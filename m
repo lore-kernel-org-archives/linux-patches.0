@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3CD2343BE;
-	Sat, 14 Feb 2026 01:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703341E5B63;
+	Sat, 14 Feb 2026 01:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031227; cv=none; b=H7O4+XBuQLH142tkglSigkozFYPBnmov+AqSbWHkwawuEwmGFs+N+tmghcx6zx7FlMYFH9PeeCNUfoYCw+TskZU/AREBK6Ou+P/yDrPw+ssx2dIFd0vJY5LkPiWofBLn5VicR12h2tHA1rdW11TQtzIQY2tXkbI5pvg9xnT/8PU=
+	t=1771031230; cv=none; b=ih2jFca4lWbN9xwgUpr7XAaPduEjWwaMClETuUgu5ls8ePwIwhNa8U2/H5NV3VbonRwt3AYShcpkWN3x11+F0MOnNYy1M1rW6wpeJWadCXAnlMdCPLGriPjSUFZYXjM/tO9F4KzFCEMMEuVxR3O458APAk6RAm0lm2CyuOUO540=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031227; c=relaxed/simple;
-	bh=AtmoDHtKVA/a36YmCk0Y1gR4wMQO6mPNCvwwKHIREbE=;
+	s=arc-20240116; t=1771031230; c=relaxed/simple;
+	bh=NafloVcmETdtCDpTqdtRCZBFFO9xJExdWJzXqLVOHJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iuem2Bb8rKv0akTGYRUq1Rq3LgTzaaZ6BFmAM0pc+NunMEfNnSDZP+T6cO8C2X30PwKudENzcTEpf16dObFGJYTf6DV/RDOqpUvaHfH0QirvZLHGOP4RTYRuPJh6cuQUoPcxmZ6NGk4rt6LBTiIlaxlinfOyA93V76zdgqoo1a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nt0WhKvK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CzQT6g6wQb8YfxFlkonU/cEwz/5YyU60moTTAxuxnf1DV39xrkrjTbNYTWVp7rhbmIY3rzB9Nfv80rSQ70YtWoO+5qg5xmLVkNjN1X2a59VLGpMn6H4712h8C8LnNUunpPTk79+SVAIwbxyrwewJxamB/xwnJhSt61Gf6qmxPqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ucs3nRpH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nt0WhKvK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11138C16AAE;
-	Sat, 14 Feb 2026 01:07:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ucs3nRpH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3A4C116C6;
+	Sat, 14 Feb 2026 01:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031227;
-	bh=AtmoDHtKVA/a36YmCk0Y1gR4wMQO6mPNCvwwKHIREbE=;
+	s=k20201202; t=1771031230;
+	bh=NafloVcmETdtCDpTqdtRCZBFFO9xJExdWJzXqLVOHJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nt0WhKvK+XJDBzy5YhDczT/GlQ3/OKbujMoCr8uZYc9tfB1RgJ9BskuNEn1ejSGTP
-	 sjNuIfYtHnccjMg1Tmy8j/0DgJUDqP0TQn4VyjF6v2qa8+47tmLNBDlMQhRrEcTxtU
-	 VvlwJGxRm1LpmnGobHshBP8hogeQY6z/vZ5Xgqc8Cyluz014HUsOmzSLBvzcnxmeDz
-	 23VN9SFkuS6+YeqgBIKR9AS8uS4GHxzQjZaP9gJQI4i5OqT2bvBHXq2U9h2rPXrLNI
-	 nCb0cUxoAjwnMLiDFAHai+MaJjmQF3aGp3IcFvWe6chdTAezYG8sx/1Fw5t4PqwNXY
-	 OmitCspLn/q9Q==
+	b=Ucs3nRpHkK5/2xwkbdQcFW22/EvOw7rnbNGJq7VS9kzbW2xdoDj7+lyvr9G7Jqszc
+	 QF6ezDzgVxMJ23kBQ1OXsSPkcnQmN8kZtar/Ejme4qAGECI6Uee/zVO8mROR4bn3F9
+	 v3heq6DzG9gYtOiqIzCBbOVSYPDxHSfZydfheUW9Wjq1ImMPx/B/50lftBbdNXL2L1
+	 1LB5C9C8P61iDLrZSoCNxMp57rzoHucz3al8D6SSuLxBhvhEVpGir4Kd3hnNO+IDB5
+	 SMjBDEM4VRJNvfscroAUFDjKAMUJ/7rHQIxF2nsR9hCAmKUwI3YHkv1eubBFoplSlf
+	 4xzhqWnw7epHQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Douglas Anderson <dianders@chromium.org>,
+Cc: Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.19-6.18] drm/panel: edp: add BOE NV140WUM-T08 panel
-Date: Fri, 13 Feb 2026 19:59:52 -0500
-Message-ID: <20260214010245.3671907-112-sashal@kernel.org>
+	peter.ujfalusi@linux.intel.com,
+	ckeepax@opensource.cirrus.com,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-6.12] ASoC: soc-acpi-intel-arl-match: change rt722 amp endpoint to aggregated
+Date: Fri, 13 Feb 2026 19:59:53 -0500
+Message-ID: <20260214010245.3671907-113-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -52,173 +55,132 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 349d4efadc1f831ebc0b872ba1e3a2b7dd58b72b ]
+[ Upstream commit 08c09899960118ffb01417242e659eb6cc067d6a ]
 
-Add powerseq timing info for the BOE NV140WUM-T08 panel used on Lenovo
-Thinkpad T14s gen 6 (Snapdragon X1 Elite) laptops.
+rt722 is aggregated with rt1320 amp in arl_rt722_l0_rt1320_l2 and it is
+the only audio configuration in the ARL platform. Set .aggregated = 1 to
+represent the fact and avoid unexpected issue.
 
-edid-decode (hex):
-
-00 ff ff ff ff ff ff 00 09 e5 26 0c 00 00 00 00
-0a 21 01 04 a5 1e 13 78 03 d6 62 99 5e 5a 8e 27
-25 53 58 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 33 3f 80 dc 70 b0 3c 40 30 20
-36 00 2e bc 10 00 00 1a 00 00 00 fd 00 28 3c 4c
-4c 10 01 0a 20 20 20 20 20 20 00 00 00 fe 00 42
-4f 45 20 43 51 0a 20 20 20 20 20 20 00 00 00 fe
-00 4e 56 31 34 30 57 55 4d 2d 54 30 38 0a 00 fa
-
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260105155134.83266-1-johannes.goede@oss.qualcomm.com
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://patch.msgid.link/20260119091749.1752088-2-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Here's my detailed analysis:
+So the RT722+RT1320 support was added in v6.13. This means stable trees
+6.13.y and potentially 6.12.y (if it was backported) could be affected.
 
-## Commit Analysis: drm/panel: edp: add BOE NV140WUM-T08 panel
+### Assessment
 
-### 1. COMMIT MESSAGE ANALYSIS
+**What the commit fixes**: The RT722 codec's amplifier endpoint was
+incorrectly configured as non-aggregated (`.aggregated = 0`) when it is
+actually aggregated with the RT1320 amplifier. This mismatch between the
+software description and the actual hardware topology could cause audio
+initialization or routing issues on ARL platforms with this specific
+codec configuration.
 
-The commit adds power sequencing timing information for the BOE
-NV140WUM-T08 eDP panel, which is used in the **Lenovo ThinkPad T14s gen
-6 (Snapdragon X1 Elite)**. The message includes the full EDID hex dump,
-which is the standard practice for new panel entries. The commit was
-authored by Hans de Goede (a very well-known and prolific kernel
-developer, especially for laptop hardware) and reviewed by Douglas
-Anderson (the `panel-edp.c` maintainer).
+**Is this a real bug fix?** Yes, but it's borderline. The commit message
+uses the vague "avoid unexpected issue" rather than describing a
+specific observed failure. However, incorrectly describing the hardware
+topology is objectively wrong — it's like having wrong device tree data.
+Getting the aggregation flag wrong could cause the SoundWire bus manager
+to incorrectly handle stream synchronization between the RT722 amp and
+RT1320.
 
-### 2. CODE CHANGE ANALYSIS
+**Meets stable criteria?**
+- Obviously correct: Yes — the commit sets the aggregation flag to match
+  reality
+- Fixes a real bug: The hardware description was wrong; this is a
+  correctness fix
+- Small and contained: Yes — just a few struct field changes in one file
+- No new features: Correct — just fixes existing configuration data
 
-The diff introduces exactly two additions:
+**Risk**: Very low. This only affects ARL platforms with the specific
+RT722+RT1320 configuration. The change is purely to endpoint metadata
+and is reviewed by Intel audio maintainers.
 
-**a) New `panel_delay` struct** (`delay_200_500_p2e200`):
-```c
-static const struct panel_delay delay_200_500_p2e200 = {
-        .hpd_absent = 200,
-        .unprepare = 500,
-        .prepare_to_enable = 200,
-};
-```
-This is a new timing combination: `hpd_absent=200`, `unprepare=500`,
-`prepare_to_enable=200`. It follows the exact naming convention of
-existing structs. There are already similar ones like
-`delay_200_500_p2e80` (prepare_to_enable=80) and `delay_200_500_p2e100`
-(prepare_to_enable=100). The existing `delay_200_500_e50_d50_p2e200`
-also has `prepare_to_enable=200` but includes `enable=50` and
-`disable=50` fields that this panel doesn't need.
+**Concern**: The commit message's vagueness about what "unexpected
+issue" means makes it somewhat uncertain whether this causes an actual
+user-visible failure or is a proactive correctness fix. However, wrong
+aggregation settings in SoundWire can realistically cause audio failures
+(amplifier not playing, stream synchronization issues).
 
-**b) New `EDP_PANEL_ENTRY`**:
-```c
-EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c26, &delay_200_500_p2e200,
-"NV140WUM-T08"),
-```
-This adds the panel's EDID product code (0x0c26) to the sorted table of
-BOE panels, with the correct timing struct. The entry is placed in the
-correct sorted order between 0x0c20 and 0x0c93.
-
-### 3. CLASSIFICATION
-
-This is squarely in the **"NEW DEVICE IDs"** exception category for
-stable backporting. It adds a panel identification entry and associated
-timing data to an existing, well-established driver (`panel-edp.c`). It
-does **not** add a new feature, API, or behavior change. It simply
-ensures that when the kernel encounters this specific panel's EDID, it
-knows the correct power sequencing timings.
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed**: ~7 lines of pure `const` data additions
-- **Files touched**: 1 (`drivers/gpu/drm/panel/panel-edp.c`)
-- **Risk**: Essentially **zero**. Both additions are `const` data that
-  only take effect when the kernel matches the exact EDID panel ID
-  0x0c26 from a BOE vendor. No existing code paths are modified. No
-  existing panel entries are changed. Systems without this panel are
-  completely unaffected.
-- **Subsystem maturity**: The `panel-edp.c` driver has been present
-  since v5.16 (September 2021) and exists in all currently maintained
-  stable trees (6.1.y, 6.6.y, 6.12.y).
-
-### 5. USER IMPACT
-
-- **Who is affected**: Owners of the Lenovo ThinkPad T14s gen 6
-  (Snapdragon X1 Elite) laptops. This is a current, widely-available
-  business laptop.
-- **Without this fix**: The panel either won't be recognized (falling
-  back to generic timing which may cause display flickering, blank
-  screen on boot, or other initialization issues) or the display may not
-  work correctly at all.
-- **Severity**: Display not working properly on a shipping laptop model
-  is a high-impact user-facing issue.
-
-### 6. STABILITY INDICATORS
-
-- **Author**: Hans de Goede — extremely well-known kernel developer,
-  Qualcomm contributor, known for laptop hardware enablement
-- **Reviewer**: Douglas Anderson — the maintainer of panel-edp.c, who
-  also committed the patch
-- **Pattern**: This is identical in structure to dozens of other panel
-  additions that are routinely backported to stable (the git log shows
-  20 similar commits just recently)
-
-### 7. DEPENDENCY CHECK
-
-- **No dependencies**: The commit is entirely self-contained. It adds
-  new `const` data and references only existing infrastructure (`struct
-  panel_delay`, `EDP_PANEL_ENTRY` macro).
-- **Clean backport**: The patch should apply cleanly to any stable tree
-  that has `panel-edp.c`, with at worst minor context adjustments for
-  differing surrounding panel entries (which is trivially resolvable).
-
-### Conclusion
-
-This is a textbook example of a panel ID / device data addition to an
-existing driver — one of the explicitly enumerated exceptions that
-qualifies for stable backporting. It adds timing data for a display
-panel used in a currently shipping Lenovo ThinkPad model. The change is:
-- Purely `const` data (zero runtime risk to other systems)
-- Self-contained (no dependencies)
-- Written by a trusted author and reviewed by the subsystem maintainer
-- Identical in pattern to hundreds of previously backported panel
-  entries
-- Fixes a real user-facing issue (display functionality on a current
-  laptop)
+This is a hardware configuration correctness fix — similar to a quirk or
+device tree fix. It's small, well-reviewed, low-risk, and fixes an
+objectively wrong hardware description that could cause audio issues on
+ARL platforms.
 
 **YES**
 
- drivers/gpu/drm/panel/panel-edp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../intel/common/soc-acpi-intel-arl-match.c   | 23 +++++++++----------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 85dd3f4cb8e1c..679f4af5246d8 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1730,6 +1730,12 @@ static const struct panel_delay delay_200_500_p2e100 = {
- 	.prepare_to_enable = 100,
+diff --git a/sound/soc/intel/common/soc-acpi-intel-arl-match.c b/sound/soc/intel/common/soc-acpi-intel-arl-match.c
+index 6bf7a6250ddc3..c952f7d2b2c0e 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-arl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-arl-match.c
+@@ -45,23 +45,22 @@ static const struct snd_soc_acpi_endpoint spk_3_endpoint = {
+ 	.group_id = 1,
  };
  
-+static const struct panel_delay delay_200_500_p2e200 = {
-+	.hpd_absent = 200,
-+	.unprepare = 500,
-+	.prepare_to_enable = 200,
-+};
-+
- static const struct panel_delay delay_200_500_e50 = {
- 	.hpd_absent = 200,
- 	.unprepare = 500,
-@@ -1977,6 +1983,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b56, &delay_200_500_e80, "NT140FHM-N47"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b66, &delay_200_500_e80, "NE140WUM-N6G"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c20, &delay_200_500_e80, "NT140FHM-N47"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c26, &delay_200_500_p2e200, "NV140WUM-T08"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c93, &delay_200_500_e200, "Unknown"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0cb6, &delay_200_500_e200, "NT116WHM-N44"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0cf2, &delay_200_500_e200, "NV156FHM-N4S"),
+-/*
+- * RT722 is a multi-function codec, three endpoints are created for
+- * its headset, amp and dmic functions.
+- */
+-static const struct snd_soc_acpi_endpoint rt722_endpoints[] = {
++static const struct snd_soc_acpi_endpoint jack_amp_g1_dmic_endpoints[] = {
++	/* Jack Endpoint */
+ 	{
+ 		.num = 0,
+ 		.aggregated = 0,
+ 		.group_position = 0,
+ 		.group_id = 0,
+ 	},
++	/* Amp Endpoint, work as spk_l_endpoint */
+ 	{
+ 		.num = 1,
+-		.aggregated = 0,
++		.aggregated = 1,
+ 		.group_position = 0,
+-		.group_id = 0,
++		.group_id = 1,
+ 	},
++	/* DMIC Endpoint */
+ 	{
+ 		.num = 2,
+ 		.aggregated = 0,
+@@ -229,11 +228,11 @@ static const struct snd_soc_acpi_adr_device rt711_sdca_0_adr[] = {
+ 	}
+ };
+ 
+-static const struct snd_soc_acpi_adr_device rt722_0_single_adr[] = {
++static const struct snd_soc_acpi_adr_device rt722_0_agg_adr[] = {
+ 	{
+ 		.adr = 0x000030025D072201ull,
+-		.num_endpoints = ARRAY_SIZE(rt722_endpoints),
+-		.endpoints = rt722_endpoints,
++		.num_endpoints = ARRAY_SIZE(jack_amp_g1_dmic_endpoints),
++		.endpoints = jack_amp_g1_dmic_endpoints,
+ 		.name_prefix = "rt722"
+ 	}
+ };
+@@ -394,8 +393,8 @@ static const struct snd_soc_acpi_link_adr arl_rt711_l0_rt1316_l3[] = {
+ static const struct snd_soc_acpi_link_adr arl_rt722_l0_rt1320_l2[] = {
+ 	{
+ 		.mask = BIT(0),
+-		.num_adr = ARRAY_SIZE(rt722_0_single_adr),
+-		.adr_d = rt722_0_single_adr,
++		.num_adr = ARRAY_SIZE(rt722_0_agg_adr),
++		.adr_d = rt722_0_agg_adr,
+ 	},
+ 	{
+ 		.mask = BIT(2),
 -- 
 2.51.0
 
