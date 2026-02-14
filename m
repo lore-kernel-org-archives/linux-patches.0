@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853F2309DB1;
-	Sat, 14 Feb 2026 21:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057D4309DB1;
+	Sat, 14 Feb 2026 21:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104349; cv=none; b=HbMNuqMK+4gOf3o4tMf0wC94adidq8+K1YW/LXLGI3vYHMQ8TVMaoy3rC8gfLLaRyx/eKXmW1d1LhPfvAPMOFwNE+pQBYewXk9pjHQkutvPioU2MxpnBucwNFwAzi2rUmJL3dRL0hn/SrwtmKS1YW4DpxRztA+VavddSXgBLplk=
+	t=1771104351; cv=none; b=RjOOXPfnPjZRPu/8s+FvCVBWqqtMHi7qqSc71cz3XmI7erWllTcUuvOcrhfC+3sfCJ3n2U8euK7HwPj4DUkIGq9uJe2zyQaBV8lwa9DyEf835oyOu1118zN7OL5ZbJkmmxcNMz+FkvSIbuPQVmvohqkfoCu0p+T10h35Ng4TrDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104349; c=relaxed/simple;
-	bh=T/Svm1QtSGSSE6CRxvQBI4rvnb10QfskCp22IKsKjFs=;
+	s=arc-20240116; t=1771104351; c=relaxed/simple;
+	bh=N6xMz5KoFVfzNcR2If2erhXZur3yHqb3P1eyI0nS6uQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=liAWTh2pi2spP2FY4vkEBJcdsUmW2nw7DPn2HZOYS7k7Cu6Xc+9ic6tc6F7l3/8m9wSJInDakBzZtJodN6v2AE3NgDO1AXN0lNy5P8dSVeALFJuns32gsBfS32rwpzX0o/YwNMPUpsJxzelQzwmCKufIGkUqNbWyr+aZb7OIVpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DSoyR4cO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IAlnI6msO5qTn5BtGsG4MQ/5EqYbBnmeOEdrAG1iipi81EDqtbDb4kjgYG19Mjq0huQVoZ0KIUiFU9fO0TinsJi/0dsTkb+Opum3qEDIsx+oeBV9roYQz299ry4XcLS+chwEn6jeYukTQaC+eWWWJo0Cpmgfbajr7Tl96v50w6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EniqImIR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DSoyR4cO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC1AC16AAE;
-	Sat, 14 Feb 2026 21:25:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EniqImIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8004C19422;
+	Sat, 14 Feb 2026 21:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104349;
-	bh=T/Svm1QtSGSSE6CRxvQBI4rvnb10QfskCp22IKsKjFs=;
+	s=k20201202; t=1771104350;
+	bh=N6xMz5KoFVfzNcR2If2erhXZur3yHqb3P1eyI0nS6uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSoyR4cO50i33zaaZA2TvkLhh7mtK8Je01yodDnjvy4U+pe45Wiqu4+1O07oOt1If
-	 yMOeknfTD5Am1v/npE+5efuwDpfnWtZUaEbeYZR0NZ67oK/rK6YQtoBufZNbp+IXVb
-	 DFur27r2IjoO1uqrxDe59pnSz52G/LBHgUO8xrTZukhCjktWjcezMYnnanP76f32kG
-	 osSpGYqahwoJHVyTpaVwfonza00sWxThd+s+f33xOOrOGrp6xc1Yq6ZT8gZOoJjFxU
-	 tYaonZdjDxBul4Dz+Oas5WOIAQWEw+AWBDP0mFTPXnMBFmkdszJaagTV1tl9qA8Jvx
-	 tlBWYlwwnBRgQ==
+	b=EniqImIRhXkK27NvLvvWCAEuhUjGEtTV01hQ2NCAtUd68tqFiSr0j2Kzm19BhylkR
+	 QB6fG6a1NwPeoWTJSF8vZhhGf5PbkQpyNOuxBnbkkU/We6l4D4bjb4ApMtUQ6JfJC4
+	 WVWj0HUGOoygsfRn3I6UbeZJmcZNMX6uZNi9ff7YHxXY50EiUl4qmtnBT8KJ6Ux6oH
+	 7VtpLGMc7sbYEZzlhjOYX5vSELGTHcuPsseQ4ddTpncvvqHZ1nNQGy3qfbKiBguyG5
+	 cLR9f30OBU+rJmVa46Th7r2sT0hvcPvY7tDpZ/NEFJEsDCGEKKUS4YndLK9t4TIr5d
+	 scxUyOWIhKi7w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Roman Peshkichev <roman.peshkichev@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] wifi: rtw88: fix DTIM period handling when conf->dtim_period is zero
-Date: Sat, 14 Feb 2026 16:22:56 -0500
-Message-ID: <20260214212452.782265-31-sashal@kernel.org>
+	brgl@kernel.org,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail when BT_EN is pulled up by hw
+Date: Sat, 14 Feb 2026 16:22:57 -0500
+Message-ID: <20260214212452.782265-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -51,155 +56,132 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roman Peshkichev <roman.peshkichev@gmail.com>
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
 
-[ Upstream commit 9f68fdcdc9dbf21be2a48feced90ff7f77d07443 ]
+[ Upstream commit fce1a9244a0f85683be8530e623bc729f24c5067 ]
 
-The function rtw_set_dtim_period() accepted an 'int' dtim_period parameter,
-while mac80211 provides dtim_period as 'u8' in struct ieee80211_bss_conf.
-In IBSS (ad-hoc) mode mac80211 may set dtim_period to 0.
+On QCS9075 and QCA8275 platforms, the BT_EN pin is always pulled up by hw
+and cannot be controlled by the host. As a result, in case of a firmware
+crash, the host cannot trigger a cold reset. Instead, the BT controller
+performs a warm restart on its own, without reloading the firmware.
 
-The driver unconditionally wrote (dtim_period - 1) to
-REG_DTIM_COUNTER_ROOT, which resulted in 0xFF when dtim_period was 0. This
-caused delays in broadcast/multicast traffic processing and issues with
-ad-hoc operation.
+This leads to the controller remaining in IBS_WAKE state, while the host
+expects it to be in sleep mode. The mismatch causes HCI reset commands
+to time out. Additionally, the driver does not clear internal flags
+QCA_SSR_TRIGGERED and QCA_IBS_DISABLED, which blocks the reset sequence.
+If the SSR duration exceeds 2 seconds, the host may enter TX sleep mode
+due to tx_idle_timeout, further preventing recovery. Also, memcoredump_flag
+is not cleared, so only the first SSR generates a coredump.
 
-Convert the function parameter to u8 to match ieee80211_bss_conf and avoid
-the underflow by writing 0 when dtim_period is 0.
+Tell the driver that the BT controller has undergone a proper restart sequence:
 
-Link: https://github.com/lwfinger/rtw88/issues/406
-Signed-off-by: Roman Peshkichev <roman.peshkichev@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251125180937.22977-1-roman.peshkichev@gmail.com
+- Clear QCA_SSR_TRIGGERED and QCA_IBS_DISABLED flags after SSR.
+- Add a 50ms delay to allow the controller to complete its warm reset.
+- Reset tx_idle_timer to prevent the host from entering TX sleep mode.
+- Clear memcoredump_flag to allow multiple coredump captures.
+
+Apply these steps only when HCI_QUIRK_NON_PERSISTENT_SETUP is not set,
+which indicates that BT_EN is defined in DTS and cannot be toggled.
+
+Refer to the comment in include/net/bluetooth/hci.h for details on
+HCI_QUIRK_NON_PERSISTENT_SETUP.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+`HCI_QUIRK_NON_PERSISTENT_SETUP` has existed since 2018 (commit
+`740011cfe9485`), so it's available in all stable trees. The only issue
+is the accessor macro change (`test_bit` → `hci_test_quirk`).
 
-### Commit Message Analysis
+### 8. FINAL ASSESSMENT
 
-The commit message clearly describes a **bug fix** for an integer
-underflow issue in the rtw88 WiFi driver. Key points:
+**Bug being fixed**: Real, user-impacting bug — Bluetooth SSR (SubSystem
+Restart) fails on specific Qualcomm platforms (QCS9075, QCA8275) where
+BT_EN is hardware-pulled high. After a firmware crash, Bluetooth becomes
+permanently non-functional until reboot.
 
-- **Bug mechanism**: When `dtim_period` is 0 (which happens in IBSS/ad-
-  hoc mode), the expression `dtim_period - 1` underflows. Since the
-  parameter was `int`, `0 - 1 = -1`, and when written via
-  `rtw_write8()`, this becomes `0xFF`.
-- **Impact**: Writing `0xFF` to `REG_DTIM_COUNTER_ROOT` causes "delays
-  in broadcast/multicast traffic processing and issues with ad-hoc
-  operation."
-- **Link**: References a real user-reported issue on GitHub
-  (lwfinger/rtw88#406).
-- **Acked by**: Ping-Ke Shih, the Realtek maintainer, both acked and
-  signed off, indicating this is a vetted fix.
+**Severity**: HIGH — Complete loss of Bluetooth functionality after
+firmware crash with no recovery path.
 
-### Code Change Analysis
+**Fix quality**: Well-documented, well-reviewed (by Qualcomm and
+Bluetooth maintainers), small and contained.
 
-The change is extremely small and surgical — only **2 lines of
-functional change** plus **2 lines of declaration change**:
+**Scope**: LOW risk — only affects platforms where
+`HCI_QUIRK_NON_PERSISTENT_SETUP` is NOT set (specific hardware
+configuration). Does not change behavior for any other platforms.
 
-1. **Parameter type change**: `int dtim_period` → `u8 dtim_period` —
-   matches the type in `struct ieee80211_bss_conf` (`u8`), which is
-   correct alignment with mac80211's API.
+**Backportability concern**: The `hci_test_quirk()` macro only exists in
+v6.16+. For older stable trees (6.1.y, 6.6.y, 6.12.y, 6.13.y), the
+backport would need to use `!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP,
+&hu->hdev->quirks)` instead. This is a trivial adaptation but means the
+patch won't apply cleanly to older stable trees.
 
-2. **Underflow guard**: `dtim_period - 1` → `dtim_period ? dtim_period -
-   1 : 0` — prevents the underflow when `dtim_period` is 0 by writing 0
-   instead of 0xFF.
+**Other concern**: The fix adds `msleep(50)` in the hw_error path, which
+is acceptable for an error recovery path but not something you'd want in
+a hot path.
 
-3. **Header declaration update**: Matching function signature change in
-   `main.h`.
-
-### Bug Classification
-
-This is a clear **integer underflow bug** that causes real-world issues:
-- The bug is triggered in IBSS (ad-hoc) mode, which is a legitimate and
-  used WiFi mode
-- The consequence is broken broadcast/multicast traffic — a real
-  functional issue for users
-- The fix is obviously correct: check for zero before subtracting
-
-### Scope and Risk Assessment
-
-- **Lines changed**: ~4 (2 functional + 2 declaration)
-- **Files touched**: 2 (main.c and main.h, both in the same driver)
-- **Risk**: Extremely low. The fix adds a simple conditional check and
-  corrects a type mismatch. It cannot introduce regressions — the only
-  behavior change is when `dtim_period == 0`, where the old behavior was
-  clearly wrong (writing 0xFF).
-- **Subsystem**: WiFi driver (rtw88) — widely used Realtek WiFi chipset
-  driver
-
-### Stable Kernel Criteria
-
-1. **Obviously correct and tested**: Yes — trivial fix, acked by
-   maintainer, addresses a clearly documented bug
-2. **Fixes a real bug**: Yes — integer underflow causing broken ad-hoc
-   WiFi operation
-3. **Important issue**: Yes — broken WiFi functionality for ad-hoc mode
-   users
-4. **Small and contained**: Yes — 4 lines changed in one driver
-5. **No new features**: Correct — pure bug fix
-6. **Applies cleanly**: The rtw88 driver has been in the kernel since
-   5.2, and this function is stable, so it should apply cleanly to
-   recent stable trees
-
-### User Impact
-
-Users of rtw88 WiFi chipsets (Realtek 8822BE, 8822CE, 8723DE, 8821CE —
-very common in laptops) who use ad-hoc/IBSS mode would experience broken
-broadcast/multicast traffic without this fix.
-
-### Dependencies
-
-None. This is a self-contained fix with no dependencies on other
-commits.
-
-### Conclusion
-
-This is a textbook stable backport candidate: a small, obvious, low-risk
-fix for a real bug (integer underflow) that causes user-visible problems
-(broken WiFi ad-hoc mode). It's acked by the subsystem maintainer and
-has a linked bug report demonstrating real-world impact.
+**Verdict**: This fixes a real, important bug (complete Bluetooth
+failure after firmware crash) on specific hardware. The fix is small,
+well-contained, and guarded by a quirk check so it has minimal risk. It
+meets stable kernel criteria. The backport will need minor adaptation
+for older trees due to the quirk API change, but this is
+straightforward. The fix has proper review from Qualcomm and the
+Bluetooth subsystem maintainer.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw88/main.c | 4 ++--
- drivers/net/wireless/realtek/rtw88/main.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_qca.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
-index fa0ed39cb1992..361ce0d40956d 100644
---- a/drivers/net/wireless/realtek/rtw88/main.c
-+++ b/drivers/net/wireless/realtek/rtw88/main.c
-@@ -730,10 +730,10 @@ void rtw_set_rx_freq_band(struct rtw_rx_pkt_stat *pkt_stat, u8 channel)
- }
- EXPORT_SYMBOL(rtw_set_rx_freq_band);
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 888176b0faa90..a3c217571c3c4 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1653,6 +1653,39 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
+ 		skb_queue_purge(&qca->rx_memdump_q);
+ 	}
  
--void rtw_set_dtim_period(struct rtw_dev *rtwdev, int dtim_period)
-+void rtw_set_dtim_period(struct rtw_dev *rtwdev, u8 dtim_period)
- {
- 	rtw_write32_set(rtwdev, REG_TCR, BIT_TCR_UPDATE_TIMIE);
--	rtw_write8(rtwdev, REG_DTIM_COUNTER_ROOT, dtim_period - 1);
-+	rtw_write8(rtwdev, REG_DTIM_COUNTER_ROOT, dtim_period ? dtim_period - 1 : 0);
++	/*
++	 * If the BT chip's bt_en pin is connected to a 3.3V power supply via
++	 * hardware and always stays high, driver cannot control the bt_en pin.
++	 * As a result, during SSR (SubSystem Restart), QCA_SSR_TRIGGERED and
++	 * QCA_IBS_DISABLED flags cannot be cleared, which leads to a reset
++	 * command timeout.
++	 * Add an msleep delay to ensure controller completes the SSR process.
++	 *
++	 * Host will not download the firmware after SSR, controller to remain
++	 * in the IBS_WAKE state, and the host needs to synchronize with it
++	 *
++	 * Since the bluetooth chip has been reset, clear the memdump state.
++	 */
++	if (!hci_test_quirk(hu->hdev, HCI_QUIRK_NON_PERSISTENT_SETUP)) {
++		/*
++		 * When the SSR (SubSystem Restart) duration exceeds 2 seconds,
++		 * it triggers host tx_idle_delay, which sets host TX state
++		 * to sleep. Reset tx_idle_timer after SSR to prevent
++		 * host enter TX IBS_Sleep mode.
++		 */
++		mod_timer(&qca->tx_idle_timer, jiffies +
++				  msecs_to_jiffies(qca->tx_idle_delay));
++
++		/* Controller reset completion time is 50ms */
++		msleep(50);
++
++		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
++		clear_bit(QCA_IBS_DISABLED, &qca->flags);
++
++		qca->tx_ibs_state = HCI_IBS_TX_AWAKE;
++		qca->memdump_state = QCA_MEMDUMP_IDLE;
++	}
++
+ 	clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
  }
  
- void rtw_update_channel(struct rtw_dev *rtwdev, u8 center_channel,
-diff --git a/drivers/net/wireless/realtek/rtw88/main.h b/drivers/net/wireless/realtek/rtw88/main.h
-index 43ed6d6b42919..1ab70214ce36e 100644
---- a/drivers/net/wireless/realtek/rtw88/main.h
-+++ b/drivers/net/wireless/realtek/rtw88/main.h
-@@ -2226,7 +2226,7 @@ enum nl80211_band rtw_hw_to_nl80211_band(enum rtw_supported_band hw_band)
- }
- 
- void rtw_set_rx_freq_band(struct rtw_rx_pkt_stat *pkt_stat, u8 channel);
--void rtw_set_dtim_period(struct rtw_dev *rtwdev, int dtim_period);
-+void rtw_set_dtim_period(struct rtw_dev *rtwdev, u8 dtim_period);
- void rtw_get_channel_params(struct cfg80211_chan_def *chandef,
- 			    struct rtw_channel_params *ch_param);
- bool check_hw_ready(struct rtw_dev *rtwdev, u32 addr, u32 mask, u32 target);
 -- 
 2.51.0
 
