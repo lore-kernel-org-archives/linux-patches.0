@@ -1,42 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56ECF3EBF2C;
-	Sat, 14 Feb 2026 01:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A29A3EBF2C;
+	Sat, 14 Feb 2026 01:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030995; cv=none; b=UFGsnFHaKn4T4ja0NQP5O+QfeXdiC/JRXPI5FQNVUmVVHw+oX/JSvOXU6UDu2dNpsx22rh0s4yNBNcVAHDHzhjICUE0CK3rnGkn4YhFHcd8iiVxFCIyb89fgiFaakegzCBL/cLBuoabhpaMccdr61cjrj4Zh7tn/0ZS1cvJUeWI=
+	t=1771030999; cv=none; b=d41hViBq03/hFOnHzwAv1jJPg13nY2XugsNYwgaZwb52JAqK5Mv9bvuxu/B23Fbbf+X7H7sPlL4OqVVbpWq6M09OeFcNfVLORmekp3XcDHzk64C0LHgBBDYuIXhXEg1xe77SfPwxosuVwiCIp54+i1oNoXtsrrhCbj9ZdIDUc2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030995; c=relaxed/simple;
-	bh=RhXjg4zDobOMLNOMmuAqdHXzgxH7E7RKn3tniYRXLis=;
+	s=arc-20240116; t=1771030999; c=relaxed/simple;
+	bh=qRQFKAhBVdXYrFAqOWRohVFkJKasL7sKeBlZ5vfvO3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZ+R6Qmu4+4TMFCCgBfgoMJUzD7uQgJ00srqsw375rQ7E6Eiu/gtVgy6P06zRgFa5Web2oGailHcndpLSBjfkXpnob5QY0tEeVZphvyZi5oH9A4l+Z0m3ajJN0i8RYfxlJeTXe+Kpbx8jvztybT97w3gB7dkOZ6/uhHcqnDP1Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2WB94f6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nZsaPNYMfYiXAEcNiVzHqlKTI0OTa7F3U2nDIyAOAsz+QFaMvSEr3ff0Dwm+yaC7Ab8OLU0oqAef8oWod6JLCmoO39jZS8q+9INTBPH5WDpSW4QxnKc46emQ/ITebdWtSMqZe1QEe+jmSb3DDWKjS3DH/DuA98hWUytbRejLMEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gQF9W7UM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2WB94f6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF2AC19424;
-	Sat, 14 Feb 2026 01:03:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gQF9W7UM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C812C116C6;
+	Sat, 14 Feb 2026 01:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030995;
-	bh=RhXjg4zDobOMLNOMmuAqdHXzgxH7E7RKn3tniYRXLis=;
+	s=k20201202; t=1771030998;
+	bh=qRQFKAhBVdXYrFAqOWRohVFkJKasL7sKeBlZ5vfvO3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z2WB94f6tg4S4JaySUk/cUmKX82/gpKoydG7fIMdkyT069hJL/FN3snBHNagEfoix
-	 RixH7lEZQPOl9u07WXDya3v1dwKRjlD1Up3BZKv6JZoe685/2B6wXinvV9jAVlfdAe
-	 uPlmfVB80DyvPj4MO9RHLtD+LReVQQvZVLwYx49UFV0QVgfctOJrcZ8SzCUS9go/A1
-	 rOhF11rpJ7AqUpEYK+hswWbm7qxd1OtxwH5AmRGZOuAL8o8r28eo8xEpR5KAfwpTED
-	 bke0wVXN+Y710WdYvZFBJenXxvR4XMGeUF6mVBMBxD/2dFp3yIOQzdqzvxlxcKSpzD
-	 H7OirnTPRMqQw==
+	b=gQF9W7UMxcrgHksEPhTVEBlKImiphrvrnxJ6mVHgSm+HgdNkxmk6CdEU5QchgFI97
+	 CNTsr9ZpbTpkDssKqv/NPMLa5pmiPtQrPZcK/dIGjyfXimnwjplI1/o6i2aCT5HSlG
+	 sv7GPS5nx8ozwyvD08/wKfRpDZkmOMNEY2RHPWakEti/+5lU8nxviaHQeInNbCEyh4
+	 x90SaG00uEj+xILqA1Pmwi2Dh+8RWBhN22bYsdjXjT2HNhbEon+05x//UYek0ez2Ih
+	 Q6ptH854e7+/Im5AhkguZwgPxwn2VpF+IuhWq9p3QJa1fay1xFsfHdu1AylgqwRUuB
+	 OZJyqWzH5zJSA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Val Packett <val@packett.cool>,
-	Douglas Anderson <dianders@chromium.org>,
+Cc: Zhongwei <Zhongwei.Zhang@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.19-6.18] drm/panel-edp: Add AUO B140QAX01.H panel
-Date: Fri, 13 Feb 2026 19:58:17 -0500
-Message-ID: <20260214010245.3671907-17-sashal@kernel.org>
+	Dillon.Varone@amd.com,
+	alvin.lee2@amd.com,
+	alex.hung@amd.com,
+	nicholas.kazlauskas@amd.com,
+	mwen@igalia.com,
+	Ausef.Yousof@amd.com,
+	yelangyan@huaqin.corp-partner.google.com,
+	Charlene.Liu@amd.com,
+	Yihan.Zhu@amd.com,
+	danny.wang@amd.com
+Subject: [PATCH AUTOSEL 6.19-6.12] drm/amd/display: avoid dig reg access timeout on usb4 link training fail
+Date: Fri, 13 Feb 2026 19:58:18 -0500
+Message-ID: <20260214010245.3671907-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -49,180 +60,92 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Val Packett <val@packett.cool>
+From: Zhongwei <Zhongwei.Zhang@amd.com>
 
-[ Upstream commit bcd752c706c357229185a330ab450b86236d9031 ]
+[ Upstream commit 15b1d7b77e9836ff4184093163174a1ef28bbdd7 ]
 
-A 14-inch 2560x1600 60Hz matte touch panel, found on a Dell Latitude 7455
-laptop (second-source with BOE NE14QDM), according to online sources it's
-also found on the Latitude 7440 and some ASUS models.
+[Why]
+When usb4 link training fails, the dpia sym clock will be disabled and SYMCLK
+source should be changed back to phy clock. In enable_streams, it is
+assumed that link training succeeded and will switch from refclk to
+phy clock. But phy clk here might not be on. Dig reg access timeout
+will occur.
 
-Raw EDID dump:
+[How]
+When enable_stream is hit, check if link training failed for usb4.
+If it did, fall back to the ref clock to avoid reg access timeout.
 
-00 ff ff ff ff ff ff 00 06 af a4 0b 00 00 00 00
-00 20 01 04 a5 1e 13 78 03 ad f5 a8 54 47 9c 24
-0e 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 f0 68 00 a0 a0 40 2e 60 30 20
-35 00 2d bc 10 00 00 1a f3 53 00 a0 a0 40 2e 60
-30 20 35 00 2d bc 10 00 00 1a 00 00 00 fe 00 36
-39 52 31 57 80 42 31 34 30 51 41 58 00 00 00 00
-00 02 41 21 a8 00 01 00 00 1a 41 0a 20 20 00 a1
-
-Don't have datasheet access, but the same timing as for other panels from
-the same manufacturer works fine.
-
-Signed-off-by: Val Packett <val@packett.cool>
-[dianders: Moved to the right location in the table]
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20251206173739.2222940-1-val@packett.cool
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Zhongwei <Zhongwei.Zhang@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is the same author (Val Packett), same laptop (Dell Latitude 7455),
-and a second-source panel for it. Let me verify this is a pure one-line
-panel ID addition and check the exact diff once more.
+This is widely used across the DC codebase — no dependency concerns.
 
-The commit message itself says this AUO B140QAX01.H is a "second-source
-with BOE NE14QDM" -- meaning the Dell Latitude 7455 can come with either
-panel, and the BOE variant was already added.
+### 8. SUMMARY
 
-## Analysis
+**What it fixes:** A register access timeout that occurs when USB4
+(DPIA) link training fails. The timeout happens because the code
+unconditionally enables the symclk (which requires phy clock to be
+running), but when link training failed, the phy clock is off. This
+causes the register access to hang/timeout.
 
-### 1. COMMIT MESSAGE ANALYSIS
+**How it fixes it:** By adding a check that mirrors the existing
+128b/132b signal handling — when link training has failed (detected by
+LINK_RATE_UNKNOWN, endpoint type is USB4 DPIA, and link is not active),
+it disables the symclk instead of enabling it, falling back to the
+reference clock. Additionally adds a NULL check on `link_enc`.
 
-The commit adds a new eDP panel entry for the **AUO B140QAX01.H** panel.
-Key details:
-- 14-inch 2560x1600 60Hz matte touch panel
-- Found on real shipping hardware: **Dell Latitude 7455**, Dell Latitude
-  7440, and some ASUS models
-- It's a second-source panel alongside the already-listed BOE NE14QDM
-- Author has the actual hardware and tested it
-- Reviewed by Douglas Anderson (the `panel-edp` subsystem maintainer)
+**Meets stable criteria:**
+- Obviously correct: mirrors existing pattern for 128b/132b, reviewed
+  and tested by AMD team
+- Fixes a real bug: register access timeout causing display failures
+- Small and contained: ~15 lines in one function in one file
+- No new features: purely defensive error handling
+- Low regression risk: only changes behavior in the failure path
 
-### 2. CODE CHANGE ANALYSIS
-
-The change is a **single line addition** to the `edp_panels[]` table:
-
-```c
-EDP_PANEL_ENTRY('A', 'U', 'O', 0x0ba4, &delay_200_500_e50,
-"B140QAX01.H"),
-```
-
-This uses:
-- The existing `EDP_PANEL_ENTRY` macro
-- An existing delay structure `delay_200_500_e50` (used by nearly all
-  other AUO panels in the table)
-- Placed in the correct sorted position (after 0x04a4, before 0x105c)
-
-There is **zero new logic, zero new delay structures, zero new
-functions** -- it is purely a data table entry.
-
-### 3. CLASSIFICATION: Device ID / Hardware Enablement
-
-This falls squarely under the **"NEW DEVICE IDs"** exception category
-for stable backports:
-- Adding a panel ID to an existing driver (`panel-edp.c`)
-- The driver infrastructure already exists in all stable trees where
-  `panel-edp.c` exists
-- The `delay_200_500_e50` delay structure already exists
-- The `EDP_PANEL_ENTRY` macro already exists
-
-### 4. USER IMPACT: What happens without this entry?
-
-Looking at the code in `generic_edp_panel_probe()` (lines 805-825):
-
-```809:825:drivers/gpu/drm/panel/panel-edp.c
-        /*
-  - We're using non-optimized timings and want it really obvious that
-  - someone needs to add an entry to the table, so we'll do a WARN_ON
-  - splat.
-         */
-        if (WARN_ON(!panel->detected_panel)) {
-                dev_warn(dev,
-                         "Unknown panel %s %#06x, using conservative
-timings\n",
-                         vend, product_id);
-                panel_edp_set_conservative_timings(panel, desc);
-        } else {
-                dev_info(dev, "Detected %s %s (%#06x)\n",
-                         vend, panel->detected_panel->ident.name,
-product_id);
-                /* Update the delay; everything else comes from EDID */
-                desc->delay = *panel->detected_panel->delay;
-        }
-```
-
-Without this entry:
-1. A **WARN_ON** fires in the kernel log (a kernel warning/splat) every
-   boot on affected Dell/ASUS laptops
-2. The panel falls back to **conservative timings** (`unprepare=2000ms`,
-   `enable=200ms`) instead of the proper timings (`hpd_absent=200ms`,
-   `unprepare=500ms`, `enable=50ms`), meaning **noticeably slower
-   display initialization** with unnecessary delays
-3. The WARN_ON trace in dmesg can confuse users and show up in automated
-   bug reporting tools
-
-### 5. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed**: 1 line added
-- **Files changed**: 1 file
-- **Risk**: Essentially zero. This is a pure data addition to a lookup
-  table. It cannot affect any other panel or any other code path. The
-  entry only matches when the EDID panel ID is exactly `AUO 0x0ba4`.
-- **Dependencies**: None. Uses only existing macros and delay
-  structures.
-
-### 6. STABILITY INDICATORS
-
-- **Reviewed-by**: Douglas Anderson (the panel-edp maintainer for
-  ChromeOS/DRM)
-- **Tested**: Author has the actual Dell Latitude 7455 hardware
-- **Pattern**: Identical to dozens of other panel additions in this file
-  (e.g., BOE NE14QDM for the same laptop was added similarly)
-
-### 7. DEPENDENCY CHECK
-
-No dependencies. The `EDP_PANEL_ENTRY` macro and `delay_200_500_e50`
-structure have existed in the kernel for years, well before any current
-stable tree branch points. This will apply cleanly to any stable tree
-that has the panel-edp driver.
-
-## Conclusion
-
-This is a textbook example of a **device ID addition to an existing
-driver** -- one of the explicitly allowed exception categories for
-stable backports. It:
-
-- Is a single-line data table entry with zero risk of regression
-- Fixes a real user-visible issue (WARN_ON splat + degraded display
-  timing on Dell Latitude 7455/7440 and some ASUS laptops)
-- Uses only existing infrastructure (macro, delay structure)
-- Has been reviewed by the subsystem maintainer
-- Has been tested on real hardware
-- Will apply cleanly to stable trees
+**YES** — This is a well-contained bug fix for a real hardware timeout
+issue affecting USB4 display connections. It's small, well-reviewed,
+well-tested, follows existing patterns in the code, and has very low
+regression risk.
 
 **YES**
 
- drivers/gpu/drm/panel/panel-edp.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c  | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 2c35970377431..85dd3f4cb8e1c 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1880,6 +1880,7 @@ static const struct panel_delay delay_80_500_e50_d50 = {
-  */
- static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x04a4, &delay_200_500_e50, "B122UAN01.0"),
-+	EDP_PANEL_ENTRY('A', 'U', 'O', 0x0ba4, &delay_200_500_e50, "B140QAX01.H"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x105c, &delay_200_500_e50, "B116XTN01.0"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1062, &delay_200_500_e50, "B120XAN01.0"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x125c, &delay_200_500_e50, "Unknown"),
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index c8ff8ae85a030..517d4c08d34c4 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -3058,9 +3058,17 @@ void dcn20_enable_stream(struct pipe_ctx *pipe_ctx)
+ 			dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
+ 		}
+ 	} else {
+-		if (dccg->funcs->enable_symclk_se)
+-			dccg->funcs->enable_symclk_se(dccg, stream_enc->stream_enc_inst,
++		if (dccg->funcs->enable_symclk_se && link_enc) {
++			if (link->ep_type == DISPLAY_ENDPOINT_USB4_DPIA
++				&& link->cur_link_settings.link_rate == LINK_RATE_UNKNOWN
++				&& !link->link_status.link_active) {
++				if (dccg->funcs->disable_symclk_se)
++					dccg->funcs->disable_symclk_se(dccg, stream_enc->stream_enc_inst,
+ 						      link_enc->transmitter - TRANSMITTER_UNIPHY_A);
++			} else
++				dccg->funcs->enable_symclk_se(dccg, stream_enc->stream_enc_inst,
++						      link_enc->transmitter - TRANSMITTER_UNIPHY_A);
++		}
+ 	}
+ 
+ 	if (dc->res_pool->dccg->funcs->set_pixel_rate_div)
 -- 
 2.51.0
 
