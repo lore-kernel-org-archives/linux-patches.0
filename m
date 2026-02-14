@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5905B1D5ABA;
-	Sat, 14 Feb 2026 01:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4581D5ABA;
+	Sat, 14 Feb 2026 01:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031141; cv=none; b=h4LYhu7oQ69RSpqQx4ZjU7PLygiWmJ6jdVKb5520i8Beq2koHagqrwJjjNERZmeDCvkMdf/S9KetIM7fWzdEwP3Ol/3G4fER45b9v9rgB2rQrj05XVVeYPdBPVdT4TBxfA7pXgmgAfBHx1I6XN7ypVy3kGCbIh1DqvnH2107IUg=
+	t=1771031142; cv=none; b=T0Nkwvn6GyVHSy3Al+aLFjpwUqJtD8jFxxznj4ZT8fXUTU9OHGgDKoITgAbymiNTMfVurxS1f85oDyf+PKVkqvLEtwP0MkJ5qIVnUMzWOZO0oAnZ5EeoyHbP7RWzDpPJM+eLHj7zf5aAmej2BAnMBEo7HfjncNwCC9Ho3B0UK0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031141; c=relaxed/simple;
-	bh=PaO56kiA8/v9E8MkTgfzvmtNojBYeVDqlrH9GB3WikI=;
+	s=arc-20240116; t=1771031142; c=relaxed/simple;
+	bh=W53QJEJAmrPalFrMxaKV2Qv8HFHkH2FBkXh51NWtAwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3xqx0lDA2g00KEcrS9csjtSZr70ArnJgG7JHKce1qJNSmKdtx7XWQROdn3mxHGSsqB9VeKM1pwrPZpIM4NjLugpy3SjhJW385RKNTSd/RvyE8SFLjm1bydmFNpHsjFc9JvejJ7G29aVg71b5GJbOQQhQQpklwi7RqtUbHGK4lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MhWuih4V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PdlVgbB4Yoa6dkXSrxUd5c2eXR0ZRnh9tQq4vFkCj3hqUKUaXaHGaziYdIata0fCWamQKDq6k3ucvzupl2JnPqSVodqpzzWiDYxqrb8uiWakYTva90bgHRsZD4Ei0Y+BjLDx49gziUi3WjWy2PYRmSjY3rb9DifgivXgYfp4eLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DH1vhD4+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MhWuih4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9186DC116C6;
-	Sat, 14 Feb 2026 01:05:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DH1vhD4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA47AC16AAE;
+	Sat, 14 Feb 2026 01:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031141;
-	bh=PaO56kiA8/v9E8MkTgfzvmtNojBYeVDqlrH9GB3WikI=;
+	s=k20201202; t=1771031142;
+	bh=W53QJEJAmrPalFrMxaKV2Qv8HFHkH2FBkXh51NWtAwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhWuih4VyFED3pBhOV4qErPOvR0Yyi9EOe7Poav2Rne1Z8ygrl7hAGGRQGfVptGp6
-	 RXhHps9jWM7dJb2Z1yMsLQ7PGTvrm1k5eM/dNGIzzhnmjJcxPrNcMfaLRzMc8hgvRY
-	 Uz1FxOf3U2E9jGohk23blUFpTDz3yug5W8CHKCU3TKBkU3OwtCx+NguRiy3sKzM9LE
-	 LNj+OOQmasajGl0vILw2cdyg70r6NlkyC3FGDwxS2YgzDx57R0hWAzDIW2ds7Y8vB3
-	 5hqBIfbu2L75Cn8cACkuE2zrq0ptp5xKt17GGQ9jJ0vget1Lnmogh2aedKhWdvM8WH
-	 SY0R+TcnZLdSw==
+	b=DH1vhD4+OGqnFhMVWC1NsWWnjWlpZp8wrTXKhSjMnb4qyIo7OoAaqf1NHHe845V3B
+	 GxK5g2zva9qGBsNRLBxhKWscJzJVbVJieIQrr0ZcQGYy+aeoZVSpb8LqcXxfkBdbxm
+	 q/ahjJZ4/+KpCrLnAqhwIGUtfUk80GieUxAkZxMmcDGuwSSndm23uDTJ3jA6PD4PpJ
+	 24uu1qRFQesl1BBNPc2jnp2/m1352xZFJ7lzzWNSZs/8dyd5VmFDh3Z4/5BeNwfrri
+	 MdRi3Xx/kA3lDgUvjndgv2JnddKYaCLGacDa7+NOtP6i0km51vN1zLh96RdCf3oB8a
+	 pdzj7Xsqqdd7A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mark Brown <broonie@kernel.org>,
-	Francesco Dolcini <francesco@dolcini.it>,
+Cc: Philip Yang <Philip.Yang@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] spi: cadence-quadspi: Parse DT for flashes with the rest of the DT parsing
-Date: Fri, 13 Feb 2026 19:59:19 -0500
-Message-ID: <20260214010245.3671907-79-sashal@kernel.org>
+	Felix.Kuehling@amd.com,
+	amd-gfx@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.19-6.12] drm/amdkfd: Handle GPU reset and drain retry fault race
+Date: Fri, 13 Feb 2026 19:59:20 -0500
+Message-ID: <20260214010245.3671907-80-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -50,237 +52,226 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit 9f0736a4e136a6eb61e0cf530ddc18ab6d816ba3 ]
+[ Upstream commit 5b57c3c3f22336e8fd5edb7f0fef3c7823f8eac1 ]
 
-The recent refactoring of where runtime PM is enabled done in commit
-f1eb4e792bb1 ("spi: spi-cadence-quadspi: Enable pm runtime earlier to
-avoid imbalance") made the fact that when we do a pm_runtime_disable()
-in the error paths of probe() we can trigger a runtime disable which in
-turn results in duplicate clock disables.  This is particularly likely
-to happen when there is missing or broken DT description for the flashes
-attached to the controller.
+Only check and drain IH1 ring if CAM is not enabled.
 
-Early on in the probe function we do a pm_runtime_get_noresume() since
-the probe function leaves the device in a powered up state but in the
-error path we can't assume that PM is enabled so we also manually
-disable everything, including clocks. This means that when runtime PM is
-active both it and the probe function release the same reference to the
-main clock for the IP, triggering warnings from the clock subsystem:
+If GPU is under reset, don't access IH to drain retry fault.
 
-[    8.693719] clk:75:7 already disabled
-[    8.693791] WARNING: CPU: 1 PID: 185 at /usr/src/kernel/drivers/clk/clk.c:1188 clk_core_disable+0xa0/0xb
-...
-[    8.694261]  clk_core_disable+0xa0/0xb4 (P)
-[    8.694272]  clk_disable+0x38/0x60
-[    8.694283]  cqspi_probe+0x7c8/0xc5c [spi_cadence_quadspi]
-[    8.694309]  platform_probe+0x5c/0xa4
-
-Dealing with this issue properly is complicated by the fact that we
-don't know if runtime PM is active so can't tell if it will disable the
-clocks or not.  We can, however, sidestep the issue for the flash
-descriptions by moving their parsing to when we parse the controller
-properties which also save us doing a bunch of setup which can never be
-used so let's do that.
-
-Reported-by: Francesco Dolcini <francesco@dolcini.it>
-Closes: https://lore.kernel.org/r/20251201072844.GA6785@francesco-nb
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20251204-spi-cadence-qspi-runtime-pm-imbalance-v2-1-10af9115d531@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information I need. Let me compile a comprehensive
-analysis.
+Now I have all the information needed for a thorough analysis. Let me
+compile my findings.
 
 ---
 
-## Comprehensive Analysis
+## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The commit by Mark Brown (SPI subsystem maintainer) addresses a double
-clock disable triggered during `cqspi_probe()` error handling,
-specifically when device tree flash descriptions are missing or broken.
-The commit references:
+**Subject:** "drm/amdkfd: Handle GPU reset and drain retry fault race"
 
-- **Root cause commit**: `f1eb4e792bb1` ("spi: spi-cadence-quadspi:
-  Enable pm runtime earlier to avoid imbalance") - merged in v6.18
-- **Reporter**: Francesco Dolcini (Toradex engineer) with a specific bug
-  link
-- **Symptom**: Kernel WARNING "clk:75:7 already disabled" plus a full
-  stack trace from `clk_core_disable` -> `clk_disable` -> `cqspi_probe`
+The commit addresses a **race condition** between GPU reset and the
+drain retry fault mechanism. The message describes two specific fixes:
 
-### 2. CODE CHANGE ANALYSIS
+1. "Only check and drain IH1 ring if CAM is not enabled" - a correctness
+   fix for interrupt handler ring selection logic
+2. "If GPU is under reset, don't access IH to drain retry fault" -
+   protecting against hardware access during GPU reset
 
-The change is very simple: it moves the `cqspi_setup_flash()` call from
-**after** PM runtime is configured to **before** any resource
-acquisition:
+Both are bug fix descriptions, not feature additions.
 
-**Before (current v6.19 code)** - `cqspi_setup_flash()` at line 1990,
-after pm_runtime_enable + pm_runtime_get_noresume:
+### 2. Code Change Analysis
 
-```1983:1994:/home/sasha/linux-autosel/drivers/spi/spi-cadence-quadspi.c
-        if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM))) {
-                pm_runtime_enable(dev);
-                pm_runtime_set_autosuspend_delay(dev,
-CQSPI_AUTOSUSPEND_TIMEOUT);
-                pm_runtime_use_autosuspend(dev);
-                pm_runtime_get_noresume(dev);
-        }
+The patch makes two distinct changes in `kfd_svm.c`:
 
-        ret = cqspi_setup_flash(cqspi);
-        if (ret) {
-                dev_err(dev, "failed to setup flash parameters %d\n",
-ret);
-                goto probe_setup_failed;
-        }
+#### Change A: `svm_range_drain_retry_fault()` - GPU reset protection
+
+**Before (current code):**
+
+```2337:2364:drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+static void svm_range_drain_retry_fault(struct svm_range_list *svms)
+{
+        // ... iterates over GPUs ...
+                amdgpu_ih_wait_on_checkpoint_process_ts(pdd->dev->adev,
+                                pdd->dev->adev->irq.retry_cam_enabled ?
+                                &pdd->dev->adev->irq.ih :
+                                &pdd->dev->adev->irq.ih1);
+                // ... no reset protection ...
+}
 ```
 
-**After (with patch applied)** - `cqspi_setup_flash()` right after
-`cqspi_of_get_pdata()`, before clock/resource acquisition:
+**After (patched code):** Adds
+`down_read_trylock(&pdd->dev->adev->reset_domain->sem)` before accessing
+the IH hardware and `up_read(...)` after. If the trylock fails (GPU is
+resetting), it `continue`s to the next GPU.
 
+**Why this matters:** `svm_range_drain_retry_fault()` calls
+`amdgpu_ih_wait_on_checkpoint_process_ts()` which calls
+`amdgpu_ih_get_wptr()`. Looking at `vega20_ih_get_wptr()`, it does
+`RREG32_NO_KIQ(ih_regs->ih_rb_wptr)` - a **direct hardware register
+read**. During GPU reset (`amdgpu_device_lock_reset_domain` takes a
+write lock on `reset_domain->sem`), the hardware is being torn down and
+reinitialized. Accessing registers during this window can cause:
+- **System hangs** (MMIO reads to offline hardware can hang the CPU bus)
+- **Garbage data reads** leading to incorrect behavior
+- **Kernel crashes** if the driver acts on invalid data
+
+This is the **exact same pattern** used throughout the amdgpu driver -
+there are **20+ existing call sites** that use
+`down_read_trylock(&adev->reset_domain->sem)` to protect hardware
+access. The fix follows an established, well-tested pattern.
+
+#### Change B: `svm_range_unmap_from_cpu()` - CAM-aware IH1 check
+
+**Before:**
 ```c
-        ret = cqspi_of_get_pdata(cqspi);
-        if (ret) { ... return -ENODEV; }
-
-        ret = cqspi_setup_flash(cqspi);
-        if (ret) {
-                dev_err(dev, "failed to setup flash parameters %d\n",
-ret);
-                return ret;
-        }
-
-        /* Obtain QSPI clock. */
-        cqspi->clk = devm_clk_get(dev, NULL);
+if (adev->irq.ih1.ring_size) {
 ```
 
-**Why this is safe**: Looking at `cqspi_setup_flash()` (lines
-1727-1765), it:
-- Iterates device tree child nodes with
-  `for_each_available_child_of_node_scoped`
-- Reads DT properties (`reg`, `cdns,read-delay`, `cdns,tshsl-ns`, etc.)
-- Populates `f_pdata` structures and `cqspi->num_chipselect`
-- Has **zero** hardware dependencies (no clock access, no IO access, no
-  IRQ, no PM runtime)
-
-Its only dependency is `cqspi->num_chipselect` which is set by
-`cqspi_of_get_pdata()` (called just before in both old and new code).
-
-### 3. THE BUG MECHANISM
-
-The error path when `cqspi_setup_flash()` fails in the current code:
-
-```2021:2033:/home/sasha/linux-autosel/drivers/spi/spi-cadence-quadspi.c
-probe_setup_failed:
-        if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
-                pm_runtime_disable(dev);
-        cqspi_controller_enable(cqspi, 0);
-probe_reset_failed:
-        if (cqspi->is_jh7110)
-                cqspi_jh7110_disable_clk(pdev, cqspi);
-
-        if (pm_runtime_get_sync(&pdev->dev) >= 0)
-                clk_disable_unprepare(cqspi->clk);
-probe_clk_failed:
-        return ret;
+**After:**
+```c
+if (!adev->irq.retry_cam_enabled && adev->irq.ih1.ring_size) {
 ```
 
-The problem: `pm_runtime_disable()` can interact with the PM runtime
-state in a way that the runtime suspend callback
-(`cqspi_runtime_suspend`) gets invoked, which calls
-`clk_disable_unprepare(cqspi->clk)`. Then the error path falls through
-to `probe_reset_failed` which also calls
-`clk_disable_unprepare(cqspi->clk)` via `pm_runtime_get_sync()` +
-explicit disable, causing the double disable WARNING.
+The comment already says "Check and drain ih1 ring if cam not available"
+but the code was missing the `!retry_cam_enabled` check. When CAM
+(Content Addressable Memory) is enabled for retry filtering, retry
+faults go through the primary IH ring (`ih`), not `ih1`. Checking `ih1`
+when CAM is enabled is incorrect because:
+- The timestamp from `ih1` would be stale/irrelevant
+- It could cause the code to `continue` early (bypassing the `ih_soft`
+  check below) with an incorrect `checkpoint_ts`
+- This leads to retry faults being incorrectly dropped or not dropped
+  when they should be
 
-### 4. FIX APPROACH COMPARISON
+This same logic (`if (adev->irq.retry_cam_enabled) return;` before `ih1`
+access) already exists in `amdgpu_gmc_filter_faults_remove()`,
+confirming that the fix aligns with the intended design.
 
-This commit represents the subsystem maintainer's preferred approach.
-Instead of patching the complex error path interactions (as done in the
-earlier attempts: `295fe8406a357`, `1889dd2081975`), it eliminates the
-problem entirely by moving the DT parsing before any resource that needs
-cleanup. If flash DT is broken, probe fails with a simple `return` - no
-PM runtime, no clocks, nothing to clean up.
+### 3. Bug Classification
 
-### 5. CLASSIFICATION AND IMPACT
+- **Change A:** Race condition fix - accessing hardware registers
+  without reset domain protection. This is a **system hang / crash**
+  bug.
+- **Change B:** Logic bug - checking the wrong interrupt handler ring
+  when CAM is enabled, leading to incorrect retry fault handling
+  (potential data corruption or stale page mappings).
 
-- **Bug type**: Resource management error (double clock disable) causing
-  kernel WARNING
-- **Severity**: Medium - kernel WARNING, potential clock framework
-  confusion
-- **Trigger**: Missing or broken DT flash descriptions for Cadence QSPI
-  controller
-- **Real-world impact**: Confirmed by Francesco Dolcini (Toradex), a
-  major embedded Linux vendor
-- **Affected versions**: v6.18+ (where `f1eb4e792bb1` was merged)
+### 4. Scope and Risk Assessment
 
-### 6. SCOPE AND RISK
+- **Lines changed:** ~10 lines of actual logic (plus 1 include)
+- **Files changed:** 1 file (`kfd_svm.c`)
+- **Complexity:** Low - follows a well-established pattern (20+ examples
+  in the codebase)
+- **Risk of regression:** Very low
+  - The `down_read_trylock` pattern is used everywhere in amdgpu and is
+    proven safe
+  - If trylock fails, we simply skip draining for that GPU (graceful
+    degradation)
+  - The CAM check aligns with existing logic in
+    `amdgpu_gmc_filter_faults_remove()`
 
-- **Lines changed**: ~12 lines moved (6 lines added in new location, 6
-  lines removed from old location)
-- **Files changed**: 1 (`drivers/spi/spi-cadence-quadspi.c`)
-- **Risk**: Very low - pure DT parsing function moved earlier with no
-  functional side effects
-- **Author**: Mark Brown, the SPI subsystem maintainer
+### 5. User Impact
 
-### 7. DEPENDENCIES
+- **Affected users:** Anyone using AMD GPUs with KFD
+  (compute/ROCm/OpenCL workloads) who experiences GPU resets
+- **Severity:** HIGH - GPU reset + drain retry fault = potential system
+  hang when register access hangs the CPU
+- **Without fix:** If a GPU reset happens concurrently with
+  `svm_range_list_fini()` (process exit), the system could hang trying
+  to read hardware registers from an offline GPU
 
-- Requires `f1eb4e792bb1` in the tree (v6.18+) since that's the commit
-  that introduced the regression
-- Compatible with `295fe8406a357` and `1889dd2081975` which are also
-  present
-- Self-contained; no other patches needed
+### 6. Dependencies
 
-### 8. STABLE CRITERIA CHECK
+- Requires `amdgpu_reset.h` (available since v6.1)
+- Requires `reset_domain->sem` infrastructure (available since v6.1)
+- Requires `retry_cam_enabled` field (available since the CAM commit in
+  6.6)
+- The `svm_range_drain_retry_fault()` function in its current form (with
+  the `retry_cam_enabled` ternary) was introduced in 6.12 (commit
+  `6ef29715ac06`)
+- This patch applies cleanly only to trees with `6ef29715ac06` and
+  `96316211eb5c4` (both in 6.12+)
 
-- **Obviously correct and tested**: Yes - authored by subsystem
-  maintainer, function only does DT parsing
-- **Fixes a real bug**: Yes - double clock disable with kernel WARNING
-- **Important issue**: Yes - regression from v6.18 on real hardware
-- **Small and contained**: Yes - ~12 lines in 1 file
-- **No new features**: Correct - pure bug fix
-- **Reported-by**: Francesco Dolcini with bug link
+### 7. Stability Indicators
+
+- **Reviewed-by:** Harish Kasiviswanathan (AMD kernel engineer)
+- **Author:** Philip Yang (AMD KFD maintainer, regularly contributes SVM
+  retry fault fixes)
+- **Signed-off-by:** Alex Deucher (AMD GPU subsystem maintainer)
+- Pattern is well-established in the driver (20+ existing similar uses)
+
+### Conclusion
+
+This commit fixes two real bugs:
+
+1. A **race condition** between GPU reset and IH ring access that can
+   cause **system hangs** - this is the critical fix
+2. A **logic error** in IH ring selection when CAM is enabled that
+   causes incorrect retry fault handling
+
+The fix is small (10 lines of logic), follows an extremely well-
+established pattern in the amdgpu driver (20+ existing call sites use
+the same `down_read_trylock` on `reset_domain->sem`), has been reviewed
+by an AMD engineer, was authored by the KFD SVM subsystem expert, and
+addresses a real crash/hang scenario. The risk of regression is minimal.
+
+The fix applies to kernels 6.12+ where `6ef29715ac06` ("drm/amdkfd:
+Change kfd/svm page fault drain handling") exists.
 
 **YES**
 
- drivers/spi/spi-cadence-quadspi.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 965b4cea3388a..597a04dbbe2e7 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1844,6 +1844,12 @@ static int cqspi_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 79ea138897fcf..a10cf8650c92b 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -33,6 +33,7 @@
+ #include "amdgpu_hmm.h"
+ #include "amdgpu.h"
+ #include "amdgpu_xgmi.h"
++#include "amdgpu_reset.h"
+ #include "kfd_priv.h"
+ #include "kfd_svm.h"
+ #include "kfd_migrate.h"
+@@ -2349,6 +2350,9 @@ static void svm_range_drain_retry_fault(struct svm_range_list *svms)
  
-+	ret = cqspi_setup_flash(cqspi);
-+	if (ret) {
-+		dev_err(dev, "failed to setup flash parameters %d\n", ret);
-+		return ret;
-+	}
+ 		pr_debug("drain retry fault gpu %d svms %p\n", i, svms);
+ 
++		if (!down_read_trylock(&pdd->dev->adev->reset_domain->sem))
++			continue;
 +
- 	/* Obtain QSPI clock. */
- 	cqspi->clk = devm_clk_get(dev, NULL);
- 	if (IS_ERR(cqspi->clk)) {
-@@ -1987,12 +1993,6 @@ static int cqspi_probe(struct platform_device *pdev)
- 		pm_runtime_get_noresume(dev);
+ 		amdgpu_ih_wait_on_checkpoint_process_ts(pdd->dev->adev,
+ 				pdd->dev->adev->irq.retry_cam_enabled ?
+ 				&pdd->dev->adev->irq.ih :
+@@ -2358,6 +2362,7 @@ static void svm_range_drain_retry_fault(struct svm_range_list *svms)
+ 			amdgpu_ih_wait_on_checkpoint_process_ts(pdd->dev->adev,
+ 				&pdd->dev->adev->irq.ih_soft);
+ 
++		up_read(&pdd->dev->adev->reset_domain->sem);
+ 
+ 		pr_debug("drain retry fault gpu %d svms 0x%p done\n", i, svms);
  	}
+@@ -2541,7 +2546,7 @@ svm_range_unmap_from_cpu(struct mm_struct *mm, struct svm_range *prange,
+ 		adev = pdd->dev->adev;
  
--	ret = cqspi_setup_flash(cqspi);
--	if (ret) {
--		dev_err(dev, "failed to setup flash parameters %d\n", ret);
--		goto probe_setup_failed;
--	}
--
- 	host->num_chipselect = cqspi->num_chipselect;
- 
- 	if (ddata && (ddata->quirks & CQSPI_SUPPORT_DEVICE_RESET))
+ 		/* Check and drain ih1 ring if cam not available */
+-		if (adev->irq.ih1.ring_size) {
++		if (!adev->irq.retry_cam_enabled && adev->irq.ih1.ring_size) {
+ 			ih = &adev->irq.ih1;
+ 			checkpoint_wptr = amdgpu_ih_get_wptr(adev, ih);
+ 			if (ih->rptr != checkpoint_wptr) {
 -- 
 2.51.0
 
