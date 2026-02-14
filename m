@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB983C2D;
-	Sat, 14 Feb 2026 21:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAFC28134C;
+	Sat, 14 Feb 2026 21:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104318; cv=none; b=ggsrpNm8Fim8syVyynHGPYxA0q37R0nw36RiazIDWxlfUQErwK/Y4lIK6o6i7pkpmSyN77H6UP6OR6YkGAgya0nqElgJPMwbmpS5rlulXlAv2JACACcml1jE+V2YXUE5RCYmB//KNgXGvEe3CMRYa9zQO4wcICuBRLDc0hxl31s=
+	t=1771104318; cv=none; b=NI8PQepWkPDMqFJ8W3lYBVSAailguimEUCjK/CQb1ajvUWn1Hdsa3xgPJKZSu9IILFBRBNtdastkiV+sJwNxdkhLYb85lL2B6CiAZq3XlwV7q0ZBXPmbBIzsHk2WwPhhfRZIbhyAG8r42+N1fMOhIeZJSbBJ2ycdtw72LVossyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771104318; c=relaxed/simple;
-	bh=/cqgyn07X/GNVDX6qvDE04jLrBdHKDPV3bDIlUemsvw=;
+	bh=4xzav0BA4B7+VgAX4B0hEbO01AeRk2vnpR6CaYtY7bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PjyM4aexdc/qLZ5ZPENR5917jblpR2htguLiYXUCBcwvujsGABeAIVXlpLj8bzeb+5kBAaa1tVVwdGW4hyPrIKBDbXBa+sTy5cCpr5u8UzXDhCi9zKerHkV2AOcQZ9l6TPXln5qREznNXWhScVIfBAojNG+F/+DgrFmK9DhXEuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R+CNkrOK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dabAz7tmR4GxtNvaN8TrZVM5Mz+r64XYEz6rDA11euTGJZWImJZDHHeQnJ4ImcqBa3YeDxIueVXIRBaC9jt+hjRAit1fHajpSPKLqwLK+OCPkAD72ogwhn7lUraCrWJIHnA3du5ZAqC6+W/nOxyBbK05xgEqqa5HjBYrFuhasBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GaOCd/yR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R+CNkrOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385BBC16AAE;
-	Sat, 14 Feb 2026 21:25:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GaOCd/yR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83406C19423;
+	Sat, 14 Feb 2026 21:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104317;
-	bh=/cqgyn07X/GNVDX6qvDE04jLrBdHKDPV3bDIlUemsvw=;
+	s=k20201202; t=1771104318;
+	bh=4xzav0BA4B7+VgAX4B0hEbO01AeRk2vnpR6CaYtY7bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R+CNkrOKho40F0c3r3zQoObZSHzjZrzgKCYG1QNN9WRMwqtkhohF2LA6+qwEL7RUF
-	 jtFoSMVoqbuXvMqZ0y1SlIh9vdP1W3IKLFcRdjpAc0NOSrj7Bi29u21UuyL6VjNgL4
-	 b7n8Z791ULEahmddoGHyfTUy5BsJny2sw3PIBYNRiU4cV37UXSRFTAoJSLkx5e+KjI
-	 aDJrOBZNM1Dw+k3B7UtlmGWb9o1GRI3rJ488rLUwtPbNT9ADckKxZCvtFCiAK+TVkG
-	 ZAY/ZC4G/TcYxiP3pvJ2x74/DeCCS7rMDyDBrvtoRShAQEifV9E7d3VlivEY4K7IB8
-	 V27sbBJb8d6aw==
+	b=GaOCd/yR3LEUG+67UC0y1QIkq2a89lxGbN8zsBjqAbYZP2BlmKSlctlvVs4PvMGS5
+	 ko4hEXoXFQPXKsqePIvPCYnhLr32FVOo3OqkkhxFR3EZntsgVmzRIP0tJxeScufBtW
+	 osbMCnxSAaV80Xaa+lLl0m2jaB1B142VxE/psQAdjYTk4+aqVoHYb97CO28EPqCktZ
+	 m39/r8CkVhJS8tKaEfLURRNd/3ePi72I6vHcD1FTIGEtXvFHUoz3/3g8b0hz98jqQo
+	 9JoglwIVUNKl2wYMnWANHS4hxiBT3F3fECMKYpCQrunTwL5g3nQLOihpnh7w+8DcqK
+	 4LfBOI5ew1eSw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Gomez <da.gomez@samsung.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	agk@redhat.com,
-	snitzer@kernel.org,
-	bmarzins@redhat.com,
-	dm-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-6.6] dm: replace -EEXIST with -EBUSY
-Date: Sat, 14 Feb 2026 16:22:37 -0500
-Message-ID: <20260214212452.782265-12-sashal@kernel.org>
+	rafael@kernel.org,
+	driver-core@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-6.18] driver core: faux: stop using static struct device
+Date: Sat, 14 Feb 2026 16:22:38 -0500
+Message-ID: <20260214212452.782265-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -51,133 +50,126 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Gomez <da.gomez@samsung.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit b13ef361d47f09b7aecd18e0383ecc83ff61057e ]
+[ Upstream commit 61b76d07d2b46a86ea91267d36449fc78f8a1f6e ]
 
-The -EEXIST error code is reserved by the module loading infrastructure
-to indicate that a module is already loaded. When a module's init
-function returns -EEXIST, userspace tools like kmod interpret this as
-"module already loaded" and treat the operation as successful, returning
-0 to the user even though the module initialization actually failed.
+faux_bus_root should not have been a static struct device, but rather a
+dynamically created structure so that lockdep and other testing tools do
+not trip over it (as well as being the right thing overall to do.)  Fix
+this up by making it properly dynamic.
 
-This follows the precedent set by commit 54416fd76770 ("netfilter:
-conntrack: helper: Replace -EEXIST by -EBUSY") which fixed the same
-issue in nf_conntrack_helper_register().
-
-Affected modules:
-  * dm_cache dm_clone dm_integrity dm_mirror dm_multipath dm_pcache
-  * dm_vdo dm-ps-round-robin dm_historical_service_time dm_io_affinity
-  * dm_queue_length dm_service_time dm_snapshot
-
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://lore.kernel.org/lkml/CALbr=LYKJsj6cbrDLA07qioKhWJcRj+gW8=bq5=4ZvpEe2c4Yg@mail.gmail.com/
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/2026012145-lapping-countless-ef81@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The precedent commit exists in the tree and was merged through the net
-subsystem, confirming this is a recognized bug pattern.
+### Key Findings
 
-### Stable Kernel Criteria Assessment
+1. **The faux bus (`drivers/base/faux.c`) was introduced in v6.14.** It
+   would be present in stable trees 6.14.y, 6.15.y, 6.16.y, 6.17.y, and
+   6.18.y (if those are maintained).
 
-1. **Obviously correct and tested**: Yes - trivial error code
-   substitution with clear rationale
-2. **Fixes a real bug**: Yes - modules can silently fail to initialize,
-   and userspace reports success
-3. **Fixes an important issue**: Yes - affects many commonly used DM
-   modules in enterprise storage environments; silent module load
-   failures can cause data availability issues
-4. **Small and contained**: Yes - 4 single-line changes, all identical
-   in nature
-5. **No new features or APIs**: Correct - only changes an error code
-6. **Applies cleanly**: These files and functions have been stable for a
-   long time; the change should apply cleanly to most stable trees
+2. **The fix itself is legitimate**: Static `struct device` is a well-
+   known anti-pattern that causes real lockdep issues. This was reported
+   by a real user and fixed by the driver core maintainer (Greg KH
+   himself).
 
-### User Impact
+3. **The fix is small and contained**: ~20 lines changed in a single
+   file, converting a static struct to a dynamically allocated one. The
+   logic is straightforward.
 
-Device-mapper is heavily used in enterprise Linux (LVM, RAID, encryption
-via dm-crypt, thin provisioning, etc.). If any DM module fails to
-register its target/type during init and returns `-EEXIST`, kmod will
-silently swallow the error. This could lead to:
-- Storage subsystems appearing available but not functioning
-- Difficult-to-diagnose failures in storage setups
-- Potential data availability issues
+4. **Risk assessment**: LOW risk. The change is mechanical — converting
+   static to dynamic allocation with proper init. Greg KH authored it
+   and Danilo Krummrich reviewed it. The faux bus is infrastructure used
+   by other drivers, so correctness matters.
 
-### Risk vs Benefit
+5. **Bug impact**: Without this fix, lockdep and other testing/debugging
+   tools produce false warnings or miss real bugs when the faux bus is
+   used. This is a real correctness issue for kernel developers and CI
+   systems testing on stable kernels.
 
-- **Risk**: Near zero. The change is a trivial error code substitution
-  that makes the semantics correct.
-- **Benefit**: Prevents silent module initialization failures across
-  many DM modules, improving error visibility and system reliability.
+### Stability Concerns
 
-This is a textbook stable backport candidate: a small, obviously correct
-fix to a real bug with meaningful user impact and essentially zero
-regression risk.
+- The faux bus is relatively new infrastructure (v6.14+), so it only
+  applies to very recent stable trees.
+- The fix is self-contained — no dependencies on other commits.
+- The commit is authored by Greg Kroah-Hartman, the stable tree
+  maintainer himself, which adds confidence.
+
+### Conclusion
+
+This commit fixes a real bug (lockdep/testing tool issues caused by
+using a static struct device, which is a known anti-pattern). It's a
+small, contained fix authored by the driver core maintainer, reviewed by
+another maintainer, and reported by a real user. It applies to stable
+trees v6.14+ where the faux bus exists. The risk is low and the benefit
+is clear — it prevents false lockdep warnings and potential issues with
+testing tools.
 
 **YES**
 
- drivers/md/dm-exception-store.c | 2 +-
- drivers/md/dm-log.c             | 2 +-
- drivers/md/dm-path-selector.c   | 2 +-
- drivers/md/dm-target.c          | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/base/faux.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/dm-exception-store.c b/drivers/md/dm-exception-store.c
-index c3799757bf4a0..88f119a0a2ae0 100644
---- a/drivers/md/dm-exception-store.c
-+++ b/drivers/md/dm-exception-store.c
-@@ -116,7 +116,7 @@ int dm_exception_store_type_register(struct dm_exception_store_type *type)
- 	if (!__find_exception_store_type(type->name))
- 		list_add(&type->list, &_exception_store_types);
+diff --git a/drivers/base/faux.c b/drivers/base/faux.c
+index 21dd02124231a..23d7258172325 100644
+--- a/drivers/base/faux.c
++++ b/drivers/base/faux.c
+@@ -29,9 +29,7 @@ struct faux_object {
+ };
+ #define to_faux_object(dev) container_of_const(dev, struct faux_object, faux_dev.dev)
+ 
+-static struct device faux_bus_root = {
+-	.init_name	= "faux",
+-};
++static struct device *faux_bus_root;
+ 
+ static int faux_match(struct device *dev, const struct device_driver *drv)
+ {
+@@ -152,7 +150,7 @@ struct faux_device *faux_device_create_with_groups(const char *name,
+ 	if (parent)
+ 		dev->parent = parent;
  	else
--		r = -EEXIST;
-+		r = -EBUSY;
- 	spin_unlock(&_lock);
+-		dev->parent = &faux_bus_root;
++		dev->parent = faux_bus_root;
+ 	dev->bus = &faux_bus_type;
+ 	dev_set_name(dev, "%s", name);
+ 	device_set_pm_not_required(dev);
+@@ -236,9 +234,15 @@ int __init faux_bus_init(void)
+ {
+ 	int ret;
  
- 	return r;
-diff --git a/drivers/md/dm-log.c b/drivers/md/dm-log.c
-index 9d85d045f9d9d..bced5a783ee33 100644
---- a/drivers/md/dm-log.c
-+++ b/drivers/md/dm-log.c
-@@ -121,7 +121,7 @@ int dm_dirty_log_type_register(struct dm_dirty_log_type *type)
- 	if (!__find_dirty_log_type(type->name))
- 		list_add(&type->list, &_log_types);
- 	else
--		r = -EEXIST;
-+		r = -EBUSY;
- 	spin_unlock(&_lock);
- 
- 	return r;
-diff --git a/drivers/md/dm-path-selector.c b/drivers/md/dm-path-selector.c
-index d0b883fabfeb6..2b0ac200f1c02 100644
---- a/drivers/md/dm-path-selector.c
-+++ b/drivers/md/dm-path-selector.c
-@@ -107,7 +107,7 @@ int dm_register_path_selector(struct path_selector_type *pst)
- 
- 	if (__find_path_selector_type(pst->name)) {
- 		kfree(psi);
--		r = -EEXIST;
-+		r = -EBUSY;
- 	} else
- 		list_add(&psi->list, &_path_selectors);
- 
-diff --git a/drivers/md/dm-target.c b/drivers/md/dm-target.c
-index 8fede41adec00..1fd41289de367 100644
---- a/drivers/md/dm-target.c
-+++ b/drivers/md/dm-target.c
-@@ -88,7 +88,7 @@ int dm_register_target(struct target_type *tt)
- 	if (__find_target_type(tt->name)) {
- 		DMERR("%s: '%s' target already registered",
- 		      __func__, tt->name);
--		rv = -EEXIST;
-+		rv = -EBUSY;
- 	} else {
- 		list_add(&tt->list, &_targets);
+-	ret = device_register(&faux_bus_root);
++	faux_bus_root = kzalloc(sizeof(*faux_bus_root), GFP_KERNEL);
++	if (!faux_bus_root)
++		return -ENOMEM;
++
++	dev_set_name(faux_bus_root, "faux");
++
++	ret = device_register(faux_bus_root);
+ 	if (ret) {
+-		put_device(&faux_bus_root);
++		put_device(faux_bus_root);
+ 		return ret;
  	}
+ 
+@@ -256,6 +260,6 @@ int __init faux_bus_init(void)
+ 	bus_unregister(&faux_bus_type);
+ 
+ error_bus:
+-	device_unregister(&faux_bus_root);
++	device_unregister(faux_bus_root);
+ 	return ret;
+ }
 -- 
 2.51.0
 
