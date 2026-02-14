@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0AB241665;
-	Sat, 14 Feb 2026 21:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6113C2D;
+	Sat, 14 Feb 2026 21:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104301; cv=none; b=mDssRWlSJRqRQ1BN6exfkw3fAJ+efRY0sEjgUJB1cTW+kF7wE88SUGmjgMkR6NJaLUL4gdt1p1vU3nC9JthO59MEEv0GaaN+hA4bVlLmzaYKtwBem5V3FNEB4ToAu0OQu0FkGRQNRrHpY4Oopl91iCnNIu0zFzUf+VzCsppxb5s=
+	t=1771104307; cv=none; b=Bf5d4UAQHluB+YBI6XAVWzJ1ylTg/9DiytlwTU1T70Hz9EqxRPXGdqk743xTwDlcQMdIKxwjzIdkkbohN6JYBsfccAu5gb2OClcUnK7nzl6QRuWvHSYbjY91Qf8ADEsh2wRxqE4h2MNOLz9oRBQRNMp0INynsCuKR3z1pMehRf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104301; c=relaxed/simple;
-	bh=0zaMdaW5V9eh6ift6xDfGX0Sbu9Si0t4ROIF/YNGBI4=;
+	s=arc-20240116; t=1771104307; c=relaxed/simple;
+	bh=hNwGvkqny+Y+Q0DIM8LQ5cWXdsv2HwFJCMRH4wUfE0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YR2Q2JEqD4nSVoE3EYN08jdbsftg3mVnNOeoJujKQJkC+1H+yW2Bh/GGXSw/NMF7Dc2ElQzqTgnVyHxFVibAyqwGUQA2gQMjbsNX9sAV6XEWVBxkGGM7ao0BYh2bKC7p+Tc571pxgiv9iDZVhuvVVahmabzwI1A5vs6p6Z1Za28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NGyHK04q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WjReLUEpjFejzL0oPELsfJAquI/rCVlM4xUJjTts+LSS8RD1rvxrHCH/MKfwpBIPCeWObtulbw1X0QOA2JTj450NRgzEc+UoV+RnVzp4OtUK9DdQ80Vhep9sQH2eYqW1efiPcbSAanI2okoSgdjsrLqS82R7S+qCaRwS0iinNMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KdXoIoil; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NGyHK04q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B03DC16AAE;
-	Sat, 14 Feb 2026 21:25:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KdXoIoil"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC91C16AAE;
+	Sat, 14 Feb 2026 21:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104301;
-	bh=0zaMdaW5V9eh6ift6xDfGX0Sbu9Si0t4ROIF/YNGBI4=;
+	s=k20201202; t=1771104307;
+	bh=hNwGvkqny+Y+Q0DIM8LQ5cWXdsv2HwFJCMRH4wUfE0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NGyHK04qu4pnRxLf0zUFbr/vVGipGhvJJypvYfuOszQ5mOduJDOeDM5tnlMlkiLRL
-	 Fjn4uGG/S6MyjPsvl+V8PacTu+BJ07Cyb2CaoTxTt5ZPKZhjxTFv2meckRyHAfXNsl
-	 gtpUPAM0naYZqAzmRrT0DCJ+FlJulFz5Ohj6v3o61L/5u/wZwkkecVlvxd6COQMoln
-	 5yzMzm4KT+q/ingsq7KMG0noZ82/KRSgUEflqDnWVMrHrJlmp3qqVVLWP2Q7isFFxf
-	 cqdGCy5NW/d4DVwuMVNbacAYNNdJrDKdO25n7gsiK5ZKr8AEdMk8PhOtpAhmymZ3BE
-	 qlpZtccXwYbWg==
+	b=KdXoIoilUJJGRLhm5hV8e0smHrwgwFzkq0GdRbOTmTEAteHRljSMkYfmY7Wi/PTfY
+	 pOQF7qxPXmQ7pyjD2qRvZ0vEQJoqC/44qLtGw8l0zoAQrQ7ixkcoyNSDV+gkMm7kML
+	 8e+yg54LjfaxGXYbkJMrj0U+Qd65sUwjrtQe9sXZlj7UDxyx7w7aabITE+ye4qTaVe
+	 HGnDqkaIez8+ylYFACSIvgZT/+nTV8Mps3A+ATiaOEXWAkFmStR8joEabfQmIwa9wg
+	 LcgyK3cKr2obNdxhRiR2Gtfrwtk6PEDRwkX+K5bZhRXHefaq2FFZinVHM+SaZyB0Iu
+	 QD/Q9MTo4C0UA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Po-Hao Huang <phhuang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] wifi: rtw89: 8922a: add digital compensation for 2GHz
-Date: Sat, 14 Feb 2026 16:22:30 -0500
-Message-ID: <20260214212452.782265-5-sashal@kernel.org>
+	johannes.berg@intel.com,
+	pagadala.yesu.anjaneyulu@intel.com,
+	emmanuel.grumbach@intel.com,
+	daniel.gabay@intel.com,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-6.18] wifi: iwlwifi: mld: Handle rate selection for NAN interface
+Date: Sat, 14 Feb 2026 16:22:31 -0500
+Message-ID: <20260214212452.782265-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -51,16 +55,17 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Po-Hao Huang <phhuang@realtek.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 8da7e88682d58a7c2e2c2101e49d3c9c9ac481b0 ]
+[ Upstream commit dbbeebece03050cd510073ce89fee83844e06b00 ]
 
-This fixes transmit power too low under 2GHz connection. Previously
-we missed the settings of 2GHz, add the according calibrated tables.
+Frames transmitted over a NAN interface might not have channel
+information assigned to them. In such cases assign the lowest
+OFDM to the frame.
 
-Signed-off-by: Po-Hao Huang <phhuang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260117044157.2392958-10-pkshih@realtek.com
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251110180612.72046f98f878.Ib784931fffd0747acd9d7bb22eabbbec5282733e@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,209 +75,121 @@ LLM Generated explanations, may be completely bogus:
 
 ### Commit Message Analysis
 
-The commit says it "fixes transmit power too low under 2GHz connection"
-by adding previously "missed" calibration tables for the 2GHz band. The
-subject says "add digital compensation for 2GHz" — this is framed as
-adding missing functionality rather than fixing a clear crash/corruption
-bug.
+The commit addresses frames transmitted over a NAN (Neighbor Awareness
+Networking) interface that might not have channel information assigned.
+Without channel info, the `band` variable remains uninitialized or set
+to an invalid value, which would lead to an out-of-bounds array access
+when used as an index into `mld->hw->wiphy->bands[band]`.
 
 ### Code Change Analysis
 
-Let me examine the changes in detail:
+The fix is a small, surgical addition of 4 lines (plus a blank line) in
+`iwl_mld_get_lowest_rate()`:
 
-1. **New data tables added**: Three new static const arrays
-   (`rtw8922a_digital_pwr_comp_2g_s0_val`,
-   `rtw8922a_digital_pwr_comp_2g_s1_val`) containing calibration values
-   for 2GHz band, for path 0 (s0) and path 1 (s1). These are ~37 lines
-   of pure data.
+```c
+if (band >= NUM_NL80211_BANDS) {
+    WARN_ON(vif->type != NL80211_IFTYPE_NAN);
+    return IWL_FIRST_OFDM_RATE;
+}
+```
 
-2. **Function signature change**: `rtw8922a_set_digital_pwr_comp()`
-   changes the `bool enable` parameter to `u8 band`. This is a semantic
-   change — previously, for 2GHz, the function would write zeros to all
-   registers (effectively disabling compensation). Now it writes band-
-   specific calibration values.
+**What happens without this fix:**
 
-3. **Logic change in `rtw8922a_set_digital_pwr_comp()`**: Previously, if
-   `enable` was false (2GHz band), all registers were set to 0 (`val =
-   enable ? digital_pwr_comp[i] : 0`). Now, the function always writes
-   calibration data, selecting the appropriate table based on band and
-   path.
+1. `iwl_mld_get_basic_rates_and_band()` is called, which sets `band`
+   based on `link_conf->chanreq.oper.chan->band`
+2. For NAN interfaces, `link_conf->chanreq.oper.chan` may be NULL,
+   meaning `band` is never properly set
+3. Looking at the function, `band` is declared as `u8 band` with no
+   initializer — so it could be any value
+4. The code then does `sband = mld->hw->wiphy->bands[band]` — if `band`
+   is out of range (>= `NUM_NL80211_BANDS`), this is an **out-of-bounds
+   array access**
+5. If `sband` happens to be NULL or garbage, subsequent access to
+   `sband->bitrates[i].hw_value` would be a **NULL pointer dereference
+   or memory corruption**
 
-4. **Logic change in `rtw8922a_digital_pwr_comp()`**: The `bool enable =
-   chan->band_type != RTW89_BAND_2G` is replaced with `u8 band =
-   chan->band_type`, and the band is passed through to the set function.
+### Bug Classification
 
-### Bug Assessment
-
-The original code had a real functional deficiency: on 2GHz, digital
-power compensation was completely disabled (all zeros written),
-resulting in "transmit power too low." This means:
-
-- **Real user impact**: WiFi connections on 2.4GHz band would have poor
-  signal/throughput on the RTW8922A chip
-- **This is a bug fix**: The 2GHz compensation data was supposed to be
-  there but was missing. The existing code structure (with
-  enable/disable logic) was a workaround for having no 2GHz tables
+This is a **potential out-of-bounds access / NULL pointer dereference**
+bug. The `bands[]` array is indexed by `band` which could be
+uninitialized/invalid when NAN interfaces don't have channel
+information. This could lead to:
+- Kernel crash/oops
+- Memory corruption
 
 ### Scope and Risk Assessment
 
-- **Files changed**: 1 file (rtw8922a.c)
-- **Lines added**: ~47 lines of data tables + ~15 lines of logic changes
-- **Lines removed**: ~10 lines
-- **Scope**: Entirely contained within the RTW8922A WiFi driver
-- **Risk**: Low — the change only affects the RTW8922A chip on 2GHz
-  band. The 5GHz/6GHz paths continue to use the same tables as before.
-  The logic is straightforward table selection based on band and path.
+- **Files changed:** 1 file
+- **Lines added:** 5 (including blank line)
+- **Lines removed:** 0
+- **Subsystem:** iwlwifi wireless driver (Intel WiFi)
+- **Risk:** Very low — the check is purely additive, validates bounds
+  before array access, and returns a safe default value
+- **The WARN_ON** provides debugging info if this path is hit
+  unexpectedly for non-NAN interfaces
 
-### Stable Kernel Criteria Check
+### Key Concern: Code Maturity
 
-1. **Obviously correct and tested**: The change is from the Realtek
-   driver maintainers themselves, adding calibration data they would
-   have tested. The logic is simple table selection.
-2. **Fixes a real bug**: Yes — transmit power too low on 2GHz is a real
-   functional bug affecting WiFi connectivity.
-3. **Important issue**: This affects basic WiFi functionality on 2.4GHz
-   for users of this chip. Low TX power means poor range, throughput,
-   and possibly connection drops.
-4. **Small and contained**: Yes — single driver file, straightforward
-   table data addition and selection logic.
-5. **No new features**: This restores intended functionality rather than
-   adding new capability. The driver already supported 2GHz band; it
-   just had wrong/missing calibration data.
+The file is `drivers/net/wireless/intel/iwlwifi/mld/tx.c`. The "mld"
+directory is relatively new in iwlwifi — it was introduced as part of
+the iwlwifi restructuring. Let me check when this code was introduced.
 
-### Concerns
+Looking at the path `drivers/net/wireless/intel/iwlwifi/mld/`, this is
+the newer MLD (Multi-Link Device) code path for iwlwifi. This code is
+quite new and may not exist in older stable trees. The commit is on top
+of Linux 6.19, so it would only be relevant for very recent stable trees
+(6.12.y at earliest, likely only 6.13.y+).
 
-- **RTW8922A is a newer chip**: This is a WiFi 7 (802.11be) chip. Need
-  to verify it exists in stable trees. The file `rtw8922a.c` was added
-  relatively recently, so it may not be present in older stable branches
-  (e.g., 6.1.y, 5.15.y). However, if it is present in a given stable
-  tree, this fix is clearly needed.
-- **No explicit Fixes: tag**: Expected for candidates under review.
-- **Data tables are large**: But they're static const data with zero
-  risk of runtime regression.
-- **The `enable` parameter removal**: The old `val = enable ?
-  digital_pwr_comp[i] : 0` path (writing zeros for 2GHz) is completely
-  removed. This is the intended behavior change — from "disable on 2GHz"
-  to "use proper 2GHz tables."
+### Dependency Check
 
-### Verdict
+The fix is self-contained. It adds a bounds check before an existing
+array access. It doesn't depend on other patches. However, the entire
+`mld/` directory may not exist in older stable trees, limiting which
+stable versions this applies to.
 
-This fixes a real functional bug (low transmit power on 2.4GHz WiFi) for
-users of the RTW8922A chip. The fix is contained within a single driver,
-adds only calibration data tables and simple selection logic, and comes
-from the chip vendor's driver team. While it's a relatively new driver,
-for any stable tree that contains this driver, the fix would be
-important — 2.4GHz WiFi with too-low TX power is essentially broken for
-many use cases.
+### User Impact
 
-The change is low-risk, driver-specific, and fixes a real user-facing
-problem. It meets stable kernel criteria.
+- **Who is affected:** Users of Intel WiFi hardware using NAN (Neighbor
+  Awareness Networking) functionality
+- **Severity:** Potential kernel crash (out-of-bounds array access) —
+  moderate to high
+- **Trigger:** Transmitting frames over a NAN interface without channel
+  information
+
+### Decision
+
+The fix:
+- Is small and surgical (5 lines)
+- Fixes a real bug (out-of-bounds array access that could cause a crash)
+- Is obviously correct (bounds check before array index)
+- Has no risk of regression (adds a safety check with safe fallback)
+- Meets stable kernel criteria
+
+The only concern is whether the `mld/` code exists in the target stable
+trees, but that's a backporting logistics issue, not a reason to reject.
+If the code exists in stable, this fix should be there too.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/rtw8922a.c | 57 +++++++++++++++----
- 1 file changed, 47 insertions(+), 10 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mld/tx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8922a.c b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-index 4bcf20612a455..52da0fa02da01 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-@@ -1770,6 +1770,32 @@ static int rtw8922a_ctrl_rx_path_tmac(struct rtw89_dev *rtwdev,
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/tx.c b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
+index 3b4b575aadaa5..e3fb4fc4f452e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
+@@ -345,6 +345,11 @@ u8 iwl_mld_get_lowest_rate(struct iwl_mld *mld,
  
- #define DIGITAL_PWR_COMP_REG_NUM 22
-+static const u32 rtw8922a_digital_pwr_comp_2g_s0_val[][DIGITAL_PWR_COMP_REG_NUM] = {
-+	{0x012C0064, 0x04B00258, 0x00432710, 0x019000A7, 0x06400320,
-+	 0x0D05091D, 0x14D50FA0, 0x00000000, 0x01010000, 0x00000101,
-+	 0x01010101, 0x02020201, 0x02010000, 0x03030202, 0x00000303,
-+	 0x03020101, 0x06060504, 0x01010000, 0x06050403, 0x01000606,
-+	 0x05040202, 0x07070706},
-+	{0x012C0064, 0x04B00258, 0x00432710, 0x019000A7, 0x06400320,
-+	 0x0D05091D, 0x14D50FA0, 0x00000000, 0x01010100, 0x00000101,
-+	 0x01000000, 0x01010101, 0x01010000, 0x02020202, 0x00000404,
-+	 0x03020101, 0x04040303, 0x02010000, 0x03030303, 0x00000505,
-+	 0x03030201, 0x05050303},
-+};
-+
-+static const u32 rtw8922a_digital_pwr_comp_2g_s1_val[][DIGITAL_PWR_COMP_REG_NUM] = {
-+	{0x012C0064, 0x04B00258, 0x00432710, 0x019000A7, 0x06400320,
-+	 0x0D05091D, 0x14D50FA0, 0x01010000, 0x01010101, 0x00000101,
-+	 0x01010100, 0x01010101, 0x01010000, 0x02020202, 0x01000202,
-+	 0x02020101, 0x03030202, 0x02010000, 0x05040403, 0x01000606,
-+	 0x05040302, 0x07070605},
-+	{0x012C0064, 0x04B00258, 0x00432710, 0x019000A7, 0x06400320,
-+	 0x0D05091D, 0x14D50FA0, 0x00000000, 0x01010100, 0x00000101,
-+	 0x01010000, 0x02020201, 0x02010100, 0x03030202, 0x01000404,
-+	 0x04030201, 0x05050404, 0x01010100, 0x04030303, 0x01000505,
-+	 0x03030101, 0x05050404},
-+};
-+
- static const u32 rtw8922a_digital_pwr_comp_val[][DIGITAL_PWR_COMP_REG_NUM] = {
- 	{0x012C0096, 0x044C02BC, 0x00322710, 0x015E0096, 0x03C8028A,
- 	 0x0BB80708, 0x17701194, 0x02020100, 0x03030303, 0x01000303,
-@@ -1784,7 +1810,7 @@ static const u32 rtw8922a_digital_pwr_comp_val[][DIGITAL_PWR_COMP_REG_NUM] = {
- };
+ 	iwl_mld_get_basic_rates_and_band(mld, vif, info, &basic_rates, &band);
  
- static void rtw8922a_set_digital_pwr_comp(struct rtw89_dev *rtwdev,
--					  bool enable, u8 nss,
-+					  u8 band, u8 nss,
- 					  enum rtw89_rf_path path)
- {
- 	static const u32 ltpc_t0[2] = {R_BE_LTPC_T0_PATH0, R_BE_LTPC_T0_PATH1};
-@@ -1792,14 +1818,25 @@ static void rtw8922a_set_digital_pwr_comp(struct rtw89_dev *rtwdev,
- 	u32 addr, val;
- 	u32 i;
- 
--	if (nss == 1)
--		digital_pwr_comp = rtw8922a_digital_pwr_comp_val[0];
--	else
--		digital_pwr_comp = rtw8922a_digital_pwr_comp_val[1];
-+	if (nss == 1) {
-+		if (band == RTW89_BAND_2G)
-+			digital_pwr_comp = path == RF_PATH_A ?
-+				rtw8922a_digital_pwr_comp_2g_s0_val[0] :
-+				rtw8922a_digital_pwr_comp_2g_s1_val[0];
-+		else
-+			digital_pwr_comp = rtw8922a_digital_pwr_comp_val[0];
-+	} else {
-+		if (band == RTW89_BAND_2G)
-+			digital_pwr_comp = path == RF_PATH_A ?
-+				rtw8922a_digital_pwr_comp_2g_s0_val[1] :
-+				rtw8922a_digital_pwr_comp_2g_s1_val[1];
-+		else
-+			digital_pwr_comp = rtw8922a_digital_pwr_comp_val[1];
++	if (band >= NUM_NL80211_BANDS) {
++		WARN_ON(vif->type != NL80211_IFTYPE_NAN);
++		return IWL_FIRST_OFDM_RATE;
 +	}
- 
- 	addr = ltpc_t0[path];
- 	for (i = 0; i < DIGITAL_PWR_COMP_REG_NUM; i++, addr += 4) {
--		val = enable ? digital_pwr_comp[i] : 0;
-+		val = digital_pwr_comp[i];
- 		rtw89_phy_write32(rtwdev, addr, val);
- 	}
- }
-@@ -1808,7 +1845,7 @@ static void rtw8922a_digital_pwr_comp(struct rtw89_dev *rtwdev,
- 				      enum rtw89_phy_idx phy_idx)
- {
- 	const struct rtw89_chan *chan = rtw89_chan_get(rtwdev, RTW89_CHANCTX_0);
--	bool enable = chan->band_type != RTW89_BAND_2G;
-+	u8 band = chan->band_type;
- 	u8 path;
- 
- 	if (rtwdev->mlo_dbcc_mode == MLO_1_PLUS_1_1RF) {
-@@ -1816,10 +1853,10 @@ static void rtw8922a_digital_pwr_comp(struct rtw89_dev *rtwdev,
- 			path = RF_PATH_A;
- 		else
- 			path = RF_PATH_B;
--		rtw8922a_set_digital_pwr_comp(rtwdev, enable, 1, path);
-+		rtw8922a_set_digital_pwr_comp(rtwdev, band, 1, path);
- 	} else {
--		rtw8922a_set_digital_pwr_comp(rtwdev, enable, 2, RF_PATH_A);
--		rtw8922a_set_digital_pwr_comp(rtwdev, enable, 2, RF_PATH_B);
-+		rtw8922a_set_digital_pwr_comp(rtwdev, band, 2, RF_PATH_A);
-+		rtw8922a_set_digital_pwr_comp(rtwdev, band, 2, RF_PATH_B);
- 	}
- }
- 
++
+ 	sband = mld->hw->wiphy->bands[band];
+ 	for_each_set_bit(i, &basic_rates, BITS_PER_LONG) {
+ 		u16 hw = sband->bitrates[i].hw_value;
 -- 
 2.51.0
 
