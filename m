@@ -1,246 +1,329 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75C1225775;
-	Sat, 14 Feb 2026 01:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031269; cv=none; b=WLeH/83eH0ULXe3iK3YE3hz45NfPZNNyc9IPZ3Gw6IGPD1D2AxbeEIPRm7Q8ere5CyYfpBPXJv2osKcP2YqTmyp/1ipWhVxYjI6k/q01UZmyVktWleXM5wK2cb8ylIDh8v+gEsRnmZ86sXD5TGg8Q0dkUYOn5D928oGtxBlsjd8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031269; c=relaxed/simple;
-	bh=D3nQp3mjhljowC6Lb3lZezNFF0d+eU3c+W7RdEXbv2Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JeyNR1X9FSeD8Bu0nS4v1qmIMe7A4Vs1hTyK44ou/NzwsP13EvVxVFM3VFkqEF+WIWxUJO7biJTz88/nrbyQJ//+3aUhncBQKoJUz3PHUYR5xDXG+7shZGgunjuXkvriVsPieWoZVvScGJcKzxieuBGeaFjOxptwbf4ae11WcQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FlzGwqOF; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCE81D63E4
+	for <patches@lists.linux.dev>; Sat, 14 Feb 2026 05:49:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771048147; cv=pass; b=cdSgfTs5nGj8uzvTQRr0tvXmB9YEK5OSKa9AP2wAdZT11GNNcnnowr2GYjJ4oj8korjngj+174QOCCCPRdPTmRjqz2ktEQ0HPA6qGbmHvCDakaYhjBvDtMt9C8X4hiaM3kZfZLpJbHkk9adJ5qWjwUpBF7lDnCpUE4gM4wZg5CY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771048147; c=relaxed/simple;
+	bh=6JMac4aQGVmaK4xSD2v1MguCqeh8mIw1wC9GX3T+jy4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U7p5BuijhjFJhBE0Sa/2nCSBWU65R/EkI5wr+AXI0hNxlLXz2CXGGHQiaYqhq5Jz7a+IJ7xjX/cENv5oyElYExCnoo+CVFbk3IkFxjpMLI32q2zJGbBSZVPesfERPkhJJ88OKbpf0NePSL01koc9MmXs3bSaoJtGBALwzPx9TGI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j/xO3MDE; arc=pass smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FlzGwqOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1254DC16AAE;
-	Sat, 14 Feb 2026 01:07:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031269;
-	bh=D3nQp3mjhljowC6Lb3lZezNFF0d+eU3c+W7RdEXbv2Q=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FlzGwqOFIYfxZX4Dub5nPUTzg8UPQZzkgtFkZzMhlQnqa0DjkMdX0O0llHDPxfl76
-	 ThYaGYudifd0Uk3PA6oV7cq5E0tBKAkOjb1+Km8GK7u02m+veF13OjBgmmV/b3i5k2
-	 NZBxULTo2nCcwGSvSrGxBlWv9OOFaou/UCQyxjM1B6/jwr6jRa57mnTJjT1wuuvPEx
-	 aB41MCw5l45IZiWbgNTyGxPrP2gJKtMTyrO4xWrZbZBIG7CCs1u/Oe5QX9+V3QNG4M
-	 NiABugBpsPjBjdeFm9yhqGxWRivYTtu1wCoa4eWVPRq02rXcbuxzGpsO6M6jzWYSP0
-	 vkvTQaROmoDtQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Chenyu Chen <chen-yu.chen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Alvin.Lee2@amd.com,
-	Dillon.Varone@amd.com,
-	nicholas.kazlauskas@amd.com,
-	aurabindo.pillai@amd.com,
-	mwen@igalia.com,
-	Charlene.Liu@amd.com,
-	Yihan.Zhu@amd.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	Ilya.Bakoulin@amd.com
-Subject: [PATCH AUTOSEL 6.19-6.12] drm/amd/display: Add signal type check for dcn401 get_phyd32clk_src
-Date: Fri, 13 Feb 2026 20:00:07 -0500
-Message-ID: <20260214010245.3671907-127-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
-References: <20260214010245.3671907-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j/xO3MDE"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-2ba9d13f10eso2841445eec.0
+        for <patches@lists.linux.dev>; Fri, 13 Feb 2026 21:49:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771048144; cv=none;
+        d=google.com; s=arc-20240605;
+        b=e9wWtMma7n4XElgifrRypnzyr/p4k9rz2VzfeY/b0Jy9ze6kn6xQf4zb6Xsvl0mcr/
+         Dn3ijulwgHQNh4G1iygkHWZjAkjcm7424SOhuXd+oboIXnGtCbaPLBkXlDlMGuB3jv9l
+         HiN9EdQxK2IrqbU4lFANc/yVDWjTKfeMC+/vm8N6ykkZj+wvQIGZHzJ//qXBJUpcNilW
+         o/BDwT/eZ68+EsENVJ8PtkqHVkroUcRO1WRlRz3XXDQLeT2XgI0ew3Pn4ikmIwyxyef6
+         ax+Qx6aJHzI2Erry+lX6+irjcLQniQ9a6M8ErFYeeg+JGxbHHKCXy8aaObaO42rnkx3I
+         UNqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=pL/rVbYopYU/xWf3Hc+ezZslblCZtsIBlSm64k0TdYc=;
+        fh=NM76TFUDijxHimwdMY1AuW33P2fcvtUfetH3wdKgUN4=;
+        b=RBLUv270w4fYQCP9wi64+gDnm8isPz8ly4E26ZJbbK7tLQZRA0/UIkP8ihbJa33VS4
+         DYlHMrYjxL4csFA0l/vHj+PdH4ZpWx7TWLw0xhIcayC/S6f3RiQ4jWybP6LPHJTTy/rM
+         owMHTIt5ihKRv363vIE9sZy/qmcgqxzPUHDfhaeSq1LvoR9YBowqIjwixFji5w2tVkTO
+         qL7huDkUqen0D1mUUDmck28WABGi3eA5u1O4dTFZJ0v5rY1C6cdt2OtM9uNLKF9nGyI2
+         CF0rSQA+yCS5FcCY4Mrd2dynXmxtu+hLKOiQmx6P96TbvC02VIBKH2RCrgHoBPFcsvCA
+         JUMg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771048144; x=1771652944; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pL/rVbYopYU/xWf3Hc+ezZslblCZtsIBlSm64k0TdYc=;
+        b=j/xO3MDEllvFJg/hATy2uIoxOqcSmohmy5rZsX0gXiexbkfHiv6fWrrWUSfCZVFdUr
+         33VetOieIDCmC9o906IRkCi6qkb1Z5laC3AXSgQFxiB/PeLhb1BdAoK6jYO2S3yPcZR9
+         gWhw4uH0W+efMRYDIVMFD9JNzth2VPcE5Cuepf7qh54dqJTIyOJQFplC9iOpuyo+bPoS
+         3ac1d72lxmHA9o/N/Q7PFscKFKc8t2bul7VPTSFsFTbxtvh0C6rjPkJVar/KWvxRjXRo
+         +ROjR5eWSARdeqp+JHVFBGbs7xhHMMk0Hbdf7bKB0UQAD8PP3/QKG/x+dis29vqz8U7g
+         HUHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771048144; x=1771652944;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pL/rVbYopYU/xWf3Hc+ezZslblCZtsIBlSm64k0TdYc=;
+        b=rmf37HGkpytGVWVVmAX7TBsMXxpVdUD8bcqWopYQKf0dU8UJYfxZpTpEfNCvTqf7TL
+         o59rBPCJZ3z9YBwKubE+j/OOQeM4d1BhObiXpqObXLbBgizfIP+thYO66RNUskmOMr6P
+         q/vEY/NyXWkCCTJLENJ5Yv21KfyM0ISqkhyFj16PBQMDz4j84w9WWSzdbj+8asTcZVrt
+         fZXAt7LZuwSJMTazwmikiCv8lf6eNXA/3IoQJiD7wkk4q/lHsxRS1hT8xh4XkjC6lkbC
+         x+G292CsgFdLX002R9JEFlz+FQTkPZkpamhUEi1kaFvNxTFcp+bSzH/GGU4qfpFU8xbr
+         vOAw==
+X-Forwarded-Encrypted: i=1; AJvYcCVh63Msyvtyr1bsXY6SQlirrbFLmqi1Lo9sZz8OPswMfDnaovA/AwOMrlbgFl0ArhwRc6w+CDC3@lists.linux.dev
+X-Gm-Message-State: AOJu0YzRMYKeMwfHKv7mDJGNJMgE4ZM23CubHRFpgEuKCTpErPs3bs/3
+	wZfP6klmJkBf6WzI7SO2V4yA6BCmyzQd+hWm9hhIY2df7rIm0kQ8xer0gVS4CHvxMnNoelkO1Sa
+	quIJebschUClcbo7g0ykZw+A8V78WmDU=
+X-Gm-Gg: AZuq6aIWZgRX0tiSP8eLrxsuu9lbmVpV5YV8UBtYTCRVOxa7YBDRuw0zi/Fpfm6Z0Ua
+	P3ejHgfCTnULaRBS6qsmFaFUgptcyZsIuaE8VAIaAoOA/Qkhlt67+S6TSocMTLoGFkspP4rETOP
+	7HaPsdy8jERSwxybR2KAcNl2ThjPdjhhmLMN7bUz3Go1WgQDXPDQXXl0zRxzzFe7gHnz9uBNMKJ
+	PNWAkQLnOYiaj4W3gZcKNjXRVuPmmFG4PK5eW8S08h9P4YB7JZrM9bReIEuGZzU5AyluTeIyewG
+	JtYwE6AjXXckBAINPTE/FdWj9cuX8KuCoaSxxYKLI6juEqU3u9ygJDqdCXrLWltVNHudGg2hrEn
+	g7fs6Xbn+AqtUbg6aQuuMU08s5jTBLJri8y3Uro72C64pAdGkFFKTy+3u2oJy+nHRi5eEa2p0xN
+	Eh7nKtaKy/BH2QaLnnZL8=
+X-Received: by 2002:a05:7301:168e:b0:2b8:6573:2d35 with SMTP id
+ 5a478bee46e88-2babc42e1f4mr2149557eec.2.1771048143570; Fri, 13 Feb 2026
+ 21:49:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260213134708.885500854@linuxfoundation.org>
+In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Sat, 14 Feb 2026 06:48:51 +0100
+X-Gm-Features: AaiRm51_Ulrx2MkwQSoBKB2WfT2plhQjy74CL-1H59OXIjjQ59srhznvWjq2yjM
+Message-ID: <CADo9pHgnDxeeOuaTDG3se2rrAT8EEMau16ZyjHYZwHC2e-jYWw@mail.gmail.com>
+Subject: Re: [PATCH 6.18 00/49] 6.18.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
 
-From: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
+Tested on: Arch Linux Machine a Dell Micro 3050 with a
+model name    : Intel(R) Core(TM) i5-6500T CPU @ 2.50GHz
+and works as it should
 
-[ Upstream commit c979d8db7b0f293111f2e83795ea353c8ed75de9 ]
 
-Trying to access link enc on a dpia link will cause a crash otherwise
+Tested-by: Luna Jernberg <droidbittin@gmail.com>
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
-Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-Now I have all the data I need. Let me compile the complete analysis.
-
----
-
-## Detailed Analysis
-
-### 1. COMMIT MESSAGE ANALYSIS
-
-The commit message is clear and explicit: **"Trying to access link enc
-on a dpia link will cause a crash otherwise"**. This is a crash fix. The
-commit has proper review (Reviewed-by: Charlene Liu), was tested
-(Tested-by: Daniel Wheeler), and was signed off by the AMD display
-subsystem maintainers.
-
-### 2. CODE CHANGE ANALYSIS
-
-The change is extremely small and surgical — it moves one line of code
-inside a conditional block.
-
-**The Bug:**
-In `dcn401_enable_stream_calc()`, the function `get_phyd32clk_src()` was
-called **unconditionally** for every stream:
-
-```906:942:drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-// BEFORE (buggy):
-if (dc->link_srv->dp_is_128b_132b_signal(pipe_ctx))
-    *dp_hpo_inst = pipe_ctx->stream_res.hpo_dp_stream_enc->inst;
-
-*phyd32clk = get_phyd32clk_src(pipe_ctx->stream->link);  // Called for
-ALL links
-```
-
-`get_phyd32clk_src()` dereferences `link->link_enc->transmitter`:
-
-```888:904:drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-static enum phyd32clk_clock_source get_phyd32clk_src(struct dc_link
-*link)
-{
-        switch (link->link_enc->transmitter) {  // NULL deref if
-link_enc is NULL
-        // ...
-        }
-}
-```
-
-For **DPIA (DisplayPort over USB4/Thunderbolt) links**, `link->link_enc`
-is NULL because DPIA links use a different path and never create a
-traditional link encoder. This is confirmed by the DPIA link
-construction in `link_factory.c`:
-
-```870:871:drivers/gpu/drm/amd/display/dc/link/link_factory.c
-        /* TODO: Create link encoder */
-```
-
-The comment confirms no link encoder is created for DPIA endpoints.
-
-**The Fix:**
-The fix moves `get_phyd32clk_src()` inside the
-`dp_is_128b_132b_signal()` conditional:
-
-```c
-// AFTER (fixed):
-if (dc->link_srv->dp_is_128b_132b_signal(pipe_ctx)) {
-    *dp_hpo_inst = pipe_ctx->stream_res.hpo_dp_stream_enc->inst;
-    *phyd32clk = get_phyd32clk_src(pipe_ctx->stream->link);  // Only for
-128b/132b
-}
-```
-
-This is correct because:
-- `phyd32clk` is ONLY used inside a `dp_is_128b_132b_signal()` guard in
-  the caller `dcn401_enable_stream()` (lines 966-972), so it only needs
-  to be computed for 128b/132b signals
-- DPIA links that are 128b/132b signals *do* have an HPO DP link encoder
-  (checked by `dp_is_128b_132b_signal`), and they should have the proper
-  link_enc context available in that path
-- The dcn20 equivalent (`dcn20_enable_stream`) already has the **correct
-  pattern** — `get_phyd32clk_src()` is called inside the
-  `dp_is_128b_132b_signal()` block (line 3054). The dcn401 code was
-  simply written incorrectly when the calculation was refactored into
-  `dcn401_enable_stream_calc`.
-
-### 3. CLASSIFICATION
-
-This is a **NULL pointer dereference crash fix**. When a DPIA link is
-used (USB4/Thunderbolt display tunneling), the code dereferences
-`link->link_enc->transmitter` where `link_enc` is NULL, causing a kernel
-crash.
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed:** 4 lines modified (one statement moved inside
-  existing braces)
-- **Files touched:** 1 file only
-- **Complexity:** Extremely low — just moving a call into an existing
-  conditional block
-- **Risk of regression:** Very low. The `phyd32clk` variable is only
-  consumed inside the same `dp_is_128b_132b_signal()` check in the
-  caller, so skipping its computation for non-128b/132b signals has no
-  effect. This matches the dcn20 behavior exactly.
-
-### 5. USER IMPACT
-
-- **Who is affected:** Users with AMD DCN4.01 GPUs (RDNA 4 / Radeon RX
-  9000 series) using USB-C / Thunderbolt displays (DPIA endpoints)
-- **Severity:** Kernel crash/NULL pointer dereference — the system would
-  crash when trying to enable a stream on a DPIA link
-- **Frequency:** Every time a DPIA display is connected on affected
-  hardware
-
-### 6. STABILITY INDICATORS
-
-- Reviewed-by: Charlene Liu (AMD display team)
-- Tested-by: Daniel Wheeler (AMD QA)
-- Follows the same pattern already proven correct in dcn20
-- Related commit d7f5a61e1b04e also fixed a `link->enc NULL pointer
-  access` in the same file, indicating this is a known class of bugs for
-  dcn401
-
-### 7. DEPENDENCY CHECK
-
-- This commit is self-contained — no dependencies on other patches
-- DCN401 code exists in stable trees from v6.11 onwards
-- The code around the change doesn't appear to have changed
-  significantly, so clean application is expected for recent stable
-  branches
-
-### 8. CONCLUSION
-
-This is a textbook stable backport candidate:
-- **Fixes a real crash** (NULL pointer dereference)
-- **Small and surgical** (4 lines, 1 file)
-- **Obviously correct** (matches the pattern already used in dcn20's
-  `dcn20_enable_stream`)
-- **Low regression risk** (the moved statement's output is only consumed
-  inside the same condition)
-- **Has proper review and testing**
-- **Affects real hardware** (USB4/Thunderbolt displays on RDNA 4 GPUs)
-- **Applicable to stable** (dcn401 exists from v6.11 onwards)
-
-**YES**
-
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index e1f5b1a34cde8..f04cbdb3d3814 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -916,10 +916,10 @@ static void dcn401_enable_stream_calc(
- 			pipe_ctx->stream->link->cur_link_settings.lane_count;
- 	uint32_t active_total_with_borders;
- 
--	if (dc->link_srv->dp_is_128b_132b_signal(pipe_ctx))
-+	if (dc->link_srv->dp_is_128b_132b_signal(pipe_ctx)) {
- 		*dp_hpo_inst = pipe_ctx->stream_res.hpo_dp_stream_enc->inst;
--
--	*phyd32clk = get_phyd32clk_src(pipe_ctx->stream->link);
-+		*phyd32clk = get_phyd32clk_src(pipe_ctx->stream->link);
-+	}
- 
- 	if (dc_is_tmds_signal(pipe_ctx->stream->signal))
- 		dcn401_calculate_dccg_tmds_div_value(pipe_ctx, tmds_div);
--- 
-2.51.0
-
+Den fre 13 feb. 2026 kl 14:52 skrev Greg Kroah-Hartman
+<gregkh@linuxfoundation.org>:
+>
+> This is the start of the stable review cycle for the 6.18.11 release.
+> There are 49 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 15 Feb 2026 13:46:52 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.11-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
+> Pseudo-Shortlog of commits:
+>
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>     Linux 6.18.11-rc1
+>
+> Danilo Krummrich <dakr@kernel.org>
+>     gpio: omap: do not register driver in probe()
+>
+> Ali Tariq <alitariq45892@gmail.com>
+>     wifi: rtl8xxxu: fix slab-out-of-bounds in rtl8xxxu_sta_add
+>
+> Liu Song <liu.song13@zte.com.cn>
+>     PCI: endpoint: Avoid creating sub-groups asynchronously
+>
+> Jeongjun Park <aha310510@gmail.com>
+>     drm/exynos: vidi: use ctx->lock to protect struct vidi_context member variables related to memory alloc/free
+>
+> Darrick J. Wong <djwong@kernel.org>
+>     xfs: fix UAF in xchk_btree_check_block_owner
+>
+> Chao Yu <chao@kernel.org>
+>     erofs: fix UAF issue for file-backed mounts w/ directio option
+>
+> Gui-Dong Han <hanguidong02@gmail.com>
+>     bus: fsl-mc: fix use-after-free in driver_override_show()
+>
+> Anil Gurumurthy <agurumurthy@marvell.com>
+>     scsi: qla2xxx: Query FW again before proceeding with login
+>
+> Anil Gurumurthy <agurumurthy@marvell.com>
+>     scsi: qla2xxx: Free sp in error path to fix system crash
+>
+> Anil Gurumurthy <agurumurthy@marvell.com>
+>     scsi: qla2xxx: Delay module unload while fabric scan in progress
+>
+> Shreyas Deodhar <sdeodhar@marvell.com>
+>     scsi: qla2xxx: Allow recovery for tape devices
+>
+> Anil Gurumurthy <agurumurthy@marvell.com>
+>     scsi: qla2xxx: Validate sp before freeing associated memory
+>
+> Bitterblue Smith <rtl8821cerfe2@gmail.com>
+>     wifi: rtw88: Fix alignment fault in rtw_core_enable_beacon()
+>
+> Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>
+>     hfs: ensure sb->s_fs_info is always cleaned up
+>
+> Edward Adam Davis <eadavis@qq.com>
+>     nilfs2: Fix potential block overflow that cause system hang
+>
+> Bibo Mao <maobibo@loongson.cn>
+>     crypto: virtio - Remove duplicated virtqueue_kick in virtio_crypto_skcipher_crypt_req
+>
+> Bibo Mao <maobibo@loongson.cn>
+>     crypto: virtio - Add spinlock protection with virtqueue notification
+>
+> Kees Cook <kees@kernel.org>
+>     crypto: omap - Allocate OMAP_CRYPTO_FORCE_COPY scatterlists correctly
+>
+> Thorsten Blum <thorsten.blum@linux.dev>
+>     crypto: octeontx - Fix length check to avoid truncation in ucode_load_store
+>
+> Thorsten Blum <thorsten.blum@linux.dev>
+>     crypto: iaa - Fix out-of-bounds index in find_empty_iaa_compression_mode
+>
+> Takashi Iwai <tiwai@suse.de>
+>     ALSA: hda/conexant: Add quirk for HP ZBook Studio G4
+>
+> Zenm Chen <zenmchen@gmail.com>
+>     Bluetooth: btusb: Add USB ID 7392:e611 for Edimax EW-7611UXB
+>
+> Gui-Dong Han <hanguidong02@gmail.com>
+>     driver core: enforce device_lock for driver_match_device()
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: let send_done handle a completion without IB_SEND_SIGNALED
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: let smbd_post_send_negotiate_req() use smbd_post_send()
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: fix last send credit problem causing disconnects
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: make use of smbdirect_socket.send_io.bcredits
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: use smbdirect_send_batch processing
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: introduce and use smbd_{alloc, free}_send_io()
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: split out smbd_ib_post_send()
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: port and use the wait_for_credits logic used by server
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: remove pointless sc->send_io.pending handling in smbd_post_send_iter()
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: remove pointless sc->recv_io.credits.count rollback
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: let smbd_post_send() make use of request->wr
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: let recv_done() queue a refill when the peer is low on credits
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: client: make use of smbdirect_socket.recv_io.credits.available
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: server: let send_done handle a completion without IB_SEND_SIGNALED
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: server: fix last send credit problem causing disconnects
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: server: make use of smbdirect_socket.send_io.bcredits
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: server: let recv_done() queue a refill when the peer is low on credits
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: server: make use of smbdirect_socket.recv_io.credits.available
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: smbdirect: introduce smbdirect_socket.send_io.bcredits.*
+>
+> Stefan Metzmacher <metze@samba.org>
+>     smb: smbdirect: introduce smbdirect_socket.recv_io.credits.available
+>
+> Henrique Carvalho <henrique.carvalho@suse.com>
+>     smb: server: fix leak of active_num_conn in ksmbd_tcp_new_connection()
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: add chann_lock to protect ksmbd_chann_list xarray
+>
+> Namjae Jeon <linkinjeon@kernel.org>
+>     ksmbd: fix infinite loop caused by next_smb2_rcv_hdr_off reset in error paths
+>
+> Henrique Carvalho <henrique.carvalho@suse.com>
+>     smb: client: split cached_fid bitfields to avoid shared-byte RMW races
+>
+> Li Chen <me@linux.beauty>
+>     io_uring: allow io-wq workers to exit when unused
+>
+> Li Chen <me@linux.beauty>
+>     io_uring/io-wq: add exit-on-idle state
+>
+>
+> -------------
+>
+> Diffstat:
+>
+>  Makefile                                           |   4 +-
+>  drivers/base/base.h                                |   9 +
+>  drivers/base/bus.c                                 |   2 +-
+>  drivers/base/dd.c                                  |   2 +-
+>  drivers/bluetooth/btusb.c                          |   2 +
+>  drivers/bus/fsl-mc/fsl-mc-bus.c                    |   6 +-
+>  drivers/crypto/intel/iaa/iaa_crypto_main.c         |  12 +-
+>  drivers/crypto/marvell/octeontx/otx_cptpf_ucode.c  |   2 +-
+>  drivers/crypto/omap-crypto.c                       |   2 +-
+>  drivers/crypto/virtio/virtio_crypto_core.c         |   5 +
+>  .../crypto/virtio/virtio_crypto_skcipher_algs.c    |   2 -
+>  drivers/gpio/gpio-omap.c                           |  22 +-
+>  drivers/gpu/drm/exynos/exynos_drm_vidi.c           |  38 +-
+>  drivers/net/wireless/realtek/rtl8xxxu/core.c       |   1 +
+>  drivers/net/wireless/realtek/rtw88/main.c          |   4 +-
+>  drivers/pci/endpoint/pci-ep-cfs.c                  |  15 +-
+>  drivers/scsi/qla2xxx/qla_gs.c                      |  41 +-
+>  drivers/scsi/qla2xxx/qla_init.c                    |  28 +-
+>  drivers/scsi/qla2xxx/qla_isr.c                     |  19 +-
+>  drivers/scsi/qla2xxx/qla_os.c                      |   3 +-
+>  fs/erofs/fileio.c                                  |   7 +-
+>  fs/hfs/mdb.c                                       |  35 +-
+>  fs/hfs/super.c                                     |  10 +-
+>  fs/nilfs2/sufile.c                                 |   4 +
+>  fs/smb/client/cached_dir.h                         |   8 +-
+>  fs/smb/client/smbdirect.c                          | 523 ++++++++++++++++-----
+>  fs/smb/common/smbdirect/smbdirect_socket.h         |  18 +
+>  fs/smb/server/mgmt/user_session.c                  |   5 +
+>  fs/smb/server/mgmt/user_session.h                  |   1 +
+>  fs/smb/server/server.c                             |   6 +-
+>  fs/smb/server/smb2pdu.c                            |  12 +-
+>  fs/smb/server/transport_rdma.c                     | 147 +++++-
+>  fs/smb/server/transport_tcp.c                      |   3 +-
+>  fs/xfs/scrub/btree.c                               |   7 +-
+>  io_uring/io-wq.c                                   |  27 +-
+>  io_uring/io-wq.h                                   |   1 +
+>  io_uring/tctx.c                                    |  11 +
+>  sound/hda/codecs/conexant.c                        |   1 +
+>  38 files changed, 799 insertions(+), 246 deletions(-)
+>
+>
+>
