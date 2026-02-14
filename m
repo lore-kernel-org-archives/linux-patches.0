@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9982F194098;
-	Sat, 14 Feb 2026 01:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C255194098;
+	Sat, 14 Feb 2026 01:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031115; cv=none; b=AG6mdjrHj7GHuyNokXbOSVaai9OsG/Nn3sym2Pb6QH6+8abZiecWH0zb80x0tCb86D17HlBKmQTcftewYBeqTYDvfQvpv3af9tR4dC1yzeiyXfZ7vzt4HgnAupXnhNjWEfkLBSEjurndb/fbyZxiz7bfWyF2oMm/dnek1vnabsk=
+	t=1771031117; cv=none; b=mbHDhNeMX80AEIYybji3FGrebT57S+Us3X8GlbppBSv1wByCGns+wnwTQ6CI1s4CcvS0rwXWLPa0/cLbnU4UMxw2tQDJgMol/YZSPwzrfXm4+sKqX5lhDGgmuVAUN4FUL7GLYbb6DlEs7j9aslu7r1DC8yVFi2F4qTrKAVxOTJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031115; c=relaxed/simple;
-	bh=mZ9Y2BSV2Mx7Qd+OzAKLZ7Xevch/oReqaOSvD0g+A5U=;
+	s=arc-20240116; t=1771031117; c=relaxed/simple;
+	bh=XBELFG+UwzVL6/9w3rVTCouVdz7B66cYIoFuqTp8KNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JVXqzcs9UWUAkZcxw8S24b4kiwnIr8X7CAbvr9F4IF06KpiyrWwnkV0TEsp44sN2jdZCjsx3Lx9ARhjK9iJLa/5bHhkVljzvq+wpCYiNPN2kXge9GBBTbbAcTyaTVxLG7iHe9kmJdpq4xZvnA9sFKxsHRMO0GAztGiGSikUfbok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o79SjLpV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pNbWmr5YP879SXkfdqqhAcHgwNaTJrJzm3VlCqYD+pJ2ChND3XDHa3iCl8lyrHwk3jwlE5rZ+dgLbfqqFuOvtD8jj0tmmbXecQ4+bGmBAXq2cpo4iwk7zBFO6yV8vC2HC8xn0rlyvV0sMCj+soockG9QSJxcSicC6m9Cv1jsknQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cE6nOPBd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o79SjLpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A22C16AAE;
-	Sat, 14 Feb 2026 01:05:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cE6nOPBd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CF5C116C6;
+	Sat, 14 Feb 2026 01:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031115;
-	bh=mZ9Y2BSV2Mx7Qd+OzAKLZ7Xevch/oReqaOSvD0g+A5U=;
+	s=k20201202; t=1771031116;
+	bh=XBELFG+UwzVL6/9w3rVTCouVdz7B66cYIoFuqTp8KNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o79SjLpV942IYXLtnIs8w/xEefnOP8Oq2W7DC7P7602gAGu0oUAB4dqTq2+fS/mDo
-	 qmi2bBMphgCxZOI8X01W3MUYjgAwUz/QLee78SnkVhJg9Yu9BdI7Mm5hm+gtkPQyjI
-	 pruAMFFHWz1UqEZLpAPlFd5jI/iYGaPIRdO4UTONF2zrlSeDffIp2+6bPNIfuqL01o
-	 K4z+QbEnhbuX96p/BSOMYH4ithxphn2uIITDUyfdHXQUXxQXU+Q+K7duRjiNwyYZGD
-	 TIEUyB79Sa++KXj/tMkRloS8dccC/gmjj7h0yfGc2qJmkPDQYOivllOCcPztQR6ev2
-	 setIEpU92JuHw==
+	b=cE6nOPBdvC1yYQtDKn7ljwNW+dWuRnTLWBoIeJFnO8u1AuXR7otJQZR9IolRS4ETx
+	 dMYYbWgdIKsh7iiGeP3KRR6oNsl3zBj+BDGDzjKkf3IQgo0TnRmjcqVmE/b66aAPB8
+	 aSxBLSt7flaJ0/DxVsOKudJSVMtKGq/N0trRxPsQFEE9OJf/pAYsxUkhciL7DZDSht
+	 ROviK9XiJn7AJN1TnJ89HuNR+0jT1SLlDM5OytUjcIkxeAdLBUq8iqzC3yqyC6HDqb
+	 T7ZmPQxabwdHJLkW1WTeMbXB1u/g5ZdzBetH9MdEMlirHB0GeYO3X0ZEfZCRByWY3d
+	 zAdZmx7Ia1Z8A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Takashi Iwai <tiwai@suse.de>,
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	dan.carpenter@linaro.org,
-	yelangyan@huaqin.corp-partner.google.com,
-	thorsten.blum@linux.dev
-Subject: [PATCH AUTOSEL 6.19-6.12] ALSA: mixer: oss: Add card disconnect checkpoints
-Date: Fri, 13 Feb 2026 19:59:07 -0500
-Message-ID: <20260214010245.3671907-67-sashal@kernel.org>
+	rfoss@kernel.org,
+	todor.too@gmail.com,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] media: qcom: camss: Do not enable cpas fast ahb clock for SM8550 VFE lite
+Date: Fri, 13 Feb 2026 19:59:08 -0500
+Message-ID: <20260214010245.3671907-68-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -53,218 +55,88 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 084d5d44418148662365eced3e126ad1a81ee3e2 ]
+[ Upstream commit a89e490ba3551823511588b7b3828d67f8b82954 ]
 
-ALSA OSS mixer layer calls the kcontrol ops rather individually, and
-pending calls might be not always caught at disconnecting the device.
+The clock is needed to stream images over a full VFE IP on SM8550 CAMSS,
+and it should not be enabled, when an image stream is routed over any of
+two lite VFE IPs on the SoC.
 
-For avoiding the potential UAF scenarios, add sanity checks of the
-card disconnection at each entry point of OSS mixer accesses.  The
-rwsem is taken just before that check, hence the rest context should
-be covered by that properly.
-
-Link: https://patch.msgid.link/20260209121212.171430-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of ALSA: mixer: oss: Add card disconnect checkpoints
+SM8550 CAMSS support was added in v6.15. This means the fix would only
+be applicable to 6.15.y and newer stable trees.
 
-### 1. COMMIT MESSAGE ANALYSIS
+### Impact Assessment
 
-The commit message is clear and explicit about the problem:
-- **Problem**: ALSA OSS mixer layer calls kcontrol ops individually, and
-  pending calls might not be caught during device disconnection.
-- **Impact**: "potential UAF scenarios" — Use-After-Free is explicitly
-  mentioned.
-- **Fix**: Add `card->shutdown` checks at each entry point of OSS mixer
-  accesses, right after the rwsem is taken.
-- **Author**: Takashi Iwai (tiwai@suse.de) — the ALSA subsystem
-  maintainer, one of the most prolific and trusted kernel developers.
+- **Who is affected**: Users of SM8550-based devices (Qualcomm
+  Snapdragon 8 Gen 2 platforms) using the camera lite VFE paths
+- **Severity**: This is a correctness fix — enabling the wrong clock
+  could cause streaming failures or incorrect behavior on VFE lite paths
+- **Scope**: Very narrow — only SM8550 CAMSS lite VFEs
 
-### 2. CODE CHANGE ANALYSIS
+### Decision
 
-The patch adds **exactly the same pattern** in 8 different locations
-within `sound/core/oss/mixer_oss.c`:
+This is a small, well-contained hardware configuration fix that corrects
+incorrect clock settings for SM8550 VFE lite IPs. It:
+- Fixes a real bug (wrong clock enabled for lite VFE IPs causing
+  incorrect behavior)
+- Is extremely small and low-risk (only static data changes)
+- Is obviously correct (lite VFEs don't need the full VFE's fast AHB
+  clock)
+- Has proper review (Acked-by subsystem maintainer)
+- Falls into the "hardware quirk/workaround" category
 
-```c
-guard(rwsem_read)(&card->controls_rwsem);
-+if (card->shutdown)
-+    return;  // or return -ENODEV;
-```
-
-Each check is placed **immediately after** the read semaphore
-(`controls_rwsem`) is acquired and **before** any kcontrol operations
-(`snd_ctl_find_numid`, `kctl->info`, `kctl->get`, `kctl->put`).
-
-**Functions modified:**
-1. `snd_mixer_oss_get_volume1_vol()` — returns void
-2. `snd_mixer_oss_get_volume1_sw()` — returns void
-3. `snd_mixer_oss_put_volume1_vol()` — returns void
-4. `snd_mixer_oss_put_volume1_sw()` — returns void
-5. `snd_mixer_oss_get_recsrc2()` — returns -ENODEV
-6. `snd_mixer_oss_put_recsrc2()` — returns -ENODEV
-7. `snd_mixer_oss_build_test()` — returns -ENODEV
-8. `snd_mixer_oss_build_input()` — returns -ENODEV
-
-**Bug mechanism**: When a sound card is being disconnected (hot-unplug,
-e.g., USB audio device removal), the card's resources are being torn
-down. If an OSS mixer operation is in progress or initiated
-concurrently, it may access kcontrol objects that have been freed,
-resulting in a use-after-free. The `card->shutdown` flag is set during
-disconnection, and checking it under the rwsem provides a safe
-synchronization point.
-
-### 3. CLASSIFICATION
-
-- **Bug fix**: YES — prevents UAF on device disconnect
-- **Security relevance**: UAF bugs can be exploitable, especially from
-  userspace-accessible paths like OSS mixer ioctls
-- **Feature addition**: NO — purely defensive checks
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed**: ~16 lines of actual code additions (8 identical
-  2-line blocks)
-- **Files touched**: 1 file (`sound/core/oss/mixer_oss.c`)
-- **Pattern**: Extremely simple and repetitive — same 2-line check in
-  each function
-- **Risk**: Extremely low. The check simply returns early (void
-  functions) or returns -ENODEV (error code functions) when the card is
-  shutting down. This cannot break normal operation since
-  `card->shutdown` is only set during disconnection.
-- **Regression potential**: Near zero. The early return during shutdown
-  is the correct behavior — there's nothing useful to do with a
-  disconnecting card.
-
-### 5. USER IMPACT
-
-- **Who is affected**: Users of USB audio devices (or any hot-pluggable
-  sound devices) using the OSS compatibility layer
-- **Trigger**: Unplugging a USB audio device while OSS mixer operations
-  are in progress
-- **Severity**: UAF can cause kernel crashes, memory corruption, or
-  potential security exploitation
-- **Real-world scenario**: Very realistic — USB audio devices are
-  commonly hot-plugged, and the OSS mixer layer is used by legacy
-  applications
-
-### 6. STABILITY INDICATORS
-
-- **Author**: Takashi Iwai is the ALSA maintainer — he knows this code
-  intimately
-- **Pattern**: This `card->shutdown` check pattern is already used
-  extensively in other ALSA paths. This commit simply extends the
-  protection to the OSS mixer layer that was missing it.
-- **Simplicity**: The change is mechanical and obviously correct
-
-### 7. DEPENDENCY CHECK
-
-- The `card->shutdown` flag and the `controls_rwsem` already exist in
-  all stable kernel versions
-- The `guard(rwsem_read)` and `scoped_guard` cleanup macros are
-  relatively modern (6.5+), so older stable trees may need minor
-  backport adjustments to use explicit `down_read`/`up_read` instead
-- No other commit dependencies — this is self-contained
-
-### Summary
-
-This is a textbook stable backport candidate:
-- Fixes a real UAF bug that can be triggered by common user actions
-  (hot-unplugging USB audio)
-- Written by the subsystem maintainer
-- Extremely small, surgical, and repetitive change (same 2-line pattern
-  × 8)
-- Uses an established defensive pattern already present in other ALSA
-  code paths
-- Near-zero regression risk
-- Single file, single concern
+The fix is similar to a device tree correction — it fixes incorrect
+hardware resource descriptions in static driver data. While the SM8550
+CAMSS support is relatively new (6.15+), the fix is safe and beneficial
+for users of that hardware.
 
 **YES**
 
- sound/core/oss/mixer_oss.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/media/platform/qcom/camss/camss.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
-index e839a4bb93f81..aa98caaaea3c5 100644
---- a/sound/core/oss/mixer_oss.c
-+++ b/sound/core/oss/mixer_oss.c
-@@ -525,6 +525,8 @@ static void snd_mixer_oss_get_volume1_vol(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return;
- 	kctl = snd_ctl_find_numid(card, numid);
- 	if (!kctl)
- 		return;
-@@ -558,6 +560,8 @@ static void snd_mixer_oss_get_volume1_sw(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return;
- 	kctl = snd_ctl_find_numid(card, numid);
- 	if (!kctl)
- 		return;
-@@ -618,6 +622,8 @@ static void snd_mixer_oss_put_volume1_vol(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return;
- 	kctl = snd_ctl_find_numid(card, numid);
- 	if (!kctl)
- 		return;
-@@ -655,6 +661,8 @@ static void snd_mixer_oss_put_volume1_sw(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return;
- 	kctl = snd_ctl_find_numid(card, numid);
- 	if (!kctl)
- 		return;
-@@ -792,6 +800,8 @@ static int snd_mixer_oss_get_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
- 	if (uinfo == NULL || uctl == NULL)
- 		return -ENOMEM;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return -ENODEV;
- 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
- 	if (!kctl)
- 		return -ENOENT;
-@@ -835,6 +845,8 @@ static int snd_mixer_oss_put_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
- 	if (uinfo == NULL || uctl == NULL)
- 		return -ENOMEM;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return -ENODEV;
- 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
- 	if (!kctl)
- 		return -ENOENT;
-@@ -878,6 +890,8 @@ static int snd_mixer_oss_build_test(struct snd_mixer_oss *mixer, struct slot *sl
- 	int err;
- 
- 	scoped_guard(rwsem_read, &card->controls_rwsem) {
-+		if (card->shutdown)
-+			return -ENODEV;
- 		kcontrol = snd_mixer_oss_test_id(mixer, name, index);
- 		if (kcontrol == NULL)
- 			return 0;
-@@ -1002,6 +1016,8 @@ static int snd_mixer_oss_build_input(struct snd_mixer_oss *mixer,
- 	if (snd_mixer_oss_build_test_all(mixer, ptr, &slot))
- 		return 0;
- 	guard(rwsem_read)(&mixer->card->controls_rwsem);
-+	if (mixer->card->shutdown)
-+		return -ENODEV;
- 	kctl = NULL;
- 	if (!ptr->index)
- 		kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index fcc2b2c3cba07..757c548af485a 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -2704,12 +2704,11 @@ static const struct camss_subdev_resources vfe_res_8550[] = {
+ 	/* VFE3 lite */
+ 	{
+ 		.regulators = {},
+-		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", "vfe_lite_ahb",
++		.clock = { "gcc_axi_hf", "cpas_ahb", "vfe_lite_ahb",
+ 			   "vfe_lite", "cpas_ife_lite", "camnoc_axi" },
+ 		.clock_rate = {	{ 0 },
+ 				{ 80000000 },
+ 				{ 300000000, 400000000 },
+-				{ 300000000, 400000000 },
+ 				{ 400000000, 480000000 },
+ 				{ 300000000, 400000000 },
+ 				{ 300000000, 400000000 } },
+@@ -2726,12 +2725,11 @@ static const struct camss_subdev_resources vfe_res_8550[] = {
+ 	/* VFE4 lite */
+ 	{
+ 		.regulators = {},
+-		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", "vfe_lite_ahb",
++		.clock = { "gcc_axi_hf", "cpas_ahb", "vfe_lite_ahb",
+ 			   "vfe_lite", "cpas_ife_lite", "camnoc_axi" },
+ 		.clock_rate = {	{ 0 },
+ 				{ 80000000 },
+ 				{ 300000000, 400000000 },
+-				{ 300000000, 400000000 },
+ 				{ 400000000, 480000000 },
+ 				{ 300000000, 400000000 },
+ 				{ 300000000, 400000000 } },
 -- 
 2.51.0
 
