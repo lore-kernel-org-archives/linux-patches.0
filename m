@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5383D3C2D;
-	Sat, 14 Feb 2026 21:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C431C84DE;
+	Sat, 14 Feb 2026 21:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104308; cv=none; b=AywG1k7kUvHyyvpaTkRQPIWmbOoFua+oZBCpbk6/Q1+tpeSW2fcYCE1cCALGa+7P07+MA+pWOZsheuPu/9HP4TpOWbVwnmrt62qPrDYCblSZNvxrs6NbVkJPrWzVRC6bsUqEx9GYiBFCg01mthvaR/lLYavDDI4TtpYloG13qxQ=
+	t=1771104309; cv=none; b=aWRbuKHdV3UiUcB7BmwiabMqfyeyuQ9WC55WiStpNu3yBmXCjEqMbYJCNUROVazuS5gZr1zMyf221mo8Uv7W9v7dWx2bp2gj6FnFOa74BjiZjBmH7SRYe+Sm0tPktbgsGKZqYhBCAG2ELL7Mp4T484ReWahF7Slb4wfcy1KlSO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104308; c=relaxed/simple;
-	bh=ao1a0ujgLDH2jAkAjdo1In/ou142IZ3qprhr/H+9WaU=;
+	s=arc-20240116; t=1771104309; c=relaxed/simple;
+	bh=QP1Mxt56RkhuEfSgRzgq6bcfzX827a6zZrXFGKW3xUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NTsv/z41lbBxGTC5ogeLup8gt5b6Exo03CAdgCAPfvEJfK5sc7q4Hv6N1B8n/J5p18DatOtrltxI25Y2GNtq1TPW+KwSL1vLx/4abb8mgl7AGd2gzjaPLyGT4G4euroCQ23Fm8Hml+G+hMkbdyruKxII64TzzB91rFJqMqTNX3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ehoa4lZ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XrZD2WgFHok14HmytZFSuaBk36mEDrLkLd3XKNzeDeDFCfjb0YHUPb9iazVyxAIuQfxiEUWZ2Wq1nDkkadzHlKh8CGIRDFBb2EbgiApAXSMi130tYp4ObQ+2EfpTJjeO/psQEaWzho6DNZLbnxp6jQ6KN9RgSh2VsMmA/t+gkDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ameAn710; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ehoa4lZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A786C19422;
-	Sat, 14 Feb 2026 21:25:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ameAn710"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6239DC16AAE;
+	Sat, 14 Feb 2026 21:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104308;
-	bh=ao1a0ujgLDH2jAkAjdo1In/ou142IZ3qprhr/H+9WaU=;
+	s=k20201202; t=1771104309;
+	bh=QP1Mxt56RkhuEfSgRzgq6bcfzX827a6zZrXFGKW3xUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehoa4lZ1X++N9eHi5e1ssvb96YIzguhtK7Dik30rCyCkQATUDChbtxZx+/MUt5xRN
-	 GVACwEkhytujmkyYx3jgpUV6+Z+AFFeCvJ7PGVsJeA9u/i51JCsInH8JTHSkd2VqOC
-	 RSzKJOruFzBJVGuHcSN48OhMYgmWZq62Mxui84nIdW+AaP1JFQDFANoNdtXAxirXpd
-	 UxXl0damyzoxzvUc+2hOIYhaFQV5eHdIbrX6w+Mho2X4vruJKiYDYMEXv6XK07Eyq5
-	 z4zxV0NnQQZKnBntavXyFrid+eLdlOIqA4brtCnd/vV3iPyplIUU5XgmSg70N2bsgp
-	 CI3gEiTO7YMKg==
+	b=ameAn710/kEid/UYZ80rYKucPl+wirxkYv0tKEZ5cGhRfk1i0yVRCdJQlH3QCKdnw
+	 luckSf62VJlsyOX4jnmtUFC/5RQ3/0B0IdbKLtCWvTqpYaPwoivvfYwiZb5Sw7YNPT
+	 +KQ67h4IgskVhvVR0FZi+SHcDvPMv7eVRMsLmGbDLcquuaOJPshVQsYSyj5fRBSHY/
+	 E3SYF9jzWLvx1/ce9r+fBLwdrbJk0TRRyW60SB610/suxaGpSe9D3FWgODIRtIGCiT
+	 v86gY9e2uyStrRauQ7a5pBX+bfjFwZGO/RO/yu0JqNdtY2Xiuy15EHXM+F8XVv5Qmc
+	 mBvsgXKOxD1pw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Jian Zhang <zhangjian.3032@bytedance.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] wifi: rtw89: pci: validate sequence number of TX release report
-Date: Sat, 14 Feb 2026 16:22:32 -0500
-Message-ID: <20260214212452.782265-7-sashal@kernel.org>
+	jk@codeconstruct.com.au,
+	matt@codeconstruct.com.au,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] net: mctp-i2c: fix duplicate reception of old data
+Date: Sat, 14 Feb 2026 16:22:33 -0500
+Message-ID: <20260214212452.782265-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -50,186 +53,157 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Jian Zhang <zhangjian.3032@bytedance.com>
 
-[ Upstream commit 957eda596c7665f2966970fd1dcc35fe299b38e8 ]
+[ Upstream commit ae4744e173fadd092c43eda4ca92dcb74645225a ]
 
-Hardware rarely reports abnormal sequence number in TX release report,
-which will access out-of-bounds of wd_ring->pages array, causing NULL
-pointer dereference.
+The MCTP I2C slave callback did not handle I2C_SLAVE_READ_REQUESTED
+events. As a result, i2c read event will trigger repeated reception of
+old data, reset rx_pos when a read request is received.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 1 PID: 1085 Comm: irq/129-rtw89_p Tainted: G S   U
-             6.1.145-17510-g2f3369c91536 #1 (HASH:69e8 1)
-  Call Trace:
-   <IRQ>
-   rtw89_pci_release_tx+0x18f/0x300 [rtw89_pci (HASH:4c83 2)]
-   rtw89_pci_napi_poll+0xc2/0x190 [rtw89_pci (HASH:4c83 2)]
-   net_rx_action+0xfc/0x460 net/core/dev.c:6578 net/core/dev.c:6645 net/core/dev.c:6759
-   handle_softirqs+0xbe/0x290 kernel/softirq.c:601
-   ? rtw89_pci_interrupt_threadfn+0xc5/0x350 [rtw89_pci (HASH:4c83 2)]
-   __local_bh_enable_ip+0xeb/0x120 kernel/softirq.c:499 kernel/softirq.c:423
-   </IRQ>
-   <TASK>
-   rtw89_pci_interrupt_threadfn+0xf8/0x350 [rtw89_pci (HASH:4c83 2)]
-   ? irq_thread+0xa7/0x340 kernel/irq/manage.c:0
-   irq_thread+0x177/0x340 kernel/irq/manage.c:1205 kernel/irq/manage.c:1314
-   ? thaw_kernel_threads+0xb0/0xb0 kernel/irq/manage.c:1202
-   ? irq_forced_thread_fn+0x80/0x80 kernel/irq/manage.c:1220
-   kthread+0xea/0x110 kernel/kthread.c:376
-   ? synchronize_irq+0x1a0/0x1a0 kernel/irq/manage.c:1287
-   ? kthread_associate_blkcg+0x80/0x80 kernel/kthread.c:331
-   ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
-   </TASK>
-
-To prevent crash, validate rpp_info.seq before using.
-
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260110022019.2254969-2-pkshih@realtek.com
+Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
+Link: https://patch.msgid.link/20260108101829.1140448-1-zhangjian.3032@bytedance.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+## Analysis of net: mctp-i2c: fix duplicate reception of old data
 
-### Commit Message Analysis
+### 1. Commit Message Analysis
 
-The commit message is crystal clear about the bug:
-- **Hardware rarely reports abnormal sequence numbers** in TX release
-  reports
-- This causes **out-of-bounds access** on `wd_ring->pages` array
-- Results in a **NULL pointer dereference** (kernel crash)
-- A full crash trace is provided, showing this is a **reproducible,
-  real-world bug**
+The commit message clearly describes a **bug fix**: the MCTP I2C slave
+callback was not handling `I2C_SLAVE_READ_REQUESTED` events, which
+caused **duplicate reception of old data** when an I2C read event
+occurred. The fix resets `rx_pos` when a read request is received.
 
-The crash trace shows it occurs in an IRQ context
-(`rtw89_pci_release_tx` → `rtw89_pci_napi_poll` → `net_rx_action`),
-meaning when this bug triggers, it crashes the system during normal
-network operation.
+Keywords: "fix duplicate reception of old data" — this is an explicit
+bug fix.
 
-### Code Change Analysis
+### 2. Code Change Analysis
 
-The fix is extremely small and surgical — it adds a **bounds check** on
-`rpp_info.seq` before it's used to index into the `wd_ring->pages`
-array:
+The patch makes two changes:
 
+**Change 1: Handle `I2C_SLAVE_READ_REQUESTED` in the switch statement**
 ```c
-if (unlikely(rpp_info.seq >= RTW89_PCI_TXWD_NUM_MAX)) {
-    rtw89_warn(rtwdev, "invalid seq %d\n", rpp_info.seq);
-    return;
-}
+case I2C_SLAVE_READ_REQUESTED:
+    midev->rx_pos = 0;
+    break;
 ```
+This adds handling for a previously unhandled I2C slave event. When a
+read request comes in, `rx_pos` is reset to 0, preventing stale data
+from being re-processed. Without this, the `rx_pos` would retain its old
+value from a previous transaction, and when `I2C_SLAVE_STOP` fires,
+`mctp_i2c_recv()` would process stale data in the buffer — resulting in
+duplicate/ghost packet reception.
 
-This is placed right before the line:
+**Change 2: Early return in `mctp_i2c_recv()` when `rx_pos == 0`**
 ```c
-txwd = &wd_ring->pages[rpp_info.seq];
+if (midev->rx_pos == 0)
+    return 0;
 ```
+This is a defensive guard: if `rx_pos` was reset to 0 (by the new
+READ_REQUESTED handler), `mctp_i2c_recv()` should do nothing since
+there's no valid write data to process. Without this check, the function
+would proceed with invalid state (`rx_pos == 0`), potentially causing
+incorrect length calculations or accessing uninitialized buffer data.
 
-Without this check, an out-of-bounds `seq` value from the hardware leads
-to accessing memory beyond the `pages` array, causing a NULL pointer
-dereference (or potentially worse — arbitrary memory access).
+### 3. Bug Mechanism
 
-The only other change is adding `unlikely()` to an existing check on
-`rpp_info.txch == RTW89_TXCH_CH12`, which is a minor optimization hint
-and completely safe.
+The I2C slave callback handles events during I2C bus transactions. The
+MCTP-over-I2C protocol involves the bus master writing MCTP packets.
+However, the I2C bus can also generate `I2C_SLAVE_READ_REQUESTED` events
+(when the master reads from this slave). Without handling this event:
 
-### Bug Classification
+1. `rx_pos` retains its value from a previous write transaction
+2. When `I2C_SLAVE_STOP` fires after the read, `mctp_i2c_recv()`
+   processes the stale buffer
+3. This causes **duplicate reception of old MCTP packets** — a data
+   integrity/correctness bug
 
-This is a textbook **out-of-bounds array access / NULL pointer
-dereference** fix:
-- The `seq` value comes from hardware (parsed from the TX release report
-  via `parse_rpp`)
-- Hardware can occasionally provide invalid/corrupt values
-- No validation was performed before using `seq` as an array index
-- Result: kernel crash (BUG: kernel NULL pointer dereference)
+### 4. Classification
 
-### Stable Kernel Criteria Assessment
+- **Bug fix**: Yes — fixes incorrect behavior (duplicate packet
+  reception)
+- **New feature**: No — this handles an existing I2C event that was
+  previously ignored
+- **Scope**: Very small — adds 5 lines of code across two locations in
+  one file
 
-1. **Obviously correct and tested**: Yes — it's a simple bounds check
-   before array access. The author (Realtek maintainer) clearly
-   understands the code.
-2. **Fixes a real bug**: Yes — NULL pointer dereference causing kernel
-   crash, with a full stack trace demonstrating the issue.
-3. **Important issue**: Yes — kernel crash/oops during normal WiFi
-   operation.
-4. **Small and contained**: Yes — adds 4 lines of bounds checking code,
-   changes 1 line (adding `unlikely()`), in a single file.
-5. **No new features**: Correct — pure bug fix.
-6. **Applies cleanly**: The change is self-contained with no
-   dependencies on other commits.
+### 5. Stable Criteria Assessment
 
-### Risk Assessment
+| Criterion | Assessment |
+|-----------|------------|
+| Obviously correct and tested | Yes — simple, logical fix; accepted by
+net maintainer Jakub Kicinski |
+| Fixes a real bug | Yes — duplicate reception of stale MCTP data |
+| Important issue | Moderate — data correctness issue in networking
+stack |
+| Small and contained | Yes — 5 lines added in a single file |
+| No new features | Correct — just handles a missing event case |
+| Applies cleanly | Likely — small, localized change |
 
-**Risk: Very Low**
-- The fix only adds a validation check that returns early on invalid
-  input
-- It cannot introduce regressions — it only rejects values that would
-  have caused a crash anyway
-- The `RTW89_PCI_TXWD_NUM_MAX` constant is already used elsewhere in the
-  driver for allocating the `pages` array, so it's the correct bound
-- Single file, single function, minimal change
+### 6. Risk Assessment
 
-**Benefit: High**
-- Prevents kernel crashes for rtw89 WiFi users
-- The rtw89 driver supports popular Realtek WiFi chips (RTW8852A,
-  RTW8852B, RTW8852C, etc.) used in many laptops
-- The crash occurs during normal WiFi operation when hardware reports a
-  bad sequence number
+**Risk: Very low**
+- The change is minimal and purely additive (no existing code modified)
+- Adding a case to a switch statement with a simple assignment is very
+  safe
+- The early return guard in `mctp_i2c_recv()` is a standard defensive
+  check
+- Only affects MCTP-over-I2C users — very narrow blast radius
 
-### Author and Trust
+**Benefit: Moderate to High for affected users**
+- MCTP (Management Component Transport Protocol) over I2C is used in
+  server/BMC management
+- Duplicate packet reception causes incorrect behavior in management
+  stacks
+- Without this fix, any I2C read event corrupts the MCTP receive path
 
-- **Ping-Ke Shih** is the Realtek WiFi driver maintainer — highly
-  trusted for rtw89 changes
-- The commit includes a detailed crash trace demonstrating the real-
-  world impact
-- The kernel version in the trace (6.1.145) suggests this was actually
-  hit on a stable kernel
+### 7. Dependencies
 
-### Dependencies
+No dependencies on other commits. The fix is self-contained and modifies
+only the existing `mctp_i2c_slave_cb()` function and `mctp_i2c_recv()`
+function.
 
-None. The fix is completely self-contained. `RTW89_PCI_TXWD_NUM_MAX` is
-already defined in the driver.
+### 8. Conclusion
 
-### Summary
-
-This is an ideal stable backport candidate: a small, obviously correct
-bounds check that prevents a kernel NULL pointer dereference crash in a
-widely-used WiFi driver. It has zero regression risk, fixes a real bug
-that users hit in production, and is authored by the subsystem
-maintainer.
+This is a clean, small, obviously correct bug fix that addresses a real
+data corruption/correctness issue (duplicate reception of stale data) in
+the MCTP I2C driver. It meets all stable kernel criteria: it's small,
+contained, fixes a real bug, introduces no new features, and has very
+low regression risk.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/pci.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/mctp/mctp-i2c.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
-index a66fcdb0293b6..093960d7279f8 100644
---- a/drivers/net/wireless/realtek/rtw89/pci.c
-+++ b/drivers/net/wireless/realtek/rtw89/pci.c
-@@ -604,11 +604,16 @@ static void rtw89_pci_release_rpp(struct rtw89_dev *rtwdev, void *rpp)
+diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
+index f782d93f826ef..ecda1cc36391c 100644
+--- a/drivers/net/mctp/mctp-i2c.c
++++ b/drivers/net/mctp/mctp-i2c.c
+@@ -242,6 +242,9 @@ static int mctp_i2c_slave_cb(struct i2c_client *client,
+ 		return 0;
  
- 	info->parse_rpp(rtwdev, rpp, &rpp_info);
+ 	switch (event) {
++	case I2C_SLAVE_READ_REQUESTED:
++		midev->rx_pos = 0;
++		break;
+ 	case I2C_SLAVE_WRITE_RECEIVED:
+ 		if (midev->rx_pos < MCTP_I2C_BUFSZ) {
+ 			midev->rx_buffer[midev->rx_pos] = *val;
+@@ -279,6 +282,9 @@ static int mctp_i2c_recv(struct mctp_i2c_dev *midev)
+ 	size_t recvlen;
+ 	int status;
  
--	if (rpp_info.txch == RTW89_TXCH_CH12) {
-+	if (unlikely(rpp_info.txch == RTW89_TXCH_CH12)) {
- 		rtw89_warn(rtwdev, "should no fwcmd release report\n");
- 		return;
- 	}
- 
-+	if (unlikely(rpp_info.seq >= RTW89_PCI_TXWD_NUM_MAX)) {
-+		rtw89_warn(rtwdev, "invalid seq %d\n", rpp_info.seq);
-+		return;
-+	}
++	if (midev->rx_pos == 0)
++		return 0;
 +
- 	tx_ring = &rtwpci->tx.rings[rpp_info.txch];
- 	wd_ring = &tx_ring->wd_ring;
- 	txwd = &wd_ring->pages[rpp_info.seq];
+ 	/* + 1 for the PEC */
+ 	if (midev->rx_pos < MCTP_I2C_MINLEN + 1) {
+ 		ndev->stats.rx_length_errors++;
 -- 
 2.51.0
 
