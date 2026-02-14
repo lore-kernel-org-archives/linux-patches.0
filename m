@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDFE2556E;
-	Sat, 14 Feb 2026 01:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D0022A4F8;
+	Sat, 14 Feb 2026 01:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031225; cv=none; b=XMlX4ctpJPoDROJp3vBsZGxqL1wH9ZOTvY9F1S0O6zkscWzvLtVJf1Wf9tN6Zq6ZyRJca3goMXKNjuEyEt2K8+SxdAiu379WKcMbP0dkRvaC9jEYKPmY2uUTOI/R9DgklMx4KQdA9Gg4/NXb0Mx9q9f9ByYSxfG7362GhH8dezY=
+	t=1771031226; cv=none; b=NiSEvK/By0UAcugM2MlVdoUketVwSr8425kxuPl1dYvPn3OfzR0vcn+Y8ZkwZzc84Kro35MC9QaLurNviQzNOLVrTnK/qMlJrByjOoKHt88mLCUkM1z59AElHh0n2lb3LeHNIAXG1jSYR078wUTCYN4uh4eW8bsJpJ76WGeXdJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031225; c=relaxed/simple;
-	bh=rDcWMAVldkzNaS8lDSB7w2Yk/9/U2azR+6IWXKQYi50=;
+	s=arc-20240116; t=1771031226; c=relaxed/simple;
+	bh=QKj6dUEnCesw0xEfA6z3Eo3aFX4Ezav57Y5BHRstK/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N/XQJyMO911/p6N9LID0lOBlDeOXeS3xeLV/zsCtrWNQOUFFkaJFDJXQFyq2QbKP8D84KX3pryhQcZs1fG13hxmm6Y8Ity6UWqMEuGjcAjWl/vyAeUTqKEvG+ESdvkWEO3uRC6tf6i3R3atOyMsOprjXnVj1o9+H8VQ7dh7Ax4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ODDFwlUR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iKJ81m0SF3qEaAfQsM5gYpI9iXKWKtUPWPIixqGHWmeQ9Y8/i2AqHAE1nlx7ksIHOuoBQysiZ1Z9Jo8qvaEeAL5xcUYbzRV45Xjd+WtF9DqIT1a9EqfYdholVtVezL4oQWy3QaS3L4BVtC3GlYIHUMJo/BYP6U5H/GLNtcp/8cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DHklg+yv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ODDFwlUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F044DC116C6;
-	Sat, 14 Feb 2026 01:07:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DHklg+yv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DA6C116C6;
+	Sat, 14 Feb 2026 01:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031225;
-	bh=rDcWMAVldkzNaS8lDSB7w2Yk/9/U2azR+6IWXKQYi50=;
+	s=k20201202; t=1771031226;
+	bh=QKj6dUEnCesw0xEfA6z3Eo3aFX4Ezav57Y5BHRstK/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODDFwlURN5QaD6cm8CNWXh/XgakSO58kpoPQkT3XCs28MC3fdV5ios/DWlzP9XI/O
-	 DGlSTN9hkHBOc0oZ7Pvwe5RePIzX2ngCHHWsxW++TXKmb38zMVCJ5EE3OO3c1ZYgbY
-	 xjtYIbJOEXnVTuERaDFa7+tb4p0QfZZpLgX0FN1hs5Qez1kPmwiAtGmMCcrjwN16iE
-	 kyiQgFxo03gi5t5GdEE/Tq2MI2t3CdqAsV/8avoyW4jbm2YoEUAJJBNcVrd3bsy8+1
-	 v5vqOD7SSF/M8sYrxMhY7v573LVwX7Wpa9yjGcwEtT4ZxJDzA7Yl2Siji2L/6zL/M3
-	 FBrobmJoqpLig==
+	b=DHklg+yv0QGS+xm/ahnSPD+sYUIm8uQTsgi/910KUrEhM8utG8xhtaoiVdqmC1rtD
+	 a5ktpWxkovjraYjsib5v4LJz2RhyYBRMxOAMv8cCfGYFBj2ByRgCxhdGGMkiupb25y
+	 7o3P1k9ENZjdcCrCwixtd236lxkMGAtBIghRROStrnJuw9zaGXLl38lgHLu/IYptv9
+	 RnKfJDozIcttXUfB86EGL+KYYZbUN8SqC4Y6TtfqYePWYnJOVxQOciAjjzpAWcYsfV
+	 +v6i8zYR7Zzd+n0tioZQD8SyXbmiVlpzZ8FrAxXOwcp+qsZ29Js8auSn2EOlQ4TgPc
+	 DpdcePJffgUAw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	neil.armstrong@linaro.org,
-	nhebert@chromium.org,
-	yelangyan@huaqin.corp-partner.google.com,
-	sebastian.fricke@collabora.com,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-6.6] media: mediatek: vcodec: Don't try to decode 422/444 VP9
-Date: Fri, 13 Feb 2026 19:59:50 -0500
-Message-ID: <20260214010245.3671907-110-sashal@kernel.org>
+	liviu.dudau@arm.com,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.19-6.18] drm/panthor: Always wait after sending a command to an AS
+Date: Fri, 13 Feb 2026 19:59:51 -0500
+Message-ID: <20260214010245.3671907-111-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -59,164 +52,308 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 3e92d7e4935084ecdbdc88880cc4688618ae1557 ]
+[ Upstream commit d2c6fde56d451ca48a5e03428535ce3dbc8fc910 ]
 
-This is not supported by the hardware and trying to decode
-these leads to LAT timeout errors.
+There's currently no situation where we want to issue a command to an
+AS and not wait for this command to complete. The wait is either
+explicitly done (LOCK, UNLOCK) or it's missing (UPDATE). So let's
+turn write_cmd() into as_send_cmd_and_wait() that has the wait after
+a command is sent.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+v2:
+- New patch
+
+v3:
+- Collect R-b
+
+v4:
+- No changes
+
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20251128084841.3804658-2-boris.brezillon@collabora.com
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+## Comprehensive Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is clear and direct: "Don't try to decode 422/444
-VP9" with the explanation that "this is not supported by the hardware
-and trying to decode these leads to LAT timeout errors." This describes
-a real hardware limitation that causes a user-visible failure (decode
-timeout).
+The commit message states: *"There's currently no situation where we
+want to issue a command to an AS and not wait for this command to
+complete. The wait is either explicitly done (LOCK, UNLOCK) or it's
+missing (UPDATE)."*
 
-### 2. Code Change Analysis
+This is a clear admission that the `AS_COMMAND_UPDATE` command paths are
+**missing a required wait** for command completion. The commit author
+(Boris Brezillon, the panthor subsystem author) explicitly identifies
+this as a bug: the hardware requires waiting for every AS command to
+complete, but `UPDATE` commands were missing this wait.
 
-The change adds exactly 6 lines of code to the
-`V4L2_CID_STATELESS_VP9_FRAME` case in `mtk_vdec_s_ctrl()`:
+### 2. CODE CHANGE ANALYSIS - THE BUG
 
-```496:505:drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec
-_stateless.c
-        case V4L2_CID_STATELESS_VP9_FRAME:
-                frame = (struct v4l2_ctrl_vp9_frame *)hdr_ctrl->p_new.p;
+#### Before the fix:
 
-                if (frame->bit_depth == 10) {
-                        ctx->is_10bit_bitstream = true;
-                } else if (frame->bit_depth != 8) {
-                        mtk_v4l2_vdec_err(ctx, "VP9: bit_depth:%d",
-frame->bit_depth);
-                        return -EINVAL;
-                }
-                break;
+The original `write_cmd()` function at line 513-523 only:
+1. Waits for the MMU to be ready to accept a command (`wait_ready()`
+   before writing)
+2. Writes the command to the `AS_COMMAND` register
+3. **Does NOT wait for the command to complete**
+
+```507:523:drivers/gpu/drm/panthor/panthor_mmu.c
+static int wait_ready(struct panthor_device *ptdev, u32 as_nr)
+{
+        // ...polls AS_STATUS for AS_ACTIVE to clear...
+}
+
+static int write_cmd(struct panthor_device *ptdev, u32 as_nr, u32 cmd)
+{
+        int status;
+        status = wait_ready(ptdev, as_nr);  // Wait BEFORE sending
+        if (!status)
+                gpu_write(ptdev, AS_COMMAND(as_nr), cmd);
+        return status;  // Returns IMMEDIATELY - no wait AFTER
+}
 ```
 
-The new code, inserted between the bit_depth check and the `break`,
-checks the VP9 frame's subsampling flags. Both
-`V4L2_VP9_FRAME_FLAG_X_SUBSAMPLING` and
-`V4L2_VP9_FRAME_FLAG_Y_SUBSAMPLING` must be set (indicating 4:2:0). If
-either is missing, it means the stream uses 4:2:2, 4:4:0, or 4:4:4 — all
-unsupported.
+#### The inconsistent callers:
 
-### 3. The Bug Mechanism (Detailed)
+- **`lock_region()`** (line 556): Calls `write_cmd(AS_COMMAND_LOCK)` —
+  the subsequent call to `wait_ready()` exists at line 591 in
+  `mmu_hw_do_operation_locked()`. So LOCK effectively waited, but in a
+  fragmented way.
+- **`mmu_hw_do_operation_locked()`** (line 604): Calls
+  `write_cmd(AS_COMMAND_UNLOCK)` followed by `wait_ready()` at line 607.
+  So UNLOCK explicitly waited.
+- **`panthor_mmu_as_enable()`** (line 636): Calls
+  `write_cmd(AS_COMMAND_UPDATE)` — **NO subsequent `wait_ready()`!** The
+  function returns immediately.
+- **`panthor_mmu_as_disable()`** (line 651): Calls
+  `write_cmd(AS_COMMAND_UPDATE)` — **NO subsequent `wait_ready()`!**
+  Same bug.
 
-The critical path that allows unsupported VP9 streams to reach the
-hardware:
+#### What this means:
 
-**Step 1**: The V4L2 core validates VP9 frame data in
-`validate_vp9_frame()` (in `v4l2-ctrls-core.c`). This validates *VP9
-spec compliance* — e.g., profile 0/2 must be 4:2:0, profile 1/3 must be
-non-4:2:0. It does NOT enforce driver-specific hardware limitations.
+When the MMU address space is enabled or disabled via
+`AS_COMMAND_UPDATE`, the code does not wait for the GPU hardware to
+finish processing the command. This is a **hardware protocol violation**
+— the software proceeds to use the address space (or assume it's been
+disabled) before the GPU has actually completed the operation.
 
-```606:616:drivers/media/v4l2-core/v4l2-ctrls-core.c
-        /* Profile 0 and 2 only accept YUV 4:2:0. */
-        if ((frame->profile == 0 || frame->profile == 2) &&
-            (!(frame->flags & V4L2_VP9_FRAME_FLAG_X_SUBSAMPLING) ||
-             !(frame->flags & V4L2_VP9_FRAME_FLAG_Y_SUBSAMPLING)))
-                return -EINVAL;
+#### The consequences of this bug:
 
-        /* Profile 1 and 3 only accept YUV 4:2:2, 4:4:0 and 4:4:4. */
-        if ((frame->profile == 1 || frame->profile == 3) &&
-            ((frame->flags & V4L2_VP9_FRAME_FLAG_X_SUBSAMPLING) &&
-             (frame->flags & V4L2_VP9_FRAME_FLAG_Y_SUBSAMPLING)))
-                return -EINVAL;
-```
+1. **`panthor_mmu_as_enable()`**: Called when activating a VM's address
+   space for GPU usage (line 792 in `panthor_vm_active`). After this
+   returns, the code sets `refcount_set(&vm->as.active_cnt, 1)` and
+   unlocks the mutex. Subsequent GPU operations may start using this
+   address space **before the UPDATE command has completed on the
+   hardware**, potentially causing GPU faults, page translation
+   failures, or data corruption.
 
-**Step 2**: The VP9 PROFILE menu control and the VP9 FRAME compound
-control are **separate, independent V4L2 controls**. The profile field
-inside the FRAME control is not cross-validated against the PROFILE menu
-control. So userspace can submit a VP9 frame with profile=1 even if the
-PROFILE control only advertises support for profiles 0 and 2.
+2. **`panthor_mmu_as_disable()`**: Called in multiple critical paths:
+   - MMU fault handler (line 1694): Disabling a faulting AS. If the
+     UPDATE hasn't completed, subsequent fault handling may race.
+   - Device suspend/reset (lines 1723, 2687): During orderly shutdown.
+     If UPDATE doesn't complete, cleanup may be incomplete.
+   - VM idle path (line 1843): Normal VM deactivation.
 
-**Step 3**: The driver's `s_ctrl` handler only checked `bit_depth`, not
-subsampling. So a valid VP9 spec frame with profile 1 and 4:2:2
-subsampling would pass all checks and reach the hardware.
+#### Cross-reference with panfrost driver:
 
-**Step 4**: The MediaTek hardware decoder only supports 4:2:0. The VP9
-LAT decoder has a `struct vdec_vp9_slice_reference` with `subsampling_x`
-and `subsampling_y` fields that get passed to firmware/hardware.
-Attempting to decode non-4:2:0 causes a LAT hardware timeout (1000ms via
-`WAIT_INTR_TIMEOUT_MS`).
+The older `panfrost` driver (for earlier Mali GPUs) has the **exact same
+bug pattern** at lines 188 and 204 — `panfrost_mmu_enable()` and
+`panfrost_mmu_disable()` also call `write_cmd(AS_COMMAND_UPDATE)`
+without waiting. This confirms it's a long-standing inherited bug from
+the original code.
 
-### 4. Impact on Stable Trees
+### 3. CLASSIFICATION
 
-**v6.6** is especially affected. I verified that:
-- The file and the `mtk_vdec_s_ctrl` function exist in v6.6 (added via
-  commit `9d86be9bda6cd`)
-- In v6.6, the VP9 profile control allows ALL profiles 0-3 (`max =
-  V4L2_MPEG_VIDEO_VP9_PROFILE_3`) with **no skip mask**. This means
-  profiles 1 and 3 (which require non-4:2:0 subsampling) are explicitly
-  advertised as supported, making the bug trivially reproducible with
-  any VP9 4:2:2 content.
-- The code context at the insertion point in v6.6 is identical to the
-  diff context, so the patch applies cleanly.
+This is a **real bug fix**: it adds a missing hardware synchronization
+wait after sending a command to the GPU's MMU address space hardware.
+The fix ensures the software doesn't proceed until the hardware has
+actually processed the address space configuration change.
 
-**v6.12** already has the profile restriction (`menu_skip_mask =
-BIT(V4L2_MPEG_VIDEO_VP9_PROFILE_1)`, `max = PROFILE_2`), which reduces
-the attack surface, but the bug still exists because the FRAME control's
-profile field is not validated against the PROFILE control.
+However, the commit message is written more as a "cleanup/consolidation"
+rather than explicitly calling out the bug's user-visible symptoms. The
+author says the wait is "missing" for UPDATE, confirming it's a bug, but
+doesn't describe specific symptoms (crashes, GPU faults, etc.).
 
-**v6.1 and earlier**: The `s_ctrl` handler doesn't exist, so the patch
-doesn't apply.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### 5. Patch Characteristics
+- **Lines changed**: ~30 lines across 1 file
+- **Files touched**: 1 (`drivers/gpu/drm/panthor/panthor_mmu.c`)
+- **Subsystem**: GPU driver (drm/panthor) — affects only Mali CSF GPUs
+  (Valhall/5th Gen)
+- **Risk**: LOW — The change adds a `wait_ready()` call (a 100μs timeout
+  poll) that was already being done for all other AS commands. This is
+  the correct hardware protocol.
+- **Regression risk**: Very low. The only negative effect could be a
+  very slight latency increase on the AS enable/disable path (up to
+  100μs per operation), which is negligible.
 
-- **Size**: 6 new lines
-- **Self-contained**: No dependencies on any other commits
-- **Pattern**: Follows the exact same validation pattern as the
-  `bit_depth` check immediately above it
-- **Error handling**: Standard `-EINVAL` return with diagnostic error
-  message
-- **Risk**: Extremely low — only rejects invalid configurations that the
-  hardware cannot handle
-- **Reviewed-by**: AngeloGioacchino Del Regno (Collabora, MediaTek
-  subsystem maintainer)
+### 5. USER IMPACT
 
-### 6. Conclusion
+- Panthor driver was introduced in kernel v6.10, so stable trees 6.10.y
+  through 6.18.y would be affected
+- Users of Mali Valhall (G710, G610) and 5th Gen (G720, G620) GPUs are
+  affected
+- This includes some Chromebook models, RK3588-based boards, and
+  MediaTek platforms
+- Without this fix, users may experience intermittent GPU faults,
+  translation errors, or subtle corruption when VMs are
+  activated/deactivated rapidly (e.g., during context switches,
+  suspend/resume)
 
-This commit fixes a real, user-visible hardware bug. Without this fix,
-attempting to decode VP9 4:2:2 or 4:4:4 content on MediaTek SoCs causes
-a 1-second hardware timeout, resulting in decode errors. The fix is
-small (6 lines), surgical, self-contained, follows existing code
-patterns exactly, and has zero risk of regression (it only rejects
-configurations that will always fail). It's especially important for
-v6.6 where the profile control doesn't even restrict non-4:2:0 profiles.
+### 6. DEPENDENCY CHECK
+
+The commit applies on top of `24f028b91ed3` ("drm/panthor: Simplify
+mmu_hw_do_operation_locked"), which is already in the tree. The current
+code in the tree already has the simplified
+`mmu_hw_do_operation_locked()` with the switch statement that the diff's
+context matches. The commit appears self-contained and doesn't require
+other patches from its series.
+
+However, the diff context shows it changes `lock_region()` to also
+error-check and use the new combined `as_send_cmd_and_wait()`, and
+`mmu_hw_do_operation_locked()` removes a now-redundant `wait_ready()`.
+This is all within one function/file and is self-contained.
+
+### 7. STABILITY INDICATORS
+
+- **Reviewed-by: Steven Price** — ARM Mali kernel developer/maintainer
+- The patch went through 4 revisions (v1 through v4), indicating careful
+  review
+- The author (Boris Brezillon) is the original panthor driver author
+
+### 8. CONCERNS
+
+- The commit is patch 2 of a series. We should check if the series has
+  other critical patches. However, this specific commit is self-
+  contained in its fix.
+- The commit message frames this as consolidation rather than urgent
+  bugfix. But the actual code change fixes a real, documented missing
+  wait.
+- The bug may be hard to trigger in practice if the hardware is fast
+  enough to process UPDATE commands before subsequent operations happen.
+  But under load or on slower hardware, it could manifest as
+  intermittent GPU faults.
+
+### VERDICT
+
+This commit fixes a **real hardware synchronization bug** — a missing
+`wait_ready()` after `AS_COMMAND_UPDATE` in the MMU address space
+management. The fix is:
+- Small and contained (1 file, ~30 lines)
+- Obviously correct (all other AS commands already waited; this makes
+  UPDATE consistent)
+- Fixes a potential race between software and hardware that could cause
+  GPU faults
+- Low regression risk (just adds a hardware completion poll)
+- Self-contained (no external dependencies beyond what's already in
+  stable)
+- Reviewed by the ARM Mali maintainer
+
+While the bug may be hard to trigger in practice, the consequences (GPU
+translation faults, potential data corruption) are serious when it does
+trigger, and the fix is minimal and safe.
 
 **YES**
 
- .../mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c      | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c
-index d873159b9b306..9eef3ff2b1278 100644
---- a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c
-@@ -502,6 +502,12 @@ static int mtk_vdec_s_ctrl(struct v4l2_ctrl *ctrl)
- 			mtk_v4l2_vdec_err(ctx, "VP9: bit_depth:%d", frame->bit_depth);
- 			return -EINVAL;
- 		}
-+
-+		if (!(frame->flags & V4L2_VP9_FRAME_FLAG_X_SUBSAMPLING) ||
-+		    !(frame->flags & V4L2_VP9_FRAME_FLAG_Y_SUBSAMPLING)) {
-+			mtk_v4l2_vdec_err(ctx, "VP9: only 420 subsampling is supported");
-+			return -EINVAL;
-+		}
- 		break;
- 	case V4L2_CID_STATELESS_AV1_SEQUENCE:
- 		seq = (struct v4l2_ctrl_av1_sequence *)hdr_ctrl->p_new.p;
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index f6339963e4960..d70acff33d41e 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -510,27 +510,29 @@ static int wait_ready(struct panthor_device *ptdev, u32 as_nr)
+ 	return ret;
+ }
+ 
+-static int write_cmd(struct panthor_device *ptdev, u32 as_nr, u32 cmd)
++static int as_send_cmd_and_wait(struct panthor_device *ptdev, u32 as_nr, u32 cmd)
+ {
+ 	int status;
+ 
+ 	/* write AS_COMMAND when MMU is ready to accept another command */
+ 	status = wait_ready(ptdev, as_nr);
+-	if (!status)
++	if (!status) {
+ 		gpu_write(ptdev, AS_COMMAND(as_nr), cmd);
++		status = wait_ready(ptdev, as_nr);
++	}
+ 
+ 	return status;
+ }
+ 
+-static void lock_region(struct panthor_device *ptdev, u32 as_nr,
+-			u64 region_start, u64 size)
++static int lock_region(struct panthor_device *ptdev, u32 as_nr,
++		       u64 region_start, u64 size)
+ {
+ 	u8 region_width;
+ 	u64 region;
+ 	u64 region_end = region_start + size;
+ 
+ 	if (!size)
+-		return;
++		return 0;
+ 
+ 	/*
+ 	 * The locked region is a naturally aligned power of 2 block encoded as
+@@ -553,7 +555,7 @@ static void lock_region(struct panthor_device *ptdev, u32 as_nr,
+ 
+ 	/* Lock the region that needs to be updated */
+ 	gpu_write64(ptdev, AS_LOCKADDR(as_nr), region);
+-	write_cmd(ptdev, as_nr, AS_COMMAND_LOCK);
++	return as_send_cmd_and_wait(ptdev, as_nr, AS_COMMAND_LOCK);
+ }
+ 
+ static int mmu_hw_do_operation_locked(struct panthor_device *ptdev, int as_nr,
+@@ -586,9 +588,7 @@ static int mmu_hw_do_operation_locked(struct panthor_device *ptdev, int as_nr,
+ 	 * power it up
+ 	 */
+ 
+-	lock_region(ptdev, as_nr, iova, size);
+-
+-	ret = wait_ready(ptdev, as_nr);
++	ret = lock_region(ptdev, as_nr, iova, size);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -601,10 +601,7 @@ static int mmu_hw_do_operation_locked(struct panthor_device *ptdev, int as_nr,
+ 	 * at the end of the GPU_CONTROL cache flush command, unlike
+ 	 * AS_COMMAND_FLUSH_MEM or AS_COMMAND_FLUSH_PT.
+ 	 */
+-	write_cmd(ptdev, as_nr, AS_COMMAND_UNLOCK);
+-
+-	/* Wait for the unlock command to complete */
+-	return wait_ready(ptdev, as_nr);
++	return as_send_cmd_and_wait(ptdev, as_nr, AS_COMMAND_UNLOCK);
+ }
+ 
+ static int mmu_hw_do_operation(struct panthor_vm *vm,
+@@ -633,7 +630,7 @@ static int panthor_mmu_as_enable(struct panthor_device *ptdev, u32 as_nr,
+ 	gpu_write64(ptdev, AS_MEMATTR(as_nr), memattr);
+ 	gpu_write64(ptdev, AS_TRANSCFG(as_nr), transcfg);
+ 
+-	return write_cmd(ptdev, as_nr, AS_COMMAND_UPDATE);
++	return as_send_cmd_and_wait(ptdev, as_nr, AS_COMMAND_UPDATE);
+ }
+ 
+ static int panthor_mmu_as_disable(struct panthor_device *ptdev, u32 as_nr)
+@@ -648,7 +645,7 @@ static int panthor_mmu_as_disable(struct panthor_device *ptdev, u32 as_nr)
+ 	gpu_write64(ptdev, AS_MEMATTR(as_nr), 0);
+ 	gpu_write64(ptdev, AS_TRANSCFG(as_nr), AS_TRANSCFG_ADRMODE_UNMAPPED);
+ 
+-	return write_cmd(ptdev, as_nr, AS_COMMAND_UPDATE);
++	return as_send_cmd_and_wait(ptdev, as_nr, AS_COMMAND_UPDATE);
+ }
+ 
+ static u32 panthor_mmu_fault_mask(struct panthor_device *ptdev, u32 value)
 -- 
 2.51.0
 
