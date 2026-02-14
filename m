@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC86217704;
-	Sat, 14 Feb 2026 01:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64752556E;
+	Sat, 14 Feb 2026 01:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031179; cv=none; b=rbXqINScjJAKRkAzW15fF53JZnwR2oetUpacLxTMNRXNB0E2qCfTOGWgk+N1tmCz7uJjXMEjMawic50Tql5H8pUeZi2cJB78axKzGRceAXTj/TSeLpDWc04h0F904MgRqm0B/hHzw9ecHQeJLhkAFRdSJDLW+jRVPDcBsXBJOfE=
+	t=1771031186; cv=none; b=E6M2z+ZO7yhqJZFUzgG8yoY+YnmLgJIs4ZAatsomznyquh3dUtFkT07kOOp+Il/w8/EXnjcmusfmUlO/jDxUw2lDWO8yzTZD8MhhU46P88a3uhzNd2kUw0TlyNFszv80axep8ZaCo/8jujteuGpczUamy2UQL2u1TBFQTH56S+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031179; c=relaxed/simple;
-	bh=fsFvBqud3Tvk5e7OR8HtRWBc2tx6+MNclWALLq3iwLw=;
+	s=arc-20240116; t=1771031186; c=relaxed/simple;
+	bh=0/dUukDbcasXbbwNQEi+L+H01WipmI+LdZZN9UXXPZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j0B/0MfJtATluUFc6+axGot3tTq1nRW7Ia58hD/cpQ7LevRzgXThdaCwnQu6M3OwXN1+zO641m3CXOYdYCpSlxgYzy71/7M5/f4n2GCTa4PD1qwJ0LV3UipBrinume8tD7MvmTcRB1HwVMndDzShaKi//gv+1I5xDcxka4zgOys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ngx3TUb7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IqS6TLZLaSyxGR7BiGBmc4q+2BzziGwm8YIEgcAHgtS17I9fWteuaaRbQ/GpJ+xsrfpGFAxXKklckB67njgeLbIOUQ2pcedILjLTVVjPjreJ6U4Imn6lJ49D/GfPsOLtpF2D6w6VSR9x1NKr7HRJi7qKIdiA929rBpYmAScEpZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aky3pi53; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ngx3TUb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30FAC19425;
-	Sat, 14 Feb 2026 01:06:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aky3pi53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D84BC16AAE;
+	Sat, 14 Feb 2026 01:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031179;
-	bh=fsFvBqud3Tvk5e7OR8HtRWBc2tx6+MNclWALLq3iwLw=;
+	s=k20201202; t=1771031186;
+	bh=0/dUukDbcasXbbwNQEi+L+H01WipmI+LdZZN9UXXPZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ngx3TUb7GpPfBnAjMctLd9eudS5iwLA4kOGo93Cf67eAxdzCBQC6F8kumnM7GgPoo
-	 tajBSVNhnEE/fjubEKnC/fUcsjLw8jT+P3qiowZ3zAji+gozjJmnwVpRscxpqoF3l3
-	 IHwcMuJQ5zh0vQkQb954WTyHLjE4UIlbQOHTRm9DOjgYbQgW1XasGpc/zDMFUrdI3v
-	 NisSeUsKhOvq10tbOb5Li4ZuCpo5npsMInMeXJyVlXfEB/ediv+q1kmfyl8XLI9bi1
-	 YDDCFnqW6wyd3hLspaHRJjVTPS8dL/VGm9goID+rSAa0wt+B412kpY9BcCA+PGKzyb
-	 IPYXfAmLVf1qQ==
+	b=Aky3pi53iK4ZOP8yl8HFs/33BIJc18Wf2+TdUM1DI1tIPHUFEdcblJkjywE0+OZIb
+	 UHXqI7/R15mfCfC5UiVwaOsPSu7Ilhz0lHToGJVP/asMp61Dd/4mPrhSKXJjrcx5yQ
+	 cSR97JXQvKU6vZb0r2imKRmcC/MNQ57f3t3zFYDluBaoTWX6vCPh35myGFao8PZNUa
+	 3Yp7o6tsvYJrU5dBmV7CM3xNj+uHWyDhPxHqpJqGPXYIIWuKK/6O9EFFPUUcacXZ0f
+	 Rgst4ZqJLtxkE9diEQumsUuZBBXGi5UWdENpAr/Wfx+nNkKdtOY6k6Hp6TKhlPhIAD
+	 k7hXdRsofdeGQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexey Klimov <alexey.klimov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
+Cc: "Jesse.Zhang" <Jesse.Zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.19-6.12] gpu/panel-edp: add AUO panel entry for B140HAN06.4
-Date: Fri, 13 Feb 2026 19:59:32 -0500
-Message-ID: <20260214010245.3671907-92-sashal@kernel.org>
+	sunil.khatri@amd.com,
+	Prike.Liang@amd.com,
+	shashank.sharma@amd.com
+Subject: [PATCH AUTOSEL 6.19-6.18] drm/amdgpu: validate user queue size constraints
+Date: Fri, 13 Feb 2026 19:59:33 -0500
+Message-ID: <20260214010245.3671907-93-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -48,183 +49,144 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: "Jesse.Zhang" <Jesse.Zhang@amd.com>
 
-[ Upstream commit 2976aeb0de77da599ad37691963efbdcb07435ce ]
+[ Upstream commit 8079b87c02e531cc91601f72ea8336dd2262fdf1 ]
 
-Add an eDP panel entry for AUO B140HAN06.4 that is also used in
-some variants of Lenovo Flex 5G with Qcom SC8180 SoC.
+Add validation to ensure user queue sizes meet hardware requirements:
+- Size must be a power of two for efficient ring buffer wrapping
+- Size must be at least AMDGPU_GPU_PAGE_SIZE to prevent undersized allocations
 
-The raw edid of the panel is:
+This prevents invalid configurations that could lead to GPU faults or
+unexpected behavior.
 
-00 ff ff ff ff ff ff 00 06 af 3d 64 00 00 00 00
-2b 1d 01 04 a5 1f 11 78 03 b8 1a a6 54 4a 9b 26
-0e 52 55 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 14 37 80 b8 70 38 24 40 10 10
-3e 00 35 ae 10 00 00 18 10 2c 80 b8 70 38 24 40
-10 10 3e 00 35 ae 10 00 00 18 00 00 00 fe 00 41
-55 4f 0a 20 20 20 20 20 20 20 20 20 00 00 00 fe
-00 42 31 34 30 48 41 4e 30 36 2e 34 20 0a 00 eb
-
-I do not have access to the datasheet and but it is tested on above
-mentioned laptop for a few weeks and seems to work just fine with
-timing info of similar panels.
-
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20251203074555.690613-1-alexey.klimov@linaro.org
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is the key section. Now I have a complete understanding. Let me
-summarize the analysis.
+So the user queue file was first introduced in v6.16. The current
+mainline is v6.19. This means:
 
-## Detailed Analysis
+- **Stable trees v6.16.y, v6.17.y, v6.18.y** would have this code and
+  could benefit from the fix
+- **Older stable trees (v6.12.y, v6.6.y, v6.1.y, 5.15.y)** do NOT have
+  user queues at all - the fix is irrelevant there
 
-### 1. Commit Message Analysis
+### 5. Classification
 
-The commit adds a new panel entry (`EDP_PANEL_ENTRY`) for AUO
-B140HAN06.4 (panel ID `0x643d`) to the `panel-edp.c` driver's
-`edp_panels[]` lookup table. The panel is used in the Lenovo Flex 5G
-with a Qualcomm SC8180 SoC. The commit has been reviewed by Douglas
-Anderson (the panel-edp subsystem maintainer), and the author confirms
-it has been tested on real hardware for several weeks.
+This is **input validation on a userspace-facing ioctl**. The
+`amdgpu_userq_input_args_validate` function validates parameters from a
+DRM ioctl (`AMDGPU_USERQ_OP_CREATE`). Without these checks:
 
-### 2. Code Change Analysis
+- A user (even unprivileged with GPU access) could pass a non-power-of-2
+  queue size, leading to GPU faults or misbehavior
+- A user could pass a too-small queue size, leading to undersized
+  allocations
 
-The change is a **single line addition**:
-
-```c
-EDP_PANEL_ENTRY('A', 'U', 'O', 0x643d, &delay_200_500_e50,
-"B140HAN06.4"),
-```
-
-This adds the panel ID `0x643d` to the sorted list of known AUO panels,
-using the standard `delay_200_500_e50` delay timing (200ms HPD absent,
-500ms unprepare, 50ms enable) -- a delay structure already heavily used
-by dozens of other AUO panel entries. The entry is inserted in the
-correct sorted position between `0x639c` and `0x723c`.
-
-### 3. What happens WITHOUT this entry
-
-Looking at lines 805-825 of `panel-edp.c`, when `find_edp_panel()` fails
-to match a panel in the `edp_panels[]` table:
-
-1. **`WARN_ON(!panel->detected_panel)` fires** (line 814) -- this
-   produces a **kernel WARNING stack trace** in dmesg every time the
-   system boots with this panel. This is a user-visible issue.
-2. **Conservative timings are used** (line 818):
-   `panel_edp_set_conservative_timings()` sets a 2000ms unprepare delay
-   and 200ms enable delay (lines 753-754) instead of the optimal
-   500ms/50ms. This makes panel operations **significantly slower** for
-   users.
-3. **`detected_panel` is set to `ERR_PTR(-EINVAL)`** (line 756), which
-   may affect other downstream behaviors.
-
-So without this entry, users with a Lenovo Flex 5G see a WARN_ON kernel
-splat on every boot and get suboptimal display performance.
-
-### 4. Historical Context
-
-The B140HAN06.4 panel was originally added to `panel-simple.c` in commit
-`93ea7aa8dfc0c` (v5.15-era). During the split to `panel-edp.c` in commit
-`5f04e7ce392db` (v5.16-rc1), it was moved. However, it was then
-**removed** in commit `51e1fb144f17c` ("drm/panel-edp: drop several
-legacy panels", merged in v6.11-rc1) because the legacy compatible
-string approach was dropped in favor of the generic "edp-panel" device
-on the AUX bus. After that removal, the panel no longer had an entry in
-the `edp_panels[]` ID table, meaning the AUX bus approach can't find it
-by panel ID. This new commit restores support through the modern
-mechanism.
-
-### 5. Classification: Device ID / Hardware Quirk Addition
-
-This is a textbook **device ID addition** to an existing driver -- one
-of the explicitly allowed exception categories for stable backports. The
-`edp_panels[]` table is directly analogous to PCI ID tables or USB ID
-tables. The commit:
-
-- Adds a single panel ID to an existing, well-established table
-- Uses existing delay parameters (`delay_200_500_e50`) -- no new code
-- Follows the exact same pattern as ~192 other entries in the table
-- The driver (`panel-edp.c`) already exists in stable trees (since
-  v5.16)
+This is a **security/robustness fix at a system boundary** (userspace →
+kernel).
 
 ### 6. Risk Assessment
 
-- **Risk: Essentially zero.** This is a one-line addition to a data
-  table. It cannot affect any other panel or any other code path. It
-  only activates when a panel with the exact matching EDID
-  vendor/product ID is detected.
-- **Scope:** Single line, single file, data-only change.
-- **Dependencies:** None. The `delay_200_500_e50` structure and
-  `EDP_PANEL_ENTRY` macro exist in all stable trees that have `panel-
-  edp.c`.
+**Risk: Very Low**
+- The change adds two simple, early-return validation checks
+- It only rejects invalid input earlier (with -EINVAL)
+- No existing valid usage is affected (any sane userspace already passes
+  power-of-2, page-aligned sizes)
+- The fix is small (10 lines of added code), self-contained, and
+  obviously correct
+- Reviewed by Christian König (key AMD DRM maintainer)
 
-### 7. User Impact
+**Benefit: Medium**
+- Prevents GPU faults from invalid configurations
+- Prevents potential memory corruption or undefined hardware behavior
+- Hardens the userspace-to-kernel boundary
 
-- **Who:** Users of the Lenovo Flex 5G laptop (Qualcomm SC8180 SoC
-  platform). This is a real, commercially available product.
-- **Without fix:** Kernel WARNING on every boot + slower panel
-  operations due to conservative timings.
-- **With fix:** Clean boot, optimal panel timing, proper panel
-  identification.
+### 7. Concerns
 
-### 8. Backport Considerations
+1. **Limited stable tree applicability**: Only applies to v6.16+ stable
+   trees (newest stable branches). Older LTS trees don't have user
+   queues.
+2. **The `amdgpu_userq_input_args_validate` function may have evolved**
+   between kernel versions, so the patch may not apply cleanly to 6.16.y
+   or 6.17.y without adjustment.
+3. **Dependency check**: The function `is_power_of_2()` is a standard
+   kernel utility (from `<linux/log2.h>`), available in all kernel
+   versions. `AMDGPU_GPU_PAGE_SIZE` is defined in amdgpu headers. No
+   dependency issues.
 
-- For stable trees **v6.11.y and later**: The legacy `panel-simple.c`
-  entry was removed in v6.11-rc1, so the panel-edp entry is essential.
-- For stable trees **v5.16.y to v6.10.y**: The panel was supported
-  through the legacy `panel-simple.c` compatible string, so the AUX bus
-  lookup wasn't needed. Whether this entry is needed depends on whether
-  the DT uses the legacy compatible or the generic `edp-panel` approach.
-- The commit should apply cleanly to v6.11+ stable trees (the table
-  structure is the same).
+### 8. Decision
 
-### 9. Stability Indicators
+**For:**
+- Validates user input at a system boundary - this is the definition of
+  a good stable fix
+- Prevents GPU faults and undefined behavior from malformed userspace
+  requests
+- Small, surgical, obviously correct change
+- Reviewed by subsystem maintainer
+- Zero risk of regression (only rejects previously-invalid input)
 
-- **Reviewed-by: Douglas Anderson** -- the panel-edp subsystem
-  maintainer
-- Tested on real hardware for weeks
-- Standard, well-understood change pattern
+**Against:**
+- Only applicable to very recent stable trees (v6.16+)
+- The commit message describes it somewhat as "adding validation" rather
+  than "fixing a bug" - but this IS a bug fix (missing input validation
+  on a userspace interface)
+- The user queue feature itself is quite new, so the number of affected
+  users is limited
+- No reported real-world incidents (no "Reported-by:" tag, no syzbot
+  report)
 
-### Conclusion
+This is a borderline case. It's a legitimate input validation fix at a
+userspace boundary that prevents GPU faults. However, the user queue
+feature is very new (v6.16+), limiting the stable trees it applies to.
+The fix is obviously correct and zero-risk, but there's no evidence of
+real-world impact. The fact that it prevents potential GPU faults from
+user-controllable input (security hardening) tips it slightly toward
+YES, but the newness of the feature and the purely preventive nature (no
+demonstrated real-world bug) is a concern.
 
-This is a clear-cut device ID addition to an existing driver's panel
-identification table. It fixes a real user-visible issue (WARN_ON kernel
-splat on boot + degraded panel timings) for users of a specific laptop
-model. The change is a single line of data, uses existing
-infrastructure, carries essentially zero regression risk, and has been
-reviewed by the subsystem maintainer. It fits perfectly into the "new
-device IDs to existing drivers" exception category for stable backports.
+On balance, this is a valid input validation fix that prevents potential
+GPU faults from invalid userspace input. It's small, safe, reviewed by
+the subsystem maintainer, and fixes a real missing-validation bug at a
+trust boundary.
 
 **YES**
 
- drivers/gpu/drm/panel/panel-edp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 023fbbb10eb4f..2c35970377431 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1904,6 +1904,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x615c, &delay_200_500_e50, "B116XAN06.1"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x635c, &delay_200_500_e50, "B116XAN06.3"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x639c, &delay_200_500_e50, "B140HAK02.7"),
-+	EDP_PANEL_ENTRY('A', 'U', 'O', 0x643d, &delay_200_500_e50, "B140HAN06.4"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x723c, &delay_200_500_e50, "B140XTN07.2"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x73aa, &delay_200_500_e50, "B116XTN02.3"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x8594, &delay_200_500_e50, "B133UAN01.0"),
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index 58b26c78b6425..ab934723579c9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -860,6 +860,17 @@ static int amdgpu_userq_input_args_validate(struct drm_device *dev,
+ 			drm_file_err(filp, "invalidate userq queue va or size\n");
+ 			return -EINVAL;
+ 		}
++
++		if (!is_power_of_2(args->in.queue_size)) {
++			drm_file_err(filp, "Queue size must be a power of 2\n");
++			return -EINVAL;
++		}
++
++		if (args->in.queue_size < AMDGPU_GPU_PAGE_SIZE) {
++			drm_file_err(filp, "Queue size smaller than AMDGPU_GPU_PAGE_SIZE\n");
++			return -EINVAL;
++		}
++
+ 		if (!args->in.wptr_va || !args->in.rptr_va) {
+ 			drm_file_err(filp, "invalidate userq queue rptr or wptr\n");
+ 			return -EINVAL;
 -- 
 2.51.0
 
