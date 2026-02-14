@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAB42D979F;
-	Sat, 14 Feb 2026 21:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB4830B538;
+	Sat, 14 Feb 2026 21:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104372; cv=none; b=kBCMFnIrbzh059ldHyhH4bvymeyezmfKp3+IRFk2kTffJWuE5vwR8YTapFRVS+PbdtdxVT5Ups22ZJOCSlLQOutpqJSfks2e/CYVxfQmCfNwsIiue7RWqNFkBWR8mrnDc9PlvaHZFQFLguGO1jUEJdbVKe6lxbBcY9WcY5aFows=
+	t=1771104373; cv=none; b=DFFWyJOsWIDHZgAcHU7s5bojBLSPOYSbNNX0gghmwzS4Z7ejdblT3Q9gGVt1Vr3P29KsQcNCan6cRvs36/MK/MYPm88WumGIrCDRHzPUKdXEMv8WzAmvhxPgKOj6FZ5pyhx4qMdbDovKjNW2IODwNENlHn8NH1tvLM54o9HcYt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104372; c=relaxed/simple;
-	bh=CXvypTIeB7bqrpF4E6BA7S6xZwcRORKDoYScrPumZ/E=;
+	s=arc-20240116; t=1771104373; c=relaxed/simple;
+	bh=aHtR4BsyF2l3HR7TsEGG3KivdPRtncTzeKuqIu8cmO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=moceIzbVgSh5HGWtKjyTUfXgU88Zn3n+ZorGXNJ5uYm0Jk6U+UZmhr1gfJqxwEl3An6xzQF0ZYGoafZBn1+3WlrQU76Kl6pgxq53jNZkUl8aFiM03Uq4kBrU1Leevcp3PeSDWq2MDJNRfgEOAWoh3osj3pLhda/EzBv44wQ5mhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l877/3MD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Aj7/Oq2/Pe+YeAJ4vV8qYqLarQSuJl5hetxaz+PsOu+HafRAP9RrTtapCXDZPr2iTqLCDBm7TacvyF2+dAO5VUhzezIcFe34gHfR8mEpI9jbXFdEOXpS2AsHjWEs/2+sNrz7RnkGyCAOg28nlJI4epyAX5KPKkEIn0ezM7neYVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uihJoc2l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l877/3MD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23864C2BC86;
-	Sat, 14 Feb 2026 21:26:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uihJoc2l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CFCC19422;
+	Sat, 14 Feb 2026 21:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104372;
-	bh=CXvypTIeB7bqrpF4E6BA7S6xZwcRORKDoYScrPumZ/E=;
+	s=k20201202; t=1771104373;
+	bh=aHtR4BsyF2l3HR7TsEGG3KivdPRtncTzeKuqIu8cmO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l877/3MDoFO7OLo5HKiA+sEvvLapOziVDBJop/1aa0hGx1SskHE4P/1E1LnZH9ak2
-	 s9yubiX6U2v61Vc5YP4Tbr9d/JBXifVAMYN727H86qo/cNd5x4gBK3jRT5VlUbCJ3R
-	 WCX/Iyn37yRurOgbMGBpOxFZEivj3JOW8rK7CFOJsYjJZuHvVFn0t0ypbz3rptmZm2
-	 6GC33xJ7iCKDX96jNRqpRoynTDf/YWqztaZ9h+gBu3P4IqdeiLKRXcD6mfQkKoRyy8
-	 sZxTo1Zw28ZOjHBQfCoRHQ0HDMr6USXXgRWWO0a6Lgm4hY29Iyo+BRmSR1QcozSvnX
-	 dJEODxQuJs4vg==
+	b=uihJoc2lrAc59pyVN95leA472wiSIEYXaLGczviZ1c7TVAp6YAQtXnu1PxXY28Fvv
+	 r7fDsc2IdljRd2KnBLrC3818CkXkw6J//MmAp0eFxh8uBtR3N8hU1KbDOumV5Zxvjj
+	 k9QLktNUEX6lT5Oy7AWU275oqXFJ4qIb1uxHBZQY49EeXA9jmyO/hIZWZSiSFEdFGj
+	 p3xyDK7FMGRazZxpB0P2dWYwpxzH6avWJZerSF8/HQcMOrqEbZa2lRu1fIlYExUcPq
+	 hY2foz2GYBWmGLrn0r09lBBNhUpRnfHyrNEd35076OL0JYr5F0alnabqVLtFwHGgAR
+	 JIa81QXrvt9Iw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Bryan Tan <bryan-bt.tan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	vishnu.dasa@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] vmw_vsock: bypass false-positive Wnonnull warning with gcc-16
-Date: Sat, 14 Feb 2026 16:23:13 -0500
-Message-ID: <20260214212452.782265-48-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] wifi: iwlegacy: add missing mutex protection in il3945_store_measurement()
+Date: Sat, 14 Feb 2026 16:23:14 -0500
+Message-ID: <20260214212452.782265-49-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -57,42 +52,26 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit e25dbf561e03c0c5e36228e3b8b784392819ce85 ]
+[ Upstream commit 4dd1dda65265ecbc9f43ffc08e333684cf715152 ]
 
-The gcc-16.0.1 snapshot produces a false-positive warning that turns
-into a build failure with CONFIG_WERROR:
+il3945_store_measurement() calls il3945_get_measurement() which internally
+calls il_send_cmd_sync() without holding il->mutex. However,
+il_send_cmd_sync() has lockdep_assert_held(&il->mutex) indicating that
+callers must hold this lock.
 
-In file included from arch/x86/include/asm/string.h:6,
-                 from net/vmw_vsock/vmci_transport.c:10:
-In function 'vmci_transport_packet_init',
-    inlined from '__vmci_transport_send_control_pkt.constprop' at net/vmw_vsock/vmci_transport.c:198:2:
-arch/x86/include/asm/string_32.h:150:25: error: argument 2 null where non-null expected because argument 3 is nonzero [-Werror=nonnull]
-  150 | #define memcpy(t, f, n) __builtin_memcpy(t, f, n)
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
-net/vmw_vsock/vmci_transport.c:164:17: note: in expansion of macro 'memcpy'
-  164 |                 memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
-      |                 ^~~~~~
-arch/x86/include/asm/string_32.h:150:25: note: in a call to built-in function '__builtin_memcpy'
-net/vmw_vsock/vmci_transport.c:164:17: note: in expansion of macro 'memcpy'
-  164 |                 memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
-      |                 ^~~~~~
+Other sysfs store functions in the same file properly acquire the mutex:
+- il3945_store_flags() acquires mutex at 3945-mac.c:3110
+- il3945_store_filter_flags() acquires mutex at 3945-mac.c:3144
 
-This seems relatively harmless, and it so far the only instance of this
-warning I have found. The __vmci_transport_send_control_pkt function
-is called either with wait=NULL or with one of the type values that
-pass 'wait' into memcpy() here, but not from the same caller.
+Add mutex_lock()/mutex_unlock() around the il3945_get_measurement() call
+in the sysfs store function to fix the missing lock protection.
 
-Replacing the memcpy with a struct assignment is otherwise the same
-but avoids the warning.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Bryan Tan <bryan-bt.tan@broadcom.com>
-Link: https://patch.msgid.link/20260203163406.2636463-1-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260125193005.1090429-1-n7l8m4@u.northwestern.edu
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -102,94 +81,116 @@ LLM Generated explanations, may be completely bogus:
 
 ### Commit Message Analysis
 
-This commit addresses a **false-positive compiler warning** with
-gcc-16.0.1 that becomes a **build failure** when `CONFIG_WERROR` is
-enabled. The fix replaces a `memcpy()` call with a direct struct
-assignment, which is semantically equivalent but avoids triggering the
-`-Wnonnull` warning.
+The commit message is clear and well-documented. It identifies:
+- **The bug**: `il3945_store_measurement()` calls
+  `il3945_get_measurement()` → `il_send_cmd_sync()` without holding
+  `il->mutex`
+- **The evidence**: `il_send_cmd_sync()` has
+  `lockdep_assert_held(&il->mutex)`, meaning this will trigger a lockdep
+  warning at runtime
+- **The pattern**: Other sysfs store functions in the same file
+  (`il3945_store_flags()`, `il3945_store_filter_flags()`) already
+  properly acquire the mutex
+- **The fix**: Add `mutex_lock()`/`mutex_unlock()` around the call
 
 ### Code Change Analysis
 
-The change is extremely minimal — a single line change:
+The diff is minimal — only 2 lines added:
 ```c
-- memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
-+ pkt->u.wait = *wait;
+mutex_lock(&il->mutex);
+il3945_get_measurement(il, &params, type);
+mutex_unlock(&il->mutex);
 ```
 
-This is a purely mechanical transformation. A struct assignment and a
-`memcpy` of the same struct size produce identical behavior. The
-compiler generates equivalent code. The only difference is that the
-struct assignment form doesn't trigger gcc-16's `-Wnonnull` analysis,
-which was producing a false positive by analyzing the `memcpy` call
-without considering that the `wait` parameter is only NULL for packet
-types that don't reach this code path.
+This is a textbook missing-lock fix. The function is a sysfs store
+handler (called from userspace via writing to a sysfs file), which calls
+into the driver's command submission path without the required
+synchronization.
 
-### Classification: Build Fix
+**Bug mechanism**: Without the mutex, concurrent access to
+`il_send_cmd_sync()` from this sysfs path and other paths (e.g., normal
+driver operation, other sysfs handlers) can result in:
+1. **Data races** on shared driver state
+2. **Lockdep warnings** at runtime (guaranteed to fire)
+3. Potential **corruption of command submission state** leading to
+   firmware communication errors or crashes
 
-This is a **build fix** — one of the explicitly allowed categories for
-stable backports. With `CONFIG_WERROR` enabled (which is the default in
-many distribution kernel configs and increasingly common), this warning
-becomes a hard build error. Users building with gcc-16 and
-`CONFIG_WERROR` would be unable to compile the kernel.
+### Classification
 
-### Risk Assessment
+This is a **synchronization bug fix** — a missing lock acquisition. It
+falls squarely into the "race conditions" category of stable-worthy
+fixes.
 
-- **Risk: Extremely low.** The change is a 1:1 semantic equivalent.
-  `pkt->u.wait = *wait` does exactly what `memcpy(&pkt->u.wait, wait,
-  sizeof(pkt->u.wait))` does — it copies the struct contents. There is
-  zero behavioral change.
-- **Scope: One line in one file.** Maximally contained.
-- **Testing: Well-reviewed.** Has three `Reviewed-by` tags from relevant
-  maintainers (Bobby Eshleman, Stefano Garzarella, Bryan Tan).
+### Scope and Risk Assessment
 
-### Dependency Check
-
-This commit has no dependencies on other patches. The code being
-modified (`vmci_transport_packet_init`) has existed for a long time in
-the stable trees.
+- **Lines changed**: 2 (extremely minimal)
+- **Files touched**: 1
+- **Risk**: Very low — adding lock acquisition around a single function
+  call, following the exact same pattern as sibling functions in the
+  same file
+- **Subsystem**: iwlegacy wireless driver (older Intel WiFi),
+  mature/stable code
+- **Could this break something?**: The mutex is already used throughout
+  the driver. The only concern would be deadlock if
+  `il3945_get_measurement()` were called with the mutex already held,
+  but since this is a sysfs entry point (userspace-initiated), it's a
+  fresh call path — no lock is held on entry.
 
 ### User Impact
 
-- Users building the kernel with gcc-16 and `CONFIG_WERROR` will hit a
-  build failure without this fix.
-- gcc-16 is a snapshot/development compiler now, but will become the
-  standard gcc version in distributions. As distributions adopt gcc-16,
-  this will become a real issue for stable kernel users.
-- Build fixes are critical for the usability of stable kernels.
+- Users with Intel 3945 WiFi hardware who trigger this sysfs interface
+  will hit the lockdep warning
+- More critically, the lack of synchronization could lead to corruption
+  of the driver's command channel, potentially causing firmware hangs or
+  crashes
+- The iwlegacy driver, while old, still has active users on older
+  hardware
 
-### Stability Assessment
+### Stability Indicators
 
-- The change is trivially correct — struct assignment and memcpy of a
-  struct are equivalent.
-- Multiple experienced reviewers have confirmed correctness.
-- Zero risk of runtime regression.
+- **Acked-by**: Stanislaw Gruszka (former iwlegacy maintainer)
+- **Committed by**: Johannes Berg (WiFi subsystem maintainer)
+- The fix follows an existing, well-established pattern in the same file
 
-### Conclusion
+### Dependency Check
 
-This is a textbook stable backport candidate: a minimal, zero-risk build
-fix that prevents compilation failure with newer compiler versions. It
-falls squarely into the "build fixes that prevent compilation" exception
-category. The change is semantically identical to the original code and
-has been well-reviewed.
+- No dependencies on other commits
+- The `il->mutex` and the function being called have existed in the
+  driver since its inception
+- This code exists in all stable trees that include the iwlegacy driver
+
+### Verdict
+
+This is a small, obviously correct, well-reviewed fix for a real
+synchronization bug. It:
+- Fixes a lockdep assertion violation (guaranteed to trigger)
+- Prevents potential race conditions in command submission
+- Is only 2 lines, touching 1 file
+- Follows the exact same pattern as adjacent code
+- Has maintainer acks
+- Has zero risk of regression
+
+This meets all stable kernel criteria perfectly.
 
 **YES**
 
- net/vmw_vsock/vmci_transport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlegacy/3945-mac.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
-index 7eccd6708d664..aca3132689cf1 100644
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -161,7 +161,7 @@ vmci_transport_packet_init(struct vmci_transport_packet *pkt,
+diff --git a/drivers/net/wireless/intel/iwlegacy/3945-mac.c b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+index 104748fcdc33e..54991f31c52c5 100644
+--- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
++++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+@@ -3224,7 +3224,9 @@ il3945_store_measurement(struct device *d, struct device_attribute *attr,
  
- 	case VMCI_TRANSPORT_PACKET_TYPE_WAITING_READ:
- 	case VMCI_TRANSPORT_PACKET_TYPE_WAITING_WRITE:
--		memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
-+		pkt->u.wait = *wait;
- 		break;
+ 	D_INFO("Invoking measurement of type %d on " "channel %d (for '%s')\n",
+ 	       type, params.channel, buf);
++	mutex_lock(&il->mutex);
+ 	il3945_get_measurement(il, &params, type);
++	mutex_unlock(&il->mutex);
  
- 	case VMCI_TRANSPORT_PACKET_TYPE_REQUEST2:
+ 	return count;
+ }
 -- 
 2.51.0
 
