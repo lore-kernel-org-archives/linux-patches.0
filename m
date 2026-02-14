@@ -1,48 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFFC17B506;
-	Sat, 14 Feb 2026 01:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116F517B506;
+	Sat, 14 Feb 2026 01:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031012; cv=none; b=LrdT1s74U2TjnGs8861bjRIvyfBWXw66xcPOcczstFfkLtc60D6xSIwrHK+YJj0Jya6AAJl1H+cCY4Cha468mTGPaDuAdzW0fUfIc7zxYabnsw0OQI70Jyek+DLFk+m2lZk/chufxf4O9VFjW6ugED/30uVVTvV2uhfUsOAuU8U=
+	t=1771031018; cv=none; b=CMaqmtliubugWRW4tOzg6o8vXTFGqRQmnJzDM0xmwUXfMXRFvfWPJKIuBhq5TAtGKXGA384npT/bPdK49B1zSsdnWHm57+Ucg1R6KhKgbi8hopsdUVpYSXwNzfD6mpvTxkgXyxrl1NqIwkP9KlbPcGAXHCsn6cVBc2o39mgDCls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031012; c=relaxed/simple;
-	bh=DYXq2qY0dD/StwAInwWhC+76+C/ziRXYzOIGNBCGnsw=;
+	s=arc-20240116; t=1771031018; c=relaxed/simple;
+	bh=hr6ZlRyO3yRbLRvj6Vembu5LFGUc/HNiBv7978rmiTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ka1dI67tlP/vy3i500duagcKp6WlqA4GtS9TFu0emQkUttfxtyhilCZJzJhWkKiuXS43KkrhWnnBEKXK5eLwKc6QGDGwbqVk4jwhpJROPHR1LCq58NlczszpEWqCUfenejey1nYgVdeGfQkqCCbT65Vu2b0mTNR/TBMOVNIFjno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pgq7ZYYL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CjtahshaI8a+Yz1CqXwlof2+DxrOQGTRyFoZdFtxW2mtW4fzLBePlPQqCo0pkmynrBB3dR6os01TqqoIdQgPGagX8dffzb+3k8PHn1RLzq6j/1Pv71r2vsmnnJcKqLzTPeZDqjFei/QgTJWEuXx6YND00XzW101H9TMgGr54FdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I1YUL+Lu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pgq7ZYYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467BBC116C6;
-	Sat, 14 Feb 2026 01:03:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I1YUL+Lu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC40AC116C6;
+	Sat, 14 Feb 2026 01:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031012;
-	bh=DYXq2qY0dD/StwAInwWhC+76+C/ziRXYzOIGNBCGnsw=;
+	s=k20201202; t=1771031017;
+	bh=hr6ZlRyO3yRbLRvj6Vembu5LFGUc/HNiBv7978rmiTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pgq7ZYYLUX4g+qhl3GF+ap16DPznNREkZiJOzVVHzi2G+FwFUzCNTCecuTQyPO2JP
-	 hIhiX/5u+DY0VjBvWBk9BEF6YrDKJCWZsDeLkSIeib881RD9dIpFmeFyEHyFXV9R9j
-	 cxbEmmYRJ7ynUjGlcjmv0xDVUTFGlSvL/AwmrNkJR0YMaQaYnOA7PK3L5rnezkLo82
-	 HAXUFBSfQquzZkx9CyA8UPGluGo+13dxvh/csMJL2PyPt9rCEcNcL9C/xKc1A75fBz
-	 fZ9eHB1uZe3lb7psor0xUgTq/M5KZokwfatXAgM9UOco+lKIkqQsz6/qT7d5UGePGj
-	 UEfUe8/vGnVfQ==
+	b=I1YUL+LuWzU6FZyQMpkYoqOaP/3s4R9g1I5P6OVy0qGeOETF1BHBrv4DEIolpKwsV
+	 fHO6czASskLNE1MD+j2zLNrmraFqEgoyeKXAqlBWT+/nkMF/6xRWtBVEhE4giCq1Vr
+	 REszDjuznxayvoBXbxAiHCLN9+rIAt4OvydOoY9TzwlounTU5gmMt50qfizpgLc9W+
+	 3ScFy6ABzfvNkQJOzMFLAElOYWKHGPTco4hkQIU9joIcvtL3LltJyqtws2BCGK2G+c
+	 fJdhe/B0riQPm8DZjtiAY4UzyqIMtQLYRPno0RZooWkiIHF/oBJTXak5IFpKfxHLMX
+	 nb9oCLFt2+Fiw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
 	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ranjani.sridharan@linux.intel.com,
-	shumingf@realtek.com,
-	niranjan.hy@ti.com,
+	tglx@kernel.org,
+	wangruikang@iscas.ac.cn,
 	yelangyan@huaqin.corp-partner.google.com,
-	linmq006@gmail.com
-Subject: [PATCH AUTOSEL 6.19] ASoC: sdw_utils: remove dai registered check
-Date: Fri, 13 Feb 2026 19:58:23 -0500
-Message-ID: <20260214010245.3671907-23-sashal@kernel.org>
+	Vijendar.Mukunda@amd.com
+Subject: [PATCH AUTOSEL 6.19] ALSA: hda: controllers: intel: add support for Nova Lake
+Date: Fri, 13 Feb 2026 19:58:24 -0500
+Message-ID: <20260214010245.3671907-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -52,160 +52,125 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 8d38c275f7ffe257d21bea224d4288eef183817d ]
+[ Upstream commit 7f428282fde34f06f3ab898b8a9081bf93a41f22 ]
 
-Checking for a registered DAI for non-existing endpoints causes the
-following error. The driver will always return -EPROBE_DEFER if the
-codec driver doesn't register the DAI of the unexist endpoint.
+Add NVL to the PCI-ID list.
 
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260120065658.1806027-1-yung-chuan.liao@linux.intel.com
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Acked-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260120193507.14019-5-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of ASoC: sdw_utils: remove dai registered check
+## Analysis
 
 ### Commit Message Analysis
 
-The commit message describes a bug where checking for a registered DAI
-for **non-existing endpoints** causes the driver to always return
-`-EPROBE_DEFER` if the codec driver doesn't register the DAI of a non-
-existent endpoint. This means the system enters an infinite probe
-deferral loop — the device will never successfully probe because it's
-waiting for a DAI that will never be registered (since the endpoint
-doesn't exist).
+The commit subject and body are straightforward: "add support for Nova
+Lake" by adding a PCI device ID (`HDA_NVL`) to the existing HDA (High
+Definition Audio) controller driver's PCI ID table.
 
 ### Code Change Analysis
 
-The change removes a block of code from `is_sdca_endpoint_present()`
-that:
+The diff shows a single line addition:
+```c
+{ PCI_DEVICE_DATA(INTEL, HDA_NVL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_LNL)
+},
+```
 
-1. Allocated a `snd_soc_dai_link_component` (dlc)
-2. Looked up the DAI name from `dai_info`
-3. Called `snd_soc_find_dai_with_mutex()` to check if the codec DAI was
-   registered
-4. If not found, returned `-EPROBE_DEFER`
-5. Freed the dlc
-
-**The bug mechanism:** The function `is_sdca_endpoint_present()` is
-supposed to determine if an endpoint is present (returns 1) or not
-(returns 0). However, for endpoints that don't actually exist on the
-hardware, the codec driver will never register their DAIs. The removed
-code would find that the DAI isn't registered and return
-`-EPROBE_DEFER`, causing the probe to be deferred indefinitely. This
-creates an infinite deferral loop — the system keeps retrying probe but
-the DAI will never appear because the endpoint doesn't exist.
-
-The rest of the function (which remains) properly handles endpoint
-presence detection by checking the SoundWire slave's SDCA data and
-function properties — this is the correct way to determine if an
-endpoint is present.
+This adds the Nova Lake (NVL) PCI device ID to the `azx_ids[]` table in
+`sound/hda/controllers/intel.c`. The entry uses the same driver type
+(`AZX_DRIVER_SKL`) and capabilities (`AZX_DCAPS_INTEL_LNL`) as other
+recent Intel platforms like Panther Lake, Wildcat Lake, and the already-
+present `HDA_NVL_S` (Nova Lake-S variant).
 
 ### Classification
 
-This is a **bug fix** — it fixes a probe failure (infinite
-`-EPROBE_DEFER` loop) that prevents SoundWire audio devices from
-initializing properly. Users with affected hardware would have no audio
-functionality.
+This is a **new device ID addition** to an existing, well-established
+driver. This falls squarely into the "NEW DEVICE IDs" exception category
+that is explicitly allowed and encouraged for stable backports.
 
-### Scope and Risk Assessment
+Key characteristics:
+- **One-line change**: Minimal risk
+- **Pattern-matching existing entries**: Uses the same driver/caps as
+  NVL_S which is already present
+- **No new code paths**: The driver infrastructure already handles this;
+  only the PCI ID binding is added
+- **No new features or APIs**: Just enables an existing driver to bind
+  to new hardware
 
-- **Lines changed:** Removes ~15 lines of code (the DAI registration
-  check and associated allocation/free)
-- **Files touched:** 1 file (`sound/soc/sdw_utils/soc_sdw_utils.c`)
-- **Risk:** LOW — the code being removed was performing an unnecessary
-  check that was actively harmful. The remaining code in the function is
-  the correct logic for determining endpoint presence.
-- **Side effects:** The removal also eliminates a memory allocation
-  (`kzalloc`/`kfree`) making the function simpler and more efficient.
+### Risk Assessment
+
+- **Risk**: Essentially zero. Adding a PCI ID to a table cannot break
+  existing functionality. The new entry only activates when the specific
+  Nova Lake hardware is present.
+- **Scope**: Single line in a single file
+- **Dependencies**: The `HDA_NVL` PCI ID macro must be defined in the
+  PCI ID header. Since `HDA_NVL_S` already exists and this commit was
+  accepted upstream, the corresponding ID definition is present.
 
 ### User Impact
 
-- **Who is affected:** Users with SoundWire-based audio hardware (Intel
-  platforms with SoundWire codecs, which is increasingly common in
-  modern laptops)
-- **Severity:** HIGH — Without this fix, affected systems have
-  completely non-functional audio because the probe never completes
-- **Trigger:** The bug triggers whenever the ACPI tables describe
-  endpoints that don't physically exist on the hardware, which can
-  happen in normal configurations
+Without this PCI ID entry, users with Nova Lake hardware will have no
+HDA audio support. This is a direct hardware enablement fix — audio
+simply won't work on these systems without it.
 
 ### Stability Indicators
 
-- **Reviewed-by:** Three reviewers (Péter Ujfalusi, Liam Girdwood,
-  Charles Keepax) — all well-known ASoC developers
-- **Author:** Bard Liao (Intel SoundWire maintainer) — deeply familiar
-  with this subsystem
-- **Applied by:** Mark Brown (ASoC maintainer)
+- **Reviewed-by**: Three reviewers (Kai Vehmanen, Liam Girdwood, Ranjani
+  Sridharan — all Intel audio engineers)
+- **Acked-by**: Takashi Iwai (HDA subsystem maintainer)
+- **Pattern**: Identical to dozens of previous Intel HDA PCI ID
+  additions that routinely go to stable
 
 ### Dependency Check
 
-The change is self-contained — it only removes code, so there are no
-forward dependencies. The function and surrounding code should exist in
-recent stable trees that include SoundWire SDCA support.
+The only dependency is the PCI ID definition macro (`INTEL_HDA_NVL` or
+similar) in the PCI ID headers. This would need to be present in the
+stable tree. Given that `HDA_NVL_S` is already in the table, the
+corresponding header changes for the NVL family may already be partially
+present, though the specific `HDA_NVL` ID definition would need to be
+verified or backported alongside this.
 
 ### Conclusion
 
-This is a clear bug fix that resolves an infinite probe deferral loop
-for SoundWire audio devices. The fix is small (pure code removal), well-
-reviewed by multiple subsystem experts, low risk, and addresses a real
-user-visible issue (no audio on affected hardware). It meets all stable
-kernel criteria: obviously correct, fixes a real bug, small and
-contained, no new features.
+This is a textbook stable backport candidate: a single-line PCI device
+ID addition to an existing, mature driver (Intel HDA), enabling audio on
+new hardware. It has zero risk of regression, multiple expert reviews,
+and direct user impact. The only consideration is ensuring the PCI ID
+macro definition is also backported.
 
 **YES**
 
- sound/soc/sdw_utils/soc_sdw_utils.c | 15 ---------------
- 1 file changed, 15 deletions(-)
+ sound/hda/controllers/intel.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
-index ccf149f949e8f..d03072cd13cb9 100644
---- a/sound/soc/sdw_utils/soc_sdw_utils.c
-+++ b/sound/soc/sdw_utils/soc_sdw_utils.c
-@@ -1421,29 +1421,14 @@ static int is_sdca_endpoint_present(struct device *dev,
- 	const struct snd_soc_acpi_adr_device *adr_dev = &adr_link->adr_d[adr_index];
- 	const struct snd_soc_acpi_endpoint *adr_end;
- 	const struct asoc_sdw_dai_info *dai_info;
--	struct snd_soc_dai_link_component *dlc;
--	struct snd_soc_dai *codec_dai;
- 	struct sdw_slave *slave;
- 	struct device *sdw_dev;
- 	const char *sdw_codec_name;
- 	int ret, i;
- 
--	dlc = kzalloc(sizeof(*dlc), GFP_KERNEL);
--	if (!dlc)
--		return -ENOMEM;
--
- 	adr_end = &adr_dev->endpoints[end_index];
- 	dai_info = &codec_info->dais[adr_end->num];
- 
--	dlc->dai_name = dai_info->dai_name;
--	codec_dai = snd_soc_find_dai_with_mutex(dlc);
--	if (!codec_dai) {
--		dev_warn(dev, "codec dai %s not registered yet\n", dlc->dai_name);
--		kfree(dlc);
--		return -EPROBE_DEFER;
--	}
--	kfree(dlc);
--
- 	sdw_codec_name = _asoc_sdw_get_codec_name(dev, adr_link, adr_index);
- 	if (!sdw_codec_name)
- 		return -ENOMEM;
+diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
+index 1e8e3d61291a1..1b365e0772970 100644
+--- a/sound/hda/controllers/intel.c
++++ b/sound/hda/controllers/intel.c
+@@ -2551,6 +2551,7 @@ static const struct pci_device_id azx_ids[] = {
+ 	/* Wildcat Lake */
+ 	{ PCI_DEVICE_DATA(INTEL, HDA_WCL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_LNL) },
+ 	/* Nova Lake */
++	{ PCI_DEVICE_DATA(INTEL, HDA_NVL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_LNL) },
+ 	{ PCI_DEVICE_DATA(INTEL, HDA_NVL_S, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_LNL) },
+ 	/* Apollolake (Broxton-P) */
+ 	{ PCI_DEVICE_DATA(INTEL, HDA_APL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_BROXTON) },
 -- 
 2.51.0
 
