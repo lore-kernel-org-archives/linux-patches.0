@@ -1,47 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37B02556E;
-	Sat, 14 Feb 2026 01:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1760C1D54FA;
+	Sat, 14 Feb 2026 01:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031189; cv=none; b=E+gHhcUBz+H0JoQWpJ5XQize9XZx0ziJP9KPjUeaiTjIwDftw5uZWAUK7+3DDc7JyHNta8x8bhjF0VQ+U1ihZTKyeW+WngLsom3azgEeUiDv7/Hj5QN1kACJiljOB/qkmPEc1oMTNMIh5M4yufDqBTk7QbpLQThjROevxAwnOAU=
+	t=1771031193; cv=none; b=rlboyNIhkux6jfe/wKqyvnTM+KVuAeHgRauA+HvcGdT+ifCvf5emmt5ZDaNaVt7GFthcBgDHy5AMuxybCEXlI++tlNNkHzSesYaZEQGwedQPNnhtvgQUwnDpF0NVMRnOJCgdh35nSgeRJojm17VvTehcc5nU2VTE/ZgYgY4k4bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031189; c=relaxed/simple;
-	bh=6xHN8ch6D3wfH6dNKdtq5U38lXb5ym/+KWSFYV/LZ7I=;
+	s=arc-20240116; t=1771031193; c=relaxed/simple;
+	bh=Aif+7sXvfbUhcDPLpr9NAHy6cdQBEEc8gRYnpWu3dGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZVvvq4jmz2ytUc6krU6F5VjwyCBhzdokGTwkgTxlHNIMhpj7Gnfp7lM8zm63YfGC0Y1Pw+LNk8OY7Xwveb+yPw48kargtqZ12maP5IkTif5ze0TMTLVryCiZzxHCpdcVCFEeZCb7q5wizsEPo94+pXn1cTfZWpMTHb335g5nfzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jA2YhB6+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NstNlJYcNJbrVnAYp4cY4Qxbo6QhlJQZLQRS1OJGLz6Z+4QtTcmYQnb/7KAM9DDtkuPjDPPhVyMA71CpyoTXCuvhV7ZKqm1qr6Yl+49S/uTL1iX2VS7Q+XtiL168gMoy+KxIbmHUNuW1mB2I7jg6ZaRxlcDXneMjQaTAEzOJAxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mWPFR8qx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jA2YhB6+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B6EC16AAE;
-	Sat, 14 Feb 2026 01:06:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mWPFR8qx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72506C16AAE;
+	Sat, 14 Feb 2026 01:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031189;
-	bh=6xHN8ch6D3wfH6dNKdtq5U38lXb5ym/+KWSFYV/LZ7I=;
+	s=k20201202; t=1771031193;
+	bh=Aif+7sXvfbUhcDPLpr9NAHy6cdQBEEc8gRYnpWu3dGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jA2YhB6+3N0SQx3Sj+dt2VRv4QCvUSdKvc719XVWgW1LxaMylETLFGulL88EtTBjf
-	 sbWhvx85vG7IAHKDyu42fJPGevcoCNRBD+lGgy0LCJ/C5RxXWAXz4qLYdZtBAfwUJk
-	 Y8XlJhZnQV9hs8yMJuFSfoqGIvvJNk1V601pMOl5ME0/A49tr0VXhIZ+K5Bs2ycpMl
-	 lkBsXyv8JG9/hTPVXX6qAFAknieNJI/sYJ1pF56bNilQTwK36l+LaHqgFrfDF2Dxx7
-	 emu3CZUoYAK4fsGOyLFH5I4kur4r6mFZrR5uCj0R/8B69y0X+vwK+fU2S1uSOXdPJA
-	 env1v/hihdRrA==
+	b=mWPFR8qx+e+h4YLVCtqWLiY5pGK+Yzk3fmHDtPgAD4UE4PmQOuit1+zJYnuutgcI+
+	 zOOjpSqY+z7PTpTCIG9zH6p7HSJHCWD7N6nM8oKMiGGN3yRoiZjDfIlrn+Pdog7X9g
+	 B12NlMJGFs/OeeTDfhLHVteIOqi5qr/QlYB4QHdgUxwAsk1oMXBJlTKrZ6PlezNmnh
+	 y+nISqSZ9ET0nJDv/5ZkMdOGlsXn38FYJHqy91OEWrnZOY9PvsoDuVkHji36Ehros3
+	 dOhrPKUS/wCT3yd9+RbBlDKAjM5p9RAe6WbcrlmyiIVIHkUbIXYNOTQGMvKzzvdi2A
+	 xXVQocqlfhZ/A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jing Zhou <Jing.Zhou@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
+Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Swapnil Patel <swapnil.patel@amd.com>,
+	Chenyu Chen <chen-yu.chen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	michael.strauss@amd.com,
-	yelangyan@huaqin.corp-partner.google.com
-Subject: [PATCH AUTOSEL 6.19-6.18] drm/amd/display: Correct FIXED_VS Link Rate Toggle Condition
-Date: Fri, 13 Feb 2026 19:59:34 -0500
-Message-ID: <20260214010245.3671907-94-sashal@kernel.org>
+	Dillon.Varone@amd.com,
+	aurabindo.pillai@amd.com,
+	chiahsuan.chung@amd.com,
+	Ilya.Bakoulin@amd.com,
+	Leo.Zeng@amd.com,
+	yelangyan@huaqin.corp-partner.google.com,
+	danny.wang@amd.com,
+	rdunlap@infradead.org
+Subject: [PATCH AUTOSEL 6.19] drm/amd/display: Fix mismatched unlock for DMUB HW lock in HWSS fast path
+Date: Fri, 13 Feb 2026 19:59:35 -0500
+Message-ID: <20260214010245.3671907-95-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -57,173 +61,240 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jing Zhou <Jing.Zhou@amd.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 531fe6e0fee85a1bdb5b8223a706fff654ed0a61 ]
+[ Upstream commit af3303970da5ce5bfe6dffdd07f38f42aad603e0 ]
 
-[WHY&HOW]
-The condition is only perform toggle if FIXED_VS LTTPR reports
-no IEEE OUI.
-The literal "\x0,\x0,\x0" contains commas changes the
-bytes being compared to {0x00,0x2C,0X00}.
-The correct literal should be "\x00\x00\x00" without commas.
+[Why]
+The evaluation for whether we need to use the DMUB HW lock isn't the
+same as whether we need to unlock which results in a hang when the
+fast path is used for ASIC without FAMS support.
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Jing Zhou <Jing.Zhou@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+[How]
+Store a flag that indicates whether we should use the lock and use
+that same flag to specify whether unlocking is needed.
+
+Reviewed-by: Swapnil Patel <swapnil.patel@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good - the nontransparent path at line 118 doesn't have the OUI check
-(it uses the older unconditional logic), so it's not affected. Only the
-transparent path (line 274) has the buggy memcmp.
-
-Now I have all the information needed for a comprehensive analysis.
+Now I have a complete understanding. Let me summarize my analysis.
 
 ---
 
-## Comprehensive Analysis
+## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The commit message is clear and well-explained:
-- **Subject**: "drm/amd/display: Correct FIXED_VS Link Rate Toggle
-  Condition"
-- **Why**: The C string literal `"\x0,\x0,\x0"` contains comma
-  characters that change the bytes being compared from the intended
-  `{0x00, 0x00, 0x00}` to `{0x00, 0x2C, 0x00}`.
-- **How**: Replace the buggy literal with the correct `"\x00\x00\x00"`.
-- **Trust indicators**: Reviewed-by: Charlene Liu, Reviewed-by: Wenjing
-  Liu, Tested-by: Dan Wheeler, Signed-off-by: Alex Deucher (AMD GPU
-  maintainer). This has strong review coverage.
+The commit message is clear and well-structured (AMD's `[Why]`/`[How]`
+format):
 
-### 2. CODE CHANGE ANALYSIS
+- **[Why]:** The evaluation for whether to **acquire** the DMUB HW lock
+  is different from the evaluation for whether to **release** it, which
+  causes a **hang** on ASICs without FAMS support.
+- **[How]:** Store the lock requirement decision in a single variable
+  and reuse it for both lock and unlock.
+- **Indicators:** "Fix", "hang" — these are strong backport signals.
+- **Tags:** `Reviewed-by`, `Tested-by` — this has been properly reviewed
+  and tested.
 
-The change is a single-line fix:
+### 2. Code Change Analysis — The Bug Mechanism
 
-```273:274:drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_trainin
-g_fixed_vs_pe_retimer.c
-        // Only perform toggle if FIXED_VS LTTPR reports no IEEE OUI
-        if (memcmp("\x0,\x0,\x0",
-&link->dpcd_caps.lttpr_caps.lttpr_ieee_oui[0], 3) == 0) {
+The bug is in `hwss_build_fast_sequence()` in `dc_hw_sequencer.c`. This
+function builds a sequence of hardware programming blocks that are
+executed during fast display updates (page flips, cursor updates, etc.).
+
+**The lock acquisition (line ~765-772 of buggy code):**
+
+```765:772:drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+        if (dc->hwss.dmub_hw_control_lock_fast) {
+block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.dc =
+dc;
+block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.lock
+= true;
+                block_sequence[*num_steps].params.dmub_hw_control_lock_f
+ast_params.is_required =
+                        dc_state_is_fams2_in_use(dc, context) ||
+                        dmub_hw_lock_mgr_does_link_require_lock(dc,
+stream->link);
+                block_sequence[*num_steps].func =
+DMUB_HW_CONTROL_LOCK_FAST;
 ```
 
-Changed to `"\x00\x00\x00"`.
+**The lock release (line ~906-911 of buggy code):**
 
-**The Bug Mechanism in Detail:**
+```906:911:drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+        if (dc->hwss.dmub_hw_control_lock_fast) {
+block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.dc =
+dc;
+block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.lock
+= false;
+                block_sequence[*num_steps].params.dmub_hw_control_lock_f
+ast_params.is_required = dc_state_is_fams2_in_use(dc, context);
+                block_sequence[*num_steps].func =
+DMUB_HW_CONTROL_LOCK_FAST;
+                (*num_steps)++;
+```
 
-In C, the hex escape sequence `\xN` consumes as many hexadecimal digits
-as follow. However, a comma (`,`) is NOT a hex digit, so `\x0`
-terminates at the comma. The result:
-- `\x0` = byte 0x00
-- `,` = byte 0x2C (ASCII comma)
-- `\x0` = byte 0x00
-- `,` = byte 0x2C (ASCII comma)
-- `\x0` = byte 0x00
+The critical mismatch:
+- **Lock:** `is_required = dc_state_is_fams2_in_use(dc, context) ||
+  dmub_hw_lock_mgr_does_link_require_lock(dc, stream->link)`
+- **Unlock:** `is_required = dc_state_is_fams2_in_use(dc, context)` —
+  **MISSING the `dmub_hw_lock_mgr_does_link_require_lock` check!**
 
-The string is 5 bytes `{0x00, 0x2C, 0x00, 0x2C, 0x00}` plus null
-terminator. Since `memcmp` compares only 3 bytes, the comparison is
-against `{0x00, 0x2C, 0x00}` — NOT the intended `{0x00, 0x00, 0x00}`.
+Looking at `dcn401_dmub_hw_control_lock_fast()`, when `is_required` is
+`true`, it sends a DMUB inbox0 command to acquire/release a hardware
+lock. When `is_required` is `false`, it does nothing.
 
-**Consequence**: The condition was supposed to check if the LTTPR
-reports NO IEEE OUI (all zeros), and if so, perform a link rate toggle
-workaround. Because of the bug, the comparison almost never matches, so
-the workaround is effectively **disabled**. This breaks DisplayPort link
-training on systems with FIXED_VS retimer chips that report no IEEE OUI,
-potentially causing **display link failures** (no display output or
-degraded link quality).
+**The hang scenario:**
+1. FAMS2 is NOT in use (`dc_state_is_fams2_in_use()` returns `false`)
+2. The link requires lock due to PSR or Replay being enabled
+   (`dmub_hw_lock_mgr_does_link_require_lock()` returns `true`)
+3. Lock path: `is_required = false || true = true` → **lock IS
+   acquired**
+4. Unlock path: `is_required = false` → unlock is **NOT performed**
+5. The hardware lock is now permanently held → **system hangs**
 
-### 3. BUG ORIGIN AND AFFECTED VERSIONS
+This is triggered specifically on ASICs that use PSR (Panel Self
+Refresh) or Replay but do NOT have FAMS2 enabled, which is a real-world
+configuration (many AMD laptops with eDP panels use PSR).
 
-The bug was introduced in commit `7c6518c1c7319` ("drm/amd/display:
-Update FIXED_VS Link Rate Toggle Workaround Usage"), first appearing in
-v6.15-rc1. This commit has already been **backported** to:
-- **stable/linux-6.14.y** (as `caa4938c5c92f`) — confirmed buggy
-- **stable/linux-6.15.y** through **stable/linux-6.19.y** — all contain
-  the same bug
-- **stable/linux-6.12.y** — NOT affected (doesn't have the OUI check at
-  all, uses older 128b/132b logic)
+### 3. Bug Origin
 
-### 4. CLASSIFICATION
+The bug was introduced by commit `7d041982fe11` ("drm/amd/display:
+Extend inbox0 lock to run Replay/PSR"), which added the
+`dmub_hw_lock_mgr_does_link_require_lock()` call to the **lock** path
+but forgot to update the **unlock** path. That commit first appeared in
+`v6.19-rc1`.
 
-This is a clear **bug fix**:
-- Fixes an incorrect byte comparison that breaks a hardware workaround
-- No new features, no new APIs
-- Pure correction of a string literal typo
+### 4. The Fix
 
-### 5. SCOPE AND RISK ASSESSMENT
+The fix is minimal and surgical — it introduces a local boolean variable
+`is_dmub_lock_required` that stores the lock decision once, then reuses
+it for both lock and unlock:
 
-- **Lines changed**: 1 (single string literal correction)
-- **Files touched**: 1
-- **Complexity**: Trivially low
-- **Risk of regression**: Near zero — this is fixing a byte comparison
-  to match the original intent
-- **Subsystem**: AMD display driver (DisplayPort link training for
-  retimer devices)
+```c
+bool is_dmub_lock_required = false;
+// ...
+if (dc->hwss.dmub_hw_control_lock_fast) {
+    is_dmub_lock_required = dc_state_is_fams2_in_use(dc, context) ||
+                            dmub_hw_lock_mgr_does_link_require_lock(dc,
+stream->link);
+    // ... lock with is_dmub_lock_required ...
+}
+// ... later ...
+if (dc->hwss.dmub_hw_control_lock_fast) {
+    // ... unlock with is_dmub_lock_required (same value!) ...
+}
+```
 
-### 6. USER IMPACT
+This guarantees the lock and unlock always use the same `is_required`
+value.
 
-- **Who is affected**: Users with AMD GPU systems that have FIXED_VS
-  LTTPR (Link Training Tunable PHY Repeater) chips with no IEEE OUI.
-  These are vendor-specific retimer chips commonly found in laptops and
-  USB4/Thunderbolt dock setups.
-- **Severity**: The link rate toggle workaround is completely disabled,
-  potentially causing DisplayPort link training failures (no display,
-  display flickering, or link instability).
-- **Real-world impact**: This directly affects display functionality — a
-  critical user-facing issue.
+### 5. Scope and Risk Assessment
 
-### 7. DEPENDENCY CHECK
+- **Files changed:** 1 file (`dc_hw_sequencer.c`)
+- **Lines changed:** ~6 lines net (variable declaration + 3 modified
+  lines)
+- **Risk:** Extremely low — the fix is purely ensuring consistent
+  behavior between lock/unlock. No new logic, no behavioral changes for
+  correctly-working paths.
+- **Subsystem:** AMD display driver (amdgpu/dc), which is widely used on
+  AMD GPUs
 
-The fix has **zero dependencies** beyond the buggy commit that's already
-present in stable trees:
-- The `lttpr_ieee_oui` field exists in stable (added by `7c6518c1c7319`
-  itself)
-- The fix is a pure string literal correction on the same line
-  introduced by the bug
-- No context changes needed — the fix will apply cleanly to any stable
-  tree that has the buggy commit
+### 6. User Impact
 
-### 8. SUMMARY
+- **Severity:** **System hang** — this is a hard hang when the DMUB
+  hardware lock is held permanently. The GPU display hardware becomes
+  unresponsive, likely requiring a reboot.
+- **Who is affected:** Users with AMD GPUs using PSR or Replay (eDP
+  laptop panels) on ASICs without FAMS2 support. This is a common laptop
+  configuration.
+- **Trigger:** Normal display fast-path updates (page flips) — this is a
+  hot path exercised during normal display operation.
 
-This is a textbook stable backport candidate:
-- **Obviously correct**: Changing `"\x0,\x0,\x0"` to `"\x00\x00\x00"` is
-  a trivially verifiable fix
-- **Fixes a real bug**: The commas in the hex escape create the wrong
-  byte sequence, disabling a necessary hardware workaround
-- **Important issue**: Affects display link training — can cause display
-  failures
-- **Small and contained**: Single character-level fix in one file, one
-  line
-- **No new features**: Pure bug fix
-- **Already tested**: Has Tested-by tag from AMD's test team, plus two
-  Reviewed-by tags
-- **Buggy code exists in stable**: Confirmed present in 6.14.y through
-  6.19.y
+### 7. Stability Indicators
+
+- `Reviewed-by: Swapnil Patel` — peer reviewed
+- `Tested-by: Daniel Wheeler` — tested by AMD's QA
+- The author (Nicholas Kazlauskas) is a key AMD display developer
+- The fix is obviously correct by inspection — lock/unlock must use the
+  same condition
+
+### 8. Dependencies
+
+The fix depends on commit `7d041982fe11` ("Extend inbox0 lock to run
+Replay/PSR") being present. That commit introduced the bug and is in
+`v6.19-rc1` and later. The fix only needs to go to stable trees that
+contain the buggy commit. The `hwss_build_fast_sequence` function itself
+has existed since v6.10 (commit `5324e2b205a2`), but the specific bug
+was only introduced by the inbox0 extension in 6.19-rc1.
+
+Since the buggy commit went into `v6.19-rc1`, the fix would primarily
+target the 6.19.y stable tree. If the buggy commit was also backported
+to earlier stable trees, the fix should follow it.
+
+### 9. Classification
+
+This is a clear **bug fix** for a **system hang** caused by **mismatched
+lock/unlock logic**. It:
+- Fixes a real bug (hardware lock never released → hang)
+- Is obviously correct (use the same condition for lock and unlock)
+- Is small and surgical (6 lines changed in 1 file)
+- Does not introduce any new features or APIs
+- Has been reviewed and tested
+- Fixes a severe user-visible issue (system hang)
+
+**YES** — this commit should be backported to stable kernel trees.
 
 **YES**
 
- .../dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c    | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
-index ce174ce5579c0..6a7c4a59ff4c7 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
-@@ -271,7 +271,7 @@ enum link_training_result dp_perform_fixed_vs_pe_training_sequence(
- 	rate = get_dpcd_link_rate(&lt_settings->link_settings);
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+index e2763b60482a0..052d573408c3e 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -741,6 +741,7 @@ void hwss_build_fast_sequence(struct dc *dc,
+ 	struct dce_hwseq *hws = dc->hwseq;
+ 	struct pipe_ctx *current_pipe = NULL;
+ 	struct pipe_ctx *current_mpc_pipe = NULL;
++	bool is_dmub_lock_required = false;
+ 	unsigned int i = 0;
  
- 	// Only perform toggle if FIXED_VS LTTPR reports no IEEE OUI
--	if (memcmp("\x0,\x0,\x0", &link->dpcd_caps.lttpr_caps.lttpr_ieee_oui[0], 3) == 0) {
-+	if (memcmp("\x00\x00\x00", &link->dpcd_caps.lttpr_caps.lttpr_ieee_oui[0], 3) == 0) {
- 		/* Vendor specific: Toggle link rate */
- 		toggle_rate = (rate == 0x6) ? 0xA : 0x6;
- 
+ 	*num_steps = 0; // Initialize to 0
+@@ -763,11 +764,12 @@ void hwss_build_fast_sequence(struct dc *dc,
+ 		(*num_steps)++;
+ 	}
+ 	if (dc->hwss.dmub_hw_control_lock_fast) {
++		is_dmub_lock_required = dc_state_is_fams2_in_use(dc, context) ||
++					dmub_hw_lock_mgr_does_link_require_lock(dc, stream->link);
++
+ 		block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.dc = dc;
+ 		block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.lock = true;
+-		block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.is_required =
+-			dc_state_is_fams2_in_use(dc, context) ||
+-			dmub_hw_lock_mgr_does_link_require_lock(dc, stream->link);
++		block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.is_required = is_dmub_lock_required;
+ 		block_sequence[*num_steps].func = DMUB_HW_CONTROL_LOCK_FAST;
+ 		(*num_steps)++;
+ 	}
+@@ -906,7 +908,7 @@ void hwss_build_fast_sequence(struct dc *dc,
+ 	if (dc->hwss.dmub_hw_control_lock_fast) {
+ 		block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.dc = dc;
+ 		block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.lock = false;
+-		block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.is_required = dc_state_is_fams2_in_use(dc, context);
++		block_sequence[*num_steps].params.dmub_hw_control_lock_fast_params.is_required = is_dmub_lock_required;
+ 		block_sequence[*num_steps].func = DMUB_HW_CONTROL_LOCK_FAST;
+ 		(*num_steps)++;
+ 	}
 -- 
 2.51.0
 
