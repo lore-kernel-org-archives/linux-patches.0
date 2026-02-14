@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA4A3C2D;
-	Sat, 14 Feb 2026 21:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B41283159;
+	Sat, 14 Feb 2026 21:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104299; cv=none; b=JoW5DYf1ZeGn+tBhTky8+Oxr1ks68IXzcHhYDp6iFOdhs/S4/812vmfBpJPmv9zgEBinDXvRubD39Z/9IekavQB0Nb+UmrFjYgrIdNkPmXH2eOwTPZyo8WoOKxoaZSsDKe6gpYDqQlz+w2isHW2ZEFAaThyhf0xsNMN5yNBNRFI=
+	t=1771104300; cv=none; b=amHB/Aa+P5wrPYfa9IgG0caBFiXET33JRafWIC6+ITSBsBO3WBWFBq7RhaGsYGGiascJ6FxQO8lH4dyyjEVkBxmaz/LRrZTVFKPagzSheBC8VbrCf2NN2EN9eEzu/kEhHSg8mnXlQzqNN9A6accgYAy4S8rea7GPOZcZOxqQgZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104299; c=relaxed/simple;
-	bh=5WmlLR1ZsEQCtJFKRU48Ql7qv4HCh319ycm8oSOdYXo=;
+	s=arc-20240116; t=1771104300; c=relaxed/simple;
+	bh=azvUs/xcRBCDkgUMgacWSsuC73kJLhlbX2dn/mO2XqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qyu/uj0+ohYzYNZi8XIkMSHhT5m+u7ld3gt2/hUTDfLu134dZbv9okdVO6zwqBY79MW3Hv5zmmPlEAx+/8f9ftQ6UFyHhQYU9qfnkP3Qe/zLcKNkZocOhQHGE82dBAe0Qv1thPXMBgeKyamRpifwqC+pkEsoglotsseelEW9tdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aWWRUliX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oJcQVw+2eF1PlkgmBONEaAT85g0TP5MPwOpyCgBr067E8Fvzfvir3f7dnajsw3EUZbQZCA2/uNb0VcH2Pg9+xfb3bff1u3SoryOXb3qXxvQqiA6qxaQknD16MjFU1SEj/3vuHkvnmbTH7krfX6X9B0GBF2yvkRMmz10I5bzyxm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aoyPguT8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aWWRUliX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F1DC19422;
-	Sat, 14 Feb 2026 21:24:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aoyPguT8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DD0C19422;
+	Sat, 14 Feb 2026 21:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104299;
-	bh=5WmlLR1ZsEQCtJFKRU48Ql7qv4HCh319ycm8oSOdYXo=;
+	s=k20201202; t=1771104300;
+	bh=azvUs/xcRBCDkgUMgacWSsuC73kJLhlbX2dn/mO2XqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWWRUliXq1MwGxmM/xM5SZWRVKlfmnrYVmLKHr1L4za79Jmh2ZMmdWd29xUtLOBzy
-	 66CGUR/xf+3q1W34QKth5/c09UTIiEZSaSGvLgumu1JsRYhxWKmQG22bqEpTdwnl0n
-	 voHvyctpWVVNyaq25nnT0iHsedsUGcMIAeQBf2EPk79iu7wq1OPJPMjpSaIVUQv+5/
-	 dDeFRPiDYs+QGkz6WxjiMc28+1LEYZl3jdVpaPQjBCzUjeSPPenVs/VqB7k9/9QiY8
-	 HaYeZiMA/pS9mm4wNY2Wc0ZIqqnnkZRzduLpF11W8bNiHrGfA4dKcYrkxhoogfX+yA
-	 VXw6pa1YwCsHw==
+	b=aoyPguT8VwCIRSqHoT2ppi1a2jE8f54kIUH/sDTZksU/olZydgV66ftUgeB6D9dzs
+	 gMKuBFOCtoQC4ucIXefTI6JZEln3bIl7LKN+Uz/IvZU6Zr6Vd/RHwjmi/JQ7tZ/xfV
+	 rJok8HL9gpjuNo0eTeFe+GEYuhqAUgJ28edMb9Q/O55d773mjuAj4vXZTkSdj5D1kF
+	 JxXkonuvKHl6h+jojVno5kAP0RAqSOlIs3UyLBRJxLN2+TjMRZH+jCwdo3V1HRmAp2
+	 GsZgD1cobdKxy1xiYFFHk4VSSoPDJJF8AWogNPvQWFCujxHPen7ql54ZeWxwJsIwSJ
+	 4b4U8UTMMF9Ww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@kernel.org,
-	neil.armstrong@linaro.org,
-	tglx@kernel.org,
-	bhelgaas@google.com,
-	giovanni.cabiddu@intel.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	lukas@wunner.de,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] myri10ge: avoid uninitialized variable use
-Date: Sat, 14 Feb 2026 16:22:28 -0500
-Message-ID: <20260214212452.782265-3-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] wifi: rtw88: 8822b: Avoid WARNING in rtw8822b_config_trx_mode()
+Date: Sat, 14 Feb 2026 16:22:29 -0500
+Message-ID: <20260214212452.782265-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -58,262 +51,196 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit fd24173439c033ffb3c2a2628fcbc9cb65e62bdb ]
+[ Upstream commit 44d1f624bbdd2d60319374ba85f7195a28d00c90 ]
 
-While compile testing on less common architectures, I noticed that gcc-10 on
-s390 finds a bug that all other configurations seem to miss:
+rtw8822b_set_antenna() can be called from userspace when the chip is
+powered off. In that case a WARNING is triggered in
+rtw8822b_config_trx_mode() because trying to read the RF registers
+when the chip is powered off returns an unexpected value.
 
-drivers/net/ethernet/myricom/myri10ge/myri10ge.c: In function 'myri10ge_set_multicast_list':
-drivers/net/ethernet/myricom/myri10ge/myri10ge.c:391:25: error: 'cmd.data0' is used uninitialized in this function [-Werror=uninitialized]
-  391 |  buf->data0 = htonl(data->data0);
-      |                         ^~
-drivers/net/ethernet/myricom/myri10ge/myri10ge.c:392:25: error: '*((void *)&cmd+4)' is used uninitialized in this function [-Werror=uninitialized]
-  392 |  buf->data1 = htonl(data->data1);
-      |                         ^~
-drivers/net/ethernet/myricom/myri10ge/myri10ge.c: In function 'myri10ge_allocate_rings':
-drivers/net/ethernet/myricom/myri10ge/myri10ge.c:392:13: error: 'cmd.data1' is used uninitialized in this function [-Werror=uninitialized]
-  392 |  buf->data1 = htonl(data->data1);
-drivers/net/ethernet/myricom/myri10ge/myri10ge.c:1939:22: note: 'cmd.data1' was declared here
- 1939 |  struct myri10ge_cmd cmd;
-      |                      ^~~
-drivers/net/ethernet/myricom/myri10ge/myri10ge.c:393:13: error: 'cmd.data2' is used uninitialized in this function [-Werror=uninitialized]
-  393 |  buf->data2 = htonl(data->data2);
-drivers/net/ethernet/myricom/myri10ge/myri10ge.c:1939:22: note: 'cmd.data2' was declared here
- 1939 |  struct myri10ge_cmd cmd;
+Call rtw8822b_config_trx_mode() in rtw8822b_set_antenna() only when
+the chip is powered on.
 
-It would be nice to understand how to make other compilers catch this as
-well, but for the moment I'll just shut up the warning by fixing the
-undefined behavior in this driver.
+------------[ cut here ]------------
+write RF mode table fail
+WARNING: CPU: 0 PID: 7183 at rtw8822b.c:824 rtw8822b_config_trx_mode.constprop.0+0x835/0x840 [rtw88_8822b]
+CPU: 0 UID: 0 PID: 7183 Comm: iw Tainted: G        W  OE       6.17.5-arch1-1 #1 PREEMPT(full)  01c39fc421df2af799dd5e9180b572af860b40c1
+Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: LENOVO 82KR/LNVNB161216, BIOS HBCN18WW 08/27/2021
+RIP: 0010:rtw8822b_config_trx_mode.constprop.0+0x835/0x840 [rtw88_8822b]
+Call Trace:
+ <TASK>
+ rtw8822b_set_antenna+0x57/0x70 [rtw88_8822b 370206f42e5890d8d5f48eb358b759efa37c422b]
+ rtw_ops_set_antenna+0x50/0x80 [rtw88_core 711c8fb4f686162be4625b1d0b8e8c6a5ac850fb]
+ ieee80211_set_antenna+0x60/0x100 [mac80211 f1845d85d2ecacf3b71867635a050ece90486cf3]
+ nl80211_set_wiphy+0x384/0xe00 [cfg80211 296485ee85696d2150309a6d21a7fbca83d3dbda]
+ ? netdev_run_todo+0x63/0x550
+ genl_family_rcv_msg_doit+0xfc/0x160
+ genl_rcv_msg+0x1aa/0x2b0
+ ? __pfx_nl80211_pre_doit+0x10/0x10 [cfg80211 296485ee85696d2150309a6d21a7fbca83d3dbda]
+ ? __pfx_nl80211_set_wiphy+0x10/0x10 [cfg80211 296485ee85696d2150309a6d21a7fbca83d3dbda]
+ ? __pfx_nl80211_post_doit+0x10/0x10 [cfg80211 296485ee85696d2150309a6d21a7fbca83d3dbda]
+ ? __pfx_genl_rcv_msg+0x10/0x10
+ netlink_rcv_skb+0x59/0x110
+ genl_rcv+0x28/0x40
+ netlink_unicast+0x285/0x3c0
+ ? __alloc_skb+0xdb/0x1a0
+ netlink_sendmsg+0x20d/0x430
+ ____sys_sendmsg+0x39f/0x3d0
+ ? import_iovec+0x2f/0x40
+ ___sys_sendmsg+0x99/0xe0
+ ? refill_obj_stock+0x12e/0x240
+ __sys_sendmsg+0x8a/0xf0
+ do_syscall_64+0x81/0x970
+ ? do_syscall_64+0x81/0x970
+ ? ksys_read+0x73/0xf0
+ ? do_syscall_64+0x81/0x970
+ ? count_memcg_events+0xc2/0x190
+ ? handle_mm_fault+0x1d7/0x2d0
+ ? do_user_addr_fault+0x21a/0x690
+ ? exc_page_fault+0x7e/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ </TASK>
+---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260205162935.2126442-1-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/lwfinger/rtw88/issues/366
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/fb9a3444-9319-4aa2-8719-35a6308bf568@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Understanding the Bug
+## Analysis of commit: wifi: rtw88: 8822b: Avoid WARNING in
+rtw8822b_config_trx_mode()
 
-The analysis reveals this is a **real, meaningful bug**, not just a
-compiler warning cleanup:
+### 1. COMMIT MESSAGE ANALYSIS
 
-1. **`struct myri10ge_cmd`** has three `u32` fields: `data0`, `data1`,
-   `data2`
-2. **`myri10ge_send_cmd()`** unconditionally copies ALL THREE fields to
-   hardware via:
-  ```c
-  buf->data0 = htonl(data->data0);
-  buf->data1 = htonl(data->data1);
-  buf->data2 = htonl(data->data2);
-  ```
-  Then sends them to the NIC via `myri10ge_pio_copy()`.
+The commit message is very clear and well-documented:
+- **Problem**: `rtw8822b_set_antenna()` can be called from userspace
+  (via `iw` tool through nl80211/cfg80211/mac80211 path) when the WiFi
+  chip is powered off.
+- **Symptom**: A `WARNING` is triggered in `rtw8822b_config_trx_mode()`
+  because reading RF registers while the chip is powered off returns
+  unexpected values.
+- **Solution**: Only call `rtw8822b_config_trx_mode()` when the chip is
+  powered on (checked via `RTW_FLAG_POWERON` flag).
+- **Evidence**: Full stack trace included showing the WARNING triggered
+  from userspace via `iw` command.
+- **Link**: Bug report at https://github.com/lwfinger/rtw88/issues/366 —
+  real users reported this issue.
 
-3. In many call sites, the `cmd` struct is declared on the stack but
-   **not all fields are initialized** before being passed to
-   `myri10ge_send_cmd()`. This means **random stack garbage is sent to
-   hardware**.
+### 2. CODE CHANGE ANALYSIS
 
-### Bug Impact
+The change is minimal and surgical — a single conditional check:
 
-- **Undefined behavior**: Uninitialized stack variables being used is
-  undefined behavior in C
-- **Hardware commands with garbage data**: The NIC firmware receives
-  commands with random data in unused fields, which could cause
-  unpredictable behavior depending on firmware implementation
-- **Potential data corruption or connectivity issues**: If the firmware
-  interprets garbage values in unexpected ways
-- **Build failure**: On gcc-10 on s390 with `-Werror`, this prevents
-  compilation entirely
+```c
+- rtw8822b_config_trx_mode(rtwdev, antenna_tx, antenna_rx, false);
++       if (test_bit(RTW_FLAG_POWERON, rtwdev->flags))
++               rtw8822b_config_trx_mode(rtwdev, antenna_tx, antenna_rx,
+false);
+```
 
-### Scope of Changes
+This is a 2-line change (net +1 line) that:
+- Wraps the call to `rtw8822b_config_trx_mode()` with a power-on state
+  check
+- Uses the existing `RTW_FLAG_POWERON` flag — no new infrastructure
+  needed
+- The antenna_tx/antenna_rx values are still saved to `hal->antenna_tx`
+  and `hal->antenna_rx` regardless of power state, so the configuration
+  will be applied when the chip powers on
 
-The fix is purely additive — it adds zero-initialization of `cmd.data0`,
-`cmd.data1`, `cmd.data2` at each call site where they were previously
-uninitialized. The changes span **one file** with simple, repetitive
-initialization statements. There's also a minor cleanup moving the `cmd`
-variable declaration to a narrower scope in `myri10ge_close()`.
+### 3. CLASSIFICATION
 
-Functions fixed:
-- `myri10ge_get_firmware_capabilities()`
-- `myri10ge_update_mac_address()`
-- `myri10ge_change_pause()`
-- `myri10ge_change_promisc()`
-- `myri10ge_allocate_rings()`
-- `myri10ge_get_txrx()`
-- `myri10ge_open()`
-- `myri10ge_close()`
-- `myri10ge_set_multicast_list()`
+- **Bug fix**: YES — fixes a WARNING triggered from userspace
+- **Feature addition**: NO
+- **Type**: Fixes improper state handling when userspace interacts with
+  the driver while hardware is powered off
 
-### Stable Kernel Criteria Assessment
+### 4. SCOPE AND RISK ASSESSMENT
 
-| Criterion | Assessment |
-|-----------|-----------|
-| Obviously correct? | Yes — initializing variables to zero before use
-is trivially correct |
-| Fixes a real bug? | Yes — undefined behavior (uninitialized data sent
-to hardware) and build failure on s390 |
-| Small and contained? | Yes — single file, simple initialization
-additions |
-| No new features? | Correct — purely a bug fix |
-| Risk of regression? | Very low — adding zero-initialization cannot
-break correct code |
+- **Lines changed**: 2 lines (1 removed, 2 added)
+- **Files touched**: 1 file
+  (`drivers/net/wireless/realtek/rtw88/rtw8822b.c`)
+- **Complexity**: Extremely low — trivial conditional guard
+- **Risk of regression**: Very low. The only scenario where behavior
+  changes is when the chip is powered off, and in that case, trying to
+  configure RF registers was already broken (producing the WARNING). The
+  antenna settings are saved to HAL state regardless, so they'll be
+  applied at power-on.
+- **Subsystem**: WiFi driver (rtw88) — a commonly used Realtek WiFi
+  driver
 
-### Risk vs Benefit
+### 5. USER IMPACT
 
-- **Risk**: Extremely low. Zero-initializing struct fields before
-  passing them to a function is the safest possible change. The only
-  conceivable risk is if the hardware somehow relied on receiving
-  specific non-zero garbage values, which would be absurd.
-- **Benefit**: Fixes undefined behavior, prevents hardware from
-  receiving garbage command data, and fixes a build failure on s390 with
-  gcc-10.
+- **Who is affected**: Users of rtw88 8822b-based WiFi adapters (common
+  in many laptops)
+- **Trigger**: Simply running `iw` commands to set antenna configuration
+  while the interface is down
+- **Severity**: WARNING in kernel log, potentially confusing to users,
+  and the WARNING mechanism in the driver indicates an unexpected state
+  that could have further consequences
+- **Real-world**: Bug was reported by actual users on GitHub issue
+  tracker
 
-### Concerns
+### 6. STABILITY INDICATORS
 
-- The myri10ge driver is for Myricom 10-Gigabit Ethernet adapters, which
-  are older hardware (Myricom was acquired by CSPI years ago). However,
-  users with this hardware in stable kernels still benefit from correct
-  behavior.
-- No dependency on other commits — this is fully self-contained.
-- Note the use of commas instead of semicolons in some initializations
-  (e.g., `cmd.data0 = 0,` instead of `cmd.data0 = 0;`) — this is
-  syntactically valid C (comma operator) but unusual. It won't cause
-  issues.
+- **Acked-by**: Ping-Ke Shih (Realtek maintainer for this driver)
+- **Signed-off-by**: Both the author and the subsystem maintainer
+- **Bug report link**: Real user-reported issue with reproduction steps
 
-### Conclusion
+### 7. DEPENDENCY CHECK
 
-This commit fixes real undefined behavior where uninitialized stack data
-is sent to network hardware. It's a textbook example of a safe,
-contained bug fix: zero-initializing variables before use in a single
-driver file. The fix prevents both runtime undefined behavior and a
-build failure on certain architectures. The risk of regression is
-negligible.
+- The fix uses `RTW_FLAG_POWERON` and `test_bit()`, both of which have
+  been present in the rtw88 driver for a long time (since the driver's
+  introduction)
+- No dependencies on other commits
+- The `rtw8822b_set_antenna()` function and `rtw8822b_config_trx_mode()`
+  have been stable for many kernel versions
+- This will apply cleanly to any stable tree that has the rtw88 driver
+
+### 8. STABLE KERNEL CRITERIA
+
+1. **Obviously correct and tested**: YES — the logic is trivially
+   correct: don't access hardware registers when hardware is off
+2. **Fixes a real bug**: YES — a WARNING triggered from userspace
+3. **Important issue**: YES — kernel WARNING from userspace interaction,
+   reproducible
+4. **Small and contained**: YES — 2-line change in 1 file
+5. **No new features**: CORRECT — pure bug fix
+6. **Applies cleanly**: Very likely — minimal change to stable code
+
+### Summary
+
+This is a textbook stable backport candidate: a tiny, obviously correct
+fix for a user-triggered WARNING in a commonly used WiFi driver. The fix
+is minimal (2 lines), well-understood, properly reviewed by the
+subsystem maintainer, and addresses a real user-reported issue. The risk
+of regression is negligible.
 
 **YES**
 
- .../net/ethernet/myricom/myri10ge/myri10ge.c  | 28 ++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/rtw8822b.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-index 7be30a8df2685..2f0cdbd4e2ac9 100644
---- a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-+++ b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-@@ -688,6 +688,9 @@ static int myri10ge_get_firmware_capabilities(struct myri10ge_priv *mgp)
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822b.c b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
+index 89b6485b229a8..4d88cc2f41485 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822b.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
+@@ -1005,7 +1005,8 @@ static int rtw8822b_set_antenna(struct rtw_dev *rtwdev,
+ 	hal->antenna_tx = antenna_tx;
+ 	hal->antenna_rx = antenna_rx;
  
- 	/* probe for IPv6 TSO support */
- 	mgp->features = NETIF_F_SG | NETIF_F_HW_CSUM | NETIF_F_TSO;
-+	cmd.data0 = 0,
-+	cmd.data1 = 0,
-+	cmd.data2 = 0,
- 	status = myri10ge_send_cmd(mgp, MXGEFW_CMD_GET_MAX_TSO6_HDR_SIZE,
- 				   &cmd, 0);
- 	if (status == 0) {
-@@ -806,6 +809,7 @@ static int myri10ge_update_mac_address(struct myri10ge_priv *mgp,
- 		     | (addr[2] << 8) | addr[3]);
+-	rtw8822b_config_trx_mode(rtwdev, antenna_tx, antenna_rx, false);
++	if (test_bit(RTW_FLAG_POWERON, rtwdev->flags))
++		rtw8822b_config_trx_mode(rtwdev, antenna_tx, antenna_rx, false);
  
- 	cmd.data1 = ((addr[4] << 8) | (addr[5]));
-+	cmd.data2 = 0;
- 
- 	status = myri10ge_send_cmd(mgp, MXGEFW_SET_MAC_ADDRESS, &cmd, 0);
- 	return status;
-@@ -817,6 +821,9 @@ static int myri10ge_change_pause(struct myri10ge_priv *mgp, int pause)
- 	int status, ctl;
- 
- 	ctl = pause ? MXGEFW_ENABLE_FLOW_CONTROL : MXGEFW_DISABLE_FLOW_CONTROL;
-+	cmd.data0 = 0,
-+	cmd.data1 = 0,
-+	cmd.data2 = 0,
- 	status = myri10ge_send_cmd(mgp, ctl, &cmd, 0);
- 
- 	if (status) {
-@@ -834,6 +841,9 @@ myri10ge_change_promisc(struct myri10ge_priv *mgp, int promisc, int atomic)
- 	int status, ctl;
- 
- 	ctl = promisc ? MXGEFW_ENABLE_PROMISC : MXGEFW_DISABLE_PROMISC;
-+	cmd.data0 = 0;
-+	cmd.data1 = 0;
-+	cmd.data2 = 0;
- 	status = myri10ge_send_cmd(mgp, ctl, &cmd, atomic);
- 	if (status)
- 		netdev_err(mgp->dev, "Failed to set promisc mode\n");
-@@ -1946,6 +1956,8 @@ static int myri10ge_allocate_rings(struct myri10ge_slice_state *ss)
- 	/* get ring sizes */
- 	slice = ss - mgp->ss;
- 	cmd.data0 = slice;
-+	cmd.data1 = 0;
-+	cmd.data2 = 0;
- 	status = myri10ge_send_cmd(mgp, MXGEFW_CMD_GET_SEND_RING_SIZE, &cmd, 0);
- 	tx_ring_size = cmd.data0;
- 	cmd.data0 = slice;
-@@ -2238,12 +2250,16 @@ static int myri10ge_get_txrx(struct myri10ge_priv *mgp, int slice)
- 	status = 0;
- 	if (slice == 0 || (mgp->dev->real_num_tx_queues > 1)) {
- 		cmd.data0 = slice;
-+		cmd.data1 = 0;
-+		cmd.data2 = 0;
- 		status = myri10ge_send_cmd(mgp, MXGEFW_CMD_GET_SEND_OFFSET,
- 					   &cmd, 0);
- 		ss->tx.lanai = (struct mcp_kreq_ether_send __iomem *)
- 		    (mgp->sram + cmd.data0);
- 	}
- 	cmd.data0 = slice;
-+	cmd.data1 = 0;
-+	cmd.data2 = 0;
- 	status |= myri10ge_send_cmd(mgp, MXGEFW_CMD_GET_SMALL_RX_OFFSET,
- 				    &cmd, 0);
- 	ss->rx_small.lanai = (struct mcp_kreq_ether_recv __iomem *)
-@@ -2312,6 +2328,7 @@ static int myri10ge_open(struct net_device *dev)
- 	if (mgp->num_slices > 1) {
- 		cmd.data0 = mgp->num_slices;
- 		cmd.data1 = MXGEFW_SLICE_INTR_MODE_ONE_PER_SLICE;
-+		cmd.data2 = 0;
- 		if (mgp->dev->real_num_tx_queues > 1)
- 			cmd.data1 |= MXGEFW_SLICE_ENABLE_MULTIPLE_TX_QUEUES;
- 		status = myri10ge_send_cmd(mgp, MXGEFW_CMD_ENABLE_RSS_QUEUES,
-@@ -2414,6 +2431,8 @@ static int myri10ge_open(struct net_device *dev)
- 
- 	/* now give firmware buffers sizes, and MTU */
- 	cmd.data0 = dev->mtu + ETH_HLEN + VLAN_HLEN;
-+	cmd.data1 = 0;
-+	cmd.data2 = 0;
- 	status = myri10ge_send_cmd(mgp, MXGEFW_CMD_SET_MTU, &cmd, 0);
- 	cmd.data0 = mgp->small_bytes;
- 	status |=
-@@ -2472,7 +2491,6 @@ static int myri10ge_open(struct net_device *dev)
- static int myri10ge_close(struct net_device *dev)
- {
- 	struct myri10ge_priv *mgp = netdev_priv(dev);
--	struct myri10ge_cmd cmd;
- 	int status, old_down_cnt;
- 	int i;
- 
-@@ -2491,8 +2509,13 @@ static int myri10ge_close(struct net_device *dev)
- 
- 	netif_tx_stop_all_queues(dev);
- 	if (mgp->rebooted == 0) {
-+		struct myri10ge_cmd cmd;
-+
- 		old_down_cnt = mgp->down_cnt;
- 		mb();
-+		cmd.data0 = 0;
-+		cmd.data1 = 0;
-+		cmd.data2 = 0;
- 		status =
- 		    myri10ge_send_cmd(mgp, MXGEFW_CMD_ETHERNET_DOWN, &cmd, 0);
- 		if (status)
-@@ -2956,6 +2979,9 @@ static void myri10ge_set_multicast_list(struct net_device *dev)
- 
- 	/* Disable multicast filtering */
- 
-+	cmd.data0 = 0;
-+	cmd.data1 = 0;
-+	cmd.data2 = 0;
- 	err = myri10ge_send_cmd(mgp, MXGEFW_ENABLE_ALLMULTI, &cmd, 1);
- 	if (err != 0) {
- 		netdev_err(dev, "Failed MXGEFW_ENABLE_ALLMULTI, error status: %d\n",
+ 	return 0;
+ }
 -- 
 2.51.0
 
