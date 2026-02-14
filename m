@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32B81DE887;
-	Sat, 14 Feb 2026 00:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2722E1E1C11;
+	Sat, 14 Feb 2026 00:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030718; cv=none; b=mm5FmwC/w0hwqwEkokdnZe6MtUIxhz2W4ka034r7xjPO+S1HhFpqd3lIUXsDWVLzLDqZANkN96f/fNApf46Iv9GKU03O1DmKWK29LT+Z0sw2yHqLulwhPA6JNC3EAixupqL/zqaVtgtzRN+5sZEZv4qXu/HCAkM9fY+IWzj7yWM=
+	t=1771030719; cv=none; b=GfhoBd18sMIptrVF4NVmnMIwMKHp/FDfmgcEuZ2kKbU3sZXdxz2102lnBoEvnYt6mmVmhRcpoagMFh8IQzdKIN15clmmdChWocIZ/RwpBtUzmsHSOY/gi1LVKToWnEAivc8Lj58+ecD0jxT+RaJHuIFxH0XblW+CST67yMX0NQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030718; c=relaxed/simple;
-	bh=oJk5DkIzIOcPUBLFNrFEmh7/x9GuEfuX178fRIzZMwE=;
+	s=arc-20240116; t=1771030719; c=relaxed/simple;
+	bh=SI5tPEIi2XpojYmcpwPvxI6NXx7gMV9FgZ80i7WZjxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s5rvxWYuIMzZmZjitFdqofupeWMfYVqL+a1ubUVk1ncPLko28rLiwy3/CM/o/FvzpKrQdTMHom9Hkos9zWPWl4dX6PGRmnnr0fTQEbO/VMHzs4sXMLsX+U7fY6YYLtIdvYfh4fVWr3Rpi9a/ySCBy+lT4ipx5ty3kccqdN3cVoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QbgsOnKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XXRHfNRn8ngm819LzWfZDuXRx02DG86lXRnm7vZpkpiRg008HcnINI2JlJeihAelNX0I/C4vNVPCI+Moi1J13CvUYaRDfQH8aUqA+ZXpmDP2gnEjVXCXHyh8JHT5ihn6Fi+MqeIdvk94PU3e0WcZzFuL53elwsCe0lxfBaNA9HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c6ZqmCHg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QbgsOnKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D757FC2BC9E;
-	Sat, 14 Feb 2026 00:58:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c6ZqmCHg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00628C16AAE;
+	Sat, 14 Feb 2026 00:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030717;
-	bh=oJk5DkIzIOcPUBLFNrFEmh7/x9GuEfuX178fRIzZMwE=;
+	s=k20201202; t=1771030718;
+	bh=SI5tPEIi2XpojYmcpwPvxI6NXx7gMV9FgZ80i7WZjxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbgsOnKvNGoeM8gsCJjbgpA4VJ5Ol+CkxSQwNWDpAbt/dFdDCP+Hc/uoaZ40xwF5o
-	 fCI8oRpgAIgNNgru8t2L8+E8a33SHfW10kwyoaXEG1BA9vkMH6MHSuQyMlR8+HARD8
-	 cuo7e4H7k0BX1Dy9w1dwiaScg99M2sJX7eRu9NBYxhuD18xOvZIyK5ZGywQ2u6RuhP
-	 PUTzdrtDFs7hktatKeOWqMylKPl9653rkRdahPt0ykv4n2bhPagIL1l7c0IbYkD9Xq
-	 r+wfLQmeIrr+ZLNhzWOgLJzEp0gsWwRXpP21GvHF820ANvNoSBa1j0qSzthGJjXvV6
-	 JKPvPciL9qnhg==
+	b=c6ZqmCHgiSDkzRkPHEc26nS4WHfucuvsAXd3BNQcCrZxlOIgaeHvLMia2U9qMBTqU
+	 MV1vqBuUvpKHWz2pZTyqYtNN+Wj9EjlpmOGH0NZJhSEWqsey0pMz3WPQa8GnIPr1DR
+	 vhJKiRfW4xcMiPSTj/eIMRLKxDkwdq2OuFrgcSxJfTDq77YgOLVBA2ews0oflZwKff
+	 MIHduld//GLG/AnLFwCiMhd1dCNQO83vd6wyXWEuYKzyxcOmV+10d2Vr/YDj8oQj54
+	 OjBhyinYaq52tKwEMCUgJIIreuqX27vD3VWw9RbDpST8VqQ5TeNgy9wCZMJw7ha+gk
+	 WRMR6rSmNBkAQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+Cc: Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Jianfeng Gao <jianfeng.gao@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sudeep.holla@kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-6.12] firmware: arm_ffa: Unmap Rx/Tx buffers on init failure
-Date: Fri, 13 Feb 2026 19:58:11 -0500
-Message-ID: <20260214005825.3665084-5-sashal@kernel.org>
+	bp@alien8.de,
+	linux-edac@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] EDAC/igen6: Add two Intel Amston Lake SoCs support
+Date: Fri, 13 Feb 2026 19:58:12 -0500
+Message-ID: <20260214005825.3665084-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214005825.3665084-1-sashal@kernel.org>
 References: <20260214005825.3665084-1-sashal@kernel.org>
@@ -49,162 +50,182 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 9fda364cb78c8b9e1abe4029f877300c94655742 ]
+[ Upstream commit 41ca2155d62b0b0d217f59e1bce18362d0c2446f ]
 
-ffa_init() maps the Rx/Tx buffers via ffa_rxtx_map() but on the
-partition setup failure path it never unmaps them.
+Intel Amston Lake SoCs with IBECC (In-Band ECC) capability share the same
+IBECC registers as Alder Lake-N SoCs. Add two new compute die IDs for
+Amston Lake SoC products to enable EDAC support.
 
-Add the missing ffa_rxtx_unmap() call in the error path so that
-the Rx/Tx buffers are properly released before freeing the backing
-pages.
-
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Message-Id: <20251210031656.56194-1-lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Jianfeng Gao <jianfeng.gao@intel.com>
+Link: https://patch.msgid.link/20251124065457.3630949-2-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+Now I have all the information needed for a complete analysis. Here is
+my detailed assessment:
+
+---
+
+## Detailed Analysis: EDAC/igen6: Add two Intel Amston Lake SoCs support
 
 ### 1. Commit Message Analysis
 
-The commit message clearly describes a **resource leak on an error
-path**: `ffa_init()` maps Rx/Tx buffers via `ffa_rxtx_map()`, but when
-`ffa_setup_partitions()` fails, the error path frees the backing pages
-without first unmapping the buffers from the firmware. The fix adds the
-missing `ffa_rxtx_unmap()` call. The commit was accepted by the FF-A
-subsystem maintainer Sudeep Holla.
+The commit adds two new PCI compute die IDs (`DID_ASL_SKU2 = 0x4646`,
+`DID_ASL_SKU3 = 0x4652`) for Intel Amston Lake SoC products to the
+`igen6_edac` driver. The commit message explicitly states these SoCs
+share the same IBECC registers as Alder Lake-N, meaning they reuse the
+existing `adl_n_cfg` configuration structure.
+
+- **Author**: Qiuxu Zhuo (Intel) - the primary maintainer and original
+  author of this driver
+- **Signed-off-by**: Tony Luck (Intel RAS maintainer) - trusted
+  subsystem maintainer
+- **Tested-by**: Jianfeng Gao (Intel) - hardware tested on actual Amston
+  Lake devices
 
 ### 2. Code Change Analysis
 
-The fix is a **single line addition**:
+The diff is minimal - exactly **4 lines added** across a single file:
 
-```2071:2071:drivers/firmware/arm_ffa/driver.c
-        ffa_rxtx_unmap(drv_info->vm_id);
-```
+1. **Two `#define` additions** (lines after existing `DID_ASL_SKU1`):
+   - `#define DID_ASL_SKU2 0x4646`
+   - `#define DID_ASL_SKU3 0x4652`
 
-inserted between `ffa_notifications_cleanup()` and the `free_pages:`
-label.
+2. **Two PCI device table entries** (in `igen6_pci_tbl[]`):
+   - `{ PCI_VDEVICE(INTEL, DID_ASL_SKU2), (kernel_ulong_t)&adl_n_cfg }`
+   - `{ PCI_VDEVICE(INTEL, DID_ASL_SKU3), (kernel_ulong_t)&adl_n_cfg }`
 
-**Understanding the bug mechanism:**
+Both new entries use the already-existing `adl_n_cfg` configuration,
+which has been in the kernel since v6.8 (commit `c4a5398991fd2`). No new
+code paths, no new functions, no behavioral changes. This is a pure PCI
+device ID addition.
 
-The `ffa_init()` function follows this flow:
-1. Allocates Rx/Tx buffer pages (lines 2038-2048)
-2. Maps them to firmware via `ffa_rxtx_map()` (line 2050) — this is an
-   FF-A SMC/HVC call to the secure firmware (e.g., TrustZone / Hafnium
-   hypervisor)
-3. Sets up partitions via `ffa_setup_partitions()` (line 2065)
-4. If partition setup fails, falls through to `free_pages:` which frees
-   the backing pages
+### 3. Classification: New Device IDs (Explicitly Allowed Exception)
 
-The problem: Step 4 **never calls `ffa_rxtx_unmap()`**, so the firmware
-retains stale references to the freed physical pages. The `ffa_exit()`
-function (line 2081-2089) correctly calls `ffa_rxtx_unmap()` before
-freeing pages, confirming the error path was simply missing this
-cleanup.
+This is a textbook **new device ID addition** to an existing driver. The
+stable kernel rules documentation explicitly allows this:
 
-**Consequences of the bug:**
-- The firmware (running in secure world or EL2 hypervisor) still holds
-  mappings to physical addresses of freed kernel pages
-- Those freed pages can be reallocated for other kernel purposes
-- The firmware could write to these stale mappings, causing **memory
-  corruption** of unrelated kernel data
-- On systems with a stage-2 hypervisor, the mapping entries are also
-  leaked
+> "Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers - These
+are trivial one-line additions that enable hardware support"
 
-### 3. Bug Origin
+The pattern is identical to many prior device ID additions to this
+driver:
+- Arizona Beach (`b804d7c59aea0`) - single PCI ID using `adl_n_cfg`
+- Alder Lake-N extra SKU (`65c441ec58224`) - single PCI ID using
+  `adl_n_cfg`
+- Arrow Lake-U/H (`88150cd9501b9`) - PCI IDs using `mtl_p_cfg`
 
-The bug was introduced by commit
-`0c565d16b80074e57e3e56240d13fc6cd6ed0334` ("firmware: arm_ffa: Handle
-partitions setup failures"), which first made `ffa_setup_partitions()`
-return an error and added an error path in `ffa_init()`. Before this
-commit, `ffa_setup_partitions()` was void and never triggered error
-cleanup. This commit landed in **v6.8**. The error path was later
-restructured by `be61da9385766` (v6.15), but the missing unmap persisted
-through both versions.
+### 4. Scope and Risk Assessment
 
-### 4. Classification
+- **Lines changed**: 4 added, 0 deleted
+- **Files touched**: 1 (`drivers/edac/igen6_edac.c`)
+- **Complexity**: Near-zero - just PCI ID defines and table entries
+- **Risk of regression**: Effectively zero. The new PCI IDs will only
+  match hardware that has those specific device IDs. If no such hardware
+  is present, the entries are completely inert. If the hardware IS
+  present, it uses the well-tested `adl_n_cfg` path that Alder Lake-N,
+  Arizona Beach, and Amston Lake SKU1 all use.
 
-This is a **resource leak / firmware-side stale mapping fix** on an
-error path. It is NOT a new feature, API change, or refactoring — it is
-purely adding missing cleanup.
+### 5. User Impact
 
-### 5. Scope and Risk Assessment
+Intel Amston Lake SoCs are described as "tailored for edge computing
+needs" in the original Amston Lake commit. EDAC (Error Detection and
+Correction) is critical for:
+- **Edge computing and embedded systems** - where these SoCs are
+  deployed
+- **Reliability-critical environments** - where memory error detection
+  prevents silent data corruption
+- **Enterprise/industrial applications** - Amston Lake targets this
+  market segment
 
-- **Lines changed**: 1 line added
-- **Files changed**: 1 file (`drivers/firmware/arm_ffa/driver.c`)
-- **Risk**: Extremely low. The `ffa_rxtx_unmap()` function is already
-  used in `ffa_exit()` for normal cleanup. Adding it to the error path
-  is the obvious correct fix. The function itself just issues an FF-A
-  call to the firmware.
-- **Regression potential**: Near zero. This only affects the failure
-  path of `ffa_setup_partitions()`, and calling unmap before freeing is
-  strictly correct.
+Without these device IDs, users with Amston Lake SKU2/SKU3 hardware get
+**no IBECC EDAC support** - meaning memory errors go undetected, which
+can lead to silent data corruption.
 
-### 6. User Impact
+### 6. Stability Indicators
 
-This affects ARM platforms using FF-A (Firmware Framework for Arm) —
-notably ARM TrustZone/OP-TEE systems, Arm CCA systems, and virtualized
-ARM environments with Hafnium. While `ffa_setup_partitions()` failure is
-not the most common path, when it does occur, the consequences (firmware
-holding stale page references, potential memory corruption) are severe.
+- Written by the driver's original author (Qiuxu Zhuo at Intel)
+- Signed-off by the RAS subsystem maintainer (Tony Luck)
+- Hardware-tested by Intel engineer (Jianfeng Gao)
+- The same `adl_n_cfg` config is already used by 12+ Alder Lake-N SKUs,
+  Arizona Beach, and ASL_SKU1 - extremely well-tested code path
 
-### 7. Stable Kernel Criteria Check
+### 7. Dependency Check
 
-| Criterion | Met? |
+This commit depends on commit `099d2db3625b3` ("EDAC/igen6: Add Intel
+Amston Lake SoCs support") which introduced `DID_ASL_SKU1` and the
+Amston Lake comment section. That commit landed in v6.16-rc1. Both
+commits would need to be backported together to stable trees that have
+`adl_n_cfg` (v6.8+). This is straightforward - both are trivial device
+ID additions.
+
+The `adl_n_cfg` configuration exists since v6.8 (commit
+`c4a5398991fd2`), so active stable trees 6.8.y, 6.12.y would have the
+necessary infrastructure. For 6.6.y, the `adl_n_cfg` is also present
+since it was added in v6.8-rc1 which branched after 6.6 - actually let
+me verify:
+
+The `adl_n_cfg` was introduced by `c4a5398991fd2` which is tagged at
+`v6.8-rc1~209^2~8`. This means it's in v6.8+. Active stable trees like
+6.12.y and 6.6.y need to be checked individually, but 6.6.y would NOT
+have `adl_n_cfg` since it predates v6.8. Stable trees 6.8+ would have
+it.
+
+### Summary
+
+| Criterion | Assessment |
 |---|---|
-| Obviously correct and tested | Yes — mirrors `ffa_exit()` cleanup
-exactly |
-| Fixes a real bug | Yes — resource leak + potential memory corruption |
-| Important issue | Yes — firmware-side stale mapping to freed kernel
-pages |
-| Small and contained | Yes — 1 line in 1 file |
-| No new features | Yes — purely error-path cleanup |
-| Applies cleanly | Yes — for v6.8+ trees (may need minor adjustment for
-v6.8-v6.14 which used `cleanup_notifs:` label) |
+| Fixes real issue? | Yes - enables EDAC on Amston Lake SKU2/SKU3
+hardware |
+| Obviously correct? | Yes - trivial PCI ID addition |
+| Small and contained? | Yes - 4 lines, 1 file |
+| New features? | No - enables existing functionality on new hardware |
+| Risk? | Near-zero |
+| Tested? | Yes (Tested-by tag from Intel) |
+| Category | New Device IDs - explicitly allowed in stable |
 
-### 8. Dependency Check
-
-The fix depends on `0c565d16b80074e57e3e56240d13fc6cd6ed0334` (v6.8) for
-the error path to exist, and on `be61da9385766` (v6.15) for the exact
-code structure in the diff. For stable trees between v6.8 and v6.14, a
-trivially adjusted backport would be needed (placing the unmap call
-inside the `cleanup_notifs:` section instead of inline). The fix is
-self-contained and has no other dependencies.
-
-### Conclusion
-
-This is a textbook error-path resource leak fix: a single line adding
-missing firmware unmap before freeing the backing pages. The bug leaves
-the firmware holding stale references to freed kernel memory, which
-could lead to memory corruption. The fix is minimal, obviously correct
-(mirrors `ffa_exit()`), and accepted by the subsystem maintainer. It
-meets all stable kernel criteria.
+This commit is a clear-cut example of the "new device ID" exception to
+stable kernel rules. It enables EDAC support for real Intel hardware
+(Amston Lake edge computing SoCs) with zero risk of regression. The
+change is trivial, authored and tested by Intel engineers, and follows
+the exact same pattern as numerous prior device ID additions to this
+driver.
 
 **YES**
 
- drivers/firmware/arm_ffa/driver.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/edac/igen6_edac.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index c72ee47565856..7209a630f6d16 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -2068,6 +2068,7 @@ static int __init ffa_init(void)
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index 839b6dd3629e9..f2c9270c1893c 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -246,6 +246,8 @@ static struct work_struct ecclog_work;
  
- 	pr_err("failed to setup partitions\n");
- 	ffa_notifications_cleanup();
-+	ffa_rxtx_unmap(drv_info->vm_id);
- free_pages:
- 	if (drv_info->tx_buffer)
- 		free_pages_exact(drv_info->tx_buffer, rxtx_bufsz);
+ /* Compute did IDs for Amston Lake with IBECC */
+ #define DID_ASL_SKU1	0x464a
++#define DID_ASL_SKU2	0x4646
++#define DID_ASL_SKU3	0x4652
+ 
+ /* Compute die IDs for Raptor Lake-P with IBECC */
+ #define DID_RPL_P_SKU1	0xa706
+@@ -628,6 +630,8 @@ static struct pci_device_id igen6_pci_tbl[] = {
+ 	{ PCI_VDEVICE(INTEL, DID_ADL_N_SKU12), (kernel_ulong_t)&adl_n_cfg },
+ 	{ PCI_VDEVICE(INTEL, DID_AZB_SKU1), (kernel_ulong_t)&adl_n_cfg },
+ 	{ PCI_VDEVICE(INTEL, DID_ASL_SKU1), (kernel_ulong_t)&adl_n_cfg },
++	{ PCI_VDEVICE(INTEL, DID_ASL_SKU2), (kernel_ulong_t)&adl_n_cfg },
++	{ PCI_VDEVICE(INTEL, DID_ASL_SKU3), (kernel_ulong_t)&adl_n_cfg },
+ 	{ PCI_VDEVICE(INTEL, DID_RPL_P_SKU1), (kernel_ulong_t)&rpl_p_cfg },
+ 	{ PCI_VDEVICE(INTEL, DID_RPL_P_SKU2), (kernel_ulong_t)&rpl_p_cfg },
+ 	{ PCI_VDEVICE(INTEL, DID_RPL_P_SKU3), (kernel_ulong_t)&rpl_p_cfg },
 -- 
 2.51.0
 
