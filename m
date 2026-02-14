@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F195F28134C;
-	Sat, 14 Feb 2026 21:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB983C2D;
+	Sat, 14 Feb 2026 21:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104316; cv=none; b=dM+hWhoZjd+W+Q6OIkp6SV+ZA1gAiuK5y8GWX4FosiMIMuZgq9Z0JZ7Ro814iVkdOpHxOhU76A8SDdx05ATQTDxXDhDPc4YAjnpc6tScHWnMnmW40Eob5KUySO5y/WSuZ+iRLhCJw/i/VofuAcu3UMPh6efAnlyJKfrzNl+3BZI=
+	t=1771104318; cv=none; b=ggsrpNm8Fim8syVyynHGPYxA0q37R0nw36RiazIDWxlfUQErwK/Y4lIK6o6i7pkpmSyN77H6UP6OR6YkGAgya0nqElgJPMwbmpS5rlulXlAv2JACACcml1jE+V2YXUE5RCYmB//KNgXGvEe3CMRYa9zQO4wcICuBRLDc0hxl31s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104316; c=relaxed/simple;
-	bh=MWhNcefrLhC3Rj5lpUlVUCHDE3IjMVQY4NNTvDIKqyk=;
+	s=arc-20240116; t=1771104318; c=relaxed/simple;
+	bh=/cqgyn07X/GNVDX6qvDE04jLrBdHKDPV3bDIlUemsvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XkzP4mnYpucZc/ukxe/TCWdWnL1Noti221JdP+k9Ah5aeAJq7n9pdky9c0JtWEFuhD+G9orF06+mkXrgPuuMyD2+djH2bGm87jYiVneBzmHZt5E4UR5+a/u50r02ne6cNFWSMn6+2VHqYsHIvzign6bqb4NgKAgB4QrOSpJBxiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u4xRdAde; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PjyM4aexdc/qLZ5ZPENR5917jblpR2htguLiYXUCBcwvujsGABeAIVXlpLj8bzeb+5kBAaa1tVVwdGW4hyPrIKBDbXBa+sTy5cCpr5u8UzXDhCi9zKerHkV2AOcQZ9l6TPXln5qREznNXWhScVIfBAojNG+F/+DgrFmK9DhXEuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R+CNkrOK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u4xRdAde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A46C19423;
-	Sat, 14 Feb 2026 21:25:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R+CNkrOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385BBC16AAE;
+	Sat, 14 Feb 2026 21:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104315;
-	bh=MWhNcefrLhC3Rj5lpUlVUCHDE3IjMVQY4NNTvDIKqyk=;
+	s=k20201202; t=1771104317;
+	bh=/cqgyn07X/GNVDX6qvDE04jLrBdHKDPV3bDIlUemsvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4xRdAdecxoJBDOrws3J/oiJFENuuDp86YX7JpBEAnLV/TUHukRRbQ9wcuLajDfgU
-	 LC4tl6pYD1X6kLVfPKHxPs7HG5RMEJA+7N0esTZN/7SaHlpfEnGgARxKPm2VL51Vk8
-	 0oifNRn/fBHcRpnPtX+k6qaVYGNQN32jmzDnHTaM31JuIB3Vcur/o8fsvCsIRgRroj
-	 41xEjSmR7r7KNUdL+tFUdTrex5YsIZTDkjwz1RfsCXZu6NfgP/yZh3BxkUdnXy1uNZ
-	 OzobJrWE4zKoiL9H/eLXSgBz6wq9BcywdZUC33EZnXfNjyj03h8jHx7xMkskLoy6uS
-	 WlIt5zzjIe83A==
+	b=R+CNkrOKho40F0c3r3zQoObZSHzjZrzgKCYG1QNN9WRMwqtkhohF2LA6+qwEL7RUF
+	 jtFoSMVoqbuXvMqZ0y1SlIh9vdP1W3IKLFcRdjpAc0NOSrj7Bi29u21UuyL6VjNgL4
+	 b7n8Z791ULEahmddoGHyfTUy5BsJny2sw3PIBYNRiU4cV37UXSRFTAoJSLkx5e+KjI
+	 aDJrOBZNM1Dw+k3B7UtlmGWb9o1GRI3rJ488rLUwtPbNT9ADckKxZCvtFCiAK+TVkG
+	 ZAY/ZC4G/TcYxiP3pvJ2x74/DeCCS7rMDyDBrvtoRShAQEifV9E7d3VlivEY4K7IB8
+	 V27sbBJb8d6aw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hsiu-Ming Chang <cges30901@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Daniel Gomez <da.gomez@samsung.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] wifi: rtw88: rtw8821cu: Add ID for Mercusys MU6H
-Date: Sat, 14 Feb 2026 16:22:36 -0500
-Message-ID: <20260214212452.782265-11-sashal@kernel.org>
+	agk@redhat.com,
+	snitzer@kernel.org,
+	bmarzins@redhat.com,
+	dm-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-6.6] dm: replace -EEXIST with -EBUSY
+Date: Sat, 14 Feb 2026 16:22:37 -0500
+Message-ID: <20260214212452.782265-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -48,104 +51,133 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hsiu-Ming Chang <cges30901@gmail.com>
+From: Daniel Gomez <da.gomez@samsung.com>
 
-[ Upstream commit 77653c327e11c71c5363b18a53fbf2b92ed21da4 ]
+[ Upstream commit b13ef361d47f09b7aecd18e0383ecc83ff61057e ]
 
-Add support for Mercusys MU6H AC650 High Gain Wireless Dual Band USB
-Adapter V1.30. It is based on RTL8811CU, usb device ID is 2c4e:0105.
+The -EEXIST error code is reserved by the module loading infrastructure
+to indicate that a module is already loaded. When a module's init
+function returns -EEXIST, userspace tools like kmod interpret this as
+"module already loaded" and treat the operation as successful, returning
+0 to the user even though the module initialization actually failed.
 
-Signed-off-by: Hsiu-Ming Chang <cges30901@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251205003245.5762-1-cges30901@gmail.com
+This follows the precedent set by commit 54416fd76770 ("netfilter:
+conntrack: helper: Replace -EEXIST by -EBUSY") which fixed the same
+issue in nf_conntrack_helper_register().
+
+Affected modules:
+  * dm_cache dm_clone dm_integrity dm_mirror dm_multipath dm_pcache
+  * dm_vdo dm-ps-round-robin dm_historical_service_time dm_io_affinity
+  * dm_queue_length dm_service_time dm_snapshot
+
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: Adding USB Device ID for Mercusys MU6H to rtw8821cu driver
+The precedent commit exists in the tree and was merged through the net
+subsystem, confirming this is a recognized bug pattern.
 
-### Commit Message Analysis
-The commit adds a USB device ID (vendor: 0x2c4e, product: 0x0105) for
-the Mercusys MU6H AC650 High Gain Wireless Dual Band USB Adapter to the
-existing rtw8821cu driver. The device is based on the RTL8811CU chipset.
+### Stable Kernel Criteria Assessment
 
-### Code Change Analysis
-The change is a **two-line addition** to the USB device ID table in
-`drivers/net/wireless/realtek/rtw88/rtw8821cu.c`:
-```c
-{ USB_DEVICE_AND_INTERFACE_INFO(0x2c4e, 0x0105, 0xff, 0xff, 0xff),
-  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Mercusys */
-```
-
-This follows the exact same pattern as every other entry in the table
-(D-Link, Edimax, and the various Realtek-branded variants). The entry
-uses the same `rtw8821c_hw_spec` hardware specification structure,
-meaning the driver already fully supports this chipset — it just needs
-to know about this particular vendor/product ID combination.
-
-### Classification
-This is a **new device ID addition** to an existing driver — one of the
-explicitly listed exceptions that IS appropriate for stable backporting.
-From the stable rules:
-
-> **NEW DEVICE IDs (Very Common):** Adding PCI IDs, USB IDs, ACPI IDs,
-etc. to existing drivers. These are trivial one-line additions that
-enable hardware support. Rule: The driver must already exist in stable;
-only the ID is new.
-
-### Risk Assessment
-- **Risk: Extremely low.** This is a pure data addition — a new entry in
-  a USB ID matching table. It cannot affect any existing functionality.
-- **Scope: Minimal.** Two lines added, one file changed, no logic
-  changes.
-- **Regression potential: Zero.** The new ID only matches a specific USB
-  device (0x2c4e:0x0105). No other device is affected.
+1. **Obviously correct and tested**: Yes - trivial error code
+   substitution with clear rationale
+2. **Fixes a real bug**: Yes - modules can silently fail to initialize,
+   and userspace reports success
+3. **Fixes an important issue**: Yes - affects many commonly used DM
+   modules in enterprise storage environments; silent module load
+   failures can cause data availability issues
+4. **Small and contained**: Yes - 4 single-line changes, all identical
+   in nature
+5. **No new features or APIs**: Correct - only changes an error code
+6. **Applies cleanly**: These files and functions have been stable for a
+   long time; the change should apply cleanly to most stable trees
 
 ### User Impact
-- Users with this specific Mercusys MU6H adapter cannot use it at all
-  without this ID entry. With the entry, the existing (and already
-  working) rtw8821cu driver will automatically bind to the device.
-- This is a consumer WiFi adapter, so real users on stable kernels would
-  benefit from this backport.
 
-### Stability Indicators
-- Acked-by the Realtek maintainer (Ping-Ke Shih)
-- The pattern is identical to existing entries
-- The rtw88 driver and rtw8821cu sub-driver already exist in stable
-  trees
+Device-mapper is heavily used in enterprise Linux (LVM, RAID, encryption
+via dm-crypt, thin provisioning, etc.). If any DM module fails to
+register its target/type during init and returns `-EEXIST`, kmod will
+silently swallow the error. This could lead to:
+- Storage subsystems appearing available but not functioning
+- Difficult-to-diagnose failures in storage setups
+- Potential data availability issues
 
-### Dependencies
-- None. This is a completely self-contained change.
+### Risk vs Benefit
 
-### Conclusion
-This is a textbook example of a device ID addition that should be
-backported to stable. It enables hardware support for a specific USB
-WiFi adapter using an already-existing, well-tested driver. The change
-is trivial, zero-risk, and directly benefits users who own this device.
+- **Risk**: Near zero. The change is a trivial error code substitution
+  that makes the semantics correct.
+- **Benefit**: Prevents silent module initialization failures across
+  many DM modules, improving error visibility and system reliability.
+
+This is a textbook stable backport candidate: a small, obviously correct
+fix to a real bug with meaningful user impact and essentially zero
+regression risk.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw88/rtw8821cu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm-exception-store.c | 2 +-
+ drivers/md/dm-log.c             | 2 +-
+ drivers/md/dm-path-selector.c   | 2 +-
+ drivers/md/dm-target.c          | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-index 7a0fffc359e25..8cd09d66655db 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-@@ -37,6 +37,8 @@ static const struct usb_device_id rtw_8821cu_id_table[] = {
- 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Edimax */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xd811, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Edimax */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2c4e, 0x0105, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Mercusys */
- 	{},
- };
- MODULE_DEVICE_TABLE(usb, rtw_8821cu_id_table);
+diff --git a/drivers/md/dm-exception-store.c b/drivers/md/dm-exception-store.c
+index c3799757bf4a0..88f119a0a2ae0 100644
+--- a/drivers/md/dm-exception-store.c
++++ b/drivers/md/dm-exception-store.c
+@@ -116,7 +116,7 @@ int dm_exception_store_type_register(struct dm_exception_store_type *type)
+ 	if (!__find_exception_store_type(type->name))
+ 		list_add(&type->list, &_exception_store_types);
+ 	else
+-		r = -EEXIST;
++		r = -EBUSY;
+ 	spin_unlock(&_lock);
+ 
+ 	return r;
+diff --git a/drivers/md/dm-log.c b/drivers/md/dm-log.c
+index 9d85d045f9d9d..bced5a783ee33 100644
+--- a/drivers/md/dm-log.c
++++ b/drivers/md/dm-log.c
+@@ -121,7 +121,7 @@ int dm_dirty_log_type_register(struct dm_dirty_log_type *type)
+ 	if (!__find_dirty_log_type(type->name))
+ 		list_add(&type->list, &_log_types);
+ 	else
+-		r = -EEXIST;
++		r = -EBUSY;
+ 	spin_unlock(&_lock);
+ 
+ 	return r;
+diff --git a/drivers/md/dm-path-selector.c b/drivers/md/dm-path-selector.c
+index d0b883fabfeb6..2b0ac200f1c02 100644
+--- a/drivers/md/dm-path-selector.c
++++ b/drivers/md/dm-path-selector.c
+@@ -107,7 +107,7 @@ int dm_register_path_selector(struct path_selector_type *pst)
+ 
+ 	if (__find_path_selector_type(pst->name)) {
+ 		kfree(psi);
+-		r = -EEXIST;
++		r = -EBUSY;
+ 	} else
+ 		list_add(&psi->list, &_path_selectors);
+ 
+diff --git a/drivers/md/dm-target.c b/drivers/md/dm-target.c
+index 8fede41adec00..1fd41289de367 100644
+--- a/drivers/md/dm-target.c
++++ b/drivers/md/dm-target.c
+@@ -88,7 +88,7 @@ int dm_register_target(struct target_type *tt)
+ 	if (__find_target_type(tt->name)) {
+ 		DMERR("%s: '%s' target already registered",
+ 		      __func__, tt->name);
+-		rv = -EEXIST;
++		rv = -EBUSY;
+ 	} else {
+ 		list_add(&tt->list, &_targets);
+ 	}
 -- 
 2.51.0
 
