@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB2A30DD30;
-	Sat, 14 Feb 2026 21:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD9F299931;
+	Sat, 14 Feb 2026 21:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104374; cv=none; b=S/8AiT/xF6UdHNVnRZQWvCzTMWGSOyKIC4xb0qLGsXHDKoQDSpCi1OOggM9xqkG9Ja6xmNO9JH8m+yjB3yxicQywSCneB2CePWZsJFgKLVNqCftfX29fO0iNGhyVbftMtO6BRtQMWRkiAAE8ftiQ+JS7AaKnM7L7A2yFBqtJtbM=
+	t=1771104377; cv=none; b=hoyylfIVaPqgWz03BwtBbazfxD393x9aQtv9AMI7nZUfR1Lu8fj3XIBxtASiKNoAifNzyeVo++tgU4MefArPjR6Dse5X1bV/t2o5G1BxTfKdoBo1CTOXluwcjQCJjrrCGq3Ni+xWsxtsU3IlqJR3tczjX/HShxQdCiRhNSoJR5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104374; c=relaxed/simple;
-	bh=9gzfxVU7+8bvYKPrLKPr/cWufaY6uETnn7pre+sMgas=;
+	s=arc-20240116; t=1771104377; c=relaxed/simple;
+	bh=LJvwCkXL776zJX/WvyQWr9cwHQHia4o0eSMgh+ZA3jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PfMR1CVhpcuv9FkjrCuabIPx/6l6E5zF4AHIK+q/0eL4yER91NrYmDFZb1jtk6+lQAzNejmY5IOLV9gl7VE0VAdrMsrD9RKRnekKHa/uvqBM02ve8aBPwhUY+sE61h11zD+WizurN6WpOxh6/3+BMYVXTCj7D6gp2ZmkEZ7o8qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lOUifURU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hm7cL/j8eV8yBpIUI0Z3/buq3x8/itYl+LANQSns+p+Gnjc6VkVh7oHmJzFd8LmO0AQmtA88urwOMcXEGU5fMxkZUaXpiVx7KmsjQmftLo84ELdZ6lEgpF5G3f6EnB0POynAHb6k8CrzLlNF5isYGzjEBZPsd9mlaI9kWWgEEBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G7ExQu3w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lOUifURU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD435C19422;
-	Sat, 14 Feb 2026 21:26:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G7ExQu3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959F8C19422;
+	Sat, 14 Feb 2026 21:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104374;
-	bh=9gzfxVU7+8bvYKPrLKPr/cWufaY6uETnn7pre+sMgas=;
+	s=k20201202; t=1771104377;
+	bh=LJvwCkXL776zJX/WvyQWr9cwHQHia4o0eSMgh+ZA3jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lOUifURUJYC+gcic1v8R8UUxwTfTUP96gJYUY0QRQwAs518YFdXpHcoWaOneGh8Hb
-	 T078L9If+xjpTmohVv2Wb/zh0ECHVl+PYMSXI/Ymix3wgSGE9x9GCAaVGi30+rgY9M
-	 hpUouN1I3HBgaW7HU4AV0yihltpUV25zcKG1wxn4XSR0ITiw4v4I0ol5cUaUy/DFMf
-	 VtkoD0aXHOJzWLkm0aOnM+etK7sXHkSadUFGrCIYTB1FgAGCjJ05WQtBPmOseYbdOd
-	 r9Li0DTfTkMeMhbLJEJXhxTpxdbGFIf1eNCk1qaEPg1K22txKlJUhPSzTQF9uM6q13
-	 NvHXtdeNt/zLg==
+	b=G7ExQu3wKY9pi26Ub3/a0Dk49v3hKKO81AlYnz8VPorvigWiG0R3s9FpelIwJRv3U
+	 hz9ZYvwjehTNDld4/cq578Coa5YkSc2vJO3SjdVl3mKHWcXxonKZDd+rizrc+EyOKw
+	 OltA4ylQtnGZnQU9iARBQbTcI5hzGNTmuWgVCgZhuOum6bidtcTYrtG6nox1qb1dAr
+	 V1hBQZbwOU8WpV528ur3MAtqR0J21IeXzkgVlHiBgjbHEZmp6+hmvo5XbtPaoNGZ4Q
+	 F+7tC6Q20VkzraQhqjOau1lES/8lvQ0LxbnE5R+NCmJ22VJJNFohIjCAmhYJKJQZ/a
+	 w2pHjkgAI8law==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Koichiro Den <den@valinux.co.jp>,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+Cc: Carl Lee <carl.lee@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jingoohan1@gmail.com,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] PCI: dwc: ep: Cache MSI outbound iATU mapping
-Date: Sat, 14 Feb 2026 16:23:15 -0500
-Message-ID: <20260214212452.782265-50-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-5.10] nfc: nxp-nci: remove interrupt trigger type
+Date: Sat, 14 Feb 2026 16:23:16 -0500
+Message-ID: <20260214212452.782265-51-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -53,217 +52,150 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Carl Lee <carl.lee@amd.com>
 
-[ Upstream commit 8719c64e76bf258cc8f44109740c854f2e2ead2e ]
+[ Upstream commit 57be33f85e369ce9f69f61eaa34734e0d3bd47a7 ]
 
-dw_pcie_ep_raise_msi_irq() currently programs an outbound iATU window
-for the MSI target address on every interrupt and tears it down again
-via dw_pcie_ep_unmap_addr().
+For NXP NCI devices (e.g. PN7150), the interrupt is level-triggered and
+active high, not edge-triggered.
 
-On systems that heavily use the AXI bridge interface (for example when
-the integrated eDMA engine is active), this means the outbound iATU
-registers are updated while traffic is in flight. The DesignWare
-endpoint databook 5.40a - "3.10.6.1 iATU Outbound Programming Overview"
-warns that updating iATU registers in this situation is not supported,
-and the behavior is undefined.
+Using IRQF_TRIGGER_RISING in the driver can cause interrupts to fail
+to trigger correctly.
 
-Under high MSI and eDMA load this pattern results in occasional bogus
-outbound transactions and IOMMU faults, on the RC side, such as:
+Remove IRQF_TRIGGER_RISING and rely on the IRQ trigger type configured
+via Device Tree.
 
-  ipmmu-vmsa eed40000.iommu: Unhandled fault: status 0x00001502 iova 0xfe000000
-
-followed by the system becoming unresponsive. This is the actual output
-observed on Renesas R-Car S4, with its ipmmu_hc used with PCIe ch0.
-
-There is no need to reprogram the iATU region used for MSI on every
-interrupt. The host-provided MSI address is stable while MSI is enabled,
-and the endpoint driver already dedicates a scratch buffer for MSI
-generation.
-
-Cache the aligned MSI address and map size, program the outbound iATU
-once, and keep the window enabled. Subsequent interrupts only perform a
-write to the MSI scratch buffer, avoiding dynamic iATU reprogramming in
-the hot path and fixing the lockups seen under load.
-
-dw_pcie_ep_raise_msix_irq() is not modified, as each vector can have a
-different msg_addr, and because the msg_addr is allowed to be changed
-while the vector is masked. Neither problem is easy to solve with the
-current design. Instead, the plan is for the DWC vendor drivers to
-transition to dw_pcie_ep_raise_msix_irq_doorbell(), which does not rely
-on the iATU.
-
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-[cassel: improve commit message]
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20251222110144.3299523-2-cassel@kernel.org
+Signed-off-by: Carl Lee <carl.lee@amd.com>
+Link: https://patch.msgid.link/20260205-fc-nxp-nci-remove-interrupt-trigger-type-v2-1-79d2ed4a7e42@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the **current state of the code** (before the patch is
-applied) still has the map/unmap on every call pattern at lines 705-712.
-The patch hasn't been applied yet to this tree — this is the candidate
-being evaluated.
+## Analysis of nfc: nxp-nci: remove interrupt trigger type
 
-### 8. STANDALONE ASSESSMENT
+### 1. COMMIT MESSAGE ANALYSIS
 
-Looking at the dependency analysis more carefully: the agent found that
-in some stable tree, this commit was brought in as part of a 10-commit
-dependency chain for a different fix. However, **that doesn't change the
-standalone value of this commit**. The commit itself:
+The commit states that for NXP NCI devices (e.g., PN7150), the interrupt
+is **level-triggered and active high**, not edge-triggered. The driver
+was incorrectly using `IRQF_TRIGGER_RISING`, which can cause
+**interrupts to fail to trigger correctly**. The fix removes the
+hardcoded trigger type and relies on the Device Tree configuration
+instead.
 
-1. **Is a standalone bug fix** — it fixes iATU reprogramming under load
-   causing IOMMU faults and system lockups on real hardware
-2. **Has no prerequisite patches** — `dw_pcie_ep_align_addr`,
-   `dw_pcie_ep_map_addr`, and `dw_pcie_ep_unmap_addr` all exist in the
-   current tree
-3. **Only adds internal fields to a struct** — no API changes needed
-   from other patches
-4. **Applies cleanly** to the current code (the pre-patch code matches
-   lines 704-712)
+Key phrases:
+- "interrupts to fail to trigger correctly" — this is a real hardware
+  bug affecting functionality
+- "level-triggered and active high, not edge-triggered" — clear
+  technical justification
 
-### RISK vs BENEFIT
+### 2. CODE CHANGE ANALYSIS
 
-**Benefit**: HIGH
-- Fixes real system lockups under load on DWC PCIe endpoint platforms
-- The bug is documented by the hardware vendor's databook as "undefined
-  behavior"
-- Concrete symptoms reported on Renesas R-Car S4
-- System becomes unresponsive — this is a critical stability issue
+The change is a **single-line modification**:
 
-**Risk**: LOW-MEDIUM
-- The change is well-contained within 2 files, single subsystem
-- The caching logic is straightforward and defensive (WARN_ON_ONCE on
-  unexpected address change)
-- Proper cleanup on endpoint stop prevents resource leaks
-- Only affects DWC PCIe endpoint users
+```c
+- IRQF_TRIGGER_RISING | IRQF_ONESHOT,
++ IRQF_ONESHOT,
+```
 
-### CONCERNS
+This removes `IRQF_TRIGGER_RISING` from the `request_threaded_irq()`
+call, leaving only `IRQF_ONESHOT`. When no trigger type is specified,
+the kernel uses the trigger type configured by the platform (Device Tree
+or ACPI), which is the correct behavior for this device.
 
-1. The change modifies `struct dw_pcie_ep` by adding 3 fields — this is
-   safe as long as no out-of-tree modules depend on this struct layout
-   (unlikely given it's a controller-specific struct).
-2. The WARN_ON_ONCE path returns -EINVAL if MSI address changes — this
-   is a safe fallback since the databook says reprogramming under load
-   is undefined anyway.
-3. The commit applies cleanly to the current tree based on code
-   inspection.
+**Bug mechanism**: The PN7150 NFC chip uses a level-triggered, active-
+high interrupt. When the driver hardcodes `IRQF_TRIGGER_RISING` (edge-
+triggered), it can:
+- Miss interrupts if the line stays high (level vs edge semantic
+  mismatch)
+- Cause the NFC controller to become unresponsive because the driver
+  never sees the interrupt
+- On some interrupt controllers, specifying a conflicting trigger type
+  can cause the IRQ to not work at all
 
-### CONCLUSION
+### 3. CLASSIFICATION
 
-This commit fixes a **real, documented hardware bug** that causes
-**system lockups** on DesignWare PCIe endpoint platforms under load. The
-fix is:
-- **Obviously correct**: Caching an iATU mapping that the hardware
-  vendor's databook says should not be reprogrammed while traffic is in
-  flight
-- **Well-tested**: Verified on Renesas R-Car S4
-- **Contained**: 2 files, single subsystem, no API changes
-- **Defensive**: WARN_ON_ONCE + -EINVAL on unexpected conditions, proper
-  cleanup on stop
+This is a **hardware bug fix**. The driver had an incorrect interrupt
+configuration that causes the device to malfunction. It falls into the
+category of fixing a real bug that prevents hardware from working
+correctly.
 
-This clearly meets all stable kernel criteria for a backport.
+This is NOT a feature addition, API change, or refactoring. It's
+correcting an incorrect driver parameter.
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+- **Size**: 1 line changed in 1 file — minimal scope
+- **Risk**: Very low. Removing the hardcoded trigger type and deferring
+  to DT/platform configuration is the standard, correct approach in
+  modern Linux kernel drivers. Many other drivers have undergone similar
+  changes.
+- **Subsystem**: NFC driver (nxp-nci) — niche but has real users (NFC on
+  embedded/mobile platforms)
+- **Regression potential**: Low. If a system was working with
+  `IRQF_TRIGGER_RISING` before, it means either (a) the DT already
+  specified the correct trigger type (in which case removing the driver
+  override changes nothing) or (b) the interrupt controller happened to
+  work with the wrong trigger type. In case (b), the DT should already
+  have the correct type defined, and this change makes the driver
+  correctly defer to it.
+
+### 5. USER IMPACT
+
+NXP PN7150 is a commonly used NFC controller, found in embedded systems
+and IoT devices — exactly the kind of platforms running stable kernels.
+Users affected by this bug would see their NFC controller fail to work
+properly (missed interrupts = no NFC communication). This is a
+**complete functionality failure** for affected users.
+
+The "v2" in the link suggests this went through review iteration,
+indicating careful consideration.
+
+### 6. STABILITY INDICATORS
+
+- Signed by AMD engineer (Carl Lee)
+- Accepted by networking maintainer (Jakub Kicinski)
+- Clear, well-documented commit message explaining the technical issue
+- The fix follows established kernel patterns (relying on DT for IRQ
+  type)
+
+### 7. DEPENDENCY CHECK
+
+This is a standalone, self-contained fix. It has no dependencies on
+other commits. The `nxp-nci` driver exists in all recent stable trees,
+and the `request_threaded_irq()` call with `IRQF_TRIGGER_RISING |
+IRQF_ONESHOT` has been there since the driver was introduced. The fix
+will apply cleanly to stable trees.
+
+### Summary
+
+This is a small, surgical, one-line fix that corrects an incorrect
+interrupt trigger type in the NXP NCI NFC driver. The bug causes
+interrupts to fail to trigger correctly, making the NFC hardware non-
+functional in some configurations. The fix is obviously correct
+(removing a wrong hardcoded value in favor of the platform-specified
+one), has minimal regression risk, and affects real hardware users. It
+meets all stable kernel criteria.
 
 **YES**
 
- .../pci/controller/dwc/pcie-designware-ep.c   | 48 ++++++++++++++++---
- drivers/pci/controller/dwc/pcie-designware.h  |  5 ++
- 2 files changed, 47 insertions(+), 6 deletions(-)
+ drivers/nfc/nxp-nci/i2c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 19571ac2b9617..18b20cc877d9e 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -601,6 +601,16 @@ static void dw_pcie_ep_stop(struct pci_epc *epc)
- 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
+index 049662ffdf972..6a5ce8ff91f0b 100644
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -305,7 +305,7 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
  
-+	/*
-+	 * Tear down the dedicated outbound window used for MSI
-+	 * generation. This avoids leaking an iATU window across
-+	 * endpoint stop/start cycles.
-+	 */
-+	if (ep->msi_iatu_mapped) {
-+		dw_pcie_ep_unmap_addr(epc, 0, 0, ep->msi_mem_phys);
-+		ep->msi_iatu_mapped = false;
-+	}
-+
- 	dw_pcie_stop_link(pci);
- }
- 
-@@ -702,14 +712,37 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
- 	msg_addr = ((u64)msg_addr_upper) << 32 | msg_addr_lower;
- 
- 	msg_addr = dw_pcie_ep_align_addr(epc, msg_addr, &map_size, &offset);
--	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
--				  map_size);
--	if (ret)
--		return ret;
- 
--	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
-+	/*
-+	 * Program the outbound iATU once and keep it enabled.
-+	 *
-+	 * The spec warns that updating iATU registers while there are
-+	 * operations in flight on the AXI bridge interface is not
-+	 * supported, so we avoid reprogramming the region on every MSI,
-+	 * specifically unmapping immediately after writel().
-+	 */
-+	if (!ep->msi_iatu_mapped) {
-+		ret = dw_pcie_ep_map_addr(epc, func_no, 0,
-+					  ep->msi_mem_phys, msg_addr,
-+					  map_size);
-+		if (ret)
-+			return ret;
-+
-+		ep->msi_iatu_mapped = true;
-+		ep->msi_msg_addr = msg_addr;
-+		ep->msi_map_size = map_size;
-+	} else if (WARN_ON_ONCE(ep->msi_msg_addr != msg_addr ||
-+				ep->msi_map_size != map_size)) {
-+		/*
-+		 * The host changed the MSI target address or the required
-+		 * mapping size changed. Reprogramming the iATU at runtime is
-+		 * unsafe on this controller, so bail out instead of trying to
-+		 * update the existing region.
-+		 */
-+		return -EINVAL;
-+	}
- 
--	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
-+	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
- 
- 	return 0;
- }
-@@ -1087,6 +1120,9 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
- 	struct device *dev = pci->dev;
- 
- 	INIT_LIST_HEAD(&ep->func_list);
-+	ep->msi_iatu_mapped = false;
-+	ep->msi_msg_addr = 0;
-+	ep->msi_map_size = 0;
- 
- 	epc = devm_pci_epc_create(dev, &epc_ops);
- 	if (IS_ERR(epc)) {
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 31685951a0804..f555926a526ea 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -479,6 +479,11 @@ struct dw_pcie_ep {
- 	void __iomem		*msi_mem;
- 	phys_addr_t		msi_mem_phys;
- 	struct pci_epf_bar	*epf_bar[PCI_STD_NUM_BARS];
-+
-+	/* MSI outbound iATU state */
-+	bool			msi_iatu_mapped;
-+	u64			msi_msg_addr;
-+	size_t			msi_map_size;
- };
- 
- struct dw_pcie_ops {
+ 	r = request_threaded_irq(client->irq, NULL,
+ 				 nxp_nci_i2c_irq_thread_fn,
+-				 IRQF_TRIGGER_RISING | IRQF_ONESHOT,
++				 IRQF_ONESHOT,
+ 				 NXP_NCI_I2C_DRIVER_NAME, phy);
+ 	if (r < 0)
+ 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
 -- 
 2.51.0
 
