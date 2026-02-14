@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA111DE8AE;
-	Sat, 14 Feb 2026 01:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC89621CC51;
+	Sat, 14 Feb 2026 01:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031086; cv=none; b=cgskD4lTeJsUjTLjiqzRMF+iW20C2oLRYDnyV6PquQ+IePEeqA4bP2bUZzZnFQHBq0gtO7cr6TogP0LDqM9ryOySmEoyhWeAmA1FX8EKQAhz1m+Yg2Fv4R1pr9T82tnHy19dg9nB3K6H54YWj6nIY2/zof8V21ijTunT/oQHazU=
+	t=1771031089; cv=none; b=PrwxQ1Mevdk8RZtmmyeL5G0DxyHWqUHyBQIXLyaIC8jg8YbEPxKHqcO/a82B6JeQP8zC1vOOPWuBQ+Zc4EHOBd0AbxFhswoM6y+cLjT3yplxmZkWYAlHyVAHDcd3HyAAB3+SpEems3tS0CiMVn7Kqnh6WKO4Mjxw9B6Y1xyY4nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031086; c=relaxed/simple;
-	bh=oxRyOpzNXomCcgLihhBoiOsspK8db4IoQtFKoIklDvo=;
+	s=arc-20240116; t=1771031089; c=relaxed/simple;
+	bh=RltvkgbiOio83qQupUFJ2gLje9Ee9CeirjZn3HX7XiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bq1b5Yvy9KpsX3N2m35qgsNLUYMZRZX8YALKgXECjZmgLlT86WmKDR58ehv/0ytG+HErLSuUffiwIm74Txiz2uB32dgLtPJgDq2eLKabiDkxRkWR6FQY91W4r0w/7bXVSgmlq4WdRhxh34420pcfou1Np0j6w/Plv/pq68geUX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WEkVVN6u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ca7n6GukImV4qe07iTitQ7/kD+iBTW+oeoaLwlh9Rofj+LRrnuHjEB377+DJTkitQN1ibu0YNfmkdJZZdJE9DJGujN03rzKnvqMs8DT/InbCovb/9s2e4jPpj7chGN4VkF1+KVSzkdV+QJrLUuwjKhbznu1mNoZzu+07QuL7Hyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWi2SCEy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WEkVVN6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2BFC16AAE;
-	Sat, 14 Feb 2026 01:04:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWi2SCEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0BDC16AAE;
+	Sat, 14 Feb 2026 01:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031086;
-	bh=oxRyOpzNXomCcgLihhBoiOsspK8db4IoQtFKoIklDvo=;
+	s=k20201202; t=1771031088;
+	bh=RltvkgbiOio83qQupUFJ2gLje9Ee9CeirjZn3HX7XiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEkVVN6u1bMYq+O2KANlf7oiT0Kc0xs0eocBgSK7X08vV//c4icPaf8971cjI3Eui
-	 mABO8GQF2c6bU2sqkcuookPKnjOdGPkezSXrQRcCvRBgB/ripcJcYgpkEqmOzEwKQF
-	 HeVUWZEU4twmip5dj9njqMuGVJvcThFhqNcYfeR9cWli1AfYvh5yX7QSMNQ7KDM55g
-	 rpu3YC1TSOs07/wx/XpRJJcNvR3iZ8OukxUWzBMBNrUWERo1ab1QU4UjNC2lRkDEyo
-	 /zqvS9l02iNCWO4PE8N3bu+yl69xSh1SIUwAYIM0LDDjt18hjz51MQqqoulvbENsJf
-	 c7mPtdoKeOBKA==
+	b=nWi2SCEyOWsKiFa69vWwIyYJyn5rdkUxvot4m4CWi9NqXp+yElhv+1pHMQtsX01Jb
+	 8/pQVum+B/UuGP8IZotYPj6oJldiFChuCXjS6ds3qLaJ5mU6XaWTEz5V6NEagyl1nj
+	 FtD+PoES1irBZZCj1TPxDUcLUI3upZ0ktRyc0kqHRHYEvrddhtl66pk0u2Uf/Fhm5K
+	 AlXI0p+YU0jIfFJeJBbdyvGov4xU30IJagr+GrQKbgR7mfNRVsfEFVbsgaTZ6ziplN
+	 0mIX/+yaL7DMorxd5YPnNuGtC5WTGTXPgHX+YfPJiogydKn/a6Dw9Pza353KpIXg4f
+	 BWj1EF81RYY2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Samuel Dionne-Riel <samuel@dionne-riel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Hsieh Hung-En <hungen3108@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sbinding@opensource.cirrus.com,
-	kailang@realtek.com,
-	chris.chiu@canonical.com
-Subject: [PATCH AUTOSEL 6.19] ALSA: hda/realtek: Add quirk for Minisforum V3 SE
-Date: Fri, 13 Feb 2026 19:58:55 -0500
-Message-ID: <20260214010245.3671907-55-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	kuninori.morimoto.gx@renesas.com,
+	yelangyan@huaqin.corp-partner.google.com,
+	nicolas.frattaroli@collabora.com
+Subject: [PATCH AUTOSEL 6.19-5.10] ASoC: es8328: Add error unwind in resume
+Date: Fri, 13 Feb 2026 19:58:56 -0500
+Message-ID: <20260214010245.3671907-56-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -50,149 +51,163 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Dionne-Riel <samuel@dionne-riel.com>
+From: Hsieh Hung-En <hungen3108@gmail.com>
 
-[ Upstream commit e3474301824926ecce1d45f2ede7ecdda9a35840 ]
+[ Upstream commit 8232e6079ae6f8d3a61d87973cb427385aa469b9 ]
 
-First, adding a generic quirk for Bass speaker DAC avoidance.
+Handle failures in the resume path by unwinding previously enabled
+resources.
 
-This pattern (re-routing the bass speakers off of a DAC without volume
-control) seems common enough that having a "model" to match against and
-quickly use to verify may be worthwhile.
+If enabling regulators or syncing the regcache fails, disable regulators
+and unprepare the clock to avoid leaking resources and leaving the device
+in a partially resumed state.
 
-The alc285_fixup_thinkpad_x1_gen7 routing was selected, amongst the
-different options, as it should allow tuning the ratio between both
-speaker set.
-
-The routing was verified using `hda-verb`, and picking either 0x00 or
-0x01. Either routing made the volume of the bass speakers controllable.
-
-    hda-verb /dev/snd/hwC1D0 0x17 SET_CONNECT_SEL 0x01
-
-This likely will apply for the Minisforum V3, though there isn't a lot
-of information to confirm whether or not the identifiers are the same.
-
-This was verified on the Minisforum V3 SE, and the root cause (the bass
-speakers routing) was found out by using pink noise, and playing with
-the mixers.
-
-Signed-off-by: Samuel Dionne-Riel <samuel@dionne-riel.com>
-Link: https://patch.msgid.link/20260203010132.1981419-2-samuel@dionne-riel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Hsieh Hung-En <hungen3108@gmail.com>
+Link: https://patch.msgid.link/20260130160017.2630-6-hungen3108@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+## Analysis of ASoC: es8328: Add error unwind in resume
 
-### Commit Message Analysis
-This commit adds a hardware quirk for the Minisforum V3 SE device. The
-problem is that the bass speakers are routed through a DAC without
-volume control, meaning users cannot control the bass speaker volume.
-The fix re-routes the bass speakers to a DAC that has volume control,
-borrowing the routing already used for ThinkPad X1 Gen 7.
+### 1. COMMIT MESSAGE ANALYSIS
 
-### Code Change Analysis
-The changes are in three parts, all within
-`sound/hda/codecs/realtek/alc269.c`:
+The commit message clearly describes adding error unwinding in the
+resume path of the ES8328 audio codec driver. The key phrases are:
+- "Handle failures in the resume path by unwinding previously enabled
+  resources"
+- "avoid leaking resources and leaving the device in a partially resumed
+  state"
 
-1. **New enum entry**: `ALC245_FIXUP_BASS_HP_DAC` added to the fixup
-   enum
-2. **New fixup definition**: A simple fixup entry that reuses the
-   existing `alc285_fixup_thinkpad_x1_gen7` function for DAC routing
-3. **New PCI quirk entry**: `SND_PCI_QUIRK(0x1f4c, 0xe001, "Minisforum
-   V3 (SE)", ALC245_FIXUP_BASS_HP_DAC)` - maps the specific PCI
-   subsystem ID to the new fixup
-4. **New model string**: `{.id = ALC245_FIXUP_BASS_HP_DAC, .name =
-   "alc245-fixup-bass-hp-dac"}` added to the model fixup table
+This is a **resource leak fix** on error paths — a classic stable-worthy
+bug fix pattern.
 
-### Classification
-This is a **hardware quirk** addition. It falls squarely into the
-"QUIRKS and WORKAROUNDS" exception category for stable backports. The
-quirk fixes a real hardware issue where bass speakers on the Minisforum
-V3 SE cannot have their volume controlled.
+### 2. CODE CHANGE ANALYSIS
 
-### Scope and Risk Assessment
-- **Very small change**: ~10 lines of actual new code
-- **Zero risk to other hardware**: The quirk is matched by a specific
-  PCI subsystem vendor/device ID (0x1f4c, 0xe001), so it only affects
-  this exact device
-- **Reuses existing, proven code**: The `alc285_fixup_thinkpad_x1_gen7`
-  function is already well-tested on ThinkPad hardware
-- **Verified by user**: The commit message states the fix was verified
-  on actual hardware using `hda-verb`
+The change is in `es8328_resume()`:
 
-### User Impact
-Without this quirk, the Minisforum V3 SE has bass speakers that cannot
-be volume-controlled - they play at full volume or not at all. This is a
-significant usability issue for real hardware owners.
+**Before:** Two error paths (`regulator_bulk_enable` failure and
+`regcache_sync` failure) would `return ret` directly without cleaning up
+previously acquired resources.
 
-### Stability
-- Uses an existing fixup function (no new code logic)
-- Device-specific PCI ID matching ensures no other devices are affected
-- The pattern is identical to hundreds of other audio quirks in this
-  file
+**Bug 1:** If `regulator_bulk_enable()` fails, the clock
+(`clk_prepare_enable`) was already enabled but never disabled → **clock
+leak**.
 
-### Dependencies
-No dependencies on other commits. The `alc285_fixup_thinkpad_x1_gen7`
-function already exists in stable trees. The only requirement is that
-the enum numbering lines up, which is a standard consideration for any
-quirk addition.
+**Bug 2:** If `regcache_sync()` fails, both the clock and regulators
+were enabled but never cleaned up → **clock leak + regulator leak**.
 
-### Conclusion
-This is a textbook hardware quirk addition - small, device-specific,
-zero risk to other hardware, fixes a real usability issue on specific
-hardware, and reuses existing proven fixup code. Audio codec quirks are
-one of the most common types of stable backports.
+**After:** The fix adds proper `goto` error labels:
+- `err_regulators`: disables regulators, then falls through to `err_clk`
+- `err_clk`: disables/unprepares the clock
+
+This is a textbook error-path resource cleanup fix.
+
+### 3. CLASSIFICATION
+
+This is a **bug fix** — specifically a resource leak fix. It fixes real
+resource leaks (clock and regulator) that occur on the resume error
+path. These are not theoretical:
+
+- If `regulator_bulk_enable` fails during resume (e.g., power supply
+  issue), the clock is leaked.
+- If `regcache_sync` fails during resume (e.g., I2C bus issue), both
+  clock and regulators are leaked.
+- Repeated suspend/resume cycles with failures could accumulate leaked
+  resources.
+
+This falls squarely into the "cleanup that adds error handling IS a bug
+fix" category.
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+- **Lines changed:** ~10 lines of actual change — very small and
+  surgical.
+- **Files changed:** 1 file (`sound/soc/codecs/es8328.c`)
+- **Risk:** Extremely low. The change only affects error paths. The
+  normal (successful) resume path is completely unchanged. The cleanup
+  calls (`regulator_bulk_disable`, `clk_disable_unprepare`) are
+  standard, well-understood operations.
+- **Subsystem:** ASoC codec driver — contained, driver-level change.
+
+### 5. USER IMPACT
+
+The ES8328 is used in real hardware (notably in some ARM SBCs and audio
+applications). Users who experience resume failures (e.g., due to
+transient I2C errors) would leak resources. Over time, this could cause:
+- Clock framework issues (clock stuck in enabled state)
+- Regulator framework issues (regulator stuck enabled, preventing power
+  savings)
+- Potential cascading failures in subsequent suspend/resume cycles
+
+### 6. STABILITY INDICATORS
+
+- The fix is straightforward and follows established kernel error-
+  handling patterns.
+- Reviewed and merged by Mark Brown (ASoC maintainer) — strong trust
+  indicator.
+- The pattern (goto-based error unwinding) is the standard Linux kernel
+  idiom.
+
+### 7. DEPENDENCY CHECK
+
+This fix is self-contained. It only modifies the `es8328_resume`
+function by changing two `return ret` statements to `goto` labels and
+adding cleanup code at the end of the function. No dependencies on other
+commits. The ES8328 driver exists in all recent stable trees.
+
+### CONCLUSION
+
+This commit fixes real resource leaks in the resume error path of the
+ES8328 codec driver. It is:
+- **Obviously correct** — standard goto-based error unwinding pattern
+- **Fixes a real bug** — resource leaks on resume failure
+- **Small and contained** — ~10 lines in one function in one file
+- **No new features** — purely error handling improvement
+- **Low risk** — only affects error paths, normal path unchanged
+
+The fix is small, surgical, and meets all stable kernel criteria.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/codecs/es8328.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 527630446631f..f26c0aaa4c705 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -4046,6 +4046,7 @@ enum {
- 	ALC288_FIXUP_SURFACE_SWAP_DACS,
- 	ALC236_FIXUP_HP_MUTE_LED_MICMUTE_GPIO,
- 	ALC233_FIXUP_LENOVO_GPIO2_MIC_HOTKEY,
-+	ALC245_FIXUP_BASS_HP_DAC,
- };
+diff --git a/sound/soc/codecs/es8328.c b/sound/soc/codecs/es8328.c
+index 1e11175cfbbbf..47c6b0c218b2c 100644
+--- a/sound/soc/codecs/es8328.c
++++ b/sound/soc/codecs/es8328.c
+@@ -758,17 +758,23 @@ static int es8328_resume(struct snd_soc_component *component)
+ 					es8328->supplies);
+ 	if (ret) {
+ 		dev_err(component->dev, "unable to enable regulators\n");
+-		return ret;
++		goto err_clk;
+ 	}
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -6548,6 +6549,11 @@ static const struct hda_fixup alc269_fixups[] = {
-                 .type = HDA_FIXUP_FUNC,
-                 .v.func = alc233_fixup_lenovo_gpio2_mic_hotkey,
-         },
-+	[ALC245_FIXUP_BASS_HP_DAC] = {
-+		.type = HDA_FIXUP_FUNC,
-+		/* Borrow the DAC routing selected for those Thinkpads */
-+		.v.func = alc285_fixup_thinkpad_x1_gen7,
-+	},
- };
+ 	regcache_mark_dirty(regmap);
+ 	ret = regcache_sync(regmap);
+ 	if (ret) {
+ 		dev_err(component->dev, "unable to sync regcache\n");
+-		return ret;
++		goto err_regulators;
+ 	}
  
- static const struct hda_quirk alc269_fixup_tbl[] = {
-@@ -7607,6 +7613,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1e39, 0xca14, "MEDION NM14LNL", ALC233_FIXUP_MEDION_MTL_SPK),
- 	SND_PCI_QUIRK(0x1ee7, 0x2078, "HONOR BRB-X M1010", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1f4c, 0xe001, "Minisforum V3 (SE)", ALC245_FIXUP_BASS_HP_DAC),
- 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2039, 0x0001, "Inspur S14-G1", ALC295_FIXUP_CHROME_BOOK),
-@@ -7822,6 +7829,7 @@ static const struct hda_model_fixup alc269_fixup_models[] = {
- 	{.id = ALC285_FIXUP_HP_GPIO_AMP_INIT, .name = "alc285-hp-amp-init"},
- 	{.id = ALC236_FIXUP_LENOVO_INV_DMIC, .name = "alc236-fixup-lenovo-inv-mic"},
- 	{.id = ALC2XX_FIXUP_HEADSET_MIC, .name = "alc2xx-fixup-headset-mic"},
-+	{.id = ALC245_FIXUP_BASS_HP_DAC, .name = "alc245-fixup-bass-hp-dac"},
- 	{}
- };
- #define ALC225_STANDARD_PINS \
+ 	return 0;
++
++err_regulators:
++	regulator_bulk_disable(ARRAY_SIZE(es8328->supplies), es8328->supplies);
++err_clk:
++	clk_disable_unprepare(es8328->clk);
++	return ret;
+ }
+ 
+ static int es8328_component_probe(struct snd_soc_component *component)
 -- 
 2.51.0
 
