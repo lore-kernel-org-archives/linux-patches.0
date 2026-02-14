@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1073C2D;
-	Sat, 14 Feb 2026 21:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB873081A2;
+	Sat, 14 Feb 2026 21:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104319; cv=none; b=qeZ3eTSvOXHcxSsgpeBeq7jVN7HGTk1SMbOYVTU6W9muZq5DLcUKnSWp5YShPagsp6TwRwJs7pa6nwmwmYXw/TlS8Z8yrck9Vcz2vZ6PjKMlBKlfYIfU1L0emuGP/YaUbTvi8Fmc1So62uBPLIMS4QMzVe21hCQ2d/b4WeZP24c=
+	t=1771104320; cv=none; b=CY7nLB5zJstJyoaAdw9Q2+CmtXEqCLSLKKPlPkhfBjM62iT3Fxns9NN9KJ1McaeTm8NL64WSICghati/vtMzBdqQAB6hrOC88Ou0di2495eSQq5aO4UnjgjW3HYtV8ktKoeq1y5mXms0+dJA+4C/Qjlsmd60TXtn8yEEW2WezU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104319; c=relaxed/simple;
-	bh=SYr2jZH/JP9Q2+T65btHGzZV/xMCQcU2k3NTQZNlZYo=;
+	s=arc-20240116; t=1771104320; c=relaxed/simple;
+	bh=k75XIAZOC75bHLfIRpDsTkg09bZTCCXEMDg9b4ASfsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i9l46Uo8O1Jc9LjizRE6eDTt2D+I3LHG2gb8VWeybHFEwtxFN+xe4/PMe2mQ2bIV0QE48SU5n8/vxq7bFPynt062p7gztE8iywidWLxQhUZ6LjuGlqYGk6Y37BU9XgaQIsC8PM56ZKv2a6M56hG2I9EmTekHUZGseX3N1zJAAS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOSOAlch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PGkSDjjC6GNlGAWAdAaBszdr2N8zdMm5PdFvMO3ejp9U/MrPYR3G/twPV5x+khShka5JLQSXL/nHuoSKXN4kB8eZI3KLgmpx6D4zx5bwB1f5dUW2FWqtqrrNm+nl2JlWRNu6rnoTbWy9ajV2MLWkF/Rh0TgVzFzCt2eJHnQDjb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cCShpOMM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOSOAlch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9948C16AAE;
-	Sat, 14 Feb 2026 21:25:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cCShpOMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02E0C16AAE;
+	Sat, 14 Feb 2026 21:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104319;
-	bh=SYr2jZH/JP9Q2+T65btHGzZV/xMCQcU2k3NTQZNlZYo=;
+	s=k20201202; t=1771104320;
+	bh=k75XIAZOC75bHLfIRpDsTkg09bZTCCXEMDg9b4ASfsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jOSOAlchxPkQsgbn//peqQenf9TNeqzgjGmjfjqUJt5TEy6MaVk+XG/R18x9sdEHP
-	 PcdLnpcRb/odVkhmd5bSyKXwp5S682fVl+G7bbTIotNfZXFdYP8SZVmeHH/ZkqVM/h
-	 VjilcQkMmEkLtlqBFBxwqpFrutEXCWEJNVMeLBlmXOHTBB5xwEtjlu4nP3IWYLNV9o
-	 E8TOtmI1HeAJtMe+Ldz17ekoDSSFKMuIzG5/kxZZXoSCDb3j4yiGLtg5ZcUXvswZq+
-	 jqJKCpQn3nSv5I5CzlIP/ZI3Z6MLXan4x34qNKw2K81Xy3Gb5hpDDAUwvdf7/06lcL
-	 XN5MrqgsgeP0w==
+	b=cCShpOMMmK+IP49/iLYCyl5Pfq1+1an6tARZyspEceIP04j4qcMpipkzYXlPiuQ5s
+	 H3/+fGILmLSwdeEi628C8HShDvpF8d54tg3mRy2fQqCPVDfVPbCbINMiDLOB/IZf7T
+	 egX93BHMhiJZ9+OF9yxnERsV7TcX7g92j+sJ8r+s7Hn6sW0TNxUNTDUSVM1HJ8ZnPH
+	 klZtV1U9oeyY6n5c0/dA+A6nINJ1fqik2cMu6vaSETBoyGe9K7DXukdVFu3n32IE53
+	 idJID3MDSBzX5Rc/4YWDCMhgp/SnBLxWrcvQMReuEPZAI+XsVvr9jHPxMD8TCy3dLB
+	 PVN+IT0ambrwg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Slark Xiao <slark_xiao@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Zenm Chen <zenmchen@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	loic.poulain@oss.qualcomm.com,
-	ryazanov.s.a@gmail.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] net: wwan: mhi: Add network support for Foxconn T99W760
-Date: Sat, 14 Feb 2026 16:22:39 -0500
-Message-ID: <20260214212452.782265-14-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] wifi: rtw89: Add support for MSI AX1800 Nano (GUAX18N)
+Date: Sat, 14 Feb 2026 16:22:40 -0500
+Message-ID: <20260214212452.782265-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -53,17 +51,19 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-[ Upstream commit 915a5f60ad947e8dd515d2cc77a96a14dffb3f15 ]
+[ Upstream commit 3116f287b81fe777a00b93ab07ec3c270093b185 ]
 
-T99W760 is designed based on Qualcomm SDX35 chip. It use similar
-architecture with SDX72/SDX75 chip. So we need to assign initial
-link id for this device to make sure network available.
+Add the ID 0db0:f0c8 to the table to support an additional RTL8832BU
+adapter: MSI AX1800 Nano (GUAX18N).
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-Link: https://patch.msgid.link/20260105022646.10630-1-slark_xiao@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Compile tested only.
+
+Link: https://github.com/morrownr/rtl8852bu-20250826/pull/2
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260112004358.5516-1-zenmchen@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -71,90 +71,84 @@ LLM Generated explanations, may be completely bogus:
 
 ## Analysis
 
-### Commit Message Analysis
+### Commit Overview
+This commit adds a single USB device ID (`0x0db0:0xf0c8`) to the
+`rtw_8852bu_id_table` in the rtw89 wireless driver to support the MSI
+AX1800 Nano (GUAX18N) USB WiFi adapter, which uses the RTL8832BU
+chipset.
 
-The commit adds network support for a new device, the Foxconn T99W760,
-which is based on the Qualcomm SDX35 chip. The commit message explains
-that this device uses a similar architecture to SDX72/SDX75 and needs an
-initial link ID assignment to make networking functional.
+### Classification: New Device ID Addition
+This falls squarely into the **"NEW DEVICE IDs"** exception category for
+stable backports:
+- It adds a USB device ID to an **existing, already-supported driver**
+  (rtw89/rtw8852bu)
+- The driver infrastructure is already in place; only the ID mapping is
+  new
+- The same `rtw89_8852bu_info` driver_info structure is used, identical
+  to all other entries in the table
 
 ### Code Change Analysis
-
-The change is extremely minimal — a single line addition:
-
-```c
-strcmp(cntrl->name, "foxconn-t99w760") == 0)
-```
-
-This adds the "foxconn-t99w760" device name to the
-`mhi_mbim_get_link_mux_id()` function so that it returns
-`WDS_BIND_MUX_DATA_PORT_MUX_ID` instead of `0`. This is the same
-treatment already given to "foxconn-dw5934e" and "foxconn-t99w640".
-
-### Classification: Device ID / Hardware Enablement
-
-This falls squarely into the **"New Device IDs"** exception category for
-stable backports. It's adding support for a specific device to an
-existing driver by matching its name and applying the same configuration
-that other similar devices already use.
-
-Without this change, users with the Foxconn T99W760 WWAN modem cannot
-use networking — the device gets the wrong mux ID (0 instead of
-`WDS_BIND_MUX_DATA_PORT_MUX_ID`), making the network interface non-
-functional.
-
-### Risk Assessment
-
-- **Scope**: 1 line added, 1 file changed
-- **Risk**: Extremely low — the change only affects devices matching the
-  exact name "foxconn-t99w760". No other hardware is affected.
-- **Pattern**: Follows the exact same pattern as existing devices in the
-  same function
-- **Complexity**: Trivial string comparison addition
+- **Size**: +2 lines (one `USB_DEVICE_AND_INTERFACE_INFO` entry)
+- **Scope**: Single file, single table entry addition
+- **Pattern**: Identical to every other entry in the table — `{
+  USB_DEVICE_AND_INTERFACE_INFO(vendor, product, 0xff, 0xff, 0xff),
+  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info }`
+- **Risk**: Essentially zero. The new entry only matches when the
+  specific USB device (`0x0db0:0xf0c8`) is present. It cannot affect any
+  other hardware or code path.
 
 ### User Impact
+- Without this ID, users with the MSI AX1800 Nano adapter cannot use it
+  with the in-kernel rtw89 driver on stable kernels
+- WiFi adapter support is a common and important need for end users
+- The vendor (MSI, vendor ID `0x0db0`) already has another device
+  (`0x6931`) in the same table, confirming this is a known hardware
+  vendor for this chipset
 
-Users with the Foxconn T99W760 WWAN modem (a real shipping hardware
-device) cannot use network connectivity without this patch. This is a
-real-world hardware enablement fix.
+### Risk Assessment
+- **Risk**: Negligible — a device ID table addition cannot cause
+  regressions for existing users
+- **Benefit**: Enables hardware support for a real commercial WiFi
+  adapter
+- **Dependencies**: None — requires only that the rtw8852bu driver
+  exists in the stable tree
 
-### Stability Assessment
+### Stability Considerations
+- The commit note says "Compile tested only," which is typical for
+  device ID additions where the submitter may not have all test
+  infrastructure but the change is trivially correct by inspection
+- The patch was accepted by the subsystem maintainer (Ping-Ke Shih from
+  Realtek)
 
-- The driver (`mhi_wwan_mbim.c`) already exists in stable trees
-- The function `mhi_mbim_get_link_mux_id()` already exists
-- The pattern is identical to existing entries
-- Zero risk of regression for any other hardware
-
-### Dependencies
-
-No dependencies on other commits. The change is entirely self-contained.
+### Dependency Check
+The rtw8852bu USB driver needs to exist in the target stable tree. This
+driver was added relatively recently, so this backport is only
+applicable to stable branches that already contain the rtw89 USB
+support.
 
 ### Conclusion
-
-This is a textbook device ID addition to an existing driver — one of the
-explicitly allowed exception categories for stable backports. It enables
-real hardware for real users, is trivially small, has zero regression
-risk, and follows an established pattern in the same function.
+This is a textbook device ID addition — the most common and least risky
+type of stable backport. It's a trivial 2-line addition that enables
+real hardware for real users with zero regression risk.
 
 **YES**
 
- drivers/net/wwan/mhi_wwan_mbim.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/rtw8852bu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wwan/mhi_wwan_mbim.c b/drivers/net/wwan/mhi_wwan_mbim.c
-index f8bc9a39bfa30..1d7e3ad900c12 100644
---- a/drivers/net/wwan/mhi_wwan_mbim.c
-+++ b/drivers/net/wwan/mhi_wwan_mbim.c
-@@ -98,7 +98,8 @@ static struct mhi_mbim_link *mhi_mbim_get_link_rcu(struct mhi_mbim_context *mbim
- static int mhi_mbim_get_link_mux_id(struct mhi_controller *cntrl)
- {
- 	if (strcmp(cntrl->name, "foxconn-dw5934e") == 0 ||
--	    strcmp(cntrl->name, "foxconn-t99w640") == 0)
-+	    strcmp(cntrl->name, "foxconn-t99w640") == 0 ||
-+	    strcmp(cntrl->name, "foxconn-t99w760") == 0)
- 		return WDS_BIND_MUX_DATA_PORT_MUX_ID;
- 
- 	return 0;
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
+index 980d17ef68d0a..84cd3ec971f98 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
+@@ -54,6 +54,8 @@ static const struct usb_device_id rtw_8852bu_id_table[] = {
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0db0, 0x6931, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x0db0, 0xf0c8, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3327, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3574, 0x6121, 0xff, 0xff, 0xff),
 -- 
 2.51.0
 
