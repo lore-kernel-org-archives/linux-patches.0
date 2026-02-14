@@ -1,51 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19CA1DE8AE;
-	Sat, 14 Feb 2026 01:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1448622259F;
+	Sat, 14 Feb 2026 01:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031098; cv=none; b=RH4gm9b3IianVWbCBrA7tJQFqCNwAOIIY+EaSNGIRkiHhz6n6b5Oy34exSyTYSn2RUTMbFcxGBef6XgOYL5OiAjxhOJKl4JGRX315e8JCjWQOFVHIsXfkhmDyqg9xcI4SfvpXvfIGR1jtBSJaHySK60eSj2VLN5o0BAwNehRhVU=
+	t=1771031100; cv=none; b=BKSvpI/fSsH9j7aNSIkcsiZ+RmV4GWML2Bdsi6Ntkc/ZROKctXLOF/AnnL36PwjMCZr8/11RLRuUNksQRSF6uSNAR65hZFeRM/h32NXFrhgmgsKM5XCKn693sDtw+CsXt7vs8W/5sdA7NG+d+G5Aix7aEyodrqGC6yq9UpG47kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031098; c=relaxed/simple;
-	bh=kfGiNrANRnBYtgOBeJSOMxXO363Ln0ivOKg4cDzVqTc=;
+	s=arc-20240116; t=1771031100; c=relaxed/simple;
+	bh=ub7yL4YAin4HwLZFyRul6lAEoj73udh0K9zLa7WpwQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c6DNeBco0Z6zRopDDLG9Tpijs32X/VfeTXnMlyn/IDLe55FqXRRfHA/rq2ooMwxLf8VP6pc1NCl6PSEaNJJ+1HB2Wae8FaNeBNGd4cJRWSEBzALJFsSMUtKhpXx7WrJ0poM8uEb1/1lpR3FPH+a+B4lYqVzW39/YIqHem8OSfNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cDtqghO5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gBCzDhuTEv6VTlJqEvVw71QVaa+M0l/ov8C+tzQlQQJ9TvX+QNvS8IWTymB0MjbSGnAymCvFDEfblADCmRzQ8Urt7yH+qO401AOhZmWgl+DPNDeQkEheLVFi+UyjbSGPqd1jMMKnE5OgI7duItS+N9V8eRnG04Edettw7/AtmdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tOCeLwN1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cDtqghO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1799FC19424;
-	Sat, 14 Feb 2026 01:04:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tOCeLwN1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065A1C16AAE;
+	Sat, 14 Feb 2026 01:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031098;
-	bh=kfGiNrANRnBYtgOBeJSOMxXO363Ln0ivOKg4cDzVqTc=;
+	s=k20201202; t=1771031099;
+	bh=ub7yL4YAin4HwLZFyRul6lAEoj73udh0K9zLa7WpwQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDtqghO5vxu1i1bPRzm20R2oZYY/QRRSMwxa+olkuX0y4VIG4nDLgN9lFXGPqOpHL
-	 KPOzBz5wNn0cmCwy2/nlKN3fHXWWQ/TmCtxCmjeByEtw8MR4UeaFak4ib+0VqMdMX1
-	 acuOYtHsBSaGeKeDRBU2awDVjhP/ngBnQfPKxm/SsMEF6tJxolW2vczeed8cQsywpX
-	 PEakKzhZO7K+Qn/V4yW/i4j0b1ii1miRuGvfCD7VEcVL3RCxvFOdZ7DMcVGgRlprO1
-	 /9fG/EhB0tyK4AA5sTV2qAyd8s78IiBpMab5D70OaFVTv3fB/RD17OKJNHAW0fpYex
-	 xobtURPGx6e4Q==
+	b=tOCeLwN1xri63F34SRaijUHuDNF2fX33XHzJlR1HDv3AncRmUa6g63h78RHYHYpNU
+	 amzZzbBNSiWeJksTO/QbsUKZk5BJsTND7ccmV/6c7f4kf0zJIe50NcME8tQ4aJ5knj
+	 bX3xJAksniTASnB3MHMXZ/WgolgCsugxK+H3SYyvBov7QkWG/G01Fwk6ipzV3x6NnH
+	 0Wcn2kW1+Web6MzBcw60gSU8td9XneZhj6DsRUKsKjwvIjFmIjZP8Un5aOw0fk+4d7
+	 pYMr0Ws1VWK+9pJ0O9ETN2+pLOBqK1+jCy/xIp8rmdIvp3Pvs2FUvsvbMvny51LBND
+	 4bkz6Eg0eXlEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	kernel test robot <lkp@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Wei Liu (Microsoft)" <wei.liu@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Bingbu Cao <bingbu.cao@linux.intel.com>,
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Mehdi Djait <mehdi.djait@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kys@microsoft.com,
-	haiyangz@microsoft.com,
-	decui@microsoft.com,
-	longli@microsoft.com,
-	linux-hyperv@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-5.10] hyper-v: Mark inner union in hv_kvp_exchg_msg_value as packed
-Date: Fri, 13 Feb 2026 19:59:01 -0500
-Message-ID: <20260214010245.3671907-61-sashal@kernel.org>
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] media: ipu6: Always close firmware stream
+Date: Fri, 13 Feb 2026 19:59:02 -0500
+Message-ID: <20260214010245.3671907-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -55,173 +48,158 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 1e5271393d777f6159d896943b4c44c4f3ecff52 ]
+[ Upstream commit 2b08b7007e55bd1793a58478d3ecea4fd95849a5 ]
 
-The unpacked union within a packed struct generates alignment warnings
-on clang for 32-bit ARM:
+Close the firmware stream even when disabling a stream on an upstream
+sub-device fails. This allows the firmware to release resources related to
+a stream that is stopped in any case.
 
-./usr/include/linux/hyperv.h:361:2: error: field  within 'struct hv_kvp_exchg_msg_value'
-  is less aligned than 'union hv_kvp_exchg_msg_value::(anonymous at ./usr/include/linux/hyperv.h:361:2)'
-  and is usually due to 'struct hv_kvp_exchg_msg_value' being packed,
-  which can lead to unaligned accesses [-Werror,-Wunaligned-access]
-     361 |         union {
-         |         ^
-
-With the recent changes to compile-test the UAPI headers in more cases,
-this warning in combination with CONFIG_WERROR breaks the build.
-
-Fix the warning.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512140314.DzDxpIVn-lkp@intel.com/
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/linux-kbuild/20260110-uapi-test-disable-headers-arm-clang-unaligned-access-v1-1-b7b0fa541daa@kernel.org/
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/linux-kbuild/29b2e736-d462-45b7-a0a9-85f8d8a3de56@app.fastmail.com/
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
-Tested-by: Nicolas Schier <nsc@kernel.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260115-kbuild-alignment-vbox-v1-1-076aed1623ff@linutronix.de
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Suggested-by: Bingbu Cao <bingbu.cao@linux.intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Bingbu Cao <bingbu.cao@intel.com>
+Tested-by: Mehdi Djait <mehdi.djait@linux.intel.com> # Dell XPS 9315
+Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+## Analysis of commit: "media: ipu6: Always close firmware stream"
 
-### Commit Message Analysis
+### 1. Commit Message Analysis
 
-This commit fixes a build error caused by an unpacked union within a
-packed struct in a UAPI header (`include/uapi/linux/hyperv.h`). The
-issue manifests as a `-Werror,-Wunaligned-access` error on clang for
-32-bit ARM, which **breaks the build** when `CONFIG_WERROR` is enabled.
+The commit message clearly states the intent: close the firmware stream
+even when disabling a stream on an upstream sub-device fails. The
+rationale is that the firmware needs to release resources related to a
+stream that is being stopped regardless of whether the upstream sub-
+device disable succeeded or not.
 
-Key signals:
-- **Two separate "Reported-by:" tags** — kernel test robot and Nathan
-  Chancellor (a prominent kernel build/clang developer)
-- **Multiple "Closes:" links** to actual build failure reports
-- **Tested-by** and **Reviewed-by** from Nicolas Schier
-- **Acked-by** from subsystem maintainer (Wei Liu) and Greg Kroah-
-  Hartman himself
-- Commit message explicitly says "breaks the build"
+Key indicators:
+- "Suggested-by: Bingbu Cao" — an Intel developer familiar with the IPU6
+  hardware
+- "Reviewed-by" from two reviewers (Bingbu Cao and Mehdi Djait)
+- "Tested-by: Mehdi Djait" on actual hardware (Dell XPS 9315)
+- Reviewed and merged by Hans Verkuil (V4L2 maintainer)
 
-### Code Change Analysis
+### 2. Code Change Analysis
 
-The change is a single-line modification:
+The change is very small and surgical — it modifies a single error path
+in `ipu6_isys_video_set_streaming()`:
 
-```c
-- };
-+       } __attribute__((packed));
-```
+**Before:** When `v4l2_subdev_disable_streams()` fails during stream-off
+(`!state`), the function returns immediately with the error,
+**skipping** the call to `close_streaming_firmware(av)`.
 
-This adds the `packed` attribute to an anonymous union inside the
-already-packed struct `hv_kvp_exchg_msg_value`. The outer struct is
-already `__attribute__((packed))`, so adding `packed` to the inner union
-aligns it with the containing struct's packing requirement, silencing
-the clang warning.
+**After:** When `v4l2_subdev_disable_streams()` fails, the error is
+still logged, but execution continues to `close_streaming_firmware(av)`,
+ensuring firmware resources are always released.
 
-**Functional impact**: This union contains `__u8 value[...]`, `__u32
-value_u32`, and `__u64 value_u64`. Since the union is inside a packed
-struct, the compiler should already be treating accesses as potentially
-unaligned. Adding `packed` to the union itself makes this explicit and
-resolves the inconsistency that triggers the warning. There is **no
-change to the actual memory layout** — the struct was already packed,
-and the union within it was already at whatever offset the packing
-dictated. This just makes the annotation consistent.
+The diff is just 4 lines changed:
+- Removes the `{ return ret; }` block after the error
+- Keeps the `dev_err()` logging
+- Allows execution to fall through to `close_streaming_firmware(av)`
 
-### Classification
+### 3. Bug Classification: Resource Leak
 
-This is a **build fix** — one of the explicitly allowed categories for
-stable backporting. It prevents compilation failure on a specific (and
-common) configuration: clang + 32-bit ARM + CONFIG_WERROR.
+This is a **resource leak fix**. When `v4l2_subdev_disable_streams()`
+fails:
+- The stream is being stopped regardless (the user requested stream-off)
+- The firmware has allocated resources for this stream
+- Without `close_streaming_firmware()`, those firmware resources are
+  leaked
+- The firmware may not be able to start new streams afterward due to
+  leaked resources
 
-### Scope and Risk Assessment
+This is a classic "error path resource leak" pattern — on failure of one
+step during teardown, other cleanup steps are skipped.
 
-- **Lines changed**: 1 (literally changing `};` to `}
-  __attribute__((packed));`)
-- **Files changed**: 1 UAPI header
-- **Risk**: Extremely low. The packed attribute on the inner union is
-  semantically correct (the outer struct is already packed), and this
-  doesn't change the ABI or memory layout
-- **Subsystem**: Hyper-V UAPI header, but the fix is really about build
-  correctness
+### 4. Scope and Risk Assessment
 
-### User Impact
+- **Size:** 4 lines changed in 1 file — minimal
+- **Risk:** Very low. The change makes teardown more robust. Even if
+  `v4l2_subdev_disable_streams()` fails, the stream is being stopped —
+  closing the firmware stream is the correct thing to do. The firmware
+  needs to know the stream is done.
+- **Subsystem:** Intel IPU6 camera driver (media/pci/intel/ipu6/) — used
+  on many modern Intel laptops
+- **Could this break something?** No — the stream is being stopped in
+  any case. Not closing firmware resources is always wrong in this path.
 
-- **Who is affected**: Anyone building the kernel with clang on 32-bit
-  ARM (or potentially other architectures in the future) with
-  `CONFIG_WERROR=y`
-- **Severity**: Build breakage — users literally cannot compile the
-  kernel in this configuration
-- **Frequency**: 100% reproducible in the affected configuration
+### 5. User Impact
 
-### Stability Indicators
+- **Who is affected:** Users of Intel IPU6 cameras (common in modern
+  laptops like Dell XPS, many Lenovo/HP models)
+- **Symptoms without fix:** After a failed stream-off, firmware
+  resources are leaked, potentially preventing future camera usage until
+  reboot
+- **Severity:** Medium — affects camera functionality, requires reboot
+  to recover
 
-- Acked by Greg Kroah-Hartman (stable tree maintainer)
-- Acked by Wei Liu (Hyper-V maintainer)
-- Tested and reviewed by Nicolas Schier
-- The fix is trivially correct — adding packed to a union inside a
-  packed struct
+### 6. Stability Indicators
 
-### Dependency Check
+- Reviewed by two developers, tested on real hardware
+- Author (Sakari Ailus) is a well-known V4L2/media subsystem maintainer
+- Merged by Hans Verkuil (another senior media maintainer)
 
-This commit is self-contained. It references "recent changes to compile-
-test the UAPI headers in more cases" as the trigger that exposed this
-warning, but the fix itself (adding packed to the union) is valid
-regardless of whether those compile-test changes are present. The
-underlying warning condition exists in any version of this header
-compiled with clang on ARM.
+### 7. Dependency Check
 
-However, I should check if the struct in question exists in older stable
-trees.
+The change is self-contained. It only modifies error handling logic
+within an existing function. No dependencies on other patches. The IPU6
+driver exists in recent stable trees (it was added in the 6.6
+timeframe).
 
-The struct `hv_kvp_exchg_msg_value` with this union has been in
-`include/uapi/linux/hyperv.h` for a very long time (it's part of the
-Hyper-V KVP userspace interface). The fix would apply cleanly to any
-stable tree that has this header.
+### 8. Stable Criteria Evaluation
+
+- **Obviously correct and tested:** Yes — reviewed by 2 people, tested
+  on hardware
+- **Fixes a real bug:** Yes — resource leak in firmware teardown path
+- **Important issue:** Yes — can leave camera non-functional until
+  reboot
+- **Small and contained:** Yes — 4 lines in 1 file
+- **No new features:** Correct — purely a bug fix
+- **Applies cleanly:** The change is minimal and should apply cleanly
 
 ### Conclusion
 
-This is a textbook stable backport candidate:
-- **Fixes a real build breakage** (not just a warning — it errors out
-  with CONFIG_WERROR)
-- **Trivially small and obviously correct** — one attribute addition
-- **Zero risk of regression** — no behavioral change, no ABI change
-- **Well-reviewed** — acked by GKH, subsystem maintainer, tested and
-  reviewed
-- **Multiple reporters** — real-world problem encountered by kernel test
-  infrastructure and developers
-- Build fixes are explicitly listed as appropriate stable material
+This is a straightforward resource leak fix in the IPU6 camera driver.
+The fix ensures firmware resources are always released during stream
+teardown, even when an intermediate step fails. It's small, obviously
+correct, well-reviewed, tested on real hardware, and fixes a real user-
+visible problem (camera becoming non-functional after a stream error).
+It meets all stable kernel criteria.
 
 **YES**
 
- include/uapi/linux/hyperv.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/intel/ipu6/ipu6-isys-video.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/uapi/linux/hyperv.h b/include/uapi/linux/hyperv.h
-index aaa502a7bff46..1749b35ab2c21 100644
---- a/include/uapi/linux/hyperv.h
-+++ b/include/uapi/linux/hyperv.h
-@@ -362,7 +362,7 @@ struct hv_kvp_exchg_msg_value {
- 		__u8 value[HV_KVP_EXCHANGE_MAX_VALUE_SIZE];
- 		__u32 value_u32;
- 		__u64 value_u64;
--	};
-+	} __attribute__((packed));
- } __attribute__((packed));
- 
- struct hv_kvp_msg_enumerate {
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys-video.c b/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
+index 919b77107cef7..54d861aca0088 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
+@@ -1036,11 +1036,10 @@ int ipu6_isys_video_set_streaming(struct ipu6_isys_video *av, int state,
+ 			sd->name, r_pad->index, stream_mask);
+ 		ret = v4l2_subdev_disable_streams(sd, r_pad->index,
+ 						  stream_mask);
+-		if (ret) {
++		if (ret)
+ 			dev_err(dev, "stream off %s failed with %d\n", sd->name,
+ 				ret);
+-			return ret;
+-		}
++
+ 		close_streaming_firmware(av);
+ 	} else {
+ 		ret = start_stream_firmware(av, bl);
 -- 
 2.51.0
 
