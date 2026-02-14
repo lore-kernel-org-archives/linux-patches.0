@@ -1,43 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AEA3EBF2C;
-	Sat, 14 Feb 2026 01:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CAA3EBF2C;
+	Sat, 14 Feb 2026 01:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030968; cv=none; b=Esy4nXOqErLpAev6DzGYDkIfYaRHLAV6L1cWSCWjkyRBcW9nqGTp482IMXvjo3Isb/ssAh3HuL+CmsTNhwcLd/SIJIj91TXpfIEpLR3VKqp0tiehFZRUzErHBNgYatdMzcHvGcjCtTZ5i7aYYztYGbgD1oezjyFefGuklWr/Ecg=
+	t=1771030971; cv=none; b=CbLTVP0MHWZGLvkThxgme0Fzm7vCDBgJFwXb5306sYM8KJ218jsb0k7O6dCJFDB92SyMfP9pfiup7BxVEM8LEHs8UvsAMvIrrXQL0mdNiIijadqkowQHvsJKlNGaM87/V1i+uOdooxlCq5J3x3r5UnvAHH3HqZj7UD65Dz1vFa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030968; c=relaxed/simple;
-	bh=UePWfbBxgT7I3H7m3efoMmny1MCBrzsMkljxq39MG+8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=o7ezbsZUm6IoghiB5xpB2+Trk9vmX2OG4CP4R4og313PoZ/+rx3RRUtMzQYD01PuKZVh3hMw5JLVSxskp0SNygAz+YuOVXHmp6uHjX0JIUls8dkmfBNXflIWtGgksQzINRo1D73ENkQo0kCqpMuawxv7cCJkY/KYvYwrdV6ySpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VoDQrvxR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771030971; c=relaxed/simple;
+	bh=7PqEWqhOrQeQFra4a9fCGifY4cBcKhe9h+vKYUikneU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=JISnz5wX18cK1+ZZdn1GIqcM+VHVr4W2sJvuekb14NEdTAwUle0bG4LGwIrQQcYBMx1EvTasaZfpGw6T0APPTSqFlMRu84Ncz6Sjw06Y/jpe+SqaOp++YKRmizSHhppAYUDJ+d4ZXWsNfphB1tKj+eibqShfDANuqVWmX6hVcGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JVjEQUo8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VoDQrvxR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE4CC116C6;
-	Sat, 14 Feb 2026 01:02:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JVjEQUo8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372AAC16AAE;
+	Sat, 14 Feb 2026 01:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030967;
-	bh=UePWfbBxgT7I3H7m3efoMmny1MCBrzsMkljxq39MG+8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=VoDQrvxRxIPXIqF379p3ekn1CgqfqdSFbkoV2ss+HNVqRh9ioOu7DOlEffIGyZS2a
-	 5y6icfR6IrBl59gV5ya02eK7f/nuUuiU0r211BrfuDqVwb8L8Y1f/EGPBYxgypMPqI
-	 TyGTgq6IdSDKgcHh8MnBrAfFjPVJrEoclBCJF8WC3L7bbcpeKfjuUUarKL3lUsitZR
-	 87gr2vopQU6fD65E3W3flvJIYwN+PpFxPVutUqrAomkPSX9iIe5xj4DxNKCamfaFWS
-	 Sl9iSF5PXYhZ1u9eC5gpt2Ph9Mce+cauTcEsHFJXgmLVXxuGQpBTKxLRdw2lBeye9T
-	 qhCUNdpHT0FyQ==
+	s=k20201202; t=1771030971;
+	bh=7PqEWqhOrQeQFra4a9fCGifY4cBcKhe9h+vKYUikneU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JVjEQUo8YeL1BQ1Y7BODdIumTIphsRmjMVbS9T4LDocX1ezMY+XNOex4k6N/pEOme
+	 kXUsa2FeqBL6CXb6/XlaDEt6m/QOSsguj19fYTKKUQOAmiISL6J/qFzrKmfBUudSrH
+	 co9yJP4M4GH1Y1W2c3kxhWQH0aODMyoQnVSlbDrQ7LnxonoZ93KzmkAlN7DyUZUAFn
+	 fHam+6PLcRWhOFLYi5MtNku9yi/yLct1Q5daz/9RK3bLa4v4aYnl+LmlsBKdJm/X14
+	 O5/FPd9nyPwO7gXlWfDJcKWqAUTjqbi4fTZn8RfeoWKe6mHHJplAj5tzbobxUTiG3l
+	 tJNJV7yBECxDA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] media: ipu6: Close firmware streams on streaming enable failure
-Date: Fri, 13 Feb 2026 19:58:01 -0500
-Message-ID: <20260214010245.3671907-1-sashal@kernel.org>
+	kuninori.morimoto.gx@renesas.com,
+	brgl@kernel.org,
+	shengjiu.wang@nxp.com,
+	yelangyan@huaqin.corp-partner.google.com,
+	tiwai@suse.de,
+	patches@opensource.cirrus.com
+Subject: [PATCH AUTOSEL 6.19-5.10] ASoC: wm8962: Add WM8962_ADC_MONOMIX to "3D Coefficients" mask
+Date: Fri, 13 Feb 2026 19:58:02 -0500
+Message-ID: <20260214010245.3671907-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
+References: <20260214010245.3671907-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,133 +57,185 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-[ Upstream commit 5925a92cc70d10c7d3124923c36da09b9c1a6eeb ]
+[ Upstream commit 66c26346ae30c883eef70acf9cf9054dfdb4fb2f ]
 
-When enabling streaming fails, the stream is stopped in firmware but not
-closed. Do this to release resources on firmware side.
+This bit is handled by a separate control.
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Bingbu Cao <bingbu.cao@intel.com>
-Tested-by: Mehdi Djait <mehdi.djait@linux.intel.com> # Dell XPS 9315
-Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260105-wm8962-l5-fixes-v1-1-f4f4eeacf089@puri.sm
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+Now I have a complete understanding. Let me compile the analysis.
 
-### Commit Message Analysis
+---
 
-The commit message is clear and directly describes a bug fix: when
-streaming enable fails, the firmware stream is stopped but not closed,
-leading to a resource leak on the firmware side. The fix adds a
-`close_streaming_firmware(av)` call in the error path.
+## Detailed Analysis
 
-Key signals:
-- "Close firmware streams on streaming enable failure" — error path fix
-- "release resources on firmware side" — resource leak fix
-- Has **Reviewed-by** from two people (Bingbu Cao, Mehdi Djait)
-- Has **Tested-by** on real hardware (Dell XPS 9315)
-- Reviewed by subsystem maintainer (Hans Verkuil)
+### 1. COMMIT MESSAGE ANALYSIS
 
-### Code Change Analysis
+The commit message is concise: "This bit is handled by a separate
+control." It's authored by Sebastian Krzyszkowiak from Purism (who works
+on the Librem 5 phone, which uses the WM8962 codec), and it's reviewed
+by Charles Keepax from Cirrus Logic (the codec manufacturer's software
+team). The subject line says "Add WM8962_ADC_MONOMIX to '3D
+Coefficients' mask." The patch series name in the link
+(`wm8962-l5-fixes`) confirms this is a fix, not a feature.
 
-The change is a **single line addition**:
+### 2. CODE CHANGE ANALYSIS — The Bug
+
+**Register layout of `WM8962_THREED1` (R268, 0x10C):**
+- Bit 6: `ADC_MONOMIX` (0x0040) — controls ADC mono downmix
+- Bit 5: `THREED_SIGN_L` (0x0020)
+- Bit 4: `THREED_SIGN_R` (0x0010)
+- Bit 2: `THREED_LHPF_MODE` (0x0004)
+- Bit 1: `THREED_LHPF_ENA` (0x0002)
+- Bit 0: `THREED_ENA` (0x0001)
+
+**Two separate ALSA controls share this register:**
+
+1. **"ADC Monomix Switch"** (line 1707) — a `SOC_SINGLE` control for bit
+   6, added in commit `89383a2707e54` (August 2020, merged in
+   v5.10-rc3).
+
+2. **"3D Coefficients"** (line 1763) — a `SND_SOC_BYTES_MASK` bulk
+   control covering 4 registers starting at `WM8962_THREED1`, added in
+   commit `69e5a39f39c37` (February 2012).
+
+**How `SND_SOC_BYTES_MASK` works:** The mask parameter tells
+`snd_soc_bytes_put()` which bits in the first register should be
+**preserved** (read-modify-write) when userspace writes coefficient
+data. Looking at lines 585-628 of `soc-ops.c`:
+
+1. Read the current register value
+2. `val &= params->mask` — extract the preserved bits
+3. `data[0] &= ~params->mask` — clear the preserved bits in the incoming
+   data
+4. `data[0] |= val` — restore the preserved bits
+
+**The bug:** Before this fix, the mask was only `WM8962_THREED_ENA`
+(0x0001, bit 0). This meant that when userspace wrote "3D Coefficients",
+only the `THREED_ENA` bit was preserved. **Bit 6 (`ADC_MONOMIX`) was NOT
+preserved** — it would be overwritten with whatever value happened to be
+in the userspace data blob at that bit position.
+
+**Consequence:** Writing the "3D Coefficients" control from userspace
+would silently and unpredictably clobber the "ADC Monomix Switch"
+setting. If a user (or ALSA UCM configuration) had enabled ADC mono
+downmix (important for single-speaker devices like the Librem 5 phone),
+writing 3D coefficients could randomly disable it, causing audio routing
+issues. Conversely, if monomix was off, writing 3D coefficients could
+accidentally enable it, causing unexpected mono downmix.
+
+### 3. FIX ANALYSIS
+
+The fix adds `WM8962_ADC_MONOMIX` (0x0040) to the mask:
 
 ```c
-out_media_entity_stop_streaming_firmware:
-        stop_streaming_firmware(av);
-+       close_streaming_firmware(av);
+// Before: mask = 0x0001 (only THREED_ENA preserved)
+SND_SOC_BYTES_MASK("3D Coefficients", WM8962_THREED1, 4,
+WM8962_THREED_ENA),
 
-        return ret;
+// After: mask = 0x0041 (THREED_ENA and ADC_MONOMIX preserved)
+SND_SOC_BYTES_MASK("3D Coefficients", WM8962_THREED1, 4,
+WM8962_THREED_ENA | WM8962_ADC_MONOMIX),
 ```
 
-This is in the error path (`goto
-out_media_entity_stop_streaming_firmware`) that handles the case where
-`v4l2_subdev_enable_streams()` fails. The existing code already called
-`stop_streaming_firmware(av)` to stop the stream, but neglected to call
-`close_streaming_firmware(av)` to release the firmware resources.
+This ensures that when "3D Coefficients" is written, both the 3D enable
+bit AND the ADC monomix bit are preserved from the current register
+value, preventing one control from clobbering the other.
 
-This is a classic **resource leak on error path** — one of the most
-common and important bug fix patterns for stable backports. The firmware
-stream is opened and stopped but never closed, which means firmware-side
-resources are leaked every time streaming enable fails.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### Classification
+- **Size:** Single character change — adding `| WM8962_ADC_MONOMIX` to a
+  mask value. This is the smallest possible fix.
+- **Files touched:** 1 file (`sound/soc/codecs/wm8962.c`)
+- **Risk:** Essentially zero. The only effect is that one additional bit
+  is read-modify-write preserved instead of being overwritten. This is
+  strictly a correctness improvement.
+- **Could this break something?** No. Before this fix, writing 3D
+  coefficients could clobber the monomix bit. After this fix, it cannot.
+  There's no scenario where the old (buggy) behavior was desirable.
 
-- **Bug type**: Resource leak (firmware resources not released on error
-  path)
-- **Pattern**: Missing cleanup call in error handler — a textbook error
-  path fix
-- **Not a feature addition**: Just completing the error handling that
-  should have been there
+### 5. USER IMPACT
 
-### Scope and Risk Assessment
+- **Who is affected:** Anyone using the WM8962 codec (common in
+  embedded/mobile devices) who uses both the ADC Monomix and 3D
+  enhancement features. The Librem 5 phone is one real-world device
+  affected.
+- **Severity:** Audio routing bug — the monomix setting is unexpectedly
+  changed when 3D coefficients are written, which can cause incorrect
+  audio output (mono/stereo confusion).
+- **How long has the bug existed:** Since v5.10-rc3 (August 2020), when
+  the ADC Monomix switch was added sharing the same register. That's
+  about 5.5 years.
 
-- **Lines changed**: 1 line added
-- **Files changed**: 1 file
-- **Risk**: Extremely low — adding a missing cleanup call in an error
-  path
-- **Subsystem**: Intel IPU6 camera driver (media subsystem)
-- The fix follows the obvious pattern: the normal shutdown path
-  presumably calls both `stop_streaming_firmware()` and
-  `close_streaming_firmware()`, so the error path should too
+### 6. STABILITY INDICATORS
 
-### User Impact
+- **Reviewed-by:** Charles Keepax from Cirrus Logic (the codec
+  manufacturer) — authoritative review
+- **Author:** Sebastian Krzyszkowiak from Purism — someone who actively
+  works with this hardware
+- **Subsystem maintainer ack:** Mark Brown (ASoC maintainer) applied it
 
-- Affects users with Intel IPU6 camera hardware (common in modern Intel
-  laptops)
-- Without this fix, firmware resources leak when streaming setup fails,
-  which could lead to the camera becoming unusable until reboot
-- Tested on Dell XPS 9315 — a popular laptop model
+### 7. STABLE TREE APPLICABILITY
 
-### Stability Indicators
+- The bug was introduced by `89383a2707e54` which is in stable trees
+  5.10, 5.15, 6.1, and newer.
+- The fix has zero dependencies on other commits.
+- The code context around the change is stable and unchanged across all
+  these versions.
+- The fix applies cleanly to all affected stable trees.
 
-- Reviewed by two developers
-- Tested on real hardware
-- Single-line, obviously correct fix
-- No risk of regression — only adds cleanup that was missing
+### 8. CLASSIFICATION
 
-### Dependency Check
+This is a **hardware register clobbering bug fix** — an audio codec
+quirk/control fix. It's analogous to audio codec quirks (like
+`SND_PCI_QUIRK` entries) in that it fixes incorrect hardware control
+behavior. It falls squarely into the "fixes a real bug" category: two
+ALSA controls sharing a hardware register were interfering with each
+other due to an incomplete bit mask.
 
-The fix is self-contained. It only adds a call to
-`close_streaming_firmware()` which already exists in the codebase. The
-IPU6 driver was added in the 6.8 timeframe, so this would be relevant
-for stable trees that include the IPU6 driver.
-
-### Conclusion
+### Decision
 
 This is a textbook stable backport candidate:
-1. **Obviously correct**: The error path stops streaming but doesn't
-   close it — the fix adds the missing close call
-2. **Fixes a real bug**: Firmware resource leak on error path
-3. **Small and contained**: Single line addition
-4. **No new features**: Just completing error handling
-5. **Well-reviewed and tested**: Multiple reviews and hardware testing
-6. **Low risk**: Cannot introduce regression — only affects an error
-   path by adding necessary cleanup
+- **Obviously correct:** The mask was missing a bit that's controlled by
+  another control sharing the same register
+- **Fixes a real bug:** Audio routing corruption when 3D coefficients
+  are written
+- **Small and contained:** One-line change adding a bit to a mask
+- **No new features:** Purely corrective
+- **No risk of regression:** Only makes the read-modify-write preserve
+  one additional bit
+- **Reviewed by codec manufacturer engineer**
+- **Affects real users on real hardware** (Librem 5 and any other
+  WM8962-based device)
+- **Bug exists in all stable trees from 5.10 onward**
 
 **YES**
 
- drivers/media/pci/intel/ipu6/ipu6-isys-video.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wm8962.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys-video.c b/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
-index dec8f5ffcfa5f..919b77107cef7 100644
---- a/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
-+++ b/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
-@@ -1066,6 +1066,7 @@ int ipu6_isys_video_set_streaming(struct ipu6_isys_video *av, int state,
+diff --git a/sound/soc/codecs/wm8962.c b/sound/soc/codecs/wm8962.c
+index e9e317ce68982..1040740fc80f8 100644
+--- a/sound/soc/codecs/wm8962.c
++++ b/sound/soc/codecs/wm8962.c
+@@ -1760,7 +1760,7 @@ SND_SOC_BYTES("EQR Coefficients", WM8962_EQ24, 18),
  
- out_media_entity_stop_streaming_firmware:
- 	stop_streaming_firmware(av);
-+	close_streaming_firmware(av);
  
- 	return ret;
- }
+ SOC_SINGLE("3D Switch", WM8962_THREED1, 0, 1, 0),
+-SND_SOC_BYTES_MASK("3D Coefficients", WM8962_THREED1, 4, WM8962_THREED_ENA),
++SND_SOC_BYTES_MASK("3D Coefficients", WM8962_THREED1, 4, WM8962_THREED_ENA | WM8962_ADC_MONOMIX),
+ 
+ SOC_SINGLE("DF1 Switch", WM8962_DF1, 0, 1, 0),
+ SND_SOC_BYTES_MASK("DF1 Coefficients", WM8962_DF1, 7, WM8962_DF1_ENA),
 -- 
 2.51.0
 
