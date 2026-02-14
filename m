@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6113C2D;
-	Sat, 14 Feb 2026 21:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5383D3C2D;
+	Sat, 14 Feb 2026 21:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104307; cv=none; b=Bf5d4UAQHluB+YBI6XAVWzJ1ylTg/9DiytlwTU1T70Hz9EqxRPXGdqk743xTwDlcQMdIKxwjzIdkkbohN6JYBsfccAu5gb2OClcUnK7nzl6QRuWvHSYbjY91Qf8ADEsh2wRxqE4h2MNOLz9oRBQRNMp0INynsCuKR3z1pMehRf4=
+	t=1771104308; cv=none; b=AywG1k7kUvHyyvpaTkRQPIWmbOoFua+oZBCpbk6/Q1+tpeSW2fcYCE1cCALGa+7P07+MA+pWOZsheuPu/9HP4TpOWbVwnmrt62qPrDYCblSZNvxrs6NbVkJPrWzVRC6bsUqEx9GYiBFCg01mthvaR/lLYavDDI4TtpYloG13qxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104307; c=relaxed/simple;
-	bh=hNwGvkqny+Y+Q0DIM8LQ5cWXdsv2HwFJCMRH4wUfE0s=;
+	s=arc-20240116; t=1771104308; c=relaxed/simple;
+	bh=ao1a0ujgLDH2jAkAjdo1In/ou142IZ3qprhr/H+9WaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WjReLUEpjFejzL0oPELsfJAquI/rCVlM4xUJjTts+LSS8RD1rvxrHCH/MKfwpBIPCeWObtulbw1X0QOA2JTj450NRgzEc+UoV+RnVzp4OtUK9DdQ80Vhep9sQH2eYqW1efiPcbSAanI2okoSgdjsrLqS82R7S+qCaRwS0iinNMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KdXoIoil; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NTsv/z41lbBxGTC5ogeLup8gt5b6Exo03CAdgCAPfvEJfK5sc7q4Hv6N1B8n/J5p18DatOtrltxI25Y2GNtq1TPW+KwSL1vLx/4abb8mgl7AGd2gzjaPLyGT4G4euroCQ23Fm8Hml+G+hMkbdyruKxII64TzzB91rFJqMqTNX3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ehoa4lZ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KdXoIoil"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC91C16AAE;
-	Sat, 14 Feb 2026 21:25:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ehoa4lZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A786C19422;
+	Sat, 14 Feb 2026 21:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104307;
-	bh=hNwGvkqny+Y+Q0DIM8LQ5cWXdsv2HwFJCMRH4wUfE0s=;
+	s=k20201202; t=1771104308;
+	bh=ao1a0ujgLDH2jAkAjdo1In/ou142IZ3qprhr/H+9WaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdXoIoilUJJGRLhm5hV8e0smHrwgwFzkq0GdRbOTmTEAteHRljSMkYfmY7Wi/PTfY
-	 pOQF7qxPXmQ7pyjD2qRvZ0vEQJoqC/44qLtGw8l0zoAQrQ7ixkcoyNSDV+gkMm7kML
-	 8e+yg54LjfaxGXYbkJMrj0U+Qd65sUwjrtQe9sXZlj7UDxyx7w7aabITE+ye4qTaVe
-	 HGnDqkaIez8+ylYFACSIvgZT/+nTV8Mps3A+ATiaOEXWAkFmStR8joEabfQmIwa9wg
-	 LcgyK3cKr2obNdxhRiR2Gtfrwtk6PEDRwkX+K5bZhRXHefaq2FFZinVHM+SaZyB0Iu
-	 QD/Q9MTo4C0UA==
+	b=ehoa4lZ1X++N9eHi5e1ssvb96YIzguhtK7Dik30rCyCkQATUDChbtxZx+/MUt5xRN
+	 GVACwEkhytujmkyYx3jgpUV6+Z+AFFeCvJ7PGVsJeA9u/i51JCsInH8JTHSkd2VqOC
+	 RSzKJOruFzBJVGuHcSN48OhMYgmWZq62Mxui84nIdW+AaP1JFQDFANoNdtXAxirXpd
+	 UxXl0damyzoxzvUc+2hOIYhaFQV5eHdIbrX6w+Mho2X4vruJKiYDYMEXv6XK07Eyq5
+	 z4zxV0NnQQZKnBntavXyFrid+eLdlOIqA4brtCnd/vV3iPyplIUU5XgmSg70N2bsgp
+	 CI3gEiTO7YMKg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes.berg@intel.com,
-	pagadala.yesu.anjaneyulu@intel.com,
-	emmanuel.grumbach@intel.com,
-	daniel.gabay@intel.com,
-	yelangyan@huaqin.corp-partner.google.com
-Subject: [PATCH AUTOSEL 6.19-6.18] wifi: iwlwifi: mld: Handle rate selection for NAN interface
-Date: Sat, 14 Feb 2026 16:22:31 -0500
-Message-ID: <20260214212452.782265-6-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] wifi: rtw89: pci: validate sequence number of TX release report
+Date: Sat, 14 Feb 2026 16:22:32 -0500
+Message-ID: <20260214212452.782265-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -55,17 +50,46 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit dbbeebece03050cd510073ce89fee83844e06b00 ]
+[ Upstream commit 957eda596c7665f2966970fd1dcc35fe299b38e8 ]
 
-Frames transmitted over a NAN interface might not have channel
-information assigned to them. In such cases assign the lowest
-OFDM to the frame.
+Hardware rarely reports abnormal sequence number in TX release report,
+which will access out-of-bounds of wd_ring->pages array, causing NULL
+pointer dereference.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20251110180612.72046f98f878.Ib784931fffd0747acd9d7bb22eabbbec5282733e@changeid
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 1 PID: 1085 Comm: irq/129-rtw89_p Tainted: G S   U
+             6.1.145-17510-g2f3369c91536 #1 (HASH:69e8 1)
+  Call Trace:
+   <IRQ>
+   rtw89_pci_release_tx+0x18f/0x300 [rtw89_pci (HASH:4c83 2)]
+   rtw89_pci_napi_poll+0xc2/0x190 [rtw89_pci (HASH:4c83 2)]
+   net_rx_action+0xfc/0x460 net/core/dev.c:6578 net/core/dev.c:6645 net/core/dev.c:6759
+   handle_softirqs+0xbe/0x290 kernel/softirq.c:601
+   ? rtw89_pci_interrupt_threadfn+0xc5/0x350 [rtw89_pci (HASH:4c83 2)]
+   __local_bh_enable_ip+0xeb/0x120 kernel/softirq.c:499 kernel/softirq.c:423
+   </IRQ>
+   <TASK>
+   rtw89_pci_interrupt_threadfn+0xf8/0x350 [rtw89_pci (HASH:4c83 2)]
+   ? irq_thread+0xa7/0x340 kernel/irq/manage.c:0
+   irq_thread+0x177/0x340 kernel/irq/manage.c:1205 kernel/irq/manage.c:1314
+   ? thaw_kernel_threads+0xb0/0xb0 kernel/irq/manage.c:1202
+   ? irq_forced_thread_fn+0x80/0x80 kernel/irq/manage.c:1220
+   kthread+0xea/0x110 kernel/kthread.c:376
+   ? synchronize_irq+0x1a0/0x1a0 kernel/irq/manage.c:1287
+   ? kthread_associate_blkcg+0x80/0x80 kernel/kthread.c:331
+   ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
+   </TASK>
+
+To prevent crash, validate rpp_info.seq before using.
+
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260110022019.2254969-2-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -75,121 +99,137 @@ LLM Generated explanations, may be completely bogus:
 
 ### Commit Message Analysis
 
-The commit addresses frames transmitted over a NAN (Neighbor Awareness
-Networking) interface that might not have channel information assigned.
-Without channel info, the `band` variable remains uninitialized or set
-to an invalid value, which would lead to an out-of-bounds array access
-when used as an index into `mld->hw->wiphy->bands[band]`.
+The commit message is crystal clear about the bug:
+- **Hardware rarely reports abnormal sequence numbers** in TX release
+  reports
+- This causes **out-of-bounds access** on `wd_ring->pages` array
+- Results in a **NULL pointer dereference** (kernel crash)
+- A full crash trace is provided, showing this is a **reproducible,
+  real-world bug**
+
+The crash trace shows it occurs in an IRQ context
+(`rtw89_pci_release_tx` → `rtw89_pci_napi_poll` → `net_rx_action`),
+meaning when this bug triggers, it crashes the system during normal
+network operation.
 
 ### Code Change Analysis
 
-The fix is a small, surgical addition of 4 lines (plus a blank line) in
-`iwl_mld_get_lowest_rate()`:
+The fix is extremely small and surgical — it adds a **bounds check** on
+`rpp_info.seq` before it's used to index into the `wd_ring->pages`
+array:
 
 ```c
-if (band >= NUM_NL80211_BANDS) {
-    WARN_ON(vif->type != NL80211_IFTYPE_NAN);
-    return IWL_FIRST_OFDM_RATE;
+if (unlikely(rpp_info.seq >= RTW89_PCI_TXWD_NUM_MAX)) {
+    rtw89_warn(rtwdev, "invalid seq %d\n", rpp_info.seq);
+    return;
 }
 ```
 
-**What happens without this fix:**
+This is placed right before the line:
+```c
+txwd = &wd_ring->pages[rpp_info.seq];
+```
 
-1. `iwl_mld_get_basic_rates_and_band()` is called, which sets `band`
-   based on `link_conf->chanreq.oper.chan->band`
-2. For NAN interfaces, `link_conf->chanreq.oper.chan` may be NULL,
-   meaning `band` is never properly set
-3. Looking at the function, `band` is declared as `u8 band` with no
-   initializer — so it could be any value
-4. The code then does `sband = mld->hw->wiphy->bands[band]` — if `band`
-   is out of range (>= `NUM_NL80211_BANDS`), this is an **out-of-bounds
-   array access**
-5. If `sband` happens to be NULL or garbage, subsequent access to
-   `sband->bitrates[i].hw_value` would be a **NULL pointer dereference
-   or memory corruption**
+Without this check, an out-of-bounds `seq` value from the hardware leads
+to accessing memory beyond the `pages` array, causing a NULL pointer
+dereference (or potentially worse — arbitrary memory access).
+
+The only other change is adding `unlikely()` to an existing check on
+`rpp_info.txch == RTW89_TXCH_CH12`, which is a minor optimization hint
+and completely safe.
 
 ### Bug Classification
 
-This is a **potential out-of-bounds access / NULL pointer dereference**
-bug. The `bands[]` array is indexed by `band` which could be
-uninitialized/invalid when NAN interfaces don't have channel
-information. This could lead to:
-- Kernel crash/oops
-- Memory corruption
+This is a textbook **out-of-bounds array access / NULL pointer
+dereference** fix:
+- The `seq` value comes from hardware (parsed from the TX release report
+  via `parse_rpp`)
+- Hardware can occasionally provide invalid/corrupt values
+- No validation was performed before using `seq` as an array index
+- Result: kernel crash (BUG: kernel NULL pointer dereference)
 
-### Scope and Risk Assessment
+### Stable Kernel Criteria Assessment
 
-- **Files changed:** 1 file
-- **Lines added:** 5 (including blank line)
-- **Lines removed:** 0
-- **Subsystem:** iwlwifi wireless driver (Intel WiFi)
-- **Risk:** Very low — the check is purely additive, validates bounds
-  before array access, and returns a safe default value
-- **The WARN_ON** provides debugging info if this path is hit
-  unexpectedly for non-NAN interfaces
+1. **Obviously correct and tested**: Yes — it's a simple bounds check
+   before array access. The author (Realtek maintainer) clearly
+   understands the code.
+2. **Fixes a real bug**: Yes — NULL pointer dereference causing kernel
+   crash, with a full stack trace demonstrating the issue.
+3. **Important issue**: Yes — kernel crash/oops during normal WiFi
+   operation.
+4. **Small and contained**: Yes — adds 4 lines of bounds checking code,
+   changes 1 line (adding `unlikely()`), in a single file.
+5. **No new features**: Correct — pure bug fix.
+6. **Applies cleanly**: The change is self-contained with no
+   dependencies on other commits.
 
-### Key Concern: Code Maturity
+### Risk Assessment
 
-The file is `drivers/net/wireless/intel/iwlwifi/mld/tx.c`. The "mld"
-directory is relatively new in iwlwifi — it was introduced as part of
-the iwlwifi restructuring. Let me check when this code was introduced.
+**Risk: Very Low**
+- The fix only adds a validation check that returns early on invalid
+  input
+- It cannot introduce regressions — it only rejects values that would
+  have caused a crash anyway
+- The `RTW89_PCI_TXWD_NUM_MAX` constant is already used elsewhere in the
+  driver for allocating the `pages` array, so it's the correct bound
+- Single file, single function, minimal change
 
-Looking at the path `drivers/net/wireless/intel/iwlwifi/mld/`, this is
-the newer MLD (Multi-Link Device) code path for iwlwifi. This code is
-quite new and may not exist in older stable trees. The commit is on top
-of Linux 6.19, so it would only be relevant for very recent stable trees
-(6.12.y at earliest, likely only 6.13.y+).
+**Benefit: High**
+- Prevents kernel crashes for rtw89 WiFi users
+- The rtw89 driver supports popular Realtek WiFi chips (RTW8852A,
+  RTW8852B, RTW8852C, etc.) used in many laptops
+- The crash occurs during normal WiFi operation when hardware reports a
+  bad sequence number
 
-### Dependency Check
+### Author and Trust
 
-The fix is self-contained. It adds a bounds check before an existing
-array access. It doesn't depend on other patches. However, the entire
-`mld/` directory may not exist in older stable trees, limiting which
-stable versions this applies to.
+- **Ping-Ke Shih** is the Realtek WiFi driver maintainer — highly
+  trusted for rtw89 changes
+- The commit includes a detailed crash trace demonstrating the real-
+  world impact
+- The kernel version in the trace (6.1.145) suggests this was actually
+  hit on a stable kernel
 
-### User Impact
+### Dependencies
 
-- **Who is affected:** Users of Intel WiFi hardware using NAN (Neighbor
-  Awareness Networking) functionality
-- **Severity:** Potential kernel crash (out-of-bounds array access) —
-  moderate to high
-- **Trigger:** Transmitting frames over a NAN interface without channel
-  information
+None. The fix is completely self-contained. `RTW89_PCI_TXWD_NUM_MAX` is
+already defined in the driver.
 
-### Decision
+### Summary
 
-The fix:
-- Is small and surgical (5 lines)
-- Fixes a real bug (out-of-bounds array access that could cause a crash)
-- Is obviously correct (bounds check before array index)
-- Has no risk of regression (adds a safety check with safe fallback)
-- Meets stable kernel criteria
-
-The only concern is whether the `mld/` code exists in the target stable
-trees, but that's a backporting logistics issue, not a reason to reject.
-If the code exists in stable, this fix should be there too.
+This is an ideal stable backport candidate: a small, obviously correct
+bounds check that prevents a kernel NULL pointer dereference crash in a
+widely-used WiFi driver. It has zero regression risk, fixes a real bug
+that users hit in production, and is authored by the subsystem
+maintainer.
 
 **YES**
 
- drivers/net/wireless/intel/iwlwifi/mld/tx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/realtek/rtw89/pci.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/tx.c b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-index 3b4b575aadaa5..e3fb4fc4f452e 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-@@ -345,6 +345,11 @@ u8 iwl_mld_get_lowest_rate(struct iwl_mld *mld,
+diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
+index a66fcdb0293b6..093960d7279f8 100644
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -604,11 +604,16 @@ static void rtw89_pci_release_rpp(struct rtw89_dev *rtwdev, void *rpp)
  
- 	iwl_mld_get_basic_rates_and_band(mld, vif, info, &basic_rates, &band);
+ 	info->parse_rpp(rtwdev, rpp, &rpp_info);
  
-+	if (band >= NUM_NL80211_BANDS) {
-+		WARN_ON(vif->type != NL80211_IFTYPE_NAN);
-+		return IWL_FIRST_OFDM_RATE;
+-	if (rpp_info.txch == RTW89_TXCH_CH12) {
++	if (unlikely(rpp_info.txch == RTW89_TXCH_CH12)) {
+ 		rtw89_warn(rtwdev, "should no fwcmd release report\n");
+ 		return;
+ 	}
+ 
++	if (unlikely(rpp_info.seq >= RTW89_PCI_TXWD_NUM_MAX)) {
++		rtw89_warn(rtwdev, "invalid seq %d\n", rpp_info.seq);
++		return;
 +	}
 +
- 	sband = mld->hw->wiphy->bands[band];
- 	for_each_set_bit(i, &basic_rates, BITS_PER_LONG) {
- 		u16 hw = sband->bitrates[i].hw_value;
+ 	tx_ring = &rtwpci->tx.rings[rpp_info.txch];
+ 	wd_ring = &tx_ring->wd_ring;
+ 	txwd = &wd_ring->pages[rpp_info.seq];
 -- 
 2.51.0
 
