@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2053090F5;
-	Sat, 14 Feb 2026 21:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63167303A02;
+	Sat, 14 Feb 2026 21:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104395; cv=none; b=TwXnQn7XGdXOsXHUHSfOiCoa/FSVux6NBAwsTkEfT9/tZArb2xWD6qKYd9l73GgNUVir5jdHlQkndYr/bD7G5nutKs0Ujc7jHp3K2JKdniuS/ATDvGTb4ZtDqCjinuyMwI61SxbtDx8uCfXf0twz8K4YqMat6mr5tsiFmD3T6gU=
+	t=1771104396; cv=none; b=JqRmZ04SCurLaA3N+EF4Ekx9pZ2QwtBqs/H7pM2V+0VrA4VqIN/Vd/SREeRyGt+YIWT3CYtZ+rX0OTfpO+n3ctYfrDmGusomHaXxymn3/XzMuqqZwtjxxURQ93rYGfa4mbjtoJOxcCsDqGWW8LCPa75S8GdWOLqzP6lAAWqHc7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104395; c=relaxed/simple;
-	bh=SfNiciLZoCdsgwu+cuQeIqk99SgFPy8qcvawaJKhokk=;
+	s=arc-20240116; t=1771104396; c=relaxed/simple;
+	bh=I27tBtEkaPD93DNtj/GNfKg8FNNMdligpTzQU8cwlMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W9F6tQIaABthO3sZeCdRjhBk2RVHXdp4tJPK6WLBayNi0oz+7buVB7Lrcsfg02jAM4FQCAKqJGIic6e3q7NbAzcbeASH61h63WGKVSG67VQRtFU1ngax02F9/RfmXRBUbUVXcqj0PQvJbdcmUiP3ISazeQF0j0F6ic8YZK3g6wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IzQTtlzu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZxfcKdB6WY60Iu5xa4foxVLuVZGtMlX+fYGMpa3ZxuJ3LvbZynQ57rmz5NNIhhskc07O1R6n+SXY4qRPjMuhDxQMHMju6LnRlgtiuR1B7E6EUAfBe/j/tdiEKIF7s5fUZ7qh+b9+vQnMABpN63iVtVs0fcjnDso/H15qgCm2K+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GBZtZrBv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IzQTtlzu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CDFC19422;
-	Sat, 14 Feb 2026 21:26:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GBZtZrBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB2DC16AAE;
+	Sat, 14 Feb 2026 21:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104394;
-	bh=SfNiciLZoCdsgwu+cuQeIqk99SgFPy8qcvawaJKhokk=;
+	s=k20201202; t=1771104396;
+	bh=I27tBtEkaPD93DNtj/GNfKg8FNNMdligpTzQU8cwlMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IzQTtlzucuZ8od72PiRX1nYtKPcseAx2ut8S4z1uyzLuMArs095BQClymhYcTZn81
-	 FjNdXz4mXpZHmfQ/3pPa7aRWHl0Z2lo/j6W2ZAK5VnihmFKMvEHZxqxAwYhBVnTa3O
-	 gao5nSyEl/QjEgnQrN1ZQwkoZH1O9/Aql6Aep5J6lQ5TwHbzyAQyxfblPJzWmzjBak
-	 AXH8Pn0/53KnCIrHqCgrpAjdlFCEzAF8lqC92IDFVJD6Kwra0PZG0LSj/KM7NRur4J
-	 agG1g9q80ubgz9SNfuFTwyjggVD4oNLUxi4/HkuAJTn+Xsf/OfueGqYyxRkzg272s5
-	 fNUdkZA0mh99Q==
+	b=GBZtZrBvRGmakA5yBHVLXn4Rz6Osc41+qPSm/C6skI/yjHjYXO6Fhq/yDqTPf64NL
+	 519zsR9agnTM5Dpms+W8+F/op6kb4N9mQApCC24FmsvfIHKJbKfxDUbTBWXkShU7U+
+	 CDcYj3uv64Puau+nFvvZH4qDSIFsdFuK6ouLG7DXcegHAPoWUA6VfNMo3k4k1rX3m3
+	 YRj2vKJ3GgbCcNfbqp+WMC0DDAXPRw5xWOwpNLKjeuc2EoSu+mRLP0Me8jTAveFY8k
+	 PlRmTsQpphoAKTMkhjyxhA+KbvZTL2ivuN1yW8fk+SpF0NuZxZ/XwrEAisM4Y3mdud
+	 h/+JjWQuzbZCw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chin-Yen Lee <timlee@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] wifi: rtw89: wow: add reason codes for disassociation in WoWLAN mode
-Date: Sat, 14 Feb 2026 16:23:24 -0500
-Message-ID: <20260214212452.782265-59-sashal@kernel.org>
+	davem@davemloft.net,
+	dsahern@kernel.org,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.15] ipv6: annotate data-races in ip6_multipath_hash_{policy,fields}()
+Date: Sat, 14 Feb 2026 16:23:25 -0500
+Message-ID: <20260214212452.782265-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -48,148 +52,149 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chin-Yen Lee <timlee@realtek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2fd8f953f25173d14981d8736b6f5bfcd757e51b ]
+[ Upstream commit 03e9d91dd64e2f5ea632df5d59568d91757efc4d ]
 
-Some APs disconnect clients by sending a Disassociation frame
-rather than a Deauthentication frame. Since these frames use
-different reason codes in WoWLAN mode, this commit adds support
-for handling Disassociation to prevent missed disconnection events.
+Add missing READ_ONCE() when reading sysctl values.
 
-Signed-off-by: Chin-Yen Lee <timlee@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260110022019.2254969-3-pkshih@realtek.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260115094141.3124990-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+## Analysis of ipv6: annotate data-races in
+ip6_multipath_hash_{policy,fields}()
 
-### Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit adds handling for disassociation frames in WoWLAN (Wake-on-
-Wireless-LAN) mode. The problem described is that some APs disconnect
-clients by sending a Disassociation frame rather than a Deauthentication
-frame. Without this patch, if an AP sends a Disassociation frame while
-the system is in WoWLAN suspend, the driver doesn't recognize the wake
-reason code (`0x4`), and the disconnection event is missed — the system
-either doesn't wake up properly or wakes up without reporting the
-correct reason to userspace.
+The commit is authored by Eric Dumazet, a well-known and prolific
+networking subsystem maintainer at Google. The subject explicitly says
+"annotate data-races," which is a common pattern for KCSAN (Kernel
+Concurrency Sanitizer) data race fixes. The commit adds `READ_ONCE()`
+annotations when reading sysctl values that can be concurrently modified
+by userspace.
 
-### Code Change Analysis
+Reviewed by Simon Horman (another senior networking maintainer) and
+committed by Jakub Kicinski (networking subsystem maintainer). This is a
+high-trust chain.
 
-The change is minimal and surgical:
+### 2. CODE CHANGE ANALYSIS
 
-1. **wow.h**: Adds a new enum value `RTW89_WOW_RSN_RX_DISASSOC = 0x4` to
-   the existing `rtw89_wake_reason` enum. This is a firmware-defined
-   reason code that the hardware/firmware already produces — the driver
-   just wasn't handling it.
+The change is extremely minimal - exactly 2 lines changed in a single
+header file:
 
-2. **wow.c**: Adds a new `case RTW89_WOW_RSN_RX_DISASSOC:` in the switch
-   statement in `rtw89_wow_show_wakeup_reason()`, which sets
-   `wakeup.disconnect = true` (same as deauth and disconnect cases) and
-   logs a debug message.
+```c
+// Before:
+return net->ipv6.sysctl.multipath_hash_policy;
+return net->ipv6.sysctl.multipath_hash_fields;
 
-The pattern is identical to the existing `RTW89_WOW_RSN_RX_DEAUTH` case
-— same behavior, just for a different frame type.
+// After:
+return READ_ONCE(net->ipv6.sysctl.multipath_hash_policy);
+return READ_ONCE(net->ipv6.sysctl.multipath_hash_fields);
+```
 
-### Bug Classification
+**What's happening:** These two inline functions read sysctl values
+(`multipath_hash_policy` and `multipath_hash_fields`) from the network
+namespace's sysctl structure. These values can be modified at any time
+by userspace through `/proc/sys/net/ipv6/...`. Without `READ_ONCE()`,
+the compiler is free to:
+- Load the value multiple times (store-tearing)
+- Optimize/reorder the read in unexpected ways
+- Cause inconsistent behavior if the value changes mid-function
 
-This fixes a **real functional bug**: missed disconnection events during
-WoWLAN suspend. When an AP sends a disassociation frame (which is a
-legitimate and common way to disconnect a client per IEEE 802.11), the
-driver fails to properly report the wakeup reason. This means:
+This is a classic data race: a sysctl writer (from userspace) and a
+packet processing reader (in softirq/RCU context) access the same memory
+without synchronization. `READ_ONCE()` prevents compiler-induced issues
+and documents the intentional lock-free access pattern.
 
-- The system may not wake up when the user expects it to (missed wake
-  event)
-- Or if it does wake, the wakeup reason isn't properly communicated to
-  cfg80211/userspace
-- The unhandled reason code falls through to the `default` case in the
-  switch
+### 3. CLASSIFICATION
 
-### Scope and Risk Assessment
+This is a **data race fix**, falling under category #3 (RACE CONDITIONS)
+from the bug patterns. While the practical consequences of this
+particular race may be minor (the worst case is likely reading a
+partially-updated or stale value for hash policy/fields), the fix is:
 
-- **Size**: ~10 lines added across 2 files
-- **Risk**: Extremely low — it's adding a case to a switch statement
-  that mirrors existing cases
-- **Self-contained**: No dependencies on other commits
-- **No new features**: This is handling a firmware-defined reason code
-  that the hardware already produces; the driver was simply missing the
-  handler
-- **No API changes**: No new userspace-visible APIs
+- Standard practice in the networking stack (Eric Dumazet has done
+  hundreds of these)
+- Prevents KCSAN warnings that indicate real concurrent access
+- Prevents potential compiler optimizations that could cause subtle bugs
+- Part of the kernel's correctness guarantees
 
-### User Impact
+### 4. SCOPE AND RISK ASSESSMENT
 
-This affects any user of rtw89 WiFi hardware who uses WoWLAN.
-Disassociation frames are commonly sent by APs (especially enterprise
-APs during maintenance, roaming scenarios, or policy enforcement).
-Missing these events means WoWLAN doesn't work correctly in real-world
-scenarios — which is a functional bug for laptop users relying on wake-
-on-disconnect.
+- **Lines changed:** 2 (extremely minimal)
+- **Files touched:** 1 header file
+- **Complexity:** Trivial - `READ_ONCE()` is a well-understood macro
+- **Risk of regression:** Essentially zero. `READ_ONCE()` is a volatile
+  read barrier that cannot change functional behavior. It only
+  constrains the compiler.
+- **Subsystem:** IPv6 networking (core, affects everyone using IPv6
+  multipath routing)
 
-### Comparison to Stable Criteria
+### 5. USER IMPACT
 
-This is analogous to a **hardware quirk/workaround** — it handles a case
-that the firmware already supports but the driver wasn't processing. It:
-- Fixes a real bug (missed disconnection events)
-- Is obviously correct (mirrors existing deauth handling)
-- Is small and contained
-- Does not introduce new features
-- Applies cleanly
+- Affects anyone using IPv6 multipath routing with hash policy or hash
+  fields sysctls
+- The data race could theoretically cause incorrect hash computation
+  leading to suboptimal load balancing, though the practical impact is
+  low
+- KCSAN reports these as warnings, which clutters logs and may mask
+  other real issues
 
-### Concerns
+### 6. STABILITY INDICATORS
 
-- The code exists in stable trees (rtw89 driver has been in the kernel
-  for several versions)
-- No dependencies on other commits
-- The enum value `0x4` is firmware-defined and presumably has been
-  supported by the firmware for some time
+- Reviewed by Simon Horman
+- Author is Eric Dumazet (top networking contributor)
+- Committed by Jakub Kicinski (networking maintainer)
+- This is a well-established pattern - dozens of identical `READ_ONCE()`
+  annotation patches have been backported to stable
+
+### 7. DEPENDENCY CHECK
+
+No dependencies. `READ_ONCE()` has existed in the kernel for many years.
+The functions `ip6_multipath_hash_policy()` and
+`ip6_multipath_hash_fields()` exist in all recent stable trees. This
+patch applies trivially.
 
 ### Decision
 
-This is a small, surgical bug fix that prevents missed WoWLAN
-disconnection events. It's clearly correct, mirrors existing code
-patterns, has negligible risk, and fixes a real-world user-facing issue
-with WiFi hardware.
+This is a textbook data race annotation fix: 2-line change, zero
+regression risk, fixes a real (if minor) concurrency bug, authored and
+reviewed by top networking maintainers. These
+`READ_ONCE()`/`WRITE_ONCE()` annotations for sysctl values are routinely
+backported to stable trees. The fix is small, surgical, and meets all
+stable kernel criteria.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/wow.c | 4 ++++
- drivers/net/wireless/realtek/rtw89/wow.h | 1 +
- 2 files changed, 5 insertions(+)
+ include/net/ipv6.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/wow.c b/drivers/net/wireless/realtek/rtw89/wow.c
-index 46aba4cb2ee9e..534966b4d9c43 100644
---- a/drivers/net/wireless/realtek/rtw89/wow.c
-+++ b/drivers/net/wireless/realtek/rtw89/wow.c
-@@ -809,6 +809,10 @@ static void rtw89_wow_show_wakeup_reason(struct rtw89_dev *rtwdev)
- 
- 	reason = rtw89_read8(rtwdev, wow_reason_reg);
- 	switch (reason) {
-+	case RTW89_WOW_RSN_RX_DISASSOC:
-+		wakeup.disconnect = true;
-+		rtw89_debug(rtwdev, RTW89_DBG_WOW, "WOW: Rx disassoc\n");
-+		break;
- 	case RTW89_WOW_RSN_RX_DEAUTH:
- 		wakeup.disconnect = true;
- 		rtw89_debug(rtwdev, RTW89_DBG_WOW, "WOW: Rx deauth\n");
-diff --git a/drivers/net/wireless/realtek/rtw89/wow.h b/drivers/net/wireless/realtek/rtw89/wow.h
-index d2ba6cebc2a6b..71e07f482174f 100644
---- a/drivers/net/wireless/realtek/rtw89/wow.h
-+++ b/drivers/net/wireless/realtek/rtw89/wow.h
-@@ -33,6 +33,7 @@
- enum rtw89_wake_reason {
- 	RTW89_WOW_RSN_RX_PTK_REKEY = 0x1,
- 	RTW89_WOW_RSN_RX_GTK_REKEY = 0x2,
-+	RTW89_WOW_RSN_RX_DISASSOC = 0x4,
- 	RTW89_WOW_RSN_RX_DEAUTH = 0x8,
- 	RTW89_WOW_RSN_DISCONNECT = 0x10,
- 	RTW89_WOW_RSN_RX_MAGIC_PKT = 0x21,
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 74fbf1ad8065a..a0407b9f510ad 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -1010,11 +1010,11 @@ static inline int ip6_default_np_autolabel(struct net *net)
+ #if IS_ENABLED(CONFIG_IPV6)
+ static inline int ip6_multipath_hash_policy(const struct net *net)
+ {
+-	return net->ipv6.sysctl.multipath_hash_policy;
++	return READ_ONCE(net->ipv6.sysctl.multipath_hash_policy);
+ }
+ static inline u32 ip6_multipath_hash_fields(const struct net *net)
+ {
+-	return net->ipv6.sysctl.multipath_hash_fields;
++	return READ_ONCE(net->ipv6.sysctl.multipath_hash_fields);
+ }
+ #else
+ static inline int ip6_multipath_hash_policy(const struct net *net)
 -- 
 2.51.0
 
