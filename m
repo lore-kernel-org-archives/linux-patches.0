@@ -1,50 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD53DF59;
-	Sat, 14 Feb 2026 00:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32B81DE887;
+	Sat, 14 Feb 2026 00:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030716; cv=none; b=qubeDRzJKSzPTUx9OUg1os/3A/T1upEGLMQALl4YrDGBnWTrntcw3e9UnoAXOf4UJZfmMMteaPjemcj9NlAPZiHUr+EnuOV8XNoEMiY4N3aw7WzEAHJpXWNohTJa2fIVgqIq05ijViww6T+oREB2J9Y9R13z9umhsjcA4o8NkKE=
+	t=1771030718; cv=none; b=mm5FmwC/w0hwqwEkokdnZe6MtUIxhz2W4ka034r7xjPO+S1HhFpqd3lIUXsDWVLzLDqZANkN96f/fNApf46Iv9GKU03O1DmKWK29LT+Z0sw2yHqLulwhPA6JNC3EAixupqL/zqaVtgtzRN+5sZEZv4qXu/HCAkM9fY+IWzj7yWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030716; c=relaxed/simple;
-	bh=9iUqq9ZQm+L4L0WZKC72XnpCTsO/DQnYd7c8gUn/SE0=;
+	s=arc-20240116; t=1771030718; c=relaxed/simple;
+	bh=oJk5DkIzIOcPUBLFNrFEmh7/x9GuEfuX178fRIzZMwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IemN7T633Takz/Z6u6dSP5EKllL3UFgJaKOjh7PJtTCqcnUEOQ1pvTjXqXRMRUFCuIaBvqYrxkOOhDVb746PZkpc0jY87EfLx8tbzueaqrP4VbWvQ9wglWfH1CphZDroairT7BISALRI5et15YnBwLDABkxQWLqR1+bYVYTrUSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GSPOji4Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s5rvxWYuIMzZmZjitFdqofupeWMfYVqL+a1ubUVk1ncPLko28rLiwy3/CM/o/FvzpKrQdTMHom9Hkos9zWPWl4dX6PGRmnnr0fTQEbO/VMHzs4sXMLsX+U7fY6YYLtIdvYfh4fVWr3Rpi9a/ySCBy+lT4ipx5ty3kccqdN3cVoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QbgsOnKv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GSPOji4Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6F6C116C6;
-	Sat, 14 Feb 2026 00:58:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QbgsOnKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D757FC2BC9E;
+	Sat, 14 Feb 2026 00:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030716;
-	bh=9iUqq9ZQm+L4L0WZKC72XnpCTsO/DQnYd7c8gUn/SE0=;
+	s=k20201202; t=1771030717;
+	bh=oJk5DkIzIOcPUBLFNrFEmh7/x9GuEfuX178fRIzZMwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GSPOji4QqRHEiVmQFrnVKtGcaTfBjnT6aA1QsEkaEWonVkmgh0rnEcOKlTFWQWz0+
-	 rohVvlNTwGRwJ5BD/WMHRvCn//sgxvZnF4Ep9Oy+5ZCjoh6G1nicpreyBkFjpdRUqp
-	 mtvOEG13lGoj0U/sMHC9g1m07QX0iGnmdslL7nzKMLsT9spX8NKdXlVMsjwfSf9DRf
-	 K2Qc9byZ5fj8hEP9a4TDGbmz2umM7YRUms39SEHrnm1bMN2CdJJ+Q3ulzuXlk4b3Wj
-	 i5QLJ6DkuWaztI4JOZbUSXZwpLJKPwxH8ZUETJ3WnoFWWfZ+XvuE5P9LTDFb2k8ptX
-	 Nad12yEq/jcvg==
+	b=QbgsOnKvNGoeM8gsCJjbgpA4VJ5Ol+CkxSQwNWDpAbt/dFdDCP+Hc/uoaZ40xwF5o
+	 fCI8oRpgAIgNNgru8t2L8+E8a33SHfW10kwyoaXEG1BA9vkMH6MHSuQyMlR8+HARD8
+	 cuo7e4H7k0BX1Dy9w1dwiaScg99M2sJX7eRu9NBYxhuD18xOvZIyK5ZGywQ2u6RuhP
+	 PUTzdrtDFs7hktatKeOWqMylKPl9653rkRdahPt0ykv4n2bhPagIL1l7c0IbYkD9Xq
+	 r+wfLQmeIrr+ZLNhzWOgLJzEp0gsWwRXpP21GvHF820ANvNoSBa1j0qSzthGJjXvV6
+	 JKPvPciL9qnhg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Borislav Petkov (AMD)" <bp@alien8.de>,
-	kernel test robot <lkp@intel.com>,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+Cc: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	nathan@kernel.org,
-	mingo@kernel.org,
-	ardb@kernel.org,
-	Neeraj.Upadhyay@amd.com,
-	aik@amd.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	ashish.kalra@amd.com,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-6.18] x86/sev: Use kfree_sensitive() when freeing a SNP message descriptor
-Date: Fri, 13 Feb 2026 19:58:10 -0500
-Message-ID: <20260214005825.3665084-4-sashal@kernel.org>
+	sudeep.holla@kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-6.12] firmware: arm_ffa: Unmap Rx/Tx buffers on init failure
+Date: Fri, 13 Feb 2026 19:58:11 -0500
+Message-ID: <20260214005825.3665084-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214005825.3665084-1-sashal@kernel.org>
 References: <20260214005825.3665084-1-sashal@kernel.org>
@@ -60,166 +52,159 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Borislav Petkov (AMD)" <bp@alien8.de>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-[ Upstream commit af05e558988ed004a20fc4de7d0f80cfbba663f0 ]
+[ Upstream commit 9fda364cb78c8b9e1abe4029f877300c94655742 ]
 
-Use the proper helper instead of an open-coded variant.
+ffa_init() maps the Rx/Tx buffers via ffa_rxtx_map() but on the
+partition setup failure path it never unmaps them.
 
-Closes: https://lore.kernel.org/r/202512202235.WHPQkLZu-lkp@intel.com
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Julia Lawall <julia.lawall@inria.fr>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://patch.msgid.link/20260112114147.GBaWTd-8HSy_Xp4S3X@fat_crate.local
+Add the missing ffa_rxtx_unmap() call in the error path so that
+the Rx/Tx buffers are properly released before freeing the backing
+pages.
+
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Message-Id: <20251210031656.56194-1-lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a thorough understanding. Let me compile my full analysis.
-
----
-
-## Detailed Analysis
+## Analysis
 
 ### 1. Commit Message Analysis
 
-The commit message is intentionally understated: "Use the proper helper
-instead of an open-coded variant." However, this is a **security-
-relevant fix** flagged by automated static analysis tools. It was:
-
-- **Reported-by: kernel test robot** (automated scanner from Intel)
-- **Reported-by: Julia Lawall** (well-known for Coccinelle semantic
-  patches that detect exactly these patterns)
-- **Reviewed-by: Tom Lendacky** (AMD SEV subsystem maintainer)
-- **Authored-by: Borislav Petkov** (x86 co-maintainer, AMD SEV expert)
+The commit message clearly describes a **resource leak on an error
+path**: `ffa_init()` maps Rx/Tx buffers via `ffa_rxtx_map()`, but when
+`ffa_setup_partitions()` fails, the error path frees the backing pages
+without first unmapping the buffers from the firmware. The fix adds the
+missing `ffa_rxtx_unmap()` call. The commit was accepted by the FF-A
+subsystem maintainer Sudeep Holla.
 
 ### 2. Code Change Analysis
 
-The change is in `snp_msg_free()` in `arch/x86/coco/sev/core.c`:
+The fix is a **single line addition**:
 
-**Before:**
-```c
-memset(mdesc, 0, sizeof(*mdesc));
-kfree(mdesc);
+```2071:2071:drivers/firmware/arm_ffa/driver.c
+        ffa_rxtx_unmap(drv_info->vm_id);
 ```
 
-**After:**
-```c
-kfree_sensitive(mdesc);
-```
+inserted between `ffa_notifications_cleanup()` and the `free_pages:`
+label.
 
-This is a **critical difference** despite appearing cosmetic:
+**Understanding the bug mechanism:**
 
-1. **`memset()` can be optimized away**: When `memset()` is followed
-   immediately by `kfree()`, the compiler can perform dead store
-   elimination (DSE). Since the memory is about to be freed and no code
-   reads the zeroed values, the compiler may determine the `memset()` is
-   a dead store and remove it entirely. This is increasingly common with
-   modern GCC and Clang optimization levels, and especially with LTO.
+The `ffa_init()` function follows this flow:
+1. Allocates Rx/Tx buffer pages (lines 2038-2048)
+2. Maps them to firmware via `ffa_rxtx_map()` (line 2050) — this is an
+   FF-A SMC/HVC call to the secure firmware (e.g., TrustZone / Hafnium
+   hypervisor)
+3. Sets up partitions via `ffa_setup_partitions()` (line 2065)
+4. If partition setup fails, falls through to `free_pages:` which frees
+   the backing pages
 
-2. **`kfree_sensitive()` uses `memzero_explicit()`**: This function
-   calls `memset()` followed by `barrier_data()`, which is a compiler
-   barrier that prevents the zero operation from being optimized away.
-   This is the canonical kernel API specifically designed for clearing
-   sensitive data before freeing.
+The problem: Step 4 **never calls `ffa_rxtx_unmap()`**, so the firmware
+retains stale references to the freed physical pages. The `ffa_exit()`
+function (line 2081-2089) correctly calls `ffa_rxtx_unmap()` before
+freeing pages, confirming the error path was simply missing this
+cleanup.
 
-3. **`kfree_sensitive()` clears the entire slab allocation**: Via
-   `ksize()`, it zeros the whole allocated slab object (which may be
-   larger than `sizeof(*mdesc)`), while the original code only zeroed
-   `sizeof(*mdesc)`. This provides more thorough clearing of any padding
-   or slab slack space.
+**Consequences of the bug:**
+- The firmware (running in secure world or EL2 hypervisor) still holds
+  mappings to physical addresses of freed kernel pages
+- Those freed pages can be reallocated for other kernel purposes
+- The firmware could write to these stale mappings, causing **memory
+  corruption** of unrelated kernel data
+- On systems with a stage-2 hypervisor, the mapping entries are also
+  leaked
 
-### 3. Sensitivity of the Data
+### 3. Bug Origin
 
-The `snp_msg_desc` structure contains:
+The bug was introduced by commit
+`0c565d16b80074e57e3e56240d13fc6cd6ed0334` ("firmware: arm_ffa: Handle
+partitions setup failures"), which first made `ffa_setup_partitions()`
+return an error and added an error path in `ffa_init()`. Before this
+commit, `ffa_setup_partitions()` was void and never triggered error
+cleanup. This commit landed in **v6.8**. The error path was later
+restructured by `be61da9385766` (v6.15), but the missing unmap persisted
+through both versions.
 
-- **`secret_request` and `secret_response`** (embedded `struct
-  snp_guest_msg`): These are **double-buffered encrypted/decrypted guest
-  messages** used for communication between the SEV-SNP guest VM and the
-  AMD Secure Processor (ASP). The comment in the struct says "Avoid
-  information leakage by double-buffering shared messages in fields that
-  are in regular encrypted memory." Each `snp_guest_msg` contains auth
-  tags, sequence numbers, and a full-page payload.
-- **`vmpck`**: Pointer to the VM Platform Communication Key.
-- **`ctx`**: AES-GCM crypto context (freed separately via `kfree()`).
-- **`secrets`**: Pointer to the SNP secrets page.
-- **`os_area_msg_seqno`**: Message sequence number.
+### 4. Classification
 
-This is AMD SEV-SNP code. The entire purpose of SEV-SNP is to protect
-guest VM memory from the hypervisor. Leaving cryptographic state and
-message contents in freed slab memory directly undermines the security
-guarantees of the technology.
+This is a **resource leak / firmware-side stale mapping fix** on an
+error path. It is NOT a new feature, API change, or refactoring — it is
+purely adding missing cleanup.
 
-### 4. History and Stable Tree Applicability
+### 5. Scope and Risk Assessment
 
-- `snp_msg_free()` was introduced in commit c5529418d0507 ("x86/sev:
-  Carve out and export SNP guest messaging init routines"), which landed
-  in **v6.14-rc1**.
-- The buggy `memset() + kfree()` pattern was introduced by this same
-  refactoring commit.
-- The fix applies to all stable trees from **v6.14 onwards**: 6.14.y,
-  6.15.y, 6.16.y, 6.17.y, 6.18.y.
-- I confirmed the vulnerable code exists in v6.14 and that
-  `kfree_sensitive()` is available there.
-- It does NOT apply to 6.12.y, 6.6.y, or older LTS trees (they use a
-  different code structure in `drivers/virt/coco/sev-guest/`).
+- **Lines changed**: 1 line added
+- **Files changed**: 1 file (`drivers/firmware/arm_ffa/driver.c`)
+- **Risk**: Extremely low. The `ffa_rxtx_unmap()` function is already
+  used in `ffa_exit()` for normal cleanup. Adding it to the error path
+  is the obvious correct fix. The function itself just issues an FF-A
+  call to the firmware.
+- **Regression potential**: Near zero. This only affects the failure
+  path of `ffa_setup_partitions()`, and calling unmap before freeing is
+  strictly correct.
 
-### 5. Risk Assessment
+### 6. User Impact
 
-- **Size**: 3 lines changed to 2 lines (net -1 line). One of the
-  smallest possible changes.
-- **Risk**: Essentially zero. `kfree_sensitive()` is the standard kernel
-  API for this exact use case, has been available since v5.9, and is
-  used in 300+ call sites across the kernel.
-- **No dependencies**: The fix is entirely self-contained.
-- **No behavioral change** from a functional perspective — same memory
-  is freed — only ensures the zeroing actually happens at runtime.
+This affects ARM platforms using FF-A (Firmware Framework for Arm) —
+notably ARM TrustZone/OP-TEE systems, Arm CCA systems, and virtualized
+ARM environments with Hafnium. While `ffa_setup_partitions()` failure is
+not the most common path, when it does occur, the consequences (firmware
+holding stale page references, potential memory corruption) are severe.
 
-### 6. Classification
+### 7. Stable Kernel Criteria Check
 
-This is a **security fix** in **security-critical AMD SEV-SNP code**.
-The pattern of `memset() + kfree()` for sensitive data is a well-known
-anti-pattern that has been the subject of multiple CVEs in other
-software projects. While the compiler may or may not optimize it away in
-current builds, it is a latent security vulnerability that could
-manifest with different compiler versions, optimization flags, or LTO
-configurations.
+| Criterion | Met? |
+|---|---|
+| Obviously correct and tested | Yes — mirrors `ffa_exit()` cleanup
+exactly |
+| Fixes a real bug | Yes — resource leak + potential memory corruption |
+| Important issue | Yes — firmware-side stale mapping to freed kernel
+pages |
+| Small and contained | Yes — 1 line in 1 file |
+| No new features | Yes — purely error-path cleanup |
+| Applies cleanly | Yes — for v6.8+ trees (may need minor adjustment for
+v6.8-v6.14 which used `cleanup_notifs:` label) |
 
-### 7. Verdict
+### 8. Dependency Check
 
-This commit:
-- Fixes a real security issue (potential leakage of cryptographic data
-  in freed memory)
-- Is in security-critical code (AMD SEV-SNP guest messaging)
-- Is extremely small and surgical (2 lines -> 1 line)
-- Uses the canonical kernel API (`kfree_sensitive()`)
-- Has zero risk of regression
-- Was reviewed by the AMD SEV maintainer
-- Was flagged by two independent automated/semi-automated analysis tools
-- Applies cleanly to stable trees v6.14+
-- Has no dependencies on other commits
+The fix depends on `0c565d16b80074e57e3e56240d13fc6cd6ed0334` (v6.8) for
+the error path to exist, and on `be61da9385766` (v6.15) for the exact
+code structure in the diff. For stable trees between v6.8 and v6.14, a
+trivially adjusted backport would be needed (placing the unmap call
+inside the `cleanup_notifs:` section instead of inline). The fix is
+self-contained and has no other dependencies.
+
+### Conclusion
+
+This is a textbook error-path resource leak fix: a single line adding
+missing firmware unmap before freeing the backing pages. The bug leaves
+the firmware holding stale references to freed kernel memory, which
+could lead to memory corruption. The fix is minimal, obviously correct
+(mirrors `ffa_exit()`), and accepted by the subsystem maintainer. It
+meets all stable kernel criteria.
 
 **YES**
 
- arch/x86/coco/sev/core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
-index 9ae3b11754e65..c8ddb9febe3d9 100644
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -2008,8 +2008,7 @@ void snp_msg_free(struct snp_msg_desc *mdesc)
- 	free_shared_pages(mdesc->request, sizeof(struct snp_guest_msg));
- 	iounmap((__force void __iomem *)mdesc->secrets);
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index c72ee47565856..7209a630f6d16 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -2068,6 +2068,7 @@ static int __init ffa_init(void)
  
--	memset(mdesc, 0, sizeof(*mdesc));
--	kfree(mdesc);
-+	kfree_sensitive(mdesc);
- }
- EXPORT_SYMBOL_GPL(snp_msg_free);
- 
+ 	pr_err("failed to setup partitions\n");
+ 	ffa_notifications_cleanup();
++	ffa_rxtx_unmap(drv_info->vm_id);
+ free_pages:
+ 	if (drv_info->tx_buffer)
+ 		free_pages_exact(drv_info->tx_buffer, rxtx_bufsz);
 -- 
 2.51.0
 
