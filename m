@@ -1,43 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CE33EBF2C;
-	Sat, 14 Feb 2026 01:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CEA3EBF2C;
+	Sat, 14 Feb 2026 01:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031077; cv=none; b=Vp95wPwssuCRirSay/ZerKciiYoQEAyGwDYY+/WKBEvo07EdceaKuCC9j3SFhBbOeHHNA+13bDX0PGsLBTkUnUmiFq0e1weyy60clEWlY4XkY8OuihrK1K5j92NI9zjNwjQNcOKamgZC4K2mPxdcRUvLXPKQVnnzQxOLodyiFAo=
+	t=1771031081; cv=none; b=oy6VPNtGpgmAtm4zFM9zxiDWoaQ4yzC094k/csW8GJKduMjn85FiNXs+n53A5dq3LU6ogabGDR9C5T8BLWVB9+Vk/MqmOwpB9QU2cY0NfEcTaYANrglJyHvjIzq9yVfwLbHz4PHwwPdk++BeTzh0zuKC96TrbkGLtvyzYINUhzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031077; c=relaxed/simple;
-	bh=7/O/wydur+hPElLkSYkXNH/MjZXgq/aaJ+3jcTRnN/A=;
+	s=arc-20240116; t=1771031081; c=relaxed/simple;
+	bh=pxU4dhXgLPgfmO4ShUeJwUO8A6IEFL46pfkVTEyvM5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gTTWJrSE/iTGyFUzG2W7Z9G9rZqUKVjxhGnpuSU4PFhmS5SJ4b0sHe0qvxiddQCEA8JNzDZxnu0/ECT3YEMJdiwlT9NgAkmOrypTHRmqn3AK3HZaktQEmm8ZtURj3+z1XWbiKX7bvJ2VeSavKeP7WutDnQTlYWRnq/jkkMO+dQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u0Fb2+JA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QEoNDdrzoTFODJE+G97RWQd+Z+yk5xfhnGAChkPhdHhH6vBxWY0ml2FwUnKNxzIB1kqOrYzui2jE2rYVAL3lmOGpNuSpJtt5GuPRhVCXIHZ2YR7//8NLWoxlZorPvaqRzuSNSA85OaC12U+LJj7BC7T5yhz28A9SKGa3GC692ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ka14I7F4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u0Fb2+JA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597B5C19423;
-	Sat, 14 Feb 2026 01:04:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ka14I7F4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EEEC116C6;
+	Sat, 14 Feb 2026 01:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031077;
-	bh=7/O/wydur+hPElLkSYkXNH/MjZXgq/aaJ+3jcTRnN/A=;
+	s=k20201202; t=1771031080;
+	bh=pxU4dhXgLPgfmO4ShUeJwUO8A6IEFL46pfkVTEyvM5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u0Fb2+JA3sNpM7HUg7oGjIbA/nku3YiIb/SDlfZUdGb37VGx6o783LWjnspIASzAk
-	 76IVLu0n9ePP3pwhoOSz9ch4q3xtJw3ETsrc3XTavEJ0LjR/v83uQuIPPWBXcNPTmW
-	 //Cs+CvrZJwmZeUXg0FhzS4nclnenmPUPGUbIjGctyqvyA1Ddf393zkoRSfid5/S12
-	 2TUAWLdA8ST6l5qeshkokBRL0tbI9+syPyJ1+G4JyrBvlPKqYbryZaP4Ftk+yYn9Bl
-	 W+hJ0swzwt1rIylcnXJk6i8VXc1AgbWXoUBUHzarwLYTRASQtPvMUzaU2M0OrtT2Zq
-	 rGjzB3iu6mhgw==
+	b=ka14I7F4J58hQvQiWC6vZyMe9V4rTKVjHrbihcIRpjaEd2PdXosl2NvlRu8y+6TdN
+	 mAR6amNSnYjG//kdV6Nc83gNws/qoGcv4ea1LSTnzlTYZV1nnUXJ8B7IxyxEDcdx3g
+	 Xv5mhW4cFi2Ezp7gW7HfxtxXwU/drdCCRD3xBjAWZdtYIhWpKC+eOMnihCEuZ5qAEN
+	 orIfv8YljgoRn4FyWS38PWGdltI1G1siLK7MYfg6OEbXIIzvVPg/15O5m95XfHrJRY
+	 Ezb0V4SuLPt8twVfYbxNVNQrGpyn5ikb1/gYerfFPWRmQJcpIb7s8mgIGD+jXmSDq8
+	 nMjLRVs6fxPTQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: YuBiao Wang <YuBiao.Wang@amd.com>,
+	Victor Skvortsov <Victor.Skvortsov@amd.com>,
+	Gavin Wan <gavin.wan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] media: mt9m114: Return -EPROBE_DEFER if no endpoint is found
-Date: Fri, 13 Feb 2026 19:58:52 -0500
-Message-ID: <20260214010245.3671907-52-sashal@kernel.org>
+	yunru.pan@amd.com,
+	Hawking.Zhang@amd.com,
+	srinivasan.shanmugam@amd.com,
+	lijo.lazar@amd.com,
+	YiPeng.Chai@amd.com,
+	yelangyan@huaqin.corp-partner.google.com,
+	Tony.Yi@amd.com,
+	bokun.zhang@amd.com,
+	shaoyun.liu@amd.com
+Subject: [PATCH AUTOSEL 6.19-6.12] drm/amdgpu: Skip loading SDMA_RS64 in VF
+Date: Fri, 13 Feb 2026 19:58:53 -0500
+Message-ID: <20260214010245.3671907-53-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -53,157 +61,155 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: YuBiao Wang <YuBiao.Wang@amd.com>
 
-[ Upstream commit 437e1f6a960035166495a5117aacbc596115eeb6 ]
+[ Upstream commit 39c21b81112321cbe1267b02c77ecd2161ce19aa ]
 
-With IPU# bridges, endpoints may only be created when the IPU bridge is
-initialized. This may happen after the sensor driver's first probe().
+VFs use the PF SDMA ucode and are unable to load SDMA_RS64.
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: YuBiao Wang <YuBiao.Wang@amd.com>
+Signed-off-by: Victor Skvortsov <Victor.Skvortsov@amd.com>
+Reviewed-by: Gavin Wan <gavin.wan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of mt9m114: Return -EPROBE_DEFER if no endpoint is found
+Now I have a complete picture. Let me compile my analysis.
 
-### Commit Message Analysis
+---
 
-The commit changes the mt9m114 camera sensor driver to return
-`-EPROBE_DEFER` instead of `-EINVAL` when no fwnode graph endpoint is
-found during probe. The rationale is that on ACPI systems (specifically
-with IPU bridges), the fwnode graph endpoints may not yet exist at the
-time the sensor driver first probes — they are created later when the
-IPU bridge driver initializes.
+## Detailed Analysis
 
-### Code Change Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The change is small and focused:
+The commit message is clear and direct: "VFs use the PF SDMA ucode and
+are unable to load SDMA_RS64." In SR-IOV (Single Root I/O
+Virtualization), Virtual Functions (VFs) rely on the Physical Function
+(PF) for SDMA firmware. The VF should never attempt to load SDMA
+firmware itself. The commit adds `AMDGPU_UCODE_ID_SDMA_RS64` to the skip
+list so VFs don't try to load it.
 
-1. **Old behavior**: When `fwnode_graph_get_next_endpoint()` returns
-   NULL, the driver logs an error and returns `-EINVAL`, causing
-   permanent probe failure.
+The commit is authored by AMD engineers (YuBiao Wang, Victor Skvortsov),
+reviewed by an AMD engineer (Gavin Wan), and signed off by the amdgpu
+subsystem maintainer (Alex Deucher).
 
-2. **New behavior**: When no endpoint is found, return `-EPROBE_DEFER`
-   (via `dev_err_probe()`), which tells the driver core to retry probing
-   later. A comment explains this is needed because on ACPI systems, the
-   bridge driver that creates the fwnode graph may not have probed yet.
+### 2. CODE CHANGE ANALYSIS
 
-3. The `dev_err()` is replaced with `dev_err_probe()`, which is the
-   standard kernel pattern for deferred probing — it only logs at debug
-   level for `-EPROBE_DEFER` (avoiding log spam) and at error level for
-   other errors.
+The change is a **single line addition** in
+`amdgpu_virt_fw_load_skip_check()`:
 
-### Bug Classification
+```1264:1264:drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+                    || ucode_id == AMDGPU_UCODE_ID_SDMA_RS64
+```
 
-This fixes a **real probe ordering bug** on ACPI-based systems. Without
-this fix, the mt9m114 sensor driver will permanently fail to probe on
-systems where the IPU bridge hasn't initialized yet at the time of the
-first probe attempt. This is a **race condition** between driver
-initialization order — the sensor driver needs endpoints that the bridge
-driver creates, but there's no guaranteed ordering.
+This adds `AMDGPU_UCODE_ID_SDMA_RS64` to the `default` case's "legacy
+blacklist" of firmware IDs that should be **skipped** when loading
+firmware in a VF context. The existing blacklist already includes
+`SDMA0` through `SDMA7`, `RLC_G`, `RLC_RESTORE_LIST_*`, and `SMC` — but
+was missing the newer `SDMA_RS64` firmware type.
 
-This is a common pattern in the kernel — many drivers have been updated
-to return `-EPROBE_DEFER` for exactly this kind of dependency issue.
-It's a well-understood fix.
+**Bug mechanism**: `AMDGPU_UCODE_ID_SDMA_RS64` is a newer SDMA firmware
+format (v3 header) introduced in commit `807d90b5ef1da` ("drm/amdgpu:
+support SDMA v3 struct fw front door load"), which landed in v6.11. It
+is used by SDMA v7 hardware (IP version 7.0.0, 7.0.1). When this
+firmware type was added, no one updated the VF skip check's default
+blacklist.
 
-### Scope and Risk Assessment
+**Call chain that triggers the bug**:
+1. `psp_load_non_psp_fw()` iterates over all firmware entries
+2. For each, it calls `fw_load_skip_check()` which checks
+   `amdgpu_sriov_vf()` and then `amdgpu_virt_fw_load_skip_check()`
+3. Without this fix, `amdgpu_virt_fw_load_skip_check()` returns `false`
+   for `SDMA_RS64` in the `default` case (meaning "don't skip")
+4. The VF then calls `psp_execute_ip_fw_load()` for SDMA_RS64
+5. This fails because VFs cannot load SDMA firmware — the PF manages it
+6. The error propagates back up, causing **VF initialization failure**
 
-- **Lines changed**: ~15 lines (very small)
-- **Files affected**: 1 file (`drivers/media/i2c/mt9m114.c`)
-- **Risk**: Very low. The change only affects the case where no endpoint
-  is found. If an endpoint IS found, behavior is unchanged. The worst
-  case is that on systems where no endpoint will ever appear, the driver
-  will defer indefinitely rather than failing immediately — but this is
-  standard kernel behavior for deferred probing, and the driver core
-  handles this gracefully.
+**Evidence of real SR-IOV usage on affected hardware**: `sdma_v7_0.c`
+has extensive `amdgpu_sriov_vf()` checks throughout its code (at least 6
+instances), confirming that SDMA v7 hardware does support and is used in
+SR-IOV configurations.
 
-### User Impact
+### 3. CLASSIFICATION
 
-Users with mt9m114 camera sensors on ACPI-based systems (e.g., Intel
-platforms with IPU bridges) would find the camera doesn't work at all
-without this fix. The sensor driver would fail to probe permanently.
-This is a real-world issue affecting actual hardware functionality.
+This is a **bug fix** — specifically a missing entry in a firmware skip
+list. It falls into the category of a hardware/virtualization quirk. The
+`default` case is labeled "legacy blacklist" and the intent is clearly
+to skip all SDMA firmware types in VFs. The omission of `SDMA_RS64` was
+simply an oversight when the new firmware type was added.
 
-### Review and Testing
+### 4. SCOPE AND RISK ASSESSMENT
 
-- **Reviewed-by: Laurent Pinchart** — well-known media subsystem
+- **Lines changed**: 1 line added
+- **Files changed**: 1 file (`amdgpu_virt.c`)
+- **Risk**: Extremely low. The change follows the exact same pattern as
+  the 8 existing SDMA entries (SDMA0-7). It only affects VF behavior
+  (SR-IOV virtual machines) and only for the specific firmware type
+  SDMA_RS64.
+- **Regression potential**: Essentially zero. Adding an entry to a
+  blacklist to skip firmware loading in VF is the conservative, safe
+  action. Not skipping it is what causes problems.
+
+### 5. USER IMPACT
+
+- **Affected users**: Anyone running AMD GPU SR-IOV virtualization on
+  hardware that uses SDMA v7 (SDMA_RS64 firmware). This includes data
+  center and cloud deployments using AMD GPU passthrough.
+- **Severity**: HIGH — VF initialization failure means the GPU is
+  unusable in the virtual machine.
+- **Visibility**: GPU completely fails to initialize in the VM, making
+  it a hard failure, not a subtle bug.
+
+### 6. STABILITY AND VERSION ANALYSIS
+
+- The `amdgpu_virt_fw_load_skip_check` function was introduced in v6.1
+  (commit `d9d86d085fbc1`)
+- `AMDGPU_UCODE_ID_SDMA_RS64` was introduced in v6.11 (commit
+  `807d90b5ef1da`)
+- Therefore, this fix is relevant for stable trees **v6.11 and later**
+  (6.11.y, 6.12.y, etc.)
+- The fix has been reviewed by AMD engineers and merged by the subsystem
   maintainer
-- **Signed-off-by**: Hans de Goede (Qualcomm/known kernel developer),
-  Sakari Ailus (Intel, media maintainer), Hans Verkuil (media subsystem
-  maintainer)
 
-The patch has strong review credentials from multiple experienced media
-subsystem developers.
+### 7. DEPENDENCY CHECK
 
-### Stable Criteria Check
+The fix has **no dependencies**. It simply adds one more enum value to
+an existing `||` chain. The `AMDGPU_UCODE_ID_SDMA_RS64` enum already
+exists in all kernels from v6.11 onward, and the function structure is
+unchanged. The patch will apply cleanly to any kernel v6.11+.
 
-1. **Obviously correct and tested**: Yes — standard `-EPROBE_DEFER`
-   pattern, reviewed by multiple maintainers
-2. **Fixes a real bug**: Yes — sensor driver fails to probe on ACPI
-   systems with IPU bridges
-3. **Important issue**: Moderate — camera hardware doesn't work without
-   this fix on affected systems
-4. **Small and contained**: Yes — ~15 lines in a single file
-5. **No new features**: Correct — this is a bug fix for probe ordering
-6. **Applies cleanly**: Should apply cleanly as it's a self-contained
-   change
+### Summary
 
-### Dependency Check
-
-Let me verify if the mt9m114 driver exists in older stable trees and if
-there are any dependencies.
-
-The `dev_err_probe()` function has been available since kernel 5.10, so
-this should be backportable to any stable tree that has the mt9m114
-driver. The mt9m114 driver was added relatively recently (v6.x era), so
-the backport scope may be limited to recent stable trees, but that
-doesn't affect the decision.
-
-### Conclusion
-
-This is a straightforward probe-deferral fix for a real hardware
-functionality issue. It uses a well-established kernel pattern
-(`-EPROBE_DEFER`), is small and surgical, has been reviewed by multiple
-media subsystem maintainers, and carries very low regression risk. It
-fixes a real problem where the mt9m114 camera sensor fails to work on
-ACPI-based systems with IPU bridges.
+This is a textbook stable backport candidate:
+- **One-line fix** adding a missing entry to a firmware skip list
+- **Fixes a real, severe bug**: VF initialization failure on newer AMD
+  GPUs with SR-IOV
+- **Obviously correct**: SDMA_RS64 should be treated identically to
+  SDMA0-7 in VF context
+- **Zero regression risk**: Only adds a skip for VFs, following the
+  exact existing pattern
+- **Small and self-contained**: No dependencies, clean backport
+- Authored, reviewed, and approved by AMD GPU engineers
 
 **YES**
 
- drivers/media/i2c/mt9m114.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/i2c/mt9m114.c b/drivers/media/i2c/mt9m114.c
-index 554f25071cca6..b1325e2cd1321 100644
---- a/drivers/media/i2c/mt9m114.c
-+++ b/drivers/media/i2c/mt9m114.c
-@@ -2360,11 +2360,17 @@ static int mt9m114_parse_dt(struct mt9m114 *sensor)
- 	struct fwnode_handle *ep;
- 	int ret;
- 
-+	/*
-+	 * On ACPI systems the fwnode graph can be initialized by a bridge
-+	 * driver, which may not have probed yet. Wait for this.
-+	 *
-+	 * TODO: Return an error once bridge driver code will have moved
-+	 * to the ACPI core.
-+	 */
- 	ep = fwnode_graph_get_next_endpoint(fwnode, NULL);
--	if (!ep) {
--		dev_err(&sensor->client->dev, "No endpoint found\n");
--		return -EINVAL;
--	}
-+	if (!ep)
-+		return dev_err_probe(&sensor->client->dev, -EPROBE_DEFER,
-+				     "waiting for fwnode graph endpoint\n");
- 
- 	sensor->bus_cfg.bus_type = V4L2_MBUS_UNKNOWN;
- 	ret = v4l2_fwnode_endpoint_alloc_parse(ep, &sensor->bus_cfg);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+index 47a6ce4fdc744..292e2706286a1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+@@ -1261,6 +1261,7 @@ bool amdgpu_virt_fw_load_skip_check(struct amdgpu_device *adev, uint32_t ucode_i
+ 		    || ucode_id == AMDGPU_UCODE_ID_SDMA5
+ 		    || ucode_id == AMDGPU_UCODE_ID_SDMA6
+ 		    || ucode_id == AMDGPU_UCODE_ID_SDMA7
++		    || ucode_id == AMDGPU_UCODE_ID_SDMA_RS64
+ 		    || ucode_id == AMDGPU_UCODE_ID_RLC_G
+ 		    || ucode_id == AMDGPU_UCODE_ID_RLC_RESTORE_LIST_CNTL
+ 		    || ucode_id == AMDGPU_UCODE_ID_RLC_RESTORE_LIST_GPM_MEM
 -- 
 2.51.0
 
