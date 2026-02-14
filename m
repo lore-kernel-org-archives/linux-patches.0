@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7836D1E5B63;
-	Sat, 14 Feb 2026 01:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28B21E5B63;
+	Sat, 14 Feb 2026 01:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031254; cv=none; b=VFLgmfzttbswdOA1QC5pc+Tpcg/abezB58FcJjEYQlMEsCPCbyKBuIxtbZHuT+rA1kz1VzyYxWq8FJfftsrwWEg2hwgs5yhlQt3xECP9x5lgpblYxdl+LWMrsf+pOLnF/6hd5Fekj9fqyLdRcRiRMm5lzZS9ZNnIPMrAhnoFDn8=
+	t=1771031255; cv=none; b=krLwqnG8u9cXgvn18db2wlW9ajBysUeMJvVgwKCTTroIMuHNXhfMjIYHCHEAoBoqBxBPdvGk1nCkH5OUHyGNXUevBpsL2Vo2xGfPwI+E3nhQfJzdwzO8+8E5Skm5+YQ8kn9k8fMMuowjfEpbTpyQZlSE9QBO1SXaX++iWER426M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031254; c=relaxed/simple;
-	bh=AOhoK7iaQfSvFBn6Bfj98kL+WvUmkWg8zJklNjmc44Q=;
+	s=arc-20240116; t=1771031255; c=relaxed/simple;
+	bh=eH7GBxutsBYerARSGn0elPJyiXpbxtbh/y6973Psm4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oV6WlVy2iKCt4SmiiU3pEaq2t6aM4XwApfI1+g9S6TnMPrC3O5IGpmWbkJkKGLNXlFHFP0L3R9QZSEPB1cfOxgYck2tsGMeVK4WFyoMz7YFg2ym2IDOghdUJYCnRtA5tDE2NHlIZra1zLYuvvzv5Acnd4ksv/+te3wFsQ/BFTBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rTSGFlUH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AtirVZ0qV/pl+Kmo0BX2Qf4KbumIbsosx0tUgsunn+oPRqrAB38qddVrgdkyLfQKUbNBC0F+Zp/ylfo2jLEwwMOhlM9Fiph4SpbFSkSRGhrvMUdFVvdzxblm7edNAkW3smVEfl1qQ/edHZnyoX1KInouwfCZvlIb/LqYg4iJsdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VhqEvJDu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rTSGFlUH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB41C16AAE;
-	Sat, 14 Feb 2026 01:07:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VhqEvJDu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F76C19424;
+	Sat, 14 Feb 2026 01:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031254;
-	bh=AOhoK7iaQfSvFBn6Bfj98kL+WvUmkWg8zJklNjmc44Q=;
+	s=k20201202; t=1771031255;
+	bh=eH7GBxutsBYerARSGn0elPJyiXpbxtbh/y6973Psm4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTSGFlUHO7aysFGIXp3gp93nKV5Vz/UYi2M/nKEVwHhI/SeUKhKTODmsX0ZYmaoV7
-	 M6Fbn0HJraaByjgDS7WaAJRyiIbp9fk0hAR4EH79e3tJ/icis2NudwMJy3+gYy1Hd8
-	 i6lwheJsrhmL2fdgkBMnZKCXX+KyKDr3pc/EPQY85ReRZLE03TpQYiU+mR4evSPKt/
-	 iXj322sHsKvxNAUn+/8ZPLYBDr3g8CFIlaif1xT/xL5gxkqw2xLSncox5LkYpo1fga
-	 oP0nXjtlUAiub8ixd/sVxGDp6AFAqFvdZV21L4CZAZUpJKHMY5kyoLi8bNMCQa0iS6
-	 7vo2MkSGag8vA==
+	b=VhqEvJDurRo1wvvoE56OpauhzLxJTsUoVKmuvDB9ZU3dfpiwpwFerjoaykTl9Kkq0
+	 5CdJmgCn4UVnqtL3TjMkF1OnyYPzzjMOpcMs9zPP/jSghSkMxpKQP3agimFQ4iScAg
+	 9ns08VWE8k4TGABTy4xQsQSxckc0N7FT57I+WTWKgBxaf1GHhaTZGFmhUQrnafdbdf
+	 IYUf9QlztR+h+Ek5lC3KGSqH5gtU2h8XMlP63lZJAmKJTdWdxJQMmtG3UQZKgrC1fE
+	 nOQYH5WHob0f58jHzEc/QKSm+kO10mtL6qciCB4Mve04YB99TWfQsEpy0eLXyZ1O32
+	 jlEFV3j9T6Ujg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Ni <nichen@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>,
-	fengzheng923@gmail.com,
-	wens@kernel.org,
-	jernej.skrabec@gmail.com,
-	samuel@sholland.org,
-	linux-sound@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-6.1] ASoC: sunxi: sun50i-dmic: Add missing check for devm_regmap_init_mmio
-Date: Fri, 13 Feb 2026 20:00:02 -0500
-Message-ID: <20260214010245.3671907-122-sashal@kernel.org>
+	linux-hwmon@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] hwmon: (dell-smm) Add support for Dell OptiPlex 7080
+Date: Fri, 13 Feb 2026 20:00:03 -0500
+Message-ID: <20260214010245.3671907-123-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -51,21 +46,25 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 74823db9ba2e13f3ec007b354759b3d8125e462c ]
+[ Upstream commit 46c3e87a79179454f741f797c274dd25f5c6125e ]
 
-Add check for the return value of devm_regmap_init_mmio() and return the
-error if it fails in order to catch the error.
+The Dell OptiPlex 7080 supports the legacy SMM interface for reading
+sensors and performing fan control. Whitelist this machine so that
+this driver loads automatically.
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://patch.msgid.link/20260127033250.2044608-1-nichen@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Closes: https://github.com/Wer-Wolf/i8kutils/issues/16
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Acked-by: Pali Rohár <pali@kernel.org>
+Link: https://lore.kernel.org/r/20260104000654.6406-1-W_Armin@gmx.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -75,99 +74,107 @@ LLM Generated explanations, may be completely bogus:
 
 ### Commit Message Analysis
 
-The commit adds a missing error check for `devm_regmap_init_mmio()` in
-the sun50i-dmic audio driver's probe function. The message is
-straightforward - it's adding a return value check that was missing.
+This commit adds a DMI whitelist entry for the Dell OptiPlex 7080 to the
+`dell-smm-hwmon` driver. The commit message explains that this machine
+supports the legacy SMM interface for reading sensors and performing fan
+control, and the whitelist entry enables the driver to load
+automatically on this hardware.
+
+There's a linked issue (`https://github.com/Wer-
+Wolf/i8kutils/issues/16`) showing a real user request for this support.
 
 ### Code Change Analysis
 
-The change is a 3-line addition:
+The change is a simple addition of a single DMI matching entry to the
+`i8k_dmi_table[]` array:
+
 ```c
-if (IS_ERR(host->regmap))
-    return dev_err_probe(&pdev->dev, PTR_ERR(host->regmap),
-                         "failed to initialise regmap\n");
+{
+    .ident = "Dell OptiPlex 7080",
+    .matches = {
+        DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+        DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7080"),
+    },
+},
 ```
 
-This is inserted right after `devm_regmap_init_mmio()` returns into
-`host->regmap`. Without this check, if `devm_regmap_init_mmio()` fails,
-`host->regmap` will contain an ERR_PTR value. The driver then continues
-execution and eventually uses this regmap pointer in subsequent
-operations (regmap reads/writes), which would cause a NULL pointer
-dereference or other crash since the ERR_PTR would be interpreted as a
-valid pointer.
+This is structurally identical to the existing entries for OptiPlex
+7060, 7050, and 7040. The pattern uses `DMI_EXACT_MATCH` for the product
+name (matching the convention of other OptiPlex entries), preventing
+false matches with similarly named models.
 
-### Bug Mechanism
+### Classification
 
-If `devm_regmap_init_mmio()` fails (e.g., memory allocation failure
-inside regmap), the error pointer gets stored in `host->regmap`. Later,
-when the driver tries to use regmap APIs with this invalid pointer, it
-will crash. This is a real bug - a missing error check that leads to use
-of an error pointer as a valid pointer.
+This falls squarely into the **device ID / hardware quirk / whitelist**
+exception category. It's adding a machine identifier to an existing
+driver's whitelist table so the driver auto-loads on that hardware.
+Without this entry, the Dell OptiPlex 7080 doesn't get hardware
+monitoring and fan control support from this driver (unless force-
+loaded).
 
-### Severity Assessment
+### Scope and Risk Assessment
 
-- **Trigger**: `devm_regmap_init_mmio()` would need to fail, which is
-  uncommon but possible (memory pressure, internal regmap errors)
-- **Consequence**: Kernel crash/oops when the invalid regmap pointer is
-  subsequently used
-- **Likelihood**: Low probability but non-zero, especially under memory
-  pressure
+- **Lines changed**: +7 lines (a single DMI table entry)
+- **Files touched**: 1 (`drivers/hwmon/dell-smm-hwmon.c`)
+- **Risk**: Extremely low. The entry only affects Dell OptiPlex 7080
+  machines. It cannot affect any other hardware. The matching pattern is
+  well-established and identical in structure to dozens of other entries
+  in the same table.
+- **Complexity**: Trivial
 
-### Stable Kernel Criteria
+### User Impact
 
-1. **Obviously correct and tested**: Yes - this follows the exact same
-   pattern as all surrounding error checks in the same function. It's a
-   textbook missing error check fix.
-2. **Fixes a real bug**: Yes - missing error check on a function that
-   can fail, leading to use of an ERR_PTR as a valid pointer.
-3. **Important issue**: Moderate - it's a potential NULL deref/crash,
-   though the trigger condition is uncommon.
-4. **Small and contained**: Yes - 3 lines added, single file, no
-   behavioral change on success path.
-5. **No new features**: Correct - purely defensive error checking.
-6. **Applies cleanly**: The change is self-contained with no
-   dependencies.
+Users with Dell OptiPlex 7080 machines running stable kernels would
+benefit from having hardware monitoring and fan control work
+automatically. This is a desktop PC used in corporate
+environments—exactly the kind of hardware that runs stable/LTS kernels.
 
-### Risk Assessment
+### Stability Indicators
 
-- **Risk**: Extremely low. The change only affects the error path. On
-  the success path, behavior is identical.
-- **Benefit**: Prevents a kernel crash if regmap initialization fails.
-- **Pattern**: This is a very common type of stable fix - adding missing
-  error checks in driver probe functions.
+- **Acked-by**: Pali Rohár (co-maintainer of this driver)
+- **Signed-off-by**: Guenter Roeck (hwmon maintainer)
+- The existing driver framework is mature and well-tested
+- The same pattern is used for many other Dell models already in the
+  table
 
-### Concerns
+### Dependency Check
 
-This is a fairly minor fix for an uncommon failure path in a specific
-ARM SoC audio driver. The user base is limited to Allwinner sun50i
-platforms. However, the fix is trivially correct, has zero risk of
-regression, and prevents a real (if unlikely) crash.
+No dependencies. The driver and DMI matching infrastructure exist in all
+relevant stable trees. This is a self-contained addition to a data
+table.
 
-### Decision
+### Conclusion
 
-The fix is small, obviously correct, follows existing patterns in the
-same function, prevents a potential crash from using an ERR_PTR, and has
-essentially zero regression risk. It meets all stable kernel criteria.
+This is a textbook example of a hardware whitelist addition that is
+appropriate for stable backporting. It enables existing, well-tested
+driver functionality on a specific hardware platform. The change is
+trivial, zero-risk to other systems, reviewed by the subsystem
+maintainers, and benefits real users running stable kernels on Dell
+OptiPlex 7080 desktops.
 
 **YES**
 
- sound/soc/sunxi/sun50i-dmic.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwmon/dell-smm-hwmon.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/sunxi/sun50i-dmic.c b/sound/soc/sunxi/sun50i-dmic.c
-index bab1e29c99887..eddfebe166169 100644
---- a/sound/soc/sunxi/sun50i-dmic.c
-+++ b/sound/soc/sunxi/sun50i-dmic.c
-@@ -358,6 +358,9 @@ static int sun50i_dmic_probe(struct platform_device *pdev)
- 
- 	host->regmap = devm_regmap_init_mmio(&pdev->dev, base,
- 					     &sun50i_dmic_regmap_config);
-+	if (IS_ERR(host->regmap))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(host->regmap),
-+				     "failed to initialise regmap\n");
- 
- 	/* Clocks */
- 	host->bus_clk = devm_clk_get(&pdev->dev, "bus");
+diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
+index 93143cfc157cf..038edffc1ac74 100644
+--- a/drivers/hwmon/dell-smm-hwmon.c
++++ b/drivers/hwmon/dell-smm-hwmon.c
+@@ -1325,6 +1325,13 @@ static const struct dmi_system_id i8k_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "MP061"),
+ 		},
+ 	},
++	{
++		.ident = "Dell OptiPlex 7080",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7080"),
++		},
++	},
+ 	{
+ 		.ident = "Dell OptiPlex 7060",
+ 		.matches = {
 -- 
 2.51.0
 
