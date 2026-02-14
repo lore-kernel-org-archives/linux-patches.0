@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76D130F922;
-	Sat, 14 Feb 2026 21:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F27F3090C1;
+	Sat, 14 Feb 2026 21:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104321; cv=none; b=vGhjriHfQ9wrzNSMcA1pOPuBlfTnnO60SQv4P9cOf3LDpqLSeo/XuwDW8CZ+lpdSD/dftGqg4p81QrFAbOd/Yd+ReT07EUi2pquoeJ6N5IHqu3n6lOsEZRotk2MItF694AvV47mV11wFwLhJx1hqm7oMajYG4ryH+6NwwqJ9kNI=
+	t=1771104323; cv=none; b=qJ8g7UBzhzfjZe48aKFi9KPeMnZJGHfPSjSU2oDEa2NH0JU2zAUWyyyoDTESZUPYYLR9sz1RNUKV1f+9EX9WO0RNVbQEllpoPub70ZGALVPO+S6zO6x4wURcFICdqcXVQ9InS9uDwizk4dbHgNaCRIItPGrXO+6exgxAawiHabE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104321; c=relaxed/simple;
-	bh=jjsKllGq21ePVmg+7k8v0M6ijQC0OZ2uqA/+v8sKS70=;
+	s=arc-20240116; t=1771104323; c=relaxed/simple;
+	bh=HNsIIUiNfMcrVXGaTxbgUw3HY9PSkBjZ42JbycFGdt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fqFHXu670I/tkarqqiL6NZ1BOdfAol7QdqHj12Ggs9DyOkPhK11/nMA13fW90HCG/20hDhxtb9S+brwTDw4Hgu2zkONChp1D/ECVkH3dUvj98ZQboRJx0W5LJDroRquo7UvQoV9kkDwEUMy3JhkH9SjEuDgOZ+CRyFKYN6o30NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fH3eQ6Gi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l0yxUDBySc3GvVAJFjrD7IEN4/fGalNyjoYJytLgNxaKiUFVgnaG1Wf5r2EVacmz5yQ7OQZbSxWDzP+4ju4GSCYOg6elbUc8Pr0yl6az9L2Z96JzWz6plLWP+LzCYICILZZU0l7ukvxywmWEP44y6euIgMRv0g0q764lfnoax7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=caJJOp4j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fH3eQ6Gi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F621C19422;
-	Sat, 14 Feb 2026 21:25:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="caJJOp4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183FBC19422;
+	Sat, 14 Feb 2026 21:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104321;
-	bh=jjsKllGq21ePVmg+7k8v0M6ijQC0OZ2uqA/+v8sKS70=;
+	s=k20201202; t=1771104323;
+	bh=HNsIIUiNfMcrVXGaTxbgUw3HY9PSkBjZ42JbycFGdt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fH3eQ6GiPhCI4X9sOJvPA8+bJJpDRqECn/xT+KFEtRqY0DQ2OWg5GjSIuX8wxuliu
-	 g9oZ95MmFPGzZTwe3VK9JMBGXVJORAvpLjqqTIUVSx0RU4Uo1R1vqMtu4cYou3aZNo
-	 PPsrhb9Epd8mq64YE4U0UsqUToF/8JZFXgBvxPcGiAx3HzWnUng0rXkvAi57viDpLX
-	 zrma87rsYsl7uflNMvIyhx41JX6CL/qoqZhgzDFkIuiEORZmGbRDW0Abh47XiQUxJ0
-	 qmK78rZhmyiduZRFQnvApvazkYgYx4G9LzkMfkuz0jXQGbeA6Nfn8on9I9l1n69Pd1
-	 EXTtBdUNOZPpw==
+	b=caJJOp4jgcuE8lQYjBZkLH56mw4XeyDSLXdulLpETeLjXZX8n0CNM058qL36d5tTD
+	 IMeflfNc0GVS21dATaKXiKopBjDNJVhptJ5zBvrwWuzUskOHwOF0zXZ+P4N+qg7dfc
+	 ZjMQPuS4PJkOTU7Lj2BoMUYivJ4oVeukj3VtDoOAl0+9UZWXj0kcTlyxZEGwrzOkTH
+	 8UXBNrWy8H3I4eZmPxquko1F0yznKZ7VO+XIBp96TTb6+HHrTkR2Iyq3PUTD3/uigm
+	 95a0I76V0I27UwZW0pTYJG2Tj9XEataKjmHhg9gcYqupuwgknq400Hzts2rheTuAZH
+	 8BU7Nxi1KdRZw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: =?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] wifi: rtw89: mcc: reset probe counter when receiving beacon
-Date: Sat, 14 Feb 2026 16:22:41 -0500
-Message-ID: <20260214212452.782265-16-sashal@kernel.org>
+	netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	rds-devel@oss.oracle.com
+Subject: [PATCH AUTOSEL 6.19-5.10] net/rds: Clear reconnect pending bit
+Date: Sat, 14 Feb 2026 16:22:42 -0500
+Message-ID: <20260214212452.782265-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -45,114 +48,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-[ Upstream commit 1b40c1c7571fcf926095ed92f25bd87900bdc8ed ]
+[ Upstream commit b89fc7c2523b2b0750d91840f4e52521270d70ed ]
 
-For BE chips, needs to transmit QoS null data periodically to ensure
-the connection with AP in GC+STA mode. However, in environments
-with interference, the Qos null data might fail to transmit
-successfully. Therefore, when receive the beacon from AP will
-reset the QoS null data failure counter to avoid unnecessary
-disconnection.
+When canceling the reconnect worker, care must be taken to reset the
+reconnect-pending bit. If the reconnect worker has not yet been
+scheduled before it is canceled, the reconnect-pending bit will stay
+on forever.
 
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251223030651.480633-13-pkshih@realtek.com
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Signed-off-by: Allison Henderson <allison.henderson@oracle.com>
+Link: https://patch.msgid.link/20260203055723.1085751-6-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good — the tree shows the **pre-patch** version. The `last_sync_bcn_tsf`
-field and `sync_bcn_tsf` already exist, so the infrastructure needed by
-this commit is present. The commit itself makes a clean, self-contained
-modification.
+### 3. BUG MECHANISM — CLEAR AND CRITICAL
 
-### 7. SUMMARY
+Now the full picture is clear:
 
-**Problem**: In rtw89 WiFi driver, when operating in MCC (Multi-Channel
-Concurrency) GC+STA mode, the driver uses QoS null data frames to verify
-AP connectivity. In environments with interference, these frames can
-fail even though the connection is actually alive (beacons are still
-being received). This causes false `ieee80211_connection_loss()` calls,
-disconnecting the user unnecessarily.
+**The flow:**
+1. `rds_queue_reconnect()` at line 138 sets `RDS_RECONNECT_PENDING` and
+   queues the delayed work.
+2. `rds_connect_worker()` (the worker function) at line 173 clears
+   `RDS_RECONNECT_PENDING` when it runs.
+3. `rds_conn_path_connect_if_down()` at line 911 uses
+   `test_and_set_bit(RDS_RECONNECT_PENDING, ...)` — if the bit is
+   already set, it returns without queuing work, trusting that a
+   reconnect is already pending.
 
-**Fix**: Before incrementing the probe failure counter, check if a
-beacon has been received since the last check (by comparing
-`sync_bcn_tsf` to `last_sync_bcn_tsf`). If a beacon was received, the
-connection is still alive, so reset the counter instead of incrementing
-it.
+**The bug:**
+In `rds_conn_shutdown()`, `cancel_delayed_work_sync()` cancels the
+queued worker. If the worker hadn't started yet, it never runs
+`clear_bit(RDS_RECONNECT_PENDING, ...)`. The bit stays set. Then when
+`rds_conn_path_connect_if_down()` is later called (e.g., when trying to
+send data), `test_and_set_bit` finds the bit already set and skips
+queuing — **forever**. The connection can never reconnect.
 
-**Stable criteria assessment**:
-- **Obviously correct**: Yes — the logic is simple: if we received a
-  beacon, the connection is alive, don't disconnect
-- **Fixes a real bug**: Yes — false disconnection in interference-heavy
-  WiFi environments
-- **Important issue**: Yes — unnecessary WiFi disconnection is a
-  significant user-facing issue
-- **Small and contained**: Yes — ~10 lines of logic in 2 files, all
-  within the rtw89 driver
-- **No new features**: Correct — this only improves connection loss
-  detection accuracy
-- **Dependencies**: The `sync_bcn_tsf` and `last_sync_bcn_tsf` fields
-  already exist in the tree; the initialization in mac80211.c is trivial
+This is a **permanent connection failure** bug — once triggered, the RDS
+connection path is effectively dead until the system is rebooted or the
+module is reloaded.
 
-**Risk**: Very low. The change is confined to the rtw89 driver's MCC
-path, and the worst case (if somehow wrong) is that the original
-disconnection behavior triggers slightly differently — still better than
-the false disconnection scenario.
+### 4. CLASSIFICATION
+
+- **Bug type:** State corruption / logic bug leading to permanent loss
+  of network connectivity
+- **Severity:** HIGH — RDS is used in production Oracle RAC clusters and
+  RDMA-based environments
+- **Trigger:** Race between shutdown and reconnect scheduling —
+  realistic in production with network flaps
+
+### 5. SCOPE AND RISK
+
+- **Change size:** 1 functional line (plus 1 blank line) — extremely
+  small and surgical
+- **Files changed:** 1 file (`net/rds/connection.c`)
+- **Risk of regression:** Very low — `clear_bit` is idempotent. If the
+  worker already ran and cleared the bit, clearing it again is harmless.
+  If the worker didn't run, this is the correct fix.
+- **The fix is placed correctly:** After `cancel_delayed_work_sync()`
+  guarantees the worker won't run, and before `rds_queue_reconnect()`
+  which will set the bit again if needed.
+
+### 6. STABLE KERNEL CRITERIA
+
+- **Obviously correct:** Yes — the logic is straightforward and well-
+  explained
+- **Fixes a real bug:** Yes — permanent loss of RDS connectivity
+- **Important issue:** Yes — affects network reliability for RDS users
+  (Oracle, RDMA environments)
+- **Small and contained:** Yes — 1 line in 1 file
+- **No new features:** Correct — purely a bug fix
+- **No new APIs:** Correct
+
+### 7. DEPENDENCY CHECK
+
+This fix is self-contained. It only adds a `clear_bit()` call after an
+existing `cancel_delayed_work_sync()` call. The `RDS_RECONNECT_PENDING`
+flag and the surrounding code have been in the kernel for a long time.
+This should apply cleanly to any stable tree that has the RDS subsystem.
+
+### Conclusion
+
+This is a textbook stable backport candidate: a tiny, obviously correct,
+one-line fix for a serious bug (permanent connection failure) in
+networking code used in production environments. The fix has zero risk
+of regression due to the idempotent nature of `clear_bit`, and the bug
+mechanism is clearly explained and verified through code analysis.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/chan.c     | 5 ++++-
- drivers/net/wireless/realtek/rtw89/mac80211.c | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ net/rds/connection.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/chan.c b/drivers/net/wireless/realtek/rtw89/chan.c
-index 86f1b39a967fe..8fe6a7ef738f7 100644
---- a/drivers/net/wireless/realtek/rtw89/chan.c
-+++ b/drivers/net/wireless/realtek/rtw89/chan.c
-@@ -2608,17 +2608,20 @@ bool rtw89_mcc_detect_go_bcn(struct rtw89_dev *rtwdev,
- static void rtw89_mcc_detect_connection(struct rtw89_dev *rtwdev,
- 					struct rtw89_mcc_role *role)
- {
-+	struct rtw89_vif_link *rtwvif_link = role->rtwvif_link;
- 	struct ieee80211_vif *vif;
- 	bool start_detect;
- 	int ret;
- 
- 	ret = rtw89_core_send_nullfunc(rtwdev, role->rtwvif_link, true, false,
- 				       RTW89_MCC_PROBE_TIMEOUT);
--	if (ret)
-+	if (ret &&
-+	    READ_ONCE(rtwvif_link->sync_bcn_tsf) == rtwvif_link->last_sync_bcn_tsf)
- 		role->probe_count++;
- 	else
- 		role->probe_count = 0;
- 
-+	rtwvif_link->last_sync_bcn_tsf = READ_ONCE(rtwvif_link->sync_bcn_tsf);
- 	if (role->probe_count < RTW89_MCC_PROBE_MAX_TRIES)
- 		return;
- 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
-index f39ca1c2ed100..d08eac3d99266 100644
---- a/drivers/net/wireless/realtek/rtw89/mac80211.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
-@@ -127,6 +127,7 @@ static int __rtw89_ops_add_iface_link(struct rtw89_dev *rtwdev,
- 	rtwvif_link->reg_6ghz_power = RTW89_REG_6GHZ_POWER_DFLT;
- 	rtwvif_link->rand_tsf_done = false;
- 	rtwvif_link->detect_bcn_count = 0;
-+	rtwvif_link->last_sync_bcn_tsf = 0;
- 
+diff --git a/net/rds/connection.c b/net/rds/connection.c
+index ad8027e6f54ef..dbfea6fa11260 100644
+--- a/net/rds/connection.c
++++ b/net/rds/connection.c
+@@ -429,6 +429,8 @@ void rds_conn_shutdown(struct rds_conn_path *cp)
+ 	 * to the conn hash, so we never trigger a reconnect on this
+ 	 * conn - the reconnect is always triggered by the active peer. */
+ 	cancel_delayed_work_sync(&cp->cp_conn_w);
++
++	clear_bit(RDS_RECONNECT_PENDING, &cp->cp_flags);
  	rcu_read_lock();
- 
+ 	if (!hlist_unhashed(&conn->c_hash_node)) {
+ 		rcu_read_unlock();
 -- 
 2.51.0
 
