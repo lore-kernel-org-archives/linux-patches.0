@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC8A3C2D;
-	Sat, 14 Feb 2026 21:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9F528134C;
+	Sat, 14 Feb 2026 21:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104339; cv=none; b=EWC6Qs2Dpu/uQgUy+SeC2dYuMmiVOdBFVOsDzUBH35RuKAdbJMWGi4KZ39jL5zadFWzny6tGjwv7hT63OSI87+tEWsVDW9g/53w2Cl4Fpnycj6oZ/7SUd/k5Kd/eyPKw13RGbl4mFrDvFS0DJVJEYO7YPaPSUWbm5BZ4pQzHtiQ=
+	t=1771104344; cv=none; b=XyxGWtp1H0eKYa7qunohFQTiaB+tjgpC7EdYeAQJORZV+fOB78V5p75egqDW1+XWRN/sS7KZ1CTjjAHuRNHXPOBI6zbhib+tl91hcc5Lzl/BMxaPFNDioOgZyNP20qlPS+jHXguHCcJngy5u5h8+b4TqxuIw9/nAhat0i6Wb6WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104339; c=relaxed/simple;
-	bh=b1LD+Xansm2gIBycBh5imiPFd4gz7SExWM2XaWHP+zQ=;
+	s=arc-20240116; t=1771104344; c=relaxed/simple;
+	bh=el7q+S3zLO8ASetRoqYi/Y+cAyRoQ4xecM7aCSAOMzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r7Ed8Sw+73H7fHvVaChq0L6FGHaxFamcFOdr7tznom8Gv4PLMGJwTEl9VZUd4lcBCaR0SZT5tZcAnCGxh2lawUSfDmezBnUeBzdov4rck6b9j+RrF0TgN5hvcjgUMz1d+GxI+sSgjE0xScJpLMPBc9Ijvut8e/1zUBZREW3pEWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZHgKkXwf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ceEC/fu4YbK087SpAItOmuWjtbMlSj82R0U9o3/HmgFTVv+xBFACAwS9YIfAU4heZsCPyIC2jRLxWezCcy7+3vJI831grMcf2lZWFKZik5Lap9wMMiTn4Iu2Bs3NLxGgZtqzVCXSqGHuUcA7EGRxF3pWO82sqFA7I3nT9yi/F4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nu90zRww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZHgKkXwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36753C16AAE;
-	Sat, 14 Feb 2026 21:25:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nu90zRww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815E4C16AAE;
+	Sat, 14 Feb 2026 21:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104339;
-	bh=b1LD+Xansm2gIBycBh5imiPFd4gz7SExWM2XaWHP+zQ=;
+	s=k20201202; t=1771104344;
+	bh=el7q+S3zLO8ASetRoqYi/Y+cAyRoQ4xecM7aCSAOMzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHgKkXwfVIUJdlnWOFBjl5fb9J5W2iIGjXEJdCsdZDISFVZoCO2MsCZNT1lMAFa0o
-	 71YSxfU2m7W0F+UPOq7C6h4ut7SCmz4bGKKLCwEKveHBdTqC5a3mUYi1PVDZTlu9dT
-	 KmVjSKkm+QRq86g/97Ir8O+a+uzyQ5T73SgVn3+qbqaw1cWFzNEeNmGgoT0uevN6k6
-	 pLT0dSIu/OIU8UjuN9m1qtNTDlAqBuAAUNb7uCbxgappzDgv7+HaLs2k4Kqr7jJ3vT
-	 qFcH9MDtpzzqJka9/6EHs//F4ileZKajiBy69L735cA3yMq3p51+9HQVYsOX/VLN8M
-	 rrtDNPxBDR8EA==
+	b=nu90zRww1B7VqP4lUsQ2OlpA1bZT0W/DvxMaQRSH15AUlUkPAE0eNrs0PG3WPXCMi
+	 qRxMo9utLxCIhhIhjTXEHVVyl2nQpP50Qu44/95UjOLlxfaGlKWsP9/kkMNxBYQMPx
+	 RkQ45i2v8IOh2DQT3+qdwMcK5eXBYJjwtIrpOjMtVMtOdMLpblPey/2yApeoPEi9oG
+	 rm9t9DNogdMDQA4QUnsZRH5XQ9dj4jOVWy5cfZeA59z/w4MvH+gjSLhZX7+i30QU6C
+	 e3e3G7NQuuWF1jzS+jMju0uonu2IGrZLSSkz6P9ePG6kwWcbBLxeaBlc8S+o1BeIfq
+	 rZrDOvP3CltMQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+Cc: Nidhish A N <nidhish.a.n@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jjohnson@kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath10k@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-5.10] wifi: ath10k: fix lock protection in ath10k_wmi_event_peer_sta_ps_state_chg()
-Date: Sat, 14 Feb 2026 16:22:51 -0500
-Message-ID: <20260214212452.782265-26-sashal@kernel.org>
+	johannes.berg@intel.com,
+	emmanuel.grumbach@intel.com,
+	ilan.peer@intel.com,
+	benjamin.berg@intel.com,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-6.18] wifi: iwlwifi: mld: Fix primary link selection logic
+Date: Sat, 14 Feb 2026 16:22:52 -0500
+Message-ID: <20260214212452.782265-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -51,171 +52,154 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Nidhish A N <nidhish.a.n@intel.com>
 
-[ Upstream commit 820ba7dd6859ef8b1eaf6014897e7aa4756fc65d ]
+[ Upstream commit 7a749db26cab2334d5b356ac31e6f1147c7682da ]
 
-ath10k_wmi_event_peer_sta_ps_state_chg() uses lockdep_assert_held() to
-assert that ar->data_lock should be held by the caller, but neither
-ath10k_wmi_10_2_op_rx() nor ath10k_wmi_10_4_op_rx() acquire this lock
-before calling this function.
+When assigning emlsr.primary with emlsr.selected_primary
+we are checking if BIT(mld_vif->emlsr.selected_links) are
+a part of vif->active_links. This is incorrect as
+emlsr.selected_links is a bitmap of possibly two selected links.
+Therefore, performing the BIT() operation on it does not
+yield any meaningful result and almost always leads to
+incorrect primary link selection.
 
-The field arsta->peer_ps_state is documented as protected by
-ar->data_lock in core.h, and other accessors (ath10k_peer_ps_state_disable,
-ath10k_dbg_sta_read_peer_ps_state) properly acquire this lock.
+Additionally, we cannot rely on vif->active_links at this
+stage of the link switch flow because it contains both the
+removed links and also the newly added links.
+For example, if we had selected links in the past (0x11)
+and we now select links because of TTLM/debugfs (0x100),
+vif->active_links will now be (0x111) and primary link
+will be 0, while 0 is not even an active link. Thus,
+we create our own bitmap of final active links.
 
-Add spin_lock_bh()/spin_unlock_bh() around the peer_ps_state update,
-and remove the lockdep_assert_held() to be aligned with new locking,
-following the pattern used by other WMI event handlers in the driver.
-
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260123175611.767731-1-n7l8m4@u.northwestern.edu
-[removed excess blank line]
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Nidhish A N <nidhish.a.n@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260111193638.38b2e14e3a20.Ie81a88dfff0c5d2becedabab8398702808f6b1bf@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of wifi: ath10k: fix lock protection in
-ath10k_wmi_event_peer_sta_ps_state_chg()
+The `iwlmld` driver was added in v6.15. Current stable trees that could
+possibly have it are 6.15.y, 6.16.y, 6.17.y, and 6.18.y. The mainline is
+6.19. The most actively maintained LTS kernels (6.12.y, 6.6.y, 6.1.y,
+5.15.y) do **NOT** have the `mld/` directory at all.
 
-### 1. Commit Message Analysis
+## CRITICAL FINDING: Applicability to Stable Trees
 
-The commit message is clear and well-structured:
-- **Subject**: Explicitly says "fix lock protection" — this is a
-  locking/synchronization bug fix
-- **Body**: Explains that `lockdep_assert_held()` asserted
-  `ar->data_lock` should be held by callers, but **no caller actually
-  held it**. This means the assertion was always wrong (or always
-  disabled), and the field `arsta->peer_ps_state` was being accessed
-  without the required lock protection.
-- **Reviewed-by**: Baochen Qiang from Qualcomm reviewed it, lending
-  credibility
-- The commit references that `core.h` documents `peer_ps_state` as
-  protected by `ar->data_lock`, and other accessors properly acquire it
-  — meaning this was the only broken path.
+The `iwlmld` sub-driver was introduced in v6.15. The current long-term
+stable (LTS) kernel branches are:
+- 6.12.y (LTS)
+- 6.6.y (LTS)
+- 6.1.y (LTS)
+- 5.15.y (LTS)
+- 5.10.y (LTS)
+- 5.4.y (LTS)
 
-### 2. Code Change Analysis
+**None of these LTS trees contain the `mld/` directory.** The code only
+exists in 6.15+ (which was a regular release, not LTS). While 6.15.y,
+6.16.y, 6.17.y, and 6.18.y are maintained as short-term stable, the fix
+targets very new code that:
 
-The change is minimal and surgical:
+1. Only exists in recent non-LTS stable trees
+2. Is part of the brand-new WiFi 7 EMLSR implementation
+3. The `iwl_mld_assign_vif_chanctx` function itself was added in v6.15
 
-1. **Removes** `lockdep_assert_held(&ar->data_lock)` — the callers never
-   held this lock, so the assertion was incorrect (and likely only
-   checked with CONFIG_LOCKDEP enabled, which is why it didn't always
-   trigger)
+## Summary
 
-2. **Adds** `spin_lock_bh(&ar->data_lock)` /
-   `spin_unlock_bh(&ar->data_lock)` around the single line
-   `arsta->peer_ps_state = __le32_to_cpu(ev->peer_ps_state)` — this is
-   the actual fix, properly protecting the field with the documented
-   lock
+| Criteria | Assessment |
+|----------|-----------|
+| Fixes real bug? | YES - incorrect primary link selection |
+| Obviously correct? | YES - the BIT() on bitmap bug is clear |
+| Small and contained? | YES - single function in one file |
+| Risk of regression? | LOW |
+| Applicable to stable? | LIMITED - only 6.15+ short-term stable trees |
+| User impact? | MODERATE - affects WiFi 7 EMLSR users with Intel
+hardware |
 
-The lock scope is minimal — only around the single write to
-`peer_ps_state`, placed after the RCU-protected station lookup and
-before the RCU read unlock. This is clean and correct.
+## Verdict
 
-### 3. Bug Classification
+While this is undeniably a real bug fix that is small, correct, and
+well-scoped, **the affected code only exists in very recent kernel
+versions (6.15+), none of which are LTS trees**. The `iwlmld` sub-driver
+is brand new WiFi 7 code that doesn't exist in any of the long-term
+stable kernels (6.12.y and below).
 
-This is a **data race / missing synchronization** bug:
-- The field `peer_ps_state` is documented as requiring `ar->data_lock`
-  protection
-- Other readers/writers of this field properly acquire the lock
-- This WMI event handler was the only path that didn't hold the lock
-- Without the lock, concurrent reads (from
-  `ath10k_dbg_sta_read_peer_ps_state`) and writes could race, leading to
-  torn reads or inconsistent state
+That said, short-term stable trees (6.15.y through 6.18.y) DO contain
+this code, and users of those trees would benefit from the fix. The fix
+is clearly correct, addresses a real bug that "almost always leads to
+incorrect primary link selection," and is small/surgical. For the short-
+term stable trees where this code exists, this is a good backport
+candidate.
 
-### 4. Scope and Risk Assessment
-
-- **Lines changed**: ~4 lines effective (remove 2 lines, add 3 lines
-  including lock/unlock)
-- **Files changed**: 1 file (`drivers/net/wireless/ath/ath10k/wmi.c`)
-- **Risk**: Very low. The change adds proper locking around a single
-  field access, following the established pattern used by all other
-  accessors. The lock is `spin_lock_bh`, which is safe in this softirq
-  context.
-- **Could it break something?** Extremely unlikely — it adds a lock that
-  was already supposed to be held, and uses the same locking pattern as
-  other paths in the driver.
-
-### 5. User Impact
-
-- **Affected hardware**: ath10k WiFi devices (Qualcomm 802.11ac chipsets
-  — very common in laptops and embedded systems)
-- **Trigger**: WMI peer power-save state change events from firmware
-- **Consequence of bug**: Data race on `peer_ps_state` field. While this
-  is a 32-bit field and the race may not always cause visible corruption
-  on most architectures, it violates the documented locking contract and
-  could cause issues with lockdep-enabled kernels (warnings/splats). On
-  architectures without atomic 32-bit writes, it could cause torn reads.
-- **Severity**: Medium — it's a real locking bug in a commonly-used WiFi
-  driver
-
-### 6. Stability Indicators
-
-- Reviewed by Qualcomm engineer (Baochen Qiang)
-- Accepted by the ath10k maintainer (Jeff Johnson)
-- Small, obvious, and following established patterns in the same driver
-
-### 7. Dependency Check
-
-- No dependencies on other commits
-- The code being modified has existed in ath10k for a long time (the
-  `lockdep_assert_held` suggests the locking was always intended but
-  never correctly implemented in this path)
-- Should apply cleanly to any stable tree that has the ath10k driver
-  with this function
-
-### 8. Stable Kernel Criteria
-
-- **Obviously correct?** Yes — adds the documented lock around a field
-  access
-- **Fixes a real bug?** Yes — data race / missing synchronization
-- **Small and contained?** Yes — 4 lines in 1 file
-- **No new features?** Correct — pure bug fix
-- **Tested?** Reviewed by subsystem experts, accepted by maintainer
-
-### Conclusion
-
-This is a textbook stable-worthy fix: a small, surgical correction to a
-locking bug in a widely-used WiFi driver. It properly adds the lock that
-was always documented as required but never acquired in this code path.
-The risk is minimal and the fix follows established patterns in the same
-driver.
+Given that stable backporting applies to ALL stable trees (including
+short-term ones like 6.15.y, 6.18.y), and this fix is clearly correct,
+small, and fixes an always-triggering bug in EMLSR mode:
 
 **YES**
 
- drivers/net/wireless/ath/ath10k/wmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../net/wireless/intel/iwlwifi/mld/mac80211.c | 23 ++++++++++++-------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index b4aad6604d6d9..ce22141e5efd9 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -5289,8 +5289,6 @@ ath10k_wmi_event_peer_sta_ps_state_chg(struct ath10k *ar, struct sk_buff *skb)
- 	struct ath10k_sta *arsta;
- 	u8 peer_addr[ETH_ALEN];
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+index cd0dce8de8569..3a1b5bfb9ed66 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+@@ -984,7 +984,9 @@ int iwl_mld_assign_vif_chanctx(struct ieee80211_hw *hw,
+ {
+ 	struct iwl_mld *mld = IWL_MAC80211_GET_MLD(hw);
+ 	struct iwl_mld_link *mld_link = iwl_mld_link_from_mac80211(link);
+-	unsigned int n_active = iwl_mld_count_active_links(mld, vif);
++	struct iwl_mld_link *temp_mld_link;
++	struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(vif);
++	u16 final_active_links = 0;
+ 	int ret;
  
--	lockdep_assert_held(&ar->data_lock);
+ 	lockdep_assert_wiphy(mld->wiphy);
+@@ -992,10 +994,7 @@ int iwl_mld_assign_vif_chanctx(struct ieee80211_hw *hw,
+ 	if (WARN_ON(!mld_link))
+ 		return -EINVAL;
+ 
+-	/* if the assigned one was not counted yet, count it now */
+ 	if (!rcu_access_pointer(mld_link->chan_ctx)) {
+-		n_active++;
 -
- 	ev = (struct wmi_peer_sta_ps_state_chg_event *)skb->data;
- 	ether_addr_copy(peer_addr, ev->peer_macaddr.addr);
+ 		/* Track addition of non-BSS link */
+ 		if (ieee80211_vif_type_p2p(vif) != NL80211_IFTYPE_STATION) {
+ 			ret = iwl_mld_emlsr_check_non_bss_block(mld, 1);
+@@ -1016,17 +1015,25 @@ int iwl_mld_assign_vif_chanctx(struct ieee80211_hw *hw,
  
-@@ -5305,7 +5303,9 @@ ath10k_wmi_event_peer_sta_ps_state_chg(struct ath10k *ar, struct sk_buff *skb)
- 	}
+ 	rcu_assign_pointer(mld_link->chan_ctx, ctx);
  
- 	arsta = (struct ath10k_sta *)sta->drv_priv;
-+	spin_lock_bh(&ar->data_lock);
- 	arsta->peer_ps_state = __le32_to_cpu(ev->peer_ps_state);
-+	spin_unlock_bh(&ar->data_lock);
+-	if (n_active > 1) {
+-		struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(vif);
++	/* We cannot rely on vif->active_links at this stage as it contains
++	 * both the removed links and the newly added links.
++	 * Therefore, we create our own bitmap of the final active links,
++	 * which does not include the removed links.
++	 */
++	for_each_mld_vif_valid_link(mld_vif, temp_mld_link) {
++		if (rcu_access_pointer(temp_mld_link->chan_ctx))
++			final_active_links |= BIT(link_id);
++	}
  
- exit:
- 	rcu_read_unlock();
++	if (hweight16(final_active_links) > 1) {
+ 		/* Indicate to mac80211 that EML is enabled */
+ 		vif->driver_flags |= IEEE80211_VIF_EML_ACTIVE;
+ 		mld_vif->emlsr.last_entry_ts = jiffies;
+ 
+-		if (vif->active_links & BIT(mld_vif->emlsr.selected_links))
++		if (final_active_links == mld_vif->emlsr.selected_links)
+ 			mld_vif->emlsr.primary = mld_vif->emlsr.selected_primary;
+ 		else
+-			mld_vif->emlsr.primary = __ffs(vif->active_links);
++			mld_vif->emlsr.primary = __ffs(final_active_links);
+ 
+ 		iwl_dbg_tlv_time_point(&mld->fwrt, IWL_FW_INI_TIME_ESR_LINK_UP,
+ 				       NULL);
 -- 
 2.51.0
 
