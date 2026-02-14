@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2748311C2C;
-	Sat, 14 Feb 2026 21:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E651F299931;
+	Sat, 14 Feb 2026 21:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104361; cv=none; b=C0WcBAljOVbGyLOb9VI5ctan3UGnysSHzIrxEs2DR720lO2uRUup2t9bXOOD1yXSSAxQz6ucpfYRlt2KIm71td90HPEfL8SAcLcVRuNtwSFQqqy7LuHvWIQScUkCDsDcY/ITrkyorGHxALi5a8BfMuv/boY0I/4WYe4Lr7K9zzg=
+	t=1771104362; cv=none; b=PD+RSvBhOJYIS/po0e10IHJ3X+5XCsfqmQEGIJM8QgLH3iBJvcxhnSqAcIGeSAMuddR0OYhbUInrZT8lRYD7m7O/TU9yT5HkBTWmJDb/Wo9NOGL0BWUryNAqa+tGgKRJ4M4FDa+dqiEgT4+0nHWpZG2hgpoDwHqNo5lT8klJzYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104361; c=relaxed/simple;
-	bh=wU+LQ22pYsQ+C1uiK5gpxnqaGGJ8G8GMZIj026Npz1I=;
+	s=arc-20240116; t=1771104362; c=relaxed/simple;
+	bh=jxz8aN0hk2Hn/dUUbJ0K1/ynlTqBgPUSzmZMjVW+I3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R4XH6yzExOzL3eipK6GQLze/38FW3Xgz3zuxHgBzmpnsiUJX+qQYMk4jYdfVR5wrbmFrjRZ20uVbHb8JMoTfP0GzBrqQy3FpcZOPMwiZ8T7TxAbJPJnhj89SIwoW7wfT52osVi/fYilXm2TTQALSwgCAYHlwgEtOQ7hxiBzzT/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=onx51MqI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FmXIXiJQ/LD4XE6J+Acgf+IQet9iIA8dUPa3mKsJfrTwBzL/RQ+qaUfFCKTgK+FNgAFDXSTstVswk4ZUUBXqydSOQl5/5Cg4EeA9Y22Wek9Mp/xcMu+1LkYLI/kJMG7r+w/qv/3awfWc1/ud6nlWal77Shx/rMGH6E2pKOL44ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o7m6qfa0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="onx51MqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08E0C19422;
-	Sat, 14 Feb 2026 21:25:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o7m6qfa0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A170C16AAE;
+	Sat, 14 Feb 2026 21:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104360;
-	bh=wU+LQ22pYsQ+C1uiK5gpxnqaGGJ8G8GMZIj026Npz1I=;
+	s=k20201202; t=1771104361;
+	bh=jxz8aN0hk2Hn/dUUbJ0K1/ynlTqBgPUSzmZMjVW+I3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=onx51MqIzjBmqQRcw5SjMVhYuV2rNEfqFNzPqwrVRY5yfRVuU2lXb9rjFTarTkUA9
-	 MvtGLlnA53vswJzS7slXFaNwpv2dgJyPIOe6bfQ/QRsSZG2HFK6lseWGGlj9Mt1Kz5
-	 Qtp10n/lCoOdIz1A4YIfhMC/YeKj9ykRjisUf5Q768hu8evqrGMl7fJ2x3sHvMVWf4
-	 P6YZONXReBhCMxtPpbR5dmXFK6GIPyoF76HIm76Y5n4PPRklba5Z8jCu3s7d2piTsd
-	 UtiNfkLb5zruiAGjEH6i20wilu3I9skstqMutWrjJuBaE6Jan+8dR/hgIVwe+uxDbp
-	 /7dgQyJhEtQjQ==
+	b=o7m6qfa0FwJmE8Ux+nNqxJCmXVCAlAe6Fqhvmywq9fqPIS4wXa938AzFUlgICMUpB
+	 CfCNjlhTuu6XoitoHfD94+fHPTu0fRerDBF71EDQ80HTwPNvA9bNCtCJ3PJa1dbe/F
+	 IhSxWyQnLf9A9SPA7J+edyChi0GjWh+nvdirRbbpr6ddQmeu9ZWstiCQ6qBcCfCSQ4
+	 TMeTACfhC05OVnW9v7RA+6eB0IyJm9B3nIW0+RwvENIsUOV9PWTrYamT6ebZWUC5kZ
+	 QoTBjoQMMjk6DSGftnIPEM8Pf441FbDDPUZorcu/koLWwgha7+RojG7K8d7Ek2krXq
+	 tdkTwNCKjVVhg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bluecross <elantsew.andrew@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Shin-Yi Lin <isaiah@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] Bluetooth: btusb: Add support for MediaTek7920 0489:e158
-Date: Sat, 14 Feb 2026 16:23:05 -0500
-Message-ID: <20260214212452.782265-40-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19] wifi: rtw89: Add default ID 28de:2432 for RTL8832CU
+Date: Sat, 14 Feb 2026 16:23:06 -0500
+Message-ID: <20260214212452.782265-41-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -53,143 +51,115 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bluecross <elantsew.andrew@gmail.com>
+From: Shin-Yi Lin <isaiah@realtek.com>
 
-[ Upstream commit 2630bcc8343a9d2a38dc1793068e6754b3156811 ]
+[ Upstream commit 5f65ebf9aaf00c7443252136066138435ec03958 ]
 
-Add support for MediaTek7920 0489:e158
+Add 28de:2432 for RTL8832CU-based adapters that use this default ID.
 
-/sys/kernel/debug/usb/devices reports for that device:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=03 Dev#=  5 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e158 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
-
-Signed-off-by: Andrew Elatsev <elantsew.andrew@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Shin-Yi Lin <isaiah@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260114014906.21829-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+## Analysis: Adding USB Device ID 28de:2432 for RTL8832CU
 
 ### Commit Message Analysis
-This commit adds a new USB device ID (0489:e158) for a MediaTek MT7920
-Bluetooth adapter to the `btusb` driver. The commit message includes the
-full USB device descriptor dump from `/sys/kernel/debug/usb/devices`,
-confirming this is a real hardware device (manufactured by MediaTek
-Inc., identified as "Wireless_Device").
+
+This commit adds a single USB device ID (`28de:2432`) to the existing
+`rtw89` wireless driver for RTL8832CU-based USB WiFi adapters. The
+vendor ID `0x28de` belongs to Valve Corporation (known for Steam Deck
+and other gaming hardware), suggesting this is a WiFi adapter used in a
+Valve product.
 
 ### Code Change Analysis
-The change is a **two-line addition** to the `quirks_table[]` array in
-`drivers/bluetooth/btusb.c`:
 
-```c
-{ USB_DEVICE(0x0489, 0xe158), .driver_info = BTUSB_MEDIATEK |
-                                             BTUSB_WIDEBAND_SPEECH },
-```
+The change is minimal and mechanical:
+- **One entry added** to the `rtw_8852cu_id_table[]` array in
+  `rtw8852cu.c`
+- The new entry follows the exact same pattern as all other entries in
+  the table
+- Uses `USB_DEVICE_AND_INTERFACE_INFO(0x28de, 0x2432, 0xff, 0xff, 0xff)`
+  with the same `rtw89_8852cu_info` driver info structure
+- The entry is inserted in vendor ID order (between `0x0db0` and
+  `0x35b2`), maintaining table organization
 
-This is added in the "Additional MediaTek MT7920 Bluetooth devices"
-section, alongside other MT7920 device IDs that already exist
-(0x0489:0xe134, 0x0489:0xe135, 0x13d3:0x3620, 0x13d3:0x3621,
-0x13d3:0x3622). The new entry uses the exact same `driver_info` flags as
-all other MT7920 entries.
+### Classification: New Device ID Addition
 
-### Classification
-This is a **new device ID addition** to an existing, well-established
-driver. This falls squarely into the "NEW DEVICE IDs" exception category
-that is explicitly allowed and encouraged for stable backports.
+This is a textbook **new device ID addition** to an existing driver —
+one of the explicitly allowed exception categories for stable backports:
+
+1. **The driver already exists** in stable trees (rtw89/rtw8852cu has
+   been in the kernel)
+2. **Only the USB ID is new** — no new code paths, no new functionality
+3. **Enables existing hardware** to be recognized by an already-working
+   driver
+4. **Zero risk of regression** — the new ID entry only matches devices
+   with that specific vendor/product ID; all other devices are
+   completely unaffected
 
 ### Scope and Risk Assessment
-- **Lines changed**: 2 lines added (one table entry)
-- **Files touched**: 1 file (`drivers/bluetooth/btusb.c`)
-- **Risk**: Essentially zero. This only adds a USB ID match entry to a
-  device table. It cannot affect any other device or code path. The
-  driver (btusb with MediaTek support) already exists and works for the
-  other MT7920 variants.
-- **Complexity**: Trivial — it's a data table entry, not logic.
+
+- **Lines changed**: 2 (one USB_DEVICE_AND_INTERFACE_INFO entry)
+- **Files touched**: 1
+- **Risk**: Essentially zero — adding a device ID to a table cannot
+  break existing functionality
+- **Complexity**: None — this is a data-only change
 
 ### User Impact
-Without this entry, users with the MediaTek MT7920 variant (vendor
-0x0489, product 0xe158) have **no Bluetooth functionality at all** — the
-kernel simply won't bind the btusb driver to this device. With this
-entry, Bluetooth works out of the box. This is a direct hardware
-enablement fix.
+
+- **Without this patch**: Users with RTL8832CU adapters using vendor ID
+  `28de:2432` (likely Valve hardware) have no WiFi support — the device
+  is simply not recognized
+- **With this patch**: The adapter works out of the box with the
+  existing rtw89 driver
+- **Impact level**: HIGH for affected users (WiFi is essential), ZERO
+  for everyone else
+
+### Dependency Check
+
+This commit is fully self-contained. It depends only on:
+- The rtw89 driver existing (it does in stable trees)
+- The `rtw89_8852cu_info` structure existing (it does, defined in the
+  same file)
+
+No other patches are needed.
 
 ### Stability Indicators
-- The same pattern (USB_DEVICE + BTUSB_MEDIATEK | BTUSB_WIDEBAND_SPEECH)
-  is used by dozens of other MediaTek entries in this table, all well-
-  tested.
-- The commit was accepted by the Bluetooth subsystem maintainer (Luiz
-  Augusto von Dentz).
 
-### Dependencies
-None. This is a self-contained, single-entry table addition with no
-dependencies on other commits.
+- Authored by Realtek engineers (Shin-Yi Lin, Ping-Ke Shih) — the chip
+  vendor themselves
+- The pattern is identical to all other entries in the table, well-
+  established and tested
 
 ### Conclusion
-This is a textbook example of a stable-worthy device ID addition:
-- Trivial two-line change to an existing device table
-- Zero risk of regression to any other device or code path
-- Enables hardware that otherwise doesn't work at all
-- Uses the exact same flags as all other MT7920 entries
-- The btusb driver and MediaTek support exist in all active stable trees
+
+This is a classic device ID addition — the most straightforward type of
+stable backport. It enables WiFi hardware for users who currently have
+no support, with zero risk to anyone else. It perfectly matches the "New
+Device IDs" exception category in the stable kernel rules.
 
 **YES**
 
- drivers/bluetooth/btusb.c | 2 ++
+ drivers/net/wireless/realtek/rtw89/rtw8852cu.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index ded09e94d296d..646de80c7e7be 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -637,6 +637,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3622), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe158), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 
- 	/* Additional MediaTek MT7921 Bluetooth devices */
- 	{ USB_DEVICE(0x0489, 0xe0c8), .driver_info = BTUSB_MEDIATEK |
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852cu.c b/drivers/net/wireless/realtek/rtw89/rtw8852cu.c
+index 2708b523ca141..3b9825c92a0d9 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852cu.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852cu.c
+@@ -46,6 +46,8 @@ static const struct usb_device_id rtw_8852cu_id_table[] = {
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852cu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0db0, 0x991d, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852cu_info },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x28de, 0x2432, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&rtw89_8852cu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x35b2, 0x0502, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852cu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x35bc, 0x0101, 0xff, 0xff, 0xff),
 -- 
 2.51.0
 
