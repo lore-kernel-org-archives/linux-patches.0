@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0331DE8AE;
-	Sat, 14 Feb 2026 01:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA14E3EBF2C;
+	Sat, 14 Feb 2026 01:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030977; cv=none; b=Z2RBslPnujnIc5nGps2sim/7JAEJkzCs6DMvbWub1123h3hqzMNNPyNd1M7XSkdcNpdg1svKzrz+vwNLrJKe8veuheyqLcpFnTt1yvw6CpQcqneTVhHGJ2Ke83a831be2pD2s0OO5fU1ch11jscCORxUpFo3h+w66/hRfOztmJ0=
+	t=1771030978; cv=none; b=jQScHTZwYJd+2HfRhL0P/6iocftaRaJI5D1US+S/eRTB1FZmRKVNjl/KfzosOCV6dumM7SjGdVYgskjtAeoiHP4+QVfX8bc0bblHMIL8BibKTHsdzwh4z5wdy2SFZa83moKPL0rdwtO7ViCt/YvoUOHJded9vdvroOi52pKtiF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030977; c=relaxed/simple;
-	bh=J37sxq8pfLFgbWzCtYcfjLaOxT+W9jkKzT/+ehOmyy0=;
+	s=arc-20240116; t=1771030978; c=relaxed/simple;
+	bh=kgi9BhdcthCxSA6dJ0nmZZtNScX+mzCCARdeMeRePEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c/TFQDV75ZzsyAj+4itMu1JCngtJ/fr+dDQmiocXidbPJohh+83psV8lTUfcHPNAo5ZrmJVDoBHK2P6Umxl3xoEPTtJdae8P9z9pTOjSANFCsq7WIUOKdC3a4yVCYRbLUbCufOEMXZaeMzBe70EmwC3Vl/OrEBQ7XavRQhVhE7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NkL5yBGW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S+y4aPKOeRdzfRrWiXPl03yTH0C+VPm/wT1AslPWxPXYlNhtcHDO4FYRlJmjgRWImQ8HWICx4Ldw8OJLGvrQPJvlS3KppoU0cSankhzfvvgceNYhoOhj/nZ84Jgmm8+JJSPtOJMXq5KqyYS++4UgyGRAkkFXlUhed8/aqviv+a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cG67LwAT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NkL5yBGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521C7C116C6;
-	Sat, 14 Feb 2026 01:02:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cG67LwAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8027DC116C6;
+	Sat, 14 Feb 2026 01:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030977;
-	bh=J37sxq8pfLFgbWzCtYcfjLaOxT+W9jkKzT/+ehOmyy0=;
+	s=k20201202; t=1771030978;
+	bh=kgi9BhdcthCxSA6dJ0nmZZtNScX+mzCCARdeMeRePEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NkL5yBGWc6TK9nHx2hxtMCGxj24z7Nx2oQsm74KUE5oOhf1y7RBu4JQ7Vmylhaf+k
-	 dnOG8L4pIj8Q7WftquaBobZR/0YIlN1+vVXkNXzOa00Uq9Dw1NHF8FWISar1QaKUaE
-	 PPhYP8ngWel42iL3JY93dLL0FhxiiWlgaEp5uWZIdcav8euA2/IyTT6SYC6muemmqi
-	 Napo6EQ9SgX9nWsTYF6LgztR4JCpCXcwaiCx7gScbyyD2oQ1TBgceDWBiB2mqteN8A
-	 w1PrBmQS1YAUZDxgdqz6QRbKZQ2/IouBnlcIxxZ+hRxVHlG8Q3a7Uk6Ykq7EUu6dkt
-	 /eJr0zFNjEh8g==
+	b=cG67LwAT9CCzYTOtmJc4ianN/J6sEP6Eix9nSgsauwRCXB1qqpY7trqyUR78aMNBn
+	 1D4Le9XXrtn0IOEUe8etj/6CBVkrQ6A4cdRmPLzZ1CLzda/YedtTu1+6FIhguez7Df
+	 cbiP25YmouBFMMkpiGmZ8Dpv+a3Mj3A0Ezjk0hmBgU2PC/yrUdXIDU9UVv382Zr8NC
+	 PIwjepUhNXTFoma3Zo1mBq+hSe0Xt3jtMf6j+mpRZO0h883V8tJtEcCRRfm5pCUknX
+	 EMnUnb9PWMqMwW6mpQUMhIP1LmL1ib12gfoiLPARhA0Z8nMZZ5mStellW5ShkKYGYX
+	 OtigkaBx1MyYg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jonathan Marek <jonathan@marek.ca>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Thorsten Schmelzer <tschmelzer@topcon.com>,
+	Michael Tretter <m.tretter@pengutronix.de>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] spi-geni-qcom: initialize mode related registers to 0
-Date: Fri, 13 Feb 2026 19:58:06 -0500
-Message-ID: <20260214010245.3671907-6-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] HID: multitouch: add eGalaxTouch EXC3188 support
+Date: Fri, 13 Feb 2026 19:58:07 -0500
+Message-ID: <20260214010245.3671907-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -52,211 +54,127 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Thorsten Schmelzer <tschmelzer@topcon.com>
 
-[ Upstream commit 739062a9f1e9a77a9687c8fd30f8e5dd12ec70be ]
+[ Upstream commit 8e4ac86b2ddd36fe501e20ecfcc080e536df1f48 ]
 
-setup_fifo_params assumes these will be zero, it won't write these
-registers if the initial mode is zero.
+Add support for the for the EXC3188 touchscreen from eGalaxy.
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Link: https://patch.msgid.link/20251120211204.24078-4-jonathan@marek.ca
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Thorsten Schmelzer <tschmelzer@topcon.com>
+Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete understanding of the bug and the fix. Let me
-compile the analysis.
+## Analysis
 
----
+### Commit Message Analysis
 
-## Detailed Analysis
+The commit adds support for the eGalaxTouch EXC3188 touchscreen device
+by adding a new USB device ID (0xC000) to the existing HID multitouch
+driver. The commit message is straightforward: "Add support for the
+EXC3188 touchscreen from eGalaxy."
 
-### 1. COMMIT MESSAGE ANALYSIS
+### Code Change Analysis
 
-The commit subject "spi-geni-qcom: initialize mode related registers to
-0" is straightforward. The commit body explains: "`setup_fifo_params`
-assumes these will be zero, it won't write these registers if the
-initial mode is zero." This is a clear description of a latent
-initialization bug.
+The changes are minimal and confined to two files:
 
-### 2. CODE CHANGE ANALYSIS - The Bug Mechanism
+1. **`drivers/hid/hid-ids.h`**: Adds a single `#define` for the new
+   device ID:
+  ```c
+  #define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C000  0xc000
+  ```
 
-The bug centers on the interaction between two functions in `spi-geni-
-qcom.c`:
+2. **`drivers/hid/hid-multitouch.c`**: Adds a 3-line entry to the
+   `mt_devices[]` device ID table:
+  ```c
+  { .driver_data = MT_CLS_EGALAX_SERIAL,
+  MT_USB_DEVICE(USB_VENDOR_ID_DWAV,
+  USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C000) },
+  ```
 
-**`spi_geni_init()`** (called once during probe at line 1147)
-initializes the GENI SPI controller. In the `case 0:` (FIFO mode) branch
-at lines 724-728, it sets the transfer mode but does NOT initialize the
-SPI mode registers.
+The new device uses `MT_CLS_EGALAX_SERIAL`, which is an existing device
+class already used by several other eGalax devices (A001, 73F7, 7349).
+No new code paths, no new driver logic, no behavioral changes.
 
-**`setup_fifo_params()`** (called for each SPI message at line 593 via
-`spi_geni_prepare_message`) has an optimization at line 405:
+### Classification: New Device ID Addition
 
-```397:431:drivers/spi/spi-geni-qcom.c
-static int setup_fifo_params(struct spi_device *spi_slv,
-                                        struct spi_controller *spi)
-{
-        struct spi_geni_master *mas = spi_controller_get_devdata(spi);
-        struct geni_se *se = &mas->se;
-        u32 loopback_cfg = 0, cpol = 0, cpha = 0, demux_output_inv = 0;
-        u32 demux_sel;
+This falls squarely into the **"New Device IDs"** exception category for
+stable backports:
+- The driver (`hid-multitouch`) already exists in stable trees
+- Only the device ID is new
+- It uses an existing device class (`MT_CLS_EGALAX_SERIAL`)
+- The pattern is identical to many other eGalax entries already in the
+  table
 
-        if (mas->last_mode != spi_slv->mode) {
-                // ... only writes registers when mode changes ...
-                writel(loopback_cfg, se->base + SE_SPI_LOOPBACK);
-                writel(demux_sel, se->base + SE_SPI_DEMUX_SEL);
-                writel(cpha, se->base + SE_SPI_CPHA);
-                writel(cpol, se->base + SE_SPI_CPOL);
-                writel(demux_output_inv, se->base +
-SE_SPI_DEMUX_OUTPUT_INV);
+### Risk Assessment
 
-                mas->last_mode = spi_slv->mode;
-        }
-        // ...
-}
-```
+- **Risk: Extremely low** — This is a pure device ID addition to an
+  existing table. It cannot affect any existing device. The new entry
+  only matches the specific USB vendor/product ID pair (0x0aec/0xc000).
+- **Scope: Minimal** — 4 lines added across 2 files (1 define + 3 lines
+  in device table)
+- **Dependencies: None** — Completely self-contained, no other commits
+  needed
 
-**The critical chain of assumptions:**
+### User Impact
 
-1. `spi_geni_master` is allocated with `kzalloc` (confirmed in
-   `__spi_alloc_controller` at spi.c line 3056), so `mas->last_mode`
-   starts at **0**.
-2. `SPI_MODE_0` = `(0|0)` = **0** (from `include/uapi/linux/spi/spi.h`
-   line 10). This is the most common SPI mode.
-3. When the first SPI device uses mode 0, `spi_slv->mode` is 0, so
-   `mas->last_mode != spi_slv->mode` is **false** (0 != 0 → false).
-4. **The register writes are skipped entirely** for the first SPI
-   transaction.
-5. This assumes the hardware registers already contain 0.
+Without this patch, users with the eGalaxTouch EXC3188 touchscreen have
+a non-functional device. With this patch, the touchscreen works using
+the existing, well-tested eGalax serial multitouch driver class. This is
+exactly the kind of hardware enablement that stable users need — their
+hardware simply doesn't work without it.
 
-**When the assumption breaks:**
+### Stability Indicators
 
-- **Bootloader contamination**: If the bootloader used SPI (very common
-  on Qualcomm SoCs for reading from SPI flash/NOR), it may have
-  configured these registers with non-zero values (e.g., CPOL=1, CPHA=1
-  for SPI mode 3, or specific chip select muxing).
-- **Firmware loading path**: The `geni_load_se_firmware()` path (line
-  674-679) loads QUP firmware when `proto == GENI_SE_INVALID_PROTO`.
-  After firmware loading, register state may be undefined.
+- Uses existing driver infrastructure (no new code paths)
+- Follows the exact same pattern as ~20 other eGalax device entries
+- Signed off by the HID subsystem maintainer (Jiri Kosina)
+- Has been reviewed and accepted through the normal HID subsystem
+  process
 
-**The consequence:**
+### Conclusion
 
-If hardware registers retain stale non-zero values from the bootloader
-and the first SPI device uses mode 0:
-- **SE_SPI_CPOL** could be set to `BIT(2)` → wrong clock polarity
-- **SE_SPI_CPHA** could be set to `BIT(0)` → wrong clock phase
-- **SE_SPI_LOOPBACK** could be enabled → data loops back instead of
-  going to device
-- **SE_SPI_DEMUX_SEL** could select wrong chip → wrong device addressed
-- **SE_SPI_DEMUX_OUTPUT_INV** could invert CS → chip select logic
-  inverted
-
-Any of these would cause **SPI communication failure or data
-corruption**.
-
-### 3. THE FIX
-
-The fix is 5 `writel(0, ...)` calls added to the FIFO mode
-initialization path in `spi_geni_init()`:
-
-```c
-writel(0, se->base + SE_SPI_LOOPBACK);
-writel(0, se->base + SE_SPI_DEMUX_SEL);
-writel(0, se->base + SE_SPI_CPHA);
-writel(0, se->base + SE_SPI_CPOL);
-writel(0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
-```
-
-This ensures the hardware state matches the software assumption
-(`last_mode = 0`), making `setup_fifo_params()`'s optimization correct.
-
-### 4. CLASSIFICATION
-
-- **Type**: Initialization bug fix (uninitialized hardware register
-  state)
-- **NOT a feature**: No new functionality, just ensuring correct
-  initialization
-- **Category**: Data corruption / device communication failure fix
-
-### 5. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed**: 6 (5 writel + 1 comment)
-- **Files touched**: 1 (`drivers/spi/spi-geni-qcom.c`)
-- **Complexity**: Extremely low - simple register zeroing
-- **Risk of regression**: Near zero. In the common case where registers
-  are already 0, the writel calls are a harmless no-op. In the bug case,
-  they fix incorrect register values.
-- **Self-contained**: Yes - all register defines (`SE_SPI_LOOPBACK`,
-  etc.) and the `spi_geni_init()` function exist in all stable trees
-  that have this driver.
-
-### 6. USER IMPACT
-
-- **Qualcomm GENI SPI** is used on many Qualcomm SoCs (SDM845, SM8150,
-  SM8250, SC7180, SC7280, SM8350, SM8450, X1E80100, etc.)
-- These SoCs power phones, laptops (Qualcomm-based Chromebooks, Windows
-  on ARM devices), IoT, and embedded systems
-- SPI is used for touchscreen controllers, sensor hubs, TPM modules, and
-  other critical peripherals
-- If SPI communication fails, the affected device simply doesn't work
-
-### 7. DEPENDENCY CHECK
-
-The patch is **entirely self-contained**. It uses:
-- `se->base` - available since the driver was created
-- `SE_SPI_LOOPBACK`, `SE_SPI_DEMUX_SEL`, `SE_SPI_CPHA`, `SE_SPI_CPOL`,
-  `SE_SPI_DEMUX_OUTPUT_INV` - all defined in the same file since
-  original driver creation
-- `writel()` - standard kernel API
-
-The patch was "4/N" in a series (from the Link URL), but this specific
-change is independent. It does not depend on any prior patch in the
-series - it simply adds register zeroing to an existing function.
-
-### 8. STABILITY INDICATORS
-
-- Merged by Mark Brown (SPI subsystem maintainer) with `Signed-off-by`
-- The fix is logically obvious and defensive
-- The pattern (writing 0 to ensure known state during init) is standard
-  practice throughout the kernel
-
-### CONCLUSION
-
-This commit fixes a real initialization bug where SPI mode-related
-hardware registers may retain stale non-zero values from
-bootloader/firmware, causing the driver's `setup_fifo_params()`
-optimization to incorrectly skip the first register write when the SPI
-device uses mode 0 (the most common mode). The consequence is SPI
-communication failure or data corruption. The fix is a trivial 5-line
-addition of register zeroing during init, with essentially zero
-regression risk, affecting a widely-deployed Qualcomm SPI driver. It is
-self-contained with no dependencies and applies cleanly to stable trees.
+This is a textbook example of a device ID addition that should be
+backported to stable. It enables real hardware for real users, has zero
+risk of regression, requires no dependencies, and follows established
+patterns in the driver. These types of commits are explicitly called out
+in stable kernel rules as appropriate for backporting.
 
 **YES**
 
- drivers/spi/spi-geni-qcom.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hid/hid-ids.h        | 1 +
+ drivers/hid/hid-multitouch.c | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index a0d8d3425c6c6..9e9953469b3a0 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -724,6 +724,12 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	case 0:
- 		mas->cur_xfer_mode = GENI_SE_FIFO;
- 		geni_se_select_mode(se, GENI_SE_FIFO);
-+		/* setup_fifo_params assumes that these registers start with a zero value */
-+		writel(0, se->base + SE_SPI_LOOPBACK);
-+		writel(0, se->base + SE_SPI_DEMUX_SEL);
-+		writel(0, se->base + SE_SPI_CPHA);
-+		writel(0, se->base + SE_SPI_CPOL);
-+		writel(0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
- 		ret = 0;
- 		break;
- 	}
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 5a18cb41e6d79..6d8b64872cefe 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -437,6 +437,7 @@
+ #define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_7349	0x7349
+ #define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_73F7	0x73f7
+ #define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_A001	0xa001
++#define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C000	0xc000
+ #define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C002	0xc002
+ 
+ #define USB_VENDOR_ID_EDIFIER		0x2d99
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index f21850f7d89e4..7daa8f6d81870 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -2212,6 +2212,9 @@ static const struct hid_device_id mt_devices[] = {
+ 	{ .driver_data = MT_CLS_EGALAX_SERIAL,
+ 		MT_USB_DEVICE(USB_VENDOR_ID_DWAV,
+ 			USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_A001) },
++	{ .driver_data = MT_CLS_EGALAX_SERIAL,
++		MT_USB_DEVICE(USB_VENDOR_ID_DWAV,
++			USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C000) },
+ 	{ .driver_data = MT_CLS_EGALAX,
+ 		MT_USB_DEVICE(USB_VENDOR_ID_DWAV,
+ 			USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C002) },
 -- 
 2.51.0
 
