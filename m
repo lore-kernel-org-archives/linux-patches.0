@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814A9194098;
-	Sat, 14 Feb 2026 01:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057BB194098;
+	Sat, 14 Feb 2026 01:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031118; cv=none; b=b9/LdTlInQlZPpPxpz31axZc6kMI40+H1dDKtvR/hUizz1AQyQFtAWBZinrrCgWRmjjui1ByK59yWbqb9rLmpftzwtHJgPdaimeQVC6bDTUJVML4QuvHdnFJVjWN+y/BWDVfklKlg4Sry1NWMFYGZYkLnx6EDPWK2k0dihh6Ehs=
+	t=1771031120; cv=none; b=ALiINabBdcv86EevAD7cbZoEpXOH4mDi0RjY8oTPHR10sJEmJYi/IFRwQd/qUXzPTjYtu+wCnNu6MdVFLxfBNMOV9Nqxikf2oF71qcINkR40za81hFB+yhbdnuj7aeJLtSbd13I2c2kKK0Lgb8gxCb+lQ5DgO7lBkXk2XhTHQdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031118; c=relaxed/simple;
-	bh=LQBMBtLQTmfpok0qH5kG1AQJ5d8akvZJuNwR5/VKM8Y=;
+	s=arc-20240116; t=1771031120; c=relaxed/simple;
+	bh=WtDfGtmmYtFguOzEXYrv/v+sKkiG5xUD0xOLBtOCIhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n6izlnoU9rWrAIbe9X9Xg6+/zfctHUey5Yo9LXYzcunRlxHMnEF3p4iK+eGpmeVjDLNjD+canlAqTXNV4gdex1RedTopq6lAd70Ok/Hckc31rB/slGzRuUuT7rWmrxMyTTTTj2V5RlVZ8cTgQBcJLu0KJPQWZLOFQxIV8DZR0ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KmEDFFU0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uCYFe+dsDfedYZ+g84y/SReHse6eW6V71FRpvKJMgucF9PaPahuxs+epjb61nwXKf8ecob1y23DjyjW3k4TowTqyiPxinR7WpUWefNKjknN008OaUlPx7/BEbh2/fg8mkhAC1hLd3+bADkQ9qUWll2F+tbpg4T4RnP4MWPsF5wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g2JDXdnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KmEDFFU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547CBC116C6;
-	Sat, 14 Feb 2026 01:05:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g2JDXdnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB881C16AAE;
+	Sat, 14 Feb 2026 01:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031118;
-	bh=LQBMBtLQTmfpok0qH5kG1AQJ5d8akvZJuNwR5/VKM8Y=;
+	s=k20201202; t=1771031119;
+	bh=WtDfGtmmYtFguOzEXYrv/v+sKkiG5xUD0xOLBtOCIhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmEDFFU0kfvbbin+im8mXUlvKCxfKKYnMdEW05lBVJ/dcMk4eNoRl5xPkTEzbkxDs
-	 aTL3EhSO3KTU4SDgamPR/I5mmBcOen6x4TdfrLVyKDfdr/LWwOoaeyAjgiWi5HdQu1
-	 baZfP741e5MhI9avZ+kFEa0opGCclGtzEO1w/jstFzTNBf/Kus7NdV+e+fHNEO3a/F
-	 ggtdWFd9C5RSB9LdKDosZsnGH3PiMwqEUP8wBjvqWYVibE8tTUQJiM+MOZ4LdnQ6Jk
-	 DT9bL8GF7eCl2Cm5u8hho3wUnHz2xTqaLUR7Eq0H4O3bt//FcdcuCR5tDLtNOeJk5K
-	 WyHCM+ecVPUCQ==
+	b=g2JDXdnKrBNMIxBve1Q9fp1kMPVoImlqYnIS7ksPpvbXbr1HQfooqg8CFn2M8ppz0
+	 eJ7Ki4BWu/uUE7SjAqSq2ZRPL/cBI26oaDx/lgxcdRDogBNHyBGwQEwVUpdD5z08KF
+	 jEzRMZYaLI/MGrsslousL9WkvATboTyQPjeJ/MQwZ4bQC3NYd6/KP2YxbcUyDFjZEJ
+	 rSi0We5MT/ihaHC3PNzY7FwogdLu+BfuLO1AqldekgPRYOokBgxX1DKNIm9Noyb1+1
+	 4hTq1ku6uJ39I16zNO4eG81xpdhcuiCRimwaYs+b/GOVVvHuRtRh0U3Mosak0q+pz5
+	 mcyUyUXwNGRVw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kees Cook <kees@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Brian Howard <blhoward2@gmail.com>,
+	Kris Fredrick <linux.baguette800@slmail.me>,
+	Andrei Shumailov <gentoo1993@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	maintainers@bluecherrydvr.com,
-	andrey_utkin@fastmail.com,
-	ismael@iodev.co.uk,
-	linux-media@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-5.10] media: solo6x10: Check for out of bounds chip_id
-Date: Fri, 13 Feb 2026 19:59:09 -0500
-Message-ID: <20260214010245.3671907-69-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] HID: multitouch: add quirks for Lenovo Yoga Book 9i
+Date: Fri, 13 Feb 2026 19:59:10 -0500
+Message-ID: <20260214010245.3671907-70-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -56,185 +55,311 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <kees@kernel.org>
+From: Brian Howard <blhoward2@gmail.com>
 
-[ Upstream commit 0fdf6323c35a134f206dcad5babb4ff488552076 ]
+[ Upstream commit 822bc5b3744b0b2c2c9678aa1d80b2cf04fdfabf ]
 
-Clang with CONFIG_UBSAN_SHIFT=y noticed a condition where a signed type
-(literal "1" is an "int") could end up being shifted beyond 32 bits,
-so instrumentation was added (and due to the double is_tw286x() call
-seen via inlining), Clang decides the second one must now be undefined
-behavior and elides the rest of the function[1]. This is a known problem
-with Clang (that is still being worked on), but we can avoid the entire
-problem by actually checking the existing max chip ID, and now there is
-no runtime instrumentation added at all since everything is known to be
-within bounds.
+The Lenovo Yoga Book 9i is a dual-screen laptop, with a single composite
+USB device providing both touch and tablet interfaces for both screens.
+All inputs report through a single device, differentiated solely by report
+numbers. As there is no way for udev to differentiate the inputs based on
+USB vendor/product ID or interface numbers, custom naming is required to
+match against for downstream configuration. A firmware bug also results
+in an erroneous InRange message report being received after the stylus
+leaves proximity, blocking later touch events. Add required quirks for
+Gen 8 to Gen 10 models, including a new quirk providing for custom input
+device naming and dropping erroneous InRange reports.
 
-Additionally use an unsigned value for the shift to remove the
-instrumentation even without the explicit bounds checking.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/2144 [1]
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[hverkuil: fix checkpatch warning for is_tw286x]
+Signed-off-by: Brian Howard <blhoward2@gmail.com>
+Tested-by: Brian Howard <blhoward2@gmail.com>
+Tested-by: Kris Fredrick <linux.baguette800@slmail.me>
+Reported-by: Andrei Shumailov <gentoo1993@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220386
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of media: solo6x10: Check for out of bounds chip_id
+Here is my complete analysis:
 
-### 1. Commit Message Analysis
+---
 
-The commit addresses two related issues:
-- **UBSAN shift sanitizer warning**: With `CONFIG_UBSAN_SHIFT=y`, Clang
-  detects that a signed `int` literal `1` could be shifted beyond 32
-  bits in the `is_tw286x()` macro, which is undefined behavior (UB).
-- **Clang miscompilation due to UB**: Because of the UB, Clang's
-  optimizer concludes the second `is_tw286x()` call (after inlining)
-  must be UB and **elides the rest of the function**. This means code is
-  silently dropped by the compiler.
-- The fix adds explicit bounds checking (`chip_num >= TW_NUM_CHIP`) and
-  changes the shift to use an unsigned value (`1U`).
+## Commit Analysis: HID: multitouch: add quirks for Lenovo Yoga Book 9i
 
-### 2. Code Change Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-Three distinct changes:
+The commit message is clear and well-structured. Key signals:
+- **"firmware bug"** explicitly mentioned — erroneous InRange reports
+  block touch events
+- **Closes: bugzilla.kernel.org/show_bug.cgi?id=220386** — tracked
+  kernel bug
+- **Reported-by: Andrei Shumailov** — user-reported real-world issue
+- **Tested-by** from both the author (Brian Howard) and another user
+  (Kris Fredrick) — multiple testers
+- **Signed-off-by: Jiri Kosina** — accepted by HID subsystem maintainer
 
-**a) Macro fix (`1` → `1U` and added parentheses):**
-```c
--#define is_tw286x(__solo, __id) (!(__solo->tw2815 & (1 << __id)))
-+#define is_tw286x(__solo, __id) (!((__solo)->tw2815 & (1U << (__id))))
-```
-- Changes signed shift to unsigned, eliminating undefined behavior for
-  shifts ≥ 31
-- Adds proper parenthesization (macro hygiene)
-- This is a real UB fix — shifting a signed `1` by ≥ 31 bits is
-  undefined in C
+The Lenovo Yoga Book 9i is a dual-screen laptop shipping to consumers.
+All touch/stylus inputs are multiplexed through a single USB composite
+device.
 
-**b) Bounds check in `tw28_set_ctrl_val()`:**
-```c
-+       if (chip_num >= TW_NUM_CHIP)
-+               return -EINVAL;
-```
-- `chip_num` is derived from `ch / 4` where `ch` is a `u8` parameter
-- `TW_NUM_CHIP` defines the maximum number of chips
-- Without this check, an out-of-bounds `chip_num` would cause UB in the
-  `is_tw286x()` shift and potentially out-of-bounds array access in
-  `TW_CHIP_OFFSET_ADDR()`
+### 2. CODE CHANGE ANALYSIS
 
-**c) Same bounds check in `tw28_get_ctrl_val()`:**
-```c
-+       if (chip_num >= TW_NUM_CHIP)
-+               return -EINVAL;
-```
-- Same protection for the read path
+The commit makes changes in **two files** with **73 lines added**:
 
-### 3. Bug Classification
+**a) `drivers/hid/hid-ids.h` — 1 line:**
+Adds `USB_DEVICE_ID_LENOVO_YOGABOOK9I 0x6161`. Standard device ID
+addition.
 
-This fixes **undefined behavior** that leads to **compiler-caused
-miscompilation**. The Clang compiler, upon detecting that UB is
-possible, optimizes away portions of the function. This is not a
-theoretical concern — the linked ClangBuiltLinux issue (#2144) documents
-the actual problem.
+**b) `drivers/hid/hid-multitouch.c` — 72 lines across 5 insertion
+points:**
 
-The consequences of the UB:
-1. **Silent code elision**: The compiler removes code paths it deems
-   unreachable due to UB, meaning the function silently does nothing in
-   some cases
-2. **Potential out-of-bounds access**: Without bounds checking, invalid
-   `chip_id` values cause shifts beyond type width
-3. **UBSAN runtime warnings**: Noise in kernel logs for users with
-   sanitizers enabled
+1. **New quirk flag** (`MT_QUIRK_YOGABOOK9I BIT(24)`) — follows the
+   existing pattern (BIT(23) is `MT_QUIRK_APPLE_TOUCHBAR`).
 
-### 4. Scope and Risk Assessment
+2. **New device class** (`MT_CLS_YOGABOOK9I 0x0115`) — standard pattern,
+   same as `MT_CLS_APPLE_TOUCHBAR 0x0114`, `MT_CLS_SIS 0x0457`, etc.
 
-- **Files changed**: 1 file (`solo6x10-tw28.c`)
-- **Lines changed**: ~6 lines of actual logic (macro change + 2 bounds
-  checks)
-- **Risk**: Very low — the macro change preserves semantics while
-  removing UB; bounds checks add early returns for invalid inputs
-- **Subsystem**: Media PCI driver (solo6x10) — contained, no core kernel
-  impact
-- **Could break something**: Extremely unlikely — the macro change only
-  affects behavior for previously-UB cases, and the bounds checks only
-  reject invalid chip IDs
+3. **Class definition in `mt_classes[]`** (~8 lines) — combines existing
+   quirk flags (`MT_QUIRK_ALWAYS_VALID`, `MT_QUIRK_FORCE_MULTI_INPUT`,
+   `MT_QUIRK_SEPARATE_APP_REPORT`, `MT_QUIRK_HOVERING`) plus the device-
+   specific `MT_QUIRK_YOGABOOK9I`. Sets `export_all_inputs = true`. This
+   is the exact same pattern used by many existing classes (e.g.,
+   `MT_CLS_WIN_8_FORCE_MULTI_INPUT`).
 
-### 5. User Impact
+4. **Firmware bug workaround in `mt_report()`** (~30 lines) — **THE
+   CRITICAL FIX**: After the stylus leaves proximity, the device
+   firmware erroneously sends an all-zero report with InRange set. This
+   report is consumed by the multitouch stack and blocks subsequent
+   touch events. The fix detects these bogus reports (all relevant
+   digitizer fields — InRange, TipSwitch, BarrelSwitch, BarrelSwitch2,
+   ContactID, TiltX, TiltY — are zero) and drops them by returning
+   early. Without this fix, **touch input becomes non-functional** after
+   stylus use.
 
-- Users building with Clang + UBSAN (increasingly common, especially on
-  Android and ChromeOS) hit this directly
-- The miscompilation affects correctness of the driver — functions may
-  be silently broken
-- The solo6x10 is a surveillance/DVR capture card used in production
-  systems
+5. **Custom naming in `mt_input_configured()`** (~20 lines) — Maps
+   report IDs to human-readable names (e.g., report 48→"Touchscreen
+   Top", 56→"Touchscreen Bottom", 20→"Stylus Top", 40→"Stylus Bottom",
+   80→"Emulated Touchpad"). Since all inputs come through a single USB
+   device with no interface differentiation, udev has **no other way**
+   to distinguish which input corresponds to which physical screen.
+   Without this, the dual-screen touchscreen/stylus configuration is
+   effectively impossible.
 
-### 6. Stable Kernel Criteria
+6. **Device ID table entry** (~6 lines) — Standard `HID_DEVICE()` entry
+   mapping `USB_VENDOR_ID_LENOVO` + `USB_DEVICE_ID_LENOVO_YOGABOOK9I` to
+   `MT_CLS_YOGABOOK9I`.
 
-| Criterion | Assessment |
-|-----------|------------|
-| Obviously correct | Yes — straightforward UB fix and bounds check |
-| Fixes real bug | Yes — compiler miscompilation due to UB |
-| Important issue | Medium — affects Clang users, prevents silent code
-elision |
-| Small and contained | Yes — 6 lines of logic in 1 file |
-| No new features | Correct — pure bug fix |
-| Tested | Yes — authored by Kees Cook, reviewed/applied by Hans Verkuil
-|
+### 3. CLASSIFICATION
 
-### 7. Dependencies
+This is a **hardware quirk/workaround**, which falls squarely under the
+"QUIRKS and WORKAROUNDS" stable exception:
+- Fixes firmware-induced bug that blocks touch events (bug fix)
+- Adds device-specific naming for a multiplexed USB device (hardware
+  workaround for udev differentiation)
+- Uses the well-established `hid-multitouch` quirk framework
+- Pattern is identical to Apple Touch Bar, ASUS, SIS, Razer Blade
+  Stealth, Smart Tech, and many other device-specific quirk additions
 
-The patch is self-contained. It only references `TW_NUM_CHIP` which is
-already defined in the driver header. No dependencies on other commits.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### Decision
+**Scope**: 73 lines added across 2 files. All changes are behind a
+**device-specific quirk flag** (`MT_QUIRK_YOGABOOK9I`) that is **only
+activated** for USB VID:PID `0x17ef:0x6161` (Lenovo Yoga Book 9i).
 
-This is a legitimate bug fix addressing undefined behavior that causes
-real miscompilation with Clang. The fix is small (6 lines of logic),
-surgical, self-contained, obviously correct, and authored/reviewed by
-well-known kernel developers. It prevents silent code elision by the
-compiler and adds proper bounds checking. The risk of regression is
-negligible.
+**Risk**: **EXTREMELY LOW**. The changes:
+- Are only triggered for one specific USB device ID
+- Do not modify any common code paths
+- Do not change behavior for any other hardware
+- Use only existing framework constructs (`mt_classes[]` entries, quirk
+  flags, `mt_report()` filtering, `mt_input_configured()` naming)
+- Are well-tested by multiple users
+
+**Dependencies**: The commit is self-contained. It uses standard HID
+definitions (`HID_DG_INRANGE`, `HID_DG_TIPSWITCH`, etc.) and `hid-
+multitouch` structures that exist in all current stable trees (v6.1,
+v6.6, v6.12). The `for (int ...)` C11 syntax is valid in all stable
+trees (kernel uses `-std=gnu11` since v5.18+). The only backport
+adjustment needed is the context around BIT(23)/BIT(24) numbering — in
+stable trees without `MT_QUIRK_APPLE_TOUCHBAR` (v6.12 and earlier), the
+BIT number would need adjustment from 24 to 23. This is a trivial
+context fixup.
+
+### 5. USER IMPACT
+
+**HIGH for affected users**: The Lenovo Yoga Book 9i (Gen 8-10) is a
+commercially available dual-screen laptop. Without this fix:
+- Touch input **stops working** after stylus use (firmware InRange bug)
+- Both screens cannot be independently configured (no input
+  differentiation)
+
+The bugzilla (#220386) and multiple Reported-by/Tested-by tags confirm
+this affects real users.
+
+### 6. STABILITY INDICATORS
+
+- Tested-by from author (Brian Howard) and second tester (Kris Fredrick)
+- Signed-off by HID subsystem maintainer (Jiri Kosina)
+- Kernel bugzilla with tracking
+- Follows well-established pattern in hid-multitouch with many precedent
+  quirk additions
+
+### 7. DEPENDENCY CHECK
+
+No dependencies on other patches. The commit is completely self-
+contained. All referenced symbols (`HID_DG_INRANGE`, `HID_DG_TIPSWITCH`,
+`mt_find_report_data`, `rdata->application->quirks`, `hi->report->id`,
+etc.) exist in all current stable kernel trees. Minor context adjustment
+may be needed for older stable trees lacking the Apple Touch Bar quirk.
+
+### Verdict
+
+This commit fixes a real firmware bug that **blocks touch events** on
+the Lenovo Yoga Book 9i, making the device partially non-functional. It
+also provides necessary input naming for the dual-screen device to be
+properly configurable. All changes are device-specific hardware quirks
+behind a USB VID:PID-gated quirk flag with zero risk to other devices.
+The commit follows the well-established hid-multitouch quirk pattern, is
+tested by multiple users, and is accepted by the subsystem maintainer.
+This is textbook "hardware quirk for a broken device" — exactly the type
+of change stable trees are designed to accept.
 
 **YES**
 
- drivers/media/pci/solo6x10/solo6x10-tw28.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/hid/hid-ids.h        |  1 +
+ drivers/hid/hid-multitouch.c | 72 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 73 insertions(+)
 
-diff --git a/drivers/media/pci/solo6x10/solo6x10-tw28.c b/drivers/media/pci/solo6x10/solo6x10-tw28.c
-index 1b7c22a9bc94f..8f53946c67928 100644
---- a/drivers/media/pci/solo6x10/solo6x10-tw28.c
-+++ b/drivers/media/pci/solo6x10/solo6x10-tw28.c
-@@ -166,7 +166,7 @@ static const u8 tbl_tw2865_pal_template[] = {
- 	0x64, 0x51, 0x40, 0xaf, 0xFF, 0xF0, 0x00, 0xC0,
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 9c2bf584d9f6f..5a18cb41e6d79 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -841,6 +841,7 @@
+ #define USB_DEVICE_ID_LENOVO_X1_TAB3	0x60b5
+ #define USB_DEVICE_ID_LENOVO_X12_TAB	0x60fe
+ #define USB_DEVICE_ID_LENOVO_X12_TAB2	0x61ae
++#define USB_DEVICE_ID_LENOVO_YOGABOOK9I	0x6161
+ #define USB_DEVICE_ID_LENOVO_OPTICAL_USB_MOUSE_600E	0x600e
+ #define USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_608D	0x608d
+ #define USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6019	0x6019
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index b1c3ef1290587..f21850f7d89e4 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -76,6 +76,7 @@ MODULE_LICENSE("GPL");
+ #define MT_QUIRK_DISABLE_WAKEUP		BIT(21)
+ #define MT_QUIRK_ORIENTATION_INVERT	BIT(22)
+ #define MT_QUIRK_APPLE_TOUCHBAR		BIT(23)
++#define MT_QUIRK_YOGABOOK9I		BIT(24)
+ 
+ #define MT_INPUTMODE_TOUCHSCREEN	0x02
+ #define MT_INPUTMODE_TOUCHPAD		0x03
+@@ -231,6 +232,7 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app);
+ #define MT_CLS_RAZER_BLADE_STEALTH		0x0112
+ #define MT_CLS_SMART_TECH			0x0113
+ #define MT_CLS_APPLE_TOUCHBAR			0x0114
++#define MT_CLS_YOGABOOK9I			0x0115
+ #define MT_CLS_SIS				0x0457
+ 
+ #define MT_DEFAULT_MAXCONTACT	10
+@@ -427,6 +429,14 @@ static const struct mt_class mt_classes[] = {
+ 		.quirks = MT_QUIRK_NOT_SEEN_MEANS_UP |
+ 			MT_QUIRK_ALWAYS_VALID |
+ 			MT_QUIRK_CONTACT_CNT_ACCURATE,
++	},
++		{ .name = MT_CLS_YOGABOOK9I,
++		.quirks = MT_QUIRK_ALWAYS_VALID |
++			MT_QUIRK_FORCE_MULTI_INPUT |
++			MT_QUIRK_SEPARATE_APP_REPORT |
++			MT_QUIRK_HOVERING |
++			MT_QUIRK_YOGABOOK9I,
++		.export_all_inputs = true
+ 	},
+ 	{ }
  };
+@@ -1576,6 +1586,38 @@ static void mt_report(struct hid_device *hid, struct hid_report *report)
+ 	if (rdata && rdata->is_mt_collection)
+ 		return mt_touch_report(hid, rdata);
  
--#define is_tw286x(__solo, __id) (!(__solo->tw2815 & (1 << __id)))
-+#define is_tw286x(__solo, __id) (!((__solo)->tw2815 & (1U << (__id))))
- 
- static u8 tw_readbyte(struct solo_dev *solo_dev, int chip_id, u8 tw6x_off,
- 		      u8 tw_off)
-@@ -686,6 +686,9 @@ int tw28_set_ctrl_val(struct solo_dev *solo_dev, u32 ctrl, u8 ch,
- 	chip_num = ch / 4;
- 	ch %= 4;
- 
-+	if (chip_num >= TW_NUM_CHIP)
-+		return -EINVAL;
++	/* Lenovo Yoga Book 9i requires consuming and dropping certain bogus reports */
++	if (rdata && rdata->application &&
++		(rdata->application->quirks & MT_QUIRK_YOGABOOK9I)) {
 +
- 	if (val > 255 || val < 0)
- 		return -ERANGE;
- 
-@@ -758,6 +761,9 @@ int tw28_get_ctrl_val(struct solo_dev *solo_dev, u32 ctrl, u8 ch,
- 	chip_num = ch / 4;
- 	ch %= 4;
- 
-+	if (chip_num >= TW_NUM_CHIP)
-+		return -EINVAL;
++		bool all_zero_report = true;
 +
- 	switch (ctrl) {
- 	case V4L2_CID_SHARPNESS:
- 		/* Only 286x has sharpness */
++		for (int f = 0; f < report->maxfield && all_zero_report; f++) {
++			struct hid_field *fld = report->field[f];
++
++			for (int i = 0; i < fld->report_count; i++) {
++				unsigned int usage = fld->usage[i].hid;
++
++				if (usage == HID_DG_INRANGE ||
++					usage == HID_DG_TIPSWITCH ||
++					usage == HID_DG_BARRELSWITCH ||
++					usage == HID_DG_BARRELSWITCH2 ||
++					usage == HID_DG_CONTACTID ||
++					usage == HID_DG_TILT_X ||
++					usage == HID_DG_TILT_Y) {
++
++					if (fld->value[i] != 0) {
++						all_zero_report = false;
++						break;
++					}
++				}
++			}
++		}
++
++		if (all_zero_report)
++			return;
++	}
++
+ 	if (field && field->hidinput && field->hidinput->input)
+ 		input_sync(field->hidinput->input);
+ }
+@@ -1772,6 +1814,30 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
+ 		break;
+ 	}
+ 
++	/* Lenovo Yoga Book 9i requires custom naming to allow differentiation in udev */
++	if (hi->report && td->mtclass.quirks & MT_QUIRK_YOGABOOK9I) {
++		switch (hi->report->id) {
++		case 48:
++			suffix = "Touchscreen Top";
++			break;
++		case 56:
++			suffix = "Touchscreen Bottom";
++			break;
++		case 20:
++			suffix = "Stylus Top";
++			break;
++		case 40:
++			suffix = "Stylus Bottom";
++			break;
++		case 80:
++			suffix = "Emulated Touchpad";
++			break;
++		default:
++			suffix = "";
++			break;
++		}
++	}
++
+ 	if (suffix) {
+ 		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
+ 						 "%s %s", hdev->name, suffix);
+@@ -2277,6 +2343,12 @@ static const struct hid_device_id mt_devices[] = {
+ 			   USB_VENDOR_ID_LENOVO,
+ 			   USB_DEVICE_ID_LENOVO_X12_TAB2) },
+ 
++	/* Lenovo Yoga Book 9i */
++	{ .driver_data = MT_CLS_YOGABOOK9I,
++		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
++			   USB_VENDOR_ID_LENOVO,
++			   USB_DEVICE_ID_LENOVO_YOGABOOK9I) },
++
+ 	/* Logitech devices */
+ 	{ .driver_data = MT_CLS_NSMU,
+ 		HID_DEVICE(BUS_BLUETOOTH, HID_GROUP_MULTITOUCH_WIN_8,
 -- 
 2.51.0
 
