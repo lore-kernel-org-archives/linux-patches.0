@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD9CDF59;
-	Sat, 14 Feb 2026 00:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7E91FF5E3;
+	Sat, 14 Feb 2026 00:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030722; cv=none; b=KzDLVLui0hpPbetn6FLIAQm8Dj9C1iYGlIQmJDYuK8FeCPJYYDACvT0KE0actGyy2a35v58BKasp9qaOcbFl+uEAJ6mgNx3yddKbXkPOwTS7mYzONGTc7rhoJO8rcE6+2luYyBCxasaWReLT8GoYYdqed8MnrZw7rSPrdIdFqp8=
+	t=1771030724; cv=none; b=G7Xzs1Pvun4TH8E3N/8mm+kjcEdjhIWYB6h/8PaIiPEpdL6EA7642lqR6yy8+M7LuKrHla8uHLBC35cYEPJ3cb6vPu3lDceclFsb1viDstd8cPjQQOXqKvm5hADiU3v47nM0JTjet54K9Twrn+HA1iOKinBbMsEOQMMPUMTYsuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030722; c=relaxed/simple;
-	bh=0PgCKvV754f0VqOtNSpEryR/Pm+XV6SuCNVQ+/aHTbU=;
+	s=arc-20240116; t=1771030724; c=relaxed/simple;
+	bh=rM84Vu3aZRI3MGaYNq8NQGpcoNuGw7GEZzVwqJyg4RA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u8LYotk04zgzGCPWKtj0hp3jMOheh68vuI5Q2vnnULTlDVHZb6H8fUzJJ6lYjnQkqy5uXxzuzWQaJgN6wSpFL+vyrTZwSdwrj1hxnh1UoAUhtgB4PiZkWXgivcqEbpuOywRyJedSHRmwAtObWVvggJZw6PAclqAEjZOGwiZDVI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jNDRoq9A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kC8HBt1KhQjZOqKKiSTwJRQFHdJho0983GJhCt3PgSUxkK6VBgt6O3GZihqpYjBsRsZhXgODw/Y8TlfKrzo4Au0m+gZOisN1ZmEthXkZHiU9WXVIdHSuNfTrSIpbiLdci9QhuoWrkEKsJvwGpfTDgoTfFwix/3J6OQFnv8cqLfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eG/vwvGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jNDRoq9A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C9BC19424;
-	Sat, 14 Feb 2026 00:58:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eG/vwvGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AEFC116C6;
+	Sat, 14 Feb 2026 00:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030722;
-	bh=0PgCKvV754f0VqOtNSpEryR/Pm+XV6SuCNVQ+/aHTbU=;
+	s=k20201202; t=1771030724;
+	bh=rM84Vu3aZRI3MGaYNq8NQGpcoNuGw7GEZzVwqJyg4RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNDRoq9ArjxtEzPtbR5sCV2MZ//RJCAuZ+v/joZ/wKBjpZQpk//GrzEKj2qdHE1+L
-	 p5YHpyvp09yigXL/88w+oQtNMt1X4pG6LsS93pId2+BuzrYySD18GDEEEHx/W9sNZC
-	 jI3mtDjE4OoXNHGDWufyJ31G7K42OemDDSuz1rE1DGbu1EJQGMg9WYJyTkbNZBjaxO
-	 gOKxh0FS/j7LCz2/PTC7nBTaFB/YB+5vV+0gylhcfC7W+gBa94NsdHzxMPnJJfbiXd
-	 COLsoWovFdC31s6K0sVwQQIo74XZ+l0/krWaQybJQh2Z0+9XN72GCSpf7qBEQko84C
-	 Kr4K9mLCeksCw==
+	b=eG/vwvGVlFFBdy6Rq6n19EKRLEKbzUYYghKKS0dtLnS9SKjGas2B0t6pp6X/dXGo2
+	 JDGkiBPzCK2u2G9UijJSxg/Xef9WO55W1btJAW2tvRbH8kh3Z23MMs8r+z6/wUZasg
+	 5Qv/24TEbWK/v8J0iS49ICBa+ysuZk3ywGbf8filTTxigU3kS5kS9+3+SSZtp3T4Nt
+	 KwGEPVUdEdK55QKVaRAKuzvKNo6f4TJ6t+vV92af1e6NdJIa26OSo7jwZMVBb7IR6s
+	 2MnhHpPgKM2jzTgggpF6a5my9oesgs0Cl67DDFElVfJd2RZY2DQ2t8X0TOd6VjZbpd
+	 Z3TsArguC/FZA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
-	Thierry Reding <treding@nvidia.com>,
+Cc: Tomas Melin <tomas.melin@vaisala.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	thierry.reding@gmail.com,
-	jonathanh@nvidia.com,
 	neil.armstrong@linaro.org,
+	neal.frager@amd.com,
+	conor.dooley@microchip.com,
 	yelangyan@huaqin.corp-partner.google.com,
-	linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] arm64: tegra: smaug: Add usb-role-switch support
-Date: Fri, 13 Feb 2026 19:58:14 -0500
-Message-ID: <20260214005825.3665084-8-sashal@kernel.org>
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-6.12] Revert "arm64: zynqmp: Add an OP-TEE node to the device tree"
+Date: Fri, 13 Feb 2026 19:58:15 -0500
+Message-ID: <20260214005825.3665084-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214005825.3665084-1-sashal@kernel.org>
 References: <20260214005825.3665084-1-sashal@kernel.org>
@@ -55,174 +55,208 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+From: Tomas Melin <tomas.melin@vaisala.com>
 
-[ Upstream commit dfa93788dd8b2f9c59adf45ecf592082b1847b7b ]
+[ Upstream commit c197179990124f991fca220d97fac56779a02c6d ]
 
-The USB2 port on Smaug is configured for OTG operation but lacked the
-required 'usb-role-switch' property, leading to a failed probe and a
-non-functioning USB port. Add the property along with setting the default
-role to host.
+This reverts commit 06d22ed6b6635b17551f386b50bb5aaff9b75fbe.
 
-Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+OP-TEE logic in U-Boot automatically injects a reserved-memory
+node along with optee firmware node to kernel device tree.
+The injection logic is dependent on that there is no manually
+defined optee node. Having the node in zynqmp.dtsi effectively
+breaks OP-TEE's insertion of the reserved-memory node, causing
+memory access violations during runtime.
+
+Signed-off-by: Tomas Melin <tomas.melin@vaisala.com>
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/r/20251125-revert-zynqmp-optee-v1-1-d2ce4c0fcaf6@vaisala.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+Now I have a comprehensive understanding. Let me compile the full
+analysis.
 
 ---
 
-## Complete Analysis
+## Detailed Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** `arm64: tegra: smaug: Add usb-role-switch support`
+This is a **revert** commit. It reverts
+`06d22ed6b6635b17551f386b50bb5aaff9b75fbe` ("arm64: zynqmp: Add an OP-
+TEE node to the device tree"), which was merged for v6.9-rc1 (January
+2024).
 
-**Body:** The commit message clearly states the problem: the USB2 port
-on Smaug (Google Pixel C) is configured for OTG operation (`mode =
-"otg"`) but lacked the required `usb-role-switch` property, **leading to
-a failed probe and a non-functioning USB port**. This is a clear bug
-fix, not a feature addition.
+The revert message explains a concrete, real-world problem:
+- U-Boot's OP-TEE logic automatically injects a `reserved-memory` node
+  and `optee` firmware node into the kernel device tree at boot time
+- This U-Boot injection logic checks for the **absence** of a manually-
+  defined optee node — if one already exists, it skips injection
+  entirely
+- The original commit added a static optee node to `zynqmp.dtsi`, which
+  prevents U-Boot from injecting the `reserved-memory` node
+- Without the reserved-memory node, **memory access violations occur
+  during runtime**
 
-**Author/Signoffs:** Authored by Diogo Ivo, signed off by Thierry Reding
-(NVIDIA's Tegra device tree maintainer).
+This is not speculative — the commit describes actual runtime memory
+access violations.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The patch adds exactly **two lines** to a device tree file:
+The change is extremely small and surgical — it removes exactly 5 lines
+(4 lines of DT node content + 1 blank line):
 
-```1811:1812:arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-                                usb-role-switch;
-                                role-switch-default-mode = "host";
+```195:198:arch/arm64/boot/dts/xilinx/zynqmp.dtsi
+                optee: optee  {
+                        compatible = "linaro,optee-tz";
+                        method = "smc";
+                };
 ```
 
-These are added to the `usb2-0` port node within the XUSB pad controller
-(`padctl@7009f000`), which already has `mode = "otg"`.
+This removes a statically-defined OP-TEE node from the ZynqMP base
+device tree include file (`zynqmp.dtsi`). The `optee` label is not
+referenced by any other DTS file in the xilinx directory tree, so there
+are no broken cross-references.
 
-### 3. ROOT CAUSE OF THE BUG
+### 3. BUG MECHANISM
 
-The bug was introduced by commit `f67213cee2b35` ("phy: tegra: xusb: Add
-usb-role-switch support"), which was merged in **v5.7-rc1**. This commit
-added the following mandatory check to
-`tegra_xusb_usb2_port_parse_dt()`:
+The bug mechanism is an interaction between the Linux kernel device tree
+and U-Boot bootloader:
 
-```765:777:drivers/phy/tegra/xusb.c
-        /* usb-role-switch property is mandatory for OTG/Peripheral
-modes */
-        if (usb2->mode == USB_DR_MODE_PERIPHERAL ||
-            usb2->mode == USB_DR_MODE_OTG) {
-                if (of_property_read_bool(np, "usb-role-switch")) {
-                        err = tegra_xusb_setup_usb_role_switch(port);
-                        if (err < 0)
-                                return err;
-                        tegra_xusb_parse_usb_role_default_mode(port);
-                } else {
-                        dev_err(&port->dev, "usb-role-switch not found
-for %s mode",
-                                modes[usb2->mode]);
-                        return -EINVAL;
-                }
-        }
-```
+1. **U-Boot's OP-TEE initialization**: U-Boot contains logic that
+   detects if OP-TEE is running and, if so, dynamically modifies the FDT
+   (Flattened Device Tree) before passing it to Linux. It adds:
+   - A `reserved-memory` node describing memory regions reserved for OP-
+     TEE
+   - The `optee` firmware node pointing to the TEE
 
-If the DT node has `mode = "otg"` but **does NOT** have the `usb-role-
-switch` property, the driver returns `-EINVAL`, causing the entire XUSB
-pad controller probe to **fail**. This means the USB port doesn't work
-at all.
+2. **Conditional injection**: U-Boot's injection is conditioned on there
+   being **no existing optee node** in the DT. If one is found, U-Boot
+   assumes the DT is already properly configured and skips injection.
 
-When commit `f67213cee2b35` was merged, the companion DTS updates were
-done for other Tegra boards (Jetson TX1 in `dbf91ff001e54`, Jetson Nano
-in `88d1049e16eaa`, Jetson TX2 in `6895c83fda8c9`), but **Smaug was
-missed**. The smaug DTS had `mode = "otg"` since v4.9 (commit
-`4d3457826abb1`) but was never updated with the required `usb-role-
-switch` property.
+3. **The problem**: The static optee node in `zynqmp.dtsi` has
+   `compatible = "linaro,optee-tz"` and `method = "smc"`, but it does
+   NOT include the critical `reserved-memory` region. When U-Boot sees
+   this node, it skips its injection. The kernel then boots with:
+   - An optee node (so the OP-TEE driver probes and starts communicating
+     with the secure world)
+   - **No reserved-memory** for OP-TEE (so the kernel may allocate and
+     use memory that OP-TEE also uses)
 
-### 4. IMPACT AND AFFECTED VERSIONS
+4. **Result**: Memory access violations at runtime. The kernel and OP-
+   TEE stomp on each other's memory. This is a data corruption and crash
+   bug.
 
-- **Broken since:** v5.7 (when `usb-role-switch` became mandatory for
-  OTG mode)
-- **Affected stable trees:** All active LTS kernels: **5.15.y, 6.1.y,
-  6.6.y, 6.12.y**
-- **Device:** Google Pixel C (Tegra210 Smaug) — a widely sold consumer
-  tablet
-- **Symptom:** Complete USB port probe failure. The XUSB pad controller
-  fails to initialize, making the USB-C port non-functional. This is not
-  a subtle degradation; it's a **total hardware functionality loss**.
+### 4. CLASSIFICATION
 
-### 5. CLASSIFICATION
+This is a **device tree fix** that addresses a **runtime memory
+corruption/access violation** bug. It falls squarely in the "DT updates
+for existing hardware" exception category. The severity is high:
+- Memory access violations = potential crashes, data corruption,
+  security boundary violations (TEE compromise)
+- Affects all ZynqMP boards running OP-TEE with U-Boot
 
-This falls squarely into the **Device Tree (DT) update** exception
-category:
-- It's a DT fix for existing hardware with an existing driver
-- It corrects an incorrect/incomplete hardware description
-- It only affects a specific ARM64 platform (Smaug/Pixel C)
-- Zero risk of regression to other platforms
+### 5. ORIGINAL COMMIT ANALYSIS
+
+The original commit (06d22ed6b6635) claimed "having the DT node present
+doesn't cause any side effects." This turned out to be **wrong** — it
+has a significant side effect with U-Boot's standard OP-TEE injection
+flow. The original commit was a feature addition ("add it in case
+someone tries to load OP-TEE") that turned out to cause a real bug.
 
 ### 6. SCOPE AND RISK ASSESSMENT
 
-- **Size:** 2 lines added to a single DTS file
-- **Risk:** Extremely low. Adding a `usb-role-switch` boolean property
-  and a `role-switch-default-mode` string property to a DT node is
-  trivially safe:
-  - `usb-role-switch` enables the existing role-switch code path that is
-    already used by every other Tegra OTG board
-  - `role-switch-default-mode = "host"` is simply ignored on kernels
-    before v6.3 (unused DT properties are silently ignored)
-- **No functional dependencies:** While this commit appears in a series
-  with `c256740c4b1ff` (tegra-udc node) and `8acdb94dcfd37`
-  (DisplayPort), this patch is fully independent — it only adds
-  properties to the pad controller's port node, which is separate from
-  the UDC node.
+- **Lines changed**: 5 lines removed (1 file)
+- **Risk**: Extremely low — removing a DT node that shouldn't have been
+  there
+- **Side effects**: None negative. If someone was using the static optee
+  node WITHOUT U-Boot injection, they would need to add it back in their
+  board-specific DT overlay. However, the standard OP-TEE workflow on
+  ZynqMP uses U-Boot injection, and the original commit was explicitly
+  designed as a convenience, not a necessity.
+- **Regression potential**: Near zero — the only "regression" is
+  returning to the pre-6.9 behavior, which worked correctly
 
-### 7. BACKPORT FEASIBILITY
+### 7. AFFECTED STABLE TREES
 
-The patch modifies only the smaug DTS file with a trivial 2-line
-addition. The context around it (`usb2-0` port node with `mode = "otg"`)
-has been stable since v4.9 and exists identically in all stable trees.
-This will apply cleanly.
+The original commit (06d22ed6b6635) is present in:
+- v6.9 through v6.19 (all current stable trees from 6.9 onward)
+- Critically, it's in **6.12.y** (current LTS tree)
 
-### 8. CONCLUSION
+The fix is relevant to 6.12.y, 6.13.y, and any other maintained stable
+tree based on 6.9+.
 
-This is a textbook DT bug fix: a missing required property (`usb-role-
-switch`) causes a complete probe failure for the USB port on the Google
-Pixel C tablet. The fix is a trivial 2-line DTS addition that:
+### 8. DEPENDENCY CHECK
 
-1. Fixes a real bug (non-functioning USB port due to probe failure with
-   `-EINVAL`)
-2. Is obviously correct (follows the exact same pattern as every other
-   Tegra OTG board)
-3. Is extremely small and contained (2 lines in one DTS file)
-4. Has zero regression risk (only affects one specific device)
-5. Has been broken since v5.7, affecting all current stable trees
-6. Falls into the explicit "DT updates for existing hardware" exception
-   category
+The revert has **zero dependencies**. It simply removes 5 lines from a
+DTS file. No other code or DT changes are needed. The `optee` label is
+not referenced by any other file. The revert will apply cleanly to any
+stable tree that has the original commit.
 
-The only mild concern is that this commit hasn't merged to mainline yet
-(it's in a `next-*` branch). Stable backports typically track mainline
-commits. However, from a purely technical standpoint, this is an ideal
-stable fix.
+### 9. USER IMPACT
+
+- **Who is affected**: All ZynqMP users running OP-TEE with standard
+  U-Boot boot flow
+- **Severity**: HIGH — runtime memory access violations can cause:
+  - Kernel crashes/panics
+  - OP-TEE secure world corruption
+  - Silent data corruption
+  - Potential security boundary violation (TEE memory exposed to normal
+    world)
+- **Platform**: Xilinx ZynqMP (common in embedded, industrial,
+  automotive applications)
+
+### 10. TRUST INDICATORS
+
+- Submitted by Tomas Melin (Vaisala), indicating real-world usage and
+  testing
+- Accepted by Michal Simek (AMD/Xilinx SoC maintainer), indicating
+  subsystem maintainer approval
+- The commit message clearly explains the mechanism and consequences
+- Clean revert of a well-identified problematic commit
+
+### CONCLUSION
+
+This is a textbook stable backport candidate:
+1. **Fixes a real bug**: Runtime memory access violations on ZynqMP with
+   OP-TEE
+2. **Obviously correct**: Clean revert of a commit that introduced the
+   problem
+3. **Small and contained**: 5-line removal from a single DTS file
+4. **No new features**: Removes a broken feature addition
+5. **Zero risk**: Returns to the pre-6.9 behavior that worked correctly
+6. **No dependencies**: Self-contained change
+7. **Real-world impact**: Affects ZynqMP users with OP-TEE
+   (embedded/industrial platforms)
+8. **Applies to active stable trees**: The buggy commit is in 6.12.y LTS
+   and other maintained stables
+
+The fix is small, surgical, and meets all stable kernel criteria.
 
 **YES**
 
- arch/arm64/boot/dts/nvidia/tegra210-smaug.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/xilinx/zynqmp.dtsi | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-index 5aa6afd56cbc6..dfbd1c72388c1 100644
---- a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-+++ b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-@@ -1809,6 +1809,8 @@ usb2-0 {
- 				status = "okay";
- 				vbus-supply = <&usbc_vbus>;
- 				mode = "otg";
-+				usb-role-switch;
-+				role-switch-default-mode = "host";
- 			};
+diff --git a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
+index 938b014ca9231..b55c6b2e8e0e1 100644
+--- a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
++++ b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
+@@ -192,11 +192,6 @@ psci {
+ 	};
  
- 			usb3-0 {
+ 	firmware {
+-		optee: optee  {
+-			compatible = "linaro,optee-tz";
+-			method = "smc";
+-		};
+-
+ 		zynqmp_firmware: zynqmp-firmware {
+ 			compatible = "xlnx,zynqmp-firmware";
+ 			#power-domain-cells = <1>;
 -- 
 2.51.0
 
