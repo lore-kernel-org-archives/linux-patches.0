@@ -1,44 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F27F3090C1;
-	Sat, 14 Feb 2026 21:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90E827B353;
+	Sat, 14 Feb 2026 21:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104323; cv=none; b=qJ8g7UBzhzfjZe48aKFi9KPeMnZJGHfPSjSU2oDEa2NH0JU2zAUWyyyoDTESZUPYYLR9sz1RNUKV1f+9EX9WO0RNVbQEllpoPub70ZGALVPO+S6zO6x4wURcFICdqcXVQ9InS9uDwizk4dbHgNaCRIItPGrXO+6exgxAawiHabE=
+	t=1771104326; cv=none; b=DxLhHDVQPlY22fo+zBxzgDuip3LUwIxSQXgLvJL2OhH8nXi2kRfpapElKISOvkcLlXcg2UnBfaLv8mXsMXsUhA0d55lE+zZ6QHa+99zxmYUU9B32ZLxHubjzzbcowS8sWVaMc/ESj6MyI7RjFqnGGmIsyp43M4EwfXklU43YjSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104323; c=relaxed/simple;
-	bh=HNsIIUiNfMcrVXGaTxbgUw3HY9PSkBjZ42JbycFGdt0=;
+	s=arc-20240116; t=1771104326; c=relaxed/simple;
+	bh=qQi4cKET8P1ejnoqtou0oEXuI4aZk8+q61dw8XPwE1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l0yxUDBySc3GvVAJFjrD7IEN4/fGalNyjoYJytLgNxaKiUFVgnaG1Wf5r2EVacmz5yQ7OQZbSxWDzP+4ju4GSCYOg6elbUc8Pr0yl6az9L2Z96JzWz6plLWP+LzCYICILZZU0l7ukvxywmWEP44y6euIgMRv0g0q764lfnoax7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=caJJOp4j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W9ZGUk0ESQRKsz6xNPLd3odXWM155haHxZPcp5FjcKolzLjoGgpoMW2mz8xdYxq/+wkRXbEdGIDyWtgIG/FW3FbNkZxBGoWygJIC6oELidBGcif8c0FOFJii2B7kH4q2jXnaq1g5Ewkjip8qTMfE6ozCWupxNbqBueMIZzPLAqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hzghBr1O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="caJJOp4j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183FBC19422;
-	Sat, 14 Feb 2026 21:25:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hzghBr1O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B606AC19423;
+	Sat, 14 Feb 2026 21:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104323;
-	bh=HNsIIUiNfMcrVXGaTxbgUw3HY9PSkBjZ42JbycFGdt0=;
+	s=k20201202; t=1771104326;
+	bh=qQi4cKET8P1ejnoqtou0oEXuI4aZk8+q61dw8XPwE1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=caJJOp4jgcuE8lQYjBZkLH56mw4XeyDSLXdulLpETeLjXZX8n0CNM058qL36d5tTD
-	 IMeflfNc0GVS21dATaKXiKopBjDNJVhptJ5zBvrwWuzUskOHwOF0zXZ+P4N+qg7dfc
-	 ZjMQPuS4PJkOTU7Lj2BoMUYivJ4oVeukj3VtDoOAl0+9UZWXj0kcTlyxZEGwrzOkTH
-	 8UXBNrWy8H3I4eZmPxquko1F0yznKZ7VO+XIBp96TTb6+HHrTkR2Iyq3PUTD3/uigm
-	 95a0I76V0I27UwZW0pTYJG2Tj9XEataKjmHhg9gcYqupuwgknq400Hzts2rheTuAZH
-	 8BU7Nxi1KdRZw==
+	b=hzghBr1OxcMTgj6TiXvGQ3B9yX10w/B8ctC4CJCEmHwuVhXTIKuiburFB72Bc9+2C
+	 2eMQ6WavST9Q40ZvEV5UMYHl0rylDO88DduDv0TNBfth1NYcWtQ+E3qeDYb5EVjCMo
+	 focRDgSYwkwdS6CGKAZtZHd4CvFDJ/SXfCOw6FaJgOJEK94G17S5QAU4DXeCsQ+mvU
+	 8ki6cwCR5Q4gyfkPYhL69mi6tmDl9R9TnD8Hcsfsbj+GTkr9pxCXXMKrq0RibaGKMb
+	 +Kxc4xG9c2zGW2c9CpX7rfq5zXeSqv1lmZYqtGFImLl+kyiWTk43FNbwKhxyrispup
+	 ST4VRTW0NfMrw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Allison Henderson <allison.henderson@oracle.com>,
+Cc: Mingj Ye <insyelu@gmail.com>,
+	Hayes Wang <hayeswang@realtek.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org,
-	rds-devel@oss.oracle.com
-Subject: [PATCH AUTOSEL 6.19-5.10] net/rds: Clear reconnect pending bit
-Date: Sat, 14 Feb 2026 16:22:42 -0500
-Message-ID: <20260214212452.782265-17-sashal@kernel.org>
+	pabeni@redhat.com,
+	neil.armstrong@linaro.org,
+	gustavoars@kernel.org,
+	andriy.shevchenko@linux.intel.com,
+	kees@kernel.org,
+	senozhatsky@chromium.org,
+	rawal.abhishek92@gmail.com,
+	phahn-oss@avm.de,
+	yicong@kylinos.cn,
+	yelangyan@huaqin.corp-partner.google.com,
+	ebiggers@google.com,
+	enelsonmoore@gmail.com,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] net: usb: r8152: fix transmit queue timeout
+Date: Sat, 14 Feb 2026 16:22:43 -0500
+Message-ID: <20260214212452.782265-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -48,121 +58,156 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Mingj Ye <insyelu@gmail.com>
 
-[ Upstream commit b89fc7c2523b2b0750d91840f4e52521270d70ed ]
+[ Upstream commit 833dcd75d54f0bf5aa0a0781ff57456b421fbb40 ]
 
-When canceling the reconnect worker, care must be taken to reset the
-reconnect-pending bit. If the reconnect worker has not yet been
-scheduled before it is canceled, the reconnect-pending bit will stay
-on forever.
+When the TX queue length reaches the threshold, the netdev watchdog
+immediately detects a TX queue timeout.
 
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Allison Henderson <allison.henderson@oracle.com>
-Link: https://patch.msgid.link/20260203055723.1085751-6-achender@kernel.org
+This patch updates the trans_start timestamp of the transmit queue
+on every asynchronous USB URB submission along the transmit path,
+ensuring that the network watchdog accurately reflects ongoing
+transmission activity.
+
+Signed-off-by: Mingj Ye <insyelu@gmail.com>
+Reviewed-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://patch.msgid.link/20260120015949.84996-1-insyelu@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### 3. BUG MECHANISM — CLEAR AND CRITICAL
+## Analysis of commit: "net: usb: r8152: fix transmit queue timeout"
 
-Now the full picture is clear:
+### 1. COMMIT MESSAGE ANALYSIS
 
-**The flow:**
-1. `rds_queue_reconnect()` at line 138 sets `RDS_RECONNECT_PENDING` and
-   queues the delayed work.
-2. `rds_connect_worker()` (the worker function) at line 173 clears
-   `RDS_RECONNECT_PENDING` when it runs.
-3. `rds_conn_path_connect_if_down()` at line 911 uses
-   `test_and_set_bit(RDS_RECONNECT_PENDING, ...)` — if the bit is
-   already set, it returns without queuing work, trusting that a
-   reconnect is already pending.
+The subject explicitly says **"fix transmit queue timeout"** — this is a
+clear bug fix. The commit message explains:
+- **Bug**: When the TX queue length reaches a threshold, the netdev
+  watchdog immediately detects a TX queue timeout (spurious timeout).
+- **Root cause**: The `trans_start` timestamp of the transmit queue is
+  not being updated when USB URBs are successfully submitted
+  asynchronously.
+- **Fix**: Call `netif_trans_update()` after each successful
+  `usb_submit_urb()` to keep the watchdog informed that transmission
+  activity is ongoing.
 
-**The bug:**
-In `rds_conn_shutdown()`, `cancel_delayed_work_sync()` cancels the
-queued worker. If the worker hadn't started yet, it never runs
-`clear_bit(RDS_RECONNECT_PENDING, ...)`. The bit stays set. Then when
-`rds_conn_path_connect_if_down()` is later called (e.g., when trying to
-send data), `test_and_set_bit` finds the bit already set and skips
-queuing — **forever**. The connection can never reconnect.
+The commit is reviewed by the Realtek maintainer (Hayes Wang) and merged
+by the network maintainer (Jakub Kicinski). Strong trust indicators.
 
-This is a **permanent connection failure** bug — once triggered, the RDS
-connection path is effectively dead until the system is rebooted or the
-module is reloaded.
+### 2. CODE CHANGE ANALYSIS
 
-### 4. CLASSIFICATION
+The diff is **+2 lines** — extremely small and surgical:
 
-- **Bug type:** State corruption / logic bug leading to permanent loss
-  of network connectivity
-- **Severity:** HIGH — RDS is used in production Oracle RAC clusters and
-  RDMA-based environments
-- **Trigger:** Race between shutdown and reconnect scheduling —
-  realistic in production with network flaps
+```c
+ret = usb_submit_urb(agg->urb, GFP_ATOMIC);
+if (ret < 0)
+    usb_autopm_put_interface_async(tp->intf);
++else
++    netif_trans_update(tp->netdev);
+```
 
-### 5. SCOPE AND RISK
+This adds an `else` branch after the `usb_submit_urb()` call. On
+successful URB submission (`ret >= 0`), it calls
+`netif_trans_update(tp->netdev)`, which updates the `trans_start`
+timestamp of the network device's transmit queue.
 
-- **Change size:** 1 functional line (plus 1 blank line) — extremely
-  small and surgical
-- **Files changed:** 1 file (`net/rds/connection.c`)
-- **Risk of regression:** Very low — `clear_bit` is idempotent. If the
-  worker already ran and cleared the bit, clearing it again is harmless.
-  If the worker didn't run, this is the correct fix.
-- **The fix is placed correctly:** After `cancel_delayed_work_sync()`
-  guarantees the worker won't run, and before `rds_queue_reconnect()`
-  which will set the bit again if needed.
+**What `netif_trans_update()` does**: It's a standard kernel helper that
+sets `txq->trans_start = jiffies`, telling the network watchdog "we are
+actively transmitting." Without this update, the watchdog timer thinks
+the queue has been idle since the last update and fires a spurious TX
+timeout.
+
+### 3. BUG SEVERITY
+
+A **TX queue timeout** in a network driver is a significant user-visible
+bug:
+- The watchdog fires, potentially calling the driver's `ndo_tx_timeout`
+  handler
+- This can cause the network interface to reset or go down
+- Results in **network connectivity loss** or **severe performance
+  degradation**
+- The r8152 driver is for **Realtek USB Ethernet adapters**, which are
+  extremely common (used in USB-to-Ethernet dongles, docking stations,
+  etc.)
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+- **Lines changed**: 2 (adding an else branch with one function call)
+- **Files touched**: 1 (`drivers/net/usb/r8152.c`)
+- **Risk**: Extremely low. `netif_trans_update()` is a well-known,
+  lightweight inline function. It simply updates a jiffies timestamp. It
+  cannot cause crashes, data corruption, or any side effects.
+- **Regression potential**: Near zero. This only affects the TX watchdog
+  timer behavior and only updates the timestamp on *successful* URB
+  submission.
+
+### 5. USER IMPACT
+
+- **HIGH impact** — r8152 is one of the most widely used USB Ethernet
+  drivers. Realtek RTL8152/RTL8153 chips are in millions of USB Ethernet
+  adapters.
+- Users experience **spurious TX timeouts** that disrupt network
+  connectivity.
+- Affects any user with a Realtek USB Ethernet adapter under sufficient
+  TX load.
 
 ### 6. STABLE KERNEL CRITERIA
 
-- **Obviously correct:** Yes — the logic is straightforward and well-
-  explained
-- **Fixes a real bug:** Yes — permanent loss of RDS connectivity
-- **Important issue:** Yes — affects network reliability for RDS users
-  (Oracle, RDMA environments)
-- **Small and contained:** Yes — 1 line in 1 file
-- **No new features:** Correct — purely a bug fix
-- **No new APIs:** Correct
+| Criterion | Met? |
+|-----------|------|
+| Obviously correct and tested | YES — reviewed by Realtek maintainer,
+simple logic |
+| Fixes a real bug | YES — spurious TX queue timeouts |
+| Important issue | YES — network connectivity loss |
+| Small and contained | YES — 2 lines in one file |
+| No new features | YES — just a watchdog timestamp update |
+| No new APIs | YES |
 
 ### 7. DEPENDENCY CHECK
 
-This fix is self-contained. It only adds a `clear_bit()` call after an
-existing `cancel_delayed_work_sync()` call. The `RDS_RECONNECT_PENDING`
-flag and the surrounding code have been in the kernel for a long time.
-This should apply cleanly to any stable tree that has the RDS subsystem.
+`netif_trans_update()` has been available in the kernel for a very long
+time (since 4.7+). The r8152 driver and the `r8152_tx_agg_fill()`
+function have been in stable trees for many kernel versions. This patch
+applies cleanly with no dependencies on other commits.
 
-### Conclusion
+### 8. CONCLUSION
 
-This is a textbook stable backport candidate: a tiny, obviously correct,
-one-line fix for a serious bug (permanent connection failure) in
-networking code used in production environments. The fix has zero risk
-of regression due to the idempotent nature of `clear_bit`, and the bug
-mechanism is clearly explained and verified through code analysis.
+This is a textbook stable backport candidate:
+- Fixes a real, user-visible bug (spurious TX timeouts causing network
+  disruption)
+- Affects a widely-used USB Ethernet driver (Realtek r8152)
+- Extremely small and surgical (2-line change)
+- Zero regression risk (just updates a jiffies timestamp)
+- Reviewed by the hardware vendor's maintainer
+- No dependencies on other patches
 
 **YES**
 
- net/rds/connection.c | 2 ++
+ drivers/net/usb/r8152.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index ad8027e6f54ef..dbfea6fa11260 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -429,6 +429,8 @@ void rds_conn_shutdown(struct rds_conn_path *cp)
- 	 * to the conn hash, so we never trigger a reconnect on this
- 	 * conn - the reconnect is always triggered by the active peer. */
- 	cancel_delayed_work_sync(&cp->cp_conn_w);
-+
-+	clear_bit(RDS_RECONNECT_PENDING, &cp->cp_flags);
- 	rcu_read_lock();
- 	if (!hlist_unhashed(&conn->c_hash_node)) {
- 		rcu_read_unlock();
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 2f3baa5f6e9c9..6b107cf5f37bd 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -2449,6 +2449,8 @@ static int r8152_tx_agg_fill(struct r8152 *tp, struct tx_agg *agg)
+ 	ret = usb_submit_urb(agg->urb, GFP_ATOMIC);
+ 	if (ret < 0)
+ 		usb_autopm_put_interface_async(tp->intf);
++	else
++		netif_trans_update(tp->netdev);
+ 
+ out_tx_fill:
+ 	return ret;
 -- 
 2.51.0
 
