@@ -1,50 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46081FFC48;
-	Sat, 14 Feb 2026 01:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7691E221FB6;
+	Sat, 14 Feb 2026 01:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031259; cv=none; b=FeQZ8SqwyQ8J8kkOQgqmwOQW1r9L2x8MBmL3Fhr588DkbLYMGZwr00mqc14W3ZhO9ao7mo62Kn63QS3K2PkXF0jpMPQ6gfMuSFcCn54aSvloyJin4YzCzsTbGwcGaGJkyWNlDB21QhhQX7m7QYmNYCFMH32nBNJ/gZK9hNGTB9o=
+	t=1771031261; cv=none; b=CKC5itzFuhGsudw8fuUH6URMYJYse9gLYzjvPKeZeBqOQ2IePF3vT909AkbgudC/RmSKOMIVKipNY4VUecdv/lmed9k+dSY2jjwQ8OUZEJZnSk8fjaMBXC0LggFCBiW/iiFsy9Vi8zFp5OkUF6oiFYi1vR+HQXmYjQ2G97jc+Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031259; c=relaxed/simple;
-	bh=PLV+QGyrfuZhs0mjPr04kQuIaDWgAcoy9szoMIGquQU=;
+	s=arc-20240116; t=1771031261; c=relaxed/simple;
+	bh=NdZuwBF6c3SvE15mIrOUjss8LIFzipRcisNbCNnXhVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ayLD4Ydh31SlVNwugv+4RZhVkoZL5EuaRUlDG3Ab+7RRj5NzYmMVh/Zc53mECpXxzyXffxuJkU56Vnckp7jMNWlfWUpvQxQsjb8/jCTxbEjisMw3qe8PyPwUS63cNyDyuUNMAkP2Z3vyWDCu4R71yATD0klC0Gw4+zeuA8Rw3Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cHe1IBly; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cEK4xX4ZQ8mGGHRMa6+0y2Smv3b1igBWyKJOEakzj9wCspECYdRMo9nOhe+QafghZwyB9tLJUQ2NqTSYrRuOgYcgMiwtbmRA9JCoIcLjpExi6btychkWvCdg/pgGQKA7aKTshkjHESI3n4BqkbtZAwIRwRNsHgE/0ptS3q61dM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gDPUrj5S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cHe1IBly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B73BC19423;
-	Sat, 14 Feb 2026 01:07:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gDPUrj5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABD0C116C6;
+	Sat, 14 Feb 2026 01:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031258;
-	bh=PLV+QGyrfuZhs0mjPr04kQuIaDWgAcoy9szoMIGquQU=;
+	s=k20201202; t=1771031261;
+	bh=NdZuwBF6c3SvE15mIrOUjss8LIFzipRcisNbCNnXhVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHe1IBly8teM8/uJXPPmdyXDn5IMsnEqjrCx1LerBBQjgEGPZJywVRkcRZyV4beJC
-	 wRdkeoCxXKHH6oKUcpu9DwwUy2fZkM4fo9h68HkEiC7JIvbWGeK+o8Ek1Z1mjHhNjr
-	 FkteFEm0/qVrGqs/1mqVgXmXvjgnqZTrHP8eyaw5y+nfrBACHbp9k2FZNbEVYK0IWn
-	 rA9RtAGzbLFVs7RqWdVVx4gAWo5Wk63jf1IkptMHVoap/V6qHCdCwsojP0VZE5OGUI
-	 WoWgNItsu23G422KJxysw5y3n5/n1pGHfEFLTZ9A+ILg49IUKuHD4d30C6M62adxjj
-	 Neqb5affYi7BA==
+	b=gDPUrj5SHKhvQ5u0nLkGnMMabnuBO9pJwn3djMNzr/LRq6tSYVoX2uvxp3XOxga5c
+	 bCA406XP42BUrgpuxlgQ7vbmHTT1odXSfw+o3Sh//8FkLsA0GRIv7WZEop/MIXLUCS
+	 u6VSqfqYNJevEluFBc8v/miuRRYAoa7bHqqcpYzVtiNz+Lsaa2IvIEfAARavWJL+nQ
+	 Y0+d1YAd0qINfixiSrA4cot5tirZ6u6PH0iksgoB/O2OaIxWocvNHlfg1v17cL83nf
+	 f3OEfl4ekykNoYIbx5AOvtTEkrvhijDd30rTtSpA3/qnE3UghC15PVdjcGdY2NUZRP
+	 bQXYWqiTHE9fQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peichen Huang <PeiChen.Huang@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Chenyu Chen <chen-yu.chen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Cruise.Hung@amd.com,
-	meenakshikumar.somasundaram@amd.com,
-	rvojvodi@amd.com,
-	timur.kristof@gmail.com,
-	george.shen@amd.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	superm1@kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] drm/amd/display: Don't disable DPCD mst_en if sink connected
-Date: Fri, 13 Feb 2026 20:00:04 -0500
-Message-ID: <20260214010245.3671907-124-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-5.10] media: omap3isp: isppreview: always clamp in preview_try_format()
+Date: Fri, 13 Feb 2026 20:00:05 -0500
+Message-ID: <20260214010245.3671907-125-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -60,240 +52,201 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peichen Huang <PeiChen.Huang@amd.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit 9aeb31b2456452257ad1ff7ec566f21bab1f3e8a ]
+[ Upstream commit 17e1e1641f74a89824d4de3aa38c78daa5686cc1 ]
 
-[WHY]
-User may connect mst dock with multi monitors and do quick unplug
-and plug in one of the monitor. This operatioin may create CSN from
-dock to display driver. Then display driver would disable and then enable
-mst link and also disable/enable DPCD mst_en bit in dock RX. However,
-when mst_en bit being disabled, if dock has another CSN message to
-transmit then the message would be removed because of the disabling of
-mst_en. In this case, the message is missing and it ends up no display in
-the replugged monitor.
+If prev->input != PREVIEW_INPUT_MEMORY the width and height weren't
+clamped. Just always clamp.
 
-[HOW]
-Don't disable mst_en bit when link still has sink connected.
+This fixes a v4l2-compliance error:
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Peichen Huang <PeiChen.Huang@amd.com>
-Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+	fail: v4l2-test-subdevs.cpp(171): fse.max_width == ~0U || fse.max_height == ~0U
+	fail: v4l2-test-subdevs.cpp(270): ret && ret != ENOTTY
+test Try VIDIOC_SUBDEV_ENUM_MBUS_CODE/FRAME_SIZE/FRAME_INTERVAL: FAIL
+
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me analyze the patch fully.
+Now I have all the information needed for a thorough analysis.
 
-## Comprehensive Analysis
+---
 
-### 1. COMMIT MESSAGE ANALYSIS
+## Detailed Analysis
 
-The commit message clearly explains a real-world user-facing bug:
+### 1. Commit Message Analysis
 
-**Problem:** When a user has an MST dock (e.g., a USB-C/Thunderbolt dock
-with multiple DisplayPort outputs) with multiple monitors, and quickly
-unplugs and re-plugs one monitor, the dock generates a Connection Status
-Notification (CSN) to the display driver. The driver handles this by
-disabling and re-enabling the MST link, which includes toggling the DPCD
-`mst_en` bit. However, when `mst_en` is disabled, if the dock has
-another CSN message to transmit (for the still-connected monitors), that
-message is discarded. The result is that the re-plugged monitor shows no
-display.
+The commit message is clear and direct: when `prev->input !=
+PREVIEW_INPUT_MEMORY`, the `preview_try_format()` function was **not
+clamping** width and height values at all. The fix simply makes the
+clamping unconditional. The commit explicitly references a
+v4l2-compliance test failure.
 
-**Fix:** Don't disable the `mst_en` bit when there are still sinks
-connected to the link.
+### 2. Code Change Analysis
 
-The commit has:
-- `Reviewed-by: Wenjing Liu` (AMD display team member)
-- `Tested-by: Daniel Wheeler` (AMD QA)
-- `Signed-off-by: Alex Deucher` (AMD display subsystem maintainer)
+The change is in `preview_try_format()`, specifically the
+`PREV_PAD_SINK` case:
 
-### 2. CODE CHANGE ANALYSIS
-
-The patch has 4 hunks, all in a single file (`link_dpms.c`), with 11
-lines added and 5 removed:
-
-**Hunk 1 (Critical fix - `disable_link_dp`):**
+**Before (buggy):**
 ```c
-// Before:
-if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
-    enable_mst_on_sink(link, false);
-
-// After:
-if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST && link->sink_count == 0)
-    enable_mst_on_sink(link, false);
-```
-This is the core fix. It adds a single condition `link->sink_count == 0`
-to ensure `mst_en` is only disabled when all sinks have been
-disconnected. This prevents the race where a CSN from the dock is lost
-because `mst_en` was momentarily disabled while other monitors are still
-connected.
-
-**Hunk 2 (Complementary fix - `enable_link_dp`):**
-```c
-// Before:
-if (DP_128b_132b_ENCODING && SST && set_mst_en_for_sst) {
-    enable_mst_on_sink(link, true);
-}
-
-// After:
-if (DP_128b_132b_ENCODING && SST && set_mst_en_for_sst) {
-    enable_mst_on_sink(link, true);
-} else if (link->dpcd_caps.is_mst_capable && SST) {
-    enable_mst_on_sink(link, false);
+if (prev->input == PREVIEW_INPUT_MEMORY) {
+    fmt->width = clamp_t(u32, fmt->width, PREV_MIN_IN_WIDTH,
+                         preview_max_out_width(prev));
+    fmt->height = clamp_t(u32, fmt->height,
+                          PREV_MIN_IN_HEIGHT,
+                          PREV_MAX_IN_HEIGHT);
 }
 ```
-This is the complementary change. When re-enabling a link in SST mode on
-an MST-capable sink, the patch explicitly disables MST mode on the sink.
-This ensures that if `disable_link_dp` skipped the `mst_en` disable
-(because `sink_count > 0`), it is properly cleaned up when re-enabling
-the link in SST mode.
 
-**Hunks 3 & 4 (Debug logging):**
-These add `sink_count` to the debug log messages in `link_set_dpms_off`
-and `link_set_dpms_on` — purely for debugging/observability, zero risk.
+**After (fixed):**
+```c
+fmt->width = clamp_t(u32, fmt->width, PREV_MIN_IN_WIDTH,
+                     preview_max_out_width(prev));
+fmt->height = clamp_t(u32, fmt->height,
+                      PREV_MIN_IN_HEIGHT,
+                      PREV_MAX_IN_HEIGHT);
+```
 
-### 3. CLASSIFICATION
+The conditional `if (prev->input == PREVIEW_INPUT_MEMORY)` is removed,
+making the clamp apply regardless of input source.
 
-This is a **bug fix** for a real-world user-visible issue: monitors
-connected through MST docks failing to display after hot-plug events.
-This is a common scenario — USB-C docks with multiple monitor outputs
-are extremely popular.
+### 3. Bug Mechanism — How the Problem Manifests
 
-### 4. SCOPE AND RISK ASSESSMENT
+The critical caller is `preview_enum_frame_size()` (line 1892). This
+function implements `VIDIOC_SUBDEV_ENUM_FRAME_SIZE`, which userspace
+applications call to discover supported frame sizes. The function works
+by:
 
-- **Size:** Very small — 11 lines added, 5 removed, 1 file changed
-- **Scope:** Localized to MST link enable/disable paths in the AMD
-  display driver
-- **Risk:** LOW
-  - Hunk 1 adds a defensive guard condition that preserves existing
-    behavior when `sink_count == 0` (the last sink disconnects) — it's
-    strictly narrowing when `mst_en` is cleared
-  - Hunk 2 adds an explicit `mst_en` disable for SST-on-MST-capable-
-    sink, which is a correct complement to hunk 1
-  - Debug logging changes have zero risk
-- **Subsystem:** AMD display driver — mature, well-tested subsystem
-- **Could it break something?** The guard `link->sink_count == 0` is
-  correct — if there are still sinks, we should not disable MST mode on
-  the dock. The `enable_link_dp` complementary change is also sound:
-  when connecting in SST mode to an MST-capable sink, explicitly
-  disabling MST mode is the correct DPCD protocol behavior.
+1. Setting `format.width = -1; format.height = -1;` (i.e., `0xFFFFFFFF`
+   as u32)
+2. Calling `preview_try_format()` to clamp to the maximum
+3. Reading back `fse->max_width = format.width; fse->max_height =
+   format.height;`
 
-### 5. USER IMPACT
+When `prev->input != PREVIEW_INPUT_MEMORY` (i.e., input is from CCDC),
+the clamp is skipped, so:
+- `fse->max_width` remains `~0U` (4294967295)
+- `fse->max_height` remains `~0U` (4294967295)
 
-This affects **anyone using MST docks (USB-C/Thunderbolt docks with
-multi-monitor support) with AMD GPUs**, which is a very common
-configuration, especially in:
-- Laptops with AMD integrated graphics (Ryzen mobile) connected to docks
-- Desktop systems with AMD discrete GPUs using DP MST hubs
+This causes the v4l2-compliance test failure (`fse.max_width == ~0U ||
+fse.max_height == ~0U`), and more importantly, returns **incorrect,
+nonsensical values** to any userspace application querying supported
+frame sizes.
 
-The bug manifests as **no display on a re-plugged monitor** after a
-quick unplug/plug cycle, which is a common user action. The severity is
-HIGH — a non-functional monitor requires manual intervention (re-plug,
-driver restart, or reboot) to recover.
+### 4. Beyond Compliance — Real Bug Impact
 
-### 6. STABILITY INDICATORS
+This isn't just a compliance issue. The unclamped values have real
+downstream consequences:
 
-- `Reviewed-by` from Wenjing Liu (AMD DC team)
-- `Tested-by` from Daniel Wheeler (AMD QA)
-- Signed off by Alex Deucher (AMD GPU maintainer who reviews all AMDGPU
-  commits)
-- No reverts or follow-up fixes found
+**a) Incorrect crop calculations:** In `preview_set_format()` (line
+2042), after calling `preview_try_format()`, the unclamped format
+dimensions are used to initialize the crop rectangle:
 
-### 7. DEPENDENCY CHECK
+```c
+crop->width = fmt->format.width;   // could be ~0U
+crop->height = fmt->format.height; // could be ~0U
+```
 
-- `link->sink_count` exists in all relevant stable trees (v6.1, v6.6,
-  v6.12)
-- `link->dpcd_caps.is_mst_capable` exists in all relevant stable trees
-- `enable_mst_on_sink()` function exists identically in all relevant
-  stable trees
-- The `disable_link_dp()` function's MST handling code is identical
-  across v6.6, v6.12, and mainline
-- The `enable_link_dp()` function's MST workaround block is also present
-  in all stable trees
-- **No dependencies on other commits** — this patch is completely self-
-  contained
-- The patch should apply cleanly to v6.6 and v6.12 (minor context
-  differences in a distant function signature for `dp_set_fec_enable` in
-  v6.6 may require a trivial context adjustment, but the key hunks are
-  identical)
+This then feeds into `preview_try_crop()`, where `sink->width -
+PREV_MARGIN_RIGHT` with `sink->width = ~0U` would cause an integer
+wraparound calculation for the `right` boundary.
 
-### 8. RISK VS BENEFIT
+**b) Userspace confusion:** Any V4L2 media application that uses frame
+size enumeration to determine valid dimensions would receive nonsensical
+maximum values, potentially leading to incorrect format negotiation.
 
-- **Benefit:** Fixes a real, user-hitting bug where monitors go blank
-  through MST docks — a very common hardware configuration
-- **Risk:** Minimal — the change is small, surgical, well-understood,
-  and was tested by AMD QA
-- The logic is clearly correct: don't clear MST mode when there are
-  still active sinks, and ensure MST mode is cleared when re-enabling in
-  SST mode
+### 5. Scope and Risk Assessment
 
-The fix is small, surgical, addresses a real user-visible bug with MST
-docks (a very common configuration), has been reviewed and tested by AMD
-engineers, has no dependencies, and the affected code exists in all
-current stable trees.
+- **Lines changed:** Net -5 lines (removing the `if` guard and comment
+  lines, keeping the clamp calls)
+- **Files touched:** 1 file (`isppreview.c`)
+- **Risk:** Extremely low. The change makes an existing clamp operation
+  unconditional. Values that were already in-range will remain unchanged
+  after clamping. For the CCDC input path, the original comment said the
+  CCDC already constrains the size — so clamping here is merely
+  defensive, adding an extra safety net. It cannot break the CCDC path.
+- **Dependencies:** None — fully self-contained change.
+
+### 6. Stable Tree Applicability
+
+- **Code exists in stable trees:** Confirmed. The identical buggy code
+  is present in v5.15 (old path `drivers/media/platform/omap3isp/`),
+  v6.1, and v6.6 (new path `drivers/media/platform/ti/omap3isp/`).
+- **Clean backport:** The patch applies cleanly to all stable trees with
+  at most a trivial path adjustment for v5.15.
+- **Testing:** Acked by Sakari Ailus (omap3isp maintainer). The fix was
+  tested with v4l2-compliance.
+
+### 7. Classification
+
+This is a **bug fix** that:
+- Fixes incorrect V4L2 API behavior (returning ~0U for max frame
+  dimensions)
+- Fixes a v4l2-compliance test failure
+- Prevents potential integer wraparound in downstream crop calculations
+- Is small, obvious, self-contained, and low-risk
+- Has no dependencies on other commits
+
+### 8. Verdict
+
+The fix meets all stable kernel criteria:
+1. **Obviously correct:** Removing a conditional around a clamp
+   operation is trivially safe.
+2. **Fixes a real bug:** Incorrect max frame size values returned to
+   userspace, compliance failure.
+3. **Small and contained:** -5 net lines, 1 file, 1 function.
+4. **No new features:** Purely a bug fix.
+5. **Low regression risk:** Clamping in-range values is a no-op; only
+   out-of-range values (the bug) are affected.
+
+The fix is small, surgical, obviously correct, and fixes a real API
+correctness bug that affects any userspace application querying frame
+sizes on the OMAP3 ISP preview engine when connected to the CCDC. It
+applies cleanly to all active stable trees.
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ .../media/platform/ti/omap3isp/isppreview.c   | 21 +++++++------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-index a6f1b3569f6f5..0b85826c7ea70 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -1931,7 +1931,7 @@ static void disable_link_dp(struct dc_link *link,
- 			link->dc->hwss.edp_power_control(link, false);
- 	}
+diff --git a/drivers/media/platform/ti/omap3isp/isppreview.c b/drivers/media/platform/ti/omap3isp/isppreview.c
+index e383a57654de8..5c492b31b5160 100644
+--- a/drivers/media/platform/ti/omap3isp/isppreview.c
++++ b/drivers/media/platform/ti/omap3isp/isppreview.c
+@@ -1742,22 +1742,17 @@ static void preview_try_format(struct isp_prev_device *prev,
  
--	if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
-+	if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST && link->sink_count == 0)
- 		/* set the sink to SST mode after disabling the link */
- 		enable_mst_on_sink(link, false);
+ 	switch (pad) {
+ 	case PREV_PAD_SINK:
+-		/* When reading data from the CCDC, the input size has already
+-		 * been mangled by the CCDC output pad so it can be accepted
+-		 * as-is.
+-		 *
+-		 * When reading data from memory, clamp the requested width and
+-		 * height. The TRM doesn't specify a minimum input height, make
++		/*
++		 * Clamp the requested width and height.
++		 * The TRM doesn't specify a minimum input height, make
+ 		 * sure we got enough lines to enable the noise filter and color
+ 		 * filter array interpolation.
+ 		 */
+-		if (prev->input == PREVIEW_INPUT_MEMORY) {
+-			fmt->width = clamp_t(u32, fmt->width, PREV_MIN_IN_WIDTH,
+-					     preview_max_out_width(prev));
+-			fmt->height = clamp_t(u32, fmt->height,
+-					      PREV_MIN_IN_HEIGHT,
+-					      PREV_MAX_IN_HEIGHT);
+-		}
++		fmt->width = clamp_t(u32, fmt->width, PREV_MIN_IN_WIDTH,
++				     preview_max_out_width(prev));
++		fmt->height = clamp_t(u32, fmt->height,
++				      PREV_MIN_IN_HEIGHT,
++				      PREV_MAX_IN_HEIGHT);
  
-@@ -2082,7 +2082,12 @@ static enum dc_status enable_link_dp(struct dc_state *state,
- 			pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT &&
- 			link->dc->debug.set_mst_en_for_sst) {
- 		enable_mst_on_sink(link, true);
-+	} else if (link->dpcd_caps.is_mst_capable &&
-+		pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT) {
-+		/* disable mst on sink */
-+		enable_mst_on_sink(link, false);
- 	}
-+
- 	if (pipe_ctx->stream->signal == SIGNAL_TYPE_EDP) {
- 		/*in case it is not on*/
- 		if (!link->dc->config.edp_no_power_sequencing)
-@@ -2368,9 +2373,9 @@ void link_set_dpms_off(struct pipe_ctx *pipe_ctx)
- 	if (pipe_ctx->stream->sink) {
- 		if (pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_VIRTUAL &&
- 			pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_NONE) {
--			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d\n", __func__,
-+			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d sink_count=%d\n", __func__,
- 			pipe_ctx->stream->sink->edid_caps.display_name,
--			pipe_ctx->stream->signal, link->link_index);
-+			pipe_ctx->stream->signal, link->link_index, link->sink_count);
- 		}
- 	}
- 
-@@ -2484,10 +2489,11 @@ void link_set_dpms_on(
- 	if (pipe_ctx->stream->sink) {
- 		if (pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_VIRTUAL &&
- 			pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_NONE) {
--			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d\n", __func__,
-+			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d sink_count=%d\n", __func__,
- 			pipe_ctx->stream->sink->edid_caps.display_name,
- 			pipe_ctx->stream->signal,
--			link->link_index);
-+			link->link_index,
-+			link->sink_count);
- 		}
- 	}
+ 		fmt->colorspace = V4L2_COLORSPACE_SRGB;
  
 -- 
 2.51.0
