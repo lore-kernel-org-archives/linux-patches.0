@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FED5142E83;
-	Sat, 14 Feb 2026 21:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683D32FF148;
+	Sat, 14 Feb 2026 21:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104416; cv=none; b=mtz7geoYBuu4Rtb3euGWJPHd/vPIfYxt0d6ffr52PFtOQIGn6jh3PPN2O5+sQYzQIUI7xNPEtUtdCB4gKTFPnnF1SmClrBvSvS+KcRkcf2+YOVINGfMuLx+4y7UHSbv69zfkSWkWKUz2hiT9USjQess2or6By17anAICUJ57rfY=
+	t=1771104419; cv=none; b=SiRwhTKQ+rbAztBS9gvDpOTc3eq5Lnz7VmZr5rLeF9W4cc9ZnAdYr5W4HxJiwd31Q0vPifjnDvGspWRN6j4RzYewj7MMVjSgBXKQVP3WACsHsi0X933ctlR7DWvRfSFp+KcWd2auotaaEPQmN3gY+/tIyYUii1rWs+HJLTs1Pzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104416; c=relaxed/simple;
-	bh=zoMV/NzMg0A/PeUsA5HJP86gpV+x8YWFr2pJq9M8MxM=;
+	s=arc-20240116; t=1771104419; c=relaxed/simple;
+	bh=qSSLev40jQp8E4MCDlw4osAc9534SPfMV7XGo/O9KPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gJf9DZEp8WipvicLy0G1WsVDD1/xu5YkPo6Udlmbgelb6PczNus4xx/E0C2Nox56iuDz2HC2hs9OCUSlROGbPA/HVKIvnjfALRbsRil3yDvJ4vpLlycm8r7R8MJTFyXW5HqGVLiRcc602QrESwZ+411feEpvp+Y05Q9TvliIT4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iqk6Mann; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GM9O8d3jnHVdSOeaGG/Juom9HPkLx533bcoDu4lutfUXv/PLCx7ZwtALD4Qx+7d9CuVnZwV8mk7iTjwh2ir9Nj3q/lD6iPsZ4NKByiU+I3QsHDLXm5HSF9Kk9JLr3V4ZpGYud9jPaDN5UQiomXsdQ330JCjVFUZi2TAS3IVurks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jH13v3NM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iqk6Mann"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE86C16AAE;
-	Sat, 14 Feb 2026 21:26:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jH13v3NM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22018C19422;
+	Sat, 14 Feb 2026 21:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104416;
-	bh=zoMV/NzMg0A/PeUsA5HJP86gpV+x8YWFr2pJq9M8MxM=;
+	s=k20201202; t=1771104419;
+	bh=qSSLev40jQp8E4MCDlw4osAc9534SPfMV7XGo/O9KPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iqk6Mann2/0YKesc32d0po8iLXM7dpBlaCq/EMm+MIkl5UjiI3Tn0NCcOqGrxlvxO
-	 RCGfd4Hh9R5H6EImikcgfyHoM+08tJSeSrVvj6cBcDm7TT4pIOCr9APiEf+qoONAcE
-	 meC3ia/1a/fIKiySEOJ02BVjZuzLfFo1ymXNfEIwgdOkwUpHs8KRZA3YHSZYIlOenv
-	 Thx0Nf0prDzD1GdPAN0gr30Jpx/YVsAciejm4mezTShCLvFRt+1rXxoCGfv+InMwJa
-	 oX3zpQxZ6V9rsxs1S39uQh4/IDVlybBnnA/iLI5wLxXCz5YvKoB1kuEfrKBEIFyFxQ
-	 K49IEQw7Dj7uw==
+	b=jH13v3NMUkAT4lLWAAdogQyB31U4K3lbVkaaUYxNhBX3TuEQ5B4qDxnMZ9EEY0xd3
+	 G/n5VBR4LTVWPbqH+MHt99kFgYEPEj+7LVknYA5npdEVJ65br3BgXleY2Lj/2TukvQ
+	 58xk/neG6Xl4EA469PBaVWihNDYrtb8Xtcj6iYByHcrsEABNt10XsagRnIULxuTyuN
+	 eGtzsjvQcivnghqDOgkHBTrp8z9aJci7x9fpzJTWTL3X7O85W9VFnFThPgBtvAgGWo
+	 Rbv9E5tZVqCaTUKgDZJOiviU3Io5t6WExinefGlO7TlUCGch5fm1f+6RB4yhXbLmR0
+	 GPSHNe+rtUVBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Stefan=20S=C3=B8rensen?= <ssorensen@roku.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Szymon Wilczek <swilczek.lx@gmail.com>,
+	syzbot+67969ab6a2551c27f71b@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	johan.hedberg@gmail.com,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] Bluetooth: hci_conn: Set link_policy on incoming ACL connections
-Date: Sat, 14 Feb 2026 16:23:38 -0500
-Message-ID: <20260214212452.782265-73-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	mingo@kernel.org,
+	tglx@kernel.org,
+	yelangyan@huaqin.corp-partner.google.com,
+	linux-wireless@vger.kernel.org,
+	libertas-dev@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-5.10] wifi: libertas: fix WARNING in usb_tx_block
+Date: Sat, 14 Feb 2026 16:23:39 -0500
+Message-ID: <20260214212452.782265-74-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -48,159 +51,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Sørensen <ssorensen@roku.com>
+From: Szymon Wilczek <swilczek.lx@gmail.com>
 
-[ Upstream commit 4bb091013ab0f2edfed3f58bebe658a798cbcc4d ]
+[ Upstream commit d66676e6ca96bf8680f869a9bd6573b26c634622 ]
 
-The connection link policy is only set when establishing an outgoing
-ACL connection causing connection idle modes not to be available on
-incoming connections. Move the setting of the link policy to the
-creation of the connection so all ACL connection will use the link
-policy set on the HCI device.
+The function usb_tx_block() submits cardp->tx_urb without ensuring that
+any previous transmission on this URB has completed. If a second call
+occurs while the URB is still active (e.g. during rapid firmware loading),
+usb_submit_urb() detects the active state and triggers a warning:
+'URB submitted while active'.
 
-Signed-off-by: Stefan Sørensen <ssorensen@roku.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix this by enforcing serialization: call usb_kill_urb() before
+submitting the new request. This ensures the URB is idle and safe to reuse.
+
+Reported-by: syzbot+67969ab6a2551c27f71b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=67969ab6a2551c27f71b
+Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
+Link: https://patch.msgid.link/20251221155806.23925-1-swilczek.lx@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Bluetooth: hci_conn: Set link_policy on incoming ACL
-connections
+## Analysis of commit: wifi: libertas: fix WARNING in usb_tx_block
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes a functional bug: the connection
-link policy is **only** set when establishing an **outgoing** ACL
-connection, which means **incoming** ACL connections don't get the link
-policy configured on the HCI device. This causes "connection idle modes
-not to be available on incoming connections."
-
-The fix moves the `link_policy` assignment from the outgoing-connection-
-specific path (`hci_acl_create_conn_sync`) to the generic connection
-creation path (`__hci_conn_add`), so all ACL connections (both incoming
-and outgoing) inherit the device's link policy.
+The commit message is clear and well-structured:
+- **Subject**: Explicitly says "fix WARNING" — this is a bug fix
+- **Problem**: `usb_tx_block()` submits `cardp->tx_urb` without ensuring
+  the previous transmission completed. If called rapidly (e.g., during
+  firmware loading), the URB is still active and `usb_submit_urb()`
+  triggers a WARNING: "URB submitted while active"
+- **Solution**: Add `usb_kill_urb()` before submitting to ensure the URB
+  is idle
+- **Reported-by syzbot**: This is a fuzzer-found, reproducible bug with
+  a concrete trigger
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is extremely small and surgical:
+The change is minimal — a single line addition:
+```c
++       usb_kill_urb(cardp->tx_urb);
+```
 
-**In `net/bluetooth/hci_conn.c` (`__hci_conn_add`):**
-- Adds one line: `conn->link_policy = hdev->link_policy;` in the
-  `ACL_LINK` case of the switch statement during connection
-  initialization.
+Added right before `usb_fill_bulk_urb()` and `usb_submit_urb()`. This
+ensures the URB is in an idle state before being reused.
 
-**In `net/bluetooth/hci_sync.c` (`hci_acl_create_conn_sync`):**
-- Removes the line `conn->link_policy = hdev->link_policy;` from the
-  outgoing connection creation path (since it's now handled in the
-  common path).
+- `usb_kill_urb()` is the standard kernel API for cancelling a pending
+  URB and waiting for its completion. It is safe to call on an already-
+  idle URB (it's a no-op in that case).
+- The fix is placed after the `surprise_removed` check but before the
+  URB fill/submit, which is the correct location.
 
-This is a pure **move** of a single assignment from a specific path to a
-common path. The net effect:
-- Outgoing connections: behavior is unchanged (link_policy was set
-  before, still set now, just earlier in the flow)
-- Incoming connections: link_policy is now properly set (was previously
-  missing)
+### 3. BUG CLASSIFICATION
 
-### 3. CLASSIFICATION
+This is a **race condition / incorrect URB lifecycle management** bug.
+The URB can be submitted while still active from a previous call, which:
+- Triggers a kernel WARNING (stack trace in dmesg)
+- Could potentially lead to undefined behavior in the USB subsystem if
+  the URB state is corrupted
+- Is a real correctness issue, not just a cosmetic warning
 
-This is a **bug fix**. Incoming Bluetooth ACL connections were not
-getting the correct link policy, which means features like sniff mode
-(power saving) and role switching wouldn't work properly on incoming
-connections. This is a real functional issue affecting Bluetooth power
-management and connection behavior.
+### 4. SYZBOT INDICATOR
 
-### 4. SCOPE AND RISK ASSESSMENT
+The bug was found by syzbot, which means:
+- It is **reproducible** with a concrete trigger
+- It is **reachable from userspace** (syzbot exercises syscall paths)
+- The syzkaller link confirms this is a documented, verified bug
 
-- **Lines changed:** 2 (1 added, 1 removed - it's a move)
-- **Files changed:** 2
-- **Complexity:** Extremely low - moving an assignment to a more
-  appropriate location
-- **Risk of regression:** Minimal. The assignment already existed for
-  outgoing connections; this just ensures incoming connections get the
-  same treatment. The value being assigned (`hdev->link_policy`) is the
-  same in both cases.
+### 5. SCOPE AND RISK ASSESSMENT
 
-### 5. USER IMPACT
+- **Lines changed**: 2 (one blank line + one `usb_kill_urb()` call)
+- **Files changed**: 1
+  (`drivers/net/wireless/marvell/libertas/if_usb.c`)
+- **Risk**: Very low. `usb_kill_urb()` is a well-understood, safe API.
+  Calling it on an idle URB is a no-op. The only effect is ensuring
+  serialization of URB submissions.
+- **Regression potential**: Minimal. The worst case is a slight
+  performance overhead from the synchronous kill call, but this is in a
+  firmware loading path, not a hot data path.
 
-Bluetooth is widely used on laptops, desktops, and embedded systems. The
-link policy controls important features like:
-- **Sniff mode**: Power-saving mode that reduces radio duty cycle
-- **Role switching**: Ability to switch between master and slave roles
-- **Hold mode**: Another power management feature
+### 6. STABLE CRITERIA CHECK
 
-Without the correct link policy on incoming connections, Bluetooth
-devices connecting to the affected system would not benefit from power-
-saving modes, potentially leading to increased battery drain and missing
-expected Bluetooth behavior.
+| Criterion | Met? |
+|-----------|------|
+| Obviously correct and tested | Yes — standard pattern, syzbot-verified
+|
+| Fixes a real bug | Yes — WARNING + potential URB corruption |
+| Fixes an important issue | Yes — kernel WARNING, USB subsystem
+correctness |
+| Small and contained | Yes — 1 line in 1 file |
+| No new features | Correct — pure bug fix |
+| Applies cleanly | Very likely — minimal context dependencies |
 
-### 6. STABILITY INDICATORS
+### 7. USER IMPACT
 
-- The author (Stefan Sørensen) submitted the fix and it was signed off
-  by Luiz Augusto von Dentz, the Bluetooth subsystem maintainer. This
-  indicates it was reviewed and approved by the person most
-  knowledgeable about the code.
-- The change is trivially correct - it's moving an existing assignment
-  to a more general location.
+The libertas driver is used with Marvell wireless USB adapters. While
+not the most commonly used driver, users with this hardware would
+experience:
+- Kernel WARNING messages in dmesg during firmware loading
+- Potential instability in the USB subsystem
+- The bug is triggered during rapid firmware loading, which is a normal
+  operation
 
-### 7. DEPENDENCY CHECK
+### 8. DEPENDENCY CHECK
 
-This commit is completely self-contained. It doesn't depend on any other
-changes - it simply moves an existing line of code. The `link_policy`
-field, `hdev->link_policy`, and `__hci_conn_add` function have been in
-the kernel for a long time, so this should apply cleanly to stable
-trees.
+This is a standalone fix with no dependencies on other commits. The
+`usb_kill_urb()` API has been available for many kernel versions. The
+function `usb_tx_block()` and the `if_usb_card` structure with `tx_urb`
+have been stable for a long time.
 
-### 8. STABLE KERNEL CRITERIA
+### CONCLUSION
 
-- **Obviously correct:** Yes - it's a one-line move that ensures all ACL
-  connections get the device's link policy
-- **Fixes a real bug:** Yes - incoming connections missing link policy
-  settings
-- **Small and contained:** Yes - 2 lines across 2 files
-- **No new features:** Correct - this enables existing functionality
-  that was incorrectly not applied
-- **Risk vs benefit:** Very low risk (trivially correct code move) vs
-  meaningful benefit (proper Bluetooth power management on incoming
-  connections)
+This is a textbook stable backport candidate:
+- Syzbot-reported, reproducible bug
+- Tiny, surgical fix (1 line)
+- Uses well-established kernel API (`usb_kill_urb`)
+- Fixes a real correctness issue (URB submitted while active)
+- Zero risk of regression
+- No dependencies on other commits
 
 **YES**
 
- net/bluetooth/hci_conn.c | 1 +
- net/bluetooth/hci_sync.c | 2 --
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/marvell/libertas/if_usb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index c3f7828bf9d54..b5e345fa6c344 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1002,6 +1002,7 @@ static struct hci_conn *__hci_conn_add(struct hci_dev *hdev, int type,
- 	switch (type) {
- 	case ACL_LINK:
- 		conn->pkt_type = hdev->pkt_type & ACL_PTYPE_MASK;
-+		conn->link_policy = hdev->link_policy;
- 		conn->mtu = hdev->acl_mtu;
- 		break;
- 	case LE_LINK:
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index cbc3a75d73262..334eb4376a266 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6897,8 +6897,6 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
+diff --git a/drivers/net/wireless/marvell/libertas/if_usb.c b/drivers/net/wireless/marvell/libertas/if_usb.c
+index b3c4040257a67..924ab93b7b671 100644
+--- a/drivers/net/wireless/marvell/libertas/if_usb.c
++++ b/drivers/net/wireless/marvell/libertas/if_usb.c
+@@ -426,6 +426,8 @@ static int usb_tx_block(struct if_usb_card *cardp, uint8_t *payload, uint16_t nb
+ 		goto tx_ret;
+ 	}
  
- 	conn->attempt++;
- 
--	conn->link_policy = hdev->link_policy;
--
- 	memset(&cp, 0, sizeof(cp));
- 	bacpy(&cp.bdaddr, &conn->dst);
- 	cp.pscan_rep_mode = 0x02;
++	usb_kill_urb(cardp->tx_urb);
++
+ 	usb_fill_bulk_urb(cardp->tx_urb, cardp->udev,
+ 			  usb_sndbulkpipe(cardp->udev,
+ 					  cardp->ep_out),
 -- 
 2.51.0
 
