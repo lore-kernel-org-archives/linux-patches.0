@@ -1,43 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004DC29ACCD;
-	Sat, 14 Feb 2026 21:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F5F29ACCD;
+	Sat, 14 Feb 2026 21:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104409; cv=none; b=Ke0KoQo2agkE9woh+BmTPdXCUhUeeYEz/DHXqI7MdVPZMRgWJN65o+LfqlAgSGCIWKneGrDVpAwBLsn3MWXrv5ONaqx9b5wQeMfFJxWfBj9Q9VzFVobPT3KA9MnKvYQSb1+1cyGfynwm4agLRs3rVJ/eB8++8T3008lbhcaHJvk=
+	t=1771104412; cv=none; b=jze0nXMVqxAVprC/zOT8Jj4dGOytAt4H3ft8rgNQc/kUvhcNWPGe56LIrYnaPxDzGlaTieeWzLRWkeBz8INItOT0nZOD1XgOpkfIex60aJ/0pdxFi6iO+Z1va6b3B4glCJnwAwWQ+Ke3x5fWUj+74FaA38gCvHX51sZhBPfb5rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104409; c=relaxed/simple;
-	bh=dm92s9uuRZ2z5LFgepcQwNGiVK+zDhDUsX9U12FpVyk=;
+	s=arc-20240116; t=1771104412; c=relaxed/simple;
+	bh=spBe1UGw1ARs3IgEvRYC5YF/E9lmPPeTNpVViA6Fnso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bv2eb8tQgjxtJ7aYwk64+/Mjm8cEAZMzVlRHu3lVj+zO1ZW3afuXja4ItmHX48GZmaVkycpCifVd/9bi4154od2//aCB8MFMhtbY3OhoPu95KE3i58rMCWbbmlEhE76yaH/dwHhq0TxmxHKCWl5CIl9GOLMIQpoPGbk3SUVOVYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nXW3nM/d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LeU9RFfwRtZ0WbhwaQSbinVb2IqBkkPcOx6dAsZUm59JPc3Ohcu22Bw59aWIxi44C5ep7v19lucZZUQDQ1S8boxwGm/xc5jQTGsK2inI5R03QyjYB0BerSoe4GBVVEXi4NiNnqj9wztWzoZrovf2evjpRv9zBAvfl4KxT4amvv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWr7AfVP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nXW3nM/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BCA3C16AAE;
-	Sat, 14 Feb 2026 21:26:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWr7AfVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B97C19422;
+	Sat, 14 Feb 2026 21:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104408;
-	bh=dm92s9uuRZ2z5LFgepcQwNGiVK+zDhDUsX9U12FpVyk=;
+	s=k20201202; t=1771104411;
+	bh=spBe1UGw1ARs3IgEvRYC5YF/E9lmPPeTNpVViA6Fnso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXW3nM/dIPvdGrayzmLBZiaRMT8q9t+OW0lHuSRWiEdDcGEInlsOM4ttl32jpnPbX
-	 yV4E6Y0yA2ZHVDboa4iu3txUIW2uXOXXMm3LVfCxaNh5E2Tk+2px65Dl/y3DenUa40
-	 HtysWwaPuNwhbLAInq2kjWHFEb6oFQrulWXjOnWTFravSQ/aUg2XE2y7hq7FZjhhtb
-	 dr7NbChIchDtP0tqSlIRi9XAyExaKMEn5doAAvtzhMapldKfWL2NwTrNGlBXTBZu1W
-	 kq42MVab7I/FFsOk0c7HPEbeBUVrPArF8JCvcIJlcZ4dp3yRHBlFYRbJGTwf4u21t6
-	 /GFVhgVJ2/AuQ==
+	b=nWr7AfVPmprttSt+USWUPrqGCX3tmWTVeMrFEOY6HPamGPxjqDCLFYwspQ/FSRn3i
+	 BI0DuJOlELKE+r28nR9JNRz893j5tp30EE4QkIFVFINPpr6CGZdzxwekKbrBo2TER0
+	 /axbeQxDsaUUFIzUXyaTmsdvam/CsJYflY+J6KkBJm0F+D5PTNAX79S+yPSodgEaL4
+	 DVLw6Dzpu+28n7DBpN8BljxhM+uzA04xcNVQ81txIKwuyS2LWsWQq2h9XXzUzc9ATc
+	 YjNFi0ZZb7DFHEq1QkOA5rCipapEMo/jv9PSdnWYbqVNSGq1dnAb/2qNPnFbJ4830X
+	 JV4J+0bBk3m4A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
+Cc: Shawn Lin <shawn.lin@rock-chips.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] PCI: Enable ACS after configuring IOMMU for OF platforms
-Date: Sat, 14 Feb 2026 16:23:33 -0500
-Message-ID: <20260214212452.782265-68-sashal@kernel.org>
+	heiko@sntech.de,
+	cassel@kernel.org,
+	18255117159@163.com,
+	bhelgaas@google.com,
+	yelangyan@huaqin.corp-partner.google.com,
+	linux.amoon@gmail.com,
+	nicolas.frattaroli@collabora.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-6.1] PCI: dw-rockchip: Disable BAR 0 and BAR 1 for Root Port
+Date: Sat, 14 Feb 2026 16:23:34 -0500
+Message-ID: <20260214212452.782265-69-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -50,186 +56,148 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit c41e2fb67e26b04d919257875fa954aa5f6e392e ]
+[ Upstream commit b5d712e5b87fc56ff838684afb1bae359eb8069f ]
 
-Platform, ACPI, or IOMMU drivers call pci_request_acs(), which sets
-'pci_acs_enable' to request that ACS be enabled for any devices enumerated
-in the future.
+Some Rockchip PCIe Root Ports report bogus size of 1GiB for the BAR
+memories and they cause below resource allocation issue during probe.
 
-OF platforms called pci_enable_acs() for the first device before
-of_iommu_configure() called pci_request_acs(), so ACS was never enabled for
-that device (typically a Root Port).
+  pci 0000:00:00.0: [1d87:3588] type 01 class 0x060400 PCIe Root Port
+  pci 0000:00:00.0: BAR 0 [mem 0x00000000-0x3fffffff]
+  pci 0000:00:00.0: BAR 1 [mem 0x00000000-0x3fffffff]
+  pci 0000:00:00.0: ROM [mem 0x00000000-0x0000ffff pref]
+	...
+  pci 0000:00:00.0: BAR 0 [mem 0x900000000-0x93fffffff]: assigned
+  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: can't assign; no space
+  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: failed to assign
+  pci 0000:00:00.0: ROM [mem 0xf0200000-0xf020ffff pref]: assigned
+  pci 0000:00:00.0: BAR 0 [mem 0x900000000-0x93fffffff]: releasing
+  pci 0000:00:00.0: ROM [mem 0xf0200000-0xf020ffff pref]: releasing
+  pci 0000:00:00.0: BAR 0 [mem 0x900000000-0x93fffffff]: assigned
+  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: can't assign; no space
+  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: failed to assign
 
-Call pci_enable_acs() later, from pci_dma_configure(), after
-of_dma_configure() has had a chance to call pci_request_acs().
+Since there is no use of the Root Port BAR memories, disable both of them.
 
-Here's the call path, showing the move of pci_enable_acs() from
-pci_acs_init() to pci_dma_configure(), where it always happens after
-pci_request_acs():
-
-    pci_device_add
-      pci_init_capabilities
-        pci_acs_init
- -        pci_enable_acs
- -          if (pci_acs_enable)                <-- previous test
- -            ...
-      device_add
-        bus_notify(BUS_NOTIFY_ADD_DEVICE)
-          iommu_bus_notifier
-            iommu_probe_device
-              iommu_init_device
-                dev->bus->dma_configure
-                  pci_dma_configure            # pci_bus_type.dma_configure
-                    of_dma_configure
-                      of_iommu_configure
-                        pci_request_acs
-                          pci_acs_enable = 1   <-- set
- +                  pci_enable_acs
- +                    if (pci_acs_enable)      <-- new test
- +                      ...
-        bus_probe_device
-          device_initial_probe
-            ...
-              really_probe
-                dev->bus->dma_configure
-                  pci_dma_configure            # pci_bus_type.dma_configure
-                    ...
-                      pci_enable_acs
-
-Note that we will now call pci_enable_acs() twice for every device, first
-from the iommu_probe_device() path and again from the really_probe() path.
-Presumably that's not an issue since we also call dev->bus->dma_configure()
-twice.
-
-For the ACPI platforms, pci_request_acs() is called during ACPI
-initialization time itself, independent of the IOMMU framework.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Link: https://patch.msgid.link/20260102-pci_acs-v3-1-72280b94d288@oss.qualcomm.com
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+[mani: reworded the description and comment]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/1766570461-138256-1-git-send-email-shawn.lin@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The commit under review builds on the existing `pci_enable_acs()`
-infrastructure. The key dependency is on `f3c3ccc4fe49d` ("PCI: Fix
-pci_enable_acs() support for the ACS quirks") from v6.12 era, which
-restructured `pci_enable_acs()` and `pci_dev_specific_enable_acs()`. The
-code structure in the diff matches what's in current mainline,
-suggesting this applies to the current code layout which includes the
-ACS refactoring from 6.11/6.12.
+### Key Findings from Investigation
 
-### 6. STABLE KERNEL ASSESSMENT
+1. **`dw_pcie_writel_dbi2`** is a well-established helper available
+   since 2023 (the static inline wrapper) with the underlying
+   `dw_pcie_write_dbi2` available since 2019. It should be present in
+   recent stable kernels.
 
-**Meets stable criteria:**
-- **Fixes a real bug**: ACS not being enabled on the first PCI device on
-  OF platforms
-- **Obviously correct**: Simply moves a function call to after its
-  dependency is satisfied
-- **Small and contained**: ~30 lines changed across 3 files, all in PCI
-  subsystem
-- **No new features**: Just reorders existing functionality
-- **Tested**: Two Tested-by tags
-- **Written by subsystem experts**: PCI maintainer involvement
+2. **`dbi_base2` setup pattern**: The standard DWC code has a default
+   fallback of `pci->dbi_base + SZ_4K` (4KB offset). However, the
+   Rockchip hardware uses a different offset of `0x100000` (1MB). This
+   commit explicitly sets `pci->dbi_base2 = pci->dbi_base +
+   PCIE_TYPE0_HDR_DBI2_OFFSET` because the generic fallback would use
+   the wrong offset for this hardware.
 
-**Concerns:**
-- The commit depends on the `pci_enable_acs()` refactoring from
-  `47c8846a49ba` ("PCI: Extend ACS configurability") and its fix
-  `f3c3ccc4fe49d`. These are from v6.11/v6.12 timeframe, so they should
-  be in recent stable trees but may not be in older LTS trees (5.15,
-  5.10). The backport would need to be adapted for trees where
-  `pci_enable_acs()` has a different structure.
-- For recent stable trees (6.6+, 6.12+) this should apply cleanly or
-  with minor adjustments.
+3. **The rockchip DWC driver** has been present since 2021, so it exists
+   in all active stable trees.
 
-### 7. CONCLUSION
+### Risk vs. Benefit
 
-This is a real bug fix for OF/DT platforms where ACS is never enabled on
-the first PCI device (Root Port). This impacts IOMMU isolation, device
-passthrough, and security. The fix is small, surgical, well-understood,
-and tested. It moves an existing function call to the correct point in
-the initialization sequence. The risk is low — the function is
-idempotent and the change doesn't alter any logic, only timing.
+**Benefit**: Fixes a real resource allocation failure during PCIe probe
+on Rockchip platforms (RK3588 and potentially others). Without this fix,
+BAR allocation consumes 2GiB of address space needlessly, potentially
+causing downstream device BAR allocation failures. The log output
+clearly shows "can't assign; no space" errors.
 
-The primary concern is dependency on ACS refactoring in newer kernels,
-but for stable trees that have that infrastructure, this is a clear
-backport candidate.
+**Risk**: Very low. The fix:
+- Only affects Rockchip DWC PCIe in host (Root Port) mode
+- Disables BARs that are not used by the Root Port
+- Uses well-established DWC infrastructure (`dw_pcie_writel_dbi2`)
+- The DBI2 offset is hardware-specific and correct for this platform
+
+### Potential Concern
+
+One thing to verify is whether `dbi_base2` might already be set by the
+generic DWC code before `rockchip_pcie_host_init` is called. If the
+generic code sets it to `dbi_base + SZ_4K` first, this override to
+`dbi_base + 0x100000` is essential for correctness. If it's not set at
+all, then both the setup AND the BAR disable writes are needed.
+
+### User Impact
+
+- **Moderate-High**: RK3588 is a widely used ARM SoC in Single Board
+  Computers (SBCs), NAS devices, and embedded systems. PCIe resource
+  allocation failures directly impact users trying to use PCIe devices
+  (NVMe SSDs, network cards, etc.) on these platforms.
+
+### Stable Criteria Assessment
+
+| Criteria | Assessment |
+|----------|------------|
+| Obviously correct and tested | Yes - simple BAR disable using standard
+DWC mechanism |
+| Fixes a real bug | Yes - bogus BAR sizes cause resource allocation
+failures |
+| Important issue | Yes - PCIe device failures on popular ARM platform |
+| Small and contained | Yes - ~10 lines in one file |
+| No new features | Correct - this is a hardware workaround |
+| Applies cleanly | Likely yes for recent stable trees |
+
+### Conclusion
+
+This is a hardware quirk/workaround that fixes a real resource
+allocation problem on Rockchip RK3588 PCIe Root Ports. The bogus 1GiB
+BAR sizes waste address space and cause downstream device allocation
+failures. The fix is small, well-scoped, uses existing infrastructure,
+and only affects Rockchip platforms. It clearly falls into the "hardware
+quirks" exception category that is explicitly appropriate for stable
+backporting.
 
 **YES**
 
- drivers/pci/pci-driver.c |  8 ++++++++
- drivers/pci/pci.c        | 10 +---------
- drivers/pci/pci.h        |  1 +
- 3 files changed, 10 insertions(+), 9 deletions(-)
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 7c2d9d5962586..301a9418e38e0 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -1650,6 +1650,14 @@ static int pci_dma_configure(struct device *dev)
- 		ret = acpi_dma_configure(dev, acpi_get_dma_attr(adev));
- 	}
+diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+index f8605fe61a415..c5f3c8935098f 100644
+--- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
++++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+@@ -80,6 +80,8 @@
+ #define  PCIE_LINKUP_MASK		GENMASK(17, 16)
+ #define  PCIE_LTSSM_STATUS_MASK		GENMASK(5, 0)
  
-+	/*
-+	 * Attempt to enable ACS regardless of capability because some Root
-+	 * Ports (e.g. those quirked with *_intel_pch_acs_*) do not have
-+	 * the standard ACS capability but still support ACS via those
-+	 * quirks.
-+	 */
-+	pci_enable_acs(to_pci_dev(dev));
++#define PCIE_TYPE0_HDR_DBI2_OFFSET      0x100000
 +
- 	pci_put_host_bridge_device(bridge);
+ struct rockchip_pcie {
+ 	struct dw_pcie pci;
+ 	void __iomem *apb_base;
+@@ -292,6 +294,8 @@ static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
+ 	if (irq < 0)
+ 		return irq;
  
- 	/* @drv may not be valid when we're called from the IOMMU layer */
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index b99ad5f50f30d..479887ece9e7a 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1015,7 +1015,7 @@ static void pci_std_enable_acs(struct pci_dev *dev, struct pci_acs *caps)
-  * pci_enable_acs - enable ACS if hardware support it
-  * @dev: the PCI device
-  */
--static void pci_enable_acs(struct pci_dev *dev)
-+void pci_enable_acs(struct pci_dev *dev)
- {
- 	struct pci_acs caps;
- 	bool enable_acs = false;
-@@ -3648,14 +3648,6 @@ bool pci_acs_path_enabled(struct pci_dev *start,
- void pci_acs_init(struct pci_dev *dev)
- {
- 	dev->acs_cap = pci_find_ext_capability(dev, PCI_EXT_CAP_ID_ACS);
--
--	/*
--	 * Attempt to enable ACS regardless of capability because some Root
--	 * Ports (e.g. those quirked with *_intel_pch_acs_*) do not have
--	 * the standard ACS capability but still support ACS via those
--	 * quirks.
--	 */
--	pci_enable_acs(dev);
++	pci->dbi_base2 = pci->dbi_base + PCIE_TYPE0_HDR_DBI2_OFFSET;
++
+ 	ret = rockchip_pcie_init_irq_domain(rockchip);
+ 	if (ret < 0)
+ 		dev_err(dev, "failed to init irq domain\n");
+@@ -302,6 +306,10 @@ static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
+ 	rockchip_pcie_configure_l1ss(pci);
+ 	rockchip_pcie_enable_l0s(pci);
+ 
++	/* Disable Root Ports BAR0 and BAR1 as they report bogus size */
++	dw_pcie_writel_dbi2(pci, PCI_BASE_ADDRESS_0, 0x0);
++	dw_pcie_writel_dbi2(pci, PCI_BASE_ADDRESS_1, 0x0);
++
+ 	return 0;
  }
  
- /**
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index 0e67014aa0013..4592ede0ebcc6 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -939,6 +939,7 @@ static inline resource_size_t pci_resource_alignment(struct pci_dev *dev,
- }
- 
- void pci_acs_init(struct pci_dev *dev);
-+void pci_enable_acs(struct pci_dev *dev);
- #ifdef CONFIG_PCI_QUIRKS
- int pci_dev_specific_acs_enabled(struct pci_dev *dev, u16 acs_flags);
- int pci_dev_specific_enable_acs(struct pci_dev *dev);
 -- 
 2.51.0
 
