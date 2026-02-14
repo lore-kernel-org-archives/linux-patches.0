@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E1930B538;
-	Sat, 14 Feb 2026 21:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5D2311C27;
+	Sat, 14 Feb 2026 21:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104444; cv=none; b=rjYpj8n/scayZpAMIqq+yfmvAdAC8+ZUYwd5dfUWQIevh+6WNLfA7HfryFzoPnPQJNLAFfodOVUxdO1uKP1A6ini+gR93QbU+cbEdtN8Fwc6BB2A55b2fxQQfWn7CQ4qpTqUZAf9mBun47rjVagGqYrKsoyRwu84IpvxqAMIZ+Q=
+	t=1771104445; cv=none; b=Qw7TT8hopl6GrVlGiKM0n1CD5fn3Ep40pFJC73EOdPlvdbTI938Q6Un+kvFSZyf/yai2pk2XOL5R9ryv/BhklHzT8BTETbPUoz6QMEYVg8YrsMxvP7vf1+xM148+pIZOY8peIdjT+1CFxLPsE9xFZF4DMF6AGk3a0NXNq+g/6Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104444; c=relaxed/simple;
-	bh=2Sb6YVj2l1Ok2Mmg0zsL+12yGub/lIm0PQt6q4Zz3I8=;
+	s=arc-20240116; t=1771104445; c=relaxed/simple;
+	bh=a7eqF+ZaUe+jrkHBrsCoLpAVDieK8LCjza9XqzFNOwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BzFbX/GnRn8o86+O4AAIaP/J3kX9T/ENbn36DG/iAe0ylifjIh9qjf6zgAy5ENkHl5M6B6/5MW4cVBhxGf4qIIJAFFDegSs53nzLvmuUcD4kgNwuYd5qsO/xkjetXkESmjWF8igmpcQGQrIt1kaqJ5nzn+6pgD/y7mVAp+Ymrwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JhhUwZ5t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=quWrWVgBTqQRjSJam7niHjVBUGAN9l5pjRfB9zEV8UBjlzP8yoSZyPHNCQV+OwjV5pWiYwM26PZu3RhQpN9Cjnodv6dGQarXFtQZAWMhUFdwVFlMJeWyxv3yu9L+vW0bOwL9UAohGyX/ETvrY6vv0+vh6D0xzCnWoGWVnW/hMSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KWZA4scx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JhhUwZ5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A03C19423;
-	Sat, 14 Feb 2026 21:27:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KWZA4scx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A2DC2BC86;
+	Sat, 14 Feb 2026 21:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104444;
-	bh=2Sb6YVj2l1Ok2Mmg0zsL+12yGub/lIm0PQt6q4Zz3I8=;
+	s=k20201202; t=1771104445;
+	bh=a7eqF+ZaUe+jrkHBrsCoLpAVDieK8LCjza9XqzFNOwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JhhUwZ5tW3s2UEWpMPNXYf/fF8kh0MH5TjH1uc1rWoK0Wy+sVY6KA5gq2tNsTIggF
-	 4clcOhmCbi1LAEAD8GI5TtS+zJTne928NVip559MUkvRRMfxOJ76HcHA4ZxbTCSwsc
-	 stoWCucP5AggKh0lfpgSLx05Wt0sP+HQ8qw4/zLa/0VYq59Tdww2amEakonatA+wBf
-	 abl6fSkBBiEKPYkgqqh539zdGLg2ck3To0Rt1hZZUEAak7TmLSV35PyzMFJZuE3M+0
-	 B+is1JzXQjQMVpFMSd5SBtVqJiSZqbnI20mexklBB59AP/SDcNrP7txAClPIkIQ3qz
-	 wB1VX5OZE/lTQ==
+	b=KWZA4scx19ESigDiVOKaDHxaC/7Foi1bei0Z0dRHaly/IulIib6Bef85v+4626At8
+	 8trKq9/oXwTJB3cVL/5weOSNPkU5qU9Xm9O8r8+bgj2zWPCYGni1RF4vIXMCeASn7I
+	 mLF/gpPtqkzJzUqs8aqD7eMt/kz4dPXOzXDxO4AOXWH2kRk7+sbY9ex19PyNxP3R6n
+	 W3o/Zt78+dadZa6OfG8uhlZbvrA6uJGlHlz8gHweKMBiMPJ59NxtF6NP5C1MPpMrDw
+	 51VxqAyzrFDOVdPNnftxgP7aUeGd3HPAgqIK5mEbYgJM5yLshWEvW90PwE3VIf3yuS
+	 CazDLRRsvNsiA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux@armlinux.org.uk,
-	andrew@lunn.ch,
-	hkallweit1@gmail.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] net: sfp: add quirk for Lantech 8330-265D
-Date: Sat, 14 Feb 2026 16:23:53 -0500
-Message-ID: <20260214212452.782265-88-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] wifi: rtw89: pci: validate release report content before using for RTL8922DE
+Date: Sat, 14 Feb 2026 16:23:54 -0500
+Message-ID: <20260214212452.782265-89-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -48,133 +44,167 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Behún <kabel@kernel.org>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 86a8e8e0ddbc3d14c799536eb888180b84d002f3 ]
+[ Upstream commit 5f93d611b33a05bd03d6843c8efe8cb6a1992620 ]
 
-Similar to Lantech 8330-262D-E, the Lantech 8330-265D also reports
-2500MBd instead of 3125MBd.
+The commit 957eda596c76
+("wifi: rtw89: pci: validate sequence number of TX release report")
+does validation on existing chips, which somehow a release report of SKB
+becomes malformed. As no clear cause found, add rules ahead for RTL8922DE
+to avoid crash if it happens.
 
-Also, all 8330-265D report normal RX_LOS in EEPROM, but some signal
-inverted RX_LOS. We therefore need to ignore RX_LOS on these modules.
-
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://patch.msgid.link/20260128170044.15576-1-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260123013957.16418-11-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of SFP Quirk Addition for Lantech 8330-265D
+### Detailed Code Change Analysis
 
-### Commit Message Analysis
+The change modifies the `rtw89_pci_release_rpp()` function in two ways:
 
-The commit adds a hardware quirk for the Lantech 8330-265D SFP module.
-It addresses two specific hardware issues:
+**OLD code:**
+```c
+if (unlikely(rpp_info.txch == RTW89_TXCH_CH12)) {
+    rtw89_warn(rtwdev, "should no fwcmd release report\n");
+    return;
+}
+```
 
-1. **Incorrect speed reporting**: The module reports 2500MBd instead of
-   the correct 3125MBd in its EEPROM, preventing it from being
-   recognized as a 2500base-X capable module.
-2. **Inverted RX_LOS signal**: Some units of this module report inverted
-   Loss-of-Signal, while the EEPROM claims normal LOS behavior. Since
-   the behavior is inconsistent across units, the fix ignores LOS
-   entirely.
+**NEW code:**
+```c
+if (unlikely(rpp_info.txch >= RTW89_TXCH_NUM ||
+             info->tx_dma_ch_mask & BIT(rpp_info.txch))) {
+    rtw89_warn(rtwdev, "should no release report on txch %d\n",
+               rpp_info.txch);
+    return;
+}
+```
 
-The commit explicitly references similarity to an existing quirk
-(Lantech 8330-262D-E), establishing a pattern.
+**What changed and why it matters:**
 
-### Code Change Analysis
+1. **Bounds check strengthened**: The old check only rejected `txch ==
+   RTW89_TXCH_CH12` (value 12). The new check rejects `txch >=
+   RTW89_TXCH_NUM` (value >= 13), which catches **out-of-bounds array
+   access** when `rpp_info.txch` is used as an index into
+   `rtwpci->tx.rings[]` (which has `RTW89_TXCH_NUM` = 13 elements).
+   Without this check, a malformed report with `txch >= 13` would cause
+   an **out-of-bounds array access**, potentially leading to a crash.
 
-The change is minimal and contained:
-- **2 lines added**: A new `SFP_QUIRK()` entry for "Lantech" /
-  "8330-265D" with `sfp_quirk_2500basex` and `sfp_fixup_ignore_los`
-- **Comment updated**: The existing comment for the 8330-262D-E is
-  expanded to cover the 8330-265D as well, and explains the LOS issue
-- **No new functions or infrastructure**: Uses existing quirk macros
-  (`SFP_QUIRK`) and existing fixup functions (`sfp_quirk_2500basex`,
-  `sfp_fixup_ignore_los`)
+2. **Masked channel check added**: The new code also checks
+   `info->tx_dma_ch_mask & BIT(rpp_info.txch)`, which rejects release
+   reports for TX channels that are disabled/masked on the specific
+   hardware. Accessing a ring for a masked channel could reference
+   uninitialized data since those rings are not set up during
+   initialization (as confirmed by the `tx_dma_ch_mask` being used to
+   skip ring initialization).
 
-### Classification: Hardware Quirk
+3. **The old CH12 check is subsumed**: RTW89_TXCH_CH12 = 12 is the
+   firmware command channel. For chips like RTL8922DE, `tx_dma_ch_mask`
+   includes `BIT(RTW89_TXCH_CH12)` (since FW CMD channel is typically
+   masked), so the old specific check is generalized into the broader
+   mask-based check.
 
-This falls squarely into the **SFP/Network Quirks** exception category
-explicitly mentioned in the stable backport guidelines. SFP quirks for
-optical modules with broken behavior are specifically called out as
-appropriate for stable trees.
+### 3. CLASSIFICATION
 
-### Risk Assessment
+This is a **bug fix** — specifically a crash prevention fix through
+input validation. It:
+- Prevents out-of-bounds array access (txch >= RTW89_TXCH_NUM)
+- Prevents access to uninitialized TX rings (masked channels)
+- The commit message explicitly says "to avoid crash if it happens"
+- This extends existing validation (from commit 957eda596c76) to cover
+  additional edge cases for RTL8922DE
 
-- **Risk: Extremely Low** — The quirk only triggers for modules with
-  vendor string "Lantech" and product string "8330-265D". It cannot
-  affect any other hardware.
-- **Scope: Minimal** — Two lines of data-driven code in an existing
-  quirk table. No logic changes.
-- **Dependencies: None** — The `SFP_QUIRK` macro, `sfp_quirk_2500basex`,
-  and `sfp_fixup_ignore_los` all already exist in the codebase. This
-  commit is fully self-contained.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### User Impact
+- **Lines changed**: ~6 lines modified in a single function
+- **Files touched**: 1 file (`drivers/net/wireless/realtek/rtw89/pci.c`)
+- **Risk**: Very low. The change only adds/strengthens a bounds check
+  and an already-masked-channel check. It's purely defensive — it only
+  triggers on malformed data and returns early with a warning.
+- **Subsystem**: WiFi driver (rtw89), well-maintained by Realtek
+  engineers
+- **The old behavior (CH12 check) is subsumed**, not removed — it's
+  generalized
 
-Without this quirk:
-- The Lantech 8330-265D SFP module **cannot operate at 2500base-X**
-  because the kernel misinterprets its EEPROM data
-- Some units exhibit **random link drops or failure to establish link**
-  due to inverted RX_LOS being treated as actual signal loss
+### 5. USER IMPACT
 
-These are real, user-impacting hardware issues that make the SFP module
-non-functional or unreliable.
+- **Who is affected**: Users with RTL8922DE WiFi adapters (and
+  potentially other Realtek WiFi chips using the rtw89 driver)
+- **Severity if triggered**: Kernel crash (NULL pointer dereference or
+  out-of-bounds access) — this is HIGH severity
+- **Likelihood**: The referenced commit 957eda596c76 was created because
+  this actually happened with malformed release reports — the cause was
+  unclear but the crash was real
+- **Author**: Ping-Ke Shih from Realtek, the driver maintainer — high
+  trust
 
-### Stability Indicators
+### 6. STABILITY INDICATORS
 
-- Author is **Marek Behún**, the SFP subsystem maintainer — he deeply
-  understands this code
-- Reviewed and merged by **Jakub Kicinski**, the networking subsystem
-  maintainer
-- Follows an established pattern (identical approach to existing
-  8330-262D-E quirk)
-- The fixup functions used (`sfp_quirk_2500basex`,
-  `sfp_fixup_ignore_los`) are well-tested and used by other quirk
-  entries
+- The commit comes from the rtw89 maintainer at Realtek
+- It follows the pattern of an earlier validated fix (957eda596c76)
+- Small, surgical change with clear defensive purpose
 
-### Conclusion
+### 7. DEPENDENCY CHECK
 
-This is a textbook example of a hardware quirk that belongs in stable
-trees. It's a tiny, self-contained, zero-risk addition to an existing
-quirk table that makes specific hardware work correctly. It uses only
-pre-existing infrastructure, was authored and reviewed by the relevant
-maintainers, and fixes real hardware issues (incorrect speed negotiation
-and unreliable link due to inverted LOS).
+- This commit depends on `957eda596c76` being present (which added the
+  initial validation framework including the `rpp_info.seq >=
+  RTW89_PCI_TXWD_NUM_MAX` check that remains unchanged)
+- It also depends on the `tx_dma_ch_mask` field existing in `struct
+  rtw89_pci_info` and the `parse_rpp` callback mechanism
+- The RTL8922DE support needs to exist in the target stable tree
+
+### Summary
+
+This is a small, surgical crash prevention fix that strengthens input
+validation for malformed TX release reports in the rtw89 WiFi driver. It
+prevents:
+1. **Out-of-bounds array access** when `txch >= RTW89_TXCH_NUM` (13)
+2. **Access to uninitialized/disabled TX rings** when the channel is
+   masked
+
+The fix is:
+- Obviously correct (bounds check + mask check before array indexing)
+- Small and contained (6 lines in one function, one file)
+- Fixes a real crash scenario (explicitly stated, and mirrors existing
+  fix for other chips)
+- Written by the driver maintainer at Realtek
+- Very low regression risk (only affects error/malformed paths)
+
+The only concern is whether the RTL8922DE support and the prerequisite
+commit exist in the target stable tree. If the RTL8922DE driver and the
+`tx_dma_ch_mask` infrastructure are present, this is straightforward to
+backport.
 
 **YES**
 
- drivers/net/phy/sfp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 3e023723887c4..43aefdd8b70f7 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -532,9 +532,13 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
- 		  sfp_fixup_ignore_tx_fault),
+diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
+index 093960d7279f8..b8135cf15d13c 100644
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -604,8 +604,10 @@ static void rtw89_pci_release_rpp(struct rtw89_dev *rtwdev, void *rpp)
  
--	// Lantech 8330-262D-E can operate at 2500base-X, but incorrectly report
--	// 2500MBd NRZ in their EEPROM
-+	// Lantech 8330-262D-E and 8330-265D can operate at 2500base-X, but
-+	// incorrectly report 2500MBd NRZ in their EEPROM.
-+	// Some 8330-265D modules have inverted LOS, while all of them report
-+	// normal LOS in EEPROM. Therefore we need to ignore LOS entirely.
- 	SFP_QUIRK_S("Lantech", "8330-262D-E", sfp_quirk_2500basex),
-+	SFP_QUIRK("Lantech", "8330-265D", sfp_quirk_2500basex,
-+		  sfp_fixup_ignore_los),
+ 	info->parse_rpp(rtwdev, rpp, &rpp_info);
  
- 	SFP_QUIRK_S("UBNT", "UF-INSTANT", sfp_quirk_ubnt_uf_instant),
+-	if (unlikely(rpp_info.txch == RTW89_TXCH_CH12)) {
+-		rtw89_warn(rtwdev, "should no fwcmd release report\n");
++	if (unlikely(rpp_info.txch >= RTW89_TXCH_NUM ||
++		     info->tx_dma_ch_mask & BIT(rpp_info.txch))) {
++		rtw89_warn(rtwdev, "should no release report on txch %d\n",
++			   rpp_info.txch);
+ 		return;
+ 	}
  
 -- 
 2.51.0
