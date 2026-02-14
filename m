@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B663EBF2C;
-	Sat, 14 Feb 2026 01:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF333EBF2C;
+	Sat, 14 Feb 2026 01:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030989; cv=none; b=n72P4BcmNsq+SDLV5V66C88RVvjLYOiJuMdIAgv5ng/HT0Eyp+vwOZMAMJWAHZ6yPafh3uvyg4myuUtQES2H1khALzBdKFlICK+2kppAWuj/kPPrCvhHwxintgrUl1RLg9hpW4BGuCofi9U9ITXKuQTI2xmTLyhsYyHakzb2V6E=
+	t=1771030991; cv=none; b=p/YWYNXSCJOocmvdK6HvmM3MyYKFAZkOyro6qoD3NPa9VhHwG2BAyQ7/yxTriLOoO4uBUszOeTozvW7VDFtCqPlDXyE2LyG3z6ugV4tFXCnKuH3GlVdd38eGIJVl0KaOxjpEE8sMJSWnRK44Ja0HoH1sxM14dW7kmwWkmxwFs44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030989; c=relaxed/simple;
-	bh=PLayDhKqDcanYXVlN+N4aQogtWC6XliezDBW70sXeuo=;
+	s=arc-20240116; t=1771030991; c=relaxed/simple;
+	bh=gaA3jb1vSP5RLu1ltGFAqS2zH//J+KBUkCpHH0YIUoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B04pXhxyzXmtovZoyKUxC+VuqiEdmDFz45GsxWnueikhbqtW5RcjHe0su1NwCpJpUdkghzF1OrmY3oycBMmHB40O3vtSSZE3Ys31Q7NG4yI5lc1MSxYeCWgttQ6pTiNs92EmVH8OamgTAN+hUHeNDVHH5jj+OKxLcLAlJRgBARU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E1xuw1AG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QEqGF849k1gijDOYN0EbocJND+/1HSpppN+VTBffveQ98CuSIKhtEhCfSJe+tM/8xLe5mSLPAVaPz/bsCiFwyyfOeI8/pkChsnU4JgJ0xo4SI5zvAkoLLWT9K8YyQL9NkSglBI3f83JR84HPYbDaqYkSQ2Fe98d4/3/p9fqMbUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CTAxUgYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E1xuw1AG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4795EC16AAE;
-	Sat, 14 Feb 2026 01:03:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CTAxUgYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC4BC116C6;
+	Sat, 14 Feb 2026 01:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030989;
-	bh=PLayDhKqDcanYXVlN+N4aQogtWC6XliezDBW70sXeuo=;
+	s=k20201202; t=1771030990;
+	bh=gaA3jb1vSP5RLu1ltGFAqS2zH//J+KBUkCpHH0YIUoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E1xuw1AGsiVSw7oa3qGWgn4Jt+DCPsGjANoz3nQA4J9LOgDfwH+MGlydsN0uHshfw
-	 xXNkczADqlYv9HX6qo3iRj+1WOgofNuTp/EX+qAJQ0D55QOp5MZ5RLDLPtAD7LZkNb
-	 d0/L/yejMHdkQ65eDP7VfZatue6Uc1aTNzKypNyWhUQemQ+/pN1nqxYfe3ROOD1NFE
-	 yzLqZGXn9sZiBfcyEg/3bCov7RlmbW2eobPBPOIQ5LeILqMnkKjfTpUKlB8gIPGu9z
-	 n6KdPdtQv9hez13XdGiVR89gixzmSCBDqfUYWLkh/wNUYuJU7dlLwiBljBZbr6klTr
-	 pgj05BPBlmdgg==
+	b=CTAxUgYk/qWjqbdIFt9SOv6Ma7XK1ktVXZZX+ABvLbj7yj9F7jHC3bKjjoAsEnNKG
+	 EJn5JKvkqMPAkyCt+1rwu9XYaiGQxxbcNVwbSzmhRuxfcbFbMx//UvwiA/5MSeqrwL
+	 I2t9lOM4OGocwlJAAvJ3zvcjrYwro5AAzzkwYCMOvPNgpEBGGWrztaAHehjZJ5QZer
+	 HtSEiNoV5SkpIYAcIvc1vbQiuogdt/TVPMlU3XccHhaYTLZKZIcAIkO0exXL2C8Al5
+	 Ll8wngNbghXgcEF9iCFk33RffyJqpnPFfLY+Z4npuMaFMh3mAOkbnYs4tBmtNHbrma
+	 KbeHsvhzj7Sig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Donet Tom <donettom@linux.ibm.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: =?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Felix.Kuehling@amd.com,
-	amd-gfx@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.19-5.15] drm/amdkfd: Fix GART PTE for non-4K pagesize in svm_migrate_gart_map()
-Date: Fri, 13 Feb 2026 19:58:14 -0500
-Message-ID: <20260214010245.3671907-14-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] HID: pidff: Do not set out of range trigger button
+Date: Fri, 13 Feb 2026 19:58:15 -0500
+Message-ID: <20260214010245.3671907-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -56,115 +53,178 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 6c160001661b6c4e20f5c31909c722741e14c2d8 ]
+[ Upstream commit e01a029654f7fb67d7151365410aa22be4e63dbe ]
 
-In svm_migrate_gart_map(), while migrating GART mapping, the number of
-bytes copied for the GART table only accounts for CPU pages. On non-4K
-systems, each CPU page can contain multiple GPU pages, and the GART
-requires one 8-byte PTE per GPU page. As a result, an incorrect size was
-passed to the DMA, causing only a partial update of the GART table.
+Some games (mainly observed with Kylotonn's WRC Serises) set trigger
+button to a random value, or always the same one, out of range.
+I observed 307 and other values but, for example, my Moza R9 only
+exposes 128 buttons AND it's trigger button field is 8-bit. This causes
+errors to appear in dmesg.
 
-Fix this function to work correctly on non-4K page-size systems by
-accounting for the number of GPU pages per CPU page when calculating the
-number of bytes to be copied.
+Only set the trigger button and trigger interval in the trigger button
+is in range of the field.
 
-Acked-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Philip Yang <Philip.Yang@amd.com>
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the issue. At line 362, `amdgpu_gart_map` already
-correctly iterates `AMDGPU_GPU_PAGES_IN_CPU_PAGE` times per CPU page
-(inner loop `j`). So it generates `npages *
-AMDGPU_GPU_PAGES_IN_CPU_PAGE` PTEs (each 8 bytes), totaling `npages * 8
-* AMDGPU_GPU_PAGES_IN_CPU_PAGE` bytes. But the DMA copy was only copying
-`npages * 8` bytes — a mismatch that results in partial GART updates on
-non-4K systems.
+Now I have a complete picture. Let me provide my analysis.
 
-### 3. Classification
+## Detailed Analysis
 
-This is a clear **bug fix** for incorrect DMA size calculation. On
-non-4K page systems (common on aarch64 and POWER architectures), only a
-fraction of the GART PTEs would be DMA-copied to the GPU page table,
-leading to:
-- **GPU page faults** when accessing unmapped entries
-- **Potential data corruption** if stale GART entries point to wrong
-  memory
-- **GPU hangs** or crashes during SVM (Shared Virtual Memory) migration
+### 1. Commit Message Analysis
 
-### 4. Scope and Risk Assessment
+The commit clearly describes a **real-world bug**: games (specifically
+Kylotonn's WRC Series) set the trigger button to random out-of-range
+values (e.g., 307) when the hardware only supports 128 buttons with an
+8-bit field. This causes errors in dmesg. The author is the driver's
+2025 co-maintainer (Tomasz Pakula, noted at line 6 of the file).
 
-- **Lines changed**: 1 line (minimal)
-- **Files changed**: 1 file
-- **Risk**: Very low. On 4K page systems (x86),
-  `AMDGPU_GPU_PAGES_IN_CPU_PAGE` = 1, so the behavior is unchanged. The
-  fix only affects non-4K systems where it was broken.
-- **Subsystem**: AMD KFD (Kernel Fusion Driver) — GPU compute path, used
-  for HPC and AI workloads on AMD GPUs
+### 2. Code Change Analysis
 
-### 5. User Impact
+**The bug mechanism:** In `pidff_set_effect_report()`, the trigger
+button value from userspace (`effect->trigger.button`) is written
+directly to the HID field value without any bounds checking:
 
-This affects users running:
-- AMD GPUs with KFD/ROCm on **aarch64 or POWER** systems (which commonly
-  use 64K pages)
-- SVM (Shared Virtual Memory) migration operations
-- Without this fix, GPU compute workloads would be broken or unreliable
-  on non-4K page systems
+```526:526:drivers/hid/usbhid/hid-pidff.c
+        pidff->set_effect[PID_TRIGGER_BUTTON].value[0] =
+effect->trigger.button;
+```
 
-### 6. Stability Indicators
+When this value exceeds what the HID field can hold (e.g., 307 in an
+8-bit field with max 128), the `implement()` function in `hid-core.c`
+catches it and emits a **non-rate-limited** warning:
 
-- Reviewed and acked by 3 AMD DRM maintainers/developers
-- The fix is mathematically obvious — the existing `amdgpu_gart_map`
-  function already generates `AMDGPU_GPU_PAGES_IN_CPU_PAGE` PTEs per CPU
-  page, so the copy size must match
-- No-op on 4K page systems, so zero risk of regression for x86
+```1472:1477:drivers/hid/hid-core.c
+                if (unlikely(value > m)) {
+                        hid_warn(hid,
+                                 "%s() called with too large value %d
+(n: %d)! (%s)\n",
+                                 __func__, value, n, current->comm);
+                        value &= m;
+                }
+```
 
-### 7. Dependency Check
+`hid_warn` maps to `dev_warn()` which is **not rate-limited** (unlike
+`hid_warn_ratelimited`). Since force feedback effects can be updated at
+frame rate (60-144+ Hz), this can produce hundreds of kernel warnings
+per second during gameplay.
 
-The fix uses `AMDGPU_GPU_PAGES_IN_CPU_PAGE` which has been defined in
-`amdgpu_gart.h` for a long time. The `svm_migrate_gart_map` function and
-the surrounding code exist in all recent stable trees. No additional
-dependencies needed.
+**The fix adds a simple bounds check:** If `trigger.button` exceeds
+`field->logical_maximum`, both trigger button and trigger repeat
+interval are set to 0 (disabled), which is the correct semantic - an
+invalid trigger button should mean "no trigger." Otherwise, the values
+pass through normally. The fix is +10 lines of straightforward
+validation logic.
 
-### Summary
+### 3. Impact Assessment
 
-This is a textbook stable backport candidate:
-- **Obviously correct**: One-line fix that aligns DMA copy size with the
-  actual number of PTEs generated
-- **Fixes a real bug**: Partial GART table update on non-4K page systems
-- **Small and contained**: Single line change in a single file
-- **No new features**: Pure bug fix
-- **Low risk**: No-op on 4K (x86) systems; fixes broken behavior on
-  non-4K systems
-- **Well-reviewed**: Multiple AMD maintainer acks/reviews
+- **Who is affected:** Users of HID PID force feedback devices (racing
+  wheels like Moza R9, Thrustmaster, etc.) playing games that set out-
+  of-range trigger button values (WRC Series and likely others).
+- **What happens without the fix:**
+  1. **Kernel log flooding** - unrestricted `hid_warn()` called per-
+     frame can fill system logs
+  2. **Silent value corruption** - `implement()` masks the value with `&
+     m`, mapping to a random valid button rather than disabling the
+     trigger
+  3. **Performance degradation** from excessive logging
+- **Severity:** Moderate - causes persistent dmesg spam and incorrect
+  device behavior, but no crash/corruption/security issue.
+
+### 4. Scope and Risk
+
+- **Size:** Very small - 10 lines added in one function in one file
+- **Risk:** Near-zero regression risk. Only adds an `if/else` bounds
+  check with a sensible default
+- **Subsystem:** HID force feedback - well-contained, affects only FF-
+  capable USB HID devices
+
+### 5. Backport Applicability
+
+- **v6.18.y:** Patch applies cleanly (function matches HEAD context)
+- **v6.15-v6.17:** Function has same structure with `pidff_set_time()` -
+  minor context adjustment needed
+- **v6.14 and earlier (LTS: v6.12.y, v6.6.y, v6.1.y, v5.15.y):**
+  Function uses old code pattern (direct `.value[0]` assignment instead
+  of `pidff_set_time()`). The fix concept is trivially portable but the
+  patch won't apply as-is. The old code at v6.14 is:
+  ```c
+  pidff->set_effect[PID_TRIGGER_BUTTON].value[0] =
+  effect->trigger.button;
+  pidff->set_effect[PID_TRIGGER_REPEAT_INT].value[0] =
+  effect->trigger.interval;
+  ```
+  The bug has existed since the driver was created (~2007).
+
+### 6. Stable Criteria Assessment
+
+| Criteria | Assessment |
+|---|---|
+| Obviously correct and tested | Yes - simple bounds check, tested with
+Moza R9 + WRC games |
+| Fixes a real bug | Yes - out-of-range values cause log spam and wrong
+behavior |
+| Important issue | Moderate - dmesg flooding + incorrect FF behavior |
+| Small and contained | Yes - 10 lines in one function |
+| No new features | Correct - pure input validation |
+
+### 7. Concerns
+
+- The patch uses C99 mixed declarations (`s32 trigger_button_max = ...`
+  in the middle of the function body). While this is accepted in modern
+  kernel coding, some older stable trees may have stricter compilation
+  settings. For LTS backports, this should be declared at function
+  scope.
+- For LTS trees (6.12.y and earlier), a hand-adapted backport is needed
+  since the 2025 refactoring isn't present.
+
+### Conclusion
+
+This is a valid input validation fix that prevents kernel log flooding
+and incorrect force feedback behavior caused by userspace (games)
+sending out-of-range trigger button values. The fix is small, obviously
+correct, zero-risk, and addresses a real-world problem reported by force
+feedback device users. Despite needing adaptation for older LTS trees,
+the concept is trivially portable.
 
 **YES**
 
- drivers/gpu/drm/amd/amdkfd/kfd_migrate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/usbhid/hid-pidff.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-index 6ada7b4af7c68..5086caac3fd06 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-@@ -61,7 +61,7 @@ svm_migrate_gart_map(struct amdgpu_ring *ring, u64 npages,
- 	*gart_addr = adev->gmc.gart_start;
+diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
+index 95377c5f63356..a4e700b40ba9b 100644
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -523,9 +523,19 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
+ 	pidff_set_duration(&pidff->set_effect[PID_DURATION],
+ 			   effect->replay.length);
  
- 	num_dw = ALIGN(adev->mman.buffer_funcs->copy_num_dw, 8);
--	num_bytes = npages * 8;
-+	num_bytes = npages * 8 * AMDGPU_GPU_PAGES_IN_CPU_PAGE;
+-	pidff->set_effect[PID_TRIGGER_BUTTON].value[0] = effect->trigger.button;
+-	pidff_set_time(&pidff->set_effect[PID_TRIGGER_REPEAT_INT],
+-		       effect->trigger.interval);
++	/* Some games set this to random values that can be out of range */
++	s32 trigger_button_max =
++		pidff->set_effect[PID_TRIGGER_BUTTON].field->logical_maximum;
++	if (effect->trigger.button <= trigger_button_max) {
++		pidff->set_effect[PID_TRIGGER_BUTTON].value[0] =
++			effect->trigger.button;
++		pidff_set_time(&pidff->set_effect[PID_TRIGGER_REPEAT_INT],
++			       effect->trigger.interval);
++	} else {
++		pidff->set_effect[PID_TRIGGER_BUTTON].value[0] = 0;
++		pidff->set_effect[PID_TRIGGER_REPEAT_INT].value[0] = 0;
++	}
++
+ 	pidff->set_effect[PID_GAIN].value[0] =
+ 		pidff->set_effect[PID_GAIN].field->logical_maximum;
  
- 	r = amdgpu_job_alloc_with_ib(adev, &adev->mman.high_pr,
- 				     AMDGPU_FENCE_OWNER_UNDEFINED,
 -- 
 2.51.0
 
