@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21C03126B2;
-	Sat, 14 Feb 2026 21:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E3B27510B;
+	Sat, 14 Feb 2026 21:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104447; cv=none; b=XZP+X6fi8EkWMQAg3cqdYuauFGCuFYmnBWjN+JrvUIbBf0SGU+3Uo842LMwJ7K2RLxlgN4m7uvAJ24mIFdwy0I9lu1yITB0b1m03HZLL9evj0lMTUeEfYzngVmJpdzlYQAMBzA0zMn4Ww+5Ut7jQSbIJRQZpdcSgbTHIAXUJv3k=
+	t=1771104452; cv=none; b=eMj949aeKnl4Md2s5TglTk/LumDElRP3hk8LgYGaRLUo+atGQ203nBQHPzHdAmZCk7XcyvoXufsLvdQ2clOqBWR/RHPBdAgvo9s0jxJpTC1LjKp22XF3ZAq8afaL8hfEV+Ups/A6s8Z8whvV3HNDCNOk1esK89UXyIxAMXvO0uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104447; c=relaxed/simple;
-	bh=R+qX/dkrpBBCavbTroNjk+lNEn38yjTGaEYPb+S4W00=;
+	s=arc-20240116; t=1771104452; c=relaxed/simple;
+	bh=ACxywjYmrjn8CZAVfqow64A/BOwi0uBOOFpXlYvOvLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tcHyXUljOhudpW/1T8E5YsZcZU0he2z8MP9DJ5T/gHV+6NDNxM2Lhnv8mxDvQaVPJIH4MTSxz2Ljb1a4Eu/EWeAGeS1wAzYktI4fxTGwPDKxVI1J2IkoAr5Z/HeD48XKPfSwvZUc9pCv+uoALxa2lKQdiGdlOUTSf8VnD2Wqh64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LaF8n+Wd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RBmr6Ha2sBJ/a5cneiKNm3Qo+9PyU9/4hmYNpSJ7wYX/6b0UsFJp9jyrqQ3Uez8E0zWwzasFapzbxL846ZAULLsv7+4Q5IAFM/uNc4+yZYCzKWOD7Emz3v0P+nzaboUyXzC0mY/UEt8T/5envrAcC7wod3dHiWfxf0rWSysRko8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fGCeI9yf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LaF8n+Wd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01CAC16AAE;
-	Sat, 14 Feb 2026 21:27:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fGCeI9yf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AD8C19423;
+	Sat, 14 Feb 2026 21:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104447;
-	bh=R+qX/dkrpBBCavbTroNjk+lNEn38yjTGaEYPb+S4W00=;
+	s=k20201202; t=1771104451;
+	bh=ACxywjYmrjn8CZAVfqow64A/BOwi0uBOOFpXlYvOvLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LaF8n+WdhwV4M+N/2/m80YrHiZ6MalvKhdJMln7I5ESUtEvOVr3BnbDe/p0lQ+RNG
-	 BGr+KYHV/wDNU6rFYj20wFvzsgd9hL/ikUWJFmg7iiZUuLa0AXXUOm5RqRZg5T5QKW
-	 ai5sX25Cv/xv6fNEiWFM0YvpqXT5U+lx4dvQU1XwoXEX9KtFzetYoznvEL6A1olYyW
-	 075ieIqCcyTKE3G+UC1XW6yjX/Q7zFgQRNS4Kv7dj0LfEZHCvxz7n7l5NUoVQTuv2i
-	 zLjZi3joRp8kAdZFdHpBAZqHiorSkEUHVk0IuUnr7BroS/LMuIJR12czs54I3LxLiA
-	 OqHq5s0PoXKpw==
+	b=fGCeI9yfxixC7PccSGMtaFX1IZvc/jHqXr/hrpPe3PxqkmCfhI6AhGfSEvsGMRVUV
+	 wC064PygT2H+VIAgAfm6RToxbhdTMf5E92VVZsqx2jnG+9wK12uu266GtV+KJ9XCWv
+	 NLtYGlA3ZmKvtUgEoZPdDP2dxYR4VVNawXvcPD4Ct2LqS9ewVpgu9hCLk9ZCt2hZ5k
+	 9AZsCoe6bK5Gn7/VcFoL0XzH6PzZLagfL83qMAllHxNBRB9ZQQZ47YKvulo9svip4X
+	 rHrFtaOVi0pW+CnGEpV0xg/l3zmD5ogLpZnc3MjwctdJSzAiGAHcOPiJRQMFQfoxvb
+	 UQ52euAqVvy6g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jacopo Scannella <code@charlie.cat>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Wander Lairson Costa <wander@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] Bluetooth: btusb: Add device ID for Realtek RTL8761BU
-Date: Sat, 14 Feb 2026 16:23:56 -0500
-Message-ID: <20260214212452.782265-91-sashal@kernel.org>
+	rostedt@goodmis.org,
+	neil.armstrong@linaro.org,
+	crwood@redhat.com,
+	ipravdin.official@gmail.com,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-6.18] rtla: Fix NULL pointer dereference in actions_parse
+Date: Sat, 14 Feb 2026 16:23:57 -0500
+Message-ID: <20260214212452.782265-92-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -53,100 +55,142 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jacopo Scannella <code@charlie.cat>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit cc6383d4f0cf6127c0552f94cae517a06ccc6b17 ]
+[ Upstream commit a0890f9dbd24b302d327fe7dad9b9c5be0e278aa ]
 
-Add USB device ID 0x2c0a:0x8761 to the btusb driver fo the Realtek
-RTL8761BU Bluetooth adapter.
+The actions_parse() function uses strtok() to tokenize the trigger
+string, but does not check if the returned token is NULL before
+passing it to strcmp(). If the trigger parameter is an empty string
+or contains only delimiter characters, strtok() returns NULL, causing
+strcmp() to dereference a NULL pointer and crash the program.
 
-Reference:
-https://www.startech.com/en-us/networking-io/av53c1-usb-bluetooth
+This issue can be triggered by malformed user input or edge cases in
+trigger string parsing. Add a NULL check immediately after the strtok()
+call to validate that a token was successfully extracted before using
+it. If no token is found, the function now returns -1 to indicate a
+parsing error.
 
-Signed-off-by: Jacopo Scannella <code@charlie.cat>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Link: https://lore.kernel.org/r/20260106133655.249887-13-wander@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+## Analysis of rtla NULL Pointer Dereference Fix
 
 ### Commit Message Analysis
-The commit adds a USB device ID (0x2c0a:0x8761) for the Realtek
-RTL8761BU Bluetooth adapter to the btusb driver. It references a
-specific commercial product (StarTech USB Bluetooth adapter), confirming
-this is real hardware that users need supported.
+
+The commit message is clear and explicit: it fixes a **NULL pointer
+dereference** in `actions_parse()`. The bug mechanism is well-explained:
+- `strtok()` can return NULL when given an empty string or a string
+  containing only delimiters
+- The returned value is passed directly to `strcmp()` without a NULL
+  check
+- This causes a crash (NULL pointer dereference)
+
+The commit is from a Red Hat engineer, reviewed and applied by another
+Red Hat engineer, and posted to the kernel mailing list with a proper
+Link tag.
 
 ### Code Change Analysis
-The change is a single line addition:
+
+The fix is extremely small and surgical: **2 lines added**.
+
 ```c
-{ USB_DEVICE(0x2c0a, 0x8761), .driver_info = BTUSB_REALTEK },
+token = strtok(trigger_c, ",");
++       if (!token)
++               return -1;
+
+if (strcmp(token, "trace") == 0)
 ```
 
-This adds a new USB vendor/product ID entry to the `quirks_table[]` in
-`drivers/bluetooth/btusb.c`. The entry uses the `BTUSB_REALTEK`
-driver_info flag, which routes the device through the existing Realtek
-firmware loading and initialization path that is already well-tested for
-many other Realtek Bluetooth adapters.
+This is a textbook NULL check before dereference. The function already
+returns `-1` for invalid trigger types, so this is consistent with
+existing error handling patterns. The change:
 
-### Classification
-This falls squarely into the **New Device IDs** exception category. The
-stable kernel rules explicitly allow adding device IDs to existing
-drivers:
-- The btusb driver already exists in all stable trees
-- The Realtek support code (`BTUSB_REALTEK`) is already present
-- Only the ID mapping is new — no new code paths are exercised
+1. Adds a NULL check after `strtok()` returns
+2. Returns `-1` (error) if no token was found
+3. Prevents the subsequent `strcmp(token, ...)` calls from crashing
 
-### Scope and Risk Assessment
-- **Lines changed:** 1 (single line addition)
-- **Files touched:** 1 (`drivers/bluetooth/btusb.c`)
-- **Risk:** Essentially zero. This only affects devices with USB ID
-  0x2c0a:0x8761. It cannot affect any other hardware or code path. If
-  the ID is wrong, the worst case is that this specific adapter doesn't
-  work — no regression for anyone else.
+### Bug Classification
 
-### User Impact
-Without this device ID, users with the Realtek RTL8761BU (StarTech
-AV53C1) Bluetooth adapter simply cannot use it at all with Linux. The
-device won't be recognized by the btusb driver. This is a complete
-hardware enablement issue — the fix makes the difference between "device
-works" and "device doesn't work."
+- **Type**: NULL pointer dereference (crash/segfault)
+- **Trigger**: Malformed user input (empty string or delimiter-only
+  string passed as trigger)
+- **Severity**: Program crash - rtla is a userspace tool, so this is a
+  userspace crash, not a kernel crash
+- **Scope**: Affects the `rtla` tracing tool (a userspace utility in
+  `tools/tracing/rtla/`)
 
-### Dependency Check
-No dependencies. The `BTUSB_REALTEK` flag and all associated Realtek
-support code have been in the kernel for years and are present in all
-actively maintained stable trees.
+### Important Context: This is a Userspace Tool
 
-### Minor Note on Placement
-The new entry is placed under the "Additional Realtek 8723BU Bluetooth
-devices" comment section, while the subject says "RTL8761BU." This is a
-minor organizational issue (it would fit better near the "Additional
-Realtek 8761BUV" section), but it has zero functional impact — the
-quirks_table is searched linearly and the position doesn't matter.
+The file is in `tools/tracing/rtla/` — this is **rtla** (Real-Time Linux
+Analysis), a userspace tool shipped with the kernel source tree. It's
+not kernel code per se, but a userspace utility that ships alongside the
+kernel.
 
-### Conclusion
-This is a textbook example of a device ID addition that should be
-backported. It's a single-line, zero-risk change that enables real
-hardware for real users, using an existing well-tested driver path.
+### Stable Kernel Criteria Assessment
+
+1. **Obviously correct and tested**: Yes — a simple NULL check before
+   dereference. The fix is trivially correct.
+2. **Fixes a real bug**: Yes — NULL pointer dereference causing a crash
+   on malformed input.
+3. **Important issue**: Moderate — it's a crash in a userspace tool, not
+   a kernel crash. However, it can be triggered by user input, which
+   makes it a robustness issue.
+4. **Small and contained**: Yes — 2 lines, 1 file, purely additive
+   safety check.
+5. **No new features**: Correct — this is purely a bug fix.
+6. **Applies cleanly**: Should apply cleanly as it's a minimal change.
+
+### Risk Assessment
+
+- **Risk**: Essentially zero. Adding a NULL check and returning an error
+  code cannot introduce a regression. The function already handles the
+  `-1` return for other invalid inputs.
+- **Benefit**: Prevents a crash when rtla receives malformed trigger
+  input.
+
+### Considerations
+
+- This is a **userspace tool** fix, not a kernel fix. The stable kernel
+  rules primarily target kernel code, but tools shipped with the kernel
+  tree do get backported regularly.
+- The fix is so small and obviously correct that there's virtually no
+  risk.
+- The `rtla` tool is used by real-time Linux users who rely on it for
+  system analysis — a crash on malformed input is a real usability
+  issue.
+
+### Verdict
+
+This is a straightforward NULL pointer dereference fix in a userspace
+tool. It's small (2 lines), obviously correct, fixes a real crash
+triggered by user input, and has zero regression risk. While it's a
+userspace tool rather than kernel code, such fixes are commonly
+backported to stable trees. The fix meets all stable kernel criteria.
 
 **YES**
 
- drivers/bluetooth/btusb.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/tracing/rtla/src/actions.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 972139729e8fd..cbb6ab2fd5e45 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -779,6 +779,7 @@ static const struct usb_device_id quirks_table[] = {
+diff --git a/tools/tracing/rtla/src/actions.c b/tools/tracing/rtla/src/actions.c
+index 8945aee58d511..15986505b4376 100644
+--- a/tools/tracing/rtla/src/actions.c
++++ b/tools/tracing/rtla/src/actions.c
+@@ -141,6 +141,8 @@ actions_parse(struct actions *self, const char *trigger, const char *tracefn)
  
- 	/* Additional Realtek 8723BU Bluetooth devices */
- 	{ USB_DEVICE(0x7392, 0xa611), .driver_info = BTUSB_REALTEK },
-+	{ USB_DEVICE(0x2c0a, 0x8761), .driver_info = BTUSB_REALTEK },
+ 	strcpy(trigger_c, trigger);
+ 	token = strtok(trigger_c, ",");
++	if (!token)
++		return -1;
  
- 	/* Additional Realtek 8723DE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0xb009), .driver_info = BTUSB_REALTEK },
+ 	if (strcmp(token, "trace") == 0)
+ 		type = ACTION_TRACE_OUTPUT;
 -- 
 2.51.0
 
