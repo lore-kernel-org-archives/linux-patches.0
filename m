@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF377194098;
-	Sat, 14 Feb 2026 01:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620E617B506;
+	Sat, 14 Feb 2026 01:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031056; cv=none; b=UJAIoEPR1KDpYa83K2Msuia//GZ+/x+BHvc+GtisSF2DRKqiK7XE3Y4qXC+YtxZnAAiIvOqCE/XCHsXFK0t4FOek4Dmx8E+zLTHwXyXEL+BFZfhHvKFB96s1DAMX58bj6dnRhLcOvCzxIZfB0tvzN5vsvPeCDkaq13hLkG7315M=
+	t=1771031058; cv=none; b=EHgJQe6uWvK41TNMjRIeXhx5Oym+4Y8JIWU0d3xYxxm9LevaDRDMtuVofGZ65E87u+oCsSccx0SoOOqa83gwiuJvNTAd9pEMI2GYWQAWqUhVbuDT7qkOfh8mEZVKwOR3Vdhc3Th7CQQY3hYDnWSHkiG7+qCkp9F7bLk528zSVBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031056; c=relaxed/simple;
-	bh=f7dNVhnQxuS+2EpCYERN03CB3MKHM5W5fa7IgT7GWXM=;
+	s=arc-20240116; t=1771031058; c=relaxed/simple;
+	bh=8+SbarDVbRZxOg/pWYIHay+wdz+dAk1f4lkH7xgnv24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BWhilxM1oxObbNDIto28BFiT1o5gdQ9y0grZFOd1BEauyHOOdDOZTbru3s2mxj7bCaBXMR8Dfu+iNatKAAjCoJtFxIXI9sHKTbBX6BoQ18ew66D164vyAMCj7l5PCMLocSGszXSFSqCai4EQKmvswpAe2yQ1CyWJrU5R4awqLxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1wWoKnZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=a4oPFppprb7g8ZytQGpeo8dDcZYmphgDTBpJvVlMLtGS4vlcfJbSXHkeUnbSVbd+taFUozBSOSfwRTsZfZp7nUdrWjbt0bRU07AA6mFytgrrx9PKwOzF1RmPTdhXIFZCNQcFR7e+O9RGrut5oDtYMHWCz4xf6l8nXeH2uEs98As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LZLRr9vl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1wWoKnZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F06EC116C6;
-	Sat, 14 Feb 2026 01:04:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LZLRr9vl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C36C116C6;
+	Sat, 14 Feb 2026 01:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031056;
-	bh=f7dNVhnQxuS+2EpCYERN03CB3MKHM5W5fa7IgT7GWXM=;
+	s=k20201202; t=1771031058;
+	bh=8+SbarDVbRZxOg/pWYIHay+wdz+dAk1f4lkH7xgnv24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1wWoKnZ4ZgYFGtyxdhNK9EJNlCPdIs3YVbm3RswwQQPDl2DecM02btPX3ujiLiIJ
-	 8qPCNlEaj9zKPRV73yDRqPCmLtw0N8tB+ZcXml7fVhg102d6MKmOKmaTtkQWPkqC0P
-	 zHdKH13GPLI0qLM/27K5wXj6KMab0w2uf8OrIfvwJH7ICKmoPb7SkGlFy2jPn7Jhaf
-	 gjttPe/BET12CZcG82fdy5CtS8OZCnkTYRBYcGvCAY5rRLlGFhfDSM3zkzMHeCm5sA
-	 WO0898dIHNkrYATAqGO20sUCor4DRF2Q898J4UUzMQI14Tnf5CHFUwvhc8Gwk/332B
-	 ZQ1aBmSWRBjIA==
+	b=LZLRr9vlc1AKJJac4JCRDaM7ZWMR9lOYo88KEbfKQ1Da1FjK4VDCJ4GAdm26WN7qe
+	 vq0HTUN7owD6k7QxpGK42FTdWTgQd+EXlAjFRSbRlRxnJBPGtKKY2WLgIAJf1jptIz
+	 +VYR/z8GTPBR+dUALtDQ78gYMZ9pPsqdWqRvlUF8GVpXx9TrnOxiOG93MpQeO0VeWx
+	 APwtihaFaQc4Imd2hLvK2nrNlRhMHkkC9WIEoGw8t/74RW+xcuTWT7P2tBPt8Sgk/U
+	 VCqZ3e1vFpFvGQcYDwMZd8H6QrOLMuDwLQNOb4PlsOa3wv65mmhVQ0xtABwrduESPt
+	 XsUvI1q4RCAnw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Yew, Chang Ching" <chang.ching.yew@intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] media: v4l2-async: Fix error handling on steps after finding a match
-Date: Fri, 13 Feb 2026 19:58:42 -0500
-Message-ID: <20260214010245.3671907-42-sashal@kernel.org>
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] PCI: Add Intel Nova Lake audio Device ID
+Date: Fri, 13 Feb 2026 19:58:43 -0500
+Message-ID: <20260214010245.3671907-43-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -52,262 +56,129 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 7345d6d356336c448d6b9230ed8704f39679fd12 ]
+[ Upstream commit b190870e0e0cfb375c0d4da02761c32083f3644d ]
 
-Once an async connection is found to be matching with an fwnode, a
-sub-device may be registered (in case it wasn't already), its bound
-operation is called, ancillary links are created, the async connection
-is added to the sub-device's list of connections and removed from the
-global waiting connection list. Further on, the sub-device's possible own
-notifier is searched for possible additional matches.
+Add Nova Lake (NVL) audio Device ID
 
-Fix these specific issues:
+The ID will be used by HDA legacy, SOF audio stack and the driver
+to determine which audio stack should be used (intel-dsp-config).
 
-- If v4l2_async_match_notify() failed before the sub-notifier handling,
-  the async connection was unbound and its entry removed from the
-  sub-device's async connection list. The latter part was also done in
-  v4l2_async_match_notify().
-
-- The async connection's sd field was only set after creating ancillary
-  links in v4l2_async_match_notify(). It was however dereferenced in
-  v4l2_async_unbind_subdev_one(), which was called on error path of
-  v4l2_async_match_notify() failure.
-
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Tested-by: "Yew, Chang Ching" <chang.ching.yew@intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260120193507.14019-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of media: v4l2-async: Fix error handling on steps after
-finding a match
+## Analysis: PCI: Add Intel Nova Lake audio Device ID
 
-### 1. COMMIT MESSAGE ANALYSIS
+### Commit Message Analysis
 
-The subject explicitly says "Fix error handling" — this is a bug fix.
-The commit message describes two specific issues:
+This commit adds a single PCI Device ID (`0xd328`) for Intel Nova Lake
+(NVL) audio hardware to `include/linux/pci_ids.h`. The commit message
+clearly states the ID will be used by HDA legacy, SOF audio stack, and
+the intel-dsp-config driver to determine which audio stack should be
+used.
 
-1. **Double cleanup of async connection list entry**: When
-   `v4l2_async_match_notify()` failed before sub-notifier handling, the
-   async connection was unbound and its entry removed from the sub-
-   device's async connection list *twice* — once inside
-   `v4l2_async_match_notify()` and once in the caller's error path.
+The commit has strong review coverage:
+- Reviewed-by from 3 Intel audio engineers (Kai Vehmanen, Liam Girdwood,
+  Ranjani Sridharan)
+- Acked-by from the PCI maintainer (Bjorn Helgaas)
+- Acked-by from the ALSA maintainer (Takashi Iwai)
 
-2. **NULL pointer dereference**: The `asc->sd` field was only set
-   *after* creating ancillary links, but
-   `v4l2_async_unbind_subdev_one()` (called on the error path)
-   dereferences `asc->sd`. If `v4l2_async_match_notify()` failed before
-   `asc->sd` was assigned, this would cause a NULL pointer dereference.
+### Code Change Analysis
 
-These are real bugs — a double list_del (list corruption) and a NULL
-pointer dereference (crash).
+The change is a single line addition in `include/linux/pci_ids.h`:
 
-### 2. CODE CHANGE ANALYSIS
+```c
++#define PCI_DEVICE_ID_INTEL_HDA_NVL    0xd328
+```
 
-The patch restructures `v4l2_async_match_notify()` by:
+This is purely a PCI ID definition — a `#define` macro. It adds no
+logic, no new functions, no behavioral changes. It simply defines a
+constant that other code (HDA driver, SOF driver, intel-dsp-config) can
+reference.
 
-**a) Splitting the function**: The sub-notifier discovery logic is
-extracted into a new function `v4l2_async_nf_try_subdev_notifier()`.
-This separates concerns so that `v4l2_async_match_notify()` handles only
-the matching/binding, and the sub-notifier logic is called separately by
-the caller.
+### Classification: New Device ID
 
-**b) Fixing error paths in `v4l2_async_match_notify()`**:
-- The error labels are moved to *after* the success return (`return 0`),
-  ensuring that on success the function returns cleanly without falling
-  through to error handling.
-- The `err_call_unbind` label properly calls
-  `v4l2_async_nf_call_unbind()` and removes the list entry.
-- The `err_unregister_subdev` label only unregisters if `registered` is
-  true.
-- Crucially, `asc->sd` is set *before* the error labels, so
-  `v4l2_async_unbind_subdev_one()` in the caller won't dereference NULL.
+This falls squarely into the **"New Device IDs"** exception category for
+stable backports:
+- It's a trivial one-line addition defining a PCI Device ID
+- It enables hardware support for Intel Nova Lake audio
+- The drivers that consume this ID (HDA, SOF, intel-dsp-config) already
+  exist in stable trees
 
-**c) Fixing caller error handling in `__v4l2_async_register_subdev()`**:
-- New error labels: `err_unlock` (just unlocks mutex) and
-  `err_unbind_one` (unbinds single connection).
-- If `v4l2_async_match_notify()` fails, it jumps to `err_unlock` — the
-  function already cleaned up internally.
-- If `v4l2_async_nf_try_subdev_notifier()` fails, it jumps to
-  `err_unbind_one`.
-- If `v4l2_async_nf_try_complete()` fails, it jumps to `err_unbind`
-  (full unbind).
-- The redundant `if (asc)` check is removed since `asc` is always valid
-  at that point.
+### Important Caveat: Dependency Check
 
-**d) Same pattern in `v4l2_async_nf_try_all_subdevs()`**: The sub-
-notifier call is now done separately after `v4l2_async_match_notify()`.
+However, there's a critical consideration: **this commit only adds the
+PCI ID definition**. By itself, this `#define` does nothing — it's just
+a constant. For Nova Lake audio to actually work, the drivers that
+reference `PCI_DEVICE_ID_INTEL_HDA_NVL` must also be updated with their
+own patches to add this ID to their device tables and configuration
+logic.
 
-### 3. BUG CLASSIFICATION
+The commit message says "The ID will be used by HDA legacy, SOF audio
+stack and the driver to determine which audio stack should be used
+(intel-dsp-config)." The subject line includes "2-" in the Link URL
+(`14019-2-peter.ujfalusi@linux.intel.com`), suggesting this is part of a
+series.
 
-- **NULL pointer dereference**: `asc->sd` dereferenced when NULL — this
-  is a crash bug.
-- **List corruption / double cleanup**: Removing an entry from a list
-  twice can corrupt the list, leading to crashes or undefined behavior.
+Without the companion patches that actually use this define in the
+driver match tables, this define alone provides no user-visible benefit.
+However:
 
-Both are serious bugs that can cause kernel crashes.
+1. The define itself is completely harmless — zero risk of regression
+2. It's a prerequisite for the actual driver patches
+3. PCI ID defines are commonly backported as part of hardware enablement
 
-### 4. SCOPE AND RISK ASSESSMENT
+### Risk Assessment
 
-- **Files changed**: 1 file (`drivers/media/v4l2-core/v4l2-async.c`)
-- **Nature of changes**: Refactoring a function into two pieces and
-  fixing error handling labels
-- **Lines changed**: Moderate (~80 lines of diff), but the logic changes
-  are focused on error paths
-- **Risk**: Medium — the refactoring is non-trivial as it splits a
-  function and changes error flow in two call sites. However, the logic
-  is straightforward and the changes are well-contained.
+- **Risk**: Essentially zero. It's a `#define` in a header file. It
+  cannot cause any regression.
+- **Benefit**: Enables Intel Nova Lake audio hardware support (when
+  companion driver patches are also present)
+- **Scope**: Single line, single file
 
-### 5. USER IMPACT
+### User Impact
 
-The V4L2 async framework is used by many camera/media subsystems,
-especially on embedded platforms (ARM SoCs with ISPs). The bugs are
-triggered on error paths during device probe, which can happen when:
-- Hardware initialization fails
-- Firmware nodes don't match properly
-- Resource allocation fails
+Users with Intel Nova Lake hardware need this ID (and the companion
+driver patches) for audio to work. Without it, audio on Nova Lake
+platforms would be non-functional.
 
-This affects embedded/SoC users running stable kernels (Android,
-embedded Linux).
+### Conclusion
 
-### 6. STABILITY INDICATORS
-
-- **Tested-by**: "Yew, Chang Ching" — indicates real testing
-- **Author**: Sakari Ailus — a well-known V4L2/media subsystem
-  maintainer
-- **Signed-off by**: Hans Verkuil — the V4L2 subsystem maintainer
-- Both bugs are clearly identified and the fix is logical
-
-### 7. DEPENDENCY CHECK
-
-The patch is self-contained within `v4l2-async.c`. It refactors existing
-code rather than depending on new APIs. The main concern would be
-whether the code being patched exists in older stable trees in the same
-form. The `v4l2_async_connection` type and the specific function
-signatures suggest this is relatively recent code, but the fix should
-apply to any tree containing these functions.
-
-### 8. CONCERNS
-
-- The patch is somewhat large due to the function extraction, not just a
-  simple one-liner. However, the refactoring is necessary to properly
-  separate the error handling concerns.
-- The function split makes the error handling cleaner and more correct,
-  which is exactly what stable trees need.
-- The changes need careful backporting review to ensure they apply
-  cleanly to each target stable tree.
-
-### CONCLUSION
-
-This commit fixes two real bugs: a NULL pointer dereference and a double
-list cleanup (list corruption). Both can cause kernel crashes. The fix
-is authored and reviewed by the V4L2 subsystem maintainers, has been
-tested, and is contained to a single file. While the patch is moderately
-sized due to the function extraction, the changes are logically sound
-and necessary to fix the error handling properly. The bugs affect real
-embedded/media users.
+This is a textbook example of a new device ID addition — one of the
+explicitly allowed exceptions for stable backporting. It's a single-
+line, zero-risk change that enables hardware support. The only
+consideration is that it needs companion patches in the actual drivers
+to be useful, but the define itself is harmless and is a standard
+prerequisite.
 
 **YES**
 
- drivers/media/v4l2-core/v4l2-async.c | 45 +++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+ include/linux/pci_ids.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
-index ee884a8221fbd..1c08bba9ecb91 100644
---- a/drivers/media/v4l2-core/v4l2-async.c
-+++ b/drivers/media/v4l2-core/v4l2-async.c
-@@ -343,7 +343,6 @@ static int v4l2_async_match_notify(struct v4l2_async_notifier *notifier,
- 				   struct v4l2_subdev *sd,
- 				   struct v4l2_async_connection *asc)
- {
--	struct v4l2_async_notifier *subdev_notifier;
- 	bool registered = false;
- 	int ret;
- 
-@@ -389,6 +388,25 @@ static int v4l2_async_match_notify(struct v4l2_async_notifier *notifier,
- 	dev_dbg(notifier_dev(notifier), "v4l2-async: %s bound (ret %d)\n",
- 		dev_name(sd->dev), ret);
- 
-+	return 0;
-+
-+err_call_unbind:
-+	v4l2_async_nf_call_unbind(notifier, sd, asc);
-+	list_del(&asc->asc_subdev_entry);
-+
-+err_unregister_subdev:
-+	if (registered)
-+		v4l2_device_unregister_subdev(sd);
-+
-+	return ret;
-+}
-+
-+static int
-+v4l2_async_nf_try_subdev_notifier(struct v4l2_async_notifier *notifier,
-+				  struct v4l2_subdev *sd)
-+{
-+	struct v4l2_async_notifier *subdev_notifier;
-+
- 	/*
- 	 * See if the sub-device has a notifier. If not, return here.
- 	 */
-@@ -404,16 +422,6 @@ static int v4l2_async_match_notify(struct v4l2_async_notifier *notifier,
- 	subdev_notifier->parent = notifier;
- 
- 	return v4l2_async_nf_try_all_subdevs(subdev_notifier);
--
--err_call_unbind:
--	v4l2_async_nf_call_unbind(notifier, sd, asc);
--	list_del(&asc->asc_subdev_entry);
--
--err_unregister_subdev:
--	if (registered)
--		v4l2_device_unregister_subdev(sd);
--
--	return ret;
- }
- 
- /* Test all async sub-devices in a notifier for a match. */
-@@ -445,6 +453,10 @@ v4l2_async_nf_try_all_subdevs(struct v4l2_async_notifier *notifier)
- 		if (ret < 0)
- 			return ret;
- 
-+		ret = v4l2_async_nf_try_subdev_notifier(notifier, sd);
-+		if (ret < 0)
-+			return ret;
-+
- 		/*
- 		 * v4l2_async_match_notify() may lead to registering a
- 		 * new notifier and thus changing the async subdevs
-@@ -829,7 +841,11 @@ int __v4l2_async_register_subdev(struct v4l2_subdev *sd, struct module *module)
- 			ret = v4l2_async_match_notify(notifier, v4l2_dev, sd,
- 						      asc);
- 			if (ret)
--				goto err_unbind;
-+				goto err_unlock;
-+
-+			ret = v4l2_async_nf_try_subdev_notifier(notifier, sd);
-+			if (ret)
-+				goto err_unbind_one;
- 
- 			ret = v4l2_async_nf_try_complete(notifier);
- 			if (ret)
-@@ -853,9 +869,10 @@ int __v4l2_async_register_subdev(struct v4l2_subdev *sd, struct module *module)
- 	if (subdev_notifier)
- 		v4l2_async_nf_unbind_all_subdevs(subdev_notifier);
- 
--	if (asc)
--		v4l2_async_unbind_subdev_one(notifier, asc);
-+err_unbind_one:
-+	v4l2_async_unbind_subdev_one(notifier, asc);
- 
-+err_unlock:
- 	mutex_unlock(&list_lock);
- 
- 	sd->owner = NULL;
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index a9a089566b7cb..f2849ff1830b1 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -3143,6 +3143,7 @@
+ #define PCI_DEVICE_ID_INTEL_HDA_CML_S	0xa3f0
+ #define PCI_DEVICE_ID_INTEL_HDA_LNL_P	0xa828
+ #define PCI_DEVICE_ID_INTEL_S21152BB	0xb152
++#define PCI_DEVICE_ID_INTEL_HDA_NVL	0xd328
+ #define PCI_DEVICE_ID_INTEL_HDA_BMG	0xe2f7
+ #define PCI_DEVICE_ID_INTEL_HDA_PTL_H	0xe328
+ #define PCI_DEVICE_ID_INTEL_HDA_PTL	0xe428
 -- 
 2.51.0
 
