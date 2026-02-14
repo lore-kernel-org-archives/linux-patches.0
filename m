@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653711F4615;
-	Sat, 14 Feb 2026 01:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08081D54FA;
+	Sat, 14 Feb 2026 01:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031129; cv=none; b=Oichnn0tQ0In1FdgKIu6+XPqZYyRcuWeEf8QreWQ4zhMaqPJDXp/cFppi46tbDIHrvzoyxq9GW/NvS1KtKuCdyA2CfVBOv39ZwviKLYBbwF2Dh0eOgey2o1vPCbjvYakOeobDSDqbaDTCxWuJt7bfY2TFZ7JJIXtol4nbowgwlo=
+	t=1771031131; cv=none; b=CjLMQSeW3Ldv9POA6qgEges20HCeZ1s2/ug3UMR1Njp4cGdTh2d8LiAS1EssDwOpfxxovkqGi2MjpeWZ0ALfb04gicblwp5/Kzr8EDGNK1TBVRIM4waYg5XKwA2W8ShFx2pp6yoyX9mPW70MCBABLZuU1TAAVGTISxBAKZMv6bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031129; c=relaxed/simple;
-	bh=lAK1Rv2ji/05aw3D1Er4DgRpI5rSRRMJeig6pVLTcq0=;
+	s=arc-20240116; t=1771031131; c=relaxed/simple;
+	bh=eBEsX1nyMrmXr/mfibb4cH9Xymd5V8ShqLBPnfWpmSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rt0t0YMANDpnNW+arUwio0Gny/8WKF2e03iLXiCGt+7RgjQAT+kyuFU1LAMWV2l0L6BYO+Nbooa1IymTCm+TbKeFob9kLhMMX6t8UATO+MD6+Yy94YsgK9/fq8dAaNJ2mZm8bGa0Y8RG20MWj7uW3U6IyNFegYx5SpSFh2zylqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k21GDKDN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HtI0MhUu/Fv8M3/b4R//hkMdFF9o7DHehsd/yG3bCH7G81bkUujB3fWNxyaN/FnL3WyJIpOrIpSEWtoST60DSxH6W8Ye4KdY4wh9zieoS6iGNKf320uUk2OvFRXob75MdVj1y2sOuSyheVOFJJB2Bx2+IPOjdp7RRUOugcAVaE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mnd8Lv+N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k21GDKDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78889C19423;
-	Sat, 14 Feb 2026 01:05:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mnd8Lv+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA1BC19423;
+	Sat, 14 Feb 2026 01:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031129;
-	bh=lAK1Rv2ji/05aw3D1Er4DgRpI5rSRRMJeig6pVLTcq0=;
+	s=k20201202; t=1771031130;
+	bh=eBEsX1nyMrmXr/mfibb4cH9Xymd5V8ShqLBPnfWpmSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k21GDKDNt3XkBJRV6UEhY53Ec62YFOu3tDcPHHIDn0jHHnLiVbMm/a8R9uhzdaMw6
-	 KzAhNigfcFZR4Xm9+Id25nMhyju1LHhp1qeKqQ3sdJiO4DMfsB+YV2Qn+Fp0AH28Cr
-	 mLEfWgTleQIyAbjP5k9KepnJH8UdrylBnk0HthaU1DfIGfxuRhfI5+7XLo6WLbhP9m
-	 m/xjr3XLL0kWMVEAFbv6RnbGKEN5cQazX6soFyYjWhRLOH+khspZEvGEGiufk3qUw/
-	 ViZQGXjGvcsqu4fqegdhfXnxMg5tLfqOWjsYJ129Ri0NjPAZgTJAHSQCUo5HAJ/xa9
-	 Nv09g03+rrMxQ==
+	b=Mnd8Lv+N72Pmpoq651k8GlpYaoE2hKL3IGdboT5PF608kwKOJd6WDBhASZnSAivX7
+	 +JrMZ3Dlxg3lPWuhtRBIQNauBvsBxX2stLMHw+pGG/UPhM6u+bdYz8JzqxziDh64qY
+	 zB5woGl9DJyCICmIchFYGbrpGaqXqi+KIIPIY64u3syO7Gp2H0g5vQK4zzuA0In05C
+	 ALiRD42rOAV1ZazFP6cR+u0pL074k3844/D7g+Ynb4SfWVITQa04mTrpUjogL0I+N0
+	 LRpKCH095zdZKo/z+YzVMk05PObxi9Qt5Hboci4jpFNVEJEei3LS9ML+anSRPk3XmR
+	 M7aRbjwWxG/Yw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: fenugrec <fenugrec@mail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Billy Tsai <billy_tsai@aspeedtech.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	roy.vegard.ovesen@gmail.com,
-	neil.armstrong@linaro.org,
-	yelangyan@huaqin.corp-partner.google.com
-Subject: [PATCH AUTOSEL 6.19-6.18] ALSA: usb-audio: presonus s18xx uses little-endian
-Date: Fri, 13 Feb 2026 19:59:13 -0500
-Message-ID: <20260214010245.3671907-73-sashal@kernel.org>
+	brgl@kernel.org,
+	joel@jms.id.au,
+	andrew@codeconstruct.com.au,
+	linux-gpio@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org
+Subject: [PATCH AUTOSEL 6.19-5.10] gpio: aspeed-sgpio: Change the macro to support deferred probe
+Date: Fri, 13 Feb 2026 19:59:14 -0500
+Message-ID: <20260214010245.3671907-74-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -50,197 +54,164 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: fenugrec <fenugrec@mail.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 3ce03297baff0ba116769044e4594fb324d4a551 ]
+[ Upstream commit e18533b023ec7a33488bcf33140ce69bbba2894f ]
 
-Use __le32 types for USB control transfers
+Use module_platform_driver() to replace module_platform_driver_probe().
+The former utilizes platform_driver_register(), which allows the driver to
+defer probing when it doesn't acquire the necessary resources due to probe
+order. In contrast, the latter uses __platform_driver_probe(), which
+includes the comment "Note that this is incompatible with deferred
+probing." Since our SGPIO driver requires access to the clock resource, the
+former is more suitable.
 
-Signed-off-by: fenugrec <fenugrec@mail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260111-preso_clean1-v2-1-44b4e5129a75@mail.com
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Link: https://lore.kernel.org/r/20260123-upstream_sgpio-v2-1-69cfd1631400@aspeedtech.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of ALSA: usb-audio: presonus s18xx uses little-endian
+## Analysis of gpio: aspeed-sgpio: Change the macro to support deferred
+probe
 
 ### Commit Message Analysis
 
-The commit converts USB control transfer packet structures from native
-`u32` types to `__le32` (little-endian 32-bit) types in the PreSonus
-S1810c/S1824c USB audio mixer driver. This is an endianness correctness
-fix.
+The commit changes `module_platform_driver_probe()` to
+`module_platform_driver()` in the Aspeed SGPIO driver. The motivation is
+to support deferred probing — when the clock resource isn't available
+yet at probe time due to probe ordering, the driver should be able to
+defer and retry later. With `module_platform_driver_probe()` (which uses
+`__platform_driver_probe()`), deferred probing is explicitly not
+supported.
 
 ### Code Change Analysis
 
-The changes are in `sound/usb/mixer_s1810c.c` and consist of:
+The changes are:
 
-1. **Structure type changes**: `struct s1810c_ctl_packet` and `struct
-   s1810c_state_packet` fields changed from `u32` to `__le32`
-2. **Write path**: All assignments to packet fields now use
-   `__cpu_to_le32()` to convert from CPU-native to little-endian before
-   sending to the USB device
-3. **Read path**: The value read back from the device is converted using
-   `__le32_to_cpu()` before being stored in a native `u32`
+1. **Remove `__init` annotation** from `aspeed_sgpio_probe()` —
+   necessary because with `module_platform_driver()`, the probe function
+   can be called after init (during deferred probe), so it can't be in
+   `.init` section.
 
-### Bug Classification: Endianness Bug
+2. **Move `.probe` into the `platform_driver` struct** — from being
+   passed as a second argument to `module_platform_driver_probe()` to
+   being set as `.probe = aspeed_sgpio_probe` in the struct.
 
-This is a classic endianness/type correctness fix. USB is a little-
-endian bus protocol. When these `u32` fields are sent via
-`snd_usb_ctl_msg()` (which wraps `usb_control_msg()`), they're
-transmitted as raw bytes. On **little-endian architectures** (x86),
-`u32` and `__le32` have the same byte representation, so this bug is
-invisible. However, on **big-endian architectures** (PowerPC, s390, some
-ARM configurations, MIPS), the bytes would be in the wrong order,
-causing:
+3. **Replace `module_platform_driver_probe()` with
+   `module_platform_driver()`** — the actual behavioral change.
 
-- The device would receive garbled control values
-- The driver would read back garbled state values
-- The mixer controls (volume, mute, 48V phantom power, line switches)
-  would be completely non-functional
-- The device would be unusable on big-endian systems
+The probe function itself is completely unchanged in logic.
 
-### Severity Assessment
+### Bug Classification
 
-- **On little-endian (x86)**: No visible effect - the fix is a no-op in
-  practice
-- **On big-endian**: This fixes a complete driver malfunction. The
-  PreSonus S1810c/S1824c audio interface would not function correctly at
-  all - mixer controls would send wrong values to hardware
+This fixes a **real probe failure bug**. When the Aspeed SGPIO driver is
+compiled and the clock resource it depends on isn't yet available
+(common on device-tree platforms where probe order isn't guaranteed),
+the driver will fail to probe and **never retry**. This means the SGPIO
+hardware is permanently non-functional until reboot, and even then only
+if probe order happens to be favorable.
 
-This is a **real bug fix**, not a cleanup or style change. The sparse
-annotation change (`u32` -> `__le32`) isn't just about satisfying the
-checker - the `__cpu_to_le32()` / `__le32_to_cpu()` conversions actually
-perform byte swaps on big-endian systems.
+This is a real-world issue on Aspeed BMC platforms (AST2400, AST2500,
+AST2600) which are widely used in server management. GPIO functionality
+being unavailable due to probe ordering is a tangible user-facing bug.
 
-### Scope and Risk
+### Scope and Risk Assessment
 
-- **Files changed**: 1 file (`sound/usb/mixer_s1810c.c`)
-- **Nature of changes**: Purely mechanical type conversions - every
-  change follows the exact same pattern
-- **Risk**: Very low. On little-endian systems, the byte-swap macros
-  compile to no-ops, so behavior is identical. On big-endian systems,
-  this fixes broken behavior.
-- **No new features**: This is purely a correctness fix
-- **Self-contained**: No dependencies on other commits
-- **Small and surgical**: The changes are straightforward and mechanical
+- **Lines changed**: Very small — removal of `__init`, moving the
+  `.probe` assignment, macro swap
+- **Files touched**: 1 file
+- **Risk**: Very low. The probe function logic is completely unchanged.
+  The only behavioral difference is that:
+  1. The probe function is no longer in `.init` section (minor memory
+     impact, but standard practice)
+  2. Deferred probing is now supported (fixes the bug)
+  3. The probe function pointer is stored in the driver struct rather
+     than being patched in at registration time
 
-### Stable Kernel Criteria
+This is a well-understood pattern — many drivers have made this exact
+same transition over the years. The `module_platform_driver_probe()` to
+`module_platform_driver()` conversion is one of the most common and
+safest changes in the kernel.
 
-1. **Obviously correct and tested**: Yes - standard endianness
-   conversion pattern used throughout the kernel
-2. **Fixes a real bug**: Yes - driver is broken on big-endian
-   architectures
-3. **Important issue**: The device is completely non-functional on big-
-   endian systems
-4. **Small and contained**: Yes - single file, mechanical changes
-5. **No new features**: Correct - pure bug fix
-6. **Applies cleanly**: Should apply cleanly as this driver code hasn't
-   changed significantly
+### Stable Criteria Check
+
+1. **Obviously correct and tested**: Yes — reviewed by Linus Walleij
+   (GPIO subsystem co-maintainer), standard pattern
+2. **Fixes a real bug**: Yes — probe failure when clock resource isn't
+   available due to ordering
+3. **Important issue**: Moderate — makes hardware permanently non-
+   functional on affected platforms
+4. **Small and contained**: Yes — minimal changes to one file
+5. **No new features**: Correct — deferred probing is an existing kernel
+   mechanism, this just enables the driver to participate in it
+6. **Applies cleanly**: Should apply cleanly to any stable tree that has
+   this driver
+
+### User Impact
+
+Aspeed BMC platforms are common in enterprise server management
+(OpenBMC). If SGPIO fails to probe due to clock resource ordering, GPIO
+pins managed by the SGPIO controller become unavailable, which can
+affect system monitoring, power control, and other BMC functions. This
+is a real-world issue that affects actual deployments.
 
 ### Concerns
 
-- The commit message is terse and doesn't explicitly mention the
-  endianness bug or affected architectures
-- No Fixes: tag or Cc: stable tag (expected for commits in this review
-  pipeline)
-- Impact is limited to big-endian users of this specific USB audio
-  device (a relatively niche intersection)
+- The commit doesn't have a `Fixes:` tag, which is expected for commits
+  under review
+- No explicit mention of user reports, but the commit author is from
+  Aspeed Technology, indicating this is a known issue in their platform
+- Minor: probe function no longer freed after init, but this is
+  negligible memory impact
 
-### Verdict
+### Decision
 
-This is a legitimate endianness bug fix in a USB audio driver. While the
-affected user population (big-endian + PreSonus S1810c/S1824c) is small,
-the fix is trivially correct, zero-risk on the dominant x86 platform,
-and fixes a complete driver malfunction on affected platforms. It meets
-all stable kernel criteria: small, surgical, obviously correct, fixes a
-real bug, and introduces no new features.
+This is a small, well-understood fix for a real probe failure bug on
+Aspeed BMC platforms. The pattern change (`module_platform_driver_probe`
+→ `module_platform_driver`) is one of the safest and most common
+conversions in the kernel. It fixes a real-world issue where hardware
+becomes non-functional due to probe ordering. The risk is minimal and
+the benefit is clear.
 
 **YES**
 
- sound/usb/mixer_s1810c.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/gpio/gpio-aspeed-sgpio.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
-index 6e09e074c0e7f..93510aa0dc5ef 100644
---- a/sound/usb/mixer_s1810c.c
-+++ b/sound/usb/mixer_s1810c.c
-@@ -82,13 +82,13 @@
-  * mixer and output but a different set for device.
-  */
- struct s1810c_ctl_packet {
--	u32 a;
--	u32 b;
--	u32 fixed1;
--	u32 fixed2;
--	u32 c;
--	u32 d;
--	u32 e;
-+	__le32 a;
-+	__le32 b;
-+	__le32 fixed1;
-+	__le32 fixed2;
-+	__le32 c;
-+	__le32 d;
-+	__le32 e;
- };
+diff --git a/drivers/gpio/gpio-aspeed-sgpio.c b/drivers/gpio/gpio-aspeed-sgpio.c
+index 7622f9e9f54af..318cd0e397416 100644
+--- a/drivers/gpio/gpio-aspeed-sgpio.c
++++ b/drivers/gpio/gpio-aspeed-sgpio.c
+@@ -516,7 +516,7 @@ static const struct of_device_id aspeed_sgpio_of_table[] = {
  
- #define SC1810C_CTL_LINE_SW	0
-@@ -118,7 +118,7 @@ struct s1810c_ctl_packet {
-  * being zero and different f1/f2.
-  */
- struct s1810c_state_packet {
--	u32 fields[63];
-+	__le32 fields[63];
- };
+ MODULE_DEVICE_TABLE(of, aspeed_sgpio_of_table);
  
- #define SC1810C_STATE_48V_SW	58
-@@ -140,14 +140,14 @@ snd_s1810c_send_ctl_packet(struct usb_device *dev, u32 a,
- 	struct s1810c_ctl_packet pkt = { 0 };
- 	int ret = 0;
- 
--	pkt.fixed1 = SC1810C_CMD_F1;
--	pkt.fixed2 = SC1810C_CMD_F2;
-+	pkt.fixed1 = __cpu_to_le32(SC1810C_CMD_F1);
-+	pkt.fixed2 = __cpu_to_le32(SC1810C_CMD_F2);
- 
--	pkt.a = a;
--	pkt.b = b;
--	pkt.c = c;
--	pkt.d = d;
--	pkt.e = e;
-+	pkt.a = __cpu_to_le32(a);
-+	pkt.b = __cpu_to_le32(b);
-+	pkt.c = __cpu_to_le32(c);
-+	pkt.d = __cpu_to_le32(d);
-+	pkt.e = __cpu_to_le32(e);
- 
- 	ret = snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0),
- 			      SC1810C_CMD_REQ,
-@@ -176,8 +176,8 @@ snd_sc1810c_get_status_field(struct usb_device *dev,
- 	struct s1810c_state_packet pkt_in = { { 0 } };
- 	int ret = 0;
- 
--	pkt_out.fields[SC1810C_STATE_F1_IDX] = SC1810C_SET_STATE_F1;
--	pkt_out.fields[SC1810C_STATE_F2_IDX] = SC1810C_SET_STATE_F2;
-+	pkt_out.fields[SC1810C_STATE_F1_IDX] = __cpu_to_le32(SC1810C_SET_STATE_F1);
-+	pkt_out.fields[SC1810C_STATE_F2_IDX] = __cpu_to_le32(SC1810C_SET_STATE_F2);
- 	ret = snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0),
- 			      SC1810C_SET_STATE_REQ,
- 			      SC1810C_SET_STATE_REQTYPE,
-@@ -197,7 +197,7 @@ snd_sc1810c_get_status_field(struct usb_device *dev,
- 		return ret;
- 	}
- 
--	(*field) = pkt_in.fields[field_idx];
-+	(*field) = __le32_to_cpu(pkt_in.fields[field_idx]);
- 	(*seqnum)++;
- 	return 0;
+-static int __init aspeed_sgpio_probe(struct platform_device *pdev)
++static int aspeed_sgpio_probe(struct platform_device *pdev)
+ {
+ 	u32 nr_gpios, sgpio_freq, sgpio_clk_div, gpio_cnt_regval, pin_mask;
+ 	const struct aspeed_sgpio_pdata *pdata;
+@@ -611,11 +611,12 @@ static int __init aspeed_sgpio_probe(struct platform_device *pdev)
  }
+ 
+ static struct platform_driver aspeed_sgpio_driver = {
++	.probe = aspeed_sgpio_probe,
+ 	.driver = {
+ 		.name = KBUILD_MODNAME,
+ 		.of_match_table = aspeed_sgpio_of_table,
+ 	},
+ };
+ 
+-module_platform_driver_probe(aspeed_sgpio_driver, aspeed_sgpio_probe);
++module_platform_driver(aspeed_sgpio_driver);
+ MODULE_DESCRIPTION("Aspeed Serial GPIO Driver");
 -- 
 2.51.0
 
