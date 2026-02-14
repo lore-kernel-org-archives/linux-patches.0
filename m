@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CDA30B538;
-	Sat, 14 Feb 2026 21:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F1E30DD2F;
+	Sat, 14 Feb 2026 21:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104353; cv=none; b=mC+YwnztZI5U6su0BFKxCN67U7MFbre76oKBBOydXBNgtSHS+hIVFB390KwAvPCVjanh71ReFJRdjbgbbjcOd78xEjLon9BAaOgXXMDqRoDExunBB99QFoPvCt46qzU/0u6FLg9R7sZmN2RtPV1gPmSEPMjhTHO9rHWrXt1LrjQ=
+	t=1771104354; cv=none; b=feirPW7hNZEG1+gMr+cUxqRns3jXFdzAMIWVuD2btMhMhr8YYa+CryyAHP5KdB5LyE7zCJPg2x5PxBsLOEksrDlp8TINaUkH+uVCrUrEMTfGskzjYh489OXs3Dj69M0+xvWOwp5CeAro2gCqGRQpnjqFM9kqJAhUG6uWmggkFZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104353; c=relaxed/simple;
-	bh=a6AFDtak2ZeymRim/dSLlx+Pr0RgsP92jVYL9T3nWmA=;
+	s=arc-20240116; t=1771104354; c=relaxed/simple;
+	bh=xc+sAmT+c0jAo/RwbDeReUB05daqk4bQVQNnhsh+/6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UTTmZSBf9Dz+74uD7nT3EYjftxoValLxhYlx8av79qHaTvJiqM2VCYHvGvY3KoJyCk5CKZDjirXE5H0QPu3HtCW3gBsLbtJewGWQdlDySjpAYAOfLwfcHu9YjUjaIQOLUuT6xvAR/2DDewmEvvJEQwlbI3JXwM2iOdTgPLqT5Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DLtCwVfS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=quI+vcsncAK3YC9o35/eN/Cf4AihIZDRAfND4C7QvwdgxHUp9jiCkbmBycLZ+czTnCZJPTdUSMXhyLw0Hz5MyncE0SeCRzygtHFINchyJs/NJJjpx2AWOQm0Bds768VmV1PGn23EaNp5zkloHzxrKYlquQIZMK5WIeDA4uMVcPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IImHk/lJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DLtCwVfS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409F2C16AAE;
-	Sat, 14 Feb 2026 21:25:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IImHk/lJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893A6C19423;
+	Sat, 14 Feb 2026 21:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104353;
-	bh=a6AFDtak2ZeymRim/dSLlx+Pr0RgsP92jVYL9T3nWmA=;
+	s=k20201202; t=1771104354;
+	bh=xc+sAmT+c0jAo/RwbDeReUB05daqk4bQVQNnhsh+/6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DLtCwVfSHG5bKyYvX8hsUlHsTmXFEyzIZ2TBY8YiJJQDpUFLklmgHZHJ+FIONJxQi
-	 GESr4B4DIalRK3Bkiu+OKeG3Qb4zag7GiH83VqckX+kPmZkt2AFYVUGtixMhSY6FmF
-	 aDNueaNqL+/tGXyI55b386GxlpmXfbi0IQjNZoLDNI8Q63zKMzb5noeP8dtVnzc9WD
-	 EqL7E/6xGPXTFniyjErn9tp9PGu4YY/xoZXbWrmw84G6p3QHNsRcVpIybfRoaBzvnW
-	 RpysaJycJ8qCtbok7b3myz0rjcLpjAUQnVhvMbipA7UeQRwRsqbyCpUc7fasVgqtbM
-	 wD4xRv3WpB/Jw==
+	b=IImHk/lJKlMTRewIsU/jwjL19oTdyPORZ4YCORS1erRA0kKl837x/OeOn6/QnAfy7
+	 tMct4iIaf+dZ6uQB4y1o0pdi0Vmqkuyl6OgeZ4BMGn0grjeg7ZclOVHccOjX3zbWxr
+	 QJM0XhT5Y7G3ZN+i61GyvycXPj/WZM5yZJENmEDs3ICDUPiYKIGjA2dg5VgEV0qL0U
+	 7Dd0AIPvkinLiZ9xOSYCJ1VDtBaCuEVsaH7u90K5xpdXjJH5iSOhQcSUrhWlOX0Iay
+	 LSVdkbHzhhLRZ0+G9qUZJwew1rERQ1J6t3r7iH8llnMXZ2tnLUbSN/VqWcHzm1zHKe
+	 Mmu4knnQ3IOPQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	dsahern@kernel.org,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] ipv6: exthdrs: annotate data-race over multiple sysctl
-Date: Sat, 14 Feb 2026 16:22:59 -0500
-Message-ID: <20260214212452.782265-34-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] wifi: rtw88: Fix inadvertent sharing of struct ieee80211_supported_band data
+Date: Sat, 14 Feb 2026 16:23:00 -0500
+Message-ID: <20260214212452.782265-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -51,178 +48,142 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 978b67d28358b0b4eacfa94453d1ad4e09b123ad ]
+[ Upstream commit fcac0f23d4d20b11014a39f8e2527cdc12ec9c82 ]
 
-Following four sysctls can change under us, add missing READ_ONCE().
+Internally wiphy writes to individual channels in this structure,
+so we must not share one static definition of channel list between
+multiple device instances, because that causes hard to debug
+breakage.
 
-- ipv6.sysctl.max_dst_opts_len
-- ipv6.sysctl.max_dst_opts_cnt
-- ipv6.sysctl.max_hbh_opts_len
-- ipv6.sysctl.max_hbh_opts_cnt
+For example, with two rtw88 driven devices in the system, channel
+information may get incoherent, preventing channel use.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260115094141.3124990-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Copied from commit 0ae36391c804 ("wifi: rtw89: Fix inadverent sharing
+of struct ieee80211_supported_band data").
+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/e94ad653-2b6d-4284-a33c-8c694f88955b@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of commit: "ipv6: exthdrs: annotate data-race over multiple
-sysctl"
-
-### 1. COMMIT MESSAGE ANALYSIS
-
-The commit message is straightforward: it adds `READ_ONCE()` annotations
-to four sysctl variables that can be modified concurrently from
-userspace while being read in the packet processing path. The author is
-Eric Dumazet, a prolific and highly respected networking maintainer at
-Google, who frequently contributes data-race annotations and fixes.
-Reviewed by Simon Horman, another well-known networking reviewer.
-
-The four sysctls affected:
-- `ipv6.sysctl.max_dst_opts_len`
-- `ipv6.sysctl.max_dst_opts_cnt`
-- `ipv6.sysctl.max_hbh_opts_len`
-- `ipv6.sysctl.max_hbh_opts_cnt`
-
-### 2. CODE CHANGE ANALYSIS
-
-The changes are minimal and mechanical - wrapping four sysctl reads with
-`READ_ONCE()`:
-
-1. **`ipv6_destopt_rcv()`** (line ~317):
-   `net->ipv6.sysctl.max_dst_opts_len` →
-   `READ_ONCE(net->ipv6.sysctl.max_dst_opts_len)`
-2. **`ipv6_destopt_rcv()`** (line ~326):
-   `net->ipv6.sysctl.max_dst_opts_cnt` →
-   `READ_ONCE(net->ipv6.sysctl.max_dst_opts_cnt)`
-3. **`ipv6_parse_hopopts()`** (line ~1053):
-   `net->ipv6.sysctl.max_hbh_opts_len` →
-   `READ_ONCE(net->ipv6.sysctl.max_hbh_opts_len)`
-4. **`ipv6_parse_hopopts()`** (line ~1056):
-   `net->ipv6.sysctl.max_hbh_opts_cnt` →
-   `READ_ONCE(net->ipv6.sysctl.max_hbh_opts_cnt)`
-
-These are in the IPv6 extension header packet receive path - hot path
-code that processes every incoming IPv6 packet with destination options
-or hop-by-hop options. The sysctl values can be changed from userspace
-at any time via `/proc/sys/net/ipv6/`, creating a data race.
-
-### 3. BUG MECHANISM
-
-Without `READ_ONCE()`, the compiler is free to:
-- Re-read the value multiple times (store tearing), potentially getting
-  different values in the same function
-- Optimize based on assumptions about the value not changing
-
-This is a real data race detectable by KCSAN (Kernel Concurrency
-Sanitizer). While the practical consequences of this particular race are
-relatively mild (the comparison values might be slightly stale or torn),
-the race is real and in a networking hot path.
-
-### 4. CLASSIFICATION
-
-This is a **data-race fix** — category 3 (Race Conditions) from the
-analysis framework. `READ_ONCE()`/`WRITE_ONCE()` annotations are a
-common pattern for KCSAN-detected data races and are regularly
-backported to stable.
-
-### 5. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed**: ~8 lines across one file
-- **Files touched**: 1 (`net/ipv6/exthdrs.c`)
-- **Risk**: Extremely low. `READ_ONCE()` is a pure compiler annotation
-  that generates identical or near-identical machine code on most
-  architectures. It cannot introduce regressions.
-- **Subsystem**: IPv6 networking — core infrastructure used by virtually
-  all systems
+This is a relevant finding: `devm_kmemdup_array()` was introduced in
+v6.15 cycle (February 2025). This means for older stable trees (6.12.y,
+6.6.y, 6.1.y, 5.15.y), this function won't exist and the backport would
+need adaptation. However, this is a minor concern - it can be replaced
+with `devm_kmemdup()` with a manual size calculation.
 
 ### 6. USER IMPACT
 
-- **Who is affected**: Any system processing IPv6 packets with extension
-  headers where sysctl values might be modified concurrently
-- **Severity**: Low to medium — the race could theoretically cause
-  inconsistent enforcement of the max length/count limits, but more
-  importantly it silences KCSAN reports and ensures correct compiler
-  behavior
-- **In the networking hot path**: These functions process packets, so
-  correctness matters
+- **Affected users:** Anyone with two or more rtw88 WiFi adapters in
+  their system (e.g., RTL8822CE + RTL8821CE, or built-in + USB adapter)
+- **Symptom:** Channel information becomes corrupt; certain WiFi
+  channels become unusable
+- **Severity:** Medium-High. WiFi connectivity issues are significant
+  for users
+- **Driver popularity:** rtw88 supports many common Realtek WiFi chips
+  (RTL8822BE, RTL8822CE, RTL8821CE, RTL8723DE) found in many laptops
 
-### 7. STABILITY INDICATORS
+### 7. DEPENDENCY CHECK
 
-- **Author**: Eric Dumazet (Google, top networking contributor) — very
-  high trust
-- **Reviewer**: Simon Horman — respected networking reviewer
-- **Pattern**: This is part of a series (patch 8 of a set) of data-race
-  annotations, which is a well-established pattern in the networking
-  subsystem
+The main dependency concern is `devm_kmemdup_array()`, which was added
+in v6.15. For older stable trees, this would need to be adapted
+(trivially, by using `devm_kmemdup()` with `sband->n_channels *
+sizeof(*sband->channels)` manually). The rest of the code is standard
+and should exist in all stable trees that have the rtw88 driver.
 
-### 8. DEPENDENCY CHECK
+### Summary
 
-This commit is self-contained. `READ_ONCE()` is a basic kernel primitive
-available in all stable trees. The sysctl variables being annotated have
-existed for a long time. No dependencies on other patches.
+**What it fixes:** Data corruption bug where multiple rtw88 WiFi device
+instances share the same static channel/bitrate arrays through shallow
+copying. When one device's wiphy modifies channel data, it corrupts the
+other device's data.
 
-### 9. VERDICT
+**Stable criteria met:**
+- Obviously correct (deep copy instead of shallow copy)
+- Fixes a real bug (channel data corruption with multiple devices)
+- Small and contained (~30 new lines in one file)
+- No new features
+- Already proven pattern (same fix in rtw89)
+- Acked by Realtek maintainer
 
-This is a small, surgical, zero-risk fix for a real data race in the
-IPv6 networking path. It follows the well-established pattern of
-`READ_ONCE()` annotations that Eric Dumazet has been systematically
-adding across the networking stack. These annotations are routinely
-backported to stable trees. The fix is obviously correct, has
-essentially zero regression risk, and addresses a real concurrency issue
-in core networking code.
+**Risk:** Very low. The change only affects rtw88 driver initialization,
+uses standard kernel APIs, and devres handles cleanup automatically.
+
+**Concern:** `devm_kmemdup_array()` may need adaptation for older stable
+trees, but this is a trivial mechanical change.
 
 **YES**
 
- net/ipv6/exthdrs.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/realtek/rtw88/main.c | 34 +++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index a23eb8734e151..54088fa0c09d0 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -314,7 +314,7 @@ static int ipv6_destopt_rcv(struct sk_buff *skb)
+diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
+index 2004d714530a3..e1de638164862 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.c
++++ b/drivers/net/wireless/realtek/rtw88/main.c
+@@ -1658,16 +1658,41 @@ static u16 rtw_get_max_scan_ie_len(struct rtw_dev *rtwdev)
+ 	return len;
+ }
+ 
++static struct ieee80211_supported_band *
++rtw_sband_dup(struct rtw_dev *rtwdev,
++	      const struct ieee80211_supported_band *sband)
++{
++	struct ieee80211_supported_band *dup;
++
++	dup = devm_kmemdup(rtwdev->dev, sband, sizeof(*sband), GFP_KERNEL);
++	if (!dup)
++		return NULL;
++
++	dup->channels = devm_kmemdup_array(rtwdev->dev, sband->channels,
++					   sband->n_channels,
++					   sizeof(*sband->channels),
++					   GFP_KERNEL);
++	if (!dup->channels)
++		return NULL;
++
++	dup->bitrates = devm_kmemdup_array(rtwdev->dev, sband->bitrates,
++					   sband->n_bitrates,
++					   sizeof(*sband->bitrates),
++					   GFP_KERNEL);
++	if (!dup->bitrates)
++		return NULL;
++
++	return dup;
++}
++
+ static void rtw_set_supported_band(struct ieee80211_hw *hw,
+ 				   const struct rtw_chip_info *chip)
+ {
+ 	struct ieee80211_supported_band *sband;
+ 	struct rtw_dev *rtwdev = hw->priv;
+-	struct device *dev = rtwdev->dev;
+ 
+ 	if (chip->band & RTW_BAND_2G) {
+-		sband = devm_kmemdup(dev, &rtw_band_2ghz, sizeof(*sband),
+-				     GFP_KERNEL);
++		sband = rtw_sband_dup(rtwdev, &rtw_band_2ghz);
+ 		if (!sband)
+ 			goto err_out;
+ 		if (chip->ht_supported)
+@@ -1676,8 +1701,7 @@ static void rtw_set_supported_band(struct ieee80211_hw *hw,
  	}
  
- 	extlen = (skb_transport_header(skb)[1] + 1) << 3;
--	if (extlen > net->ipv6.sysctl.max_dst_opts_len)
-+	if (extlen > READ_ONCE(net->ipv6.sysctl.max_dst_opts_len))
- 		goto fail_and_free;
- 
- 	opt->lastopt = opt->dst1 = skb_network_header_len(skb);
-@@ -322,7 +322,8 @@ static int ipv6_destopt_rcv(struct sk_buff *skb)
- 	dstbuf = opt->dst1;
- #endif
- 
--	if (ip6_parse_tlv(false, skb, net->ipv6.sysctl.max_dst_opts_cnt)) {
-+	if (ip6_parse_tlv(false, skb,
-+			  READ_ONCE(net->ipv6.sysctl.max_dst_opts_cnt))) {
- 		skb->transport_header += extlen;
- 		opt = IP6CB(skb);
- #if IS_ENABLED(CONFIG_IPV6_MIP6)
-@@ -1049,11 +1050,12 @@ int ipv6_parse_hopopts(struct sk_buff *skb)
- 	}
- 
- 	extlen = (skb_transport_header(skb)[1] + 1) << 3;
--	if (extlen > net->ipv6.sysctl.max_hbh_opts_len)
-+	if (extlen > READ_ONCE(net->ipv6.sysctl.max_hbh_opts_len))
- 		goto fail_and_free;
- 
- 	opt->flags |= IP6SKB_HOPBYHOP;
--	if (ip6_parse_tlv(true, skb, net->ipv6.sysctl.max_hbh_opts_cnt)) {
-+	if (ip6_parse_tlv(true, skb,
-+			  READ_ONCE(net->ipv6.sysctl.max_hbh_opts_cnt))) {
- 		skb->transport_header += extlen;
- 		opt = IP6CB(skb);
- 		opt->nhoff = sizeof(struct ipv6hdr);
+ 	if (chip->band & RTW_BAND_5G) {
+-		sband = devm_kmemdup(dev, &rtw_band_5ghz, sizeof(*sband),
+-				     GFP_KERNEL);
++		sband = rtw_sband_dup(rtwdev, &rtw_band_5ghz);
+ 		if (!sband)
+ 			goto err_out;
+ 		if (chip->ht_supported)
 -- 
 2.51.0
 
