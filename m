@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E586325F994;
-	Sat, 14 Feb 2026 21:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC8A3C2D;
+	Sat, 14 Feb 2026 21:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104338; cv=none; b=KED4N0+jtxTNeKfCXEtbuA+vPTGheDc22k3PvFypcO0XOwh5p4ylHncxdH52z07x6RKjffC4XAcvvDcRzumWIWz3bVGfzrRiXCcpq3H/klqdPDfMhraZb2SKI/8PUhb8FEMuB6ijUFFHOX+n5djBYhKZMRw0TkjVRRmqv3DjJl0=
+	t=1771104339; cv=none; b=EWC6Qs2Dpu/uQgUy+SeC2dYuMmiVOdBFVOsDzUBH35RuKAdbJMWGi4KZ39jL5zadFWzny6tGjwv7hT63OSI87+tEWsVDW9g/53w2Cl4Fpnycj6oZ/7SUd/k5Kd/eyPKw13RGbl4mFrDvFS0DJVJEYO7YPaPSUWbm5BZ4pQzHtiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104338; c=relaxed/simple;
-	bh=qtxYZTGJQeqK8Nfdp0BEb53NOaoUaaE1kwfFFdgXlJs=;
+	s=arc-20240116; t=1771104339; c=relaxed/simple;
+	bh=b1LD+Xansm2gIBycBh5imiPFd4gz7SExWM2XaWHP+zQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pcA68Zlo0H0gRNHgQbjNYvaH/GcG8CLL+OKFKj14YjDV1TiPwEszAcJLSdPmCbUMomMLRzQH1O8pjnlJHHTEjPPG3nmikdaaDwrIVc1SRDZmRKEnwkytB6OsY0MEb4XRDIFY+3w5uXoSyA6cyzNqMCnYfjSw+A3fh7mfJsDypok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hsEjmgC3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r7Ed8Sw+73H7fHvVaChq0L6FGHaxFamcFOdr7tznom8Gv4PLMGJwTEl9VZUd4lcBCaR0SZT5tZcAnCGxh2lawUSfDmezBnUeBzdov4rck6b9j+RrF0TgN5hvcjgUMz1d+GxI+sSgjE0xScJpLMPBc9Ijvut8e/1zUBZREW3pEWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZHgKkXwf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hsEjmgC3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9652C16AAE;
-	Sat, 14 Feb 2026 21:25:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZHgKkXwf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36753C16AAE;
+	Sat, 14 Feb 2026 21:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104337;
-	bh=qtxYZTGJQeqK8Nfdp0BEb53NOaoUaaE1kwfFFdgXlJs=;
+	s=k20201202; t=1771104339;
+	bh=b1LD+Xansm2gIBycBh5imiPFd4gz7SExWM2XaWHP+zQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsEjmgC3nPqbk1ZUyXAiPSi+a0ASUpCGL/BIBmb/koMlB+HXKAKeFnEKhdEyRnjW+
-	 a2CzO+88cD5fnL9vwLviZmXY0JXTwoo141dcs+Vtmn/fQUHIchAjqUhYpMrNLdatb6
-	 PJ6W9iZP7w0tO88JEqC1tIla8pE/Br3l9eZSYpXZ9DsDIHWghn3QqGZpn2WjnDILaj
-	 wB6wlGUFeBJuAPeTXEB1N55lu7PSFCx9/8stvAeDxOGCQRP9YAwbUistsM3wsWM2BQ
-	 Uev/xbSCv+JFv+LdQWOsJjYgLwnCSZMPvQeXIr73qKohjVgrMcxmoPBEDZ24TIQSSF
-	 KtKruH7QFg4VA==
+	b=ZHgKkXwfVIUJdlnWOFBjl5fb9J5W2iIGjXEJdCsdZDISFVZoCO2MsCZNT1lMAFa0o
+	 71YSxfU2m7W0F+UPOq7C6h4ut7SCmz4bGKKLCwEKveHBdTqC5a3mUYi1PVDZTlu9dT
+	 KmVjSKkm+QRq86g/97Ir8O+a+uzyQ5T73SgVn3+qbqaw1cWFzNEeNmGgoT0uevN6k6
+	 pLT0dSIu/OIU8UjuN9m1qtNTDlAqBuAAUNb7uCbxgappzDgv7+HaLs2k4Kqr7jJ3vT
+	 qFcH9MDtpzzqJka9/6EHs//F4ileZKajiBy69L735cA3yMq3p51+9HQVYsOX/VLN8M
+	 rrtDNPxBDR8EA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pabeni@redhat.com,
-	aleksander.lobakin@intel.com,
-	willemb@google.com,
-	mheib@redhat.com,
-	alice@isovalent.com,
-	yelangyan@huaqin.corp-partner.google.com
-Subject: [PATCH AUTOSEL 6.19-6.1] gro: change the BUG_ON() in gro_pull_from_frag0()
-Date: Sat, 14 Feb 2026 16:22:50 -0500
-Message-ID: <20260214212452.782265-25-sashal@kernel.org>
+	jjohnson@kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath10k@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-5.10] wifi: ath10k: fix lock protection in ath10k_wmi_event_peer_sta_ps_state_chg()
+Date: Sat, 14 Feb 2026 16:22:51 -0500
+Message-ID: <20260214212452.782265-26-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -56,172 +54,168 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit cbe41362be2c27e0237a94a404ae413cec9c2ad9 ]
+[ Upstream commit 820ba7dd6859ef8b1eaf6014897e7aa4756fc65d ]
 
-Replace the BUG_ON() which never fired with a DEBUG_NET_WARN_ON_ONCE()
+ath10k_wmi_event_peer_sta_ps_state_chg() uses lockdep_assert_held() to
+assert that ar->data_lock should be held by the caller, but neither
+ath10k_wmi_10_2_op_rx() nor ath10k_wmi_10_4_op_rx() acquire this lock
+before calling this function.
 
-$ scripts/bloat-o-meter -t vmlinux.1 vmlinux.2
-add/remove: 2/2 grow/shrink: 1/1 up/down: 370/-254 (116)
-Function                                     old     new   delta
-gro_try_pull_from_frag0                        -     196    +196
-napi_gro_frags                               771     929    +158
-__pfx_gro_try_pull_from_frag0                  -      16     +16
-__pfx_gro_pull_from_frag0                     16       -     -16
-dev_gro_receive                             1514    1464     -50
-gro_pull_from_frag0                          188       -    -188
-Total: Before=22565899, After=22566015, chg +0.00%
+The field arsta->peer_ps_state is documented as protected by
+ar->data_lock in core.h, and other accessors (ath10k_peer_ps_state_disable,
+ath10k_dbg_sta_read_peer_ps_state) properly acquire this lock.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260122045720.1221017-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add spin_lock_bh()/spin_unlock_bh() around the peer_ps_state update,
+and remove the lockdep_assert_held() to be aligned with new locking,
+following the pattern used by other WMI event handlers in the driver.
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260123175611.767731-1-n7l8m4@u.northwestern.edu
+[removed excess blank line]
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of: "gro: change the BUG_ON() in gro_pull_from_frag0()"
+## Analysis of wifi: ath10k: fix lock protection in
+ath10k_wmi_event_peer_sta_ps_state_chg()
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The commit replaces a `BUG_ON()` with `DEBUG_NET_WARN_ON_ONCE()` in the
-GRO (Generic Receive Offload) network path. The author is Eric Dumazet,
-a top Google network stack developer and prolific stable contributor.
-The commit message notes this BUG_ON() "never fired" and includes bloat-
-o-meter output showing minor code size changes.
+The commit message is clear and well-structured:
+- **Subject**: Explicitly says "fix lock protection" — this is a
+  locking/synchronization bug fix
+- **Body**: Explains that `lockdep_assert_held()` asserted
+  `ar->data_lock` should be held by callers, but **no caller actually
+  held it**. This means the assertion was always wrong (or always
+  disabled), and the field `arsta->peer_ps_state` was being accessed
+  without the required lock protection.
+- **Reviewed-by**: Baochen Qiang from Qualcomm reviewed it, lending
+  credibility
+- The commit references that `core.h` documents `peer_ps_state` as
+  protected by `ar->data_lock`, and other accessors properly acquire it
+  — meaning this was the only broken path.
 
-There are no "Fixes:" tags or "Cc: stable" tags, which is expected for
-commits under review.
+### 2. Code Change Analysis
 
-### 2. CODE CHANGE ANALYSIS
+The change is minimal and surgical:
 
-The change is a single-line replacement:
+1. **Removes** `lockdep_assert_held(&ar->data_lock)` — the callers never
+   held this lock, so the assertion was incorrect (and likely only
+   checked with CONFIG_LOCKDEP enabled, which is why it didn't always
+   trigger)
 
-```c
-- BUG_ON(skb->end - skb->tail < grow);
-+ DEBUG_NET_WARN_ON_ONCE(skb->end - skb->tail < grow);
-```
+2. **Adds** `spin_lock_bh(&ar->data_lock)` /
+   `spin_unlock_bh(&ar->data_lock)` around the single line
+   `arsta->peer_ps_state = __le32_to_cpu(ev->peer_ps_state)` — this is
+   the actual fix, properly protecting the field with the documented
+   lock
 
-**What this does:**
-- `BUG_ON()` crashes the entire kernel (panic) if the condition is true.
-  This is a hard crash that takes down the whole system.
-- `DEBUG_NET_WARN_ON_ONCE()` only prints a warning (and only once), and
-  only when `CONFIG_DEBUG_NET` is enabled. In production kernels without
-  `CONFIG_DEBUG_NET`, this becomes a no-op.
+The lock scope is minimal — only around the single write to
+`peer_ps_state`, placed after the RCU-protected station lookup and
+before the RCU read unlock. This is clean and correct.
 
-**The critical difference:** After the change, if the condition
-triggers, the code continues to execute `memcpy()` and subsequent
-operations with potentially bad parameters. However, the BUG_ON was
-described as having "never fired," meaning this condition is believed to
-be unreachable in practice.
+### 3. Bug Classification
 
-### 3. CLASSIFICATION
+This is a **data race / missing synchronization** bug:
+- The field `peer_ps_state` is documented as requiring `ar->data_lock`
+  protection
+- Other readers/writers of this field properly acquire the lock
+- This WMI event handler was the only path that didn't hold the lock
+- Without the lock, concurrent reads (from
+  `ath10k_dbg_sta_read_peer_ps_state`) and writes could race, leading to
+  torn reads or inconsistent state
 
-This is a **BUG_ON to WARN conversion** — a common pattern in the
-kernel. The kernel community has a strong policy of removing BUG_ON()
-calls from non-fatal paths because:
-- A BUG_ON() in the network receive path means a single malformed packet
-  (or driver bug) can crash the entire system
-- A WARN is preferred because it allows the system to continue operating
-  and reports the issue for debugging
-- BUG_ON() in hot paths is considered a denial-of-service risk
+### 4. Scope and Risk Assessment
 
-This is categorized as a **robustness/stability improvement** — it
-prevents a kernel panic in a hot network path. While the condition
-reportedly never fires, if it ever did (e.g., due to a driver bug,
-memory corruption, or edge case), the old code would crash the kernel,
-while the new code allows survival.
+- **Lines changed**: ~4 lines effective (remove 2 lines, add 3 lines
+  including lock/unlock)
+- **Files changed**: 1 file (`drivers/net/wireless/ath/ath10k/wmi.c`)
+- **Risk**: Very low. The change adds proper locking around a single
+  field access, following the established pattern used by all other
+  accessors. The lock is `spin_lock_bh`, which is safe in this softirq
+  context.
+- **Could it break something?** Extremely unlikely — it adds a lock that
+  was already supposed to be held, and uses the same locking pattern as
+  other paths in the driver.
 
-### 4. SCOPE AND RISK ASSESSMENT
+### 5. User Impact
 
-- **Lines changed:** 1 line (single token replacement)
-- **Files changed:** 1 (`net/core/gro.c`)
-- **Subsystem:** Core networking (GRO) — very hot path, affects every
-  system doing network I/O
-- **Risk:** Very low. Replacing BUG_ON with a warning is strictly less
-  dangerous — in the worst case, if the condition fires, instead of a
-  guaranteed crash, we get either a warning (debug builds) or continued
-  execution (production builds). The continued execution after the
-  condition could theoretically cause memory corruption, but it was
-  already protected by the fact that `gro_try_pull_from_frag0()`
-  validates the grow parameter.
+- **Affected hardware**: ath10k WiFi devices (Qualcomm 802.11ac chipsets
+  — very common in laptops and embedded systems)
+- **Trigger**: WMI peer power-save state change events from firmware
+- **Consequence of bug**: Data race on `peer_ps_state` field. While this
+  is a 32-bit field and the race may not always cause visible corruption
+  on most architectures, it violates the documented locking contract and
+  could cause issues with lockdep-enabled kernels (warnings/splats). On
+  architectures without atomic 32-bit writes, it could cause torn reads.
+- **Severity**: Medium — it's a real locking bug in a commonly-used WiFi
+  driver
 
-### 5. USER IMPACT
+### 6. Stability Indicators
 
-- **Who is affected:** Every Linux system using network GRO (virtually
-  all networked systems)
-- **Severity if bug triggers:** Without this fix, a BUG_ON in the
-  network receive path means a kernel panic — complete system crash.
-  With this fix, the system survives.
-- **Real-world scenario:** If a NIC driver has a bug that causes an
-  unexpected skb layout, or if there's memory corruption, the BUG_ON
-  would crash the system. The WARN allows the system to continue and the
-  issue to be diagnosed.
+- Reviewed by Qualcomm engineer (Baochen Qiang)
+- Accepted by the ath10k maintainer (Jeff Johnson)
+- Small, obvious, and following established patterns in the same driver
 
-### 6. STABILITY INDICATORS
+### 7. Dependency Check
 
-- Author: Eric Dumazet (Google, top networking maintainer) — extremely
-  trustworthy
-- Reviewed/accepted by: Jakub Kicinski (net maintainer)
-- Pattern: BUG_ON → WARN conversions are well-established stable
-  material
+- No dependencies on other commits
+- The code being modified has existed in ath10k for a long time (the
+  `lockdep_assert_held` suggests the locking was always intended but
+  never correctly implemented in this path)
+- Should apply cleanly to any stable tree that has the ath10k driver
+  with this function
 
-### 7. DEPENDENCY CHECK
+### 8. Stable Kernel Criteria
 
-This is a self-contained one-line change. `DEBUG_NET_WARN_ON_ONCE` has
-been available in the kernel for several versions. No dependencies on
-other commits.
+- **Obviously correct?** Yes — adds the documented lock around a field
+  access
+- **Fixes a real bug?** Yes — data race / missing synchronization
+- **Small and contained?** Yes — 4 lines in 1 file
+- **No new features?** Correct — pure bug fix
+- **Tested?** Reviewed by subsystem experts, accepted by maintainer
 
-### 8. PRECEDENT
+### Conclusion
 
-BUG_ON to WARN conversions in hot paths are regularly backported to
-stable trees, especially in networking code. The kernel community
-considers BUG_ON() in non-fatal paths to be a bug in itself — it's an
-overreaction that turns a recoverable situation into a system crash.
-
-### VERDICT
-
-**Pros:**
-- Prevents kernel panic in core networking hot path
-- Tiny, surgical, one-line change
-- Zero risk of regression (strictly less dangerous behavior)
-- Author and reviewer are top-tier networking maintainers
-- Self-contained, no dependencies
-- Well-established pattern (BUG_ON → WARN)
-
-**Cons:**
-- The BUG_ON "never fired" — the condition may be unreachable in
-  practice
-- After conversion, if condition fires in production (non-debug) kernel,
-  the code continues with potentially invalid state (though this is
-  better than crashing)
-- Could be classified as "cleanup" rather than "bug fix"
-
-The change converts a potential denial-of-service (kernel panic via
-BUG_ON in network receive path) into a survivable warning. While the
-condition reportedly never fires, BUG_ON in hot network paths is itself
-considered a bug because it's an unnecessary crash risk. The fix is
-minimal, safe, and improves system robustness.
+This is a textbook stable-worthy fix: a small, surgical correction to a
+locking bug in a widely-used WiFi driver. It properly adds the lock that
+was always documented as required but never acquired in this code path.
+The risk is minimal and the fix follows established patterns in the same
+driver.
 
 **YES**
 
- net/core/gro.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/wmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index 482fa7d7f5981..ef61695fbdbb6 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -417,7 +417,7 @@ static void gro_pull_from_frag0(struct sk_buff *skb, int grow)
- {
- 	struct skb_shared_info *pinfo = skb_shinfo(skb);
+diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
+index b4aad6604d6d9..ce22141e5efd9 100644
+--- a/drivers/net/wireless/ath/ath10k/wmi.c
++++ b/drivers/net/wireless/ath/ath10k/wmi.c
+@@ -5289,8 +5289,6 @@ ath10k_wmi_event_peer_sta_ps_state_chg(struct ath10k *ar, struct sk_buff *skb)
+ 	struct ath10k_sta *arsta;
+ 	u8 peer_addr[ETH_ALEN];
  
--	BUG_ON(skb->end - skb->tail < grow);
-+	DEBUG_NET_WARN_ON_ONCE(skb->end - skb->tail < grow);
+-	lockdep_assert_held(&ar->data_lock);
+-
+ 	ev = (struct wmi_peer_sta_ps_state_chg_event *)skb->data;
+ 	ether_addr_copy(peer_addr, ev->peer_macaddr.addr);
  
- 	memcpy(skb_tail_pointer(skb), NAPI_GRO_CB(skb)->frag0, grow);
+@@ -5305,7 +5303,9 @@ ath10k_wmi_event_peer_sta_ps_state_chg(struct ath10k *ar, struct sk_buff *skb)
+ 	}
  
+ 	arsta = (struct ath10k_sta *)sta->drv_priv;
++	spin_lock_bh(&ar->data_lock);
+ 	arsta->peer_ps_state = __le32_to_cpu(ev->peer_ps_state);
++	spin_unlock_bh(&ar->data_lock);
+ 
+ exit:
+ 	rcu_read_unlock();
 -- 
 2.51.0
 
