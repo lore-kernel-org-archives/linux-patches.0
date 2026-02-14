@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C6C2556E;
-	Sat, 14 Feb 2026 01:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665821E5B63;
+	Sat, 14 Feb 2026 01:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031243; cv=none; b=O4vv+5UwyVH5oDfZHk+cRMQFMUsJK+9SyOhZy+vZcXcY+leLjpx+Z7Vw58YDQQpLXueYzNeKsLcv4/AFUqVu6ZicmVjcuoq7a3iGjwf84KMx17hOSqNafXwa1Egl1h5h7WO/1yv5PsP6sRj1c+KP1hWk03fLeQHSgopqZPbrniE=
+	t=1771031246; cv=none; b=Z7I1YUzIhEJNH7TBA8Ujalwhc/YrmwzSWYFnsNUrHZdoYXQhIxKsMRsE9EuUsJSSW3ih534qhi6oxctRKe74fgjP9x2CPZAwSwo9VodSdmfawLHlxziJ4b7W0MNHUv/KQalw67djo0nE6FkhdHCVq5f5URzwVFgYH69tfvre+8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031243; c=relaxed/simple;
-	bh=zgR0+w19KeuAigpzZA4mlBHR3kTKhOmhG/jOoWCG13U=;
+	s=arc-20240116; t=1771031246; c=relaxed/simple;
+	bh=+9UmGzjUre24ZnoJ9X++17ykycRzExGyAIhkJPnrGxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e3SFcWy47KkgKyzdpn5ukRop+VsjZ1yZ9oUXVS+fpBAcRFf4HtWzji6VbNdOi1rZyZ0mRVYnlZ3to4LRrLNkQO5BmbqqX350BGcRoT32J94c4tkLqKOSam5EzoAPA9XqIY0qCQIbSPOcSTuQPM4dgA7kUYzJHodXDaY27eM8AyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cveJoaMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0IMN9N0ZV//Q1SBYLeHjqZ1/D4RpCHmf0OSa0MgMhrF1Wofwd4RYpnAnAuDNvuxdDc8/je9G7gJz0BxuSrdVMbTvKh6lzWK3R97K8rq2BQlCgCjKAXVtVm1L0VrWORobc8+Xol7Kyg7BPVfdOfFzCmEmUC8IyYEBVG4mKCvexk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JirlZPFH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cveJoaMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F026C16AAE;
-	Sat, 14 Feb 2026 01:07:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JirlZPFH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321EFC16AAE;
+	Sat, 14 Feb 2026 01:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031243;
-	bh=zgR0+w19KeuAigpzZA4mlBHR3kTKhOmhG/jOoWCG13U=;
+	s=k20201202; t=1771031246;
+	bh=+9UmGzjUre24ZnoJ9X++17ykycRzExGyAIhkJPnrGxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cveJoaMwnAqwPx0pD7XCmdIbv44Q5qJ0HFuwgVdB4kCb9VeXZIySSSoR7tzeWvtMq
-	 YTIXhSz15+WKRWbRk6cuV7wJZv6hzfhRN/mYlwl7SfyF2vt8dgwoIpyeaaZN+fJHZu
-	 cIT+/AAt3Lc30JwWk0ZcjPv1YtH7gCvvEFjifhN6fZuDaZ36ZIO+gdBxurrA4LkACy
-	 BVt9O6s6HgPKw7ub8Jl4vHNN1SUqrNTwX1NhtbqV4zilrn5JF6n+3SDLpGl+4dDXnH
-	 nd9QABgVWFnPoowwHoEcqzr2NpwC8BPW0DzHEHtatzp0Aj7NcFAzTxFplYIAkSZuFm
-	 aQfw7SzwkXPFw==
+	b=JirlZPFHWdDMaEPmqpHwZbq3hE15LCmMpGD7ILgQr5FVULBgVDYsePzsp1rZO7W0t
+	 puNDRuuvrnRB5Y+A/C9Kb+jHVxtLVfyQKdg3gLPzIswtitCUu4MSUAwKjWMey2Hcd8
+	 JDJJOG+03trJf2i1hO/hWfiB5MRsQj3whaDpOf7UCpB9CPuSjg3aiLhHohoTfIpQNZ
+	 uAwdaIBgsNoL7u7tl6WAGBqRhhizlpnUzxizjq7PZpVM26NjmbqpET2tlj0EfD9oaM
+	 V6MbS+2iL9i44VxDxw1NdzBPTBypPioag2DAY+XSOeJE+qDkxDjcUxznAbF39WEQF5
+	 obB10aTAxk2qw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bharat Dev Burman <bharat.singh7924@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sbinding@opensource.cirrus.com,
-	kailang@realtek.com,
-	chris.chiu@canonical.com
-Subject: [PATCH AUTOSEL 6.19-6.12] ALSA: hda/realtek: add HP Victus 16-e0xxx mute LED quirk
-Date: Fri, 13 Feb 2026 19:59:56 -0500
-Message-ID: <20260214010245.3671907-116-sashal@kernel.org>
+	matthew.brost@intel.com,
+	thomas.hellstrom@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	neil.armstrong@linaro.org,
+	yelangyan@huaqin.corp-partner.google.com,
+	intel-xe@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.19-6.18] drm/xe/xe3_lpg: Apply Wa_16028005424
+Date: Fri, 13 Feb 2026 19:59:57 -0500
+Message-ID: <20260214010245.3671907-117-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -50,166 +53,178 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bharat Dev Burman <bharat.singh7924@gmail.com>
+From: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
 
-[ Upstream commit 72919c57a055f6d7b79d66731dc398e9b433f47c ]
+[ Upstream commit 9d94c1cf6ef938abd4b849b66f8eab11e3c537ef ]
 
-HP Victus 16-e0xxx with ALC245 codec does not handle the toggling of
-the mute LED.
-This patch adds a quirk entry for subsystem ID 0x88eb using a new
-ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT fixup, enabling correct mute LED
-behavior.
+Applied Wa_16028005424 to Graphics version from 30.00 to 30.05
 
-Signed-off-by: Bharat Dev Burman <bharat.singh7924@gmail.com>
-Link: https://patch.msgid.link/20260112184253.33376-1-bharat.singh7924@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Link: https://patch.msgid.link/20251121100822.20076-2-balasubramani.vivekanandan@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+Here is my complete analysis:
 
-### Commit Message Analysis
+## Commit Analysis: drm/xe/xe3_lpg: Apply Wa_16028005424
 
-This commit adds a hardware quirk for the HP Victus 16-e0xxx laptop with
-ALC245 codec. The mute LED does not toggle correctly without this quirk.
-It adds a new `SND_PCI_QUIRK` entry (subsystem ID `0x103c:0x88eb`) and a
-new fixup function `alc245_fixup_hp_mute_led_v2_coefbit`.
+### 1. Commit Message Analysis
 
-### Code Change Analysis
+The commit adds hardware workaround Wa_16028005424 for Intel Xe3_LPG
+GPUs targeting graphics versions 30.00 through 30.05. The commit message
+is sparse (typical for Intel HW workaround additions), referencing only
+the internal workaround number. It has `Reviewed-by: Matt Roper` (a
+senior Intel GPU developer), which provides confidence in its
+correctness.
 
-The change has three parts:
+### 2. Code Change Analysis
 
-1. **New fixup function `alc245_fixup_hp_mute_led_v2_coefbit`** (~16
-   lines): This is nearly identical to the existing
-   `alc245_fixup_hp_mute_led_v1_coefbit`, differing only in the `mask`
-   field:
-   - v1: `spec->mute_led_coef.mask = 3 << 2;` (bits 2-3)
-   - v2: `spec->mute_led_coef.mask = 1 << 3;` (bit 3 only)
+The change is small and consists of three parts:
 
-   The `on` value (`1 << 3`) and all other fields are the same. This is
-a trivial variation of an existing pattern for a different hardware
-configuration.
+**a) Register definition** (`regs/xe_guc_regs.h`): Adds
+`GUC_INTR_CHICKEN` register at offset 0xc50c and defines
+`DISABLE_SIGNALING_ENGINES` as bit 1. This is a GuC (Graphics
+microController) interrupt "chicken register" - Intel terminology for a
+hardware debug/workaround register.
 
-2. **New enum value `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT`**: Added to
-   the fixup enum, standard boilerplate.
+**b) Include addition** (`xe_wa.c`): Adds `#include
+"regs/xe_guc_regs.h"` so the new register definition is accessible.
 
-3. **New quirk table entry**: `SND_PCI_QUIRK(0x103c, 0x88eb, "HP Victus
-   16-e0xxx", ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT)` — a single-line
-   addition to the quirk table.
+**c) Workaround entry** (`xe_wa.c` in `gt_was[]` table):
 
-### Classification
+```c
+{ XE_RTP_NAME("16028005424"),
+  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3005)),
+  XE_RTP_ACTIONS(SET(GUC_INTR_CHICKEN, DISABLE_SIGNALING_ENGINES))
+},
+```
 
-This is a **hardware quirk / workaround** — one of the explicitly
-allowed exception categories for stable backports. Audio codec quirks in
-`patch_realtek.c` are extremely common in stable trees. The
-`SND_PCI_QUIRK` mechanism is designed exactly for this purpose: matching
-specific hardware by PCI subsystem ID and applying device-specific
-fixups.
+This uses the well-tested `xe_rtp_entry_sr` workaround infrastructure to
+set the chicken bit during GT initialization. This is the exact same
+infrastructure used by every other GT-level workaround in the driver.
 
-### Scope and Risk Assessment
+### 3. Classification: Hardware Workaround / Quirk
 
-- **Size**: Small — ~20 lines of new code, all following well-
-  established patterns
-- **Risk**: Very low — the new quirk only activates on the specific
-  subsystem ID `0x103c:0x88eb`. It cannot affect any other hardware.
-- **Pattern**: The new function is a minor variation of an existing,
-  proven function. The only difference is one bitmask value.
-- **No behavioral changes** for any other system.
+This is a textbook hardware workaround. Intel's numbered "Wa_XXXXXXXX"
+entries represent documented hardware errata tracked in their internal
+systems. The name "DISABLE_SIGNALING_ENGINES" in the "GUC_INTR_CHICKEN"
+register indicates this disables incorrect engine-to-GuC interrupt
+signaling behavior. Without this workaround, Xe3_LPG GPUs could
+experience:
+- GPU hangs from incorrect GuC interrupt handling
+- Spurious engine interrupts causing instability
+- Work completion notification failures
 
-### User Impact
+### 4. Scope and Risk Assessment
 
-Users with HP Victus 16-e0xxx laptops currently have a non-functional
-mute LED indicator. While not a crash or data corruption issue, mute LED
-behavior is important for usability — users need visual feedback to know
-whether their microphone/speakers are muted. This is a real hardware
-issue affecting real users.
+- **Lines changed**: ~10 total (3 register defs, 1 include, 4 workaround
+  entry lines)
+- **Files touched**: 2 (`xe_guc_regs.h`, `xe_wa.c`)
+- **Affected hardware**: Only Xe3_LPG GPUs (graphics versions
+  30.00-30.05)
+- **Risk**: Very low - uses established infrastructure, hardware-
+  specific, no behavioral change for other platforms
+- **Self-contained**: Yes - no dependencies on other patches
 
-### Stability Indicators
+### 5. Platform Availability in Stable Trees
 
-- Accepted by the HDA subsystem maintainer (Takashi Iwai)
-- Follows an extremely well-established pattern in the Realtek HDA
-  driver
-- The quirk mechanism has been stable for many years
+Xe3_LPG (graphics version 3000) was introduced in kernel 6.13
+(`800d75bf20ae`). Versions 3004/3005 were added in 6.19
+(`4fde66699f1c`). The workaround's `GRAPHICS_VERSION_RANGE(3000, 3005)`
+covers all variants. In older stable trees (6.13-6.18), it would still
+correctly match the supported versions (3000, 3001, 3003).
 
-### Dependency Check
+### 6. Pattern Consistency
 
-No dependencies on other commits. The base infrastructure
-(`coef_mute_led_set`, `alc_update_coef_led`, `struct coef_fw` for LED
-coefficients) has existed in stable trees for a long time. The new
-function uses only existing helpers and structures.
+Numerous similar Xe3_LPG workaround additions have been merged into
+stable trees:
+- `Wa_15016589081` for xe3lpg
+- `Wa_14023061436` for Xe3
+- `WA_14024681466` for Xe3_LPG
+- `Wa_18041344222` for Xe3 30.00/30.01
+- `Wa_13012615864` for xe3lpg
+- `Wa_16024792527` for xe3lpg
+- `Wa_14022293748`, `Wa_22019794406` for xe3lpg (cherry-picked)
 
-### Verdict
+All follow the identical pattern of small, self-contained workaround
+table entries.
 
-This is a textbook audio codec quirk addition — a new `SND_PCI_QUIRK`
-entry with a minor variation fixup function for a specific HP laptop
-model. These are among the most common and safest stable backport
-candidates. The change is small, self-contained, risk-free to other
-hardware, and fixes a real user-facing issue (broken mute LED).
+### 7. Stability Indicators
+
+- Reviewed-by: Matt Roper (senior Intel GPU developer)
+- Well-established infrastructure (`gt_was[]` table, `xe_rtp_entry_sr`)
+- Follows identical patterns to dozens of other workaround additions
+- Commit from Intel internal developers maintaining the driver
+
+### 8. Concerns
+
+- No explicit description of the bug symptom (typical for Intel WA
+  additions)
+- No `Fixes:` tag or `Cc: stable` (expected - that's why we're reviewing
+  it)
+- Xe3_LPG is relatively new hardware (6.13+)
+
+### Decision
+
+This commit is a standard Intel GPU hardware workaround that fits
+squarely within the "quirks and workarounds" exception for stable
+kernels. It is small (10 lines total), self-contained, hardware-
+specific, uses proven infrastructure, and addresses a documented
+hardware errata in the GuC interrupt subsystem. The risk of regression
+is near zero because it only affects Xe3_LPG hardware and uses the same
+mechanism as dozens of other successfully backported workarounds.
+Without it, Xe3_LPG GPUs may experience interrupt-related issues
+affecting GPU stability.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/gpu/drm/xe/regs/xe_guc_regs.h | 3 +++
+ drivers/gpu/drm/xe/xe_wa.c            | 5 +++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index da71237d2ccb0..0924dbf1ed334 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -1551,6 +1551,22 @@ static void alc245_fixup_hp_mute_led_v1_coefbit(struct hda_codec *codec,
- 	}
- }
+diff --git a/drivers/gpu/drm/xe/regs/xe_guc_regs.h b/drivers/gpu/drm/xe/regs/xe_guc_regs.h
+index 2118f7dec287f..87984713dd126 100644
+--- a/drivers/gpu/drm/xe/regs/xe_guc_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_guc_regs.h
+@@ -90,6 +90,9 @@
+ #define GUC_SEND_INTERRUPT			XE_REG(0xc4c8)
+ #define   GUC_SEND_TRIGGER			REG_BIT(0)
  
-+static void alc245_fixup_hp_mute_led_v2_coefbit(struct hda_codec *codec,
-+					  const struct hda_fixup *fix,
-+					  int action)
-+{
-+	struct alc_spec *spec = codec->spec;
++#define GUC_INTR_CHICKEN			XE_REG(0xc50c)
++#define   DISABLE_SIGNALING_ENGINES		REG_BIT(1)
 +
-+	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
-+		spec->mute_led_polarity = 0;
-+		spec->mute_led_coef.idx = 0x0b;
-+		spec->mute_led_coef.mask = 1 << 3;
-+		spec->mute_led_coef.on = 1 << 3;
-+		spec->mute_led_coef.off = 0;
-+		snd_hda_gen_add_mute_led_cdev(codec, coef_mute_led_set);
-+	}
-+}
-+
- /* turn on/off mic-mute LED per capture hook by coef bit */
- static int coef_micmute_led_set(struct led_classdev *led_cdev,
- 				enum led_brightness brightness)
-@@ -3828,6 +3844,7 @@ enum {
- 	ALC287_FIXUP_YOGA7_14ARB7_I2C,
- 	ALC245_FIXUP_HP_MUTE_LED_COEFBIT,
- 	ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT,
-+	ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT,
- 	ALC245_FIXUP_HP_X360_MUTE_LEDS,
- 	ALC287_FIXUP_THINKPAD_I2S_SPK,
- 	ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD,
-@@ -6165,6 +6182,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc245_fixup_hp_mute_led_v1_coefbit,
+ #define GUC_BCS_RCS_IER				XE_REG(0xc550)
+ #define GUC_VCS2_VCS1_IER			XE_REG(0xc554)
+ #define GUC_WD_VECS_IER				XE_REG(0xc558)
+diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
+index e32dd2fde6f1c..d606b058d588e 100644
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -15,6 +15,7 @@
+ 
+ #include "regs/xe_engine_regs.h"
+ #include "regs/xe_gt_regs.h"
++#include "regs/xe_guc_regs.h"
+ #include "regs/xe_regs.h"
+ #include "xe_device_types.h"
+ #include "xe_force_wake.h"
+@@ -315,6 +316,10 @@ static const struct xe_rtp_entry_sr gt_was[] = {
+ 	  XE_RTP_ACTIONS(SET(VDBOX_CGCTL3F10(0), RAMDFTUNIT_CLKGATE_DIS)),
+ 	  XE_RTP_ENTRY_FLAG(FOREACH_ENGINE),
  	},
-+	[ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc245_fixup_hp_mute_led_v2_coefbit,
++	{ XE_RTP_NAME("16028005424"),
++	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3005)),
++	  XE_RTP_ACTIONS(SET(GUC_INTR_CHICKEN, DISABLE_SIGNALING_ENGINES))
 +	},
- 	[ALC245_FIXUP_HP_X360_MUTE_LEDS] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc245_fixup_hp_mute_led_coefbit,
-@@ -6654,6 +6675,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8898, "HP EliteBook 845 G8 Notebook PC", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x103c, 0x88d0, "HP Pavilion 15-eh1xxx (mainboard 88D0)", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x88dd, "HP Pavilion 15z-ec200", ALC285_FIXUP_HP_MUTE_LED),
-+	SND_PCI_QUIRK(0x103c, 0x88eb, "HP Victus 16-e0xxx", ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8902, "HP OMEN 16", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x890e, "HP 255 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8919, "HP Pavilion Aero Laptop 13-be0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ };
+ 
+ static const struct xe_rtp_entry_sr engine_was[] = {
 -- 
 2.51.0
 
