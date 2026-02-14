@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD653C2D;
-	Sat, 14 Feb 2026 21:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D843C2D;
+	Sat, 14 Feb 2026 21:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104331; cv=none; b=aWLMUuesFGOZm7bw2lDPiyuAMXKGVxK7InkOjniP3FZJ4EazuN2pywodLxq0ITHvSsi7aeEDbufUUP/E9l2mrtpm/IyRKruG0AEaYYUOLGK7VZVURYXb3CiMt14/frdJrOqNNr8pHcSIsbLTlG9bWJAQUzzYX+hohdXs0LfYmAo=
+	t=1771104332; cv=none; b=IKwbTpUZHcBulu6tPvkxNfSwoQDE54aSlZXbLzuR0gfJZr2QKc1AePQor2R80j+yu06NLVnagZquLtLTUI71q3Bxj9AiSQGI3akL1dvgvPqwG3C/PvNC2kI4txfVlVcTt1lTvOnHDHJCPeuRb/WrH6KGfC/kLPc2fNLmhbwPODQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104331; c=relaxed/simple;
-	bh=5mpOtkJruGdHyLFUXd5KfJeEA2Oq+4NYlQdoQ8Mvyms=;
+	s=arc-20240116; t=1771104332; c=relaxed/simple;
+	bh=IEolZjLt9W5K7QPJw1wk3fFPTdzpWuj9VU77DHTEGR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kcYY4Ir5vyMuayskQshoYbCSk5vk3xiQzULwjpodakWzcj55rIMD0GCUvxR1KlKdqU996v32s0ljBhg8g1RYcjOonhSbK8uDVWNZJe5B1DO1j3iQYW8JJlhayLS0ifSIyJxVdfDehE1ZkAitTlXmYvEFVjpJa4mc7w9KYZjU6sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=obsdvoqU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NTgYBwybWY0SzwsHkZxYNKjUP7+LDauBWiKVvVVpqG+Ew1gBo/0QuI7VkZEYDOTYq5HHxm2F/On0rNSv77D0BWwKCH6SswNyj+d6r1XcjO8uFMuSbGT6rPWgcacdR0ZTFGj8+2yZ22PghRZEUNfx3zeGXjZkL4xU8MDj3Wo54Cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LWyKkMlu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="obsdvoqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF1EC19422;
-	Sat, 14 Feb 2026 21:25:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LWyKkMlu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A81C19423;
+	Sat, 14 Feb 2026 21:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104331;
-	bh=5mpOtkJruGdHyLFUXd5KfJeEA2Oq+4NYlQdoQ8Mvyms=;
+	s=k20201202; t=1771104332;
+	bh=IEolZjLt9W5K7QPJw1wk3fFPTdzpWuj9VU77DHTEGR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obsdvoqUKx9gUQQ1t1YC1spIbUFCfmI71XOIw6WxXEnq0J8BalfYmqohZqH3PZhzd
-	 2lzd4/n/nZ9wsW1a25Ilkb+6eknXjQY6rhOMnbb+iYABig801RZONCcMMVdIjLGEAH
-	 tYhuWg/EzrIoCJTSZvfIlZBTjx22PkbFvUMcA8xQVwf5GrRjOTltTCk+QBA9Niuzjo
-	 AkjCb+Iwd35SDPEj6YDC22uZR/u5IMM8VJd5sRBv0S0P0UerB1EBgCZsNr+zJZcc9f
-	 EiNMScaKOePd129TjUYH1XZwlA6+rZQp8QhPO+lfePQUiC6O7QYL1I+ghbU4hjQPzW
-	 A6VoYzICu2jsQ==
+	b=LWyKkMlus429KIrrUbgC1HbODZFcj36X+CD4nexWBsawkwDovnam5LsyjpPTwo0Zd
+	 oPKDDDVc6RsLZVF34BamLva+J5UFJ4vOqRmJ7vhg/5qREG/njw7TrOTPNOFUJQvfsx
+	 UEb+gXpkcPx0pw3KgMTvLL4Ad/6doVaFrIeXYYQ5asvT0/750v2KDTF8EYYw0SSRJy
+	 NI5VhPOHye85GUupGWDZE4+Z3DCUFDdreIZV0Ot+e8riKzd5T7bko1+O/PM2J09Drl
+	 6dr+sRne1mYPGhWL0abBvZCHutVG91JuIbxfJpEHlXWNl4oRJfYGMqsZb0eQn9CANX
+	 MK8lhlFbyEzVw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] wifi: rtw89: disable EHT protocol by chip capabilities
-Date: Sat, 14 Feb 2026 16:22:47 -0500
-Message-ID: <20260214212452.782265-22-sashal@kernel.org>
+	davem@davemloft.net,
+	dsahern@kernel.org,
+	ncardwell@google.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] ipv6: annotate data-races over sysctl.flowlabel_reflect
+Date: Sat, 14 Feb 2026 16:22:48 -0500
+Message-ID: <20260214212452.782265-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -47,199 +52,175 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7fd36ffedeedc97c44a10249a3f12d471bb2dc26 ]
+[ Upstream commit 5ade47c974b46eb2a1279185962a0ffa15dc5450 ]
 
-For certain chip models, EHT protocol is disabled, and driver must follow
-the capabilities. Otherwise, chips become unusable.
+Add missing READ_ONCE() when reading ipv6.sysctl.flowlabel_reflect,
+as its value can be changed under us.
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260110022019.2254969-5-pkshih@realtek.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260115094141.3124990-6-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of commit: "wifi: rtw89: disable EHT protocol by chip
-capabilities"
+## Analysis of Commit: "ipv6: annotate data-races over
+sysctl.flowlabel_reflect"
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is clear and direct: "For certain chip models, EHT
-protocol is disabled, and driver must follow the capabilities.
-**Otherwise, chips become unusable.**"
+The commit message is clear and direct: it adds missing `READ_ONCE()`
+annotations when reading `ipv6.sysctl.flowlabel_reflect` because this
+sysctl value can be changed concurrently by another CPU (via the sysctl
+write path). The author is Eric Dumazet, a top-tier networking
+maintainer known for systematically fixing data races in the networking
+stack. Reviewed by Simon Horman, another well-known networking reviewer.
 
-This is a critical statement - it means that without this patch, certain
-WiFi chips will not function at all. The word "unusable" indicates a
-severe hardware functionality bug, not a minor issue or optimization.
+### 2. CODE CHANGE ANALYSIS
 
-### 2. Code Change Analysis
+The patch modifies exactly 3 locations across 3 files, adding
+`READ_ONCE()` around reads of `net->ipv6.sysctl.flowlabel_reflect`:
 
-The change is spread across 4 files but is small and focused:
+1. **net/ipv6/af_inet6.c** (`inet6_create`): Socket creation path —
+   reads the sysctl to set the `REPFLOW` bit on new IPv6 sockets.
 
-**fw.h**: Adds protocol level constants (11N=1, 11AC=2, 11AX=3, 11BE=4)
-for the `RTW89_C2HREG_PHYCAP_W1_PROT` field. These are just defines for
-values already communicated by firmware - not new features.
+2. **net/ipv6/icmp.c** (`icmpv6_echo_reply`): ICMPv6 echo reply path —
+   reads the sysctl to decide whether to reflect the flowlabel in echo
+   replies.
 
-**core.h**: Adds a single `bool no_eht` field to `struct rtw89_hal`.
-This is a runtime flag to track chip capability.
+3. **net/ipv6/tcp_ipv6.c** (`tcp_v6_send_reset`): TCP reset sending path
+   — reads the sysctl to decide whether to reflect the flowlabel in TCP
+   resets.
 
-**mac.c** (`rtw89_mac_setup_phycap_part0`): Reads the protocol
-capability from the firmware/hardware phycap register. If the chip
-reports a protocol level below 11BE (EHT), it sets `hal->no_eht = true`.
-This is reading hardware capabilities that already exist - the driver
-was previously ignoring this information.
+In all three cases, the pattern is identical: a plain read of
+`net->ipv6.sysctl.flowlabel_reflect` is wrapped with `READ_ONCE()`. This
+is a textbook KCSAN data-race annotation fix.
 
-**core.c** (`rtw89_init_eht_cap`): Adds `|| hal->no_eht` to the existing
-early-return check. Previously, only `RTW89_CHIP_AX` generation chips
-would skip EHT capability initialization. Now, chips that report they
-don't support EHT via their phycap register also skip it. Without this,
-the driver would advertise EHT capabilities to the mac80211 stack for
-hardware that doesn't support it, causing the chip to become unusable.
+### 3. BUG CLASSIFICATION
 
-### 3. Bug Mechanism
+This is a **data race fix**. The sysctl `flowlabel_reflect` can be
+modified at any time from another CPU via the sysctl interface. Without
+`READ_ONCE()`, the compiler is free to:
+- Load the value multiple times (potentially seeing different values
+  within a single check)
+- Optimize the read in ways that produce undefined behavior under the C
+  memory model
 
-The bug is:
-1. Certain chip models report via firmware phycap that they don't
-   support EHT (802.11be)
-2. The driver was ignoring this capability report
-3. The driver would then advertise EHT support to mac80211/cfg80211
-4. mac80211 would try to use EHT features with the chip
-5. The chip cannot handle EHT, making it **unusable**
+This is the exact pattern of KCSAN-detected data races that Eric Dumazet
+has been systematically fixing across the networking stack. These are
+real data races even if the consequences in practice may be minor (store
+tearing or inconsistent reads).
 
-This is a classic hardware capability mismatch bug where the driver
-doesn't properly respect hardware-reported capabilities.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### 4. Classification
+- **Size**: Extremely small — 3 locations, each changing a single read
+  to `READ_ONCE()`.
+- **Risk**: Essentially zero. `READ_ONCE()` is a pure annotation that
+  prevents compiler optimization issues. It cannot introduce new bugs.
+- **Files touched**: 3 files in net/ipv6/, all well-established code
+  paths.
+- **Subsystem**: Core IPv6 networking — widely used.
 
-This is a **bug fix** - it fixes a real hardware functionality issue.
-It's not adding a new feature; it's reading an existing hardware
-capability field that was being ignored, and using it to prevent
-advertising unsupported features.
+### 5. STABLE KERNEL CRITERIA
 
-This falls into the category of **hardware quirks/workarounds** -
-respecting chip capabilities to prevent malfunction.
+- **Obviously correct**: Yes — adding `READ_ONCE()` for a concurrently-
+  modified sysctl is a textbook fix.
+- **Fixes a real bug**: Yes — data races are real bugs, detectable by
+  KCSAN, and can cause undefined behavior.
+- **Small and contained**: Yes — minimal change, 3 lines modified.
+- **No new features**: Correct — pure bug fix annotation.
+- **Tested**: Reviewed by Simon Horman, authored by Eric Dumazet
+  (networking co-maintainer).
 
-### 5. Scope and Risk Assessment
+### 6. USER IMPACT
 
-- **Lines changed**: ~15 lines of actual logic (very small)
-- **Files touched**: 4 files in the same driver subsystem
-- **Risk**: Very low
-  - The `no_eht` flag defaults to `false` (zero-initialized), so
-    existing working chips are unaffected
-  - It only triggers for chips that explicitly report they don't support
-    EHT
-  - The check is additive (adds an OR condition to existing early-
-    return)
-  - No behavioral change for chips that already work correctly
+The `flowlabel_reflect` sysctl affects IPv6 flow label behavior for:
+- New socket creation
+- ICMPv6 echo replies
+- TCP reset packets
 
-### 6. User Impact
+While the practical impact of the data race is likely limited (a torn
+read of an integer sysctl would just result in a brief wrong decision),
+the fix is important for:
+- KCSAN cleanliness (preventing false positives that mask real bugs)
+- Correctness under the kernel memory model
+- Preventing potential compiler-induced bugs on architectures with weak
+  memory ordering
 
-- **Severity**: HIGH - "chips become unusable" means complete loss of
-  WiFi functionality
-- **Affected users**: Users with specific Realtek WiFi chip models that
-  don't support EHT
-- **Impact without fix**: WiFi doesn't work at all on affected hardware
+### 7. DEPENDENCY CHECK
 
-### 7. Stability and Dependencies
+This commit is self-contained. It only adds `READ_ONCE()` wrappers and
+has no dependencies on other commits. The code being modified exists in
+all recent stable trees.
 
-- The change is self-contained within the rtw89 driver
-- No dependencies on other commits
-- The `RTW89_C2HREG_PHYCAP_W1_PROT` field already existed in the
-  codebase (it was already defined); the commit just adds named
-  constants and actually uses the field
-- The rtw89 driver exists in stable trees (it's been in the kernel since
-  5.16+)
+### 8. RISK vs BENEFIT
 
-### 8. Conclusion
+- **Risk**: Near zero. `READ_ONCE()` is a safe, well-understood
+  annotation.
+- **Benefit**: Fixes real data races in the IPv6 networking path,
+  prevents potential compiler-induced misbehavior, enables clean KCSAN
+  runs.
 
-This commit fixes a real, severe bug where certain Realtek WiFi chips
-become completely unusable because the driver advertises EHT
-capabilities the hardware doesn't support. The fix is:
-- Small and surgical (adds one bool field, reads one existing register
-  field, adds one condition check)
-- Obviously correct (respect hardware capability reports)
-- Low risk (only affects chips that report no EHT support; no change for
-  others)
-- High impact (fixes completely broken WiFi for affected users)
-
-This meets all stable kernel criteria: it fixes a real bug, is small and
-contained, doesn't add new features (it reads existing hardware data),
-and has been tested.
+This is the type of small, surgical, zero-risk fix that is ideal for
+stable backporting. Eric Dumazet's data-race annotation series in
+networking has been consistently backported to stable trees.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/core.c | 2 +-
- drivers/net/wireless/realtek/rtw89/core.h | 1 +
- drivers/net/wireless/realtek/rtw89/fw.h   | 4 ++++
- drivers/net/wireless/realtek/rtw89/mac.c  | 5 +++++
- 4 files changed, 11 insertions(+), 1 deletion(-)
+ net/ipv6/af_inet6.c | 4 ++--
+ net/ipv6/icmp.c     | 3 ++-
+ net/ipv6/tcp_ipv6.c | 3 ++-
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index d5b492ea76ef4..a00b5348b7622 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -5236,7 +5236,7 @@ static void rtw89_init_eht_cap(struct rtw89_dev *rtwdev,
- 	u8 val, val_mcs13;
- 	int sts = 8;
+diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
+index b705751eb73c6..bd29840659f34 100644
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -224,8 +224,8 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
+ 	inet6_set_bit(MC6_LOOP, sk);
+ 	inet6_set_bit(MC6_ALL, sk);
+ 	np->pmtudisc	= IPV6_PMTUDISC_WANT;
+-	inet6_assign_bit(REPFLOW, sk, net->ipv6.sysctl.flowlabel_reflect &
+-				     FLOWLABEL_REFLECT_ESTABLISHED);
++	inet6_assign_bit(REPFLOW, sk, READ_ONCE(net->ipv6.sysctl.flowlabel_reflect) &
++				      FLOWLABEL_REFLECT_ESTABLISHED);
+ 	sk->sk_ipv6only	= net->ipv6.sysctl.bindv6only;
+ 	sk->sk_txrehash = READ_ONCE(net->core.sysctl_txrehash);
  
--	if (chip->chip_gen == RTW89_CHIP_AX)
-+	if (chip->chip_gen == RTW89_CHIP_AX || hal->no_eht)
- 		return;
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index 9d37e7711bc2b..1a25ecb926951 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -958,7 +958,8 @@ static enum skb_drop_reason icmpv6_echo_reply(struct sk_buff *skb)
+ 	tmp_hdr.icmp6_type = type;
  
- 	if (hal->no_mcs_12_13)
-diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
-index a9cb47ea0b935..46344ca8fa0c8 100644
---- a/drivers/net/wireless/realtek/rtw89/core.h
-+++ b/drivers/net/wireless/realtek/rtw89/core.h
-@@ -5037,6 +5037,7 @@ struct rtw89_hal {
- 	bool support_cckpd;
- 	bool support_igi;
- 	bool no_mcs_12_13;
-+	bool no_eht;
+ 	memset(&fl6, 0, sizeof(fl6));
+-	if (net->ipv6.sysctl.flowlabel_reflect & FLOWLABEL_REFLECT_ICMPV6_ECHO_REPLIES)
++	if (READ_ONCE(net->ipv6.sysctl.flowlabel_reflect) &
++	    FLOWLABEL_REFLECT_ICMPV6_ECHO_REPLIES)
+ 		fl6.flowlabel = ip6_flowlabel(ipv6_hdr(skb));
  
- 	atomic_t roc_chanctx_idx;
- 	u8 roc_link_index;
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.h b/drivers/net/wireless/realtek/rtw89/fw.h
-index cedb4a47a769c..ba7c332911310 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.h
-+++ b/drivers/net/wireless/realtek/rtw89/fw.h
-@@ -42,6 +42,10 @@ struct rtw89_c2hreg_phycap {
- #define RTW89_C2HREG_PHYCAP_W0_BW GENMASK(31, 24)
- #define RTW89_C2HREG_PHYCAP_W1_TX_NSS GENMASK(7, 0)
- #define RTW89_C2HREG_PHYCAP_W1_PROT GENMASK(15, 8)
-+#define RTW89_C2HREG_PHYCAP_W1_PROT_11N 1
-+#define RTW89_C2HREG_PHYCAP_W1_PROT_11AC 2
-+#define RTW89_C2HREG_PHYCAP_W1_PROT_11AX 3
-+#define RTW89_C2HREG_PHYCAP_W1_PROT_11BE 4
- #define RTW89_C2HREG_PHYCAP_W1_NIC GENMASK(23, 16)
- #define RTW89_C2HREG_PHYCAP_W1_WL_FUNC GENMASK(31, 24)
- #define RTW89_C2HREG_PHYCAP_W2_HW_TYPE GENMASK(7, 0)
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 6734e5d5a5e22..fbce71cd5a05c 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -3061,6 +3061,7 @@ static int rtw89_mac_setup_phycap_part0(struct rtw89_dev *rtwdev)
- 	struct rtw89_efuse *efuse = &rtwdev->efuse;
- 	struct rtw89_mac_c2h_info c2h_info = {};
- 	struct rtw89_hal *hal = &rtwdev->hal;
-+	u8 protocol;
- 	u8 tx_nss;
- 	u8 rx_nss;
- 	u8 tx_ant;
-@@ -3108,6 +3109,10 @@ static int rtw89_mac_setup_phycap_part0(struct rtw89_dev *rtwdev)
- 	rtw89_debug(rtwdev, RTW89_DBG_FW, "TX path diversity=%d\n", hal->tx_path_diversity);
- 	rtw89_debug(rtwdev, RTW89_DBG_FW, "Antenna diversity=%d\n", hal->ant_diversity);
- 
-+	protocol = u32_get_bits(phycap->w1, RTW89_C2HREG_PHYCAP_W1_PROT);
-+	if (protocol < RTW89_C2HREG_PHYCAP_W1_PROT_11BE)
-+		hal->no_eht = true;
-+
- 	return 0;
- }
+ 	fl6.flowi6_proto = IPPROTO_ICMPV6;
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 280fe59785598..4ae664b05fa91 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1085,7 +1085,8 @@ static void tcp_v6_send_reset(const struct sock *sk, struct sk_buff *skb,
+ 			txhash = inet_twsk(sk)->tw_txhash;
+ 		}
+ 	} else {
+-		if (net->ipv6.sysctl.flowlabel_reflect & FLOWLABEL_REFLECT_TCP_RESET)
++		if (READ_ONCE(net->ipv6.sysctl.flowlabel_reflect) &
++		    FLOWLABEL_REFLECT_TCP_RESET)
+ 			label = ip6_flowlabel(ipv6h);
+ 	}
  
 -- 
 2.51.0
