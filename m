@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCAD142E83;
-	Sat, 14 Feb 2026 21:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF17A142E83;
+	Sat, 14 Feb 2026 21:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104369; cv=none; b=d5HPFWp5Ta0VOxa1bIRW5ZPW+ZQ3FmfWZ07HfS587WgjK46GZieKko01+Wlb5EStoPpFqSRiqmR4b/DD3zdqylELdV+8KSv+NY/jJnVrFrHWEV6khRJGXmM/hRGkkJGW7wT+8pnh0d9HzN4zu+XbAed6O2GbWqLZCl0+9eEV6Vk=
+	t=1771104370; cv=none; b=IkjXULV2eKkD3NlEoqMRqMI1v3zbSnoG4/TNsayx06sGCLE6wQGuc2S+W/IDJd0pdGx5ubDzMbV/9dPysZcmCvO+Pjp9bIlfcWfTXOLXi+QpAGG6JmJyn6+DkpbkM1WkqPI2qDJURvcODraVDpo67J9w0LsuzSCrdvE6Cofs0/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104369; c=relaxed/simple;
-	bh=KxQpaXLSBrHxj9U+FtoqjWKOWY/+aw13eFqCSCIlmAg=;
+	s=arc-20240116; t=1771104370; c=relaxed/simple;
+	bh=Onzrktd5vADawuAhphT9wgldwaxCtyshJhJuIApQSE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CskVyRh9KkIt7ucM75VhKLcJvaicnF2HPUhOmefrYzpEy27zXFaLGgxFm+zH+ySF0kR03P4Mk2XheRo5J397/P+Y3JahknqGVdigN/qdjuOByqiMkZpvXXMNBTmmSV0DWfr3/8yfFTjWo8RVbLRGUldnKE1RUK+IkPOzi5gg4pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F7hQvqsU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qzvW48jT7U3ON1RMcp/UtEc0USTeEr/MQ+ITasB3bXcpvvOhLJlIFKSvEMMccHQSL3YxddDiG4LmaaYxOeYhsgtxwBMSaWfR01c3rQSUI8r0UA4yKt5SP916Sxzb/y1DhwPGfbrWmIza7cS1/8VqHEXfpGcJxquhU7Dw7EtiDw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qJ7MWlua; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F7hQvqsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0A7C16AAE;
-	Sat, 14 Feb 2026 21:26:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qJ7MWlua"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D46EC19422;
+	Sat, 14 Feb 2026 21:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104369;
-	bh=KxQpaXLSBrHxj9U+FtoqjWKOWY/+aw13eFqCSCIlmAg=;
+	s=k20201202; t=1771104370;
+	bh=Onzrktd5vADawuAhphT9wgldwaxCtyshJhJuIApQSE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7hQvqsUFrRlo/jdRBFFvU+JgqgVUqofjiH78C6Hm3/E8QtflX810Z0MgnjxmJGoG
-	 +lEeI4FlrPBSETE5w/DyvG4VZqvevOL8YktxszEAdsmESdgUvBKhSCeHQDpFK5ffh5
-	 8c3ZzrGfYFlAl3iR4BnJvtTsW6+x+yZBHqH05uH1SJU4gS9U58AAx54kjiQ2NxqLlA
-	 MwgFfgyh6gHivs0duMuKyuKvFvTAa5R9QH2utGp0ghBgEVwDFHPrVMRkwVnt58Zkq5
-	 tZTn4K8cFtp1kddtxsEoaGkHVI4inwgtmRWL0EpLZO4GN5b9xQEnasXzZ8gdBUhkLM
-	 CqkumgJS8IRMw==
+	b=qJ7MWluadm7eO3wk+0sTI2LsjsK++N8ImUv46D4mvzYynoXfU7UMCfFs5ssFVSzQw
+	 19wa39357DMwONxE2y1tVpi1aZZ9lR//gcssw7k0C0GvqHss8GxUablZKZpxBUtOuU
+	 M+S8CZhkcguQwlwIKUIbiSGrVU6QhLK+ot/TKsHX2L32isttpkFv3Egn0h4xNFu+C6
+	 fW4Iq3OjVY+apm98dH5SuGk3sSq6BtZ1I/Zz8AuSOnLEHEl5iOoisuleQfwcTc0bh5
+	 Zdh5ATjcX3l29beM2L6E06GcK9kPEmVoDij9rrRhHEisyI+5syJwNMUbZCGCM4B/y+
+	 0Qvl7IfnvOmfg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shell Chen <w27@sorz.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Geetha sowjanya <gakula@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] Bluetooth: btusb: Add new VID/PID for RTL8852CE
-Date: Sat, 14 Feb 2026 16:23:11 -0500
-Message-ID: <20260214212452.782265-46-sashal@kernel.org>
+	sgoutham@marvell.com,
+	lcherian@marvell.com,
+	jerinj@marvell.com,
+	hkelam@marvell.com,
+	sbhatta@marvell.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] octeontx2-af: Workaround SQM/PSE stalls by disabling sticky
+Date: Sat, 14 Feb 2026 16:23:12 -0500
+Message-ID: <20260214212452.782265-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -47,152 +51,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Shell Chen <w27@sorz.org>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit d9f7c39c6b7548bd70519b241b6c2d1bcc658d4b ]
+[ Upstream commit 70e9a5760abfb6338d63994d4de6b0778ec795d6 ]
 
-Add VID:PID 13d3:3612 to the quirks_table.
+NIX SQ manager sticky mode is known to cause stalls when multiple SQs
+share an SMQ and transmit concurrently. Additionally, PSE may deadlock
+on transitions between sticky and non-sticky transmissions. There is
+also a credit drop issue observed when certain condition clocks are
+gated.
 
-This ID pair is found in the Realtek RTL8852CE PCIe module
-in an ASUS TUF A14 2025 (FA401KM) laptop.
+work around these hardware errata by:
+- Disabling SQM sticky operation:
+  - Clear TM6 (bit 15)
+  - Clear TM11 (bit 14)
+- Disabling sticky → non-sticky transition path that can deadlock PSE:
+  - Clear TM5 (bit 23)
+- Preventing credit drops by keeping the control-flow clock enabled:
+  - Set TM9 (bit 21)
 
-Tested on aforementioned laptop.
+These changes are applied via NIX_AF_SQM_DBG_CTL_STATUS. With this
+configuration the SQM/PSE maintain forward progress under load without
+credit loss, at the cost of disabling sticky optimizations.
 
-The device info from /sys/kernel/debug/usb/devices is listed as below.
-
-T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=13d3 ProdID=3612 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-
-Signed-off-by: Shell Chen <w27@sorz.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260127125147.1642-1-gakula@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+The register definition exists in the codebase, and the code modifying
+it exists. This is a self-contained change that modifies existing
+initialization code — no new dependencies needed.
 
-### Commit Summary
+### 8. Summary
 
-This commit adds a single new USB VID/PID pair (0x13d3:0x3612) to the
-`quirks_table[]` in `drivers/bluetooth/btusb.c` for the Realtek
-RTL8852CE Bluetooth controller. This device is found in the ASUS TUF A14
-2025 (FA401KM) laptop.
+**What it fixes**: Hardware errata causing network stalls, PSE deadlock,
+and credit drops on OcteonTX2 hardware under concurrent transmission
+load.
 
-### Classification: New Device ID Addition
+**Why it matters for stable**: Users running OcteonTX2 hardware on
+stable kernels will experience these hardware bugs (stalls, deadlocks,
+packet loss) without this workaround. These are reliability/availability
+issues for networking hardware commonly used in production.
 
-This falls squarely into the **"NEW DEVICE IDs"** exception category,
-which is explicitly listed as appropriate for stable backporting:
+**Meets stable rules**:
+- Obviously correct: Simple register bit manipulation with clear
+  documentation
+- Fixes real bugs: Hardware stalls, deadlocks, and credit drops
+- Small and contained: Single file, ~10 lines of actual change
+- No new features: Hardware errata workaround only
+- Reviewed by networking maintainers
 
-> Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers. These are
-trivial one-line additions that enable hardware support. Rule: The
-driver must already exist in stable; only the ID is new.
-
-### Code Change Analysis
-
-The change is a **2-line addition** (one logical entry) inserting a new
-`USB_DEVICE()` entry into the existing RTL8852CE section of the quirks
-table:
-
-```c
-{ USB_DEVICE(0x13d3, 0x3612), .driver_info = BTUSB_REALTEK |
-                                             BTUSB_WIDEBAND_SPEECH },
-```
-
-This is identical in structure to all neighboring entries for the same
-chip family (RTL8852CE). The vendor 0x13d3 is Azurewave (a common
-Realtek module OEM), and there are already multiple 0x13d3 entries for
-this exact chip.
-
-### Risk Assessment
-
-- **Risk: Extremely Low.** This is a pure data addition to a device ID
-  table. It cannot affect any other device or code path. The only effect
-  is that a USB device with this specific VID/PID will now be recognized
-  and handled by the btusb driver with the correct Realtek quirks.
-- **Without this patch:** Bluetooth on this specific laptop model simply
-  does not work.
-- **Dependencies:** None. The RTL8852CE support infrastructure already
-  exists in all recent stable trees.
-- **Tested:** The commit message explicitly states "Tested on
-  aforementioned laptop" and includes detailed USB device info
-  confirming it works.
-
-### User Impact
-
-This enables Bluetooth functionality on the ASUS TUF A14 2025 laptop.
-Without this entry, users of this laptop running stable kernels have no
-Bluetooth. This is a real-world hardware enablement fix.
-
-### Stable Criteria
-
-1. **Obviously correct and tested:** Yes - trivial table entry addition,
-   explicitly tested on the device.
-2. **Fixes a real bug:** Yes - missing device ID means hardware doesn't
-   work.
-3. **Important issue:** Yes - complete loss of Bluetooth functionality
-   on a shipping laptop.
-4. **Small and contained:** Yes - 2 lines added to a single file's
-   device ID table.
-5. **No new features/APIs:** Correct - just enables existing driver for
-   new hardware variant.
-6. **Applies cleanly:** The change is a simple table entry insertion
-   that should apply cleanly to any stable tree containing the RTL8852CE
-   section.
+**Risk**: Minimal. Only affects OcteonTX2 hardware initialization. The
+trade-off (disabling sticky optimizations) is explicitly acknowledged
+and accepted.
 
 **YES**
 
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index de9e484efef71..972139729e8fd 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -559,6 +559,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3592), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3612), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe122), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 2f485a930edd1..49f7ff5eddfc8 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -4938,12 +4938,18 @@ static int rvu_nix_block_init(struct rvu *rvu, struct nix_hw *nix_hw)
+ 	/* Set chan/link to backpressure TL3 instead of TL2 */
+ 	rvu_write64(rvu, blkaddr, NIX_AF_PSE_CHANNEL_LEVEL, 0x01);
  
+-	/* Disable SQ manager's sticky mode operation (set TM6 = 0)
++	/* Disable SQ manager's sticky mode operation (set TM6 = 0, TM11 = 0)
+ 	 * This sticky mode is known to cause SQ stalls when multiple
+-	 * SQs are mapped to same SMQ and transmitting pkts at a time.
++	 * SQs are mapped to same SMQ and transmitting pkts simultaneously.
++	 * NIX PSE may deadlock when there are any sticky to non-sticky
++	 * transmission. Hence disable it (TM5 = 0).
+ 	 */
+ 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS);
+-	cfg &= ~BIT_ULL(15);
++	cfg &= ~(BIT_ULL(15) | BIT_ULL(14) | BIT_ULL(23));
++	/* NIX may drop credits when condition clocks are turned off.
++	 * Hence enable control flow clk (set TM9 = 1).
++	 */
++	cfg |= BIT_ULL(21);
+ 	rvu_write64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS, cfg);
+ 
+ 	ltdefs = rvu->kpu.lt_def;
 -- 
 2.51.0
 
