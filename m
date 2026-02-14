@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F088D1EF0B0;
-	Sat, 14 Feb 2026 01:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200421E5B63;
+	Sat, 14 Feb 2026 01:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031217; cv=none; b=GGMoUGyLAJBfECkUlP+Oik4p3rpOStNK+fiU6QEMwhaOE1615z+1EzgIzHLERR18DQ3r+F2solyse5vtTOBOUY6SdzgcG7malJbCh4Xk8zoY6Zfg5TSPScqk26zzNVteNnSS5Q9Fn9It0yx3fsF/AIrBw/ql6hh7xjpGPaq7h9A=
+	t=1771031218; cv=none; b=UUkMkQzN2VsWsOLbzMZvvFvxOu5K+bljg+Mq6wK8fM82QFzSsxSHBQ6bKMji9SWhhu1DoaAuqX81RWNC3utZnm38p0qsziQFkoj+btluOqAlRWVKxa6F3pzRNCkCNMExELFi2WTHuiRduh4gj3Ci1awWdX4fk8o68vFosigrjT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031217; c=relaxed/simple;
-	bh=8c8sukFP14utfTYrI376lvQLa5+I8ze4lJVTlbyy2q4=;
+	s=arc-20240116; t=1771031218; c=relaxed/simple;
+	bh=aLnq3Vhro09RFihhmybNksuVx+/a8US1ZR2sadPBDvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qXnSuq7NgT9ISa4ctsu7c5/3kMr88/P50bhZBSjWvX2+mgDAe7ogYB8pT7kV0SlLH53bvlkPsmekDM025YO4PYsxLYDsuFecmR/pSdIW7C4GwCyUVzZNOWaiZ5TpKIOwUUetZkRbLkDZBPPx6vJ2vwPbtRxJUOxhcOp/y7KJ3os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeV9vplD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eeg5jGYEVS3eIFcrqujO8dz9E3iu1JeqcYzBB8ttTuLzAnxOv2ZW8eaUfE2+1GVZz0aEuQtaW+uDT/uq3L63NXV4Np71Otmx5MWjtPN6oK+Ok2KQ2DmYTv/gyLg9dGFBxfgner+cXQC+4OSkBnAbGhtaXfQiVP6arcpK6HfmPVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MhcAX9LX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeV9vplD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADAFC116C6;
-	Sat, 14 Feb 2026 01:06:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MhcAX9LX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4383AC116C6;
+	Sat, 14 Feb 2026 01:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031216;
-	bh=8c8sukFP14utfTYrI376lvQLa5+I8ze4lJVTlbyy2q4=;
+	s=k20201202; t=1771031218;
+	bh=aLnq3Vhro09RFihhmybNksuVx+/a8US1ZR2sadPBDvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeV9vplDudGC2FdxU622iJD1KAL58XswbKg/pCKTiXgl1XOdXk2Qkg01TleeOVfpl
-	 aBkFIJo7M5WiiOnotsNkbMsJm2wfqzY+nuPDpVssYjygoBvode39Bc/cPyyLUq3jDA
-	 Nm8CTaNoV0nCMtEdy+3223zOn+FvKiksecELExpnCC2D5Uo2oPCoocuwRr7Gctc6aj
-	 l+fpGn0XbHI9aEcyLVuzfXFpmsQA/sZnsWvdkzZmhgsN9Mwja6avZxJW0lT8j0O+Zp
-	 vZDTcpGHw/0zFQSUbmcLqqQF9DDXFX8IRSfjBmal9BekHCn86ZF22DPTEq+7cHcQCT
-	 KJfn8wSLU9Fsw==
+	b=MhcAX9LXEKx0cIfuY0DUr9QIep8lApaV7mMBmI0sN0EQPrK1g0XXseDpR7sh94bxP
+	 Lm+xz2rasEW5SGOw0ZVa+3pmLFR8Zx7dlsGHW2m2H04m96MaqrWAGNci6wFVGYEAiR
+	 ZKK2CScfn8EKhMX+jYq9ToWSwCk6DUU08sE1W5STHQ5m3BgJ7pd0On+2kp53csDCNL
+	 O4HocxPzayW5m4Er+zJA2ZGo4AKsYdsRJsN9fCBbVXAfbZIP4/SaZ1DjY6WLEqUngp
+	 kbYGYiuL9SwL1+1ki5aJa0VNm+nMwckGpC8b2GtkU8kxZOdGnyBlQRXNI8rAn10l+o
+	 rGImIs4M0Zalg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Szymon Wilczek <szymonwilczek@gmx.com>,
-	syzbot+405dcd13121ff75a9e16@syzkaller.appspotmail.com,
-	Mike Isely <isely@pobox.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] media: pvrusb2: fix URB leak in pvr2_send_request_ex
-Date: Fri, 13 Feb 2026 19:59:47 -0500
-Message-ID: <20260214010245.3671907-107-sashal@kernel.org>
+	brgl@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] power: sequencing: fix missing state_lock in pwrseq_power_on() error path
+Date: Fri, 13 Feb 2026 19:59:48 -0500
+Message-ID: <20260214010245.3671907-108-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -53,165 +52,76 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Wilczek <szymonwilczek@gmx.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit a8333c8262aed2aedf608c18edd39cf5342680a7 ]
+[ Upstream commit e1dccb485c2876ac1318f36ccc0155416c633a48 ]
 
-When pvr2_send_request_ex() submits a write URB successfully but fails to
-submit the read URB (e.g. returns -ENOMEM), it returns immediately without
-waiting for the write URB to complete. Since the driver reuses the same
-URB structure, a subsequent call to pvr2_send_request_ex() attempts to
-submit the still-active write URB, triggering a 'URB submitted while
-active' warning in usb_submit_urb().
+pwrseq_power_on() calls pwrseq_unit_disable() when the
+post_enable callback fails. However, this call is outside the
+scoped_guard(mutex, &pwrseq->state_lock) block that ends.
 
-Fix this by ensuring the write URB is unlinked and waited upon if the read
-URB submission fails.
+pwrseq_unit_disable() has lockdep_assert_held(&pwrseq->state_lock),
+which will fail when called from this error path.
 
-Reported-by: syzbot+405dcd13121ff75a9e16@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=405dcd13121ff75a9e16
-Signed-off-by: Szymon Wilczek <szymonwilczek@gmx.com>
-Acked-by: Mike Isely <isely@pobox.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Add the scoped_guard block to cover the post_enable callback and its
+error handling to ensure the lock is held when pwrseq_unit_disable() is
+called.
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Link: https://patch.msgid.link/20260130182651.1576579-1-n7l8m4@u.northwestern.edu
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of pvrusb2 URB Leak Fix
+The power sequencing core was introduced in v6.11. So this fix is
+relevant for stable trees v6.11.y and later (6.12.y, 6.13.y, etc.).
 
-### 1. Commit Message Analysis
+### 8. SELF-CONTAINEDNESS
 
-The commit message is clear and well-structured:
-- **Subject**: Explicitly says "fix URB leak" — this is a bug fix
-- **Problem**: When the write URB is submitted successfully but the read
-  URB submission fails, the function returns without waiting for the
-  write URB to complete. The URB structure is reused, so a subsequent
-  call tries to submit a still-active URB.
-- **Symptom**: Triggers a `'URB submitted while active'` warning in
-  `usb_submit_urb()`, which is a well-known USB core warning indicating
-  a real bug.
-- **Reporter**: syzbot — fuzzer-found, reproducible bug
-- **Acked-by**: Mike Isely (pvrusb2 maintainer) — subsystem maintainer
-  approved
-- **Signed-off-by**: Hans Verkuil (media subsystem maintainer) — proper
-  review chain
+This is a completely self-contained fix. It doesn't depend on any other
+patches. It simply wraps two existing lines of code with the appropriate
+lock scope.
 
-### 2. Code Change Analysis
+### VERDICT
 
-The fix adds 5 lines of code in a single error path:
+**Meets stable criteria:**
+- **Obviously correct**: Yes — the lock is required (enforced by
+  `lockdep_assert_held`), and it was missing.
+- **Fixes a real bug**: Yes — lockdep assertion failure and potential
+  race condition.
+- **Small and contained**: Yes — 6 lines changed in 1 file.
+- **No new features**: Correct — purely a locking fix.
+- **Low regression risk**: Adding a lock that was already required by
+  the callee.
 
-```c
-if (hdw->ctl_write_pend_flag) {
-    usb_unlink_urb(hdw->ctl_write_urb);
-    while (hdw->ctl_write_pend_flag)
-        wait_for_completion(&hdw->ctl_done);
-}
-```
-
-**What it does**: When the read URB submission fails (`status < 0`), but
-the write URB was already submitted and is pending
-(`ctl_write_pend_flag` set), the fix:
-1. Unlinks (cancels) the still-active write URB
-2. Waits for the write URB completion callback to fire (which clears
-   `ctl_write_pend_flag`)
-
-This is the correct pattern — it mirrors what the existing code already
-does in the normal path (the `while (hdw->ctl_write_pend_flag ||
-hdw->ctl_read_pend_flag)` loop further down), but adapted for this
-specific error path.
-
-### 3. Bug Classification
-
-- **Type**: Resource leak / URB lifecycle mismanagement
-- **Trigger**: Read URB submission failure (e.g., -ENOMEM) after
-  successful write URB submission
-- **Consequence**:
-  - Active URB left dangling
-  - Next call to the same function triggers `'URB submitted while
-    active'` warning
-  - Could lead to undefined behavior with the USB subsystem, potential
-    data corruption or crashes
-- **Reproducibility**: syzbot found it — reproducible with a concrete
-  trigger
-
-### 4. Scope and Risk Assessment
-
-- **Lines changed**: +5 lines added in a single file
-- **Files affected**: 1 file (`drivers/media/usb/pvrusb2/pvrusb2-hdw.c`)
-- **Complexity**: Very low — straightforward error path cleanup
-- **Risk**: Minimal. The fix uses standard USB patterns
-  (`usb_unlink_urb` + wait for completion) that are well-established
-  throughout the kernel. The `ctl_write_pend_flag` check ensures we only
-  unlink if the write URB is actually active.
-- **Regression potential**: Very low. This code path only executes when
-  read URB submission fails, and the fix ensures proper cleanup before
-  proceeding — strictly better than the current behavior.
-
-### 5. User Impact
-
-- **Affected users**: Anyone using pvrusb2 USB TV capture devices
-- **Severity**: Medium-high — while pvrusb2 is not a widely-used driver,
-  submitting a still-active URB can cause USB core issues, kernel
-  warnings, and potentially crashes
-- **Trigger likelihood**: Moderate — memory pressure situations can
-  cause `-ENOMEM` from `usb_submit_urb()`
-
-### 6. Stability and Trust Indicators
-
-- **Reported-by**: syzbot (automated, reproducible)
-- **Acked-by**: Subsystem maintainer (Mike Isely)
-- **Merged by**: Media subsystem maintainer (Hans Verkuil)
-- **Fix pattern**: Standard, well-understood USB cleanup pattern
-
-### 7. Dependencies
-
-The fix is self-contained — it uses existing infrastructure
-(`usb_unlink_urb`, `wait_for_completion`, existing flags) that has been
-present in the pvrusb2 driver for years. No dependency on other recent
-commits.
-
-### 8. Stable Kernel Criteria
-
-| Criterion | Met? |
-|-----------|------|
-| Obviously correct and tested | Yes — syzbot-reported, maintainer-acked
-|
-| Fixes a real bug | Yes — URB leak, 'URB submitted while active' |
-| Important issue | Yes — can cause USB subsystem issues and warnings |
-| Small and contained | Yes — 5 lines, 1 file |
-| No new features | Correct — pure bug fix |
-| Applies cleanly | Likely — the pvrusb2 code is stable and rarely
-changed |
-
-### Conclusion
-
-This is a textbook stable backport candidate: a small, surgical fix for
-a syzbot-reported URB lifecycle bug in a USB driver. It's maintainer-
-acked, uses established patterns, has minimal regression risk, and fixes
-a real bug that can cause kernel warnings and potential instability. The
-fix is self-contained with no dependencies.
+The fix is small, surgical, obviously correct, and fixes a real locking
+bug that would trigger lockdep warnings and could lead to race
+conditions. It meets all stable kernel criteria.
 
 **YES**
 
- drivers/media/usb/pvrusb2/pvrusb2-hdw.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/power/sequencing/core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/pvrusb2/pvrusb2-hdw.c b/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
-index b32bb906a9de2..5807734ae26c6 100644
---- a/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
-+++ b/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
-@@ -3709,6 +3709,11 @@ status);
- 				   "Failed to submit read-control URB status=%d",
- status);
- 			hdw->ctl_read_pend_flag = 0;
-+			if (hdw->ctl_write_pend_flag) {
-+				usb_unlink_urb(hdw->ctl_write_urb);
-+				while (hdw->ctl_write_pend_flag)
-+					wait_for_completion(&hdw->ctl_done);
+diff --git a/drivers/power/sequencing/core.c b/drivers/power/sequencing/core.c
+index 190564e559885..1fcf0af7cc0bb 100644
+--- a/drivers/power/sequencing/core.c
++++ b/drivers/power/sequencing/core.c
+@@ -914,8 +914,10 @@ int pwrseq_power_on(struct pwrseq_desc *desc)
+ 	if (target->post_enable) {
+ 		ret = target->post_enable(pwrseq);
+ 		if (ret) {
+-			pwrseq_unit_disable(pwrseq, unit);
+-			desc->powered_on = false;
++			scoped_guard(mutex, &pwrseq->state_lock) {
++				pwrseq_unit_disable(pwrseq, unit);
++				desc->powered_on = false;
 +			}
- 			goto done;
  		}
  	}
+ 
 -- 
 2.51.0
 
