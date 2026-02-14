@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC84E2FDC20;
-	Sat, 14 Feb 2026 21:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9D72FDC20;
+	Sat, 14 Feb 2026 21:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104434; cv=none; b=HGHuRtvUBYLtLmE4LZTU/PlptpBvJ08RtPASSRNqmF1+5+btliuXcJtlrVTUbAid4yueBlKlYBMDHEH7JmombxEhIkuJZtoz4vPdwKLJIQQXbRUK0wb/MiRyysN6+D3MPB0iaujQANrreZR96ewdnB9Gz7L1d3bg6WfkCkV6bbQ=
+	t=1771104435; cv=none; b=LCYY6q1U98zjs5LHaF3o6ylFn7zO/R2hHVFgA6uBk5+69V1lDTqxRYzT52dw3I6wbXZ4SDtO5JOlRlBn0BTNTKcGjMxHjAjqubOwcx+cqEQOkt462hGGbQcmvucnvQenZCiJHDER81f6VsPf/OHdzM0xOhnxZcdNAkyYYB3yT7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104434; c=relaxed/simple;
-	bh=ADDlhnTR7cwcVMYUjdmYp8M6NLsPPm/L7no9GKVAU3I=;
+	s=arc-20240116; t=1771104435; c=relaxed/simple;
+	bh=U+tA0vkY6vpqXtXMkjENXllx3tPQws0mO8+SdxXCtMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rAyXpZAzyqk0p4305fFVFF3F/UriJfX9zBS/eYtboxQc7IU8vYy4fvVJa+Eho/2m0bH2bTbT7hSJg3vwfBZa5Ugq/RQ+P2DY1uS7fiCZKkTVI+i1fHjNg1J5Rb2GMTTXuRv/vQwZOXEObCg/0Uaos3k/dicL31IBNNpZewroHVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XPhVEB9E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d6/ixl5MJu0OKOnkN+FhHzUyiKg/krG6YWsswo1v0zJLCGmYHOphqhYuTptM2FU0Yt6KQZSiGD6pL1fF7ocaa9lBlZEpilwAmB4dG3uUOoLR97d36S3eYE5TaJ1WxzNwD6SQKQJWMcgUaY6V11VikWTviAtfrfrqhZKZ6vcv3J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zr0bemsT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XPhVEB9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94471C19425;
-	Sat, 14 Feb 2026 21:27:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zr0bemsT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46EDC16AAE;
+	Sat, 14 Feb 2026 21:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104434;
-	bh=ADDlhnTR7cwcVMYUjdmYp8M6NLsPPm/L7no9GKVAU3I=;
+	s=k20201202; t=1771104435;
+	bh=U+tA0vkY6vpqXtXMkjENXllx3tPQws0mO8+SdxXCtMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XPhVEB9EY9hlgoTQrCp9pDWs8KCbKjDS8aAcgT1LDe1x6Kb/3awTG+UzmVaTPFJqK
-	 l8MQ3OWRyJ+AC0RJZhOd2uzNi+qKUVEj/WXzPivKIwgM+iacjzDGROIxhf6KAF/Jw8
-	 we/mxI4SGaFOxf9hPVJ+BpcCJ2ds4nz31ef/8oZPHjD+mdf2naJpSF1oibebo+bUii
-	 6WGS48Wn7wQJkKDPCbJNRjxuFMgpJrB2MAPUYVzf4G4td2GfdejVBsLoSSWCHwXpXS
-	 w/1TZmywFBU8z1OG/KlnfADUTWRTbj/+IJtugLg/ndRBYXk2YaDyNCQMep4h1r3ymJ
-	 4TtZ6rGxBEryQ==
+	b=Zr0bemsTJBGExQlNcYboNX5rDuv0if6cMPvq5qVrnNrq5W3HInCNfm2gmM5UpxqdU
+	 MscBFedcPs4eDIqtlMnfMDs1TFsJj78b0R6Jum7r2rqU8P3ubsUvMUcNOuhqHiZyhF
+	 N4j3D9cjQmc098I04Ezd1TXJfslIinupMA24VWmJQ0TpwxIyj394ck+tJwrIswequp
+	 fpRiC9mG7y9Qs01QkgIZBWiwNvXR/E/5UsJ8uLXY/yX69HvjTP1FeSa6XEICQdWFrd
+	 ZmGg9/D4QxkNKtN1bGyt+3b62UvvfUMI2w1J99WioqZpgDvkGQRB3wTFpl7lBC2aNO
+	 O+CaAa3KnmXYQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Williamson <alex.williamson@nvidia.com>,
-	Patrick Bianchi <patrick.w.bianchi@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Li Chen <me@linux.beauty>,
+	Theodore Ts'o <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] PCI: Mark ASM1164 SATA controller to avoid bus reset
-Date: Sat, 14 Feb 2026 16:23:46 -0500
-Message-ID: <20260214212452.782265-81-sashal@kernel.org>
+	adilger.kernel@dilger.ca,
+	linux-ext4@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.15] ext4: mark group extend fast-commit ineligible
+Date: Sat, 14 Feb 2026 16:23:47 -0500
+Message-ID: <20260214212452.782265-82-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -52,148 +52,168 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Williamson <alex.williamson@nvidia.com>
+From: Li Chen <me@linux.beauty>
 
-[ Upstream commit beb2f81792a8a619e5122b6b24a374861309c54b ]
+[ Upstream commit 1f8dd813a1c771b13c303f73d876164bc9b327cc ]
 
-User forums report issues when assigning ASM1164 SATA controllers to VMs,
-especially in configurations with multiple controllers.  Logs show the
-device fails to retrain after bus reset.  Reports suggest this is an issue
-across multiple platforms.  The device indicates support for PM reset,
-therefore the device still has a viable function level reset mechanism.
-The reporting user confirms the device is well behaved in this use case
-with bus reset disabled.
+Fast commits only log operations that have dedicated replay support.
+EXT4_IOC_GROUP_EXTEND grows the filesystem to the end of the last
+block group and updates the same on-disk metadata without going
+through the fast commit tracking paths.
+In practice these operations are rare and usually followed by further
+updates, but mixing them into a fast commit makes the overall
+semantics harder to reason about and risks replay gaps if new call
+sites appear.
 
-Reported-by: Patrick Bianchi <patrick.w.bianchi@gmail.com>
-Link: https://forum.proxmox.com/threads/problems-with-pcie-passthrough-with-two-identical-devices.149003/
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260109000211.398300-1-alex.williamson@nvidia.com
+Teach ext4 to mark the filesystem fast-commit ineligible when
+EXT4_IOC_GROUP_EXTEND grows the filesystem.
+This forces those transactions to fall back to a full commit,
+ensuring that the group extension changes are captured by the normal
+journal rather than partially encoded in fast commit TLVs.
+This change should not affect common workloads but makes online
+resize via GROUP_EXTEND safer and easier to reason about under fast
+commit.
+
+Testing:
+1. prepare:
+    dd if=/dev/zero of=/root/fc_resize.img bs=1M count=0 seek=256
+    mkfs.ext4 -O fast_commit -F /root/fc_resize.img
+    mkdir -p /mnt/fc_resize && mount -t ext4 -o loop /root/fc_resize.img /mnt/fc_resize
+2. Extended the filesystem to the end of the last block group using a
+   helper that calls EXT4_IOC_GROUP_EXTEND on the mounted filesystem
+   and checked fc_info:
+    ./group_extend_helper /mnt/fc_resize
+    cat /proc/fs/ext4/loop0/fc_info
+   shows the "Resize" ineligible reason increased.
+3. Fsynced a file on the resized filesystem and confirmed that the fast
+   commit ineligible counter incremented for the resize transaction:
+    touch /mnt/fc_resize/file
+    /root/fsync_file /mnt/fc_resize/file
+    sync
+    cat /proc/fs/ext4/loop0/fc_info
+
+Signed-off-by: Li Chen <me@linux.beauty>
+Link: https://patch.msgid.link/20251211115146.897420-6-me@linux.beauty
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of PCI: Mark ASM1164 SATA controller to avoid bus reset
+### 4. DETAILED FINDINGS
 
-### Commit Message Analysis
+This is extremely revealing. The investigation shows:
 
-The commit adds a PCI quirk for the ASMedia ASM1164 SATA controller to
-disable bus reset. The problem is clearly described: when assigning
-these controllers to VMs via VFIO/PCI passthrough, the device fails to
-retrain after a bus reset. This is particularly problematic in
-configurations with multiple controllers. The device still supports PM
-reset (power management reset) as an alternative reset mechanism, so
-disabling bus reset doesn't leave the device without any reset
-capability.
+**A real gap exists:** `EXT4_IOC_RESIZE_FS` already has
+`ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_RESIZE, NULL)`, but
+`EXT4_IOC_GROUP_EXTEND` (and `EXT4_IOC_GROUP_ADD` in a sibling commit)
+do **not**. This is an inconsistency — all three ioctls perform
+filesystem geometry changes that are not supported by fast commit
+replay.
 
-Key indicators:
-- **Reported-by** tag from a real user (Patrick Bianchi)
-- **Link** to a Proxmox forum thread documenting the issue across
-  multiple platforms
-- Author is Alex Williamson, the VFIO maintainer at NVIDIA — a highly
-  authoritative source for PCI passthrough quirks
-- Reviewed/committed by Bjorn Helgaas, the PCI subsystem maintainer
+**No replay support for geometry changes:** The fast commit replay logic
+only handles file-level operations (add_range, del_range, link, unlink,
+creat, inode). There are NO replay tags for superblock or group
+descriptor changes. If `GROUP_EXTEND` runs and a fast commit is used
+instead of a full journal commit, the geometry changes would not be
+replayed on crash recovery.
 
-### Code Change Analysis
+**This is a data integrity issue:** If a fast commit transaction
+includes both file operations (which are tracked) and geometry changes
+from `GROUP_EXTEND` (which are untracked), crash recovery could replay
+the file operations against stale filesystem geometry, leading to silent
+metadata inconsistency or corruption.
 
-The change is a single `DECLARE_PCI_FIXUP_HEADER` macro invocation with
-an accompanying comment:
+### 5. CLASSIFICATION
 
-```c
-DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ASMEDIA, 0x1164,
-quirk_no_bus_reset);
-```
+This is a **correctness/data integrity fix**, not a feature addition. It
+closes a gap where filesystem metadata changes could be lost or
+inconsistently replayed after a crash. The `EXT4_FC_REASON_RESIZE` enum
+value already exists — only the missing call site is added.
 
-This calls the existing `quirk_no_bus_reset()` function, which sets the
-`PCI_DEV_FLAGS_NO_BUS_RESET` flag on the device. The function already
-exists and is used by multiple other devices (Atheros, Cavium, TI
-KeyStone) in the same file. This is purely a data addition — matching a
-specific vendor:device ID pair to an existing quirk handler.
+### 6. SCOPE AND RISK
 
-### Classification: Hardware Quirk
+- **Size:** 2 lines added. Minimal.
+- **Risk:** Extremely low. The only effect is forcing a full journal
+  commit instead of a fast commit during `GROUP_EXTEND`. Full commits
+  are always correct; fast commits are the optimization. This is a
+  fallback to the safe path.
+- **Subsystem:** ext4 filesystem — widely used, data integrity matters
+  enormously.
+- **Could it break anything?** No. A full commit is strictly more
+  conservative than a fast commit. The worst case is a minor performance
+  impact during online resize, which is an infrequent operation.
 
-This falls squarely into the **PCI Quirks** exception category for
-stable backporting:
+### 7. USER IMPACT
 
-- It's a hardware-specific workaround for a broken/buggy device
-- It uses an existing, well-tested mechanism (`quirk_no_bus_reset`)
-- It only affects the specific ASMedia ASM1164 device (vendor ID
-  ASMEDIA, device ID 0x1164)
-- Zero risk to any other hardware or code path
+- **Who is affected?** Anyone using ext4 with fast_commit enabled who
+  performs online resize via `GROUP_EXTEND`. While this is not a common
+  operation, when it does happen, data integrity on crash recovery is
+  critical.
+- **Severity if triggered:** Without this fix, crash recovery after
+  `GROUP_EXTEND` + fast commit could result in filesystem metadata
+  inconsistency — potentially data corruption.
+- **Practical likelihood:** Low frequency, but high severity when it
+  occurs.
 
-### Scope and Risk Assessment
+### 8. DEPENDENCY CHECK
 
-- **Lines changed**: ~10 (comment + 1 functional line)
-- **Files touched**: 1 (`drivers/pci/quirks.c`)
-- **Risk**: Extremely low — this only affects the specific PCI device
-  ID, and only when bus reset is attempted (primarily VFIO passthrough
-  scenarios)
-- **Dependencies**: None — `PCI_VENDOR_ID_ASMEDIA` and
-  `quirk_no_bus_reset` already exist in stable kernels
+- The `EXT4_FC_REASON_RESIZE` enum already exists in stable trees (it
+  was added when `RESIZE_FS` was given this marking).
+- The `ext4_fc_mark_ineligible()` function already exists.
+- This is a self-contained, standalone fix with no dependencies on other
+  commits.
+- There is a sibling commit for `GROUP_ADD` that would be good to
+  backport together, but each stands alone.
 
-### User Impact
+### 9. STABLE KERNEL RULES ASSESSMENT
 
-- **Who is affected**: Users doing PCI passthrough of ASM1164 SATA
-  controllers to VMs (Proxmox, QEMU/KVM, etc.)
-- **Severity without fix**: Device fails to retrain after bus reset,
-  making VM assignment of these controllers unreliable or non-
-  functional, especially with multiple controllers
-- **The forum thread** indicates this affects multiple users across
-  multiple platforms — it's a real, reproducible issue
-- ASMedia SATA controllers are very common consumer/prosumer hardware
+| Criterion | Assessment |
+|-----------|-----------|
+| Obviously correct and tested | Yes — mirrors existing pattern for
+RESIZE_FS, tested by author |
+| Fixes a real bug | Yes — missing fast-commit ineligibility marking can
+lead to incomplete crash recovery |
+| Important issue | Yes — data integrity / potential corruption on crash
+recovery |
+| Small and contained | Yes — 2 lines in one file |
+| No new features | Correct — uses existing infrastructure |
+| Applies cleanly | Very likely — minimal change to stable code |
 
-### Stability Indicators
+### 10. RISK vs BENEFIT
 
-- Alex Williamson (VFIO maintainer) authored it — he's the authority on
-  PCI passthrough issues
-- Bjorn Helgaas (PCI maintainer) committed it — reviewed and approved by
-  the subsystem maintainer
-- The pattern is identical to existing quirks for Atheros, Cavium, and
-  TI devices that are already in stable trees
-- User confirmed the fix resolves the issue
+- **Risk:** Near zero. Forces a safe fallback path for a rare operation.
+- **Benefit:** Prevents potential filesystem metadata inconsistency
+  after crash during online resize with fast commit enabled.
 
-### Dependency Check
+### CONCLUSION
 
-No dependencies. The `quirk_no_bus_reset` function,
-`DECLARE_PCI_FIXUP_HEADER` macro, and `PCI_VENDOR_ID_ASMEDIA` all exist
-in stable kernels. This will apply cleanly to any stable tree.
-
-### Conclusion
-
-This is a textbook example of a PCI quirk that belongs in stable trees.
-It's a minimal, zero-risk, single-device-ID addition that uses an
-existing well-tested mechanism to fix a real hardware issue reported by
-real users. It was authored and reviewed by the relevant subsystem
-maintainers. The pattern is identical to many existing quirks already in
-stable.
+This is a small, surgical, correctness fix for a real gap in ext4's fast
+commit mechanism. The `RESIZE_FS` ioctl already had this protection, but
+`GROUP_EXTEND` was missed. The fix prevents potential data integrity
+issues during crash recovery. It uses existing infrastructure
+(`EXT4_FC_REASON_RESIZE` and `ext4_fc_mark_ineligible()`), is self-
+contained, and has effectively zero regression risk. It meets all stable
+kernel criteria.
 
 **YES**
 
- drivers/pci/quirks.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/ext4/ioctl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 280cd50d693bd..9100fd133a7ff 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -3791,6 +3791,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_CAVIUM, 0xa100, quirk_no_bus_reset);
-  */
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_TI, 0xb005, quirk_no_bus_reset);
+diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
+index 5109b005e0286..e5e197ac7d88b 100644
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -1612,6 +1612,8 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
  
-+/*
-+ * Reports from users making use of PCI device assignment with ASM1164
-+ * controllers indicate an issue with bus reset where the device fails to
-+ * retrain.  The issue appears more common in configurations with multiple
-+ * controllers.  The device does indicate PM reset support (NoSoftRst-),
-+ * therefore this still leaves a viable reset method.
-+ * https://forum.proxmox.com/threads/problems-with-pcie-passthrough-with-two-identical-devices.149003/
-+ */
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ASMEDIA, 0x1164, quirk_no_bus_reset);
-+
- static void quirk_no_pm_reset(struct pci_dev *dev)
- {
- 	/*
+ 		err = ext4_group_extend(sb, EXT4_SB(sb)->s_es, n_blocks_count);
+ 		if (EXT4_SB(sb)->s_journal) {
++			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_RESIZE,
++						NULL);
+ 			jbd2_journal_lock_updates(EXT4_SB(sb)->s_journal);
+ 			err2 = jbd2_journal_flush(EXT4_SB(sb)->s_journal, 0);
+ 			jbd2_journal_unlock_updates(EXT4_SB(sb)->s_journal);
 -- 
 2.51.0
 
