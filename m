@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A23F2F39B1;
-	Sun, 15 Feb 2026 17:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E2A2F5311;
+	Sun, 15 Feb 2026 17:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771177288; cv=none; b=AlZv4A3gCRP+LHwt0WQWDAFknqbZI298nGQ0qnp9Mpk5ymv0uTBImiYwexa4kbM+EVd2lIWrhatDHAODjqfM6n0X9Vk8jrX5ketIjsHdyHkIc5a2XXCA/zkGOS2DsIkIlPPqkXdNA9ZXEcyFTfiuCTnMboqm2ALmN3kVpr8dsiM=
+	t=1771177289; cv=none; b=OdZ6C1QwkU4nv4Vx6J2FbkJ0o0JQnYzmfZVRDdvGvtSdVFYWJ9KYGPIUBKj9WNom32NpfYx7V6VULWitJMLT1Kz0poiYpteHfjX07nm844WHfGGn7KTVequPvdHj1vqHCfxDlGeGWT/k3rDYFz8iT9YSMLahrbMI1cFg/2CueOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771177288; c=relaxed/simple;
-	bh=nCrjXMjBoStVt4cijtk4i5RH7OleXvBYryvHaN3qCJg=;
+	s=arc-20240116; t=1771177289; c=relaxed/simple;
+	bh=Puh4sgT37KZtRy3LP1iDs5Wc0tui0i2RCskJqWuY0uA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNBeP6BhXZMihOjXsXAHSjY4sPI48HjhhoKd9oCXSBC3MeIl9AKgkXvP3KGagWT/dxmbKrXbdrx8zb8X0CvpwenJ5GdPIzpe/hZbTsNr17eGKXgo+VinyZLyhuJ+AYyNemvB7IW+0haKaMDJ5uVYS6ZgGMd6bAowKHXnrwD3OOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9Vn4iGX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OooayM32MJQXIPCOYm+5VYBsLo+M3rOxEhR2r89uKC/wijk6qrNVgDu8qj7iENjTPJyrQ5CNqpIDW+EoD3fwT9QM/SCnTwfeesaPeQTZ18MEetwRR9aNqO06U9nYGKgFJc1aNecQKl+262E/qaIF1cN/196O0IWDEe6tsOEvYrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M/MunuDy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9Vn4iGX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DADBC19423;
-	Sun, 15 Feb 2026 17:41:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M/MunuDy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509B3C4AF09;
+	Sun, 15 Feb 2026 17:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771177287;
-	bh=nCrjXMjBoStVt4cijtk4i5RH7OleXvBYryvHaN3qCJg=;
+	s=k20201202; t=1771177289;
+	bh=Puh4sgT37KZtRy3LP1iDs5Wc0tui0i2RCskJqWuY0uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9Vn4iGXzJ99+YBbPCmWa30J///fEDdrFYmHgj+85VB8JqjBshBA5H5muqwkc8l84
-	 f6w37JxomNWFqDNx445NAgPdFVOLtZdeNlqVeU1pGfoktBAUj8fTd4O9WnN4MD1P8J
-	 fAaoVqUdQeHs4dXeMhCzNwQUb4Nh/jJmQWwmFKGLzwUtFDa7RI9LZh+DB0cvKrEXyb
-	 Rk41EFaBWJDDlJRnx3Gyzl5nias7SN24JRtiSBcywk1hA2342uRDsA0DoJ45ogkXle
-	 eNNxT888yp89Zig56rusHr0ntHyaM/EVCCv+zp8VAGfTD2ybQ7Eq1eOY2/KNku3OwP
-	 Z6hY/7VqNhNpQ==
+	b=M/MunuDyJXkvmToAMxs0vNSjvoLfHGf/W77PI0VSpUNdtpvzVGQXxGNx9trxWWXPr
+	 aw+Z+tial1Ymoc3UmqnJSWTnaPfsExqdofGvL2XHtzHng/iJYyFwmfIWe2JDOIdfzY
+	 KpP6fkfmrNFX5aG+/27jEa8KRlSS22dzZh845XV48RIGDM8o3B8MPvUM+dR7hDGbSx
+	 7ry107bN4PbychCVb9Rl8VwK38OPfPKM51WCAr8KMlo/xtJ/BQrpYFuQ1XTp2YscIn
+	 tfvECyxPT42gEzxdUJSPmSQIdJeIFdokE+E8wGSZdzNlTVLuZQ1virzAZz6l0PIV4+
+	 Qsod28svsCC5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+Cc: =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
+	orsonzhai@gmail.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] mailbox: mchp-ipc-sbi: fix uninitialized symbol and other smatch warnings
-Date: Sun, 15 Feb 2026 12:41:13 -0500
-Message-ID: <20260215174120.2390402-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] mailbox: sprd: mask interrupts that are not handled
+Date: Sun, 15 Feb 2026 12:41:14 -0500
+Message-ID: <20260215174120.2390402-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260215174120.2390402-1-sashal@kernel.org>
 References: <20260215174120.2390402-1-sashal@kernel.org>
@@ -47,143 +46,178 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
+From: Otto Pflüger <otto.pflueger@abscue.de>
 
-[ Upstream commit bc4d17e495cd3b02bcb2e10f575763a5ff31f80b ]
+[ Upstream commit 75df94d05fc03fd9d861eaf79ce10fbb7a548bd8 ]
 
-Fix uninitialized symbol 'hartid' warning in mchp_ipc_cluster_aggr_isr()
-by introducing a 'found' flag to track whether the IRQ matches any
-online hart. If no match is found, return IRQ_NONE.
+To reduce the amount of spurious interrupts, disable the interrupts that
+are not handled in this driver.
 
-Also fix other smatch warnings by removing dead code in
-mchp_ipc_startup() and by returning -ENODEV in dev_err_probe() if the
-Microchip SBI extension is not found.
-
-Fixes below smatch warnings:
-drivers/mailbox/mailbox-mchp-ipc-sbi.c:187 mchp_ipc_cluster_aggr_isr() error: uninitialized symbol 'hartid'.
-drivers/mailbox/mailbox-mchp-ipc-sbi.c:324 mchp_ipc_startup() warn: ignoring unreachable code.
-drivers/mailbox/mailbox-mchp-ipc-sbi.c:422 mchp_ipc_probe() warn: passing zero to 'dev_err_probe'
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202512171533.CDLdScMY-lkp@intel.com/
-Signed-off-by: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
+Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-So v6.14 is no longer a maintained stable tree (stopped at v6.14.11).
-The relevant current stable tree would be v6.18.y.
+## Comprehensive Analysis
 
-### User Impact
+### 1. What the Commit Does
 
-This driver is for RISC-V Microchip Inter-processor Communication. While
-it's a niche driver:
-1. The uninitialized variable bug in the ISR is a real correctness issue
-2. The `dev_err_probe` returning 0 on failure could cause unexpected
-   behavior
-3. All three fixes are straightforward and low-risk
+This commit changes the interrupt mask initialization in
+`sprd_mbox_startup()` for the Spreadtrum mailbox driver. The two key
+changes are:
+
+**a) Deterministic initialization instead of read-modify-write:**
+- **Before:** Read the hardware's current IRQ mask register state, then
+  clear specific bits to unmask desired interrupts. This left other bits
+  in whatever state the hardware/bootloader had them.
+- **After:** Start from the full mask constant (all interrupts masked),
+  then unmask only the ones the driver actually handles. This is fully
+  deterministic.
+
+**b) Stop enabling the inbox overflow interrupt:**
+- **Before:** Both `SPRD_INBOX_FIFO_OVERFLOW_IRQ` (BIT(1)) and
+  `SPRD_INBOX_FIFO_DELIVER_IRQ` (BIT(2)) were unmasked. The driver only
+  handles delivery interrupts.
+- **After:** Only `SPRD_INBOX_FIFO_DELIVER_IRQ` is unmasked.
+
+### 2. Bug Being Fixed
+
+The `sprd_mbox_inbox_isr()` only checks the delivery status bits
+(`SPRD_INBOX_FIFO_DELIVER_MASK`). If no delivery is pending, it returns
+`IRQ_NONE` with a "spurious inbox interrupt" warning. This means:
+
+- If the inbox overflow interrupt fires without a concurrent delivery
+  event, the ISR returns `IRQ_NONE`
+- Repeated `IRQ_NONE` returns trigger the kernel's spurious interrupt
+  detection in `note_interrupt()` (`kernel/irq/spurious.c`), which can
+  eventually **disable the entire IRQ line** with a "nobody cared"
+  message
+- If the inbox delivery interrupt shares the same IRQ line, disabling
+  the IRQ would **break all mailbox communication**
+
+Similarly, the old code left outbox bits 1-4 and inbox bit 0 in an
+indeterminate state dependent on hardware power-on defaults, potentially
+enabling additional interrupts the driver doesn't handle.
+
+### 3. Stable Kernel Criteria Assessment
+
+- **Obviously correct:** Yes. The change is straightforward - mask
+  everything, then unmask only what the driver handles. This matches the
+  `sprd_mbox_shutdown()` function which already uses
+  `SPRD_INBOX_FIFO_IRQ_MASK` and `SPRD_OUTBOX_FIFO_IRQ_MASK` to mask all
+  interrupts.
+- **Fixes a real bug:** Yes. Spurious interrupts can lead to the kernel
+  disabling the IRQ line ("nobody cared"), which would break mailbox
+  functionality entirely.
+- **Small and contained:** Yes. 4 insertions, 6 deletions in a single
+  file, affecting one function.
+- **No new features:** Correct. This only changes interrupt masking
+  behavior.
+- **Self-contained:** Yes. No dependency on the revision 2 commit or the
+  delivery flag commit. The startup function code is unchanged between
+  v6.19 and the state before this patch.
+
+### 4. Risk Assessment
+
+- **Risk:** Very low. The change makes the interrupt state deterministic
+  and only enables interrupts the driver actually handles. The shutdown
+  function already uses the same mask constants.
+- **Regression potential:** Minimal. The only functional change is that
+  the inbox overflow interrupt is no longer enabled - but since the ISR
+  never handled it, enabling it was always a bug.
+- **Scope:** Single driver (sprd-mailbox), single function, 10 lines
+  changed.
+
+### 5. Backport Applicability
+
+The driver exists since v5.8. The buggy code in `sprd_mbox_startup()`
+has been present since the driver was added (`ca27fc26cd221`). The patch
+should apply cleanly to all stable trees that include this driver
+(5.10.y, 5.15.y, 6.1.y, 6.6.y, etc.) as the startup function has never
+been modified between the initial driver addition and this fix.
 
 ### Verification
 
-- **git log** confirmed the file was introduced in commit
-  `e4b1d67e71419` (v6.14-rc1)
-- **git tag --contains** confirmed the file first appeared in v6.14
-- **git show f7c330a8c83c9** confirmed a dependency on a prior fix that
-  changed indexing from hartid to cpuid
-- **git tag** confirmed v6.14 is no longer actively maintained (stopped
-  at v6.14.11); v6.18.y is the relevant current stable tree
-- The uninitialized variable bug is verified by reading the original
-  code: if `for_each_online_cpu` loop doesn't find a matching IRQ,
-  `hartid` is used uninitialized at line 187
-- The `dev_err_probe` bug is verified: when `sbi_probe_extension`
-  returns 0, passing 0 to `dev_err_probe` returns 0 (success), causing
-  probe to incorrectly succeed
-- The dead code is verified: the switch statement either returns 0 or
-  gotos to error cleanup, making code after it unreachable
+- **Verified** that `sprd_mbox_inbox_isr()` does NOT handle overflow
+  interrupts - it only checks `SPRD_INBOX_FIFO_DELIVER_MASK` and returns
+  `IRQ_NONE` if no delivery is pending (lines 153-193 of the v6.19
+  source).
+- **Verified** that `sprd_mbox_shutdown()` already uses
+  `SPRD_INBOX_FIFO_IRQ_MASK` and `SPRD_OUTBOX_FIFO_IRQ_MASK` to disable
+  all interrupts (lines 269-284), confirming the mask constants are the
+  correct "all masked" values.
+- **Verified** the startup function is unchanged between v6.19 (HEAD)
+  and the state just before this patch on master (identical code at
+  lines 236-268).
+- **Verified** the revision 2 commit (`c6ff944003cf1`) does NOT modify
+  `sprd_mbox_startup()`, confirming this patch has no dependency on it.
+- **Verified** the delivery flag commit (`c77661d60d422`) modifies
+  `sprd_mbox_inbox_isr()` only, not `sprd_mbox_startup()`, confirming
+  independence.
+- **Verified** the driver was added in v5.8-rc1 (`ca27fc26cd221`), so it
+  exists in all currently maintained stable trees (5.10+).
+- **Verified** via lore.kernel.org that no reviewer concerns or NAKs
+  were raised about this patch.
+- **Verified** that `SPRD_INBOX_FIFO_IRQ_MASK = GENMASK(2,0) = 0x7` and
+  `SPRD_OUTBOX_FIFO_IRQ_MASK = GENMASK(4,0) = 0x1F` from the source
+  definitions (lines 44-52).
+- **Could NOT verify** specific user reports of the "nobody cared" IRQ
+  being triggered in practice (no Reported-by tag, no bug report link).
+  However, the code analysis clearly shows this is possible if the
+  overflow interrupt fires without a concurrent delivery.
 
-### Assessment
+### Summary
 
-This commit fixes real bugs:
-1. An uninitialized variable in an interrupt handler (potential
-   undefined behavior / crash)
-2. An incorrect probe success path when hardware support is missing
-3. Dead code removal (minor cleanup)
-
-The fixes are small, well-contained, and low-risk. They fix genuine bugs
-in a driver that exists only in v6.14+. The commit has a dependency on
-`f7c330a8c83c9` which would also need to be backported.
-
-While the bugs are real, this is a very niche RISC-V mailbox driver
-(Microchip IPC over SBI). The fixes are appropriate for stable if the
-prerequisite commit is also included. The uninitialized variable and
-incorrect probe return value are both correctness bugs worth fixing.
+This is a small, self-contained bug fix that prevents spurious
+interrupts from potentially disabling the entire IRQ line for the
+Spreadtrum mailbox driver. The fix is obviously correct (mask what you
+don't handle), has minimal risk, applies cleanly to all stable trees,
+and prevents a real failure mode (kernel disabling the shared IRQ). It
+meets all stable kernel criteria.
 
 **YES**
 
- drivers/mailbox/mailbox-mchp-ipc-sbi.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/mailbox/sprd-mailbox.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mailbox/mailbox-mchp-ipc-sbi.c b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
-index d444491a584e8..b87bf2fb4b9b9 100644
---- a/drivers/mailbox/mailbox-mchp-ipc-sbi.c
-+++ b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
-@@ -174,17 +174,21 @@ static irqreturn_t mchp_ipc_cluster_aggr_isr(int irq, void *data)
- 	struct mchp_ipc_msg ipc_msg;
- 	struct mchp_ipc_status status_msg;
- 	int ret;
--	unsigned long hartid;
- 	u32 i, chan_index, chan_id;
-+	bool found = false;
+diff --git a/drivers/mailbox/sprd-mailbox.c b/drivers/mailbox/sprd-mailbox.c
+index ee8539dfcef54..c1a5fe6cc8771 100644
+--- a/drivers/mailbox/sprd-mailbox.c
++++ b/drivers/mailbox/sprd-mailbox.c
+@@ -243,21 +243,19 @@ static int sprd_mbox_startup(struct mbox_chan *chan)
+ 		/* Select outbox FIFO mode and reset the outbox FIFO status */
+ 		writel(0x0, priv->outbox_base + SPRD_MBOX_FIFO_RST);
  
- 	/* Find out the hart that originated the irq */
- 	for_each_online_cpu(i) {
--		hartid = cpuid_to_hartid_map(i);
--		if (irq == ipc->cluster_cfg[i].irq)
-+		if (irq == ipc->cluster_cfg[i].irq) {
-+			found = true;
- 			break;
-+		}
+-		/* Enable inbox FIFO overflow and delivery interrupt */
+-		val = readl(priv->inbox_base + SPRD_MBOX_IRQ_MSK);
+-		val &= ~(SPRD_INBOX_FIFO_OVERFLOW_IRQ | SPRD_INBOX_FIFO_DELIVER_IRQ);
++		/* Enable inbox FIFO delivery interrupt */
++		val = SPRD_INBOX_FIFO_IRQ_MASK;
++		val &= ~SPRD_INBOX_FIFO_DELIVER_IRQ;
+ 		writel(val, priv->inbox_base + SPRD_MBOX_IRQ_MSK);
+ 
+ 		/* Enable outbox FIFO not empty interrupt */
+-		val = readl(priv->outbox_base + SPRD_MBOX_IRQ_MSK);
++		val = SPRD_OUTBOX_FIFO_IRQ_MASK;
+ 		val &= ~SPRD_OUTBOX_FIFO_NOT_EMPTY_IRQ;
+ 		writel(val, priv->outbox_base + SPRD_MBOX_IRQ_MSK);
+ 
+ 		/* Enable supplementary outbox as the fundamental one */
+ 		if (priv->supp_base) {
+ 			writel(0x0, priv->supp_base + SPRD_MBOX_FIFO_RST);
+-			val = readl(priv->supp_base + SPRD_MBOX_IRQ_MSK);
+-			val &= ~SPRD_OUTBOX_FIFO_NOT_EMPTY_IRQ;
+ 			writel(val, priv->supp_base + SPRD_MBOX_IRQ_MSK);
+ 		}
  	}
- 
--	status_msg.cluster = hartid;
-+	if (unlikely(!found))
-+		return IRQ_NONE;
-+
-+	status_msg.cluster = cpuid_to_hartid_map(i);
- 	memcpy(ipc->cluster_cfg[i].buf_base, &status_msg, sizeof(struct mchp_ipc_status));
- 
- 	ret = mchp_ipc_sbi_send(SBI_EXT_IPC_STATUS, ipc->cluster_cfg[i].buf_base_addr);
-@@ -321,13 +325,6 @@ static int mchp_ipc_startup(struct mbox_chan *chan)
- 		goto fail_free_buf_msg_rx;
- 	}
- 
--	if (ret) {
--		dev_err(ipc->dev, "failed to register interrupt(s)\n");
--		goto fail_free_buf_msg_rx;
--	}
--
--	return ret;
--
- fail_free_buf_msg_rx:
- 	kfree(chan_info->msg_buf_rx);
- fail_free_buf_msg_tx:
-@@ -419,7 +416,7 @@ static int mchp_ipc_probe(struct platform_device *pdev)
- 
- 	ret = sbi_probe_extension(SBI_EXT_MICROCHIP_TECHNOLOGY);
- 	if (ret <= 0)
--		return dev_err_probe(dev, ret, "Microchip SBI extension not detected\n");
-+		return dev_err_probe(dev, -ENODEV, "Microchip SBI extension not detected\n");
- 
- 	ipc = devm_kzalloc(dev, sizeof(*ipc), GFP_KERNEL);
- 	if (!ipc)
 -- 
 2.51.0
 
