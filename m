@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FEE1367;
-	Sun, 15 Feb 2026 15:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E42522D4D3;
+	Sun, 15 Feb 2026 15:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771167818; cv=none; b=AAe+XGg2zdu1AVQgduehEVnG6RJgiqxgflgkgj0+XzVrdBKxDHzu+g4t5aBeQ26rn0zlEThejZgJfQenM/wH9VxVPrF6aNicvf76nkCtMU70i8RWN5PdNYGyHe+XR8UgPa5Cnx68TK928KaJtXXX1s5jJQdlK7Yro1aECV84tWU=
+	t=1771167819; cv=none; b=QP9/7owSgp1X4YIrbUJ5rBn8jh9Jbz90/3Zj3MmnIbcOG2qdRXDVCZA26UIj51BfjCOBpmD/mOyrLsBcLVPt0xep/lieMokzZo2zQZcrwublJu0iwNZLtYGtGlYWF1Ha3LtSWnNL/yhf/0pa07M0cshNSdfVPjCecAuOQEgG1ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771167818; c=relaxed/simple;
-	bh=ALJQ6v0jihErAld2wDaIVC7Dc1Pu90VzccUmQjBo3qE=;
+	s=arc-20240116; t=1771167819; c=relaxed/simple;
+	bh=IiC1peG8g8mQra+e1gdqk8iHIl+MuKKrcRSX/qkzaDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gdBDAsdDNbEQjv8lGoLEY8Z20J9DFsvg/4gyhxcg8zMSLaQf4qVV9O+zO337Vuy7RNsGH63dPxztdZSNiuxjWqlwB4klAk2QzuMK19mz77c3gBV+2f2uOWgRvahO1hXkkXegnPiZBL2Wfr8oIhqfYQv5EqNZg4ZjyJG5OUWKdGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SnD4l3f9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Pw6GksX95QCqluCKvnjDJIg213dsAITx91K62pPKmkBjDtMTII7Z/h4SRmnnKIa+LPCWo1GYUT26AxpGaYhS+ULY1tjG2wVn0181rH7w+sdBeJoaZ3spM0rc40sm43dXCR35sDU4L0UVpu1KbBBLp8V6GX5d+k+v6mQyWuOeXyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cx2Xoyfl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SnD4l3f9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36BAC4CEF7;
-	Sun, 15 Feb 2026 15:03:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cx2Xoyfl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD76C4AF0B;
+	Sun, 15 Feb 2026 15:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771167818;
-	bh=ALJQ6v0jihErAld2wDaIVC7Dc1Pu90VzccUmQjBo3qE=;
+	s=k20201202; t=1771167819;
+	bh=IiC1peG8g8mQra+e1gdqk8iHIl+MuKKrcRSX/qkzaDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SnD4l3f95hoKZ/Qa9q6GeL+aHkkQKVGQWYcFSumWEgq764zoOJ+SDty/oFEzQOMYl
-	 lSM3cEflzIPYKNXUptUEOm3DlLfAonrrD6hxii/Vz95CXvLTu//U46YAHR2Vc9Cls5
-	 4n6DrSkRYbsSpscFIsDngHW/KOAxCoy9GBRWHFezHLSJrjnfzAnoEaIppTare5prrM
-	 57vm27zFvAnmjZx/0eH/CbGKvSPqpcbSy4DaVWwVXj3q57LZF4LpkjDG4JL8mFJonC
-	 FbPDZj8zapFhj9fzpbEYFua19kRVE8XXhciHFMChAQAWHAzjjJ0N4HHJvVw9uM8fg6
-	 JTwGGwMHJgF0A==
+	b=cx2XoyflwCbfy/+wdaIHhyKvAhm8Ikd7XgVW3+6DvmUC6w5q6vsxoujo+n/I6mucb
+	 zNyxQQWphfaHXPjaG5+yTYhQpZJi1D/uekAr/Ak76S7uG46Ek4MSPBiRqc79qrezbx
+	 3MwR3P8vQw0jueLd/J1w3sPMy+Uvg0yp0OaNVi4Lez3QTz/WaZQ6JfLJB65030tBfC
+	 i6bNMHki0I/3MLgCBzSJgOq8KMSx1Oaeg61SZLdCDMiaBCJ89PgVjvc0m4mpVEOsOo
+	 1+uwis75YoQrH07BdQ4T+TbIeuV0R71Fz4tBJJxRXGah7LzFKFwGJrjjC4o+Uv8AeN
+	 QQNKQh6SYvY6A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Keita Morisaki <keita.morisaki@tier4.jp>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Longfang Liu <liulongfang@huawei.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>,
-	chaotian.jing@mediatek.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-scsi@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-6.12] scsi: ufs: mediatek: Fix page faults in ufs_mtk_clk_scale() trace event
-Date: Sun, 15 Feb 2026 10:03:19 -0500
-Message-ID: <20260215150333.2150455-2-sashal@kernel.org>
+	kvm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] hisi_acc_vfio_pci: update status after RAS error
+Date: Sun, 15 Feb 2026 10:03:20 -0500
+Message-ID: <20260215150333.2150455-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260215150333.2150455-1-sashal@kernel.org>
 References: <20260215150333.2150455-1-sashal@kernel.org>
@@ -58,99 +51,124 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keita Morisaki <keita.morisaki@tier4.jp>
+From: Longfang Liu <liulongfang@huawei.com>
 
-[ Upstream commit 9672ed3de7d772ceddd713c769c05e832fc69bae ]
+[ Upstream commit 8be14dd48dfee0df91e511acceb4beeb2461a083 ]
 
-The ufs_mtk_clk_scale() trace event currently stores the address of the
-name string directly via __field(const char *, name). This pointer may
-become invalid after the module is unloaded, causing page faults when the
-trace buffer is subsequently accessed.
+After a RAS error occurs on the accelerator device, the accelerator
+device will be reset. The live migration state will be abnormal
+after reset, and the original state needs to be restored during
+the reset process.
+Therefore, reset processing needs to be performed in a live
+migration scenario.
 
-This can occur because the MediaTek UFS driver can be configured as a
-loadable module (tristate in Kconfig), meaning the name string passed to
-the trace event may reside in module memory that becomes invalid after
-module unload.
-
-Fix this by using __string() and __assign_str() to copy the string contents
-into the ring buffer instead of storing the pointer. This ensures the trace
-data remains valid regardless of module state.
-
-This change increases the memory usage for each ftrace entry by a few bytes
-(clock names are typically 7-15 characters like "ufs_sel" or
-"ufs_sel_max_src") compared to storing an 8-byte pointer.
-
-Note that this change does not affect anything unless all of the following
-conditions are met:
-
- - CONFIG_SCSI_UFS_MEDIATEK is enabled
-
- - ftrace tracing is enabled
-
- - The ufs_mtk_clk_scale event is enabled in ftrace
-
-Signed-off-by: Keita Morisaki <keita.morisaki@tier4.jp>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://patch.msgid.link/20260202024526.122515-1-keita.morisaki@tier4.jp
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Longfang Liu <liulongfang@huawei.com>
+Link: https://lore.kernel.org/r/20260122020205.2884497-3-liulongfang@huawei.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The `ufs_mtk_clk_scale` trace event was introduced in August 2022
-(kernel 6.1 era), so this buggy code exists in multiple stable trees
-(6.1.y, 6.6.y, and later).
+This confirms the critical finding.
 
-### 8. CONCLUSION
+### 3. Bug Classification: Logic Error Causing Failed Reset After RAS
+Error
 
-This is a textbook stable backport candidate:
-- **Fixes a real crash** (page fault / use-after-free on dangling
-  pointer)
-- **Extremely small and contained** (4-line change in one file)
-- **Uses well-established patterns**
-  (`__string()/__assign_str()/__get_str()`) that are the correct and
-  standard approach
-- **Zero risk of regression** — this is strictly more correct than the
-  original code
-- **Affected code exists in stable trees** dating back to at least 6.1
-- **Reviewed and accepted** by the relevant maintainers
-- **Self-contained** — no dependencies on other patches
+The old condition was:
+```c
+if (hisi_acc_vdev->core_device.vdev.migration_flags !=
+VFIO_MIGRATION_STOP_COPY)
+    return;
+```
 
-The fix is small, surgical, and meets all stable kernel criteria.
+But `migration_flags` is set to `VFIO_MIGRATION_STOP_COPY |
+VFIO_MIGRATION_PRE_COPY` (line 1590), which is `0x1 | 0x4 = 0x5`, not
+`0x1`.
+
+So the condition `migration_flags != VFIO_MIGRATION_STOP_COPY` evaluates
+to `0x5 != 0x1` = **TRUE**, causing the function to **always return
+early** and **never perform the reset**.
+
+This means:
+- After a RAS error, the device resets
+- The migration state becomes inconsistent
+- The `hisi_acc_vf_reset()` call that should restore state is **never
+  reached**
+- The device is left in a broken/inconsistent migration state
+
+The new condition `!mig_ops` correctly checks whether migration is
+supported (the pointer is non-NULL when migration ops are registered),
+which aligns with how the VFIO core itself checks for migration
+capability.
+
+### 4. Scope and Risk Assessment
+
+- **Change size**: 2 lines modified (one condition check)
+- **Files touched**: 1 file
+- **Risk**: Very low - the change is a simple condition check
+  improvement
+- **Scope**: Well-contained to the AER reset handler for HiSilicon
+  accelerator VFIO devices
+
+### 5. User Impact
+
+- **Who is affected**: Users of HiSilicon accelerators (SEC, HPRE, ZIP
+  engines) with live migration enabled, especially in
+  cloud/virtualization environments
+- **Severity**: After a RAS error during live migration, the device
+  state would not be properly restored, potentially causing:
+  - Failed live migrations
+  - Corrupted device state
+  - Guest VM malfunction after host-side RAS recovery
+
+### 6. Stability Indicators
+
+- Merged by Alex Williamson (VFIO subsystem maintainer)
+- The fix is obviously correct - the old check was demonstrably wrong
+  due to the exact equality comparison against a bitmask field that has
+  multiple bits set
+
+### 7. Dependency Check
+
+This change is self-contained. It doesn't depend on other commits. The
+`mig_ops` field has existed in `struct vfio_device` since the VFIO
+migration rework (which is present in recent stable kernels).
+
+### Conclusion
+
+This is a clear bug fix. The old condition had a logic error that caused
+the migration reset handler to be completely non-functional — it would
+**always** return early because `migration_flags` was set to `STOP_COPY
+| PRE_COPY` but was compared with exact equality to just `STOP_COPY`.
+The fix is minimal (2 lines), obviously correct, and addresses a real
+data integrity/reliability issue during RAS error recovery in live
+migration scenarios. The change was accepted by the VFIO maintainer.
+
+The only consideration is whether `mig_ops` exists in stable tree
+versions, but since it's part of the VFIO migration rework that preceded
+the addition of `PRE_COPY` support, it should be present in any kernel
+that has this driver with `PRE_COPY` capability.
 
 **YES**
 
- drivers/ufs/host/ufs-mediatek-trace.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-mediatek-trace.h b/drivers/ufs/host/ufs-mediatek-trace.h
-index b5f2ec3140748..0df8ac843379a 100644
---- a/drivers/ufs/host/ufs-mediatek-trace.h
-+++ b/drivers/ufs/host/ufs-mediatek-trace.h
-@@ -33,19 +33,19 @@ TRACE_EVENT(ufs_mtk_clk_scale,
- 	TP_ARGS(name, scale_up, clk_rate),
+diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+index 8ed00f6183622..1c0b960de93c6 100644
+--- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
++++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+@@ -1192,8 +1192,7 @@ static void hisi_acc_vf_pci_aer_reset_done(struct pci_dev *pdev)
+ {
+ 	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
  
- 	TP_STRUCT__entry(
--		__field(const char*, name)
-+		__string(name, name)
- 		__field(bool, scale_up)
- 		__field(unsigned long, clk_rate)
- 	),
+-	if (hisi_acc_vdev->core_device.vdev.migration_flags !=
+-				VFIO_MIGRATION_STOP_COPY)
++	if (!hisi_acc_vdev->core_device.vdev.mig_ops)
+ 		return;
  
- 	TP_fast_assign(
--		__entry->name = name;
-+		__assign_str(name);
- 		__entry->scale_up = scale_up;
- 		__entry->clk_rate = clk_rate;
- 	),
- 
- 	TP_printk("ufs: clk (%s) scaled %s @ %lu",
--		  __entry->name,
-+		  __get_str(name),
- 		  __entry->scale_up ? "up" : "down",
- 		  __entry->clk_rate)
- );
+ 	mutex_lock(&hisi_acc_vdev->state_mutex);
 -- 
 2.51.0
 
