@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51702F290E;
-	Sun, 15 Feb 2026 17:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0088E2F39B5;
+	Sun, 15 Feb 2026 17:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771177285; cv=none; b=l/ugQG7b06sgLQH1RQ0UE1/zrpm5yGWJyBUmVOxVmHMQtqdO4OtdtuAPaoZEFjRMtemixfnPFEMUGSRuDFYVHAkWMieajfhXld9dRpIvX1h24Aq4qcJt3nbJGkNyB6UtZIj5axtgRxPmWGnmIz84VSPvnItgcbkJ44TfnLzdh/Y=
+	t=1771177287; cv=none; b=oXOF2gtTLxlPVEvrt/TleuYfoDv/HYGK3f08TUZtsASfh6iiJLr4yDwQHJgNFZFg1Shy5iBx7joyjv6mfRAtPzohsVXsj2WIGyD9EqPEnQpqxY//Drwy6TUxSYolM59h5VtZEjVMx/K18Whg15F0kAtmXDz4h7WjiNt/9XYllOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771177285; c=relaxed/simple;
-	bh=pYnGs/3Blk+Jl+2IOlkkNoJYHPaKrmAvSWEFOYdnE0o=;
+	s=arc-20240116; t=1771177287; c=relaxed/simple;
+	bh=Onj3uK0+DVYfeYgAG9nSvweyD5qgloOkVKT5YJbRa88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bld7chGJv6qnhN2qoJ5YuLw7qhKZtqGeQIY/pBeni5XmRGHDViL1QyQgIX7au2KPZcXugX7XdrpTFK9eCkF5qrwNZduCL/N8cXib0ls8Vb3p8q2l2ZJ43O13rhYXaRZBQRX5qM4KnZbmoE/rDgoSRRKSR1DUabLa/6mEzOjqiwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oFJ1BYwx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HYFUEACcddGfQClPPQfuPLzjZyFHDLrC0PoMUK3QZL7TLkZWLmpZpccuF5H3J7sHS81+Khq78VReWFUX+JVKmrB39OD6nlyeF9U5g8kQec0F9XxRGwNFuZ7n6D8ATl+lvnSrcqrlwpw+JVIHj/QCdqqk7LpzufV/SP1jUi+i5w4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PaCVE5xq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oFJ1BYwx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DD8C19423;
-	Sun, 15 Feb 2026 17:41:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PaCVE5xq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B274AC4CEF7;
+	Sun, 15 Feb 2026 17:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771177285;
-	bh=pYnGs/3Blk+Jl+2IOlkkNoJYHPaKrmAvSWEFOYdnE0o=;
+	s=k20201202; t=1771177286;
+	bh=Onj3uK0+DVYfeYgAG9nSvweyD5qgloOkVKT5YJbRa88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oFJ1BYwxkmB/AlWSQPrpNdENeVqYdPWF4kiA8y04Gf/FeuwRTNrA27BpUDBxNIOEV
-	 jOguxLOINITTtdPbQXLhPmfgBsvATr2hATPboQvKlP+Y4bMyoaKji5QSrzpqDONzMW
-	 kG3miW7W0lIXcyb9gB/DpZ7MmugkvcRzSTZ5Yb9d3O9dRimSebxtw4tizTColrHG9P
-	 meVUIh4w/w2lQWAvbhN7hHIEzCS3EpEhJkmS/SFLtApOXJPNuN06BcZv/31xYfpcLC
-	 CZBgO2/zyBPEoBQEwjRxjmHZ+cXJVf3GIvWr9/+dwo4SZugjQVyA/me2WeOk+8DIsp
-	 //xYH1xUCeEMg==
+	b=PaCVE5xq+92K01+7EwCkIRF+/yWgvGM0mI3lN3csy2e+BVpuIg0Rz6V+CIBohWFNX
+	 1N69IBrN+cgcPcjLKEPj0/sv2IWsNNYoMT/Akz228fze4o5HCAtqSpPlHi+mFo64Hk
+	 uCpGITm3IsQ3Ko01DonmGKiSbVrnen1hPYToU1VBLdZnmUI1W3Bse8nG6KpM15wUBP
+	 sLbV+ri1twVD/goNf3gd8X8KfieW6AxvRv2qNODjuWjvUaRsQib6aIRlK8E+lFBSL4
+	 reqtbCNSWL6Dpp4xPQ1HZ9wEhQICRZlaJUWDG9WInRBn5Yn2WCEq6RHeC7o7VjcjRb
+	 u2KgBz301B98w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Iuliana Prodan <iuliana.prodan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+Cc: Jacky Bai <ping.bai@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andersson@kernel.org,
 	Frank.Li@nxp.com,
-	linux-remoteproc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	imx@lists.linux.dev,
 	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-6.1] remoteproc: imx_dsp_rproc: Skip RP_MBOX_SUSPEND_SYSTEM when mailbox TX channel is uninitialized
-Date: Sun, 15 Feb 2026 12:41:11 -0500
-Message-ID: <20260215174120.2390402-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] mailbox: imx: Skip the suspend flag for i.MX7ULP
+Date: Sun, 15 Feb 2026 12:41:12 -0500
+Message-ID: <20260215174120.2390402-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260215174120.2390402-1-sashal@kernel.org>
 References: <20260215174120.2390402-1-sashal@kernel.org>
@@ -55,147 +55,153 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Iuliana Prodan <iuliana.prodan@nxp.com>
+From: Jacky Bai <ping.bai@nxp.com>
 
-[ Upstream commit d62e0e92e589c53c4320ed5914af5fe103f5ce7e ]
+[ Upstream commit 673b570825ace0dcb2ac0c676080559d505c6f40 ]
 
-Firmwares that do not use mailbox communication (e.g., the hello_world
-sample) leave priv->tx_ch as NULL. The current suspend logic
-unconditionally sends RP_MBOX_SUSPEND_SYSTEM, which is invalid without
-an initialized TX channel.
+In current imx-mailbox driver, the MU IRQ is configured with
+'IRQF_NO_SUSPEND' flag set. So during linux suspend/resume flow,
+the MU IRQ is always enabled. With commit 892cb524ae8a ("mailbox: imx:
+fix wakeup failure from freeze mode"), if the MU IRQ is triggered after
+the priv->suspended flag has been set, the system suspend will be
+aborted.
 
-Detect the no_mailboxes case early and skip sending the suspend
-message. Instead, proceed directly to the runtime PM suspend path,
-which is the correct behavior for firmwares that cannot respond to
-mailbox requests.
+On i.MX7ULP platform, certain drivers that depend on rpmsg may need
+to send rpmsg request and receive an acknowledgment from the remote
+core during the late_suspend stage. Early suspend abort is not
+expected, and the i.MX7ULP already has additional hardware and
+software to make sure the system can be wakeup from freeze mode
+correctly when MU IRQ is trigger.
 
-Signed-off-by: Iuliana Prodan <iuliana.prodan@nxp.com>
-Link: https://lore.kernel.org/r/20251204122825.756106-1-iuliana.prodan@oss.nxp.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Skip the 'suspend' flag handling logic on i.MX7ULP to avoid the
+early abort when doing suspend.
+
+Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-So `no_mailboxes` was introduced in v6.4. This means the bug only
-affects kernels v6.4+. Let me check which stable trees are currently
-maintained.
+Now I understand the full picture:
 
-Now let me understand the actual bug severity more precisely. From the
-code analysis:
+1. Commit 892cb524ae8a added `priv->suspend` flag and
+   `pm_system_wakeup()` call in the ISR to handle freeze mode wakeup.
+2. `pm_system_wakeup()` aborts the ongoing suspend process.
+3. On i.MX7ULP, during `late_suspend`, drivers send rpmsg to the remote
+   core and expect a response. This triggers the MU IRQ, which in turn
+   calls `pm_system_wakeup()` and aborts suspend — an undesirable
+   behavior on this platform.
+4. The fix adds a per-platform flag `skip_suspend_flag` to skip the
+   suspend flag logic for i.MX7ULP, which has its own hardware
+   mechanisms for handling wakeup.
 
-1. When `no_mailboxes=1` is set, `imx_dsp_rproc_mbox_no_alloc()` is
-   used, which is a no-op — `priv->tx_ch` stays NULL.
-2. During suspend, `imx_dsp_suspend()` calls
-   `mbox_send_message(priv->tx_ch, ...)` where `priv->tx_ch` is NULL.
-3. `mbox_send_message()` checks `if (!chan || !chan->cl)` and returns
-   `-EINVAL` — so it **does NOT crash**.
-4. However, the return value is `-EINVAL` (negative), so the error path
-   is taken: `dev_err()` is printed and the function returns the error
-   code.
-5. This causes **suspend to fail** with an error, which means the system
-   **cannot suspend** when using `no_mailboxes` mode.
+### Stable Kernel Assessment
 
-This is a real functional bug — suspend is broken when the
-`no_mailboxes` module parameter is used. It won't crash, but it prevents
-the system from suspending, which is a significant issue for
-embedded/power-managed systems.
+**Bug severity**: This is a **suspend failure** on i.MX7ULP — the system
+cannot properly enter suspend/freeze mode. This is a significant
+functional regression for i.MX7ULP users caused by commit 892cb524ae8a.
 
-## Summary of Analysis
+**Fix quality**:
+- Small, contained (adds 1 bool field + 1 config line + 2 conditional
+  checks)
+- Platform-specific — only affects i.MX7ULP; all other platforms are
+  unchanged
+- Low regression risk — it simply disables a feature that was causing
+  problems on this specific platform
+- Reviewed by Peng Fan (NXP maintainer)
 
-### What the commit fixes
-When the `no_mailboxes` module parameter is set (firmware doesn't use
-mailbox communication), `priv->tx_ch` remains NULL. The suspend function
-`imx_dsp_suspend()` unconditionally tries to send a message via the
-mailbox TX channel, which fails with `-EINVAL` when the channel is NULL.
-This causes **system suspend to fail** for all users of the
-`no_mailboxes` configuration.
+**Fits stable criteria**:
+- Fixes a real bug (suspend failure)
+- Small and contained
+- Obviously correct
+- Platform-specific quirk/workaround — this falls squarely in the
+  "hardware quirk" category
 
-The fix adds a NULL check for `priv->tx_ch` before the
-`mbox_send_message()` call, skipping the mailbox communication and going
-directly to the PM runtime suspend path — which is the correct behavior
-for firmwares that don't use mailbox.
+**Dependencies**: Requires commit 892cb524ae8a ("mailbox: imx: fix
+wakeup failure from freeze mode") to be present. That commit is in
+v5.18+, so applicable stable trees (6.1.y, 6.6.y, 6.12.y) all have it.
 
-### Stable kernel criteria assessment
-1. **Obviously correct and tested**: Yes — a simple NULL check that
-   mirrors the existing pattern in `imx_dsp_rproc_kick()` (line 764).
-   Signed off by the NXP developer and the remoteproc maintainer.
-2. **Fixes a real bug**: Yes — suspend is broken when `no_mailboxes=1`.
-3. **Important issue**: Moderate — it prevents system suspend for
-   affected configurations (embedded i.MX DSP users with no-mailbox
-   firmwares). On embedded/battery-powered devices, inability to suspend
-   is a significant problem.
-4. **Small and contained**: Yes — 9 lines added (NULL check + comment +
-   debug message), single file, single function.
-5. **No new features**: Correct — this is purely a bug fix.
-
-### Risk assessment
-- **Very low risk**: The added NULL check only triggers when
-  `priv->tx_ch` is NULL (the no-mailbox case). It has zero impact on the
-  normal mailbox path.
-- The pattern is already established in the same driver
-  (`imx_dsp_rproc_kick()` at line 764).
-- The fix is self-contained with no dependencies on other patches.
-
-### Affected versions
-The `no_mailboxes` module parameter was introduced in commit
-`11bb42a94648a` which landed in v6.4. The bug exists from v6.4 onwards.
-Currently maintained stable trees v6.6.y and v6.12.y would both be
-affected.
+**Risk**: Very low. The change only affects the i.MX7ULP platform and
+simply skips suspend flag logic that was causing problems. If the bool
+field is false (default for all other platforms), behavior is completely
+unchanged.
 
 ### Verification
-- **Verified**: `mbox_send_message()` in `drivers/mailbox/mailbox.c:249`
-  returns `-EINVAL` when `chan` is NULL (not a crash, but causes suspend
-  failure since the error is propagated).
-- **Verified**: `priv->tx_ch` starts as NULL (zeroed by
-  `devm_rproc_alloc`) and remains NULL when
-  `imx_dsp_rproc_mbox_no_alloc()` is used (it's a no-op, confirmed at
-  line 635-638).
-- **Verified**: `no_mailboxes` module parameter was introduced in commit
-  `11bb42a94648a` (v6.4 cycle), confirmed via `git log -S
-  "no_mailboxes"`.
-- **Verified**: The existing `imx_dsp_rproc_kick()` function already has
-  an identical defensive NULL check for `priv->tx_ch` at line 764,
-  confirming the fix pattern is established.
-- **Verified**: The `imx_dsp_suspend()` function returns the error from
-  `mbox_send_message()` (line 1251), so a `-EINVAL` return causes
-  suspend to fail entirely.
-- **Verified**: The driver was introduced in `ec0e5549f3586d` (Oct 2021,
-  v5.16 cycle), so it exists in multiple stable trees.
-- **Verified**: The patch was reviewed and merged by remoteproc
-  maintainer Mathieu Poirier, with a Link to the mailing list
-  discussion.
 
-This is a clean, small, obviously correct bug fix for a real problem
-(broken suspend) in a specific but important use case (no-mailbox
-firmware on i.MX DSP). It follows an established pattern in the same
-driver and has very low regression risk.
+- **git show 892cb524ae8a**: Verified that commit introduced the
+  `priv->suspend` flag and `pm_system_wakeup()` call in `imx_mu_isr()`,
+  confirming the mechanism described in the commit message.
+- **git tag --contains 892cb524ae8a**: Confirmed the prerequisite commit
+  is in v5.18+, so all active LTS trees (6.1.y, 6.6.y, 6.12.y) contain
+  it.
+- **git tag --contains 673b570825ace**: Confirmed the commit under
+  review is post-v6.19 (in development tree).
+- **Grep for `priv->suspend`**: Verified the ISR check at line 564 —
+  when suspend flag is set and MU IRQ fires, `pm_system_wakeup()` is
+  called, which aborts suspend.
+- **Code review of diff**: Verified only i.MX7ULP config gets
+  `skip_suspend_flag = true`; all other platform configs default to
+  false (zero-initialized), so behavior is unchanged for non-i.MX7ULP
+  platforms.
+- **Unverified**: Cannot directly verify user reports of suspend failure
+  on i.MX7ULP, but the commit message clearly describes the mechanism
+  and the author is from NXP (the SoC vendor).
+
+### Conclusion
+
+This is a platform-specific hardware workaround that fixes suspend
+failure on i.MX7ULP. It's small, well-scoped, reviewed by the subsystem
+maintainer, and has essentially zero regression risk for other
+platforms. It fits the "hardware quirk" exception category for stable
+backports. The prerequisite commit exists in all active LTS trees.
 
 **YES**
 
- drivers/remoteproc/imx_dsp_rproc.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/mailbox/imx-mailbox.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
-index 5130a35214c92..f51deaacc7008 100644
---- a/drivers/remoteproc/imx_dsp_rproc.c
-+++ b/drivers/remoteproc/imx_dsp_rproc.c
-@@ -1242,6 +1242,15 @@ static int imx_dsp_suspend(struct device *dev)
- 	if (rproc->state != RPROC_RUNNING)
- 		goto out;
+diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+index 6778afc64a048..003f9236c35e0 100644
+--- a/drivers/mailbox/imx-mailbox.c
++++ b/drivers/mailbox/imx-mailbox.c
+@@ -122,6 +122,7 @@ struct imx_mu_dcfg {
+ 	u32	xRR;		/* Receive Register0 */
+ 	u32	xSR[IMX_MU_xSR_MAX];	/* Status Registers */
+ 	u32	xCR[IMX_MU_xCR_MAX];	/* Control Registers */
++	bool	skip_suspend_flag;
+ };
  
-+	/*
-+	 * No channel available for sending messages;
-+	 * indicates no mailboxes present, so trigger PM runtime suspend
-+	 */
-+	if (!priv->tx_ch) {
-+		dev_dbg(dev, "No initialized mbox tx channel, suspend directly.\n");
-+		goto out;
-+	}
-+
- 	reinit_completion(&priv->pm_comp);
+ #define IMX_MU_xSR_GIPn(type, x) (type & IMX_MU_V2 ? BIT(x) : BIT(28 + (3 - (x))))
+@@ -988,6 +989,7 @@ static const struct imx_mu_dcfg imx_mu_cfg_imx7ulp = {
+ 	.xRR	= 0x40,
+ 	.xSR	= {0x60, 0x60, 0x60, 0x60},
+ 	.xCR	= {0x64, 0x64, 0x64, 0x64, 0x64},
++	.skip_suspend_flag = true,
+ };
  
- 	/* Tell DSP that suspend is happening */
+ static const struct imx_mu_dcfg imx_mu_cfg_imx8ulp = {
+@@ -1071,7 +1073,8 @@ static int __maybe_unused imx_mu_suspend_noirq(struct device *dev)
+ 			priv->xcr[i] = imx_mu_read(priv, priv->dcfg->xCR[i]);
+ 	}
+ 
+-	priv->suspend = true;
++	if (!priv->dcfg->skip_suspend_flag)
++		priv->suspend = true;
+ 
+ 	return 0;
+ }
+@@ -1094,7 +1097,8 @@ static int __maybe_unused imx_mu_resume_noirq(struct device *dev)
+ 			imx_mu_write(priv, priv->xcr[i], priv->dcfg->xCR[i]);
+ 	}
+ 
+-	priv->suspend = false;
++	if (!priv->dcfg->skip_suspend_flag)
++		priv->suspend = false;
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
