@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E2A2F5311;
-	Sun, 15 Feb 2026 17:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCDF2F60BC;
+	Sun, 15 Feb 2026 17:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771177289; cv=none; b=OdZ6C1QwkU4nv4Vx6J2FbkJ0o0JQnYzmfZVRDdvGvtSdVFYWJ9KYGPIUBKj9WNom32NpfYx7V6VULWitJMLT1Kz0poiYpteHfjX07nm844WHfGGn7KTVequPvdHj1vqHCfxDlGeGWT/k3rDYFz8iT9YSMLahrbMI1cFg/2CueOg=
+	t=1771177290; cv=none; b=RzuWNoWuucwyd87s5wk7hYnWsP73rGMU7fWtIFwLw56DeURoA/vgGDBqAsQrBXmX3Pj37lR5UQ2/lAfEF5x17xwMleU1G/JjZnJOLYmSKD1vjgccOXa/G+XiA52X4/m7V+QaGIXHePak0bDFmzUDKwEPmbz0j5nwzRDdtQNzlKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771177289; c=relaxed/simple;
-	bh=Puh4sgT37KZtRy3LP1iDs5Wc0tui0i2RCskJqWuY0uA=;
+	s=arc-20240116; t=1771177290; c=relaxed/simple;
+	bh=OCwH5Qgby2PwQjCqvpr6WB0/RAQOFhceJ3eTqz/EQNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OooayM32MJQXIPCOYm+5VYBsLo+M3rOxEhR2r89uKC/wijk6qrNVgDu8qj7iENjTPJyrQ5CNqpIDW+EoD3fwT9QM/SCnTwfeesaPeQTZ18MEetwRR9aNqO06U9nYGKgFJc1aNecQKl+262E/qaIF1cN/196O0IWDEe6tsOEvYrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M/MunuDy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GABBefPHOJlex7zMV3DU2P/0Ybf02/c/G2YgFuzValnPXJG7yMc/ylJZESyRArjIU7ut1XMxsSgKqgok9t/7EgJBNGA5Iq+0gWnrQkOlLaKO+qVXxxI+4HTUJtkcy5UssJdpFhlJCYdYrwd1lcnBORvWrmZ6j57RAac7YrIAuYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AiBcllTN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M/MunuDy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509B3C4AF09;
-	Sun, 15 Feb 2026 17:41:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AiBcllTN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D54CC19423;
+	Sun, 15 Feb 2026 17:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771177289;
-	bh=Puh4sgT37KZtRy3LP1iDs5Wc0tui0i2RCskJqWuY0uA=;
+	s=k20201202; t=1771177290;
+	bh=OCwH5Qgby2PwQjCqvpr6WB0/RAQOFhceJ3eTqz/EQNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M/MunuDyJXkvmToAMxs0vNSjvoLfHGf/W77PI0VSpUNdtpvzVGQXxGNx9trxWWXPr
-	 aw+Z+tial1Ymoc3UmqnJSWTnaPfsExqdofGvL2XHtzHng/iJYyFwmfIWe2JDOIdfzY
-	 KpP6fkfmrNFX5aG+/27jEa8KRlSS22dzZh845XV48RIGDM8o3B8MPvUM+dR7hDGbSx
-	 7ry107bN4PbychCVb9Rl8VwK38OPfPKM51WCAr8KMlo/xtJ/BQrpYFuQ1XTp2YscIn
-	 tfvECyxPT42gEzxdUJSPmSQIdJeIFdokE+E8wGSZdzNlTVLuZQ1virzAZz6l0PIV4+
-	 Qsod28svsCC5Q==
+	b=AiBcllTNZperzYNVRTEIBvgaEFqFH+8K/J66ie+mayQt8RQazF0S0bknyXV+kY4+/
+	 qIPNL/CxTevDUYIVHQdlyixXPfwXrs7IJ/NLv4SxAkkQLYKn1b4DFWyQjlIoux9RRO
+	 btU97GltX3I7vPUc+ZgU6iRD1WBs6iu1EmgM+LZOTUQb2sTkadnikXHkyb3jFvyin/
+	 K+dCcBo9kSvQ/GpgsHaq3StIVquI5Zrd7RCjidBO67/KuNKKyYmS7D6FIrZVd/hC29
+	 pShAdO/Rwc2wULDnXF0wGSPKFb2lH5jcFib71/hChx9CvFwpyB0smDQUOr6x+MgvR2
+	 sCPxrBOEpciXg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
+Cc: Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	orsonzhai@gmail.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] mailbox: sprd: mask interrupts that are not handled
-Date: Sun, 15 Feb 2026 12:41:14 -0500
-Message-ID: <20260215174120.2390402-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] mailbox: mchp-ipc-sbi: fix out-of-bounds access in mchp_ipc_get_cluster_aggr_irq()
+Date: Sun, 15 Feb 2026 12:41:15 -0500
+Message-ID: <20260215174120.2390402-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260215174120.2390402-1-sashal@kernel.org>
 References: <20260215174120.2390402-1-sashal@kernel.org>
@@ -46,177 +46,171 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Otto Pflüger <otto.pflueger@abscue.de>
+From: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
 
-[ Upstream commit 75df94d05fc03fd9d861eaf79ce10fbb7a548bd8 ]
+[ Upstream commit f7c330a8c83c9b0332fd524097eaf3e69148164d ]
 
-To reduce the amount of spurious interrupts, disable the interrupts that
-are not handled in this driver.
+The cluster_cfg array is dynamically allocated to hold per-CPU
+configuration structures, with its size based on the number of online
+CPUs. Previously, this array was indexed using hartid, which may be
+non-contiguous or exceed the bounds of the array, leading to
+out-of-bounds access.
+Switch to using cpuid as the index, as it is guaranteed to be within
+the valid range provided by for_each_online_cpu().
 
-Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+Signed-off-by: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Comprehensive Analysis
+The driver was introduced in v6.14-rc1. This means it's only present in
+very recent kernel trees — 6.14 and later. It would only need
+backporting to 6.14.y and potentially 6.15.y if those exist as stable
+branches.
 
-### 1. What the Commit Does
+Now let me also check the ISR fix more carefully. I notice the current
+(unfixed) code at line 183 reads:
 
-This commit changes the interrupt mask initialization in
-`sprd_mbox_startup()` for the Spreadtrum mailbox driver. The two key
-changes are:
+```c
+if (irq == ipc->cluster_cfg[hartid].irq)
+```
 
-**a) Deterministic initialization instead of read-modify-write:**
-- **Before:** Read the hardware's current IRQ mask register state, then
-  clear specific bits to unmask desired interrupts. This left other bits
-  in whatever state the hardware/bootloader had them.
-- **After:** Start from the full mask constant (all interrupts masked),
-  then unmask only the ones the driver actually handles. This is fully
-  deterministic.
+But the diff shows the fix changes this to `ipc->cluster_cfg[i].irq`
+where `i` is the `for_each_online_cpu` iterator. This is correct — `i`
+will always be within `[0, num_online_cpus())`.
 
-**b) Stop enabling the inbox overflow interrupt:**
-- **Before:** Both `SPRD_INBOX_FIFO_OVERFLOW_IRQ` (BIT(1)) and
-  `SPRD_INBOX_FIFO_DELIVER_IRQ` (BIT(2)) were unmasked. The driver only
-  handles delivery interrupts.
-- **After:** Only `SPRD_INBOX_FIFO_DELIVER_IRQ` is unmasked.
+## Summary of Findings
 
-### 2. Bug Being Fixed
+### What the commit fixes
+An **out-of-bounds array access** in the Microchip IPC SBI mailbox
+driver. The `cluster_cfg` array is allocated with `num_online_cpus()`
+elements but was indexed using RISC-V `hartid`, which can exceed array
+bounds when hart IDs are non-contiguous. This affects both the setup
+path (`mchp_ipc_get_cluster_aggr_irq`) and the interrupt handler
+(`mchp_ipc_cluster_aggr_isr`).
 
-The `sprd_mbox_inbox_isr()` only checks the delivery status bits
-(`SPRD_INBOX_FIFO_DELIVER_MASK`). If no delivery is pending, it returns
-`IRQ_NONE` with a "spurious inbox interrupt" warning. This means:
+### Bug severity
+- **Out-of-bounds write** in probe path: memory corruption
+- **Out-of-bounds read** in IRQ context: potential crash/panic
+- This is a real, triggerable bug on any RISC-V system with non-
+  contiguous hart IDs using Microchip IPC hardware
 
-- If the inbox overflow interrupt fires without a concurrent delivery
-  event, the ISR returns `IRQ_NONE`
-- Repeated `IRQ_NONE` returns trigger the kernel's spurious interrupt
-  detection in `note_interrupt()` (`kernel/irq/spurious.c`), which can
-  eventually **disable the entire IRQ line** with a "nobody cared"
-  message
-- If the inbox delivery interrupt shares the same IRQ line, disabling
-  the IRQ would **break all mailbox communication**
+### Stable kernel criteria
+1. **Obviously correct and tested**: Yes — the fix simply changes array
+   indexing from hartid to cpuid, which is guaranteed in-bounds.
+   Reviewed by Conor Dooley (Microchip).
+2. **Fixes a real bug**: Yes — out-of-bounds memory access
+3. **Important issue**: Yes — memory corruption and potential kernel
+   crash
+4. **Small and contained**: Yes — only changes one file, replacing
+   `hartid` with `cpuid`/`i` in array accesses
+5. **No new features**: Correct, pure bug fix
+6. **Applies cleanly**: Straightforward change to a single file
 
-Similarly, the old code left outbox bits 1-4 and inbox bit 0 in an
-indeterminate state dependent on hardware power-on defaults, potentially
-enabling additional interrupts the driver doesn't handle.
+### Risk assessment
+- **Very low risk** — the change is mechanical substitution of the array
+  index from hartid to cpuid
+- The fix is purely within one driver file
+- No behavioral change other than fixing the out-of-bounds access
 
-### 3. Stable Kernel Criteria Assessment
+### Concerns
+- The driver was only introduced in v6.14-rc1, so it's only relevant for
+  6.14.y stable trees and newer
+- No dependency on other commits; self-contained fix
 
-- **Obviously correct:** Yes. The change is straightforward - mask
-  everything, then unmask only what the driver handles. This matches the
-  `sprd_mbox_shutdown()` function which already uses
-  `SPRD_INBOX_FIFO_IRQ_MASK` and `SPRD_OUTBOX_FIFO_IRQ_MASK` to mask all
-  interrupts.
-- **Fixes a real bug:** Yes. Spurious interrupts can lead to the kernel
-  disabling the IRQ line ("nobody cared"), which would break mailbox
-  functionality entirely.
-- **Small and contained:** Yes. 4 insertions, 6 deletions in a single
-  file, affecting one function.
-- **No new features:** Correct. This only changes interrupt masking
-  behavior.
-- **Self-contained:** Yes. No dependency on the revision 2 commit or the
-  delivery flag commit. The startup function code is unchanged between
-  v6.19 and the state before this patch.
+## Verification
 
-### 4. Risk Assessment
+- **Read the full driver source** (`drivers/mailbox/mailbox-mchp-ipc-
+  sbi.c`): Confirmed the allocation at line 465 uses `num_online_cpus()`
+  and the buggy accesses use `hartid` as index
+- **Verified driver introduction**: `git log --diff-filter=A` shows the
+  driver was added in commit e4b1d67e71419, which is `v6.14-rc1~97^2~10`
+  — only in 6.14+
+- **Confirmed the bug mechanism**: RISC-V hartids can be non-contiguous
+  (this is well-known in the RISC-V kernel community), so `hartid >=
+  num_online_cpus()` is a realistic scenario
+- **Confirmed the ISR is also affected**: Line 183 in the unfixed code
+  accesses `cluster_cfg[hartid]` in interrupt context
+- **Confirmed the fix is correct**: `cpuid` from `for_each_online_cpu()`
+  is always in range `[0, num_online_cpus())`
+- **Verified the patch is reviewed**: "Reviewed-by: Conor Dooley"
+  (Microchip kernel developer)
 
-- **Risk:** Very low. The change makes the interrupt state deterministic
-  and only enables interrupts the driver actually handles. The shutdown
-  function already uses the same mask constants.
-- **Regression potential:** Minimal. The only functional change is that
-  the inbox overflow interrupt is no longer enabled - but since the ISR
-  never handled it, enabling it was always a bug.
-- **Scope:** Single driver (sprd-mailbox), single function, 10 lines
-  changed.
-
-### 5. Backport Applicability
-
-The driver exists since v5.8. The buggy code in `sprd_mbox_startup()`
-has been present since the driver was added (`ca27fc26cd221`). The patch
-should apply cleanly to all stable trees that include this driver
-(5.10.y, 5.15.y, 6.1.y, 6.6.y, etc.) as the startup function has never
-been modified between the initial driver addition and this fix.
-
-### Verification
-
-- **Verified** that `sprd_mbox_inbox_isr()` does NOT handle overflow
-  interrupts - it only checks `SPRD_INBOX_FIFO_DELIVER_MASK` and returns
-  `IRQ_NONE` if no delivery is pending (lines 153-193 of the v6.19
-  source).
-- **Verified** that `sprd_mbox_shutdown()` already uses
-  `SPRD_INBOX_FIFO_IRQ_MASK` and `SPRD_OUTBOX_FIFO_IRQ_MASK` to disable
-  all interrupts (lines 269-284), confirming the mask constants are the
-  correct "all masked" values.
-- **Verified** the startup function is unchanged between v6.19 (HEAD)
-  and the state just before this patch on master (identical code at
-  lines 236-268).
-- **Verified** the revision 2 commit (`c6ff944003cf1`) does NOT modify
-  `sprd_mbox_startup()`, confirming this patch has no dependency on it.
-- **Verified** the delivery flag commit (`c77661d60d422`) modifies
-  `sprd_mbox_inbox_isr()` only, not `sprd_mbox_startup()`, confirming
-  independence.
-- **Verified** the driver was added in v5.8-rc1 (`ca27fc26cd221`), so it
-  exists in all currently maintained stable trees (5.10+).
-- **Verified** via lore.kernel.org that no reviewer concerns or NAKs
-  were raised about this patch.
-- **Verified** that `SPRD_INBOX_FIFO_IRQ_MASK = GENMASK(2,0) = 0x7` and
-  `SPRD_OUTBOX_FIFO_IRQ_MASK = GENMASK(4,0) = 0x1F` from the source
-  definitions (lines 44-52).
-- **Could NOT verify** specific user reports of the "nobody cared" IRQ
-  being triggered in practice (no Reported-by tag, no bug report link).
-  However, the code analysis clearly shows this is possible if the
-  overflow interrupt fires without a concurrent delivery.
-
-### Summary
-
-This is a small, self-contained bug fix that prevents spurious
-interrupts from potentially disabling the entire IRQ line for the
-Spreadtrum mailbox driver. The fix is obviously correct (mask what you
-don't handle), has minimal risk, applies cleanly to all stable trees,
-and prevents a real failure mode (kernel disabling the shared IRQ). It
-meets all stable kernel criteria.
+This is a clear, small, correct fix for a real out-of-bounds memory
+access bug that can cause memory corruption or kernel crashes. It meets
+all stable kernel criteria.
 
 **YES**
 
- drivers/mailbox/sprd-mailbox.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/mailbox/mailbox-mchp-ipc-sbi.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/mailbox/sprd-mailbox.c b/drivers/mailbox/sprd-mailbox.c
-index ee8539dfcef54..c1a5fe6cc8771 100644
---- a/drivers/mailbox/sprd-mailbox.c
-+++ b/drivers/mailbox/sprd-mailbox.c
-@@ -243,21 +243,19 @@ static int sprd_mbox_startup(struct mbox_chan *chan)
- 		/* Select outbox FIFO mode and reset the outbox FIFO status */
- 		writel(0x0, priv->outbox_base + SPRD_MBOX_FIFO_RST);
+diff --git a/drivers/mailbox/mailbox-mchp-ipc-sbi.c b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
+index a6e52009a4245..d444491a584e8 100644
+--- a/drivers/mailbox/mailbox-mchp-ipc-sbi.c
++++ b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
+@@ -180,20 +180,20 @@ static irqreturn_t mchp_ipc_cluster_aggr_isr(int irq, void *data)
+ 	/* Find out the hart that originated the irq */
+ 	for_each_online_cpu(i) {
+ 		hartid = cpuid_to_hartid_map(i);
+-		if (irq == ipc->cluster_cfg[hartid].irq)
++		if (irq == ipc->cluster_cfg[i].irq)
+ 			break;
+ 	}
  
--		/* Enable inbox FIFO overflow and delivery interrupt */
--		val = readl(priv->inbox_base + SPRD_MBOX_IRQ_MSK);
--		val &= ~(SPRD_INBOX_FIFO_OVERFLOW_IRQ | SPRD_INBOX_FIFO_DELIVER_IRQ);
-+		/* Enable inbox FIFO delivery interrupt */
-+		val = SPRD_INBOX_FIFO_IRQ_MASK;
-+		val &= ~SPRD_INBOX_FIFO_DELIVER_IRQ;
- 		writel(val, priv->inbox_base + SPRD_MBOX_IRQ_MSK);
+ 	status_msg.cluster = hartid;
+-	memcpy(ipc->cluster_cfg[hartid].buf_base, &status_msg, sizeof(struct mchp_ipc_status));
++	memcpy(ipc->cluster_cfg[i].buf_base, &status_msg, sizeof(struct mchp_ipc_status));
  
- 		/* Enable outbox FIFO not empty interrupt */
--		val = readl(priv->outbox_base + SPRD_MBOX_IRQ_MSK);
-+		val = SPRD_OUTBOX_FIFO_IRQ_MASK;
- 		val &= ~SPRD_OUTBOX_FIFO_NOT_EMPTY_IRQ;
- 		writel(val, priv->outbox_base + SPRD_MBOX_IRQ_MSK);
+-	ret = mchp_ipc_sbi_send(SBI_EXT_IPC_STATUS, ipc->cluster_cfg[hartid].buf_base_addr);
++	ret = mchp_ipc_sbi_send(SBI_EXT_IPC_STATUS, ipc->cluster_cfg[i].buf_base_addr);
+ 	if (ret < 0) {
+ 		dev_err_ratelimited(ipc->dev, "could not get IHC irq status ret=%d\n", ret);
+ 		return IRQ_HANDLED;
+ 	}
  
- 		/* Enable supplementary outbox as the fundamental one */
- 		if (priv->supp_base) {
- 			writel(0x0, priv->supp_base + SPRD_MBOX_FIFO_RST);
--			val = readl(priv->supp_base + SPRD_MBOX_IRQ_MSK);
--			val &= ~SPRD_OUTBOX_FIFO_NOT_EMPTY_IRQ;
- 			writel(val, priv->supp_base + SPRD_MBOX_IRQ_MSK);
- 		}
+-	memcpy(&status_msg, ipc->cluster_cfg[hartid].buf_base, sizeof(struct mchp_ipc_status));
++	memcpy(&status_msg, ipc->cluster_cfg[i].buf_base, sizeof(struct mchp_ipc_status));
+ 
+ 	/*
+ 	 * Iterate over each bit set in the IHC interrupt status register (IRQ_STATUS) to identify
+@@ -385,21 +385,21 @@ static int mchp_ipc_get_cluster_aggr_irq(struct mchp_ipc_sbi_mbox *ipc)
+ 		if (ret <= 0)
+ 			continue;
+ 
+-		ipc->cluster_cfg[hartid].irq = ret;
+-		ret = devm_request_irq(ipc->dev, ipc->cluster_cfg[hartid].irq,
++		ipc->cluster_cfg[cpuid].irq = ret;
++		ret = devm_request_irq(ipc->dev, ipc->cluster_cfg[cpuid].irq,
+ 				       mchp_ipc_cluster_aggr_isr, IRQF_SHARED,
+ 				       "miv-ihc-irq", ipc);
+ 		if (ret)
+ 			return ret;
+ 
+-		ipc->cluster_cfg[hartid].buf_base = devm_kmalloc(ipc->dev,
+-								 sizeof(struct mchp_ipc_status),
+-								 GFP_KERNEL);
++		ipc->cluster_cfg[cpuid].buf_base = devm_kmalloc(ipc->dev,
++								sizeof(struct mchp_ipc_status),
++								GFP_KERNEL);
+ 
+-		if (!ipc->cluster_cfg[hartid].buf_base)
++		if (!ipc->cluster_cfg[cpuid].buf_base)
+ 			return -ENOMEM;
+ 
+-		ipc->cluster_cfg[hartid].buf_base_addr = __pa(ipc->cluster_cfg[hartid].buf_base);
++		ipc->cluster_cfg[cpuid].buf_base_addr = __pa(ipc->cluster_cfg[cpuid].buf_base);
+ 
+ 		irq_found = true;
  	}
 -- 
 2.51.0
