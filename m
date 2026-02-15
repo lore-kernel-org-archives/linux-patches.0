@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A3D2BEC2A;
-	Sun, 15 Feb 2026 15:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89201367;
+	Sun, 15 Feb 2026 15:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771167828; cv=none; b=bmEE1D/1fpAU0uyB6zuJFqXko7xrZzGCCvsUTQseGh7E56kR4pSSjWc7NLFJGYPzIk1kSfGii9hUAtd4wM/V4SFzt1wlD9PfJhzaSjDOUrHAJmUmBtGmmlXzrEdVOlDGSJqaN7zKF+AWlyUQckHkO8FK/z5xJ2GUJGsRlIpzf8g=
+	t=1771167830; cv=none; b=phaTtK0NS+q6h0mXfpgfYpUR2DpJQvozmH9w/Y/w3M7PVWwwCCUKJNjYwaQlPbMqeYvegIOAMRxhgWToNmeunZG73nd7sBQWQf0bQgYR51rdToDmKiOIfOvPNE1AGUVUSdzGgXrHoMSk+xnbj/LQF4hTg/dyf7qeNH2bC8oqo3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771167828; c=relaxed/simple;
-	bh=HbrphodJ+SuvhOYBz4bQr366KsqiFgwRrJZdR5Fhwtg=;
+	s=arc-20240116; t=1771167830; c=relaxed/simple;
+	bh=MSRHxs9tlBSugeSwyEqSvKzxDRILbqyLuHzoMk75zc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gdp5fnGnFXKnQ2inOoXknSMaP/Atu3cmrXPT5vhxJ1WVz0JQZt2gXw41pZuWxzHI0szvR7r4Je8OsVQLfNcAifwf2BYHs8ePGJcyiIhwy0au7nXRcwsOckPif35Re2TMXnh+iiC1ArnzUf3rmaz4zvBUkW8wZIDAhfMRh28yKek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f+YFq41M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DzGFKnMomwchaB3w3Pq7boXZlv9rVvKBjcGih71pEQfccGkyrjqNwmENe5lMcTROaMwk920b1O34qPon+uxWizAx8ZnVXni/MALNONXzNxU5A7CSK++Du3otRA7RPbao0F84N8gyScH62KwzPZxMZOygcj3iquxrVSJwBw/HO4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ePjnnSGy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f+YFq41M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E5CC2BC86;
-	Sun, 15 Feb 2026 15:03:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ePjnnSGy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B8BC4CEF7;
+	Sun, 15 Feb 2026 15:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771167828;
-	bh=HbrphodJ+SuvhOYBz4bQr366KsqiFgwRrJZdR5Fhwtg=;
+	s=k20201202; t=1771167830;
+	bh=MSRHxs9tlBSugeSwyEqSvKzxDRILbqyLuHzoMk75zc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+YFq41MF6CdT+q3P9UhH+3JoKxWxWuK+hsSi9N96sb/CqEvAeMbvOoJXOg/ZSDg3
-	 PJ25apNtAZpMKEzh9c5pG+//0BWk+5X3L5idKojwd+ahUXT6tASiU2vXN0l9ISPSJs
-	 aeyM4QnL+bh3bQ+PmcL6do5rqEq2WQtkoEm6asC01u7+AKM/ODTPZXdxObmF+HGikq
-	 Mc8w9J+JIdMRwhLkYVvxRB+McibpBJzQDeh72E74hjmTQIbT8J/Zu3qQlbnbcCK1Vd
-	 ZoNHY2mkqAg060qsPZB0+aB1Qk3j3Bt2Ky8jqVPUhMsnN/1p+hSGB/MxezdyLF9isS
-	 cE7NsK10cWs7Q==
+	b=ePjnnSGy50Ba2Ns+YYFIK5CF9fbJkgyS5/dGZJPcba2RtWR9KUI9fCuzWMuRg29Ve
+	 q4NWoVsREG6TNpJPc9SwFd2OYY+bXeJ7HNDbceGqOwtbLHvEdxxBe7G4YVOT7QjaQz
+	 ZRVkSrwo70YfZCDxL21zF+X+to+mOzsPkZ+V+dOQ/quYBg3CNlVj89FWtlXfrkwQT+
+	 5lOp+SiGnMI2UEo/fhr/dPoJxOWUAOL6a98nNpCOwBzzcfyobP1DGcUw2v0AdNwX8I
+	 u3qfkor4FjaINh5oeHOG6V7AFV8ZvCx5hVEmyuZYVO58CE9xQrq8py2oc/emN347Bc
+	 i/pYGLokMGEEg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Md Haris Iqbal <haris.iqbal@ionos.com>,
-	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Leon Romanovsky <leon@kernel.org>,
+Cc: Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-rdma@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] RDMA/rtrs-clt: For conn rejection use actual err number
-Date: Sun, 15 Feb 2026 10:03:27 -0500
-Message-ID: <20260215150333.2150455-10-sashal@kernel.org>
+	benjamin@sipsolutions.net,
+	neil.armstrong@linaro.org,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-6.18] um: Preserve errno within signal handler
+Date: Sun, 15 Feb 2026 10:03:28 -0500
+Message-ID: <20260215150333.2150455-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260215150333.2150455-1-sashal@kernel.org>
 References: <20260215150333.2150455-1-sashal@kernel.org>
@@ -53,146 +53,156 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Md Haris Iqbal <haris.iqbal@ionos.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit fc290630702b530c2969061e7ef0d869a5b6dc4f ]
+[ Upstream commit f68b2d5a907b53eed99cf2efcaaae116df73c298 ]
 
-When the connection establishment request is rejected from the server
-side, then the actual error number sent back should be used.
+We rely on errno to determine whether a syscall has failed, so we
+need to ensure that accessing errno is async-signal-safe. Currently,
+we preserve the errno in sig_handler_common(), but it doesn't cover
+every possible case. Let's do it in hard_handler() instead, which
+is the signal handler we actually register.
 
-Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Link: https://patch.msgid.link/20260107161517.56357-10-haris.iqbal@ionos.com
-Reviewed-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
-Reviewed-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20260106001228.1531146-2-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of RDMA/rtrs-clt: For conn rejection use actual err number
+## Analysis of "um: Preserve errno within signal handler"
 
 ### Commit Message Analysis
 
-The commit message says: "When the connection establishment request is
-rejected from the server side, then the actual error number sent back
-should be used." This is a bug fix — the function was discarding the
-server-provided error code and always returning `-ECONNRESET`,
-regardless of what the server actually reported.
+The commit message clearly describes a bug fix: errno is not being
+properly preserved in all signal handler code paths. The fix moves the
+errno save/restore from `sig_handler_common()` to `hard_handler()`,
+which is the actual registered signal handler. This ensures errno
+preservation covers all cases, not just those that go through
+`sig_handler_common()`.
 
 ### Code Change Analysis
 
-The change is small and surgical, touching only the
-`rtrs_rdma_conn_rejected()` function in
-`drivers/infiniband/ulp/rtrs/rtrs-clt.c`:
+The change is very small and surgical:
 
-1. **Initialization change**: `int status, errno;` → `int status, errno
-   = -ECONNRESET;` — initializes `errno` to the previous hard-coded
-   return value as a default.
+1. **Removes** `int save_errno = errno;` and `errno = save_errno;` from
+   `sig_handler_common()` (lines removed from inner function)
+2. **Adds** `int save_errno = errno;` and `errno = save_errno;` to
+   `hard_handler()` (lines added to outer function)
 
-2. **Return value change**: `return -ECONNRESET;` → `return errno;` —
-   now returns the actual error number from the server's rejection
-   message.
+This is a simple relocation of the errno save/restore to a higher-level
+function that covers more code paths.
 
-**What this fixes**: Previously, when the server rejected a connection
-and sent back a specific error code (e.g., `-EBUSY`), the function would
-parse and log the error correctly but then discard it, always returning
-`-ECONNRESET`. This means the caller couldn't distinguish between
-different rejection reasons. The most important case is `-EBUSY`, which
-tells the client that a previous session still exists and it should
-reconnect later — with the old code, the caller couldn't differentiate
-this from a generic connection reset.
+### Bug Mechanism
 
-**Fallback behavior**: If the rejection message is malformed or too
-short (`else` branch), `errno` retains its default `-ECONNRESET` value,
-preserving the old behavior for that case. This is clean and safe.
+The bug is about **async-signal-safety**. When a signal handler fires,
+it can interrupt code that just set `errno` (e.g., after a failed
+syscall). If the signal handler calls functions that modify `errno`
+(which many do), the original `errno` value is lost. The caller then
+sees a corrupted `errno` and may make incorrect decisions.
 
-### Bug Classification
+The previous code preserved errno only in `sig_handler_common()`, but
+looking at the `handlers[]` array, `hard_handler()` dispatches to
+multiple handlers:
+- `sig_handler` (which calls `sig_handler_common`)
+- `timer_alarm_handler`
+- `sigusr1_handler`
 
-This is a **real bug fix** — incorrect error propagation. The function
-was designed to extract the error number from the server's rejection
-message but then threw it away. This could cause:
-- Incorrect reconnection behavior (treating `-EBUSY` like `-ECONNRESET`)
-- Misleading error reporting to upper layers
-- Potentially infinite reconnection loops or incorrect session
-  management decisions
+The `timer_alarm_handler` and `sigusr1_handler` paths were **NOT**
+covered by the errno preservation in `sig_handler_common()`. This means
+those signal handlers could corrupt errno.
+
+### Classification
+
+This is a **real bug fix**. Corrupted errno in UML (User Mode Linux) can
+lead to:
+- Incorrect syscall failure detection
+- Spurious error handling paths being taken
+- Potentially hard-to-diagnose undefined behavior
+
+This falls into the category of a **data corruption / correctness bug**
+— the kernel relies on errno to determine syscall success/failure, and a
+corrupted errno can cause incorrect control flow.
 
 ### Scope and Risk Assessment
 
-- **Lines changed**: ~3 lines of actual logic change
-- **Files touched**: 1
-- **Complexity**: Very low
-- **Risk**: Very low — the default initialization ensures backward-
-  compatible behavior for the malformed-message path, and the fix simply
-  propagates information that was already being parsed but discarded
-- **Subsystem**: RDMA/rtrs (RDMA Transport) — used for high-performance
-  storage over RDMA networks
-
-### Review and Testing
-
-- Has `Reviewed-by:` from two reviewers (Grzegorz Prajsner and Jack
-  Wang)
-- Merged by Leon Romanovsky (RDMA subsystem maintainer)
-- Part of a patch series (patch 10), but this change is self-contained —
-  it doesn't depend on other patches in the series
+- **Lines changed**: ~6 lines (3 removed, 3 added)
+- **Files touched**: 1 file (`arch/um/os-Linux/signal.c`)
+- **Complexity**: Extremely low — just moving save/restore to a higher
+  scope
+- **Risk of regression**: Minimal. The errno save/restore pattern is
+  well-understood and the change just moves it to a more encompassing
+  location. It's logically identical for the paths that already went
+  through `sig_handler_common()`, and adds coverage for paths that
+  didn't.
 
 ### User Impact
 
-Users of rtrs (RDMA transport for block storage) could experience
-incorrect reconnection behavior when the server rejects connections. The
-`-EBUSY` case is particularly important — without the proper error code,
-the client can't handle "session still exists" rejections appropriately,
-potentially leading to connection failures or suboptimal retry behavior.
+This affects UML (User Mode Linux) users. While UML is a niche
+architecture, the bug is real — signal handlers corrupting errno can
+lead to subtle, hard-to-diagnose failures. The fix is obviously correct.
 
-### Stable Kernel Criteria Check
+### Stability Indicators
 
-1. **Obviously correct and tested**: Yes — simple, well-reviewed,
-   logical fix
-2. **Fixes a real bug**: Yes — incorrect error code propagation
-3. **Important issue**: Moderate — affects connection management in RDMA
-   storage, could cause reconnection failures
-4. **Small and contained**: Yes — 3 lines changed in 1 file
-5. **No new features**: Correct — this fixes existing behavior
-6. **Applies cleanly**: Likely — the change is simple and localized
+- Signed off by the UML maintainer (Johannes Berg)
+- The pattern of saving/restoring errno in signal handlers is a well-
+  established correctness requirement (POSIX async-signal-safety)
+- The fix is trivially verifiable by inspection
 
-### Risk vs Benefit
+### Dependency Check
 
-- **Risk**: Minimal — the default initialization preserves backward
-  compatibility, and the fix is straightforward
-- **Benefit**: Correct error propagation enables proper connection
-  rejection handling, especially for the `-EBUSY` case
+This commit is self-contained. It has no dependencies on other patches.
+The code it modifies (`hard_handler()` and `sig_handler_common()`) has
+been present in stable kernels for a long time.
 
-The fix is small, surgical, well-reviewed, and fixes a real bug where
-error information was being discarded. It meets all stable kernel
-criteria.
+### Verdict
+
+This is a small, obviously correct bug fix that:
+- Fixes a real async-signal-safety bug (errno corruption)
+- Is extremely contained (6 lines in 1 file)
+- Has near-zero regression risk
+- Affects a real code path (signal handling in UML)
+- Meets all stable kernel criteria
 
 **YES**
 
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/um/os-Linux/signal.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index 2b397a544cb93..8fa1d72bd20a4 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -1923,7 +1923,7 @@ static int rtrs_rdma_conn_rejected(struct rtrs_clt_con *con,
- 	struct rtrs_path *s = con->c.path;
- 	const struct rtrs_msg_conn_rsp *msg;
- 	const char *rej_msg;
--	int status, errno;
-+	int status, errno = -ECONNRESET;
- 	u8 data_len;
+diff --git a/arch/um/os-Linux/signal.c b/arch/um/os-Linux/signal.c
+index 327fb3c52fc79..de372b936a804 100644
+--- a/arch/um/os-Linux/signal.c
++++ b/arch/um/os-Linux/signal.c
+@@ -36,7 +36,6 @@ void (*sig_info[NSIG])(int, struct siginfo *, struct uml_pt_regs *, void *mc) =
+ static void sig_handler_common(int sig, struct siginfo *si, mcontext_t *mc)
+ {
+ 	struct uml_pt_regs r;
+-	int save_errno = errno;
  
- 	status = ev->status;
-@@ -1945,7 +1945,7 @@ static int rtrs_rdma_conn_rejected(struct rtrs_clt_con *con,
- 			  status, rej_msg);
- 	}
+ 	r.is_user = 0;
+ 	if (sig == SIGSEGV) {
+@@ -50,8 +49,6 @@ static void sig_handler_common(int sig, struct siginfo *si, mcontext_t *mc)
+ 		unblock_signals_trace();
  
--	return -ECONNRESET;
-+	return errno;
+ 	(*sig_info[sig])(sig, si, &r, mc);
+-
+-	errno = save_errno;
  }
  
- void rtrs_clt_close_conns(struct rtrs_clt_path *clt_path, bool wait)
+ /*
+@@ -207,8 +204,11 @@ static void hard_handler(int sig, siginfo_t *si, void *p)
+ {
+ 	ucontext_t *uc = p;
+ 	mcontext_t *mc = &uc->uc_mcontext;
++	int save_errno = errno;
+ 
+ 	(*handlers[sig])(sig, (struct siginfo *)si, mc);
++
++	errno = save_errno;
+ }
+ 
+ void set_handler(int sig)
 -- 
 2.51.0
 
