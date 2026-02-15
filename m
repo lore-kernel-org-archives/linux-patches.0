@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0088E2F39B5;
-	Sun, 15 Feb 2026 17:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A23F2F39B1;
+	Sun, 15 Feb 2026 17:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771177287; cv=none; b=oXOF2gtTLxlPVEvrt/TleuYfoDv/HYGK3f08TUZtsASfh6iiJLr4yDwQHJgNFZFg1Shy5iBx7joyjv6mfRAtPzohsVXsj2WIGyD9EqPEnQpqxY//Drwy6TUxSYolM59h5VtZEjVMx/K18Whg15F0kAtmXDz4h7WjiNt/9XYllOM=
+	t=1771177288; cv=none; b=AlZv4A3gCRP+LHwt0WQWDAFknqbZI298nGQ0qnp9Mpk5ymv0uTBImiYwexa4kbM+EVd2lIWrhatDHAODjqfM6n0X9Vk8jrX5ketIjsHdyHkIc5a2XXCA/zkGOS2DsIkIlPPqkXdNA9ZXEcyFTfiuCTnMboqm2ALmN3kVpr8dsiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771177287; c=relaxed/simple;
-	bh=Onj3uK0+DVYfeYgAG9nSvweyD5qgloOkVKT5YJbRa88=;
+	s=arc-20240116; t=1771177288; c=relaxed/simple;
+	bh=nCrjXMjBoStVt4cijtk4i5RH7OleXvBYryvHaN3qCJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HYFUEACcddGfQClPPQfuPLzjZyFHDLrC0PoMUK3QZL7TLkZWLmpZpccuF5H3J7sHS81+Khq78VReWFUX+JVKmrB39OD6nlyeF9U5g8kQec0F9XxRGwNFuZ7n6D8ATl+lvnSrcqrlwpw+JVIHj/QCdqqk7LpzufV/SP1jUi+i5w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PaCVE5xq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XNBeP6BhXZMihOjXsXAHSjY4sPI48HjhhoKd9oCXSBC3MeIl9AKgkXvP3KGagWT/dxmbKrXbdrx8zb8X0CvpwenJ5GdPIzpe/hZbTsNr17eGKXgo+VinyZLyhuJ+AYyNemvB7IW+0haKaMDJ5uVYS6ZgGMd6bAowKHXnrwD3OOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9Vn4iGX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PaCVE5xq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B274AC4CEF7;
-	Sun, 15 Feb 2026 17:41:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9Vn4iGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DADBC19423;
+	Sun, 15 Feb 2026 17:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771177286;
-	bh=Onj3uK0+DVYfeYgAG9nSvweyD5qgloOkVKT5YJbRa88=;
+	s=k20201202; t=1771177287;
+	bh=nCrjXMjBoStVt4cijtk4i5RH7OleXvBYryvHaN3qCJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaCVE5xq+92K01+7EwCkIRF+/yWgvGM0mI3lN3csy2e+BVpuIg0Rz6V+CIBohWFNX
-	 1N69IBrN+cgcPcjLKEPj0/sv2IWsNNYoMT/Akz228fze4o5HCAtqSpPlHi+mFo64Hk
-	 uCpGITm3IsQ3Ko01DonmGKiSbVrnen1hPYToU1VBLdZnmUI1W3Bse8nG6KpM15wUBP
-	 sLbV+ri1twVD/goNf3gd8X8KfieW6AxvRv2qNODjuWjvUaRsQib6aIRlK8E+lFBSL4
-	 reqtbCNSWL6Dpp4xPQ1HZ9wEhQICRZlaJUWDG9WInRBn5Yn2WCEq6RHeC7o7VjcjRb
-	 u2KgBz301B98w==
+	b=u9Vn4iGXzJ99+YBbPCmWa30J///fEDdrFYmHgj+85VB8JqjBshBA5H5muqwkc8l84
+	 f6w37JxomNWFqDNx445NAgPdFVOLtZdeNlqVeU1pGfoktBAUj8fTd4O9WnN4MD1P8J
+	 fAaoVqUdQeHs4dXeMhCzNwQUb4Nh/jJmQWwmFKGLzwUtFDa7RI9LZh+DB0cvKrEXyb
+	 Rk41EFaBWJDDlJRnx3Gyzl5nias7SN24JRtiSBcywk1hA2342uRDsA0DoJ45ogkXle
+	 eNNxT888yp89Zig56rusHr0ntHyaM/EVCCv+zp8VAGfTD2ybQ7Eq1eOY2/KNku3OwP
+	 Z6hY/7VqNhNpQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jacky Bai <ping.bai@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
+Cc: Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Frank.Li@nxp.com,
-	linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-6.1] mailbox: imx: Skip the suspend flag for i.MX7ULP
-Date: Sun, 15 Feb 2026 12:41:12 -0500
-Message-ID: <20260215174120.2390402-4-sashal@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] mailbox: mchp-ipc-sbi: fix uninitialized symbol and other smatch warnings
+Date: Sun, 15 Feb 2026 12:41:13 -0500
+Message-ID: <20260215174120.2390402-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260215174120.2390402-1-sashal@kernel.org>
 References: <20260215174120.2390402-1-sashal@kernel.org>
@@ -52,156 +50,140 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jacky Bai <ping.bai@nxp.com>
+From: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
 
-[ Upstream commit 673b570825ace0dcb2ac0c676080559d505c6f40 ]
+[ Upstream commit bc4d17e495cd3b02bcb2e10f575763a5ff31f80b ]
 
-In current imx-mailbox driver, the MU IRQ is configured with
-'IRQF_NO_SUSPEND' flag set. So during linux suspend/resume flow,
-the MU IRQ is always enabled. With commit 892cb524ae8a ("mailbox: imx:
-fix wakeup failure from freeze mode"), if the MU IRQ is triggered after
-the priv->suspended flag has been set, the system suspend will be
-aborted.
+Fix uninitialized symbol 'hartid' warning in mchp_ipc_cluster_aggr_isr()
+by introducing a 'found' flag to track whether the IRQ matches any
+online hart. If no match is found, return IRQ_NONE.
 
-On i.MX7ULP platform, certain drivers that depend on rpmsg may need
-to send rpmsg request and receive an acknowledgment from the remote
-core during the late_suspend stage. Early suspend abort is not
-expected, and the i.MX7ULP already has additional hardware and
-software to make sure the system can be wakeup from freeze mode
-correctly when MU IRQ is trigger.
+Also fix other smatch warnings by removing dead code in
+mchp_ipc_startup() and by returning -ENODEV in dev_err_probe() if the
+Microchip SBI extension is not found.
 
-Skip the 'suspend' flag handling logic on i.MX7ULP to avoid the
-early abort when doing suspend.
+Fixes below smatch warnings:
+drivers/mailbox/mailbox-mchp-ipc-sbi.c:187 mchp_ipc_cluster_aggr_isr() error: uninitialized symbol 'hartid'.
+drivers/mailbox/mailbox-mchp-ipc-sbi.c:324 mchp_ipc_startup() warn: ignoring unreachable code.
+drivers/mailbox/mailbox-mchp-ipc-sbi.c:422 mchp_ipc_probe() warn: passing zero to 'dev_err_probe'
 
-Signed-off-by: Jacky Bai <ping.bai@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202512171533.CDLdScMY-lkp@intel.com/
+Signed-off-by: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I understand the full picture:
+So v6.14 is no longer a maintained stable tree (stopped at v6.14.11).
+The relevant current stable tree would be v6.18.y.
 
-1. Commit 892cb524ae8a added `priv->suspend` flag and
-   `pm_system_wakeup()` call in the ISR to handle freeze mode wakeup.
-2. `pm_system_wakeup()` aborts the ongoing suspend process.
-3. On i.MX7ULP, during `late_suspend`, drivers send rpmsg to the remote
-   core and expect a response. This triggers the MU IRQ, which in turn
-   calls `pm_system_wakeup()` and aborts suspend — an undesirable
-   behavior on this platform.
-4. The fix adds a per-platform flag `skip_suspend_flag` to skip the
-   suspend flag logic for i.MX7ULP, which has its own hardware
-   mechanisms for handling wakeup.
+### User Impact
 
-### Stable Kernel Assessment
-
-**Bug severity**: This is a **suspend failure** on i.MX7ULP — the system
-cannot properly enter suspend/freeze mode. This is a significant
-functional regression for i.MX7ULP users caused by commit 892cb524ae8a.
-
-**Fix quality**:
-- Small, contained (adds 1 bool field + 1 config line + 2 conditional
-  checks)
-- Platform-specific — only affects i.MX7ULP; all other platforms are
-  unchanged
-- Low regression risk — it simply disables a feature that was causing
-  problems on this specific platform
-- Reviewed by Peng Fan (NXP maintainer)
-
-**Fits stable criteria**:
-- Fixes a real bug (suspend failure)
-- Small and contained
-- Obviously correct
-- Platform-specific quirk/workaround — this falls squarely in the
-  "hardware quirk" category
-
-**Dependencies**: Requires commit 892cb524ae8a ("mailbox: imx: fix
-wakeup failure from freeze mode") to be present. That commit is in
-v5.18+, so applicable stable trees (6.1.y, 6.6.y, 6.12.y) all have it.
-
-**Risk**: Very low. The change only affects the i.MX7ULP platform and
-simply skips suspend flag logic that was causing problems. If the bool
-field is false (default for all other platforms), behavior is completely
-unchanged.
+This driver is for RISC-V Microchip Inter-processor Communication. While
+it's a niche driver:
+1. The uninitialized variable bug in the ISR is a real correctness issue
+2. The `dev_err_probe` returning 0 on failure could cause unexpected
+   behavior
+3. All three fixes are straightforward and low-risk
 
 ### Verification
 
-- **git show 892cb524ae8a**: Verified that commit introduced the
-  `priv->suspend` flag and `pm_system_wakeup()` call in `imx_mu_isr()`,
-  confirming the mechanism described in the commit message.
-- **git tag --contains 892cb524ae8a**: Confirmed the prerequisite commit
-  is in v5.18+, so all active LTS trees (6.1.y, 6.6.y, 6.12.y) contain
-  it.
-- **git tag --contains 673b570825ace**: Confirmed the commit under
-  review is post-v6.19 (in development tree).
-- **Grep for `priv->suspend`**: Verified the ISR check at line 564 —
-  when suspend flag is set and MU IRQ fires, `pm_system_wakeup()` is
-  called, which aborts suspend.
-- **Code review of diff**: Verified only i.MX7ULP config gets
-  `skip_suspend_flag = true`; all other platform configs default to
-  false (zero-initialized), so behavior is unchanged for non-i.MX7ULP
-  platforms.
-- **Unverified**: Cannot directly verify user reports of suspend failure
-  on i.MX7ULP, but the commit message clearly describes the mechanism
-  and the author is from NXP (the SoC vendor).
+- **git log** confirmed the file was introduced in commit
+  `e4b1d67e71419` (v6.14-rc1)
+- **git tag --contains** confirmed the file first appeared in v6.14
+- **git show f7c330a8c83c9** confirmed a dependency on a prior fix that
+  changed indexing from hartid to cpuid
+- **git tag** confirmed v6.14 is no longer actively maintained (stopped
+  at v6.14.11); v6.18.y is the relevant current stable tree
+- The uninitialized variable bug is verified by reading the original
+  code: if `for_each_online_cpu` loop doesn't find a matching IRQ,
+  `hartid` is used uninitialized at line 187
+- The `dev_err_probe` bug is verified: when `sbi_probe_extension`
+  returns 0, passing 0 to `dev_err_probe` returns 0 (success), causing
+  probe to incorrectly succeed
+- The dead code is verified: the switch statement either returns 0 or
+  gotos to error cleanup, making code after it unreachable
 
-### Conclusion
+### Assessment
 
-This is a platform-specific hardware workaround that fixes suspend
-failure on i.MX7ULP. It's small, well-scoped, reviewed by the subsystem
-maintainer, and has essentially zero regression risk for other
-platforms. It fits the "hardware quirk" exception category for stable
-backports. The prerequisite commit exists in all active LTS trees.
+This commit fixes real bugs:
+1. An uninitialized variable in an interrupt handler (potential
+   undefined behavior / crash)
+2. An incorrect probe success path when hardware support is missing
+3. Dead code removal (minor cleanup)
+
+The fixes are small, well-contained, and low-risk. They fix genuine bugs
+in a driver that exists only in v6.14+. The commit has a dependency on
+`f7c330a8c83c9` which would also need to be backported.
+
+While the bugs are real, this is a very niche RISC-V mailbox driver
+(Microchip IPC over SBI). The fixes are appropriate for stable if the
+prerequisite commit is also included. The uninitialized variable and
+incorrect probe return value are both correctness bugs worth fixing.
 
 **YES**
 
- drivers/mailbox/imx-mailbox.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/mailbox/mailbox-mchp-ipc-sbi.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index 6778afc64a048..003f9236c35e0 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -122,6 +122,7 @@ struct imx_mu_dcfg {
- 	u32	xRR;		/* Receive Register0 */
- 	u32	xSR[IMX_MU_xSR_MAX];	/* Status Registers */
- 	u32	xCR[IMX_MU_xCR_MAX];	/* Control Registers */
-+	bool	skip_suspend_flag;
- };
+diff --git a/drivers/mailbox/mailbox-mchp-ipc-sbi.c b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
+index d444491a584e8..b87bf2fb4b9b9 100644
+--- a/drivers/mailbox/mailbox-mchp-ipc-sbi.c
++++ b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
+@@ -174,17 +174,21 @@ static irqreturn_t mchp_ipc_cluster_aggr_isr(int irq, void *data)
+ 	struct mchp_ipc_msg ipc_msg;
+ 	struct mchp_ipc_status status_msg;
+ 	int ret;
+-	unsigned long hartid;
+ 	u32 i, chan_index, chan_id;
++	bool found = false;
  
- #define IMX_MU_xSR_GIPn(type, x) (type & IMX_MU_V2 ? BIT(x) : BIT(28 + (3 - (x))))
-@@ -988,6 +989,7 @@ static const struct imx_mu_dcfg imx_mu_cfg_imx7ulp = {
- 	.xRR	= 0x40,
- 	.xSR	= {0x60, 0x60, 0x60, 0x60},
- 	.xCR	= {0x64, 0x64, 0x64, 0x64, 0x64},
-+	.skip_suspend_flag = true,
- };
- 
- static const struct imx_mu_dcfg imx_mu_cfg_imx8ulp = {
-@@ -1071,7 +1073,8 @@ static int __maybe_unused imx_mu_suspend_noirq(struct device *dev)
- 			priv->xcr[i] = imx_mu_read(priv, priv->dcfg->xCR[i]);
+ 	/* Find out the hart that originated the irq */
+ 	for_each_online_cpu(i) {
+-		hartid = cpuid_to_hartid_map(i);
+-		if (irq == ipc->cluster_cfg[i].irq)
++		if (irq == ipc->cluster_cfg[i].irq) {
++			found = true;
+ 			break;
++		}
  	}
  
--	priv->suspend = true;
-+	if (!priv->dcfg->skip_suspend_flag)
-+		priv->suspend = true;
+-	status_msg.cluster = hartid;
++	if (unlikely(!found))
++		return IRQ_NONE;
++
++	status_msg.cluster = cpuid_to_hartid_map(i);
+ 	memcpy(ipc->cluster_cfg[i].buf_base, &status_msg, sizeof(struct mchp_ipc_status));
  
- 	return 0;
- }
-@@ -1094,7 +1097,8 @@ static int __maybe_unused imx_mu_resume_noirq(struct device *dev)
- 			imx_mu_write(priv, priv->xcr[i], priv->dcfg->xCR[i]);
+ 	ret = mchp_ipc_sbi_send(SBI_EXT_IPC_STATUS, ipc->cluster_cfg[i].buf_base_addr);
+@@ -321,13 +325,6 @@ static int mchp_ipc_startup(struct mbox_chan *chan)
+ 		goto fail_free_buf_msg_rx;
  	}
  
--	priv->suspend = false;
-+	if (!priv->dcfg->skip_suspend_flag)
-+		priv->suspend = false;
+-	if (ret) {
+-		dev_err(ipc->dev, "failed to register interrupt(s)\n");
+-		goto fail_free_buf_msg_rx;
+-	}
+-
+-	return ret;
+-
+ fail_free_buf_msg_rx:
+ 	kfree(chan_info->msg_buf_rx);
+ fail_free_buf_msg_tx:
+@@ -419,7 +416,7 @@ static int mchp_ipc_probe(struct platform_device *pdev)
  
- 	return 0;
- }
+ 	ret = sbi_probe_extension(SBI_EXT_MICROCHIP_TECHNOLOGY);
+ 	if (ret <= 0)
+-		return dev_err_probe(dev, ret, "Microchip SBI extension not detected\n");
++		return dev_err_probe(dev, -ENODEV, "Microchip SBI extension not detected\n");
+ 
+ 	ipc = devm_kzalloc(dev, sizeof(*ipc), GFP_KERNEL);
+ 	if (!ipc)
 -- 
 2.51.0
 
