@@ -1,50 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5CA1367;
-	Sun, 15 Feb 2026 15:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FEE1367;
+	Sun, 15 Feb 2026 15:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771167816; cv=none; b=mU9ICs/8spOR1FNjwkNVTePFVTvzYM9dCUvJjNtPo8h/2qXvuf+zuRgycodZnCN+5VAD1qq/yYMW/PBGX4JIc4gH2Tg6x/1vnzTmIc17eLaVGhC9jlvLypl0cw6Mm8emhZ2uJ4bxyXRro9wji6PwP1TBr7AYNS3A1jV2Jtcxp1U=
+	t=1771167818; cv=none; b=AAe+XGg2zdu1AVQgduehEVnG6RJgiqxgflgkgj0+XzVrdBKxDHzu+g4t5aBeQ26rn0zlEThejZgJfQenM/wH9VxVPrF6aNicvf76nkCtMU70i8RWN5PdNYGyHe+XR8UgPa5Cnx68TK928KaJtXXX1s5jJQdlK7Yro1aECV84tWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771167816; c=relaxed/simple;
-	bh=wVaofg3E0qedZW4L4ZDRs8qnTvcQSmBPaPzB3h+kGYc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Qh5esvv8zxF/x1q75bwqqCfkFKJJd0G+8JRm/z5Ioxeq0GEGPV8ktsThx53KienL6M+BUop+UdVqBNl64gwWsRrJOB8aut/awet5od9SgYdTvTkI+IjoDXGnqM5iJO+u2HNvnchGRg1GAdOV1yNCP/cqYW1yW1VTCsl0CdYsLSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DWx0CH7o; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771167818; c=relaxed/simple;
+	bh=ALJQ6v0jihErAld2wDaIVC7Dc1Pu90VzccUmQjBo3qE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gdBDAsdDNbEQjv8lGoLEY8Z20J9DFsvg/4gyhxcg8zMSLaQf4qVV9O+zO337Vuy7RNsGH63dPxztdZSNiuxjWqlwB4klAk2QzuMK19mz77c3gBV+2f2uOWgRvahO1hXkkXegnPiZBL2Wfr8oIhqfYQv5EqNZg4ZjyJG5OUWKdGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SnD4l3f9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DWx0CH7o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F713C4CEF7;
-	Sun, 15 Feb 2026 15:03:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SnD4l3f9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36BAC4CEF7;
+	Sun, 15 Feb 2026 15:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771167816;
-	bh=wVaofg3E0qedZW4L4ZDRs8qnTvcQSmBPaPzB3h+kGYc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=DWx0CH7o0sEmtJRskSBMOmmzvzDqQohLC0hu4t2WNlqt08XF6S7S6ecDs1wZSh14h
-	 EPS+3XqDVQYI1hIujeITSqnc/fKITevb4L97Bv2+lNfKv56kk/d5RVGcAgxdR3mvT/
-	 p1ZFfNvnTvQn/OOjLP0VfMPgrB8YW6OaCTxrTGEGv7xBeNOK2bbdXbn8mMSw0Aaa/V
-	 zR2qNnwh7UiBI8Pc9QXacICzXAPaIMFKDyU6MxQnWgGbGfDY3n2d1V3Js4gQYsG+EA
-	 10KuPCT+Tgow/2F4pmql/Ujujs3Y9FVOz2M6q/ASs5pEyaKSU37Xbe2Eidk5p96zpX
-	 mbWAM8v1GjkjA==
+	s=k20201202; t=1771167818;
+	bh=ALJQ6v0jihErAld2wDaIVC7Dc1Pu90VzccUmQjBo3qE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=SnD4l3f95hoKZ/Qa9q6GeL+aHkkQKVGQWYcFSumWEgq764zoOJ+SDty/oFEzQOMYl
+	 lSM3cEflzIPYKNXUptUEOm3DlLfAonrrD6hxii/Vz95CXvLTu//U46YAHR2Vc9Cls5
+	 4n6DrSkRYbsSpscFIsDngHW/KOAxCoy9GBRWHFezHLSJrjnfzAnoEaIppTare5prrM
+	 57vm27zFvAnmjZx/0eH/CbGKvSPqpcbSy4DaVWwVXj3q57LZF4LpkjDG4JL8mFJonC
+	 FbPDZj8zapFhj9fzpbEYFua19kRVE8XXhciHFMChAQAWHAzjjJ0N4HHJvVw9uM8fg6
+	 JTwGGwMHJgF0A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sergey Matyukevich <geomatsi@gmail.com>,
-	Andy Chiu <andybnac@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
+Cc: Keita Morisaki <keita.morisaki@tier4.jp>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	neil.armstrong@linaro.org,
-	philmd@linaro.org,
-	cleger@rivosinc.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	yongxuan.wang@sifive.com,
-	alexghiti@rivosinc.com,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-6.12] riscv: vector: init vector context with proper vlenb
-Date: Sun, 15 Feb 2026 10:03:18 -0500
-Message-ID: <20260215150333.2150455-1-sashal@kernel.org>
+	chaotian.jing@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-scsi@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-6.12] scsi: ufs: mediatek: Fix page faults in ufs_mtk_clk_scale() trace event
+Date: Sun, 15 Feb 2026 10:03:19 -0500
+Message-ID: <20260215150333.2150455-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260215150333.2150455-1-sashal@kernel.org>
+References: <20260215150333.2150455-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,146 +58,99 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Matyukevich <geomatsi@gmail.com>
+From: Keita Morisaki <keita.morisaki@tier4.jp>
 
-[ Upstream commit ef3ff40346db8476a9ef7269fc9d1837e7243c40 ]
+[ Upstream commit 9672ed3de7d772ceddd713c769c05e832fc69bae ]
 
-The vstate in thread_struct is zeroed when the vector context is
-initialized. That includes read-only register vlenb, which holds
-the vector register length in bytes. Zeroed state persists until
-mstatus.VS becomes 'dirty' and a context switch saves the actual
-hardware values.
+The ufs_mtk_clk_scale() trace event currently stores the address of the
+name string directly via __field(const char *, name). This pointer may
+become invalid after the module is unloaded, causing page faults when the
+trace buffer is subsequently accessed.
 
-This can expose the zero vlenb value to the user-space in early
-debug scenarios, e.g. when ptrace attaches to a traced process
-early, before any vector instruction except the first one was
-executed.
+This can occur because the MediaTek UFS driver can be configured as a
+loadable module (tristate in Kconfig), meaning the name string passed to
+the trace event may reside in module memory that becomes invalid after
+module unload.
 
-Fix this by specifying proper vlenb on vector context init.
+Fix this by using __string() and __assign_str() to copy the string contents
+into the ring buffer instead of storing the pointer. This ensures the trace
+data remains valid regardless of module state.
 
-Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>
-Reviewed-by: Andy Chiu <andybnac@gmail.com>
-Tested-by: Andy Chiu <andybnac@gmail.com>
-Link: https://patch.msgid.link/20251214163537.1054292-3-geomatsi@gmail.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+This change increases the memory usage for each ftrace entry by a few bytes
+(clock names are typically 7-15 characters like "ufs_sel" or
+"ufs_sel_max_src") compared to storing an 8-byte pointer.
+
+Note that this change does not affect anything unless all of the following
+conditions are met:
+
+ - CONFIG_SCSI_UFS_MEDIATEK is enabled
+
+ - ftrace tracing is enabled
+
+ - The ufs_mtk_clk_scale event is enabled in ftrace
+
+Signed-off-by: Keita Morisaki <keita.morisaki@tier4.jp>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://patch.msgid.link/20260202024526.122515-1-keita.morisaki@tier4.jp
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The calculation `riscv_v_vsize / 32` is used consistently throughout the
-codebase (e.g., `arch/riscv/kvm/vcpu_vector.c:26` and
-`arch/riscv/include/asm/vector.h:157`), confirming it's the correct
-formula.
+The `ufs_mtk_clk_scale` trace event was introduced in August 2022
+(kernel 6.1 era), so this buggy code exists in multiple stable trees
+(6.1.y, 6.6.y, and later).
 
-### Summary of Analysis
+### 8. CONCLUSION
 
-**What the bug is:**
-When RISC-V vector context is first allocated (either for kernel
-preemptive V use or on the first user-space vector instruction), the
-`__riscv_v_ext_state` structure is zeroed, including the `vlenb` field.
-The `vlenb` field represents the vector register length in bytes — a
-read-only hardware property. This zero value persists until a context
-switch with `mstatus.VS == dirty` causes the hardware values to be
-saved.
+This is a textbook stable backport candidate:
+- **Fixes a real crash** (page fault / use-after-free on dangling
+  pointer)
+- **Extremely small and contained** (4-line change in one file)
+- **Uses well-established patterns**
+  (`__string()/__assign_str()/__get_str()`) that are the correct and
+  standard approach
+- **Zero risk of regression** — this is strictly more correct than the
+  original code
+- **Affected code exists in stable trees** dating back to at least 6.1
+- **Reviewed and accepted** by the relevant maintainers
+- **Self-contained** — no dependencies on other patches
 
-**User impact:**
-When ptrace (debuggers like GDB/LLDB) attaches to a process early —
-before any vector instruction has been executed or before a context
-switch has saved hardware values — ptrace reads `vlenb` as 0 instead of
-the actual hardware value. This is incorrect data being exposed to
-userspace, which can cause debuggers and tracing tools to malfunction.
-
-**Fix characteristics:**
-- **Small and surgical**: The core fix is a single line addition:
-  `ctx->vlenb = riscv_v_vsize / 32;`
-- **Function rename**: `riscv_v_thread_zalloc` →
-  `riscv_v_thread_ctx_alloc` (reflects that it now does more than
-  zalloc)
-- **Obviously correct**: Uses the same formula as everywhere else in the
-  kernel (`riscv_v_vsize / 32`)
-- **Well-tested**: Has `Reviewed-by` and `Tested-by` from Andy Chiu, the
-  RISC-V vector subsystem author
-- **No new features**: Fixes incorrect initialization of existing state
-- **Low risk**: Only affects RISC-V vector state initialization; the
-  value being set is identical to what hardware would provide
-
-**Stable criteria check:**
-1. Obviously correct and tested — YES (reviewed + tested by maintainer,
-   formula used elsewhere)
-2. Fixes a real bug — YES (incorrect data exposed to userspace via
-   ptrace)
-3. Important issue — YES (debugging tools get wrong hardware info;
-   incorrect userspace-visible state)
-4. Small and contained — YES (one functional line change + rename)
-5. No new features — YES (fixes existing behavior)
-
-**Dependencies:**
-The code structure with `riscv_v_thread_zalloc` exists in stable trees
-(it was introduced with RISC-V V extension support). The fix is self-
-contained and should apply cleanly or with minimal adjustment.
-
-**Risk assessment:**
-Very low risk. The fix adds a single assignment of a value that would
-eventually be set by hardware anyway. The formula `riscv_v_vsize / 32`
-is well-established and used identically in multiple other places. The
-worst case if this were somehow wrong would be an incorrect vlenb value
-— but since it's using exactly the same calculation as the rest of the
-kernel, this is essentially zero risk.
+The fix is small, surgical, and meets all stable kernel criteria.
 
 **YES**
 
- arch/riscv/kernel/vector.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/ufs/host/ufs-mediatek-trace.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/vector.c b/arch/riscv/kernel/vector.c
-index 3ed071dab9d83..b112166d51e9f 100644
---- a/arch/riscv/kernel/vector.c
-+++ b/arch/riscv/kernel/vector.c
-@@ -111,8 +111,8 @@ bool insn_is_vector(u32 insn_buf)
- 	return false;
- }
+diff --git a/drivers/ufs/host/ufs-mediatek-trace.h b/drivers/ufs/host/ufs-mediatek-trace.h
+index b5f2ec3140748..0df8ac843379a 100644
+--- a/drivers/ufs/host/ufs-mediatek-trace.h
++++ b/drivers/ufs/host/ufs-mediatek-trace.h
+@@ -33,19 +33,19 @@ TRACE_EVENT(ufs_mtk_clk_scale,
+ 	TP_ARGS(name, scale_up, clk_rate),
  
--static int riscv_v_thread_zalloc(struct kmem_cache *cache,
--				 struct __riscv_v_ext_state *ctx)
-+static int riscv_v_thread_ctx_alloc(struct kmem_cache *cache,
-+				    struct __riscv_v_ext_state *ctx)
- {
- 	void *datap;
+ 	TP_STRUCT__entry(
+-		__field(const char*, name)
++		__string(name, name)
+ 		__field(bool, scale_up)
+ 		__field(unsigned long, clk_rate)
+ 	),
  
-@@ -122,13 +122,15 @@ static int riscv_v_thread_zalloc(struct kmem_cache *cache,
+ 	TP_fast_assign(
+-		__entry->name = name;
++		__assign_str(name);
+ 		__entry->scale_up = scale_up;
+ 		__entry->clk_rate = clk_rate;
+ 	),
  
- 	ctx->datap = datap;
- 	memset(ctx, 0, offsetof(struct __riscv_v_ext_state, datap));
-+	ctx->vlenb = riscv_v_vsize / 32;
-+
- 	return 0;
- }
- 
- void riscv_v_thread_alloc(struct task_struct *tsk)
- {
- #ifdef CONFIG_RISCV_ISA_V_PREEMPTIVE
--	riscv_v_thread_zalloc(riscv_v_kernel_cachep, &tsk->thread.kernel_vstate);
-+	riscv_v_thread_ctx_alloc(riscv_v_kernel_cachep, &tsk->thread.kernel_vstate);
- #endif
- }
- 
-@@ -214,12 +216,14 @@ bool riscv_v_first_use_handler(struct pt_regs *regs)
- 	 * context where VS has been off. So, try to allocate the user's V
- 	 * context and resume execution.
- 	 */
--	if (riscv_v_thread_zalloc(riscv_v_user_cachep, &current->thread.vstate)) {
-+	if (riscv_v_thread_ctx_alloc(riscv_v_user_cachep, &current->thread.vstate)) {
- 		force_sig(SIGBUS);
- 		return true;
- 	}
-+
- 	riscv_v_vstate_on(regs);
- 	riscv_v_vstate_set_restore(current, regs);
-+
- 	return true;
- }
- 
+ 	TP_printk("ufs: clk (%s) scaled %s @ %lu",
+-		  __entry->name,
++		  __get_str(name),
+ 		  __entry->scale_up ? "up" : "down",
+ 		  __entry->clk_rate)
+ );
 -- 
 2.51.0
 
