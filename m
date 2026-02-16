@@ -1,116 +1,110 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com [52.26.1.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C2B3233F4
-	for <patches@lists.linux.dev>; Mon, 16 Feb 2026 15:19:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4151330661
+	for <patches@lists.linux.dev>; Mon, 16 Feb 2026 15:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.26.1.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771255164; cv=none; b=uTXmKpWyoHKvrrh9X3zI929m7d7qwJLHlrtHSvJjLEXSkUzqKGzDvAjzxClY5kW1qAG68UhjqvefZ9VKqjR3yfOt24QoRjAgWzVch1yeVJroH2beInnGmA/EA1U4NVdj1zZzGQ8ZICj2MXspubxUwucVTeyd/iLT721EBXpbou8=
+	t=1771255851; cv=none; b=eP7NVoNXeoOyiWLtVX+aY5+kwr7ZH9BCtCrFSOlfQqYq/YFK39sLZ6J5Vi7NJlcGJMMphHiqIo8GqG5DG/4M6MG9n0dtzj3jE71KWrlRzzsk/3grKN6Jhort9CGHLECNRlTgyCHlGaUUSuhLRNPfnTCu1LgZrbRnn/3jfRFBL8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771255164; c=relaxed/simple;
-	bh=lUf+rD+zK85EaecIl+MRfVINlsxw2aj22zOZLlA0ty8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a1HMlfVGKojWmSw0scisy7SB2OW5No6ysH3sOLwnEB9fCvOxPbaVvBP9xHRlow77EcnDNBdyy7QwnReGzp3bXhZRvFIMe522+vFt81wNANTbIdzRru33hCj70s4tt8EAqWAHdTKiZuz+c6f2UPRuMLoj3kbPZ/WOfIznVtG+Uko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-81df6a302b1so3205212b3a.2
-        for <patches@lists.linux.dev>; Mon, 16 Feb 2026 07:19:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771255163; x=1771859963;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v+0W63J01pKV+NBFDfR20YFl2vlCDVBGClMHBExbTTc=;
-        b=B8QRMzXd3eJBCNUpiOqyPQUWWIhF5xWmSppwk7Tzs3YtuqYhEBfmxG8sVxpKLEoUmb
-         ZTWdHXKbgYVTzB2RoZ9o8H1Pn+NPzpoFWklwTCSw7cXrnJML/BShKTVt9+4Z9hbHZ0JY
-         Hh/+NybTbnwSYbEzWq9pUlg2pkA4Yma/hN9+k1hHuEiFGpBo6A1njJ5wBAJj7UWuo4I8
-         /jCT29HBBuwN8P+ega6zUQzlsoH4rKJ+3xKkasHe1x+ny4PnlSzMpPmfkcKHV2hJSS9s
-         a4XGQT1fNkd0O9Cy5w4n0xeY1wFghNP9IujsamuH5ow3fEbMunxaxyieqrLoJbYP6moS
-         QCFg==
-X-Gm-Message-State: AOJu0YwoAxp+C6NivN99CEVC5Z4BZgE1QEtSOWRx3rTuaGenLFMyuoqL
-	6alhbJ9aQbqGrG1cDD4AkRQfVYDzHbfCo3oPNL55lqesCbMyv+0P7nKIBSKSvFPy
-X-Gm-Gg: AZuq6aKV+Dw4l8/ea/x9UNsIo3mJsBVLO90Jl/lDgGqBKLGhp32CP+3id6P2+b9Z6or
-	FxYHa/qkQIAj97qIt4Z1jczBLQx4OIupsmpY6r4CJypopR5/+t4a/agqFrOmvxa6yWGpLWdoTXR
-	iDgAjAOgz4wPZqtijomQHJ4tdZO1kY/OkGJDVJWkIWVTvU8OIeQ+s+jqENQUyiACR2mrds3CIwa
-	Rslw6ZmmBlCibnAP3wCBJDSwzkZrvD7gCHWxwhjqMZ62p0PLe2MXidACFzyVKYT7JQC3qLE4j/E
-	D/VhME2IVVLqpWF3NRCTINFVEdFR+zE+P9Xu+ytiid9GMKHZm9N2ajx0limyh2cp+Xd3cN5jb2r
-	96Izln+tSh0F24z+Kw8YnBsu1bAF2ydz91LeYaQAvgvY4MxRZs5z7+LYHv5X0YegUPdHZq+PxZS
-	xKxhs/Nh5BmTufvUPlu0d0wdEBykYMyA3wvYZIqbSZf17GJDAg5EAMinj/3K++pX4g
-X-Received: by 2002:a05:6102:26c8:b0:5f7:24db:fdb8 with SMTP id ada2fe7eead31-5fe2af25121mr2140392137.25.1771248507161;
-        Mon, 16 Feb 2026 05:28:27 -0800 (PST)
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com. [209.85.221.170])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94afd3a99cdsm7195805241.13.2026.02.16.05.28.25
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Feb 2026 05:28:26 -0800 (PST)
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5673891928cso1264999e0c.0
-        for <patches@lists.linux.dev>; Mon, 16 Feb 2026 05:28:25 -0800 (PST)
-X-Received: by 2002:a05:6122:4f83:b0:567:4722:66a3 with SMTP id
- 71dfb90a1353d-56889ba5013mr1919672e0c.8.1771248505602; Mon, 16 Feb 2026
- 05:28:25 -0800 (PST)
+	s=arc-20240116; t=1771255851; c=relaxed/simple;
+	bh=JKNHMpx3yq0jiEieeHswi3zu1UaTifUdqlYzJFKoAqY=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rqK3VvzsQlCOZnjIn80NdPZF9OsUBv7G+MRAyt4w6KbFnmA9Varki8PEzKVG7Tv77wrzRD85wMMJMPuyugaJ6ADU1XVMqG9CB9Ul83H68YRV3coxsAovQ3kVbM4etYhyDpy7MCHwQ/mqGg4CGnnLtmJi242JJYDDAU1h1FqoLP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=TaC2qqbq; arc=none smtp.client-ip=52.26.1.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="TaC2qqbq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+  t=1771255850; x=1802791850;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=FfyoHcCiDCW03EJ58y///IjxjOhvq51fdzKxrrdmd4Q=;
+  b=TaC2qqbqp5ikKQpVCHwvXud4HSpNoe5OZz25Ac8ZU37F3sus0gcmlMeI
+   H6MgNsAwN9VRrtyj3rj/Y5iYGoA8XV1fsMdTtAcdPBvLdyJZ6q2HRYBX3
+   XgBZ6ewfMXHgQzo8ZVbuL2qYngtlLN2c5HjU8r6EZSZ7lC0gvC2o+Vaa9
+   Fpq38Cf4DlgTaHYqXI/rnmubrWBFRREDhBMIY60V5zmaqTYtx48+NSUYM
+   dVK+JimYp5OaZmXtqijtIuufSRqguchY0WfT4BW39KmyWeXgJe70lYCCF
+   GOnvnxfaB5kUAYlZgMIJye36Z05NOTZE3dhyB+DpfK4p01aEJcWCwN5/+
+   g==;
+X-CSE-ConnectionGUID: /FbvtV2CTKet3dlJ/Pg++w==
+X-CSE-MsgGUID: lHTo2/GRSnKwNqAatp9b4g==
+X-IronPort-AV: E=Sophos;i="6.21,294,1763424000"; 
+   d="scan'208";a="13157256"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+  by internal-pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Feb 2026 15:30:48 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:31876]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.15.75:2525] with esmtp (Farcaster)
+ id 13cb868a-ded5-4244-8ed7-092409e5b678; Mon, 16 Feb 2026 15:30:47 +0000 (UTC)
+X-Farcaster-Flow-ID: 13cb868a-ded5-4244-8ed7-092409e5b678
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
+ Mon, 16 Feb 2026 15:30:47 +0000
+Received: from dev-dsk-mrgolin-1c-b2091117.eu-west-1.amazon.com
+ (10.253.103.172) by EX19D001UWA001.ant.amazon.com (10.13.138.214) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35; Mon, 16 Feb 2026
+ 15:30:44 +0000
+Date: Mon, 16 Feb 2026 15:30:34 +0000
+From: Michael Margolin <mrgolin@amazon.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Gal Pressman <gal.pressman@linux.dev>, Krzysztof Czurylo
+	<krzysztof.czurylo@intel.com>, Leon Romanovsky <leon@kernel.org>,
+	<linux-rdma@vger.kernel.org>, Yossi Leybovich <sleybo@amazon.com>, "Tatyana
+ Nikolova" <tatyana.e.nikolova@intel.com>, Abhijit Gangurde
+	<abhijit.gangurde@amd.com>, Allen Hubbe <allen.hubbe@amd.com>, Andrew Boyer
+	<andrew.boyer@amd.com>, Gal Pressman <galpress@amazon.com>, Mustafa Ismail
+	<mustafa.ismail@intel.com>, <patches@lists.linux.dev>, Roland Dreier
+	<rolandd@cisco.com>, Shiraz Saleem <shiraz.saleem@intel.com>,
+	<stable@vger.kernel.org>, Steve Wise <swise@opengridcomputing.com>
+Subject: Re: [PATCH rc 1/4] RDMA/efa: Fix typo in efa_alloc_mr()
+Message-ID: <20260216153008.GA32101@dev-dsk-mrgolin-1c-b2091117.eu-west-1.amazon.com>
+References: <0-v1-83e918d69e73+a9-rdma_udata_rc_jgg@nvidia.com>
+ <1-v1-83e918d69e73+a9-rdma_udata_rc_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260214005825.3665084-1-sashal@kernel.org> <CAMuHMdVeGv=f-Oo1=GQLghn_hwpe2YN5OS79fQsy2uccwyVUZg@mail.gmail.com>
- <aZMXwfvJjG0YkuF5@laps>
-In-Reply-To: <aZMXwfvJjG0YkuF5@laps>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Mon, 16 Feb 2026 14:28:14 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdX1Mdqp7+Oz9dqe3b2VqMzpp5L7AvBJxRZuUjb0vY6gCw@mail.gmail.com>
-X-Gm-Features: AaiRm51__ksjmZ0Ow9FHNfsDCOhP3Z--ENwDCnxogABgCRny5CijpedZP6Vlq9U
-Message-ID: <CAMuHMdX1Mdqp7+Oz9dqe3b2VqMzpp5L7AvBJxRZuUjb0vY6gCw@mail.gmail.com>
-Subject: Re: [PATCH AUTOSEL 6.19-5.10] parisc: Prevent interrupts during reboot
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
-	Helge Deller <deller@gmx.de>, guoren@kernel.org, neil.armstrong@linaro.org, 
-	brauner@kernel.org, yelangyan@huaqin.corp-partner.google.com, 
-	schuster.simon@siemens-energy.com, linux-csky@vger.kernel.org, 
-	Parisc List <linux-parisc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <1-v1-83e918d69e73+a9-rdma_udata_rc_jgg@nvidia.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-ClientProxiedBy: EX19D042UWA002.ant.amazon.com (10.13.139.17) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
 
-Hi Sasha,
+On Mon, Feb 16, 2026 at 11:02:47AM -0400, Jason Gunthorpe wrote:w3esq23
 
-On Mon, 16 Feb 2026 at 14:12, Sasha Levin <sashal@kernel.org> wrote:
-> On Mon, Feb 16, 2026 at 11:21:25AM +0100, Geert Uytterhoeven wrote:
-> >Cc linux-parisc
-> >
-> >How did you (or the LLM?) came up with that CC list?!?
+> The pattern is to check the entire driver request space, not just
+> sizeof something unrelated.
+> 
+> Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/infiniband/hw/efa/efa_verbs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+> index 22d3e25c3b9d11..c066cd84aa6407 100644
+> --- a/drivers/infiniband/hw/efa/efa_verbs.c
+> +++ b/drivers/infiniband/hw/efa/efa_verbs.c
+> @@ -1667,7 +1667,7 @@ static struct efa_mr *efa_alloc_mr(struct ib_pd *ibpd, int access_flags,
+>  	struct efa_mr *mr;
+>  
+>  	if (udata && udata->inlen &&
+> -	    !ib_is_udata_cleared(udata, 0, sizeof(udata->inlen))) {
+> +	    !ib_is_udata_cleared(udata, 0, udata->inlen)) {
+>  		ibdev_dbg(&dev->ibdev,
+>  			  "Incompatible ABI params, udata not cleared\n");
+>  		return ERR_PTR(-EINVAL);
+> -- 
+> 2.43.0
 >
-> Interesting...
->
-> $ ~/linux/scripts/get_maintainer.pl --pattern-depth=1 --no-rolestats --nor --nos 0001-parisc-Prevent-interrupts-during-reboot.patch
-> Neil Armstrong <neil.armstrong@linaro.org>
-> "Guo Ren (Alibaba Damo Academy)" <guoren@kernel.org>
-> Christian Brauner <brauner@kernel.org>
-> Geert Uytterhoeven <geert@linux-m68k.org>
-> Andreas Larsson <andreas@gaisler.com>
-> Helge Deller <deller@gmx.de>
-> Langyan Ye <yelangyan@huaqin.corp-partner.google.com>
-> Simon Schuster <schuster.simon@siemens-energy.com>
 
-Still doesn't explain linux-csky?
+Thanks!
 
-> I think that I'll fix it by replacing --pattern-depth with --nogit --nogit-fallback:
->
-> $ ~/linux/scripts/get_maintainer.pl --no-git --nogit-fallback --no-rolestats --nor --nos 0001-parisc-Prevent-interrupts-during-reboot.patch
-> "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-> Helge Deller <deller@gmx.de>
-> linux-parisc@vger.kernel.org
-> linux-kernel@vger.kernel.org
-
-Much better!
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Acked-by: Michael Margolin <mrgolin@amazon.com>
