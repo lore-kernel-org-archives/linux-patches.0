@@ -1,392 +1,408 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021077.outbound.protection.outlook.com [40.107.74.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704362FD7C3;
-	Sun, 15 Feb 2026 17:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771177294; cv=none; b=MZdzLpCvsOEW/OorqDfGhtuh+VGSodaNBH8SKbr2yBEb4PkKrtGoE0Ba/LbgSp3iKLFUvFmM7ZFobppEGVIwUTh0vM+jMdrveCEOW3nJXCvzMAWC1Oex3oisIIgF5fx9yWW9roTyvvkHS7uZSL+AkPQa0xDa5Afk+nmaT0ZFxvk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771177294; c=relaxed/simple;
-	bh=LbQM1SY4h+dsVwn+X2vz/LGXYAHWPx+4nDtz+WVRXY4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q4kuAQCY3U9BI7denXF+pexXPrIDJagKT/fhdFVglX54zYxFlgvDzc0krRFdZBlvjaIdRuYQb446Uy1taXiimlS1QTbejwL2bWB6Xmmgc9SWWdB4lJI/eFxaiRlaeexu5Fhb5iD5FLDNJE8UOv03p87j0mQDLRnsqa9XFuN9DzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WdK6NmcF; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8D7212566
+	for <patches@lists.linux.dev>; Mon, 16 Feb 2026 01:15:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.77
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771204559; cv=fail; b=TfSW+bOQIoD6u2cuSU9SzQ+3pXiTMwsLTeCldaFPkXJ4/O7k0q0Pj22Xe5PDF+P/BdD0p+AziDQk2yBWDHnPKx54pcBFmgsNdOm/1lWNUKrx5QEurpIDMIQfkRDWF0i6z+pTyctGrNDzJ0Tf675UsBTGkpKDpI9oGyR/cO7ThEA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771204559; c=relaxed/simple;
+	bh=mzZE+sEW9kuQjrlFoGTYPxUnHPKT1DvgFRPYh1ZwqWE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=TRoz2NjrRdnklvC6hpCsS3sd+RQBs+UdCIcrlKutPTWTP9DfNyxrjfNgj6k48X40bzvzF71ydfHIf3vlb6uuTXDVWRaGOF1EfQexgJ6kYMEmiQESmBXee9KkAtbM81aq+TBMjRBOZ+ujTgsfX+bNJjZEFNrv0GuuXKXhf3QV7r0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=c7biDVNS; arc=fail smtp.client-ip=40.107.74.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WdK6NmcF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D7FC4CEF7;
-	Sun, 15 Feb 2026 17:41:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771177294;
-	bh=LbQM1SY4h+dsVwn+X2vz/LGXYAHWPx+4nDtz+WVRXY4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WdK6NmcFacf//rpk+7mVBNLf9Uqw6vxsXU1TO8FE6CTNQvYRINSdI9AGMmCd4lVEx
-	 veFIrQHD0RHWZ/N2p9mhKY/gARXQ+6GdUeVOsZNT7kKxd286kULU027R63mp9utP6p
-	 2zyO8Ik66k6+NDYQRPZfPiylsL7d2boC5ZMXhYqBpfILEa0JQo1xYr4cVkaEI2OkbA
-	 Wb8BXkWKcPdQu8Bj/SXXeQfXqo4Vy0oiaQnXZvDkR3+8xuZe/HwSCB5e6DnsEWTfS4
-	 YYvBRnXlsfHkrDuZkHTz0LkO74O9NekcL1vlfXd8/ad5wVlhEjLPE5efOuBSalQuYp
-	 qGgPvZHkaB6RQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	andersson@kernel.org,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-5.15] remoteproc: mediatek: Break lock dependency to `prepare_lock`
-Date: Sun, 15 Feb 2026 12:41:18 -0500
-Message-ID: <20260215174120.2390402-10-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260215174120.2390402-1-sashal@kernel.org>
-References: <20260215174120.2390402-1-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="c7biDVNS"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SSp+3eKaXatCIWE0PmkNwoJ/Mj+l2wMoHVoYvnn5Ch7IALfrvh840FQuQ4B18s1ym/QCcj/iX+tqVd7G5R52nUQrF4Oh0AgIwy2uuJwqqqY4hCf63djJ8YYyexauHpCXXyCPkraZkux3yYAI7B6T11AnvKSUv9rINNXpYJ/wsfzEd4HP81F1NgNofudAtZRTslrAbv8utQ5XqVQ/xwBbqw9Fsx/B32yM1EiMal8Pbd4223QZyOonWB1sJ4FecOQBpTAWS0TOBdObaX4zYeXAa/Z3z1kbjXPVucsY8NpxVQkhY3H8WI5aJ1e6qSGySqoTmZj6R+1LPGFMLVerxCx71A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VuQdlJP7iE/4gjxLUvqkyOCdebFpnRR/7SjK4z0/TEo=;
+ b=sSvOxu+KeejhtG4ILTlcNouF8+K1Wxcc3tEy4hJIjEY1qoaq46ALfGZCgjG/OSx8g6wps/Mup3msYBQRL9ptkVmyqB38WZn4dyYKszFJ5Y2DNHzT+1EdryHnHgH7XFDCwv0rBG3ZprA+UEyWWE9KTC18EDwd/A6WVDl8mVeogjxXAOUvaJT538SHbYz+YlWJ5/Y9rxbUN2l2qMdGzUodE9++IC8SX34bZNCs81HiJs2zZax99LjNi6+wxQ7JCVK1x89jlXPP+pSuuoVTB0Gx9FwGU/EPHDWMNi5A0mcot9vY7D7/sg9obONmyppppTOvMze4fHzWZntYL14ED0gsOA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VuQdlJP7iE/4gjxLUvqkyOCdebFpnRR/7SjK4z0/TEo=;
+ b=c7biDVNSVINa/UcEWLN41jHISJxVB4L0ZQg5HFN0AGHqmr7PYPNzoUXfLodAM6yLW/LM18HfXO3JeMlHfB293XqVho6eOtxN6WILICQJ9vayXds6vVkD4ecOYHJ+ju0jdint4x3KOX/gV4DWmk6ydAX/glGXPFtl5wN2HYc2x2A=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by OS9P286MB4566.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:2fb::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.16; Mon, 16 Feb
+ 2026 01:15:54 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.20.9611.013; Mon, 16 Feb 2026
+ 01:15:54 +0000
+Date: Mon, 16 Feb 2026 10:15:52 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
+	Niklas Cassel <cassel@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, jingoohan1@gmail.com, 
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.19-6.18] PCI: dwc: ep: Cache MSI outbound iATU
+ mapping
+Message-ID: <oxgnleyoexgrpii4qz3ikcyktmjojckn2ln7zlpkxfyqojnk4u@pgkrkefmudkv>
+References: <20260214212452.782265-1-sashal@kernel.org>
+ <20260214212452.782265-50-sashal@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260214212452.782265-50-sashal@kernel.org>
+X-ClientProxiedBy: TYWPR01CA0006.jpnprd01.prod.outlook.com
+ (2603:1096:400:a9::11) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS9P286MB4566:EE_
+X-MS-Office365-Filtering-Correlation-Id: aac557b5-2b3f-4203-0a11-08de6cf8ee61
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|1800799024|376014|366016|27256017;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?VUdKU1VxZ2lseGpHMDZ5N2NUSjVGdnlzV0ExakJhM2p5MEZLdC9EVU1kMWg1?=
+ =?utf-8?B?QjhaZ0pnbGZ3S29veVpBZ3FWclBISTRibmtYL0dIcDB1b2UvS1ZWUmNhaERG?=
+ =?utf-8?B?TER3d25YcnhSeENkaHEvMC9QRG5PcFpYZytyVlR5SkdVTmdIT3FGUDVHaEZD?=
+ =?utf-8?B?SkRhd3QwVlpQSDZvbXhaZ3RKcHNLeGx1Um05Yk9Udi9wNktRWCtObldYUGhX?=
+ =?utf-8?B?Q05RL2l1aFZkY0xmTzdQakczVm94b0hudlhsMEdGbEwyczVyMUhaZzBnZ1hs?=
+ =?utf-8?B?MUgxWkNBWmFFTmsvdGE3SC9VRG9wOTRZR0hIWmNrTmhpNmE5RllJSStsaGZK?=
+ =?utf-8?B?Sm1rQ09RVFBXdFd1YVJGVFpraWM2NUkzeWRsV3ZGcDRCSEJtUXhlcUtzUWgv?=
+ =?utf-8?B?UnNBeWtqK1BJS0xzcjVLMFVORFQwZTZ4U21YdlEwYTVPNDd5TlZvR0d6clFs?=
+ =?utf-8?B?b3U1NUVJVnZDd01NdXpkdStLZnJXYXJXeUdCWkF6eUVRZnJ3NjlxVDYyMVVx?=
+ =?utf-8?B?SS9Vd1lOaC8wOVBKNEJUT1JDclUzS3NyTlVmTzRVeVhiK1lvUE1xeUROSTg5?=
+ =?utf-8?B?anRCakNwNVpsSlh2OFZyOEd5a002enljWlBrOFF4RUVla2xZY0NJYnpQQm5w?=
+ =?utf-8?B?Ui9xeEdUU0FqcytvU1p1K1JDSzhaVUJNU05FejdhWXFQdlB5ZGhMTjhEQllH?=
+ =?utf-8?B?aG9RNkoxY3NXVEowcVVIOTlzWjBmRXZmbGJpcVQ0dDI3TExTZGdxV1h0eVZj?=
+ =?utf-8?B?TWlQQXo0Q2NSVDF0NW1JK08rMytWNjJMMjRIYlgwL1pacGVSTWgwQlNpOVpz?=
+ =?utf-8?B?N20xM3dTVTdmb1FhVWNuTEZXbVByYmlVMytaWHZnaGJEbis0blZtRW0rcDV6?=
+ =?utf-8?B?QWxwY0FENjlSamFVaDcwa2EzZi9mNEZ3a3hSd003cDRBRklIYUFUMm91bUls?=
+ =?utf-8?B?MG5URUtJNFBJM3RkTmFQK1VOYm5aMFh3ZjBoZDF2S2o0QXowYzFnR3ZTd1pV?=
+ =?utf-8?B?NlY5OHgwSjNtOGRzeThNKy96cTRoNnpHeUhWVGticE8xQldXdThJa1d6eGd1?=
+ =?utf-8?B?UldXelhkRWpLM2c3NXk1M0xOTmVaNmtocUs4MVFHbmZEaC9OMDRHakZhK3M4?=
+ =?utf-8?B?TkdoWHRtVW9RdGNjbHppbGgxTVRTeklleEZ4OGo2SklyZDV2LzRzTTF2N1Nx?=
+ =?utf-8?B?ODJXUDdHYkdobGNrM3VRN1hkYkFjNW4wMXpVSUJzSFlsTG8zN1QwNFd4bm1a?=
+ =?utf-8?B?UW0xaSt0YXJIY2htZWdwMlFjTy81cytSSVlkNC8vdGFoOHZ0NTd5Q3QzRDY0?=
+ =?utf-8?B?Vll6MDRQTXU1RFVPRUJVNGZ3UG1lck42dmR6TEI2MEFaUzdYZGRSZE00a2dm?=
+ =?utf-8?B?d0dTV0hkVHZKWExZODZxSSs4VmFVb0xHRkNEamNhZmRiMFo5RkpVZE1YaG81?=
+ =?utf-8?B?UHo1SFZiTi9URktRajZxcDhMa2lEUDlKTEcrbnNOeFJkSGxvSWh2Z2JVSmdo?=
+ =?utf-8?B?NWlDM1JyanBzbVp5aXh1QnBHTElpWmNBT05SOS9DWGFidnR4WWFKemFGMTVo?=
+ =?utf-8?B?Z0Z6TkM0VjliVXB5SUFpM2NodFkrQkdXejE5dU5XR05TVjBSMmY3WWduQk5L?=
+ =?utf-8?B?MkJHbHJteWtvb1dCLzU2TFJIWnBZVitFK0Z6WDM3Mld5U3lqU3FITkQwd1Fm?=
+ =?utf-8?B?eWxMNzUySm5OOURHakdLYWN6SDJuSHZUc3RkcWF5NEFRSWROV01VSXV5K0dW?=
+ =?utf-8?B?anF0R0Y5NEJ4dFIvKzZVVFFBZVEvVEU2Q1pQamhuMXd6LzdRVTdwK0hZZ0RT?=
+ =?utf-8?B?WGQ4UlJ0Y21DdThEMjZmVFBTd1RIU0orUDc5QmdPUWpJVXl6ZWxYNGhFTnpF?=
+ =?utf-8?B?RlRhdGxyK3Uwc21hbXhuVVNhYjJLOXpRZ0htLzk2cHVzUFdBWTRRNnExSSts?=
+ =?utf-8?B?b0pkcVUvSmZRemdXSTNxYUFMQ1NyYzZwdjlSZ3E4c1FDdVBadERVR2VjVk5u?=
+ =?utf-8?B?eko3Y2VsbTlzNU9VZW5meElid3R0dTc0dWdIUkhOVWNyT08xTGp0WGlXVldm?=
+ =?utf-8?B?RGZhN1FvUU15YjdObmF4bkZ2aEtrRGhsM05LcU5FZEtlQmpDSDdoV3pNQTlv?=
+ =?utf-8?Q?HQR0=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(376014)(366016)(27256017);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?bGRZQzBBSUYxNHRsT1JJWTlLanNpUXVtZ1lwSGF6c0ZVY0lLZ0ltV3RtOGVz?=
+ =?utf-8?B?Y1VNdE9UUE5scXF5Z2o1RHhidTlSdG04S1VYZTdEQzRmQ3FCYWpnblhJSDdJ?=
+ =?utf-8?B?MjhqMjlXNCthMnBzRnhPU3I3akhtS1FnSFFBUkpjS3FBY09SQm9CMVgrcVVN?=
+ =?utf-8?B?OE5PSmNNalhZYkJJY0ZVN2ZXWDFUYlhCSllzTUU4YjBVZXRJL3lFVzRBNkJQ?=
+ =?utf-8?B?WndESXZEeVJFWWhheE5IQlhtbC9PTFRpaDV4TWJPekF6U2lKVTRySmFNMUNW?=
+ =?utf-8?B?VXdPN1VMVW5uQkp1N0tZU3N6azNEMGk0MzZaT0tPZkFrQWZSdDMyTVpsY0hZ?=
+ =?utf-8?B?ZXVnbENCSHBVTklrK1pRalBDc3ZkQnB4NEw1Zm9NNnZnUk1yY2xlaEtDZmlZ?=
+ =?utf-8?B?N0JxbjFpZXUxSnRPendXTnYzaCtPZHdFQzQrcnBpWFdpdjA5TFMwN1k3eHU1?=
+ =?utf-8?B?Yk9QblpQVi8rR1VOak8vNHl2M0t3ZEtnWnhWcnZ6YUJHN01zdTl3dzNUT0N6?=
+ =?utf-8?B?Z1NpU1Q1Z240YXNmNGNwYWt4YktseTNJRm0xcGhVbWtrem1GQTFjYWNzY2tz?=
+ =?utf-8?B?Z0pISE5tTDZjOStaaSt5RjRrUXlvcVJRbTJvOFJwZXNCYW5sQkpBMzlLcGtv?=
+ =?utf-8?B?MHAxQlhuT0tCUWRhSHo4SmZnU2hEL0JKdlp3UFJXUVlQc2J5YTdiSWZBc204?=
+ =?utf-8?B?eUsvVHNrNEZTOFI4UzZBZGlGR2h1ZHQ3WHNxRitpVERiWC9Lblk2MXFjNG5v?=
+ =?utf-8?B?dTVQYU5rSEdBV1pEM0NSdGh4YTZsY3JZbjk2TXNNOHg2WVFRL25SU09idFFh?=
+ =?utf-8?B?VVMwNEZCcmZIWlZISFhKbEZyT0k3cThIZmF5eXVCRXNrTW1sWW9hTEJVai9v?=
+ =?utf-8?B?bkxtTjJVdmhHeTVPc1kyOXZIUGxDUzBWNEJVT0dBMlF2ajBKZnZCaWc2dk4z?=
+ =?utf-8?B?STZkVm0zeXZHUXJuTHdhajJZeElmTE1SOHV3SlZVQWxkV25jZVdCUUw3bGdl?=
+ =?utf-8?B?WHRvSjBVS3hiNzllT0pYcGEvMHZ4c2F3UnFRRkVsL3c0UEU1VGw5elp6cUhR?=
+ =?utf-8?B?amR3OVdKSzVqVHBobURYdHhjMHpMMk9DZDhZVXZGL1VVMCtDUVZhSTBOVnNL?=
+ =?utf-8?B?OU5kM1JPb2N5WVR2WS84Y1hUMjM0NVBlNy8rbTNLMVFCSGU4MEdZQlZMQWJW?=
+ =?utf-8?B?bnIyazYybmdDVXZ4ZUk2TXVwODQ2MUIrQzV5SzJSaVRhQUtmQWZNYUxiR0J3?=
+ =?utf-8?B?Y0J0Z3kydFVCVXIxeUJjQ0xWNjVCbzVZUUNDeHAwVXA4QWxySDlKSHFOcFA3?=
+ =?utf-8?B?TXNjWTRiR1NwMkxDbEh2UHNjVG9TeUVlS29Tb0lraDd2a25GdTM4dUlOa1ZJ?=
+ =?utf-8?B?bW83K3JBcFFrcEtjYkxEbkl6bmxSTDdqa0xveUhMQ1JMVEl3Rk5mZitidC8x?=
+ =?utf-8?B?YzFGckNhSDB1MHFacHU5ajFBRmtCUVJTdFpCcFBlTURSYVdPeUd2aVJ3NnIz?=
+ =?utf-8?B?Vi9qNk5oaTFiTXJ5YmJJa3ZNUzJtTVFBREhUc2I2dTlVSmtsdWZkdHEvcTQv?=
+ =?utf-8?B?SVVKak8zK09sMnhYblQ4TDJrYlNWK3lxTW55OUhUa0plL01uNVd6cWdLT084?=
+ =?utf-8?B?MVBWN0JVcTdZNW1TWnN1emtQZjIvTGRwdU9uMCtwa1FRVGVsdmhKWW9XbE9r?=
+ =?utf-8?B?c0RyOVFWZUlISkRhREFCSWRHNENSMFROTXFtRndCMU9CUjd3NVVxa2oxU29M?=
+ =?utf-8?B?WitzREQ2WnUrYmg2SU9Qcm9UU1kvY3hWUnlsT1dialVpUW9jOHdFa0JqVURU?=
+ =?utf-8?B?TXZyWllkVi9lZzdBY3pXVmE4NlNWMlNSYUt1dERVc1NsaERZdEVJckhKdFFE?=
+ =?utf-8?B?VTlPWmlGdUpuZ09NY2pRZjMwZVp3TUdpSlUwcFFTaXRPWkJUR0Nzc0FtQWF6?=
+ =?utf-8?B?L2VaaHBBRmJidUNtU1R4dG1NY3dIdGduZ0pzdXVWZVE5MzZwcnNObFZzYXly?=
+ =?utf-8?B?SlU5SWdmRnhRUHU3Sm41QUdZWWYrTXlYZ1NJdU44Ym5vOTduenhHODNtd3RN?=
+ =?utf-8?B?U1V4RjRLczUxcFRDdGZYTWtRYmlFakpTWEZObXZPMEw2UE04RjNacXNmdXIy?=
+ =?utf-8?B?VUpvc2FXRFpjZU5TaTJGdlFwUEZ5alRtdmxYV3QvN1RLRW1XNHFWUEcwVUxr?=
+ =?utf-8?B?VjhrcHpEalhMQ3YrMU9XWVlKNjRNK0NzUTN2NnU0NmM0VnFoL1ZXNGFOWTJM?=
+ =?utf-8?B?dTdEbFJYSWltZUd6NnYyRDFKVGRJQURkQ2RhaGlyRUVFQkxMNlgzRWliTG10?=
+ =?utf-8?B?Yko5NzJhNGVETXovY1RoOHpuN0RnTkNBaG8xenV5MjZJK3Y3SUVXdzZ5VTNa?=
+ =?utf-8?Q?hLhCsrFBIVCrRyaOZSkZUremtrGcXqOBxZnpT?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: aac557b5-2b3f-4203-0a11-08de6cf8ee61
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Feb 2026 01:15:54.0839
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: agyJRj1yNAiEoGwVJOsHbHw9BSVgOx9IVeDaJO07VswrWcYwQ3ecSv2IdVi5Z59EatLFI4Xr7nOpYgQgKL5CVg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB4566
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+On Sat, Feb 14, 2026 at 04:23:15PM -0500, Sasha Levin wrote:
+> From: Koichiro Den <den@valinux.co.jp>
+> 
+> [ Upstream commit 8719c64e76bf258cc8f44109740c854f2e2ead2e ]
+> 
+> dw_pcie_ep_raise_msi_irq() currently programs an outbound iATU window
+> for the MSI target address on every interrupt and tears it down again
+> via dw_pcie_ep_unmap_addr().
+> 
+> On systems that heavily use the AXI bridge interface (for example when
+> the integrated eDMA engine is active), this means the outbound iATU
+> registers are updated while traffic is in flight. The DesignWare
+> endpoint databook 5.40a - "3.10.6.1 iATU Outbound Programming Overview"
+> warns that updating iATU registers in this situation is not supported,
+> and the behavior is undefined.
+> 
+> Under high MSI and eDMA load this pattern results in occasional bogus
+> outbound transactions and IOMMU faults, on the RC side, such as:
+> 
+>   ipmmu-vmsa eed40000.iommu: Unhandled fault: status 0x00001502 iova 0xfe000000
+> 
+> followed by the system becoming unresponsive. This is the actual output
+> observed on Renesas R-Car S4, with its ipmmu_hc used with PCIe ch0.
+> 
+> There is no need to reprogram the iATU region used for MSI on every
+> interrupt. The host-provided MSI address is stable while MSI is enabled,
+> and the endpoint driver already dedicates a scratch buffer for MSI
+> generation.
+> 
+> Cache the aligned MSI address and map size, program the outbound iATU
+> once, and keep the window enabled. Subsequent interrupts only perform a
+> write to the MSI scratch buffer, avoiding dynamic iATU reprogramming in
+> the hot path and fixing the lockups seen under load.
+> 
+> dw_pcie_ep_raise_msix_irq() is not modified, as each vector can have a
+> different msg_addr, and because the msg_addr is allowed to be changed
+> while the vector is masked. Neither problem is easy to solve with the
+> current design. Instead, the plan is for the DWC vendor drivers to
+> transition to dw_pcie_ep_raise_msix_irq_doorbell(), which does not rely
+> on the iATU.
+> 
+> Signed-off-by: Koichiro Den <den@valinux.co.jp>
+> [cassel: improve commit message]
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+> Link: https://patch.msgid.link/20251222110144.3299523-2-cassel@kernel.org
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
 
-[ Upstream commit d935187cfb27fc4168f78f3959aef4eafaae76bb ]
+Hi Sasha,
 
-A potential circular locking dependency (ABBA deadlock) exists between
-`ec_dev->lock` and the clock framework's `prepare_lock`.
+Could you please hold off on backporting this patch until the follow-up
+regression fix:
 
-The first order (A -> B) occurs when scp_ipi_send() is called while
-`ec_dev->lock` is held (e.g., within cros_ec_cmd_xfer()):
-1. cros_ec_cmd_xfer() acquires `ec_dev->lock` and calls scp_ipi_send().
-2. scp_ipi_send() calls clk_prepare_enable(), which acquires
-   `prepare_lock`.
-See #0 in the following example calling trace.
-(Lock Order: `ec_dev->lock` -> `prepare_lock`)
+  [PATCH] PCI: dwc: ep: Fix regression in dw_pcie_ep_raise_msi_irq()
+  https://lore.kernel.org/all/20260210181225.3926165-2-cassel@kernel.org/
 
-The reverse order (B -> A) is more complex and has been observed
-(learned) by lockdep.  It involves the clock prepare operation
-triggering power domain changes, which then propagates through sysfs
-and power supply uevents, eventually calling back into the ChromeOS EC
-driver and attempting to acquire `ec_dev->lock`:
-1. Something calls clk_prepare(), which acquires `prepare_lock`.  It
-   then triggers genpd operations like genpd_runtime_resume(), which
-   takes `&genpd->mlock`.
-2. Power domain changes can trigger regulator changes; regulator
-   changes can then trigger device link changes; device link changes
-   can then trigger sysfs changes.  Eventually, power_supply_uevent()
-   is called.
-3. This leads to calls like cros_usbpd_charger_get_prop(), which calls
-   cros_ec_cmd_xfer_status(), which then attempts to acquire
-   `ec_dev->lock`.
-See #1 ~ #6 in the following example calling trace.
-(Lock Order: `prepare_lock` -> `&genpd->mlock` -> ... -> `&ec_dev->lock`)
+lands upstream, so the both commits can be taken together?
 
-Move the clk_prepare()/clk_unprepare() operations for `scp->clk` to the
-remoteproc prepare()/unprepare() callbacks.  This ensures `prepare_lock`
-is only acquired in prepare()/unprepare() callbacks.  Since
-`ec_dev->lock` is not involved in the callbacks, the dependency loop is
-broken.
+The original fix ("PCI: dwc: ep: Cache MSI outbound iATU mapping") addresses an
+issue that is only observable under high load, and had existed for a long time
+without being reported until I posted the original fix. However, it later turned
+out to introduce a regression that can lead to a system hang on some platform.
 
-This means the clock is always "prepared" when the SCP is running.  The
-prolonged "prepared time" for the clock should be acceptable as SCP is
-designed to be a very power efficient processor.  The power consumption
-impact can be negligible.
+Backporting the initial commit without the follow-up fix would therefore risk
+introducing a more severe problem into stable trees, at least temporarily. I
+think it would be more preferable to take both commits together.
 
-A simplified calling trace reported by lockdep:
-> -> #6 (&ec_dev->lock)
->        cros_ec_cmd_xfer
->        cros_ec_cmd_xfer_status
->        cros_usbpd_charger_get_port_status
->        cros_usbpd_charger_get_prop
->        power_supply_get_property
->        power_supply_show_property
->        power_supply_uevent
->        dev_uevent
->        uevent_show
->        dev_attr_show
->        sysfs_kf_seq_show
->        kernfs_seq_show
-> -> #5 (kn->active#2)
->        kernfs_drain
->        __kernfs_remove
->        kernfs_remove_by_name_ns
->        sysfs_remove_file_ns
->        device_del
->        __device_link_del
->        device_links_driver_bound
-> -> #4 (device_links_lock)
->        device_link_remove
->        _regulator_put
->        regulator_put
-> -> #3 (regulator_list_mutex)
->        regulator_lock_dependent
->        regulator_disable
->        scpsys_power_off
->        _genpd_power_off
->        genpd_power_off
-> -> #2 (&genpd->mlock/1)
->        genpd_add_subdomain
->        pm_genpd_add_subdomain
->        scpsys_add_subdomain
->        scpsys_probe
-> -> #1 (&genpd->mlock)
->        genpd_runtime_resume
->        __rpm_callback
->        rpm_callback
->        rpm_resume
->        __pm_runtime_resume
->        clk_core_prepare
->        clk_prepare
-> -> #0 (prepare_lock)
->        clk_prepare
->        scp_ipi_send
->        scp_send_ipi
->        mtk_rpmsg_send
->        rpmsg_send
->        cros_ec_pkt_xfer_rpmsg
+Niklas, please let me know if you would like to add anything.
 
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Tested-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20260112110755.2435899-1-tzungbi@kernel.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
+Thanks,
+Koichiro
 
-LLM Generated explanations, may be completely bogus:
-
-Good - the `prepare`/`unprepare` ops were added in 2020, well before any
-current stable tree branch point. They exist in 5.10, 5.15, 6.1, and all
-newer stable trees.
-
-### 5. User Impact Assessment
-
-This affects **MediaTek SCP on ChromeOS devices** (Chromebooks with
-MediaTek SoCs). The deadlock scenario involves:
-- ChromeOS EC communication via rpmsg (SCP IPI)
-- Clock framework interactions
-- Power domain/regulator/device link chains
-
-This is a real-world deadlock that lockdep detected. ChromeOS devices
-are widely deployed, and a deadlock in the EC communication path could
-cause a complete system hang.
-
-### 6. Risk Assessment
-
-**Changes are mechanical and low-risk:**
-- All `clk_prepare_enable()` → `clk_enable()` (7 call sites)
-- All `clk_disable_unprepare()` → `clk_disable()` (7 call sites)
-- New `scp_prepare()`/`scp_unprepare()` callbacks added to `scp_ops`
-  (simple wrappers)
-
-**The pattern is well-established** - `clk_prepare()` is meant to be
-called in sleepable context, `clk_enable()` can be called from any
-context including IRQ. Separating them is a standard clock framework
-pattern.
-
-**Total: 30 insertions, 13 deletions** across 2 files - small and
-contained.
-
-### 7. Dependency Check
-
-The commit is self-contained:
-- No subsequent commits in these files depend on it
-- The `rproc_ops.prepare`/`.unprepare` callbacks exist since 2020
-  (present in all stable trees: 5.10+)
-- No other infrastructure changes needed
-
-### Verification
-
-- **git log master** confirmed commit d935187cfb27f is the exact commit
-  being analyzed
-- **git log --oneline d935187cfb27f..master** confirmed no subsequent
-  commits modify the same files (no dependencies)
-- **git log/show 33467ac3c8dc8** confirmed `prepare`/`unprepare` ops
-  were added to `rproc_ops` in April 2020, present in stable trees 5.10+
-- **Code review of remoteproc_internal.h** confirmed
-  `rproc_prepare_device()`/`rproc_unprepare_device()` wrappers exist and
-  are called in `rproc_fw_boot()` and `rproc_shutdown()` paths
-- **Reviewed-by and Tested-by** from Chen-Yu Tsai (wenst@chromium.org)
-  confirms the fix was tested on real hardware
-- **Lockdep call trace** in commit message confirms this is a real
-  detected lock ordering issue, not theoretical
-- The commit is a standalone single patch (not part of a series) -
-  confirmed by lore.kernel.org link format (single patch, not X/Y)
-
-### Summary
-
-This commit fixes a **lockdep-detected ABBA deadlock** in the MediaTek
-SCP remoteproc driver. The deadlock involves the clock framework's
-`prepare_lock` and the ChromeOS EC's `ec_dev->lock`. The fix is
-mechanically simple (splitting `clk_prepare_enable` into separate
-`clk_prepare` + `clk_enable` calls), uses existing remoteproc framework
-infrastructure (`prepare`/`unprepare` callbacks available since 2020),
-and has been reviewed and tested. The scope is limited to 2 files with
-30 insertions/13 deletions. The risk of regression is very low as it
-uses a well-established clock framework pattern, and the benefit is
-preventing a real deadlock on ChromeOS devices with MediaTek SoCs.
-
-**YES**
-
- drivers/remoteproc/mtk_scp.c     | 39 +++++++++++++++++++++++---------
- drivers/remoteproc/mtk_scp_ipi.c |  4 ++--
- 2 files changed, 30 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/remoteproc/mtk_scp.c b/drivers/remoteproc/mtk_scp.c
-index db8fd045468d9..98d00bd5200cc 100644
---- a/drivers/remoteproc/mtk_scp.c
-+++ b/drivers/remoteproc/mtk_scp.c
-@@ -283,7 +283,7 @@ static irqreturn_t scp_irq_handler(int irq, void *priv)
- 	struct mtk_scp *scp = priv;
- 	int ret;
- 
--	ret = clk_prepare_enable(scp->clk);
-+	ret = clk_enable(scp->clk);
- 	if (ret) {
- 		dev_err(scp->dev, "failed to enable clocks\n");
- 		return IRQ_NONE;
-@@ -291,7 +291,7 @@ static irqreturn_t scp_irq_handler(int irq, void *priv)
- 
- 	scp->data->scp_irq_handler(scp);
- 
--	clk_disable_unprepare(scp->clk);
-+	clk_disable(scp->clk);
- 
- 	return IRQ_HANDLED;
- }
-@@ -665,7 +665,7 @@ static int scp_load(struct rproc *rproc, const struct firmware *fw)
- 	struct device *dev = scp->dev;
- 	int ret;
- 
--	ret = clk_prepare_enable(scp->clk);
-+	ret = clk_enable(scp->clk);
- 	if (ret) {
- 		dev_err(dev, "failed to enable clocks\n");
- 		return ret;
-@@ -680,7 +680,7 @@ static int scp_load(struct rproc *rproc, const struct firmware *fw)
- 
- 	ret = scp_elf_load_segments(rproc, fw);
- leave:
--	clk_disable_unprepare(scp->clk);
-+	clk_disable(scp->clk);
- 
- 	return ret;
- }
-@@ -691,14 +691,14 @@ static int scp_parse_fw(struct rproc *rproc, const struct firmware *fw)
- 	struct device *dev = scp->dev;
- 	int ret;
- 
--	ret = clk_prepare_enable(scp->clk);
-+	ret = clk_enable(scp->clk);
- 	if (ret) {
- 		dev_err(dev, "failed to enable clocks\n");
- 		return ret;
- 	}
- 
- 	ret = scp_ipi_init(scp, fw);
--	clk_disable_unprepare(scp->clk);
-+	clk_disable(scp->clk);
- 	return ret;
- }
- 
-@@ -709,7 +709,7 @@ static int scp_start(struct rproc *rproc)
- 	struct scp_run *run = &scp->run;
- 	int ret;
- 
--	ret = clk_prepare_enable(scp->clk);
-+	ret = clk_enable(scp->clk);
- 	if (ret) {
- 		dev_err(dev, "failed to enable clocks\n");
- 		return ret;
-@@ -734,14 +734,14 @@ static int scp_start(struct rproc *rproc)
- 		goto stop;
- 	}
- 
--	clk_disable_unprepare(scp->clk);
-+	clk_disable(scp->clk);
- 	dev_info(dev, "SCP is ready. FW version %s\n", run->fw_ver);
- 
- 	return 0;
- 
- stop:
- 	scp->data->scp_reset_assert(scp);
--	clk_disable_unprepare(scp->clk);
-+	clk_disable(scp->clk);
- 	return ret;
- }
- 
-@@ -909,7 +909,7 @@ static int scp_stop(struct rproc *rproc)
- 	struct mtk_scp *scp = rproc->priv;
- 	int ret;
- 
--	ret = clk_prepare_enable(scp->clk);
-+	ret = clk_enable(scp->clk);
- 	if (ret) {
- 		dev_err(scp->dev, "failed to enable clocks\n");
- 		return ret;
-@@ -917,12 +917,29 @@ static int scp_stop(struct rproc *rproc)
- 
- 	scp->data->scp_reset_assert(scp);
- 	scp->data->scp_stop(scp);
--	clk_disable_unprepare(scp->clk);
-+	clk_disable(scp->clk);
- 
- 	return 0;
- }
- 
-+static int scp_prepare(struct rproc *rproc)
-+{
-+	struct mtk_scp *scp = rproc->priv;
-+
-+	return clk_prepare(scp->clk);
-+}
-+
-+static int scp_unprepare(struct rproc *rproc)
-+{
-+	struct mtk_scp *scp = rproc->priv;
-+
-+	clk_unprepare(scp->clk);
-+	return 0;
-+}
-+
- static const struct rproc_ops scp_ops = {
-+	.prepare	= scp_prepare,
-+	.unprepare	= scp_unprepare,
- 	.start		= scp_start,
- 	.stop		= scp_stop,
- 	.load		= scp_load,
-diff --git a/drivers/remoteproc/mtk_scp_ipi.c b/drivers/remoteproc/mtk_scp_ipi.c
-index c068227e251e7..7a37e273b3af8 100644
---- a/drivers/remoteproc/mtk_scp_ipi.c
-+++ b/drivers/remoteproc/mtk_scp_ipi.c
-@@ -171,7 +171,7 @@ int scp_ipi_send(struct mtk_scp *scp, u32 id, void *buf, unsigned int len,
- 	    WARN_ON(len > scp_sizes->ipi_share_buffer_size) || WARN_ON(!buf))
- 		return -EINVAL;
- 
--	ret = clk_prepare_enable(scp->clk);
-+	ret = clk_enable(scp->clk);
- 	if (ret) {
- 		dev_err(scp->dev, "failed to enable clock\n");
- 		return ret;
-@@ -211,7 +211,7 @@ int scp_ipi_send(struct mtk_scp *scp, u32 id, void *buf, unsigned int len,
- 
- unlock_mutex:
- 	mutex_unlock(&scp->send_lock);
--	clk_disable_unprepare(scp->clk);
-+	clk_disable(scp->clk);
- 
- 	return ret;
- }
--- 
-2.51.0
-
+> 
+> LLM Generated explanations, may be completely bogus:
+> 
+> This confirms the **current state of the code** (before the patch is
+> applied) still has the map/unmap on every call pattern at lines 705-712.
+> The patch hasn't been applied yet to this tree — this is the candidate
+> being evaluated.
+> 
+> ### 8. STANDALONE ASSESSMENT
+> 
+> Looking at the dependency analysis more carefully: the agent found that
+> in some stable tree, this commit was brought in as part of a 10-commit
+> dependency chain for a different fix. However, **that doesn't change the
+> standalone value of this commit**. The commit itself:
+> 
+> 1. **Is a standalone bug fix** — it fixes iATU reprogramming under load
+>    causing IOMMU faults and system lockups on real hardware
+> 2. **Has no prerequisite patches** — `dw_pcie_ep_align_addr`,
+>    `dw_pcie_ep_map_addr`, and `dw_pcie_ep_unmap_addr` all exist in the
+>    current tree
+> 3. **Only adds internal fields to a struct** — no API changes needed
+>    from other patches
+> 4. **Applies cleanly** to the current code (the pre-patch code matches
+>    lines 704-712)
+> 
+> ### RISK vs BENEFIT
+> 
+> **Benefit**: HIGH
+> - Fixes real system lockups under load on DWC PCIe endpoint platforms
+> - The bug is documented by the hardware vendor's databook as "undefined
+>   behavior"
+> - Concrete symptoms reported on Renesas R-Car S4
+> - System becomes unresponsive — this is a critical stability issue
+> 
+> **Risk**: LOW-MEDIUM
+> - The change is well-contained within 2 files, single subsystem
+> - The caching logic is straightforward and defensive (WARN_ON_ONCE on
+>   unexpected address change)
+> - Proper cleanup on endpoint stop prevents resource leaks
+> - Only affects DWC PCIe endpoint users
+> 
+> ### CONCERNS
+> 
+> 1. The change modifies `struct dw_pcie_ep` by adding 3 fields — this is
+>    safe as long as no out-of-tree modules depend on this struct layout
+>    (unlikely given it's a controller-specific struct).
+> 2. The WARN_ON_ONCE path returns -EINVAL if MSI address changes — this
+>    is a safe fallback since the databook says reprogramming under load
+>    is undefined anyway.
+> 3. The commit applies cleanly to the current tree based on code
+>    inspection.
+> 
+> ### CONCLUSION
+> 
+> This commit fixes a **real, documented hardware bug** that causes
+> **system lockups** on DesignWare PCIe endpoint platforms under load. The
+> fix is:
+> - **Obviously correct**: Caching an iATU mapping that the hardware
+>   vendor's databook says should not be reprogrammed while traffic is in
+>   flight
+> - **Well-tested**: Verified on Renesas R-Car S4
+> - **Contained**: 2 files, single subsystem, no API changes
+> - **Defensive**: WARN_ON_ONCE + -EINVAL on unexpected conditions, proper
+>   cleanup on stop
+> 
+> This clearly meets all stable kernel criteria for a backport.
+> 
+> **YES**
+> 
+>  .../pci/controller/dwc/pcie-designware-ep.c   | 48 ++++++++++++++++---
+>  drivers/pci/controller/dwc/pcie-designware.h  |  5 ++
+>  2 files changed, 47 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> index 19571ac2b9617..18b20cc877d9e 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> @@ -601,6 +601,16 @@ static void dw_pcie_ep_stop(struct pci_epc *epc)
+>  	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+>  	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+>  
+> +	/*
+> +	 * Tear down the dedicated outbound window used for MSI
+> +	 * generation. This avoids leaking an iATU window across
+> +	 * endpoint stop/start cycles.
+> +	 */
+> +	if (ep->msi_iatu_mapped) {
+> +		dw_pcie_ep_unmap_addr(epc, 0, 0, ep->msi_mem_phys);
+> +		ep->msi_iatu_mapped = false;
+> +	}
+> +
+>  	dw_pcie_stop_link(pci);
+>  }
+>  
+> @@ -702,14 +712,37 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
+>  	msg_addr = ((u64)msg_addr_upper) << 32 | msg_addr_lower;
+>  
+>  	msg_addr = dw_pcie_ep_align_addr(epc, msg_addr, &map_size, &offset);
+> -	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
+> -				  map_size);
+> -	if (ret)
+> -		return ret;
+>  
+> -	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
+> +	/*
+> +	 * Program the outbound iATU once and keep it enabled.
+> +	 *
+> +	 * The spec warns that updating iATU registers while there are
+> +	 * operations in flight on the AXI bridge interface is not
+> +	 * supported, so we avoid reprogramming the region on every MSI,
+> +	 * specifically unmapping immediately after writel().
+> +	 */
+> +	if (!ep->msi_iatu_mapped) {
+> +		ret = dw_pcie_ep_map_addr(epc, func_no, 0,
+> +					  ep->msi_mem_phys, msg_addr,
+> +					  map_size);
+> +		if (ret)
+> +			return ret;
+> +
+> +		ep->msi_iatu_mapped = true;
+> +		ep->msi_msg_addr = msg_addr;
+> +		ep->msi_map_size = map_size;
+> +	} else if (WARN_ON_ONCE(ep->msi_msg_addr != msg_addr ||
+> +				ep->msi_map_size != map_size)) {
+> +		/*
+> +		 * The host changed the MSI target address or the required
+> +		 * mapping size changed. Reprogramming the iATU at runtime is
+> +		 * unsafe on this controller, so bail out instead of trying to
+> +		 * update the existing region.
+> +		 */
+> +		return -EINVAL;
+> +	}
+>  
+> -	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
+> +	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
+>  
+>  	return 0;
+>  }
+> @@ -1087,6 +1120,9 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>  	struct device *dev = pci->dev;
+>  
+>  	INIT_LIST_HEAD(&ep->func_list);
+> +	ep->msi_iatu_mapped = false;
+> +	ep->msi_msg_addr = 0;
+> +	ep->msi_map_size = 0;
+>  
+>  	epc = devm_pci_epc_create(dev, &epc_ops);
+>  	if (IS_ERR(epc)) {
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 31685951a0804..f555926a526ea 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -479,6 +479,11 @@ struct dw_pcie_ep {
+>  	void __iomem		*msi_mem;
+>  	phys_addr_t		msi_mem_phys;
+>  	struct pci_epf_bar	*epf_bar[PCI_STD_NUM_BARS];
+> +
+> +	/* MSI outbound iATU state */
+> +	bool			msi_iatu_mapped;
+> +	u64			msi_msg_addr;
+> +	size_t			msi_map_size;
+>  };
+>  
+>  struct dw_pcie_ops {
+> -- 
+> 2.51.0
+> 
