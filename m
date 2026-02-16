@@ -1,89 +1,101 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0BA2690EC;
-	Mon, 16 Feb 2026 15:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3F83321B0;
+	Mon, 16 Feb 2026 16:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771256920; cv=none; b=UGDLmcAyfa3Iggllvs9HUmJl2XkHoVRSgFU76nfiW3uAJzle7HGevpczHGxIsgyte/vUKVh0xv0sa1T9X9jBKWBO8lSoi8TcsuzHTo4Ftwf/B+3bjdfGU7YtCICqtAKQuBW2OHEwPOsC4bN0mpYjNM3KUc9OIuF9O+GJnG7pGsQ=
+	t=1771257698; cv=none; b=vD1zr4Kfs4dAaO1oH5X8jXc4RbKtOoD9xAnsQMPAqbMKxen61ynP17ML6285fMTOWypg4m9Bg4VFw3B7YMbpkczGANsIPE1QUzlW9Xcc/xnMuCIp/OlAaxDs0IS3NoSeJ+Maq9C1xT8RHZZF4R+H55ginl0XXizU1MkJnspb6CQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771256920; c=relaxed/simple;
-	bh=kvmk9Nk3azwvwuhSY2Z7ciR0/RZ1Vx+Arvb+7UIojmo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cPe7MMZhtWiJ0MxQkOik9AFIBkWGy04GdpSH185BOmxtXam2u4T7quf61JsijZp/nBZdubAm1L9rBzs13otEP444V+2WuNaa/A86DuiaYaV14EPhxYG0iYR+uNmudlRPIOje81l0SrPprp8u6DjCvLvc0XYZLJE3kd1fjvW1w3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eOb5IkJz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771257698; c=relaxed/simple;
+	bh=jIVr4EMhbxLfBhJVNM0uEaoaqlclfdp51xNGeOTr5GA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:From:Subject:Cc:
+	 References:In-Reply-To; b=RjPzreJPd4mEqFqymwT1uYnZs2VhmxcOO99RDAkTExEpVcuekrVShyJdsJMt1VHktCw1OptF7tGy95sOZlbLttQHNmqICSTPD6P1XMKnM3itJ/0QldcNpKuwO2eAHWJyPxrrd1e0igAyAUalpwAA93rrKzK8xvwbiBPbEtB1Q0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCtA6DBC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eOb5IkJz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F23C116C6;
-	Mon, 16 Feb 2026 15:48:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCtA6DBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884F3C116C6;
+	Mon, 16 Feb 2026 16:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771256920;
-	bh=kvmk9Nk3azwvwuhSY2Z7ciR0/RZ1Vx+Arvb+7UIojmo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eOb5IkJzK82iQS6KiaoOpFZVzWcl+YPajcvGAV0rW9idL5difTNhQK/Kh8RO1Bca3
-	 ON6nXSSPWZvBW12HwX0H8BjoAo1WgiU0Sy0LVs59Ej/Bb2rLDS9051M5BS+GRKIv7O
-	 XAZCPu4z/pYzggzQsWgzlP4+Bbv+18LCVa3RAwI9lX+MRJMkDBnOuKJKQkXIv97ZvL
-	 h7PFVtPf5RPCGlQDxwEd51CJwLL7weFyuvaxAhxwANFGivIJ45Fk+I+uusP1ipBbDt
-	 hpJsRy8sP6JYuruMcg0kvReJzeRluESlD6i0wknXXHZyN9j1qDqG8SwVcdRS59yTn7
-	 BtLV0ysSX1rlQ==
-Date: Mon, 16 Feb 2026 10:48:39 -0500
-From: Sasha Levin <sashal@kernel.org>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Helge Deller <deller@gmx.de>, guoren@kernel.org,
-	neil.armstrong@linaro.org, brauner@kernel.org,
-	yelangyan@huaqin.corp-partner.google.com,
-	schuster.simon@siemens-energy.com, linux-csky@vger.kernel.org,
-	Parisc List <linux-parisc@vger.kernel.org>
-Subject: Re: [PATCH AUTOSEL 6.19-5.10] parisc: Prevent interrupts during
- reboot
-Message-ID: <aZM8VwMcSOhNHJHc@laps>
-References: <20260214005825.3665084-1-sashal@kernel.org>
- <CAMuHMdVeGv=f-Oo1=GQLghn_hwpe2YN5OS79fQsy2uccwyVUZg@mail.gmail.com>
- <aZMXwfvJjG0YkuF5@laps>
- <CAMuHMdX1Mdqp7+Oz9dqe3b2VqMzpp5L7AvBJxRZuUjb0vY6gCw@mail.gmail.com>
+	s=k20201202; t=1771257698;
+	bh=jIVr4EMhbxLfBhJVNM0uEaoaqlclfdp51xNGeOTr5GA=;
+	h=Date:To:From:Subject:Cc:References:In-Reply-To:From;
+	b=LCtA6DBCVr2TBT0CKrY9VzbcKdaAfJZKXvoj0/rq4OZKGoPR/Re+zt5a2cymZ2kDP
+	 8fsXBmWb4FWDjLLH3kMul1dyw8djkfljTza8dDj5BsxWrV5PRKLTRIiOof0J/t0902
+	 QzuwmEFerI/QaM6eYs4w8xkxTcT5I/t6HpQ9BoQ4n+Zi3gLQF8Mjbu6cQZnt1EKFiV
+	 HBVCDGCbxAgj9RR09OluRcyPb1/RTNX3ZWwjJGdMz2/Z6VjCqwn/NHU9bUw3j4IexT
+	 wyOacJbmuBKoDbzGysoiCy5qyl4lS1iS33dMxU5I8de2PCojIR9g6hsMGRUPcI5scz
+	 YZu4FV30SqvIg==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAMuHMdX1Mdqp7+Oz9dqe3b2VqMzpp5L7AvBJxRZuUjb0vY6gCw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 16 Feb 2026 17:01:33 +0100
+Message-Id: <DGGIG6WA0F2Y.Q5UZ6D6EE43W@kernel.org>
+To: "Mark Brown" <broonie@kernel.org>, "Greg Kroah-Hartman"
+ <gregkh@linuxfoundation.org>
+From: "Danilo Krummrich" <dakr@kernel.org>
+Subject: Re: [PATCH 6.12 00/24] 6.12.72-rc1 review
+Cc: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+ <akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+ <patches@kernelci.org>, <lkft-triage@lists.linaro.org>,
+ <pavel@nabladev.com>, <jonathanh@nvidia.com>, <f.fainelli@gmail.com>,
+ <sudipm.mukherjee@gmail.com>, <rwarsow@gmx.de>, <conor@kernel.org>,
+ <hargar@microsoft.com>, <achill@achill.org>, <sr@sladewatkins.com>
+References: <20260213134704.728003077@linuxfoundation.org>
+ <bde6d2f9-f554-49f1-9af8-084c4cdea035@sirena.org.uk>
+ <DGGI5PT256ZX.E11J217J4EEK@kernel.org>
+In-Reply-To: <DGGI5PT256ZX.E11J217J4EEK@kernel.org>
 
-On Mon, Feb 16, 2026 at 02:28:14PM +0100, Geert Uytterhoeven wrote:
->Hi Sasha,
->
->On Mon, 16 Feb 2026 at 14:12, Sasha Levin <sashal@kernel.org> wrote:
->> On Mon, Feb 16, 2026 at 11:21:25AM +0100, Geert Uytterhoeven wrote:
->> >Cc linux-parisc
->> >
->> >How did you (or the LLM?) came up with that CC list?!?
+On Mon Feb 16, 2026 at 4:47 PM CET, Danilo Krummrich wrote:
+> On Mon Feb 16, 2026 at 3:27 PM CET, Mark Brown wrote:
+>> On Fri, Feb 13, 2026 at 02:48:19PM +0100, Greg Kroah-Hartman wrote:
+>>> Gui-Dong Han <hanguidong02@gmail.com>
+>>>     driver core: enforce device_lock for driver_match_device()
 >>
->> Interesting...
->>
->> $ ~/linux/scripts/get_maintainer.pl --pattern-depth=1 --no-rolestats --nor --nos 0001-parisc-Prevent-interrupts-during-reboot.patch
->> Neil Armstrong <neil.armstrong@linaro.org>
->> "Guo Ren (Alibaba Damo Academy)" <guoren@kernel.org>
->> Christian Brauner <brauner@kernel.org>
->> Geert Uytterhoeven <geert@linux-m68k.org>
->> Andreas Larsson <andreas@gaisler.com>
->> Helge Deller <deller@gmx.de>
->> Langyan Ye <yelangyan@huaqin.corp-partner.google.com>
->> Simon Schuster <schuster.simon@siemens-energy.com>
+>> This breaks boot on at least the Arm Juno platform, upstream it
+>> introduced regressions on quite a few systems due to drivers registering
+>> in the probe of other devices.  That's obviously not a great pattern but
+>> a regreession is a regression.
 >
->Still doesn't explain linux-csky?
+> Just for reference, I've also sent the following to the stable patch appl=
+y
+> notice:
+>
+> "This commit reveals a few driver bugs resulting in deadlocks without the
+> following fixes:
+>
+>   - 1. ed1ac3c977dd ("iommu/arm-smmu-qcom: do not register driver in prob=
+e()")
 
-Oh, that was there because the LLM mentioned csky in it's comparison with other
-archs and get_maintainer.pl used keyword matching.
+One additional note, we want this commit backported regardless, as it also =
+fixes
+commit 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in
+qcom_smmu_impl_init").
 
-If you grab the actual patch that was sent in the AUTOSEL mail:
+I.e. the current code is racy in terms of async probe and the driver is nev=
+er
+unregistered even if built as module and the module is unloaded, which is a
+potential UAF.
 
-$ ~/linux/scripts/get_maintainer.pl --pattern-depth=1 --no-rolestats --nor --nos raw
-Guo Ren <guoren@kernel.org>
-linux-csky@vger.kernel.org
+>   - 2. 730e5ebff40c ("gpio: omap: do not register driver in probe()")
+>   - 3. https://lore.kernel.org/lkml/20260212235842.85934-1-dakr@kernel.or=
+g/
+>
+> The third one will hopefully be picked up by the clk folks soon.
+>
+> (1) should be required since v6.11, (2) since (basically forever) v2.6.22=
+ and
+> (3) since v5.11.
+>
+> We should also consider that we do not know if (especially older) stable =
+trees
+> have similar cases that we did not catch in linux-next."
+>
+> - Danilo
 
--- 
-Thanks,
-Sasha
