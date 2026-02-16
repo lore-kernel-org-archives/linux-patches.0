@@ -1,85 +1,89 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C267A937;
-	Mon, 16 Feb 2026 15:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0BA2690EC;
+	Mon, 16 Feb 2026 15:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771256878; cv=none; b=hQSxBap9xYpCNMuSVhl3KkNrZwb4YSsF/zLM/y5jtf8wBnj1Ef/yj2lIzgj354NmbWK6gtVBW9mvtkTLocBgWJGCxLPA0pu6H+vzfdv4BCg9pnq3vnpzyQFJA5vQDGlnwjarQm72X7RGIfrCAN8woZEs3vW4w+SFY1DwkwaSWQo=
+	t=1771256920; cv=none; b=UGDLmcAyfa3Iggllvs9HUmJl2XkHoVRSgFU76nfiW3uAJzle7HGevpczHGxIsgyte/vUKVh0xv0sa1T9X9jBKWBO8lSoi8TcsuzHTo4Ftwf/B+3bjdfGU7YtCICqtAKQuBW2OHEwPOsC4bN0mpYjNM3KUc9OIuF9O+GJnG7pGsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771256878; c=relaxed/simple;
-	bh=CdeISCK8ATxFSA2FnwD7G5CTs9I7sjnJTKo65pKHHAY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=J1QQQVLwJebT3wGfl3USXJ+NDwSJZpuoL8s2PritHjbGPeh7TUWcXFEd54gfwbSVqEwthGTO2Im0CcF7V+saSSi2MhTbNZ4T5elo2ep4WjBCIW9F80yA6ziDBijJEPN1Z3zw0Z/IQmGe9ZjctPtabJEdoUZ14n/FShojqlADf4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Un6vkLHO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771256920; c=relaxed/simple;
+	bh=kvmk9Nk3azwvwuhSY2Z7ciR0/RZ1Vx+Arvb+7UIojmo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cPe7MMZhtWiJ0MxQkOik9AFIBkWGy04GdpSH185BOmxtXam2u4T7quf61JsijZp/nBZdubAm1L9rBzs13otEP444V+2WuNaa/A86DuiaYaV14EPhxYG0iYR+uNmudlRPIOje81l0SrPprp8u6DjCvLvc0XYZLJE3kd1fjvW1w3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eOb5IkJz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Un6vkLHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62F3C116C6;
-	Mon, 16 Feb 2026 15:47:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eOb5IkJz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F23C116C6;
+	Mon, 16 Feb 2026 15:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771256877;
-	bh=CdeISCK8ATxFSA2FnwD7G5CTs9I7sjnJTKo65pKHHAY=;
-	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=Un6vkLHOY7xHfv+IUVMsx0RN140zqhqY1LRSSUpE8bVFDjXxX/drkWFTYVTEcn6/c
-	 WbZZurF4hG0pnBT2J5eePRAk/hTRk0wuMGV57MzsTVjy3bVtEB8VkOqqGuGdl2gGpq
-	 L4EHWQcaa8kx6UctL9UA0NRXMLKP3Jjv9Ho0tOt9i36RTwk3g7Hyn6/PwfBIawJ19b
-	 yrRCZUVQJ6TPFT6VHfr2R3MiiCb1ffRfvCRcHoMj17cjWZrGTHLnesfO/9VNN6+aNY
-	 HLVBzjlXpXkx+DEYfa/ebyfLb9DQULSE9URaaoWIdxMxStp54a+IeYyqFN7hAIVHV0
-	 wTkHqTVUpID1A==
+	s=k20201202; t=1771256920;
+	bh=kvmk9Nk3azwvwuhSY2Z7ciR0/RZ1Vx+Arvb+7UIojmo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eOb5IkJzK82iQS6KiaoOpFZVzWcl+YPajcvGAV0rW9idL5difTNhQK/Kh8RO1Bca3
+	 ON6nXSSPWZvBW12HwX0H8BjoAo1WgiU0Sy0LVs59Ej/Bb2rLDS9051M5BS+GRKIv7O
+	 XAZCPu4z/pYzggzQsWgzlP4+Bbv+18LCVa3RAwI9lX+MRJMkDBnOuKJKQkXIv97ZvL
+	 h7PFVtPf5RPCGlQDxwEd51CJwLL7weFyuvaxAhxwANFGivIJ45Fk+I+uusP1ipBbDt
+	 hpJsRy8sP6JYuruMcg0kvReJzeRluESlD6i0wknXXHZyN9j1qDqG8SwVcdRS59yTn7
+	 BtLV0ysSX1rlQ==
+Date: Mon, 16 Feb 2026 10:48:39 -0500
+From: Sasha Levin <sashal@kernel.org>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	Helge Deller <deller@gmx.de>, guoren@kernel.org,
+	neil.armstrong@linaro.org, brauner@kernel.org,
+	yelangyan@huaqin.corp-partner.google.com,
+	schuster.simon@siemens-energy.com, linux-csky@vger.kernel.org,
+	Parisc List <linux-parisc@vger.kernel.org>
+Subject: Re: [PATCH AUTOSEL 6.19-5.10] parisc: Prevent interrupts during
+ reboot
+Message-ID: <aZM8VwMcSOhNHJHc@laps>
+References: <20260214005825.3665084-1-sashal@kernel.org>
+ <CAMuHMdVeGv=f-Oo1=GQLghn_hwpe2YN5OS79fQsy2uccwyVUZg@mail.gmail.com>
+ <aZMXwfvJjG0YkuF5@laps>
+ <CAMuHMdX1Mdqp7+Oz9dqe3b2VqMzpp5L7AvBJxRZuUjb0vY6gCw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 16 Feb 2026 16:47:52 +0100
-Message-Id: <DGGI5PT256ZX.E11J217J4EEK@kernel.org>
-Subject: Re: [PATCH 6.12 00/24] 6.12.72-rc1 review
-Cc: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
- <stable@vger.kernel.org>, <patches@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
- <akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
- <patches@kernelci.org>, <lkft-triage@lists.linaro.org>,
- <pavel@nabladev.com>, <jonathanh@nvidia.com>, <f.fainelli@gmail.com>,
- <sudipm.mukherjee@gmail.com>, <rwarsow@gmx.de>, <conor@kernel.org>,
- <hargar@microsoft.com>, <achill@achill.org>, <sr@sladewatkins.com>
-To: "Mark Brown" <broonie@kernel.org>
-From: "Danilo Krummrich" <dakr@kernel.org>
-References: <20260213134704.728003077@linuxfoundation.org>
- <bde6d2f9-f554-49f1-9af8-084c4cdea035@sirena.org.uk>
-In-Reply-To: <bde6d2f9-f554-49f1-9af8-084c4cdea035@sirena.org.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAMuHMdX1Mdqp7+Oz9dqe3b2VqMzpp5L7AvBJxRZuUjb0vY6gCw@mail.gmail.com>
 
-On Mon Feb 16, 2026 at 3:27 PM CET, Mark Brown wrote:
-> On Fri, Feb 13, 2026 at 02:48:19PM +0100, Greg Kroah-Hartman wrote:
->> Gui-Dong Han <hanguidong02@gmail.com>
->>     driver core: enforce device_lock for driver_match_device()
+On Mon, Feb 16, 2026 at 02:28:14PM +0100, Geert Uytterhoeven wrote:
+>Hi Sasha,
 >
-> This breaks boot on at least the Arm Juno platform, upstream it
-> introduced regressions on quite a few systems due to drivers registering
-> in the probe of other devices.  That's obviously not a great pattern but
-> a regreession is a regression.
+>On Mon, 16 Feb 2026 at 14:12, Sasha Levin <sashal@kernel.org> wrote:
+>> On Mon, Feb 16, 2026 at 11:21:25AM +0100, Geert Uytterhoeven wrote:
+>> >Cc linux-parisc
+>> >
+>> >How did you (or the LLM?) came up with that CC list?!?
+>>
+>> Interesting...
+>>
+>> $ ~/linux/scripts/get_maintainer.pl --pattern-depth=1 --no-rolestats --nor --nos 0001-parisc-Prevent-interrupts-during-reboot.patch
+>> Neil Armstrong <neil.armstrong@linaro.org>
+>> "Guo Ren (Alibaba Damo Academy)" <guoren@kernel.org>
+>> Christian Brauner <brauner@kernel.org>
+>> Geert Uytterhoeven <geert@linux-m68k.org>
+>> Andreas Larsson <andreas@gaisler.com>
+>> Helge Deller <deller@gmx.de>
+>> Langyan Ye <yelangyan@huaqin.corp-partner.google.com>
+>> Simon Schuster <schuster.simon@siemens-energy.com>
+>
+>Still doesn't explain linux-csky?
 
-Just for reference, I've also sent the following to the stable patch apply
-notice:
+Oh, that was there because the LLM mentioned csky in it's comparison with other
+archs and get_maintainer.pl used keyword matching.
 
-"This commit reveals a few driver bugs resulting in deadlocks without the
-following fixes:
+If you grab the actual patch that was sent in the AUTOSEL mail:
 
-  - 1. ed1ac3c977dd ("iommu/arm-smmu-qcom: do not register driver in probe(=
-)")
-  - 2. 730e5ebff40c ("gpio: omap: do not register driver in probe()")
-  - 3. https://lore.kernel.org/lkml/20260212235842.85934-1-dakr@kernel.org/
+$ ~/linux/scripts/get_maintainer.pl --pattern-depth=1 --no-rolestats --nor --nos raw
+Guo Ren <guoren@kernel.org>
+linux-csky@vger.kernel.org
 
-The third one will hopefully be picked up by the clk folks soon.
-
-(1) should be required since v6.11, (2) since (basically forever) v2.6.22 a=
-nd
-(3) since v5.11.
-
-We should also consider that we do not know if (especially older) stable tr=
-ees
-have similar cases that we did not catch in linux-next."
-
-- Danilo
+-- 
+Thanks,
+Sasha
