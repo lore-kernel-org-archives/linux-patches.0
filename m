@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322E5374178;
-	Tue, 17 Feb 2026 20:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582FC3783B5;
+	Tue, 17 Feb 2026 20:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360871; cv=none; b=VTK9iSox0+xgRCrRHJyLdc68psHxqELJB+nZjKiuAbrbLVQg5i04RSn8AbCR8pGPQbwVM85N0L4bGAToS9KvQDUXFYeD5jtEn2yYu5U5bKdy1FkYpRkGWJuspQIxUY++3TZRCmp2h3pcrGTz0H0KEJcFElya689SSaUlVczARzw=
+	t=1771360874; cv=none; b=CJl5kp60nNw8xauCnq0yiE0tHwZ2bya2YRzUVJnHzfitakWp9nqqQNExSOvC6n8RlaUGn5BD8sMRQv4FsivcY+RGRK7tTPy/o448FntJQJhgBMBGX5qTzBtaYDeb26Za0n4tNxuS8YIBkUtnCwMraNqzxFuDxBVVDrJus4O9Xh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360871; c=relaxed/simple;
-	bh=3RXM9qsCxU6MQ/+GAIvj+pM/rPWWg6fHQ86DND9QZhw=;
+	s=arc-20240116; t=1771360874; c=relaxed/simple;
+	bh=/J/GYSjdMZparO/0EMy4Mr79i4VemAUONYJpMCgwKCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CpjoqtAC4qjeP5mQL1B+yguMbtbouWpBXtZNYTjiW2UT4sWl4Augfi9QhHUTCP1EMGEVDbwtxcCcnoWh8sit6V/xG7c/iHWGuFOpe9t/KKSfQnLm9n9sDWcQCj0d/+YXWVUgscIYHnXC3EgKn4qY+duOy7Va+hot6+AiHNjXeHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWorR6Ef; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nx1zUGaruo1GCVo6jNm8WXzkriUA4Ld5kf00FApMbw2m12mR7K9lG+sHwo/r8bSRHjZ+cylZ91P22ei0/wgYV5KKeMVXYOpzIGIfgZEILfnNmJ3oVoD47CFD0B3EnfpsNd3f+wfbnRQDBRn5wvtNsp3YcsWGVmnxvVIpHWzvcRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LR0Cl7T1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWorR6Ef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F63C4CEF7;
-	Tue, 17 Feb 2026 20:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LR0Cl7T1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18AFC4CEF7;
+	Tue, 17 Feb 2026 20:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360871;
-	bh=3RXM9qsCxU6MQ/+GAIvj+pM/rPWWg6fHQ86DND9QZhw=;
+	s=korg; t=1771360874;
+	bh=/J/GYSjdMZparO/0EMy4Mr79i4VemAUONYJpMCgwKCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWorR6Ef5IXYwE7unJPd+uQ6/RWzzr2hIBNLOmMJtPOU0wItCW2uk8SA0rqGcfhWg
-	 sNrzqfYuCUWsIH1wzQVE8mimRx9dghoZ+q05kF/OGGvtWHUzgH7M1sUu/+Cg71GhuC
-	 f6DDc+eJ3PvNnBtCPMHtvn1o270bS5nX6TvxzqNo=
+	b=LR0Cl7T11hwnY0PgcskOmyj1UNu8Xjd7Ewqy7ZyDuYXOM7dDMtuLLOGKatkuYdZHD
+	 iTyzNtLGIY4apdbPgvxpU+BjZSVKS5DHpci/QUk8gN40VLKDSkgAuIRW08ER/6oxMn
+	 xIginVyYxh9AUwLTUtRDdAdCt/pWuycR3fmBa0Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuewen Yan <xuewen.yan@unisoc.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 08/39] gpio: sprd: Change sprd_gpio lock to raw_spin_lock
-Date: Tue, 17 Feb 2026 21:30:30 +0100
-Message-ID: <20260217200004.548196392@linuxfoundation.org>
+Subject: [PATCH 6.6 09/39] ALSA: hda/realtek: Add quirk for Inspur S14-G1
+Date: Tue, 17 Feb 2026 21:30:31 +0100
+Message-ID: <20260217200004.586600410@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -53,121 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Yan <xuewen.yan@unisoc.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 96313fcc1f062ba239f4832c9eff685da6c51c99 ]
+[ Upstream commit 9e18920e783d0bcd4c127a7adc66565243ab9655 ]
 
-There was a lockdep warning in sprd_gpio:
+Inspur S14-G1 is equipped with ALC256.
+Enable "power saving mode" and Enable "headset jack mode".
 
-[    6.258269][T329@C6] [ BUG: Invalid wait context ]
-[    6.258270][T329@C6] 6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 Tainted: G        W  OE
-[    6.258272][T329@C6] -----------------------------
-[    6.258273][T329@C6] modprobe/329 is trying to lock:
-[    6.258275][T329@C6] ffffff8081c91690 (&sprd_gpio->lock){....}-{3:3}, at: sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd]
-[    6.258282][T329@C6] other info that might help us debug this:
-[    6.258283][T329@C6] context-{5:5}
-[    6.258285][T329@C6] 3 locks held by modprobe/329:
-[    6.258286][T329@C6]  #0: ffffff808baca108 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xc4/0x204
-[    6.258295][T329@C6]  #1: ffffff80965e7240 (request_class#4){+.+.}-{4:4}, at: __setup_irq+0x1cc/0x82c
-[    6.258304][T329@C6]  #2: ffffff80965e70c8 (lock_class#4){....}-{2:2}, at: __setup_irq+0x21c/0x82c
-[    6.258313][T329@C6] stack backtrace:
-[    6.258314][T329@C6] CPU: 6 UID: 0 PID: 329 Comm: modprobe Tainted: G        W  OE       6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 PREEMPT  3ad5b0f45741a16e5838da790706e16ceb6717df
-[    6.258316][T329@C6] Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[    6.258317][T329@C6] Hardware name: Unisoc UMS9632-base Board (DT)
-[    6.258318][T329@C6] Call trace:
-[    6.258318][T329@C6]  show_stack+0x20/0x30 (C)
-[    6.258321][T329@C6]  __dump_stack+0x28/0x3c
-[    6.258324][T329@C6]  dump_stack_lvl+0xac/0xf0
-[    6.258326][T329@C6]  dump_stack+0x18/0x3c
-[    6.258329][T329@C6]  __lock_acquire+0x824/0x2c28
-[    6.258331][T329@C6]  lock_acquire+0x148/0x2cc
-[    6.258333][T329@C6]  _raw_spin_lock_irqsave+0x6c/0xb4
-[    6.258334][T329@C6]  sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd 814535e93c6d8e0853c45c02eab0fa88a9da6487]
-[    6.258337][T329@C6]  irq_startup+0x238/0x350
-[    6.258340][T329@C6]  __setup_irq+0x504/0x82c
-[    6.258342][T329@C6]  request_threaded_irq+0x118/0x184
-[    6.258344][T329@C6]  devm_request_threaded_irq+0x94/0x120
-[    6.258347][T329@C6]  sc8546_init_irq+0x114/0x170 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
-[    6.258352][T329@C6]  sc8546_charger_probe+0x53c/0x5a0 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
-[    6.258358][T329@C6]  i2c_device_probe+0x2c8/0x350
-[    6.258361][T329@C6]  really_probe+0x1a8/0x46c
-[    6.258363][T329@C6]  __driver_probe_device+0xa4/0x10c
-[    6.258366][T329@C6]  driver_probe_device+0x44/0x1b4
-[    6.258369][T329@C6]  __driver_attach+0xd0/0x204
-[    6.258371][T329@C6]  bus_for_each_dev+0x10c/0x168
-[    6.258373][T329@C6]  driver_attach+0x2c/0x3c
-[    6.258376][T329@C6]  bus_add_driver+0x154/0x29c
-[    6.258378][T329@C6]  driver_register+0x70/0x10c
-[    6.258381][T329@C6]  i2c_register_driver+0x48/0xc8
-[    6.258384][T329@C6]  init_module+0x28/0xfd8 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
-[    6.258389][T329@C6]  do_one_initcall+0x128/0x42c
-[    6.258392][T329@C6]  do_init_module+0x60/0x254
-[    6.258395][T329@C6]  load_module+0x1054/0x1220
-[    6.258397][T329@C6]  __arm64_sys_finit_module+0x240/0x35c
-[    6.258400][T329@C6]  invoke_syscall+0x60/0xec
-[    6.258402][T329@C6]  el0_svc_common+0xb0/0xe4
-[    6.258405][T329@C6]  do_el0_svc+0x24/0x30
-[    6.258407][T329@C6]  el0_svc+0x54/0x1c4
-[    6.258409][T329@C6]  el0t_64_sync_handler+0x68/0xdc
-[    6.258411][T329@C6]  el0t_64_sync+0x1c4/0x1c8
-
-This is because the spin_lock would change to rt_mutex in PREEMPT_RT,
-however the sprd_gpio->lock would use in hard-irq, this is unsafe.
-
-So change the spin_lock_t to raw_spin_lock_t to use the spinlock
-in hard-irq.
-
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20260126094209.9855-1-xuewen.yan@unisoc.com
-[Bartosz: tweaked the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260126073508.3897461-2-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-sprd.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-sprd.c b/drivers/gpio/gpio-sprd.c
-index c117c11bfb29a..192f05a2c19c1 100644
---- a/drivers/gpio/gpio-sprd.c
-+++ b/drivers/gpio/gpio-sprd.c
-@@ -35,7 +35,7 @@
- struct sprd_gpio {
- 	struct gpio_chip chip;
- 	void __iomem *base;
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- 	int irq;
- };
- 
-@@ -54,7 +54,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
- 	unsigned long flags;
- 	u32 tmp;
- 
--	spin_lock_irqsave(&sprd_gpio->lock, flags);
-+	raw_spin_lock_irqsave(&sprd_gpio->lock, flags);
- 	tmp = readl_relaxed(base + reg);
- 
- 	if (val)
-@@ -63,7 +63,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
- 		tmp &= ~BIT(SPRD_GPIO_BIT(offset));
- 
- 	writel_relaxed(tmp, base + reg);
--	spin_unlock_irqrestore(&sprd_gpio->lock, flags);
-+	raw_spin_unlock_irqrestore(&sprd_gpio->lock, flags);
- }
- 
- static int sprd_gpio_read(struct gpio_chip *chip, unsigned int offset, u16 reg)
-@@ -234,7 +234,7 @@ static int sprd_gpio_probe(struct platform_device *pdev)
- 	if (IS_ERR(sprd_gpio->base))
- 		return PTR_ERR(sprd_gpio->base);
- 
--	spin_lock_init(&sprd_gpio->lock);
-+	raw_spin_lock_init(&sprd_gpio->lock);
- 
- 	sprd_gpio->chip.label = dev_name(&pdev->dev);
- 	sprd_gpio->chip.ngpio = SPRD_GPIO_NR;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 95e650493dc5b..5b836a91135cc 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10650,6 +10650,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1ee7, 0x2078, "HONOR BRB-X M1010", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0x2039, 0x0001, "Inspur S14-G1", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
 -- 
 2.51.0
 
