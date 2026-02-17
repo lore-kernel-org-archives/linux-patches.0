@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EA717A305;
-	Tue, 17 Feb 2026 01:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4AD231A3B;
+	Tue, 17 Feb 2026 01:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771290083; cv=none; b=KWRHBgwuon5nBqO5xztItc57fcY3vETz5pUI19Ukkrv28tSQct+75iqYXJj7I4f5R06ij6c8yXybztjht3f6mzgJESF/ReVdWMSBQksUWtwEoHxw8s3QtGjGfmGPZAPw2GD+dCtQslinCNrIoQFb3XnXc9mI4lqS7futNcH0oNc=
+	t=1771290085; cv=none; b=Ivw5/197GdvQAf6X+ZW1jv/fnhDfR6kjAbcOOjQJ9eYUwTIASy7xF9xHvGk5LR6Zwrmo8XlzF2XQIyW3tuDOkYZH19n/EwOKPqSxBicjSjzmVPSytP09d5nmJQDb0cDoJWrBAnES6eJyNzS45w7nLET6n3MVxxwmvsyBD0EAraI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771290083; c=relaxed/simple;
-	bh=c2vbSdetJzlZYmNsQeV45rnwSVku9N1DKuDBKHrmoyU=;
+	s=arc-20240116; t=1771290085; c=relaxed/simple;
+	bh=3CQR8MNuLy3NsGjQSjNTddHYGKdbU4uYpOwzcupblxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bWKAYpEr/ftD7bjHbZ6CeAo9mjY1Jlh9ZqkQoUAMLJub0MK4NbjaLVJpbpzv34tf+ZUBO98MyO4csUK7hARPhkVs154ed2gNHIdCT0QVUQLTqmCV2lxwXYRvuCqezBk43Acbf5W+0/GaHG9EoULzU2S9QnX9i234porSMgA1yUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UrgKKEm4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ucpbeOgW0iHSCGxjj8/CJdvn2vSRtoDFIh/0PmhbdEbUSeTqJ4mmf+mjamLrkBsDtuHFpZL5z+lXgcj/pqfTT4O1gj1GBb0OAhWdQ8YdGk5eubzMfAltvP1tYeqLkr1bBizf5Bf9ddKMO6Gi/nx0n96UJtzv4PlTHSx3lKyk5aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bwp48MMi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UrgKKEm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4C7C19425;
-	Tue, 17 Feb 2026 01:01:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bwp48MMi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46A6C2BC87;
+	Tue, 17 Feb 2026 01:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771290083;
-	bh=c2vbSdetJzlZYmNsQeV45rnwSVku9N1DKuDBKHrmoyU=;
+	s=k20201202; t=1771290085;
+	bh=3CQR8MNuLy3NsGjQSjNTddHYGKdbU4uYpOwzcupblxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrgKKEm4ExLZehDCY/9XGTpxbLdYqLgMh0PzJ7l94t1WDEs8bEzv198g9kFnwMnsj
-	 ccBjHudYRfVFHxSNPnNn3SuA914m2Fvk6fv1eMLrfpbzlHGt4yJECWHgZEt5M2jDYq
-	 +AUwEuE2W7lkMXk49Mb/aKvJOmLWatt+5D2X+KrsI8TCCrtXskfQ+X/sJyvBnQa698
-	 tZYzyTDb09yxdGuYpK1sw6pZn9rIY81VHoinOl8iu+AEFl2iv60nZk285gU7ILEAZ8
-	 DrpPHuZtFyskWl6SaS0FMWkC+lNV1f1p55mRD0Qu9aZg2qaBRBz3UYm7bwcncWQr8S
-	 rt+PfHwEjIy2A==
+	b=Bwp48MMihd4Al5ZmBb87Sv8KwQ+2c4ApUINj/56l4mXnIWAagnXfdVj8+oPOdmjWS
+	 XLhl0JT3dSeNtMHMaAk00BldL/EIAE1PF8Bf65ZpsIfzcBVPrO7jwoFoCI5HRi55ZX
+	 C6PSli29FLb3zNn1UB1C9nxQK9SYSMh3hFiJvXBednk4Ne7VeAUVznVgL0+O9izm1H
+	 DnsgSwjCacZ9HILf5+sfE8yyH0Y/pq+a7Ljwp/pzvT45Vr5tDzNZ+k2MC70J6rWoXB
+	 vKjdz2Gt3ZX83NxwnyvN/gRmVSlbCR0PytP/iAn6onlcBC/TAL+Zfk7x4EsNhayAaS
+	 CmzJLF9zcDSpw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefano Stabellini <stefano.stabellini@amd.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+Cc: Chuan Liu <chuan.liu@amlogic.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ericvh@kernel.org,
-	lucho@ionkov.net,
-	v9fs@lists.linux.dev,
+	neil.armstrong@linaro.org,
+	mturquette@baylibre.com,
+	sboyd@kernel.org,
+	khilman@baylibre.com,
+	linux-amlogic@lists.infradead.org,
+	linux-clk@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] 9p/xen: protect xen_9pfs_front_free against concurrent calls
-Date: Mon, 16 Feb 2026 20:01:14 -0500
-Message-ID: <20260217010118.3503621-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] clk: amlogic: remove potentially unsafe flags from S4 video clocks
+Date: Mon, 16 Feb 2026 20:01:15 -0500
+Message-ID: <20260217010118.3503621-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260217010118.3503621-1-sashal@kernel.org>
 References: <20260217010118.3503621-1-sashal@kernel.org>
@@ -54,315 +58,149 @@ X-stable-base: Linux 6.19.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefano Stabellini <stefano.stabellini@amd.com>
+From: Chuan Liu <chuan.liu@amlogic.com>
 
-[ Upstream commit ce8ded2e61f47747e31eeefb44dc24a2160a7e32 ]
+[ Upstream commit 4aca7e92023cac5018b4053bae324450f884c937 ]
 
-The xenwatch thread can race with other back-end change notifications
-and call xen_9pfs_front_free() twice, hitting the observed general
-protection fault due to a double-free. Guard the teardown path so only
-one caller can release the front-end state at a time, preventing the
-crash.
+The video clocks enci, encp, vdac and hdmitx share the same clock
+source. Adding CLK_SET_RATE_PARENT to the mux may unintentionally change
+the shared parent clock, which could affect other video clocks.
 
-This is a fix for the following double-free:
-
-[   27.052347] Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6b6b: 0000 [#1] SMP DEBUG_PAGEALLOC NOPTI
-[   27.052357] CPU: 0 UID: 0 PID: 32 Comm: xenwatch Not tainted 6.18.0-02087-g51ab33fc0a8b-dirty #60 PREEMPT(none)
-[   27.052363] RIP: e030:xen_9pfs_front_free+0x1d/0x150
-[   27.052368] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 41 55 41 54 55 48 89 fd 48 c7 c7 48 d0 92 85 53 e8 cb cb 05 00 48 8b 45 08 48 8b 55 00 <48> 3b 28 0f 85 f9 28 35 fe 48 3b 6a 08 0f 85 ef 28 35 fe 48 89 42
-[   27.052377] RSP: e02b:ffffc9004016fdd0 EFLAGS: 00010246
-[   27.052381] RAX: 6b6b6b6b6b6b6b6b RBX: ffff88800d66e400 RCX: 0000000000000000
-[   27.052385] RDX: 6b6b6b6b6b6b6b6b RSI: 0000000000000000 RDI: 0000000000000000
-[   27.052389] RBP: ffff88800a887040 R08: 0000000000000000 R09: 0000000000000000
-[   27.052393] R10: 0000000000000000 R11: 0000000000000000 R12: ffff888009e46b68
-[   27.052397] R13: 0000000000000200 R14: 0000000000000000 R15: ffff88800a887040
-[   27.052404] FS:  0000000000000000(0000) GS:ffff88808ca57000(0000) knlGS:0000000000000000
-[   27.052408] CS:  e030 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   27.052412] CR2: 00007f9714004360 CR3: 0000000004834000 CR4: 0000000000050660
-[   27.052418] Call Trace:
-[   27.052420]  <TASK>
-[   27.052422]  xen_9pfs_front_changed+0x5d5/0x720
-[   27.052426]  ? xenbus_otherend_changed+0x72/0x140
-[   27.052430]  ? __pfx_xenwatch_thread+0x10/0x10
-[   27.052434]  xenwatch_thread+0x94/0x1c0
-[   27.052438]  ? __pfx_autoremove_wake_function+0x10/0x10
-[   27.052442]  kthread+0xf8/0x240
-[   27.052445]  ? __pfx_kthread+0x10/0x10
-[   27.052449]  ? __pfx_kthread+0x10/0x10
-[   27.052452]  ret_from_fork+0x16b/0x1a0
-[   27.052456]  ? __pfx_kthread+0x10/0x10
-[   27.052459]  ret_from_fork_asm+0x1a/0x30
-[   27.052463]  </TASK>
-[   27.052465] Modules linked in:
-[   27.052471] ---[ end trace 0000000000000000 ]---
-
-Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-Message-ID: <20260129230348.2390470-1-stefano.stabellini@amd.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Chuan Liu <chuan.liu@amlogic.com>
+Link: https://lore.kernel.org/r/20250919-add_video_clk-v6-3-fe223161fb3f@amlogic.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The 9p Xen transport driver was introduced in v4.12. So this bug affects
-all stable trees from v4.12 onwards.
+Wait, this is very confusing. The mailing list says patch 2 adds new
+clocks, but git blame shows these video clock muxes (`cts_enci_sel`,
+`cts_encp_sel`, etc.) were already in the original commit from 2023. Let
+me re-read the diff more carefully.
 
-Now let me verify the specific race scenario described in the commit
-message — double-free via concurrent calls to `xen_9pfs_front_free`:
+Looking at the diff again: the commit removes `CLK_SET_RATE_PARENT` from
+`s4_cts_enci_sel`, `s4_cts_encp_sel`, `s4_cts_vdac_sel`, and
+`s4_hdmi_tx_sel`. Git blame confirmed these structures were added in
+`57b55c76aaf1b` (2023, v6.7). The patch 2 of the series adds **new**
+clocks (encl, cdac, demod, adc), but the ones being **fixed** in patch 3
+already existed.
 
-Looking at the code flow in the current (unpatched) tree:
+This means patch 3 (our commit) is **self-contained** with respect to
+the bug fix — it removes flags from clocks that already exist in stable
+trees. It does NOT depend on patch 2.
 
-**Scenario for double-free:**
+## Final Analysis
 
-1. `xen_9pfs_front_probe()` allocates `priv`, adds to list, sets drvdata
-   → OK
-2. `xen_9pfs_front_changed()` receives `XenbusStateInitWait` → calls
-   `xen_9pfs_front_init(dev)`
-3. If `_init` fails, it calls `xen_9pfs_front_free(priv)` which does
-   `list_del`, frees rings, frees `priv` → `priv` is freed, but drvdata
-   still points to freed memory
-4. Backend state continues changing → `XenbusStateClosing` arrives →
-   `xenbus_frontend_closed(dev)` → triggers device removal →
-   `xen_9pfs_front_remove()` called
-5. `xen_9pfs_front_remove()` does `dev_get_drvdata(&dev->dev)` → gets
-   stale pointer to freed memory → calls `xen_9pfs_front_free(priv)`
-   again → **GPF/double-free**
+### Problem Description
+The `CLK_SET_RATE_PARENT` flag on the video clock mux selectors
+(`cts_enci_sel`, `cts_encp_sel`, `cts_vdac_sel`, `hdmi_tx_sel`) allows
+rate change requests to propagate from these muxes up to their shared
+parent clock. Since all four muxes share the same parent clock sources
+(vclk_div and vclk2_div families), any one of them requesting a rate
+change could alter the parent, breaking the other video outputs.
 
-This is the exact scenario described in the commit message and matches
-the stack trace showing the crash in `xen_9pfs_front_free()` called from
-`xen_9pfs_front_changed()`.
+### Impact Assessment
+- **Real bug**: Yes — when one video output (e.g., HDMI) requests a
+  clock rate change, it can modify the shared parent clock, causing
+  other video outputs (CVBS, encoder) to use the wrong clock rate. This
+  could result in display corruption or loss of video signal.
+- **Scope**: Affects all Amlogic S4 SoC users with multiple active video
+  outputs, since v6.7.
+- **Severity**: Medium — display corruption/failure when multiple video
+  outputs are active simultaneously.
 
-## Classification
+### Stable Kernel Criteria Assessment
+- **Obviously correct**: Yes — removing `CLK_SET_RATE_PARENT` from
+  shared mux selectors is a well-understood pattern for preventing
+  unintended parent clock modifications.
+- **Fixes a real bug**: Yes — prevents unintended shared parent clock
+  modification affecting other video clocks.
+- **Small and contained**: Yes — removes 4 lines (flag declarations)
+  from a single file.
+- **No new features**: Correct — purely a bug fix.
+- **Risk**: Very low — removing `CLK_SET_RATE_PARENT` means the mux
+  won't propagate rate changes upward, which is the desired behavior for
+  shared clock sources. The downstream gate clocks still have
+  `CLK_SET_RATE_PARENT`, so rate requests still propagate from the gate
+  to the mux; they just stop there instead of going further up.
 
-- **Bug type**: Double-free / Use-after-free
-- **Severity**: Kernel crash (general protection fault, Oops)
-- **Trigger**: Xenbus backend state changes during 9pfs frontend
-  initialization failure
-- **Impact**: System crash in Xen guests using 9pfs
-- **Scope**: net/9p/trans_xen.c only — single file, well-contained
-
-## Risk Assessment
-
-**Risk of the fix**: MEDIUM-LOW
-- The fix restructures `_probe`, `_init`, `_remove`, and `_free`
-  functions
-- It's not a one-liner — about 170 lines are changed across the file
-- However, all changes are logically consistent and well-motivated:
-  - Moving allocation from probe to init is safe (probe just returns 0
-    now)
-  - Adding NULL check in remove prevents double-free
-  - Using lock around drvdata access prevents TOCTOU race
-  - Adding `if (priv->rings)` guard in free prevents NULL deref
-- The author is Stefano Stabellini, the original 9p/xen driver author
-- Reviewed and signed off by Dominique Martinet (9p maintainer)
-
-**Risk of NOT backporting**: HIGH
-- Kernel crash on Xen guests using 9p filesystem
-- Reproducible by backend state changes (not just theoretical)
-- Concrete Oops with stack trace demonstrated
-
-## Stable Criteria Check
-
-1. **Obviously correct and tested**: Yes — author is the subsystem
-   creator, concrete crash trace provided, fix has clear logic
-2. **Fixes a real bug**: Yes — double-free causing kernel GPF/crash
-3. **Important issue**: Yes — kernel crash/oops
-4. **Small and contained**: The diff is moderately sized (~170 lines)
-   but confined to a single file and a single logical change
-5. **No new features**: Correct — no new APIs or features added
-6. **Clean application**: The stable tree (6.19.y) has the prerequisite
-   commits `e43c608f40c06` and `7ef3ae82a6ebb`
-
-## Dependencies
-
-The commit depends on:
-- `7ef3ae82a6ebb` "9p/xen: fix init sequence" — present in stable
-  (confirmed in `git log HEAD`)
-- `e43c608f40c06` "9p/xen: fix release of IRQ" — present in stable
-  (confirmed)
-- `ea4f1009408ef` "9p/xen: Fix use after free bug" — present in stable
-  (confirmed)
-
-All prerequisites are present in the 6.19.y stable tree.
+### Concerns
+- **Dependency check**: The fix is self-contained. The affected clock
+  structures exist since v6.7 (commit `57b55c76aaf1b`). No dependency on
+  other patches in the series.
+- **Behavioral change**: Users who relied on `CLK_SET_RATE_PARENT`
+  propagation through the mux to the parent might see different
+  behavior, but this "reliance" was always incorrect since it could
+  break other video outputs.
 
 ## Verification
 
-- **Read the current (unpatched) trans_xen.c**: Confirmed the pre-patch
-  code at lines 276-320, 381-480, 482-499 showing the buggy lifecycle
-- **Confirmed the race**: `xen_9pfs_front_init()` error path at line 478
-  calls `xen_9pfs_front_free(priv)` which frees `priv`, but drvdata is
-  not cleared. Subsequent `_remove()` at line 316 reads stale drvdata
-  and calls `_free` again.
-- **Confirmed 0x6b6b6b6b6b6b6b6b**: SLAB_FREE_DEBUG poison pattern,
-  confirming access to freed slab memory
-- **git log master -- net/9p/trans_xen.c**: Confirmed all prerequisite
-  commits exist in the tree
-- **git describe 868eb122739a5**: Confirmed driver exists since v4.12 —
-  bug affects all stable trees
-- **Author verification**: Stefano Stabellini is the original driver
-  author (confirmed by copyright in file header and commit
-  `71ebd71921e45`)
-- **Maintainer sign-off**: Dominique Martinet signed off — he is the 9p
-  maintainer
-- **Checked prior related fixes**: `ea4f1009408ef` fixed a different
-  race (work vs free), `7ef3ae82a6ebb` fixed init sequence — both are
-  prerequisites present in stable
-- **Unverified**: Whether older stable trees (6.6.y, 6.1.y, 5.15.y) have
-  all prerequisites — the ring loop variable `XEN_9PFS_NUM_RINGS` and
-  some code may differ. The commit may need backport adjustments for
-  older trees.
+- **git blame** confirmed `s4_cts_enci_sel`, `s4_cts_encp_sel`,
+  `s4_cts_vdac_sel`, `s4_hdmi_tx_sel` with `CLK_SET_RATE_PARENT` were
+  introduced in `57b55c76aaf1b` (v6.7, September 2023).
+- **git tag --contains 57b55c76aaf1b** confirmed the buggy code is in
+  v6.7+ and v6.12.y LTS.
+- **lore.kernel.org** confirmed this is patch 3/3 of the "add video-
+  related clocks for S4 SoC" series, accepted December 2025 by Jerome
+  Brunet.
+- **lore.kernel.org patch 2** confirmed patch 2 adds **different**
+  clocks (encl, cdac, demod, adc), not the ones being fixed here — the
+  fix is independent.
+- **Code inspection** confirmed `s4_cts_encl_sel` already lacked
+  `CLK_SET_RATE_PARENT` (consistent architecture — encl was already
+  correct).
+- **Code inspection** confirmed downstream gate clocks (`s4_cts_enci`,
+  `s4_cts_encp`) retain `CLK_SET_RATE_PARENT`, so rate propagation still
+  works from gate to mux but stops at the mux level.
+- **Could NOT verify** any user reports of actual display corruption
+  from this bug (unverified — but the mechanism is sound and the fix is
+  obvious).
 
-## Conclusion
-
-This is a clear-cut bug fix for a double-free/use-after-free crash in
-the Xen 9p filesystem transport. The bug has a concrete reproducer with
-a kernel Oops stack trace. The fix is self-contained in a single file,
-authored by the original driver creator, and signed off by the subsystem
-maintainer. While the change is moderately sized, every part of it
-directly addresses the race condition. The risk of the fix is low
-compared to the impact of the crash it prevents. All prerequisites exist
-in the current stable tree.
+The fix is small, surgical, self-contained, fixes a real clock-tree
+correctness issue affecting all Amlogic S4 users since v6.7, and carries
+extremely low regression risk. It meets all stable kernel criteria.
 
 **YES**
 
- net/9p/trans_xen.c | 85 ++++++++++++++++++++++++----------------------
- 1 file changed, 44 insertions(+), 41 deletions(-)
+ drivers/clk/meson/s4-peripherals.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 12f752a923324..9bbfc20744f69 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -277,45 +277,52 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
- {
- 	int i, j;
+diff --git a/drivers/clk/meson/s4-peripherals.c b/drivers/clk/meson/s4-peripherals.c
+index 6d69b132d1e1f..bab4f5700de47 100644
+--- a/drivers/clk/meson/s4-peripherals.c
++++ b/drivers/clk/meson/s4-peripherals.c
+@@ -1106,7 +1106,6 @@ static struct clk_regmap s4_cts_enci_sel = {
+ 		.ops = &clk_regmap_mux_ops,
+ 		.parent_hws = s4_cts_parents,
+ 		.num_parents = ARRAY_SIZE(s4_cts_parents),
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
--	write_lock(&xen_9pfs_lock);
--	list_del(&priv->list);
--	write_unlock(&xen_9pfs_lock);
--
--	for (i = 0; i < XEN_9PFS_NUM_RINGS; i++) {
--		struct xen_9pfs_dataring *ring = &priv->rings[i];
--
--		cancel_work_sync(&ring->work);
--
--		if (!priv->rings[i].intf)
--			break;
--		if (priv->rings[i].irq > 0)
--			unbind_from_irqhandler(priv->rings[i].irq, ring);
--		if (priv->rings[i].data.in) {
--			for (j = 0;
--			     j < (1 << priv->rings[i].intf->ring_order);
--			     j++) {
--				grant_ref_t ref;
--
--				ref = priv->rings[i].intf->ref[j];
--				gnttab_end_foreign_access(ref, NULL);
--			}
--			free_pages_exact(priv->rings[i].data.in,
-+	if (priv->rings) {
-+		for (i = 0; i < XEN_9PFS_NUM_RINGS; i++) {
-+			struct xen_9pfs_dataring *ring = &priv->rings[i];
-+
-+			cancel_work_sync(&ring->work);
-+
-+			if (!priv->rings[i].intf)
-+				break;
-+			if (priv->rings[i].irq > 0)
-+				unbind_from_irqhandler(priv->rings[i].irq, ring);
-+			if (priv->rings[i].data.in) {
-+				for (j = 0;
-+				     j < (1 << priv->rings[i].intf->ring_order);
-+				     j++) {
-+					grant_ref_t ref;
-+
-+					ref = priv->rings[i].intf->ref[j];
-+					gnttab_end_foreign_access(ref, NULL);
-+				}
-+				free_pages_exact(priv->rings[i].data.in,
- 				   1UL << (priv->rings[i].intf->ring_order +
- 					   XEN_PAGE_SHIFT));
-+			}
-+			gnttab_end_foreign_access(priv->rings[i].ref, NULL);
-+			free_page((unsigned long)priv->rings[i].intf);
- 		}
--		gnttab_end_foreign_access(priv->rings[i].ref, NULL);
--		free_page((unsigned long)priv->rings[i].intf);
-+		kfree(priv->rings);
- 	}
--	kfree(priv->rings);
- 	kfree(priv->tag);
- 	kfree(priv);
- }
+@@ -1122,7 +1121,6 @@ static struct clk_regmap s4_cts_encp_sel = {
+ 		.ops = &clk_regmap_mux_ops,
+ 		.parent_hws = s4_cts_parents,
+ 		.num_parents = ARRAY_SIZE(s4_cts_parents),
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
- static void xen_9pfs_front_remove(struct xenbus_device *dev)
- {
--	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
-+	struct xen_9pfs_front_priv *priv;
+@@ -1138,7 +1136,6 @@ static struct clk_regmap s4_cts_vdac_sel = {
+ 		.ops = &clk_regmap_mux_ops,
+ 		.parent_hws = s4_cts_parents,
+ 		.num_parents = ARRAY_SIZE(s4_cts_parents),
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
-+	write_lock(&xen_9pfs_lock);
-+	priv = dev_get_drvdata(&dev->dev);
-+	if (priv == NULL) {
-+		write_unlock(&xen_9pfs_lock);
-+		return;
-+	}
- 	dev_set_drvdata(&dev->dev, NULL);
-+	list_del(&priv->list);
-+	write_unlock(&xen_9pfs_lock);
-+
- 	xen_9pfs_front_free(priv);
- }
- 
-@@ -382,7 +389,7 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
- {
- 	int ret, i;
- 	struct xenbus_transaction xbt;
--	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
-+	struct xen_9pfs_front_priv *priv;
- 	char *versions, *v;
- 	unsigned int max_rings, max_ring_order, len = 0;
- 
-@@ -410,6 +417,10 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
- 	if (p9_xen_trans.maxsize > XEN_FLEX_RING_SIZE(max_ring_order))
- 		p9_xen_trans.maxsize = XEN_FLEX_RING_SIZE(max_ring_order) / 2;
- 
-+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+	priv->dev = dev;
- 	priv->rings = kcalloc(XEN_9PFS_NUM_RINGS, sizeof(*priv->rings),
- 			      GFP_KERNEL);
- 	if (!priv->rings) {
-@@ -468,6 +479,11 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
- 		goto error;
- 	}
- 
-+	write_lock(&xen_9pfs_lock);
-+	dev_set_drvdata(&dev->dev, priv);
-+	list_add_tail(&priv->list, &xen_9pfs_devs);
-+	write_unlock(&xen_9pfs_lock);
-+
- 	xenbus_switch_state(dev, XenbusStateInitialised);
- 	return 0;
- 
-@@ -482,19 +498,6 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
- static int xen_9pfs_front_probe(struct xenbus_device *dev,
- 				const struct xenbus_device_id *id)
- {
--	struct xen_9pfs_front_priv *priv = NULL;
--
--	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
--
--	priv->dev = dev;
--	dev_set_drvdata(&dev->dev, priv);
--
--	write_lock(&xen_9pfs_lock);
--	list_add_tail(&priv->list, &xen_9pfs_devs);
--	write_unlock(&xen_9pfs_lock);
--
- 	return 0;
- }
+@@ -1169,7 +1166,6 @@ static struct clk_regmap s4_hdmi_tx_sel = {
+ 		.ops = &clk_regmap_mux_ops,
+ 		.parent_hws = s4_hdmi_tx_parents,
+ 		.num_parents = ARRAY_SIZE(s4_hdmi_tx_parents),
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
 -- 
 2.51.0
