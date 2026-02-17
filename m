@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1225286D4D;
-	Tue, 17 Feb 2026 20:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0555A377563;
+	Tue, 17 Feb 2026 20:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360852; cv=none; b=OxrbydSwRpBf2V35NwrLQY/98x3xgf9KIVBkQc/jwCZs/cAGNEBUTKaKH+juDFscODrdh1wzcRToKOkxD1Oxs+PEE8l88/ioCGIpNj8GHNnspdhkeT4Tm9m0l7mmTf1pt48uz0dPL81cMiRg7ag9yGHVDWkecSyKvDuCxwidnrM=
+	t=1771360855; cv=none; b=CBCNhx1VfVgczYHhDQgBlpHv043wJKgTQSL9yi93ccuelf2E6iF3W0d8ZZKCdaSqa2Ll5VJo+aKCOw74MZuDgS6ul3aqZMkacsalcO4ve+A4eulRCFk6yxolame0R7hgZgjrxHl80AsxNFE8XW8x5DSW9Hd5ilF4L13XIjVLxzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360852; c=relaxed/simple;
-	bh=fU0uyYb/Rwsdk80sRpFdaC9gjm/ZEhw46wWUSgjgyNY=;
+	s=arc-20240116; t=1771360855; c=relaxed/simple;
+	bh=09tu6TQXlovM0tYiv/ctqMl6U24JbEC1RiOSgb8cQw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dr17wwL3rRq1AzObPnLn+LJP7aa+Y5NFrCuyuAOwOP2ReXXaWFW8rungyVjsWh4fDRhExnl6Fa3Vw/dl2EGrJGlP46xnGeukugwki1PBmLfQ47CiNZZbgh2s0epljqTgxttRfp6+AHLPBK7xawqiar9WAVc3K81dnWS8OjnwjhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eU+Oz+93; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVQdAtRdiRcwz6RVbD+yzcf99C1DhSG0QAISV7+DkNUp2zrefffP5F67tKOVV+vCJkXGbK5Xa0tC/bpg4vk4toRZzaCIUqMvkDmYE3MOa6UCBNJoQcFvrvI24fHG0l6a5rXxI8q2Xe4J0+KfpI1CrO7WqWck9mNuElYf4wq29fA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVJIKSFK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eU+Oz+93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F8DC4CEF7;
-	Tue, 17 Feb 2026 20:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVJIKSFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFEFC4CEF7;
+	Tue, 17 Feb 2026 20:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360851;
-	bh=fU0uyYb/Rwsdk80sRpFdaC9gjm/ZEhw46wWUSgjgyNY=;
+	s=korg; t=1771360854;
+	bh=09tu6TQXlovM0tYiv/ctqMl6U24JbEC1RiOSgb8cQw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eU+Oz+93OPDQ0zyIUiCjXLSUWL3MHuA60YQl3IirmjNd1zXC6voO1lUYE6VTnwqBO
-	 M3S73LqSDHQygzXeunq3M2dRY6b/DL+LFZd167ANLEZxcazjerC9o5HYL9duc/MTsV
-	 a3Eh28FPcZpBTqSnQGrnKk+6VkrAUlZEUvcZSYt8=
+	b=oVJIKSFK3mJjyjw9AUmuv2fWY2OgydaQjpLT1FPxswyAkyQK8IClHB2DxIxJPuVV/
+	 OxX4MIA2zFGoipGMZSZuLMxipjkBKc/wKfWp8C5JeOgi7YkfkzoNFziKApLY7MpEpB
+	 zeqe0MSt9EcAIxwutNxWCuRk8qaPkE92goIAXIUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Jinbao Liu <liujinbao1@xiaomi.com>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 32/39] f2fs: fix to add gc count stat in f2fs_gc_range
-Date: Tue, 17 Feb 2026 21:30:54 +0100
-Message-ID: <20260217200005.443068543@linuxfoundation.org>
+Subject: [PATCH 6.6 33/39] f2fs: fix out-of-bounds access in sysfs attribute read/write
+Date: Tue, 17 Feb 2026 21:30:55 +0100
+Message-ID: <20260217200005.480997364@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -52,31 +53,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-commit 761dac9073cd67d4705a94cd1af674945a117f4c upstream.
+commit 98ea0039dbfdd00e5cc1b9a8afa40434476c0955 upstream.
 
-It missed the stat count in f2fs_gc_range.
+Some f2fs sysfs attributes suffer from out-of-bounds memory access and
+incorrect handling of integer values whose size is not 4 bytes.
 
+For example:
+vm:~# echo 65537 > /sys/fs/f2fs/vde/carve_out
+vm:~# cat /sys/fs/f2fs/vde/carve_out
+65537
+vm:~# echo 4294967297 > /sys/fs/f2fs/vde/atgc_age_threshold
+vm:~# cat /sys/fs/f2fs/vde/atgc_age_threshold
+1
+
+carve_out maps to {struct f2fs_sb_info}->carve_out, which is a 8-bit
+integer. However, the sysfs interface allows setting it to a value
+larger than 255, resulting in an out-of-range update.
+
+atgc_age_threshold maps to {struct atgc_management}->age_threshold,
+which is a 64-bit integer, but its sysfs interface cannot correctly set
+values larger than UINT_MAX.
+
+The root causes are:
+1. __sbi_store() treats all default values as unsigned int, which
+prevents updating integers larger than 4 bytes and causes out-of-bounds
+writes for integers smaller than 4 bytes.
+
+2. f2fs_sbi_show() also assumes all default values are unsigned int,
+leading to out-of-bounds reads and incorrect access to integers larger
+than 4 bytes.
+
+This patch introduces {struct f2fs_attr}->size to record the actual size
+of the integer associated with each sysfs attribute. With this
+information, sysfs read and write operations can correctly access and
+update values according to their real data size, avoiding memory
+corruption and truncation.
+
+Fixes: b59d0bae6ca3 ("f2fs: add sysfs support for controlling the gc_thread")
 Cc: stable@kernel.org
-Fixes: 9bf1dcbdfdc8 ("f2fs: fix to account gc stats correctly")
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Jinbao Liu <liujinbao1@xiaomi.com>
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/sysfs.c |   60 ++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 52 insertions(+), 8 deletions(-)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1998,6 +1998,7 @@ int f2fs_gc_range(struct f2fs_sb_info *s
- 	unsigned int segno;
- 	unsigned int gc_secs = dry_run_sections;
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -58,6 +58,7 @@ struct f2fs_attr {
+ 			 const char *buf, size_t len);
+ 	int struct_type;
+ 	int offset;
++	int size;
+ 	int id;
+ };
  
-+	stat_inc_gc_call_count(sbi, FOREGROUND);
- 	for (segno = start_seg; segno <= end_seg; segno += SEGS_PER_SEC(sbi)) {
- 		struct gc_inode_list gc_list = {
- 			.ilist = LIST_HEAD_INIT(gc_list.ilist),
+@@ -285,11 +286,30 @@ static ssize_t main_blkaddr_show(struct
+ 			(unsigned long long)MAIN_BLKADDR(sbi));
+ }
+ 
++static ssize_t __sbi_show_value(struct f2fs_attr *a,
++		struct f2fs_sb_info *sbi, char *buf,
++		unsigned char *value)
++{
++	switch (a->size) {
++	case 1:
++		return sysfs_emit(buf, "%u\n", *(u8 *)value);
++	case 2:
++		return sysfs_emit(buf, "%u\n", *(u16 *)value);
++	case 4:
++		return sysfs_emit(buf, "%u\n", *(u32 *)value);
++	case 8:
++		return sysfs_emit(buf, "%llu\n", *(u64 *)value);
++	default:
++		f2fs_bug_on(sbi, 1);
++		return sysfs_emit(buf,
++				"show sysfs node value with wrong type\n");
++	}
++}
++
+ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
+ 			struct f2fs_sb_info *sbi, char *buf)
+ {
+ 	unsigned char *ptr = NULL;
+-	unsigned int *ui;
+ 
+ 	ptr = __struct_ptr(sbi, a->struct_type);
+ 	if (!ptr)
+@@ -372,9 +392,30 @@ static ssize_t f2fs_sbi_show(struct f2fs
+ 				atomic_read(&sbi->cp_call_count[BACKGROUND]));
+ #endif
+ 
+-	ui = (unsigned int *)(ptr + a->offset);
++	return __sbi_show_value(a, sbi, buf, ptr + a->offset);
++}
+ 
+-	return sysfs_emit(buf, "%u\n", *ui);
++static void __sbi_store_value(struct f2fs_attr *a,
++			struct f2fs_sb_info *sbi,
++			unsigned char *ui, unsigned long value)
++{
++	switch (a->size) {
++	case 1:
++		*(u8 *)ui = value;
++		break;
++	case 2:
++		*(u16 *)ui = value;
++		break;
++	case 4:
++		*(u32 *)ui = value;
++		break;
++	case 8:
++		*(u64 *)ui = value;
++		break;
++	default:
++		f2fs_bug_on(sbi, 1);
++		f2fs_err(sbi, "store sysfs node value with wrong type");
++	}
+ }
+ 
+ static ssize_t __sbi_store(struct f2fs_attr *a,
+@@ -746,7 +787,7 @@ out:
+ 		return count;
+ 	}
+ 
+-	*ui = (unsigned int)t;
++	__sbi_store_value(a, sbi, ptr + a->offset, t);
+ 
+ 	return count;
+ }
+@@ -860,24 +901,27 @@ static struct f2fs_attr f2fs_attr_sb_##_
+ 	.id	= F2FS_FEATURE_##_feat,				\
+ }
+ 
+-#define F2FS_ATTR_OFFSET(_struct_type, _name, _mode, _show, _store, _offset) \
++#define F2FS_ATTR_OFFSET(_struct_type, _name, _mode, _show, _store, _offset, _size) \
+ static struct f2fs_attr f2fs_attr_##_name = {			\
+ 	.attr = {.name = __stringify(_name), .mode = _mode },	\
+ 	.show	= _show,					\
+ 	.store	= _store,					\
+ 	.struct_type = _struct_type,				\
+-	.offset = _offset					\
++	.offset = _offset,					\
++	.size = _size						\
+ }
+ 
+ #define F2FS_RO_ATTR(struct_type, struct_name, name, elname)	\
+ 	F2FS_ATTR_OFFSET(struct_type, name, 0444,		\
+ 		f2fs_sbi_show, NULL,				\
+-		offsetof(struct struct_name, elname))
++		offsetof(struct struct_name, elname),		\
++		sizeof_field(struct struct_name, elname))
+ 
+ #define F2FS_RW_ATTR(struct_type, struct_name, name, elname)	\
+ 	F2FS_ATTR_OFFSET(struct_type, name, 0644,		\
+ 		f2fs_sbi_show, f2fs_sbi_store,			\
+-		offsetof(struct struct_name, elname))
++		offsetof(struct struct_name, elname),		\
++		sizeof_field(struct struct_name, elname))
+ 
+ #define F2FS_GENERAL_RO_ATTR(name) \
+ static struct f2fs_attr f2fs_attr_##name = __ATTR(name, 0444, name##_show, NULL)
 
 
