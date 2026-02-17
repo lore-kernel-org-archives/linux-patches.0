@@ -1,106 +1,161 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5945418C02E;
-	Tue, 17 Feb 2026 07:48:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227973093CD
+	for <patches@lists.linux.dev>; Tue, 17 Feb 2026 10:00:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771314518; cv=none; b=H9K2raskTk1P8ZDZOumY8bH4jZZ4mhczFBbM5I6nG5XE46LCsfK5jzhBcDQ8EMefa2QbTgSstuX7MP4SohoFiqmfOR1Lb9deA1vjBz3mQQLTEsuUIp4NUvQbSiWtpfFQbihOq96eEZnFoEyhHLpJ49TD7xZRhqLD+eBJ6ohAkbc=
+	t=1771322460; cv=none; b=Mv7JiEGP15gfEOCwKPR8MsXHGDZvBbwuSsMuMJ7OGkyzJfPUDNFNHl+QXom73+qAmZYeP7Edt/b7eerLYZXEYkmBvWMffJMGBoJvUrYK0UnMzhWtvnW8rYjycNagBv4tcCKtvQeInn+FKqjRQbu9TaWur4psBLP3IwL2VMQ5kDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771314518; c=relaxed/simple;
-	bh=mJLwzjpt2bfEgYp4baQkU9mJK9eW9sZ+pX73oE5VKg8=;
+	s=arc-20240116; t=1771322460; c=relaxed/simple;
+	bh=WvbSJG18f0qrRcBaMKTlvE4EDFtVfB0iH3lA6r7nM2A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WwwMYz2ZxiqKq5XJd5Htli9DPDAXEeagDl+jy+Y9drQAaxhZjEMYywRcIpcxZq7l7/wDeGt0mGq0OmlelUvyrTRs77NSNukEJCu+JfaDbqUvim31FJ2rXQK+oFQrfeyDv2dhi8qK2t2fULjdQuFGlujne44thLX5VYBHPd1OYr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dgGwVs4B; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=pu1xWXKx6G9hBa5qCB9YZV9Jv4JAg71VYWjn/Qv9Ixp2COgcVax8ZcQmqoEFJLi8Vm7MJvOWZBOZQxTM1elUOfS8jrOtjYYAp4oiJhOrteb6kHCN9phqfrUwLk3okpB884PtCntyPR5lRvDKLoaTw07m6qVdctpEccbPBIyTZYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=Et/eL/8b; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=FQ/hRcK2; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=H+l0FWmp; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=PBDhoemM; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dgGwVs4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CBBC4CEF7;
-	Tue, 17 Feb 2026 07:48:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771314518;
-	bh=mJLwzjpt2bfEgYp4baQkU9mJK9eW9sZ+pX73oE5VKg8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dgGwVs4B5LLGiS7X1zS5obWx/mor8BygeVT48WTb5O81v04Ok6750noC+zYZatpc5
-	 W2bGGWt8kkDKoVYU3nsIUEz1ZJhmTxMvPiVTMIXP06VpwXqNDxyH8wtIW9bPTaXHsY
-	 QRfxbzjTCJHVOK47EK07HOhaxkVraJJEX7i8mzgh4bz+Ivycq9wi/dIm1JOSGGaNYb
-	 Un3QTr7OBABuXr5BrmlZnmbXMk9biJFrpnqQj8aMPeg2vWy/44MWrhdltHpeDYbsV7
-	 GtgK7u/lF4XdpX9xwRBP9AUIly9iQewVGcPHHMzWFjnHxYBwG2btH+V18syZD2Os7F
-	 A6BkjRmc3cPEw==
-Date: Tue, 17 Feb 2026 09:48:33 +0200
-From: Leon Romanovsky <leon@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	linux-rdma@vger.kernel.org,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 03/10] RDMA: Add ib_respond_udata()
-Message-ID: <20260217074833.GH12989@unreal>
-References: <0-v1-89ea7d615ba4+636-bnxt_re_uapi_jgg@nvidia.com>
- <3-v1-89ea7d615ba4+636-bnxt_re_uapi_jgg@nvidia.com>
- <20260213101053.GJ12887@unreal>
- <20260213124359.GD1218606@nvidia.com>
- <20260213153739.GR12887@unreal>
- <20260213154813.GG1218606@nvidia.com>
- <20260216231424.GA3804671@nvidia.com>
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="Et/eL/8b";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="FQ/hRcK2";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="H+l0FWmp";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="PBDhoemM"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 801B63E94C;
+	Tue, 17 Feb 2026 10:00:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1771322453; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FXFew/VphsUb2djQEERQyRCETTqYpZbxEZdKIiHK6kk=;
+	b=Et/eL/8b98kq1OXGkH37XukK1I/557ShpGRGlB5apALLL4vXLXXgj0y+vkxSF4XRXN2Rse
+	+xiUS7+zk+bG/KgCX629thSPPogqLlIlQPBfl7nl21rBKDuj9Lz7uATjCA3E/vEJsDLJmq
+	fpWDVC4L5QrfG76Eh+BQrqBchx88giU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1771322453;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FXFew/VphsUb2djQEERQyRCETTqYpZbxEZdKIiHK6kk=;
+	b=FQ/hRcK2xUwvKvCmv5YPr3nNIqPsyjcAxYRNirWGKnS2sM6F0ruNzfNROPterZHmX1SgeK
+	iSDNvwn2x69653DQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1771322449; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FXFew/VphsUb2djQEERQyRCETTqYpZbxEZdKIiHK6kk=;
+	b=H+l0FWmpZasj0sfITiQ/cGFXFWZ46NeLJY+CP40mkgH5mqAKquylCd9LfVX2p5t2JQK0Vq
+	3b6mV1FzklPy0vng4DGzSuDTkmCg2mo1rDJLkvmsEVRAWPO2IIVfVd7b/Hqq0qUpoIL4zM
+	1qVtpIjTVrmuAhlf2h4PGA3gqoW0UfM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1771322449;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FXFew/VphsUb2djQEERQyRCETTqYpZbxEZdKIiHK6kk=;
+	b=PBDhoemM5vXEW3KLxGe9lz6/iyroCe6gC/BpCD3DmD/pFjPRiEq9pnxEsyel7BEGzxV14K
+	SZ05xbFBlgr0FODQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 33E9A3EA65;
+	Tue, 17 Feb 2026 10:00:49 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id qqjIDFE8lGnkPgAAD6G6ig
+	(envelope-from <jack@suse.cz>); Tue, 17 Feb 2026 10:00:49 +0000
+Received: by quack3.suse.cz (Postfix, from userid 1000)
+	id B3215A08CF; Tue, 17 Feb 2026 11:00:42 +0100 (CET)
+Date: Tue, 17 Feb 2026 11:00:42 +0100
+From: Jan Kara <jack@suse.cz>
+To: Amir Goldstein <amir73il@gmail.com>
+Cc: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev, 
+	stable@vger.kernel.org, Jan Kara <jack@suse.cz>, Jakub Acs <acsjakub@amazon.de>, 
+	Christian Brauner <brauner@kernel.org>, viro@zeniv.linux.org.uk, linux-fsdevel@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.19-5.15] fsnotify: Shutdown fsnotify before
+ destroying sb's dcache
+Message-ID: <z6nyopsvzubwxowiqxdg2yt5v6yu4i3uzlflvryjwuk2su7z4m@35ikyzqbxb46>
+References: <20260214212452.782265-1-sashal@kernel.org>
+ <20260214212452.782265-85-sashal@kernel.org>
+ <CAOQ4uxgKwp2FSAUwqhHN-kTBcy0DsFmLstGUY+zJWppOzTAmHA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260216231424.GA3804671@nvidia.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAOQ4uxgKwp2FSAUwqhHN-kTBcy0DsFmLstGUY+zJWppOzTAmHA@mail.gmail.com>
+X-Spamd-Result: default: False [-3.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	MISSING_XM_UA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	ARC_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[gmail.com];
+	RCVD_COUNT_THREE(0.00)[3];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	RCVD_TLS_LAST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:email]
+X-Spam-Flag: NO
+X-Spam-Score: -3.80
+X-Spam-Level: 
 
-On Mon, Feb 16, 2026 at 07:14:24PM -0400, Jason Gunthorpe wrote:
-> On Fri, Feb 13, 2026 at 11:48:13AM -0400, Jason Gunthorpe wrote:
-> > On Fri, Feb 13, 2026 at 05:37:39PM +0200, Leon Romanovsky wrote:
-> > > On Fri, Feb 13, 2026 at 08:43:59AM -0400, Jason Gunthorpe wrote:
-> > > > On Fri, Feb 13, 2026 at 12:10:53PM +0200, Leon Romanovsky wrote:
-> > > > > > @@ -3177,6 +3177,38 @@ static inline int _ib_copy_validate_udata_in(struct ib_udata *udata, void *req,
-> > > > > >  		ret;                                                          \
-> > > > > >  	})
-> > > > > >  
-> > > > > > +static inline int _ib_respond_udata(struct ib_udata *udata, const void *src,
-> > > > > > +				   size_t len)
-> > > > > > +{
-> > > > > > +	size_t copy_len;
-> > > > > > +
-> > > > > > +	copy_len = min(len, udata->outlen);
-> > > > > 
-> > > > > Don't you need to check that udata->outlen is larger than zero?
-> > > > 
-> > > > As far as I can tell 0 works fine with copy_to_user()
-> > > 
-> > > My main concern that it is not clear what return value will be in that
-> > > case.
-> > > 
-> > > +       copy_len = min(len, udata->outlen);
-> > > +       if (copy_to_user(udata->outbuf, src, copy_len))
-> > > +               return -EFAULT; <--- this?
-> > > +       if (copy_len < udata->outlen) {
-> > > ...
-> > > +       }
-> > > +       return 0; <- or this?
-> > 
-> > Oh, yeah, that's a really good point.
+On Sun 15-02-26 09:11:30, Amir Goldstein wrote:
+> On Sat, Feb 14, 2026 at 11:27 PM Sasha Levin <sashal@kernel.org> wrote:
+> >
+> > From: Jan Kara <jack@suse.cz>
+> >
+> > [ Upstream commit 74bd284537b3447c651588101c32a203e4fe1a32 ]
+> >
+> > Currently fsnotify_sb_delete() was called after we have evicted
+> > superblock's dcache and inode cache. This was done mainly so that we
+> > iterate as few inodes as possible when removing inode marks. However, as
+> > Jakub reported, this is problematic because for some filesystems
+> > encoding of file handles uses sb->s_root which gets cleared as part of
+> > dcache eviction. And either delayed fsnotify events or reading fdinfo
+> > for fsnotify group with marks on fs being unmounted may trigger encoding
+> > of file handles during unmount.
 > 
-> So it still returns 0, copy_to_user() returns the number of bytes left
-> to copy. See Documentation/kernel-hacking/hacking.rst
-> 
->     Unlike :c:func:`put_user()` and :c:func:`get_user()`, they
->     return the amount of uncopied data (ie. 0 still means success).
-> 
-> Number of bytes left to copy for a 0 length copy is still 0, not
-> EFAULT.
-> 
-> I'm just going to add a comment.
+> In retrospect, the text "Now that we iterate inode connectors..."
+> would have helped LLM (as well as human) patch backports understand
+> that this is NOT a standalone patch.
 
-It should work as well.
+Good point :)
 
-Thanks
+> Sasha,
+> 
+> I am very for backporting this fix, but need to backport the series
+> https://lore.kernel.org/linux-fsdevel/20260121135513.12008-1-jack@suse.cz/
 
-> 
-> Jason
-> 
+Yes. Without commits 94bd01253c3d5 ("fsnotify: Track inode connectors for a
+superblock") and a05fc7edd988c ("fsnotify: Use connector list for
+destroying inode marks") the reordering alone can cause large latencies
+during filesystem unmount.
+
+								Honza
+-- 
+Jan Kara <jack@suse.com>
+SUSE Labs, CR
