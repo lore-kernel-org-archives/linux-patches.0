@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBC6320CD9;
-	Tue, 17 Feb 2026 20:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6544F286D4D;
+	Tue, 17 Feb 2026 20:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360844; cv=none; b=MpZVRcjp+7HqKKDo9tbqdxOFvqeA81pnqJJ9WiZUvuSx0Yn1oIMxqvKjKPVaNhDwqAVh5lsylkdxEnzBbo6VSGwCyr0FHYrTSPJkoMtrTzDnFDop2iSidyuTvIfqG9h3BsxuuU3sAOPO1Es7kBmU1+lY1xQk8gT6s06I6uYt2Q4=
+	t=1771360848; cv=none; b=SA7jDsRGf3+xbf7YUYx6iO5YmtBaxGl43vxILC2yE89Ub8Wzmkq2VAWba8Pj9bgoWUrHh6ymUskgmByFPcII6TLHFe6qWItZyWfJxvKHjs3mRy+VzXN3fQANBbyiApr/Y83CRKToUy51RF3McY7vqnU9L3TuEwt7HCH31lVFdvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360844; c=relaxed/simple;
-	bh=pHzlN07lAONPSintpWTjBDkQo1F5b5ibyAIiAkFxkjw=;
+	s=arc-20240116; t=1771360848; c=relaxed/simple;
+	bh=n+MfHyVGVvHJ83FRejoTfdLMkSfQE6PXuNZiY8LK2Hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GjMMJbavIVdoJCAonxJBCFps+FxE+97CmRMIqP8yHDkHfyVWxHRSYDNf/vW006gG2nBuqgjaKqbBvb7rhEIFmoyxch/aLdABinO9UYZdGiu0dB5+4da6e4JfJ/aoef+GV88rdKn8lYHrEkHvkKxNGpQr8GUmyMYrE89ill9XlVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvBeDFEj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VA/tmztBEYkrgAz9GpNnxRtSdTPDQIX2M6ezncLgQv8L4KZbaSc2JiWHlEVt3EEdBUZA+18u7a9dlOi2YfHN0pZuo3G407ltxtCVGd1g6sYmwQxtm/HOTWA6uTSo9bFkYmedvkVBkTLvVMBElb9YkrvjewnMXydPMyofFAPynQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMb42F03; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvBeDFEj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9B1C4CEF7;
-	Tue, 17 Feb 2026 20:40:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMb42F03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA42C4CEF7;
+	Tue, 17 Feb 2026 20:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360844;
-	bh=pHzlN07lAONPSintpWTjBDkQo1F5b5ibyAIiAkFxkjw=;
+	s=korg; t=1771360848;
+	bh=n+MfHyVGVvHJ83FRejoTfdLMkSfQE6PXuNZiY8LK2Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvBeDFEjewYDda4ZOJ2AmqcigHCMunjZVx3YGeg947nua/gGTZzFFRXMr7oh5Pzaf
-	 hQbfDHmnFaS6jOJzpySeepOxzF5LibPFVYxjwNLQmhqqIGT6BMxpGGUN/iS5FbZ03f
-	 jEQBSzoMrYzg68beSh8B0NDw0L+s3p8BJ9aBl5vc=
+	b=IMb42F03IVyV28MQfHxTwNZ9Gmf3HNcxSPAgt5IbLeBxuR4cePxZX7NXUnW1ppgZh
+	 2R97d8f2Ja5IuOwZHdoIZDraR0WzhyrCg9DyxMG0FdrSz6NF5RUh1+7apnSH3ZajKP
+	 IVS6q6Xs95PDKSamTX0SCygdWGonNC9X19UEC4eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	stable <stable@kernel.org>,
-	Steve Glendinning <steve.glendinning@shawell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 31/39] fbdev: smscufx: properly copy ioctl memory to kernelspace
-Date: Tue, 17 Feb 2026 21:30:53 +0100
-Message-ID: <20260217200005.406488385@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 05/39] bus: fsl-mc: fix use-after-free in driver_override_show()
+Date: Tue, 17 Feb 2026 21:30:27 +0100
+Message-ID: <20260217200004.434484449@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -52,57 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit 120adae7b42faa641179270c067864544a50ab69 upstream.
+[ Upstream commit 148891e95014b5dc5878acefa57f1940c281c431 ]
 
-The UFX_IOCTL_REPORT_DAMAGE ioctl does not properly copy data from
-userspace to kernelspace, and instead directly references the memory,
-which can cause problems if invalid data is passed from userspace.  Fix
-this all up by correctly copying the memory before accessing it within
-the kernel.
+The driver_override_show() function reads the driver_override string
+without holding the device_lock. However, driver_override_store() uses
+driver_set_override(), which modifies and frees the string while holding
+the device_lock.
 
-Reported-by: Tianchu Chen <flynnnchen@tencent.com>
-Cc: stable <stable@kernel.org>
-Cc: Steve Glendinning <steve.glendinning@shawell.net>
-Cc: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+This can result in a concurrent use-after-free if the string is freed
+by the store function while being read by the show function.
+
+Fix this by holding the device_lock around the read operation.
+
+Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20251202174438.12658-1-hanguidong02@gmail.com
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/smscufx.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/smscufx.c
-+++ b/drivers/video/fbdev/smscufx.c
-@@ -988,7 +988,6 @@ static int ufx_ops_ioctl(struct fb_info
- 			 unsigned long arg)
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -201,8 +201,12 @@ static ssize_t driver_override_show(stru
+ 				    struct device_attribute *attr, char *buf)
  {
- 	struct ufx_data *dev = info->par;
--	struct dloarea *area = NULL;
+ 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
++	ssize_t len;
  
- 	if (!atomic_read(&dev->usb_active))
- 		return 0;
-@@ -1003,6 +1002,10 @@ static int ufx_ops_ioctl(struct fb_info
+-	return sysfs_emit(buf, "%s\n", mc_dev->driver_override);
++	device_lock(dev);
++	len = sysfs_emit(buf, "%s\n", mc_dev->driver_override);
++	device_unlock(dev);
++	return len;
+ }
+ static DEVICE_ATTR_RW(driver_override);
  
- 	/* TODO: Help propose a standard fb.h ioctl to report mmap damage */
- 	if (cmd == UFX_IOCTL_REPORT_DAMAGE) {
-+		struct dloarea *area __free(kfree) = kmalloc(sizeof(*area), GFP_KERNEL);
-+		if (!area)
-+			return -ENOMEM;
-+
- 		/* If we have a damage-aware client, turn fb_defio "off"
- 		 * To avoid perf imact of unnecessary page fault handling.
- 		 * Done by resetting the delay for this fb_info to a very
-@@ -1012,7 +1015,8 @@ static int ufx_ops_ioctl(struct fb_info
- 		if (info->fbdefio)
- 			info->fbdefio->delay = UFX_DEFIO_WRITE_DISABLE;
- 
--		area = (struct dloarea *)arg;
-+		if (copy_from_user(area, (u8 __user *)arg, sizeof(*area)))
-+			return -EFAULT;
- 
- 		if (area->x < 0)
- 			area->x = 0;
 
 
