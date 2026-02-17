@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119C4374178;
-	Tue, 17 Feb 2026 20:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4BE37755D;
+	Tue, 17 Feb 2026 20:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360891; cv=none; b=VDwOHZ+zGHwyMc0F23iSxw7k/ijUTPQZzkcSBDqNm4glQK9vZhz7a+iU5Bir1w7lvvxGR/G4EGPpfcUWE5ho42gxTTaTPjTjaCGUwL44hXTvo22FyCwBOXGLxY8XEE0EqiXjbjACxFYCocI8nNIcLK/F5xQiE0Ij/DP1LVGKEd8=
+	t=1771360894; cv=none; b=HNruWFhTbWJMnpoZp9rCiUvTh+Wihn4TaqFbDlcDPTGVKnpuOHDMh/2N2o31aou1NctIlTBXa9RCWFDJbqsM2s3WUapQmkWvqo19nJK0Q4RLZkHZY+roNqKm6MvbPUMGVFjUnUgNDOuOGI+jVCul7hDx3sfnk9SDNEmOR23p2C0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360891; c=relaxed/simple;
-	bh=byuJ2LCUHRD/PNHQgiLvOmPWmeV3d7lQnGiNPq2NpVc=;
+	s=arc-20240116; t=1771360894; c=relaxed/simple;
+	bh=Vm8yBriRfyLbwLD7o+/3dHW/PD8B04MT4VLebiMC1Hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hAaDRA4NSHwkIJXHZympflHINk7+SM3tUOQRrmrx9TFEl2sSeST7CC/MVm/dB5PQmd21nmXkl+2GoBw6rLDxi/H44qtGyXu0cUnREv29ktRwIlfTvK6a/wC4Ef7tPMUT5Z/EJmcOXqVX4juKt64PKWST6rN1GByoXGtnFa5rCFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPmL75Jv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jJZOJvMv+M+N0Rmq9+1qfBu3WdDvMQOxOtwqESZ02iGt6anqi/ikU1VNcM5ei4WhXKOsTe0t3kI58kYlBRKMQaQzraPEC1uVnyiNNbmalR4dyfOsSKullSygtXcsAHhoV1Cci0tjq6PM1M4upGrieZbZzGFIzkFa9ZxCwxBKywk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQ0wM4UB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPmL75Jv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE2AC4CEF7;
-	Tue, 17 Feb 2026 20:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQ0wM4UB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40BEC4CEF7;
+	Tue, 17 Feb 2026 20:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360890;
-	bh=byuJ2LCUHRD/PNHQgiLvOmPWmeV3d7lQnGiNPq2NpVc=;
+	s=korg; t=1771360894;
+	bh=Vm8yBriRfyLbwLD7o+/3dHW/PD8B04MT4VLebiMC1Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPmL75JvJYYgvXGT6e2nh7Qe5VknkyL2nKme6dazxvQWXNYVrSEX95NGo88FPnR79
-	 wdsTkHV8jQFL59N78brd1/s+jOb9jP9/hCOwOlSEtHnoESREw33kSi6AqH3DNh+ZoP
-	 zi6Iq2bafFoTnJr0R7K2g1wlzoSpdUrjemxdRPso=
+	b=MQ0wM4UBdPvJCRZyyQhtS3iumezxbgEwSuDcsRJb9OppzJ3FZ9Xz+0Z9GSVvhoNID
+	 VWQZ1ml7rcdH4I4lE28e1J1URt2u2eDqossexdboCQn2uk8lapKEVL7l0fIVH+5Vfi
+	 Ym3o+sTW+fpzF0qyieeVTWj+2YpWbsC20wp/5Bi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 38/39] USB: serial: option: add Telit FN920C04 RNDIS compositions
-Date: Tue, 17 Feb 2026 21:31:00 +0100
-Message-ID: <20260217200005.674461286@linuxfoundation.org>
+	Menglong Dong <dongml2@chinatelecom.cn>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 39/39] net: tunnel: make skb_vlan_inet_prepare() return drop reasons
+Date: Tue, 17 Feb 2026 21:31:01 +0100
+Message-ID: <20260217200005.711817490@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -50,123 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Menglong Dong <menglong8.dong@gmail.com>
 
-commit 509f403f3ccec14188036212118651bf23599396 upstream.
+[ Upstream commit 9990ddf47d4168088e2246c3d418bf526e40830d ]
 
-Add the following compositions:
+Make skb_vlan_inet_prepare return the skb drop reasons, which is just
+what pskb_may_pull_reason() returns. Meanwhile, adjust all the call of
+it.
 
-0x10a1: RNDIS + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  9 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a1 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=d128dba9
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x10a6: RNDIS + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 10 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a6 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=d128dba9
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x10ab: RNDIS + tty (AT) + tty (diag) + DPL (Data Packet Logging) + adb
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 11 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10ab Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=d128dba9
-C:  #Ifs= 6 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/bareudp.c    |  4 ++--
+ drivers/net/geneve.c     |  4 ++--
+ include/net/ip_tunnels.h | 13 ++++++++-----
+ 3 files changed, 12 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1401,12 +1401,16 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(0) | RSVD(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a1, 0xff),	/* Telit FN20C04 (RNDIS) */
-+	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a2, 0xff),	/* Telit FN920C04 (MBIM) */
- 	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a3, 0xff),	/* Telit FN920C04 (ECM) */
- 	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a6, 0xff),	/* Telit FN920C04 (RNDIS) */
-+	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a7, 0xff),	/* Telit FN920C04 (MBIM) */
- 	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a8, 0xff),	/* Telit FN920C04 (ECM) */
-@@ -1415,6 +1419,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10aa, 0xff),	/* Telit FN920C04 (MBIM) */
- 	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10ab, 0xff),	/* Telit FN920C04 (RNDIS) */
-+	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10b0, 0xff, 0xff, 0x30),	/* Telit FE990B (rmnet) */
- 	  .driver_info = NCTRL(5) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10b0, 0xff, 0xff, 0x40) },
+diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
+index 54767154de265..cfbc0240126ef 100644
+--- a/drivers/net/bareudp.c
++++ b/drivers/net/bareudp.c
+@@ -319,7 +319,7 @@ static int bareudp_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be32 saddr;
+ 	int err;
+ 
+-	if (!skb_vlan_inet_prepare(skb, skb->protocol != htons(ETH_P_TEB)))
++	if (skb_vlan_inet_prepare(skb, skb->protocol != htons(ETH_P_TEB)))
+ 		return -EINVAL;
+ 
+ 	if (!sock)
+@@ -385,7 +385,7 @@ static int bareudp6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be16 sport;
+ 	int err;
+ 
+-	if (!skb_vlan_inet_prepare(skb, skb->protocol != htons(ETH_P_TEB)))
++	if (skb_vlan_inet_prepare(skb, skb->protocol != htons(ETH_P_TEB)))
+ 		return -EINVAL;
+ 
+ 	if (!sock)
+diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
+index 27761334e1bff..33dae09f7fb22 100644
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -927,7 +927,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be16 sport;
+ 	int err;
+ 
+-	if (!skb_vlan_inet_prepare(skb, inner_proto_inherit))
++	if (skb_vlan_inet_prepare(skb, inner_proto_inherit))
+ 		return -EINVAL;
+ 
+ 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
+@@ -1026,7 +1026,7 @@ static int geneve6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be16 sport;
+ 	int err;
+ 
+-	if (!skb_vlan_inet_prepare(skb, inner_proto_inherit))
++	if (skb_vlan_inet_prepare(skb, inner_proto_inherit))
+ 		return -EINVAL;
+ 
+ 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index 3d36794cb1899..1051af74285c5 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -362,11 +362,12 @@ static inline bool pskb_inet_may_pull(struct sk_buff *skb)
+ 
+ /* Variant of pskb_inet_may_pull().
+  */
+-static inline bool skb_vlan_inet_prepare(struct sk_buff *skb,
+-					 bool inner_proto_inherit)
++static inline enum skb_drop_reason
++skb_vlan_inet_prepare(struct sk_buff *skb, bool inner_proto_inherit)
+ {
+ 	int nhlen = 0, maclen = inner_proto_inherit ? 0 : ETH_HLEN;
+ 	__be16 type = skb->protocol;
++	enum skb_drop_reason reason;
+ 
+ 	/* Essentially this is skb_protocol(skb, true)
+ 	 * And we get MAC len.
+@@ -387,11 +388,13 @@ static inline bool skb_vlan_inet_prepare(struct sk_buff *skb,
+ 	/* For ETH_P_IPV6/ETH_P_IP we make sure to pull
+ 	 * a base network header in skb->head.
+ 	 */
+-	if (!pskb_may_pull(skb, maclen + nhlen))
+-		return false;
++	reason = pskb_may_pull_reason(skb, maclen + nhlen);
++	if (reason)
++		return reason;
+ 
+ 	skb_set_network_header(skb, maclen);
+-	return true;
++
++	return SKB_NOT_DROPPED_YET;
+ }
+ 
+ static inline int ip_encap_hlen(struct ip_tunnel_encap *e)
+-- 
+2.51.0
+
 
 
