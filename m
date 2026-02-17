@@ -1,222 +1,175 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925A9374744;
-	Tue, 17 Feb 2026 20:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281D0284B3B;
+	Tue, 17 Feb 2026 20:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361406; cv=none; b=a/+kbBgdgDxQdr4PP4Cl6/yHhrmseV9DUh/HnKwhXcnC2rYeymw+s/kQQowRXI0oUlAAyAspf+MgHKmDA80I/2sRcmwxc5hvycNUPF3CRp8+6cUbZCDJ8AHq4FqZ7I+sZ3eYEkvPOIG+PjLZXGwTxfHLjB2Ob52UZCSHjGlhCBI=
+	t=1771361410; cv=none; b=k7glUTaNXQh7y7+dnud9LU0nRd870jFlrLI3A2qyv5qPnM0NAzQI6dtxYU4GR9dLQXPMklTHvXCdsh76titFQESTRVn4PHz5NsCiE8yr/hGy1EsCm+G8LkKVrftdLBgF92QSRRKbetzpuQkp0+NbXdGIaNYoifXIQD+kViapU+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361406; c=relaxed/simple;
-	bh=0L7xdcmkY1/iKh8OuoZmA8Z00KbETfuiw/smMvJs1KU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFRj1wrbWFzr3eti8PXoVZSN8PQhbN0DHpHVUhQokJx5NFrqJ2yd54xEFEbKy4cxUFQkjsR+iwVPSJhHU9aQor91V0MAiNl/HGgQoMhYh2GMp7E4/vXPcy/YYxUDFadab3ZxB2cB7qZHiQrWBWFaiMBilPVelzMIi6Epiyx/4pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeqS7ovD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771361410; c=relaxed/simple;
+	bh=WvPf1I49P7BCocBSucrEIz/sEevT1TdGkDSsdtohbgs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=SqAn3QVzmXDQl19JzDmgqo8UPeAfvw0ZOxUtRBPe583eC4ITqsO5CTTZbCRcj8FChWY59U6nKTCnbDNnfjoX040wpWEU/DIwmdXE1aVxIdpJEaNLAGS5LyoE7bLvZtRZ7gUcgt5zr9Tvsiic7L4m6eISbV0zPWW43YgDxjwb7T8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YafYEbxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeqS7ovD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112C0C4CEF7;
-	Tue, 17 Feb 2026 20:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YafYEbxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1084FC4CEF7;
+	Tue, 17 Feb 2026 20:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361406;
-	bh=0L7xdcmkY1/iKh8OuoZmA8Z00KbETfuiw/smMvJs1KU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aeqS7ovDEx1mxb6ioicLLaEV2SA5hqSfJagsjDGhBSFOJ7omV3uoZedmdo//PwYn/
-	 UDz7Xo79by1BX+HjC+lfA/vWOYOOnZx2UbVyMHxI9JLletQpXm2eqZT0eiqROl4zAT
-	 1s5waqXyxnzVV3DvpKXRIphwkPK11lUoi36e6Gs0=
+	s=korg; t=1771361409;
+	bh=WvPf1I49P7BCocBSucrEIz/sEevT1TdGkDSsdtohbgs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=YafYEbxSuK2IIhlIcS5hF9aAEuf9yjsyxBJcoiPVYl8kz/lgJb8AFJ7vwgWrh74oH
+	 FgdiR99IUMhZ7KR9q8ckATClQoph9tVz4C5lQg077ruRnfQ2/iFqXzkSh2ucNBAJmR
+	 LeXoHqMsTTg+pMO3DZiGd9okJVf2UzbllQETwQqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jinbao Liu <liujinbao1@xiaomi.com>,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.19 09/18] f2fs: fix out-of-bounds access in sysfs attribute read/write
-Date: Tue, 17 Feb 2026 21:32:05 +0100
-Message-ID: <20260217200003.047740780@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 6.19 00/18] 6.19.3-rc1 review
+Date: Tue, 17 Feb 2026 21:31:56 +0100
+Message-ID: <20260217200002.683975158@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260217200002.683975158@linuxfoundation.org>
-References: <20260217200002.683975158@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.19.3-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.19.3-rc1
+X-KernelTest-Deadline: 2026-02-19T20:00+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.19-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.19.3 release.
+There are 18 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Thu, 19 Feb 2026 19:59:50 +0000.
+Anything received after that time might be too late.
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.19.3-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.19.y
+and the diffstat can be found below.
 
-commit 98ea0039dbfdd00e5cc1b9a8afa40434476c0955 upstream.
+thanks,
 
-Some f2fs sysfs attributes suffer from out-of-bounds memory access and
-incorrect handling of integer values whose size is not 4 bytes.
+greg k-h
 
-For example:
-vm:~# echo 65537 > /sys/fs/f2fs/vde/carve_out
-vm:~# cat /sys/fs/f2fs/vde/carve_out
-65537
-vm:~# echo 4294967297 > /sys/fs/f2fs/vde/atgc_age_threshold
-vm:~# cat /sys/fs/f2fs/vde/atgc_age_threshold
-1
+-------------
+Pseudo-Shortlog of commits:
 
-carve_out maps to {struct f2fs_sb_info}->carve_out, which is a 8-bit
-integer. However, the sysfs interface allows setting it to a value
-larger than 255, resulting in an out-of-range update.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.19.3-rc1
 
-atgc_age_threshold maps to {struct atgc_management}->age_threshold,
-which is a 64-bit integer, but its sysfs interface cannot correctly set
-values larger than UINT_MAX.
+Chao Yu <chao@kernel.org>
+    f2fs: fix to do sanity check on node footer in {read,write}_end_io
 
-The root causes are:
-1. __sbi_store() treats all default values as unsigned int, which
-prevents updating integers larger than 4 bytes and causes out-of-bounds
-writes for integers smaller than 4 bytes.
+Chao Yu <chao@kernel.org>
+    f2fs: fix to do sanity check on node footer in __write_node_folio()
 
-2. f2fs_sbi_show() also assumes all default values are unsigned int,
-leading to out-of-bounds reads and incorrect access to integers larger
-than 4 bytes.
+Fabio Porcedda <fabio.porcedda@gmail.com>
+    USB: serial: option: add Telit FN920C04 RNDIS compositions
 
-This patch introduces {struct f2fs_attr}->size to record the actual size
-of the integer associated with each sysfs attribute. With this
-information, sysfs read and write operations can correctly access and
-update values according to their real data size, avoiding memory
-corruption and truncation.
+Chao Yu <chao@kernel.org>
+    Revert "f2fs: block cache/dio write during f2fs_enable_checkpoint()"
 
-Fixes: b59d0bae6ca3 ("f2fs: add sysfs support for controlling the gc_thread")
-Cc: stable@kernel.org
-Signed-off-by: Jinbao Liu <liujinbao1@xiaomi.com>
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/f2fs/sysfs.c |   60 ++++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 52 insertions(+), 8 deletions(-)
+Danilo Krummrich <dakr@kernel.org>
+    iommu/arm-smmu-qcom: do not register driver in probe()
 
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -58,6 +58,7 @@ struct f2fs_attr {
- 			 const char *buf, size_t len);
- 	int struct_type;
- 	int offset;
-+	int size;
- 	int id;
- };
- 
-@@ -344,11 +345,30 @@ static ssize_t main_blkaddr_show(struct
- 			(unsigned long long)MAIN_BLKADDR(sbi));
- }
- 
-+static ssize_t __sbi_show_value(struct f2fs_attr *a,
-+		struct f2fs_sb_info *sbi, char *buf,
-+		unsigned char *value)
-+{
-+	switch (a->size) {
-+	case 1:
-+		return sysfs_emit(buf, "%u\n", *(u8 *)value);
-+	case 2:
-+		return sysfs_emit(buf, "%u\n", *(u16 *)value);
-+	case 4:
-+		return sysfs_emit(buf, "%u\n", *(u32 *)value);
-+	case 8:
-+		return sysfs_emit(buf, "%llu\n", *(u64 *)value);
-+	default:
-+		f2fs_bug_on(sbi, 1);
-+		return sysfs_emit(buf,
-+				"show sysfs node value with wrong type\n");
-+	}
-+}
-+
- static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
- 			struct f2fs_sb_info *sbi, char *buf)
- {
- 	unsigned char *ptr = NULL;
--	unsigned int *ui;
- 
- 	ptr = __struct_ptr(sbi, a->struct_type);
- 	if (!ptr)
-@@ -428,9 +448,30 @@ static ssize_t f2fs_sbi_show(struct f2fs
- 				atomic_read(&sbi->cp_call_count[BACKGROUND]));
- #endif
- 
--	ui = (unsigned int *)(ptr + a->offset);
-+	return __sbi_show_value(a, sbi, buf, ptr + a->offset);
-+}
- 
--	return sysfs_emit(buf, "%u\n", *ui);
-+static void __sbi_store_value(struct f2fs_attr *a,
-+			struct f2fs_sb_info *sbi,
-+			unsigned char *ui, unsigned long value)
-+{
-+	switch (a->size) {
-+	case 1:
-+		*(u8 *)ui = value;
-+		break;
-+	case 2:
-+		*(u16 *)ui = value;
-+		break;
-+	case 4:
-+		*(u32 *)ui = value;
-+		break;
-+	case 8:
-+		*(u64 *)ui = value;
-+		break;
-+	default:
-+		f2fs_bug_on(sbi, 1);
-+		f2fs_err(sbi, "store sysfs node value with wrong type");
-+	}
- }
- 
- static ssize_t __sbi_store(struct f2fs_attr *a,
-@@ -906,7 +947,7 @@ out:
- 		return count;
- 	}
- 
--	*ui = (unsigned int)t;
-+	__sbi_store_value(a, sbi, ptr + a->offset, t);
- 
- 	return count;
- }
-@@ -1053,24 +1094,27 @@ static struct f2fs_attr f2fs_attr_sb_##_
- 	.id	= F2FS_FEATURE_##_feat,				\
- }
- 
--#define F2FS_ATTR_OFFSET(_struct_type, _name, _mode, _show, _store, _offset) \
-+#define F2FS_ATTR_OFFSET(_struct_type, _name, _mode, _show, _store, _offset, _size) \
- static struct f2fs_attr f2fs_attr_##_name = {			\
- 	.attr = {.name = __stringify(_name), .mode = _mode },	\
- 	.show	= _show,					\
- 	.store	= _store,					\
- 	.struct_type = _struct_type,				\
--	.offset = _offset					\
-+	.offset = _offset,					\
-+	.size = _size						\
- }
- 
- #define F2FS_RO_ATTR(struct_type, struct_name, name, elname)	\
- 	F2FS_ATTR_OFFSET(struct_type, name, 0444,		\
- 		f2fs_sbi_show, NULL,				\
--		offsetof(struct struct_name, elname))
-+		offsetof(struct struct_name, elname),		\
-+		sizeof_field(struct struct_name, elname))
- 
- #define F2FS_RW_ATTR(struct_type, struct_name, name, elname)	\
- 	F2FS_ATTR_OFFSET(struct_type, name, 0644,		\
- 		f2fs_sbi_show, f2fs_sbi_store,			\
--		offsetof(struct struct_name, elname))
-+		offsetof(struct struct_name, elname),		\
-+		sizeof_field(struct struct_name, elname))
- 
- #define F2FS_GENERAL_RO_ATTR(name) \
- static struct f2fs_attr f2fs_attr_##name = __ATTR(name, 0444, name##_show, NULL)
+Yeongjin Gil <youngjin.gil@samsung.com>
+    f2fs: optimize f2fs_overwrite_io() for f2fs_iomap_begin
+
+Chao Yu <chao@kernel.org>
+    f2fs: fix to avoid mapping wrong physical block for swapfile
+
+Daeho Jeong <daehojeong@google.com>
+    f2fs: support non-4KB block size without packed_ssa feature
+
+Chao Yu <chao@kernel.org>
+    f2fs: fix to avoid UAF in f2fs_write_end_io()
+
+Yongpeng Yang <yangyongpeng@xiaomi.com>
+    f2fs: fix out-of-bounds access in sysfs attribute read/write
+
+Yongpeng Yang <yangyongpeng@xiaomi.com>
+    f2fs: fix IS_CHECKPOINTED flag inconsistency issue caused by concurrent atomic commit and checkpoint writes
+
+Chao Yu <chao@kernel.org>
+    f2fs: fix to check sysfs filename w/ gc_pin_file_thresh correctly
+
+Zhiguo Niu <zhiguo.niu@unisoc.com>
+    f2fs: fix to add gc count stat in f2fs_gc_range
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    fbdev: smscufx: properly copy ioctl memory to kernelspace
+
+Guangshuo Li <lgs201920130244@gmail.com>
+    fbdev: rivafb: fix divide error in nv3_arb()
+
+Tiezhu Yang <yangtiezhu@loongson.cn>
+    LoongArch: Rework KASAN initialization for PTW-enabled systems
+
+Otto Pflüger <otto.pflueger@abscue.de>
+    arm64: dts: mediatek: mt8183: Add missing endpoint IDs to display graph
+
+Anil Gurumurthy <agurumurthy@marvell.com>
+    scsi: qla2xxx: Fix bsg_done() causing double free
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                   |  4 +-
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi   | 37 ++++++++++---
+ arch/loongarch/mm/kasan_init.c             | 80 +++++++++++++--------------
+ drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 14 +++++
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 14 +++--
+ drivers/iommu/arm/arm-smmu/arm-smmu.c      | 24 ++++++++-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h      |  5 ++
+ drivers/scsi/qla2xxx/qla_bsg.c             | 28 ++++++----
+ drivers/usb/serial/option.c                |  6 +++
+ drivers/video/fbdev/riva/riva_hw.c         |  3 ++
+ drivers/video/fbdev/smscufx.c              |  8 ++-
+ fs/f2fs/data.c                             | 53 ++++++++++++------
+ fs/f2fs/f2fs.h                             | 67 +++++++++++++++++------
+ fs/f2fs/gc.c                               | 24 +++++----
+ fs/f2fs/node.c                             | 50 ++++++++++-------
+ fs/f2fs/node.h                             |  8 ---
+ fs/f2fs/recovery.c                         |  6 +--
+ fs/f2fs/segment.c                          | 86 ++++++++++++++++--------------
+ fs/f2fs/segment.h                          |  9 ++--
+ fs/f2fs/super.c                            | 64 +++++++---------------
+ fs/f2fs/sysfs.c                            | 62 +++++++++++++++++----
+ include/linux/f2fs_fs.h                    | 73 +++++++++++++++----------
+ 22 files changed, 460 insertions(+), 265 deletions(-)
 
 
