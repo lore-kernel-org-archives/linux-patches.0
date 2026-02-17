@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C49E280CC1;
-	Tue, 17 Feb 2026 20:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B604929A1;
+	Tue, 17 Feb 2026 20:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361650; cv=none; b=PQD/szxFx8Z8jgtuuVlywg6w+SA510tjs1LtXZ1vv9L4kH7ifkNnkUz+ek1qDOMnMmqVsW2CwAc4sCEOOp5tRJd951ZWDJzB21+PqbFOUqh+KmTNVQoW9UoTzizgpBhWNyaAUkPudk+xT7IUL2RMdRrnB8EzilF/SllLLLi0Te4=
+	t=1771361653; cv=none; b=Vpm06MA1A33mAKkbcMu8Muuyym4ESc4cYez/I9m9SHykaKhYCIFnHc/fizW/Qei9ECJ4iEoWmywD+hgiz9dXJRHyynwNxRfHKrfO+wGu5GMSMI2/ko3ENoFTfK+lzCwAdkIpI9JgO8XhX2/ujq6FtsXGj4XTZJhin5tx5xERTwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361650; c=relaxed/simple;
-	bh=SXs1wJoq+PUI/03r4/27zvILJ8jSFBLWj+5o30om4pw=;
+	s=arc-20240116; t=1771361653; c=relaxed/simple;
+	bh=87JhsQMAIOaYLbqsBu6vxwz0Jp011JJKWrlh7mo/q3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vD3BJ64oC4P7/LiyV3Emzw7Z0Ddlf67hMrXctoRfevXMzmuF4jbcaANxTQIqQAMuLWgMFfnDUzPY2VaofWGsr9Df5Dx5Bx+n6F9bf+EaK41zsNFL6hPRzgERkNCETlT8JLgL9yldM00e0VDm7J32wJ1Ev2ujY9bYsSS6V45I31o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpnMT6Tt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E434+vYsqMdicl0n0jiqX4onbB8F8hYDd6GGJiUbfF+9CsRNe0MF8mERINbgMqQpYTE3Wlb8C7S6n7gP+zudw1Quj5xSjEEAqyhEusY1E3v5cBb4+AuhtcHHEY8CMZmi4D8fFcmK7VFk4WHuhuh10ZPJ28WBBGp1155uTo0X7uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GblBJlTx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpnMT6Tt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C5AC4CEF7;
-	Tue, 17 Feb 2026 20:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GblBJlTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A5FC4CEF7;
+	Tue, 17 Feb 2026 20:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361650;
-	bh=SXs1wJoq+PUI/03r4/27zvILJ8jSFBLWj+5o30om4pw=;
+	s=korg; t=1771361653;
+	bh=87JhsQMAIOaYLbqsBu6vxwz0Jp011JJKWrlh7mo/q3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpnMT6TtIAVZ5Z4/veVPG+heaUPNpob2FfOhXQ1fStLm6ehGoYLQ6e+Yotk0hmX8G
-	 lqc5iiAwFk4vgx4OGhpe/fxrOAbXGheQqK1g+WxRI1Hzu3dIemvzu6HLZlLaLz52Lq
-	 U4y2eKTT1wO1zDxe33atQnpVFuWa4AuNprK1d8qk=
+	b=GblBJlTxY5oILUbNcLOur2RG5/fYg6knRqClwnAKjAixhuAEF4ndW8WRvveFQMrLO
+	 mOhQOD+X21hgjc5d6rGxNmU6isxHqQZGDuqhpFgWWjC/SwPRGKsSTE3Uo7oVnTQ64L
+	 E4AR3rheyfPxDpl+At67JE5CCPtnhxPy51IU3Ah8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	stable <stable@kernel.org>,
-	Steve Glendinning <steve.glendinning@shawell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 34/42] fbdev: smscufx: properly copy ioctl memory to kernelspace
-Date: Tue, 17 Feb 2026 21:32:25 +0100
-Message-ID: <20260217200007.306007673@linuxfoundation.org>
+	stable@kernel.org,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.12 35/42] f2fs: fix to add gc count stat in f2fs_gc_range
+Date: Tue, 17 Feb 2026 21:32:26 +0100
+Message-ID: <20260217200007.343204159@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200005.998240758@linuxfoundation.org>
 References: <20260217200005.998240758@linuxfoundation.org>
@@ -52,57 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-commit 120adae7b42faa641179270c067864544a50ab69 upstream.
+commit 761dac9073cd67d4705a94cd1af674945a117f4c upstream.
 
-The UFX_IOCTL_REPORT_DAMAGE ioctl does not properly copy data from
-userspace to kernelspace, and instead directly references the memory,
-which can cause problems if invalid data is passed from userspace.  Fix
-this all up by correctly copying the memory before accessing it within
-the kernel.
+It missed the stat count in f2fs_gc_range.
 
-Reported-by: Tianchu Chen <flynnnchen@tencent.com>
-Cc: stable <stable@kernel.org>
-Cc: Steve Glendinning <steve.glendinning@shawell.net>
-Cc: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@kernel.org
+Fixes: 9bf1dcbdfdc8 ("f2fs: fix to account gc stats correctly")
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/smscufx.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/f2fs/gc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/smscufx.c
-+++ b/drivers/video/fbdev/smscufx.c
-@@ -932,7 +932,6 @@ static int ufx_ops_ioctl(struct fb_info
- 			 unsigned long arg)
- {
- 	struct ufx_data *dev = info->par;
--	struct dloarea *area = NULL;
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2072,6 +2072,7 @@ int f2fs_gc_range(struct f2fs_sb_info *s
+ 	if (unlikely(f2fs_cp_error(sbi)))
+ 		return -EIO;
  
- 	if (!atomic_read(&dev->usb_active))
- 		return 0;
-@@ -947,6 +946,10 @@ static int ufx_ops_ioctl(struct fb_info
- 
- 	/* TODO: Help propose a standard fb.h ioctl to report mmap damage */
- 	if (cmd == UFX_IOCTL_REPORT_DAMAGE) {
-+		struct dloarea *area __free(kfree) = kmalloc(sizeof(*area), GFP_KERNEL);
-+		if (!area)
-+			return -ENOMEM;
-+
- 		/* If we have a damage-aware client, turn fb_defio "off"
- 		 * To avoid perf imact of unnecessary page fault handling.
- 		 * Done by resetting the delay for this fb_info to a very
-@@ -956,7 +959,8 @@ static int ufx_ops_ioctl(struct fb_info
- 		if (info->fbdefio)
- 			info->fbdefio->delay = UFX_DEFIO_WRITE_DISABLE;
- 
--		area = (struct dloarea *)arg;
-+		if (copy_from_user(area, (u8 __user *)arg, sizeof(*area)))
-+			return -EFAULT;
- 
- 		if (area->x < 0)
- 			area->x = 0;
++	stat_inc_gc_call_count(sbi, FOREGROUND);
+ 	for (segno = start_seg; segno <= end_seg; segno += SEGS_PER_SEC(sbi)) {
+ 		struct gc_inode_list gc_list = {
+ 			.ilist = LIST_HEAD_INIT(gc_list.ilist),
 
 
