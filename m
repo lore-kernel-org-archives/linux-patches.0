@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55916377556;
-	Tue, 17 Feb 2026 20:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B935736F431;
+	Tue, 17 Feb 2026 20:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360814; cv=none; b=gkNtxRNez0OjuXdOiwAd+hrIWZgwQRO0OROsnAYr0glkmN4/JZa81K+TV1kc7SjAyHRfSr3jq24FckrMg2xfG0M61aw9LYBrvShMZ9tOSbmPvPfZrqlxGtfz5AF2QQtX3srcW0QFIE6tItCogup2Yz13fmP2frTEvJf7aSl0HYw=
+	t=1771360817; cv=none; b=VI9bLKBY6NdSOg8ffciBdKbmHXG4d7i/XJP4iFs1bTLF97wt6kGm4nMB/Gljc/PIM6VYi2CgmROC9vfKLrpDuh5FlkFZr/cAC3YIBUla7B3zZEa5FtTM29n+nfD/geOI9Xf7+8+vhP7C9dypz9cXsRHyayfxQ6hBw3grFUYLhqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360814; c=relaxed/simple;
-	bh=fRGqn4OEusz3PTkSu0iID/N4ikjhgNJcZDmwIde21LI=;
+	s=arc-20240116; t=1771360817; c=relaxed/simple;
+	bh=TayJHkyPkRLdRLSJIEf8vMLsRzDhZV+Pmaxj2C/JT7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lS0XIQoWWaIljis+xWZ0SSbxchlpNb8uvyvpQJLpaJLVz5mukCk6a41ykRuzVBQ8ww0UXendUEog3Ui9bEGTTqwSW4nxhFsPJnSXJBkMl7cPYQM2/+PFM4BWVSZE99F3f4SaQW3cRLOhwZTGFygguj1JJWMXVaMEVVFsXEssEII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEeqmjSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SGWDupb5eoAexrx6GhNkhszD/9tH+nIBWxnHgUo5+Y/tWVVO8bUbThtSylzDRAjcV8VwerILHWWb4pUphd74ShVgTpfNyWdiUrMC7BZ09F/xk6bcaq3GCwyYu0jrt1aoV37OzeSSPyYDTuLU0OmgHQwdDtm4p4bGkOQ+Tzj8I2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0agdFjnx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEeqmjSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3BDC4CEF7;
-	Tue, 17 Feb 2026 20:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0agdFjnx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29688C4CEF7;
+	Tue, 17 Feb 2026 20:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360814;
-	bh=fRGqn4OEusz3PTkSu0iID/N4ikjhgNJcZDmwIde21LI=;
+	s=korg; t=1771360817;
+	bh=TayJHkyPkRLdRLSJIEf8vMLsRzDhZV+Pmaxj2C/JT7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEeqmjSAmWhb19gV2B+nBcFfvn9COfeuTezp41YPtKgOnW8WQEI3BiOyTcqjUjf4V
-	 P/elf9oekTtP6gYBmwGw7W0dl/oJrvcVnYxH5NLlAgd8WvxZ6eBREShwOZF82JfV9a
-	 Taif7wsshpNn+Usxs+G0ME7S0zhozVjm6wIouGs4=
+	b=0agdFjnxz+jY8oDjqWTUytFcW5RyDUh6NRBAAbsjuuRoW86PRdImn7j7MW/URHRSz
+	 mOx49DRD/amdgKVBw1iZEQXAycp0Wu1uViBvUe9QieE41jjpQz0nJeUjOolk4528Rh
+	 t5O3XEgXTwwOkZWK4HEZ/miWjPfdztwf6Zb8+xQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 22/39] LoongArch: Rework KASAN initialization for PTW-enabled systems
-Date: Tue, 17 Feb 2026 21:30:44 +0100
-Message-ID: <20260217200005.069232253@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH 6.6 23/39] Revert "wireguard: device: enable threaded NAPI"
+Date: Tue, 17 Feb 2026 21:30:45 +0100
+Message-ID: <20260217200005.106779227@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -50,162 +50,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 5ec5ac4ca27e4daa234540ac32f9fc5219377d53 upstream.
+This reverts commit 8c9e9cd398777fd60ba202211da1110614cb5bc5 which is
+commit db9ae3b6b43c79b1ba87eea849fd65efa05b4b2e upstream.
 
-kasan_init_generic() indicates that kasan is fully initialized, so it
-should be put at end of kasan_init().
+We have had three independent production user reports in combination
+with Cilium utilizing WireGuard as encryption underneath that k8s Pod
+E/W traffic to certain peer nodes fully stalled. The situation appears
+as follows:
 
-Otherwise bringing up the primary CPU failed when CONFIG_KASAN is set
-on PTW-enabled systems, here are the call chains:
+  - Occurs very rarely but at random times under heavy networking load.
+  - Once the issue triggers the decryption side stops working completely
+    for that WireGuard peer, other peers keep working fine. The stall
+    happens also for newly initiated connections towards that particular
+    WireGuard peer.
+  - Only the decryption side is affected, never the encryption side.
+  - Once it triggers, it never recovers and remains in this state,
+    the CPU/mem on that node looks normal, no leak, busy loop or crash.
+  - bpftrace on the affected system shows that wg_prev_queue_enqueue
+    fails, thus the MAX_QUEUED_PACKETS (1024 skbs!) for the peer's
+    rx_queue is reached.
+  - Also, bpftrace shows that wg_packet_rx_poll for that peer is never
+    called again after reaching this state for that peer. For other
+    peers wg_packet_rx_poll does get called normally.
+  - Commit db9ae3b ("wireguard: device: enable threaded NAPI")
+    switched WireGuard to threaded NAPI by default. The default has
+    not been changed for triggering the issue, neither did CPU
+    hotplugging occur (i.e. 5bd8de2 ("wireguard: queueing: always
+    return valid online CPU in wg_cpumask_choose_online()")).
+  - The issue has been observed with stable kernels of v5.15 as well as
+    v6.1. It was reported to us that v5.10 stable is working fine, and
+    no report on v6.6 stable either (somewhat related discussion in [0]
+    though).
+  - In the WireGuard driver the only material difference between v5.10
+    stable and v5.15 stable is the switch to threaded NAPI by default.
 
-    kernel_entry()
-      start_kernel()
-        setup_arch()
-          kasan_init()
-            kasan_init_generic()
+    [0] https://lore.kernel.org/netdev/CA+wXwBTT74RErDGAnj98PqS=wvdh8eM1pi4q6tTdExtjnokKqA@mail.gmail.com/
 
-The reason is PTW-enabled systems have speculative accesses which means
-memory accesses to the shadow memory after kasan_init() may be executed
-by hardware before. However, accessing shadow memory is safe only after
-kasan fully initialized because kasan_init() uses a temporary PGD table
-until we have populated all levels of shadow page tables and writen the
-PGD register. Moving kasan_init_generic() later can defer the occasion
-of kasan_enabled(), so as to avoid speculative accesses on shadow pages.
+Breakdown of the problem:
 
-After moving kasan_init_generic() to the end, kasan_init() can no longer
-call kasan_mem_to_shadow() for shadow address conversion because it will
-always return kasan_early_shadow_page. On the other hand, we should keep
-the current logic of kasan_mem_to_shadow() for both the early and final
-stage because there may be instrumentation before kasan_init().
+  1) skbs arriving for decryption are enqueued to the peer->rx_queue in
+     wg_packet_consume_data via wg_queue_enqueue_per_device_and_peer.
+  2) The latter only moves the skb into the MPSC peer queue if it does
+     not surpass MAX_QUEUED_PACKETS (1024) which is kept track in an
+     atomic counter via wg_prev_queue_enqueue.
+  3) In case enqueueing was successful, the skb is also queued up
+     in the device queue, round-robin picks a next online CPU, and
+     schedules the decryption worker.
+  4) The wg_packet_decrypt_worker, once scheduled, picks these up
+     from the queue, decrypts the packets and once done calls into
+     wg_queue_enqueue_per_peer_rx.
+  5) The latter updates the state to PACKET_STATE_CRYPTED on success
+     and calls napi_schedule on the per peer->napi instance.
+  6) NAPI then polls via wg_packet_rx_poll. wg_prev_queue_peek checks
+     on the peer->rx_queue. It will wg_prev_queue_dequeue if the
+     queue->peeked skb was not cached yet, or just return the latter
+     otherwise. (wg_prev_queue_drop_peeked later clears the cache.)
+  7) From an ordering perspective, the peer->rx_queue has skbs in order
+     while the device queue with the per-CPU worker threads from a
+     global ordering PoV can finish the decryption and signal the skb
+     PACKET_STATE_CRYPTED out of order.
+  8) A situation can be observed that the first packet coming in will
+     be stuck waiting for the decryption worker to be scheduled for
+     a longer time when the system is under pressure.
+  9) While this is the case, the other CPUs in the meantime finish
+     decryption and call into napi_schedule.
+ 10) Now in wg_packet_rx_poll it picks up the first in-order skb
+     from the peer->rx_queue and sees that its state is still
+     PACKET_STATE_UNCRYPTED. The NAPI poll routine then exits early
+     with work_done = 0 and calls napi_complete_done, signalling
+     it "finished" processing.
+ 11) The assumption in wg_packet_decrypt_worker is that when the
+     decryption finished the subsequent napi_schedule will always
+     lead to a later invocation of wg_packet_rx_poll to pick up
+     the finished packet.
+ 12) However, it appears that a later napi_schedule does /not/
+     schedule a later poll and thus no wg_packet_rx_poll.
+ 13) If this situation happens exactly for the corner case where
+     the decryption worker of the first packet is stuck and waiting
+     to be scheduled, and the network load for WireGuard is very
+     high then the queue can build up to MAX_QUEUED_PACKETS.
+ 14) If this situation occurs, then no new decryption worker will
+     be scheduled and also no new napi_schedule to make forward
+     progress.
+ 15) This means the peer->rx_queue stops processing packets completely
+     and they are indefinitely stuck waiting for a new NAPI poll on
+     that peer which never happens. New packets for that peer are
+     then dropped due to full queue, as it has been observed on the
+     production machines.
 
-To solve this, we factor out a new mem_to_shadow() function from current
-kasan_mem_to_shadow() for the shadow address conversion in kasan_init().
+Technically, the backport of commit db9ae3b6b43c ("wireguard: device:
+enable threaded NAPI") to stable should not have happened since it is
+more of an optimization rather than a pure fix and addresses a NAPI
+situation with utilizing many WireGuard tunnel devices in parallel.
+Revert it from stable given the backport triggers a regression for
+mentioned kernels.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-[ Huacai: To backport from upstream to 6.6 & 6.12, kasan_enabled() is
-          replaced with kasan_arch_is_ready() and kasan_init_generic()
-          is replaced with "kasan_early_stage = false". ]
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/mm/kasan_init.c |   77 +++++++++++++++++++++--------------------
- 1 file changed, 40 insertions(+), 37 deletions(-)
+ drivers/net/wireguard/device.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/loongarch/mm/kasan_init.c
-+++ b/arch/loongarch/mm/kasan_init.c
-@@ -42,39 +42,43 @@ static pgd_t kasan_pg_dir[PTRS_PER_PGD]
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -369,7 +369,6 @@ static int wg_newlink(struct net *src_ne
+ 	if (ret < 0)
+ 		goto err_free_handshake_queue;
  
- bool kasan_early_stage = true;
- 
--void *kasan_mem_to_shadow(const void *addr)
-+static void *mem_to_shadow(const void *addr)
- {
--	if (!kasan_arch_is_ready()) {
-+	unsigned long offset = 0;
-+	unsigned long maddr = (unsigned long)addr;
-+	unsigned long xrange = (maddr >> XRANGE_SHIFT) & 0xffff;
-+
-+	if (maddr >= FIXADDR_START)
- 		return (void *)(kasan_early_shadow_page);
--	} else {
--		unsigned long maddr = (unsigned long)addr;
--		unsigned long xrange = (maddr >> XRANGE_SHIFT) & 0xffff;
--		unsigned long offset = 0;
--
--		if (maddr >= FIXADDR_START)
--			return (void *)(kasan_early_shadow_page);
--
--		maddr &= XRANGE_SHADOW_MASK;
--		switch (xrange) {
--		case XKPRANGE_CC_SEG:
--			offset = XKPRANGE_CC_SHADOW_OFFSET;
--			break;
--		case XKPRANGE_UC_SEG:
--			offset = XKPRANGE_UC_SHADOW_OFFSET;
--			break;
--		case XKPRANGE_WC_SEG:
--			offset = XKPRANGE_WC_SHADOW_OFFSET;
--			break;
--		case XKVRANGE_VC_SEG:
--			offset = XKVRANGE_VC_SHADOW_OFFSET;
--			break;
--		default:
--			WARN_ON(1);
--			return NULL;
--		}
- 
--		return (void *)((maddr >> KASAN_SHADOW_SCALE_SHIFT) + offset);
-+	maddr &= XRANGE_SHADOW_MASK;
-+	switch (xrange) {
-+	case XKPRANGE_CC_SEG:
-+		offset = XKPRANGE_CC_SHADOW_OFFSET;
-+		break;
-+	case XKPRANGE_UC_SEG:
-+		offset = XKPRANGE_UC_SHADOW_OFFSET;
-+		break;
-+	case XKPRANGE_WC_SEG:
-+		offset = XKPRANGE_WC_SHADOW_OFFSET;
-+		break;
-+	case XKVRANGE_VC_SEG:
-+		offset = XKVRANGE_VC_SHADOW_OFFSET;
-+		break;
-+	default:
-+		WARN_ON(1);
-+		return NULL;
- 	}
-+
-+	return (void *)((maddr >> KASAN_SHADOW_SCALE_SHIFT) + offset);
-+}
-+
-+void *kasan_mem_to_shadow(const void *addr)
-+{
-+	if (kasan_arch_is_ready())
-+		return mem_to_shadow(addr);
-+	else
-+		return (void *)(kasan_early_shadow_page);
- }
- 
- const void *kasan_shadow_to_mem(const void *shadow_addr)
-@@ -295,10 +299,8 @@ void __init kasan_init(void)
- 	/* Maps everything to a single page of zeroes */
- 	kasan_pgd_populate(KASAN_SHADOW_START, KASAN_SHADOW_END, NUMA_NO_NODE, true);
- 
--	kasan_populate_early_shadow(kasan_mem_to_shadow((void *)VMALLOC_START),
--					kasan_mem_to_shadow((void *)KFENCE_AREA_END));
--
--	kasan_early_stage = false;
-+	kasan_populate_early_shadow(mem_to_shadow((void *)VMALLOC_START),
-+					mem_to_shadow((void *)KFENCE_AREA_END));
- 
- 	/* Populate the linear mapping */
- 	for_each_mem_range(i, &pa_start, &pa_end) {
-@@ -308,13 +310,13 @@ void __init kasan_init(void)
- 		if (start >= end)
- 			break;
- 
--		kasan_map_populate((unsigned long)kasan_mem_to_shadow(start),
--			(unsigned long)kasan_mem_to_shadow(end), NUMA_NO_NODE);
-+		kasan_map_populate((unsigned long)mem_to_shadow(start),
-+			(unsigned long)mem_to_shadow(end), NUMA_NO_NODE);
- 	}
- 
- 	/* Populate modules mapping */
--	kasan_map_populate((unsigned long)kasan_mem_to_shadow((void *)MODULES_VADDR),
--		(unsigned long)kasan_mem_to_shadow((void *)MODULES_END), NUMA_NO_NODE);
-+	kasan_map_populate((unsigned long)mem_to_shadow((void *)MODULES_VADDR),
-+		(unsigned long)mem_to_shadow((void *)MODULES_END), NUMA_NO_NODE);
- 	/*
- 	 * KAsan may reuse the contents of kasan_early_shadow_pte directly, so we
- 	 * should make sure that it maps the zero page read-only.
-@@ -329,5 +331,6 @@ void __init kasan_init(void)
- 
- 	/* At this point kasan is fully initialized. Enable error messages */
- 	init_task.kasan_depth = 0;
-+	kasan_early_stage = false;
- 	pr_info("KernelAddressSanitizer initialized.\n");
- }
+-	dev_set_threaded(dev, true);
+ 	ret = register_netdevice(dev);
+ 	if (ret < 0)
+ 		goto err_uninit_ratelimiter;
 
 
