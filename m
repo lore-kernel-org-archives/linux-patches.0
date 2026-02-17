@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8096F29AB02;
-	Tue, 17 Feb 2026 20:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B81436F431;
+	Tue, 17 Feb 2026 20:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360775; cv=none; b=fxu/bgJkjQMv1oj7SLEnmfELSeDP3ZVOTVv7Z73llr77RWfk9kPsbl58bZPW5UAaqCZxnPdd2aymtP9AImvgqPXlb4M5UyxHf/+UTQw2uCKwU3yDDfGQ8Fg/+9MRIWmhu4ncASP5apH/EV8BLnmzeJbdchbSO5eErZYdE1IJTWo=
+	t=1771360779; cv=none; b=icUKO1aV+AwToVF9eXeRmaLWX+Izo5N6Jf5cA5sKvyCIIJUlnVmw5FsvFLLCk/f2yIZ1AiG+9G3qhGyMfcvPCuEj6rXeDnsXVIVct0H57LO8ZDPYxdRdyqjjfqXqKgs9HE/1b5xGnf4Y96Q+rCMPgj/Kd5VuNEtPP2A/XGgH9rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360775; c=relaxed/simple;
-	bh=eQPunx98ELuFBYWl5oETePsgwOzuqHTGgaWViJmE6M8=;
+	s=arc-20240116; t=1771360779; c=relaxed/simple;
+	bh=ltvEBo0fOHXSUS/TuMNcQSRNqJZ6LKOoDrVfmzDRKB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K3vdKl3dcarr6oCCsg3QsQvy7ChvzH6byBQcDlQNgrvtC/tWZXgDI0VsXzTHIvbojwTT8ghuqiYZ5SVkqu72EzeFSnywvc5RLTMb7rH50N7sNcESa4g+RM+Go8iyEQXFIou6Zm0aUMSDDg7E1EcYNi71ft69buGUToLi5YTYRgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olBjcCp9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SHxoz3pMEuGAZCylbuk8n5ZC1bDF7pw8jr7n6XCBFaATtnsHo5+WJfcgKBCRtSur/6k9U4Qhq97YcjEjZ+2j2WELhDA1BX1RJ8OPhhRaJdVo41zfZfnJ2G292zp2PJ+QCdbc2peiSQv9Gn+mbJqCTiCX/6N1hX8StbYJgcHvtvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUqtg6gP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olBjcCp9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB259C4CEF7;
-	Tue, 17 Feb 2026 20:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUqtg6gP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD906C4CEF7;
+	Tue, 17 Feb 2026 20:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360775;
-	bh=eQPunx98ELuFBYWl5oETePsgwOzuqHTGgaWViJmE6M8=;
+	s=korg; t=1771360779;
+	bh=ltvEBo0fOHXSUS/TuMNcQSRNqJZ6LKOoDrVfmzDRKB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olBjcCp9JedwhoWMhGdJznStKM/qknb/L3ns94H24YyZEFlUYaidbtsrEVln2/6zu
-	 gs5va/mmaCboWBowO2uySUWN30pVkd5ntMfVNeKzless8E6kmaJX+5d3o6HeKLPSKQ
-	 Wa82KpIAQdR9ntlEr0Lsmu3nB8txsJuadbK4ErAU=
+	b=jUqtg6gPqK5y7f+IDu1SWTww2yAFF4FICNZRj8GDKEr4Tuz3h0XfTh69JHOFutnOs
+	 2OoEZeMkH5Adi4ekCDU8Od1qOBi1C17ok/UYZWAn8KyHsMOHEE9nZCg+fh3GEKVd8R
+	 tWvj70JVJHFDDsDCvEzUZIX2ZezwIHp+gkpbml6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brahmajit Das <listout@listout.xyz>,
-	Thierry Reding <treding@nvidia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: =?UTF-8?q?=5BPATCH=206=2E6=2012/39=5D=20=3D=3FUTF-8=3Fq=3Fdrm/tegra=3A=3D20hdmi=3A=3D20sor=3A=3D20Fix=3D20error=3A=3D20variable=3D20=3F=3D=20=3D=3FUTF-8=3Fq=3F=3DE2=3D80=3D98j=3DE2=3D80=3D99=3D20set=3D20but=3D20not=3D20used=3F=3D?=
-Date: Tue, 17 Feb 2026 21:30:34 +0100
-Message-ID: <20260217200004.698903271@linuxfoundation.org>
+Subject: [PATCH 6.6 13/39] platform/x86: classmate-laptop: Add missing NULL pointer checks
+Date: Tue, 17 Feb 2026 21:30:35 +0100
+Message-ID: <20260217200004.736295016@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -52,74 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brahmajit Das <listout@listout.xyz>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 1beee8d0c263b3e239c8d6616e4f8bb700bed658 ]
+[ Upstream commit fe747d7112283f47169e9c16e751179a9b38611e ]
 
-The variable j is set, however never used in or outside the loop, thus
-resulting in dead code.
-Building with GCC 16 results in a build error due to
--Werror=unused-but-set-variable= enabled by default.
-This patch clean up the dead code and fixes the build error.
+In a few places in the Classmate laptop driver, code using the accel
+object may run before that object's address is stored in the driver
+data of the input device using it.
 
-Example build log:
-drivers/gpu/drm/tegra/sor.c:1867:19: error: variable ‘j’ set but not used [-Werror=unused-but-set-variable=]
- 1867 |         size_t i, j;
-      |                   ^
+For example, cmpc_accel_sensitivity_store_v4() is the "show" method
+of cmpc_accel_sensitivity_attr_v4 which is added in cmpc_accel_add_v4(),
+before calling dev_set_drvdata() for inputdev->dev.  If the sysfs
+attribute is accessed prematurely, the dev_get_drvdata(&inputdev->dev)
+call in in cmpc_accel_sensitivity_store_v4() returns NULL which
+leads to a NULL pointer dereference going forward.
 
-Signed-off-by: Brahmajit Das <listout@listout.xyz>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250901212020.3757519-1-listout@listout.xyz
+Moreover, sysfs attributes using the input device are added before
+initializing that device by cmpc_add_acpi_notify_device() and if one
+of them is accessed before running that function, a NULL pointer
+dereference will occur.
+
+For example, cmpc_accel_sensitivity_attr_v4 is added before calling
+cmpc_add_acpi_notify_device() and if it is read prematurely, the
+dev_get_drvdata(&acpi->dev) call in cmpc_accel_sensitivity_show_v4()
+returns NULL which leads to a NULL pointer dereference going forward.
+
+Fix this by adding NULL pointer checks in all of the relevant places.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/12825381.O9o76ZdvQC@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/hdmi.c | 4 ++--
- drivers/gpu/drm/tegra/sor.c  | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/platform/x86/classmate-laptop.c | 32 +++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/gpu/drm/tegra/hdmi.c b/drivers/gpu/drm/tegra/hdmi.c
-index 58c2ba94e7dd6..2451c9b67024d 100644
---- a/drivers/gpu/drm/tegra/hdmi.c
-+++ b/drivers/gpu/drm/tegra/hdmi.c
-@@ -656,7 +656,7 @@ static void tegra_hdmi_write_infopack(struct tegra_hdmi *hdmi, const void *data,
- {
- 	const u8 *ptr = data;
- 	unsigned long offset;
--	size_t i, j;
-+	size_t i;
- 	u32 value;
+diff --git a/drivers/platform/x86/classmate-laptop.c b/drivers/platform/x86/classmate-laptop.c
+index 2edaea2492df7..053c8a86d5ece 100644
+--- a/drivers/platform/x86/classmate-laptop.c
++++ b/drivers/platform/x86/classmate-laptop.c
+@@ -208,7 +208,12 @@ static ssize_t cmpc_accel_sensitivity_show_v4(struct device *dev,
  
- 	switch (ptr[0]) {
-@@ -689,7 +689,7 @@ static void tegra_hdmi_write_infopack(struct tegra_hdmi *hdmi, const void *data,
- 	 * - subpack_low: bytes 0 - 3
- 	 * - subpack_high: bytes 4 - 6 (with byte 7 padded to 0x00)
- 	 */
--	for (i = 3, j = 0; i < size; i += 7, j += 8) {
-+	for (i = 3; i < size; i += 7) {
- 		size_t rem = size - i, num = min_t(size_t, rem, 4);
+ 	acpi = to_acpi_device(dev);
+ 	inputdev = dev_get_drvdata(&acpi->dev);
++	if (!inputdev)
++		return -ENXIO;
++
+ 	accel = dev_get_drvdata(&inputdev->dev);
++	if (!accel)
++		return -ENXIO;
  
- 		value = tegra_hdmi_subpack(&ptr[i], num);
-diff --git a/drivers/gpu/drm/tegra/sor.c b/drivers/gpu/drm/tegra/sor.c
-index 61b437a84806e..1b03f8ca80a10 100644
---- a/drivers/gpu/drm/tegra/sor.c
-+++ b/drivers/gpu/drm/tegra/sor.c
-@@ -1861,7 +1861,7 @@ static void tegra_sor_hdmi_write_infopack(struct tegra_sor *sor,
- {
- 	const u8 *ptr = data;
- 	unsigned long offset;
--	size_t i, j;
-+	size_t i;
- 	u32 value;
+ 	return sprintf(buf, "%d\n", accel->sensitivity);
+ }
+@@ -225,7 +230,12 @@ static ssize_t cmpc_accel_sensitivity_store_v4(struct device *dev,
  
- 	switch (ptr[0]) {
-@@ -1894,7 +1894,7 @@ static void tegra_sor_hdmi_write_infopack(struct tegra_sor *sor,
- 	 * - subpack_low: bytes 0 - 3
- 	 * - subpack_high: bytes 4 - 6 (with byte 7 padded to 0x00)
- 	 */
--	for (i = 3, j = 0; i < size; i += 7, j += 8) {
-+	for (i = 3; i < size; i += 7) {
- 		size_t rem = size - i, num = min_t(size_t, rem, 4);
+ 	acpi = to_acpi_device(dev);
+ 	inputdev = dev_get_drvdata(&acpi->dev);
++	if (!inputdev)
++		return -ENXIO;
++
+ 	accel = dev_get_drvdata(&inputdev->dev);
++	if (!accel)
++		return -ENXIO;
  
- 		value = tegra_sor_hdmi_subpack(&ptr[i], num);
+ 	r = kstrtoul(buf, 0, &sensitivity);
+ 	if (r)
+@@ -257,7 +267,12 @@ static ssize_t cmpc_accel_g_select_show_v4(struct device *dev,
+ 
+ 	acpi = to_acpi_device(dev);
+ 	inputdev = dev_get_drvdata(&acpi->dev);
++	if (!inputdev)
++		return -ENXIO;
++
+ 	accel = dev_get_drvdata(&inputdev->dev);
++	if (!accel)
++		return -ENXIO;
+ 
+ 	return sprintf(buf, "%d\n", accel->g_select);
+ }
+@@ -274,7 +289,12 @@ static ssize_t cmpc_accel_g_select_store_v4(struct device *dev,
+ 
+ 	acpi = to_acpi_device(dev);
+ 	inputdev = dev_get_drvdata(&acpi->dev);
++	if (!inputdev)
++		return -ENXIO;
++
+ 	accel = dev_get_drvdata(&inputdev->dev);
++	if (!accel)
++		return -ENXIO;
+ 
+ 	r = kstrtoul(buf, 0, &g_select);
+ 	if (r)
+@@ -303,6 +323,8 @@ static int cmpc_accel_open_v4(struct input_dev *input)
+ 
+ 	acpi = to_acpi_device(input->dev.parent);
+ 	accel = dev_get_drvdata(&input->dev);
++	if (!accel)
++		return -ENXIO;
+ 
+ 	cmpc_accel_set_sensitivity_v4(acpi->handle, accel->sensitivity);
+ 	cmpc_accel_set_g_select_v4(acpi->handle, accel->g_select);
+@@ -551,7 +573,12 @@ static ssize_t cmpc_accel_sensitivity_show(struct device *dev,
+ 
+ 	acpi = to_acpi_device(dev);
+ 	inputdev = dev_get_drvdata(&acpi->dev);
++	if (!inputdev)
++		return -ENXIO;
++
+ 	accel = dev_get_drvdata(&inputdev->dev);
++	if (!accel)
++		return -ENXIO;
+ 
+ 	return sprintf(buf, "%d\n", accel->sensitivity);
+ }
+@@ -568,7 +595,12 @@ static ssize_t cmpc_accel_sensitivity_store(struct device *dev,
+ 
+ 	acpi = to_acpi_device(dev);
+ 	inputdev = dev_get_drvdata(&acpi->dev);
++	if (!inputdev)
++		return -ENXIO;
++
+ 	accel = dev_get_drvdata(&inputdev->dev);
++	if (!accel)
++		return -ENXIO;
+ 
+ 	r = kstrtoul(buf, 0, &sensitivity);
+ 	if (r)
 -- 
 2.51.0
 
