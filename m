@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4989261B70;
-	Tue, 17 Feb 2026 20:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E70029A1;
+	Tue, 17 Feb 2026 20:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361265; cv=none; b=UZSvmQIuv4m4Gtudp0efQvJud3dWzTEe84Vhwr2dxjW4A+WVulietIKIAlNnuDh3hkmKosetgwvVhFb/XkRyQ2rSmc0eStE2zni9wTs7ngOB3zXBOk5jnF9v8cX0uAp2LObEJUsdTYYyCjo0j6LxG7HdZ+fXkjrmBL3xaPQA+yM=
+	t=1771361269; cv=none; b=L80415zcM5FdBTGEatFs/NIHBxi4GPmxi2TXpcI9TwapQO9SK+aRw5mnFSPsWNjoVWrww4ICAs6BfbwjnNDrL5OIXzYiKKNGe0vI/781ixpLWCK7WiPEXgUJIzrrZy5EkVe/fkt99SwiXdEMhJhcCBQK2SE71tl9YejlL8eLe+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361265; c=relaxed/simple;
-	bh=uJTi23tEe4nvjygCt0m0aAzZtNW0/fncO/xRqMsT1QY=;
+	s=arc-20240116; t=1771361269; c=relaxed/simple;
+	bh=EZ2ZhHlDigByB4c5GSugot9dH9etgqx0mr0eXgWmsBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsJiN17an+enCgHksXU4YRCQ8+nzrndBM0OpmzUFnj2SIuhnGLOVUDrDPtBVAyzZubSvYN6kn+ooIiA/sEphxV5mLYUP/2a1WPS854gTHHQfNvhJA9yZxADNCB7ouaFqaMnLGrJJHga8+X7gFIa0GeHdFNHKqHQo8ZKvXQSNR+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+Kxx2e+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=do1j+SfnIukKzHg8EaUbP0PYFeakWzWebBlNZAmMEDzLANRewWqA/RG5BsFQFmzGemGfSh2OWBTvKJA1HL+3vL22QqZRMtf9VVb2/89UZ1JQimxdW0PTJ+mYc2zBUTYGumz2PIBL+Iv7LF5k/1+rgHygBeDRk0isXsssOTPacbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU+2cgJC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+Kxx2e+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5384FC4CEF7;
-	Tue, 17 Feb 2026 20:47:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU+2cgJC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C6BC4CEF7;
+	Tue, 17 Feb 2026 20:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361264;
-	bh=uJTi23tEe4nvjygCt0m0aAzZtNW0/fncO/xRqMsT1QY=;
+	s=korg; t=1771361268;
+	bh=EZ2ZhHlDigByB4c5GSugot9dH9etgqx0mr0eXgWmsBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+Kxx2e+NYbxqqZvh/McYrssrfGzriMfR0nN7I4G6ZUTCnQSJNdG7y6VdMoJH2C7K
-	 sM+q4oXqIOoPR7ezXCRkMFsrf/zml/GpAi0SbEyvwFhEX0UPQ5jmcYG/3ar2TOjZuR
-	 0Q2Oenrfz6q7YwYhTzum3qpqYeTAHR45I8ZfjOhc=
+	b=tU+2cgJCmbJnyhqNQS8Vvd0RH+eKzRNGlX2zzWOJjcKqV+Ynj3Gcw0J83afSArBih
+	 dPyFEBpnXmm+ZVSvLHueMvTjkJWwUN9+z8KGzeLpw4PWYrv9YhSKh+Rn7J1zERk9mI
+	 tXUZK4WT4DyXpeTeY5/gO0C4vcM1N6m4qZCW3MLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bosi Zhang <u201911157@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.1 49/64] clk: mediatek: fix of_iomap memory leak
-Date: Tue, 17 Feb 2026 21:31:45 +0100
-Message-ID: <20260217200009.343402419@linuxfoundation.org>
+	syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jianqiang kang <jianqkang@sina.cn>
+Subject: [PATCH 6.1 50/64] nfsd: dont ignore the return code of svc_proc_register()
+Date: Tue, 17 Feb 2026 21:31:46 +0100
+Message-ID: <20260217200009.380343205@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -52,52 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bosi Zhang <u201911157@hust.edu.cn>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 3db7285e044144fd88a356f5b641b9cd4b231a77 ]
+[ Upstream commit 930b64ca0c511521f0abdd1d57ce52b2a6e3476b ]
 
-Smatch reports:
-drivers/clk/mediatek/clk-mtk.c:583 mtk_clk_simple_probe() warn:
-    'base' from of_iomap() not released on lines: 496.
+Currently, nfsd_proc_stat_init() ignores the return value of
+svc_proc_register(). If the procfile creation fails, then the kernel
+will WARN when it tries to remove the entry later.
 
-This problem was also found in linux-next. In mtk_clk_simple_probe(),
-base is not released when handling errors
-if clk_data is not existed, which may cause a leak.
-So free_base should be added here to release base.
+Fix nfsd_proc_stat_init() to return the same type of pointer as
+svc_proc_register(), and fix up nfsd_net_init() to check that and fail
+the nfsd_net construction if it occurs.
 
-Fixes: c58cd0e40ffa ("clk: mediatek: Add mtk_clk_simple_probe() to simplify clock providers")
-Signed-off-by: Bosi Zhang <u201911157@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230422084331.47198-1-u201911157@hust.edu.cn
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Li hongliang <1468888505@139.com>
+svc_proc_register() can fail if the dentry can't be allocated, or if an
+identical dentry already exists. The second case is pretty unlikely in
+the nfsd_net construction codepath, so if this happens, return -ENOMEM.
+
+Reported-by: syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-nfs/67a47501.050a0220.19061f.05f9.GAE@google.com/
+Cc: stable@vger.kernel.org # v6.9
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ Update the cleanup path to use nfsd_stat_counters_destroy. This ensures
+ the teardown logic is correctly paired with nfsd_stat_counters_init, as
+ required by the current NFSD implementation.]
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/mediatek/clk-mtk.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nfsd/nfsctl.c |    9 ++++++++-
+ fs/nfsd/stats.c  |    4 ++--
+ fs/nfsd/stats.h  |    2 +-
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/clk/mediatek/clk-mtk.c
-+++ b/drivers/clk/mediatek/clk-mtk.c
-@@ -505,8 +505,10 @@ int mtk_clk_simple_probe(struct platform
- 	num_clks += mcd->num_mux_clks;
- 
- 	clk_data = mtk_alloc_clk_data(num_clks);
--	if (!clk_data)
--		return -ENOMEM;
-+	if (!clk_data) {
-+		r = -ENOMEM;
-+		goto free_base;
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1460,17 +1460,24 @@ static __net_init int nfsd_init_net(stru
+ 	retval = nfsd_stat_counters_init(nn);
+ 	if (retval)
+ 		goto out_repcache_error;
++
+ 	memset(&nn->nfsd_svcstats, 0, sizeof(nn->nfsd_svcstats));
+ 	nn->nfsd_svcstats.program = &nfsd_program;
++	if (!nfsd_proc_stat_init(net)) {
++		retval = -ENOMEM;
++		goto out_proc_error;
 +	}
++
+ 	nn->nfsd_versions = NULL;
+ 	nn->nfsd4_minorversions = NULL;
+ 	nfsd4_init_leases_net(nn);
+ 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
+ 	seqlock_init(&nn->writeverf_lock);
+-	nfsd_proc_stat_init(net);
  
- 	if (mcd->fixed_clks) {
- 		r = mtk_clk_register_fixed_clks(mcd->fixed_clks,
-@@ -594,6 +596,7 @@ unregister_fixed_clks:
- 					      mcd->num_fixed_clks, clk_data);
- free_data:
- 	mtk_free_clk_data(clk_data);
-+free_base:
- 	if (mcd->shared_io && base)
- 		iounmap(base);
+ 	return 0;
  
++out_proc_error:
++	nfsd_stat_counters_destroy(nn);
+ out_repcache_error:
+ 	nfsd_idmap_shutdown(net);
+ out_idmap_error:
+--- a/fs/nfsd/stats.c
++++ b/fs/nfsd/stats.c
+@@ -113,11 +113,11 @@ void nfsd_stat_counters_destroy(struct n
+ 	nfsd_percpu_counters_destroy(nn->counter, NFSD_STATS_COUNTERS_NUM);
+ }
+ 
+-void nfsd_proc_stat_init(struct net *net)
++struct proc_dir_entry *nfsd_proc_stat_init(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 
+-	svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
++	return svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
+ }
+ 
+ void nfsd_proc_stat_shutdown(struct net *net)
+--- a/fs/nfsd/stats.h
++++ b/fs/nfsd/stats.h
+@@ -15,7 +15,7 @@ void nfsd_percpu_counters_reset(struct p
+ void nfsd_percpu_counters_destroy(struct percpu_counter *counters, int num);
+ int nfsd_stat_counters_init(struct nfsd_net *nn);
+ void nfsd_stat_counters_destroy(struct nfsd_net *nn);
+-void nfsd_proc_stat_init(struct net *net);
++struct proc_dir_entry *nfsd_proc_stat_init(struct net *net);
+ void nfsd_proc_stat_shutdown(struct net *net);
+ 
+ static inline void nfsd_stats_rc_hits_inc(struct nfsd_net *nn)
 
 
