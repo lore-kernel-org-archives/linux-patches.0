@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF0729A1;
-	Tue, 17 Feb 2026 20:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D7929A1;
+	Tue, 17 Feb 2026 20:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361359; cv=none; b=ZFvlW12JychZLwqdWw1RuhKryln8CmmT1IZe8laYc8C/otv2/tH1B7Nn8jyLeI36TO4d+rACe6qUeSLWvl8DeDHimjs2Bnx/qEepKfTbHMtcxpCEpH5EaOwJSePz9yHao0C4J397v/Q+8Tjnzv+tQyhp8akUdMtLxnJjpo1C12M=
+	t=1771361362; cv=none; b=WLTqYv8XyZuQ3VmyW+Xo/1mGLCK7Q/NFs0QX3rEazWistgfOt8ttR3uP8HpTgEAxCBihwiapAdwHOMY3pUpp0ueIgxpemCFvdaSdPaoOLwRC0Wgb/oCgn7/g6Ull2/La2XNWm58sD0bXefnTLLXKizwbkiT76SxdTqZ1JGBob4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361359; c=relaxed/simple;
-	bh=SY4NIyOHlkAa+6RepDgstPKX09Ja9XxgpGCuzRPR4n4=;
+	s=arc-20240116; t=1771361362; c=relaxed/simple;
+	bh=BUcm7vzYMqn0wuHuUq7QOB3DstmHC3nVF1B1wpjPGQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CcDlMarDT3QwzMJsGUmlX92MXHVmHOhKBgXiDcm4Ntx+SO+BZ+MOXfZJILW5UrvITAtoXtu+bxt8pV7wFyZOH0hok3USl0vgqYl0vlF/u2a3M/WOMX7bFcPRDeZwqp36W59ZM53h3Td0J3n4PTIJ/hBATm9ZFPpcwNKyfIDy1is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bh1g9oQd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRiLIfq056EX9caYgLort4dP8N2vUF6nSK7pEgGXeWaQX6c5VkAY8PARIhF5tXv+3FsdnBJCKjJ7MVRjfQj2o2gM6wEDi2czbmw+6R+rRmn1nWlBbkhm2eepG6jwalruo0tK61buzs3FSwXBI+QY0WcZfVl47hQ8y55kUIzW2Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvjZJAoe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bh1g9oQd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B4EC4CEF7;
-	Tue, 17 Feb 2026 20:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvjZJAoe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0053C4CEF7;
+	Tue, 17 Feb 2026 20:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361358;
-	bh=SY4NIyOHlkAa+6RepDgstPKX09Ja9XxgpGCuzRPR4n4=;
+	s=korg; t=1771361362;
+	bh=BUcm7vzYMqn0wuHuUq7QOB3DstmHC3nVF1B1wpjPGQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bh1g9oQdzStRWkYvXSm5//nwpjFwZpAQsnwYlDAJgHox9GM6XonJO1mC1e2+Omz4y
-	 B0v4fovAMzZiJEhfiS3YDlrTTRcc1DObRIAz+1lvNjWqhhNXsHD9+czsXS2b/2ve82
-	 ny07f8VQRFcBfzp+WZEjFFox/nOIusyM+axMhvO8=
+	b=rvjZJAoe84fRC0iWL9wj7HP+VdZ7ylWUTLdkk7Rt61YDgMFZnJDDhoNo+thsSIHuu
+	 Pm2Uw7LZBVOrgEDVsE34qnR5D/J7ectExQoCREqOE7FzWSIoE5qrlEOx8J+grVqetK
+	 VOCcmenr9ZArZrsZFXP6lzRzTcgwVTWrY9OgUXqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Daeho Jeong <daehojeong@google.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Yeongjin Gil <youngjin.gil@samsung.com>,
 	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Xiaolong Guo <guoxiaolong2008@gmail.com>
-Subject: [PATCH 6.19 12/18] f2fs: fix to avoid mapping wrong physical block for swapfile
-Date: Tue, 17 Feb 2026 21:32:08 +0100
-Message-ID: <20260217200003.164093527@linuxfoundation.org>
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.19 13/18] f2fs: optimize f2fs_overwrite_io() for f2fs_iomap_begin
+Date: Tue, 17 Feb 2026 21:32:09 +0100
+Message-ID: <20260217200003.205754105@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.683975158@linuxfoundation.org>
 References: <20260217200002.683975158@linuxfoundation.org>
@@ -53,140 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Yeongjin Gil <youngjin.gil@samsung.com>
 
-commit 5c145c03188bc9ba1c29e0bc4d527a5978fc47f9 upstream.
+commit d860974a7e38d35e9e2c4dc8a9f4223b38b6ad99 upstream.
 
-Xiaolong Guo reported a f2fs bug in bugzilla [1]
+When overwriting already allocated blocks, f2fs_iomap_begin() calls
+f2fs_overwrite_io() to check block mappings. However,
+f2fs_overwrite_io() iterates through all mapped blocks in the range,
+which can be inefficient for fragmented files with large I/O requests.
 
-[1] https://bugzilla.kernel.org/show_bug.cgi?id=220951
+This patch optimizes f2fs_overwrite_io() by adding a 'check_first'
+parameter and introducing __f2fs_overwrite_io() helper. When called from
+f2fs_iomap_begin(), we only check the first mapping to determine if the
+range is already allocated, which is sufficient for setting
+map.m_may_create.
 
-Quoted:
-
-"When using stress-ng's swap stress test on F2FS filesystem with kernel 6.6+,
-the system experiences data corruption leading to either:
-1 dm-verity corruption errors and device reboot
-2 F2FS node corruption errors and boot hangs
-
-The issue occurs specifically when:
-1 Using F2FS filesystem (ext4 is unaffected)
-2 Swapfile size is less than F2FS section size (2MB)
-3 Swapfile has fragmented physical layout (multiple non-contiguous extents)
-4 Kernel version is 6.6+ (6.1 is unaffected)
-
-The root cause is in check_swap_activate() function in fs/f2fs/data.c. When the
-first extent of a small swapfile (< 2MB) is not aligned to section boundaries,
-the function incorrectly treats it as the last extent, failing to map
-subsequent extents. This results in incorrect swap_extent creation where only
-the first extent is mapped, causing subsequent swap writes to overwrite wrong
-physical locations (other files' data).
-
-Steps to Reproduce
-1 Setup a device with F2FS-formatted userdata partition
-2 Compile stress-ng from https://github.com/ColinIanKing/stress-ng
-3 Run swap stress test: (Android devices)
-adb shell "cd /data/stressng; ./stress-ng-64 --metrics-brief --timeout 60
---swap 0"
-
-Log:
-1 Ftrace shows in kernel 6.6, only first extent is mapped during second
-f2fs_map_blocks call in check_swap_activate():
-stress-ng-swap-8990: f2fs_map_blocks: ino=11002, file offset=0, start
-blkaddr=0x43143, len=0x1
-(Only 4KB mapped, not the full swapfile)
-2 in kernel 6.1, both extents are correctly mapped:
-stress-ng-swap-5966: f2fs_map_blocks: ino=28011, file offset=0, start
-blkaddr=0x13cd4, len=0x1
-stress-ng-swap-5966: f2fs_map_blocks: ino=28011, file offset=1, start
-blkaddr=0x60c84b, len=0xff
-
-The problematic code is in check_swap_activate():
-if ((pblock - SM_I(sbi)->main_blkaddr) % blks_per_sec ||
-    nr_pblocks % blks_per_sec ||
-    !f2fs_valid_pinned_area(sbi, pblock)) {
-    bool last_extent = false;
-
-    not_aligned++;
-
-    nr_pblocks = roundup(nr_pblocks, blks_per_sec);
-    if (cur_lblock + nr_pblocks > sis->max)
-        nr_pblocks -= blks_per_sec;
-
-    /* this extent is last one */
-    if (!nr_pblocks) {
-        nr_pblocks = last_lblock - cur_lblock;
-        last_extent = true;
-    }
-
-    ret = f2fs_migrate_blocks(inode, cur_lblock, nr_pblocks);
-    if (ret) {
-        if (ret == -ENOENT)
-            ret = -EINVAL;
-        goto out;
-    }
-
-    if (!last_extent)
-        goto retry;
-}
-
-When the first extent is unaligned and roundup(nr_pblocks, blks_per_sec)
-exceeds sis->max, we subtract blks_per_sec resulting in nr_pblocks = 0. The
-code then incorrectly assumes this is the last extent, sets nr_pblocks =
-last_lblock - cur_lblock (entire swapfile), and performs migration. After
-migration, it doesn't retry mapping, so subsequent extents are never processed.
-"
-
-In order to fix this issue, we need to lookup block mapping info after
-we migrate all blocks in the tail of swapfile.
+This optimization significantly reduces the number of f2fs_map_blocks()
+calls in f2fs_overwrite_io() when called from f2fs_iomap_begin(),
+especially for fragmented files with large I/O requests.
 
 Cc: stable@kernel.org
-Fixes: 9703d69d9d15 ("f2fs: support file pinning for zoned devices")
-Cc: Daeho Jeong <daehojeong@google.com>
-Reported-and-tested-by: Xiaolong Guo <guoxiaolong2008@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220951
-Signed-off-by: Chao Yu <chao@kernel.org>
+Fixes: 351bc761338d ("f2fs: optimize f2fs DIO overwrites")
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Reviewed-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Signed-off-by: Yeongjin Gil <youngjin.gil@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/f2fs/data.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 --- a/fs/f2fs/data.c
 +++ b/fs/f2fs/data.c
-@@ -3935,6 +3935,7 @@ static int check_swap_activate(struct sw
+@@ -1799,7 +1799,8 @@ out:
+ 	return err;
+ }
  
- 	while (cur_lblock < last_lblock && cur_lblock < sis->max) {
- 		struct f2fs_map_blocks map;
-+		bool last_extent = false;
- retry:
- 		cond_resched();
+-bool f2fs_overwrite_io(struct inode *inode, loff_t pos, size_t len)
++static bool __f2fs_overwrite_io(struct inode *inode, loff_t pos, size_t len,
++				bool check_first)
+ {
+ 	struct f2fs_map_blocks map;
+ 	block_t last_lblk;
+@@ -1821,10 +1822,17 @@ bool f2fs_overwrite_io(struct inode *ino
+ 		if (err || map.m_len == 0)
+ 			return false;
+ 		map.m_lblk += map.m_len;
++		if (check_first)
++			break;
+ 	}
+ 	return true;
+ }
  
-@@ -3960,11 +3961,10 @@ retry:
- 		pblock = map.m_pblk;
- 		nr_pblocks = map.m_len;
++bool f2fs_overwrite_io(struct inode *inode, loff_t pos, size_t len)
++{
++	return __f2fs_overwrite_io(inode, pos, len, false);
++}
++
+ static int f2fs_xattr_fiemap(struct inode *inode,
+ 				struct fiemap_extent_info *fieinfo)
+ {
+@@ -4187,7 +4195,7 @@ static int f2fs_iomap_begin(struct inode
+ 	 * f2fs_map_lock and f2fs_balance_fs are not necessary.
+ 	 */
+ 	if ((flags & IOMAP_WRITE) &&
+-		!f2fs_overwrite_io(inode, offset, length))
++		!__f2fs_overwrite_io(inode, offset, length, true))
+ 		map.m_may_create = true;
  
--		if ((pblock - SM_I(sbi)->main_blkaddr) % blks_per_sec ||
--				nr_pblocks % blks_per_sec ||
--				f2fs_is_sequential_zone_area(sbi, pblock)) {
--			bool last_extent = false;
--
-+		if (!last_extent &&
-+			((pblock - SM_I(sbi)->main_blkaddr) % blks_per_sec ||
-+			nr_pblocks % blks_per_sec ||
-+			f2fs_is_sequential_zone_area(sbi, pblock))) {
- 			not_aligned++;
- 
- 			nr_pblocks = roundup(nr_pblocks, blks_per_sec);
-@@ -3985,8 +3985,8 @@ retry:
- 				goto out;
- 			}
- 
--			if (!last_extent)
--				goto retry;
-+			/* lookup block mapping info after block migration */
-+			goto retry;
- 		}
- 
- 		if (cur_lblock + nr_pblocks >= sis->max)
+ 	err = f2fs_map_blocks(inode, &map, F2FS_GET_BLOCK_DIO);
 
 
