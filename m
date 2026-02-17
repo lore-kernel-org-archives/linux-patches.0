@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09F329A1;
-	Tue, 17 Feb 2026 20:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5596229A1;
+	Tue, 17 Feb 2026 20:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361484; cv=none; b=DyTJPP6b/HclfKtBE+t+oP1M0x124Qv8KRAdTWab6iRfxd6guF9izs5GG68QpAKo/wmRKdhUOADFcirLPt5R3qFg0m0DIYgPun93/xdf7kdf1tFOuGsue5Tss4IYr6v7pkXlu0TUiK1MQ7qEefRCmHiaB98AdwxrkrEnI/sC9/Y=
+	t=1771361487; cv=none; b=ihnuy4U26JMJnzpZ7U6IoFAI1ivifGPxFu9jNKNgSAfXwjX/EwYYmZnnE+DRayKCys5R1xNdS2mmOXJs/CU8/iYTv2m0Xz0TLk2mNmOPhLmgpkv+HRXgwrjorfnfPC+en9Qt9Ag6wLHbs4RWzN14feoQrBgsCRCZlnppDoaYjyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361484; c=relaxed/simple;
-	bh=GkhAcBEW6+rmux7skzfGaLZR87NLaS+AXGmpBZiNXaU=;
+	s=arc-20240116; t=1771361487; c=relaxed/simple;
+	bh=g+jfcuMClH2FAUO6pUMdFxgYLfAn+NlJGepFkKBgkSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GbCqemFEM6aNbV1ht0YtAaaplehCE5rjjYJrcZ8MVUBSh6osdsC2eSkvZiHP7AaENoRR09I9pW+oisHtQlBC06qI4t6pf80s3TYce6K/yBFhoZ3bMhluZhUneoXbbjClFIT67gjXLNTfe7J9CF5uflam/pZsEj9LGrTE/eOSSuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URzkAKtP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5ZFZEYPBY6nlzSGlSldtc3mzciKrwJnGICnqj8WZxMkOnQwxdrLiYUquSBkZYqQYx7M+lvQR34aRSQfMqiKgpuOMZBpmlCtSE841v0BLOad3j0VSh8y9/3JKdGtIK1Ece4mVpEZEbeEBT5GodWrRCBYrUXZGtqWKjJ1078EVI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4sCK2WT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URzkAKtP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFF8C4CEF7;
-	Tue, 17 Feb 2026 20:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4sCK2WT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8844C4CEF7;
+	Tue, 17 Feb 2026 20:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361483;
-	bh=GkhAcBEW6+rmux7skzfGaLZR87NLaS+AXGmpBZiNXaU=;
+	s=korg; t=1771361487;
+	bh=g+jfcuMClH2FAUO6pUMdFxgYLfAn+NlJGepFkKBgkSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=URzkAKtPe/E5h+IeH+B9GCvM53rCxUiLQOMlkYVzibPzqYoxCafVyWvgnWPQ+jA+L
-	 QMNufoAQmbsYjr3vcHPtiJKvZBsH2wUqk/1KNupa1RS2HLM4ZNZNmzbi4eG0rYDnYu
-	 qmv8AxJBaLJ1gxkraDkjd/lOMlVPT8CqekJLoT74=
+	b=g4sCK2WTtdFlpWDbU67z+A3fQSqGN+9BQga1fhKGPZzT+36S01YDTjNsel5+tRgg6
+	 rrWTjbvJ04beGT8phCmu4hx+cJSQD99xUtBlCx3o+snkpbM+FyfRnC+KY3QWbK63J9
+	 /y3NpoNvjGYHm5OtMv/uIsDJWeTEORoJRlFRXaTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Chen Ridong <chenridong@huawei.com>
-Subject: [PATCH 6.18 29/43] cpuset: Fix missing adaptation for cpuset_is_populated
-Date: Tue, 17 Feb 2026 21:32:09 +0100
-Message-ID: <20260217200007.587713721@linuxfoundation.org>
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.18 03/43] rust: dma: fix broken intra-doc links
+Date: Tue, 17 Feb 2026 21:31:43 +0100
+Message-ID: <20260217200006.602617696@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200006.470920131@linuxfoundation.org>
 References: <20260217200006.470920131@linuxfoundation.org>
@@ -45,44 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-Commit b1bcaed1e39a ("cpuset: Treat cpusets in attaching as populated")
-was backported to the long‑term support (LTS) branches. However, because
-commit d5cf4d34a333 ("cgroup/cpuset: Don't track # of local child
-partitions") was not backported, a corresponding adaptation to the
-backported code is still required.
+commit 32cb3840386fd3684fbe8294cfc0a6684417139e upstream.
 
-To ensure correct behavior, replace cgroup_is_populated with
-cpuset_is_populated in the partition_is_populated function.
+The `pci` module is conditional on CONFIG_PCI. When it's disabled, the
+intra-doc link to `pci::Device` causes rustdoc warnings:
 
-Cc: stable@vger.kernel.org	# 6.1+
-Fixes: b1bcaed1e39a ("cpuset: Treat cpusets in attaching as populated")
-Cc: Waiman Long <longman@redhat.com>
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
+warning: unresolved link to `::kernel::pci::Device`
+  --> rust/kernel/dma.rs:30:70
+   |
+30 | /// where the underlying bus is DMA capable, such as [`pci::Device`](::kernel::pci::Device) or
+   |                                                                      ^^^^^^^^^^^^^^^^^^^^^ no item named `pci` in module `kernel`
+
+Fix this by making the documentation conditional on CONFIG_PCI.
+
+Fixes: d06d5f66f549 ("rust: dma: implement `dma::Device` trait")
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Reviewed-by: Dirk Behme <dirk.behme@de.bosch.com>
+Link: https://patch.msgid.link/20251231045728.1912024-1-fujita.tomonori@gmail.com
+[ Keep the "such as" part indicating a list of examples; fix typos in
+  commit message. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/dma.rs |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -385,7 +385,7 @@ static inline bool partition_is_populate
- 	    cs->attach_in_progress)
- 		return true;
- 	if (!excluded_child && !cs->nr_subparts)
--		return cgroup_is_populated(cs->css.cgroup);
-+		return cpuset_is_populated(cs);
- 
- 	rcu_read_lock();
- 	cpuset_for_each_descendant_pre(cp, pos_css, cs) {
+--- a/rust/kernel/dma.rs
++++ b/rust/kernel/dma.rs
+@@ -26,8 +26,9 @@ pub type DmaAddress = bindings::dma_addr
+ /// Trait to be implemented by DMA capable bus devices.
+ ///
+ /// The [`dma::Device`](Device) trait should be implemented by bus specific device representations,
+-/// where the underlying bus is DMA capable, such as [`pci::Device`](::kernel::pci::Device) or
+-/// [`platform::Device`](::kernel::platform::Device).
++/// where the underlying bus is DMA capable, such as:
++#[cfg_attr(CONFIG_PCI, doc = "* [`pci::Device`](kernel::pci::Device)")]
++/// * [`platform::Device`](::kernel::platform::Device)
+ pub trait Device: AsRef<device::Device<Core>> {
+     /// Set up the device's DMA streaming addressing capabilities.
+     ///
 
 
