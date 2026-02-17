@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A85259CBD;
-	Tue, 17 Feb 2026 20:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B37829A1;
+	Tue, 17 Feb 2026 20:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361379; cv=none; b=tcvr249ckl0yXBFnHKdefDYbHMUXR0GbFJa3Sg5X3brWb8ZRa5te76+QRVeNUkr1uzF60xzVJ3RwqKf9zKq6jqreeAeIK2sRIqQVjJ7KhatUUsy4Uz2ZlIeN9bNZhkFv8dQFaxVKGyMjNFg1rQf99Qs6dPOwo34WtfOpJgNEc3c=
+	t=1771361383; cv=none; b=syNlU0DBWCyxMwQI0dcvlBuxnTEjp93n7k48ApqcTgF0D1YPzemQk1xOFK84ZgLuwoplVDbb89OKiKfd8z6Dr+GcpJVvGL4GE4L5fboV3XvaYRH2FHTzdxEWTK10cbn/q+bLWWku91VQs3/VpvcCgYz7Z+biRkJ2qV7XpHdSqRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361379; c=relaxed/simple;
-	bh=uqMphDbRJAeLKDVdTu80G/pwgYD6btc2UqTKdUVHw5Y=;
+	s=arc-20240116; t=1771361383; c=relaxed/simple;
+	bh=5tVJWhKLvhSHo0sNyEk9lbw4MHbiG8WdaRh/IXiAPKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4tVe9qvbQpdPqJl2UPYHs4d252I9cMvpKKHyIazPQLGDFxYnmFaQSjxcjid6IBtxzRgf51LOYR0tZlHFRBuAYM8fMmR26L05d07jnAISqFp+tTa0eTkUz0/seT3ahexrZDA9iBO0CfQHCnhNpqRaxfjRp7HW2AdiNg0EbqK0lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agugHYvS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ykf/64WW/4LfmK4Lumn6sKkULLXvclocXkRErIOrZKhE3Hlst6wGBwUM65gT79P9nUq/0VDWmAd+QN7USmwRh+gMDqmsLDP0Ad4KP1wJhUJT6Bp/ev8/jp+q30Rp/QparPGmgYhRLHn7VO1LsTYcHsDpX6fUUMK8VUf/E6boXRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gO+7luyy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agugHYvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BDEC4CEF7;
-	Tue, 17 Feb 2026 20:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gO+7luyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84506C4CEF7;
+	Tue, 17 Feb 2026 20:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361378;
-	bh=uqMphDbRJAeLKDVdTu80G/pwgYD6btc2UqTKdUVHw5Y=;
+	s=korg; t=1771361383;
+	bh=5tVJWhKLvhSHo0sNyEk9lbw4MHbiG8WdaRh/IXiAPKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agugHYvSbXPqLJA4deIgcaPGBASyN9qRTnUzw5afPvuAD3ldZuyQnHQZjHqI9GQi7
-	 LGaI1YqtCOdNfiAsghR9Ipsj8IX1xWzD+q7eiDUAsJpE8VNYxUBSA7YVrjhXBlLNL2
-	 eyk8pkJcS4nd2OJWeFe4VMPUHlRkGRTKiuEiG2Lw=
+	b=gO+7luyyajI9GArr4uGkepNAuIBD+xmoZiMXcRvrr8DWwKgfK6M0VVA4ng4VOXobx
+	 X9SifHMWDDo4nT5BzK5CXFIUMPDqlWGhmWpaG4VeN1aJGnjfx6KdyV3OpuJQnvoVZn
+	 ylr/u2QkbdVgM+AMJP+yHUNa4Ev7dFjkoHACmt7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+803dd716c4310d16ff3a@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 18/18] f2fs: fix to do sanity check on node footer in {read,write}_end_io
-Date: Tue, 17 Feb 2026 21:32:14 +0100
-Message-ID: <20260217200003.402706905@linuxfoundation.org>
+	Evans Jahja <evansjahja13@gmail.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	=?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Thorsten Leemhuis <regressions@leemhuis.info>
+Subject: [PATCH 6.19 02/18] arm64: dts: mediatek: mt8183: Add missing endpoint IDs to display graph
+Date: Tue, 17 Feb 2026 21:31:58 +0100
+Message-ID: <20260217200002.781804097@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.683975158@linuxfoundation.org>
 References: <20260217200002.683975158@linuxfoundation.org>
@@ -47,181 +47,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Otto Pflüger <otto.pflueger@abscue.de>
 
-[ Upstream commit 50ac3ecd8e05b6bcc350c71a4307d40c030ec7e4 ]
+commit be0b304eeb8c5f77e4f98f64e58729d879195f2f upstream.
 
------------[ cut here ]------------
-kernel BUG at fs/f2fs/data.c:358!
-Call Trace:
- <IRQ>
- blk_update_request+0x5eb/0xe70 block/blk-mq.c:987
- blk_mq_end_request+0x3e/0x70 block/blk-mq.c:1149
- blk_complete_reqs block/blk-mq.c:1224 [inline]
- blk_done_softirq+0x107/0x160 block/blk-mq.c:1229
- handle_softirqs+0x283/0x870 kernel/softirq.c:579
- __do_softirq kernel/softirq.c:613 [inline]
- invoke_softirq kernel/softirq.c:453 [inline]
- __irq_exit_rcu+0xca/0x1f0 kernel/softirq.c:680
- irq_exit_rcu+0x9/0x30 kernel/softirq.c:696
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1050 [inline]
- sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1050
- </IRQ>
+The endpoint IDs in the display graph are expected to match the
+associated display path number, i.e. all endpoints connected to
+mmsys_ep_main must have reg = <0> and all endpoints connected to
+mmsys_ep_ext must have reg = <1>.
 
-In f2fs_write_end_io(), it detects there is inconsistency in between
-node page index (nid) and footer.nid of node page.
+Add the missing ID to all endpoints in the display graph, based on
+mt8365.dtsi as an existing example that does this correctly.
 
-If footer of node page is corrupted in fuzzed image, then we load corrupted
-node page w/ async method, e.g. f2fs_ra_node_pages() or f2fs_ra_node_page(),
-in where we won't do sanity check on node footer, once node page becomes
-dirty, we will encounter this bug after node page writeback.
-
-Cc: stable@kernel.org
-Reported-by: syzbot+803dd716c4310d16ff3a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=803dd716c4310d16ff3a
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ Context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e72d63fa0563 ("arm64: dts: mediatek: mt8183: Migrate to display controller OF graph")
+Reported-by: Evans Jahja <evansjahja13@gmail.com>
+Closes: https://lore.kernel.org/linux-mediatek/CAAq5pW9o3itC0G16LnJO7KMAQ_XoqXUpB=cuJ_7e3-H11zKd5Q@mail.gmail.com/
+Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+[Angelo: Fixed dtbs_check issues]
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   13 +++++++++++--
- fs/f2fs/f2fs.h |   12 ++++++++++++
- fs/f2fs/node.c |   20 +++++++++++---------
- fs/f2fs/node.h |    8 --------
- 4 files changed, 34 insertions(+), 19 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi |   37 +++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -151,6 +151,12 @@ static void f2fs_finish_read_bio(struct
- 		}
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -1812,15 +1812,23 @@
+ 				#size-cells = <0>;
  
- 		dec_page_count(F2FS_F_SB(folio), __read_io_type(folio));
+ 				port@0 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <0>;
+-					ovl_2l1_in: endpoint {
 +
-+		if (F2FS_F_SB(folio)->node_inode && is_node_folio(folio) &&
-+			f2fs_sanity_check_node_footer(F2FS_F_SB(folio),
-+				folio, folio->index, NODE_TYPE_REGULAR, true))
-+			bio->bi_status = BLK_STS_IOERR;
++					ovl_2l1_in: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&mmsys_ep_ext>;
+ 					};
+ 				};
+ 
+ 				port@1 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <1>;
+-					ovl_2l1_out: endpoint {
 +
- 		folio_end_read(folio, bio->bi_status == BLK_STS_OK);
- 	}
++					ovl_2l1_out: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&rdma1_in>;
+ 					};
+ 				};
+@@ -1872,15 +1880,23 @@
+ 				#size-cells = <0>;
  
-@@ -352,8 +358,11 @@ static void f2fs_write_end_io(struct bio
- 						STOP_CP_REASON_WRITE_FAIL);
- 		}
- 
--		f2fs_bug_on(sbi, is_node_folio(folio) &&
--				folio->index != nid_of_node(folio));
-+		if (is_node_folio(folio)) {
-+			f2fs_sanity_check_node_footer(sbi, folio,
-+				folio->index, NODE_TYPE_REGULAR, true);
-+			f2fs_bug_on(sbi, folio->index != nid_of_node(folio));
-+		}
- 
- 		dec_page_count(sbi, type);
- 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1529,6 +1529,15 @@ enum f2fs_lookup_mode {
- 	LOOKUP_AUTO,
- };
- 
-+/* For node type in __get_node_folio() */
-+enum node_type {
-+	NODE_TYPE_REGULAR,
-+	NODE_TYPE_INODE,
-+	NODE_TYPE_XATTR,
-+	NODE_TYPE_NON_INODE,
-+};
+ 				port@0 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <0>;
+-					rdma1_in: endpoint {
 +
++					rdma1_in: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&ovl_2l1_out>;
+ 					};
+ 				};
+ 
+ 				port@1 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <1>;
+-					rdma1_out: endpoint {
 +
- static inline int f2fs_test_bit(unsigned int nr, char *addr);
- static inline void f2fs_set_bit(unsigned int nr, char *addr);
- static inline void f2fs_clear_bit(unsigned int nr, char *addr);
-@@ -3877,6 +3886,9 @@ struct folio *f2fs_new_node_folio(struct
- void f2fs_ra_node_page(struct f2fs_sb_info *sbi, nid_t nid);
- struct folio *f2fs_get_node_folio(struct f2fs_sb_info *sbi, pgoff_t nid,
- 						enum node_type node_type);
-+int f2fs_sanity_check_node_footer(struct f2fs_sb_info *sbi,
-+					struct folio *folio, pgoff_t nid,
-+					enum node_type ntype, bool in_irq);
- struct folio *f2fs_get_inode_folio(struct f2fs_sb_info *sbi, pgoff_t ino);
- struct folio *f2fs_get_xnode_folio(struct f2fs_sb_info *sbi, pgoff_t xnid);
- int f2fs_move_node_folio(struct folio *node_folio, int gc_type);
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1500,9 +1500,9 @@ void f2fs_ra_node_page(struct f2fs_sb_in
- 	f2fs_folio_put(afolio, err ? true : false);
- }
++					rdma1_out: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&dpi_in>;
+ 					};
+ 				};
+@@ -2076,15 +2092,24 @@
+ 				#size-cells = <0>;
  
--static int sanity_check_node_footer(struct f2fs_sb_info *sbi,
-+int f2fs_sanity_check_node_footer(struct f2fs_sb_info *sbi,
- 					struct folio *folio, pgoff_t nid,
--					enum node_type ntype)
-+					enum node_type ntype, bool in_irq)
- {
- 	if (unlikely(nid != nid_of_node(folio)))
- 		goto out_err;
-@@ -1527,12 +1527,13 @@ static int sanity_check_node_footer(stru
- 		goto out_err;
- 	return 0;
- out_err:
--	f2fs_warn(sbi, "inconsistent node block, node_type:%d, nid:%lu, "
--		  "node_footer[nid:%u,ino:%u,ofs:%u,cpver:%llu,blkaddr:%u]",
--		  ntype, nid, nid_of_node(folio), ino_of_node(folio),
--		  ofs_of_node(folio), cpver_of_node(folio),
--		  next_blkaddr_of_node(folio));
- 	set_sbi_flag(sbi, SBI_NEED_FSCK);
-+	f2fs_warn_ratelimited(sbi, "inconsistent node block, node_type:%d, nid:%lu, "
-+		"node_footer[nid:%u,ino:%u,ofs:%u,cpver:%llu,blkaddr:%u]",
-+		ntype, nid, nid_of_node(folio), ino_of_node(folio),
-+		ofs_of_node(folio), cpver_of_node(folio),
-+		next_blkaddr_of_node(folio));
+ 				port@0 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <0>;
+-					dpi_in: endpoint {
 +
- 	f2fs_handle_error(sbi, ERROR_INCONSISTENT_FOOTER);
- 	return -EFSCORRUPTED;
- }
-@@ -1578,7 +1579,7 @@ repeat:
- 		goto out_err;
- 	}
- page_hit:
--	err = sanity_check_node_footer(sbi, folio, nid, ntype);
-+	err = f2fs_sanity_check_node_footer(sbi, folio, nid, ntype, false);
- 	if (!err)
- 		return folio;
- out_err:
-@@ -1752,7 +1753,8 @@ static bool __write_node_folio(struct fo
- 	/* get old block addr of this node page */
- 	nid = nid_of_node(folio);
++					dpi_in: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&rdma1_out>;
+ 					};
+ 				};
  
--	if (sanity_check_node_footer(sbi, folio, nid, NODE_TYPE_REGULAR)) {
-+	if (f2fs_sanity_check_node_footer(sbi, folio, nid,
-+					NODE_TYPE_REGULAR, false)) {
- 		f2fs_handle_critical_error(sbi, STOP_CP_REASON_CORRUPTED_NID);
- 		goto redirty_out;
- 	}
---- a/fs/f2fs/node.h
-+++ b/fs/f2fs/node.h
-@@ -52,14 +52,6 @@ enum {
- 	IS_PREALLOC,		/* nat entry is preallocated */
- };
- 
--/* For node type in __get_node_folio() */
--enum node_type {
--	NODE_TYPE_REGULAR,
--	NODE_TYPE_INODE,
--	NODE_TYPE_XATTR,
--	NODE_TYPE_NON_INODE,
--};
--
- /*
-  * For node information
-  */
+ 				port@1 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <1>;
+-					dpi_out: endpoint { };
++
++					dpi_out: endpoint@1  {
++						reg = <1>;
++					};
+ 				};
+ 			};
+ 		};
 
 
