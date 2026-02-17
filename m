@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3707A13A;
-	Tue, 17 Feb 2026 20:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86923261B70;
+	Tue, 17 Feb 2026 20:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361274; cv=none; b=hrd0r4rfXaSryHa2hN5hSmf1fI2ENvkyIWYjFazHwlSFbTQckhhSfPdyHRCF02Yf/sJyXJELlCgvKZrsI6czXjyiel1kXpUPrqCwb+ZyzJ1fAx+0dD6sDr11cwbwtOhsN6bLFNkYt50ggdyrdFcFAAA9v39acgG9xzcW/twdiY8=
+	t=1771361278; cv=none; b=F5U8g0T+Lb9eoSyJ4CTXVlxts/sziWVBQ6nDtyE8nYh4a00tdXKE3VPwuF563w6ETh+IVVvZENXssTA57+Em0/Wf/Yom0sJ3g+2jR0VfpDY3hUt3P1j+pOeCEHEYCe24sgmJw5HtqQhFPtfoeiqXvPxqGAy2GZ1zrfC/52Q2MP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361274; c=relaxed/simple;
-	bh=Zo/zLj+c02HE5GrO0s+GPZFkODCbmt3FJKDNyXj8kh4=;
+	s=arc-20240116; t=1771361278; c=relaxed/simple;
+	bh=P89CDAfKdMFHfEPvSYjUlA+vJKb9YQw1nEci2gI+8Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dww3tsjiNq/llv8hGyhsOuwO4AJy6ljU/r488O4j0e7nrFGfCf8TNiX9qJTnupOm6BzBNYOo0QkUXrHJReOwWH7uvCpvwQHduCPGipehxhPft8C3mg0YG1mCqPjzzkIFeUESA2Epv0Z7SloUi7e1J9sZu/P51BU1B2CBZ2KjgpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=129XdUiu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HTGdufLUmCGXUHJpH7Rrcrox6MNplQ4NhMPubH15u/KSFD00a2+5up8R30qU3GKBexsGA5+S4VcisWzp41cgm/dvRYKtUAEpXlIb59Na9kMxV70IQyn67ZK2yqNgIf3i6HeN9knRvPWUrMOcnxD9Q8+Ci+Z86VgNZ8t6iMOSSA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TofMXs8p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="129XdUiu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9F6C4CEF7;
-	Tue, 17 Feb 2026 20:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TofMXs8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBAC4C4CEF7;
+	Tue, 17 Feb 2026 20:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361274;
-	bh=Zo/zLj+c02HE5GrO0s+GPZFkODCbmt3FJKDNyXj8kh4=;
+	s=korg; t=1771361278;
+	bh=P89CDAfKdMFHfEPvSYjUlA+vJKb9YQw1nEci2gI+8Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=129XdUiudHpQCKvRl3o1VJHMdSRkSdJoIC3rF6uFKOL7+8gxo6gN71vshOhOBDMFQ
-	 7QG9dlLFmHyaBAlGAMqnUv115zB/BpwZ/3CtAa9wIrryLRk4FfhDMUCzLD1RJ4rN3x
-	 x2YR88SrNd9WCgdsfICIvQUDXYiTPPVRe7nZaKzI=
+	b=TofMXs8p4EGr07QaZSKaIdRuLSrn/2p5Lp6BCzuVBZCFAmVX96nkBngXtiNBDzyeP
+	 QkIF4n5LROC6rxjtIjJl0GiMMm682LI5Ahr3zwWHBy7aakZkwcxAS69rr1jJcKY0lE
+	 9FUmcPSMj4SmXBFLgasK/zU9Y6BCWw9yQSRD+YF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Qingfang Deng <dqfext@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Rajani Kantha <681739313@139.com>
-Subject: [PATCH 6.1 52/64] ACPI: APEI: send SIGBUS to current task if synchronous memory error not recovered
-Date: Tue, 17 Feb 2026 21:31:48 +0100
-Message-ID: <20260217200009.457100841@linuxfoundation.org>
+Subject: [PATCH 6.1 53/64] net: stmmac: Fix accessing freed irq affinity_hint
+Date: Tue, 17 Feb 2026 21:31:49 +0100
+Message-ID: <20260217200009.495087811@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -56,62 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit 79a5ae3c4c5eb7e38e0ebe4d6bf602d296080060 ]
+[ Upstream commit c60d101a226f18e9a8f01bb4c6ca2b47dfcb15ef ]
 
-If a synchronous error is detected as a result of user-space process
-triggering a 2-bit uncorrected error, the CPU will take a synchronous
-error exception such as Synchronous External Abort (SEA) on Arm64. The
-kernel will queue a memory_failure() work which poisons the related
-page, unmaps the page, and then sends a SIGBUS to the process, so that
-a system wide panic can be avoided.
+The cpumask should not be a local variable, since its pointer is saved
+to irq_desc and may be accessed from procfs.
+To fix it, use the persistent mask cpumask_of(cpu#).
 
-However, no memory_failure() work will be queued when abnormal
-synchronous errors occur. These errors can include situations like
-invalid PA, unexpected severity, no memory failure config support,
-invalid GUID section, etc. In such a case, the user-space process will
-trigger SEA again.  This loop can potentially exceed the platform
-firmware threshold or even trigger a kernel hard lockup, leading to a
-system reboot.
-
-Fix it by performing a force kill if no memory_failure() work is queued
-for synchronous errors.
-
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Reviewed-by: Jane Chu <jane.chu@oracle.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Link: https://patch.msgid.link/20250714114212.31660-2-xueshuai@linux.alibaba.com
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ Using pr_err instead of dev_err due to ghes doesn't have member "dev"]
+Cc: stable@vger.kernel.org
+Fixes: 8deec94c6040 ("net: stmmac: set IRQ affinity hint for multi MSI vectors")
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250318032424.112067-1-dqfext@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Rajani Kantha <681739313@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/apei/ghes.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -684,6 +684,16 @@ static bool ghes_do_proc(struct ghes *gh
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3518,7 +3518,6 @@ static int stmmac_request_irq_multi_msi(
+ {
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	enum request_irq_err irq_err;
+-	cpumask_t cpu_mask;
+ 	int irq_idx = 0;
+ 	char *int_name;
+ 	int ret;
+@@ -3630,9 +3629,8 @@ static int stmmac_request_irq_multi_msi(
+ 			irq_idx = i;
+ 			goto irq_error;
  		}
+-		cpumask_clear(&cpu_mask);
+-		cpumask_set_cpu(i % num_online_cpus(), &cpu_mask);
+-		irq_set_affinity_hint(priv->rx_irq[i], &cpu_mask);
++		irq_set_affinity_hint(priv->rx_irq[i],
++				      cpumask_of(i % num_online_cpus()));
  	}
  
-+	/*
-+	 * If no memory failure work is queued for abnormal synchronous
-+	 * errors, do a force kill.
-+	 */
-+	if (sync && !queued) {
-+		pr_err(GHES_PFX "%s:%d: synchronous unrecoverable error (SIGBUS)\n",
-+			current->comm, task_pid_nr(current));
-+		force_sig(SIGBUS);
-+	}
-+
- 	return queued;
- }
+ 	/* Request Tx MSI irq */
+@@ -3655,9 +3653,8 @@ static int stmmac_request_irq_multi_msi(
+ 			irq_idx = i;
+ 			goto irq_error;
+ 		}
+-		cpumask_clear(&cpu_mask);
+-		cpumask_set_cpu(i % num_online_cpus(), &cpu_mask);
+-		irq_set_affinity_hint(priv->tx_irq[i], &cpu_mask);
++		irq_set_affinity_hint(priv->tx_irq[i],
++				      cpumask_of(i % num_online_cpus()));
+ 	}
  
+ 	return 0;
 
 
