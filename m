@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356A329A1;
-	Tue, 17 Feb 2026 20:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3F1261B70;
+	Tue, 17 Feb 2026 20:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361677; cv=none; b=ivS135pAaTMSwh8pdd0kNqzisCOdGUQRKG3gYDFG/nredB/R0iHbATX/SipnSr/W3nB6oRKuyho2pxgkKsFxrgsTFkZZUkUTlEIlM/BCmJWRlkT1YY3XPwp3PKqMVmWMLcK5AItPocbUrrP/LZBX3Q11OgPfyqczfncwu7+IztE=
+	t=1771361680; cv=none; b=SySkdo42DQCcSMBZs5wLzifjy5WrgBO/BLPpyyQ5FlamElBzptfigINsXQXf+VEeqxCP36vszqv1uu1aJEGC+o4dd3i85zh3F9+bvn7UWgIeo1DRM2cHRacfVPLuHWvmUXYvhfLdWQyPnEULFFtY3BPGLtPSOvLZuFmkvfg391Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361677; c=relaxed/simple;
-	bh=6Au7pyQnzcxwiqIeeuMv2pNFMGDWiBjbMx9F8L/B0gg=;
+	s=arc-20240116; t=1771361680; c=relaxed/simple;
+	bh=3accmPA5DasFPJ6eeb0m9IfOMLeIpeU2c/YyJ5Om+ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s90OLCQDwouSpdUIv7S0D/N4e3PAFDs+o2OXe5gA0xCuhTwcbflGUR47cU5FTjI0/tOvfhCAoz2ajgwnFQLxXgqAhmZruj7tiRJSGNtb9pyELoYDq5F9JfEdiYqZ47BWw0AXzrWW6QIw1+Xy1QksBs5IxshyEki85mkeJYRCM68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTjoicGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uUpslCHyhU2BfRBglc9SFmmdWiOTF/lqYWgbjfriE3EU93r97+H6WKvZGfDUoa9mCmKQjDN/OQeyudN3N9cxif7k2Y58+123J2PE+hXJhs1FFNe4c5IEos7casehGkCh46Ew4aBkzsc9vWRpdw/LkyqNa5iQM3IPY2y7dpleFq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMxLRcTz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTjoicGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82078C4CEF7;
-	Tue, 17 Feb 2026 20:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMxLRcTz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39B3C4CEF7;
+	Tue, 17 Feb 2026 20:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361677;
-	bh=6Au7pyQnzcxwiqIeeuMv2pNFMGDWiBjbMx9F8L/B0gg=;
+	s=korg; t=1771361680;
+	bh=3accmPA5DasFPJ6eeb0m9IfOMLeIpeU2c/YyJ5Om+ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BTjoicGT/O+2VKro2sntuuslh8wtczUZ4iVQBlLMCnHhQ9EcZhItHwMYRZfS2HfFX
-	 u0Pf46+shjk/uITiQMehuDhZT0RW7QDS3fitLTOXTy+Zy90rdaepgALthTo7opX1V2
-	 KHZZ/P41wg7DI9447KJnf6U0h9u43/2tmPN0BbwA=
+	b=HMxLRcTzH39GFEu1UAkXVbGT60TQOMwAuAiMLUCunCv3oo1gPqM3+D/H82SVksUvE
+	 b8y0hNqsaa+LAcWzf1QxQRuvsowjxYD7uAkalV+U8Rp2WLDx5M3zM7wNkQk3xvw5Gw
+	 v7VC/0l5MOBgGa8vbQx5IoIYl0QIq3FLGs5BLFpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 24/42] ASoC: fsl_xcvr: fix missing lock in fsl_xcvr_mode_put()
-Date: Tue, 17 Feb 2026 21:32:15 +0100
-Message-ID: <20260217200006.925124816@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 42/42] USB: serial: option: add Telit FN920C04 RNDIS compositions
+Date: Tue, 17 Feb 2026 21:32:33 +0100
+Message-ID: <20260217200007.609622378@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200005.998240758@linuxfoundation.org>
 References: <20260217200005.998240758@linuxfoundation.org>
@@ -51,49 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-[ Upstream commit f514248727606b9087bc38a284ff686e0093abf1 ]
+commit 509f403f3ccec14188036212118651bf23599396 upstream.
 
-fsl_xcvr_activate_ctl() has
-lockdep_assert_held(&card->snd_card->controls_rwsem),
-but fsl_xcvr_mode_put() calls it without acquiring this lock.
+Add the following compositions:
 
-Other callers of fsl_xcvr_activate_ctl() in fsl_xcvr_startup() and
-fsl_xcvr_shutdown() properly acquire the lock with down_read()/up_read().
+0x10a1: RNDIS + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  9 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a1 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=d128dba9
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Add the missing down_read()/up_read() calls around fsl_xcvr_activate_ctl()
-in fsl_xcvr_mode_put() to fix the lockdep assertion and prevent potential
-race conditions when multiple userspace threads access the control.
+0x10a6: RNDIS + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 10 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a6 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=d128dba9
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Link: https://patch.msgid.link/20260202174112.2018402-1-n7l8m4@u.northwestern.edu
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+0x10ab: RNDIS + tty (AT) + tty (diag) + DPL (Data Packet Logging) + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 11 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10ab Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=d128dba9
+C:  #Ifs= 6 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_xcvr.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/option.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
-index 656a4d619cdf1..d6f00920391d1 100644
---- a/sound/soc/fsl/fsl_xcvr.c
-+++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -216,10 +216,13 @@ static int fsl_xcvr_mode_put(struct snd_kcontrol *kcontrol,
- 
- 	xcvr->mode = snd_soc_enum_item_to_val(e, item[0]);
- 
-+	down_read(&card->snd_card->controls_rwsem);
- 	fsl_xcvr_activate_ctl(dai, fsl_xcvr_arc_mode_kctl.name,
- 			      (xcvr->mode == FSL_XCVR_MODE_ARC));
- 	fsl_xcvr_activate_ctl(dai, fsl_xcvr_earc_capds_kctl.name,
- 			      (xcvr->mode == FSL_XCVR_MODE_EARC));
-+	up_read(&card->snd_card->controls_rwsem);
-+
- 	/* Allow playback for SPDIF only */
- 	rtd = snd_soc_get_pcm_runtime(card, card->dai_link);
- 	rtd->pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream_count =
--- 
-2.51.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1401,12 +1401,16 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a1, 0xff),	/* Telit FN20C04 (RNDIS) */
++	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a2, 0xff),	/* Telit FN920C04 (MBIM) */
+ 	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a3, 0xff),	/* Telit FN920C04 (ECM) */
+ 	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a6, 0xff),	/* Telit FN920C04 (RNDIS) */
++	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a7, 0xff),	/* Telit FN920C04 (MBIM) */
+ 	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a8, 0xff),	/* Telit FN920C04 (ECM) */
+@@ -1415,6 +1419,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10aa, 0xff),	/* Telit FN920C04 (MBIM) */
+ 	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10ab, 0xff),	/* Telit FN920C04 (RNDIS) */
++	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10b0, 0xff, 0xff, 0x30),	/* Telit FE990B (rmnet) */
+ 	  .driver_info = NCTRL(5) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10b0, 0xff, 0xff, 0x40) },
 
 
