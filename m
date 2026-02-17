@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F80F36F431;
-	Tue, 17 Feb 2026 20:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBC7286D4D;
+	Tue, 17 Feb 2026 20:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361006; cv=none; b=LcEpKpB3S+uwiyVSO5xX2sT4NCuWirAmRbPthp54Akzmgm8bpSpiUdBRlSQiZEqiENz56xdRvLIcqOcfz+N8MpMB68Cch8p5GSocdZn0yxCvI1dF/9mor/gDctZVC2Dra9aIor2cWso09hmSQBMfOAC2rPI0LtHK7NIs0vpD1V4=
+	t=1771361010; cv=none; b=tJIWa1midW14natxofLQIotDPSdMBygq38fmL1l//Atogn0hePoHuy1VLTAM/X8Tb44TuJhohw8aMn4JyQa/gJcFrOBfoVpd6/f1RbjoK0qO+FRA6uj/nwb8GNyr6ffi514S4TiGLX0gGPcgZtqeM5rXNsFvdHY5jP1IarBKS+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361006; c=relaxed/simple;
-	bh=4pV1/wpJqEsTyEvl/8pXFk9k6C8BRWSsH5HIhSdhMxk=;
+	s=arc-20240116; t=1771361010; c=relaxed/simple;
+	bh=0OK2YQcIB/lJiBUJ5mpJazhjYWsCNPhtGUJ3zaKGWic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yag0fMYZ+G9smQwf+PY8gVpfQdT1NPMhJ/q+hvh8L3OEnHFuUU5JeNWrdG1pEoq6BvwhWaICU1WYTtokNKfa7YebQiJcXm7FtLpvMmixikoExI3oHhxD8JWJzDTQ+Yb/vxPFo8mrMUzAHZ0OrMvmAU0XC2jYgpLDqVbCSMSPaIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBRUDeQu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fGtbICD04h8I6E4dWGvNdEhizuC6rvkf2HNuCKZZtyRTf2VOBmzw9SjLWuUkHya8uUfcICMhzKC61HlUluZbVoXPI3+o/mVyxeWuYTQxPbUR12u+Ve78ACryKNLQvt8EqqilCEdozz3DeJa3WLryIG1v1yEKxbCS5o3DNDfhfuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/mHMV8e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBRUDeQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB67C4CEF7;
-	Tue, 17 Feb 2026 20:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/mHMV8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48AC6C4CEF7;
+	Tue, 17 Feb 2026 20:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361006;
-	bh=4pV1/wpJqEsTyEvl/8pXFk9k6C8BRWSsH5HIhSdhMxk=;
+	s=korg; t=1771361010;
+	bh=0OK2YQcIB/lJiBUJ5mpJazhjYWsCNPhtGUJ3zaKGWic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBRUDeQuctnOljL2EFVoimG6GhWsEDnkFi1X+yTylHJFh2AnO37WpdTgx+0fED75H
-	 p2zijzGjl6IivbC43oXmYqq68NMiXzzZIwoRhGZTBTtfNUdekeYj9VyIfeop7SiMXz
-	 ig41W+xoQPVBWXhDwfF4w+CCtvcx2WPwS4d2WMjc=
+	b=v/mHMV8eFqQx8inBbh8UPS0pQDJ/SCPcT0UJjrr7G1v3+8mpOOMIy8fOwB20lKwxc
+	 CfqZt2CxSqETgA90soxCesFfJfb8J4nQphtNjZxqYRp9bTPFGug3mUZ+R5s39iyb4a
+	 ZIR9is7eTUuEid9SuhBerBm1eU9jnhTFKoBAO6OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 14/39] platform/x86: panasonic-laptop: Fix sysfs group leak in error path
-Date: Tue, 17 Feb 2026 21:31:23 +0100
-Message-ID: <20260217200003.478966544@linuxfoundation.org>
+Subject: [PATCH 5.15 15/39] ASoC: fsl_xcvr: fix missing lock in fsl_xcvr_mode_put()
+Date: Tue, 17 Feb 2026 21:31:24 +0100
+Message-ID: <20260217200003.516889235@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.929083107@linuxfoundation.org>
 References: <20260217200002.929083107@linuxfoundation.org>
@@ -45,55 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit 43b0b7eff4b3fb684f257d5a24376782e9663465 ]
+[ Upstream commit f514248727606b9087bc38a284ff686e0093abf1 ]
 
-The acpi_pcc_hotkey_add() error path leaks sysfs group pcc_attr_group
-if platform_device_register_simple() fails for the "panasonic" platform
-device.
+fsl_xcvr_activate_ctl() has
+lockdep_assert_held(&card->snd_card->controls_rwsem),
+but fsl_xcvr_mode_put() calls it without acquiring this lock.
 
-Address this by making it call sysfs_remove_group() in that case for
-the group in question.
+Other callers of fsl_xcvr_activate_ctl() in fsl_xcvr_startup() and
+fsl_xcvr_shutdown() properly acquire the lock with down_read()/up_read().
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3398370.44csPzL39Z@rafael.j.wysocki
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Add the missing down_read()/up_read() calls around fsl_xcvr_activate_ctl()
+in fsl_xcvr_mode_put() to fix the lockdep assertion and prevent potential
+race conditions when multiple userspace threads access the control.
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Link: https://patch.msgid.link/20260202174112.2018402-1-n7l8m4@u.northwestern.edu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/panasonic-laptop.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_xcvr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/panasonic-laptop.c b/drivers/platform/x86/panasonic-laptop.c
-index e412a550f0983..418cd4d781261 100644
---- a/drivers/platform/x86/panasonic-laptop.c
-+++ b/drivers/platform/x86/panasonic-laptop.c
-@@ -1073,7 +1073,7 @@ static int acpi_pcc_hotkey_add(struct acpi_device *device)
- 			-1, NULL, 0);
- 		if (IS_ERR(pcc->platform)) {
- 			result = PTR_ERR(pcc->platform);
--			goto out_backlight;
-+			goto out_sysfs;
- 		}
- 		result = device_create_file(&pcc->platform->dev,
- 			&dev_attr_cdpower);
-@@ -1089,6 +1089,8 @@ static int acpi_pcc_hotkey_add(struct acpi_device *device)
+diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
+index ae5960b2b6a95..c4deb09c9a9bc 100644
+--- a/sound/soc/fsl/fsl_xcvr.c
++++ b/sound/soc/fsl/fsl_xcvr.c
+@@ -203,10 +203,13 @@ static int fsl_xcvr_mode_put(struct snd_kcontrol *kcontrol,
  
- out_platform:
- 	platform_device_unregister(pcc->platform);
-+out_sysfs:
-+	sysfs_remove_group(&device->dev.kobj, &pcc_attr_group);
- out_backlight:
- 	backlight_device_unregister(pcc->backlight);
- out_input:
+ 	xcvr->mode = snd_soc_enum_item_to_val(e, item[0]);
+ 
++	down_read(&card->snd_card->controls_rwsem);
+ 	fsl_xcvr_activate_ctl(dai, fsl_xcvr_arc_mode_kctl.name,
+ 			      (xcvr->mode == FSL_XCVR_MODE_ARC));
+ 	fsl_xcvr_activate_ctl(dai, fsl_xcvr_earc_capds_kctl.name,
+ 			      (xcvr->mode == FSL_XCVR_MODE_EARC));
++	up_read(&card->snd_card->controls_rwsem);
++
+ 	/* Allow playback for SPDIF only */
+ 	rtd = snd_soc_get_pcm_runtime(card, card->dai_link);
+ 	rtd->pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream_count =
 -- 
 2.51.0
 
