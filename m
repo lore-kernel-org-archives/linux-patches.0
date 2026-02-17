@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C11E29A1;
-	Tue, 17 Feb 2026 20:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A93929A1;
+	Tue, 17 Feb 2026 20:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361186; cv=none; b=OqJZNeUr2szypqI90yDguCYY/AqbGfRuBTveDJsLyJOSoDpM9wS6B0aH2BLFQV9+B72Z6WTLDPtwpQubOmksTodKGurhTsuoS81E5DmcPm58BtUXfgigSosGp9IZPTaMON685+FDsCjIO8GkgIT00atSbEvP4i0SWd+ra0cAsc4=
+	t=1771361189; cv=none; b=hyZGwkTosUZQl1PGkNJV8ZdP7Wkklan2BBiP3/XW/xPGDuW396ZWq4QbeSCm/g+sE7+iHYNIwn61eaeK9jAErwxWc9rp999xXhaf0Otw2GzC9veTtrBAhN7Qb2OglS//bIfu44bCUHMvbFZ1nwWKh4wPmsDOay3SnE2LkPEUXws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361186; c=relaxed/simple;
-	bh=MZqO1/+mwq6XJeH2nNektev/8SM54y28sq95r+m538Q=;
+	s=arc-20240116; t=1771361189; c=relaxed/simple;
+	bh=WbPBKDKpU5KfDleKmVfH1j31oNANrddv6I+1W4o/r34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEgTThZ5guZzLB7N4AmIx6QSPyzwalpS24TWK+luttvpycZvbSqPZywFfCTUBaXxuWpanOo41mA+qgBEGQnch/is8uWgG6ix1Dua7YNGNCrU9+ELVbLSEkq7nAfoUIbWre1a+tjbn6bhXnCoD0lHpdVGKpwOTHKJY0Q+ANvgswA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sV2g33SZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oEIzLWfbdoaBo6ernSakdUTkn0MCNnRCynAu37JIe5iX00sYUpZLOn++phURfipoJMc9GpjdrKJJcfgJ0qsa9w029ATETKNQh6Ug2OKYb6mH27/XtkjzT/m/nS8e61QGl+EpAq9ewgm3fpc17qFKkcqpfuISow8Ww1SnMIIa23Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9gw/HnN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sV2g33SZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CF2C4CEF7;
-	Tue, 17 Feb 2026 20:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9gw/HnN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA59C4CEF7;
+	Tue, 17 Feb 2026 20:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361186;
-	bh=MZqO1/+mwq6XJeH2nNektev/8SM54y28sq95r+m538Q=;
+	s=korg; t=1771361189;
+	bh=WbPBKDKpU5KfDleKmVfH1j31oNANrddv6I+1W4o/r34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sV2g33SZ2BrpceBSYPRp4NNGT7iEjwrUWG0FLTSCgPcqXJYg34k7+BWf2li/RyzK6
-	 Z4Txau0IQfPoWeEURM+etF7+7Fya3odgodLDRFkmEtYSyMK8mla7AVmK3JDeC8llK8
-	 hfOTHGL1x181AhpoeqM61zrnXDd/p0Yoo3IzZsmQ=
+	b=s9gw/HnN0opdU8JPGEwLeBwg9+77Ec6/wB7QYivuChiRosOJpFWxEaf8AMIct5QgI
+	 GDLVoqYfIewE000WgHPGyoIxKVFfJjeVFCrSB9RxAi0IABHYn8YQwTYfQUlrtZ42P3
+	 /qLNvEXm6uNo7vicDTxGR5iHVC93fUJztHa/FeC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 6.1 26/64] cacheinfo: Decrement refcount in cache_setup_of_node()
-Date: Tue, 17 Feb 2026 21:31:22 +0100
-Message-ID: <20260217200008.504716328@linuxfoundation.org>
+	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 03/64] smb: server: fix leak of active_num_conn in ksmbd_tcp_new_connection()
+Date: Tue, 17 Feb 2026 21:30:59 +0100
+Message-ID: <20260217200007.637508319@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -51,63 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-commit 3da72e18371c41a6f6f96b594854b178168c7757 upstream
+commit 77ffbcac4e569566d0092d5f22627dfc0896b553 upstream.
 
-Refcounts to DT nodes are only incremented in the function
-and never decremented. Decrease the refcounts when necessary.
+On kthread_run() failure in ksmbd_tcp_new_connection(), the transport is
+freed via free_transport(), which does not decrement active_num_conn,
+leaking this counter.
 
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/20221026185954.991547-1-pierre.gondois@arm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Replace free_transport() with ksmbd_tcp_disconnect().
+
+Fixes: 0d0d4680db22e ("ksmbd: add max connections parameter")
+Cc: stable@vger.kernel.org
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/cacheinfo.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ fs/smb/server/transport_tcp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/base/cacheinfo.c
-+++ b/drivers/base/cacheinfo.c
-@@ -195,7 +195,7 @@ static void cache_of_set_props(struct ca
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -41,6 +41,7 @@ static struct ksmbd_transport_ops ksmbd_
  
- static int cache_setup_of_node(unsigned int cpu)
- {
--	struct device_node *np;
-+	struct device_node *np, *prev;
- 	struct cacheinfo *this_leaf;
- 	unsigned int index = 0;
+ static void tcp_stop_kthread(struct task_struct *kthread);
+ static struct interface *alloc_iface(char *ifname);
++static void ksmbd_tcp_disconnect(struct ksmbd_transport *t);
  
-@@ -205,19 +205,24 @@ static int cache_setup_of_node(unsigned
- 		return -ENOENT;
+ #define KSMBD_TRANS(t)	(&(t)->transport)
+ #define TCP_TRANS(t)	((struct tcp_transport *)container_of(t, \
+@@ -215,7 +216,7 @@ static int ksmbd_tcp_new_connection(stru
+ 	if (IS_ERR(handler)) {
+ 		pr_err("cannot start conn thread\n");
+ 		rc = PTR_ERR(handler);
+-		free_transport(t);
++		ksmbd_tcp_disconnect(KSMBD_TRANS(t));
  	}
- 
-+	prev = np;
-+
- 	while (index < cache_leaves(cpu)) {
- 		this_leaf = per_cpu_cacheinfo_idx(cpu, index);
--		if (this_leaf->level != 1)
-+		if (this_leaf->level != 1) {
- 			np = of_find_next_cache_node(np);
--		else
--			np = of_node_get(np);/* cpu node itself */
--		if (!np)
--			break;
-+			of_node_put(prev);
-+			prev = np;
-+			if (!np)
-+				break;
-+		}
- 		cache_of_set_props(this_leaf, np);
- 		this_leaf->fw_token = np;
- 		index++;
- 	}
- 
-+	of_node_put(np);
-+
- 	if (index != cache_leaves(cpu)) /* not all OF nodes populated */
- 		return -ENOENT;
+ 	return rc;
  
 
 
