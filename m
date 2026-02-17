@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9088E6A8D2;
-	Tue, 17 Feb 2026 20:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCFA13DDAA;
+	Tue, 17 Feb 2026 20:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360988; cv=none; b=t8HI0czg6uOQdY73UuMgi92J1IdKrsfeXQWeFroU2akN9DiI5Gvi6VYsaJgxJ/qCMiXgLHvdaY9UZABeYsD4FMFxFF26OXJ3G+ak2H9MLAS/dPJR7S8t7HrNrGibJkjxonmv7/XFIE9gE9P4JOlzQDUFfvXRYs/VKR98EhJoTh0=
+	t=1771360991; cv=none; b=NnuvqL9nutVgnOhNIPGEg0FaekKYv+t5riLHe9ruPW0YHr2DZyUWh041HcFuCdA6bwmSpAV9lLRfZJECKlpsNOKYu3ZQ9kkYc5wFB65LmtT8yhdUqsjaz76xBAatK2eqnciiUzxoDWkviEAQWYLa63iJx23a8ipN3IaXW22KJ20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360988; c=relaxed/simple;
-	bh=pUzHtjQwxPiVmnk25YtjV6zEUTudZrsuVzVOQWxuyEA=;
+	s=arc-20240116; t=1771360991; c=relaxed/simple;
+	bh=w/ORb7x36/StQtnrn4fx6TsCERPaqLk45hpVnBK2r3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5fl6Wu7yNqMcUfkMlThasJ/SMneu7HlTDgBJ9lbXN5vaKknbPP1S2PZlRHhH7yXDKVzzAerbQTgpCsSYvc9Z9giEvI8igJ7tsZQdslfysmaBqOhHxGTgLcmsNaXk5ovFhnO/CzJv4XHfNa52fcXT8taqmZJhuQlHo1vZlAwVt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSDRvb/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s285KpQT/xJUgd/5Oe3Jc7Q3zFNlxta9Qkr8jaNjckSfV4G48WkwTxEp1uDdfUylUxmwF6yYPCNt9LzM8uSsJwAs57TzOWT1ZieEl5UUWGdEBiKGm5NxtHVdXfiN5jIWfA1j15niVeZs029Plui10BbrX2CKPOau78wtTC7gnjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrxtQLbT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSDRvb/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1753BC4CEF7;
-	Tue, 17 Feb 2026 20:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrxtQLbT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245D6C4CEF7;
+	Tue, 17 Feb 2026 20:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360988;
-	bh=pUzHtjQwxPiVmnk25YtjV6zEUTudZrsuVzVOQWxuyEA=;
+	s=korg; t=1771360991;
+	bh=w/ORb7x36/StQtnrn4fx6TsCERPaqLk45hpVnBK2r3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSDRvb/gHcf07oAfuyJIVXXAoHkDkbU1/2664Q6pnzCyaMrnc+u0sMjoa+6vdHS7F
-	 YWB/QarIDs9aUGj61cfQsXi6yoF71L4q/Lo25V5fWcQPK4JyNaKjgCHg4lIltIMUPL
-	 HI/hsvm0RKfiz2rjD86Q917dWBUNRFhDUsG/CCOg=
+	b=jrxtQLbT2oAxnZGjbcP/k8IeijbUQlncMBfVaHVlCz6y4/YElWLt2fjHQ9U0zWALs
+	 7ZjmAj4n/jb5f4G4p4R3kEqJ2L8m1NZH2feVFBy82EvopkIGAiX9lZo2GCVp3z7cSu
+	 olwSnhd00dWZIaPo0AuKuY7oqoGVWSdwjkF6+gM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 01/39] crypto: octeontx - Fix length check to avoid truncation in ucode_load_store
-Date: Tue, 17 Feb 2026 21:31:10 +0100
-Message-ID: <20260217200002.988041040@linuxfoundation.org>
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 10/39] gpio: sprd: Change sprd_gpio lock to raw_spin_lock
+Date: Tue, 17 Feb 2026 21:31:19 +0100
+Message-ID: <20260217200003.324920845@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.929083107@linuxfoundation.org>
 References: <20260217200002.929083107@linuxfoundation.org>
@@ -50,38 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-commit 5565a72b24fa7935a9f30af386e92c8c9dfb23b9 upstream.
+[ Upstream commit 96313fcc1f062ba239f4832c9eff685da6c51c99 ]
 
-OTX_CPT_UCODE_NAME_LENGTH limits the microcode name to 64 bytes. If a
-user writes a string of exactly 64 characters, the original code used
-'strlen(buf) > 64' to check the length, but then strscpy() copies only
-63 characters before adding a NUL terminator, silently truncating the
-copied string.
+There was a lockdep warning in sprd_gpio:
 
-Fix this off-by-one error by using 'count' directly for the length check
-to ensure long names are rejected early and copied without truncation.
+[    6.258269][T329@C6] [ BUG: Invalid wait context ]
+[    6.258270][T329@C6] 6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 Tainted: G        W  OE
+[    6.258272][T329@C6] -----------------------------
+[    6.258273][T329@C6] modprobe/329 is trying to lock:
+[    6.258275][T329@C6] ffffff8081c91690 (&sprd_gpio->lock){....}-{3:3}, at: sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd]
+[    6.258282][T329@C6] other info that might help us debug this:
+[    6.258283][T329@C6] context-{5:5}
+[    6.258285][T329@C6] 3 locks held by modprobe/329:
+[    6.258286][T329@C6]  #0: ffffff808baca108 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xc4/0x204
+[    6.258295][T329@C6]  #1: ffffff80965e7240 (request_class#4){+.+.}-{4:4}, at: __setup_irq+0x1cc/0x82c
+[    6.258304][T329@C6]  #2: ffffff80965e70c8 (lock_class#4){....}-{2:2}, at: __setup_irq+0x21c/0x82c
+[    6.258313][T329@C6] stack backtrace:
+[    6.258314][T329@C6] CPU: 6 UID: 0 PID: 329 Comm: modprobe Tainted: G        W  OE       6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 PREEMPT  3ad5b0f45741a16e5838da790706e16ceb6717df
+[    6.258316][T329@C6] Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+[    6.258317][T329@C6] Hardware name: Unisoc UMS9632-base Board (DT)
+[    6.258318][T329@C6] Call trace:
+[    6.258318][T329@C6]  show_stack+0x20/0x30 (C)
+[    6.258321][T329@C6]  __dump_stack+0x28/0x3c
+[    6.258324][T329@C6]  dump_stack_lvl+0xac/0xf0
+[    6.258326][T329@C6]  dump_stack+0x18/0x3c
+[    6.258329][T329@C6]  __lock_acquire+0x824/0x2c28
+[    6.258331][T329@C6]  lock_acquire+0x148/0x2cc
+[    6.258333][T329@C6]  _raw_spin_lock_irqsave+0x6c/0xb4
+[    6.258334][T329@C6]  sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd 814535e93c6d8e0853c45c02eab0fa88a9da6487]
+[    6.258337][T329@C6]  irq_startup+0x238/0x350
+[    6.258340][T329@C6]  __setup_irq+0x504/0x82c
+[    6.258342][T329@C6]  request_threaded_irq+0x118/0x184
+[    6.258344][T329@C6]  devm_request_threaded_irq+0x94/0x120
+[    6.258347][T329@C6]  sc8546_init_irq+0x114/0x170 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
+[    6.258352][T329@C6]  sc8546_charger_probe+0x53c/0x5a0 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
+[    6.258358][T329@C6]  i2c_device_probe+0x2c8/0x350
+[    6.258361][T329@C6]  really_probe+0x1a8/0x46c
+[    6.258363][T329@C6]  __driver_probe_device+0xa4/0x10c
+[    6.258366][T329@C6]  driver_probe_device+0x44/0x1b4
+[    6.258369][T329@C6]  __driver_attach+0xd0/0x204
+[    6.258371][T329@C6]  bus_for_each_dev+0x10c/0x168
+[    6.258373][T329@C6]  driver_attach+0x2c/0x3c
+[    6.258376][T329@C6]  bus_add_driver+0x154/0x29c
+[    6.258378][T329@C6]  driver_register+0x70/0x10c
+[    6.258381][T329@C6]  i2c_register_driver+0x48/0xc8
+[    6.258384][T329@C6]  init_module+0x28/0xfd8 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
+[    6.258389][T329@C6]  do_one_initcall+0x128/0x42c
+[    6.258392][T329@C6]  do_init_module+0x60/0x254
+[    6.258395][T329@C6]  load_module+0x1054/0x1220
+[    6.258397][T329@C6]  __arm64_sys_finit_module+0x240/0x35c
+[    6.258400][T329@C6]  invoke_syscall+0x60/0xec
+[    6.258402][T329@C6]  el0_svc_common+0xb0/0xe4
+[    6.258405][T329@C6]  do_el0_svc+0x24/0x30
+[    6.258407][T329@C6]  el0_svc+0x54/0x1c4
+[    6.258409][T329@C6]  el0t_64_sync_handler+0x68/0xdc
+[    6.258411][T329@C6]  el0t_64_sync+0x1c4/0x1c8
 
-Cc: stable@vger.kernel.org
-Fixes: d9110b0b01ff ("crypto: marvell - add support for OCTEON TX CPT engine")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is because the spin_lock would change to rt_mutex in PREEMPT_RT,
+however the sprd_gpio->lock would use in hard-irq, this is unsafe.
+
+So change the spin_lock_t to raw_spin_lock_t to use the spinlock
+in hard-irq.
+
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20260126094209.9855-1-xuewen.yan@unisoc.com
+[Bartosz: tweaked the commit message]
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/octeontx/otx_cptpf_ucode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-sprd.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/crypto/marvell/octeontx/otx_cptpf_ucode.c
-+++ b/drivers/crypto/marvell/octeontx/otx_cptpf_ucode.c
-@@ -1337,7 +1337,7 @@ static ssize_t ucode_load_store(struct d
- 	int del_grp_idx = -1;
- 	int ucode_idx = 0;
+diff --git a/drivers/gpio/gpio-sprd.c b/drivers/gpio/gpio-sprd.c
+index 9dd9dabb579e2..b2b28c6877f2f 100644
+--- a/drivers/gpio/gpio-sprd.c
++++ b/drivers/gpio/gpio-sprd.c
+@@ -35,7 +35,7 @@
+ struct sprd_gpio {
+ 	struct gpio_chip chip;
+ 	void __iomem *base;
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ 	int irq;
+ };
  
--	if (strlen(buf) > OTX_CPT_UCODE_NAME_LENGTH)
-+	if (count >= OTX_CPT_UCODE_NAME_LENGTH)
- 		return -EINVAL;
+@@ -54,7 +54,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
+ 	unsigned long flags;
+ 	u32 tmp;
  
- 	eng_grps = container_of(attr, struct otx_cpt_eng_grps, ucode_load_attr);
+-	spin_lock_irqsave(&sprd_gpio->lock, flags);
++	raw_spin_lock_irqsave(&sprd_gpio->lock, flags);
+ 	tmp = readl_relaxed(base + reg);
+ 
+ 	if (val)
+@@ -63,7 +63,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
+ 		tmp &= ~BIT(SPRD_GPIO_BIT(offset));
+ 
+ 	writel_relaxed(tmp, base + reg);
+-	spin_unlock_irqrestore(&sprd_gpio->lock, flags);
++	raw_spin_unlock_irqrestore(&sprd_gpio->lock, flags);
+ }
+ 
+ static int sprd_gpio_read(struct gpio_chip *chip, unsigned int offset, u16 reg)
+@@ -231,7 +231,7 @@ static int sprd_gpio_probe(struct platform_device *pdev)
+ 	if (IS_ERR(sprd_gpio->base))
+ 		return PTR_ERR(sprd_gpio->base);
+ 
+-	spin_lock_init(&sprd_gpio->lock);
++	raw_spin_lock_init(&sprd_gpio->lock);
+ 
+ 	sprd_gpio->chip.label = dev_name(&pdev->dev);
+ 	sprd_gpio->chip.ngpio = SPRD_GPIO_NR;
+-- 
+2.51.0
+
 
 
