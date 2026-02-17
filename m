@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E70029A1;
-	Tue, 17 Feb 2026 20:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08AF7A13A;
+	Tue, 17 Feb 2026 20:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361269; cv=none; b=L80415zcM5FdBTGEatFs/NIHBxi4GPmxi2TXpcI9TwapQO9SK+aRw5mnFSPsWNjoVWrww4ICAs6BfbwjnNDrL5OIXzYiKKNGe0vI/781ixpLWCK7WiPEXgUJIzrrZy5EkVe/fkt99SwiXdEMhJhcCBQK2SE71tl9YejlL8eLe+g=
+	t=1771361271; cv=none; b=ZMWh2shG8ZsWz9vjf7NNzT1qwynT3XgdKbeXqzWyt/8YoI72Qc+hLOipgih7uC+dTT5eFAA6Y7yuBT5K+y50uogAstcU7sPsZKNTPMFnwuOqVO2NFo+3IU6MPEM/SPeuOf7aD5ChMC/ciSTS7m5Ji20ceCrDNwJ5pWSoAEzxSkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361269; c=relaxed/simple;
-	bh=EZ2ZhHlDigByB4c5GSugot9dH9etgqx0mr0eXgWmsBY=;
+	s=arc-20240116; t=1771361271; c=relaxed/simple;
+	bh=CMlJTUOMHSnsUa4eEc+2gmR5i313TSrLZXYySsc67L4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=do1j+SfnIukKzHg8EaUbP0PYFeakWzWebBlNZAmMEDzLANRewWqA/RG5BsFQFmzGemGfSh2OWBTvKJA1HL+3vL22QqZRMtf9VVb2/89UZ1JQimxdW0PTJ+mYc2zBUTYGumz2PIBL+Iv7LF5k/1+rgHygBeDRk0isXsssOTPacbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU+2cgJC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QQf9WiiUkkkt2+nOz6EWyFvELko+V5SwuD+FLspTeCBCVW+4IH9VHbtUPXtU0pwiTHFus3M8wMpYVpQwikDv4YHH/wJ4GzwDOHNIQ8+uQJ8EtLt3Jl8bCuX/7enXRBK/V/4ukK2sEB6n7ynzBgGToiPKT6+W5pydjvey/yZRoK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bY3ZuDr1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU+2cgJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C6BC4CEF7;
-	Tue, 17 Feb 2026 20:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bY3ZuDr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A44C4CEF7;
+	Tue, 17 Feb 2026 20:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361268;
-	bh=EZ2ZhHlDigByB4c5GSugot9dH9etgqx0mr0eXgWmsBY=;
+	s=korg; t=1771361271;
+	bh=CMlJTUOMHSnsUa4eEc+2gmR5i313TSrLZXYySsc67L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tU+2cgJCmbJnyhqNQS8Vvd0RH+eKzRNGlX2zzWOJjcKqV+Ynj3Gcw0J83afSArBih
-	 dPyFEBpnXmm+ZVSvLHueMvTjkJWwUN9+z8KGzeLpw4PWYrv9YhSKh+Rn7J1zERk9mI
-	 tXUZK4WT4DyXpeTeY5/gO0C4vcM1N6m4qZCW3MLU=
+	b=bY3ZuDr1aaJhB7Ex6yWjedZvYRptLXmcexCC+HVaA1FN0Ar8MrHNey8uZntPzNeIl
+	 hrgS7dDm87HHqBAZgmxoT2Erl2uxOQ6w5JM3/0wApLBNgLygmgrGqTl9hGzOzVpGEL
+	 w4DxFrGEhy0jzzfUjJOFK/NqdfiHc771mKqjULqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jianqiang kang <jianqkang@sina.cn>
-Subject: [PATCH 6.1 50/64] nfsd: dont ignore the return code of svc_proc_register()
-Date: Tue, 17 Feb 2026 21:31:46 +0100
-Message-ID: <20260217200009.380343205@linuxfoundation.org>
+	David Disseldorp <ddiss@suse.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.1 51/64] ksmbd: set ATTR_CTIME flags when setting mtime
+Date: Tue, 17 Feb 2026 21:31:47 +0100
+Message-ID: <20260217200009.420080764@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -52,92 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 930b64ca0c511521f0abdd1d57ce52b2a6e3476b ]
+[ Upstream commit 21e46a79bbe6c4e1aa73b3ed998130f2ff07b128 ]
 
-Currently, nfsd_proc_stat_init() ignores the return value of
-svc_proc_register(). If the procfile creation fails, then the kernel
-will WARN when it tries to remove the entry later.
+David reported that the new warning from setattr_copy_mgtime is coming
+like the following.
 
-Fix nfsd_proc_stat_init() to return the same type of pointer as
-svc_proc_register(), and fix up nfsd_net_init() to check that and fail
-the nfsd_net construction if it occurs.
+[  113.215316] ------------[ cut here ]------------
+[  113.215974] WARNING: CPU: 1 PID: 31 at fs/attr.c:300 setattr_copy+0x1ee/0x200
+[  113.219192] CPU: 1 UID: 0 PID: 31 Comm: kworker/1:1 Not tainted 6.13.0-rc1+ #234
+[  113.220127] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
+[  113.221530] Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
+[  113.222220] RIP: 0010:setattr_copy+0x1ee/0x200
+[  113.222833] Code: 24 28 49 8b 44 24 30 48 89 53 58 89 43 6c 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 48 89 df e8 77 d6 ff ff e9 cd fe ff ff <0f> 0b e9 be fe ff ff 66 0
+[  113.225110] RSP: 0018:ffffaf218010fb68 EFLAGS: 00010202
+[  113.225765] RAX: 0000000000000120 RBX: ffffa446815f8568 RCX: 0000000000000003
+[  113.226667] RDX: ffffaf218010fd38 RSI: ffffa446815f8568 RDI: ffffffff94eb03a0
+[  113.227531] RBP: ffffaf218010fb90 R08: 0000001a251e217d R09: 00000000675259fa
+[  113.228426] R10: 0000000002ba8a6d R11: ffffa4468196c7a8 R12: ffffaf218010fd38
+[  113.229304] R13: 0000000000000120 R14: ffffffff94eb03a0 R15: 0000000000000000
+[  113.230210] FS:  0000000000000000(0000) GS:ffffa44739d00000(0000) knlGS:0000000000000000
+[  113.231215] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  113.232055] CR2: 00007efe0053d27e CR3: 000000000331a000 CR4: 00000000000006b0
+[  113.232926] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  113.233812] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  113.234797] Call Trace:
+[  113.235116]  <TASK>
+[  113.235393]  ? __warn+0x73/0xd0
+[  113.235802]  ? setattr_copy+0x1ee/0x200
+[  113.236299]  ? report_bug+0xf3/0x1e0
+[  113.236757]  ? handle_bug+0x4d/0x90
+[  113.237202]  ? exc_invalid_op+0x13/0x60
+[  113.237689]  ? asm_exc_invalid_op+0x16/0x20
+[  113.238185]  ? setattr_copy+0x1ee/0x200
+[  113.238692]  btrfs_setattr+0x80/0x820 [btrfs]
+[  113.239285]  ? get_stack_info_noinstr+0x12/0xf0
+[  113.239857]  ? __module_address+0x22/0xa0
+[  113.240368]  ? handle_ksmbd_work+0x6e/0x460 [ksmbd]
+[  113.240993]  ? __module_text_address+0x9/0x50
+[  113.241545]  ? __module_address+0x22/0xa0
+[  113.242033]  ? unwind_next_frame+0x10e/0x920
+[  113.242600]  ? __pfx_stack_trace_consume_entry+0x10/0x10
+[  113.243268]  notify_change+0x2c2/0x4e0
+[  113.243746]  ? stack_depot_save_flags+0x27/0x730
+[  113.244339]  ? set_file_basic_info+0x130/0x2b0 [ksmbd]
+[  113.244993]  set_file_basic_info+0x130/0x2b0 [ksmbd]
+[  113.245613]  ? process_scheduled_works+0xbe/0x310
+[  113.246181]  ? worker_thread+0x100/0x240
+[  113.246696]  ? kthread+0xc8/0x100
+[  113.247126]  ? ret_from_fork+0x2b/0x40
+[  113.247606]  ? ret_from_fork_asm+0x1a/0x30
+[  113.248132]  smb2_set_info+0x63f/0xa70 [ksmbd]
 
-svc_proc_register() can fail if the dentry can't be allocated, or if an
-identical dentry already exists. The second case is pretty unlikely in
-the nfsd_net construction codepath, so if this happens, return -ENOMEM.
+ksmbd is trying to set the atime and mtime via notify_change without also
+setting the ctime. so This patch add ATTR_CTIME flags when setting mtime
+to avoid a warning.
 
-Reported-by: syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-nfs/67a47501.050a0220.19061f.05f9.GAE@google.com/
-Cc: stable@vger.kernel.org # v6.9
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ Update the cleanup path to use nfsd_stat_counters_destroy. This ensures
- the teardown logic is correctly paired with nfsd_stat_counters_init, as
- required by the current NFSD implementation.]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+Reported-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |    9 ++++++++-
- fs/nfsd/stats.c  |    4 ++--
- fs/nfsd/stats.h  |    2 +-
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ fs/smb/server/smb2pdu.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1460,17 +1460,24 @@ static __net_init int nfsd_init_net(stru
- 	retval = nfsd_stat_counters_init(nn);
- 	if (retval)
- 		goto out_repcache_error;
-+
- 	memset(&nn->nfsd_svcstats, 0, sizeof(nn->nfsd_svcstats));
- 	nn->nfsd_svcstats.program = &nfsd_program;
-+	if (!nfsd_proc_stat_init(net)) {
-+		retval = -ENOMEM;
-+		goto out_proc_error;
-+	}
-+
- 	nn->nfsd_versions = NULL;
- 	nn->nfsd4_minorversions = NULL;
- 	nfsd4_init_leases_net(nn);
- 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
- 	seqlock_init(&nn->writeverf_lock);
--	nfsd_proc_stat_init(net);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5739,15 +5739,13 @@ static int set_file_basic_info(struct ks
+ 		attrs.ia_valid |= (ATTR_ATIME | ATTR_ATIME_SET);
+ 	}
  
- 	return 0;
+-	attrs.ia_valid |= ATTR_CTIME;
+ 	if (file_info->ChangeTime)
+-		attrs.ia_ctime = ksmbd_NTtimeToUnix(file_info->ChangeTime);
+-	else
+-		attrs.ia_ctime = inode->i_ctime;
++		inode_set_ctime_to_ts(inode,
++				ksmbd_NTtimeToUnix(file_info->ChangeTime));
  
-+out_proc_error:
-+	nfsd_stat_counters_destroy(nn);
- out_repcache_error:
- 	nfsd_idmap_shutdown(net);
- out_idmap_error:
---- a/fs/nfsd/stats.c
-+++ b/fs/nfsd/stats.c
-@@ -113,11 +113,11 @@ void nfsd_stat_counters_destroy(struct n
- 	nfsd_percpu_counters_destroy(nn->counter, NFSD_STATS_COUNTERS_NUM);
- }
+ 	if (file_info->LastWriteTime) {
+ 		attrs.ia_mtime = ksmbd_NTtimeToUnix(file_info->LastWriteTime);
+-		attrs.ia_valid |= (ATTR_MTIME | ATTR_MTIME_SET);
++		attrs.ia_valid |= (ATTR_MTIME | ATTR_MTIME_SET | ATTR_CTIME);
+ 	}
  
--void nfsd_proc_stat_init(struct net *net)
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	if (file_info->Attributes) {
+@@ -5789,8 +5787,6 @@ static int set_file_basic_info(struct ks
+ 			return -EACCES;
  
--	svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
-+	return svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
- }
- 
- void nfsd_proc_stat_shutdown(struct net *net)
---- a/fs/nfsd/stats.h
-+++ b/fs/nfsd/stats.h
-@@ -15,7 +15,7 @@ void nfsd_percpu_counters_reset(struct p
- void nfsd_percpu_counters_destroy(struct percpu_counter *counters, int num);
- int nfsd_stat_counters_init(struct nfsd_net *nn);
- void nfsd_stat_counters_destroy(struct nfsd_net *nn);
--void nfsd_proc_stat_init(struct net *net);
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net);
- void nfsd_proc_stat_shutdown(struct net *net);
- 
- static inline void nfsd_stats_rc_hits_inc(struct nfsd_net *nn)
+ 		inode_lock(inode);
+-		inode->i_ctime = attrs.ia_ctime;
+-		attrs.ia_valid &= ~ATTR_CTIME;
+ 		rc = notify_change(user_ns, dentry, &attrs, NULL);
+ 		inode_unlock(inode);
+ 	}
 
 
