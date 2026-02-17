@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B2C378830;
-	Tue, 17 Feb 2026 20:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F80F36F431;
+	Tue, 17 Feb 2026 20:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361002; cv=none; b=hRzm/B3cf8W23eBDcB4e6GGMgmX9iECN0Z2VFsHNtQbhEyEhv4QIdDBgHXVIrtfxlnZ6sut+yrI6xc6lA3+lrS7RVKm/vc7cMnDF9ZZX5He4PAZMfR1oalUs6AIGmGYrecEx3UrhTGd43oCFLFGa7kRoKjFq/ge1s/u/E6xFP5A=
+	t=1771361006; cv=none; b=LcEpKpB3S+uwiyVSO5xX2sT4NCuWirAmRbPthp54Akzmgm8bpSpiUdBRlSQiZEqiENz56xdRvLIcqOcfz+N8MpMB68Cch8p5GSocdZn0yxCvI1dF/9mor/gDctZVC2Dra9aIor2cWso09hmSQBMfOAC2rPI0LtHK7NIs0vpD1V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361002; c=relaxed/simple;
-	bh=17EtB7EPOVaA/MC84feh20E8ATwpXPt6XKF/m6+THvE=;
+	s=arc-20240116; t=1771361006; c=relaxed/simple;
+	bh=4pV1/wpJqEsTyEvl/8pXFk9k6C8BRWSsH5HIhSdhMxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ahh5FTTWQm4GJEGSPDA/VBd84RV9JKdsSsoSDQPpH8o26yatfuEvXiI3Q8w7QM6K6IX7ecc7preD5GHvAlab3VGJ1F9sbH0xImnTm03UpRa9Z2seQlROfluJEvnqouAdMTGNIEYMJ6m6f9ZryTPUafvr/qMYikrmQ9uC1R+h/Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsOT1YGP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Yag0fMYZ+G9smQwf+PY8gVpfQdT1NPMhJ/q+hvh8L3OEnHFuUU5JeNWrdG1pEoq6BvwhWaICU1WYTtokNKfa7YebQiJcXm7FtLpvMmixikoExI3oHhxD8JWJzDTQ+Yb/vxPFo8mrMUzAHZ0OrMvmAU0XC2jYgpLDqVbCSMSPaIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBRUDeQu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsOT1YGP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8C9C4CEF7;
-	Tue, 17 Feb 2026 20:43:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBRUDeQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB67C4CEF7;
+	Tue, 17 Feb 2026 20:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361002;
-	bh=17EtB7EPOVaA/MC84feh20E8ATwpXPt6XKF/m6+THvE=;
+	s=korg; t=1771361006;
+	bh=4pV1/wpJqEsTyEvl/8pXFk9k6C8BRWSsH5HIhSdhMxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qsOT1YGPkBZbImf05Q687rWEzjEg7grLYU8HQ+Hqs7mjm177BKUhfgMouY+I2DuBJ
-	 W8JCi+gnuOWTsXASr112MDiQv0F/8MsnVF+W0DtxtkKd+FW+RUrsOiz6n/vfQmtgJI
-	 e0NCAy1aHdNL4TNqdcHnGi6mV7GyZT2GdZcz4K/c=
+	b=eBRUDeQuctnOljL2EFVoimG6GhWsEDnkFi1X+yTylHJFh2AnO37WpdTgx+0fED75H
+	 p2zijzGjl6IivbC43oXmYqq68NMiXzzZIwoRhGZTBTtfNUdekeYj9VyIfeop7SiMXz
+	 ig41W+xoQPVBWXhDwfF4w+CCtvcx2WPwS4d2WMjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 13/39] platform/x86: classmate-laptop: Add missing NULL pointer checks
-Date: Tue, 17 Feb 2026 21:31:22 +0100
-Message-ID: <20260217200003.440946034@linuxfoundation.org>
+Subject: [PATCH 5.15 14/39] platform/x86: panasonic-laptop: Fix sysfs group leak in error path
+Date: Tue, 17 Feb 2026 21:31:23 +0100
+Message-ID: <20260217200003.478966544@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.929083107@linuxfoundation.org>
 References: <20260217200002.929083107@linuxfoundation.org>
@@ -54,131 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit fe747d7112283f47169e9c16e751179a9b38611e ]
+[ Upstream commit 43b0b7eff4b3fb684f257d5a24376782e9663465 ]
 
-In a few places in the Classmate laptop driver, code using the accel
-object may run before that object's address is stored in the driver
-data of the input device using it.
+The acpi_pcc_hotkey_add() error path leaks sysfs group pcc_attr_group
+if platform_device_register_simple() fails for the "panasonic" platform
+device.
 
-For example, cmpc_accel_sensitivity_store_v4() is the "show" method
-of cmpc_accel_sensitivity_attr_v4 which is added in cmpc_accel_add_v4(),
-before calling dev_set_drvdata() for inputdev->dev.  If the sysfs
-attribute is accessed prematurely, the dev_get_drvdata(&inputdev->dev)
-call in in cmpc_accel_sensitivity_store_v4() returns NULL which
-leads to a NULL pointer dereference going forward.
-
-Moreover, sysfs attributes using the input device are added before
-initializing that device by cmpc_add_acpi_notify_device() and if one
-of them is accessed before running that function, a NULL pointer
-dereference will occur.
-
-For example, cmpc_accel_sensitivity_attr_v4 is added before calling
-cmpc_add_acpi_notify_device() and if it is read prematurely, the
-dev_get_drvdata(&acpi->dev) call in cmpc_accel_sensitivity_show_v4()
-returns NULL which leads to a NULL pointer dereference going forward.
-
-Fix this by adding NULL pointer checks in all of the relevant places.
+Address this by making it call sysfs_remove_group() in that case for
+the group in question.
 
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/12825381.O9o76ZdvQC@rafael.j.wysocki
+Link: https://patch.msgid.link/3398370.44csPzL39Z@rafael.j.wysocki
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/classmate-laptop.c | 32 +++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/platform/x86/panasonic-laptop.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/classmate-laptop.c b/drivers/platform/x86/classmate-laptop.c
-index 9309ab5792cbc..ac02b22154d62 100644
---- a/drivers/platform/x86/classmate-laptop.c
-+++ b/drivers/platform/x86/classmate-laptop.c
-@@ -208,7 +208,12 @@ static ssize_t cmpc_accel_sensitivity_show_v4(struct device *dev,
+diff --git a/drivers/platform/x86/panasonic-laptop.c b/drivers/platform/x86/panasonic-laptop.c
+index e412a550f0983..418cd4d781261 100644
+--- a/drivers/platform/x86/panasonic-laptop.c
++++ b/drivers/platform/x86/panasonic-laptop.c
+@@ -1073,7 +1073,7 @@ static int acpi_pcc_hotkey_add(struct acpi_device *device)
+ 			-1, NULL, 0);
+ 		if (IS_ERR(pcc->platform)) {
+ 			result = PTR_ERR(pcc->platform);
+-			goto out_backlight;
++			goto out_sysfs;
+ 		}
+ 		result = device_create_file(&pcc->platform->dev,
+ 			&dev_attr_cdpower);
+@@ -1089,6 +1089,8 @@ static int acpi_pcc_hotkey_add(struct acpi_device *device)
  
- 	acpi = to_acpi_device(dev);
- 	inputdev = dev_get_drvdata(&acpi->dev);
-+	if (!inputdev)
-+		return -ENXIO;
-+
- 	accel = dev_get_drvdata(&inputdev->dev);
-+	if (!accel)
-+		return -ENXIO;
- 
- 	return sprintf(buf, "%d\n", accel->sensitivity);
- }
-@@ -225,7 +230,12 @@ static ssize_t cmpc_accel_sensitivity_store_v4(struct device *dev,
- 
- 	acpi = to_acpi_device(dev);
- 	inputdev = dev_get_drvdata(&acpi->dev);
-+	if (!inputdev)
-+		return -ENXIO;
-+
- 	accel = dev_get_drvdata(&inputdev->dev);
-+	if (!accel)
-+		return -ENXIO;
- 
- 	r = kstrtoul(buf, 0, &sensitivity);
- 	if (r)
-@@ -257,7 +267,12 @@ static ssize_t cmpc_accel_g_select_show_v4(struct device *dev,
- 
- 	acpi = to_acpi_device(dev);
- 	inputdev = dev_get_drvdata(&acpi->dev);
-+	if (!inputdev)
-+		return -ENXIO;
-+
- 	accel = dev_get_drvdata(&inputdev->dev);
-+	if (!accel)
-+		return -ENXIO;
- 
- 	return sprintf(buf, "%d\n", accel->g_select);
- }
-@@ -274,7 +289,12 @@ static ssize_t cmpc_accel_g_select_store_v4(struct device *dev,
- 
- 	acpi = to_acpi_device(dev);
- 	inputdev = dev_get_drvdata(&acpi->dev);
-+	if (!inputdev)
-+		return -ENXIO;
-+
- 	accel = dev_get_drvdata(&inputdev->dev);
-+	if (!accel)
-+		return -ENXIO;
- 
- 	r = kstrtoul(buf, 0, &g_select);
- 	if (r)
-@@ -303,6 +323,8 @@ static int cmpc_accel_open_v4(struct input_dev *input)
- 
- 	acpi = to_acpi_device(input->dev.parent);
- 	accel = dev_get_drvdata(&input->dev);
-+	if (!accel)
-+		return -ENXIO;
- 
- 	cmpc_accel_set_sensitivity_v4(acpi->handle, accel->sensitivity);
- 	cmpc_accel_set_g_select_v4(acpi->handle, accel->g_select);
-@@ -551,7 +573,12 @@ static ssize_t cmpc_accel_sensitivity_show(struct device *dev,
- 
- 	acpi = to_acpi_device(dev);
- 	inputdev = dev_get_drvdata(&acpi->dev);
-+	if (!inputdev)
-+		return -ENXIO;
-+
- 	accel = dev_get_drvdata(&inputdev->dev);
-+	if (!accel)
-+		return -ENXIO;
- 
- 	return sprintf(buf, "%d\n", accel->sensitivity);
- }
-@@ -568,7 +595,12 @@ static ssize_t cmpc_accel_sensitivity_store(struct device *dev,
- 
- 	acpi = to_acpi_device(dev);
- 	inputdev = dev_get_drvdata(&acpi->dev);
-+	if (!inputdev)
-+		return -ENXIO;
-+
- 	accel = dev_get_drvdata(&inputdev->dev);
-+	if (!accel)
-+		return -ENXIO;
- 
- 	r = kstrtoul(buf, 0, &sensitivity);
- 	if (r)
+ out_platform:
+ 	platform_device_unregister(pcc->platform);
++out_sysfs:
++	sysfs_remove_group(&device->dev.kobj, &pcc_attr_group);
+ out_backlight:
+ 	backlight_device_unregister(pcc->backlight);
+ out_input:
 -- 
 2.51.0
 
