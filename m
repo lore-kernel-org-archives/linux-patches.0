@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8DB29A1;
-	Tue, 17 Feb 2026 20:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5650429A1;
+	Tue, 17 Feb 2026 20:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361497; cv=none; b=j/+A63IzCJGNGkWrellN3zkiJxBYGJYgq3PqdyyudJ1byBZi/5WUd1EKjFLCo4kHKjgeq5QzN90Bcw2hRP4IsGTBo2NsJHf/HA3sGv7R4ZE9DPPkdEsBMiEOv2M4R+tfpmKLaUDi4lBG6GfvBcnnzrGxJ94F+/bHWp+Bb173SD0=
+	t=1771361500; cv=none; b=I2aY5Yy6jl6RjSPRKmXlxIhXQZhmiC396a78vZxEvpWPg1bDSZv/ag/MKkyTqNadPa7FGe5rx4evEGLvjaFL+P/VEWotHJ0nKCa2TmeT2+WGm6Oh90vycP4aCWdlheNBuqE92ZhmrdtHows3JmPwT6TK92ZCnPJgx4qH7MLQcyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361497; c=relaxed/simple;
-	bh=B3kx5P2O0y5rg9s+bpDic/tuo3ARgk7U2TTI3WLCMAU=;
+	s=arc-20240116; t=1771361500; c=relaxed/simple;
+	bh=a0XW8Umyz9ybq6NPiTUAAGy9hn43yYOmvfi4aq8yObc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fv0HCTaJ4Ku3UbIVQjmJ4woxfV14B9/PPK3ktgFhCfiIMEwhWWaxqztlt1vGByyYriJ8ARD+DVYRkksFuHx0LhBwLBR+QzghjWJUO085ofqi9hvHTGpCfdfXA7vIFJ2BdJsyjh2mszJGZ265XvKkp5QILB2BQM9dQCVhYU5ycSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxgIZWFe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AbvubQOIbyW0+E8Eh/r8tHY8A+GRhyLQvxBgYbhkaOAG1WZjkZlJ5AxIozy1/Hj45P2k8BeFMByBkuz3aSNK4YCExSFo6xdce/aoZYfk/mCSEAfRz+vMb7fFXdF5/I7GtGpqHYkdi1+irI5KGqBsvl3FWd1EPhDACgKrQYH5VOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ki8fKLL0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxgIZWFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B41C4CEF7;
-	Tue, 17 Feb 2026 20:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ki8fKLL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD7FC4CEF7;
+	Tue, 17 Feb 2026 20:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361496;
-	bh=B3kx5P2O0y5rg9s+bpDic/tuo3ARgk7U2TTI3WLCMAU=;
+	s=korg; t=1771361500;
+	bh=a0XW8Umyz9ybq6NPiTUAAGy9hn43yYOmvfi4aq8yObc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxgIZWFeTWzZNhwRuOML8L+0fYEcBigtR6y1qIDkTiMpq/G142ec4aziSniKE44GU
-	 2pTWaVmaFaWsNU3MeoqsUForPnspJqlbbwo1JEE7qblUjR+jc6hQYJyptJKtZyEgbi
-	 DqlZJ3SM92ulzsGFMoQSCT1D1HzpnnZKdUm1LlRU=
+	b=Ki8fKLL09oLIW/CD+XnBLzTVV7tm2fCYDg3m8wo4vwHE856d9fqwaldygIMS3sVev
+	 tzLkwlBySZU3NPfH8GkQ+cOKX0eTZCTp1w88PQmwmwnYOzOZxD05LtwhF/3nXnv1No
+	 fhSBJxZHOrWkFWWJHoL6ESdG3P2GlXJXKo8UcZVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anatolii Shirykalov <pipocavsobake@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 05/43] ASoC: amd: yc: Add ASUS ExpertBook PM1503CDA to quirks list
-Date: Tue, 17 Feb 2026 21:31:45 +0100
-Message-ID: <20260217200006.676679908@linuxfoundation.org>
+Subject: [PATCH 6.18 06/43] gpio: sprd: Change sprd_gpio lock to raw_spin_lock
+Date: Tue, 17 Feb 2026 21:31:46 +0100
+Message-ID: <20260217200006.713760903@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200006.470920131@linuxfoundation.org>
 References: <20260217200006.470920131@linuxfoundation.org>
@@ -51,39 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anatolii Shirykalov <pipocavsobake@gmail.com>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-[ Upstream commit 018b211b1d321a52ed8d8de74ce83ce52a2e1224 ]
+[ Upstream commit 96313fcc1f062ba239f4832c9eff685da6c51c99 ]
 
-Add ASUS ExpertBook PM1503CDA to the DMI quirks table to enable
-internal DMIC support via the ACP6x machine driver.
+There was a lockdep warning in sprd_gpio:
 
-Signed-off-by: Anatolii Shirykalov <pipocavsobake@gmail.com>
-Link: https://patch.msgid.link/20260119145618.3171435-1-pipocavsobake@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[    6.258269][T329@C6] [ BUG: Invalid wait context ]
+[    6.258270][T329@C6] 6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 Tainted: G        W  OE
+[    6.258272][T329@C6] -----------------------------
+[    6.258273][T329@C6] modprobe/329 is trying to lock:
+[    6.258275][T329@C6] ffffff8081c91690 (&sprd_gpio->lock){....}-{3:3}, at: sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd]
+[    6.258282][T329@C6] other info that might help us debug this:
+[    6.258283][T329@C6] context-{5:5}
+[    6.258285][T329@C6] 3 locks held by modprobe/329:
+[    6.258286][T329@C6]  #0: ffffff808baca108 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xc4/0x204
+[    6.258295][T329@C6]  #1: ffffff80965e7240 (request_class#4){+.+.}-{4:4}, at: __setup_irq+0x1cc/0x82c
+[    6.258304][T329@C6]  #2: ffffff80965e70c8 (lock_class#4){....}-{2:2}, at: __setup_irq+0x21c/0x82c
+[    6.258313][T329@C6] stack backtrace:
+[    6.258314][T329@C6] CPU: 6 UID: 0 PID: 329 Comm: modprobe Tainted: G        W  OE       6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 PREEMPT  3ad5b0f45741a16e5838da790706e16ceb6717df
+[    6.258316][T329@C6] Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+[    6.258317][T329@C6] Hardware name: Unisoc UMS9632-base Board (DT)
+[    6.258318][T329@C6] Call trace:
+[    6.258318][T329@C6]  show_stack+0x20/0x30 (C)
+[    6.258321][T329@C6]  __dump_stack+0x28/0x3c
+[    6.258324][T329@C6]  dump_stack_lvl+0xac/0xf0
+[    6.258326][T329@C6]  dump_stack+0x18/0x3c
+[    6.258329][T329@C6]  __lock_acquire+0x824/0x2c28
+[    6.258331][T329@C6]  lock_acquire+0x148/0x2cc
+[    6.258333][T329@C6]  _raw_spin_lock_irqsave+0x6c/0xb4
+[    6.258334][T329@C6]  sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd 814535e93c6d8e0853c45c02eab0fa88a9da6487]
+[    6.258337][T329@C6]  irq_startup+0x238/0x350
+[    6.258340][T329@C6]  __setup_irq+0x504/0x82c
+[    6.258342][T329@C6]  request_threaded_irq+0x118/0x184
+[    6.258344][T329@C6]  devm_request_threaded_irq+0x94/0x120
+[    6.258347][T329@C6]  sc8546_init_irq+0x114/0x170 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
+[    6.258352][T329@C6]  sc8546_charger_probe+0x53c/0x5a0 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
+[    6.258358][T329@C6]  i2c_device_probe+0x2c8/0x350
+[    6.258361][T329@C6]  really_probe+0x1a8/0x46c
+[    6.258363][T329@C6]  __driver_probe_device+0xa4/0x10c
+[    6.258366][T329@C6]  driver_probe_device+0x44/0x1b4
+[    6.258369][T329@C6]  __driver_attach+0xd0/0x204
+[    6.258371][T329@C6]  bus_for_each_dev+0x10c/0x168
+[    6.258373][T329@C6]  driver_attach+0x2c/0x3c
+[    6.258376][T329@C6]  bus_add_driver+0x154/0x29c
+[    6.258378][T329@C6]  driver_register+0x70/0x10c
+[    6.258381][T329@C6]  i2c_register_driver+0x48/0xc8
+[    6.258384][T329@C6]  init_module+0x28/0xfd8 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
+[    6.258389][T329@C6]  do_one_initcall+0x128/0x42c
+[    6.258392][T329@C6]  do_init_module+0x60/0x254
+[    6.258395][T329@C6]  load_module+0x1054/0x1220
+[    6.258397][T329@C6]  __arm64_sys_finit_module+0x240/0x35c
+[    6.258400][T329@C6]  invoke_syscall+0x60/0xec
+[    6.258402][T329@C6]  el0_svc_common+0xb0/0xe4
+[    6.258405][T329@C6]  do_el0_svc+0x24/0x30
+[    6.258407][T329@C6]  el0_svc+0x54/0x1c4
+[    6.258409][T329@C6]  el0t_64_sync_handler+0x68/0xdc
+[    6.258411][T329@C6]  el0t_64_sync+0x1c4/0x1c8
+
+This is because the spin_lock would change to rt_mutex in PREEMPT_RT,
+however the sprd_gpio->lock would use in hard-irq, this is unsafe.
+
+So change the spin_lock_t to raw_spin_lock_t to use the spinlock
+in hard-irq.
+
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20260126094209.9855-1-xuewen.yan@unisoc.com
+[Bartosz: tweaked the commit message]
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpio/gpio-sprd.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index c4a4a06528b45..c18da0915baad 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -542,6 +542,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "15NBC1011"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "ASUS EXPERTBOOK PM1503CDA"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/gpio/gpio-sprd.c b/drivers/gpio/gpio-sprd.c
+index 413bcd0a42405..2cc8abe705cdb 100644
+--- a/drivers/gpio/gpio-sprd.c
++++ b/drivers/gpio/gpio-sprd.c
+@@ -35,7 +35,7 @@
+ struct sprd_gpio {
+ 	struct gpio_chip chip;
+ 	void __iomem *base;
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ 	int irq;
+ };
+ 
+@@ -54,7 +54,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
+ 	unsigned long flags;
+ 	u32 tmp;
+ 
+-	spin_lock_irqsave(&sprd_gpio->lock, flags);
++	raw_spin_lock_irqsave(&sprd_gpio->lock, flags);
+ 	tmp = readl_relaxed(base + reg);
+ 
+ 	if (val)
+@@ -63,7 +63,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
+ 		tmp &= ~BIT(SPRD_GPIO_BIT(offset));
+ 
+ 	writel_relaxed(tmp, base + reg);
+-	spin_unlock_irqrestore(&sprd_gpio->lock, flags);
++	raw_spin_unlock_irqrestore(&sprd_gpio->lock, flags);
+ }
+ 
+ static int sprd_gpio_read(struct gpio_chip *chip, unsigned int offset, u16 reg)
+@@ -236,7 +236,7 @@ static int sprd_gpio_probe(struct platform_device *pdev)
+ 	if (IS_ERR(sprd_gpio->base))
+ 		return PTR_ERR(sprd_gpio->base);
+ 
+-	spin_lock_init(&sprd_gpio->lock);
++	raw_spin_lock_init(&sprd_gpio->lock);
+ 
+ 	sprd_gpio->chip.label = dev_name(&pdev->dev);
+ 	sprd_gpio->chip.ngpio = SPRD_GPIO_NR;
 -- 
 2.51.0
 
