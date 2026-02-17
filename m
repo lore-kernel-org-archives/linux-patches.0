@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23A13783AF;
-	Tue, 17 Feb 2026 20:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4262C376BFF;
+	Tue, 17 Feb 2026 20:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361021; cv=none; b=dHf7vgkbHi6w/3zf5kxFvwGnuJcY9HEAmYP0QTHhnJKjOtKzmyAGrAxJwJhT+3KQjKtP0f6tEObmlH0dr9cF7n9iXR+v48Lp1ZSKw8QhCSME/irxGmcCG38c46aB5Z23pitscvItwey+4RcpnS5PyImGQBKKimBF8bbOan+MOzM=
+	t=1771361025; cv=none; b=CNSdij4wXVh74vjf2dBvKLHMVNGNCHlpI4sPibZM3bKVtdTbVoldNmEjhhUOu6l+AImK+CruRbnWwnp8z9sFYxTd4hNtWkAhfM2WwLFzv+TJT+j4eOy1DwRmu2T4QAybMMyfhzI8uXMv/ATK/XbKRO/ChbA3pfh2eCJEBl8KBrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361021; c=relaxed/simple;
-	bh=3aZxbUid4x/OUPlmP310sX20j2yaBwsQGJ7bdoOb+1s=;
+	s=arc-20240116; t=1771361025; c=relaxed/simple;
+	bh=SbNrgn0GypH+qitRaYQIDxdlyYv8Fv7Wl6D0ToXVPjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZ51oshXFz3sY2EGcCEt04sixdhL/g1aYAsAsqDsGk/yp4o53eVw8biownV8A+cDdJ4ae3dq2nDyQxrzskV752K9oKG5P6yqoXysMMPzLy1WQTIUDvGEg50V95yBApjXcHQ7905DQWbYC1J+YWgz4vY0eLZk8H3pjuCnj2nR9Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2hNN5fpG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L1JdE+cuJxwMesxPh46pHEdSN+hUAfuHxCaP7kBUBM8ydgURW0l+VTFG+NQBFfq4vIyKEip8+1WetjOefPwsYZfC4tvsmurV4ceHiyX1loYrD5P5YvvMTbizTyyqWLRb8l8Txwkle1NV1WKX1lSf8RISxGrcU1scbkV2y1I25AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MogRBIex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2hNN5fpG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09174C4CEF7;
-	Tue, 17 Feb 2026 20:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MogRBIex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66329C4CEF7;
+	Tue, 17 Feb 2026 20:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361021;
-	bh=3aZxbUid4x/OUPlmP310sX20j2yaBwsQGJ7bdoOb+1s=;
+	s=korg; t=1771361024;
+	bh=SbNrgn0GypH+qitRaYQIDxdlyYv8Fv7Wl6D0ToXVPjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2hNN5fpGKU4kahYiZZqA65WKDTwxIlcwE3Qo/otVkiP/FrwtlYfB5TkaG3GkvfAwT
-	 aGH22uMtOEHCMVZrJ5Ip7H9K33skRj4kqucxfMqyarYwTY7wxA9i9uOsdtAs6OvOqs
-	 6PyzNnZJ8bMJlq95rMOr32UF0eevBcSspdpmmL0k=
+	b=MogRBIexhIOEtF8iMat4P9PBrt9RueBjBUEvU4+9cy0bcRqqA4ixbQt4quXh5Wtgw
+	 /F3rZzAROsE1Uzr2Y0Ql6RidRAwEnpl2Vo39EkbWpATOwXy7tfOUu0rOBXgSMKJ0I4
+	 8s83IuV92zirssBT4TD9gP1o6Zm7wyBHWeLiugJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Shane Nehring <snehring@iastate.edu>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 5.15 18/39] btrfs: fix racy bitfield write in btrfs_clear_space_info_full()
-Date: Tue, 17 Feb 2026 21:31:27 +0100
-Message-ID: <20260217200003.630708137@linuxfoundation.org>
+Subject: [PATCH 5.15 19/39] smb: client: set correct id, uid and cruid for multiuser automounts
+Date: Tue, 17 Feb 2026 21:31:28 +0100
+Message-ID: <20260217200003.669919410@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.929083107@linuxfoundation.org>
 References: <20260217200002.929083107@linuxfoundation.org>
@@ -52,243 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 38e818718c5e04961eea0fa8feff3f100ce40408 ]
+[ Upstream commit 4508ec17357094e2075f334948393ddedbb75157 ]
 
->From the memory-barriers.txt document regarding memory barrier ordering
-guarantees:
+When uid, gid and cruid are not specified, we need to dynamically
+set them into the filesystem context used for automounting otherwise
+they'll end up reusing the values from the parent mount.
 
- (*) These guarantees do not apply to bitfields, because compilers often
-     generate code to modify these using non-atomic read-modify-write
-     sequences.  Do not attempt to use bitfields to synchronize parallel
-     algorithms.
-
- (*) Even in cases where bitfields are protected by locks, all fields
-     in a given bitfield must be protected by one lock.  If two fields
-     in a given bitfield are protected by different locks, the compiler's
-     non-atomic read-modify-write sequences can cause an update to one
-     field to corrupt the value of an adjacent field.
-
-btrfs_space_info has a bitfield sharing an underlying word consisting of
-the fields full, chunk_alloc, and flush:
-
-struct btrfs_space_info {
-        struct btrfs_fs_info *     fs_info;              /*     0     8 */
-        struct btrfs_space_info *  parent;               /*     8     8 */
-        ...
-        int                        clamp;                /*   172     4 */
-        unsigned int               full:1;               /*   176: 0  4 */
-        unsigned int               chunk_alloc:1;        /*   176: 1  4 */
-        unsigned int               flush:1;              /*   176: 2  4 */
-        ...
-
-Therefore, to be safe from parallel read-modify-writes losing a write to
-one of the bitfield members protected by a lock, all writes to all the
-bitfields must use the lock. They almost universally do, except for
-btrfs_clear_space_info_full() which iterates over the space_infos and
-writes out found->full = 0 without a lock.
-
-Imagine that we have one thread completing a transaction in which we
-finished deleting a block_group and are thus calling
-btrfs_clear_space_info_full() while simultaneously the data reclaim
-ticket infrastructure is running do_async_reclaim_data_space():
-
-          T1                                             T2
-btrfs_commit_transaction
-  btrfs_clear_space_info_full
-  data_sinfo->full = 0
-  READ: full:0, chunk_alloc:0, flush:1
-                                              do_async_reclaim_data_space(data_sinfo)
-                                              spin_lock(&space_info->lock);
-                                              if(list_empty(tickets))
-                                                space_info->flush = 0;
-                                                READ: full: 0, chunk_alloc:0, flush:1
-                                                MOD/WRITE: full: 0, chunk_alloc:0, flush:0
-                                                spin_unlock(&space_info->lock);
-                                                return;
-  MOD/WRITE: full:0, chunk_alloc:0, flush:1
-
-and now data_sinfo->flush is 1 but the reclaim worker has exited. This
-breaks the invariant that flush is 0 iff there is no work queued or
-running. Once this invariant is violated, future allocations that go
-into __reserve_bytes() will add tickets to space_info->tickets but will
-see space_info->flush is set to 1 and not queue the work. After this,
-they will block forever on the resulting ticket, as it is now impossible
-to kick the worker again.
-
-I also confirmed by looking at the assembly of the affected kernel that
-it is doing RMW operations. For example, to set the flush (3rd) bit to 0,
-the assembly is:
-  andb    $0xfb,0x60(%rbx)
-and similarly for setting the full (1st) bit to 0:
-  andb    $0xfe,-0x20(%rax)
-
-So I think this is really a bug on practical systems.  I have observed
-a number of systems in this exact state, but am currently unable to
-reproduce it.
-
-Rather than leaving this footgun lying around for the future, take
-advantage of the fact that there is room in the struct anyway, and that
-it is already quite large and simply change the three bitfield members to
-bools. This avoids writes to space_info->full having any effect on
-writes to space_info->flush, regardless of locking.
-
-Fixes: 957780eb2788 ("Btrfs: introduce ticketed enospc infrastructure")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ The context change is due to the commit cc0517fe779f
-("btrfs: tweak extent/chunk allocation for space_info sub-space")
-and the commit 45a59513b4b2
-("btrfs: add support for reclaiming from sub-space space_info")
-in v6.16 which are irrelevant to the logic of this patch. ]
+Fixes: 9fd29a5bae6e ("cifs: use fs_context for automounts")
+Reported-by: Shane Nehring <snehring@iastate.edu>
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2259257
+Cc: stable@vger.kernel.org # 6.2+
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ The context change is due to the commit 561f82a3a24c
+("smb: client: rename cifs_dfs_ref.c to namespace.c") and the commit
+0a049935e47e ("smb: client: get rid of dfs naming in automount code")
+in v6.6 which are irrelevant to the logic of this patch. ]
 Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |    6 +++---
- fs/btrfs/space-info.c  |   20 ++++++++++----------
- fs/btrfs/space-info.h  |    6 +++---
- 3 files changed, 16 insertions(+), 16 deletions(-)
+ fs/cifs/cifs_dfs_ref.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -3699,7 +3699,7 @@ int btrfs_chunk_alloc(struct btrfs_trans
- 			mutex_unlock(&fs_info->chunk_mutex);
- 		} else {
- 			/* Proceed with allocation */
--			space_info->chunk_alloc = 1;
-+			space_info->chunk_alloc = true;
- 			wait_for_alloc = false;
- 			spin_unlock(&space_info->lock);
- 		}
-@@ -3735,7 +3735,7 @@ int btrfs_chunk_alloc(struct btrfs_trans
- 	spin_lock(&space_info->lock);
- 	if (ret < 0) {
- 		if (ret == -ENOSPC)
--			space_info->full = 1;
-+			space_info->full = true;
- 		else
- 			goto out;
- 	} else {
-@@ -3745,7 +3745,7 @@ int btrfs_chunk_alloc(struct btrfs_trans
- 
- 	space_info->force_alloc = CHUNK_ALLOC_NO_FORCE;
- out:
--	space_info->chunk_alloc = 0;
-+	space_info->chunk_alloc = false;
- 	spin_unlock(&space_info->lock);
- 	mutex_unlock(&fs_info->chunk_mutex);
- 
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -178,7 +178,7 @@ void btrfs_clear_space_info_full(struct
- 	struct btrfs_space_info *found;
- 
- 	list_for_each_entry(found, head, list)
--		found->full = 0;
-+		found->full = false;
+--- a/fs/cifs/cifs_dfs_ref.c
++++ b/fs/cifs/cifs_dfs_ref.c
+@@ -258,6 +258,21 @@ compose_mount_options_err:
+ 	goto compose_mount_options_out;
  }
  
- static int create_space_info(struct btrfs_fs_info *info, u64 flags)
-@@ -271,7 +271,7 @@ void btrfs_update_space_info(struct btrf
- 	found->bytes_readonly += bytes_readonly;
- 	found->bytes_zone_unusable += bytes_zone_unusable;
- 	if (total_bytes > 0)
--		found->full = 0;
-+		found->full = false;
- 	btrfs_try_granting_tickets(info, found);
- 	spin_unlock(&found->lock);
- 	*space_info = found;
-@@ -941,7 +941,7 @@ static void btrfs_async_reclaim_metadata
- 	spin_lock(&space_info->lock);
- 	to_reclaim = btrfs_calc_reclaim_metadata_size(fs_info, space_info);
- 	if (!to_reclaim) {
--		space_info->flush = 0;
-+		space_info->flush = false;
- 		spin_unlock(&space_info->lock);
- 		return;
- 	}
-@@ -953,7 +953,7 @@ static void btrfs_async_reclaim_metadata
- 		flush_space(fs_info, space_info, to_reclaim, flush_state, false);
- 		spin_lock(&space_info->lock);
- 		if (list_empty(&space_info->tickets)) {
--			space_info->flush = 0;
-+			space_info->flush = false;
- 			spin_unlock(&space_info->lock);
- 			return;
- 		}
-@@ -996,7 +996,7 @@ static void btrfs_async_reclaim_metadata
- 					flush_state = FLUSH_DELAYED_ITEMS_NR;
- 					commit_cycles--;
- 				} else {
--					space_info->flush = 0;
-+					space_info->flush = false;
- 				}
- 			} else {
- 				flush_state = FLUSH_DELAYED_ITEMS_NR;
-@@ -1158,7 +1158,7 @@ static void btrfs_async_reclaim_data_spa
++static void fs_context_set_ids(struct smb3_fs_context *ctx)
++{
++	kuid_t uid = current_fsuid();
++	kgid_t gid = current_fsgid();
++
++	if (ctx->multiuser) {
++		if (!ctx->uid_specified)
++			ctx->linux_uid = uid;
++		if (!ctx->gid_specified)
++			ctx->linux_gid = gid;
++	}
++	if (!ctx->cruid_specified)
++		ctx->cred_uid = uid;
++}
++
+ /*
+  * Create a vfsmount that we can automount
+  */
+@@ -309,6 +324,7 @@ static struct vfsmount *cifs_dfs_do_auto
+ 	tmp.source = full_path;
+ 	tmp.UNC = tmp.prepath = NULL;
  
- 	spin_lock(&space_info->lock);
- 	if (list_empty(&space_info->tickets)) {
--		space_info->flush = 0;
-+		space_info->flush = false;
- 		spin_unlock(&space_info->lock);
- 		return;
- 	}
-@@ -1169,7 +1169,7 @@ static void btrfs_async_reclaim_data_spa
- 		flush_space(fs_info, space_info, U64_MAX, ALLOC_CHUNK_FORCE, false);
- 		spin_lock(&space_info->lock);
- 		if (list_empty(&space_info->tickets)) {
--			space_info->flush = 0;
-+			space_info->flush = false;
- 			spin_unlock(&space_info->lock);
- 			return;
- 		}
-@@ -1182,7 +1182,7 @@ static void btrfs_async_reclaim_data_spa
- 			    data_flush_states[flush_state], false);
- 		spin_lock(&space_info->lock);
- 		if (list_empty(&space_info->tickets)) {
--			space_info->flush = 0;
-+			space_info->flush = false;
- 			spin_unlock(&space_info->lock);
- 			return;
- 		}
-@@ -1199,7 +1199,7 @@ static void btrfs_async_reclaim_data_spa
- 				if (maybe_fail_all_tickets(fs_info, space_info))
- 					flush_state = 0;
- 				else
--					space_info->flush = 0;
-+					space_info->flush = false;
- 			} else {
- 				flush_state = 0;
- 			}
-@@ -1510,7 +1510,7 @@ static int __reserve_bytes(struct btrfs_
- 				 */
- 				maybe_clamp_preempt(fs_info, space_info);
- 
--				space_info->flush = 1;
-+				space_info->flush = true;
- 				trace_btrfs_trigger_flush(fs_info,
- 							  space_info->flags,
- 							  orig_bytes, flush,
---- a/fs/btrfs/space-info.h
-+++ b/fs/btrfs/space-info.h
-@@ -28,11 +28,11 @@ struct btrfs_space_info {
- 				   flushing. The value is >> clamp, so turns
- 				   out to be a 2^clamp divisor. */
- 
--	unsigned int full:1;	/* indicates that we cannot allocate any more
-+	bool full;		/* indicates that we cannot allocate any more
- 				   chunks for this space */
--	unsigned int chunk_alloc:1;	/* set if we are allocating a chunk */
-+	bool chunk_alloc;	/* set if we are allocating a chunk */
- 
--	unsigned int flush:1;		/* set if we are trying to make space */
-+	bool flush;		/* set if we are trying to make space */
- 
- 	unsigned int force_alloc;	/* set if we need to force a chunk
- 					   alloc for this space */
++	fs_context_set_ids(&tmp);
+ 	rc = smb3_fs_context_dup(ctx, &tmp);
+ 	if (rc) {
+ 		mnt = ERR_PTR(rc);
 
 
