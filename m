@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683E8320CD9;
-	Tue, 17 Feb 2026 20:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2172286D4D;
+	Tue, 17 Feb 2026 20:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360838; cv=none; b=W53J95WhqhAl9I1NXNukolavphSZ6SUrrhZC+aMQyPJBa4HCf1aCSdvXU5KjgnSPCwD78NX1hqBhB7z8maxMjMyzHQibT0GJ1KqNgEdi1toBzOogoF1tvYJBRAeFxmm3HutJchD16TyIOrLCYmFcCKVO6Z3wY4H49/7qHwKmQvI=
+	t=1771360841; cv=none; b=Wnu7KVkDh6sS1d/P3GGa9IDsC0M701TFfSoQf6hynZKXnKpntq15WfJf775SQZne6GvVlllkSYNiA/UGK/ARw5sa6KHqYA8ryTCI3piUgkCKBGoLwghw/JvJ9GR6n5+KMNndLGjLkVsIQNZJDRXUUZUeTQQoLOvHvwngyzZDJig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360838; c=relaxed/simple;
-	bh=qoe2CfW+wUozm/ht/UpvCUCmaSXKSPXEl+fynINZMF4=;
+	s=arc-20240116; t=1771360841; c=relaxed/simple;
+	bh=Em1pwDaKvG/jFmYzhLQbTUVq3EunF4SToLdCC3uBhik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i9845JAsyaYDQab7+82cCmjpcnI5unQDbON2pm8k0mspPvMSNFtAYO6wLGQQiulb8X58gmNv7sdE8DuxS9E8ZDuZl2ImCiSWFeKAb3ikrjo0JzLuUz3Q27dbdv2ecoa4qu6o5xQhTpltfThvwI1Pxufx69x5BjnE3+0WfLsTsSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oa2xCTsQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=clZJ5qY2gB2dqcnHkO5C4WfYBAKP/p0rngvt9k0DbqZuJm0bzWTMA93jaFTwngZdm3rzoxQoJmVPpObVX2CdgTtzmSOkb9W8WqtcF86+GXxkqAyBIKOi/7ro5yA7Dq56hpP+8KA04AQ9lMUCPx56V/5ZcsQx6HDwIs0w+0d9UEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avaFFIA9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oa2xCTsQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9F6C4CEF7;
-	Tue, 17 Feb 2026 20:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avaFFIA9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24D0C4CEF7;
+	Tue, 17 Feb 2026 20:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360838;
-	bh=qoe2CfW+wUozm/ht/UpvCUCmaSXKSPXEl+fynINZMF4=;
+	s=korg; t=1771360841;
+	bh=Em1pwDaKvG/jFmYzhLQbTUVq3EunF4SToLdCC3uBhik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oa2xCTsQniDJ21x7FchgUYWDr2FhA1oJbDeOXIB4g2r0McTambnsfosCz+0pBTgBc
-	 yh8uKQ2Xg1AATT8Pz0lzZSse44WUcc53iQTmFrL4+5YsYbzPAVnF/yrnB5C59D4Y8S
-	 +LrZ80kDqOlEm1tJfwClgaJx7OgmkZD2qeY81Iy0=
+	b=avaFFIA9pwp2f4s9unfFMVfGwf3nJHd89300lOrRXK7TtxVI0HNDHjR/q4zMolBOU
+	 5yn8/hUi+XK3WZzryxiYbvoGSTX8gl52wBd2F/QiKcdkq6G9XRvdYbG9yMz4mBLE3E
+	 qnQV/S9nYZuaFte6aOxu1DeFJD57ImlkyFfGjAcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 29/39] LoongArch: Add writecombine support for DMW-based ioremap()
-Date: Tue, 17 Feb 2026 21:30:51 +0100
-Message-ID: <20260217200005.332863620@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 30/39] fbdev: rivafb: fix divide error in nv3_arb()
+Date: Tue, 17 Feb 2026 21:30:52 +0100
+Message-ID: <20260217200005.368983862@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -50,165 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 8e02c3b782ec64343f3cccc8dc5a8be2b379e80b upstream.
+commit 0209e21e3c372fa2da04c39214bec0b64e4eb5f4 upstream.
 
-Currently, only TLB-based ioremap() support writecombine, so add the
-counterpart for DMW-based ioremap() with help of DMW2. The base address
-(WRITECOMBINE_BASE) is configured as 0xa000000000000000.
+A userspace program can trigger the RIVA NV3 arbitration code by calling
+the FBIOPUT_VSCREENINFO ioctl on /dev/fb*. When doing so, the driver
+recomputes FIFO arbitration parameters in nv3_arb(), using state->mclk_khz
+(derived from the PRAMDAC MCLK PLL) as a divisor without validating it
+first.
 
-DMW3 is unused by kernel now, however firmware may leave garbage in them
-and interfere kernel's address mapping. So clear it as necessary.
+In a normal setup, state->mclk_khz is provided by the real hardware and is
+non-zero. However, an attacker can construct a malicious or misconfigured
+device (e.g. a crafted/emulated PCI device) that exposes a bogus PLL
+configuration, causing state->mclk_khz to become zero.  Once
+nv3_get_param() calls nv3_arb(), the division by state->mclk_khz in the gns
+calculation causes a divide error and crashes the kernel.
 
-BTW, centralize the DMW configuration to macro SETUP_DMWINS.
+Fix this by checking whether state->mclk_khz is zero and bailing out before
+doing the division.
 
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+The following log reveals it:
+
+rivafb: setting virtual Y resolution to 2184
+divide error: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 0 PID: 2187 Comm: syz-executor.0 Not tainted 5.18.0-rc1+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.0-59-gc9ba5276e321-prebuilt.qemu.org 04/01/2014
+RIP: 0010:nv3_arb drivers/video/fbdev/riva/riva_hw.c:439 [inline]
+RIP: 0010:nv3_get_param+0x3ab/0x13b0 drivers/video/fbdev/riva/riva_hw.c:546
+Call Trace:
+  nv3CalcArbitration.constprop.0+0x255/0x460 drivers/video/fbdev/riva/riva_hw.c:603
+  nv3UpdateArbitrationSettings drivers/video/fbdev/riva/riva_hw.c:637 [inline]
+  CalcStateExt+0x447/0x1b90 drivers/video/fbdev/riva/riva_hw.c:1246
+  riva_load_video_mode+0x8a9/0xea0 drivers/video/fbdev/riva/fbdev.c:779
+  rivafb_set_par+0xc0/0x5f0 drivers/video/fbdev/riva/fbdev.c:1196
+  fb_set_var+0x604/0xeb0 drivers/video/fbdev/core/fbmem.c:1033
+  do_fb_ioctl+0x234/0x670 drivers/video/fbdev/core/fbmem.c:1109
+  fb_ioctl+0xdd/0x130 drivers/video/fbdev/core/fbmem.c:1188
+  __x64_sys_ioctl+0x122/0x190 fs/ioctl.c:856
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/addrspace.h   |    4 ++++
- arch/loongarch/include/asm/io.h          |   10 ++++++++--
- arch/loongarch/include/asm/loongarch.h   |   10 +++++++++-
- arch/loongarch/include/asm/stackframe.h  |   11 +++++++++++
- arch/loongarch/kernel/head.S             |   11 ++---------
- arch/loongarch/power/suspend_asm.S       |    6 +-----
- drivers/firmware/efi/libstub/loongarch.c |    2 ++
- 7 files changed, 37 insertions(+), 17 deletions(-)
+ drivers/video/fbdev/riva/riva_hw.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/loongarch/include/asm/addrspace.h
-+++ b/arch/loongarch/include/asm/addrspace.h
-@@ -36,6 +36,10 @@ extern unsigned long vm_map_base;
- #define UNCACHE_BASE		CSR_DMW0_BASE
- #endif
- 
-+#ifndef WRITECOMBINE_BASE
-+#define WRITECOMBINE_BASE	CSR_DMW2_BASE
-+#endif
+--- a/drivers/video/fbdev/riva/riva_hw.c
++++ b/drivers/video/fbdev/riva/riva_hw.c
+@@ -436,6 +436,9 @@ static char nv3_arb(nv3_fifo_info * res_
+     vmisses = 2;
+     eburst_size = state->memory_width * 1;
+     mburst_size = 32;
++    if (!state->mclk_khz)
++	return (0);
 +
- #define DMW_PABITS	48
- #define TO_PHYS_MASK	((1ULL << DMW_PABITS) - 1)
- 
---- a/arch/loongarch/include/asm/io.h
-+++ b/arch/loongarch/include/asm/io.h
-@@ -30,10 +30,16 @@ extern void __init early_iounmap(void __
- static inline void __iomem *ioremap_prot(phys_addr_t offset, unsigned long size,
- 					 unsigned long prot_val)
- {
--	if (prot_val & _CACHE_CC)
-+	switch (prot_val & _CACHE_MASK) {
-+	case _CACHE_CC:
- 		return (void __iomem *)(unsigned long)(CACHE_BASE + offset);
--	else
-+	case _CACHE_SUC:
- 		return (void __iomem *)(unsigned long)(UNCACHE_BASE + offset);
-+	case _CACHE_WUC:
-+		return (void __iomem *)(unsigned long)(WRITECOMBINE_BASE + offset);
-+	default:
-+		return NULL;
-+	}
- }
- 
- #define ioremap(offset, size)		\
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -856,7 +856,7 @@
- #define LOONGARCH_CSR_DMWIN2		0x182	/* 64 direct map win2: MEM */
- #define LOONGARCH_CSR_DMWIN3		0x183	/* 64 direct map win3: MEM */
- 
--/* Direct Map window 0/1 */
-+/* Direct Map window 0/1/2/3 */
- #define CSR_DMW0_PLV0		_CONST64_(1 << 0)
- #define CSR_DMW0_VSEG		_CONST64_(0x8000)
- #define CSR_DMW0_BASE		(CSR_DMW0_VSEG << DMW_PABITS)
-@@ -868,6 +868,14 @@
- #define CSR_DMW1_BASE		(CSR_DMW1_VSEG << DMW_PABITS)
- #define CSR_DMW1_INIT		(CSR_DMW1_BASE | CSR_DMW1_MAT | CSR_DMW1_PLV0)
- 
-+#define CSR_DMW2_PLV0		_CONST64_(1 << 0)
-+#define CSR_DMW2_MAT		_CONST64_(2 << 4)
-+#define CSR_DMW2_VSEG		_CONST64_(0xa000)
-+#define CSR_DMW2_BASE		(CSR_DMW2_VSEG << DMW_PABITS)
-+#define CSR_DMW2_INIT		(CSR_DMW2_BASE | CSR_DMW2_MAT | CSR_DMW2_PLV0)
-+
-+#define CSR_DMW3_INIT		0x0
-+
- /* Performance Counter registers */
- #define LOONGARCH_CSR_PERFCTRL0		0x200	/* 32 perf event 0 config */
- #define LOONGARCH_CSR_PERFCNTR0		0x201	/* 64 perf event 0 count value */
---- a/arch/loongarch/include/asm/stackframe.h
-+++ b/arch/loongarch/include/asm/stackframe.h
-@@ -37,6 +37,17 @@
- 	cfi_restore \reg \offset \docfi
- 	.endm
- 
-+	.macro SETUP_DMWINS temp
-+	li.d	\temp, CSR_DMW0_INIT	# WUC, PLV0, 0x8000 xxxx xxxx xxxx
-+	csrwr	\temp, LOONGARCH_CSR_DMWIN0
-+	li.d	\temp, CSR_DMW1_INIT	# CAC, PLV0, 0x9000 xxxx xxxx xxxx
-+	csrwr	\temp, LOONGARCH_CSR_DMWIN1
-+	li.d	\temp, CSR_DMW2_INIT	# WUC, PLV0, 0xa000 xxxx xxxx xxxx
-+	csrwr	\temp, LOONGARCH_CSR_DMWIN2
-+	li.d	\temp, CSR_DMW3_INIT	# 0x0, unused
-+	csrwr	\temp, LOONGARCH_CSR_DMWIN3
-+	.endm
-+
- /* Jump to the runtime virtual address. */
- 	.macro JUMP_VIRT_ADDR temp1 temp2
- 	li.d	\temp1, CACHE_BASE
---- a/arch/loongarch/kernel/head.S
-+++ b/arch/loongarch/kernel/head.S
-@@ -44,11 +44,7 @@ SYM_DATA(kernel_fsize, .long _kernel_fsi
- SYM_CODE_START(kernel_entry)			# kernel entry point
- 
- 	/* Config direct window and set PG */
--	li.d		t0, CSR_DMW0_INIT	# UC, PLV0, 0x8000 xxxx xxxx xxxx
--	csrwr		t0, LOONGARCH_CSR_DMWIN0
--	li.d		t0, CSR_DMW1_INIT	# CA, PLV0, 0x9000 xxxx xxxx xxxx
--	csrwr		t0, LOONGARCH_CSR_DMWIN1
--
-+	SETUP_DMWINS	t0
- 	JUMP_VIRT_ADDR	t0, t1
- 
- 	/* Enable PG */
-@@ -119,11 +115,8 @@ SYM_CODE_END(kernel_entry)
-  * function after setting up the stack and tp registers.
-  */
- SYM_CODE_START(smpboot_entry)
--	li.d		t0, CSR_DMW0_INIT	# UC, PLV0
--	csrwr		t0, LOONGARCH_CSR_DMWIN0
--	li.d		t0, CSR_DMW1_INIT	# CA, PLV0
--	csrwr		t0, LOONGARCH_CSR_DMWIN1
- 
-+	SETUP_DMWINS	t0
- 	JUMP_VIRT_ADDR	t0, t1
- 
- 	/* Enable PG */
---- a/arch/loongarch/power/suspend_asm.S
-+++ b/arch/loongarch/power/suspend_asm.S
-@@ -73,11 +73,7 @@ SYM_FUNC_START(loongarch_suspend_enter)
- 	 * Reload all of the registers and return.
- 	 */
- SYM_INNER_LABEL(loongarch_wakeup_start, SYM_L_GLOBAL)
--	li.d		t0, CSR_DMW0_INIT	# UC, PLV0
--	csrwr		t0, LOONGARCH_CSR_DMWIN0
--	li.d		t0, CSR_DMW1_INIT	# CA, PLV0
--	csrwr		t0, LOONGARCH_CSR_DMWIN1
--
-+	SETUP_DMWINS	t0
- 	JUMP_VIRT_ADDR	t0, t1
- 
- 	/* Enable PG */
---- a/drivers/firmware/efi/libstub/loongarch.c
-+++ b/drivers/firmware/efi/libstub/loongarch.c
-@@ -74,6 +74,8 @@ efi_status_t efi_boot_kernel(void *handl
- 	/* Config Direct Mapping */
- 	csr_write64(CSR_DMW0_INIT, LOONGARCH_CSR_DMWIN0);
- 	csr_write64(CSR_DMW1_INIT, LOONGARCH_CSR_DMWIN1);
-+	csr_write64(CSR_DMW2_INIT, LOONGARCH_CSR_DMWIN2);
-+	csr_write64(CSR_DMW3_INIT, LOONGARCH_CSR_DMWIN3);
- 
- 	real_kernel_entry = (void *)kernel_entry_address(kernel_addr, image);
- 
+     gns = 1000000 * (gmisses*state->mem_page_miss + state->mem_latency)/state->mclk_khz;
+     ainfo->by_gfacc = gns*ainfo->gdrain_rate/1000000;
+     ainfo->wcmocc = 0;
 
 
