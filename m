@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D15C37646D;
-	Tue, 17 Feb 2026 20:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E5537646D;
+	Tue, 17 Feb 2026 20:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361052; cv=none; b=o0ennQk4ZbnuDoOoNACVr8VlVgNJW3sP7PLCx2uVooinDEic0xd6i2VRNgtqO/f0iLBHYNtSp0FsvjLqF6DroStNf3OAgpwnnE4DggBstuL3eT/iRbRmcCdlxkxQVTKTlPj7qd8tSgWMCQsqc0RHxFio6OUlbANEImzCvx1MuM0=
+	t=1771361055; cv=none; b=JokBjbJa3ALIf0+lVP8/8DzzRrEoJ/8nFx9ypNlWL73oIldZg1DXJR6dEIYnkIKnHfsEeZp/JY4mjz/GY9Im3vNICYcQJw/tJ/2oTgfqKzpWS3miWzbi/yy/djB1mXsT0ixHYeNxgEeGTFMcBFSkcuviOGGmtLvypC57rq6pLIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361052; c=relaxed/simple;
-	bh=5rFTq17RlpImuR7yFVM4Ls14jBc75K59sjiLIaykXJQ=;
+	s=arc-20240116; t=1771361055; c=relaxed/simple;
+	bh=TEgtaoqr2/eFwP8oX34IjzYijteXCb9dbY2VIBa31H8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bTqmodCmP/o0j4vDo+gIrS31myxHEooemvjDx7biZjt0ijILTVEAaQHu8WaoIkNMztC6cKaaAS1ns7JoepwKPjTc8qLHJtu20alwIza4MHRS1JGxmbqjKzEMbH4fCmXOagEqE8sK7EWslzz4xZRaFRwsYJvuKE/+7t3RkQldm+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bt93NvJC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K18GQTW2CFEEOydSewIUzwxwxAVPpIiMfdPTGsQ2L6Uhs0B3NXBLqtwFTZPlkQPKj3AzziuzDhNbmgmtr44846nUyyg11omV4S6tkimXuMabgvOOQInS14TymcJETHAEpGYo+R4P40m/pWqn1bAg9itllhmKOEV44xlg4k03XEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DKwFWbZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt93NvJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2438CC4CEF7;
-	Tue, 17 Feb 2026 20:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DKwFWbZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C27AC4CEF7;
+	Tue, 17 Feb 2026 20:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361051;
-	bh=5rFTq17RlpImuR7yFVM4Ls14jBc75K59sjiLIaykXJQ=;
+	s=korg; t=1771361055;
+	bh=TEgtaoqr2/eFwP8oX34IjzYijteXCb9dbY2VIBa31H8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bt93NvJCrtXN6d2BDP9JYJZj0RSDiOW0Iw9c3Jg7vm1CNouFHShgVa70lqZjwmwGU
-	 U+5ymTEr3Kl4XFiL9NH2Ea7uNgkU05+Y5nQYhwv2tUy2NxYo1j90dhT6l0NQCjVi3+
-	 4R+f9TcML0BIcmKtHhLc/00fzHRUGO6AF73djx7g=
+	b=2DKwFWbZfWtoT627UpCwLuyk5h9JEkla7niT2UtV1uGxsB9e7PSd9yQ64ujPS9Ipz
+	 wwRWncnn/FyGvDvZb+kiSklpSsbceSJlByoYVv4MV1Yox1fWB50yvWbPMry6J5z9z+
+	 Wy3ruvHqXd9+zk79TKhNq9zc1xpAlp7qaXk3BkZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Anil Gurumurthy <agurumurthy@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <hmadhani2024@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 26/39] bus: fsl-mc: fix use-after-free in driver_override_show()
-Date: Tue, 17 Feb 2026 21:31:35 +0100
-Message-ID: <20260217200003.939571930@linuxfoundation.org>
+Subject: [PATCH 5.15 27/39] scsi: qla2xxx: Fix bsg_done() causing double free
+Date: Tue, 17 Feb 2026 21:31:36 +0100
+Message-ID: <20260217200003.978006268@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.929083107@linuxfoundation.org>
 References: <20260217200002.929083107@linuxfoundation.org>
@@ -52,47 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Anil Gurumurthy <agurumurthy@marvell.com>
 
-[ Upstream commit 148891e95014b5dc5878acefa57f1940c281c431 ]
+[ Upstream commit c2c68225b1456f4d0d393b5a8778d51bb0d5b1d0 ]
 
-The driver_override_show() function reads the driver_override string
-without holding the device_lock. However, driver_override_store() uses
-driver_set_override(), which modifies and frees the string while holding
-the device_lock.
+Kernel panic observed on system,
 
-This can result in a concurrent use-after-free if the string is freed
-by the store function while being read by the show function.
+[5353358.825191] BUG: unable to handle page fault for address: ff5f5e897b024000
+[5353358.825194] #PF: supervisor write access in kernel mode
+[5353358.825195] #PF: error_code(0x0002) - not-present page
+[5353358.825196] PGD 100006067 P4D 0
+[5353358.825198] Oops: 0002 [#1] PREEMPT SMP NOPTI
+[5353358.825200] CPU: 5 PID: 2132085 Comm: qlafwupdate.sub Kdump: loaded Tainted: G        W    L    -------  ---  5.14.0-503.34.1.el9_5.x86_64 #1
+[5353358.825203] Hardware name: HPE ProLiant DL360 Gen11/ProLiant DL360 Gen11, BIOS 2.44 01/17/2025
+[5353358.825204] RIP: 0010:memcpy_erms+0x6/0x10
+[5353358.825211] RSP: 0018:ff591da8f4f6b710 EFLAGS: 00010246
+[5353358.825212] RAX: ff5f5e897b024000 RBX: 0000000000007090 RCX: 0000000000001000
+[5353358.825213] RDX: 0000000000001000 RSI: ff591da8f4fed090 RDI: ff5f5e897b024000
+[5353358.825214] RBP: 0000000000010000 R08: ff5f5e897b024000 R09: 0000000000000000
+[5353358.825215] R10: ff46cf8c40517000 R11: 0000000000000001 R12: 0000000000008090
+[5353358.825216] R13: ff591da8f4f6b720 R14: 0000000000001000 R15: 0000000000000000
+[5353358.825218] FS:  00007f1e88d47740(0000) GS:ff46cf935f940000(0000) knlGS:0000000000000000
+[5353358.825219] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[5353358.825220] CR2: ff5f5e897b024000 CR3: 0000000231532004 CR4: 0000000000771ef0
+[5353358.825221] PKRU: 55555554
+[5353358.825222] Call Trace:
+[5353358.825223]  <TASK>
+[5353358.825224]  ? show_trace_log_lvl+0x1c4/0x2df
+[5353358.825229]  ? show_trace_log_lvl+0x1c4/0x2df
+[5353358.825232]  ? sg_copy_buffer+0xc8/0x110
+[5353358.825236]  ? __die_body.cold+0x8/0xd
+[5353358.825238]  ? page_fault_oops+0x134/0x170
+[5353358.825242]  ? kernelmode_fixup_or_oops+0x84/0x110
+[5353358.825244]  ? exc_page_fault+0xa8/0x150
+[5353358.825247]  ? asm_exc_page_fault+0x22/0x30
+[5353358.825252]  ? memcpy_erms+0x6/0x10
+[5353358.825253]  sg_copy_buffer+0xc8/0x110
+[5353358.825259]  qla2x00_process_vendor_specific+0x652/0x1320 [qla2xxx]
+[5353358.825317]  qla24xx_bsg_request+0x1b2/0x2d0 [qla2xxx]
 
-Fix this by holding the device_lock around the read operation.
+Most routines in qla_bsg.c call bsg_done() only for success cases.
+However a few invoke it for failure case as well leading to a double
+free. Validate before calling bsg_done().
 
-Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20251202174438.12658-1-hanguidong02@gmail.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
+Link: https://patch.msgid.link/20251210101604.431868-12-njavali@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -199,8 +199,12 @@ static ssize_t driver_override_show(stru
- 				    struct device_attribute *attr, char *buf)
- {
- 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
-+	ssize_t len;
- 
--	return sysfs_emit(buf, "%s\n", mc_dev->driver_override);
-+	device_lock(dev);
-+	len = sysfs_emit(buf, "%s\n", mc_dev->driver_override);
-+	device_unlock(dev);
-+	return len;
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -1546,8 +1546,9 @@ qla2x00_update_optrom(struct bsg_job *bs
+ 	ha->optrom_buffer = NULL;
+ 	ha->optrom_state = QLA_SWAITING;
+ 	mutex_unlock(&ha->optrom_mutex);
+-	bsg_job_done(bsg_job, bsg_reply->result,
+-		       bsg_reply->reply_payload_rcv_len);
++	if (!rval)
++		bsg_job_done(bsg_job, bsg_reply->result,
++			     bsg_reply->reply_payload_rcv_len);
+ 	return rval;
  }
- static DEVICE_ATTR_RW(driver_override);
  
+@@ -2525,8 +2526,9 @@ qla2x00_manage_host_stats(struct bsg_job
+ 				    sizeof(struct ql_vnd_mng_host_stats_resp));
+ 
+ 	bsg_reply->result = DID_OK;
+-	bsg_job_done(bsg_job, bsg_reply->result,
+-		     bsg_reply->reply_payload_rcv_len);
++	if (!ret)
++		bsg_job_done(bsg_job, bsg_reply->result,
++			     bsg_reply->reply_payload_rcv_len);
+ 
+ 	return ret;
+ }
+@@ -2615,8 +2617,9 @@ qla2x00_get_host_stats(struct bsg_job *b
+ 							       bsg_job->reply_payload.sg_cnt,
+ 							       data, response_len);
+ 	bsg_reply->result = DID_OK;
+-	bsg_job_done(bsg_job, bsg_reply->result,
+-		     bsg_reply->reply_payload_rcv_len);
++	if (!ret)
++		bsg_job_done(bsg_job, bsg_reply->result,
++			     bsg_reply->reply_payload_rcv_len);
+ 
+ 	kfree(data);
+ host_stat_out:
+@@ -2715,8 +2718,9 @@ reply:
+ 				    bsg_job->reply_payload.sg_cnt, data,
+ 				    response_len);
+ 	bsg_reply->result = DID_OK;
+-	bsg_job_done(bsg_job, bsg_reply->result,
+-		     bsg_reply->reply_payload_rcv_len);
++	if (!ret)
++		bsg_job_done(bsg_job, bsg_reply->result,
++			     bsg_reply->reply_payload_rcv_len);
+ 
+ tgt_stat_out:
+ 	kfree(data);
+@@ -2777,8 +2781,9 @@ qla2x00_manage_host_port(struct bsg_job
+ 				    bsg_job->reply_payload.sg_cnt, &rsp_data,
+ 				    sizeof(struct ql_vnd_mng_host_port_resp));
+ 	bsg_reply->result = DID_OK;
+-	bsg_job_done(bsg_job, bsg_reply->result,
+-		     bsg_reply->reply_payload_rcv_len);
++	if (!ret)
++		bsg_job_done(bsg_job, bsg_reply->result,
++			     bsg_reply->reply_payload_rcv_len);
+ 
+ 	return ret;
+ }
 
 
