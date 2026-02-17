@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0C329A1;
-	Tue, 17 Feb 2026 20:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42584266581;
+	Tue, 17 Feb 2026 20:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361445; cv=none; b=E2PG6yo8P2BhuaX8QwV6Xfbv3wZAjzknKIQaGYkkP1gy7N4fHwR+bT/oXKxjY89F9yPmrRxSkIxIU2xnBZdUWatR1EyF2OVs22BLnTPu9PCkhKAj9759Q8w6VCG5PFUcL+tPatS03+oFZwQJxqFmUNPgBAYDvXMmCuMEHsp8DLA=
+	t=1771361449; cv=none; b=etwe/4F3KJdXPhu3WxpgBeHVaABodkAgbQLWlI6Eko67A2BBgsEBuYidIAd8czi1WiaK7mQNSFU5MlCAL0D4LSdw0Zo8espDCAgQlBUQLhzQj5Q5mFUIPoKrWdzFj6DdB2FC3yZIEHAxTeV+a1hKxmcsihI26+kvy9HCJK3OwRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361445; c=relaxed/simple;
-	bh=uROoIfET2fK7HuYXibIUhLvRcMdBeVf7WXOytRwfQlI=;
+	s=arc-20240116; t=1771361449; c=relaxed/simple;
+	bh=EASunKS68P8Xf5tDVhZmrpeawRcMKjNSCYJKxbpNIq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRSXPwDFPZesYEYW2yF0ahTj4bVYU/WjNq20oHjeDrYG0tadkHWuR2awW+V8nmadqIUCwrXTi3gNOjWNWoxbPfMLnZHhZfoRMm5jiqXpaUBLfWwXmQCtcvxO1EpjrtPtnSaP9tuAc3XhPeTMT+sp4hfFserxA1kzy4yTook08pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iW5QP2Tv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QxbSgZDjTU/grbFyKIVRJUJZwWc+Vbc8Yf+x/GYFMKlkiqmuKtpAwwhQvKwAaZrm9uuo0OqOK/QQmQnE5jAZTj8CR5MaxvE54oJB1eyZXKE+Xqezae8aMTPs3le3eUIGuFVxxGasTteSiZVXzzUnPGLSBpgGgaldboc0lWv+WLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVAYuFIL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iW5QP2Tv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1367BC4CEF7;
-	Tue, 17 Feb 2026 20:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVAYuFIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52ADC4CEF7;
+	Tue, 17 Feb 2026 20:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361445;
-	bh=uROoIfET2fK7HuYXibIUhLvRcMdBeVf7WXOytRwfQlI=;
+	s=korg; t=1771361449;
+	bh=EASunKS68P8Xf5tDVhZmrpeawRcMKjNSCYJKxbpNIq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iW5QP2TvI2/gQedbwv8x+zY3la57ggDBkwdXRhoGDKX4VwKVHskKMTnhdJPAiVwth
-	 LL5srxeiJkPG9D/q0K99oD5or9CdlqmArH4LS9SgAM4wxju5DErvsAjMxzSuZWj1hY
-	 WSiGYYDxT3z5GhMR3RZHD1YA5xTl2HhF8ykJ6HW4=
+	b=eVAYuFILbKKHvcFEgIV42eyi5i2DP+OoQ0Y6TDbsu5H4xJTeUIg2zMHnHMyPMUvtA
+	 7k6PgRNJAadYWFP67KzjzC312LO6ICUxGvt52zfNrsbR17Tohm4RbCK577wft6wyig
+	 /jyOjOeKU9sQCNS6NYcyB9MVvTxgSNW3q/mXbDb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 19/43] ASoC: cs42l43: Correct handling of 3-pole jack load detection
-Date: Tue, 17 Feb 2026 21:31:59 +0100
-Message-ID: <20260217200007.204425917@linuxfoundation.org>
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.18 02/43] rust: device: fix broken intra-doc links
+Date: Tue, 17 Feb 2026 21:31:42 +0100
+Message-ID: <20260217200006.565592619@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200006.470920131@linuxfoundation.org>
 References: <20260217200006.470920131@linuxfoundation.org>
@@ -51,96 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-[ Upstream commit e77a4081d7e324dfa876a9560b2a78969446ba82 ]
+commit a9a42f0754b6c69525612d678b73da790e28b9fd upstream.
 
-The load detection process for 3-pole jacks requires slightly
-updated reference values to ensure an accurate result. Update
-the code to apply different tunings for the 3-pole and 4-pole
-cases. This also updates the thresholds overall so update the
-relevant comments to match.
+The `pci` module is conditional on CONFIG_PCI. When it's disabled, the
+intra-doc link to `pci::Device` causes rustdoc warnings:
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260130150927.2964664-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+warning: unresolved link to `kernel::pci::Device`
+   --> rust/kernel/device.rs:163:22
+    |
+163 | /// [`pci::Device`]: kernel::pci::Device
+    |                      ^^^^^^^^^^^^^^^^^^^ no item named `pci` in module `kernel`
+    |
+    = note: `#[warn(rustdoc::broken_intra_doc_links)]` on by default
+
+Fix this by making the documentation conditional on CONFIG_PCI.
+
+Fixes: d6e26c1ae4a6 ("device: rust: expand documentation for Device")
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Reviewed-by: Dirk Behme <dirk.behme@de.bosch.com>
+Link: https://patch.msgid.link/20251231045728.1912024-2-fujita.tomonori@gmail.com
+[ Keep the "such as" part indicating a list of examples; fix typos in
+  commit message. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs42l43-jack.c | 37 +++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
+ rust/kernel/device.rs |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
-index 867e23d4fb8d8..744488f371ea4 100644
---- a/sound/soc/codecs/cs42l43-jack.c
-+++ b/sound/soc/codecs/cs42l43-jack.c
-@@ -496,7 +496,23 @@ void cs42l43_bias_sense_timeout(struct work_struct *work)
- 	pm_runtime_put_autosuspend(priv->dev);
- }
- 
--static void cs42l43_start_load_detect(struct cs42l43_codec *priv)
-+static const struct reg_sequence cs42l43_3pole_patch[] = {
-+	{ 0x4000,	0x00000055 },
-+	{ 0x4000,	0x000000AA },
-+	{ 0x17420,	0x8500F300 },
-+	{ 0x17424,	0x36003E00 },
-+	{ 0x4000,	0x00000000 },
-+};
-+
-+static const struct reg_sequence cs42l43_4pole_patch[] = {
-+	{ 0x4000,	0x00000055 },
-+	{ 0x4000,	0x000000AA },
-+	{ 0x17420,	0x7800E600 },
-+	{ 0x17424,	0x36003800 },
-+	{ 0x4000,	0x00000000 },
-+};
-+
-+static void cs42l43_start_load_detect(struct cs42l43_codec *priv, bool mic)
- {
- 	struct cs42l43 *cs42l43 = priv->core;
- 
-@@ -520,6 +536,15 @@ static void cs42l43_start_load_detect(struct cs42l43_codec *priv)
- 			dev_err(priv->dev, "Load detect HP power down timed out\n");
- 	}
- 
-+	if (mic)
-+		regmap_multi_reg_write_bypassed(cs42l43->regmap,
-+						cs42l43_4pole_patch,
-+						ARRAY_SIZE(cs42l43_4pole_patch));
-+	else
-+		regmap_multi_reg_write_bypassed(cs42l43->regmap,
-+						cs42l43_3pole_patch,
-+						ARRAY_SIZE(cs42l43_3pole_patch));
-+
- 	regmap_update_bits(cs42l43->regmap, CS42L43_BLOCK_EN3,
- 			   CS42L43_ADC1_EN_MASK | CS42L43_ADC2_EN_MASK, 0);
- 	regmap_update_bits(cs42l43->regmap, CS42L43_DACCNFG2, CS42L43_HP_HPF_EN_MASK, 0);
-@@ -598,7 +623,7 @@ static int cs42l43_run_load_detect(struct cs42l43_codec *priv, bool mic)
- 
- 	reinit_completion(&priv->load_detect);
- 
--	cs42l43_start_load_detect(priv);
-+	cs42l43_start_load_detect(priv, mic);
- 	time_left = wait_for_completion_timeout(&priv->load_detect,
- 						msecs_to_jiffies(CS42L43_LOAD_TIMEOUT_MS));
- 	cs42l43_stop_load_detect(priv);
-@@ -622,11 +647,11 @@ static int cs42l43_run_load_detect(struct cs42l43_codec *priv, bool mic)
- 	}
- 
- 	switch (val & CS42L43_AMP3_RES_DET_MASK) {
--	case 0x0: // low impedance
--	case 0x1: // high impedance
-+	case 0x0: // < 22 Ohm impedance
-+	case 0x1: // < 150 Ohm impedance
-+	case 0x2: // < 1000 Ohm impedance
- 		return CS42L43_JACK_HEADPHONE;
--	case 0x2: // lineout
--	case 0x3: // Open circuit
-+	case 0x3: // > 1000 Ohm impedance
- 		return CS42L43_JACK_LINEOUT;
- 	default:
- 		return -EINVAL;
--- 
-2.51.0
-
+--- a/rust/kernel/device.rs
++++ b/rust/kernel/device.rs
+@@ -62,8 +62,9 @@ pub mod property;
+ ///
+ /// # Implementing Bus Devices
+ ///
+-/// This section provides a guideline to implement bus specific devices, such as [`pci::Device`] or
+-/// [`platform::Device`].
++/// This section provides a guideline to implement bus specific devices, such as:
++#[cfg_attr(CONFIG_PCI, doc = "* [`pci::Device`](kernel::pci::Device)")]
++/// * [`platform::Device`]
+ ///
+ /// A bus specific device should be defined as follows.
+ ///
+@@ -155,7 +156,6 @@ pub mod property;
+ ///
+ /// [`AlwaysRefCounted`]: kernel::types::AlwaysRefCounted
+ /// [`impl_device_context_deref`]: kernel::impl_device_context_deref
+-/// [`pci::Device`]: kernel::pci::Device
+ /// [`platform::Device`]: kernel::platform::Device
+ #[repr(transparent)]
+ pub struct Device<Ctx: DeviceContext = Normal>(Opaque<bindings::device>, PhantomData<Ctx>);
 
 
