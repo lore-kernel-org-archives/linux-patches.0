@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F7A2773E4;
-	Tue, 17 Feb 2026 20:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F8D266581;
+	Tue, 17 Feb 2026 20:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361234; cv=none; b=kwjsdOMzV/s7rZ/7LwaBXp2BQ4WO37jsur1amq8bJ8UYEfeVtxaROr/QqCx06RzvPcSi2yErAg+6NQ/VVaqJVd3gexrlHqoJ66qXniHghHRJULHJRNWWuIlvV0pNNN1fQrqEBBWNYSpCbuLjf6H+TZE0IR4HrrPuVIfED8JgpZE=
+	t=1771361237; cv=none; b=Cm50pk+SzRoM2FutTCT9h/vPfnP56yZt/BBdI5wfvowp7GEaMdN6yemMjlnLRgC9PVxkZb7BfiXJUQKtiQnPq121Ghq/aokPHqaux+5crEtxO9tiUy8MnNE+EI/hkq2TKWUtzTMTC54XODkjrNDJcTE3nXd8gnUXDG4+yS/RR7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361234; c=relaxed/simple;
-	bh=ut2YQMkk6OLJjg6nDnyLVn93uVkgah8tuTb5U+Tz+00=;
+	s=arc-20240116; t=1771361237; c=relaxed/simple;
+	bh=ZhcE3WBzT6oOl+Yzl9dqfY62cZ/J8zKoZF4nsaTWfZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gSaf0l256teV8kJdPUdZI/Y+NO9ip8N0KNxFYsJhPQ+uRmop/a2Hmw8fpohUO3EQ14cvIEf+g2/0fbcld4xPnpvCCerEADAbsRzd/2HHVeHwqlZqL1EWxSopjyK2d5qhG8mMuS3bp5z7O5KYXz/9eJcI0lRWMLV6QXXOQs35o/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NiF1KRN+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0+XD/lQs8IjM1gB1eK3QWbQwUJS7+O7rKtk+rvu+jgIUdxwVyFzApTpCesiitXS28N6PtL06XM/EcWwLEkBUr0sZh4GUdJFY8BNDlCmMMRfOonzGRPBD1cgswaE+etLYh8WD37VDx+XS/8+Jb0Nflvbm8Rh/KG/Q1itMZGN2Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdYWGzA3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NiF1KRN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21752C4CEF7;
-	Tue, 17 Feb 2026 20:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdYWGzA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A90C4CEF7;
+	Tue, 17 Feb 2026 20:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361234;
-	bh=ut2YQMkk6OLJjg6nDnyLVn93uVkgah8tuTb5U+Tz+00=;
+	s=korg; t=1771361237;
+	bh=ZhcE3WBzT6oOl+Yzl9dqfY62cZ/J8zKoZF4nsaTWfZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NiF1KRN+IoHYskwmh7We5ZTT9L1NkXSj0gDcNiOfe6klUakJcd9xHBrtYViuEFX9v
-	 D3jei9FJzLeEV8/0BkM/Onv7NuTYey3M8xdZsyl8saXy0yuwybsm99AFZbNMonZiAJ
-	 donqQfF0DIApKoZHMO7lVk6VN2cj0NiiFjovRLE0=
+	b=QdYWGzA3cNpuzxmHt7RHfxFBAAl7zxpUc0uU5XmMKb9QapPnb+VPi5jw9gqXVDxfj
+	 skFAgdyoJBNJtOK5jPBmXSBLTb+mkkV3DMgyr+GsqK7fZdRImApsQqdGUoAB4RCrbc
+	 fjxK6MPKrAK8MplfEth/rrr1n6FI+gfuRU59hMt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 41/64] selftests: mptcp: pm: ensure unknown flags are ignored
-Date: Tue, 17 Feb 2026 21:31:37 +0100
-Message-ID: <20260217200009.044218946@linuxfoundation.org>
+Subject: [PATCH 6.1 42/64] mptcp: schedule rtx timer only after pushing data
+Date: Tue, 17 Feb 2026 21:31:38 +0100
+Message-ID: <20260217200009.081605431@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -51,87 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 29f4801e9c8dfd12bdcb33b61a6ac479c7162bd7 upstream.
+commit 2ea6190f42d0416a4310e60a7fcb0b49fcbbd4fb upstream.
 
-This validates the previous commit: the userspace can set unknown flags
--- the 7th bit is currently unused -- without errors, but only the
-supported ones are printed in the endpoints dumps.
+The MPTCP protocol usually schedule the retransmission timer only
+when there is some chances for such retransmissions to happen.
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
+With a notable exception: __mptcp_push_pending() currently schedule
+such timer unconditionally, potentially leading to unnecessary rtx
+timer expiration.
 
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
+The issue is present since the blamed commit below but become easily
+reproducible after commit 27b0e701d387 ("mptcp: drop bogus optimization
+in __mptcp_check_push()")
+
+Fixes: 33d41c9cd74c ("mptcp: more accurate timeout")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-2-9e4781a6c1b8@kernel.org
+Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-3-9e4781a6c1b8@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in pm_netlink.sh, because some refactoring have been done
-  later on: commit 0d16ed0c2e74 ("selftests: mptcp: add
-  {get,format}_endpoint(s) helpers") and commit c99d57d0007a
-  ("selftests: mptcp: use pm_nl endpoint ops") are not in this version.
-  The same operation can still be done at the same place, without using
-  the new helpers.
-  Also, commit 1dc88d241f92 ("selftests: mptcp: pm_nl_ctl: always look
-  for errors") is not in this version, and create a conflict in the
-  context which is not related to the modification here. ]
+[ Conflicts in protocol.c, because commit 0fa1b3783a17 ("mptcp: use
+  get_send wrapper") is not in this version, and is changing the
+  context. The same modification can still be applied. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/pm_netlink.sh |    4 ++++
- tools/testing/selftests/net/mptcp/pm_nl_ctl.c   |   11 +++++++++++
- 2 files changed, 15 insertions(+)
+ net/mptcp/protocol.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
-+++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
-@@ -124,6 +124,10 @@ id 8 flags signal 10.0.1.8" "id limit"
- ip netns exec $ns1 ./pm_nl_ctl flush
- check "ip netns exec $ns1 ./pm_nl_ctl dump" "" "flush addrs"
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1666,7 +1666,7 @@ void __mptcp_push_pending(struct sock *s
+ 	struct mptcp_sendmsg_info info = {
+ 				.flags = flags,
+ 	};
+-	bool do_check_data_fin = false;
++	bool copied = false;
+ 	struct mptcp_data_frag *dfrag;
+ 	int len;
  
-+ip netns exec $ns1 ./pm_nl_ctl add 10.0.1.1 flags unknown
-+check "ip netns exec $ns1 ./pm_nl_ctl dump" "id 1 flags  10.0.1.1" "ignore unknown flags"
-+ip netns exec $ns1 ./pm_nl_ctl flush
-+
- ip netns exec $ns1 ./pm_nl_ctl limits 9 1
- check "ip netns exec $ns1 ./pm_nl_ctl limits" "$default_limits" "rcv addrs above hard limit"
- 
---- a/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-+++ b/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-@@ -29,6 +29,8 @@
- #define IPPROTO_MPTCP 262
- #endif
- 
-+#define MPTCP_PM_ADDR_FLAG_UNKNOWN _BITUL(7)
-+
- static void syntax(char *argv[])
- {
- 	fprintf(stderr, "%s add|ann|rem|csf|dsf|get|set|del|flush|dump|events|listen|accept [<args>]\n", argv[0]);
-@@ -814,6 +816,8 @@ int add_addr(int fd, int pm_family, int
- 					flags |= MPTCP_PM_ADDR_FLAG_BACKUP;
- 				else if (!strcmp(tok, "fullmesh"))
- 					flags |= MPTCP_PM_ADDR_FLAG_FULLMESH;
-+				else if (!strcmp(tok, "unknown"))
-+					flags |= MPTCP_PM_ADDR_FLAG_UNKNOWN;
- 				else
- 					error(1, errno,
- 					      "unknown flag %s", argv[arg]);
-@@ -1018,6 +1022,13 @@ static void print_addr(struct rtattr *at
- 				if (flags)
- 					printf(",");
+@@ -1703,7 +1703,7 @@ void __mptcp_push_pending(struct sock *s
+ 				goto out;
  			}
-+
-+			if (flags & MPTCP_PM_ADDR_FLAG_UNKNOWN) {
-+				printf("unknown");
-+				flags &= ~MPTCP_PM_ADDR_FLAG_UNKNOWN;
-+				if (flags)
-+					printf(",");
-+			}
  
- 			/* bump unknown flags, if any */
- 			if (flags)
+-			do_check_data_fin = true;
++			copied = true;
+ 			info.sent += ret;
+ 			len -= ret;
+ 
+@@ -1717,11 +1717,14 @@ void __mptcp_push_pending(struct sock *s
+ 		mptcp_push_release(ssk, &info);
+ 
+ out:
+-	/* ensure the rtx timer is running */
+-	if (!mptcp_rtx_timer_pending(sk))
+-		mptcp_reset_rtx_timer(sk);
+-	if (do_check_data_fin)
++	/* Avoid scheduling the rtx timer if no data has been pushed; the timer
++	 * will be updated on positive acks by __mptcp_cleanup_una().
++	 */
++	if (copied) {
++		if (!mptcp_rtx_timer_pending(sk))
++			mptcp_reset_rtx_timer(sk);
+ 		mptcp_check_send_data_fin(sk);
++	}
+ }
+ 
+ static void __mptcp_subflow_push_pending(struct sock *sk, struct sock *ssk, bool first)
 
 
