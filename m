@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985F02D594F;
-	Tue, 17 Feb 2026 20:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C466929A1;
+	Tue, 17 Feb 2026 20:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361490; cv=none; b=JbvwK6gHcyNBrY/WblIKeSHrwc+F6Itx98YY0EmKbEWb92VWGjuoYmGpI1PKIYO36aldWs/ZiP6ZzXPZmx/FF7iJnbtdCW+xGMvsG1e4KalyE28aj/ARt6no382xtU/9sG45RmvTZ4vEOIybKBsgg61g6+CG3YF6nL/T6DeE6/4=
+	t=1771361493; cv=none; b=k7e8y/2CENif//8u1zJS0jl2fGAmvFjvFDgTy8atLJaaWwxdcYZjrdeboMkr0P6jBcMDa/DgZ5/RJ//rYA5dvBcsCR9dxt8LXEnua9eJOg5v6KKXUw/4uXdoxs7v8cEZdJvXOLuENvMOxTXinApnT88py2/rbKjnWBRV0DBBREM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361490; c=relaxed/simple;
-	bh=ebHcVHv2kKy3SMQxhaPZbeLUfF7g8woylB2mmKTHb/s=;
+	s=arc-20240116; t=1771361493; c=relaxed/simple;
+	bh=KUoF+ByEwtCSyEpOp5csEQUQlqY7znbosPuc5NUxajc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pr3BaZq+FUH3fTTSeEtGFLM6jo00Czg41G2MhTTC7MuwIuhcFHiwn94/bwtk15htqAeeWAWpN2tZ1tyzImpCez76nxOLdGf64yONdTJ/bZOEG7fHTCvKxKQaeR1OJI0+kavbkVKlJnj0TYiQ1ILfHpLQhnKtOocJf171d//Tc4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxRy1Fko; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YcooU3Xqiz/hygk3XlGNIwEJ3oylE9k0BnG6EUa2LWXheC6DeYm/Ec8dkVvJqnt82cwP6EMFON5FX6khJFoOMhfJpTf3tJZK6prxv8bxayFO2hgOdDPtJs78GfshXetbkBnFp0vOR2gUgLFDfPLuD3lnKQm79s+e0kM+rFjAezA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bllCpPTA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxRy1Fko"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B611C4CEF7;
-	Tue, 17 Feb 2026 20:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bllCpPTA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C8EC4CEF7;
+	Tue, 17 Feb 2026 20:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361490;
-	bh=ebHcVHv2kKy3SMQxhaPZbeLUfF7g8woylB2mmKTHb/s=;
+	s=korg; t=1771361493;
+	bh=KUoF+ByEwtCSyEpOp5csEQUQlqY7znbosPuc5NUxajc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxRy1Fko+LrJ1zBww7aqR0Dtv/1jS+kIURV0TAw+1OHhLs419gZJtwH9VHT8E5r/X
-	 9ahNGAc1cyRIWOEGjY3aeCQrexT+5+lZD5ulYulsdeVc7vfcAk/3AvwNL1xk+oMYr3
-	 /brfNGjCPZDrjEom2yHefAgEuP2ZQ507Kk/3/sCk=
+	b=bllCpPTA4ZWIDsdYF6dy5K87/GrTEV8PKlICbQJNWs/anMBROaM59bcBnvBCXwZWp
+	 S+hFc9VADXo6Ou+0SEpXyMPl/Fb0OK2q8W1IyLiPbHAWTaLapA9vMy9Hcm89orFvju
+	 30VQwVo+khmIODT8TCy7V/75/sJvZoRiM1ZFVQvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.18 30/43] fbdev: rivafb: fix divide error in nv3_arb()
-Date: Tue, 17 Feb 2026 21:32:10 +0100
-Message-ID: <20260217200007.626194169@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.18 04/43] rust: driver: fix broken intra-doc links to example driver types
+Date: Tue, 17 Feb 2026 21:31:44 +0100
+Message-ID: <20260217200006.639674811@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200006.470920131@linuxfoundation.org>
 References: <20260217200006.470920131@linuxfoundation.org>
@@ -50,65 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 0209e21e3c372fa2da04c39214bec0b64e4eb5f4 upstream.
+commit 4c9f6a782f6078dc94450fcb22e65d520bfa0775 upstream.
 
-A userspace program can trigger the RIVA NV3 arbitration code by calling
-the FBIOPUT_VSCREENINFO ioctl on /dev/fb*. When doing so, the driver
-recomputes FIFO arbitration parameters in nv3_arb(), using state->mclk_khz
-(derived from the PRAMDAC MCLK PLL) as a divisor without validating it
-first.
+The `auxiliary` and `pci` modules are conditional on
+`CONFIG_AUXILIARY_BUS` and `CONFIG_PCI` respectively. When these are
+disabled, the intra-doc links to `auxiliary::Driver` and `pci::Driver`
+break, causing rustdoc warnings (or errors with `-D warnings`).
 
-In a normal setup, state->mclk_khz is provided by the real hardware and is
-non-zero. However, an attacker can construct a malicious or misconfigured
-device (e.g. a crafted/emulated PCI device) that exposes a bogus PLL
-configuration, causing state->mclk_khz to become zero.  Once
-nv3_get_param() calls nv3_arb(), the division by state->mclk_khz in the gns
-calculation causes a divide error and crashes the kernel.
+error: unresolved link to `kernel::auxiliary::Driver`
+  --> rust/kernel/driver.rs:82:28
+   |
+82 | //! [`auxiliary::Driver`]: kernel::auxiliary::Driver
+   |                            ^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `auxiliary` in module `kernel`
 
-Fix this by checking whether state->mclk_khz is zero and bailing out before
-doing the division.
+Fix this by making the documentation for these examples conditional on
+the corresponding configuration options.
 
-The following log reveals it:
-
-rivafb: setting virtual Y resolution to 2184
-divide error: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 0 PID: 2187 Comm: syz-executor.0 Not tainted 5.18.0-rc1+ #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.0-59-gc9ba5276e321-prebuilt.qemu.org 04/01/2014
-RIP: 0010:nv3_arb drivers/video/fbdev/riva/riva_hw.c:439 [inline]
-RIP: 0010:nv3_get_param+0x3ab/0x13b0 drivers/video/fbdev/riva/riva_hw.c:546
-Call Trace:
-  nv3CalcArbitration.constprop.0+0x255/0x460 drivers/video/fbdev/riva/riva_hw.c:603
-  nv3UpdateArbitrationSettings drivers/video/fbdev/riva/riva_hw.c:637 [inline]
-  CalcStateExt+0x447/0x1b90 drivers/video/fbdev/riva/riva_hw.c:1246
-  riva_load_video_mode+0x8a9/0xea0 drivers/video/fbdev/riva/fbdev.c:779
-  rivafb_set_par+0xc0/0x5f0 drivers/video/fbdev/riva/fbdev.c:1196
-  fb_set_var+0x604/0xeb0 drivers/video/fbdev/core/fbmem.c:1033
-  do_fb_ioctl+0x234/0x670 drivers/video/fbdev/core/fbmem.c:1109
-  fb_ioctl+0xdd/0x130 drivers/video/fbdev/core/fbmem.c:1188
-  __x64_sys_ioctl+0x122/0x190 fs/ioctl.c:856
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 970a7c68788e ("driver: rust: expand documentation for driver infrastructure")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Reported-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Closes: https://lore.kernel.org/rust-for-linux/20251209.151817.744108529426448097.fujita.tomonori@gmail.com/
+Link: https://patch.msgid.link/20251227-driver-types-v1-1-1916154fbe5e@google.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/riva/riva_hw.c |    3 +++
- 1 file changed, 3 insertions(+)
+ rust/kernel/driver.rs |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/video/fbdev/riva/riva_hw.c
-+++ b/drivers/video/fbdev/riva/riva_hw.c
-@@ -436,6 +436,9 @@ static char nv3_arb(nv3_fifo_info * res_
-     vmisses = 2;
-     eburst_size = state->memory_width * 1;
-     mburst_size = 32;
-+    if (!state->mclk_khz)
-+	return (0);
-+
-     gns = 1000000 * (gmisses*state->mem_page_miss + state->mem_latency)/state->mclk_khz;
-     ainfo->by_gfacc = gns*ainfo->gdrain_rate/1000000;
-     ainfo->wcmocc = 0;
+--- a/rust/kernel/driver.rs
++++ b/rust/kernel/driver.rs
+@@ -33,7 +33,14 @@
+ //! }
+ //! ```
+ //!
+-//! For specific examples see [`auxiliary::Driver`], [`pci::Driver`] and [`platform::Driver`].
++//! For specific examples see:
++//!
++//! * [`platform::Driver`](kernel::platform::Driver)
++#![cfg_attr(
++    CONFIG_AUXILIARY_BUS,
++    doc = "* [`auxiliary::Driver`](kernel::auxiliary::Driver)"
++)]
++#![cfg_attr(CONFIG_PCI, doc = "* [`pci::Driver`](kernel::pci::Driver)")]
+ //!
+ //! The `probe()` callback should return a `Result<Pin<KBox<Self>>>`, i.e. the driver's private
+ //! data. The bus abstraction should store the pointer in the corresponding bus device. The generic
+@@ -79,7 +86,6 @@
+ //!
+ //! For this purpose the generic infrastructure in [`device_id`] should be used.
+ //!
+-//! [`auxiliary::Driver`]: kernel::auxiliary::Driver
+ //! [`Core`]: device::Core
+ //! [`Device`]: device::Device
+ //! [`Device<Core>`]: device::Device<device::Core>
+@@ -87,8 +93,6 @@
+ //! [`DeviceContext`]: device::DeviceContext
+ //! [`device_id`]: kernel::device_id
+ //! [`module_driver`]: kernel::module_driver
+-//! [`pci::Driver`]: kernel::pci::Driver
+-//! [`platform::Driver`]: kernel::platform::Driver
+ 
+ use crate::error::{Error, Result};
+ use crate::{acpi, device, of, str::CStr, try_pin_init, types::Opaque, ThisModule};
 
 
