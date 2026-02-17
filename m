@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6544F286D4D;
-	Tue, 17 Feb 2026 20:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1225286D4D;
+	Tue, 17 Feb 2026 20:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360848; cv=none; b=SA7jDsRGf3+xbf7YUYx6iO5YmtBaxGl43vxILC2yE89Ub8Wzmkq2VAWba8Pj9bgoWUrHh6ymUskgmByFPcII6TLHFe6qWItZyWfJxvKHjs3mRy+VzXN3fQANBbyiApr/Y83CRKToUy51RF3McY7vqnU9L3TuEwt7HCH31lVFdvQ=
+	t=1771360852; cv=none; b=OxrbydSwRpBf2V35NwrLQY/98x3xgf9KIVBkQc/jwCZs/cAGNEBUTKaKH+juDFscODrdh1wzcRToKOkxD1Oxs+PEE8l88/ioCGIpNj8GHNnspdhkeT4Tm9m0l7mmTf1pt48uz0dPL81cMiRg7ag9yGHVDWkecSyKvDuCxwidnrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360848; c=relaxed/simple;
-	bh=n+MfHyVGVvHJ83FRejoTfdLMkSfQE6PXuNZiY8LK2Hg=;
+	s=arc-20240116; t=1771360852; c=relaxed/simple;
+	bh=fU0uyYb/Rwsdk80sRpFdaC9gjm/ZEhw46wWUSgjgyNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VA/tmztBEYkrgAz9GpNnxRtSdTPDQIX2M6ezncLgQv8L4KZbaSc2JiWHlEVt3EEdBUZA+18u7a9dlOi2YfHN0pZuo3G407ltxtCVGd1g6sYmwQxtm/HOTWA6uTSo9bFkYmedvkVBkTLvVMBElb9YkrvjewnMXydPMyofFAPynQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMb42F03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dr17wwL3rRq1AzObPnLn+LJP7aa+Y5NFrCuyuAOwOP2ReXXaWFW8rungyVjsWh4fDRhExnl6Fa3Vw/dl2EGrJGlP46xnGeukugwki1PBmLfQ47CiNZZbgh2s0epljqTgxttRfp6+AHLPBK7xawqiar9WAVc3K81dnWS8OjnwjhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eU+Oz+93; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMb42F03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA42C4CEF7;
-	Tue, 17 Feb 2026 20:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eU+Oz+93"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F8DC4CEF7;
+	Tue, 17 Feb 2026 20:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360848;
-	bh=n+MfHyVGVvHJ83FRejoTfdLMkSfQE6PXuNZiY8LK2Hg=;
+	s=korg; t=1771360851;
+	bh=fU0uyYb/Rwsdk80sRpFdaC9gjm/ZEhw46wWUSgjgyNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMb42F03IVyV28MQfHxTwNZ9Gmf3HNcxSPAgt5IbLeBxuR4cePxZX7NXUnW1ppgZh
-	 2R97d8f2Ja5IuOwZHdoIZDraR0WzhyrCg9DyxMG0FdrSz6NF5RUh1+7apnSH3ZajKP
-	 IVS6q6Xs95PDKSamTX0SCygdWGonNC9X19UEC4eU=
+	b=eU+Oz+93OPDQ0zyIUiCjXLSUWL3MHuA60YQl3IirmjNd1zXC6voO1lUYE6VTnwqBO
+	 M3S73LqSDHQygzXeunq3M2dRY6b/DL+LFZd167ANLEZxcazjerC9o5HYL9duc/MTsV
+	 a3Eh28FPcZpBTqSnQGrnKk+6VkrAUlZEUvcZSYt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 05/39] bus: fsl-mc: fix use-after-free in driver_override_show()
-Date: Tue, 17 Feb 2026 21:30:27 +0100
-Message-ID: <20260217200004.434484449@linuxfoundation.org>
+	stable@kernel.org,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 32/39] f2fs: fix to add gc count stat in f2fs_gc_range
+Date: Tue, 17 Feb 2026 21:30:54 +0100
+Message-ID: <20260217200005.443068543@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -52,47 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit 148891e95014b5dc5878acefa57f1940c281c431 ]
+commit 761dac9073cd67d4705a94cd1af674945a117f4c upstream.
 
-The driver_override_show() function reads the driver_override string
-without holding the device_lock. However, driver_override_store() uses
-driver_set_override(), which modifies and frees the string while holding
-the device_lock.
+It missed the stat count in f2fs_gc_range.
 
-This can result in a concurrent use-after-free if the string is freed
-by the store function while being read by the show function.
-
-Fix this by holding the device_lock around the read operation.
-
-Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20251202174438.12658-1-hanguidong02@gmail.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Fixes: 9bf1dcbdfdc8 ("f2fs: fix to account gc stats correctly")
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/f2fs/gc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -201,8 +201,12 @@ static ssize_t driver_override_show(stru
- 				    struct device_attribute *attr, char *buf)
- {
- 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
-+	ssize_t len;
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1998,6 +1998,7 @@ int f2fs_gc_range(struct f2fs_sb_info *s
+ 	unsigned int segno;
+ 	unsigned int gc_secs = dry_run_sections;
  
--	return sysfs_emit(buf, "%s\n", mc_dev->driver_override);
-+	device_lock(dev);
-+	len = sysfs_emit(buf, "%s\n", mc_dev->driver_override);
-+	device_unlock(dev);
-+	return len;
- }
- static DEVICE_ATTR_RW(driver_override);
- 
++	stat_inc_gc_call_count(sbi, FOREGROUND);
+ 	for (segno = start_seg; segno <= end_seg; segno += SEGS_PER_SEC(sbi)) {
+ 		struct gc_inode_list gc_list = {
+ 			.ilist = LIST_HEAD_INIT(gc_list.ilist),
 
 
