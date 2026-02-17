@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B935736F431;
-	Tue, 17 Feb 2026 20:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496072BD031;
+	Tue, 17 Feb 2026 20:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360817; cv=none; b=VI9bLKBY6NdSOg8ffciBdKbmHXG4d7i/XJP4iFs1bTLF97wt6kGm4nMB/Gljc/PIM6VYi2CgmROC9vfKLrpDuh5FlkFZr/cAC3YIBUla7B3zZEa5FtTM29n+nfD/geOI9Xf7+8+vhP7C9dypz9cXsRHyayfxQ6hBw3grFUYLhqs=
+	t=1771360821; cv=none; b=sX7iG20CVF5hX7k1LM3AFh1jULYBq7cu+wIf929/nlZ2oIn+y25rLM08MWbz5VwZbyT1UNjsyHpU3TwcAxKlQe1jHBrGFRmovRZB5MwnMPMfCulsG5kg7T4B2ztrLtUpll6cylCK6IhB3GEoxP1acCTSKZnhSAExqcaELufM870=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360817; c=relaxed/simple;
-	bh=TayJHkyPkRLdRLSJIEf8vMLsRzDhZV+Pmaxj2C/JT7E=;
+	s=arc-20240116; t=1771360821; c=relaxed/simple;
+	bh=804WaphbnAx0gsTEQVsHAEKL+A4DVzqMhmDAsa9O36w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGWDupb5eoAexrx6GhNkhszD/9tH+nIBWxnHgUo5+Y/tWVVO8bUbThtSylzDRAjcV8VwerILHWWb4pUphd74ShVgTpfNyWdiUrMC7BZ09F/xk6bcaq3GCwyYu0jrt1aoV37OzeSSPyYDTuLU0OmgHQwdDtm4p4bGkOQ+Tzj8I2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0agdFjnx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6Ba99Hg3836TjKdcMxKkmgd0U5Zn2KMzAvVR+s/G34RHUErfpE0d75TIH2AhM7mQAwg8FSd/Qa0BWYdSeT2eVELFaX61qhV01+4Pw7DOAbiLJHr6S7EnV/veJk6TocHcOGTGjfu9OMvZ6gkGaTlyrISaBsWlyJbGGC/dAuW9DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyBrTwF4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0agdFjnx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29688C4CEF7;
-	Tue, 17 Feb 2026 20:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyBrTwF4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829C1C4CEF7;
+	Tue, 17 Feb 2026 20:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360817;
-	bh=TayJHkyPkRLdRLSJIEf8vMLsRzDhZV+Pmaxj2C/JT7E=;
+	s=korg; t=1771360821;
+	bh=804WaphbnAx0gsTEQVsHAEKL+A4DVzqMhmDAsa9O36w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0agdFjnxz+jY8oDjqWTUytFcW5RyDUh6NRBAAbsjuuRoW86PRdImn7j7MW/URHRSz
-	 mOx49DRD/amdgKVBw1iZEQXAycp0Wu1uViBvUe9QieE41jjpQz0nJeUjOolk4528Rh
-	 t5O3XEgXTwwOkZWK4HEZ/miWjPfdztwf6Zb8+xQs=
+	b=pyBrTwF4Xwtlmll5K763+f1ybl44qJR1K74aKesNuopsBOgjPlYKfVjBpytYTO2CY
+	 GWHSzZBzJR85aK86DE2y3TacNXfsKEGn+e9BljFQI5r5TQxeqE8wMMWiBtvy5zdpLe
+	 ksycrz0HhZuhxzagDTpG34b5sl3kMa91IxMmtRyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 6.6 23/39] Revert "wireguard: device: enable threaded NAPI"
-Date: Tue, 17 Feb 2026 21:30:45 +0100
-Message-ID: <20260217200005.106779227@linuxfoundation.org>
+	Jane Chu <jane.chu@oracle.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>,
+	Jann Horn <jannh@google.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>
+Subject: [PATCH 6.6 24/39] mm/hugetlb: fix copy_hugetlb_page_range() to use ->pt_share_count
+Date: Tue, 17 Feb 2026 21:30:46 +0100
+Message-ID: <20260217200005.144812516@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -50,119 +57,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Jane Chu <jane.chu@oracle.com>
 
-This reverts commit 8c9e9cd398777fd60ba202211da1110614cb5bc5 which is
-commit db9ae3b6b43c79b1ba87eea849fd65efa05b4b2e upstream.
+commit 14967a9c7d247841b0312c48dcf8cd29e55a4cc8 upstream.
 
-We have had three independent production user reports in combination
-with Cilium utilizing WireGuard as encryption underneath that k8s Pod
-E/W traffic to certain peer nodes fully stalled. The situation appears
-as follows:
+commit 59d9094df3d79 ("mm: hugetlb: independent PMD page table shared
+count") introduced ->pt_share_count dedicated to hugetlb PMD share count
+tracking, but omitted fixing copy_hugetlb_page_range(), leaving the
+function relying on page_count() for tracking that no longer works.
 
-  - Occurs very rarely but at random times under heavy networking load.
-  - Once the issue triggers the decryption side stops working completely
-    for that WireGuard peer, other peers keep working fine. The stall
-    happens also for newly initiated connections towards that particular
-    WireGuard peer.
-  - Only the decryption side is affected, never the encryption side.
-  - Once it triggers, it never recovers and remains in this state,
-    the CPU/mem on that node looks normal, no leak, busy loop or crash.
-  - bpftrace on the affected system shows that wg_prev_queue_enqueue
-    fails, thus the MAX_QUEUED_PACKETS (1024 skbs!) for the peer's
-    rx_queue is reached.
-  - Also, bpftrace shows that wg_packet_rx_poll for that peer is never
-    called again after reaching this state for that peer. For other
-    peers wg_packet_rx_poll does get called normally.
-  - Commit db9ae3b ("wireguard: device: enable threaded NAPI")
-    switched WireGuard to threaded NAPI by default. The default has
-    not been changed for triggering the issue, neither did CPU
-    hotplugging occur (i.e. 5bd8de2 ("wireguard: queueing: always
-    return valid online CPU in wg_cpumask_choose_online()")).
-  - The issue has been observed with stable kernels of v5.15 as well as
-    v6.1. It was reported to us that v5.10 stable is working fine, and
-    no report on v6.6 stable either (somewhat related discussion in [0]
-    though).
-  - In the WireGuard driver the only material difference between v5.10
-    stable and v5.15 stable is the switch to threaded NAPI by default.
+When lazy page table copy for hugetlb is disabled, that is, revert commit
+bcd51a3c679d ("hugetlb: lazy page table copies in fork()") fork()'ing with
+hugetlb PMD sharing quickly lockup -
 
-    [0] https://lore.kernel.org/netdev/CA+wXwBTT74RErDGAnj98PqS=wvdh8eM1pi4q6tTdExtjnokKqA@mail.gmail.com/
+[  239.446559] watchdog: BUG: soft lockup - CPU#75 stuck for 27s!
+[  239.446611] RIP: 0010:native_queued_spin_lock_slowpath+0x7e/0x2e0
+[  239.446631] Call Trace:
+[  239.446633]  <TASK>
+[  239.446636]  _raw_spin_lock+0x3f/0x60
+[  239.446639]  copy_hugetlb_page_range+0x258/0xb50
+[  239.446645]  copy_page_range+0x22b/0x2c0
+[  239.446651]  dup_mmap+0x3e2/0x770
+[  239.446654]  dup_mm.constprop.0+0x5e/0x230
+[  239.446657]  copy_process+0xd17/0x1760
+[  239.446660]  kernel_clone+0xc0/0x3e0
+[  239.446661]  __do_sys_clone+0x65/0xa0
+[  239.446664]  do_syscall_64+0x82/0x930
+[  239.446668]  ? count_memcg_events+0xd2/0x190
+[  239.446671]  ? syscall_trace_enter+0x14e/0x1f0
+[  239.446676]  ? syscall_exit_work+0x118/0x150
+[  239.446677]  ? arch_exit_to_user_mode_prepare.constprop.0+0x9/0xb0
+[  239.446681]  ? clear_bhb_loop+0x30/0x80
+[  239.446684]  ? clear_bhb_loop+0x30/0x80
+[  239.446686]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Breakdown of the problem:
+There are two options to resolve the potential latent issue:
+  1. warn against PMD sharing in copy_hugetlb_page_range(),
+  2. fix it.
+This patch opts for the second option.
+While at it, simplify the comment, the details are not actually relevant
+anymore.
 
-  1) skbs arriving for decryption are enqueued to the peer->rx_queue in
-     wg_packet_consume_data via wg_queue_enqueue_per_device_and_peer.
-  2) The latter only moves the skb into the MPSC peer queue if it does
-     not surpass MAX_QUEUED_PACKETS (1024) which is kept track in an
-     atomic counter via wg_prev_queue_enqueue.
-  3) In case enqueueing was successful, the skb is also queued up
-     in the device queue, round-robin picks a next online CPU, and
-     schedules the decryption worker.
-  4) The wg_packet_decrypt_worker, once scheduled, picks these up
-     from the queue, decrypts the packets and once done calls into
-     wg_queue_enqueue_per_peer_rx.
-  5) The latter updates the state to PACKET_STATE_CRYPTED on success
-     and calls napi_schedule on the per peer->napi instance.
-  6) NAPI then polls via wg_packet_rx_poll. wg_prev_queue_peek checks
-     on the peer->rx_queue. It will wg_prev_queue_dequeue if the
-     queue->peeked skb was not cached yet, or just return the latter
-     otherwise. (wg_prev_queue_drop_peeked later clears the cache.)
-  7) From an ordering perspective, the peer->rx_queue has skbs in order
-     while the device queue with the per-CPU worker threads from a
-     global ordering PoV can finish the decryption and signal the skb
-     PACKET_STATE_CRYPTED out of order.
-  8) A situation can be observed that the first packet coming in will
-     be stuck waiting for the decryption worker to be scheduled for
-     a longer time when the system is under pressure.
-  9) While this is the case, the other CPUs in the meantime finish
-     decryption and call into napi_schedule.
- 10) Now in wg_packet_rx_poll it picks up the first in-order skb
-     from the peer->rx_queue and sees that its state is still
-     PACKET_STATE_UNCRYPTED. The NAPI poll routine then exits early
-     with work_done = 0 and calls napi_complete_done, signalling
-     it "finished" processing.
- 11) The assumption in wg_packet_decrypt_worker is that when the
-     decryption finished the subsequent napi_schedule will always
-     lead to a later invocation of wg_packet_rx_poll to pick up
-     the finished packet.
- 12) However, it appears that a later napi_schedule does /not/
-     schedule a later poll and thus no wg_packet_rx_poll.
- 13) If this situation happens exactly for the corner case where
-     the decryption worker of the first packet is stuck and waiting
-     to be scheduled, and the network load for WireGuard is very
-     high then the queue can build up to MAX_QUEUED_PACKETS.
- 14) If this situation occurs, then no new decryption worker will
-     be scheduled and also no new napi_schedule to make forward
-     progress.
- 15) This means the peer->rx_queue stops processing packets completely
-     and they are indefinitely stuck waiting for a new NAPI poll on
-     that peer which never happens. New packets for that peer are
-     then dropped due to full queue, as it has been observed on the
-     production machines.
-
-Technically, the backport of commit db9ae3b6b43c ("wireguard: device:
-enable threaded NAPI") to stable should not have happened since it is
-more of an optimization rather than a pure fix and addresses a NAPI
-situation with utilizing many WireGuard tunnel devices in parallel.
-Revert it from stable given the backport triggers a regression for
-mentioned kernels.
-
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://lkml.kernel.org/r/20250916004520.1604530-1-jane.chu@oracle.com
+Fixes: 59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count")
+Signed-off-by: Jane Chu <jane.chu@oracle.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liu Shixin <liushixin2@huawei.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireguard/device.c |    1 -
- 1 file changed, 1 deletion(-)
+ include/linux/mm_types.h |    5 +++++
+ mm/hugetlb.c             |   15 +++++----------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/net/wireguard/device.c
-+++ b/drivers/net/wireguard/device.c
-@@ -369,7 +369,6 @@ static int wg_newlink(struct net *src_ne
- 	if (ret < 0)
- 		goto err_free_handshake_queue;
+--- a/include/linux/mm_types.h
++++ b/include/linux/mm_types.h
+@@ -492,6 +492,11 @@ static inline int ptdesc_pmd_pts_count(s
+ {
+ 	return atomic_read(&ptdesc->pt_share_count);
+ }
++
++static inline bool ptdesc_pmd_is_shared(struct ptdesc *ptdesc)
++{
++	return !!ptdesc_pmd_pts_count(ptdesc);
++}
+ #else
+ static inline void ptdesc_pmd_pts_init(struct ptdesc *ptdesc)
+ {
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5090,18 +5090,13 @@ int copy_hugetlb_page_range(struct mm_st
+ 			break;
+ 		}
  
--	dev_set_threaded(dev, true);
- 	ret = register_netdevice(dev);
- 	if (ret < 0)
- 		goto err_uninit_ratelimiter;
+-		/*
+-		 * If the pagetables are shared don't copy or take references.
+-		 *
+-		 * dst_pte == src_pte is the common case of src/dest sharing.
+-		 * However, src could have 'unshared' and dst shares with
+-		 * another vma. So page_count of ptep page is checked instead
+-		 * to reliably determine whether pte is shared.
+-		 */
+-		if (page_count(virt_to_page(dst_pte)) > 1) {
++#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
++		/* If the pagetables are shared, there is nothing to do */
++		if (ptdesc_pmd_is_shared(virt_to_ptdesc(dst_pte))) {
+ 			addr |= last_addr_mask;
+ 			continue;
+ 		}
++#endif
+ 
+ 		dst_ptl = huge_pte_lock(h, dst, dst_pte);
+ 		src_ptl = huge_pte_lockptr(h, src, src_pte);
+@@ -7077,7 +7072,7 @@ int huge_pmd_unshare(struct mm_struct *m
+ 	hugetlb_vma_assert_locked(vma);
+ 	if (sz != PMD_SIZE)
+ 		return 0;
+-	if (!ptdesc_pmd_pts_count(virt_to_ptdesc(ptep)))
++	if (!ptdesc_pmd_is_shared(virt_to_ptdesc(ptep)))
+ 		return 0;
+ 
+ 	pud_clear(pud);
 
 
