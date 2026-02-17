@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E5537646D;
-	Tue, 17 Feb 2026 20:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B4529B8E8;
+	Tue, 17 Feb 2026 20:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361055; cv=none; b=JokBjbJa3ALIf0+lVP8/8DzzRrEoJ/8nFx9ypNlWL73oIldZg1DXJR6dEIYnkIKnHfsEeZp/JY4mjz/GY9Im3vNICYcQJw/tJ/2oTgfqKzpWS3miWzbi/yy/djB1mXsT0ixHYeNxgEeGTFMcBFSkcuviOGGmtLvypC57rq6pLIY=
+	t=1771361058; cv=none; b=CEYuObIpAX+bT+G69rGPtH0Q6ozTusxyWxEx5LOw2bbSBWZqXhKTSO3Y545t6PXrKPc73U4zKzhJYU38fWByQGH+diuj6hjS6M9mPRKupjXl2inFVvSrhtiwr/90TynTzgRfo61FfTuIuprhVmJE1gFcwMC/P5/0fHi83cM4vag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361055; c=relaxed/simple;
-	bh=TEgtaoqr2/eFwP8oX34IjzYijteXCb9dbY2VIBa31H8=;
+	s=arc-20240116; t=1771361058; c=relaxed/simple;
+	bh=ZqXuNWszsvHDkVmBrNhX/Fk/XAIW57B5n6J8QXt67kA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K18GQTW2CFEEOydSewIUzwxwxAVPpIiMfdPTGsQ2L6Uhs0B3NXBLqtwFTZPlkQPKj3AzziuzDhNbmgmtr44846nUyyg11omV4S6tkimXuMabgvOOQInS14TymcJETHAEpGYo+R4P40m/pWqn1bAg9itllhmKOEV44xlg4k03XEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DKwFWbZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E6QEWOlSotMLZOpakEv1i+jyhnHN8YCQMgNwa8NhpnxRYHe10kBvThJLij71CPHXGrY/Gl0r6ibjy0xTrQxbynl8HOeaBqqz4AlngYt8yqMoKuVuVS7EyabupXFfVOiUnChyTVsk+ObGejUx4AEJo1X/KRGFCGQxelY9nZ7wS/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHghswyS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DKwFWbZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C27AC4CEF7;
-	Tue, 17 Feb 2026 20:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHghswyS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE1BC4CEF7;
+	Tue, 17 Feb 2026 20:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361055;
-	bh=TEgtaoqr2/eFwP8oX34IjzYijteXCb9dbY2VIBa31H8=;
+	s=korg; t=1771361058;
+	bh=ZqXuNWszsvHDkVmBrNhX/Fk/XAIW57B5n6J8QXt67kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2DKwFWbZfWtoT627UpCwLuyk5h9JEkla7niT2UtV1uGxsB9e7PSd9yQ64ujPS9Ipz
-	 wwRWncnn/FyGvDvZb+kiSklpSsbceSJlByoYVv4MV1Yox1fWB50yvWbPMry6J5z9z+
-	 Wy3ruvHqXd9+zk79TKhNq9zc1xpAlp7qaXk3BkZk=
+	b=aHghswySZt7DaORnAvsu+Sq8WdhxPE0eqZZXovJNziJiwwpbdXa++h51i+4LBxZ69
+	 XNT85YLLc8WDTcu/ORbI/P9AYK0xb0Ljlm+nqAX15m0gl0wOeQPCb129yU17jqg9yG
+	 I0jgvuwOxjkDqLrziHi5lhbL4x23VipRPu6+INx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Gurumurthy <agurumurthy@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <hmadhani2024@gmail.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	Gleb Chesnokov <Chesnokov.G@raidix.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 27/39] scsi: qla2xxx: Fix bsg_done() causing double free
-Date: Tue, 17 Feb 2026 21:31:36 +0100
-Message-ID: <20260217200003.978006268@linuxfoundation.org>
+Subject: [PATCH 5.15 28/39] scsi: qla2xxx: Use named initializers for port_[d]state_str
+Date: Tue, 17 Feb 2026 21:31:37 +0100
+Message-ID: <20260217200004.022832008@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.929083107@linuxfoundation.org>
 References: <20260217200002.929083107@linuxfoundation.org>
@@ -53,122 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Gurumurthy <agurumurthy@marvell.com>
+From: Gleb Chesnokov <Chesnokov.G@raidix.com>
 
-[ Upstream commit c2c68225b1456f4d0d393b5a8778d51bb0d5b1d0 ]
+[ Upstream commit 6e0e85d39e528da2915a2da261195f81bfde6915 ]
 
-Kernel panic observed on system,
+Make port_state_str and port_dstate_str a little more readable and
+maintainable by using named initializers.
 
-[5353358.825191] BUG: unable to handle page fault for address: ff5f5e897b024000
-[5353358.825194] #PF: supervisor write access in kernel mode
-[5353358.825195] #PF: error_code(0x0002) - not-present page
-[5353358.825196] PGD 100006067 P4D 0
-[5353358.825198] Oops: 0002 [#1] PREEMPT SMP NOPTI
-[5353358.825200] CPU: 5 PID: 2132085 Comm: qlafwupdate.sub Kdump: loaded Tainted: G        W    L    -------  ---  5.14.0-503.34.1.el9_5.x86_64 #1
-[5353358.825203] Hardware name: HPE ProLiant DL360 Gen11/ProLiant DL360 Gen11, BIOS 2.44 01/17/2025
-[5353358.825204] RIP: 0010:memcpy_erms+0x6/0x10
-[5353358.825211] RSP: 0018:ff591da8f4f6b710 EFLAGS: 00010246
-[5353358.825212] RAX: ff5f5e897b024000 RBX: 0000000000007090 RCX: 0000000000001000
-[5353358.825213] RDX: 0000000000001000 RSI: ff591da8f4fed090 RDI: ff5f5e897b024000
-[5353358.825214] RBP: 0000000000010000 R08: ff5f5e897b024000 R09: 0000000000000000
-[5353358.825215] R10: ff46cf8c40517000 R11: 0000000000000001 R12: 0000000000008090
-[5353358.825216] R13: ff591da8f4f6b720 R14: 0000000000001000 R15: 0000000000000000
-[5353358.825218] FS:  00007f1e88d47740(0000) GS:ff46cf935f940000(0000) knlGS:0000000000000000
-[5353358.825219] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[5353358.825220] CR2: ff5f5e897b024000 CR3: 0000000231532004 CR4: 0000000000771ef0
-[5353358.825221] PKRU: 55555554
-[5353358.825222] Call Trace:
-[5353358.825223]  <TASK>
-[5353358.825224]  ? show_trace_log_lvl+0x1c4/0x2df
-[5353358.825229]  ? show_trace_log_lvl+0x1c4/0x2df
-[5353358.825232]  ? sg_copy_buffer+0xc8/0x110
-[5353358.825236]  ? __die_body.cold+0x8/0xd
-[5353358.825238]  ? page_fault_oops+0x134/0x170
-[5353358.825242]  ? kernelmode_fixup_or_oops+0x84/0x110
-[5353358.825244]  ? exc_page_fault+0xa8/0x150
-[5353358.825247]  ? asm_exc_page_fault+0x22/0x30
-[5353358.825252]  ? memcpy_erms+0x6/0x10
-[5353358.825253]  sg_copy_buffer+0xc8/0x110
-[5353358.825259]  qla2x00_process_vendor_specific+0x652/0x1320 [qla2xxx]
-[5353358.825317]  qla24xx_bsg_request+0x1b2/0x2d0 [qla2xxx]
+Also convert FCS_* macros into an enum.
 
-Most routines in qla_bsg.c call bsg_done() only for success cases.
-However a few invoke it for failure case as well leading to a double
-free. Validate before calling bsg_done().
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
-Link: https://patch.msgid.link/20251210101604.431868-12-njavali@marvell.com
+Link: https://lore.kernel.org/r/AS8PR10MB495215841EB25C16DBC0CB409D349@AS8PR10MB4952.EURPRD10.PROD.OUTLOOK.COM
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Gleb Chesnokov <Chesnokov.G@raidix.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 7adbd2b78090 ("scsi: qla2xxx: Free sp in error path to fix system crash")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h |   35 +++++++++++++++++++----------------
+ drivers/scsi/qla2xxx/qla_isr.c |   10 +++++-----
+ 2 files changed, 24 insertions(+), 21 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -1546,8 +1546,9 @@ qla2x00_update_optrom(struct bsg_job *bs
- 	ha->optrom_buffer = NULL;
- 	ha->optrom_state = QLA_SWAITING;
- 	mutex_unlock(&ha->optrom_mutex);
--	bsg_job_done(bsg_job, bsg_reply->result,
--		       bsg_reply->reply_payload_rcv_len);
-+	if (!rval)
-+		bsg_job_done(bsg_job, bsg_reply->result,
-+			     bsg_reply->reply_payload_rcv_len);
- 	return rval;
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -2689,25 +2689,28 @@ struct event_arg {
+ /*
+  * Fibre channel port/lun states.
+  */
+-#define FCS_UNCONFIGURED	1
+-#define FCS_DEVICE_DEAD		2
+-#define FCS_DEVICE_LOST		3
+-#define FCS_ONLINE		4
++enum {
++	FCS_UNKNOWN,
++	FCS_UNCONFIGURED,
++	FCS_DEVICE_DEAD,
++	FCS_DEVICE_LOST,
++	FCS_ONLINE,
++};
+ 
+ extern const char *const port_state_str[5];
+ 
+-static const char * const port_dstate_str[] = {
+-	"DELETED",
+-	"GNN_ID",
+-	"GNL",
+-	"LOGIN_PEND",
+-	"LOGIN_FAILED",
+-	"GPDB",
+-	"UPD_FCPORT",
+-	"LOGIN_COMPLETE",
+-	"ADISC",
+-	"DELETE_PEND",
+-	"LOGIN_AUTH_PEND",
++static const char *const port_dstate_str[] = {
++	[DSC_DELETED]		= "DELETED",
++	[DSC_GNN_ID]		= "GNN_ID",
++	[DSC_GNL]		= "GNL",
++	[DSC_LOGIN_PEND]	= "LOGIN_PEND",
++	[DSC_LOGIN_FAILED]	= "LOGIN_FAILED",
++	[DSC_GPDB]		= "GPDB",
++	[DSC_UPD_FCPORT]	= "UPD_FCPORT",
++	[DSC_LOGIN_COMPLETE]	= "LOGIN_COMPLETE",
++	[DSC_ADISC]		= "ADISC",
++	[DSC_DELETE_PEND]	= "DELETE_PEND",
++	[DSC_LOGIN_AUTH_PEND]	= "LOGIN_AUTH_PEND",
+ };
+ 
+ /*
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -49,11 +49,11 @@ qla27xx_process_purex_fpin(struct scsi_q
  }
  
-@@ -2525,8 +2526,9 @@ qla2x00_manage_host_stats(struct bsg_job
- 				    sizeof(struct ql_vnd_mng_host_stats_resp));
+ const char *const port_state_str[] = {
+-	"Unknown",
+-	"UNCONFIGURED",
+-	"DEAD",
+-	"LOST",
+-	"ONLINE"
++	[FCS_UNKNOWN]		= "Unknown",
++	[FCS_UNCONFIGURED]	= "UNCONFIGURED",
++	[FCS_DEVICE_DEAD]	= "DEAD",
++	[FCS_DEVICE_LOST]	= "LOST",
++	[FCS_ONLINE]		= "ONLINE"
+ };
  
- 	bsg_reply->result = DID_OK;
--	bsg_job_done(bsg_job, bsg_reply->result,
--		     bsg_reply->reply_payload_rcv_len);
-+	if (!ret)
-+		bsg_job_done(bsg_job, bsg_reply->result,
-+			     bsg_reply->reply_payload_rcv_len);
- 
- 	return ret;
- }
-@@ -2615,8 +2617,9 @@ qla2x00_get_host_stats(struct bsg_job *b
- 							       bsg_job->reply_payload.sg_cnt,
- 							       data, response_len);
- 	bsg_reply->result = DID_OK;
--	bsg_job_done(bsg_job, bsg_reply->result,
--		     bsg_reply->reply_payload_rcv_len);
-+	if (!ret)
-+		bsg_job_done(bsg_job, bsg_reply->result,
-+			     bsg_reply->reply_payload_rcv_len);
- 
- 	kfree(data);
- host_stat_out:
-@@ -2715,8 +2718,9 @@ reply:
- 				    bsg_job->reply_payload.sg_cnt, data,
- 				    response_len);
- 	bsg_reply->result = DID_OK;
--	bsg_job_done(bsg_job, bsg_reply->result,
--		     bsg_reply->reply_payload_rcv_len);
-+	if (!ret)
-+		bsg_job_done(bsg_job, bsg_reply->result,
-+			     bsg_reply->reply_payload_rcv_len);
- 
- tgt_stat_out:
- 	kfree(data);
-@@ -2777,8 +2781,9 @@ qla2x00_manage_host_port(struct bsg_job
- 				    bsg_job->reply_payload.sg_cnt, &rsp_data,
- 				    sizeof(struct ql_vnd_mng_host_port_resp));
- 	bsg_reply->result = DID_OK;
--	bsg_job_done(bsg_job, bsg_reply->result,
--		     bsg_reply->reply_payload_rcv_len);
-+	if (!ret)
-+		bsg_job_done(bsg_job, bsg_reply->result,
-+			     bsg_reply->reply_payload_rcv_len);
- 
- 	return ret;
- }
+ static void
 
 
