@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1551A29A1;
-	Tue, 17 Feb 2026 20:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CA129A1;
+	Tue, 17 Feb 2026 20:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361703; cv=none; b=UUSXwDwn+tuPwTyEFlK2i5ZOpuxGsHhRnPpuv535mzmHJGlb5Z+7F+hliIOuvtf4J0uEaUohPHzqIfLf/hdPhUaKCF7byHMGKUTm/P8+Xc/gSfns0n8n0gijMlOYQ4N0K6cjaDUqirA21dB27N3PLKBvg+bCiCXjJtbDbnVNNc8=
+	t=1771361706; cv=none; b=lZXfSuqo+G3BspA1DxDkrZ7DJrsmLR0UNczg0CuBeCfchVZmK8TFVT8daUkMTOQKIsjMFIv9Eo84GVbsNsHV9ltEVT5VMvygHOAqq+b+ddzgowBFYOb7is9ybUGrGnGJS1zNhQDoyflK5z1WQaKdNfvC07nc6mUjftCD9QR7WSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361703; c=relaxed/simple;
-	bh=k5x8mTZoKcajvqpru/dYlUWyMrCTvhjYdTI7el+KzKo=;
+	s=arc-20240116; t=1771361706; c=relaxed/simple;
+	bh=59U/QuuW+AasfueeIkEBl7j5GjNgSseVPOdhQzSHuyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e2+J0w8WuLwc4d4njGKqp8Srvgrdr/GAs+C0GQZAHCg5hqSyWewbbf1WmHKNx6sWym4qIJv+YsdtHMNEhgZ1Masaxe3eWh0mCVxRAreQiPBz2sxQfnStEaovHYBfG6ccdP0HYpuGo9aT8DbyMcSEEbVm6IcRAOLbwE+ihVaII3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzhVJbE6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NwHAy4oM+QItCceZsSBLAwgES9linenPbO8R/woCjAsZPNMIP5wp/RljLjEgXrXHwKRn7hL1w/yv6Jjjx6ciemegDVoSsYO9LKrAmx+bghV6Dm2idXj5l9pX+hHzJswtoVoQQHpBiWggUuhLZbHgn+IcMjV3O5NherHBLodZ114=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tA2s/g5w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzhVJbE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE4CC4CEF7;
-	Tue, 17 Feb 2026 20:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tA2s/g5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABED3C4CEF7;
+	Tue, 17 Feb 2026 20:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361703;
-	bh=k5x8mTZoKcajvqpru/dYlUWyMrCTvhjYdTI7el+KzKo=;
+	s=korg; t=1771361706;
+	bh=59U/QuuW+AasfueeIkEBl7j5GjNgSseVPOdhQzSHuyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PzhVJbE6digBwu0KWgwV12VOYFyp3i6tplrmz9pSsK5nBEiSsvm8D3uyDame7hCca
-	 bs2sSM0GTw8Q0mb9zDD+X7KLiCNOYzq5qS/WzMDEnCznIc2xuqS/3N80CARq3Tq1mo
-	 bfkv2M8wlqftuLtWNNXNV2Fl0pVVDQDJzC5evaPQ=
+	b=tA2s/g5wQMKc6cTnh2EubMyYzoGHEZZFuu625MxGA6Iuem3NYZaGXvE5xgDwzLKLG
+	 m/F8pQRvtjfHm0BX9FvVA73GJe7CfWDu/dmg5F2dW4/RsJRUJvjeNoj5hM+SkQxd4s
+	 Cb1q0d60mGJVrFYXHFoFaKiGz5iR3eECrsuJH1pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 6.12 31/42] Revert "wireguard: device: enable threaded NAPI"
-Date: Tue, 17 Feb 2026 21:32:22 +0100
-Message-ID: <20260217200007.188610133@linuxfoundation.org>
+	Melissa Wen <mwen@igalia.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 22/42] drm/amd/display: extend delta clamping logic to CM3 LUT helper
+Date: Tue, 17 Feb 2026 21:32:13 +0100
+Message-ID: <20260217200006.850791625@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200005.998240758@linuxfoundation.org>
 References: <20260217200005.998240758@linuxfoundation.org>
@@ -50,119 +52,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Melissa Wen <mwen@igalia.com>
 
-This reverts commit 933466fc50a8e4eb167acbd0d8ec96a078462e9c which is
-commit db9ae3b6b43c79b1ba87eea849fd65efa05b4b2e upstream.
+[ Upstream commit d25b32aa829a3ed5570138e541a71fb7805faec3 ]
 
-We have had three independent production user reports in combination
-with Cilium utilizing WireGuard as encryption underneath that k8s Pod
-E/W traffic to certain peer nodes fully stalled. The situation appears
-as follows:
+Commit 27fc10d1095f ("drm/amd/display: Fix the delta clamping for shaper
+LUT") fixed banding when using plane shaper LUT in DCN10 CM helper.  The
+problem is also present in DCN30 CM helper, fix banding by extending the
+same bug delta clamping fix to CM3.
 
-  - Occurs very rarely but at random times under heavy networking load.
-  - Once the issue triggers the decryption side stops working completely
-    for that WireGuard peer, other peers keep working fine. The stall
-    happens also for newly initiated connections towards that particular
-    WireGuard peer.
-  - Only the decryption side is affected, never the encryption side.
-  - Once it triggers, it never recovers and remains in this state,
-    the CPU/mem on that node looks normal, no leak, busy loop or crash.
-  - bpftrace on the affected system shows that wg_prev_queue_enqueue
-    fails, thus the MAX_QUEUED_PACKETS (1024 skbs!) for the peer's
-    rx_queue is reached.
-  - Also, bpftrace shows that wg_packet_rx_poll for that peer is never
-    called again after reaching this state for that peer. For other
-    peers wg_packet_rx_poll does get called normally.
-  - Commit db9ae3b ("wireguard: device: enable threaded NAPI")
-    switched WireGuard to threaded NAPI by default. The default has
-    not been changed for triggering the issue, neither did CPU
-    hotplugging occur (i.e. 5bd8de2 ("wireguard: queueing: always
-    return valid online CPU in wg_cpumask_choose_online()")).
-  - The issue has been observed with stable kernels of v5.15 as well as
-    v6.1. It was reported to us that v5.10 stable is working fine, and
-    no report on v6.6 stable either (somewhat related discussion in [0]
-    though).
-  - In the WireGuard driver the only material difference between v5.10
-    stable and v5.15 stable is the switch to threaded NAPI by default.
-
-    [0] https://lore.kernel.org/netdev/CA+wXwBTT74RErDGAnj98PqS=wvdh8eM1pi4q6tTdExtjnokKqA@mail.gmail.com/
-
-Breakdown of the problem:
-
-  1) skbs arriving for decryption are enqueued to the peer->rx_queue in
-     wg_packet_consume_data via wg_queue_enqueue_per_device_and_peer.
-  2) The latter only moves the skb into the MPSC peer queue if it does
-     not surpass MAX_QUEUED_PACKETS (1024) which is kept track in an
-     atomic counter via wg_prev_queue_enqueue.
-  3) In case enqueueing was successful, the skb is also queued up
-     in the device queue, round-robin picks a next online CPU, and
-     schedules the decryption worker.
-  4) The wg_packet_decrypt_worker, once scheduled, picks these up
-     from the queue, decrypts the packets and once done calls into
-     wg_queue_enqueue_per_peer_rx.
-  5) The latter updates the state to PACKET_STATE_CRYPTED on success
-     and calls napi_schedule on the per peer->napi instance.
-  6) NAPI then polls via wg_packet_rx_poll. wg_prev_queue_peek checks
-     on the peer->rx_queue. It will wg_prev_queue_dequeue if the
-     queue->peeked skb was not cached yet, or just return the latter
-     otherwise. (wg_prev_queue_drop_peeked later clears the cache.)
-  7) From an ordering perspective, the peer->rx_queue has skbs in order
-     while the device queue with the per-CPU worker threads from a
-     global ordering PoV can finish the decryption and signal the skb
-     PACKET_STATE_CRYPTED out of order.
-  8) A situation can be observed that the first packet coming in will
-     be stuck waiting for the decryption worker to be scheduled for
-     a longer time when the system is under pressure.
-  9) While this is the case, the other CPUs in the meantime finish
-     decryption and call into napi_schedule.
- 10) Now in wg_packet_rx_poll it picks up the first in-order skb
-     from the peer->rx_queue and sees that its state is still
-     PACKET_STATE_UNCRYPTED. The NAPI poll routine then exits early
-     with work_done = 0 and calls napi_complete_done, signalling
-     it "finished" processing.
- 11) The assumption in wg_packet_decrypt_worker is that when the
-     decryption finished the subsequent napi_schedule will always
-     lead to a later invocation of wg_packet_rx_poll to pick up
-     the finished packet.
- 12) However, it appears that a later napi_schedule does /not/
-     schedule a later poll and thus no wg_packet_rx_poll.
- 13) If this situation happens exactly for the corner case where
-     the decryption worker of the first packet is stuck and waiting
-     to be scheduled, and the network load for WireGuard is very
-     high then the queue can build up to MAX_QUEUED_PACKETS.
- 14) If this situation occurs, then no new decryption worker will
-     be scheduled and also no new napi_schedule to make forward
-     progress.
- 15) This means the peer->rx_queue stops processing packets completely
-     and they are indefinitely stuck waiting for a new NAPI poll on
-     that peer which never happens. New packets for that peer are
-     then dropped due to full queue, as it has been observed on the
-     production machines.
-
-Technically, the backport of commit db9ae3b6b43c ("wireguard: device:
-enable threaded NAPI") to stable should not have happened since it is
-more of an optimization rather than a pure fix and addresses a NAPI
-situation with utilizing many WireGuard tunnel devices in parallel.
-Revert it from stable given the backport triggers a regression for
-mentioned kernels.
-
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0274a54897f356f9c78767c4a2a5863f7dde90c6)
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireguard/device.c |    1 -
- 1 file changed, 1 deletion(-)
+ .../amd/display/dc/dcn30/dcn30_cm_common.c    | 30 +++++++++++++++----
+ .../display/dc/dwb/dcn30/dcn30_cm_common.h    |  2 +-
+ .../amd/display/dc/hwss/dcn30/dcn30_hwseq.c   |  9 +++---
+ .../amd/display/dc/hwss/dcn32/dcn32_hwseq.c   | 17 ++++++-----
+ .../amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 16 +++++-----
+ 5 files changed, 49 insertions(+), 25 deletions(-)
 
---- a/drivers/net/wireguard/device.c
-+++ b/drivers/net/wireguard/device.c
-@@ -364,7 +364,6 @@ static int wg_newlink(struct net *src_ne
- 	if (ret < 0)
- 		goto err_free_handshake_queue;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
+index f299d9455f510..4d53b17300d01 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
+@@ -105,9 +105,12 @@ void cm_helper_program_gamcor_xfer_func(
+ #define NUMBER_REGIONS     32
+ #define NUMBER_SW_SEGMENTS 16
  
--	dev_set_threaded(dev, true);
- 	ret = register_netdevice(dev);
- 	if (ret < 0)
- 		goto err_uninit_ratelimiter;
+-bool cm3_helper_translate_curve_to_hw_format(
+-				const struct dc_transfer_func *output_tf,
+-				struct pwl_params *lut_params, bool fixpoint)
++#define DC_LOGGER \
++		ctx->logger
++
++bool cm3_helper_translate_curve_to_hw_format(struct dc_context *ctx,
++					     const struct dc_transfer_func *output_tf,
++					     struct pwl_params *lut_params, bool fixpoint)
+ {
+ 	struct curve_points3 *corner_points;
+ 	struct pwl_result_data *rgb_resulted;
+@@ -256,6 +259,10 @@ bool cm3_helper_translate_curve_to_hw_format(
+ 	if (fixpoint == true) {
+ 		i = 1;
+ 		while (i != hw_points + 2) {
++			uint32_t red_clamp;
++			uint32_t green_clamp;
++			uint32_t blue_clamp;
++
+ 			if (i >= hw_points) {
+ 				if (dc_fixpt_lt(rgb_plus_1->red, rgb->red))
+ 					rgb_plus_1->red = dc_fixpt_add(rgb->red,
+@@ -268,9 +275,20 @@ bool cm3_helper_translate_curve_to_hw_format(
+ 							rgb_minus_1->delta_blue);
+ 			}
+ 
+-			rgb->delta_red_reg   = dc_fixpt_clamp_u0d10(rgb->delta_red);
+-			rgb->delta_green_reg = dc_fixpt_clamp_u0d10(rgb->delta_green);
+-			rgb->delta_blue_reg  = dc_fixpt_clamp_u0d10(rgb->delta_blue);
++			rgb->delta_red   = dc_fixpt_sub(rgb_plus_1->red,   rgb->red);
++			rgb->delta_green = dc_fixpt_sub(rgb_plus_1->green, rgb->green);
++			rgb->delta_blue  = dc_fixpt_sub(rgb_plus_1->blue,  rgb->blue);
++
++			red_clamp = dc_fixpt_clamp_u0d14(rgb->delta_red);
++			green_clamp = dc_fixpt_clamp_u0d14(rgb->delta_green);
++			blue_clamp = dc_fixpt_clamp_u0d14(rgb->delta_blue);
++
++			if (red_clamp >> 10 || green_clamp >> 10 || blue_clamp >> 10)
++				DC_LOG_ERROR("Losing delta precision while programming shaper LUT.");
++
++			rgb->delta_red_reg   = red_clamp & 0x3ff;
++			rgb->delta_green_reg = green_clamp & 0x3ff;
++			rgb->delta_blue_reg  = blue_clamp & 0x3ff;
+ 			rgb->red_reg         = dc_fixpt_clamp_u0d14(rgb->red);
+ 			rgb->green_reg       = dc_fixpt_clamp_u0d14(rgb->green);
+ 			rgb->blue_reg        = dc_fixpt_clamp_u0d14(rgb->blue);
+diff --git a/drivers/gpu/drm/amd/display/dc/dwb/dcn30/dcn30_cm_common.h b/drivers/gpu/drm/amd/display/dc/dwb/dcn30/dcn30_cm_common.h
+index bd98b327a6c70..c23dc1bb29bf8 100644
+--- a/drivers/gpu/drm/amd/display/dc/dwb/dcn30/dcn30_cm_common.h
++++ b/drivers/gpu/drm/amd/display/dc/dwb/dcn30/dcn30_cm_common.h
+@@ -59,7 +59,7 @@ void cm_helper_program_gamcor_xfer_func(
+ 	const struct pwl_params *params,
+ 	const struct dcn3_xfer_func_reg *reg);
+ 
+-bool cm3_helper_translate_curve_to_hw_format(
++bool cm3_helper_translate_curve_to_hw_format(struct dc_context *ctx,
+ 	const struct dc_transfer_func *output_tf,
+ 	struct pwl_params *lut_params, bool fixpoint);
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
+index bded33575493b..de4282a986269 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
+@@ -228,7 +228,7 @@ bool dcn30_set_blend_lut(
+ 	if (plane_state->blend_tf.type == TF_TYPE_HWPWL)
+ 		blend_lut = &plane_state->blend_tf.pwl;
+ 	else if (plane_state->blend_tf.type == TF_TYPE_DISTRIBUTED_POINTS) {
+-		result = cm3_helper_translate_curve_to_hw_format(
++		result = cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
+ 				&plane_state->blend_tf, &dpp_base->regamma_params, false);
+ 		if (!result)
+ 			return result;
+@@ -316,8 +316,9 @@ bool dcn30_set_input_transfer_func(struct dc *dc,
+ 	if (plane_state->in_transfer_func.type == TF_TYPE_HWPWL)
+ 		params = &plane_state->in_transfer_func.pwl;
+ 	else if (plane_state->in_transfer_func.type == TF_TYPE_DISTRIBUTED_POINTS &&
+-		cm3_helper_translate_curve_to_hw_format(&plane_state->in_transfer_func,
+-				&dpp_base->degamma_params, false))
++		cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
++							&plane_state->in_transfer_func,
++							&dpp_base->degamma_params, false))
+ 		params = &dpp_base->degamma_params;
+ 
+ 	result = dpp_base->funcs->dpp_program_gamcor_lut(dpp_base, params);
+@@ -388,7 +389,7 @@ bool dcn30_set_output_transfer_func(struct dc *dc,
+ 				params = &stream->out_transfer_func.pwl;
+ 			else if (pipe_ctx->stream->out_transfer_func.type ==
+ 					TF_TYPE_DISTRIBUTED_POINTS &&
+-					cm3_helper_translate_curve_to_hw_format(
++					cm3_helper_translate_curve_to_hw_format(stream->ctx,
+ 					&stream->out_transfer_func,
+ 					&mpc->blender_params, false))
+ 				params = &mpc->blender_params;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+index 2e8c9f7382596..17b6eebadef69 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+@@ -483,8 +483,9 @@ bool dcn32_set_mcm_luts(
+ 	if (plane_state->blend_tf.type == TF_TYPE_HWPWL)
+ 		lut_params = &plane_state->blend_tf.pwl;
+ 	else if (plane_state->blend_tf.type == TF_TYPE_DISTRIBUTED_POINTS) {
+-		result = cm3_helper_translate_curve_to_hw_format(&plane_state->blend_tf,
+-				&dpp_base->regamma_params, false);
++		result = cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
++								 &plane_state->blend_tf,
++								 &dpp_base->regamma_params, false);
+ 		if (!result)
+ 			return result;
+ 
+@@ -499,8 +500,9 @@ bool dcn32_set_mcm_luts(
+ 	else if (plane_state->in_shaper_func.type == TF_TYPE_DISTRIBUTED_POINTS) {
+ 		// TODO: dpp_base replace
+ 		ASSERT(false);
+-		cm3_helper_translate_curve_to_hw_format(&plane_state->in_shaper_func,
+-				&dpp_base->shaper_params, true);
++		cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
++							&plane_state->in_shaper_func,
++							&dpp_base->shaper_params, true);
+ 		lut_params = &dpp_base->shaper_params;
+ 	}
+ 
+@@ -540,8 +542,9 @@ bool dcn32_set_input_transfer_func(struct dc *dc,
+ 	if (plane_state->in_transfer_func.type == TF_TYPE_HWPWL)
+ 		params = &plane_state->in_transfer_func.pwl;
+ 	else if (plane_state->in_transfer_func.type == TF_TYPE_DISTRIBUTED_POINTS &&
+-		cm3_helper_translate_curve_to_hw_format(&plane_state->in_transfer_func,
+-				&dpp_base->degamma_params, false))
++		cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
++							&plane_state->in_transfer_func,
++							&dpp_base->degamma_params, false))
+ 		params = &dpp_base->degamma_params;
+ 
+ 	dpp_base->funcs->dpp_program_gamcor_lut(dpp_base, params);
+@@ -572,7 +575,7 @@ bool dcn32_set_output_transfer_func(struct dc *dc,
+ 				params = &stream->out_transfer_func.pwl;
+ 			else if (pipe_ctx->stream->out_transfer_func.type ==
+ 					TF_TYPE_DISTRIBUTED_POINTS &&
+-					cm3_helper_translate_curve_to_hw_format(
++					cm3_helper_translate_curve_to_hw_format(stream->ctx,
+ 					&stream->out_transfer_func,
+ 					&mpc->blender_params, false))
+ 				params = &mpc->blender_params;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+index bcb296a954f2b..f805803be55e4 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -514,7 +514,7 @@ void dcn401_populate_mcm_luts(struct dc *dc,
+ 		if (mcm_luts.lut1d_func->type == TF_TYPE_HWPWL)
+ 			m_lut_params.pwl = &mcm_luts.lut1d_func->pwl;
+ 		else if (mcm_luts.lut1d_func->type == TF_TYPE_DISTRIBUTED_POINTS) {
+-			rval = cm3_helper_translate_curve_to_hw_format(
++			rval = cm3_helper_translate_curve_to_hw_format(mpc->ctx,
+ 					mcm_luts.lut1d_func,
+ 					&dpp_base->regamma_params, false);
+ 			m_lut_params.pwl = rval ? &dpp_base->regamma_params : NULL;
+@@ -534,7 +534,7 @@ void dcn401_populate_mcm_luts(struct dc *dc,
+ 			m_lut_params.pwl = &mcm_luts.shaper->pwl;
+ 		else if (mcm_luts.shaper->type == TF_TYPE_DISTRIBUTED_POINTS) {
+ 			ASSERT(false);
+-			rval = cm3_helper_translate_curve_to_hw_format(
++			rval = cm3_helper_translate_curve_to_hw_format(mpc->ctx,
+ 					mcm_luts.shaper,
+ 					&dpp_base->regamma_params, true);
+ 			m_lut_params.pwl = rval ? &dpp_base->regamma_params : NULL;
+@@ -683,8 +683,9 @@ bool dcn401_set_mcm_luts(struct pipe_ctx *pipe_ctx,
+ 	if (plane_state->blend_tf.type == TF_TYPE_HWPWL)
+ 		lut_params = &plane_state->blend_tf.pwl;
+ 	else if (plane_state->blend_tf.type == TF_TYPE_DISTRIBUTED_POINTS) {
+-		rval = cm3_helper_translate_curve_to_hw_format(&plane_state->blend_tf,
+-				&dpp_base->regamma_params, false);
++		rval = cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
++							       &plane_state->blend_tf,
++							       &dpp_base->regamma_params, false);
+ 		lut_params = rval ? &dpp_base->regamma_params : NULL;
+ 	}
+ 	result = mpc->funcs->program_1dlut(mpc, lut_params, mpcc_id);
+@@ -695,8 +696,9 @@ bool dcn401_set_mcm_luts(struct pipe_ctx *pipe_ctx,
+ 		lut_params = &plane_state->in_shaper_func.pwl;
+ 	else if (plane_state->in_shaper_func.type == TF_TYPE_DISTRIBUTED_POINTS) {
+ 		// TODO: dpp_base replace
+-		rval = cm3_helper_translate_curve_to_hw_format(&plane_state->in_shaper_func,
+-				&dpp_base->shaper_params, true);
++		rval = cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
++							       &plane_state->in_shaper_func,
++							       &dpp_base->shaper_params, true);
+ 		lut_params = rval ? &dpp_base->shaper_params : NULL;
+ 	}
+ 	result &= mpc->funcs->program_shaper(mpc, lut_params, mpcc_id);
+@@ -730,7 +732,7 @@ bool dcn401_set_output_transfer_func(struct dc *dc,
+ 				params = &stream->out_transfer_func.pwl;
+ 			else if (pipe_ctx->stream->out_transfer_func.type ==
+ 					TF_TYPE_DISTRIBUTED_POINTS &&
+-					cm3_helper_translate_curve_to_hw_format(
++					cm3_helper_translate_curve_to_hw_format(stream->ctx,
+ 					&stream->out_transfer_func,
+ 					&mpc->blender_params, false))
+ 				params = &mpc->blender_params;
+-- 
+2.51.0
+
 
 
