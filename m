@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F932C0F79;
-	Tue, 17 Feb 2026 20:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE52337105D;
+	Tue, 17 Feb 2026 20:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360964; cv=none; b=BeNATsGOa0VZ96kyJd4diPcZqnuE89mJRUUtGnsIsWnY/ISQEzCv4vyVQwq8Xc9IQjAjDdgbDJ3fzeZA1BTpRmXqQMk7sWTOTC8Si3vMpSTnUeHdVVfSMsE+fAUWxSBkd3XxSCIBYU2Cyc5SH2MHpRDBbOltbkjQTwn2JALH3U4=
+	t=1771360967; cv=none; b=m/wYUawAFMkYQs2H97ypzjsS/mMB6ADHPpXCFsLs0PzjiXFVDGtxnBXLlZyCcnoNRoxhmo/FgNba780vaRoqRNcbxEveyTlzouTOw1xNL2eCluqcUr4LKC9h6CqOBBD5MpiwRiq4aF3eW1iw4GQ4tgzrlxr/hOKluFKOWxnC1Dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360964; c=relaxed/simple;
-	bh=QsBuEOwYkItp4FOhoXlZtUPJbAsZMrLvXPmeNTnFxaE=;
+	s=arc-20240116; t=1771360967; c=relaxed/simple;
+	bh=8kqI9tvYtO0qLBuh8IC4pynEPiu0G8MlK/YggUq7dlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMZH+V9J9gq+E1rb4XF+c3ZJyWmhFlXl33ZM2nkkyFxNv7MSIjgsVom5JpzWfr1YfMTi+ok2f9BLPWN2tx4sVj0e5H36WK+Zz8Q5tTBOodlj76rX0gYayuux5xRuUe+gmrT7rBXvncbTqmWfrB4Qf+nCjRoWrNSz8otifTgs1fA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ef63JIS/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l/7d7pCNvFLnvzj2e5ECBYWXgZOmdyxc5XGX7kZTO/Cn9YOHOLUhyDFzTgzGek00SSBJ8go8WULCrJCkCiAU19b4QbPp3cWyPMPUtQwv7WApixuD4vmL3s8LGXg4aoqZfmBltHWteZW8pGDSlEKUC6Mj17lo6lOawCdzmIltVGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfmHx+hr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ef63JIS/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456ACC4CEF7;
-	Tue, 17 Feb 2026 20:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfmHx+hr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17C7C4CEF7;
+	Tue, 17 Feb 2026 20:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360964;
-	bh=QsBuEOwYkItp4FOhoXlZtUPJbAsZMrLvXPmeNTnFxaE=;
+	s=korg; t=1771360967;
+	bh=8kqI9tvYtO0qLBuh8IC4pynEPiu0G8MlK/YggUq7dlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ef63JIS/ijq+232m1UTBbISIkYldihnOleB6uYPN6nwnjUOSEXTAwFEo30u/0xBTb
-	 zyaV6MFXMmUgwbx9uAp6pENatrZkiQsNw9mhorQXVTmywQOmB6R2OnRBiqPz1Gsz6C
-	 UcoAZ8yIpX/kFLw8nP9YYWlsEFfNhdizjPfX0lOc=
+	b=HfmHx+hr72/QoJxiJ0tCRT3KzxE3fWl1SP2dTxLnuXYnMGVYGUEfeJeioz2/UE+Gh
+	 IvB83jEZvVlQNGTelcZHivark+6xCL/2ddLSPBcCRGymWzXBeHM5RN28foF+STJQnT
+	 P5NwGwEB0vl6LKHtOGc1bUe1dHPOfsadSllhiNCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Anil Gurumurthy <agurumurthy@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <hmadhani2024@gmail.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 05/24] scsi: qla2xxx: Delay module unload while fabric scan in progress
-Date: Tue, 17 Feb 2026 21:31:18 +0100
-Message-ID: <20260217200000.915511465@linuxfoundation.org>
+Subject: [PATCH 5.10 06/24] scsi: qla2xxx: Query FW again before proceeding with login
+Date: Tue, 17 Feb 2026 21:31:19 +0100
+Message-ID: <20260217200000.953894543@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200000.708219618@linuxfoundation.org>
 References: <20260217200000.708219618@linuxfoundation.org>
@@ -56,68 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Anil Gurumurthy <agurumurthy@marvell.com>
 
-commit 8890bf450e0b6b283f48ac619fca5ac2f14ddd62 upstream.
+commit 42b2dab4340d39b71334151e10c6d7d9b0040ffa upstream.
 
-System crash seen during load/unload test in a loop.
+Issue occurred during a continuous reboot test of several thousand
+iterations specific to a fabric topo with dual mode target where it
+sends a PLOGI/PRLI and then sends a LOGO. The initiator was also in the
+process of discovery and sent a PLOGI to the switch. It then queried a
+list of ports logged in via mbx 75h and the GPDB response indicated that
+the target was logged in. This caused a mismatch in the states between
+the driver and FW.  Requery the FW for the state and proceed with the
+rest of discovery process.
 
-[105954.384919] RBP: ffff914589838dc0 R08: 0000000000000000 R09: 0000000000000086
-[105954.384920] R10: 000000000000000f R11: ffffa31240904be5 R12: ffff914605f868e0
-[105954.384921] R13: ffff914605f86910 R14: 0000000000008010 R15: 00000000ddb7c000
-[105954.384923] FS:  0000000000000000(0000) GS:ffff9163fec40000(0000) knlGS:0000000000000000
-[105954.384925] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[105954.384926] CR2: 000055d31ce1d6a0 CR3: 0000000119f5e001 CR4: 0000000000770ee0
-[105954.384928] PKRU: 55555554
-[105954.384929] Call Trace:
-[105954.384931]  <IRQ>
-[105954.384934]  qla24xx_sp_unmap+0x1f3/0x2a0 [qla2xxx]
-[105954.384962]  ? qla_async_scan_sp_done+0x114/0x1f0 [qla2xxx]
-[105954.384980]  ? qla24xx_els_ct_entry+0x4de/0x760 [qla2xxx]
-[105954.384999]  ? __wake_up_common+0x80/0x190
-[105954.385004]  ? qla24xx_process_response_queue+0xc2/0xaa0 [qla2xxx]
-[105954.385023]  ? qla24xx_msix_rsp_q+0x44/0xb0 [qla2xxx]
-[105954.385040]  ? __handle_irq_event_percpu+0x3d/0x190
-[105954.385044]  ? handle_irq_event+0x58/0xb0
-[105954.385046]  ? handle_edge_irq+0x93/0x240
-[105954.385050]  ? __common_interrupt+0x41/0xa0
-[105954.385055]  ? common_interrupt+0x3e/0xa0
-[105954.385060]  ? asm_common_interrupt+0x22/0x40
-
-The root cause of this was that there was a free (dma_free_attrs) in the
-interrupt context.  There was a device discovery/fabric scan in
-progress.  A module unload was issued which set the UNLOADING flag.  As
-part of the discovery, after receiving an interrupt a work queue was
-scheduled (which involved a work to be queued).  Since the UNLOADING
-flag is set, the work item was not allocated and the mapped memory had
-to be freed.  The free occurred in interrupt context leading to system
-crash.  Delay the driver unload until the fabric scan is complete to
-avoid the crash.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/202512090414.07Waorz0-lkp@intel.com/
-Fixes: 783e0dc4f66a ("qla2xxx: Check for device state before unloading the driver.")
+Fixes: a4239945b8ad ("scsi: qla2xxx: Add switch command to simplify fabric discovery")
 Cc: stable@vger.kernel.org
 Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
 Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
-Link: https://patch.msgid.link/20251210101604.431868-8-njavali@marvell.com
+Link: https://patch.msgid.link/20251210101604.431868-11-njavali@marvell.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_init.c |   19 +++++++++++++++++--
+ drivers/scsi/qla2xxx/qla_isr.c  |   19 +++++++++++++++++--
+ 2 files changed, 34 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -1162,7 +1162,8 @@ qla2x00_wait_for_hba_ready(scsi_qla_host
- 	while ((qla2x00_reset_active(vha) || ha->dpc_active ||
- 		ha->flags.mbox_busy) ||
- 	       test_bit(FX00_RESET_RECOVERY, &vha->dpc_flags) ||
--	       test_bit(FX00_TARGET_SCAN, &vha->dpc_flags)) {
-+	       test_bit(FX00_TARGET_SCAN, &vha->dpc_flags) ||
-+	       (vha->scan.scan_flags & SF_SCANNING)) {
- 		if (test_bit(UNLOADING, &base_vha->dpc_flags))
- 			break;
- 		msleep(1000);
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -2082,8 +2082,23 @@ qla24xx_handle_plogi_done_event(struct s
+ 	    ea->sp->gen1, fcport->rscn_gen,
+ 	    ea->data[0], ea->data[1], ea->iop[0], ea->iop[1]);
+ 
+-	if ((fcport->fw_login_state == DSC_LS_PLOGI_PEND) ||
+-	    (fcport->fw_login_state == DSC_LS_PRLI_PEND)) {
++	if (fcport->fw_login_state == DSC_LS_PLOGI_PEND) {
++		ql_dbg(ql_dbg_disc, vha, 0x20ea,
++		    "%s %d %8phC Remote is trying to login\n",
++		    __func__, __LINE__, fcport->port_name);
++		/*
++		 * If we get here, there is port thats already logged in,
++		 * but it's state has not moved ahead. Recheck with FW on
++		 * what state it is in and proceed ahead
++		 */
++		if (!N2N_TOPO(vha->hw)) {
++			fcport->fw_login_state = DSC_LS_PRLI_COMP;
++			qla24xx_post_gpdb_work(vha, fcport, 0);
++		}
++		return;
++	}
++
++	if (fcport->fw_login_state == DSC_LS_PRLI_PEND) {
+ 		ql_dbg(ql_dbg_disc, vha, 0x20ea,
+ 		    "%s %d %8phC Remote is trying to login\n",
+ 		    __func__, __LINE__, fcport->port_name);
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -1367,13 +1367,28 @@ skip_rio:
+ 
+ 			/* Port logout */
+ 			fcport = qla2x00_find_fcport_by_loopid(vha, mb[1]);
+-			if (!fcport)
++			if (!fcport) {
++				ql_dbg(ql_dbg_async, vha, 0x5011,
++					"Could not find fcport:%04x %04x %04x\n",
++					mb[1], mb[2], mb[3]);
+ 				break;
+-			if (atomic_read(&fcport->state) != FCS_ONLINE)
++			}
++
++			if (atomic_read(&fcport->state) != FCS_ONLINE) {
++				ql_dbg(ql_dbg_async, vha, 0x5012,
++					"Port state is not online State:0x%x \n",
++					atomic_read(&fcport->state));
++				ql_dbg(ql_dbg_async, vha, 0x5012,
++					"Scheduling session for deletion \n");
++				fcport->logout_on_delete = 0;
++				qlt_schedule_sess_for_deletion(fcport);
+ 				break;
++			}
++
+ 			ql_dbg(ql_dbg_async, vha, 0x508a,
+ 			    "Marking port lost loopid=%04x portid=%06x.\n",
+ 			    fcport->loop_id, fcport->d_id.b24);
++
+ 			if (qla_ini_mode_enabled(vha)) {
+ 				fcport->logout_on_delete = 0;
+ 				qlt_schedule_sess_for_deletion(fcport);
 
 
