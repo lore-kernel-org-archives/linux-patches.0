@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12854266581;
-	Tue, 17 Feb 2026 20:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F2D284B3B;
+	Tue, 17 Feb 2026 20:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361470; cv=none; b=tbqBIOIxmBN3l47Vu9vHuFOA0PQiPnWmv5UmjjVjbniZc/o+BO0RUkaGTkbM5Dq1/xNwb+39h505epe/QVjwSTb4WQ/2yTeCztAIPxSde/e6GVyOuH3fmLC1WOiEDKcIMDe8JWN8lwOqZCnz50zJ+PmdGheEYjsACCst32BIHPQ=
+	t=1771361473; cv=none; b=rX9/zBNUM5t1pyc6K/HTVV/FN/lT4QK1xR41OgArCc3BP+yMIyBttuSi9iitecbfYUMzOPCJP3rR+4ivLThqYBLTTACBaly5umM1DDZJGFNgB9UkIzuNGKMjL7b8wWtgCdyjmfDCOr578AFCgzYOqgqeYyeXK2xQ3tiTNUCHCuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361470; c=relaxed/simple;
-	bh=UQnrLsPEr+z9FUCFVbyxw6AK/3S94EQwMfh9B0VeH5Y=;
+	s=arc-20240116; t=1771361473; c=relaxed/simple;
+	bh=X5nB7p5eVdYT+ylSop4RE2EUDcuQ9oLOYFGIkzoSK0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3KEOvTJEPpej6zyc5RHrtULGQa89dmYdzqC6UCkCEs9uR3bU2GHCsT9Vb0+/RJEyZkx0QOKuCGD+h00r5yL//7DLyWzpw81vlsZA/A1oKg411UfckoFDEKEdbAb/5cjbBPk154U+tLND1Ep4NSzVMVZEvls1M8v3XlZsBSxjO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdeyNZUS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AOzOFxefz7qz1Z6oiwpELhwBReDoce4CbU0b5kb0AXqbHiA0VAgG3mDEGSP6anqeTrXm/Q9XPj8B109kzJIyRKjHT7+paLR8SgVSLi/GrEccfrKtG9IqSPPy6yLZELgrIjClmq0cpDgZJ2ZJW/Ojy8VGY/YNQ5zNyvz/wH3rtkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGP1bIAU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdeyNZUS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A38EC4CEF7;
-	Tue, 17 Feb 2026 20:51:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGP1bIAU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DDFC4CEF7;
+	Tue, 17 Feb 2026 20:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361469;
-	bh=UQnrLsPEr+z9FUCFVbyxw6AK/3S94EQwMfh9B0VeH5Y=;
+	s=korg; t=1771361472;
+	bh=X5nB7p5eVdYT+ylSop4RE2EUDcuQ9oLOYFGIkzoSK0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdeyNZUSt2pSY3CQLz2qXgYYmj0EF6xBegQIGrb+WsGFuQJ1GDvK04Q8bqDW14K8s
-	 rsxxXbdeuyVKNvzZdFVNjJ3uG/26QqwrzyS1RK32FxH/Mbp4hcuiJQfNRjdUGR4ZLc
-	 R8rj3lYhraCtyrFbhHBjQTYyVwe8hEEDDobE+xeg=
+	b=qGP1bIAUNHIKDrsVjNFru8BQyl4No4E7Q7JyIxM6PrQ+IVpq+yo4VR3C60bBhCDLd
+	 voOxOA1mf2QkwiY4oONvE8EBdEv6bIsHM7Y5O1i7SMtd/m3X18PgLyojobbgQQ2Cl6
+	 z7Sr0fsOe78Iyp+8YRMZxaWGf0CgabWchp5RGmSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alban Bedel <alban.bedel@lht.dlh.de>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 25/43] gpiolib: acpi: Fix gpio count with string references
-Date: Tue, 17 Feb 2026 21:32:05 +0100
-Message-ID: <20260217200007.437628788@linuxfoundation.org>
+	Evans Jahja <evansjahja13@gmail.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	=?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Thorsten Leemhuis <regressions@leemhuis.info>
+Subject: [PATCH 6.18 26/43] arm64: dts: mediatek: mt8183: Add missing endpoint IDs to display graph
+Date: Tue, 17 Feb 2026 21:32:06 +0100
+Message-ID: <20260217200007.474729104@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200006.470920131@linuxfoundation.org>
 References: <20260217200006.470920131@linuxfoundation.org>
@@ -46,45 +47,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alban Bedel <alban.bedel@lht.dlh.de>
+From: Otto Pflüger <otto.pflueger@abscue.de>
 
-[ Upstream commit c62e0658d458d8f100445445c3ddb106f3824a45 ]
+commit be0b304eeb8c5f77e4f98f64e58729d879195f2f upstream.
 
-Since commit 9880702d123f2 ("ACPI: property: Support using strings in
-reference properties") it is possible to use strings instead of local
-references. This work fine with single GPIO but not with arrays as
-acpi_gpio_package_count() didn't handle this case. Update it to handle
-strings like local references to cover this case as well.
+The endpoint IDs in the display graph are expected to match the
+associated display path number, i.e. all endpoints connected to
+mmsys_ep_main must have reg = <0> and all endpoints connected to
+mmsys_ep_ext must have reg = <1>.
 
-Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/20260129145944.3372777-1-alban.bedel@lht.dlh.de
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add the missing ID to all endpoints in the display graph, based on
+mt8365.dtsi as an existing example that does this correctly.
+
+Fixes: e72d63fa0563 ("arm64: dts: mediatek: mt8183: Migrate to display controller OF graph")
+Reported-by: Evans Jahja <evansjahja13@gmail.com>
+Closes: https://lore.kernel.org/linux-mediatek/CAAq5pW9o3itC0G16LnJO7KMAQ_XoqXUpB=cuJ_7e3-H11zKd5Q@mail.gmail.com/
+Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+[Angelo: Fixed dtbs_check issues]
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi |   37 +++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-acpi-core.c b/drivers/gpio/gpiolib-acpi-core.c
-index e64e21fd6bbaa..8110690ea69d0 100644
---- a/drivers/gpio/gpiolib-acpi-core.c
-+++ b/drivers/gpio/gpiolib-acpi-core.c
-@@ -1359,6 +1359,7 @@ static int acpi_gpio_package_count(const union acpi_object *obj)
- 	while (element < end) {
- 		switch (element->type) {
- 		case ACPI_TYPE_LOCAL_REFERENCE:
-+		case ACPI_TYPE_STRING:
- 			element += 3;
- 			fallthrough;
- 		case ACPI_TYPE_INTEGER:
--- 
-2.51.0
-
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -1812,15 +1812,23 @@
+ 				#size-cells = <0>;
+ 
+ 				port@0 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <0>;
+-					ovl_2l1_in: endpoint {
++
++					ovl_2l1_in: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&mmsys_ep_ext>;
+ 					};
+ 				};
+ 
+ 				port@1 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <1>;
+-					ovl_2l1_out: endpoint {
++
++					ovl_2l1_out: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&rdma1_in>;
+ 					};
+ 				};
+@@ -1872,15 +1880,23 @@
+ 				#size-cells = <0>;
+ 
+ 				port@0 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <0>;
+-					rdma1_in: endpoint {
++
++					rdma1_in: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&ovl_2l1_out>;
+ 					};
+ 				};
+ 
+ 				port@1 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <1>;
+-					rdma1_out: endpoint {
++
++					rdma1_out: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&dpi_in>;
+ 					};
+ 				};
+@@ -2076,15 +2092,24 @@
+ 				#size-cells = <0>;
+ 
+ 				port@0 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <0>;
+-					dpi_in: endpoint {
++
++					dpi_in: endpoint@1 {
++						reg = <1>;
+ 						remote-endpoint = <&rdma1_out>;
+ 					};
+ 				};
+ 
+ 				port@1 {
++					#address-cells = <1>;
++					#size-cells = <0>;
+ 					reg = <1>;
+-					dpi_out: endpoint { };
++
++					dpi_out: endpoint@1  {
++						reg = <1>;
++					};
+ 				};
+ 			};
+ 		};
 
 
