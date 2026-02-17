@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAE52773E4;
-	Tue, 17 Feb 2026 20:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633692DB78B;
+	Tue, 17 Feb 2026 20:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361329; cv=none; b=d2Sd8G3XjIdoyStzu2QgYj7eQYncAJnlj8qso3ren66Upis1TsctbDNqK8Vuy5jjHaHKGjWM7J4Gy1FbdJL6CpqxM4x8s99ut2UiZrDhgO/TaK4EYPCHwZUAsLj9hAWoBMifbaqsc3cfeC4BHdylyEARXbhQY6WGUFin5904hVs=
+	t=1771361332; cv=none; b=bj6p9UznJmfpY+fV3fAlvhg7NcnXmdO1gtmvaDlcA8afRUSLc2o/i3SKCRT81q47gn8MbancOwc6cpz6xLnJWvG6wb74S9sXYlb0oakzfz9Hyob97lP8YCBiVZvTL8F6MOd+ReSWCaJyDP9SI+eSclYWQeHamrPImLI+ISW6NRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361329; c=relaxed/simple;
-	bh=ERKWIJ7pgm+xbiims/KqrIdtbNrooNUujCPrykr3hYA=;
+	s=arc-20240116; t=1771361332; c=relaxed/simple;
+	bh=Wels6kfcn0lPsCGjyiWC6+0ZNTheZK583zcaYVOOUwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y32aAoMA+QvxHJ3ejjW37Zob1piXgs/cEOA9+4cWtV5U/GuSBzIimK2/rIAbOtaeYHe9OgRP2OD4FLXDsHwdzO7qYR3MG6HaH2X6PTYbKD5x1ApwhUdde60eWwMA81Huubz+EsLbDmbSQxPXBsnYiIDwy+HUscUk1VcoBgjdXTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKK4Aixw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCIri7t040lhB0TaLuk4ObS3VHaK3IfCV/pu3Ak5A5gZkYy11HTZy4IL6CELI8wdwPCwxq87R0JjjrwZiRkWG7eCb+3/J8XnME2r9v/+EubqzhVnL6NxE+gBPZfFKElnoJy9qhjoQhRQYwmFO5ZfRX3+hnnuMzeCjTg/4mIfsvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZ5qc5KR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKK4Aixw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11D5C4CEF7;
-	Tue, 17 Feb 2026 20:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZ5qc5KR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2478C4CEF7;
+	Tue, 17 Feb 2026 20:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361329;
-	bh=ERKWIJ7pgm+xbiims/KqrIdtbNrooNUujCPrykr3hYA=;
+	s=korg; t=1771361332;
+	bh=Wels6kfcn0lPsCGjyiWC6+0ZNTheZK583zcaYVOOUwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CKK4AixwX2k6mezjA0P9ZN703VCJlVgkUGb4v+ZOjVLtMYbgaK1UrTY31zuUMhAMt
-	 j2bajGDswKa82kWFbj0ii8UlvkNp8WdKnuYFxT2L+ag9O8zR2zbwjubKolGtCo6B5I
-	 qmrLcwEEW1aVofySp/Bt59grUELbxg/s/OhWPhH8=
+	b=yZ5qc5KRVWHyLyXj7xuN8G4eiwpO0OrTkEm7+wM1HcXSErp5MHePVu5wBUFttn7vI
+	 OvZ9pi10ah2pTguBlg7SlDH83FEag5KB4z3HxPbZN5YGci1LGTfugokq4yoDO4bBTl
+	 XeRuRXec+wEWaaC1fx0/vMmQd9UIhsGZPqhSyPAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tagir Garaev <tgaraev653@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 36/64] ASoC: Intel: sof_es8336: Add DMI quirk for Huawei BOD-WXX9
-Date: Tue, 17 Feb 2026 21:31:32 +0100
-Message-ID: <20260217200008.863604709@linuxfoundation.org>
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 6.1 27/64] cacheinfo: Remove of_node_put() for fw_token
+Date: Tue, 17 Feb 2026 21:31:23 +0100
+Message-ID: <20260217200008.540408772@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -51,73 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tagir Garaev <tgaraev653@gmail.com>
+From: Pierre Gondois <pierre.gondois@arm.com>
 
-[ Upstream commit 6b641122d31f9d33e7d60047ee0586d1659f3f54 ]
+commit 2613cc29c5723881ca603b1a3b50f0107010d5d6 upstream
 
-Add DMI entry for Huawei Matebook D (BOD-WXX9) with HEADPHONE_GPIO
-and DMIC quirks.
+fw_token is used for DT/ACPI systems to identify CPUs sharing caches.
+For DT based systems, fw_token is set to a pointer to a DT node.
 
-This device has ES8336 codec with:
-- GPIO 16 (headphone-enable) for headphone amplifier control
-- GPIO 17 (speakers-enable) for speaker amplifier control
-- GPIO 269 for jack detection IRQ
-- 2-channel DMIC
+commit 3da72e18371c ("cacheinfo: Decrement refcount in
+cache_setup_of_node()")
+doesn't increment the refcount of fw_token anymore in
+cache_setup_of_node(). fw_token is indeed used as a token and not
+as a (struct device_node*), so no reference to fw_token should be
+kept.
 
-Hardware investigation shows that both GPIO 16 and 17 are required
-for proper audio routing, as headphones and speakers share the same
-physical output (HPOL/HPOR) and are separated only via amplifier
-enable signals.
+However, [1] is triggered when hotplugging a CPU multiple times
+since cache_shared_cpu_map_remove() decrements the refcount to
+fw_token at each CPU unplugging, eventually reaching 0.
 
-RFC: Seeking advice on GPIO control issue:
+Remove of_node_put() for fw_token in cache_shared_cpu_map_remove().
 
-GPIO values change in driver (gpiod_get_value() shows logical value
-changes) but not physically (debugfs gpio shows no change). The same
-gpiod_set_value_cansleep() calls work correctly in probe context with
-msleep(), but fail when called from DAPM event callbacks.
+[1]
+------------[ cut here ]------------
+refcount_t: saturated; leaking memory.
+WARNING: CPU: 4 PID: 32 at lib/refcount.c:22 refcount_warn_saturate (lib/refcount.c:22 (discriminator 3))
+Modules linked in:
+CPU: 4 PID: 32 Comm: cpuhp/4 Tainted: G        W          6.1.0-rc1-14091-g9fdf2ca7b9c8 #76
+Hardware name: ARM LTD ARM Juno Development Platform/ARM Juno Development Platform, BIOS EDK II Oct 31 2022
+pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : refcount_warn_saturate (lib/refcount.c:22 (discriminator 3))
+lr : refcount_warn_saturate (lib/refcount.c:22 (discriminator 3))
+[...]
+Call trace:
+[...]
+of_node_release (drivers/of/dynamic.c:335)
+kobject_put (lib/kobject.c:677 lib/kobject.c:704 ./include/linux/kref.h:65 lib/kobject.c:721)
+of_node_put (drivers/of/dynamic.c:49)
+free_cache_attributes.part.0 (drivers/base/cacheinfo.c:712)
+cacheinfo_cpu_pre_down (drivers/base/cacheinfo.c:718)
+cpuhp_invoke_callback (kernel/cpu.c:247 (discriminator 4))
+cpuhp_thread_fun (kernel/cpu.c:785)
+smpboot_thread_fn (kernel/smpboot.c:164 (discriminator 3))
+kthread (kernel/kthread.c:376)
+ret_from_fork (arch/arm64/kernel/entry.S:861)
+---[ end trace 0000000000000000 ]---
 
-Context information from diagnostics:
-- in_atomic=0, in_interrupt=0, irqs_disabled=0
-- Process context: pipewire
-- GPIO 17 (speakers): changes in driver, no physical change
-- GPIO 16 (headphone): changes in driver, no physical change
-
-In Windows, audio switching works without visible GPIO changes,
-suggesting possible ACPI/firmware involvement.
-
-Any suggestions on how to properly control these GPIOs from DAPM
-events would be appreciated.
-
-Signed-off-by: Tagir Garaev <tgaraev653@gmail.com>
-Link: https://patch.msgid.link/20260201121728.16597-1-tgaraev653@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3da72e18371c ("cacheinfo: Decrement refcount in cache_setup_of_node()")
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
+Link: https://lore.kernel.org/r/20221116094958.2141072-1-pierre.gondois@arm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/boards/sof_es8336.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/base/cacheinfo.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/intel/boards/sof_es8336.c b/sound/soc/intel/boards/sof_es8336.c
-index 41dab5dcf79a3..1c71c23f347e7 100644
---- a/sound/soc/intel/boards/sof_es8336.c
-+++ b/sound/soc/intel/boards/sof_es8336.c
-@@ -332,6 +332,15 @@ static int sof_es8336_quirk_cb(const struct dmi_system_id *id)
-  * if the topology file is modified as well.
-  */
- static const struct dmi_system_id sof_es8336_quirk_table[] = {
-+	{
-+		.callback = sof_es8336_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HUAWEI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "BOD-WXX9"),
-+		},
-+		.driver_data = (void *)(SOF_ES8336_HEADPHONE_GPIO |
-+					SOF_ES8336_ENABLE_DMIC)
-+	},
- 	{
- 		.callback = sof_es8336_quirk_cb,
- 		.matches = {
--- 
-2.51.0
-
+--- a/drivers/base/cacheinfo.c
++++ b/drivers/base/cacheinfo.c
+@@ -409,8 +409,6 @@ static void cache_shared_cpu_map_remove(
+ 				}
+ 			}
+ 		}
+-		if (of_have_populated_dt())
+-			of_node_put(this_leaf->fw_token);
+ 	}
+ 
+ 	/* cpu is no longer populated in the shared map */
 
 
