@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01986A8D2;
-	Tue, 17 Feb 2026 20:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8096F29AB02;
+	Tue, 17 Feb 2026 20:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360772; cv=none; b=IeIsUWmqrLM50Wp3eEmNl8Wt5lVu8xVW8ZcQG/Y9XXZJ4DFlPkx9VSEgG0N6ZxIeZnCnKH3D+ncGJd1OfO7je3vvEyBg/1yjR7zcFX98o/xx/fftie4VcvDDAuNKglI33puEJB614ZeOKOjFJhjhdqoLTeGEL3VBHi4e2xZoGLM=
+	t=1771360775; cv=none; b=fxu/bgJkjQMv1oj7SLEnmfELSeDP3ZVOTVv7Z73llr77RWfk9kPsbl58bZPW5UAaqCZxnPdd2aymtP9AImvgqPXlb4M5UyxHf/+UTQw2uCKwU3yDDfGQ8Fg/+9MRIWmhu4ncASP5apH/EV8BLnmzeJbdchbSO5eErZYdE1IJTWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360772; c=relaxed/simple;
-	bh=pL96kdNC4vWZM+OGOAj2YyaQ8QZmE9UsGIfpWbPmQQ8=;
+	s=arc-20240116; t=1771360775; c=relaxed/simple;
+	bh=eQPunx98ELuFBYWl5oETePsgwOzuqHTGgaWViJmE6M8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hb7HfDNnL2fpCDLD/Eg+GGoqZI3euozhy+W9KNrWK9ety8gMI0gq7Q1L2JJt0ZbS6R6WTgFZ9+C3LZCTExkqT3m+zVNPVWFJLaLnuURGgO2M9CszdMhUoIpeBxJdlI55tIbndu/GgxUFBe9y5el9xQRsdHkEf/xogtJ538JqmrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksjvQ4Ew; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K3vdKl3dcarr6oCCsg3QsQvy7ChvzH6byBQcDlQNgrvtC/tWZXgDI0VsXzTHIvbojwTT8ghuqiYZ5SVkqu72EzeFSnywvc5RLTMb7rH50N7sNcESa4g+RM+Go8iyEQXFIou6Zm0aUMSDDg7E1EcYNi71ft69buGUToLi5YTYRgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olBjcCp9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksjvQ4Ew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742B5C2BC86;
-	Tue, 17 Feb 2026 20:39:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olBjcCp9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB259C4CEF7;
+	Tue, 17 Feb 2026 20:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360771;
-	bh=pL96kdNC4vWZM+OGOAj2YyaQ8QZmE9UsGIfpWbPmQQ8=;
+	s=korg; t=1771360775;
+	bh=eQPunx98ELuFBYWl5oETePsgwOzuqHTGgaWViJmE6M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksjvQ4EwzYl1rJhZ6iwZXMIYNyfN2iFWRsYz2SE4nImbZRuTDFfo10000jXhbNJ40
-	 6ortwMEfzpuBTe4JdP6cyfp7kuxO3/wJx0o0xNn9JriJeHahYAd1WN0L6ODVf+PEr5
-	 cOAGIUtS/ufJP4+NtCFOq1WfL7N/SeoLJJtA0mqE=
+	b=olBjcCp9JedwhoWMhGdJznStKM/qknb/L3ns94H24YyZEFlUYaidbtsrEVln2/6zu
+	 gs5va/mmaCboWBowO2uySUWN30pVkd5ntMfVNeKzless8E6kmaJX+5d3o6HeKLPSKQ
+	 Wa82KpIAQdR9ntlEr0Lsmu3nB8txsJuadbK4ErAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Song <liu.song13@zte.com.cn>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	stable@kernel.org,
+	Brahmajit Das <listout@listout.xyz>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 03/39] PCI: endpoint: Avoid creating sub-groups asynchronously
-Date: Tue, 17 Feb 2026 21:30:25 +0100
-Message-ID: <20260217200004.356788669@linuxfoundation.org>
+Subject: =?UTF-8?q?=5BPATCH=206=2E6=2012/39=5D=20=3D=3FUTF-8=3Fq=3Fdrm/tegra=3A=3D20hdmi=3A=3D20sor=3A=3D20Fix=3D20error=3A=3D20variable=3D20=3F=3D=20=3D=3FUTF-8=3Fq=3F=3DE2=3D80=3D98j=3DE2=3D80=3D99=3D20set=3D20but=3D20not=3D20used=3F=3D?=
+Date: Tue, 17 Feb 2026 21:30:34 +0100
+Message-ID: <20260217200004.698903271@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -47,106 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Song <liu.song13@zte.com.cn>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit 7c5c7d06bd1f86d2c3ebe62be903a4ba42db4d2c ]
+[ Upstream commit 1beee8d0c263b3e239c8d6616e4f8bb700bed658 ]
 
-The asynchronous creation of sub-groups by a delayed work could lead to a
-NULL pointer dereference when the driver directory is removed before the
-work completes.
+The variable j is set, however never used in or outside the loop, thus
+resulting in dead code.
+Building with GCC 16 results in a build error due to
+-Werror=unused-but-set-variable= enabled by default.
+This patch clean up the dead code and fixes the build error.
 
-The crash can be easily reproduced with the following commands:
+Example build log:
+drivers/gpu/drm/tegra/sor.c:1867:19: error: variable ‘j’ set but not used [-Werror=unused-but-set-variable=]
+ 1867 |         size_t i, j;
+      |                   ^
 
-  # cd /sys/kernel/config/pci_ep/functions/pci_epf_test
-  # for i in {1..20}; do mkdir test && rmdir test; done
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000088
-  ...
-  Call Trace:
-   configfs_register_group+0x3d/0x190
-   pci_epf_cfs_work+0x41/0x110
-   process_one_work+0x18f/0x350
-   worker_thread+0x25a/0x3a0
-
-Fix this issue by using configfs_add_default_group() API which does not
-have the deadlock problem as configfs_register_group() and does not require
-the delayed work handler.
-
-Fixes: e85a2d783762 ("PCI: endpoint: Add support in configfs to associate two EPCs with EPF")
-Signed-off-by: Liu Song <liu.song13@zte.com.cn>
-[mani: slightly reworded the description and added stable list]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20250710143845409gLM6JdlwPhlHG9iX3F6jK@zte.com.cn
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250901212020.3757519-1-listout@listout.xyz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/pci-ep-cfs.c |   15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/tegra/hdmi.c | 4 ++--
+ drivers/gpu/drm/tegra/sor.c  | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/pci/endpoint/pci-ep-cfs.c
-+++ b/drivers/pci/endpoint/pci-ep-cfs.c
-@@ -23,7 +23,6 @@ struct pci_epf_group {
- 	struct config_group group;
- 	struct config_group primary_epc_group;
- 	struct config_group secondary_epc_group;
--	struct delayed_work cfs_work;
- 	struct pci_epf *epf;
- 	int index;
- };
-@@ -100,7 +99,7 @@ static struct config_group
- 	secondary_epc_group = &epf_group->secondary_epc_group;
- 	config_group_init_type_name(secondary_epc_group, "secondary",
- 				    &pci_secondary_epc_type);
--	configfs_register_group(&epf_group->group, secondary_epc_group);
-+	configfs_add_default_group(secondary_epc_group, &epf_group->group);
- 
- 	return secondary_epc_group;
- }
-@@ -160,7 +159,7 @@ static struct config_group
- 
- 	config_group_init_type_name(primary_epc_group, "primary",
- 				    &pci_primary_epc_type);
--	configfs_register_group(&epf_group->group, primary_epc_group);
-+	configfs_add_default_group(primary_epc_group, &epf_group->group);
- 
- 	return primary_epc_group;
- }
-@@ -561,15 +560,13 @@ static void pci_ep_cfs_add_type_group(st
- 		return;
- 	}
- 
--	configfs_register_group(&epf_group->group, group);
-+	configfs_add_default_group(group, &epf_group->group);
- }
- 
--static void pci_epf_cfs_work(struct work_struct *work)
-+static void pci_epf_cfs_add_sub_groups(struct pci_epf_group *epf_group)
+diff --git a/drivers/gpu/drm/tegra/hdmi.c b/drivers/gpu/drm/tegra/hdmi.c
+index 58c2ba94e7dd6..2451c9b67024d 100644
+--- a/drivers/gpu/drm/tegra/hdmi.c
++++ b/drivers/gpu/drm/tegra/hdmi.c
+@@ -656,7 +656,7 @@ static void tegra_hdmi_write_infopack(struct tegra_hdmi *hdmi, const void *data,
  {
--	struct pci_epf_group *epf_group;
- 	struct config_group *group;
+ 	const u8 *ptr = data;
+ 	unsigned long offset;
+-	size_t i, j;
++	size_t i;
+ 	u32 value;
  
--	epf_group = container_of(work, struct pci_epf_group, cfs_work.work);
- 	group = pci_ep_cfs_add_primary_group(epf_group);
- 	if (IS_ERR(group)) {
- 		pr_err("failed to create 'primary' EPC interface\n");
-@@ -628,9 +625,7 @@ static struct config_group *pci_epf_make
+ 	switch (ptr[0]) {
+@@ -689,7 +689,7 @@ static void tegra_hdmi_write_infopack(struct tegra_hdmi *hdmi, const void *data,
+ 	 * - subpack_low: bytes 0 - 3
+ 	 * - subpack_high: bytes 4 - 6 (with byte 7 padded to 0x00)
+ 	 */
+-	for (i = 3, j = 0; i < size; i += 7, j += 8) {
++	for (i = 3; i < size; i += 7) {
+ 		size_t rem = size - i, num = min_t(size_t, rem, 4);
  
- 	kfree(epf_name);
+ 		value = tegra_hdmi_subpack(&ptr[i], num);
+diff --git a/drivers/gpu/drm/tegra/sor.c b/drivers/gpu/drm/tegra/sor.c
+index 61b437a84806e..1b03f8ca80a10 100644
+--- a/drivers/gpu/drm/tegra/sor.c
++++ b/drivers/gpu/drm/tegra/sor.c
+@@ -1861,7 +1861,7 @@ static void tegra_sor_hdmi_write_infopack(struct tegra_sor *sor,
+ {
+ 	const u8 *ptr = data;
+ 	unsigned long offset;
+-	size_t i, j;
++	size_t i;
+ 	u32 value;
  
--	INIT_DELAYED_WORK(&epf_group->cfs_work, pci_epf_cfs_work);
--	queue_delayed_work(system_wq, &epf_group->cfs_work,
--			   msecs_to_jiffies(1));
-+	pci_epf_cfs_add_sub_groups(epf_group);
+ 	switch (ptr[0]) {
+@@ -1894,7 +1894,7 @@ static void tegra_sor_hdmi_write_infopack(struct tegra_sor *sor,
+ 	 * - subpack_low: bytes 0 - 3
+ 	 * - subpack_high: bytes 4 - 6 (with byte 7 padded to 0x00)
+ 	 */
+-	for (i = 3, j = 0; i < size; i += 7, j += 8) {
++	for (i = 3; i < size; i += 7) {
+ 		size_t rem = size - i, num = min_t(size_t, rem, 4);
  
- 	return &epf_group->group;
- 
+ 		value = tegra_sor_hdmi_subpack(&ptr[i], num);
+-- 
+2.51.0
+
 
 
