@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A542129A1;
-	Tue, 17 Feb 2026 20:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73608259CBD;
+	Tue, 17 Feb 2026 20:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361368; cv=none; b=pkUUoWigmN8jz7ALnZicTCGfn3gFaCoSp8szcVBLVnE/OBenrngS287gEU/OysZZJncmb/ioHE2mcssMv5YdCu/VBEgCi1Mv4s23OK8uduZlmpllkUcyDCy9cO4UTTyJXF4iFYrgYk8HEOxpZy6A7c19iMHYJHXGwlIfbHNkj9Y=
+	t=1771361372; cv=none; b=WNwOj2BfO+GhjO7CRV+bkvgD8zyWeOKd4O7N7LpawlsefRXGR51GRXXBjnKrVgR9YPD7DDw+yCwXNbsK/ppbrts46KJRcfNiwQ2CoHcPiAYt044Xlvw1H/t+cOw62eKxxVGveqUpp7VeS638OQRl9UKMVpxN59SOHzILKv0Ffr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361368; c=relaxed/simple;
-	bh=wDzh0XyHSUH9lH0oyrFYMMDm46xrEyIFsK84OorzNvE=;
+	s=arc-20240116; t=1771361372; c=relaxed/simple;
+	bh=LNIUevo1lw7Hd1tDYIdFie/PRUI7x2mQ6WW/ARigFbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4FKLqPGAAbMmE3z8N0GMoejqsRYCXtc5omaz55gQLO26a2tCVVYPdaQHjAKUHPlW0LnrWfLUuPQ+H65TP8BaAl27lWeQU0WDSdvYSxgg6mMSs1Gusf8rIOHnnbOYW08qzilE5hTGXIW9bKCPwsbL4ZJh68XcTZ3Xa4obkfsKrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5Ddy/VX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j3wclx17IFmcXuqJv3x8Tk5MINlPDsllJOtOZDd4+IN62dyEwTPMA9bNg+TJq1gbbGp0kqcz6ae/khmNnfXZNebBtibo6PvIFeqIfnUrVtDp1R2QwQn8HbZPUemeRs0/AJuyubJI8VNnAG/agcNepFZ3zNxZ1Ct0OYJl6RVeR1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoyLuIg0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5Ddy/VX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24918C4CEF7;
-	Tue, 17 Feb 2026 20:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoyLuIg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69D6C4CEF7;
+	Tue, 17 Feb 2026 20:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361368;
-	bh=wDzh0XyHSUH9lH0oyrFYMMDm46xrEyIFsK84OorzNvE=;
+	s=korg; t=1771361372;
+	bh=LNIUevo1lw7Hd1tDYIdFie/PRUI7x2mQ6WW/ARigFbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5Ddy/VXUW9Rry1q72tATUbeb+1mn6zzYE1E/mir7YqpYlgWmoQR5fXKWD/0TFXHq
-	 mWD3QQ0ycUjiNQR0UYUe5QpXBKJJ3K+Es9jP6eQm2Xc1x4Hh8+zvsBepcTez2aDrVt
-	 GJGFB94w8ws0yJD7U2zEvU9kfl2ApFqT6ZifGgJs=
+	b=ZoyLuIg0NkrbKpv2vWoH2RAJZ/eXWro4thTZ53fATzKMznYCkqA+E8bUqa0ZlIiVx
+	 ETN2N+OQaK1T+USwPmZ4e9R0LOAj0i1oIkQzRU/nyfaqLMPtkJTtKE2HQw7FiaiqvR
+	 vg70AQAIfgsJEh+ouVr4HIHzmHLSu+OMYh9/WS9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 15/18] Revert "f2fs: block cache/dio write during f2fs_enable_checkpoint()"
-Date: Tue, 17 Feb 2026 21:32:11 +0100
-Message-ID: <20260217200003.287445122@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.19 16/18] USB: serial: option: add Telit FN920C04 RNDIS compositions
+Date: Tue, 17 Feb 2026 21:32:12 +0100
+Message-ID: <20260217200003.326437936@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.683975158@linuxfoundation.org>
 References: <20260217200002.683975158@linuxfoundation.org>
@@ -52,156 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-[ Upstream commit 3996b70209f145bfcf2afc7d05dd92c27b233b48 ]
+commit 509f403f3ccec14188036212118651bf23599396 upstream.
 
-This reverts commit 196c81fdd438f7ac429d5639090a9816abb9760a.
+Add the following compositions:
 
-Original patch may cause below deadlock, revert it.
+0x10a1: RNDIS + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  9 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a1 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=d128dba9
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-write				remount
-- write_begin
- - lock_page  --- lock A
- - prepare_write_begin
-  - f2fs_map_lock
-				- f2fs_enable_checkpoint
-				 - down_write(cp_enable_rwsem)  --- lock B
-				 - sync_inode_sb
-				  - writepages
-				   - lock_page			--- lock A
-   - down_read(cp_enable_rwsem)  --- lock A
+0x10a6: RNDIS + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 10 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a6 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=d128dba9
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Cc: stable@kernel.org
-Fixes: 196c81fdd438 ("f2fs: block cache/dio write during f2fs_enable_checkpoint()")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ drop tracing bits ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+0x10ab: RNDIS + tty (AT) + tty (diag) + DPL (Data Packet Logging) + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 11 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10ab Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=d128dba9
+C:  #Ifs= 6 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c  |    2 --
- fs/f2fs/f2fs.h  |    3 +--
- fs/f2fs/super.c |   38 ++++++++------------------------------
- 3 files changed, 9 insertions(+), 34 deletions(-)
+ drivers/usb/serial/option.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1424,7 +1424,6 @@ static int __allocate_data_block(struct
- 
- static void f2fs_map_lock(struct f2fs_sb_info *sbi, int flag)
- {
--	f2fs_down_read(&sbi->cp_enable_rwsem);
- 	if (flag == F2FS_GET_BLOCK_PRE_AIO)
- 		f2fs_down_read(&sbi->node_change);
- 	else
-@@ -1437,7 +1436,6 @@ static void f2fs_map_unlock(struct f2fs_
- 		f2fs_up_read(&sbi->node_change);
- 	else
- 		f2fs_unlock_op(sbi);
--	f2fs_up_read(&sbi->cp_enable_rwsem);
- }
- 
- int f2fs_get_block_locked(struct dnode_of_data *dn, pgoff_t index)
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -287,7 +287,7 @@ enum {
- #define DEF_CP_INTERVAL			60	/* 60 secs */
- #define DEF_IDLE_INTERVAL		5	/* 5 secs */
- #define DEF_DISABLE_INTERVAL		5	/* 5 secs */
--#define DEF_ENABLE_INTERVAL		5	/* 5 secs */
-+#define DEF_ENABLE_INTERVAL		16	/* 16 secs */
- #define DEF_DISABLE_QUICK_INTERVAL	1	/* 1 secs */
- #define DEF_UMOUNT_DISCARD_TIMEOUT	5	/* 5 secs */
- 
-@@ -1720,7 +1720,6 @@ struct f2fs_sb_info {
- 	long interval_time[MAX_TIME];		/* to store thresholds */
- 	struct ckpt_req_control cprc_info;	/* for checkpoint request control */
- 	struct cp_stats cp_stats;		/* for time stat of checkpoint */
--	struct f2fs_rwsem cp_enable_rwsem;	/* block cache/dio write */
- 
- 	struct inode_management im[MAX_INO_ENTRY];	/* manage inode cache */
- 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2636,11 +2636,10 @@ restore_flag:
- static int f2fs_enable_checkpoint(struct f2fs_sb_info *sbi)
- {
- 	unsigned int nr_pages = get_pages(sbi, F2FS_DIRTY_DATA) / 16;
--	long long start, writeback, lock, sync_inode, end;
-+	long long start, writeback, end;
- 	int ret;
- 
--	f2fs_info(sbi, "%s start, meta: %lld, node: %lld, data: %lld",
--					__func__,
-+	f2fs_info(sbi, "f2fs_enable_checkpoint() starts, meta: %lld, node: %lld, data: %lld",
- 					get_pages(sbi, F2FS_DIRTY_META),
- 					get_pages(sbi, F2FS_DIRTY_NODES),
- 					get_pages(sbi, F2FS_DIRTY_DATA));
-@@ -2659,18 +2658,11 @@ static int f2fs_enable_checkpoint(struct
- 	}
- 	writeback = ktime_get();
- 
--	f2fs_down_write(&sbi->cp_enable_rwsem);
--
--	lock = ktime_get();
--
--	if (get_pages(sbi, F2FS_DIRTY_DATA))
--		sync_inodes_sb(sbi->sb);
-+	sync_inodes_sb(sbi->sb);
- 
- 	if (unlikely(get_pages(sbi, F2FS_DIRTY_DATA)))
--		f2fs_warn(sbi, "%s: has some unwritten data: %lld",
--			__func__, get_pages(sbi, F2FS_DIRTY_DATA));
--
--	sync_inode = ktime_get();
-+		f2fs_warn(sbi, "checkpoint=enable has some unwritten data: %lld",
-+					get_pages(sbi, F2FS_DIRTY_DATA));
- 
- 	f2fs_down_write(&sbi->gc_lock);
- 	f2fs_dirty_to_prefree(sbi);
-@@ -2679,13 +2671,6 @@ static int f2fs_enable_checkpoint(struct
- 	set_sbi_flag(sbi, SBI_IS_DIRTY);
- 	f2fs_up_write(&sbi->gc_lock);
- 
--	f2fs_info(sbi, "%s sync_fs, meta: %lld, imeta: %lld, node: %lld, dents: %lld, qdata: %lld",
--					__func__,
--					get_pages(sbi, F2FS_DIRTY_META),
--					get_pages(sbi, F2FS_DIRTY_IMETA),
--					get_pages(sbi, F2FS_DIRTY_NODES),
--					get_pages(sbi, F2FS_DIRTY_DENTS),
--					get_pages(sbi, F2FS_DIRTY_QDATA));
- 	ret = f2fs_sync_fs(sbi->sb, 1);
- 	if (ret)
- 		f2fs_err(sbi, "%s sync_fs failed, ret: %d", __func__, ret);
-@@ -2693,17 +2678,11 @@ static int f2fs_enable_checkpoint(struct
- 	/* Let's ensure there's no pending checkpoint anymore */
- 	f2fs_flush_ckpt_thread(sbi);
- 
--	f2fs_up_write(&sbi->cp_enable_rwsem);
--
- 	end = ktime_get();
- 
--	f2fs_info(sbi, "%s end, writeback:%llu, "
--				"lock:%llu, sync_inode:%llu, sync_fs:%llu",
--				__func__,
--				ktime_ms_delta(writeback, start),
--				ktime_ms_delta(lock, writeback),
--				ktime_ms_delta(sync_inode, lock),
--				ktime_ms_delta(end, sync_inode));
-+	f2fs_info(sbi, "f2fs_enable_checkpoint() finishes, writeback:%llu, sync:%llu",
-+					ktime_ms_delta(writeback, start),
-+					ktime_ms_delta(end, writeback));
- 	return ret;
- }
- 
-@@ -4904,7 +4883,6 @@ try_onemore:
- 	init_f2fs_rwsem(&sbi->node_change);
- 	spin_lock_init(&sbi->stat_lock);
- 	init_f2fs_rwsem(&sbi->cp_rwsem);
--	init_f2fs_rwsem(&sbi->cp_enable_rwsem);
- 	init_f2fs_rwsem(&sbi->quota_sem);
- 	init_waitqueue_head(&sbi->cp_wait);
- 	spin_lock_init(&sbi->error_lock);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1401,12 +1401,16 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a1, 0xff),	/* Telit FN20C04 (RNDIS) */
++	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a2, 0xff),	/* Telit FN920C04 (MBIM) */
+ 	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a3, 0xff),	/* Telit FN920C04 (ECM) */
+ 	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a6, 0xff),	/* Telit FN920C04 (RNDIS) */
++	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a7, 0xff),	/* Telit FN920C04 (MBIM) */
+ 	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a8, 0xff),	/* Telit FN920C04 (ECM) */
+@@ -1415,6 +1419,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10aa, 0xff),	/* Telit FN920C04 (MBIM) */
+ 	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10ab, 0xff),	/* Telit FN920C04 (RNDIS) */
++	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10b0, 0xff, 0xff, 0x30),	/* Telit FE990B (rmnet) */
+ 	  .driver_info = NCTRL(5) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10b0, 0xff, 0xff, 0x40) },
 
 
