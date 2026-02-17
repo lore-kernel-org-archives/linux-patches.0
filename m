@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0C93542E2;
-	Tue, 17 Feb 2026 12:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD614C6C;
+	Tue, 17 Feb 2026 12:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771331627; cv=none; b=DM/KBWUjKdvqvMlwhsw51BhEPtTbVTa6MsnEABn5HXD47mrS1gO//KfULPmFVVMIpfuA6fy8Bo2nSFH9fmQRB4THkNK7ZnqjuxJK2EDmPanksIo9g1DscwSuvRn1cv7qOd/1DXXRo+kt/1tS7Uyz939ruAPWVdn4CUrZO6TeE0g=
+	t=1771331633; cv=none; b=a+DQxFr8d+B+EaDBQQt62FUB5m4GsU6kaXN5Vh8d/1JGGx8dDSw8A5LBOd5v/alD25/u1l1ZYWgjJiozEkU0ZWR5b4eRUPirFG5il7ajNLCK9nopt2tOm2QQeb3oskaezYDRoai2MkoqWGBmnwDZB11OYunAd+9bDXzd9xLQkq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771331627; c=relaxed/simple;
-	bh=g66xpWz4v322SSO+MMrZ4M3ZHcBS9XovXUcYiKTXiUM=;
+	s=arc-20240116; t=1771331633; c=relaxed/simple;
+	bh=QrEKdO0bkoESQUgN8doxYwY+YjoRwGATC86iFSRLX7I=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=gWoznqjEiOPF40sO0V3/r7sllW1/4gALjomVF0lec6o9HmXSN6Dayrxdy4auGwC1P21XOPeVjz+hiu8GV6pNuKbn4aIPZGdrHGLoJRtrHgRLrFqqS7qhOJFxRaGFdTSk1BjhYwY0CUFo4w1CBtkj4yDr3RaLsXUAAlyWT14nBE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qBMgYvb; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=O+Rxu0cSZtV7XOFuD2DZCekzWj7DV8iLcmvy7pmzcIamm/u4wzKUiHGmXufYXeAKMb8K28BIqFWE2upmhhunG1Fhq54O2yGV7og8SLWFduyfM+DUrjcScAsqCHHB8zs4Pl74FCuJ7Td/7PZBPHHzKfU9QHPV4l2a+PYuRvISXaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMVDGCWX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qBMgYvb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48BDC2BC87;
-	Tue, 17 Feb 2026 12:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMVDGCWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EACC4CEF7;
+	Tue, 17 Feb 2026 12:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771331627;
-	bh=g66xpWz4v322SSO+MMrZ4M3ZHcBS9XovXUcYiKTXiUM=;
+	s=korg; t=1771331633;
+	bh=QrEKdO0bkoESQUgN8doxYwY+YjoRwGATC86iFSRLX7I=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=0qBMgYvbS8HKzwTpnxBrrODIjq8t7f1DdFhWjRvRLMNkZK4mxJgBh0FDg/DlsMFjs
-	 WJDC4YZY79hSEx08h3oAGe53NllMT85VuWuBt0VS/PEdrVDa8WZbm/Up1lYIHcnxES
-	 F/kVgagn0H64IAXJu/apeJX1Sucxt2GOb+0+IyIY=
-Subject: Patch "devlink: rate: Unset parent pointer in devl_rate_nodes_destroy" has been added to the 6.1-stable tree
-To: 1468888505@139.com,cjubran@nvidia.com,davem@davemloft.net,dlinkin@nvidia.com,edumazet@google.com,gregkh@linuxfoundation.org,jiri@nvidia.com,kuba@kernel.org,pabeni@redhat.com,patches@lists.linux.dev,shayd@nvidia.com,tariqt@nvidia.com,vladbu@nvidia.com
+	b=oMVDGCWX2xe+b3/WzdaNLCnS7vkE02rAGk8OaaUbkfWiQRftuua8h1Q5B6IR38TeE
+	 WVIkJG++jaD/uG8WQqQBhYukm47L3NT+5lqgBOIVHEdwDLFpkLUSZirVXlmATJcBuv
+	 N8cXI7Fs/4DWSFKEdP2nJ67GIDeN6cSVaBHSKwPk=
+Subject: Patch "ksmbd: set ATTR_CTIME flags when setting mtime" has been added to the 6.1-stable tree
+To: 1468888505@139.com,ddiss@suse.de,gregkh@linuxfoundation.org,linkinjeon@kernel.org,patches@lists.linux.dev,senozhatsky@chromium.org,sfrench@samba.org,stfrench@microsoft.com,tom@talpey.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Tue, 17 Feb 2026 13:33:38 +0100
-In-Reply-To: <20260210030234.1532584-1-1468888505@139.com>
-Message-ID: <2026021738-petticoat-pacifist-7af8@gregkh>
+Date: Tue, 17 Feb 2026 13:33:39 +0100
+In-Reply-To: <20260211055437.2798668-1-1468888505@139.com>
+Message-ID: <2026021738-unable-patriarch-4d0b@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,148 +44,124 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    devlink: rate: Unset parent pointer in devl_rate_nodes_destroy
+    ksmbd: set ATTR_CTIME flags when setting mtime
 
 to the 6.1-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     devlink-rate-unset-parent-pointer-in-devl_rate_nodes_destroy.patch
+     ksmbd-set-attr_ctime-flags-when-setting-mtime.patch
 and it can be found in the queue-6.1 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-215594-greg=kroah.com@vger.kernel.org Tue Feb 10 04:02:55 2026
+From stable+bounces-215750-greg=kroah.com@vger.kernel.org Wed Feb 11 06:54:55 2026
 From: Li hongliang <1468888505@139.com>
-Date: Tue, 10 Feb 2026 11:02:34 +0800
-Subject: devlink: rate: Unset parent pointer in devl_rate_nodes_destroy
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, shayd@nvidia.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, jiri@nvidia.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, dlinkin@nvidia.com, vladbu@nvidia.com, netdev@vger.kernel.org, cjubran@nvidia.com, tariqt@nvidia.com
-Message-ID: <20260210030234.1532584-1-1468888505@139.com>
+Date: Wed, 11 Feb 2026 13:54:37 +0800
+Subject: ksmbd: set ATTR_CTIME flags when setting mtime
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, linkinjeon@kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, sfrench@samba.org, senozhatsky@chromium.org, tom@talpey.com, ddiss@suse.de, linux-cifs@vger.kernel.org, stfrench@microsoft.com
+Message-ID: <20260211055437.2798668-1-1468888505@139.com>
 
-From: Shay Drory <shayd@nvidia.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit f94c1a114ac209977bdf5ca841b98424295ab1f0 ]
+[ Upstream commit 21e46a79bbe6c4e1aa73b3ed998130f2ff07b128 ]
 
-The function devl_rate_nodes_destroy is documented to "Unset parent for
-all rate objects". However, it was only calling the driver-specific
-`rate_leaf_parent_set` or `rate_node_parent_set` ops and decrementing
-the parent's refcount, without actually setting the
-`devlink_rate->parent` pointer to NULL.
+David reported that the new warning from setattr_copy_mgtime is coming
+like the following.
 
-This leaves a dangling pointer in the `devlink_rate` struct, which cause
-refcount error in netdevsim[1] and mlx5[2]. In addition, this is
-inconsistent with the behavior of `devlink_nl_rate_parent_node_set`,
-where the parent pointer is correctly cleared.
+[  113.215316] ------------[ cut here ]------------
+[  113.215974] WARNING: CPU: 1 PID: 31 at fs/attr.c:300 setattr_copy+0x1ee/0x200
+[  113.219192] CPU: 1 UID: 0 PID: 31 Comm: kworker/1:1 Not tainted 6.13.0-rc1+ #234
+[  113.220127] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
+[  113.221530] Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
+[  113.222220] RIP: 0010:setattr_copy+0x1ee/0x200
+[  113.222833] Code: 24 28 49 8b 44 24 30 48 89 53 58 89 43 6c 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 48 89 df e8 77 d6 ff ff e9 cd fe ff ff <0f> 0b e9 be fe ff ff 66 0
+[  113.225110] RSP: 0018:ffffaf218010fb68 EFLAGS: 00010202
+[  113.225765] RAX: 0000000000000120 RBX: ffffa446815f8568 RCX: 0000000000000003
+[  113.226667] RDX: ffffaf218010fd38 RSI: ffffa446815f8568 RDI: ffffffff94eb03a0
+[  113.227531] RBP: ffffaf218010fb90 R08: 0000001a251e217d R09: 00000000675259fa
+[  113.228426] R10: 0000000002ba8a6d R11: ffffa4468196c7a8 R12: ffffaf218010fd38
+[  113.229304] R13: 0000000000000120 R14: ffffffff94eb03a0 R15: 0000000000000000
+[  113.230210] FS:  0000000000000000(0000) GS:ffffa44739d00000(0000) knlGS:0000000000000000
+[  113.231215] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  113.232055] CR2: 00007efe0053d27e CR3: 000000000331a000 CR4: 00000000000006b0
+[  113.232926] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  113.233812] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  113.234797] Call Trace:
+[  113.235116]  <TASK>
+[  113.235393]  ? __warn+0x73/0xd0
+[  113.235802]  ? setattr_copy+0x1ee/0x200
+[  113.236299]  ? report_bug+0xf3/0x1e0
+[  113.236757]  ? handle_bug+0x4d/0x90
+[  113.237202]  ? exc_invalid_op+0x13/0x60
+[  113.237689]  ? asm_exc_invalid_op+0x16/0x20
+[  113.238185]  ? setattr_copy+0x1ee/0x200
+[  113.238692]  btrfs_setattr+0x80/0x820 [btrfs]
+[  113.239285]  ? get_stack_info_noinstr+0x12/0xf0
+[  113.239857]  ? __module_address+0x22/0xa0
+[  113.240368]  ? handle_ksmbd_work+0x6e/0x460 [ksmbd]
+[  113.240993]  ? __module_text_address+0x9/0x50
+[  113.241545]  ? __module_address+0x22/0xa0
+[  113.242033]  ? unwind_next_frame+0x10e/0x920
+[  113.242600]  ? __pfx_stack_trace_consume_entry+0x10/0x10
+[  113.243268]  notify_change+0x2c2/0x4e0
+[  113.243746]  ? stack_depot_save_flags+0x27/0x730
+[  113.244339]  ? set_file_basic_info+0x130/0x2b0 [ksmbd]
+[  113.244993]  set_file_basic_info+0x130/0x2b0 [ksmbd]
+[  113.245613]  ? process_scheduled_works+0xbe/0x310
+[  113.246181]  ? worker_thread+0x100/0x240
+[  113.246696]  ? kthread+0xc8/0x100
+[  113.247126]  ? ret_from_fork+0x2b/0x40
+[  113.247606]  ? ret_from_fork_asm+0x1a/0x30
+[  113.248132]  smb2_set_info+0x63f/0xa70 [ksmbd]
 
-This patch fixes the issue by explicitly setting `devlink_rate->parent`
-to NULL after notifying the driver, thus fulfilling the function's
-documented behavior for all rate objects.
+ksmbd is trying to set the atime and mtime via notify_change without also
+setting the ctime. so This patch add ATTR_CTIME flags when setting mtime
+to avoid a warning.
 
-[1]
-repro steps:
-echo 1 > /sys/bus/netdevsim/new_device
-devlink dev eswitch set netdevsim/netdevsim1 mode switchdev
-echo 1 > /sys/bus/netdevsim/devices/netdevsim1/sriov_numvfs
-devlink port function rate add netdevsim/netdevsim1/test_node
-devlink port function rate set netdevsim/netdevsim1/128 parent test_node
-echo 1 > /sys/bus/netdevsim/del_device
-
-dmesg:
-refcount_t: decrement hit 0; leaking memory.
-WARNING: CPU: 8 PID: 1530 at lib/refcount.c:31 refcount_warn_saturate+0x42/0xe0
-CPU: 8 UID: 0 PID: 1530 Comm: bash Not tainted 6.18.0-rc4+ #1 NONE
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:refcount_warn_saturate+0x42/0xe0
-Call Trace:
- <TASK>
- devl_rate_leaf_destroy+0x8d/0x90
- __nsim_dev_port_del+0x6c/0x70 [netdevsim]
- nsim_dev_reload_destroy+0x11c/0x140 [netdevsim]
- nsim_drv_remove+0x2b/0xb0 [netdevsim]
- device_release_driver_internal+0x194/0x1f0
- bus_remove_device+0xc6/0x130
- device_del+0x159/0x3c0
- device_unregister+0x1a/0x60
- del_device_store+0x111/0x170 [netdevsim]
- kernfs_fop_write_iter+0x12e/0x1e0
- vfs_write+0x215/0x3d0
- ksys_write+0x5f/0xd0
- do_syscall_64+0x55/0x10f0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-[2]
-devlink dev eswitch set pci/0000:08:00.0 mode switchdev
-devlink port add pci/0000:08:00.0 flavour pcisf pfnum 0 sfnum 1000
-devlink port function rate add pci/0000:08:00.0/group1
-devlink port function rate set pci/0000:08:00.0/32768 parent group1
-modprobe -r mlx5_ib mlx5_fwctl mlx5_core
-
-dmesg:
-refcount_t: decrement hit 0; leaking memory.
-WARNING: CPU: 7 PID: 16151 at lib/refcount.c:31 refcount_warn_saturate+0x42/0xe0
-CPU: 7 UID: 0 PID: 16151 Comm: bash Not tainted 6.17.0-rc7_for_upstream_min_debug_2025_10_02_12_44 #1 NONE
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-RIP: 0010:refcount_warn_saturate+0x42/0xe0
-Call Trace:
- <TASK>
- devl_rate_leaf_destroy+0x8d/0x90
- mlx5_esw_offloads_devlink_port_unregister+0x33/0x60 [mlx5_core]
- mlx5_esw_offloads_unload_rep+0x3f/0x50 [mlx5_core]
- mlx5_eswitch_unload_sf_vport+0x40/0x90 [mlx5_core]
- mlx5_sf_esw_event+0xc4/0x120 [mlx5_core]
- notifier_call_chain+0x33/0xa0
- blocking_notifier_call_chain+0x3b/0x50
- mlx5_eswitch_disable_locked+0x50/0x110 [mlx5_core]
- mlx5_eswitch_disable+0x63/0x90 [mlx5_core]
- mlx5_unload+0x1d/0x170 [mlx5_core]
- mlx5_uninit_one+0xa2/0x130 [mlx5_core]
- remove_one+0x78/0xd0 [mlx5_core]
- pci_device_remove+0x39/0xa0
- device_release_driver_internal+0x194/0x1f0
- unbind_store+0x99/0xa0
- kernfs_fop_write_iter+0x12e/0x1e0
- vfs_write+0x215/0x3d0
- ksys_write+0x5f/0xd0
- do_syscall_64+0x53/0x1f0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Fixes: d75559845078 ("devlink: Allow setting parent node of rate objects")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1763381149-1234377-1-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Routine devl_rate_nodes_destroy is moved to net/devlink/rate.c by commit
- 7cc7194e85ca ("devlink: push rate related code into separate file") after linux-6.6.
- This fix applies the same update to its original location in net/devlink/leftover.c. ]
+Reported-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Minor conflict resolved. ]
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/devlink/leftover.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/net/devlink/leftover.c
-+++ b/net/devlink/leftover.c
-@@ -10274,13 +10274,15 @@ void devl_rate_nodes_destroy(struct devl
- 		if (!devlink_rate->parent)
- 			continue;
- 
--		refcount_dec(&devlink_rate->parent->refcnt);
- 		if (devlink_rate_is_leaf(devlink_rate))
- 			ops->rate_leaf_parent_set(devlink_rate, NULL, devlink_rate->priv,
- 						  NULL, NULL);
- 		else if (devlink_rate_is_node(devlink_rate))
- 			ops->rate_node_parent_set(devlink_rate, NULL, devlink_rate->priv,
- 						  NULL, NULL);
-+
-+		refcount_dec(&devlink_rate->parent->refcnt);
-+		devlink_rate->parent = NULL;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5739,15 +5739,13 @@ static int set_file_basic_info(struct ks
+ 		attrs.ia_valid |= (ATTR_ATIME | ATTR_ATIME_SET);
  	}
- 	list_for_each_entry_safe(devlink_rate, tmp, &devlink->rate_list, list) {
- 		if (devlink_rate_is_node(devlink_rate)) {
+ 
+-	attrs.ia_valid |= ATTR_CTIME;
+ 	if (file_info->ChangeTime)
+-		attrs.ia_ctime = ksmbd_NTtimeToUnix(file_info->ChangeTime);
+-	else
+-		attrs.ia_ctime = inode->i_ctime;
++		inode_set_ctime_to_ts(inode,
++				ksmbd_NTtimeToUnix(file_info->ChangeTime));
+ 
+ 	if (file_info->LastWriteTime) {
+ 		attrs.ia_mtime = ksmbd_NTtimeToUnix(file_info->LastWriteTime);
+-		attrs.ia_valid |= (ATTR_MTIME | ATTR_MTIME_SET);
++		attrs.ia_valid |= (ATTR_MTIME | ATTR_MTIME_SET | ATTR_CTIME);
+ 	}
+ 
+ 	if (file_info->Attributes) {
+@@ -5789,8 +5787,6 @@ static int set_file_basic_info(struct ks
+ 			return -EACCES;
+ 
+ 		inode_lock(inode);
+-		inode->i_ctime = attrs.ia_ctime;
+-		attrs.ia_valid &= ~ATTR_CTIME;
+ 		rc = notify_change(user_ns, dentry, &attrs, NULL);
+ 		inode_unlock(inode);
+ 	}
 
 
 Patches currently in stable-queue which might be from 1468888505@139.com are
