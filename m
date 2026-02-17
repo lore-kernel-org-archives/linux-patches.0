@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB1D37646D;
-	Tue, 17 Feb 2026 20:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E6937646D;
+	Tue, 17 Feb 2026 20:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361065; cv=none; b=W/4Rp96cNQwIboCwiCa6bHIBa8IOYUaPqc6LigfyDHITctl3DlwrqNCzk9h0S2BGz2efu97z552nrX6KytJOq0ZAmskR5arm6N1EyKhwfRgjZfQaJx6PJJx6ile2IcMXA/r+h+0UR4StBcVMkmJltmysIGhYwH+ZbCbJIOWPs2o=
+	t=1771361068; cv=none; b=t1fcSNXnKItrjGr+nJ+7OugUOisN94rJkcoBxVm4gwWO4Yuk06lc7THcbxDFwep8ZBzsT7fg2oCluHOVfv1xkiUhKUkA+oS/fa1Gc75QyqbhaxAsOxHsm9PSkevMLTbflTS6CqnN0yt48RmFLsf0/50NO4QybfoSKq0nY1rQAVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361065; c=relaxed/simple;
-	bh=QEf0xssPl6WIPilAc03XghxvEHqumnVMeaRUc6/Q6ZE=;
+	s=arc-20240116; t=1771361068; c=relaxed/simple;
+	bh=vEfyLO9oVqGEvRbYYVQMHUuepnpvURq8gkDmykyad0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I5wQg8PfLP7a3QWpQICu7x1oICea52uy9NKIyNLT4YZCuDQQ2RhYgz1cIQyZ5Rrhy2JeoKpuFXIUFVmn1ZRSQJqYV3DCf7BuiiRCg40gBAEBEqNTRMi2T56dN3EJGnHt36L+Sq/rj1tPGA4e5pxrUiO8rcubEoqiiYleo1q/WSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K55Uo5rI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oworlgBU9zy4sm5ls0IV/4sqngDrgrFiIL0vaMvibAFqcbg5wNWWDusnqZGqaw02UYd8SyfKeV2jiXCL79NIOx7LF0WSvqXojhp23SNspIu7RkIDUPY/rf+HcgZ0fRcs/7iKVsiNNNReBrnA74hYxjXtw1bsoacZGB16rANfvy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfOwooqB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K55Uo5rI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F11C4CEF7;
-	Tue, 17 Feb 2026 20:44:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfOwooqB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB247C4CEF7;
+	Tue, 17 Feb 2026 20:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361065;
-	bh=QEf0xssPl6WIPilAc03XghxvEHqumnVMeaRUc6/Q6ZE=;
+	s=korg; t=1771361068;
+	bh=vEfyLO9oVqGEvRbYYVQMHUuepnpvURq8gkDmykyad0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K55Uo5rIvUnTmEtO5dO3QPmIUk38MzVlS0G1Zu6pP9XSkQVe1ZjEIpUAU+2bZKUBe
-	 9PueuPloFRrmouhnxFMaz/VIzfaHz9RvdQpEdsKcLMAZ9DKRyKIj2EjZcckt7rs93A
-	 kHIB7altwY8FYjr3BROCmgkbpe5bsWBjH+8RWxY8=
+	b=CfOwooqBOI2CZOKvV97KHwB4dkc2X+WjucvfRu+ZqOjkeE5Ly/nkpb+5sHsod1eyU
+	 Ae/+mW4I45eMUlv9DsjUta3jwyFEwQnaw7aNBU/COf4NkO2S7YVqmOVqpNXngecHFq
+	 HQNboojiMZP+Iytt5fXV8fgmU5ohNnHXzCfr/4Dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 03/39] crypto: virtio - Add spinlock protection with virtqueue notification
-Date: Tue, 17 Feb 2026 21:31:12 +0100
-Message-ID: <20260217200003.061572396@linuxfoundation.org>
+	syzbot+7eedce5eb281acd832f0@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>
+Subject: [PATCH 5.15 04/39] nilfs2: Fix potential block overflow that cause system hang
+Date: Tue, 17 Feb 2026 21:31:13 +0100
+Message-ID: <20260217200003.100149224@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.929083107@linuxfoundation.org>
 References: <20260217200002.929083107@linuxfoundation.org>
@@ -52,55 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit b505047ffc8057555900d2d3a005d033e6967382 upstream.
+commit ed527ef0c264e4bed6c7b2a158ddf516b17f5f66 upstream.
 
-When VM boots with one virtio-crypto PCI device and builtin backend,
-run openssl benchmark command with multiple processes, such as
-  openssl speed -evp aes-128-cbc -engine afalg  -seconds 10 -multi 32
+When a user executes the FITRIM command, an underflow can occur when
+calculating nblocks if end_block is too small. Since nblocks is of
+type sector_t, which is u64, a negative nblocks value will become a
+very large positive integer. This ultimately leads to the block layer
+function __blkdev_issue_discard() taking an excessively long time to
+process the bio chain, and the ns_segctor_sem lock remains held for a
+long period. This prevents other tasks from acquiring the ns_segctor_sem
+lock, resulting in the hang reported by syzbot in [1].
 
-openssl processes will hangup and there is error reported like this:
- virtio_crypto virtio0: dataq.0:id 3 is not a head!
+If the ending block is too small, typically if it is smaller than 4KiB
+range, depending on the usage of the segment 0, it may be possible to
+attempt a discard request beyond the device size causing the hang.
 
-It seems that the data virtqueue need protection when it is handled
-for virtio done notification. If the spinlock protection is added
-in virtcrypto_done_task(), openssl benchmark with multiple processes
-works well.
+Exiting successfully and assign the discarded size (0 in this case)
+to range->len.
 
-Fixes: fed93fb62e05 ("crypto: virtio - Handle dataq logic with tasklet")
+Although the start and len values in the user input range are too small,
+a conservative strategy is adopted here to safely ignore them, which is
+equivalent to a no-op; it will not perform any trimming and will not
+throw an error.
+
+[1]
+task:segctord state:D stack:28968 pid:6093 tgid:6093  ppid:2 task_flags:0x200040 flags:0x00080000
+Call Trace:
+ rwbase_write_lock+0x3dd/0x750 kernel/locking/rwbase_rt.c:272
+ nilfs_transaction_lock+0x253/0x4c0 fs/nilfs2/segment.c:357
+ nilfs_segctor_thread_construct fs/nilfs2/segment.c:2569 [inline]
+ nilfs_segctor_thread+0x6ec/0xe00 fs/nilfs2/segment.c:2684
+
+[ryusuke: corrected part of the commit message about the consequences]
+
+Fixes: 82e11e857be3 ("nilfs2: add nilfs_sufile_trim_fs to trim clean segs")
+Reported-by: syzbot+7eedce5eb281acd832f0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7eedce5eb281acd832f0
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/virtio/virtio_crypto_core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nilfs2/sufile.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/crypto/virtio/virtio_crypto_core.c
-+++ b/drivers/crypto/virtio/virtio_crypto_core.c
-@@ -27,15 +27,20 @@ static void virtcrypto_done_task(unsigne
- 	struct data_queue *data_vq = (struct data_queue *)data;
- 	struct virtqueue *vq = data_vq->vq;
- 	struct virtio_crypto_request *vc_req;
-+	unsigned long flags;
- 	unsigned int len;
+--- a/fs/nilfs2/sufile.c
++++ b/fs/nilfs2/sufile.c
+@@ -1091,6 +1091,9 @@ int nilfs_sufile_trim_fs(struct inode *s
+ 	else
+ 		end_block = start_block + len - 1;
  
-+	spin_lock_irqsave(&data_vq->lock, flags);
- 	do {
- 		virtqueue_disable_cb(vq);
- 		while ((vc_req = virtqueue_get_buf(vq, &len)) != NULL) {
-+			spin_unlock_irqrestore(&data_vq->lock, flags);
- 			if (vc_req->alg_cb)
- 				vc_req->alg_cb(vc_req, len);
-+			spin_lock_irqsave(&data_vq->lock, flags);
- 		}
- 	} while (!virtqueue_enable_cb(vq));
-+	spin_unlock_irqrestore(&data_vq->lock, flags);
++	if (end_block < nilfs->ns_first_data_block)
++		goto out;
++
+ 	segnum = nilfs_get_segnum_of_block(nilfs, start_block);
+ 	segnum_end = nilfs_get_segnum_of_block(nilfs, end_block);
+ 
+@@ -1188,6 +1191,7 @@ int nilfs_sufile_trim_fs(struct inode *s
+ out_sem:
+ 	up_read(&NILFS_MDT(sufile)->mi_sem);
+ 
++out:
+ 	range->len = ndiscarded << nilfs->ns_blocksize_bits;
+ 	return ret;
  }
- 
- static void virtcrypto_dataq_callback(struct virtqueue *vq)
 
 
