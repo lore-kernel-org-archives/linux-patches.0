@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345C029A1;
-	Tue, 17 Feb 2026 20:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950B429A1;
+	Tue, 17 Feb 2026 20:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361622; cv=none; b=VsJQpg2FOn/J9XpGbGH8UAjZ1olaJwhADDvN8rBb5YvbbioDUAAG3eRmrD6AbnsVQ6yB2jX84kyUYdCcUs7shlKMPuk4sWuqOzN20G75X5MvSfj8p0oIGg8NXQZTFrJ4a5WBWqkHXWNIuSDxiIHOerQS1gsYF23+m3ADl1IAD20=
+	t=1771361625; cv=none; b=X/PHBgLP8Kk2n6HKBMP90SS0RjJ3dKV+y/FYNBO6n7XlyF2OCCO7QRxljBjg/01EWLpa1zaPW0YbWm7Gh2Bf0hZ4FY58nueYksHeca/LVfgOmWTJ7soAZc0680CczVVtvjB4a1xMTcl50Y7idrmKU9SZE7R1pewvewO8sk8CMRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361622; c=relaxed/simple;
-	bh=2rdR2JMA9hO9pzLTLCuPv7tmbRxdET/EZgX6O1LIkP8=;
+	s=arc-20240116; t=1771361625; c=relaxed/simple;
+	bh=XEk8Aiai60Nn5NWpCp/+CjiaCsK28q78EsVhHVCqgpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EvFJEY+J698Eoc/ePMK2IF6U+6IVabDF1iYJ98AjBbERNIhJkVUCOcsW8DVa0Pxf/bDynpRKoLj6DjgeL0EdnDVQNHdeCQHREMfe1twMQJib5hiZnPr7zGG0AmRgw4YPWrAyFy4rUU+w2+z9KMGI0tvMYIyV3+1pChNaRqwGkb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4TOOmrz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UvBhcjeYYfPMw48asS/USGsr9+aH1TJm2FqfxWnozA88Ppy+hAqaV0iIUcCsTIcESzJJqsck8+oC1iIjScOOVGjEr5YaYU7z2JbEl5fhXpCgMdtqGhF7mMk+Tc2ngcH1o+OAhtt7pb1MWc1bLTe5Body5U3DqGNg15suBVPMbsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vz8/NkOK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4TOOmrz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9759DC4CEF7;
-	Tue, 17 Feb 2026 20:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vz8/NkOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BA0C4CEF7;
+	Tue, 17 Feb 2026 20:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361622;
-	bh=2rdR2JMA9hO9pzLTLCuPv7tmbRxdET/EZgX6O1LIkP8=;
+	s=korg; t=1771361625;
+	bh=XEk8Aiai60Nn5NWpCp/+CjiaCsK28q78EsVhHVCqgpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4TOOmrzEoI5eWD7OHUV9qlkR8wSIbHnfXT5ucE1VRmrQQN7rNAA90lwRreiDSUjQ
-	 dQxHty3zJjetUOA6HUIHbWSlyLQCr8RN+nLabNOZWJ2yx91uU44QTdAMLMRDqo8a5s
-	 1oZTTemsZG8x8jLMjL5IP3EP/HQwAQXtb0ehiYKI=
+	b=Vz8/NkOKO9+I0RQkhRHtcn0UCjCw6YqeduhRFDuf/HhWxVck5mO2eb52CSu7JNQHt
+	 ktT8ccYkCsH83jRN/MptStvUHV+09AQeLE6e1VJVYDFShPpm5IA5a5ITcl8I8Q2gB2
+	 IB9FvUDds9evV/zK4ncv4EMsMW1z7ybjz9F2PyJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Anatolii Shirykalov <pipocavsobake@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 06/42] ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU
-Date: Tue, 17 Feb 2026 21:31:57 +0100
-Message-ID: <20260217200006.250714522@linuxfoundation.org>
+Subject: [PATCH 6.12 07/42] ASoC: amd: yc: Add ASUS ExpertBook PM1503CDA to quirks list
+Date: Tue, 17 Feb 2026 21:31:58 +0100
+Message-ID: <20260217200006.289014391@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200005.998240758@linuxfoundation.org>
 References: <20260217200005.998240758@linuxfoundation.org>
@@ -52,37 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
+From: Anatolii Shirykalov <pipocavsobake@gmail.com>
 
-[ Upstream commit b48fe9af1e60360baf09ca6b7a3cd6541f16e611 ]
+[ Upstream commit 018b211b1d321a52ed8d8de74ce83ce52a2e1224 ]
 
-Add a PCI quirk to enable microphone detection on the headphone jack of
-TongFang X6AR55xU devices.
+Add ASUS ExpertBook PM1503CDA to the DMI quirks table to enable
+internal DMIC support via the ACP6x machine driver.
 
-Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260119151626.35481-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Anatolii Shirykalov <pipocavsobake@gmail.com>
+Link: https://patch.msgid.link/20260119145618.3171435-1-pipocavsobake@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 7bb2647af654a..2bdad4e518032 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11835,6 +11835,10 @@ static const struct snd_hda_pin_quirk alc269_pin_fixup_tbl[] = {
- 		{0x12, 0x90a60140},
- 		{0x19, 0x04a11030},
- 		{0x21, 0x04211020}),
-+	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1d05, "TongFang", ALC274_FIXUP_HP_HEADSET_MIC,
-+		{0x17, 0x90170110},
-+		{0x19, 0x03a11030},
-+		{0x21, 0x03211020}),
- 	SND_HDA_PIN_QUIRK(0x10ec0282, 0x1025, "Acer", ALC282_FIXUP_ACER_DISABLE_LINEOUT,
- 		ALC282_STANDARD_PINS,
- 		{0x12, 0x90a609c0},
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 346e200613031..4f75a7d9b0e70 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -535,6 +535,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "15NBC1011"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "ASUS EXPERTBOOK PM1503CDA"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.51.0
 
