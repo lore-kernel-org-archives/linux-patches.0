@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1670286D4D;
-	Tue, 17 Feb 2026 20:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6FF36F431;
+	Tue, 17 Feb 2026 20:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360926; cv=none; b=hAdfWwjH42IARw5ZFtkBGOv4fLuF2O9lY/3rPWpCPLhOwC5dyCe8XI1oboJmEkYAO7WxCYsKWUL3MKe8RfGr9qLvfoLE5j2KosRgnTC/MsovjOZLBYHhej1qHOs22mXbCXMymrP3tNyyxFX7+stkUlOrrc8JH6T6NVSlVjwqCtE=
+	t=1771360929; cv=none; b=E1mChWpqCMXqcLUmu1mjAR+9Sz5j3Nc1Ng8dAyHmsa7DHDEdW6gNO+1yBAD3PrDBXCDCcgg7ESSufDOJJ4Xu0RBVlCkofb3j+IdnhaNwkmevhu2AqQ5G4ZYkW+dbn3Eg+Xx2UZ4ZrEjyVF9XjJVYW8lGx73HR7KwT0G7WvhK6Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360926; c=relaxed/simple;
-	bh=A1OF/gL6g4zI5dO5z+XwzfSXkcCSf0BtFczexBJ0gGA=;
+	s=arc-20240116; t=1771360929; c=relaxed/simple;
+	bh=HRo62PFVjg5YwSiNyBf19MjqEUB1CWz0okIyOFuW7KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9v7R/nklpnBWWjyFCQSBLj1evggZwFflIpW02xpHYqNDxh2kF2scyJnjE0GTQUdL5jTmacI1BHO2Jp/GWdlM9ZnxTT5+R54rJzey+XIp4hePZpGSfxc8PK6hudRtSidXVbTE6RmRtcGrWeuHe13dc5AGEI8TCGpFgou1WqqOE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCyeCkWG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KBQqA0Yr3M43IHEbihIQDG26oGZtOTdwWxDT2EzhVg7Zg5JhErpVz10bkchcgnITw1MZ8GC3NxDOpAaQsZVq4Uh7UQOFCQfxUHyViSnB/eFT+ezghY4FLNPlp6bAta9VErInNfsK0I34yc+md0rRwtYlCA49UtSLL2oOzvyVh+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENfPAOR4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCyeCkWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657D7C4CEF7;
-	Tue, 17 Feb 2026 20:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENfPAOR4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8523C4CEF7;
+	Tue, 17 Feb 2026 20:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360925;
-	bh=A1OF/gL6g4zI5dO5z+XwzfSXkcCSf0BtFczexBJ0gGA=;
+	s=korg; t=1771360929;
+	bh=HRo62PFVjg5YwSiNyBf19MjqEUB1CWz0okIyOFuW7KM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCyeCkWGvKNWgVO+xYdpbLWNJnXohNiD0ptp2Yhsx4pz8wdDepn8gY2dJ34xLlGm0
-	 xJWAcayXsOPjqSY3TTgsyhrAWtVQ5orWGxD84QjHh//gTnZudDmK4+5k/gVVdvQvJc
-	 Mgr2d0JJFKtcN+MqmzQlgdkwN3tX2r1YRCqRpsaI=
+	b=ENfPAOR4ud3OxKhuPPEID0iXAYtEtfSqG7yFn40YDFAUV9zYkeVPtezjBeC/+C/5d
+	 BNj21wcV5kNxGtpnusGg6tr189Xi/W/zTP070DLg0c+CZhRzrD/W/X8A2qwfsWiyWY
+	 OxMtHlgwCtFD2xLdNrEfHrXGy8afN69HBeHKkmOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Anil Gurumurthy <agurumurthy@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <hmadhani2024@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 16/24] crypto: virtio - Remove duplicated virtqueue_kick in virtio_crypto_skcipher_crypt_req
-Date: Tue, 17 Feb 2026 21:31:29 +0100
-Message-ID: <20260217200001.337492475@linuxfoundation.org>
+Subject: [PATCH 5.10 17/24] scsi: qla2xxx: Validate sp before freeing associated memory
+Date: Tue, 17 Feb 2026 21:31:30 +0100
+Message-ID: <20260217200001.377194505@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200000.708219618@linuxfoundation.org>
 References: <20260217200000.708219618@linuxfoundation.org>
@@ -47,43 +47,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Anil Gurumurthy <agurumurthy@marvell.com>
 
-[ Upstream commit 14f86a1155cca1176abf55987b2fce7f7fcb2455 ]
+[ Upstream commit b6df15aec8c3441357d4da0eaf4339eb20f5999f ]
 
-With function virtio_crypto_skcipher_crypt_req(), there is already
-virtqueue_kick() call with spinlock held in function
-__virtio_crypto_skcipher_do_req(). Remove duplicated virtqueue_kick()
-function call here.
+System crash with the following signature
+[154563.214890] nvme nvme2: NVME-FC{1}: controller connect complete
+[154564.169363] qla2xxx [0000:b0:00.1]-3002:2: nvme: Sched: Set ZIO exchange threshold to 3.
+[154564.169405] qla2xxx [0000:b0:00.1]-ffffff:2: SET ZIO Activity exchange threshold to 5.
+[154565.539974] qla2xxx [0000:b0:00.1]-5013:2: RSCN database changed – 0078 0080 0000.
+[154565.545744] qla2xxx [0000:b0:00.1]-5013:2: RSCN database changed – 0078 00a0 0000.
+[154565.545857] qla2xxx [0000:b0:00.1]-11a2:2: FEC=enabled (data rate).
+[154565.552760] qla2xxx [0000:b0:00.1]-11a2:2: FEC=enabled (data rate).
+[154565.553079] BUG: kernel NULL pointer dereference, address: 00000000000000f8
+[154565.553080] #PF: supervisor read access in kernel mode
+[154565.553082] #PF: error_code(0x0000) - not-present page
+[154565.553084] PGD 80000010488ab067 P4D 80000010488ab067 PUD 104978a067 PMD 0
+[154565.553089] Oops: 0000 1 PREEMPT SMP PTI
+[154565.553092] CPU: 10 PID: 858 Comm: qla2xxx_2_dpc Kdump: loaded Tainted: G           OE     -------  ---  5.14.0-503.11.1.el9_5.x86_64 #1
+[154565.553096] Hardware name: HPE Synergy 660 Gen10/Synergy 660 Gen10 Compute Module, BIOS I43 09/30/2024
+[154565.553097] RIP: 0010:qla_fab_async_scan.part.0+0x40b/0x870 [qla2xxx]
+[154565.553141] Code: 00 00 e8 58 a3 ec d4 49 89 e9 ba 12 20 00 00 4c 89 e6 49 c7 c0 00 ee a8 c0 48 c7 c1 66 c0 a9 c0 bf 00 80 00 10 e8 15 69 00 00 <4c> 8b 8d f8 00 00 00 4d 85 c9 74 35 49 8b 84 24 00 19 00 00 48 8b
+[154565.553143] RSP: 0018:ffffb4dbc8aebdd0 EFLAGS: 00010286
+[154565.553145] RAX: 0000000000000000 RBX: ffff8ec2cf0908d0 RCX: 0000000000000002
+[154565.553147] RDX: 0000000000000000 RSI: ffffffffc0a9c896 RDI: ffffb4dbc8aebd47
+[154565.553148] RBP: 0000000000000000 R08: ffffb4dbc8aebd45 R09: 0000000000ffff0a
+[154565.553150] R10: 0000000000000000 R11: 000000000000000f R12: ffff8ec2cf0908d0
+[154565.553151] R13: ffff8ec2cf090900 R14: 0000000000000102 R15: ffff8ec2cf084000
+[154565.553152] FS:  0000000000000000(0000) GS:ffff8ed27f800000(0000) knlGS:0000000000000000
+[154565.553154] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[154565.553155] CR2: 00000000000000f8 CR3: 000000113ae0a005 CR4: 00000000007706f0
+[154565.553157] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[154565.553158] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[154565.553159] PKRU: 55555554
+[154565.553160] Call Trace:
+[154565.553162]  <TASK>
+[154565.553165]  ? show_trace_log_lvl+0x1c4/0x2df
+[154565.553172]  ? show_trace_log_lvl+0x1c4/0x2df
+[154565.553177]  ? qla_fab_async_scan.part.0+0x40b/0x870 [qla2xxx]
+[154565.553215]  ? __die_body.cold+0x8/0xd
+[154565.553218]  ? page_fault_oops+0x134/0x170
+[154565.553223]  ? snprintf+0x49/0x70
+[154565.553229]  ? exc_page_fault+0x62/0x150
+[154565.553238]  ? asm_exc_page_fault+0x22/0x30
 
-Fixes: d79b5d0bbf2e ("crypto: virtio - support crypto engine framework")
+Check for sp being non NULL before freeing any associated memory
+
+Fixes: a4239945b8ad ("scsi: qla2xxx: Add switch command to simplify fabric discovery")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
+Link: https://patch.msgid.link/20251210101604.431868-10-njavali@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[ adapted kref_put() srb free mechanism to older sp->free(sp) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/virtio/virtio_crypto_algs.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_gs.c |   32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
---- a/drivers/crypto/virtio/virtio_crypto_algs.c
-+++ b/drivers/crypto/virtio/virtio_crypto_algs.c
-@@ -556,8 +556,6 @@ int virtio_crypto_skcipher_crypt_req(
- 	if (ret < 0)
- 		return ret;
+--- a/drivers/scsi/qla2xxx/qla_gs.c
++++ b/drivers/scsi/qla2xxx/qla_gs.c
+@@ -3901,22 +3901,24 @@ static int qla24xx_async_gnnft(scsi_qla_
+ 	return rval;
  
--	virtqueue_kick(data_vq->vq);
--
- 	return 0;
- }
+ done_free_sp:
+-	if (sp->u.iocb_cmd.u.ctarg.req) {
+-		dma_free_coherent(&vha->hw->pdev->dev,
+-		    sp->u.iocb_cmd.u.ctarg.req_allocated_size,
+-		    sp->u.iocb_cmd.u.ctarg.req,
+-		    sp->u.iocb_cmd.u.ctarg.req_dma);
+-		sp->u.iocb_cmd.u.ctarg.req = NULL;
+-	}
+-	if (sp->u.iocb_cmd.u.ctarg.rsp) {
+-		dma_free_coherent(&vha->hw->pdev->dev,
+-		    sp->u.iocb_cmd.u.ctarg.rsp_allocated_size,
+-		    sp->u.iocb_cmd.u.ctarg.rsp,
+-		    sp->u.iocb_cmd.u.ctarg.rsp_dma);
+-		sp->u.iocb_cmd.u.ctarg.rsp = NULL;
+-	}
++	if (sp) {
++		if (sp->u.iocb_cmd.u.ctarg.req) {
++			dma_free_coherent(&vha->hw->pdev->dev,
++			    sp->u.iocb_cmd.u.ctarg.req_allocated_size,
++			    sp->u.iocb_cmd.u.ctarg.req,
++			    sp->u.iocb_cmd.u.ctarg.req_dma);
++			sp->u.iocb_cmd.u.ctarg.req = NULL;
++		}
++		if (sp->u.iocb_cmd.u.ctarg.rsp) {
++			dma_free_coherent(&vha->hw->pdev->dev,
++			    sp->u.iocb_cmd.u.ctarg.rsp_allocated_size,
++			    sp->u.iocb_cmd.u.ctarg.rsp,
++			    sp->u.iocb_cmd.u.ctarg.rsp_dma);
++			sp->u.iocb_cmd.u.ctarg.rsp = NULL;
++		}
  
+-	sp->free(sp);
++		sp->free(sp);
++	}
+ 
+ 	spin_lock_irqsave(&vha->work_lock, flags);
+ 	vha->scan.scan_flags &= ~SF_SCANNING;
 
 
