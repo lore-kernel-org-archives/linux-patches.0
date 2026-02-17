@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620B029A1;
-	Tue, 17 Feb 2026 20:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A67261B70;
+	Tue, 17 Feb 2026 20:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361228; cv=none; b=qFaC9jPrNLJx2P77pe+Jzt5w9mmEjy5Ye9Z3An7b0y+xQpSXKn1mjMD9V4w2IwYhNPAaOxbyuAaDe6+TuE1QpabpN9DUM6zYfWxyRjKQHhtu6ijtsJqLNiYPL+fbMi3w6BAqFa87Qut7aZm4mEJuTIi996pnegdNpovEJZNkxwU=
+	t=1771361231; cv=none; b=LT05Ig1nRQa6HoKz7OPQnzskcF797H/dzwmpYM/jZwGS3/I2L4i2co51N+krwlDbH9kwKbg3LnxSlchZVkN23WoTGSlD88QjoZ1gyCTlhEB+dLQT3ursiw9nvSWawEOd4lAA1PHehLUCqMjIA2C8exCp7T8qX01rEf7VlqK9gAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361228; c=relaxed/simple;
-	bh=iRZEWnK/2nuJOegaqUKmDweo2w9uvex1ld/dCYQf/7g=;
+	s=arc-20240116; t=1771361231; c=relaxed/simple;
+	bh=k6z7szTP6GWs2J6q6Bk36Z62Meo8fFBVo7wH7JZ3xNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5bWDinB/Coh99pXXZq4zB4jXD3mejYe5rr+abyVFFyyYRCIHAzbKlv8mZOLY4iLIEr0iBvxWmogHS7cCkPfxC4Pnp1PN9P5MUd2LBU6/cd/OMNtEb8aeJo+P84tMeTCH5BbRHOqr4K4tJQNWsjaDeYTpyMnbt6lRmLBRxZB8Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L38S8XlA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBI8Q38SqDi0+NKnD5GN6rB30hXhmoZG6go8ZowsRBJCLsbOmM1HzoXfqPCoIjriV0cHbq/duedjWEJChy+ifqhe6ZjYs1x6yLr5Am7mR6pqkKEcoxhcJVmwHJG3uC7NTu5dOk/iUwgZ1KYMb+HFqs85D9tJYeVEEUOXcSm7Zoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9ZVNzcB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L38S8XlA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC136C4CEF7;
-	Tue, 17 Feb 2026 20:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9ZVNzcB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7D6C4CEF7;
+	Tue, 17 Feb 2026 20:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361228;
-	bh=iRZEWnK/2nuJOegaqUKmDweo2w9uvex1ld/dCYQf/7g=;
+	s=korg; t=1771361231;
+	bh=k6z7szTP6GWs2J6q6Bk36Z62Meo8fFBVo7wH7JZ3xNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L38S8XlA060M8rD0YqJXKIYcTTng+5xFCVeA4QndzfVKrstysyhF+XK78gMAmQBg1
-	 5BAogJ7bZkkKMPNwK1OFBQQKmdO5jdOnLYnuomsN4lBYc3WWXv6JHZmoMeNdcxEYLs
-	 ZVEoxjq8UejTskhESq+lK58DwhRskGok+pyEUUig=
+	b=H9ZVNzcB1ckJLasLjJkC4qJTFdnKyhFFwwh078HHl8rlVdIC0Kp5VF6BUbX0ucBSi
+	 wFqrBf+fIiDQfcM8FB8hOSv5pzngBodnH7SFi5ZIy6ZR5Xvo/1VuVQe09GJnRWJzs+
+	 /0OpyrWxCZC/AQ/kPE93sWBLW+cekRh2lsI01uAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alban Bedel <alban.bedel@lht.dlh.de>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 39/64] gpiolib: acpi: Fix gpio count with string references
-Date: Tue, 17 Feb 2026 21:31:35 +0100
-Message-ID: <20260217200008.971042069@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH 6.1 40/64] Revert "wireguard: device: enable threaded NAPI"
+Date: Tue, 17 Feb 2026 21:31:36 +0100
+Message-ID: <20260217200009.007280650@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -52,39 +50,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alban Bedel <alban.bedel@lht.dlh.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit c62e0658d458d8f100445445c3ddb106f3824a45 ]
+This reverts commit fb978675ccfd4a93549e49624127d8332cc61cbf which is
+commit db9ae3b6b43c79b1ba87eea849fd65efa05b4b2e upstream.
 
-Since commit 9880702d123f2 ("ACPI: property: Support using strings in
-reference properties") it is possible to use strings instead of local
-references. This work fine with single GPIO but not with arrays as
-acpi_gpio_package_count() didn't handle this case. Update it to handle
-strings like local references to cover this case as well.
+We have had three independent production user reports in combination
+with Cilium utilizing WireGuard as encryption underneath that k8s Pod
+E/W traffic to certain peer nodes fully stalled. The situation appears
+as follows:
 
-Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/20260129145944.3372777-1-alban.bedel@lht.dlh.de
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  - Occurs very rarely but at random times under heavy networking load.
+  - Once the issue triggers the decryption side stops working completely
+    for that WireGuard peer, other peers keep working fine. The stall
+    happens also for newly initiated connections towards that particular
+    WireGuard peer.
+  - Only the decryption side is affected, never the encryption side.
+  - Once it triggers, it never recovers and remains in this state,
+    the CPU/mem on that node looks normal, no leak, busy loop or crash.
+  - bpftrace on the affected system shows that wg_prev_queue_enqueue
+    fails, thus the MAX_QUEUED_PACKETS (1024 skbs!) for the peer's
+    rx_queue is reached.
+  - Also, bpftrace shows that wg_packet_rx_poll for that peer is never
+    called again after reaching this state for that peer. For other
+    peers wg_packet_rx_poll does get called normally.
+  - Commit db9ae3b ("wireguard: device: enable threaded NAPI")
+    switched WireGuard to threaded NAPI by default. The default has
+    not been changed for triggering the issue, neither did CPU
+    hotplugging occur (i.e. 5bd8de2 ("wireguard: queueing: always
+    return valid online CPU in wg_cpumask_choose_online()")).
+  - The issue has been observed with stable kernels of v5.15 as well as
+    v6.1. It was reported to us that v5.10 stable is working fine, and
+    no report on v6.6 stable either (somewhat related discussion in [0]
+    though).
+  - In the WireGuard driver the only material difference between v5.10
+    stable and v5.15 stable is the switch to threaded NAPI by default.
+
+    [0] https://lore.kernel.org/netdev/CA+wXwBTT74RErDGAnj98PqS=wvdh8eM1pi4q6tTdExtjnokKqA@mail.gmail.com/
+
+Breakdown of the problem:
+
+  1) skbs arriving for decryption are enqueued to the peer->rx_queue in
+     wg_packet_consume_data via wg_queue_enqueue_per_device_and_peer.
+  2) The latter only moves the skb into the MPSC peer queue if it does
+     not surpass MAX_QUEUED_PACKETS (1024) which is kept track in an
+     atomic counter via wg_prev_queue_enqueue.
+  3) In case enqueueing was successful, the skb is also queued up
+     in the device queue, round-robin picks a next online CPU, and
+     schedules the decryption worker.
+  4) The wg_packet_decrypt_worker, once scheduled, picks these up
+     from the queue, decrypts the packets and once done calls into
+     wg_queue_enqueue_per_peer_rx.
+  5) The latter updates the state to PACKET_STATE_CRYPTED on success
+     and calls napi_schedule on the per peer->napi instance.
+  6) NAPI then polls via wg_packet_rx_poll. wg_prev_queue_peek checks
+     on the peer->rx_queue. It will wg_prev_queue_dequeue if the
+     queue->peeked skb was not cached yet, or just return the latter
+     otherwise. (wg_prev_queue_drop_peeked later clears the cache.)
+  7) From an ordering perspective, the peer->rx_queue has skbs in order
+     while the device queue with the per-CPU worker threads from a
+     global ordering PoV can finish the decryption and signal the skb
+     PACKET_STATE_CRYPTED out of order.
+  8) A situation can be observed that the first packet coming in will
+     be stuck waiting for the decryption worker to be scheduled for
+     a longer time when the system is under pressure.
+  9) While this is the case, the other CPUs in the meantime finish
+     decryption and call into napi_schedule.
+ 10) Now in wg_packet_rx_poll it picks up the first in-order skb
+     from the peer->rx_queue and sees that its state is still
+     PACKET_STATE_UNCRYPTED. The NAPI poll routine then exits early
+     with work_done = 0 and calls napi_complete_done, signalling
+     it "finished" processing.
+ 11) The assumption in wg_packet_decrypt_worker is that when the
+     decryption finished the subsequent napi_schedule will always
+     lead to a later invocation of wg_packet_rx_poll to pick up
+     the finished packet.
+ 12) However, it appears that a later napi_schedule does /not/
+     schedule a later poll and thus no wg_packet_rx_poll.
+ 13) If this situation happens exactly for the corner case where
+     the decryption worker of the first packet is stuck and waiting
+     to be scheduled, and the network load for WireGuard is very
+     high then the queue can build up to MAX_QUEUED_PACKETS.
+ 14) If this situation occurs, then no new decryption worker will
+     be scheduled and also no new napi_schedule to make forward
+     progress.
+ 15) This means the peer->rx_queue stops processing packets completely
+     and they are indefinitely stuck waiting for a new NAPI poll on
+     that peer which never happens. New packets for that peer are
+     then dropped due to full queue, as it has been observed on the
+     production machines.
+
+Technically, the backport of commit db9ae3b6b43c ("wireguard: device:
+enable threaded NAPI") to stable should not have happened since it is
+more of an optimization rather than a pure fix and addresses a NAPI
+situation with utilizing many WireGuard tunnel devices in parallel.
+Revert it from stable given the backport triggers a regression for
+mentioned kernels.
+
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireguard/device.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
-index 11338f47d884d..48c9935bedffb 100644
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1383,6 +1383,7 @@ static int acpi_gpio_package_count(const union acpi_object *obj)
- 	while (element < end) {
- 		switch (element->type) {
- 		case ACPI_TYPE_LOCAL_REFERENCE:
-+		case ACPI_TYPE_STRING:
- 			element += 3;
- 			fallthrough;
- 		case ACPI_TYPE_INTEGER:
--- 
-2.51.0
-
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -368,7 +368,6 @@ static int wg_newlink(struct net *src_ne
+ 	if (ret < 0)
+ 		goto err_free_handshake_queue;
+ 
+-	dev_set_threaded(dev, true);
+ 	ret = register_netdevice(dev);
+ 	if (ret < 0)
+ 		goto err_uninit_ratelimiter;
 
 
