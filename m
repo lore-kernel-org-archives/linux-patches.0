@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC24B29A1;
-	Tue, 17 Feb 2026 20:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04078280CC1;
+	Tue, 17 Feb 2026 20:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361661; cv=none; b=VCB+UdTG7VF+zFxQWkGYSxW0KApRn/AzkwWwQ+FTb45ToP4COrkPmGqMa/+xvzy2ClQRKbZbL6zFKGIQ9+Ot9f1Sw6b/XWAA8ZKiovTKP+rqenbZ9so5KfdPRVpHiRwBNZtH2JHKPMp/4XZYrTxd1cauJUdcYNnkQm1eRAZtbQ4=
+	t=1771361664; cv=none; b=h+0ZJME58DKEfTlPy3SDlCHCMCASb948F6XL8CAI5VBSzhUmp408miVLtjxO3gTgBsT0SkfasHi1+nHTksbIxwLevszczJarU130KzbILqxyGPpyH7vpWDTOBxWGKAq9Wpn8nJyK0lz9xraIVQhbrUOhKP+zkZjOW7WjtK+UUdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361661; c=relaxed/simple;
-	bh=zQRAHxAyYlO4kejmvp4aSAOLcojIFWCmLfkh0WFX5l0=;
+	s=arc-20240116; t=1771361664; c=relaxed/simple;
+	bh=NSpH+uJJHJfhpdjY60d9a27uKRrTQQwpxAgcGzLf4bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7vLwwpia84AMmH7VvkGfz8K/XCMr4NEVY5rfimKe6Ldn9kik3gHc9uV/Gfsf2wAThtUDLdwSC8D+3G7quZ/AwNNU9MQYjBOHz02HLpnnkrhgs4STAuvQgZXssDBg0cQwQA1yVB3sDB/pch9tGYxq0au8ODsx9cajMXL376OaGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDFb+hsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+vVHVszH371j9Rlxzb/B2MEdQeOAsrfqSs7NucE2PuyAEzXfZdw8WUlNY8yaEo4mz5dK20GDVbdpfr11ZNG5VC/XrxjjgLZfWsQ3fPPxJePaLmrvs+NChDb8JTis04jnze+kEUlSc8YgonbRA6xb95oQ6jti7UsN7fhAE+P/z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmbIy4ZH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDFb+hsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514ECC4CEF7;
-	Tue, 17 Feb 2026 20:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmbIy4ZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621D0C4CEF7;
+	Tue, 17 Feb 2026 20:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361660;
-	bh=zQRAHxAyYlO4kejmvp4aSAOLcojIFWCmLfkh0WFX5l0=;
+	s=korg; t=1771361663;
+	bh=NSpH+uJJHJfhpdjY60d9a27uKRrTQQwpxAgcGzLf4bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fDFb+hscCNkOQq/GuvRfIzaGCwjtwrLWiDOo9usTQSKfoaOXSJBVW5uvrJ9zt/r30
-	 R/qF7Y6ZzppczOIUyMo2o/Zd+yW8/DA05TiF5ldEVXDr0g+J3deZXpfm0jEn/wyXSh
-	 i3qiEZu6IUtViKtmpVlz7XmM/zvyhyc/rgRft56c=
+	b=gmbIy4ZHfdLBxN1QCyFQ7x1iyn5LSSxselWGLCe++9VP2uUdkdKcUBR+swWpQHbpF
+	 uUaCTkBo3LAhmqts0ETrHdKLwfRN/p1GqzUOmHWTAJfKOPQpb9dPAjXesAqQZ3U1E/
+	 QRyecadYowQFVx0qTvyy3KSdgxAPvj7r4+FlBfEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Jinbao Liu <liujinbao1@xiaomi.com>,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Daeho Jeong <daehojeong@google.com>,
 	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 37/42] f2fs: fix out-of-bounds access in sysfs attribute read/write
-Date: Tue, 17 Feb 2026 21:32:28 +0100
-Message-ID: <20260217200007.418113216@linuxfoundation.org>
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Xiaolong Guo <guoxiaolong2008@gmail.com>
+Subject: [PATCH 6.12 38/42] f2fs: fix to avoid mapping wrong physical block for swapfile
+Date: Tue, 17 Feb 2026 21:32:29 +0100
+Message-ID: <20260217200007.455799429@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200005.998240758@linuxfoundation.org>
 References: <20260217200005.998240758@linuxfoundation.org>
@@ -53,170 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 98ea0039dbfdd00e5cc1b9a8afa40434476c0955 upstream.
+commit 5c145c03188bc9ba1c29e0bc4d527a5978fc47f9 upstream.
 
-Some f2fs sysfs attributes suffer from out-of-bounds memory access and
-incorrect handling of integer values whose size is not 4 bytes.
+Xiaolong Guo reported a f2fs bug in bugzilla [1]
 
-For example:
-vm:~# echo 65537 > /sys/fs/f2fs/vde/carve_out
-vm:~# cat /sys/fs/f2fs/vde/carve_out
-65537
-vm:~# echo 4294967297 > /sys/fs/f2fs/vde/atgc_age_threshold
-vm:~# cat /sys/fs/f2fs/vde/atgc_age_threshold
-1
+[1] https://bugzilla.kernel.org/show_bug.cgi?id=220951
 
-carve_out maps to {struct f2fs_sb_info}->carve_out, which is a 8-bit
-integer. However, the sysfs interface allows setting it to a value
-larger than 255, resulting in an out-of-range update.
+Quoted:
 
-atgc_age_threshold maps to {struct atgc_management}->age_threshold,
-which is a 64-bit integer, but its sysfs interface cannot correctly set
-values larger than UINT_MAX.
+"When using stress-ng's swap stress test on F2FS filesystem with kernel 6.6+,
+the system experiences data corruption leading to either:
+1 dm-verity corruption errors and device reboot
+2 F2FS node corruption errors and boot hangs
 
-The root causes are:
-1. __sbi_store() treats all default values as unsigned int, which
-prevents updating integers larger than 4 bytes and causes out-of-bounds
-writes for integers smaller than 4 bytes.
+The issue occurs specifically when:
+1 Using F2FS filesystem (ext4 is unaffected)
+2 Swapfile size is less than F2FS section size (2MB)
+3 Swapfile has fragmented physical layout (multiple non-contiguous extents)
+4 Kernel version is 6.6+ (6.1 is unaffected)
 
-2. f2fs_sbi_show() also assumes all default values are unsigned int,
-leading to out-of-bounds reads and incorrect access to integers larger
-than 4 bytes.
+The root cause is in check_swap_activate() function in fs/f2fs/data.c. When the
+first extent of a small swapfile (< 2MB) is not aligned to section boundaries,
+the function incorrectly treats it as the last extent, failing to map
+subsequent extents. This results in incorrect swap_extent creation where only
+the first extent is mapped, causing subsequent swap writes to overwrite wrong
+physical locations (other files' data).
 
-This patch introduces {struct f2fs_attr}->size to record the actual size
-of the integer associated with each sysfs attribute. With this
-information, sysfs read and write operations can correctly access and
-update values according to their real data size, avoiding memory
-corruption and truncation.
+Steps to Reproduce
+1 Setup a device with F2FS-formatted userdata partition
+2 Compile stress-ng from https://github.com/ColinIanKing/stress-ng
+3 Run swap stress test: (Android devices)
+adb shell "cd /data/stressng; ./stress-ng-64 --metrics-brief --timeout 60
+--swap 0"
 
-Fixes: b59d0bae6ca3 ("f2fs: add sysfs support for controlling the gc_thread")
+Log:
+1 Ftrace shows in kernel 6.6, only first extent is mapped during second
+f2fs_map_blocks call in check_swap_activate():
+stress-ng-swap-8990: f2fs_map_blocks: ino=11002, file offset=0, start
+blkaddr=0x43143, len=0x1
+(Only 4KB mapped, not the full swapfile)
+2 in kernel 6.1, both extents are correctly mapped:
+stress-ng-swap-5966: f2fs_map_blocks: ino=28011, file offset=0, start
+blkaddr=0x13cd4, len=0x1
+stress-ng-swap-5966: f2fs_map_blocks: ino=28011, file offset=1, start
+blkaddr=0x60c84b, len=0xff
+
+The problematic code is in check_swap_activate():
+if ((pblock - SM_I(sbi)->main_blkaddr) % blks_per_sec ||
+    nr_pblocks % blks_per_sec ||
+    !f2fs_valid_pinned_area(sbi, pblock)) {
+    bool last_extent = false;
+
+    not_aligned++;
+
+    nr_pblocks = roundup(nr_pblocks, blks_per_sec);
+    if (cur_lblock + nr_pblocks > sis->max)
+        nr_pblocks -= blks_per_sec;
+
+    /* this extent is last one */
+    if (!nr_pblocks) {
+        nr_pblocks = last_lblock - cur_lblock;
+        last_extent = true;
+    }
+
+    ret = f2fs_migrate_blocks(inode, cur_lblock, nr_pblocks);
+    if (ret) {
+        if (ret == -ENOENT)
+            ret = -EINVAL;
+        goto out;
+    }
+
+    if (!last_extent)
+        goto retry;
+}
+
+When the first extent is unaligned and roundup(nr_pblocks, blks_per_sec)
+exceeds sis->max, we subtract blks_per_sec resulting in nr_pblocks = 0. The
+code then incorrectly assumes this is the last extent, sets nr_pblocks =
+last_lblock - cur_lblock (entire swapfile), and performs migration. After
+migration, it doesn't retry mapping, so subsequent extents are never processed.
+"
+
+In order to fix this issue, we need to lookup block mapping info after
+we migrate all blocks in the tail of swapfile.
+
 Cc: stable@kernel.org
-Signed-off-by: Jinbao Liu <liujinbao1@xiaomi.com>
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Fixes: 9703d69d9d15 ("f2fs: support file pinning for zoned devices")
+Cc: Daeho Jeong <daehojeong@google.com>
+Reported-and-tested-by: Xiaolong Guo <guoxiaolong2008@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220951
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/sysfs.c |   60 ++++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 52 insertions(+), 8 deletions(-)
+ fs/f2fs/data.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -58,6 +58,7 @@ struct f2fs_attr {
- 			 const char *buf, size_t len);
- 	int struct_type;
- 	int offset;
-+	int size;
- 	int id;
- };
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -3980,6 +3980,7 @@ static int check_swap_activate(struct sw
  
-@@ -325,11 +326,30 @@ static ssize_t main_blkaddr_show(struct
- 			(unsigned long long)MAIN_BLKADDR(sbi));
- }
+ 	while (cur_lblock < last_lblock && cur_lblock < sis->max) {
+ 		struct f2fs_map_blocks map;
++		bool last_extent = false;
+ retry:
+ 		cond_resched();
  
-+static ssize_t __sbi_show_value(struct f2fs_attr *a,
-+		struct f2fs_sb_info *sbi, char *buf,
-+		unsigned char *value)
-+{
-+	switch (a->size) {
-+	case 1:
-+		return sysfs_emit(buf, "%u\n", *(u8 *)value);
-+	case 2:
-+		return sysfs_emit(buf, "%u\n", *(u16 *)value);
-+	case 4:
-+		return sysfs_emit(buf, "%u\n", *(u32 *)value);
-+	case 8:
-+		return sysfs_emit(buf, "%llu\n", *(u64 *)value);
-+	default:
-+		f2fs_bug_on(sbi, 1);
-+		return sysfs_emit(buf,
-+				"show sysfs node value with wrong type\n");
-+	}
-+}
-+
- static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
- 			struct f2fs_sb_info *sbi, char *buf)
- {
- 	unsigned char *ptr = NULL;
--	unsigned int *ui;
+@@ -4005,11 +4006,10 @@ retry:
+ 		pblock = map.m_pblk;
+ 		nr_pblocks = map.m_len;
  
- 	ptr = __struct_ptr(sbi, a->struct_type);
- 	if (!ptr)
-@@ -409,9 +429,30 @@ static ssize_t f2fs_sbi_show(struct f2fs
- 				atomic_read(&sbi->cp_call_count[BACKGROUND]));
- #endif
+-		if ((pblock - SM_I(sbi)->main_blkaddr) % blks_per_sec ||
+-				nr_pblocks % blks_per_sec ||
+-				f2fs_is_sequential_zone_area(sbi, pblock)) {
+-			bool last_extent = false;
+-
++		if (!last_extent &&
++			((pblock - SM_I(sbi)->main_blkaddr) % blks_per_sec ||
++			nr_pblocks % blks_per_sec ||
++			f2fs_is_sequential_zone_area(sbi, pblock))) {
+ 			not_aligned++;
  
--	ui = (unsigned int *)(ptr + a->offset);
-+	return __sbi_show_value(a, sbi, buf, ptr + a->offset);
-+}
+ 			nr_pblocks = roundup(nr_pblocks, blks_per_sec);
+@@ -4030,8 +4030,8 @@ retry:
+ 				goto out;
+ 			}
  
--	return sysfs_emit(buf, "%u\n", *ui);
-+static void __sbi_store_value(struct f2fs_attr *a,
-+			struct f2fs_sb_info *sbi,
-+			unsigned char *ui, unsigned long value)
-+{
-+	switch (a->size) {
-+	case 1:
-+		*(u8 *)ui = value;
-+		break;
-+	case 2:
-+		*(u16 *)ui = value;
-+		break;
-+	case 4:
-+		*(u32 *)ui = value;
-+		break;
-+	case 8:
-+		*(u64 *)ui = value;
-+		break;
-+	default:
-+		f2fs_bug_on(sbi, 1);
-+		f2fs_err(sbi, "store sysfs node value with wrong type");
-+	}
- }
+-			if (!last_extent)
+-				goto retry;
++			/* lookup block mapping info after block migration */
++			goto retry;
+ 		}
  
- static ssize_t __sbi_store(struct f2fs_attr *a,
-@@ -868,7 +909,7 @@ out:
- 		return count;
- 	}
- 
--	*ui = (unsigned int)t;
-+	__sbi_store_value(a, sbi, ptr + a->offset, t);
- 
- 	return count;
- }
-@@ -1015,24 +1056,27 @@ static struct f2fs_attr f2fs_attr_sb_##_
- 	.id	= F2FS_FEATURE_##_feat,				\
- }
- 
--#define F2FS_ATTR_OFFSET(_struct_type, _name, _mode, _show, _store, _offset) \
-+#define F2FS_ATTR_OFFSET(_struct_type, _name, _mode, _show, _store, _offset, _size) \
- static struct f2fs_attr f2fs_attr_##_name = {			\
- 	.attr = {.name = __stringify(_name), .mode = _mode },	\
- 	.show	= _show,					\
- 	.store	= _store,					\
- 	.struct_type = _struct_type,				\
--	.offset = _offset					\
-+	.offset = _offset,					\
-+	.size = _size						\
- }
- 
- #define F2FS_RO_ATTR(struct_type, struct_name, name, elname)	\
- 	F2FS_ATTR_OFFSET(struct_type, name, 0444,		\
- 		f2fs_sbi_show, NULL,				\
--		offsetof(struct struct_name, elname))
-+		offsetof(struct struct_name, elname),		\
-+		sizeof_field(struct struct_name, elname))
- 
- #define F2FS_RW_ATTR(struct_type, struct_name, name, elname)	\
- 	F2FS_ATTR_OFFSET(struct_type, name, 0644,		\
- 		f2fs_sbi_show, f2fs_sbi_store,			\
--		offsetof(struct struct_name, elname))
-+		offsetof(struct struct_name, elname),		\
-+		sizeof_field(struct struct_name, elname))
- 
- #define F2FS_GENERAL_RO_ATTR(name) \
- static struct f2fs_attr f2fs_attr_##name = __ATTR(name, 0444, name##_show, NULL)
+ 		if (cur_lblock + nr_pblocks >= sis->max)
 
 
