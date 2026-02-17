@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D7929A1;
-	Tue, 17 Feb 2026 20:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DC8259CBD;
+	Tue, 17 Feb 2026 20:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361362; cv=none; b=WLTqYv8XyZuQ3VmyW+Xo/1mGLCK7Q/NFs0QX3rEazWistgfOt8ttR3uP8HpTgEAxCBihwiapAdwHOMY3pUpp0ueIgxpemCFvdaSdPaoOLwRC0Wgb/oCgn7/g6Ull2/La2XNWm58sD0bXefnTLLXKizwbkiT76SxdTqZ1JGBob4s=
+	t=1771361365; cv=none; b=mcZsnehF8l8ojqsGcfEj4pIIxuugVHTcVCoE5JUuMgghTQ1KA5XLJxW/PXz8NRN9nPa2OnEZSMxsVFYQbIrg9lWGXpL6ggs6QgadORU2YXGpt9XWVA/Q29GdiPqimzZMIXEZN57bWI+qM4JzhZFsazx4l+KpS+fbf9NAX9GnoA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361362; c=relaxed/simple;
-	bh=BUcm7vzYMqn0wuHuUq7QOB3DstmHC3nVF1B1wpjPGQw=;
+	s=arc-20240116; t=1771361365; c=relaxed/simple;
+	bh=y+ZfkNuSXKRsyuZuk+Wko8VKrOV9znMlSmVElEAG+G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRiLIfq056EX9caYgLort4dP8N2vUF6nSK7pEgGXeWaQX6c5VkAY8PARIhF5tXv+3FsdnBJCKjJ7MVRjfQj2o2gM6wEDi2czbmw+6R+rRmn1nWlBbkhm2eepG6jwalruo0tK61buzs3FSwXBI+QY0WcZfVl47hQ8y55kUIzW2Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvjZJAoe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O8oTMDkN0YZVA1jE95gVs3XR+jA8/e/o3Rxx56F26VeYR/eSuG8CQk+aTMRk2UmQbQD9gZD6yk59oppkWUB/y1Ky8niGLgS/uy7i8Fo7Q3y5EAh144QtkeNNHAq2JeOPUn5Zz1NzonpkNdbwVyrPgwhlpJ7ggVU3YVk2XKfzPLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjlwYwqo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvjZJAoe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0053C4CEF7;
-	Tue, 17 Feb 2026 20:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjlwYwqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E84C4CEF7;
+	Tue, 17 Feb 2026 20:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361362;
-	bh=BUcm7vzYMqn0wuHuUq7QOB3DstmHC3nVF1B1wpjPGQw=;
+	s=korg; t=1771361365;
+	bh=y+ZfkNuSXKRsyuZuk+Wko8VKrOV9znMlSmVElEAG+G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvjZJAoe84fRC0iWL9wj7HP+VdZ7ylWUTLdkk7Rt61YDgMFZnJDDhoNo+thsSIHuu
-	 Pm2Uw7LZBVOrgEDVsE34qnR5D/J7ectExQoCREqOE7FzWSIoE5qrlEOx8J+grVqetK
-	 VOCcmenr9ZArZrsZFXP6lzRzTcgwVTWrY9OgUXqU=
+	b=hjlwYwqo1t7VoQHfR1hDSmw7CCgGKzXmI8zn9TilxtAD3oKwNWAhC1Pfu9nrVOGAU
+	 qQrf8Pp8pOC6uzBP+BQ8W06lMFYvjS2Xf7qcYHLscLaa3Kl2xxFs2+D18b0p8FsxMi
+	 ugkvGQDjdbcW8KWi/wH3ABc2jyE+C/fB8r9gi8yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Yeongjin Gil <youngjin.gil@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.19 13/18] f2fs: optimize f2fs_overwrite_io() for f2fs_iomap_begin
-Date: Tue, 17 Feb 2026 21:32:09 +0100
-Message-ID: <20260217200003.205754105@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Wang Jiayue <akaieurus@gmail.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>
+Subject: [PATCH 6.19 14/18] iommu/arm-smmu-qcom: do not register driver in probe()
+Date: Tue, 17 Feb 2026 21:32:10 +0100
+Message-ID: <20260217200003.243294668@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.683975158@linuxfoundation.org>
 References: <20260217200002.683975158@linuxfoundation.org>
@@ -54,75 +56,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeongjin Gil <youngjin.gil@samsung.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit d860974a7e38d35e9e2c4dc8a9f4223b38b6ad99 upstream.
+commit ed1ac3c977dd6b119405fa36dd41f7151bd5b4de upstream.
 
-When overwriting already allocated blocks, f2fs_iomap_begin() calls
-f2fs_overwrite_io() to check block mappings. However,
-f2fs_overwrite_io() iterates through all mapped blocks in the range,
-which can be inefficient for fragmented files with large I/O requests.
+Commit 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in
+qcom_smmu_impl_init") intended to also probe the TBU driver when
+CONFIG_ARM_SMMU_QCOM_DEBUG is disabled, but also moved the corresponding
+platform_driver_register() call into qcom_smmu_impl_init() which is
+called from arm_smmu_device_probe().
 
-This patch optimizes f2fs_overwrite_io() by adding a 'check_first'
-parameter and introducing __f2fs_overwrite_io() helper. When called from
-f2fs_iomap_begin(), we only check the first mapping to determine if the
-range is already allocated, which is sufficient for setting
-map.m_may_create.
+However, it neither makes sense to register drivers from probe()
+callbacks of other drivers, nor does the driver core allow registering
+drivers with a device lock already being held.
 
-This optimization significantly reduces the number of f2fs_map_blocks()
-calls in f2fs_overwrite_io() when called from f2fs_iomap_begin(),
-especially for fragmented files with large I/O requests.
+The latter was revealed by commit dc23806a7c47 ("driver core: enforce
+device_lock for driver_match_device()") leading to a deadlock condition
+described in [1].
 
-Cc: stable@kernel.org
-Fixes: 351bc761338d ("f2fs: optimize f2fs DIO overwrites")
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Signed-off-by: Yeongjin Gil <youngjin.gil@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Additionally, it was noted by Robin that the current approach is
+potentially racy with async probe [2].
+
+Hence, fix this by registering the qcom_smmu_tbu_driver from
+module_init(). Unfortunately, due to the vendoring of the driver, this
+requires an indirection through arm-smmu-impl.c.
+
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://lore.kernel.org/lkml/7ae38e31-ef31-43ad-9106-7c76ea0e8596@sirena.org.uk/
+Link: https://lore.kernel.org/lkml/DFU7CEPUSG9A.1KKGVW4HIPMSH@kernel.org/ [1]
+Link: https://lore.kernel.org/lkml/0c0d3707-9ea5-44f9-88a1-a65c62e3df8d@arm.com/ [2]
+Fixes: dc23806a7c47 ("driver core: enforce device_lock for driver_match_device()")
+Fixes: 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in qcom_smmu_impl_init")
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Tested-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Acked-by: Konrad Dybcio <konradybcio@kernel.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com> #LX2160ARDB
+Tested-by: Wang Jiayue <akaieurus@gmail.com>
+Reviewed-by: Wang Jiayue <akaieurus@gmail.com>
+Tested-by: Mark Brown <broonie@kernel.org>
+Acked-by: Joerg Roedel <joerg.roedel@amd.com>
+Link: https://patch.msgid.link/20260121141215.29658-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-impl.c |   14 ++++++++++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |   14 ++++++++++----
+ drivers/iommu/arm/arm-smmu/arm-smmu.c      |   24 +++++++++++++++++++++++-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h      |    5 +++++
+ 4 files changed, 52 insertions(+), 5 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1799,7 +1799,8 @@ out:
- 	return err;
- }
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+@@ -228,3 +228,17 @@ struct arm_smmu_device *arm_smmu_impl_in
  
--bool f2fs_overwrite_io(struct inode *inode, loff_t pos, size_t len)
-+static bool __f2fs_overwrite_io(struct inode *inode, loff_t pos, size_t len,
-+				bool check_first)
- {
- 	struct f2fs_map_blocks map;
- 	block_t last_lblk;
-@@ -1821,10 +1822,17 @@ bool f2fs_overwrite_io(struct inode *ino
- 		if (err || map.m_len == 0)
- 			return false;
- 		map.m_lblk += map.m_len;
-+		if (check_first)
-+			break;
- 	}
- 	return true;
+ 	return smmu;
  }
- 
-+bool f2fs_overwrite_io(struct inode *inode, loff_t pos, size_t len)
++
++int __init arm_smmu_impl_module_init(void)
 +{
-+	return __f2fs_overwrite_io(inode, pos, len, false);
++	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
++		return qcom_smmu_module_init();
++
++	return 0;
 +}
 +
- static int f2fs_xattr_fiemap(struct inode *inode,
- 				struct fiemap_extent_info *fieinfo)
++void __exit arm_smmu_impl_module_exit(void)
++{
++	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
++		qcom_smmu_module_exit();
++}
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -774,10 +774,6 @@ struct arm_smmu_device *qcom_smmu_impl_i
  {
-@@ -4187,7 +4195,7 @@ static int f2fs_iomap_begin(struct inode
- 	 * f2fs_map_lock and f2fs_balance_fs are not necessary.
- 	 */
- 	if ((flags & IOMAP_WRITE) &&
--		!f2fs_overwrite_io(inode, offset, length))
-+		!__f2fs_overwrite_io(inode, offset, length, true))
- 		map.m_may_create = true;
+ 	const struct device_node *np = smmu->dev->of_node;
+ 	const struct of_device_id *match;
+-	static u8 tbu_registered;
+-
+-	if (!tbu_registered++)
+-		platform_driver_register(&qcom_smmu_tbu_driver);
  
- 	err = f2fs_map_blocks(inode, &map, F2FS_GET_BLOCK_DIO);
+ #ifdef CONFIG_ACPI
+ 	if (np == NULL) {
+@@ -802,3 +798,13 @@ struct arm_smmu_device *qcom_smmu_impl_i
+ 
+ 	return smmu;
+ }
++
++int __init qcom_smmu_module_init(void)
++{
++	return platform_driver_register(&qcom_smmu_tbu_driver);
++}
++
++void __exit qcom_smmu_module_exit(void)
++{
++	platform_driver_unregister(&qcom_smmu_tbu_driver);
++}
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -2365,7 +2365,29 @@ static struct platform_driver arm_smmu_d
+ 	.remove = arm_smmu_device_remove,
+ 	.shutdown = arm_smmu_device_shutdown,
+ };
+-module_platform_driver(arm_smmu_driver);
++
++static int __init arm_smmu_init(void)
++{
++	int ret;
++
++	ret = platform_driver_register(&arm_smmu_driver);
++	if (ret)
++		return ret;
++
++	ret = arm_smmu_impl_module_init();
++	if (ret)
++		platform_driver_unregister(&arm_smmu_driver);
++
++	return ret;
++}
++module_init(arm_smmu_init);
++
++static void __exit arm_smmu_exit(void)
++{
++	arm_smmu_impl_module_exit();
++	platform_driver_unregister(&arm_smmu_driver);
++}
++module_exit(arm_smmu_exit);
+ 
+ MODULE_DESCRIPTION("IOMMU API for ARM architected SMMU implementations");
+ MODULE_AUTHOR("Will Deacon <will@kernel.org>");
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+@@ -540,6 +540,11 @@ struct arm_smmu_device *arm_smmu_impl_in
+ struct arm_smmu_device *nvidia_smmu_impl_init(struct arm_smmu_device *smmu);
+ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu);
+ 
++int __init arm_smmu_impl_module_init(void);
++void __exit arm_smmu_impl_module_exit(void);
++int __init qcom_smmu_module_init(void);
++void __exit qcom_smmu_module_exit(void);
++
+ void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx);
+ int arm_mmu500_reset(struct arm_smmu_device *smmu);
+ 
 
 
