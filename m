@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7112D29A1;
-	Tue, 17 Feb 2026 20:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C96261B70;
+	Tue, 17 Feb 2026 20:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361670; cv=none; b=CPmzbkJmx0UBTYSl33+9H8Gy/DFGZI8gllAhBwy02EgdQ/h3uH3bcN3mlR70uZin2aIPJ1pnnNvYAo8r/KaqqKoHs3T6ASHxBPunCe6nSswexnl3mNVwgP489iTf4uES41EjQz6NKiq63nVGzA1E72BsDJ+KgcGE6MYG2oYqdbs=
+	t=1771361674; cv=none; b=HQQJztT2roLKAXAloCP+bHfH6iUrsESzP3kQ7Q2dOYp9Y++bqho2rAi/J60LzulLQMrp5bsEi+Qs1tnvTys7HedukuOMAcrLjcL9crDz69CpYWlo9RVlIczU3RSvGRyZ1U0mcdNgwbFjq02ESbrQwNvYkiMwjDIfBs+eo9Bx4U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361670; c=relaxed/simple;
-	bh=yJV2JVEyoR9B+XcPguL8kzB9R3RnWtMBbkBKUE6S6v0=;
+	s=arc-20240116; t=1771361674; c=relaxed/simple;
+	bh=LJN3HPXtqsyBv36x7dYBbUOw1K8FMecHv2BpoCvfwaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMNVTZs1WEYlwbeUqnFCuYODQfZTGWNO0CVDGtb48YaIdAc+g3nyHJfSBZw5V+9pLqf4vg6f0rX1RjXTxOmjNf9jdRMkX07YX7HM8PeP22oExX4kW1eXOlHAx2wzkL7/WZ8xjDJyE0b7uW2pLAXhXBRpbGF922F03hqwwn0JGOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qhp4TSAS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NEh5+1aurDUS+dZwMbutv5+N2c+gBxZrL90MLfhhwBN7lb+sSygeQFvGou5/IeGvis4IvrXm2OKFd9GuNy6L1OY0bGLXGHJsfAllUcElIcxBT0nO5ohY7nUWYOmXVpKgAoDn67k4fIsRVidi9ERGEv/ObsJXC35EMdNjHGtTsKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjgcTo4B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qhp4TSAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC220C4CEF7;
-	Tue, 17 Feb 2026 20:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjgcTo4B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E896C4CEF7;
+	Tue, 17 Feb 2026 20:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361670;
-	bh=yJV2JVEyoR9B+XcPguL8kzB9R3RnWtMBbkBKUE6S6v0=;
+	s=korg; t=1771361673;
+	bh=LJN3HPXtqsyBv36x7dYBbUOw1K8FMecHv2BpoCvfwaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qhp4TSASSRDA/qL6QEMsQORMFXmEoisjNZgcpkJtwdq7y5GGfjMjK6duq493NqqPD
-	 8CsxGnVMofRkg58EtUxLvPEhjv/EljApWvn19aXeA9G47Pd2smnvo5i/x6jAHohCXA
-	 G9HFv/1XkMQ9317u6SExwsPKjqc/RXNSEbDogClg=
+	b=hjgcTo4BtirHzlwiREkg7zum7Z1fDog+IWIugad+7p50dZdwjZanehATFEKNbSlzy
+	 MLNKE3f2f96OT+1324HhzTz+zD/BM8cfYcR+Xv7aCL3M1EiJnMKThNiZX4cm0ds/W6
+	 Ue+HXrXsYGdtRPG5IxEPelzbKVQXtxFICG5u4HpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+b4444e3c972a7a124187@syzkaller.appspotmail.com,
+	Sheng Yong <shengyong1@xiaomi.com>,
+	Jinbao Liu <liujinbao1@xiaomi.com>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 40/42] f2fs: fix to avoid UAF in f2fs_write_end_io()
-Date: Tue, 17 Feb 2026 21:32:31 +0100
-Message-ID: <20260217200007.532108477@linuxfoundation.org>
+Subject: [PATCH 6.12 41/42] f2fs: fix IS_CHECKPOINTED flag inconsistency issue caused by concurrent atomic commit and checkpoint writes
+Date: Tue, 17 Feb 2026 21:32:32 +0100
+Message-ID: <20260217200007.571209351@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200005.998240758@linuxfoundation.org>
 References: <20260217200005.998240758@linuxfoundation.org>
@@ -53,77 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-[ Upstream commit ce2739e482bce8d2c014d76c4531c877f382aa54 ]
+[ Upstream commit 7633a7387eb4d0259d6bea945e1d3469cd135bbc ]
 
-As syzbot reported an use-after-free issue in f2fs_write_end_io().
+During SPO tests, when mounting F2FS, an -EINVAL error was returned from
+f2fs_recover_inode_page. The issue occurred under the following scenario
 
-It is caused by below race condition:
+Thread A                                     Thread B
+f2fs_ioc_commit_atomic_write
+ - f2fs_do_sync_file // atomic = true
+  - f2fs_fsync_node_pages
+    : last_folio = inode folio
+    : schedule before folio_lock(last_folio) f2fs_write_checkpoint
+                                              - block_operations// writeback last_folio
+                                              - schedule before f2fs_flush_nat_entries
+    : set_fsync_mark(last_folio, 1)
+    : set_dentry_mark(last_folio, 1)
+    : folio_mark_dirty(last_folio)
+    - __write_node_folio(last_folio)
+      : f2fs_down_read(&sbi->node_write)//block
+                                              - f2fs_flush_nat_entries
+                                                : {struct nat_entry}->flag |= BIT(IS_CHECKPOINTED)
+                                              - unblock_operations
+                                                : f2fs_up_write(&sbi->node_write)
+                                             f2fs_write_checkpoint//return
+      : f2fs_do_write_node_page()
+f2fs_ioc_commit_atomic_write//return
+                                             SPO
 
-loop device				umount
-- worker_thread
- - loop_process_work
-  - do_req_filebacked
-   - lo_rw_aio
-    - lo_rw_aio_complete
-     - blk_mq_end_request
-      - blk_update_request
-       - f2fs_write_end_io
-        - dec_page_count
-        - folio_end_writeback
-					- kill_f2fs_super
-					 - kill_block_super
-					  - f2fs_put_super
-					 : free(sbi)
-       : get_pages(, F2FS_WB_CP_DATA)
-         accessed sbi which is freed
+Thread A calls f2fs_need_dentry_mark(sbi, ino), and the last_folio has
+already been written once. However, the {struct nat_entry}->flag did not
+have the IS_CHECKPOINTED set, causing set_dentry_mark(last_folio, 1) and
+write last_folio again after Thread B finishes f2fs_write_checkpoint.
 
-In kill_f2fs_super(), we will drop all page caches of f2fs inodes before
-call free(sbi), it guarantee that all folios should end its writeback, so
-it should be safe to access sbi before last folio_end_writeback().
+After SPO and reboot, it was detected that {struct node_info}->blk_addr
+was not NULL_ADDR because Thread B successfully write the checkpoint.
 
-Let's relocate ckpt thread wakeup flow before folio_end_writeback() to
-resolve this issue.
+This issue only occurs in atomic write scenarios. For regular file
+fsync operations, the folio must be dirty. If
+block_operations->f2fs_sync_node_pages successfully submit the folio
+write, this path will not be executed. Otherwise, the
+f2fs_write_checkpoint will need to wait for the folio write submission
+to complete, as sbi->nr_pages[F2FS_DIRTY_NODES] > 0. Therefore, the
+situation where f2fs_need_dentry_mark checks that the {struct
+nat_entry}->flag /wo the IS_CHECKPOINTED flag, but the folio write has
+already been submitted, will not occur.
 
+Therefore, for atomic file fsync, sbi->node_write should be acquired
+through __write_node_folio to ensure that the IS_CHECKPOINTED flag
+correctly indicates that the checkpoint write has been completed.
+
+Fixes: 608514deba38 ("f2fs: set fsync mark only for the last dnode")
 Cc: stable@kernel.org
-Fixes: e234088758fc ("f2fs: avoid wait if IO end up when do_checkpoint for better performance")
-Reported-by: syzbot+b4444e3c972a7a124187@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b4444e3c972a7a124187
-Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
+Signed-off-by: Jinbao Liu <liujinbao1@xiaomi.com>
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 [ folio => page ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/f2fs/node.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -357,14 +357,20 @@ static void f2fs_write_end_io(struct bio
- 				page_folio(page)->index != nid_of_node(page));
- 
- 		dec_page_count(sbi, type);
-+
-+		/*
-+		 * we should access sbi before end_page_writeback() to
-+		 * avoid racing w/ kill_f2fs_super()
-+		 */
-+		if (type == F2FS_WB_CP_DATA && !get_pages(sbi, type) &&
-+				wq_has_sleeper(&sbi->cp_wait))
-+			wake_up(&sbi->cp_wait);
-+
- 		if (f2fs_in_warm_node_list(sbi, page))
- 			f2fs_del_fsync_node_entry(sbi, page);
- 		clear_page_private_gcing(page);
- 		end_page_writeback(page);
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1713,8 +1713,13 @@ static int __write_node_page(struct page
+ 		goto redirty_out;
  	}
--	if (!get_pages(sbi, F2FS_WB_CP_DATA) &&
--				wq_has_sleeper(&sbi->cp_wait))
--		wake_up(&sbi->cp_wait);
  
- 	bio_put(bio);
- }
+-	if (atomic && !test_opt(sbi, NOBARRIER))
+-		fio.op_flags |= REQ_PREFLUSH | REQ_FUA;
++	if (atomic) {
++		if (!test_opt(sbi, NOBARRIER))
++			fio.op_flags |= REQ_PREFLUSH | REQ_FUA;
++		if (IS_INODE(page))
++			set_dentry_mark(page,
++				f2fs_need_dentry_mark(sbi, ino_of_node(page)));
++	}
+ 
+ 	/* should add to global list before clearing PAGECACHE status */
+ 	if (f2fs_in_warm_node_list(sbi, page)) {
+@@ -1869,8 +1874,9 @@ continue_unlock:
+ 					if (is_inode_flag_set(inode,
+ 								FI_DIRTY_INODE))
+ 						f2fs_update_inode(inode, page);
+-					set_dentry_mark(page,
+-						f2fs_need_dentry_mark(sbi, ino));
++					if (!atomic)
++						set_dentry_mark(page,
++							f2fs_need_dentry_mark(sbi, ino));
+ 				}
+ 				/* may be written by other thread */
+ 				if (!PageDirty(page))
 
 
