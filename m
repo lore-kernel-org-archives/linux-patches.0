@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF69280CC1;
-	Tue, 17 Feb 2026 20:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C719F29A1;
+	Tue, 17 Feb 2026 20:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361584; cv=none; b=kuvO69lX+29cxqsQCF/9ygGAZfA29BFz9FKeunwW68r9IHeHu9WW0LKO+E0peLERPEX6yAtaSf+pJ8ircl+xGIIfyfYrAPzjDIjUrYyeeX4awHuDRMYzUxSnKUyr14vxF0QbkMrE65n7QLQryPVkNOUHwfUdaBlMJWRlYcydGzk=
+	t=1771361587; cv=none; b=E44H6/IitYcAeTU7eU3Fg0g5/M8V+pRe5fh4l5Qdfft/uySBkKSLtr4vtJxy624VA0jWLk61Rm7vizgHs8aGLZrt3YHeHjSc8N4DE72Ph414bgcpR47VssW7HRBflZVLuuFgHL6RiLws5782DSJH0Ad34PIM5DtCXXbyC/WH9y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361584; c=relaxed/simple;
-	bh=0N+UBL8UbKujG/5Q6FGzg/RzxpMnKgUiHb3yHTtxCck=;
+	s=arc-20240116; t=1771361587; c=relaxed/simple;
+	bh=5CjTl4uDFTjxuduZoouL5pkW3EjWhK1wacK3r+x2/ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1XsQh1CgPVJ0hMALSY7I0Sp6cHgd5ryfEt8xcO08kWrit66Xn3wzafVsZl/MRPDsMqG9ikNeng8I4I+kHYiiL2aI29ubk+E5aEOFvnp8eCSgm0sjDzxFskkmaOydr3/MuPyf0kL198XbDzSvTnMQNI3AwJqBrvik5jkqnqmA78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2O3VyyDk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sE8C4/sV1DFhXwmh+gFvMOCnQDEK2HK8dT60w+776kZC1nI4DeykD+owUarAkmzZ7StXmqpJrKDpGpU2PFYqAAx9FrTea3flQUXWT0j5aZAzcOFfnpzdteyDp1iHUB1GxNXVEroAf+W2Pfsq5PtcZ0Rl+3wXFfllz6LWwqui8n8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiR6WHI6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2O3VyyDk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEFB6C4CEF7;
-	Tue, 17 Feb 2026 20:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiR6WHI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DBDC4CEF7;
+	Tue, 17 Feb 2026 20:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361584;
-	bh=0N+UBL8UbKujG/5Q6FGzg/RzxpMnKgUiHb3yHTtxCck=;
+	s=korg; t=1771361587;
+	bh=5CjTl4uDFTjxuduZoouL5pkW3EjWhK1wacK3r+x2/ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2O3VyyDkXv3nWlSwLU9qx7tUdgioz71+CNbFUVu3Nk9xYj3DqR8lA3K4rYZK/SEcy
-	 gJjjoOCOWRVncD0l2rxQ/bgJhkHfRCYtsXVP9HH7VPhYeUEzRs2Fium88tvx/UZ7y2
-	 lGE+C/TkyKknnv0Hsfu3kBsg8M9wn+Wkarbho5Hw=
+	b=tiR6WHI6NDe2N/QqXRdOhT6AowNDwL2HUVIkSB7puXVlxhoWr98ugsPFKSu4C3slW
+	 eonQzoU3ufn7p4cGEmKKerxJdzXXKRNL6b6MxrBiJi2vlcypwBRl74V6WfKKP+FuE5
+	 iv7C++DRX/9QjDxftRF2z3xM99Nah+zuzJCXVJR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tagir Garaev <tgaraev653@gmail.com>,
+	Dirk Su <dirk.su@canonical.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 15/42] ASoC: Intel: sof_es8336: Add DMI quirk for Huawei BOD-WXX9
-Date: Tue, 17 Feb 2026 21:32:06 +0100
-Message-ID: <20260217200006.589963972@linuxfoundation.org>
+Subject: [PATCH 6.12 16/42] ASoC: amd: yc: Add quirk for HP 200 G2a 16
+Date: Tue, 17 Feb 2026 21:32:07 +0100
+Message-ID: <20260217200006.626340801@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200005.998240758@linuxfoundation.org>
 References: <20260217200005.998240758@linuxfoundation.org>
@@ -51,70 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tagir Garaev <tgaraev653@gmail.com>
+From: Dirk Su <dirk.su@canonical.com>
 
-[ Upstream commit 6b641122d31f9d33e7d60047ee0586d1659f3f54 ]
+[ Upstream commit 611c7d2262d5645118e0b3a9a88475d35a8366f2 ]
 
-Add DMI entry for Huawei Matebook D (BOD-WXX9) with HEADPHONE_GPIO
-and DMIC quirks.
+Fix the missing mic on HP 200 G2a 16 by adding quirk with the
+board ID 8EE4
 
-This device has ES8336 codec with:
-- GPIO 16 (headphone-enable) for headphone amplifier control
-- GPIO 17 (speakers-enable) for speaker amplifier control
-- GPIO 269 for jack detection IRQ
-- 2-channel DMIC
-
-Hardware investigation shows that both GPIO 16 and 17 are required
-for proper audio routing, as headphones and speakers share the same
-physical output (HPOL/HPOR) and are separated only via amplifier
-enable signals.
-
-RFC: Seeking advice on GPIO control issue:
-
-GPIO values change in driver (gpiod_get_value() shows logical value
-changes) but not physically (debugfs gpio shows no change). The same
-gpiod_set_value_cansleep() calls work correctly in probe context with
-msleep(), but fail when called from DAPM event callbacks.
-
-Context information from diagnostics:
-- in_atomic=0, in_interrupt=0, irqs_disabled=0
-- Process context: pipewire
-- GPIO 17 (speakers): changes in driver, no physical change
-- GPIO 16 (headphone): changes in driver, no physical change
-
-In Windows, audio switching works without visible GPIO changes,
-suggesting possible ACPI/firmware involvement.
-
-Any suggestions on how to properly control these GPIOs from DAPM
-events would be appreciated.
-
-Signed-off-by: Tagir Garaev <tgaraev653@gmail.com>
-Link: https://patch.msgid.link/20260201121728.16597-1-tgaraev653@gmail.com
+Signed-off-by: Dirk Su <dirk.su@canonical.com>
+Link: https://patch.msgid.link/20260129065038.39349-1-dirk.su@canonical.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_es8336.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/intel/boards/sof_es8336.c b/sound/soc/intel/boards/sof_es8336.c
-index bc27229be7c24..7c3784112ca0f 100644
---- a/sound/soc/intel/boards/sof_es8336.c
-+++ b/sound/soc/intel/boards/sof_es8336.c
-@@ -332,6 +332,15 @@ static int sof_es8336_quirk_cb(const struct dmi_system_id *id)
-  * if the topology file is modified as well.
-  */
- static const struct dmi_system_id sof_es8336_quirk_table[] = {
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 4f75a7d9b0e70..6d073ecad6f02 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -633,6 +633,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "8BD6"),
+ 		}
+ 	},
 +	{
-+		.callback = sof_es8336_quirk_cb,
++		.driver_data = &acp6x_card,
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HUAWEI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "BOD-WXX9"),
-+		},
-+		.driver_data = (void *)(SOF_ES8336_HEADPHONE_GPIO |
-+					SOF_ES8336_ENABLE_DMIC)
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_BOARD_NAME, "8EE4"),
++		}
 +	},
  	{
- 		.callback = sof_es8336_quirk_cb,
+ 		.driver_data = &acp6x_card,
  		.matches = {
 -- 
 2.51.0
