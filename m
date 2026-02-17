@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCFA13DDAA;
-	Tue, 17 Feb 2026 20:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351CE378D65;
+	Tue, 17 Feb 2026 20:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360991; cv=none; b=NnuvqL9nutVgnOhNIPGEg0FaekKYv+t5riLHe9ruPW0YHr2DZyUWh041HcFuCdA6bwmSpAV9lLRfZJECKlpsNOKYu3ZQ9kkYc5wFB65LmtT8yhdUqsjaz76xBAatK2eqnciiUzxoDWkviEAQWYLa63iJx23a8ipN3IaXW22KJ20=
+	t=1771360995; cv=none; b=nmQMT+Jzg+jb5BgOxmihhwIEbZGijoGI/comncEJ2UF1St7uTJo9sNOwYph92b9cXcRYLZiHJFGKO4wMe7Gh9TAPFIi9dBycJ0R+F7sL3Nxr8ny1njjd3wtwEYIKRfcSweKNIvURI/5lqsm3u+r3van02wHaTC6X5SmpsBAsA4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360991; c=relaxed/simple;
-	bh=w/ORb7x36/StQtnrn4fx6TsCERPaqLk45hpVnBK2r3Y=;
+	s=arc-20240116; t=1771360995; c=relaxed/simple;
+	bh=8L4+cXi2wxzwEnsnB8xdvcpqdQzCWMjoHvccpReRtts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s285KpQT/xJUgd/5Oe3Jc7Q3zFNlxta9Qkr8jaNjckSfV4G48WkwTxEp1uDdfUylUxmwF6yYPCNt9LzM8uSsJwAs57TzOWT1ZieEl5UUWGdEBiKGm5NxtHVdXfiN5jIWfA1j15niVeZs029Plui10BbrX2CKPOau78wtTC7gnjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrxtQLbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TtXIXXhHVNiufUNsK4WBIV3PKA8SMMw/NLRKyOUzfvbeC2C9d909dAK2aum2pO9xE3w3OPZjPBolor+XdxH7/BFqtRS9teBmWw2uuYGdwysyfWDYpYhjKu5EA3JA3PB/W8mbjWvH7//VVYI0eNY7e9AFV+wFAyUOtAa9TEuVVEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDAT2BnN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrxtQLbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245D6C4CEF7;
-	Tue, 17 Feb 2026 20:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDAT2BnN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BB5C4CEF7;
+	Tue, 17 Feb 2026 20:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360991;
-	bh=w/ORb7x36/StQtnrn4fx6TsCERPaqLk45hpVnBK2r3Y=;
+	s=korg; t=1771360995;
+	bh=8L4+cXi2wxzwEnsnB8xdvcpqdQzCWMjoHvccpReRtts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrxtQLbT2oAxnZGjbcP/k8IeijbUQlncMBfVaHVlCz6y4/YElWLt2fjHQ9U0zWALs
-	 7ZjmAj4n/jb5f4G4p4R3kEqJ2L8m1NZH2feVFBy82EvopkIGAiX9lZo2GCVp3z7cSu
-	 olwSnhd00dWZIaPo0AuKuY7oqoGVWSdwjkF6+gM4=
+	b=WDAT2BnNyLsGm7JyIKwHzEv7blrFgVkUenZnWSTQSMizcP+7b5Ndj5Mi3i7duno8b
+	 ycAEgWk9zLk2vUjG1FiBCkypEjO5DvbE4WpsFmsbu0i1vzx5yciEcusP+Lgy1TGl0U
+	 ZlIWABA2NG/R7rEbElqYnxUt9uEnVPn/QMNpq3Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuewen Yan <xuewen.yan@unisoc.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	syzbot+9c4e33e12283d9437c25@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/39] gpio: sprd: Change sprd_gpio lock to raw_spin_lock
-Date: Tue, 17 Feb 2026 21:31:19 +0100
-Message-ID: <20260217200003.324920845@linuxfoundation.org>
+Subject: [PATCH 5.15 11/39] romfs: check sb_set_blocksize() return value
+Date: Tue, 17 Feb 2026 21:31:20 +0100
+Message-ID: <20260217200003.363251973@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.929083107@linuxfoundation.org>
 References: <20260217200002.929083107@linuxfoundation.org>
@@ -53,121 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Yan <xuewen.yan@unisoc.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 96313fcc1f062ba239f4832c9eff685da6c51c99 ]
+[ Upstream commit ab7ad7abb3660c58ffffdf07ff3bb976e7e0afa0 ]
 
-There was a lockdep warning in sprd_gpio:
+romfs_fill_super() ignores the return value of sb_set_blocksize(), which
+can fail if the requested block size is incompatible with the block
+device's configuration.
 
-[    6.258269][T329@C6] [ BUG: Invalid wait context ]
-[    6.258270][T329@C6] 6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 Tainted: G        W  OE
-[    6.258272][T329@C6] -----------------------------
-[    6.258273][T329@C6] modprobe/329 is trying to lock:
-[    6.258275][T329@C6] ffffff8081c91690 (&sprd_gpio->lock){....}-{3:3}, at: sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd]
-[    6.258282][T329@C6] other info that might help us debug this:
-[    6.258283][T329@C6] context-{5:5}
-[    6.258285][T329@C6] 3 locks held by modprobe/329:
-[    6.258286][T329@C6]  #0: ffffff808baca108 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xc4/0x204
-[    6.258295][T329@C6]  #1: ffffff80965e7240 (request_class#4){+.+.}-{4:4}, at: __setup_irq+0x1cc/0x82c
-[    6.258304][T329@C6]  #2: ffffff80965e70c8 (lock_class#4){....}-{2:2}, at: __setup_irq+0x21c/0x82c
-[    6.258313][T329@C6] stack backtrace:
-[    6.258314][T329@C6] CPU: 6 UID: 0 PID: 329 Comm: modprobe Tainted: G        W  OE       6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 PREEMPT  3ad5b0f45741a16e5838da790706e16ceb6717df
-[    6.258316][T329@C6] Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[    6.258317][T329@C6] Hardware name: Unisoc UMS9632-base Board (DT)
-[    6.258318][T329@C6] Call trace:
-[    6.258318][T329@C6]  show_stack+0x20/0x30 (C)
-[    6.258321][T329@C6]  __dump_stack+0x28/0x3c
-[    6.258324][T329@C6]  dump_stack_lvl+0xac/0xf0
-[    6.258326][T329@C6]  dump_stack+0x18/0x3c
-[    6.258329][T329@C6]  __lock_acquire+0x824/0x2c28
-[    6.258331][T329@C6]  lock_acquire+0x148/0x2cc
-[    6.258333][T329@C6]  _raw_spin_lock_irqsave+0x6c/0xb4
-[    6.258334][T329@C6]  sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd 814535e93c6d8e0853c45c02eab0fa88a9da6487]
-[    6.258337][T329@C6]  irq_startup+0x238/0x350
-[    6.258340][T329@C6]  __setup_irq+0x504/0x82c
-[    6.258342][T329@C6]  request_threaded_irq+0x118/0x184
-[    6.258344][T329@C6]  devm_request_threaded_irq+0x94/0x120
-[    6.258347][T329@C6]  sc8546_init_irq+0x114/0x170 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
-[    6.258352][T329@C6]  sc8546_charger_probe+0x53c/0x5a0 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
-[    6.258358][T329@C6]  i2c_device_probe+0x2c8/0x350
-[    6.258361][T329@C6]  really_probe+0x1a8/0x46c
-[    6.258363][T329@C6]  __driver_probe_device+0xa4/0x10c
-[    6.258366][T329@C6]  driver_probe_device+0x44/0x1b4
-[    6.258369][T329@C6]  __driver_attach+0xd0/0x204
-[    6.258371][T329@C6]  bus_for_each_dev+0x10c/0x168
-[    6.258373][T329@C6]  driver_attach+0x2c/0x3c
-[    6.258376][T329@C6]  bus_add_driver+0x154/0x29c
-[    6.258378][T329@C6]  driver_register+0x70/0x10c
-[    6.258381][T329@C6]  i2c_register_driver+0x48/0xc8
-[    6.258384][T329@C6]  init_module+0x28/0xfd8 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
-[    6.258389][T329@C6]  do_one_initcall+0x128/0x42c
-[    6.258392][T329@C6]  do_init_module+0x60/0x254
-[    6.258395][T329@C6]  load_module+0x1054/0x1220
-[    6.258397][T329@C6]  __arm64_sys_finit_module+0x240/0x35c
-[    6.258400][T329@C6]  invoke_syscall+0x60/0xec
-[    6.258402][T329@C6]  el0_svc_common+0xb0/0xe4
-[    6.258405][T329@C6]  do_el0_svc+0x24/0x30
-[    6.258407][T329@C6]  el0_svc+0x54/0x1c4
-[    6.258409][T329@C6]  el0t_64_sync_handler+0x68/0xdc
-[    6.258411][T329@C6]  el0t_64_sync+0x1c4/0x1c8
+This can be triggered by setting a loop device's block size larger than
+PAGE_SIZE using ioctl(LOOP_SET_BLOCK_SIZE, 32768), then mounting a romfs
+filesystem on that device.
 
-This is because the spin_lock would change to rt_mutex in PREEMPT_RT,
-however the sprd_gpio->lock would use in hard-irq, this is unsafe.
+When sb_set_blocksize(sb, ROMBSIZE) is called with ROMBSIZE=4096 but the
+device has logical_block_size=32768, bdev_validate_blocksize() fails
+because the requested size is smaller than the device's logical block
+size. sb_set_blocksize() returns 0 (failure), but romfs ignores this and
+continues mounting.
 
-So change the spin_lock_t to raw_spin_lock_t to use the spinlock
-in hard-irq.
+The superblock's block size remains at the device's logical block size
+(32768). Later, when sb_bread() attempts I/O with this oversized block
+size, it triggers a kernel BUG in folio_set_bh():
 
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20260126094209.9855-1-xuewen.yan@unisoc.com
-[Bartosz: tweaked the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+    kernel BUG at fs/buffer.c:1582!
+    BUG_ON(size > PAGE_SIZE);
+
+Fix by checking the return value of sb_set_blocksize() and failing the
+mount with -EINVAL if it returns 0.
+
+Reported-by: syzbot+9c4e33e12283d9437c25@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9c4e33e12283d9437c25
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260113084037.1167887-1-kartikey406@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-sprd.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/romfs/super.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-sprd.c b/drivers/gpio/gpio-sprd.c
-index 9dd9dabb579e2..b2b28c6877f2f 100644
---- a/drivers/gpio/gpio-sprd.c
-+++ b/drivers/gpio/gpio-sprd.c
-@@ -35,7 +35,7 @@
- struct sprd_gpio {
- 	struct gpio_chip chip;
- 	void __iomem *base;
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- 	int irq;
- };
+diff --git a/fs/romfs/super.c b/fs/romfs/super.c
+index 259f684d9236e..6f31e720c9561 100644
+--- a/fs/romfs/super.c
++++ b/fs/romfs/super.c
+@@ -467,7 +467,10 @@ static int romfs_fill_super(struct super_block *sb, struct fs_context *fc)
  
-@@ -54,7 +54,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
- 	unsigned long flags;
- 	u32 tmp;
- 
--	spin_lock_irqsave(&sprd_gpio->lock, flags);
-+	raw_spin_lock_irqsave(&sprd_gpio->lock, flags);
- 	tmp = readl_relaxed(base + reg);
- 
- 	if (val)
-@@ -63,7 +63,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
- 		tmp &= ~BIT(SPRD_GPIO_BIT(offset));
- 
- 	writel_relaxed(tmp, base + reg);
--	spin_unlock_irqrestore(&sprd_gpio->lock, flags);
-+	raw_spin_unlock_irqrestore(&sprd_gpio->lock, flags);
- }
- 
- static int sprd_gpio_read(struct gpio_chip *chip, unsigned int offset, u16 reg)
-@@ -231,7 +231,7 @@ static int sprd_gpio_probe(struct platform_device *pdev)
- 	if (IS_ERR(sprd_gpio->base))
- 		return PTR_ERR(sprd_gpio->base);
- 
--	spin_lock_init(&sprd_gpio->lock);
-+	raw_spin_lock_init(&sprd_gpio->lock);
- 
- 	sprd_gpio->chip.label = dev_name(&pdev->dev);
- 	sprd_gpio->chip.ngpio = SPRD_GPIO_NR;
+ #ifdef CONFIG_BLOCK
+ 	if (!sb->s_mtd) {
+-		sb_set_blocksize(sb, ROMBSIZE);
++		if (!sb_set_blocksize(sb, ROMBSIZE)) {
++			errorf(fc, "romfs: unable to set blocksize\n");
++			return -EINVAL;
++		}
+ 	} else {
+ 		sb->s_blocksize = ROMBSIZE;
+ 		sb->s_blocksize_bits = blksize_bits(ROMBSIZE);
 -- 
 2.51.0
 
