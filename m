@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB1A17C77;
-	Tue, 17 Feb 2026 01:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651FA22541B;
+	Tue, 17 Feb 2026 01:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771290081; cv=none; b=cyarXv8Ko/eJz3OETe1aLv2n35jWF4qDnH4fGJclTowz0/WyyFb9keqAihr/AnXHYDp+hSwkx+DYs2cnRu+KTpbrveM7m1svOxge7vzO97pp4HrhMQpDN31lYNIDCOIuhxwfQIQ0a4WKc1nzdZGEJe0g9b74THxSo/IfACfxrro=
+	t=1771290082; cv=none; b=QLLsA2LbFjezeRXgzKrWYhJbd3KCawG/P7LXS7fTZyxZ1l/OPHhQ8NAAnKqmihLaR7CCmRbbVnWYDLmmo+d9G4Tz9C8fGbeaAYuLxILy25hqQvVyJQHkPgftg1VwfH4wlnQtST6bIGN6s4qELWotsR/iefw1D52Maa0USRyvBKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771290081; c=relaxed/simple;
-	bh=zu+6+bYRrKvVpVeMt3FoPRQqWS+069PP7MlrY5geJFk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FNOJNYOkHSG1yaHyy8l5YUyYtBee8SHJBjlvoiWkKu7XjeF3BG+NCq2WOiq4uaVq26EHiLXeoEL7Y75I39dCz9nHy8SmWytNvy6DXksMMvNPbZTve9c5JZTcEf+ZUCp3UxXVHdTobTrq/N/IElAYFikdjvTarMFXQ+ts2OSRHc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g6LDH9f0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771290082; c=relaxed/simple;
+	bh=aBlsoCKqIY1rr8x2s305PSeMwbnfVD32M/6FirNmeEU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UWbPdO3Y7WTYwylJ0Om6Zt3CsjI56XBQ+9heNrcRiZ4pGsO+TPcGKFGl0cp6PJ55BRYtGHiF/gNZZBzJfCBDL3mDHCnIJqdPYt2MD3vrccokBgcjxo4AN1WJ5v326p3gcbi2M+akCzi2Vz+KBGCcv/9IqcuFB9qHmjXXJOoJOY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eFlKrI5R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g6LDH9f0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B239BC116C6;
-	Tue, 17 Feb 2026 01:01:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eFlKrI5R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30749C19423;
+	Tue, 17 Feb 2026 01:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771290080;
-	bh=zu+6+bYRrKvVpVeMt3FoPRQqWS+069PP7MlrY5geJFk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=g6LDH9f0gvlMLgfjpDKgIi9BkVwXGtiXA6prigsBZVk/Yd6sxNxirYTbAsZSURHAU
-	 jOx4nKMZ3GmEIC4sLyXuEyWRN9xtP4aVN/inCPiP2PUkwEMtrfzGLzeoxR8B7istGu
-	 k+F6c/zeI3Ed8XYggnBNB6haOJaXbDmzD1ox5kKoSxgk0bO3/858y/I6CSikg1+7aZ
-	 xf0zaYEwpsTLdGLIy44P3ul41tGlm5h2ekcQDzTCWVYyvy0doHuN0rXD8Ck3Y4rjji
-	 S0a3DPC7+QxvEfk10LfMyabIZgQ8gsZ/h6dy/OWOlBRrXXVQ5Y+/f/3ZGSeAwrP5eF
-	 xxtZB8RAHOvCA==
+	s=k20201202; t=1771290082;
+	bh=aBlsoCKqIY1rr8x2s305PSeMwbnfVD32M/6FirNmeEU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=eFlKrI5RgHc+GLaQTN75d4zO4QH9zfsjTvHGYxwkRrTnQC1XWsZ5DY5b5bz8oIkJk
+	 dhHYC7j3wI0RfDGvjjgb7Zn6LWjrWjp+GmBWwvtWrhllyeQzX2WH+N1WHLufX6K1xr
+	 ss07hXcYY3M1T8N22j4HMdV0ZZoosm0XJk9QLpOn0Tb9g78p9S/wvZRaa9EO3ZxQkw
+	 36/YFAEi9vXNeJGf8hnlnTc/dCyCfRHDhPMKy+0WoTw2NslUwQB+yf7C7MxY0xGpQT
+	 5OlWL0d1ypQhQudNn15eRJldiX4M4xiGeGX/t0OSy5Q0JM/RxGj9WDVV7BhhwB6iCb
+	 yQLU1etBUSu6Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brian Masney <bmasney@redhat.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+Cc: Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
 	mturquette@baylibre.com,
 	sboyd@kernel.org,
+	linux-renesas-soc@vger.kernel.org,
 	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] clk: microchip: core: correct return value on *_get_parent()
-Date: Mon, 16 Feb 2026 20:01:12 -0500
-Message-ID: <20260217010118.3503621-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] clk: renesas: rzg2l: Deassert reset on assert timeout
+Date: Mon, 16 Feb 2026 20:01:13 -0500
+Message-ID: <20260217010118.3503621-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260217010118.3503621-1-sashal@kernel.org>
+References: <20260217010118.3503621-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,158 +52,140 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Masney <bmasney@redhat.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 5df96d141cccb37f0c3112a22fc1112ea48e9246 ]
+[ Upstream commit 0b0201f259e1158a875c5fd01adf318ae5d32352 ]
 
-roclk_get_parent() and sclk_get_parent() has the possibility of
-returning -EINVAL, however the framework expects this call to always
-succeed since the return value is unsigned.
+If the assert() fails due to timeout error, set the reset register bit
+back to deasserted state. This change is needed especially for handling
+assert error in suspend() callback that expect the device to be in
+operational state in case of failure.
 
-If there is no parent map defined, then the current value programmed in
-the hardware is used. Let's use that same value in the case where
--EINVAL is currently returned.
-
-This index is only used by clk_core_get_parent_by_index(), and it
-validates that it doesn't overflow the number of available parents.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202512050233.R9hAWsJN-lkp@intel.com/
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Link: https://lore.kernel.org/r/20251205-clk-microchip-fixes-v3-2-a02190705e47@redhat.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260108123433.104464-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The driver was introduced in 2016, around v4.7. This is very old code
-that has been in all stable trees.
+The suspend/resume directly in this driver doesn't call assert. The
+commit message mentions "suspend() callback" — this likely refers to
+peripheral device drivers that use reset_control_assert() during their
+own suspend callbacks, which then calls `rzg2l_cpg_assert()` through the
+reset_control_ops.
 
-## Bug Classification
+## Summary of Analysis
 
-This is a **type mismatch bug** where a signed error code (`-EINVAL`,
-which is -22) is returned from a function with unsigned `u8` return
-type. The framework API (`struct clk_ops.get_parent`) is defined as
-returning `u8`.
+### What the commit fixes:
+1. **Variable shadowing bug**: `readl_poll_timeout_atomic` overwrites
+   `value`, which is then needed for the error recovery path. The patch
+   introduces a separate `mon` variable for the poll output, keeping
+   `value` intact.
+2. **Missing error recovery on assert timeout**: The original code only
+   rolls back on deassert failure. If assert fails (e.g., during
+   suspend), the device is left in an asserted (reset) state with no
+   recovery, making the device non-operational even though the suspend
+   callback returns an error. The fix uses `value ^= mask` to undo
+   either direction of the operation.
 
-When `-EINVAL` is returned as `u8`:
-- It becomes 234 (0xEA) due to unsigned truncation
-- This gets passed to `clk_core_get_parent_by_index()` which checks
-  bounds (`index >= core->num_parents`)
-- Since 234 is almost certainly larger than the number of parents, it
-  returns NULL
-- This means the clock has no parent set, which could cause
-  initialization failures or wrong clock behavior
+### Dependencies:
+This commit has **hard dependencies** on two v6.18 commits:
+- `341b0f1b6cba5` - introduces `__rzg2l_cpg_assert()` helper
+- `f8c5f0dc77d86` - introduces the deassert-only rollback code that this
+  commit modifies
 
-The fix replaces the `-EINVAL` return with returning the raw hardware
-register value `v`, which is what the function already does when
-`parent_map` is NULL. This is a sensible fallback - if the parent map
-doesn't contain the hardware value, use it directly (as if there's no
-map).
+Without these two prerequisite commits, the patch cannot apply to any
+stable tree older than v6.18.
 
-## Risk Assessment
+### Risk Assessment:
+- **Scope**: Small, contained change in one function (~10 lines changed)
+- **Risk**: Low — only affects error paths in Renesas RZ/G2L clock/reset
+  driver
+- **Correctness**: The XOR approach is elegant and correct for both
+  assert and deassert cases
+- **Review**: Has "Reviewed-by: Geert Uytterhoeven" (Renesas clk
+  subsystem maintainer)
 
-**Very low risk:**
-- The change is small and contained (two functions, same pattern)
-- The logic change is straightforward: instead of returning an invalid
-  value on the "no match found" path, return the hardware register value
-- The fix is reviewed by the subsystem maintainer (Claudiu Beznea)
-- The code only affects Microchip PIC32 clock driver - very narrow scope
-- `clk_core_get_parent_by_index()` still performs bounds validation on
-  the returned value
-
-**Benefit:**
-- Prevents incorrect clock parent resolution on Microchip PIC32
-  platforms
-- Fixes a real type mismatch bug that was caught by static analysis
-  tools
-- The bug has existed since the driver was introduced (~v4.7), so all
-  stable trees are affected
+### Stable Tree Applicability:
+The fix only applies to v6.18.y since its prerequisites were merged in
+v6.18-rc1. For older stable trees (6.12.y, 6.6.y, etc.), the code
+structure is completely different (separate functions, no rollback
+logic), so this specific bug doesn't exist there.
 
 ## Verification
 
-- **Verified:** `struct clk_ops.get_parent` returns `u8` (confirmed in
-  `include/linux/clk-provider.h`)
-- **Verified:** `clk_core_get_parent_by_index()` bounds-checks the index
-  against `num_parents` and returns NULL for out-of-range
-- **Verified:** `__clk_init_parent()` calls `.get_parent()` and passes
-  result to `clk_core_get_parent_by_index()`
-- **Verified:** `-EINVAL` is -22, which truncated to `u8` becomes 234
-  (0xEA), which would exceed any realistic parent count
-- **Verified:** The driver was introduced in 2016 (commit
-  ce6e118846599), so the bug exists in all stable trees
-- **Verified:** Reported by kernel test robot and Dan Carpenter (well-
-  known static analysis reporters)
-- **Verified:** Reviewed-by from Claudiu Beznea (subsystem maintainer)
-- **Verified:** The fix simply uses the raw hardware value `v` as
-  fallback, which is what the function already returns when `parent_map`
-  is NULL
+- **git log master** showed the prerequisite commits 341b0f1b6cba5 and
+  f8c5f0dc77d86 are only in v6.18+
+- **git tag --contains** confirmed both prerequisites are in v6.18-rc1+,
+  not in any earlier release
+- **git show v6.12:drivers/clk/renesas/rzg2l-cpg.c** confirmed older
+  stable trees have separate assert/deassert functions without the
+  `__rzg2l_cpg_assert()` helper and without any error rollback logic
+- **Read of current file** confirmed the code matches the "before" state
+  of the diff
+- **Code analysis** verified the XOR-based rollback logic is correct:
+  when asserting, `value = mask << 16` (no lower mask), XOR with mask
+  adds it → deasserts; when deasserting, `value = (mask << 16) | mask`,
+  XOR with mask removes it → re-asserts
+- **Variable shadowing confirmed**: `readl_poll_timeout_atomic` modifies
+  the `value` parameter in-place, so using it for both the initial write
+  value and poll output is a real bug (though in practice the old code's
+  `if (ret && !assert)` branch reassigned `value`, masking the issue for
+  deassert)
 
-## Conclusion
+## Decision
 
-This commit fixes a real bug where two clock `get_parent` callbacks
-return a signed error code from a function with unsigned return type.
-The fix is small, obvious, well-reviewed, and low-risk. It affects a
-driver that has been in the kernel since v4.7, so all stable trees
-contain the buggy code. The fix follows the existing pattern in the code
-(using the hardware register value directly) and is the correct
-approach.
+This is a legitimate bug fix that:
+1. Fixes a real issue where assert failure during suspend leaves
+   hardware in a non-operational state
+2. Also fixes a variable shadowing bug (reusing `value` for two
+   different purposes)
+3. Is small, contained, reviewed by the subsystem maintainer
+4. Meets stable kernel criteria
+
+However, it has hard dependencies on two refactoring/feature commits
+from v6.18 that are not in any current stable tree. The only applicable
+stable tree would be 6.18.y. Given that this is a genuine fix for an
+error recovery path that matters during suspend/resume, and it's
+applicable to 6.18.y, it should be backported.
 
 **YES**
 
- drivers/clk/microchip/clk-core.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ drivers/clk/renesas/rzg2l-cpg.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/microchip/clk-core.c b/drivers/clk/microchip/clk-core.c
-index b34348d491f3e..73c05aa4e1d60 100644
---- a/drivers/clk/microchip/clk-core.c
-+++ b/drivers/clk/microchip/clk-core.c
-@@ -283,14 +283,13 @@ static u8 roclk_get_parent(struct clk_hw *hw)
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index 64d1ef6e4c943..c20ea1212b360 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -1647,6 +1647,7 @@ static int __rzg2l_cpg_assert(struct reset_controller_dev *rcdev,
+ 	u32 mask = BIT(info->resets[id].bit);
+ 	s8 monbit = info->resets[id].monbit;
+ 	u32 value = mask << 16;
++	u32 mon;
+ 	int ret;
  
- 	v = (readl(refo->ctrl_reg) >> REFO_SEL_SHIFT) & REFO_SEL_MASK;
+ 	dev_dbg(rcdev->dev, "%s id:%ld offset:0x%x\n",
+@@ -1667,10 +1668,10 @@ static int __rzg2l_cpg_assert(struct reset_controller_dev *rcdev,
+ 		return 0;
+ 	}
  
--	if (!refo->parent_map)
--		return v;
--
--	for (i = 0; i < clk_hw_get_num_parents(hw); i++)
--		if (refo->parent_map[i] == v)
--			return i;
-+	if (refo->parent_map) {
-+		for (i = 0; i < clk_hw_get_num_parents(hw); i++)
-+			if (refo->parent_map[i] == v)
-+				return i;
-+	}
+-	ret = readl_poll_timeout_atomic(priv->base + reg, value,
+-					assert == !!(value & mask), 10, 200);
+-	if (ret && !assert) {
+-		value = mask << 16;
++	ret = readl_poll_timeout_atomic(priv->base + reg, mon,
++					assert == !!(mon & mask), 10, 200);
++	if (ret) {
++		value ^= mask;
+ 		writel(value, priv->base + CLK_RST_R(info->resets[id].off));
+ 	}
  
--	return -EINVAL;
-+	return v;
- }
- 
- static unsigned long roclk_calc_rate(unsigned long parent_rate,
-@@ -826,13 +825,13 @@ static u8 sclk_get_parent(struct clk_hw *hw)
- 
- 	v = (readl(sclk->mux_reg) >> OSC_CUR_SHIFT) & OSC_CUR_MASK;
- 
--	if (!sclk->parent_map)
--		return v;
-+	if (sclk->parent_map) {
-+		for (i = 0; i < clk_hw_get_num_parents(hw); i++)
-+			if (sclk->parent_map[i] == v)
-+				return i;
-+	}
- 
--	for (i = 0; i < clk_hw_get_num_parents(hw); i++)
--		if (sclk->parent_map[i] == v)
--			return i;
--	return -EINVAL;
-+	return v;
- }
- 
- static int sclk_set_parent(struct clk_hw *hw, u8 index)
 -- 
 2.51.0
 
