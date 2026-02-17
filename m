@@ -1,263 +1,152 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C596729AB02;
-	Tue, 17 Feb 2026 20:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01986A8D2;
+	Tue, 17 Feb 2026 20:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360768; cv=none; b=S2WTzDxoOpI+wG1sulA1TeY0GsKWJ/J3BvZibxBku+wQE6aKnhK3lfne7vRzHcj6Mfsx31HzlbqbkQTr330t4rBzrYibRYEg2k3y4PRFuBtkuL3POdCJ5eMHe0CN953cslm+egV33e7PM/pSiMAF6qpbMFEzkubeBldHajgbxpk=
+	t=1771360772; cv=none; b=IeIsUWmqrLM50Wp3eEmNl8Wt5lVu8xVW8ZcQG/Y9XXZJ4DFlPkx9VSEgG0N6ZxIeZnCnKH3D+ncGJd1OfO7je3vvEyBg/1yjR7zcFX98o/xx/fftie4VcvDDAuNKglI33puEJB614ZeOKOjFJhjhdqoLTeGEL3VBHi4e2xZoGLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360768; c=relaxed/simple;
-	bh=n8yPzMiT6rhZE5JsJARmhvMIGHybLR4bzQ3Q6XixiGQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ctShXDDd8R3Iyn9Ho6qslKpglpcCJjy0CFE5I9F8808f4S4YUHpP8vLC1ydc4Yo1MOi3uZqJo2bL7l/KKS0Z9STMTv0pBPmayYCL4Ys/9o+c902j9RfZ7jUtiAhPPjpwrTIAIJ33Yf+CqHhcEWN1jCQYMsI1NO8zx+/EqKp6h+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYoSNP1z; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771360772; c=relaxed/simple;
+	bh=pL96kdNC4vWZM+OGOAj2YyaQ8QZmE9UsGIfpWbPmQQ8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hb7HfDNnL2fpCDLD/Eg+GGoqZI3euozhy+W9KNrWK9ety8gMI0gq7Q1L2JJt0ZbS6R6WTgFZ9+C3LZCTExkqT3m+zVNPVWFJLaLnuURGgO2M9CszdMhUoIpeBxJdlI55tIbndu/GgxUFBe9y5el9xQRsdHkEf/xogtJ538JqmrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksjvQ4Ew; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYoSNP1z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7110C4CEF7;
-	Tue, 17 Feb 2026 20:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksjvQ4Ew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742B5C2BC86;
+	Tue, 17 Feb 2026 20:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360768;
-	bh=n8yPzMiT6rhZE5JsJARmhvMIGHybLR4bzQ3Q6XixiGQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=oYoSNP1zz3aRnl5USMB/GTAGysXNLFsqMKpEdEvQkvVSUIpJ9nqGRa8Nfc9O3+PhP
-	 qEL4YHlZZXfIQhU+70Yu+jGPDb8lK+TVM6UAlFIIybTfodfsnrd7pMkFIyh2kd6Og5
-	 RSTNP7oXV+LWOjcdtoWhPCXc+y2402Su196d2evc=
+	s=korg; t=1771360771;
+	bh=pL96kdNC4vWZM+OGOAj2YyaQ8QZmE9UsGIfpWbPmQQ8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ksjvQ4EwzYl1rJhZ6iwZXMIYNyfN2iFWRsYz2SE4nImbZRuTDFfo10000jXhbNJ40
+	 6ortwMEfzpuBTe4JdP6cyfp7kuxO3/wJx0o0xNn9JriJeHahYAd1WN0L6ODVf+PEr5
+	 cOAGIUtS/ufJP4+NtCFOq1WfL7N/SeoLJJtA0mqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: [PATCH 6.6 00/39] 6.6.127-rc1 review
-Date: Tue, 17 Feb 2026 21:30:22 +0100
-Message-ID: <20260217200004.221651386@linuxfoundation.org>
+	Liu Song <liu.song13@zte.com.cn>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	stable@kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 03/39] PCI: endpoint: Avoid creating sub-groups asynchronously
+Date: Tue, 17 Feb 2026 21:30:25 +0100
+Message-ID: <20260217200004.356788669@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
+References: <20260217200004.221651386@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.127-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.6.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.6.127-rc1
-X-KernelTest-Deadline: 2026-02-19T20:00+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.6.127 release.
-There are 39 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Thu, 19 Feb 2026 19:59:50 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.127-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-and the diffstat can be found below.
+From: Liu Song <liu.song13@zte.com.cn>
 
-thanks,
+[ Upstream commit 7c5c7d06bd1f86d2c3ebe62be903a4ba42db4d2c ]
 
-greg k-h
+The asynchronous creation of sub-groups by a delayed work could lead to a
+NULL pointer dereference when the driver directory is removed before the
+work completes.
 
--------------
-Pseudo-Shortlog of commits:
+The crash can be easily reproduced with the following commands:
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.6.127-rc1
+  # cd /sys/kernel/config/pci_ep/functions/pci_epf_test
+  # for i in {1..20}; do mkdir test && rmdir test; done
 
-Menglong Dong <menglong8.dong@gmail.com>
-    net: tunnel: make skb_vlan_inet_prepare() return drop reasons
+  BUG: kernel NULL pointer dereference, address: 0000000000000088
+  ...
+  Call Trace:
+   configfs_register_group+0x3d/0x190
+   pci_epf_cfs_work+0x41/0x110
+   process_one_work+0x18f/0x350
+   worker_thread+0x25a/0x3a0
 
-Fabio Porcedda <fabio.porcedda@gmail.com>
-    USB: serial: option: add Telit FN920C04 RNDIS compositions
+Fix this issue by using configfs_add_default_group() API which does not
+have the deadlock problem as configfs_register_group() and does not require
+the delayed work handler.
 
-Chao Yu <chao@kernel.org>
-    f2fs: fix to avoid mapping wrong physical block for swapfile
+Fixes: e85a2d783762 ("PCI: endpoint: Add support in configfs to associate two EPCs with EPF")
+Signed-off-by: Liu Song <liu.song13@zte.com.cn>
+[mani: slightly reworded the description and added stable list]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20250710143845409gLM6JdlwPhlHG9iX3F6jK@zte.com.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/pci/endpoint/pci-ep-cfs.c |   15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-Wenjie Qi <qwjhust@gmail.com>
-    f2fs: fix zoned block device information initialization
-
-Chao Yu <chao@kernel.org>
-    f2fs: fix to avoid UAF in f2fs_write_end_io()
-
-Yongpeng Yang <yangyongpeng@xiaomi.com>
-    f2fs: fix IS_CHECKPOINTED flag inconsistency issue caused by concurrent atomic commit and checkpoint writes
-
-Yongpeng Yang <yangyongpeng@xiaomi.com>
-    f2fs: fix out-of-bounds access in sysfs attribute read/write
-
-Zhiguo Niu <zhiguo.niu@unisoc.com>
-    f2fs: fix to add gc count stat in f2fs_gc_range
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    fbdev: smscufx: properly copy ioctl memory to kernelspace
-
-Guangshuo Li <lgs201920130244@gmail.com>
-    fbdev: rivafb: fix divide error in nv3_arb()
-
-Huacai Chen <chenhuacai@kernel.org>
-    LoongArch: Add writecombine support for DMW-based ioremap()
-
-Chen Ridong <chenridong@huawei.com>
-    cpuset: Fix missing adaptation for cpuset_is_populated
-
-David Hildenbrand (Red Hat) <david@kernel.org>
-    mm/hugetlb: fix excessive IPI broadcasts when unsharing PMD tables using mmu_gather
-
-David Hildenbrand (Red Hat) <david@kernel.org>
-    mm/hugetlb: fix two comments related to huge_pmd_unshare()
-
-David Hildenbrand (Red Hat) <david@kernel.org>
-    mm/hugetlb: fix hugetlb_pmd_shared()
-
-Jane Chu <jane.chu@oracle.com>
-    mm/hugetlb: fix copy_hugetlb_page_range() to use ->pt_share_count
-
-Daniel Borkmann <daniel@iogearbox.net>
-    Revert "wireguard: device: enable threaded NAPI"
-
-Tiezhu Yang <yangtiezhu@loongson.cn>
-    LoongArch: Rework KASAN initialization for PTW-enabled systems
-
-Kanglong Wang <wangkanglong@loongson.cn>
-    LoongArch: Add WriteCombine shadow mapping in KASAN
-
-Alban Bedel <alban.bedel@lht.dlh.de>
-    gpiolib: acpi: Fix gpio count with string references
-
-Ziyi Guo <n7l8m4@u.northwestern.edu>
-    ASoC: fsl_xcvr: fix missing lock in fsl_xcvr_mode_put()
-
-Charles Keepax <ckeepax@opensource.cirrus.com>
-    ASoC: cs42l43: Correct handling of 3-pole jack load detection
-
-Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-    platform/x86: panasonic-laptop: Fix sysfs group leak in error path
-
-gongqi <550230171hxy@gmail.com>
-    platform/x86/amd/pmc: Add quirk for MECHREVO Wujie 15X Pro
-
-Dirk Su <dirk.su@canonical.com>
-    ASoC: amd: yc: Add quirk for HP 200 G2a 16
-
-Tagir Garaev <tgaraev653@gmail.com>
-    ASoC: Intel: sof_es8336: Add DMI quirk for Huawei BOD-WXX9
-
-Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-    platform/x86: classmate-laptop: Add missing NULL pointer checks
-
-Brahmajit Das <listout@listout.xyz>
-    drm/tegra: hdmi: sor: Fix error: variable ‘j’ set but not used
-
-Deepanshu Kartikey <kartikey406@gmail.com>
-    romfs: check sb_set_blocksize() return value
-
-Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>
-    ASoC: cs35l45: Corrects ASP_TX5 DAPM widget channel
-
-Zhang Heng <zhangheng@kylinos.cn>
-    ALSA: hda/realtek: Add quirk for Inspur S14-G1
-
-Xuewen Yan <xuewen.yan@unisoc.com>
-    gpio: sprd: Change sprd_gpio lock to raw_spin_lock
-
-Anatolii Shirykalov <pipocavsobake@gmail.com>
-    ASoC: amd: yc: Add ASUS ExpertBook PM1503CDA to quirks list
-
-Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
-    ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU
-
-Gui-Dong Han <hanguidong02@gmail.com>
-    bus: fsl-mc: fix use-after-free in driver_override_show()
-
-Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
-    bus: fsl-mc: Replace snprintf and sprintf with sysfs_emit in sysfs show functions
-
-Liu Song <liu.song13@zte.com.cn>
-    PCI: endpoint: Avoid creating sub-groups asynchronously
-
-Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-    PCI: endpoint: Remove unused field in struct pci_epf_group
-
-Anil Gurumurthy <agurumurthy@marvell.com>
-    scsi: qla2xxx: Fix bsg_done() causing double free
-
-
--------------
-
-Diffstat:
-
- Makefile                                  |   4 +-
- arch/loongarch/include/asm/addrspace.h    |   4 +
- arch/loongarch/include/asm/io.h           |  10 +-
- arch/loongarch/include/asm/kasan.h        |  11 ++-
- arch/loongarch/include/asm/loongarch.h    |  10 +-
- arch/loongarch/include/asm/stackframe.h   |  11 +++
- arch/loongarch/kernel/head.S              |  11 +--
- arch/loongarch/mm/kasan_init.c            |  78 +++++++++-------
- arch/loongarch/power/suspend_asm.S        |   6 +-
- drivers/bus/fsl-mc/fsl-mc-bus.c           |  10 +-
- drivers/firmware/efi/libstub/loongarch.c  |   2 +
- drivers/gpio/gpio-sprd.c                  |   8 +-
- drivers/gpio/gpiolib-acpi.c               |   1 +
- drivers/gpu/drm/tegra/hdmi.c              |   4 +-
- drivers/gpu/drm/tegra/sor.c               |   4 +-
- drivers/net/bareudp.c                     |   4 +-
- drivers/net/geneve.c                      |   4 +-
- drivers/net/wireguard/device.c            |   1 -
- drivers/pci/endpoint/pci-ep-cfs.c         |  16 +---
- drivers/platform/x86/amd/pmc/pmc-quirks.c |   7 ++
- drivers/platform/x86/classmate-laptop.c   |  32 +++++++
- drivers/platform/x86/panasonic-laptop.c   |   4 +-
- drivers/scsi/qla2xxx/qla_bsg.c            |  28 +++---
- drivers/usb/serial/option.c               |   6 ++
- drivers/video/fbdev/riva/riva_hw.c        |   3 +
- drivers/video/fbdev/smscufx.c             |   8 +-
- fs/f2fs/data.c                            |  26 ++++--
- fs/f2fs/f2fs.h                            |   1 +
- fs/f2fs/gc.c                              |   1 +
- fs/f2fs/node.c                            |  14 ++-
- fs/f2fs/super.c                           |  27 ++++++
- fs/f2fs/sysfs.c                           |  60 ++++++++++--
- fs/romfs/super.c                          |   5 +-
- include/asm-generic/tlb.h                 |  77 +++++++++++++++-
- include/linux/hugetlb.h                   |  17 ++--
- include/linux/mm_types.h                  |   6 ++
- include/net/ip_tunnels.h                  |  13 ++-
- kernel/cgroup/cpuset.c                    |   2 +-
- mm/hugetlb.c                              | 146 ++++++++++++++++--------------
- mm/mmu_gather.c                           |  33 +++++++
- mm/rmap.c                                 |  25 +++--
- sound/pci/hda/patch_realtek.c             |   5 +
- sound/soc/amd/yc/acp6x-mach.c             |  14 +++
- sound/soc/codecs/cs35l45.c                |   2 +-
- sound/soc/codecs/cs42l43-jack.c           |  37 ++++++--
- sound/soc/fsl/fsl_xcvr.c                  |   3 +
- sound/soc/intel/boards/sof_es8336.c       |   9 ++
- 47 files changed, 593 insertions(+), 217 deletions(-)
+--- a/drivers/pci/endpoint/pci-ep-cfs.c
++++ b/drivers/pci/endpoint/pci-ep-cfs.c
+@@ -23,7 +23,6 @@ struct pci_epf_group {
+ 	struct config_group group;
+ 	struct config_group primary_epc_group;
+ 	struct config_group secondary_epc_group;
+-	struct delayed_work cfs_work;
+ 	struct pci_epf *epf;
+ 	int index;
+ };
+@@ -100,7 +99,7 @@ static struct config_group
+ 	secondary_epc_group = &epf_group->secondary_epc_group;
+ 	config_group_init_type_name(secondary_epc_group, "secondary",
+ 				    &pci_secondary_epc_type);
+-	configfs_register_group(&epf_group->group, secondary_epc_group);
++	configfs_add_default_group(secondary_epc_group, &epf_group->group);
+ 
+ 	return secondary_epc_group;
+ }
+@@ -160,7 +159,7 @@ static struct config_group
+ 
+ 	config_group_init_type_name(primary_epc_group, "primary",
+ 				    &pci_primary_epc_type);
+-	configfs_register_group(&epf_group->group, primary_epc_group);
++	configfs_add_default_group(primary_epc_group, &epf_group->group);
+ 
+ 	return primary_epc_group;
+ }
+@@ -561,15 +560,13 @@ static void pci_ep_cfs_add_type_group(st
+ 		return;
+ 	}
+ 
+-	configfs_register_group(&epf_group->group, group);
++	configfs_add_default_group(group, &epf_group->group);
+ }
+ 
+-static void pci_epf_cfs_work(struct work_struct *work)
++static void pci_epf_cfs_add_sub_groups(struct pci_epf_group *epf_group)
+ {
+-	struct pci_epf_group *epf_group;
+ 	struct config_group *group;
+ 
+-	epf_group = container_of(work, struct pci_epf_group, cfs_work.work);
+ 	group = pci_ep_cfs_add_primary_group(epf_group);
+ 	if (IS_ERR(group)) {
+ 		pr_err("failed to create 'primary' EPC interface\n");
+@@ -628,9 +625,7 @@ static struct config_group *pci_epf_make
+ 
+ 	kfree(epf_name);
+ 
+-	INIT_DELAYED_WORK(&epf_group->cfs_work, pci_epf_cfs_work);
+-	queue_delayed_work(system_wq, &epf_group->cfs_work,
+-			   msecs_to_jiffies(1));
++	pci_epf_cfs_add_sub_groups(epf_group);
+ 
+ 	return &epf_group->group;
+ 
 
 
