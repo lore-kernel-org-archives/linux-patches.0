@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A019E29A1;
-	Tue, 17 Feb 2026 20:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AA92E973F;
+	Tue, 17 Feb 2026 20:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361396; cv=none; b=lmv6k4k+gu8FqkAwBQUO9SPmRu+/S+LotQ0KCpERG53ppHyqIu0vqSj0Iki2NLAebCe6sh31NLWkGOInafieig/38WjUuizxEQwonC/Ur3o6Wb17QItdLOt3xr//+3IrUO201LpPldJ2Dmvpcq7iBdfUmgHPWrNhMayYE4Qmdnc=
+	t=1771361400; cv=none; b=rjdYYb/12JQxqrRMvRqz0zV5nGblN/UKbWT0fzoxb2Dpi6P7JtqQlwA+TvJ2hrYQj1LmVqeRLDys/mndRhNQnsQLQtH9h/pLerepFiiia1oJ6sPwgJT1CQd1JxRJVG04Fl6UgwbLeuomGHhupOTA1zGqW5gaBcHznpx2i5SKnlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361396; c=relaxed/simple;
-	bh=QXWkYTUT0jfuX6dFXZzPedvWeALMI7vFwXa3Cg0KVe4=;
+	s=arc-20240116; t=1771361400; c=relaxed/simple;
+	bh=J08MPTXFFcmIt1CUh27u/ORZSpirRQQrdtdWmgaWRVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CAInoFBsqa1bcm3z+y0tsAOlsBkvtl1kjjNHgjpw8FfCH/BlDGSNorxA31+xt72M/1FjlA1ElM2dNFhQ6QLH4L/Or15eI/bxXDuBikBMvAgaTzKB6mdoDRdtanGryRqBx3OZpU2nl61dyZ+iAI/lKTrnQVYMVX78Cwl8w7ulIik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOizBOOG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CcKq+VvgcT0RGhx0seL1TkmBGtkmH2dtQ8VBQGoJRAOzTKpPO9MMgrqwBHVnwsBRPv0a8QGU8R7aI5tDmijer8HbgbhGFw+m7xHQd5BdG+HT+o/XCQU9J8hLIqLJrtsPFv767DSQEjHUR2/LNniEgtvuZHENTU1rz45Cipd87t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGh9rsrN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOizBOOG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99A4C4CEF7;
-	Tue, 17 Feb 2026 20:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGh9rsrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACCBC19421;
+	Tue, 17 Feb 2026 20:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361396;
-	bh=QXWkYTUT0jfuX6dFXZzPedvWeALMI7vFwXa3Cg0KVe4=;
+	s=korg; t=1771361399;
+	bh=J08MPTXFFcmIt1CUh27u/ORZSpirRQQrdtdWmgaWRVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VOizBOOGEtuknJcKr2+0CbaDG+51plaTBwkHCjlROwk+mgWmiROQ35ZZnwuvEZmzP
-	 gri7Kca5wi1G1h/okfHuXrlL2BIy9yWJfj7FkJ5uFOBhre4qRvJO/admDSnp7IpSO4
-	 tMcnTkQAqUSewl4Yg1XXWi0ITdEFqsFp1vDOdGF8=
+	b=rGh9rsrNR5lXzKRLCYC5mN3iJWg01IULmL1Ht0q+EHzFFQv6fxrbwKW57RcL6pc7n
+	 RsIIgCbwx2YuDC+KAR1taPWNLjA0cWeVnbD1aldZxRoiL9ZeGOi5UlfDMETC7YFDr3
+	 8SqIzMjDtlpDkrRo0r00wdaAwjj4TSOwdCAxzO7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.19 06/18] f2fs: fix to add gc count stat in f2fs_gc_range
-Date: Tue, 17 Feb 2026 21:32:02 +0100
-Message-ID: <20260217200002.936285214@linuxfoundation.org>
+Subject: [PATCH 6.19 07/18] f2fs: fix to check sysfs filename w/ gc_pin_file_thresh correctly
+Date: Tue, 17 Feb 2026 21:32:03 +0100
+Message-ID: <20260217200002.973285440@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.683975158@linuxfoundation.org>
 References: <20260217200002.683975158@linuxfoundation.org>
@@ -52,31 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 761dac9073cd67d4705a94cd1af674945a117f4c upstream.
+commit 0eda086de85e140f53c6123a4c00662f4e614ee4 upstream.
 
-It missed the stat count in f2fs_gc_range.
+Sysfs entry name is gc_pin_file_thresh instead of gc_pin_file_threshold,
+fix it.
 
 Cc: stable@kernel.org
-Fixes: 9bf1dcbdfdc8 ("f2fs: fix to account gc stats correctly")
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Fixes: c521a6ab4ad7 ("f2fs: fix to limit gc_pin_file_threshold")
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/sysfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2096,6 +2096,7 @@ int f2fs_gc_range(struct f2fs_sb_info *s
- 	if (unlikely(f2fs_cp_error(sbi)))
- 		return -EIO;
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -749,7 +749,7 @@ out:
+ 		return count;
+ 	}
  
-+	stat_inc_gc_call_count(sbi, FOREGROUND);
- 	for (segno = start_seg; segno <= end_seg; segno += SEGS_PER_SEC(sbi)) {
- 		struct gc_inode_list gc_list = {
- 			.ilist = LIST_HEAD_INIT(gc_list.ilist),
+-	if (!strcmp(a->attr.name, "gc_pin_file_threshold")) {
++	if (!strcmp(a->attr.name, "gc_pin_file_thresh")) {
+ 		if (t > MAX_GC_FAILED_PINNED_FILES)
+ 			return -EINVAL;
+ 		sbi->gc_pin_file_threshold = t;
 
 
