@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843C47A13A;
-	Tue, 17 Feb 2026 20:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F7F29A1;
+	Tue, 17 Feb 2026 20:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361282; cv=none; b=HKLYICaY8Pxf/X2yOUTjBUFD3zaXdYJMyifz8VkSarSgueq+xIQd+Dz3T+CfwvSD/YUoaI7Q3VW2N/bE9ShiUy4P0PmdusXcYcaouzjogKq14+X/SnmESGhKxhD34gTkKWmd29Q4WPQbAMXShd2GRTT3Ir5oo3GgxC2qM4w4xyc=
+	t=1771361286; cv=none; b=tomgS1yzxDBwWS3wGQliQisvMThdRq6McUbzxZIum4Q7GTU2+1CX9Tb7fzmToNozCrLsSMTa/j3Ro0gcqLozz3iG/h7go7jN1J6GAY0rNgILx+kVzhTis2rglHMW1oL8aN7BIGAgfgHn5jbqkmrWKhkS0aJwX6PKNWPYdLb7A0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361282; c=relaxed/simple;
-	bh=sJ97cQkn/CM6+ouWvTtQ/DwaSTKi8GE+o5HrgJpRLVU=;
+	s=arc-20240116; t=1771361286; c=relaxed/simple;
+	bh=FpxwqSbDLZl1wwWaWA3hw68XSBvoBvsdN9/F4W5Z3PQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZwIahiNfsWwsQbigUnWaqHa7Eg+3XtMdkgT0NHZd7r0yzta8fev/0HVNSvWgKVIXWVt3mgNACuRa0klWJBKeAxlik5sLdfBNL45QJ0IvqfFoT19QZpq1C7Ol7WeX0VgCLPpcmd2x/iQTfOjTSG5m5ilQBnuECVBLo6ftqjXXTBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8vQ4W5H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AlMgGo9d6fXtcr6Gpoj9kewJ/KJCvtMHR4Z8vw4docEK4rcCbdNmRzSXiQo9ouqvT2Xp2XjZmcRAKMGJO2NXOtpCP2eGezRJmEeEdokfsUkB7CmTC1p44s0qF/eevC5TIO6qdPki+9gAshrUlByO2qzALASfADrGo+g/OTC4mQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygCPrSow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8vQ4W5H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E986DC4CEF7;
-	Tue, 17 Feb 2026 20:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygCPrSow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E92BC4CEF7;
+	Tue, 17 Feb 2026 20:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361282;
-	bh=sJ97cQkn/CM6+ouWvTtQ/DwaSTKi8GE+o5HrgJpRLVU=;
+	s=korg; t=1771361285;
+	bh=FpxwqSbDLZl1wwWaWA3hw68XSBvoBvsdN9/F4W5Z3PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I8vQ4W5HkH0i/sZ6Dq3jwNHd/6WMhLRFuBW2m8g/yfGiU+3jnRsQlkr5WsL1B83HJ
-	 Nj0DpVxEq2IjuFVOhb5CK6XW1MeX6+Nnlqp3gHI7GftS+blLpuIHBrqYjtDm9J5jD4
-	 x7vlP1veN3yIGBGwuM5BNNtUw4ybl+uP0B15cXLs=
+	b=ygCPrSowfmgpJMEcqFUJGe/KnlG4XuV3hKbAgF05laMFeg7/IbdO8VjZ1W+ssdRLs
+	 A7KlwtHOUb0Z4sQX5aiwiFs2HBXlL7dgnBdzvoPAZolKtHWcnmrDtTV1VhHv+8j6k2
+	 DxXfObargTz10NnLMmFNMAH7bdlkuFlp8mho3bOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Bin Lan <lanbincn@139.com>
-Subject: [PATCH 6.1 54/64] net: dsa: free routing table on probe failure
-Date: Tue, 17 Feb 2026 21:31:50 +0100
-Message-ID: <20260217200009.532664913@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 55/64] mptcp: fix race in mptcp_pm_nl_flush_addrs_doit()
+Date: Tue, 17 Feb 2026 21:31:51 +0100
+Message-ID: <20260217200009.570553755@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -51,157 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8bf108d7161ffc6880ad13a0cc109de3cf631727 ]
+commit e2a9eeb69f7d4ca4cf4c70463af77664fdb6ab1d upstream.
 
-If complete = true in dsa_tree_setup(), it means that we are the last
-switch of the tree which is successfully probing, and we should be
-setting up all switches from our probe path.
+syzbot and Eulgyu Kim reported crashes in mptcp_pm_nl_get_local_id()
+and/or mptcp_pm_nl_is_backup()
 
-After "complete" becomes true, dsa_tree_setup_cpu_ports() or any
-subsequent function may fail. If that happens, the entire tree setup is
-in limbo: the first N-1 switches have successfully finished probing
-(doing nothing but having allocated persistent memory in the tree's
-dst->ports, and maybe dst->rtable), and switch N failed to probe, ending
-the tree setup process before anything is tangible from the user's PoV.
+Root cause is list_splice_init() in mptcp_pm_nl_flush_addrs_doit()
+which is not RCU ready.
 
-If switch N fails to probe, its memory (ports) will be freed and removed
-from dst->ports. However, the dst->rtable elements pointing to its ports,
-as created by dsa_link_touch(), will remain there, and will lead to
-use-after-free if dereferenced.
+list_splice_init_rcu() can not be called here while holding pernet->lock
+spinlock.
 
-If dsa_tree_setup_switches() returns -EPROBE_DEFER, which is entirely
-possible because that is where ds->ops->setup() is, we get a kasan
-report like this:
+Many thanks to Eulgyu Kim for providing a repro and testing our patches.
 
-==================================================================
-BUG: KASAN: slab-use-after-free in mv88e6xxx_setup_upstream_port+0x240/0x568
-Read of size 8 at addr ffff000004f56020 by task kworker/u8:3/42
-
-Call trace:
- __asan_report_load8_noabort+0x20/0x30
- mv88e6xxx_setup_upstream_port+0x240/0x568
- mv88e6xxx_setup+0xebc/0x1eb0
- dsa_register_switch+0x1af4/0x2ae0
- mv88e6xxx_register_switch+0x1b8/0x2a8
- mv88e6xxx_probe+0xc4c/0xf60
- mdio_probe+0x78/0xb8
- really_probe+0x2b8/0x5a8
- __driver_probe_device+0x164/0x298
- driver_probe_device+0x78/0x258
- __device_attach_driver+0x274/0x350
-
-Allocated by task 42:
- __kasan_kmalloc+0x84/0xa0
- __kmalloc_cache_noprof+0x298/0x490
- dsa_switch_touch_ports+0x174/0x3d8
- dsa_register_switch+0x800/0x2ae0
- mv88e6xxx_register_switch+0x1b8/0x2a8
- mv88e6xxx_probe+0xc4c/0xf60
- mdio_probe+0x78/0xb8
- really_probe+0x2b8/0x5a8
- __driver_probe_device+0x164/0x298
- driver_probe_device+0x78/0x258
- __device_attach_driver+0x274/0x350
-
-Freed by task 42:
- __kasan_slab_free+0x48/0x68
- kfree+0x138/0x418
- dsa_register_switch+0x2694/0x2ae0
- mv88e6xxx_register_switch+0x1b8/0x2a8
- mv88e6xxx_probe+0xc4c/0xf60
- mdio_probe+0x78/0xb8
- really_probe+0x2b8/0x5a8
- __driver_probe_device+0x164/0x298
- driver_probe_device+0x78/0x258
- __device_attach_driver+0x274/0x350
-
-The simplest way to fix the bug is to delete the routing table in its
-entirety. dsa_tree_setup_routing_table() has no problem in regenerating
-it even if we deleted links between ports other than those of switch N,
-because dsa_link_touch() first checks whether the port pair already
-exists in dst->rtable, allocating if not.
-
-The deletion of the routing table in its entirety already exists in
-dsa_tree_teardown(), so refactor that into a function that can also be
-called from the tree setup error path.
-
-In my analysis of the commit to blame, it is the one which added
-dsa_link elements to dst->rtable. Prior to that, each switch had its own
-ds->rtable which is freed when the switch fails to probe. But the tree
-is potentially persistent memory.
-
-Fixes: c5f51765a1f6 ("net: dsa: list DSA links in the fabric")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250414213001.2957964-1-vladimir.oltean@nxp.com
+Fixes: 141694df6573 ("mptcp: remove address when netlink flushes addrs")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6970a46d.a00a0220.3ad28e.5cf0.GAE@google.com/T/
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/611
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260124-net-mptcp-race_nl_flush_addrs-v3-1-b2dc1b613e9d@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Backport the fix to net/dsa/dsa2.c in v6.1.y for dsa2.c was
-renamed back into dsa.c by commit
-47d2ce03dcfb ("net: dsa: rename dsa2.c back into dsa.c and create its header")
-since v6.2. ]
-Signed-off-by: Bin Lan <lanbincn@139.com>
+[ Conflicts because the code has been moved from pm_netlink.c to
+  pm_kernel.c later on in commit 8617e85e04bd ("mptcp: pm: split
+  in-kernel PM specific code"). The same modifications can be applied
+  in pm_netlink.c with one exception, because 'pernet->local_addr_list'
+  has been renamed to 'pernet->endp_list' in commit 35e71e43a56d
+  ("mptcp: pm: in-kernel: rename 'local_addr_list' to 'endp_list'"). The
+  previous name is then still being used in this version.
+  Also, another conflict is caused by commit 7bcf4d8022f9 ("mptcp: pm:
+  rename helpers linked to 'flush'") which is not in this version:
+  mptcp_nl_remove_addrs_list() has been renamed to
+  mptcp_nl_flush_addrs_list(). The previous name has then been kept. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dsa/dsa2.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ net/mptcp/pm_netlink.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/net/dsa/dsa2.c
-+++ b/net/dsa/dsa2.c
-@@ -1148,6 +1148,16 @@ static void dsa_tree_teardown_lags(struc
- 	kfree(dst->lags);
- }
- 
-+static void dsa_tree_teardown_routing_table(struct dsa_switch_tree *dst)
-+{
-+	struct dsa_link *dl, *next;
-+
-+	list_for_each_entry_safe(dl, next, &dst->rtable, list) {
-+		list_del(&dl->list);
-+		kfree(dl);
-+	}
-+}
-+
- static int dsa_tree_setup(struct dsa_switch_tree *dst)
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1855,16 +1855,26 @@ static void __reset_counters(struct pm_n
+ static int mptcp_nl_cmd_flush_addrs(struct sk_buff *skb, struct genl_info *info)
  {
- 	bool complete;
-@@ -1165,7 +1175,7 @@ static int dsa_tree_setup(struct dsa_swi
+ 	struct pm_nl_pernet *pernet = genl_info_pm_nl(info);
+-	LIST_HEAD(free_list);
++	struct list_head free_list;
  
- 	err = dsa_tree_setup_cpu_ports(dst);
- 	if (err)
--		return err;
-+		goto teardown_rtable;
- 
- 	err = dsa_tree_setup_switches(dst);
- 	if (err)
-@@ -1197,14 +1207,14 @@ teardown_switches:
- 	dsa_tree_teardown_switches(dst);
- teardown_cpu_ports:
- 	dsa_tree_teardown_cpu_ports(dst);
-+teardown_rtable:
-+	dsa_tree_teardown_routing_table(dst);
- 
- 	return err;
+ 	spin_lock_bh(&pernet->lock);
+-	list_splice_init(&pernet->local_addr_list, &free_list);
++	free_list = pernet->local_addr_list;
++	INIT_LIST_HEAD_RCU(&pernet->local_addr_list);
+ 	__reset_counters(pernet);
+ 	pernet->next_id = 1;
+ 	bitmap_zero(pernet->id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
+ 	spin_unlock_bh(&pernet->lock);
+-	mptcp_nl_remove_addrs_list(sock_net(skb->sk), &free_list);
++
++	if (free_list.next == &pernet->local_addr_list)
++		return 0;
++
+ 	synchronize_rcu();
++
++	/* Adjust the pointers to free_list instead of pernet->local_addr_list */
++	free_list.prev->next = &free_list;
++	free_list.next->prev = &free_list;
++
++	mptcp_nl_remove_addrs_list(sock_net(skb->sk), &free_list);
+ 	__flush_addrs(&free_list);
+ 	return 0;
  }
- 
- static void dsa_tree_teardown(struct dsa_switch_tree *dst)
- {
--	struct dsa_link *dl, *next;
--
- 	if (!dst->setup)
- 		return;
- 
-@@ -1218,10 +1228,7 @@ static void dsa_tree_teardown(struct dsa
- 
- 	dsa_tree_teardown_cpu_ports(dst);
- 
--	list_for_each_entry_safe(dl, next, &dst->rtable, list) {
--		list_del(&dl->list);
--		kfree(dl);
--	}
-+	dsa_tree_teardown_routing_table(dst);
- 
- 	pr_info("DSA: tree %d torn down\n", dst->index);
- 
 
 
