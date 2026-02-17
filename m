@@ -1,48 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4AD231A3B;
-	Tue, 17 Feb 2026 01:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6C82594B9;
+	Tue, 17 Feb 2026 01:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771290085; cv=none; b=Ivw5/197GdvQAf6X+ZW1jv/fnhDfR6kjAbcOOjQJ9eYUwTIASy7xF9xHvGk5LR6Zwrmo8XlzF2XQIyW3tuDOkYZH19n/EwOKPqSxBicjSjzmVPSytP09d5nmJQDb0cDoJWrBAnES6eJyNzS45w7nLET6n3MVxxwmvsyBD0EAraI=
+	t=1771290086; cv=none; b=KD7jCz3A/KApONNei9DO8e9+3ROPTSUi7q9+Gqnfy9zYE+JR76FrSzk+K2n/6m5g+BJYWSDdfP60Lh3XqV6TyJoWjRqXJHsUgG4+1tzXg+eE2sxMm4aMeAx57ZIZj3+6Jq+1YK0/grUrONTTzIPUrQICq19DW2xWYP0bmZcxJYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771290085; c=relaxed/simple;
-	bh=3CQR8MNuLy3NsGjQSjNTddHYGKdbU4uYpOwzcupblxg=;
+	s=arc-20240116; t=1771290086; c=relaxed/simple;
+	bh=22h4jkN+njBHp+FSq94tcW7wTethWMHm328U9gEdOQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ucpbeOgW0iHSCGxjj8/CJdvn2vSRtoDFIh/0PmhbdEbUSeTqJ4mmf+mjamLrkBsDtuHFpZL5z+lXgcj/pqfTT4O1gj1GBb0OAhWdQ8YdGk5eubzMfAltvP1tYeqLkr1bBizf5Bf9ddKMO6Gi/nx0n96UJtzv4PlTHSx3lKyk5aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bwp48MMi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d3E+SW04VMDU3nK4IB867IIbbNF6X9c8yodDVezQY88j5FgnnHMG0Mp6ecWO8hc5jpFSohSKGOHOMAbUaF/xc1+3cS5hKyKINXonq5zeUTkDmBslUnPCkE3LPjNwcFtx22HEk41ivaMdPA5Oq8Z4u9YydDmSXyD5AeRrrvqt6YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=INbyTBSk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bwp48MMi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46A6C2BC87;
-	Tue, 17 Feb 2026 01:01:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="INbyTBSk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76236C2BC86;
+	Tue, 17 Feb 2026 01:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771290085;
-	bh=3CQR8MNuLy3NsGjQSjNTddHYGKdbU4uYpOwzcupblxg=;
+	s=k20201202; t=1771290086;
+	bh=22h4jkN+njBHp+FSq94tcW7wTethWMHm328U9gEdOQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bwp48MMihd4Al5ZmBb87Sv8KwQ+2c4ApUINj/56l4mXnIWAagnXfdVj8+oPOdmjWS
-	 XLhl0JT3dSeNtMHMaAk00BldL/EIAE1PF8Bf65ZpsIfzcBVPrO7jwoFoCI5HRi55ZX
-	 C6PSli29FLb3zNn1UB1C9nxQK9SYSMh3hFiJvXBednk4Ne7VeAUVznVgL0+O9izm1H
-	 DnsgSwjCacZ9HILf5+sfE8yyH0Y/pq+a7Ljwp/pzvT45Vr5tDzNZ+k2MC70J6rWoXB
-	 vKjdz2Gt3ZX83NxwnyvN/gRmVSlbCR0PytP/iAn6onlcBC/TAL+Zfk7x4EsNhayAaS
-	 CmzJLF9zcDSpw==
+	b=INbyTBSkOck19USn1fi0UVA05sE20z1/UnAa/HGUgT/M+n9pJcTfF0kANi7JxqT2l
+	 QBD6u1YI8+KoyLmXuNA0zeWQ2wQOLLQKN8AgU5c9ZFgjR60kRTnp6aJ2hs/B019DO6
+	 r+0ZlwJLlGXjJkuhghQ8RrsSZ7SHmQCHJ/F66OhSOq6FbFxN9hk0m1DBDzKbl1lcfp
+	 a+TBkd2gSZ1S99xfp3V2gzxAKKxOSjkWoysRNXJ4K4mGtzGhxjJpVGMTFaJ+JyV4+0
+	 LjBy4+QYDZS1F1aeH6lyJkxAsZ9RqFg1AmqAvms6cSJkZbodp66mdtyNgKY0RCpHCS
+	 YYM9xpcpAr1Yw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chuan Liu <chuan.liu@amlogic.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+Cc: Daniel Peng <Daniel_Peng@pegatron.corp-partner.google.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	khilman@baylibre.com,
-	linux-amlogic@lists.infradead.org,
-	linux-clk@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] clk: amlogic: remove potentially unsafe flags from S4 video clocks
-Date: Mon, 16 Feb 2026 20:01:15 -0500
-Message-ID: <20260217010118.3503621-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] HID: i2c-hid: Add FocalTech FT8112
+Date: Mon, 16 Feb 2026 20:01:16 -0500
+Message-ID: <20260217010118.3503621-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260217010118.3503621-1-sashal@kernel.org>
 References: <20260217010118.3503621-1-sashal@kernel.org>
@@ -55,153 +53,99 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuan Liu <chuan.liu@amlogic.com>
+From: Daniel Peng <Daniel_Peng@pegatron.corp-partner.google.com>
 
-[ Upstream commit 4aca7e92023cac5018b4053bae324450f884c937 ]
+[ Upstream commit 3d9586f1f90c9101b1abf5b0e9d70ca45f5f16db ]
 
-The video clocks enci, encp, vdac and hdmitx share the same clock
-source. Adding CLK_SET_RATE_PARENT to the mux may unintentionally change
-the shared parent clock, which could affect other video clocks.
+Information for touchscreen model HKO/RB116AS01-2 as below:
+- HID :FTSC1000
+- slave address:0X38
+- Interface:HID over I2C
+- Touch control lC:FT8112
+- I2C ID: PNP0C50
 
-Signed-off-by: Chuan Liu <chuan.liu@amlogic.com>
-Link: https://lore.kernel.org/r/20250919-add_video_clk-v6-3-fe223161fb3f@amlogic.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Daniel Peng <Daniel_Peng@pegatron.corp-partner.google.com>
+Acked-by: Jiri Kosina <jkosina@suse.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20251117094041.300083-2-Daniel_Peng@pegatron.corp-partner.google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Wait, this is very confusing. The mailing list says patch 2 adds new
-clocks, but git blame shows these video clock muxes (`cts_enci_sel`,
-`cts_encp_sel`, etc.) were already in the original commit from 2023. Let
-me re-read the diff more carefully.
-
-Looking at the diff again: the commit removes `CLK_SET_RATE_PARENT` from
-`s4_cts_enci_sel`, `s4_cts_encp_sel`, `s4_cts_vdac_sel`, and
-`s4_hdmi_tx_sel`. Git blame confirmed these structures were added in
-`57b55c76aaf1b` (2023, v6.7). The patch 2 of the series adds **new**
-clocks (encl, cdac, demod, adc), but the ones being **fixed** in patch 3
-already existed.
-
-This means patch 3 (our commit) is **self-contained** with respect to
-the bug fix — it removes flags from clocks that already exist in stable
-trees. It does NOT depend on patch 2.
-
-## Final Analysis
-
-### Problem Description
-The `CLK_SET_RATE_PARENT` flag on the video clock mux selectors
-(`cts_enci_sel`, `cts_encp_sel`, `cts_vdac_sel`, `hdmi_tx_sel`) allows
-rate change requests to propagate from these muxes up to their shared
-parent clock. Since all four muxes share the same parent clock sources
-(vclk_div and vclk2_div families), any one of them requesting a rate
-change could alter the parent, breaking the other video outputs.
-
-### Impact Assessment
-- **Real bug**: Yes — when one video output (e.g., HDMI) requests a
-  clock rate change, it can modify the shared parent clock, causing
-  other video outputs (CVBS, encoder) to use the wrong clock rate. This
-  could result in display corruption or loss of video signal.
-- **Scope**: Affects all Amlogic S4 SoC users with multiple active video
-  outputs, since v6.7.
-- **Severity**: Medium — display corruption/failure when multiple video
-  outputs are active simultaneously.
-
-### Stable Kernel Criteria Assessment
-- **Obviously correct**: Yes — removing `CLK_SET_RATE_PARENT` from
-  shared mux selectors is a well-understood pattern for preventing
-  unintended parent clock modifications.
-- **Fixes a real bug**: Yes — prevents unintended shared parent clock
-  modification affecting other video clocks.
-- **Small and contained**: Yes — removes 4 lines (flag declarations)
-  from a single file.
-- **No new features**: Correct — purely a bug fix.
-- **Risk**: Very low — removing `CLK_SET_RATE_PARENT` means the mux
-  won't propagate rate changes upward, which is the desired behavior for
-  shared clock sources. The downstream gate clocks still have
-  `CLK_SET_RATE_PARENT`, so rate requests still propagate from the gate
-  to the mux; they just stop there instead of going further up.
-
-### Concerns
-- **Dependency check**: The fix is self-contained. The affected clock
-  structures exist since v6.7 (commit `57b55c76aaf1b`). No dependency on
-  other patches in the series.
-- **Behavioral change**: Users who relied on `CLK_SET_RATE_PARENT`
-  propagation through the mux to the parent might see different
-  behavior, but this "reliance" was always incorrect since it could
-  break other video outputs.
+The ili2901 entry was added in December 2023. For older stable trees
+that don't have that entry, the patch would need minor context
+adjustment but the change itself is straightforward. Even without the
+ili2901 entry as context, the addition inserts cleanly in the match
+table.
 
 ## Verification
 
-- **git blame** confirmed `s4_cts_enci_sel`, `s4_cts_encp_sel`,
-  `s4_cts_vdac_sel`, `s4_hdmi_tx_sel` with `CLK_SET_RATE_PARENT` were
-  introduced in `57b55c76aaf1b` (v6.7, September 2023).
-- **git tag --contains 57b55c76aaf1b** confirmed the buggy code is in
-  v6.7+ and v6.12.y LTS.
-- **lore.kernel.org** confirmed this is patch 3/3 of the "add video-
-  related clocks for S4 SoC" series, accepted December 2025 by Jerome
-  Brunet.
-- **lore.kernel.org patch 2** confirmed patch 2 adds **different**
-  clocks (encl, cdac, demod, adc), not the ones being fixed here — the
-  fix is independent.
-- **Code inspection** confirmed `s4_cts_encl_sel` already lacked
-  `CLK_SET_RATE_PARENT` (consistent architecture — encl was already
-  correct).
-- **Code inspection** confirmed downstream gate clocks (`s4_cts_enci`,
-  `s4_cts_encp`) retain `CLK_SET_RATE_PARENT`, so rate propagation still
-  works from gate to mux but stops at the mux level.
-- **Could NOT verify** any user reports of actual display corruption
-  from this bug (unverified — but the mechanism is sound and the fix is
-  obvious).
+- **git log** confirmed `i2c-hid-of-elan.c` was first added in commit
+  `bd3cba00dcc63` (May 2022), present in 6.1.y+ stable trees
+- **git log** confirmed the file has had similar device additions
+  (ili9882t, ili2901, ekth6a12nay) following the same pattern
+- The code diff shows the new entry follows the exact struct pattern of
+  existing entries
+- The commit has `Reviewed-by: Douglas Anderson` and `Acked-by: Jiri
+  Kosina` (verified in commit message)
+- The compatible string `"focaltech,ft8112"` is a new vendor, but the
+  driver architecture supports multiple vendors (it already has elan and
+  ilitek)
+- The `elan_i2c_hid_chip_data` struct is used identically for all
+  devices in this driver
+- The `ili2901` context entry was added in Dec 2023 (commit
+  `03ddb7de012c6`), so the patch may need minor context adjustment for
+  6.1.y but the logical change is trivial
 
-The fix is small, surgical, self-contained, fixes a real clock-tree
-correctness issue affecting all Amlogic S4 users since v6.7, and carries
-extremely low regression risk. It meets all stable kernel criteria.
+## Conclusion
+
+This is a textbook device ID / compatible string addition to an existing
+driver. It enables a FocalTech FT8112 touchscreen that would otherwise
+be completely non-functional. The change is:
+- Small (~10 lines), isolated, and low-risk
+- Following an established pattern in the driver
+- Reviewed and acked by maintainers
+- Critical for users with this hardware (no touchscreen = unusable
+  device)
+
+This is exactly the type of commit that the stable kernel exception for
+device IDs was designed for.
 
 **YES**
 
- drivers/clk/meson/s4-peripherals.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-of-elan.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/clk/meson/s4-peripherals.c b/drivers/clk/meson/s4-peripherals.c
-index 6d69b132d1e1f..bab4f5700de47 100644
---- a/drivers/clk/meson/s4-peripherals.c
-+++ b/drivers/clk/meson/s4-peripherals.c
-@@ -1106,7 +1106,6 @@ static struct clk_regmap s4_cts_enci_sel = {
- 		.ops = &clk_regmap_mux_ops,
- 		.parent_hws = s4_cts_parents,
- 		.num_parents = ARRAY_SIZE(s4_cts_parents),
--		.flags = CLK_SET_RATE_PARENT,
- 	},
+diff --git a/drivers/hid/i2c-hid/i2c-hid-of-elan.c b/drivers/hid/i2c-hid/i2c-hid-of-elan.c
+index 0215f217f6d86..b81fcc6ff49ee 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-of-elan.c
++++ b/drivers/hid/i2c-hid/i2c-hid-of-elan.c
+@@ -168,6 +168,13 @@ static const struct elan_i2c_hid_chip_data elan_ekth6a12nay_chip_data = {
+ 	.power_after_backlight = true,
  };
  
-@@ -1122,7 +1121,6 @@ static struct clk_regmap s4_cts_encp_sel = {
- 		.ops = &clk_regmap_mux_ops,
- 		.parent_hws = s4_cts_parents,
- 		.num_parents = ARRAY_SIZE(s4_cts_parents),
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
- 
-@@ -1138,7 +1136,6 @@ static struct clk_regmap s4_cts_vdac_sel = {
- 		.ops = &clk_regmap_mux_ops,
- 		.parent_hws = s4_cts_parents,
- 		.num_parents = ARRAY_SIZE(s4_cts_parents),
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
- 
-@@ -1169,7 +1166,6 @@ static struct clk_regmap s4_hdmi_tx_sel = {
- 		.ops = &clk_regmap_mux_ops,
- 		.parent_hws = s4_hdmi_tx_parents,
- 		.num_parents = ARRAY_SIZE(s4_hdmi_tx_parents),
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
- 
++static const struct elan_i2c_hid_chip_data focaltech_ft8112_chip_data = {
++	.post_power_delay_ms = 10,
++	.post_gpio_reset_on_delay_ms = 150,
++	.hid_descriptor_address = 0x0001,
++	.main_supply_name = "vcc33",
++};
++
+ static const struct elan_i2c_hid_chip_data ilitek_ili9882t_chip_data = {
+ 	.post_power_delay_ms = 1,
+ 	.post_gpio_reset_on_delay_ms = 200,
+@@ -191,6 +198,7 @@ static const struct elan_i2c_hid_chip_data ilitek_ili2901_chip_data = {
+ static const struct of_device_id elan_i2c_hid_of_match[] = {
+ 	{ .compatible = "elan,ekth6915", .data = &elan_ekth6915_chip_data },
+ 	{ .compatible = "elan,ekth6a12nay", .data = &elan_ekth6a12nay_chip_data },
++	{ .compatible = "focaltech,ft8112", .data = &focaltech_ft8112_chip_data },
+ 	{ .compatible = "ilitek,ili9882t", .data = &ilitek_ili9882t_chip_data },
+ 	{ .compatible = "ilitek,ili2901", .data = &ilitek_ili2901_chip_data },
+ 	{ }
 -- 
 2.51.0
 
