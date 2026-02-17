@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED093378821;
-	Tue, 17 Feb 2026 20:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAE4374178;
+	Tue, 17 Feb 2026 20:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361045; cv=none; b=eBY3XclLpS0kq3TvT2itNgUYVbJj32bRQ7CXcoOALULtl8+hsc/EiyHKxV2rB9PLcaVoI9ay2IyyqfVWhPD6Djo7/n+T1lK51CIcKlFC/NkJJ5SHdn4ialTyNIzk25/BtGSAZfAoBrPDAgoJA4w5m3R57mq+S6fz4vrn/PBRBuQ=
+	t=1771361048; cv=none; b=suF70rIgNHvkiTkpL4olleV2W+pum7TNY7WgcC/x3iSWlJfLI85yNmGt2ykYhHmkEdmOT+lNHum/dBXuTgjWCt/MqPdTHktXzVaBxhfJ7cyqJEootoD17X4+yIA0w5cF0chHIHdq+/RW/pCg7QUXEK/3KO4UA9eKnhrORHA8LV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361045; c=relaxed/simple;
-	bh=FnP3Jf+0GQvq1MYbk09xUozouieg3HeBVfjX2wfnwTs=;
+	s=arc-20240116; t=1771361048; c=relaxed/simple;
+	bh=xSoJiNUSSxTFj8Pbig/+n+E5v6rjxo9OEzHzCdmJK5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6ryvnsa7aagldGdsAKnyp8+POxsc61cE2xAI4gBZP1u7Uuh+fD1x7xUu5vLUK+qOUtzcs3wYcTup5/GuTUEKY4ZqCYtrpXpTFHPkuo26EH3L4kmLLXA4GYBBsSTI7nSOTVQhs+nNiJky7IYazQVO9J5ljO7xjxubTV4YlMoujw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFkgsYyz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHN1Qv7Yi/RFI1qBBL4AKwtc8Tufut3XmF9s3KgDiVg9+/tTFyRe2paFdMsSj4PTm/JCzN7rgCikrsHjHaaF+YqyakX+F/yVy75L89Vd7aiN7olr7NRnuJEmE/e95RP7ZUYiPCpF2cdVdU9w5eIoPaJhsA6j6ymb1M6a6u8DaoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRmZidKf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFkgsYyz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE8AC4CEF7;
-	Tue, 17 Feb 2026 20:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRmZidKf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A03C4CEF7;
+	Tue, 17 Feb 2026 20:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361044;
-	bh=FnP3Jf+0GQvq1MYbk09xUozouieg3HeBVfjX2wfnwTs=;
+	s=korg; t=1771361048;
+	bh=xSoJiNUSSxTFj8Pbig/+n+E5v6rjxo9OEzHzCdmJK5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IFkgsYyz5DquXitegVEw8qiSsv9F6fBsuUaY3D6rFKOEC5yRkFrs2xarGH9O96t0v
-	 kuzLcn7cWjBrvdM5DxRmUCYd2uhcAF9vAHrGl6cF41cIMhlAH6LhGo/7+UD9Li05kE
-	 vwDvKJz+XgCN7ZHy2n1FzWQJ+26XQgVqVHoWotbY=
+	b=SRmZidKfZIDPNe6eQ8mZhBeefF67jlRD2mv30apX45HklFx4XGrVR0drBZVUhmg9S
+	 PMdyIpSxyu625fWqiSP5+wc6yvuD/NBeYdIrKa9bJgXxHGhyA/mJkBhu3HzEu53WPY
+	 8hRzCxw186yQESffTZyzG/Sri8siDCfQELN+Q4dI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/39] smb: server: fix leak of active_num_conn in ksmbd_tcp_new_connection()
-Date: Tue, 17 Feb 2026 21:31:33 +0100
-Message-ID: <20260217200003.862311717@linuxfoundation.org>
+Subject: [PATCH 5.15 25/39] bus: fsl-mc: Replace snprintf and sprintf with sysfs_emit in sysfs show functions
+Date: Tue, 17 Feb 2026 21:31:34 +0100
+Message-ID: <20260217200003.900682766@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.929083107@linuxfoundation.org>
 References: <20260217200002.929083107@linuxfoundation.org>
@@ -52,45 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
 
-[ Upstream commit 77ffbcac4e569566d0092d5f22627dfc0896b553 ]
+[ Upstream commit a50522c805a6c575c80f41b04706e084d814e116 ]
 
-On kthread_run() failure in ksmbd_tcp_new_connection(), the transport is
-freed via free_transport(), which does not decrement active_num_conn,
-leaking this counter.
+Use sysfs_emit() instead of snprintf()/sprintf()  when writing
+to sysfs buffers, as recommended by the kernel documentation.
 
-Replace free_transport() with ksmbd_tcp_disconnect().
-
-Fixes: 0d0d4680db22e ("ksmbd: add max connections parameter")
-Cc: stable@vger.kernel.org
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
+Acked-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20250822124339.1739290-1-chelsyratnawat2001@gmail.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Stable-dep-of: 148891e95014 ("bus: fsl-mc: fix use-after-free in driver_override_show()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/transport_tcp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ksmbd/transport_tcp.c
-+++ b/fs/ksmbd/transport_tcp.c
-@@ -41,6 +41,7 @@ static struct ksmbd_transport_ops ksmbd_
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -156,8 +156,8 @@ static ssize_t modalias_show(struct devi
+ {
+ 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
  
- static void tcp_stop_kthread(struct task_struct *kthread);
- static struct interface *alloc_iface(char *ifname);
-+static void ksmbd_tcp_disconnect(struct ksmbd_transport *t);
+-	return sprintf(buf, "fsl-mc:v%08Xd%s\n", mc_dev->obj_desc.vendor,
+-		       mc_dev->obj_desc.type);
++	return sysfs_emit(buf, "fsl-mc:v%08Xd%s\n", mc_dev->obj_desc.vendor,
++			mc_dev->obj_desc.type);
+ }
+ static DEVICE_ATTR_RO(modalias);
  
- #define KSMBD_TRANS(t)	(&(t)->transport)
- #define TCP_TRANS(t)	((struct tcp_transport *)container_of(t, \
-@@ -207,7 +208,7 @@ static int ksmbd_tcp_new_connection(stru
- 	if (IS_ERR(handler)) {
- 		pr_err("cannot start conn thread\n");
- 		rc = PTR_ERR(handler);
--		free_transport(t);
-+		ksmbd_tcp_disconnect(KSMBD_TRANS(t));
- 	}
- 	return rc;
+@@ -200,7 +200,7 @@ static ssize_t driver_override_show(stru
+ {
+ 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
+ 
+-	return snprintf(buf, PAGE_SIZE, "%s\n", mc_dev->driver_override);
++	return sysfs_emit(buf, "%s\n", mc_dev->driver_override);
+ }
+ static DEVICE_ATTR_RW(driver_override);
  
 
 
