@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0555A377563;
-	Tue, 17 Feb 2026 20:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7786137755D;
+	Tue, 17 Feb 2026 20:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771360855; cv=none; b=CBCNhx1VfVgczYHhDQgBlpHv043wJKgTQSL9yi93ccuelf2E6iF3W0d8ZZKCdaSqa2Ll5VJo+aKCOw74MZuDgS6ul3aqZMkacsalcO4ve+A4eulRCFk6yxolame0R7hgZgjrxHl80AsxNFE8XW8x5DSW9Hd5ilF4L13XIjVLxzQ=
+	t=1771360858; cv=none; b=G+C/kNK6kbjONuqFzbzlHsHvFUsMy5HEeFpOEGwKgZpti/Lv1lpaQ/KvXxIWvC8JLhsgkfF2JEU0H3Sb35LUbqOarhMwy9JgzkZNXH38LncTRezOXSIT0Nl45snSp5IKK0mrzUsNlZcczKzgna4sOVzKlrfWLhh+/JuMvoOMH8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771360855; c=relaxed/simple;
-	bh=09tu6TQXlovM0tYiv/ctqMl6U24JbEC1RiOSgb8cQw4=;
+	s=arc-20240116; t=1771360858; c=relaxed/simple;
+	bh=4kHRbCGkKI+Kyd4G4CgzCviIJc1xra4Flfh+3gMdVdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVQdAtRdiRcwz6RVbD+yzcf99C1DhSG0QAISV7+DkNUp2zrefffP5F67tKOVV+vCJkXGbK5Xa0tC/bpg4vk4toRZzaCIUqMvkDmYE3MOa6UCBNJoQcFvrvI24fHG0l6a5rXxI8q2Xe4J0+KfpI1CrO7WqWck9mNuElYf4wq29fA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVJIKSFK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mxcP60eaL7sGbYIRCsRY2cqaO1D2vnUYPxDLwpAPgj7Ok8as+2m0wDK6QHtuzDH5h5RtiVllsVyKNpHj53B7hL0W34HYzFK1oO3b0NuOKYwEYqtjv4wJiAD0oVvSJ1Bna5wsLMpT8NYc1sa9W4z1voMQNi2P2RRftolPf+z3r7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBL+t+g8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVJIKSFK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFEFC4CEF7;
-	Tue, 17 Feb 2026 20:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBL+t+g8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B35C4CEF7;
+	Tue, 17 Feb 2026 20:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771360854;
-	bh=09tu6TQXlovM0tYiv/ctqMl6U24JbEC1RiOSgb8cQw4=;
+	s=korg; t=1771360858;
+	bh=4kHRbCGkKI+Kyd4G4CgzCviIJc1xra4Flfh+3gMdVdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVJIKSFK3mJjyjw9AUmuv2fWY2OgydaQjpLT1FPxswyAkyQK8IClHB2DxIxJPuVV/
-	 OxX4MIA2zFGoipGMZSZuLMxipjkBKc/wKfWp8C5JeOgi7YkfkzoNFziKApLY7MpEpB
-	 zeqe0MSt9EcAIxwutNxWCuRk8qaPkE92goIAXIUQ=
+	b=MBL+t+g8ZLV6X+DgM3pFTfNGgQ3Eyahc9BWH5Y0IA41l9KM6m8KkavQ1xOGyrXn4V
+	 YdSblVSmSx8pr+xBQwxU8P50eZuYnh5I4YLtTpIpkDCfdBYpJeZfmJkIIh4npnxzXy
+	 JJLZeIUUviGlSb+zvewqs3141H4sGZNXxww2E66Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Sheng Yong <shengyong1@xiaomi.com>,
 	Jinbao Liu <liujinbao1@xiaomi.com>,
 	Yongpeng Yang <yangyongpeng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 33/39] f2fs: fix out-of-bounds access in sysfs attribute read/write
-Date: Tue, 17 Feb 2026 21:30:55 +0100
-Message-ID: <20260217200005.480997364@linuxfoundation.org>
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 34/39] f2fs: fix IS_CHECKPOINTED flag inconsistency issue caused by concurrent atomic commit and checkpoint writes
+Date: Tue, 17 Feb 2026 21:30:56 +0100
+Message-ID: <20260217200005.518444638@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200004.221651386@linuxfoundation.org>
 References: <20260217200004.221651386@linuxfoundation.org>
@@ -55,168 +57,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-commit 98ea0039dbfdd00e5cc1b9a8afa40434476c0955 upstream.
+[ Upstream commit 7633a7387eb4d0259d6bea945e1d3469cd135bbc ]
 
-Some f2fs sysfs attributes suffer from out-of-bounds memory access and
-incorrect handling of integer values whose size is not 4 bytes.
+During SPO tests, when mounting F2FS, an -EINVAL error was returned from
+f2fs_recover_inode_page. The issue occurred under the following scenario
 
-For example:
-vm:~# echo 65537 > /sys/fs/f2fs/vde/carve_out
-vm:~# cat /sys/fs/f2fs/vde/carve_out
-65537
-vm:~# echo 4294967297 > /sys/fs/f2fs/vde/atgc_age_threshold
-vm:~# cat /sys/fs/f2fs/vde/atgc_age_threshold
-1
+Thread A                                     Thread B
+f2fs_ioc_commit_atomic_write
+ - f2fs_do_sync_file // atomic = true
+  - f2fs_fsync_node_pages
+    : last_folio = inode folio
+    : schedule before folio_lock(last_folio) f2fs_write_checkpoint
+                                              - block_operations// writeback last_folio
+                                              - schedule before f2fs_flush_nat_entries
+    : set_fsync_mark(last_folio, 1)
+    : set_dentry_mark(last_folio, 1)
+    : folio_mark_dirty(last_folio)
+    - __write_node_folio(last_folio)
+      : f2fs_down_read(&sbi->node_write)//block
+                                              - f2fs_flush_nat_entries
+                                                : {struct nat_entry}->flag |= BIT(IS_CHECKPOINTED)
+                                              - unblock_operations
+                                                : f2fs_up_write(&sbi->node_write)
+                                             f2fs_write_checkpoint//return
+      : f2fs_do_write_node_page()
+f2fs_ioc_commit_atomic_write//return
+                                             SPO
 
-carve_out maps to {struct f2fs_sb_info}->carve_out, which is a 8-bit
-integer. However, the sysfs interface allows setting it to a value
-larger than 255, resulting in an out-of-range update.
+Thread A calls f2fs_need_dentry_mark(sbi, ino), and the last_folio has
+already been written once. However, the {struct nat_entry}->flag did not
+have the IS_CHECKPOINTED set, causing set_dentry_mark(last_folio, 1) and
+write last_folio again after Thread B finishes f2fs_write_checkpoint.
 
-atgc_age_threshold maps to {struct atgc_management}->age_threshold,
-which is a 64-bit integer, but its sysfs interface cannot correctly set
-values larger than UINT_MAX.
+After SPO and reboot, it was detected that {struct node_info}->blk_addr
+was not NULL_ADDR because Thread B successfully write the checkpoint.
 
-The root causes are:
-1. __sbi_store() treats all default values as unsigned int, which
-prevents updating integers larger than 4 bytes and causes out-of-bounds
-writes for integers smaller than 4 bytes.
+This issue only occurs in atomic write scenarios. For regular file
+fsync operations, the folio must be dirty. If
+block_operations->f2fs_sync_node_pages successfully submit the folio
+write, this path will not be executed. Otherwise, the
+f2fs_write_checkpoint will need to wait for the folio write submission
+to complete, as sbi->nr_pages[F2FS_DIRTY_NODES] > 0. Therefore, the
+situation where f2fs_need_dentry_mark checks that the {struct
+nat_entry}->flag /wo the IS_CHECKPOINTED flag, but the folio write has
+already been submitted, will not occur.
 
-2. f2fs_sbi_show() also assumes all default values are unsigned int,
-leading to out-of-bounds reads and incorrect access to integers larger
-than 4 bytes.
+Therefore, for atomic file fsync, sbi->node_write should be acquired
+through __write_node_folio to ensure that the IS_CHECKPOINTED flag
+correctly indicates that the checkpoint write has been completed.
 
-This patch introduces {struct f2fs_attr}->size to record the actual size
-of the integer associated with each sysfs attribute. With this
-information, sysfs read and write operations can correctly access and
-update values according to their real data size, avoiding memory
-corruption and truncation.
-
-Fixes: b59d0bae6ca3 ("f2fs: add sysfs support for controlling the gc_thread")
+Fixes: 608514deba38 ("f2fs: set fsync mark only for the last dnode")
 Cc: stable@kernel.org
+Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
 Signed-off-by: Jinbao Liu <liujinbao1@xiaomi.com>
 Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ folio => page ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/sysfs.c |   60 ++++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 52 insertions(+), 8 deletions(-)
+ fs/f2fs/node.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -58,6 +58,7 @@ struct f2fs_attr {
- 			 const char *buf, size_t len);
- 	int struct_type;
- 	int offset;
-+	int size;
- 	int id;
- };
- 
-@@ -285,11 +286,30 @@ static ssize_t main_blkaddr_show(struct
- 			(unsigned long long)MAIN_BLKADDR(sbi));
- }
- 
-+static ssize_t __sbi_show_value(struct f2fs_attr *a,
-+		struct f2fs_sb_info *sbi, char *buf,
-+		unsigned char *value)
-+{
-+	switch (a->size) {
-+	case 1:
-+		return sysfs_emit(buf, "%u\n", *(u8 *)value);
-+	case 2:
-+		return sysfs_emit(buf, "%u\n", *(u16 *)value);
-+	case 4:
-+		return sysfs_emit(buf, "%u\n", *(u32 *)value);
-+	case 8:
-+		return sysfs_emit(buf, "%llu\n", *(u64 *)value);
-+	default:
-+		f2fs_bug_on(sbi, 1);
-+		return sysfs_emit(buf,
-+				"show sysfs node value with wrong type\n");
-+	}
-+}
-+
- static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
- 			struct f2fs_sb_info *sbi, char *buf)
- {
- 	unsigned char *ptr = NULL;
--	unsigned int *ui;
- 
- 	ptr = __struct_ptr(sbi, a->struct_type);
- 	if (!ptr)
-@@ -372,9 +392,30 @@ static ssize_t f2fs_sbi_show(struct f2fs
- 				atomic_read(&sbi->cp_call_count[BACKGROUND]));
- #endif
- 
--	ui = (unsigned int *)(ptr + a->offset);
-+	return __sbi_show_value(a, sbi, buf, ptr + a->offset);
-+}
- 
--	return sysfs_emit(buf, "%u\n", *ui);
-+static void __sbi_store_value(struct f2fs_attr *a,
-+			struct f2fs_sb_info *sbi,
-+			unsigned char *ui, unsigned long value)
-+{
-+	switch (a->size) {
-+	case 1:
-+		*(u8 *)ui = value;
-+		break;
-+	case 2:
-+		*(u16 *)ui = value;
-+		break;
-+	case 4:
-+		*(u32 *)ui = value;
-+		break;
-+	case 8:
-+		*(u64 *)ui = value;
-+		break;
-+	default:
-+		f2fs_bug_on(sbi, 1);
-+		f2fs_err(sbi, "store sysfs node value with wrong type");
-+	}
- }
- 
- static ssize_t __sbi_store(struct f2fs_attr *a,
-@@ -746,7 +787,7 @@ out:
- 		return count;
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1696,8 +1696,13 @@ static int __write_node_page(struct page
+ 		goto redirty_out;
  	}
  
--	*ui = (unsigned int)t;
-+	__sbi_store_value(a, sbi, ptr + a->offset, t);
+-	if (atomic && !test_opt(sbi, NOBARRIER) && !f2fs_sb_has_blkzoned(sbi))
+-		fio.op_flags |= REQ_PREFLUSH | REQ_FUA;
++	if (atomic) {
++		if (!test_opt(sbi, NOBARRIER) && !f2fs_sb_has_blkzoned(sbi))
++			fio.op_flags |= REQ_PREFLUSH | REQ_FUA;
++		if (IS_INODE(page))
++			set_dentry_mark(page,
++				f2fs_need_dentry_mark(sbi, ino_of_node(page)));
++	}
  
- 	return count;
- }
-@@ -860,24 +901,27 @@ static struct f2fs_attr f2fs_attr_sb_##_
- 	.id	= F2FS_FEATURE_##_feat,				\
- }
- 
--#define F2FS_ATTR_OFFSET(_struct_type, _name, _mode, _show, _store, _offset) \
-+#define F2FS_ATTR_OFFSET(_struct_type, _name, _mode, _show, _store, _offset, _size) \
- static struct f2fs_attr f2fs_attr_##_name = {			\
- 	.attr = {.name = __stringify(_name), .mode = _mode },	\
- 	.show	= _show,					\
- 	.store	= _store,					\
- 	.struct_type = _struct_type,				\
--	.offset = _offset					\
-+	.offset = _offset,					\
-+	.size = _size						\
- }
- 
- #define F2FS_RO_ATTR(struct_type, struct_name, name, elname)	\
- 	F2FS_ATTR_OFFSET(struct_type, name, 0444,		\
- 		f2fs_sbi_show, NULL,				\
--		offsetof(struct struct_name, elname))
-+		offsetof(struct struct_name, elname),		\
-+		sizeof_field(struct struct_name, elname))
- 
- #define F2FS_RW_ATTR(struct_type, struct_name, name, elname)	\
- 	F2FS_ATTR_OFFSET(struct_type, name, 0644,		\
- 		f2fs_sbi_show, f2fs_sbi_store,			\
--		offsetof(struct struct_name, elname))
-+		offsetof(struct struct_name, elname),		\
-+		sizeof_field(struct struct_name, elname))
- 
- #define F2FS_GENERAL_RO_ATTR(name) \
- static struct f2fs_attr f2fs_attr_##name = __ATTR(name, 0444, name##_show, NULL)
+ 	/* should add to global list before clearing PAGECACHE status */
+ 	if (f2fs_in_warm_node_list(sbi, page)) {
+@@ -1852,8 +1857,9 @@ continue_unlock:
+ 					if (is_inode_flag_set(inode,
+ 								FI_DIRTY_INODE))
+ 						f2fs_update_inode(inode, page);
+-					set_dentry_mark(page,
+-						f2fs_need_dentry_mark(sbi, ino));
++					if (!atomic)
++						set_dentry_mark(page,
++							f2fs_need_dentry_mark(sbi, ino));
+ 				}
+ 				/* may be written by other thread */
+ 				if (!PageDirty(page))
 
 
