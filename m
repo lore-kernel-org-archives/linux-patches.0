@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5596229A1;
-	Tue, 17 Feb 2026 20:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985F02D594F;
+	Tue, 17 Feb 2026 20:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361487; cv=none; b=ihnuy4U26JMJnzpZ7U6IoFAI1ivifGPxFu9jNKNgSAfXwjX/EwYYmZnnE+DRayKCys5R1xNdS2mmOXJs/CU8/iYTv2m0Xz0TLk2mNmOPhLmgpkv+HRXgwrjorfnfPC+en9Qt9Ag6wLHbs4RWzN14feoQrBgsCRCZlnppDoaYjyM=
+	t=1771361490; cv=none; b=JbvwK6gHcyNBrY/WblIKeSHrwc+F6Itx98YY0EmKbEWb92VWGjuoYmGpI1PKIYO36aldWs/ZiP6ZzXPZmx/FF7iJnbtdCW+xGMvsG1e4KalyE28aj/ARt6no382xtU/9sG45RmvTZ4vEOIybKBsgg61g6+CG3YF6nL/T6DeE6/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361487; c=relaxed/simple;
-	bh=g+jfcuMClH2FAUO6pUMdFxgYLfAn+NlJGepFkKBgkSE=;
+	s=arc-20240116; t=1771361490; c=relaxed/simple;
+	bh=ebHcVHv2kKy3SMQxhaPZbeLUfF7g8woylB2mmKTHb/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5ZFZEYPBY6nlzSGlSldtc3mzciKrwJnGICnqj8WZxMkOnQwxdrLiYUquSBkZYqQYx7M+lvQR34aRSQfMqiKgpuOMZBpmlCtSE841v0BLOad3j0VSh8y9/3JKdGtIK1Ece4mVpEZEbeEBT5GodWrRCBYrUXZGtqWKjJ1078EVI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4sCK2WT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pr3BaZq+FUH3fTTSeEtGFLM6jo00Czg41G2MhTTC7MuwIuhcFHiwn94/bwtk15htqAeeWAWpN2tZ1tyzImpCez76nxOLdGf64yONdTJ/bZOEG7fHTCvKxKQaeR1OJI0+kavbkVKlJnj0TYiQ1ILfHpLQhnKtOocJf171d//Tc4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxRy1Fko; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4sCK2WT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8844C4CEF7;
-	Tue, 17 Feb 2026 20:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxRy1Fko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B611C4CEF7;
+	Tue, 17 Feb 2026 20:51:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361487;
-	bh=g+jfcuMClH2FAUO6pUMdFxgYLfAn+NlJGepFkKBgkSE=;
+	s=korg; t=1771361490;
+	bh=ebHcVHv2kKy3SMQxhaPZbeLUfF7g8woylB2mmKTHb/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g4sCK2WTtdFlpWDbU67z+A3fQSqGN+9BQga1fhKGPZzT+36S01YDTjNsel5+tRgg6
-	 rrWTjbvJ04beGT8phCmu4hx+cJSQD99xUtBlCx3o+snkpbM+FyfRnC+KY3QWbK63J9
-	 /y3NpoNvjGYHm5OtMv/uIsDJWeTEORoJRlFRXaTE=
+	b=SxRy1Fko+LrJ1zBww7aqR0Dtv/1jS+kIURV0TAw+1OHhLs419gZJtwH9VHT8E5r/X
+	 9ahNGAc1cyRIWOEGjY3aeCQrexT+5+lZD5ulYulsdeVc7vfcAk/3AvwNL1xk+oMYr3
+	 /brfNGjCPZDrjEom2yHefAgEuP2ZQ507Kk/3/sCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 03/43] rust: dma: fix broken intra-doc links
-Date: Tue, 17 Feb 2026 21:31:43 +0100
-Message-ID: <20260217200006.602617696@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 30/43] fbdev: rivafb: fix divide error in nv3_arb()
+Date: Tue, 17 Feb 2026 21:32:10 +0100
+Message-ID: <20260217200007.626194169@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200006.470920131@linuxfoundation.org>
 References: <20260217200006.470920131@linuxfoundation.org>
@@ -51,46 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FUJITA Tomonori <fujita.tomonori@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 32cb3840386fd3684fbe8294cfc0a6684417139e upstream.
+commit 0209e21e3c372fa2da04c39214bec0b64e4eb5f4 upstream.
 
-The `pci` module is conditional on CONFIG_PCI. When it's disabled, the
-intra-doc link to `pci::Device` causes rustdoc warnings:
+A userspace program can trigger the RIVA NV3 arbitration code by calling
+the FBIOPUT_VSCREENINFO ioctl on /dev/fb*. When doing so, the driver
+recomputes FIFO arbitration parameters in nv3_arb(), using state->mclk_khz
+(derived from the PRAMDAC MCLK PLL) as a divisor without validating it
+first.
 
-warning: unresolved link to `::kernel::pci::Device`
-  --> rust/kernel/dma.rs:30:70
-   |
-30 | /// where the underlying bus is DMA capable, such as [`pci::Device`](::kernel::pci::Device) or
-   |                                                                      ^^^^^^^^^^^^^^^^^^^^^ no item named `pci` in module `kernel`
+In a normal setup, state->mclk_khz is provided by the real hardware and is
+non-zero. However, an attacker can construct a malicious or misconfigured
+device (e.g. a crafted/emulated PCI device) that exposes a bogus PLL
+configuration, causing state->mclk_khz to become zero.  Once
+nv3_get_param() calls nv3_arb(), the division by state->mclk_khz in the gns
+calculation causes a divide error and crashes the kernel.
 
-Fix this by making the documentation conditional on CONFIG_PCI.
+Fix this by checking whether state->mclk_khz is zero and bailing out before
+doing the division.
 
-Fixes: d06d5f66f549 ("rust: dma: implement `dma::Device` trait")
-Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-Reviewed-by: Dirk Behme <dirk.behme@de.bosch.com>
-Link: https://patch.msgid.link/20251231045728.1912024-1-fujita.tomonori@gmail.com
-[ Keep the "such as" part indicating a list of examples; fix typos in
-  commit message. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+The following log reveals it:
+
+rivafb: setting virtual Y resolution to 2184
+divide error: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 0 PID: 2187 Comm: syz-executor.0 Not tainted 5.18.0-rc1+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.0-59-gc9ba5276e321-prebuilt.qemu.org 04/01/2014
+RIP: 0010:nv3_arb drivers/video/fbdev/riva/riva_hw.c:439 [inline]
+RIP: 0010:nv3_get_param+0x3ab/0x13b0 drivers/video/fbdev/riva/riva_hw.c:546
+Call Trace:
+  nv3CalcArbitration.constprop.0+0x255/0x460 drivers/video/fbdev/riva/riva_hw.c:603
+  nv3UpdateArbitrationSettings drivers/video/fbdev/riva/riva_hw.c:637 [inline]
+  CalcStateExt+0x447/0x1b90 drivers/video/fbdev/riva/riva_hw.c:1246
+  riva_load_video_mode+0x8a9/0xea0 drivers/video/fbdev/riva/fbdev.c:779
+  rivafb_set_par+0xc0/0x5f0 drivers/video/fbdev/riva/fbdev.c:1196
+  fb_set_var+0x604/0xeb0 drivers/video/fbdev/core/fbmem.c:1033
+  do_fb_ioctl+0x234/0x670 drivers/video/fbdev/core/fbmem.c:1109
+  fb_ioctl+0xdd/0x130 drivers/video/fbdev/core/fbmem.c:1188
+  __x64_sys_ioctl+0x122/0x190 fs/ioctl.c:856
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/dma.rs |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/riva/riva_hw.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/rust/kernel/dma.rs
-+++ b/rust/kernel/dma.rs
-@@ -26,8 +26,9 @@ pub type DmaAddress = bindings::dma_addr
- /// Trait to be implemented by DMA capable bus devices.
- ///
- /// The [`dma::Device`](Device) trait should be implemented by bus specific device representations,
--/// where the underlying bus is DMA capable, such as [`pci::Device`](::kernel::pci::Device) or
--/// [`platform::Device`](::kernel::platform::Device).
-+/// where the underlying bus is DMA capable, such as:
-+#[cfg_attr(CONFIG_PCI, doc = "* [`pci::Device`](kernel::pci::Device)")]
-+/// * [`platform::Device`](::kernel::platform::Device)
- pub trait Device: AsRef<device::Device<Core>> {
-     /// Set up the device's DMA streaming addressing capabilities.
-     ///
+--- a/drivers/video/fbdev/riva/riva_hw.c
++++ b/drivers/video/fbdev/riva/riva_hw.c
+@@ -436,6 +436,9 @@ static char nv3_arb(nv3_fifo_info * res_
+     vmisses = 2;
+     eburst_size = state->memory_width * 1;
+     mburst_size = 32;
++    if (!state->mclk_khz)
++	return (0);
++
+     gns = 1000000 * (gmisses*state->mem_page_miss + state->mem_latency)/state->mclk_khz;
+     ainfo->by_gfacc = gns*ainfo->gdrain_rate/1000000;
+     ainfo->wcmocc = 0;
 
 
