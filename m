@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E084B261B70;
-	Tue, 17 Feb 2026 20:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1736D2773E4;
+	Tue, 17 Feb 2026 20:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361433; cv=none; b=OXfcmDdNr9iyHYj379iiyv1BYx9JRFljuLAqUbH1rqHqRwuL7FWbPclp9Vw2O7gdxEy/Jc7m67eg6abuJwGNnw2BIsbhDBCMt9y2aco3/wEjYHrGuujHM2t0Y8RjMoqSyGwCFGUnlJHDKafc2Jlr5LAI3t8tP6nqGJztevnhn9Y=
+	t=1771361436; cv=none; b=qTJb/932/7ElkpuaZmluC5MNWLeAbaOxBMmWqIv3A37hX/vrMgJrkDGgBCjxLkNyGLCyTNRpSqsFbvqz41pFjptjxamxy1VkoUVR1bD8K7FgJg6vYOlcVB4y8MOZ4j78LkIGOxKGaAxaXt4/uvXrODEwx+yED1O3ZLWWY2F1Thk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361433; c=relaxed/simple;
-	bh=qk9iS7bXJwrHlbqx8v8DaO4KKB6tCz237BXGP7uiqgc=;
+	s=arc-20240116; t=1771361436; c=relaxed/simple;
+	bh=VCFLAjVU8ReP+O/vY570Xg8i51ypQdjhf3EvcWFolF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6hE7RV1W4exIi48v3Am8xKVfby+VB1eX+Qc8tPsiuk5VJJzwupIJJmpkxVbgEQM2xeNcpVyupQn2eba/jviNz00YILv4rv2zBMBiQ+h3bETVqeMC0av1mn3hgG/ZOYqqdUWDsu7BWocA/prN4PD6JJHh6NOZ151XivFgzLgtwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3iq5+92; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dxy3EEpVRzERjHWrZr6WLWtahx6UPugyU3OiAIi5G6mu5jsqDNBjXVflkZABEXfYcAK3o1hWdTf1VtkHhBN14sRUADKxH9FOM+dxt7Sb6den3vhG20P/3uiYvds3Tsvy4hyZIbgcajy5M8LExvdzMiSKQZOgb7XOh66NKKTZl7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULpB3Ypt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3iq5+92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4BDC4CEF7;
-	Tue, 17 Feb 2026 20:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULpB3Ypt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D64CC4CEF7;
+	Tue, 17 Feb 2026 20:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361432;
-	bh=qk9iS7bXJwrHlbqx8v8DaO4KKB6tCz237BXGP7uiqgc=;
+	s=korg; t=1771361435;
+	bh=VCFLAjVU8ReP+O/vY570Xg8i51ypQdjhf3EvcWFolF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E3iq5+92rjz8pkxUKAkddVCHdMXEW4YM6SFWhp+oiECdyhvDBm+85Dh6YStt7Ul3p
-	 ThRQEA8ZDe4Aqy5+YY8GWOHg91Xxiy4hb4HuA5FycGGZDVxbmbGCbs+oziU193Jd2j
-	 hQHruNz36EuyhLonbImq1BulhTIwBk8DmNOJd06I=
+	b=ULpB3YptIK30LhCicmGEtOvexLQ8pDnLojXMQk/rhuJb0jExHEHWVQP16TKPTAHWp
+	 dKdasuh5KAKihSrW+93+5xYnPK0JhqKmLjwDrcbb0hkmQsRIthrmuxhSb9STAxLWav
+	 tMnFzELFTs56czS3dSRDPoGnwuo1zvOa6U6ixowo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Baptista <brenomb07@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	gongqi <550230171hxy@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 15/43] ALSA: hda/realtek: Enable headset mic for Acer Nitro 5
-Date: Tue, 17 Feb 2026 21:31:55 +0100
-Message-ID: <20260217200007.053968837@linuxfoundation.org>
+Subject: [PATCH 6.18 16/43] platform/x86/amd/pmc: Add quirk for MECHREVO Wujie 15X Pro
+Date: Tue, 17 Feb 2026 21:31:56 +0100
+Message-ID: <20260217200007.091343851@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200006.470920131@linuxfoundation.org>
 References: <20260217200006.470920131@linuxfoundation.org>
@@ -45,38 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Baptista <brenomb07@gmail.com>
+From: gongqi <550230171hxy@gmail.com>
 
-[ Upstream commit 51db05283f7c9c95a3e6853a3044cd04226551bf ]
+[ Upstream commit 2b4e00d8e70ca8736fda82447be6a4e323c6d1f5 ]
 
-Add quirk to support microphone input through headphone jack on Acer Nitro 5 AN515-57 (ALC295).
+The MECHREVO Wujie 15X Pro suffers from spurious IRQ issues related to
+the AMD PMC. Add it to the quirk list to use the spurious_8042 fix.
 
-Signed-off-by: Breno Baptista <brenomb07@gmail.com>
-Link: https://patch.msgid.link/20260205024341.26694-1-brenomb07@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: gongqi <550230171hxy@gmail.com>
+Link: https://patch.msgid.link/20260122155501.376199-4-550230171hxy@gmail.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 55ef52fefaef4..a16cb45ac59e3 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6271,6 +6271,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1466, "Acer Aspire A515-56", ALC255_FIXUP_ACER_HEADPHONE_AND_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x1534, "Acer Predator PH315-54", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1025, 0x1539, "Acer Nitro 5 AN515-57", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x159c, "Acer Nitro 5 AN515-58", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x1597, "Acer Nitro 5 AN517-55", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index 404e62ad293a9..ed285afaf9b0d 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -302,6 +302,13 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "XxKK4NAx_XxSP4NAx"),
+ 		}
+ 	},
++	{
++		.ident = "MECHREVO Wujie 15X Pro",
++		.driver_data = &quirk_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "WUJIE Series-X5SP4NAG"),
++		}
++	},
+ 	{}
+ };
+ 
 -- 
 2.51.0
 
