@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DC8259CBD;
-	Tue, 17 Feb 2026 20:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A542129A1;
+	Tue, 17 Feb 2026 20:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361365; cv=none; b=mcZsnehF8l8ojqsGcfEj4pIIxuugVHTcVCoE5JUuMgghTQ1KA5XLJxW/PXz8NRN9nPa2OnEZSMxsVFYQbIrg9lWGXpL6ggs6QgadORU2YXGpt9XWVA/Q29GdiPqimzZMIXEZN57bWI+qM4JzhZFsazx4l+KpS+fbf9NAX9GnoA4=
+	t=1771361368; cv=none; b=pkUUoWigmN8jz7ALnZicTCGfn3gFaCoSp8szcVBLVnE/OBenrngS287gEU/OysZZJncmb/ioHE2mcssMv5YdCu/VBEgCi1Mv4s23OK8uduZlmpllkUcyDCy9cO4UTTyJXF4iFYrgYk8HEOxpZy6A7c19iMHYJHXGwlIfbHNkj9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361365; c=relaxed/simple;
-	bh=y+ZfkNuSXKRsyuZuk+Wko8VKrOV9znMlSmVElEAG+G0=;
+	s=arc-20240116; t=1771361368; c=relaxed/simple;
+	bh=wDzh0XyHSUH9lH0oyrFYMMDm46xrEyIFsK84OorzNvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O8oTMDkN0YZVA1jE95gVs3XR+jA8/e/o3Rxx56F26VeYR/eSuG8CQk+aTMRk2UmQbQD9gZD6yk59oppkWUB/y1Ky8niGLgS/uy7i8Fo7Q3y5EAh144QtkeNNHAq2JeOPUn5Zz1NzonpkNdbwVyrPgwhlpJ7ggVU3YVk2XKfzPLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjlwYwqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N4FKLqPGAAbMmE3z8N0GMoejqsRYCXtc5omaz55gQLO26a2tCVVYPdaQHjAKUHPlW0LnrWfLUuPQ+H65TP8BaAl27lWeQU0WDSdvYSxgg6mMSs1Gusf8rIOHnnbOYW08qzilE5hTGXIW9bKCPwsbL4ZJh68XcTZ3Xa4obkfsKrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5Ddy/VX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjlwYwqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E84C4CEF7;
-	Tue, 17 Feb 2026 20:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5Ddy/VX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24918C4CEF7;
+	Tue, 17 Feb 2026 20:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361365;
-	bh=y+ZfkNuSXKRsyuZuk+Wko8VKrOV9znMlSmVElEAG+G0=;
+	s=korg; t=1771361368;
+	bh=wDzh0XyHSUH9lH0oyrFYMMDm46xrEyIFsK84OorzNvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hjlwYwqo1t7VoQHfR1hDSmw7CCgGKzXmI8zn9TilxtAD3oKwNWAhC1Pfu9nrVOGAU
-	 qQrf8Pp8pOC6uzBP+BQ8W06lMFYvjS2Xf7qcYHLscLaa3Kl2xxFs2+D18b0p8FsxMi
-	 ugkvGQDjdbcW8KWi/wH3ABc2jyE+C/fB8r9gi8yE=
+	b=r5Ddy/VXUW9Rry1q72tATUbeb+1mn6zzYE1E/mir7YqpYlgWmoQR5fXKWD/0TFXHq
+	 mWD3QQ0ycUjiNQR0UYUe5QpXBKJJ3K+Es9jP6eQm2Xc1x4Hh8+zvsBepcTez2aDrVt
+	 GJGFB94w8ws0yJD7U2zEvU9kfl2ApFqT6ZifGgJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Wang Jiayue <akaieurus@gmail.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>
-Subject: [PATCH 6.19 14/18] iommu/arm-smmu-qcom: do not register driver in probe()
-Date: Tue, 17 Feb 2026 21:32:10 +0100
-Message-ID: <20260217200003.243294668@linuxfoundation.org>
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 15/18] Revert "f2fs: block cache/dio write during f2fs_enable_checkpoint()"
+Date: Tue, 17 Feb 2026 21:32:11 +0100
+Message-ID: <20260217200003.287445122@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200002.683975158@linuxfoundation.org>
 References: <20260217200002.683975158@linuxfoundation.org>
@@ -56,150 +52,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-commit ed1ac3c977dd6b119405fa36dd41f7151bd5b4de upstream.
+[ Upstream commit 3996b70209f145bfcf2afc7d05dd92c27b233b48 ]
 
-Commit 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in
-qcom_smmu_impl_init") intended to also probe the TBU driver when
-CONFIG_ARM_SMMU_QCOM_DEBUG is disabled, but also moved the corresponding
-platform_driver_register() call into qcom_smmu_impl_init() which is
-called from arm_smmu_device_probe().
+This reverts commit 196c81fdd438f7ac429d5639090a9816abb9760a.
 
-However, it neither makes sense to register drivers from probe()
-callbacks of other drivers, nor does the driver core allow registering
-drivers with a device lock already being held.
+Original patch may cause below deadlock, revert it.
 
-The latter was revealed by commit dc23806a7c47 ("driver core: enforce
-device_lock for driver_match_device()") leading to a deadlock condition
-described in [1].
+write				remount
+- write_begin
+ - lock_page  --- lock A
+ - prepare_write_begin
+  - f2fs_map_lock
+				- f2fs_enable_checkpoint
+				 - down_write(cp_enable_rwsem)  --- lock B
+				 - sync_inode_sb
+				  - writepages
+				   - lock_page			--- lock A
+   - down_read(cp_enable_rwsem)  --- lock A
 
-Additionally, it was noted by Robin that the current approach is
-potentially racy with async probe [2].
-
-Hence, fix this by registering the qcom_smmu_tbu_driver from
-module_init(). Unfortunately, due to the vendoring of the driver, this
-requires an indirection through arm-smmu-impl.c.
-
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://lore.kernel.org/lkml/7ae38e31-ef31-43ad-9106-7c76ea0e8596@sirena.org.uk/
-Link: https://lore.kernel.org/lkml/DFU7CEPUSG9A.1KKGVW4HIPMSH@kernel.org/ [1]
-Link: https://lore.kernel.org/lkml/0c0d3707-9ea5-44f9-88a1-a65c62e3df8d@arm.com/ [2]
-Fixes: dc23806a7c47 ("driver core: enforce device_lock for driver_match_device()")
-Fixes: 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in qcom_smmu_impl_init")
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Tested-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Acked-by: Konrad Dybcio <konradybcio@kernel.org>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com> #LX2160ARDB
-Tested-by: Wang Jiayue <akaieurus@gmail.com>
-Reviewed-by: Wang Jiayue <akaieurus@gmail.com>
-Tested-by: Mark Brown <broonie@kernel.org>
-Acked-by: Joerg Roedel <joerg.roedel@amd.com>
-Link: https://patch.msgid.link/20260121141215.29658-1-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Cc: stable@kernel.org
+Fixes: 196c81fdd438 ("f2fs: block cache/dio write during f2fs_enable_checkpoint()")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ drop tracing bits ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-impl.c |   14 ++++++++++++++
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |   14 ++++++++++----
- drivers/iommu/arm/arm-smmu/arm-smmu.c      |   24 +++++++++++++++++++++++-
- drivers/iommu/arm/arm-smmu/arm-smmu.h      |    5 +++++
- 4 files changed, 52 insertions(+), 5 deletions(-)
+ fs/f2fs/data.c  |    2 --
+ fs/f2fs/f2fs.h  |    3 +--
+ fs/f2fs/super.c |   38 ++++++++------------------------------
+ 3 files changed, 9 insertions(+), 34 deletions(-)
 
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-@@ -228,3 +228,17 @@ struct arm_smmu_device *arm_smmu_impl_in
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1424,7 +1424,6 @@ static int __allocate_data_block(struct
  
- 	return smmu;
- }
-+
-+int __init arm_smmu_impl_module_init(void)
-+{
-+	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
-+		return qcom_smmu_module_init();
-+
-+	return 0;
-+}
-+
-+void __exit arm_smmu_impl_module_exit(void)
-+{
-+	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
-+		qcom_smmu_module_exit();
-+}
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -774,10 +774,6 @@ struct arm_smmu_device *qcom_smmu_impl_i
+ static void f2fs_map_lock(struct f2fs_sb_info *sbi, int flag)
  {
- 	const struct device_node *np = smmu->dev->of_node;
- 	const struct of_device_id *match;
--	static u8 tbu_registered;
--
--	if (!tbu_registered++)
--		platform_driver_register(&qcom_smmu_tbu_driver);
- 
- #ifdef CONFIG_ACPI
- 	if (np == NULL) {
-@@ -802,3 +798,13 @@ struct arm_smmu_device *qcom_smmu_impl_i
- 
- 	return smmu;
+-	f2fs_down_read(&sbi->cp_enable_rwsem);
+ 	if (flag == F2FS_GET_BLOCK_PRE_AIO)
+ 		f2fs_down_read(&sbi->node_change);
+ 	else
+@@ -1437,7 +1436,6 @@ static void f2fs_map_unlock(struct f2fs_
+ 		f2fs_up_read(&sbi->node_change);
+ 	else
+ 		f2fs_unlock_op(sbi);
+-	f2fs_up_read(&sbi->cp_enable_rwsem);
  }
-+
-+int __init qcom_smmu_module_init(void)
-+{
-+	return platform_driver_register(&qcom_smmu_tbu_driver);
-+}
-+
-+void __exit qcom_smmu_module_exit(void)
-+{
-+	platform_driver_unregister(&qcom_smmu_tbu_driver);
-+}
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -2365,7 +2365,29 @@ static struct platform_driver arm_smmu_d
- 	.remove = arm_smmu_device_remove,
- 	.shutdown = arm_smmu_device_shutdown,
- };
--module_platform_driver(arm_smmu_driver);
-+
-+static int __init arm_smmu_init(void)
-+{
-+	int ret;
-+
-+	ret = platform_driver_register(&arm_smmu_driver);
-+	if (ret)
-+		return ret;
-+
-+	ret = arm_smmu_impl_module_init();
-+	if (ret)
-+		platform_driver_unregister(&arm_smmu_driver);
-+
-+	return ret;
-+}
-+module_init(arm_smmu_init);
-+
-+static void __exit arm_smmu_exit(void)
-+{
-+	arm_smmu_impl_module_exit();
-+	platform_driver_unregister(&arm_smmu_driver);
-+}
-+module_exit(arm_smmu_exit);
  
- MODULE_DESCRIPTION("IOMMU API for ARM architected SMMU implementations");
- MODULE_AUTHOR("Will Deacon <will@kernel.org>");
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-@@ -540,6 +540,11 @@ struct arm_smmu_device *arm_smmu_impl_in
- struct arm_smmu_device *nvidia_smmu_impl_init(struct arm_smmu_device *smmu);
- struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu);
+ int f2fs_get_block_locked(struct dnode_of_data *dn, pgoff_t index)
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -287,7 +287,7 @@ enum {
+ #define DEF_CP_INTERVAL			60	/* 60 secs */
+ #define DEF_IDLE_INTERVAL		5	/* 5 secs */
+ #define DEF_DISABLE_INTERVAL		5	/* 5 secs */
+-#define DEF_ENABLE_INTERVAL		5	/* 5 secs */
++#define DEF_ENABLE_INTERVAL		16	/* 16 secs */
+ #define DEF_DISABLE_QUICK_INTERVAL	1	/* 1 secs */
+ #define DEF_UMOUNT_DISCARD_TIMEOUT	5	/* 5 secs */
  
-+int __init arm_smmu_impl_module_init(void);
-+void __exit arm_smmu_impl_module_exit(void);
-+int __init qcom_smmu_module_init(void);
-+void __exit qcom_smmu_module_exit(void);
-+
- void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx);
- int arm_mmu500_reset(struct arm_smmu_device *smmu);
+@@ -1720,7 +1720,6 @@ struct f2fs_sb_info {
+ 	long interval_time[MAX_TIME];		/* to store thresholds */
+ 	struct ckpt_req_control cprc_info;	/* for checkpoint request control */
+ 	struct cp_stats cp_stats;		/* for time stat of checkpoint */
+-	struct f2fs_rwsem cp_enable_rwsem;	/* block cache/dio write */
  
+ 	struct inode_management im[MAX_INO_ENTRY];	/* manage inode cache */
+ 
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -2636,11 +2636,10 @@ restore_flag:
+ static int f2fs_enable_checkpoint(struct f2fs_sb_info *sbi)
+ {
+ 	unsigned int nr_pages = get_pages(sbi, F2FS_DIRTY_DATA) / 16;
+-	long long start, writeback, lock, sync_inode, end;
++	long long start, writeback, end;
+ 	int ret;
+ 
+-	f2fs_info(sbi, "%s start, meta: %lld, node: %lld, data: %lld",
+-					__func__,
++	f2fs_info(sbi, "f2fs_enable_checkpoint() starts, meta: %lld, node: %lld, data: %lld",
+ 					get_pages(sbi, F2FS_DIRTY_META),
+ 					get_pages(sbi, F2FS_DIRTY_NODES),
+ 					get_pages(sbi, F2FS_DIRTY_DATA));
+@@ -2659,18 +2658,11 @@ static int f2fs_enable_checkpoint(struct
+ 	}
+ 	writeback = ktime_get();
+ 
+-	f2fs_down_write(&sbi->cp_enable_rwsem);
+-
+-	lock = ktime_get();
+-
+-	if (get_pages(sbi, F2FS_DIRTY_DATA))
+-		sync_inodes_sb(sbi->sb);
++	sync_inodes_sb(sbi->sb);
+ 
+ 	if (unlikely(get_pages(sbi, F2FS_DIRTY_DATA)))
+-		f2fs_warn(sbi, "%s: has some unwritten data: %lld",
+-			__func__, get_pages(sbi, F2FS_DIRTY_DATA));
+-
+-	sync_inode = ktime_get();
++		f2fs_warn(sbi, "checkpoint=enable has some unwritten data: %lld",
++					get_pages(sbi, F2FS_DIRTY_DATA));
+ 
+ 	f2fs_down_write(&sbi->gc_lock);
+ 	f2fs_dirty_to_prefree(sbi);
+@@ -2679,13 +2671,6 @@ static int f2fs_enable_checkpoint(struct
+ 	set_sbi_flag(sbi, SBI_IS_DIRTY);
+ 	f2fs_up_write(&sbi->gc_lock);
+ 
+-	f2fs_info(sbi, "%s sync_fs, meta: %lld, imeta: %lld, node: %lld, dents: %lld, qdata: %lld",
+-					__func__,
+-					get_pages(sbi, F2FS_DIRTY_META),
+-					get_pages(sbi, F2FS_DIRTY_IMETA),
+-					get_pages(sbi, F2FS_DIRTY_NODES),
+-					get_pages(sbi, F2FS_DIRTY_DENTS),
+-					get_pages(sbi, F2FS_DIRTY_QDATA));
+ 	ret = f2fs_sync_fs(sbi->sb, 1);
+ 	if (ret)
+ 		f2fs_err(sbi, "%s sync_fs failed, ret: %d", __func__, ret);
+@@ -2693,17 +2678,11 @@ static int f2fs_enable_checkpoint(struct
+ 	/* Let's ensure there's no pending checkpoint anymore */
+ 	f2fs_flush_ckpt_thread(sbi);
+ 
+-	f2fs_up_write(&sbi->cp_enable_rwsem);
+-
+ 	end = ktime_get();
+ 
+-	f2fs_info(sbi, "%s end, writeback:%llu, "
+-				"lock:%llu, sync_inode:%llu, sync_fs:%llu",
+-				__func__,
+-				ktime_ms_delta(writeback, start),
+-				ktime_ms_delta(lock, writeback),
+-				ktime_ms_delta(sync_inode, lock),
+-				ktime_ms_delta(end, sync_inode));
++	f2fs_info(sbi, "f2fs_enable_checkpoint() finishes, writeback:%llu, sync:%llu",
++					ktime_ms_delta(writeback, start),
++					ktime_ms_delta(end, writeback));
+ 	return ret;
+ }
+ 
+@@ -4904,7 +4883,6 @@ try_onemore:
+ 	init_f2fs_rwsem(&sbi->node_change);
+ 	spin_lock_init(&sbi->stat_lock);
+ 	init_f2fs_rwsem(&sbi->cp_rwsem);
+-	init_f2fs_rwsem(&sbi->cp_enable_rwsem);
+ 	init_f2fs_rwsem(&sbi->quota_sem);
+ 	init_waitqueue_head(&sbi->cp_wait);
+ 	spin_lock_init(&sbi->error_lock);
 
 
