@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F7F29A1;
-	Tue, 17 Feb 2026 20:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5AE2773E4;
+	Tue, 17 Feb 2026 20:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361286; cv=none; b=tomgS1yzxDBwWS3wGQliQisvMThdRq6McUbzxZIum4Q7GTU2+1CX9Tb7fzmToNozCrLsSMTa/j3Ro0gcqLozz3iG/h7go7jN1J6GAY0rNgILx+kVzhTis2rglHMW1oL8aN7BIGAgfgHn5jbqkmrWKhkS0aJwX6PKNWPYdLb7A0I=
+	t=1771361289; cv=none; b=g0NKV7tdOhZ/401X6vv0GKKRErzLi0Zclv059l20USgX9RKizLAtrdnuzc3hFFp467OVuOo9q1Ff9CEo/2lcaOs7phXyDqD3aC2dK847+ePzy2XE54ljqdixqJouRzm+svIukMtKyjAwTokEQL354vCWGHAYaPnOEMyaZlki36c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361286; c=relaxed/simple;
-	bh=FpxwqSbDLZl1wwWaWA3hw68XSBvoBvsdN9/F4W5Z3PQ=;
+	s=arc-20240116; t=1771361289; c=relaxed/simple;
+	bh=rXw0Uoge3XnV8GkFOelzMVR1EZE1ZGK6ylID/gELPGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlMgGo9d6fXtcr6Gpoj9kewJ/KJCvtMHR4Z8vw4docEK4rcCbdNmRzSXiQo9ouqvT2Xp2XjZmcRAKMGJO2NXOtpCP2eGezRJmEeEdokfsUkB7CmTC1p44s0qF/eevC5TIO6qdPki+9gAshrUlByO2qzALASfADrGo+g/OTC4mQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygCPrSow; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qY/4XjPADih93fdXrkj7HPBMxyROd3pqGKeBfy+CY+dsDesazFasitD3B3TrGPU/l7AZx5dNPopIPendS7T4x1KfVB9xQHF21oto8CKu40xAvIfI+AiEBlOZQvGhnglDZT2cZgbSp/8n5RvqQqlWU8D+vw0emB4rAJ0vc3I8u/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qc1gnVPw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygCPrSow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E92BC4CEF7;
-	Tue, 17 Feb 2026 20:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qc1gnVPw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDCCC4CEF7;
+	Tue, 17 Feb 2026 20:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361285;
-	bh=FpxwqSbDLZl1wwWaWA3hw68XSBvoBvsdN9/F4W5Z3PQ=;
+	s=korg; t=1771361289;
+	bh=rXw0Uoge3XnV8GkFOelzMVR1EZE1ZGK6ylID/gELPGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ygCPrSowfmgpJMEcqFUJGe/KnlG4XuV3hKbAgF05laMFeg7/IbdO8VjZ1W+ssdRLs
-	 A7KlwtHOUb0Z4sQX5aiwiFs2HBXlL7dgnBdzvoPAZolKtHWcnmrDtTV1VhHv+8j6k2
-	 DxXfObargTz10NnLMmFNMAH7bdlkuFlp8mho3bOk=
+	b=qc1gnVPw4jblq1mNmJPNGphDepGCUF1L6WdAOnxJWEN69Nr0TDkDOKWLxKYoq90Gg
+	 IYlIEA4isfnDJRvgzf3b3B5JVmy5Q6BXFSx8elo60m23yvF/sxdC5rf3A/RwTgsG1T
+	 7p9+WgL38wDP+EyTwLFLKD9nvAUy2MF6Zer7zN6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 55/64] mptcp: fix race in mptcp_pm_nl_flush_addrs_doit()
-Date: Tue, 17 Feb 2026 21:31:51 +0100
-Message-ID: <20260217200009.570553755@linuxfoundation.org>
+	Alexander Wetzel <Alexander@wetzel-home.de>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Bin Lan <lanbincn@139.com>
+Subject: [PATCH 6.1 56/64] wifi: cfg80211: Add missing lock in cfg80211_check_and_end_cac()
+Date: Tue, 17 Feb 2026 21:31:52 +0100
+Message-ID: <20260217200009.607155854@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -54,79 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alexander Wetzel <Alexander@wetzel-home.de>
 
-commit e2a9eeb69f7d4ca4cf4c70463af77664fdb6ab1d upstream.
+[ Upstream commit 2c5dee15239f3f3e31aa5c8808f18996c039e2c1 ]
 
-syzbot and Eulgyu Kim reported crashes in mptcp_pm_nl_get_local_id()
-and/or mptcp_pm_nl_is_backup()
+Callers of wdev_chandef() must hold the wiphy mutex.
 
-Root cause is list_splice_init() in mptcp_pm_nl_flush_addrs_doit()
-which is not RCU ready.
+But the worker cfg80211_propagate_cac_done_wk() never takes the lock.
+Which triggers the warning below with the mesh_peer_connected_dfs
+test from hostapd and not (yet) released mac80211 code changes:
 
-list_splice_init_rcu() can not be called here while holding pernet->lock
-spinlock.
+WARNING: CPU: 0 PID: 495 at net/wireless/chan.c:1552 wdev_chandef+0x60/0x165
+Modules linked in:
+CPU: 0 UID: 0 PID: 495 Comm: kworker/u4:2 Not tainted 6.14.0-rc5-wt-g03960e6f9d47 #33 13c287eeabfe1efea01c0bcc863723ab082e17cf
+Workqueue: cfg80211 cfg80211_propagate_cac_done_wk
+Stack:
+ 00000000 00000001 ffffff00 6093267c
+ 00000000 6002ec30 6d577c50 60037608
+ 00000000 67e8d108 6063717b 00000000
+Call Trace:
+ [<6002ec30>] ? _printk+0x0/0x98
+ [<6003c2b3>] show_stack+0x10e/0x11a
+ [<6002ec30>] ? _printk+0x0/0x98
+ [<60037608>] dump_stack_lvl+0x71/0xb8
+ [<6063717b>] ? wdev_chandef+0x60/0x165
+ [<6003766d>] dump_stack+0x1e/0x20
+ [<6005d1b7>] __warn+0x101/0x20f
+ [<6005d3a8>] warn_slowpath_fmt+0xe3/0x15d
+ [<600b0c5c>] ? mark_lock.part.0+0x0/0x4ec
+ [<60751191>] ? __this_cpu_preempt_check+0x0/0x16
+ [<600b11a2>] ? mark_held_locks+0x5a/0x6e
+ [<6005d2c5>] ? warn_slowpath_fmt+0x0/0x15d
+ [<60052e53>] ? unblock_signals+0x3a/0xe7
+ [<60052f2d>] ? um_set_signals+0x2d/0x43
+ [<60751191>] ? __this_cpu_preempt_check+0x0/0x16
+ [<607508b2>] ? lock_is_held_type+0x207/0x21f
+ [<6063717b>] wdev_chandef+0x60/0x165
+ [<605f89b4>] regulatory_propagate_dfs_state+0x247/0x43f
+ [<60052f00>] ? um_set_signals+0x0/0x43
+ [<605e6bfd>] cfg80211_propagate_cac_done_wk+0x3a/0x4a
+ [<6007e460>] process_scheduled_works+0x3bc/0x60e
+ [<6007d0ec>] ? move_linked_works+0x4d/0x81
+ [<6007d120>] ? assign_work+0x0/0xaa
+ [<6007f81f>] worker_thread+0x220/0x2dc
+ [<600786ef>] ? set_pf_worker+0x0/0x57
+ [<60087c96>] ? to_kthread+0x0/0x43
+ [<6008ab3c>] kthread+0x2d3/0x2e2
+ [<6007f5ff>] ? worker_thread+0x0/0x2dc
+ [<6006c05b>] ? calculate_sigpending+0x0/0x56
+ [<6003b37d>] new_thread_handler+0x4a/0x64
+irq event stamp: 614611
+hardirqs last  enabled at (614621): [<00000000600bc96b>] __up_console_sem+0x82/0xaf
+hardirqs last disabled at (614630): [<00000000600bc92c>] __up_console_sem+0x43/0xaf
+softirqs last  enabled at (614268): [<00000000606c55c6>] __ieee80211_wake_queue+0x933/0x985
+softirqs last disabled at (614266): [<00000000606c52d6>] __ieee80211_wake_queue+0x643/0x985
 
-Many thanks to Eulgyu Kim for providing a repro and testing our patches.
-
-Fixes: 141694df6573 ("mptcp: remove address when netlink flushes addrs")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6970a46d.a00a0220.3ad28e.5cf0.GAE@google.com/T/
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/611
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260124-net-mptcp-race_nl_flush_addrs-v3-1-b2dc1b613e9d@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts because the code has been moved from pm_netlink.c to
-  pm_kernel.c later on in commit 8617e85e04bd ("mptcp: pm: split
-  in-kernel PM specific code"). The same modifications can be applied
-  in pm_netlink.c with one exception, because 'pernet->local_addr_list'
-  has been renamed to 'pernet->endp_list' in commit 35e71e43a56d
-  ("mptcp: pm: in-kernel: rename 'local_addr_list' to 'endp_list'"). The
-  previous name is then still being used in this version.
-  Also, another conflict is caused by commit 7bcf4d8022f9 ("mptcp: pm:
-  rename helpers linked to 'flush'") which is not in this version:
-  mptcp_nl_remove_addrs_list() has been renamed to
-  mptcp_nl_flush_addrs_list(). The previous name has then been kept. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: 26ec17a1dc5e ("cfg80211: Fix radar event during another phy CAC")
+Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
+Link: https://patch.msgid.link/20250717162547.94582-1-Alexander@wetzel-home.de
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ Use wiphy_lock() and wiphy_unlock() instead of guard() in v6.1.y. ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ net/wireless/reg.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1855,16 +1855,26 @@ static void __reset_counters(struct pm_n
- static int mptcp_nl_cmd_flush_addrs(struct sk_buff *skb, struct genl_info *info)
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -4241,6 +4241,9 @@ EXPORT_SYMBOL(regulatory_pre_cac_allowed
+ static void cfg80211_check_and_end_cac(struct cfg80211_registered_device *rdev)
  {
- 	struct pm_nl_pernet *pernet = genl_info_pm_nl(info);
--	LIST_HEAD(free_list);
-+	struct list_head free_list;
- 
- 	spin_lock_bh(&pernet->lock);
--	list_splice_init(&pernet->local_addr_list, &free_list);
-+	free_list = pernet->local_addr_list;
-+	INIT_LIST_HEAD_RCU(&pernet->local_addr_list);
- 	__reset_counters(pernet);
- 	pernet->next_id = 1;
- 	bitmap_zero(pernet->id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
- 	spin_unlock_bh(&pernet->lock);
--	mptcp_nl_remove_addrs_list(sock_net(skb->sk), &free_list);
+ 	struct wireless_dev *wdev;
 +
-+	if (free_list.next == &pernet->local_addr_list)
-+		return 0;
++	wiphy_lock(&rdev->wiphy);
 +
- 	synchronize_rcu();
+ 	/* If we finished CAC or received radar, we should end any
+ 	 * CAC running on the same channels.
+ 	 * the check !cfg80211_chandef_dfs_usable contain 2 options:
+@@ -4264,6 +4267,8 @@ static void cfg80211_check_and_end_cac(s
+ 		if (!cfg80211_chandef_dfs_usable(&rdev->wiphy, chandef))
+ 			rdev_end_cac(rdev, wdev->netdev);
+ 	}
 +
-+	/* Adjust the pointers to free_list instead of pernet->local_addr_list */
-+	free_list.prev->next = &free_list;
-+	free_list.next->prev = &free_list;
-+
-+	mptcp_nl_remove_addrs_list(sock_net(skb->sk), &free_list);
- 	__flush_addrs(&free_list);
- 	return 0;
++	wiphy_unlock(&rdev->wiphy);
  }
+ 
+ void regulatory_propagate_dfs_state(struct wiphy *wiphy,
 
 
