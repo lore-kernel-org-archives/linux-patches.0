@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2032D6E76;
-	Tue, 17 Feb 2026 20:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DED259CBD;
+	Tue, 17 Feb 2026 20:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361218; cv=none; b=TtIOYJehmR8XKqN/eZQ8iiLkTIP50RaYO4K2Z1Rec9O2ZU5Teis9nMJXyTjiyik68gcdfbU4LVmHRfrm6MKMPBVLxLgodBIrufCzyDnrp7GzfQzDNXeZleISGfMnQkXqZywWyPRjFoShrhkJ3ag0WSxKqK6J0BNO8ZPay8koPRA=
+	t=1771361222; cv=none; b=GFUO4G0dgMSIdy9gssCToqZQ56lzioyqt3Xhd/ZrQKTnEYY/Svr0sYcyEMuvLpt8/B1sdFBPSEJkNrP3rKMFkKe/wS1ywoEMIX/8mz8KG0PahqVZJIafGzRmoyFLr9jDjEt6fz4V2VyNEV45D4dq8Y0+Pd2KzcKs0E1qN/GICBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361218; c=relaxed/simple;
-	bh=Vfw8mKd8+NlHfx5XxMMWTU5JNGGt/hLwwrrfqOyy2Hs=;
+	s=arc-20240116; t=1771361222; c=relaxed/simple;
+	bh=BmWCl+ZnKK9Qmo7RduUYre7nn7i5coOziqT6wlXcDCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EqC+y/NtolXR1qeG7KerXxSvVj21ZPSxQQwoK69kyAZlTMKhXxseo9IzwdAjjJwCRd+XZDdsQ/1oLINeqJKVhjeRTePrNjgZme09uHsaglrIeXPrg66TfnT2DKJeydxPkCeJuD6miH5QDkkLqUgBRz/bcG7JYEVxo4PM/gT19vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6KmE3cT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZytQrg3T3sUxVRL1L1Ag18VLNM7GNYhQSZOimbT/LsHR25ig6OzeQ6bLGqb8okB9CJtk+AxoU0OdX4wwlYl1uGWVzs56eqxQR1KwSLJwC7zsHcIeNO4fDifda4EHEYrTNSJ2xoIbCpeThWGHpxEB5+0Y1Rg0oxFwYnWUNvNCnT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBrpcCnf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6KmE3cT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5935C4CEF7;
-	Tue, 17 Feb 2026 20:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBrpcCnf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321B7C19421;
+	Tue, 17 Feb 2026 20:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361218;
-	bh=Vfw8mKd8+NlHfx5XxMMWTU5JNGGt/hLwwrrfqOyy2Hs=;
+	s=korg; t=1771361221;
+	bh=BmWCl+ZnKK9Qmo7RduUYre7nn7i5coOziqT6wlXcDCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6KmE3cTZm78q2xnILGjjSyva0tU0erXbyBQQbvU30017AGGiTsMOdNKtw/8Tkpx8
-	 CjzrEdgu+SUH9ob17rtL04J5/TfAF1PNVvDJj5Ii75RTUrWEA6jKdKd3D0J5wx7K/3
-	 4Dgv6/pgJJqM5TQUMEHFvbRhLkZ7lgTnXPybN8iQ=
+	b=hBrpcCnfYius1C8dVDqHkDfrfkgbF01ZwM+CS6wV1r627LXaV0DnQY9J1MGGGrnka
+	 Qkueww/1mcg6Hv/B45DYh5zwxmVrKA4FzkfGh31uUsMxH6JOpPXS339AFbMK49xa2Z
+	 4hu75T+KEga7tvlSsG4QU20AdOKsvNKwZ7bgsTek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 28/64] ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU
-Date: Tue, 17 Feb 2026 21:31:24 +0100
-Message-ID: <20260217200008.576154666@linuxfoundation.org>
+Subject: [PATCH 6.1 37/64] platform/x86: panasonic-laptop: Fix sysfs group leak in error path
+Date: Tue, 17 Feb 2026 21:31:33 +0100
+Message-ID: <20260217200008.899357663@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -46,43 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b48fe9af1e60360baf09ca6b7a3cd6541f16e611 ]
+[ Upstream commit 43b0b7eff4b3fb684f257d5a24376782e9663465 ]
 
-Add a PCI quirk to enable microphone detection on the headphone jack of
-TongFang X6AR55xU devices.
+The acpi_pcc_hotkey_add() error path leaks sysfs group pcc_attr_group
+if platform_device_register_simple() fails for the "panasonic" platform
+device.
 
-Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260119151626.35481-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Address this by making it call sysfs_remove_group() in that case for
+the group in question.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/3398370.44csPzL39Z@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/platform/x86/panasonic-laptop.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index b45e5b268a65b..2fd52b6b4fb57 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10906,6 +10906,10 @@ static const struct snd_hda_pin_quirk alc269_pin_fixup_tbl[] = {
- 		{0x12, 0x90a60140},
- 		{0x19, 0x04a11030},
- 		{0x21, 0x04211020}),
-+	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1d05, "TongFang", ALC274_FIXUP_HP_HEADSET_MIC,
-+		{0x17, 0x90170110},
-+		{0x19, 0x03a11030},
-+		{0x21, 0x03211020}),
- 	SND_HDA_PIN_QUIRK(0x10ec0282, 0x1025, "Acer", ALC282_FIXUP_ACER_DISABLE_LINEOUT,
- 		ALC282_STANDARD_PINS,
- 		{0x12, 0x90a609c0},
+diff --git a/drivers/platform/x86/panasonic-laptop.c b/drivers/platform/x86/panasonic-laptop.c
+index e9bee5f6ec8d0..99cbacd0cbba4 100644
+--- a/drivers/platform/x86/panasonic-laptop.c
++++ b/drivers/platform/x86/panasonic-laptop.c
+@@ -1077,7 +1077,7 @@ static int acpi_pcc_hotkey_add(struct acpi_device *device)
+ 			PLATFORM_DEVID_NONE, NULL, 0);
+ 		if (IS_ERR(pcc->platform)) {
+ 			result = PTR_ERR(pcc->platform);
+-			goto out_backlight;
++			goto out_sysfs;
+ 		}
+ 		result = device_create_file(&pcc->platform->dev,
+ 			&dev_attr_cdpower);
+@@ -1093,6 +1093,8 @@ static int acpi_pcc_hotkey_add(struct acpi_device *device)
+ 
+ out_platform:
+ 	platform_device_unregister(pcc->platform);
++out_sysfs:
++	sysfs_remove_group(&device->dev.kobj, &pcc_attr_group);
+ out_backlight:
+ 	backlight_device_unregister(pcc->backlight);
+ out_input:
 -- 
 2.51.0
 
