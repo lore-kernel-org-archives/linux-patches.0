@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A35259CBD;
-	Tue, 17 Feb 2026 20:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271A4259CBD;
+	Tue, 17 Feb 2026 20:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361317; cv=none; b=aD+FDExRV0muiDwgVsMH5lEp+8NotyzjOcuOWEyQClDP2HGACvJYLD7IcF+UyLjDqt1/tXdvN5MhgcAz03swKpF0MU0c1DhbxwJMXpv/GE3ouoVlrLE7vVSVlIhsfnxd2PvYj32Mh3JVUBcyG/QPitr6ABlkzppUO8KS8s+aYfY=
+	t=1771361320; cv=none; b=XB3uEoIWTegiarneZBJc2LEYAY67biEeIdzKhKtZaTB9w4MJp0gijmD1YQD2040MzqjM/JDjRjTuf6aX6/poYBOfbAlJ2x9ps7vjTbEYdxlflzcl8jTBaKly2TNir9qeRMlg5UVpFX4ybBjCDgspLKoCtjQ/LAdiZnIk06P/WLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361317; c=relaxed/simple;
-	bh=SX9VNMEvIy1eb/i9/Axpu/Y6vwVB4/TA9QWUP6OPUZE=;
+	s=arc-20240116; t=1771361320; c=relaxed/simple;
+	bh=q/0Bbkg2Gx7R8KN0Aej5tLDgKq2VALFREV9+A2WMVA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVK586dhBFkcZCYzAlUW4o3sU1dInW8+9TDqQXh3YdMgm9O3deBH8rJ9dSZvrZ49bcYcnauOuDR2vD/OcpvMAPrWwyzVyFga6gUJIGuwL24l4+zau3ZiKNmRwu3XDdzcDxE0XcR9zJJFqhuNmRobX3nGEyy8iGYlhakV5fimmeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzQ6e0SH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Aq0ajpAo7fFaFBh/rjplweiZ4X//7yiOGzRZhe5TYj+R6XNisnKTmfsG387X/BVSSeiUW9PGyFWL4C8weZo2psWyWVyMiQV4+eAZfU+7XcMpFLuf9zXFPJEoX3BaWFcZPSUy9YYQLmcfDeNapLfg7lRz9fHRB3VBVDYpso557lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef9Yy+Cy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzQ6e0SH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26CEC4CEF7;
-	Tue, 17 Feb 2026 20:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef9Yy+Cy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B89C4CEF7;
+	Tue, 17 Feb 2026 20:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361317;
-	bh=SX9VNMEvIy1eb/i9/Axpu/Y6vwVB4/TA9QWUP6OPUZE=;
+	s=korg; t=1771361320;
+	bh=q/0Bbkg2Gx7R8KN0Aej5tLDgKq2VALFREV9+A2WMVA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uzQ6e0SH4QecAfXoBYyl6XvOuOZmw/b57vIJDm87CBNfN5TJouZeSsZKYYqRkongp
-	 P+Ki4l9JejPnk835dy4TyYf03Vwl9QJwUz7SgArzEHAQ5E11PPAjqeSY08MPKw9eux
-	 Zg23uEmc9NXQHEQs1ryzj+hXApsGyep0UYKPwUzk=
+	b=Ef9Yy+Cycc06kJch84VH7JSiMt8kqCUvp67rJNdR7v9YJ4bzbpx7Kp0a6BW7wZIkT
+	 FqgSbgYptdRs6JOEdlL4OFcevmWjOQL17rx8QpxJfOK7IiKnPuBNmcvs8pDb1k4yPZ
+	 qfZPTQPhNIE6Y6lkVp9LpRyxveuJDfOnKdw0JMmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c4e33e12283d9437c25@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Brahmajit Das <listout@listout.xyz>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 33/64] romfs: check sb_set_blocksize() return value
-Date: Tue, 17 Feb 2026 21:31:29 +0100
-Message-ID: <20260217200008.755504722@linuxfoundation.org>
+Subject: =?UTF-8?q?=5BPATCH=206=2E1=2034/64=5D=20=3D=3FUTF-8=3Fq=3Fdrm/tegra=3A=3D20hdmi=3A=3D20sor=3A=3D20Fix=3D20error=3A=3D20variable=3D20=3F=3D=20=3D=3FUTF-8=3Fq=3F=3DE2=3D80=3D98j=3DE2=3D80=3D99=3D20set=3D20but=3D20not=3D20used=3F=3D?=
+Date: Tue, 17 Feb 2026 21:31:30 +0100
+Message-ID: <20260217200008.791628703@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -46,66 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit ab7ad7abb3660c58ffffdf07ff3bb976e7e0afa0 ]
+[ Upstream commit 1beee8d0c263b3e239c8d6616e4f8bb700bed658 ]
 
-romfs_fill_super() ignores the return value of sb_set_blocksize(), which
-can fail if the requested block size is incompatible with the block
-device's configuration.
+The variable j is set, however never used in or outside the loop, thus
+resulting in dead code.
+Building with GCC 16 results in a build error due to
+-Werror=unused-but-set-variable= enabled by default.
+This patch clean up the dead code and fixes the build error.
 
-This can be triggered by setting a loop device's block size larger than
-PAGE_SIZE using ioctl(LOOP_SET_BLOCK_SIZE, 32768), then mounting a romfs
-filesystem on that device.
+Example build log:
+drivers/gpu/drm/tegra/sor.c:1867:19: error: variable ‘j’ set but not used [-Werror=unused-but-set-variable=]
+ 1867 |         size_t i, j;
+      |                   ^
 
-When sb_set_blocksize(sb, ROMBSIZE) is called with ROMBSIZE=4096 but the
-device has logical_block_size=32768, bdev_validate_blocksize() fails
-because the requested size is smaller than the device's logical block
-size. sb_set_blocksize() returns 0 (failure), but romfs ignores this and
-continues mounting.
-
-The superblock's block size remains at the device's logical block size
-(32768). Later, when sb_bread() attempts I/O with this oversized block
-size, it triggers a kernel BUG in folio_set_bh():
-
-    kernel BUG at fs/buffer.c:1582!
-    BUG_ON(size > PAGE_SIZE);
-
-Fix by checking the return value of sb_set_blocksize() and failing the
-mount with -EINVAL if it returns 0.
-
-Reported-by: syzbot+9c4e33e12283d9437c25@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9c4e33e12283d9437c25
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260113084037.1167887-1-kartikey406@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250901212020.3757519-1-listout@listout.xyz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/romfs/super.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tegra/hdmi.c | 4 ++--
+ drivers/gpu/drm/tegra/sor.c  | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/romfs/super.c b/fs/romfs/super.c
-index c59b230d55b43..3bc993634321a 100644
---- a/fs/romfs/super.c
-+++ b/fs/romfs/super.c
-@@ -468,7 +468,10 @@ static int romfs_fill_super(struct super_block *sb, struct fs_context *fc)
+diff --git a/drivers/gpu/drm/tegra/hdmi.c b/drivers/gpu/drm/tegra/hdmi.c
+index c66764c0bd250..47f794a367ba1 100644
+--- a/drivers/gpu/drm/tegra/hdmi.c
++++ b/drivers/gpu/drm/tegra/hdmi.c
+@@ -654,7 +654,7 @@ static void tegra_hdmi_write_infopack(struct tegra_hdmi *hdmi, const void *data,
+ {
+ 	const u8 *ptr = data;
+ 	unsigned long offset;
+-	size_t i, j;
++	size_t i;
+ 	u32 value;
  
- #ifdef CONFIG_BLOCK
- 	if (!sb->s_mtd) {
--		sb_set_blocksize(sb, ROMBSIZE);
-+		if (!sb_set_blocksize(sb, ROMBSIZE)) {
-+			errorf(fc, "romfs: unable to set blocksize\n");
-+			return -EINVAL;
-+		}
- 	} else {
- 		sb->s_blocksize = ROMBSIZE;
- 		sb->s_blocksize_bits = blksize_bits(ROMBSIZE);
+ 	switch (ptr[0]) {
+@@ -687,7 +687,7 @@ static void tegra_hdmi_write_infopack(struct tegra_hdmi *hdmi, const void *data,
+ 	 * - subpack_low: bytes 0 - 3
+ 	 * - subpack_high: bytes 4 - 6 (with byte 7 padded to 0x00)
+ 	 */
+-	for (i = 3, j = 0; i < size; i += 7, j += 8) {
++	for (i = 3; i < size; i += 7) {
+ 		size_t rem = size - i, num = min_t(size_t, rem, 4);
+ 
+ 		value = tegra_hdmi_subpack(&ptr[i], num);
+diff --git a/drivers/gpu/drm/tegra/sor.c b/drivers/gpu/drm/tegra/sor.c
+index 77723d5f1d3fd..ce8e299b6afb6 100644
+--- a/drivers/gpu/drm/tegra/sor.c
++++ b/drivers/gpu/drm/tegra/sor.c
+@@ -1860,7 +1860,7 @@ static void tegra_sor_hdmi_write_infopack(struct tegra_sor *sor,
+ {
+ 	const u8 *ptr = data;
+ 	unsigned long offset;
+-	size_t i, j;
++	size_t i;
+ 	u32 value;
+ 
+ 	switch (ptr[0]) {
+@@ -1893,7 +1893,7 @@ static void tegra_sor_hdmi_write_infopack(struct tegra_sor *sor,
+ 	 * - subpack_low: bytes 0 - 3
+ 	 * - subpack_high: bytes 4 - 6 (with byte 7 padded to 0x00)
+ 	 */
+-	for (i = 3, j = 0; i < size; i += 7, j += 8) {
++	for (i = 3; i < size; i += 7) {
+ 		size_t rem = size - i, num = min_t(size_t, rem, 4);
+ 
+ 		value = tegra_sor_hdmi_subpack(&ptr[i], num);
 -- 
 2.51.0
 
