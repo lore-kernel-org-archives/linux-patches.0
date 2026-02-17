@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A67261B70;
-	Tue, 17 Feb 2026 20:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F7A2773E4;
+	Tue, 17 Feb 2026 20:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771361231; cv=none; b=LT05Ig1nRQa6HoKz7OPQnzskcF797H/dzwmpYM/jZwGS3/I2L4i2co51N+krwlDbH9kwKbg3LnxSlchZVkN23WoTGSlD88QjoZ1gyCTlhEB+dLQT3ursiw9nvSWawEOd4lAA1PHehLUCqMjIA2C8exCp7T8qX01rEf7VlqK9gAw=
+	t=1771361234; cv=none; b=kwjsdOMzV/s7rZ/7LwaBXp2BQ4WO37jsur1amq8bJ8UYEfeVtxaROr/QqCx06RzvPcSi2yErAg+6NQ/VVaqJVd3gexrlHqoJ66qXniHghHRJULHJRNWWuIlvV0pNNN1fQrqEBBWNYSpCbuLjf6H+TZE0IR4HrrPuVIfED8JgpZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771361231; c=relaxed/simple;
-	bh=k6z7szTP6GWs2J6q6Bk36Z62Meo8fFBVo7wH7JZ3xNM=;
+	s=arc-20240116; t=1771361234; c=relaxed/simple;
+	bh=ut2YQMkk6OLJjg6nDnyLVn93uVkgah8tuTb5U+Tz+00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBI8Q38SqDi0+NKnD5GN6rB30hXhmoZG6go8ZowsRBJCLsbOmM1HzoXfqPCoIjriV0cHbq/duedjWEJChy+ifqhe6ZjYs1x6yLr5Am7mR6pqkKEcoxhcJVmwHJG3uC7NTu5dOk/iUwgZ1KYMb+HFqs85D9tJYeVEEUOXcSm7Zoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9ZVNzcB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gSaf0l256teV8kJdPUdZI/Y+NO9ip8N0KNxFYsJhPQ+uRmop/a2Hmw8fpohUO3EQ14cvIEf+g2/0fbcld4xPnpvCCerEADAbsRzd/2HHVeHwqlZqL1EWxSopjyK2d5qhG8mMuS3bp5z7O5KYXz/9eJcI0lRWMLV6QXXOQs35o/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NiF1KRN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9ZVNzcB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7D6C4CEF7;
-	Tue, 17 Feb 2026 20:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NiF1KRN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21752C4CEF7;
+	Tue, 17 Feb 2026 20:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771361231;
-	bh=k6z7szTP6GWs2J6q6Bk36Z62Meo8fFBVo7wH7JZ3xNM=;
+	s=korg; t=1771361234;
+	bh=ut2YQMkk6OLJjg6nDnyLVn93uVkgah8tuTb5U+Tz+00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9ZVNzcB1ckJLasLjJkC4qJTFdnKyhFFwwh078HHl8rlVdIC0Kp5VF6BUbX0ucBSi
-	 wFqrBf+fIiDQfcM8FB8hOSv5pzngBodnH7SFi5ZIy6ZR5Xvo/1VuVQe09GJnRWJzs+
-	 /0OpyrWxCZC/AQ/kPE93sWBLW+cekRh2lsI01uAA=
+	b=NiF1KRN+IoHYskwmh7We5ZTT9L1NkXSj0gDcNiOfe6klUakJcd9xHBrtYViuEFX9v
+	 D3jei9FJzLeEV8/0BkM/Onv7NuTYey3M8xdZsyl8saXy0yuwybsm99AFZbNMonZiAJ
+	 donqQfF0DIApKoZHMO7lVk6VN2cj0NiiFjovRLE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 6.1 40/64] Revert "wireguard: device: enable threaded NAPI"
-Date: Tue, 17 Feb 2026 21:31:36 +0100
-Message-ID: <20260217200009.007280650@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 41/64] selftests: mptcp: pm: ensure unknown flags are ignored
+Date: Tue, 17 Feb 2026 21:31:37 +0100
+Message-ID: <20260217200009.044218946@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260217200007.505931165@linuxfoundation.org>
 References: <20260217200007.505931165@linuxfoundation.org>
@@ -50,119 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-This reverts commit fb978675ccfd4a93549e49624127d8332cc61cbf which is
-commit db9ae3b6b43c79b1ba87eea849fd65efa05b4b2e upstream.
+commit 29f4801e9c8dfd12bdcb33b61a6ac479c7162bd7 upstream.
 
-We have had three independent production user reports in combination
-with Cilium utilizing WireGuard as encryption underneath that k8s Pod
-E/W traffic to certain peer nodes fully stalled. The situation appears
-as follows:
+This validates the previous commit: the userspace can set unknown flags
+-- the 7th bit is currently unused -- without errors, but only the
+supported ones are printed in the endpoints dumps.
 
-  - Occurs very rarely but at random times under heavy networking load.
-  - Once the issue triggers the decryption side stops working completely
-    for that WireGuard peer, other peers keep working fine. The stall
-    happens also for newly initiated connections towards that particular
-    WireGuard peer.
-  - Only the decryption side is affected, never the encryption side.
-  - Once it triggers, it never recovers and remains in this state,
-    the CPU/mem on that node looks normal, no leak, busy loop or crash.
-  - bpftrace on the affected system shows that wg_prev_queue_enqueue
-    fails, thus the MAX_QUEUED_PACKETS (1024 skbs!) for the peer's
-    rx_queue is reached.
-  - Also, bpftrace shows that wg_packet_rx_poll for that peer is never
-    called again after reaching this state for that peer. For other
-    peers wg_packet_rx_poll does get called normally.
-  - Commit db9ae3b ("wireguard: device: enable threaded NAPI")
-    switched WireGuard to threaded NAPI by default. The default has
-    not been changed for triggering the issue, neither did CPU
-    hotplugging occur (i.e. 5bd8de2 ("wireguard: queueing: always
-    return valid online CPU in wg_cpumask_choose_online()")).
-  - The issue has been observed with stable kernels of v5.15 as well as
-    v6.1. It was reported to us that v5.10 stable is working fine, and
-    no report on v6.6 stable either (somewhat related discussion in [0]
-    though).
-  - In the WireGuard driver the only material difference between v5.10
-    stable and v5.15 stable is the switch to threaded NAPI by default.
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
 
-    [0] https://lore.kernel.org/netdev/CA+wXwBTT74RErDGAnj98PqS=wvdh8eM1pi4q6tTdExtjnokKqA@mail.gmail.com/
-
-Breakdown of the problem:
-
-  1) skbs arriving for decryption are enqueued to the peer->rx_queue in
-     wg_packet_consume_data via wg_queue_enqueue_per_device_and_peer.
-  2) The latter only moves the skb into the MPSC peer queue if it does
-     not surpass MAX_QUEUED_PACKETS (1024) which is kept track in an
-     atomic counter via wg_prev_queue_enqueue.
-  3) In case enqueueing was successful, the skb is also queued up
-     in the device queue, round-robin picks a next online CPU, and
-     schedules the decryption worker.
-  4) The wg_packet_decrypt_worker, once scheduled, picks these up
-     from the queue, decrypts the packets and once done calls into
-     wg_queue_enqueue_per_peer_rx.
-  5) The latter updates the state to PACKET_STATE_CRYPTED on success
-     and calls napi_schedule on the per peer->napi instance.
-  6) NAPI then polls via wg_packet_rx_poll. wg_prev_queue_peek checks
-     on the peer->rx_queue. It will wg_prev_queue_dequeue if the
-     queue->peeked skb was not cached yet, or just return the latter
-     otherwise. (wg_prev_queue_drop_peeked later clears the cache.)
-  7) From an ordering perspective, the peer->rx_queue has skbs in order
-     while the device queue with the per-CPU worker threads from a
-     global ordering PoV can finish the decryption and signal the skb
-     PACKET_STATE_CRYPTED out of order.
-  8) A situation can be observed that the first packet coming in will
-     be stuck waiting for the decryption worker to be scheduled for
-     a longer time when the system is under pressure.
-  9) While this is the case, the other CPUs in the meantime finish
-     decryption and call into napi_schedule.
- 10) Now in wg_packet_rx_poll it picks up the first in-order skb
-     from the peer->rx_queue and sees that its state is still
-     PACKET_STATE_UNCRYPTED. The NAPI poll routine then exits early
-     with work_done = 0 and calls napi_complete_done, signalling
-     it "finished" processing.
- 11) The assumption in wg_packet_decrypt_worker is that when the
-     decryption finished the subsequent napi_schedule will always
-     lead to a later invocation of wg_packet_rx_poll to pick up
-     the finished packet.
- 12) However, it appears that a later napi_schedule does /not/
-     schedule a later poll and thus no wg_packet_rx_poll.
- 13) If this situation happens exactly for the corner case where
-     the decryption worker of the first packet is stuck and waiting
-     to be scheduled, and the network load for WireGuard is very
-     high then the queue can build up to MAX_QUEUED_PACKETS.
- 14) If this situation occurs, then no new decryption worker will
-     be scheduled and also no new napi_schedule to make forward
-     progress.
- 15) This means the peer->rx_queue stops processing packets completely
-     and they are indefinitely stuck waiting for a new NAPI poll on
-     that peer which never happens. New packets for that peer are
-     then dropped due to full queue, as it has been observed on the
-     production machines.
-
-Technically, the backport of commit db9ae3b6b43c ("wireguard: device:
-enable threaded NAPI") to stable should not have happened since it is
-more of an optimization rather than a pure fix and addresses a NAPI
-situation with utilizing many WireGuard tunnel devices in parallel.
-Revert it from stable given the backport triggers a regression for
-mentioned kernels.
-
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-2-9e4781a6c1b8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in pm_netlink.sh, because some refactoring have been done
+  later on: commit 0d16ed0c2e74 ("selftests: mptcp: add
+  {get,format}_endpoint(s) helpers") and commit c99d57d0007a
+  ("selftests: mptcp: use pm_nl endpoint ops") are not in this version.
+  The same operation can still be done at the same place, without using
+  the new helpers.
+  Also, commit 1dc88d241f92 ("selftests: mptcp: pm_nl_ctl: always look
+  for errors") is not in this version, and create a conflict in the
+  context which is not related to the modification here. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireguard/device.c |    1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |    4 ++++
+ tools/testing/selftests/net/mptcp/pm_nl_ctl.c   |   11 +++++++++++
+ 2 files changed, 15 insertions(+)
 
---- a/drivers/net/wireguard/device.c
-+++ b/drivers/net/wireguard/device.c
-@@ -368,7 +368,6 @@ static int wg_newlink(struct net *src_ne
- 	if (ret < 0)
- 		goto err_free_handshake_queue;
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -124,6 +124,10 @@ id 8 flags signal 10.0.1.8" "id limit"
+ ip netns exec $ns1 ./pm_nl_ctl flush
+ check "ip netns exec $ns1 ./pm_nl_ctl dump" "" "flush addrs"
  
--	dev_set_threaded(dev, true);
- 	ret = register_netdevice(dev);
- 	if (ret < 0)
- 		goto err_uninit_ratelimiter;
++ip netns exec $ns1 ./pm_nl_ctl add 10.0.1.1 flags unknown
++check "ip netns exec $ns1 ./pm_nl_ctl dump" "id 1 flags  10.0.1.1" "ignore unknown flags"
++ip netns exec $ns1 ./pm_nl_ctl flush
++
+ ip netns exec $ns1 ./pm_nl_ctl limits 9 1
+ check "ip netns exec $ns1 ./pm_nl_ctl limits" "$default_limits" "rcv addrs above hard limit"
+ 
+--- a/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
++++ b/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
+@@ -29,6 +29,8 @@
+ #define IPPROTO_MPTCP 262
+ #endif
+ 
++#define MPTCP_PM_ADDR_FLAG_UNKNOWN _BITUL(7)
++
+ static void syntax(char *argv[])
+ {
+ 	fprintf(stderr, "%s add|ann|rem|csf|dsf|get|set|del|flush|dump|events|listen|accept [<args>]\n", argv[0]);
+@@ -814,6 +816,8 @@ int add_addr(int fd, int pm_family, int
+ 					flags |= MPTCP_PM_ADDR_FLAG_BACKUP;
+ 				else if (!strcmp(tok, "fullmesh"))
+ 					flags |= MPTCP_PM_ADDR_FLAG_FULLMESH;
++				else if (!strcmp(tok, "unknown"))
++					flags |= MPTCP_PM_ADDR_FLAG_UNKNOWN;
+ 				else
+ 					error(1, errno,
+ 					      "unknown flag %s", argv[arg]);
+@@ -1018,6 +1022,13 @@ static void print_addr(struct rtattr *at
+ 				if (flags)
+ 					printf(",");
+ 			}
++
++			if (flags & MPTCP_PM_ADDR_FLAG_UNKNOWN) {
++				printf("unknown");
++				flags &= ~MPTCP_PM_ADDR_FLAG_UNKNOWN;
++				if (flags)
++					printf(",");
++			}
+ 
+ 			/* bump unknown flags, if any */
+ 			if (flags)
 
 
