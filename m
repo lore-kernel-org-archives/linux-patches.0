@@ -1,110 +1,97 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9662830497C
-	for <patches@lists.linux.dev>; Wed, 18 Feb 2026 16:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771433334; cv=pass; b=sN6aFebgEWl5t0Ya2KjsEVp4nR3diBcGH1L+L8ESwOXj5lC0dHWsJmaNYPAvjCF0b52vRNoA3d5/QBUZoMiaB7w0LxglO7rMjjVxeEGOKKBK24+HzDktSooO6XmbW8zwR1dsdf8lQ+oqO92VO1bkKIZot52gDYZt8gwL3prSng0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771433334; c=relaxed/simple;
-	bh=NDZWkf75fuSFgGmuPbAdFFylXmr6cKJW+FgcMv3BRp4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ec+xZ3jnU0NMkJwW5yK0UtCGjIam5AYX5sGMZei5qesOC3cZQSCnRdwdenJ0cTIw4pUnPpTsBliXbxwMAO0b7j3S6YJOsQZHSKH5J4GOtOGhvdrWbz8kuXZHh4Pp7QlTesZl3qlVauYX22adkmdutNpOwrRqZ2Nzy4DbCyGcoWE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=A0Lm5LWz; arc=pass smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7A13093DE
+	for <patches@lists.linux.dev>; Wed, 18 Feb 2026 19:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771442266; cv=none; b=NN/f0l0bh2zji/nZ8NfMLHOLamGW/awv/wZAZVLabIpv2O+m6b6NS+5JQMmCOYdpI2YjIcqSqD9Bi+jgH85J8CkvsDgVRiSKypXIcSQRewrnW1QRfBcLfHiYBdq7DgeavlQmD944n/fyhXgfEIKpeCbTWVnYkYyxPufTVT/66ys=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771442266; c=relaxed/simple;
+	bh=yj27m7958L79j5EUfkqy/3VqQJISmyZLtOGRrs2pc+I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IpQI2WgtBUTFG93Tv5wDd+DdnPFHyyCa4HWU2I3GNmkQRvLlR3f6ZdHKVq+O2yVHlhoy9O5RCmvWaxuXTmDkx/ntCrnH8D6seRnYklYwoCFMsY/25F5LQXJimjMJwOoY0HUxtp8auFbO93av6DYtaKfxS8Lq6A0IKi8edUUpyeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Lt6Wdzog; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="A0Lm5LWz"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b886fc047d5so10904866b.3
-        for <patches@lists.linux.dev>; Wed, 18 Feb 2026 08:48:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771433332; cv=none;
-        d=google.com; s=arc-20240605;
-        b=EHu4owLY05yc23xIiC97Mx50Sm/1f64k55mpRZdgdDgqsSh0hzk9oKZxw4p0ovdXLN
-         lXOyXSEO8NLNflFNEqwGAp1dA89H/pmWyaMpsyTtCnbW+Gp5AFjCSLCm2tlG7kyzqT+l
-         D8UTBET8aA1Q38paWgmfdOkce1najnC3gJZY13tDmyELgHvDHsauYSeqHTnQBO3zbnqO
-         BYeJEDVknPF18HG6WNzt/AfIoIBKDkP5Y7nsyyU6hJlheiU/vPvNqId/fgq42slzgIGH
-         uyKKQDZPGuOxwHbipFiCg0s+mC4hhUpRIZOwI5DQfD9XuLh+FeWzT7NW7zb0uPAgAa/N
-         lXyA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=Sl0EJrX9qWQgs7Bb3+x2webBMo2tPrGnE9i1r6t3N7I=;
-        fh=WHbh7MEmyRlwtVsu1xtschTcQ7HH21ELqyTWLBDaVq8=;
-        b=EVVjCUb52YMPwOsN/pJN9mn1f8nO6NeJDxdJRjdZneXJa96Mk7oE2lIamilzPFaXGi
-         Ny3NU01ysXGGJXvT3esa+00psV6VhDnWvnA/xDFpM+oBqStZau+wJDovU8EYPuPDP8+y
-         tZXdM12veExOAeI1jHdKGiQGifY8JbnudbgzyevbQu7Hef8N3G/wdu4w0lF8prqt62aN
-         Oiw7MA36DsLT3iA2bEo0tuJ5lIWdVeoQ/t2XsUpZj0KdchkKuwnxJai9uZDTSEyIzzSO
-         VuaxJWLrF6hOc5+GSTtvgzBSLqHt74KIhK0A/F7c88mBDCxLOCFq0jy3gHFGD4V6tUGT
-         4n5w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1771433332; x=1772038132; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sl0EJrX9qWQgs7Bb3+x2webBMo2tPrGnE9i1r6t3N7I=;
-        b=A0Lm5LWzrttfB+7JYXaO3FC6kWGC+wPyNzJA83pB3TelPhcqpenp1y4C5f0LrvfRg9
-         XTXW/0pAR3mY8LHuaon8rf26iraQbH+7+upDEx0aOmddkiHMz0SxBU+6rdIWKTlD8uQW
-         /ALGzyYrfV4MyEV8FB1Wd3L6OiKzkFzErtJoi+DLUV9S0GcjcnRy1Js45EvLyBOstN29
-         nlrLXvqx9brJyQc+moCjFcDSUlaDWjSuZw4GUucBI9xHqS6jMyLUmwlSYxAVj7Jgpqrh
-         ij7UELQt2yA7K29FknLkm9BMUlQbOkZkzLSpGs6COmR2fJnkMr7Jy/bRe7joXgw4A4Gm
-         kDeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771433332; x=1772038132;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Sl0EJrX9qWQgs7Bb3+x2webBMo2tPrGnE9i1r6t3N7I=;
-        b=nKnfdMDI/uSsGck4Ic/H6uEUZQrTcgsUhkzOSOwqNrgCWAqpEEJDn116tSk1XInHe/
-         vvews86Mn/BM2sCH5poTbaPdbI5Z4yJtTr4G+1voCGPJU4DBRj4BU+g1f8Rusn50l8OI
-         OLK36Wb+qqQt6uHuQAeqxlut8edFUdZdq1cPSNrNW4e3TOpqOemKaCGfeT+pMHCkJgkr
-         iVEghDR81l3/tWQu+9oTcDY36qTjDSPa+G4NAoTi9Ii2bK95XVFsHrCzyHD++XlMJEU5
-         0360hKJ3FSiuqNDFb2qNeSpfIXTF/SLRrcYA7ib4iaSvtM6gzLqn+LfG6rYf/3/7I/Nb
-         T/kg==
-X-Forwarded-Encrypted: i=1; AJvYcCXuol4ZO+/O0/kcyP10yLCdvPP9IjoK05mhDjEChKmBzqn2yb5qoxt25hR2ZSMD8VBSKWRHfXiv@lists.linux.dev
-X-Gm-Message-State: AOJu0YxiLqBp2yaiFklDeggPTTnMrKT65WIlvV0BWo8dY+1RejYLUTfH
-	paE8mFP+e7N/7LxnXjvod33q2KHSltO80R+n4d89oOZKqZ0lQo97/oixgAqMsLwxRagDD9/cSmB
-	aZcsH6KmlYPnw4msZdZw/pqgbguNJtlhUdrfe75XrLSblXEGLIHtILE9Fpw==
-X-Gm-Gg: AZuq6aJUa4iI5LknW+n8BpLt94yyO4/dEE1ztBnhVUc5qifq4GNDapygWCs0ShET6PV
-	Q89SRpJ/3xJCx90v+jQaW1dAPvXJmhsF1dWlIqfeUtXaV2Oh4TC9MC4GqamGL3oXE5Jy1wlt0mc
-	6QKZejiL5aBIbUpiH1VlnbwyQm1gKYkqfoRO7Pc8f4L41r+iXr4GlRjV8XGK36xJBUmXYe8Aby9
-	WXnWFIHEA7qQ2RvY8HpM79OgwG71f90u7fAUVn7pgk8qmooFJUEoa/Cd9MwQ6sECO7AYxP05UZd
-	HeF5tAKSKfIT0pfOiEQUeiWU5cDGZ3jnwSxa2rtxZrvTlHYFFR2uo5F7Z6g64EEp10BNIQ==
-X-Received: by 2002:a17:907:982:b0:b87:718:5da2 with SMTP id
- a640c23a62f3a-b904d615300mr1530766b.1.1771433331917; Wed, 18 Feb 2026
- 08:48:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Lt6Wdzog"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1771442265; x=1802978265;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=yj27m7958L79j5EUfkqy/3VqQJISmyZLtOGRrs2pc+I=;
+  b=Lt6Wdzog/fYpw4vR6Y0QFgD0LpSsDIpo0P8pF6lfVJEhZxoeb2CNp5fy
+   AsOhg12A7LqivXVpVVVveF3d2N/K0GJVkDYkH3TQkeYXcLowhLeZo2bDx
+   alONO/OSXoDgO9CUsEWSaKwhPqD+M/oqpUFzWd7WO0pZdoz8bQXc00L51
+   YafE1SLKC6RrwRjNLJo/qbXRUL3840S8Z382EcFffUD2/0g9i65OZ0vvw
+   PgGlPT8gIgJc15zmMa9SsSp8Ojrm6hweLlVDS7ArZt8oy8W3hhhxK/6tX
+   8NfcJUVsRwVfQuyITaoN/ExwBXhRPj7WmqMcgT6yF2th4rJgVlQqjvmLf
+   g==;
+X-CSE-ConnectionGUID: OGjVsnQ5TQGuWgqCcsf3bg==
+X-CSE-MsgGUID: L/PCq2ueTY6lfZ7FWNrdfg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11705"; a="83629920"
+X-IronPort-AV: E=Sophos;i="6.21,298,1763452800"; 
+   d="scan'208";a="83629920"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2026 11:17:44 -0800
+X-CSE-ConnectionGUID: ZMJB1HPxQu6a0EqFyoIoBQ==
+X-CSE-MsgGUID: 1WWC1q82RjOj+cx/waJ8/w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,298,1763452800"; 
+   d="scan'208";a="212603531"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2026 11:17:44 -0800
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: tony.luck@intel.com,
+	james.morse@arm.com,
+	Dave.Martin@arm.com,
+	babu.moger@amd.com,
+	bp@alien8.de,
+	tglx@linutronix.de,
+	dave.hansen@linux.intel.com
+Cc: x86@kernel.org,
+	hpa@zytor.com,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	reinette.chatre@intel.com
+Subject: [PATCH] MAINTAINERS: Include x86 maintainers in resctrl submissions
+Date: Wed, 18 Feb 2026 11:32:03 -0800
+Message-ID: <4274c478922c01f9ceebc805acf991f10a95519f.1771442788.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260217200006.470920131@linuxfoundation.org>
-In-Reply-To: <20260217200006.470920131@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Wed, 18 Feb 2026 22:18:15 +0530
-X-Gm-Features: AaiRm50okWH3DSk3tmbkRt2VF_bXv0FImyY0cJg-Wxj8CuzWNmO5ZoVpgJfzAPM
-Message-ID: <CAG=yYwn4ve1f9ydGK=azDkPFnnKiak5Wk391U3JhSgf1+Ukf1w@mail.gmail.com>
-Subject: Re: [PATCH 6.18 00/43] 6.18.13-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
- hello,
+The x86 maintainers handle the resctrl filesystem and x86 architectural
+resctrl code. Even so, the x86 maintainers are not part of the resctrl
+section and not returned when scripts/get_maintainer.pl is run on resctrl
+filesystem code.
 
-Compiled and booted  6.18.13-rc1+
-No typical dmesg regressions.
+Add the x86 maintainer alias, x86@kernel.org, to the resctrl section to
+ensure x86 maintainers are included in associated resctrl submissions.
 
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index dc82a6bd1a61..7b4f2b66a2ed 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22149,6 +22149,7 @@ F:	tools/testing/selftests/net/rds/
+ RDT - RESOURCE ALLOCATION
+ M:	Tony Luck <tony.luck@intel.com>
+ M:	Reinette Chatre <reinette.chatre@intel.com>
++M:	x86@kernel.org
+ R:	Dave Martin <Dave.Martin@arm.com>
+ R:	James Morse <james.morse@arm.com>
+ R:	Babu Moger <babu.moger@amd.com>
+-- 
+2.50.1
 
---
-software engineer
-rajagiri school of engineering and technology-
