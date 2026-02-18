@@ -1,97 +1,82 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7A13093DE
-	for <patches@lists.linux.dev>; Wed, 18 Feb 2026 19:17:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC99B33507C;
+	Wed, 18 Feb 2026 23:42:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771442266; cv=none; b=NN/f0l0bh2zji/nZ8NfMLHOLamGW/awv/wZAZVLabIpv2O+m6b6NS+5JQMmCOYdpI2YjIcqSqD9Bi+jgH85J8CkvsDgVRiSKypXIcSQRewrnW1QRfBcLfHiYBdq7DgeavlQmD944n/fyhXgfEIKpeCbTWVnYkYyxPufTVT/66ys=
+	t=1771458139; cv=none; b=IJSqbFzrzS508BVJ1QXCsZpPVqHm8o4Ow1DaTNm8nFaOeLeV201tLhhYXpGWd3HdI+abKFjT9f1TGUbNjbZhPKv0mP3aGxZnrW86zFGLfB9VZrlE1t2U3WwgenqnDf5DHWLAOmVC9FknmyDwXLJU8Z9TJH8JpXlbIZm44yWb8f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771442266; c=relaxed/simple;
-	bh=yj27m7958L79j5EUfkqy/3VqQJISmyZLtOGRrs2pc+I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IpQI2WgtBUTFG93Tv5wDd+DdnPFHyyCa4HWU2I3GNmkQRvLlR3f6ZdHKVq+O2yVHlhoy9O5RCmvWaxuXTmDkx/ntCrnH8D6seRnYklYwoCFMsY/25F5LQXJimjMJwOoY0HUxtp8auFbO93av6DYtaKfxS8Lq6A0IKi8edUUpyeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Lt6Wdzog; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1771458139; c=relaxed/simple;
+	bh=i9jKs2aAeKSMFBfW1T6QujLPx5Y6UqJmQV+ejEgbujY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eRAzYx1QFeSebhkytdutvR1JDeIgYbHG0UZ0XlBOsqSCCUhtl/Zx7lCeRubUGUEnjLARugsGtBmPkKtu/k6uoK44HNjQDCMiVT953YyrDBCmAVHk4D8wh+0O5pi61LvuExHAJgf4ko93JzFixey9RczUcXrp2crDIljRrgAPXbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DU/wl53u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Lt6Wdzog"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1771442265; x=1802978265;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=yj27m7958L79j5EUfkqy/3VqQJISmyZLtOGRrs2pc+I=;
-  b=Lt6Wdzog/fYpw4vR6Y0QFgD0LpSsDIpo0P8pF6lfVJEhZxoeb2CNp5fy
-   AsOhg12A7LqivXVpVVVveF3d2N/K0GJVkDYkH3TQkeYXcLowhLeZo2bDx
-   alONO/OSXoDgO9CUsEWSaKwhPqD+M/oqpUFzWd7WO0pZdoz8bQXc00L51
-   YafE1SLKC6RrwRjNLJo/qbXRUL3840S8Z382EcFffUD2/0g9i65OZ0vvw
-   PgGlPT8gIgJc15zmMa9SsSp8Ojrm6hweLlVDS7ArZt8oy8W3hhhxK/6tX
-   8NfcJUVsRwVfQuyITaoN/ExwBXhRPj7WmqMcgT6yF2th4rJgVlQqjvmLf
-   g==;
-X-CSE-ConnectionGUID: OGjVsnQ5TQGuWgqCcsf3bg==
-X-CSE-MsgGUID: L/PCq2ueTY6lfZ7FWNrdfg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11705"; a="83629920"
-X-IronPort-AV: E=Sophos;i="6.21,298,1763452800"; 
-   d="scan'208";a="83629920"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2026 11:17:44 -0800
-X-CSE-ConnectionGUID: ZMJB1HPxQu6a0EqFyoIoBQ==
-X-CSE-MsgGUID: 1WWC1q82RjOj+cx/waJ8/w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,298,1763452800"; 
-   d="scan'208";a="212603531"
-Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2026 11:17:44 -0800
-From: Reinette Chatre <reinette.chatre@intel.com>
-To: tony.luck@intel.com,
-	james.morse@arm.com,
-	Dave.Martin@arm.com,
-	babu.moger@amd.com,
-	bp@alien8.de,
-	tglx@linutronix.de,
-	dave.hansen@linux.intel.com
-Cc: x86@kernel.org,
-	hpa@zytor.com,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	reinette.chatre@intel.com
-Subject: [PATCH] MAINTAINERS: Include x86 maintainers in resctrl submissions
-Date: Wed, 18 Feb 2026 11:32:03 -0800
-Message-ID: <4274c478922c01f9ceebc805acf991f10a95519f.1771442788.git.reinette.chatre@intel.com>
-X-Mailer: git-send-email 2.50.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DU/wl53u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D2BC19421;
+	Wed, 18 Feb 2026 23:42:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771458139;
+	bh=i9jKs2aAeKSMFBfW1T6QujLPx5Y6UqJmQV+ejEgbujY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DU/wl53u7IyIxDll41yZbrcxGu7A+eAMxR0I3L348MWEGRoSWrluJWWlrIJ4nMhVK
+	 XBDUiXwXFH0PMtSShZ6Dw45fGExTGmmAt44baU5OEOV1NCXDyqf7ZkzXt0W7GIUb5g
+	 84/L8z1c11aBIk5bTHyXm/bYgW6wA5aS2839J54oshGsO4ZEz9WSoST/8kvJThHys2
+	 cbmx5uaIwCsSD65yPQPLTcejILHEeJ2rDG1p9YtR6QJAL6DICQUyZpKsnNV7QbBjQX
+	 4ywErnPUAjgEe0pWYQSmFbEaziDL9w7dXlkUP8qa6exfDORG0UBRIQhQsDMJfEOff/
+	 25Guyxp72bSVQ==
+Date: Wed, 18 Feb 2026 23:42:13 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 00/43] 6.18.13-rc1 review
+Message-ID: <14708717-74ab-45cb-b5fa-421ddc26272b@sirena.org.uk>
+References: <20260217200006.470920131@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/3AZewUcWLgPmCfh"
+Content-Disposition: inline
+In-Reply-To: <20260217200006.470920131@linuxfoundation.org>
+X-Cookie: Avoid contact with eyes.
 
-The x86 maintainers handle the resctrl filesystem and x86 architectural
-resctrl code. Even so, the x86 maintainers are not part of the resctrl
-section and not returned when scripts/get_maintainer.pl is run on resctrl
-filesystem code.
 
-Add the x86 maintainer alias, x86@kernel.org, to the resctrl section to
-ensure x86 maintainers are included in associated resctrl submissions.
+--/3AZewUcWLgPmCfh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+On Tue, Feb 17, 2026 at 09:31:40PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.13 release.
+> There are 43 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index dc82a6bd1a61..7b4f2b66a2ed 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -22149,6 +22149,7 @@ F:	tools/testing/selftests/net/rds/
- RDT - RESOURCE ALLOCATION
- M:	Tony Luck <tony.luck@intel.com>
- M:	Reinette Chatre <reinette.chatre@intel.com>
-+M:	x86@kernel.org
- R:	Dave Martin <Dave.Martin@arm.com>
- R:	James Morse <james.morse@arm.com>
- R:	Babu Moger <babu.moger@amd.com>
--- 
-2.50.1
+Tested-by: Mark Brown <broonie@kernel.org>
 
+--/3AZewUcWLgPmCfh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmWTlQACgkQJNaLcl1U
+h9BsLwf/UGOBg+6fgkNs0Pc7oC32GkyjrBFf+5pk56E/vlo6HTjAC7pY8X4rkUuf
+t/NRtWdCLFJtDbzHtD4LA/IJa4tpMt6v3IrWUUdbohYOHnd4otw9Qx8x2nN/+0xu
+DBuoYHtUlpdRymG6rRkWOQwV+cG1QT05T4qf1v7cCGGTZX0x27BOe+9C9Gg3rgwS
+rWChUgqBZlfJQtqaJdAH0oIlz2qTf8TOGZNF7/e/7iNqgKgBD02eUdk1WedaIVuX
+FdVjKOOTysHFZrbWRm9fLnAofjwf7TgOreBBoj1LveN6lgiab2CXQ/mbiQC5euTM
+TbX47QT+s3sCTsfzGQRYSC6fqhRtcQ==
+=HsVB
+-----END PGP SIGNATURE-----
+
+--/3AZewUcWLgPmCfh--
