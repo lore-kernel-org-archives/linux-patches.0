@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E8E2DB794;
-	Thu, 19 Feb 2026 02:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7427B27B35B;
+	Thu, 19 Feb 2026 02:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466684; cv=none; b=J3s7FWfVjGGyNRpE6cIlVuRW+cuVYXJPgKeiI7W6KcZYvuKHimfFJj3K+RLim5/w3uqjOJ/XCW2lYeEqFqrP1mz9KJHatk3hOFdOdlkHeu2ESZyX9GpYIiDFE//r4AVTwns/QiUaVetj5lTuPREGa+6nFCpTAIfVbOQEjtWdpX4=
+	t=1771466685; cv=none; b=SoVIhOiyRuXfDJ5qzGl8Fq6fcQv3kcoXJG2IMsdN0KeiDwzQ9x4P/SOm1kqX1Fur4MVl7dBhjeyHz3ZtRTBeTt/Mi97tmCXRl56GRrIeFV89O19z0rGo3auEDfi4rXyU99OQDImD0n9xhpFCwE2GzbBxnK/o6WDQYADeli5nDXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466684; c=relaxed/simple;
-	bh=PPjyU7zMC9lX0HvaJbOSS9kLml7wiyEt+w3z0sMWcs4=;
+	s=arc-20240116; t=1771466685; c=relaxed/simple;
+	bh=tWd3nYljE5C0DdvH//bhaWqP3c5xubS259NXSxl+bX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fb/t4WhkXaibXGw/XianIO1mN6FAstPAJqOE5nYT3/pG9av9Er6aW4waaBGO/5tx25Pr0q8tpOZGdLYzSd7ZoPzCoOrOEJPoZloDXjsslxslPjVH/tT4i5rzrsjqA/LqMyU1c0Xb0VjhUqDlDreARiac0JD468ylQtjHlxZJR8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kfJG7DV0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YoqOny0KipcS7aBHVfuPfattp1gf7Fh/OoH3LKftTxOzcUn9F3XOTQtUgJ1coDjrKnnWrrD77m8ZbAJPhPoifwkqKjT3S2O5zU0zfoH+tYh6RRzlojaS/tM8pJWXkbxCez4LPZ24eN6rBOVexljy+w/fqYdvuY2K3vXIzhX8NPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kdphkx7k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kfJG7DV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047C8C19422;
-	Thu, 19 Feb 2026 02:04:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kdphkx7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D72C2BC86;
+	Thu, 19 Feb 2026 02:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466684;
-	bh=PPjyU7zMC9lX0HvaJbOSS9kLml7wiyEt+w3z0sMWcs4=;
+	s=k20201202; t=1771466685;
+	bh=tWd3nYljE5C0DdvH//bhaWqP3c5xubS259NXSxl+bX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kfJG7DV0ZLDhd9N8eu0SgoeOSxcDwAnt9LIL61STZSfhbPuN0GFX5ijlKA883vaoZ
-	 o12v6Od7h2MeIOS7K2jyAEAERLzqljbnwVbTR4rCwC2Gg+6kq6+9RCLKDVb/+g9DkA
-	 Uy9Ilxf0wBFC1xUpN4BPx7W6sKNSVSCqIx8FL7p6393N8VcHH7rAb1bPHfH302V5qJ
-	 vI/Qgc8CV1+DFE0HOV5rbrCkn7uBbu16F+l85soWvOyj7Pv8OoU+pl8BYr39QjKu2/
-	 FC2G31h8QdFlbK/pVnlfzy0rjZR/IyrFrCqBuhKnKobei3Asv63u9rUbobgPjvwVyY
-	 RMlpEkHBbPn1Q==
+	b=kdphkx7kPawcD+xEv3s+0q6bKNeiUG+UAUUKIXyuEYcMozTpEZfaVeTOwhminDTla
+	 KRPtZwy8Syg0xAPaKOr8GAVjCtlHYerW5y3LY2YKdiffGFGk5lUin+heVAjQ5vms7Q
+	 GjzkjrHbSRe6mLKOi4wY7ZXMRqn92kZem5Y5k0LT0T9hUDU9VlclNRhejxNGhyOdkt
+	 yoCxexjkxanu7N49Jief0GALxWbhL0nTIi4GttVAdrjRG7KAz4vUOHZOxkT1fxySm3
+	 J4WqWFOTZ5lxj206hI5kxPyuZTdsKXHNeODiSwZZXOQEH335+ziO3TW5zOV1XQXk42
+	 AcI5MpzNsJAuw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	samuel@sholland.org,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] dmaengine: sun6i: Choose appropriate burst length under maxburst
-Date: Wed, 18 Feb 2026 21:03:52 -0500
-Message-ID: <20260219020422.1539798-16-sashal@kernel.org>
+	ulf.hansson@linaro.org,
+	linux-kernel@vger.kernel.org,
+	linux-mmc@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] mmc: rtsx: reset power state on suspend
+Date: Wed, 18 Feb 2026 21:03:53 -0500
+Message-ID: <20260219020422.1539798-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -55,165 +52,237 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit 7178c3586ab42693b28bb81014320a7783e5c435 ]
+[ Upstream commit eac85fbd0867c25ac517f58fae401d65c627edff ]
 
-maxburst, as provided by the client, specifies the largest amount of
-data that is allowed to be transferred in one burst. This limit is
-normally provided to avoid a data burst overflowing the target FIFO.
-It does not mean that the DMA engine can only do bursts in that size.
+When rtsx_pci suspends, the card reader hardware powers off but the sdmmc
+driver's prev_power_state remains as MMC_POWER_ON. This causes sd_power_on
+to skip reinitialization on the next I/O request, leading to DMA transfer
+timeouts and errors on resume 20% of the time.
 
-Let the driver pick the largest supported burst length within the
-given limit. This lets the driver work correctly with some clients that
-give a large maxburst value. In particular, the 8250_dw driver will give
-a quarter of the UART's FIFO size as maxburst. On some systems the FIFO
-size is 256 bytes, giving a maxburst of 64 bytes, while the hardware
-only supports bursts of up to 16 bytes.
+Add a power_off slot callback so the PCR can notify the sdmmc driver
+during suspend. The sdmmc driver resets prev_power_state, and sd_request
+checks this to reinitialize the card before the next I/O.
 
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20251221080450.1813479-1-wens@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Link: https://patch.msgid.link/20260105060236.400366-2-matthew.schwartz@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis Summary
+Good - `sd_power_on` has been part of this file since initial creation.
+The forward declaration added in the patch is just to allow the function
+(defined later in the file) to be called from `sd_request` (defined
+earlier).
 
-### What the commit fixes
+### Analysis Summary
 
-This commit fixes a real bug where the sun6i DMA engine driver
-incorrectly rejects valid DMA slave configurations. The DMA API's
-`maxburst` field specifies the **maximum** burst size, not an exact
-value. When a DMA client (like 8250_dw UART) provides a maxburst value
-(e.g., 64) that isn't directly supported by the hardware (which only
-supports 1, 4, 8, 16), the old code returned `-EINVAL`, causing DMA
-transfers to fail completely.
+**What problem the commit solves:**
 
-The fix adds a `find_burst_size()` helper that selects the largest
-supported burst length that doesn't exceed `maxburst`, which is the
-correct DMA API semantics. This makes DMA work on real systems where
-8250_dw UART gives maxburst=64 (quarter of a 256-byte FIFO) but the DMA
-hardware supports bursts of at most 16.
+This commit fixes a suspend/resume regression in Realtek PCI-E SD card
+readers where, after suspend, 20% of resume attempts fail with DMA
+transfer timeouts because:
 
-### Stable kernel criteria assessment
+1. During suspend, `rtsx_pci_power_off()` powers down the card reader
+   hardware
+2. But the sdmmc driver's `prev_power_state` remains `MMC_POWER_ON`
+3. On resume, when `sd_power_on()` is called, it sees `prev_power_state
+   == MMC_POWER_ON` at line 912 and returns immediately without
+   reinitializing the hardware
+4. The first I/O attempt then fails with DMA timeout because the
+   hardware was never re-powered
 
-1. **Obviously correct and tested**: Yes. The logic is simple - find
-   largest power-of-two burst in the supported bitmask that fits within
-   maxburst. Reviewed by Jernej Skrabec, applied by Vinod Koul.
+**The fix has three parts:**
+1. Adds a `power_off` callback to `struct rtsx_slot` (1 line in header)
+2. In the PCR suspend paths (both system and runtime), calls
+   `slot->power_off()` to notify the sdmmc driver before powering off
+   hardware
+3. In the sdmmc driver: implements `rtsx_pci_sdmmc_power_off()` to reset
+   `prev_power_state = MMC_POWER_OFF`, and adds a check in
+   `sd_request()` to call `sd_power_on()` if `prev_power_state ==
+   MMC_POWER_OFF`
 
-2. **Fixes a real bug**: Yes. DMA transactions fail with `-EINVAL` on
-   specific hardware combinations. This causes UART (and potentially
-   other peripherals) to not work via DMA.
+**Stable kernel criteria assessment:**
+- **Fixes a real bug:** Yes - 20% failure rate on resume with SD card
+  operations
+- **Obviously correct:** Yes - the logic is straightforward: notify the
+  driver that hardware was powered off so it reinitializes properly
+- **Small and contained:** Yes - 32 lines of insertion across 3 files,
+  all within the rtsx subsystem
+- **No new features:** Correct - this adds only internal plumbing to fix
+  power state tracking
+- **Tested:** Author tested 300+ s2idle cycles
+- **Impact:** Users with Realtek card readers experience I/O errors,
+  filesystem journal failures, and card detection loss after
+  suspend/resume
 
-3. **Important issue**: Yes - this causes peripheral communication
-   failure (UART DMA doesn't work on some Allwinner SoCs). Users with
-   256-byte UART FIFOs and DMA-capable 8250_dw cannot use DMA at all.
+**Risk assessment:**
+- Low risk - the changes are confined to the rtsx card reader subsystem
+- The `power_off` callback is properly guarded with NULL checks (`if
+  (slot->p_dev && slot->power_off)`)
+- The `sd_request` power-on check has proper error handling
+- The drv_remove function properly clears the callback
+- No impact on other subsystems
 
-4. **Small and contained**: Yes. Adds a ~14-line helper function,
-   removes 4 lines of strict checks, and reorders 4 lines of existing
-   code to call the new function first. Total change is well under 50
-   lines in a single file.
+**Dependencies:**
+- Self-contained - no dependencies on other commits
+- The companion delay patch (aced969e9bf37) has already been selected
+  for stable and is independent
+- The code being modified (`rtsx_slot`, `rtsx_pci_suspend`,
+  `sd_request`) exists in all recent stable trees
 
-5. **No new features**: Correct - this makes the driver handle the
-   existing DMA API correctly. It's a bug fix to match the documented
-   DMA maxburst semantics.
+### Verification
 
-### Risk assessment
+- **Verified** that `sd_power_on()` at line 912 returns early when
+  `prev_power_state == MMC_POWER_ON`, confirming the bug mechanism
+- **Verified** via `git show aced969e9bf37` that the companion patch
+  (delay increase) has a Fixes: tag and was independently picked for
+  stable
+- **Verified** via `git show ed0d7f8559dbd` (stable branch version) that
+  the delay patch was already applied to stable with `[Upstream commit
+  ...]` marker
+- **Verified** via lore.kernel.org that this is a 2-patch series (0/2
+  cover letter), both fixing suspend/resume failures, with testing
+  showing patch 1 reduces failures from 20% to 4%
+- **Verified** that `struct rtsx_slot` currently only has `p_dev` and
+  `card_event` fields by reading `include/linux/rtsx_common.h`
+- **Verified** that the suspend paths properly hold `pcr->pcr_mutex`
+  when calling the callback
+- **Verified** the NULL check guards (`slot->p_dev && slot->power_off`)
+  in both suspend functions
+- **Verified** that `sd_power_on()` has existed since the driver was
+  created (`ff984e57d36e8`) - the forward declaration is just for
+  compilation order
+- **Verified** that `rtsx_pci_sdmmc_drv_remove` properly clears
+  `power_off = NULL` to prevent stale callbacks
 
-- **Low risk**: Changes are confined to one driver file
-  (`drivers/dma/sun6i-dma.c`)
-- **No regressions for existing users**: If maxburst was previously an
-  exact match for hardware-supported values (1, 4, 8, or 16),
-  `find_burst_size()` returns the same value as before. The behavior
-  only changes for values that previously failed.
-- **Well-tested helper**: `rounddown_pow_of_two` is a standard kernel
-  utility available in all stable trees.
-- **No dependency issues**: The `burst_lengths` infrastructure was
-  introduced in 2017, present in all current stable kernels.
-
-### User impact
-
-Moderate-to-high for Allwinner ARM SoC users (embedded/IoT). These SoCs
-are common in single-board computers (Orange Pi, Pine64, etc.) and
-various embedded devices. The fix enables DMA-based UART operation where
-it was previously broken.
-
-## Verification
-
-- **Verified** `burst_lengths` was introduced by commit d5f6d8cf31a89
-  (2017-09-28), present in all stable trees.
-- **Verified** `convert_burst()` only handles values 1, 4, 8, 16 (lines
-  283-297), so the old code that directly passed unsupported values
-  would return -EINVAL from both the explicit check AND from
-  convert_burst.
-- **Verified** the hardware configs show burst_lengths support
-  BIT(1)|BIT(8) (A31/A23/A83t/D1) or BIT(1)|BIT(4)|BIT(8)|BIT(16)
-  (H3/H6/V3s/A100), meaning a maxburst of 64 would fail on ALL variants.
-- **Verified** `rounddown_pow_of_two` is available in
-  `include/linux/log2.h` and is a long-standing kernel utility.
-- **Verified** via git log that no other recent commits to this file are
-  needed as dependencies.
-- **Verified** via lore.kernel.org that the patch was reviewed by Jernej
-  Skrabec and applied by maintainer Vinod Koul.
-- **Could not verify** the exact 8250_dw maxburst=64 scenario from the
-  8250_dw driver source (unverified, but the commit message describes a
-  real hardware scenario credibly).
+This is a clear, well-tested bug fix for a user-impactful suspend/resume
+issue. It's small, contained, properly guarded, and fixes a 20% failure
+rate. It meets all stable kernel criteria.
 
 **YES**
 
- drivers/dma/sun6i-dma.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ drivers/misc/cardreader/rtsx_pcr.c |  9 +++++++++
+ drivers/mmc/host/rtsx_pci_sdmmc.c  | 22 ++++++++++++++++++++++
+ include/linux/rtsx_common.h        |  1 +
+ 3 files changed, 32 insertions(+)
 
-diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index 2215ff877bf7d..f9d876deb1f05 100644
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -583,6 +583,22 @@ static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
- 	return ret;
+diff --git a/drivers/misc/cardreader/rtsx_pcr.c b/drivers/misc/cardreader/rtsx_pcr.c
+index f9952d76d6ed7..f1f4d8ed544d6 100644
+--- a/drivers/misc/cardreader/rtsx_pcr.c
++++ b/drivers/misc/cardreader/rtsx_pcr.c
+@@ -1654,6 +1654,7 @@ static int __maybe_unused rtsx_pci_suspend(struct device *dev_d)
+ 	struct pci_dev *pcidev = to_pci_dev(dev_d);
+ 	struct pcr_handle *handle = pci_get_drvdata(pcidev);
+ 	struct rtsx_pcr *pcr = handle->pcr;
++	struct rtsx_slot *slot = &pcr->slots[RTSX_SD_CARD];
+ 
+ 	dev_dbg(&(pcidev->dev), "--> %s\n", __func__);
+ 
+@@ -1661,6 +1662,9 @@ static int __maybe_unused rtsx_pci_suspend(struct device *dev_d)
+ 
+ 	mutex_lock(&pcr->pcr_mutex);
+ 
++	if (slot->p_dev && slot->power_off)
++		slot->power_off(slot->p_dev);
++
+ 	rtsx_pci_power_off(pcr, HOST_ENTER_S3, false);
+ 
+ 	mutex_unlock(&pcr->pcr_mutex);
+@@ -1772,12 +1776,17 @@ static int rtsx_pci_runtime_suspend(struct device *device)
+ 	struct pci_dev *pcidev = to_pci_dev(device);
+ 	struct pcr_handle *handle = pci_get_drvdata(pcidev);
+ 	struct rtsx_pcr *pcr = handle->pcr;
++	struct rtsx_slot *slot = &pcr->slots[RTSX_SD_CARD];
+ 
+ 	dev_dbg(device, "--> %s\n", __func__);
+ 
+ 	cancel_delayed_work_sync(&pcr->carddet_work);
+ 
+ 	mutex_lock(&pcr->pcr_mutex);
++
++	if (slot->p_dev && slot->power_off)
++		slot->power_off(slot->p_dev);
++
+ 	rtsx_pci_power_off(pcr, HOST_ENTER_S3, true);
+ 
+ 	mutex_unlock(&pcr->pcr_mutex);
+diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
+index 8df60000b5b41..34343b5d5823d 100644
+--- a/drivers/mmc/host/rtsx_pci_sdmmc.c
++++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
+@@ -47,6 +47,7 @@ struct realtek_pci_sdmmc {
+ };
+ 
+ static int sdmmc_init_sd_express(struct mmc_host *mmc, struct mmc_ios *ios);
++static int sd_power_on(struct realtek_pci_sdmmc *host, unsigned char power_mode);
+ 
+ static inline struct device *sdmmc_dev(struct realtek_pci_sdmmc *host)
+ {
+@@ -821,6 +822,15 @@ static void sd_request(struct work_struct *work)
+ 
+ 	rtsx_pci_start_run(pcr);
+ 
++	if (host->prev_power_state == MMC_POWER_OFF) {
++		err = sd_power_on(host, MMC_POWER_ON);
++		if (err) {
++			cmd->error = err;
++			mutex_unlock(&pcr->pcr_mutex);
++			goto finish;
++		}
++	}
++
+ 	rtsx_pci_switch_clock(pcr, host->clock, host->ssc_depth,
+ 			host->initial_mode, host->double_clk, host->vpclk);
+ 	rtsx_pci_write_register(pcr, CARD_SELECT, 0x07, SD_MOD_SEL);
+@@ -1522,6 +1532,16 @@ static void rtsx_pci_sdmmc_card_event(struct platform_device *pdev)
+ 	mmc_detect_change(host->mmc, 0);
  }
  
-+static u32 find_burst_size(const u32 burst_lengths, u32 maxburst)
++static void rtsx_pci_sdmmc_power_off(struct platform_device *pdev)
 +{
-+	if (!maxburst)
-+		return 1;
++	struct realtek_pci_sdmmc *host = platform_get_drvdata(pdev);
 +
-+	if (BIT(maxburst) & burst_lengths)
-+		return maxburst;
++	if (!host)
++		return;
 +
-+	/* Hardware only does power-of-two bursts. */
-+	for (u32 burst = rounddown_pow_of_two(maxburst); burst > 0; burst /= 2)
-+		if (BIT(burst) & burst_lengths)
-+			return burst;
-+
-+	return 1;
++	host->prev_power_state = MMC_POWER_OFF;
 +}
 +
- static int set_config(struct sun6i_dma_dev *sdev,
- 			struct dma_slave_config *sconfig,
- 			enum dma_transfer_direction direction,
-@@ -616,15 +632,13 @@ static int set_config(struct sun6i_dma_dev *sdev,
- 		return -EINVAL;
- 	if (!(BIT(dst_addr_width) & sdev->slave.dst_addr_widths))
- 		return -EINVAL;
--	if (!(BIT(src_maxburst) & sdev->cfg->src_burst_lengths))
--		return -EINVAL;
--	if (!(BIT(dst_maxburst) & sdev->cfg->dst_burst_lengths))
--		return -EINVAL;
+ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
+ {
+ 	struct mmc_host *mmc;
+@@ -1554,6 +1574,7 @@ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, host);
+ 	pcr->slots[RTSX_SD_CARD].p_dev = pdev;
+ 	pcr->slots[RTSX_SD_CARD].card_event = rtsx_pci_sdmmc_card_event;
++	pcr->slots[RTSX_SD_CARD].power_off = rtsx_pci_sdmmc_power_off;
  
- 	src_width = convert_buswidth(src_addr_width);
- 	dst_width = convert_buswidth(dst_addr_width);
--	dst_burst = convert_burst(dst_maxburst);
--	src_burst = convert_burst(src_maxburst);
-+	src_burst = find_burst_size(sdev->cfg->src_burst_lengths, src_maxburst);
-+	dst_burst = find_burst_size(sdev->cfg->dst_burst_lengths, dst_maxburst);
-+	dst_burst = convert_burst(dst_burst);
-+	src_burst = convert_burst(src_burst);
+ 	mutex_init(&host->host_mutex);
  
- 	*p_cfg = DMA_CHAN_CFG_SRC_WIDTH(src_width) |
- 		DMA_CHAN_CFG_DST_WIDTH(dst_width);
+@@ -1585,6 +1606,7 @@ static void rtsx_pci_sdmmc_drv_remove(struct platform_device *pdev)
+ 	pcr = host->pcr;
+ 	pcr->slots[RTSX_SD_CARD].p_dev = NULL;
+ 	pcr->slots[RTSX_SD_CARD].card_event = NULL;
++	pcr->slots[RTSX_SD_CARD].power_off = NULL;
+ 	mmc = host->mmc;
+ 
+ 	cancel_work_sync(&host->work);
+diff --git a/include/linux/rtsx_common.h b/include/linux/rtsx_common.h
+index da9c8c6b5d50f..f294f478f0c0e 100644
+--- a/include/linux/rtsx_common.h
++++ b/include/linux/rtsx_common.h
+@@ -32,6 +32,7 @@ struct platform_device;
+ struct rtsx_slot {
+ 	struct platform_device	*p_dev;
+ 	void			(*card_event)(struct platform_device *p_dev);
++	void			(*power_off)(struct platform_device *p_dev);
+ };
+ 
+ #endif
 -- 
 2.51.0
 
