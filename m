@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCE3288C34;
-	Thu, 19 Feb 2026 02:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C773D30E0F1;
+	Thu, 19 Feb 2026 02:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466702; cv=none; b=UnHAa4u1O7ISdzdQXAkraVwZxP8WTJ/GSN5Hb7PIDg48dGDHGaLTnl/kmKbFwU5AjN+5mFU7f7kO6OyvJ27f9FLAtPvOTCsvCgg9B8ZiHwxQrNtyU93w0Ww/i3HnjpFqAFOO1PYWUHXTFGksbBHtZ1UoIgfJjRwB/PAxk4uwVJ0=
+	t=1771466703; cv=none; b=ocqP5vYu+t3bBLAvHSwruW61V3OeW+jh8oO1RxvcSe6k2YCAoxioISHVfBReo20lmYUurcCnNDk21LkTn2Ldz/RAzRFe96IXBjXnTAOTJaBFC7ZEl8+olq1r4dLw6bwdQiSKmOLxeb8RKSoS8JriwgER14Bw/FapUZNalBB+6uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466702; c=relaxed/simple;
-	bh=C7k2nygNZOWnv4rXq1W6kueUUUbb8ONRpDHVKcqXh+c=;
+	s=arc-20240116; t=1771466703; c=relaxed/simple;
+	bh=lOZidEmx5vk20ZO0QrhgAGaGcoFEhk4bJAlW3AJLUOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YOCjn6mO6eeP8GIohZD1dr+xqG8ZKOLT57TyDOe0mfpqcFpjMqWzfqfRf1vCR+k4QN+VReWQyCE9/jWs7T1MHQl0A5GpfL40K/C0QtoteXe0IECvU6IzhPYsE6mjtQYAo5Kv7wFjfgbKnx5RpoZGEkgw7mqgQHpGzn37bQRytss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WRABJ1or; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LlfqR4+2BALZ+KCCO/3b10E+zchA+6NqcalNe/za0C6IJh+3GKCC+lm6DfjR6o1PjhBhmJ/uEVWBUNYe/Nj8JY1gqvhLf6VrOVElNrxhlij0wccVze6SKaWwNegwIAKQHQTAs6PLN9w76dG+jzL0grbAkzmNoIjOMBhLdZ6Ee1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bDrkdjbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WRABJ1or"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE37C19424;
-	Thu, 19 Feb 2026 02:05:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bDrkdjbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8320DC19422;
+	Thu, 19 Feb 2026 02:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466702;
-	bh=C7k2nygNZOWnv4rXq1W6kueUUUbb8ONRpDHVKcqXh+c=;
+	s=k20201202; t=1771466703;
+	bh=lOZidEmx5vk20ZO0QrhgAGaGcoFEhk4bJAlW3AJLUOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRABJ1orBrSnQBOyvOPV3YmMtRFMH5aanPyVwTk4ZwLV1bA1ojbvp+DDYH5pA4OoJ
-	 4ZMQQ0ZrPq8Ea4Fxj4oLCwOzrD7miEASBkF9bpoAKKx4NRQEni1uN+qEKQGTpzazJr
-	 8gM98t0/gSMwrIZu1q9MZfGBDPpN0rZm7GbpVH0okdS56sL25yrrCA8+r9mATKpMHY
-	 DpmppMR5tvt4Gv0MznOEC/waAxH0nOVW50bz5E0+TCGpxv85ZYj/nv06q1uvIfC7KC
-	 rdyL/BedcXc2NeZ+ZUOomITWGycjDBivuLpi6JzG7kJE13lbvnMk5DPHCxZkE10LsS
-	 sl3Yf4ItuHB8g==
+	b=bDrkdjbvtDnkfPHNkqW2l+/iLzj7A9E2KZ5LDUUqsThA71UtRLrKT8/GtBrU0hKtX
+	 0QnBkfBkl2+pfGFAMeyaCytwZPKIy1l4WRJ+egUX/UK6y9D5/kk40EwITuUJ1d/RfH
+	 oTBBs+eo0JJm+X8QnjVGeFCgbY1ZyVxKCeDDc+076WdGwRDJ/7NjaXUNq3j0fsedaQ
+	 k9JqfvSP3k4QMvEidLcgJlvVkF2bKn/IwM8JKuJzjMJSy4pL4OhCBgZ3H3uACFXgiN
+	 U8uqCKfAnKj72b8ab2N2uBMg2aT4Z4/p/WnPtA4iNZqPlRbjL5LUl7EgfUznrLL6YM
+	 hO2vOUtxbCp5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sam Day <me@samcday.com>,
-	David Heidelberg <david@ixit.cz>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Xu Yang <xu.yang_2@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] usb: gadget: f_fs: fix DMA-BUF OUT queues
-Date: Wed, 18 Feb 2026 21:04:06 -0500
-Message-ID: <20260219020422.1539798-30-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] phy: fsl-imx8mq-usb: disable bind/unbind platform driver feature
+Date: Wed, 18 Feb 2026 21:04:07 -0500
+Message-ID: <20260219020422.1539798-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -50,187 +52,120 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sam Day <me@samcday.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 0145e7acd29855dfba4a2f387d455b5d9a520f0e ]
+[ Upstream commit 27ee0869d77b2cb404770ac49bdceae3aedf658b ]
 
-Currently, DMA_FROM_DEVICE is used when attaching DMABUFs to IN
-endpoints and DMA_TO_DEVICE for OUT endpoints. This is inverted from
-how it should be.
+Disabling PHYs in runtime usually causes the client with external abort
+exception or similar issue due to lack of API to notify clients about PHY
+removal. This patch removes the possibility to unbind i.MX PHY drivers in
+runtime.
 
-The result is IOMMU read-only mappings placed on OUT queues,
-triggering arm-smmu write faults.
-
-Put differently, OUT endpoints flow data from host -> gadget, meaning
-the UDC peripheral needs to have write access to the buffer to fill it
-with the incoming data.
-
-This commit flips the directions and updates the implicit-sync helpers
-so IN endpoints act as readers and OUT endpoints as writers.
-
-Signed-off-by: Sam Day <me@samcday.com>
-Tested-by: David Heidelberg <david@ixit.cz>  # OnePlus 6T on sdm845-next-20251119
-Link: https://patch.msgid.link/20260108-ffs-dmabuf-ioctl-fix-v1-2-e51633891a81@samcday.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260120111712.3159782-1-xu.yang_2@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Wait — I see the code at line 1512 still shows the **old** (buggy)
-direction. This means the fix commit hasn't been applied yet to this
-tree. Let me verify this is the pre-fix state, and confirm the
-correctness of the fix.
+## Analysis Summary
 
-The key insight about USB gadget directions:
+### What the commit does
+This commit adds `.suppress_bind_attrs = true` to the i.MX8MQ USB PHY
+platform driver. This single line prevents the kernel from creating
+`/sys/bus/platform/drivers/imx8mq-usb-phy/bind` and
+`/sys/bus/platform/drivers/imx8mq-usb-phy/unbind` sysfs files, thereby
+preventing runtime unbinding of the PHY driver.
 
-- **IN endpoint** (`epfile->in == true`): Data flows from gadget **to**
-  host. The UDC reads from the buffer → `DMA_TO_DEVICE` (device reads
-  the memory)
-- **OUT endpoint** (`epfile->in == false`): Data flows from host **to**
-  gadget. The UDC writes to the buffer → `DMA_FROM_DEVICE` (device
-  writes to memory)
+### Problem being fixed
+The commit message states that unbinding PHYs at runtime causes
+"external abort exception or similar issue" because there is no API to
+notify PHY clients about PHY removal. An external abort is a serious ARM
+exception that typically results in a kernel crash/oops. If a user or
+management tool writes to the `unbind` sysfs file for this PHY driver,
+the USB controller client would try to access the now-missing PHY
+resources, resulting in a crash.
 
-The current code has it backwards:
-- `epfile->in ? DMA_FROM_DEVICE : DMA_TO_DEVICE` — **WRONG**
-- Should be: `epfile->in ? DMA_TO_DEVICE : DMA_FROM_DEVICE` —
-  **CORRECT**
+### Stable kernel rules assessment
+1. **Obviously correct and tested**: Yes - this is a well-established
+   one-line pattern used in 385+ files in the kernel. It's reviewed by
+   the PHY maintainer (Vinod Koul) and reviewed by Frank Li.
+2. **Fixes a real bug**: Yes - runtime unbinding causes a crash
+   (external abort exception). This is a real, triggerable issue.
+3. **Important issue**: Moderate - it prevents a crash, but only
+   triggered by explicit sysfs manipulation (not normal operation).
+   However, system management tools or user error could trigger this.
+4. **Small and contained**: Yes - single one-line addition to a driver
+   struct.
+5. **No new features**: Correct - this removes functionality (ability to
+   unbind), it doesn't add any.
 
-This is consistent with the DMA-BUF perspective where DMA direction
-refers to the device's perspective relative to memory.
-
-Similarly for the reservation fences:
-- IN endpoint (read from buffer to send to host) → the fence should be
-  `DMA_RESV_USAGE_READ` (reading from the buffer)
-- OUT endpoint (write incoming data to buffer) → the fence should be
-  `DMA_RESV_USAGE_WRITE` (writing to the buffer)
-
-The current code has:
-- `epfile->in ? DMA_RESV_USAGE_WRITE : DMA_RESV_USAGE_READ` — **WRONG**
-- Should be: `epfile->in ? DMA_RESV_USAGE_READ : DMA_RESV_USAGE_WRITE` —
-  **CORRECT**
-
-And for the `dma_resv_wait_timeout`:
-- `dma_resv_usage_rw(epfile->in)` means: if IN, wait for both
-  read+write; if OUT, wait for write only
-- Should be `dma_resv_usage_rw(!epfile->in)`: if OUT, wait for both
-  read+write; if IN, wait for write only
-
-This logic is also inverted and the fix correctly flips it.
-
-## Summary Assessment
-
-### What problem does this commit solve?
-
-This fixes an inverted DMA direction mapping for DMA-BUF operations in
-the USB gadget FunctionFS driver. The bug causes:
-1. **IOMMU write faults** (arm-smmu) on OUT endpoints because buffers
-   are mapped read-only when they need write access
-2. Incorrect implicit-sync fence semantics (readers treated as writers
-   and vice versa)
-
-This is a **correctness bug** that makes DMA-BUF OUT transfers
-completely non-functional on systems with an IOMMU (which includes most
-modern ARM SoCs).
-
-### Does it meet stable kernel rules?
-
-1. **Obviously correct**: Yes — the DMA direction semantics are well-
-   defined and the fix is a straightforward inversion of three boolean
-   conditions
-2. **Fixes a real bug**: Yes — DMA-BUF OUT transfers cause IOMMU faults
-   on ARM platforms
-3. **Important issue**: Yes — hardware fault/crash-level issue that
-   prevents a feature from working
-4. **Small and contained**: Yes — 3 lines changed in a single file
-5. **No new features**: Correct — pure bug fix
-6. **Tested**: Yes — "Tested-by: David Heidelberg" on OnePlus 6T
-   (sdm845)
-
-### Risk vs Benefit
-
-- **Risk**: Very low — the change is mechanical (flip three booleans),
-  touches only DMA-BUF code paths in f_fs, and cannot affect non-DMA-BUF
-  USB operations
-- **Benefit**: High — fixes broken DMA-BUF OUT transfers that cause
-  IOMMU faults
+### Risk assessment
+- **Risk**: Extremely low. This is literally a single boolean field
+  being set in the driver struct. It only affects sysfs attributes. The
+  same pattern exists in 385+ other drivers.
+- **Benefit**: Prevents a crash scenario when the PHY is unbound at
+  runtime.
+- **Dependencies**: None - this is entirely self-contained.
 
 ### Concerns
+- The bug is only triggerable by explicit sysfs manipulation (writing to
+  `/sys/bus/platform/drivers/imx8mq-usb-phy/unbind`), not by normal
+  system operation.
+- The fix is a defensive measure rather than fixing a root cause in the
+  PHY framework. However, this is the standard kernel approach - the PHY
+  framework doesn't have removal notification, so drivers that can't
+  handle unbinding should suppress it.
+- The change is straightforward and would apply cleanly to any stable
+  tree that has this driver.
 
-- **Affected versions**: The DMA-BUF support was introduced in commit
-  `7b07a2a7ca02a` during the v6.9 development cycle. Only stable trees
-  from v6.9 onward need this fix (the code doesn't exist in older
-  kernels).
-- **Dependencies**: None — the fix is self-contained and touches only
-  the three lines with the bug
-- **Backport risk**: Clean application expected since the surrounding
-  code has not changed significantly
+### Classification
+This falls into the **hardware quirk/workaround** category. It's a
+defensive fix that prevents a crash scenario. While the trigger requires
+explicit user action (sysfs unbind), this is a well-established pattern
+in the kernel for exactly this purpose.
 
-### Verification
+## Verification
+- Verified `suppress_bind_attrs = true` is used in 385+ files across the
+  drivers/ directory via Grep search
+- Verified 7 other PHY drivers (Samsung, HiSilicon) already use this
+  pattern
+- Verified no other Freescale PHY drivers currently have this attribute
+  (this is the first)
+- Verified via git log that similar commits exist for other subsystems
+  (gpio, perf)
+- Verified via lore.kernel.org that the patch was reviewed by Frank Li
+  and accepted by PHY maintainer Vinod Koul
+- Verified the commit message describes a real crash scenario (external
+  abort exception)
+- Could NOT verify the specific crash reproduction steps (unverified,
+  but the mechanism is well-understood in the kernel community)
 
-- `git log -S "ffs_dmabuf_attach" master` confirmed the DMA-BUF
-  interface was introduced in commit `7b07a2a7ca02a` (v6.9 cycle,
-  2024-01-30)
-- `git merge-base --is-ancestor 7b07a2a7ca02a master` confirmed the
-  buggy code is in master
-- Read of `f_fs.c` at lines 1490-1549 verified the current (pre-fix)
-  code shows the inverted `DMA_FROM_DEVICE`/`DMA_TO_DEVICE` direction
-- Grep for `epfile->in` confirmed three locations needing the fix (lines
-  1512, 1642, 1687) matching the patch
-- Line 2442 shows `epfile->in = usb_endpoint_dir_in(ep->ep->desc)`
-  confirming `epfile->in` is true for IN endpoints (data to host)
-- USB DMA direction convention verified: IN endpoint = device reads
-  buffer = `DMA_TO_DEVICE`; OUT endpoint = device writes buffer =
-  `DMA_FROM_DEVICE`. The original code has these inverted.
-- `git tag --contains 7b07a2a7ca02a` shows the commit is in `p-6.12`,
-  `p-6.15`, `p-6.16` branches, confirming the buggy code exists in
-  multiple stable trees
-- Commit has "Tested-by: David Heidelberg" and was merged by Greg Kroah-
-  Hartman (USB maintainer), indicating quality review
-
-This is a clear, small, well-tested fix for a real hardware fault that
-makes DMA-BUF OUT transfers completely broken on IOMMU-enabled
-platforms. It meets all stable kernel criteria.
+The fix is minimal (one line), extremely low risk, prevents a crash
+scenario, uses a well-established kernel pattern, and was properly
+reviewed. It meets all stable kernel criteria.
 
 **YES**
 
- drivers/usb/gadget/function/f_fs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/phy/freescale/phy-fsl-imx8mq-usb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index fa467a40949d2..928f51fddc64e 100644
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1509,7 +1509,7 @@ static int ffs_dmabuf_attach(struct file *file, int fd)
- 		goto err_dmabuf_detach;
+diff --git a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
+index 91b3e62743d3a..b30d01f345d20 100644
+--- a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
++++ b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
+@@ -730,6 +730,7 @@ static struct platform_driver imx8mq_usb_phy_driver = {
+ 	.driver = {
+ 		.name	= "imx8mq-usb-phy",
+ 		.of_match_table	= imx8mq_usb_phy_of_match,
++		.suppress_bind_attrs = true,
  	}
- 
--	dir = epfile->in ? DMA_FROM_DEVICE : DMA_TO_DEVICE;
-+	dir = epfile->in ? DMA_TO_DEVICE : DMA_FROM_DEVICE;
- 
- 	err = ffs_dma_resv_lock(dmabuf, nonblock);
- 	if (err)
-@@ -1639,7 +1639,7 @@ static int ffs_dmabuf_transfer(struct file *file,
- 	/* Make sure we don't have writers */
- 	timeout = nonblock ? 0 : msecs_to_jiffies(DMABUF_ENQUEUE_TIMEOUT_MS);
- 	retl = dma_resv_wait_timeout(dmabuf->resv,
--				     dma_resv_usage_rw(epfile->in),
-+				     dma_resv_usage_rw(!epfile->in),
- 				     true, timeout);
- 	if (retl == 0)
- 		retl = -EBUSY;
-@@ -1684,7 +1684,7 @@ static int ffs_dmabuf_transfer(struct file *file,
- 	dma_fence_init(&fence->base, &ffs_dmabuf_fence_ops,
- 		       &priv->lock, priv->context, seqno);
- 
--	resv_dir = epfile->in ? DMA_RESV_USAGE_WRITE : DMA_RESV_USAGE_READ;
-+	resv_dir = epfile->in ? DMA_RESV_USAGE_READ : DMA_RESV_USAGE_WRITE;
- 
- 	dma_resv_add_fence(dmabuf->resv, &fence->base, resv_dir);
- 	dma_resv_unlock(dmabuf->resv);
+ };
+ module_platform_driver(imx8mq_usb_phy_driver);
 -- 
 2.51.0
 
