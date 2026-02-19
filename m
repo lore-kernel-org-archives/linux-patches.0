@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B8830F93D;
-	Thu, 19 Feb 2026 02:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E79E30FF25;
+	Thu, 19 Feb 2026 02:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466706; cv=none; b=iGRBxlZS+2e0JdiSobh0wgUOMxB4UrielLYpV0AnlGwLgo+0PNGt8jh8w+mbRBeopSCCJ97ECPvLyf4Q4U3DPqJlyTQUkGdHN48D7atr6k1VtatCWm9F955Y9hQWi72LiC5fBXT9ur2JEF8u9dsApFsAHIVD1NBfBzCpuj2povw=
+	t=1771466707; cv=none; b=IG7Gkn7IoW0iSmlrd6A+dxByfjvtBO+jFrM34j8WQW0sbNbAq5xMhlJb3fTb2np1N1BR5sxZPvjZtFQdHcSQ+54UJoQhR4EOZ1jSg9ePVEaQVwaVAy0L6LVSWpsrHyvUZjTiE3rUBNBtL0Jh26+/e5xslez0wlI6+H28HySNQO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466706; c=relaxed/simple;
-	bh=H8iaY/PK1UVRbp3ySwwROjS5cvfwZ2ZobWy3LlKk+IY=;
+	s=arc-20240116; t=1771466707; c=relaxed/simple;
+	bh=D73wScJAC375XHCH4oZKOpkSXn1g9xaFJmyXXU/9UKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=phnNd56Vhj44Gys5XSlhGTOm9feSKesD7crlN+1lWMvFdejo4yrXzCRfew6U2LwoNqWCJ0r3gL9ba3qn5DnlXqkJTnp5aspRlvVIQallRi0b0jn+94a58uj8HD0+fRwZEwiUTT/8x9GexT7QbuwXv9k/bpLPj2p2K50q+00y3Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C3HxaUkC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q/kSckIXcpSFfdLzu9vC1dpysc5WrAEwaZI1wSxnt4NyXVqp0RXMH6/KR41KBphLMwRRGOKZymptFBcpD1UJoJWI2ilWSTtWug9y8e3y9EVCXinPq+mZFUWoMRgODqlFrq/pA6TvNkFSrAJkgOzJSwEeMsC+WF3AeH4w/ci+upw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SHlPGcmm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C3HxaUkC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27416C116D0;
-	Thu, 19 Feb 2026 02:05:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SHlPGcmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B6AC116D0;
+	Thu, 19 Feb 2026 02:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466706;
-	bh=H8iaY/PK1UVRbp3ySwwROjS5cvfwZ2ZobWy3LlKk+IY=;
+	s=k20201202; t=1771466707;
+	bh=D73wScJAC375XHCH4oZKOpkSXn1g9xaFJmyXXU/9UKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3HxaUkCpNUezwqVlQm4yq2vu7JoSsAYmMTEeSINpMbjZe4GiH/Z5EAVZmgnD25wn
-	 5YsMf2/tflXb1HUj0RL3bfUoZoznY92IBXgcQCXfogMjTbNBn6dyZ+6eiHUdtKxQ5u
-	 qd3G/LuaDymnf05Qgw9aGI4y+fd4PwfXVWWuxZ7qnv8HWLePC+dFlaXK+5D+la8p7a
-	 XKb8Nphq5Ye9i+VvOfcKk5N1+6jgbpEZj3vH7e15JPZRnoipRy61xKiFE++17fd5Lc
-	 teNwRkLYZVdJBpDNnd7mMDF19jwam1eTwe1A6o8+wZPhvGO/sykgNuXkIfI+LXNXun
-	 NIt1q+AmkE+YQ==
+	b=SHlPGcmmCWc0L3iooCbHuBf8E5HBd0k5RhB5XDrRKy8Bn9X5piuxN7GnplB4mR1SB
+	 c55XzbF3xdiMGp5KzfhShD+Ji4jJa621u2FyNSWxjDW0NFysOtxgyZbaphXIAkeRXQ
+	 WyB/wIjRPgkIgjq+9jm+0XsF5sCpavvKt/OyGbYsHu/DgDfMzIJCAXY0pJzDnLaGNi
+	 jiKqgUwNXx4sbEzwJk43vGFF+chfRrUnOy2UsS1zw49cJy3MXTQgc1IQH3UOyv631a
+	 pRlmcfLyFnwvpsVR+6V2+1hneJ/tPl80TfEjBK/c60RrHrj2dZ8lzX9Ut58HUl8EfI
+	 nBIVCw1wuOknQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-sound@vger.kernel.org,
+	linusw@kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] soundwire: dmi-quirks: add mapping for Avell B.ON (OEM rebranded of NUC15)
-Date: Wed, 18 Feb 2026 21:04:09 -0500
-Message-ID: <20260219020422.1539798-33-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] pinctrl: renesas: rzt2h: Allow .get_direction() for IRQ function GPIOs
+Date: Wed, 18 Feb 2026 21:04:10 -0500
+Message-ID: <20260219020422.1539798-34-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -51,117 +51,165 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-[ Upstream commit 59946373755d71dbd7614ba235e0093159f80b69 ]
+[ Upstream commit 49b039a61a314c18074c15a7047705399e1240e6 ]
 
-Avell B.ON is an OEM re-branded NUC15 'Bishop County' LAPBC510 and
-LAPBC710.
+Setting up an IRQ would normally be done in the .activate() and
+.deactivate() ops of the IRQ domain, but for hierarchical IRQ domains
+the .activate() and .deactivate() ops are overridden in the
+gpiochip_hierarchy_setup_domain_ops() function.
 
-Link: https://github.com/thesofproject/linux/issues/5529
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20251215130947.31385-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+As such, activating and deactivating need to be done in the .translate()
+and .free() ops of the IRQ domain.
+
+For RZ/T2H and RZ/N2H, interrupts go through the pin controller, into
+the ICU, which level-translates them and forwards them to the GIC.
+
+To use a GPIO as an interrupt it needs to be put into peripheral
+function mode 0, which will connect it to the IRQ lines of the ICU.
+
+The IRQ chip .child_to_parent_hwirq() callback is called as part of the
+IRQ fwspec parsing logic (as part of irq_create_of_mapping()) which
+happens before the IRQ is requested (as part of gpiochip_lock_as_irq()).
+
+gpiochip_lock_as_irq() calls gpiod_get_direction() if the
+.get_direction() callback is provided to ensure that the GPIO line is
+set up as input.
+
+In our case, IRQ function is separate from GPIO, and both cannot be true
+at the same time.
+
+Return GPIO_LINE_DIRECTION_IN even if pin is in IRQ function to allow
+this setup to work.
+
+Hold the spinlock to ensure atomicity between reading the PMC register
+(which determines whether the pin is in GPIO mode or not) and reading
+the function of the pin when it is not in GPIO mode.
+
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20251205150234.2958140-3-cosmin-gabriel.tanislav.xa@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Scope and Risk Assessment
+Confirmed: The PFC register read pattern with `rzt2h_pinctrl_readq` and
+the `PFC_MASK` at line 141 is consistent with what the fix does. The new
+code reads `PFC(port)` and masks with `PFC_MASK`, which is the same
+pattern used in the existing `rzt2h_pinctrl_set_pfc` function.
 
-- **Lines changed**: 11 lines added, 0 lines modified or deleted
-- **Files touched**: 1 file (`drivers/soundwire/dmi-quirks.c`)
-- **Complexity**: Minimal — it's a data table entry addition
-- **Risk**: Extremely low — the new entry only matches systems with
-  `DMI_SYS_VENDOR = "Avell High Performance"` and `DMI_PRODUCT_NAME =
-  "B.ON"`. It cannot affect any other system.
-- **Pattern**: Identical to the 8+ existing entries in the same table
+### Verification
 
-## User Impact
+- **Verified**: The driver `pinctrl-rzt2h.c` was introduced in commit
+  34d4d093077a5, first appearing in v6.18. Active stable trees v6.18.y
+  and v6.19.y contain this driver.
+- **Verified**: `gpiochip_lock_as_irq()` at gpiolib.c:4088-4095 calls
+  `gpiod_get_direction()` and fails if it returns negative, confirming
+  the bug mechanism described in the commit message.
+- **Verified**: The original `rzt2h_gpio_get_direction()` returns
+  `-EINVAL` unconditionally when PMC bit is set (line 496-497 of current
+  code), which would fail IRQ setup.
+- **Verified**: `rzt2h_pinctrl_readq` is generated by macro at line 104
+  and already used for PFC reads (line 140), so no new functions are
+  needed.
+- **Verified**: `PFC_MASK` is already defined (line 51: `GENMASK_ULL(5,
+  0)`), so the mask pattern is correct.
+- **Verified**: The PFC function 0 being the IRQ function is consistent
+  with the hardware description (peripheral function mode 0 connects to
+  ICU IRQ lines, as stated in the commit message).
+- **Verified**: The spinlock `pctrl->lock` is already used in other
+  functions (e.g., `rzt2h_gpio_set_direction` at line 475,
+  `rzt2h_pinctrl_set_pfc` at line 128), so adding it to `get_direction`
+  is consistent.
+- **Verified**: No additional commits are needed as dependencies - the
+  code being modified exists in the base driver.
+- **Unverified**: Whether the commit has been explicitly discussed on
+  linux-stable mailing list (did not search lore.kernel.org).
 
-- **Who is affected**: Users of Avell B.ON laptops (OEM rebranded Intel
-  NUC15, sold in Brazil)
-- **What happens without this fix**: Audio does not work on these
-  laptops because the SoundWire address remapping is not applied
-- **Severity**: Complete loss of audio functionality on affected
-  hardware
-- **Evidence**: GitHub issue #5529 documents the user-reported problem
+### Summary
 
-## Stable Kernel Rules Compliance
+**What the commit fixes**: GPIO pins on Renesas RZ/T2H and RZ/N2H SoCs
+cannot be used as interrupt sources because the GPIO direction query
+fails when the pin is in IRQ function mode, causing
+`gpiochip_lock_as_irq()` to fail.
 
-1. **Obviously correct and tested**: Yes — follows the exact same
-   pattern as all other entries in the table, reviewed by two subsystem
-   experts
-2. **Fixes a real bug**: Yes — audio is non-functional on Avell B.ON
-   laptops without this quirk
-3. **Important issue**: Yes — complete hardware functionality loss (no
-   audio)
-4. **Small and contained**: Yes — 11 lines in one file, data-only change
-5. **No new features**: Correct — enables existing hardware support via
-   existing mechanism
-6. **Applies cleanly**: Should apply cleanly as it's a simple table
-   entry addition
+**Stable kernel criteria**:
+- **Obviously correct**: Yes - the logic is clear and well-explained.
+  When a pin is in IRQ mode (peripheral function 0), reporting it as
+  input direction is the correct semantic.
+- **Fixes a real bug**: Yes - GPIO IRQ functionality is broken without
+  this fix.
+- **Small and contained**: Yes - ~20 lines in a single function in a
+  single driver file.
+- **No new features**: Correct - this fixes existing GPIO/IRQ
+  interaction, not adding new functionality.
+- **Reviewed**: Yes - reviewed by Geert Uytterhoeven (Renesas subsystem
+  maintainer).
 
-## Verification
+**Risk vs benefit**: Very low risk (single driver, narrow hardware
+scope, no architectural changes) vs. high benefit (enables GPIO IRQ
+functionality on these SoCs).
 
-- **git log** for `drivers/soundwire/dmi-quirks.c` confirms the file has
-  a history of receiving similar DMI quirk additions (e.g., LAPBC710,
-  Rooks County, HP Omen)
-- **Code review** of the file confirms `intel_tgl_bios` is the same
-  remap data used by 4 other NUC15/HP entries — this is the correct
-  mapping for Bishop County hardware
-- **GitHub issue #5529** confirms this is a real user-reported problem
-  with Avell B.ON laptops lacking audio functionality
-- **Reviewed-by tags** from Kai Vehmanen and Bard Liao (both Intel audio
-  subsystem maintainers) confirm correctness
-- **File history** shows this file was introduced in 2021 (commit
-  f6594cdfec4cd) and exists in stable trees
-- The change is purely additive (no existing code modified) and only
-  matches a specific DMI vendor/product combination, so it cannot
-  regress other hardware
-
-## Conclusion
-
-This is a textbook stable backport candidate. It's a hardware quirk
-addition — a trivial, data-only change that enables audio on Avell B.ON
-laptops (OEM rebrands of Intel NUC15). The fix is minimal (11 lines),
-zero risk to other hardware, follows an established pattern in the file,
-was reviewed by multiple Intel audio experts, and addresses a real user-
-reported hardware issue. It meets all stable kernel criteria and falls
-into the well-established "hardware quirks" exception category.
+**Concern**: The driver only exists in v6.18+ stable trees, limiting the
+scope of backporting. No older stable trees are affected.
 
 **YES**
 
- drivers/soundwire/dmi-quirks.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/pinctrl/renesas/pinctrl-rzt2h.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 91ab97a456fa9..5854218e1a274 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -122,6 +122,17 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		},
- 		.driver_data = (void *)intel_tgl_bios,
- 	},
-+	{
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzt2h.c b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
+index 4826ff91cd906..40df706210119 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzt2h.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
+@@ -51,6 +51,7 @@
+ 
+ #define PFC_MASK		GENMASK_ULL(5, 0)
+ #define PFC_PIN_MASK(pin)	(PFC_MASK << ((pin) * 8))
++#define PFC_FUNC_INTERRUPT	0
+ 
+ /*
+  * Use 16 lower bits [15:0] for pin identifier
+@@ -486,6 +487,7 @@ static int rzt2h_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
+ 	struct rzt2h_pinctrl *pctrl = gpiochip_get_data(chip);
+ 	u8 port = RZT2H_PIN_ID_TO_PORT(offset);
+ 	u8 bit = RZT2H_PIN_ID_TO_PIN(offset);
++	u64 reg64;
+ 	u16 reg;
+ 	int ret;
+ 
+@@ -493,8 +495,25 @@ static int rzt2h_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (rzt2h_pinctrl_readb(pctrl, port, PMC(port)) & BIT(bit))
++	guard(spinlock_irqsave)(&pctrl->lock);
++
++	if (rzt2h_pinctrl_readb(pctrl, port, PMC(port)) & BIT(bit)) {
 +		/*
-+		 * quirk used for Avell B.ON (OEM rebrand of NUC15 'Bishop County'
-+		 * LAPBC510 and LAPBC710)
++		 * When a GPIO is being requested as an IRQ, the pinctrl
++		 * framework expects to be able to read the GPIO's direction.
++		 * IRQ function is separate from GPIO, and enabling it takes the
++		 * pin out of GPIO mode.
++		 * At this point, .child_to_parent_hwirq() has already been
++		 * called to enable the IRQ function.
++		 * Default to input direction for IRQ function.
 +		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Avell High Performance"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "B.ON"),
-+		},
-+		.driver_data = (void *)intel_tgl_bios,
-+	},
- 	{
- 		/* quirk used for NUC15 'Rooks County' LAPRC510 and LAPRC710 skews */
- 		.matches = {
++		reg64 = rzt2h_pinctrl_readq(pctrl, port, PFC(port));
++		reg64 = (reg64 >> (bit * 8)) & PFC_MASK;
++		if (reg64 == PFC_FUNC_INTERRUPT)
++			return GPIO_LINE_DIRECTION_IN;
++
+ 		return -EINVAL;
++	}
+ 
+ 	reg = rzt2h_pinctrl_readw(pctrl, port, PM(port));
+ 	reg = (reg >> (bit * 2)) & PM_MASK;
 -- 
 2.51.0
 
