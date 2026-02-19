@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4AD30C36C;
-	Thu, 19 Feb 2026 02:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCE3288C34;
+	Thu, 19 Feb 2026 02:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466701; cv=none; b=gVmiWA/yzwyrsE/xMQn/XVi2iX02X84gUmNmmjIWZlNwGA2gOlzYuQnU2exXuhrbB7R6fP1ysH/jtqc6J3xUzY9/0nmk6wtiQl8r1D2UsfWzujfNGcwJQgz7wdwe4EBvq9R9OGv9IiOuT9Nn5CP17bO0rkFOHf5mj4QnQZBf1Do=
+	t=1771466702; cv=none; b=UnHAa4u1O7ISdzdQXAkraVwZxP8WTJ/GSN5Hb7PIDg48dGDHGaLTnl/kmKbFwU5AjN+5mFU7f7kO6OyvJ27f9FLAtPvOTCsvCgg9B8ZiHwxQrNtyU93w0Ww/i3HnjpFqAFOO1PYWUHXTFGksbBHtZ1UoIgfJjRwB/PAxk4uwVJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466701; c=relaxed/simple;
-	bh=Ckx5Vm1eSpTtUf4BNRfhEFhCZzJhmRXKfZBCmXOxmwU=;
+	s=arc-20240116; t=1771466702; c=relaxed/simple;
+	bh=C7k2nygNZOWnv4rXq1W6kueUUUbb8ONRpDHVKcqXh+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=La+4SDHYYAygxhWwdhaI+zqv5xjc3UgVY3vfHpPnTrQ3Lp/FeOZG7nwHropNEyUYTYks6f8S9PwWxgyRtPz+2PxB3acjwUlckLAcBku4zUKYuimfKO4K60+kCatQERSVUGw0duL81WwhGKi0rs0oQ4XX/9bx9Q8mh/zZgn8kVes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S4QYXJP+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YOCjn6mO6eeP8GIohZD1dr+xqG8ZKOLT57TyDOe0mfpqcFpjMqWzfqfRf1vCR+k4QN+VReWQyCE9/jWs7T1MHQl0A5GpfL40K/C0QtoteXe0IECvU6IzhPYsE6mjtQYAo5Kv7wFjfgbKnx5RpoZGEkgw7mqgQHpGzn37bQRytss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WRABJ1or; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S4QYXJP+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D31C2BC86;
-	Thu, 19 Feb 2026 02:04:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WRABJ1or"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE37C19424;
+	Thu, 19 Feb 2026 02:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466700;
-	bh=Ckx5Vm1eSpTtUf4BNRfhEFhCZzJhmRXKfZBCmXOxmwU=;
+	s=k20201202; t=1771466702;
+	bh=C7k2nygNZOWnv4rXq1W6kueUUUbb8ONRpDHVKcqXh+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4QYXJP+qwbtSWeXgYlw4QjizvVtqFxZV0g2PYlo5qJ/kKATq7omvalUyJ8NygLtb
-	 KQEzSK9h/NhnjndBCJFyYjdowKcIz8zKSew4PUoU0eM7dNz45yppdkfjCrIEE6pJMV
-	 S4BTnywakj+bjCMjAIjHyaONKfjuW7sLt1zsGIDpG0vfeRiAmes8OBstuekvqMBnP8
-	 s83/ibkcc6IKNqOYNFvE6TcSXvbx6Ul+KTvAhYsjiVMSexn7D9EqEBIWkhFirA/nIj
-	 MdTEk0Yb3oaS8u5L7iGrgp0U9T2ATO86TumhorHK/Y90cmDMgArHSX2If9BcRujLpy
-	 svTZlASBRMC1w==
+	b=WRABJ1orBrSnQBOyvOPV3YmMtRFMH5aanPyVwTk4ZwLV1bA1ojbvp+DDYH5pA4OoJ
+	 4ZMQQ0ZrPq8Ea4Fxj4oLCwOzrD7miEASBkF9bpoAKKx4NRQEni1uN+qEKQGTpzazJr
+	 8gM98t0/gSMwrIZu1q9MZfGBDPpN0rZm7GbpVH0okdS56sL25yrrCA8+r9mATKpMHY
+	 DpmppMR5tvt4Gv0MznOEC/waAxH0nOVW50bz5E0+TCGpxv85ZYj/nv06q1uvIfC7KC
+	 rdyL/BedcXc2NeZ+ZUOomITWGycjDBivuLpi6JzG7kJE13lbvnMk5DPHCxZkE10LsS
+	 sl3Yf4ItuHB8g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: John Garry <john.g.garry@oracle.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+Cc: Sam Day <me@samcday.com>,
+	David Heidelberg <david@ixit.cz>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	chenhuacai@kernel.org,
-	jiaxun.yang@flygoat.com,
-	linux-mips@vger.kernel.org,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] MIPS: Loongson: Make cpumask_of_node() robust against NUMA_NO_NODE
-Date: Wed, 18 Feb 2026 21:04:05 -0500
-Message-ID: <20260219020422.1539798-29-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] usb: gadget: f_fs: fix DMA-BUF OUT queues
+Date: Wed, 18 Feb 2026 21:04:06 -0500
+Message-ID: <20260219020422.1539798-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -52,134 +50,187 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Garry <john.g.garry@oracle.com>
+From: Sam Day <me@samcday.com>
 
-[ Upstream commit d55d3fe2d1470ac5b6e93efe7998b728013c9fc8 ]
+[ Upstream commit 0145e7acd29855dfba4a2f387d455b5d9a520f0e ]
 
-The arch definition of cpumask_of_node() cannot handle NUMA_NO_NODE - which
-is a valid index - so add a check for this.
+Currently, DMA_FROM_DEVICE is used when attaching DMABUFs to IN
+endpoints and DMA_TO_DEVICE for OUT endpoints. This is inverted from
+how it should be.
 
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+The result is IOMMU read-only mappings placed on OUT queues,
+triggering arm-smmu write faults.
+
+Put differently, OUT endpoints flow data from host -> gadget, meaning
+the UDC peripheral needs to have write access to the buffer to fill it
+with the incoming data.
+
+This commit flips the directions and updates the implicit-sync helpers
+so IN endpoints act as readers and OUT endpoints as writers.
+
+Signed-off-by: Sam Day <me@samcday.com>
+Tested-by: David Heidelberg <david@ixit.cz>  # OnePlus 6T on sdm845-next-20251119
+Link: https://patch.msgid.link/20260108-ffs-dmabuf-ioctl-fix-v1-2-e51633891a81@samcday.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good. `NUMA_NO_NODE` is defined as `-1`.
+Wait — I see the code at line 1512 still shows the **old** (buggy)
+direction. This means the fix commit hasn't been applied yet to this
+tree. Let me verify this is the pre-fix state, and confirm the
+correctness of the fix.
 
-## 3. Bug Mechanism
+The key insight about USB gadget directions:
 
-The bug is clear:
-- `NUMA_NO_NODE` = `-1`
-- The old macro: `&__node_cpumask[node]` with `node = -1` results in
-  `&__node_cpumask[-1]`
-- This is an **out-of-bounds array access** at index -1, reading memory
-  before the start of the array
-- This is undefined behavior in C and could lead to:
-  - Returning garbage data (incorrect CPU mask)
-  - Kernel crash/oops if the memory before the array is unmapped
-  - Subtle corruption or incorrect scheduling decisions
+- **IN endpoint** (`epfile->in == true`): Data flows from gadget **to**
+  host. The UDC reads from the buffer → `DMA_TO_DEVICE` (device reads
+  the memory)
+- **OUT endpoint** (`epfile->in == false`): Data flows from host **to**
+  gadget. The UDC writes to the buffer → `DMA_FROM_DEVICE` (device
+  writes to memory)
 
-The fix returns `cpu_all_mask` when `NUMA_NO_NODE` is passed, which is
-the semantically correct behavior: "no specific node" means "all CPUs
-are valid."
+The current code has it backwards:
+- `epfile->in ? DMA_FROM_DEVICE : DMA_TO_DEVICE` — **WRONG**
+- Should be: `epfile->in ? DMA_TO_DEVICE : DMA_FROM_DEVICE` —
+  **CORRECT**
 
-## 4. Consistency with Other Architectures
+This is consistent with the DMA-BUF perspective where DMA direction
+refers to the device's perspective relative to memory.
 
-The investigation confirmed that multiple architectures already handle
-this case:
-- **PowerPC**: checks for `-1`, returns `cpu_all_mask`
-- **SPARC64**: checks for `-1`, returns `cpu_all_mask`
-- **MIPS IP27**: checks for `-1`, returns `cpu_all_mask`
-- **asm-generic/numa.h**: checks for `NUMA_NO_NODE`, returns
-  `cpu_all_mask`
-- **arm64**: had a similar fix applied (commit `a194c5f2d2b3a`)
+Similarly for the reservation fences:
+- IN endpoint (read from buffer to send to host) → the fence should be
+  `DMA_RESV_USAGE_READ` (reading from the buffer)
+- OUT endpoint (write incoming data to buffer) → the fence should be
+  `DMA_RESV_USAGE_WRITE` (writing to the buffer)
 
-This fix brings the MIPS Loongson implementation in line with the
-established pattern.
+The current code has:
+- `epfile->in ? DMA_RESV_USAGE_WRITE : DMA_RESV_USAGE_READ` — **WRONG**
+- Should be: `epfile->in ? DMA_RESV_USAGE_READ : DMA_RESV_USAGE_WRITE` —
+  **CORRECT**
 
-## 5. Scope and Risk Assessment
+And for the `dma_resv_wait_timeout`:
+- `dma_resv_usage_rw(epfile->in)` means: if IN, wait for both
+  read+write; if OUT, wait for write only
+- Should be `dma_resv_usage_rw(!epfile->in)`: if OUT, wait for both
+  read+write; if IN, wait for write only
 
-- **One line changed** in a macro definition
-- **One file touched** (architecture-specific topology header)
-- **Extremely low risk** - only adds a conditional check; the existing
-  behavior is preserved for all valid node values
-- **Well-established pattern** - identical to what other architectures
-  already do
-- **Reviewed by Loongson maintainer** (Huacai Chen)
+This logic is also inverted and the fix correctly flips it.
 
-## 6. User Impact
+## Summary Assessment
 
-- Without this fix, any caller of `cpumask_of_node(NUMA_NO_NODE)` on
-  MIPS Loongson triggers **out-of-bounds array access**
-- This is an actual memory safety bug, not a theoretical issue
-- `NUMA_NO_NODE` is a valid value returned by various kernel APIs (e.g.,
-  `dev_to_node()` for devices without NUMA affinity)
-- Impact: potential kernel crash, undefined behavior, or incorrect
-  scheduling/memory allocation decisions
+### What problem does this commit solve?
 
-## 7. Stable Criteria Evaluation
+This fixes an inverted DMA direction mapping for DMA-BUF operations in
+the USB gadget FunctionFS driver. The bug causes:
+1. **IOMMU write faults** (arm-smmu) on OUT endpoints because buffers
+   are mapped read-only when they need write access
+2. Incorrect implicit-sync fence semantics (readers treated as writers
+   and vice versa)
 
-| Criteria | Assessment |
-|----------|-----------|
-| Obviously correct | YES - matches pattern used by 4+ other
-architectures |
-| Fixes real bug | YES - out-of-bounds array access with index -1 |
-| Important issue | YES - memory safety / potential crash |
-| Small and contained | YES - single line change |
-| No new features | Correct - pure bug fix |
-| Tested | YES - reviewed by subsystem maintainer, identical pattern in
-other archs |
+This is a **correctness bug** that makes DMA-BUF OUT transfers
+completely non-functional on systems with an IOMMU (which includes most
+modern ARM SoCs).
 
-## Verification
+### Does it meet stable kernel rules?
 
-- Verified `NUMA_NO_NODE` is defined as `(-1)` in
-  `include/linux/nodemask_types.h:15`
-- Verified `__node_cpumask[]` is indexed by `node` directly in the old
-  macro, so passing -1 causes out-of-bounds access
-- Verified via git log that similar fixes exist for LoongArch
-  (`94b0c831eda77`) and arm64 (`a194c5f2d2b3a`)
-- Verified that PowerPC, SPARC64, and MIPS IP27 already have the same
-  NUMA_NO_NODE guard pattern
-- Verified the generic implementation in `include/asm-generic/numa.h`
-  also checks for NUMA_NO_NODE
-- Verified the fix returns `cpu_all_mask` which is consistent with all
-  other architecture implementations
-- Verified the change is a single-line macro modification with no
-  dependencies on other commits
+1. **Obviously correct**: Yes — the DMA direction semantics are well-
+   defined and the fix is a straightforward inversion of three boolean
+   conditions
+2. **Fixes a real bug**: Yes — DMA-BUF OUT transfers cause IOMMU faults
+   on ARM platforms
+3. **Important issue**: Yes — hardware fault/crash-level issue that
+   prevents a feature from working
+4. **Small and contained**: Yes — 3 lines changed in a single file
+5. **No new features**: Correct — pure bug fix
+6. **Tested**: Yes — "Tested-by: David Heidelberg" on OnePlus 6T
+   (sdm845)
 
-## Conclusion
+### Risk vs Benefit
 
-This is a textbook stable backport candidate. It fixes a real out-of-
-bounds memory access bug (array index -1) with a minimal, obviously
-correct one-line change that follows an established pattern used by
-multiple other architectures. The fix was reviewed by the Loongson
-maintainer. The risk of regression is effectively zero since the fix
-only adds a guard for a specific invalid input while preserving existing
-behavior for all valid inputs.
+- **Risk**: Very low — the change is mechanical (flip three booleans),
+  touches only DMA-BUF code paths in f_fs, and cannot affect non-DMA-BUF
+  USB operations
+- **Benefit**: High — fixes broken DMA-BUF OUT transfers that cause
+  IOMMU faults
+
+### Concerns
+
+- **Affected versions**: The DMA-BUF support was introduced in commit
+  `7b07a2a7ca02a` during the v6.9 development cycle. Only stable trees
+  from v6.9 onward need this fix (the code doesn't exist in older
+  kernels).
+- **Dependencies**: None — the fix is self-contained and touches only
+  the three lines with the bug
+- **Backport risk**: Clean application expected since the surrounding
+  code has not changed significantly
+
+### Verification
+
+- `git log -S "ffs_dmabuf_attach" master` confirmed the DMA-BUF
+  interface was introduced in commit `7b07a2a7ca02a` (v6.9 cycle,
+  2024-01-30)
+- `git merge-base --is-ancestor 7b07a2a7ca02a master` confirmed the
+  buggy code is in master
+- Read of `f_fs.c` at lines 1490-1549 verified the current (pre-fix)
+  code shows the inverted `DMA_FROM_DEVICE`/`DMA_TO_DEVICE` direction
+- Grep for `epfile->in` confirmed three locations needing the fix (lines
+  1512, 1642, 1687) matching the patch
+- Line 2442 shows `epfile->in = usb_endpoint_dir_in(ep->ep->desc)`
+  confirming `epfile->in` is true for IN endpoints (data to host)
+- USB DMA direction convention verified: IN endpoint = device reads
+  buffer = `DMA_TO_DEVICE`; OUT endpoint = device writes buffer =
+  `DMA_FROM_DEVICE`. The original code has these inverted.
+- `git tag --contains 7b07a2a7ca02a` shows the commit is in `p-6.12`,
+  `p-6.15`, `p-6.16` branches, confirming the buggy code exists in
+  multiple stable trees
+- Commit has "Tested-by: David Heidelberg" and was merged by Greg Kroah-
+  Hartman (USB maintainer), indicating quality review
+
+This is a clear, small, well-tested fix for a real hardware fault that
+makes DMA-BUF OUT transfers completely broken on IOMMU-enabled
+platforms. It meets all stable kernel criteria.
 
 **YES**
 
- arch/mips/include/asm/mach-loongson64/topology.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_fs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/include/asm/mach-loongson64/topology.h b/arch/mips/include/asm/mach-loongson64/topology.h
-index 3414a1fd17835..89bb4deab98a6 100644
---- a/arch/mips/include/asm/mach-loongson64/topology.h
-+++ b/arch/mips/include/asm/mach-loongson64/topology.h
-@@ -7,7 +7,7 @@
- #define cpu_to_node(cpu)	(cpu_logical_map(cpu) >> 2)
+diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
+index fa467a40949d2..928f51fddc64e 100644
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -1509,7 +1509,7 @@ static int ffs_dmabuf_attach(struct file *file, int fd)
+ 		goto err_dmabuf_detach;
+ 	}
  
- extern cpumask_t __node_cpumask[];
--#define cpumask_of_node(node)	(&__node_cpumask[node])
-+#define cpumask_of_node(node)	  ((node) == NUMA_NO_NODE ? cpu_all_mask : &__node_cpumask[node])
+-	dir = epfile->in ? DMA_FROM_DEVICE : DMA_TO_DEVICE;
++	dir = epfile->in ? DMA_TO_DEVICE : DMA_FROM_DEVICE;
  
- struct pci_bus;
- extern int pcibus_to_node(struct pci_bus *);
+ 	err = ffs_dma_resv_lock(dmabuf, nonblock);
+ 	if (err)
+@@ -1639,7 +1639,7 @@ static int ffs_dmabuf_transfer(struct file *file,
+ 	/* Make sure we don't have writers */
+ 	timeout = nonblock ? 0 : msecs_to_jiffies(DMABUF_ENQUEUE_TIMEOUT_MS);
+ 	retl = dma_resv_wait_timeout(dmabuf->resv,
+-				     dma_resv_usage_rw(epfile->in),
++				     dma_resv_usage_rw(!epfile->in),
+ 				     true, timeout);
+ 	if (retl == 0)
+ 		retl = -EBUSY;
+@@ -1684,7 +1684,7 @@ static int ffs_dmabuf_transfer(struct file *file,
+ 	dma_fence_init(&fence->base, &ffs_dmabuf_fence_ops,
+ 		       &priv->lock, priv->context, seqno);
+ 
+-	resv_dir = epfile->in ? DMA_RESV_USAGE_WRITE : DMA_RESV_USAGE_READ;
++	resv_dir = epfile->in ? DMA_RESV_USAGE_READ : DMA_RESV_USAGE_WRITE;
+ 
+ 	dma_resv_add_fence(dmabuf->resv, &fence->base, resv_dir);
+ 	dma_resv_unlock(dmabuf->resv);
 -- 
 2.51.0
 
