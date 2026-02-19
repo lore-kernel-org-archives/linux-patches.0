@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A030C2DCF4C;
-	Thu, 19 Feb 2026 02:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F325F2D876F;
+	Thu, 19 Feb 2026 02:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466681; cv=none; b=AM4N0/DNyBPR5lVFRQfKp/dlbM+RK1o9NCoxQ3i48RzB15/W0AHQpGFRk38+vfAHlsFQ68ME+5Vk8zwOWbcj+hCtEsfUp364lQHgw3wa9wOC0eb9gnFxvye9MF0LjzGpiG3tOoSsuISQ7QuUW53hsIMf2FeUK/fXCVxMtt3JnXU=
+	t=1771466683; cv=none; b=tQ/ZVnULmw/2xidlHPQURuiU093QzDNTxhEagmrDvtRN8USj5lMOe5qIJTAoqaeajsNhTQpRw+kgtPAvd22Tjcv6/f6OB8ic5hugD/UDxlTZEUmLYyeS/a4k1fc5ZweFvofKCM1JLXlY95rD6MAvUMNLj71ZM4Twi839X0/qt2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466681; c=relaxed/simple;
-	bh=bPo6irn4L27PBL7wCzQUZj+yQ5CRpD1GRlWw8+EcY34=;
+	s=arc-20240116; t=1771466683; c=relaxed/simple;
+	bh=PEy4M+x/13hXJFTNbqHXIFiFKwPnGI3g2c2qHSwUTgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vy6IOhoqCh1IIjScs9ZYfj8dNe/6PPOS+8qiScvqpIJqOBC6o+g7MnPaJxtb+PvGW+6b3D9ZDqBelodMOvYPs3POSBgaC2X3QjT7Q9bAjDKwtHvWRyev3XWAiw/msg9aNcFPudaP9kEMvq7HuoR7C/JL1H10MhCInTP66hariqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bf++E7Cc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h5zsJUb4ZFtiktiFB6dzHVfMjqR5dgtfdFgv7jHwk/dMfR8YJDca/cP0+9Wr90BQEVK/IxPihaTwoGKS70FrUXvEwmk2t9vD23rVseT5LpjUD/ZjZqCD5lS8QaAX8+5YYsJcfJsnhPuntJViLzO2aBKEi+KVIPI72KdZ/rO1jCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YT9W+hOl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bf++E7Cc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2062C19424;
-	Thu, 19 Feb 2026 02:04:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YT9W+hOl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0765C116D0;
+	Thu, 19 Feb 2026 02:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466681;
-	bh=bPo6irn4L27PBL7wCzQUZj+yQ5CRpD1GRlWw8+EcY34=;
+	s=k20201202; t=1771466682;
+	bh=PEy4M+x/13hXJFTNbqHXIFiFKwPnGI3g2c2qHSwUTgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bf++E7Cc+YLFg1mvAdbaucQknsX+PrmwB6HQBQxcHU17GE2TbrDNPul7Se/ynFCUI
-	 5+enGAptO48jYxNBi+C1KdXocByoo0OxYE61B1/ndcldR3kqNdkpancRvyQBW0uBQC
-	 EHEJZIgEtZ+tGfrq8jn6t0hXlh+jfhk/xpvKwiRPCNJfUFG48z0u4qSU1tQATtlhhG
-	 4vNvTxzRMmGYQ5Tv6vNrLbiCSCPLcoj2HtnH8ead7ZQiYW6ci+/BMhhfCIaNv7M22o
-	 7kGM5sK9w4z5dzJTXI/nkSiZRuZk28ihvcNYGP3nvdq7kz0nAv9L+b4eEciWO2QFcf
-	 ZdiDACQyxG+Qw==
+	b=YT9W+hOlpKGRbxmfILtXzBHSS57oPP99LmEp2s0p2b58its1QyZlxwvdrY5bEsmlh
+	 M7fb4LmHuYA14+ZcNJFxwwmpkOHyhcuKA/qVyYOc9SQvDM+e5WkaJMjzbaUF8ECHwN
+	 9ROcVVI0SR7O7HpsZcdSZyZWpHborPkXL6O99k+KHs/DZvCnesY4ahygldJowHpOsv
+	 DwgStXgzXoUuMgR0IYNpaUbYZ8mIWxSP2g03Ie04GnTmWj1hnxZF6ExllsI2bqpo+a
+	 07uFJx14/4Pqq0s+vd+dOfXwCYgOhKTcBhHh3N+jRGHzlDwpBCxFnMzTLqpPKSHFU9
+	 0tMQgWuAL2IpA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Tuo Li <islituo@gmail.com>,
+	Scott Branden <scott.branden@broadcom.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] block: fix partial IOVA mapping cleanup in blk_rq_dma_map_iova
-Date: Wed, 18 Feb 2026 21:03:50 -0500
-Message-ID: <20260219020422.1539798-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] misc: bcm_vk: Fix possible null-pointer dereferences in bcm_vk_read()
+Date: Wed, 18 Feb 2026 21:03:51 -0500
+Message-ID: <20260219020422.1539798-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -53,156 +52,127 @@ X-stable-base: Linux 6.19.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit 81e7223b1a2d63b655ee72577c8579f968d037e3 ]
+[ Upstream commit ba75ecb97d3f4e95d59002c13afb6519205be6cb ]
 
-When dma_iova_link() fails partway through mapping a request's bvec
-list, the function breaks out of the loop without cleaning up
-already mapped segments. Similarly, if dma_iova_sync() fails after
-linking all segments, no cleanup is performed.
+In the function bcm_vk_read(), the pointer entry is checked, indicating
+that it can be NULL. If entry is NULL and rc is set to -EMSGSIZE, the
+following code may cause null-pointer dereferences:
 
-This leaves partial IOVA mappings in place. The completion path
-attempts to unmap the full expected size via dma_iova_destroy() or
-nvme_unmap_data(), but only a partial size was actually mapped,
-leading to incorrect unmap operations.
+  struct vk_msg_blk tmp_msg = entry->to_h_msg[0];
+  set_msg_id(&tmp_msg, entry->usr_msg_id);
+  tmp_msg.size = entry->to_h_blks - 1;
 
-Add an out_unlink error path that calls dma_iova_destroy() to clean
-up partial mappings before returning failure. The dma_iova_destroy()
-function handles both partial unlink and IOVA space freeing. It
-correctly handles the mapped_len == 0 case (first dma_iova_link()
-failure) by only freeing the IOVA allocation without attempting to
-unmap.
+To prevent these possible null-pointer dereferences, copy to_h_msg,
+usr_msg_id, and to_h_blks from iter into temporary variables, and return
+these temporary variables to the application instead of accessing them
+through a potentially NULL entry.
 
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Reviewed-by: Scott Branden <scott.branden@broadcom.com>
+Link: https://patch.msgid.link/20251211063637.3987937-1-islituo@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The function is called from `blk_dma_map_iter_start()` which is the main
-DMA mapping entry point for block requests using IOMMU-based (IOVA)
-mapping. This is used by NVMe drivers and potentially other high-
-performance storage drivers.
+The buggy commit is present in stable trees 5.15 and 6.1 (among others),
+confirming the bug exists in stable kernels.
 
-## 3. Summary of Analysis
+## Summary
 
-### What the bug is:
-In `blk_rq_dma_map_iova()`, when `dma_iova_link()` fails partway through
-mapping multiple segments, or when `dma_iova_sync()` fails after all
-segments are linked:
+**Bug**: Guaranteed null-pointer dereference in `bcm_vk_read()` when
+user provides a buffer too small for the message. `entry` is NULL but
+dereferenced in the `else if (rc == -EMSGSIZE)` branch.
 
-1. **dma_iova_link() failure**: The code breaks out of the loop but
-   doesn't clean up already-linked segments. The IOVA allocation and
-   partial mappings are leaked. Additionally, when the `dma_iova_link()`
-   fails, the code falls through to `dma_iova_sync()` which then
-   operates on partially mapped data — this is also incorrect behavior.
+**Fix quality**: Small, surgical, correct. Saves needed values from
+`iter` (which is valid) into temporary variables while inside the loop,
+then uses those temporaries instead of the NULL `entry` pointer. The fix
+is reviewed by the subsystem maintainer and merged by Greg KH.
 
-2. **dma_iova_sync() failure**: The code returns `false` with
-   `iter->status` set, but doesn't call `dma_iova_destroy()` to clean up
-   the linked IOVA mappings.
+**Risk**: Very low. The fix only changes when values are copied (from
+inside the loop to the same code path), using temporary variables. No
+behavioral change for the normal path.
 
-In both cases, the completion path will attempt to unmap using the full
-expected size via `dma_iova_destroy()` or `nvme_unmap_data()`, but only
-a partial size was actually mapped, leading to **incorrect unmap
-operations** — which could corrupt IOMMU mappings, cause IOMMU faults,
-or lead to data corruption.
+**Impact**: Prevents a kernel crash/oops that any user of this driver
+can trigger by calling `read()` with an undersized buffer.
 
-### Why it matters:
-- This is a bug in the **block I/O DMA path** — the very core of how
-  storage I/O works with IOMMU
-- It can trigger on any system using IOMMU with NVMe storage when memory
-  pressure or IOMMU resource exhaustion causes `dma_iova_link()` to fail
-- Consequences of incorrect IOMMU unmap: potential data corruption,
-  IOMMU page faults, kernel crashes
-- NVMe is extremely widely deployed; any system with IOMMU enabled could
-  be affected
+**Scope**: Single file, ~10 meaningful lines changed. Clean and self-
+contained.
 
-### Stable criteria assessment:
-- **Obviously correct**: Yes — adds proper error cleanup with
-  `dma_iova_destroy()` which is designed for exactly this purpose
-- **Fixes a real bug**: Yes — partial IOVA mapping cleanup is missing,
-  leading to incorrect unmap operations
-- **Small and contained**: Yes — the diff is minimal (~15 lines changed
-  in a single function in a single file)
-- **No new features**: Correct — purely error path fix
-- **Reviewed**: Yes — reviewed by Christoph Hellwig (original author of
-  the code), committed by Jens Axboe (block layer maintainer)
-- **Tested in mainline**: Yes — it's in mainline already
-
-### Risk assessment:
-- **Very low risk**: The change only affects error paths, adding proper
-  cleanup where none existed
-- **Well-understood cleanup function**: `dma_iova_destroy()` is
-  specifically designed for this cleanup and handles both partial and
-  zero-length cases
-- **Backport note**: The patch won't apply cleanly to 6.17.y and 6.18.y
-  because the `attrs` variable was added in v6.19. A minor adaptation
-  would be needed (remove `attrs` and pass `0` to `dma_iova_destroy()`).
-  For 6.19.y, it should apply cleanly.
+**Stable criteria**: Meets all criteria:
+- Obviously correct and tested (reviewed by maintainer)
+- Fixes a real bug (null-pointer dereference = kernel crash)
+- Fixes an important issue (kernel crash from userspace)
+- Small and contained
+- No new features or APIs
 
 ## Verification
 
-- **git log** showed `blk-mq-dma.c` was created by commit
-  `b0a4158554b90` and the buggy function `blk_rq_dma_map_iova` was
-  introduced by `858299dc61603` ("block: add scatterlist-less DMA
-  mapping helpers"), first in v6.17
-- **git tag --contains** confirmed the buggy code entered mainline in
-  v6.17
-- **git show stable/linux-6.18.y:block/blk-mq-dma.c** and **git show
-  stable/linux-6.17.y:block/blk-mq-dma.c** both confirmed the buggy code
-  is present in stable trees (with `break` instead of `goto out_unlink`,
-  and no cleanup on `dma_iova_sync` failure)
-- **git show stable/linux-6.12.y:block/blk-mq-dma.c** confirmed the file
-  does NOT exist in 6.12.y (only affects 6.17+)
-- **Read of drivers/iommu/dma-iommu.c** confirmed `dma_iova_destroy()`
-  properly handles mapped_len == 0 by calling `dma_iova_free()` only,
-  and mapped_len > 0 by unlinking and freeing
-- **git log stable/linux-6.18.y** and **stable/linux-6.19.y** confirmed
-  the fix has not yet been applied to stable trees
-- **git log 37f0c7a8df7ad** confirmed the `attrs` variable was
-  introduced in v6.19, meaning 6.17.y and 6.18.y will need a trivial
-  adaptation for clean backport
-- The reviewer (Christoph Hellwig) is verified as the original author of
-  the buggy code via the Signed-off-by on `858299dc61603`
+- **git blame** confirmed the buggy lines (`entry->to_h_msg[0]`,
+  `entry->usr_msg_id`, `entry->to_h_blks` at lines 1055, 1061, 1062)
+  originate from commit `111d746bb4767a` (Jan 2021, "misc: bcm-vk: add
+  VK messaging support")
+- **Code trace** verified: `entry` is initialized to NULL (line 1012),
+  remains NULL in the `-EMSGSIZE` path (only set to `iter` in the
+  buffer-big-enough branch), and is then dereferenced in `else if (rc ==
+  -EMSGSIZE)` branch — confirmed null-pointer dereference
+- **git tag** confirmed the buggy commit is present in stable trees
+  p-5.15 and p-6.1
+- **Diff review** confirmed the fix correctly saves values from `iter`
+  (valid pointer) into temporaries before leaving the loop, and uses
+  those temporaries in the error path
+- **Reviewed-by: Scott Branden** (subsystem maintainer) confirms
+  correctness
 
 **YES**
 
- block/blk-mq-dma.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/misc/bcm-vk/bcm_vk_msg.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk-mq-dma.c b/block/blk-mq-dma.c
-index fb018fffffdcc..feead1934301a 100644
---- a/block/blk-mq-dma.c
-+++ b/block/blk-mq-dma.c
-@@ -126,17 +126,20 @@ static bool blk_rq_dma_map_iova(struct request *req, struct device *dma_dev,
- 		error = dma_iova_link(dma_dev, state, vec->paddr, mapped,
- 				vec->len, dir, attrs);
- 		if (error)
--			break;
-+			goto out_unlink;
- 		mapped += vec->len;
- 	} while (blk_map_iter_next(req, &iter->iter, vec));
+diff --git a/drivers/misc/bcm-vk/bcm_vk_msg.c b/drivers/misc/bcm-vk/bcm_vk_msg.c
+index 1f42d1d5a630a..665a3888708ac 100644
+--- a/drivers/misc/bcm-vk/bcm_vk_msg.c
++++ b/drivers/misc/bcm-vk/bcm_vk_msg.c
+@@ -1010,6 +1010,9 @@ ssize_t bcm_vk_read(struct file *p_file,
+ 	struct device *dev = &vk->pdev->dev;
+ 	struct bcm_vk_msg_chan *chan = &vk->to_h_msg_chan;
+ 	struct bcm_vk_wkent *entry = NULL, *iter;
++	struct vk_msg_blk tmp_msg;
++	u32 tmp_usr_msg_id;
++	u32 tmp_blks;
+ 	u32 q_num;
+ 	u32 rsp_length;
  
- 	error = dma_iova_sync(dma_dev, state, 0, mapped);
--	if (error) {
--		iter->status = errno_to_blk_status(error);
--		return false;
--	}
-+	if (error)
-+		goto out_unlink;
+@@ -1034,6 +1037,9 @@ ssize_t bcm_vk_read(struct file *p_file,
+ 					entry = iter;
+ 				} else {
+ 					/* buffer not big enough */
++					tmp_msg = iter->to_h_msg[0];
++					tmp_usr_msg_id = iter->usr_msg_id;
++					tmp_blks = iter->to_h_blks;
+ 					rc = -EMSGSIZE;
+ 				}
+ 				goto read_loop_exit;
+@@ -1052,14 +1058,12 @@ ssize_t bcm_vk_read(struct file *p_file,
  
- 	return true;
-+
-+out_unlink:
-+	dma_iova_destroy(dma_dev, state, mapped, dir, attrs);
-+	iter->status = errno_to_blk_status(error);
-+	return false;
- }
- 
- static inline void blk_rq_map_iter_init(struct request *rq,
+ 		bcm_vk_free_wkent(dev, entry);
+ 	} else if (rc == -EMSGSIZE) {
+-		struct vk_msg_blk tmp_msg = entry->to_h_msg[0];
+-
+ 		/*
+ 		 * in this case, return just the first block, so
+ 		 * that app knows what size it is looking for.
+ 		 */
+-		set_msg_id(&tmp_msg, entry->usr_msg_id);
+-		tmp_msg.size = entry->to_h_blks - 1;
++		set_msg_id(&tmp_msg, tmp_usr_msg_id);
++		tmp_msg.size = tmp_blks - 1;
+ 		if (copy_to_user(buf, &tmp_msg, VK_MSGQ_BLK_SIZE) != 0) {
+ 			dev_err(dev, "Error return 1st block in -EMSGSIZE\n");
+ 			rc = -EFAULT;
 -- 
 2.51.0
 
