@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667B530595C;
-	Thu, 19 Feb 2026 02:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03C4308F0A;
+	Thu, 19 Feb 2026 02:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466694; cv=none; b=L4HHZw08r5XIEkVJtDSjm4gPdo9Ptfjl00ktDUl1YsHInC4jInDW0JBH62ztHB+MFc1V8S2QajHSjF1F1JjbjrdjAaZLIDlleoC9rgMW+mGpXG3OO5jjF6hy/Ku0VKlbok1JqSnSefLigzoTJmhx2v+ddtACK+n6WcxTsVv4DQ4=
+	t=1771466695; cv=none; b=m5PAgc+4cDtu5YT9Q0KmphXGi/SLbYTaSw0KPTM3S2OstlptREhTAfYk5ziYEZ4i7Rfz6rJL4bpQYxyjQ8Ih6/+j8fNrTVIwKqwxc81JV6VzLTHwAnxHL5hLFv4hMb5Kf+F/EG84HODPpolf9UACFXse6GJyegXoTEJ1vE0aXeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466694; c=relaxed/simple;
-	bh=Hzgly7jLnIzJWFToxAp2yu08V0fNXobD7L0hKdm+Ok0=;
+	s=arc-20240116; t=1771466695; c=relaxed/simple;
+	bh=XHfSr++LfcSDnt9pFUweddD+5djdvkHfs20so8hqnXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GRDPOKk3u8SE0Mr9ofgYUmE37cBj4VW7kXkrHxEkgpnL9W7l1fYpwUpFMGOK2BQ2Yhsnxiu7U4kSj1fbZT+7SmD+vaESj2jAbQfq1571HUI8k8LWHjvl4IjgtjztuOXezkItKH+6alFcMTpZPbjOWyIit5jGf/A/Xmhgd0zFdwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jo2jQ/Jg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mT8OgQ+AncS1nrMwEXJN36nemDKS7ZeDYfvAP0wtXVOFQJZVbpIEtG5Ik0QaNkhlm87yMAjF9ILW+lI5dBTSqVmnVBz9AspgIaltdkiATUdny3osc6DfOIbA5SMM9GM0f/KblaspVc0t0C5qanhy5UDJGU0Kzy70uMIkM48gE5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pFQoy0A9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jo2jQ/Jg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4653FC19425;
-	Thu, 19 Feb 2026 02:04:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pFQoy0A9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A48C116D0;
+	Thu, 19 Feb 2026 02:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466694;
-	bh=Hzgly7jLnIzJWFToxAp2yu08V0fNXobD7L0hKdm+Ok0=;
+	s=k20201202; t=1771466695;
+	bh=XHfSr++LfcSDnt9pFUweddD+5djdvkHfs20so8hqnXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jo2jQ/JgePSEfPtIyWj7uBke/NNbV5eRLt8DNrZRIAXxXrFZVJdPnNr+iyP4ivnMe
-	 pXM5VQRH6pTwK2sNW3qvML5Iy/Dn8hn0uaolcISKTAgJC9X3u08GFyFYaOHPiEMeZh
-	 zA/J3tuGVAkjyamrWAGJdwSm97ww9b5uxoPkpM0dLyUhSqMu0a9M666x2gaV7RH0FB
-	 gvcse4elM5ARsR4yf/9kWsgvWal6P1GNsxiivTSgXEKS8wnIWPI0f0rwLA6f8PVmUD
-	 Bn/8Qzv2GQ2h7HdMVwK91FZeIAnN6CwQO2BoixOwl+vvz2BT0l7oP/aR4ntju0w0Yt
-	 q8KCwX6AZIH0A==
+	b=pFQoy0A9O+MxLFB/Yv7YehDK31QxNo3qrW3J5sSAF6ZKfGL/VuNpoYfkZG4/W2eVV
+	 z3DGvHOtNBc+JOJC3r90Qo8ikQO01YsGQRhnytKqkKcWEd7VUvWCMYR+2N3DWcWW1m
+	 +I6FORd0ch5Jt7VhUay6FnHxbr9seD+kNIkKAJcJsP3fu6EfpSEUOBpN5efOtM1djI
+	 y4xFw2of74Hej2hxtGrSNWDnpelieTwaxoCiK+1pe2LvCiMHlYPrVNeXyLVZ8pe1Gq
+	 HiAdDRElzht+fDkEm6bJFj94HHlK1mxTMmMPXent8W+V+ZuLd0nInbekoZuuEYNxg6
+	 xrLL92ObldVMw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: "Derek J. Clark" <derekjohn.clark@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	arve@android.com,
-	tkjos@android.com,
+	lanzano.alex@gmail.com,
+	jic23@kernel.org,
+	linux-iio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] binder: don't use %pK through printk
-Date: Wed, 18 Feb 2026 21:04:00 -0500
-Message-ID: <20260219020422.1539798-24-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] iio: bmi270_i2c: Add MODULE_DEVICE_TABLE for BMI260/270
+Date: Wed, 18 Feb 2026 21:04:01 -0500
+Message-ID: <20260219020422.1539798-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -49,170 +49,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: "Derek J. Clark" <derekjohn.clark@gmail.com>
 
-[ Upstream commit 56d21267663bad91e8b10121224ec46366a7937e ]
+[ Upstream commit f69b5ac682dbc61e6aca806c22ce2ae74d598e45 ]
 
-In the past %pK was preferable to %p as it would not leak raw pointer
-values into the kernel log. Since commit ad67b74d2469 ("printk: hash
-addresses printed with %p") the regular %p has been improved to avoid
-this issue. Furthermore, restricted pointers ("%pK") were never meant
-to be used through printk(). They can still unintentionally leak raw
-pointers or acquire sleeping locks in atomic contexts.
+Currently BMI260 & BMI270 devices do not automatically load this
+driver. To fix this, add missing MODULE_DEVICE_TABLE for the i2c,
+acpi, and of device tables so the driver will load when the hardware
+is detected.
 
-Switch to the regular pointer formatting which is safer and
-easier to reason about.
+Tested on my OneXPlayer F1 Pro.
 
-There are still a few users of %pK left, but these use it through
-seq_file, for which its usage is safe.
-
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260107-restricted-pointers-binder-v1-1-181018bf3812@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Derek J. Clark <derekjohn.clark@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Classification
+So:
+- v6.13: Driver introduced with BMI260 support (no MODULE_DEVICE_TABLE)
+- v6.14-v6.16: No changes to this file
+- v6.17: Added suspend/resume pm_ops (affects the `.pm = pm_ptr(...)`
+  line in the driver struct)
+- v6.18: Added BMI0260 ACPI ID
 
-This commit addresses two real issues:
+The MODULE_DEVICE_TABLE additions are simple line additions between
+existing code, so they should apply cleanly to v6.13+ (possibly with
+minor context adjustments for v6.17+ changes and v6.18+ ACPI table
+differences). A minor backport adaptation may be needed for older stable
+trees that don't have the BMI0260 ACPI entry or the pm_ptr line, but
+these are trivial context issues.
 
-1. **Sleeping locks in atomic context (correctness bug)**: The `%pK`
-   format specifier in `restricted_pointer()` calls
-   `has_capability_noaudit()` which can trigger LSM capability checks.
-   On PREEMPT_RT kernels with SELinux, this acquires sleeping locks.
-   Since `binder_debug()` uses `pr_info_ratelimited()` (printk) and can
-   be called while holding spinlocks like `binder_inner_proc_lock`, this
-   is a real sleeping-in-atomic-context bug.
+### Summary
 
-2. **Potential pointer leakage**: When `%pK` fails in atomic/IRQ context
-   (detected by `in_hardirq() || in_serving_softirq() || in_nmi()`
-   checks), it prints "pK-error" instead of the address. But in non-IRQ
-   spinlock contexts (like binder's inner proc lock), the check doesn't
-   catch it, potentially leading to unintended raw pointer leaks.
+**What it fixes**: BMI260/BMI270 I2C driver doesn't autoload when
+hardware is detected because `MODULE_DEVICE_TABLE` macros were never
+added. Users must manually load the module.
 
-### Scope and Risk
+**Why it matters**: This is a device enablement bug affecting real
+consumer hardware (handheld gaming PCs like GPD Win Mini, Aya Neo, OXP
+Mini Pro, OneXPlayer F1 Pro). The driver exists but doesn't work without
+manual intervention.
 
-- **4 format string changes** across 2 files - extremely minimal
-- **No logic changes** - only the pointer format specifier character
-  changes
-- **Zero risk of regression** - `%p` is the standard, recommended
-  approach since 2017
-- **Well-reviewed** - Acked by Carlos Llamas, Reviewed by Alice Ryhl,
-  committed by Greg KH
+**Risk**: Essentially zero. `MODULE_DEVICE_TABLE` is a compile-time-only
+construct that generates module alias information. It cannot cause
+runtime regressions.
 
-### Stable Kernel Suitability
+**Scope**: 3 lines added in 1 file. Minimal, well-understood change.
 
-- **Fixes a real bug**: Sleeping in atomic context is a correctness bug,
-  especially on PREEMPT_RT
-- **Obviously correct**: Using `%p` is documented as the correct
-  approach for printk
-- **Small and contained**: Only 4 single-character changes in format
-  strings
-- **No new features**: Pure bug fix
-- **No dependencies**: The prerequisite commit `ad67b74d2469` ("printk:
-  hash addresses printed with %p") is from 2017 (v4.15), present in all
-  active stable trees
-
-### Concerns
-
-- The bug only manifests with specific configurations (PREEMPT_RT + LSM
-  like SELinux + kptr_restrict=1), making it relatively rare in practice
-- The fix is so trivial and low-risk that there's essentially no
-  downside to backporting
+**Stable criteria met**:
+- Obviously correct (trivially so)
+- Fixes a real bug (driver doesn't autoload)
+- Small and contained
+- No new features
+- Tested on real hardware
+- Reviewed by respected kernel developer
 
 ### Verification
 
-- Explored `restricted_pointer()` in `lib/vsprintf.c` - confirmed it
-  calls `has_capability_noaudit()` which can trigger sleeping LSM hooks
-  when `kptr_restrict==1`
-- Confirmed `binder_debug()` macro uses `pr_info_ratelimited()` (printk)
-  - this goes through the printk path
-- Confirmed the binder debug calls happen under
-  `binder_inner_proc_lock()` (spinlock) - verified in the diff context
-  showing `binder_inner_proc_lock(proc)` before the debug print
-- Confirmed documentation at `Documentation/core-api/printk-formats.rst`
-  states `%pK` is "only intended when producing content of a file read
-  by userspace from e.g. procfs or sysfs, not for dmesg"
-- Confirmed commit `ad67b74d2469` is from 2017 (v4.15 era), meaning `%p`
-  hashing is available in all active stable trees
-- Found a real-world bug report (kmemleak sleeping lock issue)
-  confirming `%pK` through printk causes actual sleeping-in-atomic
-  violations on PREEMPT_RT with SELinux
-- Could NOT independently verify the exact stable tree versions affected
-  (unverified, but the code pattern has existed since early binder
-  inclusion)
-
-### Decision
-
-While this is a real correctness bug (sleeping in atomic context), it
-only triggers under a very specific configuration combination
-(PREEMPT_RT + SELinux/LSM + kptr_restrict=1 + binder debug enabled). The
-fix is trivially correct and zero-risk, but the practical impact to
-stable users is very low. That said, the fix meets all stable criteria:
-it's obviously correct, fixes a real (if uncommon) bug, is extremely
-small, and has no risk of regression. The benefit, while small, exceeds
-the (essentially zero) risk.
+- `git log --diff-filter=A -- drivers/iio/imu/bmi270/bmi270_i2c.c`
+  confirmed driver was introduced in commit `3ea51548d6b25` (v6.13)
+- `git show 3ea51548d6b25` confirmed the original driver never had
+  `MODULE_DEVICE_TABLE` — this has been a bug since day one
+- `git show f35f3c832eb58` confirmed BMI260 support (with ACPI and OF
+  tables) was added in v6.13
+- `git tag --contains 3ea51548d6b25` confirmed the driver is in v6.13+
+- `git tag --contains dc757dc1572d5` confirmed the BMI0260 ACPI ID is
+  only in v6.18+, so the backport may need minor context adjustment for
+  older trees
+- `git log --oneline v6.16..v6.17 --
+  drivers/iio/imu/bmi270/bmi270_i2c.c` confirmed suspend/resume was
+  added in v6.17, which affects context near the driver struct
+- The change is purely additive (3 macro invocations), verified by
+  reading the diff
 
 **YES**
 
- drivers/android/binder.c       | 2 +-
- drivers/android/binder_alloc.c | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/imu/bmi270/bmi270_i2c.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/android/binder.c b/drivers/android/binder.c
-index b356c9b882544..33e4dad0915bb 100644
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -4523,7 +4523,7 @@ static int binder_thread_write(struct binder_proc *proc,
- 				}
- 			}
- 			binder_debug(BINDER_DEBUG_DEAD_BINDER,
--				     "%d:%d BC_DEAD_BINDER_DONE %016llx found %pK\n",
-+				     "%d:%d BC_DEAD_BINDER_DONE %016llx found %p\n",
- 				     proc->pid, thread->pid, (u64)cookie,
- 				     death);
- 			if (death == NULL) {
-diff --git a/drivers/android/binder_alloc.c b/drivers/android/binder_alloc.c
-index 979c96b74cad3..d5ed64543bbf4 100644
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -81,7 +81,7 @@ static void binder_insert_free_buffer(struct binder_alloc *alloc,
- 	new_buffer_size = binder_alloc_buffer_size(alloc, new_buffer);
+diff --git a/drivers/iio/imu/bmi270/bmi270_i2c.c b/drivers/iio/imu/bmi270/bmi270_i2c.c
+index b909a421ad017..b92da4e0776fa 100644
+--- a/drivers/iio/imu/bmi270/bmi270_i2c.c
++++ b/drivers/iio/imu/bmi270/bmi270_i2c.c
+@@ -37,6 +37,7 @@ static const struct i2c_device_id bmi270_i2c_id[] = {
+ 	{ "bmi270", (kernel_ulong_t)&bmi270_chip_info },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(i2c, bmi270_i2c_id);
  
- 	binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
--		     "%d: add free buffer, size %zd, at %pK\n",
-+		     "%d: add free buffer, size %zd, at %p\n",
- 		      alloc->pid, new_buffer_size, new_buffer);
+ static const struct acpi_device_id bmi270_acpi_match[] = {
+ 	/* GPD Win Mini, Aya Neo AIR Pro, OXP Mini Pro, etc. */
+@@ -45,12 +46,14 @@ static const struct acpi_device_id bmi270_acpi_match[] = {
+ 	{ "BMI0260",  (kernel_ulong_t)&bmi260_chip_info },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(acpi, bmi270_acpi_match);
  
- 	while (*p) {
-@@ -572,7 +572,7 @@ static struct binder_buffer *binder_alloc_new_buf_locked(
- 	}
+ static const struct of_device_id bmi270_of_match[] = {
+ 	{ .compatible = "bosch,bmi260", .data = &bmi260_chip_info },
+ 	{ .compatible = "bosch,bmi270", .data = &bmi270_chip_info },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, bmi270_of_match);
  
- 	binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
--		     "%d: binder_alloc_buf size %zd got buffer %pK size %zd\n",
-+		     "%d: binder_alloc_buf size %zd got buffer %p size %zd\n",
- 		      alloc->pid, size, buffer, buffer_size);
- 
- 	/*
-@@ -748,7 +748,7 @@ static void binder_free_buf_locked(struct binder_alloc *alloc,
- 		ALIGN(buffer->extra_buffers_size, sizeof(void *));
- 
- 	binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
--		     "%d: binder_free_buf %pK size %zd buffer_size %zd\n",
-+		     "%d: binder_free_buf %p size %zd buffer_size %zd\n",
- 		      alloc->pid, buffer, size, buffer_size);
- 
- 	BUG_ON(buffer->free);
+ static struct i2c_driver bmi270_i2c_driver = {
+ 	.driver = {
 -- 
 2.51.0
 
