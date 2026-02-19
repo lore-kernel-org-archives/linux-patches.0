@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803AF284896;
-	Thu, 19 Feb 2026 02:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D222C2C0F8E;
+	Thu, 19 Feb 2026 02:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466672; cv=none; b=KGidQqO3GazTQL2H0Vf5/CWpEzvUJ6N/m8aR7oo4gm09pYicf9vD0ycGdw3xzL9MMbKS7YFWiwAOBTQhqZuqYZ5TQZC0UXkARnMpjpn+TOQMZmloBy4qEHUuPKZxAjpT1xSU1+OPPdher7oRM6zbWpH1lV7kexxe0IXBPQggx/c=
+	t=1771466673; cv=none; b=H62mRJvVuWhzOJC+08wA+ff1EgmH2tFvryQ4BL7I+LJQzZRhctUCTl5dFNHpWpuohJ77EbUeCsLm9Jtqy8q6vgZYLvCkFN99AdkBGCQ/Ag+IAVXC3QCsAf1G7UW17mL/brPamK+KMBJk1nIHis+lDOcE3FBvGjIxtqiiUZMJ/8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466672; c=relaxed/simple;
-	bh=rAe4ps5q6e4DIfaR9GY8Om27+K6JRSY5/98vs/RSyi0=;
+	s=arc-20240116; t=1771466673; c=relaxed/simple;
+	bh=otP0+uOp9VFL6AME+3Z+1o09irTWa/J1aD/0/uL/ABE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J22L617/3foSABykOy1oFrpJql2XnGmkenSOVE/KsFedHV01Ei1r/URHAdA4VajuAp9jNAMVqEBeua3uLEIqy0xaxh7fNBBgfZQtuSM0yqjh8otGoh7JJaMk/K+k4c020U0AzQqntfCmH+IUlqWbZBzBV/M9zupneUDDFNvIP5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pd9HYyjR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EyfF+5zdwZNke6PyZukYuWFjPLZ9I3DND0ze+OUVP425CeaDXM0qSrlW7FzWlQeYdwetiTr1RuntVNhWx0zNsjxdmNBeVgLtKAPOtJRnLZdWfpRLe6ttUYGVcTSpF36A6Bs31BY/JwQqhf1gtd/jC4YfwU2FSXsZX8FnxEixMks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t2rBdHcV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pd9HYyjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B65C4AF09;
-	Thu, 19 Feb 2026 02:04:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t2rBdHcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87272C19422;
+	Thu, 19 Feb 2026 02:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466672;
-	bh=rAe4ps5q6e4DIfaR9GY8Om27+K6JRSY5/98vs/RSyi0=;
+	s=k20201202; t=1771466673;
+	bh=otP0+uOp9VFL6AME+3Z+1o09irTWa/J1aD/0/uL/ABE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pd9HYyjRhEdTc2I1fuOCVF1zPUp3TrM+OWkFiILZwxW20HvMaTp0WK8tLs0lyLose
-	 E/DqJgseLHMC64FM3hwl9PUtl8ojIeh09W0T1K8/vU7cMczotafWTr5rY3mz4x8inA
-	 QdB8W+Hf2emk5Zfh4piHw4Uxei4PXZT8AwPH6CBskKBFJSEfL27dkBQtlpuqrmcVu2
-	 4Gmgz44nTfmrTNmNESRzCqqkdnFAdCXoBhx9N4vt7U6bkacxTLuyjfh0Tzi6YLiAw0
-	 Qt58a6XeOxVmq9VKci0aKYgdS9pFoKv+KIrME2h5yx7agDOHy3VUfpWaliOudRxqap
-	 9KbIhHmZKHt6A==
+	b=t2rBdHcV/fTCnW0/JBckGWC5kJjVwoDtuEY/gRkS1t4skQPQetKxwxcIlsU8d1pMM
+	 8jQqoyJa09AB0u/NLmc1aUVR/r0LRYeS6R+E4Vpmkm6p0/Ag/RZQZsN6AddJrBCBNu
+	 IYrpvi2veKfVnzByhgpV+cj1UycYYnBIwPBtu1vJL4NFeiQ8+xreAphfei6+8ukKDs
+	 RFj08gUG/8zNKE19KgIVJytdfEWRnSqLSGOLmXmwp3rxScmtVM+RSiL8UHynOBeWza
+	 WLpmhbsRx46HSSTjrxGnl2p+jLCAYeeU1VLqXa4Cz0k1KNYW12n3LySle/PSCwHuNr
+	 t9UD9AVdu+J6A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Romain Gantois <romain.gantois@bootlin.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ulf.hansson@linaro.org,
-	linux-kernel@vger.kernel.org,
-	linux-mmc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] mmc: rtsx_pci: add quirk to disable MMC_CAP_AGGRESSIVE_PM for RTS525A
-Date: Wed, 18 Feb 2026 21:03:43 -0500
-Message-ID: <20260219020422.1539798-7-sashal@kernel.org>
+	mdf@kernel.org,
+	linux-fpga@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] fpga: of-fpga-region: Fail if any bridge is missing
+Date: Wed, 18 Feb 2026 21:03:44 -0500
+Message-ID: <20260219020422.1539798-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -50,156 +51,151 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Romain Gantois <romain.gantois@bootlin.com>
 
-[ Upstream commit 5f0bf80cc5e04d31eeb201683e0b477c24bd18e7 ]
+[ Upstream commit c141c8221bc5089de915d9f26044df892c343c7e ]
 
-Using MMC_CAP_AGGRESSIVE_PM on RTS525A card readers causes game
-performance issues when the card reader comes back from idle into active
-use. This can be observed in Hades II when loading new sections of the
-game or menu after the card reader puts itself into idle, and presents
-as a 1-2 second hang.
+When parsing the region bridge list from the "fpga-bridges" device tree
+property, the of-fpga-region driver will silently ignore bridges which fail
+to be obtained, for example due to a missing bridge driver or invalid
+phandle.
 
-Add EXTRA_CAPS_NO_AGGRESSIVE_PM quirk to allow cardreader drivers to
-opt-out of aggressive PM, and set it for RTS525A.
+This can lead to hardware issues if a region bridge stays coupled when
+partial programming is performed.
 
-Closes: https://lore.kernel.org/linux-mmc/ff9a7c20-f465-4afa-bf29-708d4a52974a@linux.dev/
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Link: https://patch.msgid.link/20260103204226.71752-1-matthew.schwartz@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fail if any of the bridges specified in "fpga-bridges" cannot be obtained.
+
+Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
+Link: https://lore.kernel.org/r/20251127-of-fpga-region-fail-if-bridges-not-found-v1-1-ca674f8d07eb@bootlin.com
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Summary Analysis
+This confirms the calling pattern: `fpga_region_program_fpga()` calls
+`get_bridges()` which is `of_fpga_region_get_bridges()`. If bridges fail
+to be obtained, the function proceeds to **disable bridges** (line 127)
+and then **load FPGA image** (line 133). If a bridge was supposed to
+decouple a region but was silently skipped, the FPGA programming
+proceeds with the bridge still coupled - which can cause hardware
+issues.
 
-**What the commit does:**
-This commit adds a device-specific quirk for the Realtek RTS525A card
-reader to disable `MMC_CAP_AGGRESSIVE_PM`. When aggressive PM is enabled
-on this device, it powers down the card reader after 10 seconds of idle,
-and re-tuning when waking up causes 1-2 second hangs that are user-
-visible and impact performance.
+## Summary of Analysis
 
-**Does it fix a real bug?**
-Yes. The aggressive PM behavior on RTS525A causes real, user-observable
-1-2 second hangs during normal use. This was reported by a real user
-with concrete reproduction steps (playing a game that loads data from a
-micro SD card). The "Closes:" tag links to a real mailing list report.
+### What the bug is
 
-**Stable kernel criteria assessment:**
+The `of_fpga_region_get_bridges()` function iterates over bridges
+specified in the device tree's "fpga-bridges" property. For each bridge,
+it calls `of_fpga_bridge_get_to_list()` which can return:
+- `0` = success
+- `-EBUSY` = bridge in use
+- `-ENODEV` = bridge not found (missing driver, invalid phandle)
 
-1. **Obviously correct and tested**: The change follows an existing
-   pattern (`EXTRA_CAPS_NO_MMC` is the exact same kind of quirk flag).
-   The author tested it on affected hardware.
+The **old code** only checked for `-EBUSY` and silently ignored
+`-ENODEV` and other errors. This means if a bridge driver is missing or
+a phandle is invalid, the bridge is silently skipped and FPGA partial
+reconfiguration proceeds without decoupling that bridge.
 
-2. **Fixes a real bug**: Yes - user-visible performance degradation (1-2
-   second hangs) on specific hardware.
+### Why it matters
 
-3. **Important issue**: It's a usability issue rather than a
-   crash/security issue. However, hardware quirks for broken behavior
-   are explicitly allowed in stable.
+FPGA bridges are isolation mechanisms. During partial reconfiguration,
+bridges must be decoupled to prevent bus contention and hardware
+corruption. If a bridge is silently skipped (not decoupled), partial
+programming proceeds with the region still coupled, potentially causing
+**hardware issues** - this is a data corruption / hardware damage
+scenario.
 
-4. **Small and contained**: The change is minimal - 3 new lines of code
-   plus a new flag definition. It only affects RTS525A devices and
-   doesn't change behavior for any other hardware.
+### The fix
 
-5. **No new features**: This is a hardware quirk/workaround, which is an
-   explicitly allowed exception to the "no new features" rule.
+The change is minimal and surgical:
+- `if (ret == -EBUSY)` → `if (ret)` (catches all errors, not just EBUSY)
+- `return -EBUSY` → `return ret` (propagates the actual error code)
+- Comment updates to match
 
-6. **Clean application**: The change builds on existing infrastructure
-   (`extra_caps` flags) that exists in all stable trees since v5.11.
+This is a **2-line functional change** with comment updates. Very low
+risk.
 
-**Risk assessment:**
-- **Very low risk**: The quirk only affects RTS525A devices
-  (`PID_525A`). All other devices are completely unaffected.
-- The code pattern is identical to existing quirks
-  (`EXTRA_CAPS_NO_MMC`).
-- The worst case if the quirk is wrong is slightly higher power
-  consumption on RTS525A (no aggressive PM = card reader stays powered).
+### Risk assessment
 
-**Dependencies:**
-None. The change uses existing infrastructure (`extra_caps`,
-`CHK_PCI_PID`, `PID_525A`) that has been present since before v5.11.
+- **Scope**: Very small (2 functional lines changed)
+- **Risk**: Low - the change makes the function stricter (fail on error
+  instead of silently continue), which is the safe direction. The only
+  risk is that some setups that previously "worked" (with silently
+  missing bridges) would now fail to program the FPGA. But this is the
+  correct behavior - programming without proper bridge decoupling is
+  dangerous.
+- **Dependencies**: None - this is a self-contained change
+- **Code exists in stable**: The file has been present since v4.16
+  (2017), so it exists in all active stable trees
 
-### Verification
+### Stable criteria check
 
-- **git log** showed `rtd3_en` / `MMC_CAP_AGGRESSIVE_PM` was introduced
-  in commit `5b4258f6721f4` (v5.11), confirming all current stable trees
-  have the affected code.
-- **git tag --contains** confirmed the runtime PM commit is in stable
-  trees (p-5.15, p-6.1, p-6.12).
-- **Grep for EXTRA_CAPS_** confirmed the existing quirk flag pattern
-  (NO_MMC at bit 7, SD_EXPRESS at bit 8, new flag at bit 9 - clean
-  progression).
-- **lore.kernel.org fetch** confirmed the bug report describes real
-  user-reported 1-2 second hangs on RTS525A with concrete reproduction
-  steps.
-- **Code review** verified the change only adds a condition check and
-  flag - no behavioral change for non-RTS525A devices.
-- The commit was signed off by Greg Kroah-Hartman, the stable tree
-  maintainer, indicating it went through proper review.
-- Could NOT verify whether any stable tree has already picked this up
-  (unverified, but not relevant to the YES/NO decision).
+1. Obviously correct: Yes - checking all errors instead of just one
+   specific error code
+2. Fixes a real bug: Yes - silent bridge skip can lead to hardware
+   issues during partial reconfiguration
+3. Important issue: Yes - potential hardware damage/corruption
+4. Small and contained: Yes - 2 functional lines changed in a single
+   file
+5. No new features: Correct - no new features added
+6. Reviewed: Yes - "Reviewed-by: Xu Yilun <yilun.xu@intel.com>" (FPGA
+   subsystem maintainer)
 
-### Conclusion
+## Verification
 
-This is a textbook hardware quirk for a specific device with a real,
-user-reported issue. It follows existing patterns in the codebase, is
-minimal in scope, and has zero risk to other devices. Hardware quirks
-are explicitly listed as appropriate for stable backporting. The
-affected code exists in all current stable trees (5.15+).
+- Read `of-fpga-region.c` (pre-patch version at lines 88-141): Confirmed
+  old code only checks `ret == -EBUSY` at line 134
+- Found `of_fpga_bridge_get_to_list` in `drivers/fpga/fpga-bridge.c`:
+  Confirmed it can return `-ENODEV` (from `of_fpga_bridge_get`) or
+  `-EBUSY`, not just `-EBUSY`
+- Traced the call chain: `fpga_region_program_fpga()` →
+  `region->get_bridges()` → `of_fpga_region_get_bridges()`. Confirmed at
+  `fpga-region.c:119-120` that the callback is invoked before
+  `fpga_bridges_disable()` at line 127 and `fpga_mgr_load()` at line 133
+- Confirmed the file has existed since commit `ef3acdd820752` (v4.16,
+  2017) - the bug has been present since file creation
+- Confirmed the patch has `Reviewed-by: Xu Yilun` (FPGA subsystem
+  maintainer)
+- Confirmed the change is self-contained - no dependencies on other
+  commits
 
 **YES**
 
- drivers/misc/cardreader/rts5249.c | 3 +++
- drivers/mmc/host/rtsx_pci_sdmmc.c | 4 ++--
- include/linux/rtsx_pci.h          | 1 +
- 3 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/fpga/of-fpga-region.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/misc/cardreader/rts5249.c b/drivers/misc/cardreader/rts5249.c
-index 38aefd8db452a..87d576a03e68e 100644
---- a/drivers/misc/cardreader/rts5249.c
-+++ b/drivers/misc/cardreader/rts5249.c
-@@ -78,6 +78,9 @@ static void rtsx_base_fetch_vendor_settings(struct rtsx_pcr *pcr)
- 	if (CHK_PCI_PID(pcr, PID_524A) || CHK_PCI_PID(pcr, PID_525A))
- 		pcr->rtd3_en = rtsx_reg_to_rtd3_uhsii(reg);
+diff --git a/drivers/fpga/of-fpga-region.c b/drivers/fpga/of-fpga-region.c
+index 43db4bb77138a..caa091224dc54 100644
+--- a/drivers/fpga/of-fpga-region.c
++++ b/drivers/fpga/of-fpga-region.c
+@@ -83,7 +83,7 @@ static struct fpga_manager *of_fpga_region_get_mgr(struct device_node *np)
+  * done with the bridges.
+  *
+  * Return: 0 for success (even if there are no bridges specified)
+- * or -EBUSY if any of the bridges are in use.
++ * or an error code if any of the bridges are not available.
+  */
+ static int of_fpga_region_get_bridges(struct fpga_region *region)
+ {
+@@ -130,10 +130,10 @@ static int of_fpga_region_get_bridges(struct fpga_region *region)
+ 						 &region->bridge_list);
+ 		of_node_put(br);
  
-+	if (CHK_PCI_PID(pcr, PID_525A))
-+		pcr->extra_caps |= EXTRA_CAPS_NO_AGGRESSIVE_PM;
-+
- 	if (rtsx_check_mmc_support(reg))
- 		pcr->extra_caps |= EXTRA_CAPS_NO_MMC;
- 	pcr->sd30_drive_sel_3v3 = rtsx_reg_to_sd30_drive_sel_3v3(reg);
-diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
-index 4db3328f46dfb..8df60000b5b41 100644
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -1497,8 +1497,8 @@ static void realtek_init_host(struct realtek_pci_sdmmc *host)
- 	mmc->caps = MMC_CAP_4_BIT_DATA | MMC_CAP_SD_HIGHSPEED |
- 		MMC_CAP_MMC_HIGHSPEED | MMC_CAP_BUS_WIDTH_TEST |
- 		MMC_CAP_UHS_SDR12 | MMC_CAP_UHS_SDR25;
--	if (pcr->rtd3_en)
--		mmc->caps = mmc->caps | MMC_CAP_AGGRESSIVE_PM;
-+	if (pcr->rtd3_en && !(pcr->extra_caps & EXTRA_CAPS_NO_AGGRESSIVE_PM))
-+		mmc->caps |= MMC_CAP_AGGRESSIVE_PM;
- 	mmc->caps2 = MMC_CAP2_NO_PRESCAN_POWERUP | MMC_CAP2_FULL_PWR_CYCLE |
- 		MMC_CAP2_NO_SDIO;
- 	mmc->max_current_330 = 400;
-diff --git a/include/linux/rtsx_pci.h b/include/linux/rtsx_pci.h
-index 3c5689356004e..f6122349c00ec 100644
---- a/include/linux/rtsx_pci.h
-+++ b/include/linux/rtsx_pci.h
-@@ -1230,6 +1230,7 @@ struct rtsx_pcr {
- #define EXTRA_CAPS_MMC_8BIT		(1 << 5)
- #define EXTRA_CAPS_NO_MMC		(1 << 7)
- #define EXTRA_CAPS_SD_EXPRESS		(1 << 8)
-+#define EXTRA_CAPS_NO_AGGRESSIVE_PM	(1 << 9)
- 	u32				extra_caps;
+-		/* If any of the bridges are in use, give up */
+-		if (ret == -EBUSY) {
++		/* If any of the bridges are not available, give up */
++		if (ret) {
+ 			fpga_bridges_put(&region->bridge_list);
+-			return -EBUSY;
++			return ret;
+ 		}
+ 	}
  
- #define IC_VER_A			0
 -- 
 2.51.0
 
