@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF5427EC7C;
-	Thu, 19 Feb 2026 02:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0A62DB794;
+	Thu, 19 Feb 2026 02:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466687; cv=none; b=KAVPvUXOSWtO1GcUfBgWWB4O/8+9kxuJEo6fInEdGV3hykrgj9O3MR9mz7XgD3DeJHuZPS5HHac1mbwPKrqpQyYx+4cCzVBi3YfgPntBwn/HOY57E8zUIoVUJp/cBqFMLhh3zIwp+FpwDTwT1tnJroKKD9Ng4qu+Eu9Y/Tk/Z+Q=
+	t=1771466687; cv=none; b=AEZJ8mSK6t7wt05m5PvTmZD8tVfRTiQdxKpaJf/3z2nthGCYzZmJ8GNAPu3nNBgc2YJcPLQWL0XNuKzl51MfzBlldJwqhbwsDWoht4Qc7SGGv7ypNrDyjt/65ZwZRlieCosLXDI4TOqwcuMzbu+Sye3WfYZOTAr5W1vaqf6cryk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771466687; c=relaxed/simple;
-	bh=3reYJvSH7ahSG/B6SvWXMM/NjZMpd+EdHuwNA20VIFc=;
+	bh=GKoHcnbEYD55ZwnR/rf/QDevmnIm0EXgtWNdvhuZ7Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dafxJiE5OyeZjYwExHpY78iU+zhE8QTsyEfMFKbaBJs0Qc/soQaW/0Yh6kmCTR06gk9mIT6Vv/Z/DkxN6r05kRjHlXxw+LhYI6Aiz//xY82yDhzfV4SQBg8ADhVXTVtUHLXamIKjNSNdmNrGOlIEJBb72Vr7kdod9Bzvba8vIh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sFQ7e7v9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Qw8XhKcetqcrVqNsXEycsFGfmTo4rI9ULJF+2ayiBcQyDTHaKoAR0FtAfDj/2Knh0bgrjK1iW4xr/PacRhEPnlzqpVzgbdA0oeY+h4U4bGY4T9Wimlu29czHxvIcOy6LK124XwxITFf+cStDJzNIwqvTHiCBSdI2rYBm+wNDDjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kTm940YQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sFQ7e7v9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B583FC19422;
-	Thu, 19 Feb 2026 02:04:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kTm940YQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA36C19425;
+	Thu, 19 Feb 2026 02:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466686;
-	bh=3reYJvSH7ahSG/B6SvWXMM/NjZMpd+EdHuwNA20VIFc=;
+	s=k20201202; t=1771466687;
+	bh=GKoHcnbEYD55ZwnR/rf/QDevmnIm0EXgtWNdvhuZ7Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFQ7e7v90bKn4xhOGBnPm0OvJcpTh+xIz989Mtjuh4hQZqdE0JLikRIzWiHw2uj8g
-	 ls4P4OLOQwp31Rp4vVDpbs/i08122CuKGDotDN2AHhj0ZcD90Z6XU5f0/jW4LLjQFL
-	 Bxe1F7GQQkBImLD91Y6Klu6p/dA6V47OSqkh5YQnEV1YWbnis6PY6P6zQEhrSxHjVH
-	 9MZrBeMPZw2JRdJtRGyRJj3QHdL63LtqgB+ofkDfZy1uxjYwdtKAciRiF9qAUoZWQg
-	 94fO19d2lSvYNsQNBGal+WwGVe5PCum50HSUnkb5/w+SGakFEU6vXTBLfxWoHFqDdW
-	 YtzNlBs2foKRQ==
+	b=kTm940YQNq+5lZDm7QNv8VCBMwLnqghJHDW35RrMqGoOciisJgluNj7w3+K59Nbai
+	 52Xs9yewCetKpB5PKROELN3jXvYhkhHA74TVBDsciHPo2ejsUlbYXyGnME9HjxpDKc
+	 eeancmlDxJXs784BCV6H7Wlagfxamzra8ZrgoVsSTLGo8iTSumH7RrzMV177q3lT09
+	 w+7YFc+rwturQCipBT8DTI7l9C6KJAStisnPcTINGyAcyfKATpbDMY6bTu+NuVSsNZ
+	 rbHKjh297xbIm9u3ltfSiVubUqVX8HP9yG6IOmy8LxSt7KCBX/rQUHrZNuIQeeKVOV
+	 gPinixM0HuU6Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Biju Das <biju.das.jz@bp.renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jirislaby@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] serial: rsci: Add set_rtrg() callback
-Date: Wed, 18 Feb 2026 21:03:54 -0500
-Message-ID: <20260219020422.1539798-18-sashal@kernel.org>
+	support.opensource@diasemi.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] Revert "mfd: da9052-spi: Change read-mask to write-mask"
+Date: Wed, 18 Feb 2026 21:03:55 -0500
+Message-ID: <20260219020422.1539798-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -54,141 +52,132 @@ X-stable-base: Linux 6.19.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit b346e5d7dbf6696176417923c49838a1beb1d785 ]
+[ Upstream commit 12daa9c1954542bf98bb942fb2dadf19de79a44b ]
 
-The rtrg variable is populated in sci_init_single() for RZ/T2H. Add
-set_rtrg() callback for setting the rtrg value.
+This reverts commit 2e3378f6c79a1b3f7855ded1ef306ea4406352ed.
 
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://patch.msgid.link/20251129164325.209213-4-biju.das.jz@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Almost every register in this chip can be customized via OTP
+memory. Somehow the value for R19, which decide if the flag is set
+on read or write operation, seems to have been overwritten for the chip
+the original patch were written for.
+
+Revert the change to follow the default behavior.
+
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Link: https://patch.msgid.link/20251124-da9052-revert-v1-1-fbeb2c894002@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-`fifosize = 16`, so `fifosize > 1` is true, meaning the
-`rx_fifo_trigger` sysfs attribute is also created. Both sysfs paths are
-reachable and will cause NULL pointer dereferences without the
-`set_rtrg` callback.
+This is very significant. The broken commit `2e3378f6c79a` ("Change
+read-mask to write-mask") was backported to **multiple stable trees**:
+v6.12.x, v6.6.x, v6.1.x, and even v5.15.x. This means the revert is
+critically needed in all those stable trees.
 
-### Summary of Analysis
+## Analysis Summary
 
-**What the commit does:** Adds a `set_rtrg()` callback to the RSCI
-serial driver that programs the receive FIFO trigger level into the
-hardware.
+### What the commit does
+This reverts commit `2e3378f6c79a` which incorrectly changed
+`config.read_flag_mask = 1` to `config.write_flag_mask = 1` in the
+DA9052 SPI PMIC driver. The original author (Marcus Folkesson - who is
+also the author of the broken commit) realized that the chip he tested
+with had its OTP memory customized, causing register R19 to behave
+differently than the default. The default chip behavior requires the
+flag on **read** operations, not write.
 
-**What bug it fixes:** Without this callback, the `set_rtrg` function
-pointer in `rsci_port_ops` is NULL. The shared SCI framework code in
-`sh-sci.c` calls `s->ops->set_rtrg()` **without NULL checks** from
-multiple paths:
+### Why this matters
+The `read_flag_mask`/`write_flag_mask` in regmap controls the SPI
+protocol signaling for the DA9052 PMIC. Setting the wrong flag means:
+- **Read operations** won't have the correct flag bit set, so the chip
+  may misinterpret reads
+- **Write operations** will have an unexpected flag bit set, potentially
+  corrupting registers
+- This can cause the PMIC (Power Management IC) to malfunction -
+  affecting power rails, voltage regulation, battery charging, and other
+  critical functions
+- A broken PMIC driver can lead to hardware damage, data loss, or system
+  instability
 
-1. **sysfs `rx_fifo_trigger` write** (line 1347): Created for RSCI
-   because `fifosize=16 > 1`. Writing to it calls NULL `set_rtrg` →
-   **kernel crash/panic**
-2. **sysfs `rx_fifo_timeout` write** (line 1392): Explicitly created for
-   `SCI_PORT_RSCI` at line 3921-3922. Writing a non-zero value calls
-   NULL `set_rtrg` → **kernel crash/panic**
-3. **Timer callback `rx_fifo_timer_fn`** (line 1322): Once a user writes
-   to `rx_fifo_timeout`, the timer is set up and will fire, calling NULL
-   `set_rtrg` → **kernel crash/panic**
-4. **Interrupt handler path** (lines 1980-1982): If `rx_trigger > 1`
-   (it's 15 for RSCI) and `rx_fifo_timeout > 0`, the interrupt handler
-   calls NULL `rtrg_enabled` first → **kernel crash/panic**
+### Stable tree analysis
+- The broken commit `2e3378f6c79a` landed in **v6.13** mainline
+- It was backported to stable trees: **v6.12.x, v6.6.x, v6.1.x,
+  v5.15.x**
+- All of these stable trees are now broken for DA9052 SPI users
+- The revert **must** follow to all stable trees that received the
+  broken commit
 
-The `rx_trigger` for RSCI is initialized to 15 (line 3333), and both
-sysfs attributes are created, making these paths reachable from
-userspace.
+### Risk assessment
+- **Change size**: Single line change (`write_flag_mask` →
+  `read_flag_mask`)
+- **Risk**: Extremely low - it restores the behavior that existed for
+  over a decade before the broken commit
+- **Scope**: Only affects the DA9052 SPI PMIC driver
+- **Testing**: The same author who made the original mistake authored
+  the revert, understanding the root cause (OTP-customized chip)
 
-**Risk assessment:** LOW risk. The change adds a simple function that
-reads a register, clamps a value, and writes it back. It only affects
-the RSCI port type. The callback is registered in the existing ops
-structure. No behavioral changes for any other port type.
+### Stable criteria evaluation
+1. **Obviously correct**: YES - restores long-standing default behavior,
+   explained by same author
+2. **Fixes a real bug**: YES - the broken commit introduced incorrect
+   SPI communication with the PMIC
+3. **Important issue**: YES - broken PMIC communication can cause power
+   management failures
+4. **Small and contained**: YES - single line change in one file
+5. **No new features**: Correct - pure bug fix (revert of broken change)
 
-**Scope:** Small - one new function (~15 lines) and one ops structure
-entry.
+## Verification
 
-**Stable criteria check:**
-- Fixes a real bug: YES - NULL pointer dereference (kernel crash)
-  reachable from sysfs
-- Obviously correct: YES - straightforward register read/modify/write
-- Small and contained: YES - ~15 lines of new code, 1 file
-- No new features: The function itself enables correct operation of
-  existing sysfs interfaces; the commit message frames it as "adding a
-  callback" but it's actually fixing a NULL pointer dereference
-- Tested: YES - has "Tested-by:" tag
+- **git log confirmed** commit `2e3378f6c79a` landed in v6.12..v6.13
+  range (mainline v6.13)
+- **git log confirmed** the broken commit was backported to stable:
+  v6.12.x (as `691333e2987dd`), v6.6.x (as `d80635d7ebefd`), v6.1.x (as
+  `50952a6ff5fa3`), and v5.15.x (as `a82dbec6e882e`)
+- **git show confirmed** the original commit `2e3378f6c79a` had a
+  `Fixes:` tag referencing `e9e9d3973594`, which is why it was auto-
+  selected for stable
+- **git show confirmed** `e9e9d3973594` was the commit that introduced
+  the local `config` variable and set `read_flag_mask = 1` — the
+  behavior that existed correctly for years
+- **lore.kernel.org** confirmed Marcus Folkesson submitted the revert on
+  2024-11-24 and Lee Jones (MFD maintainer) processed it
+- The revert commit appears to be in linux-next (tags `next-20251219`,
+  `p-6.15`, etc.) but not yet in a mainline release — this is expected
+  for a commit being evaluated for backport
+- **Could NOT verify** if the revert has landed in mainline yet (not
+  found on master in this tree), but it is signed off by the subsystem
+  maintainer Lee Jones
 
-**Note:** The commit is also missing a `rtrg_enabled` callback, which is
-also called without NULL check at line 1981. This commit only adds
-`set_rtrg`, not `rtrg_enabled`. However, `set_rtrg` alone fixes the most
-immediate crash paths (sysfs writes and timer). The `rtrg_enabled` path
-at line 1981 would still be a problem but only if both `rx_trigger > 1`
-AND `rx_fifo_timeout > 0`, which requires explicit user action to set
-the timeout.
+## Conclusion
 
-### Verification
-
-- **Verified** that `SCI_PORT_RSCI` sets `rx_trigger = 15` at sh-
-  sci.c:3332-3333
-- **Verified** that `rx_fifo_timeout` sysfs attribute is created for
-  `SCI_PORT_RSCI` at sh-sci.c:3921-3922
-- **Verified** that `rx_fifo_trigger` sysfs attribute is created when
-  `fifosize > 1` at sh-sci.c:3916-3919 (RSCI fifosize=16 per rsci.c:420)
-- **Verified** that `set_rtrg` is called without NULL checks at sh-sci.c
-  lines 1322, 1347, 1349, 1392, 1517, 1955, 1982, 2661, 2666, 2668
-- **Verified** that `rtrg_enabled` is called without NULL check at sh-
-  sci.c:1981
-- **Verified** that the RSCI `rsci_set_termios` at rsci.c:154-169 does
-  NOT call the shared `sci_set_termios` (lines 2673+) so the set_termios
-  path at lines 2659-2668 is not directly triggered for RSCI
-- **Verified** that `rsci_port_ops` before this commit has no `set_rtrg`
-  callback (it was not listed in the pre-patch ops structure)
-- **Could NOT verify** whether a separate commit adds `rtrg_enabled` for
-  RSCI (this commit only adds `set_rtrg`)
+This is a textbook case for stable backporting: a single-line revert of
+a broken commit that was already backported to multiple stable trees.
+The broken commit corrupts SPI communication with a PMIC chip by using
+the wrong flag mask. All stable trees that received the broken commit
+need this revert. The fix is trivial, well-understood, and authored by
+the same person who made the original mistake.
 
 **YES**
 
- drivers/tty/serial/rsci.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/mfd/da9052-spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/rsci.c b/drivers/tty/serial/rsci.c
-index b3c48dc1e07db..0533a4bb1d03c 100644
---- a/drivers/tty/serial/rsci.c
-+++ b/drivers/tty/serial/rsci.c
-@@ -151,6 +151,22 @@ static void rsci_start_rx(struct uart_port *port)
- 	rsci_serial_out(port, CCR0, ctrl);
- }
+diff --git a/drivers/mfd/da9052-spi.c b/drivers/mfd/da9052-spi.c
+index 80fc5c0cac2fb..be5f2b34e18ae 100644
+--- a/drivers/mfd/da9052-spi.c
++++ b/drivers/mfd/da9052-spi.c
+@@ -37,7 +37,7 @@ static int da9052_spi_probe(struct spi_device *spi)
+ 	spi_set_drvdata(spi, da9052);
  
-+static int rsci_scif_set_rtrg(struct uart_port *port, int rx_trig)
-+{
-+	u32 fcr = rsci_serial_in(port, FCR);
-+
-+	if (rx_trig >= port->fifosize)
-+		rx_trig = port->fifosize - 1;
-+	else if (rx_trig < 1)
-+		rx_trig = 0;
-+
-+	fcr &= ~FCR_RTRG4_0;
-+	fcr |= field_prep(FCR_RTRG4_0, rx_trig);
-+	rsci_serial_out(port, FCR, fcr);
-+
-+	return rx_trig;
-+}
-+
- static void rsci_set_termios(struct uart_port *port, struct ktermios *termios,
- 			     const struct ktermios *old)
- {
-@@ -454,6 +470,7 @@ static const struct sci_port_ops rsci_port_ops = {
- 	.poll_put_char		= rsci_poll_put_char,
- 	.prepare_console_write	= rsci_prepare_console_write,
- 	.suspend_regs_size	= rsci_suspend_regs_size,
-+	.set_rtrg		= rsci_scif_set_rtrg,
- 	.shutdown_complete	= rsci_shutdown_complete,
- };
- 
+ 	config = da9052_regmap_config;
+-	config.write_flag_mask = 1;
++	config.read_flag_mask = 1;
+ 	config.reg_bits = 7;
+ 	config.pad_bits = 1;
+ 	config.val_bits = 8;
 -- 
 2.51.0
 
