@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C773D30E0F1;
-	Thu, 19 Feb 2026 02:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0391928D8FD;
+	Thu, 19 Feb 2026 02:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466703; cv=none; b=ocqP5vYu+t3bBLAvHSwruW61V3OeW+jh8oO1RxvcSe6k2YCAoxioISHVfBReo20lmYUurcCnNDk21LkTn2Ldz/RAzRFe96IXBjXnTAOTJaBFC7ZEl8+olq1r4dLw6bwdQiSKmOLxeb8RKSoS8JriwgER14Bw/FapUZNalBB+6uw=
+	t=1771466705; cv=none; b=oxoTmmIF9+Xvh0lZxailjr4Wih5JYIjcbOSrNQ9O/iHcOyosTPq7H3L7mqf8ST73JCp6F1EWVGF6BpZvsLDdPgQP7E+QDFWwRyvComh/980YhaLCKZIhngX4ZB4K5cpznJmnKIZRR7yBpXunjHenGT12uci6LbEGj2/E/3rHt4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466703; c=relaxed/simple;
-	bh=lOZidEmx5vk20ZO0QrhgAGaGcoFEhk4bJAlW3AJLUOQ=;
+	s=arc-20240116; t=1771466705; c=relaxed/simple;
+	bh=OWUyDUYLIGpfdDvH7M8IARbFsrGTB/uGSAMlqlNkjUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LlfqR4+2BALZ+KCCO/3b10E+zchA+6NqcalNe/za0C6IJh+3GKCC+lm6DfjR6o1PjhBhmJ/uEVWBUNYe/Nj8JY1gqvhLf6VrOVElNrxhlij0wccVze6SKaWwNegwIAKQHQTAs6PLN9w76dG+jzL0grbAkzmNoIjOMBhLdZ6Ee1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bDrkdjbv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mabrLmi2/Gs+zmchZFtdFRdZaJmwoAK0GhLNG2JjfP35XJPr7Kpmj+EuAvN2BuA4RjMTrlkCAardJL3CewcTMo1cMIzmdy/BypktktXymKpYuX8k3mY/zYqvJHFyhbMGvX9S/Z2TtDIt7ks8z5SoU0FSfiGzxSpcazP5rlbSZkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nMoGASr1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bDrkdjbv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8320DC19422;
-	Thu, 19 Feb 2026 02:05:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nMoGASr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E55C19425;
+	Thu, 19 Feb 2026 02:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466703;
-	bh=lOZidEmx5vk20ZO0QrhgAGaGcoFEhk4bJAlW3AJLUOQ=;
+	s=k20201202; t=1771466704;
+	bh=OWUyDUYLIGpfdDvH7M8IARbFsrGTB/uGSAMlqlNkjUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bDrkdjbvtDnkfPHNkqW2l+/iLzj7A9E2KZ5LDUUqsThA71UtRLrKT8/GtBrU0hKtX
-	 0QnBkfBkl2+pfGFAMeyaCytwZPKIy1l4WRJ+egUX/UK6y9D5/kk40EwITuUJ1d/RfH
-	 oTBBs+eo0JJm+X8QnjVGeFCgbY1ZyVxKCeDDc+076WdGwRDJ/7NjaXUNq3j0fsedaQ
-	 k9JqfvSP3k4QMvEidLcgJlvVkF2bKn/IwM8JKuJzjMJSy4pL4OhCBgZ3H3uACFXgiN
-	 U8uqCKfAnKj72b8ab2N2uBMg2aT4Z4/p/WnPtA4iNZqPlRbjL5LUl7EgfUznrLL6YM
-	 hO2vOUtxbCp5g==
+	b=nMoGASr1olw2h3vlyaZKeFhIjGTmlMUt9V6urvzm2E+XGtJ8evXQkPDXsQ1bWASQ1
+	 are63hgEDvkW5a/oXxkpEXQ2/nHha2CMDNQm019Lya0yr9ORI7DB+/I1NK2jUlScCE
+	 7DYcGgN87fzv7uStGv0D3C/qFElmMHGlzqDZbkdFjcsjR5SOZXIENqJIiAYX7YwvJd
+	 Lj+UpotiX5AQXICu+Qm8vHFBbs1+kxpZZ/goKJcANbfMyBlLQGZFveJ2vEvDaW3uLS
+	 DgWHylmrKaXyOuwH89H+COrL3VVpBC5nH3D2DmqXMfc7TC/bOYWyAeocNYhd1hO/DU
+	 xOVGRrmAuwRVw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xu Yang <xu.yang_2@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-phy@lists.infradead.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
+	linux-watchdog@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] phy: fsl-imx8mq-usb: disable bind/unbind platform driver feature
-Date: Wed, 18 Feb 2026 21:04:07 -0500
-Message-ID: <20260219020422.1539798-31-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] watchdog: rzv2h_wdt: Discard pm_runtime_put() return value
+Date: Wed, 18 Feb 2026 21:04:08 -0500
+Message-ID: <20260219020422.1539798-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -52,120 +50,131 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 27ee0869d77b2cb404770ac49bdceae3aedf658b ]
+[ Upstream commit 2dea984a74265a67e3210f818416a83b87f70200 ]
 
-Disabling PHYs in runtime usually causes the client with external abort
-exception or similar issue due to lack of API to notify clients about PHY
-removal. This patch removes the possibility to unbind i.MX PHY drivers in
-runtime.
+Failing device probe due to pm_runtime_put() returning an error is not
+particularly useful.
 
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260120111712.3159782-1-xu.yang_2@nxp.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Returning an error code from pm_runtime_put() merely means that it has
+not queued up a work item to check whether or not the device can be
+suspended and there are many perfectly valid situations in which that
+can happen, like after writing "on" to the devices' runtime PM "control"
+attribute in sysfs for one example.  It also happens when the kernel is
+configured with CONFIG_PM unset.
+
+Accordingly, update rzt2h_wdt_wdtdcr_init() to simply discard the return
+value of pm_runtime_put() and return success to the caller after
+invoking that function.
+
+This will facilitate a planned change of the pm_runtime_put() return
+type to void in the future.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis Summary
+So the driver was introduced in v6.12-rc1, meaning it would be present
+in the 6.12.y stable tree.
 
-### What the commit does
-This commit adds `.suppress_bind_attrs = true` to the i.MX8MQ USB PHY
-platform driver. This single line prevents the kernel from creating
-`/sys/bus/platform/drivers/imx8mq-usb-phy/bind` and
-`/sys/bus/platform/drivers/imx8mq-usb-phy/unbind` sysfs files, thereby
-preventing runtime unbinding of the PHY driver.
+### Assessment
 
-### Problem being fixed
-The commit message states that unbinding PHYs at runtime causes
-"external abort exception or similar issue" because there is no API to
-notify PHY clients about PHY removal. An external abort is a serious ARM
-exception that typically results in a kernel crash/oops. If a user or
-management tool writes to the `unbind` sysfs file for this PHY driver,
-the USB controller client would try to access the now-missing PHY
-resources, resulting in a crash.
+**What the commit fixes:**
+The commit fixes a real bug where the watchdog driver probe fails in
+perfectly valid configurations, specifically:
+1. When `CONFIG_PM` is not set — probe **always** fails because
+   `pm_runtime_put()` returns `-ENOSYS`
+2. When runtime PM has been configured in ways that prevent idle
+   queueing — probe fails spuriously
 
-### Stable kernel rules assessment
-1. **Obviously correct and tested**: Yes - this is a well-established
-   one-line pattern used in 385+ files in the kernel. It's reviewed by
-   the PHY maintainer (Vinod Koul) and reviewed by Frank Li.
-2. **Fixes a real bug**: Yes - runtime unbinding causes a crash
-   (external abort exception). This is a real, triggerable issue.
-3. **Important issue**: Moderate - it prevents a crash, but only
-   triggered by explicit sysfs manipulation (not normal operation).
-   However, system management tools or user error could trigger this.
-4. **Small and contained**: Yes - single one-line addition to a driver
-   struct.
-5. **No new features**: Correct - this removes functionality (ability to
-   unbind), it doesn't add any.
+**Stable kernel criteria assessment:**
+- **Obviously correct**: Yes — the return value of `pm_runtime_put()` is
+  not meaningful for success/failure of the initialization. The
+  `pm_runtime_resume_and_get()` call that preceded it already succeeded,
+  and the device configuration (stopping WDTDCR counter) was already
+  done. The "put" is just releasing the runtime PM reference.
+- **Fixes a real bug**: Yes — probe failure preventing a watchdog device
+  from being usable.
+- **Small and contained**: Yes — 3 lines removed, 1 line added, single
+  file, single function.
+- **No new features**: Correct, this is purely a bug fix.
+- **Reviewed**: Yes — by Guenter Roeck (the watchdog subsystem
+  maintainer).
 
-### Risk assessment
-- **Risk**: Extremely low. This is literally a single boolean field
-  being set in the driver struct. It only affects sysfs attributes. The
-  same pattern exists in 385+ other drivers.
-- **Benefit**: Prevents a crash scenario when the PHY is unbound at
-  runtime.
-- **Dependencies**: None - this is entirely self-contained.
+**Risk assessment:**
+- Extremely low risk. The change simply ignores a return value that was
+  incorrectly being treated as a probe error.
+- The `pm_runtime_put()` operation itself still happens; only the error
+  check is removed.
 
-### Concerns
-- The bug is only triggerable by explicit sysfs manipulation (writing to
-  `/sys/bus/platform/drivers/imx8mq-usb-phy/unbind`), not by normal
-  system operation.
-- The fix is a defensive measure rather than fixing a root cause in the
-  PHY framework. However, this is the standard kernel approach - the PHY
-  framework doesn't have removal notification, so drivers that can't
-  handle unbinding should suppress it.
-- The change is straightforward and would apply cleanly to any stable
-  tree that has this driver.
+**However**, this driver was only introduced in v6.12-rc1. It's only
+applicable to the 6.12.y stable tree (and possibly 6.13.y if that
+exists). This limits its scope somewhat but doesn't change whether it
+should be backported.
 
-### Classification
-This falls into the **hardware quirk/workaround** category. It's a
-defensive fix that prevents a crash scenario. While the trigger requires
-explicit user action (sysfs unbind), this is a well-established pattern
-in the kernel for exactly this purpose.
+**The "preparation for future API change" angle:**
+While the commit mentions preparation for changing `pm_runtime_put()` to
+return `void`, that's the motivation for the broader cleanup campaign.
+The actual fix here independently addresses a real probe failure bug,
+making it valid for stable.
 
-## Verification
-- Verified `suppress_bind_attrs = true` is used in 385+ files across the
-  drivers/ directory via Grep search
-- Verified 7 other PHY drivers (Samsung, HiSilicon) already use this
-  pattern
-- Verified no other Freescale PHY drivers currently have this attribute
-  (this is the first)
-- Verified via git log that similar commits exist for other subsystems
-  (gpio, perf)
-- Verified via lore.kernel.org that the patch was reviewed by Frank Li
-  and accepted by PHY maintainer Vinod Koul
-- Verified the commit message describes a real crash scenario (external
-  abort exception)
-- Could NOT verify the specific crash reproduction steps (unverified,
-  but the mechanism is well-understood in the kernel community)
+### Verification
 
-The fix is minimal (one line), extremely low risk, prevents a crash
-scenario, uses a well-established kernel pattern, and was properly
-reviewed. It meets all stable kernel criteria.
+- **Verified CONFIG_PM=n behavior**: Read
+  `include/linux/pm_runtime.h:261-264` — `__pm_runtime_idle()` returns
+  `-ENOSYS` when CONFIG_PM is not set. `pm_runtime_put()` at line
+  561-563 calls `__pm_runtime_idle()`, so it returns `-ENOSYS` without
+  CONFIG_PM.
+- **Verified driver introduction version**: `git describe --tags
+  --contains f6febd0a30b6e` showed `v6.12-rc1~92^2~6`, confirming the
+  driver was introduced in v6.12.
+- **Verified the code change scope**: The diff shows exactly 3 lines
+  removed (the `ret = pm_runtime_put()`, `if (ret < 0)`, `return ret;`)
+  and 1 line added (`pm_runtime_put(&pdev->dev);`), all in
+  `rzt2h_wdt_wdtdcr_init()`.
+- **Verified reviewer**: Guenter Roeck (watchdog maintainer) gave
+  Reviewed-by.
+- **Unverified**: Whether anyone actually reported the CONFIG_PM=n probe
+  failure — the commit message doesn't reference a specific report.
+  However, the bug is clear from code analysis.
+
+### Conclusion
+
+This is a small, obviously correct bug fix that prevents the watchdog
+driver probe from failing in valid configurations (notably CONFIG_PM=n).
+It's reviewed by the subsystem maintainer, touches a single function in
+a single file, and has zero risk of regression. While the driver only
+exists in 6.12+, it should be backported to applicable stable trees.
 
 **YES**
 
- drivers/phy/freescale/phy-fsl-imx8mq-usb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/watchdog/rzv2h_wdt.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-index 91b3e62743d3a..b30d01f345d20 100644
---- a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-+++ b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-@@ -730,6 +730,7 @@ static struct platform_driver imx8mq_usb_phy_driver = {
- 	.driver = {
- 		.name	= "imx8mq-usb-phy",
- 		.of_match_table	= imx8mq_usb_phy_of_match,
-+		.suppress_bind_attrs = true,
- 	}
- };
- module_platform_driver(imx8mq_usb_phy_driver);
+diff --git a/drivers/watchdog/rzv2h_wdt.c b/drivers/watchdog/rzv2h_wdt.c
+index a694786837e11..f9bb4ef3d327b 100644
+--- a/drivers/watchdog/rzv2h_wdt.c
++++ b/drivers/watchdog/rzv2h_wdt.c
+@@ -270,9 +270,7 @@ static int rzt2h_wdt_wdtdcr_init(struct platform_device *pdev,
+ 
+ 	rzt2h_wdt_wdtdcr_count_stop(priv);
+ 
+-	ret = pm_runtime_put(&pdev->dev);
+-	if (ret < 0)
+-		return ret;
++	pm_runtime_put(&pdev->dev);
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
