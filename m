@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E79E30FF25;
-	Thu, 19 Feb 2026 02:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A7B310779;
+	Thu, 19 Feb 2026 02:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466707; cv=none; b=IG7Gkn7IoW0iSmlrd6A+dxByfjvtBO+jFrM34j8WQW0sbNbAq5xMhlJb3fTb2np1N1BR5sxZPvjZtFQdHcSQ+54UJoQhR4EOZ1jSg9ePVEaQVwaVAy0L6LVSWpsrHyvUZjTiE3rUBNBtL0Jh26+/e5xslez0wlI6+H28HySNQO0=
+	t=1771466709; cv=none; b=IBKnbvQX/FRW76HbDlXP3QFgPm3FkTQbWL08cd3q6pJXSZoqnX7k0asgg/IlyHeB9fqe2UQsa3MPwiL5f3fq+nBKWuAoYUr8rc/Tu93RnWUCutPbcYIoijSWsmUYyhBrDx4qVQkCZ7vSXrWq2+fhu9M25MV6LhSSpyNwkw1kAw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466707; c=relaxed/simple;
-	bh=D73wScJAC375XHCH4oZKOpkSXn1g9xaFJmyXXU/9UKs=;
+	s=arc-20240116; t=1771466709; c=relaxed/simple;
+	bh=frX33pev+XR4l6oz6+xiDXC5X50uJZtofsvGkHEY7RA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/kSckIXcpSFfdLzu9vC1dpysc5WrAEwaZI1wSxnt4NyXVqp0RXMH6/KR41KBphLMwRRGOKZymptFBcpD1UJoJWI2ilWSTtWug9y8e3y9EVCXinPq+mZFUWoMRgODqlFrq/pA6TvNkFSrAJkgOzJSwEeMsC+WF3AeH4w/ci+upw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SHlPGcmm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rnWxErthvXPJAR0g1DPhwuat99lik3HJ7IEfoCe20fd1cKYn2TghmUYtFNccjapZZsPemvyneLdQ5k8g/1gTc6oRjdQSGUERftFsgq/6pPxrafSrylNUB5Q1dog9SNeUCRW5w35mGtf/GbsYGlgdDAbX+ubkoXGonwPspF/0x2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wil0D8ZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SHlPGcmm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B6AC116D0;
-	Thu, 19 Feb 2026 02:05:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wil0D8ZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E80C19425;
+	Thu, 19 Feb 2026 02:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466707;
-	bh=D73wScJAC375XHCH4oZKOpkSXn1g9xaFJmyXXU/9UKs=;
+	s=k20201202; t=1771466708;
+	bh=frX33pev+XR4l6oz6+xiDXC5X50uJZtofsvGkHEY7RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHlPGcmmCWc0L3iooCbHuBf8E5HBd0k5RhB5XDrRKy8Bn9X5piuxN7GnplB4mR1SB
-	 c55XzbF3xdiMGp5KzfhShD+Ji4jJa621u2FyNSWxjDW0NFysOtxgyZbaphXIAkeRXQ
-	 WyB/wIjRPgkIgjq+9jm+0XsF5sCpavvKt/OyGbYsHu/DgDfMzIJCAXY0pJzDnLaGNi
-	 jiKqgUwNXx4sbEzwJk43vGFF+chfRrUnOy2UsS1zw49cJy3MXTQgc1IQH3UOyv631a
-	 pRlmcfLyFnwvpsVR+6V2+1hneJ/tPl80TfEjBK/c60RrHrj2dZ8lzX9Ut58HUl8EfI
-	 nBIVCw1wuOknQ==
+	b=Wil0D8ZPPDa/S/GwFA0Vt8A7F+18QXRUJX7g1qSxJ8KtCPtQnuacBrPrFwKlrGyHu
+	 JgVpr2O1y77ZO47EzS29aj4W38oN2jH+LqivTGB+V1QW6LnJbMcg4cpYPpCLK8b0Qe
+	 QUuGrLtVyW8ddNVjP4YWaCEz4jI+6kdKiDb6q6oHqWbEMSQywfwantQ4JP0fVJWEZH
+	 +tAlhiet9F/1S5iA0V5yO3wyQFOz3PutsJ8hoBLcNF0s0pM32Juu7vBJYZzh4tx1Ni
+	 x+JXQeLhdbCbdjVheDdGiYc87WyL20aa84aIxKCDefJhnpS2Cp58vQRTHIjbTg3Pgl
+	 sxH+9dvSEM9hw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+Cc: Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Eugen Hristev <eugen.hristev@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linusw@kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	dmaengine@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] pinctrl: renesas: rzt2h: Allow .get_direction() for IRQ function GPIOs
-Date: Wed, 18 Feb 2026 21:04:10 -0500
-Message-ID: <20260219020422.1539798-34-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] dmaengine: stm32-dma3: use module_platform_driver
+Date: Wed, 18 Feb 2026 21:04:11 -0500
+Message-ID: <20260219020422.1539798-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -51,165 +54,135 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 49b039a61a314c18074c15a7047705399e1240e6 ]
+[ Upstream commit 0d41ed4ea496fabbb4dc21171e32d9a924c2a661 ]
 
-Setting up an IRQ would normally be done in the .activate() and
-.deactivate() ops of the IRQ domain, but for hierarchical IRQ domains
-the .activate() and .deactivate() ops are overridden in the
-gpiochip_hierarchy_setup_domain_ops() function.
+Without module_platform_driver(), stm32-dma3 doesn't have a
+module_exit procedure. Once stm32-dma3 module is inserted, it
+can't be removed, marked busy.
+Use module_platform_driver() instead of subsys_initcall() to register
+(insmod) and unregister (rmmod) stm32-dma3 driver.
 
-As such, activating and deactivating need to be done in the .translate()
-and .free() ops of the IRQ domain.
-
-For RZ/T2H and RZ/N2H, interrupts go through the pin controller, into
-the ICU, which level-translates them and forwards them to the GIC.
-
-To use a GPIO as an interrupt it needs to be put into peripheral
-function mode 0, which will connect it to the IRQ lines of the ICU.
-
-The IRQ chip .child_to_parent_hwirq() callback is called as part of the
-IRQ fwspec parsing logic (as part of irq_create_of_mapping()) which
-happens before the IRQ is requested (as part of gpiochip_lock_as_irq()).
-
-gpiochip_lock_as_irq() calls gpiod_get_direction() if the
-.get_direction() callback is provided to ensure that the GPIO line is
-set up as input.
-
-In our case, IRQ function is separate from GPIO, and both cannot be true
-at the same time.
-
-Return GPIO_LINE_DIRECTION_IN even if pin is in IRQ function to allow
-this setup to work.
-
-Hold the spinlock to ensure atomicity between reading the PMC register
-(which determines whether the pin is in GPIO mode or not) and reading
-the function of the pin when it is not in GPIO mode.
-
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20251205150234.2958140-3-cosmin-gabriel.tanislav.xa@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://patch.msgid.link/20251121-dma3_improv-v2-1-76a207b13ea6@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Confirmed: The PFC register read pattern with `rzt2h_pinctrl_readq` and
-the `PFC_MASK` at line 141 is consistent with what the fix does. The new
-code reads `PFC(port)` and masks with `PFC_MASK`, which is the same
-pattern used in the existing `rzt2h_pinctrl_set_pfc` function.
+Interesting - all three STM32 DMA drivers use `subsys_initcall()`. The
+other two (stm32-dma and stm32-mdma) also lack module_exit. This commit
+only changes stm32-dma3.
 
-### Verification
+## Analysis Summary
 
-- **Verified**: The driver `pinctrl-rzt2h.c` was introduced in commit
-  34d4d093077a5, first appearing in v6.18. Active stable trees v6.18.y
-  and v6.19.y contain this driver.
-- **Verified**: `gpiochip_lock_as_irq()` at gpiolib.c:4088-4095 calls
-  `gpiod_get_direction()` and fails if it returns negative, confirming
-  the bug mechanism described in the commit message.
-- **Verified**: The original `rzt2h_gpio_get_direction()` returns
-  `-EINVAL` unconditionally when PMC bit is set (line 496-497 of current
-  code), which would fail IRQ setup.
-- **Verified**: `rzt2h_pinctrl_readq` is generated by macro at line 104
-  and already used for PFC reads (line 140), so no new functions are
-  needed.
-- **Verified**: `PFC_MASK` is already defined (line 51: `GENMASK_ULL(5,
-  0)`), so the mask pattern is correct.
-- **Verified**: The PFC function 0 being the IRQ function is consistent
-  with the hardware description (peripheral function mode 0 connects to
-  ICU IRQ lines, as stated in the commit message).
-- **Verified**: The spinlock `pctrl->lock` is already used in other
-  functions (e.g., `rzt2h_gpio_set_direction` at line 475,
-  `rzt2h_pinctrl_set_pfc` at line 128), so adding it to `get_direction`
-  is consistent.
-- **Verified**: No additional commits are needed as dependencies - the
-  code being modified exists in the base driver.
-- **Unverified**: Whether the commit has been explicitly discussed on
-  linux-stable mailing list (did not search lore.kernel.org).
+### What the commit fixes
+The stm32-dma3 driver registers using `subsys_initcall()` but has no
+`module_exit()` function. This means the module can be loaded (`insmod`)
+but never unloaded (`rmmod`), as the kernel marks it as busy due to
+having no exit/cleanup path.
 
-### Summary
+### Change implications
+The fix replaces `subsys_initcall()` (priority level 4) with
+`module_platform_driver()` which uses `module_init()` /
+`device_initcall()` (priority level 6). This is a **behavioral change**
+- the driver will now:
+1. Initialize later in the boot sequence (device_initcall instead of
+   subsys_initcall)
+2. Be unloadable via rmmod
 
-**What the commit fixes**: GPIO pins on Renesas RZ/T2H and RZ/N2H SoCs
-cannot be used as interrupt sources because the GPIO direction query
-fails when the pin is in IRQ function mode, causing
-`gpiochip_lock_as_irq()` to fail.
+### Risk Assessment
+- **Positive**: Fixes inability to unload the module - this is a genuine
+  bug fix
+- **Risk**: The init level change from `subsys_initcall` (level 4) to
+  `device_initcall` (level 6) could cause probe ordering issues. DMA
+  controllers are often needed early by other subsystems. However, with
+  device tree and deferred probing in modern kernels, this should be
+  handled. The fact that 54 other DMA drivers use
+  `module_platform_driver()` successfully supports this.
+- **Scope**: Very small change - removes 6 lines, adds 1 line. Single
+  file, single driver.
+- **Affected stable trees**: Only 6.11+ (driver introduced in
+  v6.11-rc1), so this would apply to v6.12.y and v6.13.y stable trees.
 
-**Stable kernel criteria**:
-- **Obviously correct**: Yes - the logic is clear and well-explained.
-  When a pin is in IRQ mode (peripheral function 0), reporting it as
-  input direction is the correct semantic.
-- **Fixes a real bug**: Yes - GPIO IRQ functionality is broken without
-  this fix.
-- **Small and contained**: Yes - ~20 lines in a single function in a
-  single driver file.
-- **No new features**: Correct - this fixes existing GPIO/IRQ
-  interaction, not adding new functionality.
-- **Reviewed**: Yes - reviewed by Geert Uytterhoeven (Renesas subsystem
-  maintainer).
+### Stable criteria assessment
+- **Fixes a real bug**: Yes - module cannot be unloaded
+- **Obviously correct**: Mostly. The `module_platform_driver()` macro is
+  the standard pattern used by the majority of DMA drivers. However, the
+  init level change adds a small risk.
+- **Small and contained**: Yes - 7 lines changed in one file
+- **No new features**: The ability to unload a module is restoring
+  expected behavior, not a new feature
+- **Tested**: Has a Reviewed-by tag from Eugen Hristev
 
-**Risk vs benefit**: Very low risk (single driver, narrow hardware
-scope, no architectural changes) vs. high benefit (enables GPIO IRQ
-functionality on these SoCs).
+### Concerns
+1. The initialization order change (`subsys_initcall` →
+   `device_initcall`) is the main concern. DMA engines are
+   infrastructure that other drivers depend on. If anything probes
+   before the DMA controller is ready and doesn't handle deferred
+   probing correctly, this could cause regressions.
+2. However, this is mitigated by the fact that modern device tree
+   platforms and probe deferral should handle this gracefully.
+3. The bug (inability to rmmod) primarily affects development/debugging
+   workflows and modular kernel configurations, not production embedded
+   systems that typically build DMA drivers in.
 
-**Concern**: The driver only exists in v6.18+ stable trees, limiting the
-scope of backporting. No older stable trees are affected.
+## Verification
+
+- **git log** confirmed stm32-dma3.c was introduced by commit
+  f561ec8b2b33d, which is in v6.11-rc1
+- **Read of current source** (line 1917-1922) confirmed the
+  `subsys_initcall` without `module_exit` pattern matches the pre-patch
+  state
+- **Grep of drivers/dma/stm32/** confirmed all three STM32 DMA drivers
+  use subsys_initcall - this commit only changes stm32-dma3
+- **Grep of drivers/dma/** found 21 DMA drivers using subsys_initcall
+  and 54 using module_platform_driver, confirming module_platform_driver
+  is the dominant pattern
+- **git tag** confirmed the driver exists only in 6.11+ stable trees
+- The `.remove` callback (`stm32_dma3_remove`) is already defined in the
+  platform_driver struct (line 1909), confirming the removal path was
+  intended to work
+
+## Conclusion
+
+This fixes a real bug (module cannot be unloaded) with a minimal, well-
+understood change using a standard kernel macro. The risk is the init
+level change, but this follows the pattern of the majority of DMA
+drivers. The fix is small, reviewed, and appropriate for stable. The
+driver only exists in 6.11+, limiting the scope of backport. For
+embedded/STM32 developers who load the DMA3 driver as a module, this is
+a meaningful fix.
 
 **YES**
 
- drivers/pinctrl/renesas/pinctrl-rzt2h.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/dma/stm32/stm32-dma3.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzt2h.c b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
-index 4826ff91cd906..40df706210119 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzt2h.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
-@@ -51,6 +51,7 @@
+diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma3.c
+index 50e7106c5cb73..9500164c8f688 100644
+--- a/drivers/dma/stm32/stm32-dma3.c
++++ b/drivers/dma/stm32/stm32-dma3.c
+@@ -1914,12 +1914,7 @@ static struct platform_driver stm32_dma3_driver = {
+ 	},
+ };
  
- #define PFC_MASK		GENMASK_ULL(5, 0)
- #define PFC_PIN_MASK(pin)	(PFC_MASK << ((pin) * 8))
-+#define PFC_FUNC_INTERRUPT	0
+-static int __init stm32_dma3_init(void)
+-{
+-	return platform_driver_register(&stm32_dma3_driver);
+-}
+-
+-subsys_initcall(stm32_dma3_init);
++module_platform_driver(stm32_dma3_driver);
  
- /*
-  * Use 16 lower bits [15:0] for pin identifier
-@@ -486,6 +487,7 @@ static int rzt2h_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
- 	struct rzt2h_pinctrl *pctrl = gpiochip_get_data(chip);
- 	u8 port = RZT2H_PIN_ID_TO_PORT(offset);
- 	u8 bit = RZT2H_PIN_ID_TO_PIN(offset);
-+	u64 reg64;
- 	u16 reg;
- 	int ret;
- 
-@@ -493,8 +495,25 @@ static int rzt2h_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
- 	if (ret)
- 		return ret;
- 
--	if (rzt2h_pinctrl_readb(pctrl, port, PMC(port)) & BIT(bit))
-+	guard(spinlock_irqsave)(&pctrl->lock);
-+
-+	if (rzt2h_pinctrl_readb(pctrl, port, PMC(port)) & BIT(bit)) {
-+		/*
-+		 * When a GPIO is being requested as an IRQ, the pinctrl
-+		 * framework expects to be able to read the GPIO's direction.
-+		 * IRQ function is separate from GPIO, and enabling it takes the
-+		 * pin out of GPIO mode.
-+		 * At this point, .child_to_parent_hwirq() has already been
-+		 * called to enable the IRQ function.
-+		 * Default to input direction for IRQ function.
-+		 */
-+		reg64 = rzt2h_pinctrl_readq(pctrl, port, PFC(port));
-+		reg64 = (reg64 >> (bit * 8)) & PFC_MASK;
-+		if (reg64 == PFC_FUNC_INTERRUPT)
-+			return GPIO_LINE_DIRECTION_IN;
-+
- 		return -EINVAL;
-+	}
- 
- 	reg = rzt2h_pinctrl_readw(pctrl, port, PM(port));
- 	reg = (reg >> (bit * 2)) & PM_MASK;
+ MODULE_DESCRIPTION("STM32 DMA3 controller driver");
+ MODULE_AUTHOR("Amelie Delaunay <amelie.delaunay@foss.st.com>");
 -- 
 2.51.0
 
