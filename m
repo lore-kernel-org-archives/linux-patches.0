@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338503112DC;
-	Thu, 19 Feb 2026 02:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDE1311C27;
+	Thu, 19 Feb 2026 02:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466710; cv=none; b=ZSe3l2KR6/dsELylyfe0ESy4okkjWHnVeBO3kqvlE9SyeFrVMsJYEyHizLJyaNX2xAy3h1QSU8jYSji9HWSfPJe/+FlY9off/apW7qo+VVq8N4+j0rpU1oIMvF6JvpefxQ2xwd5+h10KOUxQ8FGkowpGlC4I7b3XUb485uAG618=
+	t=1771466711; cv=none; b=KaBh9GFGvvOnLADnOSuvzmW7OJ2UWEGZglMW+qW38gNdH5cp2XQrxbHTdFHFssoHVlNjSBeZBFcsa/6AOxmQxbYAYs8POElw02hUpRw6uo77zPea8wf0iT7+gUcSmdxlmRQa5oK2SKFnFy5I62qnBBkorkJSwLZRvndakR/XjlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466710; c=relaxed/simple;
-	bh=iX5gKxaTwXYEIEfEK8lcX9yf1CfI4OHAxvr4yNY05nM=;
+	s=arc-20240116; t=1771466711; c=relaxed/simple;
+	bh=Z3fUAAbQXGFdlQbONURw12JtANNmbkXVjuTdQg/02uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGYOGXviPI3JC3PATqwepWCm0SJsKybhyx7FSYMCnq52IiYHYNl8+j3L9ND4jMuqEMwCmBxTjxVn1C56hOxyXPf9YbqdmDRpvmr31iGgQdtI3r0PmIqrvWhQx+fa4Kit5xq4A5zwAV3GayDC97Dii4Wy+2Q6Zq/m7+OtiwLwbjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=btWM//c8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tZzs3ob3Y+UgAUIvNBDzlWstH52zT6/eJyNymrUjqokdfaxYnvIbx3tfmrwcJlB6RWv49wg5sHe+Y4a0xjhcAs6/8Ix0DLO4B7iqHu4I9QRLGtEzzVbqveIiVATe88njpf6HKphybSHZmY9kuTy9bEnL9T9bmhVog7ekAnKxKs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OudGccxz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="btWM//c8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433B4C116D0;
-	Thu, 19 Feb 2026 02:05:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OudGccxz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74221C116D0;
+	Thu, 19 Feb 2026 02:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466710;
-	bh=iX5gKxaTwXYEIEfEK8lcX9yf1CfI4OHAxvr4yNY05nM=;
+	s=k20201202; t=1771466711;
+	bh=Z3fUAAbQXGFdlQbONURw12JtANNmbkXVjuTdQg/02uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btWM//c8Tf3VeWdjULzmqHwa+MOqmTZ2F0bjuAPFiHYr7F9cds5z9Rx16ZO07V2A1
-	 XBB2yd62cRrcpLxkWgoCwyrz5XzMbTaM7XdFeX5QKTZfesPslXlRnoG197lKUbxogY
-	 Ugcx+rlkHFhAiHL6HZZsTPOULKFae4Xe227wBpMWHVs71yEiA5ddHR9J68SrFMuqNN
-	 fXTKnvGKufj9gr1UEeBDlcP6DZ6Jmmpn7jl98m0K9lApnPJFCJJPP8SjQmU42X0Ttx
-	 KRAptt0bPq2nLelhyvJagTRhw5i1q7oPrjxb4HvOVUNlNen6W5Z8dwA+q1uc8CAbgS
-	 laFwJFu3Xj3uw==
+	b=OudGccxzoq3dLyhQEh3ItVzmP3YhMYEOoLmeFHFmYR7095oN8hnhUn3wGwsmIM6UN
+	 7EEeoe0LW3hG2N0GkW4nqO50+FRvlyH/xUyko+eJei4SOs5qU/WPxVhR++XCxkJ0Fl
+	 o+IBPWqMbZIYXFRAoIK4KdZ9LKBII2+J0NcgQOCD+Py3ovENQO2dEdLF26TBUXTQVe
+	 mTU9ppciJrOOwVjF6wCSjuWF4FcdqKusZrkf8rOCB931H4Z2Nc81RvmJLv4frjQOTf
+	 Vx+auLD/LmTGRfJH3I6ZW+7fCPgqgwyV143lU08Nw1Hw33OJdNHCgk5HCqowXIOIuV
+	 yAeTo/tW+PXPQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Liang Jie <liangjie@lixiang.com>,
-	fanggeng <fanggeng@lixiang.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Aleksandar Gerasimovski <aleksandar.gerasimovski@belden.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-staging@lists.linux.dev,
+	linux-phy@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] staging: rtl8723bs: fix missing status update on sdio_alloc_irq() failure
-Date: Wed, 18 Feb 2026 21:04:12 -0500
-Message-ID: <20260219020422.1539798-36-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] phy: mvebu-cp110-utmi: fix dr_mode property read from dts
+Date: Wed, 18 Feb 2026 21:04:13 -0500
+Message-ID: <20260219020422.1539798-37-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -50,100 +49,157 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang Jie <liangjie@lixiang.com>
+From: Aleksandar Gerasimovski <aleksandar.gerasimovski@belden.com>
 
-[ Upstream commit 618b4aec12faabc7579a6b0df046842d798a4c7c ]
+[ Upstream commit e2ce913452ab56b3330539cc443b97b7ea8c3a1a ]
 
-The return value of sdio_alloc_irq() was not stored in status.
-If sdio_alloc_irq() fails after rtw_drv_register_netdev() succeeds,
-status remains _SUCCESS and the error path skips resource cleanup,
-while rtw_drv_init() still returns success.
+The problem with the current implementation is that it does not consider
+that the USB controller can have multiple PHY handles with different
+arguments count, as for example we have in our cn9131 based platform:
+"phys = <&cp0_comphy1 0>, <&cp0_utmi0>;".
 
-Store the return value of sdio_alloc_irq() in status and reuse the
-existing error handling which relies on status.
+In such case calling "of_usb_get_dr_mode_by_phy" with -1 (no phy-cells)
+leads to not proper phy detection, taking the "marvell,cp110-utmi-phy"
+dts definition we can call the "of_usb_get_dr_mode_by_phy" with 0
+(#phy-cells = <0>) and safely look for that phy.
 
-Reviewed-by: fanggeng <fanggeng@lixiang.com>
-Signed-off-by: Liang Jie <liangjie@lixiang.com>
-Link: https://patch.msgid.link/20251208092730.262499-1-buaajxlj@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Aleksandar Gerasimovski <aleksandar.gerasimovski@belden.com>
+Link: https://patch.msgid.link/20260106150643.922110-1-aleksandar.gerasimovski@belden.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The driver has a long history with 2020 commits, meaning it's well-
-established in the kernel tree and present in stable trees.
+Now I have a clear understanding of the bug. Let me verify the behavior
+difference more carefully:
 
-## Decision Analysis
+## Understanding the Bug
 
-**Arguments for YES:**
-- Fixes a real bug: resource leak and incorrect success return on error
-  path
-- Extremely small and surgical change (2 lines)
-- Obviously correct - uses the same pattern as the line above it
-- Low risk of regression
-- The bug has been confirmed by code review (verified above at line 380)
-- Reviewed by one reviewer and accepted by Greg Kroah-Hartman
+When `arg0 = -1`:
+- The function uses `of_parse_phandle()` (line 303-306), which simply
+  returns the nth phandle node **without** parsing `#phy-cells`. It sets
+  `args.args_count = 0`.
+- The matching at line 316-317: `args.np == np && (args.args_count == 0
+  || args.args[0] == arg0)` — since `args_count = 0`, it matches on the
+  `np` comparison alone.
 
-**Arguments for NO:**
-- This is a **staging driver** - stable kernel rules note staging
-  drivers are usually not stable material
-- The bug only triggers on `sdio_alloc_irq()` failure - an error path
-- Staging drivers are explicitly called out as usually not appropriate
-  for stable
+The problem: When the controller has `phys = <&cp0_comphy1 0>,
+<&cp0_utmi0>;`, there are two phandle entries. The first (`cp0_comphy1`)
+has `#phy-cells = <1>` (it takes argument `0`), and the second
+(`cp0_utmi0`) has `#phy-cells = <0>`.
+
+With `arg0 = -1`, `of_parse_phandle()` is used, which doesn't understand
+`#phy-cells`. It simply iterates through raw phandle entries. Since
+`cp0_comphy1` has an extra cell (`0`), `of_parse_phandle()` at index 0
+returns `cp0_comphy1`, at index 1 it might return the `0` argument cell
+(not a valid phandle) rather than `cp0_utmi0`. This leads to incorrect
+PHY matching — the function can't properly find the UTMI PHY when mixed
+`#phy-cells` counts are present.
+
+With `arg0 = 0`:
+- The function uses `of_parse_phandle_with_args()` (line 307-312), which
+  correctly parses `#phy-cells` for each phandle and properly skips over
+  argument cells. This means index 0 correctly refers to `cp0_comphy1`
+  (with its argument `0`) and index 1 correctly refers to `cp0_utmi0`.
+- At line 316-317: for `cp0_utmi0`, `args.args_count = 0` (since `#phy-
+  cells = <0>`), so the match succeeds correctly.
+
+This is a real functional bug fix — on platforms with mixed PHY types,
+the UTMI PHY won't be correctly identified for its dual-role mode,
+potentially causing the USB port to be configured incorrectly
+(defaulting to HOST mode with a warning instead of detecting the correct
+mode).
+
+## Stable Kernel Criteria Assessment
+
+1. **Fixes a real bug**: Yes — on cn9131-based platforms (and likely
+   others) with mixed PHY types, the UTMI PHY dr_mode detection fails,
+   leading to incorrect USB configuration.
+
+2. **Obviously correct and tested**: The fix is a one-line change from
+   `-1` to `0`. The commit author is from Belden (likely has the
+   hardware). The change matches the documented `#phy-cells = <0>` for
+   this PHY type. Using `of_parse_phandle_with_args()` (triggered by
+   arg0 >= 0) is the correct approach when different PHYs have different
+   `#phy-cells` counts.
+
+3. **Small and contained**: Single character change in one file. Minimal
+   risk.
+
+4. **No new features**: This is purely a bug fix.
+
+5. **User impact**: Without this fix, USB dual-role mode detection fails
+   on affected platforms. The PHY defaults to HOST mode when it might
+   need to be PERIPHERAL mode (or vice versa), which means USB
+   functionality is broken for those configurations.
+
+## Risk Assessment
+
+- **Risk**: Extremely low. The change from `-1` to `0` for a PHY with
+  `#phy-cells = <0>` is semantically equivalent for single-PHY
+  configurations. For multi-PHY configurations with mixed `#phy-cells`,
+  it's a correctness fix.
+- **Regression potential**: Very low. The `of_parse_phandle_with_args()`
+  path is well-tested across the kernel. The only behavior change is
+  that mixed-PHY configurations now work correctly.
+- **Scope**: Single driver, single line, Marvell ARM platform specific.
 
 ## Verification
 
-- Read the actual source file at
-  `drivers/staging/rtl8723bs/os_dep/sdio_intf.c` lines 350-409:
-  confirmed the bug at line 380 where `sdio_alloc_irq()` return value is
-  discarded while `status` remains `_SUCCESS` from line 376
-- Confirmed the cleanup at lines 386-391 uses `status != _SUCCESS`
-  checks, so with `status == _SUCCESS`, cleanup of `if1` and `dvobj`
-  would be skipped
-- Confirmed via `git log` that the driver has extensive history (2020
-  commits) and exists in stable trees
-- The commit was reviewed and merged by Greg Kroah-Hartman (staging
-  maintainer)
-- The diff is only 2 lines changed, making it trivially correct
+- **Function `of_usb_get_dr_mode_by_phy` analyzed**: Read the
+  implementation at `drivers/usb/common/common.c:290-331`. Verified that
+  `arg0 = -1` uses `of_parse_phandle()` (no `#phy-cells` awareness)
+  while `arg0 >= 0` uses `of_parse_phandle_with_args()` (proper `#phy-
+  cells` parsing).
+- **Device tree binding confirmed**: The Explore agent verified that
+  `Documentation/devicetree/bindings/phy/marvell,armada-cp110-utmi-
+  phy.yaml` specifies `#phy-cells: const: 0`, meaning arg0 = 0 is the
+  correct semantic match.
+- **Driver history verified**: `git log` shows the driver was introduced
+  in commit `2fc989f74b8da` ("drivers: phy: add support for Armada CP110
+  UTMI PHY"), and the `-1` argument has been there since inception. The
+  file has had only 3 subsequent commits before this fix, none related
+  to dr_mode.
+- **Matching logic verified**: At line 316-317, when `args.args_count ==
+  0` (which is the case for `#phy-cells = <0>`), the match succeeds on
+  `args.np == np` alone, so the value `0` doesn't cause a spurious
+  mismatch.
+- **Bug mechanism verified**: With mixed `#phy-cells` (e.g., `phys =
+  <&cp0_comphy1 0>, <&cp0_utmi0>`), `of_parse_phandle()` (used with
+  arg0=-1) doesn't account for the argument cell `0` after
+  `cp0_comphy1`, leading to incorrect phandle indexing.
 
-## Final Assessment
+## Conclusion
 
-While this is a legitimate bug fix that is small, safe, and obviously
-correct, it affects a **staging driver**. Staging drivers are generally
-considered not stable material because they are experimental, may have
-many other bugs, and are expected to be in flux. The bug only triggers
-on an error path (`sdio_alloc_irq()` failure), which limits real-world
-impact.
-
-However, rtl8723bs is one of the most widely-used staging drivers (found
-in many budget ARM tablets and SBCs), and the fix is truly trivial with
-zero risk. The resource leak and incorrect return value on IRQ
-allocation failure are real bugs that could affect users. Given the
-minimal risk and clear correctness, this is a borderline case that leans
-toward YES despite being in staging.
+This is a clear, minimal, one-line bug fix for incorrect device tree PHY
+matching on Marvell CP110 UTMI platforms. It fixes a real functional
+issue (incorrect USB dual-role mode detection) that affects users with
+mixed-PHY configurations. The fix is obviously correct, has near-zero
+regression risk, and follows the established pattern used by other PHY
+drivers.
 
 **YES**
 
- drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/phy/marvell/phy-mvebu-cp110-utmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-index 1d0239eef114b..dc787954126fd 100644
---- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-+++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-@@ -377,7 +377,8 @@ static int rtw_drv_init(
- 	if (status != _SUCCESS)
- 		goto free_if1;
+diff --git a/drivers/phy/marvell/phy-mvebu-cp110-utmi.c b/drivers/phy/marvell/phy-mvebu-cp110-utmi.c
+index 59903f86b13f5..dd3e515a8e865 100644
+--- a/drivers/phy/marvell/phy-mvebu-cp110-utmi.c
++++ b/drivers/phy/marvell/phy-mvebu-cp110-utmi.c
+@@ -338,7 +338,7 @@ static int mvebu_cp110_utmi_phy_probe(struct platform_device *pdev)
+ 			return -ENOMEM;
+ 		}
  
--	if (sdio_alloc_irq(dvobj) != _SUCCESS)
-+	status = sdio_alloc_irq(dvobj);
-+	if (status != _SUCCESS)
- 		goto free_if1;
- 
- 	status = _SUCCESS;
+-		port->dr_mode = of_usb_get_dr_mode_by_phy(child, -1);
++		port->dr_mode = of_usb_get_dr_mode_by_phy(child, 0);
+ 		if ((port->dr_mode != USB_DR_MODE_HOST) &&
+ 		    (port->dr_mode != USB_DR_MODE_PERIPHERAL)) {
+ 			dev_err(&pdev->dev,
 -- 
 2.51.0
 
