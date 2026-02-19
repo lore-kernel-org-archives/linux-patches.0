@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A7B310779;
-	Thu, 19 Feb 2026 02:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338503112DC;
+	Thu, 19 Feb 2026 02:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466709; cv=none; b=IBKnbvQX/FRW76HbDlXP3QFgPm3FkTQbWL08cd3q6pJXSZoqnX7k0asgg/IlyHeB9fqe2UQsa3MPwiL5f3fq+nBKWuAoYUr8rc/Tu93RnWUCutPbcYIoijSWsmUYyhBrDx4qVQkCZ7vSXrWq2+fhu9M25MV6LhSSpyNwkw1kAw8=
+	t=1771466710; cv=none; b=ZSe3l2KR6/dsELylyfe0ESy4okkjWHnVeBO3kqvlE9SyeFrVMsJYEyHizLJyaNX2xAy3h1QSU8jYSji9HWSfPJe/+FlY9off/apW7qo+VVq8N4+j0rpU1oIMvF6JvpefxQ2xwd5+h10KOUxQ8FGkowpGlC4I7b3XUb485uAG618=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466709; c=relaxed/simple;
-	bh=frX33pev+XR4l6oz6+xiDXC5X50uJZtofsvGkHEY7RA=;
+	s=arc-20240116; t=1771466710; c=relaxed/simple;
+	bh=iX5gKxaTwXYEIEfEK8lcX9yf1CfI4OHAxvr4yNY05nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rnWxErthvXPJAR0g1DPhwuat99lik3HJ7IEfoCe20fd1cKYn2TghmUYtFNccjapZZsPemvyneLdQ5k8g/1gTc6oRjdQSGUERftFsgq/6pPxrafSrylNUB5Q1dog9SNeUCRW5w35mGtf/GbsYGlgdDAbX+ubkoXGonwPspF/0x2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wil0D8ZP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LGYOGXviPI3JC3PATqwepWCm0SJsKybhyx7FSYMCnq52IiYHYNl8+j3L9ND4jMuqEMwCmBxTjxVn1C56hOxyXPf9YbqdmDRpvmr31iGgQdtI3r0PmIqrvWhQx+fa4Kit5xq4A5zwAV3GayDC97Dii4Wy+2Q6Zq/m7+OtiwLwbjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=btWM//c8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wil0D8ZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E80C19425;
-	Thu, 19 Feb 2026 02:05:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="btWM//c8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433B4C116D0;
+	Thu, 19 Feb 2026 02:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466708;
-	bh=frX33pev+XR4l6oz6+xiDXC5X50uJZtofsvGkHEY7RA=;
+	s=k20201202; t=1771466710;
+	bh=iX5gKxaTwXYEIEfEK8lcX9yf1CfI4OHAxvr4yNY05nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wil0D8ZPPDa/S/GwFA0Vt8A7F+18QXRUJX7g1qSxJ8KtCPtQnuacBrPrFwKlrGyHu
-	 JgVpr2O1y77ZO47EzS29aj4W38oN2jH+LqivTGB+V1QW6LnJbMcg4cpYPpCLK8b0Qe
-	 QUuGrLtVyW8ddNVjP4YWaCEz4jI+6kdKiDb6q6oHqWbEMSQywfwantQ4JP0fVJWEZH
-	 +tAlhiet9F/1S5iA0V5yO3wyQFOz3PutsJ8hoBLcNF0s0pM32Juu7vBJYZzh4tx1Ni
-	 x+JXQeLhdbCbdjVheDdGiYc87WyL20aa84aIxKCDefJhnpS2Cp58vQRTHIjbTg3Pgl
-	 sxH+9dvSEM9hw==
+	b=btWM//c8Tf3VeWdjULzmqHwa+MOqmTZ2F0bjuAPFiHYr7F9cds5z9Rx16ZO07V2A1
+	 XBB2yd62cRrcpLxkWgoCwyrz5XzMbTaM7XdFeX5QKTZfesPslXlRnoG197lKUbxogY
+	 Ugcx+rlkHFhAiHL6HZZsTPOULKFae4Xe227wBpMWHVs71yEiA5ddHR9J68SrFMuqNN
+	 fXTKnvGKufj9gr1UEeBDlcP6DZ6Jmmpn7jl98m0K9lApnPJFCJJPP8SjQmU42X0Ttx
+	 KRAptt0bPq2nLelhyvJagTRhw5i1q7oPrjxb4HvOVUNlNen6W5Z8dwA+q1uc8CAbgS
+	 laFwJFu3Xj3uw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Eugen Hristev <eugen.hristev@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Liang Jie <liangjie@lixiang.com>,
+	fanggeng <fanggeng@lixiang.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mcoquelin.stm32@gmail.com,
-	alexandre.torgue@foss.st.com,
-	dmaengine@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
+	linux-staging@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] dmaengine: stm32-dma3: use module_platform_driver
-Date: Wed, 18 Feb 2026 21:04:11 -0500
-Message-ID: <20260219020422.1539798-35-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] staging: rtl8723bs: fix missing status update on sdio_alloc_irq() failure
+Date: Wed, 18 Feb 2026 21:04:12 -0500
+Message-ID: <20260219020422.1539798-36-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -54,135 +50,100 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Liang Jie <liangjie@lixiang.com>
 
-[ Upstream commit 0d41ed4ea496fabbb4dc21171e32d9a924c2a661 ]
+[ Upstream commit 618b4aec12faabc7579a6b0df046842d798a4c7c ]
 
-Without module_platform_driver(), stm32-dma3 doesn't have a
-module_exit procedure. Once stm32-dma3 module is inserted, it
-can't be removed, marked busy.
-Use module_platform_driver() instead of subsys_initcall() to register
-(insmod) and unregister (rmmod) stm32-dma3 driver.
+The return value of sdio_alloc_irq() was not stored in status.
+If sdio_alloc_irq() fails after rtw_drv_register_netdev() succeeds,
+status remains _SUCCESS and the error path skips resource cleanup,
+while rtw_drv_init() still returns success.
 
-Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://patch.msgid.link/20251121-dma3_improv-v2-1-76a207b13ea6@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Store the return value of sdio_alloc_irq() in status and reuse the
+existing error handling which relies on status.
+
+Reviewed-by: fanggeng <fanggeng@lixiang.com>
+Signed-off-by: Liang Jie <liangjie@lixiang.com>
+Link: https://patch.msgid.link/20251208092730.262499-1-buaajxlj@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Interesting - all three STM32 DMA drivers use `subsys_initcall()`. The
-other two (stm32-dma and stm32-mdma) also lack module_exit. This commit
-only changes stm32-dma3.
+The driver has a long history with 2020 commits, meaning it's well-
+established in the kernel tree and present in stable trees.
 
-## Analysis Summary
+## Decision Analysis
 
-### What the commit fixes
-The stm32-dma3 driver registers using `subsys_initcall()` but has no
-`module_exit()` function. This means the module can be loaded (`insmod`)
-but never unloaded (`rmmod`), as the kernel marks it as busy due to
-having no exit/cleanup path.
+**Arguments for YES:**
+- Fixes a real bug: resource leak and incorrect success return on error
+  path
+- Extremely small and surgical change (2 lines)
+- Obviously correct - uses the same pattern as the line above it
+- Low risk of regression
+- The bug has been confirmed by code review (verified above at line 380)
+- Reviewed by one reviewer and accepted by Greg Kroah-Hartman
 
-### Change implications
-The fix replaces `subsys_initcall()` (priority level 4) with
-`module_platform_driver()` which uses `module_init()` /
-`device_initcall()` (priority level 6). This is a **behavioral change**
-- the driver will now:
-1. Initialize later in the boot sequence (device_initcall instead of
-   subsys_initcall)
-2. Be unloadable via rmmod
-
-### Risk Assessment
-- **Positive**: Fixes inability to unload the module - this is a genuine
-  bug fix
-- **Risk**: The init level change from `subsys_initcall` (level 4) to
-  `device_initcall` (level 6) could cause probe ordering issues. DMA
-  controllers are often needed early by other subsystems. However, with
-  device tree and deferred probing in modern kernels, this should be
-  handled. The fact that 54 other DMA drivers use
-  `module_platform_driver()` successfully supports this.
-- **Scope**: Very small change - removes 6 lines, adds 1 line. Single
-  file, single driver.
-- **Affected stable trees**: Only 6.11+ (driver introduced in
-  v6.11-rc1), so this would apply to v6.12.y and v6.13.y stable trees.
-
-### Stable criteria assessment
-- **Fixes a real bug**: Yes - module cannot be unloaded
-- **Obviously correct**: Mostly. The `module_platform_driver()` macro is
-  the standard pattern used by the majority of DMA drivers. However, the
-  init level change adds a small risk.
-- **Small and contained**: Yes - 7 lines changed in one file
-- **No new features**: The ability to unload a module is restoring
-  expected behavior, not a new feature
-- **Tested**: Has a Reviewed-by tag from Eugen Hristev
-
-### Concerns
-1. The initialization order change (`subsys_initcall` →
-   `device_initcall`) is the main concern. DMA engines are
-   infrastructure that other drivers depend on. If anything probes
-   before the DMA controller is ready and doesn't handle deferred
-   probing correctly, this could cause regressions.
-2. However, this is mitigated by the fact that modern device tree
-   platforms and probe deferral should handle this gracefully.
-3. The bug (inability to rmmod) primarily affects development/debugging
-   workflows and modular kernel configurations, not production embedded
-   systems that typically build DMA drivers in.
+**Arguments for NO:**
+- This is a **staging driver** - stable kernel rules note staging
+  drivers are usually not stable material
+- The bug only triggers on `sdio_alloc_irq()` failure - an error path
+- Staging drivers are explicitly called out as usually not appropriate
+  for stable
 
 ## Verification
 
-- **git log** confirmed stm32-dma3.c was introduced by commit
-  f561ec8b2b33d, which is in v6.11-rc1
-- **Read of current source** (line 1917-1922) confirmed the
-  `subsys_initcall` without `module_exit` pattern matches the pre-patch
-  state
-- **Grep of drivers/dma/stm32/** confirmed all three STM32 DMA drivers
-  use subsys_initcall - this commit only changes stm32-dma3
-- **Grep of drivers/dma/** found 21 DMA drivers using subsys_initcall
-  and 54 using module_platform_driver, confirming module_platform_driver
-  is the dominant pattern
-- **git tag** confirmed the driver exists only in 6.11+ stable trees
-- The `.remove` callback (`stm32_dma3_remove`) is already defined in the
-  platform_driver struct (line 1909), confirming the removal path was
-  intended to work
+- Read the actual source file at
+  `drivers/staging/rtl8723bs/os_dep/sdio_intf.c` lines 350-409:
+  confirmed the bug at line 380 where `sdio_alloc_irq()` return value is
+  discarded while `status` remains `_SUCCESS` from line 376
+- Confirmed the cleanup at lines 386-391 uses `status != _SUCCESS`
+  checks, so with `status == _SUCCESS`, cleanup of `if1` and `dvobj`
+  would be skipped
+- Confirmed via `git log` that the driver has extensive history (2020
+  commits) and exists in stable trees
+- The commit was reviewed and merged by Greg Kroah-Hartman (staging
+  maintainer)
+- The diff is only 2 lines changed, making it trivially correct
 
-## Conclusion
+## Final Assessment
 
-This fixes a real bug (module cannot be unloaded) with a minimal, well-
-understood change using a standard kernel macro. The risk is the init
-level change, but this follows the pattern of the majority of DMA
-drivers. The fix is small, reviewed, and appropriate for stable. The
-driver only exists in 6.11+, limiting the scope of backport. For
-embedded/STM32 developers who load the DMA3 driver as a module, this is
-a meaningful fix.
+While this is a legitimate bug fix that is small, safe, and obviously
+correct, it affects a **staging driver**. Staging drivers are generally
+considered not stable material because they are experimental, may have
+many other bugs, and are expected to be in flux. The bug only triggers
+on an error path (`sdio_alloc_irq()` failure), which limits real-world
+impact.
+
+However, rtl8723bs is one of the most widely-used staging drivers (found
+in many budget ARM tablets and SBCs), and the fix is truly trivial with
+zero risk. The resource leak and incorrect return value on IRQ
+allocation failure are real bugs that could affect users. Given the
+minimal risk and clear correctness, this is a borderline case that leans
+toward YES despite being in staging.
 
 **YES**
 
- drivers/dma/stm32/stm32-dma3.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma3.c
-index 50e7106c5cb73..9500164c8f688 100644
---- a/drivers/dma/stm32/stm32-dma3.c
-+++ b/drivers/dma/stm32/stm32-dma3.c
-@@ -1914,12 +1914,7 @@ static struct platform_driver stm32_dma3_driver = {
- 	},
- };
+diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+index 1d0239eef114b..dc787954126fd 100644
+--- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
++++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+@@ -377,7 +377,8 @@ static int rtw_drv_init(
+ 	if (status != _SUCCESS)
+ 		goto free_if1;
  
--static int __init stm32_dma3_init(void)
--{
--	return platform_driver_register(&stm32_dma3_driver);
--}
--
--subsys_initcall(stm32_dma3_init);
-+module_platform_driver(stm32_dma3_driver);
+-	if (sdio_alloc_irq(dvobj) != _SUCCESS)
++	status = sdio_alloc_irq(dvobj);
++	if (status != _SUCCESS)
+ 		goto free_if1;
  
- MODULE_DESCRIPTION("STM32 DMA3 controller driver");
- MODULE_AUTHOR("Amelie Delaunay <amelie.delaunay@foss.st.com>");
+ 	status = _SUCCESS;
 -- 
 2.51.0
 
