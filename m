@@ -1,58 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D6933B6C7;
-	Thu, 19 Feb 2026 13:03:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEFD30DD3B
+	for <patches@lists.linux.dev>; Thu, 19 Feb 2026 21:03:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771506197; cv=none; b=UNffjSD21uqNauSV15OKeLq2dBY9r1F0yg92lE2dtgoJpeYMP1pI4V2NbROqZT/BAwh+v5iWVkdfIn9+3AJKeanYduphh9SEcHmkpRFPMrkDVRZRDJqgaNQKoxpkPfvFyAVKNhi3HCiy0Po4rrBvtzSasW8rWAUPkPkGzCFwk7k=
+	t=1771535039; cv=none; b=FVvzfBVxjLqjI5CEQMfwFHpnUcOqgJOY5mZvoKEJ9LMmanz0oAx5f4Ovw4E397xm0f3XVnG3Zuxs/BX9NacNYEzKKBc8EhaAspCX5AtaNzb98+CBG/tP29ffcTWLA6VosnbGNVk438cwPzcnwnyYLD29KcDnQeP7HzAuhf91wqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771506197; c=relaxed/simple;
-	bh=yK19pzf3xS6eSgWh4BDlWw4MEi9y63s4HTiuIj6YxRo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FpuRTIXQeOY+tTt2C9LjtXXfKY7l0x1ncH1yRvHBht/sHvekCF+e2JdtXVsVSdsy9xVXWbMkx4bOP9AQrqa1XhI3EAlLe5pCLpP2bA2qDEvlwqoUAm86G/sJ7GGG/VxMIgAeB8gfC5k/GVR0sC7A9Skci7ViZM8oDsDpkTd+HzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t2ZoCQY7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771535039; c=relaxed/simple;
+	bh=pNvvwCxaWteDSrjz3ya2LND8dS5HAFVN2gK9oksO2ms=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=F52V3T5Vlj8rMVt/DrVPbTpjm5wUAou7JTsMBlKgGT6w5u6l3dZhzD+21nTwlpl1GIbGRGmsSQM8AqYoAS10Novi/emj0XxGnV5Fo8vcTt12vRStyyrtd908kT/NRHRcFhULuv2guy+l7DdrVdkZdaUjg6s5liKiVbDETWMlfIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QE1hYFW7; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t2ZoCQY7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A83C4CEF7;
-	Thu, 19 Feb 2026 13:03:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771506197;
-	bh=yK19pzf3xS6eSgWh4BDlWw4MEi9y63s4HTiuIj6YxRo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t2ZoCQY7ubMdJFO+Dogk0wJElzLEhXKFZ9AkBXAx4+w9tG9dUG0pnEtgX8h0cx+fm
-	 n9RakTCI8kMCHii/QQlCHqpbzeBnQeGxOzuAvJRSyQ9vx1nTYgb666rG8rkBO0Oo6v
-	 QvBbQS7LB4TCat9b6w1Kalq7MYIP6LBenv9Ukhh+WC6mpLKKTRY3ScpuDPB+JoJA3a
-	 7Lk55C/u9d9tzCOAjUTit6uEMYu4E4F7keqAxUURTzY0HbPAJxO3/C1mrSt1cqugWa
-	 kr1GHwpPT3tgaQMsL2F0lJCRLROfCqKX2txbhENwjHaWlpuLm1z07hTaXVts9iwBsc
-	 AwndwIqXFKQIw==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QE1hYFW7"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-48336a6e932so9344425e9.3
+        for <patches@lists.linux.dev>; Thu, 19 Feb 2026 13:03:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771535036; x=1772139836; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lAxExF3Bh85aqNqMomIsLZH79MhB2KBo6F6PX7ObPew=;
+        b=QE1hYFW7GPFr92Lr+ac7EMbL0ivs8DP/25CS0fYJHFdMWPTbFShC1hnBErhJ0fbveK
+         wZ2Tdwj/CqZ7vxfIrSwtrTuFhpnDwZNQtBLXC6OaxmtYh3OOEjFfjuVa1Mf94RqrBeY9
+         tWsBwNFPDo4sFqxBl2jfuZvpvUzImcaP3QEoKZ5/rVg+v/P1P4QS1TnoGsMw6TLpyn5o
+         D7i8OncL9G473aMbKxOcHayq7o9lvS2RJK+mXiQhzCKR3K9j2G3anQ5bdgfr69rOszMv
+         t73tiJtLhOAhjpKp76xu5FSCzqChgotiKALxzDszO3HBofBxgMkxNCOQbOuBh/ET+2x8
+         iZag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771535036; x=1772139836;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lAxExF3Bh85aqNqMomIsLZH79MhB2KBo6F6PX7ObPew=;
+        b=cgWYBULtCRck/EYQpoCQAHGGx2cWPQpU0PMB8GB+r5yFPKgZTzrKkMEXgxb/llkOGT
+         +tS2U2cQXgzjtBq8N/7l7R9fDjHS5jmwdH6ZjYecj46s0PjfuuyaybuOn0O40gkqoU4M
+         U85y5zu3WgW22P0c5eev0TBH0nxrbQ7/AWXZP1EGLwJ5zZ9rA0Cgqs8TKWUfPVH9vepr
+         10m9FPo8N5P3enk9umthlganOG8A62ofQp9SgCmi1NorZsDSjbBiuLS8hxy9NX73qRob
+         tIMsJN8CwJ2j1zTOTm8eec31td/6PNUcndJnL6XVXQ8kd4lqvjrT+c/K5RQf7SOLvfZw
+         NRAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXywfRQqfOsR0ojx19FZonNCXmqpL+G/UW95SkCEoQ4+sm5zqfeei4Sr3+e0Cy1UuArlzQFwjk7@lists.linux.dev
+X-Gm-Message-State: AOJu0YyFi63bDpZCMmno1tjeDHcuccB9Yqm5F0Qaa8E2Bwcoi7LI5yyM
+	eVfvYpVIHKMNlDVwER74wqXdqT8gKRLvJrOjKYRqQCk3GYRmmuiRXBlR
+X-Gm-Gg: AZuq6aIWt9IBY1WO2aya2DG+RM37gtIM/m7NOCM8CTPdNfS21phSuAl1QescTIiOEr3
+	C/55SMHmqcJJJ5fu5RkCkqwoYwg4cYdaJmTaG38s3Tx/rYK7KZGFDcBnZQagbggvlJBouvn9WPq
+	jMisKR4O3TtwullaU/xeijQbhbFZkiAEvNdr1B5WTqHc/pW3v6TmWYsR4wgJ6YfaZuHAcYVMUrp
+	dx05cryVYcq2kl8L8Dx0GY6gald4RFwwmZ8s8+Tn6/0S/pCH3gy/oeyLmwIwzkcyiA9wew1oc2A
+	jSy19iBd4ntKoVN6JyXmauU7s9tSWBXF/B6r+gvvJ0GaD55+A0i+ss8M3Q/7jcP7ycuIclgqVyJ
+	mFg3VNA1a1JIqbswZs/NAEzbCUbaUmwxxT7Swwxc7SsdZgpNZyKcyjsNGLxWhgflSW7qzzbcWwW
+	5c/gELrgjF7ByJT8KAOKM=
+X-Received: by 2002:a05:600c:848a:b0:483:aa2:6bce with SMTP id 5b1f17b1804b1-48379c00bf9mr264391715e9.30.1771535035717;
+        Thu, 19 Feb 2026 13:03:55 -0800 (PST)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-483a316eb08sm30113295e9.0.2026.02.19.13.03.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Feb 2026 13:03:55 -0800 (PST)
+From: Askar Safin <safinaskar@gmail.com>
+To: linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jan Kara <jack@suse.cz>
+Cc: Randy Dunlap <rdunlap@infradead.org>,
 	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.19 00/18] 6.19.3-rc1 review
-Date: Thu, 19 Feb 2026 14:02:56 +0100
-Message-ID: <20260219130256.31407-1-ojeda@kernel.org>
-In-Reply-To: <20260217200002.683975158@linuxfoundation.org>
-References: <20260217200002.683975158@linuxfoundation.org>
+	linux-kbuild@vger.kernel.org,
+	initramfs@vger.kernel.org,
+	Rob Landley <rob@landley.net>,
+	David Disseldorp <ddiss@suse.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
+	patches@lists.linux.dev
+Subject: [PATCH 0/2] init: ensure that /dev/console and /dev/null are (nearly) always available in initramfs
+Date: Thu, 19 Feb 2026 21:03:10 +0000
+Message-ID: <20260219210312.3468980-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,27 +82,27 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 17 Feb 2026 21:31:56 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.19.3 release.
-> There are 18 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 19 Feb 2026 19:59:50 +0000.
-> Anything received after that time might be too late.
+This patchset is for VFS.
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64:
+See commit messages for motivation and details.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+Askar Safin (2):
+  init: ensure that /dev/console is (nearly) always available in
+    initramfs
+  init: ensure that /dev/null is (nearly) always available in initramfs
 
-The same couple build errors and the warning still apply, from 6.19.1
-(and 6.19.2):
+ .../filesystems/ramfs-rootfs-initramfs.rst    |  4 +--
+ init/do_mounts.c                              | 11 ++++++++
+ init/do_mounts.h                              |  2 ++
+ init/initramfs.c                              |  2 ++
+ init/main.c                                   |  6 +++-
+ init/noinitramfs.c                            | 28 +++----------------
+ usr/Makefile                                  |  2 +-
+ usr/default_cpio_list                         |  6 +---
+ 8 files changed, 28 insertions(+), 33 deletions(-)
 
-  https://lore.kernel.org/stable/20260215023627.56245-1-ojeda@kernel.org/
 
-Thanks!
+base-commit: 2961f841b025fb234860bac26dfb7fa7cb0fb122 (mainline)
+-- 
+2.47.3
 
-Cheers,
-Miguel
