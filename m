@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03C4308F0A;
-	Thu, 19 Feb 2026 02:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60587285CA2;
+	Thu, 19 Feb 2026 02:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771466695; cv=none; b=m5PAgc+4cDtu5YT9Q0KmphXGi/SLbYTaSw0KPTM3S2OstlptREhTAfYk5ziYEZ4i7Rfz6rJL4bpQYxyjQ8Ih6/+j8fNrTVIwKqwxc81JV6VzLTHwAnxHL5hLFv4hMb5Kf+F/EG84HODPpolf9UACFXse6GJyegXoTEJ1vE0aXeQ=
+	t=1771466697; cv=none; b=G3WZJ6x1a4bm4FsrytQKbI7IJ3cKwLjdV5Z+F2yuBa9ObIWyd5UdD6DMxF03Nv5rmPlHv4x7VSQzysJr4wrqDlyWvv7D0T+xWUP5x6QEcl+OpHa++pac5FpAj+A9whz75qa0p6uXAU4NEQNVtdh9MiSmusIvLaV/xP+QxVFUccQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771466695; c=relaxed/simple;
-	bh=XHfSr++LfcSDnt9pFUweddD+5djdvkHfs20so8hqnXw=;
+	s=arc-20240116; t=1771466697; c=relaxed/simple;
+	bh=7En8I07/4oFxJWOvuSQdW2P8VYxNHDDzzM8DUJKR2w8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mT8OgQ+AncS1nrMwEXJN36nemDKS7ZeDYfvAP0wtXVOFQJZVbpIEtG5Ik0QaNkhlm87yMAjF9ILW+lI5dBTSqVmnVBz9AspgIaltdkiATUdny3osc6DfOIbA5SMM9GM0f/KblaspVc0t0C5qanhy5UDJGU0Kzy70uMIkM48gE5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pFQoy0A9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UJaOrEefYVMzwQlTE7oxmYkwm4xcg0rEwv76x8DCk9txoIvB8L2y/kQLbauCzJI6hv6DQFU5vGG80usmWtDqInQfyTxHTOsjtHL2HYeSS7M9KNLiIZs+CM6ZRq/inLy62SHb5Xm4PpixOb1TcLXZ4a+MwdINdeqpgyZNwt7rSeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aH39I/qV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pFQoy0A9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A48C116D0;
-	Thu, 19 Feb 2026 02:04:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aH39I/qV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD6BC19422;
+	Thu, 19 Feb 2026 02:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771466695;
-	bh=XHfSr++LfcSDnt9pFUweddD+5djdvkHfs20so8hqnXw=;
+	s=k20201202; t=1771466697;
+	bh=7En8I07/4oFxJWOvuSQdW2P8VYxNHDDzzM8DUJKR2w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFQoy0A9O+MxLFB/Yv7YehDK31QxNo3qrW3J5sSAF6ZKfGL/VuNpoYfkZG4/W2eVV
-	 z3DGvHOtNBc+JOJC3r90Qo8ikQO01YsGQRhnytKqkKcWEd7VUvWCMYR+2N3DWcWW1m
-	 +I6FORd0ch5Jt7VhUay6FnHxbr9seD+kNIkKAJcJsP3fu6EfpSEUOBpN5efOtM1djI
-	 y4xFw2of74Hej2hxtGrSNWDnpelieTwaxoCiK+1pe2LvCiMHlYPrVNeXyLVZ8pe1Gq
-	 HiAdDRElzht+fDkEm6bJFj94HHlK1mxTMmMPXent8W+V+ZuLd0nInbekoZuuEYNxg6
-	 xrLL92ObldVMw==
+	b=aH39I/qVmlmTpMpx+TlXPHdX+UpmkIxvykw3l3t24N1KKXuMvNVWDJvhw2Jr9mFVq
+	 6Q022yCi3OK+Ds0t6v4eAF8NhvJhkCCqptsKT7G8eYZwgWgqQm+xW2s2M8QWW9FKto
+	 yhw3ure1h7k3S8aLVS5DJ7+5kiZmYyFDQUo8JPWXGZN9yCpaKb87bLJM95nq6Mbxce
+	 JwWIGn+60TPZXvk0dV07mjE0YLtPkoS4s3eVYEEOcQrlzSCMPeVSMBMEYjnZSkbCee
+	 M739OfkbTJOU06B9qdFD7N6BlTAzGgyqAmVDuNIkgmeTgEhTIM0+FmwJ3hROl058YM
+	 VBn6+aVgJFFBA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Derek J. Clark" <derekjohn.clark@gmail.com>,
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lanzano.alex@gmail.com,
 	jic23@kernel.org,
+	lars@metafoo.de,
+	Michael.Hennerich@analog.com,
 	linux-iio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] iio: bmi270_i2c: Add MODULE_DEVICE_TABLE for BMI260/270
-Date: Wed, 18 Feb 2026 21:04:01 -0500
-Message-ID: <20260219020422.1539798-25-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] iio: Use IRQF_NO_THREAD
+Date: Wed, 18 Feb 2026 21:04:02 -0500
+Message-ID: <20260219020422.1539798-26-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260219020422.1539798-1-sashal@kernel.org>
 References: <20260219020422.1539798-1-sashal@kernel.org>
@@ -55,18 +56,17 @@ X-stable-base: Linux 6.19.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Derek J. Clark" <derekjohn.clark@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit f69b5ac682dbc61e6aca806c22ce2ae74d598e45 ]
+[ Upstream commit 04d390af97f2c28166f7ddfe1a6bda622e3a4766 ]
 
-Currently BMI260 & BMI270 devices do not automatically load this
-driver. To fix this, add missing MODULE_DEVICE_TABLE for the i2c,
-acpi, and of device tables so the driver will load when the hardware
-is detected.
+The interrupt handler iio_trigger_generic_data_rdy_poll() will invoke
+other interrupt handler and this supposed to happen from within the
+hardirq.
 
-Tested on my OneXPlayer F1 Pro.
+Use IRQF_NO_THREAD to forbid forced-threading.
 
-Signed-off-by: Derek J. Clark <derekjohn.clark@gmail.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -74,95 +74,151 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
 
 LLM Generated explanations, may be completely bogus:
 
-So:
-- v6.13: Driver introduced with BMI260 support (no MODULE_DEVICE_TABLE)
-- v6.14-v6.16: No changes to this file
-- v6.17: Added suspend/resume pm_ops (affects the `.pm = pm_ptr(...)`
-  line in the driver struct)
-- v6.18: Added BMI0260 ACPI ID
+`IRQF_NO_THREAD` has been available for a long time (it's a well-
+established flag).
 
-The MODULE_DEVICE_TABLE additions are simple line additions between
-existing code, so they should apply cleanly to v6.13+ (possibly with
-minor context adjustments for v6.17+ changes and v6.18+ ACPI table
-differences). A minor backport adaptation may be needed for older stable
-trees that don't have the BMI0260 ACPI entry or the pm_ptr line, but
-these are trivial context issues.
+### Classification
 
-### Summary
+This is a **bug fix for PREEMPT_RT kernels**. Without `IRQF_NO_THREAD`:
+1. On PREEMPT_RT, the interrupt handler gets force-threaded
+2. The handler runs in thread context instead of hardirq context
+3. `iio_trigger_poll()` calls `generic_handle_irq()` which checks
+   `in_hardirq()`
+4. The check fails → `WARN_ON_ONCE` fires → sub-IRQ is not dispatched →
+   **IIO trigger doesn't work**
 
-**What it fixes**: BMI260/BMI270 I2C driver doesn't autoload when
-hardware is detected because `MODULE_DEVICE_TABLE` macros were never
-added. Users must manually load the module.
+This is not a theoretical issue — it's a complete functional breakage of
+IIO triggers on PREEMPT_RT kernels.
 
-**Why it matters**: This is a device enablement bug affecting real
-consumer hardware (handheld gaming PCs like GPD Win Mini, Aya Neo, OXP
-Mini Pro, OneXPlayer F1 Pro). The driver exists but doesn't work without
-manual intervention.
+### Scope and Risk Assessment
 
-**Risk**: Essentially zero. `MODULE_DEVICE_TABLE` is a compile-time-only
-construct that generates module alias information. It cannot cause
-runtime regressions.
+- **4 files changed**, each with a one-line flag addition
+- No behavioral change on non-RT kernels (the flag is ignored when not
+  force-threading)
+- No risk of regression — `IRQF_NO_THREAD` is a well-understood, widely-
+  used flag
+- The fix is purely additive (adding a flag to existing IRQ registration
+  calls)
 
-**Scope**: 3 lines added in 1 file. Minimal, well-understood change.
+### Risk vs Benefit
 
-**Stable criteria met**:
-- Obviously correct (trivially so)
-- Fixes a real bug (driver doesn't autoload)
-- Small and contained
-- No new features
-- Tested on real hardware
-- Reviewed by respected kernel developer
+- **Risk**: Extremely low. Adding `IRQF_NO_THREAD` only prevents force-
+  threading on RT kernels. On non-RT kernels, this flag is a no-op.
+- **Benefit**: Fixes complete IIO trigger breakage for these four sensor
+  drivers on PREEMPT_RT kernels.
+
+### Concerns
+
+1. **Scope**: This only fixes 4 of 19+ drivers that use
+   `iio_trigger_generic_data_rdy_poll`. There may be other drivers
+   needing the same fix, but each fix is self-contained.
+2. **Dependencies**: None. This is a simple flag addition that applies
+   cleanly.
+3. **Affected versions**: Any kernel with PREEMPT_RT support and these
+   IIO drivers.
 
 ### Verification
 
-- `git log --diff-filter=A -- drivers/iio/imu/bmi270/bmi270_i2c.c`
-  confirmed driver was introduced in commit `3ea51548d6b25` (v6.13)
-- `git show 3ea51548d6b25` confirmed the original driver never had
-  `MODULE_DEVICE_TABLE` — this has been a bug since day one
-- `git show f35f3c832eb58` confirmed BMI260 support (with ACPI and OF
-  tables) was added in v6.13
-- `git tag --contains 3ea51548d6b25` confirmed the driver is in v6.13+
-- `git tag --contains dc757dc1572d5` confirmed the BMI0260 ACPI ID is
-  only in v6.18+, so the backport may need minor context adjustment for
-  older trees
-- `git log --oneline v6.16..v6.17 --
-  drivers/iio/imu/bmi270/bmi270_i2c.c` confirmed suspend/resume was
-  added in v6.17, which affects context near the driver struct
-- The change is purely additive (3 macro invocations), verified by
-  reading the diff
+- Read `iio_trigger_generic_data_rdy_poll()` at
+  `drivers/iio/industrialio-trigger.c:212` — confirmed it calls
+  `iio_trigger_poll()` which calls `generic_handle_irq()` at line 204
+- Read `iio_trigger_poll()` comment at line 193: "This function should
+  only be called from a hard IRQ context" — confirmed the hardirq
+  requirement
+- Read `kernel/irq/irqdesc.c:666`: confirmed `WARN_ON_ONCE(!in_hardirq()
+  ...)` check that would trigger if called from thread context
+- Read `ad7766_irq()` at `drivers/iio/adc/ad7766.c:187-191`: confirmed
+  it also calls `iio_trigger_poll()` directly, same issue
+- Confirmed `IRQF_NO_THREAD` is defined in
+  `include/linux/interrupt.h:83` and has been available for a long time
+- Confirmed author Sebastian Andrzej Siewior is the PREEMPT_RT
+  maintainer — this is from someone with deep expertise
+- Confirmed reviewer Andy Shevchenko and IIO maintainer Jonathan Cameron
+  signed off
+- `PREEMPT_RT` config option exists since at least v5.x (2019), so this
+  affects stable trees
+- Confirmed no behavioral change on non-RT kernels (IRQF_NO_THREAD is
+  ignored when not force-threading)
+
+### Conclusion
+
+This is a small, surgical, obviously correct fix for a real bug that
+causes complete IIO trigger failure on PREEMPT_RT kernels. It adds
+`IRQF_NO_THREAD` to four IRQ registrations where the handler must run in
+hardirq context (because it calls `generic_handle_irq()`). The fix has
+zero risk on non-RT kernels and is essential for RT kernel users. It
+meets all stable kernel criteria: fixes a real bug, is small and
+contained, is obviously correct, and doesn't introduce new features.
 
 **YES**
 
- drivers/iio/imu/bmi270/bmi270_i2c.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/accel/bma180.c        | 5 +++--
+ drivers/iio/adc/ad7766.c          | 2 +-
+ drivers/iio/gyro/itg3200_buffer.c | 8 +++-----
+ drivers/iio/light/si1145.c        | 2 +-
+ 4 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/iio/imu/bmi270/bmi270_i2c.c b/drivers/iio/imu/bmi270/bmi270_i2c.c
-index b909a421ad017..b92da4e0776fa 100644
---- a/drivers/iio/imu/bmi270/bmi270_i2c.c
-+++ b/drivers/iio/imu/bmi270/bmi270_i2c.c
-@@ -37,6 +37,7 @@ static const struct i2c_device_id bmi270_i2c_id[] = {
- 	{ "bmi270", (kernel_ulong_t)&bmi270_chip_info },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(i2c, bmi270_i2c_id);
+diff --git a/drivers/iio/accel/bma180.c b/drivers/iio/accel/bma180.c
+index 8925f5279e627..7bc6761f51354 100644
+--- a/drivers/iio/accel/bma180.c
++++ b/drivers/iio/accel/bma180.c
+@@ -986,8 +986,9 @@ static int bma180_probe(struct i2c_client *client)
+ 		}
  
- static const struct acpi_device_id bmi270_acpi_match[] = {
- 	/* GPD Win Mini, Aya Neo AIR Pro, OXP Mini Pro, etc. */
-@@ -45,12 +46,14 @@ static const struct acpi_device_id bmi270_acpi_match[] = {
- 	{ "BMI0260",  (kernel_ulong_t)&bmi260_chip_info },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(acpi, bmi270_acpi_match);
+ 		ret = devm_request_irq(dev, client->irq,
+-			iio_trigger_generic_data_rdy_poll, IRQF_TRIGGER_RISING,
+-			"bma180_event", data->trig);
++				       iio_trigger_generic_data_rdy_poll,
++				       IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
++				       "bma180_event", data->trig);
+ 		if (ret) {
+ 			dev_err(dev, "unable to request IRQ\n");
+ 			goto err_trigger_free;
+diff --git a/drivers/iio/adc/ad7766.c b/drivers/iio/adc/ad7766.c
+index 4d570383ef025..1e6bfe8765ab3 100644
+--- a/drivers/iio/adc/ad7766.c
++++ b/drivers/iio/adc/ad7766.c
+@@ -261,7 +261,7 @@ static int ad7766_probe(struct spi_device *spi)
+ 		 * don't enable the interrupt to avoid extra load on the system
+ 		 */
+ 		ret = devm_request_irq(&spi->dev, spi->irq, ad7766_irq,
+-				       IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN,
++				       IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN | IRQF_NO_THREAD,
+ 				       dev_name(&spi->dev),
+ 				       ad7766->trig);
+ 		if (ret < 0)
+diff --git a/drivers/iio/gyro/itg3200_buffer.c b/drivers/iio/gyro/itg3200_buffer.c
+index a624400a239cb..cf97adfa97274 100644
+--- a/drivers/iio/gyro/itg3200_buffer.c
++++ b/drivers/iio/gyro/itg3200_buffer.c
+@@ -118,11 +118,9 @@ int itg3200_probe_trigger(struct iio_dev *indio_dev)
+ 	if (!st->trig)
+ 		return -ENOMEM;
  
- static const struct of_device_id bmi270_of_match[] = {
- 	{ .compatible = "bosch,bmi260", .data = &bmi260_chip_info },
- 	{ .compatible = "bosch,bmi270", .data = &bmi270_chip_info },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(of, bmi270_of_match);
+-	ret = request_irq(st->i2c->irq,
+-			  &iio_trigger_generic_data_rdy_poll,
+-			  IRQF_TRIGGER_RISING,
+-			  "itg3200_data_rdy",
+-			  st->trig);
++	ret = request_irq(st->i2c->irq, &iio_trigger_generic_data_rdy_poll,
++			  IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
++			  "itg3200_data_rdy", st->trig);
+ 	if (ret)
+ 		goto error_free_trig;
  
- static struct i2c_driver bmi270_i2c_driver = {
- 	.driver = {
+diff --git a/drivers/iio/light/si1145.c b/drivers/iio/light/si1145.c
+index f8eb251eca8dc..ef0abc4499b74 100644
+--- a/drivers/iio/light/si1145.c
++++ b/drivers/iio/light/si1145.c
+@@ -1248,7 +1248,7 @@ static int si1145_probe_trigger(struct iio_dev *indio_dev)
+ 
+ 	ret = devm_request_irq(&client->dev, client->irq,
+ 			  iio_trigger_generic_data_rdy_poll,
+-			  IRQF_TRIGGER_FALLING,
++			  IRQF_TRIGGER_FALLING | IRQF_NO_THREAD,
+ 			  "si1145_irq",
+ 			  trig);
+ 	if (ret < 0) {
 -- 
 2.51.0
 
