@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC570344025;
-	Fri, 20 Feb 2026 12:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8653451A9;
+	Fri, 20 Feb 2026 12:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771591093; cv=none; b=XBad5nv0FBQP7PPnqKquJi2Y4SX4nMbdFpQKWUHp4hKk4v1GRjLf6gwIENDTvXd8TKsNUB03J8zEd6MJsJ64xVGIigIuMpAWjOKe5NepEQCb/jbiy/kj2di1zwV/IJR4XykzyPlEpZAt7yY+t7N0b/pmKL/i1w1skov1lqu0DNw=
+	t=1771591094; cv=none; b=GdSnUO64JgKi2uVsFvqeIqvQMLmy1ZDcWhrZCZ6sS/oTYvnZpCywOVtpxmsDnJCzw76PoP69QJ4cqyQOXsPAC1mGycGZ+6JO+419ZAVIg/BJTvLGR14vJxuqanvUdyJPJuyljSSjjTlA6p0C7LRQMrq+Wgh3q4U9qoU/CCZ+wSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771591093; c=relaxed/simple;
-	bh=JCQIO+38b7kX1zydRreP6mW2WWXVI7BBpn3fdnoMbuM=;
+	s=arc-20240116; t=1771591094; c=relaxed/simple;
+	bh=ZjuULHlzQuAgtwtu1i/dIHEtQred4jaY0d+Ndi+RozY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NTZ77KACos50dyyHK0v6E3iAfjYF8lG8pVQW+SbJXOfC5duZzwCLGfFLWTObSi/g5Ymj/Pg7VuEiHXFrJDAHz66+pW9MeWJ6TICsp5HDf3idCzbbcFiAXPooUrGCH2fUvt1Yt+TrerMGgWq3Dhk9oAP6D5pOg3IRQzEN6qfMZuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ikNDpmg/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UZxFLIbMtfrIc4bQBAGeUIu3VqhBx6JNIv4pQd/wHPF8SNaSJVTYcE6nPaelHzUI9E3uQlN9zCuxS6eVkrlyZ7kZzxznZuZPxdodYjEMDTjGun1crdGToc/wc0Fb77/0NoBglXiuH/hfRMP/8oSePFEOezWt9mDRHw0yTeQGtzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=muJ0LUUE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ikNDpmg/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13D2C2BC9E;
-	Fri, 20 Feb 2026 12:38:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="muJ0LUUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F42C116D0;
+	Fri, 20 Feb 2026 12:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771591092;
-	bh=JCQIO+38b7kX1zydRreP6mW2WWXVI7BBpn3fdnoMbuM=;
+	s=k20201202; t=1771591094;
+	bh=ZjuULHlzQuAgtwtu1i/dIHEtQred4jaY0d+Ndi+RozY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikNDpmg/gq/YNDltyErzZHefhMs3k2HAnKrel3Oouz2tcqPpqzCwG8VuP6wG80mWa
-	 V4qlcmf58QO5WyLN2t+Oy5Zz4jzbxkxLeE4qhqrNwBi9Kv8YuGh4XB5/lz7KkRSJ0n
-	 p/+nVf+owsuhCeEPxyemV8HfkQ5T/4G08gboSC7bAkVDCdju1/ulRYEfiVVqCiiV1E
-	 Raceb8YO4TMEQEvwqh0mx/FdbhcTUpgDQg3UDwxc/PTWVwfhaGiNNH45GB7O0TCRkk
-	 bUQsM4Sfv9BT2WioAnKBOcSRQt6YaHHJzOGcvJAucKVNbJBR1m8n3PH3n5FyTHgU+6
-	 9ygYMtjAQz16Q==
+	b=muJ0LUUEqLQHdGPw35/9F+Jonu++NHAWi9MChVKsQ1xGMI53iPPW0AybYzi5trjv7
+	 3E2pZmnsZy+GwM2fjsKW4/sKkmXGKErLTPZAoglnsbLDW/mRZORtibFl8OaNjvNPIZ
+	 fXUWSD9wCdKJmV2R8wzPYYscnZapEWxyCp+h5d69sVJrqVlOtA/yLsYMQyS7f/YlOL
+	 Ed2Hfs2hL6LcnzoyIAeYD6w/chwO4jZCRhbFwq07n7NpYRtXzNPpG8GYZht6QOUFLY
+	 RKMgEMoJH5EobRRDm9cQ+EEoJMl4/asUrU6uz/x4Jc/216oSmTIPYlEiem1j/+LwNO
+	 H4UefiXiOrA9Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jaehun Gou <p22gone@gmail.com>,
-	Seunghun Han <kkamagui@gmail.com>,
-	Jihoon Kwon <kjh010315@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Yauhen Kharuzhy <jekhor@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	rafael@kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] fs: ntfs3: check return value of indx_find to avoid infinite loop
-Date: Fri, 20 Feb 2026 07:37:53 -0500
-Message-ID: <20260220123805.3371698-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] ACPI: x86: Force enabling of PWM2 on the Yogabook YB1-X90
+Date: Fri, 20 Feb 2026 07:37:54 -0500
+Message-ID: <20260220123805.3371698-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260220123805.3371698-1-sashal@kernel.org>
 References: <20260220123805.3371698-1-sashal@kernel.org>
@@ -54,158 +53,152 @@ X-stable-base: Linux 6.19.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaehun Gou <p22gone@gmail.com>
+From: Yauhen Kharuzhy <jekhor@gmail.com>
 
-[ Upstream commit 1732053c8a6b360e2d5afb1b34fe9779398b072c ]
+[ Upstream commit a8c975302868c716afef0f50467bebbd069a35b8 ]
 
-We found an infinite loop bug in the ntfs3 file system that can lead to a
-Denial-of-Service (DoS) condition.
+The PWM2 on YB1-X90 tablets is used for keyboard backlight control but
+it is disabled in the ACPI DSDT table. Add it to the override_status_ids
+list to allow keyboard function control driver
+(drivers/platform/x86/lenovo/yogabook.c) to use it.
 
-A malformed dentry in the ntfs3 filesystem can cause the kernel to hang
-during the lookup operations. By setting the HAS_SUB_NODE flag in an
-INDEX_ENTRY within a directory's INDEX_ALLOCATION block and manipulating the
-VCN pointer, an attacker can cause the indx_find() function to repeatedly
-read the same block, allocating 4 KB of memory each time. The kernel lacks
-VCN loop detection and depth limits, causing memory exhaustion and an OOM
-crash.
-
-This patch adds a return value check for fnd_push() to prevent a memory
-exhaustion vulnerability caused by infinite loops. When the index exceeds the
-size of the fnd->nodes array, fnd_push() returns -EINVAL. The indx_find()
-function checks this return value and stops processing, preventing further
-memory allocation.
-
-Co-developed-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Co-developed-by: Jihoon Kwon <kjh010315@gmail.com>
-Signed-off-by: Jihoon Kwon <kjh010315@gmail.com>
-Signed-off-by: Jaehun Gou <p22gone@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Yauhen Kharuzhy <jekhor@gmail.com>
+Link: https://patch.msgid.link/20260211222242.4101162-1-jekhor@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is the original ntfs3 driver introduction commit (v5.15-rc1 era).
-The bug has been present since ntfs3 was first added.
-
-Now let me verify what happens when `fnd_push` fails but its return
-value is ignored:
-
-When `fnd_push` returns `-EINVAL` (because `fnd->level >=
-ARRAY_SIZE(fnd->nodes)`, i.e., >= 20), the current code at line 1193
-ignores this return value. The loop continues iterating:
-1. `fnd_push` fails — the node is NOT added to the `fnd->nodes` array,
-   so `fnd->level` stays at 20
-2. The loop continues, reading more index blocks via `indx_read`,
-   allocating memory each time
-3. Since the node isn't tracked in `fnd->nodes`, it's never freed
-   (memory leak)
-4. A crafted filesystem with circular VCN references will cause an
-   infinite loop, each iteration allocating 4KB, leading to OOM
-
-This is a clear DoS vulnerability via crafted filesystem.
+Now I have a comprehensive picture. Let me analyze this commit.
 
 ## Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
-- **Clear bug description**: Infinite loop in ntfs3 leading to DoS / OOM
-  crash
-- **Attack vector**: Malformed NTFS filesystem image with manipulated
-  VCN pointers and HAS_SUB_NODE flag
-- **Mechanism**: `fnd_push()` return value is ignored; when array is
-  full, the node is leaked and the loop continues infinitely
-- **Severity**: DoS / memory exhaustion / OOM kill — this is a security-
-  relevant bug
+### 1. Commit Message Analysis
 
-### 2. CODE CHANGE ANALYSIS
-The fix is minimal and surgical:
-- Changes `fnd_push(fnd, node, e);` to `err = fnd_push(fnd, node, e);`
-- Adds error checking: if `fnd_push` fails, properly cleans up
-  (`put_indx_node(node)`) and returns the error
-- Only 5 lines of new code added (plus removal of 1 line)
-- No functional changes beyond the error handling
+The commit adds an entry to the `override_status_ids` list in
+`drivers/acpi/x86/utils.c` to force-enable the PWM2 ACPI device on
+Lenovo Yoga Book YB1-X90 tablets. The PWM2 is used for keyboard
+backlight control but is disabled in the ACPI DSDT table. Without this
+override, the yogabook platform driver cannot control the keyboard
+backlight.
 
-### 3. CLASSIFICATION
-- **Bug fix**: Yes — fixes an infinite loop / memory exhaustion
-  vulnerability
-- **Security**: Yes — DoS via crafted filesystem (mountable by
-  unprivileged user in many configs, e.g., USB automount)
-- **Stable criteria met**: Obviously correct, fixes a real bug, small
-  and contained, no new features
+### 2. Code Change Analysis
 
-### 4. SCOPE AND RISK
-- **Lines changed**: ~6 lines net
-- **Files changed**: 1 (fs/ntfs3/index.c)
-- **Risk**: Extremely low — the only behavioral change is that an
-  already-defined error path is now properly taken instead of being
-  silently ignored
-- **Could break something**: No — `fnd_push` already returned an error;
-  it was just ignored. Now that error propagates correctly.
+The change is a straightforward addition of a `PRESENT_ENTRY_HID` entry
+to the existing quirk table. It:
+- Targets HID `"80862289"` (Intel Cherry Trail PWM), UID `"2"` (PWM2
+  specifically)
+- Scopes to `INTEL_ATOM_AIRMONT` CPU platform (Cherry Trail)
+- Narrows with 3 DMI_EXACT_MATCH entries specific to the Yoga Book
+  Android variant (YETI-11)
+- This is the exact same pattern as the existing Xiaomi Mi Pad 2 entry
+  (lines 78-82) which also enables PWM2 for touchkey backlight control
 
-### 5. USER IMPACT
-- Affects any system that can mount NTFS filesystems (common for USB
-  drives, dual-boot systems)
-- A crafted USB drive could trigger OOM on any system with ntfs3 enabled
-- Impact: System hang / OOM kill — HIGH severity
+The change is ~12 lines including the comment. It follows an
+established, well-understood pattern that's been used in this file for
+years.
 
-### 6. STABILITY
-- Signed off by the ntfs3 maintainer (Konstantin Komarov)
-- The fix pattern (check return value, propagate error) is a well-
-  understood and safe pattern
+### 3. Classification: Hardware Quirk
 
-### 7. DEPENDENCY CHECK
-- `fnd_push()` already returns `int` with proper bounds checking since
-  it was introduced
-- The fix only adds the return value check in the caller — no
-  dependencies on other commits
-- The affected code (`indx_find` and `fnd_push`) has been present since
-  ntfs3 was first merged (commit 82cae269cfa95, v5.15-rc1)
-- This fix applies cleanly to all stable trees that have ntfs3 (5.15+)
+This is a **hardware quirk/workaround** — one of the explicitly allowed
+exception categories for stable backports. The device has broken ACPI
+firmware (DSDT disables a needed device), and this quirk works around it
+by forcing the device present.
+
+### 4. Scope and Risk Assessment
+
+- **Very small change**: ~12 lines added to a data table
+- **Zero risk to other hardware**: The DMI_EXACT_MATCH conditions ensure
+  this only triggers on the exact Lenovo Yoga Book YB1-X90 (YETI-11
+  variant)
+- **Well-tested pattern**: Identical to the Xiaomi Mi Pad 2 entry that's
+  been in the kernel since v4.18
+- **No code logic changes**: Only adds data to an existing table
+
+### 5. Dependencies
+
+The change depends on:
+- The `override_status_ids` mechanism — present since at least v4.x
+- The yogabook platform driver
+  (`drivers/platform/x86/lenovo/yogabook.c`) — added in v6.6 via commit
+  `6df1523fa0b79`
+- The keyboard backlight support in the platform driver — added in v6.6
+  via commit `fc4f1d88bc6b1`
+
+The prerequisite code exists in all current stable trees (6.6+). The
+file path changed recently (moved to `lenovo/` subdirectory in commit
+`651b57dd40871`), so older stable trees may need minor context
+adjustment, but the data-table addition itself is trivially portable.
+
+### 6. User Impact
+
+Without this quirk, the keyboard backlight on Lenovo Yoga Book YB1-X90
+tablets doesn't work under Linux. This is a real hardware enablement
+issue for a specific consumer tablet.
+
+### 7. Stable Suitability
+
+- **Obviously correct**: Follows the exact same pattern as existing
+  entries
+- **Fixes a real issue**: Keyboard backlight doesn't work without it
+- **Small and contained**: Data-only addition to a quirk table
+- **No new features**: Enables existing functionality on specific
+  hardware
+- **No new APIs**: Pure internal quirk
 
 ### Verification
 
-- **git blame** confirmed the vulnerable code at line 1193 has been
-  present since commit 82cae269cfa95 ("fs/ntfs3: Add initialization of
-  super block") — the original ntfs3 introduction
-- **Read of fnd_push()** at lines 673-684 confirms it already returns
-  `-EINVAL` when `i >= ARRAY_SIZE(fnd->nodes)` (which is 20), verifying
-  the commit message's claim
-- **Read of struct ntfs_fnd** (from agent exploration) confirms
-  `nodes[20]` — hardcoded array of 20 entries, so the depth limit is
-  real
-- **Current code at lines 1173-1198** confirms `fnd_push` return value
-  is currently ignored on line 1193 (the bug)
-- **git log history** shows no prior fix for this specific issue (no
-  `fnd_push` return value check commits found)
+- Verified `fc4f1d88bc6b1` (keyboard backlight platform driver) is in
+  v6.6 via `git merge-base --is-ancestor`
+- Verified `6df1523fa0b79` (platform driver support) is in v6.6 via `git
+  merge-base --is-ancestor`
+- Verified `1a1e7540cf501` (ACPI quirk for i2c clients) is in v6.6 via
+  `git merge-base --is-ancestor`
+- Verified the existing Xiaomi Mi Pad 2 PWM2 entry (`b72cd8e0fa34d`) is
+  in v6.6 via `git merge-base --is-ancestor`, confirming the
+  infrastructure exists
+- Read `drivers/acpi/x86/utils.c` lines 55-104 to confirm the existing
+  code structure and similar entries
+- Confirmed via git log that the commit `a8c975302868c` exists and
+  matches the described change
+- The agent exploration confirmed the yogabook platform driver at
+  `drivers/platform/x86/lenovo/yogabook.c` uses `devm_pwm_get(dev,
+  "pwm_soc_lpss_2")` at line 488, which is the PWM2 device being enabled
+  by this quirk
 
-This is a textbook stable backport candidate: a small, obviously correct
-fix for a security-relevant DoS vulnerability in a filesystem accessible
-from user space, present in all stable trees with ntfs3 support.
+This is a textbook hardware quirk addition — small, safe, DMI-scoped to
+one specific device, follows an established pattern, and enables real
+hardware functionality for users. It meets all stable kernel criteria.
 
 **YES**
 
- fs/ntfs3/index.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/acpi/x86/utils.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 7157cfd70fdcb..75b94beac1613 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1190,7 +1190,12 @@ int indx_find(struct ntfs_index *indx, struct ntfs_inode *ni,
- 			return -EINVAL;
- 		}
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index 4ee30c2897a2b..418951639f511 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -81,6 +81,18 @@ static const struct override_status_id override_status_ids[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Mipad2"),
+ 	      }),
  
--		fnd_push(fnd, node, e);
-+		err = fnd_push(fnd, node, e);
++	/*
++	 * Lenovo Yoga Book uses PWM2 for touch keyboard backlight control.
++	 * It needs to be enabled only for the Android device version (YB1-X90*
++	 * aka YETI-11); the Windows version (YB1-X91*) uses ACPI control
++	 * methods.
++	 */
++	PRESENT_ENTRY_HID("80862289", "2", INTEL_ATOM_AIRMONT, {
++		DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++		DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++		DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
++	      }),
 +
-+		if (err) {
-+			put_indx_node(node);
-+			return err;
-+		}
- 	}
- 
- 	*entry = e;
+ 	/*
+ 	 * The INT0002 device is necessary to clear wakeup interrupt sources
+ 	 * on Cherry Trail devices, without it we get nobody cared IRQ msgs.
 -- 
 2.51.0
 
