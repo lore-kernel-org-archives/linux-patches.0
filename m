@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8653451A9;
-	Fri, 20 Feb 2026 12:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F228E3451D7;
+	Fri, 20 Feb 2026 12:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771591094; cv=none; b=GdSnUO64JgKi2uVsFvqeIqvQMLmy1ZDcWhrZCZ6sS/oTYvnZpCywOVtpxmsDnJCzw76PoP69QJ4cqyQOXsPAC1mGycGZ+6JO+419ZAVIg/BJTvLGR14vJxuqanvUdyJPJuyljSSjjTlA6p0C7LRQMrq+Wgh3q4U9qoU/CCZ+wSc=
+	t=1771591096; cv=none; b=FoL0JuI6Ld+9J+9xh49hOMEqAyK4HUcGYHFLbdEUOKvgVS0WE+xsi9WgJUOdNcR1nsiHa2+un2VU0jsEUmMeNsGfYAXNJmTx9vy9+K1q+beJDmPDJ9yF+1eeLpTo87iUwu7MhWvUs9jpEhxHZx/6KB4AvqCEi/FKG9tOGxGvVMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771591094; c=relaxed/simple;
-	bh=ZjuULHlzQuAgtwtu1i/dIHEtQred4jaY0d+Ndi+RozY=;
+	s=arc-20240116; t=1771591096; c=relaxed/simple;
+	bh=tzvL8dU6MqNQWZTHv5gFQ2d3Y3+gb4kIrR5EOchILO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UZxFLIbMtfrIc4bQBAGeUIu3VqhBx6JNIv4pQd/wHPF8SNaSJVTYcE6nPaelHzUI9E3uQlN9zCuxS6eVkrlyZ7kZzxznZuZPxdodYjEMDTjGun1crdGToc/wc0Fb77/0NoBglXiuH/hfRMP/8oSePFEOezWt9mDRHw0yTeQGtzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=muJ0LUUE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GyQBQJzGcKFz3mLHIci3g2kntFgbO67HEhRw5zGVm86Y7TjI0fZZyFLEkbQ73pRjlBKaonJpMRfa+EramRJ1ug6qv+ZgsnUKP8tNTL6xzTJUu/6Kj1HA8XlWAVQTPVTqkHy0Fz118qajsNQ63HU+44X5XhINOTHVTueDkhEwlf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SRC+1om3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="muJ0LUUE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F42C116D0;
-	Fri, 20 Feb 2026 12:38:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SRC+1om3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE92C19425;
+	Fri, 20 Feb 2026 12:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771591094;
-	bh=ZjuULHlzQuAgtwtu1i/dIHEtQred4jaY0d+Ndi+RozY=;
+	s=k20201202; t=1771591095;
+	bh=tzvL8dU6MqNQWZTHv5gFQ2d3Y3+gb4kIrR5EOchILO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=muJ0LUUEqLQHdGPw35/9F+Jonu++NHAWi9MChVKsQ1xGMI53iPPW0AybYzi5trjv7
-	 3E2pZmnsZy+GwM2fjsKW4/sKkmXGKErLTPZAoglnsbLDW/mRZORtibFl8OaNjvNPIZ
-	 fXUWSD9wCdKJmV2R8wzPYYscnZapEWxyCp+h5d69sVJrqVlOtA/yLsYMQyS7f/YlOL
-	 Ed2Hfs2hL6LcnzoyIAeYD6w/chwO4jZCRhbFwq07n7NpYRtXzNPpG8GYZht6QOUFLY
-	 RKMgEMoJH5EobRRDm9cQ+EEoJMl4/asUrU6uz/x4Jc/216oSmTIPYlEiem1j/+LwNO
-	 H4UefiXiOrA9Q==
+	b=SRC+1om3rx9+Zhob6+tZoQUNyQocD1J7t9uG3/JpmDNYO0kyHeoODlIBoVBWZnEfF
+	 l9ITfhvI+JVaRfLILMYfOs6XrvkuGCLSnPiAL/HfpwyQUEu9VAS34Dl8+b+GvJ5KjV
+	 /unNHn/txYcKn0Jd7ZwyfyfHfJju88N+r4U+acfPNDbvnQFaI4KO/OTOh0HpDP2z+0
+	 lWgIWiGNNtS2cpX9tDefWEeRGFGQndfuCtYMd1+vpoxi5Jg+QKmmu/hESTLF8mUZt6
+	 45/s4rZ0GSIy1tJiMMHqyGkz1iy5gz/1f6OJTOS2lBjGzERIJX+dZ3wHUiTVfvYQLp
+	 TjRWFiA5skUjg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yauhen Kharuzhy <jekhor@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
+	ntfs3@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] ACPI: x86: Force enabling of PWM2 on the Yogabook YB1-X90
-Date: Fri, 20 Feb 2026 07:37:54 -0500
-Message-ID: <20260220123805.3371698-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] fs/ntfs3: avoid calling run_get_entry() when run == NULL in ntfs_read_run_nb_ra()
+Date: Fri, 20 Feb 2026 07:37:55 -0500
+Message-ID: <20260220123805.3371698-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260220123805.3371698-1-sashal@kernel.org>
 References: <20260220123805.3371698-1-sashal@kernel.org>
@@ -53,152 +53,152 @@ X-stable-base: Linux 6.19.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yauhen Kharuzhy <jekhor@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit a8c975302868c716afef0f50467bebbd069a35b8 ]
+[ Upstream commit c5226b96c08a010ebef5fdf4c90572bcd89e4299 ]
 
-The PWM2 on YB1-X90 tablets is used for keyboard backlight control but
-it is disabled in the ACPI DSDT table. Add it to the override_status_ids
-list to allow keyboard function control driver
-(drivers/platform/x86/lenovo/yogabook.c) to use it.
+When ntfs_read_run_nb_ra() is invoked with run == NULL the code later
+assumes run is valid and may call run_get_entry(NULL, ...), and also
+uses clen/idx without initializing them. Smatch reported uninitialized
+variable warnings and this can lead to undefined behaviour. This patch
+fixes it.
 
-Signed-off-by: Yauhen Kharuzhy <jekhor@gmail.com>
-Link: https://patch.msgid.link/20260211222242.4101162-1-jekhor@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202512230646.v5hrYXL0-lkp@intel.com/
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a comprehensive picture. Let me analyze this commit.
+Now I have all the information needed for a thorough analysis.
 
 ## Analysis
 
 ### 1. Commit Message Analysis
 
-The commit adds an entry to the `override_status_ids` list in
-`drivers/acpi/x86/utils.c` to force-enable the PWM2 ACPI device on
-Lenovo Yoga Book YB1-X90 tablets. The PWM2 is used for keyboard
-backlight control but is disabled in the ACPI DSDT table. Without this
-override, the yogabook platform driver cannot control the keyboard
-backlight.
+The commit clearly describes a bug fix: when `ntfs_read_run_nb()`
+(renamed to `ntfs_read_run_nb_ra()` in the commit being analyzed) is
+invoked with `run == NULL`, the code can later call `run_get_entry(NULL,
+...)` and use uninitialized variables `clen` and `idx`. This was
+reported by the kernel test robot and Dan Carpenter (a well-known static
+analysis expert using Smatch).
 
 ### 2. Code Change Analysis
 
-The change is a straightforward addition of a `PRESENT_ENTRY_HID` entry
-to the existing quirk table. It:
-- Targets HID `"80862289"` (Intel Cherry Trail PWM), UID `"2"` (PWM2
-  specifically)
-- Scopes to `INTEL_ATOM_AIRMONT` CPU platform (Cherry Trail)
-- Narrows with 3 DMI_EXACT_MATCH entries specific to the Yoga Book
-  Android variant (YETI-11)
-- This is the exact same pattern as the existing Xiaomi Mi Pad 2 entry
-  (lines 78-82) which also enables PWM2 for touchkey backlight control
+**The bug mechanism:**
 
-The change is ~12 lines including the comment. It follows an
-established, well-understood pattern that's been used in this file for
-years.
+At `fs/ntfs3/fsntfs.c:1186-1207`, when `run == NULL`, the function uses
+the absolute boot MFT location:
+- `lbo` and `len` are set from boot info (lines 1194-1195)
+- **But `clen`, `idx`, and `vcn` are NOT initialized** — they are only
+  set via `run_lookup_entry()` on the `run != NULL` path (line 1196)
 
-### 3. Classification: Hardware Quirk
+The function then enters a `for(;;)` loop (line 1215) containing an
+inner `do { } while (len32)` loop. If the requested `bytes` exceeds the
+initial `len` (i.e., the read spans more than one record), the inner
+loop completes, and execution falls through to line 1255 where:
 
-This is a **hardware quirk/workaround** — one of the explicitly allowed
-exception categories for stable backports. The device has broken ACPI
-firmware (DSDT disables a needed device), and this quirk works around it
-by forcing the device present.
+1. `vcn_next = vcn + clen;` — **uses uninitialized `clen`** (undefined
+   behavior)
+2. `run_get_entry(run, ++idx, ...)` — **dereferences NULL `run`** (crash
+   at `run->count` in `run.c:608`)
+3. `++idx` — **uses uninitialized `idx`** (undefined behavior)
 
-### 4. Scope and Risk Assessment
+**What `run_get_entry()` does with NULL:**
+Looking at `fs/ntfs3/run.c:608`, the very first thing it does is `if
+(index >= run->count)`, which immediately dereferences the NULL pointer
+→ **kernel oops/panic**.
 
-- **Very small change**: ~12 lines added to a data table
-- **Zero risk to other hardware**: The DMI_EXACT_MATCH conditions ensure
-  this only triggers on the exact Lenovo Yoga Book YB1-X90 (YETI-11
-  variant)
-- **Well-tested pattern**: Identical to the Xiaomi Mi Pad 2 entry that's
-  been in the kernel since v4.18
-- **No code logic changes**: Only adds data to an existing table
+**The fix:** Adds a simple `if (!run)` check before reaching the
+`run_get_entry()` call, returning `-EINVAL` and going to error cleanup.
+This is exactly 4 lines of code and is obviously correct — if we entered
+the loop via the `run == NULL` path and need another fragment, we can't
+get one, so returning an error is the right behavior.
 
-### 5. Dependencies
+### 3. Classification
 
-The change depends on:
-- The `override_status_ids` mechanism — present since at least v4.x
-- The yogabook platform driver
-  (`drivers/platform/x86/lenovo/yogabook.c`) — added in v6.6 via commit
-  `6df1523fa0b79`
-- The keyboard backlight support in the platform driver — added in v6.6
-  via commit `fc4f1d88bc6b1`
+This is a **bug fix** that prevents:
+- NULL pointer dereference (crash/oops)
+- Use of uninitialized variables (undefined behavior, potential data
+  corruption)
 
-The prerequisite code exists in all current stable trees (6.6+). The
-file path changed recently (moved to `lenovo/` subdirectory in commit
-`651b57dd40871`), so older stable trees may need minor context
-adjustment, but the data-table addition itself is trivially portable.
+### 4. Scope and Risk
 
-### 6. User Impact
+- **Lines changed:** 4 lines of actual code added (NULL check + goto)
+- **Files touched:** 1 (`fs/ntfs3/fsntfs.c`)
+- **Risk:** Extremely low — adds a defensive check that can only trigger
+  on an error path, returning `-EINVAL` which callers already handle
+- **No behavioral change** for the normal case where `run != NULL`
 
-Without this quirk, the keyboard backlight on Lenovo Yoga Book YB1-X90
-tablets doesn't work under Linux. This is a real hardware enablement
-issue for a specific consumer tablet.
+### 5. User Impact
 
-### 7. Stable Suitability
+NTFS3 is used by anyone mounting NTFS filesystems on Linux (common for
+dual-boot systems, external drives). While the `run == NULL` path is
+specific to early MFT reading during mount, the uninitialized variable
+use means the code is technically invoking undefined behavior, which
+compilers can exploit in unexpected ways.
 
-- **Obviously correct**: Follows the exact same pattern as existing
-  entries
-- **Fixes a real issue**: Keyboard backlight doesn't work without it
-- **Small and contained**: Data-only addition to a quirk table
-- **No new features**: Enables existing functionality on specific
-  hardware
-- **No new APIs**: Pure internal quirk
+### 6. Stability Indicators
 
-### Verification
+- Reported by kernel test robot and Dan Carpenter (Smatch static
+  analysis) — two highly reputable sources
+- The fix is authored by the NTFS3 maintainer (Konstantin Komarov)
+- Extremely small and contained change
 
-- Verified `fc4f1d88bc6b1` (keyboard backlight platform driver) is in
-  v6.6 via `git merge-base --is-ancestor`
-- Verified `6df1523fa0b79` (platform driver support) is in v6.6 via `git
-  merge-base --is-ancestor`
-- Verified `1a1e7540cf501` (ACPI quirk for i2c clients) is in v6.6 via
-  `git merge-base --is-ancestor`
-- Verified the existing Xiaomi Mi Pad 2 PWM2 entry (`b72cd8e0fa34d`) is
-  in v6.6 via `git merge-base --is-ancestor`, confirming the
-  infrastructure exists
-- Read `drivers/acpi/x86/utils.c` lines 55-104 to confirm the existing
-  code structure and similar entries
-- Confirmed via git log that the commit `a8c975302868c` exists and
-  matches the described change
-- The agent exploration confirmed the yogabook platform driver at
-  `drivers/platform/x86/lenovo/yogabook.c` uses `devm_pwm_get(dev,
-  "pwm_soc_lpss_2")` at line 488, which is the PWM2 device being enabled
-  by this quirk
+### 7. Dependency Check
 
-This is a textbook hardware quirk addition — small, safe, DMI-scoped to
-one specific device, follows an established pattern, and enables real
-hardware functionality for users. It meets all stable kernel criteria.
+The fix is self-contained — it just adds a NULL check. It applies to the
+existing `ntfs_read_run_nb()` function which has been in the kernel
+since NTFS3 was merged in v5.15.
+
+## Verification
+
+- **Read `ntfs_read_run_nb()` at fsntfs.c:1171-1282**: Confirmed `clen`,
+  `idx` are only initialized via `run_lookup_entry()` on line 1196,
+  which is skipped when `run == NULL`
+- **Read `run_get_entry()` at run.c:603-623**: Confirmed line 608
+  immediately dereferences `run->count`, which would crash if `run ==
+  NULL`
+- **Searched callers of `ntfs_read_run_nb()`**: Found 12 call sites; the
+  `run == NULL` path is designed for early MFT reading (per comment at
+  line 1187)
+- **Checked `oa->run1` initialization in fslog.c**: All paths through
+  `fake_attr` (line 4749) and normal flow (line 4801) set `oa->run1`, so
+  the fslog caller is unlikely to pass NULL — but the function's design
+  explicitly handles `run == NULL` at its entry
+- **Confirmed ntfs3 present since v5.15**: The filesystem was merged in
+  Linux 5.15, present in all active stable trees
+- **git log confirmed recent ntfs3 activity**: Active maintenance by the
+  NTFS3 maintainer
+
+This is a textbook stable backport candidate: small, surgical fix for a
+NULL pointer dereference and uninitialized variable use, authored by the
+subsystem maintainer, reported by trusted automated tools.
 
 **YES**
 
- drivers/acpi/x86/utils.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/ntfs3/fsntfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
-index 4ee30c2897a2b..418951639f511 100644
---- a/drivers/acpi/x86/utils.c
-+++ b/drivers/acpi/x86/utils.c
-@@ -81,6 +81,18 @@ static const struct override_status_id override_status_ids[] = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Mipad2"),
- 	      }),
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 5f138f7158357..ac99c5613284a 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -1252,6 +1252,12 @@ int ntfs_read_run_nb(struct ntfs_sb_info *sbi, const struct runs_tree *run,
  
-+	/*
-+	 * Lenovo Yoga Book uses PWM2 for touch keyboard backlight control.
-+	 * It needs to be enabled only for the Android device version (YB1-X90*
-+	 * aka YETI-11); the Windows version (YB1-X91*) uses ACPI control
-+	 * methods.
-+	 */
-+	PRESENT_ENTRY_HID("80862289", "2", INTEL_ATOM_AIRMONT, {
-+		DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+		DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
-+		DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
-+	      }),
+ 		} while (len32);
+ 
++		if (!run) {
++			err = -EINVAL;
++			goto out;
++		}
 +
- 	/*
- 	 * The INT0002 device is necessary to clear wakeup interrupt sources
- 	 * on Cherry Trail devices, without it we get nobody cared IRQ msgs.
++		/* Get next fragment to read. */
+ 		vcn_next = vcn + clen;
+ 		if (!run_get_entry(run, ++idx, &vcn, &lcn, &clen) ||
+ 		    vcn != vcn_next) {
 -- 
 2.51.0
 
