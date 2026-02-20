@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F228E3451D7;
-	Fri, 20 Feb 2026 12:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA0F34405B;
+	Fri, 20 Feb 2026 12:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771591096; cv=none; b=FoL0JuI6Ld+9J+9xh49hOMEqAyK4HUcGYHFLbdEUOKvgVS0WE+xsi9WgJUOdNcR1nsiHa2+un2VU0jsEUmMeNsGfYAXNJmTx9vy9+K1q+beJDmPDJ9yF+1eeLpTo87iUwu7MhWvUs9jpEhxHZx/6KB4AvqCEi/FKG9tOGxGvVMU=
+	t=1771591098; cv=none; b=ok3pz67S2fp6QOpL8S/R/wqNMhOBb8ZgXjn6K/lMS02rGAQ0JeVehm0bMKgf0lRD9fZcVh3OjsGvyK1UN+eKjMldwvsi1BBdwV868o3a8aAhlNbCQSjnmCw9AuIN2/t+WqmTky5jayZ1oftpW2iysCWF3rHHOh0vOLRoxkWxoao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771591096; c=relaxed/simple;
-	bh=tzvL8dU6MqNQWZTHv5gFQ2d3Y3+gb4kIrR5EOchILO0=;
+	s=arc-20240116; t=1771591098; c=relaxed/simple;
+	bh=pRO9IN213oQrBu+VLwnbbinX8CLsfnTtiFHne3ap5TI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GyQBQJzGcKFz3mLHIci3g2kntFgbO67HEhRw5zGVm86Y7TjI0fZZyFLEkbQ73pRjlBKaonJpMRfa+EramRJ1ug6qv+ZgsnUKP8tNTL6xzTJUu/6Kj1HA8XlWAVQTPVTqkHy0Fz118qajsNQ63HU+44X5XhINOTHVTueDkhEwlf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SRC+1om3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I8he8z3GjJU3BYIdzkxecX7B3Z59w4l+MgIffKxJWkzNf6g0qfpNThBrBUZvT4ZfugOcGGNfwckWrHCHoOtHOeDT5WMYcETsMaJbFglGn0PbOZaRhl3TxTB6S3/9O3Geo+6M+agBscDztbdVpTmcT6HZOlQzKx/+J1RvkZxjmYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pjAhWy00; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SRC+1om3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE92C19425;
-	Fri, 20 Feb 2026 12:38:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pjAhWy00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8387FC116C6;
+	Fri, 20 Feb 2026 12:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771591095;
-	bh=tzvL8dU6MqNQWZTHv5gFQ2d3Y3+gb4kIrR5EOchILO0=;
+	s=k20201202; t=1771591097;
+	bh=pRO9IN213oQrBu+VLwnbbinX8CLsfnTtiFHne3ap5TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRC+1om3rx9+Zhob6+tZoQUNyQocD1J7t9uG3/JpmDNYO0kyHeoODlIBoVBWZnEfF
-	 l9ITfhvI+JVaRfLILMYfOs6XrvkuGCLSnPiAL/HfpwyQUEu9VAS34Dl8+b+GvJ5KjV
-	 /unNHn/txYcKn0Jd7ZwyfyfHfJju88N+r4U+acfPNDbvnQFaI4KO/OTOh0HpDP2z+0
-	 lWgIWiGNNtS2cpX9tDefWEeRGFGQndfuCtYMd1+vpoxi5Jg+QKmmu/hESTLF8mUZt6
-	 45/s4rZ0GSIy1tJiMMHqyGkz1iy5gz/1f6OJTOS2lBjGzERIJX+dZ3wHUiTVfvYQLp
-	 TjRWFiA5skUjg==
+	b=pjAhWy006rSSRGnBMng8YkaA6wu/3gYxwbQ64V9xXsIHkYSYh/o6sfPJQdDGGGKGl
+	 lJCdUUf0z9QySmD3dkMPwaXoVbl2gP9c5zR63Nvub36Y7pgSaIVJ+gif3+38QTjOJQ
+	 u7vziAw5qvg2eARLvyD8924HNM5fo1vCfYbnmJCLurNNVFRnVWH4XpFCC9H5ZReknB
+	 Jr60B6VzttGvv1DrzOkwiz4uN8sC6hNkfBi7uCm0GZK0/3PhE0eiJnT+u+FriT/LsG
+	 TlRbBUO1ojqnF+eNI3uMwXQDQNDzSVGwU8LDFH6E9zS8uNgmP1GH6NTZ7L+mZr34Ea
+	 k2RX884dRkH0Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+Cc: ethanwu <ethanwu@synology.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	amarkuze@redhat.com,
+	slava@dubeyko.com,
+	ceph-devel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] fs/ntfs3: avoid calling run_get_entry() when run == NULL in ntfs_read_run_nb_ra()
-Date: Fri, 20 Feb 2026 07:37:55 -0500
-Message-ID: <20260220123805.3371698-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] ceph: supply snapshot context in ceph_uninline_data()
+Date: Fri, 20 Feb 2026 07:37:56 -0500
+Message-ID: <20260220123805.3371698-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260220123805.3371698-1-sashal@kernel.org>
 References: <20260220123805.3371698-1-sashal@kernel.org>
@@ -53,152 +55,257 @@ X-stable-base: Linux 6.19.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: ethanwu <ethanwu@synology.com>
 
-[ Upstream commit c5226b96c08a010ebef5fdf4c90572bcd89e4299 ]
+[ Upstream commit 305ff6b3a03c230d3c07b61457e961406d979693 ]
 
-When ntfs_read_run_nb_ra() is invoked with run == NULL the code later
-assumes run is valid and may call run_get_entry(NULL, ...), and also
-uses clen/idx without initializing them. Smatch reported uninitialized
-variable warnings and this can lead to undefined behaviour. This patch
-fixes it.
+The ceph_uninline_data function was missing proper snapshot context
+handling for its OSD write operations. Both CEPH_OSD_OP_CREATE and
+CEPH_OSD_OP_WRITE requests were passing NULL instead of the appropriate
+snapshot context, which could lead to unnecessary object clone.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202512230646.v5hrYXL0-lkp@intel.com/
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reproducer:
+../src/vstart.sh --new -x --localhost --bluestore
+// turn on cephfs inline data
+./bin/ceph fs set a inline_data true --yes-i-really-really-mean-it
+// allow fs_a client to take snapshot
+./bin/ceph auth caps client.fs_a mds 'allow rwps fsname=a' mon 'allow r fsname=a' osd 'allow rw tag cephfs data=a'
+// mount cephfs with fuse, since kernel cephfs doesn't support inline write
+ceph-fuse --id fs_a -m 127.0.0.1:40318 --conf ceph.conf -d /mnt/mycephfs/
+// bump snapshot seq
+mkdir /mnt/mycephfs/.snap/snap1
+echo "foo" > /mnt/mycephfs/test
+// umount and mount it again using kernel cephfs client
+umount /mnt/mycephfs
+mount -t ceph fs_a@.a=/ /mnt/mycephfs/ -o conf=./ceph.conf
+echo "bar" >> /mnt/mycephfs/test
+./bin/rados listsnaps -p cephfs.a.data $(printf "%x\n" $(stat -c %i /mnt/mycephfs/test)).00000000
+
+will see this object does unnecessary clone
+1000000000a.00000000 (seq:2):
+cloneid snaps   size    overlap
+2       2       4       []
+head    -       8
+
+but it's expected to see
+10000000000.00000000 (seq:2):
+cloneid snaps   size    overlap
+head    -       8
+
+since there's no snapshot between these 2 writes
+
+clone happened because the first osd request CEPH_OSD_OP_CREATE doesn't
+pass snap context so object is created with snap seq 0, but later data
+writeback is equipped with snapshot context.
+snap.seq(1) > object snap seq(0), so osd does object clone.
+
+This fix properly acquiring the snapshot context before performing
+write operations.
+
+Signed-off-by: ethanwu <ethanwu@synology.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+Now I have a comprehensive understanding. Let me also check the
+`__ceph_mark_dirty_caps` function which is where `i_head_snapc` normally
+gets populated:
+
+The pattern at `caps.c:1813-1817` shows the standard way `i_head_snapc`
+gets populated:
+```c
+if (!ci->i_head_snapc) {
+    WARN_ON_ONCE(!rwsem_is_locked(&mdsc->snap_rwsem));
+    ci->i_head_snapc = ceph_get_snap_context(
+        ci->i_snap_realm->cached_context);
+}
+```
+
+The fix in `ceph_uninline_data()` uses the same pattern, which confirms
+it's correct.
+
+Now let me assess the overall analysis:
 
 ## Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit clearly describes a bug fix: when `ntfs_read_run_nb()`
-(renamed to `ntfs_read_run_nb_ra()` in the commit being analyzed) is
-invoked with `run == NULL`, the code can later call `run_get_entry(NULL,
-...)` and use uninitialized variables `clen` and `idx`. This was
-reported by the kernel test robot and Dan Carpenter (a well-known static
-analysis expert using Smatch).
+The commit message clearly explains:
+- **What**: `ceph_uninline_data()` passes NULL instead of proper
+  snapshot context to OSD write operations
+- **Why**: This causes unnecessary RADOS object clones when inline data
+  is uninlined in the presence of snapshots
+- **Reproducer**: A detailed step-by-step reproducer is provided
+- **Impact**: Unnecessary object clones (storage waste, incorrect
+  snapshot state)
 
-### 2. Code Change Analysis
+The commit is reviewed and tested by Viacheslav Dubeyko (IBM) and signed
+off by Ilya Dryomov (CephFS maintainer).
 
-**The bug mechanism:**
+### 2. CODE CHANGE ANALYSIS
 
-At `fs/ntfs3/fsntfs.c:1186-1207`, when `run == NULL`, the function uses
-the absolute boot MFT location:
-- `lbo` and `len` are set from boot info (lines 1194-1195)
-- **But `clen`, `idx`, and `vcn` are NOT initialized** — they are only
-  set via `run_lookup_entry()` on the `run != NULL` path (line 1196)
+The fix:
+1. Adds snapshot context acquisition before OSD write operations
+   (following the established pattern from `__ceph_mark_dirty_caps` and
+   `ceph_write_begin`)
+2. Passes `snapc` instead of NULL to both `CEPH_OSD_OP_CREATE` and
+   `CEPH_OSD_OP_WRITE` requests
+3. Properly releases the snapshot context reference with
+   `ceph_put_snap_context(snapc)` in the cleanup path
 
-The function then enters a `for(;;)` loop (line 1215) containing an
-inner `do { } while (len32)` loop. If the requested `bytes` exceeds the
-initial `len` (i.e., the read spans more than one record), the inner
-loop completes, and execution falls through to line 1255 where:
+The pattern of snapshot context acquisition is identical to what's used
+in other CephFS write paths (caps.c:1813-1817, caps.c:2779-2783).
 
-1. `vcn_next = vcn + clen;` — **uses uninitialized `clen`** (undefined
-   behavior)
-2. `run_get_entry(run, ++idx, ...)` — **dereferences NULL `run`** (crash
-   at `run->count` in `run.c:608`)
-3. `++idx` — **uses uninitialized `idx`** (undefined behavior)
+### 3. CLASSIFICATION
 
-**What `run_get_entry()` does with NULL:**
-Looking at `fs/ntfs3/run.c:608`, the very first thing it does is `if
-(index >= run->count)`, which immediately dereferences the NULL pointer
-→ **kernel oops/panic**.
+This is a **bug fix** - it fixes incorrect behavior where OSD objects
+are created with snap_seq=0 instead of the proper snapshot sequence
+number, causing unnecessary clones.
 
-**The fix:** Adds a simple `if (!run)` check before reaching the
-`run_get_entry()` call, returning `-EINVAL` and going to error cleanup.
-This is exactly 4 lines of code and is obviously correct — if we entered
-the loop via the `run == NULL` path and need another fragment, we can't
-get one, so returning an error is the right behavior.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### 3. Classification
+- **Lines changed**: ~20 lines added (very small)
+- **Files touched**: 1 (fs/ceph/addr.c)
+- **Pattern**: Well-established, used identically in multiple other
+  write paths
+- **Risk**: Low - the snap context acquisition pattern is battle-tested
+  in the CephFS codebase
+- **Self-contained**: Yes, no dependencies on other patches
 
-This is a **bug fix** that prevents:
-- NULL pointer dereference (crash/oops)
-- Use of uninitialized variables (undefined behavior, potential data
-  corruption)
+### 5. USER IMPACT
 
-### 4. Scope and Risk
+- Affects CephFS users with inline data enabled and snapshots
+- The bug causes unnecessary RADOS object clones, leading to:
+  - Wasted storage space
+  - Incorrect/unexpected snapshot state
+  - Could confuse backup/recovery tools that rely on snapshot state
 
-- **Lines changed:** 4 lines of actual code added (NULL check + goto)
-- **Files touched:** 1 (`fs/ntfs3/fsntfs.c`)
-- **Risk:** Extremely low — adds a defensive check that can only trigger
-  on an error path, returning `-EINVAL` which callers already handle
-- **No behavioral change** for the normal case where `run != NULL`
+### 6. STABILITY INDICATORS
 
-### 5. User Impact
+- Reviewed-by and Tested-by from Viacheslav Dubeyko (IBM)
+- Signed-off by CephFS maintainer Ilya Dryomov
+- Detailed reproducer provided and verified
 
-NTFS3 is used by anyone mounting NTFS filesystems on Linux (common for
-dual-boot systems, external drives). While the `run == NULL` path is
-specific to early MFT reading during mount, the uninitialized variable
-use means the code is technically invoking undefined behavior, which
-compilers can exploit in unexpected ways.
+### 7. HISTORICAL CONTEXT
 
-### 6. Stability Indicators
+The bug was introduced in 2016 by commit `34b759b4a22b0` ("ceph: kill
+ceph_empty_snapc") which replaced `ceph_empty_snapc` with NULL, claiming
+equivalence. While this was true for message sizing, it meant the
+snap_seq sent to OSD became 0 instead of the proper value, causing the
+clone issue.
 
-- Reported by kernel test robot and Dan Carpenter (Smatch static
-  analysis) — two highly reputable sources
-- The fix is authored by the NTFS3 maintainer (Konstantin Komarov)
-- Extremely small and contained change
+### Concerns
 
-### 7. Dependency Check
+- The bug requires a specific (but documented) configuration: CephFS
+  inline data + snapshots
+- Inline data is a deprecated feature in CephFS, but still supported and
+  used
+- The unnecessary clones are a data correctness issue (wrong snapshot
+  state) rather than a crash/security issue
+- The fix is small, well-tested, and follows established patterns
 
-The fix is self-contained — it just adds a NULL check. It applies to the
-existing `ntfs_read_run_nb()` function which has been in the kernel
-since NTFS3 was merged in v5.15.
+### Verification
 
-## Verification
+- Verified that commit `305ff6b3a03c2` exists and modifies only
+  `fs/ceph/addr.c`
+- Verified the snap context acquisition pattern matches
+  `caps.c:1813-1817` and `caps.c:2779-2783` (identical pattern)
+- Verified that NULL snapc causes `snap_seq=0` to be encoded in OSD
+  requests (osd_client.c:2198-2199)
+- Verified that `ceph_uninline_data()` is called from `ceph_open()` when
+  opening a file with inline data for writing (file.c:242-243)
+- Verified the historical context: commit `7b06a826e7c52` (2015) changed
+  to `ceph_empty_snapc`, then commit `34b759b4a22b0` (2016) changed to
+  NULL, introducing the bug
+- Verified the commit is reviewed by Viacheslav Dubeyko and signed off
+  by Ilya Dryomov (CephFS maintainer)
+- Verified the fix follows the standard lock ordering: `snap_rwsem`
+  (read) → `i_ceph_lock` (spin)
+- Could NOT verify whether inline_data feature is commonly used in
+  production stable kernel environments (unverified)
 
-- **Read `ntfs_read_run_nb()` at fsntfs.c:1171-1282**: Confirmed `clen`,
-  `idx` are only initialized via `run_lookup_entry()` on line 1196,
-  which is skipped when `run == NULL`
-- **Read `run_get_entry()` at run.c:603-623**: Confirmed line 608
-  immediately dereferences `run->count`, which would crash if `run ==
-  NULL`
-- **Searched callers of `ntfs_read_run_nb()`**: Found 12 call sites; the
-  `run == NULL` path is designed for early MFT reading (per comment at
-  line 1187)
-- **Checked `oa->run1` initialization in fslog.c**: All paths through
-  `fake_attr` (line 4749) and normal flow (line 4801) set `oa->run1`, so
-  the fslog caller is unlikely to pass NULL — but the function's design
-  explicitly handles `run == NULL` at its entry
-- **Confirmed ntfs3 present since v5.15**: The filesystem was merged in
-  Linux 5.15, present in all active stable trees
-- **git log confirmed recent ntfs3 activity**: Active maintenance by the
-  NTFS3 maintainer
+### Decision
 
-This is a textbook stable backport candidate: small, surgical fix for a
-NULL pointer dereference and uninitialized variable use, authored by the
-subsystem maintainer, reported by trusted automated tools.
+This commit fixes a real bug in CephFS snapshot handling that causes
+incorrect RADOS object clones (data correctness issue). The fix is small
+(~20 lines), self-contained, follows well-established patterns used
+throughout the CephFS codebase, and has been reviewed and tested. The
+bug has existed since 2016 and affects all stable kernels. While the
+trigger requires inline data + snapshots (a somewhat niche
+configuration), the fix is low-risk and addresses incorrect behavior.
 
 **YES**
 
- fs/ntfs3/fsntfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ceph/addr.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index 5f138f7158357..ac99c5613284a 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -1252,6 +1252,12 @@ int ntfs_read_run_nb(struct ntfs_sb_info *sbi, const struct runs_tree *run,
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index 63b75d2142102..faecd9025ee9c 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -2199,6 +2199,7 @@ int ceph_uninline_data(struct file *file)
+ 	struct ceph_osd_request *req = NULL;
+ 	struct ceph_cap_flush *prealloc_cf = NULL;
+ 	struct folio *folio = NULL;
++	struct ceph_snap_context *snapc = NULL;
+ 	u64 inline_version = CEPH_INLINE_NONE;
+ 	struct page *pages[1];
+ 	int err = 0;
+@@ -2226,6 +2227,24 @@ int ceph_uninline_data(struct file *file)
+ 	if (inline_version == 1) /* initial version, no data */
+ 		goto out_uninline;
  
- 		} while (len32);
- 
-+		if (!run) {
-+			err = -EINVAL;
-+			goto out;
++	down_read(&fsc->mdsc->snap_rwsem);
++	spin_lock(&ci->i_ceph_lock);
++	if (__ceph_have_pending_cap_snap(ci)) {
++		struct ceph_cap_snap *capsnap =
++				list_last_entry(&ci->i_cap_snaps,
++						struct ceph_cap_snap,
++						ci_item);
++		snapc = ceph_get_snap_context(capsnap->context);
++	} else {
++		if (!ci->i_head_snapc) {
++			ci->i_head_snapc = ceph_get_snap_context(
++				ci->i_snap_realm->cached_context);
 +		}
++		snapc = ceph_get_snap_context(ci->i_head_snapc);
++	}
++	spin_unlock(&ci->i_ceph_lock);
++	up_read(&fsc->mdsc->snap_rwsem);
 +
-+		/* Get next fragment to read. */
- 		vcn_next = vcn + clen;
- 		if (!run_get_entry(run, ++idx, &vcn, &lcn, &clen) ||
- 		    vcn != vcn_next) {
+ 	folio = read_mapping_folio(inode->i_mapping, 0, file);
+ 	if (IS_ERR(folio)) {
+ 		err = PTR_ERR(folio);
+@@ -2241,7 +2260,7 @@ int ceph_uninline_data(struct file *file)
+ 	req = ceph_osdc_new_request(&fsc->client->osdc, &ci->i_layout,
+ 				    ceph_vino(inode), 0, &len, 0, 1,
+ 				    CEPH_OSD_OP_CREATE, CEPH_OSD_FLAG_WRITE,
+-				    NULL, 0, 0, false);
++				    snapc, 0, 0, false);
+ 	if (IS_ERR(req)) {
+ 		err = PTR_ERR(req);
+ 		goto out_unlock;
+@@ -2257,7 +2276,7 @@ int ceph_uninline_data(struct file *file)
+ 	req = ceph_osdc_new_request(&fsc->client->osdc, &ci->i_layout,
+ 				    ceph_vino(inode), 0, &len, 1, 3,
+ 				    CEPH_OSD_OP_WRITE, CEPH_OSD_FLAG_WRITE,
+-				    NULL, ci->i_truncate_seq,
++				    snapc, ci->i_truncate_seq,
+ 				    ci->i_truncate_size, false);
+ 	if (IS_ERR(req)) {
+ 		err = PTR_ERR(req);
+@@ -2320,6 +2339,7 @@ int ceph_uninline_data(struct file *file)
+ 		folio_put(folio);
+ 	}
+ out:
++	ceph_put_snap_context(snapc);
+ 	ceph_free_cap_flush(prealloc_cf);
+ 	doutc(cl, "%llx.%llx inline_version %llu = %d\n",
+ 	      ceph_vinop(inode), inline_version, err);
 -- 
 2.51.0
 
