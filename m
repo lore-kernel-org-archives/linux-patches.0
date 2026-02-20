@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E663446B7;
-	Fri, 20 Feb 2026 12:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC570344025;
+	Fri, 20 Feb 2026 12:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771591091; cv=none; b=fcdSHXtmoOMHbVyhAJl7dcnRTx+D1AnNOIJXKgcZtEW+ywUtVQlTFYm7z0T1k3h1kWFs8/z18d5aL+hklDlJvMEf0j9xnAKxDFXl8Y3tSH3oF+QuGbM1KSfbCkJxwcptsRu6W07lT0X4L7nUzbHRlvsAgpWdiBsZ5ftzkBxJORs=
+	t=1771591093; cv=none; b=XBad5nv0FBQP7PPnqKquJi2Y4SX4nMbdFpQKWUHp4hKk4v1GRjLf6gwIENDTvXd8TKsNUB03J8zEd6MJsJ64xVGIigIuMpAWjOKe5NepEQCb/jbiy/kj2di1zwV/IJR4XykzyPlEpZAt7yY+t7N0b/pmKL/i1w1skov1lqu0DNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771591091; c=relaxed/simple;
-	bh=6xg59RKnatLMK8GVX5ueyxlD/UNx9NrdSSNST8WPIjI=;
+	s=arc-20240116; t=1771591093; c=relaxed/simple;
+	bh=JCQIO+38b7kX1zydRreP6mW2WWXVI7BBpn3fdnoMbuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sAzx7ALh2NYcquOMBQqnMka98t+Q07wJItPWD+lqk27d2e6o2itr+dvXUVNPNBVZxS64uN+pfrdBcLIRzMdmrjI848eWbGu367PYu3nZewiCF2H8qhABca1xL0wWsZ7fbf7V74fZQCt8bhnYldjOlnpg1w8tFHJ2+Zb4ilYfzoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lFMMew1K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NTZ77KACos50dyyHK0v6E3iAfjYF8lG8pVQW+SbJXOfC5duZzwCLGfFLWTObSi/g5Ymj/Pg7VuEiHXFrJDAHz66+pW9MeWJ6TICsp5HDf3idCzbbcFiAXPooUrGCH2fUvt1Yt+TrerMGgWq3Dhk9oAP6D5pOg3IRQzEN6qfMZuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ikNDpmg/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lFMMew1K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1156AC2BC86;
-	Fri, 20 Feb 2026 12:38:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ikNDpmg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13D2C2BC9E;
+	Fri, 20 Feb 2026 12:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771591091;
-	bh=6xg59RKnatLMK8GVX5ueyxlD/UNx9NrdSSNST8WPIjI=;
+	s=k20201202; t=1771591092;
+	bh=JCQIO+38b7kX1zydRreP6mW2WWXVI7BBpn3fdnoMbuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFMMew1KEhh6eKyGxjVK3Hm17qyKq9T8lj4KIjQW6pifcqn/Wz66ThFWGZC+oKWA7
-	 /c2R+TmNZV9gY8lL05KYIG9Lkk3z05lL60GG9+4W0sA0vYmzak2XB/FMjmPD+VmppZ
-	 Ds3T5g6/mh7R9eYb3ySg2BZw74mKBm9tZhvq/Ycsx4ebry2ZxequkcVNE70LxX9C4F
-	 cPX5KSiaP6o6WIgxQY51K1yZPQW1FZwalCyp0LK77T91U+jbFchXGlwjxEMPH4nc/5
-	 XshtVsgyqv4A+fv5pWQXckDWochBJsgyAh/7gyGLnokWzAMjw5tN9nnOj/RhPCUQ9V
-	 gKOPlDvGDiQiQ==
+	b=ikNDpmg/gq/YNDltyErzZHefhMs3k2HAnKrel3Oouz2tcqPpqzCwG8VuP6wG80mWa
+	 V4qlcmf58QO5WyLN2t+Oy5Zz4jzbxkxLeE4qhqrNwBi9Kv8YuGh4XB5/lz7KkRSJ0n
+	 p/+nVf+owsuhCeEPxyemV8HfkQ5T/4G08gboSC7bAkVDCdju1/ulRYEfiVVqCiiV1E
+	 Raceb8YO4TMEQEvwqh0mx/FdbhcTUpgDQg3UDwxc/PTWVwfhaGiNNH45GB7O0TCRkk
+	 bUQsM4Sfv9BT2WioAnKBOcSRQt6YaHHJzOGcvJAucKVNbJBR1m8n3PH3n5FyTHgU+6
+	 9ygYMtjAQz16Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Jaehun Gou <p22gone@gmail.com>,
+	Seunghun Han <kkamagui@gmail.com>,
+	Jihoon Kwon <kjh010315@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	daniel.lezcano@linaro.org,
-	linux-pm@vger.kernel.org,
+	ntfs3@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] thermal: int340x: Fix sysfs group leak on DLVR registration failure
-Date: Fri, 20 Feb 2026 07:37:52 -0500
-Message-ID: <20260220123805.3371698-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] fs: ntfs3: check return value of indx_find to avoid infinite loop
+Date: Fri, 20 Feb 2026 07:37:53 -0500
+Message-ID: <20260220123805.3371698-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260220123805.3371698-1-sashal@kernel.org>
 References: <20260220123805.3371698-1-sashal@kernel.org>
@@ -55,132 +54,158 @@ X-stable-base: Linux 6.19.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Jaehun Gou <p22gone@gmail.com>
 
-[ Upstream commit 15176b818e048ccf6ef4b96db34eda7b7e98938a ]
+[ Upstream commit 1732053c8a6b360e2d5afb1b34fe9779398b072c ]
 
-When DLVR sysfs group creation fails in proc_thermal_rfim_add(),
-the function returns immediately without cleaning up the FIVR group
-that may have been created earlier.
+We found an infinite loop bug in the ntfs3 file system that can lead to a
+Denial-of-Service (DoS) condition.
 
-Add proper error unwinding to remove the FIVR group before returning
-failure.
+A malformed dentry in the ntfs3 filesystem can cause the kernel to hang
+during the lookup operations. By setting the HAS_SUB_NODE flag in an
+INDEX_ENTRY within a directory's INDEX_ALLOCATION block and manipulating the
+VCN pointer, an attacker can cause the indx_find() function to repeatedly
+read the same block, allocating 4 KB of memory each time. The kernel lacks
+VCN loop detection and depth limits, causing memory exhaustion and an OOM
+crash.
 
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/LV3PR11MB876881B77D32A2854AD2908EF563A@LV3PR11MB8768.namprd11.prod.outlook.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This patch adds a return value check for fnd_push() to prevent a memory
+exhaustion vulnerability caused by infinite loops. When the index exceeds the
+size of the fnd->nodes array, fnd_push() returns -EINVAL. The indx_find()
+function checks this return value and stops processing, preventing further
+memory allocation.
+
+Co-developed-by: Seunghun Han <kkamagui@gmail.com>
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Co-developed-by: Jihoon Kwon <kjh010315@gmail.com>
+Signed-off-by: Jihoon Kwon <kjh010315@gmail.com>
+Signed-off-by: Jaehun Gou <p22gone@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete understanding of the code. Let me do a final check
-on the existing error handling in the DVFS section, which already had
-cleanup for FIVR and DLVR (but note: the DVFS section also has a bug -
-it returns after removing FIVR but doesn't also remove DLVR, and vice
-versa. However, that's a separate issue).
+This is the original ntfs3 driver introduction commit (v5.15-rc1 era).
+The bug has been present since ntfs3 was first added.
+
+Now let me verify what happens when `fnd_push` fails but its return
+value is ignored:
+
+When `fnd_push` returns `-EINVAL` (because `fnd->level >=
+ARRAY_SIZE(fnd->nodes)`, i.e., >= 20), the current code at line 1193
+ignores this return value. The loop continues iterating:
+1. `fnd_push` fails — the node is NOT added to the `fnd->nodes` array,
+   so `fnd->level` stays at 20
+2. The loop continues, reading more index blocks via `indx_read`,
+   allocating memory each time
+3. Since the node isn't tracked in `fnd->nodes`, it's never freed
+   (memory leak)
+4. A crafted filesystem with circular VCN references will cause an
+   infinite loop, each iteration allocating 4KB, leading to OOM
+
+This is a clear DoS vulnerability via crafted filesystem.
 
 ## Analysis
 
-### 1. Commit Message Analysis
-The commit message clearly describes a **resource leak bug fix**: when
-DLVR sysfs group creation fails, the previously created FIVR sysfs group
-is not cleaned up. The fix adds proper error unwinding.
+### 1. COMMIT MESSAGE ANALYSIS
+- **Clear bug description**: Infinite loop in ntfs3 leading to DoS / OOM
+  crash
+- **Attack vector**: Malformed NTFS filesystem image with manipulated
+  VCN pointers and HAS_SUB_NODE flag
+- **Mechanism**: `fnd_push()` return value is ignored; when array is
+  full, the node is leaked and the loop continues infinitely
+- **Severity**: DoS / memory exhaustion / OOM kill — this is a security-
+  relevant bug
 
-### 2. Code Change Analysis
-The bug is straightforward and real:
+### 2. CODE CHANGE ANALYSIS
+The fix is minimal and surgical:
+- Changes `fnd_push(fnd, node, e);` to `err = fnd_push(fnd, node, e);`
+- Adds error checking: if `fnd_push` fails, properly cleans up
+  (`put_indx_node(node)`) and returns the error
+- Only 5 lines of new code added (plus removal of 1 line)
+- No functional changes beyond the error handling
 
-In `proc_thermal_rfim_add()`:
-1. First, the FIVR sysfs group is created (line 447)
-2. Then, the DLVR sysfs group is created (line 468)
-3. If the DLVR creation fails (line 469), the code returns immediately
-   **without** removing the FIVR group
+### 3. CLASSIFICATION
+- **Bug fix**: Yes — fixes an infinite loop / memory exhaustion
+  vulnerability
+- **Security**: Yes — DoS via crafted filesystem (mountable by
+  unprivileged user in many configs, e.g., USB automount)
+- **Stable criteria met**: Obviously correct, fixes a real bug, small
+  and contained, no new features
 
-The fix adds a conditional cleanup: if FIVR was created (checked via
-`PROC_THERMAL_FEATURE_FIVR` mask) and DLVR creation fails, remove the
-FIVR group before returning the error.
+### 4. SCOPE AND RISK
+- **Lines changed**: ~6 lines net
+- **Files changed**: 1 (fs/ntfs3/index.c)
+- **Risk**: Extremely low — the only behavioral change is that an
+  already-defined error path is now properly taken instead of being
+  silently ignored
+- **Could break something**: No — `fnd_push` already returned an error;
+  it was just ignored. Now that error propagates correctly.
 
-Interestingly, the DVFS section (lines 473-482) already had similar
-cleanup logic (removing both FIVR and DLVR on DVFS failure), showing the
-author's intent was always to have proper unwinding. The DLVR section
-was simply missing the same pattern.
+### 5. USER IMPACT
+- Affects any system that can mount NTFS filesystems (common for USB
+  drives, dual-boot systems)
+- A crafted USB drive could trigger OOM on any system with ntfs3 enabled
+- Impact: System hang / OOM kill — HIGH severity
 
-### 3. Classification
-- **Bug type**: Resource leak (sysfs group leak on error path)
-- **Severity**: Low-to-medium. A leaked sysfs group during probe failure
-  could lead to:
-  - Stale sysfs entries
-  - Issues on subsequent probe attempts
-  - Resource leak
-- **Fix correctness**: Obviously correct. The pattern matches what's
-  already done in the DVFS error handling section of the same function.
+### 6. STABILITY
+- Signed off by the ntfs3 maintainer (Konstantin Komarov)
+- The fix pattern (check return value, propagate error) is a well-
+  understood and safe pattern
 
-### 4. Scope and Risk Assessment
-- **Change size**: +3 lines changed (adding cleanup in one error path)
-- **Files touched**: 1 file
-- **Risk**: Very low. The fix only adds cleanup that mirrors existing
-  patterns in the same function.
-- **Regression potential**: Extremely low - removing a sysfs group that
-  was just created in a failure path cannot break anything.
-
-### 5. Stable Kernel Rules Compliance
-- **Obviously correct**: Yes, the pattern is identical to existing
-  cleanup in the DVFS section
-- **Fixes a real bug**: Yes, a sysfs group resource leak on error path
-- **Small and contained**: Yes, 3 lines in 1 file
-- **No new features**: Correct, pure bug fix
-- **Tested**: Acked by the subsystem maintainer (Srinivas Pandruvada)
-
-### 6. Affected Versions
-The DLVR feature was introduced in commit 5bc6b1df65c87 (v6.4..v6.5
-cycle), so this bug affects kernels v6.5 and later. Current stable trees
-that would need this: 6.6.y, 6.12.y (and possibly others depending on
-active stable branches).
+### 7. DEPENDENCY CHECK
+- `fnd_push()` already returns `int` with proper bounds checking since
+  it was introduced
+- The fix only adds the return value check in the caller — no
+  dependencies on other commits
+- The affected code (`indx_find` and `fnd_push`) has been present since
+  ntfs3 was first merged (commit 82cae269cfa95, v5.15-rc1)
+- This fix applies cleanly to all stable trees that have ntfs3 (5.15+)
 
 ### Verification
-- `git log --oneline` on the file confirmed commit history and that the
-  fix is 15176b818e048
-- `git show 5bc6b1df65c87` confirmed DLVR support was added in the
-  v6.4→v6.5 window, introducing the buggy error path
-- Read of `processor_thermal_rfim.c` lines 442-486 confirmed the pre-fix
-  code: DLVR error path at line 469-470 returns without FIVR cleanup
-- Read confirmed DVFS section (lines 473-482) already had the cleanup
-  pattern the DLVR section was missing
-- `git tag --contains 5bc6b1df65c87` confirmed affected versions start
-  at v6.5 era
-- Commit is Acked-by Srinivas Pandruvada (Intel thermal subsystem
-  maintainer), confirming correctness
 
-### Conclusion
-This is a textbook stable backport candidate: a small, obvious resource
-leak fix on an error path, with minimal risk, acked by the subsystem
-maintainer, and following an existing pattern in the same function. It
-affects Intel thermal driver users on platforms with both FIVR and DLVR
-features when DLVR probe fails.
+- **git blame** confirmed the vulnerable code at line 1193 has been
+  present since commit 82cae269cfa95 ("fs/ntfs3: Add initialization of
+  super block") — the original ntfs3 introduction
+- **Read of fnd_push()** at lines 673-684 confirms it already returns
+  `-EINVAL` when `i >= ARRAY_SIZE(fnd->nodes)` (which is 20), verifying
+  the commit message's claim
+- **Read of struct ntfs_fnd** (from agent exploration) confirms
+  `nodes[20]` — hardcoded array of 20 entries, so the depth limit is
+  real
+- **Current code at lines 1173-1198** confirms `fnd_push` return value
+  is currently ignored on line 1193 (the bug)
+- **git log history** shows no prior fix for this specific issue (no
+  `fnd_push` return value check commits found)
+
+This is a textbook stable backport candidate: a small, obviously correct
+fix for a security-relevant DoS vulnerability in a filesystem accessible
+from user space, present in all stable trees with ntfs3 support.
 
 **YES**
 
- .../thermal/intel/int340x_thermal/processor_thermal_rfim.c   | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ntfs3/index.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
-index 589a3a71f0c4c..ba88d878c998d 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
-@@ -466,8 +466,11 @@ int proc_thermal_rfim_add(struct pci_dev *pdev, struct proc_thermal_device *proc
- 			break;
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 7157cfd70fdcb..75b94beac1613 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1190,7 +1190,12 @@ int indx_find(struct ntfs_index *indx, struct ntfs_inode *ni,
+ 			return -EINVAL;
  		}
- 		ret = sysfs_create_group(&pdev->dev.kobj, &dlvr_attribute_group);
--		if (ret)
-+		if (ret) {
-+			if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_FIVR)
-+				sysfs_remove_group(&pdev->dev.kobj, &fivr_attribute_group);
- 			return ret;
+ 
+-		fnd_push(fnd, node, e);
++		err = fnd_push(fnd, node, e);
++
++		if (err) {
++			put_indx_node(node);
++			return err;
 +		}
  	}
  
- 	if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_DVFS) {
+ 	*entry = e;
 -- 
 2.51.0
 
