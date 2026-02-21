@@ -1,102 +1,100 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out28-79.mail.aliyun.com (out28-79.mail.aliyun.com [115.124.28.79])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54DF1A58D
-	for <patches@lists.linux.dev>; Sat, 21 Feb 2026 00:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A946D3090FD
+	for <patches@lists.linux.dev>; Sat, 21 Feb 2026 01:40:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.28.79
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771632988; cv=none; b=cJsIIE9xGhX0iGiWSshwiBA8drd1JK7ozmtTUOq0ka3XBfhpBMk+VvWc0Q/m7F+uzC6koBdZZYGmFPmeSCeVT9d/qx5qYTnT2HerRbwpcdWfU+R0lmgjV4LRrK9MVTcZfIwswPITnC8Xy2o0EOT2dsDy0rRWAfZ62mKZtiSUFz0=
+	t=1771638008; cv=none; b=Z6P1zR5rHSDV4HhaPmA5Pkpy13G21WEDz1vVJKgkKLQ6MvJtktyj77m6q3h349mxF6AVuaG0ZPRuJRnMqGwNBjWgxHbzejNo1xI0ysZCZpvFpyP+/vJ+cFOtcvoWMvg9mq/h48YbV7Gvxmaw1tddSuWni5F82ndW2YszLu/ZgcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771632988; c=relaxed/simple;
-	bh=3CyBu6t4VMRW7+VaTdEqeBQZt8ryLT8L+AYTjT70+ps=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6Oq8ef4PAOwMDtshaEjMxNpCWekvhRBQHn6cz2DWsFPlXxfp4xlC0nUqgO47HgQTH3WQEjyY5RUdEWHbRG7ixHi878IkMVSzp31RAkcWtkybf4vYvw14133YmrcHjASTavA5+5a6MOpxLwaGLGwez7OtRLT2sGvocbWNnaXHuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JEPcnR06; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JEPcnR06"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-48375f10628so15923985e9.1
-        for <patches@lists.linux.dev>; Fri, 20 Feb 2026 16:16:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771632985; x=1772237785; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pT8043eXb3x0Y28ESC3KU+eLsSvxZ0GN6RPVeedqxFo=;
-        b=JEPcnR06XRRc+k2qmWpsci0CKTSJAqbi82qumeSY+jPyRc0+89DwjXOf6s1y8NLUaC
-         iFAVv09MJZSeUuBoXzokRw6tHJrQRU32F84omtv+j2/2YVgBhsKHhn80MSarbQ3VBOEc
-         QvrlPTFyUfdkGo1WFqS5tAQjhxiu5QheV7q3f5hYBXqYILAGYA3hEsEmDg+yzabxqiul
-         ekA5w1DCmam6Y+S/UEaRd8fXF0ULK+QGhSfrDjlLPghFwIcT/Iy0wp7dUrpUDcPLZ1oX
-         jAtfZvoIuTFYiZi4eBM+U7pozeyyYqbx0kEReX68dAw9ciIvbYn44k6W3qddgqw/lwRJ
-         Kxmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771632985; x=1772237785;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pT8043eXb3x0Y28ESC3KU+eLsSvxZ0GN6RPVeedqxFo=;
-        b=Z5vphqbx/82UyxrVe+dX7p7SBqKqI3/NAZ5BsifYXMrbJ0vhF33EuqAjeqJSsbHnVj
-         yAemCBRsu8Mpg9QqYLt4FKJMEv4CQn8EoojTxH2wu+BV9r327NVAxhH4VvMO76b+0GiM
-         P2PGB89HkSsEdbu69vanMMYbocKQsi0SIG/1rJyKQt05VWxp8JJuwZgwel0BY8dOLaK1
-         Bxkne4gjk5OSf+qPEJJVKYaWXjH7qRc6KIplE/syDW6W8Thtvf/umBNmaWHTT5A7kX/X
-         j4FKgo/R4Fe5Fl2uFU4q+Oa70d1PoGRRKy0EgHKVZ1ZD/MyGLsFjVlNBF9grV6RqgHYO
-         NzlA==
-X-Forwarded-Encrypted: i=1; AJvYcCXQdyTj55sRQMLLIo5vhSsUyTSelqOm5DcNIsAPgEOHJ2i4e92fZSAoPa9wsfQmLBk6NDF13eRc@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw6Rtf7rmmh9fGfznLKQJdzp/ZJGz+8vVMv8KA1hiMIG+SQS8rP
-	yGAX/DUfdAAszyd8/L69MLhTxpqi94XtwW9UAS+eNZJLfCjkb4m16lXr
-X-Gm-Gg: AZuq6aL983lH7HO9AJC6eoG/KA8wISrJM9qu/b9WY2wkuBuyOauFFYKrX6GGHwQCIxa
-	XS/gaenCG3HGGWo/maeQjKYdkcQa19MSZ+6tMF4r2gd+TyIXHCdgQRLsUClbwj8Hlqzikw13klr
-	RIjmjpn2g7ttXPpfalD97o1DVQQUNoycrqqXr2NSBnsYx38f6f8MyxySo+/6BJQwk4CFnILIOHR
-	/slSSfVw+zXEX0WGvrEZ8JqO7+8j3FftdbhcV6r5Y/VaoTJutG0tVqPuREr9QRTMxjJInuTRoU5
-	NCY6lCb/ePcdEoIvK8Is0uPH7WaLv8i4YZXSX5xkC+gG/STRk2VwzUXZQHtDWXFkW2dHhDp7Ps+
-	lMK0D9WymgzMxjs1EKG3w5tbHAv4ZSx/PHJqrGJ0ECzUhX4XXuhGq1ZWoOEwxLMOhKOI03DW2xG
-	pLodxmGJOXSBxetIql5O0=
-X-Received: by 2002:a05:600c:1d15:b0:47e:e8c2:905f with SMTP id 5b1f17b1804b1-483a95bc0cbmr16930615e9.8.1771632985095;
-        Fri, 20 Feb 2026 16:16:25 -0800 (PST)
-Received: from localhost ([212.73.77.104])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-483a42cd49fsm38764515e9.5.2026.02.20.16.16.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Feb 2026 16:16:23 -0800 (PST)
-From: Askar Safin <safinaskar@gmail.com>
-To: ddiss@suse.de
-Cc: brauner@kernel.org,
-	initramfs@vger.kernel.org,
-	jack@suse.cz,
-	linux-fsdevel@vger.kernel.org,
-	linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	nathan@kernel.org,
-	nsc@kernel.org,
-	patches@lists.linux.dev,
-	rdunlap@infradead.org,
-	rob@landley.net,
-	viro@zeniv.linux.org.uk
-Subject: Re: [PATCH 2/2] init: ensure that /dev/null is (nearly) always available in initramfs
-Date: Sat, 21 Feb 2026 03:16:09 +0300
-Message-ID: <20260221001610.820321-1-safinaskar@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260220112606.551099f5.ddiss@suse.de>
-References: <20260220112606.551099f5.ddiss@suse.de>
+	s=arc-20240116; t=1771638008; c=relaxed/simple;
+	bh=fJ5N5OivNGfNs17IocW1hf5cle81k0MQ9EhIy0aRN/A=;
+	h=Date:From:To:Subject:Cc:In-Reply-To:References:Message-Id:
+	 MIME-Version:Content-Type; b=BMVnPdcXGOJAcgV8zj8uDHRECLQ3U/9H7avCgmmSQPF4YhFzxI6qsAcFK5vVkoAHC1bjx0GJaiydSOVchtvbZsB7WqpgUole5KvP0dQzTM6gUgriXaNqSoL6cqDq7v+d6y/B1iN5WB5SQ3oqz5QCPoLm+TDiesCdRzLg0PRAiVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com; spf=pass smtp.mailfrom=e16-tech.com; arc=none smtp.client-ip=115.124.28.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
+Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.gbWoX.z_1771637683 cluster:ay29)
+          by smtp.aliyun-inc.com;
+          Sat, 21 Feb 2026 09:34:44 +0800
+Date: Sat, 21 Feb 2026 09:34:45 +0800
+From: Wang Yugui <wangyugui@e16-tech.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Andrew Cooper <andrew.cooper3@citrix.com>
+Subject: Re: [PATCH 6.6 00/86] 6.6.124-rc1 review
+Cc: stable@vger.kernel.org,
+ patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org,
+ akpm@linux-foundation.org,
+ linux@roeck-us.net,
+ shuah@kernel.org,
+ patches@kernelci.org,
+ lkft-triage@lists.linaro.org,
+ pavel@nabladev.com,
+ jonathanh@nvidia.com,
+ f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com,
+ rwarsow@gmx.de,
+ conor@kernel.org,
+ hargar@microsoft.com,
+ broonie@kernel.org,
+ achill@achill.org,
+ sr@sladewatkins.com
+In-Reply-To: <2026021127-posh-anchor-1e47@gregkh>
+References: <20260211110620.0A4D.409509F4@e16-tech.com> <2026021127-posh-anchor-1e47@gregkh>
+Message-Id: <20260221093444.DED8.409509F4@e16-tech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Becky! ver. 2.83.01 [en]
 
-David Disseldorp <ddiss@suse.de>:
-> It looks as though Bionic has extra logic to handle missing /dev/null
-> during early boot, although it's dependent on !is_AT_SECURE:
->   https://cs.android.com/android/platform/superproject/main/+/main:bionic/libc/bionic/libc_init_common.cpp;drc=a7637a8f06f103c53d61a400a6b66f48f2da32be;l=400
+Hi,
+
+> On Wed, Feb 11, 2026 at 11:06:21AM +0800, Wang Yugui wrote:
+> > Hi,
+> > 
+> > > Hi,
+> > > 
+> > > > This is the start of the stable review cycle for the 6.6.124 release.
+> > > > There are 86 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > > 
+> > > > Responses should be made by Wed, 11 Feb 2026 14:22:44 +0000.
+> > > > Anything received after that time might be too late.
+> > > > 
+> > > > The whole patch series can be found in one patch at:
+> > > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.124-rc1.gz
+> > > > or in the git tree and branch at:
+> > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> > > > and the diffstat can be found below.
+> > > 
+> > > 6.6.123 boot well, but 6.6.124-rc1 failed to boot here.
+> > > 
+> > > error message:
+> > > dracut: fatal: iscsiroot requested but kernel/initrd does not support iscsi.
+> > > 
+> > > 'git bisect' yet not done, and report this problem firstly.
+> > 
+> > 6.6.124-rc1 without 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch' (revert), 
+> > boot well here.
+> > 
+> > but 6.1.163-rc1 with 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch'
+> > boot well.
 > 
-> I think this would be better addressed via documentation (e.g. in Bionic
-> or ramfs-rootfs-initramfs.rst).
+> Does 6.19 work properly on this hardware too?
+> 
 
-Okay, I see, current bionic behavior is good.
+6.6.127 boot well on this hardware again.
+so this regression is fixed at least in 6.6.127.
 
-Okay, I agree that this /dev/null patch is not necessary.
+Best Regards
+Wang Yugui (wangyugui@e16-tech.com)
+2026/02/21
 
--- 
-Askar Safin
