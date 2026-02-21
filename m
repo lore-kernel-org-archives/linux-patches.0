@@ -1,100 +1,133 @@
-Received: from out28-79.mail.aliyun.com (out28-79.mail.aliyun.com [115.124.28.79])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A946D3090FD
-	for <patches@lists.linux.dev>; Sat, 21 Feb 2026 01:40:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.28.79
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0229F36828A;
+	Sat, 21 Feb 2026 20:21:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771638008; cv=none; b=Z6P1zR5rHSDV4HhaPmA5Pkpy13G21WEDz1vVJKgkKLQ6MvJtktyj77m6q3h349mxF6AVuaG0ZPRuJRnMqGwNBjWgxHbzejNo1xI0ysZCZpvFpyP+/vJ+cFOtcvoWMvg9mq/h48YbV7Gvxmaw1tddSuWni5F82ndW2YszLu/ZgcQ=
+	t=1771705321; cv=none; b=d47EdjH1kWRMod/Jx4oi22+qpXO3qO2zxK/4K/ZCaWCtnCxya9qUjSipkyU/sFcMQ3T+3wTvFwbf8Fr+/KOwryGo7rBIgsLYAv6rDIsOYCEdiKVtn7k8FshG1aYdk3DL5b0URcsVWqXb5BLKFibPY8Y/YgzQZwKM6pV840xSN4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771638008; c=relaxed/simple;
-	bh=fJ5N5OivNGfNs17IocW1hf5cle81k0MQ9EhIy0aRN/A=;
-	h=Date:From:To:Subject:Cc:In-Reply-To:References:Message-Id:
-	 MIME-Version:Content-Type; b=BMVnPdcXGOJAcgV8zj8uDHRECLQ3U/9H7avCgmmSQPF4YhFzxI6qsAcFK5vVkoAHC1bjx0GJaiydSOVchtvbZsB7WqpgUole5KvP0dQzTM6gUgriXaNqSoL6cqDq7v+d6y/B1iN5WB5SQ3oqz5QCPoLm+TDiesCdRzLg0PRAiVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com; spf=pass smtp.mailfrom=e16-tech.com; arc=none smtp.client-ip=115.124.28.79
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
-Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.gbWoX.z_1771637683 cluster:ay29)
-          by smtp.aliyun-inc.com;
-          Sat, 21 Feb 2026 09:34:44 +0800
-Date: Sat, 21 Feb 2026 09:34:45 +0800
-From: Wang Yugui <wangyugui@e16-tech.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Andrew Cooper <andrew.cooper3@citrix.com>
-Subject: Re: [PATCH 6.6 00/86] 6.6.124-rc1 review
-Cc: stable@vger.kernel.org,
- patches@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org,
- akpm@linux-foundation.org,
- linux@roeck-us.net,
- shuah@kernel.org,
- patches@kernelci.org,
- lkft-triage@lists.linaro.org,
- pavel@nabladev.com,
- jonathanh@nvidia.com,
- f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com,
- rwarsow@gmx.de,
- conor@kernel.org,
- hargar@microsoft.com,
- broonie@kernel.org,
- achill@achill.org,
- sr@sladewatkins.com
-In-Reply-To: <2026021127-posh-anchor-1e47@gregkh>
-References: <20260211110620.0A4D.409509F4@e16-tech.com> <2026021127-posh-anchor-1e47@gregkh>
-Message-Id: <20260221093444.DED8.409509F4@e16-tech.com>
+	s=arc-20240116; t=1771705321; c=relaxed/simple;
+	bh=vzhOmEvFaSJaDBrwFGbbvRvfotWjUvH6FzZiWbW1yVs=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=fKWvO6r+71R+kJzpUFLginj8o+VmFHF1NiaGhSPx9ASRfaFYvOX1hpsHEbWu+61sWeUdbCiFeTG/X831H7Z3lcqqsSCSyGpwk5y6LxvwVteggkVNKtaH+KPXb9X27OgQ1ldh7GLod3x1DoEUWYmkjDUvcVFvVsPazOJCtLXpwYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1vttU5-001zor-1N;
+	Sat, 21 Feb 2026 20:21:48 +0000
+Received: from ben by deadeye with local (Exim 4.99.1)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1vttU3-00000000PRz-12OF;
+	Sat, 21 Feb 2026 21:21:47 +0100
+Message-ID: <1a11526ae3d8664f705b541b8d6ea57b847b49a8.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 02/41] ARM: 9468/1: fix memset64() on big-endian
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Thomas =?ISO-8859-1?Q?Wei=DFschuh?=	
+ <thomas.weissschuh@linutronix.de>, "Matthew Wilcox (Oracle)"	
+ <willy@infradead.org>, Arnd Bergmann <arnd@arndb.de>, "Russell King
+ (Oracle)"	 <rmk+kernel@armlinux.org.uk>
+Date: Sat, 21 Feb 2026 21:21:42 +0100
+In-Reply-To: <20260209142256.889650945@linuxfoundation.org>
+References: <20260209142256.797267956@linuxfoundation.org>
+	 <20260209142256.889650945@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-X4Nl9z/dMpOFTgxhFOy3"
+User-Agent: Evolution 3.56.2-8 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Becky! ver. 2.83.01 [en]
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
-Hi,
 
-> On Wed, Feb 11, 2026 at 11:06:21AM +0800, Wang Yugui wrote:
-> > Hi,
-> > 
-> > > Hi,
-> > > 
-> > > > This is the start of the stable review cycle for the 6.6.124 release.
-> > > > There are 86 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > > 
-> > > > Responses should be made by Wed, 11 Feb 2026 14:22:44 +0000.
-> > > > Anything received after that time might be too late.
-> > > > 
-> > > > The whole patch series can be found in one patch at:
-> > > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.124-rc1.gz
-> > > > or in the git tree and branch at:
-> > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > > > and the diffstat can be found below.
-> > > 
-> > > 6.6.123 boot well, but 6.6.124-rc1 failed to boot here.
-> > > 
-> > > error message:
-> > > dracut: fatal: iscsiroot requested but kernel/initrd does not support iscsi.
-> > > 
-> > > 'git bisect' yet not done, and report this problem firstly.
-> > 
-> > 6.6.124-rc1 without 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch' (revert), 
-> > boot well here.
-> > 
-> > but 6.1.163-rc1 with 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch'
-> > boot well.
-> 
-> Does 6.19 work properly on this hardware too?
-> 
+--=-X4Nl9z/dMpOFTgxhFOy3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6.6.127 boot well on this hardware again.
-so this regression is fixed at least in 6.6.127.
+On Mon, 2026-02-09 at 15:24 +0100, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Thomas Weissschuh <thomas.weissschuh@linutronix.de>
+>=20
+> commit 23ea2a4c72323feb6e3e025e8a6f18336513d5ad upstream.
+>=20
+> On big-endian systems the 32-bit low and high halves need to be swapped
+> for the underlying assembly implementation to work correctly.
 
-Best Regards
-Wang Yugui (wangyugui@e16-tech.com)
-2026/02/21
+Now it's broken on little-endian, because CONFIG_CPU_LITTLE_ENDIAN was
+only introduced in 5.19.
 
+For 5.10 and 5.15, please revert this or change the condition to
+!IS_ENABLED(CONFIG_CPU_BIG_ENDIAN).
+
+Ben.
+
+>=20
+> Fixes: fd1d362600e2 ("ARM: implement memset32 & memset64")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de>
+> Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+> Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  arch/arm/include/asm/string.h |    5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>=20
+> --- a/arch/arm/include/asm/string.h
+> +++ b/arch/arm/include/asm/string.h
+> @@ -36,7 +36,10 @@ static inline void *memset32(uint32_t *p
+>  extern void *__memset64(uint64_t *, uint32_t low, __kernel_size_t, uint3=
+2_t hi);
+>  static inline void *memset64(uint64_t *p, uint64_t v, __kernel_size_t n)
+>  {
+> -	return __memset64(p, v, n * 8, v >> 32);
+> +	if (IS_ENABLED(CONFIG_CPU_LITTLE_ENDIAN))
+> +		return __memset64(p, v, n * 8, v >> 32);
+> +	else
+> +		return __memset64(p, v >> 32, n * 8, v);
+>  }
+> =20
+>  #endif
+>=20
+>=20
+
+--=20
+Ben Hutchings
+Who are all these weirdos? - David Bowie, on joining IRC
+
+--=-X4Nl9z/dMpOFTgxhFOy3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmmaE9YACgkQ57/I7JWG
+EQnltg/+Kjdukktt3i+v5hb4fe6oRhnhKA3zsPWYEgMEVq8i09u9366O6hFz++pj
+7ARXDSJ9G68RugsQSbrnxXwLOAhtfCNg7mVrtgUPzlNyVrpd3Mmu3qAVrnAvkMjy
+8vZkdxRVTQPhEJ9L5secO5wBq+FmsFuWnyLWmRJSslZdaKP8qVjyhdjGC+PQkGKy
+VvOkqoyvbk7D5aFdVVTiUsvqM0s6vI5C8BkDSTwaJajuRsMmz9/sbopyCwHiVBuf
+rHSPLTJSznR2kTmWLAX+b33VRMHcVUZDRb1+ZsjxmL3XzUJ85LLm356pbhdeUNmP
+rwuRGrHxm7RAtK+nUg5glEln53MmdBo69wvVC1uJZHtnqN77VWEV7G3xQFyTGmXR
+gkzihu+EEUAYtTlc43nL0oCkQAuwbwaG+N0lAu2wh69Fbs5KqNNbpjvL9JE0KkqB
+oL2zoUV5mdZR6QfKJntNX+5lMydXqmos7lq3wD6ePdN7I7iBgyjr5P6N6rWMejE1
+aO63er2fGGFB82ITKAli3BEzp9Q1gxiptv+O+nFyH061r1wI8ky1CSQD83w/VgyT
+WxEA5uJ9da/88KZc00YTjLp3wozk3RdVHL+Ueu+g4h6yk2BD/oneqwyQKVYVDjG+
+6HUwvA6Z9IpLQuTGRayc4tr7ZY9LGXE8zIZGSfxY2hU0I8Kgvok=
+=dSyq
+-----END PGP SIGNATURE-----
+
+--=-X4Nl9z/dMpOFTgxhFOy3--
