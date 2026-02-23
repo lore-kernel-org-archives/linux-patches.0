@@ -1,141 +1,78 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B5137881C
-	for <patches@lists.linux.dev>; Mon, 23 Feb 2026 21:41:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771882905; cv=pass; b=bPwbhKdcghNnTGwHIFaiUGEf2B5f31le4tTs4Ll66U1g1zo4f4kC0ZLs9kMpenuD4VMJ4irc+pYvLvGCpyoP9op/tb9fVec7wGf6S9HvkdXsSkQaMOsNADAaEsJPAa4PLL6D2VXPGgg6XiG6EsAkmYIrY+TF1yaVsoV9EAWF/no=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771882905; c=relaxed/simple;
-	bh=1JG2cynNzhGyhQW47nj1rwIOUkkhTWpJb7I8OtRgOjo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XvMRExQ7KYze5/4Ou55IWKlWVBaqSvBfZ6zsedACaPLaIPoHzfZMtBrfwXPPpdaY2cJ62QINcgOjKiQK/JA22jxr059uTMnfj7XoEfyos7mD28x/918tYqKl0cX6oxmSO3NKN0/iUNXK/tVP3mhBq7BBOrBjdOJt7sQo3ikj2Xw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q3TarfCW; arc=pass smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5781937997A
+	for <patches@lists.linux.dev>; Mon, 23 Feb 2026 21:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771883625; cv=none; b=jdctUqqX7J9229tWg9VUKjT9ffVopM+/XLBLzRX8J1gQeWB30FG/nPSPKS7tvZR69qVw9tnOMvCE00c4rCz4eYBUk2wG999HGpPsSqDBYK0LPf7aiOVVyQYro/4TxR/ej2Sx3rxYV8F+UJo7aFPDAcdhFw0kUSvZbXhCjR/IyEY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771883625; c=relaxed/simple;
+	bh=a47+wjzEFQM3mE5wXVcS4PxdztrWL6jwdpKX8/S97lc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qD7RBnRX0BuDINMGibYsF7EfduDXsUJ+sWC+Kh+jcxhchWfXTfEc7MpVwaIAZFWzM+e5nLruA3d9pM5i5A+TVq3ILd7/rb+ebxkwGH7UNpVvCcMuKj14u48jLdZ9VHShIeVUQ1xns0ojfao5sJAs+Du0SenBBLBf+VWWXmrYMkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=bJM3WAk7; arc=none smtp.client-ip=45.79.88.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q3TarfCW"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-64ae222d87dso4406867d50.2
-        for <patches@lists.linux.dev>; Mon, 23 Feb 2026 13:41:44 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771882903; cv=none;
-        d=google.com; s=arc-20240605;
-        b=FQtAOruF+JLk6fo31DQ3k1bpji9/xppPuQ9JohAeDBJytN1H3nrbVy4QN8pHDLgvec
-         /NomBnTbMtBw1BAsNEqB3+D5dGkQt5vYAJXdAKQ/rpySOD+7V0WOwteRb0WDEJn32ou0
-         PQnyKHjOSORcKsfz975D9kU36KEzgU0HkecHGHT2mDe2DtNMN0ofWEp744J5Nq3SgmTF
-         IPd3rxitqHhJX+MlowQ7598QccgZ8oDbRpU3TYS6elX/gCVA7YjCMepHw+HNtJ5tUPu3
-         fK8mvYN0EJHNmoHYf8GWGrn3Dc7PkVCnZXVekB2fCyHQn9SE4ypVLWIqDsvY/yRIFf0x
-         aYdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=1JG2cynNzhGyhQW47nj1rwIOUkkhTWpJb7I8OtRgOjo=;
-        fh=0Us/GHQQhRXSbxtUTxxaV1uzz59o6h7LKUNyrgIQhAA=;
-        b=K3y/W0EEb201rFEuN/9xXhHvPkzmczxJJvdBuYqc1aVSCBMBhf8SI06GxiwYnKv9Q9
-         ama04FN6wvWrIRLk1gtwNL5VIiqVfDWYPUU+9XPoySEv5q5gcBHcYNAidtc8OucfYIsf
-         gW+/JEyBPpY46szGuI6Z5ip3H7xQ/wN2GiUqqxWrR+4Ijx0F1U8SwL02za1jLCZNt1Vb
-         keJmbPgqB3Idz8Sichm3+WUviwyhAJJStqRHSjw8LYAZz/2rTQWligSUh1eiy2qaMAXw
-         2rr+0bdSZ5ExnebW+/3uPP0xkqePYc8SmQesi98kVdqDzfEoduBqe1QMiSpU2Sms/w0B
-         1aZw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771882903; x=1772487703; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1JG2cynNzhGyhQW47nj1rwIOUkkhTWpJb7I8OtRgOjo=;
-        b=Q3TarfCWup4J6gqcNrd6BbNuIfM/AKlGGcg0KSYfervUe7pyKeCGL+fU3wxWiiiCDB
-         /C+FLYKVwjVUIQ5RrBLyiSJmdgNeyXgV/IozQTq/qxaGhT0KqbnVCnwTTtB10qZIvfDn
-         VXiHCtsoEUd7MrR2tbkfSmKpl7ey8UmId41NqCaHDOOGYMwtNj1niOfh0nRXrRbyCTpN
-         JIs2enq8+o7BbRN7EYsJwaecKqTUqGU4+os4N8nMHVcBga59/0psuyHyXMTsQ9OAoNpg
-         5HjWMpREmTZdk92J0VyAQgwwUR1k72SwZn+ouaAJdnopZJqDNTN7BwgNbol0h30RaApc
-         OqQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771882903; x=1772487703;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1JG2cynNzhGyhQW47nj1rwIOUkkhTWpJb7I8OtRgOjo=;
-        b=KNsl4w+41WGIjGlgwzbNivqBzANKq2ZBLqdvCgKXROncqIE3PXwlNLXQ9KTlsgID7f
-         DsqVmq6CZKZmHbKKA53/LJRy7VtB9Y7GcAk79R9bFwHIG0R2zB5nG73UaZW+qAFfyhNm
-         n8yyQnVKMX8Qr/fP92oX3uvTJ52MYTZSU5/DStAgtsMUKkpI7h46fBBATqYWo+W1mEti
-         8MJ+mDYi43LAXgI0PvEpVvZ2puNYhUBJThAQQ6CSKYrnG5N959t9Fk+PjS2YJQcxZEUn
-         zYX7zd3BIGC0LRFAo5JHkEYN2+FxowA95+OfcPxiXhd/OORQo6RbzoZmcFqwPj+XjSgx
-         h7KQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXE4882veY0d+4TzYrDSKqK7kU9ZaEX9QF1GHawyTOSYZXgI18xrlIyz8M1tFbryyv0FGYmBeHs@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz7szndM6AcjEZ4BiOAxDwkrjvI8aedbmJ0RFcPAKBokpEWUxCk
-	YLf9J5+EPTEem6OHcB9jjlwbpt3cLZztP/kS0b7NM9eLyPO2cbKhmNH0b+K8ps3tYVbykv29Uwq
-	Yv/JycEKtRcOeUsWrLJhWczEXlzfuWEc=
-X-Gm-Gg: ATEYQzzplq/vjVVtCpcAwnBvU3SHY0xkOyvfloT1uFBTscSWeG4zEU5XPeWtq7kPcRq
-	806n00UQIJDlZCC26UIIfECTHvGWkesgWxWRC/xVeucGBJ5fNxWiVrZB7jaR2T3LOkRhz0QXggL
-	Ma5kGUoQFGa6yKW4Ehne5MZyc1IBbPkJEtyaPHX3qVMd4c/3+jtKy14d/7rm5CBZvJFbX4Ef4ui
-	+3iINcjh9Jl1EbOSxi2qOCl/udXtwywNAaqCwWKMR61ckEcZ1WUdk80olSB2RvzFk21pSWUBeSZ
-	yeJMiws=
-X-Received: by 2002:a05:690e:134b:b0:64a:d67a:1fdc with SMTP id
- 956f58d0204a3-64c785dc781mr9063433d50.13.1771882903527; Mon, 23 Feb 2026
- 13:41:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="bJM3WAk7"
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net A433040423
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1771883623; bh=02HXq/OpBLcQvKpjpOkKgJLkQHTj8Uut5lZbJ3ywpks=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=bJM3WAk77Oeg6Oqu0IUzwEG2TqKsl7A6gAY2CuCRKbU6GHjEL8DDwENv1pt4rKhgg
+	 2UBEhQU92deOaiLC8RM/nkhqCbA7SmIphQOdUFJOV/dJlBDVJ/GAbm+cidsd4SKjZB
+	 ApULdr4ufSLIal/R2LqIQdriui6AAQ4DoslLkLJTbm+dG3kCodinRhZXimMD7+v3Sr
+	 z8Av8/+5HtRplEwe36Is+todPGjWkUrs2kwtazjIv1tp8JcZdYpCB0UAKwSLndcfrK
+	 IbdEyRnus3hhTH98eJkEAYFnAFWPoTiNn6QrgmcLoXlL2DugBP3waH0qXLnro1kD9h
+	 bg1y4+F59+WGA==
+Received: from localhost (c-71-229-227-126.hsd1.co.comcast.net [71.229.227.126])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id A433040423;
+	Mon, 23 Feb 2026 21:53:43 +0000 (UTC)
+From: Jonathan Corbet <corbet@lwn.net>
+To: Askar Safin <safinaskar@gmail.com>, Shuah Khan
+ <skhan@linuxfoundation.org>, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] doc: early_userspace_support.rst: trivial fix:
+ directory -> file
+In-Reply-To: <20260220165238.4162735-1-safinaskar@gmail.com>
+References: <20260220165238.4162735-1-safinaskar@gmail.com>
+Date: Mon, 23 Feb 2026 14:53:42 -0700
+Message-ID: <871pib3z4p.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260220105913.4b62e124.ddiss@suse.de> <20260220191150.244006-1-safinaskar@gmail.com>
- <20260223121946.45b3c5b1.ddiss@suse.de>
-In-Reply-To: <20260223121946.45b3c5b1.ddiss@suse.de>
-From: Askar Safin <safinaskar@gmail.com>
-Date: Tue, 24 Feb 2026 00:41:07 +0300
-X-Gm-Features: AaiRm53G7mBkRTZxrmFx_UAZ2LIC8h6oVUqyUREBRtA1_T72X2Ms5uG-DS2L9PQ
-Message-ID: <CAPnZJGC0kHEmAqHeTXwbcmuA0GqEOhDmCfjLRPRKff5DsEgW6w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] init: ensure that /dev/console is (nearly) always
- available in initramfs
-To: David Disseldorp <ddiss@suse.de>
-Cc: brauner@kernel.org, initramfs@vger.kernel.org, jack@suse.cz, 
-	linux-fsdevel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, nathan@kernel.org, nsc@kernel.org, 
-	patches@lists.linux.dev, rdunlap@infradead.org, rob@landley.net, 
-	viro@zeniv.linux.org.uk
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Feb 23, 2026 at 4:20=E2=80=AFAM David Disseldorp <ddiss@suse.de> wr=
-ote:
-> There are still other options:
-> - use a different initramfs archiving tool
+Askar Safin <safinaskar@gmail.com> writes:
 
-I'm trying to solve Rob's use case. He tries to write a tool for building
-kernel and rootfs called "mkroot". The tool is written in pure shell
-without any C. It should not have any external dependencies.
-So it cannot depend on a custom cpio tool. The only cpio tools
-allowed are gen_init_cpio and whatever cpio is present on the system.
+> Trivial fix.
+>
+> Signed-off-by: Askar Safin <safinaskar@gmail.com>
+> ---
+>  .../driver-api/early-userspace/early_userspace_support.rst      | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/driver-api/early-userspace/early_userspace_support.rst b/Documentation/driver-api/early-userspace/early_userspace_support.rst
+> index 61bdeac1b..60d1e1bc9 100644
+> --- a/Documentation/driver-api/early-userspace/early_userspace_support.rst
+> +++ b/Documentation/driver-api/early-userspace/early_userspace_support.rst
+> @@ -73,7 +73,7 @@ usr/gen_initramfs.sh.  This means that CONFIG_INITRAMFS_SOURCE
+>  can really be interpreted as any legal argument to
+>  gen_initramfs.sh.  If a directory is specified as an argument then
+>  the contents are scanned, uid/gid translation is performed, and
+> -usr/gen_init_cpio file directives are output.  If a directory is
+> +usr/gen_init_cpio file directives are output.  If a file is
+>  specified as an argument to usr/gen_initramfs.sh then the
 
-> - point GNU cpio at an existing /dev/console
+"Trivial fix" is not a great changelog ... but I've applied the patch,
+thanks.
 
-This will not work if we are inside some container, such as docker.
-Container engines usually replace /dev/console with something else.
-
-> or call mknod as root
-
-mkroot should work as normal user
-
-> I remain unconvinced
-
-I still believe in my approach.
-
-According to current kernel logic, /dev/console
-magically works if you use external initramfs and doesn't work
-if you use internal initramfs. I simply propose to make internal
-initramfs work, too.
-
-> To me it still feels like a workaround for GNU
-> cpio's poor archive-contents-must-exist-locally interface.
-
-I will repeat: mkroot should work not only with GNU cpio,
-but with whatever cpio is present on the system.
-
-So we should either fix *all* cpio implementations, or
-fix the kernel. Obviously the second option is easier.
-
---=20
-Askar Safin
+jon
