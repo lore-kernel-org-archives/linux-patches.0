@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42D5366060;
-	Mon, 23 Feb 2026 12:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F54366073;
+	Mon, 23 Feb 2026 12:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850275; cv=none; b=GyQofpcXb760XAmEq1JCHUCQvqG1o6lObuuZNp+B9C5zH2ckmeBr0nnVa/gJPE8nUmjyVBglwZ3A9r9xAs7oEvkE8x+D3P5gXKGAs39TVoYv6DZ5KoghzV9xmFS5ehxEVjc3H/cANtlm94Fl/TGNlw9ePGCwdsmzgM/uqnBOV3M=
+	t=1771850276; cv=none; b=NRPv1Jw8WWg/Lv9n6QTaY46BUAt7PNoJDgOvFLYkxpci3KD/bsejlTDaxnjdLYQzfaXs1K1zFaOyY7QwoJWBK9qyyhN8tnXVffafJzFWlSh4MJqjGAiO4Zcl5BdGjONjL1LXrHJTd2aCuYdwOoFK+vnhVGXmf1CSCo4CCK3JJP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850275; c=relaxed/simple;
-	bh=AY7DAd8/iJzlRwcE2gF3ydEu5wc5gzFPG4/2vw0iHOE=;
+	s=arc-20240116; t=1771850276; c=relaxed/simple;
+	bh=RQh1j+LUKytS3w1QRWWV+FCwNZExkTptVRygNB3i8xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iNhiyx5QCbJobDDVigliCG6k8a8Z2Srvv9nteQPhOSY/0VfpPGMrymb5eoTAXUhf7MrPrBr67puXsHnbSgZRkiHDDqiQv80XNktTjSEhSzSGLefgCFL/lKu4+jERhzI8dLZj8P1aXsccWVg36gOTbV08Yi4cgPqaru3w/f1+TB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ucDhgYLm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aG4Q6GbhhQLYz9IYUs+G29zNRKlGkLVtLiCKgxZ1nmPDYAReiF8FbzBkk7wFwdNbjeIq2RE2n3EOcztGG06c+9yJ7kD0Gj4L38sIn6dmCKDq75Hb4+ep9SGkqOv7E2OEHUkJwiGoFO/B75jLCpdq2aGLVobQoJlcDAzQ7/HZTbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TcVyXuQU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ucDhgYLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352CFC116C6;
-	Mon, 23 Feb 2026 12:37:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TcVyXuQU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690A6C2BCAF;
+	Mon, 23 Feb 2026 12:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850273;
-	bh=AY7DAd8/iJzlRwcE2gF3ydEu5wc5gzFPG4/2vw0iHOE=;
+	s=k20201202; t=1771850276;
+	bh=RQh1j+LUKytS3w1QRWWV+FCwNZExkTptVRygNB3i8xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ucDhgYLmjVyMiVwMe7CM3uJxwIeqTguLG3xsDwwYsOFEb+gBhDJgzq4vL+zlEUeXC
-	 pGy7eoH0PBwz1CAP5ChTgS4gNwXSUcE/JII9ZG13ACRTzdTPv0gLOCs70eXYvF4jV4
-	 ZubHwERK9BktKU0fdUHjwrtMHH5KLpFwAo+P0nkqauYo/d2oRU9t0rc1GZh1Dx1ujL
-	 AazTAEazpUiuDfs0Vriy73OUku3I1S368NSvRJwisEsz0g6OK/1yUHLtEIxkIN0UCF
-	 a6aEGX7jy65fSysiaxvnx+N+TpZxPG+pNYy3BYLvvihDDc1ZyCyf9VUnfUv8ZgHg1D
-	 kgeFnm6PwZ/Wg==
+	b=TcVyXuQUW/36l1glygxuqv3OF7I9TC7EShd0d+3rOwhBGRvtbnn+lJR2rJuxTyGt5
+	 cmZ3Ygk+aXMEh4wB4KAVpFvGkLPk/IOhL58Z6GCqS6oX1EveY8TbDRKkwUaENtJe/I
+	 xj8FFuHWSGNMx5rUDUnt0j8DE8Z49RQkRROch3fMQ0lyfDi9kuEr8eH5Q8Dnerk0HY
+	 WKa51Q7JDO0bm7V/dzom10M+Cp4FW0EiuT1WFGA3mKFxPDoR0vG+wbGLJf4ebiVt4a
+	 ulKk337N8fX/y0yzk7oxLQABs1QCj/6z3lXXu1SzPZboDA3QZf/yTCrBYYPwpAhnjN
+	 pzBW/9Pmzm5Xw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lijo Lazar <lijo.lazar@amd.com>,
-	Mangesh Gadre <Mangesh.Gadre@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	lgirdwood@gmail.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] drm/amdgpu: Skip vcn poison irq release on VF
-Date: Mon, 23 Feb 2026 07:37:14 -0500
-Message-ID: <20260223123738.1532940-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] regulator: core: Remove regulator supply_name length limit
+Date: Mon, 23 Feb 2026 07:37:16 -0500
+Message-ID: <20260223123738.1532940-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260223123738.1532940-1-sashal@kernel.org>
 References: <20260223123738.1532940-1-sashal@kernel.org>
@@ -57,169 +52,189 @@ X-stable-base: Linux 6.19.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 8980be03b3f9a4b58197ef95d3b37efa41a25331 ]
+[ Upstream commit e243cdd87b911ce9968b62e4ab2b680dfadc4341 ]
 
-VF doesn't enable VCN poison irq in VCNv2.5. Skip releasing it and avoid
-call trace during deinitialization.
+When creating the regulator object, associated with a consumer device,
+the supply_name is string formatted into a statically sized buffer on
+the stack, then strdup()'ed onto the heap.
 
-[   71.913601] [drm] clean up the vf2pf work item
-[   71.915088] ------------[ cut here ]------------
-[   71.915092] WARNING: CPU: 3 PID: 1079 at /tmp/amd.aFkFvSQl/amd/amdgpu/amdgpu_irq.c:641 amdgpu_irq_put+0xc6/0xe0 [amdgpu]
-[   71.915355] Modules linked in: amdgpu(OE-) amddrm_ttm_helper(OE) amdttm(OE) amddrm_buddy(OE) amdxcp(OE) amddrm_exec(OE) amd_sched(OE) amdkcl(OE) drm_suballoc_helper drm_display_helper cec rc_core i2c_algo_bit video wmi binfmt_misc nls_iso8859_1 intel_rapl_msr intel_rapl_common input_leds joydev serio_raw mac_hid qemu_fw_cfg sch_fq_codel dm_multipath scsi_dh_rdac scsi_dh_emc scsi_dh_alua efi_pstore ip_tables x_tables autofs4 btrfs blake2b_generic raid10 raid456 async_raid6_recov async_memcpy async_pq async_xor async_tx xor raid6_pq libcrc32c raid1 raid0 hid_generic crct10dif_pclmul crc32_pclmul polyval_clmulni polyval_generic ghash_clmulni_intel usbhid 8139too sha256_ssse3 sha1_ssse3 hid psmouse bochs i2c_i801 ahci drm_vram_helper libahci i2c_smbus lpc_ich drm_ttm_helper 8139cp mii ttm aesni_intel crypto_simd cryptd
-[   71.915484] CPU: 3 PID: 1079 Comm: rmmod Tainted: G           OE      6.8.0-87-generic #88~22.04.1-Ubuntu
-[   71.915489] Hardware name: Red Hat KVM/RHEL, BIOS 1.16.3-2.el9_5.1 04/01/2014
-[   71.915492] RIP: 0010:amdgpu_irq_put+0xc6/0xe0 [amdgpu]
-[   71.915768] Code: 75 84 b8 ea ff ff ff eb d4 44 89 ea 48 89 de 4c 89 e7 e8 fd fc ff ff 5b 41 5c 41 5d 41 5e 5d 31 d2 31 f6 31 ff e9 55 30 3b c7 <0f> 0b eb d4 b8 fe ff ff ff eb a8 e9 b7 3b 8a 00 66 2e 0f 1f 84 00
-[   71.915771] RSP: 0018:ffffcf0800eafa30 EFLAGS: 00010246
-[   71.915775] RAX: 0000000000000000 RBX: ffff891bda4b0668 RCX: 0000000000000000
-[   71.915777] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-[   71.915779] RBP: ffffcf0800eafa50 R08: 0000000000000000 R09: 0000000000000000
-[   71.915781] R10: 0000000000000000 R11: 0000000000000000 R12: ffff891bda480000
-[   71.915782] R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000000
-[   71.915792] FS:  000070cff87c4c40(0000) GS:ffff893abfb80000(0000) knlGS:0000000000000000
-[   71.915795] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   71.915797] CR2: 00005fa13073e478 CR3: 000000010d634006 CR4: 0000000000770ef0
-[   71.915800] PKRU: 55555554
-[   71.915802] Call Trace:
-[   71.915805]  <TASK>
-[   71.915809]  vcn_v2_5_hw_fini+0x19e/0x1e0 [amdgpu]
+Not only is the dance on the stack unnecessary, but when the device's
+name is long we might not fit the constructed supply_name in the fixed
+64 byte buffer on the stack.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+One such case can be seen on the Qualcomm Rb3Gen2 board, where we find a
+PCIe controller, with a PCIe switch, with a USB controller, with a USB
+hub, consuming a regulator. In this example the dev->kobj.name itself is
+62 characters long.
+
+Drop the temporary buffer on the stack and kasprintf() the string
+directly on the heap, both to simplify the code, and to remove the
+length limitation.
+
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260211-regulator-supply-name-length-v1-1-3875541c1576@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a comprehensive understanding. Let me summarize the analysis.
+Now I have sufficient information for a thorough analysis.
 
 ## Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit fixes a **WARNING/call trace during deinitialization** on AMD
-GPU Virtual Functions (VF, i.e., SR-IOV guests). The commit message
-includes the full stack trace showing the `WARN_ON` trigger at
-`amdgpu_irq_put+0xc6/0xe0` called from `vcn_v2_5_hw_fini+0x19e/0x1e0`,
-occurring during `rmmod` of the amdgpu driver.
+The commit message clearly describes a real bug: the
+`create_regulator()` function uses a fixed 64-byte stack buffer
+(`REG_STR_SIZE`) to format the supply name. When the device's kobject
+name plus the supply name exceeds 63 characters, the `snprintf` output
+is truncated, and the `size >= REG_STR_SIZE` check causes the function
+to return NULL — meaning the regulator **fails to be created entirely**.
 
-### 2. Code Change Analysis
+The commit describes a concrete real-world case on the Qualcomm Rb3Gen2
+board where a deeply nested device topology (PCIe controller -> PCIe
+switch -> USB controller -> USB hub) produces a device name 62
+characters long, which combined with the supply name easily exceeds 64
+bytes.
 
-**The bug**: In `vcn_v2_5_hw_fini()`, the code unconditionally calls
-`amdgpu_irq_put()` for `ras_poison_irq` whenever RAS is supported.
-However, for SR-IOV VF (Virtual Function) environments,
-`amdgpu_irq_get()` was **never called** on this IRQ source during
-initialization. The IRQ enable path is in `amdgpu_vcn_ras_late_init()`
-which runs through the RAS block late init — but for VFs, the RAS
-interrupt operations are not fully initialized/enabled (as the comment
-in the fix says: "VF doesn't enable interrupt operations for RAS").
+### 2. CODE CHANGE ANALYSIS
 
-When `amdgpu_irq_put()` is called on an IRQ that was never enabled
-(refcount is 0), line 639 of `amdgpu_irq.c` triggers:
-`WARN_ON(!amdgpu_irq_enabled(adev, src, type))`, causing the stack trace
-shown in the commit message.
+The change is small and surgical:
 
-**The fix**: Adds `!amdgpu_sriov_vf(adev)` check before calling
-`amdgpu_irq_put()`, so the IRQ release is skipped on VF — matching the
-fact that it was never enabled on VF. This is a minimal 2-line change
-(adding the VF check to the existing conditional).
+**Before:** A 64-byte stack buffer `buf[REG_STR_SIZE]` is used with
+`snprintf()`, then `kstrdup()`. If the formatted string is >= 64 bytes,
+the function returns NULL (regulator creation fails).
 
-### 3. Classification
+**After:** `kasprintf(GFP_KERNEL, "%s-%s", dev->kobj.name, supply_name)`
+allocates exactly the needed size on the heap directly. No truncation
+possible (unless memory allocation itself fails).
 
-This is a **bug fix** — it fixes a mismatched IRQ get/put that causes a
-WARNING and call trace during driver deinitialization (rmmod) on SR-IOV
-VF environments. The fix is:
-- Obviously correct (symmetry between init/fini paths)
-- Small and surgical (2-line change to an existing conditional)
-- Fixes a real user-visible issue (WARNING + call trace during rmmod)
-- No new features, no API changes
+The change:
+- Removes the `#define REG_STR_SIZE 64` (which was only used here)
+- Removes the stack buffer and `snprintf` + truncation check + `kstrdup`
+  dance
+- Replaces with a single `kasprintf()` call
+- Keeps the `kfree_const()` cleanup compatible (kasprintf returns heap
+  memory, which kfree_const handles correctly)
 
-### 4. Scope and Risk
+### 3. USER IMPACT
 
-- **Very small change**: Only adds a VF check to an existing `if`
-  condition
-- **Low risk**: The change only affects SR-IOV VF environments, and it
-  simply skips an operation that should never have run in that context
-- **Single file**: Only `vcn_v2_5.c` is modified
-- **Well-understood pattern**: Other VCN versions (e.g., vcn_v4_0.c)
-  have similar structures, and the author (Lijo Lazar) is an AMD kernel
-  developer familiar with the subsystem
+When `create_regulator()` returns NULL, both callers (`set_supply()` at
+line 1798, and `_regulator_get_common()` at line 2411) treat it as
+-ENOMEM and fail the regulator acquisition. This means:
 
-### 5. User Impact
+- **In `set_supply()`**: The regulator's supply chain fails to resolve.
+  The regulator won't work properly.
+- **In `_regulator_get_common()`**: `regulator_get()` returns an error
+  to the consumer driver. The driver's probe will fail, meaning the
+  device won't function.
 
-This affects AMD GPU users running in SR-IOV virtualized environments
-(VMs using AMD GPU virtual functions). When they unload the amdgpu
-driver (rmmod), they see a WARNING call trace in the kernel log. While
-not a crash, this is a real operational annoyance and the WARN_ON could
-trigger panic-on-warn systems.
+On the Qualcomm Rb3Gen2, this means a USB hub behind a PCIe-connected
+USB controller can't get its regulator, potentially causing the entire
+downstream USB tree to be non-functional.
 
-### 6. Stability
+### 4. SCOPE AND RISK
 
-- Reviewed by Mangesh Gadre (AMD engineer)
-- Signed off by Alex Deucher (AMD GPU maintainer)
-- The fix is logically straightforward — matching the fini path to what
-  the init path actually does
+- **Lines changed**: ~15 lines removed, ~3 lines added (net reduction)
+- **Files affected**: 1 file (drivers/regulator/core.c)
+- **Risk**: Very low. `kasprintf` is a well-established kernel API. The
+  change is semantically equivalent but removes an arbitrary limitation.
+  The only functional difference is: names that were previously rejected
+  (>63 chars) now succeed.
+- **Regression potential**: Minimal. The new code handles the same error
+  cases (memory allocation failure). The `kfree_const` in
+  `destroy_regulator()` works correctly with both `kasprintf` and
+  `kstrdup_const` allocated memory.
 
-### 7. Dependencies
+### 5. STABLE KERNEL CRITERIA
 
-None. The fix is self-contained and uses existing APIs
-(`amdgpu_sriov_vf()`) that have been in the kernel for a long time. The
-`vcn_v2_5.c` file and the relevant code paths exist in all supported
-stable trees that include VCN 2.5 support.
+- **Obviously correct**: Yes — `kasprintf` is the standard kernel
+  pattern for "format a string and allocate it"
+- **Fixes a real bug**: Yes — regulator creation silently fails for
+  devices with long names
+- **Important issue**: Yes — complete device failure on affected
+  hardware
+- **Small and contained**: Yes — 1 file, ~15 lines net change, purely
+  within one function
+- **No new features**: Correct — no new API, no behavior change for
+  names that fit in 64 bytes
+- **No dependencies**: The code uses standard kernel APIs (`kasprintf`,
+  `kfree_const`) that exist in all stable trees
 
-## Verification
+### 6. DEPENDENCY CHECK
 
-- Read `vcn_v2_5.c:506-529` (pre-fix code on current tree) confirming
-  the `amdgpu_irq_put` call at line 524-525 lacks the VF check
-- Read `amdgpu_irq.c:623-646` confirming the `WARN_ON` at line 639
-  matches the stack trace
-- Read `amdgpu_vcn.c:1286-1310` confirming `amdgpu_vcn_ras_late_init`
-  calls `amdgpu_irq_get` for poison IRQ — but this may not run for VF
-  environments
-- Verified commit `8980be03b3f9a` exists in tree and matches the
-  analyzed patch
-- Searched for similar patterns (`sriov_vf` + `ras_poison_irq`) — no
-  other instance found, confirming this is the only VCN version patched
-  (VCN 2.5 specific)
-- The `vcn_v4_0.c` hw_fini was noted by the explore agent as having the
-  same pattern (no VF check before irq_put) — this is potentially a
-  separate issue for other VCN versions
-- Could NOT verify which stable trees contain VCN 2.5 support
-  specifically — unverified, but VCN 2.5 has been in the kernel since
-  ~5.4-5.5 era
+The commit operates on `create_regulator()` which has existed in the
+kernel for a very long time. The `kasprintf` API is available in all
+supported stable kernels. The `kfree_const` pattern was introduced in
+commit 0630b614391f (2017), so it's in all current stable trees. No
+dependencies on other recent commits.
 
-## Conclusion
+### Verification
 
-This is a small, surgical bug fix that resolves a WARNING/call trace
-during driver deinitialization on SR-IOV VF environments. It fixes an
-asymmetry between the init and fini paths (IRQ never enabled on VF, but
-unconditionally released). The fix is obviously correct, low risk, well-
-reviewed, and impacts real users of AMD GPU virtualization. It meets all
-stable kernel criteria.
+- **Verified** that `create_regulator()` is called from `set_supply()`
+  (line 1798) and `_regulator_get_common()` (line 2411), both of which
+  propagate NULL as -ENOMEM errors that fail driver probe
+- **Verified** that `REG_STR_SIZE` was only used in `create_regulator()`
+  (via grep)
+- **Verified** that `kfree_const()` is used in `destroy_regulator()` to
+  free `supply_name`, and works correctly with `kasprintf`-allocated
+  memory (heap memory is always freeable by kfree_const)
+- **Verified** via git log that `kstrdup_const` pattern was introduced
+  in commit 0630b614391f (2017), present in all stable trees
+- **Verified** the code before the patch at lines 1996-2004 showing the
+  64-byte buffer and truncation-then-return-NULL behavior
+- **Verified** the commit applies to a single file
+  (drivers/regulator/core.c) with minimal change scope
+- **Unverified**: Could not independently verify the 62-character device
+  name claim on Rb3Gen2 (taken from commit message, which is from the
+  Qualcomm kernel engineer)
+
+### Conclusion
+
+This commit fixes a real bug where regulator creation fails for devices
+with long kobject names (>~58 characters when combined with supply
+name). The failure causes complete device malfunction. The fix is small,
+surgical, uses standard kernel APIs, has no dependencies, and carries
+essentially zero regression risk. It meets all stable kernel criteria.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-index cebee453871c1..006a154511971 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-@@ -521,7 +521,9 @@ static int vcn_v2_5_hw_fini(struct amdgpu_ip_block *ip_block)
- 		     RREG32_SOC15(VCN, i, mmUVD_STATUS)))
- 			vinst->set_pg_state(vinst, AMD_PG_STATE_GATE);
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 4b6182cde859a..6fb00d21004ed 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1944,8 +1944,6 @@ static const struct file_operations constraint_flags_fops = {
+ #endif
+ };
  
--		if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__VCN))
-+		/* VF doesn't enable interrupt operations for RAS */
-+		if (!amdgpu_sriov_vf(adev) &&
-+		    amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__VCN))
- 			amdgpu_irq_put(adev, &vinst->ras_poison_irq, 0);
- 	}
+-#define REG_STR_SIZE	64
+-
+ static void link_and_create_debugfs(struct regulator *regulator, struct regulator_dev *rdev,
+ 				    struct device *dev)
+ {
+@@ -1993,15 +1991,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
+ 	lockdep_assert_held_once(&rdev->mutex.base);
  
+ 	if (dev) {
+-		char buf[REG_STR_SIZE];
+-		int size;
+-
+-		size = snprintf(buf, REG_STR_SIZE, "%s-%s",
+-				dev->kobj.name, supply_name);
+-		if (size >= REG_STR_SIZE)
+-			return NULL;
+-
+-		supply_name = kstrdup(buf, GFP_KERNEL);
++		supply_name = kasprintf(GFP_KERNEL, "%s-%s", dev->kobj.name, supply_name);
+ 		if (supply_name == NULL)
+ 			return NULL;
+ 	} else {
 -- 
 2.51.0
 
