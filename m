@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3BE366045;
-	Mon, 23 Feb 2026 12:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F01365A1E;
+	Mon, 23 Feb 2026 12:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850265; cv=none; b=BjZpEwvCVUvye6kMxYHnmnvzFl4c4rK2ws2JQFkdDeg6Ap5qH5d771lJTia1dKYWwJH1OUXgX8PfFnR7L2BQWgTDx6YNJGDkrYS2uzU8UWX2/7EnYHdIJnKeBi/yomdmqB6NS1eIJiEW15QB/FJ/gY++8d4jr6708HvZjGyBBR4=
+	t=1771850267; cv=none; b=JglqvgzFluiABUkcOCf+jTJI6qiEMEjeuCztjQeA0SNw5g2pYhZEsFls5avgE6Odyrptf97UEvFsa4Jg2gKaB1JwK5hthuVo8QhSHF+X1OsynAB5Pw7AcmJAvT0IjC2edYdwZXgGSfIUvV9NE9EjV2Sd4+0KvONMNOB+LDVcD7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850265; c=relaxed/simple;
-	bh=qCNdhU8EOJo463mruZX+JLfGxhk7zjp/WuKH4k5Vmo4=;
+	s=arc-20240116; t=1771850267; c=relaxed/simple;
+	bh=8FmYs+QrdSDFMbKC7QBfwAXPK2pJJB0FmB/uWUvKPnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVgqukeoHPpGjnlOZbTQeng72u3/VtKBOgbeT57uJbkO50VryrqvpzsoQew6rDnpvjOepwVpmMtkcAec3UZrIxFEpQvIeW0rko6bsqy2Aczb+46c9hwpq8vA8ECwiy6d23+Evyvl1bND4iAvc3fjOJ6iedY05oI0p8GRx+hF6zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pqV86eGL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eIgLWyAuti+9De6574pUBDdlXZ31i+0LapzS/akSIQ+tPNohLqlKrVPxvL+796p0OtOamf/8Fgl/fiXdxLJ7X1FbwR/PlCxwlGwaJ+rcssEPQyDV97TwpsPGt56kmc1h4wKFXFpI2qVjX2CG69F9rwjv8MWXmuECrLS/7vp3wdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WOJ84LIB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pqV86eGL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DE6C116D0;
-	Mon, 23 Feb 2026 12:37:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WOJ84LIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0998CC2BC9E;
+	Mon, 23 Feb 2026 12:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850265;
-	bh=qCNdhU8EOJo463mruZX+JLfGxhk7zjp/WuKH4k5Vmo4=;
+	s=k20201202; t=1771850266;
+	bh=8FmYs+QrdSDFMbKC7QBfwAXPK2pJJB0FmB/uWUvKPnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pqV86eGLY+reqUEoIigl7EMynsfvuvvvyYMsC/D+LaQFO5F10Nt1nfK0FdqXGHSYe
-	 bta2YvdvEiq7KLuZIMfdRV0CmXQTLUY57K5ZywOkLMbNsSrhuYAfNxlcNlYpowMLha
-	 LFZBopwCEx2unqrmxxeQlKi9WAj6tTQrn54+jtfAhtzg81pqzncRzIQVr5VluH+9lr
-	 sqMo/dm/q2xj8OU+gFNovhfS8nfk6P/aE6oPhHn1STLkAUsEpCHB213rqkGuVpyfTB
-	 O3dCFVBkZEU37wBxMyDMzmpvPb+3WXvSJ9SlC2RF6X61DzUVl84Yk79sye1EZGZvMj
-	 iUgspZqlFkqGQ==
+	b=WOJ84LIBNwGlaD8YoCJIe2RS1r4Xg7VHNPOF2YM9Ki84Q25tEIHa0mlvFcwq7cUXN
+	 PptNKboPgj9OCh2r77JO57Ra38b1lSoiofOoEo0UHTPPFYO33w5w5+yw6g6G6N02EB
+	 oCP0YrSgntGEttNrX7YB58tnX23aXDRFnNcwnZSOgCnSVQ9zU2KRn9ZvBJxokX/y4Y
+	 b9LuAfNjsrgcRNPerc3uvCPK8zQ0uOgPq1ory/kDZN+YhleuJllZxWFGgH4vZJ0voF
+	 N+kZ5dga6fQvNqWn75Fnl3NEFSWCRrX1zPoysPNXOSF0aFElnb0ZX337FsIBD7aldf
+	 YL8W08SHB2oNg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Adarsh Das <adarshdas950@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] btrfs: replace BUG() with error handling in __btrfs_balance()
-Date: Mon, 23 Feb 2026 07:37:09 -0500
-Message-ID: <20260223123738.1532940-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] ALSA: usb-audio: Add sanity check for OOB writes at silencing
+Date: Mon, 23 Feb 2026 07:37:10 -0500
+Message-ID: <20260223123738.1532940-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260223123738.1532940-1-sashal@kernel.org>
 References: <20260223123738.1532940-1-sashal@kernel.org>
@@ -51,20 +50,31 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.3
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adarsh Das <adarshdas950@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit be6324a809dbda76d5fdb23720ad9b20e5c1905c ]
+[ Upstream commit fba2105a157fffcf19825e4eea498346738c9948 ]
 
-We search with offset (u64)-1 which should never match exactly.
-Previously this was handled with BUG(). Now logs an error
-and return -EUCLEAN.
+At silencing the playback URB packets in the implicit fb mode before
+the actual playback, we blindly assume that the received packets fit
+with the buffer size.  But when the setup in the capture stream
+differs from the playback stream (e.g. due to the USB core limitation
+of max packet size), such an inconsistency may lead to OOB writes to
+the buffer, resulting in a crash.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Adarsh Das <adarshdas950@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+For addressing it, add a sanity check of the transfer buffer size at
+prepare_silent_urb(), and stop the data copy if the received data
+overflows.  Also, report back the transfer error properly from there,
+too.
+
+Note that this doesn't fix the root cause of the playback error
+itself, but this merely covers the kernel Oops.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
+Link: https://patch.msgid.link/20260216141209.1849200-4-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -72,110 +82,167 @@ LLM Generated explanations, may be completely bogus:
 
 ## Analysis
 
-### What the commit does
+### What the commit fixes
 
-This commit replaces a `BUG()` call with proper error handling in
-`__btrfs_balance()`. The `BUG()` is triggered when `btrfs_search_slot()`
-returns an exact match (ret == 0) for key offset `(u64)-1`, which should
-theoretically never happen. The existing code has a `/* FIXME break ?
-*/` comment from 2012, indicating the developers always knew `BUG()` was
-wrong here.
+This commit adds bounds checking to `prepare_silent_urb()` in the USB
+audio driver to prevent **out-of-bounds memory writes** that cause a
+**kernel panic/oops**. The bug occurs during implicit feedback mode when
+silencing playback URB packets before actual playback begins. When the
+capture stream has different (larger) packet sizes than the playback
+stream (e.g., due to USB core max packet size limitations), the code
+writes beyond the allocated transfer buffer, corrupting memory and
+crashing the kernel.
 
-The fix:
-1. Replaces `BUG()` with `btrfs_err()` logging + return `-EUCLEAN`
-2. Properly releases `reclaim_bgs_lock` mutex before `goto error`
-   (fixing what would have been a mutex held across a panic)
-3. Uses `unlikely()` to indicate this is an exceptional path
+### Bug severity
 
-### Bug severity assessment
+This is a **kernel crash/oops** triggered by real hardware. The bugzilla
+report (bug #221076) documents:
+- Hard system lockups / kernel panics on multiple platforms (Intel, AMD,
+  Raspberry Pi 5)
+- Reproducible with specific USB audio devices at high sample rates
+  (352.8kHz/384kHz, 6-channel)
+- The crash trace shows `memset_orig` called from `prepare_outbound_urb`
+  → page fault on not-present page
+- The regression was traced back to kernel 5.8.0, meaning it has
+  affected users for years
 
-**The existing `BUG()` crashes the kernel** (panic/oops). While the
-condition "should never happen," if it does occur (e.g., due to
-filesystem corruption, a prior failed relocate as the comment says, or a
-metadata inconsistency), the result is a full kernel crash instead of a
-graceful error return. This is in the btrfs balance path, which is user-
-triggered via `btrfs balance start`.
+### Code change analysis
 
-Key points:
-- **BUG() = kernel crash** - This is a real fix that prevents a kernel
-  panic
-- **User-triggerable**: The balance operation is initiated by userspace,
-  so a corrupted filesystem could trigger this crash
-- **The fix is small and surgical**: Only changes the error handling for
-  one condition
-- **Properly handles mutex**: The new code correctly unlocks
-  `reclaim_bgs_lock` before the error path
-- **Well-reviewed**: Reviewed by Qu Wenruo and David Sterba (btrfs
-  maintainer)
-- **BUG() has existed since 2012** (commit c9e9f97bdfb64d), affecting
-  all stable trees
+The fix is small (22 insertions, 17 deletions, single file) and
+surgical:
 
-### Stable criteria evaluation
+1. **Return type change**: `prepare_silent_urb()` changes from `void` to
+   `int` to report errors
+2. **Negative return check**: Checks if
+   `snd_usb_endpoint_next_packet_size()` returns a negative error code
+   before using the value
+3. **Buffer bounds check**: `if (offs + length + extra >
+   ctx->buffer_size) break;` — stops copying if data would overflow the
+   buffer
+4. **Error propagation**: Returns `-EPIPE` if nothing was written, `0`
+   on success
+5. **Caller updated**: `prepare_outbound_urb()` now returns the error
+   from `prepare_silent_urb()` instead of ignoring it
 
-- **Obviously correct**: Yes - replacing BUG() with error handling is
-  well-understood
-- **Fixes a real bug**: Yes - a kernel crash/panic on a theoretically-
-  impossible-but-not-actually-impossible condition
-- **Small and contained**: Yes - one file, simple logic change in a
-  single function
-- **No new features**: Correct - pure error handling improvement
-- **Risk**: Very low - the only change is what happens when ret == 0,
-  and the new behavior (return error) is strictly better than crashing
+### Stable kernel criteria assessment
+
+- **Obviously correct**: Yes — adds bounds checking before memory
+  writes, a straightforward safety measure
+- **Fixes a real bug**: Yes — kernel oops/panic with real hardware,
+  documented in bugzilla with crash traces
+- **Small and contained**: Yes — 22 insertions/17 deletions in a single
+  file, no API changes
+- **No new features**: Correct — purely defensive checks
+- **Risk**: Very low — the check only prevents writing beyond the
+  buffer; normal operation is unchanged
+
+### Dependencies
+
+The commit modifies only `prepare_silent_urb()` and its caller in
+`prepare_outbound_urb()`. The `ctx->buffer_size` field has been present
+since the URB context structure was established. No prerequisite commits
+appear needed.
 
 ### Verification
 
-- `git blame` confirmed the BUG() has been present since commit
-  c9e9f97bdfb64d (2012, "Btrfs: add basic restriper infrastructure")
-- Read the code at lines 4104-4116: confirmed `reclaim_bgs_lock` is held
-  when BUG() fires, so the panic would also leave a mutex locked
-- The `/* FIXME break ? */` comment confirms this was a known issue
-- The new code properly calls `mutex_unlock()` before `goto error`,
-  matching the pattern used at line 4107 for `ret < 0`
-- Reviewed-by from Qu Wenruo (btrfs developer) and David Sterba (btrfs
-  maintainer)
-- The commit exists as be6324a809dbd in the tree, dated 2026-02-03
-- The affected function `__btrfs_balance()` has existed for many years
-  and is present in all stable trees
+- Confirmed via the bugzilla report (bug #221076) that this is a real
+  user-reported crash with kernel oops trace showing `memset_orig` page
+  fault in `prepare_outbound_urb` call path
+- The bug has been present since kernel 5.8.0 per user bisection,
+  meaning all stable trees are affected
+- Explored `snd_usb_endpoint_next_packet_size()` — confirmed it can
+  return negative (`-EAGAIN`), which was not checked before this fix
+- Confirmed `ctx->buffer_size` is set in `data_ep_set_params()` as
+  `maxsize * packets`, and the transfer buffer is allocated to that size
+  — so the bounds check is valid
+- The commit is authored by Takashi Iwai (ALSA maintainer), providing
+  high confidence in correctness
+- The commit message explicitly states it covers a kernel Oops — a clear
+  stable-worthy fix
+- Commit touches only `sound/usb/endpoint.c` (1 file, small diff)
 
-### Risk vs Benefit
-
-- **Benefit**: Prevents kernel crash (BUG/panic) on a condition that
-  could occur with corrupted filesystems
-- **Risk**: Near-zero - the condition was previously a crash; now it's a
-  graceful error return. No behavioral change for the normal (ret != 0)
-  path.
-
-This is a textbook stable candidate: a small, well-reviewed fix that
-replaces a kernel crash with proper error handling in a long-standing
-code path. BUG() removal in favor of error handling is one of the most
-common and safest types of stable backports.
+This is a textbook stable backport candidate: a small, surgical fix for
+a kernel crash affecting real users, authored by the subsystem
+maintainer, with low regression risk.
 
 **YES**
 
- fs/btrfs/volumes.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/usb/endpoint.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 8a08412f3529a..14d988c3ef4f3 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -4112,8 +4112,14 @@ static int __btrfs_balance(struct btrfs_fs_info *fs_info)
- 		 * this shouldn't happen, it means the last relocate
- 		 * failed
- 		 */
--		if (ret == 0)
--			BUG(); /* FIXME break ? */
-+		if (unlikely(ret == 0)) {
-+			btrfs_err(fs_info,
-+				  "unexpected exact match of CHUNK_ITEM in chunk tree, offset 0x%llx",
-+				  key.offset);
-+			mutex_unlock(&fs_info->reclaim_bgs_lock);
-+			ret = -EUCLEAN;
-+			goto error;
-+		}
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 27ade2aa16f5a..1eaf52d1ae9c7 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -275,8 +275,8 @@ static inline bool has_tx_length_quirk(struct snd_usb_audio *chip)
+ 	return chip->quirk_flags & QUIRK_FLAG_TX_LENGTH;
+ }
  
- 		ret = btrfs_previous_item(chunk_root, path, 0,
- 					  BTRFS_CHUNK_ITEM_KEY);
+-static void prepare_silent_urb(struct snd_usb_endpoint *ep,
+-			       struct snd_urb_ctx *ctx)
++static int prepare_silent_urb(struct snd_usb_endpoint *ep,
++			      struct snd_urb_ctx *ctx)
+ {
+ 	struct urb *urb = ctx->urb;
+ 	unsigned int offs = 0;
+@@ -289,28 +289,34 @@ static void prepare_silent_urb(struct snd_usb_endpoint *ep,
+ 		extra = sizeof(packet_length);
+ 
+ 	for (i = 0; i < ctx->packets; ++i) {
+-		unsigned int offset;
+-		unsigned int length;
+-		int counts;
+-
+-		counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, 0);
+-		length = counts * ep->stride; /* number of silent bytes */
+-		offset = offs * ep->stride + extra * i;
+-		urb->iso_frame_desc[i].offset = offset;
++		int length;
++
++		length = snd_usb_endpoint_next_packet_size(ep, ctx, i, 0);
++		if (length < 0)
++			return length;
++		length *= ep->stride; /* number of silent bytes */
++		if (offs + length + extra > ctx->buffer_size)
++			break;
++		urb->iso_frame_desc[i].offset = offs;
+ 		urb->iso_frame_desc[i].length = length + extra;
+ 		if (extra) {
+ 			packet_length = cpu_to_le32(length);
+-			memcpy(urb->transfer_buffer + offset,
++			memcpy(urb->transfer_buffer + offs,
+ 			       &packet_length, sizeof(packet_length));
++			offs += extra;
+ 		}
+-		memset(urb->transfer_buffer + offset + extra,
++		memset(urb->transfer_buffer + offs,
+ 		       ep->silence_value, length);
+-		offs += counts;
++		offs += length;
+ 	}
+ 
+-	urb->number_of_packets = ctx->packets;
+-	urb->transfer_buffer_length = offs * ep->stride + ctx->packets * extra;
++	if (!offs)
++		return -EPIPE;
++
++	urb->number_of_packets = i;
++	urb->transfer_buffer_length = offs;
+ 	ctx->queued = 0;
++	return 0;
+ }
+ 
+ /*
+@@ -332,8 +338,7 @@ static int prepare_outbound_urb(struct snd_usb_endpoint *ep,
+ 		if (data_subs && ep->prepare_data_urb)
+ 			return ep->prepare_data_urb(data_subs, urb, in_stream_lock);
+ 		/* no data provider, so send silence */
+-		prepare_silent_urb(ep, ctx);
+-		break;
++		return prepare_silent_urb(ep, ctx);
+ 
+ 	case SND_USB_ENDPOINT_TYPE_SYNC:
+ 		if (snd_usb_get_speed(ep->chip->dev) >= USB_SPEED_HIGH) {
 -- 
 2.51.0
 
