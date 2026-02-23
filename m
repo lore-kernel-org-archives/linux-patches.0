@@ -1,49 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0200C366DBD;
-	Mon, 23 Feb 2026 12:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6242036654A;
+	Mon, 23 Feb 2026 12:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850285; cv=none; b=mvfYA2Vpd2lDlnzgGudV0u1nsy2ZC1hUxGLOuX+sxNDy2fNr9NrXuufOLEJ0CH+eFMsBlkBHtTr2sAP739mx0rJXGh+LauDy6UQaY+Oi80i4WxiVSIqfqr0UMEWsmsQJ9DFtEjBkO4HB/LT1zGyUaF7tmkjXbjnK0qi19E6tymo=
+	t=1771850286; cv=none; b=rals67YXxfisVNxBtyBzPlpAZ2nk1VlePf/WN/E7OoF9+5gHZF3lYusQ1XNgr7CLMt00UXYpEXkxylk0dyFpkwdZ231hS8BXAVIZJ241WHQDzmK843aU7cV6G9UPbsG6ufQC1Dq6TXL4QChGgOX8ksCN7ERn0ajkWqedqIF8Y+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850285; c=relaxed/simple;
-	bh=TOFpe1DnK5oWCgx+hi8hSuXMCP2TQ1XP7VjsLHFhjFU=;
+	s=arc-20240116; t=1771850286; c=relaxed/simple;
+	bh=EfL1zGl01oo4GS5HNkMgV5OVgLXxYcXRoLCBrmlcPQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ldMp7DN4UU3onn7/45TVSh6v/12VvFECYlO8nh6ibEK12QLtdFu14G884XrzmlYGGo2msC/ff0iHOnbPjVwgF/ZNmZHkOEjAa+4hciNl+HooqfXC7o/iPpbEle6aEEzyBSFIbDbxFavYPCFZEk1tH1Rlej9n1PUgcG4QBlBJRHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fODqEtIP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=libWlfT2u/2mvZCf+SzuDh6c+siOYJuA1MtQlJ+eI9e5DD3PGyLWQTvRPIv8zjickHWWrA+bv98doA0GStO8AmkMyfxQS0Aqb7iFrwphuEQl3IX3HuoE3ErhoHJJ/tvL4Yslh+m3h0NunL/w/2g+G+8CkQ/NqQNMOBkgnG4oZE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dxq2xMUE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fODqEtIP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C91C19424;
-	Mon, 23 Feb 2026 12:38:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dxq2xMUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAABC2BC86;
+	Mon, 23 Feb 2026 12:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850284;
-	bh=TOFpe1DnK5oWCgx+hi8hSuXMCP2TQ1XP7VjsLHFhjFU=;
+	s=k20201202; t=1771850286;
+	bh=EfL1zGl01oo4GS5HNkMgV5OVgLXxYcXRoLCBrmlcPQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fODqEtIPoWYHIHq1pkMBOWxuhx++VrlA0O1Uz7APxslPfv5mabBMrOQKHaJWHBEZt
-	 vPwUnf1W6XpxfOcBIYVwAgqLshhJA3epkuQmcq1rjB1WOOE3EqG2C0PSaU5UC28p5V
-	 xKwfERf0l39U/a8Fh5fkfcOgtPkqQccTKvTRqY18Cz9BY2KkuLB/PWi4Zi8okjrQn9
-	 tbCqQSjkUDJ0QlM591yauqj0s2Bt2xZfAByT0N8YBoRsIoa64SvWB6ggZI6uj06Jr9
-	 8HSUJ+LnshhHoXxyq3YpKD0nY19nYyxAQx4ZEdCmHR9gsVbYtNGHq9i9FRkPNxekpk
-	 6gYNtzHtYJSIg==
+	b=Dxq2xMUEYjAP/TINOt3M+vG1ghNlYHGqZr060RjoAFlI/Fusv6dCUJwN5XKwBepyI
+	 PfDeeFPQUzm0f7aQwnDn2iXaufuEXQgDpp6bvgTUKItygIJ6XhcIYU42neJBLC/1fX
+	 HE0iZhSUKiw4QpMHVOUdDImqGuVXURm5eb/ySKYKyZbdo88GPBNX5sj3q78eHxM+qZ
+	 NqSU8rSE0pBPcyburmBqux65U3EfPLxDCfjYydDX5nw+xsrXY3kHXSHFK4Pv1tYg4G
+	 qnRZCSFTmlgWMpfrRV18oinWygTgAexv52YGJ8e3WsKez/yjxz23uCJdYXAOIG4/ZL
+	 G16nAeB1tC/5A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Purna Pavan Chandra Aekkaladevi <paekkaladevi@linux.microsoft.com>,
-	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
-	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
+Cc: Qu Wenruo <wqu@suse.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kys@microsoft.com,
-	haiyangz@microsoft.com,
-	decui@microsoft.com,
-	longli@microsoft.com,
-	linux-hyperv@vger.kernel.org,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] mshv: Ignore second stats page map result failure
-Date: Mon, 23 Feb 2026 07:37:22 -0500
-Message-ID: <20260223123738.1532940-17-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19] btrfs: do not ASSERT() when the fs flips RO inside btrfs_repair_io_failure()
+Date: Mon, 23 Feb 2026 07:37:23 -0500
+Message-ID: <20260223123738.1532940-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260223123738.1532940-1-sashal@kernel.org>
 References: <20260223123738.1532940-1-sashal@kernel.org>
@@ -59,251 +54,204 @@ X-stable-base: Linux 6.19.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Purna Pavan Chandra Aekkaladevi <paekkaladevi@linux.microsoft.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 7538b80e5a4b473b73428d13b3a47ceaad9a8a7c ]
+[ Upstream commit 8ceaad6cd6e7fa5f73b0b2796a2e85d75d37e9f3 ]
 
-Older versions of the hypervisor do not have a concept of separate SELF
-and PARENT stats areas. In this case, mapping the HV_STATS_AREA_SELF page
-is sufficient - it's the only page and it contains all available stats.
+[BUG]
+There is a bug report that when btrfs hits ENOSPC error in a critical
+path, btrfs flips RO (this part is expected, although the ENOSPC bug
+still needs to be addressed).
 
-Mapping HV_STATS_AREA_PARENT returns HV_STATUS_INVALID_PARAMETER which
-currently causes module init to fail on older hypevisor versions.
+The problem is after the RO flip, if there is a read repair pending, we
+can hit the ASSERT() inside btrfs_repair_io_failure() like the following:
 
-Detect this case and gracefully fall back to populating
-stats_pages[HV_STATS_AREA_PARENT] with the already-mapped SELF page.
+  BTRFS info (device vdc): relocating block group 30408704 flags metadata|raid1
+  ------------[ cut here ]------------
+  BTRFS: Transaction aborted (error -28)
+  WARNING: fs/btrfs/extent-tree.c:3235 at __btrfs_free_extent.isra.0+0x453/0xfd0, CPU#1: btrfs/383844
+  Modules linked in: kvm_intel kvm irqbypass
+  [...]
+  ---[ end trace 0000000000000000 ]---
+  BTRFS info (device vdc state EA): 2 enospc errors during balance
+  BTRFS info (device vdc state EA): balance: ended with status: -30
+  BTRFS error (device vdc state EA): parent transid verify failed on logical 30556160 mirror 2 wanted 8 found 6
+  BTRFS error (device vdc state EA): bdev /dev/nvme0n1 errs: wr 0, rd 0, flush 0, corrupt 10, gen 0
+  [...]
+  assertion failed: !(fs_info->sb->s_flags & SB_RDONLY) :: 0, in fs/btrfs/bio.c:938
+  ------------[ cut here ]------------
+  assertion failed: !(fs_info->sb->s_flags & SB_RDONLY) :: 0, in fs/btrfs/bio.c:938
+  kernel BUG at fs/btrfs/bio.c:938!
+  Oops: invalid opcode: 0000 [#1] SMP NOPTI
+  CPU: 0 UID: 0 PID: 868 Comm: kworker/u8:13 Tainted: G        W        N  6.19.0-rc6+ #4788 PREEMPT(full)
+  Tainted: [W]=WARN, [N]=TEST
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+  Workqueue: btrfs-endio simple_end_io_work
+  RIP: 0010:btrfs_repair_io_failure.cold+0xb2/0x120
+  RSP: 0000:ffffc90001d2bcf0 EFLAGS: 00010246
+  RAX: 0000000000000051 RBX: 0000000000001000 RCX: 0000000000000000
+  RDX: 0000000000000000 RSI: ffffffff8305cf42 RDI: 00000000ffffffff
+  RBP: 0000000000000002 R08: 00000000fffeffff R09: ffffffff837fa988
+  R10: ffffffff8327a9e0 R11: 6f69747265737361 R12: ffff88813018d310
+  R13: ffff888168b8a000 R14: ffffc90001d2bd90 R15: ffff88810a169000
+  FS:  0000000000000000(0000) GS:ffff8885e752c000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  ------------[ cut here ]------------
 
-Add comments to clarify the behavior, including a clarification of why
-this isn't needed for hv_call_map_stats_page2() which always supports
-PARENT and SELF areas.
+[CAUSE]
+The cause of -ENOSPC error during the test case btrfs/124 is still
+unknown, although it's known that we still have cases where metadata can
+be over-committed but can not be fulfilled correctly, thus if we hit
+such ENOSPC error inside a critical path, we have no choice but abort
+the current transaction.
 
-Signed-off-by: Purna Pavan Chandra Aekkaladevi <paekkaladevi@linux.microsoft.com>
-Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Reviewed-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
-Acked-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+This will mark the fs read-only.
+
+The problem is inside the btrfs_repair_io_failure() path that we require
+the fs not to be mount read-only. This is normally fine, but if we are
+doing a read-repair meanwhile the fs flips RO due to a critical error,
+we can enter btrfs_repair_io_failure() with super block set to
+read-only, thus triggering the above crash.
+
+[FIX]
+Just replace the ASSERT() with a proper return if the fs is already
+read-only.
+
+Reported-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/linux-btrfs/20260126045555.GB31641@lst.de/
+Tested-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+The same ASSERT exists in v6.1 too (in extent_io.c instead of bio.c).
+The bug is present across all stable trees.
 
 ## Analysis
 
-### 1. Commit Message Analysis
+### What problem does this commit solve?
 
-The commit clearly describes a backward compatibility bug: on older
-Hyper-V hypervisor versions that don't support separate SELF and PARENT
-stats areas, mapping `HV_STATS_AREA_PARENT` returns
-`HV_STATUS_INVALID_PARAMETER`, which causes **module initialization to
-fail entirely**. This is not a feature addition — it's fixing a
-regression/incompatibility where the driver doesn't work on older
-hypervisors.
+This commit fixes a **kernel BUG/crash** (not just a warning) that
+occurs when:
+1. The btrfs filesystem encounters a critical error (e.g., ENOSPC in a
+   critical path)
+2. The filesystem flips to read-only mode (transaction abort)
+3. Meanwhile, a concurrent read-repair operation calls
+   `btrfs_repair_io_failure()`
+4. The ASSERT checks `!(fs_info->sb->s_flags & SB_RDONLY)` and fails
+5. Since btrfs's `ASSERT()` macro calls `BUG()`, this causes a kernel
+   oops/crash
 
-### 2. Code Change Analysis
+The crash is confirmed by the stack trace in the commit message showing
+`kernel BUG at fs/btrfs/bio.c:938!`.
 
-The fix has three parts:
+### Does it meet stable kernel rules?
 
-**a) New helper `hv_stats_get_area_type()`** (~15 lines): Extracts the
-stats area type from the identity union based on the object type. This
-is needed to distinguish PARENT from SELF area mapping requests.
+1. **Obviously correct and tested**: Yes. The fix replaces an ASSERT
+   (which calls BUG()) with a graceful `return 0` when the filesystem is
+   read-only. It has `Tested-by: Christoph Hellwig` and `Reviewed-by:
+   David Sterba` (btrfs maintainer).
 
-**b) Modified `hv_call_map_stats_page()`** (~20 lines changed): When the
-hypercall returns `HV_STATUS_INVALID_PARAMETER` specifically for a
-PARENT area mapping, instead of failing with an error, it returns
-success but with `*addr = NULL`. This signals to the caller that PARENT
-isn't supported.
+2. **Fixes a real bug**: Yes. A kernel BUG/crash is triggered. The bug
+   report is linked and comes from Christoph Hellwig, a prominent kernel
+   developer.
 
-**c) Modified `mshv_vp_stats_map()`** (+3 lines): After mapping PARENT,
-if the address is NULL (meaning older hypervisor), it falls back to
-using the already-mapped SELF page for both areas. This is safe because
-on older hypervisors, the SELF page contains all available stats.
+3. **Fixes an important issue**: Yes. This is a kernel crash (oops via
+   BUG()). If a filesystem encounters a critical error and goes RO, a
+   concurrent read-repair shouldn't crash the entire system.
 
-### 3. Bug Impact
+4. **Small and contained**: Yes. The change removes one line
+   (`ASSERT(...)`) and adds a 4-line `if (unlikely(sb_rdonly(...)))
+   return 0;` check. Total: ~6 lines changed in one file.
 
-- **Severity**: HIGH — the driver completely fails to create VPs
-  (virtual processors), making it unusable on older hypervisor versions
-- **User impact**: Anyone running the mshv_root driver on an older
-  Hyper-V hypervisor version cannot use the driver at all
-- **Trigger**: Deterministic — always fails on affected hypervisor
-  versions, not a race or edge case
+5. **Does NOT introduce new features**: Correct. It only changes error
+   handling.
 
-### 4. Scope and Risk
+### Risk vs Benefit
 
-- The change is small (~40 lines including comments) and well-contained
-  to the stats page mapping path
-- It adds graceful degradation, not new behavior — the driver works the
-  same on new hypervisors
-- Multiple reviewers: Reviewed-by and Acked-by from Stanislav
-  Kinsburskii, Reviewed-by from Michael Kelley
-- The fallback logic (using SELF page for both) is explicitly described
-  as correct by the authors since older hypervisors put all stats in the
-  single SELF page
+- **Risk**: Extremely low. Replacing a crash (BUG()) with a graceful
+  return (0 = success, skip repair) is safe. If the filesystem is
+  already RO, skipping the repair write is correct behavior — you can't
+  write to a RO filesystem anyway.
+- **Benefit**: High. Prevents kernel crash in a race condition that real
+  users hit (reported by Christoph Hellwig during btrfs/124 test).
 
-### 5. Stable Tree Applicability
+### Backport considerations
 
-- The mshv_root driver was introduced in **v6.15** (commit
-  `621191d709b14`)
-- The bug has been present **since the driver was first introduced** —
-  the original `mshv_vp_stats_map()` function already mapped both SELF
-  and PARENT areas with no fallback
-- In v6.19 the function was renamed from `hv_call_map_stat_page` to
-  `hv_call_map_stats_page` and wrapped by `hv_map_stats_page` (commit
-  `d62313bdf5961`), so backporting to pre-6.19 trees would require minor
-  adaptation
-- The fix applies to all stable trees containing the mshv_root driver
-  (6.15.y through 6.18.y)
+The function signature has changed significantly across versions:
+- **v6.6**: Uses `struct page *page` parameter — different signature but
+  the ASSERT is identical
+- **v6.12**: Uses `struct folio *folio` parameter — different signature
+  but the ASSERT is identical
+- **Current**: Uses `const phys_addr_t paddrs[]` parameter
 
-### 6. Stable Criteria Assessment
-
-| Criterion | Assessment |
-|-----------|-----------|
-| Obviously correct and tested | YES — well-reviewed, clear logic |
-| Fixes a real bug | YES — module init failure |
-| Important issue | YES — driver completely non-functional on older
-hypervisors |
-| Small and contained | YES — ~40 lines, 2 files, single subsystem |
-| No new features | YES — adds backward compatibility/graceful
-degradation |
+However, the **fix itself** (remove ASSERT, add `if (sb_rdonly(...))
+return 0`) is signature-independent and applies to all versions. A minor
+adaptation to the surrounding context will be needed for each stable
+tree, but the core fix is trivial.
 
 ### Verification
 
-- `git show 621191d709b14 -- drivers/hv/mshv_root_main.c` confirmed
-  `mshv_vp_stats_map()` with SELF+PARENT mapping was present in the
-  original v6.15 driver introduction
-- `git show 621191d709b14 -- drivers/hv/mshv_root_hv_call.c` confirmed
-  the original `hv_call_map_stat_page()` had no fallback for PARENT area
-  failures
-- `git describe --contains 621191d709b14` returned `v6.15-rc1~193^2~2`,
-  confirming v6.15 introduction
-- `git describe --contains d62313bdf5961` returned `v6.19-rc1~56^2~30`,
-  confirming function rename happened in v6.19
-- `git log -p` diff confirmed the rename from `hv_call_map_stat_page` to
-  `hv_call_map_stats_page` occurred in `d62313bdf5961`
-- The bug mechanism is verified: older hypervisors return
-  `HV_STATUS_INVALID_PARAMETER` for PARENT area mapping, which was not
-  handled, causing the error to propagate up and fail VP creation
-- Could NOT independently verify which exact stable trees (6.15.y,
-  6.16.y, 6.17.y, 6.18.y) are still actively maintained (unverified)
+- **Verified**: The ASSERT macro in btrfs calls `BUG()` (confirmed in
+  `fs/btrfs/messages.h` lines 139-152)
+- **Verified**: The buggy ASSERT exists in v6.12 and v6.6 stable trees
+  (checked via `git show v6.12:fs/btrfs/bio.c` and `git show
+  v6.6:fs/btrfs/bio.c`)
+- **Verified**: The buggy ASSERT also exists in v6.1 (in
+  `fs/btrfs/extent_io.c` rather than `bio.c`, function named
+  `repair_io_failure`)
+- **Verified**: The function has two callers: `btrfs_end_repair_bio()`
+  (bio.c) and `btrfs_repair_eb_io_failure()` (disk-io.c), both in I/O
+  completion paths that can race with filesystem RO transitions
+- **Verified**: The commit has `Tested-by: Christoph Hellwig`,
+  `Reviewed-by: David Sterba`, and `Reported-by: Christoph Hellwig` with
+  a link to the bug report
+- **Verified**: The fix is a clean 6-line change — remove ASSERT, add
+  early return with comment
+- **Verified**: The function signature differs across stable trees (page
+  vs folio vs phys_addr_t), but the fix concept (remove ASSERT, add
+  sb_rdonly check) is identical and straightforward to adapt
 
-### Conclusion
-
-This is a legitimate bug fix for a complete driver initialization
-failure on older Hyper-V hypervisor versions. The bug has existed since
-the driver was first introduced in v6.15. The fix is small, well-
-contained, well-reviewed, and poses minimal regression risk. Backporting
-to pre-6.19 stable trees would require minor adaptation due to function
-renames, but the logic is straightforward. It meets all stable kernel
-criteria.
+This is a textbook stable backport candidate: a small, well-reviewed fix
+for a kernel crash in a race condition, reported by a trusted developer,
+in a widely-used filesystem. The fix is obviously correct — when the fs
+is RO, there's nothing to repair and crashing is worse than skipping.
 
 **YES**
 
- drivers/hv/mshv_root_hv_call.c | 52 +++++++++++++++++++++++++++++++---
- drivers/hv/mshv_root_main.c    |  3 ++
- 2 files changed, 51 insertions(+), 4 deletions(-)
+ fs/btrfs/bio.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hv/mshv_root_hv_call.c b/drivers/hv/mshv_root_hv_call.c
-index 598eaff4ff299..1f93b94d7580c 100644
---- a/drivers/hv/mshv_root_hv_call.c
-+++ b/drivers/hv/mshv_root_hv_call.c
-@@ -813,6 +813,13 @@ hv_call_notify_port_ring_empty(u32 sint_index)
- 	return hv_result_to_errno(status);
- }
+diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+index fa1d321a2fb83..45bd3c3b6d793 100644
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -935,7 +935,6 @@ int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 fileoff,
+ 	struct bio *bio = NULL;
+ 	int ret = 0;
  
-+/*
-+ * Equivalent of hv_call_map_stats_page() for cases when the caller provides
-+ * the map location.
-+ *
-+ * NOTE: This is a newer hypercall that always supports SELF and PARENT stats
-+ * areas, unlike hv_call_map_stats_page().
-+ */
- static int hv_call_map_stats_page2(enum hv_stats_object_type type,
- 				   const union hv_stats_object_identity *identity,
- 				   u64 map_location)
-@@ -855,6 +862,34 @@ static int hv_call_map_stats_page2(enum hv_stats_object_type type,
- 	return ret;
- }
+-	ASSERT(!(fs_info->sb->s_flags & SB_RDONLY));
+ 	BUG_ON(!mirror_num);
  
-+static int
-+hv_stats_get_area_type(enum hv_stats_object_type type,
-+		       const union hv_stats_object_identity *identity)
-+{
-+	switch (type) {
-+	case HV_STATS_OBJECT_HYPERVISOR:
-+		return identity->hv.stats_area_type;
-+	case HV_STATS_OBJECT_LOGICAL_PROCESSOR:
-+		return identity->lp.stats_area_type;
-+	case HV_STATS_OBJECT_PARTITION:
-+		return identity->partition.stats_area_type;
-+	case HV_STATS_OBJECT_VP:
-+		return identity->vp.stats_area_type;
-+	}
+ 	/* Basic alignment checks. */
+@@ -947,6 +946,13 @@ int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 fileoff,
+ 	ASSERT(step <= length);
+ 	ASSERT(is_power_of_2(step));
+ 
++	/*
++	 * The fs either mounted RO or hit critical errors, no need
++	 * to continue repairing.
++	 */
++	if (unlikely(sb_rdonly(fs_info->sb)))
++		return 0;
 +
-+	return -EINVAL;
-+}
-+
-+/*
-+ * Map a stats page, where the page location is provided by the hypervisor.
-+ *
-+ * NOTE: The concept of separate SELF and PARENT stats areas does not exist on
-+ * older hypervisor versions. All the available stats information can be found
-+ * on the SELF page. When attempting to map the PARENT area on a hypervisor
-+ * that doesn't support it, return "success" but with a NULL address. The
-+ * caller should check for this case and instead fallback to the SELF area
-+ * alone.
-+ */
- static int hv_call_map_stats_page(enum hv_stats_object_type type,
- 				  const union hv_stats_object_identity *identity,
- 				  void **addr)
-@@ -863,7 +898,7 @@ static int hv_call_map_stats_page(enum hv_stats_object_type type,
- 	struct hv_input_map_stats_page *input;
- 	struct hv_output_map_stats_page *output;
- 	u64 status, pfn;
--	int ret = 0;
-+	int hv_status, ret = 0;
+ 	if (btrfs_repair_one_zone(fs_info, logical))
+ 		return 0;
  
- 	do {
- 		local_irq_save(flags);
-@@ -878,11 +913,20 @@ static int hv_call_map_stats_page(enum hv_stats_object_type type,
- 		pfn = output->map_location;
- 
- 		local_irq_restore(flags);
--		if (hv_result(status) != HV_STATUS_INSUFFICIENT_MEMORY) {
--			ret = hv_result_to_errno(status);
-+
-+		hv_status = hv_result(status);
-+		if (hv_status != HV_STATUS_INSUFFICIENT_MEMORY) {
- 			if (hv_result_success(status))
- 				break;
--			return ret;
-+
-+			if (hv_stats_get_area_type(type, identity) == HV_STATS_AREA_PARENT &&
-+			    hv_status == HV_STATUS_INVALID_PARAMETER) {
-+				*addr = NULL;
-+				return 0;
-+			}
-+
-+			hv_status_debug(status, "\n");
-+			return hv_result_to_errno(status);
- 		}
- 
- 		ret = hv_call_deposit_pages(NUMA_NO_NODE,
-diff --git a/drivers/hv/mshv_root_main.c b/drivers/hv/mshv_root_main.c
-index 681b58154d5ea..d3e8a66443ad6 100644
---- a/drivers/hv/mshv_root_main.c
-+++ b/drivers/hv/mshv_root_main.c
-@@ -993,6 +993,9 @@ static int mshv_vp_stats_map(u64 partition_id, u32 vp_index,
- 	if (err)
- 		goto unmap_self;
- 
-+	if (!stats_pages[HV_STATS_AREA_PARENT])
-+		stats_pages[HV_STATS_AREA_PARENT] = stats_pages[HV_STATS_AREA_SELF];
-+
- 	return 0;
- 
- unmap_self:
 -- 
 2.51.0
 
