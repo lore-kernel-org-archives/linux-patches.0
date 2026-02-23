@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5B6366542;
-	Mon, 23 Feb 2026 12:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B24366562;
+	Mon, 23 Feb 2026 12:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850277; cv=none; b=S7KIPQym2PH++3CwQs6jV9R1Hkjrwfdia1jZ0KBfjHwLZXEaWpN7N+pxkaf5auXUlKyL03nTqHikLe2hPwZEOR4cZe1flmEPKbK5llG6aB4rDFh5kTqNkzcIV9nlduzGfGRM6AO9qz53t+uJMWR7Symsn6nI+zv7J5D8CL0lJ8Y=
+	t=1771850278; cv=none; b=WsRwk4fTbmykxdY66RQJHOmlvqLN6HGFcraoCNAu5L+vHc5njA037rN7m0RvO1E+ShUBagxMSo+qGPQ3IvvCH3LE9Pg9Ff7JOp1EEDkVxVIMOon7vPOmNYCcBcM3C70n8K64/X44gkscE6STxvVWJuxjSawZ9I3YhQutD7tfjXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850277; c=relaxed/simple;
-	bh=YmHkHhwawnZMymK9qwLb6dAjfNhmwbfV46PsBnQB/N0=;
+	s=arc-20240116; t=1771850278; c=relaxed/simple;
+	bh=1S7CCT5hTU6hbmGT9oij8/dhMm2j+yuXL+cRd3wT9rM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L6H/H3AyfFaxG5HCBo//j9NjtrZx0NJk1HQ5RBVRTOa8DEp5ZkUq3HRMUI02I4q/2SNkEaH/QodBR3718IGmRLqvRI+B9pTCQuhSEBbG7x3tAv61z3h91QDAGg529CdY+dVriZ7UZeaAM7ZMQQoshcEJ4vlq6Fv3JYbWpWhdmL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nTCO9zwP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tTH1GWLwOdweKGxlYxJ0yk0k0hmE9S1lWlIts1nQLyp2z6Mg3vpysWDslerl3jmCwV/bZEu6+uNJ/yzuxV/Ju0netfru1tXE1/Uyloi/zWK4muE9KREPPBKyFQ8Jw9nfXtm32wod6GKs0LWn69CYPSAfzsBSmkiB+kp1I5rtZuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OvxhdQxc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nTCO9zwP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801D0C2BC86;
-	Mon, 23 Feb 2026 12:37:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OvxhdQxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A1DC19424;
+	Mon, 23 Feb 2026 12:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850277;
-	bh=YmHkHhwawnZMymK9qwLb6dAjfNhmwbfV46PsBnQB/N0=;
+	s=k20201202; t=1771850275;
+	bh=1S7CCT5hTU6hbmGT9oij8/dhMm2j+yuXL+cRd3wT9rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTCO9zwPREdLMwFHGwoO8MjN/WqJaKSI31Kq/yxlnM5ZT1RqzSpUF6OuUODVnexr3
-	 XtZLDMsvWtQI8j4Jm2KMRrEJ0g+SLCpFtdn/Py44BVk6xGIzxvZGHGgESh+tRWjUw5
-	 VgzP7pHIllsHRTpxgVPz8C4MFPXlrtdO62Mciep09yMpPwifRdjLJpLi44qzAdTKi/
-	 OnKuqS6YrrZua5PrUG7e9oZppNaW0N+gnpUZZK0ZAILUITdudr/XRjpjKfpG/A0nTz
-	 +1Jlpjlow6qPg3G1kHKatO881AdgEiKsHNiDRx+tZ0RddY203dWnLrKSO2mCwsTA10
-	 XrYQiX5qXTD+g==
+	b=OvxhdQxctWJMLPapfGhhik1H2/hxXrNYl5hC2yZ+w6Jp49a7tKGMUakMzA4jK/YU/
+	 JwDlPpsfzllqmTsYKW81K94Uu2TJ61g1yf205+C719WjADh2UwFz6HUfTKx6aGRGO9
+	 4BWKr3v3Yd/KGrAiIJ9H1P18OPl1+8Ff2WomyfV+k13GJtpDiH4bdUhzsf6XS6Km+M
+	 lDxHlj7D8eF0InEHxUflhN1lUk/zJtEjiakakm4nES1CUYEweYQ2vQQ3FIw6kFmCDQ
+	 aj9b4vxc7ge1rBBXE/W16jFq2CHtMUPWYkGBeyduFYqHCEWxEId53GqeW5qUAARLW+
+	 ZrUgCRzwBsZrg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thomas Weissschuh <thomas.weissschuh@linutronix.de>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+Cc: Gangliang Xie <ganglxie@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Kent Russell <kent.russell@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux@armlinux.org.uk,
-	linux-arm-kernel@lists.infradead.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] ARM: 9467/1: mm: Don't use %pK through printk
-Date: Mon, 23 Feb 2026 07:37:17 -0500
-Message-ID: <20260223123738.1532940-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] drm/amdgpu: return when ras table checksum is error
+Date: Mon, 23 Feb 2026 07:37:15 -0500
+Message-ID: <20260223123738.1532940-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260223123738.1532940-1-sashal@kernel.org>
 References: <20260223123738.1532940-1-sashal@kernel.org>
@@ -47,142 +52,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.3
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weissschuh <thomas.weissschuh@linutronix.de>
+From: Gangliang Xie <ganglxie@amd.com>
 
-[ Upstream commit 012ea376a5948b025f260aa45d2a6ec5d96674ea ]
+[ Upstream commit 044f8d3b1fac6ac89c560f61415000e6bdab3a03 ]
 
-Restricted pointers ("%pK") were never meant to be used
-through printk(). They can acquire sleeping locks in atomic contexts.
+end the function flow when ras table checksum is error
 
-Switch to %px over the more secure %p as this usage is a debugging aid,
-gated behind CONFIG_DEBUG_VIRTUAL and used by WARN().
-
-Link: https://lore.kernel.org/lkml/20250113171731-dc10e3c1-da64-4af0-b767-7c7070468023@linutronix.de/
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Gangliang Xie <ganglxie@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+Now I have a clear picture. Let me analyze this commit:
 
 ## Analysis
 
-### 1. Commit Message Analysis
+### What the commit does
 
-The commit fixes a misuse of the `%pK` format specifier in a `WARN()`
-macro within `arch/arm/mm/physaddr.c`. The `%pK` format was designed for
-use in procfs/sysfs/debugfs seq_file handlers, **not** through
-`printk()` or `WARN()`. When used through `printk()`, `%pK` can acquire
-sleeping locks (particularly with LSMs that use sleeping spinlocks),
-which is invalid when called from atomic contexts.
+The commit fixes a missing early return in `amdgpu_ras_eeprom_check()`
+when the RAS EEPROM table checksum verification fails for the
+`RAS_TABLE_HDR_VAL` case (valid header).
 
-### 2. Code Change Analysis
+**The bug:** When `hdr->header == RAS_TABLE_HDR_VAL` and
+`__verify_ras_table_checksum()` fails, the original code logs an error
+but continues execution. This means the function proceeds to check if
+bad pages exceed 90% of the threshold and eventually returns 0 (success
+via `return res < 0 ? res : 0;`, since `__verify_ras_table_checksum`
+returns positive for checksum mismatch). The caller then treats the
+corrupt table as valid.
 
-The change is a single-character substitution in one format string:
-- `%pK` → `%px` in a `WARN()` call inside `__virt_to_phys()`
+**The inconsistency:** In the other branch (`RAS_TABLE_HDR_BAD`), the
+same checksum failure already results in `return -EINVAL` (line 1728).
+The fix makes both code paths behave consistently - returning an error
+on checksum failure.
 
-The `WARN()` macro internally uses `printk()`. The `%pK` format
-specifier can invoke security module hooks that acquire sleeping locks.
-Since `WARN()` can fire from any context (including atomic, interrupt,
-or with spinlocks held), this creates a **sleeping-in-atomic-context
-bug**.
+### Why this matters
 
-The choice of `%px` (raw pointer) over `%p` (hashed pointer) is
-deliberate: this code is gated behind `CONFIG_DEBUG_VIRTUAL` and is a
-debugging aid, so showing the actual address is appropriate.
+If the RAS table has a corrupt checksum and the function returns
+success:
+1. The caller `amdgpu_ras_load_bad_pages()` proceeds to use potentially
+   corrupt bad page data
+2. Corrupt bad page tracking could lead to incorrect GPU memory
+   management decisions
+3. Pages that should be retired (due to hardware errors) might not be,
+   or vice versa, potentially leading to GPU errors, data corruption, or
+   instability
 
-### 3. Bug Classification
+### Stable criteria assessment
 
-This is a **real bug fix**: sleeping-in-atomic-context. On `PREEMPT_RT`
-kernels (increasingly common), this is a hard failure. On non-RT
-kernels, it can cause lockdep splats and potential hangs. The bug is
-triggered whenever `__virt_to_phys()` is called with an invalid address
-while the caller holds a spinlock or is in interrupt context.
-
-### 4. Scope and Risk Assessment
-
-- **1 file changed, 1 line modified** - Extremely minimal scope
-- **Zero risk of regression** - Only changes the format of a debug
-  message
-- **Self-contained** - No dependencies on other commits
-- **Part of a systematic kernel-wide effort** - Similar fixes applied to
-  arm64, riscv, MIPS, powerpc, bpf, networking, drm, etc.
-
-### 5. User Impact
-
-- Affects all ARM users with `CONFIG_DEBUG_VIRTUAL` enabled
-- On PREEMPT_RT kernels: can cause invalid wait context warnings or
-  actual hangs
-- On regular kernels: can cause lockdep warnings
-- The affected file has existed since v4.11 (commit e377cd8221ebb,
-  January 2017), so all stable trees have this code
-
-### 6. Stable Kernel Rules Check
-
-- **Obviously correct**: Yes - single format specifier change, well-
-  understood issue
-- **Fixes a real bug**: Yes - sleeping in atomic context
-- **Small and contained**: Yes - 1 line change
-- **No new features**: Correct - pure fix
-- **Tested**: Yes - part of a systematic effort with identical fixes
-  across multiple subsystems
+- **Fixes a real bug:** Yes - using corrupt EEPROM data when checksum
+  fails is a genuine bug
+- **Obviously correct:** Yes - the `RAS_TABLE_HDR_BAD` path already
+  returns `-EINVAL` on checksum failure; this is making the
+  `RAS_TABLE_HDR_VAL` path consistent
+- **Small and contained:** Yes - adds `return -EINVAL` and wraps the
+  existing `if` in braces, 4 lines changed
+- **No new features:** Correct - purely a bug fix
+- **Risk:** Very low - only affects the error path when checksum is
+  already corrupt
 
 ### Verification
 
-- **Verified via `git show e377cd8221ebb`**: The affected file
-  `arch/arm/mm/physaddr.c` was introduced in v4.11 (commit from Jan
-  2017), confirming it exists in all active stable trees
-- **Verified via `git log master --oneline --grep="Don't use %pK"`**: At
-  least 15+ similar commits across the kernel (arm64, riscv, MIPS,
-  powerpc, bpf, drm, networking, etc.) confirm this is a systematic,
-  well-understood issue
-- **Verified via lore.kernel.org discussion**: Thomas Weißschuh's
-  original mail confirms `%pK` was "only ever meant to be used from
-  procfs/sysfs/debugfs handlers" and causes sleeping lock acquisition
-  through printk in atomic contexts, particularly problematic with
-  PREEMPT_RT
-- **Verified via code read**: The `WARN()` macro is in
-  `__virt_to_phys()` which is called via `virt_to_phys()` from many
-  contexts, including potentially atomic contexts
-- **Verified the fix is self-contained**: The change is a single format
-  specifier substitution with no dependencies
-- **Could NOT verify**: Whether identical arm64/riscv fixes
-  (892d20acf36c3, eb8db421ce83f) were already backported to stable trees
-  - but each architecture's fix is independent
+- Read the full `amdgpu_ras_eeprom_check()` function (lines 1670-1762)
+  confirming the two parallel branches and the inconsistent handling
+- Confirmed `__verify_ras_table_checksum()` returns positive for
+  checksum mismatch, negative for I/O error (lines 1429-1437)
+- Confirmed the return statement `return res < 0 ? res : 0` at line 1761
+  means a positive `res` (checksum mismatch) would be returned as 0
+  (success) - this is the core bug
+- Confirmed the `RAS_TABLE_HDR_BAD` branch already returns `-EINVAL` on
+  checksum failure (line 1728), confirming this is an oversight
+- Confirmed the caller in `amdgpu_ras.c` uses the return value to decide
+  whether to proceed with loading bad pages (`if (ret) goto out;`)
+- The patch has been Reviewed-by two AMD engineers (Tao Zhou and Kent
+  Russell)
 
-### Conclusion
-
-This is a textbook stable backport candidate: a one-line fix for a real
-sleeping-in-atomic-context bug, with zero regression risk, in code that
-exists in all stable trees. The fix is part of a well-understood
-systematic effort across the entire kernel.
+The fix is small, surgical, obviously correct (matching the existing
+pattern in the parallel code path), and prevents using corrupt EEPROM
+data. It meets all stable kernel criteria.
 
 **YES**
 
- arch/arm/mm/physaddr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mm/physaddr.c b/arch/arm/mm/physaddr.c
-index 3f263c840ebc4..1a37ebfacbba9 100644
---- a/arch/arm/mm/physaddr.c
-+++ b/arch/arm/mm/physaddr.c
-@@ -38,7 +38,7 @@ static inline bool __virt_addr_valid(unsigned long x)
- phys_addr_t __virt_to_phys(unsigned long x)
- {
- 	WARN(!__virt_addr_valid(x),
--	     "virt_to_phys used for non-linear address: %pK (%pS)\n",
-+	     "virt_to_phys used for non-linear address: %px (%pS)\n",
- 	     (void *)x, (void *)x);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
+index 64dd7a81bff5f..710a8fe79fccd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
+@@ -1701,10 +1701,12 @@ int amdgpu_ras_eeprom_check(struct amdgpu_ras_eeprom_control *control)
+ 		}
  
- 	return __virt_to_phys_nodebug(x);
+ 		res = __verify_ras_table_checksum(control);
+-		if (res)
++		if (res) {
+ 			dev_err(adev->dev,
+ 				"RAS table incorrect checksum or error:%d\n",
+ 				res);
++			return -EINVAL;
++		}
+ 
+ 		/* Warn if we are at 90% of the threshold or above
+ 		 */
 -- 
 2.51.0
 
