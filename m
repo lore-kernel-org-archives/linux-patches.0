@@ -1,136 +1,106 @@
-Received: from tiger.tulip.relay.mailchannels.net (tiger.tulip.relay.mailchannels.net [23.83.218.248])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DC73191D2
-	for <patches@lists.linux.dev>; Mon, 23 Feb 2026 16:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.248
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771864626; cv=pass; b=O5LfblaJPMRANpN1fUEIG6sYEfTHVzR5CaBZtIOL1IhSo3hFOYtm2pPv88Oyw1bltls3DigQCDPc2CnzcTP+g2BRbEFA5nvGLSsK1NjOR8ldU4Lqih2AOrF300bPeYeMaLaKj9KUIhUEVUoJV3j1BaDgYKEZN/JlXmGpe2RYdvQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771864626; c=relaxed/simple;
-	bh=QmuNg1tBtzwmz+wkhgiXHLezpaCUDOCDyd8P/htnkvc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YDh7nmO0jcCyPBqMvVekN1buDzlJWzRIkWM5d/4DAmQ1YgsjmjxOMcsGYRjLsqsSs+pWNasLU8FEqau4nyKiaqwe0IFR01bci/NdBdxJXD7fXXT5MFB7YqYDRSVRNP4m01k1m78f+YX+E1mCnfFOha9R5HZoWs8SRWUrrRbevHI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=landley.net; spf=pass smtp.mailfrom=landley.net; dkim=pass (2048-bit key) header.d=landley.net header.i=@landley.net header.b=E7yTKFH6; arc=pass smtp.client-ip=23.83.218.248
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=landley.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=landley.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB77E2F25F9
+	for <patches@lists.linux.dev>; Mon, 23 Feb 2026 17:34:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771868090; cv=none; b=eGZh1drMH0iJOuaYVIJFlG+g+xF1nMnhhUIWQ0RkFLM9g5dwEC5pZ97UDQIJPOmkbphV+EZHJ2f5slZU+/2cZFNt3pnuC4E1FQTnnTL72FMc6O4fsQG32Gks7QN5UB23tdfU0q5+cWD1hJL/u5uY+46th1pCjRPwgLxHFBKia9M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771868090; c=relaxed/simple;
+	bh=pPVYjjX+g8lwuvjjX9cEbFdLG+Rgns4g94OuadbV+lI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kost/b5tnWNvb15T1hed2/HwNhjB5oLrqZG/EP5eNxpgMoIQhIROch6DDf/DonR2z1KooPkqH0Jo4jV1gVXo+Wfpk2GaYQnJpQ7oTc/cFBWCLKjlDNO6v+e4K6omwLNsGEWp2xNFNB17ie0194foPbtJVatVCktp0BPUM+XQ1+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HYIy0Nvf; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=landley.net header.i=@landley.net header.b="E7yTKFH6"
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 96639160C57;
-	Mon, 23 Feb 2026 16:11:12 +0000 (UTC)
-Received: from pdx1-sub0-mail-a229.dreamhost.com (100-103-37-158.trex-nlb.outbound.svc.cluster.local [100.103.37.158])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 13DC4163A9E;
-	Mon, 23 Feb 2026 16:11:10 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
-	t=1771863070;
-	b=D10lQ/C9uKN0awKaoY1DJbyw883z2sXTh1CP2yS9BDRhSH58rsf1CoH5LujX2k7UdyXoBD
-	t1bhwmCoGJUp9Vlj46sIobRvYohwXZMku0zgzlMBomVvtklhx9MTfMCq18nqt7BfSfv5sy
-	JVyRXMl+RWIB9TE/S+JSDtdPUzvkDAid+ovXQx2YKRnNJmpm5dGpxNqaSlaH32r3Q7Bgj8
-	Df91LPvo+OF+8/1j3YKIG3yfMANeWaohaeRJukOVHk0/p9XDuYaSP7vRB736CZPbK9+1uR
-	Q5fyNplw8uWgFHsNE6fxqfshimehi1AB1J9EDCVb/DyMbdGOH2nQUoa/y2CAhg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1771863070;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=XuD6XCjlTOuLfHYtXzVsTlp4WOA/ge30qcw+P5i9Neg=;
-	b=J4JKNO/Aq56Qgvep1jBeLGTX0W4LsZYTzravitWIiHbtcBK53abXlKnP3aSwFPPxC8WCdU
-	2HKgwjMY25lyHqUUf86/lzeAksAERcKa5INoAEp/MKbQs0d2mcu9Vh7PZdoezJ3mJP05lD
-	9YgRxaG/As8lvZTDA3Ry3nd2hF4QVxeimG3XC4CAgaSbTC3J7Y1U6NJowVojfIyx2Ds9Dw
-	JldXum/9uH/Pg/DjU6owlT5lDyq1K7rZYtfgNDqXZbFJf3u6vf8yNkQzu+9oPmutrcJdcE
-	eMdaySlElaVd84WcD02Igp0Re0WMlbkG4IY++BztF09xTyEHTrW2wno/ZJNfTw==
-ARC-Authentication-Results: i=1;
-	rspamd-6fbd58c58b-q6pqj;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
-X-MailChannels-Auth-Id: dreamhost
-X-Glossy-Stupid: 51eb68441b29b606_1771863072406_1607851710
-X-MC-Loop-Signature: 1771863072406:3925674246
-X-MC-Ingress-Time: 1771863072404
-Received: from pdx1-sub0-mail-a229.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.103.37.158 (trex/7.1.3);
-	Mon, 23 Feb 2026 16:11:12 +0000
-Received: from [IPV6:2607:fb90:9a0f:889c:175:8594:632c:fd9c] (unknown [172.56.10.34])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	(Authenticated sender: rob@landley.net)
-	by pdx1-sub0-mail-a229.dreamhost.com (Postfix) with ESMTPSA id 4fKQnm4c9Yz6N;
-	Mon, 23 Feb 2026 08:11:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
-	s=dreamhost; t=1771863069;
-	bh=XuD6XCjlTOuLfHYtXzVsTlp4WOA/ge30qcw+P5i9Neg=;
-	h=Date:Subject:To:Cc:From:Content-Type:Content-Transfer-Encoding;
-	b=E7yTKFH61K6Rf3nyxMlL5gJn8Vu7IRd1pAZWYgnNR9pCVRRJUpvhMLFsUk6Xig3sX
-	 d6NWEP3DpNrj+DxqHNetE2uHwz9ZJUf/MP/SxA4TNEVqYNX1XyMQxsMbqnOItaYmhx
-	 kMG9i8DHBsDuwQZ/6swAy5TFwwx11Zc5Ry3lX1XRq5mq4C6CTDl7cGtAYkgBgq25SO
-	 fh7Lt1Up1B6KsjeaobDjAYsrfx59zhVGH+ott0uRMP1JJ71tbhFsbxkxnwXEXqRvlu
-	 t7uZaYSEx+P719OVfP3zRy8hYDm/Xq10VI5hBE26ZbFU1tWk0vFK0xtefoKtamHS2O
-	 AcHbh4zCO+A7w==
-Message-ID: <7e309fc3-7d55-4e95-8dea-f164a7a96b6c@landley.net>
-Date: Mon, 23 Feb 2026 10:11:05 -0600
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HYIy0Nvf"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-483487335c2so42574945e9.2
+        for <patches@lists.linux.dev>; Mon, 23 Feb 2026 09:34:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771868088; x=1772472888; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HUEz6YAu4nuheVqgpSXCLvSWu/dJuHAVRYNHbZZUc14=;
+        b=HYIy0NvfDVYb515Outmlgzg54RkSbbGObdT+taZ4xEoX9r9sVt8gCywHhSbkU+nOWB
+         2Su9y2sz/4WymDNDmCpLmaIbHdHbZgC82E2nCd12URJ6mq04rRjq/mulNDQxWlM+wTKA
+         goVVmG5EW7FEzSA4k1BPc/a6+W6S7KkveeXZvMUQLxeY/N1qdg5BkrUOiQN3dtXZcReh
+         sUAjxrwuMlqRsi2G8kNE/JMbHGi0TE/7821soSN4E2sWdJXi5Vw9EMBCtiTK2gr8aDHS
+         VNyhCf8I+vLohyzi23Dif5LlJcNUuM+4nHm4+IsuF1Bo8O5IuocCC3iYDlBDjxYwIttY
+         AGFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771868088; x=1772472888;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HUEz6YAu4nuheVqgpSXCLvSWu/dJuHAVRYNHbZZUc14=;
+        b=QKGZhZRtVy2u4D0CmyMXkbRgnOHxp6wu++SIKkoahhxoZoQGrwRewaYMkldA3Nuw+S
+         domUJ48iDUs1OjID7YuHN6OWQRRa8a7F2thfqaBg9dnxuUe3IX+zkVr+SpeQVs1n6MhN
+         ed6uzpRTDzMvxhksTmXnsJlcr8ljoId/urqLxVe3Eu3az+1jJIoRuiGWOz5QVfUakSBJ
+         TIBak1A+UrWMcxTkEQ311wJ5M2bpBoJXP7RCSkK3lnCqfbhiMNPqH+bLH32lzFKaNBqZ
+         9HcBckjRSBqOWpd+3Wh/qYAoQmovdGqqndP1EzdTU2zL0QpEJ4jiW2LMgOs6AERkOm9N
+         tltw==
+X-Forwarded-Encrypted: i=1; AJvYcCV4hEFgNK1mW6trsZz2wDGBELDx/tJQRD4auFWJXe5nGvRQ24LI8+DWV9cs55O6g/jyhgZkbkB9@lists.linux.dev
+X-Gm-Message-State: AOJu0YwU040alIfN2Q+Vjg0FJkz3frwo2YmtHZ8BG8xQhoUJEqFW8fVr
+	Qk3Hcd7ydhpfIW3PfRnsORhEWPxu9rvhxBd3SVlpKMSaWcYBuKcAYNnL
+X-Gm-Gg: AZuq6aJbfQ30wwd2Ln+KRT/oNj3SxJApG+V+ktrCjT+4mExz04QyQBPofV2THQrT40+
+	rdT/UAqK3JhI1mgaSZEvXH2V+0UOfwCjk8WkaO8LfyrfcCLuYHYkm/bEcVwD96dAxKcebMhnT1q
+	78wFa9JNdOpPoJfKK/RPGDae+rDxxpx1XkBU+n08Hu4Oe/M5N6jgO04hCraq5by9BXny6pEu3ZJ
+	ljp+DbldNcXHrG/s+VeDcE6yBJFrnPgDic9LVbZ2q2vqtu+TzFX9dz8iHKXco0gV8uuZ8NaBDlI
+	1PgyKcEUpzU9J7GT29igJAw7YrGQ253SOWZribhHrur+CkFe1cDgkoybM2ArLH94SjXE2gu3SOD
+	EwCCUg5FjadPAo/pR+t+ehWAg6v2RxllrcuTpo8s3TNGov+V0jeZpQ/4THVoHuqsjT2ShvqEv/D
+	IrV90nzSDnPe3sDWLNFjc=
+X-Received: by 2002:a05:600c:45ce:b0:483:a895:9d85 with SMTP id 5b1f17b1804b1-483a95b3e18mr165817715e9.2.1771868087959;
+        Mon, 23 Feb 2026 09:34:47 -0800 (PST)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-483a9b668f3sm213824665e9.3.2026.02.23.09.34.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Feb 2026 09:34:47 -0800 (PST)
+From: Askar Safin <safinaskar@gmail.com>
+To: rob@landley.net
+Cc: brauner@kernel.org,
+	ddiss@suse.de,
+	initramfs@vger.kernel.org,
+	jack@suse.cz,
+	linux-fsdevel@vger.kernel.org,
+	linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	nathan@kernel.org,
+	nsc@kernel.org,
+	patches@lists.linux.dev,
+	rdunlap@infradead.org,
+	safinaskar@gmail.com,
+	viro@zeniv.linux.org.uk
+Subject: Re: [PATCH 1/2] init: ensure that /dev/console is (nearly) always available in initramfs
+Date: Mon, 23 Feb 2026 20:34:42 +0300
+Message-ID: <20260223173443.327797-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <7e309fc3-7d55-4e95-8dea-f164a7a96b6c@landley.net>
+References: <7e309fc3-7d55-4e95-8dea-f164a7a96b6c@landley.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] init: ensure that /dev/console is (nearly) always
- available in initramfs
-To: David Disseldorp <ddiss@suse.de>
-Cc: Askar Safin <safinaskar@gmail.com>, linux-fsdevel@vger.kernel.org,
- Christian Brauner <brauner@kernel.org>,
- Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>,
- Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
- linux-kbuild@vger.kernel.org, initramfs@vger.kernel.org,
- Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>,
- patches@lists.linux.dev
-References: <20260219210312.3468980-1-safinaskar@gmail.com>
- <20260219210312.3468980-2-safinaskar@gmail.com>
- <20260220105913.4b62e124.ddiss@suse.de>
- <6d34c95a-a2ea-46a4-b491-45e7cb86049b@landley.net>
- <20260223133357.0c3b8f8e.ddiss@suse.de>
-Content-Language: en-US
-From: Rob Landley <rob@landley.net>
-In-Reply-To: <20260223133357.0c3b8f8e.ddiss@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 2/22/26 20:33, David Disseldorp wrote:
->> It's an archive format. There are tools that create that archive format
->> from a directory.
->>
->> The kernel itself had a fairly generic one one built-in, which you
->> _could_ use to create cpio archives with /dev/console as a regular
->> user... until the kernel guys decided to break it. I carried a patch to
->> fix that for a little while myself:
->>
->> https://landley.net/bin/mkroot/0.8.10/linux-patches/0011-gen_init_cpio-regression.patch
-> 
-> This seems like a helpful feature to me.
+Rob Landley <rob@landley.net>:
+> The real problem isn't cpio, it's that the kernel interface
 
-It was, but I want mkroot to at least be _able_ to build with vanilla 
-kernels, so couldn't depend on a feature upstream had abandoned.
+So there is some bug here?
 
-The real problem isn't cpio, it's that the kernel interface for 
-statically linking a cpio into the kernel wants you to point it at a 
-directory of files for _it_ to cpio up, and when you do that you need 
-root access (or fakeroot) to mknod.
+Then, please, describe properly this bug.
 
-You used to be able to point it at one of those generated files (and 
-thus edit the file yourself to add the extra nodes), but that went away 
-the same time they broke the rest of the interface.
+I. e. using usual formula "steps to reproduce - what I got - what I expected to see".
 
-> Thanks, David
+Also, does the kernel broke *documented* feature? If indeed some
+*documented* feature doesn't work, then this is indeed very real bug.
 
-Rob
+I kindly ask you, please, please, describe this bug. I really want
+to help you.
+
+-- 
+Askar Safin
