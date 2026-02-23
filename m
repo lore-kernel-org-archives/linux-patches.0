@@ -1,45 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3D0366807;
-	Mon, 23 Feb 2026 12:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659AB36829E;
+	Mon, 23 Feb 2026 12:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850287; cv=none; b=HfYtHkfB1RFbU6FTsrGjzND5fmd5b0XRaBT0oZRF+0iJoNYVnPCR5xjnvoEZIF5M90P3ANZdYi0Gj2IuYycERh0Ss9pWALoHZsppuN9pIC89uqDlCL4t4ELNtkfyW6Gr1bTveREOnk5/g8poAt5zXvBlQOMwpbBou9J5E0SLPT4=
+	t=1771850289; cv=none; b=tV9FsKdUOgzKVlf9Xb1sOnfQ2pgQ9wrg+h6JmtrXC75eLvd/xDJKcWAKbL3oxxa20VqG2m+F9yR8GItU5cbNpOroBNAOM8wM6TlSvyZW90xojTSSSHfBjbkwqcNeDKeAuPiy+pG4kWJ+D8fJbY8UFgQzw4XjxbDUGX9Dq2YGHOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850287; c=relaxed/simple;
-	bh=GH64Xio/xNmrTz43HQgczXVCE9RAw80ZZ/U8bMFFlzQ=;
+	s=arc-20240116; t=1771850289; c=relaxed/simple;
+	bh=piEMGXZwt8wLWfoaik1WxIGNNWEo8qL2QNNyNKrGrEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rhGjzE9D58ow/IhPCJO2Ogug8gWmviGmGDiUg0NxwETyB1sToJe5Zr1UWom1R+6u7e9zRt2G/hqqbyThGmhGUYKWjLyrJHsl8UeMrmRZ1LQM9WXQy7VFeP65zxXiLS0foX6TQSLk2A7iOFXOJWzmp9GDTYKMLFq6lzwwfApbv1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KG2yg52P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZJn3PCdEf88mcb5P8E7YCVtaPJk4AMLySlqgRyU0FZXGiPQFYIRnBfn5sXWFZlIDpWHK6YnIfAE+bghlpNygHh6h5fk9dsqIeBvivK5yKMZbsIWAl5C9Jg+LlmU33MSHgEUMJYoqJpCWn1fdDBnMzcbwkqvUbTn0FduEDz5EXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DC39kg3T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KG2yg52P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BD6C2BC87;
-	Mon, 23 Feb 2026 12:38:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DC39kg3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E5EC2BC86;
+	Mon, 23 Feb 2026 12:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850287;
-	bh=GH64Xio/xNmrTz43HQgczXVCE9RAw80ZZ/U8bMFFlzQ=;
+	s=k20201202; t=1771850289;
+	bh=piEMGXZwt8wLWfoaik1WxIGNNWEo8qL2QNNyNKrGrEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KG2yg52Pn+QsxFuklWzElpRdJ5rgkpqI9zYzIL6Rh77F1F7iDuCTPFnif07BAOofT
-	 nhZ0Px7cTt4shFVCEWva5PfwlKJ2sB9VhMUtc5B3Yc3dj18cY8Rz6KwzCnrLUI5fVW
-	 egO1uzXUHGKYA0G/vim1XWnZhMl67JzYdY6fARYEvx37BwAUIp6CNRGparsk0b4EuM
-	 9YJ0YaKEWr3H6UGpLs3Mg74PazL4F9fhtw1Hh0+DT4lhSJCrosIPwOxB/n1/Fzlx3y
-	 PEKoVN7q4k+0Tone08xyaIXVtVwE0G4V8KOpar7umunCMfDPWMv2mCRX1/QraK8jfp
-	 TWxjAJ0Ke1EbQ==
+	b=DC39kg3To/G/iH8uBAviqkTV5NDtM+9k3vUOe5XbEO7nKBRk2Vt6FbmB6G4jg30cl
+	 Y8/8e3KdlovKP8RSEeKqbqid68NFUm0lQiDZmcy9KvelXxA5IZvQnfBhgIhw/92IuR
+	 6jh2WwfU9PT4OJG9G1T2Zoq9z9918+0OIsrGmPnD+rElRLC3malUYUiNh/38BPUuKz
+	 THFmIGwGz3fnm2WPD7j8Ady3/7zJWGbV+lOOIU5gsJAb4qfFdUFa7MJsKYyiNn3PU0
+	 WYrAG4MAhXyvCG4jaDUaQw1qte1WbzJOBadT0jNob1P1LG1ZDm0d2KL1syAbZt3wR0
+	 rQJXHb1dGA1rw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aaron Erhardt <aer@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: YiLing Chen <yi-lchen@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] ALSA: hda/hdmi: Add quirk for TUXEDO IBS14G6
-Date: Mon, 23 Feb 2026 07:37:24 -0500
-Message-ID: <20260223123738.1532940-19-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19] drm/amd/display: set enable_legacy_fast_update to false for DCN36
+Date: Mon, 23 Feb 2026 07:37:25 -0500
+Message-ID: <20260223123738.1532940-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260223123738.1532940-1-sashal@kernel.org>
 References: <20260223123738.1532940-1-sashal@kernel.org>
@@ -54,125 +60,45 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.3
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Erhardt <aer@tuxedocomputers.com>
+From: YiLing Chen <yi-lchen@amd.com>
 
-[ Upstream commit d649c58bcad8fb9b749e3837136a201632fa109d ]
+[ Upstream commit d0728aee5090853d0b9982757f5fb1b13e2e2b27 ]
 
-Depending on the timing during boot, the BIOS might report wrong pin
-capabilities, which can lead to HDMI audio being disabled. Therefore,
-force HDMI audio connection on TUXEDO InfinityBook S 14 Gen6.
+[Why/How]
+Align the default value of the flag with DCN35/351.
 
-Signed-off-by: Aaron Erhardt <aer@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260218213234.429686-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: YiLing Chen <yi-lchen@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
-
-### Commit Summary
-This commit adds a single `SND_PCI_QUIRK` entry to the
-`force_connect_list[]` table in the HDA HDMI audio codec driver for the
-TUXEDO InfinityBook S 14 Gen6 laptop (PCI subsystem ID `0x1558:0x14a1`).
-
-### Problem Being Fixed
-The commit message explains that depending on boot timing, the BIOS may
-report incorrect pin capabilities, which can result in HDMI audio being
-completely disabled. The quirk forces the HDMI audio connection to work
-around this firmware bug.
-
-### Code Change Analysis
-The change is a single line addition:
-```c
-SND_PCI_QUIRK(0x1558, 0x14a1, "TUXEDO InfinityBook S 14 Gen6", 1),
-```
-
-This is added to the existing `force_connect_list[]` table, which is
-already populated with many similar entries for HP, ASUS, MSI, and Intel
-devices. The quirk value `1` forces the HDMI connection, matching the
-pattern of all other entries in the list.
-
-### Stable Kernel Rules Assessment
-
-1. **Obviously correct and tested**: Yes - it's a trivial one-line
-   addition to an existing quirk table, following the exact same pattern
-   as ~20 other entries. The authors are from TUXEDO Computers (the
-   hardware vendor), so they tested on the actual hardware.
-
-2. **Fixes a real bug**: Yes - HDMI audio can be non-functional on this
-   laptop due to a BIOS timing issue. This is a real user-facing bug.
-
-3. **Important issue**: Yes - complete loss of HDMI audio output is a
-   significant functional issue for users of this laptop.
-
-4. **Small and contained**: Yes - it's a single line in a single file,
-   adding an entry to an existing table.
-
-5. **No new features**: Correct - this is a hardware quirk/workaround
-   for a broken BIOS, not a new feature.
-
-6. **Applies cleanly**: The change is a simple table entry addition that
-   should apply cleanly to any stable tree that has the
-   `force_connect_list[]` table.
-
-### Exception Category
-This falls squarely into the **QUIRKS and WORKAROUNDS** exception
-category. Hardware-specific quirks for broken/buggy devices (in this
-case, a BIOS firmware bug) are explicitly listed as appropriate for
-stable backporting. Audio codec quirks via `SND_PCI_QUIRK` entries are
-specifically called out in the stable kernel guidelines.
-
-### Risk Assessment
-- **Risk**: Essentially zero. The quirk only activates for the specific
-  PCI subsystem ID `0x1558:0x14a1`. It cannot affect any other hardware.
-- **Benefit**: Fixes HDMI audio for all users of the TUXEDO InfinityBook
-  S 14 Gen6.
-
-### Verification
-
-- Verified the diff: Single-line addition of `SND_PCI_QUIRK(0x1558,
-  0x14a1, "TUXEDO InfinityBook S 14 Gen6", 1)` to the existing
-  `force_connect_list[]` table.
-- Verified the table structure: All other entries in the table follow
-  the identical `SND_PCI_QUIRK(vendor, device, name, 1)` pattern,
-  confirming this entry is consistent.
-- Verified authors: `@tuxedocomputers.com` email domains confirm the
-  authors are from the hardware vendor, meaning they have direct access
-  to and have tested on the affected hardware.
-- Verified the maintainer ack: Signed-off-by from Takashi Iwai (ALSA/HDA
-  maintainer at SUSE), confirming proper review.
-- Verified no dependencies: This is a standalone table entry addition
-  with no prerequisite commits needed.
-- The `force_connect_list[]` table has existed for multiple stable
-  kernel versions (verified by the presence of many existing entries in
-  the code).
-
-### Conclusion
-This is a textbook stable backport candidate. It's a single-line
-hardware quirk addition that fixes a real bug (HDMI audio disabled) on
-specific hardware, with zero risk to other systems. It follows the exact
-same pattern as dozens of similar quirk entries already in the table.
+The background task completed but doesn't change my analysis. My
+decision stands - this is a valid one-line bug fix for user-visible
+display stuttering on DCN36 hardware.
 
 **YES**
 
- sound/hda/codecs/hdmi/hdmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/resource/dcn36/dcn36_resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/hdmi/hdmi.c b/sound/hda/codecs/hdmi/hdmi.c
-index 111c9b5335afc..c2e3adc7b3c00 100644
---- a/sound/hda/codecs/hdmi/hdmi.c
-+++ b/sound/hda/codecs/hdmi/hdmi.c
-@@ -1557,6 +1557,7 @@ static const struct snd_pci_quirk force_connect_list[] = {
- 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
- 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
-+	SND_PCI_QUIRK(0x1558, 0x14a1, "TUXEDO InfinityBook S 14 Gen6", 1),
- 	SND_PCI_QUIRK(0x8086, 0x2060, "Intel NUC5CPYB", 1),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
- 	{}
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn36/dcn36_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn36/dcn36_resource.c
+index 6469d5fe2e6d4..a1132102afde4 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn36/dcn36_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn36/dcn36_resource.c
+@@ -769,7 +769,7 @@ static const struct dc_debug_options debug_defaults_drv = {
+ };
+ 
+ static const struct dc_check_config config_defaults = {
+-	.enable_legacy_fast_update = true,
++	.enable_legacy_fast_update = false,
+ };
+ 
+ static const struct dc_panel_config panel_config_defaults = {
 -- 
 2.51.0
 
