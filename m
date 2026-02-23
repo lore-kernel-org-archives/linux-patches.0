@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F6C366054;
-	Mon, 23 Feb 2026 12:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB53136656F;
+	Mon, 23 Feb 2026 12:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850270; cv=none; b=d+PDaFZpQQJDZOpsHjhUsoJ9jj8nZwr6bYTKb7+JE27oAGWwRYSfCz12/3Xf0nu43nW5X8PrkFvopRcnhxKplpwlfQ1ztSXHnEcm4oPQSMNCcWdXOyxAr5YG12/zExgkQJlzOYgMbCgxK4I+PGDm6jQcBWL7L8dQ2JhCDnTecYA=
+	t=1771850272; cv=none; b=QYb/1PJhpUpMeRNGtQpHKdTegmv7LMRbPF3WkSrJZvStwNnItTtds8ar9BdKsOqafIskI7qCenbcbDCUMAhV0e8LNkr/PXA6H9K03Kbg8DXtOLZ1BF/P1QZdeytaZ3B0Q35kHRulfEB0sesX1A+kCB/z+RWOb8HkDeCzZEl9fTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850270; c=relaxed/simple;
-	bh=DARLU9PRhXEqGMQEgxyxiRXMnp76keYf4PJl96EYaKs=;
+	s=arc-20240116; t=1771850272; c=relaxed/simple;
+	bh=3uVzNyyLTtIloKiEc4ytCPRgNK6+M5PvDJ/8z1pKvxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Oap5rTy7ePMXEyq4m8QwAq0P9FYpUf80b3yhFF9OToiNlessQ/AOqUucQA1lp3sY326J7eJ+zbyxBJrfjJP6X+gxJQs5USvRbkdB8Y9GOj7Fa1p4S71Lrr6tfpM/pqayVfWWOtbYH5UvlHbfo5S3PVmAlRORcF3OPOwO/6CBtYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PSrFXcOB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCpQ8curF9/dn0++r1CcMsLiKH9iJWveNWu/iouSLDxsEkcMVsc5BRWo3ohqOdZoOof8ntgE8eOjEufhg0IQnNziyiiCJDfMt+7q5qerG1ngp817NMg2g4nK8AuvbVI5/Ffgd8GepX1SxjdLUVlug9omVN9+8cQfFJgdb+yV8Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gWlAZf+u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PSrFXcOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DE7C116D0;
-	Mon, 23 Feb 2026 12:37:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gWlAZf+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BAEC116D0;
+	Mon, 23 Feb 2026 12:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850270;
-	bh=DARLU9PRhXEqGMQEgxyxiRXMnp76keYf4PJl96EYaKs=;
+	s=k20201202; t=1771850271;
+	bh=3uVzNyyLTtIloKiEc4ytCPRgNK6+M5PvDJ/8z1pKvxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSrFXcOBdPDtdo5nUAH+LOaB1CfOxO7vX9jVipuRsIZ1nUGxfwdFTaaOG6stVvcE2
-	 0wF+wzuOxTxznVHAFQrFaJoM7V/aRTnF5KlojAQtOvOfzQtq07V4gUVC7zz3cX2a8n
-	 xNE41tiTp/UeO6fU3/UPG7EL4GQIZSjraWF2jZ1tYDPNYO4q8m96/D62FiJNczqNC0
-	 7ZEzwgLdwXxrk2OCdBB2La/XXsCmGsKoZxMA1jX2OMVN2rMmy0p18HqsmmkCe4x8L8
-	 Uoar8qO1ie4cockybEzDjIVu9MwYLvZjZDOsUfVoukvYCrUBuxTSD456Q3R1zF14K+
-	 czVr47KVLheLQ==
+	b=gWlAZf+ulTI40ttJmtbdOg9btbL4m31ERKZOmc00s1dBeHPu83ut3GbsvxGbpFax+
+	 8cn6wFi2Mq4FyhL++DFt1iMPZgqkhBTNKgbpJUOAwmF1X1huTGaDthfb/bRZ2azHak
+	 iRqbYL6oVcD/ezNnQ6TVUMeuUEr4fhKfTLIfOsWIU2QSAq4ELbAJjfzvOKNQzzMXBa
+	 CtDf/fWwZHrfmh0O0v3nXZbHgPeome+jxlbffEH/EOGSbiKBoYgLi1zVBbOr0EceBB
+	 X3Wqwxreb8AnZ6wmOmj160x98N6b0NZYufLU6tNZ5EkuljciKw10U2E9xCOoQIdynX
+	 A2TfISHiriT4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] arm64: hugetlbpage: avoid unused-but-set-parameter warning (gcc-16)
-Date: Mon, 23 Feb 2026 07:37:12 -0500
-Message-ID: <20260223123738.1532940-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] drm/amd/display: Fix writeback on DCN 3.2+
+Date: Mon, 23 Feb 2026 07:37:13 -0500
+Message-ID: <20260223123738.1532940-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260223123738.1532940-1-sashal@kernel.org>
 References: <20260223123738.1532940-1-sashal@kernel.org>
@@ -51,156 +57,193 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.3
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 729a2e8e9ac47099a967567389cc9d73ef4194ca ]
+[ Upstream commit 9ef84a307582a92ef055ef0bd3db10fd8ac75960 ]
 
-gcc-16 warns about an instance that older compilers did not:
+[WHAT]
+1. Set no scaling for writeback as they are hardcoded in DCN3.2+.
+2. Set no fast plane update for writeback commits.
 
-arch/arm64/mm/hugetlbpage.c: In function 'huge_pte_clear':
-arch/arm64/mm/hugetlbpage.c:369:57: error: parameter 'addr' set but not used [-Werror=unused-but-set-parameter=]
-
-The issue here is that __pte_clear() does not actually use its second
-argument, but when CONFIG_ARM64_CONTPTE is enabled it still gets
-updated.
-
-Replace the macro with an inline function to let the compiler see
-the argument getting passed down.
-
-Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I have all the information needed for a comprehensive analysis.
+
 ## Analysis
 
-### What the commit does
+### 1. Commit Message Analysis
 
-This commit replaces a `__pte_clear` macro with an equivalent inline
-function to fix a gcc-16 build warning/error:
+The commit title "Fix writeback on DCN 3.2+" clearly indicates a bug
+fix. The `[WHAT]` section describes two fixes:
+1. Setting no scaling (taps=1) for writeback since scaling is hardcoded
+   in DCN 3.2+
+2. Disabling fast plane updates for writeback commits
 
-**Old (macro):**
-```c
-#define __pte_clear(mm, addr, ptep) \
-    __set_pte(ptep, __pte(0))
-```
+The commit has strong trust indicators: Reviewed-by (Harry Wentland, a
+senior AMD display developer), Tested-by (Dan Wheeler, AMD's display
+testing lead), and sign-offs from multiple AMD developers.
 
-**New (inline function):**
-```c
-static inline void __pte_clear(struct mm_struct *mm,
-                               unsigned long addr, pte_t *ptep)
-{
-    __set_pte(ptep, __pte(0));
-}
-```
+### 2. Code Change Analysis
 
-The two are functionally identical. The only difference is that the
-inline function form allows the compiler to understand that `mm` and
-`addr` are intentionally unused parameters passed through to satisfy the
-interface, suppressing the `-Werror=unused-but-set-parameter` warning
-that gcc-16 newly introduces.
+**Change 1 - Scaler taps (lines 10651-10654):**
+The scaler tap values are changed from `h_taps=4, v_taps=4, h_taps_c=2,
+v_taps_c=2` to all `1`. This is because:
+- DCN 3.2+ hardware has hardcoded writeback scaling, meaning the
+  software-configured scaler taps are not used by the hardware
+- Setting taps to 4/2 is incorrect because it tells the DML (Display
+  Mode Library) bandwidth calculation code that scaling with 4 taps is
+  active, when it's actually not. This is visible in
+  `dml2_translation_helper.c:1250-1253` and `dcn30_fpu.c:219-220` where
+  these values feed into bandwidth calculations
+- Wrong bandwidth estimates could cause writeback to fail validation or
+  produce incorrect output
 
-### Classification: Build Fix
+**Change 2 - Writeback check in should_reset_plane (11 new lines):**
+A new check is added in `should_reset_plane()` to detect writeback
+commits (connectors of type `DRM_MODE_CONNECTOR_WRITEBACK` with an
+active `writeback_job`). When detected, the function returns `true`,
+forcing a full plane reset instead of a fast update.
 
-This is a **build fix** — it prevents compilation failure with gcc-16
-when `-Werror` is enabled. Build fixes are explicitly listed as
-acceptable stable material in the stable kernel rules.
+This is needed because commit `435f5b369657c` ("Enable fast plane
+updates on DCN3.2 and above", v6.7-rc2) changed `should_reset_plane()`
+to allow fast updates on DCN 3.2+, skipping the full plane reset for
+`allow_modeset` states. However, writeback operations require the full
+plane reconfiguration path - the fast update path doesn't properly
+handle writeback state changes.
 
-### Risk Assessment
+### 3. Bug Classification
 
-**Risk: Extremely low.** The macro-to-inline-function conversion
-produces identical compiled output. The function body is identical
-(`__set_pte(ptep, __pte(0))`), and the compiler will inline it, making
-the generated code exactly the same. There is zero behavioral change at
-runtime.
+This fixes a **functional correctness bug** where writeback (screen
+capture/recording via DRM writeback connectors) is broken on DCN 3.2+
+hardware (AMD Radeon RX 7000 series and later). Without this fix:
+- Writeback uses the fast plane update path, which is insufficient for
+  writeback configuration
+- Scaler tap parameters are incorrectly set, potentially causing DML
+  bandwidth validation issues
 
-### Scope
+### 4. Scope and Risk Assessment
 
-- **1 file changed** (`arch/arm64/include/asm/pgtable.h`)
-- Small, surgical change — macro removed, inline function added in
-  appropriate location
-- No logic changes whatsoever
+- **Files changed:** 1 (`amdgpu_dm.c`)
+- **Lines changed:** ~15 lines modified/added
+- **Risk:** Low - the scaler tap change is a simple value change; the
+  `should_reset_plane` change adds an additional early-return condition
+  that is purely additive
+- **The writeback check only affects writeback commits** - normal
+  display operations are unaffected
+- **The scaler tap change only affects writeback parameters** - normal
+  display scaling is unaffected
 
-### Considerations Against Backporting
+### 5. Dependency Check
 
-- **gcc-16 is very new** — most stable kernel users and enterprise
-  distributions won't use it for some time
-- This is not a runtime bug — it only affects compilation
-- The warning only becomes an error with `-Werror=unused-but-set-
-  parameter` (which gcc-16 enables by default or through `-Werror`)
+- **Prerequisite 1:** Commit `435f5b369657c` ("Enable fast plane updates
+  on DCN3.2 and above") - present since v6.7-rc2. Without this commit,
+  the `should_reset_plane` change isn't needed (pre-DCN3.2 always does
+  full reset).
+- **Prerequisite 2:** Writeback support re-added in commit
+  `c81e13b929df2` (v6.8-rc1). Without this, the `dm_set_writeback`
+  function doesn't exist.
+- **Self-contained:** The commit doesn't depend on any other patches in
+  its series for correctness. Both changes are independent and additive.
+- **Applicable stable versions:** v6.8+ (where both prerequisites exist)
 
-### Considerations For Backporting
+### 6. User Impact
 
-- Build fixes are explicitly listed as stable-worthy in stable kernel
-  rules
-- The change is **zero risk** — functionally identical
-- As distributions and users adopt gcc-16, they will hit this on older
-  kernels
-- Already reviewed and accepted by arm64 maintainers (Reviewed-by: Dev
-  Jain, Signed-off-by: Will Deacon)
+Users with DCN 3.2+ hardware (AMD RDNA3 / RX 7000 series GPUs, and
+newer) trying to use DRM writeback (screen capture, recording
+functionality) would find it broken without this fix. This affects real
+users attempting to use writeback features on modern AMD GPUs.
 
 ### Verification
 
-- Verified the old macro and new inline function are functionally
-  identical by reading the diff — both call `__set_pte(ptep, __pte(0))`
-  and discard `mm` and `addr`
-- Verified this is purely a build fix with no runtime behavioral change
-- The commit message clearly describes the gcc-16 warning/error and the
-  solution
-- The commit has proper review chain (Suggested-by: Catalin Marinas,
-  Reviewed-by: Dev Jain, Signed-off-by: Will Deacon — all arm64
-  maintainers/reviewers)
-- Could NOT verify whether stable trees already have other gcc-16 build
-  fixes (unverified, but irrelevant to the merits of this specific fix)
+- Verified that commit `435f5b369657c` ("Enable fast plane updates on
+  DCN3.2 and above") was introduced in v6.7-rc2 via `git describe
+  --contains` - this is the commit that created the bug for writeback by
+  allowing fast updates on DCN 3.2+
+- Verified that writeback support was re-added in commit `c81e13b929df2`
+  in v6.8-rc1 via `git describe --contains` - this means the bug is
+  present since v6.8
+- Verified that the scaler_taps values are consumed by DML bandwidth
+  calculation code in `dml2_translation_helper.c:1250-1253` and
+  `dcn30_fpu.c:219-220` via grep
+- Verified that DCN 3.0+ (dcn30) DWB funcs do NOT have a `set_scaler`
+  function (unlike dcn20), confirming that hardware scaling is handled
+  differently on newer DCN
+- Verified the `should_reset_plane` function at line 11660 in the
+  current codebase - confirmed it does not have the writeback check
+- Verified via lore.kernel.org that this is patch 7/21 in a DC patch
+  series, reviewed by Harry Wentland, with no explicit dependency notes
+- Could NOT verify specific user reports of writeback failures on DCN
+  3.2+ (unverified) - the commit doesn't reference bug reports, but the
+  code analysis makes the bug mechanism clear
 
 ### Conclusion
 
-This is a zero-risk build fix that prevents compilation failure with
-gcc-16. While gcc-16 is new and most stable users won't encounter this
-immediately, the change is so low-risk (functionally identical macro-to-
-inline conversion) that the benefit of proactively fixing compilation
-clearly outweighs the negligible risk. Build fixes are explicitly called
-out as stable material.
+This is a clear bug fix for broken writeback functionality on DCN 3.2+
+hardware. The change is small (15 lines), self-contained, low-risk,
+well-reviewed, and tested. It fixes a real functional regression where
+writeback was broken by the fast plane update optimization. It meets all
+stable kernel criteria: obviously correct, fixes a real bug, small and
+contained, no new features. The fix applies to stable trees v6.8+.
 
 **YES**
 
- arch/arm64/include/asm/pgtable.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
-index 64d5f1d9cce96..5ab5fe3bef25e 100644
---- a/arch/arm64/include/asm/pgtable.h
-+++ b/arch/arm64/include/asm/pgtable.h
-@@ -179,8 +179,6 @@ static inline pteval_t __phys_to_pte_val(phys_addr_t phys)
- 	__pte(__phys_to_pte_val((phys_addr_t)(pfn) << PAGE_SHIFT) | pgprot_val(prot))
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index a8a59126b2d2b..a72394b05ab02 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10648,10 +10648,10 @@ static void dm_set_writeback(struct amdgpu_display_manager *dm,
  
- #define pte_none(pte)		(!pte_val(pte))
--#define __pte_clear(mm, addr, ptep) \
--				__set_pte(ptep, __pte(0))
- #define pte_page(pte)		(pfn_to_page(pte_pfn(pte)))
+ 	wb_info->dwb_params.capture_rate = dwb_capture_rate_0;
  
- /*
-@@ -1320,6 +1318,13 @@ static inline bool pud_user_accessible_page(pud_t pud)
- /*
-  * Atomic pte/pmd modifications.
-  */
+-	wb_info->dwb_params.scaler_taps.h_taps = 4;
+-	wb_info->dwb_params.scaler_taps.v_taps = 4;
+-	wb_info->dwb_params.scaler_taps.h_taps_c = 2;
+-	wb_info->dwb_params.scaler_taps.v_taps_c = 2;
++	wb_info->dwb_params.scaler_taps.h_taps = 1;
++	wb_info->dwb_params.scaler_taps.v_taps = 1;
++	wb_info->dwb_params.scaler_taps.h_taps_c = 1;
++	wb_info->dwb_params.scaler_taps.v_taps_c = 1;
+ 	wb_info->dwb_params.subsample_position = DWB_INTERSTITIAL_SUBSAMPLING;
+ 
+ 	wb_info->mcif_buf_params.luma_pitch = afb->base.pitches[0];
+@@ -11667,6 +11667,8 @@ static bool should_reset_plane(struct drm_atomic_state *state,
+ 	struct drm_crtc_state *old_crtc_state, *new_crtc_state;
+ 	struct dm_crtc_state *old_dm_crtc_state, *new_dm_crtc_state;
+ 	struct amdgpu_device *adev = drm_to_adev(plane->dev);
++	struct drm_connector_state *new_con_state;
++	struct drm_connector *connector;
+ 	int i;
+ 
+ 	/*
+@@ -11677,6 +11679,15 @@ static bool should_reset_plane(struct drm_atomic_state *state,
+ 	    state->allow_modeset)
+ 		return true;
+ 
++	/* Check for writeback commit */
++	for_each_new_connector_in_state(state, connector, new_con_state, i) {
++		if (connector->connector_type != DRM_MODE_CONNECTOR_WRITEBACK)
++			continue;
 +
-+static inline void __pte_clear(struct mm_struct *mm,
-+			       unsigned long addr, pte_t *ptep)
-+{
-+	__set_pte(ptep, __pte(0));
-+}
++		if (new_con_state->writeback_job)
++			return true;
++	}
 +
- static inline int __ptep_test_and_clear_young(struct vm_area_struct *vma,
- 					      unsigned long address,
- 					      pte_t *ptep)
+ 	if (amdgpu_in_reset(adev) && state->allow_modeset)
+ 		return true;
+ 
 -- 
 2.51.0
 
