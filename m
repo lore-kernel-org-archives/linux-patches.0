@@ -1,51 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6EF365A02;
-	Mon, 23 Feb 2026 12:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F6C366054;
+	Mon, 23 Feb 2026 12:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850268; cv=none; b=p7H4fChwE8y22hzDjiVtHSOFGxdjs/ORLKK44KqFP42hDSuZP+lYWaXZjLuDIAcl1/au+hQfl/oISA8yoNcm92ObGozOXNogtzhpw01os6+/G3Zx4QKboJ9KOAk1MnsIysMzNu+5Vl3SAEY+RkMvfcpnvYCnF4N1jKzJRMk+pKc=
+	t=1771850270; cv=none; b=d+PDaFZpQQJDZOpsHjhUsoJ9jj8nZwr6bYTKb7+JE27oAGWwRYSfCz12/3Xf0nu43nW5X8PrkFvopRcnhxKplpwlfQ1ztSXHnEcm4oPQSMNCcWdXOyxAr5YG12/zExgkQJlzOYgMbCgxK4I+PGDm6jQcBWL7L8dQ2JhCDnTecYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850268; c=relaxed/simple;
-	bh=ieO3IDaCxW655UojJOwVdh3Cqjs3Mef/DOUYYLZgQfY=;
+	s=arc-20240116; t=1771850270; c=relaxed/simple;
+	bh=DARLU9PRhXEqGMQEgxyxiRXMnp76keYf4PJl96EYaKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mj5P7aUaWneaFMd5AVJCtk0QuVBoEhgGynK0EaYA5ms2RjAfvMEVDY0DzDTNPV//W4Sv26h2LNLRRqvQdZYcZPb27WevDMuKeJ5K/kw/GS/BkltuvXpu2KI0BgEj7rwt2GRhFLTeR2g/YqfJhqZbMYDbdcQNHknAjLXhf2W+QAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PGqkAMqO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Oap5rTy7ePMXEyq4m8QwAq0P9FYpUf80b3yhFF9OToiNlessQ/AOqUucQA1lp3sY326J7eJ+zbyxBJrfjJP6X+gxJQs5USvRbkdB8Y9GOj7Fa1p4S71Lrr6tfpM/pqayVfWWOtbYH5UvlHbfo5S3PVmAlRORcF3OPOwO/6CBtYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PSrFXcOB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PGqkAMqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C854C116D0;
-	Mon, 23 Feb 2026 12:37:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PSrFXcOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DE7C116D0;
+	Mon, 23 Feb 2026 12:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850268;
-	bh=ieO3IDaCxW655UojJOwVdh3Cqjs3Mef/DOUYYLZgQfY=;
+	s=k20201202; t=1771850270;
+	bh=DARLU9PRhXEqGMQEgxyxiRXMnp76keYf4PJl96EYaKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PGqkAMqOuiB6v5WERJJ25jDW7mmx+7GSfSp3/2YybdIlEzVUW5V6AIRqtwMRxWcqO
-	 YlJLSN+bO8LvxKT+NQ8RP4NXBUyr/NpwFjg0zqOWUs/UdTxW2B7a/7f/0UgYgdWIh8
-	 XyUNEgcHe1AYzazA5aBIxIFzYem20IITCKLrQzXK7OIEoWorLp7rpJ5xoPfBbkY0p9
-	 jSiLKVtsk/tKbLfR/xf4BoiHg1Yufh7vymI59xPV9FEz5N47hnn//JHAJFJXEFZgdo
-	 84MQxiaiIjEkDTZ12dkfzCf65iCAMLKx/bpQqAfR/1fYz+fn/Y2f4jqNr28UyHAqC+
-	 MRSYZu76UkpGw==
+	b=PSrFXcOBdPDtdo5nUAH+LOaB1CfOxO7vX9jVipuRsIZ1nUGxfwdFTaaOG6stVvcE2
+	 0wF+wzuOxTxznVHAFQrFaJoM7V/aRTnF5KlojAQtOvOfzQtq07V4gUVC7zz3cX2a8n
+	 xNE41tiTp/UeO6fU3/UPG7EL4GQIZSjraWF2jZ1tYDPNYO4q8m96/D62FiJNczqNC0
+	 7ZEzwgLdwXxrk2OCdBB2La/XXsCmGsKoZxMA1jX2OMVN2rMmy0p18HqsmmkCe4x8L8
+	 Uoar8qO1ie4cockybEzDjIVu9MwYLvZjZDOsUfVoukvYCrUBuxTSD456Q3R1zF14K+
+	 czVr47KVLheLQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tom Chung <chiahsuan.chung@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] drm/amd/display: Fix system resume lag issue
-Date: Mon, 23 Feb 2026 07:37:11 -0500
-Message-ID: <20260223123738.1532940-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] arm64: hugetlbpage: avoid unused-but-set-parameter warning (gcc-16)
+Date: Mon, 23 Feb 2026 07:37:12 -0500
+Message-ID: <20260223123738.1532940-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260223123738.1532940-1-sashal@kernel.org>
 References: <20260223123738.1532940-1-sashal@kernel.org>
@@ -61,167 +54,153 @@ X-stable-base: Linux 6.19.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 64c94cd9be2e188ed07efeafa6a109bce638c967 ]
+[ Upstream commit 729a2e8e9ac47099a967567389cc9d73ef4194ca ]
 
-[Why]
-System will try to apply idle power optimizations setting during
-system resume. But system power state is still in D3 state, and
-it will cause the idle power optimizations command not actually
-to be sent to DMUB and cause some platforms to go into IPS.
+gcc-16 warns about an instance that older compilers did not:
 
-[How]
-Set power state to D0 first before calling the
-dc_dmub_srv_apply_idle_power_optimizations(dm->dc, false)
+arch/arm64/mm/hugetlbpage.c: In function 'huge_pte_clear':
+arch/arm64/mm/hugetlbpage.c:369:57: error: parameter 'addr' set but not used [-Werror=unused-but-set-parameter=]
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The issue here is that __pte_clear() does not actually use its second
+argument, but when CONFIG_ARM64_CONTPTE is enabled it still gets
+updated.
+
+Replace the macro with an inline function to let the compiler see
+the argument getting passed down.
+
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good. Now I have all the information needed for my analysis.
-
----
-
 ## Analysis
 
-### 1. Commit Message Analysis
+### What the commit does
 
-The commit clearly describes a **system resume lag issue** on AMD
-display platforms with IPS (Idle Power States) support. The commit is
-structured with `[Why]` and `[How]` sections explaining the root cause
-and fix:
+This commit replaces a `__pte_clear` macro with an equivalent inline
+function to fix a gcc-16 build warning/error:
 
-- **Root Cause**: During system resume,
-  `dc_dmub_srv_apply_idle_power_optimizations(dm->dc, false)` is called
-  to disable idle power optimizations, but at that point the DMUB power
-  state is still D3 (suspended). The DMUB firmware won't execute
-  commands when in D3 state, so the idle power optimization disable
-  command silently fails, causing some platforms to incorrectly enter
-  IPS during resume.
-- **Fix**: Set DMUB power state to D0 *before* calling the idle power
-  optimizations command.
+**Old (macro):**
+```c
+#define __pte_clear(mm, addr, ptep) \
+    __set_pte(ptep, __pte(0))
+```
 
-### 2. Code Change Analysis
+**New (inline function):**
+```c
+static inline void __pte_clear(struct mm_struct *mm,
+                               unsigned long addr, pte_t *ptep)
+{
+    __set_pte(ptep, __pte(0));
+}
+```
 
-The change is **+10 lines** in a single file. It adds:
-1. `dc_dmub_srv_set_power_state(dm->dc->ctx->dmub_srv,
-   DC_ACPI_CM_POWER_STATE_D0)` — sets DMUB to active power state before
-   sending commands
-2. Mutex locking around the operation (`dm->dc_lock`) for the non-reset
-   resume path
-3. The `amdgpu_in_reset()` check for mutex matches the existing pattern
-   in the reset path (which already holds the lock)
+The two are functionally identical. The only difference is that the
+inline function form allows the compiler to understand that `mm` and
+`addr` are intentionally unused parameters passed through to satisfy the
+interface, suppressing the `-Werror=unused-but-set-parameter` warning
+that gcc-16 newly introduces.
 
-The fix is clearly correct: looking at line 3559 of the current code,
-the normal (non-IPS-early) resume path already calls
-`dc_dmub_srv_set_power_state(D0)` before other operations. The early IPS
-block was simply missing this prerequisite call.
+### Classification: Build Fix
 
-### 3. Bug Severity
+This is a **build fix** — it prevents compilation failure with gcc-16
+when `-Werror` is enabled. Build fixes are explicitly listed as
+acceptable stable material in the stable kernel rules.
 
-This is a **real user-visible bug** — system resume lag/hang on AMD
-platforms with IPS support (DCN35+ hardware, e.g., AMD Ryzen mobile
-APUs). This affects:
-- Laptop users doing S3/S4 suspend/resume
-- The fix prevents displays from being stuck/lagging after system resume
-- Tested-by Daniel Wheeler (AMD) confirms hardware validation
+### Risk Assessment
 
-### 4. Scope and Risk
+**Risk: Extremely low.** The macro-to-inline-function conversion
+produces identical compiled output. The function body is identical
+(`__set_pte(ptep, __pte(0))`), and the compiler will inline it, making
+the generated code exactly the same. There is zero behavioral change at
+runtime.
 
-- **Very small**: Only 10 lines added to a single file
-- **Surgically targeted**: Only affects the early IPS power optimization
-  block in `dm_resume()`
-- **Pattern consistent**: The fix follows the exact same pattern used in
-  the GPU-reset resume path (line 3500) and the normal resume path (line
-  3559), both of which already call `dc_dmub_srv_set_power_state(D0)`
-  first
-- **Well-reviewed**: Reviewed by Nicholas Kazlauskas (AMD display
-  expert), Tested by Daniel Wheeler (AMD QA), Signed-off by Wayne Lin
-  and Alex Deucher (AMD display maintainer)
-- **Low regression risk**: Adding D0 power state before a command is
-  purely correctional — the command already expected D0 state
+### Scope
 
-### 5. Dependencies
+- **1 file changed** (`arch/arm64/include/asm/pgtable.h`)
+- Small, surgical change — macro removed, inline function added in
+  appropriate location
+- No logic changes whatsoever
 
-- `dc_dmub_srv_set_power_state()` was introduced in commit
-  `0f657938e4345` (v6.8)
-- The buggy `dc_dmub_srv_apply_idle_power_optimizations()` call in
-  `dm_resume` was added around v6.9
-- The `dm->dc_lock` mutex has existed since the display manager was
-  created
-- **No missing dependencies** — all required functions exist in v6.9+
-  stable trees
+### Considerations Against Backporting
 
-### 6. Stable Tree Applicability
+- **gcc-16 is very new** — most stable kernel users and enterprise
+  distributions won't use it for some time
+- This is not a runtime bug — it only affects compilation
+- The warning only becomes an error with `-Werror=unused-but-set-
+  parameter` (which gcc-16 enables by default or through `-Werror`)
 
-The fix applies to kernels **v6.9+** where the IPS check in `dm_resume`
-exists. The code is self-contained and should apply cleanly to recent
-stable trees (6.12.y, 6.6.y may need checking for ips_support code).
+### Considerations For Backporting
+
+- Build fixes are explicitly listed as stable-worthy in stable kernel
+  rules
+- The change is **zero risk** — functionally identical
+- As distributions and users adopt gcc-16, they will hit this on older
+  kernels
+- Already reviewed and accepted by arm64 maintainers (Reviewed-by: Dev
+  Jain, Signed-off-by: Will Deacon)
 
 ### Verification
 
-- Verified the exact diff via `git diff 64c94cd9be2e1^..64c94cd9be2e1`:
-  confirms +10 line change, single file
-- Verified `dc_dmub_srv_set_power_state()` implementation at
-  `dc_dmub_srv.c:1572-1585`: simple power state setter, calls
-  `dmub_srv_set_power_state()`
-- Verified the function was introduced in commit `0f657938e4345` (first
-  in v6.8-rc1) via `git tag --contains`
-- Verified the buggy IPS check (`ips_support` +
-  `apply_idle_power_optimizations` in `dm_resume`) was added around v6.9
-  via `git tag --contains 60818ed76577c`
-- Verified `dm->dc_lock` mutex exists at `amdgpu_dm.h:446`
-- Verified the normal resume path already calls
-  `dc_dmub_srv_set_power_state(D0)` at line 3559, confirming the fix
-  follows the established pattern
-- Verified the GPU-reset resume path also calls
-  `dc_dmub_srv_set_power_state(D0)` at line 3500, same pattern
-- Could NOT verify via lore.kernel.org whether there are known
-  regressions from this fix (unverified, but low concern given AMD
-  testing)
+- Verified the old macro and new inline function are functionally
+  identical by reading the diff — both call `__set_pte(ptep, __pte(0))`
+  and discard `mm` and `addr`
+- Verified this is purely a build fix with no runtime behavioral change
+- The commit message clearly describes the gcc-16 warning/error and the
+  solution
+- The commit has proper review chain (Suggested-by: Catalin Marinas,
+  Reviewed-by: Dev Jain, Signed-off-by: Will Deacon — all arm64
+  maintainers/reviewers)
+- Could NOT verify whether stable trees already have other gcc-16 build
+  fixes (unverified, but irrelevant to the merits of this specific fix)
 
 ### Conclusion
 
-This is a clear, well-tested bug fix for a real user-visible issue
-(system resume lag/hang on AMD IPS-capable platforms). The fix is small
-(+10 lines), surgical, follows established patterns in the same
-function, has been reviewed and tested by AMD engineers, and has no
-feature additions. It meets all stable kernel criteria.
+This is a zero-risk build fix that prevents compilation failure with
+gcc-16. While gcc-16 is new and most stable users won't encounter this
+immediately, the change is so low-risk (functionally identical macro-to-
+inline conversion) that the benefit of proactively fixing compilation
+clearly outweighs the negligible risk. Build fixes are explicitly called
+out as stable material.
 
 **YES**
 
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm64/include/asm/pgtable.h | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index a72394b05ab02..e004fc3893edf 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3468,7 +3468,17 @@ static int dm_resume(struct amdgpu_ip_block *ip_block)
- 	struct dc_commit_streams_params commit_params = {};
+diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
+index 64d5f1d9cce96..5ab5fe3bef25e 100644
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -179,8 +179,6 @@ static inline pteval_t __phys_to_pte_val(phys_addr_t phys)
+ 	__pte(__phys_to_pte_val((phys_addr_t)(pfn) << PAGE_SHIFT) | pgprot_val(prot))
  
- 	if (dm->dc->caps.ips_support) {
-+		if (!amdgpu_in_reset(adev))
-+			mutex_lock(&dm->dc_lock);
-+
-+		/* Need to set POWER_STATE_D0 first or it will not execute
-+		 * idle_power_optimizations command to DMUB.
-+		 */
-+		dc_dmub_srv_set_power_state(dm->dc->ctx->dmub_srv, DC_ACPI_CM_POWER_STATE_D0);
- 		dc_dmub_srv_apply_idle_power_optimizations(dm->dc, false);
-+
-+		if (!amdgpu_in_reset(adev))
-+			mutex_unlock(&dm->dc_lock);
- 	}
+ #define pte_none(pte)		(!pte_val(pte))
+-#define __pte_clear(mm, addr, ptep) \
+-				__set_pte(ptep, __pte(0))
+ #define pte_page(pte)		(pfn_to_page(pte_pfn(pte)))
  
- 	if (amdgpu_in_reset(adev)) {
+ /*
+@@ -1320,6 +1318,13 @@ static inline bool pud_user_accessible_page(pud_t pud)
+ /*
+  * Atomic pte/pmd modifications.
+  */
++
++static inline void __pte_clear(struct mm_struct *mm,
++			       unsigned long addr, pte_t *ptep)
++{
++	__set_pte(ptep, __pte(0));
++}
++
+ static inline int __ptep_test_and_clear_young(struct vm_area_struct *vma,
+ 					      unsigned long address,
+ 					      pte_t *ptep)
 -- 
 2.51.0
 
