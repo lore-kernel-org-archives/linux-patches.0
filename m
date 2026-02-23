@@ -1,46 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA61936922C;
-	Mon, 23 Feb 2026 12:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8187B36923C;
+	Mon, 23 Feb 2026 12:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850293; cv=none; b=cLicoHrWF21bMHtplQJ17awYe/mDBTk/1UDj6yiIsKBy2fZB+bVCn6+Fii/jtPPRFcXRV4oDU63bKd1/U0fQJ/U38R4mqHlKLzu17gpU7KP9UgihuG676RoNobh6iMC2m5O/P4mtynH+hQW24Syevk+czxWZSQUEdkwGoi0BbsY=
+	t=1771850294; cv=none; b=k6sWT5rQLVUIUB/oXHvCKcy2+E0lBjJKJeviyjkz5M25CUdoERQUiTVS2hS9Wb+odrTMUu2HekXL9LwbJsAA1s8JxnyD6bAqnT3uVU0liYEaVcV16VvQdEO/YRJv3rBQM9ilp802Rgoauh8Uh/AGTTv0cDQ3dYDTzHT0kuIssIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850293; c=relaxed/simple;
-	bh=nY/v9SYsp2G3sHqyLBAJhO39T4dkycHk/4QUhAf0jaY=;
+	s=arc-20240116; t=1771850294; c=relaxed/simple;
+	bh=xcY3l/8COfPuaTeSpHCsQ4ZAHRp7isNRAnvmtk1jgYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HkRQmulHxMct/qWfi8xmrHjWAsXFvIEu3J9K+3J4xzoTirdKoa6Dzuwvhqx2cHWGzeJJiKzCX/Jt6cvkHWF4+KljT8B5AECgUIFFJ0efdBhSPZU+rURrScJ559f2I7jvJlHuU0Paw8embKwVw8hd6kyymxFqv8uz57m02EJjkmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Omq1bgeX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bCBfXbQWGqH0rKtVCm++u5uPWKZNrjJRa+M7wHpsOElOFktFYJPikuibshBCEMBT8ybTf/M+x78fUB4mmjqh/9J7ZuaQHSb1suIDuoET9GW36PJY535w1MGEwyXBMCaf98uqFF1fWknVoAEMmJ8B96Fs0Z9ShATcLL6liOs6Exc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a/A9Vi6E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Omq1bgeX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B026C116D0;
-	Mon, 23 Feb 2026 12:38:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a/A9Vi6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029CDC19424;
+	Mon, 23 Feb 2026 12:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850292;
-	bh=nY/v9SYsp2G3sHqyLBAJhO39T4dkycHk/4QUhAf0jaY=;
+	s=k20201202; t=1771850294;
+	bh=xcY3l/8COfPuaTeSpHCsQ4ZAHRp7isNRAnvmtk1jgYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Omq1bgeXAq4B70CRkuYvjWXQXStIN5A/HChGMzg8AHuNx/Z6e7jQrYukDnRYhZSlF
-	 GWaVWRLs7zB2MfyjLXlOECq84f4RhFMemckoEpjgIfdl4iX8EYaJfxDy0KJqQr71To
-	 2cy5HGAW9bm6B6MdatVc8zVeNLyJ38ZZAtFPpbYWP6hwLSLwoi/ctZXuhY8OLKF5ej
-	 FoOxKNEj5DMHNXZF+6EmxaBV74mAIqW035f2h2hoNoANHw2ugXQHZgHLs4AHUp6vRj
-	 E1jRF0Fp5NvGOla7vo1zq9omZOhz2tgjj7cY1gi887tnAjgmdKhbxlRODhmQCOWGnL
-	 qDzA5ZfzsCfUA==
+	b=a/A9Vi6Ec/X/9SVwamVz3wZGv3pxdxI42K4iek1SpF6QJYwfUlQn9uSDhDSU458vH
+	 9OedVfBrQKMAemFudfXVlHCaEB+Ma5QYQApjkNHsiI904cQ/2doZvzclFI0FgOjlmM
+	 vuJRKsgI3PLP8L0J8M/SMsnuDX+kq7iUhgPVyK7qcVqtRzBizv9P5JoWr5ekHKOGiW
+	 R2eQkEOSSTGPOiS7aCQHpsjTdWz1D5g2NDmA+sPwypnrzPeSNFGRw9o61R0s2py2R2
+	 OJXM2ZlMkqyLrcryqCzRsta0+wHNq/Q6hSeEqgKiBX4OWaE23bM2UjbyT/YMq6rztJ
+	 Yb2rENPbmJi+g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
-	Wei Liu <wei.liu@kernel.org>,
+Cc: Wayne Lin <Wayne.Lin@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kys@microsoft.com,
-	haiyangz@microsoft.com,
-	decui@microsoft.com,
-	longli@microsoft.com,
-	linux-hyperv@vger.kernel.org,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] mshv: clear eventfd counter on irqfd shutdown
-Date: Mon, 23 Feb 2026 07:37:27 -0500
-Message-ID: <20260223123738.1532940-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] drm/amd/display: Avoid updating surface with the same surface under MPO
+Date: Mon, 23 Feb 2026 07:37:28 -0500
+Message-ID: <20260223123738.1532940-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260223123738.1532940-1-sashal@kernel.org>
 References: <20260223123738.1532940-1-sashal@kernel.org>
@@ -50,183 +54,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.3
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos López <clopez@suse.de>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit 2b4246153e2184e3a3b4edc8cc35337d7a2455a6 ]
+[ Upstream commit 1a38ded4bc8ac09fd029ec656b1e2c98cc0d238c ]
 
-While unhooking from the irqfd waitqueue, clear the internal eventfd
-counter by using eventfd_ctx_remove_wait_queue() instead of
-remove_wait_queue(), preventing potential spurious interrupts. This
-removes the need to store a pointer into the workqueue, as the eventfd
-already keeps track of it.
+[Why & How]
+Although it's dummy updates of surface update for committing stream
+updates, we should not have dummy_updates[j].surface all indicating
+to the same surface under multiple surfaces case. Otherwise,
+copy_surface_update_to_plane() in update_planes_and_stream_state()
+will update to the same surface only.
 
-This mimicks what other similar subsystems do on their equivalent paths
-with their irqfds (KVM, Xen, ACRN support, etc).
-
-Signed-off-by: Carlos López <clopez@suse.de>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a clear picture. Let me provide my analysis.
-
 ## Analysis
 
-### 1. Commit Message Analysis
+### What the commit fixes
 
-The commit replaces `remove_wait_queue()` with
-`eventfd_ctx_remove_wait_queue()` in `mshv_irqfd_shutdown()`. The key
-claim is that this "prevents potential spurious interrupts" by clearing
-the eventfd counter atomically when unhooking from the waitqueue. The
-commit also removes the now-unnecessary `irqfd_wqh` pointer from the
-struct.
+This is a clear **indexing bug** in `amdgpu_dm_atomic_commit_tail()`. In
+a loop iterating over `status->plane_count` planes:
 
-The phrase "potential spurious interrupts" uses the word "potential" —
-suggesting this is a preventive/hardening fix rather than a response to
-an observed bug.
+```c
+for (j = 0; j < status->plane_count; j++)
+    dummy_updates[j].surface = status->plane_states[0];  // BUG: always
+[0]
+```
 
-### 2. Code Change Analysis
+The fix changes `plane_states[0]` to `plane_states[j]`, so each dummy
+update references its correct corresponding plane state instead of all
+pointing to the first one.
 
-The change is small and well-defined:
-- **`mshv_irqfd_shutdown()`**: `remove_wait_queue(irqfd->irqfd_wqh,
-  &irqfd->irqfd_wait)` →
-  `eventfd_ctx_remove_wait_queue(irqfd->irqfd_eventfd_ctx,
-  &irqfd->irqfd_wait, &cnt)`. The new call atomically removes the waiter
-  AND resets the eventfd counter to zero.
-- **`mshv_irqfd_queue_proc()`**: Removes `irqfd->irqfd_wqh = wqh` since
-  the field is no longer needed.
-- **`struct mshv_irqfd`**: Removes the `irqfd_wqh` field.
+### Bug impact
 
-Without clearing the counter, if an eventfd had been signaled before
-shutdown completes, stale events could remain in the counter. This is a
-real correctness concern, though labeled as "potential."
+This bug affects **Multi-Plane Overlay (MPO)** scenarios where
+`status->plane_count > 1`. When multiple planes are active:
 
-### 3. Pattern Match with KVM/Xen/ACRN/VFIO
+1. **All dummy updates point to the same surface** -
+   `copy_surface_update_to_plane()` processes the same plane repeatedly,
+   ignoring other planes in the composition
+2. **The sort by `layer_index` becomes meaningless** - all entries have
+   the same layer_index since they reference the same plane
+3. **`dc_update_planes_and_stream()` operates on incorrect data** -
+   stream updates that should touch all planes only affect one
 
-All four analogous subsystems use `eventfd_ctx_remove_wait_queue()` in
-their irqfd shutdown paths:
-- `virt/kvm/eventfd.c:136`
-- `drivers/xen/privcmd.c:906`
-- `drivers/virt/acrn/irqfd.c:55`
-- `drivers/vfio/virqfd.c:90`
+This causes incorrect display behavior under MPO, which is used for
+hardware-accelerated video overlay, cursor planes, and compositing.
 
-The mshv code was the sole outlier using plain `remove_wait_queue()`.
-This is a well-established pattern for correct irqfd teardown.
+### Meets stable criteria
 
-### 4. Driver Age and Stable Tree Applicability
+- **Obviously correct**: Classic `[0]` vs `[j]` indexing bug in a loop -
+  the fix is a single character change
+- **Fixes a real bug**: MPO plane updates are broken when multiple
+  planes are active
+- **Small and contained**: Single line change, zero risk of regression
+- **No new features**: Pure bug fix
+- **Reviewed and tested**: Has `Reviewed-by: Harry Wentland`, `Tested-
+  by: Daniel Wheeler`
 
-The mshv driver was introduced in v6.15-rc1 (commit `621191d709b14`). It
-would only exist in stable trees 6.15.y and newer (6.16.y, 6.17.y,
-6.18.y). It does NOT exist in any LTS trees (6.12.y, 6.6.y, 6.1.y,
-5.15.y).
+### Bug origin
 
-### 5. Risk Assessment
+The bug was introduced in commit `efc8278eecfd5` (Feb 2021) which was a
+revert that restored older code containing this indexing error. The bug
+has been present for ~5 years, affecting all stable trees that contain
+this code path.
 
-- **Size**: Very small — changes 2 files, net removal of code (removes a
-  struct field and an assignment)
-- **Risk**: Very low — uses a well-understood API that's already used by
-  KVM, Xen, ACRN, and VFIO
-- **Scope**: Confined to mshv irqfd shutdown path only
+### Risk assessment
 
-### 6. Bug Severity
-
-Without this fix, if the eventfd counter is non-zero during shutdown,
-leftover events could trigger spurious interrupt injection into the
-guest VM. In a hypervisor context, spurious interrupts can cause guest
-OS instability. While this is described as "potential" (no specific bug
-report), the failure mode is real and the fix is straightforward.
-
-### 7. Stable Criteria Assessment
-
-- **Obviously correct**: YES — follows the exact pattern used by KVM,
-  Xen, ACRN, VFIO
-- **Fixes a real bug**: Borderline — fixes a latent correctness issue
-  rather than a reported crash
-- **Small and contained**: YES — minimal change
-- **No new features**: YES — this is purely a correctness fix
-- **Tested**: It mirrors established code in KVM and other subsystems
+**Extremely low risk.** This is a one-character fix (`0` → `j`) that
+corrects an obvious loop indexing mistake. There is no conceivable way
+this change could cause a regression - the previous behavior (all
+pointing to `plane_states[0]`) was simply wrong.
 
 ### Verification
 
-- `git log --follow --diff-filter=A -- drivers/hv/mshv_eventfd.c`
-  confirmed the file was introduced in commit `621191d709b14` ("Drivers:
-  hv: Introduce mshv_root module")
-- `git describe --tags --contains 621191d709b14` confirmed this was
-  introduced in v6.15-rc1
-- Grep for `eventfd_ctx_remove_wait_queue` confirmed all four analogous
-  subsystems (KVM, Xen, ACRN, VFIO) use this API in their shutdown paths
-- Read of `drivers/hv/mshv_eventfd.c` confirmed the pre-patch code uses
-  `remove_wait_queue()` with the stored `irqfd_wqh` pointer (line 255)
-- Verified stable tree tags exist for 6.15.y through 6.18.y that would
-  contain this driver
-- Could NOT verify any specific user-reported bugs caused by the lack of
-  counter clearing (unverified — commit only says "potential")
-
-### Conclusion
-
-This is a small, low-risk correctness fix that aligns mshv with the
-well-established pattern used by KVM, Xen, ACRN, and VFIO for irqfd
-shutdown. It prevents stale eventfd events from potentially causing
-spurious interrupts in guest VMs. The fix is obviously correct, tiny in
-scope, and carries essentially zero regression risk. While it addresses
-a "potential" rather than actively reported issue, the fix is clearly
-the right thing to do for stable users running Microsoft Hypervisor
-workloads on 6.15+ kernels.
+- **Verified the buggy line exists** at `amdgpu_dm.c:10954` via Read
+  tool - confirmed `plane_states[0]` in loop
+- **Verified bug introduction**: `git log --no-walk efc8278eecfd5`
+  confirmed it was a revert from Feb 2021 that restored the buggy code
+- **Verified the fix commit**: `git show 1a38ded4bc8ac` confirmed Wayne
+  Lin authored the fix, merged to master
+- **Verified code flow**: The agent traced
+  `dc_update_planes_and_stream()` → `update_planes_and_stream_state()` →
+  `copy_surface_update_to_plane()` which iterates over each surface
+  update, confirming that having all dummy_updates point to the same
+  surface causes only one plane to be updated
+- **Verified `dm_plane_layer_index_cmp()`** sorts by
+  `surface->layer_index` - with all surfaces the same, sorting is a no-
+  op (broken)
+- **Verified the fix is in master** via `git branch -a --contains
+  1a38ded4bc8ac`
+- **Could not independently verify** user-reported display issues under
+  MPO, but the code analysis clearly shows the bug mechanism
 
 **YES**
 
- drivers/hv/mshv_eventfd.c | 5 ++---
- drivers/hv/mshv_eventfd.h | 1 -
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hv/mshv_eventfd.c b/drivers/hv/mshv_eventfd.c
-index 0b75ff1edb735..cb8b24b81cd5e 100644
---- a/drivers/hv/mshv_eventfd.c
-+++ b/drivers/hv/mshv_eventfd.c
-@@ -247,12 +247,13 @@ static void mshv_irqfd_shutdown(struct work_struct *work)
- {
- 	struct mshv_irqfd *irqfd =
- 			container_of(work, struct mshv_irqfd, irqfd_shutdown);
-+	u64 cnt;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index e004fc3893edf..7fae54e47292b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10961,7 +10961,7 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
+ 			continue;
+ 		}
+ 		for (j = 0; j < status->plane_count; j++)
+-			dummy_updates[j].surface = status->plane_states[0];
++			dummy_updates[j].surface = status->plane_states[j];
  
- 	/*
- 	 * Synchronize with the wait-queue and unhook ourselves to prevent
- 	 * further events.
- 	 */
--	remove_wait_queue(irqfd->irqfd_wqh, &irqfd->irqfd_wait);
-+	eventfd_ctx_remove_wait_queue(irqfd->irqfd_eventfd_ctx, &irqfd->irqfd_wait, &cnt);
- 
- 	if (irqfd->irqfd_resampler) {
- 		mshv_irqfd_resampler_shutdown(irqfd);
-@@ -371,8 +372,6 @@ static void mshv_irqfd_queue_proc(struct file *file, wait_queue_head_t *wqh,
- 	struct mshv_irqfd *irqfd =
- 			container_of(polltbl, struct mshv_irqfd, irqfd_polltbl);
- 
--	irqfd->irqfd_wqh = wqh;
--
- 	/*
- 	 * TODO: Ensure there isn't already an exclusive, priority waiter, e.g.
- 	 * that the irqfd isn't already bound to another partition.  Only the
-diff --git a/drivers/hv/mshv_eventfd.h b/drivers/hv/mshv_eventfd.h
-index 332e7670a3442..464c6b81ab336 100644
---- a/drivers/hv/mshv_eventfd.h
-+++ b/drivers/hv/mshv_eventfd.h
-@@ -32,7 +32,6 @@ struct mshv_irqfd {
- 	struct mshv_lapic_irq		     irqfd_lapic_irq;
- 	struct hlist_node		     irqfd_hnode;
- 	poll_table			     irqfd_polltbl;
--	wait_queue_head_t		    *irqfd_wqh;
- 	wait_queue_entry_t		     irqfd_wait;
- 	struct work_struct		     irqfd_shutdown;
- 	struct mshv_irqfd_resampler	    *irqfd_resampler;
+ 		sort(dummy_updates, status->plane_count,
+ 		     sizeof(*dummy_updates), dm_plane_layer_index_cmp, NULL);
 -- 
 2.51.0
 
