@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB0C29A1;
-	Mon, 23 Feb 2026 12:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E8434CDD;
+	Mon, 23 Feb 2026 12:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850122; cv=none; b=neKuELsXDvbzBmSfHzlI02oc42eOqWxY771eJaevg0wtNZ5sA4qSIAC+TyeWWtJi4jAw/a3HZQT3mxgJ2MU0d+tzwTyGnSIG0JljomGB7OWZmzs7+J+ttgcHAFdnUx/7ZbI/1U4onv6CKWCunLbZDetL/Xp+arTuEd5KVNYYCkg=
+	t=1771850262; cv=none; b=SEf2jAB2mSunaPxtb/M+vIwuHh2oTA/CpaAY+NrG+gfif0GxzbUul/jX1VO9mLNdFAHCdbADdfNv7+tYzpuYQgjkiIBEDvl0VZAKmFl67kIt3AsKdSCAMkiw/oPB3az1og0mpziF53ucLBSIZIWEN/MaB7NIIqf1CwUY1LqRBLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850122; c=relaxed/simple;
-	bh=832GzeFGpJlTvJnDTmsz3qYOtS9eEKxPa1rPEfRgb88=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=H8boGf4wvTXIxUdiqrfJrQxZNybFLiz6kQEneIr42/ldG9j8F1ULj3H6i/GFM8MG5PtS1caR+ffov4V73EfRr5RVI30WTBDZlW9dqv20DeWNofowNhrMqZvBvxQ6XZekU62HcZMOaX+03RMqphONC0wzdwOUfs85hc5UfvTWYL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g2QhZzH8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771850262; c=relaxed/simple;
+	bh=6yEJzJGwIc7WthA0Os7u9sP1677ojVa4inC0ZmHF8hc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hP4INEJM7J7Nn6LsWuR0GEJiP/TEatICbXwXw1G+t9l/RS8jD4fRWFQaZyBVonDnF13eEHLcky8riYsJls2QRfCr2Rq8aomn99KB6BIufH10geFW8XS11BiXmEoq+mAg66V3PxYCwITt4WEOtC1WDk451l/1RIlvI+AEK5xikJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rxX85ZsB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g2QhZzH8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF8AC116C6;
-	Mon, 23 Feb 2026 12:35:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rxX85ZsB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B650C19424;
+	Mon, 23 Feb 2026 12:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850122;
-	bh=832GzeFGpJlTvJnDTmsz3qYOtS9eEKxPa1rPEfRgb88=;
+	s=k20201202; t=1771850261;
+	bh=6yEJzJGwIc7WthA0Os7u9sP1677ojVa4inC0ZmHF8hc=;
 	h=From:To:Cc:Subject:Date:From;
-	b=g2QhZzH8jINChZkD3HgkJysqWC60zhlK9XJGp2hwhtKQsepGtl0QXFF4D7jQEp06w
-	 Zj97Oc0lm0oPa3NjG5q8bzFF5jigDMuEdn3Y/GdpH9BvXYkLjSJpdO6KoR3VOQviD4
-	 Kg6uGZ6107FgMLlGCX+Wt4PCug/PE7aTO71mzBKzgJJO0IiLD2CJQdTWppHyOMf1X9
-	 V2HjDXPaIaqo6PCMmEA2Wn8fNvpPBBGLVYJoX9J/OZs+K+wpMBdJXs/p8bMKX4HoRm
-	 p3UF3bHBAJ/7PagQAndQVFz/nvyUh1jbVAu2amuvff4qlfwKTRJJ2izdS0Ymvn/wBg
-	 wmrJih91N3ZoA==
+	b=rxX85ZsBqjadtifvESDhlaU9SIZ3K5AVVBaf/0KYMPcyRp9XAQG0UG/opzzWYNAVl
+	 DruHVLTQwY6hOo7wK2bS5XNUxDcnnt62ID9quq7573ukex+rq7mp5V2W4RBLqG/reM
+	 tIMnN2huWrwL7AFOt0kkYeJTSf2+P/q8yWGA2j6o1TOscabYaY12+q1LMrshaH5zwU
+	 Q01xiPUX22kR9rQMKl8kD5pIQnugHUvxPnz3SHwZFPrL3HoYDrXHFdy5cJxNM5HRd1
+	 twbWbNKbbmrvucOVji+5JQcDkYm11PE+y0vE91LSkHBGeCRbs59GcrLoDAuO4SxfxB
+	 4hkQ3UJbA5cbA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Phil Sutter <phil@nwl.cc>,
-	Alyssa Ross <hi@alyssa.is>,
-	Florian Westphal <fw@strlen.de>,
+Cc: Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pablo@netfilter.org,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] include: uapi: netfilter_bridge.h: Cover for musl libc
-Date: Mon, 23 Feb 2026 07:35:19 -0500
-Message-ID: <20260223123520.1515978-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] drm/amd/display: Remove conditional for shaper 3DLUT power-on
+Date: Mon, 23 Feb 2026 07:37:06 -0500
+Message-ID: <20260223123738.1532940-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -49,160 +55,122 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.3
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Phil Sutter <phil@nwl.cc>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 4edd4ba71ce0df015303dba75ea9d20d1a217546 ]
+[ Upstream commit 1b38a87b8f8020e8ef4563e7752a64182b5a39b9 ]
 
-Musl defines its own struct ethhdr and thus defines __UAPI_DEF_ETHHDR to
-zero. To avoid struct redefinition errors, user space is therefore
-supposed to include netinet/if_ether.h before (or instead of)
-linux/if_ether.h. To relieve them from this burden, include the libc
-header here if not building for kernel space.
+[Why]
+Shaper programming has high chance to fail on first time after
+power-on or reboot. This can be verified by running IGT's kms_colorop.
 
-Reported-by: Alyssa Ross <hi@alyssa.is>
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+[How]
+Always power on the shaper and 3DLUT before programming by
+removing the debug flag of low power mode.
+
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough information to make a thorough analysis.
+Good. This confirms the key observation: `mpc32_program_3dlut()` at line
+927 **already calls `mpc32_power_on_shaper_3dlut()` unconditionally**
+for power-on. The fix makes `mpc32_program_shaper()` consistent with
+this pattern.
 
 ## Analysis
 
-### 1. Commit Message Analysis
+### 1. What the commit fixes
 
-The commit fixes a **userspace build failure** when compiling programs
-against musl libc that include `<linux/netfilter_bridge.h>`. Musl
-defines its own `struct ethhdr` and sets `__UAPI_DEF_ETHHDR` to zero to
-tell kernel UAPI headers not to redefine it. However, this mechanism
-only works if musl's `<netinet/if_ether.h>` is included *before* the
-kernel's `<linux/if_ether.h>`. Without this fix, including
-`<linux/netfilter_bridge.h>` (which transitively includes
-`<linux/if_ether.h>`) results in struct redefinition errors.
+The commit fixes a real hardware programming bug in AMD DCN 3.2 display
+hardware (RDNA3 GPUs). The shaper LUT programming
+(`mpc32_program_shaper()`) was conditionally gating the power-on of the
+shaper/3DLUT memory behind a debug flag
+(`enable_mem_low_power.bits.mpc`). When this flag is not set, the
+hardware memory is never powered on before programming, causing shaper
+programming to fail on first boot or reboot.
 
-The commit has a `Reported-by:` tag from Alyssa Ross, indicating a real
-user hit this issue.
+### 2. The bug mechanism
 
-### 2. Code Change Analysis
+Looking at `mpc32_power_on_shaper_3dlut()` (lines 682-709):
+- Line 692-693: It **always** writes to `MPCC_MCM_MEM_PWR_CTRL` to
+  enable/disable power — this is the actual power control
+- Lines 695-698: The debug flag only controls whether to **wait** for
+  the power state to settle
 
-The change is minimal - 3 lines added:
-```c
-#ifndef __KERNEL__
-#include <netinet/if_ether.h>   /* for __UAPI_DEF_ETHHDR if defined */
-#endif
-```
+The caller `mpc32_program_shaper()` was incorrectly checking the debug
+flag before even calling the function, meaning the power control
+register was never written when the flag was off. Without powering on
+the memory, the subsequent LUT programming writes fail silently.
 
-This is inserted before the existing `#include <linux/if_ether.h>`, so
-that musl's `<netinet/if_ether.h>` sets `__UAPI_DEF_ETHHDR=0` before the
-kernel header checks it. The `#ifndef __KERNEL__` guard ensures this
-only affects userspace compilation - the kernel build is completely
-unaffected.
+### 3. Consistency evidence
 
-### 3. Classification
+`mpc32_program_3dlut()` (line 927) already calls
+`mpc32_power_on_shaper_3dlut()` unconditionally for power-on. The
+conditional only guards the power-**down** (line 987-988). The fix makes
+`mpc32_program_shaper()` follow the same correct pattern.
 
-This is a **build fix** for UAPI headers. The stable kernel rules
-explicitly allow build fixes ("Fixes for compilation errors or
-warnings... These are critical for users who need to build the kernel").
+### 4. Stable criteria assessment
 
-### 4. Scope and Risk Assessment
+- **Fixes a real bug**: Yes — shaper programming fails on first
+  boot/reboot, causing incorrect color management
+- **Obviously correct**: Yes — makes the shaper function consistent with
+  the 3DLUT function's already-correct unconditional power-on
+- **Small and contained**: Yes — a single line change (removing one `if`
+  condition)
+- **No new features**: Correct — just ensures hardware is powered before
+  programming
+- **Tested**: Yes — `Tested-by: Daniel Wheeler`, verified with IGT
+  kms_colorop test, `Reviewed-by: Aurabindo Pillai`
+- **Risk**: Very low — the function call always writes the power
+  register; removing the guard just ensures it's always called
 
-- **Lines changed**: 3 lines added (plus context from moved lines in the
-  diff)
-- **Files touched**: 1 UAPI header file
-- **Risk**: Essentially zero. The added code is guarded by `#ifndef
-  __KERNEL__`, so it cannot affect kernel compilation or runtime in any
-  way. It only affects userspace programs including this header.
-- **Kernel runtime impact**: None whatsoever
+### 5. User impact
 
-### 5. Precedent
-
-This follows an established pattern used in multiple other UAPI headers:
-- `include/uapi/linux/mptcp.h` - includes `<netinet/in.h>` and
-  `<sys/socket.h>` for the same reason (commit `06e445f740c1a`, which
-  had a `Fixes:` tag)
-- `include/uapi/linux/if.h` - includes `<sys/socket.h>`
-- `include/uapi/linux/vm_sockets.h` - includes `<sys/socket.h>`
-
-The original `__UAPI_DEF_ETHHDR` mechanism was added in commit
-`6926e041a8920` specifically for musl compatibility.
-
-### 6. User Impact
-
-Users compiling netfilter/ebtables userspace tools (like iptables,
-nftables, ebtables) against musl libc are affected. This is particularly
-relevant for:
-- Alpine Linux and other musl-based distributions
-- Embedded systems using musl
-- Container environments using musl-based images (e.g., Alpine Docker
-  images)
-
-Without this fix, these users must manually ensure
-`<netinet/if_ether.h>` is included before any kernel netfilter headers,
-which is fragile and error-prone.
-
-### 7. Dependencies
-
-None. The patch is completely self-contained. The `__UAPI_DEF_ETHHDR`
-mechanism in `include/uapi/linux/if_ether.h` has been present since 2018
-(commit `6926e041a8920`), so it exists in all active stable trees.
+This affects all AMD RDNA3 GPU users (RX 7000 series) who use color
+management features (shaper/3DLUT). Failure to program the shaper LUT
+means incorrect display color output. This is a functional correctness
+issue, not just cosmetic.
 
 ### Verification
 
-- Verified the current file contents via `Read` of
-  `include/uapi/linux/netfilter_bridge.h` - confirmed it includes
-  `<linux/if_ether.h>` which defines `struct ethhdr`
-- Verified `include/uapi/linux/if_ether.h` lines 171-182 show the
-  `__UAPI_DEF_ETHHDR` guard mechanism exists and works by checking the
-  macro before defining `struct ethhdr`
-- Verified via `git log` that the `__UAPI_DEF_ETHHDR` mechanism was
-  introduced in commit `6926e041a8920` (2018) - present in all stable
-  trees
-- Verified the established pattern via Explore agent: similar musl-
-  compat fixes exist in `mptcp.h`, `if.h`, `vm_sockets.h`, `ethtool.h`
-- Verified the mptcp precedent (`06e445f740c1a`) was a similar fix with
-  a `Fixes:` tag, confirming this class of fix is considered bug-worthy
-- Verified via lore.kernel.org that the patch went through proper review
-  via the netfilter-devel list and was included in Florian Westphal's
-  netfilter patch series
-- Could NOT verify if the mptcp fix was specifically backported to
-  stable trees (unverified), but it had a Fixes: tag which would trigger
-  auto-selection
-
-### Conclusion
-
-This is a textbook build fix for a UAPI header. It:
-1. Fixes a real compilation error reported by a real user
-2. Is obviously correct - follows an established pattern used in other
-   headers
-3. Is tiny (3 lines) with zero risk to kernel runtime
-4. Has no dependencies on other commits
-5. Falls squarely within the "build fixes" exception for stable
+- Read `mpc32_power_on_shaper_3dlut()` (lines 682-709): Confirmed it
+  always writes power register at line 692-693 regardless of debug flag;
+  debug flag only controls wait at lines 695-698
+- Read `mpc32_program_shaper()` (lines 712-751): Confirmed the buggy
+  conditional at line 727 gates the entire power-on call
+- Read `mpc32_program_3dlut()` (lines 908-991): Confirmed unconditional
+  power-on at line 927, proving the fix makes the pattern consistent
+- git log confirmed the file exists in the current tree with DCN32
+  support present
+- Commit has Reviewed-by and Tested-by tags from AMD engineers
 
 **YES**
 
- include/uapi/linux/netfilter_bridge.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/netfilter_bridge.h b/include/uapi/linux/netfilter_bridge.h
-index 1610fdbab98df..ad520d3e9df8f 100644
---- a/include/uapi/linux/netfilter_bridge.h
-+++ b/include/uapi/linux/netfilter_bridge.h
-@@ -5,6 +5,10 @@
- /* bridge-specific defines for netfilter. 
-  */
+diff --git a/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c b/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c
+index 83bbbf34bcac7..badcef027b846 100644
+--- a/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c
++++ b/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c
+@@ -724,8 +724,7 @@ bool mpc32_program_shaper(
+ 		return false;
+ 	}
  
-+#ifndef __KERNEL__
-+#include <netinet/if_ether.h>	/* for __UAPI_DEF_ETHHDR if defined */
-+#endif
-+
- #include <linux/in.h>
- #include <linux/netfilter.h>
- #include <linux/if_ether.h>
+-	if (mpc->ctx->dc->debug.enable_mem_low_power.bits.mpc)
+-		mpc32_power_on_shaper_3dlut(mpc, mpcc_id, true);
++	mpc32_power_on_shaper_3dlut(mpc, mpcc_id, true);
+ 
+ 	current_mode = mpc32_get_shaper_current(mpc, mpcc_id);
+ 
 -- 
 2.51.0
 
