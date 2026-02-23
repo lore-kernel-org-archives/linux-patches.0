@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614931F2380;
-	Mon, 23 Feb 2026 16:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264730DEB7;
+	Mon, 23 Feb 2026 16:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771863430; cv=none; b=fAhNSBw9KCObuA7Z2wp1eyKkm8zYfgdNWN2G325PVkxpH9uQzWX22GUN0g+vcHV08i70zNA8O3XNJ5qEW3d2/skk4qTx/SaPJtlLLr9CIKdvMb5rn+L5BQl4fe57bya92q47RUhWPLrQ0pfHFMy0U8McG5ZT09+Xhnj40NHlXdY=
+	t=1771863431; cv=none; b=aHjJrI257lR8VsWG6cxVhw+E97ukh1UggJ0Drty6xmZhasc1MalK64JvE1gearck5Edg1PKdG5eOsmj9kO2J09th5N19AxWwbqX02+UuO2YGz29WuL5muatrGYmMld/hRRH+j43R+W+YEjcAOQE3WLsz5kQgnp7VNnaAkc5NJSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771863430; c=relaxed/simple;
-	bh=qc/Pj+e+abFOM8hFmthyMpplEjTK0RVSw/BU/rotFUo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ID0ad0ForkVD5Z7sqTWaZS7THN6zX6kq0S/frIZh7qLq0moA2iKciqiGRGHxnLpkwbMneZBRVRPU3ILWksCbsnDAPhNRD+e48+XAg97yDsnlzsMjjigl2JbQrcIISUNla+NJumEst/fiYEBpmecoGZt8+qt+0tnUVkLbZibwv8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MNuuzbEP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771863431; c=relaxed/simple;
+	bh=11j/YgPS1K5gNtNQRU2un7idsUfbyDDUSpshVpfWE4Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SuSjUXv+7AW3O4xwPmkIfadnNAVB9lqg8yGqOhyZAAdVcUHHKKflHYhME0J8OqiASuSC6RPUwUFm5jeSug9OqD1mM/3+oBQupztd74Dy0XeZIp/4jXVlvGZ/A4OW8EkiapG3k4Cij/FoCfh9lRVr79ejVcg0DYSw4vklFoYuFAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f3quHLrc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MNuuzbEP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E6FC116C6;
-	Mon, 23 Feb 2026 16:17:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f3quHLrc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579D2C19421;
+	Mon, 23 Feb 2026 16:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771863430;
-	bh=qc/Pj+e+abFOM8hFmthyMpplEjTK0RVSw/BU/rotFUo=;
-	h=From:To:Cc:Subject:Date:From;
-	b=MNuuzbEPRtdoalWzXso9OOsyrMnjIhz79YvWPajXYBZjZdFz5SGpZ60EjKgWhGtNP
-	 zhAnB/VGXpA2/2MDe6yGgh87jnikzQHmGciCbKPEAzsoHv+/iX2vyA9TzMfVoY5Z2f
-	 glGbnI0niUeINeYA7QRLzZDmnGLjmgB8dzTmOUMjpnGGRCPPhOm+3eVzg+8b7XFw+b
-	 6h7IlQ1hAWPeq7SrGr1Qy2Kmi44YUEcxsPszgWWmqALiGD5/T4m+1jsy34P5v+Q0Qm
-	 C+/4+D0QyeYJe7hYE07pmKYB0EDMwSfvm48PciA9C3VTczt4xwZJicHB4P9YMaps1B
-	 npjsBNMRpb5RQ==
+	s=k20201202; t=1771863431;
+	bh=11j/YgPS1K5gNtNQRU2un7idsUfbyDDUSpshVpfWE4Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=f3quHLrcnj8ESjsm6UaK8qTTGK/VSPHK1mGR2oygAQqknGX7bKyBZ2ZtPi3nTd6LK
+	 5NL3FGfC1prj/hi1YgUrdHvsAW+zXuV3ydHWkEaH22go8AESPH265tHEbHv78l8BQ3
+	 QhjqiyY9jIF1ZOgf84MiaiFUMPJs4DrKTGznW+58y4f/2FdNZwwpphY+CB/6FRoTzs
+	 +MRFEOAnbVuvn7pOfJ218v6Vy95OM3VqeIf4Nt7ik6gUyI/O915htRosQuVFHHNoKg
+	 l5pnOx6pWMOqY2+O5eQEyNMYAMaDp9O2TzrjWhBbHCh3/sIsGsvAADxMoNXS88gRzJ
+	 BlneJ/Vlbn47Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -38,10 +39,12 @@ Cc: Maciej Grochowski <Maciej.Grochowski@sony.com>,
 	linux-pci@vger.kernel.org,
 	ntb@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] ntb: ntb_hw_switchtec: Fix shift-out-of-bounds for 0 mw lut
-Date: Mon, 23 Feb 2026 11:17:05 -0500
-Message-ID: <20260223161707.2714732-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] ntb: ntb_hw_switchtec: Fix array-index-out-of-bounds access
+Date: Mon, 23 Feb 2026 11:17:06 -0500
+Message-ID: <20260223161707.2714732-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260223161707.2714732-1-sashal@kernel.org>
+References: <20260223161707.2714732-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,12 +59,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Grochowski <Maciej.Grochowski@sony.com>
 
-[ Upstream commit 186615f8855a0be4ee7d3fcd09a8ecc10e783b08 ]
+[ Upstream commit c8ba7ad2cc1c7b90570aa347b8ebbe279f1eface ]
 
-Number of MW LUTs depends on NTB configuration and can be set to zero,
-in such scenario rounddown_pow_of_two will cause undefined behaviour and
-should not be performed.
-This patch ensures that rounddown_pow_of_two is called on valid value.
+Number of MW LUTs depends on NTB configuration and can be set to MAX_MWS,
+This patch protects against invalid index out of bounds access to mw_sizes
+When invalid access print message to user that configuration is not valid.
 
 Signed-off-by: Maciej Grochowski <Maciej.Grochowski@sony.com>
 Signed-off-by: Jon Mason <jdmason@kudzu.us>
@@ -70,95 +72,103 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
 
 LLM Generated explanations, may be completely bogus:
 
-The file has been present since 2017 (v4.14 era), so it's in all stable
-trees.
+Now I have a clear picture. Let me verify the key claim about the bug.
 
-Now let me verify the exact nature of the bug:
+The critical finding from the exploration:
+- `mw_sizes` is declared as `u64 mw_sizes[MAX_MWS]` where `MAX_MWS =
+  128`
+- `nr_direct_mw` can be at most 6 (MAX_DIRECT_MW)
+- `nr_lut_mw` is read from hardware via `ioread16()` and can be up to
+  512 (rounded down to power of 2, so max 256 or 512)
+- The buggy loop computes `idx = nr_direct_mw + i` where `i` ranges from
+  `0` to `nr_lut_mw - 1`
+- If `nr_lut_mw` is large enough (e.g., 256), then `idx` can exceed
+  `MAX_MWS (128)`, causing an out-of-bounds write to `mw_sizes[idx]`
+
+This is a real out-of-bounds array access bug. The `nr_lut_mw` value
+comes from hardware registers (`ioread16`), and there's no validation
+that `nr_direct_mw + nr_lut_mw` stays within `MAX_MWS`. If the hardware
+reports a large number of LUT entries, the loop will write past the end
+of the `mw_sizes[128]` array, corrupting adjacent memory in the
+`shared_mw` structure (the `spad[128]` array) or beyond.
 
 ## Analysis
 
-### Problem
-The commit fixes undefined behavior (UB) in `switchtec_ntb_init_mw()`.
-When `nr_lut_mw` or `peer_nr_lut_mw` is read as 0 from hardware (via
-`ioread16`), calling `rounddown_pow_of_two(0)` results in:
+### What the commit fixes
+An array-index-out-of-bounds write in `switchtec_ntb_init_shared()`. The
+`nr_lut_mw` value is read from hardware registers and can exceed
+`MAX_MWS - nr_direct_mw`. When this happens,
+`sndev->self_shared->mw_sizes[idx]` writes past the 128-element array
+boundary, corrupting the subsequent `spad[128]` field or memory beyond
+the structure.
 
-- `1UL << (fls_long(0) - 1)` = `1UL << (0 - 1)` = `1UL << -1` (unsigned
-  underflow to a huge shift value)
+### Bug severity
+- **Out-of-bounds write**: This is a memory corruption bug. Writing past
+  `mw_sizes` corrupts the `spad` array in the shared memory window
+  structure, which could cause unpredictable behavior.
+- The shared memory buffer is DMA-allocated (`dma_alloc_coherent`), so
+  corrupting it could affect hardware/firmware interaction.
+- Triggered by hardware configuration — if a Switchtec NTB device
+  reports many LUT table entries, this will fire during driver
+  initialization.
 
-This is explicitly documented as undefined in the kernel: the comment in
-`include/linux/log2.h` says "the result is undefined when n == 0". This
-is a **shift-out-of-bounds** bug that:
-- Triggers UBSAN warnings
-- Produces an incorrect (garbage) value for `nr_lut_mw`, which could
-  cause further issues downstream
+### Meets stable criteria
+1. **Obviously correct**: The fix adds a simple bounds check `if (idx >=
+   MAX_MWS)` before the array access, prints an error, and breaks out of
+   the loop. This is straightforward and safe.
+2. **Fixes a real bug**: Out-of-bounds array write — memory corruption.
+3. **Small and contained**: Only adds 5 lines of bounds-checking code in
+   a single function.
+4. **No new features**: Pure defensive fix.
+5. **Low risk**: The break simply stops filling in MW sizes for indices
+   beyond the array — existing valid entries are unaffected.
 
-### Fix
-The fix adds a simple `if (sndev->nr_lut_mw)` guard before calling
-`rounddown_pow_of_two()` in two places — for both `self` and `peer` LUT
-MW counts. If the value is 0, it stays 0 (which is correct — no LUT
-memory windows).
-
-### Stable Criteria Assessment
-1. **Obviously correct and tested**: Yes — trivially correct. If the
-   count is 0, rounding down 0 should remain 0.
-2. **Fixes a real bug**: Yes — undefined behavior from shift-out-of-
-   bounds. This can cause UBSAN splats and potentially incorrect values.
-3. **Important issue**: Medium — UB can have unpredictable consequences
-   depending on compiler optimizations. The value 0 is a valid hardware
-   configuration.
-4. **Small and contained**: Yes — 4 lines changed (2 `if` guards added),
-   single file, single function.
-5. **No new features**: Correct — purely a bug fix.
-6. **Applies cleanly**: The code has been stable since 2017; should
-   apply to all active stable trees.
-
-### Risk Assessment
-- **Risk**: Extremely low. The guard only adds a check for zero before
-  calling a function that explicitly documents UB for zero input.
-- **Benefit**: Eliminates undefined behavior and potential UBSAN splats
-  on hardware configurations with 0 LUT memory windows.
+### Risk assessment
+- **Very low risk**. The change is a simple bounds check that prevents
+  memory corruption. It cannot break any working configuration — it only
+  affects cases where the index would have been out of bounds.
+- The affected code has existed since the driver was introduced, so this
+  fix applies to all stable trees that include this driver.
 
 ### Verification
-- Verified `rounddown_pow_of_two` is documented as "result is undefined
-  when n == 0" in `include/linux/log2.h`
-- Verified the implementation: `1UL << (fls_long(n) - 1)` with n=0
-  produces `1UL << (0-1)` = shift-out-of-bounds
-- Verified the file has existed since 2017 (commit 33dea5aae032),
-  present in all active stable trees
-- Verified the fix is minimal: 2 `if` guards added, no other behavioral
-  changes
-- Verified there's a related prior shift fix in the same file
-  (ff148d8ac53e5), showing this class of bugs has been addressed before
+
+- Confirmed `MAX_MWS = 128` at line 32, `mw_sizes[MAX_MWS]` at line 38
+  of `ntb_hw_switchtec.c`
+- Confirmed `nr_lut_mw` is read from hardware via `ioread16()` at line
+  1204 and rounded to power of 2 at line 1205 — can be up to 256 or 512
+- Confirmed `nr_direct_mw` max is 6 (bounded by `MAX_DIRECT_MW =
+  ARRAY_SIZE(bar_entry)` where `bar_entry[6]`)
+- Confirmed the `shared_mw` struct layout: `mw_sizes[128]` followed by
+  `spad[128]` — OOB write corrupts `spad`
+- `git log` shows the file has had other bug fixes backported (shift-
+  out-of-bounds, UAF), confirming the driver is in stable trees
+- The first loop over `nr_direct_mw` is safe (max index 5), but the
+  second loop over `nr_lut_mw` is unbounded before this fix
+- Could NOT verify via lore.kernel.org the specific mailing list
+  discussion (not fetched), but the commit message and code are clear
 
 **YES**
 
- drivers/ntb/hw/mscc/ntb_hw_switchtec.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/ntb/hw/mscc/ntb_hw_switchtec.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-index f15ebab138144..0536521fa6ccc 100644
+index f851397b65d6e..f15ebab138144 100644
 --- a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
 +++ b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-@@ -1202,7 +1202,8 @@ static void switchtec_ntb_init_mw(struct switchtec_ntb *sndev)
- 				       sndev->mmio_self_ctrl);
+@@ -1314,6 +1314,12 @@ static void switchtec_ntb_init_shared(struct switchtec_ntb *sndev)
+ 	for (i = 0; i < sndev->nr_lut_mw; i++) {
+ 		int idx = sndev->nr_direct_mw + i;
  
- 	sndev->nr_lut_mw = ioread16(&sndev->mmio_self_ctrl->lut_table_entries);
--	sndev->nr_lut_mw = rounddown_pow_of_two(sndev->nr_lut_mw);
-+	if (sndev->nr_lut_mw)
-+		sndev->nr_lut_mw = rounddown_pow_of_two(sndev->nr_lut_mw);
- 
- 	dev_dbg(&sndev->stdev->dev, "MWs: %d direct, %d lut\n",
- 		sndev->nr_direct_mw, sndev->nr_lut_mw);
-@@ -1212,7 +1213,8 @@ static void switchtec_ntb_init_mw(struct switchtec_ntb *sndev)
- 
- 	sndev->peer_nr_lut_mw =
- 		ioread16(&sndev->mmio_peer_ctrl->lut_table_entries);
--	sndev->peer_nr_lut_mw = rounddown_pow_of_two(sndev->peer_nr_lut_mw);
-+	if (sndev->peer_nr_lut_mw)
-+		sndev->peer_nr_lut_mw = rounddown_pow_of_two(sndev->peer_nr_lut_mw);
- 
- 	dev_dbg(&sndev->stdev->dev, "Peer MWs: %d direct, %d lut\n",
- 		sndev->peer_nr_direct_mw, sndev->peer_nr_lut_mw);
++		if (idx >= MAX_MWS) {
++			dev_err(&sndev->stdev->dev,
++				"Total number of MW cannot be bigger than %d", MAX_MWS);
++			break;
++		}
++
+ 		sndev->self_shared->mw_sizes[idx] = LUT_SIZE;
+ 	}
+ }
 -- 
 2.51.0
 
