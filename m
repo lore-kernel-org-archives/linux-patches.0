@@ -1,94 +1,95 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535833783D8
-	for <patches@lists.linux.dev>; Mon, 23 Feb 2026 20:59:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3C037419D
+	for <patches@lists.linux.dev>; Mon, 23 Feb 2026 21:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771880375; cv=pass; b=dQG0SsKWNrH4AfcfacoBToFzhRANoUv/pIBWh7BqMC1nGX5HoBVtHZMMQ8St4oJf5UeCHW3Shgmc2ph0oYldbYkJVFA0tGopREg72HhSCSd0c/lfUKWe/Sux61lsNP/6QqGMl/7Q3Vg4fYUw6/aB+Lr5JNubeE5GfksdU+lQlQc=
+	t=1771881566; cv=pass; b=j85W8KGTeQV1t72Nar8E+7IVrH11enozlFX8EWqc++xfmPkePmhfXhmGq0jmhWo50c1FBrZlIFQOucqLmVMVZTC1fSpfqImJgTXbhWnMSohB/HIsFab/jRU0yf2eji1U2VZLVL1S3uYq5Tq6zqiZRDNYofvbQkWwS1q/kja5e8w=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771880375; c=relaxed/simple;
-	bh=ZGWxl/dhdATLUFkTP4bDg4Eh/JPLgT7DDIEuEfXiY7U=;
+	s=arc-20240116; t=1771881566; c=relaxed/simple;
+	bh=6xucJiKz6gf7cBFoHRvH8DDttfd7LVVX7JhNAoPFST4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i4hhF/3RfhdNWQyAN9EzFyIDyf5UgSCy4/VyMHxIwFmIvH2Y2xRoz3jaiDGDCKAnUDLWzvE1ZDPA8HRGedSF7Rlv+CaewQes216KNu3RmdXn5mkUGz6sWyjTn6zTXrTMGrBeINppsJ8aYbpUt7cz2AVEDdLjISnoy8P+VIg2HH8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QOQftl0o; arc=pass smtp.client-ip=74.125.224.42
+	 To:Cc:Content-Type; b=f116bjfutsJTMCQTTo50+LcnPO1kSIpjiF9fDgH2kLbypqBVJwnqJxzgGuczP0LH7AQS8sh24LCL7vJK2CNWoD9WstbwbMlTcS/Q7+d47ASyeyjGD+ICPw2HyVtIWE6BUg5MnwvZ+4U3n2t7IKtOkRfL+mM/UN5l1t6X8bqf2tk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lrS3zDo1; arc=pass smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QOQftl0o"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-64adabaafd6so3896117d50.0
-        for <patches@lists.linux.dev>; Mon, 23 Feb 2026 12:59:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771880373; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lrS3zDo1"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-79827d28fc4so23316367b3.1
+        for <patches@lists.linux.dev>; Mon, 23 Feb 2026 13:19:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771881564; cv=none;
         d=google.com; s=arc-20240605;
-        b=gVZgu3OElinU4KWEjnbAwJmr4xudD1bxF5Ibyb2qfFVDIT6/Hf7wZx/5OCCuVUBL5r
-         jrkS2lHOcztcxWDKv2c+Mqlmp/3b/d9RDNVkldCwAnYOPZKEBQuom4tN4+iNeQhu88ql
-         RwvuFva7A5/zhHoxQH4+GKO7Insd16yToyL7oRyPlcVtycAJFCCB4VdqYzPvScF9RCKm
-         kHYLUbA/y/0nBSCeFgBaUXypF70+9GoHmMpUukxhFjDmG1jSiSV0veyB9digRJZWwaQy
-         2zYduRrUKOJmlL1w7I2nSg7ef5oDplehh5brv4FtuwNbczPFLu5jwbVDpxdP+7wUJyPB
-         vCxQ==
+        b=a+DtFTHuITamW1VNPcuN0PaBU6xotHHKdIa+GwAR8NaZo+qd3LGLZhQsT9INVpWiRb
+         EpVHMg4EnLsE+ybUjTaDc/Mr61VlIfKL2sinKqnaK2aAnnXT2lIGd8ZrQlY6tDBVnH/A
+         RB+ZzGBRiol+PFg32Jh6oAe08D8V2oi2++U87OcuU75iqaa6Lit6P7VH9BJGtS+PDkUT
+         NY+wFwiKQGgLXZHJlXUsQyF7P6dce1IJd+ks70eHhal5JzoMCKgbUoX+0qVYdO2xSFYg
+         AE6ZACy4iKFP7obWYJXdK35agxaw8zirzeU+lggkCVUq6wASF6rlESA0MX2jVtBss9MD
+         fVLQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=ZGWxl/dhdATLUFkTP4bDg4Eh/JPLgT7DDIEuEfXiY7U=;
-        fh=KSJZEk0y2qJB7+IG7PIoKbAWv+4w6uR9LqQrzbb+7kk=;
-        b=DduDs1wbgeGGAgduPszMVaWXvJe4fm5DGLXbSOrH/ekbDvKkv9mgLFO608nUBmGW2o
-         lQbYLQ8amuLbAFeGvcESDlkKJBUU+lZYUE1jx1XEgfVkLuB24RiWh/EJo6P+IAVI6ICL
-         kItAd2A/h5QiH7FNxkAe9OEmz+vuQppSYMBDWh8WUls5Q6hooY6MiZvDQ6OrjAoPY340
-         EhsCk6bQR439fJNYEDvx2hGQmQGuwgXmAJ3kAMJxMO8louSgdOrjpX+89VIafUGbj+Wt
-         ALhFcYptnNCorKIazQ0NrYlXPu2v2uw2GIBT408Kxc1fO0Fc/wp9h/qXfmtt0M+Fgv/t
-         BHRw==;
+        bh=6xucJiKz6gf7cBFoHRvH8DDttfd7LVVX7JhNAoPFST4=;
+        fh=WghXYmLL6wUjTJ41n4Bq9noeKJ9XT+BwcnVntz1M9ao=;
+        b=TlAE0KknF43ZyWKLntaPIYZhbAXdzt5TFWu6nS5bQkcx7IC24ftQNtaAObj4r6rOut
+         e0BlA98oa7jD6molA+V0ClX9yPgHw29hMHLLwESXqTVUFqmC/Umtyc4E/FSKpSOQ0Gbt
+         dZa5XyXoUFw5qe98JVNCxlb/Tz2zWCTFQm69wag7sV8j1o2A+QpFc0AP8w4PV1Ypxo10
+         FNRprU19hYwru4QgRpI6cuP7ZCIKtsUoyb3bb1r8N/hUaU1FSBd12C8nQM36GGsQwtSv
+         USBtHS2dIM2Wpu6tLBs65/E0rw9i1NfLpnXDCfeWChR1hyH96FBdZkVHgGjAFK+MLpcC
+         i/vQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771880373; x=1772485173; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1771881564; x=1772486364; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZGWxl/dhdATLUFkTP4bDg4Eh/JPLgT7DDIEuEfXiY7U=;
-        b=QOQftl0ovWl79wE8DNmzOD7utGH0+XjuU/9PL8vZ12A846XS0Sy3jcrB+6m9kaLEK7
-         q15lo3S6qFtjnCvE7X1x3/p86KxyDdzM0CqtRsU6WANVREZ7hjJ516iwbzYmyIKmNH8F
-         egRTy1vtIg5btn3VcUAg5x6TUAlIgOsYj2pZvzbS2Y9i9Mdvs+70zMDa2fDHC7XbJLAt
-         PaZhJ1mUqoKtF2O0ndtqTYKNwBDPLO2nETN1DK2VI9AMKfRCvRc8/Sp1xDHJK+D77luK
-         9UlJf4MKAD1HQZK9Ihe2VYUHAP6vI4oBlnRB3+vwRjzVa22c9bZUC6ErX/pB6z+frZo4
-         gzwA==
+        bh=6xucJiKz6gf7cBFoHRvH8DDttfd7LVVX7JhNAoPFST4=;
+        b=lrS3zDo1W8mgOLIZAWO3Jppnk7ZEDAv95X6bFR+k50dY/66gBgTrReF5BvHc/KlMJf
+         u3JxS7YexWeRUjlabVYATjNKgKfRED+lIkLt/ncfkXHDQzFgcsCJmC9cr8xRVJVYbZdM
+         GGwJTtjt7eXVKzCM1Y+yklPITfimvgkgFjCOW9dc9n5UZIUAtFFx3CbQEjbBOeO6vFmP
+         fzI0K7LkeYjeQxoT1WOrZCUujhwL6R0hiXkR2uuxkbU/ZSxkk+9FVPFFgXYx2/uotdm1
+         EBLMURLx9m3m7Tk9mNp2jkSkLEaOF0aBMSzhLp2ThNok5dweL+NatXJolgMUW4AQTv1C
+         lFDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771880373; x=1772485173;
+        d=1e100.net; s=20230601; t=1771881564; x=1772486364;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ZGWxl/dhdATLUFkTP4bDg4Eh/JPLgT7DDIEuEfXiY7U=;
-        b=gjFVJwuJFunM2k9oOK62aSiZWiRgi3R+qEY/kETvxObddRAvPqOdOl7/0n+AoTRcQX
-         C4C9JVDAonbbc11sHHzOw+LA+5fScu8iEAFPN1zyVlhpQFrRBvAZi+Ex+Jz01MARO1Gp
-         YYld1MJMVMYjgIrynRBLP2C0QX/HhvVbpOjXCF5wkBfUgwmYJ6NVi9yiUudVrKksjV4O
-         4fwPNkG+KLbaZWtEel3sBXc01BiPKeL5lUEHhc6oaLGaErXUv39UwjT/hxwzmdCMlQAQ
-         FGO8KgD/e4uazHVsiznIFEZO4hGxAoOxJiBzPm8EElHs6ibeUhdW07EptOZ4wwWJrb6z
-         MBTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUh1JTn65++LfbYbdhiW7NCwmUheQQltNZrTUB+EINPKQarRNDYvDt8PIr+cxFOCMxrQbs++q5o@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx0XNrphnEIXH04ekh489pS2HeFJ/kv1kRXvy3MTo1GdezgpUa9
-	8Rw6JWZ/Jv6kC5QnmahtecEthTA1dNLstTBHindDqRWvfPJFDjM/p0+t6VSoZU2bWk/S645srY7
-	HiEmvtg94ejVTjc9GDahze9dhFCy1xGM=
-X-Gm-Gg: ATEYQzw+qoCzTUvk8Hk8YzPb8OVyfxiPHXAD1lrb6RdowD5vrMjLEpyRJds/Qdvk62o
-	FCOXNbGqBiEqlF3GZik1TDqoxviBkpIIt16Dmrb9qz2w7/b0yYTMSUGavWgojXM6MJq2FJ4deTS
-	aot0newxDwmLpX8a/UDHVQQggBapE+GwenQRok1HWkgM0g0WyXvZ1SHOWKQT1Msdkl6tJDh2pnA
-	A/3XR5GN/c8aob5Spu3xn1dJl+FfKPAQ0ILWuMEaZvquTLUNwwD93O4dKedIpzT/AbtIEhjkq+6
-	O4jus6c=
-X-Received: by 2002:a05:690e:d47:b0:64a:e799:1d84 with SMTP id
- 956f58d0204a3-64c78e3ed37mr10186762d50.49.1771880373230; Mon, 23 Feb 2026
- 12:59:33 -0800 (PST)
+        bh=6xucJiKz6gf7cBFoHRvH8DDttfd7LVVX7JhNAoPFST4=;
+        b=P5Z/OEMLgH+D+y0Z90fgcG+FDt3cXshWmKh+p5UznPP2U77EULgPfeGPAkKzuMybDA
+         VXtSgg9nFaE5fttfsAN3AGyG5oI/QDAcwK5w3HJN4ULpf91kp/eCq7Obx3VmdaC8FxnR
+         o/9XVuydKk8qvgbjtMoSO/CXjZOKZr+h3xro8Epr8VNdRqTaEt+AbmKm2UH42GaoBQB+
+         x8yPY4QSjCyVz7FpSKbEWP2RPhUmVVKhvmlh1CHj7uafJEJOv4BBReFf5WNB+UfgOzVk
+         CA0tn2o+26h/1Ap/yy5rXVuLcd2cvec+G0X+fI5jUq90nOX88g69/lhesAeOuoGyjpuT
+         YR3g==
+X-Forwarded-Encrypted: i=1; AJvYcCWWwa4yUTvCE1jVXQ1wMY1qRvey24aZxw6g5ruiGRsy6zzhZiUK5eO6gKyZKL9rDmCnIDJl5Dlm@lists.linux.dev
+X-Gm-Message-State: AOJu0YyasgGIp/tVbGmaU4txzNaSR0azukNAm7TOKTk40u3R5sXtEH33
+	k9RBN/cdTPuaEoeuFnGtOfr8wM8A6HXHSKHidbgUdUiGzxuph9pQ7ghNTZrMbx02aVTttUYn+QQ
+	oqMougwZs8XNLLj2/B2+Wopsj0hrsMec=
+X-Gm-Gg: ATEYQzzRFugwaNRp7B74NKY5F2sRiZyiIR5FZso5pTDbvNrpkCzUeLK176g14PwRNgZ
+	27HNUiRQs471zOZDrkGRh6dBpaIFF9s8dxcoNTB8d+BCbXjVbT0svlFwLS366/7dzAa+sPLI2Zt
+	e5UL4kW6PnZJCgeBmo0DTMmMMSxQb5au9qb97+Ncw5s6muD1/QSRZJwIsDqDbDsYJyCgWZ0GldV
+	E8l1N4UaPayo4/W99IXW5B+I3Jj31CInNu+EzR4ZGCKmX07S3fCKbIV7C+rkFf/Sl1zWvVF3nhk
+	/tSXcyk=
+X-Received: by 2002:a05:690c:298:b0:798:3be8:b724 with SMTP id
+ 00721157ae682-7983be8c0bdmr55059167b3.65.1771881564464; Mon, 23 Feb 2026
+ 13:19:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260219210312.3468980-1-safinaskar@gmail.com> <a7cb199d-928d-4158-8f16-db7ae5309082@landley.net>
-In-Reply-To: <a7cb199d-928d-4158-8f16-db7ae5309082@landley.net>
+References: <20260219210312.3468980-1-safinaskar@gmail.com>
+ <20260219210312.3468980-3-safinaskar@gmail.com> <e67898f6-4e33-428b-8498-b8b28f817bd9@landley.net>
+In-Reply-To: <e67898f6-4e33-428b-8498-b8b28f817bd9@landley.net>
 From: Askar Safin <safinaskar@gmail.com>
-Date: Mon, 23 Feb 2026 23:58:57 +0300
-X-Gm-Features: AaiRm52qRcNRr0w0juOjbrF6MNkTC6Cm6dik1IbLPWbMt5sbBgSggwUmnjLgJPQ
-Message-ID: <CAPnZJGAw9o8BetWs_wO2B6YD7mYuOopP0CwD=KCfOJXw2QU4Gg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] init: ensure that /dev/console and /dev/null are
- (nearly) always available in initramfs
+Date: Tue, 24 Feb 2026 00:18:48 +0300
+X-Gm-Features: AaiRm50sLaC9UJuN7QdRgNE3QNOZiS7DWDKIfXjMKeU4af4U1Sw57WjY7CysLU8
+Message-ID: <CAPnZJGDDFrOObdxa70nSS0bqXQ0zqRPnKWLRFUBCj-FtnkpPtg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] init: ensure that /dev/null is (nearly) always
+ available in initramfs
 To: Rob Landley <rob@landley.net>
 Cc: linux-fsdevel@vger.kernel.org, Christian Brauner <brauner@kernel.org>, 
 	Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>, 
@@ -99,20 +100,27 @@ Cc: linux-fsdevel@vger.kernel.org, Christian Brauner <brauner@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 23, 2026 at 3:17=E2=80=AFAM Rob Landley <rob@landley.net> wrote=
+On Mon, Feb 23, 2026 at 4:15=E2=80=AFAM Rob Landley <rob@landley.net> wrote=
 :
-> FYI I've been using (and occasionally posting) variants of
-> https://landley.net/bin/mkroot/0.8.13/linux-patches/0003-Wire-up-CONFIG_D=
-EVTMPFS_MOUNT-to-initramfs.patch
-> since 2017.
+> Are you saying it's reoccurred, or that you plan to run a 5 year old
+> userspace with a current kernel?
 
-drivers/base/Kconfig says on CONFIG_DEVTMPFS_MOUNT:
-> This option does not affect initramfs based booting
+I was not aware about this. Okay, I agree that /dev/null is not needed.
 
-So CONFIG_DEVTMPFS_MOUNT works as documented.
+> (Although I can't say I've regression tested an init task statically
+> linked against bionic launching itself in an empty chroot recently
+> either.
 
-(But I am not against your CONFIG_DEVTMPFS_MOUNT approach
-if it helps you fix your problem.)
+I tested current Android NDK LTS. I found that if stdin/stdout/stderr
+already opened, then bionic binary will not crash if /dev/null is absent.
+It will not crash even if PID is not 1 (so chroot should work).
+But I didn't test what happens if stdin/stdout/stderr are closed.
+So, assuming you already somehow got /dev/console, then
+/dev/null is not needed.
+
+According to code, bionic binary should work even if stdin/stdout/stderr ar=
+e
+closed, assuming that PID is 1.
 
 --
 Askar Safin
