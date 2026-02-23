@@ -1,50 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8187B36923C;
-	Mon, 23 Feb 2026 12:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4C5369980;
+	Mon, 23 Feb 2026 12:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850294; cv=none; b=k6sWT5rQLVUIUB/oXHvCKcy2+E0lBjJKJeviyjkz5M25CUdoERQUiTVS2hS9Wb+odrTMUu2HekXL9LwbJsAA1s8JxnyD6bAqnT3uVU0liYEaVcV16VvQdEO/YRJv3rBQM9ilp802Rgoauh8Uh/AGTTv0cDQ3dYDTzHT0kuIssIw=
+	t=1771850296; cv=none; b=Nnvc05DVsEdAmk2BoYh/CH989q3jlv9KnZltvARwSLF0fGylTMETBy4p0cQteRHmbmHQApXi4sH0Dz7t9lE8qN0ChzK3OdZp/TwZRND8g2dcXq2T+XGdThZKkjJpkTc4J+aYG/O9EMspQe4SF8+s3SO1+G+Cv3+1lTCG5RhjNP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850294; c=relaxed/simple;
-	bh=xcY3l/8COfPuaTeSpHCsQ4ZAHRp7isNRAnvmtk1jgYM=;
+	s=arc-20240116; t=1771850296; c=relaxed/simple;
+	bh=S/5Sg1QaN/ZPsrUGbMZye4NSw0Cx7AOMez0I6MYtngI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bCBfXbQWGqH0rKtVCm++u5uPWKZNrjJRa+M7wHpsOElOFktFYJPikuibshBCEMBT8ybTf/M+x78fUB4mmjqh/9J7ZuaQHSb1suIDuoET9GW36PJY535w1MGEwyXBMCaf98uqFF1fWknVoAEMmJ8B96Fs0Z9ShATcLL6liOs6Exc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a/A9Vi6E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NeW9A+7xLXvusII0DtHCS9I8CE4z9AHkEbFQD+5EEKDeODa4aqAWbW52FrIzJi5hgfjNYUFhZyyu+z/V7HzyGzyBq9FckFPTddKLmJQmtJ1N8ZG5zgzKKwBjzf8lwLZUJCAh+KsmBI2MBuWFLomV2gCd1XILLsY1f6pB2L2bnDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ts7NayFC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a/A9Vi6E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029CDC19424;
-	Mon, 23 Feb 2026 12:38:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ts7NayFC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3024C116C6;
+	Mon, 23 Feb 2026 12:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771850294;
-	bh=xcY3l/8COfPuaTeSpHCsQ4ZAHRp7isNRAnvmtk1jgYM=;
+	s=k20201202; t=1771850295;
+	bh=S/5Sg1QaN/ZPsrUGbMZye4NSw0Cx7AOMez0I6MYtngI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/A9Vi6Ec/X/9SVwamVz3wZGv3pxdxI42K4iek1SpF6QJYwfUlQn9uSDhDSU458vH
-	 9OedVfBrQKMAemFudfXVlHCaEB+Ma5QYQApjkNHsiI904cQ/2doZvzclFI0FgOjlmM
-	 vuJRKsgI3PLP8L0J8M/SMsnuDX+kq7iUhgPVyK7qcVqtRzBizv9P5JoWr5ekHKOGiW
-	 R2eQkEOSSTGPOiS7aCQHpsjTdWz1D5g2NDmA+sPwypnrzPeSNFGRw9o61R0s2py2R2
-	 OJXM2ZlMkqyLrcryqCzRsta0+wHNq/Q6hSeEqgKiBX4OWaE23bM2UjbyT/YMq6rztJ
-	 Yb2rENPbmJi+g==
+	b=Ts7NayFCwkI4cJIRh0Zx37Ngg2FmrMs5B3+9PnFbg1AROXb1le/lpTZDNrtVPzDwz
+	 hTPQP3oV4O1poKKR2HxxAhcT1qQKXhlNiP/jO7f4MvG2vKUedEgCYKr3fNjEvXdl0o
+	 56NJYv5IH6Jo8ifzmptYmUXwxxO7SOABYksYo88/fvVUgrWpW/kKYm2vhmAGXepeJ6
+	 KMePvNIefBXtH0piPhoV1muCP0a3MCPy9aMRx065Hm3Ira1kqXhFLSC2Bb88AzJFmz
+	 /UefxhYLQAKpeUyzZkZo68PZo9TtWS3BF1ZboVCw04bQxzZbU0qfuXz6fRFf8ewReV
+	 BI2SlzhfgSE6w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Wayne Lin <Wayne.Lin@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] drm/amd/display: Avoid updating surface with the same surface under MPO
-Date: Mon, 23 Feb 2026 07:37:28 -0500
-Message-ID: <20260223123738.1532940-23-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] ALSA: usb-audio: Update the number of packets properly at receiving
+Date: Mon, 23 Feb 2026 07:37:29 -0500
+Message-ID: <20260223123738.1532940-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260223123738.1532940-1-sashal@kernel.org>
 References: <20260223123738.1532940-1-sashal@kernel.org>
@@ -60,124 +53,122 @@ X-stable-base: Linux 6.19.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 1a38ded4bc8ac09fd029ec656b1e2c98cc0d238c ]
+[ Upstream commit cf044e44190234a41a788de1cdbb6c21f4a52e1e ]
 
-[Why & How]
-Although it's dummy updates of surface update for committing stream
-updates, we should not have dummy_updates[j].surface all indicating
-to the same surface under multiple surfaces case. Otherwise,
-copy_surface_update_to_plane() in update_planes_and_stream_state()
-will update to the same surface only.
+At receiving the packets from the implicit feedback source, we didn't
+update ctx->packets field but only the ctx->packet_size[] data.
+In exceptional cases, this might lead to unexpectedly superfluous data
+transfer (although this won't happen usually due to the nature of USB
+isochronous transfer).  Fix it to update the field properly.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://patch.msgid.link/20260216141209.1849200-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I have all the information needed for a thorough analysis.
+
 ## Analysis
 
 ### What the commit fixes
 
-This is a clear **indexing bug** in `amdgpu_dm_atomic_commit_tail()`. In
-a loop iterating over `status->plane_count` planes:
+The commit adds a single line: `ctx->packets = packet->packets;` before
+the loop that copies `packet->packet_size[i]` values. Without this fix,
+when implicit feedback mode is active, the `ctx->packet_size[]` array
+gets updated from the feedback source, but `ctx->packets` retains its
+original value set during initialization in
+`snd_usb_endpoint_set_params()`.
 
-```c
-for (j = 0; j < status->plane_count; j++)
-    dummy_updates[j].surface = status->plane_states[0];  // BUG: always
-[0]
-```
+### Bug mechanism
 
-The fix changes `plane_states[0]` to `plane_states[j]`, so each dummy
-update references its correct corresponding plane state instead of all
-pointing to the first one.
+In implicit feedback mode, the capture endpoint tells the playback
+endpoint exactly how many packets to send and what size each should be.
+The feedback info is stored in `struct snd_usb_packet_info` with both a
+`packets` count and `packet_size[]` array. When
+`snd_usb_queue_pending_output_urbs()` processes this info, it copies the
+packet sizes but **fails to update the packet count**.
 
-### Bug impact
+Downstream, `ctx->packets` is used in:
+- `prepare_playback_urb()` (pcm.c:1554) - loop bound for setting up ISO
+  frame descriptors
+- `prepare_silent_urb()` (endpoint.c:291) - loop bound +
+  `urb->number_of_packets`
 
-This bug affects **Multi-Plane Overlay (MPO)** scenarios where
-`status->plane_count > 1`. When multiple planes are active:
+If `ctx->packets` (stale, from initialization) is **larger** than
+`packet->packets` (actual feedback), the code iterates beyond the valid
+packet sizes into uninitialized/stale `packet_size[]` entries, leading
+to superfluous data transfer. If it's **smaller**, some feedback-
+supplied packet sizes are ignored.
 
-1. **All dummy updates point to the same surface** -
-   `copy_surface_update_to_plane()` processes the same plane repeatedly,
-   ignoring other planes in the composition
-2. **The sort by `layer_index` becomes meaningless** - all entries have
-   the same layer_index since they reference the same plane
-3. **`dc_update_planes_and_stream()` operates on incorrect data** -
-   stream updates that should touch all planes only affect one
+### Severity assessment
 
-This causes incorrect display behavior under MPO, which is used for
-hardware-accelerated video overlay, cursor planes, and compositing.
+The commit author (Takashi Iwai, ALSA maintainer) notes this "won't
+happen usually due to the nature of USB isochronous transfer" - meaning
+the packet count in practice rarely differs between what was initialized
+and what arrives via feedback. However, in exceptional cases it can
+cause incorrect data transfer behavior.
 
-### Meets stable criteria
+### Stable kernel criteria evaluation
 
-- **Obviously correct**: Classic `[0]` vs `[j]` indexing bug in a loop -
-  the fix is a single character change
-- **Fixes a real bug**: MPO plane updates are broken when multiple
-  planes are active
-- **Small and contained**: Single line change, zero risk of regression
-- **No new features**: Pure bug fix
-- **Reviewed and tested**: Has `Reviewed-by: Harry Wentland`, `Tested-
-  by: Daniel Wheeler`
+1. **Fixes a real bug**: Yes - mismatch between packet count and packet
+   size array in implicit feedback mode
+2. **Obviously correct**: Yes - single line addition that ensures
+   `ctx->packets` matches the feedback data, exactly parallel to what's
+   already done for `ctx->packet_size[]`
+3. **Small and contained**: Yes - literally 1 line added
+4. **No new features**: Correct - pure bug fix
+5. **Risk**: Extremely low - it's adding the obvious missing assignment
+   that pairs with the existing `packet_size[]` copy loop
+6. **Author**: Takashi Iwai is the ALSA maintainer and subsystem expert
+7. **Independence**: The followup commit (36adb51ac0b19) is a pure
+   optimization (loop to memcpy) and is NOT needed for this fix to work
 
-### Bug origin
+### Risk vs benefit
 
-The bug was introduced in commit `efc8278eecfd5` (Feb 2021) which was a
-revert that restored older code containing this indexing error. The bug
-has been present for ~5 years, affecting all stable trees that contain
-this code path.
-
-### Risk assessment
-
-**Extremely low risk.** This is a one-character fix (`0` → `j`) that
-corrects an obvious loop indexing mistake. There is no conceivable way
-this change could cause a regression - the previous behavior (all
-pointing to `plane_states[0]`) was simply wrong.
+- **Risk**: Negligible. One line that brings `ctx->packets` in sync with
+  the data it should have always tracked.
+- **Benefit**: Prevents potential audio glitches or incorrect USB
+  isochronous transfers in implicit feedback mode, which is used by many
+  USB audio interfaces (especially pro audio equipment).
 
 ### Verification
 
-- **Verified the buggy line exists** at `amdgpu_dm.c:10954` via Read
-  tool - confirmed `plane_states[0]` in loop
-- **Verified bug introduction**: `git log --no-walk efc8278eecfd5`
-  confirmed it was a revert from Feb 2021 that restored the buggy code
-- **Verified the fix commit**: `git show 1a38ded4bc8ac` confirmed Wayne
-  Lin authored the fix, merged to master
-- **Verified code flow**: The agent traced
-  `dc_update_planes_and_stream()` → `update_planes_and_stream_state()` →
-  `copy_surface_update_to_plane()` which iterates over each surface
-  update, confirming that having all dummy_updates point to the same
-  surface causes only one plane to be updated
-- **Verified `dm_plane_layer_index_cmp()`** sorts by
-  `surface->layer_index` - with all surfaces the same, sorting is a no-
-  op (broken)
-- **Verified the fix is in master** via `git branch -a --contains
-  1a38ded4bc8ac`
-- **Could not independently verify** user-reported display issues under
-  MPO, but the code analysis clearly shows the bug mechanism
+- Read the full `snd_usb_queue_pending_output_urbs()` function
+  (endpoint.c:457-525) confirming `ctx->packets` was not updated before
+  the fix
+- Verified `ctx->packets` is used downstream in `prepare_silent_urb()`
+  (line 291, 311, 312) and `prepare_playback_urb()` (pcm.c:1554, 1581)
+  as the loop bound for ISO frame descriptor setup
+- Confirmed the mainline commit is cf044e4419023 by Takashi Iwai
+- Verified the followup commit 36adb51ac0b19 is a pure optimization
+  (loop→memcpy) with no functional changes, confirming this fix is self-
+  contained
+- Confirmed `struct snd_urb_ctx` has `packets` field (card.h:58) used
+  for `urb->number_of_packets`
+- Could NOT independently verify a user report triggering this bug
+  (author says "exceptional cases" and "won't happen usually")
 
 **YES**
 
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/endpoint.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index e004fc3893edf..7fae54e47292b 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10961,7 +10961,7 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
- 			continue;
- 		}
- 		for (j = 0; j < status->plane_count; j++)
--			dummy_updates[j].surface = status->plane_states[0];
-+			dummy_updates[j].surface = status->plane_states[j];
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 8f9313857ee9d..27ade2aa16f5a 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -481,6 +481,7 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
  
- 		sort(dummy_updates, status->plane_count,
- 		     sizeof(*dummy_updates), dm_plane_layer_index_cmp, NULL);
+ 		/* copy over the length information */
+ 		if (implicit_fb) {
++			ctx->packets = packet->packets;
+ 			for (i = 0; i < packet->packets; i++)
+ 				ctx->packet_size[i] = packet->packet_size[i];
+ 		}
 -- 
 2.51.0
 
