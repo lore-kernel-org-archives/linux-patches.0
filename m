@@ -1,170 +1,213 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012042.outbound.protection.outlook.com [40.107.209.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D78826D4C7
-	for <patches@lists.linux.dev>; Mon, 23 Feb 2026 02:34:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771814050; cv=none; b=QbBUTgLMMhW/v6r8pHbsW/TuMjwvl+uve4tZbni6SLoFQfOVDfKdXHUKM/ClaDWrvyuvlIeJSMCReOnCMvXF1qmWG7vWEyQJvjCg1ATTplDoRAwoEc4ympA4FhO4688mJe6dlrcBn4UdkP9+ZeVUhECIZ4aENBaBI3OGmdmQL6k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771814050; c=relaxed/simple;
-	bh=o3vrtzHydrZPd18X8TUbC24WHKnqPdXQ96c1KGfW4+o=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=psrlMz1AvYGgO6yIzyJdXVLderkaPLTbdF42AuZNj7ZU0EfArFsplG5zPHDuacKdWvKx4m5tsg4o7ZsnbGgKB1Is/In6Asd5duyXtM2RAVZ/iFReUMYAay5zkvBGOlsKaoU6+4hWhJ3ueph4tXjfsEvs/sBzqYxDEpZSa/j5Eco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=gmWNwHUQ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=auQ0GoDN; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=gmWNwHUQ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=auQ0GoDN; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5131E361DCE
+	for <patches@lists.linux.dev>; Mon, 23 Feb 2026 12:07:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771848478; cv=fail; b=ZRDGh0MQ8pP4UDEPmGMjXwf/dZMV3EMzTwkc2/lWDGBY6/GOoUuXLYcIX7hBcy0n5tgngT6yK8lyaJHBB0c9dTXesHVBIG8rdQwFJZVBAb7se7XJfJrRNQowElinbio+A+4vipif0yyJYZW+x+rMZfSgUkclB4foQJtiZuYbcJE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771848478; c=relaxed/simple;
+	bh=//higwwKl1edAfwVU3hNQ3ydXfyHBmUDIsQq1mMlSsQ=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=qUJQ35ZFLs2zV5oWOjQh9SM1XkgGrJlmejVI7hIGX4ILlguqqDZ99X6XpUZVdNtTOBuRIWm30gAirbvOk4QktjL9wqO5XdY29OOaYM6Ufmr04lhMrZTPuUA42xy03oInQKvQ8TQCnJ89gUtSZ3C/wGoLfFvkBUSWC6YXuWF2U1E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=WBFztR0x; arc=fail smtp.client-ip=40.107.209.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="gmWNwHUQ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="auQ0GoDN";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="gmWNwHUQ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="auQ0GoDN"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 825B03EA2A;
-	Mon, 23 Feb 2026 02:34:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1771814047; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kxBYf+cdsMcA82jqSZJfW81TKbNCK8ORNnR1WW9nGd8=;
-	b=gmWNwHUQsLKFsdQq3rxX7oYQBWRe+tb8pRi7wAhILa5mA/1USLZgYdjeqxOhBf9nXv8kDv
-	IaYpn+7OTs+SM/Dth8DtPyBYbXANRZPqf90pCSHSb+ALcktyx7clsssAB46keRQyuQ7G8T
-	so5wcd04uN5je3AX8vWIMd5r0IyWGJA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1771814047;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kxBYf+cdsMcA82jqSZJfW81TKbNCK8ORNnR1WW9nGd8=;
-	b=auQ0GoDN3o96PnHEwC1UaFkwqGjmNjDjO9s8zTrhPJ8C60BBcRw9Zz9b+Xq6ByxUB26Gpx
-	kzrSWbIEpEK5uwBg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1771814047; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kxBYf+cdsMcA82jqSZJfW81TKbNCK8ORNnR1WW9nGd8=;
-	b=gmWNwHUQsLKFsdQq3rxX7oYQBWRe+tb8pRi7wAhILa5mA/1USLZgYdjeqxOhBf9nXv8kDv
-	IaYpn+7OTs+SM/Dth8DtPyBYbXANRZPqf90pCSHSb+ALcktyx7clsssAB46keRQyuQ7G8T
-	so5wcd04uN5je3AX8vWIMd5r0IyWGJA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1771814047;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kxBYf+cdsMcA82jqSZJfW81TKbNCK8ORNnR1WW9nGd8=;
-	b=auQ0GoDN3o96PnHEwC1UaFkwqGjmNjDjO9s8zTrhPJ8C60BBcRw9Zz9b+Xq6ByxUB26Gpx
-	kzrSWbIEpEK5uwBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 14AF93EA68;
-	Mon, 23 Feb 2026 02:34:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 90XqLpq8m2nxfAAAD6G6ig
-	(envelope-from <ddiss@suse.de>); Mon, 23 Feb 2026 02:34:02 +0000
-Date: Mon, 23 Feb 2026 13:33:57 +1100
-From: David Disseldorp <ddiss@suse.de>
-To: Rob Landley <rob@landley.net>
-Cc: Askar Safin <safinaskar@gmail.com>, linux-fsdevel@vger.kernel.org,
- Christian Brauner <brauner@kernel.org>, Alexander Viro
- <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>, Randy Dunlap
- <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
- linux-kbuild@vger.kernel.org, initramfs@vger.kernel.org, Nathan Chancellor
- <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>,
- patches@lists.linux.dev
-Subject: Re: [PATCH 1/2] init: ensure that /dev/console is (nearly) always
- available in initramfs
-Message-ID: <20260223133357.0c3b8f8e.ddiss@suse.de>
-In-Reply-To: <6d34c95a-a2ea-46a4-b491-45e7cb86049b@landley.net>
-References: <20260219210312.3468980-1-safinaskar@gmail.com>
-	<20260219210312.3468980-2-safinaskar@gmail.com>
-	<20260220105913.4b62e124.ddiss@suse.de>
-	<6d34c95a-a2ea-46a4-b491-45e7cb86049b@landley.net>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="WBFztR0x"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fyDIGrjx4YilFq/ibBR6/pytWduLh7Jm4nSZQiapu1ubWXtfDD9ZbdkunrpQw95WjHHFjlXRiiK6nQljcyC9EmDTTVt8b+CNZJom5NtDjjpw8VqPP4Z50bVOCFJO/p/CiK0FSx+hNzwVLGfVWFtzx/kBz2ZxypKa399Ta+UY+/srnU0cFfdwgwurpbn9APhSQ7Gu4P2Mxht/dID5gYD1L8F47TMCAC/2DIiuckiH1dmzXr6XQGdE0BBcNisAsA6kAAHVWOs5VtFkpTzX0ETxD3WnKe+vY9XnnHNVx7rsx3pCSIT99uFtju7QqPwuRhEWQa7e5ETQ25zfG+xIDJrTxg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IW1phrt9LazKc/W+sX7Yu5k9I9VcsBzq9oUaUgMTJdI=;
+ b=ta+72x6kQaYJDLRe7cPDGC8z6xdkDP8HOneiKBZAmZFQNBL9GLGBo34VO8XotaBuEGHHPOD4mUApG8g9B3zyWpTPF7p5NKpsCPQVOQfTE27HrsdHrEdcPnb1hgkiR8Ug21FB3dEiLMV4oWGz8GKVXX8KKXE2z8o+GaCxBEklac2fLS7DlFEh2OSJBQb+XiOT8zg0DDHYG/uuiSmJ8KRCWz2oCKy/znHnD8r6fShOhdlQnAWvSALPG+aJYj8TQtC7DwgorF3jAUAszBoa50/jFRZMuaSrwpWFRIwvw7UtagG3rvmLc+7s5WSPDXC5OIa0ElDFErbdMv62o1qNRIt2VQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IW1phrt9LazKc/W+sX7Yu5k9I9VcsBzq9oUaUgMTJdI=;
+ b=WBFztR0xl65kEsJbVvSkZ2viDwV84xwyhHfbLZsk6s9o7MKQeTqQxCbeamTnCSZvLAp4u2AwMi+Efe6eYFUFUY/LBorvmvnQwtUDJ3UDnTpeRaXwGWK+3R2GdGNE1yOmXELwwYCFZTMTBmds9f3vQAAeErcpWpiMT34O9bqKZQo=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DM6PR12MB2860.namprd12.prod.outlook.com (2603:10b6:5:186::11)
+ by MN2PR12MB4469.namprd12.prod.outlook.com (2603:10b6:208:268::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.14; Mon, 23 Feb
+ 2026 12:07:54 +0000
+Received: from DM6PR12MB2860.namprd12.prod.outlook.com
+ ([fe80::b2e7:252a:a896:8a19]) by DM6PR12MB2860.namprd12.prod.outlook.com
+ ([fe80::b2e7:252a:a896:8a19%6]) with mapi id 15.20.9632.017; Mon, 23 Feb 2026
+ 12:07:54 +0000
+Message-ID: <abdf4f89-90a7-84c7-af7c-f070073b399d@amd.com>
+Date: Mon, 23 Feb 2026 17:37:43 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH rc 4/4] RDMA/ionic: Fix kernel stack leak in
+ ionic_create_cq()
+Content-Language: en-US
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Allen Hubbe <allen.hubbe@amd.com>, Andrew Boyer <andrew.boyer@amd.com>,
+ Gal Pressman <galpress@amazon.com>, Mustafa Ismail
+ <mustafa.ismail@intel.com>, patches@lists.linux.dev,
+ Roland Dreier <rolandd@cisco.com>, Shiraz Saleem <shiraz.saleem@intel.com>,
+ stable@vger.kernel.org, Steve Wise <swise@opengridcomputing.com>,
+ Gal Pressman <gal.pressman@linux.dev>,
+ Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
+ Leon Romanovsky <leon@kernel.org>, linux-rdma@vger.kernel.org,
+ Michael Margolin <mrgolin@amazon.com>, Yossi Leybovich <sleybo@amazon.com>,
+ Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+References: <4-v1-83e918d69e73+a9-rdma_udata_rc_jgg@nvidia.com>
+From: Abhijit Gangurde <abhijit.gangurde@amd.com>
+In-Reply-To: <4-v1-83e918d69e73+a9-rdma_udata_rc_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5P287CA0073.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:1b3::6) To DM6PR12MB2860.namprd12.prod.outlook.com
+ (2603:10b6:5:186::11)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-3.30 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_ALL(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org,kernel.org,zeniv.linux.org.uk,suse.cz,infradead.org,lists.linux.dev];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-X-Spam-Flag: NO
-X-Spam-Score: -3.30
-X-Spam-Level: 
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB2860:EE_|MN2PR12MB4469:EE_
+X-MS-Office365-Filtering-Correlation-Id: 46c11a17-823b-4a5d-c50e-08de72d42c5b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|7416014|376014|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?RlNVb2FWd0xlMHZXMmVleHF3K0ZuMnovaGQ5WnEzSEVUSm1GTlc5WElTNVB1?=
+ =?utf-8?B?VTIxVnh2OU9McXN2ZWhPSjltcDhHeUgvdXF3S1Z0VFpibWxTT1crOWhSZy9X?=
+ =?utf-8?B?TlY5ZGQvZ3l2ZitKcmZENCs3QUxHazVIOEFFVXg1eXRFRVhpMFpIUnlxNWwr?=
+ =?utf-8?B?aUlmckZ3VlMwN3BUTG0vMWZjQWhXbnNlL2Zmd05xKzF3OGI4bTBvYXNpL05a?=
+ =?utf-8?B?YklDNjNKT2RYNG5jVGFUUVRaU1NLNUl1QU5xaWswb3g1ZWhLM2Zua0dKbmlE?=
+ =?utf-8?B?NkNhMnpYQmxqNHllRUYvWi9nMmgxb2lXQjZ6Tit1N2s1WHB0UVhadURpV2Jy?=
+ =?utf-8?B?WmRxQTJZL2JpU3g1NmJJbTFqL1NSdXdITnZ5WmxUNUtZUm9lNG9FK2w4aGM1?=
+ =?utf-8?B?eWVtZE9mdUJYWlYwREhUMnVaQ1pPZGpDc29laVA0SGV4VTlBZTVaSkxTR2xG?=
+ =?utf-8?B?eEFicHJjZ1dCSk02MmplK3R5V0Q5RDRMSmt5U3hMdEVqbUtvdFJ4YlBYZXpu?=
+ =?utf-8?B?cmNsazk0YUFKZUdOMnNTSzVjMGZVTnZUVHA3YjNmb2hPZGJ3V01ZaHFvbGhL?=
+ =?utf-8?B?YWdMRzJJOVJ6UW4yYUpNb2Y4eUJMdmpQYXhpbnIwZWFWQmdPemRISXpaR1BP?=
+ =?utf-8?B?ZkR0Y293cEk0cEJmaFJRRUpqdE05ZWhSVkl2UlRNampmcGQ5NE9lNjhqZVgw?=
+ =?utf-8?B?amhEKythYUFacWpFSmJPK1k0WksxbFNZcUhOOUJnUzJRbEVGUnhsYkVHaUY5?=
+ =?utf-8?B?VVFKVnAvUlFWUU00bG1ETWg2cWFFWUxZSmsrdkpUZjNxRm5RZ3N1K09xVmxl?=
+ =?utf-8?B?amhidXRIQU85cDluenZ0TzNYeVVkUDZqQzFiaEdhNC9yaTBWeEQ2bXQyYWsy?=
+ =?utf-8?B?OFhjL0pyekNkY1VGem5Ud28wemxmTTJjcUo1ZkpMa0lwV0gzREo4cEFaT0Yw?=
+ =?utf-8?B?cHlKdVRGUFBDKzFKY25FUHMvaVVMRFZXVXVRa3RuK1BkWFU1Y0ZiVEV6Yk9t?=
+ =?utf-8?B?cHhyMFgzWFF1d1dsWVUxUGt2SVlYT3NzOHVkTTlGMmx3ZUFVb2VBTit3WU4y?=
+ =?utf-8?B?cEZ6ZW9rc3Nhemc2eXFvZkw2VW9STjVTa2kwbmZDeWVqVkUvTWVHODNOOG5s?=
+ =?utf-8?B?MDZtLy9OQXBycldvS0VWNURxcG85WVp1Z3FZaTRHNXpidkJRMFdMZE5PRHpP?=
+ =?utf-8?B?RmNBRUlTa0wyU0JYbkduaGE4cFM0NjV4NmNPVlpKeWlnc1BPakNuWjBqNjVH?=
+ =?utf-8?B?M205TkxvbkZycERuQSt4WTRvM2lNV1pIQU1iSnl1NUlJbnBuaGdDYUs1cHdN?=
+ =?utf-8?B?VWtmSTFBdlZNRkg5N3pITXJBMk1MbjBOU3NxVHdaSnZNYVBFS2dhOXVrVHhP?=
+ =?utf-8?B?TXVXZHl1VGZsVXo0ZkN1WGNpRXlCVnJOREZETnM1c2JwT2sxdUZ2SW5QUzUw?=
+ =?utf-8?B?NkRKb0tBeXA1anpyblJOM3lDaThQYUFEdlRiM0dUZlhQWGptUkQwU2NaSU1t?=
+ =?utf-8?B?R0E5VlJmZ3MvTmxFR1c0aURDTFFqUk5RQU1ycEcvcFE3V3puSUdadU5xbXNw?=
+ =?utf-8?B?a2U2QWhKYXQwQURSTDNPcUdrWnRwd1ptYXVqOUFVMDloWlYweThJTmNOVGZk?=
+ =?utf-8?B?allaallnaXpZZDB3R2RNZmpNajBQMjc4dGFYMG9OM1Nqc3FmQk5xUDRUYmtG?=
+ =?utf-8?B?QXZsaHlUTTAraW5ZTEdNVVZwY212dzBNeE81R0dyZURGa3dUeG1jckFNZXZj?=
+ =?utf-8?B?L0tVQjNObVRQbEs5RzRRa0FTRGRLZlhlVFNGM28xWVNqS3ZPYk1qVlJTcjds?=
+ =?utf-8?B?djl1aUhjQ3BaTUN5Y2Z0WDg1d2FPU3o3OWhmSHlqN3RZM2FBZ1JYQ0hSeGxh?=
+ =?utf-8?B?TzM2SGVQS1dYZzloR3Q3dkU2UzFORWlYSjN4UkpnVUxhQ1hmbWJsdFMxTzds?=
+ =?utf-8?B?TkEya0N4S0tnckZVOWdOendqNVlTNDNrTUlMVkNkYmkrRmt0Qm5hcDhqdGdz?=
+ =?utf-8?B?VU5obXdlUTdqMG04eFJPbTNzZXluT2F0ZEdzN2ZHWldvckZkaFBMYk8vUW5Y?=
+ =?utf-8?B?TlpRY1JUcmNKMWttTGpmRVFMR3dSd1doVVBEZURwNFpGTWszckk2MTg3cVNz?=
+ =?utf-8?Q?WyuY=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB2860.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SHBPVlo2azArYWQ3MUQ4WUFRZGxLekptY0hpRzUzejdrUzU0TmFFVEJyZ05v?=
+ =?utf-8?B?ZU1OdmZsc212QzVWbHdsV21PTWFJc1J0cFhIRjI5Q0RzSk4xdHE0eXViSHhi?=
+ =?utf-8?B?aFFZdEg5YUc2WDZnc2RobDYrdi9oMC9MTWlxMnB3b3JDTm5qTndiOFpHZjRw?=
+ =?utf-8?B?S1Y5L0RWNGhYYmh2aHNXRFlxaklWN296YW1YYm53NHArODJIdnhRY21yY2g4?=
+ =?utf-8?B?YXdzNHNqTUhWY0FDSkRNUFg1UVlmTnZUU3ZRZWFSK0dGWFFvV2N1NDNPbTZw?=
+ =?utf-8?B?cHpGOFFhdzFQUFBpQUJZT0tSWGhUQmoxemhiL0FiSG1aQWZwbTNkMUROWGR1?=
+ =?utf-8?B?bGt3RktZd0NnYmFiZW5odXBwYlhqeTVZdExNYlltQzNOMEtZeEYrMzZ1M3Ry?=
+ =?utf-8?B?a0QvdnRJQ1BVVXZZZHUwbUlRd21nc0hxa2x3akZyMCt5T0R0ZCtYeEZ0MUtw?=
+ =?utf-8?B?UVlZbVc5LzJzSFpnbThtQWNJSnMwV2hoL1Q1cW1tL3AwNHIrVWUyTGt5TjBp?=
+ =?utf-8?B?S25yODEza0Jhd2RobDluNXpoYWJkZXltZjNjUDRueFVMeUN5bnN6MHRzbEd5?=
+ =?utf-8?B?dUV3R3J0NjhIWFBER2x6bmo3dmtxak10WmNjUzZtaUd4UENvOGRpdVY4TU9H?=
+ =?utf-8?B?cW92VzZCTHUzWUU1NE5oRW13OHRGTnFVOU9neGZSZkdLZTJydVZEOHlWK2dE?=
+ =?utf-8?B?bUIvWERub0M3YlJ2Ym9rMFJaOTlkV0Z1OWQ4ZndXdERFaVBuNktRRDNoNC9Q?=
+ =?utf-8?B?Z08wNnpReFdOYTNCcDZYZEJjb0NMMWRlVEVOdXJ6WkM3Vm9JTXNjaG9iQTJl?=
+ =?utf-8?B?azV0VFJiaThsNnBGZnhWaitjaEpGeGJ3QkZNSC9meFowWGxrQnI4TVN5SXV3?=
+ =?utf-8?B?N2FUUFdQc2ZWRXJTWnc2OVVWZzd1elBMTzQzUnJacmY4bWZWTnphTTRtSXdR?=
+ =?utf-8?B?dzFxOXlRTjRwVlZBUElxOWlSZUl3cGZUZU81dXhUTzg4VFBrTTQ1UW1aUTBD?=
+ =?utf-8?B?Z3Z1L3ZIMlZFU0FSN1JEQmhncmVDZW5TQ0Ftc2Ruekl3M2NlYVBNbjI3LzlK?=
+ =?utf-8?B?amlhQkFOK1Fla3RUS1BORUtzM1JBaUVJZU5BQkpWdFpUVUZjMjNqcU9Bc01t?=
+ =?utf-8?B?aTMvdkQ4MWh4V2VybjZQUHRwa1VtUWs5Q2xNWXc1NnExVkwwczl1SXdVbGMx?=
+ =?utf-8?B?cW1tYlBxWVhDd1BjM3dSVVovOUhmYXZRVmZVQnUwM2VMb003eWFocVdUU1lM?=
+ =?utf-8?B?QkRTNnc0bTdXd3NocUZIc1YzUlZ4aDNrTWgzMGJ6Mlp6UVk1NTZqcG1KOWtl?=
+ =?utf-8?B?Y2dCQWRFZGdHclQ0Y040S01ZVmpoa0ZFR2VhaG9yWVRYRUs5VE5tYThHMWE4?=
+ =?utf-8?B?RjkwajdCK0tRK0g2MlVlSEpHSVZYcG5TWUE5TmpjWktURnptL3lqZkxyZnNr?=
+ =?utf-8?B?TDNyNjFUdHRCWFE2V3NyMktqUTVQajc0aHZYaXhodm5DZnZpRDZHVUc4ZDNr?=
+ =?utf-8?B?dGk0a3lPZlVyc0tuWDV2YTYxbU5WelRmVk9ka0xWZlluekYwQ24yaGNmNEI2?=
+ =?utf-8?B?V1JXbXFNeXJKT1FSTmdWeTNKandWNEhqU2pWT3o1bVpZM0s0WDQ1cnFFMkMz?=
+ =?utf-8?B?K21CcjVYSnJPcTJQWXJCVEpCT2U3OHFRNkdKOEpJcm0xUmRVNGdscUxsUUx5?=
+ =?utf-8?B?dFVoVGovaG5FVXhRNzBjNGlZdFBVR3BkTThVSkF2Y0lOZzJmMGRKSXpub1FQ?=
+ =?utf-8?B?cnBsMGdDTDZhaUgwcTIwWUxIdEN3TCsxVU1yYzNOaXA2bGJZeURVRGZCaWFN?=
+ =?utf-8?B?Z0FlS2U5NXhXd1RMaEV2Smc5bXBJdjM0blhaZzFxUTVxME9FMDRhM2Vrekgw?=
+ =?utf-8?B?THN2VnR1bHIyUGd0bTV4Y3hOMk12Rmozb1FWZk91ZUtDTkRGZ1dmaVMyR0d2?=
+ =?utf-8?B?VEc1VUlSUFFtcFdpNXVsbEFNbTJMK0NyZjVDV3NwY29MVDRtY2hMT2E2QXp2?=
+ =?utf-8?B?bGJQeDQ4Y1hHS0pCZDZSQXhXRzkvWXVNZmwrS0hpSXMxaytUREtxcHBMOU1s?=
+ =?utf-8?B?UE1aY2FZamw1RzFLNExpcC9YMGF1TG9RT2ZucjZZUy9teEhSUkRqT0xra051?=
+ =?utf-8?B?MEU5b3ZRK1JQdGdTV2xUSWsxbXpML2RHL1VWM2hFU0RPbE45enUwbFZ6MUVY?=
+ =?utf-8?B?Wk8vTFE0elJ4R0hOcjIyYWQySTB4Sk9zQnFCaVNaMWRBM0FXWUxJSFNYQWdv?=
+ =?utf-8?B?cjJ1OGJtYWNZeWFmYStzN3ByQXF5Z0Q0aHJGNkdPOXVnYWVEblNUbVlac0Zr?=
+ =?utf-8?B?SS96N2lkdDN5U1hYTjg0cEc4ZFRSUFl6L0t3OGNIR1JoOXZCeUxhdz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 46c11a17-823b-4a5d-c50e-08de72d42c5b
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB2860.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Feb 2026 12:07:54.0227
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 28od2/5o1zWRlBMZ6y3u6nGyXdUKfajJ17m9aoNsJ+o5K2Dus9hFPUosJ/ZI4nLyAiN/fOoTXwxofX/+YN5ItA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4469
 
-On Sun, 22 Feb 2026 19:27:50 -0600, Rob Landley wrote:
+Thanks!
 
-> On 2/19/26 17:59, David Disseldorp wrote:
-> >> This problem can be solved by using gen_init_cpio.  
-> 
-> It used to work, then they broke it. (See below.)
-> 
-> >> But I think that proper solution is to ensure that /dev/console
-> >> is always available, no matter what. This is quality-of-implementation
-> >> feature. This will reduce number of possible failure modes. And
-> >> this will make easier for developers to get early boot right.
-> >> (Early boot issues are very hard to debug.)  
-> > 
-> > I'd prefer not to go down this path:
-> > - I think it's reasonable to expect that users who override the default
-> >    internal initramfs know what they're doing WRT /dev/console creation.
-> > - initramfs can be made up of concatenated cpio archives, so tools which
-> >    insist on using GNU cpio and run into mknod EPERM issues could append
-> >    the nodes via gen_init_cpio, while continuing to use GNU cpio for
-> >    everything else.  
-> 
-> Who said anything about gnu? Busybox has a cpio, toybox has a cpio... 
-> once upon a time it was a posix command, removed from the standard for 
-> the same reason tar was removed, and that was just as widely ignored.
+Acked-by: Abhijit Gangurde <abhijit.gangurde@amd.com>
 
-I'm not familiar with Busybox or toybox cpio. I've referred to GNU cpio
-as it carries the archive-contents-must-exist-locally interface. Any
-tool which uses the same interface will likely need to workaround the
-same mknod EPERM issues for initramfs.
-
-> It's an archive format. There are tools that create that archive format 
-> from a directory.
-> 
-> The kernel itself had a fairly generic one one built-in, which you 
-> _could_ use to create cpio archives with /dev/console as a regular 
-> user... until the kernel guys decided to break it. I carried a patch to 
-> fix that for a little while myself:
-> 
-> https://landley.net/bin/mkroot/0.8.10/linux-patches/0011-gen_init_cpio-regression.patch
-
-This seems like a helpful feature to me.
-
-Thanks, David
+On 2/16/26 20:32, Jason Gunthorpe wrote:
+> struct ionic_cq_resp resp {
+>      __u32 cqid[2];         // offset 0 - PARTIALLY SET (see below)
+>      __u8  udma_mask;       // offset 8 - SET (resp.udma_mask = vcq->udma_mask)
+>      __u8  rsvd[7];         // offset 9 - NEVER SET <- LEAK
+> };
+>
+> rsvd[7]: 7 bytes of stack memory leaked unconditionally.
+>
+> cqid[2]: The loop at line 1256 iterates over udma_idx but skips indices
+> where !(vcq->udma_mask & BIT(udma_idx)). The array has 2 entries but
+> udma_count could be 1, meaning cqid[1] might never be written via
+> ionic_create_cq_common(). If udma_mask only has bit 0 set, cqid[1] (4
+> bytes) is also leaked. So potentially 11 bytes leaked.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: e8521822c733 ("RDMA/ionic: Register device ops for control path")
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/infiniband/hw/ionic/ionic_controlpath.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/infiniband/hw/ionic/ionic_controlpath.c b/drivers/infiniband/hw/ionic/ionic_controlpath.c
+> index ea12d9b8e125fe..83573721af2c08 100644
+> --- a/drivers/infiniband/hw/ionic/ionic_controlpath.c
+> +++ b/drivers/infiniband/hw/ionic/ionic_controlpath.c
+> @@ -1218,7 +1218,7 @@ int ionic_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+>   		rdma_udata_to_drv_context(udata, struct ionic_ctx, ibctx);
+>   	struct ionic_vcq *vcq = to_ionic_vcq(ibcq);
+>   	struct ionic_tbl_buf buf = {};
+> -	struct ionic_cq_resp resp;
+> +	struct ionic_cq_resp resp = {};
+>   	struct ionic_cq_req req;
+>   	int udma_idx = 0, rc;
+>   
