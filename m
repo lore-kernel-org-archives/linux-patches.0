@@ -1,132 +1,128 @@
-Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sienna.cherry.relay.mailchannels.net (sienna.cherry.relay.mailchannels.net [23.83.223.165])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C98723EA83
-	for <patches@lists.linux.dev>; Tue, 24 Feb 2026 17:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B702DB791
+	for <patches@lists.linux.dev>; Tue, 24 Feb 2026 19:02:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.165
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771954244; cv=pass; b=B4R43NFnbNcjbfXntCBo2pygOpJB+Pp/rSiDfhoHn3SHbtIIvQ+C+/CKT2SmXT8O0pqSDHXC3k0Str5FbJCr39uLr3mM1Xlb+SSv5qZjojkoMXH2VBN97YR/Bsc7ducHH5DY0GKec1CiH95luQ1bOCyaqp0dEbbMdN1UIcIqANA=
+	t=1771959774; cv=pass; b=dphhrg6jsYu7EjlMTn8d5BO0bmKC4bSDwCLBQjeMYv8TkMVNkqh33IyNtvpAtjXfB7xn8dLMfGo+bRH99Mn+3rQmKvfgg2O72z1ktZgV4S7xejlIvd6O87cG/hjtSS+QVVF0T1FOm4oXpLajGYRCkt5CaVqVnEmdHiSxGGflU6M=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771954244; c=relaxed/simple;
-	bh=hc85fxZzUnttApa9NdPqidKuo7OpFu7Ke4r3j7ibou0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l6t9FwOLB6tPJ8d1N7UUVFfiDyw5hyAWOzWGi3i6Kkb3aw1a2OJyeBsPYuvaoteEob7NxoiNwSklQ5F7/N/J5mUyLsv1pL6R6uxxYjN5+AujCHE9o+vG1zlEJQSgtHf7ywB/IQERdnMqr+9TebZjkAvsphn074ac41Q3VzoRteo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=npdeo2MK; arc=pass smtp.client-ip=74.125.82.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771959774; c=relaxed/simple;
+	bh=Jr/PDVnNKvKlpq+USPz3dMI/D1o2FqG9PRfJXdMbzxQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=riKCmnxz4UR/FR7zkzZ/niFIj8IRWyILPK+vu4zwg0oLo/FC8p739UGZyW4uPKmRR/GEBwlTOoEEVckmb/WzZNDfXIJrncME8uVJT0UDmCgEUMH3n5IyH/CtUdUE3/3fgwjT0LH591dEFcx8SLA1XHIv2G/8Eoj8LZCRBCN21QM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=landley.net; spf=pass smtp.mailfrom=landley.net; dkim=pass (2048-bit key) header.d=landley.net header.i=@landley.net header.b=ZlK/Uv01; arc=pass smtp.client-ip=23.83.223.165
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=landley.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=landley.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="npdeo2MK"
-Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-12739fe9a0eso323579c88.2
-        for <patches@lists.linux.dev>; Tue, 24 Feb 2026 09:30:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771954242; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lZLV6lOUXr6R2VNy4gw6m6AueMkYIRncXc5LTjxhG4W5fKWKm6ip3CQt/XTscxLGDd
-         XVAGb5UNgVCJgcoORsPsYuBgzDOVcaIMEUVo+uwRQPSjdvweSnrCK76HTn/M0xNdadbE
-         Qkb0rSi8c+VGJYIi1keQo2qRDzM9uksbZMdhfAcxg5R0XDwyVKBFfjk0jW0UbpyEZWMI
-         F/R6uMWr1SJrP4BrsaIQcmCHtNhkkt40FX9d0IxwONvW1fw6t39F7QMMQwLlLm7FC3FG
-         8JnsYSfu+ddQI5lDzS6CzK09B5VgDFnhytDlRd8qobmbE76ymg1E43MhD2D18v8sZ/tW
-         JmzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=/a2JzYiJi8j5HoSY10XGkri0uRla1KOV5s6Jt2sDeKc=;
-        fh=QRcClapHE9Q/JwqNPJII5fxFsJJB+EahHFhwnQGzfck=;
-        b=hVmo6fjEP93atLXcbWCl5Ei1WxiZDZW6/4kJq/cGO8t43hyTn/fhxr08fXTz4wds4T
-         v5Z+ITAjiFyj3JkXiL5W5trKlHf9yDsE/nv3b93oD2GP/JtE1U5eKGZrJ9AwV+pQMy/b
-         Pn+9O61SWt415TUB9PG5Qb5BoZvdkv3cm8VokmN3/sQCWdwRogLlomF28e9Qig1hWm+T
-         X1J11T+EhkV7anO6AWXp/ScGRDxxnYXekk6zixak7pE72+ru/umrfhcJRODK8YTGHtZd
-         /3XOO1vndxI6tVi1z8yqRgdMhOmlyGR1UEn8Xg46Yzrw2cW/enb8lAghiYTqiZxgSKrv
-         q5CQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771954242; x=1772559042; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/a2JzYiJi8j5HoSY10XGkri0uRla1KOV5s6Jt2sDeKc=;
-        b=npdeo2MK3dne2Q3kfNRzCovDBM26lruwK1InwHPg7k3lQq4QVL7f8cIPar4DjTHgIZ
-         Sb5rZK1f/9W8c1gLja7Ta426hG/ECXv54LTf9tMHqWD0Oiddkj1Y3FdD3+ZLEVCFcFaQ
-         C8lwG2gdMq2DzQa1oGnbsbc1zeF+zgqVDXSyuMEixVDFuYePjo14dEOehAxwC9m7a3sU
-         WVsCb+INEBAtpwb+5CUAhtfaC4U+hLMQG9sB7tzFbRe/TgaKBArE4XykUTouqJinxl8b
-         HN1adt7eG/X0Ztv4b9z5NWazsd5MzAyTKw9N2f3T5pCKzkVNg8x6WhucAwBmjj4aGvHI
-         r4nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771954242; x=1772559042;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/a2JzYiJi8j5HoSY10XGkri0uRla1KOV5s6Jt2sDeKc=;
-        b=eyRla/uPnx/iJ3dU+u0ERbjgfgWFERkafzblHuK5KE6W31qa8EQoZCwUPR8yTAHVtp
-         eu8KztGpQSHWqL9Nw4toxFgIN747NZCF0Xh6TXl8t5fmlNuiUsJ/2jyL1axu77Tl59zb
-         Gquy4zgByM7MpaRgnaga0DWTzgYGs5KoShv1kdPKue/gEAbkb3wZNY7AMzFKn9A4GdEI
-         nD6OqVifReoVPn94kwFZsfZjqolfyodzSsvgu7QKJV2p8ZWtmoY/ez82Fl/f/Q6+6Gpt
-         y/cqKqAErD8bu7NB0sxfmPm3geMI6zlgLjtvDZBC/qc1id24S5iUNt3Ly+bEdthmwLS+
-         NJgw==
-X-Forwarded-Encrypted: i=1; AJvYcCX6Nh8oU+LMRgaH8sIwi65CTkwSI0UcM7KWvXNXNpPgoiHNsInpvTsgGAhhmywazwtTKhINt3XC@lists.linux.dev
-X-Gm-Message-State: AOJu0YxgP/eXkGYqNAUZQDPcbTCtBksD38YtZH/6MZKLMGTcHSHhIK2i
-	XXhz6torgRzeGoCs2iYaaYTVCh5QmoHX7ilkS2p8cO8Rcz7lJhPu6SziOOFhaPllfS63FQ0HEaX
-	RUhlI3w0CPQQ6kj8sVdtHfLVq+08IMCM=
-X-Gm-Gg: ATEYQzwXOGY5PlBvjWRjsmnhIaaZsQ2V0ufZLY9LD1K87Lm411tbGwFD/DQ1oekDl7L
-	RTP5iTPboHRGS2rcP1qIP5CErVmqjSEhpoCoXoVu2FgH8I/PF/jhmpJkyX0FGxXLLPbaHG5/6Lw
-	bFoQ+pTbKITPd7+tU36zTOtKxyB33UFJvEFFZ4mUhz2BjyyoCHqizYOMwzC5oZypDo8+tiuUuIX
-	575UF42y9PljaV86B0zvX0JNo7fwCnlfngknznLu/nzniEi/TxPTX/yavk2RvokfMkQRd8j4YTh
-	Ey9gkLKPdFYT4O5Skbqia1t5jspIDLF2oJULabNutn3kWiktvA4DH5q8ItzZ2nCbmt14F+IZSHA
-	nGsyyERbPqkLF11ZlydYb80wXvEO0
-X-Received: by 2002:a05:7301:3e09:b0:2ba:7d2c:1468 with SMTP id
- 5a478bee46e88-2bd7bdb1e3cmr2638165eec.8.1771954242093; Tue, 24 Feb 2026
- 09:30:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=landley.net header.i=@landley.net header.b="ZlK/Uv01"
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id C9EE6181FB5;
+	Tue, 24 Feb 2026 19:02:47 +0000 (UTC)
+Received: from pdx1-sub0-mail-a209.dreamhost.com (100-99-12-80.trex-nlb.outbound.svc.cluster.local [100.99.12.80])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 468A218277C;
+	Tue, 24 Feb 2026 19:02:47 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+	t=1771959767;
+	b=pvB/qBHCxCT0aHmBMwVI5e+2bMlJq8Cj+GFdb+Sox00GZWxo5WXxg+DhMdvEQGGAwviO2/
+	Q+PxTOLTcm5iM5iw+FAz+JpT14a0XQdwGRxsry+6TOERxrwrCredRnM70ZOmHqermKw/pk
+	KLyPHjCmVaBs/TbhTsmyq8NXgu9fXRSI+PH8MsLr8ykhi+57Eoe/f/wt3+wWq723G/W6pJ
+	WiiCSyzF+ov17/F1PYHyHAzilQBTY9/1GtJbFuhB6C2YjEyoLYLDrzI8DmWmBWSB1Nad7+
+	9n1rvsee4KUhrNX1tHyyKggC1sFcrVr178CzTkJZqWItIzI8Qoi4cGfbqgvnBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1771959767;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=BKJGCewKEjcg+ipjOOUMSQ1gSJ8lDiWlCzg0lPxp+p8=;
+	b=bJQjHP5OPsK78libaOkE8diCp0+pfQ1K0djQ3GdAQQPTDPPXNV48+h/ZxdoB+H0c8pA6QU
+	uqloVPhDfsxBhwZOZ97iyKZGzCr6tjRTMqRMwR7B/4DM774XhKAoHQeIJG60a4bkKJ/pXe
+	ms49778XHbWt0KHRwuQcBtCEiofzoBdzzUlDcn/DZQ7B3fgh+S2s6gSR48q6Yi8l8BHPSn
+	SuKK3xijAApfyEW1Wdi9pR7yurwRST8hOG8dtoERHqqQkk8PUEN6hY1YnbPmzae4DWBJDJ
+	ZBpIF84pNoooSxRInfrwtsNmlfjy5krcuP4Dxw80YZHgJ2obEOoj31yudui+bg==
+ARC-Authentication-Results: i=1;
+	rspamd-7f65b64645-pztnx;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
+X-MailChannels-Auth-Id: dreamhost
+X-Fearful-Lettuce: 4ec8746d1357a7d7_1771959767655_491962063
+X-MC-Loop-Signature: 1771959767655:2667290202
+X-MC-Ingress-Time: 1771959767654
+Received: from pdx1-sub0-mail-a209.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.99.12.80 (trex/7.1.3);
+	Tue, 24 Feb 2026 19:02:47 +0000
+Received: from [192.168.88.6] (unknown [209.81.127.98])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: rob@landley.net)
+	by pdx1-sub0-mail-a209.dreamhost.com (Postfix) with ESMTPSA id 4fL6YK4QY7zTC;
+	Tue, 24 Feb 2026 11:02:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
+	s=dreamhost; t=1771959767;
+	bh=BKJGCewKEjcg+ipjOOUMSQ1gSJ8lDiWlCzg0lPxp+p8=;
+	h=Date:Subject:To:Cc:From:Content-Type:Content-Transfer-Encoding;
+	b=ZlK/Uv01G4CStwmTz++hMmyuEPPue6aqD3QQmJmKX61oV8Mc1a91AZfjp8H1Ro7dq
+	 0xU54vLor8XgZzFwEGghruMb0kbafUwQgai7nlI4muNOgg7OephR/snaicxNn/0LMY
+	 3b4Nvo0brV2P9bgfO6jNno/UJO7tARXrIjdyilRLWHWAu/ovsXRNZZFaxEkAOvbt4A
+	 py0RuSV1BsL2/o7bMkRIvvwgnC7/9M/NHf6yN0YKqEEr+yGaEEwpMLrQn7tB4klxqH
+	 oMHi33bHek9jPgWCsGrs9g3Ty7GW0EptpcXDkzGP3Hnt5MmcMcSZ9m0+jgGVbTAUnw
+	 45uzkY8a0rfIQ==
+Message-ID: <bd45c86c-e1ea-4995-bb00-df83cc873105@landley.net>
+Date: Tue, 24 Feb 2026 13:02:44 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250325184309.97170-1-ojeda@kernel.org>
-In-Reply-To: <20250325184309.97170-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 24 Feb 2026 18:30:29 +0100
-X-Gm-Features: AaiRm51wD0fuBi0zdmWx-qM10gH2hHg8jiZcmf3ERejosyAQoJRqHDpNFa-s4Vs
-Message-ID: <CANiq72=MT5V_rNDBTW4UY3g6vuZ1TQA1pk3kLERg1auDHYsGsA@mail.gmail.com>
-Subject: Re: [PATCH] rust: workaround `bindgen` issue with forward references
- to `enum` types
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] init: ensure that /dev/console and /dev/null are
+ (nearly) always available in initramfs
+To: Askar Safin <safinaskar@gmail.com>
+Cc: linux-fsdevel@vger.kernel.org, Christian Brauner <brauner@kernel.org>,
+ Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>,
+ Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+ linux-kbuild@vger.kernel.org, initramfs@vger.kernel.org,
+ David Disseldorp <ddiss@suse.de>, Nathan Chancellor <nathan@kernel.org>,
+ Nicolas Schier <nsc@kernel.org>, patches@lists.linux.dev
+References: <20260219210312.3468980-1-safinaskar@gmail.com>
+ <a7cb199d-928d-4158-8f16-db7ae5309082@landley.net>
+ <CAPnZJGAw9o8BetWs_wO2B6YD7mYuOopP0CwD=KCfOJXw2QU4Gg@mail.gmail.com>
+Content-Language: en-US
+From: Rob Landley <rob@landley.net>
+In-Reply-To: <CAPnZJGAw9o8BetWs_wO2B6YD7mYuOopP0CwD=KCfOJXw2QU4Gg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 25, 2025 at 7:43=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> `bindgen` currently generates the wrong type for an `enum` when there
-> is a forward reference to it. For instance:
->
->     enum E;
->     enum E { A };
->
-> generates:
->
->     pub const E_A: E =3D 0;
->     pub type E =3D i32;
->
-> instead of the expected:
->
->     pub const E_A: E =3D 0;
->     pub type E =3D ffi::c_uint;
->
-> The issue was reported to upstream `bindgen` [1].
+On 2/23/26 14:58, Askar Safin wrote:
+> On Mon, Feb 23, 2026 at 3:17 AM Rob Landley <rob@landley.net> wrote:
+>> FYI I've been using (and occasionally posting) variants of
+>> https://landley.net/bin/mkroot/0.8.13/linux-patches/0003-Wire-up-CONFIG_DEVTMPFS_MOUNT-to-initramfs.patch
+>> since 2017.
+> 
+> drivers/base/Kconfig says on CONFIG_DEVTMPFS_MOUNT:
+>> This option does not affect initramfs based booting
+> 
+> So CONFIG_DEVTMPFS_MOUNT works as documented.
 
-This should be fixed now in:
+I.E. they added that instead of merging any of my patches. Doubling down 
+on "initramfs isn't a REAL root filesystem"...
 
-  https://github.com/rust-lang/rust-bindgen/pull/3346
+*shrug*
 
-So we will likely have it in bindgen 0.73.0. Thus, after a couple
-years or so, we should be able to remove the workaround.
+> (But I am not against your CONFIG_DEVTMPFS_MOUNT approach
+> if it helps you fix your problem.)
 
-Cheers,
-Miguel
+Oh I've been patching it locally for years. I'm only replying because I 
+was cc'd.
+
+Rob
