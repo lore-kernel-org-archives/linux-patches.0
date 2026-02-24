@@ -1,178 +1,284 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from n169-111.mail.139.com (n169-111.mail.139.com [120.232.169.111])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D685937D122
-	for <patches@lists.linux.dev>; Mon, 23 Feb 2026 23:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771887898; cv=pass; b=ApgKIuda4DGDTDK5/tgwnMpvdeaXR7jwBZE357XRDdx4Cmn1qnm5EUy6n6W/WnniLix83+giF0z0VTdmeCLDPJ8DbFCU5DWln2AVc4jvdnGXW33lLKi46fUyLWM81JQjeRjdO74fCpvhM3TEd23iBZpPTE8/gW22yefuCoJuar4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771887898; c=relaxed/simple;
-	bh=5iVARBZLENhP06ggeySaiFzVdgp8bTAAtxPPZZI/s4k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z+lv2esN5vGk1HfruGuzrnkiqPMHCTbjkdZ6XScqHl99AYm6GhDPs6HEu3VanQNdPL1zAtV+6AOXnIV4UliFKvOgfs7n+KV9kiXooutdSa4OamLJqio0ODyqiREJKTtE0vVh8NTKEYGI33Y+gZVJ2yA0v0DCCAZOsd01bfItGcw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FSq7APz7; arc=pass smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6613439FCE
+	for <patches@lists.linux.dev>; Tue, 24 Feb 2026 07:01:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.111
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771916475; cv=none; b=aY0rNyyXDu4RZVCmHkPZ5N1Mowjk2yRGuTexREsTf7YGAqtCj6YKMH3RuNE8LzlPlN7aWBa1ZXLbjCP1k6B0UTxjG/YHQ5F8d7KY6VEmQmUUF8ehPGaDofe5u57qpQRRZjUMqUg5H7xggRyrn4/uLSyJZCCO6BV+DorpGDYh40U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771916475; c=relaxed/simple;
+	bh=UoQ27TNkBWsgai/h5SzU1NFobM5Bcm/+jATQ8QwrhLo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=d7CZhL0i4VOcldUOaMDig9RFBwK9QSGKJs5A5Bu0/5a4QH+eRWZQZObSKo1Zy69wCUC0IKk2DehoaFwKmMAWQ9+rsDIufn0fMokni4yCNete6vEb+aNG2Ze4W7/0raIZV+0rzxQK4mE1NY0Mj3p+WO6cYJx8xd9FsLRoSakp0OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=qTEs8EyR; arc=none smtp.client-ip=120.232.169.111
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FSq7APz7"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-794911acb04so49032237b3.0
-        for <patches@lists.linux.dev>; Mon, 23 Feb 2026 15:04:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771887896; cv=none;
-        d=google.com; s=arc-20240605;
-        b=QjWvLOK4HiMtfhf74N9p4etCNvFG8OaNo/qMWqlNGX+rimSl8hK8shBQDFl7cmFCRL
-         5hlx5ssxzj1AvuFDSog0Y9zaVqHt4/QiMCIJ7xLIH43M/zS6wwEr2PU/RLwrik5pQ9mW
-         5V4noM1RhxbGmoCFzKfr77oKjk0O0+7JlCrmJXllKo2KzRdvsW5yZ4qvokMGG5MRsRIl
-         jqg8TxqKeAihj8k+Bl8xJulZfSxB7o8OKbNZjXzVXAlOGZTKiT3s1zAJKZ6kjU6p6u5b
-         kJ3pIltG0Q1O6JjAwoRLjhA4A+XdbKuYOkRVKd1rRQfIVKQYDPeZcTKwB0c3wYygfzGQ
-         vN2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=5iVARBZLENhP06ggeySaiFzVdgp8bTAAtxPPZZI/s4k=;
-        fh=BV7KqnCGRiJ37w9UYnxY6xHbPgQGmEWR6sD+YSUdaLU=;
-        b=G26dY+ttGQ6sxCd5Iz+WIDX+zDIz+O7l7VLYBHESWqg7sLmu1U08yGn0XQHKKG15jr
-         2z3WgCWDitCdCq1KYdV3P9414pUs35L1D6fljECXMlxjeZgreJ4HDks+ucQOsolCE12U
-         8Q6gls3hgA6sLRz95P5ygM/GSXB82pzYBzPmuY6Gvq87w9y1g4Op8HmXrK9jkP8WXIgi
-         zU6gPCNTARlJNZN7/bJDimOuoCQ2ZAf15xAGfyI+QRv2OHAZS5l5XVjzHlBcTLAktmcU
-         Y/zURkOGDAfmAUepsetJ4ZthM2hy0ofJf23Pqo1RZOBjimMtnc4MXzFEUFOneC6uNU+/
-         c5kg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="qTEs8EyR"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771887896; x=1772492696; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5iVARBZLENhP06ggeySaiFzVdgp8bTAAtxPPZZI/s4k=;
-        b=FSq7APz7ypqFSUyj1xrdyMTUYdtg+jprPRlPyGpSv8x1ZKqPzHFv+KCUmYNcGcDIZB
-         NuAN2aiVcRToxMJB5ElFdmjI+QLOL+AEMuoI0OjOjpclusx3ZCS+a5McoBPi47gqoF0q
-         tiG3YlvWCtfncqV+lCqeq50P/2fQUwYCohYORCxuKJaScp6r1B7AZw1fL+BS1B3shhSd
-         60V/EMVhxKRDKqUNQS+w2StERS272zjS8bWLt+QJhWKprjsp3q3M/qbwA6zog7C+1VXG
-         l1oanZPXHSfwTkExo6raxrR2omabg+HkcMhx06FlvWGn/1Ez1I8FpTisnzxKAphYRBHF
-         Fo4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771887896; x=1772492696;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=5iVARBZLENhP06ggeySaiFzVdgp8bTAAtxPPZZI/s4k=;
-        b=dNxJ3qS3T17UjAg8oNQ2uzFttz3j4L2M7nU1QVu6IB7iAiPfiJGCjvx2pasbcWFGjU
-         j1I7GKyyO+GqPcALkUk3L1BD7VexWQaWtxztcZie/rfvnQtP0+hHQipFeknVH4KcvdFZ
-         MrZK4P1sBoPxYzv0E59XGkT7qRyIYaqNc1E6BOhjUO5WG9TfeigfICSsKumCGXeEm8Iy
-         V4BfBDeujAJdDge8IdnRpdzfelZsBlri8hm2sAqRxZGjOtkjeX+u9TPWfypt2x2uYlp6
-         fwtAUbYWpUvy0dB0k7rZsAylZh06gMoLSaSMU8IyJNYRsx0FvVvbiaJWy3f1b5/5chu5
-         6v5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXB47jyPV8auLLotqdxOqS2VMqFb/zso2MibuiRMGQrjVKTIZnKuGNQ3FNSMxUdLRGhlienoNDK@lists.linux.dev
-X-Gm-Message-State: AOJu0YxlaEXJSvAuJTekS1qHwCeeGMZjWkxRLCxO9Sg6vK/S3KfziMA/
-	qL4zLQG6VvVyZ/YGqALdvFE1CwdKO90Du59aF5wyTsl8PoBBbvjk1R5YRRPjQabuzohq8B8FMcX
-	BBRNWrWNMlJVv4Zh7VD9mXEwgNdI3dlE=
-X-Gm-Gg: ATEYQzzDminFbF6RG0y969g9J+VhFsEn+P6eWXUlQ7C6i8WnlVps5MIlwOBCHpSQz2Z
-	wcmI0xpFIfXplmmYnSshKeMGtd8fFziwS6qXLDeq0Fq4tR/UTqxXXqdmho6IZndL6mf1SYTXZhZ
-	mQMsTd8Avvz4tv7OLzS/8ia5DaryaRxufSx1yxNPEm5k2C0kjtIfn0QLSPfJKWhwngyA1ht5pMo
-	CTkTZ9ZlJyzWAuQOEm/abpD9dHN2tMDVETlMnb0czi5EdZ5XRnMYjkaXWGkPjtDtYEAhhpdLA47
-	qLmMxCA=
-X-Received: by 2002:a05:690c:f09:b0:798:5333:ce36 with SMTP id
- 00721157ae682-7985333d4f3mr19166357b3.7.1771887895866; Mon, 23 Feb 2026
- 15:04:55 -0800 (PST)
+	d=139.com; s=dkim; l=0;
+	h=from:subject:message-id:to:cc:mime-version;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	b=qTEs8EyRbdqp97VW6HJjx+dz4B82TOrWOe4Uyn+YfnmeWPkzkaLrBTR8IjaaEGYEm5GwGLplljBcr
+	 SfA0vXQMaP4l0ah4JsyDcazYS2cRDWxePwjl1zfB2xPYrI7DcFZ0UyaKOm90a1o9F9RrFDx68YpG6u
+	 bI5ogXUAd9p5ofMA=
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM:                                                                                        
+X-RM-SPAM-FLAG:00000000
+Received:from NTT-kernel-dev (unknown[60.247.85.88])
+	by rmsmtp-lg-appmail-18-12021 (RichMail) with SMTP id 2ef5699d4ca4477-01491;
+	Tue, 24 Feb 2026 15:00:59 +0800 (CST)
+X-RM-TRANSID:2ef5699d4ca4477-01491
+From: Li hongliang <1468888505@139.com>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	hch@lst.de
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	trond.myklebust@hammerspace.com,
+	anna@kernel.org,
+	linux-nfs@vger.kernel.org,
+	chuck.lever@oracle.com,
+	Anna.Schumaker@Netapp.com
+Subject: [PATCH 6.6.y 1/2] nfs: pass explicit offset/count to trace events
+Date: Tue, 24 Feb 2026 15:00:58 +0800
+Message-Id: <20260224070058.2933695-1-1468888505@139.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260219210312.3468980-1-safinaskar@gmail.com>
- <20260219210312.3468980-2-safinaskar@gmail.com> <20260220105913.4b62e124.ddiss@suse.de>
- <6d34c95a-a2ea-46a4-b491-45e7cb86049b@landley.net>
-In-Reply-To: <6d34c95a-a2ea-46a4-b491-45e7cb86049b@landley.net>
-From: Askar Safin <safinaskar@gmail.com>
-Date: Tue, 24 Feb 2026 02:04:19 +0300
-X-Gm-Features: AaiRm51ShYWisRZxqEP2jfYkn9npSVqKeCstRJL8gtXtjrs-RidKNfYk8lXIBQs
-Message-ID: <CAPnZJGDDonspVK1WxDac2omkLJVX=_1Tybn4ne+sf3KyaAuofA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] init: ensure that /dev/console is (nearly) always
- available in initramfs
-To: Rob Landley <rob@landley.net>
-Cc: David Disseldorp <ddiss@suse.de>, linux-fsdevel@vger.kernel.org, 
-	Christian Brauner <brauner@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>, 
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, initramfs@vger.kernel.org, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Rob, I THINK I KNOW HOW TO SOLVE YOUR PROBLEM! (See below.)
+From: Christoph Hellwig <hch@lst.de>
 
-On Mon, Feb 23, 2026 at 4:27=E2=80=AFAM Rob Landley <rob@landley.net> wrote=
-:
->
-> On 2/19/26 17:59, David Disseldorp wrote:
-> >> This problem can be solved by using gen_init_cpio.
+[ Upstream commit fada32ed6dbc748f447c8d050a961b75d946055a ]
 
-I said this, not David.
+nfs_folio_length is unsafe to use without having the folio locked and a
+check for a NULL ->f_mapping that protects against truncations and can
+lead to kernel crashes.  E.g. when running xfstests generic/065 with
+all nfs trace points enabled.
 
-> It used to work, then they broke it. (See below.)
+Follow the model of the XFS trace points and pass in an explіcit offset
+and length.  This has the additional benefit that these values can
+be more accurate as some of the users touch partial folio ranges.
 
-So you have a directory with rootfs, and you want to add /dev/console
-to it? Do I understand your problem correctly?
+Fixes: eb5654b3b89d ("NFS: Enable tracing of nfs_invalidate_folio() and nfs_launder_folio()")
+Reported-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
+---
+ fs/nfs/file.c     |  5 +++--
+ fs/nfs/nfstrace.h | 36 ++++++++++++++++++++----------------
+ fs/nfs/read.c     |  8 +++++---
+ fs/nfs/write.c    | 10 +++++-----
+ 4 files changed, 33 insertions(+), 26 deletions(-)
 
-This is how you can solve it.
+diff --git a/fs/nfs/file.c b/fs/nfs/file.c
+index 2f4db026f8d6..9b6f4cc4d582 100644
+--- a/fs/nfs/file.c
++++ b/fs/nfs/file.c
+@@ -441,7 +441,7 @@ static void nfs_invalidate_folio(struct folio *folio, size_t offset,
+ 	/* Cancel any unstarted writes on this page */
+ 	nfs_wb_folio_cancel(inode, folio);
+ 	folio_wait_fscache(folio);
+-	trace_nfs_invalidate_folio(inode, folio);
++	trace_nfs_invalidate_folio(inode, folio_pos(folio) + offset, length);
+ }
+ 
+ /*
+@@ -509,7 +509,8 @@ static int nfs_launder_folio(struct folio *folio)
+ 
+ 	folio_wait_fscache(folio);
+ 	ret = nfs_wb_folio(inode, folio);
+-	trace_nfs_launder_folio_done(inode, folio, ret);
++	trace_nfs_launder_folio_done(inode, folio_pos(folio),
++			folio_size(folio), ret);
+ 	return ret;
+ }
+ 
+diff --git a/fs/nfs/nfstrace.h b/fs/nfs/nfstrace.h
+index 4e90ca531176..004c25f0782b 100644
+--- a/fs/nfs/nfstrace.h
++++ b/fs/nfs/nfstrace.h
+@@ -933,10 +933,11 @@ TRACE_EVENT(nfs_sillyrename_unlink,
+ DECLARE_EVENT_CLASS(nfs_folio_event,
+ 		TP_PROTO(
+ 			const struct inode *inode,
+-			struct folio *folio
++			loff_t offset,
++			size_t count
+ 		),
+ 
+-		TP_ARGS(inode, folio),
++		TP_ARGS(inode, offset, count),
+ 
+ 		TP_STRUCT__entry(
+ 			__field(dev_t, dev)
+@@ -944,7 +945,7 @@ DECLARE_EVENT_CLASS(nfs_folio_event,
+ 			__field(u64, fileid)
+ 			__field(u64, version)
+ 			__field(loff_t, offset)
+-			__field(u32, count)
++			__field(size_t, count)
+ 		),
+ 
+ 		TP_fast_assign(
+@@ -954,13 +955,13 @@ DECLARE_EVENT_CLASS(nfs_folio_event,
+ 			__entry->fileid = nfsi->fileid;
+ 			__entry->fhandle = nfs_fhandle_hash(&nfsi->fh);
+ 			__entry->version = inode_peek_iversion_raw(inode);
+-			__entry->offset = folio_file_pos(folio);
+-			__entry->count = nfs_folio_length(folio);
++			__entry->offset = offset,
++			__entry->count = count;
+ 		),
+ 
+ 		TP_printk(
+ 			"fileid=%02x:%02x:%llu fhandle=0x%08x version=%llu "
+-			"offset=%lld count=%u",
++			"offset=%lld count=%zu",
+ 			MAJOR(__entry->dev), MINOR(__entry->dev),
+ 			(unsigned long long)__entry->fileid,
+ 			__entry->fhandle, __entry->version,
+@@ -972,18 +973,20 @@ DECLARE_EVENT_CLASS(nfs_folio_event,
+ 	DEFINE_EVENT(nfs_folio_event, name, \
+ 			TP_PROTO( \
+ 				const struct inode *inode, \
+-				struct folio *folio \
++				loff_t offset, \
++				size_t count \
+ 			), \
+-			TP_ARGS(inode, folio))
++			TP_ARGS(inode, offset, count))
+ 
+ DECLARE_EVENT_CLASS(nfs_folio_event_done,
+ 		TP_PROTO(
+ 			const struct inode *inode,
+-			struct folio *folio,
++			loff_t offset,
++			size_t count,
+ 			int ret
+ 		),
+ 
+-		TP_ARGS(inode, folio, ret),
++		TP_ARGS(inode, offset, count, ret),
+ 
+ 		TP_STRUCT__entry(
+ 			__field(dev_t, dev)
+@@ -992,7 +995,7 @@ DECLARE_EVENT_CLASS(nfs_folio_event_done,
+ 			__field(u64, fileid)
+ 			__field(u64, version)
+ 			__field(loff_t, offset)
+-			__field(u32, count)
++			__field(size_t, count)
+ 		),
+ 
+ 		TP_fast_assign(
+@@ -1002,14 +1005,14 @@ DECLARE_EVENT_CLASS(nfs_folio_event_done,
+ 			__entry->fileid = nfsi->fileid;
+ 			__entry->fhandle = nfs_fhandle_hash(&nfsi->fh);
+ 			__entry->version = inode_peek_iversion_raw(inode);
+-			__entry->offset = folio_file_pos(folio);
+-			__entry->count = nfs_folio_length(folio);
++			__entry->offset = offset,
++			__entry->count = count,
+ 			__entry->ret = ret;
+ 		),
+ 
+ 		TP_printk(
+ 			"fileid=%02x:%02x:%llu fhandle=0x%08x version=%llu "
+-			"offset=%lld count=%u ret=%d",
++			"offset=%lld count=%zu ret=%d",
+ 			MAJOR(__entry->dev), MINOR(__entry->dev),
+ 			(unsigned long long)__entry->fileid,
+ 			__entry->fhandle, __entry->version,
+@@ -1021,10 +1024,11 @@ DECLARE_EVENT_CLASS(nfs_folio_event_done,
+ 	DEFINE_EVENT(nfs_folio_event_done, name, \
+ 			TP_PROTO( \
+ 				const struct inode *inode, \
+-				struct folio *folio, \
++				loff_t offset, \
++				size_t count, \
+ 				int ret \
+ 			), \
+-			TP_ARGS(inode, folio, ret))
++			TP_ARGS(inode, offset, count, ret))
+ 
+ DEFINE_NFS_FOLIO_EVENT(nfs_aop_readpage);
+ DEFINE_NFS_FOLIO_EVENT_DONE(nfs_aop_readpage_done);
+diff --git a/fs/nfs/read.c b/fs/nfs/read.c
+index 688a24e9bc8b..ed411897e33f 100644
+--- a/fs/nfs/read.c
++++ b/fs/nfs/read.c
+@@ -333,13 +333,15 @@ int nfs_read_add_folio(struct nfs_pageio_descriptor *pgio,
+ int nfs_read_folio(struct file *file, struct folio *folio)
+ {
+ 	struct inode *inode = file_inode(file);
++	loff_t pos = folio_pos(folio);
++	size_t len = folio_size(folio);
+ 	struct nfs_pageio_descriptor pgio;
+ 	struct nfs_open_context *ctx;
+ 	int ret;
+ 
+-	trace_nfs_aop_readpage(inode, folio);
++	trace_nfs_aop_readpage(inode, pos, len);
+ 	nfs_inc_stats(inode, NFSIOS_VFSREADPAGE);
+-	task_io_account_read(folio_size(folio));
++	task_io_account_read(len);
+ 
+ 	/*
+ 	 * Try to flush any pending writes to the file..
+@@ -382,7 +384,7 @@ int nfs_read_folio(struct file *file, struct folio *folio)
+ out_put:
+ 	put_nfs_open_context(ctx);
+ out:
+-	trace_nfs_aop_readpage_done(inode, folio, ret);
++	trace_nfs_aop_readpage_done(inode, pos, len, ret);
+ 	return ret;
+ out_unlock:
+ 	folio_unlock(folio);
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index ef69b15aa72e..7b225ef1a284 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -2131,17 +2131,17 @@ int nfs_wb_folio_cancel(struct inode *inode, struct folio *folio)
+  */
+ int nfs_wb_folio(struct inode *inode, struct folio *folio)
+ {
+-	loff_t range_start = folio_file_pos(folio);
+-	loff_t range_end = range_start + (loff_t)folio_size(folio) - 1;
++	loff_t range_start = folio_pos(folio);
++	size_t len = folio_size(folio);
+ 	struct writeback_control wbc = {
+ 		.sync_mode = WB_SYNC_ALL,
+ 		.nr_to_write = 0,
+ 		.range_start = range_start,
+-		.range_end = range_end,
++		.range_end = range_start + len - 1,
+ 	};
+ 	int ret;
+ 
+-	trace_nfs_writeback_folio(inode, folio);
++	trace_nfs_writeback_folio(inode, range_start, len);
+ 
+ 	for (;;) {
+ 		folio_wait_writeback(folio);
+@@ -2159,7 +2159,7 @@ int nfs_wb_folio(struct inode *inode, struct folio *folio)
+ 			goto out_error;
+ 	}
+ out_error:
+-	trace_nfs_writeback_folio_done(inode, folio, ret);
++	trace_nfs_writeback_folio_done(inode, range_start, len, ret);
+ 	return ret;
+ }
+ 
+-- 
+2.34.1
 
-Option 1 (recommended).
 
-Let's assume you have your rootfs in a directory /tmp/rootfs . Then
-create /tmp/cplist with:
-
-dir /dev 0755 0 0
-nod /dev/console 0600 0 0 c 5 1
-
-And add this to your config:
-
-CONFIG_INITRAMFS_SOURCE=3D"/tmp/rootfs /tmp/cplist"
-
-This will create builtin initramfs with contents of /tmp/rootfs AND
-nodes from /tmp/cplist
-(i. e. /dev/console).
-
-This will work, I just checked it.
-No need to build the kernel twice.
-Does this solve your problem?
-
-Option 2.
-Alternatively (assuming you already built gen_init_cpio) you can
-create cpio with /dev/console using gen_init_cpio and then
-concatenate it with cpio archive with your rootfs.
-
-Unfortunately, this may require building the kernel twice, as I
-explained in my previous letter in this thread. But this option
-is still doable.
-
-Option 3.
-Yet another way: run
-
-usr/gen_initramfs.sh /tmp/rootfs /tmp/cplist > some-output.cpio
-
-(again, here /tmp/rootfs is a directory with your rootfs and
-/tmp/cplist is a list of nodes.)
-
-Unfortunately, this requires gen_init_cpio to be present, so, again,
-similarly to option 2, this may require building the kernel twice.
-But, again, this is doable.
-
-In fact, gen_initramfs.sh accepts same options as CONFIG_INITRAMFS_SOURCE,
-this is explained in
-https://elixir.bootlin.com/linux/v6.19/source/Documentation/driver-api/earl=
-y-userspace/early_userspace_support.rst#L70
-.
-
-Conclusion.
-As I said, option 1 is the best in my opinion. It does not require
-building the kernel twice,
-and, as well as I understand, fully solves your problem.
-
-If I miss something, please, tell me this.
-
-I really want to help you, Rob.
-I sent this patch, because I want to help you.
-
---=20
-Askar Safin
