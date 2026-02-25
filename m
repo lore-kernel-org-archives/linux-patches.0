@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F55726463A;
-	Wed, 25 Feb 2026 01:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578B0258EF9;
+	Wed, 25 Feb 2026 01:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983527; cv=none; b=FECCrZ/bofB0458IZSsHbK/6dwy9VhuDIMt2Pq2dScBfzR3OSrlw+lcR2TkLZzVNtAWcCKewPqOVimBjP9NXQZDLiXSR7sgL0nDYfOliw05cIFvLozhZl/gTaAOJoir6j8d58zx1D9NOOBwxzrnNbvEpXNNzmhRaDVqFrQIJOao=
+	t=1771983528; cv=none; b=GqBuKtUyuEX+aHEqHtWFWvUx0mOzrDtlQWy/RbfyPU9FKeU8nyEfZvayIK8kbsDSyP2jwkM5hzZoqqttVHsJ/RspmUm1BxqBAUiY6HZmotSq653ebYLKR5SnkPE//nOa/QObKgleGcpH0LfPZOMInWSb03oVPHrCVkWqKgDeYBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983527; c=relaxed/simple;
-	bh=vjyZLNTlZ1I1thJTTiJR0ytr8uhMdqwKHR69l6ATJ8o=;
+	s=arc-20240116; t=1771983528; c=relaxed/simple;
+	bh=x0AyCp0XFOu9pVpmuI7Igy5qohLHZiaYDso6sZOMIW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCi1gahhz8FASEVQjLq1JvqJ52L3r6JQ/ivu36EKDXyrK8GkfDe4t6zZvAYIFWVeP8NTFfFYE1XuZA3j+ctn9msuiUJpOdMnTaVpuOBnlQIWKCfTVqxzYBLHckaeoPZQdr2NgxK9+Xzk1XR7jdqP+yazMvr6uIiZ+gQvJBbdOOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OW+/GqrW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tZYNt2PY0YOB5/bTfyDPfSSpmgJuzR12lQ3rqNDgvp2X5ql//cDX9FvocWGDpH+uzq7KnGxPeoNRFHHj7a/UhrLo8OmA57paIuDqltyXjwu6WdF8ouzKbNQbcvn4tmBpKtTXiPFB1lpXsMMjsWsOm8Ch7Y6eUq8nU8kzFRBdjOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxntZygA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OW+/GqrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF22DC116D0;
-	Wed, 25 Feb 2026 01:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxntZygA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 175B8C116D0;
+	Wed, 25 Feb 2026 01:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983526;
-	bh=vjyZLNTlZ1I1thJTTiJR0ytr8uhMdqwKHR69l6ATJ8o=;
+	s=korg; t=1771983528;
+	bh=x0AyCp0XFOu9pVpmuI7Igy5qohLHZiaYDso6sZOMIW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OW+/GqrWUvz3T48YePBSgXiMW8I3hzLf35+G7VkDgTFfj87Ue9Pkr2KSVJv2XbH4/
-	 xBT7wdS1Ce8rF1vg0GGizD7g6AiHRe1FdhFuzbpz2Sy+gnhPnlyln5YF0PbvFkbHHg
-	 o9dYSoiVVGebMwOtPIoCQurAnPNhknRmd215fmuo=
+	b=nxntZygAq4lmw5XFwW67PBf9RpOqyX4H0I6Z3+QpCSV+8uXaNu8Hmts33z2Zq4A54
+	 8Ssk6NDk3W388e1UXR5In0fQjk7LVFC1FoASuyuQXtq3rUfPAl3Q+WSUwxn08+BF0q
+	 4drmPpR30RYjQljCZJk6Bzks93/8OIboHjiWMCa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 634/781] ovpn: fix VPN TX bytes counting
-Date: Tue, 24 Feb 2026 17:22:23 -0800
-Message-ID: <20260225012415.357602716@linuxfoundation.org>
+Subject: [PATCH 6.19 635/781] net: mctp: ensure our nlmsg responses are initialised
+Date: Tue, 24 Feb 2026 17:22:24 -0800
+Message-ID: <20260225012415.382185816@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,58 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit b660b13d4c6379ca6360f24aaef8c5807fefd237 ]
+[ Upstream commit a6a9bc544b675d8b5180f2718ec985ad267b5cbf ]
 
-In ovpn_net_xmit, after GSO segmentation and segment processing, the
-first segment on the list is used to increment VPN TX statistics, which
-fails to account for any subsequent segments in the chain.
+Syed Faraz Abrar (@farazsth98) from Zellic, and Pumpkin (@u1f383) from
+DEVCORE Research Team working with Trend Micro Zero Day Initiative
+report that a RTM_GETNEIGH will return uninitalised data in the pad
+bytes of the ndmsg data.
 
-Fix this by accumulating the length of every segment that successfully
-passes skb_share_check into a tx_bytes variable. This ensures the peer
-statistics accurately reflect the total data volume sent, regardless of
-whether the original packet was segmented.
+Ensure we're initialising the netlink data to zero, in the link, addr
+and neigh response messages.
 
-Fixes: 04ca14955f9a ("ovpn: store tunnel and transport statistics")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Fixes: 831119f88781 ("mctp: Add neighbour netlink interface")
+Fixes: 06d2f4c583a7 ("mctp: Add netlink route management")
+Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260209-dev-mctp-nlmsg-v1-1-f1e30c346a43@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/io.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mctp/device.c | 1 +
+ net/mctp/neigh.c  | 1 +
+ net/mctp/route.c  | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/drivers/net/ovpn/io.c b/drivers/net/ovpn/io.c
-index f70c58b10599b..955c9a37e1f8d 100644
---- a/drivers/net/ovpn/io.c
-+++ b/drivers/net/ovpn/io.c
-@@ -355,6 +355,7 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct ovpn_priv *ovpn = netdev_priv(dev);
- 	struct sk_buff *segments, *curr, *next;
- 	struct sk_buff_head skb_list;
-+	unsigned int tx_bytes = 0;
- 	struct ovpn_peer *peer;
- 	__be16 proto;
- 	int ret;
-@@ -414,6 +415,8 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
- 			continue;
- 		}
+diff --git a/net/mctp/device.c b/net/mctp/device.c
+index 4d404edd7446e..04c5570bacff6 100644
+--- a/net/mctp/device.c
++++ b/net/mctp/device.c
+@@ -70,6 +70,7 @@ static int mctp_fill_addrinfo(struct sk_buff *skb,
+ 		return -EMSGSIZE;
  
-+		/* only count what we actually send */
-+		tx_bytes += curr->len;
- 		__skb_queue_tail(&skb_list, curr);
- 	}
+ 	hdr = nlmsg_data(nlh);
++	memset(hdr, 0, sizeof(*hdr));
+ 	hdr->ifa_family = AF_MCTP;
+ 	hdr->ifa_prefixlen = 0;
+ 	hdr->ifa_flags = 0;
+diff --git a/net/mctp/neigh.c b/net/mctp/neigh.c
+index 05b899f22d902..fc85f0e693014 100644
+--- a/net/mctp/neigh.c
++++ b/net/mctp/neigh.c
+@@ -218,6 +218,7 @@ static int mctp_fill_neigh(struct sk_buff *skb, u32 portid, u32 seq, int event,
+ 		return -EMSGSIZE;
  
-@@ -426,7 +429,7 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
- 	}
- 	skb_list.prev->next = NULL;
+ 	hdr = nlmsg_data(nlh);
++	memset(hdr, 0, sizeof(*hdr));
+ 	hdr->ndm_family = AF_MCTP;
+ 	hdr->ndm_ifindex = dev->ifindex;
+ 	hdr->ndm_state = 0; // TODO other state bits?
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index 2ac4011a953ff..ecbbe4beb2133 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -1643,6 +1643,7 @@ static int mctp_fill_rtinfo(struct sk_buff *skb, struct mctp_route *rt,
+ 		return -EMSGSIZE;
  
--	ovpn_peer_stats_increment_tx(&peer->vpn_stats, skb_list.next->len);
-+	ovpn_peer_stats_increment_tx(&peer->vpn_stats, tx_bytes);
- 	ovpn_send(ovpn, skb_list.next, peer);
+ 	hdr = nlmsg_data(nlh);
++	memset(hdr, 0, sizeof(*hdr));
+ 	hdr->rtm_family = AF_MCTP;
  
- 	return NETDEV_TX_OK;
+ 	/* we use the _len fields as a number of EIDs, rather than
 -- 
 2.51.0
 
