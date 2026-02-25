@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EFD2BAF7;
-	Wed, 25 Feb 2026 01:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8688A25228D;
+	Wed, 25 Feb 2026 01:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983054; cv=none; b=Wgb3tOPFB+K6+YZXJ8naASiynCydMhxuuyzIvJmQSx8keUyPCMMfOBKdqDRNg3yA5VvVVAgvdHe0ethUlq8v6/XylzMB0LmlZjiBBNcQIhpN2ZZBSwKuEvU0o+SzSanGD7KY0TYJmeFhKaQPx3seYDFuzhTcED8BwxrzODPKyJU=
+	t=1771983055; cv=none; b=BYYd8Kf2cVDiXNifFKxnr5sPAVvHKXfTNDbssJHZMpxuhoTCJqEyT2BDJDxGlTgd065c6DgCexsQJ+w7qN2WbtnyDojFCBmGfKtEmHyUzXNgCrFjMKJwvfP/FTxHhOevMi8aIA3OAep7LbHjfCswfyX59DMSpn3VMf2T6Xgta18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983054; c=relaxed/simple;
-	bh=N453ZaxdIelFPvIge0qr6foa5Z2L1vDDkDUgQQJiqhY=;
+	s=arc-20240116; t=1771983055; c=relaxed/simple;
+	bh=Av7LvkKFpoAFqChOJvcDasxL+Rc69uxIFWAz7HdkaI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VFzUz/ONPMKEzLKWDzG+ImQ2DTsFnED8irbzMOw1ciF1n8UPFMf/ByOYTfZBg7PVeXtqcKpVJHNAoDVpopoGXQJJj6tnq9L3SlOnMJ+4t+to5DwdhniCAaDoVo2r8JIfWKWbvrNROaiRDgte1Y1QkzIBOd712k0EZPnoK5GIjBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAM+XCor; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=neDL6T/yZxJhpUB9tNGjyrrwcKF3c/gsDEq6M3TUbV3QKRgSrrssNSKbBhpMYgTP8lAwYc7xjFcTF2BH/R7mdhx/7Ze5dqxijWu88NW3mtKyGMSz8BUodapKf7chDtR/XQvGUKf9NT4TrwbyL11oE8EfnTqXRpTcYWKa5YhcG7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dfX5PqnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAM+XCor"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3358CC116D0;
-	Wed, 25 Feb 2026 01:30:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfX5PqnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B850C116D0;
+	Wed, 25 Feb 2026 01:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983054;
-	bh=N453ZaxdIelFPvIge0qr6foa5Z2L1vDDkDUgQQJiqhY=;
+	s=korg; t=1771983055;
+	bh=Av7LvkKFpoAFqChOJvcDasxL+Rc69uxIFWAz7HdkaI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GAM+XCorHx07DSKr1o+h+XSywF5tcT2qqwWEzw1oJTKhTi9NDrElkXwCm3YfgBthO
-	 UPgcYZxarqgh8w9R6lttE2kOrdVpDuXzTZPA8TgCr2O8hhJn9Gk7GnjOQt1Bh3eajK
-	 OANF92wnQwa2NR4PhVExYv4slJZMaOa9WiP0YDJM=
+	b=dfX5PqnKrzy0wcPoSji23jdo5pSbcTXguQRQiAz9BkRtM57IdjWyN4ewInCZRGN6R
+	 3tpZO3RTq3JpJk8iILy/M6G33E6iQ9y4zsjy+ss1TW1xmxrNAeTMwqPqfmhF95ByJ8
+	 zkTL2hfk40N4ZJPYVmrxAwUHHlqnPTvj+kGAn9Yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 219/781] ALSA: timer: Relax __free() variable declarations
-Date: Tue, 24 Feb 2026 17:15:28 -0800
-Message-ID: <20260225012405.087280700@linuxfoundation.org>
+Subject: [PATCH 6.19 220/781] ALSA: vmaster: Relax __free() variable declarations
+Date: Tue, 24 Feb 2026 17:15:29 -0800
+Message-ID: <20260225012405.109648294@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit b1bf8ac5319010e0f73183bdb78c1daf5552c8cb ]
+[ Upstream commit 3b7c7bda39e1e48f926fb3d280a5f5d20a939857 ]
 
 We used to have a variable declaration with __free() initialized with
 NULL.  This was to keep the old coding style rule, but recently it's
@@ -64,65 +64,61 @@ Although the current code has no bug, per se, let's follow the new
 standard and move the declaration to the place of assignment (or
 directly assign the allocated result) instead of NULL initializations.
 
-Fixes: ed96f6394e1b ("ALSA: timer: Use automatic cleanup of kfree()")
-Fixes: 37745918e0e7 ("ALSA: timer: Introduce virtual userspace-driven timers")
+Fixes: fb9e197f3f27 ("ALSA: vmaster: Use automatic cleanup of kfree()")
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251216140634.171890-8-tiwai@suse.de
+Link: https://patch.msgid.link/20251216140634.171890-9-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/timer.c | 12 ++++++------
+ sound/core/vmaster.c | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/sound/core/timer.c b/sound/core/timer.c
-index d9fff5c87613e..9a4a1748ff80b 100644
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -1614,12 +1614,12 @@ static int snd_timer_user_next_device(struct snd_timer_id __user *_tid)
- static int snd_timer_user_ginfo(struct file *file,
- 				struct snd_timer_ginfo __user *_ginfo)
+diff --git a/sound/core/vmaster.c b/sound/core/vmaster.c
+index c657659b236c4..76cc64245f5df 100644
+--- a/sound/core/vmaster.c
++++ b/sound/core/vmaster.c
+@@ -56,10 +56,10 @@ struct link_follower {
+ 
+ static int follower_update(struct link_follower *follower)
  {
--	struct snd_timer_ginfo *ginfo __free(kfree) = NULL;
- 	struct snd_timer_id tid;
- 	struct snd_timer *t;
- 	struct list_head *p;
-+	struct snd_timer_ginfo *ginfo __free(kfree) =
-+		memdup_user(_ginfo, sizeof(*ginfo));
+-	struct snd_ctl_elem_value *uctl __free(kfree) = NULL;
+ 	int err, ch;
++	struct snd_ctl_elem_value *uctl __free(kfree) =
++		kzalloc(sizeof(*uctl), GFP_KERNEL);
  
--	ginfo = memdup_user(_ginfo, sizeof(*ginfo));
- 	if (IS_ERR(ginfo))
- 		return PTR_ERR(ginfo);
- 
-@@ -1756,7 +1756,6 @@ static int snd_timer_user_info(struct file *file,
- 			       struct snd_timer_info __user *_info)
- {
- 	struct snd_timer_user *tu;
--	struct snd_timer_info *info __free(kfree) = NULL;
- 	struct snd_timer *t;
- 
- 	tu = file->private_data;
-@@ -1766,7 +1765,8 @@ static int snd_timer_user_info(struct file *file,
- 	if (!t)
- 		return -EBADFD;
- 
--	info = kzalloc(sizeof(*info), GFP_KERNEL);
-+	struct snd_timer_info *info __free(kfree) =
-+		kzalloc(sizeof(*info), GFP_KERNEL);
- 	if (! info)
+-	uctl = kzalloc(sizeof(*uctl), GFP_KERNEL);
+ 	if (!uctl)
  		return -ENOMEM;
- 	info->card = t->card ? t->card->number : -1;
-@@ -2192,10 +2192,10 @@ static int snd_utimer_ioctl_create(struct file *file,
- 				   struct snd_timer_uinfo __user *_utimer_info)
+ 	uctl->id = follower->follower.id;
+@@ -74,7 +74,6 @@ static int follower_update(struct link_follower *follower)
+ /* get the follower ctl info and save the initial values */
+ static int follower_init(struct link_follower *follower)
  {
- 	struct snd_utimer *utimer;
--	struct snd_timer_uinfo *utimer_info __free(kfree) = NULL;
- 	int err, timer_fd;
-+	struct snd_timer_uinfo *utimer_info __free(kfree) =
-+		memdup_user(_utimer_info, sizeof(*utimer_info));
+-	struct snd_ctl_elem_info *uinfo __free(kfree) = NULL;
+ 	int err;
  
--	utimer_info = memdup_user(_utimer_info, sizeof(*utimer_info));
- 	if (IS_ERR(utimer_info))
- 		return PTR_ERR(utimer_info);
+ 	if (follower->info.count) {
+@@ -84,7 +83,8 @@ static int follower_init(struct link_follower *follower)
+ 		return 0;
+ 	}
  
+-	uinfo = kmalloc(sizeof(*uinfo), GFP_KERNEL);
++	struct snd_ctl_elem_info *uinfo __free(kfree) =
++		kmalloc(sizeof(*uinfo), GFP_KERNEL);
+ 	if (!uinfo)
+ 		return -ENOMEM;
+ 	uinfo->id = follower->follower.id;
+@@ -341,9 +341,9 @@ static int master_get(struct snd_kcontrol *kcontrol,
+ static int sync_followers(struct link_master *master, int old_val, int new_val)
+ {
+ 	struct link_follower *follower;
+-	struct snd_ctl_elem_value *uval __free(kfree) = NULL;
++	struct snd_ctl_elem_value *uval __free(kfree) =
++		kmalloc(sizeof(*uval), GFP_KERNEL);
+ 
+-	uval = kmalloc(sizeof(*uval), GFP_KERNEL);
+ 	if (!uval)
+ 		return -ENOMEM;
+ 	list_for_each_entry(follower, &master->followers, list) {
 -- 
 2.51.0
 
