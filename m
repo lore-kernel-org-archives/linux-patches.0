@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2881D5ABA;
-	Wed, 25 Feb 2026 01:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70E424A06D;
+	Wed, 25 Feb 2026 01:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982827; cv=none; b=crbIGoXcyxMJyYsLPEcRo2sjvrb2LqNenEML+XltBQNlWt8OxXvZoau94o65/5++V22plxRAD5cYd8uZzP5LKHH6MNgBIH/XXnsZPSSKvJ/xLZPfTAu+E/JvY9OkkQoNez2QPR1SwuyhSmzVc4O2YihK+4RiAfVt62BiBsmssEc=
+	t=1771982829; cv=none; b=RjI4cmg8L0LFk7L6ESYuoQ3E/8HAHPo/9UhAxX5If67Frw1R/li13DJs2AVJrfnqcCUTFoNrnO+geNFfuPYoGuQtWGjHey+BhLCVGX613A/dnjzi2r1yrjnvVFL0tj6z9YyGZCp414VzdWQd/l2/tyBL7ete17SceMl5CFMKwz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982827; c=relaxed/simple;
-	bh=mXZH7mqLoiUC3aqmctS5h/Eek2gsEu7RvcMbxVcVXyQ=;
+	s=arc-20240116; t=1771982829; c=relaxed/simple;
+	bh=gfj8WfXsSjJ/7yng3nkl0fBnxakZjYGZb9V7tFUE4xY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfTotiKjmYcr/GoUhvKOiZ9P38JvvaArj3HihBV8hviR4fDE+CTLjwh/ywUdSdQxiRAsqtEc5A/E3I0ePVs/AAkdwD98vdgCePwLErIM8NOfW6RrRYvFlEHNoN+NwzoIzsy0TxjEz0Zr4Aki68bWhbvCm0lOdZfVCKcxYAy6mw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrH/xj2k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+UsOuVv3peHe6bOlDdbdbwpIbG2ORjhdkm0dgv/cS+HTrpuPJS4MixarZkBd0Qwvh99e4rXL2d01jJvMjcvCgKK82FxyI8G2gtuokRLY4UGUwTdwI861rS3Ns2f8uLCD8KolNQMNhHXKgPn/47I4guaL7SIRDUxfUhPB2t6NGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMhVtLGl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrH/xj2k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFE8C116D0;
-	Wed, 25 Feb 2026 01:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMhVtLGl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68B8C116D0;
+	Wed, 25 Feb 2026 01:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982827;
-	bh=mXZH7mqLoiUC3aqmctS5h/Eek2gsEu7RvcMbxVcVXyQ=;
+	s=korg; t=1771982828;
+	bh=gfj8WfXsSjJ/7yng3nkl0fBnxakZjYGZb9V7tFUE4xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrH/xj2kOG4b5FLKlnJOvPVQE95UuNGuxjcONiL8KzNhLwS2TyG7u7zmAvnDIToZy
-	 8uAmOKe+gZElGoTWJwD+zk9QPTouBl/3QbtazrzYtUySsw6/oq1/7jp2e09Qh0C9Sj
-	 LvG0mHEd2Gect8ZAgmJNY3ImzEHHP1/TsQP4q2hM=
+	b=xMhVtLGlRt8GOv/TdtV0DMGa1KWTz0bhFN8AXZPRQ1d6uvcID8s88fWj2cWI7QhCn
+	 8Svuczy23Zv1sBJiWuiDzSa3M4aGeEdXKhp72gMCgffVZnWn8P6V+69ZceibS9Lu72
+	 BFnMn7M2X7NMZ+B74bgkjnQuIxq6mv0hTfyRq56E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda2@huawei.com>,
-	Yao Kai <yaokai34@huawei.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 006/781] rcu: Fix rcu_read_unlock() deadloop due to softirq
-Date: Tue, 24 Feb 2026 17:11:55 -0800
-Message-ID: <20260225012359.853901270@linuxfoundation.org>
+Subject: [PATCH 6.19 007/781] audit: move the compat_xxx_class[] extern declarations to audit_arch.h
+Date: Tue, 24 Feb 2026 17:11:56 -0800
+Message-ID: <20260225012359.877183087@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,166 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Kai <yaokai34@huawei.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit d41e37f26b3157b3f1d10223863519a943aa239b ]
+[ Upstream commit 76489955c6d4a065ca69dc88faf7a50a59b66f35 ]
 
-Commit 5f5fa7ea89dc ("rcu: Don't use negative nesting depth in
-__rcu_read_unlock()") removes the recursion-protection code from
-__rcu_read_unlock(). Therefore, we could invoke the deadloop in
-raise_softirq_irqoff() with ftrace enabled as follows:
+The comapt_xxx_class symbols aren't declared in anything that
+lib/comapt_audit.c is including (arm64 build) which is causing
+the following sparse warnings:
 
-WARNING: CPU: 0 PID: 0 at kernel/trace/trace.c:3021 __ftrace_trace_stack.constprop.0+0x172/0x180
-Modules linked in: my_irq_work(O)
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G O 6.18.0-rc7-dirty #23 PREEMPT(full)
-Tainted: [O]=OOT_MODULE
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:__ftrace_trace_stack.constprop.0+0x172/0x180
-RSP: 0018:ffffc900000034a8 EFLAGS: 00010002
-RAX: 0000000000000000 RBX: 0000000000000004 RCX: 0000000000000000
-RDX: 0000000000000003 RSI: ffffffff826d7b87 RDI: ffffffff826e9329
-RBP: 0000000000090009 R08: 0000000000000005 R09: ffffffff82afbc4c
-R10: 0000000000000008 R11: 0000000000011d7a R12: 0000000000000000
-R13: ffff888003874100 R14: 0000000000000003 R15: ffff8880038c1054
-FS:  0000000000000000(0000) GS:ffff8880fa8ea000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055b31fa7f540 CR3: 00000000078f4005 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <IRQ>
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- raise_softirq_irqoff+0x6e/0xa0
- rcu_read_unlock_special+0xb1/0x160
- unwind_next_frame+0x203/0x9b0
- __unwind_start+0x15d/0x1c0
- arch_stack_walk+0x62/0xf0
- stack_trace_save+0x48/0x70
- __ftrace_trace_stack.constprop.0+0x144/0x180
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- raise_softirq_irqoff+0x6e/0xa0
- rcu_read_unlock_special+0xb1/0x160
- unwind_next_frame+0x203/0x9b0
- __unwind_start+0x15d/0x1c0
- arch_stack_walk+0x62/0xf0
- stack_trace_save+0x48/0x70
- __ftrace_trace_stack.constprop.0+0x144/0x180
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- raise_softirq_irqoff+0x6e/0xa0
- rcu_read_unlock_special+0xb1/0x160
- unwind_next_frame+0x203/0x9b0
- __unwind_start+0x15d/0x1c0
- arch_stack_walk+0x62/0xf0
- stack_trace_save+0x48/0x70
- __ftrace_trace_stack.constprop.0+0x144/0x180
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- raise_softirq_irqoff+0x6e/0xa0
- rcu_read_unlock_special+0xb1/0x160
- __is_insn_slot_addr+0x54/0x70
- kernel_text_address+0x48/0xc0
- __kernel_text_address+0xd/0x40
- unwind_get_return_address+0x1e/0x40
- arch_stack_walk+0x9c/0xf0
- stack_trace_save+0x48/0x70
- __ftrace_trace_stack.constprop.0+0x144/0x180
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- __raise_softirq_irqoff+0x61/0x80
- __flush_smp_call_function_queue+0x115/0x420
- __sysvec_call_function_single+0x17/0xb0
- sysvec_call_function_single+0x8c/0xc0
- </IRQ>
+lib/compat_audit.c:7:10: warning: symbol 'compat_dir_class'
+  was not declared. Should it be static?
+lib/compat_audit.c:12:10: warning: symbol 'compat_read_class'
+  was not declared. Should it be static?
+lib/compat_audit.c:17:10: warning: symbol 'compat_write_class'
+  was not declared. Should it be static?
+lib/compat_audit.c:22:10: warning: symbol 'compat_chattr_class'
+  was not declared. Should it be static?
+lib/compat_audit.c:27:10: warning: symbol 'compat_signal_class'
+  was not declared. Should it be static?
 
-Commit b41642c87716 ("rcu: Fix rcu_read_unlock() deadloop due to IRQ work")
-fixed the infinite loop in rcu_read_unlock_special() for IRQ work by
-setting a flag before calling irq_work_queue_on(). We fix this issue by
-setting the same flag before calling raise_softirq_irqoff() and rename the
-flag to defer_qs_pending for more common.
+Trying to fix this by chaning compat_audit.c to inclde <linux/audit.h>
+does not work on arm64 due to compile errors with the extra includes
+that changing this header makes. The simpler thing would be just to
+move the definitons of these symbols out of <linux/audit.h> into
+<linux/audit_arch.h> which is included.
 
-Fixes: 5f5fa7ea89dc ("rcu: Don't use negative nesting depth in __rcu_read_unlock()")
-Reported-by: Tengda Wu <wutengda2@huawei.com>
-Signed-off-by: Yao Kai <yaokai34@huawei.com>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Fixes: 4b58841149dca ("audit: Add generic compat syscall support")
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+[PM: rewrite subject line, fixed line length in description]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.h        |  2 +-
- kernel/rcu/tree_plugin.h | 15 +++++++++------
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ include/linux/audit.h      | 6 ------
+ include/linux/audit_arch.h | 7 +++++++
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/rcu/tree.h b/kernel/rcu/tree.h
-index b8bbe7960cda7..2265b9c2906e1 100644
---- a/kernel/rcu/tree.h
-+++ b/kernel/rcu/tree.h
-@@ -203,7 +203,7 @@ struct rcu_data {
- 					/*  during and after the last grace */
- 					/* period it is aware of. */
- 	struct irq_work defer_qs_iw;	/* Obtain later scheduler attention. */
--	int defer_qs_iw_pending;	/* Scheduler attention pending? */
-+	int defer_qs_pending;		/* irqwork or softirq pending? */
- 	struct work_struct strict_work;	/* Schedule readers for strict GPs. */
+diff --git a/include/linux/audit.h b/include/linux/audit.h
+index 536f8ee8da818..b8d8029c6c480 100644
+--- a/include/linux/audit.h
++++ b/include/linux/audit.h
+@@ -128,12 +128,6 @@ enum audit_nfcfgop {
+ extern int __init audit_register_class(int class, unsigned *list);
+ extern int audit_classify_syscall(int abi, unsigned syscall);
+ extern int audit_classify_arch(int arch);
+-/* only for compat system calls */
+-extern unsigned compat_write_class[];
+-extern unsigned compat_read_class[];
+-extern unsigned compat_dir_class[];
+-extern unsigned compat_chattr_class[];
+-extern unsigned compat_signal_class[];
  
- 	/* 2) batch handling */
-diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
-index dbe2d02be824a..95ad967adcf3c 100644
---- a/kernel/rcu/tree_plugin.h
-+++ b/kernel/rcu/tree_plugin.h
-@@ -487,8 +487,8 @@ rcu_preempt_deferred_qs_irqrestore(struct task_struct *t, unsigned long flags)
- 	union rcu_special special;
+ /* audit_names->type values */
+ #define	AUDIT_TYPE_UNKNOWN	0	/* we don't know yet */
+diff --git a/include/linux/audit_arch.h b/include/linux/audit_arch.h
+index 0e34d673ef171..2b8153791e6a5 100644
+--- a/include/linux/audit_arch.h
++++ b/include/linux/audit_arch.h
+@@ -23,4 +23,11 @@ enum auditsc_class_t {
  
- 	rdp = this_cpu_ptr(&rcu_data);
--	if (rdp->defer_qs_iw_pending == DEFER_QS_PENDING)
--		rdp->defer_qs_iw_pending = DEFER_QS_IDLE;
-+	if (rdp->defer_qs_pending == DEFER_QS_PENDING)
-+		rdp->defer_qs_pending = DEFER_QS_IDLE;
+ extern int audit_classify_compat_syscall(int abi, unsigned syscall);
  
- 	/*
- 	 * If RCU core is waiting for this CPU to exit its critical section,
-@@ -645,7 +645,7 @@ static void rcu_preempt_deferred_qs_handler(struct irq_work *iwp)
- 	 * 5. Deferred QS reporting does not happen.
- 	 */
- 	if (rcu_preempt_depth() > 0)
--		WRITE_ONCE(rdp->defer_qs_iw_pending, DEFER_QS_IDLE);
-+		WRITE_ONCE(rdp->defer_qs_pending, DEFER_QS_IDLE);
- }
- 
- /*
-@@ -747,7 +747,10 @@ static void rcu_read_unlock_special(struct task_struct *t)
- 			// Using softirq, safe to awaken, and either the
- 			// wakeup is free or there is either an expedited
- 			// GP in flight or a potential need to deboost.
--			raise_softirq_irqoff(RCU_SOFTIRQ);
-+			if (rdp->defer_qs_pending != DEFER_QS_PENDING) {
-+				rdp->defer_qs_pending = DEFER_QS_PENDING;
-+				raise_softirq_irqoff(RCU_SOFTIRQ);
-+			}
- 		} else {
- 			// Enabling BH or preempt does reschedule, so...
- 			// Also if no expediting and no possible deboosting,
-@@ -755,11 +758,11 @@ static void rcu_read_unlock_special(struct task_struct *t)
- 			// tick enabled.
- 			set_need_resched_current();
- 			if (IS_ENABLED(CONFIG_IRQ_WORK) && irqs_were_disabled &&
--			    needs_exp && rdp->defer_qs_iw_pending != DEFER_QS_PENDING &&
-+			    needs_exp && rdp->defer_qs_pending != DEFER_QS_PENDING &&
- 			    cpu_online(rdp->cpu)) {
- 				// Get scheduler to re-evaluate and call hooks.
- 				// If !IRQ_WORK, FQS scan will eventually IPI.
--				rdp->defer_qs_iw_pending = DEFER_QS_PENDING;
-+				rdp->defer_qs_pending = DEFER_QS_PENDING;
- 				irq_work_queue_on(&rdp->defer_qs_iw, rdp->cpu);
- 			}
- 		}
++/* only for compat system calls */
++extern unsigned compat_write_class[];
++extern unsigned compat_read_class[];
++extern unsigned compat_dir_class[];
++extern unsigned compat_chattr_class[];
++extern unsigned compat_signal_class[];
++
+ #endif
 -- 
 2.51.0
 
