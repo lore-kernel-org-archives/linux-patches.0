@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D7030BF69;
-	Wed, 25 Feb 2026 06:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9292D6E58;
+	Wed, 25 Feb 2026 06:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002666; cv=none; b=UoTFYHAdUrWPJPaPSUTnvsMf6a3iqzerqOMocogHdaS6bXdF+dFJz/6l0oOcqMvua/JDDyzQoe7phdaNEP9YBB93j3Go7nr78rUSqSNd8M3OtrixzhxEQMh0EzuBiu4GNz4L2yKXgDqIxzetl5Pl0+6z+YlLTxNg6yC14sNeK3I=
+	t=1772002667; cv=none; b=FzfZs+NLlc4aSRVSSeWg7gYiGBjyxiBLknOQRcpsG8T+KGmOWKPzmnRArwS8L46NwY3veXsK1lQNj/3YvBmhMmJJxKvx7vVj+N8VpMovMzBDMQQUpRiR9RUeM5j1gwW8Clod+PlnSsWePsGTxiO8O4kXGFb0/4HAzYEVhwoKXx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002666; c=relaxed/simple;
-	bh=ZZdFfpldocfyrRFQyM3t/5jNT5pxAYdSYGwruxw8Icg=;
+	s=arc-20240116; t=1772002667; c=relaxed/simple;
+	bh=GdnYzrRD2U5zdS+aE4bQ8fsnu9ctjkpLcRO3gm/m5MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqlQWp6+Ph+/Q48ZgqfIG45vgkfJOiTmdw5HR8NmCkKQvLaDylDcklaT3op4K5mDcU8Dnk1o/vWz822EKuqXjo7OcjfP2RnFAvMLGz1gnKnQHaYx5fwIiPeeOn8t2w0LhCXeeJf0gnPjN15R4spELARZ8anxKi2jfeUY/cVHSiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpc9Q6GJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ciJo1HIuSfYocLc3BzdK3GoH0K9GVjluWcJDAssEBWyfxBGYH8KS73OfQe7x/TApGUNUR5jDmRbTA0ynnJQPItoTaMnv/BYU7Z1bP/BCJzyArOlNqYzPMsKWNxyoSEtUQpk32Hlxk+3RXbGP6qXAz1DPpYyq94+Gbg9YfNnaNcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOWf7yIz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpc9Q6GJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2E7C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOWf7yIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D39C116D0;
 	Wed, 25 Feb 2026 06:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002666;
-	bh=ZZdFfpldocfyrRFQyM3t/5jNT5pxAYdSYGwruxw8Icg=;
+	bh=GdnYzrRD2U5zdS+aE4bQ8fsnu9ctjkpLcRO3gm/m5MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rpc9Q6GJmvN74zg4EP1qmqoHp9FFAiXUhQfOSxYb0FQC1nZbDCOE3PiIW25jiO7ls
-	 u50IzX36EErm5pqTGboOutgwYx2CcgCLOUaKoK7OYgEQKFgD5j7+c39GFrF1PDEdpl
-	 mEPSVvO+YzthypAVXR2gBMj/O+DMv5ZxtCOVR4Xo=
+	b=aOWf7yIzl40s9a3S3z2IittGsyf06SCaDO6jkJZsvbrd+TImMDVQoxipnnO6SKCdK
+	 +siyipd8JhN2fWzwfCYs7gueF1i1e09dAi3yxWgCr6OngBNCR5Dx9IXweJOLsvf9tO
+	 Sgq6qYOr/imAYlSNRz/ZVlRoIMHMN8HI4sHD4l0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 447/641] clk: mediatek: Fix error handling in runtime PM setup
-Date: Tue, 24 Feb 2026 17:22:53 -0800
-Message-ID: <20260225012359.353081589@linuxfoundation.org>
+Subject: [PATCH 6.18 421/641] clk: rockchip: Fix error pointer check after rockchip_clk_register_gate_link()
+Date: Tue, 24 Feb 2026 17:22:27 -0800
+Message-ID: <20260225012358.753574503@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,64 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit aa2ad19210a6a444111bce55e8b69579f29318fb ]
+[ Upstream commit a8d722f03923b1c6166d39482c6df8f017e185d9 ]
 
-devm_pm_runtime_enable() can fail due to memory allocation. The current
-code ignores its return value, and when pm_runtime_resume_and_get() fails,
-it returns directly without unmapping the shared_io region.
+Replace NULL check with IS_ERR_OR_NULL() check after calling
+rockchip_clk_register_gate_link() since this function
+returns error pointers (ERR_PTR).
 
-Add error handling for devm_pm_runtime_enable(). Reorder cleanup labels
-to properly unmap shared_io on pm_runtime_resume_and_get() failure.
-
-Fixes: 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers during probe")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: c62fa612cfa6 ("clk: rockchip: implement linked gate clock support")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://patch.msgid.link/20250805030358.3665878-1-linmq006@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mtk.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/clk/rockchip/clk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
-index 19cd27941747a..deafe55a96cb1 100644
---- a/drivers/clk/mediatek/clk-mtk.c
-+++ b/drivers/clk/mediatek/clk-mtk.c
-@@ -497,14 +497,16 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
+diff --git a/drivers/clk/rockchip/clk.c b/drivers/clk/rockchip/clk.c
+index 19caf26c991bd..2d30b1e24f013 100644
+--- a/drivers/clk/rockchip/clk.c
++++ b/drivers/clk/rockchip/clk.c
+@@ -693,7 +693,7 @@ void rockchip_clk_register_late_branches(struct device *dev,
+ 			break;
+ 		}
  
- 
- 	if (mcd->need_runtime_pm) {
--		devm_pm_runtime_enable(&pdev->dev);
-+		r = devm_pm_runtime_enable(&pdev->dev);
-+		if (r)
-+			goto unmap_io;
- 		/*
- 		 * Do a pm_runtime_resume_and_get() to workaround a possible
- 		 * deadlock between clk_register() and the genpd framework.
- 		 */
- 		r = pm_runtime_resume_and_get(&pdev->dev);
- 		if (r)
--			return r;
-+			goto unmap_io;
+-		if (!pdev)
++		if (IS_ERR_OR_NULL(pdev))
+ 			dev_err(dev, "failed to register device for clock %s\n", list->name);
  	}
- 
- 	/* Calculate how many clk_hw_onecell_data entries to allocate */
-@@ -618,11 +620,11 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- free_data:
- 	mtk_free_clk_data(clk_data);
- free_base:
--	if (mcd->shared_io && base)
--		iounmap(base);
--
- 	if (mcd->need_runtime_pm)
- 		pm_runtime_put(&pdev->dev);
-+unmap_io:
-+	if (mcd->shared_io && base)
-+		iounmap(base);
- 	return r;
  }
- 
 -- 
 2.51.0
 
