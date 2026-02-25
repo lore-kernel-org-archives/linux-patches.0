@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A48826FA60;
-	Wed, 25 Feb 2026 01:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E7626F46F;
+	Wed, 25 Feb 2026 01:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983938; cv=none; b=ZKqVSOhWBgGgo00Gm0j2vfMV2bnTm7It1pINtxh3bPkYN4UqPvfOORpfbgUcPgvZLHx1XokuMzZvzF/aW22Neqw497/aJpHqeK+gM+x0yxPEGyBQRJQhtMDN6fNBTsfIdW1CYCGVIOzTW85ND1DWUkf+1hlpfsHjbGFj2Xjtjeg=
+	t=1771983939; cv=none; b=Dj03W+XT0QcFKhDSRSaKhdT5MsH8yDrJakY3JjUhPOanWMnGRyGip8jvmCOfdYxcrJNFpgwK76Q9CZJpWtZYCra20HWAKR+zB8LiYfM/j/lSwl90D1DMGUaAmQlhLHgU/HzS8c2W/tH9Wfu72H/yv7FgaGmCeaLDMeAbrnGgxWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983938; c=relaxed/simple;
-	bh=0Wn5D2OB+QUkznVNi2MrXquSfrkML41h9dhc8tKljiM=;
+	s=arc-20240116; t=1771983939; c=relaxed/simple;
+	bh=mZeFuT55887nhBL7CAVYqAT5Mj4iFTwWB9HJl4y+YEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JScsK+5WOltql7BUE4zWdpmuZuaaJ3mfpIatunnA96SseXw5c60S6SZa6zd0D96BLia++fUXVWZchRy9qVOBDgpANx6fVe/NXsz0imTnykoX+Mfbf32bb2KYbs9EDwTRYcPpCsI8il8TiPjyOP01sJf3Wp3AWU9+SYfFbI7Q/F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqMSFFZy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BKGzlGA5rJzX5FOIZ6tqTeQ41P/fNDFiqp9LS/sdNAa8a+t2/UGS1Q116zHjfP9RaWjCIgLbseqbyTFSlmC6oGttQqM2WFpE/evNiFu3jEi1qAzy2QnR7ogUoCYfawjyBLng45huMo3EpYbshDknxG4ESe+BkWfh88rZdKenmhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWuUbnhz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqMSFFZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49F7C116D0;
-	Wed, 25 Feb 2026 01:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWuUbnhz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1007AC116D0;
+	Wed, 25 Feb 2026 01:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983937;
-	bh=0Wn5D2OB+QUkznVNi2MrXquSfrkML41h9dhc8tKljiM=;
+	s=korg; t=1771983939;
+	bh=mZeFuT55887nhBL7CAVYqAT5Mj4iFTwWB9HJl4y+YEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pqMSFFZyncl3iyL43x6U22NwdOhMwWrCZt/72JFiMZ3+KJCXKlY0ENaex0Xiy7OKW
-	 zqxYRF7ShFtZeuDKKHZudi5ZVcJUSFBJp5frwL7++8S/o7jPLohyezbEZm8Jg5EGMn
-	 1grzt+6BLNSF5uxyAmtBV4B3zxjNy/W48XbV38to=
+	b=OWuUbnhzwbhJFqFTXOml7lVh9J3VeuOUfw+Ry5/pdimtMAt9SQsyeCNI578NOkXWY
+	 0qpO91uWgL2m9IXZPrcLX0Sez1ctim/47zNRXSmI2LgniiPPAAqIptVE9NsSIWzcs2
+	 SoW9FcCGQ3NUg55CRu7qVEx748iKmZWg0s8bKtLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	David Heidelberg <david@ixit.cz>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 202/641] media: ccs: Accommodate C-PHY into the calculation
-Date: Tue, 24 Feb 2026 17:18:48 -0800
-Message-ID: <20260225012353.865333259@linuxfoundation.org>
+Subject: [PATCH 6.18 203/641] drm/msm/a2xx: fix pixel shader start on A225
+Date: Tue, 24 Feb 2026 17:18:49 -0800
+Message-ID: <20260225012353.887407589@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,51 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 3085977e734dab74adebb1dda195befce25addff ]
+[ Upstream commit 6a7b0a670ba4d283285d76d45233cbecc5af5e40 ]
 
-We need to set correct mode for PLL to calculate correct frequency.
-Signalling mode is known at this point, so use it for that.
+A225 has a different PixelShader start address, write correct address
+while initializing GPU.
 
-Fixes: 47b6eaf36eba ("media: ccs-pll: Differentiate between CSI-2 D-PHY and C-PHY")
-Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-[Sakari Ailus: Drop extra newline.]
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 21af872cd8c6 ("drm/msm/adreno: add a2xx")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/689906/
+Message-ID: <20251121-a225-v1-1-a1bab651d186@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ccs/ccs-core.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ccs/ccs-core.c b/drivers/media/i2c/ccs/ccs-core.c
-index 1c889c878abd3..08e78f0bf2528 100644
---- a/drivers/media/i2c/ccs/ccs-core.c
-+++ b/drivers/media/i2c/ccs/ccs-core.c
-@@ -3425,7 +3425,21 @@ static int ccs_probe(struct i2c_client *client)
- 	sensor->scale_m = CCS_LIM(sensor, SCALER_N_MIN);
+diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+index 963c0f669ee50..e67ed58aa3d8f 100644
+--- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+@@ -77,7 +77,10 @@ static bool a2xx_me_init(struct msm_gpu *gpu)
  
- 	/* prepare PLL configuration input values */
--	sensor->pll.bus_type = CCS_PLL_BUS_TYPE_CSI2_DPHY;
-+	switch (sensor->hwcfg.csi_signalling_mode) {
-+	case CCS_CSI_SIGNALING_MODE_CSI_2_CPHY:
-+		sensor->pll.bus_type = CCS_PLL_BUS_TYPE_CSI2_CPHY;
-+		break;
-+	case CCS_CSI_SIGNALING_MODE_CSI_2_DPHY:
-+	case SMIAPP_CSI_SIGNALLING_MODE_CCP2_DATA_CLOCK:
-+	case SMIAPP_CSI_SIGNALLING_MODE_CCP2_DATA_STROBE:
-+		sensor->pll.bus_type = CCS_PLL_BUS_TYPE_CSI2_DPHY;
-+		break;
-+	default:
-+		dev_err(&client->dev, "unsupported signalling mode %u\n",
-+			sensor->hwcfg.csi_signalling_mode);
-+		rval = -EINVAL;
-+		goto out_cleanup;
-+	}
- 	sensor->pll.csi2.lanes = sensor->hwcfg.lanes;
- 	if (CCS_LIM(sensor, CLOCK_CALCULATION) &
- 	    CCS_CLOCK_CALCULATION_LANE_SPEED) {
+ 	/* Vertex and Pixel Shader Start Addresses in instructions
+ 	 * (3 DWORDS per instruction) */
+-	OUT_RING(ring, 0x80000180);
++	if (adreno_is_a225(adreno_gpu))
++		OUT_RING(ring, 0x80000300);
++	else
++		OUT_RING(ring, 0x80000180);
+ 	/* Maximum Contexts */
+ 	OUT_RING(ring, 0x00000001);
+ 	/* Write Confirm Interval and The CP will wait the
 -- 
 2.51.0
 
