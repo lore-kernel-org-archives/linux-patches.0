@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D0B1E2834;
-	Wed, 25 Feb 2026 01:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BCB26ED3D;
+	Wed, 25 Feb 2026 01:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983666; cv=none; b=iEtSoHCHVZOZcDu7uwWkmQkxVj2cIkZ+jO/bKTWD5ontnuWXX7EXgABtMHBiAJo5PHql/vXeOedMBIfPbbtd/cZNuxiCNYuoG/lGsjSijsB2XdqgbI950287nyS78xP0C1PrY/J1uNeDMKSf4mSlDC4V60URDGi0+BgAGkrKKGA=
+	t=1771983667; cv=none; b=knjK+50zn9O/5BVYJfLq9SWqUnBkSJB1XYQDTd6vtkbohbXM98MvciDPctC8CRImU7CUOp0OmohDv0FfYy6gzH9NZQhtbOwXfAQM/bceDWBM8ZOONYe2/PsIRAo8HWHH8MLXEfJmYwfYhhvZybXTt3yfuM6XjwNRDCmWAp/m9J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983666; c=relaxed/simple;
-	bh=YTtBa+fL6PMiMjCTMQcaXmxCHAgTKYd67KhDNCxJQIc=;
+	s=arc-20240116; t=1771983667; c=relaxed/simple;
+	bh=3fzs9/L4ao9lcOeianHnCyuk05YV6s0BLIreW/av+30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mmmszbRke/Ka61ZVWuNWGLV+airGv9sbCmr3bbzpuFpTtKHs0IlbtsWcaZ8TfB7Nk6+X7Div6ASHXhDS8YOdzEDjGOaVsIMn1QqgqStvf7UEh49Iei3KLOJaKFECo4Gp94GFXTQEQTNNu+OVusD8CaiPahkN0lcUAzioHKJ2cIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvEBwPN7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZCHoscjfK6QBg7gy86msVKwINeRefvHKvDT3gtBDVt6yGEjQufTN5neJpU/eBvOpIgdNMhzl2ZXL2bLee1RjU8Ej8+NtxLdUiu+iPTI8uVoAjeO4JKk/MC0TlMmn+DH1yBWILjuFxXtUZ0vQ2yCmIA8z55AEmDDDARu285NQvio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQMjJjvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvEBwPN7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B65C116D0;
-	Wed, 25 Feb 2026 01:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQMjJjvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFD0C116D0;
+	Wed, 25 Feb 2026 01:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983666;
-	bh=YTtBa+fL6PMiMjCTMQcaXmxCHAgTKYd67KhDNCxJQIc=;
+	s=korg; t=1771983667;
+	bh=3fzs9/L4ao9lcOeianHnCyuk05YV6s0BLIreW/av+30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvEBwPN7mQstFyDDUXoDmkCZtTyU+zwRPBiqODGZjtsEzok+55RR1uctYd0ZZbpVD
-	 46Yi0RYp9iS+X5O+cjkLxO+pxLHj5wd+7OQOxys6hxdZqrh3JYDcvgyis5vrEEveHW
-	 4aJYwTIMxUYie5DXWlA3o2AcOsGlgefa5Lm0jkig=
+	b=sQMjJjvEuddhufvHHTslggYq7n4xTJ4pTO+rQyEpJhkwf92l2bkqI1D1jqA0VL0YU
+	 EvU4ZHQ4Xm4GvXkhLRWnUngklDAFZlUa/bPhuaOuldJCuDPV6d7fHqU3sbf6yH41HI
+	 7n0Ri+LtTpV4w5E3Q8csIkihv4JerxSPJwW/rn7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 753/781] ksmbd: call ksmbd_vfs_kern_path_end_removing() on some error paths
-Date: Tue, 24 Feb 2026 17:24:22 -0800
-Message-ID: <20260225012418.189736209@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.19 754/781] ext4: subdivide EXT4_EXT_DATA_VALID1
+Date: Tue, 24 Feb 2026 17:24:23 -0800
+Message-ID: <20260225012418.214597138@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,63 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit a09dc10d1353f0e92c21eae2a79af1c2b1ddcde8 upstream.
+commit 22784ca541c0f01c5ebad14e8228298dc0a390ed upstream.
 
-There are two places where ksmbd_vfs_kern_path_end_removing() needs to be
-called in order to balance what the corresponding successful call to
-ksmbd_vfs_kern_path_start_removing() has done, i.e. drop inode locks and
-put the taken references.  Otherwise there might be potential deadlocks
-and unbalanced locks which are caught like:
+When splitting an extent, if the EXT4_GET_BLOCKS_CONVERT flag is set and
+it is necessary to split the target extent in the middle,
+ext4_split_extent() first handles splitting the latter half of the
+extent and passes the EXT4_EXT_DATA_VALID1 flag. This flag implies that
+all blocks before the split point contain valid data; however, this
+assumption is incorrect.
 
-BUG: workqueue leaked lock or atomic: kworker/5:21/0x00000000/7596
-     last function: handle_ksmbd_work
-2 locks held by kworker/5:21/7596:
- #0: ffff8881051ae448 (sb_writers#3){.+.+}-{0:0}, at: ksmbd_vfs_kern_path_locked+0x142/0x660
- #1: ffff888130e966c0 (&type->i_mutex_dir_key#3/1){+.+.}-{4:4}, at: ksmbd_vfs_kern_path_locked+0x17d/0x660
-CPU: 5 PID: 7596 Comm: kworker/5:21 Not tainted 6.1.162-00456-gc29b353f383b #138
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-Workqueue: ksmbd-io handle_ksmbd_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x44/0x5b
- process_one_work.cold+0x57/0x5c
- worker_thread+0x82/0x600
- kthread+0x153/0x190
- ret_from_fork+0x22/0x30
- </TASK>
+Therefore, subdivid EXT4_EXT_DATA_VALID1 into
+EXT4_EXT_DATA_ENTIRE_VALID1 and EXT4_EXT_DATA_PARTIAL_VALID1, which
+indicate that the first half of the extent is either entirely valid or
+only partially valid, respectively. These two flags cannot be set
+simultaneously.
 
-Found by Linux Verification Center (linuxtesting.org).
+This patch does not use EXT4_EXT_DATA_PARTIAL_VALID1, it only replaces
+EXT4_EXT_DATA_VALID1 with EXT4_EXT_DATA_ENTIRE_VALID1 at the location
+where it is set, no logical changes.
 
-Fixes: d5fc1400a34b ("smb/server: avoid deadlock when linking with ReplaceIfExists")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Cc: stable@kernel.org
+Message-ID: <20251129103247.686136-2-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/extents.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6114,14 +6114,14 @@ static int smb2_create_link(struct ksmbd
- 				rc = -EINVAL;
- 				ksmbd_debug(SMB, "cannot delete %s\n",
- 					    link_name);
--				goto out;
- 			}
- 		} else {
- 			rc = -EEXIST;
- 			ksmbd_debug(SMB, "link already exists\n");
--			goto out;
- 		}
- 		ksmbd_vfs_kern_path_end_removing(&path);
-+		if (rc)
-+			goto out;
- 	}
- 	rc = ksmbd_vfs_link(work, target_name, link_name);
- 	if (rc)
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -43,8 +43,13 @@
+ #define EXT4_EXT_MARK_UNWRIT1	0x2  /* mark first half unwritten */
+ #define EXT4_EXT_MARK_UNWRIT2	0x4  /* mark second half unwritten */
+ 
+-#define EXT4_EXT_DATA_VALID1	0x8  /* first half contains valid data */
+-#define EXT4_EXT_DATA_VALID2	0x10 /* second half contains valid data */
++/* first half contains valid data */
++#define EXT4_EXT_DATA_ENTIRE_VALID1	0x8   /* has entirely valid data */
++#define EXT4_EXT_DATA_PARTIAL_VALID1	0x10  /* has partially valid data */
++#define EXT4_EXT_DATA_VALID1		(EXT4_EXT_DATA_ENTIRE_VALID1 | \
++					 EXT4_EXT_DATA_PARTIAL_VALID1)
++
++#define EXT4_EXT_DATA_VALID2	0x20 /* second half contains valid data */
+ 
+ static __le32 ext4_extent_block_csum(struct inode *inode,
+ 				     struct ext4_extent_header *eh)
+@@ -3190,8 +3195,9 @@ static struct ext4_ext_path *ext4_split_
+ 	unsigned int ee_len, depth;
+ 	int err = 0;
+ 
+-	BUG_ON((split_flag & (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2)) ==
+-	       (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2));
++	BUG_ON((split_flag & EXT4_EXT_DATA_VALID1) == EXT4_EXT_DATA_VALID1);
++	BUG_ON((split_flag & EXT4_EXT_DATA_VALID1) &&
++	       (split_flag & EXT4_EXT_DATA_VALID2));
+ 
+ 	ext_debug(inode, "logical block %llu\n", (unsigned long long)split);
+ 
+@@ -3373,7 +3379,7 @@ static struct ext4_ext_path *ext4_split_
+ 			split_flag1 |= EXT4_EXT_MARK_UNWRIT1 |
+ 				       EXT4_EXT_MARK_UNWRIT2;
+ 		if (split_flag & EXT4_EXT_DATA_VALID2)
+-			split_flag1 |= EXT4_EXT_DATA_VALID1;
++			split_flag1 |= EXT4_EXT_DATA_ENTIRE_VALID1;
+ 		path = ext4_split_extent_at(handle, inode, path,
+ 				map->m_lblk + map->m_len, split_flag1, flags1);
+ 		if (IS_ERR(path))
+@@ -3728,7 +3734,7 @@ static struct ext4_ext_path *ext4_split_
+ 
+ 	/* Convert to unwritten */
+ 	if (flags & EXT4_GET_BLOCKS_CONVERT_UNWRITTEN) {
+-		split_flag |= EXT4_EXT_DATA_VALID1;
++		split_flag |= EXT4_EXT_DATA_ENTIRE_VALID1;
+ 	/* Convert to initialized */
+ 	} else if (flags & EXT4_GET_BLOCKS_CONVERT) {
+ 		/*
 
 
