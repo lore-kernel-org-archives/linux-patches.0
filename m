@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086C34369A;
-	Wed, 25 Feb 2026 01:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E177E4369A;
+	Wed, 25 Feb 2026 01:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982887; cv=none; b=KJKyx6e4lVHv06MnIeqpch2jo6wYx7HschxJ+NAbY2pc+Ti+Hpr3ILTowpJQHFAJOpeLAbVbnIO/dcf1BGNIYznoQV/3+bDUcguRdbaXHijxzH0h+CVCsw3aFKxZlv5e8/XP5CvvRsMX0GNhKccMfBjzfM3l3i6xGbzDs96p6qQ=
+	t=1771982888; cv=none; b=OidQ0nG6m4O7Xy36XisO/p8hx3madMQczuq2+FKal/wKDpc96IkAZCvJM9SnsSW+XTUsUxVTBw1fkhMKlzUn3lbVFacSSkMiJiS8/6gzLyXUn07hnx+bWvI0v8mH+oTXHzpF020nLjSkxFknqTb/EDve417kBtLAGvzj3dHq6kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982887; c=relaxed/simple;
-	bh=/k3ow8KVRtNJehrK55nV+YqBiEgK5ChaspB2Rz8XPyI=;
+	s=arc-20240116; t=1771982888; c=relaxed/simple;
+	bh=QjQK4eK9kd8faFesxzxo9eTM+g8cOW6u4RFJn433v/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETOdpvxzn4DaNnr3KejaYtkRNsGnvLVH+oFQtdabTjfGOgf+oFC7Cnr7tkW9ouEpkXfsrjjTXr4JyWOQvvwXEXLSBgrjN9/W+meYM1Py8vqbKrKKqWiz7K/aYzh2UHkyOzxoetzPOCjV/5vh0aTDmD26G2vpvl0FzqwI76bAbL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpAo/+Rf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I1i5aBXNAtATa78ya2hmGjjlHrEoGEHmAEoaZckrv04bQFjPaAqQZMDutSIKQzMk50idA3c9Pe5tdTYjsOAUu7NWiaVCmbixJ5kvIpI3sav1e5PLSQgtAg2oYuk8UtNGpdrOE1pnQToGHnVDgQlpmaGP99QC7DaCYThiGv+NA9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZWsy4Z1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpAo/+Rf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B337C116D0;
-	Wed, 25 Feb 2026 01:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZWsy4Z1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3936C116D0;
+	Wed, 25 Feb 2026 01:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982886;
-	bh=/k3ow8KVRtNJehrK55nV+YqBiEgK5ChaspB2Rz8XPyI=;
+	s=korg; t=1771982887;
+	bh=QjQK4eK9kd8faFesxzxo9eTM+g8cOW6u4RFJn433v/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dpAo/+Rfn8QQvZnhaVSVyAR4OZdxfsdV5yASJe2TTNQ1Pz81jdC7SB9j5xQX3eXM+
-	 Ql5f7Sopt1qZ5xIuKY4Pvj3GnQNaIi6OOAkPK+w5C+3gybNpUoKAJhVJxAjXhj0nkz
-	 8tmlmshrVKkZFU4JBMq2FKb9hh0SQ76m9zH4Td18=
+	b=fZWsy4Z1p+imMO4ubMfIva8iYHADQTBDToBIKS7e+VXeoogXV9iWVQ+Z41MvkmbNt
+	 ITTK1/Ka8vMpaqG3/jgFlPwyvyvQ/QoDa8J78XPfsZlkBx8NehzxRCW4VmStmk+Uiz
+	 fggzy/WQzmo8eRF1jgUALDNAXJzLMQLYt3cI9KGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 017/781] gfs2: Rename gfs2_log_submit_{bio -> write}
-Date: Tue, 24 Feb 2026 17:12:06 -0800
-Message-ID: <20260225012400.123337041@linuxfoundation.org>
+Subject: [PATCH 6.19 065/781] PM: sleep: wakeirq: harden dev_pm_clear_wake_irq() against races
+Date: Tue, 24 Feb 2026 17:12:54 -0800
+Message-ID: <20260225012401.298231161@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -50,88 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 59d81037d32ff1e415dcaa359c238c9ca730932d ]
+[ Upstream commit 5c9ecd8e6437cd55a38ea4f1e1d19cee8e226cb8 ]
 
-Rename gfs2_log_submit_bio() to gfs2_log_submit_write(): this function
-isn't used for submitting log reads.
+dev_pm_clear_wake_irq() currently uses a dangerous pattern where
+dev->power.wakeirq is read and checked for NULL outside the lock.
+If two callers invoke this function concurrently, both might see
+a valid pointer and proceed. This could result in a double-free
+when the second caller acquires the lock and tries to release the
+same object.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Stable-dep-of: 4a94f052e098 ("gfs2: Initialize bio->bi_opf early")
+Address this by removing the lockless check of dev->power.wakeirq.
+Instead, acquire dev->power.lock immediately to ensure the check and
+the subsequent operations are atomic. If dev->power.wakeirq is NULL
+under the lock, simply unlock and return. This guarantees that
+concurrent calls cannot race to free the same object.
+
+Based on a quick scan of current users, I did not find an actual bug as
+drivers seem to rely on their own synchronization. However, since
+asynchronous usage patterns exist (e.g., in
+drivers/net/wireless/ti/wlcore), I believe a race is theoretically
+possible if the API is used less carefully in the future. This change
+hardens the API to be robust against such cases.
+
+Fixes: 4990d4fe327b ("PM / Wakeirq: Add automated device wake IRQ handling")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://patch.msgid.link/20260203031943.1924-1-hanguidong02@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/log.c  | 4 ++--
- fs/gfs2/lops.c | 6 +++---
- fs/gfs2/lops.h | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/base/power/wakeirq.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
-index 8312cd2cdae47..2a3b9d10eba78 100644
---- a/fs/gfs2/log.c
-+++ b/fs/gfs2/log.c
-@@ -889,7 +889,7 @@ void gfs2_write_log_header(struct gfs2_sbd *sdp, struct gfs2_jdesc *jd,
- 	lh->lh_crc = cpu_to_be32(crc);
- 
- 	gfs2_log_write(sdp, jd, page, sb->s_blocksize, 0, dblock);
--	gfs2_log_submit_bio(&jd->jd_log_bio, REQ_OP_WRITE | op_flags);
-+	gfs2_log_submit_write(&jd->jd_log_bio, REQ_OP_WRITE | op_flags);
- }
- 
- /**
-@@ -1096,7 +1096,7 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
- 	if (gfs2_withdrawn(sdp))
- 		goto out_withdraw;
- 	if (sdp->sd_jdesc)
--		gfs2_log_submit_bio(&sdp->sd_jdesc->jd_log_bio, REQ_OP_WRITE);
-+		gfs2_log_submit_write(&sdp->sd_jdesc->jd_log_bio, REQ_OP_WRITE);
- 	if (gfs2_withdrawn(sdp))
- 		goto out_withdraw;
- 
-diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
-index d27a0b1080a97..aa9e9fe25c2f7 100644
---- a/fs/gfs2/lops.c
-+++ b/fs/gfs2/lops.c
-@@ -229,7 +229,7 @@ static void gfs2_end_log_write(struct bio *bio)
- }
- 
- /**
-- * gfs2_log_submit_bio - Submit any pending log bio
-+ * gfs2_log_submit_write - Submit a pending log write bio
-  * @biop: Address of the bio pointer
-  * @opf: REQ_OP | op_flags
-  *
-@@ -237,7 +237,7 @@ static void gfs2_end_log_write(struct bio *bio)
-  * there is no pending bio, then this is a no-op.
+diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
+index 8aa28c08b2891..c0809d18fc540 100644
+--- a/drivers/base/power/wakeirq.c
++++ b/drivers/base/power/wakeirq.c
+@@ -83,13 +83,16 @@ EXPORT_SYMBOL_GPL(dev_pm_set_wake_irq);
   */
- 
--void gfs2_log_submit_bio(struct bio **biop, blk_opf_t opf)
-+void gfs2_log_submit_write(struct bio **biop, blk_opf_t opf)
+ void dev_pm_clear_wake_irq(struct device *dev)
  {
- 	struct bio *bio = *biop;
- 	if (bio) {
-@@ -303,7 +303,7 @@ static struct bio *gfs2_log_get_bio(struct gfs2_sbd *sdp, u64 blkno,
- 		nblk >>= sdp->sd_fsb2bb_shift;
- 		if (blkno == nblk && !flush)
- 			return bio;
--		gfs2_log_submit_bio(biop, op);
-+		gfs2_log_submit_write(biop, op);
- 	}
+-	struct wake_irq *wirq = dev->power.wakeirq;
++	struct wake_irq *wirq;
+ 	unsigned long flags;
  
- 	*biop = gfs2_log_alloc_bio(sdp, blkno, end_io);
-diff --git a/fs/gfs2/lops.h b/fs/gfs2/lops.h
-index be740bf336664..010a4696406bb 100644
---- a/fs/gfs2/lops.h
-+++ b/fs/gfs2/lops.h
-@@ -17,7 +17,7 @@ u64 gfs2_log_bmap(struct gfs2_jdesc *jd, unsigned int lbn);
- void gfs2_log_write(struct gfs2_sbd *sdp, struct gfs2_jdesc *jd,
- 		    struct page *page, unsigned size, unsigned offset,
- 		    u64 blkno);
--void gfs2_log_submit_bio(struct bio **biop, blk_opf_t opf);
-+void gfs2_log_submit_write(struct bio **biop, blk_opf_t opf);
- void gfs2_pin(struct gfs2_sbd *sdp, struct buffer_head *bh);
- int gfs2_find_jhead(struct gfs2_jdesc *jd,
- 		    struct gfs2_log_header_host *head);
+-	if (!wirq)
++	spin_lock_irqsave(&dev->power.lock, flags);
++	wirq = dev->power.wakeirq;
++	if (!wirq) {
++		spin_unlock_irqrestore(&dev->power.lock, flags);
+ 		return;
++	}
+ 
+-	spin_lock_irqsave(&dev->power.lock, flags);
+ 	device_wakeup_detach_irq(dev);
+ 	dev->power.wakeirq = NULL;
+ 	spin_unlock_irqrestore(&dev->power.lock, flags);
 -- 
 2.51.0
 
