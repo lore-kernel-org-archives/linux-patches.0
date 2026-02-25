@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF2923D7CF;
-	Wed, 25 Feb 2026 01:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEF8253932;
+	Wed, 25 Feb 2026 01:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983853; cv=none; b=k4Jmf6brA6Zgq9CghnIrnbb2ja0w2cuzyrS93b2OL9hWSi5tKqRHJFVoXzxUSlO9KEOHuMlg/i3JCBTwMeYjozdMEbbLTe0My3W/BSk9+83p7yPxENIG1NKnJyd3ypMSLlUjhKOoqMrTcetH4elcczLTsU9ozK7WOeKywE+CxoM=
+	t=1771983854; cv=none; b=KQdyMySmgyjR9fEU1W+qM/1sCCVYvF6iBFuI4LYmmCLwIj3VvfhDsktJqr67QNJx3X+0eS0Ai2fA2rwdHK/Us3VBLi4sX6l0fy61n8elMulRazq1jcC3d2Jz9nGADb7hcO8K5XrJrVkfm648uh6cR4jqeHpEMrm70R9EoWqRkqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983853; c=relaxed/simple;
-	bh=CB/bSVIJOXwaFplOrX4zp29+X2f1s7OgE6KEgmcPvv4=;
+	s=arc-20240116; t=1771983854; c=relaxed/simple;
+	bh=VLzbtn4voZUv0h+vSpHE6xpGG83MwUcgrXNrLdlkMes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqLfAE1tOWI3mQ6Hj7dHVLHt3fwv0GNxPDSSEpfyVWnfebr3JJVKDuGR8HxArpfsdsCBzTpVFsuIDRLt4IbeUGS2aK0OydiaNjtUYqFPdUQM8Qs8atPE/F1pEO4wiYRWsz82kSUT7berz4tllHeYS9ryUuzj2M6pyyE12DVGrBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwD0zJTj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UnUHTzbDvgDA6QkERnpSbxMiSvyWZEU49X1UCjSAdq6Gk5HntX6VHS6b5/4fUt23e9ztEdE3RAmhDq4MthyC7szvQ916z+RFIelKIFYqzNEJYSLD1KxGHx5uJu+rfdeEiu+1HGzsIilkRc2z3IT2OMNpQMU9iH6/GB5t8xHyNNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NRr6jQeh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwD0zJTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76AD8C116D0;
-	Wed, 25 Feb 2026 01:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRr6jQeh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D059C116D0;
+	Wed, 25 Feb 2026 01:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983853;
-	bh=CB/bSVIJOXwaFplOrX4zp29+X2f1s7OgE6KEgmcPvv4=;
+	s=korg; t=1771983854;
+	bh=VLzbtn4voZUv0h+vSpHE6xpGG83MwUcgrXNrLdlkMes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwD0zJTjTD90STP3CszGzl2Ee2+gQIQb/QEyI/4KAyqTkvOd05Obsb6k2HFIpht8U
-	 G2GZbrRBdYkohwg/96SfjCR0RsOyzpIPqNAHk7mvAZN+5SlVkzpdalS9kkwBHbmHK+
-	 uUB1NxKHGQZFGKnzFRmf1P5K0ZkWkQ2briWbK9ms=
+	b=NRr6jQehZj0KHREgizNYTiMm9dmwp87T4pam4ullfDj7ALCN6AUBDGbKW2QC8lQps
+	 2jCNH4TYa7SitTuxhYw6GeEE418yRB+fuz7HmV5fhw+HY/9BoH6nuS/Vsmnu21yv+2
+	 +7UNoRiitTT/zhqYE+Ws9jatmsRbt9jFT5L0588c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Tony Luck <tony.luck@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Sourav Mohapatra <sourav.mohapatra@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 129/641] EDAC/i5400: Fix snprintf() limit calculation in calculate_dimm_size()
-Date: Tue, 24 Feb 2026 17:17:35 -0800
-Message-ID: <20260225012352.275457875@linuxfoundation.org>
+Subject: [PATCH 6.18 130/641] firmware: arm_ffa: Correct 32-bit response handling in NOTIFICATION_INFO_GET
+Date: Tue, 24 Feb 2026 17:17:36 -0800
+Message-ID: <20260225012352.300531332@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,47 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit 72f12683611344853ab030fe7d19b23970ed2bd8 ]
+[ Upstream commit be4d4543f78074fbebd530ba5109d39a2a34e668 ]
 
-The snprintf() can't really overflow because we're writing a max of 42
-bytes to a PAGE_SIZE buffer.  But my static checker complains because
-the limit calculation doesn't take the first 11 space characters that
-we wrote into the buffer into consideration.  Fix this for the sake of
-correctness even though it doesn't affect runtime.
+The FF-A specification allows NOTIFICATION_INFO_GET to return either a
+64-bit (FFA_FN64_SUCCESS) or a 32-bit (FFA_SUCCESS) response, depending on
+whether the firmware chooses the SMC64 or SMC32 calling convention.
 
-Also delete an earlier "space -= n;" which was not used.
+The driver previously detected the response format by checking ret.a0, but
+still interpreted the returned ID lists (x3..x17 or w3..w7) as if they always
+followed the 64-bit SMC64 layout. In the SMC32 case, the upper 32 bits of
+each argument register are undefined by the calling convention, meaning the
+driver could read stale or garbage values when parsing notification IDs.
 
-Fixes: 68d086f89b80 ("i5400_edac: improve debug messages to better represent the filled memory")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Link: https://patch.msgid.link/ccd06b91748e7ed8e33eeb2ff1e7b98700879304.1765290801.git.dan.carpenter@linaro.org
+This resulted in incorrectly decoded partition/VCPU IDs whenever the FF-A
+firmware used an SMC32 return path.
+
+Fix the issue by:
+
+- Introducing logic to map list indices to the correct u16 offsets,
+  depending on whether the response width matches the kernel word size
+  or is a 32-bit response on a 64-bit kernel.
+- Ensuring that the packed ID list is parsed using the proper layout,
+  avoiding reads from undefined upper halves in the SMC32 case.
+
+With this change, NOTIFICATION_INFO_GET now correctly interprets ID list
+entries regardless of the response width, aligning the driver with the FF-A
+specification.
+
+Fixes: 3522be48d82b ("firmware: arm_ffa: Implement the NOTIFICATION_INFO_GET interface")
+Reported-by: Sourav Mohapatra <sourav.mohapatra@arm.com>
+Message-Id: <20251218142001.2457111-1-sudeep.holla@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/i5400_edac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/driver.c | 33 +++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/edac/i5400_edac.c b/drivers/edac/i5400_edac.c
-index b5cf25905b059..fb49a1d1df112 100644
---- a/drivers/edac/i5400_edac.c
-+++ b/drivers/edac/i5400_edac.c
-@@ -1026,13 +1026,13 @@ static void calculate_dimm_size(struct i5400_pvt *pvt)
- 		space -= n;
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index c72ee47565856..c501c3104b3a4 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -981,10 +981,27 @@ static void __do_sched_recv_cb(u16 part_id, u16 vcpu, bool is_per_vcpu)
  	}
+ }
  
--	space -= n;
- 	edac_dbg(2, "%s\n", mem_buffer);
- 	p = mem_buffer;
- 	space = PAGE_SIZE;
++/*
++ * Map logical ID index to the u16 index within the packed ID list.
++ *
++ * For native responses (FF-A width == kernel word size), IDs are
++ * tightly packed: idx -> idx.
++ *
++ * For 32-bit responses on a 64-bit kernel, each 64-bit register
++ * contributes 4 x u16 values but only the lower 2 are defined; the
++ * upper 2 are garbage. This mapping skips those upper halves:
++ *   0,1,2,3,4,5,... -> 0,1,4,5,8,9,...
++ */
++static int list_idx_to_u16_idx(int idx, bool is_native_resp)
++{
++	return is_native_resp ? idx : idx + 2 * (idx >> 1);
++}
++
+ static void ffa_notification_info_get(void)
+ {
+-	int idx, list, max_ids, lists_cnt, ids_processed, ids_count[MAX_IDS_64];
+-	bool is_64b_resp;
++	int ids_processed, ids_count[MAX_IDS_64];
++	int idx, list, max_ids, lists_cnt;
++	bool is_64b_resp, is_native_resp;
+ 	ffa_value_t ret;
+ 	u64 id_list;
  
- 	n = snprintf(p, space, "           ");
- 	p += n;
-+	space -= n;
- 	for (branch = 0; branch < MAX_BRANCHES; branch++) {
- 		n = snprintf(p, space, "       branch %d       | ", branch);
- 		p += n;
+@@ -1001,6 +1018,7 @@ static void ffa_notification_info_get(void)
+ 		}
+ 
+ 		is_64b_resp = (ret.a0 == FFA_FN64_SUCCESS);
++		is_native_resp = (ret.a0 == FFA_FN_NATIVE(SUCCESS));
+ 
+ 		ids_processed = 0;
+ 		lists_cnt = FIELD_GET(NOTIFICATION_INFO_GET_ID_COUNT, ret.a2);
+@@ -1017,12 +1035,16 @@ static void ffa_notification_info_get(void)
+ 
+ 		/* Process IDs */
+ 		for (list = 0; list < lists_cnt; list++) {
++			int u16_idx;
+ 			u16 vcpu_id, part_id, *packed_id_list = (u16 *)&ret.a3;
+ 
+ 			if (ids_processed >= max_ids - 1)
+ 				break;
+ 
+-			part_id = packed_id_list[ids_processed++];
++			u16_idx = list_idx_to_u16_idx(ids_processed,
++						      is_native_resp);
++			part_id = packed_id_list[u16_idx];
++			ids_processed++;
+ 
+ 			if (ids_count[list] == 1) { /* Global Notification */
+ 				__do_sched_recv_cb(part_id, 0, false);
+@@ -1034,7 +1056,10 @@ static void ffa_notification_info_get(void)
+ 				if (ids_processed >= max_ids - 1)
+ 					break;
+ 
+-				vcpu_id = packed_id_list[ids_processed++];
++				u16_idx = list_idx_to_u16_idx(ids_processed,
++							      is_native_resp);
++				vcpu_id = packed_id_list[u16_idx];
++				ids_processed++;
+ 
+ 				__do_sched_recv_cb(part_id, vcpu_id, true);
+ 			}
 -- 
 2.51.0
 
