@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8443B2D94AF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E809330F7F7;
 	Wed, 25 Feb 2026 06:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002668; cv=none; b=gGGRtQuyZZ9u80H+Wpu6qoRMPxydsDabK5ENRcipWX5Y5zuChyrnMWE+eT4ffz0BZByUWjlMvr7aZinXEi0IzaWLeMn4uZyxj0bex6R0uc+Noaa3x98+mnRKjsTapw7yjD0AQlvOzvmbeyV5fF4icUKXohXrZ1et61XaS8YNGs8=
+	t=1772002669; cv=none; b=I/LhWL3Mx9uBdSV1PFc4sU7YcPrD6q1UqR2YrtcxdtZDUSWlBEVKgGrh2pl+KYbF7z4xkaIf1YdtGkd8aW4dQh4EzoyaFoEL/Ox8Rz8+qeg7BAhLZz4O4+UibFq1DjSRsyRaDkNu+um2oc8EYE7gf3++Ad+BgYj6xVwlLWNNvtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002668; c=relaxed/simple;
-	bh=30oi680SREIfV+iATQ6j34+LB54Wn0hDXAdqIsh7bv0=;
+	s=arc-20240116; t=1772002669; c=relaxed/simple;
+	bh=HjOQCHxxe+X6B2XyaaXYbXjx7kNy+jCXcN4443SIqng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GvC9L+mzqDTno8ed9JYI9wrqJ2chV/VIjf7Ew5ZrSkAOxxbwvSVkiMfplMRj+sdaIDGVoWBZeRh5xc96MWXPR+y3W2d2Mps/6qJND74nxqFmY3IwqsDbiRdPb9Olqh+X5J52dMiZVnP8i9Cr2orW5BQo9Cr+G+94zqlFg6255a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pehturtn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n+nA2u/k00URorIRBZMexb53iC13Hkv3xe7d93y9gv2DiwJhIW25lZHx2lCO/29Qy75ZB5WlZ0eGyMPzbEnnx45jPilumGMVbfzgnW+qfJ2tYF/9Too+J7EY6D0oLiLaF0HVGI5zrqttlRWPV6NJN8QUcrGd/n4ayIeySB9jA7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwN5gzoz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pehturtn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FC3C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwN5gzoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF87C116D0;
 	Wed, 25 Feb 2026 06:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002668;
-	bh=30oi680SREIfV+iATQ6j34+LB54Wn0hDXAdqIsh7bv0=;
+	bh=HjOQCHxxe+X6B2XyaaXYbXjx7kNy+jCXcN4443SIqng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PehturtnKhunM3ed3xsSL4a0yhmT0gi6QSETdZ4jC2vcGh/CDcmn00VBtngzK5+yR
-	 RNzaD1YEAGR+c+xGoueZt6D5ppq4GVoZ5pMz+/fZsW2XV5P0hSsNbA63Hax61cxyw7
-	 dMBNrfkpQQbvtR5sEltgxnLQCYtOkM3cGCJ+lBc0=
+	b=pwN5gzoz3xV74zyTijNwc8UiLxb8uY/Z5DNofaKgdxazwTGigva1sl79pSkR8zbLS
+	 ljw1s5xWTdKRi0LvRQ2Aq8mkJaeJyw8XZmWnuEhsO0Yvk/R4nc1IczXhigB+dbZlag
+	 p1kTE1ZQnXS+WneYS03uzHyAeLv4w5NSP4NeYoBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 449/641] clk: zynqmp: pll: Fix zynqmp_clk_divider_determine_rate kerneldoc
-Date: Tue, 24 Feb 2026 17:22:55 -0800
-Message-ID: <20260225012359.400718545@linuxfoundation.org>
+Subject: [PATCH 6.18 450/641] interconnect: mediatek: Dont hijack parent device
+Date: Tue, 24 Feb 2026 17:22:56 -0800
+Message-ID: <20260225012359.423708286@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,42 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit 750e0e0a1652530618d2c07697618e705bc5061b ]
+[ Upstream commit 510f8214440c553e81774c5822437ccf154e9e38 ]
 
-After renaming round_rate->determine, kerneldoc does not match anymore,
-causing W=1 warnings:
+If the intention is that users of the interconnect declare their
+relationship to the child icc_emi node of the dvfsrc controller, then
+this code never worked. That's because it uses the parent dvfsrc device
+as the device it passes to the interconnect core framework, which means
+all the OF parsing is broken.
 
-  pll.c:102 function parameter 'req' not described in 'zynqmp_pll_determine_rate'
-  pll.c:102 expecting prototype for zynqmp_pll_round_rate(). Prototype was for zynqmp_pll_determine_rate() instead
+Use the actual device instead, and pass the dvfsrc parent into the
+dvfsrc calls.
 
-Fixes: 193650c7a873 ("clk: zynqmp: pll: convert from round_rate() to determine_rate()")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: b45293799f75 ("interconnect: mediatek: Add MediaTek MT8183/8195 EMI Interconnect driver")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Link: https://lore.kernel.org/r/20251124-mt8196-dvfsrc-v2-12-d9c1334db9f3@collabora.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/zynqmp/pll.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/interconnect/mediatek/icc-emi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/zynqmp/pll.c b/drivers/clk/zynqmp/pll.c
-index 630a3936c97c3..6bc2c3934f564 100644
---- a/drivers/clk/zynqmp/pll.c
-+++ b/drivers/clk/zynqmp/pll.c
-@@ -91,10 +91,9 @@ static inline void zynqmp_pll_set_mode(struct clk_hw *hw, bool on)
- }
+diff --git a/drivers/interconnect/mediatek/icc-emi.c b/drivers/interconnect/mediatek/icc-emi.c
+index 7da740b5fa8d6..182aa2b0623af 100644
+--- a/drivers/interconnect/mediatek/icc-emi.c
++++ b/drivers/interconnect/mediatek/icc-emi.c
+@@ -40,7 +40,7 @@ static int mtk_emi_icc_set(struct icc_node *src, struct icc_node *dst)
+ 	if (unlikely(!src->provider))
+ 		return -EINVAL;
  
- /**
-- * zynqmp_pll_round_rate() - Round a clock frequency
-+ * zynqmp_pll_determine_rate() - Round a clock frequency
-  * @hw:		Handle between common and hardware-specific interfaces
-- * @rate:	Desired clock frequency
-- * @prate:	Clock frequency of parent clock
-+ * @req:	Desired clock frequency
-  *
-  * Return: Frequency closest to @rate the hardware can generate
-  */
+-	dev = src->provider->dev;
++	dev = src->provider->dev->parent;
+ 
+ 	switch (node->ep) {
+ 	case 0:
+@@ -97,7 +97,7 @@ int mtk_emi_icc_probe(struct platform_device *pdev)
+ 	if (!data)
+ 		return -ENOMEM;
+ 
+-	provider->dev = pdev->dev.parent;
++	provider->dev = dev;
+ 	provider->set = mtk_emi_icc_set;
+ 	provider->aggregate = mtk_emi_icc_aggregate;
+ 	provider->xlate = of_icc_xlate_onecell;
 -- 
 2.51.0
 
