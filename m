@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CA72BAF7;
-	Wed, 25 Feb 2026 01:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363792BAF7;
+	Wed, 25 Feb 2026 01:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983077; cv=none; b=TTd1mtQDjqoimkU94n4V3BcYiNutCAyjOOxjAW+CDO5TBomwC5IflS8CJ7LUPBYIlsYOS06tWV8mTATITi4MirTwDGV7eoHA1QliHeXy5T5vylqjy7Rg8uKBNmXeOMhWaLoL42mCrh4nXou+y+D2iYy2jNrHkfaaUzNUpMplH2A=
+	t=1771983078; cv=none; b=tM/YnkgATXzpr4wtC/NkP5SWOj3kSsn7twwMUHl5nmNo7PfXbd6Egz31vqBnFYcHHo0MPO9++5dloWJBH1De5doR2ZzNPIQl+pHVWkIeaKELnq3Bqkqni64usafVRFbCwoLT6uA9HNYtS2e/2HCDydEK8m/ooPOhrEYaYe9cFfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983077; c=relaxed/simple;
-	bh=yc0C+otxbZMrbUtDiVejUeFERJvI6safT3kM4Akdggg=;
+	s=arc-20240116; t=1771983078; c=relaxed/simple;
+	bh=DJCPTLfju+bv+EQmDMu6RMxO3TLzCzHx/28g/Wt7Qj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGVXmavPclAF4LE0jXf9zLGRofvjkbu52VYnQPDmU51EBuiZJStWxP5kiYDGiuSOQBrf5VmxafHRuOZoIjUw2skjsaiR+agoOUN2EOM7HszWu6OdYzbug6euL4SCYUvT+IPoRXc+4cW1mCvnPAQ+nZwQSphRlLb21pp06wjZun0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELfr+s3G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKp9GGPIRkAJB/HWtjKvZZX2FaL0YZ2KE92V5VQlOS4pPZLTGSJzsMp6VsPmT4LDxR9xOuwAMe5bSzZHymHvnrA8yfIlfLMmZ55sWu2/Fq58P+EKUDIE3uJORT8opb1VQLqwW/vwCjTvuDy27b7aVK20vcs8fZsBrTwBqAtEGas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpTAaTLg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELfr+s3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6747C116D0;
-	Wed, 25 Feb 2026 01:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpTAaTLg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBE1C116D0;
+	Wed, 25 Feb 2026 01:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983077;
-	bh=yc0C+otxbZMrbUtDiVejUeFERJvI6safT3kM4Akdggg=;
+	s=korg; t=1771983078;
+	bh=DJCPTLfju+bv+EQmDMu6RMxO3TLzCzHx/28g/Wt7Qj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELfr+s3GGDLvB/YsRzHWe92LpvNdIioNmwGyWu8OL7Xv3gpGyzbdQ09px2mrTXsz7
-	 Mz7aSvbTDgTX2+UGfhmzP8z+QLkdXGwBBPzDtlRsQoXqoZMpIF4ykdHcWqkK9ww6+8
-	 wgZnjnPloJpT0EvLJwfCRKmrAd4k+g3hhQNXrC/c=
+	b=fpTAaTLgIz1Vvoy4a4SZEV/BrR3hEfg8BRz8MAnzzeefvmFS55QVsvKiEDlVgrRLi
+	 cy8aDrvhqq90mNS0j0xaGmb3TJE/j51XFzqpzMZ3z8cyXoL1hwdwi0x1Zh7eCYdUk4
+	 n3fizJY6lQebejnzJPbpj3X6NCLn7Spb2I6weGXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 238/781] drm/amdgpu: Describe @AMD_IP_BLOCK_TYPE_RAS in amd_ip_block_type enum
-Date: Tue, 24 Feb 2026 17:15:47 -0800
-Message-ID: <20260225012405.545678057@linuxfoundation.org>
+Subject: [PATCH 6.19 239/781] drm/amd: Drop "amdgpu kernel modesetting enabled" message
+Date: Tue, 24 Feb 2026 17:15:48 -0800
+Message-ID: <20260225012405.570983038@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,36 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit d8ccbb5e228b093eba19027a281274e7faf2da4c ]
+[ Upstream commit 8644084a74a4573278d6f454c6638ccd5965f4e2 ]
 
-Sphinx reports kernel-doc warning:
+The behavior for amdgpu was changed with commit e00e5c223878
+("drm/amdgpu: adjust drm_firmware_drivers_only() handling") to
+potentially allow loading even if nomodeset was set, so the
+message is no longer accurate.
 
-WARNING: ./drivers/gpu/drm/amd/include/amd_shared.h:113 Enum value 'AMD_IP_BLOCK_TYPE_RAS' not described in enum 'amd_ip_block_type'
+Just drop it to avoid confusion.
 
-Describe the value to fix it.
-
-Fixes: 7169e706c82d ("drm/amdgpu: Add ras module ip block to amdgpu discovery")
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Fixes: e00e5c223878 ("drm/amdgpu: adjust drm_firmware_drivers_only() handling")
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/include/amd_shared.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/include/amd_shared.h b/drivers/gpu/drm/amd/include/amd_shared.h
-index 17945094a1383..ac2d3701e2bdc 100644
---- a/drivers/gpu/drm/amd/include/amd_shared.h
-+++ b/drivers/gpu/drm/amd/include/amd_shared.h
-@@ -89,6 +89,7 @@ enum amd_apu_flags {
- * @AMD_IP_BLOCK_TYPE_VPE: Video Processing Engine
- * @AMD_IP_BLOCK_TYPE_UMSCH_MM: User Mode Scheduler for Multimedia
- * @AMD_IP_BLOCK_TYPE_ISP: Image Signal Processor
-+* @AMD_IP_BLOCK_TYPE_RAS: Reliability, Availability, Serviceability
- * @AMD_IP_BLOCK_TYPE_NUM: Total number of IP block types
- */
- enum amd_ip_block_type {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 39387da8586b4..83567ade84298 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -3172,7 +3172,6 @@ static int __init amdgpu_init(void)
+ 	if (r)
+ 		goto error_fence;
+ 
+-	DRM_INFO("amdgpu kernel modesetting enabled.\n");
+ 	amdgpu_register_atpx_handler();
+ 	amdgpu_acpi_detect();
+ 
 -- 
 2.51.0
 
