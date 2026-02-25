@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FDF24A05D;
-	Wed, 25 Feb 2026 01:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CAB1FE45D;
+	Wed, 25 Feb 2026 01:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983436; cv=none; b=JDuFnpp9XLniYF0kIF36y/OURS83CMt3bnXNClQVXG4eaD7KMOfqUzdNBs2+YU3oVocHQwLlTVUfHnBVp7ZIPP9H3khW07VcVTm7DYdU/l3ASba3pIfC6uHByQxNRpvEsgDymIyxH9vV5nLKZsme4oWIFHSxLo8QBH9x6Zc9DSs=
+	t=1771983437; cv=none; b=WhIhjQ3nUazMN4LPfRgDUUGfmKqs3NO2sseSAOFP1tjP4CJ+DLGgK1ew9JW6CADJIw2FzLrYiK0pM6kNw+8tHXkKVnY2nNvZRTOPNXh7q0nEJHSz7/hdZW0Ii7OlV9cziMcXTLHXN4RvvWpvLYQTDJABcdE65/87MhFTgLVlHf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983436; c=relaxed/simple;
-	bh=nUTwuyXyRmJQcNAQ5v8PhLEVXsbqtUu2lLGt0/kvUzs=;
+	s=arc-20240116; t=1771983437; c=relaxed/simple;
+	bh=ntfBFtC09jTVRwhWK+99CZzS/CKTg4CnwlFBouMQEtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C09BB2XEZfxKFV6ONSX2Xzd/F1UrHCQgJ653sR3TTMnjSf3lMRNJUb/WMtkE9z9Mov+lHBk7ecufkE3Uvdtyzj+EQ9JJ+YyMZCbMlHwoOv/6qoedj9ayTqFT3EmnzylsO13KwVqGqe0NU8sq4JOLeNoGjovhxCxHNN0T5pW/8io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMWIFott; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvfWGlary34YP1+RU5FSOpJliu6zJUqM0G+3hzdc8d+hdh7TdD0dny3STPYgxyQyoHR/DB9iv4HHuDMMDFQDXaUcNMdWk1RD2KPcbB5Am9y3Cepx0GSJRWktysWbx9nKLCQLR0HoZqN9XnP08v3h0QZbzqmvQjJMUy5GyHl5wwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAPA7wu1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMWIFott"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20E6C116D0;
-	Wed, 25 Feb 2026 01:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAPA7wu1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CB1C116D0;
+	Wed, 25 Feb 2026 01:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983436;
-	bh=nUTwuyXyRmJQcNAQ5v8PhLEVXsbqtUu2lLGt0/kvUzs=;
+	s=korg; t=1771983437;
+	bh=ntfBFtC09jTVRwhWK+99CZzS/CKTg4CnwlFBouMQEtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMWIFottv18VE0BEU625odIChc8WbITGZtbMlQiXDa4nSrfNNLTl0giEXpvRdYYuH
-	 z5UNgYtLvE+CXFG9Y0gb6dqsOC8L50keDSBl8eCzf8+/FnT5/9jSjhjYa9DcpMZFvU
-	 xava2AnqYNygcj+SWKNjn/3PgMMBLXbETpKPhdeE=
+	b=oAPA7wu1S3TY6+MhiH5evACRQgPoxUnASFGcgQxsMb7imhTxWC7Kbt/45lq9Gn18g
+	 0AZDNsRVq58o5nrxfDxhFyJCJ63GSzDIstOx+9T4oAAxA9jgZ8oKeyIwXc1t0ZecTH
+	 R+aD75pz1hOm6ZNYxtGnK1KlMDuBbVJpk7ii5qfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sjoerd Simons <sjoerd@collabora.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Laura Nao <laura.nao@collabora.com>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 554/781] clk: mediatek: Drop __initconst from gates
-Date: Tue, 24 Feb 2026 17:21:03 -0800
-Message-ID: <20260225012413.390138978@linuxfoundation.org>
+Subject: [PATCH 6.19 555/781] clk: mediatek: Add mfg_eb as parent to mt8196 mfgpll clocks
+Date: Tue, 24 Feb 2026 17:21:04 -0800
+Message-ID: <20260225012413.414002574@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,70 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sjoerd Simons <sjoerd@collabora.com>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit 871afb43e41ad4e8246438de495a939cd0f8113c ]
+[ Upstream commit 19024c9980c331908de0680283d572b80308654e ]
 
-Since commit 8ceff24a754a ("clk: mediatek: clk-gate: Refactor
-mtk_clk_register_gate to use mtk_gate struct") the mtk_gate structs
-are no longer just used for initialization/registration, but also at
-runtime. So drop __initconst annotations.
+All the MFGPLL require MFG_EB to be on for any operation on them, and
+they only tick when MFG_EB is on as well, therefore making this a
+parent-child relationship.
 
-Fixes: 8ceff24a754a ("clk: mediatek: clk-gate: Refactor mtk_clk_register_gate to use mtk_gate struct")
-Signed-off-by: Sjoerd Simons <sjoerd@collabora.com>
+This dependency wasn't clear during the initial upstreaming of these
+clock controllers, as it only made itself known when I could observe
+the effects of the clock by bringing up a different piece of hardware.
+
+Add a new PLL_PARENT_EN flag to mediatek's clk-pll.h, and check for it
+when initialising the pll to then translate it into the actual
+CLK_OPS_PARENT_ENABLE flag.
+
+Then add the mfg_eb parent to the mfgpll clocks, and set the new
+PLL_PARENT_EN flag.
+
+Fixes: 03dc02f8c7dc ("clk: mediatek: Add MT8196 mfg clock support")
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Laura Nao <laura.nao@collabora.com>
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt7981-eth.c | 6 +++---
- drivers/clk/mediatek/clk-mt8516.c     | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/mediatek/clk-mt8196-mfg.c | 13 +++++++------
+ drivers/clk/mediatek/clk-pll.c        |  3 +++
+ drivers/clk/mediatek/clk-pll.h        |  1 +
+ 3 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt7981-eth.c b/drivers/clk/mediatek/clk-mt7981-eth.c
-index 906aec9ddff54..0655ebb6c561f 100644
---- a/drivers/clk/mediatek/clk-mt7981-eth.c
-+++ b/drivers/clk/mediatek/clk-mt7981-eth.c
-@@ -31,7 +31,7 @@ static const struct mtk_gate_regs sgmii0_cg_regs = {
- 		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
+diff --git a/drivers/clk/mediatek/clk-mt8196-mfg.c b/drivers/clk/mediatek/clk-mt8196-mfg.c
+index ae1eb9de79ae2..f40795b47ff1f 100644
+--- a/drivers/clk/mediatek/clk-mt8196-mfg.c
++++ b/drivers/clk/mediatek/clk-mt8196-mfg.c
+@@ -58,24 +58,25 @@
+ 		.pcw_shift = _pcw_shift,			\
+ 		.pcwbits = _pcwbits,				\
+ 		.pcwibits = MT8196_INTEGER_BITS,		\
++		.parent_name = "mfg_eb",			\
  	}
  
--static const struct mtk_gate sgmii0_clks[] __initconst = {
-+static const struct mtk_gate sgmii0_clks[] = {
- 	GATE_SGMII0(CLK_SGM0_TX_EN, "sgm0_tx_en", "usb_tx250m", 2),
- 	GATE_SGMII0(CLK_SGM0_RX_EN, "sgm0_rx_en", "usb_eq_rx250m", 3),
- 	GATE_SGMII0(CLK_SGM0_CK0_EN, "sgm0_ck0_en", "usb_ln0", 4),
-@@ -53,7 +53,7 @@ static const struct mtk_gate_regs sgmii1_cg_regs = {
- 		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
- 	}
+ static const struct mtk_pll_data mfg_ao_plls[] = {
+-	PLL(CLK_MFG_AO_MFGPLL, "mfgpll", MFGPLL_CON0, MFGPLL_CON0, 0, 0, 0,
+-	    BIT(0), MFGPLL_CON1, 24, 0, 0, 0,
++	PLL(CLK_MFG_AO_MFGPLL, "mfgpll", MFGPLL_CON0, MFGPLL_CON0, 0, 0,
++	    PLL_PARENT_EN, BIT(0), MFGPLL_CON1, 24, 0, 0, 0,
+ 	    MFGPLL_CON1, 0, 22),
+ };
  
--static const struct mtk_gate sgmii1_clks[] __initconst = {
-+static const struct mtk_gate sgmii1_clks[] = {
- 	GATE_SGMII1(CLK_SGM1_TX_EN, "sgm1_tx_en", "usb_tx250m", 2),
- 	GATE_SGMII1(CLK_SGM1_RX_EN, "sgm1_rx_en", "usb_eq_rx250m", 3),
- 	GATE_SGMII1(CLK_SGM1_CK1_EN, "sgm1_ck1_en", "usb_ln0", 4),
-@@ -75,7 +75,7 @@ static const struct mtk_gate_regs eth_cg_regs = {
- 		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
- 	}
+ static const struct mtk_pll_data mfgsc0_ao_plls[] = {
+ 	PLL(CLK_MFGSC0_AO_MFGPLL_SC0, "mfgpll-sc0", MFGPLL_SC0_CON0,
+-	    MFGPLL_SC0_CON0, 0, 0, 0, BIT(0), MFGPLL_SC0_CON1, 24, 0, 0, 0,
+-	    MFGPLL_SC0_CON1, 0, 22),
++	    MFGPLL_SC0_CON0, 0, 0, PLL_PARENT_EN, BIT(0), MFGPLL_SC0_CON1, 24,
++	    0, 0, 0, MFGPLL_SC0_CON1, 0, 22),
+ };
  
--static const struct mtk_gate eth_clks[] __initconst = {
-+static const struct mtk_gate eth_clks[] = {
- 	GATE_ETH(CLK_ETH_FE_EN, "eth_fe_en", "netsys_2x", 6),
- 	GATE_ETH(CLK_ETH_GP2_EN, "eth_gp2_en", "sgm_325m", 7),
- 	GATE_ETH(CLK_ETH_GP1_EN, "eth_gp1_en", "sgm_325m", 8),
-diff --git a/drivers/clk/mediatek/clk-mt8516.c b/drivers/clk/mediatek/clk-mt8516.c
-index 21eb052b0a539..342a59019fea9 100644
---- a/drivers/clk/mediatek/clk-mt8516.c
-+++ b/drivers/clk/mediatek/clk-mt8516.c
-@@ -544,7 +544,7 @@ static const struct mtk_gate_regs top5_cg_regs = {
- #define GATE_TOP5(_id, _name, _parent, _shift)				\
- 	GATE_MTK(_id, _name, _parent, &top5_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
+ static const struct mtk_pll_data mfgsc1_ao_plls[] = {
+ 	PLL(CLK_MFGSC1_AO_MFGPLL_SC1, "mfgpll-sc1", MFGPLL_SC1_CON0,
+-	    MFGPLL_SC1_CON0, 0, 0, 0, BIT(0), MFGPLL_SC1_CON1, 24, 0, 0, 0,
+-	    MFGPLL_SC1_CON1, 0, 22),
++	    MFGPLL_SC1_CON0, 0, 0, PLL_PARENT_EN, BIT(0), MFGPLL_SC1_CON1, 24,
++	    0, 0, 0, MFGPLL_SC1_CON1, 0, 22),
+ };
  
--static const struct mtk_gate top_clks[] __initconst = {
-+static const struct mtk_gate top_clks[] = {
- 	/* TOP1 */
- 	GATE_TOP1(CLK_TOP_THEM, "them", "ahb_infra_sel", 1),
- 	GATE_TOP1(CLK_TOP_APDMA, "apdma", "ahb_infra_sel", 2),
+ static const struct of_device_id of_match_clk_mt8196_mfg[] = {
+diff --git a/drivers/clk/mediatek/clk-pll.c b/drivers/clk/mediatek/clk-pll.c
+index cd2b6ce551c6b..de3eb02670554 100644
+--- a/drivers/clk/mediatek/clk-pll.c
++++ b/drivers/clk/mediatek/clk-pll.c
+@@ -358,6 +358,9 @@ struct clk_hw *mtk_clk_register_pll_ops(struct mtk_clk_pll *pll,
+ 
+ 	init.name = data->name;
+ 	init.flags = (data->flags & PLL_AO) ? CLK_IS_CRITICAL : 0;
++	if (data->flags & PLL_PARENT_EN)
++		init.flags |= CLK_OPS_PARENT_ENABLE;
++
+ 	init.ops = pll_ops;
+ 	if (data->parent_name)
+ 		init.parent_names = &data->parent_name;
+diff --git a/drivers/clk/mediatek/clk-pll.h b/drivers/clk/mediatek/clk-pll.h
+index d71c150ce83e4..de5a8fb7cbcfe 100644
+--- a/drivers/clk/mediatek/clk-pll.h
++++ b/drivers/clk/mediatek/clk-pll.h
+@@ -21,6 +21,7 @@ struct mtk_pll_div_table {
+ 
+ #define HAVE_RST_BAR	BIT(0)
+ #define PLL_AO		BIT(1)
++#define PLL_PARENT_EN	BIT(2)
+ #define POSTDIV_MASK	GENMASK(2, 0)
+ 
+ struct mtk_pll_data {
 -- 
 2.51.0
 
