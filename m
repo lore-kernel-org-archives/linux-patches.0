@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E283279DC2;
-	Wed, 25 Feb 2026 01:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6755127F73A;
+	Wed, 25 Feb 2026 01:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983765; cv=none; b=eOV3/9U381po73/YRl5TzQ0mx31CNCxU6rDmNtxSywR9OJzOslsIPa5VYbIresSZN3rvlUcG1IL9AHA9zj3P3U+J69wgaCazxHOnT55uMnVNjJ6PPZsjP9r0K9dAgXpG+Kx4HdQMymZ5gCrR/eaZAoRaRGEqrIbpYAv9AtX+cVI=
+	t=1771983766; cv=none; b=ux+gHIubX5rlCGahBpz7+IR67mBcuxGGvFaXWKyF9K9V9AP8LEbbOkI8xbxLTUJsUFQcF2bI+XTLvD6wTZL9CgeMPtJWw13ZXc8/hBYUJR06HsiODDxs25nwxpakL7lVuFnZREDvv8GKyMkqR31Xz20xQdaKuxqOl/DpKRLcx8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983765; c=relaxed/simple;
-	bh=D8sP9qLx6uCKeCdmTtE2vTi4kUbVg1/3+JM5pEOkaI8=;
+	s=arc-20240116; t=1771983766; c=relaxed/simple;
+	bh=sDpGstOQwx7ypF31LxC5rPu7ToCKDUVSkj89mczTOxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qqhQrUoK6OmCvdaWl0g6jEez36yb48iQnFrWd6u4kZNwtWfZGkmV2UUY5mYjRJZCE4ceV6WUC7/VCUAq0/G/RbwkCxLfAuJXAce1imB3bwsoXS+IC3ERgtz2i0oyOo+BTgQBE5kjYLKmnxDHLC+1YEhlJdsjxiWyfK4tHlIQz8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpC/sq+n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dOxonSGW6NVbZKpbVQRs+04Wu3T6t3HWyuN9QxM+9jzSKRQx+M72EuDsHS5gwvOPi8ulbH8LM8fVe69lErtIE3SWo/VQpWt+ZzaHD0EA6AMHwGV1KOc63aiKJXDCngk9Wn5SIv85OyUF9reTETZyOh3olqr3n6juBr4t3OUPc+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNOQ5DTr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpC/sq+n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAE3C116D0;
-	Wed, 25 Feb 2026 01:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNOQ5DTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC01C116D0;
+	Wed, 25 Feb 2026 01:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983765;
-	bh=D8sP9qLx6uCKeCdmTtE2vTi4kUbVg1/3+JM5pEOkaI8=;
+	s=korg; t=1771983766;
+	bh=sDpGstOQwx7ypF31LxC5rPu7ToCKDUVSkj89mczTOxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpC/sq+nfG2Abg74Yx4EI9mEi5ySAb/YZTH9ix1aRn1UAj1m0sCYF9GGiwIOxd8IJ
-	 1NR2Yqd++KTykPT8ZvgsI1EXWR557OI4ipd4XR351vtGHCLo/kF1FxVx9Dj5+VkhBE
-	 4DCA7ksGbwLpcRnGji5veH3M1XnDO0dj99GkAyhA=
+	b=UNOQ5DTr6b/m/d8II2fkKBaPbwYV6bc2mRbSDCAMRMEWJfHBikA88T/hEruiSLJPr
+	 ZvuH4iX7Kov9UJvEKnQ9+e/hwOH3ZxekaMWQRxkCvdnojGTQlclq38zIYa1VSeO5p3
+	 KZNmkQ5foB8MMPKGysfc2TAmQfd4MlvpUGSS/THc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
+	Leo Yan <leo.yan@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 057/641] arm64/gcs: Fix error handling in arch_set_shadow_stack_status()
-Date: Tue, 24 Feb 2026 17:16:23 -0800
-Message-ID: <20260225012350.424476836@linuxfoundation.org>
+Subject: [PATCH 6.18 058/641] perf: arm_spe: Properly set hw.state on failures
+Date: Tue, 24 Feb 2026 17:16:24 -0800
+Message-ID: <20260225012350.454059668@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,43 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 53c998527ffa60f9deda8974a11ad39790684159 ]
+[ Upstream commit 283182c1c239f6873d1a50e9e710c1a699f2256b ]
 
-alloc_gcs() returns an error-encoded pointer on failure, which comes
-from do_mmap(), not NULL.
+When arm_spe_pmu_next_off() fails to calculate a valid limit, it returns
+zero to indicate that tracing should not start.  However, the caller
+arm_spe_perf_aux_output_begin() does not propagate this failure by
+updating hwc->state, cause the error to be silently ignored by upper
+layers.
 
-The current NULL check fails to detect errors, which could lead to using
-an invalid GCS address.
+Because hwc->state remains zero after a failure, arm_spe_pmu_start()
+continues to programs filter registers unnecessarily.  The driver
+still reports success to the perf core, so the core assumes the SPE
+event was enabled and proceeds to enable other events.  This breaks
+event group semantics: SPE is already stopped while other events in the
+same group are enabled.
 
-Use IS_ERR_VALUE() to properly detect errors, consistent with the
-check in gcs_alloc_thread_stack().
+Fix this by updating arm_spe_perf_aux_output_begin() to return a status
+code indicating success (0) or failure (-EIO).  Both the interrupt
+handler and arm_spe_pmu_start() check the return value and call
+arm_spe_pmu_stop() to set PERF_HES_STOPPED in hwc->state.
 
-Fixes: b57180c75c7e ("arm64/gcs: Implement shadow stack prctl() interface")
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
+In the interrupt handler, the period (e.g., period_left) needs to be
+updated, so PERF_EF_UPDATE is passed to arm_spe_pmu_stop().  When the
+error occurs during event start, the trace unit is not yet enabled, so
+a flag '0' is used to drain buffer and update state only.
+
+Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/gcs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/perf/arm_spe_pmu.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/mm/gcs.c b/arch/arm64/mm/gcs.c
-index 6e93f78de79b1..04a23a497f205 100644
---- a/arch/arm64/mm/gcs.c
-+++ b/arch/arm64/mm/gcs.c
-@@ -199,8 +199,8 @@ int arch_set_shadow_stack_status(struct task_struct *task, unsigned long arg)
+diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
+index fa50645feddad..e4e4e63c64c42 100644
+--- a/drivers/perf/arm_spe_pmu.c
++++ b/drivers/perf/arm_spe_pmu.c
+@@ -105,6 +105,8 @@ struct arm_spe_pmu {
+ /* Keep track of our dynamic hotplug state */
+ static enum cpuhp_state arm_spe_pmu_online;
  
- 		size = gcs_size(0);
- 		gcs = alloc_gcs(0, size);
--		if (!gcs)
--			return -ENOMEM;
-+		if (IS_ERR_VALUE(gcs))
-+			return gcs;
++static void arm_spe_pmu_stop(struct perf_event *event, int flags);
++
+ enum arm_spe_pmu_buf_fault_action {
+ 	SPE_PMU_BUF_FAULT_ACT_SPURIOUS,
+ 	SPE_PMU_BUF_FAULT_ACT_FATAL,
+@@ -582,8 +584,8 @@ static u64 arm_spe_pmu_next_off(struct perf_output_handle *handle)
+ 	return limit;
+ }
  
- 		task->thread.gcspr_el0 = gcs + size - sizeof(u64);
- 		task->thread.gcs_base = gcs;
+-static void arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
+-					  struct perf_event *event)
++static int arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
++					 struct perf_event *event)
+ {
+ 	u64 base, limit;
+ 	struct arm_spe_pmu_buf *buf;
+@@ -597,7 +599,6 @@ static void arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
+ 	/* Start a new aux session */
+ 	buf = perf_aux_output_begin(handle, event);
+ 	if (!buf) {
+-		event->hw.state |= PERF_HES_STOPPED;
+ 		/*
+ 		 * We still need to clear the limit pointer, since the
+ 		 * profiler might only be disabled by virtue of a fault.
+@@ -617,6 +618,7 @@ static void arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
+ 
+ out_write_limit:
+ 	write_sysreg_s(limit, SYS_PMBLIMITR_EL1);
++	return (limit & PMBLIMITR_EL1_E) ? 0 : -EIO;
+ }
+ 
+ static void arm_spe_perf_aux_output_end(struct perf_output_handle *handle)
+@@ -756,7 +758,10 @@ static irqreturn_t arm_spe_pmu_irq_handler(int irq, void *dev)
+ 		 * when we get to it.
+ 		 */
+ 		if (!(handle->aux_flags & PERF_AUX_FLAG_TRUNCATED)) {
+-			arm_spe_perf_aux_output_begin(handle, event);
++			if (arm_spe_perf_aux_output_begin(handle, event)) {
++				arm_spe_pmu_stop(event, PERF_EF_UPDATE);
++				break;
++			}
+ 			isb();
+ 		}
+ 		break;
+@@ -851,9 +856,10 @@ static void arm_spe_pmu_start(struct perf_event *event, int flags)
+ 	struct perf_output_handle *handle = this_cpu_ptr(spe_pmu->handle);
+ 
+ 	hwc->state = 0;
+-	arm_spe_perf_aux_output_begin(handle, event);
+-	if (hwc->state)
++	if (arm_spe_perf_aux_output_begin(handle, event)) {
++		arm_spe_pmu_stop(event, 0);
+ 		return;
++	}
+ 
+ 	reg = arm_spe_event_to_pmsfcr(event);
+ 	write_sysreg_s(reg, SYS_PMSFCR_EL1);
 -- 
 2.51.0
 
