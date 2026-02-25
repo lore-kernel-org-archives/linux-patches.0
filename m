@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB732494FE;
-	Wed, 25 Feb 2026 01:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F87C251795;
+	Wed, 25 Feb 2026 01:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982811; cv=none; b=Ci23bjSk3TkUtJep19Z4TyCBXoUUfg6WxBleikQZgWaoY1DLG14Dz8i1gL70MDQDbGnE/tnMlEO/tGRQ6ZeNAFI3JDP/4BCg2gj2kj0gGpQtOl+IQSBTwVeyXMGkctDLkE/Tzpezl/9O2QK0Q4928u/SrV6Q/KC/Nm6OSmuHBDM=
+	t=1771982812; cv=none; b=aQ0C12y8ZNMcW97VUladGxC6/g5JOlGGwFCfCtFea1ZHr7r/K/I76PZ43jktreDMRcI1eK5JuWbJp0YqMRsbHzgLMOi70z6qJ6H1Z6iwGY3mH7pje4rbpo3EsZN4YpiWS9zg4ERGbrVVcQ3YPgnkvczY43VxPIwjV/LpS71D8p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982811; c=relaxed/simple;
-	bh=3veGEpr9IWV/uQRVKmwYZGzwiiArIpJAgnsOB4LUuig=;
+	s=arc-20240116; t=1771982812; c=relaxed/simple;
+	bh=5VFJjOYyBdKuxGRUTvHYUcv9oFCe2XjyuKj6jMkYo9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MagXy7wQsDPNac0/9VLlvTLVRIAb/tZaCw4DA9g2WNLIt20t9Vom/OiNnglTvq7bgIvYFkPHHI6QEeMXoC/eHwhiEFkFCTxZka/DpbBdAGTK8WWVTzbjYFVL2H099tcWoLgbCw4pflLrRwKGjna0iQ3rEHn8S651IkkvCncJGTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMbwLs2L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHdGNkHSQe7Cg30xKjzw6/SVl9O9oNrZEPfuDNHaGPLInn4mlvN2QKivTpTAXmttaKI2Ktbh/EoNtTF4DD8cs8MfQrYSEelsiTNRMBX/yDfDuVOfS/hmNoxEhhA+oyl0k447KUth5HGCFsR4WVdMxO10v3DhAqJdyj5aIsK0lPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byvc+Gqy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMbwLs2L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBEB5C116D0;
-	Wed, 25 Feb 2026 01:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byvc+Gqy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E14C116D0;
+	Wed, 25 Feb 2026 01:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982811;
-	bh=3veGEpr9IWV/uQRVKmwYZGzwiiArIpJAgnsOB4LUuig=;
+	s=korg; t=1771982812;
+	bh=5VFJjOYyBdKuxGRUTvHYUcv9oFCe2XjyuKj6jMkYo9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMbwLs2L2LGLlHiaEmMfbBYEukoOYLCZ0Qp31FSs3nLu/2vWjaOsvJ0N0cpX7yhS+
-	 g79OT+j65WlLzGEUpZiJTJyCnTVYXv/u5Sq1Asyidy01Ai9sIyBcWNgKHCkzOxxqBu
-	 SjjlsvbUjtgvrGyhXYP940CY58gQZSaDwMMKosXg=
+	b=byvc+Gqy6xipvbn09VPdgidG9DQTCZshWC2XDmh3oHVi9z76E3Lb0dXtMpqoTVUqD
+	 9k3IjzKuYbcjrR5kKNC3fGlXOl6AQBlO0rnqpBmv2zF3HwWK7xRzAK2obJ8Oiu4fzR
+	 LCs87uium9fCMI14ua0Yv99d+SzjjbtdK0usbt7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YunJe Shin <ioerts@kookmin.ac.kr>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.19 001/781] RDMA/siw: Fix potential NULL pointer dereference in header processing
-Date: Tue, 24 Feb 2026 17:11:50 -0800
-Message-ID: <20260225012359.735763472@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 010/781] device_cgroup: remove branch hint after code refactor
+Date: Tue, 24 Feb 2026 17:11:59 -0800
+Message-ID: <20260225012359.954820805@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,41 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YunJe Shin <yjshin0438@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 14ab3da122bd18920ad57428f6cf4fade8385142 upstream.
+[ Upstream commit 6784f274722559c0cdaaa418bc8b7b1d61c314f9 ]
 
-If siw_get_hdr() returns -EINVAL before set_rx_fpdu_context(),
-qp->rx_fpdu can be NULL. The error path in siw_tcp_rx_data()
-dereferences qp->rx_fpdu->more_ddp_segs without checking, which
-may lead to a NULL pointer deref. Only check more_ddp_segs when
-rx_fpdu is present.
+commit 4ef4ac360101 ("device_cgroup: avoid access to ->i_rdev in the
+common case in devcgroup_inode_permission()") reordered the checks in
+devcgroup_inode_permission() to check the inode mode before checking
+i_rdev, for better cache behavior.
 
-KASAN splat:
-[  101.384271] KASAN: null-ptr-deref in range [0x00000000000000c0-0x00000000000000c7]
-[  101.385869] RIP: 0010:siw_tcp_rx_data+0x13ad/0x1e50
+However, the likely() annotation on the i_rdev check was not updated
+to reflect the new code flow. Originally, when i_rdev was checked
+first, likely(!inode->i_rdev) made sense because most inodes were(?)
+regular files/directories, thus i_rdev == 0.
 
-Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
-Signed-off-by: YunJe Shin <ioerts@kookmin.ac.kr>
-Link: https://patch.msgid.link/20260204092546.489842-1-ioerts@kookmin.ac.kr
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+After the reorder, by the time we reach the i_rdev check, we have
+already confirmed the inode IS a block or character device. Block and
+character special files are precisely defined by having a device number
+(i_rdev), so !inode->i_rdev is now the rare edge case, not the common
+case.
+
+Branch profiling confirmed this is 100% mispredicted:
+
+  correct incorrect  %    Function                      File              Line
+  ------- ---------  -    --------                      ----              ----
+        0   2631904 100   devcgroup_inode_permission    device_cgroup.h   24
+
+Remove likely() to avoid giving the wrong hint to the CPU.
+
+Fixes: 4ef4ac360101 ("device_cgroup: avoid access to ->i_rdev in the common case in devcgroup_inode_permission()")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260107-likely_device-v1-1-0c55f83a7e47@debian.org
+Reviewed-by: Mateusz Guzik <mjguzik@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/device_cgroup.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -1435,7 +1435,8 @@ int siw_tcp_rx_data(read_descriptor_t *r
- 		}
- 		if (unlikely(rv != 0 && rv != -EAGAIN)) {
- 			if ((srx->state > SIW_GET_HDR ||
--			     qp->rx_fpdu->more_ddp_segs) && run_completion)
-+			     (qp->rx_fpdu && qp->rx_fpdu->more_ddp_segs)) &&
-+			    run_completion)
- 				siw_rdmap_complete(qp, rv);
+diff --git a/include/linux/device_cgroup.h b/include/linux/device_cgroup.h
+index 0864773a57e8f..822085bc2d202 100644
+--- a/include/linux/device_cgroup.h
++++ b/include/linux/device_cgroup.h
+@@ -21,7 +21,7 @@ static inline int devcgroup_inode_permission(struct inode *inode, int mask)
+ 	if (likely(!S_ISBLK(inode->i_mode) && !S_ISCHR(inode->i_mode)))
+ 		return 0;
  
- 			siw_dbg_qp(qp, "rx error %d, rx state %d\n", rv,
+-	if (likely(!inode->i_rdev))
++	if (!inode->i_rdev)
+ 		return 0;
+ 
+ 	if (S_ISBLK(inode->i_mode))
+-- 
+2.51.0
+
 
 
