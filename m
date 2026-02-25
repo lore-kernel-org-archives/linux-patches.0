@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988D01FE45D;
-	Wed, 25 Feb 2026 01:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801B11FE45D;
+	Wed, 25 Feb 2026 01:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983995; cv=none; b=A8y+DnU9CY46weyDuL40xIxqR+puuJwY6Go+Zbr5gcwbs4Nf5deolr2wqxTPhi5V9vQLYayGUK8Bx0LGd2mJK2RQnfxDp7jrTdDnZSbgXuY4l3wlorhxjSye5Db0Yx2gFxldWRhgtbACMl6s44WohIPw64Gh0Chwta+A8oPT4kY=
+	t=1771983996; cv=none; b=UoWL841rtdfdK9whLxzgpNqlxlo4YvgroGtbgQ3pW7Rsb/8EyhOVSedSd3LkGx5XFmVlW5OYk8j+nlt1WlS2+hUl/Am80bBh9rs7ORPmAfrKsS6SqrqwdWrBlxA49qrUSqk/mg6Z7jNTaDVzSHoQv3oenmWaPDFiidF/GOslG+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983995; c=relaxed/simple;
-	bh=fcuaRTs1OLtVSskA2/LDGrvV68Cst//mp8FeNu0E9Cs=;
+	s=arc-20240116; t=1771983996; c=relaxed/simple;
+	bh=Veu8Ppl5/aa19wLyEVBRlVVLRvdVscextJnh1/Xr77s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c4A3Unfl6WY8IsG8ft7DKBOYkwSaFa5f6fxVbo90+dHqMZw4GlI7EQfWDNleuKxFh4RdY6PvHHprvXTnWdEgUg53KFeQcQSUbtfgc/bnzbiGnrvb+jyMdASAChf2cRWLpoC2WgqbVnz3HXETnmy+SL3Fx1ZEBLF6UKHPb5J69y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6iF3JB/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GhcZ2/pwdlGOHdYxYkjwo6v4R+Yk/3994LPWJ0BjtC+m3EtgO1wfBDzQFOREI95Lptvn3xZtYX3+798w0ST5DLwuGUAkVE6AHpDQrkegJ7vwz1AtpYKb9PpM4YkUtsQZH/p9hqwtTL0SRMSz+I6m87si7P2RPedimb2AOABsUpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDILo/Ah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6iF3JB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26763C116D0;
-	Wed, 25 Feb 2026 01:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDILo/Ah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5F7C19424;
+	Wed, 25 Feb 2026 01:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983995;
-	bh=fcuaRTs1OLtVSskA2/LDGrvV68Cst//mp8FeNu0E9Cs=;
+	s=korg; t=1771983996;
+	bh=Veu8Ppl5/aa19wLyEVBRlVVLRvdVscextJnh1/Xr77s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6iF3JB/mRkDbOeA8irQ5FItlbPABfpL3q7I+wniHUlVy3YYSz4vkrhP2l1psmzio
-	 nWcZPpAFMxDGH1NEKiCEEwenodVtLJeb5nMrv3fuE5snOmUSecf9KefVx0PqttlJmQ
-	 e8tTfhc74q7zkI6VStBqkLsfTB3PtuTfOL4j75ds=
+	b=LDILo/Ah956X7ZDorxAb/wBMy44SxBoNTztBfuSXdWpGKLzR+PcipEuJEO9VezxyY
+	 lFJH6q4PaGlK6EVhR6QeZaYfWQNqHuiJXQWQzH4NmJZOzToe6w8lIz4HYYn7JoWGoJ
+	 pEYaoM4b8KjMe5QZilwfx3le2g+YweSpnluZbPvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 249/641] wifi: ath9k: add OF dependency to AHB
-Date: Tue, 24 Feb 2026 17:19:35 -0800
-Message-ID: <20260225012354.885923156@linuxfoundation.org>
+Subject: [PATCH 6.18 250/641] wifi: ath12k: do WoW offloads only on primary link
+Date: Tue, 24 Feb 2026 17:19:36 -0800
+Message-ID: <20260225012354.907837201@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -46,42 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 125e7b31f041cc0a4ede1e42bef69915f0a63a35 ]
+[ Upstream commit e62102ac9b773bdb08475aa9ca24dea61ae98708 ]
 
-The conversion to OF missed adding a Kconfig dependency.
+In case of multi-link connection, WCN7850 firmware crashes due to WoW
+offloads enabled on both primary and secondary links.
 
-Fixes: 2fa490c0d759 ("wifi: ath9k: ahb: replace id_table with of")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20250802000432.3079550-1-rosenp@gmail.com
+Change to do it only on primary link to fix it.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00284-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
+
+Fixes: 32f7b19668bd ("wifi: ath12k: support MLO as well if single_chip_mlo_support flag is set")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251103-ath12-primary-link-wow-v1-1-3cf523dc09f0@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/wow.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath9k/Kconfig b/drivers/net/wireless/ath/ath9k/Kconfig
-index 0c47be06c153b..47d570a5ca6a1 100644
---- a/drivers/net/wireless/ath/ath9k/Kconfig
-+++ b/drivers/net/wireless/ath/ath9k/Kconfig
-@@ -47,7 +47,7 @@ config ATH9K_PCI
+diff --git a/drivers/net/wireless/ath/ath12k/wow.c b/drivers/net/wireless/ath/ath12k/wow.c
+index e8481626f1940..c78aa95d49791 100644
+--- a/drivers/net/wireless/ath/ath12k/wow.c
++++ b/drivers/net/wireless/ath/ath12k/wow.c
+@@ -135,6 +135,9 @@ static int ath12k_wow_cleanup(struct ath12k *ar)
+ 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
  
- config ATH9K_AHB
- 	bool "Atheros ath9k AHB bus support"
--	depends on ATH9K
-+	depends on ATH9K && OF
- 	default n
- 	help
- 	  This option enables the AHB bus support in ath9k.
+ 	list_for_each_entry(arvif, &ar->arvifs, list) {
++		if (arvif != &arvif->ahvif->deflink)
++			continue;
++
+ 		ret = ath12k_wow_vif_cleanup(arvif);
+ 		if (ret) {
+ 			ath12k_warn(ar->ab, "failed to clean wow wakeups on vdev %i: %d\n",
+@@ -479,8 +482,12 @@ static int ath12k_wow_set_wakeups(struct ath12k *ar,
+ 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
+ 
+ 	list_for_each_entry(arvif, &ar->arvifs, list) {
++		if (arvif != &arvif->ahvif->deflink)
++			continue;
++
+ 		if (ath12k_wow_is_p2p_vdev(arvif->ahvif))
+ 			continue;
++
+ 		ret = ath12k_wow_vif_set_wakeups(arvif, wowlan);
+ 		if (ret) {
+ 			ath12k_warn(ar->ab, "failed to set wow wakeups on vdev %i: %d\n",
+@@ -538,6 +545,9 @@ static int ath12k_wow_nlo_cleanup(struct ath12k *ar)
+ 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
+ 
+ 	list_for_each_entry(arvif, &ar->arvifs, list) {
++		if (arvif != &arvif->ahvif->deflink)
++			continue;
++
+ 		if (ath12k_wow_is_p2p_vdev(arvif->ahvif))
+ 			continue;
+ 
+@@ -745,6 +755,9 @@ static int ath12k_wow_arp_ns_offload(struct ath12k *ar, bool enable)
+ 	list_for_each_entry(arvif, &ar->arvifs, list) {
+ 		ahvif = arvif->ahvif;
+ 
++		if (arvif != &ahvif->deflink)
++			continue;
++
+ 		if (ahvif->vdev_type != WMI_VDEV_TYPE_STA)
+ 			continue;
+ 
+@@ -776,6 +789,9 @@ static int ath12k_gtk_rekey_offload(struct ath12k *ar, bool enable)
+ 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
+ 
+ 	list_for_each_entry(arvif, &ar->arvifs, list) {
++		if (arvif != &arvif->ahvif->deflink)
++			continue;
++
+ 		if (arvif->ahvif->vdev_type != WMI_VDEV_TYPE_STA ||
+ 		    !arvif->is_up ||
+ 		    !arvif->rekey_data.enable_offload)
 -- 
 2.51.0
 
