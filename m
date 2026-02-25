@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E2618B0A;
-	Wed, 25 Feb 2026 01:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8D418B0A;
+	Wed, 25 Feb 2026 01:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983255; cv=none; b=AZ3/VCGnU/fKMYW9b4IitPai/5ZOYWBORylyEKe0SC4ef2uxsCdJLiX35Tk6ptJMaNbHWuZgj+I08O+1z+waDz4ebOhAnPa6nA/JrrplxyOLBxdkrj/RKSVn0MFF7h2rVKebEvQEImnDAHDOT5EJy3mEf/HJcbxrMb/ObJwPtl4=
+	t=1771983256; cv=none; b=mXvDxrydI73Omjq9YGx9KuC4cmLqqW3PLuOJ1Ibr6DzvAbu0Rsz0rf3Wu9Oce0iyNbMTDuMZgK1j20iomLl7qVocbRKXrVFLX+Sc9lMZUYfUgCIhmz45QZcbnoHkaqj7w7GuEOt7M+m+8kPCTEsn6pPd5lY+InWJ1RhaV5FHyc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983255; c=relaxed/simple;
-	bh=Fo6pmeA5rCJXyG8lFijFY+p9H3Pe/VE1uS/Xwu52qPI=;
+	s=arc-20240116; t=1771983256; c=relaxed/simple;
+	bh=TSqL8/e/l3vQoDKC7q2TLODonjE2NudyX6AG3Jqu+zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=InohxbkZjvcrVINSdlJ+d3xz/STFOQXEb1OZcMJcUcEa7+s4DKiSbWLft/MBCYZtO5r80adZ8+YzlDRTXx35Wt6jB5HdtU8K4darnP5b0Z1vxNv6iZ5j/e7RLArARMb78LJ28r1SLfrzpwbjnLIJreXQBfO4P6Ny8CZAG06u1Ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W16JqE5J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YgsVahqqoeVx0njDQWcf7uE41ceIKZJqDcNY+MlqCQKN8d1H/4b6Q8aELg56dhYbw/CR/NGcAjodfsM7jnYdqCL2YFkIy0WWdxF0UOgiKraxBOBE0N4s2KoyK+CHLwg3IH+Q65IzKXmEKDvu0bQdkF3TL0gJ/DASgfSSL/6XxQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSupuQ4e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W16JqE5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13725C116D0;
-	Wed, 25 Feb 2026 01:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSupuQ4e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C30FC116D0;
+	Wed, 25 Feb 2026 01:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983255;
-	bh=Fo6pmeA5rCJXyG8lFijFY+p9H3Pe/VE1uS/Xwu52qPI=;
+	s=korg; t=1771983256;
+	bh=TSqL8/e/l3vQoDKC7q2TLODonjE2NudyX6AG3Jqu+zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W16JqE5JVg+dmjmZIb4HEv23c1xaijfEOFDB41w3gEm6eMbMC9QdLajPclxXldFM3
-	 5WLnnjLHDPMJVlPMFcMNXFICwpuzniGsLDJOjxA+Qs2QnyGNblCG/OoIsqBsBkiudU
-	 a2DsHiHJr21+0IsD5MkC0Kp1N3kpEKXkRWgdWWwo=
+	b=dSupuQ4eyYOxmKoGvK345y6NhvDDn/OdNo5HHVjyZsUmUdjzx4CJS2pNvG64EOPdC
+	 6To5NRRDCjRq6tdRJChe09auOZ4VoGAYjz1XhBpKs/DrdK78iiDbyrYaajuF8Wb1PN
+	 qZ4rn3NqviEV+rKQBekImTjWDR5ozGxplSk53ioU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Maluka <dmaluka@chromium.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 354/781] iommu/vt-d: Flush cache for PASID table before using it
-Date: Tue, 24 Feb 2026 17:17:43 -0800
-Message-ID: <20260225012408.369271282@linuxfoundation.org>
+Subject: [PATCH 6.19 345/781] netfilter: nf_tables: reset table validation state on abort
+Date: Tue, 24 Feb 2026 17:17:34 -0800
+Message-ID: <20260225012408.154779128@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,53 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmytro Maluka <dmaluka@chromium.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 22d169bdd2849fe6bd18c2643742e1c02be6451c ]
+[ Upstream commit 6f93616a7323d646d18db9c09f147e453b40fdd7 ]
 
-When writing the address of a freshly allocated zero-initialized PASID
-table to a PASID directory entry, do that after the CPU cache flush for
-this PASID table, not before it, to avoid the time window when this
-PASID table may be already used by non-coherent IOMMU hardware while
-its contents in RAM is still some random old data, not zero-initialized.
+If a transaction fails the final validation in the commit hook, the table
+validation state is changed to NFT_VALIDATE_DO and a replay of the batch is
+performed.  Every rule insert will then do a graph validation.
 
-Fixes: 194b3348bdbb ("iommu/vt-d: Fix PASID directory pointer coherency")
-Signed-off-by: Dmytro Maluka <dmaluka@chromium.org>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20251221123508.37495-1-dmaluka@chromium.org
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+This is much slower, but provides better error reporting to the user
+because we can point at the rule that introduces the validation issue.
+
+Without this reset the affected table(s) remain in full validation mode,
+i.e. on next transaction we start with slow-mode.
+
+This makes the next transaction after a failed incremental update very slow:
+
+ # time iptables-restore < /tmp/ruleset
+ real    0m0.496s [..]
+ # time iptables -A CALLEE -j CALLER
+ iptables v1.8.11 (nf_tables):  RULE_APPEND failed (Too many links): rule in chain CALLEE
+ real    0m0.022s [..]
+ # time iptables-restore < /tmp/ruleset
+ real    1m22.355s [..]
+
+After this patch, 2nd iptables-restore is back to ~0.5s.
+
+Fixes: 9a32e9850686 ("netfilter: nf_tables: don't write table validation state without mutex")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/netfilter/nf_tables_api.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 3e2255057079c..77b9b147ab50e 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -153,6 +153,9 @@ static struct pasid_entry *intel_pasid_get_entry(struct device *dev, u32 pasid)
- 		if (!entries)
- 			return NULL;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index be92750e2af3a..ec9e5e2a9f277 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -11536,6 +11536,13 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
+ 	ret = __nf_tables_abort(net, action);
+ 	nft_gc_seq_end(nft_net, gc_seq);
  
-+		if (!ecap_coherent(info->iommu->ecap))
-+			clflush_cache_range(entries, VTD_PAGE_SIZE);
++	if (action == NFNL_ABORT_NONE) {
++		struct nft_table *table;
 +
- 		/*
- 		 * The pasid directory table entry won't be freed after
- 		 * allocation. No worry about the race with free and
-@@ -165,10 +168,8 @@ static struct pasid_entry *intel_pasid_get_entry(struct device *dev, u32 pasid)
- 			iommu_free_pages(entries);
- 			goto retry;
- 		}
--		if (!ecap_coherent(info->iommu->ecap)) {
--			clflush_cache_range(entries, VTD_PAGE_SIZE);
-+		if (!ecap_coherent(info->iommu->ecap))
- 			clflush_cache_range(&dir[dir_index].val, sizeof(*dir));
--		}
- 	}
++		list_for_each_entry(table, &nft_net->tables, list)
++			table->validate_state = NFT_VALIDATE_SKIP;
++	}
++
+ 	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
  
- 	return &entries[index];
+ 	/* module autoload needs to happen after GC sequence update because it
 -- 
 2.51.0
 
