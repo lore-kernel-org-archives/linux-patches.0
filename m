@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4862C30E85D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE10A30E85D;
 	Wed, 25 Feb 2026 06:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002705; cv=none; b=I2VItDpzGJlQDrHhsqrBIR4Fe1ONxoA4uFgBaAjADGTNhagmGypBXIYjOwxjc7NlsAEWjHzFHqwHTnT3mIPrOqbudrj8spWFrmDfkB+dE4vqPij0BRAaI5hlFZhoNlGe0OELLLvF0F8e0MfB/FbdRc9+YiH5iZ9E++lrgmGVVQI=
+	t=1772002706; cv=none; b=p/H4/+C0qsUBLgV3tkuxMRcs7Omn6dBehwwEtY9XzFSjGp2yfHOC1gGzZxkQ5xvI+rcA3ngUvKN8QYsq0cc4PxNym/Ddi9jS8GipQK4o4Er7xd8KM61A0bee+655VAWjx+W44SlnBVhngYwi/22ghmQO4Q/0dDPb9ES5+jo8/24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002705; c=relaxed/simple;
-	bh=+13Ucbj4WeHDaMHJE0/v/p+oF7SWf+X1QunpZfE5Wr4=;
+	s=arc-20240116; t=1772002706; c=relaxed/simple;
+	bh=wGiwoiSQTlhu1geUa/BVOkOij7QNb6GGUf4mIl6tcGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPjDB0Zmd9EN8tubO5/pmOHTV07jBGD+07Ooggf3C8brow+UGI+JZq6gm9YCMZnw7lILc/VHSSoDzzMDWTeSJ9iICmD62ORuVJBFW0EMzFIxpaa8wAbyJ7vcoEqkl6O+Hpvwbgydn6DEy+v32YQaHVeEqMcixa3/1WiVPx5xQuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLfehNHe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IZd0HCDLKd8S1QzgmgqBCNaEPG0M/ESKXPSIYm4v1RYo2Q6BOWypxjz7og/wpWVqBtXcHOAe0IJNn6BeTqY754M6SyAm2/m+sNBNjYXwxWDFp+2UGZx8mvAkyxV2FhWlb+r+z0ZQ7hM0XomC4kFSWtlkdqPDbw6qAAFyDkjAzy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liR84OpR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLfehNHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225DCC19422;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liR84OpR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7EB1C116D0;
 	Wed, 25 Feb 2026 06:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002705;
-	bh=+13Ucbj4WeHDaMHJE0/v/p+oF7SWf+X1QunpZfE5Wr4=;
+	bh=wGiwoiSQTlhu1geUa/BVOkOij7QNb6GGUf4mIl6tcGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLfehNHe73PLRDeWhZvCFx8MGFI+ah3pDSG7j2kEceoxTz7ZxCc/VeeH9bf5ZnSDl
-	 E4QdBRoHP/HsjAW5ZiM6m3Hs8vRiQOgr/GeBRBFT90PU8NoNt//AEe3xCLwRFBuxda
-	 RD89aZofwimm7mtAnmWTH5v8XCP3OemhyVosl5uk=
+	b=liR84OpRrhUnKb25kDgeMw4uV9V+7SwC1p6HkpNEn3zhBFYPlM8z50nQ+llnA3AmR
+	 bsWVjTjRNdhD95/NBDHjyND92WpFVgIEP8U7iwmwKzP9IRzaIzfIM44rMfqMr9U5sj
+	 AytcugEfbeCL6QT9nfQMgw4014UXy3hKnsCh6ANU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jens Remus <jremus@linux.ibm.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 504/641] powercap: intel_rapl_tpmi: Remove FW_BUG from invalid version check
-Date: Tue, 24 Feb 2026 17:23:50 -0800
-Message-ID: <20260225012400.734635230@linuxfoundation.org>
+Subject: [PATCH 6.18 505/641] kbuild: Add objtool to top-level clean target
+Date: Tue, 24 Feb 2026 17:23:51 -0800
+Message-ID: <20260225012400.759747867@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,47 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit c7d54dafa042cf379859dba265fe5afef6fa8770 ]
+[ Upstream commit 68b4fe32d73789dea23e356f468de67c8367ef8f ]
 
-On partitioned systems, multiple TPMI instances may exist per package,
-but RAPL registers are only valid on one instance since RAPL has
-package-scope control. Other instances return invalid versions during
-domain parsing, which is expected behavior on such systems.
+Objtool is an integral part of the build, make sure it gets cleaned by
+"make clean" and "make mrproper".
 
-Currently this generates a firmware bug warning:
-
-  intel_rapl_tpmi: [Firmware Bug]: Invalid version
-
-Remove the FW_BUG tag, downgrade to pr_debug(), and update the message
-to clarify that invalid versions are expected on partitioned systems
-where only one instance can be valid.
-
-Fixes: 9eef7f9da928 ("powercap: intel_rapl: Introduce RAPL TPMI interface driver")
-Reported-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260211223401.1575776-1-sathyanarayanan.kuppuswamy@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 442f04c34a1a ("objtool: Add tool to perform compile-time stack metadata validation")
+Reported-by: Jens Remus <jremus@linux.ibm.com>
+Closes: https://lore.kernel.org/15f2af3b-be33-46fc-b972-6b8e7e0aa52e@linux.ibm.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Tested-by: Jens Remus <jremus@linux.ibm.com>
+Link: https://patch.msgid.link/968faf2ed30fa8b3519f79f01a1ecfe7929553e5.1770759919.git.jpoimboe@kernel.org
+[nathan: use Closes: instead of Link: per checkpatch.pl]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_tpmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile               | 11 ++++++++++-
+ tools/objtool/Makefile |  2 ++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/powercap/intel_rapl_tpmi.c b/drivers/powercap/intel_rapl_tpmi.c
-index 82201bf4685d4..34c0bd1edd61a 100644
---- a/drivers/powercap/intel_rapl_tpmi.c
-+++ b/drivers/powercap/intel_rapl_tpmi.c
-@@ -157,7 +157,7 @@ static int parse_one_domain(struct tpmi_rapl_package *trp, u32 offset)
- 	tpmi_domain_flags = tpmi_domain_header >> 32 & 0xffff;
+diff --git a/Makefile b/Makefile
+index c4b22ec262784..bc34a825aba80 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1440,6 +1440,15 @@ ifneq ($(wildcard $(resolve_btfids_O)),)
+ 	$(Q)$(MAKE) -sC $(srctree)/tools/bpf/resolve_btfids O=$(resolve_btfids_O) clean
+ endif
  
- 	if (tpmi_domain_version == TPMI_VERSION_INVALID) {
--		pr_warn(FW_BUG "Invalid version\n");
-+		pr_debug("Invalid version, other instances may be valid\n");
- 		return -ENODEV;
- 	}
++PHONY += objtool_clean
++
++objtool_O = $(abspath $(objtree))/tools/objtool
++
++objtool_clean:
++ifneq ($(wildcard $(objtool_O)),)
++	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) clean
++endif
++
+ tools/: FORCE
+ 	$(Q)mkdir -p $(objtree)/tools
+ 	$(Q)$(MAKE) O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/
+@@ -1603,7 +1612,7 @@ vmlinuxclean:
+ 	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/link-vmlinux.sh clean
+ 	$(Q)$(if $(ARCH_POSTLINK), $(MAKE) -f $(ARCH_POSTLINK) clean)
  
+-clean: archclean vmlinuxclean resolve_btfids_clean
++clean: archclean vmlinuxclean resolve_btfids_clean objtool_clean
+ 
+ # mrproper - Delete all generated files, including .config
+ #
+diff --git a/tools/objtool/Makefile b/tools/objtool/Makefile
+index 8c20361dd100e..99d3897e046c6 100644
+--- a/tools/objtool/Makefile
++++ b/tools/objtool/Makefile
+@@ -7,6 +7,8 @@ srctree := $(patsubst %/,%,$(dir $(CURDIR)))
+ srctree := $(patsubst %/,%,$(dir $(srctree)))
+ endif
+ 
++RM ?= rm -f
++
+ LIBSUBCMD_DIR = $(srctree)/tools/lib/subcmd/
+ ifneq ($(OUTPUT),)
+   LIBSUBCMD_OUTPUT = $(abspath $(OUTPUT))/libsubcmd
 -- 
 2.51.0
 
