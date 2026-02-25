@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C743115B8;
-	Wed, 25 Feb 2026 06:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E25530AD0C;
+	Wed, 25 Feb 2026 06:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002696; cv=none; b=P7qrsiTCidubgqeWSejkzZHI/btoZw37tEH8aPxAFlfUVXQG1UNLZGSwqaNZt2dSzycyf4tgXSq9X5BvsBakOArKmucjDVS9X+xYxkCbglwODc2jr2BIcM/Oy6BXX9B65vuX0oxQvpb6UMlp9LiY1Mv9Flk1+PQo0k2oFr+GNVE=
+	t=1772002697; cv=none; b=O47eXcgnTZd4Cy8x3t0UjrmWjjYbe71BEbYkOGSn0S5M6GC/k2pXaV6ZAfYmyXq7otD4+72+jq0hytmYlT2pWgMpOZeRYVxIuiVJVDvYZdK5mGSGx5t3lhrgSAhh/uzaQ/fjh70dwWsCltiCl1XCBnBoLRdVGIoHnIs+qiFLN9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002696; c=relaxed/simple;
-	bh=dIfRM7ntspt5ciRIoc0OYHkJI9pw6UcZKPs/1y7pCK0=;
+	s=arc-20240116; t=1772002697; c=relaxed/simple;
+	bh=a/PzofcGot8NZA0cIndS0ZdU2HjuLN+bn74jT8Ty3OM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlEE1CdIUVvLwpW9KXbWzdbXq82L/sd9W4leGt4G0/FGchF+hoFXCNHxmzXwwypkCM3QKJKWt15N3I8OTxB4lAqNGG//MNlgdl0jqaKih9etGdcCUpFd8pL8eBnOiui4L89YFdUdL2hq6zh2qwcUteqN9pBiIMWJHgyRnbuM2OM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9z+yJ3d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YxDf6a7trWLKVhxvPOhiElOtTW5ZmY7gSMAtzG4+AI8/6DvvISGNFX6uMHX7IgmMwlY2BkyjGiB85xHx3GvrYK71QoZ8GVbRR/O59s9a7HdBnAtuDoSxYZO3c66CxOgBMo1qrUa2cw9zaO9GqRv54FMF7SedPM1sqlTiaEqO8Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrY7h/0y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9z+yJ3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BB3C2BC86;
-	Wed, 25 Feb 2026 06:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrY7h/0y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58498C4AF0B;
+	Wed, 25 Feb 2026 06:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002696;
-	bh=dIfRM7ntspt5ciRIoc0OYHkJI9pw6UcZKPs/1y7pCK0=;
+	s=korg; t=1772002697;
+	bh=a/PzofcGot8NZA0cIndS0ZdU2HjuLN+bn74jT8Ty3OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9z+yJ3d1OyssxGfY6vJ14uMj1w0v0FVFz2sSzr5jw3N/zNBguw6ArqVgkrDPyOWI
-	 CrP0VJ+K3ediQp+w3BBAeNTzwIwSlvXJG4rt8losnz0Ae7vaug0PLf8jYk0m8qbK11
-	 9AzC+ya4SsR/942t8gymwuD4hZM42oUfazD9levE=
+	b=hrY7h/0yn+qYg1x3W/QQx2USzjDd+UMeAZWF+RAVvfkX/VZ4dxtipGDTg07igtjNe
+	 bpH8VO0UASc4FKoVPfWQEG6md6a058S3fDdiK1IqjR3tG86P+bBTQHGTxnTd6hxlnn
+	 Q19yZgo4kB+BlwJ1xpz96FchTppWyq8KXit3naso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	Petre Rodan <petre.rodan@subdimension.ro>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 493/641] leds: qcom-lpg: Check the return value of regmap_bulk_write()
-Date: Tue, 24 Feb 2026 17:23:39 -0800
-Message-ID: <20260225012400.463705832@linuxfoundation.org>
+Subject: [PATCH 6.18 467/641] iio: pressure: mprls0025pa: fix spi_transfer struct initialisation
+Date: Tue, 24 Feb 2026 17:23:13 -0800
+Message-ID: <20260225012359.830102976@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,53 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Petre Rodan <petre.rodan@subdimension.ro>
 
-[ Upstream commit f42033b5ce8c79c5db645916c9a72ee3e10cecfa ]
+[ Upstream commit 1e0ac56c92e26115cbc8cfc639843725cb3a7d6a ]
 
-The lpg_lut_store() function currently ignores the return value of
-regmap_bulk_write() and always returns 0. This can cause hardware write
-failures to go undetected, leading the caller to believe LUT programming
-succeeded when it may have failed.
+Make sure that the spi_transfer struct is zeroed out before use.
 
-Check the return value of regmap_bulk_write() in lpg_lut_store and return
-the error to the caller on failure.
-
-Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260108175133.638-1-vulab@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: a0858f0cd28e ("iio: pressure: mprls0025pa add SPI driver")
+Signed-off-by: Petre Rodan <petre.rodan@subdimension.ro>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/rgb/leds-qcom-lpg.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/iio/pressure/mprls0025pa_spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index e197f548cddb0..a460782dadca4 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -369,7 +369,7 @@ static int lpg_lut_store(struct lpg *lpg, struct led_pattern *pattern,
+diff --git a/drivers/iio/pressure/mprls0025pa_spi.c b/drivers/iio/pressure/mprls0025pa_spi.c
+index d04102f8a4a03..e6bb75de34119 100644
+--- a/drivers/iio/pressure/mprls0025pa_spi.c
++++ b/drivers/iio/pressure/mprls0025pa_spi.c
+@@ -40,7 +40,7 @@ static int mpr_spi_xfer(struct mpr_data *data, const u8 cmd, const u8 pkt_len)
  {
- 	unsigned int idx;
- 	u16 val;
--	int i;
-+	int i, ret;
+ 	struct spi_device *spi = to_spi_device(data->dev);
+ 	struct mpr_spi_buf *buf = spi_get_drvdata(spi);
+-	struct spi_transfer xfer;
++	struct spi_transfer xfer = { };
  
- 	idx = bitmap_find_next_zero_area(lpg->lut_bitmap, lpg->lut_size,
- 					 0, len, 0);
-@@ -379,8 +379,10 @@ static int lpg_lut_store(struct lpg *lpg, struct led_pattern *pattern,
- 	for (i = 0; i < len; i++) {
- 		val = pattern[i].brightness;
- 
--		regmap_bulk_write(lpg->map, lpg->lut_base + LPG_LUT_REG(idx + i),
--				  &val, sizeof(val));
-+		ret = regmap_bulk_write(lpg->map, lpg->lut_base + LPG_LUT_REG(idx + i),
-+					&val, sizeof(val));
-+		if (ret)
-+			return ret;
- 	}
- 
- 	bitmap_set(lpg->lut_bitmap, idx, len);
+ 	if (pkt_len > MPR_MEASUREMENT_RD_SIZE)
+ 		return -EOVERFLOW;
 -- 
 2.51.0
 
