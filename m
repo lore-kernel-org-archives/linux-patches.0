@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6EA18DB2A;
-	Wed, 25 Feb 2026 01:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C35118DB2A;
+	Wed, 25 Feb 2026 01:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983184; cv=none; b=EJhWk9PnwmfgmV1eFlJFpuHr5pnan1CeG95VDyFwx0Ndwgc2Wky1anFcM2VdtbZYT7Atdhd2sNmUtBFaF6Mzvmv+m0fLYUb8bPn8SC1F1irO5+bqzj8I3gY6XlcCNZuNcAEQyx/wIYmblvY4J4rin+96Im87LAuMNX/DvfvjKbQ=
+	t=1771983185; cv=none; b=t2bcPVjA5hGcSltYU+ZviwwQ1RmTnmyrGkAk9NarfOl3w7z4wKF0M4m4K+RNciu7+S8jwA092O/u2IW6dWz9zb8dQuCHBHqo9d2La7mDtiYTCaA0B9uDGN/QLYhuseitPez0vS0qy41MMxKwAzdeBZzJxgKJWmbLFEZHQkXe344=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983184; c=relaxed/simple;
-	bh=Gner84l3i3lZv9hARPkP8cZE5EWBKcrKM1bP1N7ODRg=;
+	s=arc-20240116; t=1771983185; c=relaxed/simple;
+	bh=C6G+L688U7pOoCopJ3A3MIBmJts95bV9VMgUNfOL7Ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M5upKyvYt4Ilwwkf3rgILQqQ9DKYNZM/vy+GWaM1HDIiniImlppzEl2RBUv/fh+noQmWFm3TPxKnAv8IcOTbxceQxBDUy5qoI8F6VVLjaagQC+pI3Ig+qA08TYyIMkAig5z7p8oiFA2u2y2yF6ivUWDyNNx17uR1Dw/7ucb5XIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkMNIWJe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LxnF/sUiTcAV88OVXGsffrOOS71VOh2AznPYC0rQd5y/EFCPYU4Sq7GEPi1Ao2lZGnBsBW2INLGhRIwAK7OVgd+pivaTUcdkYF50buerlGUK9UX+e6n0a7kQDsXZk11V/nql5m0l9TTBtMfQRIaKAKwcXOsNypz9vjYzhZHyDfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/5Si2RY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkMNIWJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D41C116D0;
-	Wed, 25 Feb 2026 01:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/5Si2RY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2F4C116D0;
+	Wed, 25 Feb 2026 01:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983184;
-	bh=Gner84l3i3lZv9hARPkP8cZE5EWBKcrKM1bP1N7ODRg=;
+	s=korg; t=1771983185;
+	bh=C6G+L688U7pOoCopJ3A3MIBmJts95bV9VMgUNfOL7Ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EkMNIWJeeS1aYaXCUY/opoiXQ3GhIjyN6R5uKkq5t1S+hyJRJHTX7WivZ2T6m1hT3
-	 Qiw0qjr58nnBluysA/WMf4OBBq+iMZzVY8IQf+BTsJoWk03dfTOPnQm/pRpxb2Htu1
-	 T2JwRO2GF+sZGSrWt6SshuClhezlpqMIUv48+Y94=
+	b=i/5Si2RYS/3I4zxheBedjeq+hW8x2DdbdVhp/ReilEYObWILV6uao9zpLAUzybfZq
+	 kbml3cWoVkP+N1iiLawFebykhWo6QW108MaT3IBSRoGa/IDWPjgdXkDrGeQ38R+oxG
+	 Ftr5y/xOum5QnyYkffJDOR9dXdoGwCKHx9F74PRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 334/781] wifi: ath9k: debug.h: fix kernel-doc bad lines and struct ath_tx_stats
-Date: Tue, 24 Feb 2026 17:17:23 -0800
-Message-ID: <20260225012407.890756269@linuxfoundation.org>
+Subject: [PATCH 6.19 335/781] wifi: ath9k: fix kernel-doc warnings in common-debug.h
+Date: Tue, 24 Feb 2026 17:17:24 -0800
+Message-ID: <20260225012407.913583349@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -55,80 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit c6131765a2c0052b2c5a2310ff92191ff33aec8b ]
+[ Upstream commit b9909c19965dc9e5a3a898fef09b437fcc3a9494 ]
 
-Repair "bad line" warnings by starting each line with " *".
-Add or correct kernel-doc entries for missing struct members in
-struct ath_tx_stats.
+Modify kernel-doc comments in common-debug.h to avoid warnings:
 
-Warning: ../drivers/net/wireless/ath/ath9k/debug.h:144 bad line:
+Warning: drivers/net/wireless/ath/ath9k/common-debug.h:21 bad line:
   may have had errors.
-Warning: ../drivers/net/wireless/ath/ath9k/debug.h:146 bad line:
+Warning: ../drivers/net/wireless/ath/ath9k/common-debug.h:23 bad line:
   may have had errors.
-Warning: ../drivers/net/wireless/ath/ath9k/debug.h:156 bad line:
-  Valid only for:
-Warning: ../drivers/net/wireless/ath/ath9k/debug.h:157 bad line:
-  - non-aggregate condition.
-Warning: ../drivers/net/wireless/ath/ath9k/debug.h:158 bad line:
-  - first packet of aggregate.
-Warning: drivers/net/wireless/ath/ath9k/debug.h:191 struct member
- 'xretries' not described in 'ath_tx_stats'
-Warning: drivers/net/wireless/ath/ath9k/debug.h:191 struct member
- 'data_underrun' not described in 'ath_tx_stats'
-Warning: drivers/net/wireless/ath/ath9k/debug.h:191 struct member
- 'delim_underrun' not described in 'ath_tx_stats'
+Warning: ../drivers/net/wireless/ath/ath9k/common-debug.h:26 bad line:
+  decryption process completed
+Warning: ../drivers/net/wireless/ath/ath9k/common-debug.h:28 bad line:
+  encountered an error
 
 Fixes: 99c15bf575b1 ("ath9k: Report total tx/rx bytes and packets in debugfs.")
-Fixes: fec247c0d5bf ("ath9k: Add debug counters for TX")
-Fixes: 5a6f78afdabe ("ath9k: show excessive-retry MPDUs in debugfs")
+Fixes: 1395d3f00a41 ("ath9k: Add debugfs file for RX errors")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20251117020304.448687-1-rdunlap@infradead.org
+Link: https://patch.msgid.link/20251117020251.447692-1-rdunlap@infradead.org
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/debug.h | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath9k/common-debug.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/debug.h b/drivers/net/wireless/ath/ath9k/debug.h
-index cb3e75969875a..804e2a0a0c20f 100644
---- a/drivers/net/wireless/ath/ath9k/debug.h
-+++ b/drivers/net/wireless/ath/ath9k/debug.h
-@@ -142,11 +142,12 @@ struct ath_interrupt_stats {
+diff --git a/drivers/net/wireless/ath/ath9k/common-debug.h b/drivers/net/wireless/ath/ath9k/common-debug.h
+index 2938b5b96b074..97948af97682b 100644
+--- a/drivers/net/wireless/ath/ath9k/common-debug.h
++++ b/drivers/net/wireless/ath/ath9k/common-debug.h
+@@ -19,14 +19,14 @@
  /**
-  * struct ath_tx_stats - Statistics about TX
-  * @tx_pkts_all:  No. of total frames transmitted, including ones that
+  * struct ath_rx_stats - RX Statistics
+  * @rx_pkts_all:  No. of total frames received, including ones that
 -	may have had errors.
 + *	may have had errors.
-  * @tx_bytes_all:  No. of total bytes transmitted, including ones that
+  * @rx_bytes_all:  No. of total bytes received, including ones that
 -	may have had errors.
 + *	may have had errors.
-  * @queued: Total MPDUs (non-aggr) queued
-  * @completed: Total MPDUs (non-aggr) completed
-+ * @xretries: Total MPDUs with xretries
-  * @a_aggr: Total no. of aggregates queued
-  * @a_queued_hw: Total AMPDUs queued to hardware
-  * @a_completed: Total AMPDUs completed
-@@ -154,14 +155,14 @@ struct ath_interrupt_stats {
-  * @a_xretries: No. of AMPDUs dropped due to xretries
-  * @txerr_filtered: No. of frames with TXERR_FILT flag set.
-  * @fifo_underrun: FIFO underrun occurrences
--	Valid only for:
--		- non-aggregate condition.
--		- first packet of aggregate.
-+ *	Valid only for:
-+ *		- non-aggregate condition.
-+ *		- first packet of aggregate.
-  * @xtxop: No. of frames filtered because of TXOP limit
-  * @timer_exp: Transmit timer expiry
-  * @desc_cfg_err: Descriptor configuration errors
-- * @data_urn: TX data underrun errors
-- * @delim_urn: TX delimiter underrun errors
-+ * @data_underrun: TX data underrun errors
-+ * @delim_underrun: TX delimiter underrun errors
-  * @puttxbuf: Number of times hardware was given txbuf to write.
-  * @txstart:  Number of times hardware was told to start tx.
-  * @txprocdesc:  Number of times tx descriptor was processed
+  * @crc_err: No. of frames with incorrect CRC value
+  * @decrypt_crc_err: No. of frames whose CRC check failed after
+-	decryption process completed
++ *	decryption process completed
+  * @phy_err: No. of frames whose reception failed because the PHY
+-	encountered an error
++ *	encountered an error
+  * @mic_err: No. of frames with incorrect TKIP MIC verification failure
+  * @pre_delim_crc_err: Pre-Frame delimiter CRC error detections
+  * @post_delim_crc_err: Post-Frame delimiter CRC error detections
 -- 
 2.51.0
 
