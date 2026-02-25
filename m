@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE3218B0A;
-	Wed, 25 Feb 2026 01:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B509C18B0A;
+	Wed, 25 Feb 2026 01:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983284; cv=none; b=JEiSEwV1AAR3faqYBHPbMNDjSMOA1ACtJrwfaFlZnacY87/4Y1zefGfpHJpfovBJ5PToK5LPT69atLrQ8ZQbXAVjmT84PUn+h9HfjPJgB6SNpJ14bMwWsHut/HKwvD0hzyaNy+AAhJxMutZzIWu/X7Yu3lVfmBNdB/EpxKGjcpM=
+	t=1771983285; cv=none; b=kRTH8g/BuszJ/CNouax4PcJt1wRtNcJ0ie3NZVpamQHn2gGlenahVP7VtQKVV4K6//zKXVSQDilfQoss+LlEDckLxr98XLYxyorOhU9QfW27fp/p9EIbLOkwP5bB8zg6Azw1P6xXxwVoxTH8n2kyM2Ti68NPQwuHs5DC7c3OIa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983284; c=relaxed/simple;
-	bh=V67fGRHSHPj9Yf3aBtySafwaWxzi98NviC843VmCtHg=;
+	s=arc-20240116; t=1771983285; c=relaxed/simple;
+	bh=mxfB2HfyCdloaKzN6BXjsA7y8AWlzRUMX8Ii20US1oY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HgU8nrX+KdmGIl9u1rGUHFhH35D+wIvtkfqyIELNSw3Hw9epdBnetj5891rUUYFUIw0cYGXtlEqvsx33JbEaTIfWRHBmh7bDW3oUL1Tmuui1v48ON0uT0ycBykH2nqBSNUWQ6Szl7NDUvrU3alDgAVmKbNT5zEuBISraT+hFJWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmG5SSPc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SqCtYMfJ2flOZ2nBbHfDj1cVHR2gDNrW36jhJv1GSszkSOSmFkRX+YyOxPkMjF0GIiahv2/x1QFsXQQHRqh4aI18dKrKIsqxUwptJ4tLLm7aSp+4I6voNri1ZEe1fsdjtzFHpur0i8eR6TX8cTgj2CpIRi3ZY/vpH8EQy7tSADE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/dmTDbz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmG5SSPc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD395C116D0;
-	Wed, 25 Feb 2026 01:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/dmTDbz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694B6C116D0;
+	Wed, 25 Feb 2026 01:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983284;
-	bh=V67fGRHSHPj9Yf3aBtySafwaWxzi98NviC843VmCtHg=;
+	s=korg; t=1771983285;
+	bh=mxfB2HfyCdloaKzN6BXjsA7y8AWlzRUMX8Ii20US1oY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BmG5SSPcfXbOINUDzfwgWnGrR6vzvaB/KmPEwh9APPC10Bv3NhNotNq4dYab3myrk
-	 OqIZEpyZrwaL3dcF9lqU0JIhNpzY+LuTSF9x7MDro/CP4Ml0Jq0wND7grbDy6Z3Svz
-	 vX78dochGKU9yG4SWKhKY11+gpHN70H033aJJiEg=
+	b=Q/dmTDbzqDUbPZBk45FiGBtCau0hfB9npxScTaiZWzsiaacd36yIfU5kIJGxkvjHJ
+	 q2EkMz2Zsvnv18os/slwfQmRc7O0Lfq2Fp7gFReNKhPk7Gk150iwdeMGhDaRLPrx4F
+	 T46qDGLqpQ315956e7PmcD1BfPxXiut/f7NzPwU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 421/781] PCI: Add ACS quirk for Pericom PI7C9X2G404 switches [12d8:b404]
-Date: Tue, 24 Feb 2026 17:18:50 -0800
-Message-ID: <20260225012410.026092724@linuxfoundation.org>
+Subject: [PATCH 6.19 422/781] rust: driver-core: use "kernel vertical" style for imports
+Date: Tue, 24 Feb 2026 17:18:51 -0800
+Message-ID: <20260225012410.052655058@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,44 +50,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 5907a90551e9f7968781f3a6ab8684458959beb3 ]
+[ Upstream commit 52563c665b0b0b39f319bee40ecc5e8f25b9050a ]
 
-12d8:b404 is apparently another PCI ID for Pericom PI7C9X2G404 (as
-identified by the chip silkscreen and lspci).
+Convert all imports to use "kernel vertical" style.
 
-It is also affected by the PI7C9X2G errata (e.g. a network card attached
-to it fails under load when P2P Redirect Request is enabled), so apply
-the same quirk to this PCI ID too.
+With this, subsequent patches neither introduce unrelated changes nor
+leave an inconsistent import pattern.
 
-PCI bridge [0604]: Pericom Semiconductor PI7C9X2G404 EV/SV PCIe2 4-Port/4-Lane Packet Switch [12d8:b404] (rev 01)
+While at it, drop unnecessary imports covered by prelude::*.
 
-Fixes: acd61ffb2f16 ("PCI: Add ACS quirk for Pericom PI7C9X2G switches")
-Closes: https://lore.kernel.org/all/a1d926f0-4cb5-4877-a4df-617902648d80@green-communications.fr/
-Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260119160915.26456-1-nicolas.cavallari@green-communications.fr
+Link: https://docs.kernel.org/rust/coding-guidelines.html#imports
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260105142123.95030-3-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Stable-dep-of: ba268514ea14 ("rust: devres: fix race condition due to nesting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ rust/kernel/device.rs | 14 +++++++++++---
+ rust/kernel/devres.rs | 25 +++++++++++++++++++------
+ rust/kernel/driver.rs | 12 ++++++++----
+ 3 files changed, 38 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 211b7f72d103e..6df78efd7f6dc 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -6189,6 +6189,10 @@ DECLARE_PCI_FIXUP_ENABLE(PCI_VENDOR_ID_PERICOM, 0x2303,
- 			 pci_fixup_pericom_acs_store_forward);
- DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_PERICOM, 0x2303,
- 			 pci_fixup_pericom_acs_store_forward);
-+DECLARE_PCI_FIXUP_ENABLE(PCI_VENDOR_ID_PERICOM, 0xb404,
-+			 pci_fixup_pericom_acs_store_forward);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_PERICOM, 0xb404,
-+			 pci_fixup_pericom_acs_store_forward);
+diff --git a/rust/kernel/device.rs b/rust/kernel/device.rs
+index 031720bf5d8ca..7b950b01f16d4 100644
+--- a/rust/kernel/device.rs
++++ b/rust/kernel/device.rs
+@@ -5,12 +5,20 @@
+ //! C header: [`include/linux/device.h`](srctree/include/linux/device.h)
  
- static void nvidia_ion_ahci_fixup(struct pci_dev *pdev)
- {
+ use crate::{
+-    bindings, fmt,
++    bindings,
++    fmt,
+     prelude::*,
+     sync::aref::ARef,
+-    types::{ForeignOwnable, Opaque},
++    types::{
++        ForeignOwnable,
++        Opaque, //
++    }, //
++};
++use core::{
++    any::TypeId,
++    marker::PhantomData,
++    ptr, //
+ };
+-use core::{any::TypeId, marker::PhantomData, ptr};
+ 
+ #[cfg(CONFIG_PRINTK)]
+ use crate::c_str;
+diff --git a/rust/kernel/devres.rs b/rust/kernel/devres.rs
+index 835d9c11948e7..db02f8b1788d4 100644
+--- a/rust/kernel/devres.rs
++++ b/rust/kernel/devres.rs
+@@ -8,13 +8,26 @@
+ use crate::{
+     alloc::Flags,
+     bindings,
+-    device::{Bound, Device},
+-    error::{to_result, Error, Result},
+-    ffi::c_void,
++    device::{
++        Bound,
++        Device, //
++    },
++    error::to_result,
+     prelude::*,
+-    revocable::{Revocable, RevocableGuard},
+-    sync::{aref::ARef, rcu, Completion},
+-    types::{ForeignOwnable, Opaque, ScopeGuard},
++    revocable::{
++        Revocable,
++        RevocableGuard, //
++    },
++    sync::{
++        aref::ARef,
++        rcu,
++        Completion, //
++    },
++    types::{
++        ForeignOwnable,
++        Opaque,
++        ScopeGuard, //
++    },
+ };
+ 
+ use pin_init::Wrapper;
+diff --git a/rust/kernel/driver.rs b/rust/kernel/driver.rs
+index bee3ae21a27b2..36de8098754d0 100644
+--- a/rust/kernel/driver.rs
++++ b/rust/kernel/driver.rs
+@@ -94,10 +94,14 @@
+ //! [`device_id`]: kernel::device_id
+ //! [`module_driver`]: kernel::module_driver
+ 
+-use crate::error::{Error, Result};
+-use crate::{acpi, device, of, str::CStr, try_pin_init, types::Opaque, ThisModule};
+-use core::pin::Pin;
+-use pin_init::{pin_data, pinned_drop, PinInit};
++use crate::{
++    acpi,
++    device,
++    of,
++    prelude::*,
++    types::Opaque,
++    ThisModule, //
++};
+ 
+ /// Trait describing the layout of a specific device driver.
+ ///
 -- 
 2.51.0
 
