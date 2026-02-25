@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA8624A05D;
-	Wed, 25 Feb 2026 01:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DBB26E6F8;
+	Wed, 25 Feb 2026 01:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983601; cv=none; b=fnd4aBE6Ct2Z3dClXEFE85HO5n/Uy3/GvhMe6cd+Lpq8pGwu3bBe52lFJEge3vhIyS1rwn6c446KUxIghZ93savOhaQATuL4YIB0bOg9ylPnUyk5aqQ1LAbLlp7pHvkJl1uSQ190RxtSZWNjSlmrz7CfvDcpfmUK34OHwEFcvqQ=
+	t=1771983602; cv=none; b=U0VwBkRo5KYk4Zdeahy/V/QW9G9MK1spbyqniQbTcNVKpU4oZqdsY1WrhebB/KXmRK60ZxzS3rEHC/lX7dJ/gbIe4IHxV8DmezP6Qn66xhNmaf3pPliHsS0FvgxItrthYZorYv9AXm1aklj1WV6mvsPwQvsx3yUp3Tsi85nmnaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983601; c=relaxed/simple;
-	bh=sJfBNjtc7gdsFLuaj5QUfgwUsVZL5EM4nAT6SGmT0Tc=;
+	s=arc-20240116; t=1771983602; c=relaxed/simple;
+	bh=eXNfrQ6D0F3R/UC318r6tpj4HCNadCbLoap5pPUNjfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BoJoNrQmJ5m2Frg6gjcbw/wSX9yvxBUPabn1iXdcDGI9S1dx7174Pbc+ryLExEfrGCx9vbcXJcLNBS9eaGA2EaWQb26JoleQuF47/QYTDZo1vQml0bzLOGzMbS6vP2o8OuxBL9vJFRjMzFee6UoHuwHaR7M3zPeGNsIcYGW1Vr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZQbO95R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u8VzNh1mfQGWIHbg5kSjv4dl4TQl6Zt0FhCdEhYUVD/B4opLeYHMAm6f4oEiYE6EXvFNhq51Ce+CfnuPUAbXl0rMdaz0Cs+VfgAeZc+a2ZPK6dd0dyxJpzdFgLZD2ihtIxyK53xvS/Ssf9reR82FAUuqBRk6z6w1QHQBmoQoj1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKZb7ebQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZQbO95R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDF9C116D0;
-	Wed, 25 Feb 2026 01:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKZb7ebQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05452C116D0;
+	Wed, 25 Feb 2026 01:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983601;
-	bh=sJfBNjtc7gdsFLuaj5QUfgwUsVZL5EM4nAT6SGmT0Tc=;
+	s=korg; t=1771983602;
+	bh=eXNfrQ6D0F3R/UC318r6tpj4HCNadCbLoap5pPUNjfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZQbO95RRha5SKA83MM2KhGKHtmV1UgRW/OQMtWDzFOC/mv3rIA3NvdrjeyCNOqcK
-	 7qvWNmgft90yUJ0M9fcABtbfZt8Idk4e6yXiUrgdobkMAUsyOnXGj5moc4XewT4UG2
-	 UZr9IHdgQJR99jtSd1p8jOrsROdtxJDDMt61hESA=
+	b=HKZb7ebQXsZcVwv4GO65vVTpeKl0UiIWVY0Ade/EzXJNtRLdLsCN0T3+vlTCIq4yx
+	 phbRNrnCmjOQBSXQC42ts+GkF+bbgrpTjOLmePr7odJIVa5NqxsL+wE6/OgVe7c7Ad
+	 Fqk3lySjv3hbUZEki8eECvI3DvL6uOnn9XpLgIug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 673/781] dpll: zl3073x: Fix ref frequency setting
-Date: Tue, 24 Feb 2026 17:23:02 -0800
-Message-ID: <20260225012416.289198345@linuxfoundation.org>
+Subject: [PATCH 6.19 674/781] ping: annotate data-races in ping_lookup()
+Date: Tue, 24 Feb 2026 17:23:03 -0800
+Message-ID: <20260225012416.312156029@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,54 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a047497f952831e377564b606dcb74a7cb309384 ]
+[ Upstream commit ad5dfde2a5733aaf652ea3e40c8c5e071e935901 ]
 
-The frequency for an input reference is computed as:
+isk->inet_num, isk->inet_rcv_saddr and sk->sk_bound_dev_if
+are read locklessly in ping_lookup().
 
-  frequency = freq_base * freq_mult * freq_ratio_m / freq_ratio_n
+Add READ_ONCE()/WRITE_ONCE() annotations.
 
-Before commit 5bc02b190a3fb ("dpll: zl3073x: Cache all reference
-properties in zl3073x_ref"), zl3073x_dpll_input_pin_frequency_set()
-explicitly wrote 1 to both the REF_RATIO_M and REF_RATIO_N hardware
-registers whenever a new frequency was set. This ensured the FEC ratio
-was always reset to 1:1 alongside the new base/multiplier values.
+The race on isk->inet_rcv_saddr is probably coming from IPv6 support,
+but does not deserve a specific backport.
 
-The refactoring in that commit introduced zl3073x_ref_freq_set() to
-update the cached ref state, but this helper only sets freq_base and
-freq_mult without resetting freq_ratio_m and freq_ratio_n to 1. Because
-zl3073x_ref_state_set() uses a compare-and-write strategy, unchanged
-ratio fields are never written to the hardware. If the device previously
-had non-unity FEC ratio values, they remain in effect after a frequency
-change, resulting in an incorrect computed frequency.
-
-Explicitly set freq_ratio_m and freq_ratio_n to 1 in zl3073x_ref_freq_set()
-to restore the original behavior.
-
-Fixes: 5bc02b190a3fb ("dpll: zl3073x: Cache all reference properties in zl3073x_ref")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260216194007.680416-1-ivecera@redhat.com
+Fixes: dbca1596bbb0 ("ping: convert to RCU lookups, get rid of rwlock")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260216100149.3319315-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/zl3073x/ref.h | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/ping.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/dpll/zl3073x/ref.h b/drivers/dpll/zl3073x/ref.h
-index efc7f59cd9f9c..0d8618f5ce8df 100644
---- a/drivers/dpll/zl3073x/ref.h
-+++ b/drivers/dpll/zl3073x/ref.h
-@@ -91,6 +91,8 @@ zl3073x_ref_freq_set(struct zl3073x_ref *ref, u32 freq)
+diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+index cfbd563498e85..0fec4e5645667 100644
+--- a/net/ipv4/ping.c
++++ b/net/ipv4/ping.c
+@@ -148,7 +148,7 @@ void ping_unhash(struct sock *sk)
+ 	pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
+ 	spin_lock(&ping_table.lock);
+ 	if (sk_del_node_init_rcu(sk)) {
+-		isk->inet_num = 0;
++		WRITE_ONCE(isk->inet_num, 0);
+ 		isk->inet_sport = 0;
+ 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
+ 	}
+@@ -181,31 +181,35 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
+ 	}
  
- 	ref->freq_base = base;
- 	ref->freq_mult = mult;
-+	ref->freq_ratio_m = 1;
-+	ref->freq_ratio_n = 1;
+ 	sk_for_each_rcu(sk, hslot) {
++		int bound_dev_if;
++
+ 		if (!net_eq(sock_net(sk), net))
+ 			continue;
+ 		isk = inet_sk(sk);
  
- 	return 0;
- }
+ 		pr_debug("iterate\n");
+-		if (isk->inet_num != ident)
++		if (READ_ONCE(isk->inet_num) != ident)
+ 			continue;
+ 
++		bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
+ 		if (skb->protocol == htons(ETH_P_IP) &&
+ 		    sk->sk_family == AF_INET) {
++			__be32 rcv_saddr = READ_ONCE(isk->inet_rcv_saddr);
++
+ 			pr_debug("found: %p: num=%d, daddr=%pI4, dif=%d\n", sk,
+-				 (int) isk->inet_num, &isk->inet_rcv_saddr,
+-				 sk->sk_bound_dev_if);
++				 ident, &rcv_saddr,
++				 bound_dev_if);
+ 
+-			if (isk->inet_rcv_saddr &&
+-			    isk->inet_rcv_saddr != ip_hdr(skb)->daddr)
++			if (rcv_saddr && rcv_saddr != ip_hdr(skb)->daddr)
+ 				continue;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 		} else if (skb->protocol == htons(ETH_P_IPV6) &&
+ 			   sk->sk_family == AF_INET6) {
+ 
+ 			pr_debug("found: %p: num=%d, daddr=%pI6c, dif=%d\n", sk,
+-				 (int) isk->inet_num,
++				 ident,
+ 				 &sk->sk_v6_rcv_saddr,
+-				 sk->sk_bound_dev_if);
++				 bound_dev_if);
+ 
+ 			if (!ipv6_addr_any(&sk->sk_v6_rcv_saddr) &&
+ 			    !ipv6_addr_equal(&sk->sk_v6_rcv_saddr,
+@@ -216,8 +220,8 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
+ 			continue;
+ 		}
+ 
+-		if (sk->sk_bound_dev_if && sk->sk_bound_dev_if != dif &&
+-		    sk->sk_bound_dev_if != sdif)
++		if (bound_dev_if && bound_dev_if != dif &&
++		    bound_dev_if != sdif)
+ 			continue;
+ 
+ 		goto exit;
+@@ -392,7 +396,9 @@ static void ping_set_saddr(struct sock *sk, struct sockaddr_unsized *saddr)
+ 	if (saddr->sa_family == AF_INET) {
+ 		struct inet_sock *isk = inet_sk(sk);
+ 		struct sockaddr_in *addr = (struct sockaddr_in *) saddr;
+-		isk->inet_rcv_saddr = isk->inet_saddr = addr->sin_addr.s_addr;
++
++		isk->inet_saddr = addr->sin_addr.s_addr;
++		WRITE_ONCE(isk->inet_rcv_saddr, addr->sin_addr.s_addr);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	} else if (saddr->sa_family == AF_INET6) {
+ 		struct sockaddr_in6 *addr = (struct sockaddr_in6 *) saddr;
+@@ -849,7 +855,8 @@ int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
+ 	struct sk_buff *skb;
+ 	int copied, err;
+ 
+-	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk, isk->inet_num);
++	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk,
++		 READ_ONCE(isk->inet_num));
+ 
+ 	err = -EOPNOTSUPP;
+ 	if (flags & MSG_OOB)
 -- 
 2.51.0
 
