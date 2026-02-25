@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E4025A357;
-	Wed, 25 Feb 2026 01:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2868C258ED5;
+	Wed, 25 Feb 2026 01:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983571; cv=none; b=UaQpQX4ZTko3cShRIEHes1uhnwckuRMyXlNGX3L9yLD36GS1yXqIajoEzwd9mbEKfriyazftxLrqDU5WDSvjW+GuWfzNXA4TcU76fSFHc1CvB4Sc3sqKvixA1YWQW8aEvJWiEpa7EzrkMmfjdb8CFQfHBT0YPGqIf39vBkDhHRY=
+	t=1771983572; cv=none; b=syLPI2s1KRSPGWLl5WFqCoMKkgSHZ7x9HJuDzqi46sNXBNDGVGbu1C/qVq4L6iWEc6NnuzrBGTaoMDnvbK1dvf4ng0zZWQx12uKgZqzo79h91u7ZVKcQzkiYd0HCXaId8W8Z8KFchFu4DJx2aCA5vnpeXkTDLqdSNmWyKULpgLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983571; c=relaxed/simple;
-	bh=8ETeBuqOXioK2kBgxOOhwmUBSYEXGmmEVxON4sYEntM=;
+	s=arc-20240116; t=1771983572; c=relaxed/simple;
+	bh=eATotnli9qFImWOVaoYMFR4/ges2PgmP8XjWzAsym/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZv1yoIwDV8MyinS1Zuci0Wc0wqWltNFeygDd/EOUCtmpK9PwLF/7hnRBtyi8ibnmjO21GZuXueOC/0wdjhoHDDAwcmgovPecKR9zBjjGeXpr7aheJ987Boj+TABjLyOcaVwtkyV34dhM0FSotgiDMvP/KPQyHsOx/pFcd59TBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwngezVE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcnDGfmwo1YrEOokmql+ZHCvFZcYzUCBuxlSHwnNG/cRzJve/fu7cGHV+BaovuLKTa2xVGGrXFbQnxjz9RtXXSP8dvIuQfbh5XAZ4nbmILgOZHocnxmRgqjGfz48I1Epr+zRLlYMgk5fcfTPMtuSCVqZUoQatrl2mJpc+VJpRk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0n9f0hlc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwngezVE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E2BC116D0;
-	Wed, 25 Feb 2026 01:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0n9f0hlc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C2FC116D0;
+	Wed, 25 Feb 2026 01:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983571;
-	bh=8ETeBuqOXioK2kBgxOOhwmUBSYEXGmmEVxON4sYEntM=;
+	s=korg; t=1771983572;
+	bh=eATotnli9qFImWOVaoYMFR4/ges2PgmP8XjWzAsym/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwngezVELafCx2KWfNn6Pfb6kwUkm1nhMTWFhQvwQDES644M6GRHb7uZSUpYEIX59
-	 BgiBiucCdKtM+u2lFPzyKkTgNa2BPqEDvs0B4KIM/6SrStJfYOtoGOuK+UcqmzN19i
-	 8vK3haOtF8OX+lxtDqwqUeC9SKTcYouWsgyt8xjs=
+	b=0n9f0hlcs8MpAqGVWQ9mQprkSI96MFpuco3SdgVDkKMwVfzp6JIKGiO4YrWwcnW4Y
+	 uwP1pWKGnz3fzV4b7LxDFhW4ls/VlgsYO8qyi8sLRy6iXY0xOzOHLCGOpfnATH/nas
+	 Zka6eWiYoeHKfv/Rr0W0pNmF4rgQGde8cIzy8wlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aristeu Rozanski <aris@redhat.com>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Shuah Khan <shuah@kernel.org>,
-	liuye <liuye@kylinos.cn>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 628/781] selftests/memfd: use IPC semaphore instead of SIGSTOP/SIGCONT
-Date: Tue, 24 Feb 2026 17:22:17 -0800
-Message-ID: <20260225012415.216059621@linuxfoundation.org>
+Subject: [PATCH 6.19 619/781] fs/ntfs3: prevent infinite loops caused by the next valid being the same
+Date: Tue, 24 Feb 2026 17:22:08 -0800
+Message-ID: <20260225012414.989058046@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -55,238 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aristeu Rozanski <aris@redhat.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit b24335521de92fd2ee22460072b75367ca8860b0 ]
+[ Upstream commit 27b75ca4e51e3e4554dc85dbf1a0246c66106fd3 ]
 
-selftests/memfd: use IPC semaphore instead of SIGSTOP/SIGCONT
+When processing valid within the range [valid : pos), if valid cannot
+be retrieved correctly, for example, if the retrieved valid value is
+always the same, this can trigger a potential infinite loop, similar
+to the hung problem reported by syzbot [1].
 
-In order to synchronize new processes to test inheritance of memfd_noexec
-sysctl, memfd_test sets up the sysctl with a value before creating the new
-process.  The new process then sends itself a SIGSTOP in order to wait for
-the parent to flip the sysctl value and send a SIGCONT signal.
+Adding a check for the valid value within the loop body, and terminating
+the loop and returning -EINVAL if the value is the same as the current
+value, can prevent this.
 
-This would work as intended if it wasn't the fact that the new process is
-being created with CLONE_NEWPID, which creates a new PID namespace and the
-new process has PID 1 in this namespace.  There're restrictions on sending
-signals to PID 1 and, although it's relaxed for other than root PID
-namespace, it's biting us here.  In this specific case the SIGSTOP sent by
-the new process is ignored (no error to kill() is returned) and it never
-stops its execution.  This is usually not noticiable as the parent usually
-manages to set the new sysctl value before the child has a chance to run
-and the test succeeds.  But if you run the test in a loop, it eventually
-reproduces:
+[1]
+INFO: task syz.4.21:6056 blocked for more than 143 seconds.
+Call Trace:
+ rwbase_write_lock+0x14f/0x750 kernel/locking/rwbase_rt.c:244
+ inode_lock include/linux/fs.h:1027 [inline]
+ ntfs_file_write_iter+0xe6/0x870 fs/ntfs3/file.c:1284
 
-	while [ 1 ]; do ./memfd_test >log 2>&1 || break; done; cat log
-
-So this patch replaces the SIGSTOP/SIGCONT synchronization with IPC
-semaphore.
-
-Link: https://lkml.kernel.org/r/a7776389-b3d6-4b18-b438-0b0e3ed1fd3b@work
-Fixes: 6469b66e3f5a ("selftests: improve vm.memfd_noexec sysctl tests")
-Signed-off-by: Aristeu Rozanski <aris@redhat.com>
-Cc: Aleksa Sarai <cyphar@cyphar.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: liuye <liuye@kylinos.cn>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bcf9e1868c1a0c7e04f1
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/memfd/memfd_test.c | 113 +++++++++++++++++++--
- 1 file changed, 105 insertions(+), 8 deletions(-)
+ fs/ntfs3/file.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/memfd/memfd_test.c b/tools/testing/selftests/memfd/memfd_test.c
-index 5b993924cc3f5..2ca07ea7202a5 100644
---- a/tools/testing/selftests/memfd/memfd_test.c
-+++ b/tools/testing/selftests/memfd/memfd_test.c
-@@ -18,6 +18,9 @@
- #include <sys/stat.h>
- #include <sys/syscall.h>
- #include <sys/wait.h>
-+#include <sys/types.h>
-+#include <sys/ipc.h>
-+#include <sys/sem.h>
- #include <unistd.h>
- #include <ctype.h>
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 732260087066d..5120bd7851694 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -1077,8 +1077,12 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
+ 			goto out;
  
-@@ -39,6 +42,20 @@
- 		    F_SEAL_EXEC)
- 
- #define MFD_NOEXEC_SEAL	0x0008U
-+union semun {
-+	int val;
-+	struct semid_ds *buf;
-+	unsigned short int *array;
-+	struct seminfo *__buf;
-+};
-+
-+/*
-+ * we use semaphores on nested wait tasks due the use of CLONE_NEWPID: the
-+ * child will be PID 1 and can't send SIGSTOP to themselves due special
-+ * treatment of the init task, so the SIGSTOP/SIGCONT synchronization
-+ * approach can't be used here.
-+ */
-+#define SEM_KEY 0xdeadbeef
- 
- /*
-  * Default is not to test hugetlbfs
-@@ -1333,8 +1350,22 @@ static int sysctl_nested(void *arg)
- 
- static int sysctl_nested_wait(void *arg)
- {
--	/* Wait for a SIGCONT. */
--	kill(getpid(), SIGSTOP);
-+	int sem = semget(SEM_KEY, 1, 0600);
-+	struct sembuf sembuf;
-+
-+	if (sem < 0) {
-+		perror("semget:");
-+		abort();
-+	}
-+	sembuf.sem_num = 0;
-+	sembuf.sem_flg = 0;
-+	sembuf.sem_op = 0;
-+
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		abort();
-+	}
-+
- 	return sysctl_nested(arg);
- }
- 
-@@ -1355,7 +1386,9 @@ static void test_sysctl_sysctl2_failset(void)
- 
- static int sysctl_nested_child(void *arg)
- {
--	int pid;
-+	int pid, sem;
-+	union semun semun;
-+	struct sembuf sembuf;
- 
- 	printf("%s nested sysctl 0\n", memfd_str);
- 	sysctl_assert_write("0");
-@@ -1389,23 +1422,53 @@ static int sysctl_nested_child(void *arg)
- 			   test_sysctl_sysctl2_failset);
- 	join_thread(pid);
- 
-+	sem = semget(SEM_KEY, 1, IPC_CREAT | 0600);
-+	if (sem < 0) {
-+		perror("semget:");
-+		return 1;
-+	}
-+	semun.val = 1;
-+	sembuf.sem_op = -1;
-+	sembuf.sem_flg = 0;
-+	sembuf.sem_num = 0;
-+
- 	/* Verify that the rules are actually inherited after fork. */
- 	printf("%s nested sysctl 0 -> 1 after fork\n", memfd_str);
- 	sysctl_assert_write("0");
- 
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl1_failset);
- 	sysctl_assert_write("1");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	printf("%s nested sysctl 0 -> 2 after fork\n", memfd_str);
- 	sysctl_assert_write("0");
- 
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl2_failset);
- 	sysctl_assert_write("2");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	/*
-@@ -1415,28 +1478,62 @@ static int sysctl_nested_child(void *arg)
- 	 */
- 	printf("%s nested sysctl 2 -> 1 after fork\n", memfd_str);
- 	sysctl_assert_write("2");
-+
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl2);
- 	sysctl_assert_write("1");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	printf("%s nested sysctl 2 -> 0 after fork\n", memfd_str);
- 	sysctl_assert_write("2");
-+
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl2);
- 	sysctl_assert_write("0");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	printf("%s nested sysctl 1 -> 0 after fork\n", memfd_str);
- 	sysctl_assert_write("1");
-+
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl1);
- 	sysctl_assert_write("0");
--	kill(pid, SIGCONT);
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
-+	semctl(sem, 0, IPC_RMID);
-+
- 	return 0;
- }
+ 		if (lcn == SPARSE_LCN) {
+-			ni->i_valid = valid =
+-				frame_vbo + ((u64)clen << sbi->cluster_bits);
++			valid = frame_vbo + ((u64)clen << sbi->cluster_bits);
++			if (ni->i_valid == valid) {
++				err = -EINVAL;
++				goto out;
++			}
++			ni->i_valid = valid;
+ 			continue;
+ 		}
  
 -- 
 2.51.0
