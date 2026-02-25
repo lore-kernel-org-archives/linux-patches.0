@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9869D2F7478;
-	Wed, 25 Feb 2026 06:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FA12F7478;
+	Wed, 25 Feb 2026 06:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002779; cv=none; b=HiI4zcZ4VPMVYrQrSOho2izQdnW8SBZFqZWi3wzqZkh8G6nFPy5eySgNgWYIrGR8qlgAJmziKEg4C1UeMpw5E32Af66lDYq3MJ6gGl7mk7vKnft5Tc/bIX2BFeHEM13ox5MZTdsudS++1KCz14Lj1MT+oVc2XkU9gHxWQ4ubn5E=
+	t=1772002780; cv=none; b=qAOrde5RiTUmaLMkdzXkphEWP+T5rOFzfujF0ytSZXeWdFn4HlVZlcAyI5FW18Qt+rMf3624UC/Z1tkiFbEg8DqXKro2yD64eNI+AupgG8Jq7u3y7WAdu5WEtGPM6CNdLEvpZNvnXEugNtvsH4dHSEeFb3wsF6fL7K/Me4c5K9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002779; c=relaxed/simple;
-	bh=IoBG2oAJM9jPvcOOkBeinKcZgm/jwA3YLMtIMWAnwzo=;
+	s=arc-20240116; t=1772002780; c=relaxed/simple;
+	bh=ktxLnNdxSB9MT3DGXytVKe8VZjjpOoO3LlcDWtr8QSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgFdz8OfDn97tPXsowKefUKxv6KZJJMHnOT7Czq4ytW1QvsJb42Uudm5SxD/CQLZ8euHhDRS4wTmH4yQf0ARAdyO8nFWN+j19yxnnHEhDTyadmnRIDH+nYrttEc+9rpkGpV6wGFOvEFAnfobxcZTj191/SXfHsiYlkOLpcM1xfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WltwbvPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=utXfPl8jIdviwsS/vKIVnDEHZhkwIBLD0e8HC+FcrD1p7jy6dXPPMZ3ylEkxdz7udlZPKblnW55OtxJXvBd01fn7O+fgeJ0+J7F0qAeR2ydRP9eRQHTN6bQ65fyfTE6oNgoG9Ph61h9BwPNLGp9CrEBlMEB1hLj5mn5qXlDpbXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpY7i+3g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WltwbvPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720CFC116D0;
-	Wed, 25 Feb 2026 06:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpY7i+3g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FDCC2BC9E;
+	Wed, 25 Feb 2026 06:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002779;
-	bh=IoBG2oAJM9jPvcOOkBeinKcZgm/jwA3YLMtIMWAnwzo=;
+	s=korg; t=1772002780;
+	bh=ktxLnNdxSB9MT3DGXytVKe8VZjjpOoO3LlcDWtr8QSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WltwbvPG2nTrf2cskdL5nDzX1uSqAbpycWmLKDDWeu3SADL23FKIBhbcZ+z+7tpnH
-	 sw53ePYNji6wRaH6YFgRm2kMfr/O9IHnFEgG4LVQqFlZXL1c2wjgFhrmK+0TC87EHd
-	 0lJurXh35v4B1CimFgLqlZ6pBWnMrESC3bXAD490=
+	b=bpY7i+3ggidjI3Z6yAI2g7FXv8eFWaq9fnOTbYjjGDsBDRavxtxX70gDxAbgRLju/
+	 WY04aEdeBnThkTNQyVs6jyFjYz1VSNNviodkHHbYPWxArOZkd4HDm0rT7loxwCOW8b
+	 RVEYsZDHt9ikUDLTFRkzf81/VzbyyVoC9ZWLLMi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
+	Brian Foster <bfoster@redhat.com>,
 	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.18 618/641] ext4: fix e4b bitmap inconsistency reports
-Date: Tue, 24 Feb 2026 17:25:44 -0800
-Message-ID: <20260225012403.483285913@linuxfoundation.org>
+Subject: [PATCH 6.18 619/641] ext4: fix dirtyclusters double decrement on fs shutdown
+Date: Tue, 24 Feb 2026 17:25:45 -0800
+Message-ID: <20260225012403.507420214@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,122 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongjian Sun <sunyongjian1@huawei.com>
+From: Brian Foster <bfoster@redhat.com>
 
-commit bdc56a9c46b2a99c12313122b9352b619a2e719e upstream.
+commit 94a8cea54cd935c54fa2fba70354757c0fc245e3 upstream.
 
-A bitmap inconsistency issue was observed during stress tests under
-mixed huge-page workloads. Ext4 reported multiple e4b bitmap check
-failures like:
+fstests test generic/388 occasionally reproduces a warning in
+ext4_put_super() associated with the dirty clusters count:
 
-ext4_mb_complex_scan_group:2508: group 350, 8179 free clusters as
-per group info. But got 8192 blocks
+  WARNING: CPU: 7 PID: 76064 at fs/ext4/super.c:1324 ext4_put_super+0x48c/0x590 [ext4]
 
-Analysis and experimentation confirmed that the issue is caused by a
-race condition between page migration and bitmap modification. Although
-this timing window is extremely narrow, it is still hit in practice:
+Tracing the failure shows that the warning fires due to an
+s_dirtyclusters_counter value of -1. IOW, this appears to be a
+spurious decrement as opposed to some sort of leak. Further tracing
+of the dirty cluster count deltas and an LLM scan of the resulting
+output identified the cause as a double decrement in the error path
+between ext4_mb_mark_diskspace_used() and the caller
+ext4_mb_new_blocks().
 
-folio_lock                        ext4_mb_load_buddy
-__migrate_folio
-  check ref count
-  folio_mc_copy                     __filemap_get_folio
-                                      folio_try_get(folio)
-                                  ......
-                                  mb_mark_used
-                                  ext4_mb_unload_buddy
-  __folio_migrate_mapping
-    folio_ref_freeze
-folio_unlock
+First, note that generic/388 is a shutdown vs. fsstress test and so
+produces a random set of operations and shutdown injections. In the
+problematic case, the shutdown triggers an error return from the
+ext4_handle_dirty_metadata() call(s) made from
+ext4_mb_mark_context(). The changed value is non-zero at this point,
+so ext4_mb_mark_diskspace_used() does not exit after the error
+bubbles up from ext4_mb_mark_context(). Instead, the former
+decrements both cluster counters and returns the error up to
+ext4_mb_new_blocks(). The latter falls into the !ar->len out path
+which decrements the dirty clusters counter a second time, creating
+the inconsistency.
 
-The root cause of this issue is that the fast path of load_buddy only
-increments the folio's reference count, which is insufficient to prevent
-concurrent folio migration. We observed that the folio migration process
-acquires the folio lock. Therefore, we can determine whether to take the
-fast path in load_buddy by checking the lock status. If the folio is
-locked, we opt for the slow path (which acquires the lock) to close this
-concurrency window.
+To avoid this problem and simplify ownership of the cluster
+reservation in this codepath, lift the counter reduction to a single
+place in the caller. This makes it more clear that
+ext4_mb_new_blocks() is responsible for acquiring cluster
+reservation (via ext4_claim_free_clusters()) in the !delalloc case
+as well as releasing it, regardless of whether it ends up consumed
+or returned due to failure.
 
-Additionally, this change addresses the following issues:
-
-When the DOUBLE_CHECK macro is enabled to inspect bitmap-related
-issues, the following error may be triggered:
-
-corruption in group 324 at byte 784(6272): f in copy != ff on
-disk/prealloc
-
-Analysis reveals that this is a false positive. There is a specific race
-window where the bitmap and the group descriptor become momentarily
-inconsistent, leading to this error report:
-
-ext4_mb_load_buddy                   ext4_mb_load_buddy
-  __filemap_get_folio(create|lock)
-    folio_lock
-  ext4_mb_init_cache
-    folio_mark_uptodate
-                                     __filemap_get_folio(no lock)
-                                     ......
-                                     mb_mark_used
-                                       mb_mark_used_double
-  mb_cmp_bitmaps
-                                       mb_set_bits(e4b->bd_bitmap)
-  folio_unlock
-
-The original logic assumed that since mb_cmp_bitmaps is called when the
-bitmap is newly loaded from disk, the folio lock would be sufficient to
-prevent concurrent access. However, this overlooks a specific race
-condition: if another process attempts to load buddy and finds the folio
-is already in an uptodate state, it will immediately begin using it without
-holding folio lock.
-
-Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Fixes: 0087d9fb3f29 ("ext4: Fix s_dirty_blocks_counter if block allocation failed with nodelalloc")
+Signed-off-by: Brian Foster <bfoster@redhat.com>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260106090820.836242-1-sunyongjian@huaweicloud.com
+Link: https://patch.msgid.link/20260113171905.118284-1-bfoster@redhat.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ fs/ext4/mballoc-test.c |    2 +-
+ fs/ext4/mballoc.c      |   21 +++++----------------
+ 2 files changed, 6 insertions(+), 17 deletions(-)
 
+--- a/fs/ext4/mballoc-test.c
++++ b/fs/ext4/mballoc-test.c
+@@ -567,7 +567,7 @@ test_mark_diskspace_used_range(struct ku
+ 
+ 	bitmap = mbt_ctx_bitmap(sb, TEST_GOAL_GROUP);
+ 	memset(bitmap, 0, sb->s_blocksize);
+-	ret = ext4_mb_mark_diskspace_used(ac, NULL, 0);
++	ret = ext4_mb_mark_diskspace_used(ac, NULL);
+ 	KUNIT_ASSERT_EQ(test, ret, 0);
+ 
+ 	max = EXT4_CLUSTERS_PER_GROUP(sb);
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -1712,16 +1712,17 @@ ext4_mb_load_buddy_gfp(struct super_bloc
+@@ -4181,8 +4181,7 @@ out_err:
+  * Returns 0 if success or error code
+  */
+ static noinline_for_stack int
+-ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
+-				handle_t *handle, unsigned int reserv_clstrs)
++ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac, handle_t *handle)
+ {
+ 	struct ext4_group_desc *gdp;
+ 	struct ext4_sb_info *sbi;
+@@ -4237,13 +4236,6 @@ ext4_mb_mark_diskspace_used(struct ext4_
+ 	BUG_ON(changed != ac->ac_b_ex.fe_len);
+ #endif
+ 	percpu_counter_sub(&sbi->s_freeclusters_counter, ac->ac_b_ex.fe_len);
+-	/*
+-	 * Now reduce the dirty block count also. Should not go negative
+-	 */
+-	if (!(ac->ac_flags & EXT4_MB_DELALLOC_RESERVED))
+-		/* release all the reserved blocks if non delalloc */
+-		percpu_counter_sub(&sbi->s_dirtyclusters_counter,
+-				   reserv_clstrs);
  
- 	/* Avoid locking the folio in the fast path ... */
- 	folio = __filemap_get_folio(inode->i_mapping, pnum, FGP_ACCESSED, 0);
--	if (IS_ERR(folio) || !folio_test_uptodate(folio)) {
-+	if (IS_ERR(folio) || !folio_test_uptodate(folio) || folio_test_locked(folio)) {
-+		/*
-+		 * folio_test_locked is employed to detect ongoing folio
-+		 * migrations, since concurrent migrations can lead to
-+		 * bitmap inconsistency. And if we are not uptodate that
-+		 * implies somebody just created the folio but is yet to
-+		 * initialize it. We can drop the folio reference and
-+		 * try to get the folio with lock in both cases to avoid
-+		 * concurrency.
-+		 */
- 		if (!IS_ERR(folio))
--			/*
--			 * drop the folio reference and try
--			 * to get the folio with lock. If we
--			 * are not uptodate that implies
--			 * somebody just created the folio but
--			 * is yet to initialize it. So
--			 * wait for it to initialize.
--			 */
- 			folio_put(folio);
- 		folio = __filemap_get_folio(inode->i_mapping, pnum,
- 				FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
-@@ -1763,7 +1764,7 @@ ext4_mb_load_buddy_gfp(struct super_bloc
- 	poff = block % blocks_per_page;
+ 	return err;
+ }
+@@ -6328,7 +6320,7 @@ repeat:
+ 			ext4_mb_pa_put_free(ac);
+ 	}
+ 	if (likely(ac->ac_status == AC_STATUS_FOUND)) {
+-		*errp = ext4_mb_mark_diskspace_used(ac, handle, reserv_clstrs);
++		*errp = ext4_mb_mark_diskspace_used(ac, handle);
+ 		if (*errp) {
+ 			ext4_discard_allocated_blocks(ac);
+ 			goto errout;
+@@ -6359,12 +6351,9 @@ errout:
+ out:
+ 	if (inquota && ar->len < inquota)
+ 		dquot_free_block(ar->inode, EXT4_C2B(sbi, inquota - ar->len));
+-	if (!ar->len) {
+-		if ((ar->flags & EXT4_MB_DELALLOC_RESERVED) == 0)
+-			/* release all the reserved blocks if non delalloc */
+-			percpu_counter_sub(&sbi->s_dirtyclusters_counter,
+-						reserv_clstrs);
+-	}
++	/* release any reserved blocks */
++	if (reserv_clstrs)
++		percpu_counter_sub(&sbi->s_dirtyclusters_counter, reserv_clstrs);
  
- 	folio = __filemap_get_folio(inode->i_mapping, pnum, FGP_ACCESSED, 0);
--	if (IS_ERR(folio) || !folio_test_uptodate(folio)) {
-+	if (IS_ERR(folio) || !folio_test_uptodate(folio) || folio_test_locked(folio)) {
- 		if (!IS_ERR(folio))
- 			folio_put(folio);
- 		folio = __filemap_get_folio(inode->i_mapping, pnum,
+ 	trace_ext4_allocate_blocks(ar, (unsigned long long)block);
+ 
 
 
