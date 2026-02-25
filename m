@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3375A2BAF7;
-	Wed, 25 Feb 2026 01:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441472BAF7;
+	Wed, 25 Feb 2026 01:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983064; cv=none; b=pfw/yO9c1Vn3j8BeGM8M5EcPBdBRnXUP56mE0JmeimABUiFNGtjFITvwWxCcwMQ7ewSTXM2vFhf7CaHsLrXT2pB+TUJoeMTlPUvyTGO1KnKh2wUD0XnhY2P/qNLQpacC8dbTnSX+xcfL/43iaF/F7W7T0PJiv3fu+91pWCSmB4s=
+	t=1771983065; cv=none; b=gHodCotjCRXoa6U32Qz+uW0HGg+xIUZZo570J7vAsyJKDsQu82z6KyXQRbROuihJu4aAYb3za7hKzGc7gQCtWHusoXrJTIS+OwnsxJeT/8R9G+3gt7YztA8rVOoZm//z+CN1+Y/l6JKEekDsN5lDjmSCyCz5va+JjePVTPXb/zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983064; c=relaxed/simple;
-	bh=9JahBHeCu6z8Qo3gpxjPsIN1537gxO+mKnDHWgELtew=;
+	s=arc-20240116; t=1771983065; c=relaxed/simple;
+	bh=AGvB3vNSRCzCx5nmhBw5sc4ueK9Ff1PsQ1+PvwqpeDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dj32zfoESxn0/eDPiW1yWLglhPxyCShwjKwlB7dkIlVzXn4mbfu0P9dMGAgSbm7j51AU5trS6JUwtLcXNu+pjQy6kOU+Rgmi0OMi48ZN8OKyxiKDrEECE8Fkx9LykA5Gvzjd7+ATKcuX1zURUyggfxqDvWUe9yXqMOx3qxGVggk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJr5i5jn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mx9ps23aDCcGOlasA9J7/IuYTax7qNU32nrYT0lZp8RAnZt+7Mv2rAzxNKrgdo6Ytsu4elvhF/2oFKTAW1nbo6PT1PtiLv7dYCSdq55wmB9X7peKna+RrUWHG7YSl9QRCTLG7UwRPiY7O0RdE/6e8fZLgA8o4siYsZepZ8gBWiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9G6+ipB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJr5i5jn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDEAC116D0;
-	Wed, 25 Feb 2026 01:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9G6+ipB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001DFC116D0;
+	Wed, 25 Feb 2026 01:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983064;
-	bh=9JahBHeCu6z8Qo3gpxjPsIN1537gxO+mKnDHWgELtew=;
+	s=korg; t=1771983065;
+	bh=AGvB3vNSRCzCx5nmhBw5sc4ueK9Ff1PsQ1+PvwqpeDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJr5i5jnr7smhTEBXgEHDWXHSRPwxwH9vzfSfz1mrTsQ25jgyxpJIJHBtt9aTE00z
-	 xvw1JrZDTTcpNR+v7n/XnG3bqab/SBBWZJNB9YG7tb1NIL5LDA7zCNMQ0m2JuKbGfB
-	 0HtQIeg0wePFSkGGyTYOzuIW/+BJuSG/H+koWcx0=
+	b=Q9G6+ipB1uCjUZ7Mxo0ulzXjwu2wxv3H7Oy2u0b0Lz0RaScIgSoD3ksJB7jWpzFjK
+	 dG83Xq1nLcBbi1IxP6KZviPvFdL3r0Ah3QoHmSfJpOqTyrri7IA3F66s6zY9MJQavx
+	 DAOL5aqegfMar+Ht4sWDv2I+h0X3LYdOGR+FLKxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Ketil Johnsen <ketil.johnsen@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 227/781] drm/panthor: Evict groups before VM termination
-Date: Tue, 24 Feb 2026 17:15:36 -0800
-Message-ID: <20260225012405.279281781@linuxfoundation.org>
+Subject: [PATCH 6.19 228/781] drm/display/dp_mst: Add protection against 0 vcpi
+Date: Tue, 24 Feb 2026 17:15:37 -0800
+Message-ID: <20260225012405.305009441@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,88 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ketil Johnsen <ketil.johnsen@arm.com>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-[ Upstream commit 565ed40b5fc1242f7538a016fce5a85f802d4fb5 ]
+[ Upstream commit 342ccffd9f77fc29fe1c05fd145e4d842bd2feaa ]
 
-Ensure all related groups are evicted and suspended before VM
-destruction takes place.
+When releasing a timeslot there is a slight chance we may end up
+with the wrong payload mask due to overflow if the delayed_destroy_work
+ends up coming into play after a DP 2.1 monitor gets disconnected
+which causes vcpi to become 0 then we try to make the payload =
+~BIT(vcpi - 1) which is a negative shift. VCPI id should never
+really be 0 hence skip changing the payload mask if VCPI is 0.
 
-This fixes an issue where panthor_vm_destroy() destroys and unmaps the
-heap context while there are still on slot groups using this.
-The FW will do a write out to the heap context when a CSG (group) is
-suspended, so a premature unmap of the heap context will cause a
-GPU page fault.
-This page fault is quite harmless, and do not affect the continued
-operation of the GPU.
+Otherwise it leads to
+<7> [515.287237] xe 0000:03:00.0: [drm:drm_dp_mst_get_port_malloc
+[drm_display_helper]] port ffff888126ce9000 (3)
+<4> [515.287267] -----------[ cut here ]-----------
+<3> [515.287268] UBSAN: shift-out-of-bounds in
+../drivers/gpu/drm/display/drm_dp_mst_topology.c:4575:36
+<3> [515.287271] shift exponent -1 is negative
+<4> [515.287275] CPU: 7 UID: 0 PID: 3108 Comm: kworker/u64:33 Tainted: G
+S U 6.17.0-rc6-lgci-xe-xe-3795-3e79699fa1b216e92+ #1 PREEMPT(voluntary)
+<4> [515.287279] Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
+<4> [515.287279] Hardware name: ASUS System Product Name/PRIME Z790-P
+WIFI, BIOS 1645 03/15/2024
+<4> [515.287281] Workqueue: drm_dp_mst_wq drm_dp_delayed_destroy_work
+[drm_display_helper]
+<4> [515.287303] Call Trace:
+<4> [515.287304] <TASK>
+<4> [515.287306] dump_stack_lvl+0xc1/0xf0
+<4> [515.287313] dump_stack+0x10/0x20
+<4> [515.287316] __ubsan_handle_shift_out_of_bounds+0x133/0x2e0
+<4> [515.287324] ? drm_atomic_get_private_obj_state+0x186/0x1d0
+<4> [515.287333] drm_dp_atomic_release_time_slots.cold+0x17/0x3d
+[drm_display_helper]
+<4> [515.287355] mst_connector_atomic_check+0x159/0x180 [xe]
+<4> [515.287546] drm_atomic_helper_check_modeset+0x4d9/0xfa0
+<4> [515.287550] ? __ww_mutex_lock.constprop.0+0x6f/0x1a60
+<4> [515.287562] intel_atomic_check+0x119/0x2b80 [xe]
+<4> [515.287740] ? find_held_lock+0x31/0x90
+<4> [515.287747] ? lock_release+0xce/0x2a0
+<4> [515.287754] drm_atomic_check_only+0x6a2/0xb40
+<4> [515.287758] ? drm_atomic_add_affected_connectors+0x12b/0x140
+<4> [515.287765] drm_atomic_commit+0x6e/0xf0
+<4> [515.287766] ? _pfx__drm_printfn_info+0x10/0x10
+<4> [515.287774] drm_client_modeset_commit_atomic+0x25c/0x2b0
+<4> [515.287794] drm_client_modeset_commit_locked+0x60/0x1b0
+<4> [515.287795] ? mutex_lock_nested+0x1b/0x30
+<4> [515.287801] drm_client_modeset_commit+0x26/0x50
+<4> [515.287804] __drm_fb_helper_restore_fbdev_mode_unlocked+0xdc/0x110
+<4> [515.287810] drm_fb_helper_hotplug_event+0x120/0x140
+<4> [515.287814] drm_fbdev_client_hotplug+0x28/0xd0
+<4> [515.287819] drm_client_hotplug+0x6c/0xf0
+<4> [515.287824] drm_client_dev_hotplug+0x9e/0xd0
+<4> [515.287829] drm_kms_helper_hotplug_event+0x1a/0x30
+<4> [515.287834] drm_dp_delayed_destroy_work+0x3df/0x410
+[drm_display_helper]
+<4> [515.287861] process_one_work+0x22b/0x6f0
+<4> [515.287874] worker_thread+0x1e8/0x3d0
+<4> [515.287879] ? __pfx_worker_thread+0x10/0x10
+<4> [515.287882] kthread+0x11c/0x250
+<4> [515.287886] ? __pfx_kthread+0x10/0x10
+<4> [515.287890] ret_from_fork+0x2d7/0x310
+<4> [515.287894] ? __pfx_kthread+0x10/0x10
+<4> [515.287897] ret_from_fork_asm+0x1a/0x30
 
-Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Ketil Johnsen <ketil.johnsen@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20251219093546.1227697-1-ketil.johnsen@arm.com
-Co-developed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6303
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Imre Deak <imre.deak@intel.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20251119094650.799135-1-suraj.kandpal@intel.com
+Stable-dep-of: e05b08d7d016 ("drm/atomic: convert drm_atomic_get_{old, new}_colorop_state() into proper functions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_mmu.c   |  4 ++++
- drivers/gpu/drm/panthor/panthor_sched.c | 14 ++++++++++++++
- drivers/gpu/drm/panthor/panthor_sched.h |  1 +
- 3 files changed, 19 insertions(+)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
-index f6339963e4960..9194bad4b6196 100644
---- a/drivers/gpu/drm/panthor/panthor_mmu.c
-+++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-@@ -1503,6 +1503,10 @@ static void panthor_vm_destroy(struct panthor_vm *vm)
+diff --git a/drivers/gpu/drm/display/drm_dp_mst_topology.c b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+index 64e5c176d5cce..be749dcad3b58 100644
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -4572,7 +4572,8 @@ int drm_dp_atomic_release_time_slots(struct drm_atomic_state *state,
+ 	if (!payload->delete) {
+ 		payload->pbn = 0;
+ 		payload->delete = true;
+-		topology_state->payload_mask &= ~BIT(payload->vcpi - 1);
++		if (payload->vcpi > 0)
++			topology_state->payload_mask &= ~BIT(payload->vcpi - 1);
+ 	}
  
- 	vm->destroyed = true;
- 
-+	/* Tell scheduler to stop all GPU work related to this VM */
-+	if (refcount_read(&vm->as.active_cnt) > 0)
-+		panthor_sched_prepare_for_vm_destruction(vm->ptdev);
-+
- 	mutex_lock(&vm->heaps.lock);
- 	panthor_heap_pool_destroy(vm->heaps.pool);
- 	vm->heaps.pool = NULL;
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 6ac4cec52f9e4..bd397d773d72b 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -2805,6 +2805,20 @@ void panthor_sched_report_mmu_fault(struct panthor_device *ptdev)
- 		panthor_sched_immediate_tick(ptdev);
- }
- 
-+void panthor_sched_prepare_for_vm_destruction(struct panthor_device *ptdev)
-+{
-+	/* FW can write out internal state, like the heap context, during CSG
-+	 * suspend. It is therefore important that the scheduler has fully
-+	 * evicted any pending and related groups before VM destruction can
-+	 * safely continue. Failure to do so can lead to GPU page faults.
-+	 * A controlled termination of a Panthor instance involves destroying
-+	 * the group(s) before the VM. This means any relevant group eviction
-+	 * has already been initiated by this point, and we just need to
-+	 * ensure that any pending tick_work() has been completed.
-+	 */
-+	flush_work(&ptdev->scheduler->tick_work.work);
-+}
-+
- void panthor_sched_resume(struct panthor_device *ptdev)
- {
- 	/* Force a tick to re-evaluate after a resume. */
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.h b/drivers/gpu/drm/panthor/panthor_sched.h
-index f4a475aa34c0a..9a8692de8aded 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.h
-+++ b/drivers/gpu/drm/panthor/panthor_sched.h
-@@ -50,6 +50,7 @@ void panthor_sched_suspend(struct panthor_device *ptdev);
- void panthor_sched_resume(struct panthor_device *ptdev);
- 
- void panthor_sched_report_mmu_fault(struct panthor_device *ptdev);
-+void panthor_sched_prepare_for_vm_destruction(struct panthor_device *ptdev);
- void panthor_sched_report_fw_events(struct panthor_device *ptdev, u32 events);
- 
- void panthor_fdinfo_gather_group_samples(struct panthor_file *pfile);
+ 	return 0;
 -- 
 2.51.0
 
