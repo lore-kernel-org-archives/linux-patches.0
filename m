@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E695920C012;
-	Wed, 25 Feb 2026 01:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3049D23D7CF;
+	Wed, 25 Feb 2026 01:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983358; cv=none; b=YoFiFP0Fu0UvDqp8duQjkHhl9DvGSowgk1U/zM0PFP1svIhvC0MJRawUEu3JYJ9gioL0NbU4WO/DBff9XnYRRoloLtrezjHwmiPm8p6j2k2mAoTsgGXTfTU7/CThmOJvdsNUwYw18h1cZnMuaxLYplDbgNYECEj9QLEtbgeCjyQ=
+	t=1771983359; cv=none; b=sxtaPhdI4uyThYwyYkzT1s97bclvOxq3xNTTOoJNZVp/GNGEPgq6JKByvf3G1lub89w/sDAs7FfIUoO3x2clPnl+zzkqXV1EXUIMog6J6IsxXf4i8pj6LxxSx7U1npdaf5/h6WBzPtJc+dMUF6CH7njy4aq1wbD8A/rBGCCaamA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983358; c=relaxed/simple;
-	bh=reHL0jNDARjTYeESqVGJPYg70r7HnOFpjwS/sGxBJh4=;
+	s=arc-20240116; t=1771983359; c=relaxed/simple;
+	bh=VcJqSKw2GWAEt4WmyLGvuZ4XLGdBAOYQ5e79mnVKfsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQAk0Fux2b8tqkNMbSWqVosBgrBwW69r85Vb8F62rSbkiPVnv6ClO92IEmPNTby6egZJXxpamrLyzqhupLg4G+G8nKf8jxFjdsxjOzdRshj6etumUgqesrG1DcNiZ6NwGTVEVQOmLaLIw5WN27j1+CK19vJWrGReWHxgQSlqICg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EaiWmHL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l44TlO9miC5HkxTZVgYX9F55a9EPsF23MTrQxbZ/DNkdZABesGLz2pRIfLEdXOmwWQ9HGy7fctrNLXXZj9KhggWPWugjEys9llzHSqofixPpjLzBOXm3UZDJ7RqE8xLkopITh8VlcQ+AHa0GhT+izGDE1m2CPxpFveorN+xA7ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw4QKwwZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EaiWmHL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0777C116D0;
-	Wed, 25 Feb 2026 01:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw4QKwwZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEFCC116D0;
+	Wed, 25 Feb 2026 01:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983357;
-	bh=reHL0jNDARjTYeESqVGJPYg70r7HnOFpjwS/sGxBJh4=;
+	s=korg; t=1771983359;
+	bh=VcJqSKw2GWAEt4WmyLGvuZ4XLGdBAOYQ5e79mnVKfsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0EaiWmHLh4FqyIDKlqTB+GH1MnQBJI3t9bNklL6Ql48Rd2xKKc4sUSm0MU+1pQD0X
-	 ts8Q65nVAbL3VOyFW7yNizzqOYbxCzXTxzJJhZW3fme80miWPvUg4D/HkmEPxXgWdo
-	 tSv5zblfLJ4SFoyn8RG0dN43E3f8d+PMUPSrq8nY=
+	b=Qw4QKwwZnbyJV8DzW8yKUlsn8poFw8227YUVUPuKb2ovWHYPP8FIlPl5k0ghsyHrw
+	 J0WsdXw7eiuAci+QvQd1WyeQHjIuilAN+/L3Pp20ns96+35mnzjyCESw1CDiNNr5KW
+	 8Q7uE/9BdlthtI4df7yJAp03ez07QesMw5ji3u2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 442/781] RDMA/hns: Return actual error code instead of fixed EINVAL
-Date: Tue, 24 Feb 2026 17:19:11 -0800
-Message-ID: <20260225012410.541896163@linuxfoundation.org>
+Subject: [PATCH 6.19 443/781] RDMA/hns: Fix RoCEv1 failure due to DSCP
+Date: Tue, 24 Feb 2026 17:19:12 -0800
+Message-ID: <20260225012410.568646091@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,43 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 8cda8acbb1f8c6c0fec45b7166bb558b5af59da8 ]
+[ Upstream commit 84bd5d60f0a2b9c763c5e6d0b3d8f4f61f6c5470 ]
 
-query_cqc() and query_mpt() may return various error codes in
-different cases. Return actual error code instead of fixed EINVAL.
+DSCP is not supported in RoCEv1, but get_dscp() is still called. If
+get_dscp() returns an error, it'll eventually cause create_ah to fail
+even when using RoCEv1.
 
-Fixes: f2b070f36d1b ("RDMA/hns: Support CQ's restrack raw ops for hns driver")
-Fixes: 3d67e7e236ad ("RDMA/hns: Support MR's restrack raw ops for hns driver")
+Correct the return value and avoid calling get_dscp() when using
+RoCEv1.
+
+Fixes: ee20cc17e9d8 ("RDMA/hns: Support DSCP")
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20260104064057.1582216-3-huangjunxian6@hisilicon.com
+Link: https://patch.msgid.link/20260104064057.1582216-4-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_restrack.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_ah.c    | 23 +++++++++---------
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 28 ++++++++++++----------
+ 2 files changed, 26 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_restrack.c b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-index 230187dda6a07..085791cc617c4 100644
---- a/drivers/infiniband/hw/hns/hns_roce_restrack.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-@@ -51,7 +51,7 @@ int hns_roce_fill_res_cq_entry_raw(struct sk_buff *msg, struct ib_cq *ib_cq)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_ah.c b/drivers/infiniband/hw/hns/hns_roce_ah.c
+index 0c1c32d23c884..8a605da8a93c9 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_ah.c
++++ b/drivers/infiniband/hw/hns/hns_roce_ah.c
+@@ -60,7 +60,7 @@ int hns_roce_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
+ 	u8 tclass = get_tclass(grh);
+ 	u8 priority = 0;
+ 	u8 tc_mode = 0;
+-	int ret;
++	int ret = 0;
  
- 	ret = hr_dev->hw->query_cqc(hr_dev, hr_cq->cqn, &context);
- 	if (ret)
--		return -EINVAL;
-+		return ret;
+ 	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08 && udata) {
+ 		ret = -EOPNOTSUPP;
+@@ -77,19 +77,18 @@ int hns_roce_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
+ 	ah->av.flowlabel = grh->flow_label;
+ 	ah->av.udp_sport = get_ah_udp_sport(ah_attr);
+ 	ah->av.tclass = tclass;
++	ah->av.sl = rdma_ah_get_sl(ah_attr);
  
- 	ret = nla_put(msg, RDMA_NLDEV_ATTR_RES_RAW, sizeof(context), &context);
+-	ret = hr_dev->hw->get_dscp(hr_dev, tclass, &tc_mode, &priority);
+-	if (ret == -EOPNOTSUPP)
+-		ret = 0;
+-
+-	if (ret && grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP)
+-		goto err_out;
++	if (grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP) {
++		ret = hr_dev->hw->get_dscp(hr_dev, tclass, &tc_mode, &priority);
++		if (ret == -EOPNOTSUPP)
++			ret = 0;
++		else if (ret)
++			goto err_out;
  
-@@ -177,7 +177,7 @@ int hns_roce_fill_res_mr_entry_raw(struct sk_buff *msg, struct ib_mr *ib_mr)
+-	if (tc_mode == HNAE3_TC_MAP_MODE_DSCP &&
+-	    grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP)
+-		ah->av.sl = priority;
+-	else
+-		ah->av.sl = rdma_ah_get_sl(ah_attr);
++		if (tc_mode == HNAE3_TC_MAP_MODE_DSCP)
++			ah->av.sl = priority;
++	}
  
- 	ret = hr_dev->hw->query_mpt(hr_dev, hr_mr->key, &context);
- 	if (ret)
--		return -EINVAL;
-+		return ret;
+ 	if (!check_sl_valid(hr_dev, ah->av.sl)) {
+ 		ret = -EINVAL;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index f95442798ddb3..1f37d74b466b5 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -5053,20 +5053,22 @@ static int hns_roce_set_sl(struct ib_qp *ibqp,
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	int ret;
  
- 	ret = nla_put(msg, RDMA_NLDEV_ATTR_RES_RAW, sizeof(context), &context);
+-	ret = hns_roce_hw_v2_get_dscp(hr_dev, get_tclass(&attr->ah_attr.grh),
+-				      &hr_qp->tc_mode, &hr_qp->priority);
+-	if (ret && ret != -EOPNOTSUPP &&
+-	    grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP) {
+-		ibdev_err_ratelimited(ibdev,
+-				      "failed to get dscp, ret = %d.\n", ret);
+-		return ret;
+-	}
++	hr_qp->sl = rdma_ah_get_sl(&attr->ah_attr);
  
+-	if (hr_qp->tc_mode == HNAE3_TC_MAP_MODE_DSCP &&
+-	    grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP)
+-		hr_qp->sl = hr_qp->priority;
+-	else
+-		hr_qp->sl = rdma_ah_get_sl(&attr->ah_attr);
++	if (grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP) {
++		ret = hns_roce_hw_v2_get_dscp(hr_dev,
++					      get_tclass(&attr->ah_attr.grh),
++					      &hr_qp->tc_mode, &hr_qp->priority);
++		if (ret && ret != -EOPNOTSUPP) {
++			ibdev_err_ratelimited(ibdev,
++					      "failed to get dscp, ret = %d.\n",
++					      ret);
++			return ret;
++		}
++
++		if (hr_qp->tc_mode == HNAE3_TC_MAP_MODE_DSCP)
++			hr_qp->sl = hr_qp->priority;
++	}
+ 
+ 	if (!check_sl_valid(hr_dev, hr_qp->sl))
+ 		return -EINVAL;
 -- 
 2.51.0
 
