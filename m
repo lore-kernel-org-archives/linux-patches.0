@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B65242D9B;
-	Wed, 25 Feb 2026 01:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1711D5ABA;
+	Wed, 25 Feb 2026 01:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983011; cv=none; b=D/P5mx+lR65JDw7ID6MjRVBubaNHRMzjEMUF/ducHmMdqrd9jRLpjxcbEQrMk/7d36hVKF2fd0YyvO5EpPr/8KT9gfVeSWd3ijqTFhTW6vSEomPrfqbntApAQu+Q8UHh4wTEN56eVqCWX8gZb+zGwrtW9Ktn0AEf1X9ZG+Mw58E=
+	t=1771983013; cv=none; b=knxVhgxkmV0uyxprGT65J26LoVdW5VEE2xFYvUYieHuBwL1R0kbwGp5k8syaY5jW+WAjoR/RVlLnu8Z8TeoXYk6HHEP1UJ4Eof4so8/NXxlwg1koJHdOrknyvNP1NPeOkZ9DE2CQ7BOdL7e7THOvNl59LJ+Zo2etno2mZzKMX6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983011; c=relaxed/simple;
-	bh=w8oRUMkb6/UIsVxUd5FY340Wc3eVOfr7pMJf9RdLmH0=;
+	s=arc-20240116; t=1771983013; c=relaxed/simple;
+	bh=t8a74ulXqJvdZ24f3ogmeIDZipPEstPb5Yn53RM+R2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=trkDcXSxcQJBum+7oVud3yY2bZWBA9z1pxDLABzZty29D2ZHU2W28biLyNuT1CyDp20Qr/FfrWLzzm1lvU5EXpXHIdCpSmVwBmuQQLw7Hs3qboFjomWrz07jCOTFXUiD3L0j8Cd1kzwo1i7apULcWjaQBqK+jcpY/ugqeb7VUsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5Bz3+jL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sagbey5FKpQOyyzXZS8wy0gBGDzf9liOGgcJnUNaeSVTrfVADplqup+8/l5fFhbrs67UA12zS89+rF92FwnFdx0rJCgnW2Ih+2Qo3tXZjm6igvyCM2RkhDolW9n8hsSviAApS7SS/MGnKg/Nd5QoM3rxDhUZfmLQ1VkJMNPbZCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbwaNF8v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5Bz3+jL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEEAC116D0;
-	Wed, 25 Feb 2026 01:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbwaNF8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9599C19423;
+	Wed, 25 Feb 2026 01:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983011;
-	bh=w8oRUMkb6/UIsVxUd5FY340Wc3eVOfr7pMJf9RdLmH0=;
+	s=korg; t=1771983013;
+	bh=t8a74ulXqJvdZ24f3ogmeIDZipPEstPb5Yn53RM+R2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w5Bz3+jLigWIcrng2iTkAHJ4P90XuNUboL95tBLTIO76XCltGNW3tbSEdyTIz7AqK
-	 fxac3HZl8+jd2ARCO90kH6cTCESlSId/gWzJBSnm4SZY4L372cN2xm1kx92KZ7M9Ls
-	 X8P0mVZBcqCUOmkta/8VaL6i3C+4UkVofpiEfAdU=
+	b=GbwaNF8vefHOf5JW4c2xFFMGUr/LFctuiyU6qNbtyZ4HYRuRK2WatnMHujhlqnlfN
+	 rHbnCTDdje7xLsJq5jSZ9Y7y/qlBDzFCT2kjw7NwoD8umf8i5KY+4/eL1CBt11+SQ2
+	 noZnQ+RW6lFwRcHjDB61LD0vlthEph1nkiJ5OpMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 180/781] arm64: dts: qcom: qrb4210-rb2: Fix UART3 wakeup IRQ storm
-Date: Tue, 24 Feb 2026 17:14:49 -0800
-Message-ID: <20260225012404.059451818@linuxfoundation.org>
+Subject: [PATCH 6.19 181/781] arm64: dts: qcom: sdm845-db845c: drop CS from SPIO0
+Date: Tue, 24 Feb 2026 17:14:50 -0800
+Message-ID: <20260225012404.085982095@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,39 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit c5dc4812f6bf397b82290c540085e9ec98b47b30 ]
+[ Upstream commit 8bfb696ccdc5bcfad7a45b84c2c8a36757070e19 ]
 
-Follow commit 9c92d36b0b1e ("arm64: dts: qcom: qrb2210-rb1: Fix UART3
-wakeup IRQ storm") and apply the similar fix to the RB2 platform.
+On SDM845 SPI uses hardware-provided chip select, while specifying
+cs-gpio makes the driver request GPIO pin, which on DB845c conflicts
+with the normal host controllers pinctrl entry.
 
-Having RX / TX pins as pull up and wakup interrupt as high-level
-triggered generates an interrupt storm when trying to suspend the
-device. Avoid the storm by using the falling edge trigger (as all other
-platforms do).
+Drop the cs-gpios property to restore SPI functionality.
 
-Fixes: cab60b166575 ("arm64: dts: qcom: qrb4210-rb2: Enable bluetooth")
+Fixes: cb29e7106d4e ("arm64: dts: qcom: db845c: Add support for MCP2517FD")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260106-wcn3990-pwrctl-v2-6-0386204328be@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260106-wcn3990-pwrctl-v2-7-0386204328be@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index 0cd36c54632fa..5f8613150bdd2 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -694,7 +694,7 @@ sdc2_card_det_n: sd-card-det-n-state {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index ce23f87e0316b..ad283a79bcdb4 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -850,7 +850,6 @@ &spi0 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&qup_spi0_default>;
+-	cs-gpios = <&tlmm 3 GPIO_ACTIVE_LOW>;
  
- &uart3 {
- 	interrupts-extended = <&intc GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
--			      <&tlmm 11 IRQ_TYPE_LEVEL_HIGH>;
-+			      <&tlmm 11 IRQ_TYPE_EDGE_FALLING>;
- 	pinctrl-0 = <&uart3_default>;
- 	pinctrl-1 = <&uart3_sleep>;
- 	pinctrl-names = "default", "sleep";
+ 	can@0 {
+ 		compatible = "microchip,mcp2517fd";
 -- 
 2.51.0
 
