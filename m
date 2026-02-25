@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A401C21D596;
-	Wed, 25 Feb 2026 01:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADABC1D5ABA;
+	Wed, 25 Feb 2026 01:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982956; cv=none; b=f3o47y11d7r0WWIzGm5zWqiFtyp7/qYwUWTchkUUfwkNLKtuKvx4+d54UsuirkIs0wQvrBI/4++nq68Z2PMrzIhmcQn2Wb6XHMOoNTKG1v0Q8TZPuVWgcgEH1Asdi5/LLzd/Bmcp88XRRzmzjHAL55pzKbYYrq/Akcw+orQLxp8=
+	t=1771982957; cv=none; b=KqGw2VO+gaqFHJcqbj4lui+7yituY4vOaqPnPUlC5N+xGGH+ESvh9uhagzxMbDr+nrQvSv6Jy6EZSqKv3nFUtjla7x0fNWmSUAVT4YhVgJHAD3HL5/KKq1G1bmEcaYxj1dIGRj3Dr3sbySF4gI1+yE9w7ohGfU6fh92/em6hfIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982956; c=relaxed/simple;
-	bh=/Z/V4S0G2xqJqfA2UBSVHLLl+PhSVWE9cAT81boftaU=;
+	s=arc-20240116; t=1771982957; c=relaxed/simple;
+	bh=nc1LS9gPQt0ZjMLGBqIgVVhrBVuUtvDjmjs1lOyK5UY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrIdeixZFD+Wow61wTjZp08wYo9l1OvCsuI6lT2UE5yFPU9qus5qyHcpjTu2ReUWPsWafGsGu1hbhA15g9Bz4JkU2Y2pqe1OX0hgKanfwQ6ec8H5BYMOppRHJ9ydJoJxXTwSduIO0mNeILt/85hvBHDuRAbyK+y2SgDj4OKAgXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMwwURzs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/M81OW2/+WkLXE7goxgjiQaumsRLdhtMSMUf05CaAFaOWcYWm9X3N/pkFG4hLfP025MaSMmzAnbr+Qnus5ONRhIjS+IyDhV2i7g9+r6ZzLSPRBSrdNhIe2XsMlX2Vk28+epSTpEzRDyGOLGz1yu1zNAoWkVfdTgldbYXT0GyKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjAJtkHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMwwURzs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FD5C116D0;
-	Wed, 25 Feb 2026 01:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjAJtkHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642BFC116D0;
+	Wed, 25 Feb 2026 01:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982956;
-	bh=/Z/V4S0G2xqJqfA2UBSVHLLl+PhSVWE9cAT81boftaU=;
+	s=korg; t=1771982957;
+	bh=nc1LS9gPQt0ZjMLGBqIgVVhrBVuUtvDjmjs1lOyK5UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMwwURzsev+gIhEv98gQVsZa8XWCfrCbMgzoDiiKGGQk+CPbVWebHJghmEFRoY3+K
-	 pe/MgnEA+uSnh7TryWMxqHzdjymZX8ZhmdtfKJJzgZ5BtwNQJ2zJlt8mlcbclsj5bp
-	 kG753YusSfngdXfpip2E3zZ5TbnmWg+pS2Jed8b0=
+	b=wjAJtkHss6GCEiEJ6Kf78P2xmGhgQvFyr3FMcZSqrPvjDwk9Gqsn+Kldo/daZWwWx
+	 mwgDz+mhDaLxUzjO5GB8D/hEVU7rnAVr0GkpC6P6WcY3K3sis1PzYwIyTapcOR5w6W
+	 P4etSv9+zEtw+cXtWNSmqAVIQUwwC3Z/GVh+tDMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Toshi Piazza <toshi.piazza@microsoft.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 133/781] bpf: Require frozen map for calculating map hash
-Date: Tue, 24 Feb 2026 17:14:02 -0800
-Message-ID: <20260225012402.931400348@linuxfoundation.org>
+Subject: [PATCH 6.19 134/781] crypto: starfive - Fix memory leak in starfive_aes_aead_do_one_req()
+Date: Tue, 24 Feb 2026 17:14:03 -0800
+Message-ID: <20260225012402.956396630@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,49 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: KP Singh <kpsingh@kernel.org>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit a2c86aa621c22f2a7e26c654f936d65cfff0aa91 ]
+[ Upstream commit ccb679fdae2e62ed92fd9acb25ed809c0226fcc6 ]
 
-Currently, bpf_map_get_info_by_fd calculates and caches the hash of the
-map regardless of the map's frozen state.
+The starfive_aes_aead_do_one_req() function allocates rctx->adata with
+kzalloc() but fails to free it if sg_copy_to_buffer() or
+starfive_aes_hw_init() fails, which lead to memory leaks.
 
-This leads to a TOCTOU bug where userspace can call
-BPF_OBJ_GET_INFO_BY_FD to cache the hash and then modify the map
-contents before freezing.
+Since rctx->adata is unconditionally freed after the write_adata
+operations, ensure consistent cleanup by freeing the allocation in these
+earlier error paths as well.
 
-Therefore, a trusted loader can be tricked into verifying the stale hash
-while loading the modified contents.
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-Fix this by returning -EPERM if the map is not frozen when the hash is
-requested. This ensures the hash is only generated for the final,
-immutable state of the map.
-
-Fixes: ea2e6467ac36 ("bpf: Return hashes of maps in BPF_OBJ_GET_INFO_BY_FD")
-Reported-by: Toshi Piazza <toshi.piazza@microsoft.com>
-Signed-off-by: KP Singh <kpsingh@kernel.org>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260205070755.695776-1-kpsingh@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 7467147ef9bf ("crypto: starfive - Use dma for aes requests")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/crypto/starfive/jh7110-aes.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index f89aa142f71b8..ce7db2f3be6f6 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -5314,6 +5314,9 @@ static int bpf_map_get_info_by_fd(struct file *file,
- 		if (info.hash_size != SHA256_DIGEST_SIZE)
- 			return -EINVAL;
+diff --git a/drivers/crypto/starfive/jh7110-aes.c b/drivers/crypto/starfive/jh7110-aes.c
+index 426b24889af85..01195664cc7cd 100644
+--- a/drivers/crypto/starfive/jh7110-aes.c
++++ b/drivers/crypto/starfive/jh7110-aes.c
+@@ -669,8 +669,10 @@ static int starfive_aes_aead_do_one_req(struct crypto_engine *engine, void *areq
+ 			return -ENOMEM;
  
-+		if (!READ_ONCE(map->frozen))
-+			return -EPERM;
-+
- 		err = map->ops->map_get_hash(map, SHA256_DIGEST_SIZE, map->sha);
- 		if (err != 0)
- 			return err;
+ 		if (sg_copy_to_buffer(req->src, sg_nents_for_len(req->src, cryp->assoclen),
+-				      rctx->adata, cryp->assoclen) != cryp->assoclen)
++				      rctx->adata, cryp->assoclen) != cryp->assoclen) {
++			kfree(rctx->adata);
+ 			return -EINVAL;
++		}
+ 	}
+ 
+ 	if (cryp->total_in)
+@@ -681,8 +683,11 @@ static int starfive_aes_aead_do_one_req(struct crypto_engine *engine, void *areq
+ 	ctx->rctx = rctx;
+ 
+ 	ret = starfive_aes_hw_init(ctx);
+-	if (ret)
++	if (ret) {
++		if (cryp->assoclen)
++			kfree(rctx->adata);
+ 		return ret;
++	}
+ 
+ 	if (!cryp->assoclen)
+ 		goto write_text;
 -- 
 2.51.0
 
