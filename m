@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD0F1E2834;
-	Wed, 25 Feb 2026 01:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5330C18DB2A;
+	Wed, 25 Feb 2026 01:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983146; cv=none; b=kwKKHsXmVAs4k7wUp0HJsbl2SaTjHbfOaJmAJGDyqPW8UQTF3fqVQJFG8diRP7b9qvC/TQsFGhRm05iHXJlAe+voKEn9/Dxh6uQL8hlSL5YCcfAI+ySMjJnkySoxd9X6VjhWFeQKxG+XB8tQOuT1S0X9WZrjJIo0YDxEOwbiy5o=
+	t=1771983147; cv=none; b=OUNjTAi2vdUAdyT50sgG3VmSAoZ7UIaTWnnEdH7Edp9O408xj9exXQKTyIE7d+opAqLLOTBdwo79fRb9bhqhsY1fmXAfZ7DFEWxc2m9ZsL1JLzLUaLcxaxz9h4DaTsO4JLZxDkM+MEdB3RBX5zQhNkCHfp+V+tEMHKR/ss35S/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983146; c=relaxed/simple;
-	bh=GTdNBxEgwYviG4Kwq0HUD+NfetBo73c6FG9tA92KfeY=;
+	s=arc-20240116; t=1771983147; c=relaxed/simple;
+	bh=eayvUpfs1mNH3n0yTzyWGSrFFbCl2P+8miaSqwh3k4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AcNRDQV7yeqc1wnHb5JYjhjcgYM4NP3vHEZqVmOBcs4cCKOARiP4O+Y2YwvQ+Wurpqe8AhZpJNkczo1UP/eRMAO8daEI4GLE/SYA7Q5z24zbGGqc00Q0sD0RozoB0h6izfi+bzRXYapTM91nNu4QEn3gpD9sKxRj8832Id40DjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDBnCC9o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UWW9u+8Pcd/VJUjwg0ZBvfgL3CsxAS7WzEgOr7MxBBtul9sX8QQbkT74Ka1DNBBPQiRNkHUThTvntZnCrnlx2l9lXnQEXl4uXgB9+VkWPyhRiRZE+Ha5dYqJQRknm0aU3nUfJmr8tvBTkGnCPHJeWAQLwOlyaoAOJzdMaF+QXW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=078AUhaE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDBnCC9o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E8DC116D0;
-	Wed, 25 Feb 2026 01:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="078AUhaE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB17C116D0;
+	Wed, 25 Feb 2026 01:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983145;
-	bh=GTdNBxEgwYviG4Kwq0HUD+NfetBo73c6FG9tA92KfeY=;
+	s=korg; t=1771983147;
+	bh=eayvUpfs1mNH3n0yTzyWGSrFFbCl2P+8miaSqwh3k4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jDBnCC9oz6+XOsF3zDK0o7cNKvHvUk5zX1PyfbG7wEjc6yCgt9M02U6CGd4ForSlD
-	 KwmE3JidWwTFbOmOJnAfnHcF5u/ewQ+GsDAtBDqaXnMtSkAv8lsodMnkx5gefo0ccC
-	 bx7yy1/lcjjHRSTf1LcFtwaTcwO4ekRL3YnYC26k=
+	b=078AUhaEmMVt1mtvRUjR7xODESt82sQJfMF+GBRdfv8lpI4DtuAbywg0EF1p5/p6B
+	 6ZrwWYlHqIlh7pNcCG1gXl24NSE280FHTTyDqbNOx3U480DRJXGhgBO4qutdt3Ow8v
+	 psWcxuUPu0U3J4n7d+xQkk8f249zHsusCw7QNW28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 257/781] HID: playstation: Add missing check for input_ff_create_memless
-Date: Tue, 24 Feb 2026 17:16:06 -0800
-Message-ID: <20260225012406.008590727@linuxfoundation.org>
+Subject: [PATCH 6.19 258/781] drm/amdgpu/ttm: Pin 4K MMIO_REMAP Singleton BO at Init v2
+Date: Tue, 24 Feb 2026 17:16:07 -0800
+Message-ID: <20260225012406.032537433@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -45,45 +46,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit e6807641ac94e832988655a1c0e60ccc806b76dc ]
+[ Upstream commit de8955508b72f8a88afc3f2cbb62334d5f79ccc3 ]
 
-The ps_gamepad_create() function calls input_ff_create_memless()
-without verifying its return value,  which can lead to incorrect
-behavior or potential crashes when FF effects are triggered.
+MMIO_REMAP (HDP flush page) is a hardware I/O window exposed via a PCI
+BAR.  It must not migrate or be evicted.
 
-Add a check for the return value of input_ff_create_memless().
+Allocate a single 4 KB GEM BO in AMDGPU_GEM_DOMAIN_MMIO_REMAP during TTM
+initialization when the hardware exposes a remap bus address and the
+host page size is <= 4 KiB. Reserve the BO and pin it at the TTM level
+so it remains fixed for its lifetime. No CPU mapping is established
+here.
 
-Fixes: 51151098d7ab ("HID: playstation: add DualSense classic rumble support.")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+On teardown, reserve, unpin, and free the BO if present.
+
+This prepares the object to be shared (e.g., via dma-buf) without
+triggering placement changes or no CPU-access migration
+
+v2: Added extra NULL checks
+
+Suggested-by: Christian König <christian.koenig@amd.com>
+Suggested-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 96e97a562d06 ("drm/amdgpu: Drop MMIO_REMAP domain bit and keep it Internal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-playstation.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 32 +++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
-index e4dfcf26b04e7..2ec6d4445e84b 100644
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -774,7 +774,9 @@ ps_gamepad_create(struct hid_device *hdev,
- #if IS_ENABLED(CONFIG_PLAYSTATION_FF)
- 	if (play_effect) {
- 		input_set_capability(gamepad, EV_FF, FF_RUMBLE);
--		input_ff_create_memless(gamepad, NULL, play_effect);
-+		ret = input_ff_create_memless(gamepad, NULL, play_effect);
-+		if (ret)
-+			return ERR_PTR(ret);
- 	}
- #endif
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index 2b931e855abd9..ac67886acaa24 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -1820,6 +1820,10 @@ static void amdgpu_ttm_pools_fini(struct amdgpu_device *adev)
+  * PAGE_SIZE is <= AMDGPU_GPU_PAGE_SIZE (4K). The BO is created as a regular
+  * GEM object (amdgpu_bo_create).
+  *
++ * The BO is created as a normal GEM object via amdgpu_bo_create(), then
++ * reserved and pinned at the TTM level (ttm_bo_pin()) so it can never be
++ * migrated or evicted. No CPU mapping is established here.
++ *
+  * Return:
+  *  * 0 on success or intentional skip (feature not present/unsupported)
+  *  * negative errno on allocation failure
+@@ -1848,7 +1852,26 @@ static int amdgpu_ttm_mmio_remap_bo_init(struct amdgpu_device *adev)
+ 	if (r)
+ 		return r;
  
++	r = amdgpu_bo_reserve(adev->rmmio_remap.bo, true);
++	if (r)
++		goto err_unref;
++
++	/*
++	 * MMIO_REMAP is a fixed I/O placement (AMDGPU_PL_MMIO_REMAP).
++	 * Use TTM-level pin so the BO cannot be evicted/migrated,
++	 * independent of GEM domains. This
++	 * enforces the “fixed I/O window”
++	 */
++	ttm_bo_pin(&adev->rmmio_remap.bo->tbo);
++
++	amdgpu_bo_unreserve(adev->rmmio_remap.bo);
+ 	return 0;
++
++err_unref:
++	if (adev->rmmio_remap.bo)
++		amdgpu_bo_unref(&adev->rmmio_remap.bo);
++	adev->rmmio_remap.bo = NULL;
++	return r;
+ }
+ 
+ /**
+@@ -1860,6 +1883,15 @@ static int amdgpu_ttm_mmio_remap_bo_init(struct amdgpu_device *adev)
+  */
+ static void amdgpu_ttm_mmio_remap_bo_fini(struct amdgpu_device *adev)
+ {
++	struct amdgpu_bo *bo = adev->rmmio_remap.bo;
++
++	if (!bo)
++		return;   /* <-- safest early exit */
++
++	if (!amdgpu_bo_reserve(adev->rmmio_remap.bo, true)) {
++		ttm_bo_unpin(&adev->rmmio_remap.bo->tbo);
++		amdgpu_bo_unreserve(adev->rmmio_remap.bo);
++	}
+ 	amdgpu_bo_unref(&adev->rmmio_remap.bo);
+ 	adev->rmmio_remap.bo = NULL;
+ }
 -- 
 2.51.0
 
