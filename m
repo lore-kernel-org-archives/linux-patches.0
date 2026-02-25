@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE5718DB2A;
-	Wed, 25 Feb 2026 01:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062B518DB2A;
+	Wed, 25 Feb 2026 01:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983170; cv=none; b=eCucX1ETlMwGXjFHBYwHbp9R7RzLiQXQzfHH+ZKIBlDUj8xeorRfzsNUcrawg1EE6Cy4NQ3erNWwguOwlBB8M6aw7QcPDd2+EaXk+aSttUjqBZc7FM7pjlS7Z0wuGUcxMaIzTBEXYWTG/tytOEwxAAwWAPrZiTGVv03/y34Zhg0=
+	t=1771983171; cv=none; b=i6mrCZ2w9mO9VTe8+FX/CuEulVob7t2hFVQjNkCc33fc9mnG/3DJiGk/yc1+NMSuMfbkZoInlT2cscPiBzJsKyRLats+90Cr8mQpugvaCiwOs738kSICEQ3OS3Rmjcf74fe+ZJnob7Vh0hsqP4dC3oEEyFb2Nt8Rh/AR5U2P/5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983170; c=relaxed/simple;
-	bh=Qn5hclG+WB+ZkAxZLLjTDbsGQhiNqe0Y2UU+Bo2UnH4=;
+	s=arc-20240116; t=1771983171; c=relaxed/simple;
+	bh=0fbi8Q6r1bZHmPbrqz9AbHnZI4a7D0L/9L0JjrpbpRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSxIdXXE8qJHwRzn80if+7NwqdmjJ7i6jBvE3NGcH17eszPMOdwwubAUpQBj5yAkAemg7T+hFYnG9IMQDluocjwgAdOTNx4lhJhENDOXqWV6W4nRwnKOXjK0rwWmYc6tgIYHVGKNeIHLIfPfXhJ+zBE0nWNO8X4VV7MVGMtQApY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQLySLLH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ew+/UOmSP3SaVhecSZOKFYas1mEZOY72ccKvBxEGBsfRljlLmqGBB6pQWgYNyf/QvOv1ylhWTWHEjBOeIrqnKYc/9fFfh9QskAhIlYZg2u1qCKbHea023l07Ld61Ei+pHk5HWDfNByDkD3DOTCdgYLsrGZig2DIfTImdmmrMv9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8gbkcsr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQLySLLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E320BC116D0;
-	Wed, 25 Feb 2026 01:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8gbkcsr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FB2C116D0;
+	Wed, 25 Feb 2026 01:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1771983170;
-	bh=Qn5hclG+WB+ZkAxZLLjTDbsGQhiNqe0Y2UU+Bo2UnH4=;
+	bh=0fbi8Q6r1bZHmPbrqz9AbHnZI4a7D0L/9L0JjrpbpRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQLySLLHt8E7gORhkHo2xA1h7EwkHRxCBBMKqhl8UPK2NNqhMuOSyp/reQZCF8nLj
-	 w+1qLkvLc5f7rslBqKAdYJhqzP+tKfO5l7jL8KHjutcSQZBZ879/v8Od2uPuBNtWHA
-	 sAKuEszSz9E+vgjsRN6OfL1ebw4RkQ4q6b4ef8ts=
+	b=q8gbkcsrPp3EcgGkEdW9364X1LXHtUNV8oZ3rrz8HPII4e1uhjksHOp3Bk5DsGP5N
+	 QWn2eNpWQT6/U95QoCu98iSX5S8uewDcrDSxiZUgPudqZYg7+j6LElQXiCSH+Z3CsX
+	 M0ZCWKMJVIHHFxDpZ5F6OIg8lGNPgnKAkRl14ypw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@google.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Huang Chenming <chenming.huang@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 322/781] PCI/PM: Avoid redundant delays on D3hot->D3cold
-Date: Tue, 24 Feb 2026 17:17:11 -0800
-Message-ID: <20260225012407.600277934@linuxfoundation.org>
+Subject: [PATCH 6.19 323/781] wifi: cfg80211: Fix use_for flag update on BSS refresh
+Date: Tue, 24 Feb 2026 17:17:12 -0800
+Message-ID: <20260225012407.625552045@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,60 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Norris <briannorris@google.com>
+From: Huang Chenming <chenming.huang@oss.qualcomm.com>
 
-[ Upstream commit 4d982084507d663df160546c4c48066a8887ed89 ]
+[ Upstream commit 4073ea516106e5f98ed0476f89cdede8baa98d37 ]
 
-When transitioning to D3cold, __pci_set_power_state() first transitions to
-D3hot. If the device was already in D3hot, this adds excess work:
+Userspace may fail to connect to certain BSS that were initially
+marked as unusable due to regulatory restrictions (use_for = 0,
+e.g., 6 GHz power type mismatch). Even after these restrictions
+are removed and the BSS becomes usable, connection attempts still
+fail.
 
-  (a) read/modify/write PMCSR; and
-  (b) excess delay (pci_dev_d3_sleep()).
+The issue occurs in cfg80211_update_known_bss() where the use_for
+flag is updated using bitwise AND (&=) instead of direct assignment.
+Once a BSS is marked with use_for = 0, the AND operation masks out
+any subsequent non-zero values, permanently keeping the flag at 0.
+This causes __cfg80211_get_bss(), invoked by nl80211_assoc_bss(), to
+fail the check "(bss->pub.use_for & use_for) != use_for", thereby
+blocking association.
 
-For (b), we already performed the necessary delay on the previous D3hot
-entry; this was extra noticeable when evaluating runtime PM transition
-latency.
+Replace the bitwise AND operation with direct assignment so the use_for
+flag accurately reflects the current BSS state.
 
-Check whether we're already in the target state before continuing.
-
-Note that __pci_set_power_state() already does this same check for other
-state transitions, but D3cold is special because __pci_set_power_state()
-converts it to D3hot for the purposes of PMCSR.
-
-This seems to be an oversight in commit 0aacdc957401 ("PCI/PM: Clean up
-pci_set_low_power_state()").
-
-Fixes: 0aacdc957401 ("PCI/PM: Clean up pci_set_low_power_state()")
-Signed-off-by: Brian Norris <briannorris@google.com>
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-[bhelgaas: reverse test to match other "dev->current_state == state" cases]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20251003154008.1.I7a21c240b30062c66471329567a96dceb6274358@changeid
+Fixes: d02a12b8e4bb ("wifi: cfg80211: add BSS usage reporting")
+Signed-off-by: Huang Chenming <chenming.huang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251209025733.2098456-1-chenming.huang@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/wireless/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 13dbb405dc31f..86ccbd0efb495 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1488,6 +1488,9 @@ static int pci_set_low_power_state(struct pci_dev *dev, pci_power_t state, bool
- 	   || (state == PCI_D2 && !dev->d2_support))
- 		return -EIO;
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 7546647752fd8..eb0e77813d466 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1959,7 +1959,7 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
+ 	ether_addr_copy(known->parent_bssid, new->parent_bssid);
+ 	known->pub.max_bssid_indicator = new->pub.max_bssid_indicator;
+ 	known->pub.bssid_index = new->pub.bssid_index;
+-	known->pub.use_for &= new->pub.use_for;
++	known->pub.use_for = new->pub.use_for;
+ 	known->pub.cannot_use_reasons = new->pub.cannot_use_reasons;
+ 	known->bss_source = new->bss_source;
  
-+	if (dev->current_state == state)
-+		return 0;
-+
- 	pci_read_config_word(dev, dev->pm_cap + PCI_PM_CTRL, &pmcsr);
- 	if (PCI_POSSIBLE_ERROR(pmcsr)) {
- 		pci_err(dev, "Unable to change power state from %s to %s, device inaccessible\n",
 -- 
 2.51.0
 
