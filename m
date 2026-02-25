@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86271258EF9;
-	Wed, 25 Feb 2026 01:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4101D5141;
+	Wed, 25 Feb 2026 01:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983523; cv=none; b=CADjE6ZYNK0hlo36J9cm92LJmF/BhMFBF5hV3uhEQWITije12tz5zuRBXiP2EkW6TZkNJ7984cD0WQ701RbRGPrffi4lde33KnS9UeaTZrbvzKVIyx6DaYEeEeZJmUbyMMWoQBiwXs/UNI07VPr7uivc+iUPsQIgFWlO+834RQk=
+	t=1771983524; cv=none; b=UuStNXGzbZsL68wzkU0bqnX0CzP9pnOYQ+0Q7sA8zhlvmug65Fk84IMJs/eTY1Put82VDvf17bKz71iE8wE+alpjCGmu5Q6rbMnQCr6tad9zNjf2vvXCUqVLCJ+ep2YQZjvePaUvTH6uC9dlqRn5yat3yrqRGYzgLZoQFHGE36o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983523; c=relaxed/simple;
-	bh=/r+5Y3/Wx3rV9tP+WNWt267zVm1fSwEhXao/DLnD4g8=;
+	s=arc-20240116; t=1771983524; c=relaxed/simple;
+	bh=bNG3UjwNVtivgh0mTP6aQ6j3Smrhhwy6haRYUWb2cIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hocg4tYQGeIK6zMoed9PhpsNTWN/BVNlsr6wFgBTZbC88I7n15xpM7B/6/2I06iCJwhey8OkpZ1uuh4VGCFlCf9smI50LN6GtYFRI91ghtzSLKDjSibP3svLZayPzMBNGdENliBVbFlvoRzghCCUwic68HFn6q51Ct9qweFPonw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7/wgifY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f3WM5vxoOXxOOGI4QxEA+9B8+BxqEHX+Qee+VwUm0vXH7fy58QSePjvJNp5cMBbXx/HfdXn5jyEcAsb4+L7xnK+3OOxAGupS3vyBQnBH9FUcNsXBS5+z/zITUWtsa/SjctI5jpe1Ca5i9x3o0bNdLPWQ4qwWZ809AIYI7rz7MA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIwMrega; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7/wgifY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D77C116D0;
-	Wed, 25 Feb 2026 01:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIwMrega"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56897C116D0;
+	Wed, 25 Feb 2026 01:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983523;
-	bh=/r+5Y3/Wx3rV9tP+WNWt267zVm1fSwEhXao/DLnD4g8=;
+	s=korg; t=1771983524;
+	bh=bNG3UjwNVtivgh0mTP6aQ6j3Smrhhwy6haRYUWb2cIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7/wgifYtmDFiObTx/rHnuAgt/X3gIl8BfP0uQs8blsXlyCR65OfBuIetfI504ub1
-	 Nm0SZkKJEO53knoVr6tzuQlyRK/7KwinQnKUT+0kcnHGpdhaT6DIF5hw5GGjZCDIST
-	 ZMYZRu+uU/ryQe989DeFvhVkn7X+6hydEuE/XH9I=
+	b=OIwMregaoa6ZUmwU1wKBA+6eVSTILKm2o7nDQ/aH3oZtlaf4JjzULaWlGQ6FnaVFf
+	 xXEi+I981N5eOFIzasaEl2L7AB2dyz9Thy/q37815vVAm9OVzMwT1eRqTtSJK5h0jH
+	 hvtt+8n1vHGZKR3LgF0U9xdMGkSI6P6dsxZFjQIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ralf Lici <ralf@mandelbit.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 631/781] cpuidle: Skip governor when only one idle state is available
-Date: Tue, 24 Feb 2026 17:22:20 -0800
-Message-ID: <20260225012415.286207835@linuxfoundation.org>
+Subject: [PATCH 6.19 632/781] ovpn: set sk_user_data before overriding callbacks
+Date: Tue, 24 Feb 2026 17:22:21 -0800
+Message-ID: <20260225012415.310805183@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,57 +52,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit e5c9ffc6ae1bcdb1062527d611043681ac301aca ]
+[ Upstream commit 93686c472eb7b09a51b97a096449e7092fefcd1f ]
 
-On certain platforms (PowerNV systems without a power-mgt DT node),
-cpuidle may register only a single idle state. In cases where that
-single state is a polling state (state 0), the ladder governor may
-incorrectly treat state 1 as the first usable state and pass an
-out-of-bounds index. This can lead to a NULL enter callback being
-invoked, ultimately resulting in a system crash.
+During initialization, we override socket callbacks and set sk_user_data
+to an ovpn_socket instance. Currently, these two operations are
+decoupled: callbacks are overridden before sk_user_data is set. While
+existing callbacks perform safety checks for NULL or non-ovpn
+sk_user_data, this condition causes a "half-formed" state where valid
+packets arriving during attachment trigger error logs (e.g., "invoked on
+non ovpn socket").
 
-[   13.342636] cpuidle-powernv : Only Snooze is available
-[   13.351854] Faulting instruction address: 0x00000000
-[   13.376489] NIP [0000000000000000] 0x0
-[   13.378351] LR  [c000000001e01974] cpuidle_enter_state+0x2c4/0x668
+Set sk_user_data before overriding the callbacks so that it can be
+accessed safely from them. Since we already check that the socket has no
+sk_user_data before setting it, this remains safe even if an interrupt
+accesses the socket after sk_user_data is set but before the callbacks
+are overridden.
 
-Fix this by adding a bail-out in cpuidle_select() that returns state 0
-directly when state_count <= 1, bypassing the governor and keeping the
-tick running.
+This also requires initializing all protocol-specific fields (such as
+tcp_tx_work and peer links) before calling ovpn_socket_attach, ensuring
+the ovpn_socket is fully formed before it becomes visible to any
+callback.
 
-Fixes: dc2251bf98c6 ("cpuidle: Eliminate the CPUIDLE_DRIVER_STATE_START symbol")
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260216185005.1131593-2-aboorvad@linux.ibm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: f6226ae7a0cd ("ovpn: introduce the ovpn_socket object")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/cpuidle.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ovpn/socket.c | 39 +++++++++++++++++++++------------------
+ drivers/net/ovpn/tcp.c    |  9 +++++++--
+ drivers/net/ovpn/udp.c    |  1 +
+ 3 files changed, 29 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
-index c7876e9e024f9..65fbb8e807b97 100644
---- a/drivers/cpuidle/cpuidle.c
-+++ b/drivers/cpuidle/cpuidle.c
-@@ -359,6 +359,16 @@ noinstr int cpuidle_enter_state(struct cpuidle_device *dev,
- int cpuidle_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 		   bool *stop_tick)
- {
-+	/*
-+	 * If there is only a single idle state (or none), there is nothing
-+	 * meaningful for the governor to choose. Skip the governor and
-+	 * always use state 0 with the tick running.
+diff --git a/drivers/net/ovpn/socket.c b/drivers/net/ovpn/socket.c
+index 9750871ab65ce..448cee3b3f9fa 100644
+--- a/drivers/net/ovpn/socket.c
++++ b/drivers/net/ovpn/socket.c
+@@ -200,6 +200,22 @@ struct ovpn_socket *ovpn_socket_new(struct socket *sock, struct ovpn_peer *peer)
+ 	ovpn_sock->sk = sk;
+ 	kref_init(&ovpn_sock->refcount);
+ 
++	/* TCP sockets are per-peer, therefore they are linked to their unique
++	 * peer
 +	 */
-+	if (drv->state_count <= 1) {
-+		*stop_tick = false;
-+		return 0;
++	if (sk->sk_protocol == IPPROTO_TCP) {
++		INIT_WORK(&ovpn_sock->tcp_tx_work, ovpn_tcp_tx_work);
++		ovpn_sock->peer = peer;
++		ovpn_peer_hold(peer);
++	} else if (sk->sk_protocol == IPPROTO_UDP) {
++		/* in UDP we only link the ovpn instance since the socket is
++		 * shared among multiple peers
++		 */
++		ovpn_sock->ovpn = peer->ovpn;
++		netdev_hold(peer->ovpn->dev, &ovpn_sock->dev_tracker,
++			    GFP_KERNEL);
 +	}
 +
- 	return cpuidle_curr_governor->select(drv, dev, stop_tick);
+ 	/* the newly created ovpn_socket is holding reference to sk,
+ 	 * therefore we increase its refcounter.
+ 	 *
+@@ -212,29 +228,16 @@ struct ovpn_socket *ovpn_socket_new(struct socket *sock, struct ovpn_peer *peer)
+ 
+ 	ret = ovpn_socket_attach(ovpn_sock, sock, peer);
+ 	if (ret < 0) {
++		if (sk->sk_protocol == IPPROTO_TCP)
++			ovpn_peer_put(peer);
++		else if (sk->sk_protocol == IPPROTO_UDP)
++			netdev_put(peer->ovpn->dev, &ovpn_sock->dev_tracker);
++
+ 		sock_put(sk);
+ 		kfree(ovpn_sock);
+ 		ovpn_sock = ERR_PTR(ret);
+-		goto sock_release;
+-	}
+-
+-	/* TCP sockets are per-peer, therefore they are linked to their unique
+-	 * peer
+-	 */
+-	if (sk->sk_protocol == IPPROTO_TCP) {
+-		INIT_WORK(&ovpn_sock->tcp_tx_work, ovpn_tcp_tx_work);
+-		ovpn_sock->peer = peer;
+-		ovpn_peer_hold(peer);
+-	} else if (sk->sk_protocol == IPPROTO_UDP) {
+-		/* in UDP we only link the ovpn instance since the socket is
+-		 * shared among multiple peers
+-		 */
+-		ovpn_sock->ovpn = peer->ovpn;
+-		netdev_hold(peer->ovpn->dev, &ovpn_sock->dev_tracker,
+-			    GFP_KERNEL);
+ 	}
+ 
+-	rcu_assign_sk_user_data(sk, ovpn_sock);
+ sock_release:
+ 	release_sock(sk);
+ 	return ovpn_sock;
+diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
+index 0d7f30360d874..f0b4e07ba9245 100644
+--- a/drivers/net/ovpn/tcp.c
++++ b/drivers/net/ovpn/tcp.c
+@@ -487,6 +487,7 @@ int ovpn_tcp_socket_attach(struct ovpn_socket *ovpn_sock,
+ 	/* make sure no pre-existing encapsulation handler exists */
+ 	if (ovpn_sock->sk->sk_user_data)
+ 		return -EBUSY;
++	rcu_assign_sk_user_data(ovpn_sock->sk, ovpn_sock);
+ 
+ 	/* only a fully connected socket is expected. Connection should be
+ 	 * handled in userspace
+@@ -495,13 +496,14 @@ int ovpn_tcp_socket_attach(struct ovpn_socket *ovpn_sock,
+ 		net_err_ratelimited("%s: provided TCP socket is not in ESTABLISHED state: %d\n",
+ 				    netdev_name(peer->ovpn->dev),
+ 				    ovpn_sock->sk->sk_state);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err;
+ 	}
+ 
+ 	ret = strp_init(&peer->tcp.strp, ovpn_sock->sk, &cb);
+ 	if (ret < 0) {
+ 		DEBUG_NET_WARN_ON_ONCE(1);
+-		return ret;
++		goto err;
+ 	}
+ 
+ 	INIT_WORK(&peer->tcp.defer_del_work, ovpn_tcp_peer_del_work);
+@@ -536,6 +538,9 @@ int ovpn_tcp_socket_attach(struct ovpn_socket *ovpn_sock,
+ 	strp_check_rcv(&peer->tcp.strp);
+ 
+ 	return 0;
++err:
++	rcu_assign_sk_user_data(ovpn_sock->sk, NULL);
++	return ret;
  }
  
+ static void ovpn_tcp_close(struct sock *sk, long timeout)
+diff --git a/drivers/net/ovpn/udp.c b/drivers/net/ovpn/udp.c
+index d6a0f7a0b75d7..272b535ecaad4 100644
+--- a/drivers/net/ovpn/udp.c
++++ b/drivers/net/ovpn/udp.c
+@@ -386,6 +386,7 @@ int ovpn_udp_socket_attach(struct ovpn_socket *ovpn_sock, struct socket *sock,
+ 			   struct ovpn_priv *ovpn)
+ {
+ 	struct udp_tunnel_sock_cfg cfg = {
++		.sk_user_data = ovpn_sock,
+ 		.encap_type = UDP_ENCAP_OVPNINUDP,
+ 		.encap_rcv = ovpn_udp_encap_recv,
+ 		.encap_destroy = ovpn_udp_encap_destroy,
 -- 
 2.51.0
 
