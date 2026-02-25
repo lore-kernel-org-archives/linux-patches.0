@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D047251795;
-	Wed, 25 Feb 2026 01:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EBD24A06D;
+	Wed, 25 Feb 2026 01:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982843; cv=none; b=O3o5TT4gKPOrc38yN7Irl2kmshgpFfO8g4WyQklHeUzyg8cImhaA5GglKK/iSRLgvRwF8Ku6N8yceRyukBRKQYlZw0lF80OK9ALYph59MRyxW8G+7tSu4N6U3dD9VXNIP2Pv6DBV6bl3E12g7K822HpenliqRQsCO+3OaUzU1E8=
+	t=1771982844; cv=none; b=O1IN97FHWTm1lFf9LTO3PCgza7A36AFj15tr/cZJVt/nsqJhLJEym9SR+J5I/nUL2jKLf8muY27Bx87VnzwnBmh6SUpLTZk97uQ7Nb8Txg0jNNVJy1Ci+AKzKg0DKxewjvEMToWC0KcR6SrNNdGIU+Owsj+J6YV6vFWT6tS+qg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982843; c=relaxed/simple;
-	bh=ueD9FG3eH68AWgnKF7Rvj1rolQ8Zbh4YCqPopkHn1nk=;
+	s=arc-20240116; t=1771982844; c=relaxed/simple;
+	bh=RD6T8qGDCzttzsMXuGvtgZjfSCkLiNsWRMd6V7cnUGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kaMPUnV/OI1TphzAVYHMOTTxG3zq0amxkmGYqufXbxn8qZGn2+Wut/likeDhOW0uyD73fWHGANO5IdBfYlEqqNNmCgi/2E2rfZjGE1uCZns5g9/FHjI1nTbBzfRk+tPKzhDw2cgA9bhhGbv5a6XjxkieTh2B0BG/WB2zH7ALLEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ww1z89DO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NNxG6kQ0pPiKcz77g/F9V94iwsZXMGMEg+rQAWnJkcTBCl2+3Jwsuxg+PDiSBMVDB30CjiKZ7GZfnw37oCXApP7GyPcTsCGNy8kGB82ng9gjMBUM0d0/a58wJaW6psa1Ki5pXYMkqN+Y1baX9F4tyQadXvopyFZJS1ufGMlTRCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtlaqgSE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ww1z89DO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378B8C19423;
-	Wed, 25 Feb 2026 01:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtlaqgSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81991C116D0;
+	Wed, 25 Feb 2026 01:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982843;
-	bh=ueD9FG3eH68AWgnKF7Rvj1rolQ8Zbh4YCqPopkHn1nk=;
+	s=korg; t=1771982844;
+	bh=RD6T8qGDCzttzsMXuGvtgZjfSCkLiNsWRMd6V7cnUGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ww1z89DO4X0Q4lYFST33w9vlqDSQhqvhqurBRCw8eL7v4ViE71tAt7sVaFZ9h5PqX
-	 cbfBvZpQOkY2YL7u6jBpOMjlPHyC0umxZQ4fMmrVBV5g+8DmyUANcmMizeQn0YX82E
-	 KTVaFggaxjfoNFGnSpWxHOoZ9XFaFmeExzPgV4Gk=
+	b=OtlaqgSEe8Bc61YRCA1ShNl3leTI+9waABHZlheMuIBUbyH3kw9IvftFbL3MChB/m
+	 LEx3b+zd36Uqax8lT0HbkMoMqRQiRGn5i2RH9YDfNspicUT+HRz6ubHDgwcgeEgRtA
+	 18c80k5Kw18Q1e3Py/Sb6pnOgeb1W8JXMpOOTE2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willy Tarreau <w@1wt.eu>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>,
+	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 035/781] tools/nolibc: always use 64-bit mode for s390 header checks
-Date: Tue, 24 Feb 2026 17:12:24 -0800
-Message-ID: <20260225012400.564663361@linuxfoundation.org>
+Subject: [PATCH 6.19 036/781] rnbd-srv: Fix server side setting of bi_size for special IOs
+Date: Tue, 24 Feb 2026 17:12:25 -0800
+Message-ID: <20260225012400.588288309@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,50 +47,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
 
-[ Upstream commit cc6809f6728456c03db6750fcc94ed8b581a2cf8 ]
+[ Upstream commit 4ac9690d4b9456ca1d5276d86547fa2e7cd47684 ]
 
-32-bit s390 support was recently removed from nolibc.
-If the compiler defaults to 32-bit during the header checks, they fail.
+On rnbd-srv, the bi_size of the bio is set during the bio_add_page
+function, to which datalen is passed. But for special IOs like DISCARD
+and WRITE_ZEROES, datalen is 0, since there is no data to write. For
+these special IOs, use the bi_size of the rnbd_msg_io.
 
-Make sure to always use 64-bit mode for s390 heafer checks.
-
-Fixes: 169ebcbb9082 ("tools: Remove s390 compat support")
-Acked-by: Willy Tarreau <w@1wt.eu>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Link: https://patch.msgid.link/20251203-nolibc-headers-check-s390-v1-1-5d35e52a83ba@weissschuh.net
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Fixes: f6f84be089c9 ("block/rnbd-srv: Add sanity check and remove redundant assignment")
+Signed-off-by: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
+Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/Makefile | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/block/rnbd/rnbd-srv.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/tools/include/nolibc/Makefile b/tools/include/nolibc/Makefile
-index 8118e22844f19..afb6a20ac1336 100644
---- a/tools/include/nolibc/Makefile
-+++ b/tools/include/nolibc/Makefile
-@@ -103,9 +103,12 @@ headers_standalone: headers
- 	$(Q)$(MAKE) -C $(srctree) headers
- 	$(Q)$(MAKE) -C $(srctree) headers_install INSTALL_HDR_PATH=$(OUTPUT)sysroot
+diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
+index 2df8941a6b146..9b3fdc202e152 100644
+--- a/drivers/block/rnbd/rnbd-srv.c
++++ b/drivers/block/rnbd/rnbd-srv.c
+@@ -145,18 +145,30 @@ static int process_rdma(struct rnbd_srv_session *srv_sess,
+ 	priv->sess_dev = sess_dev;
+ 	priv->id = id;
  
-+CFLAGS_s390 := -m64
-+CFLAGS := $(CFLAGS_$(ARCH))
+-	bio = bio_alloc(file_bdev(sess_dev->bdev_file), 1,
++	bio = bio_alloc(file_bdev(sess_dev->bdev_file), !!datalen,
+ 			rnbd_to_bio_flags(le32_to_cpu(msg->rw)), GFP_KERNEL);
+-	bio_add_virt_nofail(bio, data, datalen);
+-
+-	bio->bi_opf = rnbd_to_bio_flags(le32_to_cpu(msg->rw));
+-	if (bio_has_data(bio) &&
+-	    bio->bi_iter.bi_size != le32_to_cpu(msg->bi_size)) {
+-		rnbd_srv_err_rl(sess_dev, "Datalen mismatch:  bio bi_size (%u), bi_size (%u)\n",
+-				bio->bi_iter.bi_size, msg->bi_size);
+-		err = -EINVAL;
+-		goto bio_put;
++	if (unlikely(!bio)) {
++		err = -ENOMEM;
++		goto put_sess_dev;
+ 	}
 +
- headers_check: headers_standalone
- 	$(Q)for header in $(filter-out crt.h std.h,$(all_files)); do \
--		$(CC) $(CLANG_CROSS_FLAGS) -Wall -Werror -nostdinc -fsyntax-only -x c /dev/null \
-+		$(CC) $(CFLAGS) $(CLANG_CROSS_FLAGS) -Wall -Werror -nostdinc -fsyntax-only -x c /dev/null \
- 			-I$(or $(objtree),$(srctree))/usr/include -include $$header -include $$header || exit 1; \
- 	done
++	if (!datalen) {
++		/*
++		 * For special requests like DISCARD and WRITE_ZEROES, the datalen is zero.
++		 */
++		bio->bi_iter.bi_size = le32_to_cpu(msg->bi_size);
++	} else {
++		bio_add_virt_nofail(bio, data, datalen);
++		bio->bi_opf = rnbd_to_bio_flags(le32_to_cpu(msg->rw));
++		if (bio->bi_iter.bi_size != le32_to_cpu(msg->bi_size)) {
++			rnbd_srv_err_rl(sess_dev,
++					"Datalen mismatch:  bio bi_size (%u), bi_size (%u)\n",
++					bio->bi_iter.bi_size, msg->bi_size);
++			err = -EINVAL;
++			goto bio_put;
++		}
++	}
++
+ 	bio->bi_end_io = rnbd_dev_bi_end_io;
+ 	bio->bi_private = priv;
+ 	bio->bi_iter.bi_sector = le64_to_cpu(msg->sector);
+@@ -170,6 +182,7 @@ static int process_rdma(struct rnbd_srv_session *srv_sess,
  
+ bio_put:
+ 	bio_put(bio);
++put_sess_dev:
+ 	rnbd_put_sess_dev(sess_dev);
+ err:
+ 	kfree(priv);
 -- 
 2.51.0
 
