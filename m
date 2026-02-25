@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D263227E056;
-	Wed, 25 Feb 2026 01:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15A6280331;
+	Wed, 25 Feb 2026 01:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983768; cv=none; b=kDWM+z2WyJq2CDrNEJEWhMLTSwAbrrWt6BmCqjV/nBJ+gTsUxx3Z7oQ30abvSg47Pz7VYgvDTOeapLVdzduqeR7pM33zYOs2kcjP/HPjvuacpedkgNiqruOc+t9WZak4Uiaml9GLTFa4f/IgvM1yJuLy1rUkeMX/1RzG7C7wfuY=
+	t=1771983769; cv=none; b=EEZ0sKxfGJBbsgp729rvOUcC2910F0/XycsjUn3Gy6iSV2NHdF0o5CV3EE7fzvUa5Qa5uhICsSeLSatRMwNXWtRt7RY51mf1JIh9mhZQEBbPpt6bM+MC/llUyrVRiFkHwhCw0QgJSbL7qIkNhKnuCNTWf6Hqi3ENkqBNh+v/lVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983768; c=relaxed/simple;
-	bh=gCPYMlErzruXXY3R7XSl/bW9GYpK2UntuoJFVEIMyLA=;
+	s=arc-20240116; t=1771983769; c=relaxed/simple;
+	bh=WLTePBfmfaF57PSlY74imcSkk9IS4WQG2c2vzZEnuWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pywkCeHmW26WLPt2eEWP2KRzjqkbucTtX+ADamPMh8YJ3aDkd5g49lBj4487qIZa1Ag9mfvDujjRULsLigg72G1WmTYckcjhFXbXj3VblgW8yctdIlT8Gt93HExXtd3v0lGPUfilGME1Ct6u+RVmv/mNtGQDrTeTIgQP7wAgz0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yH85W5bn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFheupvjM7EsaO1jq8C5Mx3PK8wGSpDiPZ/QMqlbw+jOJST5Tm00TNVNye4kuo5VL1s8+PkkWG14aD3LBn7AaLVDdo1+tTQsJe6JvCDbvjlyOLoIkXtYfRy7gxw1LN83XuFnX7dFq+BhcOOTHJz77I9A+PGGO6I3JXgU8nnTRgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DChlZnzS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yH85W5bn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5269BC116D0;
-	Wed, 25 Feb 2026 01:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DChlZnzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7236EC2BC87;
+	Wed, 25 Feb 2026 01:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983768;
-	bh=gCPYMlErzruXXY3R7XSl/bW9GYpK2UntuoJFVEIMyLA=;
+	s=korg; t=1771983769;
+	bh=WLTePBfmfaF57PSlY74imcSkk9IS4WQG2c2vzZEnuWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yH85W5bnMpCIVV9Y67JFVER5ZhkGiYF/8goxOhuWCGEXbctZUMroHiQJpaB4kH8kg
-	 +58DC0vPNb++ywNdq+6H19brBBS9HPAKc7Cn0keA1yjhD0+GQUCBt3UATO+rd0SMHr
-	 VeJtQEM75cQ9T0+r2M71M49vhBjomEjuj1pui+hE=
+	b=DChlZnzS9YcdNN/StqBRxYRAExaUgQlXoBDfZCyJQ86Wt5lfNSCaXcz//2geKpQc4
+	 2FxZJTnwV0vJyFZ8wSpCGhuAscKMbLwcU+02YaGegrWLo9epC/dNwJOfhUxeMceU1z
+	 PMybr7dQ3hD70T700aGST2aplKrTCISoYVzDjlqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Li Nan <linan122@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 060/641] PM: sleep: wakeirq: harden dev_pm_clear_wake_irq() against races
-Date: Tue, 24 Feb 2026 17:16:26 -0800
-Message-ID: <20260225012350.503360035@linuxfoundation.org>
+Subject: [PATCH 6.18 043/641] md/raid5: fix raid5_run() to return error when log_init() fails
+Date: Tue, 24 Feb 2026 17:16:09 -0800
+Message-ID: <20260225012350.072261139@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,63 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Yu Kuai <yukuai@fnnas.com>
 
-[ Upstream commit 5c9ecd8e6437cd55a38ea4f1e1d19cee8e226cb8 ]
+[ Upstream commit 2d9f7150ac197ce79c9c917a004d4cf0b26ad7e0 ]
 
-dev_pm_clear_wake_irq() currently uses a dangerous pattern where
-dev->power.wakeirq is read and checked for NULL outside the lock.
-If two callers invoke this function concurrently, both might see
-a valid pointer and proceed. This could result in a double-free
-when the second caller acquires the lock and tries to release the
-same object.
+Since commit f63f17350e53 ("md/raid5: use the atomic queue limit
+update APIs"), the abort path in raid5_run() returns 'ret' instead of
+-EIO. However, if log_init() fails, 'ret' is still 0 from the previous
+successful call, causing raid5_run() to return success despite the
+failure.
 
-Address this by removing the lockless check of dev->power.wakeirq.
-Instead, acquire dev->power.lock immediately to ensure the check and
-the subsequent operations are atomic. If dev->power.wakeirq is NULL
-under the lock, simply unlock and return. This guarantees that
-concurrent calls cannot race to free the same object.
+Fix this by capturing the return value from log_init().
 
-Based on a quick scan of current users, I did not find an actual bug as
-drivers seem to rely on their own synchronization. However, since
-asynchronous usage patterns exist (e.g., in
-drivers/net/wireless/ti/wlcore), I believe a race is theoretically
-possible if the API is used less carefully in the future. This change
-hardens the API to be robust against such cases.
-
-Fixes: 4990d4fe327b ("PM / Wakeirq: Add automated device wake IRQ handling")
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260203031943.1924-1-hanguidong02@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/linux-raid/20260114171241.3043364-2-yukuai@fnnas.com
+Fixes: f63f17350e53 ("md/raid5: use the atomic queue limit update APIs")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202601130531.LGfcZsa4-lkp@intel.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Xiao Ni <xni@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/wakeirq.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/md/raid5.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
-index 8aa28c08b2891..c0809d18fc540 100644
---- a/drivers/base/power/wakeirq.c
-+++ b/drivers/base/power/wakeirq.c
-@@ -83,13 +83,16 @@ EXPORT_SYMBOL_GPL(dev_pm_set_wake_irq);
-  */
- void dev_pm_clear_wake_irq(struct device *dev)
- {
--	struct wake_irq *wirq = dev->power.wakeirq;
-+	struct wake_irq *wirq;
- 	unsigned long flags;
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 41de29206402a..1041788a54c20 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -8056,7 +8056,8 @@ static int raid5_run(struct mddev *mddev)
+ 			goto abort;
+ 	}
  
--	if (!wirq)
-+	spin_lock_irqsave(&dev->power.lock, flags);
-+	wirq = dev->power.wakeirq;
-+	if (!wirq) {
-+		spin_unlock_irqrestore(&dev->power.lock, flags);
- 		return;
-+	}
+-	if (log_init(conf, journal_dev, raid5_has_ppl(conf)))
++	ret = log_init(conf, journal_dev, raid5_has_ppl(conf));
++	if (ret)
+ 		goto abort;
  
--	spin_lock_irqsave(&dev->power.lock, flags);
- 	device_wakeup_detach_irq(dev);
- 	dev->power.wakeirq = NULL;
- 	spin_unlock_irqrestore(&dev->power.lock, flags);
+ 	return 0;
 -- 
 2.51.0
 
