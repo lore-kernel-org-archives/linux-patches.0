@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582DF4369A;
-	Wed, 25 Feb 2026 01:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F7A21D596;
+	Wed, 25 Feb 2026 01:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982978; cv=none; b=ZKKWbWV8xM0uwB25zSWiqsssOBtiyIlzfc0ws43odgM4AC2S6yiO/iZgTfqqcepG8PG9/iFRislKUXAl/JKpVQLUwP4cBQYzTZh4+06xXda9xMwNJan5uIENG7BdlDW7XjrCKEnUpp8KhLf7uPeVFi+x2gkEYuz4bJvacOwTHwM=
+	t=1771982980; cv=none; b=iFFARWTl/zCxyLwwIVO92gBo1R5MPABDbiuEsAKRI53wZrEjZMop6uoLqI+su2ymg6C3RBWypCuJz1zIbtcZZ3Xq+shsTWoF6Gsw0FadGKte6ekt22uidfsYvy2KZl2ahkSd+6pOegcM3vtFAkCO2oAUD4qmfm3ifsAIq/j6YaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982978; c=relaxed/simple;
-	bh=YuB6wEXOtONR/sc3Wp+bNC0J7jEA07AUN7gHGCvwknQ=;
+	s=arc-20240116; t=1771982980; c=relaxed/simple;
+	bh=9uHy421SvF6o8Px/Nay7WoBQxK0nJXP51+UUYR/DGEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRUsg+M1ITKHUia6pc6lfN15gShr/tTozUPB+eE63KQNIhr/ZoQ63O/gaWzQrBN7g4f9UayDKtriAIYMWepG4aYIC0VAku7zGmIfh+8AeJwOI1AAS9QeCKxuuW5VUf+abL3clRlqLVo5cMZJ1KlAgd/+M4kAUi4m6O4NBPplj90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9pCHod/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BwutDJKXYeNOoG0XilpAAzGdlQbjjBV9jA7WvU2hHMO9PI6pCfqzqRv3IPCJwZPGs6R8ZLDLot0MYwCni33nsyPS6C0d3HBtt0NF7qfx+hvuvL5P8BjEorIOVm/HDseJVoeDURO0uW6vxQPLxe1t/cU/A/gkWPuC1lR+RdSt7vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRIJvrUS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9pCHod/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C6EC19423;
-	Wed, 25 Feb 2026 01:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRIJvrUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029F3C116D0;
+	Wed, 25 Feb 2026 01:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982978;
-	bh=YuB6wEXOtONR/sc3Wp+bNC0J7jEA07AUN7gHGCvwknQ=;
+	s=korg; t=1771982980;
+	bh=9uHy421SvF6o8Px/Nay7WoBQxK0nJXP51+UUYR/DGEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A9pCHod/02PSlwecrV0RGCn98A0IRqGJhVunHyn9Ntk+0+ZNX/RmSJNQKbsY4mt+D
-	 IcF/VPTUuPQl9zXiVsJIJYzWKL5flE6KKUmTkDD+V1z8qsQ3IOBjJgzm/TrQkX8nsq
-	 rlsAUFg8z1zducXGy1diAutZeD2mPHx4Ue9ZWoEo=
+	b=dRIJvrUSiQQmBRWb3668eGShAMalouv75plNriPwhpb4+koI4Tdk6EVJSrmJQoFfJ
+	 sl8WRo13+uYWoRxU80zfWNGYejh/DYxiJT3vlVspuf0+G34dDZqF4saMEnMwd8S63o
+	 XubWiwr2j04P5h8RSMKqjmjcBdC9QIgZkxcdNy/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 151/781] arm64: dts: qcom: sm8150-hdk,mtp: specify ZAP firmware name
-Date: Tue, 24 Feb 2026 17:14:20 -0800
-Message-ID: <20260225012403.365980415@linuxfoundation.org>
+Subject: [PATCH 6.19 116/781] bpf: Fix bpf_xdp_store_bytes proto for read-only arg
+Date: Tue, 24 Feb 2026 17:13:45 -0800
+Message-ID: <20260225012402.519849202@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,56 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit d43019ef200d567454a8f68e60a5b2df01d8c706 ]
+[ Upstream commit 6557f1565d779851c4db9c488c49c05a47a6e72f ]
 
-The DT file has GPU node enabled, but doesn't specify the file name of
-the ZAP firmware, which means using a default file name. Specify the
-name to the ZAP shader firmware, pointing to the file in the
-linux-firmware repo.
+While making some maps in Cilium read-only from the BPF side, we noticed
+that the bpf_xdp_store_bytes proto is incorrect. In particular, the
+verifier was throwing the following error:
 
-Fixes: f30ac26def18 ("arm64: dts: qcom: add sm8150 GPU nodes")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251213-zap-names-v1-1-c889af173911@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  ; ret = ctx_store_bytes(ctx, l3_off + offsetof(struct iphdr, saddr),
+                          &nat->address, 4, 0);
+  635: (79) r1 = *(u64 *)(r10 -144)     ; R1=ctx() R10=fp0 fp-144=ctx()
+  636: (b4) w2 = 26                     ; R2=26
+  637: (b4) w4 = 4                      ; R4=4
+  638: (b4) w5 = 0                      ; R5=0
+  639: (85) call bpf_xdp_store_bytes#190
+  write into map forbidden, value_size=6 off=0 size=4
+
+nat comes from a BPF_F_RDONLY_PROG map, so R3 is a PTR_TO_MAP_VALUE.
+The verifier checks the helper's memory access to R3 in
+check_mem_size_reg, as it reaches ARG_CONST_SIZE argument. The third
+argument has expected type ARG_PTR_TO_UNINIT_MEM, which includes the
+MEM_WRITE flag. The verifier thus checks for a BPF_WRITE access on R3.
+Given R3 points to a read-only map, the check fails.
+
+Conversely, ARG_PTR_TO_UNINIT_MEM can also lead to the helper reading
+from uninitialized memory.
+
+This patch simply fixes the expected argument type to match that of
+bpf_skb_store_bytes.
+
+Fixes: 3f364222d032 ("net: xdp: introduce bpf_xdp_pointer utility routine")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/9fa3c9f72d806e82541071c4df88b8cba28ad6a9.1769875479.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 4 ++++
- arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 4 ++++
- 2 files changed, 8 insertions(+)
+ net/core/filter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-index 0339a572f34d0..1eea9c5c66847 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-@@ -387,6 +387,10 @@ &gpu {
- 	status = "okay";
+diff --git a/net/core/filter.c b/net/core/filter.c
+index b1f8e2930e1c4..51318cb40f778 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4137,7 +4137,7 @@ static const struct bpf_func_proto bpf_xdp_store_bytes_proto = {
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+ 	.arg2_type	= ARG_ANYTHING,
+-	.arg3_type	= ARG_PTR_TO_UNINIT_MEM,
++	.arg3_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg4_type	= ARG_CONST_SIZE,
  };
  
-+&gpu_zap_shader {
-+	firmware-name = "qcom/sm8150/a640_zap.mbn";
-+};
-+
- &i2c4 {
- 	clock-frequency = <100000>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-index 12e8e1ada6d8b..0f2d511624a8b 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-@@ -358,6 +358,10 @@ &gpu {
- 	status = "okay";
- };
- 
-+&gpu_zap_shader {
-+	firmware-name = "qcom/sm8150/a640_zap.mbn";
-+};
-+
- &pon {
- 	mode-bootloader = <0x2>;
- 	mode-recovery = <0x1>;
 -- 
 2.51.0
 
