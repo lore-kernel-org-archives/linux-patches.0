@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D503248886;
-	Wed, 25 Feb 2026 01:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E14918B0A;
+	Wed, 25 Feb 2026 01:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983349; cv=none; b=Ue7VZLeDzmQyCKA4C/SA3Du+kgKVrhhoAnUk8U2ZAJ+PBBiKreSEqhyDjZvj1H/XsWBRxInkGATYJ4fA2tdOpBTMNxKIowVoepjIPUt75IspUSKbaamN5ex49def1TLLAsIxCeknsPbB0eAMU3S4jr2F8FkeCeWipp307cKdOxE=
+	t=1771983350; cv=none; b=WZVaQOZY3hrLx4QLVR9qrmUzsc5tRwDlL1fCcftk18ygFeMh/CvVBLDhWWRQ4ZUtMHOZkalC3QyDDPv6tOHFrtp9AccmxunG2yY+XZr72HMzJiW55CrLxPRKNShfBrtc+V/MHtNwUCgTxgasBQeMGs55XnGR8QeWFZIOev5HxdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983349; c=relaxed/simple;
-	bh=0cyLp9iaQmDNcv77rnPqUKjXCuKCc+g1mDc7gwhoHc0=;
+	s=arc-20240116; t=1771983350; c=relaxed/simple;
+	bh=4GzRTBINmHtpN/cWDWKJVwoh120xq9BiFkh3PBnsxfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h4XEyjgbmTOmHAlN9hLcUKk8qhqd5nJJJWyGraHu4DaDP483xPzgBUtMm9t4Rny1mUJwcoPHb4cB6/FSc3mG5imVncAlLsoCBEiF+UFQAEivviqmSlYzQ8kNLQyYMPzFy+cBXnZxQ/567Duo5bAWjD9NlcMQCW7pPU49iTA4Zmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPRj4UhN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U+aumNxs3FN9hjIbgHYeZ4uZUqkxK+80gfG0Js1Qc50fujgyz9OqeigIEDyBWyP4oAUKX/tpF5zbndPGhTq+AybW3av+ZgAV8e2dhb5C3A5FzxowuGVU+ZE+kqtMDsgKwQDhXclmV+luFTmc7S84hjdwimWSYBSD36KpHcgeP8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT9nHcFI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPRj4UhN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16E5C116D0;
-	Wed, 25 Feb 2026 01:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT9nHcFI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8FBC116D0;
+	Wed, 25 Feb 2026 01:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983348;
-	bh=0cyLp9iaQmDNcv77rnPqUKjXCuKCc+g1mDc7gwhoHc0=;
+	s=korg; t=1771983350;
+	bh=4GzRTBINmHtpN/cWDWKJVwoh120xq9BiFkh3PBnsxfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPRj4UhNraA4x87KbXZmH6Df+oRzSgn2ABjSwm3YfwcpC0il4v+iI2CWLRdGqtvYj
-	 IuxowywO6mzr3j4GuX6eadi0Y5t8GHTnmbO/BjsJ5+xOGbrwJFgnsJWt1fjkd/A9QT
-	 O8o0IhZHZ1I/tdvRuHzKujpVlISNRVUH3S105rRE=
+	b=OT9nHcFI4pG5q+qVuXlOH9gQzGb4Qpytt6pO4WQJUw0B9eEcHfK3DNuw0ShrDx4Kw
+	 ZSl9RPMEp8fDJOH72z6ijBM3V0fiEzlKia9i6OU+9oyBP2aw4wxiDOuON/d+T7cwO+
+	 H2q21T9TNSecDi42sfCFt2tD0A5Dr4V4NdzubDMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 476/781] mtd: parsers: Fix memory leak in mtd_parser_tplink_safeloader_parse()
-Date: Tue, 24 Feb 2026 17:19:45 -0800
-Message-ID: <20260225012411.489425394@linuxfoundation.org>
+Subject: [PATCH 6.19 477/781] NFS/localio: Handle short writes by retrying
+Date: Tue, 24 Feb 2026 17:19:46 -0800
+Message-ID: <20260225012411.513020659@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,40 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 980ce2b02dd06a4fdf5fee38b2e14becf9cf7b8b ]
+[ Upstream commit 615762059d284b863f9163b53679d95b3dcdd495 ]
 
-The function mtd_parser_tplink_safeloader_parse() allocates buf via
-mtd_parser_tplink_safeloader_read_table(). If the allocation for
-parts[idx].name fails inside the loop, the code jumps to the err_free
-label without freeing buf, leading to a memory leak.
+The current code for handling short writes in localio just truncates the
+I/O and then sets an error. While that is close to how the ordinary NFS
+code behaves, it does mean there is a chance the data that got written
+is lost because it isn't persisted.
+To fix this, change localio so that the upper layers can direct the
+behaviour to persist any unstable data by rewriting it, and then
+continuing writing until an ENOSPC is hit.
 
-Fix this by freeing the temporary buffer buf in the err_free label.
-
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
-
-Fixes: 00a3588084be ("mtd: parsers: add TP-Link SafeLoader partitions table parser")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 70ba381e1a43 ("nfs: add LOCALIO support")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/parsers/tplink_safeloader.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfs/localio.c | 64 +++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 47 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/mtd/parsers/tplink_safeloader.c b/drivers/mtd/parsers/tplink_safeloader.c
-index e358a029dc70c..4fcaf92d22e4f 100644
---- a/drivers/mtd/parsers/tplink_safeloader.c
-+++ b/drivers/mtd/parsers/tplink_safeloader.c
-@@ -116,6 +116,7 @@ static int mtd_parser_tplink_safeloader_parse(struct mtd_info *mtd,
- 	return idx;
+diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
+index 41fbcb3f9167e..00bbac6c9fe40 100644
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -58,6 +58,11 @@ struct nfs_local_fsync_ctx {
+ static bool localio_enabled __read_mostly = true;
+ module_param(localio_enabled, bool, 0644);
  
- err_free:
-+	kfree(buf);
- 	for (idx -= 1; idx >= 0; idx--)
- 		kfree(parts[idx].name);
- err_free_parts:
++static int nfs_local_do_read(struct nfs_local_kiocb *iocb,
++			     const struct rpc_call_ops *call_ops);
++static int nfs_local_do_write(struct nfs_local_kiocb *iocb,
++			      const struct rpc_call_ops *call_ops);
++
+ static inline bool nfs_client_is_local(const struct nfs_client *clp)
+ {
+ 	return !!rcu_access_pointer(clp->cl_uuid.net);
+@@ -542,13 +547,50 @@ nfs_local_iocb_release(struct nfs_local_kiocb *iocb)
+ 	nfs_local_iocb_free(iocb);
+ }
+ 
+-static void
+-nfs_local_pgio_release(struct nfs_local_kiocb *iocb)
++static void nfs_local_pgio_restart(struct nfs_local_kiocb *iocb,
++				   struct nfs_pgio_header *hdr)
++{
++	int status = 0;
++
++	iocb->kiocb.ki_pos = hdr->args.offset;
++	iocb->kiocb.ki_flags &= ~(IOCB_DSYNC | IOCB_SYNC | IOCB_DIRECT);
++	iocb->kiocb.ki_complete = NULL;
++	iocb->aio_complete_work = NULL;
++	iocb->end_iter_index = -1;
++
++	switch (hdr->rw_mode) {
++	case FMODE_READ:
++		nfs_local_iters_init(iocb, ITER_DEST);
++		status = nfs_local_do_read(iocb, hdr->task.tk_ops);
++		break;
++	case FMODE_WRITE:
++		nfs_local_iters_init(iocb, ITER_SOURCE);
++		status = nfs_local_do_write(iocb, hdr->task.tk_ops);
++		break;
++	default:
++		status = -EOPNOTSUPP;
++	}
++
++	if (status != 0) {
++		nfs_local_iocb_release(iocb);
++		hdr->task.tk_status = status;
++		nfs_local_hdr_release(hdr, hdr->task.tk_ops);
++	}
++}
++
++static void nfs_local_pgio_release(struct nfs_local_kiocb *iocb)
+ {
+ 	struct nfs_pgio_header *hdr = iocb->hdr;
++	struct rpc_task *task = &hdr->task;
++
++	task->tk_action = NULL;
++	task->tk_ops->rpc_call_done(task, hdr);
+ 
+-	nfs_local_iocb_release(iocb);
+-	nfs_local_hdr_release(hdr, hdr->task.tk_ops);
++	if (task->tk_action == NULL) {
++		nfs_local_iocb_release(iocb);
++		task->tk_ops->rpc_release(hdr);
++	} else
++		nfs_local_pgio_restart(iocb, hdr);
+ }
+ 
+ /*
+@@ -773,19 +815,7 @@ static void nfs_local_write_done(struct nfs_local_kiocb *iocb)
+ 		pr_info_ratelimited("nfs: Unexpected direct I/O write alignment failure\n");
+ 	}
+ 
+-	/* Handle short writes as if they are ENOSPC */
+-	status = hdr->res.count;
+-	if (status > 0 && status < hdr->args.count) {
+-		hdr->mds_offset += status;
+-		hdr->args.offset += status;
+-		hdr->args.pgbase += status;
+-		hdr->args.count -= status;
+-		nfs_set_pgio_error(hdr, -ENOSPC, hdr->args.offset);
+-		status = -ENOSPC;
+-		/* record -ENOSPC in terms of nfs_local_pgio_done */
+-		(void) nfs_local_pgio_done(iocb, status, true);
+-	}
+-	if (hdr->task.tk_status < 0)
++	if (status < 0)
+ 		nfs_reset_boot_verifier(hdr->inode);
+ }
+ 
 -- 
 2.51.0
 
