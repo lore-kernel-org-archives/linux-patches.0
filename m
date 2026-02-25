@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D581D5ABA;
-	Wed, 25 Feb 2026 01:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5734F248881;
+	Wed, 25 Feb 2026 01:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983197; cv=none; b=XMze1pmlZEsbsDEiZLNVrKiVwFHKlGV1E5DtTIBB6gRt3hfFHdQdA/kNxX+JToX77BPs3epPjKTGQFsZZcqM9UQbhsmjzAtu3N/o5miAtSLMw7riTjN48eroC5IERmIQTeHux1Caf66/YyD+6Rl0izWZ0gd05C0FoDkB1/2KMVM=
+	t=1771983198; cv=none; b=Bq4o/7/KJz4YwuqjS1xSDoTVwrJIeGhkw5n5Eg/19TUyJoRX/rdemOaDQ0xGrW51TzhM0Yl6inIiycDj5XEH+VLgiHpPu5/hXqcvyXkeB2q2upOIsWbZoapVSIJ6sNBlgxr+TSQtkqINfJbM2Cvov0R461AqBUW52weFd/YTdFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983197; c=relaxed/simple;
-	bh=O/G6fLRimTs1BbWcgWMI1hv2OiTQ/wj1R8r/Fd5l8jM=;
+	s=arc-20240116; t=1771983198; c=relaxed/simple;
+	bh=5m1HFNh3OzA89ksiA1mEUG8qsrKRQ6kaIKm440Lhs58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UvYLhcwft02YsNYDCShmFxumzRmgBk0cjrSGKD1ESAOkMH8uu8NzB3+rmZ+67DF+brqB5JamqqbNLxSo4csDiejCsH+L5m/BJdDnFfZR9MQlDXya0hbFKTu+G9miND8sW6to/xV1BRcaPyBH3ZgSeuZ4fHuZ+XXKJj6kCPHwlWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aD2lePpQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mtkQ3hgcCWFCRC5V3xVlpev5svTiU1mJkMKQWh4euNE5OdgDGBZgug73v/bjdQbkRFR+ww05Mz6u5I2Efm71btwF9U+FmQGYiWRvXkBS30Iwvqwc0hEil+aYG8FuuiXDHdYz2mjghzogynl3wZYa0+Pu5uMtvz6uNFPQZzNCqG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M259nBDY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aD2lePpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C0EC19423;
-	Wed, 25 Feb 2026 01:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M259nBDY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162E3C19424;
+	Wed, 25 Feb 2026 01:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983197;
-	bh=O/G6fLRimTs1BbWcgWMI1hv2OiTQ/wj1R8r/Fd5l8jM=;
+	s=korg; t=1771983198;
+	bh=5m1HFNh3OzA89ksiA1mEUG8qsrKRQ6kaIKm440Lhs58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aD2lePpQdCI1d2hWv0Ef3MLZSkldW8xttrQdeSQ1cFX3g3fxVszOXl6yacTH8PlIU
-	 d+6O3Kksxo6AySxibf5A0DAdq5vUrY+XGvsMJMtwvc6yxt2v0uozkplcpUH+bDuob1
-	 Uod6RJUQwVOw4mu7pUZN2aLhmexuDDX9Y8W/BoWI=
+	b=M259nBDYm2qUseztlZ7/jWB0BSrNipmQ6+2cUskHaT1TQ4c5sW382lP0oRNfK1Jng
+	 Kt9USHbvQYrOWLzHrJsuLRnbD8z/kLB7HY/r1e28ba7wVkEv7yxeZa4L6UEdLobywy
+	 Mcudo8xbpKQstorDFpoeihQa6C2yL5VpnUXOF4EA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	Baokun Li <libaokun1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 344/781] ext4: fast commit: make s_fc_lock reclaim-safe
-Date: Tue, 24 Feb 2026 17:17:33 -0800
-Message-ID: <20260225012408.129628496@linuxfoundation.org>
+Subject: [PATCH 6.19 304/781] ASoC: SDCA: Factor out jack handling into new c file
+Date: Tue, 24 Feb 2026 17:16:53 -0800
+Message-ID: <20260225012407.165598133@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,299 +52,340 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 491f2927ae097e2d405afe0b3fe841931ab8aad2 ]
+[ Upstream commit 3addd63d1fba8d9013e00b06d9420e39271c0c4e ]
 
-s_fc_lock can be acquired from inode eviction and thus is
-reclaim unsafe. Since the fast commit path holds s_fc_lock while writing
-the commit log, allocations under the lock can enter reclaim and invert
-the lock order with fs_reclaim. Add ext4_fc_lock()/ext4_fc_unlock()
-helpers which acquire s_fc_lock under memalloc_nofs_save()/restore()
-context and use them everywhere so allocations under the lock cannot
-recurse into filesystem reclaim.
+The jack code is perhaps a bit large for being in the interrupt
+code directly. Improve the encapsulation by factoring out the
+jack handling code into a new c file, as is already done for HID
+and FDL. Whilst doing so also add a jack_state structure to hold
+the jack state for improved expandability in the future.
 
-Fixes: 6593714d67ba ("ext4: hold s_fc_lock while during fast commit")
-Signed-off-by: Li Chen <me@linux.beauty>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260106120621.440126-1-me@linux.beauty
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251215153650.3913117-2-ckeepax@opensource.cirrus.com
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: d7730c44b7dd ("ASoC: SDCA: Still process most of the jack detect if control is missing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h        | 16 ++++++++++++++
- fs/ext4/fast_commit.c | 51 ++++++++++++++++++++++++-------------------
- 2 files changed, 44 insertions(+), 23 deletions(-)
+ include/sound/sdca_jack.h        |  27 ++++++
+ sound/soc/sdca/Makefile          |   2 +-
+ sound/soc/sdca/sdca_interrupts.c |  83 ++----------------
+ sound/soc/sdca/sdca_jack.c       | 140 +++++++++++++++++++++++++++++++
+ 4 files changed, 175 insertions(+), 77 deletions(-)
+ create mode 100644 include/sound/sdca_jack.h
+ create mode 100644 sound/soc/sdca/sdca_jack.c
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 56112f201cace..1524276aeac79 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1795,6 +1795,10 @@ struct ext4_sb_info {
- 	 * Main fast commit lock. This lock protects accesses to the
- 	 * following fields:
- 	 * ei->i_fc_list, s_fc_dentry_q, s_fc_q, s_fc_bytes, s_fc_bh.
-+	 *
-+	 * s_fc_lock can be taken from reclaim context (inode eviction) and is
-+	 * thus reclaim unsafe. Use ext4_fc_lock()/ext4_fc_unlock() helpers
-+	 * when acquiring / releasing the lock.
- 	 */
- 	struct mutex s_fc_lock;
- 	struct buffer_head *s_fc_bh;
-@@ -1839,6 +1843,18 @@ static inline void ext4_writepages_up_write(struct super_block *sb, int ctx)
- 	percpu_up_write(&EXT4_SB(sb)->s_writepages_rwsem);
- }
- 
-+static inline int ext4_fc_lock(struct super_block *sb)
-+{
-+	mutex_lock(&EXT4_SB(sb)->s_fc_lock);
-+	return memalloc_nofs_save();
-+}
+diff --git a/include/sound/sdca_jack.h b/include/sound/sdca_jack.h
+new file mode 100644
+index 0000000000000..9fad5f22cbb9e
+--- /dev/null
++++ b/include/sound/sdca_jack.h
+@@ -0,0 +1,27 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * The MIPI SDCA specification is available for public downloads at
++ * https://www.mipi.org/mipi-sdca-v1-0-download
++ *
++ * Copyright (C) 2025 Cirrus Logic, Inc. and
++ *                    Cirrus Logic International Semiconductor Ltd.
++ */
 +
-+static inline void ext4_fc_unlock(struct super_block *sb, int ctx)
-+{
-+	memalloc_nofs_restore(ctx);
-+	mutex_unlock(&EXT4_SB(sb)->s_fc_lock);
-+}
++#ifndef __SDCA_JACK_H__
++#define __SDCA_JACK_H__
 +
- static inline int ext4_valid_inum(struct super_block *sb, unsigned long ino)
++struct sdca_interrupt;
++struct snd_kcontrol;
++
++/**
++ * struct jack_state - Jack state structure to keep data between interrupts
++ * @kctl: Pointer to the ALSA control attached to this jack
++ */
++struct jack_state {
++	struct snd_kcontrol *kctl;
++};
++
++int sdca_jack_alloc_state(struct sdca_interrupt *interrupt);
++int sdca_jack_process(struct sdca_interrupt *interrupt);
++
++#endif // __SDCA_JACK_H__
+diff --git a/sound/soc/sdca/Makefile b/sound/soc/sdca/Makefile
+index f6b73275d9649..b3b0f5d94c8de 100644
+--- a/sound/soc/sdca/Makefile
++++ b/sound/soc/sdca/Makefile
+@@ -3,7 +3,7 @@
+ snd-soc-sdca-y := sdca_functions.o sdca_device.o sdca_function_device.o \
+ 		  sdca_regmap.o sdca_asoc.o sdca_ump.o
+ snd-soc-sdca-$(CONFIG_SND_SOC_SDCA_HID) += sdca_hid.o
+-snd-soc-sdca-$(CONFIG_SND_SOC_SDCA_IRQ) += sdca_interrupts.o
++snd-soc-sdca-$(CONFIG_SND_SOC_SDCA_IRQ) += sdca_interrupts.o sdca_jack.o
+ snd-soc-sdca-$(CONFIG_SND_SOC_SDCA_FDL) += sdca_fdl.o
+ 
+ snd-soc-sdca-class-y := sdca_class.o
+diff --git a/sound/soc/sdca/sdca_interrupts.c b/sound/soc/sdca/sdca_interrupts.c
+index 8f6a2adfb6fbe..ff3a7e405fdcb 100644
+--- a/sound/soc/sdca/sdca_interrupts.c
++++ b/sound/soc/sdca/sdca_interrupts.c
+@@ -22,6 +22,7 @@
+ #include <sound/sdca_function.h>
+ #include <sound/sdca_hid.h>
+ #include <sound/sdca_interrupts.h>
++#include <sound/sdca_jack.h>
+ #include <sound/sdca_ump.h>
+ #include <sound/soc-component.h>
+ #include <sound/soc.h>
+@@ -155,14 +156,7 @@ static irqreturn_t detected_mode_handler(int irq, void *data)
  {
- 	return ino == EXT4_ROOT_INO ||
-diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
-index fa66b08de9994..5bd57d7f921b9 100644
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -231,16 +231,16 @@ static bool ext4_fc_disabled(struct super_block *sb)
- void ext4_fc_del(struct inode *inode)
- {
- 	struct ext4_inode_info *ei = EXT4_I(inode);
--	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
- 	struct ext4_fc_dentry_update *fc_dentry;
- 	wait_queue_head_t *wq;
-+	int alloc_ctx;
- 
- 	if (ext4_fc_disabled(inode->i_sb))
- 		return;
- 
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(inode->i_sb);
- 	if (list_empty(&ei->i_fc_list) && list_empty(&ei->i_fc_dilist)) {
--		mutex_unlock(&sbi->s_fc_lock);
-+		ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 		return;
- 	}
- 
-@@ -275,9 +275,9 @@ void ext4_fc_del(struct inode *inode)
- #endif
- 		prepare_to_wait(wq, &wait.wq_entry, TASK_UNINTERRUPTIBLE);
- 		if (ext4_test_inode_state(inode, EXT4_STATE_FC_FLUSHING_DATA)) {
--			mutex_unlock(&sbi->s_fc_lock);
-+			ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 			schedule();
--			mutex_lock(&sbi->s_fc_lock);
-+			alloc_ctx = ext4_fc_lock(inode->i_sb);
- 		}
- 		finish_wait(wq, &wait.wq_entry);
- 	}
-@@ -288,7 +288,7 @@ void ext4_fc_del(struct inode *inode)
- 	 * dentry create references, since it is not needed to log it anyways.
- 	 */
- 	if (list_empty(&ei->i_fc_dilist)) {
--		mutex_unlock(&sbi->s_fc_lock);
-+		ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 		return;
- 	}
- 
-@@ -298,7 +298,7 @@ void ext4_fc_del(struct inode *inode)
- 	list_del_init(&fc_dentry->fcd_dilist);
- 
- 	WARN_ON(!list_empty(&ei->i_fc_dilist));
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 
- 	release_dentry_name_snapshot(&fc_dentry->fcd_name);
- 	kmem_cache_free(ext4_fc_dentry_cachep, fc_dentry);
-@@ -315,6 +315,7 @@ void ext4_fc_mark_ineligible(struct super_block *sb, int reason, handle_t *handl
- 	tid_t tid;
- 	bool has_transaction = true;
- 	bool is_ineligible;
-+	int alloc_ctx;
- 
- 	if (ext4_fc_disabled(sb))
- 		return;
-@@ -329,12 +330,12 @@ void ext4_fc_mark_ineligible(struct super_block *sb, int reason, handle_t *handl
- 			has_transaction = false;
- 		read_unlock(&sbi->s_journal->j_state_lock);
- 	}
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	is_ineligible = ext4_test_mount_flag(sb, EXT4_MF_FC_INELIGIBLE);
- 	if (has_transaction && (!is_ineligible || tid_gt(tid, sbi->s_fc_ineligible_tid)))
- 		sbi->s_fc_ineligible_tid = tid;
- 	ext4_set_mount_flag(sb, EXT4_MF_FC_INELIGIBLE);
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	WARN_ON(reason >= EXT4_FC_REASON_MAX);
- 	sbi->s_fc_stats.fc_ineligible_reason_count[reason]++;
- }
-@@ -358,6 +359,7 @@ static int ext4_fc_track_template(
- 	struct ext4_inode_info *ei = EXT4_I(inode);
- 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
- 	tid_t tid = 0;
-+	int alloc_ctx;
+ 	struct sdca_interrupt *interrupt = data;
+ 	struct device *dev = interrupt->dev;
+-	struct snd_soc_component *component = interrupt->component;
+-	struct snd_soc_card *card = component->card;
+-	struct rw_semaphore *rwsem = &card->snd_card->controls_rwsem;
+-	struct snd_kcontrol *kctl = interrupt->priv;
+-	struct snd_ctl_elem_value *ucontrol __free(kfree) = NULL;
+-	struct soc_enum *soc_enum;
+ 	irqreturn_t irqret = IRQ_NONE;
+-	unsigned int reg, val;
  	int ret;
  
- 	tid = handle->h_transaction->t_tid;
-@@ -373,14 +375,14 @@ static int ext4_fc_track_template(
- 	if (!enqueue)
- 		return ret;
- 
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(inode->i_sb);
- 	if (list_empty(&EXT4_I(inode)->i_fc_list))
- 		list_add_tail(&EXT4_I(inode)->i_fc_list,
- 				(sbi->s_journal->j_flags & JBD2_FULL_COMMIT_ONGOING ||
- 				 sbi->s_journal->j_flags & JBD2_FAST_COMMIT_ONGOING) ?
- 				&sbi->s_fc_q[FC_Q_STAGING] :
- 				&sbi->s_fc_q[FC_Q_MAIN]);
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 
- 	return ret;
- }
-@@ -402,6 +404,7 @@ static int __track_dentry_update(handle_t *handle, struct inode *inode,
- 	struct inode *dir = dentry->d_parent->d_inode;
- 	struct super_block *sb = inode->i_sb;
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
-+	int alloc_ctx;
- 
- 	spin_unlock(&ei->i_fc_lock);
- 
-@@ -425,7 +428,7 @@ static int __track_dentry_update(handle_t *handle, struct inode *inode,
- 	take_dentry_name_snapshot(&node->fcd_name, dentry);
- 	INIT_LIST_HEAD(&node->fcd_dilist);
- 	INIT_LIST_HEAD(&node->fcd_list);
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	if (sbi->s_journal->j_flags & JBD2_FULL_COMMIT_ONGOING ||
- 		sbi->s_journal->j_flags & JBD2_FAST_COMMIT_ONGOING)
- 		list_add_tail(&node->fcd_list,
-@@ -446,7 +449,7 @@ static int __track_dentry_update(handle_t *handle, struct inode *inode,
- 		WARN_ON(!list_empty(&ei->i_fc_dilist));
- 		list_add_tail(&node->fcd_dilist, &ei->i_fc_dilist);
- 	}
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	spin_lock(&ei->i_fc_lock);
- 
- 	return 0;
-@@ -1046,18 +1049,19 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	struct blk_plug plug;
- 	int ret = 0;
- 	u32 crc = 0;
-+	int alloc_ctx;
- 
- 	/*
- 	 * Step 1: Mark all inodes on s_fc_q[MAIN] with
- 	 * EXT4_STATE_FC_FLUSHING_DATA. This prevents these inodes from being
- 	 * freed until the data flush is over.
- 	 */
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	list_for_each_entry(iter, &sbi->s_fc_q[FC_Q_MAIN], i_fc_list) {
- 		ext4_set_inode_state(&iter->vfs_inode,
- 				     EXT4_STATE_FC_FLUSHING_DATA);
- 	}
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 
- 	/* Step 2: Flush data for all the eligible inodes. */
- 	ret = ext4_fc_flush_data(journal);
-@@ -1067,7 +1071,7 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	 * any error from step 2. This ensures that waiters waiting on
- 	 * EXT4_STATE_FC_FLUSHING_DATA can resume.
- 	 */
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	list_for_each_entry(iter, &sbi->s_fc_q[FC_Q_MAIN], i_fc_list) {
- 		ext4_clear_inode_state(&iter->vfs_inode,
- 				       EXT4_STATE_FC_FLUSHING_DATA);
-@@ -1084,7 +1088,7 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	 * prepare_to_wait() in ext4_fc_del().
- 	 */
- 	smp_mb();
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 
- 	/*
- 	 * If we encountered error in Step 2, return it now after clearing
-@@ -1101,12 +1105,12 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	 * previous handles are now drained. We now mark the inodes on the
- 	 * commit queue as being committed.
- 	 */
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	list_for_each_entry(iter, &sbi->s_fc_q[FC_Q_MAIN], i_fc_list) {
- 		ext4_set_inode_state(&iter->vfs_inode,
- 				     EXT4_STATE_FC_COMMITTING);
- 	}
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	jbd2_journal_unlock_updates(journal);
- 
- 	/*
-@@ -1117,6 +1121,7 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 		blkdev_issue_flush(journal->j_fs_dev);
- 
- 	blk_start_plug(&plug);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	/* Step 6: Write fast commit blocks to disk. */
- 	if (sbi->s_fc_bytes == 0) {
- 		/*
-@@ -1134,7 +1139,6 @@ static int ext4_fc_perform_commit(journal_t *journal)
+ 	ret = pm_runtime_get_sync(dev);
+@@ -171,76 +165,9 @@ static irqreturn_t detected_mode_handler(int irq, void *data)
+ 		goto error;
  	}
  
- 	/* Step 6.2: Now write all the dentry updates. */
--	mutex_lock(&sbi->s_fc_lock);
- 	ret = ext4_fc_commit_dentry_updates(journal, &crc);
- 	if (ret)
- 		goto out;
-@@ -1156,7 +1160,7 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	ret = ext4_fc_write_tail(sb, crc);
+-	if (!kctl) {
+-		const char *name __free(kfree) = kasprintf(GFP_KERNEL, "%s %s",
+-							   interrupt->entity->label,
+-							   SDCA_CTL_SELECTED_MODE_NAME);
+-
+-		if (!name)
+-			goto error;
+-
+-		kctl = snd_soc_component_get_kcontrol(component, name);
+-		if (!kctl) {
+-			dev_dbg(dev, "control not found: %s\n", name);
+-			goto error;
+-		}
+-
+-		interrupt->priv = kctl;
+-	}
+-
+-	soc_enum = (struct soc_enum *)kctl->private_value;
+-
+-	reg = SDW_SDCA_CTL(interrupt->function->desc->adr, interrupt->entity->id,
+-			   interrupt->control->sel, 0);
+-
+-	ret = regmap_read(interrupt->function_regmap, reg, &val);
+-	if (ret < 0) {
+-		dev_err(dev, "failed to read detected mode: %d\n", ret);
+-		goto error;
+-	}
+-
+-	switch (val) {
+-	case SDCA_DETECTED_MODE_DETECTION_IN_PROGRESS:
+-	case SDCA_DETECTED_MODE_JACK_UNKNOWN:
+-		reg = SDW_SDCA_CTL(interrupt->function->desc->adr,
+-				   interrupt->entity->id,
+-				   SDCA_CTL_GE_SELECTED_MODE, 0);
+-
+-		/*
+-		 * Selected mode is not normally marked as volatile register
+-		 * (RW), but here force a read from the hardware. If the
+-		 * detected mode is unknown we need to see what the device
+-		 * selected as a "safe" option.
+-		 */
+-		regcache_drop_region(interrupt->function_regmap, reg, reg);
+-
+-		ret = regmap_read(interrupt->function_regmap, reg, &val);
+-		if (ret) {
+-			dev_err(dev, "failed to re-check selected mode: %d\n", ret);
+-			goto error;
+-		}
+-		break;
+-	default:
+-		break;
+-	}
+-
+-	dev_dbg(dev, "%s: %#x\n", interrupt->name, val);
+-
+-	ucontrol = kzalloc(sizeof(*ucontrol), GFP_KERNEL);
+-	if (!ucontrol)
+-		goto error;
+-
+-	ucontrol->value.enumerated.item[0] = snd_soc_enum_val_to_item(soc_enum, val);
+-
+-	down_write(rwsem);
+-	ret = kctl->put(kctl, ucontrol);
+-	up_write(rwsem);
+-	if (ret < 0) {
+-		dev_err(dev, "failed to update selected mode: %d\n", ret);
++	ret = sdca_jack_process(interrupt);
++	if (ret)
+ 		goto error;
+-	}
+-
+-	snd_ctl_notify(card->snd_card, SNDRV_CTL_EVENT_MASK_VALUE, &kctl->id);
  
- out:
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	blk_finish_plug(&plug);
- 	return ret;
- }
-@@ -1290,6 +1294,7 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	struct ext4_inode_info *ei;
- 	struct ext4_fc_dentry_update *fc_dentry;
-+	int alloc_ctx;
- 
- 	if (full && sbi->s_fc_bh)
- 		sbi->s_fc_bh = NULL;
-@@ -1297,7 +1302,7 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 	trace_ext4_fc_cleanup(journal, full, tid);
- 	jbd2_fc_release_bufs(journal);
- 
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	while (!list_empty(&sbi->s_fc_q[FC_Q_MAIN])) {
- 		ei = list_first_entry(&sbi->s_fc_q[FC_Q_MAIN],
- 					struct ext4_inode_info,
-@@ -1356,7 +1361,7 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 
- 	if (full)
- 		sbi->s_fc_bytes = 0;
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	trace_ext4_fc_stats(sb);
- }
- 
+ 	irqret = IRQ_HANDLED;
+ error:
+@@ -536,6 +463,10 @@ int sdca_irq_populate(struct sdca_function_data *function,
+ 				handler = function_status_handler;
+ 				break;
+ 			case SDCA_CTL_TYPE_S(GE, DETECTED_MODE):
++				ret = sdca_jack_alloc_state(interrupt);
++				if (ret)
++					return ret;
++
+ 				handler = detected_mode_handler;
+ 				break;
+ 			case SDCA_CTL_TYPE_S(XU, FDL_CURRENTOWNER):
+diff --git a/sound/soc/sdca/sdca_jack.c b/sound/soc/sdca/sdca_jack.c
+new file mode 100644
+index 0000000000000..83b2b9cc81f00
+--- /dev/null
++++ b/sound/soc/sdca/sdca_jack.c
+@@ -0,0 +1,140 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (C) 2025 Cirrus Logic, Inc. and
++//                    Cirrus Logic International Semiconductor Ltd.
++
++/*
++ * The MIPI SDCA specification is available for public downloads at
++ * https://www.mipi.org/mipi-sdca-v1-0-download
++ */
++
++#include <linux/cleanup.h>
++#include <linux/device.h>
++#include <linux/dev_printk.h>
++#include <linux/soundwire/sdw.h>
++#include <linux/soundwire/sdw_registers.h>
++#include <linux/sprintf.h>
++#include <linux/regmap.h>
++#include <linux/rwsem.h>
++#include <sound/asound.h>
++#include <sound/control.h>
++#include <sound/sdca.h>
++#include <sound/sdca_function.h>
++#include <sound/sdca_interrupts.h>
++#include <sound/sdca_jack.h>
++#include <sound/soc-component.h>
++#include <sound/soc.h>
++
++/**
++ * sdca_jack_process - Process an SDCA jack event
++ * @interrupt: SDCA interrupt structure
++ *
++ * Return: Zero on success or a negative error code.
++ */
++int sdca_jack_process(struct sdca_interrupt *interrupt)
++{
++	struct device *dev = interrupt->dev;
++	struct snd_soc_component *component = interrupt->component;
++	struct snd_soc_card *card = component->card;
++	struct rw_semaphore *rwsem = &card->snd_card->controls_rwsem;
++	struct jack_state *state = interrupt->priv;
++	struct snd_kcontrol *kctl = state->kctl;
++	struct snd_ctl_elem_value *ucontrol __free(kfree) = NULL;
++	struct soc_enum *soc_enum;
++	unsigned int reg, val;
++	int ret;
++
++	if (!kctl) {
++		const char *name __free(kfree) = kasprintf(GFP_KERNEL, "%s %s",
++							   interrupt->entity->label,
++							   SDCA_CTL_SELECTED_MODE_NAME);
++
++		if (!name)
++			return -ENOMEM;
++
++		kctl = snd_soc_component_get_kcontrol(component, name);
++		if (!kctl) {
++			dev_dbg(dev, "control not found: %s\n", name);
++			return -ENOENT;
++		}
++
++		state->kctl = kctl;
++	}
++
++	soc_enum = (struct soc_enum *)kctl->private_value;
++
++	reg = SDW_SDCA_CTL(interrupt->function->desc->adr, interrupt->entity->id,
++			   interrupt->control->sel, 0);
++
++	ret = regmap_read(interrupt->function_regmap, reg, &val);
++	if (ret < 0) {
++		dev_err(dev, "failed to read detected mode: %d\n", ret);
++		return ret;
++	}
++
++	switch (val) {
++	case SDCA_DETECTED_MODE_DETECTION_IN_PROGRESS:
++	case SDCA_DETECTED_MODE_JACK_UNKNOWN:
++		reg = SDW_SDCA_CTL(interrupt->function->desc->adr,
++				   interrupt->entity->id,
++				   SDCA_CTL_GE_SELECTED_MODE, 0);
++
++		/*
++		 * Selected mode is not normally marked as volatile register
++		 * (RW), but here force a read from the hardware. If the
++		 * detected mode is unknown we need to see what the device
++		 * selected as a "safe" option.
++		 */
++		regcache_drop_region(interrupt->function_regmap, reg, reg);
++
++		ret = regmap_read(interrupt->function_regmap, reg, &val);
++		if (ret) {
++			dev_err(dev, "failed to re-check selected mode: %d\n", ret);
++			return ret;
++		}
++		break;
++	default:
++		break;
++	}
++
++	dev_dbg(dev, "%s: %#x\n", interrupt->name, val);
++
++	ucontrol = kzalloc(sizeof(*ucontrol), GFP_KERNEL);
++	if (!ucontrol)
++		return -ENOMEM;
++
++	ucontrol->value.enumerated.item[0] = snd_soc_enum_val_to_item(soc_enum, val);
++
++	down_write(rwsem);
++	ret = kctl->put(kctl, ucontrol);
++	up_write(rwsem);
++	if (ret < 0) {
++		dev_err(dev, "failed to update selected mode: %d\n", ret);
++		return ret;
++	}
++
++	snd_ctl_notify(card->snd_card, SNDRV_CTL_EVENT_MASK_VALUE, &kctl->id);
++
++	return 0;
++}
++EXPORT_SYMBOL_NS_GPL(sdca_jack_process, "SND_SOC_SDCA");
++
++/**
++ * sdca_jack_alloc_state - allocate state for a jack interrupt
++ * @interrupt: SDCA interrupt structure.
++ *
++ * Return: Zero on success or a negative error code.
++ */
++int sdca_jack_alloc_state(struct sdca_interrupt *interrupt)
++{
++	struct device *dev = interrupt->dev;
++	struct jack_state *jack_state;
++
++	jack_state = devm_kzalloc(dev, sizeof(*jack_state), GFP_KERNEL);
++	if (!jack_state)
++		return -ENOMEM;
++
++	interrupt->priv = jack_state;
++
++	return 0;
++}
++EXPORT_SYMBOL_NS_GPL(sdca_jack_alloc_state, "SND_SOC_SDCA");
 -- 
 2.51.0
 
