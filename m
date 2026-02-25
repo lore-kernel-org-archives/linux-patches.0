@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4695A2853F3;
-	Wed, 25 Feb 2026 01:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4F4285419;
+	Wed, 25 Feb 2026 01:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983888; cv=none; b=IbWXV9ndjZGXgleyDCXi/yOmWCBwQnu+WVzmzNnHaPaR2wGIivycx6XwI5Wuo42u9oLWjqcou3lRw6EzkKJLOH+AdPc0xa/RHZCkkuzBnu6zP8sW+43NGjxdboW4j+ny5kA/0lvrSCOVEBHp8YCFVyyrjlb+kPnJ4jZ6gNHvgAo=
+	t=1771983889; cv=none; b=mML+HXBqwzHi8ubp45P1k5th9mKGBUCy0lN0JMrhT0LDR4tEAquNJAciYjHysv+apPbMuviFqkXQbAmkf/a4YyKl3iNRsYN5Mi7Y/lqp5jkvULdYLCDCUTQlKA5F4JQR+rkCbTnDBCRCAFz903p74xV2a1vlLVyJfo4t0EyAX5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983888; c=relaxed/simple;
-	bh=5aQuH+hZnUiE1UsczNtccT/fIBec0spYsf8EJFvZbCw=;
+	s=arc-20240116; t=1771983889; c=relaxed/simple;
+	bh=cQhU8V1KP+BrbAyoqCQue4bR7RUYhkwfAJVEO+16+4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FWEEvRQY+xAxW+5HCLGLeOhvYN/3UVBIT3s/3h6MWwkJE1n7jL80Te5QPxRgObB0xB90B8/iGymGHW82E/QZoLw6nGRMx/nJ5J1kCudTqAuJbaaLmjZClIN+9geNsi62jfiDDNVoRRbxKa3Xxy77FJ7RbaFBYsmtqwjNRWB/9UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xg/ODwkw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GvEB20xNFBTACV7bBkSFAvYVBk95gvuqYDLwRtJS6g4/KKWYx50gCPSkU6bOy11UDppv3ZkJL/96cI12UElZXYxs7q0fGcY2vL/T3b80Yj9+RJLyRz9pgH54BSpCjfPsQB9aWMbxyi4VSZGjcsKWKS5OqedFZ0ftT9k/OPpqnKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybzms/hb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xg/ODwkw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38E8C116D0;
-	Wed, 25 Feb 2026 01:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybzms/hb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC00CC19424;
+	Wed, 25 Feb 2026 01:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983887;
-	bh=5aQuH+hZnUiE1UsczNtccT/fIBec0spYsf8EJFvZbCw=;
+	s=korg; t=1771983889;
+	bh=cQhU8V1KP+BrbAyoqCQue4bR7RUYhkwfAJVEO+16+4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xg/ODwkw5I+2vjsa3Amf1iJaMgFSfoxH/gZpvBMZFg+7AisHlzakbnQn57QVCc1qk
-	 gq0F+b77lziGG+h0LughiySRakQ4wLfH+us1SqkN2dlhCKuNDn2OFLkGpwJndXLg3N
-	 lIIHv1Vce0T4Ric1qbu4rMnPLn4qS0o0WdcK8Rug=
+	b=ybzms/hbe2Q3ar06PkpmFi3J8+bdLCShqoTigYM222vcwyP7QZgoJx609NYu8IINs
+	 nDJ12CUfiC+39oh2kj5+IdK6t7Hpk63vQdQibUJAX/Y7dJFMTGydSGcR56cEpXJI/s
+	 ML5EZfg+3kTaGKh8Jiw4oYxuRNEmFEqSLAct6JY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Casey Connolly <casey.connolly@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 161/641] arm64: dts: qcom: sdm845-db845c: drop CS from SPIO0
-Date: Tue, 24 Feb 2026 17:18:07 -0800
-Message-ID: <20260225012352.970253121@linuxfoundation.org>
+Subject: [PATCH 6.18 135/641] arm64: dts: qcom: sdm845-oneplus: Dont mark ts supply boot-on
+Date: Tue, 24 Feb 2026 17:17:41 -0800
+Message-ID: <20260225012352.411222368@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,38 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Casey Connolly <casey.connolly@linaro.org>
 
-[ Upstream commit 8bfb696ccdc5bcfad7a45b84c2c8a36757070e19 ]
+[ Upstream commit c9b98b9dad9749bf2eb7336a6fca31a6af1039d7 ]
 
-On SDM845 SPI uses hardware-provided chip select, while specifying
-cs-gpio makes the driver request GPIO pin, which on DB845c conflicts
-with the normal host controllers pinctrl entry.
+The touchscreen isn't enabled by bootloader and doesn't need to be
+enabled at boot, only when the driver probes, thus remove the
+regulator-boot-on property.
 
-Drop the cs-gpios property to restore SPI functionality.
-
-Fixes: cb29e7106d4e ("arm64: dts: qcom: db845c: Add support for MCP2517FD")
+Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260106-wcn3990-pwrctl-v2-7-0386204328be@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20251118-dts-oneplus-regulators-v2-1-3e67cea1e4e7@ixit.cz
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 1 -
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 8abf3e909502f..384be2f8b1411 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -850,7 +850,6 @@ &spi0 {
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&qup_spi0_default>;
--	cs-gpios = <&tlmm 3 GPIO_ACTIVE_LOW>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index 51a9a276399ac..35d105ff689b9 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -160,7 +160,6 @@ ts_1p8_supply: ts-1p8-regulator {
  
- 	can@0 {
- 		compatible = "microchip,mcp2517fd";
+ 		gpio = <&tlmm 88 0>;
+ 		enable-active-high;
+-		regulator-boot-on;
+ 	};
+ };
+ 
 -- 
 2.51.0
 
