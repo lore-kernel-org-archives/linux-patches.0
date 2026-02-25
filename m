@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6E71E2834;
-	Wed, 25 Feb 2026 01:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD7125A655;
+	Wed, 25 Feb 2026 01:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983538; cv=none; b=hVxcejI9Ub7TwhNJz3+qhu+wKXvSikpq+2Ht0FCBXtthRmFpsY6qV0tG/3YH1rg+0iWFIJT5bWTOw7bSGfw6fuY1b6o1nI0mBQhaEb1xX1DLIzM2dTMxHRqwhFKsNaIIj6FTWk7MwNnhDfZmQXdqPWey4WaPaf9WaoZeO5d4jmk=
+	t=1771983539; cv=none; b=poDTZ/hJ3mCVdYrCIMoePZ2SYfOTUM71GOT0egiE/jYIYpsybd4JL7KXvzaTkzSyvfQiYrJtBNbVnSfuSSN6srOibvRQ0Xq237zpatfzBqTTp0MpsHhxL41DWHJizeGfRK8PMkuSFFFVxgs0/dXGPjYB5v9uMh8Ofux6APQ6xtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983538; c=relaxed/simple;
-	bh=4b2XzWZ9pz/PvmZw/yEslev6Q3jbSdZxeFnf5DtJ0SA=;
+	s=arc-20240116; t=1771983539; c=relaxed/simple;
+	bh=99jMZrr6yrfDHYCyqa8IEFWqLxIeUN4x20CcYSAOscI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K90ZeiXutHhIFYvtxnFoAGQdNmxWJlD3/8rVkIs00ynVolXxmrbm9UNilMMWO1+I6GtVNJopZh3R6L79h+cr65MxtuUdc+cLk8dRTa8IDa+lJOcWq8ViYcSYkKy4XhrsF28ay8MOcgBWl3c2MdvCzNF7GyywUWdOwEqszYGKwJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBt0itTl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=py3bVnxiRdmpP2QJ4buQ3eNDwknD6SX/pH365d6tlVALuZvoO9KLI1ilxyABClsBzQZS7mlPJa+qzXcc0LA+yv0+7ZQ/vkVN0dQhI2bRROHRYN8DD3FWMp14wTJXOUeWIe4L8K0IH0y9jhhP8AxOsxj2mI9HaXK6ZAaU+dgLLNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBgx+m5w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBt0itTl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFDFC116D0;
-	Wed, 25 Feb 2026 01:38:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBgx+m5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F8FC116D0;
+	Wed, 25 Feb 2026 01:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983538;
-	bh=4b2XzWZ9pz/PvmZw/yEslev6Q3jbSdZxeFnf5DtJ0SA=;
+	s=korg; t=1771983539;
+	bh=99jMZrr6yrfDHYCyqa8IEFWqLxIeUN4x20CcYSAOscI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBt0itTlDNsSzxWloJ4TGyk1LQPX/HFFclXNvKkG/mGBn/MCnX4Tz5OAkJpBTyenf
-	 lRBOJYDHj8yJ7d6jyGIL7dtpX8LA30/G8Sd+3qBe0rKfh4/BkxLQT0ha14Ku2aPW5q
-	 JrUIHiqh/j+2Jxym3bw5iNN1LBua8y92GjVBTIpY=
+	b=nBgx+m5wi3Zz6pG7GgFmb8Mhfg/MYgPS+Qy8NcYW9ISlFBIoa4BJ4f1S24w9E4C+W
+	 d2FTPfpMWZBjvcvyS/y6v6SsEEnJ+R//U9fwz7y0N5016fNNKJMVTxSpGsntDIKVN9
+	 t5kwqkg4bRupUpe6N1RGPLxYqTE/V8DBULkU5If8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Pin-yen Lin <treapking@google.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 642/781] net: mscc: ocelot: add missing lock protection in ocelot_port_xmit_inj()
-Date: Tue, 24 Feb 2026 17:22:31 -0800
-Message-ID: <20260225012415.549240482@linuxfoundation.org>
+Subject: [PATCH 6.19 643/781] selftests: netconsole: Increase port listening timeout
+Date: Tue, 24 Feb 2026 17:22:32 -0800
+Message-ID: <20260225012415.572890363@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,59 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Pin-yen Lin <treapking@google.com>
 
-[ Upstream commit 026f6513c5880c2c89e38ad66bbec2868f978605 ]
+[ Upstream commit a68a9bd086c2822d0c629443bd16ad1317afe501 ]
 
-ocelot_port_xmit_inj() calls ocelot_can_inject() and
-ocelot_port_inject_frame() without holding the injection group lock.
-Both functions contain lockdep_assert_held() for the injection lock,
-and the correct caller felix_port_deferred_xmit() properly acquires
-the lock using ocelot_lock_inj_grp() before calling these functions.
+wait_for_port() can wait up to 2 seconds with the sleep and the polling
+in wait_local_port_listen() combined. So, in netcons_basic.sh, the socat
+process could die before the test writes to the netconsole.
 
-Add ocelot_lock_inj_grp()/ocelot_unlock_inj_grp() around the register
-injection path to fix the missing lock protection. The FDMA path is not
-affected as it uses its own locking mechanism.
+Increase the timeout to 3 seconds to make netcons_basic.sh pass
+consistently.
 
-Fixes: c5e12ac3beb0 ("net: mscc: ocelot: serialize access to the injection/extraction groups")
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20260208225602.1339325-4-n7l8m4@u.northwestern.edu
+Fixes: 3dc6c76391cb ("selftests: net: Add IPv6 support to netconsole basic tests")
+Signed-off-by: Pin-yen Lin <treapking@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260210005939.3230550-1-treapking@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mscc/ocelot_net.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ tools/testing/selftests/drivers/net/lib/sh/lib_netcons.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mscc/ocelot_net.c b/drivers/net/ethernet/mscc/ocelot_net.c
-index a7966c174b2e2..1b82693204640 100644
---- a/drivers/net/ethernet/mscc/ocelot_net.c
-+++ b/drivers/net/ethernet/mscc/ocelot_net.c
-@@ -597,14 +597,22 @@ static netdev_tx_t ocelot_port_xmit_inj(struct sk_buff *skb,
- 	int port = priv->port.index;
- 	u32 rew_op = 0;
+diff --git a/tools/testing/selftests/drivers/net/lib/sh/lib_netcons.sh b/tools/testing/selftests/drivers/net/lib/sh/lib_netcons.sh
+index ae8abff4be409..64d3941576d5d 100644
+--- a/tools/testing/selftests/drivers/net/lib/sh/lib_netcons.sh
++++ b/tools/testing/selftests/drivers/net/lib/sh/lib_netcons.sh
+@@ -247,8 +247,8 @@ function listen_port_and_save_to() {
+ 		SOCAT_MODE="UDP6-LISTEN"
+ 	fi
  
--	if (!ocelot_can_inject(ocelot, 0))
-+	ocelot_lock_inj_grp(ocelot, 0);
-+
-+	if (!ocelot_can_inject(ocelot, 0)) {
-+		ocelot_unlock_inj_grp(ocelot, 0);
- 		return NETDEV_TX_BUSY;
-+	}
+-	# Just wait for 2 seconds
+-	timeout 2 ip netns exec "${NAMESPACE}" \
++	# Just wait for 3 seconds
++	timeout 3 ip netns exec "${NAMESPACE}" \
+ 		socat "${SOCAT_MODE}":"${PORT}",fork "${OUTPUT}" 2> /dev/null
+ }
  
--	if (!ocelot_xmit_timestamp(ocelot, port, skb, &rew_op))
-+	if (!ocelot_xmit_timestamp(ocelot, port, skb, &rew_op)) {
-+		ocelot_unlock_inj_grp(ocelot, 0);
- 		return NETDEV_TX_OK;
-+	}
- 
- 	ocelot_port_inject_frame(ocelot, port, 0, rew_op, skb);
- 
-+	ocelot_unlock_inj_grp(ocelot, 0);
-+
- 	consume_skb(skb);
- 
- 	return NETDEV_TX_OK;
 -- 
 2.51.0
 
