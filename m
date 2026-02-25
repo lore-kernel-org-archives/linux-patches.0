@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6385D25A655;
-	Wed, 25 Feb 2026 01:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09FB25A655;
+	Wed, 25 Feb 2026 01:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983878; cv=none; b=fjwn4gR/W5Y9IessK2xhAW/72sYuKzrJpqz8j7hPckSvPE+AQlMtBaeM8iivfxIODjjYlNL7tqXkjVraFGreStqAKR5lhW6BfoUnCSalA7tJuU+p7sW/URS1olWD3na7bKvsn/Nl5qh5UYtzaaXDosamx/PXmdHBvPdZR7heNn0=
+	t=1771983879; cv=none; b=OPsmTr8Ls5qKRNbocXxM3OyFFpw2+FP7vo5i5YtuYp1XiGogteNvCy+XHCNCHD7am9q7ZZiLVeIlEQk7Dqd22eIJCVbN2DuHgNYyL6CTVR5fB69rGNsoiEK58sdsiSBI4u9Y5LcaXVzLoz0aZYCDL164X9APlBoJt4j8VS+TKMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983878; c=relaxed/simple;
-	bh=vZGF+P4f6cUt5ZIaRUN/GtlFpTilclWaSzAaaR4z30E=;
+	s=arc-20240116; t=1771983879; c=relaxed/simple;
+	bh=JkmYZR603FOsr1YfG4xwm74hjuoXGYP0br8/Zq5ldNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=He+u6SaXn1yQyjBmMftTf0ZpePJa5goSjoMMwuKxsKYt2s7oMri588t1E+ueZN1IviaanwSPCZQ/nlwX1FZYwxrstqLK40bM0aX0P3L4wTc0TUxkuVFJyjdiaUbYEUnJnQpL8sCoy9F2KXu8xNymiddm+789yMY31ODwETOP7a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qrewv/C7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dv2EnFGtYK6XaSCOGO64ye+3e1AZMUIuFqtN+39KDRGMn19aT92kmU8NRxLOKTeWlZ64qp10190NHfOs3JnqlM5RC/E2pwIl5F84XKLio4DEmnhv/vG/iSfchveZ8y1AIy9LKU2vd8u4Kd7tXsTgnDddHv4UOQy7xqkJdzjH6l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHhlqI9a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qrewv/C7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA51C116D0;
-	Wed, 25 Feb 2026 01:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHhlqI9a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCCEC116D0;
+	Wed, 25 Feb 2026 01:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983878;
-	bh=vZGF+P4f6cUt5ZIaRUN/GtlFpTilclWaSzAaaR4z30E=;
+	s=korg; t=1771983879;
+	bh=JkmYZR603FOsr1YfG4xwm74hjuoXGYP0br8/Zq5ldNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qrewv/C7g5Zo8Xw8sluipR0q/W4/kh5LCyKGtmeNy1sB7+YULNU492Kr4zcr5DK6s
-	 sBSX8M8UTvp199uBYD3TY2zx9zl7fGuuMBoxfxsXhiIRWU9HrgAKQziLuic5PRJwLQ
-	 SpSjudVdWPi185b+jxHZlRGSDyZO9uXJdmOXn7ZM=
+	b=yHhlqI9a/sdB4i4Zk6TPBxTTmamfllZK1WiF7qfJBLZIDfAeBJCHJtzvMTlbuqkEO
+	 VZr8A0FBlGnyKcTgjr39B9OAm419lShjdaKRCkjK/MRMnc1kFZGiH153Bk/psKu4sr
+	 l7Hl8zMfqh0biZBZi5LKnLzdizJlSHFDCud8yPig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 153/641] soc: qcom: ubwc: add missing include
-Date: Tue, 24 Feb 2026 17:17:59 -0800
-Message-ID: <20260225012352.796730030@linuxfoundation.org>
+Subject: [PATCH 6.18 154/641] hwspinlock: omap: Handle devm_pm_runtime_enable() errors
+Date: Tue, 24 Feb 2026 17:18:00 -0800
+Message-ID: <20260225012352.820353791@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,35 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit ccef4b2703ff5b0de0b1bda30a0de3026d52eb19 ]
+[ Upstream commit 3bd4edd67b034f8e1f61c86e0eb098de6179e3f2 ]
 
-The header has a function which calls pr_err(). Don't require users of
-the header to include <linux/printk.h> and include it here.
+Although unlikely, devm_pm_runtime_enable() can fail due to memory
+allocations. Without proper error handling, the subsequent
+pm_runtime_resume_and_get() call may operate on incorrectly
+initialized runtime PM state.
 
-Fixes: 87cfc79dcd60 ("drm/msm/a6xx: Resolve the meaning of UBWC_MODE")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20260110-iris-ubwc-v1-1-dd70494dcd7b@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Add error handling to check the return value of
+devm_pm_runtime_enable() and return on failure.
+
+Fixes: 25f7d74d4514 ("hwspinlock: omap: Use devm_pm_runtime_enable() helper")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251124104805.135-1-vulab@iscas.ac.cn
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/soc/qcom/ubwc.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwspinlock/omap_hwspinlock.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/soc/qcom/ubwc.h b/include/linux/soc/qcom/ubwc.h
-index 1ed8b1b16bc90..d9dfc9edc1b2f 100644
---- a/include/linux/soc/qcom/ubwc.h
-+++ b/include/linux/soc/qcom/ubwc.h
-@@ -8,6 +8,7 @@
- #define __QCOM_UBWC_H__
- 
- #include <linux/bits.h>
-+#include <linux/printk.h>
- #include <linux/types.h>
- 
- struct qcom_ubwc_cfg_data {
+diff --git a/drivers/hwspinlock/omap_hwspinlock.c b/drivers/hwspinlock/omap_hwspinlock.c
+index 27b47b8623c09..2d8de835bc242 100644
+--- a/drivers/hwspinlock/omap_hwspinlock.c
++++ b/drivers/hwspinlock/omap_hwspinlock.c
+@@ -88,7 +88,9 @@ static int omap_hwspinlock_probe(struct platform_device *pdev)
+ 	 * make sure the module is enabled and clocked before reading
+ 	 * the module SYSSTATUS register
+ 	 */
+-	devm_pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		return ret;
+ 	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.51.0
 
