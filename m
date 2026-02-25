@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7427D18DB2A;
-	Wed, 25 Feb 2026 01:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC34D18DB2A;
+	Wed, 25 Feb 2026 01:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983133; cv=none; b=QGk+j/h+Flk8YgFVOFmWAMdqa6YZHh2G+0fd1R754GUn+zcTamaT0QgmtxiZZBKPJTYePZuXJwzt4LTPUK3YcfFY4VvKMZBZnbtWcd94udCld04hUYLgagT6pyi1QMGG8wPdHm8zFkRAzqcAKrV3QJz6LGM7r5mTZqki+2GKjnU=
+	t=1771983134; cv=none; b=PQA7eFTRCD/Ch2Nf2i2EX2Xztztuy0A7c1A9SsxPvHfcMlXl+jImkj0nwmkITF+uOjlFDHXeXfhUGqoYHWSW1sGflvwiO7xLz8lexQG+HYtkEBl95WQ8cm7U3k9PUUqNHgSppnvUuA15bbe6yqDMd0lUb4YvcC9oWATO5Z1cF98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983133; c=relaxed/simple;
-	bh=rZra2zqmc5Ub3yvmJp5jU64DPGWNz21zpsajD5J/EHE=;
+	s=arc-20240116; t=1771983134; c=relaxed/simple;
+	bh=eVWDnI2UtVnWHxT8SezOz9A4dhV7hcdy59pcdeQzhNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3wbt2vXMFsMP2hA3bTXExEVvFiNCHsFCgPB62nKF4dZQYoQ8UZuu89oQmfFKMnHOCYbXRvaa9TA4hJseinc5DEmq2+6ReSm2X6x7gB82kf/5D/33+lFP1ph8ctB9tMH/wdBQWQd7S7UL8xAg5/UFlwxsBz7e9Yonb5y/rw56fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBS8D7zf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rrifN9iwP7/IXw+ejrmnd0Eic6HjIB7HiF84AwWDo1W2JX7h6HwGRC653csjwiKb9kWllRs6Df4OdJ4T8OvpCTUcuhQaKGXqpSqb+JbLHhK6Bo+3sChnt2YdufApa6cM4xNAalZhyTvu4YBCob05pHLdUyn5LzbnlanUSKAJFZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rv6io3/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBS8D7zf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305F5C116D0;
-	Wed, 25 Feb 2026 01:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rv6io3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3CAC116D0;
+	Wed, 25 Feb 2026 01:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983133;
-	bh=rZra2zqmc5Ub3yvmJp5jU64DPGWNz21zpsajD5J/EHE=;
+	s=korg; t=1771983134;
+	bh=eVWDnI2UtVnWHxT8SezOz9A4dhV7hcdy59pcdeQzhNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tBS8D7zfp5b/+Omtmolr9hC8l6NRRIDwPRgBPg+5Lcrw7M+O0Zzuco3lUWiEVqirJ
-	 rmJkngUcHO+MoY1LlRkKNePu0teMm9EiVjhPNMzpg6gVBnNwbxHZl9RM8T6DGkh2eY
-	 +o0YXHR7fV7/aikIUaO6i56+Jr/fpOYgRJ6pIP/Q=
+	b=1rv6io3/Mj62++XudQSeGQ5UvuQlTNiKI1V3KaBG7knvy04ffmcwgAOUiU91sa26Z
+	 Yqx9+dT2GXwXNLOR4shX0n4FDcCKyvYL+fv6XckUCjIdsFfAGyPGTNmIKk5cDt2HW+
+	 Sjev5+IW9+eGhzNozZ/+0dFCshnJq85sGVsGMHk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Sheetal <sheetal@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 290/781] mm/slab: fix false lockdep warning in __kfree_rcu_sheaf()
-Date: Tue, 24 Feb 2026 17:16:39 -0800
-Message-ID: <20260225012406.819174099@linuxfoundation.org>
+Subject: [PATCH 6.19 291/781] ASoC: tegra: Add AHUB writeable_reg for RX holes
+Date: Tue, 24 Feb 2026 17:16:40 -0800
+Message-ID: <20260225012406.844335416@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,128 +52,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Yoo <harry.yoo@oracle.com>
+From: Sheetal <sheetal@nvidia.com>
 
-[ Upstream commit f8b4cd2dad097e4ea5aed3511f42b9eb771e7b19 ]
+[ Upstream commit 0ba6286a71581aaf8413a55b9bd90ea3463fd23b ]
 
-kvfree_call_rcu() can be called while holding a raw_spinlock_t.
-Since __kfree_rcu_sheaf() may acquire a spinlock_t (which becomes a
-sleeping lock on PREEMPT_RT) and violate lock nesting rules,
-kvfree_call_rcu() bypasses the sheaves layer entirely on PREEMPT_RT.
+Add writeable_reg callbacks for Tegra210/186 AHUB RX registers so the
+flat cache only treats valid RX locations as writable, avoiding holes
+in the register map.
 
-However, lockdep still complains about acquiring spinlock_t while holding
-raw_spinlock_t, even on !PREEMPT_RT where spinlock_t is a spinning lock.
-This causes a false lockdep warning [1]:
-
- =============================
- [ BUG: Invalid wait context ]
- 6.19.0-rc6-next-20260120 #21508 Not tainted
- -----------------------------
- migration/1/23 is trying to lock:
- ffff8afd01054e98 (&barn->lock){..-.}-{3:3}, at: barn_get_empty_sheaf+0x1d/0xb0
- other info that might help us debug this:
- context-{5:5}
- 3 locks held by migration/1/23:
-  #0: ffff8afd01fd89a8 (&p->pi_lock){-.-.}-{2:2}, at: __balance_push_cpu_stop+0x3f/0x200
-  #1: ffffffff9f15c5c8 (rcu_read_lock){....}-{1:3}, at: cpuset_cpus_allowed_fallback+0x27/0x250
-  #2: ffff8afd1f470be0 ((local_lock_t *)&pcs->lock){+.+.}-{3:3}, at: __kfree_rcu_sheaf+0x52/0x3d0
- stack backtrace:
- CPU: 1 UID: 0 PID: 23 Comm: migration/1 Not tainted 6.19.0-rc6-next-20260120 #21508 PREEMPTLAZY
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
- Stopper: __balance_push_cpu_stop+0x0/0x200 <- balance_push+0x118/0x170
- Call Trace:
-  <TASK>
-  __dump_stack+0x22/0x30
-  dump_stack_lvl+0x60/0x80
-  dump_stack+0x19/0x24
-  __lock_acquire+0xd3a/0x28e0
-  ? __lock_acquire+0x5a9/0x28e0
-  ? __lock_acquire+0x5a9/0x28e0
-  ? barn_get_empty_sheaf+0x1d/0xb0
-  lock_acquire+0xc3/0x270
-  ? barn_get_empty_sheaf+0x1d/0xb0
-  ? __kfree_rcu_sheaf+0x52/0x3d0
-  _raw_spin_lock_irqsave+0x47/0x70
-  ? barn_get_empty_sheaf+0x1d/0xb0
-  barn_get_empty_sheaf+0x1d/0xb0
-  ? __kfree_rcu_sheaf+0x52/0x3d0
-  __kfree_rcu_sheaf+0x19f/0x3d0
-  kvfree_call_rcu+0xaf/0x390
-  set_cpus_allowed_force+0xc8/0xf0
-  [...]
-  </TASK>
-
-This wasn't triggered until sheaves were enabled for all slab caches,
-since kfree_rcu() wasn't being called with a raw spinlock held for
-caches with sheaves (vma, maple node).
-
-As suggested by Vlastimil Babka, fix this by using a lockdep map with
-LD_WAIT_CONFIG wait type to tell lockdep that acquiring spinlock_t is valid
-in this case, as those spinlocks won't be used on PREEMPT_RT.
-
-Note that kfree_rcu_sheaf_map should be acquired using _try() variant,
-otherwise the acquisition of the lockdep map itself will trigger an invalid
-wait context warning.
-
-Reported-by: Paul E. McKenney <paulmck@kernel.org>
-Closes: https://lore.kernel.org/linux-mm/c858b9af-2510-448b-9ab3-058f7b80dd42@paulmck-laptop [1]
-Fixes: ec66e0d59952 ("slab: add sheaf support for batching kfree_rcu() operations")
-Suggested-by: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: 16e1bcc2caf4 ("ASoC: tegra: Add Tegra210 based AHUB driver")
+Signed-off-by: Sheetal <sheetal@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260123095346.1258556-2-sheetal@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ sound/soc/tegra/tegra210_ahub.c | 57 +++++++++++++++++++++++++++++++++
+ sound/soc/tegra/tegra210_ahub.h | 30 +++++++++++++++++
+ 2 files changed, 87 insertions(+)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index cdc1e652ec52f..e1583757331e7 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -6265,11 +6265,29 @@ static void rcu_free_sheaf(struct rcu_head *head)
- 	free_empty_sheaf(s, sheaf);
- }
+diff --git a/sound/soc/tegra/tegra210_ahub.c b/sound/soc/tegra/tegra210_ahub.c
+index e795907a3963a..fc5892056f832 100644
+--- a/sound/soc/tegra/tegra210_ahub.c
++++ b/sound/soc/tegra/tegra210_ahub.c
+@@ -2049,6 +2049,61 @@ static const struct snd_soc_component_driver tegra264_ahub_component = {
+ 	.num_dapm_routes	= ARRAY_SIZE(tegra264_ahub_routes),
+ };
  
-+/*
-+ * kvfree_call_rcu() can be called while holding a raw_spinlock_t. Since
-+ * __kfree_rcu_sheaf() may acquire a spinlock_t (sleeping lock on PREEMPT_RT),
-+ * this would violate lock nesting rules. Therefore, kvfree_call_rcu() avoids
-+ * this problem by bypassing the sheaves layer entirely on PREEMPT_RT.
-+ *
-+ * However, lockdep still complains that it is invalid to acquire spinlock_t
-+ * while holding raw_spinlock_t, even on !PREEMPT_RT where spinlock_t is a
-+ * spinning lock. Tell lockdep that acquiring spinlock_t is valid here
-+ * by temporarily raising the wait-type to LD_WAIT_CONFIG.
-+ */
-+static DEFINE_WAIT_OVERRIDE_MAP(kfree_rcu_sheaf_map, LD_WAIT_CONFIG);
++static bool tegra210_ahub_wr_reg(struct device *dev, unsigned int reg)
++{
++	int part;
 +
- bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj)
- {
- 	struct slub_percpu_sheaves *pcs;
- 	struct slab_sheaf *rcu_sheaf;
- 
-+	if (WARN_ON_ONCE(IS_ENABLED(CONFIG_PREEMPT_RT)))
++	if (reg % TEGRA210_XBAR_RX_STRIDE)
 +		return false;
 +
-+	lock_map_acquire_try(&kfree_rcu_sheaf_map);
++	for (part = 0; part < TEGRA210_XBAR_UPDATE_MAX_REG; part++) {
++		switch (reg & ~(part * TEGRA210_XBAR_PART1_RX)) {
++		case TEGRA210_AXBAR_PART_0_ADMAIF_RX1_0 ... TEGRA210_AXBAR_PART_0_ADMAIF_RX10_0:
++		case TEGRA210_AXBAR_PART_0_I2S1_RX1_0 ... TEGRA210_AXBAR_PART_0_I2S5_RX1_0:
++		case TEGRA210_AXBAR_PART_0_SFC1_RX1_0 ... TEGRA210_AXBAR_PART_0_SFC4_RX1_0:
++		case TEGRA210_AXBAR_PART_0_MIXER1_RX1_0 ... TEGRA210_AXBAR_PART_0_MIXER1_RX10_0:
++		case TEGRA210_AXBAR_PART_0_SPDIF1_RX1_0 ... TEGRA210_AXBAR_PART_0_SPDIF1_RX2_0:
++		case TEGRA210_AXBAR_PART_0_AFC1_RX1_0 ... TEGRA210_AXBAR_PART_0_AFC6_RX1_0:
++		case TEGRA210_AXBAR_PART_0_OPE1_RX1_0 ... TEGRA210_AXBAR_PART_0_OPE2_RX1_0:
++		case TEGRA210_AXBAR_PART_0_SPKPROT1_RX1_0:
++		case TEGRA210_AXBAR_PART_0_MVC1_RX1_0 ... TEGRA210_AXBAR_PART_0_MVC2_RX1_0:
++		case TEGRA210_AXBAR_PART_0_AMX1_RX1_0 ... TEGRA210_AXBAR_PART_0_ADX2_RX1_0:
++			return true;
++		default:
++			break;
++		}
++	}
 +
- 	if (!local_trylock(&s->cpu_sheaves->lock))
- 		goto fail;
++	return false;
++}
++
++static bool tegra186_ahub_wr_reg(struct device *dev, unsigned int reg)
++{
++	int part;
++
++	if (reg % TEGRA210_XBAR_RX_STRIDE)
++		return false;
++
++	for (part = 0; part < TEGRA186_XBAR_UPDATE_MAX_REG; part++) {
++		switch (reg & ~(part * TEGRA210_XBAR_PART1_RX)) {
++		case TEGRA210_AXBAR_PART_0_ADMAIF_RX1_0 ... TEGRA186_AXBAR_PART_0_I2S6_RX1_0:
++		case TEGRA210_AXBAR_PART_0_SFC1_RX1_0 ... TEGRA210_AXBAR_PART_0_SFC4_RX1_0:
++		case TEGRA210_AXBAR_PART_0_MIXER1_RX1_0 ... TEGRA210_AXBAR_PART_0_MIXER1_RX10_0:
++		case TEGRA186_AXBAR_PART_0_DSPK1_RX1_0 ... TEGRA186_AXBAR_PART_0_DSPK2_RX1_0:
++		case TEGRA210_AXBAR_PART_0_AFC1_RX1_0 ... TEGRA210_AXBAR_PART_0_AFC6_RX1_0:
++		case TEGRA210_AXBAR_PART_0_OPE1_RX1_0:
++		case TEGRA186_AXBAR_PART_0_MVC1_RX1_0 ... TEGRA186_AXBAR_PART_0_MVC2_RX1_0:
++		case TEGRA186_AXBAR_PART_0_AMX1_RX1_0 ... TEGRA186_AXBAR_PART_0_AMX3_RX4_0:
++		case TEGRA210_AXBAR_PART_0_ADX1_RX1_0 ... TEGRA186_AXBAR_PART_0_ASRC1_RX7_0:
++			return true;
++		default:
++			break;
++		}
++	}
++
++	return false;
++}
++
+ static bool tegra264_ahub_wr_reg(struct device *dev, unsigned int reg)
+ {
+ 	int part;
+@@ -2076,6 +2131,7 @@ static const struct regmap_config tegra210_ahub_regmap_config = {
+ 	.reg_bits		= 32,
+ 	.val_bits		= 32,
+ 	.reg_stride		= 4,
++	.writeable_reg		= tegra210_ahub_wr_reg,
+ 	.max_register		= TEGRA210_MAX_REGISTER_ADDR,
+ 	.cache_type		= REGCACHE_FLAT,
+ };
+@@ -2084,6 +2140,7 @@ static const struct regmap_config tegra186_ahub_regmap_config = {
+ 	.reg_bits		= 32,
+ 	.val_bits		= 32,
+ 	.reg_stride		= 4,
++	.writeable_reg		= tegra186_ahub_wr_reg,
+ 	.max_register		= TEGRA186_MAX_REGISTER_ADDR,
+ 	.cache_type		= REGCACHE_FLAT,
+ };
+diff --git a/sound/soc/tegra/tegra210_ahub.h b/sound/soc/tegra/tegra210_ahub.h
+index f355b2cfd19b2..acbe640dd3b57 100644
+--- a/sound/soc/tegra/tegra210_ahub.h
++++ b/sound/soc/tegra/tegra210_ahub.h
+@@ -68,6 +68,36 @@
+ #define TEGRA210_MAX_REGISTER_ADDR (TEGRA210_XBAR_PART2_RX +		\
+ 	(TEGRA210_XBAR_RX_STRIDE * (TEGRA210_XBAR_AUDIO_RX_COUNT - 1)))
  
-@@ -6346,10 +6364,12 @@ bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj)
- 	local_unlock(&s->cpu_sheaves->lock);
++/* AXBAR register offsets */
++#define TEGRA186_AXBAR_PART_0_AMX1_RX1_0	0x120
++#define TEGRA186_AXBAR_PART_0_AMX3_RX4_0	0x14c
++#define TEGRA186_AXBAR_PART_0_ASRC1_RX7_0	0x1a8
++#define TEGRA186_AXBAR_PART_0_DSPK1_RX1_0	0xc0
++#define TEGRA186_AXBAR_PART_0_DSPK2_RX1_0	0xc4
++#define TEGRA186_AXBAR_PART_0_I2S6_RX1_0	0x54
++#define TEGRA186_AXBAR_PART_0_MVC1_RX1_0	0x110
++#define TEGRA186_AXBAR_PART_0_MVC2_RX1_0	0x114
++#define TEGRA210_AXBAR_PART_0_ADMAIF_RX10_0	0x24
++#define TEGRA210_AXBAR_PART_0_ADMAIF_RX1_0	0x0
++#define TEGRA210_AXBAR_PART_0_ADX1_RX1_0	0x160
++#define TEGRA210_AXBAR_PART_0_ADX2_RX1_0	0x164
++#define TEGRA210_AXBAR_PART_0_AFC1_RX1_0	0xd0
++#define TEGRA210_AXBAR_PART_0_AFC6_RX1_0	0xe4
++#define TEGRA210_AXBAR_PART_0_AMX1_RX1_0	0x140
++#define TEGRA210_AXBAR_PART_0_I2S1_RX1_0	0x40
++#define TEGRA210_AXBAR_PART_0_I2S5_RX1_0	0x50
++#define TEGRA210_AXBAR_PART_0_MIXER1_RX10_0	0xa4
++#define TEGRA210_AXBAR_PART_0_MIXER1_RX1_0	0x80
++#define TEGRA210_AXBAR_PART_0_MVC1_RX1_0	0x120
++#define TEGRA210_AXBAR_PART_0_MVC2_RX1_0	0x124
++#define TEGRA210_AXBAR_PART_0_OPE1_RX1_0	0x100
++#define TEGRA210_AXBAR_PART_0_OPE2_RX1_0	0x104
++#define TEGRA210_AXBAR_PART_0_SFC1_RX1_0	0x60
++#define TEGRA210_AXBAR_PART_0_SFC4_RX1_0	0x6c
++#define TEGRA210_AXBAR_PART_0_SPDIF1_RX1_0	0xc0
++#define TEGRA210_AXBAR_PART_0_SPDIF1_RX2_0	0xc4
++#define TEGRA210_AXBAR_PART_0_SPKPROT1_RX1_0	0x110
++
+ #define MUX_REG(id) (TEGRA210_XBAR_RX_STRIDE * (id))
  
- 	stat(s, FREE_RCU_SHEAF);
-+	lock_map_release(&kfree_rcu_sheaf_map);
- 	return true;
- 
- fail:
- 	stat(s, FREE_RCU_SHEAF_FAIL);
-+	lock_map_release(&kfree_rcu_sheaf_map);
- 	return false;
- }
- 
+ #define MUX_VALUE(npart, nbit) (1 + (nbit) + (npart) * 32)
 -- 
 2.51.0
 
