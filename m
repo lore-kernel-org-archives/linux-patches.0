@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664CC18B0A;
-	Wed, 25 Feb 2026 01:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A43818B0A;
+	Wed, 25 Feb 2026 01:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983399; cv=none; b=sQiyu45o8KB6EEGPZDKIcicRFmmLlYI4iQZAIaXETSEqU3SJkrqSQU0BZ4VezJ592T8Vi4Igsr3ihUrV4U/HGscRx5ZK083IAHd3veJGyHIWEouMoTpt+F5WyeLSwG2LTK1qB6r3+mK6tDBPxJKixhBMwqJHgkZhiordV8PiGVE=
+	t=1771983400; cv=none; b=WTiLUw1svjWy51PwkvslkKjAXmj1DiiDZosoxR/MJ5LakMVHKKUsF5y6qNba0UJd9n1QkjF7Qnr3efYNem0yPKPdi2gyr6x30w/Jv21VzZJFqWHAbYFvfcaMUJCk09/nqX53mASOTyIQ2N3Zjwz/fdHG7Q0pMBBWJs5GY8WbyO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983399; c=relaxed/simple;
-	bh=CtcTGdfArZpyiqvxi2NIZBX6xxU7i4JrjfJR0+tU64s=;
+	s=arc-20240116; t=1771983400; c=relaxed/simple;
+	bh=0kmgU+ZKm0FBYc+vdEQ+N32BkHKgcsitVVEkL0F3/Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLBDmSFR+2n5uZH4qNi81/q2uKoGdDP3040fmDGrtPsI7z/Qw+/AZ0YjkkC8kBqUXvKJKDGQmQLIDkBCykW+MxiFtDG0taJcCRZvVKbfjzHi+SxCJeP+EbfLPtOQCaL1MKXVZdRZrRVDZaDtr1/w0zyir0sqFUKPs+UIF1juuBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NovfjsbV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBXoCEwpnE7eqfQOBeapSLNfW/cxw5M9/7sPDbqxjyrpAvCRMdig8LwwwSa/dttAK8h6QI7MtcyGtq+wi0JWXSPy/dAvsdldKdvrQ9gG+JUmhXwK76Q4bj2xZTMe6GnTGrS1LOyvvZSi0ZgoxD0qlxP248pugc+oqKVG5de+Hko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzQTdiXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NovfjsbV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABB2C116D0;
-	Wed, 25 Feb 2026 01:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzQTdiXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457DCC116D0;
+	Wed, 25 Feb 2026 01:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983399;
-	bh=CtcTGdfArZpyiqvxi2NIZBX6xxU7i4JrjfJR0+tU64s=;
+	s=korg; t=1771983400;
+	bh=0kmgU+ZKm0FBYc+vdEQ+N32BkHKgcsitVVEkL0F3/Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NovfjsbVTVHRerAyX6kZ4JH1Mp73aFee4Ei8L5QprVNhPp5ILfAkw7sjcTwfGDip4
-	 yJXMOullgCJWMv0EQZQdOSifnZgyyQPvuJtNPCTFC2yzGNf6yN0mVTJ4jD4KyCEjP2
-	 UixjMNDEaLqKzzQaGcibldSXm/qUsu03jzrZ9bIc=
+	b=wzQTdiXVnGEd+2SulKzJ8D5t43hdcij+zqFEd5Vt/7OHoc73sswk3qCUyCSLL+R7F
+	 YKtvJQ1lgstpiYfW3MK4LVsMNTEsV7nMMplDk8vcSZDHGC2SbGmTiPNWkIG0IsgJp5
+	 VOqK95X2I2D/KpVRFPPsvuD/Z705H+9FNGwbl/Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Imran Shaik <imran.shaik@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 485/781] ata: libata-core: Quirk INTEL SSDSC2KG480G8 max_sectors
-Date: Tue, 24 Feb 2026 17:19:54 -0800
-Message-ID: <20260225012411.708242893@linuxfoundation.org>
+Subject: [PATCH 6.19 521/781] clk: qcom: gcc-sdx75: Update the SDCC RCGs to use shared_floor_ops
+Date: Tue, 24 Feb 2026 17:20:30 -0800
+Message-ID: <20260225012412.579633968@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,52 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 
-[ Upstream commit 5f64ae1ef639a2bab7e39497c55f76cc0682f108 ]
+[ Upstream commit 4b057462bb61a6571608ba393e6e018c9da9c9c3 ]
 
-Commit 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP") increased
-the default max_sectors_kb from 1280 KiB to 4096 KiB.
+Use shared_floor_ops for the SDCC RCGs so the RCG is safely parked
+during disable and the new parent configuration is programmed in
+hardware only when the new parent is enabled, avoiding cases where
+the RCG configuration fails to update.
 
-INTEL SSDSC2KG480G8 with FW rev XCV10120 times out when sending I/Os of
-size 4096 KiB.
-
-Enable ATA_QUIRK_MAX_SEC, with value 8191 (sectors) for this device,
-since any I/O with more sectors than that lead to I/O timeouts.
-
-With this, the INTEL SSDSC2KG480G8 is usable again.
-
-Link: https://lore.kernel.org/linux-ide/176839089913.2398366.61500945766820256@eldamar.lan/
-Fixes: 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 108cdc09b2de ("clk: qcom: Add GCC driver support for SDX75")
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251127-sdcc_shared_floor_ops-v2-4-473afc86589c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/qcom/gcc-sdx75.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index d5151b9ca9141..fb148b1c3bdbf 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4067,6 +4067,7 @@ static const struct ata_dev_quirk_value __ata_dev_max_sec_quirks[] = {
- 	{ "LITEON CX1-JB*-HP",		NULL,		1024 },
- 	{ "LITEON EP1-*",		NULL,		1024 },
- 	{ "DELLBOSS VD",		"MV.R00-0",	8191 },
-+	{ "INTEL SSDSC2KG480G8",	"XCV10120",	8191 },
- 	{ },
+diff --git a/drivers/clk/qcom/gcc-sdx75.c b/drivers/clk/qcom/gcc-sdx75.c
+index 453a6bf8e8786..1f3cd58483a2d 100644
+--- a/drivers/clk/qcom/gcc-sdx75.c
++++ b/drivers/clk/qcom/gcc-sdx75.c
+@@ -1033,7 +1033,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src = {
+ 		.name = "gcc_sdcc1_apps_clk_src",
+ 		.parent_data = gcc_parent_data_17,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_17),
+-		.ops = &clk_rcg2_floor_ops,
++		.ops = &clk_rcg2_shared_floor_ops,
+ 	},
  };
  
-@@ -4324,6 +4325,8 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
+@@ -1057,7 +1057,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.name = "gcc_sdcc2_apps_clk_src",
+ 		.parent_data = gcc_parent_data_18,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_18),
+-		.ops = &clk_rcg2_floor_ops,
++		.ops = &clk_rcg2_shared_floor_ops,
+ 	},
+ };
  
- 	{ "Micron*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "Crucial*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
-+	{ "INTEL SSDSC2KG480G8", "XCV10120",	ATA_QUIRK_ZERO_AFTER_TRIM |
-+						ATA_QUIRK_MAX_SEC },
- 	{ "INTEL*SSD*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "SSD*INTEL*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "Samsung*SSD*",		NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
 -- 
 2.51.0
 
