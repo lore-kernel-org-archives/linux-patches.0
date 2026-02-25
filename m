@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404261D5141;
-	Wed, 25 Feb 2026 01:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6701D5141;
+	Wed, 25 Feb 2026 01:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983409; cv=none; b=Epq9aEvcptWdpOfXNObRtNhkxddtC9IA6LazEfe0To1tSMBUKEGxhdk6Cb0mLkhKXMVMfNtBzWtN4sYdm6o/jdG1PJ9CrT4EW7Km4hFjM5WMKUW1dB9A/5gCW6f3nZJoBSEl1tNPeF96aEiPHOq+nXoa5oz3T/bwXPA9MUazVeg=
+	t=1771983410; cv=none; b=ZUx023sKTo3/7byb9WGYDg7eDVAJCvUCIseXIXiq9LG9dKj70ciSgsau4j7DL6voRF3tT4fRyOXtgm2xU0+ENT15lGOepMD079an521M0yG7E+qFYGtul2t4w7AbRr0jOBD9Kpoa+3SMoy/ZGv49E5FT8Wdtmqe6diWrKMqUgbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983409; c=relaxed/simple;
-	bh=NPm/E0oKk9pdANF3js/YGdDzpmeyQzO7zjZmBEd5ots=;
+	s=arc-20240116; t=1771983410; c=relaxed/simple;
+	bh=OznFoBG8LEdswF5CO88HVa8REViRZUFl5iNJQJKc4+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pneVfwT8/91Rs8bv557xBE9rNgFUqpP+SeWYVHSNM7j017Sf1qXjhNHyQqwKGM9+8D4dqgMfJzbXCsj5D8IDG2QPzP4Jkun1TnbB7oADBlcjwozjd7R9TfBz5Yyt5UOl4GokJ2jJzXb6PGK28olpxnaBJXwrQlEDsSyqUMR3GMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWuiAson; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dX7wPSPcgGZKKmpGKQ25ff3sBWGReQjUFZi3ZSoVqfps9qbbnhqB5t5GNIb95rTz9t2ePZOs9JXpFmmVQg8o8DCFvwo3fShT2+w1V77kaB4Gu1P5UyM/srEyztHK4TxjxWl1U3/RvcN3XWDf0kM8+E9x5sz+DNPqOIKnvXjjGbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XZ/HxwD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWuiAson"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B639C116D0;
-	Wed, 25 Feb 2026 01:36:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XZ/HxwD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C24C19423;
+	Wed, 25 Feb 2026 01:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983408;
-	bh=NPm/E0oKk9pdANF3js/YGdDzpmeyQzO7zjZmBEd5ots=;
+	s=korg; t=1771983409;
+	bh=OznFoBG8LEdswF5CO88HVa8REViRZUFl5iNJQJKc4+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWuiAsonKKM4iCXPocHi4FHznpwwSKs1ZHyTNnd76m3osI8kGZi2rL0mR9JmBYp9N
-	 5bfp5e5c0PdY0+Ixj36EsGeKhKudWjtbwidVKae/5rggYb1AQhN8bE06ytUZa2vmBX
-	 iT4gWglsCi1dKfZdmQZN5sn7lDLtUP1Hshtyqgvk=
+	b=1XZ/HxwDz2ey/gVe/yfyjGdZJoCGyKcEXruAutZwaCJZsItUq2HYRBltNHMlDx+VD
+	 MEC4JW51DiURRv+QpwxQG2W1fmfODWEcSz+XB5ZB82stROVAoGx70cI32bLKS71y89
+	 GFqEIQcdVt2bZY9aspgvIB5TZRASIm18fc1bgqVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Liu <liuy22@mails.tsinghua.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 486/781] RDMA/uverbs: Validate wqe_size before using it in ib_uverbs_post_send
-Date: Tue, 24 Feb 2026 17:19:55 -0800
-Message-ID: <20260225012411.732015066@linuxfoundation.org>
+Subject: [PATCH 6.19 487/781] RDMA/mlx5: Fix memory leak in GET_DATA_DIRECT_SYSFS_PATH handler
+Date: Tue, 24 Feb 2026 17:19:56 -0800
+Message-ID: <20260225012411.754224748@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,55 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Liu <liuy22@mails.tsinghua.edu.cn>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 1956f0a74ccf5dc9c3ef717f2985c3ed3400aab0 ]
+[ Upstream commit 9b9d253908478f504297ac283c514e5953ddafa6 ]
 
-ib_uverbs_post_send() uses cmd.wqe_size from userspace without any
-validation before passing it to kmalloc() and using the allocated
-buffer as struct ib_uverbs_send_wr.
+The UVERBS_HANDLER(MLX5_IB_METHOD_GET_DATA_DIRECT_SYSFS_PATH) function
+allocates memory for the device path using kobject_get_path(). If the
+length of the device path exceeds the output buffer length, the function
+returns -ENOSPC but does not free the allocated memory, resulting in a
+memory leak.
 
-If a user provides a small wqe_size value (e.g., 1), kmalloc() will
-succeed, but subsequent accesses to user_wr->opcode, user_wr->num_sge,
-and other fields will read beyond the allocated buffer, resulting in
-an out-of-bounds read from kernel heap memory. This could potentially
-leak sensitive kernel information to userspace.
+Add a kfree() call to the error path to ensure the allocated memory is
+properly freed.
 
-Additionally, providing an excessively large wqe_size can trigger a
-WARNING in the memory allocation path, as reported by syzkaller.
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-This is inconsistent with ib_uverbs_unmarshall_recv() which properly
-validates that wqe_size >= sizeof(struct ib_uverbs_recv_wr) before
-proceeding.
-
-Add the same validation for ib_uverbs_post_send() to ensure wqe_size
-is at least sizeof(struct ib_uverbs_send_wr).
-
-Fixes: c3bea3d2dc53 ("RDMA/uverbs: Use the iterator for ib_uverbs_unmarshall_recv()")
-Signed-off-by: Yi Liu <liuy22@mails.tsinghua.edu.cn>
-Link: https://patch.msgid.link/20260122142900.2356276-2-liuy22@mails.tsinghua.edu.cn
+Fixes: ec7ad6530909 ("RDMA/mlx5: Introduce GET_DATA_DIRECT_SYSFS_PATH ioctl")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://patch.msgid.link/20260126074801.627898-1-zilin@seu.edu.cn
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_cmd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/std_types.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
-index ce16404cdfb8c..3259e9848cc79 100644
---- a/drivers/infiniband/core/uverbs_cmd.c
-+++ b/drivers/infiniband/core/uverbs_cmd.c
-@@ -2049,7 +2049,10 @@ static int ib_uverbs_post_send(struct uverbs_attr_bundle *attrs)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/infiniband/hw/mlx5/std_types.c b/drivers/infiniband/hw/mlx5/std_types.c
+index 2fcf553044e15..1ee31611b4b3f 100644
+--- a/drivers/infiniband/hw/mlx5/std_types.c
++++ b/drivers/infiniband/hw/mlx5/std_types.c
+@@ -195,7 +195,7 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_GET_DATA_DIRECT_SYSFS_PATH)(
+ 	int out_len = uverbs_attr_get_len(attrs,
+ 			MLX5_IB_ATTR_GET_DATA_DIRECT_SYSFS_PATH);
+ 	u32 dev_path_len;
+-	char *dev_path;
++	char *dev_path = NULL;
+ 	int ret;
  
--	user_wr = kmalloc(cmd.wqe_size, GFP_KERNEL);
-+	if (cmd.wqe_size < sizeof(struct ib_uverbs_send_wr))
-+		return -EINVAL;
-+
-+	user_wr = kmalloc(cmd.wqe_size, GFP_KERNEL | __GFP_NOWARN);
- 	if (!user_wr)
- 		return -ENOMEM;
+ 	c = to_mucontext(ib_uverbs_get_ucontext(attrs));
+@@ -223,9 +223,9 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_GET_DATA_DIRECT_SYSFS_PATH)(
  
+ 	ret = uverbs_copy_to(attrs, MLX5_IB_ATTR_GET_DATA_DIRECT_SYSFS_PATH, dev_path,
+ 			     dev_path_len);
+-	kfree(dev_path);
+ 
+ end:
++	kfree(dev_path);
+ 	mutex_unlock(&dev->data_direct_lock);
+ 	return ret;
+ }
 -- 
 2.51.0
 
