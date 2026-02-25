@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C5518B0A;
-	Wed, 25 Feb 2026 01:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C8218B0A;
+	Wed, 25 Feb 2026 01:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983220; cv=none; b=L0eTFrDVrWJQJ2wn9f83PHpdHJ3cNpjQ12VFAgA2H8HsvbV9JeRbRzwR6zgAIdxhlXsx9TPRnOmKY20JpOzwWcb70U+FVzTvHuU1EHfJexF8tXNBULNvAwvmbrat2BtL5zcWSIQhpyEWrgEBdb5/ytLa6X7w8CPOI8N+JHnJNMo=
+	t=1771983221; cv=none; b=EfB95cIsKiR+fJki7rako6uoAmqiBi/nG6Wom6sxmXUSZu7yAIvbe0nQaB07+9rd+abPxbew519X0HRvrplfSx1NQUbuEnSGzGHyf0V6+7rwtqjXSpDfurvC5wpHgtF/3JhvvkJo74rZwfYzbx0lUcN2tX38diEmoNEiMEYceSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983220; c=relaxed/simple;
-	bh=jb+DUACeMBI/jkp6mQzfy+9BxQ9Dc6kQhiq2hUj4Sew=;
+	s=arc-20240116; t=1771983221; c=relaxed/simple;
+	bh=l9MxjKAs181626ITK6W6XUvznm6du9FehVKVr6NUfPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfQXfzwCVMuoLTVSQlTPPPZoVFxionH2RLdwguoQEeCg9ygQCEYMrD2w6bkcWeb6LOjNJkk5R/DL/kQlQjSW/wDS3XvU2RU7xbO2LAFj3pDS86xd19cFJAmFJzIhILX46jlR16HG1FEmjKeL6FKfqMnmj8tUT0SE4/2WZr155WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzLOtQFX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IbrgxxXqlrB0CkqLmsjPYfHkQjSyI9A2DjWP2DcqYs0A0ACc2ZwcY22tnM+w48NDRKhIg9s8dEtw9jB+cPkzj9CyseJ6laaHBOMIkSRG8bELh9hYDZlLXvEtbV6dwBqdWnzNqXqyxmxui2sitrWrfJSMuchqyGkrl6UsZlCg7NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xm1lQgl+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzLOtQFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1635EC116D0;
-	Wed, 25 Feb 2026 01:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xm1lQgl+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382CDC116D0;
+	Wed, 25 Feb 2026 01:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983220;
-	bh=jb+DUACeMBI/jkp6mQzfy+9BxQ9Dc6kQhiq2hUj4Sew=;
+	s=korg; t=1771983221;
+	bh=l9MxjKAs181626ITK6W6XUvznm6du9FehVKVr6NUfPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzLOtQFXRh2t3upgpxkOlobdvxrrqVl5Nu0/TkzzcY1FGCUSyb12FQSTGxrrFafQJ
-	 h00AtSXmIAgTka2Yo0prRmMpRKRh6OnkYtKvW1g7PABnZx0HyGJFrDS1PpUhJxBep8
-	 Y5UUOEIoLN8BZAMgjrFnkbfOLb2ydg7sNGtB01Jk=
+	b=xm1lQgl+0rD6N2EhrQj6oUyA0syNanou1gDs4w7IRGx6U0atvopdOZZljDMUjz0JL
+	 fROxRZiKML9h7ugT+IKRkPl9lijNkhBi2XFZQguEi4eFNbi9QZcGlk149eNhHEBUdU
+	 NYSb0Mesf06uUQhZKG9OxYuqwS0HmPaZjLVe083Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiyu Zhang <zhiyuzhang999@gmail.com>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Malte=20Schr=C3=B6der?= <malte+lkml@tnxip.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 367/781] fat: avoid parent link count underflow in rmdir
-Date: Tue, 24 Feb 2026 17:17:56 -0800
-Message-ID: <20260225012408.682599257@linuxfoundation.org>
+Subject: [PATCH 6.19 368/781] PCI: Rewrite bridge window head alignment function
+Date: Tue, 24 Feb 2026 17:17:57 -0800
+Message-ID: <20260225012408.706960332@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -49,78 +46,176 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 8cafcb881364af5ef3a8b9fed4db254054033d8a ]
+[ Upstream commit bc75c8e5071120e919beb39e69f0979cccfdf219 ]
 
-Corrupted FAT images can leave a directory inode with an incorrect
-i_nlink (e.g. 2 even though subdirectories exist). rmdir then
-unconditionally calls drop_nlink(dir) and can drive i_nlink to 0,
-triggering the WARN_ON in drop_nlink().
+The calculation of bridge window head alignment is done by
+calculate_mem_align() [*]. With the default bridge window alignment, it
+is used for both head and tail alignment.
 
-Add a sanity check in vfat_rmdir() and msdos_rmdir(): only drop the
-parent link count when it is at least 3, otherwise report a filesystem
-error.
+The selected head alignment does not always result in tight-fitting
+resources (gap at d4f00000-d4ffffff):
 
-Link: https://lkml.kernel.org/r/20260101111148.1437-1-zhiyuzhang999@gmail.com
-Fixes: 9a53c3a783c2 ("[PATCH] r/o bind mounts: unlink: monitor i_nlink")
-Signed-off-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
-Reported-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
-Closes: https://lore.kernel.org/linux-fsdevel/aVN06OKsKxZe6-Kv@casper.infradead.org/T/#t
-Tested-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  d4800000-dbffffff : PCI Bus 0000:06
+    d4800000-d48fffff : PCI Bus 0000:07
+      d4800000-d4803fff : 0000:07:00.0
+        d4800000-d4803fff : nvme
+    d4900000-d49fffff : PCI Bus 0000:0a
+      d4900000-d490ffff : 0000:0a:00.0
+        d4900000-d490ffff : r8169
+      d4910000-d4913fff : 0000:0a:00.0
+    d4a00000-d4cfffff : PCI Bus 0000:0b
+      d4a00000-d4bfffff : 0000:0b:00.0
+        d4a00000-d4bfffff : 0000:0b:00.0
+      d4c00000-d4c07fff : 0000:0b:00.0
+    d4d00000-d4dfffff : PCI Bus 0000:15
+      d4d00000-d4d07fff : 0000:15:00.0
+        d4d00000-d4d07fff : xhci-hcd
+    d4e00000-d4efffff : PCI Bus 0000:16
+      d4e00000-d4e7ffff : 0000:16:00.0
+      d4e80000-d4e803ff : 0000:16:00.0
+        d4e80000-d4e803ff : ahci
+    d5000000-dbffffff : PCI Bus 0000:0c
+
+This has not caused problems (for years) with the default bridge window
+tail alignment that grossly over-estimates the required tail alignment
+leaving more tail room than necessary. With the introduction of relaxed
+tail alignment that leaves no extra tail room whatsoever, any gaps will
+immediately turn into assignment failures.
+
+Introduce head alignment calculation that ensures no gaps are left and
+apply the new approach when using relaxed alignment. We may want to
+consider using it for the normal alignment eventually, but as the first
+step, solve only the problem with the relaxed tail alignment.
+
+([*] I don't understand the algorithm in calculate_mem_align().)
+
+Link: https://git.kernel.org/history/history/c/5d0a8965aea9 ("[PATCH] 2.5.14: New PCI allocation code (alpha, arm, parisc) [2/2]")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220775
+Reported-by: Malte Schröder <malte+lkml@tnxip.de>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Malte Schröder <malte+lkml@tnxip.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251219174036.16738-3-ilpo.jarvinen@linux.intel.com
+Stable-dep-of: f909e3ee3ed1 ("PCI: Remove old_size limit from bridge window sizing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/namei_msdos.c | 7 ++++++-
- fs/fat/namei_vfat.c  | 7 ++++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/pci/setup-bus.c | 53 ++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 44 insertions(+), 9 deletions(-)
 
-diff --git a/fs/fat/namei_msdos.c b/fs/fat/namei_msdos.c
-index 0b920ee40a7f9..262ec1b790b56 100644
---- a/fs/fat/namei_msdos.c
-+++ b/fs/fat/namei_msdos.c
-@@ -325,7 +325,12 @@ static int msdos_rmdir(struct inode *dir, struct dentry *dentry)
- 	err = fat_remove_entries(dir, &sinfo);	/* and releases bh */
- 	if (err)
- 		goto out;
--	drop_nlink(dir);
-+	if (dir->i_nlink >= 3)
-+		drop_nlink(dir);
-+	else {
-+		fat_fs_error(sb, "parent dir link count too low (%u)",
-+			dir->i_nlink);
-+	}
+diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
+index a61d38777cdc4..99086980e102e 100644
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -1227,6 +1227,45 @@ static inline resource_size_t calculate_mem_align(resource_size_t *aligns,
+ 	return min_align;
+ }
  
- 	clear_nlink(inode);
- 	fat_truncate_time(inode, NULL, S_CTIME);
-diff --git a/fs/fat/namei_vfat.c b/fs/fat/namei_vfat.c
-index 5dbc4cbb8fce3..47ff083cfc7e6 100644
---- a/fs/fat/namei_vfat.c
-+++ b/fs/fat/namei_vfat.c
-@@ -803,7 +803,12 @@ static int vfat_rmdir(struct inode *dir, struct dentry *dentry)
- 	err = fat_remove_entries(dir, &sinfo);	/* and releases bh */
- 	if (err)
- 		goto out;
--	drop_nlink(dir);
-+	if (dir->i_nlink >= 3)
-+		drop_nlink(dir);
-+	else {
-+		fat_fs_error(sb, "parent dir link count too low (%u)",
-+			dir->i_nlink);
++/*
++ * Calculate bridge window head alignment that leaves no gaps in between
++ * resources.
++ */
++static resource_size_t calculate_head_align(resource_size_t *aligns,
++					    int max_order)
++{
++	resource_size_t head_align = 1;
++	resource_size_t remainder = 0;
++	int order;
++
++	/* Take the largest alignment as the starting point. */
++	head_align <<= max_order + __ffs(SZ_1M);
++
++	for (order = max_order - 1; order >= 0; order--) {
++		resource_size_t align1 = 1;
++
++		align1 <<= order + __ffs(SZ_1M);
++
++		/*
++		 * Account smaller resources with alignment < max_order that
++		 * could be used to fill head room if alignment less than
++		 * max_order is used.
++		 */
++		remainder += aligns[order];
++
++		/*
++		 * Test if head fill is enough to satisfy the alignment of
++		 * the larger resources after reducing the alignment.
++		 */
++		while ((head_align > align1) && (remainder >= head_align / 2)) {
++			head_align /= 2;
++			remainder -= head_align;
++		}
 +	}
++
++	return head_align;
++}
++
+ /**
+  * pbus_upstream_space_available - Check no upstream resource limits allocation
+  * @bus:	The bus
+@@ -1314,13 +1353,13 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
+ {
+ 	struct pci_dev *dev;
+ 	resource_size_t min_align, win_align, align, size, size0, size1 = 0;
+-	resource_size_t aligns[28]; /* Alignments from 1MB to 128TB */
++	resource_size_t aligns[28] = {}; /* Alignments from 1MB to 128TB */
++	resource_size_t aligns2[28] = {};/* Alignments from 1MB to 128TB */
+ 	int order, max_order;
+ 	struct resource *b_res = pbus_select_window_for_type(bus, type);
+ 	resource_size_t children_add_size = 0;
+ 	resource_size_t children_add_align = 0;
+ 	resource_size_t add_align = 0;
+-	resource_size_t relaxed_align;
+ 	resource_size_t old_size;
  
- 	clear_nlink(inode);
- 	fat_truncate_time(inode, NULL, S_ATIME|S_MTIME);
+ 	if (!b_res)
+@@ -1330,7 +1369,6 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
+ 	if (b_res->parent)
+ 		return;
+ 
+-	memset(aligns, 0, sizeof(aligns));
+ 	max_order = 0;
+ 	size = 0;
+ 
+@@ -1381,6 +1419,7 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
+ 			 */
+ 			if (r_size <= align)
+ 				aligns[order] += align;
++			aligns2[order] += align;
+ 			if (order > max_order)
+ 				max_order = order;
+ 
+@@ -1405,9 +1444,7 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
+ 
+ 	if (bus->self && size0 &&
+ 	    !pbus_upstream_space_available(bus, b_res, size0, min_align)) {
+-		relaxed_align = 1ULL << (max_order + __ffs(SZ_1M));
+-		relaxed_align = max(relaxed_align, win_align);
+-		min_align = min(min_align, relaxed_align);
++		min_align = calculate_head_align(aligns2, max_order);
+ 		size0 = calculate_memsize(size, min_size, 0, 0, old_size, win_align);
+ 		resource_set_range(b_res, min_align, size0);
+ 		pci_info(bus->self, "bridge window %pR to %pR requires relaxed alignment rules\n",
+@@ -1421,9 +1458,7 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
+ 
+ 		if (bus->self && size1 &&
+ 		    !pbus_upstream_space_available(bus, b_res, size1, add_align)) {
+-			relaxed_align = 1ULL << (max_order + __ffs(SZ_1M));
+-			relaxed_align = max(relaxed_align, win_align);
+-			min_align = min(min_align, relaxed_align);
++			min_align = calculate_head_align(aligns2, max_order);
+ 			size1 = calculate_memsize(size, min_size, add_size, children_add_size,
+ 						  old_size, win_align);
+ 			pci_info(bus->self,
 -- 
 2.51.0
 
