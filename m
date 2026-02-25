@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C523A1D5ABA;
-	Wed, 25 Feb 2026 01:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D0A1D5ABA;
+	Wed, 25 Feb 2026 01:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983194; cv=none; b=mTA7kLFebzuqGrZdQRM1pF7qNPWRqNwv+uotCB9rgNjEh0mQdhyep5vAdRQnl3UJiSjADbQnPXCNbKlTkUtPnooKR+fcDDa4kjhtAw55/e9bHxdS5mU8tfmlCGMkM1Da/XwO1p3miOmYHYLHE19aQ3mbxanchElUFyaxLQuIzVQ=
+	t=1771983196; cv=none; b=RkUyulnSxXRCoP/ee/ulrT7j7IZPg+W1vNZcX7hjIpFXMqS8pKT1/RHQ+6kUS1nuBbN1sC2ZYLXFNT+WQWy63oucN950rhTwreHMtVE3bQ5n+hP80FsxvO26Bqa7hORa5WI9/hzN/wq297aLwRxO0rjEQ/nbCWlT+5x9JdM5Rlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983194; c=relaxed/simple;
-	bh=Z36aRCc+Y2OQaF/zR1fIQLQIOYIRfEml6ct/AFF8HpE=;
+	s=arc-20240116; t=1771983196; c=relaxed/simple;
+	bh=Wer5fbjrJemGTZbBlj1lBB81gELNZGweG1cz0Mu5Lgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=horJ+KfWKR1agSkzzORlJMAsLyNOoptso+E8s0Tglt0/8McuIlCk8QIUajHyh3wdhJltI1aQtuQwHlHMv24BWS4OlmYxqr7yqFWLw7Zs4V5i3OzlYHkc9UTcLvStmlXnKR3kboAzKtfhYIlV+mlrpIrTYKKcZ9cpu9/zF7CXyCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e29Pm1xP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q6TYl8z0GybjA79jFRzNlkH9uUnknIpnxnkvMe1ORF1XCtPN7O5gsP/1zlb53MxtErcpFBg9ejEoMauWeoZkCTOgBGpXHBdy/aGOV2HWZL9uwVXUpx5EeQ/RP+C+Yp0SUX6ktoAOJFYBPIQ33Lh4diujtFdPNDlDe6saKbUs0Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbqbCHzZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e29Pm1xP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C33FC116D0;
-	Wed, 25 Feb 2026 01:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbqbCHzZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5516C116D0;
+	Wed, 25 Feb 2026 01:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983194;
-	bh=Z36aRCc+Y2OQaF/zR1fIQLQIOYIRfEml6ct/AFF8HpE=;
+	s=korg; t=1771983195;
+	bh=Wer5fbjrJemGTZbBlj1lBB81gELNZGweG1cz0Mu5Lgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e29Pm1xPI3uKk3NBzGbGIX6Qf3OlrlK1XFpHyobe1ThC4o5yeZKb6KbPtzAS0eJ6n
-	 lMWnkMPt/UQZGJFn6fOFnWmaLSiDItdEyHK3QgWpoqRUvCTkr0chmX7E19Lo0+OeQ1
-	 n1z2Laz9Fw7zqNOVOVp0KUYE1NVJ6fQVKDCcXU9c=
+	b=gbqbCHzZ0aYtkrjwiHtjaVE1eECX0QAojtqyDoomP51XjzSvo2aQcOe9Ig2Q1jxXh
+	 piDY+3dvBnLKbURb+ekwhqJT1od63YNFollSDFDC3Iye2rMqK9M7wR5AFoIlB5oXVP
+	 tfspP7Tao1gvbJBZfGLXAMjmICq1dJ5oryQWDkDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Wei Wang <wei.w.wang@hotmail.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 342/781] wifi: cfg80211: stop NAN and P2P in cfg80211_leave
-Date: Tue, 24 Feb 2026 17:17:31 -0800
-Message-ID: <20260225012408.080229583@linuxfoundation.org>
+Subject: [PATCH 6.19 343/781] iommupt: Do not set C-bit on MMIO backed PTEs
+Date: Tue, 24 Feb 2026 17:17:32 -0800
+Message-ID: <20260225012408.106090222@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,45 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Wei Wang <wei.w.wang@hotmail.com>
 
-[ Upstream commit e1696c8bd0056bc1a5f7766f58ac333adc203e8a ]
+[ Upstream commit e2692c4eeaa4bd945b7bae156b4cac55d6a0c730 ]
 
-Seems that there is an assumption that this function should be called
-only for netdev interfaces, but it can also be called in suspend, or
-from nl80211_netlink_notify (indirectly).
-Note that the documentation of NL80211_ATTR_SOCKET_OWNER explicitly
-says that NAN interfaces would be destroyed as well in the
-nl80211_netlink_notify case.
+AMD Secure Memory Encryption (SME) marks individual memory pages as
+encrypted by setting the C-bit in page table entries. According to the
+AMD APM,any pages corresponding to MMIO addresses must be configured
+with the C-bit clear.
 
-Fix this by also stopping P2P and NAN.
+The current *_iommu_set_prot() implementation sets the C-bit on all PTEs
+in the IOMMU page tables. This is incorrect for PTEs backed by MMIO, and
+can break PCIe peer-to-peer communication when IOVA is used. Fix this by
+avoiding the C-bit for MMIO-backed mappings.
 
-Fixes: cb3b7d87652a ("cfg80211: add start / stop NAN commands")
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260107140430.dab142cbef0b.I290cc47836d56dd7e35012ce06bec36c6da688cd@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+For amdv2 IOMMU page tables, there is a usage scenario for GVA->GPA
+mappings, and for the trusted MMIO in the TEE-IO case, the C-bit will need
+to be added to GPA. However, SNP guests do not yet support vIOMMU, and the
+trusted MMIO support is not ready in upstream. Adding the C-bit for trusted
+MMIO can be considered once those features land.
+
+Fixes: 879ced2bab1b ("iommupt: Add the AMD IOMMU v1 page table format")
+Fixes: aef5de756ea8 ("iommupt: Add the x86 64 bit page table format")
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Wei Wang <wei.w.wang@hotmail.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iommu/generic_pt/fmt/amdv1.h  | 3 ++-
+ drivers/iommu/generic_pt/fmt/x86_64.h | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 9a420d627d3ce..a04f96dc9a1d7 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1415,8 +1415,10 @@ void cfg80211_leave(struct cfg80211_registered_device *rdev,
- 		cfg80211_leave_ocb(rdev, dev);
- 		break;
- 	case NL80211_IFTYPE_P2P_DEVICE:
-+		cfg80211_stop_p2p_device(rdev, wdev);
-+		break;
- 	case NL80211_IFTYPE_NAN:
--		/* cannot happen, has no netdev */
-+		cfg80211_stop_nan(rdev, wdev);
- 		break;
- 	case NL80211_IFTYPE_AP_VLAN:
- 	case NL80211_IFTYPE_MONITOR:
+diff --git a/drivers/iommu/generic_pt/fmt/amdv1.h b/drivers/iommu/generic_pt/fmt/amdv1.h
+index aa8e1a8ec95fd..3b2c41d9654d7 100644
+--- a/drivers/iommu/generic_pt/fmt/amdv1.h
++++ b/drivers/iommu/generic_pt/fmt/amdv1.h
+@@ -354,7 +354,8 @@ static inline int amdv1pt_iommu_set_prot(struct pt_common *common,
+ 	 * Ideally we'd have an IOMMU_ENCRYPTED flag set by higher levels to
+ 	 * control this. For now if the tables use sme_set then so do the ptes.
+ 	 */
+-	if (pt_feature(common, PT_FEAT_AMDV1_ENCRYPT_TABLES))
++	if (pt_feature(common, PT_FEAT_AMDV1_ENCRYPT_TABLES) &&
++	    !(iommu_prot & IOMMU_MMIO))
+ 		pte = __sme_set(pte);
+ 
+ 	attrs->descriptor_bits = pte;
+diff --git a/drivers/iommu/generic_pt/fmt/x86_64.h b/drivers/iommu/generic_pt/fmt/x86_64.h
+index 210748d9d6e8a..ed9a47cbb6e02 100644
+--- a/drivers/iommu/generic_pt/fmt/x86_64.h
++++ b/drivers/iommu/generic_pt/fmt/x86_64.h
+@@ -227,7 +227,8 @@ static inline int x86_64_pt_iommu_set_prot(struct pt_common *common,
+ 	 * Ideally we'd have an IOMMU_ENCRYPTED flag set by higher levels to
+ 	 * control this. For now if the tables use sme_set then so do the ptes.
+ 	 */
+-	if (pt_feature(common, PT_FEAT_X86_64_AMD_ENCRYPT_TABLES))
++	if (pt_feature(common, PT_FEAT_X86_64_AMD_ENCRYPT_TABLES) &&
++	    !(iommu_prot & IOMMU_MMIO))
+ 		pte = __sme_set(pte);
+ 
+ 	attrs->descriptor_bits = pte;
 -- 
 2.51.0
 
