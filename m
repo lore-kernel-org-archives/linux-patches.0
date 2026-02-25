@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522B218DB2A;
-	Wed, 25 Feb 2026 01:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C55D1E2834;
+	Wed, 25 Feb 2026 01:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983150; cv=none; b=jiff61Y0KyOyxJhStL345Pubqmr05nv3xnfr1M3SiyT75oZKHO40t6/LZ1V1uu36zby98z0VWd7KbyP4P17UbB8r5dYAUy1ZsgVK2A3JaQ7b8jz0sCJRpbv0EBTe380AuWmbnHHR28Q7stJ+QuPOolAosA0eg9GXGI0usZAZXB8=
+	t=1771983152; cv=none; b=m/2N/vm456DPYOhT+EmQwc1IUKfQaHW8l5mhwY7smddPaQaQIhUrRImYccC1QUoTOSxeXOW7+mREVbiLHbNfJ2TYOX55q2Oerv/lhTnTCcq/i0o8XBcsDopABRsci0zD3vyzHQ2g4sUKtUGOpYaEnR7VQh5DelFllL4+q7YzKFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983150; c=relaxed/simple;
-	bh=xpoXyct8HqqeXJCHPHWL63kppBuJA9PcJXA3aljJ4tA=;
+	s=arc-20240116; t=1771983152; c=relaxed/simple;
+	bh=BfPmA+9oOvW2NAkmW1P67UEks3292a2rXQIz7RHY/qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Musbb5ZCk3K0xJ3ay8FE/9P8IdWwTByFWaYRWa6vAbAtkiH3TrG+Zs4DZz3REv0r9zEQEHjoSegQuH/YI5g5ehsUWb88xcI+CtjZrxdMmYpYY1RfosLL4OrIZyxph5jFrTBi6Kt+aN8WkgeX8y7ORKl5CQy7+pca8yKFAOrv51A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HMzuScd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BnD/KT4uCDjsRvEKnKl8mJLcIDHQqzdji34WYfyVmtHCqzcduDwlGmdrEhXQF3qHxodzxa2TSLXII5dgY+EyYmIWIkCXIrTJ7Tv1P9xAroPgFgdvdQdprdfwctSjVOZVsRsG3vgvow7ld0f74BuQp2Jf7EUlbk1WIM+qAKQUiHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xf2hoT4W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HMzuScd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF536C116D0;
-	Wed, 25 Feb 2026 01:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xf2hoT4W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACE0C116D0;
+	Wed, 25 Feb 2026 01:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983150;
-	bh=xpoXyct8HqqeXJCHPHWL63kppBuJA9PcJXA3aljJ4tA=;
+	s=korg; t=1771983152;
+	bh=BfPmA+9oOvW2NAkmW1P67UEks3292a2rXQIz7RHY/qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2HMzuScd/QB6ghQzKSqQaZBNEwTPp780QHlUKFyEJsZxQTDqKuwJBn2AbGLbGK0nM
-	 8mRSlIZnwFfqmuQawYJBu+B05h0yivFBYdRgMwP/T738eJNjMRGVK7YWidxKR1hj93
-	 v/yELHVgsUDAj+K2f3tG0D7EbzqrkWcSyI+yXjiA=
+	b=xf2hoT4WkWIxhknywtGUyE8pZYMqzi1BTN1xZO8MKP0gFwRlAq0rcIZYlVy33CnBR
+	 Zdda2RmYzFaHs34vANN9Az+sduFSSBq8OZGUsvSXs9NHHUkCwA4AnmNYAesB2JkCfv
+	 XtKy/E1HRAp/eZoCEYSODWwr2mQ83+ZAI6p+zqX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hubbard <jhubbard@nvidia.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Timur Tabi <ttabi@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 260/781] gpu: nova-core: check for overflow to DMATRFBASE1
-Date: Tue, 24 Feb 2026 17:16:09 -0800
-Message-ID: <20260225012406.079566490@linuxfoundation.org>
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 6.19 261/781] drm/msm/disp: set num_planes to 1 for interleaved YUV formats
+Date: Tue, 24 Feb 2026 17:16:10 -0800
+Message-ID: <20260225012406.101883030@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,55 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timur Tabi <ttabi@nvidia.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 5cf76277cdec872aef9ff2e9008ae129bb303787 ]
+[ Upstream commit 6421e1c5075b7e1536a8fcbe6b4086db07103048 ]
 
-The NV_PFALCON_FALCON_DMATRFBASE/1 register pair supports DMA addresses
-up to 49 bits only, but the write to DMATRFBASE1 could exceed that.
-To mitigate, check first that the DMA address will fit.
+Interleaved YUV formats use only one plane for all pixel data. Specify
+num_planes = 1 for those formats. This was left unnoticed since
+_dpu_format_populate_plane_sizes_linear() overrides layout->num_planes.
 
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Fixes: 69f5cd67ce41 ("gpu: nova-core: add falcon register definitions and base code")
-Signed-off-by: Timur Tabi <ttabi@nvidia.com>
-Link: https://patch.msgid.link/20260107201647.2490140-1-ttabi@nvidia.com
-[ Import ::kernel::dma::DmaMask. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/688162/
+Link: https://lore.kernel.org/r/20251114-dpu-formats-v3-1-cae312379d49@oss.qualcomm.com
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcm6490-fairphone-fp5
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/nova-core/falcon.rs | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/mdp_format.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/nova-core/falcon.rs b/drivers/gpu/nova-core/falcon.rs
-index 82c661aef594f..3ab33ea36d9c8 100644
---- a/drivers/gpu/nova-core/falcon.rs
-+++ b/drivers/gpu/nova-core/falcon.rs
-@@ -8,7 +8,10 @@
+diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
+index 426782d50cb49..eebedb1a2636e 100644
+--- a/drivers/gpu/drm/msm/disp/mdp_format.c
++++ b/drivers/gpu/drm/msm/disp/mdp_format.c
+@@ -479,25 +479,25 @@ static const struct msm_format mdp_formats[] = {
+ 		0, BPC8, BPC8, BPC8,
+ 		C2_R_Cr, C0_G_Y, C1_B_Cb, C0_G_Y,
+ 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
+-		MDP_FETCH_LINEAR, 2),
++		MDP_FETCH_LINEAR, 1),
  
- use kernel::{
-     device,
--    dma::DmaAddress,
-+    dma::{
-+        DmaAddress,
-+        DmaMask, //
-+    },
-     io::poll::read_poll_timeout,
-     prelude::*,
-     sync::aref::ARef,
-@@ -472,6 +475,12 @@ fn dma_wr<F: FalconFirmware<Target = E>>(
-             return Err(EINVAL);
-         }
+ 	INTERLEAVED_YUV_FMT(UYVY,
+ 		0, BPC8, BPC8, BPC8,
+ 		C1_B_Cb, C0_G_Y, C2_R_Cr, C0_G_Y,
+ 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
+-		MDP_FETCH_LINEAR, 2),
++		MDP_FETCH_LINEAR, 1),
  
-+        // The DMATRFBASE/1 register pair only supports a 49-bit address.
-+        if dma_start > DmaMask::new::<49>().value() {
-+            dev_err!(self.dev, "DMA address {:#x} exceeds 49 bits\n", dma_start);
-+            return Err(ERANGE);
-+        }
-+
-         // DMA transfers can only be done in units of 256 bytes. Compute how many such transfers we
-         // need to perform.
-         let num_transfers = load_offsets.len.div_ceil(DMA_LEN);
+ 	INTERLEAVED_YUV_FMT(YUYV,
+ 		0, BPC8, BPC8, BPC8,
+ 		C0_G_Y, C1_B_Cb, C0_G_Y, C2_R_Cr,
+ 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
+-		MDP_FETCH_LINEAR, 2),
++		MDP_FETCH_LINEAR, 1),
+ 
+ 	INTERLEAVED_YUV_FMT(YVYU,
+ 		0, BPC8, BPC8, BPC8,
+ 		C0_G_Y, C2_R_Cr, C0_G_Y, C1_B_Cb,
+ 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
+-		MDP_FETCH_LINEAR, 2),
++		MDP_FETCH_LINEAR, 1),
+ 
+ 	/* 3 plane YUV */
+ 	PLANAR_YUV_FMT(YUV420,
 -- 
 2.51.0
 
