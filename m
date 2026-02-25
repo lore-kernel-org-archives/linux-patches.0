@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739361F03DE;
-	Wed, 25 Feb 2026 01:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A94299937;
+	Wed, 25 Feb 2026 01:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983982; cv=none; b=DIhPYSyYHV7BpEH4vX0Y0IBzYNg+2eGVRtSRfDZr6jAnPBtQ+rbXRxZT1qmCA5RNVkM+KJfhuC90+rb0iJ7a34Y/jGspIRmZcwV4k6ynvQklq6OO9DgYCYrU7+ningavMzBuDQ8tKgKo1QNoTbBpwG0ywipf8OtjQSKfDKWDozo=
+	t=1771983983; cv=none; b=qROkAK6WfzL2lRx15dX/yrdjqOWwzLYSFJSLGyq47tZM+h6CapUPMqItahx5LTqnP1rvWNBWJ14YndJvk7v9ZL21QAwCTwYwQ6j7zRsLUbFRB9I6BsNECZZbmx4+s7M0S39AK2SEPPl1MJsuKW8gMrjVKmms7uILA5+T7gjc6g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983982; c=relaxed/simple;
-	bh=gPc9sPvnjvuuo8PiEnbHwDQRyNzdPfV6pzdudXW1/Cw=;
+	s=arc-20240116; t=1771983983; c=relaxed/simple;
+	bh=yPRWUwPLCBRQMrE/8jMYLgIogaBikvZBU2EUnzEqrOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZuPMx6ZdcY1OncExgpZtVRA8JUQ2eKwLT1Q4c455UNOY9/h/awNAFa+0wewTjbF95p2a2Xmq3CDtLfgSdTGnWu80AiW1BYDMLdxTgLIM+HDa/1N2cH/rKbCBZ5r5pKTx4No0lqd47Nx5tDW+KW7b4BguUKFgLVtW/a9ycoWrpzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMqzOU0q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sgfywhUEdcEVRENVjvocyu/Okxkse5Rcz59JAhN9r/tbtkwgWU31BGhSkEQC7JzHg2vt+sXYdJ0eRP61C3VNr8ZQslQK61t5NAx1/xGglm8INAgQDGi4fXdeFL/jB9yY9zA2xP+8g4K8rpeRCrCvTj0PYLgJ7nIRivjw88M2Ny0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfdtW6ST; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMqzOU0q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D812C116D0;
-	Wed, 25 Feb 2026 01:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfdtW6ST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A88AC116D0;
+	Wed, 25 Feb 2026 01:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983982;
-	bh=gPc9sPvnjvuuo8PiEnbHwDQRyNzdPfV6pzdudXW1/Cw=;
+	s=korg; t=1771983983;
+	bh=yPRWUwPLCBRQMrE/8jMYLgIogaBikvZBU2EUnzEqrOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMqzOU0q4/IT6KdB3wVX0/KDDWtd1+XAjMJUSTb+HyvPM2tn5eCi5+O22PwvSyO12
-	 knfHbHsOticUxrTqRlpnVXRn1tyolBTC9qyUmb0gYqgTG7tYEOuFlV2LIgZem3yypI
-	 908ktXj9ssTALDyrVEGmD0V30E2adEeMe1xjhPeQ=
+	b=lfdtW6STeSpg9wjAETAYjvaWi9Mgg1562dXclJzGogh6+HIotSnXCJ1kUj+Rx+yok
+	 sBxZsAz1V/WxszgWAcfnoEkjN1k7/S2dnSPb/Cim3KhU64i7BmXZO5ntW1NNMuDAAn
+	 7pFZlE5ZfIJx2ZTqjhgK5+7a7zgSXYmGDUH0EhMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 234/641] PCI: mediatek: Fix IRQ domain leak when MSI allocation fails
-Date: Tue, 24 Feb 2026 17:19:20 -0800
-Message-ID: <20260225012354.558619443@linuxfoundation.org>
+Subject: [PATCH 6.18 185/641] smack: /smack/doi: accept previously used values
+Date: Tue, 24 Feb 2026 17:18:31 -0800
+Message-ID: <20260225012353.496615243@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -45,49 +45,235 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit 7f0cdcddf8bef1c8c18f9be6708073fd3790a20f ]
+[ Upstream commit 33d589ed60ae433b483761987b85e0d24e54584e ]
 
-In mtk_pcie_init_irq_domain(), if mtk_pcie_allocate_msi_domains()
-fails after port->irq_domain has been successfully created via
-irq_domain_create_linear(), the function returns directly without
-cleaning up the allocated IRQ domain, resulting in a resource leak.
+Writing to /smack/doi a value that has ever been
+written there in the past disables networking for
+non-ambient labels.
+E.g.
 
-Add irq_domain_remove() call in the error path to properly release the
-INTx IRQ domain before returning the error.
+    # cat /smack/doi
+    3
+    # netlabelctl -p cipso list
+    Configured CIPSO mappings (1)
+     DOI value : 3
+       mapping type : PASS_THROUGH
+    # netlabelctl -p map list
+    Configured NetLabel domain mappings (3)
+     domain: "_" (IPv4)
+       protocol: UNLABELED
+     domain: DEFAULT (IPv4)
+       protocol: CIPSO, DOI = 3
+     domain: DEFAULT (IPv6)
+       protocol: UNLABELED
 
-Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20251119023308.476-1-vulab@iscas.ac.cn
+    # cat /smack/ambient
+    _
+    # cat /proc/$$/attr/smack/current
+    _
+    # ping -c1 10.1.95.12
+    64 bytes from 10.1.95.12: icmp_seq=1 ttl=64 time=0.964 ms
+    # echo foo >/proc/$$/attr/smack/current
+    # ping -c1 10.1.95.12
+    64 bytes from 10.1.95.12: icmp_seq=1 ttl=64 time=0.956 ms
+    unknown option 86
+
+    # echo 4 >/smack/doi
+    # echo 3 >/smack/doi
+!>  [  214.050395] smk_cipso_doi:691 cipso add rc = -17
+    # echo 3 >/smack/doi
+!>  [  249.402261] smk_cipso_doi:678 remove rc = -2
+!>  [  249.402261] smk_cipso_doi:691 cipso add rc = -17
+
+    # ping -c1 10.1.95.12
+!!> ping: 10.1.95.12: Address family for hostname not supported
+
+    # echo _ >/proc/$$/attr/smack/current
+    # ping -c1 10.1.95.12
+    64 bytes from 10.1.95.12: icmp_seq=1 ttl=64 time=0.617 ms
+
+This happens because Smack keeps decommissioned DOIs,
+fails to re-add them, and consequently refuses to add
+the “default” domain map:
+
+    # netlabelctl -p cipso list
+    Configured CIPSO mappings (2)
+     DOI value : 3
+       mapping type : PASS_THROUGH
+     DOI value : 4
+       mapping type : PASS_THROUGH
+    # netlabelctl -p map list
+    Configured NetLabel domain mappings (2)
+     domain: "_" (IPv4)
+       protocol: UNLABELED
+!>  (no ipv4 map for default domain here)
+     domain: DEFAULT (IPv6)
+       protocol: UNLABELED
+
+Fix by clearing decommissioned DOI definitions and
+serializing concurrent DOI updates with a new lock.
+
+Also:
+- allow /smack/doi to live unconfigured, since
+  adding a map (netlbl_cfg_cipsov4_map_add) may fail.
+  CIPSO_V4_DOI_UNKNOWN(0) indicates the unconfigured DOI
+- add new DOI before removing the old default map,
+  so the old map remains if the add fails
+
+(2008-02-04, Casey Schaufler)
+Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-mediatek.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ security/smack/smackfs.c | 71 +++++++++++++++++++++++++---------------
+ 1 file changed, 45 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
-index 24cc30a2ab6c6..e0bf667c2b4c6 100644
---- a/drivers/pci/controller/pcie-mediatek.c
-+++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -575,8 +575,10 @@ static int mtk_pcie_init_irq_domain(struct mtk_pcie_port *port,
+diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
+index 316c2ea401e8a..d27d9140dda2f 100644
+--- a/security/smack/smackfs.c
++++ b/security/smack/smackfs.c
+@@ -70,6 +70,7 @@ enum smk_inos {
+ static DEFINE_MUTEX(smack_cipso_lock);
+ static DEFINE_MUTEX(smack_ambient_lock);
+ static DEFINE_MUTEX(smk_net4addr_lock);
++static DEFINE_MUTEX(smk_cipso_doi_lock);
+ #if IS_ENABLED(CONFIG_IPV6)
+ static DEFINE_MUTEX(smk_net6addr_lock);
+ #endif /* CONFIG_IPV6 */
+@@ -141,7 +142,7 @@ struct smack_parsed_rule {
+ 	int			smk_access2;
+ };
  
- 	if (IS_ENABLED(CONFIG_PCI_MSI)) {
- 		ret = mtk_pcie_allocate_msi_domains(port);
--		if (ret)
-+		if (ret) {
-+			irq_domain_remove(port->irq_domain);
- 			return ret;
-+		}
+-static u32 smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
++static u32 smk_cipso_doi_value = CIPSO_V4_DOI_UNKNOWN;
+ 
+ /*
+  * Values for parsing cipso rules
+@@ -663,43 +664,60 @@ static const struct file_operations smk_load_ops = {
+ };
+ 
+ /**
+- * smk_cipso_doi - initialize the CIPSO domain
++ * smk_cipso_doi - set netlabel maps
++ * @ndoi: new value for our CIPSO DOI
++ * @gfp_flags: kmalloc allocation context
+  */
+-static void smk_cipso_doi(void)
++static int
++smk_cipso_doi(u32 ndoi, gfp_t gfp_flags)
+ {
+-	int rc;
++	int rc = 0;
+ 	struct cipso_v4_doi *doip;
+ 	struct netlbl_audit nai;
+ 
+-	smk_netlabel_audit_set(&nai);
++	mutex_lock(&smk_cipso_doi_lock);
+ 
+-	rc = netlbl_cfg_map_del(NULL, PF_INET, NULL, NULL, &nai);
+-	if (rc != 0)
+-		printk(KERN_WARNING "%s:%d remove rc = %d\n",
+-		       __func__, __LINE__, rc);
++	if (smk_cipso_doi_value == ndoi)
++		goto clr_doi_lock;
++
++	smk_netlabel_audit_set(&nai);
+ 
+-	doip = kmalloc(sizeof(struct cipso_v4_doi), GFP_KERNEL | __GFP_NOFAIL);
++	doip = kmalloc(sizeof(struct cipso_v4_doi), gfp_flags);
++	if (!doip) {
++		rc = -ENOMEM;
++		goto clr_doi_lock;
++	}
+ 	doip->map.std = NULL;
+-	doip->doi = smk_cipso_doi_value;
++	doip->doi = ndoi;
+ 	doip->type = CIPSO_V4_MAP_PASS;
+ 	doip->tags[0] = CIPSO_V4_TAG_RBITMAP;
+ 	for (rc = 1; rc < CIPSO_V4_TAG_MAXCNT; rc++)
+ 		doip->tags[rc] = CIPSO_V4_TAG_INVALID;
+ 
+ 	rc = netlbl_cfg_cipsov4_add(doip, &nai);
+-	if (rc != 0) {
+-		printk(KERN_WARNING "%s:%d cipso add rc = %d\n",
+-		       __func__, __LINE__, rc);
++	if (rc) {
+ 		kfree(doip);
+-		return;
++		goto clr_doi_lock;
+ 	}
+-	rc = netlbl_cfg_cipsov4_map_add(doip->doi, NULL, NULL, NULL, &nai);
+-	if (rc != 0) {
+-		printk(KERN_WARNING "%s:%d map add rc = %d\n",
+-		       __func__, __LINE__, rc);
+-		netlbl_cfg_cipsov4_del(doip->doi, &nai);
+-		return;
++
++	if (smk_cipso_doi_value != CIPSO_V4_DOI_UNKNOWN) {
++		rc = netlbl_cfg_map_del(NULL, PF_INET, NULL, NULL, &nai);
++		if (rc && rc != -ENOENT)
++			goto clr_ndoi_def;
++
++		netlbl_cfg_cipsov4_del(smk_cipso_doi_value, &nai);
+ 	}
++
++	rc = netlbl_cfg_cipsov4_map_add(ndoi, NULL, NULL, NULL, &nai);
++	if (rc) {
++		smk_cipso_doi_value = CIPSO_V4_DOI_UNKNOWN; // no default map
++clr_ndoi_def:	netlbl_cfg_cipsov4_del(ndoi, &nai);
++	} else
++		smk_cipso_doi_value = ndoi;
++
++clr_doi_lock:
++	mutex_unlock(&smk_cipso_doi_lock);
++	return rc;
+ }
+ 
+ /**
+@@ -1599,11 +1617,8 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
+ 
+ 	if (u == CIPSO_V4_DOI_UNKNOWN || u > U32_MAX)
+ 		return -EINVAL;
+-	smk_cipso_doi_value = u;
+-
+-	smk_cipso_doi();
+ 
+-	return count;
++	return smk_cipso_doi(u, GFP_KERNEL) ? : count;
+ }
+ 
+ static const struct file_operations smk_doi_ops = {
+@@ -2984,6 +2999,7 @@ static int __init init_smk_fs(void)
+ {
+ 	int err;
+ 	int rc;
++	struct netlbl_audit nai;
+ 
+ 	if (smack_enabled == 0)
+ 		return 0;
+@@ -3002,7 +3018,10 @@ static int __init init_smk_fs(void)
+ 		}
  	}
  
- 	return 0;
+-	smk_cipso_doi();
++	smk_netlabel_audit_set(&nai);
++	(void) netlbl_cfg_map_del(NULL, PF_INET, NULL, NULL, &nai);
++	(void) smk_cipso_doi(SMACK_CIPSO_DOI_DEFAULT,
++			     GFP_KERNEL | __GFP_NOFAIL);
+ 	smk_unlbl_ambient(NULL);
+ 
+ 	rc = smack_populate_secattr(&smack_known_floor);
 -- 
 2.51.0
 
