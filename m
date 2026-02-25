@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30867280CFC;
-	Wed, 25 Feb 2026 01:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A92A299924;
+	Wed, 25 Feb 2026 01:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983951; cv=none; b=poxTDOSkO2fnQUVsDxqQRz2dy5aPxcWQAIoVBxdTBkKmsy2PFhraRVfpfW7fy5fTR7wYCv8x6o416zwVx+n2T8P9lSiTGCCkJ9D6jMBETibDBn3OHcnW8P8tJu7OPIAikLh3uUlq3Y3OZcQ9bVxQMh5tEOK7Yz7/ddQ0wySZfKI=
+	t=1771983952; cv=none; b=X79+nb9zeTEOd6dNIgqUYOj5i0zSxT2gUObOELbOAWHfXQhG1wfujSu63vToBmbek7rR9vYfsb6hdX5Mwb6uxXIYBQnaL7z6DESXp0b66WSo+diMHI7eyzdpdzDVFcqJr+1v+1u8tqvNZyQZfMSyJVv8HGr9CbPi89685OYYVbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983951; c=relaxed/simple;
-	bh=kffXL4XAyMKK5ofJ9wQTe91EPvgGAbiaowP1Wr0VL1Y=;
+	s=arc-20240116; t=1771983952; c=relaxed/simple;
+	bh=DmatXIUvN3h/NIUut0BSThi/MVZEVkX6Z3JQTqlqNHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBTwHx4kisQH3wb221Z1/aKB34ScV9xgrZlsQkqVmowNzaStUMjjRFbfDa5KLMtXaGbKPzBKD7HtF/d95wuZlDQebZMZS5UHhBA/qq7BDwS3ifk9S3d7bfrKqLdAVUZIUTGmqLQKkCgvkeBVRCLdmHvZw8IADcsFsXHPgWCMkYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5SKUsbs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CLqvPwzwKI8pwukL+Tv6b2dU6UM4GCaYfIeKaSTxzFNjTpjCGV35wpzjW09a+XGHt+cMcc94Rl18HLFjNf+G0othXnwprQiNZKOVxAqjMipyTLZrGloCDfkxLmED+4ouIsLsFmYHhz9xRfwMQM9L2CMjbuAgXDadevpYU8NZcCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1C3Cf9b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5SKUsbs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63C7C116D0;
-	Wed, 25 Feb 2026 01:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1C3Cf9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09ACAC116D0;
+	Wed, 25 Feb 2026 01:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983951;
-	bh=kffXL4XAyMKK5ofJ9wQTe91EPvgGAbiaowP1Wr0VL1Y=;
+	s=korg; t=1771983952;
+	bh=DmatXIUvN3h/NIUut0BSThi/MVZEVkX6Z3JQTqlqNHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5SKUsbssRGuXI9ZiIi9+XxF+i3MpBB4jz/WCf4MZ89x4ET3sCoqWuerDWVheqXcJ
-	 lXpzX0C66nVyUVmrAXDOB+idmfhiPQF5+deejn/17ZqVcY3FPjXzN4I9zUwugWJ7Sq
-	 RCOV0KpfYvsq3xWlcUmwdI4+jy5qn2kKG8OZF7lI=
+	b=T1C3Cf9bzBoNsAzy4m7xrUncUjshm8vbafMNNphAAd0LQAk6mg9oTcoiCrIw4SUtH
+	 xv2VQgZminzFtNvNEIDSU5hUiCIUnPM3MGnVP22YY3caT7I0HtpctZsccYvUy5dNFC
+	 TcImcqnpgPNYPdPGW8ua9wyVuqNt5q4kVdmCagRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Val Packett <val@packett.cool>
-Subject: [PATCH 6.18 210/641] drm/msm/mdss: correct HBB programmed on UBWC 5.x and 6.x devices
-Date: Tue, 24 Feb 2026 17:18:56 -0800
-Message-ID: <20260225012354.037433961@linuxfoundation.org>
+Subject: [PATCH 6.18 211/641] drm/msm/dpu: offset HBB values written to DPU by -13
+Date: Tue, 24 Feb 2026 17:18:57 -0800
+Message-ID: <20260225012354.059268456@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,37 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit e6177c7a2401b87b016728b75992926971d871fc ]
+[ Upstream commit 7ead14d4b9742b5ed244f35b999f0fe26dc23586 ]
 
-As in the previous generations, on UBWC 5.x and 6.x devices the Highest
-Bank Bit value should be programmed into the hardware with the offset of
--13.  Correct the value written into the register to prevent
-unpredictable results.
+As in all other places, the Highest Bank Bit value should be programmed
+into the hardware with the offset of -13.  Correct the value written
+into the register to prevent unpredictable results.
 
 Fixes: 227d4ce0b09e ("drm/msm: Offset MDSS HBB value by 13")
 Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/699274/
-Link: https://lore.kernel.org/r/20260119-msm-ubwc-fixes-v4-1-0987acc0427f@oss.qualcomm.com
+Patchwork: https://patchwork.freedesktop.org/patch/699276/
+Link: https://lore.kernel.org/r/20260119-msm-ubwc-fixes-v4-2-0987acc0427f@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_mdss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index 2d0e3e784c044..4dbb1b1d879f1 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -229,7 +229,7 @@ static void msm_mdss_setup_ubwc_dec_50(struct msm_mdss *msm_mdss)
- {
- 	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
- 	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
--		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit);
-+		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit - 13);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+index 6f1fc790ad6d8..b66c4cb5760c9 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+@@ -270,30 +270,32 @@ static void dpu_hw_sspp_setup_format(struct dpu_sw_pipe *pipe,
+ 		((fmt->bpp - 1) << 9);
  
- 	if (data->ubwc_bank_spread)
- 		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
+ 	if (fmt->fetch_mode != MDP_FETCH_LINEAR) {
++		u32 hbb = ctx->ubwc->highest_bank_bit - 13;
++
+ 		if (MSM_FORMAT_IS_UBWC(fmt))
+ 			opmode |= MDSS_MDP_OP_BWC_EN;
+ 		src_format |= (fmt->fetch_mode & 3) << 30; /*FRAME_FORMAT */
+ 		DPU_REG_WRITE(c, SSPP_FETCH_CONFIG,
+ 			DPU_FETCH_CONFIG_RESET_VALUE |
+-			ctx->ubwc->highest_bank_bit << 18);
++			hbb << 18);
+ 		switch (ctx->ubwc->ubwc_enc_version) {
+ 		case UBWC_1_0:
+ 			fast_clear = fmt->alpha_enable ? BIT(31) : 0;
+ 			DPU_REG_WRITE(c, SSPP_UBWC_STATIC_CTRL,
+ 					fast_clear | (ctx->ubwc->ubwc_swizzle & 0x1) |
+ 					BIT(8) |
+-					(ctx->ubwc->highest_bank_bit << 4));
++					(hbb << 4));
+ 			break;
+ 		case UBWC_2_0:
+ 			fast_clear = fmt->alpha_enable ? BIT(31) : 0;
+ 			DPU_REG_WRITE(c, SSPP_UBWC_STATIC_CTRL,
+ 					fast_clear | (ctx->ubwc->ubwc_swizzle) |
+-					(ctx->ubwc->highest_bank_bit << 4));
++					(hbb << 4));
+ 			break;
+ 		case UBWC_3_0:
+ 			DPU_REG_WRITE(c, SSPP_UBWC_STATIC_CTRL,
+ 					BIT(30) | (ctx->ubwc->ubwc_swizzle) |
+-					(ctx->ubwc->highest_bank_bit << 4));
++					(hbb << 4));
+ 			break;
+ 		case UBWC_4_0:
+ 			DPU_REG_WRITE(c, SSPP_UBWC_STATIC_CTRL,
 -- 
 2.51.0
 
