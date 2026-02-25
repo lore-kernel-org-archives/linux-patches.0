@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCDF30E855;
-	Wed, 25 Feb 2026 06:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8769230E855;
+	Wed, 25 Feb 2026 06:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002707; cv=none; b=KhPMJubmJwnI3PGvo5vnU2vdUZwWRACYyWuOXGk6sEwUprqmxrXc6q6wZ5zqLcwQFFJxDT0coIXnAKZ8neew6TFwoK1zShZSBR3OMOShHOg8TurGJp6JdBLJvVnjXtPFEis04kKGsaPY5tBFXjLMEBbjhjyk8b/DF2w2FFeJyZs=
+	t=1772002708; cv=none; b=HbgNKZH996mYoGUqY5FUPm9vMXdLxZdICDXVJ+bQgbvm6ORybS+4nY4KpBT+XOTUNH+muJ51jCuFjwee5bXUU068JlDI8WHja0g3dGNv9qnyfum5LSGa8OCwFhuwwt9QK+wLdW9KhQ1oQVKJwBLHIg3dmXP0bWRqcoRPZyO891M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002707; c=relaxed/simple;
-	bh=gxF+QLsVOPdiDd90odlSHwXsHLcD5YJVQxvmHuAogLc=;
+	s=arc-20240116; t=1772002708; c=relaxed/simple;
+	bh=XnsbEzyKI+ZDxhwR3IraOGN3FPULirJxZ8q/vFaJ/vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgWEQsRkJ8YyDPBngeoQOp4ti+RabLrI23/4pCPcSo+Ff9UONmXkbB0NSkSuk/7/pxoH89bBIw7Wo/73iTZxS3q48t8ddS7hf5K+dxk7e7OQfW6BSPRbABlLiw9pJhCskZY2MgR7fK4rPbMOdKNzBqQQw6d86AUj0/+XgBdfY+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImGIC1yG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeoZul0oGwwhMBq/XW5f9U80H3Cp0dgvkx36WCxOV9ZawJO/XBJruc63DXPHcORk/2+7u2S3hHYswSKXTnzw6vrPYuwnteLLY3+cF57cG9U9iA52l51UPW6l+xzNJusHCKd52UHN76B0EdiwH7eKkYDdk8AWdcC5Gn5zYgeOMT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/pO1rBS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImGIC1yG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72DCC116D0;
-	Wed, 25 Feb 2026 06:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/pO1rBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E28C116D0;
+	Wed, 25 Feb 2026 06:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002707;
-	bh=gxF+QLsVOPdiDd90odlSHwXsHLcD5YJVQxvmHuAogLc=;
+	s=korg; t=1772002708;
+	bh=XnsbEzyKI+ZDxhwR3IraOGN3FPULirJxZ8q/vFaJ/vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImGIC1yGhqgNvPfS0mEN4l+4RaPehCixDNfVEIEdDq++RCc97PztrybvKXNIfofnA
-	 DyJSjt/Fk+a1Jh0mRywAjrbQ2b09p3/mVD9DBTv57Xu4oA+Y3RQeKfXluYVP0fYaLA
-	 YlLnSnDYObVoHtlt0hSDs5C+g2AcXs9Q/ojXgk9k=
+	b=l/pO1rBSIbgEagKdrKELO34VxNz8a5RIu618uH20HPyovKDznK5eYjGBU58GfG9A2
+	 PwcWbD+6zCvmTQ3Q9lnslB8j+/VleVwOfQ/KXMShmB+P+aaPg7V7cIRaO42xONTyRO
+	 Tck2389OblgOIgUnu8dB1ZPqGpVrWBobAKFIggLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhai Can <bczhc0@126.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Christian Loehle <christian.loehle@arm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 508/641] ACPI: PM: Add unused power resource quirk for THUNDEROBOT ZERO
-Date: Tue, 24 Feb 2026 17:23:54 -0800
-Message-ID: <20260225012400.834606110@linuxfoundation.org>
+Subject: [PATCH 6.18 509/641] cpuidle: Skip governor when only one idle state is available
+Date: Tue, 24 Feb 2026 17:23:55 -0800
+Message-ID: <20260225012400.858957687@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -46,69 +47,62 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Message-ID: <20260225012355.YHhrI928UUScP9sU-Cx30O_NJYFYPF1ElJ_K-KrXzU8@z>
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhai Can <bczhc0@126.com>
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-[ Upstream commit cd7ef20ba8c6e936dba133b4136537a8ada22976 ]
+[ Upstream commit e5c9ffc6ae1bcdb1062527d611043681ac301aca ]
 
-On the THUNDEROBOT ZERO laptop, the second NVMe slot and the discrete
-NVIDIA GPU are both controlled by power-resource PXP. Due to the SSDT table
-bug (lack of reference), PXP will be shut dow as an "unused" power resource
-during initialization, making the NVMe slot #2 + NVIDIA both inaccessible.
+On certain platforms (PowerNV systems without a power-mgt DT node),
+cpuidle may register only a single idle state. In cases where that
+single state is a polling state (state 0), the ladder governor may
+incorrectly treat state 1 as the first usable state and pass an
+out-of-bounds index. This can lead to a NULL enter callback being
+invoked, ultimately resulting in a system crash.
 
-This issue was introduced by commit a1224f34d72a ("ACPI: PM: Check
-states of power resources during initialization"). Here are test
-results on the three consecutive commits:
+[   13.342636] cpuidle-powernv : Only Snooze is available
+[   13.351854] Faulting instruction address: 0x00000000
+[   13.376489] NIP [0000000000000000] 0x0
+[   13.378351] LR  [c000000001e01974] cpuidle_enter_state+0x2c4/0x668
 
-(bad again!) a1224f34d72a ACPI: PM: Check states of power resources during initialization
-(good) bc2836859643 ACPI: PM: Do not turn off power resources in unknown state
-(bad) 519d81956ee2 Linux 5.15-rc6
+Fix this by adding a bail-out in cpuidle_select() that returns state 0
+directly when state_count <= 1, bypassing the governor and keeping the
+tick running.
 
-On commit bc2836859643 ("ACPI: PM: Do not turn off power resources in
-unknown state") this was not an issue because the power resource state
-left UNKNOWN thus being ignored.
-
-See also commit 9b04d99788cf ("ACPI: PM: Do not turn of unused power
-resources on the Toshiba Click Mini") which is another almost identical
-case to this one.
-
-Fixes: a1224f34d72a ("ACPI: PM: Check states of power resources during initialization")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221087
-Signed-off-by: Zhai Can <bczhc0@126.com>
-Link: https://patch.msgid.link/20260214161452.2849346-1-bczhc0@126.com
+Fixes: dc2251bf98c6 ("cpuidle: Eliminate the CPUIDLE_DRIVER_STATE_START symbol")
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260216185005.1131593-2-aboorvad@linux.ibm.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/power.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/cpuidle/cpuidle.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
-index 361a7721a6a87..7da5ae5594a72 100644
---- a/drivers/acpi/power.c
-+++ b/drivers/acpi/power.c
-@@ -1113,6 +1113,19 @@ static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "SATELLITE Click Mini L9W-B"),
- 		},
- 	},
-+	{
-+		/*
-+		 * THUNDEROBOT ZERO laptop: Due to its SSDT table bug, power
-+		 * resource 'PXP' will be shut down on initialization, making
-+		 * the NVMe #2 and the NVIDIA dGPU both unavailable (they're
-+		 * both controlled by 'PXP').
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "THUNDEROBOT"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "ZERO"),
-+		}
+diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+index 56132e843c991..8950796a493de 100644
+--- a/drivers/cpuidle/cpuidle.c
++++ b/drivers/cpuidle/cpuidle.c
+@@ -357,6 +357,16 @@ noinstr int cpuidle_enter_state(struct cpuidle_device *dev,
+ int cpuidle_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		   bool *stop_tick)
+ {
++	/*
++	 * If there is only a single idle state (or none), there is nothing
++	 * meaningful for the governor to choose. Skip the governor and
++	 * always use state 0 with the tick running.
++	 */
++	if (drv->state_count <= 1) {
++		*stop_tick = false;
++		return 0;
++	}
 +
-+	},
- 	{}
- };
+ 	return cpuidle_curr_governor->select(drv, dev, stop_tick);
+ }
  
 -- 
 2.51.0
