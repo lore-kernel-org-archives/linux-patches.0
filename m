@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2540B26056D;
-	Wed, 25 Feb 2026 01:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C0D25A357;
+	Wed, 25 Feb 2026 01:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983481; cv=none; b=OW3pTeBwAn79Ij5oXY09aLvd6mgsFI0ho/HZbeLWoEUhvOkik8FlZVgrXC1R5OaOO+2Bepye2PJUFMH9RqMlf+fF6p5NyJaCUzJIsTuXTX2VuvW51IisFFaSBmagReKPoGci+vRSdD9zvwku5axCrA+AGvwON3gZsthz28ltQb0=
+	t=1771983482; cv=none; b=XXeoUFtYYXBzHf0i7gIxaGY5lKHs7BOWPVAxbSubtQu9jifp9RrivfpasunYcviI0gw98H6M4I2dwNM/HzaXWNas5FOMpNHmxDY8EdlOS/x6ZvX1PBEZvytn557i6oIaQ3qRb3FI+ECWDFybZnbzs+mZ3QW0BwIfVf/lugAOk1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983481; c=relaxed/simple;
-	bh=5aCXIE5ANmaBvu5Q0JtmezK7dxkrFa/uLpTmlVYphMU=;
+	s=arc-20240116; t=1771983482; c=relaxed/simple;
+	bh=y3uRc6ln9l1Xny1cAIAjV4G4nrKgqTmgXPlIgg1jpvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cWlB2u+cv76o0CeXWzSOyshCx3axeWGzhEgMI16MTsRN1DgwaR1gEuYOSh5HexB6L2f91L1uZp+lEep7uN3bTwOyOoIPL4n6elf4EFhbEDzT29Dhq3AyFfHQIlBrTQJOrhXEitUezeDyO17YTtT10EUc294UCoDw8BkOP9A+XIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lf5jUtNM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mj/6tgrTSuVS9+EKPKIUXURvfOFM98W9GOz9mtFhDMjFVl+w4KtMEuoZss4qJvcHiP9PYCZjHhmmvuB2FRDRh60z+Z+3iXY2Xe6kkcYZbmSb922HGWbGZBrkW3pADGCwxs8mkRxFUmEVTMGWEfaU/RKSIeHYrI0rbowEzO2fyns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YM7AyrQG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lf5jUtNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F297DC116D0;
-	Wed, 25 Feb 2026 01:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YM7AyrQG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CB5C116D0;
+	Wed, 25 Feb 2026 01:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983481;
-	bh=5aCXIE5ANmaBvu5Q0JtmezK7dxkrFa/uLpTmlVYphMU=;
+	s=korg; t=1771983482;
+	bh=y3uRc6ln9l1Xny1cAIAjV4G4nrKgqTmgXPlIgg1jpvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lf5jUtNMaLd76lHS0JU+B6YKnFBqiSnpH9u4z1A6IEktoPN1bBTw/y/qQWQfB7oxs
-	 aupXSncfSRahIrWnTHdd9OvYaZwcmMnBlPhTo38/tOMbtIEdMfR/HIsvh4nqgm+h0P
-	 EoNJszD7AycqB1quU6OPWGk2wPr7jnIz3RKLwdpM=
+	b=YM7AyrQGp9YLZqfVCOJIZryQtODovM2Khh4cqnfbev2yQiD3ZNWUhFsKCfFQUKsYX
+	 y5WwHIYPttvi3DnOW85LLfScbX2pe/oyhB2ot8goQnccTOVxxEh16VBj8Eg+t15agK
+	 6VtP2PFUbuCv4r7iZiHjAKhQ5L/vZfE0ybhu4p7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Jose Javier Rodriguez Barbarin <dev-josejavier.rodriguez@duagon.com>,
+	Johannes Thumshirn <morbidrsa@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 594/781] nvmem: an8855: drop an unused Kconfig symbol
-Date: Tue, 24 Feb 2026 17:21:43 -0800
-Message-ID: <20260225012414.368213944@linuxfoundation.org>
+Subject: [PATCH 6.19 595/781] mcb: fix incorrect sanity check
+Date: Tue, 24 Feb 2026 17:21:44 -0800
+Message-ID: <20260225012414.391695228@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,36 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Jose Javier Rodriguez Barbarin <dev-josejavier.rodriguez@duagon.com>
 
-[ Upstream commit 4796eaafd6a170db012395a40385d2baf4f4d118 ]
+[ Upstream commit bc2e4bc952e26dd93b978588219044bd8b24237b ]
 
-MFD_AIROHA_AN8855 is referenced here but never defined, so drop it
-from the Kconfig file.
+__mcb_register_driver() makes some sanity checks over mcb_driver
+to check if .probe and .remove callbacks are set.  However, since commit
+3bd13ae04ccc ("gpio: menz127: simplify error path and remove remove()")
+removed the .remove callback from menz127-gpio.c, not all mcb device
+drivers implement .remove callback.
 
-Fixes: e2258cfd9b98 ("nvmem: an8855: Add support for Airoha AN8855 Switch EFUSE")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260116170846.733558-4-srini@kernel.org
+Remove .remove check to ensure all mcb device drivers can be loaded.
+
+Signed-off-by: Jose Javier Rodriguez Barbarin <dev-josejavier.rodriguez@duagon.com>
+Fixes: 3bd13ae04ccc ("gpio: menz127: simplify error path and remove remove()")
+[ jth: added statement about menz127-gpio.c ]
+Signed-off-by: Johannes Thumshirn <morbidrsa@gmail.com>
+Link: https://patch.msgid.link/16fb55bd59d9c1d2ce2443f41d4dec2048f9a8ec.1768562302.git.jth@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mcb/mcb-core.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
-index bf47a982cf629..74ddbd0f79b0e 100644
---- a/drivers/nvmem/Kconfig
-+++ b/drivers/nvmem/Kconfig
-@@ -30,7 +30,7 @@ source "drivers/nvmem/layouts/Kconfig"
+diff --git a/drivers/mcb/mcb-core.c b/drivers/mcb/mcb-core.c
+index c1367223e71a0..3d487d75c483d 100644
+--- a/drivers/mcb/mcb-core.c
++++ b/drivers/mcb/mcb-core.c
+@@ -85,7 +85,8 @@ static void mcb_remove(struct device *dev)
+ 	struct mcb_device *mdev = to_mcb_device(dev);
+ 	struct module *carrier_mod;
  
- config NVMEM_AN8855_EFUSE
- 	tristate "Airoha AN8855 eFuse support"
--	depends on MFD_AIROHA_AN8855 || COMPILE_TEST
-+	depends on COMPILE_TEST
- 	help
- 	  Say y here to enable support for reading eFuses on Airoha AN8855
- 	  Switch. These are e.g. used to store factory programmed
+-	mdrv->remove(mdev);
++	if (mdrv->remove)
++		mdrv->remove(mdev);
+ 
+ 	carrier_mod = mdev->dev.parent->driver->owner;
+ 	module_put(carrier_mod);
+@@ -176,13 +177,13 @@ static const struct device_type mcb_carrier_device_type = {
+  * @owner: The @mcb_driver's module
+  * @mod_name: The name of the @mcb_driver's module
+  *
+- * Register a @mcb_driver at the system. Perform some sanity checks, if
+- * the .probe and .remove methods are provided by the driver.
++ * Register a @mcb_driver at the system. Perform a sanity check, if
++ * .probe method is provided by the driver.
+  */
+ int __mcb_register_driver(struct mcb_driver *drv, struct module *owner,
+ 			const char *mod_name)
+ {
+-	if (!drv->probe || !drv->remove)
++	if (!drv->probe)
+ 		return -EINVAL;
+ 
+ 	drv->driver.owner = owner;
 -- 
 2.51.0
 
