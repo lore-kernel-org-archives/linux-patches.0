@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E011D5ABA;
-	Wed, 25 Feb 2026 01:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF5E251795;
+	Wed, 25 Feb 2026 01:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982857; cv=none; b=kySXgpQZqYHDvPBQH9b+5pTYEhLxIHH9hOC/bkZrKhYHdca+z3g8+oZowXM0HbzZyDOyvhhhVPvOgdCsQDgHCNfWe8cEm5uq/sFIUOKCvhbhFv9yQLDS0NjTCeKxUEwF/gn1e4bi7aCXuaRiYVqGNjOiTSzW+Jl9TPXqujPQ1m0=
+	t=1771982859; cv=none; b=ocPijv/zSpWLDzcpv9RHMcybid+HoJStXwvrCJmtWxloLTuU/vzo7a/ryXRfeEXGVPuTAxYKNC6mxq+kg8mZnppPNGqoCvanGEyaXZSWrmlR0TN9rsOsZHr9c63sqglztfVFBs/fVpfLNrMNNiROAJdWHYGtfrBgg2HIDPGzB5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982857; c=relaxed/simple;
-	bh=AJO7akBsxVRcF9ta5VcA3OdUO15Us4NoKyl4Z09KWTA=;
+	s=arc-20240116; t=1771982859; c=relaxed/simple;
+	bh=D1KzJSSqUkYyVhoHG8Ae5Mgk/itT/rMursOKOKmjGtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siJnWraf7rxfW4nbogTQ5q3QaLM9R7w7bY0KcEFHxdiWzMomCm1v5t1zn+BxZNU9JCLHclCbbvYb6l+jxSy0VgIwuQKSWuZ7GrDBC+zgATSr+1rzoUr6wPFUfmuSnw+vJZ9ZJ+9zxkeu3Aeth7YTyBT0yc8HQo5xBPQCoO1CMCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTYD1A6J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jlu5cnvLQhA2teMSMzkBG7xs54st2jpnVqTJ+lkqvyfYjBNERNrdOhqIyYU4xB8xOQlikDtlNJFmeUXFXjIVBDh32R2cnQWVVDzd0f52aaw4OXxilOHrRhk+E2pXidi3WO6mTqYuXsi+2W/xJLhk9jFhSy7MwpAZeL4n844SXVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZjOOP2I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTYD1A6J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84482C116D0;
-	Wed, 25 Feb 2026 01:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZjOOP2I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D4EC116D0;
+	Wed, 25 Feb 2026 01:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982857;
-	bh=AJO7akBsxVRcF9ta5VcA3OdUO15Us4NoKyl4Z09KWTA=;
+	s=korg; t=1771982859;
+	bh=D1KzJSSqUkYyVhoHG8Ae5Mgk/itT/rMursOKOKmjGtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTYD1A6Jb7pfwWEME2o+z1EL62+hUIvtYpB8p2GbsvFn8E/yY7Wnj7qRYZNLlVLDx
-	 8MmuqyKY+OWPx3//jTH+KziVGyg6Knvv1jL49hoTYbNV1N5dspSjMM2kZlk9ot9g3K
-	 MpI9Zle7sMqGJLLbMfTGVPz53Jwp8ipgJVsiGrT4=
+	b=SZjOOP2IhYYoB27X0d8y51q8sWof2JahpzJNOj9gYHVa0VobJxTaChqqzdEWc0fBQ
+	 em/VR217go/zYRxZ83chihPHxe1IBRT7LS8RFGX19nzqSPelQyX7T4VtOjZQnLsD8x
+	 VHBYnEC6a6AwkxS7BgBpt2IuVdHEqymLgiL0SzOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Li Nan <linan122@huawei.com>,
-	Xiao Ni <xni@redhat.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
 	Christoph Hellwig <hch@lst.de>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 046/781] md/raid5: fix raid5_run() to return error when log_init() fails
-Date: Tue, 24 Feb 2026 17:12:35 -0800
-Message-ID: <20260225012400.833935284@linuxfoundation.org>
+Subject: [PATCH 6.19 020/781] iomap: fix invalid folio access after folio_end_read()
+Date: Tue, 24 Feb 2026 17:12:09 -0800
+Message-ID: <20260225012400.199631920@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,45 +53,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 2d9f7150ac197ce79c9c917a004d4cf0b26ad7e0 ]
+[ Upstream commit aa35dd5cbc060bc3e28ad22b1d76eefa3f024030 ]
 
-Since commit f63f17350e53 ("md/raid5: use the atomic queue limit
-update APIs"), the abort path in raid5_run() returns 'ret' instead of
--EIO. However, if log_init() fails, 'ret' is still 0 from the previous
-successful call, causing raid5_run() to return success despite the
-failure.
+If the folio does not have an iomap_folio_state (ifs) attached and the
+folio gets read in by the filesystem's IO helper, folio_end_read() will
+be called by the IO helper at any time. For this case, we cannot access
+the folio after dispatching it to the IO helper, eg subsequent accesses
+like
 
-Fix this by capturing the return value from log_init().
+        if (ctx->cur_folio &&
+                    offset_in_folio(ctx->cur_folio, iter->pos) == 0) {
 
-Link: https://lore.kernel.org/linux-raid/20260114171241.3043364-2-yukuai@fnnas.com
-Fixes: f63f17350e53 ("md/raid5: use the atomic queue limit update APIs")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202601130531.LGfcZsa4-lkp@intel.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Xiao Ni <xni@redhat.com>
+are incorrect.
+
+Fix these invalid accesses by invalidating ctx->cur_folio if all bytes
+of the folio have been read in by the IO helper.
+
+This allows us to also remove the +1 bias added for the ifs case. The
+bias was previously added to ensure that if all bytes are read in, the
+IO helper does not end the read on the folio until iomap has decremented
+the bias.
+
+Fixes: b2f35ac4146d ("iomap: add caller-provided callbacks for read and readahead")
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Link: https://patch.msgid.link/20260126224107.2182262-2-joannelkoong@gmail.com
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/iomap/buffered-io.c | 51 ++++++++++++++++++++++--------------------
+ 1 file changed, 27 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 8dc98f545969f..a85878b009f9a 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -8057,7 +8057,8 @@ static int raid5_run(struct mddev *mddev)
- 			goto abort;
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 6beb876658c09..e3bedcbb5f1ea 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -409,8 +409,6 @@ static void iomap_read_init(struct folio *folio)
+ 	struct iomap_folio_state *ifs = folio->private;
+ 
+ 	if (ifs) {
+-		size_t len = folio_size(folio);
+-
+ 		/*
+ 		 * ifs->read_bytes_pending is used to track how many bytes are
+ 		 * read in asynchronously by the IO helper. We need to track
+@@ -418,23 +416,19 @@ static void iomap_read_init(struct folio *folio)
+ 		 * reading in all the necessary ranges of the folio and can end
+ 		 * the read.
+ 		 *
+-		 * Increase ->read_bytes_pending by the folio size to start, and
+-		 * add a +1 bias. We'll subtract the bias and any uptodate /
+-		 * zeroed ranges that did not require IO in iomap_read_end()
+-		 * after we're done processing the folio.
++		 * Increase ->read_bytes_pending by the folio size to start.
++		 * We'll subtract any uptodate / zeroed ranges that did not
++		 * require IO in iomap_read_end() after we're done processing
++		 * the folio.
+ 		 *
+ 		 * We do this because otherwise, we would have to increment
+ 		 * ifs->read_bytes_pending every time a range in the folio needs
+ 		 * to be read in, which can get expensive since the spinlock
+ 		 * needs to be held whenever modifying ifs->read_bytes_pending.
+-		 *
+-		 * We add the bias to ensure the read has not been ended on the
+-		 * folio when iomap_read_end() is called, even if the IO helper
+-		 * has already finished reading in the entire folio.
+ 		 */
+ 		spin_lock_irq(&ifs->state_lock);
+ 		WARN_ON_ONCE(ifs->read_bytes_pending != 0);
+-		ifs->read_bytes_pending = len + 1;
++		ifs->read_bytes_pending = folio_size(folio);
+ 		spin_unlock_irq(&ifs->state_lock);
  	}
+ }
+@@ -465,11 +459,9 @@ static void iomap_read_end(struct folio *folio, size_t bytes_submitted)
  
--	if (log_init(conf, journal_dev, raid5_has_ppl(conf)))
-+	ret = log_init(conf, journal_dev, raid5_has_ppl(conf));
-+	if (ret)
- 		goto abort;
+ 		/*
+ 		 * Subtract any bytes that were initially accounted to
+-		 * read_bytes_pending but skipped for IO. The +1 accounts for
+-		 * the bias we added in iomap_read_init().
++		 * read_bytes_pending but skipped for IO.
+ 		 */
+-		ifs->read_bytes_pending -=
+-			(folio_size(folio) + 1 - bytes_submitted);
++		ifs->read_bytes_pending -= folio_size(folio) - bytes_submitted;
  
- 	return 0;
+ 		/*
+ 		 * If !ifs->read_bytes_pending, this means all pending reads by
+@@ -483,14 +475,16 @@ static void iomap_read_end(struct folio *folio, size_t bytes_submitted)
+ 		spin_unlock_irq(&ifs->state_lock);
+ 		if (end_read)
+ 			folio_end_read(folio, uptodate);
+-	} else if (!bytes_submitted) {
++	} else {
+ 		/*
+-		 * If there were no bytes submitted, this means we are
+-		 * responsible for unlocking the folio here, since no IO helper
+-		 * has taken ownership of it. If there were bytes submitted,
+-		 * then the IO helper will end the read via
+-		 * iomap_finish_folio_read().
++		 * If a folio without an ifs is submitted to the IO helper, the
++		 * read must be on the entire folio and the IO helper takes
++		 * ownership of the folio. This means we should only enter
++		 * iomap_read_end() for the !ifs case if no bytes were submitted
++		 * to the IO helper, in which case we are responsible for
++		 * unlocking the folio here.
+ 		 */
++		WARN_ON_ONCE(bytes_submitted);
+ 		folio_unlock(folio);
+ 	}
+ }
+@@ -502,6 +496,7 @@ static int iomap_read_folio_iter(struct iomap_iter *iter,
+ 	loff_t pos = iter->pos;
+ 	loff_t length = iomap_length(iter);
+ 	struct folio *folio = ctx->cur_folio;
++	size_t folio_len = folio_size(folio);
+ 	size_t poff, plen;
+ 	loff_t pos_diff;
+ 	int ret;
+@@ -515,8 +510,7 @@ static int iomap_read_folio_iter(struct iomap_iter *iter,
+ 
+ 	ifs_alloc(iter->inode, folio, iter->flags);
+ 
+-	length = min_t(loff_t, length,
+-			folio_size(folio) - offset_in_folio(folio, pos));
++	length = min_t(loff_t, length, folio_len - offset_in_folio(folio, pos));
+ 	while (length) {
+ 		iomap_adjust_read_range(iter->inode, folio, &pos, length, &poff,
+ 				&plen);
+@@ -542,7 +536,15 @@ static int iomap_read_folio_iter(struct iomap_iter *iter,
+ 			ret = ctx->ops->read_folio_range(iter, ctx, plen);
+ 			if (ret)
+ 				return ret;
++
+ 			*bytes_submitted += plen;
++			/*
++			 * If the entire folio has been read in by the IO
++			 * helper, then the helper owns the folio and will end
++			 * the read on it.
++			 */
++			if (*bytes_submitted == folio_len)
++				ctx->cur_folio = NULL;
+ 		}
+ 
+ 		ret = iomap_iter_advance(iter, plen);
+@@ -575,7 +577,8 @@ void iomap_read_folio(const struct iomap_ops *ops,
+ 	if (ctx->ops->submit_read)
+ 		ctx->ops->submit_read(ctx);
+ 
+-	iomap_read_end(folio, bytes_submitted);
++	if (ctx->cur_folio)
++		iomap_read_end(ctx->cur_folio, bytes_submitted);
+ }
+ EXPORT_SYMBOL_GPL(iomap_read_folio);
+ 
 -- 
 2.51.0
 
