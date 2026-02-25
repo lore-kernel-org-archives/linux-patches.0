@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5081D5141;
-	Wed, 25 Feb 2026 01:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4346248881;
+	Wed, 25 Feb 2026 01:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983413; cv=none; b=lxGlCe/mXLaF+hd8ndzuGk7hNf0iyC03uod/zyzFbqsQIR3uZswS/qOkimss81qahbjJDiLe10YTkEEizshRiflqp7RbA66pmdVqPU/Ywz83v8ajG+Q4XgaVbvAAC02yJ0NIlza9y2+7hX1fJmgTAJ56a696JYR59mAQbGaVE2k=
+	t=1771983414; cv=none; b=MnYulyIGqV3ZDbfKgN5HvU5Om/ucN7W4O+tKfafoQGNOxSUI0ppv6vLNb+swOGenoKltr77aVIQ4UCp+iwVhH0jO6kauT9USY/veluGpMrfS0eQ5qK5aAvVMva11O0Z+/VJvJAwJOoeqWPVwxsyU8rEICzRclR3khjQg1zesBwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983413; c=relaxed/simple;
-	bh=/yKTmPzjxhs9pj/KUyMvpDPymtdk5Xxv2kt3aeuxUEg=;
+	s=arc-20240116; t=1771983414; c=relaxed/simple;
+	bh=Fzk6gJfh3yJFYN9psbF3HcqW+1G61Q+r2h6BvbOni+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdTxUjNr9Tdp55NkDenHD9NIf/Xlqwv8NP8KsgP0+TJ5Yjkokfdc4ASKfVeNjBNiLN+My+b5GiStgiOYjTHgsYcAPkT6EQ1l0vJgGm2Rxrl77QxEhB/khjT+pfgM9lfmrmPweoLB7zNVzNAiOsX3v2bujtt97s1tMyvERaFP67M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAKRmXhw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sroidfDuvtrz2SqEGkkpdJzDWkKA8THU4EbQeWcuiPMh+MBVYs36hzaMJtnVp7vDi+QZmW4ee1saEvGcGhP+VMnaAQ9asjeIvwM8kUvtJmlO0xzxlo3Yb3lAyAgESS4F+5jzRPMZ/+wHCK/jlFQdkb8awXOuP8Ypgxra//iSgS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqlxL6mH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAKRmXhw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FC0C116D0;
-	Wed, 25 Feb 2026 01:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqlxL6mH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C2AC116D0;
+	Wed, 25 Feb 2026 01:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983413;
-	bh=/yKTmPzjxhs9pj/KUyMvpDPymtdk5Xxv2kt3aeuxUEg=;
+	s=korg; t=1771983414;
+	bh=Fzk6gJfh3yJFYN9psbF3HcqW+1G61Q+r2h6BvbOni+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UAKRmXhwfIprcJDoNllCDRxVF86hO9K/EK8ZV5ObZqiCQThZDmU36lV8AP4ODn3ws
-	 bvDXyvbp7vHRWqAv61kbPZGC4SwhUB41QHIs8sS7b2OgbHG8ZIPVWFz4Gx9hskzwle
-	 F7/7MTthdmn04exAOdxnHSmG5TIWAt/+zVG0lQMw=
+	b=FqlxL6mHnnEZxKrU1F76LFz9osdcRDOsODmIjakfmciUXlWGuy1DINx70fXB5SXjK
+	 kfY/kTw6HWZSryAhJ33MuD3T/vaRE5i1ljqXW9FCUEFSg1l3kjlO3eK2lvQqRCD/15
+	 vnyEEE5KZEyfINFVeBv7TuBaa8Ps4eo6nIiu4f8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuxiong Wang <yuxiong.wang@linux.alibaba.com>,
-	Huang Ying <ying.huang@linux.alibaba.com>,
+	Robert Richter <rrichter@amd.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 490/781] cxl: Fix premature commit_end increment on decoder commit failure
-Date: Tue, 24 Feb 2026 17:19:59 -0800
-Message-ID: <20260225012411.825909331@linuxfoundation.org>
+Subject: [PATCH 6.19 481/781] cxl/hdm: Fix newline character in dev_err() messages
+Date: Tue, 24 Feb 2026 17:19:50 -0800
+Message-ID: <20260225012411.611477729@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,60 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuxiong Wang <yuxiong.wang@linux.alibaba.com>
+From: Robert Richter <rrichter@amd.com>
 
-[ Upstream commit 7b6f9d9b1ea05c9c22570126547c780e8c6c3f62 ]
+[ Upstream commit e5b1887619403c2da25a5899cad3e1ab34e7717f ]
 
-In cxl_decoder_commit(), commit_end is incremented before verifying
-whether the commit succeeded, and the CXL_DECODER_F_ENABLE bit in
-cxld->flags is only set after a successful commit. As a result, if the
-commit fails, commit_end has been incremented and cxld->reset() has no
-effect since the flag is not set, so commit_end remains incorrectly
-incremented. The inconsistency between commit_end and CXL_DECODER_F_ENABLE
-causes failure during subsequent either commit or reset operations.
+The newline character is not placed at the end of the string. This
+causes unintended line wraps, broken log level and unterminated log
+messages. Fix that for all messages.
 
-Fix this by incrementing commit_end only after confirming the commit
-succeeded. Also, remove the ineffective cxld->reset() call. According to
-CXL Spec r4.0 8.2.4.20.12 Committing Decoder Programming, since
-cxld_await_commit() has cleared the decoder commit bit on failure, no
-additional reset is required.
+Note that the messages are changed to use colons now instead of
+parentheses, which is more common use.
 
-[dj: Fixed commit log 80 char wrapping. ]
-[dj: Fix "Fixes" tag to correct hash length. ]
-[dj: Change spec to r4.0. ]
-
-Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
-Signed-off-by: Yuxiong Wang <yuxiong.wang@linux.alibaba.com>
-Acked-by: Huang Ying <ying.huang@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260129064552.31180-1-yuxiong.wang@linux.alibaba.com
+Fixes: 24b18197184a ("cxl/hdm: Extend DVSEC range register emulation for region enumeration")
+Fixes: 9c57cde0dcbd ("cxl/hdm: Enumerate allocated DPA")
+Signed-off-by: Robert Richter <rrichter@amd.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20260109122952.639231-1-rrichter@amd.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/cxl/core/hdm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index a7ad730763e85..bc4b0c8607258 100644
+index eb5a3a7640c60..a7ad730763e85 100644
 --- a/drivers/cxl/core/hdm.c
 +++ b/drivers/cxl/core/hdm.c
-@@ -844,14 +844,13 @@ static int cxl_decoder_commit(struct cxl_decoder *cxld)
- 	scoped_guard(rwsem_read, &cxl_rwsem.dpa)
- 		setup_hw_decoder(cxld, hdm);
- 
--	port->commit_end++;
- 	rc = cxld_await_commit(hdm, cxld->id);
+@@ -966,7 +966,7 @@ static int cxl_setup_hdm_decoder_from_dvsec(
+ 	rc = devm_cxl_dpa_reserve(cxled, *dpa_base, len, 0);
  	if (rc) {
- 		dev_dbg(&port->dev, "%s: error %d committing decoder\n",
- 			dev_name(&cxld->dev), rc);
--		cxld->reset(cxld);
+ 		dev_err(&port->dev,
+-			"decoder%d.%d: Failed to reserve DPA range %#llx - %#llx\n (%d)",
++			"decoder%d.%d: Failed to reserve DPA range %#llx - %#llx: %d\n",
+ 			port->id, cxld->id, *dpa_base, *dpa_base + len - 1, rc);
  		return rc;
  	}
-+	port->commit_end++;
- 	cxld->flags |= CXL_DECODER_F_ENABLE;
- 
- 	return 0;
+@@ -1117,7 +1117,7 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
+ 	rc = devm_cxl_dpa_reserve(cxled, *dpa_base + skip, dpa_size, skip);
+ 	if (rc) {
+ 		dev_err(&port->dev,
+-			"decoder%d.%d: Failed to reserve DPA range %#llx - %#llx\n (%d)",
++			"decoder%d.%d: Failed to reserve DPA range %#llx - %#llx: %d\n",
+ 			port->id, cxld->id, *dpa_base,
+ 			*dpa_base + dpa_size + skip - 1, rc);
+ 		return rc;
 -- 
 2.51.0
 
