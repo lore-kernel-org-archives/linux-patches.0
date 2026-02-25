@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189AB2C17A0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44AF2C17A0;
 	Wed, 25 Feb 2026 06:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002598; cv=none; b=fjFku1J9PT+dShxcfA9yMU1foZRwsWxcD23TDr0Gu8hLtC5CTXKyjwLcnw79g+XNkEL/O5Zpc3RztPIk6dBpaqgNkCeVmJHPyHtv05YPyITKawQj8o+aDlmOXK5qzozCaSHlP4gxrAj7QimC3KBNaiTUR0n4bhtPTwOJiFb07zY=
+	t=1772002598; cv=none; b=ZpasqzDXhoHC+x3+hj5iO+uLfwmuSLxY9Y15kk653e8cKzK5DE8eW6djqfxDb2FBJ2oJrEezwVz5BuI9kmbZu3KZBwZl7zzKuteKFuJSciTdsHxYy4OGUVEqpElDU1kVTLy8QQ/r4+40QuJPw3KmGINMjHKxHVNsmGkcXyIbJfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002598; c=relaxed/simple;
-	bh=i5RUP3XCJyOKtR9mfQJipUAhxmHZrP6QN3gIZnLOpqI=;
+	bh=NTPF+SCv7IwTPXKIpTukm7ts0VMM0Puf8lwyP+fVYDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8q4+ekTFKNnlJwjUdiLmMpWek65K0ZoYLNBPB/EP81SrWJpBEDDyEz5KtXmvA8DydZBOUm4HNOYPu/r00CXXyhaDB2TROkYt7xH4sKFfuteIjV4caujZu9R679wqvCSP3H3EkDSe8jeWm79ZJlRem+ljFog8WuCCbTmQWJ2oXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpjdhbyD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e6nkhQU8NkIAceJxx39t56J/SVH0tU8UfWj7eywE+uhphWK2Xn19Fz/vu2shJYA7ivdNecTxMRCZZ0UYaMqb+EAYMsgi10CIg69rnxnJCZ+JPiFoFsg6qJSiOgH41qdx63EZDdv6Mm56xigbfz8pYjYJ/fjursaxqrS2cWe+gMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxduVSHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpjdhbyD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A7DC2BC86;
-	Wed, 25 Feb 2026 06:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxduVSHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F19C116D0;
+	Wed, 25 Feb 2026 06:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002598;
-	bh=i5RUP3XCJyOKtR9mfQJipUAhxmHZrP6QN3gIZnLOpqI=;
+	bh=NTPF+SCv7IwTPXKIpTukm7ts0VMM0Puf8lwyP+fVYDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpjdhbyDbX1xxlwvGNquRp3VKtf6nm6hR06caxQ7JhrJu9UjCuRzkhxkB7CXVmZlK
-	 HSlSOOd3Ne6ieiyRRrIqWMXCos/oQ31h7pDq/LFGmgLpDQxm1CdX7GA0fv5Q0zhEDr
-	 tF1IXPyKCwOYdAeyTIWQ12OADZrM8vBvJa3/yK4I=
+	b=xxduVSHRBx00WcGAj61eoT/NJy8DrSU/m1jwcnH/x0cNieqoJbHeBEsiJ3wNfyLC+
+	 EQRYUhOdZcZMt4ufTNC1HrdHm+/KwYNfY6slStKH/6m2syD2fbAGtmf/pWCeqDUrsa
+	 hkQav9VPdMHEdvRz9WscQ2RapSAKfdg7aw4VUTwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Waqar Hameed <waqar.hameed@axis.com>,
-	Linus Walleij <linusw@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 344/641] power: supply: ab8500: Fix use-after-free in power_supply_changed()
-Date: Tue, 24 Feb 2026 17:21:10 -0800
-Message-ID: <20260225012356.995366916@linuxfoundation.org>
+Subject: [PATCH 6.18 345/641] power: supply: act8945a: Fix use-after-free in power_supply_changed()
+Date: Tue, 24 Feb 2026 17:21:11 -0800
+Message-ID: <20260225012357.018844638@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit c4af8a98bb52825a5331ae1d0604c0ea6956ba4b ]
+[ Upstream commit 3291c51d4684d048dd2eb91b5b65fcfdaf72141f ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -75,79 +74,52 @@ the `power_supply` handle. This would then lead to the nasty situation
 of using the `power_supply` handle *uninitialized* in
 `power_supply_changed()`.
 
-Commit 1c1f13a006ed ("power: supply: ab8500: Move to componentized
-binding") introduced this issue during a refactorization. Fix this racy
-use-after-free by making sure the IRQ is requested _after_ the
-registration of the `power_supply` handle.
+Fix this racy use-after-free by making sure the IRQ is requested _after_
+the registration of the `power_supply` handle.
 
-Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
+Fixes: a09209acd6a8 ("power: supply: act8945a_charger: Add status change update support")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/ccf83a09942cb8dda3dff70b2682f2c2e9cb97f2.1766268280.git.waqar.hameed@axis.com
+Link: https://patch.msgid.link/bcf3a23b5187df0bba54a8c8fe09f8b8a0031dee.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 40 +++++++++++++--------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ drivers/power/supply/act8945a_charger.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 5f4537766e5b9..1813fbdfa1c1f 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -3466,26 +3466,6 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/drivers/power/supply/act8945a_charger.c b/drivers/power/supply/act8945a_charger.c
+index 3901a02f326a5..9dec4486b1439 100644
+--- a/drivers/power/supply/act8945a_charger.c
++++ b/drivers/power/supply/act8945a_charger.c
+@@ -597,14 +597,6 @@ static int act8945a_charger_probe(struct platform_device *pdev)
+ 		return irq ?: -ENXIO;
  	}
  
--	/* Request interrupts */
--	for (i = 0; i < ARRAY_SIZE(ab8500_charger_irq); i++) {
--		irq = platform_get_irq_byname(pdev, ab8500_charger_irq[i].name);
--		if (irq < 0)
--			return irq;
--
--		ret = devm_request_threaded_irq(dev,
--			irq, NULL, ab8500_charger_irq[i].isr,
--			IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
--			ab8500_charger_irq[i].name, di);
--
--		if (ret != 0) {
--			dev_err(dev, "failed to request %s IRQ %d: %d\n"
--				, ab8500_charger_irq[i].name, irq, ret);
--			return ret;
--		}
--		dev_dbg(dev, "Requested %s IRQ %d: %d\n",
--			ab8500_charger_irq[i].name, irq, ret);
+-	ret = devm_request_irq(&pdev->dev, irq, act8945a_status_changed,
+-			       IRQF_TRIGGER_FALLING, "act8945a_interrupt",
+-			       charger);
+-	if (ret) {
+-		dev_err(&pdev->dev, "failed to request nIRQ pin IRQ\n");
+-		return ret;
 -	}
 -
- 	/* initialize lock */
- 	spin_lock_init(&di->usb_state.usb_lock);
- 	mutex_init(&di->usb_ipt_crnt_lock);
-@@ -3614,6 +3594,26 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 		return PTR_ERR(di->usb_chg.psy);
+ 	charger->desc.name = "act8945a-charger";
+ 	charger->desc.get_property = act8945a_charger_get_property;
+ 	charger->desc.properties = act8945a_charger_props;
+@@ -625,6 +617,14 @@ static int act8945a_charger_probe(struct platform_device *pdev)
+ 		return PTR_ERR(charger->psy);
  	}
  
-+	/* Request interrupts */
-+	for (i = 0; i < ARRAY_SIZE(ab8500_charger_irq); i++) {
-+		irq = platform_get_irq_byname(pdev, ab8500_charger_irq[i].name);
-+		if (irq < 0)
-+			return irq;
-+
-+		ret = devm_request_threaded_irq(dev,
-+			irq, NULL, ab8500_charger_irq[i].isr,
-+			IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
-+			ab8500_charger_irq[i].name, di);
-+
-+		if (ret != 0) {
-+			dev_err(dev, "failed to request %s IRQ %d: %d\n"
-+				, ab8500_charger_irq[i].name, irq, ret);
-+			return ret;
-+		}
-+		dev_dbg(dev, "Requested %s IRQ %d: %d\n",
-+			ab8500_charger_irq[i].name, irq, ret);
++	ret = devm_request_irq(&pdev->dev, irq, act8945a_status_changed,
++			       IRQF_TRIGGER_FALLING, "act8945a_interrupt",
++			       charger);
++	if (ret) {
++		dev_err(&pdev->dev, "failed to request nIRQ pin IRQ\n");
++		return ret;
 +	}
 +
- 	/*
- 	 * Check what battery we have, since we always have the USB
- 	 * psy, use that as a handle.
+ 	platform_set_drvdata(pdev, charger);
+ 
+ 	INIT_WORK(&charger->work, act8945a_work);
 -- 
 2.51.0
 
