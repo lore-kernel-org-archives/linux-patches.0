@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2974218B0A;
-	Wed, 25 Feb 2026 01:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172DE18B0A;
+	Wed, 25 Feb 2026 01:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983265; cv=none; b=huiPCcyoOMHSHtpVehmFKjM1m5Cl6AxCvRHIux108o7tB03Zj/QyhII3b41LPGGsR6W3O9lnxXQ779fpwlW0AYO73C3M9qAN6qO9yJt1+AHjMmmxegQ8dyINJ+3r2DNnF3u17tVMTbSBd+cnW+ezIKiCp+FAs9JW0tY2D+979Y4=
+	t=1771983266; cv=none; b=pK/UkF9uENJ/D5w8dW9NTB4W4Ze6iY1mqyyvDxWDS47QnFkCJyBLXsokZcksdWrpnnh48+k9M0hkKr5gb6vVjbILq8llaZWMxdeXVHbrb/uL5rhil3qeoZn4/MHnK+Dd/OaR3Kknnborr4aa29Yxal5+scEzOWXrWMjcpS3bDsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983265; c=relaxed/simple;
-	bh=DPwHtrFjDeYAVDSePcu4J4Qb6ZcokRbjknEDYprJjOc=;
+	s=arc-20240116; t=1771983266; c=relaxed/simple;
+	bh=CDacgpqD0BUmR1eX36E5LL6bCrGXC0sVYkeEym346yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btbz3cmcVzE/+ArNOd2w3C9y8uI3t1D0k5N4xzFCfvddU5d9ZIjeuj7aV1ykVYtOwIjPLnsJdS0UypQ9fBJSqBj5pSwVxHV0ibo4cfOEa1aZIg7gDlxqGllH+Qb+1Fjmk9O/BGpOZ53AuP+ZdR71VySHEOnryL7YsaJ3ILTDiWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vZjfKCg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nJPF1KgUCk8r4Dp1cgloE5ajbUcFIECAUFlNMACGtCYWLQ7f1s6kvYeaVJEM0TFxGmXrINDY8S32JyqXwEWxjzn/yp5RU2OxxNJlVXLHgp8Whc5Pm+F+TkfqOfPGxiPFAmqtNGu3u90zi56oWVO4WOOO1W3hQcNSREaiHW/mMhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/JuuUJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vZjfKCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE28C116D0;
-	Wed, 25 Feb 2026 01:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/JuuUJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A57C116D0;
+	Wed, 25 Feb 2026 01:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983265;
-	bh=DPwHtrFjDeYAVDSePcu4J4Qb6ZcokRbjknEDYprJjOc=;
+	s=korg; t=1771983266;
+	bh=CDacgpqD0BUmR1eX36E5LL6bCrGXC0sVYkeEym346yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vZjfKCgthoLhjcuiocJyAHgDoK7o2yT0S89Wksy7sJrTozbhgFDVstrp2VnInrSm
-	 ABoMXd2K/VXkxsaGj0hIW8kky/MAwpFHTuESwG2uk/fluzbaaSv7QXdrjuY9qjWoP4
-	 R7Zu7MjthzBMC2fMdNlK041FBPuY9lcFoWHGbhF4=
+	b=s/JuuUJgDa27tFd+4+i6RYjoOQkFYWMYzxNDlA5mEl38tU27WYqSPuhlruqT2giGj
+	 2UHYHT4XwddcADCQJ/zGuWx41umTHYSbCqqaHOywbgJrI4Q/NXX4VPoxj0jumbiTNu
+	 6FxWrEaWuPSxKActTWofWzXTvEps2Krpw02lWDnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Votokina Victoria <Victoria.Votokina@kaspersky.com>,
+	kernel test robot <lkp@intel.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 406/781] nfc: hci: shdlc: Stop timers and work before freeing context
-Date: Tue, 24 Feb 2026 17:18:35 -0800
-Message-ID: <20260225012409.661419848@linuxfoundation.org>
+Subject: [PATCH 6.19 407/781] amd-xgbe: do not select NET_SELFTESTS when INET is disabled
+Date: Tue, 24 Feb 2026 17:18:36 -0800
+Message-ID: <20260225012409.686629845@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,50 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Votokina Victoria <Victoria.Votokina@kaspersky.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit c9efde1e537baed7648a94022b43836a348a074f ]
+[ Upstream commit ee9241524b4682a34ed4b66d8c68c33304810b93 ]
 
-llc_shdlc_deinit() purges SHDLC skb queues and frees the llc_shdlc
-structure while its timers and state machine work may still be active.
+AMD_XGBE currently selects NET_SELFTESTS unconditionally. Since select
+does not honor dependencies, this can force-enable NET_SELFTESTS even
+when INET is disabled (e.g. INET=n randconfig builds).
 
-Timer callbacks can schedule sm_work, and sm_work accesses SHDLC state
-and the skb queues. If teardown happens in parallel with a queued/running
-work item, it can lead to UAF and other shutdown races.
+Fixes build issue when INET is disabled.
 
-Stop all SHDLC timers and cancel sm_work synchronously before purging the
-queues and freeing the context.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 4a61cd6687fc ("NFC: Add an shdlc llc module to llc core")
-Signed-off-by: Votokina Victoria <Victoria.Votokina@kaspersky.com>
-Link: https://patch.msgid.link/20260203113158.2008723-1-Victoria.Votokina@kaspersky.com
+Fixes: 862a64c83faf ("amd-xgbe: introduce support ethtool selftest")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202602030920.SWN7cwzT-lkp@intel.com/
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Link: https://patch.msgid.link/20260204150020.883639-1-Raju.Rangoju@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/hci/llc_shdlc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/amd/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/nfc/hci/llc_shdlc.c b/net/nfc/hci/llc_shdlc.c
-index 4fc37894860c9..08c8aa1530d8a 100644
---- a/net/nfc/hci/llc_shdlc.c
-+++ b/net/nfc/hci/llc_shdlc.c
-@@ -762,6 +762,14 @@ static void llc_shdlc_deinit(struct nfc_llc *llc)
- {
- 	struct llc_shdlc *shdlc = nfc_llc_get_data(llc);
- 
-+	timer_shutdown_sync(&shdlc->connect_timer);
-+	timer_shutdown_sync(&shdlc->t1_timer);
-+	timer_shutdown_sync(&shdlc->t2_timer);
-+	shdlc->t1_active = false;
-+	shdlc->t2_active = false;
-+
-+	cancel_work_sync(&shdlc->sm_work);
-+
- 	skb_queue_purge(&shdlc->rcv_q);
- 	skb_queue_purge(&shdlc->send_q);
- 	skb_queue_purge(&shdlc->ack_pending_q);
+diff --git a/drivers/net/ethernet/amd/Kconfig b/drivers/net/ethernet/amd/Kconfig
+index d54dca3074eb6..45e8d698781c1 100644
+--- a/drivers/net/ethernet/amd/Kconfig
++++ b/drivers/net/ethernet/amd/Kconfig
+@@ -165,7 +165,7 @@ config AMD_XGBE
+ 	select CRC32
+ 	select PHYLIB
+ 	select AMD_XGBE_HAVE_ECC if X86
+-	select NET_SELFTESTS
++	imply NET_SELFTESTS
+ 	help
+ 	  This driver supports the AMD 10GbE Ethernet device found on an
+ 	  AMD SoC.
 -- 
 2.51.0
 
