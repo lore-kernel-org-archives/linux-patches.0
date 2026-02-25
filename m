@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4551A1D5ABA;
-	Wed, 25 Feb 2026 01:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6461D5ABA;
+	Wed, 25 Feb 2026 01:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982820; cv=none; b=WRsuLuVkO4BMdyOuLT995/IMYpWLavMWj3jKdDzKxo8Y1z1ZDKs7i1ZpZ6O3biu0gLyxMGXUsJG/rAM5diTnykp8o6gtGuOLDeovSP2Q7WXCiM90DXMcYyUZxsyxzzcLSQPOYvym1qKwpfx7V3sRYOp+l8iSSeOy5u1o9y16LbE=
+	t=1771982821; cv=none; b=H2grfBgak8DU55dNbIXjpZ3pWdFdrPTpcpS3avEkaFsvYTCdyYhnrxxJMgAmxpNQC0YW+dxolRiby98kB8A2bX74cJpEVxBA9YIzNL5Q/gkC4xl9nCeEjUu7szJhtrTC8mUA2IRVRut2xHd9bJz41u2S3BnYPwc1XnipTct7Lbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982820; c=relaxed/simple;
-	bh=ossK0pLQbZ3qH1K6eNeihmYGAc0DGEou+lYZBwt/TVc=;
+	s=arc-20240116; t=1771982821; c=relaxed/simple;
+	bh=qwtW7QOEeuPnaCow3yE9nRT5mcf4Ga91CEwcpHeoX4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R6enBCpu2QZ2BEe7Kl/QexfrdZpux+XnaQNlfKOj3o9hHrPJchggJ0hNC7YtKoK/VfRyPWsuLe9b8PhW/JEUfyKDP8Cje+MS5JDenIpZT3N1Kb1WkAN6xbdXwuTDTt1fTwdlTht8rDvaroGt31Cfx9WjG8ADjHVVCSwnBk7C+vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfoLAF7D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WydcGDrpfkZQ70yjfVkzBerLjPn5KjwJ9CqF4rhjp6b/fSzOT+JeG6tPwy0BIFHMHIICoHK7X96ihLtHPiOBfPZFmGjRj8iMmyWLOSVo/DQDl7ITALG7eBm+EeOFMB4HXEBNMUSMvaIlj/j3lRRiyaGU4ypc8Ic6mUOQ8KygYkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ik4PHBcS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfoLAF7D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0A0C116D0;
-	Wed, 25 Feb 2026 01:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ik4PHBcS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F81C116D0;
+	Wed, 25 Feb 2026 01:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982819;
-	bh=ossK0pLQbZ3qH1K6eNeihmYGAc0DGEou+lYZBwt/TVc=;
+	s=korg; t=1771982821;
+	bh=qwtW7QOEeuPnaCow3yE9nRT5mcf4Ga91CEwcpHeoX4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DfoLAF7DOWzl6Y3olEjZiwKE9Zwpk7Zrflj/z/IqWQ32eBAFIAWvVJwF0WmZPexqe
-	 m1ggwymGqrnVmeFrzLiq/UD7gqrSMxXnjXnZFOOM41HZOUkUp426nSJ/zc7FXCtfLk
-	 tv5fmUZeupZTXC7yi/SJn6mMMqKgFXSqPnAz/9uc=
+	b=Ik4PHBcSbH6irUJefHt0Dk89vmzWNbfSHyxfaKEGG2qCrRkngnuub1Mo78Fh68+ot
+	 PR0F+kBms9AP4lLNuCy9AC5HsTQLF+xBADj0TYY4mg2GhnyA10+pJkGJCybEFXtfug
+	 EfrbG2eXF4hLnIeSMuQ1LieQmfudjHgQE/IHY2Mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 015/781] erofs: avoid noisy messages for transient -ENOMEM
-Date: Tue, 24 Feb 2026 17:12:04 -0800
-Message-ID: <20260225012400.075613412@linuxfoundation.org>
+Subject: [PATCH 6.19 016/781] gfs2: Retries missing in gfs2_{rename,exchange}
+Date: Tue, 24 Feb 2026 17:12:05 -0800
+Message-ID: <20260225012400.099137439@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,52 +50,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 9aa64b62a73cbca226c0144dcf3cdf97294e0641 ]
+[ Upstream commit 11d763f0b0afc2cf5f92f4adae5dbbbbef712f8f ]
 
-EROFS may allocate temporary pages using GFP_NOWAIT | GFP_NORETRY
-when pcl->besteffort is off (e.g., for readahead requests).
+Fix a bug in gfs2's asynchronous glock handling for rename and exchange
+operations.  The original async implementation from commit ad26967b9afa
+("gfs2: Use async glocks for rename") mentioned that retries were needed
+but never implemented them, causing operations to fail with -ESTALE
+instead of retrying on timeout.
 
-If the allocation fails, the original request will fall back to
-synchronous read, so the failure is transient.
+Also makes the waiting interruptible.
 
-Such fallback can frequently happen in low memory scenarios, but since
-these failures are expected and temporary, avoid printing error
-messages like below:
+In addition, the timeouts used were too high for situations in which
+timing out is a rare but expected scenario.  Switch to shorter timeouts
+with randomization and exponentional backoff.
 
-[ 7425.184264] erofs (device sr0): failed to decompress (lz4) -ENOMEM @ pa 148447232 size 28672 => 26788
-[ 7426.244267] erofs (device sr0): failed to decompress (lz4) -ENOMEM @ pa 149422080 size 28672 => 15903
-[ 7426.245508] erofs (device sr0): failed to decompress (lz4) -ENOMEM @ pa 138440704 size 28672 => 39294
-...
-[ 7504.258373] erofs (device sr0): failed to decompress (lz4) -ENOMEM @ pa 93581312 size 20480 => 47366
-
-Fixes: 831faabed812 ("erofs: improve decompression error reporting")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: ad26967b9afa ("gfs2: Use async glocks for rename")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/gfs2/glock.c | 36 +++++++++++++++++++++++++++---------
+ fs/gfs2/glock.h |  3 ++-
+ fs/gfs2/inode.c | 18 ++++++++++++++----
+ 3 files changed, 43 insertions(+), 14 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 70e1597dec8a6..c62908f1ce478 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1324,9 +1324,10 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
- 						GFP_NOWAIT | __GFP_NORETRY
- 				 }, be->pagepool);
- 		if (IS_ERR(reason)) {
--			erofs_err(be->sb, "failed to decompress (%s) %pe @ pa %llu size %u => %u",
--				  alg->name, reason, pcl->pos,
--				  pcl->pclustersize, pcl->length);
-+			if (pcl->besteffort || reason != ERR_PTR(-ENOMEM))
-+				erofs_err(be->sb, "failed to decompress (%s) %pe @ pa %llu size %u => %u",
-+					  alg->name, reason, pcl->pos,
-+					  pcl->pclustersize, pcl->length);
- 			err = PTR_ERR(reason);
- 		} else if (unlikely(reason)) {
- 			erofs_err(be->sb, "failed to decompress (%s) %s @ pa %llu size %u => %u",
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index 92e029104d8a4..289851d70130b 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -1284,31 +1284,45 @@ static int glocks_pending(unsigned int num_gh, struct gfs2_holder *ghs)
+  * gfs2_glock_async_wait - wait on multiple asynchronous glock acquisitions
+  * @num_gh: the number of holders in the array
+  * @ghs: the glock holder array
++ * @retries: number of retries attempted so far
+  *
+  * Returns: 0 on success, meaning all glocks have been granted and are held.
+  *          -ESTALE if the request timed out, meaning all glocks were released,
+  *          and the caller should retry the operation.
+  */
+ 
+-int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs)
++int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs,
++			  unsigned int retries)
+ {
+ 	struct gfs2_sbd *sdp = ghs[0].gh_gl->gl_name.ln_sbd;
+-	int i, ret = 0, timeout = 0;
+ 	unsigned long start_time = jiffies;
++	int i, ret = 0;
++	long timeout;
+ 
+ 	might_sleep();
+-	/*
+-	 * Total up the (minimum hold time * 2) of all glocks and use that to
+-	 * determine the max amount of time we should wait.
+-	 */
+-	for (i = 0; i < num_gh; i++)
+-		timeout += ghs[i].gh_gl->gl_hold_time << 1;
+ 
+-	if (!wait_event_timeout(sdp->sd_async_glock_wait,
++	timeout = GL_GLOCK_MIN_HOLD;
++	if (retries) {
++		unsigned int max_shift;
++		long incr;
++
++		/* Add a random delay and increase the timeout exponentially. */
++		max_shift = BITS_PER_LONG - 2 - __fls(GL_GLOCK_HOLD_INCR);
++		incr = min(GL_GLOCK_HOLD_INCR << min(retries - 1, max_shift),
++			   10 * HZ - GL_GLOCK_MIN_HOLD);
++		schedule_timeout_interruptible(get_random_long() % (incr / 3));
++		if (signal_pending(current))
++			goto interrupted;
++		timeout += (incr / 3) + get_random_long() % (incr / 3);
++	}
++
++	if (!wait_event_interruptible_timeout(sdp->sd_async_glock_wait,
+ 				!glocks_pending(num_gh, ghs), timeout)) {
+ 		ret = -ESTALE; /* request timed out. */
+ 		goto out;
+ 	}
++	if (signal_pending(current))
++		goto interrupted;
+ 
+ 	for (i = 0; i < num_gh; i++) {
+ 		struct gfs2_holder *gh = &ghs[i];
+@@ -1332,6 +1346,10 @@ int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs)
+ 		}
+ 	}
+ 	return ret;
++
++interrupted:
++	ret = -EINTR;
++	goto out;
+ }
+ 
+ /**
+diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
+index 55d5985f32a08..dccbf36b8cb10 100644
+--- a/fs/gfs2/glock.h
++++ b/fs/gfs2/glock.h
+@@ -204,7 +204,8 @@ int gfs2_glock_poll(struct gfs2_holder *gh);
+ int gfs2_instantiate(struct gfs2_holder *gh);
+ int gfs2_glock_holder_ready(struct gfs2_holder *gh);
+ int gfs2_glock_wait(struct gfs2_holder *gh);
+-int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs);
++int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs,
++			  unsigned int retries);
+ void gfs2_glock_dq(struct gfs2_holder *gh);
+ void gfs2_glock_dq_wait(struct gfs2_holder *gh);
+ void gfs2_glock_dq_uninit(struct gfs2_holder *gh);
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 36618e3531996..b6ed069b34872 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -1495,7 +1495,7 @@ static int gfs2_rename(struct inode *odir, struct dentry *odentry,
+ 	unsigned int num_gh;
+ 	int dir_rename = 0;
+ 	struct gfs2_diradd da = { .nr_blocks = 0, .save_loc = 0, };
+-	unsigned int x;
++	unsigned int retries = 0, x;
+ 	int error;
+ 
+ 	gfs2_holder_mark_uninitialized(&r_gh);
+@@ -1545,12 +1545,17 @@ static int gfs2_rename(struct inode *odir, struct dentry *odentry,
+ 		num_gh++;
+ 	}
+ 
++again:
+ 	for (x = 0; x < num_gh; x++) {
+ 		error = gfs2_glock_nq(ghs + x);
+ 		if (error)
+ 			goto out_gunlock;
+ 	}
+-	error = gfs2_glock_async_wait(num_gh, ghs);
++	error = gfs2_glock_async_wait(num_gh, ghs, retries);
++	if (error == -ESTALE) {
++		retries++;
++		goto again;
++	}
+ 	if (error)
+ 		goto out_gunlock;
+ 
+@@ -1739,7 +1744,7 @@ static int gfs2_exchange(struct inode *odir, struct dentry *odentry,
+ 	struct gfs2_sbd *sdp = GFS2_SB(odir);
+ 	struct gfs2_holder ghs[4], r_gh;
+ 	unsigned int num_gh;
+-	unsigned int x;
++	unsigned int retries = 0, x;
+ 	umode_t old_mode = oip->i_inode.i_mode;
+ 	umode_t new_mode = nip->i_inode.i_mode;
+ 	int error;
+@@ -1783,13 +1788,18 @@ static int gfs2_exchange(struct inode *odir, struct dentry *odentry,
+ 	gfs2_holder_init(nip->i_gl, LM_ST_EXCLUSIVE, GL_ASYNC, ghs + num_gh);
+ 	num_gh++;
+ 
++again:
+ 	for (x = 0; x < num_gh; x++) {
+ 		error = gfs2_glock_nq(ghs + x);
+ 		if (error)
+ 			goto out_gunlock;
+ 	}
+ 
+-	error = gfs2_glock_async_wait(num_gh, ghs);
++	error = gfs2_glock_async_wait(num_gh, ghs, retries);
++	if (error == -ESTALE) {
++		retries++;
++		goto again;
++	}
+ 	if (error)
+ 		goto out_gunlock;
+ 
 -- 
 2.51.0
 
