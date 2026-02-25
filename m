@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52382C0263;
-	Wed, 25 Feb 2026 06:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F5F2C0263;
+	Wed, 25 Feb 2026 06:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002567; cv=none; b=NhmVADxU4duQUE/2C1nwOOkwzT72RveNIeEhEr0BmGAy+ULkV6YxilsJ9JxLhi6hE6VfkvFjbTr7feXKFcNygEPq1mtU8pjA55sktzd9q4FQFtTaeoXzs1jkRN/xA5k2TMCa9ltFQI4RNQTnokJaTCN0Z0IKeLGED1wpkgUA/P4=
+	t=1772002568; cv=none; b=QXtsqvc+MbAuQRLbkfURcTkymObk/+QSkm1Rx2NZF0uULs39HJXPumhwlTC5QqjCDj/JlmJ7M6XnV6In6w4efO/ZyQybSl7Iv+KP/Z++V8GPE1Zw7Alp741YHotmrnU1ySpgLuMiXIb1RlkGaukUGgCXtdIuml0385fCgL/OZdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002567; c=relaxed/simple;
-	bh=5aa3CU9PWB6KKQUWiSRMLV+Rp25e9/3938yzBu0MaYw=;
+	s=arc-20240116; t=1772002568; c=relaxed/simple;
+	bh=0gxwDgmgAvSxE5hFBDS56yr8sPxo0GLNHrEBKhn3ChM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8ezLYJTmq1sSrWaM/Gp6cxjlLUBYDof4dxiD0cmFNcdfX2CF/bBbBRQcUDOOgT41yJiAzgQJD3Iq2Mc0q3UkZHBX+g7b6iZZH0snmjmDHZO4FusjEQZdC+sjqsfqkVQcqy3X7Mg4JCH+8u0s2DIGy1NPPtN70Ri6zM+EqcI0AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YLOvtEJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCfRaQiRhgWDJTg0TiRgryWnoB5yN1romHwviSEl37gMgWaszQEVB9BZBopUCMkoquTLUfMN2LXnWYLGkD1H9k5+fBh80A5udZrDVZHIe0Z79YMgNvpQbH8+D006elbZK3JtVx0P/oWeuW0y7YwGcUmqzAnjBjZNH1jkbyiPObg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjPEGfWn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YLOvtEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCAFC19422;
-	Wed, 25 Feb 2026 06:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjPEGfWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEA7C19422;
+	Wed, 25 Feb 2026 06:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002566;
-	bh=5aa3CU9PWB6KKQUWiSRMLV+Rp25e9/3938yzBu0MaYw=;
+	s=korg; t=1772002567;
+	bh=0gxwDgmgAvSxE5hFBDS56yr8sPxo0GLNHrEBKhn3ChM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2YLOvtEJuppxagMxidtWSeroxRgRo+F+7jw98vNWBeRERkukB9FwoVwtg0yIfRLKI
-	 BTi0fzL7D2NmM5QJ9CKP3KMELvYEUMRJi6a+XsOvm9IYxhVhYiOQTywuYnxlD4RH3W
-	 GW8NxgJDL3QuwZpneARMR3GTFri26b+mS7LhaYqM=
+	b=SjPEGfWnG9cdG5+kHlnQsGy/eTsLsyDWpatWfJ6lBU7rJS9h7nWWaPiB6wwc8O+kN
+	 bkZswQuICsunM058ltYDCUKBHm5MQPqz2Z9r/snNpzw63oKPth2KsV0uDmYOieU6Vg
+	 ZIRy60h8iShE5WUSyb2X6YwXa0B+0h3vd+f5q96M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshumali Gaur <agaur@marvell.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 300/641] octeontx2-af: Fix PF driver crash with kexec kernel booting
-Date: Tue, 24 Feb 2026 17:20:26 -0800
-Message-ID: <20260225012356.013480709@linuxfoundation.org>
+Subject: [PATCH 6.18 301/641] bonding: only set speed/duplex to unknown, if getting speed failed
+Date: Tue, 24 Feb 2026 17:20:27 -0800
+Message-ID: <20260225012356.039411398@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,60 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshumali Gaur <agaur@marvell.com>
+From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
 
-[ Upstream commit 2d2d574309e3ae84ee794869a5da8b4c38753a94 ]
+[ Upstream commit 48dec8d88af96039a4a17b8c2f148f2a4066e195 ]
 
-During a kexec reboot the hardware is not power-cycled, so AF state from
-the old kernel can persist into the new kernel. When AF and PF drivers
-are built as modules, the PF driver may probe before AF reinitializes
-the hardware.
+bond_update_speed_duplex() first set speed/duplex to unknown and
+then asks slave driver for current speed/duplex. Since getting
+speed/duplex might take longer there is a race, where this false state
+is visible by /proc/net/bonding. With commit 691b2bf14946 ("bonding:
+ update port speed when getting bond speed") this race gets more visible,
+if user space is calling ethtool on a regular base.
 
-The PF driver treats the RVUM block revision as an indication that AF
-initialization is complete. If this value is left uncleared at shutdown,
-PF may incorrectly assume AF is ready and access stale hardware state,
-leading to a crash.
+Fix this by only setting speed/duplex to unknown, if link speed is
+really unknown/unusable.
 
-Clear the RVUM block revision during AF shutdown to avoid PF
-mis-detecting AF readiness after kexec.
-
-Fixes: 54494aa5d1e6 ("octeontx2-af: Add Marvell OcteonTX2 RVU AF driver")
-Signed-off-by: Anshumali Gaur <agaur@marvell.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260203050701.2616685-1-agaur@marvell.com
+Fixes: 98f41f694f46 ("bonding:update speed/duplex for NETDEV_CHANGE")
+Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20260203141153.51581-1-tbogendoerfer@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/bonding/bond_main.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index 747fbdf2a908f..8530df8b3fdaf 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -3632,11 +3632,22 @@ static void rvu_remove(struct pci_dev *pdev)
- 	devm_kfree(&pdev->dev, rvu);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 51733fb29bd77..166dff47a029f 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -791,26 +791,29 @@ static int bond_update_speed_duplex(struct slave *slave)
+ 	struct ethtool_link_ksettings ecmd;
+ 	int res;
+ 
+-	slave->speed = SPEED_UNKNOWN;
+-	slave->duplex = DUPLEX_UNKNOWN;
+-
+ 	res = __ethtool_get_link_ksettings(slave_dev, &ecmd);
+ 	if (res < 0)
+-		return 1;
++		goto speed_duplex_unknown;
+ 	if (ecmd.base.speed == 0 || ecmd.base.speed == ((__u32)-1))
+-		return 1;
++		goto speed_duplex_unknown;
+ 	switch (ecmd.base.duplex) {
+ 	case DUPLEX_FULL:
+ 	case DUPLEX_HALF:
+ 		break;
+ 	default:
+-		return 1;
++		goto speed_duplex_unknown;
+ 	}
+ 
+ 	slave->speed = ecmd.base.speed;
+ 	slave->duplex = ecmd.base.duplex;
+ 
+ 	return 0;
++
++speed_duplex_unknown:
++	slave->speed = SPEED_UNKNOWN;
++	slave->duplex = DUPLEX_UNKNOWN;
++
++	return 1;
  }
  
-+static void rvu_shutdown(struct pci_dev *pdev)
-+{
-+	struct rvu *rvu = pci_get_drvdata(pdev);
-+
-+	if (!rvu)
-+		return;
-+
-+	rvu_clear_rvum_blk_revid(rvu);
-+}
-+
- static struct pci_driver rvu_driver = {
- 	.name = DRV_NAME,
- 	.id_table = rvu_id_table,
- 	.probe = rvu_probe,
- 	.remove = rvu_remove,
-+	.shutdown = rvu_shutdown,
- };
- 
- static int __init rvu_init_module(void)
+ const char *bond_slave_link_status(s8 link)
 -- 
 2.51.0
 
