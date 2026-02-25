@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C56518B0A;
-	Wed, 25 Feb 2026 01:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FA718B0A;
+	Wed, 25 Feb 2026 01:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983253; cv=none; b=Ycu6REtmB+lRbIxhhmGmPcPHQ4gBzu3QQBmTHxaCV/0fba7rL329MpjXdkRch6h+yt9qH7DX2ReI4gn/kllK7auA1uvCP/ii0vhrDQdzCMOKWvfeVvh58rIE58YV0V2L+6Bb4pST37fCqSQ4htcoj/aJxL5EWeZlFonDbxCmEFY=
+	t=1771983254; cv=none; b=S4LDOEbfs0mUg51XeEtpLH8+FSAKYdqAJu/eOH6JyMGQWWHpVzPbMWkAnlQ7X5YI6WxFxyP+k8/Cbm1xB2Bdt/8NBtUsV5dMXBCZPIIXG20ET4Sf1cA0Rx2DBh74hgSJkUPKQAdAp4kfK4z8XD2k/KOnVDjkL0A4UBQ47EUT0J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983253; c=relaxed/simple;
-	bh=oiV+6hP4qiLfIIakgEP9oTy3euNBKq6IGlqIrAclvmQ=;
+	s=arc-20240116; t=1771983254; c=relaxed/simple;
+	bh=TUwIWqLQow2Qn1+toAUtxIqWCGDv6CgdNN8AhGjEfSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pDvynrGP4smm+Du8uGAlEtge0v2c2oA33MpLI1/9z7gMc9zraCXkgyGis/HP/ViaPig0nebSwLrY9skP+k83HyN85hGY2R2Krodbi+/YDBMAtbITWf4YvNH1M1NKkVActESOxQTHU7RgBPMDEosU2hecmQhBHRcL87aE/Y55jc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epa4DPY7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YL7vCFcJaQybVYE5Ua9wCNei1MejFuPQyTX1XEOBbHuEiVK/AL7sT8nb26UNRTWOtNoP7eJyun45rm+ovJSAdw6d0+jdvwf26sRWnRDX0FnK3Z3jDSh7svVs2axDx1zzPGFAydL6lw5d4OUgeei5cUqAlN5wzRQA6CjRe80CyVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbAPz9Kp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epa4DPY7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16105C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbAPz9Kp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED136C116D0;
 	Wed, 25 Feb 2026 01:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983253;
-	bh=oiV+6hP4qiLfIIakgEP9oTy3euNBKq6IGlqIrAclvmQ=;
+	s=korg; t=1771983254;
+	bh=TUwIWqLQow2Qn1+toAUtxIqWCGDv6CgdNN8AhGjEfSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epa4DPY7yYVSRinTR9fmyDGps3ez/uBFiHLTyOtkFEroZ3Cw9SC64X2oG/C1fVzyE
-	 NNKCj/bsTOEjMmrU35imUgAUvlAJ+QlKAXW5Sv5ERr+jK/+jzeOIPYS9q0R+Jyw5ty
-	 I2sAPcA/GH+M7sBZC0EHAh+YsjI5Vj080spU4Rt8=
+	b=GbAPz9Kp1oHJ9bO0NllNHqeIDDTbCZN/CDvUSN4iVJ4O0ipOe3BhsMZPHtr1vPFx6
+	 uYN/WeFEWGh0YOt3BZeLC18ReE7QnD1LkbNy+zPPcbx7X86acb0ci/Pu5IIZSTmYMl
+	 KUKaTKFclnl0MFNLVtutOv2Jz7Kpqd/IUNv6TPz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=B6rg=20Wedekind?= <joerg@wedekind.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 352/781] PCI: Mark 3ware-9650SA Root Port Extended Tags as broken
-Date: Tue, 24 Feb 2026 17:17:41 -0800
-Message-ID: <20260225012408.323772659@linuxfoundation.org>
+Subject: [PATCH 6.19 353/781] wifi: rtw89: debug: Fix memory leak in __print_txpwr_map()
+Date: Tue, 24 Feb 2026 17:17:42 -0800
+Message-ID: <20260225012408.346914374@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -45,58 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jörg Wedekind <joerg@wedekind.de>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 959ac08a2c2811305be8c2779779e8b0932e5a99 ]
+[ Upstream commit 6070a44051b1c35714fa130de7726cfe91ca5559 ]
 
-Per PCIe r7.0, sec 2.2.6.2.1 and 7.5.3.4, a Requester may not use 8-bit Tags
-unless its Extended Tag Field Enable is set, but all Receivers/Completers
-must handle 8-bit Tags correctly regardless of their Extended Tag Field
-Enable.
+In __print_txpwr_map(), memory is allocated to bufp via vzalloc().
+If max_valid_addr is 0, the function returns -EOPNOTSUPP immediately
+without freeing bufp, leading to a memory leak.
 
-Some devices do not handle 8-bit Tags as Completers, so add a quirk for
-them.  If we find such a device, we disable Extended Tags for the entire
-hierarchy to make peer-to-peer DMA possible.
+Since the validation of max_valid_addr does not depend on the allocated
+memory, fix this by moving the vzalloc() call after the check.
 
-The 3ware 9650SA seems to have issues with handling 8-bit tags. Mark it as
-broken.
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-This fixes PCI Parity Errors like :
-
-  3w-9xxx: scsi0: ERROR: (0x06:0x000C): PCI Parity Error: clearing.
-  3w-9xxx: scsi0: ERROR: (0x06:0x000D): PCI Abort: clearing.
-  3w-9xxx: scsi0: ERROR: (0x06:0x000E): Controller Queue Error: clearing.
-  3w-9xxx: scsi0: ERROR: (0x06:0x0010): Microcontroller Error: clearing.
-
-Fixes: 60db3a4d8cc9 ("PCI: Enable PCIe Extended Tags if supported")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=202425
-Signed-off-by: Jörg Wedekind <joerg@wedekind.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260119143114.21948-1-joerg@wedekind.de
+Fixes: 036042e15770 ("wifi: rtw89: debug: txpwr table supports Wi-Fi 7 chips")
+Suggested-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260116130834.1413924-1-zilin@seu.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtw89/debug.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 280cd50d693bd..211b7f72d103e 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5581,6 +5581,7 @@ static void quirk_no_ext_tags(struct pci_dev *pdev)
- 	pci_walk_bus(bridge->bus, pci_configure_extended_tags, NULL);
- }
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_3WARE, 0x1004, quirk_no_ext_tags);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_3WARE, 0x1005, quirk_no_ext_tags);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0132, quirk_no_ext_tags);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0140, quirk_no_ext_tags);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0141, quirk_no_ext_tags);
+diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
+index 1264c2f82600b..987eef8170f2b 100644
+--- a/drivers/net/wireless/realtek/rtw89/debug.c
++++ b/drivers/net/wireless/realtek/rtw89/debug.c
+@@ -825,10 +825,6 @@ static ssize_t __print_txpwr_map(struct rtw89_dev *rtwdev, char *buf, size_t buf
+ 	s8 *bufp, tmp;
+ 	int ret;
+ 
+-	bufp = vzalloc(map->addr_to - map->addr_from + 4);
+-	if (!bufp)
+-		return -ENOMEM;
+-
+ 	if (path_num == 1)
+ 		max_valid_addr = map->addr_to_1ss;
+ 	else
+@@ -837,6 +833,10 @@ static ssize_t __print_txpwr_map(struct rtw89_dev *rtwdev, char *buf, size_t buf
+ 	if (max_valid_addr == 0)
+ 		return -EOPNOTSUPP;
+ 
++	bufp = vzalloc(map->addr_to - map->addr_from + 4);
++	if (!bufp)
++		return -ENOMEM;
++
+ 	for (addr = map->addr_from; addr <= max_valid_addr; addr += 4) {
+ 		ret = rtw89_mac_txpwr_read32(rtwdev, RTW89_PHY_0, addr, &val);
+ 		if (ret)
 -- 
 2.51.0
 
