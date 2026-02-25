@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0051D5141;
-	Wed, 25 Feb 2026 01:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933EE1D5141;
+	Wed, 25 Feb 2026 01:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983732; cv=none; b=Fs1Rb9fVqoXF++0DS0KlIOLwMB5RFeTh2l/xnT3lgMrZhvA7aML/lQuXH2mQuZrwe24E0zP72b2GDEjQPVX+tpqa+02LDQPP8/jW3nhO+HMB8rN3bPuKFpDzO/MDpiJFn52x7L/RIj86N+dABfNTWexztzDexwq+wZNXs3gw7Ck=
+	t=1771983733; cv=none; b=Wifai/99D6LkBTmBpkrmWvHfbASG5TyuN4SuhPa+XHhs7Qsu3J/KVhWtl8dxkLSPKfJ2YkcMbO/w0YpgPeCxvKcn1YcteVipe5dpIcZgq6/VP2caKlAVaJKw7pm+BktbR+QOl6XjdnTga2a6nIKemcuvAgJ/5ZserHnN8eaAVoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983732; c=relaxed/simple;
-	bh=FXHdcgfSF4eyoJ6B2QDrGqjTSudwpmX0LQB/zwb6Tc4=;
+	s=arc-20240116; t=1771983733; c=relaxed/simple;
+	bh=RETED7amnF99+qlcIlPtk60rjzIg/yA2j3wZipVnNiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SByZrLBYYfIRdjRGku+gpp2S+wy7XrFElwc3dbzzkIT53MADoKa/sos0S8EjOeeuZLQJM97kgN8Ih5aOXpaob9CKgMhFT9/LTUnMlZz7mWnaTwVaV27K47/+AZDw4OYjR3gwjpyihKRRwq4ckpC4abIIZ+gaqiKZN/sqWUBQ3T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIoEUPyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TsqDlX/IEQm/Cvx4YfrL265IpWVtjxvzARB0xCXQUWS1StKwBcU8iYoVGjUgiSLlCjQDWhno8xjlWHUrb1+ufU7JyFwvEdS2oRRsMtUAkcS4N9Oj+xbIukeWj64zf7jAdDxceKQXejmfF3jg7m+n/rJwedLpic1hEGjhsA8OiQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHRYZvoD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIoEUPyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D60C116D0;
-	Wed, 25 Feb 2026 01:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHRYZvoD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BEFC19423;
+	Wed, 25 Feb 2026 01:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983732;
-	bh=FXHdcgfSF4eyoJ6B2QDrGqjTSudwpmX0LQB/zwb6Tc4=;
+	s=korg; t=1771983733;
+	bh=RETED7amnF99+qlcIlPtk60rjzIg/yA2j3wZipVnNiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIoEUPyw1EmKD7CY1BDyh73I33LfphHPR5nN09eRvVIFcNkUzciCBOV1BKbOarR6T
-	 2KA9lB20Z1MmQJ3AUyzkBhAFDm591mTmq32co6LGt3hnbEnWtb2wFn/PVdVRFibJND
-	 M9uKIlkfZpOUIrzxONWMlUM8SSh7bespIh4aiQ4E=
+	b=MHRYZvoDFye+2LBg6A8CJ9UdpPZ4AX3+cn5uA7Kh2uG3YX1kw0VSGLWdJBe1Xq76n
+	 JQXWlJNsIDxXrDNV46P+xgOiCivIlog5x9+granvm1/4vT1VPEJZ0Vrox2B9P1K5f0
+	 uR3GA7beU5H6pwHGrCKQ68nite9vlj8hL3FCSXfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 027/641] btrfs: zoned: dont zone append to conventional zone
-Date: Tue, 24 Feb 2026 17:15:53 -0800
-Message-ID: <20260225012349.643654392@linuxfoundation.org>
+Subject: [PATCH 6.18 028/641] btrfs: qgroup: return correct error when deleting qgroup relation item
+Date: Tue, 24 Feb 2026 17:15:54 -0800
+Message-ID: <20260225012349.666768799@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,115 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit b39b26e017c7889181cb84032e22bef72e81cf29 ]
+[ Upstream commit 51b1fcf71c88c3c89e7dcf07869c5de837b1f428 ]
 
-In case of a zoned RAID, it can happen that a data write is targeting a
-sequential write required zone and a conventional zone. In this case the
-bio will be marked as REQ_OP_ZONE_APPEND but for the conventional zone,
-this needs to be REQ_OP_WRITE.
+If we fail to delete the second qgroup relation item, we end up returning
+success or -ENOENT in case the first item does not exist, instead of
+returning the error from the second item deletion.
 
-The setting of REQ_OP_ZONE_APPEND is deferred to the last possible time in
-btrfs_submit_dev_bio(), but the decision if we can use zone append is
-cached in btrfs_bio.
-
-CC: Naohiro Aota <naohiro.aota@wdc.com>
-Fixes: e9b9b911e03c ("btrfs: add raid stripe tree to features enabled with debug config")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Fixes: 73798c465b66 ("btrfs: qgroup: Try our best to delete qgroup relations")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/bio.c | 19 +++++++++----------
- fs/btrfs/bio.h |  3 +++
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ fs/btrfs/qgroup.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
-index c3d860a2bca42..9b71f3fde618b 100644
---- a/fs/btrfs/bio.c
-+++ b/fs/btrfs/bio.c
-@@ -441,6 +441,8 @@ static void btrfs_clone_write_end_io(struct bio *bio)
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index febc22d1b6487..7a1dd250e92c0 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1627,8 +1627,10 @@ static int __del_qgroup_relation(struct btrfs_trans_handle *trans, u64 src,
+ 	if (ret < 0 && ret != -ENOENT)
+ 		goto out;
+ 	ret2 = del_qgroup_relation_item(trans, dst, src);
+-	if (ret2 < 0 && ret2 != -ENOENT)
++	if (ret2 < 0 && ret2 != -ENOENT) {
++		ret = ret2;
+ 		goto out;
++	}
  
- static void btrfs_submit_dev_bio(struct btrfs_device *dev, struct bio *bio)
- {
-+	u64 physical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
-+
- 	if (!dev || !dev->bdev ||
- 	    test_bit(BTRFS_DEV_STATE_MISSING, &dev->dev_state) ||
- 	    (btrfs_op(bio) == BTRFS_MAP_WRITE &&
-@@ -455,12 +457,13 @@ static void btrfs_submit_dev_bio(struct btrfs_device *dev, struct bio *bio)
- 	 * For zone append writing, bi_sector must point the beginning of the
- 	 * zone
- 	 */
--	if (bio_op(bio) == REQ_OP_ZONE_APPEND) {
--		u64 physical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
-+	if (btrfs_bio(bio)->can_use_append && btrfs_dev_is_sequential(dev, physical)) {
- 		u64 zone_start = round_down(physical, dev->fs_info->zone_size);
- 
- 		ASSERT(btrfs_dev_is_sequential(dev, physical));
- 		bio->bi_iter.bi_sector = zone_start >> SECTOR_SHIFT;
-+		bio->bi_opf &= ~REQ_OP_WRITE;
-+		bio->bi_opf |= REQ_OP_ZONE_APPEND;
- 	}
- 	btrfs_debug(dev->fs_info,
- 	"%s: rw %d 0x%x, sector=%llu, dev=%lu (%s id %llu), size=%u",
-@@ -708,7 +711,6 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
- 	u64 logical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
- 	u64 length = bio->bi_iter.bi_size;
- 	u64 map_length = length;
--	bool use_append = btrfs_use_zone_append(bbio);
- 	struct btrfs_io_context *bioc = NULL;
- 	struct btrfs_io_stripe smap;
- 	blk_status_t status;
-@@ -736,8 +738,10 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
- 	if (bio_op(bio) == REQ_OP_WRITE && is_data_bbio(bbio))
- 		bbio->orig_logical = logical;
- 
-+	bbio->can_use_append = btrfs_use_zone_append(bbio);
-+
- 	map_length = min(map_length, length);
--	if (use_append)
-+	if (bbio->can_use_append)
- 		map_length = btrfs_append_map_length(bbio, map_length);
- 
- 	if (map_length < length) {
-@@ -766,11 +770,6 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
- 	}
- 
- 	if (btrfs_op(bio) == BTRFS_MAP_WRITE) {
--		if (use_append) {
--			bio->bi_opf &= ~REQ_OP_WRITE;
--			bio->bi_opf |= REQ_OP_ZONE_APPEND;
--		}
--
- 		if (is_data_bbio(bbio) && bioc && bioc->use_rst) {
- 			/*
- 			 * No locking for the list update, as we only add to
-@@ -797,7 +796,7 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
- 			status = errno_to_blk_status(ret);
- 			if (status)
- 				goto fail;
--		} else if (use_append ||
-+		} else if (bbio->can_use_append ||
- 			   (btrfs_is_zoned(fs_info) && inode &&
- 			    inode->flags & BTRFS_INODE_NODATASUM)) {
- 			ret = btrfs_alloc_dummy_sum(bbio);
-diff --git a/fs/btrfs/bio.h b/fs/btrfs/bio.h
-index 488cdbdd9e2f8..126bc68c87605 100644
---- a/fs/btrfs/bio.h
-+++ b/fs/btrfs/bio.h
-@@ -99,6 +99,9 @@ struct btrfs_bio {
- 	/* Whether the csum generation for data write is async. */
- 	bool async_csum;
- 
-+	/* Whether the bio is written using zone append. */
-+	bool can_use_append;
-+
- 	/*
- 	 * This member must come last, bio_alloc_bioset will allocate enough
- 	 * bytes for entire btrfs_bio but relies on bio being last.
+ 	/* At least one deletion succeeded, return 0 */
+ 	if (!ret || !ret2)
 -- 
 2.51.0
 
