@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18842C17A0;
-	Wed, 25 Feb 2026 06:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EC32C17A0;
+	Wed, 25 Feb 2026 06:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002595; cv=none; b=dxwY5qtvug4fLCxHwXIFotCKmsnq6BMSJWk5nhTWVEkI0g4WbttdpfoMqaluE13YVe+IHzj27ntj3FM6zoLea2bhEK2NRsrjHUsfQiJlsR+qx8DHcAZ16R1n9c5nzzAjdZwPxJmgiO6gxUY9alcKWJ+4htF/hm+AlVKDK+1gwhQ=
+	t=1772002595; cv=none; b=qpxHNMZig2es0QTXL8Y96xG5YFbPlUA5jpfo2qwe4MwM76iLv1SE9u5FSPoztFTcu5OYKWnx3UZSrxHKDSJafj+TD+Ji8r3Q/UvjntA1QVzelIorWvx5tpg0TGsNJWLA1qR39wNw9qjE/tf9WbQZUF2I0ac7xcW1W8/5d7uG+tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002595; c=relaxed/simple;
-	bh=+R+zy8yUIu6lnMq/DQcopuV8jxKWru3bSqTJ+qX2r/8=;
+	bh=Iot/tD3brpKBvVFMUnpWR2Z15msWnkMPgGyUvFRFj14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDOXZ0Gb8Y5ZlNYq/kjA2eFNzaVto1DNH+eouhidfDnlnrmLBCBrdafdYMHZ+UX6iBmPi8MJ36/zM+RHTZ7hbYhUocm6jH/DADOxTjxP+0cpkKMhgareunWTFfndmoSN8rydu2OQYg++mwtm/mKlFJcVauRNtGvIzswvyPLGgwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbctzchv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XMAvH+9hIm1GAbvFjNQ9c91yndj5p95fxGaAM8w5PMOK8WgDfmrrYQmPJCaXx4qpPIwUmxXxEoUT2IJ3T+scywHZ2GX9xrhSuGBUARuvEqIiVFn5y7kI/pVwROGKvC1M75xMuOdTORBsIV1LVTmvy0iS/8tylltsQOxZ0hsBqa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEwbEMhK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbctzchv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9431C116D0;
-	Wed, 25 Feb 2026 06:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEwbEMhK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670B7C2BC86;
+	Wed, 25 Feb 2026 06:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002594;
-	bh=+R+zy8yUIu6lnMq/DQcopuV8jxKWru3bSqTJ+qX2r/8=;
+	s=korg; t=1772002595;
+	bh=Iot/tD3brpKBvVFMUnpWR2Z15msWnkMPgGyUvFRFj14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbctzchvBlg779nlHYmdPlLZBT2YDPllhj8uuPd4de5cK54mimHtsPWmy9RZep8QI
-	 i5WDAK33nr12yYf5/AKYDb4ScgAUnBmo7rBjuyjKQMXWJwAIfZtw3Wfn1g5by0Ivj5
-	 rAJYokegvkxwteOMTFmRsw9B1THlu8M5zxp/2iiE=
+	b=fEwbEMhKdBlsfyY5FFYBANp8UUDR9whbEiUIzbaMSP3bQjt2KVkK1JyDTNdkjeHBb
+	 /KLRX7VHc2eJ+tiKhC5T108pPtfMN5VEQvgKNQnYKejS6vq3/4yV9C8U/D7aRn9jDy
+	 D1ifuPR4W3T2nhnxz41pVNhsCLd2C7Wpkb9uofuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 339/641] RDMA/hns: Fix WQ_MEM_RECLAIM warning
-Date: Tue, 24 Feb 2026 17:21:05 -0800
-Message-ID: <20260225012356.884725746@linuxfoundation.org>
+Subject: [PATCH 6.18 340/641] RDMA/hns: Fix RoCEv1 failure due to DSCP
+Date: Tue, 24 Feb 2026 17:21:06 -0800
+Message-ID: <20260225012356.907143207@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,60 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit c0a26bbd3f99b7b03f072e3409aff4e6ec8af6f6 ]
+[ Upstream commit 84bd5d60f0a2b9c763c5e6d0b3d8f4f61f6c5470 ]
 
-When sunrpc is used, if a reset triggered, our wq may lead the
-following trace:
+DSCP is not supported in RoCEv1, but get_dscp() is still called. If
+get_dscp() returns an error, it'll eventually cause create_ah to fail
+even when using RoCEv1.
 
-workqueue: WQ_MEM_RECLAIM xprtiod:xprt_rdma_connect_worker [rpcrdma]
-is flushing !WQ_MEM_RECLAIM hns_roce_irq_workq:flush_work_handle
-[hns_roce_hw_v2]
-WARNING: CPU: 0 PID: 8250 at kernel/workqueue.c:2644 check_flush_dependency+0xe0/0x144
-Call trace:
-  check_flush_dependency+0xe0/0x144
-  start_flush_work.constprop.0+0x1d0/0x2f0
-  __flush_work.isra.0+0x40/0xb0
-  flush_work+0x14/0x30
-  hns_roce_v2_destroy_qp+0xac/0x1e0 [hns_roce_hw_v2]
-  ib_destroy_qp_user+0x9c/0x2b4
-  rdma_destroy_qp+0x34/0xb0
-  rpcrdma_ep_destroy+0x28/0xcc [rpcrdma]
-  rpcrdma_ep_put+0x74/0xb4 [rpcrdma]
-  rpcrdma_xprt_disconnect+0x1d8/0x260 [rpcrdma]
-  xprt_rdma_connect_worker+0xc0/0x120 [rpcrdma]
-  process_one_work+0x1cc/0x4d0
-  worker_thread+0x154/0x414
-  kthread+0x104/0x144
-  ret_from_fork+0x10/0x18
+Correct the return value and avoid calling get_dscp() when using
+RoCEv1.
 
-Since QP destruction frees memory, this wq should have the WQ_MEM_RECLAIM.
-
-Fixes: ffd541d45726 ("RDMA/hns: Add the workqueue framework for flush cqe handler")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Fixes: ee20cc17e9d8 ("RDMA/hns: Support DSCP")
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20260104064057.1582216-2-huangjunxian6@hisilicon.com
+Link: https://patch.msgid.link/20260104064057.1582216-4-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_ah.c    | 23 +++++++++---------
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 28 ++++++++++++----------
+ 2 files changed, 26 insertions(+), 25 deletions(-)
 
+diff --git a/drivers/infiniband/hw/hns/hns_roce_ah.c b/drivers/infiniband/hw/hns/hns_roce_ah.c
+index 307c35888b300..3b6c6a6e9f977 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_ah.c
++++ b/drivers/infiniband/hw/hns/hns_roce_ah.c
+@@ -61,7 +61,7 @@ int hns_roce_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
+ 	u8 tclass = get_tclass(grh);
+ 	u8 priority = 0;
+ 	u8 tc_mode = 0;
+-	int ret;
++	int ret = 0;
+ 
+ 	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08 && udata) {
+ 		ret = -EOPNOTSUPP;
+@@ -78,19 +78,18 @@ int hns_roce_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
+ 	ah->av.flowlabel = grh->flow_label;
+ 	ah->av.udp_sport = get_ah_udp_sport(ah_attr);
+ 	ah->av.tclass = tclass;
++	ah->av.sl = rdma_ah_get_sl(ah_attr);
+ 
+-	ret = hr_dev->hw->get_dscp(hr_dev, tclass, &tc_mode, &priority);
+-	if (ret == -EOPNOTSUPP)
+-		ret = 0;
+-
+-	if (ret && grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP)
+-		goto err_out;
++	if (grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP) {
++		ret = hr_dev->hw->get_dscp(hr_dev, tclass, &tc_mode, &priority);
++		if (ret == -EOPNOTSUPP)
++			ret = 0;
++		else if (ret)
++			goto err_out;
+ 
+-	if (tc_mode == HNAE3_TC_MAP_MODE_DSCP &&
+-	    grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP)
+-		ah->av.sl = priority;
+-	else
+-		ah->av.sl = rdma_ah_get_sl(ah_attr);
++		if (tc_mode == HNAE3_TC_MAP_MODE_DSCP)
++			ah->av.sl = priority;
++	}
+ 
+ 	if (!check_sl_valid(hr_dev, ah->av.sl)) {
+ 		ret = -EINVAL;
 diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 63052c0e76133..cb0bbc4167b0d 100644
+index cb0bbc4167b0d..b0e7c5c6e2ff5 100644
 --- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
 +++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -6878,7 +6878,8 @@ static int hns_roce_v2_init_eq_table(struct hns_roce_dev *hr_dev)
+@@ -4975,20 +4975,22 @@ static int hns_roce_set_sl(struct ib_qp *ibqp,
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	int ret;
  
- 	INIT_WORK(&hr_dev->ecc_work, fmea_ram_ecc_work);
+-	ret = hns_roce_hw_v2_get_dscp(hr_dev, get_tclass(&attr->ah_attr.grh),
+-				      &hr_qp->tc_mode, &hr_qp->priority);
+-	if (ret && ret != -EOPNOTSUPP &&
+-	    grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP) {
+-		ibdev_err_ratelimited(ibdev,
+-				      "failed to get dscp, ret = %d.\n", ret);
+-		return ret;
+-	}
++	hr_qp->sl = rdma_ah_get_sl(&attr->ah_attr);
  
--	hr_dev->irq_workq = alloc_ordered_workqueue("hns_roce_irq_workq", 0);
-+	hr_dev->irq_workq = alloc_ordered_workqueue("hns_roce_irq_workq",
-+						    WQ_MEM_RECLAIM);
- 	if (!hr_dev->irq_workq) {
- 		dev_err(dev, "failed to create irq workqueue.\n");
- 		ret = -ENOMEM;
+-	if (hr_qp->tc_mode == HNAE3_TC_MAP_MODE_DSCP &&
+-	    grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP)
+-		hr_qp->sl = hr_qp->priority;
+-	else
+-		hr_qp->sl = rdma_ah_get_sl(&attr->ah_attr);
++	if (grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP) {
++		ret = hns_roce_hw_v2_get_dscp(hr_dev,
++					      get_tclass(&attr->ah_attr.grh),
++					      &hr_qp->tc_mode, &hr_qp->priority);
++		if (ret && ret != -EOPNOTSUPP) {
++			ibdev_err_ratelimited(ibdev,
++					      "failed to get dscp, ret = %d.\n",
++					      ret);
++			return ret;
++		}
++
++		if (hr_qp->tc_mode == HNAE3_TC_MAP_MODE_DSCP)
++			hr_qp->sl = hr_qp->priority;
++	}
+ 
+ 	if (!check_sl_valid(hr_dev, hr_qp->sl))
+ 		return -EINVAL;
 -- 
 2.51.0
 
