@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607482C17A0;
-	Wed, 25 Feb 2026 06:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027EA2D4805;
+	Wed, 25 Feb 2026 06:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002647; cv=none; b=pT3h0LZMMtN8dV+jxdloExyb9YnxKdC1HntVwUpEqKVL2UscXhpu1CcGhEp4ubQQsVDiw2/hDj9vmLRQzsk7IY3GORdxLc7T21ZYU4wALDe/wVpv8bgjqrGpEkRIb2W39Gk1IkMEv8tjt/Ex2tLDa9RdwD5j2FrLZXMEklw/UwY=
+	t=1772002648; cv=none; b=fy9mAr42aFjdbF19ucaInIUReWbQ4/blgEI3evd2rS3auBW6TqHZ4gm3D8vPgYOkGGpyVXnHSMXUtNAKGu6IOTUJx/QXhuUykYZYvAo1nFPMOF65dRDyaLNcUBzZqgtU/qdQd/E/8fueduHkkH+NMXBpzZ5V7UM6mYSiU2dB988=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002647; c=relaxed/simple;
-	bh=q/6vGBM++aSEJL3fIWK6PhodgJCdMSP4hs+5FzhmSAg=;
+	s=arc-20240116; t=1772002648; c=relaxed/simple;
+	bh=YzcLFkyvu6wX7/w7Fl66JrDYuexUFkYmutCx5H1JBkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KbzWIuWxb49QPbmMbk8fRrTCsysg52ICL0cU228/VcQDDh2h81fzDUf4xMPyWQ9by82+uYzTU1xMaZ2KQeF7s8L/OMsJqL4zylQsZRxjwDRmEEzcmkHjEaMpk8CAjXEDaEraDfWIeXGzhy4u7mZooiR8IzbP2DjUlf9ZcFMJczc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZOidRVX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=onFJr+UskHwDvbTYNCamRb1luN7BqhODNXDov2TY2MOyqhUrD1CJBhKmK7lK8AYmHsrTWgTnconZxSMz7ivW41tAa81YE8P/qULQ5krbYDT2WE0rFLYPwtBemdI0blMCwZdn/5IJ18Fs8N6KmfVsRZ3quAI4TBAk93cvs51r8f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFkmutGk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZOidRVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318B1C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFkmutGk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3FFC19422;
 	Wed, 25 Feb 2026 06:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002647;
-	bh=q/6vGBM++aSEJL3fIWK6PhodgJCdMSP4hs+5FzhmSAg=;
+	bh=YzcLFkyvu6wX7/w7Fl66JrDYuexUFkYmutCx5H1JBkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZOidRVX6VcCf68dHQH6klox7ta0zpxjxVA1LuDKtTpjoBOwztm+8gnDp4/u1yXMP
-	 mwFHfHGPblXdx0gf6p0hfLdxmGjXy8bQTOB0nW7usK4G8ujNJ2XwVk6v4KECobk9QN
-	 jpstUhU7djLxXp5Lk7XjYeY20Qzt0KkGwOC/Ziw4=
+	b=WFkmutGklTppq7LKdDf8vMhdJuulhv4FzY4wS44akZ1iV7DZZHt6Nn+p/3wqWYKyV
+	 b8ZK8vU/Qtp3wcFiFSV7DIUyC5C8F2iSJMlOcDvn8Ni3JeIx026qsDZXgXlt/PfDAd
+	 zhDQIBKfUvupUbn0qabevvnNfuhiN8yfo5TwWrLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Imran Shaik <imran.shaik@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 416/641] clk: qcom: gcc-glymur: Update the SDCC RCGs to use shared_floor_ops
-Date: Tue, 24 Feb 2026 17:22:22 -0800
-Message-ID: <20260225012358.638561685@linuxfoundation.org>
+Subject: [PATCH 6.18 417/641] clk: qcom: gcc-msm8953: Remove ALWAYS_ON flag from cpp_gdsc
+Date: Tue, 24 Feb 2026 17:22:23 -0800
+Message-ID: <20260225012358.662107083@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -48,53 +46,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-[ Upstream commit d5639a6d72810023d257c935cb763aea1ada1abc ]
+[ Upstream commit 5f613e7034187179a9d088ff5fd02b1089d0cf20 ]
 
-Use shared_floor_ops for the SDCC RCGs so the RCG is safely parked
-during disable and the new parent configuration is programmed in
-hardware only when the new parent is enabled, avoiding cases where
-the RCG configuration fails to update.
+cpp_gdsc should not be always on, ALWAYS_ON flag was set accidentally.
 
-Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
-Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Link: https://lore.kernel.org/r/20251127-sdcc_shared_floor_ops-v2-8-473afc86589c@oss.qualcomm.com
+Fixes: 9bb6cfc3c77e ("clk: qcom: Add Global Clock Controller driver for MSM8953")
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251117-fix-gdsc-cpp-msm8917-msm8953-v1-1-db33adcff28a@mainlining.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-glymur.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-msm8953.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
-index d938e7dc5b66e..17e860307fa10 100644
---- a/drivers/clk/qcom/gcc-glymur.c
-+++ b/drivers/clk/qcom/gcc-glymur.c
-@@ -2317,7 +2317,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.parent_data = gcc_parent_data_17,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_17),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_floor_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
+diff --git a/drivers/clk/qcom/gcc-msm8953.c b/drivers/clk/qcom/gcc-msm8953.c
+index 8f29ecc74c50b..8fe1d3e421440 100644
+--- a/drivers/clk/qcom/gcc-msm8953.c
++++ b/drivers/clk/qcom/gcc-msm8953.c
+@@ -3946,7 +3946,6 @@ static struct gdsc cpp_gdsc = {
+ 	.pd = {
+ 		.name = "cpp_gdsc",
  	},
- };
- 
-@@ -2339,7 +2339,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
- 		.parent_data = gcc_parent_data_3,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_floor_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
+-	.flags = ALWAYS_ON,
+ 	.pwrsts = PWRSTS_OFF_ON,
  };
  
 -- 
