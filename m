@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AB02701B8;
-	Wed, 25 Feb 2026 01:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A9A26ED3D;
+	Wed, 25 Feb 2026 01:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983664; cv=none; b=Aa1SQsnICcUIrOsYRoaTIf+O5LEBlWqvXcRm6eB5G1JOS0v3lMyiicQfSAHQjcaCvyiU5q2qTj2mFSgHbLzrImLzavx4v5Iu4/gUcfqw/Mur8x/FGE2FhxBrBcskJ07XLRFQ3/W1lQO4Cz3ZY9lMLOpZ7SKyNlmXlS8xOH7MCac=
+	t=1771983665; cv=none; b=r5tzPVs66ZP3GZur9oHrlFI1i1WrxTDRzfLHBMQ9GuAFWhw8fEfBKK0jlzv/JJPknYUqpZuhhAbzoRgEnZjEvRaeb/DTE2xF89VDtIMSNGotiYCStH1h8AUwLjKr6M2BFGorzOccFwmsUunbQ6EIYb0E/WnK1ztizsXCVwaFnKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983664; c=relaxed/simple;
-	bh=p7qo+K8iRIKq4ocrvzPIllFQIGVqNYnuBk2tIjJmfUE=;
+	s=arc-20240116; t=1771983665; c=relaxed/simple;
+	bh=W9du6xFz8gMdTg1yqpffOofyY6gwlSlyW81apkOJELA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCmRyHplU8EC4M57c+vtPSVlTGliFlgctuLdg19xTaVFk2HCjdzxHgNdk5Klotaz/NmwcMvRpGAD1IlAMQ05pOijMC6Z4NAUPC5ShBROJlXD3guhpivT/f2pVEGflGnQn87J06FsqbJz2j2eFO4khoZPYAkJ7m/voKHwN92b+/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwsKyoqs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lpu3vADPujMPOKPTH150lVOuFEW83schEXdxRUitmEYqgEjyJJQH+cqJyqTArselzhXdDCv9/mqn7BmVxWt23s+je/424eX3vLqtodkuV0nwymyTBXcAMmqqttiN+JTxPCjYLKKBp3U61Aqks+Gcm2xhKMOOc4UbO+0wSg48pEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ALZF/Zc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwsKyoqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE17CC116D0;
-	Wed, 25 Feb 2026 01:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ALZF/Zc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028C3C116D0;
+	Wed, 25 Feb 2026 01:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983664;
-	bh=p7qo+K8iRIKq4ocrvzPIllFQIGVqNYnuBk2tIjJmfUE=;
+	s=korg; t=1771983665;
+	bh=W9du6xFz8gMdTg1yqpffOofyY6gwlSlyW81apkOJELA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EwsKyoqssUCsB4XYoZXkHCjswYcK4gqf2dJhK2Jpbp/DsNVeHGfNT6YhsePYsU5sq
-	 K/vefRZFjE2jN5aUmBa0EyULJm7AHtcdQgXL/bWOcQfqb4d6bP/kSDag2UosWPsheT
-	 vDbmu4ht4uf5d2A0bgcHwuZnaaqu3itXt0SdppwA=
+	b=0ALZF/ZcFkofyZOJgbW8F+zUo5P9rBck60yR2zWs6Lwk/PcF6tro6OxF+d969Wy5s
+	 uyHeTtRP3kAjqxzC6xq8hEzhi5+BfX3Idi0jCGI5SLtznCXhzRwfZspRysXkNPTXeP
+	 jbhMVyL9szKJMfaUpilujhIFdr0brXmT0Q8XmGSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 743/781] ASoC: rockchip: i2s-tdm: Use param rate if not provided by set_sysclk
-Date: Tue, 24 Feb 2026 17:24:12 -0800
-Message-ID: <20260225012417.949531828@linuxfoundation.org>
+	Yao Zi <me@ziyao.cc>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.19 752/781] MIPS: Work around LLVM bug when gp is used as global register variable
+Date: Tue, 24 Feb 2026 17:24:21 -0800
+Message-ID: <20260225012418.165694518@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,55 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Detlev Casanova <detlev.casanova@collabora.com>
+From: Yao Zi <me@ziyao.cc>
 
-[ Upstream commit 0783052534f547f8f201dd4554b1df9f1f8615b5 ]
+commit 30bfc2d6a1132a89a5f1c3b96c59cf3e4d076ea3 upstream.
 
-Drivers will not always call set_sysclk() for all clocks, especially when
-default mclk-fs can be used.
-When that is the case, use the clock rate set in the params multiplied by the
-default mclk-fs.
+On MIPS, __current_thread_info is defined as global register variable
+locating in $gp, and is simply assigned with new address during kernel
+relocation.
 
-Fixes: 5323186e2e8d ("ASoC: rockchip: i2s_tdm: Re-add the set_sysclk callback")
-Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
-Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260218201834.924358-1-detlev.casanova@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This however is broken with LLVM, which always restores $gp if it finds
+$gp is clobbered in any form, including when intentionally through a
+global register variable. This is against GCC's documentation[1], which
+requires a callee-saved register used as global register variable not to
+be restored if it's clobbered.
+
+As a result, $gp will continue to point to the unrelocated kernel after
+the epilog of relocate_kernel(), leading to an early crash in init_idle,
+
+[    0.000000] CPU 0 Unable to handle kernel paging request at virtual address 0000000000000000, epc == ffffffff81afada8, ra == ffffffff81afad90
+[    0.000000] Oops[#1]:
+[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper Tainted: G        W           6.19.0-rc5-00262-gd3eeb99bbc99-dirty #188 VOLUNTARY
+[    0.000000] Tainted: [W]=WARN
+[    0.000000] Hardware name: loongson,loongson64v-4core-virtio
+[    0.000000] $ 0   : 0000000000000000 0000000000000000 0000000000000001 0000000000000000
+[    0.000000] $ 4   : ffffffff80b80ec0 ffffffff80b53d48 0000000000000000 00000000000f4240
+[    0.000000] $ 8   : 0000000000000100 ffffffff81d82f80 ffffffff81d82f80 0000000000000001
+[    0.000000] $12   : 0000000000000000 ffffffff81776f58 00000000000005da 0000000000000002
+[    0.000000] $16   : ffffffff80b80e40 0000000000000000 ffffffff80b81614 9800000005dfbe80
+[    0.000000] $20   : 00000000540000e0 ffffffff81980000 0000000000000000 ffffffff80f81c80
+[    0.000000] $24   : 0000000000000a26 ffffffff8114fb90
+[    0.000000] $28   : ffffffff80b50000 ffffffff80b53d40 0000000000000000 ffffffff81afad90
+[    0.000000] Hi    : 0000000000000000
+[    0.000000] Lo    : 0000000000000000
+[    0.000000] epc   : ffffffff81afada8 init_idle+0x130/0x270
+[    0.000000] ra    : ffffffff81afad90 init_idle+0x118/0x270
+[    0.000000] Status: 540000e2	KX SX UX KERNEL EXL
+[    0.000000] Cause : 00000008 (ExcCode 02)
+[    0.000000] BadVA : 0000000000000000
+[    0.000000] PrId  : 00006305 (ICT Loongson-3)
+[    0.000000] Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____), tls=0000000000000000)
+[    0.000000] Stack : 9800000005dfbf00 ffffffff8178e950 0000000000000000 0000000000000000
+[    0.000000]         0000000000000000 ffffffff81970000 000000000000003f ffffffff810a6528
+[    0.000000]         0000000000000001 9800000005dfbe80 9800000005dfbf00 ffffffff81980000
+[    0.000000]         ffffffff810a6450 ffffffff81afb6c0 0000000000000000 ffffffff810a2258
+[    0.000000]         ffffffff81d82ec8 ffffffff8198d010 ffffffff81b67e80 ffffffff8197dd98
+[    0.000000]         ffffffff81d81c80 ffffffff81930000 0000000000000040 0000000000000000
+[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
+[    0.000000]         0000000000000000 000000000000009e ffffffff9fc01000 0000000000000000
+[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
+[    0.000000]         0000000000000000 ffffffff81ae86dc ffffffff81b3c741 0000000000000002
+[    0.000000]         ...
+[    0.000000] Call Trace:
+[    0.000000] [<ffffffff81afada8>] init_idle+0x130/0x270
+[    0.000000] [<ffffffff81afb6c0>] sched_init+0x5c8/0x6c0
+[    0.000000] [<ffffffff81ae86dc>] start_kernel+0x27c/0x7a8
+
+This bug has been reported to LLVM[2] and affects version from (at
+least) 18 to 21. Let's work around this by using inline assembly to
+assign $gp before a fix is widely available.
+
+Cc: stable@vger.kernel.org
+Link: https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Global-Register-Variables.html # [1]
+Link: https://github.com/llvm/llvm-project/issues/176546 # [2]
+Signed-off-by: Yao Zi <me@ziyao.cc>
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/rockchip/rockchip_i2s_tdm.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/mips/kernel/relocate.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/sound/soc/rockchip/rockchip_i2s_tdm.c b/sound/soc/rockchip/rockchip_i2s_tdm.c
-index 770b9bfbb384a..fc52149ed6ae3 100644
---- a/sound/soc/rockchip/rockchip_i2s_tdm.c
-+++ b/sound/soc/rockchip/rockchip_i2s_tdm.c
-@@ -22,6 +22,7 @@
+--- a/arch/mips/kernel/relocate.c
++++ b/arch/mips/kernel/relocate.c
+@@ -420,7 +420,20 @@ void *__init relocate_kernel(void)
+ 			goto out;
  
- #define DRV_NAME "rockchip-i2s-tdm"
- 
-+#define DEFAULT_MCLK_FS				256
- #define CH_GRP_MAX				4  /* The max channel 8 / 2 */
- #define MULTIPLEX_CH_MAX			10
- 
-@@ -665,6 +666,15 @@ static int rockchip_i2s_tdm_hw_params(struct snd_pcm_substream *substream,
- 			mclk_rate = i2s_tdm->mclk_rx_freq;
- 		}
- 
+ 		/* The current thread is now within the relocated image */
++#ifndef CONFIG_CC_IS_CLANG
+ 		__current_thread_info = RELOCATED(&init_thread_union);
++#else
 +		/*
-+		 * When the dai/component driver doesn't need to set mclk-fs for a specific
-+		 * clock, it can skip the call to set_sysclk() for that clock.
-+		 * In that case, simply use the clock rate from the params and multiply it by
-+		 * the default mclk-fs value.
++		 * LLVM may wrongly restore $gp ($28) in epilog even if it's
++		 * intentionally modified. Work around this by using inline
++		 * assembly to assign $gp. $gp couldn't be listed as output or
++		 * clobber, or LLVM will still restore its original value.
++		 * See also LLVM upstream issue
++		 * https://github.com/llvm/llvm-project/issues/176546
 +		 */
-+		if (!mclk_rate)
-+			mclk_rate = DEFAULT_MCLK_FS * params_rate(params);
-+
- 		err = clk_set_rate(mclk, mclk_rate);
- 		if (err)
- 			return err;
--- 
-2.51.0
-
++		asm volatile("move $28, %0" : :
++			     "r" (RELOCATED(&init_thread_union)));
++#endif
+ 
+ 		/* Return the new kernel's entry point */
+ 		kernel_entry = RELOCATED(start_kernel);
 
 
