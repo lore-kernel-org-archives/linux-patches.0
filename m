@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A2730F526;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E123530F526;
 	Wed, 25 Feb 2026 06:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002792; cv=none; b=My/cICDi1PS1gEHdQOBobMB5NIU2cryJx2Y0lttlkRX7+kJVYOOGNAVO5+yxnzVjmn0RlkKbeDAL3CYzGzWxhSku+Sizjrvz3kXm6HqGu6bpxNRLIvUUe9F7CJu07zoWw/axrXymyQ5sXfCYClT7v3BODlP0b6LFNdKfSB8T5lI=
+	t=1772002793; cv=none; b=PtSyyaKFhdAF0RqisRJsHz/xbOdtclutPmnWK6kbZbuZNIO+1oxkhqx4zi7W9ZDdCWaeB2UviXh04ep9BHt2TIPFerBuGQh/eNCAMaHoMKNLz6sqh3r9N4kPg8Rfc+08Z/MpWrdpJIsiKU58qXHQ4fCv5U69UMejwYMf2g3ZVQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002792; c=relaxed/simple;
-	bh=SsF3E0YNCyPbAz/q/YNIZCbOxAQKBEpLzpjK9WzNd6Q=;
+	s=arc-20240116; t=1772002793; c=relaxed/simple;
+	bh=wflWR4ZUMU7z1iRzp1QX147YKJOUpSprFZiOCHql3ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/F3kcV0sDi3Ai31TLNLVL0RjPzk4HJ0yQQVt169JguP+JNBUDX1FFV488ReCbazXhek0ycINyoRjRUkbIpqb7YFtMnF5TURWRrGupo1pyh9t33YSHyHfJ8979zBTakRWMWSya88hsm1r5cHrBljusH/XVG75J76UhIIobfR5TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/Y1ePGG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q4vtaJjiy3QJfdpIGa3bQVoL4q2XljIkeFIGcayTCO7QaIaAK8bEV/qoNcqBAKlJ45dNdVK6DiKD/TtHNBXWKIIScQfMwgVMLk1S5D5YbetrjomY0SLrIIBj68i98SO5hGH64qFHWtAkHYUvswhep1FuXhf0eFLgvvN2s+Lxz78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMMc2fLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/Y1ePGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE192C116D0;
-	Wed, 25 Feb 2026 06:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMMc2fLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D94C116D0;
+	Wed, 25 Feb 2026 06:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002792;
-	bh=SsF3E0YNCyPbAz/q/YNIZCbOxAQKBEpLzpjK9WzNd6Q=;
+	bh=wflWR4ZUMU7z1iRzp1QX147YKJOUpSprFZiOCHql3ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/Y1ePGGTc4Muw2N50L3xjO3UhD9M/MbTTd2Vf+q8pndnxKFvkBdGK+N/eOGGQ+jR
-	 qteFwL+LrdK78Ds6aN9UWXYNrVd2gUPvSdXPylVJ9PGoWy/jvL/fM2w+/rOYO7rZA3
-	 QBUHeTNDxmbtkEpwEpeN2BHvQkyKH42hjBTmAEpY=
+	b=CMMc2fLwsLXTyNCwpm/mDp050PiK7RhJANAwiX4hnUPQDywSHyq8XXetL1/byF9V4
+	 4+TbPme5EW634P7GRC2geXxLyvYY5H5954DT0eKKrTqce8uywlLOs2f7HcDihzgOVN
+	 TMWVSfTUFqiytrv86mIRS7QFroeXFgpTq9qlbuM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeongjun Park <aha310510@gmail.com>,
 	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 6.18 635/641] drm/exynos: vidi: use priv->vidi_dev for ctx lookup in vidi_connection_ioctl()
-Date: Tue, 24 Feb 2026 17:26:01 -0800
-Message-ID: <20260225012403.891577913@linuxfoundation.org>
+Subject: [PATCH 6.18 636/641] drm/exynos: vidi: fix to avoid directly dereferencing user pointer
+Date: Tue, 24 Feb 2026 17:26:02 -0800
+Message-ID: <20260225012403.916226316@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,88 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeongjun Park <aha310510@gmail.com>
 
-commit d3968a0d85b211e197f2f4f06268a7031079e0d0 upstream.
+commit d4c98c077c7fb2dfdece7d605e694b5ea2665085 upstream.
 
-vidi_connection_ioctl() retrieves the driver_data from drm_dev->dev to
-obtain a struct vidi_context pointer. However, drm_dev->dev is the
-exynos-drm master device, and the driver_data contained therein is not
-the vidi component device, but a completely different device.
+In vidi_connection_ioctl(), vidi->edid(user pointer) is directly
+dereferenced in the kernel.
 
-This can lead to various bugs, ranging from null pointer dereferences and
-garbage value accesses to, in unlucky cases, out-of-bounds errors,
-use-after-free errors, and more.
-
-To resolve this issue, we need to store/delete the vidi device pointer in
-exynos_drm_private->vidi_dev during bind/unbind, and then read this
-exynos_drm_private->vidi_dev within ioctl() to obtain the correct
-struct vidi_context pointer.
+This allows arbitrary kernel memory access from the user space, so instead
+of directly accessing the user pointer in the kernel, we should modify it
+to copy edid to kernel memory using copy_from_user() and use it.
 
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_drv.h  |    1 +
- drivers/gpu/drm/exynos/exynos_drm_vidi.c |   14 +++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c |   22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/exynos/exynos_drm_drv.h
-+++ b/drivers/gpu/drm/exynos/exynos_drm_drv.h
-@@ -199,6 +199,7 @@ struct drm_exynos_file_private {
- struct exynos_drm_private {
- 	struct device *g2d_dev;
- 	struct device *dma_dev;
-+	struct device *vidi_dev;
- 	void *mapping;
- 
- 	/* for atomic commit */
 --- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
 +++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -231,9 +231,14 @@ ATTRIBUTE_GROUPS(vidi);
- int vidi_connection_ioctl(struct drm_device *drm_dev, void *data,
- 				struct drm_file *file_priv)
- {
--	struct vidi_context *ctx = dev_get_drvdata(drm_dev->dev);
-+	struct exynos_drm_private *priv = drm_dev->dev_private;
-+	struct device *dev = priv ? priv->vidi_dev : NULL;
-+	struct vidi_context *ctx = dev ? dev_get_drvdata(dev) : NULL;
- 	struct drm_exynos_vidi_connection *vidi = data;
+@@ -262,13 +262,27 @@ int vidi_connection_ioctl(struct drm_dev
  
-+	if (!ctx)
-+		return -ENODEV;
+ 	if (vidi->connection) {
+ 		const struct drm_edid *drm_edid;
+-		const struct edid *raw_edid;
++		const void __user *edid_userptr = u64_to_user_ptr(vidi->edid);
++		void *edid_buf;
++		struct edid hdr;
+ 		size_t size;
+ 
+-		raw_edid = (const struct edid *)(unsigned long)vidi->edid;
+-		size = (raw_edid->extensions + 1) * EDID_LENGTH;
++		if (copy_from_user(&hdr, edid_userptr, sizeof(hdr)))
++			return -EFAULT;
+ 
+-		drm_edid = drm_edid_alloc(raw_edid, size);
++		size = (hdr.extensions + 1) * EDID_LENGTH;
 +
- 	if (!vidi) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev,
- 				  "user data for vidi is null.\n");
-@@ -393,6 +398,7 @@ static int vidi_bind(struct device *dev,
- {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
- 	struct drm_device *drm_dev = data;
-+	struct exynos_drm_private *priv = drm_dev->dev_private;
- 	struct drm_encoder *encoder = &ctx->encoder;
- 	struct exynos_drm_plane *exynos_plane;
- 	struct exynos_drm_plane_config plane_config = { 0 };
-@@ -400,6 +406,8 @@ static int vidi_bind(struct device *dev,
- 	int ret;
++		edid_buf = kmalloc(size, GFP_KERNEL);
++		if (!edid_buf)
++			return -ENOMEM;
++
++		if (copy_from_user(edid_buf, edid_userptr, size)) {
++			kfree(edid_buf);
++			return -EFAULT;
++		}
++
++		drm_edid = drm_edid_alloc(edid_buf, size);
++		kfree(edid_buf);
+ 		if (!drm_edid)
+ 			return -ENOMEM;
  
- 	ctx->drm_dev = drm_dev;
-+	if (priv)
-+		priv->vidi_dev = dev;
- 
- 	plane_config.pixel_formats = formats;
- 	plane_config.num_pixel_formats = ARRAY_SIZE(formats);
-@@ -445,8 +453,12 @@ static int vidi_bind(struct device *dev,
- static void vidi_unbind(struct device *dev, struct device *master, void *data)
- {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
-+	struct drm_device *drm_dev = data;
-+	struct exynos_drm_private *priv = drm_dev->dev_private;
- 
- 	timer_delete_sync(&ctx->timer);
-+	if (priv)
-+		priv->vidi_dev = NULL;
- }
- 
- static const struct component_ops vidi_component_ops = {
 
 
