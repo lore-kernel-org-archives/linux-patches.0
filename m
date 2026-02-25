@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF816248886;
-	Wed, 25 Feb 2026 01:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECD8248886;
+	Wed, 25 Feb 2026 01:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983911; cv=none; b=XSH+pg4PrLDZ5dXh8mx1PrULguxdaWUbkUDk8q2pPoCswG9XehAEFE/Y/N/jRalAFRZIkqrus7I2SgHZ1u6emN53JNfgYHdgN0dHLykLwNNEno7A6WfNAjMhf/qq7p+cHCZOZJ3enQt0vYhBw2dELn+VUBFmMC5oEEIBXA35Ciw=
+	t=1771983912; cv=none; b=sfz5cjsxLqTz5x2lAcpl7FmjCh3fwanRRdUQ14guUSk1BYua5uIcHOGGOAVyOn1Q9Bw3/oLKCaenbghhk81kRQI98uu+Z+oQ6kVfajY5+L9rA71U+O0S0wU4VEKQKC8PjKgbm9HffPj7hLFbtpNaBqY03BPKwn9lgKldhWiLav8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983911; c=relaxed/simple;
-	bh=VsUfBk/UoikmCiA00wgiyF8n68aHggChgeWQeOw8MMI=;
+	s=arc-20240116; t=1771983912; c=relaxed/simple;
+	bh=mSzzWtLveh7GHqTIk9y+KV6qAEipi39rclCFfuam5Qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJPvSj8hlE3suYGvhMWXi8u6FOgzCcoGSi/U1Jm+/9RQfelnLHiuBksCIoIKcKL0/gkC2PxzPlDRP3VqvzcNBRtb0zBZGFscww9ElhDsxhLskhFN5SfVeCHWp1D7yr20A2eTWHXEsEkp93oGzmM3w+UewL/Kxq5y59Th9vMy3lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLbptksR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sy4E3vpM2LiPF/zldmhQp9de/Pji28stkDyW6CAgPUjjCqyGUitLdnzEJNvdfRgsQbPevmvIY8qOfWfbSGhJzXXykmKdfCSvXk+WJUGjGQOkWvcZcK9oEJkH6XvCS03c5M9rw3n2L21HIXnw/tiGBWInV1qUS2lZwVNdntqgkq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY3447MI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLbptksR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA35C116D0;
-	Wed, 25 Feb 2026 01:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY3447MI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F391AC19423;
+	Wed, 25 Feb 2026 01:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983910;
-	bh=VsUfBk/UoikmCiA00wgiyF8n68aHggChgeWQeOw8MMI=;
+	s=korg; t=1771983912;
+	bh=mSzzWtLveh7GHqTIk9y+KV6qAEipi39rclCFfuam5Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KLbptksR+NI2sLPSbByb/WbEOLdlank4HlE81KMBzLmYuGW1D0HsNKgVtcLQeJvFM
-	 96eEke6FVY/sF4cwvTBrsVG0GrRnYfMpJekcCWp/pjRPCUwzbajoF3Trh+u/dbpUdy
-	 G5BBKKD+ydlAQDrtGeKeRMJUeAV6UmJ3pc8CEujQ=
+	b=mY3447MIRrsyib1O7t8a1dUGvZroQD5OHbFk2hCGsH+IVRo5Oycn01D7mb1P/8YP1
+	 +z5FDQidYaxvGK7XcSzPalKeSVq0CdS7sWb2tOFf/O1ORI57ZuYQpBiIUOft0h04ZJ
+	 1IRDQ4NV4PJQoJMWL/tDdSmEehbR7CJNimqzCehs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akash Goel <akash.goel@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 177/641] drm/panthor: Fix panthor_gpu_coherency_set()
-Date: Tue, 24 Feb 2026 17:18:23 -0800
-Message-ID: <20260225012353.320438531@linuxfoundation.org>
+Subject: [PATCH 6.18 178/641] accel/amdxdna: Fix race where send ring appears full due to delayed head update
+Date: Tue, 24 Feb 2026 17:18:24 -0800
+Message-ID: <20260225012353.342244531@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,55 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 9beb8dca9e749e9983e70b22e9823e6fcd519f91 ]
+[ Upstream commit 343f5683cfa443000904c88ce2e23656375fc51c ]
 
-GPU_COHERENCY_PROTOCOL takes one of GPU_COHERENCY_xx
-not BIT(GPU_COHERENCY_xx).
+The firmware sends a response and interrupts the driver before advancing
+the mailbox send ring head pointer. As a result, the driver may observe
+the response and attempt to send a new request before the firmware has
+updated the head pointer. In this window, the send ring still appears
+full, causing the driver to incorrectly fail the send operation.
 
-v3:
-- New commit
+This race can be triggered more easily in a multithreaded environment,
+leading to unexpected and spurious "send ring full" failures.
 
-v4:
-- Add Steve's R-b
+To address this, poll the send ring head pointer for up to 100us before
+returning a full-ring condition. This allows the firmware time to update
+the head pointer.
 
-v5:
-- No changes
-
-v6:
-- No changes
-
-v7:
-- No changes
-
-v8:
-- No changes
-
-Cc: Akash Goel <akash.goel@arm.com>
-Fixes: dd7db8d911a1 ("drm/panthor: Explicitly set the coherency mode")
-Reported-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20251208100841.730527-3-boris.brezillon@collabora.com
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: b87f920b9344 ("accel/amdxdna: Support hardware mailbox")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20251211045125.1724604-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/amdxdna/amdxdna_mailbox.c | 27 +++++++++++++++----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
-index b92c9e738dbfa..77d0f4ced1206 100644
---- a/drivers/gpu/drm/panthor/panthor_gpu.c
-+++ b/drivers/gpu/drm/panthor/panthor_gpu.c
-@@ -49,7 +49,7 @@ struct panthor_gpu {
- static void panthor_gpu_coherency_set(struct panthor_device *ptdev)
- {
- 	gpu_write(ptdev, GPU_COHERENCY_PROTOCOL,
--		ptdev->coherent ? GPU_COHERENCY_PROT_BIT(ACE_LITE) : GPU_COHERENCY_NONE);
-+		  ptdev->coherent ? GPU_COHERENCY_ACE_LITE : GPU_COHERENCY_NONE);
+diff --git a/drivers/accel/amdxdna/amdxdna_mailbox.c b/drivers/accel/amdxdna/amdxdna_mailbox.c
+index 6634a4d5717ff..a80c77a478bff 100644
+--- a/drivers/accel/amdxdna/amdxdna_mailbox.c
++++ b/drivers/accel/amdxdna/amdxdna_mailbox.c
+@@ -206,26 +206,34 @@ mailbox_send_msg(struct mailbox_channel *mb_chann, struct mailbox_msg *mb_msg)
+ 	u32 head, tail;
+ 	u32 start_addr;
+ 	u32 tmp_tail;
++	int ret;
+ 
+ 	head = mailbox_get_headptr(mb_chann, CHAN_RES_X2I);
+ 	tail = mb_chann->x2i_tail;
+-	ringbuf_size = mailbox_get_ringbuf_size(mb_chann, CHAN_RES_X2I);
++	ringbuf_size = mailbox_get_ringbuf_size(mb_chann, CHAN_RES_X2I) - sizeof(u32);
+ 	start_addr = mb_chann->res[CHAN_RES_X2I].rb_start_addr;
+ 	tmp_tail = tail + mb_msg->pkg_size;
+ 
+-	if (tail < head && tmp_tail >= head)
+-		goto no_space;
+-
+-	if (tail >= head && (tmp_tail > ringbuf_size - sizeof(u32) &&
+-			     mb_msg->pkg_size >= head))
+-		goto no_space;
+ 
+-	if (tail >= head && tmp_tail > ringbuf_size - sizeof(u32)) {
++check_again:
++	if (tail >= head && tmp_tail > ringbuf_size) {
+ 		write_addr = mb_chann->mb->res.ringbuf_base + start_addr + tail;
+ 		writel(TOMBSTONE, write_addr);
+ 
+ 		/* tombstone is set. Write from the start of the ringbuf */
+ 		tail = 0;
++		tmp_tail = tail + mb_msg->pkg_size;
++	}
++
++	if (tail < head && tmp_tail >= head) {
++		ret = read_poll_timeout(mailbox_get_headptr, head,
++					tmp_tail < head || tail >= head,
++					1, 100, false, mb_chann, CHAN_RES_X2I);
++		if (ret)
++			return ret;
++
++		if (tail >= head)
++			goto check_again;
+ 	}
+ 
+ 	write_addr = mb_chann->mb->res.ringbuf_base + start_addr + tail;
+@@ -237,9 +245,6 @@ mailbox_send_msg(struct mailbox_channel *mb_chann, struct mailbox_msg *mb_msg)
+ 			    mb_msg->pkg.header.id);
+ 
+ 	return 0;
+-
+-no_space:
+-	return -ENOSPC;
  }
  
- static void panthor_gpu_irq_handler(struct panthor_device *ptdev, u32 status)
+ static int
 -- 
 2.51.0
 
