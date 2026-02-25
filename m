@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BBB279DB3;
-	Wed, 25 Feb 2026 01:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD71279DB3;
+	Wed, 25 Feb 2026 01:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983763; cv=none; b=LxdIGyWL9r9RxGYFhYoWaKlObCdt9RRhQmF+Gi49lk5vXFDyPUkJtsvs/unWr9cBHJyh8nfthZ+BQ3aaPMKX+rDRfQddxDZs2wRIonV7e+teuwbfkTswKAiWlxgOsMPf1CU453Mj7VcQCh5kE8A/W5xjO6HntPS26dPDQztlBCs=
+	t=1771983764; cv=none; b=PS7HcrmTeHBh9ZEGjbJY2nxh2YIeM82VP4LHRDEjgYFOPnaqStdH2VOO5Zz87ziZG/E9S0+T4ez+U8eeVsgPLFQwrexQlHgYBTYAK3cW2Rzw3bloG6DZ315Rn20mJdh8rch4or9pW0iNngcLvWyMXe7+60vB2aSTkBCfMwfkcec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983763; c=relaxed/simple;
-	bh=jEydx9mCNRnhRgWMxGdyzJIAe6flJl1zBK/WoM9OUVo=;
+	s=arc-20240116; t=1771983764; c=relaxed/simple;
+	bh=RwDoM/6+TqJAee76dgLIGIbY6KEqRrcvFDHTSKlWyyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EnxTC4/GF04Dtn5ajmR4khF30CvtIWqfHCuEYyhLgcp7W3Y8aMLHAYP+NOS/s+aHyx5MBdcTmgrIjIhGRy4gOTKeGYmRS+YJTuzsrTPhANKNY05N5PMdoZtzXMm2+31p6LsYBBXaK8ks2rZeDmukUgkKct3UU5pQGOGD3t8MIMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHiLzL81; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GRXAd268mxvQcw+Ujq/pH/N/nUK7l2o27tgR6Bfr4eF7MKNuC3ltrN2rSMIAgB+qcfctDUOboUHNS7we9J6UvcfCxjgNkSR2BwZh6F6Pukufy33qYAXDpIriqpOsORDx7Oc8hi/l1H8vxXoa/lsUXxN89cvz1kHZ6n2RquMtnnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3tOTqqD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHiLzL81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10318C116D0;
-	Wed, 25 Feb 2026 01:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3tOTqqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C37EC19424;
+	Wed, 25 Feb 2026 01:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983763;
-	bh=jEydx9mCNRnhRgWMxGdyzJIAe6flJl1zBK/WoM9OUVo=;
+	s=korg; t=1771983764;
+	bh=RwDoM/6+TqJAee76dgLIGIbY6KEqRrcvFDHTSKlWyyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aHiLzL813MexOmPgdc1aAw3JyvIRrIfhFEzbQGJlHWtAAvnPRDW3OYlV7iVSZKb8M
-	 hvfw7klIDnaoZG12BcgGmh/KTJXZgSw/3FpY7mz4JOR74w71w2z0El4o0kDnUo7FUm
-	 d7+6ripOhXBJZPziIgPeHISGrZ3pUCy7w+DVihjs=
+	b=B3tOTqqD1RkAfd5C9s2HqNnz8ApPFUmT7BMbY3APnZ4yXP5kRkndlAUprRV/2353u
+	 eFrpm96RUQ2h765vJsMQOKQP7enzO/bbmp8CqqfLvImYnuN8te2Cn6NKxE3lP47rId
+	 zCbrrQZRR5K+fYxYC5D6QjOGiNrugePptrpbvI58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Xiao Ni <xni@redhat.com>,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+	Samuel Wu <wusamuel@google.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 055/641] md: fix return value of mddev_trylock
-Date: Tue, 24 Feb 2026 17:16:21 -0800
-Message-ID: <20260225012350.373255414@linuxfoundation.org>
+Subject: [PATCH 6.18 056/641] PM: wakeup: Handle empty list in wakeup_sources_walk_start()
+Date: Tue, 24 Feb 2026 17:16:22 -0800
+Message-ID: <20260225012350.399347576@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,41 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Ni <xni@redhat.com>
+From: Samuel Wu <wusamuel@google.com>
 
-[ Upstream commit 05c8de4f09b08e97c6ecb190dcec0e68b167cb03 ]
+[ Upstream commit 75ce02f4bc9a8b8350b6b1b01872467b0cc960cc ]
 
-A return value of 0 is treaded as successful lock acquisition. In fact, a
-return value of 1 means getting the lock successfully.
+In the case of an empty wakeup_sources list, wakeup_sources_walk_start()
+will return an invalid but non-NULL address. This also affects wrappers
+of the aforementioned function, like for_each_wakeup_source().
 
-Link: https://lore.kernel.org/linux-raid/20260127073951.17248-1-xni@redhat.com
-Fixes: 9e59d609763f ("md: call del_gendisk in control path")
-Reported-by: Bart Van Assche <bvanassche@acm.org>
-Closes: https://lore.kernel.org/linux-raid/20250611073108.25463-1-xni@redhat.com/T/#mfa369ef5faa4aa58e13e6d9fdb88aecd862b8f2f
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by:  Li Nan <linan122@huawei.com>
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Update wakeup_sources_walk_start() to return NULL in case of an empty
+list.
+
+Fixes: b4941adb24c0 ("PM: wakeup: Add routine to help fetch wakeup source object.")
+Signed-off-by: Samuel Wu <wusamuel@google.com>
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20260124012133.2451708-2-wusamuel@google.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/power/wakeup.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index fd6e001c1d38f..9d66afb8cc6e6 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -736,8 +736,8 @@ static inline int mddev_trylock(struct mddev *mddev)
- 	int ret;
+diff --git a/drivers/base/power/wakeup.c b/drivers/base/power/wakeup.c
+index d1283ff1080bb..2f630df16bfe1 100644
+--- a/drivers/base/power/wakeup.c
++++ b/drivers/base/power/wakeup.c
+@@ -276,9 +276,7 @@ EXPORT_SYMBOL_GPL(wakeup_sources_read_unlock);
+  */
+ struct wakeup_source *wakeup_sources_walk_start(void)
+ {
+-	struct list_head *ws_head = &wakeup_sources;
+-
+-	return list_entry_rcu(ws_head->next, struct wakeup_source, entry);
++	return list_first_or_null_rcu(&wakeup_sources, struct wakeup_source, entry);
+ }
+ EXPORT_SYMBOL_GPL(wakeup_sources_walk_start);
  
- 	ret = mutex_trylock(&mddev->reconfig_mutex);
--	if (!ret && test_bit(MD_DELETED, &mddev->flags)) {
--		ret = -ENODEV;
-+	if (ret && test_bit(MD_DELETED, &mddev->flags)) {
-+		ret = 0;
- 		mutex_unlock(&mddev->reconfig_mutex);
- 	}
- 	return ret;
 -- 
 2.51.0
 
