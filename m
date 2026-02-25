@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E279831352F;
-	Wed, 25 Feb 2026 06:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8830433121D;
+	Wed, 25 Feb 2026 06:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002791; cv=none; b=KcIAeWseZTmZzuxpB6gKh5ozAC6KvkO9cGR+2TT9UgVIE3ggXNLDgyFOUfldYENHMlcAcpE+bdhi2xnHmwvaVH7W7DwcrlquSYVQEwybm+uylXwSULL0fft0za/96PKtaMn8xxYGqXk1503Mcg6Vgf6bxmlo/5v+R89L1sxo2q4=
+	t=1772002791; cv=none; b=i6zP8iUKMxbsXKBzsiR4fLlC4k17ok/tl6IogE7jRmTUhpK+aw3mTXR8aaNAhkGJa22P+vlNMv2FgaA3lcbLpioHy1J4F/o656otloQstc8UOF9Mxd53oEoqUEHbxXosCh7XdP/uiT5zTUVQvZE5BBbj4ZrNKvxFySLpa+YIDUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002791; c=relaxed/simple;
-	bh=/KtdpCE2NB3syAXeYs9wiLDMdV4FauQcsuZitcuCeT8=;
+	bh=vEsuXKLqV851mivOVCGioJbITGRoa2dgNpvIa5akwAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4onrCBv+A6bbU74Fxp+NBsfuKuiF12OO/3I7Z0XFmW1l+6OtSKdn1z3e4UY54NN16wDLfXagGAuRmRbkKMiPGAJmTR6pSuaeIJgLy1ppbpViNwzqRuJ1TvL4Lb2EQTRY+C7CV0BBV8kp63VP8DZ0MsQ6kmYB+kh8jG27P5wyJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQEvxJHb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yn6DuKERsI9gCzMvJnJ6sSK8sHsdfz3MFah/5qEWsIAVfMIYUIrrfuaWqlwrH+JhGg2M4blijE4FSbu0b4SNkTwsk4qQA32NhaPomwlBWAgVe8Lx/uO6OEHSMSm+Jf67+gpnNiXwnJFSxMnaOcsOhzljsNXR6IoV14MTWAPAAVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLMUtJ09; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQEvxJHb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4BAC116D0;
-	Wed, 25 Feb 2026 06:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLMUtJ09"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60803C116D0;
+	Wed, 25 Feb 2026 06:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002790;
-	bh=/KtdpCE2NB3syAXeYs9wiLDMdV4FauQcsuZitcuCeT8=;
+	s=korg; t=1772002791;
+	bh=vEsuXKLqV851mivOVCGioJbITGRoa2dgNpvIa5akwAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQEvxJHbT2mNHaRxWi/1z6ycVMfOXKgzO0e8aRDQMrdGw3HrtTzKv0jtl4n00bEvw
-	 DyklAGsBIXVIYW11Jvo1+Lx5erUZZyZRgh3Xs91oiaO+pi2R62F2RO71qg+C2BTAYH
-	 VhZroMPBJSMjZ2WIuDK78uI7rhXb1PVMykRub7LE=
+	b=iLMUtJ090d+/JFYNbfi/G4oaio/Dcz7dfuu7NLE5seU3lYNgHSa0qb+k7fZqqHVhE
+	 tjn23C4EMLRXFu0whAywXGUnA42CAJoEH8pAyTKU/S7dj85oX0ujLiMKQQqwbYUxBO
+	 GT/7TkU2+8pt+pwZdQd83fU6iQgP2e+oVcXFqtPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lewis Mason <lewis@ocuru.co.uk>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 634/641] ALSA: hda/realtek: Add quirk for Samsung Galaxy Book3 Pro 360 (NP965QFG)
-Date: Tue, 24 Feb 2026 17:26:00 -0800
-Message-ID: <20260225012403.868838693@linuxfoundation.org>
+	Raag Jadav <raag.jadav@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 599/641] drm/xe/bo: Redirect faults to dummy page for wedged device
+Date: Tue, 24 Feb 2026 17:25:25 -0800
+Message-ID: <20260225012403.030984168@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -50,33 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lewis Mason <mason8110@gmail.com>
+From: Raag Jadav <raag.jadav@intel.com>
 
-commit 3a6b7dc431aab90744e973254604855e654294ae upstream.
+[ Upstream commit 4e83a8d58e1c721a89b3ffe15f549007080272e2 ]
 
-The Samsung Galaxy Book3 Pro 360 NP965QFG (subsystem ID 0x144d:0xc1cb)
-uses the same Realtek ALC298 codec and amplifier configuration as the
-NP960QFG (0x144d:0xc1ca). Apply the same ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS
-fixup to enable the internal speakers.
+As per uapi documentation[1], the prerequisite for wedged device is to
+redirected page faults to a dummy page. Follow it.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Lewis Mason <lewis@ocuru.co.uk>
-Link: https://patch.msgid.link/20260210231337.7265-1-lewis@ocuru.co.uk
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1] Documentation/gpu/drm-uapi.rst
+
+v2: Add uapi reference and fixes tag (Matthew Brost)
+
+Fixes: 7bc00751f877 ("drm/xe: Use device wedged event")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260212055622.2054991-1-raag.jadav@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit c020fff70d757612933711dd3cc3751d7d782d3c)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/xe/xe_bo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6951,6 +6951,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x144d, 0xc872, "Samsung Galaxy Book2 Pro (NP950XEE)", ALC298_FIXUP_SAMSUNG_AMP_V2_2_AMPS),
- 	SND_PCI_QUIRK(0x144d, 0xc886, "Samsung Galaxy Book3 Pro (NP964XFG)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
- 	SND_PCI_QUIRK(0x144d, 0xc1ca, "Samsung Galaxy Book3 Pro 360 (NP960QFG)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
-+	SND_PCI_QUIRK(0x144d, 0xc1cb, "Samsung Galaxy Book3 Pro 360 (NP965QFG)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
- 	SND_PCI_QUIRK(0x144d, 0xc1cc, "Samsung Galaxy Book3 Ultra (NT960XFH)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
- 	SND_PCI_QUIRK(0x1458, 0x900e, "Gigabyte G5 KF5 (2023)", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1458, 0xfa53, "Gigabyte BXBT-2807", ALC283_FIXUP_HEADSET_MIC),
+diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
+index e2e28ff73925b..a270aef7c4980 100644
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -1895,7 +1895,7 @@ static vm_fault_t xe_bo_cpu_fault(struct vm_fault *vmf)
+ 	int err = 0;
+ 	int idx;
+ 
+-	if (!drm_dev_enter(&xe->drm, &idx))
++	if (xe_device_wedged(xe) || !drm_dev_enter(&xe->drm, &idx))
+ 		return ttm_bo_vm_dummy_page(vmf, vmf->vma->vm_page_prot);
+ 
+ 	ret = xe_bo_cpu_fault_fastpath(vmf, xe, bo, needs_rpm);
+-- 
+2.51.0
+
 
 
