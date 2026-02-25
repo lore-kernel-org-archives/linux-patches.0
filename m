@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EC54369A;
-	Wed, 25 Feb 2026 01:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC3A21D596;
+	Wed, 25 Feb 2026 01:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982922; cv=none; b=EKkTgMhXLgVtVTxdJ/bfW5YAS6nNuQma+9lDMCMjyDsqKlYS17pLhX/YzmLlvqanOruAhvaVGm1+L+RpLQQqD4Clz9nIrRs/hHTJ7qXe7rHdt3BtwqydsKQu8Mhuctzfr5T//nUFiuyh5aUGuqXHpXimYpD5OZx2QyCo48xF0Pc=
+	t=1771982923; cv=none; b=IhsvosNTr0P8NGIl7MQD0s9FVoI/FNbJ2nryC4RYdYhXhI5BJFjid8la/1TjA2ydd2q9rlZGATVZ9mgCzC/MeLjU1xtyjnwQlic+Jb+2C0YPr2ijiIZUMdoyILjKhf3hP/aXSie2Q5fphftmlUPGPU+dtO0XMaTVeSPIUYECYU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982922; c=relaxed/simple;
-	bh=m9X5iQog2QwkF7NALmPzdxCe1f3H01Pn2cZYyozfjdM=;
+	s=arc-20240116; t=1771982923; c=relaxed/simple;
+	bh=UJAOP95jMEqBM1DqYzM6KUYPDm1y84nbwRXaGKL/CfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nw+WTrBsCge491WtamjVf+ahr859TQOFX+zo46q9lM3EuOyNrxcuP5SByNDrfn+/sCn9UIe3v6Z5s5fVa5ZoV1QDlKSfTe+mepnYT0tRthGl3FTF4Q29HWiIbDFCvzmVD9PwGGrc00ieG3e3NewM2rcwYu+tZS2Vvd8kTVCCOVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aswZG/cq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qTL2Hdy7up/SLpOtmrJOBI52w6tyJwUxOnJKZ7yj2YF0KPKLW9DMkN6aiqRg4iwDylF1Wu9vHon4vZwOZs0asVlznpnbyvRHdkI04ZQlCUYNiYsc+Z+XYXFYctl2PeYq2HnrkIEfykKXaRvS9fdcHUoR3eftHlHI3gFmT//Clrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avnERfb+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aswZG/cq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3440EC116D0;
-	Wed, 25 Feb 2026 01:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avnERfb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5F2C116D0;
+	Wed, 25 Feb 2026 01:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982922;
-	bh=m9X5iQog2QwkF7NALmPzdxCe1f3H01Pn2cZYyozfjdM=;
+	s=korg; t=1771982923;
+	bh=UJAOP95jMEqBM1DqYzM6KUYPDm1y84nbwRXaGKL/CfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aswZG/cq9Io2qLPj5J0NaheTUSYgrdGreHC4s1/cP2nsbm0niVTDJ88kKGYUhPgQl
-	 Ae+QNZcKXS46SYuaJjcpNbp3dtyardZy4VfYwaIRACzYDZZJV+pEoKHnV4MjJ7wR9p
-	 LYIfLof2UVDxUEJ4U+hA/GGyaXgkH5fv0oWMwZIA=
+	b=avnERfb+2U1PD3/g+n7vc/1WYiF0qYLaaPfbXA6Tyoi+oVpIJbH+Me3RluBZog2MG
+	 ipy5oZ42r9paZFZz4/0N6oQXPbVK2rhdayGsrerxH6W2YUrEa7ycNQEhvmASPQzX7N
+	 oLXjP1J4yHnCoFRzhXjddw/UrKrsmxAaBtBEMySc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amery Hung <ameryhung@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 101/781] rqspinlock: Fix TAS fallback lock entry creation
-Date: Tue, 24 Feb 2026 17:13:30 -0800
-Message-ID: <20260225012402.164266315@linuxfoundation.org>
+Subject: [PATCH 6.19 102/781] bpf, sockmap: Fix incorrect copied_seq calculation
+Date: Tue, 24 Feb 2026 17:13:31 -0800
+Message-ID: <20260225012402.186650531@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,65 +53,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 82f3b142c99cf44c7b1e70b7720169c646b9760f ]
+[ Upstream commit b40cc5adaa80e1471095a62d78233b611d7a558c ]
 
-The TAS fallback can be invoked directly when queued spin locks are
-disabled, and through the slow path when paravirt is enabled for queued
-spin locks. In the latter case, the res_spin_lock macro will attempt the
-fast path and already hold the entry when entering the slow path. This
-will lead to creation of extraneous entries that are not released, which
-may cause false positives for deadlock detection.
+A socket using sockmap has its own independent receive queue: ingress_msg.
+This queue may contain data from its own protocol stack or from other
+sockets.
 
-Fix this by always preceding invocation of the TAS fallback in every
-case with the grabbing of the held lock entry, and add a comment to make
-note of this.
+The issue is that when reading from ingress_msg, we update tp->copied_seq
+by default. However, if the data is not from its own protocol stack,
+tcp->rcv_nxt is not increased. Later, if we convert this socket to a
+native socket, reading from this socket may fail because copied_seq might
+be significantly larger than rcv_nxt.
 
-Fixes: c9102a68c070 ("rqspinlock: Add a test-and-set fallback")
-Reported-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Tested-by: Amery Hung <ameryhung@gmail.com>
-Link: https://lore.kernel.org/r/20260122115911.3668985-1-memxor@gmail.com
+This fix also addresses the syzkaller-reported bug referenced in the
+Closes tag.
+
+This patch marks the skmsg objects in ingress_msg. When reading, we update
+copied_seq only if the data is from its own protocol stack.
+
+                                                     FD1:read()
+                                                     --  FD1->copied_seq++
+                                                         |  [read data]
+                                                         |
+                                [enqueue data]           v
+                  [sockmap]     -> ingress to self ->  ingress_msg queue
+FD1 native stack  ------>                                 ^
+-- FD1->rcv_nxt++               -> redirect to other      | [enqueue data]
+                                       |                  |
+                                       |             ingress to FD1
+                                       v                  ^
+                                      ...                 |  [sockmap]
+                                                     FD2 native stack
+
+Closes: https://syzkaller.appspot.com/bug?extid=06dbd397158ec0ea4983
+Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20260124113314.113584-2-jiayuan.chen@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/rqspinlock.h | 2 +-
- kernel/bpf/rqspinlock.c          | 7 ++++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ include/linux/skmsg.h |  2 ++
+ net/core/skmsg.c      | 27 ++++++++++++++++++++++++---
+ net/ipv4/tcp_bpf.c    |  5 +++--
+ 3 files changed, 29 insertions(+), 5 deletions(-)
 
-diff --git a/include/asm-generic/rqspinlock.h b/include/asm-generic/rqspinlock.h
-index 0f2dcbbfee2f0..5c5cf2f7fc395 100644
---- a/include/asm-generic/rqspinlock.h
-+++ b/include/asm-generic/rqspinlock.h
-@@ -191,7 +191,7 @@ static __always_inline int res_spin_lock(rqspinlock_t *lock)
+diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
+index 49847888c287a..dfdc158ab88c8 100644
+--- a/include/linux/skmsg.h
++++ b/include/linux/skmsg.h
+@@ -141,6 +141,8 @@ int sk_msg_memcopy_from_iter(struct sock *sk, struct iov_iter *from,
+ 			     struct sk_msg *msg, u32 bytes);
+ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+ 		   int len, int flags);
++int __sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
++		     int len, int flags, int *copied_from_self);
+ bool sk_msg_is_readable(struct sock *sk);
  
- #else
+ static inline void sk_msg_check_to_free(struct sk_msg *msg, u32 i, u32 bytes)
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 2ac7731e1e0a7..d402da5caadd6 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -409,22 +409,26 @@ int sk_msg_memcopy_from_iter(struct sock *sk, struct iov_iter *from,
+ }
+ EXPORT_SYMBOL_GPL(sk_msg_memcopy_from_iter);
  
--#define res_spin_lock(lock) resilient_tas_spin_lock(lock)
-+#define res_spin_lock(lock) ({ grab_held_lock_entry(lock); resilient_tas_spin_lock(lock); })
+-/* Receive sk_msg from psock->ingress_msg to @msg. */
+-int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+-		   int len, int flags)
++int __sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
++		     int len, int flags, int *copied_from_self)
+ {
+ 	struct iov_iter *iter = &msg->msg_iter;
+ 	int peek = flags & MSG_PEEK;
+ 	struct sk_msg *msg_rx;
+ 	int i, copied = 0;
++	bool from_self;
  
- #endif /* CONFIG_QUEUED_SPINLOCKS */
+ 	msg_rx = sk_psock_peek_msg(psock);
++	if (copied_from_self)
++		*copied_from_self = 0;
++
+ 	while (copied != len) {
+ 		struct scatterlist *sge;
  
-diff --git a/kernel/bpf/rqspinlock.c b/kernel/bpf/rqspinlock.c
-index f7d0c8d4644ed..2fdfa828e3d35 100644
---- a/kernel/bpf/rqspinlock.c
-+++ b/kernel/bpf/rqspinlock.c
-@@ -265,10 +265,11 @@ int __lockfunc resilient_tas_spin_lock(rqspinlock_t *lock)
+ 		if (unlikely(!msg_rx))
+ 			break;
  
- 	RES_INIT_TIMEOUT(ts);
- 	/*
--	 * The fast path is not invoked for the TAS fallback, so we must grab
--	 * the deadlock detection entry here.
-+	 * We are either called directly from res_spin_lock after grabbing the
-+	 * deadlock detection entry when queued spinlocks are disabled, or from
-+	 * resilient_queued_spin_lock_slowpath after grabbing the deadlock
-+	 * detection entry. No need to obtain it here.
- 	 */
--	grab_held_lock_entry(lock);
++		from_self = msg_rx->sk == sk;
+ 		i = msg_rx->sg.start;
+ 		do {
+ 			struct page *page;
+@@ -443,6 +447,9 @@ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+ 			}
  
- 	/*
- 	 * Since the waiting loop's time is dependent on the amount of
+ 			copied += copy;
++			if (from_self && copied_from_self)
++				*copied_from_self += copy;
++
+ 			if (likely(!peek)) {
+ 				sge->offset += copy;
+ 				sge->length -= copy;
+@@ -487,6 +494,13 @@ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+ out:
+ 	return copied;
+ }
++
++/* Receive sk_msg from psock->ingress_msg to @msg. */
++int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
++		   int len, int flags)
++{
++	return __sk_msg_recvmsg(sk, psock, msg, len, flags, NULL);
++}
+ EXPORT_SYMBOL_GPL(sk_msg_recvmsg);
+ 
+ bool sk_msg_is_readable(struct sock *sk)
+@@ -616,6 +630,12 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
+ 	if (unlikely(!msg))
+ 		return -EAGAIN;
+ 	skb_set_owner_r(skb, sk);
++
++	/* This is used in tcp_bpf_recvmsg_parser() to determine whether the
++	 * data originates from the socket's own protocol stack. No need to
++	 * refcount sk because msg's lifetime is bound to sk via the ingress_msg.
++	 */
++	msg->sk = sk;
+ 	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg, take_ref);
+ 	if (err < 0)
+ 		kfree(msg);
+@@ -909,6 +929,7 @@ int sk_psock_msg_verdict(struct sock *sk, struct sk_psock *psock,
+ 	sk_msg_compute_data_pointers(msg);
+ 	msg->sk = sk;
+ 	ret = bpf_prog_run_pin_on_cpu(prog, msg);
++	msg->sk = NULL;
+ 	ret = sk_psock_map_verd(ret, msg->sk_redir);
+ 	psock->apply_bytes = msg->apply_bytes;
+ 	if (ret == __SK_REDIRECT) {
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index a268e1595b22a..5c698fd7fbf81 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -226,6 +226,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 	int peek = flags & MSG_PEEK;
+ 	struct sk_psock *psock;
+ 	struct tcp_sock *tcp;
++	int copied_from_self = 0;
+ 	int copied = 0;
+ 	u32 seq;
+ 
+@@ -262,7 +263,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 	}
+ 
+ msg_bytes_ready:
+-	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
++	copied = __sk_msg_recvmsg(sk, psock, msg, len, flags, &copied_from_self);
+ 	/* The typical case for EFAULT is the socket was gracefully
+ 	 * shutdown with a FIN pkt. So check here the other case is
+ 	 * some error on copy_page_to_iter which would be unexpected.
+@@ -277,7 +278,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 			goto out;
+ 		}
+ 	}
+-	seq += copied;
++	seq += copied_from_self;
+ 	if (!copied) {
+ 		long timeo;
+ 		int data;
 -- 
 2.51.0
 
