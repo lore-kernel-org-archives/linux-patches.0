@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A093930B501;
-	Wed, 25 Feb 2026 06:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6932C2F25E4;
+	Wed, 25 Feb 2026 06:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002635; cv=none; b=C4kuuS9M8gnSRXhk7jSOIjf11cxV+GS3eo/kSrYb7TPI90e/ABCfbOdNkjIaU9ZXcWvE5XUyydpeMh7FlsciC8CgrIK2A4YiEPqeZ6DsBQybutTQL5yqKi7E4tVFn7tMW+lWbGxFUahTsqLMAWyzubOW7OEQUpTEMOBDHscp2ls=
+	t=1772002636; cv=none; b=hhkFphhMQtXtOLivkoDU7XP7htXqhXsYashq1dKzW2fg4gDUbvJWPFveNDPQo6J3VUngwCLjj/dINyate+Csgwzx8/am1chK/dYihJctWPS7FmlxDoGCufSTrzUJZgctt8nKapBZMYJOXouBnVsIK/ev8r6/l2qEreBSiIajWs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002635; c=relaxed/simple;
-	bh=WoWr2KyY3hlrygyIbGKFxYBD7TCouGt4qfqZXP4lD6w=;
+	s=arc-20240116; t=1772002636; c=relaxed/simple;
+	bh=/X+To6IdPKrACDRbafurFz7yPJIGGFgYkKDGRCBa3BE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1libf1v5nXFs2YoPpyr4OftjqiEkT53htc8XcIqo7uF/xXuf364w35zCFvaOW7+DMorvlWnu3IQ3vx0B2Lx3GgOAkHDQYVZ1padrcj/xe00zHCX1NvcqL0bvvzZExv1x56Qgvo7XNumCGJRHQ6WUhHQHdHJ7WpmJjKotVZllVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDoLirNy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oC9Pxqb1JTMynU+bON1qk7JFfFnXvIdf7JMzKJQWC9MMkqTnYmq1DGbUQ7+Fo4q67C1nxERcQmfQrsH1fpq/5FAK0ZNc19ba+uHaWGhgC45CN46pMDmFQFgT1xBHlSGsipnzAUmoUURssENyqotu3UWobwhTyuueeLT7OrYRLtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2/yJ3aG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDoLirNy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79CCEC116D0;
-	Wed, 25 Feb 2026 06:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2/yJ3aG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2356CC116D0;
+	Wed, 25 Feb 2026 06:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002635;
-	bh=WoWr2KyY3hlrygyIbGKFxYBD7TCouGt4qfqZXP4lD6w=;
+	s=korg; t=1772002636;
+	bh=/X+To6IdPKrACDRbafurFz7yPJIGGFgYkKDGRCBa3BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDoLirNyiGr+NI6tHOiRPCKA0Q6ZcLHFD3HE6CbQXIW1IzTC8vNoymtzNHgSggqeN
-	 H5Dw2E0HWXk3yv07P5JTfRyswHXEtiaJxCTw2Vokj+qW8vqF8av69ns+ZGkweXVBkV
-	 0E1PXrx6AD7Cp6Y7rWPC340cXt0jOp7ppYLtngXY=
+	b=U2/yJ3aGzwuD+6q2sw2xIkXD9gdL8WuBiuuhYQveeiADqMb8YwSChhRx3ZxazYRQ0
+	 fhK4K57SnrWuYORfBsdSRB1a1GOOr6POCE0dnVM+0l47TqGWSent8ELbLuCAOztG2h
+	 tHkFJHapzGiSDbDoQh6oJmqBNVovwyb+AJOx82Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Felix Gu <ustc.gu@gmail.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 400/641] fbdev: of_display_timing: Fix device node reference leak in of_get_display_timings()
-Date: Tue, 24 Feb 2026 17:22:06 -0800
-Message-ID: <20260225012358.261219103@linuxfoundation.org>
+Subject: [PATCH 6.18 401/641] fbdev: au1200fb: Fix a memory leak in au1200fb_drv_probe()
+Date: Tue, 24 Feb 2026 17:22:07 -0800
+Message-ID: <20260225012358.284225466@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,51 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit c39ee2d264f98efa14aa46c9942114cb03c7baa6 ]
+[ Upstream commit ce4e25198a6aaaaf36248edf8daf3d744ec8e309 ]
 
-Use for_each_child_of_node_scoped instead of for_each_child_of_node
-to ensure automatic of_node_put on early exit paths, preventing
-device node reference leak.
+In au1200fb_drv_probe(), when platform_get_irq fails(), it directly
+returns from the function with an error code, which causes a memory
+leak.
 
-Fixes: cc3f414cf2e4 ("video: add of helper for display timings/videomode")
+Replace it with a goto label to ensure proper cleanup.
+
+Fixes: 4e88761f5f8c ("fbdev: au1200fb: Fix missing IRQ check in au1200fb_drv_probe")
 Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/of_display_timing.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/au1200fb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/of_display_timing.c b/drivers/video/of_display_timing.c
-index bebd371c6b93e..a4cd446ac5a59 100644
---- a/drivers/video/of_display_timing.c
-+++ b/drivers/video/of_display_timing.c
-@@ -195,7 +195,7 @@ struct display_timings *of_get_display_timings(const struct device_node *np)
- 	disp->num_timings = 0;
- 	disp->native_mode = 0;
+diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
+index ed770222660b5..685e629e7e164 100644
+--- a/drivers/video/fbdev/au1200fb.c
++++ b/drivers/video/fbdev/au1200fb.c
+@@ -1724,8 +1724,10 @@ static int au1200fb_drv_probe(struct platform_device *dev)
  
--	for_each_child_of_node(timings_np, entry) {
-+	for_each_child_of_node_scoped(timings_np, child) {
- 		struct display_timing *dt;
- 		int r;
+ 	/* Now hook interrupt too */
+ 	irq = platform_get_irq(dev, 0);
+-	if (irq < 0)
+-		return irq;
++	if (irq < 0) {
++		ret = irq;
++		goto failed;
++	}
  
-@@ -206,7 +206,7 @@ struct display_timings *of_get_display_timings(const struct device_node *np)
- 			goto timingfail;
- 		}
- 
--		r = of_parse_display_timing(entry, dt);
-+		r = of_parse_display_timing(child, dt);
- 		if (r) {
- 			/*
- 			 * to not encourage wrong devicetrees, fail in case of
-@@ -218,7 +218,7 @@ struct display_timings *of_get_display_timings(const struct device_node *np)
- 			goto timingfail;
- 		}
- 
--		if (native_mode == entry)
-+		if (native_mode == child)
- 			disp->native_mode = disp->num_timings;
- 
- 		disp->timings[disp->num_timings] = dt;
+ 	ret = request_irq(irq, au1200fb_handle_irq,
+ 			  IRQF_SHARED, "lcd", (void *)dev);
 -- 
 2.51.0
 
