@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C9B18DB2A;
-	Wed, 25 Feb 2026 01:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4794A18DB2A;
+	Wed, 25 Feb 2026 01:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983269; cv=none; b=nLJjHAEtcwJXtQdHcuVzoFvMySb0KKkfZfDSyIXcfeNRmJxniKLgxQOTKkr5O5kX2QkBBUgfhzTK+1avW/a9dGhF6TxrWcHjz1DDd5N3iVCAGqcRGIK3ZSxADRua/RfErtnwQ+eY6jAkr5k3Kg18hgKKn56f9M88yZTRy+cjIa4=
+	t=1771983270; cv=none; b=MAB7LSoQgQI4Z+oKRzyW7eoXfj2OdpxDjYVOBe2OiEMRYni6t/cnVuelP3WurptfkZidpQK+ITmADZnyOViz5wTZ1lgC6NYp3jYPYCEX8yd9T+eGVCNRnahiMxBEwBQ/3l1tppailExnJDAotRtkrXhlnBFO6xKuNranAJMJ/2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983269; c=relaxed/simple;
-	bh=nRvxRFONJGF455313GBLGA8zR7MnUN3oTLIs2OaeRuw=;
+	s=arc-20240116; t=1771983270; c=relaxed/simple;
+	bh=sgW2jOuXzXw2W8pW4L+ds1sVGWWj/dCpFAr7fabmSt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlnJBS2sD1tWvenAluy7F1IlNDc+4GN81F7XGtpCCqUCJwr4fmnbJh2EdVAmz5my6kDX2ul33Hcq1GvsDD6iWGIid2kZ1CJrQSqrcCl9TAVvS5JhVx63cuiZMWY/IXMK9/fRVvalntfixHxu5A4mxPn3v//MX7+Q9QquMTfcrWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqyKvb1O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jdcJpFxylE+aRXXilrgO9y8rZ9mUmVCReGkVY6OVFPULRDv6AISqmDecRAJ5rB3Ju6NAK83778tdWAJxJaL5I0W7TPHENQ898LNg0E0hf8FJbtJRR875g3KZNh6oBzd4QG3nukU1pQSTCL/9lRzxqY6AXuatIihGQ7qurztBbkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tO0WpRw4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqyKvb1O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37C3C116D0;
-	Wed, 25 Feb 2026 01:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tO0WpRw4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081CFC116D0;
+	Wed, 25 Feb 2026 01:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983269;
-	bh=nRvxRFONJGF455313GBLGA8zR7MnUN3oTLIs2OaeRuw=;
+	s=korg; t=1771983270;
+	bh=sgW2jOuXzXw2W8pW4L+ds1sVGWWj/dCpFAr7fabmSt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zqyKvb1O1PuJItYwQHZQ4MsbOf/SRS73P2xOVhjAk8sF0kdxizDnOVng6nML2DULP
-	 EYY1MT+vt9NeU+T3hB7rs89EdQu66E08gEO+Uxa2O81khIxL6yTmh7MKEvUs/ImKA6
-	 jUQIz8wD+P4Nt0uAb4LJLC4Lg0TtkS0Ms6J7D7g8=
+	b=tO0WpRw4GfZcssnJaB4wbI+laifRKxysw0hUNOlySEgZsYaJ1afEByya5a06525Os
+	 w9IhwPpDgZT6UiCij0U15Lic9+E/WAzmg11eh7J/5MMm/SnbG9Wyl03cyOCpXkKPM6
+	 0/ZOQQhtA49k0z9ow4FaWimMvyimUmxSfbETKEQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 392/781] PCI: dwc: ep: Cache MSI outbound iATU mapping
-Date: Tue, 24 Feb 2026 17:18:21 -0800
-Message-ID: <20260225012409.314839089@linuxfoundation.org>
+Subject: [PATCH 6.19 410/781] netfilter: nft_set_hash: fix get operation on big endian
+Date: Tue, 24 Feb 2026 17:18:39 -0800
+Message-ID: <20260225012409.760147623@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,149 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 8719c64e76bf258cc8f44109740c854f2e2ead2e ]
+[ Upstream commit 2f635adbe2642d398a0be3ab245accd2987be0c3 ]
 
-dw_pcie_ep_raise_msi_irq() currently programs an outbound iATU window
-for the MSI target address on every interrupt and tears it down again
-via dw_pcie_ep_unmap_addr().
+tests/shell/testcases/packetpath/set_match_nomatch_hash_fast
+fails on big endian with:
 
-On systems that heavily use the AXI bridge interface (for example when
-the integrated eDMA engine is active), this means the outbound iATU
-registers are updated while traffic is in flight. The DesignWare
-endpoint databook 5.40a - "3.10.6.1 iATU Outbound Programming Overview"
-warns that updating iATU registers in this situation is not supported,
-and the behavior is undefined.
+Error: Could not process rule: No such file or directory
+reset element ip test s { 244.147.90.126 }
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Fatal: Cannot fetch element "244.147.90.126"
 
-Under high MSI and eDMA load this pattern results in occasional bogus
-outbound transactions and IOMMU faults, on the RC side, such as:
+... because the wrong bucket is searched, jhash() and jhash1_word are
+not interchangeable on big endian.
 
-  ipmmu-vmsa eed40000.iommu: Unhandled fault: status 0x00001502 iova 0xfe000000
-
-followed by the system becoming unresponsive. This is the actual output
-observed on Renesas R-Car S4, with its ipmmu_hc used with PCIe ch0.
-
-There is no need to reprogram the iATU region used for MSI on every
-interrupt. The host-provided MSI address is stable while MSI is enabled,
-and the endpoint driver already dedicates a scratch buffer for MSI
-generation.
-
-Cache the aligned MSI address and map size, program the outbound iATU
-once, and keep the window enabled. Subsequent interrupts only perform a
-write to the MSI scratch buffer, avoiding dynamic iATU reprogramming in
-the hot path and fixing the lockups seen under load.
-
-dw_pcie_ep_raise_msix_irq() is not modified, as each vector can have a
-different msg_addr, and because the msg_addr is allowed to be changed
-while the vector is masked. Neither problem is easy to solve with the
-current design. Instead, the plan is for the DWC vendor drivers to
-transition to dw_pcie_ep_raise_msix_irq_doorbell(), which does not rely
-on the iATU.
-
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-[cassel: improve commit message]
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20251222110144.3299523-2-cassel@kernel.org
-Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
+Fixes: 3b02b0adc242 ("netfilter: nft_set_hash: fix lookups with fixed size hash on big endian")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pci/controller/dwc/pcie-designware-ep.c   | 48 ++++++++++++++++---
- drivers/pci/controller/dwc/pcie-designware.h  |  5 ++
- 2 files changed, 47 insertions(+), 6 deletions(-)
+ net/netfilter/nft_set_hash.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index f6c54625486e2..1195d401df19e 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -601,6 +601,16 @@ static void dw_pcie_ep_stop(struct pci_epc *epc)
- 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index ba01ce75d6dea..739b992bde591 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -619,15 +619,20 @@ static struct nft_elem_priv *
+ nft_hash_get(const struct net *net, const struct nft_set *set,
+ 	     const struct nft_set_elem *elem, unsigned int flags)
+ {
++	const u32 *key = (const u32 *)&elem->key.val;
+ 	struct nft_hash *priv = nft_set_priv(set);
+ 	u8 genmask = nft_genmask_cur(net);
+ 	struct nft_hash_elem *he;
+ 	u32 hash;
  
-+	/*
-+	 * Tear down the dedicated outbound window used for MSI
-+	 * generation. This avoids leaking an iATU window across
-+	 * endpoint stop/start cycles.
-+	 */
-+	if (ep->msi_iatu_mapped) {
-+		dw_pcie_ep_unmap_addr(epc, 0, 0, ep->msi_mem_phys);
-+		ep->msi_iatu_mapped = false;
-+	}
+-	hash = jhash(elem->key.val.data, set->klen, priv->seed);
++	if (set->klen == 4)
++		hash = jhash_1word(*key, priv->seed);
++	else
++		hash = jhash(key, set->klen, priv->seed);
 +
- 	dw_pcie_stop_link(pci);
- }
- 
-@@ -702,14 +712,37 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
- 	msg_addr = ((u64)msg_addr_upper) << 32 | msg_addr_lower;
- 
- 	msg_addr = dw_pcie_ep_align_addr(epc, msg_addr, &map_size, &offset);
--	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
--				  map_size);
--	if (ret)
--		return ret;
- 
--	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
-+	/*
-+	 * Program the outbound iATU once and keep it enabled.
-+	 *
-+	 * The spec warns that updating iATU registers while there are
-+	 * operations in flight on the AXI bridge interface is not
-+	 * supported, so we avoid reprogramming the region on every MSI,
-+	 * specifically unmapping immediately after writel().
-+	 */
-+	if (!ep->msi_iatu_mapped) {
-+		ret = dw_pcie_ep_map_addr(epc, func_no, 0,
-+					  ep->msi_mem_phys, msg_addr,
-+					  map_size);
-+		if (ret)
-+			return ret;
-+
-+		ep->msi_iatu_mapped = true;
-+		ep->msi_msg_addr = msg_addr;
-+		ep->msi_map_size = map_size;
-+	} else if (WARN_ON_ONCE(ep->msi_msg_addr != msg_addr ||
-+				ep->msi_map_size != map_size)) {
-+		/*
-+		 * The host changed the MSI target address or the required
-+		 * mapping size changed. Reprogramming the iATU at runtime is
-+		 * unsafe on this controller, so bail out instead of trying to
-+		 * update the existing region.
-+		 */
-+		return -EINVAL;
-+	}
- 
--	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
-+	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
- 
- 	return 0;
- }
-@@ -1087,6 +1120,9 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
- 	struct device *dev = pci->dev;
- 
- 	INIT_LIST_HEAD(&ep->func_list);
-+	ep->msi_iatu_mapped = false;
-+	ep->msi_msg_addr = 0;
-+	ep->msi_map_size = 0;
- 
- 	epc = devm_pci_epc_create(dev, &epc_ops);
- 	if (IS_ERR(epc)) {
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index aec4af5194b51..f9e2eaa3571e0 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -479,6 +479,11 @@ struct dw_pcie_ep {
- 	void __iomem		*msi_mem;
- 	phys_addr_t		msi_mem_phys;
- 	struct pci_epf_bar	*epf_bar[PCI_STD_NUM_BARS];
-+
-+	/* MSI outbound iATU state */
-+	bool			msi_iatu_mapped;
-+	u64			msi_msg_addr;
-+	size_t			msi_map_size;
- };
- 
- struct dw_pcie_ops {
+ 	hash = reciprocal_scale(hash, priv->buckets);
+ 	hlist_for_each_entry_rcu(he, &priv->table[hash], node) {
+-		if (!memcmp(nft_set_ext_key(&he->ext), elem->key.val.data, set->klen) &&
++		if (!memcmp(nft_set_ext_key(&he->ext), key, set->klen) &&
+ 		    nft_set_elem_active(&he->ext, genmask))
+ 			return &he->priv;
+ 	}
 -- 
 2.51.0
 
