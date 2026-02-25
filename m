@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0FA1E2834;
-	Wed, 25 Feb 2026 01:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16C018DB2A;
+	Wed, 25 Feb 2026 01:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983153; cv=none; b=n6OqOCq6YJqCVwZKa+/2tHd78U3rHcziWX+0Jg3UyUaG35sNQ8oC3SkqnkOf//RMOTkTDcZcs2jT4t04NU3qOLfJvsS0MIIW9rMQPgXTMzKBCdA/jZj8jP8jBrEN+JB2dFI/jJzY8q/lOa8SH7RVbnICKlDN45S8UIiJaKS+Ois=
+	t=1771983154; cv=none; b=UoczlO/NbWTbp5athSkgk19rXK0xyzooU9LCw5+mIsoi7Dmy9QZryH6gtp1TYeuS9TmGgB81EVv96+R+Yftf+j/6J16qIgIInqiWtLWw/lHIPFLMkg4lT/VTXXIh5LG6NzlUYlo2l7oK+Rulg38aZ3x4UYBvYRIMaR2Ad4xISEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983153; c=relaxed/simple;
-	bh=TnoZ2E5e8WIOdl/w4U6Oq6n8+hPEIyOYM+aU1QGU+8s=;
+	s=arc-20240116; t=1771983154; c=relaxed/simple;
+	bh=61sP3H5XnpjIx5TjRE5/c84Otf7tmcz44vlTHvr59ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lYc5s1Z+P/80qKtabIp4PQjump66b2pGaMspHXnSgPPQJUPMsUgBgNTyZf8hePhWO/8fJV6zfFAr+HfV7AsOj9ZKs8xdK2SPT0S8ZH0cMsYJYUfzudiuc2AFPuL6pREWdqOKwAcKkj3lUFW1NfzjS5WJR2C9pgUqiLFeCXfRq0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9tNPETa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fGoQVKSj0f9w2M8y3PrvmBmQgljleGs+poopgLCYOcdj5lGFEAMew2c2dyxNEE1ZjdaBBhyVitwVQdW69c0DZVaDh4s/8DUboo8GH+DVspQkV+6vc9GXHoldo0FXRvkELXTczIn2wiF6xjCADzHvCyopgusb1a2S32eE5/OVl9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRpMBwuA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9tNPETa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69695C116D0;
-	Wed, 25 Feb 2026 01:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRpMBwuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E89C116D0;
+	Wed, 25 Feb 2026 01:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983153;
-	bh=TnoZ2E5e8WIOdl/w4U6Oq6n8+hPEIyOYM+aU1QGU+8s=;
+	s=korg; t=1771983154;
+	bh=61sP3H5XnpjIx5TjRE5/c84Otf7tmcz44vlTHvr59ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x9tNPETa/bZAOiryzAPOOL58BvOvhgTF0b1KJsB2+Sq8mMYN4PTDdQ+6E6gk+pPn2
-	 qFyX5Q7NnsAufqCr86df8VktF+9mPxLDQQAcp4LUAm/RCMxkexff25NGpB0bsRqLYP
-	 wlRAaaxUtE3LxbP6A3SrvIk0k6BoIelEmUGAgSC0=
+	b=wRpMBwuA8hD77DTOlqvHtnZo+JvAXTAmq0ikEm5xUmt/jYw1Mquyg/f0dqJDYHuRU
+	 LPvQAJdr3WXz9UnHu3/FuIMUpbzypj6hImgw95bBt1tPzbH2N36kASuo+qozGjbKnd
+	 GWlLo86pR8Rpfs7ZFOdyAWfufWBqSdcfEnpT8y/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 252/781] mei: late_bind: fix struct intel_lb_component_ops kernel-doc
-Date: Tue, 24 Feb 2026 17:16:01 -0800
-Message-ID: <20260225012405.889488839@linuxfoundation.org>
+Subject: [PATCH 6.19 300/781] accel/amdxdna: Remove hardware context status
+Date: Tue, 24 Feb 2026 17:16:49 -0800
+Message-ID: <20260225012407.064870941@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,44 +51,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 936cae9254e55a39aeaa0c156a764d22f319338b ]
+[ Upstream commit b853007fdcdd64b49601a993c2b30c28279ae15d ]
 
-Fix kernel-doc warnings on struct intel_lb_component_ops:
+One newly supported command does not require hardware context configuration
+to be performed upfront. As a result, checking hardware context status
+causes this command to fail incorrectly.
 
-Warning: include/drm/intel/intel_lb_mei_interface.h:55 Incorrect use of
-  kernel-doc format: * push_payload - Sends a payload to the
-  authentication firmware
+Remove hardware context status handling entirely. For other commands,
+if userspace submits a request without configuring the hardware context
+first, the firmware will report an error or time out as appropriate.
 
-And a bunch more. There isn't really support for documenting function
-pointer struct members in kernel-doc, but at least reference the member
-properly.
-
-Fixes: 741eeabb7c78 ("mei: late_bind: add late binding component driver")
-Cc: Alexander Usyskin <alexander.usyskin@intel.com>
-Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
-Link: https://patch.msgid.link/20260107160226.2381388-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260202212450.2681273-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/intel/intel_lb_mei_interface.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/accel/amdxdna/aie2_ctx.c     | 25 ++-----------------------
+ drivers/accel/amdxdna/aie2_message.c |  3 +++
+ drivers/accel/amdxdna/amdxdna_ctx.h  |  5 -----
+ 3 files changed, 5 insertions(+), 28 deletions(-)
 
-diff --git a/include/drm/intel/intel_lb_mei_interface.h b/include/drm/intel/intel_lb_mei_interface.h
-index d65be2cba2ab9..0850738a30fc7 100644
---- a/include/drm/intel/intel_lb_mei_interface.h
-+++ b/include/drm/intel/intel_lb_mei_interface.h
-@@ -53,7 +53,8 @@ enum intel_lb_status {
-  */
- struct intel_lb_component_ops {
- 	/**
--	 * push_payload - Sends a payload to the authentication firmware
-+	 * @push_payload: Sends a payload to the authentication firmware
-+	 *
- 	 * @dev: Device struct corresponding to the mei device
- 	 * @type: Payload type (see &enum intel_lb_type)
- 	 * @flags: Payload flags bitmap (e.g. %INTEL_LB_FLAGS_IS_PERSISTENT)
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index c4a58c00e442a..ad5b5cd0bc81f 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -47,17 +47,6 @@ static void aie2_job_put(struct amdxdna_sched_job *job)
+ 	kref_put(&job->refcnt, aie2_job_release);
+ }
+ 
+-static void aie2_hwctx_status_shift_stop(struct amdxdna_hwctx *hwctx)
+-{
+-	 hwctx->old_status = hwctx->status;
+-	 hwctx->status = HWCTX_STAT_STOP;
+-}
+-
+-static void aie2_hwctx_status_restore(struct amdxdna_hwctx *hwctx)
+-{
+-	hwctx->status = hwctx->old_status;
+-}
+-
+ /* The bad_job is used in aie2_sched_job_timedout, otherwise, set it to NULL */
+ static void aie2_hwctx_stop(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hwctx,
+ 			    struct drm_sched_job *bad_job)
+@@ -84,11 +73,6 @@ static int aie2_hwctx_restart(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hw
+ 		goto out;
+ 	}
+ 
+-	if (hwctx->status != HWCTX_STAT_READY) {
+-		XDNA_DBG(xdna, "hwctx is not ready, status %d", hwctx->status);
+-		goto out;
+-	}
+-
+ 	ret = aie2_config_cu(hwctx, NULL);
+ 	if (ret) {
+ 		XDNA_ERR(xdna, "Config cu failed, ret %d", ret);
+@@ -140,7 +124,6 @@ static int aie2_hwctx_suspend_cb(struct amdxdna_hwctx *hwctx, void *arg)
+ 
+ 	aie2_hwctx_wait_for_idle(hwctx);
+ 	aie2_hwctx_stop(xdna, hwctx, NULL);
+-	aie2_hwctx_status_shift_stop(hwctx);
+ 
+ 	return 0;
+ }
+@@ -162,7 +145,6 @@ static int aie2_hwctx_resume_cb(struct amdxdna_hwctx *hwctx, void *arg)
+ {
+ 	struct amdxdna_dev *xdna = hwctx->client->xdna;
+ 
+-	aie2_hwctx_status_restore(hwctx);
+ 	return aie2_hwctx_restart(xdna, hwctx);
+ }
+ 
+@@ -315,7 +297,7 @@ aie2_sched_job_run(struct drm_sched_job *sched_job)
+ 	struct dma_fence *fence;
+ 	int ret;
+ 
+-	if (hwctx->status != HWCTX_STAT_READY)
++	if (!hwctx->priv->mbox_chann)
+ 		return NULL;
+ 
+ 	if (!mmget_not_zero(job->mm))
+@@ -666,7 +648,6 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
+ 	}
+ 	amdxdna_pm_suspend_put(xdna);
+ 
+-	hwctx->status = HWCTX_STAT_INIT;
+ 	init_waitqueue_head(&priv->job_free_wq);
+ 
+ 	XDNA_DBG(xdna, "hwctx %s init completed", hwctx->name);
+@@ -710,7 +691,6 @@ void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx)
+ 	/* Request fw to destroy hwctx and cancel the rest pending requests */
+ 	drm_sched_stop(&hwctx->priv->sched, NULL);
+ 	aie2_release_resource(hwctx);
+-	hwctx->status = HWCTX_STAT_STOP;
+ 	drm_sched_start(&hwctx->priv->sched, 0);
+ 
+ 	mutex_unlock(&xdna->dev_lock);
+@@ -755,7 +735,7 @@ static int aie2_hwctx_cu_config(struct amdxdna_hwctx *hwctx, void *buf, u32 size
+ 	if (XDNA_MBZ_DBG(xdna, config->pad, sizeof(config->pad)))
+ 		return -EINVAL;
+ 
+-	if (hwctx->status != HWCTX_STAT_INIT) {
++	if (hwctx->cus) {
+ 		XDNA_ERR(xdna, "Not support re-config CU");
+ 		return -EINVAL;
+ 	}
+@@ -786,7 +766,6 @@ static int aie2_hwctx_cu_config(struct amdxdna_hwctx *hwctx, void *buf, u32 size
+ 	}
+ 
+ 	wmb(); /* To avoid locking in command submit when check status */
+-	hwctx->status = HWCTX_STAT_READY;
+ 
+ 	return 0;
+ 
+diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
+index 273d6af9f6f52..2c5b27d90563e 100644
+--- a/drivers/accel/amdxdna/aie2_message.c
++++ b/drivers/accel/amdxdna/aie2_message.c
+@@ -450,6 +450,9 @@ int aie2_config_cu(struct amdxdna_hwctx *hwctx,
+ 	if (!chann)
+ 		return -ENODEV;
+ 
++	if (!hwctx->cus)
++		return 0;
++
+ 	if (hwctx->cus->num_cus > MAX_NUM_CUS) {
+ 		XDNA_DBG(xdna, "Exceed maximum CU %d", MAX_NUM_CUS);
+ 		return -EINVAL;
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.h b/drivers/accel/amdxdna/amdxdna_ctx.h
+index b29449a92f607..16c85f08f03c6 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.h
++++ b/drivers/accel/amdxdna/amdxdna_ctx.h
+@@ -99,11 +99,6 @@ struct amdxdna_hwctx {
+ 	u32				start_col;
+ 	u32				num_col;
+ 	u32				num_unused_col;
+-#define HWCTX_STAT_INIT  0
+-#define HWCTX_STAT_READY 1
+-#define HWCTX_STAT_STOP  2
+-	u32				status;
+-	u32				old_status;
+ 
+ 	struct amdxdna_qos_info		     qos;
+ 	struct amdxdna_hwctx_param_config_cu *cus;
 -- 
 2.51.0
 
