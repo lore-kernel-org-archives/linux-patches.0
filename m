@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7E318B0A;
-	Wed, 25 Feb 2026 01:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1550618B0A;
+	Wed, 25 Feb 2026 01:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983293; cv=none; b=lN2objda002iyPCAoANuDDPl5xC5wijqzU9Kq+qg+OHeb+cR9Jp1lQUuTOc+SU/ng3re4xmngMXR5HuuoImRemg0rNG4HYw9YCPlzDlRuWwlQheA1j7uDV3WcmnSDfRb60Z0g/v4hQFRfSc5Hk6T/YzJClzOpJB4quAAMR068Dw=
+	t=1771983294; cv=none; b=eLMc+OFjWrL2GbVrTPItUPjGr5zlBKjxCjdFyX1h0mEGKYs/NGn/H2zqeEY8GhOEbcHqwFCBbS4jduZ+y+IWwr+s7RTxOoy/1Xxy1eFGpEDOIv7CStI1h/SSz+odglJH1hCwdCoVDLqYSOsLPjM+eQBuVGFjzneduHSQU615R5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983293; c=relaxed/simple;
-	bh=0JM3g76itItSZcuTgviLI0+yvWUzlMpDIrUZBWxJAeE=;
+	s=arc-20240116; t=1771983294; c=relaxed/simple;
+	bh=h3cYgwF88s5OW2gow2z4uh9v3+FaIJScQdhRICwuns0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzT4UAGYnbobKmyYz8hPkRsEbFf+A97CaDuW9vlhKMKyxOkYjWDHAyt8uGfWQO99c8YQPwtqzmybqtgCoiwWQxMUiIS5KL/b+YykgJi5Ro+MheaXk1Xe6Yj8vHM9RjzV3DzUL+UfakfaNvzaJtzucfSOts/wS+5k8UDOcEs7+qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrZo0Hq/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hOeVYekB2H3mqLSf0cb3+4BhAC6kAy8TnVy2GTA/Zey8crVSAshKnB7upB8kgm1PZiKN3inO73jjMVR+CorrcpIC0yNjGb/Wp4M+HoP5dGLnIp5H/JjwGNHNE0M0lCKGfVi+hsiCvBGUSLemlbrM3EC4K8DmHUcH2490ZMYlmGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgNfFBr/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrZo0Hq/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D7BC116D0;
-	Wed, 25 Feb 2026 01:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgNfFBr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48DFC2BC86;
+	Wed, 25 Feb 2026 01:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983292;
-	bh=0JM3g76itItSZcuTgviLI0+yvWUzlMpDIrUZBWxJAeE=;
+	s=korg; t=1771983294;
+	bh=h3cYgwF88s5OW2gow2z4uh9v3+FaIJScQdhRICwuns0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrZo0Hq/GkYouxfrqqaO0a1oq6Y89nS+1b002JJw9iY9zNi5eX/7cg2SclGlx7R1G
-	 ImyEqBxJPMeV3ZiYOdPTNf2789lvkjTlnysT1VHrfhO2zSgmYt7cHRaxAeYMcNc9GB
-	 1RHYVBuSZ6Y/cLa+1Yd6EKCXEOitrQGdkuhepe6w=
+	b=rgNfFBr/GCEzmogNpT/NlbJCpOedaSdaZ3f3rvyr7+1Z8OTcJg+XXhINxPubm5PGj
+	 3Vn0Zk6PX2qDhJhP0KXCJo0kQgqjC8Ta1h5N90NBZ7ejI+OKFNmLtzOq8Hde4KoMAB
+	 JDhN1z84MqYRDnJiVzWaCufFCDWuHtA7+h2/U/pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot+1f22cb1769f249df9fa0@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 427/781] smb: client: correct value for smbd_max_fragmented_recv_size
-Date: Tue, 24 Feb 2026 17:18:56 -0800
-Message-ID: <20260225012410.174214663@linuxfoundation.org>
+Subject: [PATCH 6.19 428/781] net: atm: fix crash due to unvalidated vcc pointer in sigd_send()
+Date: Tue, 24 Feb 2026 17:18:57 -0800
+Message-ID: <20260225012410.196063405@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -57,76 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 4a93d1ee2d0206970b6eb13fbffe07938cd95948 ]
+[ Upstream commit ae88a5d2f29b69819dc7b04086734439d074a643 ]
 
-When we download a file without rdma offload or get
-a large directly enumeration from the server,
-the server might want to send up to smbd_max_fragmented_recv_size
-bytes, but if it is too large all our recv buffers
-might already be moved to the recv_io.reassembly.list
-and we're no longer able to grant recv credits.
+Reproducer available at [1].
 
-The maximum fragmented upper-layer payload receive size supported
+The ATM send path (sendmsg -> vcc_sendmsg -> sigd_send) reads the vcc
+pointer from msg->vcc and uses it directly without any validation. This
+pointer comes from userspace via sendmsg() and can be arbitrarily forged:
 
-Assume max_payload_per_credit is
-smbd_max_receive_size - 24 = 1340
+    int fd = socket(AF_ATMSVC, SOCK_DGRAM, 0);
+    ioctl(fd, ATMSIGD_CTRL);  // become ATM signaling daemon
+    struct msghdr msg = { .msg_iov = &iov, ... };
+    *(unsigned long *)(buf + 4) = 0xdeadbeef;  // fake vcc pointer
+    sendmsg(fd, &msg, 0);  // kernel dereferences 0xdeadbeef
 
-The maximum number would be
-smbd_receive_credit_max * max_payload_per_credit
+In normal operation, the kernel sends the vcc pointer to the signaling
+daemon via sigd_enq() when processing operations like connect(), bind(),
+or listen(). The daemon is expected to return the same pointer when
+responding. However, a malicious daemon can send arbitrary pointer values.
 
-                      1340 * 255 = 341700 (0x536C4)
+Fix this by introducing find_get_vcc() which validates the pointer by
+searching through vcc_hash (similar to how sigd_close() iterates over
+all VCCs), and acquires a reference via sock_hold() if found.
 
-The minimum value from the spec is 131072 (0x20000)
+Since struct atm_vcc embeds struct sock as its first member, they share
+the same lifetime. Therefore using sock_hold/sock_put is sufficient to
+keep the vcc alive while it is being used.
 
-For now we use the logic we used in ksmbd before:
-                (1364 * 255) / 2 = 173910 (0x2A756)
+Note that there may be a race with sigd_close() which could mark the vcc
+with various flags (e.g., ATM_VF_RELEASED) after find_get_vcc() returns.
+However, sock_hold() guarantees the memory remains valid, so this race
+only affects the logical state, not memory safety.
 
-Fixes: 03bee01d6215 ("CIFS: SMBD: Add SMB Direct protocol initial values and constants")
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+[1]: https://gist.github.com/mrpre/1ba5949c45529c511152e2f4c755b0f3
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+1f22cb1769f249df9fa0@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69039850.a70a0220.5b2ed.005d.GAE@google.com/T/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260205095501.131890-1-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ net/atm/signaling.c | 56 +++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 54 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index 01d55bcc6d0f9..c8cef098d4806 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -101,8 +101,23 @@ int smbd_send_credit_target = 255;
- /* The maximum single message size can be sent to remote peer */
- int smbd_max_send_size = 1364;
+diff --git a/net/atm/signaling.c b/net/atm/signaling.c
+index e70ae2c113f95..358fbe5e4d1d0 100644
+--- a/net/atm/signaling.c
++++ b/net/atm/signaling.c
+@@ -22,6 +22,36 @@
  
--/*  The maximum fragmented upper-layer payload receive size supported */
--int smbd_max_fragmented_recv_size = 1024 * 1024;
+ struct atm_vcc *sigd = NULL;
+ 
 +/*
-+ * The maximum fragmented upper-layer payload receive size supported
++ * find_get_vcc - validate and get a reference to a vcc pointer
++ * @vcc: the vcc pointer to validate
 + *
-+ * Assume max_payload_per_credit is
-+ * smbd_max_receive_size - 24 = 1340
++ * This function validates that @vcc points to a registered VCC in vcc_hash.
++ * If found, it increments the socket reference count and returns the vcc.
++ * The caller must call sock_put(sk_atm(vcc)) when done.
 + *
-+ * The maximum number would be
-+ * smbd_receive_credit_max * max_payload_per_credit
-+ *
-+ *                       1340 * 255 = 341700 (0x536C4)
-+ *
-+ * The minimum value from the spec is 131072 (0x20000)
-+ *
-+ * For now we use the logic we used in ksmbd before:
-+ *                 (1364 * 255) / 2 = 173910 (0x2A756)
++ * Returns the vcc pointer if valid, NULL otherwise.
 + */
-+int smbd_max_fragmented_recv_size = (1364 * 255) / 2;
++static struct atm_vcc *find_get_vcc(struct atm_vcc *vcc)
++{
++	int i;
++
++	read_lock(&vcc_sklist_lock);
++	for (i = 0; i < VCC_HTABLE_SIZE; i++) {
++		struct sock *s;
++
++		sk_for_each(s, &vcc_hash[i]) {
++			if (atm_sk(s) == vcc) {
++				sock_hold(s);
++				read_unlock(&vcc_sklist_lock);
++				return vcc;
++			}
++		}
++	}
++	read_unlock(&vcc_sklist_lock);
++	return NULL;
++}
++
+ static void sigd_put_skb(struct sk_buff *skb)
+ {
+ 	if (!sigd) {
+@@ -69,7 +99,14 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
  
- /*  The maximum single-message size which can be received */
- int smbd_max_receive_size = 1364;
+ 	msg = (struct atmsvc_msg *) skb->data;
+ 	WARN_ON(refcount_sub_and_test(skb->truesize, &sk_atm(vcc)->sk_wmem_alloc));
+-	vcc = *(struct atm_vcc **) &msg->vcc;
++
++	vcc = find_get_vcc(*(struct atm_vcc **)&msg->vcc);
++	if (!vcc) {
++		pr_debug("invalid vcc pointer in msg\n");
++		dev_kfree_skb(skb);
++		return -EINVAL;
++	}
++
+ 	pr_debug("%d (0x%lx)\n", (int)msg->type, (unsigned long)vcc);
+ 	sk = sk_atm(vcc);
+ 
+@@ -100,7 +137,16 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
+ 		clear_bit(ATM_VF_WAITING, &vcc->flags);
+ 		break;
+ 	case as_indicate:
+-		vcc = *(struct atm_vcc **)&msg->listen_vcc;
++		/* Release the reference from msg->vcc, we'll use msg->listen_vcc instead */
++		sock_put(sk);
++
++		vcc = find_get_vcc(*(struct atm_vcc **)&msg->listen_vcc);
++		if (!vcc) {
++			pr_debug("invalid listen_vcc pointer in msg\n");
++			dev_kfree_skb(skb);
++			return -EINVAL;
++		}
++
+ 		sk = sk_atm(vcc);
+ 		pr_debug("as_indicate!!!\n");
+ 		lock_sock(sk);
+@@ -115,6 +161,8 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
+ 		sk->sk_state_change(sk);
+ as_indicate_complete:
+ 		release_sock(sk);
++		/* Paired with find_get_vcc(msg->listen_vcc) above */
++		sock_put(sk);
+ 		return 0;
+ 	case as_close:
+ 		set_bit(ATM_VF_RELEASED, &vcc->flags);
+@@ -131,11 +179,15 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
+ 		break;
+ 	default:
+ 		pr_alert("bad message type %d\n", (int)msg->type);
++		/* Paired with find_get_vcc(msg->vcc) above */
++		sock_put(sk);
+ 		return -EINVAL;
+ 	}
+ 	sk->sk_state_change(sk);
+ out:
+ 	dev_kfree_skb(skb);
++	/* Paired with find_get_vcc(msg->vcc) above */
++	sock_put(sk);
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
