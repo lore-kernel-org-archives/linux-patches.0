@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC75E1D5141;
-	Wed, 25 Feb 2026 01:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435D91D5141;
+	Wed, 25 Feb 2026 01:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983518; cv=none; b=ktfRUYJMqOpdjfRVIqIuz/Ih7CrGVVAKTmUo9uVL05ENyeBxkpYDJ//5omY2FVSc03PnbMf83HaB0SCfGqkCJgOxUrV/cZ8pcs65COpxWMvZXAPSyJBV4E3nklstmqFeBkFFLBrdWLsBrUr6oagEirg77eSuvicN4E5JTEBE658=
+	t=1771983520; cv=none; b=nqhWHp2BY7x5ZgfuBl1pIlsSoUEIuyFiK7gniv2JML6hgyhgiLTofUDX5j3/uIOXiPPrXUqnyWeNtEKng21xuJg2CP7hO/c4uIAMFfqQmQzOIRJBZjgpkyU4FXySLNmn4HWMTZm+5HnlPDRr/XKev4I841vR2Ma9UGQsIDJ+sHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983518; c=relaxed/simple;
-	bh=2SyhXR6q+lOb2Aym7D1/157qvKQusLm94C3q/vvIQM4=;
+	s=arc-20240116; t=1771983520; c=relaxed/simple;
+	bh=sB+I6BBpZRtA1mAk30fNHuCqdb3IAHGlafK8WVohLGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dkQvmNNyc6KhdGjJ+MotpvSzYMxBedBjlEbyQ3FXEgq/tExrE75pXSaf09ETyYZPVd5MpxYFF8a9TP4AHmPy5iAaIWM5PSc0OSXeYP+/PX6/JcuVjDTHeOrKFodZTBnFBpOy3TYXfz+iiMj/oLCt3g5jdIRTOqmGVMHWnEC2NqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhGFdyFV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UK31j3K3jG2ZWgPhJG9Od99xF034ruXhHlXNXgxSp+gFiDvmVR3e7jsmRuKQt0vLMtstXHB1N+5ms5awoEc6evlwb5Vx8uFmv7rl6AnDSpEKmv1XCLw9jSgLr+5I0CH+UfGbuYDTMej+NAv0gysvBoWNvyYAR9lX6K9yatsM2x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuTVqQim; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhGFdyFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A17C116D0;
-	Wed, 25 Feb 2026 01:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuTVqQim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EE5C116D0;
+	Wed, 25 Feb 2026 01:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983518;
-	bh=2SyhXR6q+lOb2Aym7D1/157qvKQusLm94C3q/vvIQM4=;
+	s=korg; t=1771983519;
+	bh=sB+I6BBpZRtA1mAk30fNHuCqdb3IAHGlafK8WVohLGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhGFdyFV3RG+009oYkageaH5AjWxZ75UHfHljde1Scu3nzxcl6vw6p7mhSiFiZE4V
-	 8GKLAHbCd8Emtd8OSSvyoKPFOQmWrQAeAMn2rpgoAUwLTEzW5m4joFSSQBp2RCbcFi
-	 uFqfZlMH4maJGFqOrcf/I50LmZQXI307WD9a7Oyc=
+	b=TuTVqQimJ5AM5SEERv/z2VFlvlKM2nHayqPOpudUOJc6XwZXuzHTrcNAiEE/K1jh4
+	 d01ifk+d9F7iK9WCGprC4DPvN3WjCSzBQ1qVu2Rt/p4bLlqsouEfN35Y+rW0mMY/i2
+	 ZvrdWvyn/Y9W0qbDzs0FEh9HJFy2OBPTa9bXs5AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 573/781] gpib: Fix error code in ni_usb_write_registers()
-Date: Tue, 24 Feb 2026 17:21:22 -0800
-Message-ID: <20260225012413.855501053@linuxfoundation.org>
+Subject: [PATCH 6.19 620/781] fs/ntfs3: Fix slab-out-of-bounds read in DeleteIndexEntryRoot
+Date: Tue, 24 Feb 2026 17:22:09 -0800
+Message-ID: <20260225012415.018758421@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -50,35 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 484e62252212c5b5fc62eaee5e4977143cb159c6 ]
+[ Upstream commit b2bc7c44ed1779fc9eaab9a186db0f0d01439622 ]
 
-If ni_usb_receive_bulk_msg() succeeds but without reading 16 bytes, then
-the error code needs to be set.  The current code returns success.
+In the 'DeleteIndexEntryRoot' case of the 'do_action' function, the
+entry size ('esize') is retrieved from the log record without adequate
+bounds checking.
 
-Fixes: 4e127de14fa7 ("staging: gpib: Add National Instruments USB GPIB driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aSlMpbE4IrQuBGFS@stanley.mountain
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Specifically, the code calculates the end of the entry ('e2') using:
+    e2 = Add2Ptr(e1, esize);
+
+It then calculates the size for memmove using 'PtrOffset(e2, ...)',
+which subtracts the end pointer from the buffer limit. If 'esize' is
+maliciously large, 'e2' exceeds the used buffer size. This results in
+a negative offset which, when cast to size_t for memmove, interprets
+as a massive unsigned integer, leading to a heap buffer overflow.
+
+This commit adds a check to ensure that the entry size ('esize') strictly
+fits within the remaining used space of the index header before performing
+memory operations.
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpib/ni_usb/ni_usb_gpib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/fslog.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpib/ni_usb/ni_usb_gpib.c b/drivers/gpib/ni_usb/ni_usb_gpib.c
-index 1f8412de9fa32..fdcaa6c00bfea 100644
---- a/drivers/gpib/ni_usb/ni_usb_gpib.c
-+++ b/drivers/gpib/ni_usb/ni_usb_gpib.c
-@@ -566,7 +566,7 @@ static int ni_usb_write_registers(struct ni_usb_priv *ni_priv,
- 			retval, bytes_read);
- 		ni_usb_dump_raw_block(in_data, bytes_read);
- 		kfree(in_data);
--		return retval;
-+		return retval ?: -EINVAL;
- 	}
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 38934e6978ece..28bd611f580d9 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3429,6 +3429,9 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
  
- 	mutex_unlock(&ni_priv->addressed_transfer_lock);
+ 		e1 = Add2Ptr(attr, le16_to_cpu(lrh->attr_off));
+ 		esize = le16_to_cpu(e1->size);
++		if (PtrOffset(e1, Add2Ptr(hdr, used)) < esize)
++			goto dirty_vol;
++
+ 		e2 = Add2Ptr(e1, esize);
+ 
+ 		memmove(e1, e2, PtrOffset(e2, Add2Ptr(hdr, used)));
 -- 
 2.51.0
 
