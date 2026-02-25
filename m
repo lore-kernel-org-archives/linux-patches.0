@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B9D1FE45D;
-	Wed, 25 Feb 2026 01:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE891FE45D;
+	Wed, 25 Feb 2026 01:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983448; cv=none; b=f+0vGjGoMcJMF3HMZD14pZPwz+cL7qtyGOQ/iW3JuwIv0/OaHkqnCbZe+Oge9QoY3loVIo7hojyjpn9f7FDxUROc9E2kKYfAEf/estaiR5NeAGOjb2WBJL1oekUsAu9b9pajNDy+hdLSL/daQJbYVOcIu37nVLOxt8nC4KAZ2aY=
+	t=1771983449; cv=none; b=c6aSWFbn2Ve+hJQlEljoTz/iE+iChot/RKRUck91/Odxzim1rOaXya9xxNM30vKqdd48SRwc5FHERn8+c+92WWKzFOVNpS+EX86HxVnWx5tUCXw2G6aAiQYknXMSpCOqtlb/didxav2iAfXy0lN2zl8mm9zwD8FFW6VCndlf/+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983448; c=relaxed/simple;
-	bh=IXeNWZSF2lzG9nJbO4eZ2PZv6uih5wzD1X30J025B0o=;
+	s=arc-20240116; t=1771983449; c=relaxed/simple;
+	bh=0tmKKklpurzQcV9+NMMED3vS8z4Eqo9HNvRw2qHVYsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YY2eAETv0/oDF5gVVLgm+Vf5sp9SD+JoOOwudpeJ5O3zes/2/nzTDGsV/rHsZ702MAn4Qb9hlXgIq5WnfplV7sb2ACLZ3XorEJ96qx83yGBWWtm+66iHQmnTmj8lEtnSmUKz/MowUPedqZCDho2q+mWBzpgC4UiVPKTfcIOxYLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSSRsCN8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OPbOA/wE5u6NlC/+vb9semRO81+fYpbBZskkqZFk4el+WE9Vpnz4++CHyNzZRfDCEb8pFMKs9x90zIRjDTFb6PBiruS+G8yBWXQoDmZCedfcCLyrOJEM15IBrwkhPTb2y9hKfgm36QUSqQhHVzSqvDTDsV0SALChqjdXiYx9S5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgzP1oYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSSRsCN8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D68C116D0;
-	Wed, 25 Feb 2026 01:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgzP1oYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D328C19423;
+	Wed, 25 Feb 2026 01:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983448;
-	bh=IXeNWZSF2lzG9nJbO4eZ2PZv6uih5wzD1X30J025B0o=;
+	s=korg; t=1771983449;
+	bh=0tmKKklpurzQcV9+NMMED3vS8z4Eqo9HNvRw2qHVYsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSSRsCN8DjN5SgCl7Hl+PCeNKUuqyABeQmYBH/BMB3iaTmhOQDENnOOggFJQdQpnm
-	 M0tqwpWk4o/3A/7YLL+sN17ts+W7uWzF3RDv9Lbie13Ee/tTw666BP6rGhE1RfjLob
-	 s6LL3F9aoGEQqC5jrMYN/Tk7lE784xOvCHaEeuKE=
+	b=bgzP1oYZ3e4kvO+OHezQc5M6TcXFfuYehO/R6c60z+pp4nVbrMSMBZmBZGVwvdM6m
+	 lZQUcTbmTlxZuFQ+dDAGecqsiLzm2/M9D/2eOo40aG+Y4NR1HDgRR6y04erv91Y1aU
+	 0vu1foeCoYCFTdn2GzzzQO4STDs6aiuLfjyV0x0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Foreman <derek.foreman@collabora.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Alper Ak <alperyasinak1@gmail.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 564/781] phy: rockchip: samsung-hdptx: Pre-compute HDMI PLL config for 461.10125 MHz output
-Date: Tue, 24 Feb 2026 17:21:13 -0800
-Message-ID: <20260225012413.634623585@linuxfoundation.org>
+Subject: [PATCH 6.19 565/781] char: misc: Use IS_ERR() for filp_open() return value
+Date: Tue, 24 Feb 2026 17:21:14 -0800
+Message-ID: <20260225012413.660729995@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,59 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Alper Ak <alperyasinak1@gmail.com>
 
-[ Upstream commit f2daf0c67a1767ff6536aa3e96599afb42ca42e7 ]
+[ Upstream commit e849ada70c6b1ee22e9f4f5c0e38231dcee53f04 ]
 
-Attempting to make use of a 1080p@120Hz display mode with 10 bpc RGB on
-my Acer XV275K P3 monitor results in a blank image.  A similar behavior
-has been reported on Philips 279M1RV.
+filp_open() never returns NULL, it returns either a valid pointer or an
+error pointer. Using IS_ERR_OR_NULL() is unnecessary. Additionally, if
+filp were NULL, PTR_ERR(NULL) would return 0, leading to a misleading
+error message.
 
-The faulty modeline is created by drm_gtf_mode_complex() based on the
-following EDID entry from the Standard Timings block:
-
-  GTF:  1920x1080  119.999987 Hz  16:9    138.840 kHz    368.759000 MHz
-
-It's worth noting the computed pixel clock ends up being slightly higher
-at 368.881000 MHz.  Nevertheless, this seems to work consistently fine
-with 8 bpc RGB.
-
-After switching to 10 bpc, the TMDS character rate expected for the mode
-increases to 461.101250 MHz, as per drm_hdmi_compute_mode_clock().
-
-Since there is no entry for this rate in the ropll_tmds_cfg table, the
-necessary HDMI PLL configuration parameters are calculated dynamically
-by rk_hdptx_phy_clk_pll_calc().  However, the resulting output rate is
-not quite a perfect match, i.e. 461.100000 MHz.  That proved to be the
-actual root cause of the problem.
-
-Add a new entry to the TMDS configuration table and provide the
-necessary frequency division coefficients for the PHY PLL to generate
-the expected 461.101250 MHz output.
-
-Fixes: 9d0ec51d7c22 ("phy: rockchip: samsung-hdptx: Add high color depth management")
-Tested-by: Derek Foreman <derek.foreman@collabora.com>
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20251221-phy-hdptx-pll-fix-v2-1-ae4abf7f75a1@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 74d8361be344 ("char: misc: add test cases")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202506132058.thWZHlrb-lkp@intel.com/
+Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
+Acked-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://patch.msgid.link/20251226230248.113073-1-alperyasinak1@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/char/misc_minor_kunit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-index 29de2f7bdae8a..cafa618d70fdc 100644
---- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-+++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-@@ -414,6 +414,8 @@ struct rk_hdptx_phy {
- static const struct ropll_config ropll_tmds_cfg[] = {
- 	{ 594000000ULL, 124, 124, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 62, 1, 16, 5, 0,
- 	  1, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
-+	{ 461101250ULL, 97, 97, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 71, 1, 53, 2, 6,
-+	  35, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
- 	{ 371250000ULL, 155, 155, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 62, 1, 16, 5, 0,
- 	  1, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
- 	{ 297000000ULL, 124, 124, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 62, 1, 16, 5, 0,
+diff --git a/drivers/char/misc_minor_kunit.c b/drivers/char/misc_minor_kunit.c
+index 6fc8b05169c57..e930c78e1ef97 100644
+--- a/drivers/char/misc_minor_kunit.c
++++ b/drivers/char/misc_minor_kunit.c
+@@ -166,7 +166,7 @@ static void __init miscdev_test_can_open(struct kunit *test, struct miscdevice *
+ 		KUNIT_FAIL(test, "failed to create node\n");
+ 
+ 	filp = filp_open(devname, O_RDONLY, 0);
+-	if (IS_ERR_OR_NULL(filp))
++	if (IS_ERR(filp))
+ 		KUNIT_FAIL(test, "failed to open misc device: %ld\n", PTR_ERR(filp));
+ 	else
+ 		fput(filp);
 -- 
 2.51.0
 
