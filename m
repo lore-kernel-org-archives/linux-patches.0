@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DB23016F7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85A22D3EEE;
 	Wed, 25 Feb 2026 06:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002732; cv=none; b=nQ7/Wso2ibC9tXmOJyTVwRr3CNH8MB2GqsHilsrfc0Ur7EWVnFcFy+epVBZ5FLjpnMwpuxFxTyNRSderqj7kgUCZq6JhUSMIZrstYo/QXDOtRKFQrDmGpPXTWJR7XMTWlUJ2EkLiur+4Da5Ph3ixRPNCF04hugWzIYY15aRiSfY=
+	t=1772002733; cv=none; b=eNJBtnNA7TqNi2DMRR//xlv2YPQENzvHI29UoumWMFH3xZskofMBaEfy30f0vW1EpuLD+OWD+Fv8tiNw8+QDWWxLAZXfmOZ+SmPnp4D8wKeUKHnGL2iWbHDaXlRq9HivfGaDgvXRdmeQD0g+7Kq6bxArXdHn7cK8dSR/hMzLUj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002732; c=relaxed/simple;
-	bh=1Sl4FKXGEdQHrr9v8XtQORlx2iYDHFXLEkSsmzmVQnc=;
+	s=arc-20240116; t=1772002733; c=relaxed/simple;
+	bh=1qBglaaCz/JRoiv/bzKzsqD8/0nnaFVclscpoV0DEUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oovdGRr6cikluVPu45LOXrEpbuOmoJg3Gr7HlJRHYf923ByYBF5NK58JVX2a3zhZiER/fj2xOkUPo0nEuWybIFgIfeFIFhpDH1qHMU4PT0jqU/oc0E2bdgjE7Br0vlW4AaCpcoDh5bZeY/OBHI6whSMwJfQSLEtMRfk1RyDqQhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnYpXEct; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gu0xOAmrHN4wIY3epipv5aDw5ZqQHSE0uTk971s2o6MMNqc3xdqIOMnD1hnmf2MYz+Hb2bSuTtdcdUd3YSnZDOQwi/iwDRaGLRS8t9IG71NdAHDNA/1RBc/PAlXfBWfiie6QCVKgSMQAJ6VWqqgVTgP/M9T0LXUzGodIPQp5f3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwI6rpuD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnYpXEct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE09C19422;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwI6rpuD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF99CC116D0;
 	Wed, 25 Feb 2026 06:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002732;
-	bh=1Sl4FKXGEdQHrr9v8XtQORlx2iYDHFXLEkSsmzmVQnc=;
+	bh=1qBglaaCz/JRoiv/bzKzsqD8/0nnaFVclscpoV0DEUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnYpXEctfEl/Ybz8IAfL7vvusIZmG5kPd9MiKThfMnLWkjcDm7Kmwq+Q/SeRzlrDc
-	 szWYBiPG6DN1pFU3ITfUDfDXNqYlMgz5KUpCdq1QN1vhtOLj6TMIMoxAxIlqwaxZk3
-	 pVQ5YDxPR19aE4/Pf3tGgjmDUsZ5zDbIc6E/72ko=
+	b=FwI6rpuDQtnT/znr7AfHJhADp5087fssQFkZfenDhkKGx+/C/1GnTEiumLfd2RT4m
+	 IsXbl+l7KpZSboTg3GLk54r5NjWxtkOhYeg65zoqvx0R6192PeTdFalUwjJ3d9hSGF
+	 5AMA1bz3I14chzD1DhoPD9NGwvC4GIq0qND3dSH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Monnet <qmo@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Simon Horman <horms@kernel.org>,
+	Daniel Zahka <daniel.zahka@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 546/641] bpftool: Fix truncated netlink dumps
-Date: Tue, 24 Feb 2026 17:24:32 -0800
-Message-ID: <20260225012401.758848775@linuxfoundation.org>
+Subject: [PATCH 6.18 547/641] net: psp: select CONFIG_SKB_EXTENSIONS
+Date: Tue, 24 Feb 2026 17:24:33 -0800
+Message-ID: <20260225012401.783119615@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,71 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 3b39d73cc3379360a33eb583b17f21fe55e1288e ]
+[ Upstream commit 6e980df452169f82674f2e650079c1fe0aee343d ]
 
-Netlink requires that the recv buffer used during dumps is at least
-min(PAGE_SIZE, 8k) (see the man page). Otherwise the messages will
-get truncated. Make sure bpftool follows this requirement, avoid
-missing information on systems with large pages.
+psp now uses skb extensions, failing to build when that is disabled:
 
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Fixes: 7084566a236f ("tools/bpftool: Remove libbpf_internal.h usage in bpftool")
+In file included from include/net/psp.h:7,
+                 from net/psp/psp_sock.c:9:
+include/net/psp/functions.h: In function '__psp_skb_coalesce_diff':
+include/net/psp/functions.h:60:13: error: implicit declaration of function 'skb_ext_find'; did you mean 'skb_ext_copy'? [-Wimplicit-function-declaration]
+   60 |         a = skb_ext_find(one, SKB_EXT_PSP);
+      |             ^~~~~~~~~~~~
+      |             skb_ext_copy
+include/net/psp/functions.h:60:31: error: 'SKB_EXT_PSP' undeclared (first use in this function)
+   60 |         a = skb_ext_find(one, SKB_EXT_PSP);
+      |                               ^~~~~~~~~~~
+include/net/psp/functions.h:60:31: note: each undeclared identifier is reported only once for each function it appears in
+include/net/psp/functions.h: In function '__psp_sk_rx_policy_check':
+include/net/psp/functions.h:94:53: error: 'SKB_EXT_PSP' undeclared (first use in this function)
+   94 |         struct psp_skb_ext *pse = skb_ext_find(skb, SKB_EXT_PSP);
+      |                                                     ^~~~~~~~~~~
+net/psp/psp_sock.c: In function 'psp_sock_recv_queue_check':
+net/psp/psp_sock.c:164:41: error: 'SKB_EXT_PSP' undeclared (first use in this function)
+  164 |                 pse = skb_ext_find(skb, SKB_EXT_PSP);
+      |                                         ^~~~~~~~~~~
+
+Select the Kconfig symbol as we do from its other users.
+
+Fixes: 6b46ca260e22 ("net: psp: add socket security association code")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
+Link: https://patch.msgid.link/20260216105500.2382181-1-arnd@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20260217194150.734701-1-kuba@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/net.c | 5 ++++-
- tools/lib/bpf/netlink.c | 4 +++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ net/psp/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
-index cfc6f944f7c33..1a06b0b5eef35 100644
---- a/tools/bpf/bpftool/net.c
-+++ b/tools/bpf/bpftool/net.c
-@@ -156,7 +156,7 @@ static int netlink_recv(int sock, __u32 nl_pid, __u32 seq,
- 	bool multipart = true;
- 	struct nlmsgerr *err;
- 	struct nlmsghdr *nh;
--	char buf[4096];
-+	char buf[8192];
- 	int len, ret;
- 
- 	while (multipart) {
-@@ -201,6 +201,9 @@ static int netlink_recv(int sock, __u32 nl_pid, __u32 seq,
- 					return ret;
- 			}
- 		}
-+
-+		if (len)
-+			p_err("Invalid message or trailing data in Netlink response: %d bytes left", len);
- 	}
- 	ret = 0;
- done:
-diff --git a/tools/lib/bpf/netlink.c b/tools/lib/bpf/netlink.c
-index c997e69d507fe..c9a78fb16f115 100644
---- a/tools/lib/bpf/netlink.c
-+++ b/tools/lib/bpf/netlink.c
-@@ -143,7 +143,7 @@ static int libbpf_netlink_recv(int sock, __u32 nl_pid, int seq,
- 	struct nlmsghdr *nh;
- 	int len, ret;
- 
--	ret = alloc_iov(&iov, 4096);
-+	ret = alloc_iov(&iov, 8192);
- 	if (ret)
- 		goto done;
- 
-@@ -212,6 +212,8 @@ static int libbpf_netlink_recv(int sock, __u32 nl_pid, int seq,
- 				}
- 			}
- 		}
-+		if (len)
-+			pr_warn("Invalid message or trailing data in Netlink response: %d bytes left\n", len);
- 	}
- 	ret = 0;
- done:
+diff --git a/net/psp/Kconfig b/net/psp/Kconfig
+index 371e8771f3bd3..84d6b0f254606 100644
+--- a/net/psp/Kconfig
++++ b/net/psp/Kconfig
+@@ -6,6 +6,7 @@ config INET_PSP
+ 	bool "PSP Security Protocol support"
+ 	depends on INET
+ 	select SKB_DECRYPTED
++	select SKB_EXTENSIONS
+ 	select SOCK_VALIDATE_XMIT
+ 	help
+ 	Enable kernel support for the PSP Security Protocol (PSP).
 -- 
 2.51.0
 
