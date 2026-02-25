@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF032494FE;
-	Wed, 25 Feb 2026 01:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876F2242D9B;
+	Wed, 25 Feb 2026 01:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982847; cv=none; b=C5uQ2LfO2Kkrfoly/QDSgwVYiLNj0lvMOqa2QqSgEn5gqWauDoqO7sJBs7gq/5L2rOhrToaifrmzF2Wm6jHunmmJU4ie76rz0llXisz1tOW7VsJvjpwSf/6lj1TpMNBULZp3jIDJMvOCeu2ktIcVouOL6DgcgHvu4qUgpJbikTw=
+	t=1771982848; cv=none; b=WWufSISEPh+BH7jK4wXoLQWlO8FvIFabhJivnpEc+frdSZeHmg9r1ESfkg7iQMdsdjneEGKBQD36LYdrlSn0LxXrJLtpaCHeo6QNphEku3oltQo0nPg2HZlF2d/8p86TxZ/fZIco4/S5xovE7sSlFkjATZBhNqRqK+DWzDr7sYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982847; c=relaxed/simple;
-	bh=8xkTS9F6o1XlsM3lEQeEzmhcaDRJ79psN7Tib0BJgMw=;
+	s=arc-20240116; t=1771982848; c=relaxed/simple;
+	bh=UN6/Y0AQq4IZYzzM04KESWsTj+OZmChSgZ4BRJmO5ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6rzjy7fNToRow3pGU03NwJcR1Cl63iWK7jSorPw+UPUmBK8+BiT12UfEN8hUK8StngDiRgy/1gpHrbN2tFve1HSDNZQVtnzgaJgQloASuQ5H3hSOQ4mytuykedqq1tBkUsbcdmimuqjxb+JOqu+sx1F3sEMXVvoNKXBGVbM+pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfOXe547; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDhJ54dZN+RRd5AP5wtJ0Qn6itnxuyzBBQHhlkM0grIddz9eT42Ztm4M64kG/DjJpnn6o4eziNxRqwpzE1dfLy/DZpXlEw3bJ2PnO1EoRKMGU+49M4xFBs1VznSfsiUpY8isBucbIK+uQ54CVMZrNJR75+lXuvW593xIMBWoPLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2GqnmXt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfOXe547"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A3DC19423;
-	Wed, 25 Feb 2026 01:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2GqnmXt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40443C116D0;
+	Wed, 25 Feb 2026 01:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982847;
-	bh=8xkTS9F6o1XlsM3lEQeEzmhcaDRJ79psN7Tib0BJgMw=;
+	s=korg; t=1771982848;
+	bh=UN6/Y0AQq4IZYzzM04KESWsTj+OZmChSgZ4BRJmO5ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfOXe547Bq8gUCv+hxUvg79dd6aAlBcM1yuv6Gvq/e/42KPBwlSPCWlzXnvF7rDmj
-	 NAz73nTcErAuEgT2dpKH6RHiI2RrxXocDlG2I9Otbti3kEbXfBz7r1gmpy5mOkauYO
-	 eqLfVFdr7HrO6mF9w5jUmxLqayKPpDGitTtZC83A=
+	b=l2GqnmXtIwFoKIAK42V8xiWVpDkOhPSFUNBNoo7SDXqZIrjsSrkUrvJGt+ieKGFYk
+	 Pm6ULxnnM58VXZ5frmqDwPDaIPGXVZaQ6yHF0D7yI58MeGmtc2DeX7aIa7Byh674Ih
+	 uiEhwFFsJZ9E5BjwooDG+MGcaR5BiIzYm9WtRguQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 037/781] docs: find-unused-docs.sh: fixup directory usage
-Date: Tue, 24 Feb 2026 17:12:26 -0800
-Message-ID: <20260225012400.612362057@linuxfoundation.org>
+Subject: [PATCH 6.19 038/781] ACPI: processor: Update cpuidle driver check in __acpi_processor_start()
+Date: Tue, 24 Feb 2026 17:12:27 -0800
+Message-ID: <20260225012400.636359817@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,42 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit e970637707f4f8e5bd098b09090b755f2f57898b ]
+[ Upstream commit 0089ce1c056aee547115bdc25c223f8f88c08498 ]
 
-The recent move of this script from scripts/ to tools/docs/
-did not account for the 'cd' directory usage.
-Update "cd .." to "cd ../.." to make the script self-correcting.
+Commit 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle
+driver registration") moved the ACPI idle driver registration to
+acpi_processor_driver_init() and acpi_processor_power_init() does
+not register an idle driver any more.
 
-This also eliminates a shell warning:
-./tools/docs/find-unused-docs.sh: line 33: cd: Documentation/: No such file or directory
+Accordingly, the cpuidle driver check in __acpi_processor_start() needs
+to be updated to avoid calling acpi_processor_power_init() without a
+cpuidle driver, in which case the registration of the cpuidle device
+in that function would lead to a NULL pointer dereference in
+__cpuidle_register_device().
 
-Fixes: 184414c6a6ca ("docs: move find-unused-docs.sh to tools/docs")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Fixes: 184414c6a6ca (docs: move find-unused-docs.sh to tools/docs)
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260102200657.1040234-1-rdunlap@infradead.org>
+Fixes: 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle driver registration")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20251223100914.2407069-4-lihuisong@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/docs/find-unused-docs.sh | 2 +-
+ drivers/acpi/processor_driver.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/docs/find-unused-docs.sh b/tools/docs/find-unused-docs.sh
-index 05552dbda5bcb..ca4e607ec3f72 100755
---- a/tools/docs/find-unused-docs.sh
-+++ b/tools/docs/find-unused-docs.sh
-@@ -28,7 +28,7 @@ if ! [ -d "$1" ]; then
- fi
+diff --git a/drivers/acpi/processor_driver.c b/drivers/acpi/processor_driver.c
+index 65e779be64ffc..7644de24d2faa 100644
+--- a/drivers/acpi/processor_driver.c
++++ b/drivers/acpi/processor_driver.c
+@@ -166,7 +166,7 @@ static int __acpi_processor_start(struct acpi_device *device)
+ 	if (result && !IS_ENABLED(CONFIG_ACPI_CPU_FREQ_PSS))
+ 		dev_dbg(&device->dev, "CPPC data invalid or not present\n");
  
- cd "$( dirname "${BASH_SOURCE[0]}" )"
--cd ..
-+cd ../..
+-	if (!cpuidle_get_driver() || cpuidle_get_driver() == &acpi_idle_driver)
++	if (cpuidle_get_driver() == &acpi_idle_driver)
+ 		acpi_processor_power_init(pr);
  
- cd Documentation/
- 
+ 	acpi_pss_perf_init(pr);
 -- 
 2.51.0
 
