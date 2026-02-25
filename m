@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2931C18B0A;
-	Wed, 25 Feb 2026 01:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F02F18B0A;
+	Wed, 25 Feb 2026 01:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983237; cv=none; b=ldm8yEWVT+aN6Z9WSoRWs0pbMpbCp7FQdta3R5mrqomc3GDe2Mw+12XuQr7gM/ZCL/+YS5okXA2MkuvWt3NmA3RdO6f7mpb0ewjLoQePrCRtyIc/nvaFme1G/TCucbD+CuiTD4PwGeQ+BLV7fAokGaFVKj8AEizdkytrSTB5gVI=
+	t=1771983238; cv=none; b=WM15iCJAjJfh/hVA6Mwq/6jWgW+EMKLHmyC49Al9fOlJ8hnEZ+Y+AAOPszpuj7oIlOqpwv1qfhRoGfHOHethAGxWEO1k0VV4hKA8BCzpGbbLIMrjIaWF4BJO7mpT4Z5N81FzXVlZWOKiFLePA/bQtUk1Hm2mD/rpvoRA2Jv1iPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983237; c=relaxed/simple;
-	bh=yVm3rs+dWH6xJJPo1TWUUK3itKjMS/D0P2XpEAy2Zco=;
+	s=arc-20240116; t=1771983238; c=relaxed/simple;
+	bh=KhnAnmsGtckcSiIxl2yAeJ7pr417SHzhXMEF4pJEsIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=giJB0EfsWjbP0RdgSJQFCbJqbGf/jf0rwakVTe7OE2s7FK7/JhFWu/zREo0iEbIpx8WiaIsoeOUiROyJmrND6VRoshCfTzmLgioe8TuIr2CVUmtiA7XGJD9jfrjFnpz+aCc2n4j6YTWrSogbX+45FMnAVzgqIrF+jCT0EXUqyFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcbM03N5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UpEBSY3i0NAWmOj+Upj5aad3J99knuT+xpzprvyeYgmszoiD1dc1HtjA3Ckya+UtAlKivyUc2jIImF5VPVqeBebakoM/F40ScRDlvCGtLlnvLRADSeUU3s9VNWdNmL0npw3DOgwGf8XX0PhEMFQQCS4iMTlYFGpu4nhik4ktwyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXaHBWI/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcbM03N5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E19C116D0;
-	Wed, 25 Feb 2026 01:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXaHBWI/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD93C116D0;
+	Wed, 25 Feb 2026 01:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983237;
-	bh=yVm3rs+dWH6xJJPo1TWUUK3itKjMS/D0P2XpEAy2Zco=;
+	s=korg; t=1771983238;
+	bh=KhnAnmsGtckcSiIxl2yAeJ7pr417SHzhXMEF4pJEsIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FcbM03N5/QLpcsAOY34sVC0AAY8SSUbiriccVfvzV4FLHQLA5RCw4H6iDSiHqJ2n+
-	 hq3TeHxIbcfVXdVoNomF39EunLVwusCobPoBL5n08kZVe7/Gnpz5UkLxs6WMnCdThk
-	 YN3GOHC+Al/9Y7FNab2ZHf2F0a92cjznQ36ZFr2s=
+	b=ZXaHBWI/vaIscoap8aqI9J/u1OBEk2h1gsh0wVq0hhPiggMu2z9FyVN7v2OIGpGK1
+	 Mt01nnNr4PtGNtCx0rE9bW210e87OWbCPeP3m+fEYBWfnQ3Br/OupMTA02rClz+YVQ
+	 9KMAEltF8sl+YBUmReFqphMQPWeSZtfHArHLGJ8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 379/781] PCI/ACPI: Restrict program_hpx_type2() to AER bits
-Date: Tue, 24 Feb 2026 17:18:08 -0800
-Message-ID: <20260225012408.988970825@linuxfoundation.org>
+Subject: [PATCH 6.19 380/781] Revert "net/smc: Introduce TCP ULP support"
+Date: Tue, 24 Feb 2026 17:18:09 -0800
+Message-ID: <20260225012409.014608250@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -45,202 +49,199 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit 9abf79c8d7b40db0e5a34aa8c744ea60ff9a3fcf ]
+[ Upstream commit df31a6b0a3057e66994ad6ccf5d95b9b9514f033 ]
 
-Previously program_hpx_type2() applied PCIe settings unconditionally,
-which could incorrectly change bits like Extended Tag Field Enable and
-Enable Relaxed Ordering.
+This reverts commit d7cd421da9da2cc7b4d25b8537f66db5c8331c40.
 
-When _HPX was added to ACPI r3.0, the intent of the PCIe Setting
-Record (Type 2) in sec 6.2.7.3 was to configure AER registers when the
-OS does not own the AER Capability:
+As reported by Al Viro, the TCP ULP support for SMC is fundamentally
+broken. The implementation attempts to convert an active TCP socket
+into an SMC socket by modifying the underlying `struct file`, dentry,
+and inode in-place, which violates core VFS invariants that assume
+these structures are immutable for an open file, creating a risk of
+use after free errors and general system instability.
 
-  The PCI Express setting record contains ... [the AER] Uncorrectable
-  Error Mask, Uncorrectable Error Severity, Correctable Error Mask
-  ... to be used when configuring registers in the Advanced Error
-  Reporting Extended Capability Structure ...
+Given the severity of this design flaw and the fact that cleaner
+alternatives (e.g., LD_PRELOAD, BPF) exist for legacy application
+transparency, the correct course of action is to remove this feature
+entirely.
 
-  OSPM [1] will only evaluate _HPX with Setting Record – Type 2 if
-  OSPM is not controlling the PCI Express Advanced Error Reporting
-  capability.
-
-ACPI r3.0b, sec 6.2.7.3, added more AER registers, including registers
-in the PCIe Capability with AER-related bits, and the restriction that
-the OS use this only when it owns PCIe native hotplug:
-
-  ... when configuring PCI Express registers in the Advanced Error
-  Reporting Extended Capability Structure *or PCI Express Capability
-  Structure* ...
-
-  An OS that has assumed ownership of native hot plug but does not
-  ... have ownership of the AER register set must use ... the Type 2
-  record to program the AER registers ...
-
-  However, since the Type 2 record also includes register bits that
-  have functions other than AER, the OS must ignore values ... that
-  are not applicable.
-
-Restrict program_hpx_type2() to only the intended purpose:
-
-  - Apply settings only when OS owns PCIe native hotplug but not AER,
-
-  - Only touch the AER-related bits (Error Reporting Enables) in Device
-    Control
-
-  - Don't touch Link Control at all, since nothing there seems AER-related,
-    but log _HPX settings for debugging purposes
-
-Note that Read Completion Boundary is now configured elsewhere, since it is
-unrelated to _HPX.
-
-[1] Operating System-directed configuration and Power Management
-
-Fixes: 40abb96c51bb ("[PATCH] pciehp: Fix programming hotplug parameters")
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260129175237.727059-3-haakon.bugge@oracle.com
+Fixes: d7cd421da9da ("net/smc: Introduce TCP ULP support")
+Link: https://lore.kernel.org/netdev/Yus1SycZxcd+wHwz@ZenIV/
+Reported-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260128055452.98251-1-alibuda@linux.alibaba.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-acpi.c | 59 +++++++++++++++++-------------------------
- drivers/pci/pci.h      |  3 +++
- drivers/pci/pcie/aer.c |  3 ---
- 3 files changed, 27 insertions(+), 38 deletions(-)
+ net/smc/af_smc.c | 91 +++---------------------------------------------
+ 1 file changed, 4 insertions(+), 87 deletions(-)
 
-diff --git a/drivers/pci/pci-acpi.c b/drivers/pci/pci-acpi.c
-index 9369377725fa0..0162acfb57896 100644
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -271,21 +271,6 @@ static acpi_status decode_type1_hpx_record(union acpi_object *record,
- 	return AE_OK;
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index f97f77b041d97..d8201eb3ac5f3 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -3357,11 +3357,10 @@ int smc_create_clcsk(struct net *net, struct sock *sk, int family)
+ 	return 0;
  }
  
--static bool pcie_root_rcb_set(struct pci_dev *dev)
+-static int __smc_create(struct net *net, struct socket *sock, int protocol,
+-			int kern, struct socket *clcsock)
++static int smc_create(struct net *net, struct socket *sock, int protocol,
++		      int kern)
+ {
+ 	int family = (protocol == SMCPROTO_SMC6) ? PF_INET6 : PF_INET;
+-	struct smc_sock *smc;
+ 	struct sock *sk;
+ 	int rc;
+ 
+@@ -3380,15 +3379,7 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
+ 	if (!sk)
+ 		goto out;
+ 
+-	/* create internal TCP socket for CLC handshake and fallback */
+-	smc = smc_sk(sk);
+-
+-	rc = 0;
+-	if (clcsock)
+-		smc->clcsock = clcsock;
+-	else
+-		rc = smc_create_clcsk(net, sk, family);
+-
++	rc = smc_create_clcsk(net, sk, family);
+ 	if (rc) {
+ 		sk_common_release(sk);
+ 		sock->sk = NULL;
+@@ -3397,76 +3388,12 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
+ 	return rc;
+ }
+ 
+-static int smc_create(struct net *net, struct socket *sock, int protocol,
+-		      int kern)
 -{
--	struct pci_dev *rp = pcie_find_root_port(dev);
--	u16 lnkctl;
--
--	if (!rp)
--		return false;
--
--	pcie_capability_read_word(rp, PCI_EXP_LNKCTL, &lnkctl);
--	if (lnkctl & PCI_EXP_LNKCTL_RCB)
--		return true;
--
--	return false;
+-	return __smc_create(net, sock, protocol, kern, NULL);
 -}
 -
- /* _HPX PCI Express Setting Record (Type 2) */
- struct hpx_type2 {
- 	u32 revision;
-@@ -311,6 +296,7 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
- {
- 	int pos;
- 	u32 reg32;
-+	const struct pci_host_bridge *host;
+ static const struct net_proto_family smc_sock_family_ops = {
+ 	.family	= PF_SMC,
+ 	.owner	= THIS_MODULE,
+ 	.create	= smc_create,
+ };
  
- 	if (!hpx)
- 		return;
-@@ -318,6 +304,15 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
- 	if (!pci_is_pcie(dev))
- 		return;
+-static int smc_ulp_init(struct sock *sk)
+-{
+-	struct socket *tcp = sk->sk_socket;
+-	struct net *net = sock_net(sk);
+-	struct socket *smcsock;
+-	int protocol, ret;
+-
+-	/* only TCP can be replaced */
+-	if (tcp->type != SOCK_STREAM || sk->sk_protocol != IPPROTO_TCP ||
+-	    (sk->sk_family != AF_INET && sk->sk_family != AF_INET6))
+-		return -ESOCKTNOSUPPORT;
+-	/* don't handle wq now */
+-	if (tcp->state != SS_UNCONNECTED || !tcp->file || tcp->wq.fasync_list)
+-		return -ENOTCONN;
+-
+-	if (sk->sk_family == AF_INET)
+-		protocol = SMCPROTO_SMC;
+-	else
+-		protocol = SMCPROTO_SMC6;
+-
+-	smcsock = sock_alloc();
+-	if (!smcsock)
+-		return -ENFILE;
+-
+-	smcsock->type = SOCK_STREAM;
+-	__module_get(THIS_MODULE); /* tried in __tcp_ulp_find_autoload */
+-	ret = __smc_create(net, smcsock, protocol, 1, tcp);
+-	if (ret) {
+-		sock_release(smcsock); /* module_put() which ops won't be NULL */
+-		return ret;
+-	}
+-
+-	/* replace tcp socket to smc */
+-	smcsock->file = tcp->file;
+-	smcsock->file->private_data = smcsock;
+-	smcsock->file->f_inode = SOCK_INODE(smcsock); /* replace inode when sock_close */
+-	smcsock->file->f_path.dentry->d_inode = SOCK_INODE(smcsock); /* dput() in __fput */
+-	tcp->file = NULL;
+-
+-	return ret;
+-}
+-
+-static void smc_ulp_clone(const struct request_sock *req, struct sock *newsk,
+-			  const gfp_t priority)
+-{
+-	struct inet_connection_sock *icsk = inet_csk(newsk);
+-
+-	/* don't inherit ulp ops to child when listen */
+-	icsk->icsk_ulp_ops = NULL;
+-}
+-
+-static struct tcp_ulp_ops smc_ulp_ops __read_mostly = {
+-	.name		= "smc",
+-	.owner		= THIS_MODULE,
+-	.init		= smc_ulp_init,
+-	.clone		= smc_ulp_clone,
+-};
+-
+ unsigned int smc_net_id;
  
-+	host = pci_find_host_bridge(dev->bus);
-+
-+	/*
-+	 * Only do the _HPX Type 2 programming if OS owns PCIe native
-+	 * hotplug but not AER.
-+	 */
-+	if (!host->native_pcie_hotplug || host->native_aer)
-+		return;
-+
- 	if (hpx->revision > 1) {
- 		pci_warn(dev, "PCIe settings rev %d not supported\n",
- 			 hpx->revision);
-@@ -325,33 +320,27 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
+ static __net_init int smc_net_init(struct net *net)
+@@ -3589,16 +3516,10 @@ static int __init smc_init(void)
+ 		pr_err("%s: ib_register fails with %d\n", __func__, rc);
+ 		goto out_sock;
  	}
- 
- 	/*
--	 * Don't allow _HPX to change MPS or MRRS settings.  We manage
--	 * those to make sure they're consistent with the rest of the
--	 * platform.
-+	 * We only allow _HPX to program DEVCTL bits related to AER, namely
-+	 * PCI_EXP_DEVCTL_CERE, PCI_EXP_DEVCTL_NFERE, PCI_EXP_DEVCTL_FERE,
-+	 * and PCI_EXP_DEVCTL_URRE.
-+	 *
-+	 * The rest of DEVCTL is managed by the OS to make sure it's
-+	 * consistent with the rest of the platform.
- 	 */
--	hpx->pci_exp_devctl_and |= PCI_EXP_DEVCTL_PAYLOAD |
--				    PCI_EXP_DEVCTL_READRQ;
--	hpx->pci_exp_devctl_or &= ~(PCI_EXP_DEVCTL_PAYLOAD |
--				    PCI_EXP_DEVCTL_READRQ);
-+	hpx->pci_exp_devctl_and |= ~PCI_EXP_AER_FLAGS;
-+	hpx->pci_exp_devctl_or &= PCI_EXP_AER_FLAGS;
- 
- 	/* Initialize Device Control Register */
- 	pcie_capability_clear_and_set_word(dev, PCI_EXP_DEVCTL,
- 			~hpx->pci_exp_devctl_and, hpx->pci_exp_devctl_or);
- 
--	/* Initialize Link Control Register */
-+	/* Log if _HPX attempts to modify Link Control Register */
- 	if (pcie_cap_has_lnkctl(dev)) {
 -
--		/*
--		 * If the Root Port supports Read Completion Boundary of
--		 * 128, set RCB to 128.  Otherwise, clear it.
--		 */
--		hpx->pci_exp_lnkctl_and |= PCI_EXP_LNKCTL_RCB;
--		hpx->pci_exp_lnkctl_or &= ~PCI_EXP_LNKCTL_RCB;
--		if (pcie_root_rcb_set(dev))
--			hpx->pci_exp_lnkctl_or |= PCI_EXP_LNKCTL_RCB;
--
--		pcie_capability_clear_and_set_word(dev, PCI_EXP_LNKCTL,
--			~hpx->pci_exp_lnkctl_and, hpx->pci_exp_lnkctl_or);
-+		if (hpx->pci_exp_lnkctl_and != 0xffff ||
-+		    hpx->pci_exp_lnkctl_or != 0)
-+			pci_info(dev, "_HPX attempts Link Control setting (AND %#06x OR %#06x)\n",
-+				 hpx->pci_exp_lnkctl_and,
-+				 hpx->pci_exp_lnkctl_or);
+-	rc = tcp_register_ulp(&smc_ulp_ops);
+-	if (rc) {
+-		pr_err("%s: tcp_ulp_register fails with %d\n", __func__, rc);
+-		goto out_ib;
+-	}
+ 	rc = smc_inet_init();
+ 	if (rc) {
+ 		pr_err("%s: smc_inet_init fails with %d\n", __func__, rc);
+-		goto out_ulp;
++		goto out_ib;
  	}
- 
- 	/* Find Advanced Error Reporting Enhanced Capability */
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index 0e67014aa0013..e3c2852c80fbd 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -88,6 +88,9 @@ struct pcie_tlp_log;
- #define PCI_BUS_BRIDGE_MEM_WINDOW	1
- #define PCI_BUS_BRIDGE_PREF_MEM_WINDOW	2
- 
-+#define PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
-+				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
-+
- extern const unsigned char pcie_link_speed[];
- extern bool pci_early_dump;
- 
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index e0bcaa896803c..9472d86cef552 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -239,9 +239,6 @@ void pcie_ecrc_get_policy(char *str)
- }
- #endif	/* CONFIG_PCIE_ECRC */
- 
--#define	PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
--				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
--
- int pcie_aer_is_native(struct pci_dev *dev)
+ 	rc = bpf_smc_hs_ctrl_init();
+ 	if (rc) {
+@@ -3610,8 +3531,6 @@ static int __init smc_init(void)
+ 	return 0;
+ out_inet:
+ 	smc_inet_exit();
+-out_ulp:
+-	tcp_unregister_ulp(&smc_ulp_ops);
+ out_ib:
+ 	smc_ib_unregister_client();
+ out_sock:
+@@ -3647,7 +3566,6 @@ static void __exit smc_exit(void)
  {
- 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
+ 	static_branch_disable(&tcp_have_smc);
+ 	smc_inet_exit();
+-	tcp_unregister_ulp(&smc_ulp_ops);
+ 	sock_unregister(PF_SMC);
+ 	smc_core_exit();
+ 	smc_ib_unregister_client();
+@@ -3672,7 +3590,6 @@ MODULE_AUTHOR("Ursula Braun <ubraun@linux.vnet.ibm.com>");
+ MODULE_DESCRIPTION("smc socket address family");
+ MODULE_LICENSE("GPL");
+ MODULE_ALIAS_NETPROTO(PF_SMC);
+-MODULE_ALIAS_TCP_ULP("smc");
+ /* 256 for IPPROTO_SMC and 1 for SOCK_STREAM */
+ MODULE_ALIAS_NET_PF_PROTO_TYPE(PF_INET, 256, 1);
+ #if IS_ENABLED(CONFIG_IPV6)
 -- 
 2.51.0
 
