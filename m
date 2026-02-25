@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B6D22127B;
-	Wed, 25 Feb 2026 01:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6558E22579E;
+	Wed, 25 Feb 2026 01:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983974; cv=none; b=dUHJRyZq7C/q1/vAvIOuKrTTd1DHxNPKLQZ9V+/xDTJlAoIU0qfi5aaEEYF1R3irfW06xPj4vSzf8MdYPLGwffi5WyQPbERmQ5qKX1zTeS+biFOLDFmMu3Gc6gWa5qGrgaHmhcnl4dIPg3DjZRvgYJNHFO1XvEiz62bdnGeehhY=
+	t=1771983975; cv=none; b=u2P+/tiy50qbKbYI4tr5wS4j05bsBjY/g/TWLYr2xczJ8OjQ+fWE+3twCVfghzD1prpL1LN2H0MKYmgVk5N2+dHYpXDI0BmOgHT04e2AAnvvPQ65VhiI9hDJMMsakfKsGMFYSqcB5opdhIvBKkynwaFWqKj/ZYKfGW69JILJSBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983974; c=relaxed/simple;
-	bh=B1zFBZHVwa0gGmBvBCwmJsnn3JNFw6x6iRVarcjNy8Y=;
+	s=arc-20240116; t=1771983975; c=relaxed/simple;
+	bh=zHBMs2IUMx63NZg4D3pe+5oqfYN2Jv3sEEvlGlYn67o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQofrR2eK5Ngx9YKOfl0iYynXX/JbKPIue9oHPJ1vY02xMSi7+02TVDOSiSIccTSxRmhU2W3swDLaRhtcDpBh3wC6W4lNapintMwXSxxiX0DxU48SXIaksr/sR9syLTaBlgMM9T8G/MjbqsQiwy8wa3wHUivgHeFVp8IGQfreJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkk5zAZc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMsa+WQqsUHFZjgZg8Y0fjPJquA8E2fR+YzBYOJ5AQSHgDX/DIOaYPGQDqwfPoDQzoPT52BF1xa7ZQNB4QOgOI9RUWMIUEonk843qcMQSqjpfuecdk2mWRkiB8zMIs8b5N64NXk3XEO3i2wc6UvEmbEoIO1LFbCZXMiOadXV5R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHCfNqYK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkk5zAZc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B547C116D0;
-	Wed, 25 Feb 2026 01:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHCfNqYK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2491CC116D0;
+	Wed, 25 Feb 2026 01:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983974;
-	bh=B1zFBZHVwa0gGmBvBCwmJsnn3JNFw6x6iRVarcjNy8Y=;
+	s=korg; t=1771983975;
+	bh=zHBMs2IUMx63NZg4D3pe+5oqfYN2Jv3sEEvlGlYn67o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zkk5zAZc2QTw8hQBj36kYRYhQJMmCNUO0CG3Bj7dJUS+PipUxdEN/g8IOG1CoFcvt
-	 JZgiZNlP9ZB8SekwAOhZDubI2VNdnm00mppwGzces806sz86WOyiGNnIajSJzwfCTb
-	 o2ucZGxI/wvWyQ5xYjL5RqFBRy5t6UuFwJCjlxFA=
+	b=FHCfNqYKtBMte9k2ECWSmjeDDu/xGmc67RQBLQ37WoPlr7AmqdlERRyhY+EezTkkc
+	 e4eOpPWsTd4ttk0tbV43ryTrUw555D9EcplJ22r0SxLalhbwAMtgp1wp7WNp7jcvSo
+	 JrN4Uv20l6qGyPQRquojm0R9h0q5nsZ41mBPBJmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 228/641] ASoC: SDCA: Remove outdated todo comment
-Date: Tue, 24 Feb 2026 17:19:14 -0800
-Message-ID: <20260225012354.428962435@linuxfoundation.org>
+Subject: [PATCH 6.18 184/641] smack: /smack/doi must be > 0
+Date: Tue, 24 Feb 2026 17:18:30 -0800
+Message-ID: <20260225012353.475356589@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,39 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit b27b57f85fe3f0eca479556ac55bc9cbd1a5685a ]
+[ Upstream commit 19c013e1551bf51e1493da1270841d60e4fd3f15 ]
 
-Support for -cn- properties has already been added, however the TODO
-comment noting this feature was required was not removed. Remove the
-now redundant comment.
+/smack/doi allows writing and keeping negative doi values.
+Correct values are 0 < doi <= (max 32-bit positive integer)
 
-Fixes: 50a479527ef01 ("ASoC: SDCA: Add support for -cn- value properties")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260204125944.1134011-2-ckeepax@opensource.cirrus.com
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+(2008-02-04, Casey Schaufler)
+Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdca/sdca_functions.c | 4 ----
- 1 file changed, 4 deletions(-)
+ security/smack/smackfs.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
-index 19b12564f822e..7adbf653bd8ac 100644
---- a/sound/soc/sdca/sdca_functions.c
-+++ b/sound/soc/sdca/sdca_functions.c
-@@ -854,10 +854,6 @@ static int find_sdca_control_value(struct device *dev, struct sdca_entity *entit
- 	return 0;
- }
+diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
+index b1e5e62f5cbd1..316c2ea401e8a 100644
+--- a/security/smack/smackfs.c
++++ b/security/smack/smackfs.c
+@@ -141,7 +141,7 @@ struct smack_parsed_rule {
+ 	int			smk_access2;
+ };
  
--/*
-- * TODO: Add support for -cn- properties, allowing different channels to have
-- * different defaults etc.
-- */
- static int find_sdca_entity_control(struct device *dev, struct sdca_entity *entity,
- 				    struct fwnode_handle *control_node,
- 				    struct sdca_control *control)
+-static int smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
++static u32 smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
+ 
+ /*
+  * Values for parsing cipso rules
+@@ -1562,7 +1562,7 @@ static ssize_t smk_read_doi(struct file *filp, char __user *buf,
+ 	if (*ppos != 0)
+ 		return 0;
+ 
+-	sprintf(temp, "%d", smk_cipso_doi_value);
++	sprintf(temp, "%lu", (unsigned long)smk_cipso_doi_value);
+ 	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
+ 
+ 	return rc;
+@@ -1581,7 +1581,7 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
+ 			     size_t count, loff_t *ppos)
+ {
+ 	char temp[80];
+-	int i;
++	unsigned long u;
+ 
+ 	if (!smack_privileged(CAP_MAC_ADMIN))
+ 		return -EPERM;
+@@ -1594,10 +1594,12 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
+ 
+ 	temp[count] = '\0';
+ 
+-	if (sscanf(temp, "%d", &i) != 1)
++	if (kstrtoul(temp, 10, &u))
+ 		return -EINVAL;
+ 
+-	smk_cipso_doi_value = i;
++	if (u == CIPSO_V4_DOI_UNKNOWN || u > U32_MAX)
++		return -EINVAL;
++	smk_cipso_doi_value = u;
+ 
+ 	smk_cipso_doi();
+ 
 -- 
 2.51.0
 
