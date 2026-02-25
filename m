@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5A31D5ABA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D54218DB2A;
 	Wed, 25 Feb 2026 01:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983117; cv=none; b=qlJAZ00G72Ej5ODRgnJCK6XoG1MGIZN1c/Bm+JXHpGJFaksHDHBl1bn5Oar0r2HBUv7eaIwwduCYm3C5LJeqRgTWfNzthBRiCOReXyxTvQ7nJCrxoM3bdyq6jVK3P5jwbcYPkTfG676+bKGUjKqfnLZeYiWw/wY9Cq3UD53O/+0=
+	t=1771983117; cv=none; b=Qs42YsjEI2WsQ3OVXvfKBDDcrGN8zY2I+zYYOK4YIfct6XHRcPnS3tO1oiQPMlW8vxpWxI15XIo+ftHYFB9uuBPHOOoOCgIdxCDVQ4L/JXyDBskx8w7VTX2jWTUlc5YcYkLC++qyl9qritlawBR7wj8oELVHjDxa27FHzI6QAYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771983117; c=relaxed/simple;
-	bh=0O24iYf6ie0lTl6Qu6YoqI+JQnxMlHEeoAkYtJMJYzo=;
+	bh=hLGc49nYL8IVfQ7nYp7oQKeQpUA52pAsxdF+8nyHECU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6aWfV5+47sjN0839FKunxohUhFmoz8bZR1qahBgMWGCpuvDHJ0YIh+WmZcCZ4Bz6+ScAVt8czOqYumksh5nljMcw0OTUMu5geLS1TMhEP6OH+kf1IAXDYfxE2tNJm4Ypf8QxCKLCpzv5QiZB5bC4PCBpqBMjS/lXXZzFmh8zkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8UBFYkX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SSr3Upk742To8syA0FddceFIW6s9hfEBJbHGV2S7nO0HuSGcmE5A/EAoUg6M8a513Nuzi/uexK43IoIv+4w4qUD26eLJI7ByInlvScuTNX7mJHP/zRD0grMnZAUn9tAR+z9dv+fAjSn1FDcpeO0F9dYmq/E/upN13TO58Ocws9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgrLQVdl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8UBFYkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEE7C19424;
-	Wed, 25 Feb 2026 01:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgrLQVdl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE442C116D0;
+	Wed, 25 Feb 2026 01:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983115;
-	bh=0O24iYf6ie0lTl6Qu6YoqI+JQnxMlHEeoAkYtJMJYzo=;
+	s=korg; t=1771983116;
+	bh=hLGc49nYL8IVfQ7nYp7oQKeQpUA52pAsxdF+8nyHECU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8UBFYkXTImZPHKePDerb/7M/VQBHzq8JpHiBVw6/Dgr2y6HQK01BtN7dgxxb3rha
-	 5HlMa8M+Q52F0rSAU+xwrCbASu+SyKhLT8l+ZmAytk3UAcUYb9RpBnyqX6+RnO16x7
-	 2vMPliVcGxq45qLEyavt6NKlkhIs3koZgAcKv+uY=
+	b=mgrLQVdlXhYLVrsZvljHeRnyA9Mau9VlzTkEueRpv18D9BiqRNKA5wzYt2wX8U2nq
+	 Xw+S2mZixJl4Y1R3pzltw2Nq/o5Qz4l3klsYGK+TrStgeABhKP3D4WQ9/WEZhnNRWr
+	 bgAdqtu92EPmECffYTdDNDiCAUM/t3YWjxYLJ61A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Kari Argillander <kari.argillander@gmail.com>,
+	Michal Wilczynski <m.wilczynski@samsung.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 275/781] drm/rockchip: dw_hdmi_qp: Fix RK3576 HPD interrupt handling
-Date: Tue, 24 Feb 2026 17:16:24 -0800
-Message-ID: <20260225012406.443526985@linuxfoundation.org>
+Subject: [PATCH 6.19 276/781] rust: pwm: Fix potential memory leak on init error
+Date: Tue, 24 Feb 2026 17:16:25 -0800
+Message-ID: <20260225012406.467604294@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -45,58 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Kari Argillander <kari.argillander@gmail.com>
 
-[ Upstream commit 5f7be8afc40c5ccf1be0410514703e50a49532c0 ]
+[ Upstream commit a2633dc243c35754a0c2270131d8a199c987c9bf ]
 
-The threaded interrupt handler on RK3576 checks HPD IRQ status before
-deciding to continue with interrupt clearing and unmasking.
+When initializing a PWM chip using pwmchip_alloc(), the allocated device
+owns an initial reference that must be released on all error paths.
 
-This is not only redundant, since a similar verification has been
-already performed by the hard IRQ handler before masking the interrupt,
-but is also error prone, because it might happen that hardware clears
-the status register right after the masking operation completes, and
-before the threaded handler reads its value.
+If __pinned_init() were to fail, the allocated pwm_chip would currently
+leak because the error path returns without calling pwmchip_put().
 
-The consequence is that HPD IRQ gets never unmasked, which breaks
-hotplug detection until reloading the driver or rebooting the system.
-
-Drop the unnecessary verification of the HPD interrupt status from the
-threaded interrupt handler.
-
-Fixes: 36439120efbd ("drm/rockchip: dw_hdmi_qp: Add basic RK3576 HDMI output support")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260115-dw-hdmi-qp-hpd-v1-1-e59c166eaa65@collabora.com
+Fixes: 7b3dce814a15 ("rust: pwm: Add Kconfig and basic data structures")
+Signed-off-by: Kari Argillander <kari.argillander@gmail.com>
+Acked-by: Michal Wilczynski <m.wilczynski@samsung.com>
+Link: https://patch.msgid.link/20260102-pwm-rust-v2-1-2702ce57d571@gmail.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ rust/kernel/pwm.rs | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-index 8604342f99432..c7158b1b8c59e 100644
---- a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-+++ b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-@@ -280,12 +280,7 @@ static irqreturn_t dw_hdmi_qp_rk3576_hardirq(int irq, void *dev_id)
- static irqreturn_t dw_hdmi_qp_rk3576_irq(int irq, void *dev_id)
- {
- 	struct rockchip_hdmi_qp *hdmi = dev_id;
--	u32 intr_stat, val;
--
--	regmap_read(hdmi->regmap, RK3576_IOC_HDMI_HPD_STATUS, &intr_stat);
--
--	if (!intr_stat)
--		return IRQ_NONE;
-+	u32 val;
+diff --git a/rust/kernel/pwm.rs b/rust/kernel/pwm.rs
+index cb00f8a8765c8..2ba9cfd02bfdb 100644
+--- a/rust/kernel/pwm.rs
++++ b/rust/kernel/pwm.rs
+@@ -601,7 +601,11 @@ pub fn new(
+         let drvdata_ptr = unsafe { bindings::pwmchip_get_drvdata(c_chip_ptr) };
  
- 	val = FIELD_PREP_WM16(RK3576_HDMI_HPD_INT_CLR, 1);
- 	regmap_write(hdmi->regmap, RK3576_IOC_MISC_CON0, val);
+         // SAFETY: We construct the `T` object in-place in the allocated private memory.
+-        unsafe { data.__pinned_init(drvdata_ptr.cast())? };
++        unsafe { data.__pinned_init(drvdata_ptr.cast()) }.inspect_err(|_| {
++            // SAFETY: It is safe to call `pwmchip_put()` with a valid pointer obtained
++            // from `pwmchip_alloc()`. We will not use pointer after this.
++            unsafe { bindings::pwmchip_put(c_chip_ptr) }
++        })?;
+ 
+         // SAFETY: `c_chip_ptr` points to a valid chip.
+         unsafe {
 -- 
 2.51.0
 
