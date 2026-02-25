@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C614D256C84;
-	Wed, 25 Feb 2026 01:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C41256C84;
+	Wed, 25 Feb 2026 01:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983863; cv=none; b=Y6NI5THHv9KT3Nb2MxOTuQK7Q8OdC9ceiqxNp7Vq8q5Ahr1ufAH0HrKUCuzj81Pjqsoq52Dsj8sBsgauOe4Lae92mRD3L4y1ND7xDaNmwkJKXbhrNTABSAsfyU2Hat2eVSJ6qbdmEpkM8gZR3P4uxt2yg9nPVEQoqR0626rO8Ow=
+	t=1771983865; cv=none; b=g1RVPN4SQge8Yp2tp6/yGU7PJtCAp0ajCaOYdnZvSqpGr69tIMp7/BsI5KhR1E2HF2ET9MneFck7BHnwzeFMWnvosIBtYhG/uU+Fg+JOVs48uZTHoOZPPK9fak6rjU+YxHfcq5/S7k3HtZwqM7Uih83kFNzuILqws5Z+7RSp/Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983863; c=relaxed/simple;
-	bh=tLiUzJBKr/WG3Ukego/D9XLuUYU7TQUPUcOQHNtC9qM=;
+	s=arc-20240116; t=1771983865; c=relaxed/simple;
+	bh=jl1grz7Xs4/GJ12i07Ou5YHOTsLL5VtKfM0T6Ut4drI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdfwTakILWl/9xAMeizJrz6HsAOh/ZhhdT58YN3titxhOkgFiolml6vpPuN76/QABPJ0HrbwyYs9PO7ORex2Dw5JW7ahOioClUL3athdxpze2LHMkS2wAnKP0mH8xXaavxsoSWqY97BDPfCR8lDiC1gKK9fCqwd2xUQ7eMxXYTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlC2LfjB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pdVQ39kzXXDTFtilZSJ2YCxENEs58JUORfWILVHOXSD76BDfiDymFB/IcYqHBbcG9yyqpJJeWLejRMPPHA/CePzrV/7zgGWDxWzYzlut0/sf8WWZbXSLRceyOA8ywjlkaH17z8kv2vhxirjfqrq2fcS7vtYAzy2mzoVuDKJnM1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fRse0po3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlC2LfjB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C26BC116D0;
-	Wed, 25 Feb 2026 01:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fRse0po3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC18CC116D0;
+	Wed, 25 Feb 2026 01:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983863;
-	bh=tLiUzJBKr/WG3Ukego/D9XLuUYU7TQUPUcOQHNtC9qM=;
+	s=korg; t=1771983864;
+	bh=jl1grz7Xs4/GJ12i07Ou5YHOTsLL5VtKfM0T6Ut4drI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlC2LfjB6bIihcW26TaO30ODxy2jm4n+oL7meCal+ml69iJIikby5mGMGiu4tRion
-	 BUy69jQa3/EtFZlS6Vi98fkypKkTOeN0l3aOKthnZbLG8niwnfBGpbyzWpf+aBIC4I
-	 +xMuBu36KpFM+/8jYJo8NATxn1nVDbULqDMtErNY=
+	b=fRse0po3hJnokdN9Ykk/ibo6ihhSJh/LN5VkC7UvlzRVjetiKtRFFSV/P4jpoHaOJ
+	 aJZPGins8W0uQVdX9mo8yclnc2Jt0IWi9DyC5ThMo8dO0zJ0ReLW7uuDEyGT/ioqJ3
+	 6uNh6BUWHwQ1YqKqOvZItYavyuXDjG2hVnFrzAEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 133/641] clk: qcom: Return correct error code in qcom_cc_probe_by_index()
-Date: Tue, 24 Feb 2026 17:17:39 -0800
-Message-ID: <20260225012352.369288027@linuxfoundation.org>
+Subject: [PATCH 6.18 142/641] powerpc/uaccess: Move barrier_nospec() out of allow_read_{from/write}_user()
+Date: Tue, 24 Feb 2026 17:17:48 -0800
+Message-ID: <20260225012352.560063812@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,40 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 1e07ebe744fb522983bd52a4a6148601675330c7 ]
+[ Upstream commit 5fbc09eb0b4f4b1a4b33abebacbeee0d29f195e9 ]
 
-When devm_platform_ioremap_resource() fails, it returns various
-error codes. Returning a hardcoded -ENOMEM masks the actual
-failure reason.
+Commit 74e19ef0ff80 ("uaccess: Add speculation barrier to
+copy_from_user()") added a redundant barrier_nospec() in
+copy_from_user(), because powerpc is already calling
+barrier_nospec() in allow_read_from_user() and
+allow_read_write_user(). But on other architectures that
+call to barrier_nospec() was missing. So change powerpc
+instead of reverting the above commit and having to fix
+other architectures one by one. This is now possible
+because barrier_nospec() has also been added in
+copy_from_user_iter().
 
-Use PTR_ERR() to propagate the actual error code returned by
-devm_platform_ioremap_resource() instead of -ENOMEM.
+Move barrier_nospec() out of allow_read_from_user() and
+allow_read_write_user(). This will also allow reuse of those
+functions when implementing masked user access which doesn't
+require barrier_nospec().
 
-Fixes: 75e0a1e30191 ("clk: qcom: define probe by index API as common API")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251217041338.2432-1-vulab@iscas.ac.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Don't add it back in raw_copy_from_user() as it is already called
+by copy_from_user() and copy_from_user_iter().
+
+Fixes: 74e19ef0ff80 ("uaccess: Add speculation barrier to copy_from_user()")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/f29612105c5fcbc8ceb7303808ddc1a781f0f6b5.1766574657.git.chleroy@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/asm/kup.h     | 2 --
+ arch/powerpc/include/asm/uaccess.h | 4 ++++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-index 1215918867741..eec369d2173b5 100644
---- a/drivers/clk/qcom/common.c
-+++ b/drivers/clk/qcom/common.c
-@@ -454,7 +454,7 @@ int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
+diff --git a/arch/powerpc/include/asm/kup.h b/arch/powerpc/include/asm/kup.h
+index dab63b82a8d4f..f2009d7c8cfa7 100644
+--- a/arch/powerpc/include/asm/kup.h
++++ b/arch/powerpc/include/asm/kup.h
+@@ -134,7 +134,6 @@ static __always_inline void kuap_assert_locked(void)
  
- 	base = devm_platform_ioremap_resource(pdev, index);
- 	if (IS_ERR(base))
--		return -ENOMEM;
-+		return PTR_ERR(base);
+ static __always_inline void allow_read_from_user(const void __user *from, unsigned long size)
+ {
+-	barrier_nospec();
+ 	allow_user_access(NULL, from, size, KUAP_READ);
+ }
  
- 	regmap = devm_regmap_init_mmio(&pdev->dev, base, desc->config);
- 	if (IS_ERR(regmap))
+@@ -146,7 +145,6 @@ static __always_inline void allow_write_to_user(void __user *to, unsigned long s
+ static __always_inline void allow_read_write_user(void __user *to, const void __user *from,
+ 						  unsigned long size)
+ {
+-	barrier_nospec();
+ 	allow_user_access(to, from, size, KUAP_READ_WRITE);
+ }
+ 
+diff --git a/arch/powerpc/include/asm/uaccess.h b/arch/powerpc/include/asm/uaccess.h
+index 4f5a46a77fa2b..3987a5c33558b 100644
+--- a/arch/powerpc/include/asm/uaccess.h
++++ b/arch/powerpc/include/asm/uaccess.h
+@@ -301,6 +301,7 @@ do {								\
+ 	__typeof__(sizeof(*(ptr))) __gu_size = sizeof(*(ptr));	\
+ 								\
+ 	might_fault();					\
++	barrier_nospec();					\
+ 	allow_read_from_user(__gu_addr, __gu_size);		\
+ 	__get_user_size_allowed(__gu_val, __gu_addr, __gu_size, __gu_err);	\
+ 	prevent_read_from_user(__gu_addr, __gu_size);		\
+@@ -329,6 +330,7 @@ raw_copy_in_user(void __user *to, const void __user *from, unsigned long n)
+ {
+ 	unsigned long ret;
+ 
++	barrier_nospec();
+ 	allow_read_write_user(to, from, n);
+ 	ret = __copy_tofrom_user(to, from, n);
+ 	prevent_read_write_user(to, from, n);
+@@ -415,6 +417,7 @@ static __must_check __always_inline bool user_access_begin(const void __user *pt
+ 
+ 	might_fault();
+ 
++	barrier_nospec();
+ 	allow_read_write_user((void __user *)ptr, ptr, len);
+ 	return true;
+ }
+@@ -431,6 +434,7 @@ user_read_access_begin(const void __user *ptr, size_t len)
+ 
+ 	might_fault();
+ 
++	barrier_nospec();
+ 	allow_read_from_user(ptr, len);
+ 	return true;
+ }
 -- 
 2.51.0
 
