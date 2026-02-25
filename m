@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236672C11CD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97F92C0263;
 	Wed, 25 Feb 2026 06:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002583; cv=none; b=PKOKQIbydElPvOU/c9JiNF1MPvj7iAm3eXpCZiIGLxZVdB4NogTb8iNfKZdYkRb6SwO+urlv+EoxDS76ju5qRXXpnGwTKSJgg3EjH6Ml8BhzYUtUTqVwBG3Fqg/WM8XQfgd5JNxVATYgbXxSh30LZeKQIAxe1GVR3uF+xD34J8A=
+	t=1772002583; cv=none; b=DKuS4a5p9WMUvQOivEQOFx3LQO0v4dfW1gOQQdy2eXd7gPstQ7C/ueHSn5fyCxaCdwP8zWgbf0vM8rvQZtTZY2XVsd6gFeWAc5G166EbSWRokr7+/k5+kgXb0THhEr3iBLCT5cyOeeeh7AsNgGknwaUg0kXzypBD4Pmq2+sM6fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002583; c=relaxed/simple;
-	bh=6MgIqNCj9CxA3qSs8P+wkv0FUebCuZQpu5s8rQwga1g=;
+	bh=ss3ZfLm/JBCBMNvFArD0RqqEwtbsizpYjzDp773vUL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XKpc0yPck8co7WYg/Dce3OrQd2xni9PEehwKqkBiFyHSE8rKVfo+mfjfcf6+tvf6hdvH0Hohjotvj7HAdDsARPA0qV/SE17y1dPdDLuPrA/bRJfld1sLXW5w/qczqHW4OO5UmF+w/IeFwb653E2ApFS1DlSGR3xpv4+AuM2e4RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4mCOehh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JHBGASNOKFEMOgn7YJZHc/0ZiySbHBAgTe67lsQ7jF3Jmcn82/DKxc3C85f/r9RBXI/cAByogdUTEAqZ4mYdOdv1DgDuJMbK5eXOZKJq7TA8Te22T8glJAPsrgCd0h12SSUY7eschNQ2vKTJYS7EDt5MLy+7FuSg1w09Wcr3a9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJUC0C4r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4mCOehh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE25CC116D0;
-	Wed, 25 Feb 2026 06:56:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJUC0C4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9785EC116D0;
+	Wed, 25 Feb 2026 06:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002583;
-	bh=6MgIqNCj9CxA3qSs8P+wkv0FUebCuZQpu5s8rQwga1g=;
+	bh=ss3ZfLm/JBCBMNvFArD0RqqEwtbsizpYjzDp773vUL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P4mCOehhcj5lnw9cj8jt/BESoYsISMi9rhd08kOUeQ5SDgoHaeP5i0tPZNiTt4DK+
-	 o92wxQDJ4q7vfq9ESBIcj/S7R5wIcWogd4fX1TmkvJLVTVNTKCSTVQRQczwlSoaou/
-	 sfJoc3/1chjZWatGY4/0lpPbs2HWr7UAijuEgdrQ=
+	b=ZJUC0C4rZpcBIo1WGi4E64l8UlN6DYjpMBz/sDk8FtWWtTHx3XfDWAvytlWsSFRiK
+	 botBAvO+We3PVHl92coPv/fcuf7KyiIe/t18jBHcNCRpdOWcqhsJRo6zVSabgRrSQS
+	 NiDR+ahtJAvplrok21vnZ0WjPVa0W5TwpIxHbh80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ivan Vecera <ivecera@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 319/641] dpll: zl3073x: Store raw register values instead of parsed state
-Date: Tue, 24 Feb 2026 17:20:45 -0800
-Message-ID: <20260225012356.441195792@linuxfoundation.org>
+Subject: [PATCH 6.18 320/641] dpll: zl3073x: Split ref, out, and synth logic from core
+Date: Tue, 24 Feb 2026 17:20:46 -0800
+Message-ID: <20260225012356.464180784@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -55,367 +55,1310 @@ Content-Transfer-Encoding: 8bit
 
 From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 58fb88d30b0250f928e1afa0eaa4547770d86229 ]
+[ Upstream commit 607f2c00c61faa3b437dbb0d38287e7a9d398a52 ]
 
-The zl3073x_ref, zl3073x_out and zl3073x_synth structures
-previously stored state that was parsed from register reads. This
-included values like boolean 'enabled' flags, synthesizer selections,
-and pre-calculated frequencies.
+Refactor the zl3073x driver by splitting the logic for input
+references, outputs and synthesizers out of the monolithic
+core.[ch] files.
 
-This commit refactors the state management to store the raw register
-values directly in these structures. The various inline helper functions
-are updated to parse these raw values on-demand using FIELD_GET.
+Move the logic for each functional block into its own dedicated files:
+ref.[ch], out.[ch] and synth.[ch].
+
+Specifically:
+- Move state structures (zl3073x_ref, zl3073x_out, zl3073x_synth)
+  from core.h into their respective new headers
+- Move state-fetching functions (..._state_fetch) from core.c to their
+  new .c files
+- Move the zl3073x_ref_freq_factorize helper from core.c to ref.c
+- Introduce a new helper layer to decouple the core device logic from
+  the state-parsing logic:
+  1. Move the original inline helpers (e.g., zl3073x_ref_is_enabled)
+     to the new headers (ref.h, etc.) and make them operate on a
+     const struct ... * pointer.
+  2. Create new zl3073x_dev_... prefixed functions in core.h
+     (e.g., zl3073x_dev_ref_is_enabled) and Implement these _dev_ functions
+     to fetch state using a new ..._state_get() helper and then call
+     the non-prefixed helper.
+  3. Update all driver-internal callers (in dpll.c, prop.c, etc.) to use
+     the new zl3073x_dev_... functions.
 
 Reviewed-by: Petr Oros <poros@redhat.com>
 Tested-by: Prathosh Satish <Prathosh.Satish@microchip.com>
 Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Link: https://patch.msgid.link/20251113074105.141379-2-ivecera@redhat.com
+Link: https://patch.msgid.link/20251113074105.141379-3-ivecera@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 5d41f95f5d0b ("dpll: zl3073x: Fix output pin phase adjustment sign")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/zl3073x/core.c | 81 ++++++++++++-------------------------
- drivers/dpll/zl3073x/core.h | 61 ++++++++++++++++------------
- 2 files changed, 60 insertions(+), 82 deletions(-)
+ drivers/dpll/zl3073x/Makefile |   3 +-
+ drivers/dpll/zl3073x/core.c   | 194 ----------------------------------
+ drivers/dpll/zl3073x/core.h   | 170 +++++++++++++----------------
+ drivers/dpll/zl3073x/dpll.c   |  36 +++----
+ drivers/dpll/zl3073x/out.c    |  67 ++++++++++++
+ drivers/dpll/zl3073x/out.h    |  80 ++++++++++++++
+ drivers/dpll/zl3073x/prop.c   |  12 +--
+ drivers/dpll/zl3073x/ref.c    | 112 ++++++++++++++++++++
+ drivers/dpll/zl3073x/ref.h    |  66 ++++++++++++
+ drivers/dpll/zl3073x/synth.c  |  87 +++++++++++++++
+ drivers/dpll/zl3073x/synth.h  |  72 +++++++++++++
+ 11 files changed, 584 insertions(+), 315 deletions(-)
+ create mode 100644 drivers/dpll/zl3073x/out.c
+ create mode 100644 drivers/dpll/zl3073x/out.h
+ create mode 100644 drivers/dpll/zl3073x/ref.c
+ create mode 100644 drivers/dpll/zl3073x/ref.h
+ create mode 100644 drivers/dpll/zl3073x/synth.c
+ create mode 100644 drivers/dpll/zl3073x/synth.h
 
+diff --git a/drivers/dpll/zl3073x/Makefile b/drivers/dpll/zl3073x/Makefile
+index 84e22aae57e5f..bd324c7fe7101 100644
+--- a/drivers/dpll/zl3073x/Makefile
++++ b/drivers/dpll/zl3073x/Makefile
+@@ -1,7 +1,8 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ obj-$(CONFIG_ZL3073X)		+= zl3073x.o
+-zl3073x-objs			:= core.o devlink.o dpll.o flash.o fw.o prop.o
++zl3073x-objs			:= core.o devlink.o dpll.o flash.o fw.o	\
++				   out.o prop.o ref.o synth.o
+ 
+ obj-$(CONFIG_ZL3073X_I2C)	+= zl3073x_i2c.o
+ zl3073x_i2c-objs		:= i2c.o
 diff --git a/drivers/dpll/zl3073x/core.c b/drivers/dpll/zl3073x/core.c
-index e42e527813cf8..50c1fe59bc7f0 100644
+index 50c1fe59bc7f0..2f340f7eb9ec3 100644
 --- a/drivers/dpll/zl3073x/core.c
 +++ b/drivers/dpll/zl3073x/core.c
-@@ -598,25 +598,22 @@ int zl3073x_write_hwreg_seq(struct zl3073x_dev *zldev,
-  * @zldev: pointer to zl3073x_dev structure
-  * @index: input reference index to fetch state for
-  *
-- * Function fetches information for the given input reference that are
-- * invariant and stores them for later use.
-+ * Function fetches state for the given input reference and stores it for
-+ * later user.
-  *
-  * Return: 0 on success, <0 on error
-  */
+@@ -129,47 +129,6 @@ const struct regmap_config zl3073x_regmap_config = {
+ };
+ EXPORT_SYMBOL_NS_GPL(zl3073x_regmap_config, "ZL3073X");
+ 
+-/**
+- * zl3073x_ref_freq_factorize - factorize given frequency
+- * @freq: input frequency
+- * @base: base frequency
+- * @mult: multiplier
+- *
+- * Checks if the given frequency can be factorized using one of the
+- * supported base frequencies. If so the base frequency and multiplier
+- * are stored into appropriate parameters if they are not NULL.
+- *
+- * Return: 0 on success, -EINVAL if the frequency cannot be factorized
+- */
+-int
+-zl3073x_ref_freq_factorize(u32 freq, u16 *base, u16 *mult)
+-{
+-	static const u16 base_freqs[] = {
+-		1, 2, 4, 5, 8, 10, 16, 20, 25, 32, 40, 50, 64, 80, 100, 125,
+-		128, 160, 200, 250, 256, 320, 400, 500, 625, 640, 800, 1000,
+-		1250, 1280, 1600, 2000, 2500, 3125, 3200, 4000, 5000, 6250,
+-		6400, 8000, 10000, 12500, 15625, 16000, 20000, 25000, 31250,
+-		32000, 40000, 50000, 62500,
+-	};
+-	u32 div;
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(base_freqs); i++) {
+-		div = freq / base_freqs[i];
+-
+-		if (div <= U16_MAX && (freq % base_freqs[i]) == 0) {
+-			if (base)
+-				*base = base_freqs[i];
+-			if (mult)
+-				*mult = div;
+-
+-			return 0;
+-		}
+-	}
+-
+-	return -EINVAL;
+-}
+-
+ static bool
+ zl3073x_check_reg(struct zl3073x_dev *zldev, unsigned int reg, size_t size)
+ {
+@@ -593,159 +552,6 @@ int zl3073x_write_hwreg_seq(struct zl3073x_dev *zldev,
+ 	return rc;
+ }
+ 
+-/**
+- * zl3073x_ref_state_fetch - get input reference state
+- * @zldev: pointer to zl3073x_dev structure
+- * @index: input reference index to fetch state for
+- *
+- * Function fetches state for the given input reference and stores it for
+- * later user.
+- *
+- * Return: 0 on success, <0 on error
+- */
+-static int
+-zl3073x_ref_state_fetch(struct zl3073x_dev *zldev, u8 index)
+-{
+-	struct zl3073x_ref *ref = &zldev->ref[index];
+-	int rc;
+-
+-	/* If the input is differential then the configuration for N-pin
+-	 * reference is ignored and P-pin config is used for both.
+-	 */
+-	if (zl3073x_is_n_pin(index) && zl3073x_ref_is_diff(zldev, index - 1)) {
+-		memcpy(ref, &zldev->ref[index - 1], sizeof(*ref));
+-
+-		return 0;
+-	}
+-
+-	guard(mutex)(&zldev->multiop_lock);
+-
+-	/* Read reference configuration */
+-	rc = zl3073x_mb_op(zldev, ZL_REG_REF_MB_SEM, ZL_REF_MB_SEM_RD,
+-			   ZL_REG_REF_MB_MASK, BIT(index));
+-	if (rc)
+-		return rc;
+-
+-	/* Read ref_config register */
+-	rc = zl3073x_read_u8(zldev, ZL_REG_REF_CONFIG, &ref->config);
+-	if (rc)
+-		return rc;
+-
+-	dev_dbg(zldev->dev, "REF%u is %s and configured as %s\n", index,
+-		str_enabled_disabled(zl3073x_ref_is_enabled(zldev, index)),
+-		zl3073x_ref_is_diff(zldev, index)
+-			? "differential" : "single-ended");
+-
+-	return rc;
+-}
+-
+-/**
+- * zl3073x_out_state_fetch - get output state
+- * @zldev: pointer to zl3073x_dev structure
+- * @index: output index to fetch state for
+- *
+- * Function fetches state of the given output (not output pin) and stores it
+- * for later use.
+- *
+- * Return: 0 on success, <0 on error
+- */
+-static int
+-zl3073x_out_state_fetch(struct zl3073x_dev *zldev, u8 index)
+-{
+-	struct zl3073x_out *out = &zldev->out[index];
+-	int rc;
+-
+-	/* Read output configuration */
+-	rc = zl3073x_read_u8(zldev, ZL_REG_OUTPUT_CTRL(index), &out->ctrl);
+-	if (rc)
+-		return rc;
+-
+-	dev_dbg(zldev->dev, "OUT%u is %s and connected to SYNTH%u\n", index,
+-		str_enabled_disabled(zl3073x_out_is_enabled(zldev, index)),
+-		zl3073x_out_synth_get(zldev, index));
+-
+-	guard(mutex)(&zldev->multiop_lock);
+-
+-	/* Read output configuration */
+-	rc = zl3073x_mb_op(zldev, ZL_REG_OUTPUT_MB_SEM, ZL_OUTPUT_MB_SEM_RD,
+-			   ZL_REG_OUTPUT_MB_MASK, BIT(index));
+-	if (rc)
+-		return rc;
+-
+-	/* Read output mode */
+-	rc = zl3073x_read_u8(zldev, ZL_REG_OUTPUT_MODE, &out->mode);
+-	if (rc)
+-		return rc;
+-
+-	dev_dbg(zldev->dev, "OUT%u has signal format 0x%02x\n", index,
+-		zl3073x_out_signal_format_get(zldev, index));
+-
+-	return rc;
+-}
+-
+-/**
+- * zl3073x_synth_state_fetch - get synth state
+- * @zldev: pointer to zl3073x_dev structure
+- * @index: synth index to fetch state for
+- *
+- * Function fetches state of the given synthesizer and stores it for later use.
+- *
+- * Return: 0 on success, <0 on error
+- */
+-static int
+-zl3073x_synth_state_fetch(struct zl3073x_dev *zldev, u8 index)
+-{
+-	struct zl3073x_synth *synth = &zldev->synth[index];
+-	int rc;
+-
+-	/* Read synth control register */
+-	rc = zl3073x_read_u8(zldev, ZL_REG_SYNTH_CTRL(index), &synth->ctrl);
+-	if (rc)
+-		return rc;
+-
+-	guard(mutex)(&zldev->multiop_lock);
+-
+-	/* Read synth configuration */
+-	rc = zl3073x_mb_op(zldev, ZL_REG_SYNTH_MB_SEM, ZL_SYNTH_MB_SEM_RD,
+-			   ZL_REG_SYNTH_MB_MASK, BIT(index));
+-	if (rc)
+-		return rc;
+-
+-	/* The output frequency is determined by the following formula:
+-	 * base * multiplier * numerator / denominator
+-	 *
+-	 * Read registers with these values
+-	 */
+-	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_BASE, &synth->freq_base);
+-	if (rc)
+-		return rc;
+-
+-	rc = zl3073x_read_u32(zldev, ZL_REG_SYNTH_FREQ_MULT, &synth->freq_mult);
+-	if (rc)
+-		return rc;
+-
+-	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_M, &synth->freq_m);
+-	if (rc)
+-		return rc;
+-
+-	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_N, &synth->freq_n);
+-	if (rc)
+-		return rc;
+-
+-	/* Check denominator for zero to avoid div by 0 */
+-	if (!synth->freq_n) {
+-		dev_err(zldev->dev,
+-			"Zero divisor for SYNTH%u retrieved from device\n",
+-			index);
+-		return -EINVAL;
+-	}
+-
+-	dev_dbg(zldev->dev, "SYNTH%u frequency: %u Hz\n", index,
+-		zl3073x_synth_freq_get(zldev, index));
+-
+-	return rc;
+-}
+-
  static int
- zl3073x_ref_state_fetch(struct zl3073x_dev *zldev, u8 index)
+ zl3073x_dev_state_fetch(struct zl3073x_dev *zldev)
  {
--	struct zl3073x_ref *input = &zldev->ref[index];
--	u8 ref_config;
-+	struct zl3073x_ref *ref = &zldev->ref[index];
- 	int rc;
- 
- 	/* If the input is differential then the configuration for N-pin
- 	 * reference is ignored and P-pin config is used for both.
- 	 */
--	if (zl3073x_is_n_pin(index) &&
--	    zl3073x_ref_is_diff(zldev, index - 1)) {
--		input->enabled = zl3073x_ref_is_enabled(zldev, index - 1);
--		input->diff = true;
-+	if (zl3073x_is_n_pin(index) && zl3073x_ref_is_diff(zldev, index - 1)) {
-+		memcpy(ref, &zldev->ref[index - 1], sizeof(*ref));
- 
- 		return 0;
- 	}
-@@ -630,16 +627,14 @@ zl3073x_ref_state_fetch(struct zl3073x_dev *zldev, u8 index)
- 		return rc;
- 
- 	/* Read ref_config register */
--	rc = zl3073x_read_u8(zldev, ZL_REG_REF_CONFIG, &ref_config);
-+	rc = zl3073x_read_u8(zldev, ZL_REG_REF_CONFIG, &ref->config);
- 	if (rc)
- 		return rc;
- 
--	input->enabled = FIELD_GET(ZL_REF_CONFIG_ENABLE, ref_config);
--	input->diff = FIELD_GET(ZL_REF_CONFIG_DIFF_EN, ref_config);
--
- 	dev_dbg(zldev->dev, "REF%u is %s and configured as %s\n", index,
--		str_enabled_disabled(input->enabled),
--		input->diff ? "differential" : "single-ended");
-+		str_enabled_disabled(zl3073x_ref_is_enabled(zldev, index)),
-+		zl3073x_ref_is_diff(zldev, index)
-+			? "differential" : "single-ended");
- 
- 	return rc;
- }
-@@ -649,8 +644,8 @@ zl3073x_ref_state_fetch(struct zl3073x_dev *zldev, u8 index)
-  * @zldev: pointer to zl3073x_dev structure
-  * @index: output index to fetch state for
-  *
-- * Function fetches information for the given output (not output pin)
-- * that are invariant and stores them for later use.
-+ * Function fetches state of the given output (not output pin) and stores it
-+ * for later use.
-  *
-  * Return: 0 on success, <0 on error
-  */
-@@ -658,22 +653,16 @@ static int
- zl3073x_out_state_fetch(struct zl3073x_dev *zldev, u8 index)
- {
- 	struct zl3073x_out *out = &zldev->out[index];
--	u8 output_ctrl, output_mode;
- 	int rc;
- 
- 	/* Read output configuration */
--	rc = zl3073x_read_u8(zldev, ZL_REG_OUTPUT_CTRL(index), &output_ctrl);
-+	rc = zl3073x_read_u8(zldev, ZL_REG_OUTPUT_CTRL(index), &out->ctrl);
- 	if (rc)
- 		return rc;
- 
--	/* Store info about output enablement and synthesizer the output
--	 * is connected to.
--	 */
--	out->enabled = FIELD_GET(ZL_OUTPUT_CTRL_EN, output_ctrl);
--	out->synth = FIELD_GET(ZL_OUTPUT_CTRL_SYNTH_SEL, output_ctrl);
--
- 	dev_dbg(zldev->dev, "OUT%u is %s and connected to SYNTH%u\n", index,
--		str_enabled_disabled(out->enabled), out->synth);
-+		str_enabled_disabled(zl3073x_out_is_enabled(zldev, index)),
-+		zl3073x_out_synth_get(zldev, index));
- 
- 	guard(mutex)(&zldev->multiop_lock);
- 
-@@ -683,17 +672,13 @@ zl3073x_out_state_fetch(struct zl3073x_dev *zldev, u8 index)
- 	if (rc)
- 		return rc;
- 
--	/* Read output_mode */
--	rc = zl3073x_read_u8(zldev, ZL_REG_OUTPUT_MODE, &output_mode);
-+	/* Read output mode */
-+	rc = zl3073x_read_u8(zldev, ZL_REG_OUTPUT_MODE, &out->mode);
- 	if (rc)
- 		return rc;
- 
--	/* Extract and store output signal format */
--	out->signal_format = FIELD_GET(ZL_OUTPUT_MODE_SIGNAL_FORMAT,
--				       output_mode);
--
- 	dev_dbg(zldev->dev, "OUT%u has signal format 0x%02x\n", index,
--		out->signal_format);
-+		zl3073x_out_signal_format_get(zldev, index));
- 
- 	return rc;
- }
-@@ -703,8 +688,7 @@ zl3073x_out_state_fetch(struct zl3073x_dev *zldev, u8 index)
-  * @zldev: pointer to zl3073x_dev structure
-  * @index: synth index to fetch state for
-  *
-- * Function fetches information for the given synthesizer that are
-- * invariant and stores them for later use.
-+ * Function fetches state of the given synthesizer and stores it for later use.
-  *
-  * Return: 0 on success, <0 on error
-  */
-@@ -712,25 +696,13 @@ static int
- zl3073x_synth_state_fetch(struct zl3073x_dev *zldev, u8 index)
- {
- 	struct zl3073x_synth *synth = &zldev->synth[index];
--	u16 base, m, n;
--	u8 synth_ctrl;
--	u32 mult;
- 	int rc;
- 
- 	/* Read synth control register */
--	rc = zl3073x_read_u8(zldev, ZL_REG_SYNTH_CTRL(index), &synth_ctrl);
-+	rc = zl3073x_read_u8(zldev, ZL_REG_SYNTH_CTRL(index), &synth->ctrl);
- 	if (rc)
- 		return rc;
- 
--	/* Store info about synth enablement and DPLL channel the synth is
--	 * driven by.
--	 */
--	synth->enabled = FIELD_GET(ZL_SYNTH_CTRL_EN, synth_ctrl);
--	synth->dpll = FIELD_GET(ZL_SYNTH_CTRL_DPLL_SEL, synth_ctrl);
--
--	dev_dbg(zldev->dev, "SYNTH%u is %s and driven by DPLL%u\n", index,
--		str_enabled_disabled(synth->enabled), synth->dpll);
--
- 	guard(mutex)(&zldev->multiop_lock);
- 
- 	/* Read synth configuration */
-@@ -744,35 +716,32 @@ zl3073x_synth_state_fetch(struct zl3073x_dev *zldev, u8 index)
- 	 *
- 	 * Read registers with these values
- 	 */
--	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_BASE, &base);
-+	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_BASE, &synth->freq_base);
- 	if (rc)
- 		return rc;
- 
--	rc = zl3073x_read_u32(zldev, ZL_REG_SYNTH_FREQ_MULT, &mult);
-+	rc = zl3073x_read_u32(zldev, ZL_REG_SYNTH_FREQ_MULT, &synth->freq_mult);
- 	if (rc)
- 		return rc;
- 
--	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_M, &m);
-+	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_M, &synth->freq_m);
- 	if (rc)
- 		return rc;
- 
--	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_N, &n);
-+	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_N, &synth->freq_n);
- 	if (rc)
- 		return rc;
- 
- 	/* Check denominator for zero to avoid div by 0 */
--	if (!n) {
-+	if (!synth->freq_n) {
- 		dev_err(zldev->dev,
- 			"Zero divisor for SYNTH%u retrieved from device\n",
- 			index);
- 		return -EINVAL;
- 	}
- 
--	/* Compute and store synth frequency */
--	zldev->synth[index].freq = div_u64(mul_u32_u32(base * m, mult), n);
--
- 	dev_dbg(zldev->dev, "SYNTH%u frequency: %u Hz\n", index,
--		zldev->synth[index].freq);
-+		zl3073x_synth_freq_get(zldev, index));
- 
- 	return rc;
- }
 diff --git a/drivers/dpll/zl3073x/core.h b/drivers/dpll/zl3073x/core.h
-index 1dca4ddcf2350..51d0fd6cfabfc 100644
+index 51d0fd6cfabfc..fe779fc77dd09 100644
 --- a/drivers/dpll/zl3073x/core.h
 +++ b/drivers/dpll/zl3073x/core.h
-@@ -29,38 +29,38 @@ struct zl3073x_dpll;
+@@ -9,7 +9,10 @@
+ #include <linux/mutex.h>
+ #include <linux/types.h>
+ 
++#include "out.h"
++#include "ref.h"
+ #include "regs.h"
++#include "synth.h"
+ 
+ struct device;
+ struct regmap;
+@@ -27,42 +30,6 @@ struct zl3073x_dpll;
+ #define ZL3073X_NUM_PINS	(ZL3073X_NUM_INPUT_PINS + \
+ 				 ZL3073X_NUM_OUTPUT_PINS)
+ 
+-/**
+- * struct zl3073x_ref - input reference invariant info
+- * @ffo: current fractional frequency offset
+- * @config: reference config
+- */
+-struct zl3073x_ref {
+-	s64	ffo;
+-	u8	config;
+-};
+-
+-/**
+- * struct zl3073x_out - output invariant info
+- * @ctrl: output control
+- * @mode: output mode
+- */
+-struct zl3073x_out {
+-	u8	ctrl;
+-	u8	mode;
+-};
+-
+-/**
+- * struct zl3073x_synth - synthesizer invariant info
+- * @freq_mult: frequency multiplier
+- * @freq_base: frequency base
+- * @freq_m: frequency numerator
+- * @freq_n: frequency denominator
+- * @ctrl: synth control
+- */
+-struct zl3073x_synth {
+-	u32	freq_mult;
+-	u16	freq_base;
+-	u16	freq_m;
+-	u16	freq_n;
+-	u8	ctrl;
+-};
+-
+ /**
+  * struct zl3073x_dev - zl3073x device
+  * @dev: pointer to device
+@@ -175,7 +142,6 @@ int zl3073x_write_hwreg_seq(struct zl3073x_dev *zldev,
+  * Misc operations
+  *****************/
+ 
+-int zl3073x_ref_freq_factorize(u32 freq, u16 *base, u16 *mult);
+ int zl3073x_ref_phase_offsets_update(struct zl3073x_dev *zldev, int channel);
+ 
+ static inline bool
+@@ -217,181 +183,188 @@ zl3073x_output_pin_out_get(u8 id)
+ }
  
  /**
-  * struct zl3073x_ref - input reference invariant info
-- * @enabled: input reference is enabled or disabled
-- * @diff: true if input reference is differential
-  * @ffo: current fractional frequency offset
-+ * @config: reference config
+- * zl3073x_ref_ffo_get - get current fractional frequency offset
++ * zl3073x_dev_ref_ffo_get - get current fractional frequency offset
+  * @zldev: pointer to zl3073x device
+  * @index: input reference index
+  *
+  * Return: the latest measured fractional frequency offset
   */
- struct zl3073x_ref {
--	bool	enabled;
--	bool	diff;
- 	s64	ffo;
-+	u8	config;
- };
+ static inline s64
+-zl3073x_ref_ffo_get(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_ref_ffo_get(struct zl3073x_dev *zldev, u8 index)
+ {
+-	return zldev->ref[index].ffo;
++	const struct zl3073x_ref *ref = zl3073x_ref_state_get(zldev, index);
++
++	return zl3073x_ref_ffo_get(ref);
+ }
  
  /**
-  * struct zl3073x_out - output invariant info
-- * @enabled: out is enabled or disabled
-- * @synth: synthesizer the out is connected to
-- * @signal_format: out signal format
+- * zl3073x_ref_is_diff - check if the given input reference is differential
++ * zl3073x_dev_ref_is_diff - check if the given input reference is differential
+  * @zldev: pointer to zl3073x device
+  * @index: input reference index
+  *
+  * Return: true if reference is differential, false if reference is single-ended
+  */
+ static inline bool
+-zl3073x_ref_is_diff(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_ref_is_diff(struct zl3073x_dev *zldev, u8 index)
+ {
+-	if (FIELD_GET(ZL_REF_CONFIG_DIFF_EN, zldev->ref[index].config))
+-		return true;
++	const struct zl3073x_ref *ref = zl3073x_ref_state_get(zldev, index);
+ 
+-	return false;
++	return zl3073x_ref_is_diff(ref);
+ }
+ 
+ /**
+- * zl3073x_ref_is_enabled - check if the given input reference is enabled
++ * zl3073x_dev_ref_is_enabled - check if the given input reference is enabled
+  * @zldev: pointer to zl3073x device
+  * @index: input reference index
+  *
+  * Return: true if input refernce is enabled, false otherwise
+  */
+ static inline bool
+-zl3073x_ref_is_enabled(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_ref_is_enabled(struct zl3073x_dev *zldev, u8 index)
+ {
+-	if (FIELD_GET(ZL_REF_CONFIG_ENABLE, zldev->ref[index].config))
+-		return true;
++	const struct zl3073x_ref *ref = zl3073x_ref_state_get(zldev, index);
+ 
+-	return false;
++	return zl3073x_ref_is_enabled(ref);
+ }
+ 
+ /**
+- * zl3073x_synth_dpll_get - get DPLL ID the synth is driven by
++ * zl3073x_dev_synth_dpll_get - get DPLL ID the synth is driven by
+  * @zldev: pointer to zl3073x device
+  * @index: synth index
+  *
+  * Return: ID of DPLL the given synthetizer is driven by
+  */
+ static inline u8
+-zl3073x_synth_dpll_get(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_synth_dpll_get(struct zl3073x_dev *zldev, u8 index)
+ {
+-	return FIELD_GET(ZL_SYNTH_CTRL_DPLL_SEL, zldev->synth[index].ctrl);
++	const struct zl3073x_synth *synth;
++
++	synth = zl3073x_synth_state_get(zldev, index);
++	return zl3073x_synth_dpll_get(synth);
+ }
+ 
+ /**
+- * zl3073x_synth_freq_get - get synth current freq
++ * zl3073x_dev_synth_freq_get - get synth current freq
+  * @zldev: pointer to zl3073x device
+  * @index: synth index
+  *
+  * Return: frequency of given synthetizer
+  */
+ static inline u32
+-zl3073x_synth_freq_get(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_synth_freq_get(struct zl3073x_dev *zldev, u8 index)
+ {
+-	struct zl3073x_synth *synth = &zldev->synth[index];
++	const struct zl3073x_synth *synth;
+ 
+-	return mul_u64_u32_div(synth->freq_base * synth->freq_m,
+-			       synth->freq_mult, synth->freq_n);
++	synth = zl3073x_synth_state_get(zldev, index);
++	return zl3073x_synth_freq_get(synth);
+ }
+ 
+ /**
+- * zl3073x_synth_is_enabled - check if the given synth is enabled
++ * zl3073x_dev_synth_is_enabled - check if the given synth is enabled
+  * @zldev: pointer to zl3073x device
+  * @index: synth index
+  *
+  * Return: true if synth is enabled, false otherwise
+  */
+ static inline bool
+-zl3073x_synth_is_enabled(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_synth_is_enabled(struct zl3073x_dev *zldev, u8 index)
+ {
+-	return FIELD_GET(ZL_SYNTH_CTRL_EN, zldev->synth[index].ctrl);
++	const struct zl3073x_synth *synth;
++
++	synth = zl3073x_synth_state_get(zldev, index);
++	return zl3073x_synth_is_enabled(synth);
+ }
+ 
+ /**
+- * zl3073x_out_synth_get - get synth connected to given output
++ * zl3073x_dev_out_synth_get - get synth connected to given output
+  * @zldev: pointer to zl3073x device
+  * @index: output index
+  *
+  * Return: index of synth connected to given output.
+  */
+ static inline u8
+-zl3073x_out_synth_get(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_out_synth_get(struct zl3073x_dev *zldev, u8 index)
+ {
+-	return FIELD_GET(ZL_OUTPUT_CTRL_SYNTH_SEL, zldev->out[index].ctrl);
++	const struct zl3073x_out *out = zl3073x_out_state_get(zldev, index);
++
++	return zl3073x_out_synth_get(out);
+ }
+ 
+ /**
+- * zl3073x_out_is_enabled - check if the given output is enabled
++ * zl3073x_dev_out_is_enabled - check if the given output is enabled
+  * @zldev: pointer to zl3073x device
+  * @index: output index
+  *
+  * Return: true if the output is enabled, false otherwise
+  */
+ static inline bool
+-zl3073x_out_is_enabled(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_out_is_enabled(struct zl3073x_dev *zldev, u8 index)
+ {
+-	u8 synth;
++	const struct zl3073x_out *out = zl3073x_out_state_get(zldev, index);
++	const struct zl3073x_synth *synth;
++	u8 synth_id;
+ 
+ 	/* Output is enabled only if associated synth is enabled */
+-	synth = zl3073x_out_synth_get(zldev, index);
+-	if (!zl3073x_synth_is_enabled(zldev, synth))
+-		return false;
++	synth_id = zl3073x_out_synth_get(out);
++	synth = zl3073x_synth_state_get(zldev, synth_id);
+ 
+-	return FIELD_GET(ZL_OUTPUT_CTRL_EN, zldev->out[index].ctrl);
++	return zl3073x_synth_is_enabled(synth) && zl3073x_out_is_enabled(out);
+ }
+ 
+ /**
+- * zl3073x_out_signal_format_get - get output signal format
++ * zl3073x_dev_out_signal_format_get - get output signal format
+  * @zldev: pointer to zl3073x device
+  * @index: output index
+  *
+  * Return: signal format of given output
+  */
+ static inline u8
+-zl3073x_out_signal_format_get(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_out_signal_format_get(struct zl3073x_dev *zldev, u8 index)
+ {
+-	return FIELD_GET(ZL_OUTPUT_MODE_SIGNAL_FORMAT, zldev->out[index].mode);
++	const struct zl3073x_out *out = zl3073x_out_state_get(zldev, index);
++
++	return zl3073x_out_signal_format_get(out);
+ }
+ 
+ /**
+- * zl3073x_out_dpll_get - get DPLL ID the output is driven by
++ * zl3073x_dev_out_dpll_get - get DPLL ID the output is driven by
+  * @zldev: pointer to zl3073x device
+  * @index: output index
+  *
+  * Return: ID of DPLL the given output is driven by
+  */
+ static inline
+-u8 zl3073x_out_dpll_get(struct zl3073x_dev *zldev, u8 index)
++u8 zl3073x_dev_out_dpll_get(struct zl3073x_dev *zldev, u8 index)
+ {
+-	u8 synth;
++	const struct zl3073x_out *out = zl3073x_out_state_get(zldev, index);
++	const struct zl3073x_synth *synth;
++	u8 synth_id;
+ 
+ 	/* Get synthesizer connected to given output */
+-	synth = zl3073x_out_synth_get(zldev, index);
++	synth_id = zl3073x_out_synth_get(out);
++	synth = zl3073x_synth_state_get(zldev, synth_id);
+ 
+ 	/* Return DPLL that drives the synth */
+-	return zl3073x_synth_dpll_get(zldev, synth);
++	return zl3073x_synth_dpll_get(synth);
+ }
+ 
+ /**
+- * zl3073x_out_is_diff - check if the given output is differential
++ * zl3073x_dev_out_is_diff - check if the given output is differential
+  * @zldev: pointer to zl3073x device
+  * @index: output index
+  *
+  * Return: true if output is differential, false if output is single-ended
+  */
+ static inline bool
+-zl3073x_out_is_diff(struct zl3073x_dev *zldev, u8 index)
++zl3073x_dev_out_is_diff(struct zl3073x_dev *zldev, u8 index)
+ {
+-	switch (zl3073x_out_signal_format_get(zldev, index)) {
+-	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_LVDS:
+-	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_DIFF:
+-	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_LOWVCM:
+-		return true;
+-	default:
+-		break;
+-	}
++	const struct zl3073x_out *out = zl3073x_out_state_get(zldev, index);
+ 
+-	return false;
++	return zl3073x_out_is_diff(out);
+ }
+ 
+ /**
+- * zl3073x_output_pin_is_enabled - check if the given output pin is enabled
++ * zl3073x_dev_output_pin_is_enabled - check if the given output pin is enabled
+  * @zldev: pointer to zl3073x device
+  * @id: output pin id
+  *
+@@ -401,16 +374,21 @@ zl3073x_out_is_diff(struct zl3073x_dev *zldev, u8 index)
+  * Return: true if output pin is enabled, false if output pin is disabled
+  */
+ static inline bool
+-zl3073x_output_pin_is_enabled(struct zl3073x_dev *zldev, u8 id)
++zl3073x_dev_output_pin_is_enabled(struct zl3073x_dev *zldev, u8 id)
+ {
+-	u8 output = zl3073x_output_pin_out_get(id);
++	u8 out_id = zl3073x_output_pin_out_get(id);
++	const struct zl3073x_out *out;
++
++	out = zl3073x_out_state_get(zldev, out_id);
+ 
+-	/* Check if the whole output is enabled */
+-	if (!zl3073x_out_is_enabled(zldev, output))
++	/* Check if the output is enabled - call _dev_ helper that
++	 * additionally checks for attached synth enablement.
++	 */
++	if (!zl3073x_dev_out_is_enabled(zldev, out_id))
+ 		return false;
+ 
+ 	/* Check signal format */
+-	switch (zl3073x_out_signal_format_get(zldev, output)) {
++	switch (zl3073x_out_signal_format_get(out)) {
+ 	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_DISABLED:
+ 		/* Both output pins are disabled by signal format */
+ 		return false;
+diff --git a/drivers/dpll/zl3073x/dpll.c b/drivers/dpll/zl3073x/dpll.c
+index d90150671d374..62996f26e065f 100644
+--- a/drivers/dpll/zl3073x/dpll.c
++++ b/drivers/dpll/zl3073x/dpll.c
+@@ -967,7 +967,7 @@ zl3073x_dpll_output_pin_esync_get(const struct dpll_pin *dpll_pin,
+ 	 * for N-division is also used for the esync divider so both cannot
+ 	 * be used.
+ 	 */
+-	switch (zl3073x_out_signal_format_get(zldev, out)) {
++	switch (zl3073x_dev_out_signal_format_get(zldev, out)) {
+ 	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_2_NDIV:
+ 	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_2_NDIV_INV:
+ 		return -EOPNOTSUPP;
+@@ -1001,10 +1001,10 @@ zl3073x_dpll_output_pin_esync_get(const struct dpll_pin *dpll_pin,
+ 	}
+ 
+ 	/* Get synth attached to output pin */
+-	synth = zl3073x_out_synth_get(zldev, out);
++	synth = zl3073x_dev_out_synth_get(zldev, out);
+ 
+ 	/* Get synth frequency */
+-	synth_freq = zl3073x_synth_freq_get(zldev, synth);
++	synth_freq = zl3073x_dev_synth_freq_get(zldev, synth);
+ 
+ 	clock_type = FIELD_GET(ZL_OUTPUT_MODE_CLOCK_TYPE, output_mode);
+ 	if (clock_type != ZL_OUTPUT_MODE_CLOCK_TYPE_ESYNC) {
+@@ -1078,7 +1078,7 @@ zl3073x_dpll_output_pin_esync_set(const struct dpll_pin *dpll_pin,
+ 	 * for N-division is also used for the esync divider so both cannot
+ 	 * be used.
+ 	 */
+-	switch (zl3073x_out_signal_format_get(zldev, out)) {
++	switch (zl3073x_dev_out_signal_format_get(zldev, out)) {
+ 	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_2_NDIV:
+ 	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_2_NDIV_INV:
+ 		return -EOPNOTSUPP;
+@@ -1117,10 +1117,10 @@ zl3073x_dpll_output_pin_esync_set(const struct dpll_pin *dpll_pin,
+ 		goto write_mailbox;
+ 
+ 	/* Get synth attached to output pin */
+-	synth = zl3073x_out_synth_get(zldev, out);
++	synth = zl3073x_dev_out_synth_get(zldev, out);
+ 
+ 	/* Get synth frequency */
+-	synth_freq = zl3073x_synth_freq_get(zldev, synth);
++	synth_freq = zl3073x_dev_synth_freq_get(zldev, synth);
+ 
+ 	rc = zl3073x_read_u32(zldev, ZL_REG_OUTPUT_DIV, &output_div);
+ 	if (rc)
+@@ -1172,8 +1172,8 @@ zl3073x_dpll_output_pin_frequency_get(const struct dpll_pin *dpll_pin,
+ 	int rc;
+ 
+ 	out = zl3073x_output_pin_out_get(pin->id);
+-	synth = zl3073x_out_synth_get(zldev, out);
+-	synth_freq = zl3073x_synth_freq_get(zldev, synth);
++	synth = zl3073x_dev_out_synth_get(zldev, out);
++	synth_freq = zl3073x_dev_synth_freq_get(zldev, synth);
+ 
+ 	guard(mutex)(&zldev->multiop_lock);
+ 
+@@ -1195,7 +1195,7 @@ zl3073x_dpll_output_pin_frequency_get(const struct dpll_pin *dpll_pin,
+ 	}
+ 
+ 	/* Read used signal format for the given output */
+-	signal_format = zl3073x_out_signal_format_get(zldev, out);
++	signal_format = zl3073x_dev_out_signal_format_get(zldev, out);
+ 
+ 	switch (signal_format) {
+ 	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_2_NDIV:
+@@ -1263,12 +1263,12 @@ zl3073x_dpll_output_pin_frequency_set(const struct dpll_pin *dpll_pin,
+ 	int rc;
+ 
+ 	out = zl3073x_output_pin_out_get(pin->id);
+-	synth = zl3073x_out_synth_get(zldev, out);
+-	synth_freq = zl3073x_synth_freq_get(zldev, synth);
++	synth = zl3073x_dev_out_synth_get(zldev, out);
++	synth_freq = zl3073x_dev_synth_freq_get(zldev, synth);
+ 	new_div = synth_freq / (u32)frequency;
+ 
+ 	/* Get used signal format for the given output */
+-	signal_format = zl3073x_out_signal_format_get(zldev, out);
++	signal_format = zl3073x_dev_out_signal_format_get(zldev, out);
+ 
+ 	guard(mutex)(&zldev->multiop_lock);
+ 
+@@ -1856,8 +1856,8 @@ zl3073x_dpll_pin_is_registrable(struct zl3073x_dpll *zldpll,
+ 		if (zldpll->refsel_mode == ZL_DPLL_MODE_REFSEL_MODE_NCO)
+ 			return false;
+ 
+-		is_diff = zl3073x_ref_is_diff(zldev, ref);
+-		is_enabled = zl3073x_ref_is_enabled(zldev, ref);
++		is_diff = zl3073x_dev_ref_is_diff(zldev, ref);
++		is_enabled = zl3073x_dev_ref_is_enabled(zldev, ref);
+ 	} else {
+ 		/* Output P&N pair shares single HW output */
+ 		u8 out = zl3073x_output_pin_out_get(index);
+@@ -1865,7 +1865,7 @@ zl3073x_dpll_pin_is_registrable(struct zl3073x_dpll *zldpll,
+ 		name = "OUT";
+ 
+ 		/* Skip the pin if it is connected to different DPLL channel */
+-		if (zl3073x_out_dpll_get(zldev, out) != zldpll->id) {
++		if (zl3073x_dev_out_dpll_get(zldev, out) != zldpll->id) {
+ 			dev_dbg(zldev->dev,
+ 				"%s%u is driven by different DPLL\n", name,
+ 				out);
+@@ -1873,8 +1873,8 @@ zl3073x_dpll_pin_is_registrable(struct zl3073x_dpll *zldpll,
+ 			return false;
+ 		}
+ 
+-		is_diff = zl3073x_out_is_diff(zldev, out);
+-		is_enabled = zl3073x_output_pin_is_enabled(zldev, index);
++		is_diff = zl3073x_dev_out_is_diff(zldev, out);
++		is_enabled = zl3073x_dev_output_pin_is_enabled(zldev, index);
+ 	}
+ 
+ 	/* Skip N-pin if the corresponding input/output is differential */
+@@ -2124,7 +2124,7 @@ zl3073x_dpll_pin_ffo_check(struct zl3073x_dpll_pin *pin)
+ 		return false;
+ 
+ 	/* Get the latest measured ref's ffo */
+-	ffo = zl3073x_ref_ffo_get(zldev, ref);
++	ffo = zl3073x_dev_ref_ffo_get(zldev, ref);
+ 
+ 	/* Compare with previous value */
+ 	if (pin->freq_offset != ffo) {
+diff --git a/drivers/dpll/zl3073x/out.c b/drivers/dpll/zl3073x/out.c
+new file mode 100644
+index 0000000000000..a48f6917b39fb
+--- /dev/null
++++ b/drivers/dpll/zl3073x/out.c
+@@ -0,0 +1,67 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++#include <linux/bitfield.h>
++#include <linux/cleanup.h>
++#include <linux/dev_printk.h>
++#include <linux/string.h>
++#include <linux/string_choices.h>
++#include <linux/types.h>
++
++#include "core.h"
++#include "out.h"
++
++/**
++ * zl3073x_out_state_fetch - fetch output state from hardware
++ * @zldev: pointer to zl3073x_dev structure
++ * @index: output index to fetch state for
++ *
++ * Function fetches state of the given output from hardware and stores it
++ * for later use.
++ *
++ * Return: 0 on success, <0 on error
++ */
++int zl3073x_out_state_fetch(struct zl3073x_dev *zldev, u8 index)
++{
++	struct zl3073x_out *out = &zldev->out[index];
++	int rc;
++
++	/* Read output configuration */
++	rc = zl3073x_read_u8(zldev, ZL_REG_OUTPUT_CTRL(index), &out->ctrl);
++	if (rc)
++		return rc;
++
++	dev_dbg(zldev->dev, "OUT%u is %s and connected to SYNTH%u\n", index,
++		str_enabled_disabled(zl3073x_out_is_enabled(out)),
++		zl3073x_out_synth_get(out));
++
++	guard(mutex)(&zldev->multiop_lock);
++
++	/* Read output configuration */
++	rc = zl3073x_mb_op(zldev, ZL_REG_OUTPUT_MB_SEM, ZL_OUTPUT_MB_SEM_RD,
++			   ZL_REG_OUTPUT_MB_MASK, BIT(index));
++	if (rc)
++		return rc;
++
++	/* Read output mode */
++	rc = zl3073x_read_u8(zldev, ZL_REG_OUTPUT_MODE, &out->mode);
++	if (rc)
++		return rc;
++
++	dev_dbg(zldev->dev, "OUT%u has signal format 0x%02x\n", index,
++		zl3073x_out_signal_format_get(out));
++
++	return rc;
++}
++
++/**
++ * zl3073x_out_state_get - get current output state
++ * @zldev: pointer to zl3073x_dev structure
++ * @index: output index to get state for
++ *
++ * Return: pointer to given output state
++ */
++const struct zl3073x_out *zl3073x_out_state_get(struct zl3073x_dev *zldev,
++						u8 index)
++{
++	return &zldev->out[index];
++}
+diff --git a/drivers/dpll/zl3073x/out.h b/drivers/dpll/zl3073x/out.h
+new file mode 100644
+index 0000000000000..986aa046221da
+--- /dev/null
++++ b/drivers/dpll/zl3073x/out.h
+@@ -0,0 +1,80 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++#ifndef _ZL3073X_OUT_H
++#define _ZL3073X_OUT_H
++
++#include <linux/bitfield.h>
++#include <linux/types.h>
++
++#include "regs.h"
++
++struct zl3073x_dev;
++
++/**
++ * struct zl3073x_out - output state
 + * @ctrl: output control
 + * @mode: output mode
-  */
- struct zl3073x_out {
--	bool	enabled;
--	u8	synth;
--	u8	signal_format;
++ */
++struct zl3073x_out {
 +	u8	ctrl;
 +	u8	mode;
- };
++};
++
++int zl3073x_out_state_fetch(struct zl3073x_dev *zldev, u8 index);
++const struct zl3073x_out *zl3073x_out_state_get(struct zl3073x_dev *zldev,
++						u8 index);
++
++/**
++ * zl3073x_out_signal_format_get - get output signal format
++ * @out: pointer to out state
++ *
++ * Return: signal format of given output
++ */
++static inline u8 zl3073x_out_signal_format_get(const struct zl3073x_out *out)
++{
++	return FIELD_GET(ZL_OUTPUT_MODE_SIGNAL_FORMAT, out->mode);
++}
++
++/**
++ * zl3073x_out_is_diff - check if the given output is differential
++ * @out: pointer to out state
++ *
++ * Return: true if output is differential, false if output is single-ended
++ */
++static inline bool zl3073x_out_is_diff(const struct zl3073x_out *out)
++{
++	switch (zl3073x_out_signal_format_get(out)) {
++	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_LVDS:
++	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_DIFF:
++	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_LOWVCM:
++		return true;
++	default:
++		break;
++	}
++
++	return false;
++}
++
++/**
++ * zl3073x_out_is_enabled - check if the given output is enabled
++ * @out: pointer to out state
++ *
++ * Return: true if output is enabled, false if output is disabled
++ */
++static inline bool zl3073x_out_is_enabled(const struct zl3073x_out *out)
++{
++	return !!FIELD_GET(ZL_OUTPUT_CTRL_EN, out->ctrl);
++}
++
++/**
++ * zl3073x_out_synth_get - get synth connected to given output
++ * @out: pointer to out state
++ *
++ * Return: index of synth connected to given output.
++ */
++static inline u8 zl3073x_out_synth_get(const struct zl3073x_out *out)
++{
++	return FIELD_GET(ZL_OUTPUT_CTRL_SYNTH_SEL, out->ctrl);
++}
++
++#endif /* _ZL3073X_OUT_H */
+diff --git a/drivers/dpll/zl3073x/prop.c b/drivers/dpll/zl3073x/prop.c
+index 9e1fca5cdaf1e..4ed153087570b 100644
+--- a/drivers/dpll/zl3073x/prop.c
++++ b/drivers/dpll/zl3073x/prop.c
+@@ -46,10 +46,10 @@ zl3073x_pin_check_freq(struct zl3073x_dev *zldev, enum dpll_pin_direction dir,
  
- /**
-  * struct zl3073x_synth - synthesizer invariant info
-- * @freq: synthesizer frequency
-- * @dpll: ID of DPLL the synthesizer is driven by
-- * @enabled: synth is enabled or disabled
+ 		/* Get output pin synthesizer */
+ 		out = zl3073x_output_pin_out_get(id);
+-		synth = zl3073x_out_synth_get(zldev, out);
++		synth = zl3073x_dev_out_synth_get(zldev, out);
+ 
+ 		/* Get synth frequency */
+-		synth_freq = zl3073x_synth_freq_get(zldev, synth);
++		synth_freq = zl3073x_dev_synth_freq_get(zldev, synth);
+ 
+ 		/* Check the frequency divides synth frequency */
+ 		if (synth_freq % (u32)freq)
+@@ -93,13 +93,13 @@ zl3073x_prop_pin_package_label_set(struct zl3073x_dev *zldev,
+ 
+ 		prefix = "REF";
+ 		ref = zl3073x_input_pin_ref_get(id);
+-		is_diff = zl3073x_ref_is_diff(zldev, ref);
++		is_diff = zl3073x_dev_ref_is_diff(zldev, ref);
+ 	} else {
+ 		u8 out;
+ 
+ 		prefix = "OUT";
+ 		out = zl3073x_output_pin_out_get(id);
+-		is_diff = zl3073x_out_is_diff(zldev, out);
++		is_diff = zl3073x_dev_out_is_diff(zldev, out);
+ 	}
+ 
+ 	if (!is_diff)
+@@ -217,8 +217,8 @@ struct zl3073x_pin_props *zl3073x_pin_props_get(struct zl3073x_dev *zldev,
+ 		 * the synth frequency count.
+ 		 */
+ 		out = zl3073x_output_pin_out_get(index);
+-		synth = zl3073x_out_synth_get(zldev, out);
+-		f = 2 * zl3073x_synth_freq_get(zldev, synth);
++		synth = zl3073x_dev_out_synth_get(zldev, out);
++		f = 2 * zl3073x_dev_synth_freq_get(zldev, synth);
+ 		props->dpll_props.phase_gran = f ? div_u64(PSEC_PER_SEC, f) : 1;
+ 	}
+ 
+diff --git a/drivers/dpll/zl3073x/ref.c b/drivers/dpll/zl3073x/ref.c
+new file mode 100644
+index 0000000000000..6abd6288a02ad
+--- /dev/null
++++ b/drivers/dpll/zl3073x/ref.c
+@@ -0,0 +1,112 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++#include <linux/bitfield.h>
++#include <linux/cleanup.h>
++#include <linux/dev_printk.h>
++#include <linux/string.h>
++#include <linux/string_choices.h>
++#include <linux/types.h>
++
++#include "core.h"
++#include "ref.h"
++
++/**
++ * zl3073x_ref_freq_factorize - factorize given frequency
++ * @freq: input frequency
++ * @base: base frequency
++ * @mult: multiplier
++ *
++ * Checks if the given frequency can be factorized using one of the
++ * supported base frequencies. If so the base frequency and multiplier
++ * are stored into appropriate parameters if they are not NULL.
++ *
++ * Return: 0 on success, -EINVAL if the frequency cannot be factorized
++ */
++int
++zl3073x_ref_freq_factorize(u32 freq, u16 *base, u16 *mult)
++{
++	static const u16 base_freqs[] = {
++		1, 2, 4, 5, 8, 10, 16, 20, 25, 32, 40, 50, 64, 80, 100, 125,
++		128, 160, 200, 250, 256, 320, 400, 500, 625, 640, 800, 1000,
++		1250, 1280, 1600, 2000, 2500, 3125, 3200, 4000, 5000, 6250,
++		6400, 8000, 10000, 12500, 15625, 16000, 20000, 25000, 31250,
++		32000, 40000, 50000, 62500,
++	};
++	u32 div;
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(base_freqs); i++) {
++		div = freq / base_freqs[i];
++
++		if (div <= U16_MAX && (freq % base_freqs[i]) == 0) {
++			if (base)
++				*base = base_freqs[i];
++			if (mult)
++				*mult = div;
++
++			return 0;
++		}
++	}
++
++	return -EINVAL;
++}
++
++/**
++ * zl3073x_ref_state_fetch - fetch input reference state from hardware
++ * @zldev: pointer to zl3073x_dev structure
++ * @index: input reference index to fetch state for
++ *
++ * Function fetches state for the given input reference from hardware and
++ * stores it for later use.
++ *
++ * Return: 0 on success, <0 on error
++ */
++int zl3073x_ref_state_fetch(struct zl3073x_dev *zldev, u8 index)
++{
++	struct zl3073x_ref *ref = &zldev->ref[index];
++	int rc;
++
++	/* For differential type inputs the N-pin reference shares
++	 * part of the configuration with the P-pin counterpart.
++	 */
++	if (zl3073x_is_n_pin(index) && zl3073x_ref_is_diff(ref - 1)) {
++		struct zl3073x_ref *p_ref = &zldev->ref[index - 1];
++
++		/* Copy the shared items from the P-pin */
++		ref->config = p_ref->config;
++
++		return 0; /* Finish - no non-shared items for now */
++	}
++
++	guard(mutex)(&zldev->multiop_lock);
++
++	/* Read reference configuration */
++	rc = zl3073x_mb_op(zldev, ZL_REG_REF_MB_SEM, ZL_REF_MB_SEM_RD,
++			   ZL_REG_REF_MB_MASK, BIT(index));
++	if (rc)
++		return rc;
++
++	/* Read ref_config register */
++	rc = zl3073x_read_u8(zldev, ZL_REG_REF_CONFIG, &ref->config);
++	if (rc)
++		return rc;
++
++	dev_dbg(zldev->dev, "REF%u is %s and configured as %s\n", index,
++		str_enabled_disabled(zl3073x_ref_is_enabled(ref)),
++		zl3073x_ref_is_diff(ref) ? "differential" : "single-ended");
++
++	return rc;
++}
++
++/**
++ * zl3073x_ref_state_get - get current input reference state
++ * @zldev: pointer to zl3073x_dev structure
++ * @index: input reference index to get state for
++ *
++ * Return: pointer to given input reference state
++ */
++const struct zl3073x_ref *
++zl3073x_ref_state_get(struct zl3073x_dev *zldev, u8 index)
++{
++	return &zldev->ref[index];
++}
+diff --git a/drivers/dpll/zl3073x/ref.h b/drivers/dpll/zl3073x/ref.h
+new file mode 100644
+index 0000000000000..e72f2c8750876
+--- /dev/null
++++ b/drivers/dpll/zl3073x/ref.h
+@@ -0,0 +1,66 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++#ifndef _ZL3073X_REF_H
++#define _ZL3073X_REF_H
++
++#include <linux/bitfield.h>
++#include <linux/types.h>
++
++#include "regs.h"
++
++struct zl3073x_dev;
++
++/**
++ * struct zl3073x_ref - input reference state
++ * @ffo: current fractional frequency offset
++ * @config: reference config
++ */
++struct zl3073x_ref {
++	s64	ffo;
++	u8	config;
++};
++
++int zl3073x_ref_state_fetch(struct zl3073x_dev *zldev, u8 index);
++
++const struct zl3073x_ref *zl3073x_ref_state_get(struct zl3073x_dev *zldev,
++						u8 index);
++
++int zl3073x_ref_freq_factorize(u32 freq, u16 *base, u16 *mult);
++
++/**
++ * zl3073x_ref_ffo_get - get current fractional frequency offset
++ * @ref: pointer to ref state
++ *
++ * Return: the latest measured fractional frequency offset
++ */
++static inline s64
++zl3073x_ref_ffo_get(const struct zl3073x_ref *ref)
++{
++	return ref->ffo;
++}
++
++/**
++ * zl3073x_ref_is_diff - check if the given input reference is differential
++ * @ref: pointer to ref state
++ *
++ * Return: true if reference is differential, false if reference is single-ended
++ */
++static inline bool
++zl3073x_ref_is_diff(const struct zl3073x_ref *ref)
++{
++	return !!FIELD_GET(ZL_REF_CONFIG_DIFF_EN, ref->config);
++}
++
++/**
++ * zl3073x_ref_is_enabled - check if the given input reference is enabled
++ * @ref: pointer to ref state
++ *
++ * Return: true if input refernce is enabled, false otherwise
++ */
++static inline bool
++zl3073x_ref_is_enabled(const struct zl3073x_ref *ref)
++{
++	return !!FIELD_GET(ZL_REF_CONFIG_ENABLE, ref->config);
++}
++
++#endif /* _ZL3073X_REF_H */
+diff --git a/drivers/dpll/zl3073x/synth.c b/drivers/dpll/zl3073x/synth.c
+new file mode 100644
+index 0000000000000..da839572dab26
+--- /dev/null
++++ b/drivers/dpll/zl3073x/synth.c
+@@ -0,0 +1,87 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++#include <linux/bitfield.h>
++#include <linux/cleanup.h>
++#include <linux/dev_printk.h>
++#include <linux/string.h>
++#include <linux/string_choices.h>
++#include <linux/types.h>
++
++#include "core.h"
++#include "synth.h"
++
++/**
++ * zl3073x_synth_state_fetch - fetch synth state from hardware
++ * @zldev: pointer to zl3073x_dev structure
++ * @index: synth index to fetch state for
++ *
++ * Function fetches state of the given synthesizer from the hardware and
++ * stores it for later use.
++ *
++ * Return: 0 on success, <0 on error
++ */
++int zl3073x_synth_state_fetch(struct zl3073x_dev *zldev, u8 index)
++{
++	struct zl3073x_synth *synth = &zldev->synth[index];
++	int rc;
++
++	/* Read synth control register */
++	rc = zl3073x_read_u8(zldev, ZL_REG_SYNTH_CTRL(index), &synth->ctrl);
++	if (rc)
++		return rc;
++
++	guard(mutex)(&zldev->multiop_lock);
++
++	/* Read synth configuration */
++	rc = zl3073x_mb_op(zldev, ZL_REG_SYNTH_MB_SEM, ZL_SYNTH_MB_SEM_RD,
++			   ZL_REG_SYNTH_MB_MASK, BIT(index));
++	if (rc)
++		return rc;
++
++	/* The output frequency is determined by the following formula:
++	 * base * multiplier * numerator / denominator
++	 *
++	 * Read registers with these values
++	 */
++	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_BASE, &synth->freq_base);
++	if (rc)
++		return rc;
++
++	rc = zl3073x_read_u32(zldev, ZL_REG_SYNTH_FREQ_MULT, &synth->freq_mult);
++	if (rc)
++		return rc;
++
++	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_M, &synth->freq_m);
++	if (rc)
++		return rc;
++
++	rc = zl3073x_read_u16(zldev, ZL_REG_SYNTH_FREQ_N, &synth->freq_n);
++	if (rc)
++		return rc;
++
++	/* Check denominator for zero to avoid div by 0 */
++	if (!synth->freq_n) {
++		dev_err(zldev->dev,
++			"Zero divisor for SYNTH%u retrieved from device\n",
++			index);
++		return -EINVAL;
++	}
++
++	dev_dbg(zldev->dev, "SYNTH%u frequency: %u Hz\n", index,
++		zl3073x_synth_freq_get(synth));
++
++	return rc;
++}
++
++/**
++ * zl3073x_synth_state_get - get current synth state
++ * @zldev: pointer to zl3073x_dev structure
++ * @index: synth index to get state for
++ *
++ * Return: pointer to given synth state
++ */
++const struct zl3073x_synth *zl3073x_synth_state_get(struct zl3073x_dev *zldev,
++						    u8 index)
++{
++	return &zldev->synth[index];
++}
+diff --git a/drivers/dpll/zl3073x/synth.h b/drivers/dpll/zl3073x/synth.h
+new file mode 100644
+index 0000000000000..6c55eb8a888c2
+--- /dev/null
++++ b/drivers/dpll/zl3073x/synth.h
+@@ -0,0 +1,72 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++#ifndef _ZL3073X_SYNTH_H
++#define _ZL3073X_SYNTH_H
++
++#include <linux/bitfield.h>
++#include <linux/math64.h>
++#include <linux/types.h>
++
++#include "regs.h"
++
++struct zl3073x_dev;
++
++/**
++ * struct zl3073x_synth - synthesizer state
 + * @freq_mult: frequency multiplier
 + * @freq_base: frequency base
 + * @freq_m: frequency numerator
 + * @freq_n: frequency denominator
 + * @ctrl: synth control
-  */
- struct zl3073x_synth {
--	u32	freq;
--	u8	dpll;
--	bool	enabled;
++ */
++struct zl3073x_synth {
 +	u32	freq_mult;
 +	u16	freq_base;
 +	u16	freq_m;
 +	u16	freq_n;
 +	u8	ctrl;
- };
- 
- /**
-@@ -239,7 +239,10 @@ zl3073x_ref_ffo_get(struct zl3073x_dev *zldev, u8 index)
- static inline bool
- zl3073x_ref_is_diff(struct zl3073x_dev *zldev, u8 index)
- {
--	return zldev->ref[index].diff;
-+	if (FIELD_GET(ZL_REF_CONFIG_DIFF_EN, zldev->ref[index].config))
-+		return true;
++};
 +
-+	return false;
- }
- 
- /**
-@@ -252,7 +255,10 @@ zl3073x_ref_is_diff(struct zl3073x_dev *zldev, u8 index)
- static inline bool
- zl3073x_ref_is_enabled(struct zl3073x_dev *zldev, u8 index)
- {
--	return zldev->ref[index].enabled;
-+	if (FIELD_GET(ZL_REF_CONFIG_ENABLE, zldev->ref[index].config))
-+		return true;
++int zl3073x_synth_state_fetch(struct zl3073x_dev *zldev, u8 synth_id);
 +
-+	return false;
- }
- 
- /**
-@@ -265,7 +271,7 @@ zl3073x_ref_is_enabled(struct zl3073x_dev *zldev, u8 index)
- static inline u8
- zl3073x_synth_dpll_get(struct zl3073x_dev *zldev, u8 index)
- {
--	return zldev->synth[index].dpll;
-+	return FIELD_GET(ZL_SYNTH_CTRL_DPLL_SEL, zldev->synth[index].ctrl);
- }
- 
- /**
-@@ -278,7 +284,10 @@ zl3073x_synth_dpll_get(struct zl3073x_dev *zldev, u8 index)
- static inline u32
- zl3073x_synth_freq_get(struct zl3073x_dev *zldev, u8 index)
- {
--	return zldev->synth[index].freq;
-+	struct zl3073x_synth *synth = &zldev->synth[index];
++const struct zl3073x_synth *zl3073x_synth_state_get(struct zl3073x_dev *zldev,
++						    u8 synth_id);
 +
++int zl3073x_synth_state_set(struct zl3073x_dev *zldev, u8 synth_id,
++			    const struct zl3073x_synth *synth);
++
++/**
++ * zl3073x_synth_dpll_get - get DPLL ID the synth is driven by
++ * @synth: pointer to synth state
++ *
++ * Return: ID of DPLL the given synthetizer is driven by
++ */
++static inline u8 zl3073x_synth_dpll_get(const struct zl3073x_synth *synth)
++{
++	return FIELD_GET(ZL_SYNTH_CTRL_DPLL_SEL, synth->ctrl);
++}
++
++/**
++ * zl3073x_synth_freq_get - get synth current freq
++ * @synth: pointer to synth state
++ *
++ * Return: frequency of given synthetizer
++ */
++static inline u32 zl3073x_synth_freq_get(const struct zl3073x_synth *synth)
++{
 +	return mul_u64_u32_div(synth->freq_base * synth->freq_m,
 +			       synth->freq_mult, synth->freq_n);
- }
- 
- /**
-@@ -291,7 +300,7 @@ zl3073x_synth_freq_get(struct zl3073x_dev *zldev, u8 index)
- static inline bool
- zl3073x_synth_is_enabled(struct zl3073x_dev *zldev, u8 index)
- {
--	return zldev->synth[index].enabled;
-+	return FIELD_GET(ZL_SYNTH_CTRL_EN, zldev->synth[index].ctrl);
- }
- 
- /**
-@@ -304,7 +313,7 @@ zl3073x_synth_is_enabled(struct zl3073x_dev *zldev, u8 index)
- static inline u8
- zl3073x_out_synth_get(struct zl3073x_dev *zldev, u8 index)
- {
--	return zldev->out[index].synth;
-+	return FIELD_GET(ZL_OUTPUT_CTRL_SYNTH_SEL, zldev->out[index].ctrl);
- }
- 
- /**
-@@ -321,10 +330,10 @@ zl3073x_out_is_enabled(struct zl3073x_dev *zldev, u8 index)
- 
- 	/* Output is enabled only if associated synth is enabled */
- 	synth = zl3073x_out_synth_get(zldev, index);
--	if (zl3073x_synth_is_enabled(zldev, synth))
--		return zldev->out[index].enabled;
-+	if (!zl3073x_synth_is_enabled(zldev, synth))
-+		return false;
- 
--	return false;
-+	return FIELD_GET(ZL_OUTPUT_CTRL_EN, zldev->out[index].ctrl);
- }
- 
- /**
-@@ -337,7 +346,7 @@ zl3073x_out_is_enabled(struct zl3073x_dev *zldev, u8 index)
- static inline u8
- zl3073x_out_signal_format_get(struct zl3073x_dev *zldev, u8 index)
- {
--	return zldev->out[index].signal_format;
-+	return FIELD_GET(ZL_OUTPUT_MODE_SIGNAL_FORMAT, zldev->out[index].mode);
- }
- 
- /**
++}
++
++/**
++ * zl3073x_synth_is_enabled - check if the given synth is enabled
++ * @synth: pointer to synth state
++ *
++ * Return: true if synth is enabled, false otherwise
++ */
++static inline bool zl3073x_synth_is_enabled(const struct zl3073x_synth *synth)
++{
++	return FIELD_GET(ZL_SYNTH_CTRL_EN, synth->ctrl);
++}
++
++#endif /* _ZL3073X_SYNTH_H */
 -- 
 2.51.0
 
