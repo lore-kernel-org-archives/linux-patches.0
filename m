@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7168A26FA60;
-	Wed, 25 Feb 2026 01:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897A82701B6;
+	Wed, 25 Feb 2026 01:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983848; cv=none; b=iVQgfjzUCwTNKk80tWiTnGz+v8neLSLT7jC8CpsGOFMiWntip7xWIOYe7YrSxoZSS3eKr1UVQs/YHp4ibVaqKNCPJMWm//E+L1QH5MVQp+HlS0Jr/XrPVjqqTS6h9YKUjIRzjGKR3RYwGa0ko3XuMgrbdO8ZftyUjc8GsgG79ag=
+	t=1771983849; cv=none; b=rae4woIbMJL/gSqqe7U9STy9vTJu1DSLn5HGWGZgESHr7lbxmSGBFUkaXbpaYp0imtvSP0nrEncWFKTSIMRK5e/2HmkTsj+GMROvmqcOu16sCz0ZC2UMBWkWX251ONQe4NaQBkGGlmqwFbO4DGrvidDdXt405lqDR4cOYKr7yFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983848; c=relaxed/simple;
-	bh=8CNRjdG9BAie1C/ebrf/MF6uaeHryuYKyKUzcsd0wRg=;
+	s=arc-20240116; t=1771983849; c=relaxed/simple;
+	bh=neOmN+GH3w1/7ZNHe2obiIp+ak9Jj63YetSLeE2arxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqY74g0M+KR3HB/5dzKRPFXoUN95OMhIRflOz4FU7N5tge8lEkjdalDbSdCMyZHbeJ1e2eQ84cgA6H6Jf2r4rjwLDoob7ToxbLxzrqZqiwMjUquh/ENkK+XmVXVCMawjptjTXc0OS9G5QfK3ViGvf/z8ZayuT7QDawRzBIj0zp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljl0ziMo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jPd3RBp9j5hTIXU+oqy6SBoXTnH8mjqyFa3wBQt7NCnA8yaWzhiMZlgW8iDT6iAybW8gvPiQqUbRVMmWZwND5aqxNWmDme8VLYOZyvpcma9+wF+R39ORry6iiVSwenRFac1RZHYG0EyDhkjL7JOu/cp2Ivlh4zNi966XOuDoUWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xk0EPhMR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljl0ziMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE82C116D0;
-	Wed, 25 Feb 2026 01:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xk0EPhMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B9FC116D0;
+	Wed, 25 Feb 2026 01:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983848;
-	bh=8CNRjdG9BAie1C/ebrf/MF6uaeHryuYKyKUzcsd0wRg=;
+	s=korg; t=1771983849;
+	bh=neOmN+GH3w1/7ZNHe2obiIp+ak9Jj63YetSLeE2arxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ljl0ziMoLnsjosxJq64s4irgtBm7G3rd3ug4z9OUog9vfXG22SyD6UzKMs9c7JCxM
-	 fxOFuYuHrUB1W0WNRhJkfWdTD9NJygLTe8Yu7s7wbaqbWU1juadniV9+Q4NH865l30
-	 pG3QxXMN29MNaYjq+/2J3nlVD2bDdH7Y2PhbX3f0=
+	b=xk0EPhMRAktTWr+9bCfHPphqR5o6oep1sIjhkpssMId/tze6Kulb0SgFWTVWpUKa6
+	 1jgFxgKOreOirBKieVGxsGmurMWp3lngdf8L82IBj4IdJDNe542rHu1lANdgHcQ7XF
+	 n9ccYeQCX67akqSo04G3F72eHVMV+1vj100W5Thc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	"Tycho Andersen (AMD)" <tycho@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 125/641] selftests/xsk: fix number of Tx frags in invalid packet
-Date: Tue, 24 Feb 2026 17:17:31 -0800
-Message-ID: <20260225012352.176018906@linuxfoundation.org>
+Subject: [PATCH 6.18 090/641] crypto: ccp - narrow scope of snp_range_list
+Date: Tue, 24 Feb 2026 17:16:56 -0800
+Message-ID: <20260225012351.281241531@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,57 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Tycho Andersen (AMD) <tycho@kernel.org>
 
-[ Upstream commit 88af9fefed412e4bea9a1a771cbe6fe347fa3507 ]
+[ Upstream commit dc8ccab15081efc4f2c5a9fc7b209cd641d29177 ]
 
-The issue occurs in TOO_MANY_FRAGS test case when xdp_zc_max_segs is set to
-an odd number.
+snp_range_list is only used in __sev_snp_init_locked() in the SNP_INIT_EX
+case, move the declaration there and add a __free() cleanup helper for it
+instead of waiting until shutdown.
 
-TOO_MANY_FRAGS test case contains an invalid packet consisting of
-(xdp_zc_max_segs) frags. Every frag, even the last one has XDP_PKT_CONTD
-flag set. This packet is expected to be dropped. After that, there is a
-valid linear packet, which is expected to be received back.
-
-Once (xdp_zc_max_segs) is an odd number, the last packet cannot be
-received, if packet forwarding between Rx and Tx interfaces relies on
-the ethernet header, e.g. checks for ETH_P_LOOPBACK. Packet is malformed,
-if all traffic is looped.
-
-Turns out, sending function processes multiple invalid frags as if they
-were in 2-frag packets. So once the invalid mbuf packet contains an odd
-number of those, the valid packet after gets paired with the previous
-invalid descriptor, and hence does not get an ethernet header generated, so
-it is either dropped or malformed.
-
-Make invalid packets in verbatim mode always have only a single frag. For
-such packets, number of frags is otherwise meaningless, as descriptor flags
-are pre-configured in verbatim mode and packet data is not generated for
-invalid descriptors.
-
-Fixes: 697604492b64 ("selftests/xsk: add invalid descriptor test for multi-buffer")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://lore.kernel.org/r/20260203155103.2305816-3-larysa.zaremba@intel.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 1ca5614b84ee ("crypto: ccp: Add support to initialize the AMD-SP for SEV-SNP")
+Reviewed-by: Alexey Kardashevskiy <aik@amd.com>
+Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_xsk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/ccp/sev-dev.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_xsk.c b/tools/testing/selftests/bpf/test_xsk.c
-index b52f597ea9bd2..55d318c5c5e59 100644
---- a/tools/testing/selftests/bpf/test_xsk.c
-+++ b/tools/testing/selftests/bpf/test_xsk.c
-@@ -431,7 +431,7 @@ static u32 pkt_nb_frags(u32 frame_size, struct pkt_stream *pkt_stream, struct pk
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index 3c6ee8b4e4487..5fdba0fe4acce 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -119,13 +119,6 @@ static size_t sev_es_tmr_size = SEV_TMR_SIZE;
+ #define NV_LENGTH (32 * 1024)
+ static void *sev_init_ex_buffer;
+ 
+-/*
+- * SEV_DATA_RANGE_LIST:
+- *   Array containing range of pages that firmware transitions to HV-fixed
+- *   page state.
+- */
+-static struct sev_data_range_list *snp_range_list;
+-
+ static void __sev_firmware_shutdown(struct sev_device *sev, bool panic);
+ 
+ static int snp_shutdown_on_panic(struct notifier_block *nb,
+@@ -1365,6 +1358,7 @@ static int snp_filter_reserved_mem_regions(struct resource *rs, void *arg)
+ 
+ static int __sev_snp_init_locked(int *error, unsigned int max_snp_asid)
+ {
++	struct sev_data_range_list *snp_range_list __free(kfree) = NULL;
+ 	struct psp_device *psp = psp_master;
+ 	struct sev_data_snp_init_ex data;
+ 	struct sev_device *sev;
+@@ -2753,11 +2747,6 @@ static void __sev_firmware_shutdown(struct sev_device *sev, bool panic)
+ 		sev_init_ex_buffer = NULL;
  	}
  
- 	/* Search for the end of the packet in verbatim mode */
--	if (!pkt_continues(pkt->options))
-+	if (!pkt_continues(pkt->options) || !pkt->valid)
- 		return nb_frags;
+-	if (snp_range_list) {
+-		kfree(snp_range_list);
+-		snp_range_list = NULL;
+-	}
+-
+ 	__sev_snp_shutdown_locked(&error, panic);
+ }
  
- 	next_frag = pkt_stream->current_pkt_nb;
 -- 
 2.51.0
 
