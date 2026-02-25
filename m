@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E7626F46F;
-	Wed, 25 Feb 2026 01:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6788626F46F;
+	Wed, 25 Feb 2026 01:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983939; cv=none; b=Dj03W+XT0QcFKhDSRSaKhdT5MsH8yDrJakY3JjUhPOanWMnGRyGip8jvmCOfdYxcrJNFpgwK76Q9CZJpWtZYCra20HWAKR+zB8LiYfM/j/lSwl90D1DMGUaAmQlhLHgU/HzS8c2W/tH9Wfu72H/yv7FgaGmCeaLDMeAbrnGgxWY=
+	t=1771983940; cv=none; b=jsWuBK+5iSPwoWlNHAtANYiYi/WrYFzjlr5YDtFRHN24vFRw3T2B5jI6LIoAoIJ4FtUnlzWlgW9/eWCre/oHiNAh0OTski9tB15R9/szwbGFpwsJqDjqpe0BsA+QFQ/Yg8kq5RWbhpdsJYj8rddr8O6V3n6VUFIurBl5R3ZQGuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983939; c=relaxed/simple;
-	bh=mZeFuT55887nhBL7CAVYqAT5Mj4iFTwWB9HJl4y+YEo=;
+	s=arc-20240116; t=1771983940; c=relaxed/simple;
+	bh=HlkygQBv8Lu8fuv5npVtPZFRaM2wBbYMJ3x24AVCRag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKGzlGA5rJzX5FOIZ6tqTeQ41P/fNDFiqp9LS/sdNAa8a+t2/UGS1Q116zHjfP9RaWjCIgLbseqbyTFSlmC6oGttQqM2WFpE/evNiFu3jEi1qAzy2QnR7ogUoCYfawjyBLng45huMo3EpYbshDknxG4ESe+BkWfh88rZdKenmhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWuUbnhz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PEcOrNe/kwbfEfo1tqUXrAxlRDrA6NkyPUFB50Tyek5i80qcJze7d4C/It+8QTt6vI9mf1gZsMP9FSnZjVb560QNUK7gERJuTRNi7VMewgs5IIWNVhMdjudVNY27grM8kIX6FSYkzNGZS+uty0dk4U2eM6xwSC6AQfXqDHLeuV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTk3Z1Oe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWuUbnhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1007AC116D0;
-	Wed, 25 Feb 2026 01:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTk3Z1Oe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269C3C2BC9E;
+	Wed, 25 Feb 2026 01:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983939;
-	bh=mZeFuT55887nhBL7CAVYqAT5Mj4iFTwWB9HJl4y+YEo=;
+	s=korg; t=1771983940;
+	bh=HlkygQBv8Lu8fuv5npVtPZFRaM2wBbYMJ3x24AVCRag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OWuUbnhzwbhJFqFTXOml7lVh9J3VeuOUfw+Ry5/pdimtMAt9SQsyeCNI578NOkXWY
-	 0qpO91uWgL2m9IXZPrcLX0Sez1ctim/47zNRXSmI2LgniiPPAAqIptVE9NsSIWzcs2
-	 SoW9FcCGQ3NUg55CRu7qVEx748iKmZWg0s8bKtLo=
+	b=uTk3Z1Oec+nhhlVUejMbOEnQ6ii8XOJgQnJTBAp+pGKjDX+3XTF4oOoloXkJncBtB
+	 LszKCOVNH3C679QxDnABQB1Zubsorki00vtGdjjDL9aBZBoxGQ8kRu9GB9cFYpPb+Q
+	 xD1Wy3bsAVUr04NCIIvblHXk4cclrXPwD6qt16dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 203/641] drm/msm/a2xx: fix pixel shader start on A225
-Date: Tue, 24 Feb 2026 17:18:49 -0800
-Message-ID: <20260225012353.887407589@linuxfoundation.org>
+Subject: [PATCH 6.18 204/641] drm/buddy: release free_trees array on buddy mm teardown
+Date: Tue, 24 Feb 2026 17:18:50 -0800
+Message-ID: <20260225012353.908825341@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -46,46 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Michał Grzelak <michal.grzelak@intel.com>
 
-[ Upstream commit 6a7b0a670ba4d283285d76d45233cbecc5af5e40 ]
+[ Upstream commit 7d0507772406e129329983b8b807e5b499bd74fd ]
 
-A225 has a different PixelShader start address, write correct address
-while initializing GPU.
+During initialization of DRM buddy memory manager at drm_buddy_init,
+mm->free_trees array is allocated for both clear and dirty RB trees.
+During cleanup happening at drm_buddy_fini it is never freed, leading to
+following memory leaks observed on xe module load & unload cycles:
 
-Fixes: 21af872cd8c6 ("drm/msm/adreno: add a2xx")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/689906/
-Message-ID: <20251121-a225-v1-1-a1bab651d186@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+    kmemleak_alloc+0x4a/0x90
+    __kmalloc_cache_noprof+0x488/0x800
+    drm_buddy_init+0xc2/0x330 [drm_buddy]
+    __xe_ttm_vram_mgr_init+0xc3/0x190 [xe]
+    xe_ttm_stolen_mgr_init+0xf5/0x9d0 [xe]
+    xe_device_probe+0x326/0x9e0 [xe]
+    xe_pci_probe+0x39a/0x610 [xe]
+    local_pci_probe+0x47/0xb0
+    pci_device_probe+0xf3/0x260
+    really_probe+0xf1/0x3c0
+    __driver_probe_device+0x8c/0x180
+    driver_probe_device+0x24/0xd0
+    __driver_attach+0x10f/0x220
+    bus_for_each_dev+0x7f/0xe0
+    driver_attach+0x1e/0x30
+    bus_add_driver+0x151/0x290
+
+Deallocate array for free trees when cleaning up buddy memory manager
+in the same way as if going through out_free_tree label.
+
+Fixes: d4cd665c98c1 ("drm/buddy: Separate clear and dirty free block trees")
+Signed-off-by: Michał Grzelak <michal.grzelak@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Link: https://patch.msgid.link/20251208102714.4008260-2-michal.grzelak@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_buddy.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-index 963c0f669ee50..e67ed58aa3d8f 100644
---- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-@@ -77,7 +77,10 @@ static bool a2xx_me_init(struct msm_gpu *gpu)
+diff --git a/drivers/gpu/drm/drm_buddy.c b/drivers/gpu/drm/drm_buddy.c
+index f2c92902e4a30..3f1a9892f2a39 100644
+--- a/drivers/gpu/drm/drm_buddy.c
++++ b/drivers/gpu/drm/drm_buddy.c
+@@ -419,6 +419,7 @@ void drm_buddy_fini(struct drm_buddy *mm)
  
- 	/* Vertex and Pixel Shader Start Addresses in instructions
- 	 * (3 DWORDS per instruction) */
--	OUT_RING(ring, 0x80000180);
-+	if (adreno_is_a225(adreno_gpu))
-+		OUT_RING(ring, 0x80000300);
-+	else
-+		OUT_RING(ring, 0x80000180);
- 	/* Maximum Contexts */
- 	OUT_RING(ring, 0x00000001);
- 	/* Write Confirm Interval and The CP will wait the
+ 	for_each_free_tree(i)
+ 		kfree(mm->free_trees[i]);
++	kfree(mm->free_trees);
+ 	kfree(mm->roots);
+ }
+ EXPORT_SYMBOL(drm_buddy_fini);
 -- 
 2.51.0
 
