@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D02431195D;
-	Wed, 25 Feb 2026 06:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B17631195D;
+	Wed, 25 Feb 2026 06:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002760; cv=none; b=uGexxaALpsia1fPX1jf0F3TDEm2c2Ttx2k1FuOodIBIpwMLEsYXM3Zf/3sqZNqXM5baWX0FTn4ro+j9MMs2AMXDnSvV7z1hlyNQ86JvH68sWNX0hUZcnQ4N5sdETir/u4/zHwrdeRUAJBj4aN2EqTzbT1B6i4Ay75DF99612tE8=
+	t=1772002761; cv=none; b=Ht/hgNO9pLZR1zAHpX12zGS04cJujjkD/dm1qFdYUc9iNuxWg43AEn4qGECmhaNEq5pEOn6B/rJyH3pTt1A0kwIXVhIfA+qvLzzNZ7TsdXTDxy2QccIcN+23D6WmYjB3jvaVzxJuUkKw0BsCJTEULeSnViT/zwKQL027YWokpAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002760; c=relaxed/simple;
-	bh=ACEcUwkISlTtTPmKAOMLf8jM0tJQKYUQre3rnp2UJQw=;
+	s=arc-20240116; t=1772002761; c=relaxed/simple;
+	bh=1XSopu8+xwUsBFzMscSvObPtUoxgbfGOPAbhk03LS+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mvGjeUtc5wCvG6LmdWgDQJwBG1m05mnl82bk2VStXGEGFiYM10i19tq+jQanel/yFxlRmtstniV9bJ0kY0ay52JhrOOCuWRrzACIQF9jDLfRvnHIVIBBhEeUsrNFDPlBUhOG8+Vd2NDsYrcERDBZVQkohD6P+hop6yJYc9jE0Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LC7ytvpx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qPmMx6Mla1TfVWKvxHgTMMxmAfZQs1ycTU3Mxjfss5K2PMdRJ6IO+pnjzMIA1v1ZjN+PnlfidA1RemAlCBQQfqZu7Z6rBp50IVoVQSn2GTGZ8CaMTv+vROV7yBcIbBAI5t31KocROE4PpLj2lZTNSc3o5iNKYLpLc18pa3AFNYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akg3t4kD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LC7ytvpx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C19C116D0;
-	Wed, 25 Feb 2026 06:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akg3t4kD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F78C116D0;
+	Wed, 25 Feb 2026 06:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002760;
-	bh=ACEcUwkISlTtTPmKAOMLf8jM0tJQKYUQre3rnp2UJQw=;
+	s=korg; t=1772002761;
+	bh=1XSopu8+xwUsBFzMscSvObPtUoxgbfGOPAbhk03LS+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LC7ytvpxLH5g2+LNnceJcNxEnLp79txdLVzkhpUkef78UhDX1RY2wm8fTgfUSia54
-	 zMG/WcmgeXB2nJRSmf8pAMGaNE7Yu85iyvAFIEYquZIZFftIB+tHs6W/OacFpUkAc2
-	 fr8fX19h52pq3OKM8qlauAdIwjYV+FhkVlhxSAL8=
+	b=akg3t4kDG+crbCqIIjx9ewjc/o4P2dg9DXroqvLNymiHQaeyEyA6RPBZiV5FBfd8z
+	 of5629RlWqnDjKRMSdf21BRVSqql81pveyvj1wYPRB739gR3aOA10+Klfd16aYv1PH
+	 5d1e5bqTotjwr/se/dhMtcwwYydurLWtq6+X/2/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jonathan Kim <jonathan.kim@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 589/641] PCI: Validate window resource type in pbus_select_window_for_type()
-Date: Tue, 24 Feb 2026 17:25:15 -0800
-Message-ID: <20260225012402.785363313@linuxfoundation.org>
+Subject: [PATCH 6.18 590/641] drm/amdkfd: Fix watch_id bounds checking in debug address watch v2
+Date: Tue, 24 Feb 2026 17:25:16 -0800
+Message-ID: <20260225012402.811793856@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,65 +56,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kaihengf@nvidia.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit e5f72cb9cea599dc9f5a9b80a33560a1d06f01cc ]
+[ Upstream commit 5a19302cab5cec7ae7f1a60c619951e6c17d8742 ]
 
-After ebe091ad81e1 ("PCI: Use pbus_select_window_for_type() during IO
-window sizing") and ae88d0b9c57f ("PCI: Use pbus_select_window_for_type()
-during mem window sizing"), many bridge windows can't get resources
-assigned:
+The address watch clear code receives watch_id as an unsigned value
+(u32), but some helper functions were using a signed int and checked
+bits by shifting with watch_id.
 
-  pci 0006:05:00.0: bridge window [??? 0x00001000-0x00001fff flags 0x20080000]: can't assign; no space
-  pci 0006:05:00.0: bridge window [??? 0x00001000-0x00001fff flags 0x20080000]: failed to assign
+If a very large watch_id is passed from userspace, it can be converted
+to a negative value.  This can cause invalid shifts and may access
+memory outside the watch_points array.
 
-Those commits replace find_bus_resource_of_type() with
-pbus_select_window_for_type(), and the latter lacks resource type
-validation.
+drm/amdkfd: Fix watch_id bounds checking in debug address watch v2
 
-Add the resource type validation back to pbus_select_window_for_type() to
-match the original behavior.
+Fix this by checking that watch_id is within MAX_WATCH_ADDRESSES before
+using it.  Also use BIT(watch_id) to test and clear bits safely.
 
-Fixes: 74afce3dfcba ("PCI: Add bridge window selection functions")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221072
-Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20260210142058.82701-1-kaihengf@nvidia.com
+This keeps the behavior unchanged for valid watch IDs and avoids
+undefined behavior for invalid ones.
+
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_debug.c:448
+kfd_dbg_trap_clear_dev_address_watch() error: buffer overflow
+'pdd->watch_points' 4 <= u32max user_rl='0-3,2147483648-u32max' uncapped
+
+drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_debug.c
+    433 int kfd_dbg_trap_clear_dev_address_watch(struct kfd_process_device *pdd,
+    434                                         uint32_t watch_id)
+    435 {
+    436         int r;
+    437
+    438         if (!kfd_dbg_owns_dev_watch_id(pdd, watch_id))
+
+kfd_dbg_owns_dev_watch_id() doesn't check for negative values so if
+watch_id is larger than INT_MAX it leads to a buffer overflow.
+(Negative shifts are undefined).
+
+    439                 return -EINVAL;
+    440
+    441         if (!pdd->dev->kfd->shared_resources.enable_mes) {
+    442                 r = debug_lock_and_unmap(pdd->dev->dqm);
+    443                 if (r)
+    444                         return r;
+    445         }
+    446
+    447         amdgpu_gfx_off_ctrl(pdd->dev->adev, false);
+--> 448         pdd->watch_points[watch_id] = pdd->dev->kfd2kgd->clear_address_watch(
+    449                                                         pdd->dev->adev,
+    450                                                         watch_id);
+
+v2: (as per, Jonathan Kim)
+ - Add early watch_id >= MAX_WATCH_ADDRESSES validation in the set path to
+   match the clear path.
+ - Drop the redundant bounds check in kfd_dbg_owns_dev_watch_id().
+
+Fixes: e0f85f4690d0 ("drm/amdkfd: add debug set and clear address watch points operation")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Jonathan Kim <jonathan.kim@amd.com>
+Cc: Felix Kuehling <felix.kuehling@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Jonathan Kim <jonathan.kim@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_debug.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index 4f4890196e63e..cc592ccff5424 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -221,14 +221,21 @@ static struct resource *pbus_select_window_for_type(struct pci_bus *bus,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
+index ba99e0f258aee..986cb297de8f8 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
+@@ -401,27 +401,25 @@ static int kfd_dbg_get_dev_watch_id(struct kfd_process_device *pdd, int *watch_i
+ 	return -ENOMEM;
+ }
  
- 	switch (iores_type) {
- 	case IORESOURCE_IO:
--		return pci_bus_resource_n(bus, PCI_BUS_BRIDGE_IO_WINDOW);
-+		win = pci_bus_resource_n(bus, PCI_BUS_BRIDGE_IO_WINDOW);
-+		if (win && (win->flags & IORESOURCE_IO))
-+			return win;
-+		return NULL;
+-static void kfd_dbg_clear_dev_watch_id(struct kfd_process_device *pdd, int watch_id)
++static void kfd_dbg_clear_dev_watch_id(struct kfd_process_device *pdd, u32 watch_id)
+ {
+ 	spin_lock(&pdd->dev->watch_points_lock);
  
- 	case IORESOURCE_MEM:
- 		mmio = pci_bus_resource_n(bus, PCI_BUS_BRIDGE_MEM_WINDOW);
- 		mmio_pref = pci_bus_resource_n(bus, PCI_BUS_BRIDGE_PREF_MEM_WINDOW);
+ 	/* process owns device watch point so safe to clear */
+-	if ((pdd->alloc_watch_ids >> watch_id) & 0x1) {
+-		pdd->alloc_watch_ids &= ~(0x1 << watch_id);
+-		pdd->dev->alloc_watch_ids &= ~(0x1 << watch_id);
++	if (pdd->alloc_watch_ids & BIT(watch_id)) {
++		pdd->alloc_watch_ids &= ~BIT(watch_id);
++		pdd->dev->alloc_watch_ids &= ~BIT(watch_id);
+ 	}
  
--		if (!(type & IORESOURCE_PREFETCH) ||
--		    !(mmio_pref->flags & IORESOURCE_MEM))
-+		if (mmio && !(mmio->flags & IORESOURCE_MEM))
-+			mmio = NULL;
-+		if (mmio_pref && !(mmio_pref->flags & IORESOURCE_MEM))
-+			mmio_pref = NULL;
+ 	spin_unlock(&pdd->dev->watch_points_lock);
+ }
+ 
+-static bool kfd_dbg_owns_dev_watch_id(struct kfd_process_device *pdd, int watch_id)
++static bool kfd_dbg_owns_dev_watch_id(struct kfd_process_device *pdd, u32 watch_id)
+ {
+ 	bool owns_watch_id = false;
+ 
+ 	spin_lock(&pdd->dev->watch_points_lock);
+-	owns_watch_id = watch_id < MAX_WATCH_ADDRESSES &&
+-			((pdd->alloc_watch_ids >> watch_id) & 0x1);
+-
++	owns_watch_id = pdd->alloc_watch_ids & BIT(watch_id);
+ 	spin_unlock(&pdd->dev->watch_points_lock);
+ 
+ 	return owns_watch_id;
+@@ -432,6 +430,9 @@ int kfd_dbg_trap_clear_dev_address_watch(struct kfd_process_device *pdd,
+ {
+ 	int r;
+ 
++	if (watch_id >= MAX_WATCH_ADDRESSES)
++		return -EINVAL;
 +
-+		if (!(type & IORESOURCE_PREFETCH) || !mmio_pref)
- 			return mmio;
+ 	if (!kfd_dbg_owns_dev_watch_id(pdd, watch_id))
+ 		return -EINVAL;
  
- 		if ((type & IORESOURCE_MEM_64) ||
+@@ -469,6 +470,9 @@ int kfd_dbg_trap_set_dev_address_watch(struct kfd_process_device *pdd,
+ 	if (r)
+ 		return r;
+ 
++	if (*watch_id >= MAX_WATCH_ADDRESSES)
++		return -EINVAL;
++
+ 	if (!pdd->dev->kfd->shared_resources.enable_mes) {
+ 		r = debug_lock_and_unmap(pdd->dev->dqm);
+ 		if (r) {
 -- 
 2.51.0
 
