@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AE32D3EEE;
-	Wed, 25 Feb 2026 06:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5076C2D7810;
+	Wed, 25 Feb 2026 06:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002735; cv=none; b=KV0QC9D2NGFs7EJGohxDsaXESCB3ArW9PUhytTiUwcX//zgG4XImp+G4I/s9pHlGzx9zRvhBeh+X3nxQIUCVtQpUvMbtiFej4l26pcqpcPNbvS+aPF50c9VhyrvMnuCJAI2ezXOYRjcJFspXBHBMtRP6C7utTzKTo2ifUcN/ndE=
+	t=1772002736; cv=none; b=dcpMasrKN6hjbaSPXLt/m02mCAhojBph8zA0fgpbmnUQ6uG9EOxrQpmJLaFO62usBGSPtpyrxsKDpawYdD3wLkieaMdprHEya1jhzaivy0xB0YN6iz8W6HdT7hZd/K7kszx0tCsOIc5Kn7TtsSc4sU/yfG0Q3jQMy5xCvUyx4eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002735; c=relaxed/simple;
-	bh=JaB4Jz47Taon04b3hTI9TmI/xhIL6tZBRPSIPHqkz60=;
+	s=arc-20240116; t=1772002736; c=relaxed/simple;
+	bh=KCcoex6YoynWzFwX2C7cbtT9uDl0Wrdq1H1fkgaD/aM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhlxQHs4wbmkpg28E7Y190n4siFZxv3nO88dF702jU9PYWwNNVI8oxJQvE3OI8mOphoyYiZXDr8Ncwi63xmiQiEpV3zjrakKip11GxYM9wHVyIVZxl2ysR0LoAXRn4qxjoTvMK6OgwCo++aa8p99fd4GuMld3f2v72rjw0x2LnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozy+40sb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TFDrm8mNNREsKkB2L4RI9eVJja4DrLES2jqoz3yvrf/4Fhmx6a180A2iPr1cGxANCwMbSqdg5Xtis2EzDdTS//GSk7/N2NBR0xyB9KYavdix5VadXtY+zb4unJUMaSoMhT0gKLg/tyLv/VrYvyNoKopOBZZwA2Sz63g72izbxl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdUBrwky; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozy+40sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9FCC116D0;
-	Wed, 25 Feb 2026 06:58:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdUBrwky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C78C116D0;
+	Wed, 25 Feb 2026 06:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002735;
-	bh=JaB4Jz47Taon04b3hTI9TmI/xhIL6tZBRPSIPHqkz60=;
+	s=korg; t=1772002736;
+	bh=KCcoex6YoynWzFwX2C7cbtT9uDl0Wrdq1H1fkgaD/aM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozy+40sbvAazLpcZbS/9IltvT90IhkSr3X8kSSd7PLzVDwPlnfOY+KCbvN+FJoBTt
-	 DuJgZAfvoB8HvUR/ALOxGhtQlWuTa9Co2jl4VD/Sh6wqMPXwIQCDmDQg0fxmgHm2jz
-	 S58NVHlmSwrD4kTWb5ispIHYWjtVGx00wyBJvVRc=
+	b=sdUBrwkypXibZvZI8jfGNyesMwjDKC4ghUjHwEoTSMNSF/FafaPuwfnFSBp6OBwU6
+	 gR13IIWIfK31Jx4NIZlaMiFY/zhSkzxsmxv7El3nB3ZMGumLka/cJLM9vedwyeAJqg
+	 Hx6mA/bhKy+8KNjigkwiTBv5ZzP0vbpFK7AEOJzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	valis <sec@valis.email>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Dimitri Daskalakis <dimitri.daskalakis1@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 550/641] macvlan: observe an RCU grace period in macvlan_common_newlink() error path
-Date: Tue, 24 Feb 2026 17:24:36 -0800
-Message-ID: <20260225012401.851274347@linuxfoundation.org>
+Subject: [PATCH 6.18 551/641] eth: fbnic: Add validation for MTU changes
+Date: Tue, 24 Feb 2026 17:24:37 -0800
+Message-ID: <20260225012401.874930165@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,113 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dimitri Daskalakis <dimitri.daskalakis1@gmail.com>
 
-[ Upstream commit e3f000f0dee1bfab52e2e61ca6a3835d9e187e35 ]
+[ Upstream commit ccd8e87748ad083047d6c8544c5809b7f96cc8df ]
 
-valis reported that a race condition still happens after my prior patch.
+Increasing the MTU beyond the HDS threshold causes the hardware to
+fragment packets across multiple buffers. If a single-buffer XDP program
+is attached, the driver will drop all multi-frag frames. While we can't
+prevent a remote sender from sending non-TCP packets larger than the MTU,
+this will prevent users from inadvertently breaking new TCP streams.
 
-macvlan_common_newlink() might have made @dev visible before
-detecting an error, and its caller will directly call free_netdev(dev).
+Traditionally, drivers supported XDP with MTU less than 4Kb
+(packet per page). Fbnic currently prevents attaching XDP when MTU is too high.
+But it does not prevent increasing MTU after XDP is attached.
 
-We must respect an RCU period, either in macvlan or the core networking
-stack.
-
-After adding a temporary mdelay(1000) in macvlan_forward_source_one()
-to open the race window, valis repro was:
-
-ip link add p1 type veth peer p2
-ip link set address 00:00:00:00:00:20 dev p1
-ip link set up dev p1
-ip link set up dev p2
-ip link add mv0 link p2 type macvlan mode source
-
-(ip link add invalid% link p2 type macvlan mode source macaddr add
-00:00:00:00:00:20 &) ; sleep 0.5 ; ping -c1 -I p1 1.2.3.4
-PING 1.2.3.4 (1.2.3.4): 56 data bytes
-RTNETLINK answers: Invalid argument
-
-BUG: KASAN: slab-use-after-free in macvlan_forward_source
-(drivers/net/macvlan.c:408 drivers/net/macvlan.c:444)
-Read of size 8 at addr ffff888016bb89c0 by task e/175
-
-CPU: 1 UID: 1000 PID: 175 Comm: e Not tainted 6.19.0-rc8+ #33 NONE
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-2 04/01/2014
-Call Trace:
-<IRQ>
-dump_stack_lvl (lib/dump_stack.c:123)
-print_report (mm/kasan/report.c:379 mm/kasan/report.c:482)
-? macvlan_forward_source (drivers/net/macvlan.c:408 drivers/net/macvlan.c:444)
-kasan_report (mm/kasan/report.c:597)
-? macvlan_forward_source (drivers/net/macvlan.c:408 drivers/net/macvlan.c:444)
-macvlan_forward_source (drivers/net/macvlan.c:408 drivers/net/macvlan.c:444)
-? tasklet_init (kernel/softirq.c:983)
-macvlan_handle_frame (drivers/net/macvlan.c:501)
-
-Allocated by task 169:
-kasan_save_stack (mm/kasan/common.c:58)
-kasan_save_track (./arch/x86/include/asm/current.h:25
-mm/kasan/common.c:70 mm/kasan/common.c:79)
-__kasan_kmalloc (mm/kasan/common.c:419)
-__kvmalloc_node_noprof (./include/linux/kasan.h:263 mm/slub.c:5657
-mm/slub.c:7140)
-alloc_netdev_mqs (net/core/dev.c:12012)
-rtnl_create_link (net/core/rtnetlink.c:3648)
-rtnl_newlink (net/core/rtnetlink.c:3830 net/core/rtnetlink.c:3957
-net/core/rtnetlink.c:4072)
-rtnetlink_rcv_msg (net/core/rtnetlink.c:6958)
-netlink_rcv_skb (net/netlink/af_netlink.c:2550)
-netlink_unicast (net/netlink/af_netlink.c:1319 net/netlink/af_netlink.c:1344)
-netlink_sendmsg (net/netlink/af_netlink.c:1894)
-__sys_sendto (net/socket.c:727 net/socket.c:742 net/socket.c:2206)
-__x64_sys_sendto (net/socket.c:2209)
-do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:131)
-
-Freed by task 169:
-kasan_save_stack (mm/kasan/common.c:58)
-kasan_save_track (./arch/x86/include/asm/current.h:25
-mm/kasan/common.c:70 mm/kasan/common.c:79)
-kasan_save_free_info (mm/kasan/generic.c:587)
-__kasan_slab_free (mm/kasan/common.c:287)
-kfree (mm/slub.c:6674 mm/slub.c:6882)
-rtnl_newlink (net/core/rtnetlink.c:3845 net/core/rtnetlink.c:3957
-net/core/rtnetlink.c:4072)
-rtnetlink_rcv_msg (net/core/rtnetlink.c:6958)
-netlink_rcv_skb (net/netlink/af_netlink.c:2550)
-netlink_unicast (net/netlink/af_netlink.c:1319 net/netlink/af_netlink.c:1344)
-netlink_sendmsg (net/netlink/af_netlink.c:1894)
-__sys_sendto (net/socket.c:727 net/socket.c:742 net/socket.c:2206)
-__x64_sys_sendto (net/socket.c:2209)
-do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:131)
-
-Fixes: f8db6475a836 ("macvlan: fix error recovery in macvlan_common_newlink()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: valis <sec@valis.email>
-Link: https://patch.msgid.link/20260213142557.3059043-1-edumazet@google.com
+Fixes: 1b0a3950dbd4 ("eth: fbnic: Add XDP pass, drop, abort support")
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dimitri Daskalakis <dimitri.daskalakis1@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macvlan.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/meta/fbnic/fbnic_netdev.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index c509228be84d1..4433b8e95b6ac 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -1572,6 +1572,11 @@ int macvlan_common_newlink(struct net_device *dev,
- 		if (create)
- 			macvlan_port_destroy(port->dev);
- 	}
-+	/* @dev might have been made visible before an error was detected.
-+	 * Make sure to observe an RCU grace period before our caller
-+	 * (rtnl_newlink()) frees it.
-+	 */
-+	synchronize_net();
- 	return err;
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
+index e95be0e7bd9e0..5cbf3ad175a54 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
+@@ -262,6 +262,23 @@ static int fbnic_set_mac(struct net_device *netdev, void *p)
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(macvlan_common_newlink);
+ 
++static int fbnic_change_mtu(struct net_device *dev, int new_mtu)
++{
++	struct fbnic_net *fbn = netdev_priv(dev);
++
++	if (fbnic_check_split_frames(fbn->xdp_prog, new_mtu, fbn->hds_thresh)) {
++		dev_err(&dev->dev,
++			"MTU %d is larger than HDS threshold %d in XDP mode\n",
++			new_mtu, fbn->hds_thresh);
++
++		return -EINVAL;
++	}
++
++	WRITE_ONCE(dev->mtu, new_mtu);
++
++	return 0;
++}
++
+ void fbnic_clear_rx_mode(struct fbnic_dev *fbd)
+ {
+ 	struct net_device *netdev = fbd->netdev;
+@@ -533,6 +550,7 @@ static const struct net_device_ops fbnic_netdev_ops = {
+ 	.ndo_start_xmit		= fbnic_xmit_frame,
+ 	.ndo_features_check	= fbnic_features_check,
+ 	.ndo_set_mac_address	= fbnic_set_mac,
++	.ndo_change_mtu		= fbnic_change_mtu,
+ 	.ndo_set_rx_mode	= fbnic_set_rx_mode,
+ 	.ndo_get_stats64	= fbnic_get_stats64,
+ 	.ndo_bpf		= fbnic_bpf,
 -- 
 2.51.0
 
