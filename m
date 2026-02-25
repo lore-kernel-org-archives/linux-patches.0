@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC0218B0A;
-	Wed, 25 Feb 2026 01:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C55418B0A;
+	Wed, 25 Feb 2026 01:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983295; cv=none; b=St6Y6N68sIatXfzyyOJkk9yjGm/n4DR2/S1Pu0yV8hiy7ZV+DEkJ+HtO2fpF6gq7yPpsjaDaHtHqroNgaqryOky96HUhvR1LkX45cgkjgw8htFSf+/YRZjfh12fAcpK06NotCVgoI9ubF5hOKA4NAaD9p93vdzfX8LjZxNeAoA4=
+	t=1771983296; cv=none; b=NFhyWdP0gYmmXWjuF9gVyEGiPmcV1PIYUh2EFoD8/lH8+5gs92C3SycBqqX+9Bq0ueuZYBqzKZhD/mOF3mGe+9kVf6k/DBa+g9HvbIRxOhABadXy/zSFX71T3aNCePxTiuQ93rwMAEkb3MHHLdrEGv1Kg28dEU0pApjpcExEHic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983295; c=relaxed/simple;
-	bh=LSexQfAsFpMeZ47F3fMhDTMutuur6gmBAAKoRbmQa3s=;
+	s=arc-20240116; t=1771983296; c=relaxed/simple;
+	bh=AfSmd1FjuvenV4lZZx12vagNUGhl5vImPcXk9q6pnPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pE1H1cvzRSxWPR+GdQaP4LwNAAgRnVCNMFOv8Dnu7dLVbgAh8QukfTj2x/aIWueM+BqrQ4K7yfr2JTSPD8JXxMrVwwLC1RPUMiaNF6z4JHMH34Pya6xVnNdyjHmMJV1F943MeqsS/bX5U7nM26h+W4vr7LbXX8ir687YPjwTgY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPDsqv8h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zh8lE/wLUQ65iJJZPQ6bpTMFBFYmhlo90z8jKQpdNbXagwo3UINTJa83anL4/R0r2vqC6tYWrVG2goPdB66Vzmzqg/if1mUBoWFy9WfPJa9dTSMH4+K1am18KwpnsBiTnmEGUIWgWbTpflRom2tSDPbO/P3/tXhPliC9E+oBz88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT0RZol9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPDsqv8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF943C116D0;
-	Wed, 25 Feb 2026 01:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT0RZol9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F232EC116D0;
+	Wed, 25 Feb 2026 01:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983295;
-	bh=LSexQfAsFpMeZ47F3fMhDTMutuur6gmBAAKoRbmQa3s=;
+	s=korg; t=1771983296;
+	bh=AfSmd1FjuvenV4lZZx12vagNUGhl5vImPcXk9q6pnPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uPDsqv8hymGfKTP3PXOFR26dG4mYlE/KJxCkscuievlHQMc4C4WpwAmNa7tpeKn0l
-	 1w0Bcj+ia7MszEOOlu0S/TKrsyigIYzrvqbEGG7c7DTn13DwWX0UxgW27inj1fFAPn
-	 e4nVO2aD/EwsiVh3SyD+/ZRRJS/ouZlsvxc88uds=
+	b=AT0RZol90BEiCNJbZV+mJJ306mjDPuspYRiXIwX7hvPrJB5CEnBwYAcTkWoYRhrka
+	 DRR1kVWseqtmvyLSyil4JA36sli2tIFxSTSgLd+13yXcwNcJuvgGzr2kz0dGhDRNSk
+	 LfXl0NkBrxfKRxNPjAe4ZnGYsy70klLnROy1aIkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Sean Anderson <seanga2@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 429/781] net: sunhme: Fix sbus regression
-Date: Tue, 24 Feb 2026 17:18:58 -0800
-Message-ID: <20260225012410.220508779@linuxfoundation.org>
+Subject: [PATCH 6.19 394/781] PCI: endpoint: Add dynamic_inbound_mapping EPC feature
+Date: Tue, 24 Feb 2026 17:18:23 -0800
+Message-ID: <20260225012409.366784766@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,75 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 8c5d17834ec104d0abd1bda52fbc04e647fab274 ]
+[ Upstream commit 06a81c5940e46cc7bddee28f16bdd29a12a76344 ]
 
-Commit cc216e4b44ce ("net: sunhme: Switch SBUS to devres") changed
-explicit sized of_ioremap with BMAC_REG_SIZEs to
-devm_platform_ioremap_resource mapping all the resource. However,
-this does not work on my Sun Ultra 2 with SBUS HMEs:
+Introduce a new EPC feature bit (dynamic_inbound_mapping) that indicates
+whether an Endpoint Controller can update the inbound address
+translation for a BAR without requiring the EPF driver to clear/reset
+the BAR first.
 
-hme f0072f38: error -EBUSY: can't request region for resource [mem 0x1ffe8c07000-0x1ffe8c0701f]
-hme f0072f38: Cannot map TCVR registers.
-hme f0072f38: probe with driver hme failed with error -16
-hme f007ab44: error -EBUSY: can't request region for resource [mem 0x1ff28c07000-0x1ff28c0701f]
-hme f007ab44: Cannot map TCVR registers.
-hme f007ab44: probe with driver hme failed with error -16
+Endpoint Function drivers (e.g. vNTB) can use this information to decide
+whether it really is safe to call pci_epc_set_bar() multiple times to
+update inbound mappings for the BAR.
 
-Turns out the open-firmware resources overlap, at least on this
-machines and PROM version:
-
-hexdump /proc/device-tree/sbus@1f,0/SUNW,hme@2,8c00000/reg:
-00 00 00 02 08 c0 00 00  00 00 01 08
-00 00 00 02 08 c0 20 00  00 00 20 00
-00 00 00 02 08 c0 40 00  00 00 20 00
-00 00 00 02 08 c0 60 00  00 00 20 00
-00 00 00 02 08 c0 70 00  00 00 00 20
-
-And the driver previously explicitly mapped way smaller mmio regions:
-
-/proc/iomem:
-1ff28c00000-1ff28c00107 : HME Global Regs
-1ff28c02000-1ff28c02033 : HME TX Regs
-1ff28c04000-1ff28c0401f : HME RX Regs
-1ff28c06000-1ff28c0635f : HME BIGMAC Regs
-1ff28c07000-1ff28c0701f : HME Tranceiver Regs
-
-Quirk this specific issue by truncating the previous resource to not
-overlap into the TCVR registers.
-
-Fixes: cc216e4b44ce ("net: sunhme: Switch SBUS to devres")
-Signed-off-by: René Rebe <rene@exactco.de>
-Reviewed-by: Sean Anderson <seanga2@gmail.com>
-Link: https://patch.msgid.link/20260205.170959.89574674688839340.rene@exactco.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260124145012.2794108-2-den@valinux.co.jp
+Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sunhme.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/pci-epc.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/sun/sunhme.c b/drivers/net/ethernet/sun/sunhme.c
-index 48f0a96c0e9e3..6669980829980 100644
---- a/drivers/net/ethernet/sun/sunhme.c
-+++ b/drivers/net/ethernet/sun/sunhme.c
-@@ -2551,6 +2551,9 @@ static int happy_meal_sbus_probe_one(struct platform_device *op, int is_qfe)
- 		goto err_out_clear_quattro;
- 	}
- 
-+	/* BIGMAC may have bogus sizes */
-+	if ((op->resource[3].end - op->resource[3].start) >= BMAC_REG_SIZE)
-+		op->resource[3].end = op->resource[3].start + BMAC_REG_SIZE - 1;
- 	hp->bigmacregs = devm_platform_ioremap_resource(op, 3);
- 	if (IS_ERR(hp->bigmacregs)) {
- 		dev_err(&op->dev, "Cannot map BIGMAC registers.\n");
+diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+index 4286bfdbfdfad..4c8516756c568 100644
+--- a/include/linux/pci-epc.h
++++ b/include/linux/pci-epc.h
+@@ -223,6 +223,10 @@ struct pci_epc_bar_desc {
+ /**
+  * struct pci_epc_features - features supported by a EPC device per function
+  * @linkup_notifier: indicate if the EPC device can notify EPF driver on link up
++ * @dynamic_inbound_mapping: indicate if the EPC device supports updating
++ *                           inbound mappings for an already configured BAR
++ *                           (i.e. allow calling pci_epc_set_bar() again
++ *                           without first calling pci_epc_clear_bar())
+  * @msi_capable: indicate if the endpoint function has MSI capability
+  * @msix_capable: indicate if the endpoint function has MSI-X capability
+  * @intx_capable: indicate if the endpoint can raise INTx interrupts
+@@ -231,6 +235,7 @@ struct pci_epc_bar_desc {
+  */
+ struct pci_epc_features {
+ 	unsigned int	linkup_notifier : 1;
++	unsigned int	dynamic_inbound_mapping : 1;
+ 	unsigned int	msi_capable : 1;
+ 	unsigned int	msix_capable : 1;
+ 	unsigned int	intx_capable : 1;
 -- 
 2.51.0
 
