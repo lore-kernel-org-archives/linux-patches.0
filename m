@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C79281376;
-	Wed, 25 Feb 2026 01:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80DE280CE5;
+	Wed, 25 Feb 2026 01:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983734; cv=none; b=opAD0sczNWu6bfs6iM6lxVJqctByz6epVJCC3FRsIXFbe2TfBYmB3pNMve+8R7cRIA9uAut3jWhmf/FkIQbcg4gX8ZQGpMIYWSpS+Z3G0T9CtwXPGWqPpV8nVUAd2Nl+06WZfI7Val0KNhkB2a0XBSTC1U6Y6yBpXFgMkT1keyo=
+	t=1771983735; cv=none; b=f2kWzyXFD7V63Iklkb2tH36hd/C6ewUCoUjL59Dba+iQCd2MD41WBqWtolWKXOtNre/yLI+7CtP9KetDJ2iXcbrZnQ2kIwchyKiE/yAUvNd+gD53Suu+tx5Fb++KDwyDpckUON9055XG1OhC809L1+QQ6mbfCPKmT7OHC+7uwAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983734; c=relaxed/simple;
-	bh=8acBm9j/G2xfq6gsWVbbFuMp611lbpiVzYbMrhou2gk=;
+	s=arc-20240116; t=1771983735; c=relaxed/simple;
+	bh=o14d0mNoLyfdtPY4Bc62M+pIcL9ykKgJbk0V4tda2Vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+I9SoVK+sKapf0x/Arjdrl47FQBKT3sOXTub8cXwvVQwUsuTiHR4MC/r2CqrDR2UOpm1wYGSzwSSKwcED2Pzt0XMvrj8PjaJJvPZuaZbJchYYh6C9Ydm5HlF5gY6JougK8xRATaMs9XhlIFyfgU91so3c38zDdmKkIpR0LUlAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=va3xQoIW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1PBh+Ha13mOacvGS54pUhQhs6feWDQaYMpa5X59SopyM7oaRkop7aXPxnzvMgF+/N1iKGkfgKpJ1i5XfhMqy7wiJQRjhW5N3qAR8vCqmNsDcjN9hOHIA0kzNo7ANghPUSJJZIOkH1yFRuAhgopNe8atvWKJIr7QqL2BIi/nzzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KS4lA+8A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="va3xQoIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9F6C19423;
-	Wed, 25 Feb 2026 01:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KS4lA+8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F35C19424;
+	Wed, 25 Feb 2026 01:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983734;
-	bh=8acBm9j/G2xfq6gsWVbbFuMp611lbpiVzYbMrhou2gk=;
+	s=korg; t=1771983735;
+	bh=o14d0mNoLyfdtPY4Bc62M+pIcL9ykKgJbk0V4tda2Vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=va3xQoIW2Aff6dTw08rfGgATnem/g+7ao/Ib3ULR3r6vS50+LnoTEgMfnVD0WukdQ
-	 mY5+9uX/sISU3fwL+V660jVSIaGf4D7V24MrmH+nAbBFk7CsDffDPI+U4nlay8apIq
-	 dH4TejflZXUMF5BPIpoPJ8vYpLaK9Fefjf3zLTas=
+	b=KS4lA+8AYpL7BWnUtTob0bzMaJ4VVsldYPqDrj8YqBl4FKIJoJCBRlEZwVdXDtzv/
+	 st7HogMr19k17dsWsvxcGZQjmMLqIXK1GWqmBdioC95kwP7kaePWuRAwbP+wXJ8tRj
+	 1u+W5aWUJk1QI4JapXy977qdaajdR760LymWxvNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/641] btrfs: fix block_group_tree dirty_list corruption
-Date: Tue, 24 Feb 2026 17:15:55 -0800
-Message-ID: <20260225012349.690692947@linuxfoundation.org>
+Subject: [PATCH 6.18 003/641] auxdisplay: arm-charlcd: fix release_mem_region() size
+Date: Tue, 24 Feb 2026 17:15:29 -0800
+Message-ID: <20260225012349.014959845@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,148 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 3a1f4264daed4b419c325a7fe35e756cada3cf82 ]
+[ Upstream commit b5c23a4d291d2ac1dfdd574a68a3a68c8da3069e ]
 
-When the incompat flag EXTENT_TREE_V2 is set, we unconditionally add the
-block group tree to the switch_commits list before calling
-switch_commit_roots, as we do for the tree root and the chunk root.
-However, the block group tree uses normal root dirty tracking and in any
-transaction that does an allocation and dirties a block group, the block
-group root will already be linked to a list by the dirty_list field and
-this use of list_add_tail() is invalid and corrupts the prev/next
-members of block_group_root->dirty_list.
+It seems like, after the request_mem_region(), the corresponding
+release_mem_region() must take the same size. This was done
+in (now removed due to previous refactoring) charlcd_remove()
+but not in the error path in charlcd_probe().
 
-This is apparent on a subsequent list_del on the prev if we enable
-CONFIG_DEBUG_LIST:
-
-  [32.1571] ------------[ cut here ]------------
-  [32.1572] list_del corruption. next->prev should beffff958890202538, but was ffff9588992bd538. (next=ffff958890201538)
-  [32.1575] WARNING: lib/list_debug.c:65 at 0x0, CPU#3: sync/607
-  [32.1583] CPU: 3 UID: 0 PID: 607 Comm: sync Not tainted 6.18.0 #24PREEMPT(none)
-  [32.1585] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS1.17.0-4.fc41 04/01/2014
-  [32.1587] RIP: 0010:__list_del_entry_valid_or_report+0x108/0x120
-  [32.1593] RSP: 0018:ffffaa288287fdd0 EFLAGS: 00010202
-  [32.1594] RAX: 0000000000000001 RBX: ffff95889326e800 RCX:ffff958890201538
-  [32.1596] RDX: ffff9588992bd538 RSI: ffff958890202538 RDI:ffffffff82a41e00
-  [32.1597] RBP: ffff958890202538 R08: ffffffff828fc1e8 R09:00000000ffffefff
-  [32.1599] R10: ffffffff8288c200 R11: ffffffff828e4200 R12:ffff958890201538
-  [32.1601] R13: ffff95889326e958 R14: ffff958895c24000 R15:ffff958890202538
-  [32.1603] FS:  00007f0c28eb5740(0000) GS:ffff958af2bd2000(0000)knlGS:0000000000000000
-  [32.1605] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [32.1607] CR2: 00007f0c28e8a3cc CR3: 0000000109942005 CR4:0000000000370ef0
-  [32.1609] Call Trace:
-  [32.1610]  <TASK>
-  [32.1611]  switch_commit_roots+0x82/0x1d0 [btrfs]
-  [32.1615]  btrfs_commit_transaction+0x968/0x1550 [btrfs]
-  [32.1618]  ? btrfs_attach_transaction_barrier+0x23/0x60 [btrfs]
-  [32.1621]  __iterate_supers+0xe8/0x190
-  [32.1622]  ? __pfx_sync_fs_one_sb+0x10/0x10
-  [32.1623]  ksys_sync+0x63/0xb0
-  [32.1624]  __do_sys_sync+0xe/0x20
-  [32.1625]  do_syscall_64+0x73/0x450
-  [32.1626]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [32.1627] RIP: 0033:0x7f0c28d05d2b
-  [32.1632] RSP: 002b:00007ffc9d988048 EFLAGS: 00000246 ORIG_RAX:00000000000000a2
-  [32.1634] RAX: ffffffffffffffda RBX: 00007ffc9d988228 RCX:00007f0c28d05d2b
-  [32.1636] RDX: 00007f0c28e02301 RSI: 00007ffc9d989b21 RDI:00007f0c28dba90d
-  [32.1637] RBP: 0000000000000001 R08: 0000000000000001 R09:0000000000000000
-  [32.1639] R10: 0000000000000000 R11: 0000000000000246 R12:000055b96572cb80
-  [32.1641] R13: 000055b96572b19f R14: 00007f0c28dfa434 R15:000055b96572b034
-  [32.1643]  </TASK>
-  [32.1644] irq event stamp: 0
-  [32.1644] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-  [32.1646] hardirqs last disabled at (0): [<ffffffff81298817>]copy_process+0xb37/0x2260
-  [32.1648] softirqs last  enabled at (0): [<ffffffff81298817>]copy_process+0xb37/0x2260
-  [32.1650] softirqs last disabled at (0): [<0000000000000000>] 0x0
-  [32.1652] ---[ end trace 0000000000000000 ]---
-
-Furthermore, this list corruption eventually (when we happen to add a
-new block group) results in getting the switch_commits and
-dirty_cowonly_roots lists mixed up and attempting to call update_root
-on the tree root which can't be found in the tree root, resulting in a
-transaction abort:
-
-  [87.8269] BTRFS critical (device nvme1n1): unable to find root key (1 0 0) in tree 1
-  [87.8272] ------------[ cut here ]------------
-  [87.8274] BTRFS: Transaction aborted (error -117)
-  [87.8275] WARNING: fs/btrfs/root-tree.c:153 at 0x0, CPU#4: sync/703
-  [87.8285] CPU: 4 UID: 0 PID: 703 Comm: sync Not tainted 6.18.0 #25 PREEMPT(none)
-  [87.8287] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-4.fc41 04/01/2014
-  [87.8289] RIP: 0010:btrfs_update_root+0x296/0x790 [btrfs]
-  [87.8295] RSP: 0018:ffffa58d035dfd60 EFLAGS: 00010282
-  [87.8297] RAX: ffff9a59126ddb68 RBX: ffff9a59126dc000 RCX: 0000000000000000
-  [87.8299] RDX: 0000000000000000 RSI: 00000000ffffff8b RDI: ffffffffc0b28270
-  [87.8301] RBP: ffff9a5904aec000 R08: 0000000000000000 R09: 00000000ffffefff
-  [87.8303] R10: ffffffff9ac8c200 R11: ffffffff9ace4200 R12: 0000000000000001
-  [87.8305] R13: ffff9a59041740e8 R14: ffff9a5904aec1f7 R15: ffff9a590fdefaf0
-  [87.8307] FS:  00007f54cde6b740(0000) GS:ffff9a5b5a81c000(0000) knlGS:0000000000000000
-  [87.8309] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [87.8310] CR2: 00007f54cde403cc CR3: 0000000112902004 CR4: 0000000000370ef0
-  [87.8312] Call Trace:
-  [87.8313]  <TASK>
-  [87.8314]  ? _raw_spin_unlock+0x23/0x40
-  [87.8315]  commit_cowonly_roots+0x1ad/0x250 [btrfs]
-  [87.8317]  ? btrfs_commit_transaction+0x79b/0x1560 [btrfs]
-  [87.8320]  btrfs_commit_transaction+0x8aa/0x1560 [btrfs]
-  [87.8322]  ? btrfs_attach_transaction_barrier+0x23/0x60 [btrfs]
-  [87.8325]  __iterate_supers+0xf1/0x170
-  [87.8326]  ? __pfx_sync_fs_one_sb+0x10/0x10
-  [87.8327]  ksys_sync+0x63/0xb0
-  [87.8328]  __do_sys_sync+0xe/0x20
-  [87.8329]  do_syscall_64+0x73/0x450
-  [87.8330]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [87.8331] RIP: 0033:0x7f54cdd05d2b
-  [87.8336] RSP: 002b:00007fff1b58ff78 EFLAGS: 00000246 ORIG_RAX: 00000000000000a2
-  [87.8338] RAX: ffffffffffffffda RBX: 00007fff1b590158 RCX: 00007f54cdd05d2b
-  [87.8340] RDX: 00007f54cde02301 RSI: 00007fff1b592b66 RDI: 00007f54cddba90d
-  [87.8342] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
-  [87.8344] R10: 0000000000000000 R11: 0000000000000246 R12: 000055e07ca96b80
-  [87.8346] R13: 000055e07ca9519f R14: 00007f54cddfa434 R15: 000055e07ca95034
-  [87.8348]  </TASK>
-  [87.8348] irq event stamp: 0
-  [87.8349] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-  [87.8351] hardirqs last disabled at (0): [<ffffffff99698797>] copy_process+0xb37/0x21e0
-  [87.8353] softirqs last  enabled at (0): [<ffffffff99698797>] copy_process+0xb37/0x21e0
-  [87.8355] softirqs last disabled at (0): [<0000000000000000>] 0x0
-  [87.8357] ---[ end trace 0000000000000000 ]---
-  [87.8358] BTRFS: error (device nvme1n1 state A) in btrfs_update_root:153: errno=-117 Filesystem corrupted
-  [87.8360] BTRFS info (device nvme1n1 state EA): forced readonly
-  [87.8362] BTRFS warning (device nvme1n1 state EA): Skipping commit of aborted transaction.
-  [87.8364] BTRFS: error (device nvme1n1 state EA) in cleanup_transaction:2037: errno=-117 Filesystem corrupted
-
-Since the block group tree was pulled out of the extent tree and uses
-normal root dirty tracking, remove the offending extra list_add. This
-fixes the list corruption and the resulting fs corruption.
-
-Fixes: 14033b08a029 ("btrfs: don't save block group root into super block")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: ce8962455e90 ("ARM: 6214/2: driver for the character LCD found in ARM refdesigns")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c | 7 -------
- 1 file changed, 7 deletions(-)
+ drivers/auxdisplay/arm-charlcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 041f4781956cf..b537bba767806 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -2484,13 +2484,6 @@ int btrfs_commit_transaction(struct btrfs_trans_handle *trans)
- 	list_add_tail(&fs_info->chunk_root->dirty_list,
- 		      &cur_trans->switch_commits);
- 
--	if (btrfs_fs_incompat(fs_info, EXTENT_TREE_V2)) {
--		btrfs_set_root_node(&fs_info->block_group_root->root_item,
--				    fs_info->block_group_root->node);
--		list_add_tail(&fs_info->block_group_root->dirty_list,
--			      &cur_trans->switch_commits);
--	}
--
- 	switch_commit_roots(trans);
- 
- 	ASSERT(list_empty(&cur_trans->dirty_bgs));
+diff --git a/drivers/auxdisplay/arm-charlcd.c b/drivers/auxdisplay/arm-charlcd.c
+index a7eae99a48f77..4e22882f57c9c 100644
+--- a/drivers/auxdisplay/arm-charlcd.c
++++ b/drivers/auxdisplay/arm-charlcd.c
+@@ -323,7 +323,7 @@ static int __init charlcd_probe(struct platform_device *pdev)
+ out_no_irq:
+ 	iounmap(lcd->virtbase);
+ out_no_memregion:
+-	release_mem_region(lcd->phybase, SZ_4K);
++	release_mem_region(lcd->phybase, lcd->physize);
+ out_no_resource:
+ 	kfree(lcd);
+ 	return ret;
 -- 
 2.51.0
 
