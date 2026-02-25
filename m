@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773B018B0A;
-	Wed, 25 Feb 2026 01:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8723D18B0A;
+	Wed, 25 Feb 2026 01:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983298; cv=none; b=sQ/r8cSvCrVUbYBSKzjwLZixZtNlsYXSOZ4xuOR1gmtBC1uGdHArD4k2tY874LnGDNEFwjvemYAwE3g5SbtxLHzG9MmfDL5yGHzD5EpIuvghuYhYfKCNypA4u1CmYasSnXzhnPdC348fp4wQ34tIcIU7PVP6By6L3IZ1mMhS+s8=
+	t=1771983299; cv=none; b=ZyUkHhehdztEeU9ouWs8OlG+gCQfvUPj1e+IpsbLxSmIFIkB3HwXvARHERKJNJcdYxBFJ9eJXumIsbwrpTcnbsuyB83ndBHNMFq8QGC7nJ5bnVFx7h2wyX5C3DlWs0l2Eep59Hd46IOlQvBtGcpctjCCNVz8TIWbnhVmjyyGcck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983298; c=relaxed/simple;
-	bh=xjK0XPtmbEtXoxlbUvaEaMHcizM0X/B3164r3yo8bkQ=;
+	s=arc-20240116; t=1771983299; c=relaxed/simple;
+	bh=T5m36JC01yavXbIpDg+8LHdPXPUNPd1SSmWTDFPlGaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBWx4+aBsCuW6RcYayS7p3TS2mOVIwzrYS2qS35qEElZgS4lcM5ubv2poaqs95dudUjuw0n48fTZJ9Ipr00CAAmhby10zsulNnOcituSl742IL/5XPRqIDWN6CdClYGdCU3X5p3Uu5i7bFo1O3NAZ5nuJZvYAILYNyz1E0tumPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oy6KApnE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dgdxn/EV/ijGxIal8lSVq/SdpWe8w2GxN5KAOI8tJ5aBwOqGmpKVTEmBS+DnDGwlGEjKRY/GlFO0i6YVe/LL7LIhl3+oc9aXiyxK7PXsBjYwtde2UPHJnpaJ+LYTqN0QO/4wc0wlyOBzewKCZqQu+IItECEqk6JLSA/9FYb9SEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8xO0k4h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oy6KApnE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F886C116D0;
-	Wed, 25 Feb 2026 01:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8xO0k4h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481E9C116D0;
+	Wed, 25 Feb 2026 01:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983298;
-	bh=xjK0XPtmbEtXoxlbUvaEaMHcizM0X/B3164r3yo8bkQ=;
+	s=korg; t=1771983299;
+	bh=T5m36JC01yavXbIpDg+8LHdPXPUNPd1SSmWTDFPlGaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oy6KApnEHxDhADUfyqIlKqiDNeVUaFA7xIWfc1cg7PH5qQEoiEd1Hha7D9jA6ZDNF
-	 FGKtkjoArOXwNeArsinem3ww1VUkKcxwO4l/sBLhd3DaVwFMrFdNvG2GGX4OnH2M9O
-	 ZqUYA8KlOPK+XmKJgCfE7HZn7ykzHDGLPoUYpznk=
+	b=Q8xO0k4hboBxgeri5TpiLr6miIhzJtAeGSsx496GYKR4GW4wXfMg+TgsknKoaOI2S
+	 1hC1RI7aroirTo9RPov5iubaxnI1F25oDZwc/Dnm2uY+SmPE1HaA5oelJ4e4+W9wgB
+	 yDd3JO4UOS12cyld5dvH8ueuygVCkUdV+/YRtSic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+827272712bd6d12c79a4@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Jijie Shao <shaojijie@huawei.com>,
+	Sathesh Edara <sedara@marvell.com>,
+	Shinas Rasheed <srasheed@marvell.com>,
+	Vimlesh Kumar <vimleshk@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 431/781] serial: caif: fix use-after-free in caif_serial ldisc_close()
-Date: Tue, 24 Feb 2026 17:19:00 -0800
-Message-ID: <20260225012410.270197394@linuxfoundation.org>
+Subject: [PATCH 6.19 432/781] octeon_ep: disable per ring interrupts
+Date: Tue, 24 Feb 2026 17:19:01 -0800
+Message-ID: <20260225012410.295603295@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,150 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Vimlesh Kumar <vimleshk@marvell.com>
 
-[ Upstream commit 308e7e4d0a846359685f40aade023aee7b27284c ]
+[ Upstream commit 73e6ffa37cebee152c07c5f2b8bc70fd2899ea6e ]
 
-There is a use-after-free bug in caif_serial where handle_tx() may
-access ser->tty after the tty has been freed.
+Disable the MSI-X per ring interrupt for every PF ring when PF
+netdev goes down.
 
-The race condition occurs between ldisc_close() and packet transmission:
-
-    CPU 0 (close)                     CPU 1 (xmit)
-    -------------                     ------------
-    ldisc_close()
-      tty_kref_put(ser->tty)
-      [tty may be freed here]
-                     <-- race window -->
-                                      caif_xmit()
-                                        handle_tx()
-                                          tty = ser->tty  // dangling ptr
-                                          tty->ops->write() // UAF!
-      schedule_work()
-        ser_release()
-          unregister_netdevice()
-
-The root cause is that tty_kref_put() is called in ldisc_close() while
-the network device is still active and can receive packets.
-
-Since ser and tty have a 1:1 binding relationship with consistent
-lifecycles (ser is allocated in ldisc_open and freed in ser_release
-via unregister_netdevice, and each ser binds exactly one tty), we can
-safely defer the tty reference release to ser_release() where the
-network device is unregistered.
-
-Fix this by moving tty_kref_put() from ldisc_close() to ser_release(),
-after unregister_netdevice(). This ensures the tty reference is held
-as long as the network device exists, preventing the UAF.
-
-Note: We save ser->tty before unregister_netdevice() because ser is
-embedded in netdev's private data and will be freed along with netdev
-(needs_free_netdev = true).
-
-How to reproduce: Add mdelay(500) at the beginning of ldisc_close()
-to widen the race window, then run the reproducer program [1].
-
-Note: There is a separate deadloop issue in handle_tx() when using
-PORT_UNKNOWN serial ports (e.g., /dev/ttyS3 in QEMU without proper
-serial backend). This deadloop exists even without this patch,
-and is likely caused by inconsistency between uart_write_room() and
-uart_write() in serial core. It has been addressed in a separate
-patch [2].
-
-KASAN report:
-
-==================================================================
-BUG: KASAN: slab-use-after-free in handle_tx+0x5d1/0x620
-Read of size 1 at addr ffff8881131e1490 by task caif_uaf_trigge/9929
-
-Call Trace:
- <TASK>
- dump_stack_lvl+0x10e/0x1f0
- print_report+0xd0/0x630
- kasan_report+0xe4/0x120
- handle_tx+0x5d1/0x620
- dev_hard_start_xmit+0x9d/0x6c0
- __dev_queue_xmit+0x6e2/0x4410
- packet_xmit+0x243/0x360
- packet_sendmsg+0x26cf/0x5500
- __sys_sendto+0x4a3/0x520
- __x64_sys_sendto+0xe0/0x1c0
- do_syscall_64+0xc9/0xf80
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f615df2c0d7
-
-Allocated by task 9930:
-
-Freed by task 64:
-
-Last potentially related work creation:
-
-The buggy address belongs to the object at ffff8881131e1000
- which belongs to the cache kmalloc-cg-2k of size 2048
-The buggy address is located 1168 bytes inside of
- freed 2048-byte region [ffff8881131e1000, ffff8881131e1800)
-
-The buggy address belongs to the physical page:
-page_owner tracks the page as allocated
-page last free pid 9778 tgid 9778 stack trace:
-
-Memory state around the buggy address:
- ffff8881131e1380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8881131e1400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff8881131e1480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                         ^
- ffff8881131e1500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8881131e1580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-[1]: https://gist.github.com/mrpre/f683f244544f7b11e7fa87df9e6c2eeb
-[2]: https://lore.kernel.org/linux-serial/20260204074327.226165-1-jiayuan.chen@linux.dev/T/#u
-
-Reported-by: syzbot+827272712bd6d12c79a4@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000a4a7550611e234f5@google.com/T/
-Fixes: 56e0ef527b18 ("drivers/net: caif: fix wrong rtnl_is_locked() usage")
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20260206074450.154267-1-jiayuan.chen@linux.dev
+Fixes: 1f2c2d0cee023 ("octeon_ep: add hardware configuration APIs")
+Signed-off-by: Sathesh Edara <sedara@marvell.com>
+Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
+Signed-off-by: Vimlesh Kumar <vimleshk@marvell.com>
+Link: https://patch.msgid.link/20260206111510.1045092-2-vimleshk@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/caif/caif_serial.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../ethernet/marvell/octeon_ep/octep_cn9k_pf.c | 18 +++++++++++++++---
+ .../ethernet/marvell/octeon_ep/octep_cnxk_pf.c | 18 +++++++++++++++---
+ .../marvell/octeon_ep/octep_regs_cn9k_pf.h     |  1 +
+ .../marvell/octeon_ep/octep_regs_cnxk_pf.h     |  1 +
+ 4 files changed, 32 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/caif/caif_serial.c b/drivers/net/caif/caif_serial.c
-index c398ac42eae90..b90890030751f 100644
---- a/drivers/net/caif/caif_serial.c
-+++ b/drivers/net/caif/caif_serial.c
-@@ -284,6 +284,7 @@ static void ser_release(struct work_struct *work)
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
+index b5805969404fa..f0bcb5f3c1474 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
+@@ -696,14 +696,26 @@ static void octep_enable_interrupts_cn93_pf(struct octep_device *oct)
+ /* Disable all interrupts */
+ static void octep_disable_interrupts_cn93_pf(struct octep_device *oct)
  {
- 	struct list_head list;
- 	struct ser_device *ser, *tmp;
-+	struct tty_struct *tty;
+-	u64 intr_mask = 0ULL;
++	u64 reg_val, intr_mask = 0ULL;
+ 	int srn, num_rings, i;
  
- 	spin_lock(&ser_lock);
- 	list_replace_init(&ser_release_list, &list);
-@@ -292,9 +293,11 @@ static void ser_release(struct work_struct *work)
- 	if (!list_empty(&list)) {
- 		rtnl_lock();
- 		list_for_each_entry_safe(ser, tmp, &list, node) {
-+			tty = ser->tty;
- 			dev_close(ser->dev);
- 			unregister_netdevice(ser->dev);
- 			debugfs_deinit(ser);
-+			tty_kref_put(tty);
- 		}
- 		rtnl_unlock();
- 	}
-@@ -355,8 +358,6 @@ static void ldisc_close(struct tty_struct *tty)
+ 	srn = CFG_GET_PORTS_PF_SRN(oct->conf);
+ 	num_rings = CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf);
+ 
+-	for (i = 0; i < num_rings; i++)
+-		intr_mask |= (0x1ULL << (srn + i));
++	for (i = 0; i < num_rings; i++) {
++		intr_mask |= BIT_ULL(srn + i);
++		reg_val = octep_read_csr64(oct,
++					   CN93_SDP_R_IN_INT_LEVELS(srn + i));
++		reg_val &= ~CN93_INT_ENA_BIT;
++		octep_write_csr64(oct,
++				  CN93_SDP_R_IN_INT_LEVELS(srn + i), reg_val);
++
++		reg_val = octep_read_csr64(oct,
++					   CN93_SDP_R_OUT_INT_LEVELS(srn + i));
++		reg_val &= ~CN93_INT_ENA_BIT;
++		octep_write_csr64(oct,
++				  CN93_SDP_R_OUT_INT_LEVELS(srn + i), reg_val);
++	}
+ 
+ 	octep_write_csr64(oct, CN93_SDP_EPF_IRERR_RINT_ENA_W1C, intr_mask);
+ 	octep_write_csr64(oct, CN93_SDP_EPF_ORERR_RINT_ENA_W1C, intr_mask);
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
+index 5de0b5ecbc5fd..07e00887c6940 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
+@@ -720,14 +720,26 @@ static void octep_enable_interrupts_cnxk_pf(struct octep_device *oct)
+ /* Disable all interrupts */
+ static void octep_disable_interrupts_cnxk_pf(struct octep_device *oct)
  {
- 	struct ser_device *ser = tty->disc_data;
+-	u64 intr_mask = 0ULL;
++	u64 reg_val, intr_mask = 0ULL;
+ 	int srn, num_rings, i;
  
--	tty_kref_put(ser->tty);
--
- 	spin_lock(&ser_lock);
- 	list_move(&ser->node, &ser_release_list);
- 	spin_unlock(&ser_lock);
+ 	srn = CFG_GET_PORTS_PF_SRN(oct->conf);
+ 	num_rings = CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf);
+ 
+-	for (i = 0; i < num_rings; i++)
+-		intr_mask |= (0x1ULL << (srn + i));
++	for (i = 0; i < num_rings; i++) {
++		intr_mask |= BIT_ULL(srn + i);
++		reg_val = octep_read_csr64(oct,
++					   CNXK_SDP_R_IN_INT_LEVELS(srn + i));
++		reg_val &= ~CNXK_INT_ENA_BIT;
++		octep_write_csr64(oct,
++				  CNXK_SDP_R_IN_INT_LEVELS(srn + i), reg_val);
++
++		reg_val = octep_read_csr64(oct,
++					   CNXK_SDP_R_OUT_INT_LEVELS(srn + i));
++		reg_val &= ~CNXK_INT_ENA_BIT;
++		octep_write_csr64(oct,
++				  CNXK_SDP_R_OUT_INT_LEVELS(srn + i), reg_val);
++	}
+ 
+ 	octep_write_csr64(oct, CNXK_SDP_EPF_IRERR_RINT_ENA_W1C, intr_mask);
+ 	octep_write_csr64(oct, CNXK_SDP_EPF_ORERR_RINT_ENA_W1C, intr_mask);
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
+index ca473502d7a02..95f1dfff90cce 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
+@@ -386,5 +386,6 @@
+ #define CN93_PEM_BAR4_INDEX            7
+ #define CN93_PEM_BAR4_INDEX_SIZE       0x400000ULL
+ #define CN93_PEM_BAR4_INDEX_OFFSET     (CN93_PEM_BAR4_INDEX * CN93_PEM_BAR4_INDEX_SIZE)
++#define CN93_INT_ENA_BIT	BIT_ULL(62)
+ 
+ #endif /* _OCTEP_REGS_CN9K_PF_H_ */
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
+index e637d7c8224d4..4d172a552f80c 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
+@@ -412,5 +412,6 @@
+ #define CNXK_PEM_BAR4_INDEX		7
+ #define CNXK_PEM_BAR4_INDEX_SIZE	0x400000ULL
+ #define CNXK_PEM_BAR4_INDEX_OFFSET	(CNXK_PEM_BAR4_INDEX * CNXK_PEM_BAR4_INDEX_SIZE)
++#define CNXK_INT_ENA_BIT	BIT_ULL(62)
+ 
+ #endif /* _OCTEP_REGS_CNXK_PF_H_ */
 -- 
 2.51.0
 
