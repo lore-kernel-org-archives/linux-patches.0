@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B832D3EEE;
-	Wed, 25 Feb 2026 06:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0723E2D3EEE;
+	Wed, 25 Feb 2026 06:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002734; cv=none; b=swQZe3U3HszapmWTPuEd8PJ/aUTlXL7+FydTQsScn/qq8rEan/6zvr4EQ96CBuS2QIZTe21/74VonwqAMUq9LWs66voEFmHReAtF2u9Rc3XrJutiRPqh5SVbyQ8sN6e1hxK2aC71eC6Puzv2Av1HahBMv/QwEXZyHWr+BRph2Rk=
+	t=1772002735; cv=none; b=rX+FeuS01tBzFpLjgn2w1rkIZ3dvSlcqzot7Vm2Jtwitv/7QOZR9tKJlH3M3S3BRumpLyJu4erVT52XEUiVT3cIlnmWdg5DA8llUyZC99hejPjv6BTblwzRnbbUJnKE1mjBgTd7bRATd2pBEjP5RXhkjluYCaGxeQfAN02LJ/SM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002734; c=relaxed/simple;
-	bh=9UH7RRP+VK2ii3Z9aBDAsZh2ZP2zedgnw0ayOYkxso8=;
+	s=arc-20240116; t=1772002735; c=relaxed/simple;
+	bh=Cw/RSrTtaux8XoLkV85y1P7p8poENNHHHV/fAKApC0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/F5L7poSiY/L7C9TESY5jpPMNMTNQNlBo93dfbiHgE996GE9HEjemYBgUE37QLvbzCHIAbITAHfqnDGzEUqTz7tZXvRtioP3p2RL6x0YpRv+AqC537xdh0qWd9Vb//Jv7/vbnv9BB88pBtrJMtogAA/+BXtS/w+noAW+6lKr1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inouRTIJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b0oef2KzIotFuveomjWF1Dms/XtpV0kEiX5XIqgBKDgbmNIqihUureMs/8CdJZ7viU+riiRn1A7HNfXzLmuI6FXQTyuZSlsMHQsH4a7U20kN5ETRydU4OgfJtoQLmtBa+YZv6xDMG4rZNQ5zTFTyawemTddWExZ60UnRG5bcctc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpwHj3y/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inouRTIJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D53C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpwHj3y/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88DDC116D0;
 	Wed, 25 Feb 2026 06:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002734;
-	bh=9UH7RRP+VK2ii3Z9aBDAsZh2ZP2zedgnw0ayOYkxso8=;
+	bh=Cw/RSrTtaux8XoLkV85y1P7p8poENNHHHV/fAKApC0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inouRTIJYq6S7PH9H8du5d5aBzlv4nOfazRpxtobJZNK7/53KGJMySqkK9+NXUbzJ
-	 FqFIuz7gpnY4Sbk1LtKtNAdPGIU+j4f2KRSwE1pVYm3hUDKxyS3Z6PGtyNgPmtdSwv
-	 G8KqAzBWDv6/Y1Mk6ml5qPxEmoQ4+0FF+4a2xuU8=
+	b=HpwHj3y/9qAEbruzWsvMxPj5itLXbvUxDbpNtlO9yVArhqIGd7KNJTbnKqMn7CEl2
+	 SyzTlz5iKdzEAKNodDnPIXTwgXhBh/3JK6XFCjlcUKUNZXk8ZLMPyMpSHIjwLlVFIX
+	 V+q/npkg4r1bQgEpjd8j6gi4L2irFeFnAf0UHJfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Petr Machata <petrm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 549/641] selftests: tc_actions: dont dump 2MB of \0 to stdout
-Date: Tue, 24 Feb 2026 17:24:35 -0800
-Message-ID: <20260225012401.828305978@linuxfoundation.org>
+Subject: [PATCH 6.18 514/641] selftests: net: lib: Fix jq parsing error
+Date: Tue, 24 Feb 2026 17:24:00 -0800
+Message-ID: <20260225012400.976438907@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,55 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit 32b70e62034aa72f8414ad4e9122cce7ad418c48 ]
+[ Upstream commit 10ec0fc0ccc525abc807b0ca8ad5a26a0bd56361 ]
 
-Since we started running selftests in NIPA we have been seeing
-tc_actions.sh generate a soft lockup warning on ~20% of the runs.
-On the pre-netdev foundation setup it was actually a missed irq
-splat from the console. Now it's either that or a lockup.
+The testcase failed as below:
+$./vlan_bridge_binding.sh
+...
++ adf_ip_link_set_up d1
++ local name=d1
++ shift
++ ip_link_is_up d1
++ ip_link_has_flag d1 UP
++ local name=d1
++ shift
++ local flag=UP
++ shift
+++ ip -j link show d1
+++ jq --arg flag UP 'any(.[].flags.[]; . == $flag)'
+jq: error: syntax error, unexpected '[', expecting FORMAT or QQSTRING_START
+ (Unix shell quoting issues?) at <top-level>, line 1:
+any(.[].flags.[]; . == $flag)
+jq: 1 compile error
 
-I initially suspected a socket locking issue since the test
-is exercising local loopback with act_mirred.
-After hours of staring at this I noticed in strace that ncat
-when -o $file is specified _both_ saves the output to the file
-and still prints it to stdout. Because the file being sent
-is constructed with:
+Remove the extra dot (.) after flags array to fix this.
 
-  dd conv=sparse status=none if=/dev/zero bs=1M count=2 of=$mirred
-                                ^^^^^^^^^
-
-the data printed is all \0. Most terminals don't display nul
-characters (and neither does vng output capture save them).
-But QEMU's serial console still has to poke them thru which
-is very slow and causes the lockup (if the file is >600kB).
-
-Replace the '-o $file' with '> $file'. This speeds the test up
-from 2m20s to 18s on debug kernels, and prevents the warnings.
-
-Fixes: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260214035159.2119699-1-kuba@kernel.org
+Fixes: 4baa1d3a5080 ("selftests: net: lib: Add ip_link_has_flag()")
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/20260211022146.190948-1-yuehaibing@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/tc_actions.sh | 2 +-
+ tools/testing/selftests/net/lib.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/tc_actions.sh b/tools/testing/selftests/net/forwarding/tc_actions.sh
-index ea89e558672db..86edbc7e2489b 100755
---- a/tools/testing/selftests/net/forwarding/tc_actions.sh
-+++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
-@@ -223,7 +223,7 @@ mirred_egress_to_ingress_tcp_test()
- 		ip_proto icmp \
- 			action drop
+diff --git a/tools/testing/selftests/net/lib.sh b/tools/testing/selftests/net/lib.sh
+index f448bafb3f208..d0306b27fe95e 100644
+--- a/tools/testing/selftests/net/lib.sh
++++ b/tools/testing/selftests/net/lib.sh
+@@ -576,7 +576,7 @@ ip_link_has_flag()
+ 	local flag=$1; shift
  
--	ip vrf exec v$h1 ncat --recv-only -w10 -l -p 12345 -o $mirred_e2i_tf2 &
-+	ip vrf exec v$h1 ncat --recv-only -w10 -l -p 12345 > $mirred_e2i_tf2 &
- 	local rpid=$!
- 	ip vrf exec v$h1 ncat -w1 --send-only 192.0.2.2 12345 <$mirred_e2i_tf1
- 	wait -n $rpid
+ 	local state=$(ip -j link show "$name" |
+-		      jq --arg flag "$flag" 'any(.[].flags.[]; . == $flag)')
++		      jq --arg flag "$flag" 'any(.[].flags[]; . == $flag)')
+ 	[[ $state == true ]]
+ }
+ 
 -- 
 2.51.0
 
