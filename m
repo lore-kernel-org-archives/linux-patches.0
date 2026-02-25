@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3645318B0A;
-	Wed, 25 Feb 2026 01:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC31918B0A;
+	Wed, 25 Feb 2026 01:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983306; cv=none; b=K5LfcuVHcudAWDZeFHh8rYP4Q8bnnDwonUmYlTb+llUCQyjRJJNoLdeeoPDEr4TyrZYNizMZ7htwsGCt9C3y9bD9odLtJdPcIHix2Gs1Bgp/jgsPfr30gHqJr4xel464WyJaHxV9VrLuJiBJEQL3wK5V0r6TMCS+0h08Emq4KyA=
+	t=1771983307; cv=none; b=b6G9Wad+9R9CvZVhAHScVnfJKsn33zeQpt02MHqf24C2rncLv3Y/PwejP13UlvblBE9W1gS5r3goOyc5/sW/hq8Il5CgJKdwjI25dvr1TxvLdLBa9fqFZMtX5n3wX7Aj6x8zmb4qc0Qf36eTXwtjHSoCEYWJfrdUqjYeIP2KtUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983306; c=relaxed/simple;
-	bh=hAXFAnRbjNhX4f18O9ndDbCWR52rLwdagrAL6aVISkA=;
+	s=arc-20240116; t=1771983307; c=relaxed/simple;
+	bh=1HMHSSnlr5TsL244XkHaqCaWqPmCglL+gy/RAypi8mM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+AA94jcJTRtv+wQCwUk1ioV7RcYrEre1W7wbXKyF5Vmb5FreJ2reP4uJS1+eWcWZMyhWmppVuEVLjxgUdZ+fPEbMb0lZhskAJMzrDHOkTib5O2iwK9FmG5ysL0OA7DtDQdFCoBG90Lmy6WwbSOyspM5fOgIkZr0YE4whiztRI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBOsuMNM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1nv/Hu9+Vre/x1cC5IdkZrf0gQOwTahCatiUTn0kkpI45uhrn20N9Ct7xsXw88kcWHAFJPMZRLl+CBn9QKLhO6uG434MkwsHoZZmbEnNgMNt6RSpBRN25Eh4m2RjHY48QZcHtFE2kBXynpKNF95+qt6tC7ThNncJoDbKq3LlO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9ZJgz/d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBOsuMNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D0DC19424;
-	Wed, 25 Feb 2026 01:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9ZJgz/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2DAC116D0;
+	Wed, 25 Feb 2026 01:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983306;
-	bh=hAXFAnRbjNhX4f18O9ndDbCWR52rLwdagrAL6aVISkA=;
+	s=korg; t=1771983307;
+	bh=1HMHSSnlr5TsL244XkHaqCaWqPmCglL+gy/RAypi8mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YBOsuMNM3d082DDT7C6NqeWLTB0JKtxSAJNcevNxTOwACNU2J0FzKj6r/kmgR9E/9
-	 vidtmGzuuDL8uMycOKsTpJ8Qjbdd6ETadBd7pwL+q+fbb7hDjhkmNEv+yg/6UtyoaG
-	 YeqQyBrTmP+Phb1W8G7icOBzpaYKrf9ncCXXNdyc=
+	b=d9ZJgz/dfOxrrRY5DmdwZUTC+EpzhyQIvXLZ5GfIEiNmXDYO9pGgRoa5SPAzVxzCr
+	 el2GxxGc0cSXt+FKsVtow1Cy/cKQcxZTsK2IATTAQV+L2aT3rx8+4tLPB32YMVVWWt
+	 M5isWUmgjcdnlUnU53jzbsgZM2XrL2N2FI6Dp8eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
+	Aksh Garg <a-garg7@ti.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>,
 	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 397/781] PCI: dwc: ep: Support BAR subrange inbound mapping via Address Match Mode iATU
-Date: Tue, 24 Feb 2026 17:18:26 -0800
-Message-ID: <20260225012409.443105766@linuxfoundation.org>
+Subject: [PATCH 6.19 398/781] PCI: dwc: ep: Fix resizable BAR support for multi-PF configurations
+Date: Tue, 24 Feb 2026 17:18:27 -0800
+Message-ID: <20260225012409.467292308@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,334 +53,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Aksh Garg <a-garg7@ti.com>
 
-[ Upstream commit cc839bef7727043a66004bba563492957ca3e531 ]
+[ Upstream commit 43d67ec26b329f8aea34ba9dff23d69b84a8e564 ]
 
-Extend dw_pcie_ep_set_bar() to support inbound mappings for BAR
-subranges using Address Match Mode IB iATU when pci_epf_bar.num_submap
-is non-zero.
+The resizable BAR support added by the commit 3a3d4cabe681 ("PCI: dwc: ep:
+Allow EPF drivers to configure the size of Resizable BARs") incorrectly
+configures the resizable BARs only for the first Physical Function (PF0)
+in EP mode.
 
-Rename the existing BAR-match helper into dw_pcie_ep_ib_atu_bar() and
-introduce dw_pcie_ep_ib_atu_addr() for Address Match Mode. When
-num_submap is non-zero, read the assigned BAR base address and program
-one inbound iATU window per subrange. Validate the submap array before
-programming:
-- each subrange is aligned to pci->region_align
-- subranges cover the whole BAR (no gaps and no overlaps)
+The resizable BAR configuration functions use generic dw_pcie_*_dbi()
+operations instead of physical function specific dw_pcie_ep_*_dbi()
+operations. This causes resizable BAR configuration to always target
+PF0 regardless of the requested function number.
 
-Track Address Match Mode mappings and tear them down on clear_bar() and
-on set_bar() error paths to avoid leaving half-programmed state or
-untranslated BAR holes.
+Additionally, dw_pcie_ep_init_non_sticky_registers() only initializes
+resizable BAR registers for PF0, leaving other PFs unconfigured during
+the execution of this function.
 
-Advertise this capability by extending the common feature bit
-initializer macro (DWC_EPC_COMMON_FEATURES).
+Fix this by using physical function specific configuration space access
+operations throughout the resizable BAR code path and initializing
+registers for all the physical functions that support resizable BARs.
 
-This enables multiple inbound windows within a single BAR, which is
-useful on platforms where usable BARs are scarce but EPFs need multiple
-inbound regions.
-
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Fixes: 3a3d4cabe681 ("PCI: dwc: ep: Allow EPF drivers to configure the size of Resizable BARs")
+Signed-off-by: Aksh Garg <a-garg7@ti.com>
+[mani: added stable tag]
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260124145012.2794108-5-den@valinux.co.jp
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260130115516.515082-2-a-garg7@ti.com
 Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pci/controller/dwc/pcie-designware-ep.c   | 213 +++++++++++++++++-
- drivers/pci/controller/dwc/pcie-designware.h  |   7 +-
- 2 files changed, 209 insertions(+), 11 deletions(-)
+ .../pci/controller/dwc/pcie-designware-ep.c   | 48 ++++++++++++-------
+ 1 file changed, 32 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index cfd59899c7b85..855b2e58c3380 100644
+index 855b2e58c3380..1cc2985bab03d 100644
 --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -100,9 +100,10 @@ static int dw_pcie_ep_write_header(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	return 0;
+@@ -75,6 +75,13 @@ static u8 dw_pcie_ep_find_capability(struct dw_pcie_ep *ep, u8 func_no, u8 cap)
+ 				 cap, NULL, ep, func_no);
  }
  
--static int dw_pcie_ep_inbound_atu(struct dw_pcie_ep *ep, u8 func_no, int type,
--				  dma_addr_t parent_bus_addr, enum pci_barno bar,
--				  size_t size)
-+/* BAR Match Mode inbound iATU mapping */
-+static int dw_pcie_ep_ib_atu_bar(struct dw_pcie_ep *ep, u8 func_no, int type,
-+				 dma_addr_t parent_bus_addr, enum pci_barno bar,
-+				 size_t size)
++static u16 dw_pcie_ep_find_ext_capability(struct dw_pcie_ep *ep,
++					  u8 func_no, u8 cap)
++{
++	return PCI_FIND_NEXT_EXT_CAP(dw_pcie_ep_read_cfg, 0,
++				     cap, NULL, ep, func_no);
++}
++
+ static int dw_pcie_ep_write_header(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 				   struct pci_epf_header *hdr)
  {
- 	int ret;
- 	u32 free_win;
-@@ -135,6 +136,179 @@ static int dw_pcie_ep_inbound_atu(struct dw_pcie_ep *ep, u8 func_no, int type,
- 	return 0;
- }
- 
-+static void dw_pcie_ep_clear_ib_maps(struct dw_pcie_ep *ep, enum pci_barno bar)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-+	struct device *dev = pci->dev;
-+	unsigned int i, num;
-+	u32 atu_index;
-+	u32 *indexes;
-+
-+	/* Tear down the BAR Match Mode mapping, if any. */
-+	if (ep->bar_to_atu[bar]) {
-+		atu_index = ep->bar_to_atu[bar] - 1;
-+		dw_pcie_disable_atu(pci, PCIE_ATU_REGION_DIR_IB, atu_index);
-+		clear_bit(atu_index, ep->ib_window_map);
-+		ep->bar_to_atu[bar] = 0;
-+	}
-+
-+	/* Tear down all Address Match Mode mappings, if any. */
-+	indexes = ep->ib_atu_indexes[bar];
-+	num = ep->num_ib_atu_indexes[bar];
-+	ep->ib_atu_indexes[bar] = NULL;
-+	ep->num_ib_atu_indexes[bar] = 0;
-+	if (!indexes)
-+		return;
-+	for (i = 0; i < num; i++) {
-+		dw_pcie_disable_atu(pci, PCIE_ATU_REGION_DIR_IB, indexes[i]);
-+		clear_bit(indexes[i], ep->ib_window_map);
-+	}
-+	devm_kfree(dev, indexes);
-+}
-+
-+static u64 dw_pcie_ep_read_bar_assigned(struct dw_pcie_ep *ep, u8 func_no,
-+					enum pci_barno bar, int flags)
-+{
-+	u32 reg = PCI_BASE_ADDRESS_0 + (4 * bar);
-+	u32 lo, hi;
-+	u64 addr;
-+
-+	lo = dw_pcie_ep_readl_dbi(ep, func_no, reg);
-+
-+	if (flags & PCI_BASE_ADDRESS_SPACE)
-+		return lo & PCI_BASE_ADDRESS_IO_MASK;
-+
-+	addr = lo & PCI_BASE_ADDRESS_MEM_MASK;
-+	if (!(flags & PCI_BASE_ADDRESS_MEM_TYPE_64))
-+		return addr;
-+
-+	hi = dw_pcie_ep_readl_dbi(ep, func_no, reg + 4);
-+	return addr | ((u64)hi << 32);
-+}
-+
-+static int dw_pcie_ep_validate_submap(struct dw_pcie_ep *ep,
-+				      const struct pci_epf_bar_submap *submap,
-+				      unsigned int num_submap, size_t bar_size)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-+	u32 align = pci->region_align;
-+	size_t off = 0;
-+	unsigned int i;
-+	size_t size;
-+
-+	if (!align || !IS_ALIGNED(bar_size, align))
-+		return -EINVAL;
-+
-+	/*
-+	 * The submap array order defines the BAR layout (submap[0] starts
-+	 * at offset 0 and each entry immediately follows the previous
-+	 * one). Here, validate that it forms a strict, gapless
-+	 * decomposition of the BAR:
-+	 *  - each entry has a non-zero size
-+	 *  - sizes, implicit offsets and phys_addr are aligned to
-+	 *    pci->region_align
-+	 *  - each entry lies within the BAR range
-+	 *  - the entries exactly cover the whole BAR
-+	 *
-+	 * Note: dw_pcie_prog_inbound_atu() also checks alignment for the
-+	 * PCI address and the target phys_addr, but validating up-front
-+	 * avoids partially programming iATU windows in vain.
-+	 */
-+	for (i = 0; i < num_submap; i++) {
-+		size = submap[i].size;
-+
-+		if (!size)
-+			return -EINVAL;
-+
-+		if (!IS_ALIGNED(size, align) || !IS_ALIGNED(off, align))
-+			return -EINVAL;
-+
-+		if (!IS_ALIGNED(submap[i].phys_addr, align))
-+			return -EINVAL;
-+
-+		if (off > bar_size || size > bar_size - off)
-+			return -EINVAL;
-+
-+		off += size;
-+	}
-+	if (off != bar_size)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
-+/* Address Match Mode inbound iATU mapping */
-+static int dw_pcie_ep_ib_atu_addr(struct dw_pcie_ep *ep, u8 func_no, int type,
-+				  const struct pci_epf_bar *epf_bar)
-+{
-+	const struct pci_epf_bar_submap *submap = epf_bar->submap;
-+	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-+	enum pci_barno bar = epf_bar->barno;
-+	struct device *dev = pci->dev;
-+	u64 pci_addr, parent_bus_addr;
-+	u64 size, base, off = 0;
-+	int free_win, ret;
-+	unsigned int i;
-+	u32 *indexes;
-+
-+	if (!epf_bar->num_submap || !submap || !epf_bar->size)
-+		return -EINVAL;
-+
-+	ret = dw_pcie_ep_validate_submap(ep, submap, epf_bar->num_submap,
-+					 epf_bar->size);
-+	if (ret)
-+		return ret;
-+
-+	base = dw_pcie_ep_read_bar_assigned(ep, func_no, bar, epf_bar->flags);
-+	if (!base) {
-+		dev_err(dev,
-+			"BAR%u not assigned, cannot set up sub-range mappings\n",
-+			bar);
-+		return -EINVAL;
-+	}
-+
-+	indexes = devm_kcalloc(dev, epf_bar->num_submap, sizeof(*indexes),
-+			       GFP_KERNEL);
-+	if (!indexes)
-+		return -ENOMEM;
-+
-+	ep->ib_atu_indexes[bar] = indexes;
-+	ep->num_ib_atu_indexes[bar] = 0;
-+
-+	for (i = 0; i < epf_bar->num_submap; i++) {
-+		size = submap[i].size;
-+		parent_bus_addr = submap[i].phys_addr;
-+
-+		if (off > (~0ULL) - base) {
-+			ret = -EINVAL;
-+			goto err;
-+		}
-+
-+		pci_addr = base + off;
-+		off += size;
-+
-+		free_win = find_first_zero_bit(ep->ib_window_map,
-+					       pci->num_ib_windows);
-+		if (free_win >= pci->num_ib_windows) {
-+			ret = -ENOSPC;
-+			goto err;
-+		}
-+
-+		ret = dw_pcie_prog_inbound_atu(pci, free_win, type,
-+					       parent_bus_addr, pci_addr, size);
-+		if (ret)
-+			goto err;
-+
-+		set_bit(free_win, ep->ib_window_map);
-+		indexes[i] = free_win;
-+		ep->num_ib_atu_indexes[bar] = i + 1;
-+	}
-+	return 0;
-+err:
-+	dw_pcie_ep_clear_ib_maps(ep, bar);
-+	return ret;
-+}
-+
- static int dw_pcie_ep_outbound_atu(struct dw_pcie_ep *ep,
- 				   struct dw_pcie_ob_atu_cfg *atu)
- {
-@@ -165,17 +339,15 @@ static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
- 	enum pci_barno bar = epf_bar->barno;
--	u32 atu_index = ep->bar_to_atu[bar] - 1;
- 
--	if (!ep->bar_to_atu[bar])
-+	if (!ep->epf_bar[bar])
- 		return;
- 
- 	__dw_pcie_ep_reset_bar(pci, func_no, bar, epf_bar->flags);
- 
--	dw_pcie_disable_atu(pci, PCIE_ATU_REGION_DIR_IB, atu_index);
--	clear_bit(atu_index, ep->ib_window_map);
-+	dw_pcie_ep_clear_ib_maps(ep, bar);
-+
+@@ -350,22 +357,22 @@ static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
  	ep->epf_bar[bar] = NULL;
--	ep->bar_to_atu[bar] = 0;
  }
  
- static unsigned int dw_pcie_ep_get_rebar_offset(struct dw_pcie *pci,
-@@ -331,11 +503,28 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 		    ep->epf_bar[bar]->flags != flags)
- 			return -EINVAL;
+-static unsigned int dw_pcie_ep_get_rebar_offset(struct dw_pcie *pci,
++static unsigned int dw_pcie_ep_get_rebar_offset(struct dw_pcie_ep *ep, u8 func_no,
+ 						enum pci_barno bar)
+ {
+ 	u32 reg, bar_index;
+ 	unsigned int offset, nbars;
+ 	int i;
  
-+		/*
-+		 * When dynamically changing a BAR, tear down any existing
-+		 * mappings before re-programming.
-+		 */
-+		if (ep->epf_bar[bar]->num_submap || epf_bar->num_submap)
-+			dw_pcie_ep_clear_ib_maps(ep, bar);
-+
+-	offset = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
++	offset = dw_pcie_ep_find_ext_capability(ep, func_no, PCI_EXT_CAP_ID_REBAR);
+ 	if (!offset)
+ 		return offset;
+ 
+-	reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
++	reg = dw_pcie_ep_readl_dbi(ep, func_no, offset + PCI_REBAR_CTRL);
+ 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, reg);
+ 
+ 	for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL) {
+-		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
++		reg = dw_pcie_ep_readl_dbi(ep, func_no, offset + PCI_REBAR_CTRL);
+ 		bar_index = FIELD_GET(PCI_REBAR_CTRL_BAR_IDX, reg);
+ 		if (bar_index == bar)
+ 			return offset;
+@@ -386,7 +393,7 @@ static int dw_pcie_ep_set_bar_resizable(struct dw_pcie_ep *ep, u8 func_no,
+ 	u32 rebar_cap, rebar_ctrl;
+ 	int ret;
+ 
+-	rebar_offset = dw_pcie_ep_get_rebar_offset(pci, bar);
++	rebar_offset = dw_pcie_ep_get_rebar_offset(ep, func_no, bar);
+ 	if (!rebar_offset)
+ 		return -EINVAL;
+ 
+@@ -416,16 +423,16 @@ static int dw_pcie_ep_set_bar_resizable(struct dw_pcie_ep *ep, u8 func_no,
+ 	 * 1 MB to 128 TB. Bits 31:16 in PCI_REBAR_CTRL define "supported sizes"
+ 	 * bits for sizes 256 TB to 8 EB. Disallow sizes 256 TB to 8 EB.
+ 	 */
+-	rebar_ctrl = dw_pcie_readl_dbi(pci, rebar_offset + PCI_REBAR_CTRL);
++	rebar_ctrl = dw_pcie_ep_readl_dbi(ep, func_no, rebar_offset + PCI_REBAR_CTRL);
+ 	rebar_ctrl &= ~GENMASK(31, 16);
+-	dw_pcie_writel_dbi(pci, rebar_offset + PCI_REBAR_CTRL, rebar_ctrl);
++	dw_pcie_ep_writel_dbi(ep, func_no, rebar_offset + PCI_REBAR_CTRL, rebar_ctrl);
+ 
+ 	/*
+ 	 * The "selected size" (bits 13:8) in PCI_REBAR_CTRL are automatically
+ 	 * updated when writing PCI_REBAR_CAP, see "Figure 3-26 Resizable BAR
+ 	 * Example for 32-bit Memory BAR0" in DWC EP databook 5.96a.
+ 	 */
+-	dw_pcie_writel_dbi(pci, rebar_offset + PCI_REBAR_CAP, rebar_cap);
++	dw_pcie_ep_writel_dbi(ep, func_no, rebar_offset + PCI_REBAR_CAP, rebar_cap);
+ 
+ 	dw_pcie_dbi_ro_wr_dis(pci);
+ 
+@@ -1023,20 +1030,17 @@ void dw_pcie_ep_deinit(struct dw_pcie_ep *ep)
+ }
+ EXPORT_SYMBOL_GPL(dw_pcie_ep_deinit);
+ 
+-static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
++static void dw_pcie_ep_init_rebar_registers(struct dw_pcie_ep *ep, u8 func_no)
+ {
+-	struct dw_pcie_ep *ep = &pci->ep;
+ 	unsigned int offset;
+ 	unsigned int nbars;
+ 	enum pci_barno bar;
+ 	u32 reg, i, val;
+ 
+-	offset = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
+-
+-	dw_pcie_dbi_ro_wr_en(pci);
++	offset = dw_pcie_ep_find_ext_capability(ep, func_no, PCI_EXT_CAP_ID_REBAR);
+ 
+ 	if (offset) {
+-		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
++		reg = dw_pcie_ep_readl_dbi(ep, func_no, offset + PCI_REBAR_CTRL);
+ 		nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, reg);
+ 
  		/*
- 		 * When dynamically changing a BAR, skip writing the BAR reg, as
- 		 * that would clear the BAR's PCI address assigned by the host.
- 		 */
- 		goto config_atu;
-+	} else {
-+		/*
-+		 * Subrange mapping is an update-only operation.  The BAR
-+		 * must have been configured once without submaps so that
-+		 * subsequent set_bar() calls can update inbound mappings
-+		 * without touching the BAR register (and clobbering the
-+		 * host-assigned address).
-+		 */
-+		if (epf_bar->num_submap)
-+			return -EINVAL;
+@@ -1057,16 +1061,28 @@ static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
+ 			 * the controller when RESBAR_CAP_REG is written, which
+ 			 * is why RESBAR_CAP_REG is written here.
+ 			 */
+-			val = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
++			val = dw_pcie_ep_readl_dbi(ep, func_no, offset + PCI_REBAR_CTRL);
+ 			bar = FIELD_GET(PCI_REBAR_CTRL_BAR_IDX, val);
+ 			if (ep->epf_bar[bar])
+ 				pci_epc_bar_size_to_rebar_cap(ep->epf_bar[bar]->size, &val);
+ 			else
+ 				val = BIT(4);
+ 
+-			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, val);
++			dw_pcie_ep_writel_dbi(ep, func_no, offset + PCI_REBAR_CAP, val);
+ 		}
  	}
- 
- 	bar_type = dw_pcie_ep_get_bar_type(ep, bar);
-@@ -369,8 +558,12 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	else
- 		type = PCIE_ATU_TYPE_IO;
- 
--	ret = dw_pcie_ep_inbound_atu(ep, func_no, type, epf_bar->phys_addr, bar,
--				     size);
-+	if (epf_bar->num_submap)
-+		ret = dw_pcie_ep_ib_atu_addr(ep, func_no, type, epf_bar);
-+	else
-+		ret = dw_pcie_ep_ib_atu_bar(ep, func_no, type,
-+					    epf_bar->phys_addr, bar, size);
++}
 +
- 	if (ret)
- 		return ret;
- 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 205fb55fca8c0..3c4220027415e 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -306,7 +306,8 @@
- #define DMA_LLP_MEM_SIZE		PAGE_SIZE
- 
- /* Common struct pci_epc_feature bits among DWC EP glue drivers */
--#define DWC_EPC_COMMON_FEATURES		.dynamic_inbound_mapping = true
-+#define DWC_EPC_COMMON_FEATURES		.dynamic_inbound_mapping = true, \
-+					.subrange_mapping = true
- 
- struct dw_pcie;
- struct dw_pcie_rp;
-@@ -483,6 +484,10 @@ struct dw_pcie_ep {
- 	phys_addr_t		msi_mem_phys;
- 	struct pci_epf_bar	*epf_bar[PCI_STD_NUM_BARS];
- 
-+	/* Only for Address Match Mode inbound iATU */
-+	u32			*ib_atu_indexes[PCI_STD_NUM_BARS];
-+	unsigned int		num_ib_atu_indexes[PCI_STD_NUM_BARS];
++static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
++{
++	struct dw_pcie_ep *ep = &pci->ep;
++	u8 funcs = ep->epc->max_functions;
++	u8 func_no;
 +
- 	/* MSI outbound iATU state */
- 	bool			msi_iatu_mapped;
- 	u64			msi_msg_addr;
++	dw_pcie_dbi_ro_wr_en(pci);
++
++	for (func_no = 0; func_no < funcs; func_no++)
++		dw_pcie_ep_init_rebar_registers(ep, func_no);
+ 
+ 	dw_pcie_setup(pci);
+ 	dw_pcie_dbi_ro_wr_dis(pci);
 -- 
 2.51.0
 
