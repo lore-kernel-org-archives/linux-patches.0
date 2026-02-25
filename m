@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A331EB5E1;
-	Wed, 25 Feb 2026 01:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39722505B2;
+	Wed, 25 Feb 2026 01:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983323; cv=none; b=tK0XA3pyNckyHpyAPw37CW6bffFjYjlhdC0IXE2LE9mQvQ977Y2ao4RiiefzOpYSKQnVQmI/1caXNvmVpiYZeJR5ivk+xfMSOBG2OG804DkNlb8Xb0ApQkCsAzrhz0S62cztK7WzyVzizHZv2dOEKfpbSaoohqER5Tbc4CYETNM=
+	t=1771983324; cv=none; b=NA9wvV8uw6FfODi6ETIakv2KiS+Hjt+uoNULI4oaaE2AQh9PggO5aYkr1IxoCqhN/c+XFnOAFp3/a2sKe4OBP36iBpwlKi4B4GxfOKMiHZs09K46u56GHKoEtVgr91hz1/To0wmZfsz2f8dY/sEalyypyNaqarZgtz8WiCNOoDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983323; c=relaxed/simple;
-	bh=y5g0pxswbCKf2f8fdZPGVoN4X9VwmVMcr/ORPJ7Yono=;
+	s=arc-20240116; t=1771983324; c=relaxed/simple;
+	bh=CHabqQr8pW7MosvqDQFJAJ+7WyOuJAbha/D8b4CHxQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HoNBT5d+yEXz+zo0i5ULBV5aatAzSFaT+aISciAVgjbNJEcTi+bUiwKGxOBzaEfV2Ar5XBBI7q+m9b+h2tK+JyLMSN8kOvSHrplJXMse/8zANUZRjlrIqW2w1bmN0m52xz/ORKkxn4MVE8EEMGgTroUnOCEkLDxKI+e/tVP9dlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAkPUIQD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gULs+nukOg875vKnHavhz7A5Bp7DPg6t87wxQyBBKtcAl6Aalh3lBC9ptQkGO/E3fiBkpwgEniszpsq/KJtAwWlO2N4HTlu/xo/lxYBbeM/zrAO6Dx8rg+LJUk54EXG513VuwTYG1Zp1P/LczJpC0AZ8497fPwP94uUUecE981A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqoL/fXk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAkPUIQD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442D3C116D0;
-	Wed, 25 Feb 2026 01:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqoL/fXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFF7C116D0;
+	Wed, 25 Feb 2026 01:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983323;
-	bh=y5g0pxswbCKf2f8fdZPGVoN4X9VwmVMcr/ORPJ7Yono=;
+	s=korg; t=1771983324;
+	bh=CHabqQr8pW7MosvqDQFJAJ+7WyOuJAbha/D8b4CHxQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAkPUIQDgvRu7woQ0WDE1plhIt4XaN57jMHYF8xfS5i+i16XVWa3Fkh6kdiJ5lFl0
-	 mpvaN9Y06T4vvl8PVVrcnkrgQYOuITmSyhgbNZhdJBqNcbvnN+7aCLAHPcQl56eq28
-	 gqlwG5gLs6QzQ6jx9g1PkxWZtAAHC65uQqR5vlrU=
+	b=TqoL/fXk+nK6TowBVuwp0CiQbnEGb3r5hdo1m12hCNMxrkGqqa3v2wIQ/OY8wht2m
+	 MugWN0B/CGQuEtHEaknxmhrwLbP0P+8Cl87DAugR3UAjecqOXkNwICXFBOkUMT6FwO
+	 DN4vBSc4up/0G41h05bHssiSZdMXwUkfLHZymo9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Waqar Hameed <waqar.hameed@axis.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 438/781] af_unix: Fix memleak of newsk in unix_stream_connect().
-Date: Tue, 24 Feb 2026 17:19:07 -0800
-Message-ID: <20260225012410.444770060@linuxfoundation.org>
+Subject: [PATCH 6.19 456/781] power: supply: rt9455: Fix use-after-free in power_supply_changed()
+Date: Tue, 24 Feb 2026 17:19:25 -0800
+Message-ID: <20260225012410.903331265@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,54 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit 6884028cd7f275f8bcb854a347265cb1fb0e4bea ]
+[ Upstream commit e2febe375e5ea5afed92f4cd9711bde8f24ee6d2 ]
 
-When prepare_peercred() fails in unix_stream_connect(),
-unix_release_sock() is not called for newsk, and the memory
-is leaked.
+Using the `devm_` variant for requesting IRQ _before_ the `devm_`
+variant for allocating/registering the `power_supply` handle, means that
+the `power_supply` handle will be deallocated/unregistered _before_ the
+interrupt handler (since `devm_` naturally deallocates in reverse
+allocation order). This means that during removal, there is a race
+condition where an interrupt can fire just _after_ the `power_supply`
+handle has been freed, *but* just _before_ the corresponding
+unregistration of the IRQ handler has run.
 
-Let's move prepare_peercred() before unix_create1().
+This will lead to the IRQ handler calling `power_supply_changed()` with
+a freed `power_supply` handle. Which usually crashes the system or
+otherwise silently corrupts the memory...
 
-Fixes: fd0a109a0f6b ("net, pidfs: prepare for handing out pidfds for reaped sk->sk_peer_pid")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260207232236.2557549-1-kuniyu@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Note that there is a similar situation which can also happen during
+`probe()`; the possibility of an interrupt firing _before_ registering
+the `power_supply` handle. This would then lead to the nasty situation
+of using the `power_supply` handle *uninitialized* in
+`power_supply_changed()`.
+
+Fix this racy use-after-free by making sure the IRQ is requested _after_
+the registration of the `power_supply` handle.
+
+Fixes: e86d69dd786e ("power_supply: Add support for Richtek RT9455 battery charger")
+Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
+Link: https://patch.msgid.link/1567d831e04c3e2fcb9e18dd36b7bcba4634581a.1766268280.git.waqar.hameed@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/power/supply/rt9455_charger.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index d0511225799ba..f6d56e70c7a2c 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1650,10 +1650,9 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr_unsized *uad
- 
- 	timeo = sock_sndtimeo(sk, flags & O_NONBLOCK);
- 
--	/* First of all allocate resources.
--	 * If we will make it after state is locked,
--	 * we will have to recheck all again in any case.
--	 */
-+	err = prepare_peercred(&peercred);
-+	if (err)
-+		goto out;
- 
- 	/* create new sock for complete connection */
- 	newsk = unix_create1(net, NULL, 0, sock->type);
-@@ -1662,10 +1661,6 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr_unsized *uad
- 		goto out;
+diff --git a/drivers/power/supply/rt9455_charger.c b/drivers/power/supply/rt9455_charger.c
+index 1ffe7f02932f6..5130d2395e88f 100644
+--- a/drivers/power/supply/rt9455_charger.c
++++ b/drivers/power/supply/rt9455_charger.c
+@@ -1663,6 +1663,15 @@ static int rt9455_probe(struct i2c_client *client)
+ 	rt9455_charger_config.supplied_to	= rt9455_charger_supplied_to;
+ 	rt9455_charger_config.num_supplicants	=
+ 					ARRAY_SIZE(rt9455_charger_supplied_to);
++
++	info->charger = devm_power_supply_register(dev, &rt9455_charger_desc,
++						   &rt9455_charger_config);
++	if (IS_ERR(info->charger)) {
++		dev_err(dev, "Failed to register charger\n");
++		ret = PTR_ERR(info->charger);
++		goto put_usb_notifier;
++	}
++
+ 	ret = devm_request_threaded_irq(dev, client->irq, NULL,
+ 					rt9455_irq_handler_thread,
+ 					IRQF_TRIGGER_LOW | IRQF_ONESHOT,
+@@ -1678,14 +1687,6 @@ static int rt9455_probe(struct i2c_client *client)
+ 		goto put_usb_notifier;
  	}
  
--	err = prepare_peercred(&peercred);
--	if (err)
--		goto out;
+-	info->charger = devm_power_supply_register(dev, &rt9455_charger_desc,
+-						   &rt9455_charger_config);
+-	if (IS_ERR(info->charger)) {
+-		dev_err(dev, "Failed to register charger\n");
+-		ret = PTR_ERR(info->charger);
+-		goto put_usb_notifier;
+-	}
 -
- 	/* Allocate skb for sending to listening sock */
- 	skb = sock_wmalloc(newsk, 1, 0, GFP_KERNEL);
- 	if (!skb) {
+ 	return 0;
+ 
+ put_usb_notifier:
 -- 
 2.51.0
 
