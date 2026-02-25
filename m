@@ -1,50 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E3220C012;
-	Wed, 25 Feb 2026 01:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710C2263C7F;
+	Wed, 25 Feb 2026 01:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771984012; cv=none; b=pA0IbF4SnbcIRjMbZYrmx3QGswFqQh88g4zU2I2iE9hpX6w1XLCu1Q3Jd359hRqo6ggjWXEprT8UP+irazdTcjbnIcRsnpKV+sTbMo8HuHcqJLIxFKp4psey3T1NpJIgDPvGwXT0mofeUDsxB3OxU9tAXWW/wKQ2UHxPgW5WMPQ=
+	t=1771984013; cv=none; b=hBo98SFF4kX0jAvQZsLGxFMa6T906hXhqZKIPnBuNZfFr/mXPX07HHI2CfbLmF3CthkmZ+6QqZ2peX/BCUjQvxTBghL/iJL0G+OCgUtYyR5ZZceuJLGfpVIdNWq24hlkry3b+z8pMvLC9rqyTCbZVdmX4ThAlw+E/6PVS+8G078=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771984012; c=relaxed/simple;
-	bh=MJGW/NWRnr0Dj9I9qOEaLuZqOtogu8lo6kNcTBEmxrg=;
+	s=arc-20240116; t=1771984013; c=relaxed/simple;
+	bh=7W2vQhCSO79d2Yl2vRJv7NHIFd4F1ttOFPOC6n7+miQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzuZ13kco+KW0ucZZXS8sHRjF1dnjYMdwoSjgixmJLhvkTf/2qB0ROssYnjlB10s5RYpFOzm5w4z4uUL7ggLu1iJpkkFY5sbfhXJXykzvm0AIwYito8ffJ/tt5YodhB70JrE4xeGMafa3PecdTzTciJWs/IBUzXEqX92mj2vzj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKlHnbt6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lTMrJb0Eqw8qKLoUtA7J4+YPoTgwmFpnxblZodsv/ZOA9r+i2UeTfmLOMcZvWrneKhM6Bo4lrqNWDzF9blbLVw4YniU7eoUeGh22iraoDDjSeTi8+oKugLL0o19tgfy6Wf5MZy3kUiqYtXbS5UNmeuqTI2KNiR7fGwVPuaIn7JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjem3DW4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKlHnbt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13943C116D0;
-	Wed, 25 Feb 2026 01:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjem3DW4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7B6C116D0;
+	Wed, 25 Feb 2026 01:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771984012;
-	bh=MJGW/NWRnr0Dj9I9qOEaLuZqOtogu8lo6kNcTBEmxrg=;
+	s=korg; t=1771984013;
+	bh=7W2vQhCSO79d2Yl2vRJv7NHIFd4F1ttOFPOC6n7+miQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZKlHnbt6L5+o/zhrePdEUGCkclAL64mdESS3VlzlJrKlBRs8SiinoDamKHNso5TF0
-	 9pSt2bSjhv0RGiVXEskkGzIxDPB/d7pBLL2JAy11/TCqeeFn8wXAZZ34VGZ51oDpb3
-	 /coGIkPYFJFsMtGU/ZgvXtLbjkZ95y+MgiVD1V0U=
+	b=zjem3DW4nu1pkBqHUUgcFbRiQlE/Eu7ksOp60vinYQbMc4gNodRNNKCRRYPjlvP1u
+	 tebILSBL+ZJbvUe6pQ7fb7fpRQ/Nd0KEhLgXEKh9JhK4ArMPHKt4Tn1bnmYgdO8/4M
+	 5i5Vu5zX1wx4XSWYTX7/QqrGoZfDYtE9LRgWyi5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Petr Mladek <pmladek@suse.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Daniel Borkman <daniel@iogearbox.net>,
 	Daniel Gomez <da.gomez@samsung.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkman <daniel@iogearbox.net>,
 	John Fastabend <john.fastabend@gmail.com>,
 	Kees Cook <kees@kernel.org>,
 	Luis Chamberalin <mcgrof@kernel.org>,
 	Marc Rutland <mark.rutland@arm.com>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 261/641] kallsyms/bpf: rename __bpf_address_lookup() to bpf_address_lookup()
-Date: Tue, 24 Feb 2026 17:19:47 -0800
-Message-ID: <20260225012355.145968551@linuxfoundation.org>
+Subject: [PATCH 6.18 262/641] module: add helper function for reading module_buildid()
+Date: Tue, 24 Feb 2026 17:19:48 -0800
+Message-ID: <20260225012355.167524030@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -65,182 +65,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Petr Mladek <pmladek@suse.com>
 
-[ Upstream commit cd6735896d0343942cf3dafb48ce32eb79341990 ]
+[ Upstream commit acfdbb4ab2910ff6f03becb569c23ac7b2223913 ]
 
-bpf_address_lookup() has been used only in kallsyms_lookup_buildid().  It
-was supposed to set @modname and @modbuildid when the symbol was in a
-module.
+Add a helper function for reading the optional "build_id" member of struct
+module.  It is going to be used also in ftrace_mod_address_lookup().
 
-But it always just cleared @modname because BPF symbols were never in a
-module.  And it did not clear @modbuildid because the pointer was not
-passed.
+Use "#ifdef" instead of "#if IS_ENABLED()" to match the declaration of the
+optional field in struct module.
 
-The wrapper is no longer needed.  Both @modname and @modbuildid are now
-always initialized to NULL in kallsyms_lookup_buildid().
-
-Remove the wrapper and rename __bpf_address_lookup() to
-bpf_address_lookup() because this variant is used everywhere.
-
-[akpm@linux-foundation.org: fix loongarch]
-Link: https://lkml.kernel.org/r/20251128135920.217303-6-pmladek@suse.com
-Fixes: 9294523e3768 ("module: add printk formats to add module build ID to stacktraces")
+Link: https://lkml.kernel.org/r/20251128135920.217303-4-pmladek@suse.com
 Signed-off-by: Petr Mladek <pmladek@suse.com>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
 Cc: Aaron Tomlin <atomlin@atomlin.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
 Cc: Daniel Borkman <daniel@iogearbox.net>
-Cc: Daniel Gomez <da.gomez@samsung.com>
 Cc: John Fastabend <john.fastabend@gmail.com>
 Cc: Kees Cook <kees@kernel.org>
 Cc: Luis Chamberalin <mcgrof@kernel.org>
 Cc: Marc Rutland <mark.rutland@arm.com>
 Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Petr Pavlu <petr.pavlu@suse.com>
 Cc: Sami Tolvanen <samitolvanen@google.com>
 Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: e8a1e7eaa19d ("kallsyms/ftrace: set module buildid in ftrace_mod_address_lookup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c   |  2 +-
- arch/loongarch/net/bpf_jit.c    |  2 +-
- arch/powerpc/net/bpf_jit_comp.c |  2 +-
- include/linux/filter.h          | 26 ++++----------------------
- kernel/bpf/core.c               |  4 ++--
- kernel/kallsyms.c               |  5 ++---
- 6 files changed, 11 insertions(+), 30 deletions(-)
+ include/linux/module.h   | 9 +++++++++
+ kernel/module/kallsyms.c | 9 ++-------
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 0dfefeedfe56c..83a6ca613f9c2 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -2939,7 +2939,7 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type poke_type,
- 	u64 plt_target = 0ULL;
- 	bool poking_bpf_entry;
+diff --git a/include/linux/module.h b/include/linux/module.h
+index e135cc79aceea..4decae2b16755 100644
+--- a/include/linux/module.h
++++ b/include/linux/module.h
+@@ -747,6 +747,15 @@ static inline void __module_get(struct module *module)
+ 	__mod ? __mod->name : "kernel";		\
+ })
  
--	if (!__bpf_address_lookup((unsigned long)ip, &size, &offset, namebuf))
-+	if (!bpf_address_lookup((unsigned long)ip, &size, &offset, namebuf))
- 		/* Only poking bpf text is supported. Since kernel function
- 		 * entry is set up by ftrace, we reply on ftrace to poke kernel
- 		 * functions.
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index 87ff025137873..e9d666508ae28 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -1318,7 +1318,7 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type poke_type,
- 	/* Only poking bpf text is supported. Since kernel function entry
- 	 * is set up by ftrace, we rely on ftrace to poke kernel functions.
- 	 */
--	if (!__bpf_address_lookup((unsigned long)ip, &size, &offset, namebuf))
-+	if (!bpf_address_lookup((unsigned long)ip, &size, &offset, namebuf))
- 		return -ENOTSUPP;
++static inline const unsigned char *module_buildid(struct module *mod)
++{
++#ifdef CONFIG_STACKTRACE_BUILD_ID
++	return mod->build_id;
++#else
++	return NULL;
++#endif
++}
++
+ /* Dereference module function descriptor */
+ void *dereference_module_function_descriptor(struct module *mod, void *ptr);
  
- 	image = ip - offset;
-diff --git a/arch/powerpc/net/bpf_jit_comp.c b/arch/powerpc/net/bpf_jit_comp.c
-index 88ad5ba7b87fd..21f7f26a5e2f3 100644
---- a/arch/powerpc/net/bpf_jit_comp.c
-+++ b/arch/powerpc/net/bpf_jit_comp.c
-@@ -1122,7 +1122,7 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type poke_type,
- 	branch_flags = poke_type == BPF_MOD_CALL ? BRANCH_SET_LINK : 0;
+diff --git a/kernel/module/kallsyms.c b/kernel/module/kallsyms.c
+index 00a60796327c0..0fc11e45df9b9 100644
+--- a/kernel/module/kallsyms.c
++++ b/kernel/module/kallsyms.c
+@@ -334,13 +334,8 @@ int module_address_lookup(unsigned long addr,
+ 	if (mod) {
+ 		if (modname)
+ 			*modname = mod->name;
+-		if (modbuildid) {
+-#if IS_ENABLED(CONFIG_STACKTRACE_BUILD_ID)
+-			*modbuildid = mod->build_id;
+-#else
+-			*modbuildid = NULL;
+-#endif
+-		}
++		if (modbuildid)
++			*modbuildid = module_buildid(mod);
  
- 	/* We currently only support poking bpf programs */
--	if (!__bpf_address_lookup(bpf_func, &size, &offset, name)) {
-+	if (!bpf_address_lookup(bpf_func, &size, &offset, name)) {
- 		pr_err("%s (0x%lx): kernel/modules are not supported\n", __func__, bpf_func);
- 		return -EOPNOTSUPP;
- 	}
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index 569de3b14279a..cf7a0bce1bb6d 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -1375,24 +1375,13 @@ static inline bool bpf_jit_kallsyms_enabled(void)
- 	return false;
- }
+ 		sym = find_kallsyms_symbol(mod, addr, size, offset);
  
--int __bpf_address_lookup(unsigned long addr, unsigned long *size,
--				 unsigned long *off, char *sym);
-+int bpf_address_lookup(unsigned long addr, unsigned long *size,
-+		       unsigned long *off, char *sym);
- bool is_bpf_text_address(unsigned long addr);
- int bpf_get_kallsym(unsigned int symnum, unsigned long *value, char *type,
- 		    char *sym);
- struct bpf_prog *bpf_prog_ksym_find(unsigned long addr);
- 
--static inline int
--bpf_address_lookup(unsigned long addr, unsigned long *size,
--		   unsigned long *off, char **modname, char *sym)
--{
--	int ret = __bpf_address_lookup(addr, size, off, sym);
--
--	if (ret && modname)
--		*modname = NULL;
--	return ret;
--}
--
- void bpf_prog_kallsyms_add(struct bpf_prog *fp);
- void bpf_prog_kallsyms_del(struct bpf_prog *fp);
- 
-@@ -1431,8 +1420,8 @@ static inline bool bpf_jit_kallsyms_enabled(void)
- }
- 
- static inline int
--__bpf_address_lookup(unsigned long addr, unsigned long *size,
--		     unsigned long *off, char *sym)
-+bpf_address_lookup(unsigned long addr, unsigned long *size,
-+		   unsigned long *off, char *sym)
- {
- 	return 0;
- }
-@@ -1453,13 +1442,6 @@ static inline struct bpf_prog *bpf_prog_ksym_find(unsigned long addr)
- 	return NULL;
- }
- 
--static inline int
--bpf_address_lookup(unsigned long addr, unsigned long *size,
--		   unsigned long *off, char **modname, char *sym)
--{
--	return 0;
--}
--
- static inline void bpf_prog_kallsyms_add(struct bpf_prog *fp)
- {
- }
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index d595fe512498c..c2278f392e932 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -713,8 +713,8 @@ static struct bpf_ksym *bpf_ksym_find(unsigned long addr)
- 	return n ? container_of(n, struct bpf_ksym, tnode) : NULL;
- }
- 
--int __bpf_address_lookup(unsigned long addr, unsigned long *size,
--				 unsigned long *off, char *sym)
-+int bpf_address_lookup(unsigned long addr, unsigned long *size,
-+		       unsigned long *off, char *sym)
- {
- 	struct bpf_ksym *ksym;
- 	int ret = 0;
-diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
-index 049e296f586cc..7417dd5f8a796 100644
---- a/kernel/kallsyms.c
-+++ b/kernel/kallsyms.c
-@@ -345,7 +345,7 @@ int kallsyms_lookup_size_offset(unsigned long addr, unsigned long *symbolsize,
- 		return 1;
- 	}
- 	return !!module_address_lookup(addr, symbolsize, offset, NULL, NULL, namebuf) ||
--	       !!__bpf_address_lookup(addr, symbolsize, offset, namebuf);
-+	       !!bpf_address_lookup(addr, symbolsize, offset, namebuf);
- }
- 
- static int kallsyms_lookup_buildid(unsigned long addr,
-@@ -377,8 +377,7 @@ static int kallsyms_lookup_buildid(unsigned long addr,
- 	ret = module_address_lookup(addr, symbolsize, offset,
- 				    modname, modbuildid, namebuf);
- 	if (!ret)
--		ret = bpf_address_lookup(addr, symbolsize,
--					 offset, modname, namebuf);
-+		ret = bpf_address_lookup(addr, symbolsize, offset, namebuf);
- 
- 	if (!ret)
- 		ret = ftrace_mod_address_lookup(addr, symbolsize,
 -- 
 2.51.0
 
