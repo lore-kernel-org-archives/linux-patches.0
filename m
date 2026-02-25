@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6C318DB2A;
-	Wed, 25 Feb 2026 01:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2C51E2834;
+	Wed, 25 Feb 2026 01:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983230; cv=none; b=u/tDqB332A7JpzyufZkiGm1lByM4o3AXRfEGOBviqNhjZ+Fk0/I0zzEzuybrMCjs1B5U6rTED1UyjWWon3/RDGxLpgQ+9tZqnKpi9dy/RZXuENLbwLkbuKw9PP7HLXjYaqngddxgIKBQDdXKIC6IK3h7uP6CKwkemoyE+JsrsNo=
+	t=1771983231; cv=none; b=R+Rdpw08pu+szcZOxTQdsYGVFCuFd2hpwkSHOFyiz8YSmtikmUEyKQ46h9p4rHLPJ13BrpDG7fUksRLiMjwU0oTogrTe0L3Hkw/NEDB8lDhpGLPFsheU1TJVJnkIt8XYBBdG87N81hF7wG6mMfcahS0VmTustXdZzQ/i86/Fyg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983230; c=relaxed/simple;
-	bh=8AoqDM+5h0eCyEtt7tC2qxGPNmeoeOZjWYjgqlOY5Fg=;
+	s=arc-20240116; t=1771983231; c=relaxed/simple;
+	bh=rEK6jUgQLVoXQSH5YswAr04vob15Vn2TkqdLmCTk2pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WNwKRzuRy/vaV/flcADyPJ/uDA/46Keu+m5WNcLHYYG89Fkexj781DC4+AGUmc1lthga0EqX3GDmmc8uhdSVzFj0ShKQ5P4L77zwi5NIlrElHyeg6wRmioKmS4b65JV5E9Vp+58chAZoEl64RTlSXBmsSUaE7el0nxLoOuVX0Mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCnlpWy0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BDuSZApHxJXJIBMnqCJ+4uojHdWPp1P5IbShBgeRoP3bwi2yLGRscMDfbeaRxd12FgcFU0ugp6DLyiLRJev1FeNCgvQq8p8z1vY9QFmhftCm0xxDY6NOE7SNNYh89G9aKFBsRk1Ainm2mOp/cmeq8KpRBXWErKreIklbYHFFpno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVDQFx0E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCnlpWy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388C8C116D0;
-	Wed, 25 Feb 2026 01:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVDQFx0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C211C116D0;
+	Wed, 25 Feb 2026 01:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983230;
-	bh=8AoqDM+5h0eCyEtt7tC2qxGPNmeoeOZjWYjgqlOY5Fg=;
+	s=korg; t=1771983231;
+	bh=rEK6jUgQLVoXQSH5YswAr04vob15Vn2TkqdLmCTk2pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCnlpWy0aSE/SUJ2NWoWcUDauoYP5LLiNUBYQsNxMth5yu5WuoJhVfOa5FrabdNsQ
-	 EftA4DR2HU1TF44vEpNd0m6X7YeBkLbYOg/8sTFb39OM1JF6KvoO/3aQPjIDE9Sq9Z
-	 yDd4G90WP2ZB8z5XVbpOpbDbYqOgR0Oo6VABixPk=
+	b=mVDQFx0EjF34tWQ2vaunOUvCHUCzPoWUbJq7WQ6aI7dQ8kR/fYJG/WiX08agYI4NL
+	 RMWPggkM8fpURe8sUt7Rz9brx8+GNfE7xnyiV+XtQeP9pgbDQwvNHace/azY/GKfsf
+	 QC4x9Fv9OC9N04oR+lBzSGjpBFTEfMcVInPMVoKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Michal Slabihoudek <michal.slabihoudek@gooddata.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 374/781] wifi: ath10k: sdio: add missing lock protection in ath10k_sdio_fw_crashed_dump()
-Date: Tue, 24 Feb 2026 17:18:03 -0800
-Message-ID: <20260225012408.863560798@linuxfoundation.org>
+Subject: [PATCH 6.19 348/781] netfilter: nf_conncount: fix tracking of connections from localhost
+Date: Tue, 24 Feb 2026 17:17:37 -0800
+Message-ID: <20260225012408.226232187@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,59 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit e55ac348089e579fc224569c7bd90340bf2439f9 ]
+[ Upstream commit de8a70cefcb26cdceaafdc5ac144712681419c29 ]
 
-ath10k_sdio_fw_crashed_dump() calls ath10k_coredump_new() which requires
-ar->dump_mutex to be held, as indicated by lockdep_assert_held() in that
-function. However, the SDIO implementation does not acquire this lock,
-unlike the PCI and SNOC implementations which properly hold the mutex.
+Since commit be102eb6a0e7 ("netfilter: nf_conncount: rework API to use
+sk_buff directly"), we skip the adding and trigger a GC when the ct is
+confirmed. For connections originated from local to local it doesn't
+work because the connection is confirmed on POSTROUTING, therefore
+tracking on the INPUT hook is always skipped.
 
-Additionally, ar->stats.fw_crash_counter is documented as protected by
-ar->data_lock in core.h, but the SDIO implementation modifies it without
-holding this spinlock.
+In order to fix this, we check whether skb input ifindex is set to
+loopback ifindex. If it is then we fallback on a GC plus track operation
+skipping the optimization. This fallback is necessary to avoid
+duplicated tracking of a packet train e.g 10 UDP datagrams sent on a
+burst when initiating the connection.
 
-Add the missing mutex_lock()/mutex_unlock() around the coredump
-operations, and add spin_lock_bh()/spin_unlock_bh() around the
-fw_crash_counter increment, following the pattern used in
-ath10k_pci_fw_dump_work() and ath10k_snoc_fw_crashed_dump().
+Tested with xt_connlimit/nft_connlimit and OVS limit and with a HTTP
+server and iperf3 on UDP mode.
 
-Fixes: 3c45f21af84e ("ath10k: sdio: add firmware coredump support")
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260123045822.2221549-1-n7l8m4@u.northwestern.edu
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: be102eb6a0e7 ("netfilter: nf_conncount: rework API to use sk_buff directly")
+Reported-by: Michal Slabihoudek <michal.slabihoudek@gooddata.com>
+Closes: https://lore.kernel.org/netfilter/6989BD9F-8C24-4397-9AD7-4613B28BF0DB@gooddata.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/sdio.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/netfilter/nf_conncount.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/sdio.c b/drivers/net/wireless/ath/ath10k/sdio.c
-index c06d50db40b81..00d0556dafefd 100644
---- a/drivers/net/wireless/ath/ath10k/sdio.c
-+++ b/drivers/net/wireless/ath/ath10k/sdio.c
-@@ -2487,7 +2487,11 @@ void ath10k_sdio_fw_crashed_dump(struct ath10k *ar)
- 	if (fast_dump)
- 		ath10k_bmi_start(ar);
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 288936f5c1bf9..14e62b3263cd9 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -179,14 +179,25 @@ static int __nf_conncount_add(struct net *net,
+ 		return -ENOENT;
  
-+	mutex_lock(&ar->dump_mutex);
+ 	if (ct && nf_ct_is_confirmed(ct)) {
+-		err = -EEXIST;
+-		goto out_put;
++		/* local connections are confirmed in postrouting so confirmation
++		 * might have happened before hitting connlimit
++		 */
++		if (skb->skb_iif != LOOPBACK_IFINDEX) {
++			err = -EEXIST;
++			goto out_put;
++		}
 +
-+	spin_lock_bh(&ar->data_lock);
- 	ar->stats.fw_crash_counter++;
-+	spin_unlock_bh(&ar->data_lock);
++		/* this is likely a local connection, skip optimization to avoid
++		 * adding duplicates from a 'packet train'
++		 */
++		goto check_connections;
+ 	}
  
- 	ath10k_sdio_disable_intrs(ar);
+ 	if ((u32)jiffies == list->last_gc &&
+ 	    (list->count - list->last_gc_count) < CONNCOUNT_GC_MAX_COLLECT)
+ 		goto add_new_node;
  
-@@ -2505,6 +2509,8 @@ void ath10k_sdio_fw_crashed_dump(struct ath10k *ar)
- 
- 	ath10k_sdio_enable_intrs(ar);
- 
-+	mutex_unlock(&ar->dump_mutex);
-+
- 	ath10k_core_start_recovery(ar);
- }
- 
++check_connections:
+ 	/* check the saved connections */
+ 	list_for_each_entry_safe(conn, conn_n, &list->head, node) {
+ 		if (collect > CONNCOUNT_GC_MAX_COLLECT)
 -- 
 2.51.0
 
