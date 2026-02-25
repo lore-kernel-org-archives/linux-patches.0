@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE091E2834;
-	Wed, 25 Feb 2026 01:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090F81E2834;
+	Wed, 25 Feb 2026 01:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771984024; cv=none; b=ga/KHS5vhbuNqubprXV6Zrsy4c2CP2qOUJ1ndHcer4FQxhHOR7zQF+9FXkJ4P8KMYaJCIuyES4P7HTY1QU4xB1Bca81XMxX3F7VveZWLa+G89D+A3CpybDNx3eseylY+MpPwF4G9gMMtiIQOo2lpjUjB8zZeAvHbKfu5L8tAoBI=
+	t=1771984026; cv=none; b=NEWo+8hXG3NYvB3HD25b61rVjOh7GG7Sfib2rHgXKjmOZgDEg5XxyPYuZPkdUCw86kPZEk3NDy7SPyM96M0HPgzJgfqbTXnsWk5qum2Wx4hvJ7EjTocOjlI/9JL38KfMCXyWHUpLxsnZpz2iMbmEZHqaCJwju0EnCzOBThGxXh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771984024; c=relaxed/simple;
-	bh=/b4ChQdiy+Iq7W5LNdHAvPreZEdO5CJvmHBHP6lIaLI=;
+	s=arc-20240116; t=1771984026; c=relaxed/simple;
+	bh=ActG3WlXVkACp1pEQfgdNxfz6eificW4sR2SGppsfQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSmvYP3zmkYku6VQz6CzITaFmY/jMBqUJLtg3667dg81CD1GzuiAYz+ran8iYFKxYkxvxbpTCN/EgQBaOoUnrEccuqrApNuMxol93XJb3NkACNEnYzUrFneZ+zXslabWzu2ckqkl+IwoI0VqgGcknFLLr83jreMfmoNGZj6mR6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4VL3Uyi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B9a11vVbzKVhs2mTjKjBCq3EusZVffa0GAiC5T+C54k8w5joPicK0HQ3g/7uTQHZWVZtNoo3sygDH3Qa86rirP9rMD4WWBgLSh8cA6BA4DyBBr/UCTcYsRxdNMQK/zkJTUpJ0fvs86VJNnZW9vQevB9znQrSY7JP2IqjDZwULLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0IPUPbQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4VL3Uyi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE88C116D0;
-	Wed, 25 Feb 2026 01:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0IPUPbQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6982C116D0;
+	Wed, 25 Feb 2026 01:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771984024;
-	bh=/b4ChQdiy+Iq7W5LNdHAvPreZEdO5CJvmHBHP6lIaLI=;
+	s=korg; t=1771984025;
+	bh=ActG3WlXVkACp1pEQfgdNxfz6eificW4sR2SGppsfQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4VL3UyiF/zvd4mHwdZOXk0WXSDLS0pmfc0cXgYFjK6HcbEL0uf9HP2RqpYvMY2n4
-	 puzPKe3OItzBX1k02xo1P/qYvecVk5uhNGuyqDhC1PFh/1wiIgSTb88e5iA8X8Kl3h
-	 a1H5rwPIpJvUenPdxjc2lq1AJCUisRRjv1FHIZw4=
+	b=I0IPUPbQVyXCBojTYpoR4q13B7on7w6HYG9VWrU7lFmHaHJNlnPQAPu65PhTKymk0
+	 k3wW1TJxh5BSaIkrJG7D8vjQGK2i120z92DP5praUKqVjp4MlrOt0/C615G5g+XTti
+	 UiktKboEEwH79f0fw57gvT7wxhVLPeo5HGoTTJBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 270/641] xdrgen: Fix struct prefix for typedef types in program wrappers
-Date: Tue, 24 Feb 2026 17:19:56 -0800
-Message-ID: <20260225012355.341333261@linuxfoundation.org>
+Subject: [PATCH 6.18 271/641] NFS: NFSERR_INVAL is not defined by NFSv2
+Date: Tue, 24 Feb 2026 17:19:57 -0800
+Message-ID: <20260225012355.362260656@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,79 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit bf0fe9ad3d597d8e1378dc9953ca96dfc3addb2b ]
+[ Upstream commit 0ac903d1bfdce8ff40657c2b7d996947b72b6645 ]
 
-The program templates for decoder/argument.j2 and encoder/result.j2
-unconditionally add 'struct' prefix to all types. This is incorrect
-when an RPC protocol specification lists a typedef'd basic type or
-an enum as a procedure argument or result (e.g., NFSv2's fhandle or
-stat), resulting in compiler errors when building generated C code.
+A documenting comment in include/uapi/linux/nfs.h claims incorrectly
+that NFSv2 defines NFSERR_INVAL. There is no such definition in either
+RFC 1094 or https://pubs.opengroup.org/onlinepubs/9629799/chap7.htm
 
-Fixes: 4b132aacb076 ("tools: Add xdrgen")
+NFS3ERR_INVAL is introduced in RFC 1813.
+
+NFSD returns NFSERR_INVAL for PROC_GETACL, which has no
+specification (yet).
+
+However, nfsd_map_status() maps nfserr_symlink and nfserr_wrong_type
+to nfserr_inval, which does not align with RFC 1094. This logic was
+introduced only recently by commit 438f81e0e92a ("nfsd: move error
+choice for incorrect object types to version-specific code."). Given
+that we have no INVAL or SERVERFAULT status in NFSv2, probably the
+only choice is NFSERR_IO.
+
+Fixes: 438f81e0e92a ("nfsd: move error choice for incorrect object types to version-specific code.")
+Reviewed-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/net/sunrpc/xdrgen/generators/__init__.py              | 3 ++-
- .../sunrpc/xdrgen/templates/C/program/decoder/argument.j2   | 4 ++++
- .../net/sunrpc/xdrgen/templates/C/program/encoder/result.j2 | 6 ++++++
- 3 files changed, 12 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs2acl.c        | 2 +-
+ fs/nfsd/nfsproc.c        | 2 +-
+ include/uapi/linux/nfs.h | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/net/sunrpc/xdrgen/generators/__init__.py b/tools/net/sunrpc/xdrgen/generators/__init__.py
-index b98574a36a4ac..a2eb6652ac900 100644
---- a/tools/net/sunrpc/xdrgen/generators/__init__.py
-+++ b/tools/net/sunrpc/xdrgen/generators/__init__.py
-@@ -6,7 +6,7 @@ import sys
- from jinja2 import Environment, FileSystemLoader, Template
+diff --git a/fs/nfsd/nfs2acl.c b/fs/nfsd/nfs2acl.c
+index 5fb202acb0fd0..0ac538c761800 100644
+--- a/fs/nfsd/nfs2acl.c
++++ b/fs/nfsd/nfs2acl.c
+@@ -45,7 +45,7 @@ static __be32 nfsacld_proc_getacl(struct svc_rqst *rqstp)
+ 	inode = d_inode(fh->fh_dentry);
  
- from xdr_ast import _XdrAst, Specification, _RpcProgram, _XdrTypeSpecifier
--from xdr_ast import public_apis, pass_by_reference, get_header_name
-+from xdr_ast import public_apis, pass_by_reference, structs, get_header_name
- from xdr_parse import get_xdr_annotate
- 
- 
-@@ -22,6 +22,7 @@ def create_jinja2_environment(language: str, xdr_type: str) -> Environment:
-             environment.globals["annotate"] = get_xdr_annotate()
-             environment.globals["public_apis"] = public_apis
-             environment.globals["pass_by_reference"] = pass_by_reference
-+            environment.globals["structs"] = structs
-             return environment
-         case _:
-             raise NotImplementedError("Language not supported")
-diff --git a/tools/net/sunrpc/xdrgen/templates/C/program/decoder/argument.j2 b/tools/net/sunrpc/xdrgen/templates/C/program/decoder/argument.j2
-index 0b1709cca0d4a..19b219dd276d3 100644
---- a/tools/net/sunrpc/xdrgen/templates/C/program/decoder/argument.j2
-+++ b/tools/net/sunrpc/xdrgen/templates/C/program/decoder/argument.j2
-@@ -14,7 +14,11 @@ bool {{ program }}_svc_decode_{{ argument }}(struct svc_rqst *rqstp, struct xdr_
- {% if argument == 'void' %}
- 	return xdrgen_decode_void(xdr);
- {% else %}
-+{% if argument in structs %}
- 	struct {{ argument }} *argp = rqstp->rq_argp;
-+{% else %}
-+	{{ argument }} *argp = rqstp->rq_argp;
-+{% endif %}
- 
- 	return xdrgen_decode_{{ argument }}(xdr, argp);
- {% endif %}
-diff --git a/tools/net/sunrpc/xdrgen/templates/C/program/encoder/result.j2 b/tools/net/sunrpc/xdrgen/templates/C/program/encoder/result.j2
-index 6fc61a5d47b7f..746592cfda562 100644
---- a/tools/net/sunrpc/xdrgen/templates/C/program/encoder/result.j2
-+++ b/tools/net/sunrpc/xdrgen/templates/C/program/encoder/result.j2
-@@ -14,8 +14,14 @@ bool {{ program }}_svc_encode_{{ result }}(struct svc_rqst *rqstp, struct xdr_st
- {% if result == 'void' %}
- 	return xdrgen_encode_void(xdr);
- {% else %}
-+{% if result in structs %}
- 	struct {{ result }} *resp = rqstp->rq_resp;
- 
- 	return xdrgen_encode_{{ result }}(xdr, resp);
-+{% else %}
-+	{{ result }} *resp = rqstp->rq_resp;
-+
-+	return xdrgen_encode_{{ result }}(xdr, *resp);
-+{% endif %}
- {% endif %}
- }
+ 	if (argp->mask & ~NFS_ACL_MASK) {
+-		resp->status = nfserr_inval;
++		resp->status = nfserr_io;
+ 		goto out;
+ 	}
+ 	resp->mask = argp->mask;
+diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
+index 8f71f5748c75b..906a672578900 100644
+--- a/fs/nfsd/nfsproc.c
++++ b/fs/nfsd/nfsproc.c
+@@ -33,7 +33,7 @@ static __be32 nfsd_map_status(__be32 status)
+ 		break;
+ 	case nfserr_symlink:
+ 	case nfserr_wrong_type:
+-		status = nfserr_inval;
++		status = nfserr_io;
+ 		break;
+ 	}
+ 	return status;
+diff --git a/include/uapi/linux/nfs.h b/include/uapi/linux/nfs.h
+index 71c7196d32817..e629c49535345 100644
+--- a/include/uapi/linux/nfs.h
++++ b/include/uapi/linux/nfs.h
+@@ -55,7 +55,7 @@
+ 	NFSERR_NODEV = 19,		/* v2 v3 v4 */
+ 	NFSERR_NOTDIR = 20,		/* v2 v3 v4 */
+ 	NFSERR_ISDIR = 21,		/* v2 v3 v4 */
+-	NFSERR_INVAL = 22,		/* v2 v3 v4 */
++	NFSERR_INVAL = 22,		/*    v3 v4 */
+ 	NFSERR_FBIG = 27,		/* v2 v3 v4 */
+ 	NFSERR_NOSPC = 28,		/* v2 v3 v4 */
+ 	NFSERR_ROFS = 30,		/* v2 v3 v4 */
 -- 
 2.51.0
 
