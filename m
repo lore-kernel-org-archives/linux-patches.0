@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8D418B0A;
-	Wed, 25 Feb 2026 01:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826B518B0A;
+	Wed, 25 Feb 2026 01:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983256; cv=none; b=mXvDxrydI73Omjq9YGx9KuC4cmLqqW3PLuOJ1Ibr6DzvAbu0Rsz0rf3Wu9Oce0iyNbMTDuMZgK1j20iomLl7qVocbRKXrVFLX+Sc9lMZUYfUgCIhmz45QZcbnoHkaqj7w7GuEOt7M+m+8kPCTEsn6pPd5lY+InWJ1RhaV5FHyc4=
+	t=1771983257; cv=none; b=lFa896ghiMI+SZseH+Jac8PArHzglI1rKZHeX9YYBED+j3P8f37yF2AloBUFG4OXotrds6uzaUchO5FLfSwC6QiMg35sUym77q4GGR4IJoXbAP5fHhoCMCB4lJ832RWbnL4PkZF/nZBDEvcdKbnUhFRiGVpQtM6cL2KBPrl5VA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983256; c=relaxed/simple;
-	bh=TSqL8/e/l3vQoDKC7q2TLODonjE2NudyX6AG3Jqu+zs=;
+	s=arc-20240116; t=1771983257; c=relaxed/simple;
+	bh=3k3j0eYImRl0xyXieE3ldUnnN6elvs4fY6eraqdpIWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YgsVahqqoeVx0njDQWcf7uE41ceIKZJqDcNY+MlqCQKN8d1H/4b6Q8aELg56dhYbw/CR/NGcAjodfsM7jnYdqCL2YFkIy0WWdxF0UOgiKraxBOBE0N4s2KoyK+CHLwg3IH+Q65IzKXmEKDvu0bQdkF3TL0gJ/DASgfSSL/6XxQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSupuQ4e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QKF6FOVW+aYEHrgGUxLwsxKYg9rZ8mp0bKcizLqsEz1PB2NC/urGmTDolnLat1jTUGWMjPp0aZdyfFfUd1AIvy+cz5Ogfy97UZE8rSnzYAgTOU7OfAdVNl9M+0aUTl8Zph63wpExir5Nvr8aomlQeWbnp0bo/7ApQVb/WA58fiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xhssv0AT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSupuQ4e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C30FC116D0;
-	Wed, 25 Feb 2026 01:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xhssv0AT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424B7C116D0;
+	Wed, 25 Feb 2026 01:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983256;
-	bh=TSqL8/e/l3vQoDKC7q2TLODonjE2NudyX6AG3Jqu+zs=;
+	s=korg; t=1771983257;
+	bh=3k3j0eYImRl0xyXieE3ldUnnN6elvs4fY6eraqdpIWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dSupuQ4eyYOxmKoGvK345y6NhvDDn/OdNo5HHVjyZsUmUdjzx4CJS2pNvG64EOPdC
-	 6To5NRRDCjRq6tdRJChe09auOZ4VoGAYjz1XhBpKs/DrdK78iiDbyrYaajuF8Wb1PN
-	 qZ4rn3NqviEV+rKQBekImTjWDR5ozGxplSk53ioU=
+	b=Xhssv0ATCnPYb4tsMmv6cPIGGoiPko5c66eoeQKzul0V6qPMNHLpZcUXoQIxb40li
+	 Xxw3WeEo2o5G4FqkrpbXfvtfzyVWLyYT6mmKnA7WYp7xpJcM1brwrby8+riQ0WRC52
+	 ENrpy5oR6Ef3wb2+M49Ct1dntN9a+Zna2GYcDgyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Wenbin Yao <wenbin.yao@oss.qualcomm.com>,
+	Qiang Yu <qiang.yu@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 345/781] netfilter: nf_tables: reset table validation state on abort
-Date: Tue, 24 Feb 2026 17:17:34 -0800
-Message-ID: <20260225012408.154779128@linuxfoundation.org>
+Subject: [PATCH 6.19 391/781] PCI: dwc: Add new APIs to remove standard and extended Capability
+Date: Tue, 24 Feb 2026 17:18:20 -0800
+Message-ID: <20260225012409.287893256@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -50,57 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
 
-[ Upstream commit 6f93616a7323d646d18db9c09f147e453b40fdd7 ]
+[ Upstream commit 0183562f1e824c0ca6c918309a0978e9a269af3e ]
 
-If a transaction fails the final validation in the commit hook, the table
-validation state is changed to NFT_VALIDATE_DO and a replay of the batch is
-performed.  Every rule insert will then do a graph validation.
+On some platforms, certain PCIe Capabilities may be present in hardware
+but are not fully implemented as defined in PCIe spec. These incomplete
+capabilities should be hidden from the PCI framework to prevent unexpected
+behavior.
 
-This is much slower, but provides better error reporting to the user
-because we can point at the rule that introduces the validation issue.
+Introduce two APIs to remove a specific PCIe Capability and Extended
+Capability by updating the previous capability's next offset field to skip
+over the unwanted capability. These APIs allow RC drivers to easily hide
+unsupported or partially implemented capabilities from software.
 
-Without this reset the affected table(s) remain in full validation mode,
-i.e. on next transaction we start with slow-mode.
-
-This makes the next transaction after a failed incremental update very slow:
-
- # time iptables-restore < /tmp/ruleset
- real    0m0.496s [..]
- # time iptables -A CALLEE -j CALLER
- iptables v1.8.11 (nf_tables):  RULE_APPEND failed (Too many links): rule in chain CALLEE
- real    0m0.022s [..]
- # time iptables-restore < /tmp/ruleset
- real    1m22.355s [..]
-
-After this patch, 2nd iptables-restore is back to ~0.5s.
-
-Fixes: 9a32e9850686 ("netfilter: nf_tables: don't write table validation state without mutex")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Co-developed-by: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
+Signed-off-by: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
+Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251109-remove_cap-v1-2-2208f46f4dc2@oss.qualcomm.com
+Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/pci/controller/dwc/pcie-designware.c | 53 ++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-designware.h |  2 +
+ 2 files changed, 55 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index be92750e2af3a..ec9e5e2a9f277 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -11536,6 +11536,13 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
- 	ret = __nf_tables_abort(net, action);
- 	nft_gc_seq_end(nft_net, gc_seq);
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index 5d7a7e6f5724e..345365ea97c74 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -236,6 +236,59 @@ u16 dw_pcie_find_ext_capability(struct dw_pcie *pci, u8 cap)
+ }
+ EXPORT_SYMBOL_GPL(dw_pcie_find_ext_capability);
  
-+	if (action == NFNL_ABORT_NONE) {
-+		struct nft_table *table;
++void dw_pcie_remove_capability(struct dw_pcie *pci, u8 cap)
++{
++	u8 cap_pos, pre_pos, next_pos;
++	u16 reg;
 +
-+		list_for_each_entry(table, &nft_net->tables, list)
-+			table->validate_state = NFT_VALIDATE_SKIP;
++	cap_pos = PCI_FIND_NEXT_CAP(dw_pcie_read_cfg, PCI_CAPABILITY_LIST, cap,
++				 &pre_pos, pci);
++	if (!cap_pos)
++		return;
++
++	reg = dw_pcie_readw_dbi(pci, cap_pos);
++	next_pos = (reg & 0xff00) >> 8;
++
++	dw_pcie_dbi_ro_wr_en(pci);
++	if (pre_pos == PCI_CAPABILITY_LIST)
++		dw_pcie_writeb_dbi(pci, PCI_CAPABILITY_LIST, next_pos);
++	else
++		dw_pcie_writeb_dbi(pci, pre_pos + 1, next_pos);
++	dw_pcie_dbi_ro_wr_dis(pci);
++}
++EXPORT_SYMBOL_GPL(dw_pcie_remove_capability);
++
++void dw_pcie_remove_ext_capability(struct dw_pcie *pci, u8 cap)
++{
++	int cap_pos, next_pos, pre_pos;
++	u32 pre_header, header;
++
++	cap_pos = PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, 0, cap, &pre_pos, pci);
++	if (!cap_pos)
++		return;
++
++	header = dw_pcie_readl_dbi(pci, cap_pos);
++	/*
++	 * If the first cap at offset PCI_CFG_SPACE_SIZE is removed,
++	 * only set it's capid to zero as it cannot be skipped.
++	 */
++	if (cap_pos == PCI_CFG_SPACE_SIZE) {
++		dw_pcie_dbi_ro_wr_en(pci);
++		dw_pcie_writel_dbi(pci, cap_pos, header & 0xffff0000);
++		dw_pcie_dbi_ro_wr_dis(pci);
++		return;
 +	}
 +
- 	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
++	pre_header = dw_pcie_readl_dbi(pci, pre_pos);
++	next_pos = PCI_EXT_CAP_NEXT(header);
++
++	dw_pcie_dbi_ro_wr_en(pci);
++	dw_pcie_writel_dbi(pci, pre_pos,
++			  (pre_header & 0xfffff) | (next_pos << 20));
++	dw_pcie_dbi_ro_wr_dis(pci);
++}
++EXPORT_SYMBOL_GPL(dw_pcie_remove_ext_capability);
++
+ static u16 __dw_pcie_find_vsec_capability(struct dw_pcie *pci, u16 vendor_id,
+ 					  u16 vsec_id)
+ {
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 31685951a0804..aec4af5194b51 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -562,6 +562,8 @@ void dw_pcie_version_detect(struct dw_pcie *pci);
  
- 	/* module autoload needs to happen after GC sequence update because it
+ u8 dw_pcie_find_capability(struct dw_pcie *pci, u8 cap);
+ u16 dw_pcie_find_ext_capability(struct dw_pcie *pci, u8 cap);
++void dw_pcie_remove_capability(struct dw_pcie *pci, u8 cap);
++void dw_pcie_remove_ext_capability(struct dw_pcie *pci, u8 cap);
+ u16 dw_pcie_find_rasdes_capability(struct dw_pcie *pci);
+ u16 dw_pcie_find_ptm_capability(struct dw_pcie *pci);
+ 
 -- 
 2.51.0
 
