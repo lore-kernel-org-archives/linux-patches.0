@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1AF24677D;
-	Wed, 25 Feb 2026 01:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FD31EB5E1;
+	Wed, 25 Feb 2026 01:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983209; cv=none; b=cdns1nklTI75h5SIPVAQY3NmdnoYy2n6K7VGWRQBzje27cms6IWRKXiUds6CMUccMn2UhKpCmtPaChccgEfr0+Zpum5x8BAnLhTLxIbJLjcPccjEHG/HeN+4AdlrVlMr2ccYdOlgyFfPV73SzQ/YjlZ1sl1QKYvTHlTk12CiKqw=
+	t=1771983210; cv=none; b=mWJxPSAhB/wp8jtkp9ZbLu/Zs2mXeVFr1E0sivGHtkNh/nppHZagU6e0oMwIwcd/m0K87+VN8cgTfZSxvM4XSNABbkY63CPKYAfFK7MpBMV5ncR3oJS82WNqsDI+L0/MA3fPso4xDFqXIp0G03/3VQlXjYTGjhTfl+Cmp75tG3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983209; c=relaxed/simple;
-	bh=wXbk5Nl7fvCfYxSecxYBUnkC8Jt4DMIYWpZRB/6ij0U=;
+	s=arc-20240116; t=1771983210; c=relaxed/simple;
+	bh=z1LNoF7s7lElV+aafZ8AFI+Vz/3bcjnKORmqaEI8UQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehWgAGncmL0n2AXoeViMT2MqkCNOlaVFXKxOB444IvauwaBgUMPAJFhFSPpbcHx2gQue/sIqO9XDLaOzs0cXIA66jsB0R1YgWni/Utq40Lpe3BKSjrRHj7FyJHEaQdc/auAa63/VKmuGkuNdbCOruHkC1x9Rj28+JEfLqkqd8b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExEmrN9I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HjCU/nctxh4YbEl6u41dkEuZbyDUH51nnCpLyAxzDf/Fs+/Hc6ol48d3GomdJ24ah1ztIRxT96lT10oEUe84z0Sij6OAq3A6QKEQWCw6LtxpLE8BlHO4lqnBBchLUsQm1UZghk2bpbC4pxCw2t2pxXuiYVy/xcYkhbWYFyqK72c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osNFtjSC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExEmrN9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0CEC116D0;
-	Wed, 25 Feb 2026 01:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osNFtjSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDABC116D0;
+	Wed, 25 Feb 2026 01:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983209;
-	bh=wXbk5Nl7fvCfYxSecxYBUnkC8Jt4DMIYWpZRB/6ij0U=;
+	s=korg; t=1771983210;
+	bh=z1LNoF7s7lElV+aafZ8AFI+Vz/3bcjnKORmqaEI8UQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExEmrN9IlMKKCIEdD0MYKkFZcCP7m+CWyzzhkZig0NV36QaDbGasO+bGhCA3SpMZZ
-	 kDnFW9HAVPJju8dynAAfmaGXl9N2KLUL3BLN2TTbuw4yV9Uceb93T+XltoVunqgZuH
-	 mpn+WeOY8HtV1L5xiLsig+xiwtwEOWoyFC8S7u4g=
+	b=osNFtjSCfJIGYdvVJwQHwcB1HJvRo62zVqlK0tUaPdmDfGkDxk2M5IrgqO/FZM34H
+	 K/7l/fT1+Lb/PrFXVcZhZGxDkKtOO28fgy4zfv+mefiIGbiKrsMEiy1Ej7vmBe5sMS
+	 Gtjkd01Y7vVbH1bT/+Vg/QuOXpHMlkTi7j2YQrOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 358/781] dm: use bio_clone_blkg_association
-Date: Tue, 24 Feb 2026 17:17:47 -0800
-Message-ID: <20260225012408.465935525@linuxfoundation.org>
+Subject: [PATCH 6.19 359/781] xdrgen: Fix struct prefix for typedef types in program wrappers
+Date: Tue, 24 Feb 2026 17:17:48 -0800
+Message-ID: <20260225012408.489920226@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,42 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 2df8b310bcfe76827fd71092f58a2493ee6590b0 ]
+[ Upstream commit bf0fe9ad3d597d8e1378dc9953ca96dfc3addb2b ]
 
-The origin bio carries blk-cgroup information which could be set from
-foreground(task_css(css) - wbc->wb->blkcg_css), so the blkcg won't
-control buffer io since commit ca522482e3eaf ("dm: pass NULL bdev to
-bio_alloc_clone"). The synchronous io is still under control by blkcg,
-because 'bio->bi_blkg' is set by io submitting task which has been added
-into 'cgroup.procs'.
+The program templates for decoder/argument.j2 and encoder/result.j2
+unconditionally add 'struct' prefix to all types. This is incorrect
+when an RPC protocol specification lists a typedef'd basic type or
+an enum as a procedure argument or result (e.g., NFSv2's fhandle or
+stat), resulting in compiler errors when building generated C code.
 
-Fix it by using bio_clone_blkg_association when submitting a cloned bio.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220985
-Fixes: ca522482e3eaf ("dm: pass NULL bdev to bio_alloc_clone")
-Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Tested-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Fixes: 4b132aacb076 ("tools: Add xdrgen")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/net/sunrpc/xdrgen/generators/__init__.py              | 3 ++-
+ .../sunrpc/xdrgen/templates/C/program/decoder/argument.j2   | 4 ++++
+ .../net/sunrpc/xdrgen/templates/C/program/encoder/result.j2 | 6 ++++++
+ 3 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index b632792022601..8e029f6289c10 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -1364,6 +1364,8 @@ void dm_submit_bio_remap(struct bio *clone, struct bio *tgt_clone)
- 	if (!tgt_clone)
- 		tgt_clone = clone;
+diff --git a/tools/net/sunrpc/xdrgen/generators/__init__.py b/tools/net/sunrpc/xdrgen/generators/__init__.py
+index e22632cf38fbe..1d577a986c6cf 100644
+--- a/tools/net/sunrpc/xdrgen/generators/__init__.py
++++ b/tools/net/sunrpc/xdrgen/generators/__init__.py
+@@ -6,7 +6,7 @@ from pathlib import Path
+ from jinja2 import Environment, FileSystemLoader, Template
  
-+	bio_clone_blkg_association(tgt_clone, io->orig_bio);
+ from xdr_ast import _XdrAst, Specification, _RpcProgram, _XdrTypeSpecifier
+-from xdr_ast import public_apis, pass_by_reference, get_header_name
++from xdr_ast import public_apis, pass_by_reference, structs, get_header_name
+ from xdr_parse import get_xdr_annotate
+ 
+ 
+@@ -25,6 +25,7 @@ def create_jinja2_environment(language: str, xdr_type: str) -> Environment:
+             environment.globals["annotate"] = get_xdr_annotate()
+             environment.globals["public_apis"] = public_apis
+             environment.globals["pass_by_reference"] = pass_by_reference
++            environment.globals["structs"] = structs
+             return environment
+         case _:
+             raise NotImplementedError("Language not supported")
+diff --git a/tools/net/sunrpc/xdrgen/templates/C/program/decoder/argument.j2 b/tools/net/sunrpc/xdrgen/templates/C/program/decoder/argument.j2
+index 0b1709cca0d4a..19b219dd276d3 100644
+--- a/tools/net/sunrpc/xdrgen/templates/C/program/decoder/argument.j2
++++ b/tools/net/sunrpc/xdrgen/templates/C/program/decoder/argument.j2
+@@ -14,7 +14,11 @@ bool {{ program }}_svc_decode_{{ argument }}(struct svc_rqst *rqstp, struct xdr_
+ {% if argument == 'void' %}
+ 	return xdrgen_decode_void(xdr);
+ {% else %}
++{% if argument in structs %}
+ 	struct {{ argument }} *argp = rqstp->rq_argp;
++{% else %}
++	{{ argument }} *argp = rqstp->rq_argp;
++{% endif %}
+ 
+ 	return xdrgen_decode_{{ argument }}(xdr, argp);
+ {% endif %}
+diff --git a/tools/net/sunrpc/xdrgen/templates/C/program/encoder/result.j2 b/tools/net/sunrpc/xdrgen/templates/C/program/encoder/result.j2
+index 6fc61a5d47b7f..746592cfda562 100644
+--- a/tools/net/sunrpc/xdrgen/templates/C/program/encoder/result.j2
++++ b/tools/net/sunrpc/xdrgen/templates/C/program/encoder/result.j2
+@@ -14,8 +14,14 @@ bool {{ program }}_svc_encode_{{ result }}(struct svc_rqst *rqstp, struct xdr_st
+ {% if result == 'void' %}
+ 	return xdrgen_encode_void(xdr);
+ {% else %}
++{% if result in structs %}
+ 	struct {{ result }} *resp = rqstp->rq_resp;
+ 
+ 	return xdrgen_encode_{{ result }}(xdr, resp);
++{% else %}
++	{{ result }} *resp = rqstp->rq_resp;
 +
- 	/*
- 	 * Account io->origin_bio to DM dev on behalf of target
- 	 * that took ownership of IO with DM_MAPIO_SUBMITTED.
++	return xdrgen_encode_{{ result }}(xdr, *resp);
++{% endif %}
+ {% endif %}
+ }
 -- 
 2.51.0
 
