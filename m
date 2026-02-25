@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD202C11CF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036E92C11CF;
 	Wed, 25 Feb 2026 06:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002585; cv=none; b=bJmZkwer9C8yr2c45Qm/Q2c9kTKEKzPhYs3Y7PK5xiSBw57fZ4L9utr+Tf8pP9vQodYBZG30CZsWnB+XnmHrK+CPBri6wAKh+SOguFiOQAhyzYuNdgXSe4XW1OJlenWq22wOhVeV4dacHPQAwCK+KjQihd6cUtDE5IAy0fqPcks=
+	t=1772002586; cv=none; b=ZwcXo0mRYOxRqd097fB46jVhEuEVxWTfOidUfIm7siPa6hlY21+CE8KfawTOiKpWHM7FWaAsQxmywzho0nVFUjkBRrL58ekq1yLEhNgBXMIpLOCqTdYIkCSPov4uS/T1GivmFVJNkAtnRQCag0kwF12d5LEVEA33mTX1c0dHFsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002585; c=relaxed/simple;
-	bh=AgDQM/LC6JYpJ6ULfXyB/OADw+K2Yn4pqU+t7s0JdBI=;
+	s=arc-20240116; t=1772002586; c=relaxed/simple;
+	bh=DAW3SZpW+fxoMm+bdYz/508j9eZ8hKJ+RAI5Ag8AOGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnhIo9p2uzUlFbxF3L4RGh1tvvDKjkVOactC7GxLIKrA5WINy+tnEEEv72qb71/mBhWWotzC0Zcy7EUx/me7fEaQWPxnALUtrz7LriKQX5wAxCn2wxew9dofnEtQOx7RxIYKg9h2405T3Cx1cShugnBzjFJNoCU0kCOLrc7mmdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuFYroCV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uxaLyVXwz6PhMb94jd06oaHSScdPSastyPCeVARUVi1wVg1Aox4OE8EgqDzA/bfuNJKGDUJR/pg4NAkWmfkEJf2khaXo1I6IxsxLG1cSs/tX+FCCjzBidBc0bHwYMX5AeXdv91sgbsc+hP7x2V4WUdNkxt9itpcJeIJfuJ/ilPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPGm5l/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuFYroCV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076C6C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPGm5l/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4FDC116D0;
 	Wed, 25 Feb 2026 06:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002585;
-	bh=AgDQM/LC6JYpJ6ULfXyB/OADw+K2Yn4pqU+t7s0JdBI=;
+	bh=DAW3SZpW+fxoMm+bdYz/508j9eZ8hKJ+RAI5Ag8AOGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuFYroCVouz7uPfENH1dfEDtBMjFDl2aX0MQxbIb77cvJ0hEFjtPNrbxZTmoOQErS
-	 9LG+Mt+R2JaDeTBvRmvF8SpGeZeQPWIkuDVB23oJ3aO7h0DhGgymXba3rBl2cy+S17
-	 kG6vJ9Lwc3TPRPZLW6a+DNKlBdIivbDSWssCV+b4=
+	b=zPGm5l/5rRmpkf1aJoY41tEj3UBvOboEcJTNSb0jq+Re5UA67LyrgjVEDrjxWd9q9
+	 uAYEmTsnmD6SntPR8SLHbe+ZFoti2uEIxRZc/Z38uUgwb6wwbUtCaFkvhjO0u6/EYp
+	 dAi9DUJYGda2Lm3vGG09j5U1V6PwX6Kp9/YfD5xU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 286/641] wifi: ath12k: clear stale link mapping of ahvif->links_map
-Date: Tue, 24 Feb 2026 17:20:12 -0800
-Message-ID: <20260225012355.694378882@linuxfoundation.org>
+Subject: [PATCH 6.18 322/641] dpll: zl3073x: Fix output pin phase adjustment sign
+Date: Tue, 24 Feb 2026 17:20:48 -0800
+Message-ID: <20260225012356.507956631@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,66 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 2c1ba9c2adf0fda96eaaebd8799268a7506a8fc9 ]
+[ Upstream commit 5d41f95f5d0bd9db02f3f16a649d0631f71e9fdb ]
 
-When an arvif is initialized in non-AP STA mode but MLO connection
-preparation fails before the arvif is created
-(arvif->is_created remains false), the error path attempts to delete all
-links. However, link deletion only executes when arvif->is_created is true.
-As a result, ahvif retains a stale entry of arvif that is initialized but
-not created.
+The output pin phase adjustment functions incorrectly negate the phase
+compensation value.
 
-When a new arvif is initialized with the same link id, this stale mapping
-triggers the following WARN_ON.
+Per the ZL3073x datasheet, the output phase compensation register is
+simply a signed two's complement integer where:
+ - Positive values move the phase later in time
+ - Negative values move the phase earlier in time
 
-WARNING: drivers/net/wireless/ath/ath12k/mac.c:4271 at ath12k_mac_op_change_vif_links+0x140/0x180 [ath12k], CPU#3: wpa_supplicant/275
+No negation is required. The erroneous negation caused phase adjustments
+to be applied in the wrong direction.
 
-Call trace:
- ath12k_mac_op_change_vif_links+0x140/0x180 [ath12k] (P)
- drv_change_vif_links+0xbc/0x1a4 [mac80211]
- ieee80211_vif_update_links+0x54c/0x6a0 [mac80211]
- ieee80211_vif_set_links+0x40/0x70 [mac80211]
- ieee80211_prep_connection+0x84/0x450 [mac80211]
- ieee80211_mgd_auth+0x200/0x480 [mac80211]
- ieee80211_auth+0x14/0x20 [mac80211]
- cfg80211_mlme_auth+0x90/0xf0 [cfg80211]
- nl80211_authenticate+0x32c/0x380 [cfg80211]
- genl_family_rcv_msg_doit+0xc8/0x134
+Note that input pin phase adjustment correctly uses negation because the
+hardware has an inverted convention for input references (positive moves
+phase earlier, negative moves phase later).
 
-Fix this issue by unassigning the link vif and clearing ahvif->links_map
-if arvif is only initialized but not created.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.5-01651-QCAHKSWPL_SILICONZ-1
-
-Fixes: 81e4be30544e ("wifi: ath12k: handle link removal in change_vif_links()")
-Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260127033400.1721220-1-aaradhana.sahu@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 6287262f761e ("dpll: zl3073x: Add support to adjust phase")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260205181055.129768-1-ivecera@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dpll/zl3073x/dpll.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 256ffae4d7f7d..b97469dca0467 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -4004,8 +4004,10 @@ ath12k_mac_op_change_vif_links(struct ieee80211_hw *hw,
- 		if (WARN_ON(!arvif))
- 			return -EINVAL;
+diff --git a/drivers/dpll/zl3073x/dpll.c b/drivers/dpll/zl3073x/dpll.c
+index 38551cf788494..11ca32e1bb829 100644
+--- a/drivers/dpll/zl3073x/dpll.c
++++ b/drivers/dpll/zl3073x/dpll.c
+@@ -1222,10 +1222,8 @@ zl3073x_dpll_output_pin_phase_adjust_get(const struct dpll_pin *dpll_pin,
+ 	out_id = zl3073x_output_pin_out_get(pin->id);
+ 	out = zl3073x_out_state_get(zldev, out_id);
  
--		if (!arvif->is_created)
-+		if (!arvif->is_created) {
-+			ath12k_mac_unassign_link_vif(arvif);
- 			continue;
-+		}
+-	/* Convert value to ps and reverse two's complement negation applied
+-	 * during 'set'
+-	 */
+-	*phase_adjust = -out->phase_comp * pin->phase_gran;
++	/* The value in the register is expressed in half synth clock cycles. */
++	*phase_adjust = out->phase_comp * pin->phase_gran;
  
- 		if (WARN_ON(!arvif->ar))
- 			return -EINVAL;
+ 	return 0;
+ }
+@@ -1247,10 +1245,8 @@ zl3073x_dpll_output_pin_phase_adjust_set(const struct dpll_pin *dpll_pin,
+ 	out_id = zl3073x_output_pin_out_get(pin->id);
+ 	out = *zl3073x_out_state_get(zldev, out_id);
+ 
+-	/* The value in the register is stored as two's complement negation
+-	 * of requested value and expressed in half synth clock cycles.
+-	 */
+-	out.phase_comp = -phase_adjust / pin->phase_gran;
++	/* The value in the register is expressed in half synth clock cycles. */
++	out.phase_comp = phase_adjust / pin->phase_gran;
+ 
+ 	/* Update output configuration from mailbox */
+ 	return zl3073x_out_state_set(zldev, out_id, &out);
 -- 
 2.51.0
 
