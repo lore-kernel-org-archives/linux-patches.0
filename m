@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14481E2834;
-	Wed, 25 Feb 2026 01:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551B01EB5E1;
+	Wed, 25 Feb 2026 01:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983304; cv=none; b=NrNlGwENczSSp1Nj6Pbi8qPskn1k4ytuFm0Fe8+q9cK7tt2rp849HW12Ub1b9/UjcpV6G6LzyL3C67tycXLI7eOpyCE69xiFcc1FtaseUyltYK7c4Opr2ME7tNXbHyEU+5euemeBRyvvkWeJq+6XKW7mj0ZphkVYhPMyl3DgLjo=
+	t=1771983305; cv=none; b=P6in8unwEXlSmRRDVeDvwmuiyee5M7n1r7FshMxwwz2cpfpwaMmEoGBel87G9JUWlFXseYfQmwQI6rkRCCqdmFxIce2VE0PE909SHHfQshgFFUvFjl5OKHVYd8XpbbaPyvnptOMxAb9nb+gqmiJRKyhj2ekJE8PnYufB5mFQuHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983304; c=relaxed/simple;
-	bh=vszbcZ8+YfLUtEgE+Ubhf84QNFnONP7LA6RRphsHZmc=;
+	s=arc-20240116; t=1771983305; c=relaxed/simple;
+	bh=FPC0zWTSEMdkQTXakk96cCYNxxu2RJO1Uwnfz9uCRJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IyDBBqPk+11rvUxyOStf+gRbkNmCBPTTLqUk4BMApCFmGO4pR79f/PT95/oYbVGqN62dCZxGyXH+cnojVFMDYUQpM3+95g4Pu/WDDx9OoGIZhvjSSOC3tVvJN0fpLJb3RSJK3lKjnYwDkM3KTVWz1JvIt/T01QExep0qldVN33k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTJWgI62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uEmf50uG+eJ0eYLTcjBMbuD2FwZcxSjrjJG3+ofFf2w3/rl0rwujTNmOkXbGi6xyEDLiV74DP7p3XqED6dV05xNGnQ9b8mdoiqy8NBH+P2/TeT9IZriuIuguNXzFYp2Oj5lIsl77u8D+KvHTmNGvHNyj+KeMrDjnUjOLFggfbaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhIyGgd6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTJWgI62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C63C116D0;
-	Wed, 25 Feb 2026 01:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhIyGgd6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F4DC116D0;
+	Wed, 25 Feb 2026 01:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983303;
-	bh=vszbcZ8+YfLUtEgE+Ubhf84QNFnONP7LA6RRphsHZmc=;
+	s=korg; t=1771983304;
+	bh=FPC0zWTSEMdkQTXakk96cCYNxxu2RJO1Uwnfz9uCRJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qTJWgI627Dn/c3ibN2q5pDfsy91FxSBQj9o1A9H5SomrmCP3fT67b76a5KGvfHdzR
-	 L5U2xv0ZsYHNy9T1nL9iQ8/zQpJ5RJMHakKv2DyufLHRG5is3lwYXNTyqpxIaRJv7m
-	 xtd1tPUyIzXbtK4XppKl2VZR4wOvPer7F1VlM28A=
+	b=zhIyGgd6mgwEeoUZZkbIXXg47o5fQdcMA7/Bq195agMAQmfEKsgPE0QWvw9SzxQtU
+	 lYaSVZas9vSoCZPyUo8hGzTjxhdqb176jid2XRMwBKAIqaj5ksB0CZev64u4t+cbBc
+	 hzIE/HHn8rfgpbj2AwFdU73tCDSvgufKYICPE1Nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,10 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Koichiro Den <den@valinux.co.jp>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 395/781] PCI: endpoint: Add BAR subrange mapping support
-Date: Tue, 24 Feb 2026 17:18:24 -0800
-Message-ID: <20260225012409.394033361@linuxfoundation.org>
+Subject: [PATCH 6.19 396/781] PCI: dwc: Advertise dynamic inbound mapping support
+Date: Tue, 24 Feb 2026 17:18:25 -0800
+Message-ID: <20260225012409.416985108@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,131 +55,235 @@ Content-Transfer-Encoding: 8bit
 
 From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 31fb95400451040050361e22ff480476964280f0 ]
+[ Upstream commit c0f1506f63546308e894469ceb0f1fadbdf9d2f9 ]
 
-Some endpoint platforms have only a small number of usable BARs. At the
-same time, EPF drivers (e.g. vNTB) may need multiple independent inbound
-regions (control/scratchpad, one or more memory windows, and optionally
-MSI or other feature-related regions). Subrange mapping allows these to
-share a single BAR without consuming additional BARs that may not be
-available, or forcing a fragile layout by aggressively packing into a
-single contiguous memory range.
+The DesignWare EP core has supported updating the inbound iATU mapping
+for an already configured BAR (i.e. allowing pci_epc_set_bar() to be
+called again without a prior pci_epc_clear_bar()) since
+commit 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update
+inbound map address").
 
-Extend the PCI endpoint core to support mapping subranges within a BAR.
-Add an optional 'submap' field in struct pci_epf_bar so an endpoint
-function driver can request inbound mappings that fully cover the BAR.
+Now that this capability is exposed via the dynamic_inbound_mapping EPC
+feature bit, set it for DWC-based EP glue drivers using a common
+initializer macro to avoid duplicating the same flag in each driver.
 
-Introduce a new EPC feature bit, subrange_mapping, and reject submap
-requests from pci_epc_set_bar() unless the controller advertises both
-subrange_mapping and dynamic_inbound_mapping features.
-
-The submap array describes the complete BAR layout (no overlaps and no
-gaps are allowed to avoid exposing untranslated address ranges). This
-provides the generic infrastructure needed to map multiple logical
-regions into a single BAR at different offsets, without assuming a
-controller-specific inbound address translation mechanism.
+Note that pci-layerscape-ep.c is untouched. It currently constructs the
+feature struct dynamically in ls_pcie_ep_init(). Once converted to a
+static feature definition, it will use DWC_EPC_COMMON_FEATURES as well.
 
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260124145012.2794108-3-den@valinux.co.jp
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260124145012.2794108-4-den@valinux.co.jp
 Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/pci-epc-core.c |  8 ++++++++
- include/linux/pci-epc.h             |  4 ++++
- include/linux/pci-epf.h             | 23 +++++++++++++++++++++++
- 3 files changed, 35 insertions(+)
+ drivers/pci/controller/dwc/pci-dra7xx.c           | 1 +
+ drivers/pci/controller/dwc/pci-imx6.c             | 3 +++
+ drivers/pci/controller/dwc/pci-keystone.c         | 1 +
+ drivers/pci/controller/dwc/pcie-artpec6.c         | 1 +
+ drivers/pci/controller/dwc/pcie-designware-plat.c | 1 +
+ drivers/pci/controller/dwc/pcie-designware.h      | 3 +++
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c     | 2 ++
+ drivers/pci/controller/dwc/pcie-keembay.c         | 1 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c         | 1 +
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c       | 1 +
+ drivers/pci/controller/dwc/pcie-stm32-ep.c        | 1 +
+ drivers/pci/controller/dwc/pcie-tegra194.c        | 1 +
+ drivers/pci/controller/dwc/pcie-uniphier-ep.c     | 2 ++
+ 13 files changed, 19 insertions(+)
 
-diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-index ca7f19cc973a4..068155819c575 100644
---- a/drivers/pci/endpoint/pci-epc-core.c
-+++ b/drivers/pci/endpoint/pci-epc-core.c
-@@ -596,6 +596,14 @@ int pci_epc_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	if (!epc_features)
- 		return -EINVAL;
+diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
+index 01cfd9aeb0b81..d5d26229063f2 100644
+--- a/drivers/pci/controller/dwc/pci-dra7xx.c
++++ b/drivers/pci/controller/dwc/pci-dra7xx.c
+@@ -424,6 +424,7 @@ static int dra7xx_pcie_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
  
-+	if (epf_bar->num_submap && !epf_bar->submap)
-+		return -EINVAL;
-+
-+	if (epf_bar->num_submap &&
-+	    !(epc_features->dynamic_inbound_mapping &&
-+	      epc_features->subrange_mapping))
-+		return -EINVAL;
-+
- 	if (epc_features->bar[bar].type == BAR_RESIZABLE &&
- 	    (epf_bar->size < SZ_1M || (u64)epf_bar->size > (SZ_128G * 1024)))
- 		return -EINVAL;
-diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
-index 4c8516756c568..c021c7af175fd 100644
---- a/include/linux/pci-epc.h
-+++ b/include/linux/pci-epc.h
-@@ -227,6 +227,9 @@ struct pci_epc_bar_desc {
-  *                           inbound mappings for an already configured BAR
-  *                           (i.e. allow calling pci_epc_set_bar() again
-  *                           without first calling pci_epc_clear_bar())
-+ * @subrange_mapping: indicate if the EPC device can map inbound subranges for a
-+ *                    BAR. This feature depends on @dynamic_inbound_mapping
-+ *                    feature.
-  * @msi_capable: indicate if the endpoint function has MSI capability
-  * @msix_capable: indicate if the endpoint function has MSI-X capability
-  * @intx_capable: indicate if the endpoint can raise INTx interrupts
-@@ -236,6 +239,7 @@ struct pci_epc_bar_desc {
- struct pci_epc_features {
- 	unsigned int	linkup_notifier : 1;
- 	unsigned int	dynamic_inbound_mapping : 1;
-+	unsigned int	subrange_mapping : 1;
- 	unsigned int	msi_capable : 1;
- 	unsigned int	msix_capable : 1;
- 	unsigned int	intx_capable : 1;
-diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
-index 48f68c4dcfa5e..7737a7c03260d 100644
---- a/include/linux/pci-epf.h
-+++ b/include/linux/pci-epf.h
-@@ -110,6 +110,22 @@ struct pci_epf_driver {
+ static const struct pci_epc_features dra7xx_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.linkup_notifier = true,
+ 	.msi_capable = true,
+ };
+diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+index 4668fc9648bff..f28e335bbbfaf 100644
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -1387,6 +1387,7 @@ static int imx_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
  
- #define to_pci_epf_driver(drv) container_of_const((drv), struct pci_epf_driver, driver)
- 
-+/**
-+ * struct pci_epf_bar_submap - BAR subrange for inbound mapping
-+ * @phys_addr: target physical/DMA address for this subrange
-+ * @size: the size of the subrange to be mapped
-+ *
-+ * When pci_epf_bar.num_submap is >0, pci_epf_bar.submap describes the
-+ * complete BAR layout. This allows an EPC driver to program multiple
-+ * inbound translation windows for a single BAR when supported by the
-+ * controller. The array order defines the BAR layout (submap[0] at offset
-+ * 0, and each immediately follows the previous one).
-+ */
-+struct pci_epf_bar_submap {
-+	dma_addr_t	phys_addr;
-+	size_t		size;
-+};
-+
- /**
-  * struct pci_epf_bar - represents the BAR of EPF device
-  * @phys_addr: physical address that should be mapped to the BAR
-@@ -119,6 +135,9 @@ struct pci_epf_driver {
-  *            requirement
-  * @barno: BAR number
-  * @flags: flags that are set for the BAR
-+ * @num_submap: number of entries in @submap
-+ * @submap: array of subrange descriptors allocated by the caller. See
-+ *          struct pci_epf_bar_submap for the semantics in detail.
-  */
- struct pci_epf_bar {
- 	dma_addr_t	phys_addr;
-@@ -127,6 +146,10 @@ struct pci_epf_bar {
- 	size_t		mem_size;
- 	enum pci_barno	barno;
- 	int		flags;
-+
-+	/* Optional sub-range mapping */
-+	unsigned int	num_submap;
-+	struct pci_epf_bar_submap	*submap;
+ static const struct pci_epc_features imx8m_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.msi_capable = true,
+ 	.bar[BAR_1] = { .type = BAR_RESERVED, },
+ 	.bar[BAR_3] = { .type = BAR_RESERVED, },
+@@ -1396,6 +1397,7 @@ static const struct pci_epc_features imx8m_pcie_epc_features = {
  };
  
- /**
+ static const struct pci_epc_features imx8q_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.msi_capable = true,
+ 	.bar[BAR_1] = { .type = BAR_RESERVED, },
+ 	.bar[BAR_3] = { .type = BAR_RESERVED, },
+@@ -1416,6 +1418,7 @@ static const struct pci_epc_features imx8q_pcie_epc_features = {
+  * BAR5	| Enable   | 32-bit  | 64 KB   | Programmable Size
+  */
+ static const struct pci_epc_features imx95_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.msi_capable = true,
+ 	.bar[BAR_1] = { .type = BAR_FIXED, .fixed_size = SZ_64K, },
+ 	.align = SZ_4K,
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index f86d9111f863f..20fa4dadb82af 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -930,6 +930,7 @@ static int ks_pcie_am654_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
+ 
+ static const struct pci_epc_features ks_pcie_am654_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.msi_capable = true,
+ 	.msix_capable = true,
+ 	.bar[BAR_0] = { .type = BAR_RESERVED, },
+diff --git a/drivers/pci/controller/dwc/pcie-artpec6.c b/drivers/pci/controller/dwc/pcie-artpec6.c
+index f4a136ee2daf3..e994b75986c34 100644
+--- a/drivers/pci/controller/dwc/pcie-artpec6.c
++++ b/drivers/pci/controller/dwc/pcie-artpec6.c
+@@ -370,6 +370,7 @@ static int artpec6_pcie_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
+ 
+ static const struct pci_epc_features artpec6_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.msi_capable = true,
+ };
+ 
+diff --git a/drivers/pci/controller/dwc/pcie-designware-plat.c b/drivers/pci/controller/dwc/pcie-designware-plat.c
+index 12f41886c65d1..8530746ec5cbb 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-plat.c
++++ b/drivers/pci/controller/dwc/pcie-designware-plat.c
+@@ -61,6 +61,7 @@ static int dw_plat_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
+ 
+ static const struct pci_epc_features dw_plat_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.msi_capable = true,
+ 	.msix_capable = true,
+ };
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 8a99a9c393f53..205fb55fca8c0 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -305,6 +305,9 @@
+ /* Default eDMA LLP memory size */
+ #define DMA_LLP_MEM_SIZE		PAGE_SIZE
+ 
++/* Common struct pci_epc_feature bits among DWC EP glue drivers */
++#define DWC_EPC_COMMON_FEATURES		.dynamic_inbound_mapping = true
++
+ struct dw_pcie;
+ struct dw_pcie_rp;
+ struct dw_pcie_ep;
+diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+index 2f865f67a10a7..bf8ec3ca6f689 100644
+--- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
++++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+@@ -362,6 +362,7 @@ static int rockchip_pcie_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
+ 
+ static const struct pci_epc_features rockchip_pcie_epc_features_rk3568 = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.linkup_notifier = true,
+ 	.msi_capable = true,
+ 	.msix_capable = true,
+@@ -382,6 +383,7 @@ static const struct pci_epc_features rockchip_pcie_epc_features_rk3568 = {
+  * BARs) would be overwritten, resulting in (all other BARs) no longer working.
+  */
+ static const struct pci_epc_features rockchip_pcie_epc_features_rk3588 = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.linkup_notifier = true,
+ 	.msi_capable = true,
+ 	.msix_capable = true,
+diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
+index 60e74ac782af3..2666a9c3d67e7 100644
+--- a/drivers/pci/controller/dwc/pcie-keembay.c
++++ b/drivers/pci/controller/dwc/pcie-keembay.c
+@@ -309,6 +309,7 @@ static int keembay_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
+ 
+ static const struct pci_epc_features keembay_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.msi_capable		= true,
+ 	.msix_capable		= true,
+ 	.bar[BAR_0]		= { .only_64bit = true, },
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index f1bc0ac81a928..5e990c7a5879f 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -820,6 +820,7 @@ static void qcom_pcie_ep_init_debugfs(struct qcom_pcie_ep *pcie_ep)
+ }
+ 
+ static const struct pci_epc_features qcom_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.linkup_notifier = true,
+ 	.msi_capable = true,
+ 	.align = SZ_4K,
+diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+index 80778917d2ddd..a6912e85e4ddc 100644
+--- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
++++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+@@ -420,6 +420,7 @@ static int rcar_gen4_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
+ 
+ static const struct pci_epc_features rcar_gen4_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.msi_capable = true,
+ 	.bar[BAR_1] = { .type = BAR_RESERVED, },
+ 	.bar[BAR_3] = { .type = BAR_RESERVED, },
+diff --git a/drivers/pci/controller/dwc/pcie-stm32-ep.c b/drivers/pci/controller/dwc/pcie-stm32-ep.c
+index 2cecf32d2b0f3..c1944b40ce02f 100644
+--- a/drivers/pci/controller/dwc/pcie-stm32-ep.c
++++ b/drivers/pci/controller/dwc/pcie-stm32-ep.c
+@@ -70,6 +70,7 @@ static int stm32_pcie_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
+ 
+ static const struct pci_epc_features stm32_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.msi_capable = true,
+ 	.align = SZ_64K,
+ };
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 0ddeef70726dd..06571d806ab31 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1988,6 +1988,7 @@ static int tegra_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+ }
+ 
+ static const struct pci_epc_features tegra_pcie_epc_features = {
++	DWC_EPC_COMMON_FEATURES,
+ 	.linkup_notifier = true,
+ 	.msi_capable = true,
+ 	.bar[BAR_0] = { .type = BAR_FIXED, .fixed_size = SZ_1M,
+diff --git a/drivers/pci/controller/dwc/pcie-uniphier-ep.c b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
+index d6e73811216e2..d52753060970f 100644
+--- a/drivers/pci/controller/dwc/pcie-uniphier-ep.c
++++ b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
+@@ -420,6 +420,7 @@ static const struct uniphier_pcie_ep_soc_data uniphier_pro5_data = {
+ 	.init = uniphier_pcie_pro5_init_ep,
+ 	.wait = NULL,
+ 	.features = {
++		DWC_EPC_COMMON_FEATURES,
+ 		.linkup_notifier = false,
+ 		.msi_capable = true,
+ 		.msix_capable = false,
+@@ -438,6 +439,7 @@ static const struct uniphier_pcie_ep_soc_data uniphier_nx1_data = {
+ 	.init = uniphier_pcie_nx1_init_ep,
+ 	.wait = uniphier_pcie_nx1_wait_ep,
+ 	.features = {
++		DWC_EPC_COMMON_FEATURES,
+ 		.linkup_notifier = false,
+ 		.msi_capable = true,
+ 		.msix_capable = false,
 -- 
 2.51.0
 
