@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FCD251793;
-	Wed, 25 Feb 2026 01:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF0D251793;
+	Wed, 25 Feb 2026 01:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982849; cv=none; b=k5PUEi4mi73N8npHbWQ6aPWJPWYTa8/WZkh6VSPStd4lh6egjAfzdcXPCuBK865l0CqPLasCpKvhP6TgYqChGH82b/5o04oWMteip/IiQV6cHSk8tL060zSXIfaWUXWLWjWaR1VPqUJVySjcCUV6C09f6ABnsaMU9kXTy779Bro=
+	t=1771982850; cv=none; b=R56n5w8PpjwNT/AHZw/rqkDPEIc2sgM5GvRnvzS/V+8+0bO2SnGCuWdp3agpHQxXoBcV2xflmnQhT3BtcsMX+o6ykPUzRJR7sjY2k3O6ayNL/S068AK2HJteye4SObZYkbqqtrlR58KXy4TtyWXVz4NOyEOAegYreRnWZgRwJ6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982849; c=relaxed/simple;
-	bh=pWEGjLClUhLH8zoaZzeA8oaucri2913pZzn2uY3+RxY=;
+	s=arc-20240116; t=1771982850; c=relaxed/simple;
+	bh=fN2EVwtrXw4ugVrlDek8HRDTfa8bCghEQsavDHyUomE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PChoxDVxSV6/p1vpsEuRD42DonDKha+Y9q71tzmsaU9IW6DlK7CnHvatiCcFUF+2YrEKoEWKz8qkHqfD5aroMd9VJiDxJCLJvqWDZxLYBQbrPbhhhe9thNxR/rYUC+qvT5reTmeiDCBOugMb0ScewlNz6+MKoNY9+gZd3CGm/Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXnxC7VY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZmnvdjrtwprU8tzwRGIpswVNiGRbo9LCGZia/C2EhgdoFajT3rR1fSuQhkaaVu0i5ptkeL7ta6u1Ns0XIuEGNFgLt+M481vxZKwLpqJ6euLIQSz+O7trNvuki4j5YFC/ft4Gi+QOGY/ctnHMq4iDBX9+f2H7mtvDNtC7ii+KuXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeufP/Qg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXnxC7VY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7EAC116D0;
-	Wed, 25 Feb 2026 01:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeufP/Qg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CA4C116D0;
+	Wed, 25 Feb 2026 01:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982849;
-	bh=pWEGjLClUhLH8zoaZzeA8oaucri2913pZzn2uY3+RxY=;
+	s=korg; t=1771982850;
+	bh=fN2EVwtrXw4ugVrlDek8HRDTfa8bCghEQsavDHyUomE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXnxC7VYHdrDYF55o7l+REJgbTtex7nPvBFtCqeQCIFUUQJG4RyircyUjsxSkQZTm
-	 kTdpZEWphpgAlBEi72FDdx61ki7WHdNYf8NNv4uz62kkwV3PTP3+J/q2PQ/DYotD8k
-	 m23HFo4Y/hLSPxczU7JgjMOhR4Kp1mI42qVyrT58=
+	b=zeufP/QgPsUYteJoHbF8qMfle12BR1y79dWD92A+EiLpbyMFqgWG3Y834JwKhR244
+	 m/wVTKwdXJQxw70m7kJSysazFx7iHTlm48w8RVxfwEGqum9dUoRwVSfNhP9WRI/3OO
+	 TBjIsDKgIz15zggCz7tXXFDzqTJHmyOpPmaS0qJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Teddy Astie <teddy.astie@vates.tech>,
-	Juergen Gross <jgross@suse.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 039/781] xen/virtio: Dont use grant-dma-ops when running as Dom0
-Date: Tue, 24 Feb 2026 17:12:28 -0800
-Message-ID: <20260225012400.661107953@linuxfoundation.org>
+Subject: [PATCH 6.19 040/781] io_uring: use release-acquire ordering for IORING_SETUP_R_DISABLED
+Date: Tue, 24 Feb 2026 17:12:29 -0800
+Message-ID: <20260225012400.685313492@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,43 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Teddy Astie <teddy.astie@vates.tech>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit dc8ea8714311e549ee93a2b0bdd5487d20bfadbf ]
+[ Upstream commit 7a8737e1132ff07ca225aa7a4008f87319b5b1ca ]
 
-Dom0 inherit devices from the machine and is usually in PV mode.
-If we are running in a virtual that has virtio devices, these devices
-would be considered as using grants with Dom0 as backend, while being
-the said Dom0 itself, while we want to use these devices like regular
-PCI devices.
+io_uring_enter(), __io_msg_ring_data(), and io_msg_send_fd() read
+ctx->flags and ctx->submitter_task without holding the ctx's uring_lock.
+This means they may race with the assignment to ctx->submitter_task and
+the clearing of IORING_SETUP_R_DISABLED from ctx->flags in
+io_register_enable_rings(). Ensure the correct ordering of the
+ctx->flags and ctx->submitter_task memory accesses by storing to
+ctx->flags using release ordering and loading it using acquire ordering.
 
-Fix this by preventing grant-dma-ops from being used when running as Dom0
-(initial domain). We still keep the device-tree logic as-is.
-
-Signed-off-by: Teddy Astie <teddy.astie@vates.tech>
-Fixes: 61367688f1fb0 ("xen/virtio: enable grant based virtio on x86")
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <6698564dd2270a9f7377b78ebfb20cb425cabbe8.1767720955.git.teddy.astie@vates.tech>
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Fixes: 4add705e4eeb ("io_uring: remove io_register_submitter")
+Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/grant-dma-ops.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c |  6 +++++-
+ io_uring/msg_ring.c | 12 ++++++++++--
+ io_uring/register.c |  3 ++-
+ 3 files changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
-index 14077d23f2a19..c2603e7001786 100644
---- a/drivers/xen/grant-dma-ops.c
-+++ b/drivers/xen/grant-dma-ops.c
-@@ -366,7 +366,8 @@ static int xen_grant_init_backend_domid(struct device *dev,
- 	if (np) {
- 		ret = xen_dt_grant_init_backend_domid(dev, np, backend_domid);
- 		of_node_put(np);
--	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain()) {
-+	} else if (!xen_initial_domain() &&
-+		   (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain())) {
- 		dev_info(dev, "Using dom0 as backend\n");
- 		*backend_domid = 0;
- 		ret = 0;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index b7a077c11c21a..8aa671ba43474 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3256,7 +3256,11 @@ SYSCALL_DEFINE6(io_uring_enter, unsigned int, fd, u32, to_submit,
+ 
+ 	ctx = file->private_data;
+ 	ret = -EBADFD;
+-	if (unlikely(ctx->flags & IORING_SETUP_R_DISABLED))
++	/*
++	 * Keep IORING_SETUP_R_DISABLED check before submitter_task load
++	 * in io_uring_add_tctx_node() -> __io_uring_add_tctx_node_from_submit()
++	 */
++	if (unlikely(smp_load_acquire(&ctx->flags) & IORING_SETUP_R_DISABLED))
+ 		goto out;
+ 
+ 	/*
+diff --git a/io_uring/msg_ring.c b/io_uring/msg_ring.c
+index 7063ea7964e75..87b4d306cf1b6 100644
+--- a/io_uring/msg_ring.c
++++ b/io_uring/msg_ring.c
+@@ -125,7 +125,11 @@ static int __io_msg_ring_data(struct io_ring_ctx *target_ctx,
+ 		return -EINVAL;
+ 	if (!(msg->flags & IORING_MSG_RING_FLAGS_PASS) && msg->dst_fd)
+ 		return -EINVAL;
+-	if (target_ctx->flags & IORING_SETUP_R_DISABLED)
++	/*
++	 * Keep IORING_SETUP_R_DISABLED check before submitter_task load
++	 * in io_msg_data_remote() -> io_msg_remote_post()
++	 */
++	if (smp_load_acquire(&target_ctx->flags) & IORING_SETUP_R_DISABLED)
+ 		return -EBADFD;
+ 
+ 	if (io_msg_need_remote(target_ctx))
+@@ -245,7 +249,11 @@ static int io_msg_send_fd(struct io_kiocb *req, unsigned int issue_flags)
+ 		return -EINVAL;
+ 	if (target_ctx == ctx)
+ 		return -EINVAL;
+-	if (target_ctx->flags & IORING_SETUP_R_DISABLED)
++	/*
++	 * Keep IORING_SETUP_R_DISABLED check before submitter_task load
++	 * in io_msg_fd_remote()
++	 */
++	if (smp_load_acquire(&target_ctx->flags) & IORING_SETUP_R_DISABLED)
+ 		return -EBADFD;
+ 	if (!msg->src_file) {
+ 		int ret = io_msg_grab_file(req, issue_flags);
+diff --git a/io_uring/register.c b/io_uring/register.c
+index 3d3822ff3fd9e..12318c276068e 100644
+--- a/io_uring/register.c
++++ b/io_uring/register.c
+@@ -193,7 +193,8 @@ static int io_register_enable_rings(struct io_ring_ctx *ctx)
+ 	if (ctx->restrictions.registered)
+ 		ctx->restricted = 1;
+ 
+-	ctx->flags &= ~IORING_SETUP_R_DISABLED;
++	/* Keep submitter_task store before clearing IORING_SETUP_R_DISABLED */
++	smp_store_release(&ctx->flags, ctx->flags & ~IORING_SETUP_R_DISABLED);
+ 	if (ctx->sq_data && wq_has_sleeper(&ctx->sq_data->wait))
+ 		wake_up(&ctx->sq_data->wait);
+ 	return 0;
 -- 
 2.51.0
 
