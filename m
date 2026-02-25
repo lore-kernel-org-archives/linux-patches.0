@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC86262FC0;
-	Wed, 25 Feb 2026 01:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7601D5141;
+	Wed, 25 Feb 2026 01:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983652; cv=none; b=Kb9IiSHKNjmDaKa6QbkMBYeaVeVsvmaA3yjVHl8eZxOL4iJOWDSo9DIR6PqduUbZzY3cdQ31WXdnZH3HfAVbypW/WaIoDtOH/uZC0QuElNsoagCa6BeXQ1AOLARm+z4XqnvOgdzRDVtrtHduB2hdC8kv+vmbwkhVbb4lBiA9CbI=
+	t=1771983653; cv=none; b=n1S3+Ma7FyNljoJdxzUDUcBaiLnxGzD1DkBCna3TdTgixCyQ84lj3/vpFUu8m23dkm0qerGQYui2OoBR/NJpr3axc2s6aIu4nDcVovOm6Ty0cvzbaxPEBmK9pXeuBZjG3AOnO65JQNOuoxSEUdNjEn9rgpZGoIPZgLUk6lO/QJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983652; c=relaxed/simple;
-	bh=XVBpZbBXquTFsn4Ql9APXExxu44O2on1TE6lv0zalgc=;
+	s=arc-20240116; t=1771983653; c=relaxed/simple;
+	bh=+2X4W8iFPo43N15eqBLVAfJughp7cpJ+9LAqx+udoHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQNpzgqTtz2BkXwA34uLNIj/XZW8JYj+znLSVIE53aRXUADDj9C6acmglQa3JJBEMpD5+lmOX8gL3rEfpcKrnkqVo6ATZtfFsNPiyPB/avjqvKKPJ10SHbjl8qxE7stoabHelqA42JRVxP3huDbcyTHQCa2hlgiXV+7iJfHaZFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hy1x6VQ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QFasYAA2PN6pf9eH51jdo7FlOEixlC2qCSIc/FJd2IF1Az4MBjDUnotPPg4pPFIbeF7upOGOsy2MW13r6Lfy8zbYQ5zSHpg6eMCGfiPdFMv8LZxmV7sGDvgp6j2ea9OPVOIM8E8VW0Q/wIEf3VkIqXc6YqP0zOBhdzrPIQ/lWt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFzqXsbG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hy1x6VQ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACB5C116D0;
-	Wed, 25 Feb 2026 01:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFzqXsbG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E8DC116D0;
+	Wed, 25 Feb 2026 01:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983652;
-	bh=XVBpZbBXquTFsn4Ql9APXExxu44O2on1TE6lv0zalgc=;
+	s=korg; t=1771983653;
+	bh=+2X4W8iFPo43N15eqBLVAfJughp7cpJ+9LAqx+udoHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hy1x6VQ5PcPnfCQfV1eatZOvT3eMDyCbl47bxLvAouApOdQhCytM6Tjmafv3PQEOa
-	 vVvrvPUzy3Y3WNtG6jHFhNlB+mE661AzChNYS3x6ilEWWu4xLeChu1tGVOwKUnXlwC
-	 tjTCuVIFNzb62Xtw8LiNvH5LzL6K3wECiEOEfX6I=
+	b=vFzqXsbGAIC9t7QvwoBmHC7GwTvWSLluBrFDkxSR8sCptueo4SkDWn0Bp1dLsbIdq
+	 vI8ltNl9DhmF8IJhwzJGdsAtBq0tU9CkMAL8k0G7iPugFzOReznVpTneQ4yiMdL4B7
+	 s6bZBhKNPByRyu4xlQlYgb5nUAi8S6wCsQasmIyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 738/781] btrfs: fix invalid leaf access in btrfs_quota_enable() if ref key not found
-Date: Tue, 24 Feb 2026 17:24:07 -0800
-Message-ID: <20260225012417.830188918@linuxfoundation.org>
+Subject: [PATCH 6.19 739/781] drm/amd/display: Use DCE 6 link encoder for DCE 6 analog connectors
+Date: Tue, 24 Feb 2026 17:24:08 -0800
+Message-ID: <20260225012417.853885104@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,55 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit ecb7c2484cfc83a93658907580035a8adf1e0a92 ]
+[ Upstream commit 2de34fbcab2063cd3d52e5872a801b9a5fc755d0 ]
 
-If btrfs_search_slot_for_read() returns 1, it means we did not find any
-key greater than or equals to the key we asked for, meaning we have
-reached the end of the tree and therefore the path is not valid. If
-this happens we need to break out of the loop and stop, instead of
-continuing and accessing an invalid path.
+DCE 6 should use the DCE 6 specific link encoder.
+This was a copy paste mistake.
 
-Fixes: 5223cc60b40a ("btrfs: drop the path before adding qgroup items when enabling qgroups")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 0fbe321a93ce ("drm/amd/display: Implement DCE analog link encoders (v2)")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index c634e01140514..bed9d1c11c67a 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -1137,11 +1137,14 @@ int btrfs_quota_enable(struct btrfs_fs_info *fs_info,
- 			}
- 			if (ret > 0) {
- 				/*
--				 * Shouldn't happen, but in case it does we
--				 * don't need to do the btrfs_next_item, just
--				 * continue.
-+				 * Shouldn't happen because the key should still
-+				 * be there (return 0), but in case it does it
-+				 * means we have reached the end of the tree -
-+				 * there are no more leaves with items that have
-+				 * a key greater than or equals to @found_key,
-+				 * so just stop the search loop.
- 				 */
--				continue;
-+				break;
- 			}
- 		}
- 		ret = btrfs_next_item(tree_root, path);
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
+index f0152933bee2c..068fb1df8d889 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
+@@ -734,7 +734,7 @@ static struct link_encoder *dce60_link_encoder_create(
+ 		return NULL;
+ 
+ 	if (enc_init_data->connector.id == CONNECTOR_ID_VGA) {
+-		dce110_link_encoder_construct(enc110,
++		dce60_link_encoder_construct(enc110,
+ 			enc_init_data,
+ 			&link_enc_feature,
+ 			&link_enc_regs[ENGINE_ID_DACA],
 -- 
 2.51.0
 
