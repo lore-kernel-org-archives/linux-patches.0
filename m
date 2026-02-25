@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B072C17A0;
-	Wed, 25 Feb 2026 06:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB7E2C17A0;
+	Wed, 25 Feb 2026 06:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002596; cv=none; b=OCxHL9q/hHffWtLwWih2swPueI0wGlZBHAncNSdBmpxa93YfuW4zQoWbpOjKiPKU0YC4vBtgykCiLttcsOeix6c+gKT3NqyeBJJwMXmaWu3TqrOKtHU/RxftmlCx6Rb/SbCeFZjJqhnEN7sBr6OBLmnjkNXklZsWjCUA0/ebu+M=
+	t=1772002597; cv=none; b=EYCb9jiqh1PoWcc/oIGnxK39vz5bHshzAqTZemxLdwYp8VjKr2XzfDMDVCxmnqIr4PXjK/l5MC6liOiPnhvQz2VmwUrRp3cNcy8084TvbTDW3/wyKDeahjZnUolCPewkc9cUno2JLvcPOsfKi7Nv8qCHaGSTAXWHYXpuGeYleoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002596; c=relaxed/simple;
-	bh=d3H/L1yQrHtA1qE+RYYYET0VbPVRs+S0nPfrCvCx2BM=;
+	s=arc-20240116; t=1772002597; c=relaxed/simple;
+	bh=EfRLc7vfAl/5IT5mVxqK3Bv0qmt61n2Ao5W7vvNNF1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WyRdun68QcI1ptDotxxeq+/pesGJpz9BQ44MsKelRijTr9PAukhrDxNqJkW1+W1dyPlKBsr/EzxQMyd9epWkX9n/BDv4mj3cOAXNp0AdCT9I/2l0qsC9v5jDhfTFmXqaIOETTDS5BxcupO9rHY5s8QAXfhgUp1tcqGNBIAxi7lU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5zNEqlX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nH9z6OtCf3olICmUbPxStWAt8ASM8Glwd7ke9k5fFR7PcW09xO8YqsiGdhvx4cIj39PtNLotSDt4zWM+MTIqU6N6vY38iIIHMi9dONrSFmTmKF2K3e+9aTll8yLWbJ/h4Cq/ERN1zntxqVREd+hl9/qPr4J6pQHRJcp6Lw7H7to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vY+6LeN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5zNEqlX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76D6C19422;
-	Wed, 25 Feb 2026 06:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vY+6LeN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C33C116D0;
+	Wed, 25 Feb 2026 06:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002596;
-	bh=d3H/L1yQrHtA1qE+RYYYET0VbPVRs+S0nPfrCvCx2BM=;
+	s=korg; t=1772002597;
+	bh=EfRLc7vfAl/5IT5mVxqK3Bv0qmt61n2Ao5W7vvNNF1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X5zNEqlXuwgWXjKqr/c3C8x7tXP5gQqMF9YXGVsA8sac3EvBrt3yIvEXrZLOGvF2j
-	 V3DzyNz7saimwUKEZ1NBwGaE23q72i7yXa/sAMaknMlYMMme+pJU0ysLs9yxzbsVSB
-	 fwHIAvzYpw+wNW2ohrBFMsLmIOdNNJkQjGkt6Z6E=
+	b=vY+6LeN+yzVjsIWvYFWaxYKsNhRyjJI0jrMvGWxgvmYVT2Nzk2/TGSpqlsLiTSk7O
+	 SK0TljrDEd7Q/BfyNsb/VenPgkMQRG/8Myp1BxQA57jlqIjd76IVuVi1pX+ZH17o3I
+	 VTlQenTSuSMQfq1EUwTBpMe4x6AovbMn+R1AlP6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Shiju Jose <shiju.jose@huawei.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Ben Cheatham <benjamin.cheatham@amd.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Alejandro Lucero <alucerop@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 342/641] RDMA/mlx5: Fix ucaps init error flow
-Date: Tue, 24 Feb 2026 17:21:08 -0800
-Message-ID: <20260225012356.951226566@linuxfoundation.org>
+Subject: [PATCH 6.18 343/641] cxl/mem: Fix devm_cxl_memdev_edac_release() confusion
+Date: Tue, 24 Feb 2026 17:21:09 -0800
+Message-ID: <20260225012356.973167919@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,50 +57,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 6dc78c53de99e4ed9868d4f0fc6da6e46f52fe4d ]
+[ Upstream commit 10016118b6fade907143a32a7aeaa777063dc79c ]
 
-In mlx5_ib_stage_caps_init(), if mlx5_ib_init_ucaps() fails after
-mlx5_ib_init_var_table() succeeds, the VAR bitmap is leaked since
-the function returns without cleanup.
+A device release method is only for undoing allocations on the path to
+preparing the device for device_add(). In contrast, devm allocations are
+post device_add(), are acquired during / after ->probe() and are released
+synchronous with ->remove().
 
-Thus, cleanup the var table bitmap in case of error of initializing
-ucaps before exiting, preventing the leak above.
+So, a "devm" helper in a "release" method is a clear anti-pattern.
 
-Fixes: cf7174e8982f ("RDMA/mlx5: Create UCAP char devices for supported device capabilities")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/20260104-ib-core-misc-v1-3-00367f77f3a8@nvidia.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Move this devm release action where it belongs, an action created at edac
+object creation time. Otherwise, this leaks resources until
+cxl_memdev_release() time which may be long after these xarray and error
+record caches have gone idle.
+
+Note, this also fixes up the type of @cxlmd->err_rec_array which needlessly
+dropped type-safety.
+
+Fixes: 0b5ccb0de1e2 ("cxl/edac: Support for finding memory operation attributes from the current boot")
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Shiju Jose <shiju.jose@huawei.com>
+Cc: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Ben Cheatham <benjamin.cheatham@amd.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Tested-by: Shiju Jose <shiju.jose@huawei.com>
+Reviewed-by: Shiju Jose <shiju.jose@huawei.com>
+Tested-by: Alejandro Lucero <alucerop@amd.com>
+Link: https://patch.msgid.link/20251216005616.3090129-2-dan.j.williams@intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/cxl/core/edac.c   | 64 ++++++++++++++++++++++-----------------
+ drivers/cxl/core/memdev.c |  1 -
+ drivers/cxl/cxlmem.h      |  5 +--
+ 3 files changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index fc1e86f6c4097..8f69c8c1ba54d 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -4462,12 +4462,16 @@ static int mlx5_ib_stage_caps_init(struct mlx5_ib_dev *dev)
- 	    MLX5_HCA_CAP_2_GENERAL_OBJECT_TYPES_RDMA_CTRL) {
- 		err = mlx5_ib_init_ucaps(dev);
- 		if (err)
--			return err;
-+			goto err_ucaps;
- 	}
- 
- 	dev->ib_dev.use_cq_dim = true;
- 
+diff --git a/drivers/cxl/core/edac.c b/drivers/cxl/core/edac.c
+index 79994ca9bc9f3..81160260e26b7 100644
+--- a/drivers/cxl/core/edac.c
++++ b/drivers/cxl/core/edac.c
+@@ -1988,6 +1988,40 @@ static int cxl_memdev_soft_ppr_init(struct cxl_memdev *cxlmd,
  	return 0;
-+
-+err_ucaps:
-+	bitmap_free(dev->var_table.bitmap);
-+	return err;
  }
  
- static const struct ib_device_ops mlx5_ib_dev_port_ops = {
++static void err_rec_free(void *_cxlmd)
++{
++	struct cxl_memdev *cxlmd = _cxlmd;
++	struct cxl_mem_err_rec *array_rec = cxlmd->err_rec_array;
++	struct cxl_event_gen_media *rec_gen_media;
++	struct cxl_event_dram *rec_dram;
++	unsigned long index;
++
++	cxlmd->err_rec_array = NULL;
++	xa_for_each(&array_rec->rec_dram, index, rec_dram)
++		kfree(rec_dram);
++	xa_destroy(&array_rec->rec_dram);
++
++	xa_for_each(&array_rec->rec_gen_media, index, rec_gen_media)
++		kfree(rec_gen_media);
++	xa_destroy(&array_rec->rec_gen_media);
++	kfree(array_rec);
++}
++
++static int devm_cxl_memdev_setup_err_rec(struct cxl_memdev *cxlmd)
++{
++	struct cxl_mem_err_rec *array_rec =
++		kzalloc(sizeof(*array_rec), GFP_KERNEL);
++
++	if (!array_rec)
++		return -ENOMEM;
++
++	xa_init(&array_rec->rec_gen_media);
++	xa_init(&array_rec->rec_dram);
++	cxlmd->err_rec_array = array_rec;
++
++	return devm_add_action_or_reset(&cxlmd->dev, err_rec_free, cxlmd);
++}
++
+ int devm_cxl_memdev_edac_register(struct cxl_memdev *cxlmd)
+ {
+ 	struct edac_dev_feature ras_features[CXL_NR_EDAC_DEV_FEATURES];
+@@ -2038,15 +2072,9 @@ int devm_cxl_memdev_edac_register(struct cxl_memdev *cxlmd)
+ 		}
+ 
+ 		if (repair_inst) {
+-			struct cxl_mem_err_rec *array_rec =
+-				devm_kzalloc(&cxlmd->dev, sizeof(*array_rec),
+-					     GFP_KERNEL);
+-			if (!array_rec)
+-				return -ENOMEM;
+-
+-			xa_init(&array_rec->rec_gen_media);
+-			xa_init(&array_rec->rec_dram);
+-			cxlmd->err_rec_array = array_rec;
++			rc = devm_cxl_memdev_setup_err_rec(cxlmd);
++			if (rc)
++				return rc;
+ 		}
+ 	}
+ 
+@@ -2088,22 +2116,4 @@ int devm_cxl_region_edac_register(struct cxl_region *cxlr)
+ }
+ EXPORT_SYMBOL_NS_GPL(devm_cxl_region_edac_register, "CXL");
+ 
+-void devm_cxl_memdev_edac_release(struct cxl_memdev *cxlmd)
+-{
+-	struct cxl_mem_err_rec *array_rec = cxlmd->err_rec_array;
+-	struct cxl_event_gen_media *rec_gen_media;
+-	struct cxl_event_dram *rec_dram;
+-	unsigned long index;
+-
+-	if (!IS_ENABLED(CONFIG_CXL_EDAC_MEM_REPAIR) || !array_rec)
+-		return;
+-
+-	xa_for_each(&array_rec->rec_dram, index, rec_dram)
+-		kfree(rec_dram);
+-	xa_destroy(&array_rec->rec_dram);
+ 
+-	xa_for_each(&array_rec->rec_gen_media, index, rec_gen_media)
+-		kfree(rec_gen_media);
+-	xa_destroy(&array_rec->rec_gen_media);
+-}
+-EXPORT_SYMBOL_NS_GPL(devm_cxl_memdev_edac_release, "CXL");
+diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+index e370d733e4400..4dff7f44d908e 100644
+--- a/drivers/cxl/core/memdev.c
++++ b/drivers/cxl/core/memdev.c
+@@ -27,7 +27,6 @@ static void cxl_memdev_release(struct device *dev)
+ 	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+ 
+ 	ida_free(&cxl_memdev_ida, cxlmd->id);
+-	devm_cxl_memdev_edac_release(cxlmd);
+ 	kfree(cxlmd);
+ }
+ 
+diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+index 434031a0c1f74..c12ab4fc95123 100644
+--- a/drivers/cxl/cxlmem.h
++++ b/drivers/cxl/cxlmem.h
+@@ -63,7 +63,7 @@ struct cxl_memdev {
+ 	int depth;
+ 	u8 scrub_cycle;
+ 	int scrub_region_id;
+-	void *err_rec_array;
++	struct cxl_mem_err_rec *err_rec_array;
+ };
+ 
+ static inline struct cxl_memdev *to_cxl_memdev(struct device *dev)
+@@ -877,7 +877,6 @@ int devm_cxl_memdev_edac_register(struct cxl_memdev *cxlmd);
+ int devm_cxl_region_edac_register(struct cxl_region *cxlr);
+ int cxl_store_rec_gen_media(struct cxl_memdev *cxlmd, union cxl_event *evt);
+ int cxl_store_rec_dram(struct cxl_memdev *cxlmd, union cxl_event *evt);
+-void devm_cxl_memdev_edac_release(struct cxl_memdev *cxlmd);
+ #else
+ static inline int devm_cxl_memdev_edac_register(struct cxl_memdev *cxlmd)
+ { return 0; }
+@@ -889,8 +888,6 @@ static inline int cxl_store_rec_gen_media(struct cxl_memdev *cxlmd,
+ static inline int cxl_store_rec_dram(struct cxl_memdev *cxlmd,
+ 				     union cxl_event *evt)
+ { return 0; }
+-static inline void devm_cxl_memdev_edac_release(struct cxl_memdev *cxlmd)
+-{ return; }
+ #endif
+ 
+ #ifdef CONFIG_CXL_SUSPEND
 -- 
 2.51.0
 
