@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4346248881;
-	Wed, 25 Feb 2026 01:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E401D5141;
+	Wed, 25 Feb 2026 01:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983414; cv=none; b=MnYulyIGqV3ZDbfKgN5HvU5Om/ucN7W4O+tKfafoQGNOxSUI0ppv6vLNb+swOGenoKltr77aVIQ4UCp+iwVhH0jO6kauT9USY/veluGpMrfS0eQ5qK5aAvVMva11O0Z+/VJvJAwJOoeqWPVwxsyU8rEICzRclR3khjQg1zesBwA=
+	t=1771983415; cv=none; b=FKRjxVaDLJeAITO+KwuwAHmsgmTSBjgiK1FCJG95TPz5xBKonwKlanB0WiuOd5iARz+frnIeEoO7YGNHvQt4mxNW6qBk0Wxh7dkeqcjWddGIMswBOaoGGAE+bqWOBsG3RIsyvoK0WWNMt9R253OIfNxaufw46wHs+f7Po5JeY5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983414; c=relaxed/simple;
-	bh=Fzk6gJfh3yJFYN9psbF3HcqW+1G61Q+r2h6BvbOni+8=;
+	s=arc-20240116; t=1771983415; c=relaxed/simple;
+	bh=lpGUkWsqdrnYYmpgEnPhlbQ6ptR7CSb+UbRnsi0zpZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sroidfDuvtrz2SqEGkkpdJzDWkKA8THU4EbQeWcuiPMh+MBVYs36hzaMJtnVp7vDi+QZmW4ee1saEvGcGhP+VMnaAQ9asjeIvwM8kUvtJmlO0xzxlo3Yb3lAyAgESS4F+5jzRPMZ/+wHCK/jlFQdkb8awXOuP8Ypgxra//iSgS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqlxL6mH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EYGZWIFkxsK4nWekPqCUvwFv7O38AR3G/sBz8AxP2BqzAN5wA/MXe1YNMTWIKzZDMXuRepquty6NkKpZdZ+uvFpWiUqmzReO6JQZDSVgDaNWrLgb85ITft+v/MkHYzFv12qj41Libfu1lcF5sbnpW2fsLwldYhfXspBDKYTpxpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfcecpeB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqlxL6mH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C2AC116D0;
-	Wed, 25 Feb 2026 01:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfcecpeB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D47BC116D0;
+	Wed, 25 Feb 2026 01:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983414;
-	bh=Fzk6gJfh3yJFYN9psbF3HcqW+1G61Q+r2h6BvbOni+8=;
+	s=korg; t=1771983415;
+	bh=lpGUkWsqdrnYYmpgEnPhlbQ6ptR7CSb+UbRnsi0zpZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqlxL6mHnnEZxKrU1F76LFz9osdcRDOsODmIjakfmciUXlWGuy1DINx70fXB5SXjK
-	 kfY/kTw6HWZSryAhJ33MuD3T/vaRE5i1ljqXW9FCUEFSg1l3kjlO3eK2lvQqRCD/15
-	 vnyEEE5KZEyfINFVeBv7TuBaa8Ps4eo6nIiu4f8o=
+	b=EfcecpeBXle3V1S9AXoMgUaoaPdu+Dfj7UziG2h44hgBatde4fcjzArlryeg6MUIY
+	 jCZnBG3CU8LDeGoQm8+fyM/ktziY/FvgAqjJ012kXJwmTSvhmnSSSu53DgklaLdW7b
+	 C9BaYXwKR1oo2Jz8J799lJEsGMLHCj6Lho0FoM6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Richter <rrichter@amd.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	George Moussalem <george.moussalem@outlook.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 481/781] cxl/hdm: Fix newline character in dev_err() messages
-Date: Tue, 24 Feb 2026 17:19:50 -0800
-Message-ID: <20260225012411.611477729@linuxfoundation.org>
+Subject: [PATCH 6.19 528/781] clk: qcom: gcc-ipq5018: flag sleep clock as critical
+Date: Tue, 24 Feb 2026 17:20:37 -0800
+Message-ID: <20260225012412.749671138@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,50 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Richter <rrichter@amd.com>
+From: George Moussalem <george.moussalem@outlook.com>
 
-[ Upstream commit e5b1887619403c2da25a5899cad3e1ab34e7717f ]
+[ Upstream commit 04c4dc1f541135708d90a9b4632af51136f93ac3 ]
 
-The newline character is not placed at the end of the string. This
-causes unintended line wraps, broken log level and unterminated log
-messages. Fix that for all messages.
+The sleep clock never be disabled. To avoid the kernel trying to disable
+it and keep it always on, flag it as critical.
 
-Note that the messages are changed to use colons now instead of
-parentheses, which is more common use.
-
-Fixes: 24b18197184a ("cxl/hdm: Extend DVSEC range register emulation for region enumeration")
-Fixes: 9c57cde0dcbd ("cxl/hdm: Enumerate allocated DPA")
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://patch.msgid.link/20260109122952.639231-1-rrichter@amd.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251128-ipq5018-sleep-clk-fix-v1-1-6f4b75ec336c@outlook.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-ipq5018.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index eb5a3a7640c60..a7ad730763e85 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -966,7 +966,7 @@ static int cxl_setup_hdm_decoder_from_dvsec(
- 	rc = devm_cxl_dpa_reserve(cxled, *dpa_base, len, 0);
- 	if (rc) {
- 		dev_err(&port->dev,
--			"decoder%d.%d: Failed to reserve DPA range %#llx - %#llx\n (%d)",
-+			"decoder%d.%d: Failed to reserve DPA range %#llx - %#llx: %d\n",
- 			port->id, cxld->id, *dpa_base, *dpa_base + len - 1, rc);
- 		return rc;
- 	}
-@@ -1117,7 +1117,7 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
- 	rc = devm_cxl_dpa_reserve(cxled, *dpa_base + skip, dpa_size, skip);
- 	if (rc) {
- 		dev_err(&port->dev,
--			"decoder%d.%d: Failed to reserve DPA range %#llx - %#llx\n (%d)",
-+			"decoder%d.%d: Failed to reserve DPA range %#llx - %#llx: %d\n",
- 			port->id, cxld->id, *dpa_base,
- 			*dpa_base + dpa_size + skip - 1, rc);
- 		return rc;
+diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
+index dcda2be8c1a51..64792cda06202 100644
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -1340,6 +1340,7 @@ static struct clk_branch gcc_sleep_clk_src = {
+ 			.name = "gcc_sleep_clk_src",
+ 			.parent_data = gcc_sleep_clk_data,
+ 			.num_parents = ARRAY_SIZE(gcc_sleep_clk_data),
++			.flags = CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
 -- 
 2.51.0
 
