@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9752311599;
-	Wed, 25 Feb 2026 06:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F513081D7;
+	Wed, 25 Feb 2026 06:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002691; cv=none; b=tBuf7+IPgeTqxGiMQk4lWN+AqcKQk9/6Z+ApJOMOCRAveQzgphg/Qiryd8zNqf83GIaA+IyimDU8AudxTexoXW8+hLm6Eb8N0za1FrDj12vNPxCAoSKoUbWt7xcJpvfcSFTQ1ClvEH14sj+nR4FgkHP1dvw6/qJ5hBDECaq9fvM=
+	t=1772002692; cv=none; b=cAle14m0jgrXWAP2BukhnejAseE2HUjsn1llqW+RBEIq7tl+1QPFu9h7sZUTfC90x2Injb6CBrRBtoja7qfcdgjnGfT0IoMhREmVycPqExV92IEMKBROvDK+NK0QOB0nNkFZcRIQU9YhnJgkfRy9rywYMt3Y1Nxb+3yaZ+Rft10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002691; c=relaxed/simple;
-	bh=ySrb6A5RyWHDiUmqIsmNMsJs8Z3UcTNvYmUnh9Ygy5w=;
+	s=arc-20240116; t=1772002692; c=relaxed/simple;
+	bh=uXkpV9fdwkUblVen1QaMV+Y1o5UNiFGJxGRfVUjDHzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIZ6+Sf6/jiAp6InkCuYf1ziM8JvKBwGSNqLFE3XdnBz3kL+jDk7id/8B8twuWkBRrGJu6WdK1PWQM4PntC/WoYlLr2v2GwtkUC0XC7pBEIx1My8iJ6P+W9flMOUxqS3AxTsEH0cobws+Ph5/mDdXw6asEpuk7UMDDV6gsi98XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCSig9b1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k4Y7ileZNlNzWwRi4JVLfqFMbpwvW5po/UXae/8NSYogsj3O2f/aDHu5dyJ4PbH6bWXjrWFKdXR1hJkFB2v4kgSNQUut5YABQhuqBnrJzgYVArMJrRtHBp4NIKe1BS+r6oHEWBXPAQrl8p4KWZvZXr8Tp4Kmwn4ROs6ufeilCZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6ld8aaf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCSig9b1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921CAC19422;
-	Wed, 25 Feb 2026 06:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6ld8aaf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CFCBC116D0;
+	Wed, 25 Feb 2026 06:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002691;
-	bh=ySrb6A5RyWHDiUmqIsmNMsJs8Z3UcTNvYmUnh9Ygy5w=;
+	s=korg; t=1772002692;
+	bh=uXkpV9fdwkUblVen1QaMV+Y1o5UNiFGJxGRfVUjDHzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCSig9b1qaiK2/XoUcNl3QfaX7F4cZTPoiOZatZ7b+CD2NL0/39o27akdbPzWbHWO
-	 SSaTAWJ3dpjfYvQOgebZzzh+Y+3aK8JJwerr++WnD2t+0CaSkQM93yg3BNlmeBnbPR
-	 YTN5+5YxSV1ogQ5RPuyLC7dS6n7OPl2oUruGsmX0=
+	b=c6ld8aafadj9oBqlc4DZxEcOBUwYsaZDJzZDmiITciB4KYuNFSW/G0zpLYRc4HMEb
+	 t2d0yGrwRfm9ZB/b8ck6M80avmCCJ7ZAtzbCnTawXudwyWRlc8PPjdsoQuIn8FDPRf
+	 nGTES5roAssuUCJPGmlbpFkIzcG9z9O9i+pI7PG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 485/641] iio: sca3000: Fix a resource leak in sca3000_probe()
-Date: Tue, 24 Feb 2026 17:23:31 -0800
-Message-ID: <20260225012400.269812190@linuxfoundation.org>
+Subject: [PATCH 6.18 486/641] mips: LOONGSON32: drop a dangling Kconfig symbol
+Date: Tue, 24 Feb 2026 17:23:32 -0800
+Message-ID: <20260225012400.294703990@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,40 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 62b44ebc1f2c71db3ca2d4737c52e433f6f03038 ]
+[ Upstream commit d463fc5ca1ace0b2e8bb764df04fc12ecd6f8e2b ]
 
-spi->irq from request_threaded_irq() not released when
-iio_device_register() fails. Add an return value check and jump to a
-common error handler when iio_device_register() fails.
+CPU_HAS_LOAD_STORE_LR is not used anywhere in the kernel sources,
+so drop it.
 
-Fixes: 9a4936dc89a3 ("staging:iio:accel:sca3000 Tidy up probe order to avoid a race.")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 85c4354076ca ("MIPS: loongson32: Switch to generic core")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Keguang Zhang <keguang.zhang@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/sca3000.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/mips/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/iio/accel/sca3000.c b/drivers/iio/accel/sca3000.c
-index bfa8a3f5a92f4..9ef4d6e274669 100644
---- a/drivers/iio/accel/sca3000.c
-+++ b/drivers/iio/accel/sca3000.c
-@@ -1489,7 +1489,11 @@ static int sca3000_probe(struct spi_device *spi)
- 	if (ret)
- 		goto error_free_irq;
- 
--	return iio_device_register(indio_dev);
-+	ret = iio_device_register(indio_dev);
-+	if (ret)
-+		goto error_free_irq;
-+
-+	return 0;
- 
- error_free_irq:
- 	if (spi->irq)
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index e8683f58fd3e2..83a6b68d8a39a 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -1408,7 +1408,6 @@ config CPU_LOONGSON32
+ 	select CPU_MIPS32
+ 	select CPU_MIPSR2
+ 	select CPU_HAS_PREFETCH
+-	select CPU_HAS_LOAD_STORE_LR
+ 	select CPU_SUPPORTS_32BIT_KERNEL
+ 	select CPU_SUPPORTS_HIGHMEM
+ 	select CPU_SUPPORTS_CPUFREQ
 -- 
 2.51.0
 
