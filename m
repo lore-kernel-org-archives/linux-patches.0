@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B576C286D70;
-	Wed, 25 Feb 2026 01:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E079248886;
+	Wed, 25 Feb 2026 01:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983747; cv=none; b=ddfUgbFr8yCYPfj/k2owmKdmVJLRbbqOlZh+QfOXmMuKEcCVKbJnJ9eqbI7UJlyryeRPct7Yw586DtrujaCHBZnRDLoeB3jSktxLMwMQyQMh73IHm0C8Scq++66LJSGZxp4cnt6PQ6qnUaWMhygRFDRvGpeY2t/V2m4f1nvbp1M=
+	t=1771983749; cv=none; b=pwBIAaIDZadr1s9kTjqtHS4JR2TKmYKYMohvH3H23fCV7OHrmlCBmF/ITo+V5DBxp2717sa38ZBL3yeZQJVv6InqZdrDw4NaK4Cba5yj1r9EOljeHOhiKNDzdU4zlJzaMbzcxK99WLe6AwtIanOTq1+gPkfecxsdFuob879tTqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983747; c=relaxed/simple;
-	bh=/XI4GLoTHALgaycaJZXU/n3zhea/WogzrLWhA9PActE=;
+	s=arc-20240116; t=1771983749; c=relaxed/simple;
+	bh=kbeCrC/NNO4LML2PQLISjxXIxQknEr9o+7CtOJmBSlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWvjXqM7bG9NOQL7hUtsX/nTjfqy6QOu+ZEliZkpFzgBSsXpxnowcc7aOg+6ZviZ8ztyWIgOfmDMEQ9+oAWV/BqTKv0oCJAYWtHV1W3lfCbewGsC0sUXk0YT1BlAdukl3luJel096fGOK1U6Zhq1io0H/jePt1d0dyKPkUahfIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9siogar; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FWc5V8AYeg7ZsP0iE2n7rV0uc3wbUuGXH7MpxgL/5lDA6PlXrjPnaQuIQs6pvtDEvqvw9erRfLM561Qa4EVFRVIQM5y+pyzBdgXkL1DiC+/AgRUCHVDnmv5Ioe5W5tVhcHmaAiTX/fYyh5Em0d+CJ06irDY1tN4xo0/sM/IAXiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zrp6bz2/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9siogar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E01C116D0;
-	Wed, 25 Feb 2026 01:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zrp6bz2/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8B5C116D0;
+	Wed, 25 Feb 2026 01:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983747;
-	bh=/XI4GLoTHALgaycaJZXU/n3zhea/WogzrLWhA9PActE=;
+	s=korg; t=1771983748;
+	bh=kbeCrC/NNO4LML2PQLISjxXIxQknEr9o+7CtOJmBSlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9siogar5NH85Rg8pYN+nXyGgq3rIdQNYiq/XRtX+wy+MHN0Mh0PWAsNyOStPgAcJ
-	 cSYZvHsVkwM2K6v/fMavKe6+uHZG4mkrSLrq5ECLahDG+iddS89hOom3H8OgOc6gYq
-	 vj4ZNEfi/BSiLit7XXgbczyIRMmBjuLQFqdsT56s=
+	b=Zrp6bz2/42r3KK4S1S/p7KBkWs0S6EiJKNWUHCPdM0x9wfeHDYE1gYKhJQp82yMgt
+	 1HmB/47qjXACkpCQSLKeu+OYD2TheM3U8y6kNY7jeyQGGpF9GgJ4xVe6bp/mUnbZmj
+	 +/BTDFswTlWOnXEHBq+p4QcB9Yz0dMcpkSrDt3TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1c8ff72d0cd8a50dfeaa@syzkaller.appspotmail.com,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 004/641] hfsplus: return error when node already exists in hfs_bnode_create
-Date: Tue, 24 Feb 2026 17:15:30 -0800
-Message-ID: <20260225012349.042749850@linuxfoundation.org>
+Subject: [PATCH 6.18 040/641] io_uring/sync: validate passed in offset
+Date: Tue, 24 Feb 2026 17:16:06 -0800
+Message-ID: <20260225012349.995257440@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,56 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit d8a73cc46c8462a969a7516131feb3096f4c49d3 ]
+[ Upstream commit 649dd18f559891bdafc5532d737c7dfb56060a6d ]
 
-When hfs_bnode_create() finds that a node is already hashed (which should
-not happen in normal operation), it currently returns the existing node
-without incrementing its reference count. This causes a reference count
-inconsistency that leads to a kernel panic when the node is later freed
-in hfs_bnode_put():
+Check if the passed in offset is negative once cast to sync->off. This
+ensures that -EINVAL is returned for that case, like it would be for
+sync_file_range(2).
 
-    kernel BUG at fs/hfsplus/bnode.c:676!
-    BUG_ON(!atomic_read(&node->refcnt))
-
-This scenario can occur when hfs_bmap_alloc() attempts to allocate a node
-that is already in use (e.g., when node 0's bitmap bit is incorrectly
-unset), or due to filesystem corruption.
-
-Returning an existing node from a create path is not normal operation.
-
-Fix this by returning ERR_PTR(-EEXIST) instead of the node when it's
-already hashed. This properly signals the error condition to callers,
-which already check for IS_ERR() return values.
-
-Reported-by: syzbot+1c8ff72d0cd8a50dfeaa@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=1c8ff72d0cd8a50dfeaa
-Link: https://lore.kernel.org/all/784415834694f39902088fa8946850fc1779a318.camel@ibm.com/
-Fixes: 634725a92938 ("[PATCH] hfs: cleanup HFS+ prints")
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20251229204938.1907089-1-shardul.b@mpiricsoftware.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: c992fe2925d7 ("io_uring: add fsync support")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/bnode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/sync.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
-index 482a6c5faa197..8e60e04c427bd 100644
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -629,7 +629,7 @@ struct hfs_bnode *hfs_bnode_create(struct hfs_btree *tree, u32 num)
- 	if (node) {
- 		pr_crit("new node %u already hashed?\n", num);
- 		WARN_ON(1);
--		return node;
-+		return ERR_PTR(-EEXIST);
- 	}
- 	node = __hfs_bnode_create(tree, num);
- 	if (!node)
+diff --git a/io_uring/sync.c b/io_uring/sync.c
+index cea2d381ffd2a..ab7fa1cd7dd63 100644
+--- a/io_uring/sync.c
++++ b/io_uring/sync.c
+@@ -62,6 +62,8 @@ int io_fsync_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 		return -EINVAL;
+ 
+ 	sync->off = READ_ONCE(sqe->off);
++	if (sync->off < 0)
++		return -EINVAL;
+ 	sync->len = READ_ONCE(sqe->len);
+ 	req->flags |= REQ_F_FORCE_ASYNC;
+ 	return 0;
 -- 
 2.51.0
 
