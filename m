@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8EF030E85C;
-	Wed, 25 Feb 2026 06:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB5130E85C;
+	Wed, 25 Feb 2026 06:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002793; cv=none; b=rmgZreybZ3YSq9cIyEx+e2srCReQtTth+TaE/YgYUwjSGhHTCOqs3uXoFtJqbvM2+nuUVhv+l9PNeYc2AxCd7bzrDgsechmK+QwJGCDn1uTjniJiD7ZutgdN0PzktBDR6CZffOBn0TJdfyJ3Gng/yysF4SIamfkDRfGMCIrYVeg=
+	t=1772002794; cv=none; b=bLspGAoHJg+GMUd45IW7O8jBmO6iGVBRwjhy3CNZuAOgppg7EJK9fNjVbrGKhuS3zy4H77K8toiB2CEJdcsJfDszkoFJsWn8Re9xpvHkQCiV59kKZdPjqbgRHZE9PXe+qzqHif0Q7waExepXDFD0PYk0xf8mk+pQkEI/jh9p8h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002793; c=relaxed/simple;
-	bh=9g4tXbzdtpBPX+LDgN2IJYgmFsMTz2NaEPISn2HTsnA=;
+	s=arc-20240116; t=1772002794; c=relaxed/simple;
+	bh=W2tlkqe4+5jnUkh2e8mBJyg5HAcQ2wuTlvLoSJjpSkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ObWylcTgyqIzgKmvl4LjsD6J+guR9iftmV0PMYCUw1DHQ5p62/4lN9l9aYgaqIO4r2gMYdptlE95h3XTCQDmLiBP1ryJDJVMg1gTc6BfKgnbA5QWgeC24IbDAlIQAjOXw/m66euGA00bpEGj6ifOIUWgdY8MsyYSBCqBLMh5v2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abMyOpTi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBhgmNvgVWGe9B+CFhzIieQtAaFu8TkRQz4DSSpPF9K10K1X4zkLoSK28QU0aoSAfXA2mAESTulI/hZxTsVyWdpbeduex62YfMVk1BM6ZwGoVG5BsXsfy9eghEoecXQHQnvhFrRtKRC2Y5+JKC+IuwWS+FrDAULj0vIJkeh/7vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/hfhui8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abMyOpTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA0BC19425;
-	Wed, 25 Feb 2026 06:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/hfhui8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6BBC19425;
+	Wed, 25 Feb 2026 06:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002793;
-	bh=9g4tXbzdtpBPX+LDgN2IJYgmFsMTz2NaEPISn2HTsnA=;
+	s=korg; t=1772002794;
+	bh=W2tlkqe4+5jnUkh2e8mBJyg5HAcQ2wuTlvLoSJjpSkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=abMyOpTi9wIuXXDaj9M98Iq8X3NwOexQOKxhrl3atib+XF53dTxj0t/HV1p2JLpPm
-	 y1dgDOeysijQAzGt+eB+n7SUR3JPJvzxOYxRlRVPoEd6iOuazQJwk738Y/Ars0qvF8
-	 5MzHPWMoqcIKfp/nEd3hxH0kd+OkuZJCRO+aHAGU=
+	b=G/hfhui894oFUa9c+pGedPdh5RlxN2EaWGuol79XoqZB+LOX2jzZCfL5EMXnBrqlL
+	 9jP9AZi2d9QRfev5NjFFf4T2qD23jmPw1dUCx5mpTf17cb7IsegsE3V2XUe19ma7eP
+	 WBkj388OMLf86A5fgoJR+qnJx8zAbHs2nkwe3t+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Florian Bezdeka <florian.bezdeka@siemens.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.18 637/641] Drivers: hv: vmbus: Use kthread for vmbus interrupts on PREEMPT_RT
-Date: Tue, 24 Feb 2026 17:26:03 -0800
-Message-ID: <20260225012403.941395944@linuxfoundation.org>
+	Joanne Koong <joannelkoong@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 638/641] io_uring/rsrc: clean up buffer cloning arg validation
+Date: Tue, 24 Feb 2026 17:26:04 -0800
+Message-ID: <20260225012403.964095983@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,175 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-commit f8e6343b7a89c7c649db5a9e309ba7aa20401813 upstream.
+commit b8201b50e403815f941d1c6581a27fdbfe7d0fd4 upstream.
 
-Resolves the following lockdep report when booting PREEMPT_RT on Hyper-V
-with related guest support enabled:
+Get rid of some redundant checks and move the src arg validation to
+before the buffer table allocation, which simplifies error handling.
 
-[    1.127941] hv_vmbus: registering driver hyperv_drm
-
-[    1.132518] =============================
-[    1.132519] [ BUG: Invalid wait context ]
-[    1.132521] 6.19.0-rc8+ #9 Not tainted
-[    1.132524] -----------------------------
-[    1.132525] swapper/0/0 is trying to lock:
-[    1.132526] ffff8b9381bb3c90 (&channel->sched_lock){....}-{3:3}, at: vmbus_chan_sched+0xc4/0x2b0
-[    1.132543] other info that might help us debug this:
-[    1.132544] context-{2:2}
-[    1.132545] 1 lock held by swapper/0/0:
-[    1.132547]  #0: ffffffffa010c4c0 (rcu_read_lock){....}-{1:3}, at: vmbus_chan_sched+0x31/0x2b0
-[    1.132557] stack backtrace:
-[    1.132560] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.19.0-rc8+ #9 PREEMPT_{RT,(lazy)}
-[    1.132565] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 09/25/2025
-[    1.132567] Call Trace:
-[    1.132570]  <IRQ>
-[    1.132573]  dump_stack_lvl+0x6e/0xa0
-[    1.132581]  __lock_acquire+0xee0/0x21b0
-[    1.132592]  lock_acquire+0xd5/0x2d0
-[    1.132598]  ? vmbus_chan_sched+0xc4/0x2b0
-[    1.132606]  ? lock_acquire+0xd5/0x2d0
-[    1.132613]  ? vmbus_chan_sched+0x31/0x2b0
-[    1.132619]  rt_spin_lock+0x3f/0x1f0
-[    1.132623]  ? vmbus_chan_sched+0xc4/0x2b0
-[    1.132629]  ? vmbus_chan_sched+0x31/0x2b0
-[    1.132634]  vmbus_chan_sched+0xc4/0x2b0
-[    1.132641]  vmbus_isr+0x2c/0x150
-[    1.132648]  __sysvec_hyperv_callback+0x5f/0xa0
-[    1.132654]  sysvec_hyperv_callback+0x88/0xb0
-[    1.132658]  </IRQ>
-[    1.132659]  <TASK>
-[    1.132660]  asm_sysvec_hyperv_callback+0x1a/0x20
-
-As code paths that handle vmbus IRQs use sleepy locks under PREEMPT_RT,
-the vmbus_isr execution needs to be moved into thread context. Open-
-coding this allows to skip the IPI that irq_work would additionally
-bring and which we do not need, being an IRQ, never an NMI.
-
-This affects both x86 and arm64, therefore hook into the common driver
-logic.
-
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Reviewed-by: Florian Bezdeka <florian.bezdeka@siemens.com>
-Tested-by: Florian Bezdeka <florian.bezdeka@siemens.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/vmbus_drv.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 65 insertions(+), 1 deletion(-)
+ io_uring/rsrc.c |   27 ++++++---------------------
+ 1 file changed, 6 insertions(+), 21 deletions(-)
 
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -25,6 +25,7 @@
- #include <linux/cpu.h>
- #include <linux/sched/isolation.h>
- #include <linux/sched/task_stack.h>
-+#include <linux/smpboot.h>
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -1185,12 +1185,16 @@ static int io_clone_buffers(struct io_ri
+ 		return -EBUSY;
  
- #include <linux/delay.h>
- #include <linux/panic_notifier.h>
-@@ -1306,7 +1307,7 @@ sched_unlock_rcu:
+ 	nbufs = src_ctx->buf_table.nr;
++	if (!nbufs)
++		return -ENXIO;
+ 	if (!arg->nr)
+ 		arg->nr = nbufs;
+ 	else if (arg->nr > nbufs)
+ 		return -EINVAL;
+ 	else if (arg->nr > IORING_MAX_REG_BUFFERS)
+ 		return -EINVAL;
++	if (check_add_overflow(arg->nr, arg->src_off, &off) || off > nbufs)
++		return -EOVERFLOW;
+ 	if (check_add_overflow(arg->nr, arg->dst_off, &nbufs))
+ 		return -EOVERFLOW;
+ 	if (nbufs > IORING_MAX_REG_BUFFERS)
+@@ -1210,21 +1214,6 @@ static int io_clone_buffers(struct io_ri
+ 		}
  	}
+ 
+-	ret = -ENXIO;
+-	nbufs = src_ctx->buf_table.nr;
+-	if (!nbufs)
+-		goto out_free;
+-	ret = -EINVAL;
+-	if (!arg->nr)
+-		arg->nr = nbufs;
+-	else if (arg->nr > nbufs)
+-		goto out_free;
+-	ret = -EOVERFLOW;
+-	if (check_add_overflow(arg->nr, arg->src_off, &off))
+-		goto out_free;
+-	if (off > nbufs)
+-		goto out_free;
+-
+ 	off = arg->dst_off;
+ 	i = arg->src_off;
+ 	nr = arg->nr;
+@@ -1237,8 +1226,8 @@ static int io_clone_buffers(struct io_ri
+ 		} else {
+ 			dst_node = io_rsrc_node_alloc(ctx, IORING_RSRC_BUFFER);
+ 			if (!dst_node) {
+-				ret = -ENOMEM;
+-				goto out_free;
++				io_rsrc_data_free(ctx, &data);
++				return -ENOMEM;
+ 			}
+ 
+ 			refcount_inc(&src_node->buf->refs);
+@@ -1274,10 +1263,6 @@ static int io_clone_buffers(struct io_ri
+ 	WARN_ON_ONCE(ctx->buf_table.nr);
+ 	ctx->buf_table = data;
+ 	return 0;
+-
+-out_free:
+-	io_rsrc_data_free(ctx, &data);
+-	return ret;
  }
  
--static void vmbus_isr(void)
-+static void __vmbus_isr(void)
- {
- 	struct hv_per_cpu_context *hv_cpu
- 		= this_cpu_ptr(hv_context.cpu_context);
-@@ -1330,6 +1331,53 @@ static void vmbus_isr(void)
- 	add_interrupt_randomness(vmbus_interrupt);
- }
- 
-+static DEFINE_PER_CPU(bool, vmbus_irq_pending);
-+static DEFINE_PER_CPU(struct task_struct *, vmbus_irqd);
-+
-+static void vmbus_irqd_wake(void)
-+{
-+	struct task_struct *tsk = __this_cpu_read(vmbus_irqd);
-+
-+	__this_cpu_write(vmbus_irq_pending, true);
-+	wake_up_process(tsk);
-+}
-+
-+static void vmbus_irqd_setup(unsigned int cpu)
-+{
-+	sched_set_fifo(current);
-+}
-+
-+static int vmbus_irqd_should_run(unsigned int cpu)
-+{
-+	return __this_cpu_read(vmbus_irq_pending);
-+}
-+
-+static void run_vmbus_irqd(unsigned int cpu)
-+{
-+	__this_cpu_write(vmbus_irq_pending, false);
-+	__vmbus_isr();
-+}
-+
-+static bool vmbus_irq_initialized;
-+
-+static struct smp_hotplug_thread vmbus_irq_threads = {
-+	.store                  = &vmbus_irqd,
-+	.setup			= vmbus_irqd_setup,
-+	.thread_should_run      = vmbus_irqd_should_run,
-+	.thread_fn              = run_vmbus_irqd,
-+	.thread_comm            = "vmbus_irq/%u",
-+};
-+
-+static void vmbus_isr(void)
-+{
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT)) {
-+		vmbus_irqd_wake();
-+	} else {
-+		lockdep_hardirq_threaded();
-+		__vmbus_isr();
-+	}
-+}
-+
- static irqreturn_t vmbus_percpu_isr(int irq, void *dev_id)
- {
- 	vmbus_isr();
-@@ -1375,6 +1423,13 @@ static int vmbus_bus_init(void)
- 	 * the VMbus interrupt handler.
- 	 */
- 
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT) && !vmbus_irq_initialized) {
-+		ret = smpboot_register_percpu_thread(&vmbus_irq_threads);
-+		if (ret)
-+			goto err_kthread;
-+		vmbus_irq_initialized = true;
-+	}
-+
- 	if (vmbus_irq == -1) {
- 		hv_setup_vmbus_handler(vmbus_isr);
- 	} else {
-@@ -1449,6 +1504,11 @@ err_alloc:
- 		free_percpu(vmbus_evt);
- 	}
- err_setup:
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT) && vmbus_irq_initialized) {
-+		smpboot_unregister_percpu_thread(&vmbus_irq_threads);
-+		vmbus_irq_initialized = false;
-+	}
-+err_kthread:
- 	bus_unregister(&hv_bus);
- 	return ret;
- }
-@@ -2914,6 +2974,10 @@ static void __exit vmbus_exit(void)
- 		free_percpu_irq(vmbus_irq, vmbus_evt);
- 		free_percpu(vmbus_evt);
- 	}
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT) && vmbus_irq_initialized) {
-+		smpboot_unregister_percpu_thread(&vmbus_irq_threads);
-+		vmbus_irq_initialized = false;
-+	}
- 	for_each_online_cpu(cpu) {
- 		struct hv_per_cpu_context *hv_cpu
- 			= per_cpu_ptr(hv_context.cpu_context, cpu);
+ /*
 
 
