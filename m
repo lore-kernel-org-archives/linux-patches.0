@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74615311C07;
-	Wed, 25 Feb 2026 06:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8D42BDC03;
+	Wed, 25 Feb 2026 06:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002764; cv=none; b=meuGG9DFYT/YWMvDZ3e5A5yg4fh9zStlyEi0DNDhATQAHHsNk9COvEjvCbuW9a9+4C2mSSz0HawvcTHVxoVgv8H1X8a87PAdXac9Tl+aHJiC0+GsTVPuNJ/mp5lbxaOtQs0IiuPY34d63DmaDTGsxASXhjby2YszmFz688wKFgY=
+	t=1772002765; cv=none; b=YxDxrA3ZgbRZT9aMT9n9U4qZ5brbhRfsk1+rS0xTHqDVuG+wtv5mqjOt0/eo/bXmbeB4GA92RYZ5ij0AIItV5QllkhdOkGh/8B6J4pTBUxyFK9vNt2OVPzEiE9lg83iwQrDP9x0RCByS6pk9ctRrSLPeSO5CCuatff9PTrBXizg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002764; c=relaxed/simple;
-	bh=9JVE30yjWeREaJSn/gB6cTpkB4IMwUTRR+KlyZRo9lc=;
+	s=arc-20240116; t=1772002765; c=relaxed/simple;
+	bh=Go5vKHukaJBL20tJxEaUEvwVN7i/7XdkRQiXaVFOIG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0vec0+nXderPMtNAlaBTwtb5eR8iUPyD/Op1XIS9bd6i0ymQv68Q3oB9nLcq62w4FwTHcWYvqHBEV6Ria0gDZPcBYCR8+fLS07h1iAFDXXh6gZxUm5BUVr4JxSQ/jC2OIRPQC9Nelcv7wceaGy6t3NLIR6KDyYcTqt8Gn/jgdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eu570Diw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kV4rC+UXL3LBuhqLIDcEamsi2usq/1qU5OcvdCFvJqcHeziFIoMOXJrhH7Eo4vLxHKwM9b/P11aiLtJHqXSgq4GpnYAAEi9dB1kn59rALHM84L8IgVwE5DRvQ6tN46lc9kE3Bcn4oi9NRu6KT5if1L8RkdfEOFTzKk9jSa9vfcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTZzP5wa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eu570Diw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D69BC116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTZzP5wa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B5BC116D0;
 	Wed, 25 Feb 2026 06:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002764;
-	bh=9JVE30yjWeREaJSn/gB6cTpkB4IMwUTRR+KlyZRo9lc=;
+	s=korg; t=1772002765;
+	bh=Go5vKHukaJBL20tJxEaUEvwVN7i/7XdkRQiXaVFOIG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eu570DiwLoy3/YoCCD/bma7GYXwzLasYeJijc8yotrHC7VYgLZzU6MRNJoejf8DHg
-	 WZFb0fx3P7RB5Sn9pllUNMNoNP37/Y312mEcYpdIfJW+2d+n1+pNqsRtHP38lEBX6S
-	 e8+Cxq55ORkxtaIJlaNAEAoddvC/ONvLy9P7blOU=
+	b=hTZzP5waoy7RfQHhBCf5ultxkDQDygGUy+mPD2otf5cas4Loo4KNU5X4JR0Tr8XZK
+	 urKgpQzBtpLZLxW+OnOPflQD3PXX4Oxb56YbJ5ynS8o4FXGZ4zvfrqSmivAtuqutzs
+	 yvKibcwcLruLWZVwIe0KVw/yT9EaPPTuHQFXly5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
+	Zygmunt Krynicki <zygmunt.krynicki@canonical.com>,
+	Tyler Hicks <code@tyhicks.com>,
+	Ryan Lee <ryan.lee@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 594/641] s390/kexec: Make KEXEC_SIG available when CONFIG_MODULES=n
-Date: Tue, 24 Feb 2026 17:25:20 -0800
-Message-ID: <20260225012402.908783420@linuxfoundation.org>
+Subject: [PATCH 6.18 567/641] apparmor: return -ENOMEM in unpack_perms_table upon alloc failure
+Date: Tue, 24 Feb 2026 17:24:53 -0800
+Message-ID: <20260225012402.260376087@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,59 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Egorenkov <egorenar@linux.ibm.com>
+From: Ryan Lee <ryan.lee@canonical.com>
 
-[ Upstream commit dd3411959b57df6e05a3ccbac67b0a836871c0c4 ]
+[ Upstream commit 74b7105e53e80a4072bd3e1a50be7aa15e3f0a01 ]
 
-The commit c8424e776b09 ("MODSIGN: Export module signature definitions")
-replaced the dependency of KEXEC_SIG on SYSTEM_DATA_VERIFICATION with the
-dependency on MODULE_SIG_FORMAT. This change disables KEXEC_SIG in s390
-kernels built with MODULES=n if nothing else selects MODULE_SIG_FORMAT.
+In policy_unpack.c:unpack_perms_table, the perms struct is allocated via
+kcalloc, with the position being reset if the allocation fails. However,
+the error path results in -EPROTO being retured instead of -ENOMEM. Fix
+this to return the correct error code.
 
-Furthermore, the signature verification in s390 kexec does not require
-MODULE_SIG_FORMAT because it requires only the struct module_signature and,
-therefore, does not depend on code in kernel/module_signature.c.
-
-But making ARCH_SUPPORTS_KEXEC_SIG depend on SYSTEM_DATA_VERIFICATION is
-also incorrect because it makes KEXEC_SIG available on s390 only if some
-other arbitrary option (for instance a file system or device driver)
-selects it directly or indirectly.
-
-To properly make KEXEC_SIG available for s390 kernels built with MODULES=y
-as well as MODULES=n _and_ also not depend on arbitrary options selecting
-SYSTEM_DATA_VERIFICATION, set ARCH_SUPPORTS_KEXEC_SIG=y for s390 and select
-SYSTEM_DATA_VERIFICATION when KEXEC_SIG=y.
-
-Fixes: c8424e776b09 ("MODSIGN: Export module signature definitions")
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reported-by: Zygmunt Krynicki <zygmunt.krynicki@canonical.com>
+Fixes: fd1b2b95a2117 ("apparmor: add the ability for policy to specify a permission table")
+Reviewed-by: Tyler Hicks <code@tyhicks.com>
+Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ security/apparmor/policy_unpack.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
-index df22b10d91415..e60d2b823e091 100644
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -270,6 +270,7 @@ config S390
- 	select SPARSE_IRQ
- 	select SWIOTLB
- 	select SYSCTL_EXCEPTION_TRACE
-+	select SYSTEM_DATA_VERIFICATION if KEXEC_SIG
- 	select THREAD_INFO_IN_TASK
- 	select TRACE_IRQFLAGS_SUPPORT
- 	select TTY
-@@ -296,7 +297,7 @@ config ARCH_SUPPORTS_KEXEC_FILE
- 	def_bool y
- 
- config ARCH_SUPPORTS_KEXEC_SIG
--	def_bool MODULE_SIG_FORMAT
-+	def_bool y
- 
- config ARCH_SUPPORTS_KEXEC_PURGATORY
- 	def_bool y
+diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
+index 7523971e37d9c..dd602bd5fca99 100644
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -687,8 +687,10 @@ static ssize_t unpack_perms_table(struct aa_ext *e, struct aa_perms **perms)
+ 		if (!aa_unpack_array(e, NULL, &size))
+ 			goto fail_reset;
+ 		*perms = kcalloc(size, sizeof(struct aa_perms), GFP_KERNEL);
+-		if (!*perms)
+-			goto fail_reset;
++		if (!*perms) {
++			e->pos = pos;
++			return -ENOMEM;
++		}
+ 		for (i = 0; i < size; i++) {
+ 			if (!unpack_perm(e, version, &(*perms)[i]))
+ 				goto fail;
 -- 
 2.51.0
 
