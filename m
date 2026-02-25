@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BE924677D;
-	Wed, 25 Feb 2026 01:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEA624677D;
+	Wed, 25 Feb 2026 01:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983834; cv=none; b=QUDS0W3LFB2r9LEvn1y93yjx1jr4d04yIm6mG6Y9Chtgmg8dDHTa6byvhO2YJ5SzkEWPOzt6XYHIRzbayUJW9o/LqAgo40CureI9DrvDWaVO4oI8zAXgxVTgv67MmPh1br7psWURylhf55YfgPDM9/QUeEllrSw4YIypEbL59xQ=
+	t=1771983835; cv=none; b=DrBaYAIrQ/tHeyc1p5hPJlO7UL9E+4WLMcO0TyUbw6JzmTtSwB7bJQKMF9RIizU54jvY9yBwuQZ3oYI0E1znnFTrCx/eq0/EQ6w8STSGPg/d9TRi3ekjSUwEDfAShhXGqRn05rTSbbkhMdWoVsg3PmTbfJM1RsRS3u4pKBR4VBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983834; c=relaxed/simple;
-	bh=09qKpXl0t+e4P0ebd0zTWm6cXaPOB32fz2frDjlnQwo=;
+	s=arc-20240116; t=1771983835; c=relaxed/simple;
+	bh=UPbEM0wOoadFE6QJouIjw86MUiYhvgMcliXTHVY/RIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YUqU0jmYkcHEXHfkV5Jm733LWWNMbnmBennUJhyj2w08VBfTAP0hco86DUAuhZHpoQQcz600xIrbLYU9dK2HW56uF90cKud2NqWgk4dzhOfQt86465w+w1/u2C9P5E92b2h5jMOz/QQrlh/h4WxNIAXf5Gf8+JAtrLRUwuuKKFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fb8mmFWX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lKUPYc7Lq39lPNzbC3MNUTNdky608TJragW6lshWDWw8jq1r+/AmttJKQJungx4/GErLbRNKbzxva+/hSG79blHCTyQlYsji/HBare/+KsUPfNC+dGQFH/NHeIwXrg3q9URdjac3k/j8cGY3+ovnry5OYZZEybs31UlvgYiV7fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJf/AObx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fb8mmFWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68BEC116D0;
-	Wed, 25 Feb 2026 01:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJf/AObx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34949C116D0;
+	Wed, 25 Feb 2026 01:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983834;
-	bh=09qKpXl0t+e4P0ebd0zTWm6cXaPOB32fz2frDjlnQwo=;
+	s=korg; t=1771983835;
+	bh=UPbEM0wOoadFE6QJouIjw86MUiYhvgMcliXTHVY/RIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fb8mmFWXRuDzTuqSogaqgmdj6eKj3eCQZONh1bFcHfy4EABcls0RS6aaioL3jRR3v
-	 UoyOsmVWJ9gZcAF3HD58HlRkIzb+WIwgzleY+lkZkHB3EEeSiMpQfDk6IAaUaVkVtA
-	 6OQm99bGyTL7PVzAsvhKJv/hQwulUwGnVGINiU08=
+	b=fJf/AObxvoldGaapDCImY0IsZN5QbpalU2F1eikaYPOvCU6B+xHibjwEFMSt8VQAL
+	 u8TwKS9c7wEkosd6HJb079f0I00Al+Ru09Wy6T4eWA6WGVzLX6VFNDGQqEqf+u+8dy
+	 44BXm1y62jbgpAAcj7PXZjmngN+NYta1Zw1O6yo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Christian Loehle <christian.loehle@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 114/641] media: pci: mg4b: Use IRQF_NO_THREAD
-Date: Tue, 24 Feb 2026 17:17:20 -0800
-Message-ID: <20260225012351.889478854@linuxfoundation.org>
+Subject: [PATCH 6.18 115/641] sched/deadline: Clear the defer params
+Date: Tue, 24 Feb 2026 17:17:21 -0800
+Message-ID: <20260225012351.916701328@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,37 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Joel Fernandes <joelagnelf@nvidia.com>
 
-[ Upstream commit ef92b98f5f6758a049898b53aa30476010db04fa ]
+[ Upstream commit 3cb3b27693bf30defb16aa096158a3b24583b8d2 ]
 
-The interrupt handler iio_trigger_generic_data_rdy_poll() will invoke other
-interrupt handlers and this supposed to happen from hard interrupt context.
+The defer params were not cleared in __dl_clear_params. Clear them.
 
-Use IRQF_NO_THREAD to forbid forced-threading.
+Without this is some of my test cases are flaking and the DL timer is
+not starting correctly AFAICS.
 
-Fixes: 0ab13674a9bd1 ("media: pci: mgb4: Added Digiteq Automotive MGB4 driver")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260128095540.863589-21-bigeasy@linutronix.de
+Fixes: a110a81c52a9 ("sched/deadline: Deferrable dl server")
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260126100050.3854740-2-arighi@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/mgb4/mgb4_trigger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/deadline.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/pci/mgb4/mgb4_trigger.c b/drivers/media/pci/mgb4/mgb4_trigger.c
-index d7dddc5c8728e..10c23f0c833d5 100644
---- a/drivers/media/pci/mgb4/mgb4_trigger.c
-+++ b/drivers/media/pci/mgb4/mgb4_trigger.c
-@@ -114,7 +114,7 @@ static int probe_trigger(struct iio_dev *indio_dev, int irq)
- 	if (!st->trig)
- 		return -ENOMEM;
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index c7a8717e837dd..72499cf2a1db5 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -3591,6 +3591,9 @@ static void __dl_clear_params(struct sched_dl_entity *dl_se)
+ 	dl_se->dl_non_contending	= 0;
+ 	dl_se->dl_overrun		= 0;
+ 	dl_se->dl_server		= 0;
++	dl_se->dl_defer			= 0;
++	dl_se->dl_defer_running		= 0;
++	dl_se->dl_defer_armed		= 0;
  
--	ret = request_irq(irq, &iio_trigger_generic_data_rdy_poll, 0,
-+	ret = request_irq(irq, &iio_trigger_generic_data_rdy_poll, IRQF_NO_THREAD,
- 			  "mgb4-trigger", st->trig);
- 	if (ret)
- 		goto error_free_trig;
+ #ifdef CONFIG_RT_MUTEXES
+ 	dl_se->pi_se			= dl_se;
 -- 
 2.51.0
 
