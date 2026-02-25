@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6102C3252;
-	Wed, 25 Feb 2026 06:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320212C0263;
+	Wed, 25 Feb 2026 06:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002578; cv=none; b=tGMNvM52evPH00vVf6ImX9L9Yyldhn0cJqGaobg7tVP/7Wp4tqMiMg6MDafOqSoXH/Olo6tEzUTpScL5SZ57ReIsqtlrzMtOUMNqN5H+g6srAyNwoBqKKB4MifkC9GwIPTyAqarxBkJAAe5zYgAmsMCMrEG6puefiBIhC83IIg8=
+	t=1772002579; cv=none; b=rDfOA64p4yWx6t4DD3q1EqOiE34I5e0cqJ76rZs93t+8v9uYntP4IRcUKnKbRzkabITM8VbcY4A8ADTZjBZ290xHGLKizHeaHvLGccaWhMamu3tc1LyDx8Jqf56gKZ0thTlVrl0kE26y+Pdo2bQSQ43d2oXZGEL0Mr+rTLeMgAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002578; c=relaxed/simple;
-	bh=zg+Zkv7bH0/uNJIJT9+mlDCTqLg+86dB186Tiu1Vdbk=;
+	s=arc-20240116; t=1772002579; c=relaxed/simple;
+	bh=aZZ1MS04CG0/BwqMwrCT+QQHDW/ZVBd6J4IY/q7GNl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZD1xmFoCIrAHwK7th6J0XORtpp5fqtVStXaqOuz/U3P0bwp0IqfVKzEEeADOE4lqv+dZIiqdLpiGcKItp8ekokX1SA/XWVQ5mre4kprsjjuLAfhIczPwA1uGB+JXlUCEyuKfx0orPtXQNgNnq5ltM9N/KsjLMptWDC21UDilBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+BogKTj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BOaoR868OQ1oFBIJ9XSQbWAqsyeD8jVDpZbu/JvjM4dK6ZbWUXBLJ6FB5oESQinA4BtvEDpR0uIupRVkWNe+UbwcRIDtXhQ5ZQ4QAH/dLd194fK/BuwVzawd1qV2dlqBbrTZOIcgQT0AV/13Tnfe2II3tVpuGCwIJvgDt1d1E5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCqhWvlo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+BogKTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62840C116D0;
-	Wed, 25 Feb 2026 06:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCqhWvlo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3CBC116D0;
+	Wed, 25 Feb 2026 06:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002578;
-	bh=zg+Zkv7bH0/uNJIJT9+mlDCTqLg+86dB186Tiu1Vdbk=;
+	s=korg; t=1772002579;
+	bh=aZZ1MS04CG0/BwqMwrCT+QQHDW/ZVBd6J4IY/q7GNl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+BogKTjN8LhUwCoGbnwkcDDHh3MrXneuJcOAJTju0bKbtyaizbVerGP7oLGCYmrU
-	 MpwmOv1ejSktF3xE9kpezB8hIJykjBSpzQuhXxLLkWwHG5s8BZYRm4DHMXHu7RpQ4E
-	 zXROcwZi9EE5Ogb5VMKCBtMoSekagqZEel+ufLgs=
+	b=lCqhWvlooAXPZeoCRJZy7lJ+pwzQj4XQKWU6DcviSaMPISsyd9slF8iIvB4kkWmqP
+	 qTgx4QSlXzddPwFQSIOgrvsSaosOpPYDqfQlrnx7tMG/NT5XQWLN16GTLKP2rPi80E
+	 asDGQbjv9zwixL7wQz7meAuLATwj7HNnM7G8KlOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot+d417922a3e7935517ef6@syzkaller.appspotmail.com,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 312/641] netfilter: nft_set_rbtree: remove seqcount_rwlock_t
-Date: Tue, 24 Feb 2026 17:20:38 -0800
-Message-ID: <20260225012356.287048293@linuxfoundation.org>
+Subject: [PATCH 6.18 313/641] netfilter: nft_set_rbtree: dont gc elements on insert
+Date: Tue, 24 Feb 2026 17:20:39 -0800
+Message-ID: <20260225012356.309349398@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,61 +51,299 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 5599fa810b503eafc2bd8cd15bd45f35fc8ff6b9 ]
+[ Upstream commit 35f83a75529a829b0939708b003652f7b4f3df9a ]
 
-After the conversion to binary search array, this is not required anymore.
-Remove it.
+During insertion we can queue up expired elements for garbage
+collection.
 
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+In case of later abort, the commit hook will never be called.
+Packet path and 'get' requests will find free'd elements in the
+binary search blob:
+
+ nft_set_ext_key include/net/netfilter/nf_tables.h:800 [inline]
+ nft_array_get_cmp+0x1f6/0x2a0 net/netfilter/nft_set_rbtree.c:133
+ __inline_bsearch include/linux/bsearch.h:15 [inline]
+ bsearch+0x50/0xc0 lib/bsearch.c:33
+ nft_rbtree_get+0x16b/0x400 net/netfilter/nft_set_rbtree.c:169
+ nft_setelem_get net/netfilter/nf_tables_api.c:6495 [inline]
+ nft_get_set_elem+0x420/0xaa0 net/netfilter/nf_tables_api.c:6543
+ nf_tables_getsetelem+0x448/0x5e0 net/netfilter/nf_tables_api.c:6632
+ nfnetlink_rcv_msg+0x8ae/0x12c0 net/netfilter/nfnetlink.c:290
+
+Also, when we insert an element that triggers -EEXIST, and that insertion
+happens to also zap a timed-out entry, we end up with same issue:
+Neither commit nor abort hook is called.
+
+Fix this by removing gc api usage during insertion.
+
+The blamed commit also removes concurrency of the rbtree with the
+packet path, so we can now safely rb_erase() the element and move
+it to a new expired list that can be reaped in the commit hook
+before building the next blob iteration.
+
+This also avoids the need to rebuild the blob in the abort path:
+Expired elements seen during insertion attempts are kept around
+until a transaction passes.
+
+Reported-by: syzbot+d417922a3e7935517ef6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d417922a3e7935517ef6
+Fixes: 7e43e0a1141d ("netfilter: nft_set_rbtree: translate rbtree to array for binary search")
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Stable-dep-of: 782f2688128e ("netfilter: nft_set_rbtree: validate element belonging to interval")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 6 ------
- 1 file changed, 6 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 136 ++++++++++++++++-----------------
+ 1 file changed, 68 insertions(+), 68 deletions(-)
 
 diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 1b0502cc87301..6470bc5d38749 100644
+index 6470bc5d38749..14b4256bb00d0 100644
 --- a/net/netfilter/nft_set_rbtree.c
 +++ b/net/netfilter/nft_set_rbtree.c
-@@ -33,7 +33,6 @@ struct nft_rbtree {
- 	rwlock_t		lock;
+@@ -34,11 +34,15 @@ struct nft_rbtree {
  	struct nft_array __rcu	*array;
  	struct nft_array	*array_next;
--	seqcount_rwlock_t	count;
  	unsigned long		last_gc;
++	struct list_head	expired;
  };
  
-@@ -572,9 +571,7 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 		cond_resched();
+ struct nft_rbtree_elem {
+ 	struct nft_elem_priv	priv;
+-	struct rb_node		node;
++	union {
++		struct rb_node	node;
++		struct list_head list;
++	};
+ 	struct nft_set_ext	ext;
+ };
  
- 		write_lock_bh(&priv->lock);
--		write_seqcount_begin(&priv->count);
- 		err = __nft_rbtree_insert(net, set, rbe, elem_priv);
--		write_seqcount_end(&priv->count);
- 		write_unlock_bh(&priv->lock);
- 	} while (err == -EAGAIN);
- 
-@@ -584,9 +581,7 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- static void nft_rbtree_erase(struct nft_rbtree *priv, struct nft_rbtree_elem *rbe)
- {
- 	write_lock_bh(&priv->lock);
--	write_seqcount_begin(&priv->count);
- 	rb_erase(&rbe->node, &priv->root);
--	write_seqcount_end(&priv->count);
- 	write_unlock_bh(&priv->lock);
+@@ -186,13 +190,16 @@ nft_rbtree_get(const struct net *net, const struct nft_set *set,
+ 	return &rbe->priv;
  }
  
-@@ -798,7 +793,6 @@ static int nft_rbtree_init(const struct nft_set *set,
- 	BUILD_BUG_ON(offsetof(struct nft_rbtree_elem, priv) != 0);
+-static void nft_rbtree_gc_elem_remove(struct net *net, struct nft_set *set,
+-				      struct nft_rbtree *priv,
+-				      struct nft_rbtree_elem *rbe)
++static void nft_rbtree_gc_elem_move(struct net *net, struct nft_set *set,
++				    struct nft_rbtree *priv,
++				    struct nft_rbtree_elem *rbe)
+ {
+ 	lockdep_assert_held_write(&priv->lock);
+ 	nft_setelem_data_deactivate(net, set, &rbe->priv);
+ 	rb_erase(&rbe->node, &priv->root);
++
++	/* collected later on in commit callback */
++	list_add(&rbe->list, &priv->expired);
+ }
+ 
+ static const struct nft_rbtree_elem *
+@@ -203,11 +210,6 @@ nft_rbtree_gc_elem(const struct nft_set *__set, struct nft_rbtree *priv,
+ 	struct rb_node *prev = rb_prev(&rbe->node);
+ 	struct net *net = read_pnet(&set->net);
+ 	struct nft_rbtree_elem *rbe_prev;
+-	struct nft_trans_gc *gc;
+-
+-	gc = nft_trans_gc_alloc(set, 0, GFP_ATOMIC);
+-	if (!gc)
+-		return ERR_PTR(-ENOMEM);
+ 
+ 	/* search for end interval coming before this element.
+ 	 * end intervals don't carry a timeout extension, they
+@@ -225,28 +227,10 @@ nft_rbtree_gc_elem(const struct nft_set *__set, struct nft_rbtree *priv,
+ 	rbe_prev = NULL;
+ 	if (prev) {
+ 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
+-		nft_rbtree_gc_elem_remove(net, set, priv, rbe_prev);
+-
+-		/* There is always room in this trans gc for this element,
+-		 * memory allocation never actually happens, hence, the warning
+-		 * splat in such case. No need to set NFT_SET_ELEM_DEAD_BIT,
+-		 * this is synchronous gc which never fails.
+-		 */
+-		gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
+-		if (WARN_ON_ONCE(!gc))
+-			return ERR_PTR(-ENOMEM);
+-
+-		nft_trans_gc_elem_add(gc, rbe_prev);
++		nft_rbtree_gc_elem_move(net, set, priv, rbe_prev);
+ 	}
+ 
+-	nft_rbtree_gc_elem_remove(net, set, priv, rbe);
+-	gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
+-	if (WARN_ON_ONCE(!gc))
+-		return ERR_PTR(-ENOMEM);
+-
+-	nft_trans_gc_elem_add(gc, rbe);
+-
+-	nft_trans_gc_queue_sync_done(gc);
++	nft_rbtree_gc_elem_move(net, set, priv, rbe);
+ 
+ 	return rbe_prev;
+ }
+@@ -708,29 +692,13 @@ static void nft_rbtree_walk(const struct nft_ctx *ctx,
+ 	}
+ }
+ 
+-static void nft_rbtree_gc_remove(struct net *net, struct nft_set *set,
+-				 struct nft_rbtree *priv,
+-				 struct nft_rbtree_elem *rbe)
+-{
+-	nft_setelem_data_deactivate(net, set, &rbe->priv);
+-	nft_rbtree_erase(priv, rbe);
+-}
+-
+-static void nft_rbtree_gc(struct nft_set *set)
++static void nft_rbtree_gc_scan(struct nft_set *set)
+ {
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	struct nft_rbtree_elem *rbe, *rbe_end = NULL;
+ 	struct net *net = read_pnet(&set->net);
+ 	u64 tstamp = nft_net_tstamp(net);
+ 	struct rb_node *node, *next;
+-	struct nft_trans_gc *gc;
+-
+-	set  = nft_set_container_of(priv);
+-	net  = read_pnet(&set->net);
+-
+-	gc = nft_trans_gc_alloc(set, 0, GFP_KERNEL);
+-	if (!gc)
+-		return;
+ 
+ 	for (node = rb_first(&priv->root); node ; node = next) {
+ 		next = rb_next(node);
+@@ -748,34 +716,46 @@ static void nft_rbtree_gc(struct nft_set *set)
+ 		if (!__nft_set_elem_expired(&rbe->ext, tstamp))
+ 			continue;
+ 
+-		gc = nft_trans_gc_queue_sync(gc, GFP_KERNEL);
+-		if (!gc)
+-			goto try_later;
+-
+ 		/* end element needs to be removed first, it has
+ 		 * no timeout extension.
+ 		 */
++		write_lock_bh(&priv->lock);
+ 		if (rbe_end) {
+-			nft_rbtree_gc_remove(net, set, priv, rbe_end);
+-			nft_trans_gc_elem_add(gc, rbe_end);
++			nft_rbtree_gc_elem_move(net, set, priv, rbe_end);
+ 			rbe_end = NULL;
+ 		}
+ 
+-		gc = nft_trans_gc_queue_sync(gc, GFP_KERNEL);
+-		if (!gc)
+-			goto try_later;
+-
+-		nft_rbtree_gc_remove(net, set, priv, rbe);
+-		nft_trans_gc_elem_add(gc, rbe);
++		nft_rbtree_gc_elem_move(net, set, priv, rbe);
++		write_unlock_bh(&priv->lock);
+ 	}
+ 
+-try_later:
++	priv->last_gc = jiffies;
++}
++
++static void nft_rbtree_gc_queue(struct nft_set *set)
++{
++	struct nft_rbtree *priv = nft_set_priv(set);
++	struct nft_rbtree_elem *rbe, *rbe_end;
++	struct nft_trans_gc *gc;
++
++	if (list_empty(&priv->expired))
++		return;
+ 
+-	if (gc) {
+-		gc = nft_trans_gc_catchall_sync(gc);
+-		nft_trans_gc_queue_sync_done(gc);
+-		priv->last_gc = jiffies;
++	gc = nft_trans_gc_alloc(set, 0, GFP_KERNEL);
++	if (!gc)
++		return;
++
++	list_for_each_entry_safe(rbe, rbe_end, &priv->expired, list) {
++		list_del(&rbe->list);
++		nft_trans_gc_elem_add(gc, rbe);
++
++		gc = nft_trans_gc_queue_sync(gc, GFP_KERNEL);
++		if (!gc)
++			return;
+ 	}
++
++	gc = nft_trans_gc_catchall_sync(gc);
++	nft_trans_gc_queue_sync_done(gc);
+ }
+ 
+ static u64 nft_rbtree_privsize(const struct nlattr * const nla[],
+@@ -794,6 +774,7 @@ static int nft_rbtree_init(const struct nft_set *set,
  
  	rwlock_init(&priv->lock);
--	seqcount_rwlock_init(&priv->count, &priv->lock);
  	priv->root = RB_ROOT;
++	INIT_LIST_HEAD(&priv->expired);
  
  	priv->array = NULL;
+ 	priv->array_next = NULL;
+@@ -811,10 +792,15 @@ static void nft_rbtree_destroy(const struct nft_ctx *ctx,
+ 			       const struct nft_set *set)
+ {
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+-	struct nft_rbtree_elem *rbe;
++	struct nft_rbtree_elem *rbe, *next;
+ 	struct nft_array *array;
+ 	struct rb_node *node;
+ 
++	list_for_each_entry_safe(rbe, next, &priv->expired, list) {
++		list_del(&rbe->list);
++		nf_tables_set_elem_destroy(ctx, set, &rbe->priv);
++	}
++
+ 	while ((node = priv->root.rb_node) != NULL) {
+ 		rb_erase(node, &priv->root);
+ 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
+@@ -861,13 +847,21 @@ static void nft_rbtree_commit(struct nft_set *set)
+ 	u32 num_intervals = 0;
+ 	struct rb_node *node;
+ 
+-	if (time_after_eq(jiffies, priv->last_gc + nft_set_gc_interval(set)))
+-		nft_rbtree_gc(set);
+-
+ 	/* No changes, skip, eg. elements updates only. */
+ 	if (!priv->array_next)
+ 		return;
+ 
++	/* GC can be performed if the binary search blob is going
++	 * to be rebuilt.  It has to be done in two phases: first
++	 * scan tree and move all expired elements to the expired
++	 * list.
++	 *
++	 * Then, after blob has been re-built and published to other
++	 * CPUs, queue collected entries for freeing.
++	 */
++	if (time_after_eq(jiffies, priv->last_gc + nft_set_gc_interval(set)))
++		nft_rbtree_gc_scan(set);
++
+ 	/* Reverse walk to create an array from smaller to largest interval. */
+ 	node = rb_last(&priv->root);
+ 	if (node)
+@@ -914,10 +908,16 @@ static void nft_rbtree_commit(struct nft_set *set)
+ 		num_intervals++;
+ err_out:
+ 	priv->array_next->num_intervals = num_intervals;
+-	old = rcu_replace_pointer(priv->array, priv->array_next, true);
++	old = rcu_replace_pointer(priv->array, priv->array_next,
++				  lockdep_is_held(&nft_pernet(read_pnet(&set->net))->commit_mutex));
+ 	priv->array_next = NULL;
+ 	if (old)
+ 		call_rcu(&old->rcu_head, nft_array_free_rcu);
++
++	/* New blob is public, queue collected entries for freeing.
++	 * call_rcu ensures elements stay around until readers are done.
++	 */
++	nft_rbtree_gc_queue(set);
+ }
+ 
+ static void nft_rbtree_abort(const struct nft_set *set)
 -- 
 2.51.0
 
