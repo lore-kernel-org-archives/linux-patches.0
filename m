@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E177E4369A;
-	Wed, 25 Feb 2026 01:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FF7251795;
+	Wed, 25 Feb 2026 01:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982888; cv=none; b=OidQ0nG6m4O7Xy36XisO/p8hx3madMQczuq2+FKal/wKDpc96IkAZCvJM9SnsSW+XTUsUxVTBw1fkhMKlzUn3lbVFacSSkMiJiS8/6gzLyXUn07hnx+bWvI0v8mH+oTXHzpF020nLjSkxFknqTb/EDve417kBtLAGvzj3dHq6kY=
+	t=1771982889; cv=none; b=G9+eXIXH7PCPbpVvYfs7lzA93D5JyRkKqiZlgn0POdz/w4H+Nmis7+OSqbi4UFQB46JkcK67NnR9cXUyheLfnEW7keB829v2FVj3Cly5hZmp1BfCkPtNAg6UF6YovrZGqDyWknkGE0cTRWer/VJlvOgiUyJKwVdP2SLGc2wJx4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982888; c=relaxed/simple;
-	bh=QjQK4eK9kd8faFesxzxo9eTM+g8cOW6u4RFJn433v/Q=;
+	s=arc-20240116; t=1771982889; c=relaxed/simple;
+	bh=zwQtGPNVUKT+eCGnB4CTARAs3wk7to3A3ndTx3eiZds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1i5aBXNAtATa78ya2hmGjjlHrEoGEHmAEoaZckrv04bQFjPaAqQZMDutSIKQzMk50idA3c9Pe5tdTYjsOAUu7NWiaVCmbixJ5kvIpI3sav1e5PLSQgtAg2oYuk8UtNGpdrOE1pnQToGHnVDgQlpmaGP99QC7DaCYThiGv+NA9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZWsy4Z1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EyBALUcU+C95a8j6UH69IhY6C20IR3P0pb05xo3uhYQvzJzgb/mCtpFOfu/mf3DQ67eyZAFOYPPVi0izUCJqLtWbfhiNB50z9QokqrrAjfeKKeVwKKvBoaBX8JyMIU2Fn690MUW9gxZKR3vOfgpGmYZ/qGBkvhg2PerSBgfpenM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1HyzNPi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZWsy4Z1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3936C116D0;
-	Wed, 25 Feb 2026 01:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1HyzNPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC929C116D0;
+	Wed, 25 Feb 2026 01:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982887;
-	bh=QjQK4eK9kd8faFesxzxo9eTM+g8cOW6u4RFJn433v/Q=;
+	s=korg; t=1771982888;
+	bh=zwQtGPNVUKT+eCGnB4CTARAs3wk7to3A3ndTx3eiZds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZWsy4Z1p+imMO4ubMfIva8iYHADQTBDToBIKS7e+VXeoogXV9iWVQ+Z41MvkmbNt
-	 ITTK1/Ka8vMpaqG3/jgFlPwyvyvQ/QoDa8J78XPfsZlkBx8NehzxRCW4VmStmk+Uiz
-	 fggzy/WQzmo8eRF1jgUALDNAXJzLMQLYt3cI9KGo=
+	b=E1HyzNPiTxEQECf1Jhd0YgEWPh8ZfEn1axz+5ejNFoEVz4WltcjBNDkn/wHPAo0tM
+	 onLSwaboZDofVwWMG3U/I66jBl1RXX9aOuGA2t/7fVo/b1/UWKMbmM7z7WeiFGcz7w
+	 d0iUXip5aUFUTg74H8X/KSSPo9sNa9K72S3yL/a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Harrison Green <harrisonmichaelgreen@gmail.com>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Varun R Mallya <varunrmallya@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 065/781] PM: sleep: wakeirq: harden dev_pm_clear_wake_irq() against races
-Date: Tue, 24 Feb 2026 17:12:54 -0800
-Message-ID: <20260225012401.298231161@linuxfoundation.org>
+Subject: [PATCH 6.19 074/781] libbpf: Fix OOB read in btf_dump_get_bitfield_value
+Date: Tue, 24 Feb 2026 17:13:03 -0800
+Message-ID: <20260225012401.518821302@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,63 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Varun R Mallya <varunrmallya@gmail.com>
 
-[ Upstream commit 5c9ecd8e6437cd55a38ea4f1e1d19cee8e226cb8 ]
+[ Upstream commit 5714ca8cba5ed736f3733663c446cbee63a10a64 ]
 
-dev_pm_clear_wake_irq() currently uses a dangerous pattern where
-dev->power.wakeirq is read and checked for NULL outside the lock.
-If two callers invoke this function concurrently, both might see
-a valid pointer and proceed. This could result in a double-free
-when the second caller acquires the lock and tries to release the
-same object.
+When dumping bitfield data, btf_dump_get_bitfield_value() reads data
+based on the underlying type's size (t->size). However, it does not
+verify that the provided data buffer (data_sz) is large enough to
+contain these bytes.
 
-Address this by removing the lockless check of dev->power.wakeirq.
-Instead, acquire dev->power.lock immediately to ensure the check and
-the subsequent operations are atomic. If dev->power.wakeirq is NULL
-under the lock, simply unlock and return. This guarantees that
-concurrent calls cannot race to free the same object.
+If btf_dump__dump_type_data() is called with a buffer smaller than
+the type's size, this leads to an out-of-bounds read. This was
+confirmed by AddressSanitizer in the linked issue.
 
-Based on a quick scan of current users, I did not find an actual bug as
-drivers seem to rely on their own synchronization. However, since
-asynchronous usage patterns exist (e.g., in
-drivers/net/wireless/ti/wlcore), I believe a race is theoretically
-possible if the API is used less carefully in the future. This change
-hardens the API to be robust against such cases.
+Fix this by ensuring we do not read past the provided data_sz limit.
 
-Fixes: 4990d4fe327b ("PM / Wakeirq: Add automated device wake IRQ handling")
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260203031943.1924-1-hanguidong02@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: a1d3cc3c5eca ("libbpf: Avoid use of __int128 in typed dump display")
+Reported-by: Harrison Green <harrisonmichaelgreen@gmail.com>
+Suggested-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Varun R Mallya <varunrmallya@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260106233527.163487-1-varunrmallya@gmail.com
+
+Closes: https://github.com/libbpf/libbpf/issues/928
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/wakeirq.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/lib/bpf/btf_dump.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
-index 8aa28c08b2891..c0809d18fc540 100644
---- a/drivers/base/power/wakeirq.c
-+++ b/drivers/base/power/wakeirq.c
-@@ -83,13 +83,16 @@ EXPORT_SYMBOL_GPL(dev_pm_set_wake_irq);
-  */
- void dev_pm_clear_wake_irq(struct device *dev)
- {
--	struct wake_irq *wirq = dev->power.wakeirq;
-+	struct wake_irq *wirq;
- 	unsigned long flags;
+diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
+index 6388392f49a0b..53c6624161d79 100644
+--- a/tools/lib/bpf/btf_dump.c
++++ b/tools/lib/bpf/btf_dump.c
+@@ -1762,9 +1762,18 @@ static int btf_dump_get_bitfield_value(struct btf_dump *d,
+ 	__u16 left_shift_bits, right_shift_bits;
+ 	const __u8 *bytes = data;
+ 	__u8 nr_copy_bits;
++	__u8 start_bit, nr_bytes;
+ 	__u64 num = 0;
+ 	int i;
  
--	if (!wirq)
-+	spin_lock_irqsave(&dev->power.lock, flags);
-+	wirq = dev->power.wakeirq;
-+	if (!wirq) {
-+		spin_unlock_irqrestore(&dev->power.lock, flags);
- 		return;
-+	}
- 
--	spin_lock_irqsave(&dev->power.lock, flags);
- 	device_wakeup_detach_irq(dev);
- 	dev->power.wakeirq = NULL;
- 	spin_unlock_irqrestore(&dev->power.lock, flags);
++	/* Calculate how many bytes cover the bitfield */
++	start_bit = bits_offset % 8;
++	nr_bytes = (start_bit + bit_sz + 7) / 8;
++
++	/* Bound check */
++	if (data + nr_bytes > d->typed_dump->data_end)
++		return -E2BIG;
++
+ 	/* Maximum supported bitfield size is 64 bits */
+ 	if (t->size > 8) {
+ 		pr_warn("unexpected bitfield size %d\n", t->size);
 -- 
 2.51.0
 
