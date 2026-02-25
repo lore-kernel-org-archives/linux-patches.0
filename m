@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C20926561A;
-	Wed, 25 Feb 2026 01:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447F627055D;
+	Wed, 25 Feb 2026 01:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983634; cv=none; b=A1ZHJ4fhMIW0Ymaqqku5ZjGjlLkA+DuXPK4GV8TYfhu4M7Ks5lHMZaHyEJy9XeILMm+0kL/wk2PNeMf9I/qPTWjY4UgIvZQU1x19dOy+H/DE9jL7ZT5XFxegAPRCvZBrgKducZGmg4TMPywA4olGD5JNItPo3OMGP8ZQW6gVMJQ=
+	t=1771983635; cv=none; b=SEHW+PZi6Q0bK3KCIUxAjS4+Ox+4z5o9yT7ETvf++67tkg7lET418zORFRI7qzORLRmCfgKIEEFcDGuIJewX6QDYeI/Ov9lZ1Ye+nKK8xnBPiT2hXpyiNgUFMJm1bhFWs8/7JZNVEPbDbG/dr6w6nuzjbQpkzxtZ+Y1gaxNmEvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983634; c=relaxed/simple;
-	bh=1GjDhQrqN/UzCQcyCUOmJ1KFI+qiuNve2U+tf/J5Hgs=;
+	s=arc-20240116; t=1771983635; c=relaxed/simple;
+	bh=7QRl7dcYFsP/2ctfEjG0ZTN+INSb4LDdHo/48rAwGXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qYtAEQp3iLQ+mjYp7eQVXeQLFcl3nnGbCg67hglROJeUtdM8SJI0WXSuKKYVHw73udP+7BpqG+QuSfsqH6o5cho/5C47Jr/D1paRcCU4VIJxaRGKzEtbDHO31GzpAAS06ekDx0tkvAIEFBWl67hmR7RNAkX7kgwyhqce4peVvB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Br0TTgY1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JOsW9kEWcjE1rHq3qXVmoB79NQuWzwxbDrD8ZoO8sp1soXqeAVQWHxgln2dEvrVtD6R/I23RONm00Rx7D4NhkAJ5bRNpLOrg2Iy5qy+A4aK3xlJrIgERl4c35YF5NTifAhhT0zOELd1wrdtNYAPAYaDMIUVCG2mF+4bLVquZbLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MF0+ctLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Br0TTgY1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19F9C116D0;
-	Wed, 25 Feb 2026 01:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MF0+ctLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048CCC116D0;
+	Wed, 25 Feb 2026 01:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983634;
-	bh=1GjDhQrqN/UzCQcyCUOmJ1KFI+qiuNve2U+tf/J5Hgs=;
+	s=korg; t=1771983635;
+	bh=7QRl7dcYFsP/2ctfEjG0ZTN+INSb4LDdHo/48rAwGXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Br0TTgY1DUu8TPcHHsrRwHiO24jYPrp6vHRCb7uKBkmLzhvczKMfO0EL1N4rSpaMj
-	 ZJpAR3kvFwKc72ac4fDmE5zmxGb0ZvCaCdMRhTvIDG8WjwzYnU4T6jsVYvNf9a2e0p
-	 ERmd7rBrABSF4tejf9bS9nO7SUa6R72Vd+9FrZgU=
+	b=MF0+ctLDcvDheSybWlZgkgwUCFMXb93woqFexDcXpx7Lutk6kXthjr/dE5myTCbgd
+	 bRVbuob7vbEhC2iZ/R7fDP+CBHngiWWNiOghqtzGVgEIGsDe2Q9rOCv3bP88fGgRDI
+	 Gi2Vg70iLvLGON4VjpokB1jWmgzpNLp2wCUP78Ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyler Hicks <code@tyhicks.com>,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	"=?UTF-8?q?J . =20Neusch=C3=A4fer?=" <j.ne@posteo.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 697/781] apparmor: drop in_atomic flag in common_mmap, and common_file_perm
-Date: Tue, 24 Feb 2026 17:23:26 -0800
-Message-ID: <20260225012416.853110100@linuxfoundation.org>
+Subject: [PATCH 6.19 724/781] spi: wpcm-fiu: Fix potential NULL pointer dereference in wpcm_fiu_probe()
+Date: Tue, 24 Feb 2026 17:23:53 -0800
+Message-ID: <20260225012417.493649178@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,106 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit c3f27ccdb2dce3f0f2814574d06017f46c11fa29 ]
+[ Upstream commit 888a0a802c467bbe34a42167bdf9d7331333440a ]
 
-with the previous changes to mmap the in_atomic flag is now always
-false, so drop it.
+platform_get_resource_byname() can return NULL, which would cause a crash
+when passed the pointer to resource_size().
 
-Suggested-by: Tyler Hicks <code@tyhicks.com>
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Stable-dep-of: 4a134723f9f1 ("apparmor: move check for aa_null file to cover all cases")
+Move the fiu->memory_size assignment after the error check for
+devm_ioremap_resource() to prevent the potential NULL pointer dereference.
+
+Fixes: 9838c182471e ("spi: wpcm-fiu: Add direct map support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: J. Neuschäfer <j.ne@posteo.net>
+Link: https://patch.msgid.link/20260212-wpcm-v1-1-5b7c4f526aac@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/lsm.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/spi/spi-wpcm-fiu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
-index acca3d6efdbc8..e59e9bc7250bf 100644
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -520,8 +520,7 @@ static void apparmor_file_free_security(struct file *file)
- 		aa_put_label(rcu_access_pointer(ctx->label));
- }
+diff --git a/drivers/spi/spi-wpcm-fiu.c b/drivers/spi/spi-wpcm-fiu.c
+index a9aee2a6c7dcb..c47b56f0933f1 100644
+--- a/drivers/spi/spi-wpcm-fiu.c
++++ b/drivers/spi/spi-wpcm-fiu.c
+@@ -459,11 +459,11 @@ static int wpcm_fiu_probe(struct platform_device *pdev)
  
--static int common_file_perm(const char *op, struct file *file, u32 mask,
--			    bool in_atomic)
-+static int common_file_perm(const char *op, struct file *file, u32 mask)
- {
- 	struct aa_label *label;
- 	int error = 0;
-@@ -532,7 +531,7 @@ static int common_file_perm(const char *op, struct file *file, u32 mask,
- 		return -EACCES;
+ 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "memory");
+ 	fiu->memory = devm_ioremap_resource(dev, res);
+-	fiu->memory_size = min_t(size_t, resource_size(res), MAX_MEMORY_SIZE_TOTAL);
+ 	if (IS_ERR(fiu->memory))
+ 		return dev_err_probe(dev, PTR_ERR(fiu->memory),
+ 			       "Failed to map flash memory window\n");
  
- 	label = __begin_current_label_crit_section(&needput);
--	error = aa_file_perm(op, current_cred(), label, file, mask, in_atomic);
-+	error = aa_file_perm(op, current_cred(), label, file, mask, false);
- 	__end_current_label_crit_section(label, needput);
++	fiu->memory_size = min_t(size_t, resource_size(res), MAX_MEMORY_SIZE_TOTAL);
+ 	fiu->shm_regmap = syscon_regmap_lookup_by_phandle_optional(dev->of_node, "nuvoton,shm");
  
- 	return error;
-@@ -540,13 +539,12 @@ static int common_file_perm(const char *op, struct file *file, u32 mask,
- 
- static int apparmor_file_receive(struct file *file)
- {
--	return common_file_perm(OP_FRECEIVE, file, aa_map_file_to_perms(file),
--				false);
-+	return common_file_perm(OP_FRECEIVE, file, aa_map_file_to_perms(file));
- }
- 
- static int apparmor_file_permission(struct file *file, int mask)
- {
--	return common_file_perm(OP_FPERM, file, mask, false);
-+	return common_file_perm(OP_FPERM, file, mask);
- }
- 
- static int apparmor_file_lock(struct file *file, unsigned int cmd)
-@@ -556,11 +554,11 @@ static int apparmor_file_lock(struct file *file, unsigned int cmd)
- 	if (cmd == F_WRLCK)
- 		mask |= MAY_WRITE;
- 
--	return common_file_perm(OP_FLOCK, file, mask, false);
-+	return common_file_perm(OP_FLOCK, file, mask);
- }
- 
- static int common_mmap(const char *op, struct file *file, unsigned long prot,
--		       unsigned long flags, bool in_atomic)
-+		       unsigned long flags)
- {
- 	int mask = 0;
- 
-@@ -578,21 +576,20 @@ static int common_mmap(const char *op, struct file *file, unsigned long prot,
- 	if (prot & PROT_EXEC)
- 		mask |= AA_EXEC_MMAP;
- 
--	return common_file_perm(op, file, mask, in_atomic);
-+	return common_file_perm(op, file, mask);
- }
- 
- static int apparmor_mmap_file(struct file *file, unsigned long reqprot,
- 			      unsigned long prot, unsigned long flags)
- {
--	return common_mmap(OP_FMMAP, file, prot, flags, false);
-+	return common_mmap(OP_FMMAP, file, prot, flags);
- }
- 
- static int apparmor_file_mprotect(struct vm_area_struct *vma,
- 				  unsigned long reqprot, unsigned long prot)
- {
- 	return common_mmap(OP_FMPROT, vma->vm_file, prot,
--			   !(vma->vm_flags & VM_SHARED) ? MAP_PRIVATE : 0,
--			   false);
-+			   !(vma->vm_flags & VM_SHARED) ? MAP_PRIVATE : 0);
- }
- 
- #ifdef CONFIG_IO_URING
+ 	wpcm_fiu_hw_init(fiu);
 -- 
 2.51.0
 
