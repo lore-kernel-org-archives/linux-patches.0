@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B412505B2;
-	Wed, 25 Feb 2026 01:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7963624E4B4;
+	Wed, 25 Feb 2026 01:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982833; cv=none; b=CRY2oGa06eFUVLWuHo2pWuvtrtOUTITnIYnLpM3KaXAd+3FgN2E9fbqhmQ+jjlasX2eY64fHpnjh7Pc2K9aXvzffayB+aFs44tfrzg9Xf4oG3n9QDgM6zqG0NGbou2uWm5hzAunnvsp3RaUhIrovaNyOzuzkZWIYX1bXH2VsNg4=
+	t=1771982834; cv=none; b=YwpZjFZf1EeRAL38JdUYW6qHHpOfanH7pSMaP120p0bJSWDGwekOVgwtHgFQpzLjq8XjM8DOLa/e9B7HTB81cF0ovTnM6hZs9FkisigSspTMTlyxrpn3tytnODiCBq/PFwkXix9ofefQz4l6d2Xr+f0oI271nrP8FpaOnHfoHw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982833; c=relaxed/simple;
-	bh=XdtAtludWIvUZtcuWN4weWNHY9UEy9d4oeHGIMoD+8I=;
+	s=arc-20240116; t=1771982834; c=relaxed/simple;
+	bh=8UNxsXFIb5Fvxsvc7k2wEEuCT7KarDnU63KMkRSoSRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/Qn9NCMTnngMN5KQU+V4opO20QxJPGpvouS+x+ic5a42tmNUYof2XCa7H4ByfvN/P6XfWkFyn37NVOFsAGrif/4Q2db84AW4ZxnXnoFpo9P2KkuJay2Y+ozRi3kcfnTkp+Ujcyg5JfAsh9juv3zI5DS8MdUX2166KgYjmyMumk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtNcTvOJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f3lJ4sjn0YD4YDRIs2xeJ4/Xp5/Kvqa+I7GED0J+c9lNuzzA/a4aJdSRBW3RAff7+7SWO81YY+HRqJB+1FTvRYgUBY/tg99qC1Ihz5J81LTwIobSSsD0Qw8Rexe11pO8R+rHv2CEI8McmI7pJyU2cWO8obxZoGpubwYAKzR8cIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5ZMbZpD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtNcTvOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A871C2BC87;
-	Wed, 25 Feb 2026 01:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5ZMbZpD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A6FC2BC86;
+	Wed, 25 Feb 2026 01:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982833;
-	bh=XdtAtludWIvUZtcuWN4weWNHY9UEy9d4oeHGIMoD+8I=;
+	s=korg; t=1771982834;
+	bh=8UNxsXFIb5Fvxsvc7k2wEEuCT7KarDnU63KMkRSoSRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtNcTvOJC08EEHVbyCNq0CalcmVsWKymrDj/qwcKTHnzJKEarT+rB/bJGpf4xeDvh
-	 SCRakdJoGJEntQW39bvXwRudq6NmZYABU5PBw+UuqZMV7mydTVrLJwY+eyvgD7CVoT
-	 F1uUHzGne6z0bgB8EKKcPWGOD7VNKBGsWx3FOKTU=
+	b=V5ZMbZpDW1Ph5t2wh2eWDZl+MeNnaapFuAN/pbshLr7jjt8FLZQ52s9O/Offopdtq
+	 orCcWaSgAnq1x8QYSX84qBwEzLMMDEFVswLu6cOmcjZyHHdFkRjLoLQjLrYuRp/3x2
+	 16L/oEUCk5IIcoJ/in2/XlTq1e4/93yGq+LFBhqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f6539d4ce3f775aee0cc@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 018/781] gfs2: Initialize bio->bi_opf early
-Date: Tue, 24 Feb 2026 17:12:07 -0800
-Message-ID: <20260225012400.147159080@linuxfoundation.org>
+Subject: [PATCH 6.19 027/781] btrfs: zoned: dont zone append to conventional zone
+Date: Tue, 24 Feb 2026 17:12:16 -0800
+Message-ID: <20260225012400.366377887@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,212 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 4a94f052e0982794aa65312fe8b69999e4494a20 ]
+[ Upstream commit b39b26e017c7889181cb84032e22bef72e81cf29 ]
 
-Pass the right blk_opf_t value to bio_alloc() so that ->bi_ops is
-initialized correctly and doesn't have to be changed later.  Adjust the
-call chain to pass that value through to where it is needed (and only
-there).
+In case of a zoned RAID, it can happen that a data write is targeting a
+sequential write required zone and a conventional zone. In this case the
+bio will be marked as REQ_OP_ZONE_APPEND but for the conventional zone,
+this needs to be REQ_OP_WRITE.
 
-Add a separate blk_opf_t argument to gfs2_chain_bio() instead of copying
-the value from the previous bio.
+The setting of REQ_OP_ZONE_APPEND is deferred to the last possible time in
+btrfs_submit_dev_bio(), but the decision if we can use zone append is
+cached in btrfs_bio.
 
-Fixes: 8a157e0a0aa5 ("gfs2: Fix use of bio_chain")
-Reported-by: syzbot+f6539d4ce3f775aee0cc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f6539d4ce3f775aee0cc
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+CC: Naohiro Aota <naohiro.aota@wdc.com>
+Fixes: e9b9b911e03c ("btrfs: add raid stripe tree to features enabled with debug config")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/log.c  |  7 ++++---
- fs/gfs2/lops.c | 37 ++++++++++++++++++++-----------------
- fs/gfs2/lops.h |  4 ++--
- 3 files changed, 26 insertions(+), 22 deletions(-)
+ fs/btrfs/bio.c | 19 +++++++++----------
+ fs/btrfs/bio.h |  3 +++
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
-index 2a3b9d10eba78..347df29d610e6 100644
---- a/fs/gfs2/log.c
-+++ b/fs/gfs2/log.c
-@@ -888,8 +888,9 @@ void gfs2_write_log_header(struct gfs2_sbd *sdp, struct gfs2_jdesc *jd,
- 		     sb->s_blocksize - LH_V1_SIZE - 4);
- 	lh->lh_crc = cpu_to_be32(crc);
+diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+index fa1d321a2fb83..e4d382d3a7aea 100644
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -480,6 +480,8 @@ static void btrfs_clone_write_end_io(struct bio *bio)
  
--	gfs2_log_write(sdp, jd, page, sb->s_blocksize, 0, dblock);
--	gfs2_log_submit_write(&jd->jd_log_bio, REQ_OP_WRITE | op_flags);
-+	gfs2_log_write(sdp, jd, page, sb->s_blocksize, 0, dblock,
-+		       REQ_OP_WRITE | op_flags);
-+	gfs2_log_submit_write(&jd->jd_log_bio);
- }
- 
- /**
-@@ -1096,7 +1097,7 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
- 	if (gfs2_withdrawn(sdp))
- 		goto out_withdraw;
- 	if (sdp->sd_jdesc)
--		gfs2_log_submit_write(&sdp->sd_jdesc->jd_log_bio, REQ_OP_WRITE);
-+		gfs2_log_submit_write(&sdp->sd_jdesc->jd_log_bio);
- 	if (gfs2_withdrawn(sdp))
- 		goto out_withdraw;
- 
-diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
-index aa9e9fe25c2f7..c3317432a25b3 100644
---- a/fs/gfs2/lops.c
-+++ b/fs/gfs2/lops.c
-@@ -231,19 +231,17 @@ static void gfs2_end_log_write(struct bio *bio)
- /**
-  * gfs2_log_submit_write - Submit a pending log write bio
-  * @biop: Address of the bio pointer
-- * @opf: REQ_OP | op_flags
-  *
-  * Submit any pending part-built or full bio to the block device. If
-  * there is no pending bio, then this is a no-op.
-  */
- 
--void gfs2_log_submit_write(struct bio **biop, blk_opf_t opf)
-+void gfs2_log_submit_write(struct bio **biop)
+ static void btrfs_submit_dev_bio(struct btrfs_device *dev, struct bio *bio)
  {
- 	struct bio *bio = *biop;
- 	if (bio) {
- 		struct gfs2_sbd *sdp = bio->bi_private;
- 		atomic_inc(&sdp->sd_log_in_flight);
--		bio->bi_opf = opf;
- 		submit_bio(bio);
- 		*biop = NULL;
++	u64 physical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
++
+ 	if (!dev || !dev->bdev ||
+ 	    test_bit(BTRFS_DEV_STATE_MISSING, &dev->dev_state) ||
+ 	    (btrfs_op(bio) == BTRFS_MAP_WRITE &&
+@@ -494,12 +496,13 @@ static void btrfs_submit_dev_bio(struct btrfs_device *dev, struct bio *bio)
+ 	 * For zone append writing, bi_sector must point the beginning of the
+ 	 * zone
+ 	 */
+-	if (bio_op(bio) == REQ_OP_ZONE_APPEND) {
+-		u64 physical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
++	if (btrfs_bio(bio)->can_use_append && btrfs_dev_is_sequential(dev, physical)) {
+ 		u64 zone_start = round_down(physical, dev->fs_info->zone_size);
+ 
+ 		ASSERT(btrfs_dev_is_sequential(dev, physical));
+ 		bio->bi_iter.bi_sector = zone_start >> SECTOR_SHIFT;
++		bio->bi_opf &= ~REQ_OP_WRITE;
++		bio->bi_opf |= REQ_OP_ZONE_APPEND;
  	}
-@@ -254,6 +252,7 @@ void gfs2_log_submit_write(struct bio **biop, blk_opf_t opf)
-  * @sdp: The super block
-  * @blkno: The device block number we want to write to
-  * @end_io: The bi_end_io callback
-+ * @opf: REQ_OP | op_flags
-  *
-  * Allocate a new bio, initialize it with the given parameters and return it.
-  *
-@@ -261,10 +260,10 @@ void gfs2_log_submit_write(struct bio **biop, blk_opf_t opf)
-  */
+ 	btrfs_debug(dev->fs_info,
+ 	"%s: rw %d 0x%x, sector=%llu, dev=%lu (%s id %llu), size=%u",
+@@ -747,7 +750,6 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
+ 	u64 logical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
+ 	u64 length = bio->bi_iter.bi_size;
+ 	u64 map_length = length;
+-	bool use_append = btrfs_use_zone_append(bbio);
+ 	struct btrfs_io_context *bioc = NULL;
+ 	struct btrfs_io_stripe smap;
+ 	blk_status_t status;
+@@ -775,8 +777,10 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
+ 	if (bio_op(bio) == REQ_OP_WRITE && is_data_bbio(bbio))
+ 		bbio->orig_logical = logical;
  
- static struct bio *gfs2_log_alloc_bio(struct gfs2_sbd *sdp, u64 blkno,
--				      bio_end_io_t *end_io)
-+				      bio_end_io_t *end_io, blk_opf_t opf)
- {
- 	struct super_block *sb = sdp->sd_vfs;
--	struct bio *bio = bio_alloc(sb->s_bdev, BIO_MAX_VECS, 0, GFP_NOIO);
-+	struct bio *bio = bio_alloc(sb->s_bdev, BIO_MAX_VECS, opf, GFP_NOIO);
++	bbio->can_use_append = btrfs_use_zone_append(bbio);
++
+ 	map_length = min(map_length, length);
+-	if (use_append)
++	if (bbio->can_use_append)
+ 		map_length = btrfs_append_map_length(bbio, map_length);
  
- 	bio->bi_iter.bi_sector = blkno << sdp->sd_fsb2bb_shift;
- 	bio->bi_end_io = end_io;
-@@ -303,10 +302,10 @@ static struct bio *gfs2_log_get_bio(struct gfs2_sbd *sdp, u64 blkno,
- 		nblk >>= sdp->sd_fsb2bb_shift;
- 		if (blkno == nblk && !flush)
- 			return bio;
--		gfs2_log_submit_write(biop, op);
-+		gfs2_log_submit_write(biop);
+ 	if (map_length < length) {
+@@ -805,11 +809,6 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
  	}
  
--	*biop = gfs2_log_alloc_bio(sdp, blkno, end_io);
-+	*biop = gfs2_log_alloc_bio(sdp, blkno, end_io, op);
- 	return *biop;
- }
+ 	if (btrfs_op(bio) == BTRFS_MAP_WRITE) {
+-		if (use_append) {
+-			bio->bi_opf &= ~REQ_OP_WRITE;
+-			bio->bi_opf |= REQ_OP_ZONE_APPEND;
+-		}
+-
+ 		if (is_data_bbio(bbio) && bioc && bioc->use_rst) {
+ 			/*
+ 			 * No locking for the list update, as we only add to
+@@ -836,7 +835,7 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
+ 			status = errno_to_blk_status(ret);
+ 			if (status)
+ 				goto fail;
+-		} else if (use_append ||
++		} else if (bbio->can_use_append ||
+ 			   (btrfs_is_zoned(fs_info) && inode &&
+ 			    inode->flags & BTRFS_INODE_NODATASUM)) {
+ 			ret = btrfs_alloc_dummy_sum(bbio);
+diff --git a/fs/btrfs/bio.h b/fs/btrfs/bio.h
+index 1be74209f0b8d..246c7519dff39 100644
+--- a/fs/btrfs/bio.h
++++ b/fs/btrfs/bio.h
+@@ -92,6 +92,9 @@ struct btrfs_bio {
+ 	/* Whether the csum generation for data write is async. */
+ 	bool async_csum;
  
-@@ -318,6 +317,7 @@ static struct bio *gfs2_log_get_bio(struct gfs2_sbd *sdp, u64 blkno,
-  * @size: the size of the data to write
-  * @offset: the offset within the page 
-  * @blkno: block number of the log entry
-+ * @opf: REQ_OP | op_flags
-  *
-  * Try and add the page segment to the current bio. If that fails,
-  * submit the current bio to the device and create a new one, and
-@@ -326,17 +326,17 @@ static struct bio *gfs2_log_get_bio(struct gfs2_sbd *sdp, u64 blkno,
- 
- void gfs2_log_write(struct gfs2_sbd *sdp, struct gfs2_jdesc *jd,
- 		    struct page *page, unsigned size, unsigned offset,
--		    u64 blkno)
-+		    u64 blkno, blk_opf_t opf)
- {
- 	struct bio *bio;
- 	int ret;
- 
--	bio = gfs2_log_get_bio(sdp, blkno, &jd->jd_log_bio, REQ_OP_WRITE,
-+	bio = gfs2_log_get_bio(sdp, blkno, &jd->jd_log_bio, opf,
- 			       gfs2_end_log_write, false);
- 	ret = bio_add_page(bio, page, size, offset);
- 	if (ret == 0) {
- 		bio = gfs2_log_get_bio(sdp, blkno, &jd->jd_log_bio,
--				       REQ_OP_WRITE, gfs2_end_log_write, true);
-+				       opf, gfs2_end_log_write, true);
- 		ret = bio_add_page(bio, page, size, offset);
- 		WARN_ON(ret == 0);
- 	}
-@@ -359,7 +359,7 @@ static void gfs2_log_write_bh(struct gfs2_sbd *sdp, struct buffer_head *bh)
- 	dblock = gfs2_log_bmap(sdp->sd_jdesc, sdp->sd_log_flush_head);
- 	gfs2_log_incr_head(sdp);
- 	gfs2_log_write(sdp, sdp->sd_jdesc, folio_page(bh->b_folio, 0),
--			bh->b_size, bh_offset(bh), dblock);
-+			bh->b_size, bh_offset(bh), dblock, REQ_OP_WRITE);
- }
- 
- /**
-@@ -380,7 +380,8 @@ static void gfs2_log_write_page(struct gfs2_sbd *sdp, struct page *page)
- 
- 	dblock = gfs2_log_bmap(sdp->sd_jdesc, sdp->sd_log_flush_head);
- 	gfs2_log_incr_head(sdp);
--	gfs2_log_write(sdp, sdp->sd_jdesc, page, sb->s_blocksize, 0, dblock);
-+	gfs2_log_write(sdp, sdp->sd_jdesc, page, sb->s_blocksize, 0, dblock,
-+		       REQ_OP_WRITE);
- }
- 
- /**
-@@ -477,11 +478,12 @@ static void gfs2_jhead_process_page(struct gfs2_jdesc *jd, unsigned long index,
- 	folio_put_refs(folio, 2);
- }
- 
--static struct bio *gfs2_chain_bio(struct bio *prev, unsigned int nr_iovecs)
-+static struct bio *gfs2_chain_bio(struct bio *prev, unsigned int nr_iovecs,
-+				  blk_opf_t opf)
- {
- 	struct bio *new;
- 
--	new = bio_alloc(prev->bi_bdev, nr_iovecs, prev->bi_opf, GFP_NOIO);
-+	new = bio_alloc(prev->bi_bdev, nr_iovecs, opf, GFP_NOIO);
- 	bio_clone_blkg_association(new, prev);
- 	new->bi_iter.bi_sector = bio_end_sector(prev);
- 	bio_chain(new, prev);
-@@ -546,7 +548,8 @@ int gfs2_find_jhead(struct gfs2_jdesc *jd, struct gfs2_log_header_host *head)
- 					unsigned int blocks =
- 						(PAGE_SIZE - off) >> bsize_shift;
- 
--					bio = gfs2_chain_bio(bio, blocks);
-+					bio = gfs2_chain_bio(bio, blocks,
-+							     REQ_OP_READ);
- 					goto add_block_to_new_bio;
- 				}
- 			}
-@@ -556,8 +559,8 @@ int gfs2_find_jhead(struct gfs2_jdesc *jd, struct gfs2_log_header_host *head)
- 				submit_bio(bio);
- 			}
- 
--			bio = gfs2_log_alloc_bio(sdp, dblock, gfs2_end_log_read);
--			bio->bi_opf = REQ_OP_READ;
-+			bio = gfs2_log_alloc_bio(sdp, dblock, gfs2_end_log_read,
-+						 REQ_OP_READ);
- add_block_to_new_bio:
- 			bio_add_folio_nofail(bio, folio, bsize, off);
- block_added:
-diff --git a/fs/gfs2/lops.h b/fs/gfs2/lops.h
-index 010a4696406bb..772557b63b48b 100644
---- a/fs/gfs2/lops.h
-+++ b/fs/gfs2/lops.h
-@@ -16,8 +16,8 @@ void gfs2_log_incr_head(struct gfs2_sbd *sdp);
- u64 gfs2_log_bmap(struct gfs2_jdesc *jd, unsigned int lbn);
- void gfs2_log_write(struct gfs2_sbd *sdp, struct gfs2_jdesc *jd,
- 		    struct page *page, unsigned size, unsigned offset,
--		    u64 blkno);
--void gfs2_log_submit_write(struct bio **biop, blk_opf_t opf);
-+		    u64 blkno, blk_opf_t opf);
-+void gfs2_log_submit_write(struct bio **biop);
- void gfs2_pin(struct gfs2_sbd *sdp, struct buffer_head *bh);
- int gfs2_find_jhead(struct gfs2_jdesc *jd,
- 		    struct gfs2_log_header_host *head);
++	/* Whether the bio is written using zone append. */
++	bool can_use_append;
++
+ 	/*
+ 	 * This member must come last, bio_alloc_bioset will allocate enough
+ 	 * bytes for entire btrfs_bio but relies on bio being last.
 -- 
 2.51.0
 
