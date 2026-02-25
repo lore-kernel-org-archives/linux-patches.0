@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8A226056D;
-	Wed, 25 Feb 2026 01:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E991A26E6F8;
+	Wed, 25 Feb 2026 01:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983757; cv=none; b=OSZZWLdHbFVzeCwS+KGxcs6zlhhpudZT+7B5L1+anS+dsmvxP8OGDBhXrGXhc1z1lCLMbHRMhtBH/26KB21ua6A0QK+5jjJ8xYvTd/akhfxM5K9SpnYcKs0qU+DiEcCruqJ9Hokp5XWfUEpr8g+OBp5NhTRuFc0TKbp5qIWtJ1Y=
+	t=1771983759; cv=none; b=OswJWdB4C0uq8Nl2MEv6PZc6Vr4v8PKF+QIB3urVW7edfo23/IvIht5B65GE8sC83MIQ5OthjMLbZzqEOKMXeYFxrY4iaPeAB63+bp2pfc7xGrPXgTKrcLHvMO+PrYF9ST0g5bOeKpfO5UHPI6Dm4Y1waDgYYkFsz5KnsE0IzJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983757; c=relaxed/simple;
-	bh=XVS/m8cVHoyYODctXBp1CHYb7ijEufs5faN/U/aCabo=;
+	s=arc-20240116; t=1771983759; c=relaxed/simple;
+	bh=XOXYdrZROBZ9xOb/Qfh9EKkeTyWgMghlwgipb3mr/38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Om4CYc0JxDl4Tzk1GOZHyAx00WZ/lDGunhAE2pbz15lrn0x8b4X+gZr2U7TRH+RCyAdeCeRg+xBhiJqHvV5o4qZYXEZmUTDQC/132pHMHcivef0SZOcx7B+YevBsDUGU6298dLsEgK+T+zm2yONh+c+rg1LoqFoOzQG35FBoBWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6fCymVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MBG5q4qP+AmsUJ3z+6n5q6J26aYRybWeR8+jrHgKjO9pGoY+ZwMvNSGGH5SuI5SqmRAolmUVrpaiYoAKA7ZktuNpQfuYCvrHMIf62wSRSBzBA2PcHOZO2jBeLKRtki1uUjCCzx/9Ncr8TsE917J+IcPNihIowciYG3yIh84+El8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWkK4VAJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6fCymVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6223CC116D0;
-	Wed, 25 Feb 2026 01:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWkK4VAJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2153C116D0;
+	Wed, 25 Feb 2026 01:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983757;
-	bh=XVS/m8cVHoyYODctXBp1CHYb7ijEufs5faN/U/aCabo=;
+	s=korg; t=1771983758;
+	bh=XOXYdrZROBZ9xOb/Qfh9EKkeTyWgMghlwgipb3mr/38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6fCymVqwEkXNgW33yvjlFbR9oPwLrSgNykddm8FtmSSlRmqeiCPNTKESdtcQ4TEc
-	 uVlRWGSe0Bl3Wfh2BLBlx0gCyT501/QvPsUEyC8jtfgLr2HdiFCwspkYBjJT0lWeTE
-	 xaABfyrI2C5+ZwTQ8MRe/awZMJIXtpWQxc1niYyA=
+	b=LWkK4VAJ0lXvgZO5zLao+KP4NjDHV7HVDP+SsYJ8wKOfS/pvFN0ShTSJQcgsNCBeO
+	 HKMGi8eEY0I4/c51xfF/WU5A2Hg7/QP1fSv28ItEWE8NVsL3GyzoTvFEAibqkzDSmK
+	 SVXwSyfKTr/OThd5Eu0NY4kObrsVsOQ8bde2ay4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/641] thermal: intel: x86_pkg_temp_thermal: Handle invalid temperature
-Date: Tue, 24 Feb 2026 17:16:08 -0800
-Message-ID: <20260225012350.043390689@linuxfoundation.org>
+Subject: [PATCH 6.18 051/641] ublk: restore auto buf unregister refcount optimization
+Date: Tue, 24 Feb 2026 17:16:17 -0800
+Message-ID: <20260225012350.271869268@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -50,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 9635c586a559ba0e45b2bfbff79c937ddbaf1a62 ]
+[ Upstream commit ad5f2e2908c9b79a86529281a48e94d644d43dc7 ]
 
-After commit be0a3600aa1e ("thermal: sysfs: Rework the handling of trip
-point updates"), THERMAL_TEMP_INVALID can be passed to sys_set_trip_temp()
-and it is treated as a regular temperature value there, so the sysfs
-write fails even though it is expected to succeed and disable the given
-trip point.
+Commit 1ceeedb59749 ("ublk: optimize UBLK_IO_UNREGISTER_IO_BUF on daemon
+task") optimized ublk request buffer unregistration to use a non-atomic
+reference count decrement when performed on the ublk_io's daemon task.
+The optimization applied to auto buffer unregistration, which happens as
+part of handling UBLK_IO_COMMIT_AND_FETCH_REQ on the daemon task.
+However, commit b749965edda8 ("ublk: remove ublk_commit_and_fetch()")
+reordered the ublk_sub_req_ref() for the completed request before the
+io_buffer_unregister_bvec() call. As a result, task_registered_buffers
+is already 0 when io_buffer_unregister_bvec() calls ublk_io_release()
+and the non-atomic refcount optimization doesn't apply.
+Move the io_buffer_unregister_bvec() call back to before
+ublk_need_complete_req() to restore the reference counting optimization.
 
-Address this by making sys_set_trip_temp() clear its temp variable when
-it is equal to THERMAL_TEMP_INVALID.
-
-Fixes: be0a3600aa1e ("thermal: sysfs: Rework the handling of trip point updates")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2815400.mvXUDI8C0e@rafael.j.wysocki
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Fixes: b749965edda8 ("ublk: remove ublk_commit_and_fetch()")
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/x86_pkg_temp_thermal.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/block/ublk_drv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/intel/x86_pkg_temp_thermal.c b/drivers/thermal/intel/x86_pkg_temp_thermal.c
-index 3fc679b6f11b1..aab5f9fca9c33 100644
---- a/drivers/thermal/intel/x86_pkg_temp_thermal.c
-+++ b/drivers/thermal/intel/x86_pkg_temp_thermal.c
-@@ -128,6 +128,9 @@ sys_set_trip_temp(struct thermal_zone_device *tzd,
- 	u32 l, h, mask, shift, intr;
- 	int tj_max, val, ret;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 4b6d7b785d7b3..56058090d223e 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2526,11 +2526,11 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 		io->res = result;
+ 		req = ublk_fill_io_cmd(io, cmd);
+ 		ret = ublk_config_io_buf(ub, io, cmd, addr, &buf_idx);
++		if (buf_idx != UBLK_INVALID_BUF_IDX)
++			io_buffer_unregister_bvec(cmd, buf_idx, issue_flags);
+ 		compl = ublk_need_complete_req(ub, io);
  
-+	if (temp == THERMAL_TEMP_INVALID)
-+		temp = 0;
-+
- 	tj_max = intel_tcc_get_tjmax(zonedev->cpu);
- 	if (tj_max < 0)
- 		return tj_max;
+ 		/* can't touch 'ublk_io' any more */
+-		if (buf_idx != UBLK_INVALID_BUF_IDX)
+-			io_buffer_unregister_bvec(cmd, buf_idx, issue_flags);
+ 		if (req_op(req) == REQ_OP_ZONE_APPEND)
+ 			req->__sector = addr;
+ 		if (compl)
 -- 
 2.51.0
 
