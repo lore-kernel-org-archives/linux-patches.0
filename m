@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041FD1F5858;
-	Wed, 25 Feb 2026 01:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF1529BDA2;
+	Wed, 25 Feb 2026 01:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983890; cv=none; b=XiMDJJthmsAkqQ/nCgn+70pXmoF+hsNh7uoJJ7AgnSL/0vHGV5OyKOfbqB/l/vBrE2BR0Ob0dSgpOobWuppsrWpS+0Mh+h+MCSHZNwa9NlKsyzLyC6u66HUFnuGnqpzGwrFAzfn+PVfjEL4Z/LNaHBy4SeX+KyxqjHqBdBrHtCo=
+	t=1771983891; cv=none; b=ISEHJSVjJkaZUZQ7B1Qdiapt5vilWWETtT0/t2+fvpH0GQhbu/tmkxqZ8cD6Ey+R8XHoUBdEYt3ehKjeHUBsIdNZX+fF7wUDpJc3r/TLwP+DL3o6T7uAjaVH8DJ9FCh2At4HK8tURqO2zZ8UDQMIlJrzF3eePrDrmiJUeINbhQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983890; c=relaxed/simple;
-	bh=udgGf8BrNKf5HzT9nyIu65fVwD2GLe4z48dxDdJcTBs=;
+	s=arc-20240116; t=1771983891; c=relaxed/simple;
+	bh=qTxfdv0VW76eW+gdck6WRvyfLCsX399/K3oJU3PDrgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBFOrW/xsZhqtpDkjBKQvM37OK1zCwtLs9uhsgjitM/b5LujGwTfKHqrR9c93vsIU+h4BbYzeLR/kIfTHwQIeuax+3nTtSFZRiLvrXrFBEx/XiphsOByN0mQBDmxWG4YklCLj02jyaOa0riJlPhXbDbJXaQfbuMzvQXkEZoUqbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKp1vf8y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a4DwFusPxWefF/xAjqAbE4wuVJ5F+8K5xrV/WYN4OXbNFPf5Ukf2DEsnyQpIcLPoFY09US0zpPFh1Q+Qo49jgjLDWzKc6GPQXzT1IerTt5UKXoGvNice+5mV4iZ6/0phsQ6RCZfgfS3pTK3bkzcjusoCBTBMAQnEDmmuXzD/9Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZDkSOe0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKp1vf8y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF3AC19423;
-	Wed, 25 Feb 2026 01:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZDkSOe0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8621C116D0;
+	Wed, 25 Feb 2026 01:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983889;
-	bh=udgGf8BrNKf5HzT9nyIu65fVwD2GLe4z48dxDdJcTBs=;
+	s=korg; t=1771983891;
+	bh=qTxfdv0VW76eW+gdck6WRvyfLCsX399/K3oJU3PDrgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKp1vf8y/o34QdFUtiSgh1ya9mKCSQV7Ta7Dys+K+4GUhu+kILTkyLNtD6hiYeeuw
-	 PCRm6pvzW4xtMeKK3trN9rRIt7tB/Mx4x4x5LkjSi52NQ14f0Xs7Qgjzz4MNDbEiMz
-	 WPjZQ3i+RxuqmR5iGIaTe4oKqeAcfMZRfvym8xT8=
+	b=WZDkSOe0CuL6QAqHdxDAxmeanxZEaU2EgpB6gFvpOB3+OsAdK5jQRCg4cFKmXIqZS
+	 z4mPcu2AUV4/LtpiZHhK0LVXX6LPXmrF/ZqPiKINJX0YKD8kr2wyMMAUPId+EPlv2V
+	 dSc4rvqvOl76i8DvK+JCjOnfanTt3XcPXhuSOL+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jonathan Marek <jonathan@marek.ca>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 162/641] arm64: dts: qcom: sdm845-db845c: specify power for WiFi CH1
-Date: Tue, 24 Feb 2026 17:18:08 -0800
-Message-ID: <20260225012352.992553039@linuxfoundation.org>
+Subject: [PATCH 6.18 163/641] arm64: dts: qcom: x1e: bus is 40-bits (fix 64GB models)
+Date: Tue, 24 Feb 2026 17:18:09 -0800
+Message-ID: <20260225012353.014387534@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,48 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit c303e89f7f17c29981d09f8beaaf60937ae8b1f2 ]
+[ Upstream commit b38dd256e11a4c8bd5a893e11fc42d493939c907 ]
 
-Specify power supply for the second chain / antenna output of the
-onboard WiFi chip.
+Unlike the phone SoCs this was copied from, x1e has a 40-bit physical bus.
+The upper address space is used to support more than 32GB of memory.
 
-Fixes: 3f72e2d3e682 ("arm64: dts: qcom: Add Dragonboard 845c")
+This fixes issues when DMA buffers are allocated outside the 36-bit range.
+
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260106-wcn3990-pwrctl-v2-8-0386204328be@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20251127212943.24480-1-jonathan@marek.ca
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 384be2f8b1411..5147d6d3cc26b 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -379,6 +379,12 @@ vreg_l21a_2p95: ldo21 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 3290fd8c2d6e6..512a75da4f13f 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -791,8 +791,8 @@ soc: soc@0 {
  
-+		vreg_l23a_3p3: ldo23 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l24a_3p075: ldo24 {
- 			regulator-min-microvolt = <3088000>;
- 			regulator-max-microvolt = <3088000>;
-@@ -1155,6 +1161,7 @@ &wifi {
- 	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
- 	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
- 	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-+	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+-		dma-ranges = <0 0 0 0 0x10 0>;
+-		ranges = <0 0 0 0 0x10 0>;
++		dma-ranges = <0 0 0 0 0x100 0>;
++		ranges = <0 0 0 0 0x100 0>;
  
- 	qcom,snoc-host-cap-8bit-quirk;
- 	qcom,calibration-variant = "Thundercomm_DB845C";
+ 		gcc: clock-controller@100000 {
+ 			compatible = "qcom,x1e80100-gcc";
 -- 
 2.51.0
 
