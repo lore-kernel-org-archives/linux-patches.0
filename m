@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E14918B0A;
-	Wed, 25 Feb 2026 01:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7045518B0A;
+	Wed, 25 Feb 2026 01:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983350; cv=none; b=WZVaQOZY3hrLx4QLVR9qrmUzsc5tRwDlL1fCcftk18ygFeMh/CvVBLDhWWRQ4ZUtMHOZkalC3QyDDPv6tOHFrtp9AccmxunG2yY+XZr72HMzJiW55CrLxPRKNShfBrtc+V/MHtNwUCgTxgasBQeMGs55XnGR8QeWFZIOev5HxdA=
+	t=1771983353; cv=none; b=Bn2yNPl2SILk3DJ756XAX/lGUXtVi3ujiBExSstE5bzvrWGjP0LLfb2o6Z/7/zOvKqXYkl4MsW560EQ2GPLVncQsVOthC/0HNHM8T9WkUlT0/fimSugxWBIK6OIJk2bYOztjBtF7uwmDUP/QgPhvw5MGSP6Vl+ixxM6q7efq6d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983350; c=relaxed/simple;
-	bh=4GzRTBINmHtpN/cWDWKJVwoh120xq9BiFkh3PBnsxfs=;
+	s=arc-20240116; t=1771983353; c=relaxed/simple;
+	bh=vHCROGLlUjxZwidZMgl1UBtNKTDpBiMyksrmDNlc348=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+aumNxs3FN9hjIbgHYeZ4uZUqkxK+80gfG0Js1Qc50fujgyz9OqeigIEDyBWyP4oAUKX/tpF5zbndPGhTq+AybW3av+ZgAV8e2dhb5C3A5FzxowuGVU+ZE+kqtMDsgKwQDhXclmV+luFTmc7S84hjdwimWSYBSD36KpHcgeP8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT9nHcFI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DaEQCmAuOHUmS13piSL97aN6pLmDBX3AH8LUWms8WHnaOIZfebKVfWqhLD5bhBroOrhXjt6WhP5Uo1UubeMofNz84SonblrVbISf3XMzd7+pR2RaOeZ0nHCtXuz+N1eg9ljse2xswDu4DsBxbw222odo8flwRYAYjI524mkV7ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UARMOuoN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT9nHcFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8FBC116D0;
-	Wed, 25 Feb 2026 01:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UARMOuoN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F710C116D0;
+	Wed, 25 Feb 2026 01:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983350;
-	bh=4GzRTBINmHtpN/cWDWKJVwoh120xq9BiFkh3PBnsxfs=;
+	s=korg; t=1771983353;
+	bh=vHCROGLlUjxZwidZMgl1UBtNKTDpBiMyksrmDNlc348=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OT9nHcFI4pG5q+qVuXlOH9gQzGb4Qpytt6pO4WQJUw0B9eEcHfK3DNuw0ShrDx4Kw
-	 ZSl9RPMEp8fDJOH72z6ijBM3V0fiEzlKia9i6OU+9oyBP2aw4wxiDOuON/d+T7cwO+
-	 H2q21T9TNSecDi42sfCFt2tD0A5Dr4V4NdzubDMo=
+	b=UARMOuoNpfXJ1eyeCU1jJZv16Qg2E5wm1ZRB4LynkzLCO/fxlUARHuFNWPW60lUXw
+	 5y+CnDnqjCp2QBWHNvMdDpvWn1utT6t0dMJMrdAaas0Xq5opuTTzB2GtjwUUkuJCgM
+	 YoukOcuQzElv4tYoJrq7D5JdakrKRmNEwnVoDpZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	John Cagle <john.cagle@hammerspace.com>,
+	Allen Lu <allen.lu@hammerspace.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Mike Snitzer <snitzer@hammerspace.com>,
 	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 477/781] NFS/localio: Handle short writes by retrying
-Date: Tue, 24 Feb 2026 17:19:46 -0800
-Message-ID: <20260225012411.513020659@linuxfoundation.org>
+Subject: [PATCH 6.19 478/781] NFS/localio: prevent direct reclaim recursion into NFS via nfs_writepages
+Date: Tue, 24 Feb 2026 17:19:47 -0800
+Message-ID: <20260225012411.538570224@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,119 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Mike Snitzer <snitzer@hammerspace.com>
 
-[ Upstream commit 615762059d284b863f9163b53679d95b3dcdd495 ]
+[ Upstream commit 67435d2d8a33a75f9647724952cb1b18279d2e95 ]
 
-The current code for handling short writes in localio just truncates the
-I/O and then sets an error. While that is close to how the ordinary NFS
-code behaves, it does mean there is a chance the data that got written
-is lost because it isn't persisted.
-To fix this, change localio so that the upper layers can direct the
-behaviour to persist any unstable data by rewriting it, and then
-continuing writing until an ENOSPC is hit.
+LOCALIO is an NFS loopback mount optimization that avoids using the
+network for READ, WRITE and COMMIT if the NFS client and server are
+determined to be on the same system. But because LOCALIO is still
+fundamentally "just NFS loopback mount" it is susceptible to recursion
+deadlock via direct reclaim, e.g.: NFS LOCALIO down to XFS and then
+back into NFS via nfs_writepages.
 
+Fix LOCALIO's potential for direct reclaim deadlock by ensuring that
+all its page cache allocations are done from GFP_NOFS context.
+
+Thanks to Ben Coddington for pointing out commit ad22c7a043c2 ("xfs:
+prevent stack overflows from page cache allocation").
+
+Reported-by: John Cagle <john.cagle@hammerspace.com>
+Tested-by: Allen Lu <allen.lu@hammerspace.com>
+Suggested-by: Benjamin Coddington <bcodding@hammerspace.com>
 Fixes: 70ba381e1a43 ("nfs: add LOCALIO support")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Mike Snitzer <snitzer@hammerspace.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/localio.c | 64 +++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 47 insertions(+), 17 deletions(-)
+ fs/nfs/localio.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 41fbcb3f9167e..00bbac6c9fe40 100644
+index 00bbac6c9fe40..84f53f27a9089 100644
 --- a/fs/nfs/localio.c
 +++ b/fs/nfs/localio.c
-@@ -58,6 +58,11 @@ struct nfs_local_fsync_ctx {
- static bool localio_enabled __read_mostly = true;
- module_param(localio_enabled, bool, 0644);
- 
-+static int nfs_local_do_read(struct nfs_local_kiocb *iocb,
-+			     const struct rpc_call_ops *call_ops);
-+static int nfs_local_do_write(struct nfs_local_kiocb *iocb,
-+			      const struct rpc_call_ops *call_ops);
-+
- static inline bool nfs_client_is_local(const struct nfs_client *clp)
- {
- 	return !!rcu_access_pointer(clp->cl_uuid.net);
-@@ -542,13 +547,50 @@ nfs_local_iocb_release(struct nfs_local_kiocb *iocb)
- 	nfs_local_iocb_free(iocb);
+@@ -291,6 +291,18 @@ nfs_local_open_fh(struct nfs_client *clp, const struct cred *cred,
  }
+ EXPORT_SYMBOL_GPL(nfs_local_open_fh);
  
--static void
--nfs_local_pgio_release(struct nfs_local_kiocb *iocb)
-+static void nfs_local_pgio_restart(struct nfs_local_kiocb *iocb,
-+				   struct nfs_pgio_header *hdr)
++/*
++ * Ensure all page cache allocations are done from GFP_NOFS context to
++ * prevent direct reclaim recursion back into NFS via nfs_writepages.
++ */
++static void
++nfs_local_mapping_set_gfp_nofs_context(struct address_space *m)
 +{
-+	int status = 0;
++	gfp_t gfp_mask = mapping_gfp_mask(m);
 +
-+	iocb->kiocb.ki_pos = hdr->args.offset;
-+	iocb->kiocb.ki_flags &= ~(IOCB_DSYNC | IOCB_SYNC | IOCB_DIRECT);
-+	iocb->kiocb.ki_complete = NULL;
-+	iocb->aio_complete_work = NULL;
-+	iocb->end_iter_index = -1;
-+
-+	switch (hdr->rw_mode) {
-+	case FMODE_READ:
-+		nfs_local_iters_init(iocb, ITER_DEST);
-+		status = nfs_local_do_read(iocb, hdr->task.tk_ops);
-+		break;
-+	case FMODE_WRITE:
-+		nfs_local_iters_init(iocb, ITER_SOURCE);
-+		status = nfs_local_do_write(iocb, hdr->task.tk_ops);
-+		break;
-+	default:
-+		status = -EOPNOTSUPP;
-+	}
-+
-+	if (status != 0) {
-+		nfs_local_iocb_release(iocb);
-+		hdr->task.tk_status = status;
-+		nfs_local_hdr_release(hdr, hdr->task.tk_ops);
-+	}
++	mapping_set_gfp_mask(m, (gfp_mask & ~(__GFP_FS)));
 +}
 +
-+static void nfs_local_pgio_release(struct nfs_local_kiocb *iocb)
+ static void
+ nfs_local_iocb_free(struct nfs_local_kiocb *iocb)
  {
- 	struct nfs_pgio_header *hdr = iocb->hdr;
-+	struct rpc_task *task = &hdr->task;
-+
-+	task->tk_action = NULL;
-+	task->tk_ops->rpc_call_done(task, hdr);
- 
--	nfs_local_iocb_release(iocb);
--	nfs_local_hdr_release(hdr, hdr->task.tk_ops);
-+	if (task->tk_action == NULL) {
-+		nfs_local_iocb_release(iocb);
-+		task->tk_ops->rpc_release(hdr);
-+	} else
-+		nfs_local_pgio_restart(iocb, hdr);
- }
- 
- /*
-@@ -773,19 +815,7 @@ static void nfs_local_write_done(struct nfs_local_kiocb *iocb)
- 		pr_info_ratelimited("nfs: Unexpected direct I/O write alignment failure\n");
+@@ -315,6 +327,7 @@ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
+ 		return NULL;
  	}
  
--	/* Handle short writes as if they are ENOSPC */
--	status = hdr->res.count;
--	if (status > 0 && status < hdr->args.count) {
--		hdr->mds_offset += status;
--		hdr->args.offset += status;
--		hdr->args.pgbase += status;
--		hdr->args.count -= status;
--		nfs_set_pgio_error(hdr, -ENOSPC, hdr->args.offset);
--		status = -ENOSPC;
--		/* record -ENOSPC in terms of nfs_local_pgio_done */
--		(void) nfs_local_pgio_done(iocb, status, true);
--	}
--	if (hdr->task.tk_status < 0)
-+	if (status < 0)
- 		nfs_reset_boot_verifier(hdr->inode);
- }
++	nfs_local_mapping_set_gfp_nofs_context(file->f_mapping);
+ 	init_sync_kiocb(&iocb->kiocb, file);
  
+ 	iocb->hdr = hdr;
+@@ -1004,6 +1017,8 @@ nfs_local_run_commit(struct file *filp, struct nfs_commit_data *data)
+ 			end = LLONG_MAX;
+ 	}
+ 
++	nfs_local_mapping_set_gfp_nofs_context(filp->f_mapping);
++
+ 	dprintk("%s: commit %llu - %llu\n", __func__, start, end);
+ 	return vfs_fsync_range(filp, start, end, 0);
+ }
 -- 
 2.51.0
 
