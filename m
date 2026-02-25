@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9729530E855;
-	Wed, 25 Feb 2026 06:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3905730E855;
+	Wed, 25 Feb 2026 06:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002706; cv=none; b=jXDfU7pTYjOQbA/wTpDeZV8XWiwQcOXgdRRPRvdmBQCwp+dJIXZqyJ6T/eN7oBe0rx6lp0ArIj3kWuc3YlEXQ+3QnEPyJTIFVGIOSx40EckAdt/B4PjxC8F/0/wOPCBmR4QpFN/0+7izK7D3qERSeQUpwA4CJdKaJyvHQKOSetw=
+	t=1772002707; cv=none; b=heLk2M3namZdIDTjW/HghBIAu7kMzvb9mqxxgw0PzYKXA8hy2oIWR2EJLZgOR6jPU3BDc79vOYybBO89SsW5At5CDYOVGBC55MH0NVb0DlgRJSrT7Kal7ssEvZiwZAyIpVZfCbvTrda8es3nT5RvQXluUQmxkY0queO2F+BZI50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002706; c=relaxed/simple;
-	bh=m4vU6dP/sNeV8TYbAPk/RcP3+EHNKLSZJKW9sftm0io=;
+	s=arc-20240116; t=1772002707; c=relaxed/simple;
+	bh=YOTwB4FSfJEENOxv1381HVPZAR9/tS1JT01CIIcf5e4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l9HDw3GX0aRNrWzeNKstuvGG+1VqzvPoleg4jwSLX1NHTazcd+WcZXgK9NSd+cncdl7xg3iluIwbZV/H6BSwI6ZDcCC0t6xlqKYaKJyMqW0sAh34N+HvjKDzuI2UIs6f8HDREdghoZVSq1MrE5pH9zH4I9QrkO2C5g8VpWe1WuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwkv8BWX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lqMwIPcrxQh0f2m/eREuJf80keQEULAEGzol8D0gzi/dDeYXgaMKlp+ZgOe9/x8Z2gz6GVmU4v0HM3dDQAKGwH1T/VswQFbHIzLnW8FeWk8I/sy66XaOqrSSk08JBsHRgKkVOIiI5UmSUCjE19GxXrIkUD9L1DP7OpgfpvqBw6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKuTEfn4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwkv8BWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAA0C116D0;
-	Wed, 25 Feb 2026 06:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKuTEfn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12789C116D0;
+	Wed, 25 Feb 2026 06:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002706;
-	bh=m4vU6dP/sNeV8TYbAPk/RcP3+EHNKLSZJKW9sftm0io=;
+	s=korg; t=1772002707;
+	bh=YOTwB4FSfJEENOxv1381HVPZAR9/tS1JT01CIIcf5e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vwkv8BWXtfpBcHl3J0MV7X4K34TzcPCDn/YOf1yF4XXZP9NythMRqJpkdXMiYa6Oh
-	 7+KOP6ad/iOWj5PwspcjrEGzcX/2kNk+PLs0jAk0HlPC7Tch+YrfUDHAja1OrP8tKa
-	 T6xURRGzxeM5qY4OIXqICk0mjFOzW3LAtOLntAMk=
+	b=dKuTEfn4MalRmEHa2zGvn5g5VwPaHLqKmrtAtcNB1hAyxr1IderivoGxT4z5xNO9N
+	 vPVNluX1Eius8DXRZa4MaafhwzBszu9QhRBPCo19xG3fWj9HTF6TjLCABSZ2X9iJYC
+	 wXZt80J6PMQyCtsCe+IdQwzsW+eoYglaZRZ0PnAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aristeu Rozanski <aris@redhat.com>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Shuah Khan <shuah@kernel.org>,
-	liuye <liuye@kylinos.cn>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	zhouwenhao <zhouwenhao7600@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Matt Wu <wuqiang.matt@bytedance.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 506/641] selftests/memfd: use IPC semaphore instead of SIGSTOP/SIGCONT
-Date: Tue, 24 Feb 2026 17:23:52 -0800
-Message-ID: <20260225012400.785580010@linuxfoundation.org>
+Subject: [PATCH 6.18 507/641] objpool: fix the overestimation of object pooling metadata size
+Date: Tue, 24 Feb 2026 17:23:53 -0800
+Message-ID: <20260225012400.809444793@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -55,239 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aristeu Rozanski <aris@redhat.com>
+From: zhouwenhao <zhouwenhao7600@gmail.com>
 
-[ Upstream commit b24335521de92fd2ee22460072b75367ca8860b0 ]
+[ Upstream commit 5ed4b6b37c647d168ae31035b3f61b705997e043 ]
 
-selftests/memfd: use IPC semaphore instead of SIGSTOP/SIGCONT
+objpool uses struct objpool_head to store metadata information, and its
+cpu_slots member points to an array of pointers that store the addresses
+of the percpu ring arrays.  However, the memory size allocated during the
+initialization of cpu_slots is nr_cpu_ids * sizeof(struct objpool_slot).
+On a 64-bit machine, the size of struct objpool_slot is 16 bytes, which is
+twice the size of the actual pointer required, and the extra memory is
+never be used, resulting in a waste of memory.  Therefore, the memory size
+required for cpu_slots needs to be corrected.
 
-In order to synchronize new processes to test inheritance of memfd_noexec
-sysctl, memfd_test sets up the sysctl with a value before creating the new
-process.  The new process then sends itself a SIGSTOP in order to wait for
-the parent to flip the sysctl value and send a SIGCONT signal.
-
-This would work as intended if it wasn't the fact that the new process is
-being created with CLONE_NEWPID, which creates a new PID namespace and the
-new process has PID 1 in this namespace.  There're restrictions on sending
-signals to PID 1 and, although it's relaxed for other than root PID
-namespace, it's biting us here.  In this specific case the SIGSTOP sent by
-the new process is ignored (no error to kill() is returned) and it never
-stops its execution.  This is usually not noticiable as the parent usually
-manages to set the new sysctl value before the child has a chance to run
-and the test succeeds.  But if you run the test in a loop, it eventually
-reproduces:
-
-	while [ 1 ]; do ./memfd_test >log 2>&1 || break; done; cat log
-
-So this patch replaces the SIGSTOP/SIGCONT synchronization with IPC
-semaphore.
-
-Link: https://lkml.kernel.org/r/a7776389-b3d6-4b18-b438-0b0e3ed1fd3b@work
-Fixes: 6469b66e3f5a ("selftests: improve vm.memfd_noexec sysctl tests")
-Signed-off-by: Aristeu Rozanski <aris@redhat.com>
-Cc: Aleksa Sarai <cyphar@cyphar.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: liuye <liuye@kylinos.cn>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Link: https://lkml.kernel.org/r/20260202132846.68257-1-zhouwenhao7600@gmail.com
+Fixes: b4edb8d2d464 ("lib: objpool added: ring-array based lockless MPMC")
+Signed-off-by: zhouwenhao <zhouwenhao7600@gmail.com>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Matt Wu <wuqiang.matt@bytedance.com>
+Cc: wuqiang.matt <wuqiang.matt@bytedance.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/memfd/memfd_test.c | 113 +++++++++++++++++++--
- 1 file changed, 105 insertions(+), 8 deletions(-)
+ lib/objpool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/memfd/memfd_test.c b/tools/testing/selftests/memfd/memfd_test.c
-index 5b993924cc3f5..2ca07ea7202a5 100644
---- a/tools/testing/selftests/memfd/memfd_test.c
-+++ b/tools/testing/selftests/memfd/memfd_test.c
-@@ -18,6 +18,9 @@
- #include <sys/stat.h>
- #include <sys/syscall.h>
- #include <sys/wait.h>
-+#include <sys/types.h>
-+#include <sys/ipc.h>
-+#include <sys/sem.h>
- #include <unistd.h>
- #include <ctype.h>
- 
-@@ -39,6 +42,20 @@
- 		    F_SEAL_EXEC)
- 
- #define MFD_NOEXEC_SEAL	0x0008U
-+union semun {
-+	int val;
-+	struct semid_ds *buf;
-+	unsigned short int *array;
-+	struct seminfo *__buf;
-+};
-+
-+/*
-+ * we use semaphores on nested wait tasks due the use of CLONE_NEWPID: the
-+ * child will be PID 1 and can't send SIGSTOP to themselves due special
-+ * treatment of the init task, so the SIGSTOP/SIGCONT synchronization
-+ * approach can't be used here.
-+ */
-+#define SEM_KEY 0xdeadbeef
- 
- /*
-  * Default is not to test hugetlbfs
-@@ -1333,8 +1350,22 @@ static int sysctl_nested(void *arg)
- 
- static int sysctl_nested_wait(void *arg)
- {
--	/* Wait for a SIGCONT. */
--	kill(getpid(), SIGSTOP);
-+	int sem = semget(SEM_KEY, 1, 0600);
-+	struct sembuf sembuf;
-+
-+	if (sem < 0) {
-+		perror("semget:");
-+		abort();
-+	}
-+	sembuf.sem_num = 0;
-+	sembuf.sem_flg = 0;
-+	sembuf.sem_op = 0;
-+
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		abort();
-+	}
-+
- 	return sysctl_nested(arg);
- }
- 
-@@ -1355,7 +1386,9 @@ static void test_sysctl_sysctl2_failset(void)
- 
- static int sysctl_nested_child(void *arg)
- {
--	int pid;
-+	int pid, sem;
-+	union semun semun;
-+	struct sembuf sembuf;
- 
- 	printf("%s nested sysctl 0\n", memfd_str);
- 	sysctl_assert_write("0");
-@@ -1389,23 +1422,53 @@ static int sysctl_nested_child(void *arg)
- 			   test_sysctl_sysctl2_failset);
- 	join_thread(pid);
- 
-+	sem = semget(SEM_KEY, 1, IPC_CREAT | 0600);
-+	if (sem < 0) {
-+		perror("semget:");
-+		return 1;
-+	}
-+	semun.val = 1;
-+	sembuf.sem_op = -1;
-+	sembuf.sem_flg = 0;
-+	sembuf.sem_num = 0;
-+
- 	/* Verify that the rules are actually inherited after fork. */
- 	printf("%s nested sysctl 0 -> 1 after fork\n", memfd_str);
- 	sysctl_assert_write("0");
- 
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl1_failset);
- 	sysctl_assert_write("1");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	printf("%s nested sysctl 0 -> 2 after fork\n", memfd_str);
- 	sysctl_assert_write("0");
- 
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl2_failset);
- 	sysctl_assert_write("2");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	/*
-@@ -1415,28 +1478,62 @@ static int sysctl_nested_child(void *arg)
- 	 */
- 	printf("%s nested sysctl 2 -> 1 after fork\n", memfd_str);
- 	sysctl_assert_write("2");
-+
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl2);
- 	sysctl_assert_write("1");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	printf("%s nested sysctl 2 -> 0 after fork\n", memfd_str);
- 	sysctl_assert_write("2");
-+
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl2);
- 	sysctl_assert_write("0");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	printf("%s nested sysctl 1 -> 0 after fork\n", memfd_str);
- 	sysctl_assert_write("1");
-+
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl1);
- 	sysctl_assert_write("0");
--	kill(pid, SIGCONT);
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
-+	semctl(sem, 0, IPC_RMID);
-+
- 	return 0;
- }
- 
+diff --git a/lib/objpool.c b/lib/objpool.c
+index b998b720c7329..d98fadf1de169 100644
+--- a/lib/objpool.c
++++ b/lib/objpool.c
+@@ -142,7 +142,7 @@ int objpool_init(struct objpool_head *pool, int nr_objs, int object_size,
+ 	pool->gfp = gfp & ~__GFP_ZERO;
+ 	pool->context = context;
+ 	pool->release = release;
+-	slot_size = nr_cpu_ids * sizeof(struct objpool_slot);
++	slot_size = nr_cpu_ids * sizeof(struct objpool_slot *);
+ 	pool->cpu_slots = kzalloc(slot_size, pool->gfp);
+ 	if (!pool->cpu_slots)
+ 		return -ENOMEM;
 -- 
 2.51.0
 
