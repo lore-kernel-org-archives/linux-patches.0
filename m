@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210B02D4805;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E2A2D4805;
 	Wed, 25 Feb 2026 06:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002746; cv=none; b=Y7Wr8ApdOReGCrqUoOb3cwmn8xu2XHvqWUdZCx2uretouDd9mqrpFoN418f8QdnXP4jPvVtj5iEAqCg0VdHY0gcGHEArPbQ8f4flersCXrTpz9EoIyKSpF3lLBSnTnhcR4nVu8kPNc6lHW27qU9txXVj7C7p0kaDU5Y/W2L/gxA=
+	t=1772002746; cv=none; b=SFp59vGcEK4aOHy40xg2WKQpjg23CxlnsD2LfNsd8PA/GfHC1GQ9t7x2eZqt1v6COkRdZwlc/5nfFE/Aj/ZoJMEFwdsozy5r1xgmT7MpZamGHf3LGohbZv8s0Uam1tTu27rDH8xb8j/b+uMJScDgDUCQGziiOlH/MHHGnUlZVPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002746; c=relaxed/simple;
-	bh=B70W7zt9X1FmC/A5dIGPKbLkiH5QqN2akfnH0Atl7rg=;
+	bh=ULVUy3DtrrBUNPwB1WKhKoM+E9HwhBSCdOxrAzOgRNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YxHiT4+sqWCGwctb8nnh4gc3astgwaLFVl82vxcAi/EHRkuR2F1oYi3OWekR+Of8lA5BHB6ImoG4xpLpzw67RlNKKVWCNph09+2Z5cxC7MP551NLIKx6Ha5N8WEG++0x090tncnu4wJXiU0rDSSIlWCTeBorDK/HKSma3BbOZks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9rB4DKM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B9RLd2yCVb5E8ATB8qzRPL+gNVkn630uM5gtLinHmggp1kOcbTdKnK1hd3fkwtAsE19GBAphiw1qb3Ez89Y6r+ONDOsWJ3yRKoifALXlNAcLzh5DtwpcnVURN7xCJYvpQdzcDtUFdd151JocALKrxQMvVji6wjifLP6U/5WDWfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDC3atYN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9rB4DKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBACBC116D0;
-	Wed, 25 Feb 2026 06:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDC3atYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B53AC116D0;
+	Wed, 25 Feb 2026 06:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002746;
-	bh=B70W7zt9X1FmC/A5dIGPKbLkiH5QqN2akfnH0Atl7rg=;
+	bh=ULVUy3DtrrBUNPwB1WKhKoM+E9HwhBSCdOxrAzOgRNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9rB4DKMPr1nD0/jqbrrCmrNWGkzc0ro/U1ABheJXAuaSR7+Ucn70Sqh7rVXtLBbW
-	 2zVPHz9SNkbZM/+Bqz2OUFneRUnQtaZ0to0OnPn3WzzTLLonz8C9on4ukjnlKAaMBc
-	 L0Dfr3lGEJ+FHEyAR8Ax7nPK8T/kPlqKLiTNN30I=
+	b=IDC3atYNnT3AMmlpI44gON46p8MpLY1j9ZrT7rKYx2O29mPs7J7OS5vpkxJaudBQw
+	 d6a4GwN0yQTjWCbZqWFec2Ncxs5q9prF2Y0CKm8hUv+6+EZaT5wRodi+gdxTnEawB7
+	 R8V1Ez8JF8i83laTHFKc6K8x8xZlz3tLEmp5OwdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jacob Keller <Jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 560/641] net/mlx5: Fix misidentification of write combining CQE during poll loop
-Date: Tue, 24 Feb 2026 17:24:46 -0800
-Message-ID: <20260225012402.091912093@linuxfoundation.org>
+Subject: [PATCH 6.18 561/641] net/mlx5e: Fix deadlocks between devlink and netdev instance locks
+Date: Tue, 24 Feb 2026 17:24:47 -0800
+Message-ID: <20260225012402.116628172@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,84 +54,316 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit d451994ebc7d4392610bd4b2ab339b255deb4143 ]
+[ Upstream commit 83ac0304a2d77519dae1e54c9713cbe1aedf19c9 ]
 
-The write combining completion poll loop uses usleep_range() which can
-sleep much longer than requested due to scheduler latency. Under load,
-we witnessed a 20ms+ delay until the process was rescheduled, causing
-the jiffies based timeout to expire while the thread is sleeping.
+In the mentioned "Fixes" commit, various work tasks triggering devlink
+health reporter recovery were switched to use netdev_trylock to protect
+against concurrent tear down of the channels being recovered. But this
+had the side effect of introducing potential deadlocks because of
+incorrect lock ordering.
 
-The original do-while loop structure (poll, sleep, check timeout) would
-exit without a final poll when waking after timeout, missing a CQE that
-arrived during sleep.
+The correct lock order is described by the init flow:
+probe_one -> mlx5_init_one (acquires devlink lock)
+-> mlx5_init_one_devl_locked -> mlx5_register_device
+-> mlx5_rescan_drivers_locked -...-> mlx5e_probe -> _mlx5e_probe
+-> register_netdev (acquires rtnl lock)
+-> register_netdevice (acquires netdev lock)
+=> devlink lock -> rtnl lock -> netdev lock.
 
-Instead of the open-coded while loop, use the kernel's poll_timeout_us()
-which always performs an additional check after the sleep expiration,
-and is less error-prone.
+But in the current recovery flow, the order is wrong:
+mlx5e_tx_err_cqe_work (acquires netdev lock)
+-> mlx5e_reporter_tx_err_cqe -> mlx5e_health_report
+-> devlink_health_report (acquires devlink lock => boom!)
+-> devlink_health_reporter_recover
+-> mlx5e_tx_reporter_recover -> mlx5e_tx_reporter_recover_from_ctx
+-> mlx5e_tx_reporter_err_cqe_recover
 
-Note: poll_timeout_us() doesn't accept a sleep range, by passing 10
-sleep_us the sleep range effectively changes from 2-10 to 3-10 usecs.
+The same pattern exists in:
+mlx5e_reporter_rx_timeout
+mlx5e_reporter_tx_ptpsq_unhealthy
+mlx5e_reporter_tx_timeout
 
-Fixes: d98995b4bf98 ("net/mlx5: Reimplement write combining test")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Fix these by moving the netdev_trylock calls from the work handlers
+lower in the call stack, in the respective recovery functions, where
+they are actually necessary.
+
+Fixes: 8f7b00307bf1 ("net/mlx5e: Convert mlx5 netdevs to instance locking")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Jacob Keller <Jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260218072904.1764634-4-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260218072904.1764634-6-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/wc.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en/ptp.c  | 14 -----
+ .../mellanox/mlx5/core/en/reporter_rx.c       | 13 +++++
+ .../mellanox/mlx5/core/en/reporter_tx.c       | 52 +++++++++++++++++--
+ .../net/ethernet/mellanox/mlx5/core/en_main.c | 40 --------------
+ 4 files changed, 61 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/wc.c b/drivers/net/ethernet/mellanox/mlx5/core/wc.c
-index 05e5fd777d4f4..8701b7b6a2d51 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/wc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/wc.c
-@@ -2,6 +2,7 @@
- // Copyright (c) 2024, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
- 
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/mlx5/transobj.h>
- #include "lib/clock.h"
- #include "mlx5_core.h"
-@@ -14,7 +15,7 @@
- #define TEST_WC_NUM_WQES 255
- #define TEST_WC_LOG_CQ_SZ (order_base_2(TEST_WC_NUM_WQES))
- #define TEST_WC_SQ_LOG_WQ_SZ TEST_WC_LOG_CQ_SZ
--#define TEST_WC_POLLING_MAX_TIME_JIFFIES msecs_to_jiffies(100)
-+#define TEST_WC_POLLING_MAX_TIME_USEC (100 * USEC_PER_MSEC)
- 
- struct mlx5_wc_cq {
- 	/* data path - accessed per cqe */
-@@ -358,7 +359,6 @@ static int mlx5_wc_poll_cq(struct mlx5_wc_sq *sq)
- static void mlx5_core_test_wc(struct mlx5_core_dev *mdev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+index c93ee969ea647..ec715b158a342 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+@@ -448,22 +448,8 @@ static void mlx5e_ptpsq_unhealthy_work(struct work_struct *work)
  {
- 	unsigned int offset = 0;
--	unsigned long expires;
- 	struct mlx5_wc_sq *sq;
- 	int i, err;
+ 	struct mlx5e_ptpsq *ptpsq =
+ 		container_of(work, struct mlx5e_ptpsq, report_unhealthy_work);
+-	struct mlx5e_txqsq *sq = &ptpsq->txqsq;
+-
+-	/* Recovering the PTP SQ means re-enabling NAPI, which requires the
+-	 * netdev instance lock. However, SQ closing has to wait for this work
+-	 * task to finish while also holding the same lock. So either get the
+-	 * lock or find that the SQ is no longer enabled and thus this work is
+-	 * not relevant anymore.
+-	 */
+-	while (!netdev_trylock(sq->netdev)) {
+-		if (!test_bit(MLX5E_SQ_STATE_ENABLED, &sq->state))
+-			return;
+-		msleep(20);
+-	}
  
-@@ -388,13 +388,9 @@ static void mlx5_core_test_wc(struct mlx5_core_dev *mdev)
+ 	mlx5e_reporter_tx_ptpsq_unhealthy(ptpsq);
+-	netdev_unlock(sq->netdev);
+ }
  
- 	mlx5_wc_post_nop(sq, &offset, true);
+ static int mlx5e_ptp_open_txqsq(struct mlx5e_ptp *c, u32 tisn,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
+index b1415992ffa24..a09a7c05820d6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
+@@ -1,6 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0
+ // Copyright (c) 2019 Mellanox Technologies.
  
--	expires = jiffies + TEST_WC_POLLING_MAX_TIME_JIFFIES;
--	do {
--		err = mlx5_wc_poll_cq(sq);
--		if (err)
--			usleep_range(2, 10);
--	} while (mdev->wc_state == MLX5_WC_STATE_UNINITIALIZED &&
--		 time_is_after_jiffies(expires));
-+	poll_timeout_us(mlx5_wc_poll_cq(sq),
-+			mdev->wc_state != MLX5_WC_STATE_UNINITIALIZED, 10,
-+			TEST_WC_POLLING_MAX_TIME_USEC, false);
++#include <net/netdev_lock.h>
++
+ #include "health.h"
+ #include "params.h"
+ #include "txrx.h"
+@@ -177,6 +179,16 @@ static int mlx5e_rx_reporter_timeout_recover(void *ctx)
+ 	rq = ctx;
+ 	priv = rq->priv;
  
- 	mlx5_wc_destroy_sq(sq);
++	/* Acquire netdev instance lock to synchronize with channel close and
++	 * reopen flows. Either successfully obtain the lock, or detect that
++	 * channels are closing for another reason, making this work no longer
++	 * necessary.
++	 */
++	while (!netdev_trylock(rq->netdev)) {
++		if (!test_bit(MLX5E_STATE_CHANNELS_ACTIVE, &rq->priv->state))
++			return 0;
++		msleep(20);
++	}
+ 	mutex_lock(&priv->state_lock);
  
+ 	eq = rq->cq.mcq.eq;
+@@ -186,6 +198,7 @@ static int mlx5e_rx_reporter_timeout_recover(void *ctx)
+ 		clear_bit(MLX5E_SQ_STATE_ENABLED, &rq->icosq->state);
+ 
+ 	mutex_unlock(&priv->state_lock);
++	netdev_unlock(rq->netdev);
+ 
+ 	return err;
+ }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+index 9e2cf191ed308..9f6454102cf79 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+@@ -1,6 +1,8 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (c) 2019 Mellanox Technologies. */
+ 
++#include <net/netdev_lock.h>
++
+ #include "health.h"
+ #include "en/ptp.h"
+ #include "en/devlink.h"
+@@ -78,6 +80,18 @@ static int mlx5e_tx_reporter_err_cqe_recover(void *ctx)
+ 	if (!test_bit(MLX5E_SQ_STATE_RECOVERING, &sq->state))
+ 		return 0;
+ 
++	/* Recovering queues means re-enabling NAPI, which requires the netdev
++	 * instance lock. However, SQ closing flows have to wait for work tasks
++	 * to finish while also holding the netdev instance lock. So either get
++	 * the lock or find that the SQ is no longer enabled and thus this work
++	 * is not relevant anymore.
++	 */
++	while (!netdev_trylock(dev)) {
++		if (!test_bit(MLX5E_SQ_STATE_ENABLED, &sq->state))
++			return 0;
++		msleep(20);
++	}
++
+ 	err = mlx5_core_query_sq_state(mdev, sq->sqn, &state);
+ 	if (err) {
+ 		netdev_err(dev, "Failed to query SQ 0x%x state. err = %d\n",
+@@ -113,9 +127,11 @@ static int mlx5e_tx_reporter_err_cqe_recover(void *ctx)
+ 	else
+ 		mlx5e_trigger_napi_sched(sq->cq.napi);
+ 
++	netdev_unlock(dev);
+ 	return 0;
+ out:
+ 	clear_bit(MLX5E_SQ_STATE_RECOVERING, &sq->state);
++	netdev_unlock(dev);
+ 	return err;
+ }
+ 
+@@ -136,10 +152,24 @@ static int mlx5e_tx_reporter_timeout_recover(void *ctx)
+ 	sq = to_ctx->sq;
+ 	eq = sq->cq.mcq.eq;
+ 	priv = sq->priv;
++
++	/* Recovering the TX queues implies re-enabling NAPI, which requires
++	 * the netdev instance lock.
++	 * However, channel closing flows have to wait for this work to finish
++	 * while holding the same lock. So either get the lock or find that
++	 * channels are being closed for other reason and this work is not
++	 * relevant anymore.
++	 */
++	while (!netdev_trylock(sq->netdev)) {
++		if (!test_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state))
++			return 0;
++		msleep(20);
++	}
++
+ 	err = mlx5e_health_channel_eq_recover(sq->netdev, eq, sq->cq.ch_stats);
+ 	if (!err) {
+ 		to_ctx->status = 0; /* this sq recovered */
+-		return err;
++		goto out;
+ 	}
+ 
+ 	mutex_lock(&priv->state_lock);
+@@ -147,7 +177,7 @@ static int mlx5e_tx_reporter_timeout_recover(void *ctx)
+ 	mutex_unlock(&priv->state_lock);
+ 	if (!err) {
+ 		to_ctx->status = 1; /* all channels recovered */
+-		return err;
++		goto out;
+ 	}
+ 
+ 	to_ctx->status = err;
+@@ -155,7 +185,8 @@ static int mlx5e_tx_reporter_timeout_recover(void *ctx)
+ 	netdev_err(priv->netdev,
+ 		   "mlx5e_safe_reopen_channels failed recovering from a tx_timeout, err(%d).\n",
+ 		   err);
+-
++out:
++	netdev_unlock(sq->netdev);
+ 	return err;
+ }
+ 
+@@ -172,10 +203,22 @@ static int mlx5e_tx_reporter_ptpsq_unhealthy_recover(void *ctx)
+ 		return 0;
+ 
+ 	priv = ptpsq->txqsq.priv;
++	netdev = priv->netdev;
++
++	/* Recovering the PTP SQ means re-enabling NAPI, which requires the
++	 * netdev instance lock. However, SQ closing has to wait for this work
++	 * task to finish while also holding the same lock. So either get the
++	 * lock or find that the SQ is no longer enabled and thus this work is
++	 * not relevant anymore.
++	 */
++	while (!netdev_trylock(netdev)) {
++		if (!test_bit(MLX5E_SQ_STATE_ENABLED, &ptpsq->txqsq.state))
++			return 0;
++		msleep(20);
++	}
+ 
+ 	mutex_lock(&priv->state_lock);
+ 	chs = &priv->channels;
+-	netdev = priv->netdev;
+ 
+ 	carrier_ok = netif_carrier_ok(netdev);
+ 	netif_carrier_off(netdev);
+@@ -192,6 +235,7 @@ static int mlx5e_tx_reporter_ptpsq_unhealthy_recover(void *ctx)
+ 		netif_carrier_on(netdev);
+ 
+ 	mutex_unlock(&priv->state_lock);
++	netdev_unlock(netdev);
+ 
+ 	return err;
+ }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 59e17b41c3a67..cb993ad2d9ad9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -688,19 +688,7 @@ static void mlx5e_rq_timeout_work(struct work_struct *timeout_work)
+ 					   struct mlx5e_rq,
+ 					   rx_timeout_work);
+ 
+-	/* Acquire netdev instance lock to synchronize with channel close and
+-	 * reopen flows. Either successfully obtain the lock, or detect that
+-	 * channels are closing for another reason, making this work no longer
+-	 * necessary.
+-	 */
+-	while (!netdev_trylock(rq->netdev)) {
+-		if (!test_bit(MLX5E_STATE_CHANNELS_ACTIVE, &rq->priv->state))
+-			return;
+-		msleep(20);
+-	}
+-
+ 	mlx5e_reporter_rx_timeout(rq);
+-	netdev_unlock(rq->netdev);
+ }
+ 
+ static int mlx5e_alloc_mpwqe_rq_drop_page(struct mlx5e_rq *rq)
+@@ -1997,20 +1985,7 @@ void mlx5e_tx_err_cqe_work(struct work_struct *recover_work)
+ 	struct mlx5e_txqsq *sq = container_of(recover_work, struct mlx5e_txqsq,
+ 					      recover_work);
+ 
+-	/* Recovering queues means re-enabling NAPI, which requires the netdev
+-	 * instance lock. However, SQ closing flows have to wait for work tasks
+-	 * to finish while also holding the netdev instance lock. So either get
+-	 * the lock or find that the SQ is no longer enabled and thus this work
+-	 * is not relevant anymore.
+-	 */
+-	while (!netdev_trylock(sq->netdev)) {
+-		if (!test_bit(MLX5E_SQ_STATE_ENABLED, &sq->state))
+-			return;
+-		msleep(20);
+-	}
+-
+ 	mlx5e_reporter_tx_err_cqe(sq);
+-	netdev_unlock(sq->netdev);
+ }
+ 
+ static struct dim_cq_moder mlx5e_get_def_tx_moderation(u8 cq_period_mode)
+@@ -5102,19 +5077,6 @@ static void mlx5e_tx_timeout_work(struct work_struct *work)
+ 	struct net_device *netdev = priv->netdev;
+ 	int i;
+ 
+-	/* Recovering the TX queues implies re-enabling NAPI, which requires
+-	 * the netdev instance lock.
+-	 * However, channel closing flows have to wait for this work to finish
+-	 * while holding the same lock. So either get the lock or find that
+-	 * channels are being closed for other reason and this work is not
+-	 * relevant anymore.
+-	 */
+-	while (!netdev_trylock(netdev)) {
+-		if (!test_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state))
+-			return;
+-		msleep(20);
+-	}
+-
+ 	for (i = 0; i < netdev->real_num_tx_queues; i++) {
+ 		struct netdev_queue *dev_queue =
+ 			netdev_get_tx_queue(netdev, i);
+@@ -5127,8 +5089,6 @@ static void mlx5e_tx_timeout_work(struct work_struct *work)
+ 		/* break if tried to reopened channels */
+ 			break;
+ 	}
+-
+-	netdev_unlock(netdev);
+ }
+ 
+ static void mlx5e_tx_timeout(struct net_device *dev, unsigned int txqueue)
 -- 
 2.51.0
 
