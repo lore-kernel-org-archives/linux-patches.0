@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15A6280331;
-	Wed, 25 Feb 2026 01:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32D728D8DF;
+	Wed, 25 Feb 2026 01:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983769; cv=none; b=EEZ0sKxfGJBbsgp729rvOUcC2910F0/XycsjUn3Gy6iSV2NHdF0o5CV3EE7fzvUa5Qa5uhICsSeLSatRMwNXWtRt7RY51mf1JIh9mhZQEBbPpt6bM+MC/llUyrVRiFkHwhCw0QgJSbL7qIkNhKnuCNTWf6Hqi3ENkqBNh+v/lVo=
+	t=1771983770; cv=none; b=DTNrBNB/yTmrqWJaLDWAZMF0APVR3Jf0sjaC7JiDdOVbgxBaYQmc7fye5ZDzKp8CrEv8gLk2FOo/PrRfpmhL76NuuyPOW/S6DjGxgvzLAa5QggN3nz1Oj2aWTeqDWBfRRuPvKLmD+L+UwfLabeeHk2qOi3qxAHFtTTmO7nLVEH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983769; c=relaxed/simple;
-	bh=WLTePBfmfaF57PSlY74imcSkk9IS4WQG2c2vzZEnuWo=;
+	s=arc-20240116; t=1771983770; c=relaxed/simple;
+	bh=hQZybT4PwKtWeHTZ53jjF6ZoqC9NS3IXde3Ih/5rucs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFheupvjM7EsaO1jq8C5Mx3PK8wGSpDiPZ/QMqlbw+jOJST5Tm00TNVNye4kuo5VL1s8+PkkWG14aD3LBn7AaLVDdo1+tTQsJe6JvCDbvjlyOLoIkXtYfRy7gxw1LN83XuFnX7dFq+BhcOOTHJz77I9A+PGGO6I3JXgU8nnTRgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DChlZnzS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NSI2t7tva3V6U97cQpUt8l92ks9qCgWBr6w8MIQ8GZ/fz4nV7xZ8GJvv2bDBlbscl3qvWVp7iK4WXhyBVg0GxYf3N5u6LCGpTVigbmnzkeOnKKhyzhiIYkRtUwvgolsao3Ba5umheIyHBPufg5whupJnNqLdIQDT+BGpNdmz/Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jo+SrJXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DChlZnzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7236EC2BC87;
-	Wed, 25 Feb 2026 01:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jo+SrJXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84732C116D0;
+	Wed, 25 Feb 2026 01:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983769;
-	bh=WLTePBfmfaF57PSlY74imcSkk9IS4WQG2c2vzZEnuWo=;
+	s=korg; t=1771983770;
+	bh=hQZybT4PwKtWeHTZ53jjF6ZoqC9NS3IXde3Ih/5rucs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DChlZnzS9YcdNN/StqBRxYRAExaUgQlXoBDfZCyJQ86Wt5lfNSCaXcz//2geKpQc4
-	 2FxZJTnwV0vJyFZ8wSpCGhuAscKMbLwcU+02YaGegrWLo9epC/dNwJOfhUxeMceU1z
-	 PMybr7dQ3hD70T700aGST2aplKrTCISoYVzDjlqo=
+	b=jo+SrJXNgXbKG9KU3gc+mg8ZBJlXkS+J9bU7A3g4GGCvXYSt1p1X+viGK6YgX1e0s
+	 8m/LGur5D8atfxlQVdZ8g5M/YTZQJ7Go3EQj2+LLuFKJDNA4iZZ1OugfJFvMIKceCw
+	 6VadZYCz+ygMCqmk+T0Y9YnsMbIGMVaYrhUvEDDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Li Nan <linan122@huawei.com>,
-	Xiao Ni <xni@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Salah Triki <salah.triki@gmail.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/641] md/raid5: fix raid5_run() to return error when log_init() fails
-Date: Tue, 24 Feb 2026 17:16:09 -0800
-Message-ID: <20260225012350.072261139@linuxfoundation.org>
+Subject: [PATCH 6.18 061/641] s390/cio: Fix device lifecycle handling in css_alloc_subchannel()
+Date: Tue, 24 Feb 2026 17:16:27 -0800
+Message-ID: <20260225012350.529694407@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,45 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit 2d9f7150ac197ce79c9c917a004d4cf0b26ad7e0 ]
+[ Upstream commit f65c75b0b9b5a390bc3beadcde0a6fbc3ad118f7 ]
 
-Since commit f63f17350e53 ("md/raid5: use the atomic queue limit
-update APIs"), the abort path in raid5_run() returns 'ret' instead of
--EIO. However, if log_init() fails, 'ret' is still 0 from the previous
-successful call, causing raid5_run() to return success despite the
-failure.
+`css_alloc_subchannel()` calls `device_initialize()` before setting up
+the DMA masks. If `dma_set_coherent_mask()` or `dma_set_mask()` fails,
+the error path frees the subchannel structure directly, bypassing
+the device model reference counting.
 
-Fix this by capturing the return value from log_init().
+Once `device_initialize()` has been called, the embedded struct device
+must be released via `put_device()`, allowing the release callback to
+free the container structure.
 
-Link: https://lore.kernel.org/linux-raid/20260114171241.3043364-2-yukuai@fnnas.com
-Fixes: f63f17350e53 ("md/raid5: use the atomic queue limit update APIs")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202601130531.LGfcZsa4-lkp@intel.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Xiao Ni <xni@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fix the error path by dropping the initial device reference with
+`put_device()` instead of calling `kfree()` directly.
+
+This ensures correct device lifetime handling and avoids potential
+use-after-free or double-free issues.
+
+Fixes: e5dcf0025d7af ("s390/css: move subchannel lock allocation")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/s390/cio/css.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 41de29206402a..1041788a54c20 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -8056,7 +8056,8 @@ static int raid5_run(struct mddev *mddev)
- 			goto abort;
- 	}
+diff --git a/drivers/s390/cio/css.c b/drivers/s390/cio/css.c
+index be78a57f9bfde..8a70596a55447 100644
+--- a/drivers/s390/cio/css.c
++++ b/drivers/s390/cio/css.c
+@@ -236,7 +236,7 @@ struct subchannel *css_alloc_subchannel(struct subchannel_id schid,
+ 	return sch;
  
--	if (log_init(conf, journal_dev, raid5_has_ppl(conf)))
-+	ret = log_init(conf, journal_dev, raid5_has_ppl(conf));
-+	if (ret)
- 		goto abort;
+ err:
+-	kfree(sch);
++	put_device(&sch->dev);
+ 	return ERR_PTR(ret);
+ }
  
- 	return 0;
 -- 
 2.51.0
 
