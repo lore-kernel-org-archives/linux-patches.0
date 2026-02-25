@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AFE1EB5E1;
-	Wed, 25 Feb 2026 01:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB92A18B0A;
+	Wed, 25 Feb 2026 01:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983325; cv=none; b=PTMNdMzsmSxZiKtQ1/3ajf2UI9IyszJeGvhRTXyL/YPPKDjLAXjppzR/yLtMP0zilAIfzOhD9iCCI4RJbSVkNKaq7KlhkztWcuH8GYcIh6OYFGFtYoCy01pomPA+L2RbPXH8dgHjoHREhbKRR1gxDU1pD62ninJnkrg4b65zHgc=
+	t=1771983326; cv=none; b=IeL/xCrD1zHmgg3/+dNhUfYS5ihbRgHhleD13yXnOJEfMyxZo2r4O8GpsV9PoKHKx3Y9VXV0MB6xllIFPTYop3rDR9ZoEDuPHYtOOMcnOKSUuuV+rECbPVzis7x6YQE8J0jUXRKUU6uBFDQoHGpoEnzsrYckgQkphK2AXuZ2qeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983325; c=relaxed/simple;
-	bh=nwvuobPwt2RQKR8gzccMKr1DXAm2ZPE69r8eDYRkPk8=;
+	s=arc-20240116; t=1771983326; c=relaxed/simple;
+	bh=o8tmQcY/ZeVTp4brsooNE5esFGtQntu/v26Kl355wWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UsWTO4Ej/qNY501/WfCBE8qRNCAv7q4ioPjYZ4NpDWs6Z5NsRpfwnLSm9Sh67d2DpynnqZcDeBjPT+ekzl7WWgTSJglnOh3XjgSN0sxkArmwdvU1qvJ7h3DBKAqeYtiuGkKN88OwDz4Z54GFDmwr6tRu5BzWYJIOppP1HN6BMXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9zwf2TS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qky0RGFYZOpuV2/r06+3Dtp802LsFAd98P08DoXozGkK59GxPCQ0i/f+RbBcBck9f9Oq0iNO6p19umITXrJGsg3kq8WFcJiTW5krFINL+HFs/FfnfDSn8z2Cw2xWKd5nEfYUpBGvcV3DCTS/9GMDXB+T8jh30vCLezMlLAxs5W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18z+61n6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9zwf2TS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7310EC116D0;
-	Wed, 25 Feb 2026 01:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18z+61n6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8208CC116D0;
+	Wed, 25 Feb 2026 01:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983325;
-	bh=nwvuobPwt2RQKR8gzccMKr1DXAm2ZPE69r8eDYRkPk8=;
+	s=korg; t=1771983326;
+	bh=o8tmQcY/ZeVTp4brsooNE5esFGtQntu/v26Kl355wWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9zwf2TSQcmIbZG5LDgCeTRmPg2mLfONvY4XcHhzpfNLxhJhidGOyUlS0om4uNhg6
-	 yAGF7egoZMV5k/CIerOK9DBck5dPJAghS7anPpu+73+dNyBBx0pzXTj3Kr+ZESh9jk
-	 m7MgwGEzR+ZS1t3INVP4p8mZF3UcdEFNg5HqidZk=
+	b=18z+61n6+QFxF3WmEZvyHqrEPNYclH3UY+xbRLO6V+RNlKgStHL0SedtupW/AkSdX
+	 9t+kGW9HmiZ7zz83ot0jNCk6qy98jEmyAf8VWTDifqWnmV25FAYasaZPIUYNlbxd1z
+	 6CuzVzgYeFzR4+t1Yv2wPcJJy2GKsotnZzcKnUVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waqar Hameed <waqar.hameed@axis.com>,
-	Phil Reid <preid@electromag.com.au>,
+	Alexander Koskovich <akoskovich@pm.me>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 457/781] power: supply: sbs-battery: Fix use-after-free in power_supply_changed()
-Date: Tue, 24 Feb 2026 17:19:26 -0800
-Message-ID: <20260225012410.929183592@linuxfoundation.org>
+Subject: [PATCH 6.19 458/781] power: reset: nvmem-reboot-mode: respect cell size for nvmem_cell_write
+Date: Tue, 24 Feb 2026 17:19:27 -0800
+Message-ID: <20260225012410.953966160@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,97 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waqar Hameed <waqar.hameed@axis.com>
+From: Alexander Koskovich <AKoskovich@pm.me>
 
-[ Upstream commit 8d59cf3887fbabacef53bfba473e33e8a8d9d07b ]
+[ Upstream commit 36b05629226413836cfbb3fbe6689cd188bca156 ]
 
-Using the `devm_` variant for requesting IRQ _before_ the `devm_`
-variant for allocating/registering the `power_supply` handle, means that
-the `power_supply` handle will be deallocated/unregistered _before_ the
-interrupt handler (since `devm_` naturally deallocates in reverse
-allocation order). This means that during removal, there is a race
-condition where an interrupt can fire just _after_ the `power_supply`
-handle has been freed, *but* just _before_ the corresponding
-unregistration of the IRQ handler has run.
+Some platforms expose reboot mode cells that are smaller than an
+unsigned int, in which cases lead to write failures. Read the cell
+first to determine actual size and only write the number of bytes the
+cell can hold.
 
-This will lead to the IRQ handler calling `power_supply_changed()` with
-a freed `power_supply` handle. Which usually crashes the system or
-otherwise silently corrupts the memory...
-
-Note that there is a similar situation which can also happen during
-`probe()`; the possibility of an interrupt firing _before_ registering
-the `power_supply` handle. This would then lead to the nasty situation
-of using the `power_supply` handle *uninitialized* in
-`power_supply_changed()`.
-
-Fix this racy use-after-free by making sure the IRQ is requested _after_
-the registration of the `power_supply` handle. Keep the old behavior of
-just printing a warning in case of any failures during the IRQ request
-and finishing the probe successfully.
-
-Fixes: d2cec82c2880 ("power: sbs-battery: Request threaded irq and fix dev callback cookie")
-Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Reviewed-by: Phil Reid <preid@electromag.com.au>
-Link: https://patch.msgid.link/0ef896e002495e615157b482d18a437af19ddcd0.1766268280.git.waqar.hameed@axis.com
+Fixes: 7a78a7f7695b ("power: reset: nvmem-reboot-mode: use NVMEM as reboot mode write interface")
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Link: https://patch.msgid.link/20251214191529.2470580-1-akoskovich@pm.me
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/sbs-battery.c | 36 +++++++++++++++---------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/power/reset/nvmem-reboot-mode.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/sbs-battery.c b/drivers/power/supply/sbs-battery.c
-index 943c82ee978f4..43c48196c1674 100644
---- a/drivers/power/supply/sbs-battery.c
-+++ b/drivers/power/supply/sbs-battery.c
-@@ -1174,24 +1174,6 @@ static int sbs_probe(struct i2c_client *client)
+diff --git a/drivers/power/reset/nvmem-reboot-mode.c b/drivers/power/reset/nvmem-reboot-mode.c
+index 41530b70cfc48..d260715fccf67 100644
+--- a/drivers/power/reset/nvmem-reboot-mode.c
++++ b/drivers/power/reset/nvmem-reboot-mode.c
+@@ -10,6 +10,7 @@
+ #include <linux/nvmem-consumer.h>
+ #include <linux/platform_device.h>
+ #include <linux/reboot-mode.h>
++#include <linux/slab.h>
  
- 	i2c_set_clientdata(client, chip);
+ struct nvmem_reboot_mode {
+ 	struct reboot_mode_driver reboot;
+@@ -19,12 +20,22 @@ struct nvmem_reboot_mode {
+ static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot,
+ 				    unsigned int magic)
+ {
+-	int ret;
+ 	struct nvmem_reboot_mode *nvmem_rbm;
++	size_t buf_len;
++	void *buf;
++	int ret;
  
--	if (!chip->gpio_detect)
--		goto skip_gpio;
--
--	irq = gpiod_to_irq(chip->gpio_detect);
--	if (irq <= 0) {
--		dev_warn(&client->dev, "Failed to get gpio as irq: %d\n", irq);
--		goto skip_gpio;
--	}
--
--	rc = devm_request_threaded_irq(&client->dev, irq, NULL, sbs_irq,
--		IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
--		dev_name(&client->dev), chip);
--	if (rc) {
--		dev_warn(&client->dev, "Failed to request irq: %d\n", rc);
--		goto skip_gpio;
--	}
--
--skip_gpio:
- 	/*
- 	 * Before we register, we might need to make sure we can actually talk
- 	 * to the battery.
-@@ -1217,6 +1199,24 @@ static int sbs_probe(struct i2c_client *client)
- 		return dev_err_probe(&client->dev, PTR_ERR(chip->power_supply),
- 				     "Failed to register power supply\n");
+ 	nvmem_rbm = container_of(reboot, struct nvmem_reboot_mode, reboot);
  
-+	if (!chip->gpio_detect)
-+		goto out;
+-	ret = nvmem_cell_write(nvmem_rbm->cell, &magic, sizeof(magic));
++	buf = nvmem_cell_read(nvmem_rbm->cell, &buf_len);
++	if (IS_ERR(buf))
++		return PTR_ERR(buf);
++	kfree(buf);
 +
-+	irq = gpiod_to_irq(chip->gpio_detect);
-+	if (irq <= 0) {
-+		dev_warn(&client->dev, "Failed to get gpio as irq: %d\n", irq);
-+		goto out;
-+	}
++	if (buf_len > sizeof(magic))
++		return -EINVAL;
 +
-+	rc = devm_request_threaded_irq(&client->dev, irq, NULL, sbs_irq,
-+		IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-+		dev_name(&client->dev), chip);
-+	if (rc) {
-+		dev_warn(&client->dev, "Failed to request irq: %d\n", rc);
-+		goto out;
-+	}
-+
-+out:
- 	dev_info(&client->dev,
- 		"%s: battery gas gauge device registered\n", client->name);
++	ret = nvmem_cell_write(nvmem_rbm->cell, &magic, buf_len);
+ 	if (ret < 0)
+ 		dev_err(reboot->dev, "update reboot mode bits failed\n");
  
 -- 
 2.51.0
