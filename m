@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838A92BAF7;
-	Wed, 25 Feb 2026 01:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CF32BAF7;
+	Wed, 25 Feb 2026 01:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983068; cv=none; b=ByxRqn6gb0h+x1Xf27nyWGr9Cuj55q9Qu2T4J6jL9wBPrDU0bKioQqyVl8BKnv8UQkvZ0rsyDNJuQRYgchQq/l0VJ2E0UUvBShIWt/weX+S3TEeLI72EKVZfHGu/ByfNEhJEPVi/NRT5iIELSUeSp6AXYkRZ1/jJvrEo2W5FX5s=
+	t=1771983069; cv=none; b=XqSGwDyuu1kYuemNowuTyUQOUkkXEpBblREM/Z2q+vGLHiXMfzlNK5Aaq02lSCbiiIKtl3crCVOKRzj+/SrS8PrZXDQHgdogKBwTsMM9+U5L9f3Epi3dcWR3Nr3Mz3s7zuZCKiYEONcT/oTR1/xKeF1xmzvWD5ITtLpxNoaVYY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983068; c=relaxed/simple;
-	bh=CRjd7X6hPXjTQJ5EmR/YJg1UpSuwUbLmNqPCQyxMfMk=;
+	s=arc-20240116; t=1771983069; c=relaxed/simple;
+	bh=I6LqR/yXf5UINYtgi6JWjA0Kpi4TQpkBi7oX2iHx6DE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4VesWxbnK5LIY44/0bHfp9TxycWF9swExEqFpUj7673NujfzAq1Ix8wJsuOcOik1tXD9PyuwAbM1rclkYECC5wzQYgUQ9ZIP/jQA35q/bu/UF60cBNSu7pTPClOH4ik/b6cyq+MQ4EYoYEGkRYlKRfQwqmlMtSipY8ue0DrJY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0kBwhbk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=i4gpUtw8jtgCNvfIqnRHK/5I/f1xT+DP3TJAFhfBombkwQFOTtrOwQHFdSH/hzmY8GS9WUVKptDyjOwk9TG7iX8FvQjZlS7d3u/qPu5hD1l6Mf7t6uh+L4z5kAsuQzmr7Yqfj8VsVgHrJa1wbBNLoNKMwmqODAuukY9I2AVfmaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8MfiUIM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0kBwhbk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4978CC116D0;
-	Wed, 25 Feb 2026 01:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8MfiUIM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8C0C116D0;
+	Wed, 25 Feb 2026 01:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983068;
-	bh=CRjd7X6hPXjTQJ5EmR/YJg1UpSuwUbLmNqPCQyxMfMk=;
+	s=korg; t=1771983069;
+	bh=I6LqR/yXf5UINYtgi6JWjA0Kpi4TQpkBi7oX2iHx6DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F0kBwhbkS71F0TS9+Af5oXBS/CWN1e08Kpj/rht+Hn1QJgB+zwQXJwxSLBPybheNR
-	 OlpOKsYnCkRc83dVP7hxgfb3dlga+iCx7uYYOV7ZQ8/dO3yNffd/RRiu6jPERk8AGY
-	 f8xkf6wKPdK7JhgoCvZThT4sMVil0dsgTBKD3Alw=
+	b=G8MfiUIMlDPJOqCSjHoBb6Ocnm2g5xDvjcKxPzCB03LaxZZJRnJvhDTYoGUfDlrT+
+	 joRejnOjh/CsEjN1xkL87zbc/Wg0amW1a0WndvQe8DGBAitDryfy/P/eQF7rovke/p
+	 8nfthzcrY8spVEQjY13cSHYq6w2uoP2SXrdayAfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konstantin Andreev <andreev@swemel.ru>,
 	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 231/781] smack: /smack/doi must be > 0
-Date: Tue, 24 Feb 2026 17:15:40 -0800
-Message-ID: <20260225012405.376485059@linuxfoundation.org>
+Subject: [PATCH 6.19 232/781] smack: /smack/doi: accept previously used values
+Date: Tue, 24 Feb 2026 17:15:41 -0800
+Message-ID: <20260225012405.400725030@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -45,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
@@ -53,10 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit 19c013e1551bf51e1493da1270841d60e4fd3f15 ]
+[ Upstream commit 33d589ed60ae433b483761987b85e0d24e54584e ]
 
-/smack/doi allows writing and keeping negative doi values.
-Correct values are 0 < doi <= (max 32-bit positive integer)
+Writing to /smack/doi a value that has ever been
+written there in the past disables networking for
+non-ambient labels.
+E.g.
+
+    # cat /smack/doi
+    3
+    # netlabelctl -p cipso list
+    Configured CIPSO mappings (1)
+     DOI value : 3
+       mapping type : PASS_THROUGH
+    # netlabelctl -p map list
+    Configured NetLabel domain mappings (3)
+     domain: "_" (IPv4)
+       protocol: UNLABELED
+     domain: DEFAULT (IPv4)
+       protocol: CIPSO, DOI = 3
+     domain: DEFAULT (IPv6)
+       protocol: UNLABELED
+
+    # cat /smack/ambient
+    _
+    # cat /proc/$$/attr/smack/current
+    _
+    # ping -c1 10.1.95.12
+    64 bytes from 10.1.95.12: icmp_seq=1 ttl=64 time=0.964 ms
+    # echo foo >/proc/$$/attr/smack/current
+    # ping -c1 10.1.95.12
+    64 bytes from 10.1.95.12: icmp_seq=1 ttl=64 time=0.956 ms
+    unknown option 86
+
+    # echo 4 >/smack/doi
+    # echo 3 >/smack/doi
+!>  [  214.050395] smk_cipso_doi:691 cipso add rc = -17
+    # echo 3 >/smack/doi
+!>  [  249.402261] smk_cipso_doi:678 remove rc = -2
+!>  [  249.402261] smk_cipso_doi:691 cipso add rc = -17
+
+    # ping -c1 10.1.95.12
+!!> ping: 10.1.95.12: Address family for hostname not supported
+
+    # echo _ >/proc/$$/attr/smack/current
+    # ping -c1 10.1.95.12
+    64 bytes from 10.1.95.12: icmp_seq=1 ttl=64 time=0.617 ms
+
+This happens because Smack keeps decommissioned DOIs,
+fails to re-add them, and consequently refuses to add
+the “default” domain map:
+
+    # netlabelctl -p cipso list
+    Configured CIPSO mappings (2)
+     DOI value : 3
+       mapping type : PASS_THROUGH
+     DOI value : 4
+       mapping type : PASS_THROUGH
+    # netlabelctl -p map list
+    Configured NetLabel domain mappings (2)
+     domain: "_" (IPv4)
+       protocol: UNLABELED
+!>  (no ipv4 map for default domain here)
+     domain: DEFAULT (IPv6)
+       protocol: UNLABELED
+
+Fix by clearing decommissioned DOI definitions and
+serializing concurrent DOI updates with a new lock.
+
+Also:
+- allow /smack/doi to live unconfigured, since
+  adding a map (netlbl_cfg_cipsov4_map_add) may fail.
+  CIPSO_V4_DOI_UNKNOWN(0) indicates the unconfigured DOI
+- add new DOI before removing the old default map,
+  so the old map remains if the add fails
 
 (2008-02-04, Casey Schaufler)
 Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
@@ -65,55 +136,144 @@ Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
 Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smackfs.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ security/smack/smackfs.c | 71 +++++++++++++++++++++++++---------------
+ 1 file changed, 45 insertions(+), 26 deletions(-)
 
 diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index 2a9d3f2ebbe13..e611e0fb56209 100644
+index e611e0fb56209..8919e330d2f60 100644
 --- a/security/smack/smackfs.c
 +++ b/security/smack/smackfs.c
-@@ -141,7 +141,7 @@ struct smack_parsed_rule {
+@@ -70,6 +70,7 @@ enum smk_inos {
+ static DEFINE_MUTEX(smack_cipso_lock);
+ static DEFINE_MUTEX(smack_ambient_lock);
+ static DEFINE_MUTEX(smk_net4addr_lock);
++static DEFINE_MUTEX(smk_cipso_doi_lock);
+ #if IS_ENABLED(CONFIG_IPV6)
+ static DEFINE_MUTEX(smk_net6addr_lock);
+ #endif /* CONFIG_IPV6 */
+@@ -141,7 +142,7 @@ struct smack_parsed_rule {
  	int			smk_access2;
  };
  
--static int smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
-+static u32 smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
+-static u32 smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
++static u32 smk_cipso_doi_value = CIPSO_V4_DOI_UNKNOWN;
  
  /*
   * Values for parsing cipso rules
-@@ -1562,7 +1562,7 @@ static ssize_t smk_read_doi(struct file *filp, char __user *buf,
- 	if (*ppos != 0)
- 		return 0;
+@@ -663,43 +664,60 @@ static const struct file_operations smk_load_ops = {
+ };
  
--	sprintf(temp, "%d", smk_cipso_doi_value);
-+	sprintf(temp, "%lu", (unsigned long)smk_cipso_doi_value);
- 	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
- 
- 	return rc;
-@@ -1581,7 +1581,7 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
- 			     size_t count, loff_t *ppos)
+ /**
+- * smk_cipso_doi - initialize the CIPSO domain
++ * smk_cipso_doi - set netlabel maps
++ * @ndoi: new value for our CIPSO DOI
++ * @gfp_flags: kmalloc allocation context
+  */
+-static void smk_cipso_doi(void)
++static int
++smk_cipso_doi(u32 ndoi, gfp_t gfp_flags)
  {
- 	char temp[80];
--	int i;
-+	unsigned long u;
+-	int rc;
++	int rc = 0;
+ 	struct cipso_v4_doi *doip;
+ 	struct netlbl_audit nai;
  
- 	if (!smack_privileged(CAP_MAC_ADMIN))
- 		return -EPERM;
-@@ -1594,10 +1594,12 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
+-	smk_netlabel_audit_set(&nai);
++	mutex_lock(&smk_cipso_doi_lock);
  
- 	temp[count] = '\0';
+-	rc = netlbl_cfg_map_del(NULL, PF_INET, NULL, NULL, &nai);
+-	if (rc != 0)
+-		printk(KERN_WARNING "%s:%d remove rc = %d\n",
+-		       __func__, __LINE__, rc);
++	if (smk_cipso_doi_value == ndoi)
++		goto clr_doi_lock;
++
++	smk_netlabel_audit_set(&nai);
  
--	if (sscanf(temp, "%d", &i) != 1)
-+	if (kstrtoul(temp, 10, &u))
+-	doip = kmalloc(sizeof(struct cipso_v4_doi), GFP_KERNEL | __GFP_NOFAIL);
++	doip = kmalloc(sizeof(struct cipso_v4_doi), gfp_flags);
++	if (!doip) {
++		rc = -ENOMEM;
++		goto clr_doi_lock;
++	}
+ 	doip->map.std = NULL;
+-	doip->doi = smk_cipso_doi_value;
++	doip->doi = ndoi;
+ 	doip->type = CIPSO_V4_MAP_PASS;
+ 	doip->tags[0] = CIPSO_V4_TAG_RBITMAP;
+ 	for (rc = 1; rc < CIPSO_V4_TAG_MAXCNT; rc++)
+ 		doip->tags[rc] = CIPSO_V4_TAG_INVALID;
+ 
+ 	rc = netlbl_cfg_cipsov4_add(doip, &nai);
+-	if (rc != 0) {
+-		printk(KERN_WARNING "%s:%d cipso add rc = %d\n",
+-		       __func__, __LINE__, rc);
++	if (rc) {
+ 		kfree(doip);
+-		return;
++		goto clr_doi_lock;
+ 	}
+-	rc = netlbl_cfg_cipsov4_map_add(doip->doi, NULL, NULL, NULL, &nai);
+-	if (rc != 0) {
+-		printk(KERN_WARNING "%s:%d map add rc = %d\n",
+-		       __func__, __LINE__, rc);
+-		netlbl_cfg_cipsov4_del(doip->doi, &nai);
+-		return;
++
++	if (smk_cipso_doi_value != CIPSO_V4_DOI_UNKNOWN) {
++		rc = netlbl_cfg_map_del(NULL, PF_INET, NULL, NULL, &nai);
++		if (rc && rc != -ENOENT)
++			goto clr_ndoi_def;
++
++		netlbl_cfg_cipsov4_del(smk_cipso_doi_value, &nai);
+ 	}
++
++	rc = netlbl_cfg_cipsov4_map_add(ndoi, NULL, NULL, NULL, &nai);
++	if (rc) {
++		smk_cipso_doi_value = CIPSO_V4_DOI_UNKNOWN; // no default map
++clr_ndoi_def:	netlbl_cfg_cipsov4_del(ndoi, &nai);
++	} else
++		smk_cipso_doi_value = ndoi;
++
++clr_doi_lock:
++	mutex_unlock(&smk_cipso_doi_lock);
++	return rc;
+ }
+ 
+ /**
+@@ -1599,11 +1617,8 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
+ 
+ 	if (u == CIPSO_V4_DOI_UNKNOWN || u > U32_MAX)
  		return -EINVAL;
+-	smk_cipso_doi_value = u;
+-
+-	smk_cipso_doi();
  
--	smk_cipso_doi_value = i;
-+	if (u == CIPSO_V4_DOI_UNKNOWN || u > U32_MAX)
-+		return -EINVAL;
-+	smk_cipso_doi_value = u;
+-	return count;
++	return smk_cipso_doi(u, GFP_KERNEL) ? : count;
+ }
  
- 	smk_cipso_doi();
+ static const struct file_operations smk_doi_ops = {
+@@ -2984,6 +2999,7 @@ int __init init_smk_fs(void)
+ {
+ 	int err;
+ 	int rc;
++	struct netlbl_audit nai;
  
+ 	if (smack_enabled == 0)
+ 		return 0;
+@@ -3002,7 +3018,10 @@ int __init init_smk_fs(void)
+ 		}
+ 	}
+ 
+-	smk_cipso_doi();
++	smk_netlabel_audit_set(&nai);
++	(void) netlbl_cfg_map_del(NULL, PF_INET, NULL, NULL, &nai);
++	(void) smk_cipso_doi(SMACK_CIPSO_DOI_DEFAULT,
++			     GFP_KERNEL | __GFP_NOFAIL);
+ 	smk_unlbl_ambient(NULL);
+ 
+ 	rc = smack_populate_secattr(&smack_known_floor);
 -- 
 2.51.0
 
