@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74CC1D5141;
-	Wed, 25 Feb 2026 01:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23131D5141;
+	Wed, 25 Feb 2026 01:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983557; cv=none; b=F84qTVq0EsjOwWqJdz1mYbZzuNuiAZArQ3kZBtkHnZuigUBqPM833olXQOJ8UjgtbCbo0gda0Njr0lDoAdekjQNhdHYwcNVzEj7UeyPZ47i2dksg3BX0F0mitMomrXuBEhGF+/8pgt5o5u3KJEy4SSEG6BdAmSPa4x5rRTICF9E=
+	t=1771983559; cv=none; b=rx+x4/FKKjoedre3ySbRtC5bT2GeG6oUMAa6qFSXq/WfU1fNfXTgD/69qMbslcd+zz5koEsWn5oqkQ43vXqOMvhZU6HaZPF8OezC+gt58QSoGlgHdkdFQa/jhqC+rpar6h7sdZPAlsxb7f6VVRTugRzOW4XWA3DkZuqHylQ9vdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983557; c=relaxed/simple;
-	bh=aoM0t0WGF+9q2edESCroirCOlMgiv99Ms8GWHaMRRC8=;
+	s=arc-20240116; t=1771983559; c=relaxed/simple;
+	bh=eBZFCHV9IjMYVtwCsf8s35rdhq/hQf6iIjkS/okB6LI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aWfFpAhHQ55s50/IqwgUutQZNoRgJA9q9yERyxBLzH4ErB3guzrRUtXJrVZbmu0r6WZRyjmQefL9Pcy8Fjv81EHjSAE20UiNv3xm0bvg9Ly9gjLTL7QV8Cx72lDg+kq6zkRaIZ1NXSA2za7Mm5D6wDHktWgv0fDY+MoEjCwCBLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTGXlJf3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ViE/AQJl21Ayn2yYz+bOJ9ayQTG/H8kh9o+MdXWQ41qa30rWO78UZd4XYdJq4r5x1wICLxGVp0iWW/SGyW734yUqznLcw4uvk4LnMML03uEeFYTbFCKc+WumAL3Ud62eEIaBkiAavL0f/M6mUcI8VzhP8omSlVe2HuHBNST0+7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKUDda5g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTGXlJf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C86CC2BC86;
-	Wed, 25 Feb 2026 01:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKUDda5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A616DC2BC86;
+	Wed, 25 Feb 2026 01:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983557;
-	bh=aoM0t0WGF+9q2edESCroirCOlMgiv99Ms8GWHaMRRC8=;
+	s=korg; t=1771983558;
+	bh=eBZFCHV9IjMYVtwCsf8s35rdhq/hQf6iIjkS/okB6LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PTGXlJf3SqMIOXsPoSI4V6JzKnQVhD0ov88qeg4QIk6TdUMKMiliTfMK1f9xyy2lV
-	 2DgL8u6sUiMR39kXxJ3HBhWhcwz9NDPP60qHxkuBydyFwtflGWYYxtuMnrzYIe3WNC
-	 EPa38OgWhWmWGNlWRocUhXa9cW/ouUzTCUq1x5+E=
+	b=cKUDda5gKa1CzZLKt82UiAaKXJIGO0nbG6J7bpb587besQ9TpB4UWNFrAQ/a07Soy
+	 nUB5NQR/sU3b2ASz5AYnnOf0f7r0orR9A5hK3snwHY3ESXcbpCsRTMxlhVw/c0KtV7
+	 OREj+ebvSML3WIGFAUd0aVMSyGnE51R4SooJi46c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksei Oladko <aleksey.oladko@virtuozzo.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Furquim Ulisses <ulisses.furquim@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 658/781] selftests: forwarding: vxlan_bridge_1d: fix test failure with br_netfilter enabled
-Date: Tue, 24 Feb 2026 17:22:47 -0800
-Message-ID: <20260225012415.926716043@linuxfoundation.org>
+Subject: [PATCH 6.19 623/781] powercap: intel_rapl: Remove incorrect CPU check in PMU context
+Date: Tue, 24 Feb 2026 17:22:12 -0800
+Message-ID: <20260225012415.093984728@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,75 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit 02cb2e6bacbb08ebf6acb61be816efd11e1f4a21 ]
+[ Upstream commit 7537bae8b6eb635583e0e6260f61d13ddbd52087 ]
 
-The test generates VXLAN traffic using mausezahn, where the encapsulated
-inner IPv4 packet contains a zero IP header checksum. After VXLAN
-decapsulation, such packets do not pass sanity checks in br_netfilter
-and are dropped, which causes the test to fail.
+The RAPL MSR read path incorrectly validates CPU context when called
+from the PMU subsystem:
 
-Fix this by calculating and setting a valid IPv4 header checksum for the
-encapsulated packet generated by mausezahn, so that the packet is accepted
-by br_netfilter. Fixed by using the payload_template_calc_checksum() /
-payload_template_expand_checksum() helpers that are only available
-in v6.3 and newer kernels.
+    if (atomic) {
+        if (unlikely(smp_processor_id() != cpu))
+            return -EIO;
+        rdmsrq(ra->reg.msr, ra->value);
+    }
 
-Fixes: a0b61f3d8ebf ("selftests: forwarding: vxlan_bridge_1d: Add an ECN decap test")
-Signed-off-by: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260213131907.43351-2-aleksey.oladko@virtuozzo.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This check fails for package-scoped MSRs like RAPL energy counters,
+which are readable from any CPU within the package.
+
+The perf tool avoids hitting this check by validating against
+/sys/bus/event_source/devices/power/cpumask before opening events.
+However, turbostat does not perform this validation and may attempt
+reads from non-lead CPUs, causing the check to fail and return zero
+power values.
+
+Since package-scoped MSRs are architecturally accessible from any CPU
+in the package, remove the CPU matching check.
+
+Also rename 'atomic' to 'pmu_ctx' to clarify this indicates PMU context
+where rdmsrq() can be used directly instead of rdmsrl_safe_on_cpu().
+
+Fixes: 748d6ba43afd ("powercap: intel_rapl: Enable MSR-based RAPL PMU support")
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Tested-by: Furquim Ulisses <ulisses.furquim@intel.com>
+Reviewed-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20260209234310.1440722-2-sathyanarayanan.kuppuswamy@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/forwarding/vxlan_bridge_1d.sh         | 26 ++++++++++++-------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/powercap/intel_rapl_common.c |  6 +++---
+ drivers/powercap/intel_rapl_msr.c    | 12 +++++-------
+ include/linux/intel_rapl.h           |  2 +-
+ 3 files changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
-index b43816dd998ca..457f41d5e584b 100755
---- a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
-+++ b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
-@@ -567,6 +567,21 @@ vxlan_encapped_ping_do()
- 	local inner_tos=$1; shift
- 	local outer_tos=$1; shift
+diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
+index 3ff6da3bf4e63..3705d0608a0fb 100644
+--- a/drivers/powercap/intel_rapl_common.c
++++ b/drivers/powercap/intel_rapl_common.c
+@@ -254,7 +254,7 @@ static void rapl_init_domains(struct rapl_package *rp);
+ static int rapl_read_data_raw(struct rapl_domain *rd,
+ 			      enum rapl_primitives prim,
+ 			      bool xlate, u64 *data,
+-			      bool atomic);
++			      bool pmu_ctx);
+ static int rapl_write_data_raw(struct rapl_domain *rd,
+ 			       enum rapl_primitives prim,
+ 			       unsigned long long value);
+@@ -832,7 +832,7 @@ prim_fixups(struct rapl_domain *rd, enum rapl_primitives prim)
+  */
+ static int rapl_read_data_raw(struct rapl_domain *rd,
+ 			      enum rapl_primitives prim, bool xlate, u64 *data,
+-			      bool atomic)
++			      bool pmu_ctx)
+ {
+ 	u64 value;
+ 	enum rapl_primitives prim_fixed = prim_fixups(rd, prim);
+@@ -854,7 +854,7 @@ static int rapl_read_data_raw(struct rapl_domain *rd,
  
-+	local ipv4hdr=$(:
-+		    )"45:"$(                      : IP version + IHL
-+		    )"$inner_tos:"$(              : IP TOS
-+		    )"00:54:"$(                   : IP total length
-+		    )"99:83:"$(                   : IP identification
-+		    )"40:00:"$(                   : IP flags + frag off
-+		    )"40:"$(                      : IP TTL
-+		    )"01:"$(                      : IP proto
-+		    )"CHECKSUM:"$(                : IP header csum
-+		    )"c0:00:02:03:"$(             : IP saddr: 192.0.2.3
-+		    )"c0:00:02:01"$(              : IP daddr: 192.0.2.1
-+		)
-+	local checksum=$(payload_template_calc_checksum "$ipv4hdr")
-+	ipv4hdr=$(payload_template_expand_checksum "$ipv4hdr" $checksum)
-+
- 	$MZ $dev -c $count -d 100msec -q \
- 		-b $next_hop_mac -B $dest_ip \
- 		-t udp tos=$outer_tos,sp=23456,dp=$VXPORT,p=$(:
-@@ -577,16 +592,7 @@ vxlan_encapped_ping_do()
- 		    )"$dest_mac:"$(               : ETH daddr
- 		    )"$(mac_get w2):"$(           : ETH saddr
- 		    )"08:00:"$(                   : ETH type
--		    )"45:"$(                      : IP version + IHL
--		    )"$inner_tos:"$(              : IP TOS
--		    )"00:54:"$(                   : IP total length
--		    )"99:83:"$(                   : IP identification
--		    )"40:00:"$(                   : IP flags + frag off
--		    )"40:"$(                      : IP TTL
--		    )"01:"$(                      : IP proto
--		    )"00:00:"$(                   : IP header csum
--		    )"c0:00:02:03:"$(             : IP saddr: 192.0.2.3
--		    )"c0:00:02:01:"$(             : IP daddr: 192.0.2.1
-+		    )"$ipv4hdr:"$(                : IPv4 header
- 		    )"08:"$(                      : ICMP type
- 		    )"00:"$(                      : ICMP code
- 		    )"8b:f2:"$(                   : ICMP csum
+ 	ra.mask = rpi->mask;
+ 
+-	if (rd->rp->priv->read_raw(get_rid(rd->rp), &ra, atomic)) {
++	if (rd->rp->priv->read_raw(get_rid(rd->rp), &ra, pmu_ctx)) {
+ 		pr_debug("failed to read reg 0x%llx for %s:%s\n", ra.reg.val, rd->rp->name, rd->name);
+ 		return -EIO;
+ 	}
+diff --git a/drivers/powercap/intel_rapl_msr.c b/drivers/powercap/intel_rapl_msr.c
+index 9a7e150b3536b..152893dca5653 100644
+--- a/drivers/powercap/intel_rapl_msr.c
++++ b/drivers/powercap/intel_rapl_msr.c
+@@ -110,16 +110,14 @@ static int rapl_cpu_down_prep(unsigned int cpu)
+ 	return 0;
+ }
+ 
+-static int rapl_msr_read_raw(int cpu, struct reg_action *ra, bool atomic)
++static int rapl_msr_read_raw(int cpu, struct reg_action *ra, bool pmu_ctx)
+ {
+ 	/*
+-	 * When called from atomic-context (eg PMU event handler)
+-	 * perform MSR read directly using rdmsrq().
++	 * When called from PMU context, perform MSR read directly using
++	 * rdmsrq() without IPI overhead. Package-scoped MSRs are readable
++	 * from any CPU in the package.
+ 	 */
+-	if (atomic) {
+-		if (unlikely(smp_processor_id() != cpu))
+-			return -EIO;
+-
++	if (pmu_ctx) {
+ 		rdmsrq(ra->reg.msr, ra->value);
+ 		goto out;
+ 	}
+diff --git a/include/linux/intel_rapl.h b/include/linux/intel_rapl.h
+index f479ef5b3341c..fa1f328d67120 100644
+--- a/include/linux/intel_rapl.h
++++ b/include/linux/intel_rapl.h
+@@ -152,7 +152,7 @@ struct rapl_if_priv {
+ 	union rapl_reg reg_unit;
+ 	union rapl_reg regs[RAPL_DOMAIN_MAX][RAPL_DOMAIN_REG_MAX];
+ 	int limits[RAPL_DOMAIN_MAX];
+-	int (*read_raw)(int id, struct reg_action *ra, bool atomic);
++	int (*read_raw)(int id, struct reg_action *ra, bool pmu_ctx);
+ 	int (*write_raw)(int id, struct reg_action *ra);
+ 	void *defaults;
+ 	void *rpi;
 -- 
 2.51.0
 
