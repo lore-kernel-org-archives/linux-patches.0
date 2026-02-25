@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EC21E2834;
-	Wed, 25 Feb 2026 01:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA8E1E2834;
+	Wed, 25 Feb 2026 01:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983595; cv=none; b=OV2t5Ed72f/rzYuv81mjJ97Dd6t10uHkwo0T0Of+Dkb13DF4rgoVZh8cOwAZi+gQ91OECJ6ih2U/+Eqvi2EluEg2Zit0+F8egG1KI3GhsBlnB+jTlLBlurnvALHZ95nPDBUCdzPqc6LcHuoPOV6YMHkZSjz1x7QSSKAo014htyQ=
+	t=1771983596; cv=none; b=OzQq9riWmCjxVK0KtG4uWXbL5prt9kyCBMpEv3xmTjGAhWLW+S7kysSOxg+65IV+T2CV0+4dfWyheD/ENd6SA8ZR0GPgPOXCzyrwbySLv/AWmCYfS8NHBOEMXmwGeaDbyqIfHByuTxdE+0qtWSgx72GqVUx/rSAt8/s3PGZtitU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983595; c=relaxed/simple;
-	bh=3EpYHKdjESwTelxEdpwS6Wh3sHBFTYDMv6QIYbkSrGs=;
+	s=arc-20240116; t=1771983596; c=relaxed/simple;
+	bh=OHMeOpJ12LTDZ0nXuf+fxEPQ7wME1Ny1SZfra1qTmfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSYrExw76EW+crz8JkuIGBWuiKVdJ/zImR46oIXKrF3FUdijy2Vo+gCa2/QTx8QFQzsfb8NjPuwS7JDWyVxGTxflld9jyopCWATPlt4NnMKuS8lWd0tYxz2hn3Zy1ADECKjUwzP8ft7n1G5DNfs6pDY1NlDKdwgoL4Xy3Q0siuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTcalbax; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dOGV1OAnfsleQ90KZishy+JOIIHm0im+YcGN+EN0wT6OdxSviWDkkWzLragO2N6/1I9hUP/RuzIbRnjle2tMRmhjEkhGCk+v9X5dK0r0R0xz4lxD5Zy7QW0Pq2xRtvr+N9RmfIUPOicCRtZCmNfFpYeel1AdYyiSbGoXZimPp24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEDMgJTB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTcalbax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A0CC116D0;
-	Wed, 25 Feb 2026 01:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEDMgJTB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B86C116D0;
+	Wed, 25 Feb 2026 01:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983595;
-	bh=3EpYHKdjESwTelxEdpwS6Wh3sHBFTYDMv6QIYbkSrGs=;
+	s=korg; t=1771983596;
+	bh=OHMeOpJ12LTDZ0nXuf+fxEPQ7wME1Ny1SZfra1qTmfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTcalbaxB/qvigGwd+5p2eWAvIVf19HvNoO5HCxQTCOxWaOnGVb5yvrIOMdWllgf4
-	 krO2W3iBaEaavrMT/YJFJawAqt+010bvewrL9WsKsnTLoTCagSDqVPDun1jX+NvJKZ
-	 +/QIi++DfI/27bOIxfpMR5Fe5mXK8jMX+IhIWs6M=
+	b=tEDMgJTB1q/PY8NLM3pM/mJ6ZI8w25GLg2Zt0YYdowl3F97eWeG6tgLfcwkTDb4Fl
+	 Lp+AVfbTmeocIhoos9f8tSGafA73adSI6VE7lQsWFdKeG/5TPHvGJD+lcTBJKHFMdg
+	 GImf+qMApH2wz6tG1zn2zP34tkAHOBCUGeaPRCew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inseo An <y0un9sa@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 668/781] netfilter: nf_tables: fix use-after-free in nf_tables_addchain()
-Date: Tue, 24 Feb 2026 17:22:57 -0800
-Message-ID: <20260225012416.169514679@linuxfoundation.org>
+Subject: [PATCH 6.19 669/781] ipv6: fix a race in ip6_sock_set_v6only()
+Date: Tue, 24 Feb 2026 17:22:58 -0800
+Message-ID: <20260225012416.192849925@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,52 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inseo An <y0un9sa@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 71e99ee20fc3f662555118cf1159443250647533 ]
+[ Upstream commit 452a3eee22c57a5786ae6db5c97f3b0ec13bb3b7 ]
 
-nf_tables_addchain() publishes the chain to table->chains via
-list_add_tail_rcu() (in nft_chain_add()) before registering hooks.
-If nf_tables_register_hook() then fails, the error path calls
-nft_chain_del() (list_del_rcu()) followed by nf_tables_chain_destroy()
-with no RCU grace period in between.
+It is unlikely that this function will be ever called
+with isk->inet_num being not zero.
 
-This creates two use-after-free conditions:
+Perform the check on isk->inet_num inside the locked section
+for complete safety.
 
- 1) Control-plane: nf_tables_dump_chains() traverses table->chains
-    under rcu_read_lock(). A concurrent dump can still be walking
-    the chain when the error path frees it.
-
- 2) Packet path: for NFPROTO_INET, nf_register_net_hook() briefly
-    installs the IPv4 hook before IPv6 registration fails.  Packets
-    entering nft_do_chain() via the transient IPv4 hook can still be
-    dereferencing chain->blob_gen_X when the error path frees the
-    chain.
-
-Add synchronize_rcu() between nft_chain_del() and the chain destroy
-so that all RCU readers -- both dump threads and in-flight packet
-evaluation -- have finished before the chain is freed.
-
-Fixes: 91c7b38dc9f0 ("netfilter: nf_tables: use new transaction infrastructure to handle chain")
-Signed-off-by: Inseo An <y0un9sa@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 9b115749acb24 ("ipv6: add ip6_sock_set_v6only")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260216102202.3343588-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/ipv6.h | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index f807183235e79..8dae197c7fafb 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2822,6 +2822,7 @@ static int nf_tables_addchain(struct nft_ctx *ctx, u8 family, u8 policy,
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 74fbf1ad8065a..6a933690e0ff5 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -1280,12 +1280,15 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex,
  
- err_register_hook:
- 	nft_chain_del(chain);
-+	synchronize_rcu();
- err_chain_add:
- 	nft_trans_destroy(trans);
- err_trans:
+ static inline int ip6_sock_set_v6only(struct sock *sk)
+ {
+-	if (inet_sk(sk)->inet_num)
+-		return -EINVAL;
++	int ret = 0;
++
+ 	lock_sock(sk);
+-	sk->sk_ipv6only = true;
++	if (inet_sk(sk)->inet_num)
++		ret = -EINVAL;
++	else
++		sk->sk_ipv6only = true;
+ 	release_sock(sk);
+-	return 0;
++	return ret;
+ }
+ 
+ static inline void ip6_sock_set_recverr(struct sock *sk)
 -- 
 2.51.0
 
