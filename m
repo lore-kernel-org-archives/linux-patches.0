@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E6418B0A;
-	Wed, 25 Feb 2026 01:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD3718DB2A;
+	Wed, 25 Feb 2026 01:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983267; cv=none; b=P6WXhLpjs3w7h7pkvwbX1S6mUwXtD8VnBCiWDYRePy2zNo9/PTtxckB+uQ+FmPprCYjZbXzjTBfM33HldptjxcXo2FvV3usz03B/6wa1Uzh+Zs47SKC9XWBVf1woMHTiJNxt9M0L8a0YMG2yhRgT95Rv1Ap0QdCnbdVhd1Yqh6U=
+	t=1771983268; cv=none; b=rmURejN2sTmJ26jwh1kXl5PwX1hAQMIGy2PNTO9Ac7sSGaOp69iDEiBy0rKKYsA1Rliyjm3D0uJ06gS5iRmNHO91r9GPLGbK1iK7pj1KBwlyjeO7dRKaN/Tpvge5KBIF9U1wmny2yt6u6X61GirELchF+VklEVwvrv52uzIf2G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983267; c=relaxed/simple;
-	bh=q5K+JJIPlgeSepwFsM2z2dLiLOFJcr3iMSi9ZgP7Zdg=;
+	s=arc-20240116; t=1771983268; c=relaxed/simple;
+	bh=IXQEvhqQZSpB0AwY3o57CkOC9tSX3edSFKi46VNjteM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwHPDucObGLjd/6t6/PJEC3NJa3qns9733mzFxQFvB89YiXQpetKe3SeH8CTLccJAvxXV3b7YU3xskFiCM76It6QnD/3CBz5Lt58yLh6zbmCQkSSnVme9xLUPKMCSVn56SmS1dWp5Np6Gv9Ftz5xCohKFdt6WzaR0JspgBECkvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfXe8Rvw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hpYI0AYLzpY6qDTkSiRys6cGEM/rKeRp5imOOk0PN44GTgXXkvs4miQkAIemYs2nVV4nUmHLmndAlxOGe+FEAliFIAxCZZf/Gde6/NHiZaA5dh+A15ozPfgws5a9ad6243d5wSHIHM2xz54CIjuxMm5DU2ko5gkOHwCgiRgZeMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFNziMJ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfXe8Rvw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E417FC116D0;
-	Wed, 25 Feb 2026 01:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFNziMJ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC450C116D0;
+	Wed, 25 Feb 2026 01:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1771983267;
-	bh=q5K+JJIPlgeSepwFsM2z2dLiLOFJcr3iMSi9ZgP7Zdg=;
+	bh=IXQEvhqQZSpB0AwY3o57CkOC9tSX3edSFKi46VNjteM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rfXe8RvwlnXav8B36UIj+99SUl8ILSLOQPLYJh2xdEQQaXnaaMgH1VgbfOY8PRhcu
-	 gBbN2dBPz9xxfArD1GIzHAqdmVKqNLQ3IN9b69ONTqLNET2g9hiGbYnY/3six94iAM
-	 o1BuwI4lyqhgDZ9ZfBam+Zh5TAOtVEZ8QQKL5a10=
+	b=dFNziMJ8YJXVcoHHTsUwFjS0DhwV7pcag7R7aF/lxYzWKO+MEYmbPbHajpdE9Q7EP
+	 9TvqIBh7p5d+UeTjwQPVGiawrB67HthJRsrxntzkP5j4VC17dsCkKu9xoYTt08ihcg
+	 lJ12RumaWRyC+4a5/2eq2i5rF35/M8iuqwUhSD44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mitchell <scott.k.mitch1@gmail.com>,
+	Ulrich Weber <ulrich.weber@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 408/781] netfilter: nfnetlink_queue: optimize verdict lookup with hash table
-Date: Tue, 24 Feb 2026 17:18:37 -0800
-Message-ID: <20260225012409.710521935@linuxfoundation.org>
+Subject: [PATCH 6.19 409/781] netfilter: nfnetlink_queue: do shared-unconfirmed check before segmentation
+Date: Tue, 24 Feb 2026 17:18:38 -0800
+Message-ID: <20260225012409.734708477@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,316 +51,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mitchell <scott.k.mitch1@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit e19079adcd26a25d7d3e586b1837493361fdf8b6 ]
+[ Upstream commit 207b3ebacb6113acaaec0d171d5307032c690004 ]
 
-The current implementation uses a linear list to find queued packets by
-ID when processing verdicts from userspace. With large queue depths and
-out-of-order verdicting, this O(n) lookup becomes a significant
-bottleneck, causing userspace verdict processing to dominate CPU time.
+Ulrich reports a regression with nfqueue:
 
-Replace the linear search with a hash table for O(1) average-case
-packet lookup by ID. A global rhashtable spanning all network
-namespaces attributes hash bucket memory to kernel but is subject to
-fixed upper bound.
+If an application did not set the 'F_GSO' capability flag and a gso
+packet with an unconfirmed nf_conn entry is received all packets are
+now dropped instead of queued, because the check happens after
+skb_gso_segment().  In that case, we did have exclusive ownership
+of the skb and its associated conntrack entry.  The elevated use
+count is due to skb_clone happening via skb_gso_segment().
 
-Signed-off-by: Scott Mitchell <scott.k.mitch1@gmail.com>
+Move the check so that its peformed vs. the aggregated packet.
+
+Then, annotate the individual segments except the first one so we
+can do a 2nd check at reinject time.
+
+For the normal case, where userspace does in-order reinjects, this avoids
+packet drops: first reinjected segment continues traversal and confirms
+entry, remaining segments observe the confirmed entry.
+
+While at it, simplify nf_ct_drop_unconfirmed(): We only care about
+unconfirmed entries with a refcnt > 1, there is no need to special-case
+dying entries.
+
+This only happens with UDP.  With TCP, the only unconfirmed packet will
+be the TCP SYN, those aren't aggregated by GRO.
+
+Next patch adds a udpgro test case to cover this scenario.
+
+Reported-by: Ulrich Weber <ulrich.weber@gmail.com>
+Fixes: 7d8dc1c7be8d ("netfilter: nf_queue: drop packets with cloned unconfirmed conntracks")
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 207b3ebacb61 ("netfilter: nfnetlink_queue: do shared-unconfirmed check before segmentation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_queue.h |   3 +
- net/netfilter/nfnetlink_queue.c  | 146 ++++++++++++++++++++++++-------
- 2 files changed, 119 insertions(+), 30 deletions(-)
+ include/net/netfilter/nf_queue.h |   1 +
+ net/netfilter/nfnetlink_queue.c  | 123 +++++++++++++++++++------------
+ 2 files changed, 75 insertions(+), 49 deletions(-)
 
 diff --git a/include/net/netfilter/nf_queue.h b/include/net/netfilter/nf_queue.h
-index 4aeffddb75861..e6803831d6af5 100644
+index e6803831d6af5..45eb26b2e95b3 100644
 --- a/include/net/netfilter/nf_queue.h
 +++ b/include/net/netfilter/nf_queue.h
-@@ -6,11 +6,13 @@
- #include <linux/ipv6.h>
- #include <linux/jhash.h>
- #include <linux/netfilter.h>
-+#include <linux/rhashtable-types.h>
- #include <linux/skbuff.h>
- 
- /* Each queued (to userspace) skbuff has one of these. */
- struct nf_queue_entry {
- 	struct list_head	list;
-+	struct rhash_head	hash_node;
- 	struct sk_buff		*skb;
- 	unsigned int		id;
- 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
-@@ -20,6 +22,7 @@ struct nf_queue_entry {
+@@ -21,6 +21,7 @@ struct nf_queue_entry {
+ 	struct net_device	*physout;
  #endif
  	struct nf_hook_state	state;
++	bool			nf_ct_is_unconfirmed;
  	u16			size; /* sizeof(entry) + saved route keys */
-+	u16			queue_num;
+ 	u16			queue_num;
  
- 	/* extra space to store route keys */
- };
 diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 8b7b39d8a1091..336e3ad18e72d 100644
+index 336e3ad18e72d..34548213f2f14 100644
 --- a/net/netfilter/nfnetlink_queue.c
 +++ b/net/netfilter/nfnetlink_queue.c
-@@ -30,6 +30,8 @@
- #include <linux/netfilter/nf_conntrack_common.h>
- #include <linux/list.h>
- #include <linux/cgroup-defs.h>
-+#include <linux/rhashtable.h>
-+#include <linux/jhash.h>
- #include <net/gso.h>
- #include <net/sock.h>
- #include <net/tcp_states.h>
-@@ -47,6 +49,8 @@
- #endif
+@@ -438,6 +438,34 @@ static void nf_reinject(struct nf_queue_entry *entry, unsigned int verdict)
+ 	nf_queue_entry_free(entry);
+ }
  
- #define NFQNL_QMAX_DEFAULT 1024
-+#define NFQNL_HASH_MIN     1024
-+#define NFQNL_HASH_MAX     1048576
- 
- /* We're using struct nlattr which has 16bit nla_len. Note that nla_len
-  * includes the header length. Thus, the maximum packet length that we
-@@ -56,6 +60,26 @@
-  */
- #define NFQNL_MAX_COPY_RANGE (0xffff - NLA_HDRLEN)
- 
-+/* Composite key for packet lookup: (net, queue_num, packet_id) */
-+struct nfqnl_packet_key {
-+	possible_net_t net;
-+	u32 packet_id;
-+	u16 queue_num;
-+} __aligned(sizeof(u32));  /* jhash2 requires 32-bit alignment */
-+
-+/* Global rhashtable - one for entire system, all netns */
-+static struct rhashtable nfqnl_packet_map __read_mostly;
-+
-+/* Helper to initialize composite key */
-+static inline void nfqnl_init_key(struct nfqnl_packet_key *key,
-+				  struct net *net, u32 packet_id, u16 queue_num)
++/* return true if the entry has an unconfirmed conntrack attached that isn't owned by us
++ * exclusively.
++ */
++static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry, bool *is_unconfirmed)
 +{
-+	memset(key, 0, sizeof(*key));
-+	write_pnet(&key->net, net);
-+	key->packet_id = packet_id;
-+	key->queue_num = queue_num;
++#if IS_ENABLED(CONFIG_NF_CONNTRACK)
++	struct nf_conn *ct = (void *)skb_nfct(entry->skb);
++
++	if (!ct || nf_ct_is_confirmed(ct))
++		return false;
++
++	if (is_unconfirmed)
++		*is_unconfirmed = true;
++
++	/* in some cases skb_clone() can occur after initial conntrack
++	 * pickup, but conntrack assumes exclusive skb->_nfct ownership for
++	 * unconfirmed entries.
++	 *
++	 * This happens for br_netfilter and with ip multicast routing.
++	 * This can't be solved with serialization here because one clone
++	 * could have been queued for local delivery or could be transmitted
++	 * in parallel on another CPU.
++	 */
++	return refcount_read(&ct->ct_general.use) > 1;
++#endif
++	return false;
 +}
 +
- struct nfqnl_instance {
- 	struct hlist_node hlist;		/* global list of queues */
- 	struct rcu_head rcu;
-@@ -100,6 +124,39 @@ static inline u_int8_t instance_hashfn(u_int16_t queue_num)
- 	return ((queue_num >> 8) ^ queue_num) % INSTANCE_BUCKETS;
- }
- 
-+/* Extract composite key from nf_queue_entry for hashing */
-+static u32 nfqnl_packet_obj_hashfn(const void *data, u32 len, u32 seed)
-+{
-+	const struct nf_queue_entry *entry = data;
-+	struct nfqnl_packet_key key;
-+
-+	nfqnl_init_key(&key, entry->state.net, entry->id, entry->queue_num);
-+
-+	return jhash2((u32 *)&key, sizeof(key) / sizeof(u32), seed);
-+}
-+
-+/* Compare stack-allocated key against entry */
-+static int nfqnl_packet_obj_cmpfn(struct rhashtable_compare_arg *arg,
-+				  const void *obj)
-+{
-+	const struct nfqnl_packet_key *key = arg->key;
-+	const struct nf_queue_entry *entry = obj;
-+
-+	return !net_eq(entry->state.net, read_pnet(&key->net)) ||
-+	       entry->queue_num != key->queue_num ||
-+	       entry->id != key->packet_id;
-+}
-+
-+static const struct rhashtable_params nfqnl_rhashtable_params = {
-+	.head_offset = offsetof(struct nf_queue_entry, hash_node),
-+	.key_len = sizeof(struct nfqnl_packet_key),
-+	.obj_hashfn = nfqnl_packet_obj_hashfn,
-+	.obj_cmpfn = nfqnl_packet_obj_cmpfn,
-+	.automatic_shrinking = true,
-+	.min_size = NFQNL_HASH_MIN,
-+	.max_size = NFQNL_HASH_MAX,
-+};
-+
- static struct nfqnl_instance *
- instance_lookup(struct nfnl_queue_net *q, u_int16_t queue_num)
+ static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
  {
-@@ -191,33 +248,45 @@ instance_destroy(struct nfnl_queue_net *q, struct nfqnl_instance *inst)
- 	spin_unlock(&q->instances_lock);
- }
- 
--static inline void
-+static int
- __enqueue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
- {
--       list_add_tail(&entry->list, &queue->queue_list);
--       queue->queue_total++;
-+	int err;
-+
-+	entry->queue_num = queue->queue_num;
-+
-+	err = rhashtable_insert_fast(&nfqnl_packet_map, &entry->hash_node,
-+				     nfqnl_rhashtable_params);
-+	if (unlikely(err))
-+		return err;
-+
-+	list_add_tail(&entry->list, &queue->queue_list);
-+	queue->queue_total++;
-+
-+	return 0;
- }
- 
- static void
- __dequeue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
- {
-+	rhashtable_remove_fast(&nfqnl_packet_map, &entry->hash_node,
-+			       nfqnl_rhashtable_params);
- 	list_del(&entry->list);
- 	queue->queue_total--;
- }
- 
- static struct nf_queue_entry *
--find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id)
-+find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id,
-+		   struct net *net)
- {
--	struct nf_queue_entry *entry = NULL, *i;
-+	struct nfqnl_packet_key key;
-+	struct nf_queue_entry *entry;
- 
--	spin_lock_bh(&queue->lock);
-+	nfqnl_init_key(&key, net, id, queue->queue_num);
- 
--	list_for_each_entry(i, &queue->queue_list, list) {
--		if (i->id == id) {
--			entry = i;
--			break;
--		}
--	}
-+	spin_lock_bh(&queue->lock);
-+	entry = rhashtable_lookup_fast(&nfqnl_packet_map, &key,
-+				       nfqnl_rhashtable_params);
- 
- 	if (entry)
- 		__dequeue_entry(queue, entry);
-@@ -407,8 +476,7 @@ nfqnl_flush(struct nfqnl_instance *queue, nfqnl_cmpfn cmpfn, unsigned long data)
- 	spin_lock_bh(&queue->lock);
- 	list_for_each_entry_safe(entry, next, &queue->queue_list, list) {
- 		if (!cmpfn || cmpfn(entry, data)) {
--			list_del(&entry->list);
--			queue->queue_total--;
-+			__dequeue_entry(queue, entry);
- 			nfqnl_reinject(entry, NF_DROP);
+ 	const struct nf_ct_hook *ct_hook;
+@@ -465,6 +493,24 @@ static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
+ 			break;
  		}
  	}
-@@ -888,23 +956,23 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
- 	if (nf_ct_drop_unconfirmed(entry))
- 		goto err_out_free_nskb;
- 
--	if (queue->queue_total >= queue->queue_maxlen) {
--		if (queue->flags & NFQA_CFG_F_FAIL_OPEN) {
--			failopen = 1;
--			err = 0;
--		} else {
--			queue->queue_dropped++;
--			net_warn_ratelimited("nf_queue: full at %d entries, dropping packets(s)\n",
--					     queue->queue_total);
--		}
--		goto err_out_free_nskb;
--	}
-+	if (queue->queue_total >= queue->queue_maxlen)
-+		goto err_out_queue_drop;
 +
- 	entry->id = ++queue->id_sequence;
- 	*packet_id_ptr = htonl(entry->id);
- 
-+	/* Insert into hash BEFORE unicast. If failure don't send to userspace. */
-+	err = __enqueue_entry(queue, entry);
-+	if (unlikely(err))
-+		goto err_out_queue_drop;
-+
- 	/* nfnetlink_unicast will either free the nskb or add it to a socket */
- 	err = nfnetlink_unicast(nskb, net, queue->peer_portid);
- 	if (err < 0) {
-+		/* Unicast failed - remove entry we just inserted */
-+		__dequeue_entry(queue, entry);
-+
- 		if (queue->flags & NFQA_CFG_F_FAIL_OPEN) {
- 			failopen = 1;
- 			err = 0;
-@@ -914,11 +982,22 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
- 		goto err_out_unlock;
- 	}
- 
--	__enqueue_entry(queue, entry);
--
- 	spin_unlock_bh(&queue->lock);
- 	return 0;
- 
-+err_out_queue_drop:
-+	if (queue->flags & NFQA_CFG_F_FAIL_OPEN) {
-+		failopen = 1;
-+		err = 0;
-+	} else {
-+		queue->queue_dropped++;
-+
-+		if (queue->queue_total >= queue->queue_maxlen)
-+			net_warn_ratelimited("nf_queue: full at %d entries, dropping packets(s)\n",
-+					     queue->queue_total);
-+		else
-+			net_warn_ratelimited("nf_queue: hash insert failed: %d\n", err);
++	if (verdict != NF_DROP && entry->nf_ct_is_unconfirmed) {
++		/* If first queued segment was already reinjected then
++		 * there is a good chance the ct entry is now confirmed.
++		 *
++		 * Handle the rare cases:
++		 *  - out-of-order verdict
++		 *  - threaded userspace reinjecting in parallel
++		 *  - first segment was dropped
++		 *
++		 * In all of those cases we can't handle this packet
++		 * because we can't be sure that another CPU won't modify
++		 * nf_conn->ext in parallel which isn't allowed.
++		 */
++		if (nf_ct_drop_unconfirmed(entry, NULL))
++			verdict = NF_DROP;
 +	}
- err_out_free_nskb:
++
+ 	nf_reinject(entry, verdict);
+ }
+ 
+@@ -894,49 +940,6 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
+ 	return NULL;
+ }
+ 
+-static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry)
+-{
+-#if IS_ENABLED(CONFIG_NF_CONNTRACK)
+-	static const unsigned long flags = IPS_CONFIRMED | IPS_DYING;
+-	struct nf_conn *ct = (void *)skb_nfct(entry->skb);
+-	unsigned long status;
+-	unsigned int use;
+-
+-	if (!ct)
+-		return false;
+-
+-	status = READ_ONCE(ct->status);
+-	if ((status & flags) == IPS_DYING)
+-		return true;
+-
+-	if (status & IPS_CONFIRMED)
+-		return false;
+-
+-	/* in some cases skb_clone() can occur after initial conntrack
+-	 * pickup, but conntrack assumes exclusive skb->_nfct ownership for
+-	 * unconfirmed entries.
+-	 *
+-	 * This happens for br_netfilter and with ip multicast routing.
+-	 * We can't be solved with serialization here because one clone could
+-	 * have been queued for local delivery.
+-	 */
+-	use = refcount_read(&ct->ct_general.use);
+-	if (likely(use == 1))
+-		return false;
+-
+-	/* Can't decrement further? Exclusive ownership. */
+-	if (!refcount_dec_not_one(&ct->ct_general.use))
+-		return false;
+-
+-	skb_set_nfct(entry->skb, 0);
+-	/* No nf_ct_put(): we already decremented .use and it cannot
+-	 * drop down to 0.
+-	 */
+-	return true;
+-#endif
+-	return false;
+-}
+-
+ static int
+ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
+ 			struct nf_queue_entry *entry)
+@@ -953,9 +956,6 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
+ 	}
+ 	spin_lock_bh(&queue->lock);
+ 
+-	if (nf_ct_drop_unconfirmed(entry))
+-		goto err_out_free_nskb;
+-
+ 	if (queue->queue_total >= queue->queue_maxlen)
+ 		goto err_out_queue_drop;
+ 
+@@ -998,7 +998,6 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
+ 		else
+ 			net_warn_ratelimited("nf_queue: hash insert failed: %d\n", err);
+ 	}
+-err_out_free_nskb:
  	kfree_skb(nskb);
  err_out_unlock:
-@@ -1430,7 +1509,7 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
- 
- 	verdict = ntohl(vhdr->verdict);
- 
--	entry = find_dequeue_entry(queue, ntohl(vhdr->id));
-+	entry = find_dequeue_entry(queue, ntohl(vhdr->id), info->net);
- 	if (entry == NULL)
- 		return -ENOENT;
- 
-@@ -1781,10 +1860,14 @@ static int __init nfnetlink_queue_init(void)
+ 	spin_unlock_bh(&queue->lock);
+@@ -1077,9 +1076,10 @@ __nfqnl_enqueue_packet_gso(struct net *net, struct nfqnl_instance *queue,
+ static int
+ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
  {
- 	int status;
- 
-+	status = rhashtable_init(&nfqnl_packet_map, &nfqnl_rhashtable_params);
-+	if (status < 0)
-+		return status;
-+
- 	status = register_pernet_subsys(&nfnl_queue_net_ops);
- 	if (status < 0) {
- 		pr_err("failed to register pernet ops\n");
--		goto out;
-+		goto cleanup_rhashtable;
+-	unsigned int queued;
+-	struct nfqnl_instance *queue;
+ 	struct sk_buff *skb, *segs, *nskb;
++	bool ct_is_unconfirmed = false;
++	struct nfqnl_instance *queue;
++	unsigned int queued;
+ 	int err = -ENOBUFS;
+ 	struct net *net = entry->state.net;
+ 	struct nfnl_queue_net *q = nfnl_queue_pernet(net);
+@@ -1103,6 +1103,15 @@ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
+ 		break;
  	}
  
- 	netlink_register_notifier(&nfqnl_rtnl_notifier);
-@@ -1809,7 +1892,8 @@ static int __init nfnetlink_queue_init(void)
- cleanup_netlink_notifier:
- 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
- 	unregister_pernet_subsys(&nfnl_queue_net_ops);
--out:
-+cleanup_rhashtable:
-+	rhashtable_destroy(&nfqnl_packet_map);
- 	return status;
- }
- 
-@@ -1821,6 +1905,8 @@ static void __exit nfnetlink_queue_fini(void)
- 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
- 	unregister_pernet_subsys(&nfnl_queue_net_ops);
- 
-+	rhashtable_destroy(&nfqnl_packet_map);
++	/* Check if someone already holds another reference to
++	 * unconfirmed ct.  If so, we cannot queue the skb:
++	 * concurrent modifications of nf_conn->ext are not
++	 * allowed and we can't know if another CPU isn't
++	 * processing the same nf_conn entry in parallel.
++	 */
++	if (nf_ct_drop_unconfirmed(entry, &ct_is_unconfirmed))
++		return -EINVAL;
 +
- 	rcu_barrier(); /* Wait for completion of call_rcu()'s */
- }
+ 	if (!skb_is_gso(skb) || ((queue->flags & NFQA_CFG_F_GSO) && !skb_is_gso_sctp(skb)))
+ 		return __nfqnl_enqueue_packet(net, queue, entry);
  
+@@ -1116,7 +1125,23 @@ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
+ 		goto out_err;
+ 	queued = 0;
+ 	err = 0;
++
+ 	skb_list_walk_safe(segs, segs, nskb) {
++		if (ct_is_unconfirmed && queued > 0) {
++			/* skb_gso_segment() increments the ct refcount.
++			 * This is a problem for unconfirmed (not in hash)
++			 * entries, those can race when reinjections happen
++			 * in parallel.
++			 *
++			 * Annotate this for all queued entries except the
++			 * first one.
++			 *
++			 * As long as the first one is reinjected first it
++			 * will do the confirmation for us.
++			 */
++			entry->nf_ct_is_unconfirmed = ct_is_unconfirmed;
++		}
++
+ 		if (err == 0)
+ 			err = __nfqnl_enqueue_packet_gso(net, queue,
+ 							segs, entry);
 -- 
 2.51.0
 
