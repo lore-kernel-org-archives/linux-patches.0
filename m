@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E2622127B;
-	Wed, 25 Feb 2026 01:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9314722127B;
+	Wed, 25 Feb 2026 01:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983963; cv=none; b=aWJsJa81xlEF9lsQepO7H6nsZQ2UVMZv9G0cKV6RbGiQKQ828zhalP58EBpk8YogJzWy2It2ZpHRHpkjc/USTAhbgTBrdb2KB9LoDf+CPB8WqPD6568j2cjavKv1Gkn+LC3OYe87AmJM4W2ZCupjrHmnN+qTxx/to1LYX3X17Fs=
+	t=1771983964; cv=none; b=kwRKcqVwNpc9wDU6jvYHrvhJ0BDS9Y5wEyrUIlyODy+d81vJbJVDDrOdnuDkUUSrSWlxyc3Vwm/3wFwFwzA1dJnfJyxV3jEv/28ikmTNzUkmRTRhAYkLDnMgQVdtpRJlYztlTYwJBqCsov7OTigIEX721wTFGQTN+XKeilZHBLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983963; c=relaxed/simple;
-	bh=xS3R1/4R4HhO0UAom0caqAULbhKqGEfnt3tu7/Ta7Lc=;
+	s=arc-20240116; t=1771983964; c=relaxed/simple;
+	bh=ChSQstuvxqTEE34sY2tL3Mtpwwj3YxuUTk3zoc6hCMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPxDKFpN2LvviNbPqKIIJVUP5zyIUxyhwLgt/UiNGe4feChWsRnopbiq/ZncHe/XrxrABrTAlOWoY9i+Wk6Cn2WJzXRuCIrPw+9p1CYNgv2jSZity2z+hhlxTugdVhPB+Ha2vhFlOc1n4K4/YX9RKGwXDnVReW6tp5wNxLmWseQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMKm83xm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GST6Gg5c+qTh5nthtuNX+2JsLBtbJWG5OEkLUYuu3mM9nRphovYki+8PFpIyqfeb2BacT7l9iCZlJFlsEtDIAs3nOPGDgtz9heoCDJGskT4W2Vp1RADE1nPaGRe5X18p7G24sDHyo7wEplSnSHZ/djRiLLxzkKzG13SrgaSZTso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lq5JOunl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMKm83xm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4003DC116D0;
-	Wed, 25 Feb 2026 01:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lq5JOunl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A502C116D0;
+	Wed, 25 Feb 2026 01:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983963;
-	bh=xS3R1/4R4HhO0UAom0caqAULbhKqGEfnt3tu7/Ta7Lc=;
+	s=korg; t=1771983964;
+	bh=ChSQstuvxqTEE34sY2tL3Mtpwwj3YxuUTk3zoc6hCMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QMKm83xmnjIiTzjVB9JteczFkOY0VsmFhAP4HeOzKnipLl2iAZ5nknp19Q1txtzJh
-	 1PPGGs0nTPLfuTgW/GC6zPgpSp4wxwPIuF0pQ8jxW84G2tzO92PNMPjNeydEZ6Gu+h
-	 x9B8oBjQDPwkGUr6QijZdhimKbF6bhCxUQUUW6mI=
+	b=Lq5JOunlOm5WIhHMYDbXPOG//0FOmnaTw9SpZ2/FJv2DrUnaQjdhW33KAx/bcxnVa
+	 V9Nf/40Lerpqv+8d59P/I1COhdBDIwm6H4dk0KAMChh10pIlUcwQnP2U7ElrzCqiI6
+	 udSAuK74bbbB4cS2kyjET3+G63z25YPGtrt8uAew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 219/641] drm/xe: Unregister drm device on probe error
-Date: Tue, 24 Feb 2026 17:19:05 -0800
-Message-ID: <20260225012354.232007927@linuxfoundation.org>
+Subject: [PATCH 6.18 220/641] mm/slab: fix false lockdep warning in __kfree_rcu_sheaf()
+Date: Tue, 24 Feb 2026 17:19:06 -0800
+Message-ID: <20260225012354.253684511@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,89 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Harry Yoo <harry.yoo@oracle.com>
 
-[ Upstream commit 96c2c72b817d70e8d110e78b0162e044a0c41f9f ]
+[ Upstream commit f8b4cd2dad097e4ea5aed3511f42b9eb771e7b19 ]
 
-Call drm_dev_unregister() when xe_device_probe() fails after successful
-drm_dev_register(). This ensures the DRM device is promptly unregistered
-before returning an error, avoiding leaving it registered on the failure
-path.
-Otherwise, there is warn message if xe_device_probe() is called again:
-"
-[  207.322365] [drm:drm_minor_register]
-[  207.322381] debugfs: '128' already exists in 'dri'
-[  207.322432] sysfs: cannot create duplicate filename '/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:01.0/0000:03:00.0/drm/renderD128'
-[  207.322435] CPU: 5 UID: 0 PID: 10261 Comm: modprobe Tainted: G    B   W           6.19.0-rc2-lgci-xe-kernel+ #223 PREEMPT(voluntary)
-[  207.322439] Tainted: [B]=BAD_PAGE, [W]=WARN
-[  207.322440] Hardware name: ASUS System Product Name/PRIME Z790-P WIFI, BIOS 0812 02/24/2023
-[  207.322441] Call Trace:
-[  207.322442]  <TASK>
-[  207.322443]  dump_stack_lvl+0xa0/0xc0
-[  207.322446]  dump_stack+0x10/0x20
-[  207.322448]  sysfs_warn_dup+0xd5/0x110
-[  207.322451]  sysfs_create_dir_ns+0x1f6/0x280
-[  207.322453]  ? __pfx_sysfs_create_dir_ns+0x10/0x10
-[  207.322455]  ? lock_acquire+0x1a4/0x2e0
-[  207.322458]  ? __kasan_check_read+0x11/0x20
-[  207.322461]  kobject_add_internal+0x28d/0x8e0
-[  207.322464]  kobject_add+0x11f/0x1f0
-[  207.322465]  ? lock_acquire+0x1a4/0x2e0
-[  207.322467]  ? __pfx_kobject_add+0x10/0x10
-[  207.322469]  ? __kasan_check_write+0x14/0x20
-[  207.322471]  ? kobject_put+0x62/0x4a0
-[  207.322473]  ? get_device_parent.isra.0+0x1bb/0x4c0
-[  207.322475]  ? kobject_put+0x62/0x4a0
-[  207.322477]  device_add+0x2d7/0x1500
-[  207.322479]  ? __pfx_device_add+0x10/0x10
-[  207.322481]  ? drm_debugfs_add_file+0xfa/0x170
-[  207.322483]  ? drm_debugfs_add_files+0x82/0xd0
-[  207.322485]  ? drm_debugfs_add_files+0x82/0xd0
-[  207.322487]  drm_minor_register+0x10a/0x2d0
-[  207.322489]  drm_dev_register+0x143/0x860
-[  207.322491]  ? xe_configfs_get_psmi_enabled+0x12/0x90 [xe]
-[  207.322667]  xe_device_probe+0x185b/0x2c40 [xe]
-[  207.322812]  ? __pfx___drm_dev_dbg+0x10/0x10
-[  207.322815]  ? add_dr+0x180/0x220
-[  207.322818]  ? __pfx___drmm_mutex_release+0x10/0x10
-[  207.322821]  ? __pfx_xe_device_probe+0x10/0x10 [xe]
-[  207.322966]  ? xe_pm_init_early+0x33a/0x410 [xe]
-[  207.323136]  xe_pci_probe+0x936/0x1250 [xe]
-[  207.323298]  ? lock_acquire+0x1a4/0x2e0
-[  207.323302]  ? __pfx_xe_pci_probe+0x10/0x10 [xe]
-[  207.323464]  local_pci_probe+0xe6/0x1a0
-[  207.323468]  pci_device_probe+0x523/0x840
-[  207.323470]  ? __pfx_pci_device_probe+0x10/0x10
-[  207.323473]  ? sysfs_do_create_link_sd.isra.0+0x8c/0x110
-[  207.323476]  ? sysfs_create_link+0x48/0xc0
-[  207.323479]  really_probe+0x1fd/0x8a0
-...
-"
+kvfree_call_rcu() can be called while holding a raw_spinlock_t.
+Since __kfree_rcu_sheaf() may acquire a spinlock_t (which becomes a
+sleeping lock on PREEMPT_RT) and violate lock nesting rules,
+kvfree_call_rcu() bypasses the sheaves layer entirely on PREEMPT_RT.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://patch.msgid.link/20260109211041.2446012-2-shuicheng.lin@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 60bfb8baf8f0d5b0d521744dfd01c880ce1a23f3)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+However, lockdep still complains about acquiring spinlock_t while holding
+raw_spinlock_t, even on !PREEMPT_RT where spinlock_t is a spinning lock.
+This causes a false lockdep warning [1]:
+
+ =============================
+ [ BUG: Invalid wait context ]
+ 6.19.0-rc6-next-20260120 #21508 Not tainted
+ -----------------------------
+ migration/1/23 is trying to lock:
+ ffff8afd01054e98 (&barn->lock){..-.}-{3:3}, at: barn_get_empty_sheaf+0x1d/0xb0
+ other info that might help us debug this:
+ context-{5:5}
+ 3 locks held by migration/1/23:
+  #0: ffff8afd01fd89a8 (&p->pi_lock){-.-.}-{2:2}, at: __balance_push_cpu_stop+0x3f/0x200
+  #1: ffffffff9f15c5c8 (rcu_read_lock){....}-{1:3}, at: cpuset_cpus_allowed_fallback+0x27/0x250
+  #2: ffff8afd1f470be0 ((local_lock_t *)&pcs->lock){+.+.}-{3:3}, at: __kfree_rcu_sheaf+0x52/0x3d0
+ stack backtrace:
+ CPU: 1 UID: 0 PID: 23 Comm: migration/1 Not tainted 6.19.0-rc6-next-20260120 #21508 PREEMPTLAZY
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+ Stopper: __balance_push_cpu_stop+0x0/0x200 <- balance_push+0x118/0x170
+ Call Trace:
+  <TASK>
+  __dump_stack+0x22/0x30
+  dump_stack_lvl+0x60/0x80
+  dump_stack+0x19/0x24
+  __lock_acquire+0xd3a/0x28e0
+  ? __lock_acquire+0x5a9/0x28e0
+  ? __lock_acquire+0x5a9/0x28e0
+  ? barn_get_empty_sheaf+0x1d/0xb0
+  lock_acquire+0xc3/0x270
+  ? barn_get_empty_sheaf+0x1d/0xb0
+  ? __kfree_rcu_sheaf+0x52/0x3d0
+  _raw_spin_lock_irqsave+0x47/0x70
+  ? barn_get_empty_sheaf+0x1d/0xb0
+  barn_get_empty_sheaf+0x1d/0xb0
+  ? __kfree_rcu_sheaf+0x52/0x3d0
+  __kfree_rcu_sheaf+0x19f/0x3d0
+  kvfree_call_rcu+0xaf/0x390
+  set_cpus_allowed_force+0xc8/0xf0
+  [...]
+  </TASK>
+
+This wasn't triggered until sheaves were enabled for all slab caches,
+since kfree_rcu() wasn't being called with a raw spinlock held for
+caches with sheaves (vma, maple node).
+
+As suggested by Vlastimil Babka, fix this by using a lockdep map with
+LD_WAIT_CONFIG wait type to tell lockdep that acquiring spinlock_t is valid
+in this case, as those spinlocks won't be used on PREEMPT_RT.
+
+Note that kfree_rcu_sheaf_map should be acquired using _try() variant,
+otherwise the acquisition of the lockdep map itself will trigger an invalid
+wait context warning.
+
+Reported-by: Paul E. McKenney <paulmck@kernel.org>
+Closes: https://lore.kernel.org/linux-mm/c858b9af-2510-448b-9ab3-058f7b80dd42@paulmck-laptop [1]
+Fixes: ec66e0d59952 ("slab: add sheaf support for batching kfree_rcu() operations")
+Suggested-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_device.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/slub.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-index fe5aadb27b779..0d69cd0e4e798 100644
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -966,6 +966,7 @@ int xe_device_probe(struct xe_device *xe)
- 
- err_unregister_display:
- 	xe_display_unregister(xe);
-+	drm_dev_unregister(&xe->drm);
- 
- 	return err;
+diff --git a/mm/slub.c b/mm/slub.c
+index e01641cea143b..896421a555573 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -6232,11 +6232,29 @@ static void rcu_free_sheaf(struct rcu_head *head)
+ 	free_empty_sheaf(s, sheaf);
  }
+ 
++/*
++ * kvfree_call_rcu() can be called while holding a raw_spinlock_t. Since
++ * __kfree_rcu_sheaf() may acquire a spinlock_t (sleeping lock on PREEMPT_RT),
++ * this would violate lock nesting rules. Therefore, kvfree_call_rcu() avoids
++ * this problem by bypassing the sheaves layer entirely on PREEMPT_RT.
++ *
++ * However, lockdep still complains that it is invalid to acquire spinlock_t
++ * while holding raw_spinlock_t, even on !PREEMPT_RT where spinlock_t is a
++ * spinning lock. Tell lockdep that acquiring spinlock_t is valid here
++ * by temporarily raising the wait-type to LD_WAIT_CONFIG.
++ */
++static DEFINE_WAIT_OVERRIDE_MAP(kfree_rcu_sheaf_map, LD_WAIT_CONFIG);
++
+ bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj)
+ {
+ 	struct slub_percpu_sheaves *pcs;
+ 	struct slab_sheaf *rcu_sheaf;
+ 
++	if (WARN_ON_ONCE(IS_ENABLED(CONFIG_PREEMPT_RT)))
++		return false;
++
++	lock_map_acquire_try(&kfree_rcu_sheaf_map);
++
+ 	if (!local_trylock(&s->cpu_sheaves->lock))
+ 		goto fail;
+ 
+@@ -6313,10 +6331,12 @@ bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj)
+ 	local_unlock(&s->cpu_sheaves->lock);
+ 
+ 	stat(s, FREE_RCU_SHEAF);
++	lock_map_release(&kfree_rcu_sheaf_map);
+ 	return true;
+ 
+ fail:
+ 	stat(s, FREE_RCU_SHEAF_FAIL);
++	lock_map_release(&kfree_rcu_sheaf_map);
+ 	return false;
+ }
+ 
 -- 
 2.51.0
 
