@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E199E26056D;
-	Wed, 25 Feb 2026 01:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20D4262FC0;
+	Wed, 25 Feb 2026 01:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983721; cv=none; b=NesqM9reVmCtidnypMk7qkB1fJiFsFVpIkhoze8UB0PSzqDQvf+i+UX74LjSUz6wFMHV3VkL95ky2/wM/s28x6TU11KZacoQylhdLT82iqlg0rWV6kWXNpYxNUj0pZ2ZxbnIGE/2DyOWAXjFo4foAeLdlbx6BaflEU0qeSwQukI=
+	t=1771983722; cv=none; b=PDbTWukrWmvbP1hxIWD7fzm1gn6P/xrT1t2lImoDbCGt+HY9F5teF4OTv25aIe8bcPQfosUlL3/a1BtuWWtgpudciLqD/c42y96o+ytxwnbsLNH4JnVj6SLuk9e49Z2T2jXl8GsLtj1cNw/uD02nDekJcaxLKWhFwvMsYeoeg4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983721; c=relaxed/simple;
-	bh=RcwfHM6GCxalZjzYoDNec0tFZckhIl3oNN+fpH3FJiw=;
+	s=arc-20240116; t=1771983722; c=relaxed/simple;
+	bh=uiBLuxeAGZ+qVEXf0evUowLYoPohCjpeX6PMYWJzQu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rlZ115Gs6rg3YxZvoYuvU0gUC9LOMyNajVoT2a8fimsHR4nyQ/3toPsEnh1lhwHK0cizjw+M5hV8HgjFWym1a3jCVDtyCOSWsOY7UCVTCTuMhi2d2lOBJ6YYqYGWjyv8wdX2Sj6sy2uEX0CfIQTAKwEm0hla8v+6bsLDMoZkzJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBjHV50O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ah+uom48BcOIgvMH2zY2VkAGwiGJADlQ/MVgGCvKiFCCP5YoJho8WUuqu0k2Ami+rOzqrld5Zq0XiZrDFe/GrwAxgqkUiQbRHalvrO6xQ9J4Z6QmKzhkBTsfSjIDPNWlZxgEMC+963jMfERy9OoxVfQtxo+D2az/y6N/wTBgDUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euzyHPxq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBjHV50O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C1CC116D0;
-	Wed, 25 Feb 2026 01:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euzyHPxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB50BC116D0;
+	Wed, 25 Feb 2026 01:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983720;
-	bh=RcwfHM6GCxalZjzYoDNec0tFZckhIl3oNN+fpH3FJiw=;
+	s=korg; t=1771983721;
+	bh=uiBLuxeAGZ+qVEXf0evUowLYoPohCjpeX6PMYWJzQu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBjHV50OZouC1R47smUluFAL73vYE2TbaOWDyB48U8snF6v+IO2sMMZxBd7nBWG7t
-	 7nLNRQz6V53fCh5JozwqZHl1dKhIHn3zfmVdRiSPvP8qiRnutbS2j+OW6eD9N4Avfd
-	 c51hAB3p0LoV/WSOm1QA31tWf96NfU5LFywy0nXU=
+	b=euzyHPxqKa0e+ijsXh7VN2tSwxyEELzyNipW6jmB3hi7M/7+ehf2hqv6K8y/VUReq
+	 3no3wFOorlt4LuxWFhKFGYGmL4tyUliqUrFg2yNn5iqHnpqdvVnLg7yAjyHhDO5f8Y
+	 jJOC27LGG1Q8dCeGxPHQOlJ+R2WuSoa5RtZXaDkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alper Ak <alperyasinak1@gmail.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 018/641] tpm: tpm_i2c_infineon: Fix locality leak on get_burstcount() failure
-Date: Tue, 24 Feb 2026 17:15:44 -0800
-Message-ID: <20260225012349.408880733@linuxfoundation.org>
+Subject: [PATCH 6.18 019/641] tpm: st33zp24: Fix missing cleanup on get_burstcount() error
+Date: Tue, 24 Feb 2026 17:15:45 -0800
+Message-ID: <20260225012349.436622059@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,40 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Alper Ak <alperyasinak1@gmail.com>
 
-[ Upstream commit bbd6e97c836cbeb9606d7b7e5dcf8a1d89525713 ]
+[ Upstream commit 3e91b44c93ad2871f89fc2a98c5e4fe6ca5db3d9 ]
 
-get_burstcount() can return -EBUSY on timeout. When this happens, the
-function returns directly without releasing the locality that was
-acquired at the beginning of tpm_tis_i2c_send().
+get_burstcount() can return -EBUSY on timeout. When this happens,
+st33zp24_send() returns directly without releasing the locality
+acquired earlier.
 
 Use goto out_err to ensure proper cleanup when get_burstcount() fails.
 
-Fixes: aad628c1d91a ("char/tpm: Add new driver for Infineon I2C TIS TPM")
+Fixes: bf38b8710892 ("tpm/tpm_i2c_stm_st33: Split tpm_i2c_tpm_st33 in 2 layers (core + phy)")
 Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_i2c_infineon.c | 6 ++++--
+ drivers/char/tpm/st33zp24/st33zp24.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_i2c_infineon.c b/drivers/char/tpm/tpm_i2c_infineon.c
-index bdf1f329a6794..8b7d32de0b2ef 100644
---- a/drivers/char/tpm/tpm_i2c_infineon.c
-+++ b/drivers/char/tpm/tpm_i2c_infineon.c
-@@ -544,8 +544,10 @@ static int tpm_tis_i2c_send(struct tpm_chip *chip, u8 *buf, size_t bufsiz,
- 		burstcnt = get_burstcount(chip);
+diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
+index 2ed7815e4899b..e2b7451ea7ccd 100644
+--- a/drivers/char/tpm/st33zp24/st33zp24.c
++++ b/drivers/char/tpm/st33zp24/st33zp24.c
+@@ -328,8 +328,10 @@ static int st33zp24_send(struct tpm_chip *chip, unsigned char *buf,
  
- 		/* burstcnt < 0 = TPM is busy */
+ 	for (i = 0; i < len - 1;) {
+ 		burstcnt = get_burstcount(chip);
 -		if (burstcnt < 0)
 -			return burstcnt;
 +		if (burstcnt < 0) {
-+			rc = burstcnt;
++			ret = burstcnt;
 +			goto out_err;
 +		}
- 
- 		if (burstcnt > (len - 1 - count))
- 			burstcnt = len - 1 - count;
+ 		size = min_t(int, len - i - 1, burstcnt);
+ 		ret = tpm_dev->ops->send(tpm_dev->phy_id, TPM_DATA_FIFO,
+ 					 buf + i, size);
 -- 
 2.51.0
 
