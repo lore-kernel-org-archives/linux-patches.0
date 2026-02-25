@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFA31D5141;
-	Wed, 25 Feb 2026 01:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF5126056D;
+	Wed, 25 Feb 2026 01:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983576; cv=none; b=OyIo1+cIB+J9yjUVWuk/xMqL1D0FeLl7nZWRQfBYmGdR8Bfjwskwd8mWQGEz2/X43jUFJ4MT5Zv+b+q4aDapXqN7lZzo/hNbABWsNn5a0B/Ss6CrmN3BXzwy2FNQncVqs3y1XydEi9ZrCACNuCdk8ICJkvJJHvJxLF/45dEX5wU=
+	t=1771983577; cv=none; b=Uym2amvscLiuicvZpZE+3EQ1DBAkV+NpCH4kD5WrNyOduzDfQ8J15/Qboy4iFQ51ckIkixp9gnUQoICRrNO4P0PgCrX9QTWqtS+U+hHiSAIFHfMRFNEQ11XRmbGSDo77bl46aK5XjVH0ggDzyc7T2BZjlVyRCDsg/MFnZLQVPB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983576; c=relaxed/simple;
-	bh=yrZzVO85BeTYbQzaXUl4hBVJIwNG4l+14dNJZh82IJ4=;
+	s=arc-20240116; t=1771983577; c=relaxed/simple;
+	bh=kwLytkPD0qmVmS+Hkl1SsDQHRIraEAeQqRfFqGKLsq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ex+QCWFkn/v3Emey6t/BdEkPw2GDx/IDtK42IhAqlrXBGn0WC+axOWYGgMcBxiinYU+4P/Xwyxqo3ojnvUMHhILirhWhvTC1raT2yekgkRSXBvFu9naNfs5y3LMM2DIj8N9E8TfJ5snpxLg6WYgGt+rXI52wYQh9H+No0V2EnzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaLuEo3W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D7xxMFtpXH5ytlFutYu6TVNHpuYeEkcvgRz11GXMJXvlgeNNLxrxkPI2V763kccjJfKLNMQw0surlrCTytmlxI9d+0fKMKipemfZ6UkVWU7SO3jbDT6Uc9it6ODhfqxoPTVjKw1xjtj9bYrDBLsTkA0Yh0ACu4O5ye0mLbD675A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMdH3fDn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaLuEo3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46573C116D0;
-	Wed, 25 Feb 2026 01:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMdH3fDn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6E7C116D0;
+	Wed, 25 Feb 2026 01:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983576;
-	bh=yrZzVO85BeTYbQzaXUl4hBVJIwNG4l+14dNJZh82IJ4=;
+	s=korg; t=1771983577;
+	bh=kwLytkPD0qmVmS+Hkl1SsDQHRIraEAeQqRfFqGKLsq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TaLuEo3W18javHSOLiFjfuDN3pYhtJq0XyEkoysKhNGczaw1ekRxozavZUHVNl8PN
-	 vW0u3DQfmi9tqyZG+fdGMBAiDpP54q1T5OGcpR8o8BMcBCdiquajc/uejix+vNHxN1
-	 fDgnbFf+FJ/AeW193kcPffkBeZRlPHrCdisjAXWQ=
+	b=yMdH3fDnxkV+SNPbp84zQrGDTCyO6JiJkb/jh6w2ONZ1uw0KTacNg/tCQIXUKybFo
+	 9xmqnbWrTb8vYLdI5sX0KRXwfYc0rms+knM3GycplOEB80tLbKNgqVlL6+GU5G7+un
+	 yTD4h9s++NUQT1/rT3vAwN1eerLGhzZmk1/CYs8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Dimitri Daskalakis <dimitri.daskalakis1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 677/781] eth: fbnic: Add validation for MTU changes
-Date: Tue, 24 Feb 2026 17:23:06 -0800
-Message-ID: <20260225012416.384277539@linuxfoundation.org>
+Subject: [PATCH 6.19 678/781] icmp: prevent possible overflow in icmp_global_allow()
+Date: Tue, 24 Feb 2026 17:23:07 -0800
+Message-ID: <20260225012416.408376221@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,66 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitri Daskalakis <dimitri.daskalakis1@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ccd8e87748ad083047d6c8544c5809b7f96cc8df ]
+[ Upstream commit 034bbd806298e9ba4197dd1587b0348ee30996ea ]
 
-Increasing the MTU beyond the HDS threshold causes the hardware to
-fragment packets across multiple buffers. If a single-buffer XDP program
-is attached, the driver will drop all multi-frag frames. While we can't
-prevent a remote sender from sending non-TCP packets larger than the MTU,
-this will prevent users from inadvertently breaking new TCP streams.
+Following expression can overflow
+if sysctl_icmp_msgs_per_sec is big enough.
 
-Traditionally, drivers supported XDP with MTU less than 4Kb
-(packet per page). Fbnic currently prevents attaching XDP when MTU is too high.
-But it does not prevent increasing MTU after XDP is attached.
+sysctl_icmp_msgs_per_sec * delta / HZ;
 
-Fixes: 1b0a3950dbd4 ("eth: fbnic: Add XDP pass, drop, abort support")
+Fixes: 4cdf507d5452 ("icmp: add a global rate limitation")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260216142832.3834174-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Dimitri Daskalakis <dimitri.daskalakis1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_netdev.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ net/ipv4/icmp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-index 81c9d5c9a4b2c..e3ca5fcfabef3 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-@@ -262,6 +262,23 @@ static int fbnic_set_mac(struct net_device *netdev, void *p)
- 	return 0;
- }
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index a2cff16668d72..471dd862f6639 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -248,7 +248,8 @@ bool icmp_global_allow(struct net *net)
+ 	if (delta < HZ / 50)
+ 		return false;
  
-+static int fbnic_change_mtu(struct net_device *dev, int new_mtu)
-+{
-+	struct fbnic_net *fbn = netdev_priv(dev);
-+
-+	if (fbnic_check_split_frames(fbn->xdp_prog, new_mtu, fbn->hds_thresh)) {
-+		dev_err(&dev->dev,
-+			"MTU %d is larger than HDS threshold %d in XDP mode\n",
-+			new_mtu, fbn->hds_thresh);
-+
-+		return -EINVAL;
-+	}
-+
-+	WRITE_ONCE(dev->mtu, new_mtu);
-+
-+	return 0;
-+}
-+
- void fbnic_clear_rx_mode(struct fbnic_dev *fbd)
- {
- 	struct net_device *netdev = fbd->netdev;
-@@ -533,6 +550,7 @@ static const struct net_device_ops fbnic_netdev_ops = {
- 	.ndo_start_xmit		= fbnic_xmit_frame,
- 	.ndo_features_check	= fbnic_features_check,
- 	.ndo_set_mac_address	= fbnic_set_mac,
-+	.ndo_change_mtu		= fbnic_change_mtu,
- 	.ndo_set_rx_mode	= fbnic_set_rx_mode,
- 	.ndo_get_stats64	= fbnic_get_stats64,
- 	.ndo_bpf		= fbnic_bpf,
+-	incr = READ_ONCE(net->ipv4.sysctl_icmp_msgs_per_sec) * delta / HZ;
++	incr = READ_ONCE(net->ipv4.sysctl_icmp_msgs_per_sec);
++	incr = div_u64((u64)incr * delta, HZ);
+ 	if (!incr)
+ 		return false;
+ 
 -- 
 2.51.0
 
