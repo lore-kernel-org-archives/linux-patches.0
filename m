@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6FF21D596;
-	Wed, 25 Feb 2026 01:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB29E4369A;
+	Wed, 25 Feb 2026 01:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982924; cv=none; b=SwFDjEU4MzdZjpylUDFbphcNkkedFFdW6I8tYOYEByzj5s5vzfofkiLIkIiw7mKiJuFfoz1LfQZceJn+PQFApRhVyVgM7GO4K+Jha7a2d5DnOqHkBPgPAhTuUSuz4zkKaHfXYxovEO85iXDn5+HKgZ1C8ug4/DNexyML1VD7S/w=
+	t=1771982925; cv=none; b=RoOiEMkDaDdrJN6AF3+tvcmlcSoz+TeFDLTVWCLxvCkwnFJ0v/w6dYwQtayfyGBnbweTiGf3QCAmLb78NKl2Wdjyw1FMmebiK0cwQmeJhLgjrfkRGlOIzfrGGHlJZ17TF93nLEx2kG5FvByc6MgBZHJ+29XPvGVOk7a/fxLoYv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982924; c=relaxed/simple;
-	bh=9ozv6OKyrCdiaT1/opR576pyc6m5/EeYEzsFQeTHk64=;
+	s=arc-20240116; t=1771982925; c=relaxed/simple;
+	bh=lmQ29mhPmcdOK8NXe6f/1ylnZ4GUGV249DqwbcMHa9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mADFtR5clYCM0DTTP+IflFsVWENF0JZkJWdL+H0UXRim0xsTwfq/npkToxn7d5jpThCUbeukpSeTMKIKFnKemvz+KZKysnmOEkCQKb7zY3dAunJGbl5cDOp2mImslMDt7T5hCgWx6qV4WM3CWBFn5g17Yo2FCjEsrJqm4aptiwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyumJKHR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hwIwl1ZqwuCm0tidZXET6Y8onAgCrHvvHaD67QGS3MV/u8erEuEOSiHktzPympXnQlrPF+WC7yvdRBMaE6eJ4du+DiKhJDnCv47J44Ta2iztCb3KuPKxcT+r4A/5kRbwYqemqOVEwpwg1McwX5h9eqE8JLczysweUx+bElBtIq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IK2WFCjk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyumJKHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D58C116D0;
-	Wed, 25 Feb 2026 01:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IK2WFCjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D60BC116D0;
+	Wed, 25 Feb 2026 01:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982924;
-	bh=9ozv6OKyrCdiaT1/opR576pyc6m5/EeYEzsFQeTHk64=;
+	s=korg; t=1771982925;
+	bh=lmQ29mhPmcdOK8NXe6f/1ylnZ4GUGV249DqwbcMHa9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QyumJKHR7o9/LOzRYnt+RNZpwaXNhpjQyjpbIv0CAsDCpEMmVJxU4Wh1qHcD1ZTtA
-	 iRTFqkMMQ0ikdhSryFOZN+I8GQVBUZ0lRalbUJb3Vj07T5zXR6CPWh5CTnbuFsJapL
-	 gOzOiRPhMAHpKnllOuTAKnkv33eyKYQKv7yrmDzk=
+	b=IK2WFCjk4pMAdL2iOr83OL/H4dq0nQIOFkhnmkG2gWaBTxtKJYJtTQj2qmU6St3lI
+	 TKtAwxzQ4LV7nlQopoV7WQC2VkDlbAGK5CkSgJnEA4Y/9/xlcUHLHJcDDomIJ9rtIB
+	 WxEg83hAhu9p703foKuW9k+D5nZ6aVGUvOeWhsDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	x86@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 103/781] bpf, sockmap: Fix FIONREAD for sockmap
-Date: Tue, 24 Feb 2026 17:13:32 -0800
-Message-ID: <20260225012402.211652750@linuxfoundation.org>
+Subject: [PATCH 6.19 068/781] x86/cpu/amd: Correct the microcode table for Zenbleed
+Date: Tue, 24 Feb 2026 17:12:57 -0800
+Message-ID: <20260225012401.372170432@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,291 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-[ Upstream commit 929e30f9312514902133c45e51c79088421ab084 ]
+[ Upstream commit fb7bfa31b8e8569f154f2fe0ea6c2f03c0f087aa ]
 
-A socket using sockmap has its own independent receive queue: ingress_msg.
-This queue may contain data from its own protocol stack or from other
-sockets.
+The good revisions are tied to exact steppings, meaning it's not valid to
+match on model number alone, let alone a range.
 
-Therefore, for sockmap, relying solely on copied_seq and rcv_nxt to
-calculate FIONREAD is not enough.
+This is probably only a latent issue.  From public microcode archives, the
+following CPUs exist 17-30-00, 17-60-00, 17-70-00 and would be captured by the
+model ranges.  They're likely pre-production steppings, and likely didn't get
+Zenbleed microcode, but it's still incorrect to compare them to a different
+steppings revision.
 
-This patch adds a new msg_tot_len field in the psock structure to record
-the data length in ingress_msg. Additionally, we implement new ioctl
-interfaces for TCP and UDP to intercept FIONREAD operations.
+Either way, convert the logic to use x86_match_min_microcode_rev(), which is
+the preferred mechanism.
 
-Note that we intentionally do not include sk_receive_queue data in the
-FIONREAD result. Data in sk_receive_queue has not yet been processed by
-the BPF verdict program, and may be redirected to other sockets or
-dropped. Including it would create semantic ambiguity since this data
-may never be readable by the user.
-
-Unix and VSOCK sockets have similar issues, but fixing them is outside
-the scope of this patch as it would require more intrusive changes.
-
-Previous work by John Fastabend made some efforts towards FIONREAD support:
-commit e5c6de5fa025 ("bpf, sockmap: Incorrectly handling copied_seq")
-Although the current patch is based on the previous work by John Fastabend,
-it is acceptable for our Fixes tag to point to the same commit.
-
-                                                      FD1:read()
-                                                      --  FD1->copied_seq++
-                                                          |  [read data]
-                                                          |
-                                   [enqueue data]         v
-                  [sockmap]     -> ingress to self ->  ingress_msg queue
-FD1 native stack  ------>                                 ^
--- FD1->rcv_nxt++               -> redirect to other      | [enqueue data]
-                                       |                  |
-                                       |             ingress to FD1
-                                       v                  ^
-                                      ...                 |  [sockmap]
-                                                     FD2 native stack
-
-Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/r/20260124113314.113584-3-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: x86@kernel.org
+Link: https://patch.msgid.link/20251126130352.880424-1-andrew.cooper3@citrix.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h | 68 +++++++++++++++++++++++++++++++++++++++++--
- net/core/skmsg.c      |  3 ++
- net/ipv4/tcp_bpf.c    | 20 +++++++++++++
- net/ipv4/udp_bpf.c    | 23 ++++++++++++---
- 4 files changed, 108 insertions(+), 6 deletions(-)
+ arch/x86/kernel/cpu/amd.c | 30 +++++++++---------------------
+ 1 file changed, 9 insertions(+), 21 deletions(-)
 
-diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-index dfdc158ab88c8..829b281d6c9c2 100644
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -97,6 +97,8 @@ struct sk_psock {
- 	struct sk_buff_head		ingress_skb;
- 	struct list_head		ingress_msg;
- 	spinlock_t			ingress_lock;
-+	/** @msg_tot_len: Total bytes queued in ingress_msg list. */
-+	u32				msg_tot_len;
- 	unsigned long			state;
- 	struct list_head		link;
- 	spinlock_t			link_lock;
-@@ -321,6 +323,27 @@ static inline void sock_drop(struct sock *sk, struct sk_buff *skb)
- 	kfree_skb(skb);
- }
- 
-+static inline u32 sk_psock_get_msg_len_nolock(struct sk_psock *psock)
-+{
-+	/* Used by ioctl to read msg_tot_len only; lock-free for performance */
-+	return READ_ONCE(psock->msg_tot_len);
-+}
-+
-+static inline void sk_psock_msg_len_add_locked(struct sk_psock *psock, int diff)
-+{
-+	/* Use WRITE_ONCE to ensure correct read in sk_psock_get_msg_len_nolock().
-+	 * ingress_lock should be held to prevent concurrent updates to msg_tot_len
-+	 */
-+	WRITE_ONCE(psock->msg_tot_len, psock->msg_tot_len + diff);
-+}
-+
-+static inline void sk_psock_msg_len_add(struct sk_psock *psock, int diff)
-+{
-+	spin_lock_bh(&psock->ingress_lock);
-+	sk_psock_msg_len_add_locked(psock, diff);
-+	spin_unlock_bh(&psock->ingress_lock);
-+}
-+
- static inline bool sk_psock_queue_msg(struct sk_psock *psock,
- 				      struct sk_msg *msg)
- {
-@@ -329,6 +352,7 @@ static inline bool sk_psock_queue_msg(struct sk_psock *psock,
- 	spin_lock_bh(&psock->ingress_lock);
- 	if (sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED)) {
- 		list_add_tail(&msg->list, &psock->ingress_msg);
-+		sk_psock_msg_len_add_locked(psock, msg->sg.size);
- 		ret = true;
- 	} else {
- 		sk_msg_free(psock->sk, msg);
-@@ -345,18 +369,25 @@ static inline struct sk_msg *sk_psock_dequeue_msg(struct sk_psock *psock)
- 
- 	spin_lock_bh(&psock->ingress_lock);
- 	msg = list_first_entry_or_null(&psock->ingress_msg, struct sk_msg, list);
--	if (msg)
-+	if (msg) {
- 		list_del(&msg->list);
-+		sk_psock_msg_len_add_locked(psock, -msg->sg.size);
-+	}
- 	spin_unlock_bh(&psock->ingress_lock);
- 	return msg;
- }
- 
-+static inline struct sk_msg *sk_psock_peek_msg_locked(struct sk_psock *psock)
-+{
-+	return list_first_entry_or_null(&psock->ingress_msg, struct sk_msg, list);
-+}
-+
- static inline struct sk_msg *sk_psock_peek_msg(struct sk_psock *psock)
- {
- 	struct sk_msg *msg;
- 
- 	spin_lock_bh(&psock->ingress_lock);
--	msg = list_first_entry_or_null(&psock->ingress_msg, struct sk_msg, list);
-+	msg = sk_psock_peek_msg_locked(psock);
- 	spin_unlock_bh(&psock->ingress_lock);
- 	return msg;
- }
-@@ -523,6 +554,39 @@ static inline bool sk_psock_strp_enabled(struct sk_psock *psock)
- 	return !!psock->saved_data_ready;
- }
- 
-+/* for tcp only, sk is locked */
-+static inline ssize_t sk_psock_msg_inq(struct sock *sk)
-+{
-+	struct sk_psock *psock;
-+	ssize_t inq = 0;
-+
-+	psock = sk_psock_get(sk);
-+	if (likely(psock)) {
-+		inq = sk_psock_get_msg_len_nolock(psock);
-+		sk_psock_put(sk, psock);
-+	}
-+	return inq;
-+}
-+
-+/* for udp only, sk is not locked */
-+static inline ssize_t sk_msg_first_len(struct sock *sk)
-+{
-+	struct sk_psock *psock;
-+	struct sk_msg *msg;
-+	ssize_t inq = 0;
-+
-+	psock = sk_psock_get(sk);
-+	if (likely(psock)) {
-+		spin_lock_bh(&psock->ingress_lock);
-+		msg = sk_psock_peek_msg_locked(psock);
-+		if (msg)
-+			inq = msg->sg.size;
-+		spin_unlock_bh(&psock->ingress_lock);
-+		sk_psock_put(sk, psock);
-+	}
-+	return inq;
-+}
-+
- #if IS_ENABLED(CONFIG_NET_SOCK_MSG)
- 
- #define BPF_F_STRPARSER	(1UL << 1)
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index d402da5caadd6..ddde93dd8bc6d 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -458,6 +458,7 @@ int __sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg
- 					atomic_sub(copy, &sk->sk_rmem_alloc);
- 				}
- 				msg_rx->sg.size -= copy;
-+				sk_psock_msg_len_add(psock, -copy);
- 
- 				if (!sge->length) {
- 					sk_msg_iter_var_next(i);
-@@ -821,9 +822,11 @@ static void __sk_psock_purge_ingress_msg(struct sk_psock *psock)
- 		list_del(&msg->list);
- 		if (!msg->skb)
- 			atomic_sub(msg->sg.size, &psock->sk->sk_rmem_alloc);
-+		sk_psock_msg_len_add(psock, -msg->sg.size);
- 		sk_msg_free(psock->sk, msg);
- 		kfree(msg);
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index bc94ff1e250ad..86059f2c0fcd4 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -951,26 +951,14 @@ static void init_amd_zen1(struct cpuinfo_x86 *c)
  	}
-+	WARN_ON_ONCE(psock->msg_tot_len);
  }
  
- static void __sk_psock_zap_ingress(struct sk_psock *psock)
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 5c698fd7fbf81..ca8a5cb8e569d 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -10,6 +10,7 @@
+-static bool cpu_has_zenbleed_microcode(void)
+-{
+-	u32 good_rev = 0;
+-
+-	switch (boot_cpu_data.x86_model) {
+-	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
+-	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
+-	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
+-	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
+-	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
+-
+-	default:
+-		return false;
+-	}
+-
+-	if (boot_cpu_data.microcode < good_rev)
+-		return false;
+-
+-	return true;
+-}
++static const struct x86_cpu_id amd_zenbleed_microcode[] = {
++	ZEN_MODEL_STEP_UCODE(0x17, 0x31, 0x0, 0x0830107b),
++	ZEN_MODEL_STEP_UCODE(0x17, 0x60, 0x1, 0x0860010c),
++	ZEN_MODEL_STEP_UCODE(0x17, 0x68, 0x1, 0x08608107),
++	ZEN_MODEL_STEP_UCODE(0x17, 0x71, 0x0, 0x08701033),
++	ZEN_MODEL_STEP_UCODE(0x17, 0xa0, 0x0, 0x08a00009),
++	{}
++};
  
- #include <net/inet_common.h>
- #include <net/tls.h>
-+#include <asm/ioctls.h>
- 
- void tcp_eat_skb(struct sock *sk, struct sk_buff *skb)
+ static void zen2_zenbleed_check(struct cpuinfo_x86 *c)
  {
-@@ -332,6 +333,24 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 	return copied;
- }
+@@ -980,7 +968,7 @@ static void zen2_zenbleed_check(struct cpuinfo_x86 *c)
+ 	if (!cpu_has(c, X86_FEATURE_AVX))
+ 		return;
  
-+static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
-+{
-+	bool slow;
-+
-+	if (cmd != SIOCINQ)
-+		return tcp_ioctl(sk, cmd, karg);
-+
-+	/* works similar as tcp_ioctl */
-+	if (sk->sk_state == TCP_LISTEN)
-+		return -EINVAL;
-+
-+	slow = lock_sock_fast(sk);
-+	*karg = sk_psock_msg_inq(sk);
-+	unlock_sock_fast(sk, slow);
-+
-+	return 0;
-+}
-+
- static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 			   int flags, int *addr_len)
- {
-@@ -610,6 +629,7 @@ static void tcp_bpf_rebuild_protos(struct proto prot[TCP_BPF_NUM_CFGS],
- 	prot[TCP_BPF_BASE].close		= sock_map_close;
- 	prot[TCP_BPF_BASE].recvmsg		= tcp_bpf_recvmsg;
- 	prot[TCP_BPF_BASE].sock_is_readable	= sk_msg_is_readable;
-+	prot[TCP_BPF_BASE].ioctl		= tcp_bpf_ioctl;
- 
- 	prot[TCP_BPF_TX]			= prot[TCP_BPF_BASE];
- 	prot[TCP_BPF_TX].sendmsg		= tcp_bpf_sendmsg;
-diff --git a/net/ipv4/udp_bpf.c b/net/ipv4/udp_bpf.c
-index 0735d820e413f..91233e37cd97a 100644
---- a/net/ipv4/udp_bpf.c
-+++ b/net/ipv4/udp_bpf.c
-@@ -5,6 +5,7 @@
- #include <net/sock.h>
- #include <net/udp.h>
- #include <net/inet_common.h>
-+#include <asm/ioctls.h>
- 
- #include "udp_impl.h"
- 
-@@ -111,12 +112,26 @@ enum {
- static DEFINE_SPINLOCK(udpv6_prot_lock);
- static struct proto udp_bpf_prots[UDP_BPF_NUM_PROTS];
- 
-+static int udp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
-+{
-+	if (cmd != SIOCINQ)
-+		return udp_ioctl(sk, cmd, karg);
-+
-+	/* Since we don't hold a lock, sk_receive_queue may contain data.
-+	 * BPF might only be processing this data at the moment. We only
-+	 * care about the data in the ingress_msg here.
-+	 */
-+	*karg = sk_msg_first_len(sk);
-+	return 0;
-+}
-+
- static void udp_bpf_rebuild_protos(struct proto *prot, const struct proto *base)
- {
--	*prot        = *base;
--	prot->close  = sock_map_close;
--	prot->recvmsg = udp_bpf_recvmsg;
--	prot->sock_is_readable = sk_msg_is_readable;
-+	*prot			= *base;
-+	prot->close		= sock_map_close;
-+	prot->recvmsg		= udp_bpf_recvmsg;
-+	prot->sock_is_readable	= sk_msg_is_readable;
-+	prot->ioctl		= udp_bpf_ioctl;
- }
- 
- static void udp_bpf_check_v6_needs_rebuild(struct proto *ops)
+-	if (!cpu_has_zenbleed_microcode()) {
++	if (!x86_match_min_microcode_rev(amd_zenbleed_microcode)) {
+ 		pr_notice_once("Zenbleed: please update your microcode for the most optimal fix\n");
+ 		msr_set_bit(MSR_AMD64_DE_CFG, MSR_AMD64_DE_CFG_ZEN2_FP_BACKUP_FIX_BIT);
+ 	} else {
 -- 
 2.51.0
 
