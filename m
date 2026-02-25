@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C751248886;
-	Wed, 25 Feb 2026 01:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D27C248886;
+	Wed, 25 Feb 2026 01:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983676; cv=none; b=RGtzzroVGx7pFcqH2GIuWXVmRR0V4SOZcLZ1P5yjXpFwYvweZ1mPl5rNHpsPuYUyAjLQWVnQtth56sxoM57gWF1fP66uZQqSp9+vp8yq9KyXH7F4uLGjrekjVFPWDdKvfqxKI0w06vx0+/u6VL+S7MLfL3pUU4mXcIhy2a+dDuQ=
+	t=1771983677; cv=none; b=k31fQcW3xBPAQqPHd8lUl22t+81MtP3eNvyEMf+d/Pu9MnjzxyadbGKNeodotFgC75eFDQWgtk4OxEzcQ0wu/aMogyhQQ28gmTWw50Gxac69HRu7QgLPDMfEy4BkpcCIJiuHRiV8Rj0BvN9uyn+wYktlmtIn6l+boAijAhV4JBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983676; c=relaxed/simple;
-	bh=TKwbNBZTSXuJnH3vjJCcoT1iJnPIfKuoT69uxnBt+X8=;
+	s=arc-20240116; t=1771983677; c=relaxed/simple;
+	bh=4+qJQbqqUYS2p9HM9nIjR09yAyEoRy4UBbtoUS89dZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZKx+kpCZMxcbXzoJltxCygwhOORvHtUz+h35vBMj4DTyaujYri3iND65ms2igP0QsSN9o8CpQpOv7m+yaTcEsU/31eN2MDJxDYyXo7UDO7Cbmrr6wswIrnza93V1OaX31p9O3X08RGTEeX5x6CXrqDFp7QOtiEJz7hXIzYvHiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPLeMp1b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbGEIKGd2K7OLVIGzWjWRD+h6UPqlTts4veO6YdO98DD1LLyQNSj7wIz0O1aVsz4ZPRDj7CKJHh5VqFNde99nUJCm0mo86y2MHGMfuIvJVf4UpzBMBRuo/6A50IEU/xahrOiIbrrDNDXh6lL8TrjC+useqZgl2blRbre9s9EZmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJww1As+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPLeMp1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7D5C116D0;
-	Wed, 25 Feb 2026 01:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJww1As+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0F0C116D0;
+	Wed, 25 Feb 2026 01:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983676;
-	bh=TKwbNBZTSXuJnH3vjJCcoT1iJnPIfKuoT69uxnBt+X8=;
+	s=korg; t=1771983677;
+	bh=4+qJQbqqUYS2p9HM9nIjR09yAyEoRy4UBbtoUS89dZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPLeMp1bCxFDGGkr3il6BpWzuaEyNVfkjU0xPtmQ/pAp5KyTR8hI+/u2BGXg9082P
-	 shlzm2lnXuuyYTFxc45BM+JtwQMzaOi4UmxKzgcDLS45TsRWk1t8deHvuBbAsE7q4J
-	 EB7DGVxUUcez9fzFWj7UaCvGd0GjcsmN6l8Ym7jQ=
+	b=KJww1As+b18rWhDX+rMCr3n+K32Zm/Pm/sdf4FY2uOCK9Q0UJupvfBi8HwJBWgs4Y
+	 Lpl30YM+3sf8WtsUslwFVyqikw2xxs1qax1g9/gXPwjhi0J/MqjtCY2ilK8kAmQXt8
+	 V/bDvbY2JxxkPUyr7FNMPjQP4zJMsMb/fAhtQ5mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.19 761/781] ext4: fix e4b bitmap inconsistency reports
-Date: Tue, 24 Feb 2026 17:24:30 -0800
-Message-ID: <20260225012418.383923114@linuxfoundation.org>
+	Mario Kleiner <mario.kleiner.de@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 744/781] drm/amd/display: Use same max plane scaling limits for all 64 bpp formats
+Date: Tue, 24 Feb 2026 17:24:13 -0800
+Message-ID: <20260225012417.973547398@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,122 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongjian Sun <sunyongjian1@huawei.com>
+From: Mario Kleiner <mario.kleiner.de@gmail.com>
 
-commit bdc56a9c46b2a99c12313122b9352b619a2e719e upstream.
+[ Upstream commit f0157ce46cf0e5e2257e19d590c9b16036ce26d4 ]
 
-A bitmap inconsistency issue was observed during stress tests under
-mixed huge-page workloads. Ext4 reported multiple e4b bitmap check
-failures like:
+The plane scaling hw seems to have the same min/max plane scaling limits
+for all 16 bpc / 64 bpp interleaved pixel color formats.
 
-ext4_mb_complex_scan_group:2508: group 350, 8179 free clusters as
-per group info. But got 8192 blocks
+Therefore add cases to amdgpu_dm_plane_get_min_max_dc_plane_scaling() for
+all the 16 bpc fixed-point / unorm formats to use the same .fp16
+up/downscaling factor limits as used by the fp16 floating point formats.
 
-Analysis and experimentation confirmed that the issue is caused by a
-race condition between page migration and bitmap modification. Although
-this timing window is extremely narrow, it is still hit in practice:
+So far, 16 bpc unorm formats were not handled, and the default: path
+returned max/min factors for 32 bpp argb8888 formats, which were wrong
+and bigger than what many DCE / DCN hw generations could handle.
 
-folio_lock                        ext4_mb_load_buddy
-__migrate_folio
-  check ref count
-  folio_mc_copy                     __filemap_get_folio
-                                      folio_try_get(folio)
-                                  ......
-                                  mb_mark_used
-                                  ext4_mb_unload_buddy
-  __folio_migrate_mapping
-    folio_ref_freeze
-folio_unlock
+The result sometimes was misscaling of framebuffers with
+DRM_FORMAT_XRGB16161616, DRM_FORMAT_ARGB16161616, DRM_FORMAT_XBGR16161616,
+DRM_FORMAT_ABGR16161616, leading to very wrong looking display, as tested
+on Polaris11 / DCE-11.2.
 
-The root cause of this issue is that the fast path of load_buddy only
-increments the folio's reference count, which is insufficient to prevent
-concurrent folio migration. We observed that the folio migration process
-acquires the folio lock. Therefore, we can determine whether to take the
-fast path in load_buddy by checking the lock status. If the folio is
-locked, we opt for the slow path (which acquires the lock) to close this
-concurrency window.
+So far this went unnoticed, because only few userspace clients used such
+16 bpc unorm framebuffers, and those didn't use hw plane scaling, so they
+did not experience this issue.
 
-Additionally, this change addresses the following issues:
+With upcoming Mesa 26 exposing 16 bpc unorm formats under both OpenGL
+and Vulkan under Wayland, and the upcoming GNOME 50 Mutter Wayland
+compositor allowing for direct scanout of these formats, the scaling
+hw will be used on these formats if possible for HiDPI display scaling,
+so it is important to use the correct hw scaling limits to avoid wrong
+display.
 
-When the DOUBLE_CHECK macro is enabled to inspect bitmap-related
-issues, the following error may be triggered:
+Tested on AMD Polaris 11 / DCE 11.2 with upcoming Mesa 26 and GNOME 50
+on HiDPI displays with scaling enabled. The mutter Wayland compositor now
+correctly falls back to scaling via desktop compositing instead of direct
+scanout, thereby avoiding wrong image display. For unscaled mode, it
+correctly uses direct scanout.
 
-corruption in group 324 at byte 784(6272): f in copy != ff on
-disk/prealloc
-
-Analysis reveals that this is a false positive. There is a specific race
-window where the bitmap and the group descriptor become momentarily
-inconsistent, leading to this error report:
-
-ext4_mb_load_buddy                   ext4_mb_load_buddy
-  __filemap_get_folio(create|lock)
-    folio_lock
-  ext4_mb_init_cache
-    folio_mark_uptodate
-                                     __filemap_get_folio(no lock)
-                                     ......
-                                     mb_mark_used
-                                       mb_mark_used_double
-  mb_cmp_bitmaps
-                                       mb_set_bits(e4b->bd_bitmap)
-  folio_unlock
-
-The original logic assumed that since mb_cmp_bitmaps is called when the
-bitmap is newly loaded from disk, the folio lock would be sufficient to
-prevent concurrent access. However, this overlooks a specific race
-condition: if another process attempts to load buddy and finds the folio
-is already in an uptodate state, it will immediately begin using it without
-holding folio lock.
-
-Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260106090820.836242-1-sunyongjian@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 580204038f5b ("drm/amd/display: Enable support for 16 bpc fixed-point framebuffers.")
+Signed-off-by: Mario Kleiner <mario.kleiner.de@gmail.com>
+Tested-by: Mario Kleiner <mario.kleiner.de@gmail.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -1706,16 +1706,17 @@ ext4_mb_load_buddy_gfp(struct super_bloc
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+index 7c4496fb4b9d4..f0946e67aef97 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+@@ -1060,10 +1060,15 @@ static void amdgpu_dm_plane_get_min_max_dc_plane_scaling(struct drm_device *dev,
+ 		*min_downscale = plane_cap->max_downscale_factor.nv12;
+ 		break;
  
- 	/* Avoid locking the folio in the fast path ... */
- 	folio = __filemap_get_folio(inode->i_mapping, pnum, FGP_ACCESSED, 0);
--	if (IS_ERR(folio) || !folio_test_uptodate(folio)) {
-+	if (IS_ERR(folio) || !folio_test_uptodate(folio) || folio_test_locked(folio)) {
-+		/*
-+		 * folio_test_locked is employed to detect ongoing folio
-+		 * migrations, since concurrent migrations can lead to
-+		 * bitmap inconsistency. And if we are not uptodate that
-+		 * implies somebody just created the folio but is yet to
-+		 * initialize it. We can drop the folio reference and
-+		 * try to get the folio with lock in both cases to avoid
-+		 * concurrency.
-+		 */
- 		if (!IS_ERR(folio))
--			/*
--			 * drop the folio reference and try
--			 * to get the folio with lock. If we
--			 * are not uptodate that implies
--			 * somebody just created the folio but
--			 * is yet to initialize it. So
--			 * wait for it to initialize.
--			 */
- 			folio_put(folio);
- 		folio = __filemap_get_folio(inode->i_mapping, pnum,
- 				FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
-@@ -1764,7 +1765,7 @@ ext4_mb_load_buddy_gfp(struct super_bloc
- 
- 	/* we need another folio for the buddy */
- 	folio = __filemap_get_folio(inode->i_mapping, pnum, FGP_ACCESSED, 0);
--	if (IS_ERR(folio) || !folio_test_uptodate(folio)) {
-+	if (IS_ERR(folio) || !folio_test_uptodate(folio) || folio_test_locked(folio)) {
- 		if (!IS_ERR(folio))
- 			folio_put(folio);
- 		folio = __filemap_get_folio(inode->i_mapping, pnum,
++	/* All 64 bpp formats have the same fp16 scaling limits */
+ 	case DRM_FORMAT_XRGB16161616F:
+ 	case DRM_FORMAT_ARGB16161616F:
+ 	case DRM_FORMAT_XBGR16161616F:
+ 	case DRM_FORMAT_ABGR16161616F:
++	case DRM_FORMAT_XRGB16161616:
++	case DRM_FORMAT_ARGB16161616:
++	case DRM_FORMAT_XBGR16161616:
++	case DRM_FORMAT_ABGR16161616:
+ 		*max_upscale = plane_cap->max_upscale_factor.fp16;
+ 		*min_downscale = plane_cap->max_downscale_factor.fp16;
+ 		break;
+-- 
+2.51.0
+
 
 
