@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C18A2D4805;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2C42D4805;
 	Wed, 25 Feb 2026 06:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002683; cv=none; b=sHwMEpsh+/v7Nf41sz8bDADjy3XWgKMdV8QQR/YoZsykuxxEHnWHILRdHIduqDAlh1CtyPn+Z3TymbGf00nh2WnO1Pa+e/ir182Rfl/ZA3mj2fW7jFz/Lc+NcuvF70GxJg5aYcwRYvEnbRHAvhbNTzAxkG7duP2GK0OxIzjZY2k=
+	t=1772002683; cv=none; b=h5bZBrqymhK1zYDl2CJ3EJgDa8/Y0Ao1pNKFJHXDOyYmMyv3OKIhHeyxikAkLqfYU+d72gOTsPhWaP/hr2ZcSW+I4EVbqBAz0sWYc53o63o2SKaNWNc7r1ac1cUyoIVM/I2JWV/da9/K/Ic9VuNsgezgMGrHDAFz7ktzUmAGuU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002683; c=relaxed/simple;
-	bh=MFI7Xat2Im5v2/BdGQRVG4pbjge3PGJ8T7JqU1BGnm0=;
+	bh=0OudECk8Fg15T6CUa7tUCubkcxzt13E4tkllrI8x47o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kg/O6Xjb3xxBl+mR1O8aHsrhM5jRC6AgOgPpjotDm1G7tP71RVbxrGvX80myQpNpWaL7s7b8O5FmcrRtRl7wutBMr8RgSudrdNAyLCCbyRptqp/916o4A8W00HXFiRCjhER26qVjotWpUlEen1y+g2+MkVX70eG5MIRGtTRGp+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7ufIzyQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=COO+FHpH/M1m66miy+H75r6gWIgq2+d3wkH4jnQk5pX9jLfTeu3UpxOPaQaNkG7W0F68xcLV3SwBy4mgn5QGt+OcYSD8sP/E++JZm+CoamkZMP7RXERCo0boTYpRb5tQDTe+Skj5xPqimIBCj3KxkzaXw3SFGHpXjzBgAG3x+00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAoJRomU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7ufIzyQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13245C19425;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAoJRomU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DEBC116D0;
 	Wed, 25 Feb 2026 06:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002683;
-	bh=MFI7Xat2Im5v2/BdGQRVG4pbjge3PGJ8T7JqU1BGnm0=;
+	bh=0OudECk8Fg15T6CUa7tUCubkcxzt13E4tkllrI8x47o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7ufIzyQO4DH0h6bs/Kanzohc+cj36/O+HT76oBTGb+/G0P3JE6Dw5pXtYtAZjD6j
-	 le8MHXVOc8vNIPEr4mBHI/ivm42Yzbw0eAI5qXa/6M4nXyLyvUYSBgcCIQCmCjRJOe
-	 7dmXsqgRVjMErNtdDvKOujNQj3WMJnwXCKBdhaSY=
+	b=gAoJRomUVoHxiQc0LvkH87H03vdaauDezximDjl9XAqlJTUlMXXZCBwqXYjywAjYw
+	 sPZPScJe9D/rJVn2UGBmd9jytIwOOSTEMhoFnfSfTEdp2RVY1r/v7gn9QqBgDFbOpi
+	 QVMCz19SrqMnAXniGjKwTaOVLeVc8F5gHF05BnVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>,
-	Jianhao Xu <jianhao.xu@seu.edu.cn>,
-	Zilin Guan <zilin@seu.edu.cn>,
+	Thomas Richard <thomas.richard@bootlin.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 465/641] gpib: Fix memory leak in ni_usb_init()
-Date: Tue, 24 Feb 2026 17:23:11 -0800
-Message-ID: <20260225012359.781295340@linuxfoundation.org>
+Subject: [PATCH 6.18 474/641] phy: freescale: imx8qm-hsio: fix NULL pointer dereference
+Date: Tue, 24 Feb 2026 17:23:20 -0800
+Message-ID: <20260225012400.004355070@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,65 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Thomas Richard <thomas.richard@bootlin.com>
 
-[ Upstream commit b89921eed8cf2d97250bac4be38dbcfbf048b586 ]
+[ Upstream commit 4dd5d4c0361af0a3fd24f45c815996abf4429770 ]
 
-In ni_usb_init(), if ni_usb_setup_init() fails, the function returns
--EFAULT without freeing the allocated writes buffer, leading to a
-memory leak.
+During the probe the refclk_pad pointer is set to NULL if the
+'fsl,refclk-pad-mode' property is not defined in the devicetree node. But
+in imx_hsio_configure_clk_pad() this pointer is unconditionally used which
+could result in a NULL pointer dereference. So check the pointer before to
+use it.
 
-Additionally, ni_usb_setup_init() returns 0 on failure, which causes
-ni_usb_init() to return -EFAULT, an inappropriate error code for this
-situation.
-
-Fix the leak by freeing writes in the error path. Modify
-ni_usb_setup_init() to return -EINVAL on failure and propagate this
-error code in ni_usb_init().
-
-Fixes: 4e127de14fa7 ("staging: gpib: Add National Instruments USB GPIB driver")
-Suggested-by: Greg KH <gregkh@linuxfoundation.org>
-Suggested-by: Dave Penkler <dpenkler@gmail.com>
-Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20251230034546.929452-1-zilin@seu.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 82c56b6dd24f ("phy: freescale: imx8qm-hsio: Add i.MX8QM HSIO PHY driver support")
+Signed-off-by: Thomas Richard <thomas.richard@bootlin.com>
+Reviewed-by: Richard Zhu <hongxing.zhu@nxp.com>
+Link: https://patch.msgid.link/20260114-phy-fsl-imx8qm-hsio-fix-null-pointer-dereference-v1-1-730e941be464@bootlin.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/ni_usb/ni_usb_gpib.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/phy/freescale/phy-fsl-imx8qm-hsio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/gpib/ni_usb/ni_usb_gpib.c b/drivers/staging/gpib/ni_usb/ni_usb_gpib.c
-index fdcaa6c00bfea..b6fddb437f552 100644
---- a/drivers/staging/gpib/ni_usb/ni_usb_gpib.c
-+++ b/drivers/staging/gpib/ni_usb/ni_usb_gpib.c
-@@ -1780,7 +1780,7 @@ static int ni_usb_setup_init(struct gpib_board *board, struct ni_usb_register *w
- 	i++;
- 	if (i > NUM_INIT_WRITES) {
- 		dev_err(&usb_dev->dev, "bug!, buffer overrun, i=%i\n", i);
--		return 0;
-+		return -EINVAL;
- 	}
- 	return i;
- }
-@@ -1799,10 +1799,12 @@ static int ni_usb_init(struct gpib_board *board)
- 		return -ENOMEM;
+diff --git a/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c b/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c
+index 977d21d753a59..279b8ac7822df 100644
+--- a/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c
++++ b/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c
+@@ -251,7 +251,7 @@ static void imx_hsio_configure_clk_pad(struct phy *phy)
+ 	struct imx_hsio_lane *lane = phy_get_drvdata(phy);
+ 	struct imx_hsio_priv *priv = lane->priv;
  
- 	writes_len = ni_usb_setup_init(board, writes);
--	if (writes_len)
--		retval = ni_usb_write_registers(ni_priv, writes, writes_len, &ibsta);
--	else
--		return -EFAULT;
-+	if (writes_len < 0) {
-+		kfree(writes);
-+		return writes_len;
-+	}
-+
-+	retval = ni_usb_write_registers(ni_priv, writes, writes_len, &ibsta);
- 	kfree(writes);
- 	if (retval) {
- 		dev_err(&usb_dev->dev, "register write failed, retval=%i\n", retval);
+-	if (strncmp(priv->refclk_pad, "output", 6) == 0) {
++	if (priv->refclk_pad && strncmp(priv->refclk_pad, "output", 6) == 0) {
+ 		pll = true;
+ 		regmap_update_bits(priv->misc, HSIO_CTRL0,
+ 				   HSIO_IOB_A_0_TXOE | HSIO_IOB_A_0_M1M0_MASK,
 -- 
 2.51.0
 
