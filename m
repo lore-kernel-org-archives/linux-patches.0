@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9F327FD44;
-	Wed, 25 Feb 2026 01:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE08D27FD44;
+	Wed, 25 Feb 2026 01:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983726; cv=none; b=ch8kA/+WviQ/2ryDB78JrGZGbyjcsvq0qGxzREODObzhB4XvrWRHanEu167cVII/Tu/Vj98itG11apnD641GlZtX1MjJtP/dhPIsNoTp19VuiNIPYT8EJHfgmgUw803yHrU7fvQthlt9UXjp2O6Y+yerrE7oBgwHMtGaSEQzcPI=
+	t=1771983727; cv=none; b=RLCHjRp9LkZE03Vc8UaSnKg1LMTac5cYzt/VdRx5kGV6eeVV/srjyM9w6Qnl9y8sdz62lAvBKukYFW2wZAjHpOV7kmI+tYSHeJmaByt2hJweDX5O/23x/Nz7VleaOBlSGviQQy/EAa7Y8TfV9m0JddA/eIRsmL5+ttemks1SuiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983726; c=relaxed/simple;
-	bh=/YpiUaLYefOGA7IyauUn1DBgHuWkdglSihNsqV3OoIo=;
+	s=arc-20240116; t=1771983727; c=relaxed/simple;
+	bh=xJ8Z26Bab6vCwTHfcRQRwXmCQThLEVQzQZhVqsGymbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6jXNmOIFTjxdI+gNc7K3qM8CdWwpZAwlunTVXOfe02i1Vzh8LrzYxDQQkYeW+Wh/WRrnZM7oPLZa3nYhWQNrKd1cq7SSaBzOsKJZbGR+Y6jWoSKyeWlofTB9CCQj1IV/i/EX5DOkoUPihitWKEqwlH3eT5Wjqn1VGqIyfqC65E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dfkvjK2R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IFE2tRi3wgLJ8NhrsycLPHlBZqB3uJi2fB3i8E5EMB4t/nv/PZdUUVC0eW7GN3ITJFopZHaU63V8MHAuM2iDybB0MAiLew9xxFM+rDdSacheevYwMOrF0EJP3E64E4CK4OcnnxJentjtIfWbQz2PfW7vHkM7VZ8aGkhc61DmC/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7kWtGeF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfkvjK2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195D0C2BC86;
-	Wed, 25 Feb 2026 01:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7kWtGeF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3856EC116D0;
+	Wed, 25 Feb 2026 01:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983726;
-	bh=/YpiUaLYefOGA7IyauUn1DBgHuWkdglSihNsqV3OoIo=;
+	s=korg; t=1771983727;
+	bh=xJ8Z26Bab6vCwTHfcRQRwXmCQThLEVQzQZhVqsGymbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dfkvjK2RLPF6Tp46mY1jYuPtZ/3Tb/5xQKlBpQ35qHoz2mzPmA4dIjRCKZomLAEk7
-	 qiZ68L5/KnOS5sehULQLg1254vqf1UoPvTfSzIhNv2Ip2uFy0tHd/XnrVabPrfSu5y
-	 F0ef6ftQ5khGOrXpXH+lw+w3SD7lgIVxWNC66r5k=
+	b=a7kWtGeFtZwTr+NMpwnJTEyXPDJgBTLWvQTobFrjJTOVzXpSut7x6due6BXlQesIW
+	 j6FG0gKGEjxc00Pjso6A28nVePnr2EdyeC7ASZ38/YjRXD+ymz7OuPf1zyzN1XPYiO
+	 wgpvbVMzgKQ/N5D8i624jl/VOC1b81TurUiAu8g8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 022/641] btrfs: headers cleanup to remove unnecessary local includes
-Date: Tue, 24 Feb 2026 17:15:48 -0800
-Message-ID: <20260225012349.513732615@linuxfoundation.org>
+Subject: [PATCH 6.18 023/641] btrfs: remove btrfs_bio::fs_info by extracting it from btrfs_bio::inode
+Date: Tue, 24 Feb 2026 17:15:49 -0800
+Message-ID: <20260225012349.539200256@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,44 +53,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit c5667f9c8eb90293dfa4e52c65eb89fe39f5652d ]
+[ Upstream commit 81cea6cd7041ebd42281e0517f856d88527d3326 ]
 
-[BUG]
-When I tried to remove btrfs_bio::fs_info and use btrfs_bio::inode to
-grab the fs_info, the header "btrfs_inode.h" is needed to access the
-full btrfs_inode structure.
+Currently there is only one caller which doesn't populate
+btrfs_bio::inode, and that's scrub.
 
-Then btrfs will fail to compile.
+The idea is scrub doesn't want any automatic csum verification nor
+read-repair, as everything will be handled by scrub itself.
 
-[CAUSE]
-There is a recursive including chain:
+However that behavior is really no different than metadata inode, thus
+we can reuse btree_inode as btrfs_bio::inode for scrub.
 
-  "bio.h" -> "btrfs_inode.h" -> "extent_map.h" -> "compression.h" ->
-  "bio.h"
+The only exception is in btrfs_submit_chunk() where if a bbio is from
+scrub or data reloc inode, we set rst_search_commit_root to true.
+This means we still need a way to distinguish scrub from metadata, but
+that can be done by a new flag inside btrfs_bio.
 
-That recursive including is causing problems for btrfs.
-
-[ENHANCEMENT]
-To reduce the risk of recursive including:
-
-- Remove unnecessary local includes from btrfs headers
-  Either the included header is pulled in by other headers, or is
-  completely unnecessary.
-
-- Remove btrfs local includes if the header only requires a pointer
-  In that case let the implementing C file to pull the required header.
-
-  This is especially important for headers like "btrfs_inode.h" which
-  pulls in a lot of other btrfs headers, thus it's a mine field of
-  recursive including.
-
-- Remove unnecessary temporary structure definition
-  Either if we have included the header defining the structure, or
-  completely unused.
-
-Now including "btrfs_inode.h" inside "bio.h" is completely fine,
-although "btrfs_inode.h" still includes "extent_map.h", but that header
-only includes "fs.h", no more chain back to "bio.h".
+Now btrfs_bio::inode is a mandatory parameter, we can extract fs_info
+from that inode thus can remove btrfs_bio::fs_info to save 8 bytes from
+btrfs_bio structure.
 
 Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
@@ -98,319 +79,553 @@ Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: b39b26e017c7 ("btrfs: zoned: don't zone append to conventional zone")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/accessors.h   | 1 +
- fs/btrfs/btrfs_inode.h | 8 ++++----
- fs/btrfs/compression.h | 3 ---
- fs/btrfs/ctree.h       | 2 --
- fs/btrfs/defrag.c      | 1 +
- fs/btrfs/dir-item.c    | 1 +
- fs/btrfs/direct-io.c   | 2 ++
- fs/btrfs/disk-io.c     | 1 +
- fs/btrfs/disk-io.h     | 3 ++-
- fs/btrfs/extent-tree.c | 1 +
- fs/btrfs/extent_io.h   | 1 -
- fs/btrfs/extent_map.h  | 3 +--
- fs/btrfs/file-item.h   | 2 +-
- fs/btrfs/inode.c       | 1 +
- fs/btrfs/space-info.c  | 1 +
- fs/btrfs/subpage.h     | 1 -
- fs/btrfs/transaction.c | 2 ++
- fs/btrfs/transaction.h | 4 ----
- fs/btrfs/tree-log.c    | 1 +
- fs/btrfs/tree-log.h    | 3 +--
- fs/btrfs/zoned.h       | 1 -
- 21 files changed, 21 insertions(+), 22 deletions(-)
+ fs/btrfs/bio.c         | 53 ++++++++++++++++++++++--------------------
+ fs/btrfs/bio.h         | 18 +++++++++-----
+ fs/btrfs/compression.c |  6 ++---
+ fs/btrfs/compression.h |  3 ++-
+ fs/btrfs/direct-io.c   |  4 +---
+ fs/btrfs/extent_io.c   | 22 +++++++-----------
+ fs/btrfs/inode.c       |  7 ++----
+ fs/btrfs/scrub.c       | 51 ++++++++++++++++++++++------------------
+ fs/btrfs/zoned.c       |  4 ++--
+ 9 files changed, 87 insertions(+), 81 deletions(-)
 
-diff --git a/fs/btrfs/accessors.h b/fs/btrfs/accessors.h
-index 99b3ced12805b..78721412951c5 100644
---- a/fs/btrfs/accessors.h
-+++ b/fs/btrfs/accessors.h
-@@ -12,6 +12,7 @@
- #include <linux/string.h>
- #include <linux/mm.h>
- #include <uapi/linux/btrfs_tree.h>
-+#include "fs.h"
- #include "extent_io.h"
+diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+index 21df48e6c4fa2..b85b6b21b5450 100644
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -41,13 +41,17 @@ static bool bbio_has_ordered_extent(const struct btrfs_bio *bbio)
+  * Initialize a btrfs_bio structure.  This skips the embedded bio itself as it
+  * is already initialized by the block layer.
+  */
+-void btrfs_bio_init(struct btrfs_bio *bbio, struct btrfs_fs_info *fs_info,
++void btrfs_bio_init(struct btrfs_bio *bbio, struct btrfs_inode *inode, u64 file_offset,
+ 		    btrfs_bio_end_io_t end_io, void *private)
+ {
++	/* @inode parameter is mandatory. */
++	ASSERT(inode);
++
+ 	memset(bbio, 0, offsetof(struct btrfs_bio, bio));
+-	bbio->fs_info = fs_info;
++	bbio->inode = inode;
+ 	bbio->end_io = end_io;
+ 	bbio->private = private;
++	bbio->file_offset = file_offset;
+ 	atomic_set(&bbio->pending_ios, 1);
+ 	WRITE_ONCE(bbio->status, BLK_STS_OK);
+ }
+@@ -60,7 +64,7 @@ void btrfs_bio_init(struct btrfs_bio *bbio, struct btrfs_fs_info *fs_info,
+  * a mempool.
+  */
+ struct btrfs_bio *btrfs_bio_alloc(unsigned int nr_vecs, blk_opf_t opf,
+-				  struct btrfs_fs_info *fs_info,
++				  struct btrfs_inode *inode, u64 file_offset,
+ 				  btrfs_bio_end_io_t end_io, void *private)
+ {
+ 	struct btrfs_bio *bbio;
+@@ -68,7 +72,7 @@ struct btrfs_bio *btrfs_bio_alloc(unsigned int nr_vecs, blk_opf_t opf,
  
- struct extent_buffer;
-diff --git a/fs/btrfs/btrfs_inode.h b/fs/btrfs/btrfs_inode.h
-index af373d50a901f..a66ca5531b5c5 100644
---- a/fs/btrfs/btrfs_inode.h
-+++ b/fs/btrfs/btrfs_inode.h
-@@ -18,20 +18,20 @@
- #include <linux/lockdep.h>
- #include <uapi/linux/btrfs_tree.h>
- #include <trace/events/btrfs.h>
-+#include "ctree.h"
- #include "block-rsv.h"
- #include "extent_map.h"
--#include "extent_io.h"
- #include "extent-io-tree.h"
--#include "ordered-data.h"
--#include "delayed-inode.h"
+ 	bio = bio_alloc_bioset(NULL, nr_vecs, opf, GFP_NOFS, &btrfs_bioset);
+ 	bbio = btrfs_bio(bio);
+-	btrfs_bio_init(bbio, fs_info, end_io, private);
++	btrfs_bio_init(bbio, inode, file_offset, end_io, private);
+ 	return bbio;
+ }
  
--struct extent_state;
- struct posix_acl;
- struct iov_iter;
- struct writeback_control;
- struct btrfs_root;
- struct btrfs_fs_info;
- struct btrfs_trans_handle;
-+struct btrfs_bio;
-+struct btrfs_file_extent;
-+struct btrfs_delayed_node;
+@@ -85,9 +89,7 @@ static struct btrfs_bio *btrfs_split_bio(struct btrfs_fs_info *fs_info,
+ 		return ERR_CAST(bio);
  
- /*
-  * Since we search a directory based on f_pos (struct dir_context::pos) we have
+ 	bbio = btrfs_bio(bio);
+-	btrfs_bio_init(bbio, fs_info, NULL, orig_bbio);
+-	bbio->inode = orig_bbio->inode;
+-	bbio->file_offset = orig_bbio->file_offset;
++	btrfs_bio_init(bbio, orig_bbio->inode, orig_bbio->file_offset, NULL, orig_bbio);
+ 	orig_bbio->file_offset += map_length;
+ 	if (bbio_has_ordered_extent(bbio)) {
+ 		refcount_inc(&orig_bbio->ordered->refs);
+@@ -244,9 +246,8 @@ static struct btrfs_failed_bio *repair_one_sector(struct btrfs_bio *failed_bbio,
+ 	bio_add_folio_nofail(repair_bio, folio, sectorsize, foff);
+ 
+ 	repair_bbio = btrfs_bio(repair_bio);
+-	btrfs_bio_init(repair_bbio, fs_info, NULL, fbio);
+-	repair_bbio->inode = failed_bbio->inode;
+-	repair_bbio->file_offset = failed_bbio->file_offset + bio_offset;
++	btrfs_bio_init(repair_bbio, failed_bbio->inode, failed_bbio->file_offset + bio_offset,
++		       NULL, fbio);
+ 
+ 	mirror = next_repair_mirror(fbio, failed_bbio->mirror_num);
+ 	btrfs_debug(fs_info, "submitting repair read to mirror %d", mirror);
+@@ -332,7 +333,7 @@ static void btrfs_simple_end_io(struct bio *bio)
+ {
+ 	struct btrfs_bio *bbio = btrfs_bio(bio);
+ 	struct btrfs_device *dev = bio->bi_private;
+-	struct btrfs_fs_info *fs_info = bbio->fs_info;
++	struct btrfs_fs_info *fs_info = bbio->inode->root->fs_info;
+ 
+ 	btrfs_bio_counter_dec(fs_info);
+ 
+@@ -581,10 +582,11 @@ static void run_one_async_done(struct btrfs_work *work, bool do_free)
+ 
+ static bool should_async_write(struct btrfs_bio *bbio)
+ {
++	struct btrfs_fs_info *fs_info = bbio->inode->root->fs_info;
+ 	bool auto_csum_mode = true;
+ 
+ #ifdef CONFIG_BTRFS_EXPERIMENTAL
+-	struct btrfs_fs_devices *fs_devices = bbio->fs_info->fs_devices;
++	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
+ 	enum btrfs_offload_csum_mode csum_mode = READ_ONCE(fs_devices->offload_csum_mode);
+ 
+ 	if (csum_mode == BTRFS_OFFLOAD_CSUM_FORCE_OFF)
+@@ -594,7 +596,7 @@ static bool should_async_write(struct btrfs_bio *bbio)
+ #endif
+ 
+ 	/* Submit synchronously if the checksum implementation is fast. */
+-	if (auto_csum_mode && test_bit(BTRFS_FS_CSUM_IMPL_FAST, &bbio->fs_info->flags))
++	if (auto_csum_mode && test_bit(BTRFS_FS_CSUM_IMPL_FAST, &fs_info->flags))
+ 		return false;
+ 
+ 	/*
+@@ -605,7 +607,7 @@ static bool should_async_write(struct btrfs_bio *bbio)
+ 		return false;
+ 
+ 	/* Zoned devices require I/O to be submitted in order. */
+-	if ((bbio->bio.bi_opf & REQ_META) && btrfs_is_zoned(bbio->fs_info))
++	if ((bbio->bio.bi_opf & REQ_META) && btrfs_is_zoned(fs_info))
+ 		return false;
+ 
+ 	return true;
+@@ -620,7 +622,7 @@ static bool btrfs_wq_submit_bio(struct btrfs_bio *bbio,
+ 				struct btrfs_io_context *bioc,
+ 				struct btrfs_io_stripe *smap, int mirror_num)
+ {
+-	struct btrfs_fs_info *fs_info = bbio->fs_info;
++	struct btrfs_fs_info *fs_info = bbio->inode->root->fs_info;
+ 	struct async_submit_bio *async;
+ 
+ 	async = kmalloc(sizeof(*async), GFP_NOFS);
+@@ -639,11 +641,12 @@ static bool btrfs_wq_submit_bio(struct btrfs_bio *bbio,
+ 
+ static u64 btrfs_append_map_length(struct btrfs_bio *bbio, u64 map_length)
+ {
++	struct btrfs_fs_info *fs_info = bbio->inode->root->fs_info;
+ 	unsigned int nr_segs;
+ 	int sector_offset;
+ 
+-	map_length = min(map_length, bbio->fs_info->max_zone_append_size);
+-	sector_offset = bio_split_rw_at(&bbio->bio, &bbio->fs_info->limits,
++	map_length = min(map_length, fs_info->max_zone_append_size);
++	sector_offset = bio_split_rw_at(&bbio->bio, &fs_info->limits,
+ 					&nr_segs, map_length);
+ 	if (sector_offset) {
+ 		/*
+@@ -651,7 +654,7 @@ static u64 btrfs_append_map_length(struct btrfs_bio *bbio, u64 map_length)
+ 		 * sectorsize and thus cause unaligned I/Os.  Fix that by
+ 		 * always rounding down to the nearest boundary.
+ 		 */
+-		return ALIGN_DOWN(sector_offset << SECTOR_SHIFT, bbio->fs_info->sectorsize);
++		return ALIGN_DOWN(sector_offset << SECTOR_SHIFT, fs_info->sectorsize);
+ 	}
+ 	return map_length;
+ }
+@@ -659,7 +662,7 @@ static u64 btrfs_append_map_length(struct btrfs_bio *bbio, u64 map_length)
+ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
+ {
+ 	struct btrfs_inode *inode = bbio->inode;
+-	struct btrfs_fs_info *fs_info = bbio->fs_info;
++	struct btrfs_fs_info *fs_info = inode->root->fs_info;
+ 	struct bio *bio = &bbio->bio;
+ 	u64 logical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
+ 	u64 length = bio->bi_iter.bi_size;
+@@ -670,7 +673,7 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
+ 	blk_status_t status;
+ 	int ret;
+ 
+-	if (!bbio->inode || btrfs_is_data_reloc_root(inode->root))
++	if (bbio->is_scrub || btrfs_is_data_reloc_root(inode->root))
+ 		smap.rst_search_commit_root = true;
+ 	else
+ 		smap.rst_search_commit_root = false;
+@@ -734,7 +737,7 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
+ 		 * Csum items for reloc roots have already been cloned at this
+ 		 * point, so they are handled as part of the no-checksum case.
+ 		 */
+-		if (inode && !(inode->flags & BTRFS_INODE_NODATASUM) &&
++		if (!(inode->flags & BTRFS_INODE_NODATASUM) &&
+ 		    !test_bit(BTRFS_FS_STATE_NO_DATA_CSUMS, &fs_info->fs_state) &&
+ 		    !btrfs_is_data_reloc_root(inode->root)) {
+ 			if (should_async_write(bbio) &&
+@@ -782,7 +785,7 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
+ static void assert_bbio_alignment(struct btrfs_bio *bbio)
+ {
+ #ifdef CONFIG_BTRFS_ASSERT
+-	struct btrfs_fs_info *fs_info = bbio->fs_info;
++	struct btrfs_fs_info *fs_info = bbio->inode->root->fs_info;
+ 	struct bio_vec bvec;
+ 	struct bvec_iter iter;
+ 	const u32 blocksize = fs_info->sectorsize;
+@@ -885,16 +888,16 @@ int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 start,
+  */
+ void btrfs_submit_repair_write(struct btrfs_bio *bbio, int mirror_num, bool dev_replace)
+ {
+-	struct btrfs_fs_info *fs_info = bbio->fs_info;
++	struct btrfs_fs_info *fs_info = bbio->inode->root->fs_info;
+ 	u64 logical = bbio->bio.bi_iter.bi_sector << SECTOR_SHIFT;
+ 	u64 length = bbio->bio.bi_iter.bi_size;
+ 	struct btrfs_io_stripe smap = { 0 };
+ 	int ret;
+ 
+-	ASSERT(fs_info);
+ 	ASSERT(mirror_num > 0);
+ 	ASSERT(btrfs_op(&bbio->bio) == BTRFS_MAP_WRITE);
+-	ASSERT(!bbio->inode);
++	ASSERT(!is_data_inode(bbio->inode));
++	ASSERT(bbio->is_scrub);
+ 
+ 	btrfs_bio_counter_inc_blocked(fs_info);
+ 	ret = btrfs_map_repair_block(fs_info, &smap, logical, length, mirror_num);
+diff --git a/fs/btrfs/bio.h b/fs/btrfs/bio.h
+index 00883aea55d70..b7a0de6f97840 100644
+--- a/fs/btrfs/bio.h
++++ b/fs/btrfs/bio.h
+@@ -34,7 +34,10 @@ typedef void (*btrfs_bio_end_io_t)(struct btrfs_bio *bbio);
+ struct btrfs_bio {
+ 	/*
+ 	 * Inode and offset into it that this I/O operates on.
+-	 * Only set for data I/O.
++	 *
++	 * If the inode is a data one, csum verification and read-repair
++	 * will be done automatically.
++	 * If the inode is a metadata one, everything is handled by the caller.
+ 	 */
+ 	struct btrfs_inode *inode;
+ 	u64 file_offset;
+@@ -76,14 +79,17 @@ struct btrfs_bio {
+ 	atomic_t pending_ios;
+ 	struct work_struct end_io_work;
+ 
+-	/* File system that this I/O operates on. */
+-	struct btrfs_fs_info *fs_info;
+-
+ 	/* Save the first error status of split bio. */
+ 	blk_status_t status;
+ 
+ 	/* Use the commit root to look up csums (data read bio only). */
+ 	bool csum_search_commit_root;
++
++	/*
++	 * Since scrub will reuse btree inode, we need this flag to distinguish
++	 * scrub bios.
++	 */
++	bool is_scrub;
+ 	/*
+ 	 * This member must come last, bio_alloc_bioset will allocate enough
+ 	 * bytes for entire btrfs_bio but relies on bio being last.
+@@ -99,10 +105,10 @@ static inline struct btrfs_bio *btrfs_bio(struct bio *bio)
+ int __init btrfs_bioset_init(void);
+ void __cold btrfs_bioset_exit(void);
+ 
+-void btrfs_bio_init(struct btrfs_bio *bbio, struct btrfs_fs_info *fs_info,
++void btrfs_bio_init(struct btrfs_bio *bbio, struct btrfs_inode *inode, u64 file_offset,
+ 		    btrfs_bio_end_io_t end_io, void *private);
+ struct btrfs_bio *btrfs_bio_alloc(unsigned int nr_vecs, blk_opf_t opf,
+-				  struct btrfs_fs_info *fs_info,
++				  struct btrfs_inode *inode, u64 file_offset,
+ 				  btrfs_bio_end_io_t end_io, void *private);
+ void btrfs_bio_end_io(struct btrfs_bio *bbio, blk_status_t status);
+ 
+diff --git a/fs/btrfs/compression.c b/fs/btrfs/compression.c
+index bacad18357b33..8c3899832a1aa 100644
+--- a/fs/btrfs/compression.c
++++ b/fs/btrfs/compression.c
+@@ -67,9 +67,7 @@ static struct compressed_bio *alloc_compressed_bio(struct btrfs_inode *inode,
+ 
+ 	bbio = btrfs_bio(bio_alloc_bioset(NULL, BTRFS_MAX_COMPRESSED_PAGES, op,
+ 					  GFP_NOFS, &btrfs_compressed_bioset));
+-	btrfs_bio_init(bbio, inode->root->fs_info, end_io, NULL);
+-	bbio->inode = inode;
+-	bbio->file_offset = start;
++	btrfs_bio_init(bbio, inode, start, end_io, NULL);
+ 	return to_compressed_bio(bbio);
+ }
+ 
+@@ -354,7 +352,7 @@ static void end_bbio_compressed_write(struct btrfs_bio *bbio)
+ 
+ static void btrfs_add_compressed_bio_folios(struct compressed_bio *cb)
+ {
+-	struct btrfs_fs_info *fs_info = cb->bbio.fs_info;
++	struct btrfs_fs_info *fs_info = cb->bbio.inode->root->fs_info;
+ 	struct bio *bio = &cb->bbio.bio;
+ 	u32 offset = 0;
+ 
 diff --git a/fs/btrfs/compression.h b/fs/btrfs/compression.h
-index eba188a9e3bb5..c6812d5fcab79 100644
+index c6812d5fcab79..062ebd9c2d32d 100644
 --- a/fs/btrfs/compression.h
 +++ b/fs/btrfs/compression.h
-@@ -14,14 +14,11 @@
+@@ -14,6 +14,7 @@
  #include <linux/pagemap.h>
  #include "bio.h"
  #include "fs.h"
--#include "messages.h"
++#include "btrfs_inode.h"
  
  struct address_space;
--struct page;
  struct inode;
- struct btrfs_inode;
- struct btrfs_ordered_extent;
--struct btrfs_bio;
+@@ -74,7 +75,7 @@ struct compressed_bio {
  
- /*
-  * We want to make sure that amount of RAM required to uncompress an extent is
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index fe70b593c7cd9..16dd11c485313 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -17,9 +17,7 @@
- #include <linux/refcount.h>
- #include <uapi/linux/btrfs_tree.h>
- #include "locking.h"
--#include "fs.h"
- #include "accessors.h"
--#include "extent-io-tree.h"
+ static inline struct btrfs_fs_info *cb_to_fs_info(const struct compressed_bio *cb)
+ {
+-	return cb->bbio.fs_info;
++	return cb->bbio.inode->root->fs_info;
+ }
  
- struct extent_buffer;
- struct btrfs_block_rsv;
-diff --git a/fs/btrfs/defrag.c b/fs/btrfs/defrag.c
-index 7b277934f66f9..a4cc1bc635622 100644
---- a/fs/btrfs/defrag.c
-+++ b/fs/btrfs/defrag.c
-@@ -15,6 +15,7 @@
- #include "defrag.h"
- #include "file-item.h"
- #include "super.h"
-+#include "compression.h"
- 
- static struct kmem_cache *btrfs_inode_defrag_cachep;
- 
-diff --git a/fs/btrfs/dir-item.c b/fs/btrfs/dir-item.c
-index 69863e398e223..77e1bcb2a74bf 100644
---- a/fs/btrfs/dir-item.c
-+++ b/fs/btrfs/dir-item.c
-@@ -9,6 +9,7 @@
- #include "transaction.h"
- #include "accessors.h"
- #include "dir-item.h"
-+#include "delayed-inode.h"
- 
- /*
-  * insert a name into a directory, doing overflow properly if there is a hash
+ /* @range_end must be exclusive. */
 diff --git a/fs/btrfs/direct-io.c b/fs/btrfs/direct-io.c
-index 802d4dbe5b381..8888ef4ae6064 100644
+index 8888ef4ae6064..e29ea28ce90b9 100644
 --- a/fs/btrfs/direct-io.c
 +++ b/fs/btrfs/direct-io.c
-@@ -10,6 +10,8 @@
- #include "fs.h"
- #include "transaction.h"
- #include "volumes.h"
-+#include "bio.h"
-+#include "ordered-data.h"
+@@ -715,10 +715,8 @@ static void btrfs_dio_submit_io(const struct iomap_iter *iter, struct bio *bio,
+ 		container_of(bbio, struct btrfs_dio_private, bbio);
+ 	struct btrfs_dio_data *dio_data = iter->private;
  
- struct btrfs_dio_data {
- 	ssize_t submitted;
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 745ae698bbc8a..3fd5d6a27d4c0 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -50,6 +50,7 @@
- #include "relocation.h"
- #include "scrub.h"
- #include "super.h"
-+#include "delayed-inode.h"
+-	btrfs_bio_init(bbio, BTRFS_I(iter->inode)->root->fs_info,
++	btrfs_bio_init(bbio, BTRFS_I(iter->inode), file_offset,
+ 		       btrfs_dio_end_io, bio->bi_private);
+-	bbio->inode = BTRFS_I(iter->inode);
+-	bbio->file_offset = file_offset;
  
- #define BTRFS_SUPER_FLAG_SUPP	(BTRFS_HEADER_FLAG_WRITTEN |\
- 				 BTRFS_HEADER_FLAG_RELOC |\
-diff --git a/fs/btrfs/disk-io.h b/fs/btrfs/disk-io.h
-index 57920f2c6fe4e..5320da83d0cf8 100644
---- a/fs/btrfs/disk-io.h
-+++ b/fs/btrfs/disk-io.h
-@@ -9,7 +9,8 @@
- #include <linux/sizes.h>
- #include <linux/compiler_types.h>
- #include "ctree.h"
--#include "fs.h"
-+#include "bio.h"
-+#include "ordered-data.h"
+ 	dip->file_offset = file_offset;
+ 	dip->bytes = bio->bi_iter.bi_size;
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index e6ffa12f57535..c3524401ff03e 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -518,7 +518,7 @@ static void end_folio_read(struct folio *folio, bool uptodate, u64 start, u32 le
+  */
+ static void end_bbio_data_write(struct btrfs_bio *bbio)
+ {
+-	struct btrfs_fs_info *fs_info = bbio->fs_info;
++	struct btrfs_fs_info *fs_info = bbio->inode->root->fs_info;
+ 	struct bio *bio = &bbio->bio;
+ 	int error = blk_status_to_errno(bio->bi_status);
+ 	struct folio_iter fi;
+@@ -574,7 +574,7 @@ static void begin_folio_read(struct btrfs_fs_info *fs_info, struct folio *folio)
+  */
+ static void end_bbio_data_read(struct btrfs_bio *bbio)
+ {
+-	struct btrfs_fs_info *fs_info = bbio->fs_info;
++	struct btrfs_fs_info *fs_info = bbio->inode->root->fs_info;
+ 	struct bio *bio = &bbio->bio;
+ 	struct folio_iter fi;
  
- struct block_device;
- struct super_block;
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index dc4ca98c37800..01337e3f2879c 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -40,6 +40,7 @@
- #include "orphan.h"
- #include "tree-checker.h"
- #include "raid-stripe-tree.h"
-+#include "delayed-inode.h"
+@@ -739,12 +739,10 @@ static void alloc_new_bio(struct btrfs_inode *inode,
+ 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
+ 	struct btrfs_bio *bbio;
  
- #undef SCRAMBLE_DELAYED_REFS
+-	bbio = btrfs_bio_alloc(BIO_MAX_VECS, bio_ctrl->opf, fs_info,
+-			       bio_ctrl->end_io_func, NULL);
++	bbio = btrfs_bio_alloc(BIO_MAX_VECS, bio_ctrl->opf, inode,
++			       file_offset, bio_ctrl->end_io_func, NULL);
+ 	bbio->bio.bi_iter.bi_sector = disk_bytenr >> SECTOR_SHIFT;
+ 	bbio->bio.bi_write_hint = inode->vfs_inode.i_write_hint;
+-	bbio->inode = inode;
+-	bbio->file_offset = file_offset;
+ 	bio_ctrl->bbio = bbio;
+ 	bio_ctrl->len_to_oe_boundary = U32_MAX;
+ 	bio_ctrl->next_file_offset = file_offset;
+@@ -2223,12 +2221,11 @@ static noinline_for_stack void write_one_eb(struct extent_buffer *eb,
  
-diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
-index 559bec44a7a8e..73571d5d3d5ad 100644
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -12,7 +12,6 @@
- #include <linux/rwsem.h>
- #include <linux/list.h>
- #include <linux/slab.h>
--#include "compression.h"
- #include "messages.h"
- #include "ulist.h"
- #include "misc.h"
-diff --git a/fs/btrfs/extent_map.h b/fs/btrfs/extent_map.h
-index d4b81ee4d97bd..6f685f3c93272 100644
---- a/fs/btrfs/extent_map.h
-+++ b/fs/btrfs/extent_map.h
-@@ -8,8 +8,7 @@
- #include <linux/rbtree.h>
- #include <linux/list.h>
- #include <linux/refcount.h>
--#include "misc.h"
--#include "compression.h"
-+#include "fs.h"
+ 	bbio = btrfs_bio_alloc(INLINE_EXTENT_BUFFER_PAGES,
+ 			       REQ_OP_WRITE | REQ_META | wbc_to_write_flags(wbc),
+-			       eb->fs_info, end_bbio_meta_write, eb);
++			       BTRFS_I(fs_info->btree_inode), eb->start,
++			       end_bbio_meta_write, eb);
+ 	bbio->bio.bi_iter.bi_sector = eb->start >> SECTOR_SHIFT;
+ 	bio_set_dev(&bbio->bio, fs_info->fs_devices->latest_dev->bdev);
+ 	wbc_init_bio(wbc, &bbio->bio);
+-	bbio->inode = BTRFS_I(eb->fs_info->btree_inode);
+-	bbio->file_offset = eb->start;
+ 	for (int i = 0; i < num_extent_folios(eb); i++) {
+ 		struct folio *folio = eb->folios[i];
+ 		u64 range_start = max_t(u64, eb->start, folio_pos(folio));
+@@ -3842,6 +3839,7 @@ static void end_bbio_meta_read(struct btrfs_bio *bbio)
+ int read_extent_buffer_pages_nowait(struct extent_buffer *eb, int mirror_num,
+ 				    const struct btrfs_tree_parent_check *check)
+ {
++	struct btrfs_fs_info *fs_info = eb->fs_info;
+ 	struct btrfs_bio *bbio;
  
- struct btrfs_inode;
- struct btrfs_fs_info;
-diff --git a/fs/btrfs/file-item.h b/fs/btrfs/file-item.h
-index 63216c43676de..0d59e830018a6 100644
---- a/fs/btrfs/file-item.h
-+++ b/fs/btrfs/file-item.h
-@@ -7,7 +7,7 @@
- #include <linux/list.h>
- #include <uapi/linux/btrfs_tree.h>
- #include "ctree.h"
--#include "accessors.h"
-+#include "ordered-data.h"
+ 	if (test_bit(EXTENT_BUFFER_UPTODATE, &eb->bflags))
+@@ -3875,11 +3873,9 @@ int read_extent_buffer_pages_nowait(struct extent_buffer *eb, int mirror_num,
+ 	refcount_inc(&eb->refs);
  
- struct extent_map;
- struct btrfs_file_extent_item;
+ 	bbio = btrfs_bio_alloc(INLINE_EXTENT_BUFFER_PAGES,
+-			       REQ_OP_READ | REQ_META, eb->fs_info,
+-			       end_bbio_meta_read, eb);
++			       REQ_OP_READ | REQ_META, BTRFS_I(fs_info->btree_inode),
++			       eb->start, end_bbio_meta_read, eb);
+ 	bbio->bio.bi_iter.bi_sector = eb->start >> SECTOR_SHIFT;
+-	bbio->inode = BTRFS_I(eb->fs_info->btree_inode);
+-	bbio->file_offset = eb->start;
+ 	memcpy(&bbio->parent_check, check, sizeof(*check));
+ 	for (int i = 0; i < num_extent_folios(eb); i++) {
+ 		struct folio *folio = eb->folios[i];
 diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 76a66c74249a2..b261dbeb29040 100644
+index b261dbeb29040..47e762856521d 100644
 --- a/fs/btrfs/inode.c
 +++ b/fs/btrfs/inode.c
-@@ -71,6 +71,7 @@
- #include "backref.h"
- #include "raid-stripe-tree.h"
- #include "fiemap.h"
-+#include "delayed-inode.h"
+@@ -9423,7 +9423,6 @@ int btrfs_encoded_read_regular_fill_pages(struct btrfs_inode *inode,
+ 					  u64 disk_bytenr, u64 disk_io_size,
+ 					  struct page **pages, void *uring_ctx)
+ {
+-	struct btrfs_fs_info *fs_info = inode->root->fs_info;
+ 	struct btrfs_encoded_read_private *priv, sync_priv;
+ 	struct completion sync_reads;
+ 	unsigned long i = 0;
+@@ -9448,10 +9447,9 @@ int btrfs_encoded_read_regular_fill_pages(struct btrfs_inode *inode,
+ 	priv->status = 0;
+ 	priv->uring_ctx = uring_ctx;
  
- #define COW_FILE_RANGE_KEEP_LOCKED	(1UL << 0)
- #define COW_FILE_RANGE_NO_INLINE	(1UL << 1)
-diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
-index a6f94e9f55915..e5c18a29eb7e6 100644
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -15,6 +15,7 @@
- #include "accessors.h"
- #include "extent-tree.h"
- #include "zoned.h"
-+#include "delayed-inode.h"
+-	bbio = btrfs_bio_alloc(BIO_MAX_VECS, REQ_OP_READ, fs_info,
++	bbio = btrfs_bio_alloc(BIO_MAX_VECS, REQ_OP_READ, inode, 0,
+ 			       btrfs_encoded_read_endio, priv);
+ 	bbio->bio.bi_iter.bi_sector = disk_bytenr >> SECTOR_SHIFT;
+-	bbio->inode = inode;
  
- /*
-  * HOW DOES SPACE RESERVATION WORK
-diff --git a/fs/btrfs/subpage.h b/fs/btrfs/subpage.h
-index ad0552db7c7dc..d81a0ade559fd 100644
---- a/fs/btrfs/subpage.h
-+++ b/fs/btrfs/subpage.h
-@@ -7,7 +7,6 @@
- #include <linux/atomic.h>
- #include <linux/sizes.h>
- #include "btrfs_inode.h"
--#include "fs.h"
+ 	do {
+ 		size_t bytes = min_t(u64, disk_io_size, PAGE_SIZE);
+@@ -9460,10 +9458,9 @@ int btrfs_encoded_read_regular_fill_pages(struct btrfs_inode *inode,
+ 			refcount_inc(&priv->pending_refs);
+ 			btrfs_submit_bbio(bbio, 0);
  
- struct address_space;
- struct folio;
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index c457316c2788b..041f4781956cf 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -32,6 +32,8 @@
- #include "ioctl.h"
- #include "relocation.h"
- #include "scrub.h"
-+#include "ordered-data.h"
-+#include "delayed-inode.h"
+-			bbio = btrfs_bio_alloc(BIO_MAX_VECS, REQ_OP_READ, fs_info,
++			bbio = btrfs_bio_alloc(BIO_MAX_VECS, REQ_OP_READ, inode, 0,
+ 					       btrfs_encoded_read_endio, priv);
+ 			bbio->bio.bi_iter.bi_sector = disk_bytenr >> SECTOR_SHIFT;
+-			bbio->inode = inode;
+ 			continue;
+ 		}
  
- static struct kmem_cache *btrfs_trans_handle_cachep;
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index b6a7ea105eb13..747e2c748376a 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -929,10 +929,11 @@ static int calc_next_mirror(int mirror, int num_copies)
+ static void scrub_bio_add_sector(struct btrfs_bio *bbio, struct scrub_stripe *stripe,
+ 				 int sector_nr)
+ {
++	struct btrfs_fs_info *fs_info = bbio->inode->root->fs_info;
+ 	void *kaddr = scrub_stripe_get_kaddr(stripe, sector_nr);
+ 	int ret;
  
-diff --git a/fs/btrfs/transaction.h b/fs/btrfs/transaction.h
-index 9f7c777af6356..18ef069197e5b 100644
---- a/fs/btrfs/transaction.h
-+++ b/fs/btrfs/transaction.h
-@@ -14,10 +14,6 @@
- #include <linux/wait.h>
- #include "btrfs_inode.h"
- #include "delayed-ref.h"
--#include "extent-io-tree.h"
--#include "block-rsv.h"
--#include "messages.h"
--#include "misc.h"
+-	ret = bio_add_page(&bbio->bio, virt_to_page(kaddr), bbio->fs_info->sectorsize,
++	ret = bio_add_page(&bbio->bio, virt_to_page(kaddr), fs_info->sectorsize,
+ 			   offset_in_page(kaddr));
+ 	/*
+ 	 * Caller should ensure the bbio has enough size.
+@@ -942,7 +943,21 @@ static void scrub_bio_add_sector(struct btrfs_bio *bbio, struct scrub_stripe *st
+ 	 * to create the minimal amount of bio vectors, for fs block size < page
+ 	 * size cases.
+ 	 */
+-	ASSERT(ret == bbio->fs_info->sectorsize);
++	ASSERT(ret == fs_info->sectorsize);
++}
++
++static struct btrfs_bio *alloc_scrub_bbio(struct btrfs_fs_info *fs_info,
++					  unsigned int nr_vecs, blk_opf_t opf,
++					  u64 logical,
++					  btrfs_bio_end_io_t end_io, void *private)
++{
++	struct btrfs_bio *bbio;
++
++	bbio = btrfs_bio_alloc(nr_vecs, opf, BTRFS_I(fs_info->btree_inode),
++			       logical, end_io, private);
++	bbio->is_scrub = true;
++	bbio->bio.bi_iter.bi_sector = logical >> SECTOR_SHIFT;
++	return bbio;
+ }
  
- struct dentry;
- struct inode;
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index ae2e035d013e2..6c5db73c3e85f 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -29,6 +29,7 @@
- #include "orphan.h"
- #include "print-tree.h"
- #include "tree-checker.h"
-+#include "delayed-inode.h"
+ static void scrub_stripe_submit_repair_read(struct scrub_stripe *stripe,
+@@ -968,12 +983,10 @@ static void scrub_stripe_submit_repair_read(struct scrub_stripe *stripe,
+ 			bbio = NULL;
+ 		}
  
- #define MAX_CONFLICT_INODES 10
+-		if (!bbio) {
+-			bbio = btrfs_bio_alloc(stripe->nr_sectors, REQ_OP_READ,
+-				fs_info, scrub_repair_read_endio, stripe);
+-			bbio->bio.bi_iter.bi_sector = (stripe->logical +
+-				(i << fs_info->sectorsize_bits)) >> SECTOR_SHIFT;
+-		}
++		if (!bbio)
++			bbio = alloc_scrub_bbio(fs_info, stripe->nr_sectors, REQ_OP_READ,
++						stripe->logical + (i << fs_info->sectorsize_bits),
++						scrub_repair_read_endio, stripe);
  
-diff --git a/fs/btrfs/tree-log.h b/fs/btrfs/tree-log.h
-index dc313e6bb2faa..4f149d7d4fdee 100644
---- a/fs/btrfs/tree-log.h
-+++ b/fs/btrfs/tree-log.h
-@@ -8,8 +8,7 @@
+ 		scrub_bio_add_sector(bbio, stripe, i);
+ 	}
+@@ -1352,13 +1365,10 @@ static void scrub_write_sectors(struct scrub_ctx *sctx, struct scrub_stripe *str
+ 			scrub_submit_write_bio(sctx, stripe, bbio, dev_replace);
+ 			bbio = NULL;
+ 		}
+-		if (!bbio) {
+-			bbio = btrfs_bio_alloc(stripe->nr_sectors, REQ_OP_WRITE,
+-					       fs_info, scrub_write_endio, stripe);
+-			bbio->bio.bi_iter.bi_sector = (stripe->logical +
+-				(sector_nr << fs_info->sectorsize_bits)) >>
+-				SECTOR_SHIFT;
+-		}
++		if (!bbio)
++			bbio = alloc_scrub_bbio(fs_info, stripe->nr_sectors, REQ_OP_WRITE,
++					stripe->logical + (sector_nr << fs_info->sectorsize_bits),
++					scrub_write_endio, stripe);
+ 		scrub_bio_add_sector(bbio, stripe, sector_nr);
+ 	}
+ 	if (bbio)
+@@ -1849,9 +1859,8 @@ static void scrub_submit_extent_sector_read(struct scrub_stripe *stripe)
+ 				continue;
+ 			}
  
- #include <linux/list.h>
- #include <linux/fs.h>
--#include "messages.h"
--#include "ctree.h"
-+#include <linux/fscrypt.h>
- #include "transaction.h"
+-			bbio = btrfs_bio_alloc(stripe->nr_sectors, REQ_OP_READ,
+-					       fs_info, scrub_read_endio, stripe);
+-			bbio->bio.bi_iter.bi_sector = logical >> SECTOR_SHIFT;
++			bbio = alloc_scrub_bbio(fs_info, stripe->nr_sectors, REQ_OP_READ,
++						logical, scrub_read_endio, stripe);
+ 		}
  
- struct inode;
-diff --git a/fs/btrfs/zoned.h b/fs/btrfs/zoned.h
-index 17c5656580dd9..2b807a02d1a8a 100644
---- a/fs/btrfs/zoned.h
-+++ b/fs/btrfs/zoned.h
-@@ -15,7 +15,6 @@
- #include "disk-io.h"
- #include "block-group.h"
- #include "btrfs_inode.h"
--#include "fs.h"
+ 		scrub_bio_add_sector(bbio, stripe, i);
+@@ -1888,10 +1897,8 @@ static void scrub_submit_initial_read(struct scrub_ctx *sctx,
+ 		return;
+ 	}
  
- struct block_device;
- struct extent_buffer;
+-	bbio = btrfs_bio_alloc(BTRFS_STRIPE_LEN >> min_folio_shift, REQ_OP_READ, fs_info,
+-			       scrub_read_endio, stripe);
+-
+-	bbio->bio.bi_iter.bi_sector = stripe->logical >> SECTOR_SHIFT;
++	bbio = alloc_scrub_bbio(fs_info, BTRFS_STRIPE_LEN >> min_folio_shift, REQ_OP_READ,
++				stripe->logical, scrub_read_endio, stripe);
+ 	/* Read the whole range inside the chunk boundary. */
+ 	for (unsigned int cur = 0; cur < nr_sectors; cur++)
+ 		scrub_bio_add_sector(bbio, stripe, cur);
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index d1db7fa1fe583..3afc9c0c22287 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1809,14 +1809,14 @@ bool btrfs_use_zone_append(struct btrfs_bio *bbio)
+ {
+ 	u64 start = (bbio->bio.bi_iter.bi_sector << SECTOR_SHIFT);
+ 	struct btrfs_inode *inode = bbio->inode;
+-	struct btrfs_fs_info *fs_info = bbio->fs_info;
++	struct btrfs_fs_info *fs_info = inode->root->fs_info;
+ 	struct btrfs_block_group *cache;
+ 	bool ret = false;
+ 
+ 	if (!btrfs_is_zoned(fs_info))
+ 		return false;
+ 
+-	if (!inode || !is_data_inode(inode))
++	if (!is_data_inode(inode))
+ 		return false;
+ 
+ 	if (btrfs_op(&bbio->bio) != BTRFS_MAP_WRITE)
 -- 
 2.51.0
 
