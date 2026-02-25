@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319B3242D9B;
-	Wed, 25 Feb 2026 01:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7121E2834;
+	Wed, 25 Feb 2026 01:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983172; cv=none; b=Q0iqDpgucQ/Jd1OVQr6cZH/L16j3g0veA0MwcwAxBE/RlW51j0mUA9miiF1u61xRIZd62z4x0QTAKVItgpeUIistPvZWAL9uwCM4h3f4UTSnL5aNluUxSvYy09SIfHaRnW/z3jY9I+s7c+uwY8+L1Ne8FD6yuPpNJLcqkkLIOf8=
+	t=1771983173; cv=none; b=PweLd7Yq7IJnYe+sdGGPlzHcC9mnCfpfX/U4s9J8O5WeiqTRXEsuiByZxbdQkAdI1IZrzWKFWrS4KirGHNJ1oT6UGjKqdR0Kf12Z+Rh+yIyM+WJTJdCadAqczOpQH4hWVFI6gt5Qlq0296iSoNFoI23XOJICnFYAUS2QIIKNk/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983172; c=relaxed/simple;
-	bh=JxmPFASYiiHSWr/4j1JT8k9obwcqDnvaDZ/beV3DIHk=;
+	s=arc-20240116; t=1771983173; c=relaxed/simple;
+	bh=1DxQ7irKyMCX6tEJ2Ktr56LscaLPYRNLryp7gJPfedw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jjel9/P559m3Ck7yLYh2BOln+zc5dK3n3NCHSTcAIzTclUYQC2PPp2wC2xCGxQG+khI6sgSyRwhpfxRWSiwxDw5zGiKaplckXUM4WppcS+/wC9JNZc3Mu4CFYHXYNgkQgpIXCupnIM5i27k62d1Z3vfDiJkvT4OZny95cePZiFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3tOakYc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i1U0amKwwGsW5XbRValCWxkLvCcE6WueyA6jpa2NF7hTXp3CjT5/FzEiFQhN0RJp0s5rZgDqIR+gG0al4phME8G1OB/Dw70N+n6ppvCv33TfxulpqoHhqdzharSY3Bi1nKDh5vKz9Yr6zW7+c15e5qUFsejYGLP+2gUDU8a+XdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lTkRMQhf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3tOakYc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCDEC116D0;
-	Wed, 25 Feb 2026 01:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lTkRMQhf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C75C116D0;
+	Wed, 25 Feb 2026 01:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983172;
-	bh=JxmPFASYiiHSWr/4j1JT8k9obwcqDnvaDZ/beV3DIHk=;
+	s=korg; t=1771983173;
+	bh=1DxQ7irKyMCX6tEJ2Ktr56LscaLPYRNLryp7gJPfedw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D3tOakYcP47DNQ3o9ae1j16m0fKRAhYac5klMH+ee9G1PeIiAnvm3p57txGXAvrZ1
-	 uuXSfT5vJcFwdkV+i9sNjtX1OCeToG5lvgkp0Met4hp6ALy/fJVt40BFVfDPP2Cfze
-	 T7PDgWjC4t5LeTute+uXTvFRMr4Y11XSXE1E4J8E=
+	b=lTkRMQhfK9komie+k6GtYytNDRjJ5mh168lwUHxeSW1fS++frfF7kBFmmQVxdA7/t
+	 5aC6ZnPJcny6xHih8K8dSIbZDX4E2GyjtHbsOlVfINRJlfiSQCw3Y1rakix6cMdMjD
+	 HzdSIRbj4kzTQLDg6G107Q6rjMik+Bgt74Mna6nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Logan Gunthorpe <logang@deltatee.com>,
 	Alistair Popple <apopple@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 324/781] PCI/P2PDMA: Release per-CPU pgmap ref when vm_insert_page() fails
-Date: Tue, 24 Feb 2026 17:17:13 -0800
-Message-ID: <20260225012407.653116462@linuxfoundation.org>
+Subject: [PATCH 6.19 325/781] PCI/P2PDMA: Fix p2pmem_alloc_mmap() warning condition
+Date: Tue, 24 Feb 2026 17:17:14 -0800
+Message-ID: <20260225012407.678293215@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -55,38 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 6220694c52a5a04102b48109e4f24e958b559bd3 ]
+[ Upstream commit cb500023a75246f60b79af9f7321d6e75330c5b5 ]
 
-When vm_insert_page() fails in p2pmem_alloc_mmap(), p2pmem_alloc_mmap()
-doesn't invoke percpu_ref_put() to free the per-CPU ref of pgmap acquired
-after gen_pool_alloc_owner(), and memunmap_pages() will hang forever when
-trying to remove the PCI device.
+Commit b7e282378773 has already changed the initial page refcount of
+p2pdma page from one to zero, however, in p2pmem_alloc_mmap() it uses
+"VM_WARN_ON_ONCE_PAGE(!page_ref_count(page))" to assert the initial page
+refcount should not be zero and the following will be reported when
+CONFIG_DEBUG_VM is enabled:
 
-Fix it by adding the missed percpu_ref_put().
+  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x380400000
+  flags: 0x20000000002000(reserved|node=0|zone=4)
+  raw: 0020000000002000 ff1100015e3ab440 0000000000000000 0000000000000000
+  raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+  page dumped because: VM_WARN_ON_ONCE_PAGE(!page_ref_count(page))
+  ------------[ cut here ]------------
+  WARNING: CPU: 5 PID: 449 at drivers/pci/p2pdma.c:240 p2pmem_alloc_mmap+0x83a/0xa60
 
-Fixes: 7e9c7ef83d78 ("PCI/P2PDMA: Allow userspace VMA allocations through sysfs")
+Fix by using "page_ref_count(page)" as the assertion condition.
+
+Fixes: b7e282378773 ("mm/mm_init: move p2pdma page refcount initialisation to p2pdma")
 Signed-off-by: Hou Tao <houtao1@huawei.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
 Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Link: https://patch.msgid.link/20251220040446.274991-2-houtao@huaweicloud.com
+Link: https://patch.msgid.link/20251220040446.274991-3-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/p2pdma.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/p2pdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
-index 4a2fc7ab42c34..218c1f5252b66 100644
+index 218c1f5252b66..dd64ec830fdd4 100644
 --- a/drivers/pci/p2pdma.c
 +++ b/drivers/pci/p2pdma.c
-@@ -152,6 +152,7 @@ static int p2pmem_alloc_mmap(struct file *filp, struct kobject *kobj,
+@@ -147,7 +147,7 @@ static int p2pmem_alloc_mmap(struct file *filp, struct kobject *kobj,
+ 		 * we have just allocated the page no one else should be
+ 		 * using it.
+ 		 */
+-		VM_WARN_ON_ONCE_PAGE(!page_ref_count(page), page);
++		VM_WARN_ON_ONCE_PAGE(page_ref_count(page), page);
+ 		set_page_count(page, 1);
  		ret = vm_insert_page(vma, vaddr, page);
  		if (ret) {
- 			gen_pool_free(p2pdma->pool, (uintptr_t)kaddr, len);
-+			percpu_ref_put(ref);
- 			return ret;
- 		}
- 		percpu_ref_get(ref);
 -- 
 2.51.0
 
