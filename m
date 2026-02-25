@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061DA24A05D;
-	Wed, 25 Feb 2026 01:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5EE24A05D;
+	Wed, 25 Feb 2026 01:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983531; cv=none; b=leYGJN3pd2N4KjLKlt9qIQo6Gzt6JaFFgWSKWCtQ4fvheOHDlsGIpq5YZNu2cqKJp1lGS5S6vGxILnqxQ5huk7Ok3O1Yv479JsjKMZIIrDbFnS0Q5IZAbjvIZooO8fqL4q3V5eGsgqH2ghThYVmPFkuZ7+OLbCcFL6+O26g5T+8=
+	t=1771983532; cv=none; b=KtJXViFIadorW5P/+kRUARnUnokboAZ+q5RmbKTze9ao8oUVx2HfCHXuHAw/qug2mTeNbyUGkxQolzWGosQDWP0EX+RH+liaOW+/V9yMHmftsZdBsg5XsZaIDDGMG1qIac31WLhBHp2BAhDkKiiiWm+0lqR2/WQS7sAjsorlBew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983531; c=relaxed/simple;
-	bh=hBxQC8DR8c8H8U4as7BjO8mS1KKrk+H8Z0P/FX3tR38=;
+	s=arc-20240116; t=1771983532; c=relaxed/simple;
+	bh=XR1MlU3poWCxzKjplDEosTMCXMhKu8vAqKpP8ByZ9Pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJgmNvgAXXJjo1RDP4Vs/8S7eVyzsqFOrbGg1TkMvyomXg4DGMl7SLFTERmvLKTSa+Jb8+vya5aagkBhBxMmuYayFLX5QKtCiZy337XRvVdl9vOjAHApD/WzjppMl4VzbOL7mb3u9w3poGNPA/iHq/I2zDvkAZlbDZkkddvMTNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXXJb6A2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TxI9UVmzUBPF+eQsdPdVlAHh0POqJJy4Mn+REmBKZ6iSL5g1P6wxxISoyEKiBZ32GhEGPHZv/sd6f2FnVSewJQE1jCpdgsVCxnGM7lyrSc4SVwrX5EVRKPY4iHcbgn/pSBD8XDZwYG2N6QVfIrRtRkIRYGGGEpG3TF7I9zRXrcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdOYE7lG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXXJb6A2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F45C116D0;
-	Wed, 25 Feb 2026 01:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdOYE7lG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D72BC116D0;
+	Wed, 25 Feb 2026 01:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983530;
-	bh=hBxQC8DR8c8H8U4as7BjO8mS1KKrk+H8Z0P/FX3tR38=;
+	s=korg; t=1771983532;
+	bh=XR1MlU3poWCxzKjplDEosTMCXMhKu8vAqKpP8ByZ9Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXXJb6A2duJjCvCwDb6SenVzMntpFlDYIAtWFsXDXA1lQuoLFyjuJkcTfLNGk4SOz
-	 6EWIIOlWM9pR1zNX2qWSbLzVuKM6Fy5DTHm0PM2IpXOC5lNMhsyFFHQn9TZCHP2Lrw
-	 YiE+t10EBB2JkE1vwNdP9M2KHJOGIHvuUTOaRGxQ=
+	b=mdOYE7lGTJQ21gM3+DMJDfLtPOVpJ/ZA49MwJLVSsowR0veJPbFDF0qR+RB5OW7a0
+	 G0RtuUo6PaHiWvJ45Ef5S++3JUNXpqtBszj+eyG3UErx2aTDLdzwI7MVK4uYJid/7P
+	 xLmKvKt1YmDG0MMjbWVRX+cbkO5uNONjE9sfvVjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Petr Machata <petrm@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jie Zhang <jie.zhang@analog.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 637/781] selftests: net: lib: Fix jq parsing error
-Date: Tue, 24 Feb 2026 17:22:26 -0800
-Message-ID: <20260225012415.429783591@linuxfoundation.org>
+Subject: [PATCH 6.19 638/781] net: stmmac: fix oops when split header is enabled
+Date: Tue, 24 Feb 2026 17:22:27 -0800
+Message-ID: <20260225012415.454315638@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,52 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Jie Zhang <jzhang918@gmail.com>
 
-[ Upstream commit 10ec0fc0ccc525abc807b0ca8ad5a26a0bd56361 ]
+[ Upstream commit babab1b42ed68877ef669a08384becf281ad2582 ]
 
-The testcase failed as below:
-$./vlan_bridge_binding.sh
+For GMAC4, when split header is enabled, in some rare cases, the
+hardware does not fill buf2 of the first descriptor with payload.
+Thus we cannot assume buf2 is always fully filled if it is not
+the last descriptor. Otherwise, the length of buf2 of the second
+descriptor will be calculated wrong and cause an oops:
+
+Unable to handle kernel paging request at virtual address ffff00019246bfc0
 ...
-+ adf_ip_link_set_up d1
-+ local name=d1
-+ shift
-+ ip_link_is_up d1
-+ ip_link_has_flag d1 UP
-+ local name=d1
-+ shift
-+ local flag=UP
-+ shift
-++ ip -j link show d1
-++ jq --arg flag UP 'any(.[].flags.[]; . == $flag)'
-jq: error: syntax error, unexpected '[', expecting FORMAT or QQSTRING_START
- (Unix shell quoting issues?) at <top-level>, line 1:
-any(.[].flags.[]; . == $flag)
-jq: 1 compile error
+x2 : 0000000000000040 x1 : ffff00019246bfc0 x0 : ffff00009246c000
+Call trace:
+ dcache_inval_poc+0x28/0x58 (P)
+ dma_direct_sync_single_for_cpu+0x38/0x6c
+ __dma_sync_single_for_cpu+0x34/0x6c
+ stmmac_napi_poll_rx+0x8f0/0xb60
+ __napi_poll.constprop.0+0x30/0x144
+ net_rx_action+0x160/0x274
+ handle_softirqs+0x1b8/0x1fc
+...
 
-Remove the extra dot (.) after flags array to fix this.
+To fix this, the PL bit-field in RDES3 register is used for all
+descriptors, whether it is the last descriptor or not.
 
-Fixes: 4baa1d3a5080 ("selftests: net: lib: Add ip_link_has_flag()")
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/20260211022146.190948-1-yuehaibing@huawei.com
+Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Jie Zhang <jie.zhang@analog.com>
+Link: https://patch.msgid.link/20260209225037.589130-1-jie.zhang@analog.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 20 ++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/lib.sh b/tools/testing/selftests/net/lib.sh
-index 0ec131b339bc4..b40694573f4c7 100644
---- a/tools/testing/selftests/net/lib.sh
-+++ b/tools/testing/selftests/net/lib.sh
-@@ -577,7 +577,7 @@ ip_link_has_flag()
- 	local flag=$1; shift
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index a379221b96a34..f98fd254315f6 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5023,13 +5023,27 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
+ 	if (!priv->sph_active)
+ 		return 0;
  
- 	local state=$(ip -j link show "$name" |
--		      jq --arg flag "$flag" 'any(.[].flags.[]; . == $flag)')
-+		      jq --arg flag "$flag" 'any(.[].flags[]; . == $flag)')
- 	[[ $state == true ]]
+-	/* Not last descriptor */
+-	if (status & rx_not_ls)
++	/* For GMAC4, when split header is enabled, in some rare cases, the
++	 * hardware does not fill buf2 of the first descriptor with payload.
++	 * Thus we cannot assume buf2 is always fully filled if it is not
++	 * the last descriptor. Otherwise, the length of buf2 of the second
++	 * descriptor will be calculated wrong and cause an oops.
++	 *
++	 * If this is the last descriptor, 'plen' is the length of the
++	 * received packet that was transferred to system memory.
++	 * Otherwise, it is the accumulated number of bytes that have been
++	 * transferred for the current packet.
++	 *
++	 * Thus 'plen - len' always gives the correct length of buf2.
++	 */
++
++	/* Not GMAC4 and not last descriptor */
++	if (priv->plat->core_type != DWMAC_CORE_GMAC4 && (status & rx_not_ls))
+ 		return priv->dma_conf.dma_buf_sz;
+ 
++	/* GMAC4 or last descriptor */
+ 	plen = stmmac_get_rx_frame_len(priv, p, coe);
+ 
+-	/* Last descriptor */
+ 	return plen - len;
  }
  
 -- 
