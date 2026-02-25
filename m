@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7692D8396;
-	Wed, 25 Feb 2026 06:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC9D2D8396;
+	Wed, 25 Feb 2026 06:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002652; cv=none; b=a/sBdWodVEuaNbJiWTBDU8c5Hz4+PODuROWu5jhCaYHX2CegTBUv6tQyB/whp7+HDW/fyKRAFZ7O6BBVikpPdrSMt6qrxDgirWpyag86hz1lU66G6zCQyvAG8dlKQUShlFO9NOQGUwwcafvgG14sAdveEQiwYDyKiCNlINmJwlg=
+	t=1772002652; cv=none; b=lgd1gxRTHDmn9oXoG5T19ZyUFIAMAMLzEn+G0afLZa8Ww3P8dXwekVROiTByFf+emskAQZcx73ZJ4kFjLtj1xt0RccNCFI71mLax2IZJ4Djvp4uoylO6JPsT0hcu29Qna68hUN355uZheF64lU55i++odL6JcXpMavX1Vuj+sZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002652; c=relaxed/simple;
-	bh=k7Wl108p0Czf+q75yfGreCltxC6dmcLTVIomRcy/7P8=;
+	bh=UEXtA8qLa5wTIwOBSk3cRyT8tloBHTKnGNo1Z/llNsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdj1uZGHya7sMWyOzCokoA7xHdkngHP/L9jW5zt9IGWxcldkrgCZieNz8Hj5NgV06ytmrglVrPtAsqkdAsMoAPPQtrNBAs1+J1gZ0MUl/eBC+UmjoVmNL9Dt1SO9fjD3GC+IarPGao1tYeWHlOzorBlS+tD/+Qmoqg4tRoB0S6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jj47uMBA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AiGEjHbzw+x2J/QDWljCXFp7av0fyf+XNwlSocRdz10B2pCQx574+Wjh3g3KLVvrc47y2CKjw/oGwRG4GjBl1MXl3z9lo7EmNOZOEatRTAxblTwJPMwYPevhs91+xs5+Kppis8dFKB04EAq9E2nqWqCOWLIF6GEdz9cNN0S8xWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McKR+Pt2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jj47uMBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9888C116D0;
-	Wed, 25 Feb 2026 06:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McKR+Pt2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C7CC116D0;
+	Wed, 25 Feb 2026 06:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002651;
-	bh=k7Wl108p0Czf+q75yfGreCltxC6dmcLTVIomRcy/7P8=;
+	s=korg; t=1772002652;
+	bh=UEXtA8qLa5wTIwOBSk3cRyT8tloBHTKnGNo1Z/llNsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jj47uMBA5XSRFHGH5qrwgrFcMvFQw3zcr112Ej26AMd9H+EIpnHYOcHWedVJbL+Vf
-	 1yGkXG/71guCJTzOq+bYuQPxNNmH3OLsQs3kuqDnDcpQ23UiFX49H7Oc/gp31rI8Ka
-	 hWUk8enctiodEOELhUqh+/EqQSa49tVqRpmWSmf8=
+	b=McKR+Pt2TS19CvS0qhcC+qyUgzKASLVHvAMC0lCcGqivG6MZcG0KiYXZE1fHSDMYw
+	 HDNsitP/BqSSw07iLap0NuKxFdgmlYfTN36r5AZYkM6erk5f7khGMaruIoF9wjdMe1
+	 7ZQVZiyiFAVungYdMqQPzvxNub9y7+z7KtqIi+2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	George Moussalem <george.moussalem@outlook.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 373/641] NFS/localio: Handle short writes by retrying
-Date: Tue, 24 Feb 2026 17:21:39 -0800
-Message-ID: <20260225012357.643289829@linuxfoundation.org>
+Subject: [PATCH 6.18 419/641] clk: qcom: gcc-ipq5018: flag sleep clock as critical
+Date: Tue, 24 Feb 2026 17:22:25 -0800
+Message-ID: <20260225012358.707485790@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,119 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: George Moussalem <george.moussalem@outlook.com>
 
-[ Upstream commit 615762059d284b863f9163b53679d95b3dcdd495 ]
+[ Upstream commit 04c4dc1f541135708d90a9b4632af51136f93ac3 ]
 
-The current code for handling short writes in localio just truncates the
-I/O and then sets an error. While that is close to how the ordinary NFS
-code behaves, it does mean there is a chance the data that got written
-is lost because it isn't persisted.
-To fix this, change localio so that the upper layers can direct the
-behaviour to persist any unstable data by rewriting it, and then
-continuing writing until an ENOSPC is hit.
+The sleep clock never be disabled. To avoid the kernel trying to disable
+it and keep it always on, flag it as critical.
 
-Fixes: 70ba381e1a43 ("nfs: add LOCALIO support")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251128-ipq5018-sleep-clk-fix-v1-1-6f4b75ec336c@outlook.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/localio.c | 64 +++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 47 insertions(+), 17 deletions(-)
+ drivers/clk/qcom/gcc-ipq5018.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index f537bc3386bf2..ea7b35191d0af 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -58,6 +58,11 @@ struct nfs_local_fsync_ctx {
- static bool localio_enabled __read_mostly = true;
- module_param(localio_enabled, bool, 0644);
- 
-+static int nfs_local_do_read(struct nfs_local_kiocb *iocb,
-+			     const struct rpc_call_ops *call_ops);
-+static int nfs_local_do_write(struct nfs_local_kiocb *iocb,
-+			      const struct rpc_call_ops *call_ops);
-+
- static inline bool nfs_client_is_local(const struct nfs_client *clp)
- {
- 	return !!rcu_access_pointer(clp->cl_uuid.net);
-@@ -542,13 +547,50 @@ nfs_local_iocb_release(struct nfs_local_kiocb *iocb)
- 	nfs_local_iocb_free(iocb);
- }
- 
--static void
--nfs_local_pgio_release(struct nfs_local_kiocb *iocb)
-+static void nfs_local_pgio_restart(struct nfs_local_kiocb *iocb,
-+				   struct nfs_pgio_header *hdr)
-+{
-+	int status = 0;
-+
-+	iocb->kiocb.ki_pos = hdr->args.offset;
-+	iocb->kiocb.ki_flags &= ~(IOCB_DSYNC | IOCB_SYNC | IOCB_DIRECT);
-+	iocb->kiocb.ki_complete = NULL;
-+	iocb->aio_complete_work = NULL;
-+	iocb->end_iter_index = -1;
-+
-+	switch (hdr->rw_mode) {
-+	case FMODE_READ:
-+		nfs_local_iters_init(iocb, ITER_DEST);
-+		status = nfs_local_do_read(iocb, hdr->task.tk_ops);
-+		break;
-+	case FMODE_WRITE:
-+		nfs_local_iters_init(iocb, ITER_SOURCE);
-+		status = nfs_local_do_write(iocb, hdr->task.tk_ops);
-+		break;
-+	default:
-+		status = -EOPNOTSUPP;
-+	}
-+
-+	if (status != 0) {
-+		nfs_local_iocb_release(iocb);
-+		hdr->task.tk_status = status;
-+		nfs_local_hdr_release(hdr, hdr->task.tk_ops);
-+	}
-+}
-+
-+static void nfs_local_pgio_release(struct nfs_local_kiocb *iocb)
- {
- 	struct nfs_pgio_header *hdr = iocb->hdr;
-+	struct rpc_task *task = &hdr->task;
-+
-+	task->tk_action = NULL;
-+	task->tk_ops->rpc_call_done(task, hdr);
- 
--	nfs_local_iocb_release(iocb);
--	nfs_local_hdr_release(hdr, hdr->task.tk_ops);
-+	if (task->tk_action == NULL) {
-+		nfs_local_iocb_release(iocb);
-+		task->tk_ops->rpc_release(hdr);
-+	} else
-+		nfs_local_pgio_restart(iocb, hdr);
- }
- 
- /*
-@@ -776,19 +818,7 @@ static void nfs_local_write_done(struct nfs_local_kiocb *iocb)
- 		pr_info_ratelimited("nfs: Unexpected direct I/O write alignment failure\n");
- 	}
- 
--	/* Handle short writes as if they are ENOSPC */
--	status = hdr->res.count;
--	if (status > 0 && status < hdr->args.count) {
--		hdr->mds_offset += status;
--		hdr->args.offset += status;
--		hdr->args.pgbase += status;
--		hdr->args.count -= status;
--		nfs_set_pgio_error(hdr, -ENOSPC, hdr->args.offset);
--		status = -ENOSPC;
--		/* record -ENOSPC in terms of nfs_local_pgio_done */
--		(void) nfs_local_pgio_done(iocb, status, true);
--	}
--	if (hdr->task.tk_status < 0)
-+	if (status < 0)
- 		nfs_reset_boot_verifier(hdr->inode);
- }
- 
+diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
+index dcda2be8c1a51..64792cda06202 100644
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -1340,6 +1340,7 @@ static struct clk_branch gcc_sleep_clk_src = {
+ 			.name = "gcc_sleep_clk_src",
+ 			.parent_data = gcc_sleep_clk_data,
+ 			.num_parents = ARRAY_SIZE(gcc_sleep_clk_data),
++			.flags = CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
 -- 
 2.51.0
 
