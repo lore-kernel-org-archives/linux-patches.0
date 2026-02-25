@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2F131352A;
-	Wed, 25 Feb 2026 06:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D971313546;
+	Wed, 25 Feb 2026 06:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002710; cv=none; b=Mtz0bEO8yOSgGCME7Dqi6ZgRoMMSlNDJ7JDzC7FmYdHF8/GW62B4yIzqgLFTkbx3h5gTIFDvhxFr9fM7V/GWFvUF8EoVObZRoiumMJet4df2CECDG05ncAJxMclyfnYyvTxC1MovjsJB4SvO4Kl/zwuMJMzJ9GsnKkUS0UiQKX4=
+	t=1772002711; cv=none; b=NTlz4kf40R21VKd1v7l7JBLniyPHTuxLwFl/JPu1SEa90RIpO7c/+PphVqT2E6oqfPJmin6pkVpRdMNb79gaAjskBQX8BKHN8Zf9fSea3oGBJSkjNCP0NkRmC6HkMwlibuzHY/35tCYFzPBS9IpxHgcTf/T3nLPXpbCJyh5+H8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002710; c=relaxed/simple;
-	bh=8U42xW0UXF/h5EcHj3f8yKPugKH4BkG8ajAZI4MkurU=;
+	s=arc-20240116; t=1772002711; c=relaxed/simple;
+	bh=yrxJ0v7alxbEcgu7ogk17v6QzaCaCKRwOZln7MENP9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KppKhZAoAmIMITVgP4R3OrLvBOW1+tR1edBRPJYvzuwGUKFiIOcrDFkVxX91pf4+o5IJhEtfq9usMwGffEwSn5bpMy9FMYBiqwY9NCH1yi8TwhyIB4Y36Tfgt6gm0Btq7OzdWtDiUdssBx2g4lU3W6lW0PF5DRuwKe7eJfDIWek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=So4Pj3m6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W8GnhtcBa/nygXWaRXrlXO1W2bnAQ249jxSl6RrmMqwyd3ap5lCDFaWDRAG5pk2loa0RdWrMldvMkGxKsB8Dkz040lfNhff/S/47kAdpAu1Mb+mLh016utPorwB6MKmCrHIeQ5m+D/NU9h76BP8KqP7q1J84qs6HWLKbcK8Nc0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M92qaek3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="So4Pj3m6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65650C116D0;
-	Wed, 25 Feb 2026 06:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M92qaek3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146A4C116D0;
+	Wed, 25 Feb 2026 06:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002710;
-	bh=8U42xW0UXF/h5EcHj3f8yKPugKH4BkG8ajAZI4MkurU=;
+	s=korg; t=1772002711;
+	bh=yrxJ0v7alxbEcgu7ogk17v6QzaCaCKRwOZln7MENP9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=So4Pj3m6CSNKa3uhrDXB4owwjJQ08cvSTIVyGmy594tvYLNZFtzcbDEJtywneLfhN
-	 hDddMy2dTxnuQuv+uCqDvL3JoHtod3hXZJTVd3L7VL3oo6JYL1AN3roy2wcjGK1O5R
-	 ugRclGZGoAi9KFw0uGQaigp1ipSLu8nW3hCKIQXA=
+	b=M92qaek3U1yEcFP7aufZOPNVI1Q6nJMHY5vAgxIRR5OZl1OqeOZpzWJuC9zGIzqEp
+	 DpxYTYR754KmWmr//deed89nKwW7/QjHdOXFE2r1mPRVIsZSikAoH3kIbpN2Zw2y5m
+	 JQVKo9DoJrvNLmCASItGuiq1fXODwxxCfrmLKlj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petre Rodan <petre.rodan@subdimension.ro>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Kery Qi <qikeyu2017@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 471/641] iio: pressure: mprls0025pa: fix pressure calculation
-Date: Tue, 24 Feb 2026 17:23:17 -0800
-Message-ID: <20260225012359.925448126@linuxfoundation.org>
+Subject: [PATCH 6.18 472/641] watchdog: starfive-wdt: Fix PM reference leak in probe error path
+Date: Tue, 24 Feb 2026 17:23:18 -0800
+Message-ID: <20260225012359.952331031@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,108 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petre Rodan <petre.rodan@subdimension.ro>
+From: Kery Qi <qikeyu2017@gmail.com>
 
-[ Upstream commit d63403d4e31ae537fefc5c0ee9d90f29b4fc532b ]
+[ Upstream commit 3f2d8d79cceb05a8b8dd200fa81c0dffc59ec46f ]
 
-A sign change is needed for proper calculation of the pressure.
+The PM reference count is not expected to be incremented on return in
+functions starfive_wdt_probe.
 
-This is a minor fix since it only affects users that might have custom
-silicon from Honeywell that has honeywell,pmin-pascal != 0.
+However, pm_runtime_get_sync will increment pm usage counter
+even failed. Forgetting to putting operation will result in a
+reference leak here.
 
-Also due to the fact that raw pressure values can not be lower
-than output_min (400k-3.3M) there is no need to calculate a decimal for
-the offset.
+Replace it with pm_runtime_resume_and_get to keep usage
+counter balanced.
 
-Fixes: 713337d9143e ("iio: pressure: Honeywell mprls0025pa pressure sensor")
-Signed-off-by: Petre Rodan <petre.rodan@subdimension.ro>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: db728ea9c7be ("drivers: watchdog: Add StarFive Watchdog driver")
+Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/mprls0025pa.c | 26 +++++++++++---------------
- drivers/iio/pressure/mprls0025pa.h |  2 --
- 2 files changed, 11 insertions(+), 17 deletions(-)
+ drivers/watchdog/starfive-wdt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/pressure/mprls0025pa.c b/drivers/iio/pressure/mprls0025pa.c
-index 6ba45d4c16b30..d4133fef91fac 100644
---- a/drivers/iio/pressure/mprls0025pa.c
-+++ b/drivers/iio/pressure/mprls0025pa.c
-@@ -59,7 +59,7 @@
-  *
-  * Values given to the userspace in sysfs interface:
-  * * raw	- press_cnt
-- * * offset	- (-1 * outputmin) - pmin / scale
-+ * * offset	- (-1 * outputmin) + pmin / scale
-  *                note: With all sensors from the datasheet pmin = 0
-  *                which reduces the offset to (-1 * outputmin)
-  */
-@@ -313,8 +313,7 @@ static int mpr_read_raw(struct iio_dev *indio_dev,
- 		return IIO_VAL_INT_PLUS_NANO;
- 	case IIO_CHAN_INFO_OFFSET:
- 		*val = data->offset;
--		*val2 = data->offset2;
--		return IIO_VAL_INT_PLUS_NANO;
-+		return IIO_VAL_INT;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -330,8 +329,9 @@ int mpr_common_probe(struct device *dev, const struct mpr_ops *ops, int irq)
- 	struct mpr_data *data;
- 	struct iio_dev *indio_dev;
- 	const char *triplet;
--	s64 scale, offset;
-+	s64 odelta, pdelta;
- 	u32 func;
-+	s32 tmp;
- 
- 	indio_dev = devm_iio_device_alloc(dev, sizeof(*data));
- 	if (!indio_dev)
-@@ -405,17 +405,13 @@ int mpr_common_probe(struct device *dev, const struct mpr_ops *ops, int irq)
- 	data->outmin = mpr_func_spec[data->function].output_min;
- 	data->outmax = mpr_func_spec[data->function].output_max;
- 
--	/* use 64 bit calculation for preserving a reasonable precision */
--	scale = div_s64(((s64)(data->pmax - data->pmin)) * NANO,
--			data->outmax - data->outmin);
--	data->scale = div_s64_rem(scale, NANO, &data->scale2);
--	/*
--	 * multiply with NANO before dividing by scale and later divide by NANO
--	 * again.
--	 */
--	offset = ((-1LL) * (s64)data->outmin) * NANO -
--		  div_s64(div_s64((s64)data->pmin * NANO, scale), NANO);
--	data->offset = div_s64_rem(offset, NANO, &data->offset2);
-+	odelta = data->outmax - data->outmin;
-+	pdelta = data->pmax - data->pmin;
-+
-+	data->scale = div_s64_rem(div_s64(pdelta * NANO, odelta), NANO, &tmp);
-+	data->scale2 = tmp;
-+
-+	data->offset = div_s64(odelta * data->pmin, pdelta) - data->outmin;
- 
- 	if (data->irq > 0) {
- 		ret = devm_request_irq(dev, data->irq, mpr_eoc_handler, 0,
-diff --git a/drivers/iio/pressure/mprls0025pa.h b/drivers/iio/pressure/mprls0025pa.h
-index d62a018eaff32..b6944b3051267 100644
---- a/drivers/iio/pressure/mprls0025pa.h
-+++ b/drivers/iio/pressure/mprls0025pa.h
-@@ -53,7 +53,6 @@ enum mpr_func_id {
-  * @scale: pressure scale
-  * @scale2: pressure scale, decimal number
-  * @offset: pressure offset
-- * @offset2: pressure offset, decimal number
-  * @gpiod_reset: reset
-  * @irq: end of conversion irq. used to distinguish between irq mode and
-  *       reading in a loop until data is ready
-@@ -75,7 +74,6 @@ struct mpr_data {
- 	int			scale;
- 	int			scale2;
- 	int			offset;
--	int			offset2;
- 	struct gpio_desc	*gpiod_reset;
- 	int			irq;
- 	struct completion	completion;
+diff --git a/drivers/watchdog/starfive-wdt.c b/drivers/watchdog/starfive-wdt.c
+index ed71d3960a0f2..af55adc4a3c69 100644
+--- a/drivers/watchdog/starfive-wdt.c
++++ b/drivers/watchdog/starfive-wdt.c
+@@ -446,7 +446,7 @@ static int starfive_wdt_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, wdt);
+ 	pm_runtime_enable(&pdev->dev);
+ 	if (pm_runtime_enabled(&pdev->dev)) {
+-		ret = pm_runtime_get_sync(&pdev->dev);
++		ret = pm_runtime_resume_and_get(&pdev->dev);
+ 		if (ret < 0)
+ 			return ret;
+ 	} else {
 -- 
 2.51.0
 
