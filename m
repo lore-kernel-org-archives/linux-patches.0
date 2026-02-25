@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707A72D8396;
-	Wed, 25 Feb 2026 06:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210133054C7;
+	Wed, 25 Feb 2026 06:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002749; cv=none; b=Jdyqc0N8+jqVYSNXjIJHFc7daDsNEas4FWXFxpjcxP4FpUYNMiaSF67ipXi9QR1YEwYrmRHR8S5AzyzZAZPufHdoANXWaQnDIZ7T/985drzPwhVYRGAuADdo9bDcm2G7Dhcojhk6gZlm+J0+NsRM6oiGElGElFGJDccoaGI3+3I=
+	t=1772002750; cv=none; b=RVvpkHbCSLfPztha9c4/WPD3PJ317gUD2bz7RutVgOjgLufFIJ7uULrChVEFHP/d11MvHh64S/4JVbxhezWTmKG1GRuVtnKQITQk3ssyLCC5c4Nbkyw52bYp4XTnQ12XRnavyhZammjXUcIQR8O6M+l5c2xxwVj9BJwdR9mnwdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002749; c=relaxed/simple;
-	bh=Wr+kBAcNmZgmPLrGnxRo1xJDREE4dcEH2RXGLjzvK9w=;
+	s=arc-20240116; t=1772002750; c=relaxed/simple;
+	bh=t8TODMmQg+Iq49OM8cdJ5F94E8ATmVzq4n65AdgLDcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h1GxdksR+9J0xRpMIzo1MDzAO/ngoSuqilvrlSbYPNgY/exhKS0GDbwa25LL/Mhcfj66m4dgWCEQtexKSC2U4mPodkg9yNYE1ceVup54Q1v8sGuTrWSParMnmQnHc+RjhfuSnxc2oMFb/ErwwNojdf8ui3VJtIxfjm4IDvHcRXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uv+uO4j5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k6fQZzZZMMA9ffafmEhV+5Ca1zGO9InqKE3+Itz/iow09bz+qmuzsy+q82j/EE/kNFUHhLFB0IXHcuR8McBFZ2k8BcPcO3kTitec9J0X7tnvcy85l0TX8mB3b9JY1N9y3IW4MJsJbAiXS/EwAIJGcd7X2dXhK3VyQ597qCLY1Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iI5lo+GB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uv+uO4j5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EC9C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iI5lo+GB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CBAC116D0;
 	Wed, 25 Feb 2026 06:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002749;
-	bh=Wr+kBAcNmZgmPLrGnxRo1xJDREE4dcEH2RXGLjzvK9w=;
+	s=korg; t=1772002750;
+	bh=t8TODMmQg+Iq49OM8cdJ5F94E8ATmVzq4n65AdgLDcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uv+uO4j5dL0y98vs7GSH2Gj+VfLt9Kz/YU2dzNGTKfSuC5BsoJm4kXqlUuotKQZU5
-	 opde12z9jMAWLUf3iYXK4xm+g/fQhLSoAjcSrdlWp19NF4ldZg1QIXWDp2HMwDCaBw
-	 dPE4VH4iZZFoyxzOuFS8AgpLAmoaNnyfTa3RnODU=
+	b=iI5lo+GB0NId7YVffKgV3mqV5BvFM6IJcVbw5IvUjnpeym7kE9drjPj4iNd2qQjeK
+	 jKePathRkJS9VTuMBMkfOprOG9CHV7dolZBMBFHb7eDFjtX+qlWnaYyPEzYEidz/FI
+	 8YScAZb9DqCteU89a7lNlRURiQ5z7ytTJubPZv3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Georgia Garcia <georgia.garcia@canonical.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 573/641] apparmor: remove apply_modes_to_perms from label_match
-Date: Tue, 24 Feb 2026 17:24:59 -0800
-Message-ID: <20260225012402.402109150@linuxfoundation.org>
+Subject: [PATCH 6.18 574/641] apparmor: make label_match return a consistent value
+Date: Tue, 24 Feb 2026 17:25:00 -0800
+Message-ID: <20260225012402.426119971@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,49 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit b2e27be2948f2f8c38421cd554b5fc9383215648 ]
+[ Upstream commit a4c9efa4dbad6dacad6e8b274e30e814c8353097 ]
 
-The modes shouldn't be applied at the point of label match, it just
-results in them being applied multiple times. Instead they should be
-applied after which is already being done by all callers so it can
-just be dropped from label_match.
+compound match is inconsistent in returning a state or an integer error
+this is problemati if the error is ever used as a state in the state
+machine
 
+Fixes: f1bd904175e81 ("apparmor: add the base fns() for domain labels")
 Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
-Stable-dep-of: a4c9efa4dbad ("apparmor: make label_match return a consistent value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/label.c | 3 ---
- 1 file changed, 3 deletions(-)
+ security/apparmor/label.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
 diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index 913678f199c35..02ee128f53d13 100644
+index 02ee128f53d13..1d3fa5c28d97f 100644
 --- a/security/apparmor/label.c
 +++ b/security/apparmor/label.c
-@@ -1317,7 +1317,6 @@ static int label_compound_match(struct aa_profile *profile,
+@@ -1278,7 +1278,7 @@ static inline aa_state_t match_component(struct aa_profile *profile,
+  * @request: permissions to request
+  * @perms: perms struct to set
+  *
+- * Returns: 0 on success else ERROR
++ * Returns: state match stopped at or DFA_NOMATCH if aborted early
+  *
+  * For the label A//&B//&C this does the perm match for A//&B//&C
+  * @perms should be preinitialized with allperms OR a previous permission
+@@ -1305,7 +1305,7 @@ static int label_compound_match(struct aa_profile *profile,
+ 
+ 	/* no component visible */
+ 	*perms = allperms;
+-	return 0;
++	return state;
+ 
+ next:
+ 	label_for_each_cont(i, label, tp) {
+@@ -1317,14 +1317,11 @@ static int label_compound_match(struct aa_profile *profile,
  			goto fail;
  	}
  	*perms = *aa_lookup_perms(rules->policy, state);
--	aa_apply_modes_to_perms(profile, perms);
- 	if ((perms->allow & request) != request)
- 		return -EACCES;
+-	if ((perms->allow & request) != request)
+-		return -EACCES;
+-
+-	return 0;
++	return state;
  
-@@ -1370,7 +1369,6 @@ static int label_components_match(struct aa_profile *profile,
+ fail:
+ 	*perms = nullperms;
+-	return state;
++	return DFA_NOMATCH;
+ }
  
- next:
- 	tmp = *aa_lookup_perms(rules->policy, state);
--	aa_apply_modes_to_perms(profile, &tmp);
- 	aa_perms_accum(perms, &tmp);
- 	label_for_each_cont(i, label, tp) {
- 		if (!aa_ns_visible(profile->ns, tp->ns, subns))
-@@ -1379,7 +1377,6 @@ static int label_components_match(struct aa_profile *profile,
- 		if (!state)
- 			goto fail;
- 		tmp = *aa_lookup_perms(rules->policy, state);
--		aa_apply_modes_to_perms(profile, &tmp);
- 		aa_perms_accum(perms, &tmp);
- 	}
+ /**
+@@ -1406,11 +1403,12 @@ int aa_label_match(struct aa_profile *profile, struct aa_ruleset *rules,
+ 		   struct aa_label *label, aa_state_t state, bool subns,
+ 		   u32 request, struct aa_perms *perms)
+ {
+-	int error = label_compound_match(profile, rules, label, state, subns,
+-					 request, perms);
+-	if (!error)
+-		return error;
++	aa_state_t tmp = label_compound_match(profile, rules, label, state, subns,
++					request, perms);
++	if ((perms->allow & request) == request)
++		return 0;
  
++	/* failed compound_match try component matches */
+ 	*perms = allperms;
+ 	return label_components_match(profile, rules, label, state, subns,
+ 				      request, perms);
 -- 
 2.51.0
 
