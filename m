@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7274A262FE7;
-	Wed, 25 Feb 2026 01:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74CC1D5141;
+	Wed, 25 Feb 2026 01:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983556; cv=none; b=C35i0ip3sdI5yfm9AqUiPIE5qpJcd+DO5BVCKCvFrg+hp/yNr/7vBBvkrMo/T0IKB/z4ZMBGqzsKYQOA4/DR/5xONOmcas7XURlfyPPqFpyNZfbVzObnw+q5bvf80G2wsJweuQWMS2v962ULMXz7kPJLj9zFz6XBfY8HvohE1NY=
+	t=1771983557; cv=none; b=F84qTVq0EsjOwWqJdz1mYbZzuNuiAZArQ3kZBtkHnZuigUBqPM833olXQOJ8UjgtbCbo0gda0Njr0lDoAdekjQNhdHYwcNVzEj7UeyPZ47i2dksg3BX0F0mitMomrXuBEhGF+/8pgt5o5u3KJEy4SSEG6BdAmSPa4x5rRTICF9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983556; c=relaxed/simple;
-	bh=4MEbwdfWi9kkvpGpy2x2ioLfVIIybVwX/Yfazzlyb90=;
+	s=arc-20240116; t=1771983557; c=relaxed/simple;
+	bh=aoM0t0WGF+9q2edESCroirCOlMgiv99Ms8GWHaMRRC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nweOoB1gSp0SChPWbvXgaa2E+3t7FRKgZxMCCjLWToWGs6M1QW7MzOgR9zgS0qOJlW6ymPDl8t9qmTzawlAuU01eaSQDN8YsJ7frPVIH3Tk1EckqtHx1ssqia1ZHvnLHNwAdMvpakFaggXS/2UqLeymB+XE7QPMY+5Xp3bR5yA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJbbo06k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWfFpAhHQ55s50/IqwgUutQZNoRgJA9q9yERyxBLzH4ErB3guzrRUtXJrVZbmu0r6WZRyjmQefL9Pcy8Fjv81EHjSAE20UiNv3xm0bvg9Ly9gjLTL7QV8Cx72lDg+kq6zkRaIZ1NXSA2za7Mm5D6wDHktWgv0fDY+MoEjCwCBLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTGXlJf3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJbbo06k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B079C116D0;
-	Wed, 25 Feb 2026 01:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTGXlJf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C86CC2BC86;
+	Wed, 25 Feb 2026 01:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983556;
-	bh=4MEbwdfWi9kkvpGpy2x2ioLfVIIybVwX/Yfazzlyb90=;
+	s=korg; t=1771983557;
+	bh=aoM0t0WGF+9q2edESCroirCOlMgiv99Ms8GWHaMRRC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJbbo06kXt8M5O6s89tzYAeUtSEbBkUySaDDId8qoe+yJZJJIWfeAW1vD+DM4OQZw
-	 LSh3ggf0GJ+jhajrYpPzymK2vHn/8UF46H9B6Ovv+Ekmplh5piKCT5NKDggOSJCEo/
-	 V61lOB5XN+K1WMooirFFs5P7MeI+lFcUPI6jyuUg=
+	b=PTGXlJf3SqMIOXsPoSI4V6JzKnQVhD0ov88qeg4QIk6TdUMKMiliTfMK1f9xyy2lV
+	 2DgL8u6sUiMR39kXxJ3HBhWhcwz9NDPP60qHxkuBydyFwtflGWYYxtuMnrzYIe3WNC
+	 EPa38OgWhWmWGNlWRocUhXa9cW/ouUzTCUq1x5+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d5d1b7343531d17bd3c5@syzkaller.appspotmail.com,
+	Aleksei Oladko <aleksey.oladko@virtuozzo.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <nikolay@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 657/781] net: bridge: mcast: always update mdb_n_entries for vlan contexts
-Date: Tue, 24 Feb 2026 17:22:46 -0800
-Message-ID: <20260225012415.903015108@linuxfoundation.org>
+Subject: [PATCH 6.19 658/781] selftests: forwarding: vxlan_bridge_1d: fix test failure with br_netfilter enabled
+Date: Tue, 24 Feb 2026 17:22:47 -0800
+Message-ID: <20260225012415.926716043@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,190 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <nikolay@nvidia.com>
+From: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
 
-[ Upstream commit 8b769e311a86bb9d15c5658ad283b86fc8f080a2 ]
+[ Upstream commit 02cb2e6bacbb08ebf6acb61be816efd11e1f4a21 ]
 
-syzbot triggered a warning[1] about the number of mdb entries in a context.
-It turned out that there are multiple ways to trigger that warning today
-(some got added during the years), the root cause of the problem is that
-the increase is done conditionally, and over the years these different
-conditions increased so there were new ways to trigger the warning, that is
-to do a decrease which wasn't paired with a previous increase.
+The test generates VXLAN traffic using mausezahn, where the encapsulated
+inner IPv4 packet contains a zero IP header checksum. After VXLAN
+decapsulation, such packets do not pass sanity checks in br_netfilter
+and are dropped, which causes the test to fail.
 
-For example one way to trigger it is with flush:
- $ ip l add br0 up type bridge vlan_filtering 1 mcast_snooping 1
- $ ip l add dumdum up master br0 type dummy
- $ bridge mdb add dev br0 port dumdum grp 239.0.0.1 permanent vid 1
- $ ip link set dev br0 down
- $ ip link set dev br0 type bridge mcast_vlan_snooping 1
-   ^^^^ this will enable snooping, but will not update mdb_n_entries
-        because in __br_multicast_enable_port_ctx() we check !netif_running
- $ bridge mdb flush dev br0
-   ^^^ this will trigger the warning because it will delete the pg which
-       we added above, which will try to decrease mdb_n_entries
+Fix this by calculating and setting a valid IPv4 header checksum for the
+encapsulated packet generated by mausezahn, so that the packet is accepted
+by br_netfilter. Fixed by using the payload_template_calc_checksum() /
+payload_template_expand_checksum() helpers that are only available
+in v6.3 and newer kernels.
 
-Fix the problem by removing the conditional increase and always keep the
-count up-to-date while the vlan exists. In order to do that we have to
-first initialize it on port-vlan context creation, and then always increase
-or decrease the value regardless of mcast options. To keep the current
-behaviour we have to enforce the mdb limit only if the context is port's or
-if the port-vlan's mcast snooping is enabled.
-
-[1]
- ------------[ cut here ]------------
- n == 0
- WARNING: net/bridge/br_multicast.c:718 at br_multicast_port_ngroups_dec_one net/bridge/br_multicast.c:718 [inline], CPU#0: syz.4.4607/22043
- WARNING: net/bridge/br_multicast.c:718 at br_multicast_port_ngroups_dec net/bridge/br_multicast.c:771 [inline], CPU#0: syz.4.4607/22043
- WARNING: net/bridge/br_multicast.c:718 at br_multicast_del_pg+0x1bbe/0x1e20 net/bridge/br_multicast.c:825, CPU#0: syz.4.4607/22043
- Modules linked in:
- CPU: 0 UID: 0 PID: 22043 Comm: syz.4.4607 Not tainted syzkaller #0 PREEMPT(full)
- Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/24/2026
- RIP: 0010:br_multicast_port_ngroups_dec_one net/bridge/br_multicast.c:718 [inline]
- RIP: 0010:br_multicast_port_ngroups_dec net/bridge/br_multicast.c:771 [inline]
- RIP: 0010:br_multicast_del_pg+0x1bbe/0x1e20 net/bridge/br_multicast.c:825
- Code: 41 5f 5d e9 04 7a 48 f7 e8 3f 73 5c f7 90 0f 0b 90 e9 cf fd ff ff e8 31 73 5c f7 90 0f 0b 90 e9 16 fd ff ff e8 23 73 5c f7 90 <0f> 0b 90 e9 60 fd ff ff e8 15 73 5c f7 eb 05 e8 0e 73 5c f7 48 8b
- RSP: 0018:ffffc9000c207220 EFLAGS: 00010293
- RAX: ffffffff8a68042d RBX: ffff88807c6f1800 RCX: ffff888066e90000
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
- RBP: 0000000000000000 R08: ffff888066e90000 R09: 000000000000000c
- R10: 000000000000000c R11: 0000000000000000 R12: ffff8880303ef800
- R13: dffffc0000000000 R14: ffff888050eb11c4 R15: 1ffff1100a1d6238
- FS:  00007fa45921b6c0(0000) GS:ffff8881256f5000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fa4591f9ff8 CR3: 0000000081df2000 CR4: 00000000003526f0
- Call Trace:
-  <TASK>
-  br_mdb_flush_pgs net/bridge/br_mdb.c:1525 [inline]
-  br_mdb_flush net/bridge/br_mdb.c:1544 [inline]
-  br_mdb_del_bulk+0x5e2/0xb20 net/bridge/br_mdb.c:1561
-  rtnl_mdb_del+0x48a/0x640 net/core/rtnetlink.c:-1
-  rtnetlink_rcv_msg+0x77e/0xbe0 net/core/rtnetlink.c:6967
-  netlink_rcv_skb+0x232/0x4b0 net/netlink/af_netlink.c:2550
-  netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
-  netlink_unicast+0x80f/0x9b0 net/netlink/af_netlink.c:1344
-  netlink_sendmsg+0x813/0xb40 net/netlink/af_netlink.c:1894
-  sock_sendmsg_nosec net/socket.c:727 [inline]
-  __sock_sendmsg net/socket.c:742 [inline]
-  ____sys_sendmsg+0xa68/0xad0 net/socket.c:2592
-  ___sys_sendmsg+0x2a5/0x360 net/socket.c:2646
-  __sys_sendmsg net/socket.c:2678 [inline]
-  __do_sys_sendmsg net/socket.c:2683 [inline]
-  __se_sys_sendmsg net/socket.c:2681 [inline]
-  __x64_sys_sendmsg+0x1bd/0x2a0 net/socket.c:2681
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
- RIP: 0033:0x7fa45839aeb9
- Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
- RSP: 002b:00007fa45921b028 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
- RAX: ffffffffffffffda RBX: 00007fa458615fa0 RCX: 00007fa45839aeb9
- RDX: 0000000000000000 RSI: 00002000000000c0 RDI: 0000000000000004
- RBP: 00007fa458408c1f R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
- R13: 00007fa458616038 R14: 00007fa458615fa0 R15: 00007fff0b59fae8
- </TASK>
-
-Fixes: b57e8d870d52 ("net: bridge: Maintain number of MDB entries in net_bridge_mcast_port")
-Reported-by: syzbot+d5d1b7343531d17bd3c5@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/aYrWbRp83MQR1ife@debil/T/#t
+Fixes: a0b61f3d8ebf ("selftests: forwarding: vxlan_bridge_1d: Add an ECN decap test")
+Signed-off-by: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Nikolay Aleksandrov <nikolay@nvidia.com>
-Link: https://patch.msgid.link/20260213070031.1400003-2-nikolay@nvidia.com
+Link: https://patch.msgid.link/20260213131907.43351-2-aleksey.oladko@virtuozzo.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_multicast.c | 45 ++++++++++++++++-----------------------
- 1 file changed, 18 insertions(+), 27 deletions(-)
+ .../net/forwarding/vxlan_bridge_1d.sh         | 26 ++++++++++++-------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index d55a4ab87837f..e9a7e65304017 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -244,14 +244,11 @@ br_multicast_port_vid_to_port_ctx(struct net_bridge_port *port, u16 vid)
+diff --git a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
+index b43816dd998ca..457f41d5e584b 100755
+--- a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
++++ b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
+@@ -567,6 +567,21 @@ vxlan_encapped_ping_do()
+ 	local inner_tos=$1; shift
+ 	local outer_tos=$1; shift
  
- 	lockdep_assert_held_once(&port->br->multicast_lock);
- 
--	if (!br_opt_get(port->br, BROPT_MCAST_VLAN_SNOOPING_ENABLED))
--		return NULL;
--
- 	/* Take RCU to access the vlan. */
- 	rcu_read_lock();
- 
- 	vlan = br_vlan_find(nbp_vlan_group_rcu(port), vid);
--	if (vlan && !br_multicast_port_ctx_vlan_disabled(&vlan->port_mcast_ctx))
-+	if (vlan)
- 		pmctx = &vlan->port_mcast_ctx;
- 
- 	rcu_read_unlock();
-@@ -701,7 +698,10 @@ br_multicast_port_ngroups_inc_one(struct net_bridge_mcast_port *pmctx,
- 	u32 max = READ_ONCE(pmctx->mdb_max_entries);
- 	u32 n = READ_ONCE(pmctx->mdb_n_entries);
- 
--	if (max && n >= max) {
-+	/* enforce the max limit when it's a port pmctx or a port-vlan pmctx
-+	 * with snooping enabled
-+	 */
-+	if (!br_multicast_port_ctx_vlan_disabled(pmctx) && max && n >= max) {
- 		NL_SET_ERR_MSG_FMT_MOD(extack, "%s is already in %u groups, and mcast_max_groups=%u",
- 				       what, n, max);
- 		return -E2BIG;
-@@ -736,9 +736,7 @@ static int br_multicast_port_ngroups_inc(struct net_bridge_port *port,
- 		return err;
- 	}
- 
--	/* Only count on the VLAN context if VID is given, and if snooping on
--	 * that VLAN is enabled.
--	 */
-+	/* Only count on the VLAN context if VID is given */
- 	if (!group->vid)
- 		return 0;
- 
-@@ -2011,6 +2009,18 @@ void br_multicast_port_ctx_init(struct net_bridge_port *port,
- 	timer_setup(&pmctx->ip6_own_query.timer,
- 		    br_ip6_multicast_port_query_expired, 0);
- #endif
-+	/* initialize mdb_n_entries if a new port vlan is being created */
-+	if (vlan) {
-+		struct net_bridge_port_group *pg;
-+		u32 n = 0;
++	local ipv4hdr=$(:
++		    )"45:"$(                      : IP version + IHL
++		    )"$inner_tos:"$(              : IP TOS
++		    )"00:54:"$(                   : IP total length
++		    )"99:83:"$(                   : IP identification
++		    )"40:00:"$(                   : IP flags + frag off
++		    )"40:"$(                      : IP TTL
++		    )"01:"$(                      : IP proto
++		    )"CHECKSUM:"$(                : IP header csum
++		    )"c0:00:02:03:"$(             : IP saddr: 192.0.2.3
++		    )"c0:00:02:01"$(              : IP daddr: 192.0.2.1
++		)
++	local checksum=$(payload_template_calc_checksum "$ipv4hdr")
++	ipv4hdr=$(payload_template_expand_checksum "$ipv4hdr" $checksum)
 +
-+		spin_lock_bh(&port->br->multicast_lock);
-+		hlist_for_each_entry(pg, &port->mglist, mglist)
-+			if (pg->key.addr.vid == vlan->vid)
-+				n++;
-+		WRITE_ONCE(pmctx->mdb_n_entries, n);
-+		spin_unlock_bh(&port->br->multicast_lock);
-+	}
- }
- 
- void br_multicast_port_ctx_deinit(struct net_bridge_mcast_port *pmctx)
-@@ -2094,25 +2104,6 @@ static void __br_multicast_enable_port_ctx(struct net_bridge_mcast_port *pmctx)
- 		br_ip4_multicast_add_router(brmctx, pmctx);
- 		br_ip6_multicast_add_router(brmctx, pmctx);
- 	}
--
--	if (br_multicast_port_ctx_is_vlan(pmctx)) {
--		struct net_bridge_port_group *pg;
--		u32 n = 0;
--
--		/* The mcast_n_groups counter might be wrong. First,
--		 * BR_VLFLAG_MCAST_ENABLED is toggled before temporary entries
--		 * are flushed, thus mcast_n_groups after the toggle does not
--		 * reflect the true values. And second, permanent entries added
--		 * while BR_VLFLAG_MCAST_ENABLED was disabled, are not reflected
--		 * either. Thus we have to refresh the counter.
--		 */
--
--		hlist_for_each_entry(pg, &pmctx->port->mglist, mglist) {
--			if (pg->key.addr.vid == pmctx->vlan->vid)
--				n++;
--		}
--		WRITE_ONCE(pmctx->mdb_n_entries, n);
--	}
- }
- 
- static void br_multicast_enable_port_ctx(struct net_bridge_mcast_port *pmctx)
+ 	$MZ $dev -c $count -d 100msec -q \
+ 		-b $next_hop_mac -B $dest_ip \
+ 		-t udp tos=$outer_tos,sp=23456,dp=$VXPORT,p=$(:
+@@ -577,16 +592,7 @@ vxlan_encapped_ping_do()
+ 		    )"$dest_mac:"$(               : ETH daddr
+ 		    )"$(mac_get w2):"$(           : ETH saddr
+ 		    )"08:00:"$(                   : ETH type
+-		    )"45:"$(                      : IP version + IHL
+-		    )"$inner_tos:"$(              : IP TOS
+-		    )"00:54:"$(                   : IP total length
+-		    )"99:83:"$(                   : IP identification
+-		    )"40:00:"$(                   : IP flags + frag off
+-		    )"40:"$(                      : IP TTL
+-		    )"01:"$(                      : IP proto
+-		    )"00:00:"$(                   : IP header csum
+-		    )"c0:00:02:03:"$(             : IP saddr: 192.0.2.3
+-		    )"c0:00:02:01:"$(             : IP daddr: 192.0.2.1
++		    )"$ipv4hdr:"$(                : IPv4 header
+ 		    )"08:"$(                      : ICMP type
+ 		    )"00:"$(                      : ICMP code
+ 		    )"8b:f2:"$(                   : ICMP csum
 -- 
 2.51.0
 
