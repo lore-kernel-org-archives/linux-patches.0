@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AB518B0A;
-	Wed, 25 Feb 2026 01:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF05018B0A;
+	Wed, 25 Feb 2026 01:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983275; cv=none; b=ebfpeN+kWH6DTYDLwL6k5tNi/YfjsqOAaE/Vj8vr28DDekjPUvzZeCgh1scoOlB2KN1wgXZIs282Fo8/K0PyuefMR1tJywfnuvTzulIVk0Gp1RVbhHQ5T694pdVfbCSbFauFMr+Dd5mVPTH/xMB2/xm8g2w3/FK8QAvfeycD3Lc=
+	t=1771983277; cv=none; b=NAz/tlhr7EehWVPtZE5ufKgQ5oSmGJpHT+qZNuyrA5GUPbyLkrMEOnMBYhPTHZyH3ipBl2OjgwaqcozRZb5Gw1wXye9oM4mLIXokAQ01X6U1Pn76cOzE3s5tRbhwOG63g9EWEFA8QvuUtA2hclf8ux4Tpndyn6h5LA11dT1WXLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983275; c=relaxed/simple;
-	bh=Q77OxJAjrnqYU/e2aV8iIbiKjIwtKJvjsxNyl8kDhIo=;
+	s=arc-20240116; t=1771983277; c=relaxed/simple;
+	bh=IPIyiV2TMkUB+sTW+eGAy0iYXvaawPyo+8cAedswuAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ufFXZdfU7sUa2rSDFs40z4nu+bnJAPWk/ra1la7oLyJICWOZZUvL0daDsP2ciAI4vUt4vigCKcXmwHt7kow06lisaTGoPo44QZeznHcsROT+JrDs6nOipy0Lvx+vq+WVrCemTc5X905azJYNu1OiFe2PXYPP+BSeC7PcgAcZem8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jesPt021; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f60asJpjwbGxdEzhyXSlufYq4xkfAF2O2/7Yi0mpsESV8Ddn7Qcy3/DNLhSSV69fTCDmlACFdc43Gf9me/i055XhQewFSAlN+qcry47wXNcsnWJPDGlAOjXkl/+ed0orJNS6WOOliepSToYzIRFARftylK7W+20vasbxDntzJOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEmg0AXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jesPt021"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D0DC116D0;
-	Wed, 25 Feb 2026 01:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEmg0AXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE90C116D0;
+	Wed, 25 Feb 2026 01:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983275;
-	bh=Q77OxJAjrnqYU/e2aV8iIbiKjIwtKJvjsxNyl8kDhIo=;
+	s=korg; t=1771983276;
+	bh=IPIyiV2TMkUB+sTW+eGAy0iYXvaawPyo+8cAedswuAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jesPt021vRl18rXdNzj9538lrbcvEMEsP7CR05HilDhbEjW+wzuTxnMMEAImFNH92
-	 2SN9GbwCbwuXqY09yAOt8ldkKLAC57RKu7XpbhwVXUGeKJV4Ky4TJoHalyZQY84MYv
-	 27HdyL+4IXE5QlDro+jxXV+4aCola8lttAdzBscA=
+	b=WEmg0AXqK9lb7QuxKevpwDqDm6qZEgUUpPTcERkgXNsAhBXBL2FTBIlaDmcJFYXxa
+	 c9EkEm6Ki54/1G/FTqlCBwXzhGevB9QBuRZuRcAqjxIz/WLAnz6aip7I1xI+W/cpML
+	 SQVcaDKSM1khu5tJdhWy0CcM59RYW1+g/ELWLDyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 415/781] netfilter: nft_set_rbtree: use binary search array in get command
-Date: Tue, 24 Feb 2026 17:18:44 -0800
-Message-ID: <20260225012409.877958913@linuxfoundation.org>
+Subject: [PATCH 6.19 416/781] netfilter: nft_set_rbtree: remove seqcount_rwlock_t
+Date: Tue, 24 Feb 2026 17:18:45 -0800
+Message-ID: <20260225012409.900434551@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,194 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 2aa34191f06fc5af4f70241518a8554370d86054 ]
+[ Upstream commit 5599fa810b503eafc2bd8cd15bd45f35fc8ff6b9 ]
 
-Rework .get interface to use the binary search array, this needs a specific
-lookup function to match on end intervals (<=). Packet path lookup is slight
-different because match is on lesser value, not equal (ie. <).
-
-After this patch, seqcount can be removed in a follow up patch.
+After the conversion to binary search array, this is not required anymore.
+Remove it.
 
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Stable-dep-of: 782f2688128e ("netfilter: nft_set_rbtree: validate element belonging to interval")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 154 ++++++++++++++-------------------
- 1 file changed, 64 insertions(+), 90 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
 diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 04e696c87f4a0..1b0502cc87301 100644
+index 1b0502cc87301..6470bc5d38749 100644
 --- a/net/netfilter/nft_set_rbtree.c
 +++ b/net/netfilter/nft_set_rbtree.c
-@@ -69,96 +69,6 @@ static int nft_rbtree_cmp(const struct nft_set *set,
- 		      set->klen);
+@@ -33,7 +33,6 @@ struct nft_rbtree {
+ 	rwlock_t		lock;
+ 	struct nft_array __rcu	*array;
+ 	struct nft_array	*array_next;
+-	seqcount_rwlock_t	count;
+ 	unsigned long		last_gc;
+ };
+ 
+@@ -572,9 +571,7 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 		cond_resched();
+ 
+ 		write_lock_bh(&priv->lock);
+-		write_seqcount_begin(&priv->count);
+ 		err = __nft_rbtree_insert(net, set, rbe, elem_priv);
+-		write_seqcount_end(&priv->count);
+ 		write_unlock_bh(&priv->lock);
+ 	} while (err == -EAGAIN);
+ 
+@@ -584,9 +581,7 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ static void nft_rbtree_erase(struct nft_rbtree *priv, struct nft_rbtree_elem *rbe)
+ {
+ 	write_lock_bh(&priv->lock);
+-	write_seqcount_begin(&priv->count);
+ 	rb_erase(&rbe->node, &priv->root);
+-	write_seqcount_end(&priv->count);
+ 	write_unlock_bh(&priv->lock);
  }
  
--static bool __nft_rbtree_get(const struct net *net, const struct nft_set *set,
--			     const u32 *key, struct nft_rbtree_elem **elem,
--			     unsigned int seq, unsigned int flags, u8 genmask)
--{
--	struct nft_rbtree_elem *rbe, *interval = NULL;
--	struct nft_rbtree *priv = nft_set_priv(set);
--	const struct rb_node *parent;
--	const void *this;
--	int d;
--
--	parent = rcu_dereference_raw(priv->root.rb_node);
--	while (parent != NULL) {
--		if (read_seqcount_retry(&priv->count, seq))
--			return false;
--
--		rbe = rb_entry(parent, struct nft_rbtree_elem, node);
--
--		this = nft_set_ext_key(&rbe->ext);
--		d = memcmp(this, key, set->klen);
--		if (d < 0) {
--			parent = rcu_dereference_raw(parent->rb_left);
--			if (!(flags & NFT_SET_ELEM_INTERVAL_END))
--				interval = rbe;
--		} else if (d > 0) {
--			parent = rcu_dereference_raw(parent->rb_right);
--			if (flags & NFT_SET_ELEM_INTERVAL_END)
--				interval = rbe;
--		} else {
--			if (!nft_set_elem_active(&rbe->ext, genmask)) {
--				parent = rcu_dereference_raw(parent->rb_left);
--				continue;
--			}
--
--			if (nft_set_elem_expired(&rbe->ext))
--				return false;
--
--			if (!nft_set_ext_exists(&rbe->ext, NFT_SET_EXT_FLAGS) ||
--			    (*nft_set_ext_flags(&rbe->ext) & NFT_SET_ELEM_INTERVAL_END) ==
--			    (flags & NFT_SET_ELEM_INTERVAL_END)) {
--				*elem = rbe;
--				return true;
--			}
--
--			if (nft_rbtree_interval_end(rbe))
--				interval = NULL;
--
--			parent = rcu_dereference_raw(parent->rb_left);
--		}
--	}
--
--	if (set->flags & NFT_SET_INTERVAL && interval != NULL &&
--	    nft_set_elem_active(&interval->ext, genmask) &&
--	    !nft_set_elem_expired(&interval->ext) &&
--	    ((!nft_rbtree_interval_end(interval) &&
--	      !(flags & NFT_SET_ELEM_INTERVAL_END)) ||
--	     (nft_rbtree_interval_end(interval) &&
--	      (flags & NFT_SET_ELEM_INTERVAL_END)))) {
--		*elem = interval;
--		return true;
--	}
--
--	return false;
--}
--
--static struct nft_elem_priv *
--nft_rbtree_get(const struct net *net, const struct nft_set *set,
--	       const struct nft_set_elem *elem, unsigned int flags)
--{
--	struct nft_rbtree *priv = nft_set_priv(set);
--	unsigned int seq = read_seqcount_begin(&priv->count);
--	struct nft_rbtree_elem *rbe = ERR_PTR(-ENOENT);
--	const u32 *key = (const u32 *)&elem->key.val;
--	u8 genmask = nft_genmask_cur(net);
--	bool ret;
--
--	ret = __nft_rbtree_get(net, set, key, &rbe, seq, flags, genmask);
--	if (ret || !read_seqcount_retry(&priv->count, seq))
--		return &rbe->priv;
--
--	read_lock_bh(&priv->lock);
--	seq = read_seqcount_begin(&priv->count);
--	ret = __nft_rbtree_get(net, set, key, &rbe, seq, flags, genmask);
--	read_unlock_bh(&priv->lock);
--
--	if (!ret)
--		return ERR_PTR(-ENOENT);
--
--	return &rbe->priv;
--}
--
- struct nft_array_lookup_ctx {
- 	const u32	*key;
- 	u32		klen;
-@@ -213,6 +123,70 @@ nft_rbtree_lookup(const struct net *net, const struct nft_set *set,
- 	return interval->from;
- }
+@@ -798,7 +793,6 @@ static int nft_rbtree_init(const struct nft_set *set,
+ 	BUILD_BUG_ON(offsetof(struct nft_rbtree_elem, priv) != 0);
  
-+struct nft_array_get_ctx {
-+	const u32	*key;
-+	unsigned int	flags;
-+	u32		klen;
-+};
-+
-+static int nft_array_get_cmp(const void *pkey, const void *entry)
-+{
-+	const struct nft_array_interval *interval = entry;
-+	const struct nft_array_get_ctx *ctx = pkey;
-+	int a, b;
-+
-+	if (!interval->from)
-+		return 1;
-+
-+	a = memcmp(ctx->key, nft_set_ext_key(interval->from), ctx->klen);
-+	if (!interval->to)
-+		b = -1;
-+	else
-+		b = memcmp(ctx->key, nft_set_ext_key(interval->to), ctx->klen);
-+
-+	if (a >= 0) {
-+		if (ctx->flags & NFT_SET_ELEM_INTERVAL_END && b <= 0)
-+			return 0;
-+		else if (b < 0)
-+			return 0;
-+	}
-+
-+	if (a < 0)
-+		return -1;
-+
-+	return 1;
-+}
-+
-+static struct nft_elem_priv *
-+nft_rbtree_get(const struct net *net, const struct nft_set *set,
-+	       const struct nft_set_elem *elem, unsigned int flags)
-+{
-+	struct nft_rbtree *priv = nft_set_priv(set);
-+	struct nft_array *array = rcu_dereference(priv->array);
-+	const struct nft_array_interval *interval;
-+	struct nft_array_get_ctx ctx = {
-+		.key	= (const u32 *)&elem->key.val,
-+		.flags	= flags,
-+		.klen	= set->klen,
-+	};
-+	struct nft_rbtree_elem *rbe;
-+
-+	if (!array)
-+		return ERR_PTR(-ENOENT);
-+
-+	interval = bsearch(&ctx, array->intervals, array->num_intervals,
-+			   sizeof(struct nft_array_interval), nft_array_get_cmp);
-+	if (!interval || nft_set_elem_expired(interval->from))
-+		return ERR_PTR(-ENOENT);
-+
-+	if (flags & NFT_SET_ELEM_INTERVAL_END)
-+		rbe = container_of(interval->to, struct nft_rbtree_elem, ext);
-+	else
-+		rbe = container_of(interval->from, struct nft_rbtree_elem, ext);
-+
-+	return &rbe->priv;
-+}
-+
- static void nft_rbtree_gc_elem_remove(struct net *net, struct nft_set *set,
- 				      struct nft_rbtree *priv,
- 				      struct nft_rbtree_elem *rbe)
+ 	rwlock_init(&priv->lock);
+-	seqcount_rwlock_init(&priv->count, &priv->lock);
+ 	priv->root = RB_ROOT;
+ 
+ 	priv->array = NULL;
 -- 
 2.51.0
 
