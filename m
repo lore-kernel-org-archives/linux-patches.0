@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E221D5141;
-	Wed, 25 Feb 2026 01:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AFE1D5141;
+	Wed, 25 Feb 2026 01:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983509; cv=none; b=Y9J28LOjMch+8JS7ZrIgsiAGlKb6jWtw7DPU25j/lq+aRyhyNlQWwypMscGNPOD7KMNNcW3ZQy8FWHox9/LJBY+dJLgSVSolwGk7GxK/xpugv2ZN+51eFy2cHDQzE1gZraxPjKo9fjA6ku0AIpooQwaKofGG/0eOW3LFgLP2iGo=
+	t=1771983510; cv=none; b=aI3SWy0QvFzKHAr5fmaxEw+/M9wU3XsZLwLTGWI+2p0QKaZq5W5SwUwvXwvsFOj2LJCC3Zxw/Bqohl6p5nyKWvvMZ9JLRZMEigqxOoTFQBBIQPy2H8YIaynA8fxkg28OZjrs1OMly3rUPYzAXfvf4gfo+ur87HeX1tk9dYIpegE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983509; c=relaxed/simple;
-	bh=MiNK1y/cjldeRorKjqniF/c0H2sTJtGk79riODAl1XY=;
+	s=arc-20240116; t=1771983510; c=relaxed/simple;
+	bh=mLuIgX+DgIo2EonPi+f22iXG41F+CxSmZGC6RhaPb9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=teauH7TxEvkTA7smpFEdiaOkcHSoTZsYW1i5jaONHC0Otq+fqwxiHIXs6q7MqCTjCBBCnN9KwIYQxamleiUsYAxqv3tdqx876VS+zRFNxRav+H+QRBXPaWZ2Su9N34p57zNvPEMPvoqXkAfk1r+PUCRFRjlki4BiS/s2+uAtk9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgUe0lEN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZGcm+KF/Pmx8UsKPbum2roc4FPpdQ1HhecBkpLTJm5kzqgm+QKEAzVDA0PtgIe41J7M9FmIVZdhqTzxcR9/zMEy9pwPpNGVd9CTiP3ZA3AnfilD4rAsUvF4l1nmZI8oKckVd2H6cnqCWhS7j65Tx+eyq1DOJUZYh7e3veSiDcw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COyqivjW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgUe0lEN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BA1C19424;
-	Wed, 25 Feb 2026 01:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COyqivjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BC6C116D0;
+	Wed, 25 Feb 2026 01:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983509;
-	bh=MiNK1y/cjldeRorKjqniF/c0H2sTJtGk79riODAl1XY=;
+	s=korg; t=1771983510;
+	bh=mLuIgX+DgIo2EonPi+f22iXG41F+CxSmZGC6RhaPb9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WgUe0lENwlh3XK57F4rOsHgqovI00L6rS5vGjbpW4cN2wuHE8+4gimblQ6yvTSe+P
-	 FU+vdGlPrS9jTl4KEvC74Z6w3y4JJ6P05s5epoQQTiaEjSGJ8Yvdfy3rC0GTIXpy7U
-	 rMnOprQ3I59aWaClRxOG/f52y2i+qNnfHZJM0V9Q=
+	b=COyqivjWgfLMcDeCPAdAZMgEC8Cht20Lm4n1c6pB6Hw64ZHKFRYIUF/3d+ch6NWt7
+	 yHMcdAT5AdchRVUWqMZMIWS3K7Q4nH+nFXiku47MaGf0dersLpe+40GHb2CMkjuFAi
+	 jVs9/7bKAAxECtNzLLzurkLOTYJn7Uhg96KNShp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+23aee7afc440fe803545@syzkaller.appspotmail.com,
-	Baokun Li <libaokun1@huawei.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 616/781] fs/ntfs3: fix ntfs_mount_options leak in ntfs_fill_super()
-Date: Tue, 24 Feb 2026 17:22:05 -0800
-Message-ID: <20260225012414.910464549@linuxfoundation.org>
+Subject: [PATCH 6.19 617/781] fs/ntfs3: rename ni_readpage_cmpr into ni_read_folio_cmpr
+Date: Tue, 24 Feb 2026 17:22:06 -0800
+Message-ID: <20260225012414.937727392@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,84 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit f7edab0cee03a1cbe0e55a7bcab8d2d8b6b74278 ]
+[ Upstream commit 4248f563f0b76f3fb74b2a28ee068bf66fcbbedf ]
 
-In ntfs_fill_super(), the fc->fs_private pointer is set to NULL without
-first freeing the memory it points to. This causes the subsequent call to
-ntfs_fs_free() to skip freeing the ntfs_mount_options structure.
+The old "readpage" naming is still used in ni_readpage_cmpr(), even though
+the vfs has transitioned to the folio-based read_folio() API.
 
-This results in a kmemleak report:
+This patch performs a straightforward renaming of the helper:
+ni_readpage_cmpr() -> ni_read_folio_cmpr().
 
-  unreferenced object 0xff1100015378b800 (size 32):
-    comm "mount", pid 582, jiffies 4294890685
-    hex dump (first 32 bytes):
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-      00 00 00 00 00 00 00 00 ed ff ed ff 00 04 00 00  ................
-    backtrace (crc ed541d8c):
-      __kmalloc_cache_noprof+0x424/0x5a0
-      __ntfs_init_fs_context+0x47/0x590
-      alloc_fs_context+0x5d8/0x960
-      __x64_sys_fsopen+0xb1/0x190
-      do_syscall_64+0x50/0x1f0
-      entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-This issue can be reproduced using the following commands:
-        fallocate -l 100M test.file
-        mount test.file /tmp/test
-
-Since sbi->options is duplicated from fc->fs_private and does not
-directly use the memory allocated for fs_private, it is unnecessary to
-set fc->fs_private to NULL.
-
-Additionally, this patch simplifies the code by utilizing the helper
-function put_mount_options() instead of open-coding the cleanup logic.
-
-Reported-by: syzbot+23aee7afc440fe803545@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=23aee7afc440fe803545
-Fixes: aee4d5a521e9 ("ntfs3: fix double free of sbi->options->nls and clarify ownership of fc->fs_private")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: e37a75bb866c ("fs/ntfs3: fix deadlock in ni_read_folio_cmpr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ fs/ntfs3/frecord.c | 8 ++++----
+ fs/ntfs3/inode.c   | 2 +-
+ fs/ntfs3/ntfs_fs.h | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 8b0cf0ed4f72c..0567a3b224ed3 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -705,9 +705,7 @@ static void ntfs_put_super(struct super_block *sb)
- 	ntfs_set_state(sbi, NTFS_DIRTY_CLEAR);
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 641ddaf8d4a07..7e3d61de2f8fa 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2046,18 +2046,18 @@ static struct page *ntfs_lock_new_page(struct address_space *mapping,
+ }
  
- 	if (sbi->options) {
--		unload_nls(sbi->options->nls);
--		kfree(sbi->options->nls_name);
--		kfree(sbi->options);
-+		put_mount_options(sbi->options);
- 		sbi->options = NULL;
- 	}
+ /*
+- * ni_readpage_cmpr
++ * ni_read_folio_cmpr
+  *
+  * When decompressing, we typically obtain more than one page per reference.
+  * We inject the additional pages into the page cache.
+  */
+-int ni_readpage_cmpr(struct ntfs_inode *ni, struct folio *folio)
++int ni_read_folio_cmpr(struct ntfs_inode *ni, struct folio *folio)
+ {
+ 	int err;
+ 	struct ntfs_sb_info *sbi = ni->mi.sbi;
+ 	struct address_space *mapping = folio->mapping;
+-	pgoff_t index = folio->index;
+-	u64 frame_vbo, vbo = (u64)index << PAGE_SHIFT;
++	pgoff_t index;
++	u64 frame_vbo, vbo = folio_pos(folio);
+ 	struct page **pages = NULL; /* Array of at most 16 pages. stack? */
+ 	u8 frame_bits;
+ 	CLST frame;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 0a9ac5efeb67c..1319b99dfeb41 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -736,7 +736,7 @@ static int ntfs_read_folio(struct file *file, struct folio *folio)
  
-@@ -1253,7 +1251,6 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 		}
+ 	if (is_compressed(ni)) {
+ 		ni_lock(ni);
+-		err = ni_readpage_cmpr(ni, folio);
++		err = ni_read_folio_cmpr(ni, folio);
+ 		ni_unlock(ni);
+ 		return err;
  	}
- 	sbi->options = options;
--	fc->fs_private = NULL;
- 	sb->s_flags |= SB_NODIRATIME;
- 	sb->s_magic = 0x7366746e; // "ntfs"
- 	sb->s_op = &ntfs_sops;
-@@ -1679,9 +1676,7 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- out:
- 	/* sbi->options == options */
- 	if (options) {
--		unload_nls(options->nls);
--		kfree(options->nls_name);
--		kfree(options);
-+		put_mount_options(sbi->options);
- 		sbi->options = NULL;
- 	}
- 
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index a4559c9f64e68..7b619bb151ce9 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -568,7 +568,7 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint);
+ #define _ni_write_inode(i, w) ni_write_inode(i, w, __func__)
+ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 	      __u64 vbo, __u64 len);
+-int ni_readpage_cmpr(struct ntfs_inode *ni, struct folio *folio);
++int ni_read_folio_cmpr(struct ntfs_inode *ni, struct folio *folio);
+ int ni_decompress_file(struct ntfs_inode *ni);
+ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
+ 		  u32 pages_per_frame, int copy);
 -- 
 2.51.0
 
