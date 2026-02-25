@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AFE1D5141;
-	Wed, 25 Feb 2026 01:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0F31D5141;
+	Wed, 25 Feb 2026 01:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983510; cv=none; b=aI3SWy0QvFzKHAr5fmaxEw+/M9wU3XsZLwLTGWI+2p0QKaZq5W5SwUwvXwvsFOj2LJCC3Zxw/Bqohl6p5nyKWvvMZ9JLRZMEigqxOoTFQBBIQPy2H8YIaynA8fxkg28OZjrs1OMly3rUPYzAXfvf4gfo+ur87HeX1tk9dYIpegE=
+	t=1771983511; cv=none; b=q3ysXCeWxdDQpAXrEkE8kdVb6tZd8Hz54uAVX7wJulrrvmPxJAkKreMDDkry/XbaN5kJlg5qSEMTuPzYiFy9moiUJ5G3fo21tYwriukdML80n7Xl8Mw0dFDyunOzvwk7tzakda8cROSGacyHNJUose11YeptgdKOvihVm1uaiIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983510; c=relaxed/simple;
-	bh=mLuIgX+DgIo2EonPi+f22iXG41F+CxSmZGC6RhaPb9k=;
+	s=arc-20240116; t=1771983511; c=relaxed/simple;
+	bh=43BW4/VSSTkseD9Udb2yNQJzK1R58HENvmUa8nOb8lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZGcm+KF/Pmx8UsKPbum2roc4FPpdQ1HhecBkpLTJm5kzqgm+QKEAzVDA0PtgIe41J7M9FmIVZdhqTzxcR9/zMEy9pwPpNGVd9CTiP3ZA3AnfilD4rAsUvF4l1nmZI8oKckVd2H6cnqCWhS7j65Tx+eyq1DOJUZYh7e3veSiDcw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COyqivjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y67ycS6r+DEzOzPLRtRcY342FDJU98KWTRN0i8aDwwsJnoI/ZUmNHx5zlKmm67Zelnt/ZKMi2iPjkYOFuya3xDUUY+fyI/xv3hMJpPgZ/SHsIFI/lMg3AK7amww3gS8obwVoxIuMHpOfbwqRoFHjcB0KJNuSLtVgXdZShpdWxXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6KZ3sZ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COyqivjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BC6C116D0;
-	Wed, 25 Feb 2026 01:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6KZ3sZ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92285C19424;
+	Wed, 25 Feb 2026 01:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983510;
-	bh=mLuIgX+DgIo2EonPi+f22iXG41F+CxSmZGC6RhaPb9k=;
+	s=korg; t=1771983511;
+	bh=43BW4/VSSTkseD9Udb2yNQJzK1R58HENvmUa8nOb8lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=COyqivjWgfLMcDeCPAdAZMgEC8Cht20Lm4n1c6pB6Hw64ZHKFRYIUF/3d+ch6NWt7
-	 yHMcdAT5AdchRVUWqMZMIWS3K7Q4nH+nFXiku47MaGf0dersLpe+40GHb2CMkjuFAi
-	 jVs9/7bKAAxECtNzLLzurkLOTYJn7Uhg96KNShp8=
+	b=Y6KZ3sZ7MliX1GKSwVZkni7PGMmiFg7mavbLJSqUSgOU/2Y+W6IWXRZT0TZUeWP3R
+	 xfCs3nZbWRLlL4U3P6lwMjzaeTVt9BdJdo/GG6b0ujvH1VMXgxcP3vFThKsZcuZvbW
+	 GBLACe0nS8ynvZ5l9usI/eLkvGUudI2TbxE7U/MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+5af33dd272b913b65880@syzkaller.appspotmail.com,
+	Szymon Wilczek <swilczek.lx@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 617/781] fs/ntfs3: rename ni_readpage_cmpr into ni_read_folio_cmpr
-Date: Tue, 24 Feb 2026 17:22:06 -0800
-Message-ID: <20260225012414.937727392@linuxfoundation.org>
+Subject: [PATCH 6.19 618/781] fs/ntfs3: fix deadlock in ni_read_folio_cmpr
+Date: Tue, 24 Feb 2026 17:22:07 -0800
+Message-ID: <20260225012414.963371941@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -50,78 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Szymon Wilczek <swilczek.lx@gmail.com>
 
-[ Upstream commit 4248f563f0b76f3fb74b2a28ee068bf66fcbbedf ]
+[ Upstream commit e37a75bb866c29da954b51d0dd7670406246d9ee ]
 
-The old "readpage" naming is still used in ni_readpage_cmpr(), even though
-the vfs has transitioned to the folio-based read_folio() API.
+Syzbot reported a task hung in ni_readpage_cmpr (now ni_read_folio_cmpr).
+This is caused by a lock inversion deadlock involving the inode mutex
+(ni_lock) and page locks.
 
-This patch performs a straightforward renaming of the helper:
-ni_readpage_cmpr() -> ni_read_folio_cmpr().
+Scenario:
+1. Task A enters ntfs_read_folio() for page X. It acquires ni_lock.
+2. Task A calls ni_read_folio_cmpr(), which attempts to lock all pages in
+   the compressed frame (including page Y).
+3. Concurrently, Task B (e.g., via readahead) has locked page Y and
+   calls ntfs_read_folio().
+4. Task B waits for ni_lock (held by A).
+5. Task A waits for page Y lock (held by B).
+   -> DEADLOCK.
 
+The fix is to restructure locking: do not take ni_lock in ntfs_read_folio().
+Instead, acquire ni_lock inside ni_read_folio_cmpr() ONLY AFTER all required
+page locks for the frame have been successfully acquired. This restores the
+correct lock ordering (Page Lock -> ni_lock) consistent with VFS.
+
+Reported-by: syzbot+5af33dd272b913b65880@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5af33dd272b913b65880
+Fixes: f35590ee26f5 ("fs/ntfs3: remove ntfs_bio_pages and use page cache for compressed I/O")
+Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
+[almaz.alexandrovich@paragon-software.com: ni_readpage_cmpr was renamed to ni_read_folio_cmpr]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: e37a75bb866c ("fs/ntfs3: fix deadlock in ni_read_folio_cmpr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 8 ++++----
- fs/ntfs3/inode.c   | 2 +-
- fs/ntfs3/ntfs_fs.h | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ fs/ntfs3/frecord.c | 2 ++
+ fs/ntfs3/inode.c   | 3 +--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 641ddaf8d4a07..7e3d61de2f8fa 100644
+index 7e3d61de2f8fa..d5bbd47e1ee9d 100644
 --- a/fs/ntfs3/frecord.c
 +++ b/fs/ntfs3/frecord.c
-@@ -2046,18 +2046,18 @@ static struct page *ntfs_lock_new_page(struct address_space *mapping,
- }
+@@ -2107,7 +2107,9 @@ int ni_read_folio_cmpr(struct ntfs_inode *ni, struct folio *folio)
+ 		pages[i] = pg;
+ 	}
  
- /*
-- * ni_readpage_cmpr
-+ * ni_read_folio_cmpr
-  *
-  * When decompressing, we typically obtain more than one page per reference.
-  * We inject the additional pages into the page cache.
-  */
--int ni_readpage_cmpr(struct ntfs_inode *ni, struct folio *folio)
-+int ni_read_folio_cmpr(struct ntfs_inode *ni, struct folio *folio)
- {
- 	int err;
- 	struct ntfs_sb_info *sbi = ni->mi.sbi;
- 	struct address_space *mapping = folio->mapping;
--	pgoff_t index = folio->index;
--	u64 frame_vbo, vbo = (u64)index << PAGE_SHIFT;
-+	pgoff_t index;
-+	u64 frame_vbo, vbo = folio_pos(folio);
- 	struct page **pages = NULL; /* Array of at most 16 pages. stack? */
- 	u8 frame_bits;
- 	CLST frame;
++	ni_lock(ni);
+ 	err = ni_read_frame(ni, frame_vbo, pages, pages_per_frame, 0);
++	ni_unlock(ni);
+ 
+ out1:
+ 	for (i = 0; i < pages_per_frame; i++) {
 diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 0a9ac5efeb67c..1319b99dfeb41 100644
+index 1319b99dfeb41..ec8e954f4426c 100644
 --- a/fs/ntfs3/inode.c
 +++ b/fs/ntfs3/inode.c
-@@ -736,7 +736,7 @@ static int ntfs_read_folio(struct file *file, struct folio *folio)
+@@ -735,9 +735,8 @@ static int ntfs_read_folio(struct file *file, struct folio *folio)
+ 	}
  
  	if (is_compressed(ni)) {
- 		ni_lock(ni);
--		err = ni_readpage_cmpr(ni, folio);
-+		err = ni_read_folio_cmpr(ni, folio);
- 		ni_unlock(ni);
+-		ni_lock(ni);
++		/* ni_lock is taken inside ni_read_folio_cmpr after page locks */
+ 		err = ni_read_folio_cmpr(ni, folio);
+-		ni_unlock(ni);
  		return err;
  	}
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index a4559c9f64e68..7b619bb151ce9 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -568,7 +568,7 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint);
- #define _ni_write_inode(i, w) ni_write_inode(i, w, __func__)
- int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 	      __u64 vbo, __u64 len);
--int ni_readpage_cmpr(struct ntfs_inode *ni, struct folio *folio);
-+int ni_read_folio_cmpr(struct ntfs_inode *ni, struct folio *folio);
- int ni_decompress_file(struct ntfs_inode *ni);
- int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
- 		  u32 pages_per_frame, int copy);
+ 
 -- 
 2.51.0
 
