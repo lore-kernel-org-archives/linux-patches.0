@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED1418B0A;
-	Wed, 25 Feb 2026 01:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9FF22579E;
+	Wed, 25 Feb 2026 01:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983354; cv=none; b=pK9PTAWRhKIqiSFy2Q0pCiaAq0cqvvgW/9azJnR5axqTwbIumJC51Rr85YGmCvweurx/vHcI660fY2PakB49xNTF5/0JNkf9DpJ8gMQPq1rq44ls5N/8AYA8Xzp4S8F92eK1qwKncEl3lkQGXE8kwbjRYc5QZEVXANQHKl+7dAk=
+	t=1771983356; cv=none; b=tYgebuWrouZv4ctOGu2rV6O1Erbg/22Ix0kRmZLV9IZiD68CcY+wsoqP5HpcbEupZDbJewTUmFKiDJV/RDl7Z7UBDfEhYunXuqWc4Yv3p1O03V7eeH7yDsbazQJbdVNpn7RNpu8/sxWvh0XSwzUNMTEYRaG5dnXj+xNGn0qVeZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983354; c=relaxed/simple;
-	bh=5cTxWdpHnI/7/w5u/oMEE2lxXYhTVlijzY2QXLZf2d8=;
+	s=arc-20240116; t=1771983356; c=relaxed/simple;
+	bh=MZthmK2BG50nzExvishTXwQIkPU9/JCp4lAOS591RUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLpP4DsnVlru4HKr/Go4lzTJKV+aRjC5PmQlKB1XpSICyvb3XI4Fn+k41twl9bE8N6HpBHKwFj1eAzTpg/2trN5kvKCtWVSqwfjY7qGwAHsbPnns0ZsV3awcPQ1ctbZSnp/cz8T255Ha8Dm4EUrSowStJM7vduhWKAPEd0W3U0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eq/jUvxJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o/y6MIBzCYByYJsnLarEXRFApvNT1aXFdXt0M+aAoy+NlIKAJJWsMWdCFyrLCr23J1zr41po6Hg6XL8hHi7oFoDe5lx8fnsPB+Wj9uL3TzYRAaBTXcH2UFvBznAMN3iepjDI4HjRx0wUmN0jJbZmDyqGG/4c39uWfjBUxNVMdF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwrFEpjn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eq/jUvxJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA54C116D0;
-	Wed, 25 Feb 2026 01:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwrFEpjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E99DC116D0;
+	Wed, 25 Feb 2026 01:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983354;
-	bh=5cTxWdpHnI/7/w5u/oMEE2lxXYhTVlijzY2QXLZf2d8=;
+	s=korg; t=1771983355;
+	bh=MZthmK2BG50nzExvishTXwQIkPU9/JCp4lAOS591RUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eq/jUvxJOV4l8ZR+nGa50YOZkQdAlMeghe/fRjkShLaElmJygmSwrRF4CG8rOdtXV
-	 U1X2Mgkqy8dDnLw8vSdM64tMNpgs2YzksDSsWyvZ2sCDb741GQAx8zEIwBehSHHZTJ
-	 A4w0EgdjHfkmTtR1qc6NRWNo3JeGZOCWPMG3lrmI=
+	b=xwrFEpjnEKQyAWt7C++VsHQcTOS3HWLpJ6XSGHckkE7ZdF4Ox13gccbAhgYygddUs
+	 SGEeP8ggflYZzrbwpTbS8pWygcq+Bo61F9DS8aHwCnjoe6aBwL7J9y/2tF7bt+6Lx3
+	 hLuAzJSTvEHjiD95483mIAIctwrlv1dP1AFah9Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@hammerspace.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 479/781] NFS/localio: use GFP_NOIO and non-memreclaim workqueue in nfs_local_commit
-Date: Tue, 24 Feb 2026 17:19:48 -0800
-Message-ID: <20260225012411.564170843@linuxfoundation.org>
+Subject: [PATCH 6.19 480/781] NFS/localio: remove -EAGAIN handling in nfs_local_doio()
+Date: Tue, 24 Feb 2026 17:19:49 -0800
+Message-ID: <20260225012411.588210160@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,77 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@hammerspace.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 9bb0060f7860aa4561c5b21163dd45ceb66946a9 ]
+[ Upstream commit e72a73957613653f50375db1f3a3fbb907a9c40b ]
 
-nfslocaliod_workqueue is a non-memreclaim workqueue (it isn't
-initialized with WQ_MEM_RECLAIM), see commit b9f5dd57f4a5
-("nfs/localio: use dedicated workqueues for filesystem read and
-write").
+Handling -EAGAIN in nfs_local_doio() was introduced with commit
+0978e5b85fc08 (nfs_do_local_{read,write} were made to have negative
+checks for correspoding iter method) but commit e43e9a3a3d66
+since eliminated the possibility for this -EAGAIN early return.
 
-Use nfslocaliod_workqueue for LOCALIO's SYNC work.
+So remove nfs_local_doio()'s -EAGAIN handling that calls
+nfs_localio_disable_client() -- while it should never happen from
+nfs_do_local_{read,write} this particular -EAGAIN handling is now
+"dead" and so it has become a liability.
 
-Also, set PF_LOCAL_THROTTLE | PF_MEMALLOC_NOIO in
-nfs_local_fsync_work.
-
-Fixes: b9f5dd57f4a5 ("nfs/localio: use dedicated workqueues for filesystem read and write")
-Signed-off-by: Mike Snitzer <snitzer@hammerspace.com>
+Fixes: e43e9a3a3d66 ("nfs/localio: refactor iocb initialization")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/localio.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/nfs/localio.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 84f53f27a9089..f553ac0e1d86e 100644
+index f553ac0e1d86e..3bd4f28c8afc2 100644
 --- a/fs/nfs/localio.c
 +++ b/fs/nfs/localio.c
-@@ -1060,17 +1060,22 @@ nfs_local_fsync_ctx_free(struct nfs_local_fsync_ctx *ctx)
- static void
- nfs_local_fsync_work(struct work_struct *work)
- {
-+	unsigned long old_flags = current->flags;
- 	struct nfs_local_fsync_ctx *ctx;
- 	int status;
+@@ -989,8 +989,6 @@ int nfs_local_doio(struct nfs_client *clp, struct nfsd_file *localio,
+ 	}
  
- 	ctx = container_of(work, struct nfs_local_fsync_ctx, work);
- 
-+	current->flags |= PF_LOCAL_THROTTLE | PF_MEMALLOC_NOIO;
-+
- 	status = nfs_local_run_commit(nfs_to->nfsd_file_file(ctx->localio),
- 				      ctx->data);
- 	nfs_local_commit_done(ctx->data, status);
- 	if (ctx->done != NULL)
- 		complete(ctx->done);
- 	nfs_local_fsync_ctx_free(ctx);
-+
-+	current->flags = old_flags;
- }
- 
- static struct nfs_local_fsync_ctx *
-@@ -1094,7 +1099,7 @@ int nfs_local_commit(struct nfsd_file *localio,
- {
- 	struct nfs_local_fsync_ctx *ctx;
- 
--	ctx = nfs_local_fsync_ctx_alloc(data, localio, GFP_KERNEL);
-+	ctx = nfs_local_fsync_ctx_alloc(data, localio, GFP_NOIO);
- 	if (!ctx) {
- 		nfs_local_commit_done(data, -ENOMEM);
- 		nfs_local_release_commit_data(localio, data, call_ops);
-@@ -1106,10 +1111,10 @@ int nfs_local_commit(struct nfsd_file *localio,
- 	if (how & FLUSH_SYNC) {
- 		DECLARE_COMPLETION_ONSTACK(done);
- 		ctx->done = &done;
--		queue_work(nfsiod_workqueue, &ctx->work);
-+		queue_work(nfslocaliod_workqueue, &ctx->work);
- 		wait_for_completion(&done);
- 	} else
--		queue_work(nfsiod_workqueue, &ctx->work);
-+		queue_work(nfslocaliod_workqueue, &ctx->work);
- 
- 	return 0;
- }
+ 	if (status != 0) {
+-		if (status == -EAGAIN)
+-			nfs_localio_disable_client(clp);
+ 		nfs_local_iocb_release(iocb);
+ 		hdr->task.tk_status = status;
+ 		nfs_local_hdr_release(hdr, call_ops);
 -- 
 2.51.0
 
