@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2681E2834;
-	Wed, 25 Feb 2026 01:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD0F1E2834;
+	Wed, 25 Feb 2026 01:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983145; cv=none; b=shGcfN8qmfcpXdGT8dQ9RZVNDJDIorBR9+VJWZmHKPyY6HwNXT6JtenxpIV25VBDLd4rxDqbDB5I0gwL5NPHdq4okLO6oP9ytxMiugEKLOjSkcrzyCadB1EwnIVoZi9SbE8UUbXeLUHc3/wof6iVwmI8NwHMtPZP4/J5R/emfkE=
+	t=1771983146; cv=none; b=kwKKHsXmVAs4k7wUp0HJsbl2SaTjHbfOaJmAJGDyqPW8UQTF3fqVQJFG8diRP7b9qvC/TQsFGhRm05iHXJlAe+voKEn9/Dxh6uQL8hlSL5YCcfAI+ySMjJnkySoxd9X6VjhWFeQKxG+XB8tQOuT1S0X9WZrjJIo0YDxEOwbiy5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983145; c=relaxed/simple;
-	bh=cKQ1AyfPsNxwlebNcoIm1mvXfd09AqVbzSPFW5SGTv8=;
+	s=arc-20240116; t=1771983146; c=relaxed/simple;
+	bh=GTdNBxEgwYviG4Kwq0HUD+NfetBo73c6FG9tA92KfeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o05t4Q3kut4B8CabIxvFfATDwlFePTfrX4J8G8pMhr3AQoKeB1CQn2159RJsYFsStnyqcf83ETxYbwlWmjdh3kvmCs/dK5EDstHu1GQfAkkV1hUg5OnheYUX/L2kYQFGTSbmGjH8piQjzphqQRYpQO/91HY2t5k6RXAk6nqy/Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10IVTMrK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AcNRDQV7yeqc1wnHb5JYjhjcgYM4NP3vHEZqVmOBcs4cCKOARiP4O+Y2YwvQ+Wurpqe8AhZpJNkczo1UP/eRMAO8daEI4GLE/SYA7Q5z24zbGGqc00Q0sD0RozoB0h6izfi+bzRXYapTM91nNu4QEn3gpD9sKxRj8832Id40DjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDBnCC9o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10IVTMrK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02A3C116D0;
-	Wed, 25 Feb 2026 01:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDBnCC9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E8DC116D0;
+	Wed, 25 Feb 2026 01:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983144;
-	bh=cKQ1AyfPsNxwlebNcoIm1mvXfd09AqVbzSPFW5SGTv8=;
+	s=korg; t=1771983145;
+	bh=GTdNBxEgwYviG4Kwq0HUD+NfetBo73c6FG9tA92KfeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10IVTMrKo1ZyLqNG77MvUAdNCzREbJo9V5XQYYlXW1oAhkp79RNcDnMbX4Mp8YVcJ
-	 DpitazYcM/dKVXZdboxFiIRlDYfowRC4+sHC7bdhaazc9toJJJclBvoq3La20CZYbJ
-	 clUfzD2qI9pT3TZxEFI5Tf4lhIaiOihTnSWvNUMY=
+	b=jDBnCC9oz6+XOsF3zDK0o7cNKvHvUk5zX1PyfbG7wEjc6yCgt9M02U6CGd4ForSlD
+	 KwmE3JidWwTFbOmOJnAfnHcF5u/ewQ+GsDAtBDqaXnMtSkAv8lsodMnkx5gefo0ccC
+	 bx7yy1/lcjjHRSTf1LcFtwaTcwO4ekRL3YnYC26k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Even Xu <even.xu@intel.com>,
-	Rui Zhang <rui1.zhang@intel.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 298/781] HID: Intel-thc-hid: Intel-thc: Fix wrong register fields updating
-Date: Tue, 24 Feb 2026 17:16:47 -0800
-Message-ID: <20260225012407.016444429@linuxfoundation.org>
+Subject: [PATCH 6.19 257/781] HID: playstation: Add missing check for input_ff_create_memless
+Date: Tue, 24 Feb 2026 17:16:06 -0800
+Message-ID: <20260225012406.008590727@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,44 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Even Xu <even.xu@intel.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit e4aa247d94a04574297a8bc9fabbede0dcba1ab6 ]
+[ Upstream commit e6807641ac94e832988655a1c0e60ccc806b76dc ]
 
-Clear the target bit fields in register before setting new values. This
-ensures proper field updates by removing any existing bits that might
-interfere with the new configuration.
+The ps_gamepad_create() function calls input_ff_create_memless()
+without verifying its return value,  which can lead to incorrect
+behavior or potential crashes when FF effects are triggered.
 
-Fixes: 22da60f0304b ("HID: Intel-thc-hid: Intel-thc: Introduce interrupt delay control")
-Fixes: 45e92a093099 ("HID: Intel-thc-hid: Intel-thc: Introduce max input size control")
-Signed-off-by: Even Xu <even.xu@intel.com>
-Tested-by: Rui Zhang <rui1.zhang@intel.com>
+Add a check for the return value of input_ff_create_memless().
+
+Fixes: 51151098d7ab ("HID: playstation: add DualSense classic rumble support.")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-playstation.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c b/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c
-index 7e220a4c5ded7..d8e195189e4bf 100644
---- a/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c
-+++ b/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c
-@@ -1597,6 +1597,7 @@ int thc_i2c_set_rx_max_size(struct thc_device *dev, u32 max_rx_size)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
+index e4dfcf26b04e7..2ec6d4445e84b 100644
+--- a/drivers/hid/hid-playstation.c
++++ b/drivers/hid/hid-playstation.c
+@@ -774,7 +774,9 @@ ps_gamepad_create(struct hid_device *hdev,
+ #if IS_ENABLED(CONFIG_PLAYSTATION_FF)
+ 	if (play_effect) {
+ 		input_set_capability(gamepad, EV_FF, FF_RUMBLE);
+-		input_ff_create_memless(gamepad, NULL, play_effect);
++		ret = input_ff_create_memless(gamepad, NULL, play_effect);
++		if (ret)
++			return ERR_PTR(ret);
+ 	}
+ #endif
  
-+	val = val & ~THC_M_PRT_SPI_ICRRD_OPCODE_I2C_MAX_SIZE;
- 	val |= FIELD_PREP(THC_M_PRT_SPI_ICRRD_OPCODE_I2C_MAX_SIZE, max_rx_size);
- 
- 	ret = regmap_write(dev->thc_regmap, THC_M_PRT_SPI_ICRRD_OPCODE_OFFSET, val);
-@@ -1667,6 +1668,7 @@ int thc_i2c_set_rx_int_delay(struct thc_device *dev, u32 delay_us)
- 		return ret;
- 
- 	/* THC hardware counts at 10us unit */
-+	val = val & ~THC_M_PRT_SPI_ICRRD_OPCODE_I2C_INTERVAL;
- 	val |= FIELD_PREP(THC_M_PRT_SPI_ICRRD_OPCODE_I2C_INTERVAL, DIV_ROUND_UP(delay_us, 10));
- 
- 	ret = regmap_write(dev->thc_regmap, THC_M_PRT_SPI_ICRRD_OPCODE_OFFSET, val);
 -- 
 2.51.0
 
