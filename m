@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439AC2F7478;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF48D2F7478;
 	Wed, 25 Feb 2026 06:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002778; cv=none; b=cWE9PT3ZUuSofT7M0Z0FeEMgzymK8C1Wwj0np93mqCciLGUBX5VO3t2FhrskNmifbhwoY4gG8uZkb9ZWH1wk6SKWNm4g5CzIz8ItHK+/eJoy1/8IraBpjDMo3xYijfa025AM+gvldk6vGzlyi8WlBZLD1ief7z7kHes5/T9+FK8=
+	t=1772002779; cv=none; b=SeLtcRTeKLffi8HA8TN4fJwddGgJP7JDR95fa6w2AGFdxQMmih8kRR5YvBFUKrQLlFMgth73EtCb8kCQAMaOpzcgWi1rkgkgagbN0YsFZzFdK+ZEiTIxFUFcMMZPiVEyuZtJTTElaMIdYvQqXI3pxQ56MYAsBl2BnesNT4KmE/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002778; c=relaxed/simple;
-	bh=QECNRYnKIoFTD8Y+3RnOJOVHWkYtPSu88TZ5lbayHAE=;
+	s=arc-20240116; t=1772002779; c=relaxed/simple;
+	bh=GCVsxt0XYyQw+6IJ02gF0bHg805mT+4o4UTL532+B/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaTB2b1wPS0iobWPoO3DVVdNDzupa76BTtSks3vRDWXJSj5mMIUiXnLBJ6uIf1+cGO6GM3Jsgb6lU5iMtZTH5KUgNR33vXF8KHP4Dda5RPYjuT9BGZBuFxDoderXFouaNlVltnHXm2tftks7UjXMLlQO6DGA2RjqVeWlzrCU40I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBeuSv5I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qtuE4vnmuXMID+b4rgdesNqfwWB6LVtTG84NUbBNFSn362p7/Ev43q6zzUMwGFynFgb3uFtxh1TjNMMbyhvW5NPT+NUE7pTlEUZxSTZuDyeFK/naujqtRqJEzu3HNoBDx/HxJIb70CiTzQvz8diVSDbMM1YOZ027aPONfKJA88o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZebHeMSg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBeuSv5I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5C8C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZebHeMSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7417C116D0;
 	Wed, 25 Feb 2026 06:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002778;
-	bh=QECNRYnKIoFTD8Y+3RnOJOVHWkYtPSu88TZ5lbayHAE=;
+	bh=GCVsxt0XYyQw+6IJ02gF0bHg805mT+4o4UTL532+B/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBeuSv5IUWXYmKfPLGqmuM2/cV2I7oxicC8xTfETjG6AwJYAIQ1MN7ruHbzpVymIW
-	 MxO7CnfCA6zviYCoFjFy0gprAO2tXhjHD2WMH5GHyrjHD91V0eDY/Z3yHm9naa89aP
-	 HJ6sUQ8GieY3SaGmp8yhn1AC8NpfefkU8BCSE+w4=
+	b=ZebHeMSgh4NnPiluINmsG6z+3VbszaKO2DU2JmfzSN5R/kKzFzZPYeT85NHS8QkUS
+	 VvJwTpFcfjL6g7mrB5xv3Ct7t71laTjZRVOxbINuqLoAzyRnJpigYpMDxh4n4+DXlF
+	 qqwOG3p5OwUII33uMomRGJ8sRHGuKSp9ZBlI8WXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zilin Guan <zilin@seu.edu.cn>,
 	Zhang Yi <yi.zhang@huawei.com>,
 	Baokun Li <libaokun1@huawei.com>,
-	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.18 616/641] ext4: drop extent cache when splitting extent fails
-Date: Tue, 24 Feb 2026 17:25:42 -0800
-Message-ID: <20260225012403.437364610@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.18 617/641] ext4: fix memory leak in ext4_ext_shift_extents()
+Date: Tue, 24 Feb 2026 17:25:43 -0800
+Message-ID: <20260225012403.459841436@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,56 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-commit 79b592e8f1b435796cbc2722190368e3e8ffd7a1 upstream.
+commit ca81109d4a8f192dc1cbad4a1ee25246363c2833 upstream.
 
-When the split extent fails, we might leave some extents still being
-processed and return an error directly, which will result in stale
-extent entries remaining in the extent status tree. So drop all of the
-remaining potentially stale extents if the splitting fails.
+In ext4_ext_shift_extents(), if the extent is NULL in the while loop, the
+function returns immediately without releasing the path obtained via
+ext4_find_extent(), leading to a memory leak.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Fix this by jumping to the out label to ensure the path is properly
+released.
+
+Fixes: a18ed359bdddc ("ext4: always check ext4_ext_find_extent result")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Cc: stable@kernel.org
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Message-ID: <20251129103247.686136-8-yi.zhang@huaweicloud.com>
+Link: https://patch.msgid.link/20251225084800.905701-1-zilin@seu.edu.cn
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ext4/extents.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/fs/ext4/extents.c
 +++ b/fs/ext4/extents.c
-@@ -3267,7 +3267,7 @@ static struct ext4_ext_path *ext4_split_
- 
- 	err = PTR_ERR(path);
- 	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
--		return path;
-+		goto out_path;
- 
- 	/*
- 	 * Get a new path to try to zeroout or fix the extent length.
-@@ -3281,7 +3281,7 @@ static struct ext4_ext_path *ext4_split_
- 	if (IS_ERR(path)) {
- 		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
- 				 split, PTR_ERR(path));
--		return path;
-+		goto out_path;
- 	}
- 	depth = ext_depth(inode);
- 	ex = path[depth].p_ext;
-@@ -3358,6 +3358,10 @@ out:
- 		ext4_free_ext_path(path);
- 		path = ERR_PTR(err);
- 	}
-+out_path:
-+	if (IS_ERR(path))
-+		/* Remove all remaining potentially stale extents. */
-+		ext4_es_remove_extent(inode, ee_block, ee_len);
- 	ext4_ext_show_leaf(inode, path);
- 	return path;
- }
+@@ -5410,7 +5410,8 @@ again:
+ 		if (!extent) {
+ 			EXT4_ERROR_INODE(inode, "unexpected hole at %lu",
+ 					 (unsigned long) *iterator);
+-			return -EFSCORRUPTED;
++			ret = -EFSCORRUPTED;
++			goto out;
+ 		}
+ 		if (SHIFT == SHIFT_LEFT && *iterator >
+ 		    le32_to_cpu(extent->ee_block)) {
 
 
