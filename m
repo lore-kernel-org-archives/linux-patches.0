@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E7B27B34F;
-	Wed, 25 Feb 2026 01:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0720F27B34F;
+	Wed, 25 Feb 2026 01:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771984036; cv=none; b=tntbKRdsl9IsmyU2tZCB9mHP9dYa4YgaVassc8Av6A4b1wSWBo5O/f0OlfzpAj5nj9yHRkqbFlq191ale7NbYAudQzRJW6sM87Dfr/aFtULH8lxPv2fMZGAkcO9LfOuNpV2/f2CL86yRMnNggjf05femCusuXMESlO/nXpBlwbs=
+	t=1771984037; cv=none; b=Z6slhFaZIg3AyAVC9DbcciZ7W5bjwpCD+qiOgQoIm/7/9mb42/dm4FnSSoOqOS6hsoHZhsBTZZfh3XgbODHAWPbgTzyL4WczgRMBbVnUNY7QzgwmUjajud9DmWkZtctYeCxsbMAeIFBbbUuQDTT4A+2Yv8iwFnvveOYCl6PvZDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771984036; c=relaxed/simple;
-	bh=CTy5av0Dp1/D2qEcW164u0P71sXmsEqF+pxaGDqv8mQ=;
+	s=arc-20240116; t=1771984037; c=relaxed/simple;
+	bh=XKfqUH6jzYKjDNoOfORSf6/82Xf5RFMRzs/2CM8MXXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LW5z0T1CaIigWm9Hh9NqhXIk7vBhIWEaT3/TrgSrLhkS3RKv/T3xwAAV0BXhjAAicTYs2NfmV+9TKj3lbjBYzz1TJ0cNr+PY3JkNUh931f0ruvMDIwnCogJLO7TaJESgfG0BLkpJT+4lF4f3Cu2EvZkgaUt4YwMZb2ttVSAzHE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+ZDNn+P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JjDMQsKf7JYWccppB8t8GnjYKKdE5zY6n1jRzDTFTSHUq7g06tM7UXmEVlFOD8tz5ETEIzWVQDVt9X2VXP7kYXzlgfv7qPIuk7pSd5ybtBk4oiZyqxS+/tsAbAYNiyNPH83vbW5JPa6bCawo/GpHIH7NALbT+ynQc5tOMWJercY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lI3Movaf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+ZDNn+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21DAC116D0;
-	Wed, 25 Feb 2026 01:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lI3Movaf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF619C116D0;
+	Wed, 25 Feb 2026 01:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1771984036;
-	bh=CTy5av0Dp1/D2qEcW164u0P71sXmsEqF+pxaGDqv8mQ=;
+	bh=XKfqUH6jzYKjDNoOfORSf6/82Xf5RFMRzs/2CM8MXXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+ZDNn+PNC6D489PwCp34RURaN0Pr1t6SdJeEDdnEUx4M+TbPQat2Yih7h+cce5xP
-	 /hZqyq+zQjmsuTTL/WNR6ICw6YoQfOaD3V/EMBbLZa/uameK5MPHsLu4+hJ5Qii+wj
-	 u9iYpuw707bmdLnj29czxCzX0AH6mkWecW8Q/TZk=
+	b=lI3Movaf7huo8JA+wMbQMXbsPJIyO+pW3VpgxI3Ez7dHxJNe/X+ygmeO3tqcVSKZj
+	 Te1Ct1mglUNAiPIijCwOH702D/DGH3otlFutKLlu3Wyh9u5QWSxG60IPE3iATy0lJN
+	 2AJhDFVSE26BqnmQYnzT542zkYnjoJ7ptaTtT6D4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Simon Richter <Simon.Richter@hogyros.de>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Malte=20Schr=C3=B6der?= <malte+lkml@tnxip.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 279/641] PCI: Stop over-estimating bridge window size
-Date: Tue, 24 Feb 2026 17:20:05 -0800
-Message-ID: <20260225012355.542904001@linuxfoundation.org>
+Subject: [PATCH 6.18 280/641] PCI: Remove old_size limit from bridge window sizing
+Date: Tue, 24 Feb 2026 17:20:06 -0800
+Message-ID: <20260225012355.564036800@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -55,163 +55,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 3958bf16e2fe1b1c95467e58694102122c951a31 ]
+[ Upstream commit f909e3ee3ed1a44202f09ac7e637a0f9ec372225 ]
 
-New way to calculate the bridge window head alignment produces tight-fit,
-that is, it does not leave any gaps between the resources.  Similarly,
-relaxed tail alignment does not leave extra tail room.
+calculate_memsize() applies lower bound to the resource size before
+aligning the resource size making it impossible to shrink bridge window
+resources. I've not found any justification for this lower bound and
+nothing indicated it was to work around some HW issue.
 
-Start to use bridge window calculation that does not over-estimate the size
-of the required window.
+Prior to the commit 3baeae36039a ("PCI: Use pci_release_resource() instead
+of release_resource()"), releasing a bridge window during BAR resize
+resulted in clearing start and end address of the resource.  Clearing
+addresses destroys the resource size as a side-effect, therefore nullifying
+the effect of the old size lower bound.
 
-pbus_upstream_space_available() can be removed.
+After the commit 3baeae36039a ("PCI: Use pci_release_resource() instead of
+release_resource()"), BAR resize uses the aligned old size, which results
+in exceeding what fits into the parent window in some cases:
 
+  xe 0030:03:00.0: [drm] Attempting to resize bar from 256MiB -> 16384MiB
+  xe 0030:03:00.0: BAR 0 [mem 0x620c000000000-0x620c000ffffff 64bit]: releasing
+  xe 0030:03:00.0: BAR 2 [mem 0x6200000000000-0x620000fffffff 64bit pref]: releasing
+  pci 0030:02:01.0: bridge window [mem 0x6200000000000-0x620001fffffff 64bit pref]: releasing
+  pci 0030:01:00.0: bridge window [mem 0x6200000000000-0x6203fbff0ffff 64bit pref]: releasing
+  pci 0030:00:00.0: bridge window [mem 0x6200000000000-0x6203fbff0ffff 64bit pref]: was not released (still contains assigned resources)
+  pci 0030:00:00.0: Assigned bridge window [mem 0x6200000000000-0x6203fbff0ffff 64bit pref] to [bus 01-04] free space at [mem 0x6200400000000-0x62007ffffffff 64bit pref]
+  pci 0030:00:00.0: Assigned bridge window [mem 0x6200000000000-0x6203fbff0ffff 64bit pref] to [bus 01-04] cannot fit 0x4000000000 required for 0030:01:00.0 bridging to [bus 02-04]
+
+The old size of 0x6200000000000-0x6203fbff0ffff resource was used as the
+lower bound which results in 0x4000000000 size request due to alignment.
+That exceeds what can fit into the parent window.
+
+Since the lower bound never even was enforced fully because the resource
+addresses were cleared when the bridge window is released, remove the
+old_size lower bound entirely and trust the calculated bridge window size
+is enough.
+
+This same problem may occur on io window side but seems less likely to
+cause issues due to general difference in alignment. Removing the lower
+bound may have other unforeseen consequences in case of io window so it's
+better to leave it as -next material if no problem is reported related to
+io window sizing (BAR resize shouldn't touch io windows anyway).
+
+Fixes: 3baeae36039a ("PCI: Use pci_release_resource() instead of release_resource()")
+Reported-by: Simon Richter <Simon.Richter@hogyros.de>
+Link: https://lore.kernel.org/r/f9a8c975-f5d3-4dd2-988e-4371a1433a60@hogyros.de/
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Malte Schröder <malte+lkml@tnxip.de>
-Link: https://patch.msgid.link/20251219174036.16738-4-ilpo.jarvinen@linux.intel.com
-Stable-dep-of: f909e3ee3ed1 ("PCI: Remove old_size limit from bridge window sizing")
+Link: https://patch.msgid.link/20251219174036.16738-6-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 97 +++--------------------------------------
- 1 file changed, 5 insertions(+), 92 deletions(-)
+ drivers/pci/setup-bus.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index cd12926a72af7..25d6d4d3afc14 100644
+index 25d6d4d3afc14..4f4890196e63e 100644
 --- a/drivers/pci/setup-bus.c
 +++ b/drivers/pci/setup-bus.c
-@@ -1262,68 +1262,6 @@ static resource_size_t calculate_head_align(resource_size_t *aligns,
- 	return head_align;
+@@ -1066,16 +1066,13 @@ static resource_size_t calculate_memsize(resource_size_t size,
+ 					 resource_size_t min_size,
+ 					 resource_size_t add_size,
+ 					 resource_size_t children_add_size,
+-					 resource_size_t old_size,
+ 					 resource_size_t align)
+ {
+ 	if (size < min_size)
+ 		size = min_size;
+-	if (old_size == 1)
+-		old_size = 0;
+ 
+ 	size = max(size, add_size) + children_add_size;
+-	return ALIGN(max(size, old_size), align);
++	return ALIGN(size, align);
  }
  
--/**
-- * pbus_upstream_space_available - Check no upstream resource limits allocation
-- * @bus:	The bus
-- * @res:	The resource to help select the correct bridge window
-- * @size:	The size required from the bridge window
-- * @align:	Required alignment for the resource
-- *
-- * Check that @size can fit inside the upstream bridge resources that are
-- * already assigned. Select the upstream bridge window based on the type of
-- * @res.
-- *
-- * Return: %true if enough space is available on all assigned upstream
-- * resources.
-- */
--static bool pbus_upstream_space_available(struct pci_bus *bus,
--					  struct resource *res,
--					  resource_size_t size,
--					  resource_size_t align)
--{
--	struct resource_constraint constraint = {
--		.max = RESOURCE_SIZE_MAX,
--		.align = align,
--	};
--	struct pci_bus *downstream = bus;
--
--	while ((bus = bus->parent)) {
--		if (pci_is_root_bus(bus))
--			break;
--
--		res = pbus_select_window(bus, res);
--		if (!res)
--			return false;
--		if (!res->parent)
--			continue;
--
--		if (resource_size(res) >= size) {
--			struct resource gap = {};
--
--			if (find_resource_space(res, &gap, size, &constraint) == 0) {
--				gap.flags = res->flags;
--				pci_dbg(bus->self,
--					"Assigned bridge window %pR to %pR free space at %pR\n",
--					res, &bus->busn_res, &gap);
--				return true;
--			}
--		}
--
--		if (bus->self) {
--			pci_info(bus->self,
--				 "Assigned bridge window %pR to %pR cannot fit 0x%llx required for %s bridging to %pR\n",
--				 res, &bus->busn_res,
--				 (unsigned long long)size,
--				 pci_name(downstream->self),
--				 &downstream->busn_res);
--		}
--
--		return false;
--	}
--
--	return true;
--}
--
- /**
-  * pbus_size_mem() - Size the memory window of a given bus
-  *
-@@ -1350,7 +1288,6 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
- 	struct pci_dev *dev;
- 	resource_size_t min_align, win_align, align, size, size0, size1 = 0;
- 	resource_size_t aligns[28] = {}; /* Alignments from 1MB to 128TB */
--	resource_size_t aligns2[28] = {};/* Alignments from 1MB to 128TB */
- 	int order, max_order;
- 	struct resource *b_res = pbus_select_window_for_type(bus, type);
+ resource_size_t __weak pcibios_window_alignment(struct pci_bus *bus,
+@@ -1293,7 +1290,6 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
  	resource_size_t children_add_size = 0;
-@@ -1409,13 +1346,8 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
- 				continue;
- 			}
- 			size += max(r_size, align);
--			/*
--			 * Exclude ranges with size > align from calculation of
--			 * the alignment.
--			 */
--			if (r_size <= align)
--				aligns[order] += align;
--			aligns2[order] += align;
-+
-+			aligns[order] += align;
- 			if (order > max_order)
- 				max_order = order;
+ 	resource_size_t children_add_align = 0;
+ 	resource_size_t add_align = 0;
+-	resource_size_t old_size;
  
-@@ -1429,38 +1361,19 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
+ 	if (!b_res)
+ 		return;
+@@ -1359,11 +1355,10 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
+ 		}
+ 	}
  
- 	old_size = resource_size(b_res);
+-	old_size = resource_size(b_res);
  	win_align = window_alignment(bus, b_res->flags);
--	min_align = calculate_mem_align(aligns, max_order);
-+	min_align = calculate_head_align(aligns, max_order);
+ 	min_align = calculate_head_align(aligns, max_order);
  	min_align = max(min_align, win_align);
--	size0 = calculate_memsize(size, min_size, 0, 0, old_size, min_align);
-+	size0 = calculate_memsize(size, min_size, 0, 0, old_size, win_align);
+-	size0 = calculate_memsize(size, min_size, 0, 0, old_size, win_align);
++	size0 = calculate_memsize(size, min_size, 0, 0, win_align);
  
  	if (size0) {
  		resource_set_range(b_res, min_align, size0);
- 		b_res->flags &= ~IORESOURCE_DISABLED;
- 	}
- 
--	if (bus->self && size0 &&
--	    !pbus_upstream_space_available(bus, b_res, size0, min_align)) {
--		min_align = calculate_head_align(aligns2, max_order);
--		size0 = calculate_memsize(size, min_size, 0, 0, old_size, win_align);
--		resource_set_range(b_res, min_align, size0);
--		pci_info(bus->self, "bridge window %pR to %pR requires relaxed alignment rules\n",
--			 b_res, &bus->busn_res);
--	}
--
+@@ -1373,7 +1368,7 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
  	if (realloc_head && (add_size > 0 || children_add_size > 0)) {
  		add_align = max(min_align, add_align);
  		size1 = calculate_memsize(size, min_size, add_size, children_add_size,
--					  old_size, add_align);
--
--		if (bus->self && size1 &&
--		    !pbus_upstream_space_available(bus, b_res, size1, add_align)) {
--			min_align = calculate_head_align(aligns2, max_order);
--			size1 = calculate_memsize(size, min_size, add_size, children_add_size,
--						  old_size, win_align);
--			pci_info(bus->self,
--				 "bridge window %pR to %pR requires relaxed alignment rules\n",
--				 b_res, &bus->busn_res);
--		}
-+					  old_size, win_align);
+-					  old_size, win_align);
++					  win_align);
  	}
  
  	if (!size0 && !size1) {
