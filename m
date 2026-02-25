@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7E520C012;
-	Wed, 25 Feb 2026 01:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4D420C012;
+	Wed, 25 Feb 2026 01:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983203; cv=none; b=LUT0c5GGKQBuOwBb94SP/oxyq2zjIBgLNfxH73mzQBA3wBFvqzq9aQhntZkh2fL0qyrFoFSkmZgCackbyJ1WqYbDl0rO5K9rSH7a2E12u1GaI4KYbiFZhdk1LdH0erVX3RlGKwPlyYgJGAgnfM1/3FZXC+2h/qazhWpsQUnJVKo=
+	t=1771983205; cv=none; b=iX9iYCjimp+0XjX0/K+O9/NzirRnoUUOLZaj3Q0vmd2vl2NisoP9cwiaxduzxEvWO6B9Xc6uQQxHm+aC1Hz3J++0QotiutgqJztx+ZTGZCirnwMPmNfp4LieoakJtStMMU85TbE73f63j/ExCgQM4pOasTKQjkyffVxtjWEDrUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983203; c=relaxed/simple;
-	bh=bRtmrOf6otwwBF/UuMwrQ1+Aciv1wA9WYyDTUcIVYFo=;
+	s=arc-20240116; t=1771983205; c=relaxed/simple;
+	bh=HrfjhNauZBcmvFx5Y79EFkMvWhg7XPkNPoK6TKp9oFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4L/gyoT7NbQFQyWMopPUfqNvxwnqMPMnazcGFTf6EwDs7v7BZ/1BwvqDEa1UwsGdoopslMj8343uCLNd/vS1dGkiLqajRRIoJYR5ZSQTWi1/7G8LjNIq/uWdEnbThcntaWVRi5rsTlmIaqPLuVYpv+gZ8IzmtMO6pFlJHpfOhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LsTwCCae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p6ngZTQn2Hfz4oWt32yN1tJPvZQZuv15wYZXApTOD2B0LVBNgEGO/nRELYQOIne7QH1S5yCLnlKlLn5ww7/VNWz5Ek7Z2v/ldoTASgBL/Fce7Zi8OVsjbFHhrpVbu1mD4pUOh+/s3c0jjKy8izU1DmZXmAjGUHT7iAfl80sqovY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrsM2S6a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LsTwCCae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CFDC19423;
-	Wed, 25 Feb 2026 01:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrsM2S6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9D6C116D0;
+	Wed, 25 Feb 2026 01:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983203;
-	bh=bRtmrOf6otwwBF/UuMwrQ1+Aciv1wA9WYyDTUcIVYFo=;
+	s=korg; t=1771983204;
+	bh=HrfjhNauZBcmvFx5Y79EFkMvWhg7XPkNPoK6TKp9oFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LsTwCCaey7DeefpCyJ1wOTc86pkHnHMciayhnxZDiO8SQl58GcSrNxospTY9vLRwr
-	 g+YFuM6xD7yceFOiBpojYjQ2qR7gcZEEej8f2ctI+pT81bqhmXkol+EmQxl3cb8EIL
-	 H3KSaGcekqCnhEpE7HqNuTkoMoYDsluFHvYbpnJE=
+	b=rrsM2S6aQl8Ayuh8tXmyfJM10taUVeXSmaQCgUXBffVCbqBT8pzD8D1jAfI3Xvqir
+	 ddVuFFzLrWslRcm2tC4hi2LZAWTCBxUQ1IV5/9Y4489phA/hrVy3URLL/AbKtc/GHB
+	 qfRjL2qxOIbZ80V6HNZ8SPJzOe+CAecILhDaqQEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Aleksandra Rukomoinikova <ARukomoinikova@k2.cloud>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 299/781] accel/amdxdna: Enable temporal sharing only mode
-Date: Tue, 24 Feb 2026 17:16:48 -0800
-Message-ID: <20260225012407.040281904@linuxfoundation.org>
+Subject: [PATCH 6.19 346/781] netfilter: nf_conncount: increase the connection clean up limit to 64
+Date: Tue, 24 Feb 2026 17:17:35 -0800
+Message-ID: <20260225012408.179773035@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,128 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 7818618a09a06320f409571bf28801ccfe7e0a30 ]
+[ Upstream commit 21d033e472735ecec677f1ae46d6740b5e47a4f3 ]
 
-Newer firmware versions prefer temporal sharing only mode. In this mode,
-the driver no longer needs to manage AIE array column allocation. Instead,
-a new field, num_unused_col, is added to the hardware context creation
-request to specify how many columns will not be used by this hardware
-context.
+After the optimization to only perform one GC per jiffy, a new problem
+was introduced. If more than 8 new connections are tracked per jiffy the
+list won't be cleaned up fast enough possibly reaching the limit
+wrongly.
 
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20251217191150.2145937-1-lizhi.hou@amd.com
-Stable-dep-of: b853007fdcdd ("accel/amdxdna: Remove hardware context status")
+In order to prevent this issue, only skip the GC if it was already
+triggered during the same jiffy and the increment is lower than the
+clean up limit. In addition, increase the clean up limit to 64
+connections to avoid triggering GC too often and do more effective GCs.
+
+This has been tested using a HTTP server and several
+performance tools while having nft_connlimit/xt_connlimit or OVS limit
+configured.
+
+Output of slowhttptest + OVS limit at 52000 connections:
+
+ slow HTTP test status on 340th second:
+ initializing:        0
+ pending:             432
+ connected:           51998
+ error:               0
+ closed:              0
+ service available:   YES
+
+Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
+Reported-by: Aleksandra Rukomoinikova <ARukomoinikova@k2.cloud>
+Closes: https://lore.kernel.org/netfilter/b2064e7b-0776-4e14-adb6-c68080987471@k2.cloud/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c      | 18 +++++++++++++++---
- drivers/accel/amdxdna/aie2_message.c  |  1 +
- drivers/accel/amdxdna/aie2_msg_priv.h |  3 ++-
- drivers/accel/amdxdna/aie2_pci.h      |  1 +
- drivers/accel/amdxdna/amdxdna_ctx.h   |  1 +
- drivers/accel/amdxdna/npu4_regs.c     |  1 +
- 6 files changed, 21 insertions(+), 4 deletions(-)
+ include/net/netfilter/nf_conntrack_count.h |  1 +
+ net/netfilter/nf_conncount.c               | 15 ++++++++++-----
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index 2c36ed7e9639c..c4a58c00e442a 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -471,6 +471,12 @@ static int aie2_alloc_resource(struct amdxdna_hwctx *hwctx)
- 	struct alloc_requests *xrs_req;
- 	int ret;
+diff --git a/include/net/netfilter/nf_conntrack_count.h b/include/net/netfilter/nf_conntrack_count.h
+index 52a06de41aa0f..cf0166520cf33 100644
+--- a/include/net/netfilter/nf_conntrack_count.h
++++ b/include/net/netfilter/nf_conntrack_count.h
+@@ -13,6 +13,7 @@ struct nf_conncount_list {
+ 	u32 last_gc;		/* jiffies at most recent gc */
+ 	struct list_head head;	/* connections with the same filtering key */
+ 	unsigned int count;	/* length of list */
++	unsigned int last_gc_count; /* length of list at most recent gc */
+ };
  
-+	if (AIE2_FEATURE_ON(xdna->dev_handle, AIE2_TEMPORAL_ONLY)) {
-+		hwctx->num_unused_col = xdna->dev_handle->total_col - hwctx->num_col;
-+		hwctx->num_col = xdna->dev_handle->total_col;
-+		return aie2_create_context(xdna->dev_handle, hwctx);
-+	}
-+
- 	xrs_req = kzalloc(sizeof(*xrs_req), GFP_KERNEL);
- 	if (!xrs_req)
- 		return -ENOMEM;
-@@ -502,9 +508,15 @@ static void aie2_release_resource(struct amdxdna_hwctx *hwctx)
- 	struct amdxdna_dev *xdna = hwctx->client->xdna;
- 	int ret;
+ struct nf_conncount_data *nf_conncount_init(struct net *net, unsigned int keylen);
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 8487808c87614..288936f5c1bf9 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -34,8 +34,9 @@
  
--	ret = xrs_release_resource(xdna->xrs_hdl, (uintptr_t)hwctx);
--	if (ret)
--		XDNA_ERR(xdna, "Release AIE resource failed, ret %d", ret);
-+	if (AIE2_FEATURE_ON(xdna->dev_handle, AIE2_TEMPORAL_ONLY)) {
-+		ret = aie2_destroy_context(xdna->dev_handle, hwctx);
-+		if (ret)
-+			XDNA_ERR(xdna, "Destroy temporal only context failed, ret %d", ret);
-+	} else {
-+		ret = xrs_release_resource(xdna->xrs_hdl, (uintptr_t)hwctx);
-+		if (ret)
-+			XDNA_ERR(xdna, "Release AIE resource failed, ret %d", ret);
-+	}
+ #define CONNCOUNT_SLOTS		256U
+ 
+-#define CONNCOUNT_GC_MAX_NODES	8
+-#define MAX_KEYLEN		5
++#define CONNCOUNT_GC_MAX_NODES		8
++#define CONNCOUNT_GC_MAX_COLLECT	64
++#define MAX_KEYLEN			5
+ 
+ /* we will save the tuples of all connections we care about */
+ struct nf_conncount_tuple {
+@@ -182,12 +183,13 @@ static int __nf_conncount_add(struct net *net,
+ 		goto out_put;
+ 	}
+ 
+-	if ((u32)jiffies == list->last_gc)
++	if ((u32)jiffies == list->last_gc &&
++	    (list->count - list->last_gc_count) < CONNCOUNT_GC_MAX_COLLECT)
+ 		goto add_new_node;
+ 
+ 	/* check the saved connections */
+ 	list_for_each_entry_safe(conn, conn_n, &list->head, node) {
+-		if (collect > CONNCOUNT_GC_MAX_NODES)
++		if (collect > CONNCOUNT_GC_MAX_COLLECT)
+ 			break;
+ 
+ 		found = find_or_evict(net, list, conn);
+@@ -230,6 +232,7 @@ static int __nf_conncount_add(struct net *net,
+ 		nf_ct_put(found_ct);
+ 	}
+ 	list->last_gc = (u32)jiffies;
++	list->last_gc_count = list->count;
+ 
+ add_new_node:
+ 	if (WARN_ON_ONCE(list->count > INT_MAX)) {
+@@ -277,6 +280,7 @@ void nf_conncount_list_init(struct nf_conncount_list *list)
+ 	spin_lock_init(&list->list_lock);
+ 	INIT_LIST_HEAD(&list->head);
+ 	list->count = 0;
++	list->last_gc_count = 0;
+ 	list->last_gc = (u32)jiffies;
  }
+ EXPORT_SYMBOL_GPL(nf_conncount_list_init);
+@@ -316,13 +320,14 @@ static bool __nf_conncount_gc_list(struct net *net,
+ 		}
  
- static int aie2_ctx_syncobj_create(struct amdxdna_hwctx *hwctx)
-diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
-index 9e55e66830ead..273d6af9f6f52 100644
---- a/drivers/accel/amdxdna/aie2_message.c
-+++ b/drivers/accel/amdxdna/aie2_message.c
-@@ -211,6 +211,7 @@ int aie2_create_context(struct amdxdna_dev_hdl *ndev, struct amdxdna_hwctx *hwct
- 	req.aie_type = 1;
- 	req.start_col = hwctx->start_col;
- 	req.num_col = hwctx->num_col;
-+	req.num_unused_col = hwctx->num_unused_col;
- 	req.num_cq_pairs_requested = 1;
- 	req.pasid = hwctx->client->pasid;
- 	req.context_priority = 2;
-diff --git a/drivers/accel/amdxdna/aie2_msg_priv.h b/drivers/accel/amdxdna/aie2_msg_priv.h
-index 1c957a6298d39..cc912b7899ce5 100644
---- a/drivers/accel/amdxdna/aie2_msg_priv.h
-+++ b/drivers/accel/amdxdna/aie2_msg_priv.h
-@@ -112,7 +112,8 @@ struct create_ctx_req {
- 	__u32	aie_type;
- 	__u8	start_col;
- 	__u8	num_col;
--	__u16	reserved;
-+	__u8    num_unused_col;
-+	__u8	reserved;
- 	__u8	num_cq_pairs_requested;
- 	__u8	reserved1;
- 	__u16	pasid;
-diff --git a/drivers/accel/amdxdna/aie2_pci.h b/drivers/accel/amdxdna/aie2_pci.h
-index e08ec2fd44daa..4fdc032bc171b 100644
---- a/drivers/accel/amdxdna/aie2_pci.h
-+++ b/drivers/accel/amdxdna/aie2_pci.h
-@@ -231,6 +231,7 @@ struct aie2_hw_ops {
- enum aie2_fw_feature {
- 	AIE2_NPU_COMMAND,
- 	AIE2_PREEMPT,
-+	AIE2_TEMPORAL_ONLY,
- 	AIE2_FEATURE_MAX
- };
+ 		nf_ct_put(found_ct);
+-		if (collected > CONNCOUNT_GC_MAX_NODES)
++		if (collected > CONNCOUNT_GC_MAX_COLLECT)
+ 			break;
+ 	}
  
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.h b/drivers/accel/amdxdna/amdxdna_ctx.h
-index b6151244d64fe..b29449a92f607 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.h
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.h
-@@ -98,6 +98,7 @@ struct amdxdna_hwctx {
- 	u32				*col_list;
- 	u32				start_col;
- 	u32				num_col;
-+	u32				num_unused_col;
- #define HWCTX_STAT_INIT  0
- #define HWCTX_STAT_READY 1
- #define HWCTX_STAT_STOP  2
-diff --git a/drivers/accel/amdxdna/npu4_regs.c b/drivers/accel/amdxdna/npu4_regs.c
-index 986a5f28ba245..2ceedfe583a8c 100644
---- a/drivers/accel/amdxdna/npu4_regs.c
-+++ b/drivers/accel/amdxdna/npu4_regs.c
-@@ -89,6 +89,7 @@ const struct dpm_clk_freq npu4_dpm_clk_table[] = {
- const struct aie2_fw_feature_tbl npu4_fw_feature_table[] = {
- 	{ .feature = AIE2_NPU_COMMAND, .min_minor = 15 },
- 	{ .feature = AIE2_PREEMPT, .min_minor = 12 },
-+	{ .feature = AIE2_TEMPORAL_ONLY, .min_minor = 12 },
- 	{ 0 }
- };
+ 	if (!list->count)
+ 		ret = true;
+ 	list->last_gc = (u32)jiffies;
++	list->last_gc_count = list->count;
  
+ 	return ret;
+ }
 -- 
 2.51.0
 
