@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA9C1FC7;
-	Wed, 25 Feb 2026 01:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8091FC7;
+	Wed, 25 Feb 2026 01:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983896; cv=none; b=PJru5B7vX8xLgci3lR67vACR/WyAe1awej6CPsLk2GfgOEijGQp0xiqiHnyhY3tWC+CKkGW3MDIaEh4b/PqYtx+y+Jxh2Ll1HuuIsD1sC4Kf7p9QzjLrUKrJGvbGJ0iRr3piVxbNQi125G50kffp6wpRM2dw6DZTfQiSKmkcTqE=
+	t=1771983897; cv=none; b=VjVw33jdfpd7dKvHQ0q/oR6oE9QA5vku9VHrRXNkVd+LY1hrPN3W3scZnRcltih8RS7yJcc1mFhWJV7P9XY8gOmxRtk6JrQFWIx+NudqyKAGk9T9Z2cDVw+uOptOLCWS25Fl3tOxAvAqXhu4HR6vYf0UciknuLfmUQUPhLUQG5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983896; c=relaxed/simple;
-	bh=TDhr7KS871rrqEjgnXz2/gRZjR9VQzqcke5nLohzajI=;
+	s=arc-20240116; t=1771983897; c=relaxed/simple;
+	bh=pW+rBh22cxtrNjhT+jOpJvLMKmXRniaRs8UcTzTUXSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0Qshe68+d4ei/NqxEPQBdUAfII0xfOQC+jybJrDecIlMdE0XWQCVSXplOH69oNPycYB0q/+J43t8UxCswjKfNzIuICPqmZFPMJz78QzGN6/sEMfcMBEcg4BaPeLS7yLrwWICJTzz75hzMBq8FEdkWGg/B9ypo23narw39o54Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gom7BOeC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m/KfTGNTZb1Nt3zxisIqJlRIYjCaUVsQ05na7HWUsqZsvhj9anN+euClUsuUyi3+YEEbdajKTWsJWpWZE+smoEkJ4bUyBOCZ7LP0Q/jZ9X5sGAW38BBAUvWqV8wk+TmAEONXnY6oDa+1GYVkMLgnOuFtOYSPYhkxM8QexnNs0yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgiMGTwA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gom7BOeC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7BCC116D0;
-	Wed, 25 Feb 2026 01:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgiMGTwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE98C116D0;
+	Wed, 25 Feb 2026 01:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983895;
-	bh=TDhr7KS871rrqEjgnXz2/gRZjR9VQzqcke5nLohzajI=;
+	s=korg; t=1771983897;
+	bh=pW+rBh22cxtrNjhT+jOpJvLMKmXRniaRs8UcTzTUXSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gom7BOeCN4RNu3Oq6y5MqktYHwPcLzOgdsS/bUsoQJLoOO15INdr/F2H1o2hM3P5x
-	 5jSjNSrxVJHkRuGZgWtQtP3X3UoUQjoY81jMN8hotZ5Zk2l1D+8LkADohWRwBLdALV
-	 uvWtwnt30jP5mGsmfER30QRkQMwFsXNmM24BvQhs=
+	b=MgiMGTwA6VWJwoKJHgHsZ7vOos6n3THsYp8Fnvd3X2om+Rblxa2xonHGT/11TmCE/
+	 /YFvLMqq7oof8yWtg/FVSkJ3sGe3WZuixiuDmK1tRB1i4Pl8pua+JUAPRx6X0i/j7S
+	 rwTSIRdEzomKVbF6brpT6qodQpadZzSOAkvYMrkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 167/641] reset: canaan: k230: drop OF dependency and enable by default
-Date: Tue, 24 Feb 2026 17:18:13 -0800
-Message-ID: <20260225012353.103254761@linuxfoundation.org>
+Subject: [PATCH 6.18 168/641] drm/panthor: Recover from panthor_gpu_flush_caches() failures
+Date: Tue, 24 Feb 2026 17:18:14 -0800
+Message-ID: <20260225012353.124588214@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,34 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhui Liu <junhui.liu@pigmoral.tech>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit c7a5e01e229d21e0560d78bd645b4f7398667ce4 ]
+[ Upstream commit 3c0a60195b37af83bbbaf223cd3a78945bace49e ]
 
-The driver doesn't use any symbols depending on CONFIG_OF, so drop the
-dependency. Also, enable it by default when ARCH_CANAAN is selected.
+We have seen a few cases where the whole memory subsystem is blocked
+and flush operations never complete. When that happens, we want to:
 
-Fixes: 360a7a647759 ("reset: canaan: add reset driver for Kendryte K230")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+- schedule a reset, so we can recover from this situation
+- in the reset path, we need to reset the pending_reqs so we can send
+  new commands after the reset
+- if more panthor_gpu_flush_caches() operations are queued after
+  the timeout, we skip them and return -EIO directly to avoid needless
+  waits (the memory block won't miraculously work again)
+
+Note that we drop the WARN_ON()s because these hangs can be triggered
+with buggy GPU jobs created by the UMD, and there's no way we can
+prevent it. We do keep the error messages though.
+
+v2:
+- New patch
+
+v3:
+- Collect R-b
+- Explicitly mention the fact we dropped the WARN_ON()s in the commit
+  message
+
+v4:
+- No changes
+
+Fixes: 5cd894e258c4 ("drm/panthor: Add the GPU logical block")
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20251128084841.3804658-4-boris.brezillon@collabora.com
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/reset/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panthor/panthor_gpu.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
-index 78b7078478d46..b3b9e0f9d8c48 100644
---- a/drivers/reset/Kconfig
-+++ b/drivers/reset/Kconfig
-@@ -150,7 +150,7 @@ config RESET_K210
- config RESET_K230
- 	tristate "Reset controller driver for Canaan Kendryte K230 SoC"
- 	depends on ARCH_CANAAN || COMPILE_TEST
--	depends on OF
-+	default ARCH_CANAAN
- 	help
- 	  Support for the Canaan Kendryte K230 RISC-V SoC reset controller.
- 	  Say Y if you want to control reset signals provided by this
+diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
+index db69449a5be09..b92c9e738dbfa 100644
+--- a/drivers/gpu/drm/panthor/panthor_gpu.c
++++ b/drivers/gpu/drm/panthor/panthor_gpu.c
+@@ -259,38 +259,42 @@ int panthor_gpu_l2_power_on(struct panthor_device *ptdev)
+ int panthor_gpu_flush_caches(struct panthor_device *ptdev,
+ 			     u32 l2, u32 lsc, u32 other)
+ {
+-	bool timedout = false;
+ 	unsigned long flags;
++	int ret = 0;
+ 
+ 	/* Serialize cache flush operations. */
+ 	guard(mutex)(&ptdev->gpu->cache_flush_lock);
+ 
+ 	spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
+-	if (!drm_WARN_ON(&ptdev->base,
+-			 ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
++	if (!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
+ 		ptdev->gpu->pending_reqs |= GPU_IRQ_CLEAN_CACHES_COMPLETED;
+ 		gpu_write(ptdev, GPU_CMD, GPU_FLUSH_CACHES(l2, lsc, other));
++	} else {
++		ret = -EIO;
+ 	}
+ 	spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
+ 
++	if (ret)
++		return ret;
++
+ 	if (!wait_event_timeout(ptdev->gpu->reqs_acked,
+ 				!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED),
+ 				msecs_to_jiffies(100))) {
+ 		spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
+ 		if ((ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED) != 0 &&
+ 		    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_CLEAN_CACHES_COMPLETED))
+-			timedout = true;
++			ret = -ETIMEDOUT;
+ 		else
+ 			ptdev->gpu->pending_reqs &= ~GPU_IRQ_CLEAN_CACHES_COMPLETED;
+ 		spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
+ 	}
+ 
+-	if (timedout) {
++	if (ret) {
++		panthor_device_schedule_reset(ptdev);
+ 		drm_err(&ptdev->base, "Flush caches timeout");
+-		return -ETIMEDOUT;
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ /**
+@@ -330,6 +334,7 @@ int panthor_gpu_soft_reset(struct panthor_device *ptdev)
+ 		return -ETIMEDOUT;
+ 	}
+ 
++	ptdev->gpu->pending_reqs = 0;
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
