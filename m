@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F13B18B0A;
-	Wed, 25 Feb 2026 01:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EFF18B0A;
+	Wed, 25 Feb 2026 01:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983380; cv=none; b=opS98CgWDRCxJogkBRMHvKlRdY05KlGPRWAc320Gcjq1YI8rtxQMnsrCEtny0RghbEQS92xRm0Pwd0XPHNAqK6UXXkQj4yfyd04gs0fnOD7pQBW4X6ZdkLOnoWnfBKC1BWTR/MuIHOIGbPSXN2SFR2Eo6pMLzqqOmTZa+qaEq7s=
+	t=1771983381; cv=none; b=S85bc9Ugm6mnV6as0m0avuDr+eOKBZGtMPd2M/ytpC5xMlp3SSaUdnACoxU8pA1fC8SAz08YpdMCnQQCwLJpxngqDqJ3VukTTjReFznploMCd57cNCN6zsCgUxxN1c56ElOcCGEp+Il1CZuIbufk63eDYUL2U/5RsGB1VnJLPLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983380; c=relaxed/simple;
-	bh=42b7k8eY0+23K/iluDarGj7GVbw4o1UloqtJXnY/49k=;
+	s=arc-20240116; t=1771983381; c=relaxed/simple;
+	bh=7+1XSN3rX1s5pBtvAhWwI0iCXcOH1B73fuqNJQyLhf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cp5ZQWcdGq4IgiOVbaZfrbuhH7TjoQrmipX3JVI3y1+Q8BXnrM28ABXMNyFffibgKvvcdTi/k0DOhYKGRP0LkmnUArakAxHim8v849H7YPO2Be9AzZ+kTJ7exMmxs/zImisZrsS2hBxDAAdchvPcZAV6dpo+FBW/SsvEwttM030=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esShA4X4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cPN6KjoWrUcIgAhaDp9dK7HOPW6aOINK5DOkqeKUPLaK0EiozwMemw14b1vclxYEImkHM0ZSfFxfgqMUlDKjxkQwO5zz55mFIltepdDPYMGn4sIyAzk+WZEOal98OTCbl/w70WZDtxUUIsQXhUdonUEckCpw/IWIpSNfHmX0PNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3lZZdzr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esShA4X4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4282AC116D0;
-	Wed, 25 Feb 2026 01:36:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3lZZdzr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56130C116D0;
+	Wed, 25 Feb 2026 01:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983380;
-	bh=42b7k8eY0+23K/iluDarGj7GVbw4o1UloqtJXnY/49k=;
+	s=korg; t=1771983381;
+	bh=7+1XSN3rX1s5pBtvAhWwI0iCXcOH1B73fuqNJQyLhf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=esShA4X4EMmjzk+cDZzRS/jNme9m3+hufKixekqKqiyVj3pu0JVwfkp1T9lMilRqZ
-	 6GWraILRrS7m2ae+91P4tAgkLIwswZsYQd8zKH+Vy/FGjfk8ZuhPy2VjUxcDZeZiuU
-	 fAlLbJqjOo4PImFa7slNFT4867Hwu+yz9zIoRaY0=
+	b=v3lZZdzrYPCSdrs1c7hlhCq4UvNvGgMgVd9vsf5i3rkJEGdJ+RjNgRPCt5mPNyt3C
+	 JDChoVqH16o3doSc0fh5KnMhYC0UMAunGlIZsz8zwoLCPwsKJb20nZKqhq/TvM+q84
+	 Q2XirZPDQneQpypb2Sd4P6wG0UXLIGeqNQqKMp3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 504/781] tracing: Remove duplicate ENABLE_EVENT_STR and DISABLE_EVENT_STR macros
-Date: Tue, 24 Feb 2026 17:20:13 -0800
-Message-ID: <20260225012412.164777372@linuxfoundation.org>
+Subject: [PATCH 6.19 505/781] remoteproc: imx_rproc: Use strstarts for "rsc-table" check
+Date: Tue, 24 Feb 2026 17:20:14 -0800
+Message-ID: <20260225012412.189965997@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,41 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-[ Upstream commit 9df0e49c5b9b8d051529be9994e4f92f2d20be6f ]
+[ Upstream commit 93f51b9182a107cf5f5e8a7802cd90df0c9a7154 ]
 
-The macros ENABLE_EVENT_STR and DISABLE_EVENT_STR were added to trace.h so
-that more than one file can have access to them, but was never removed
-from their original location. Remove the duplicates.
+The resource name may include an address suffix, for example:
+rsc-table@1fff8000.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://patch.msgid.link/20260126130037.4ba201f9@gandalf.local.home
-Fixes: d0bad49bb0a09 ("tracing: Add enable_hist/disable_hist triggers")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+To handle such cases, use strstarts() instead of strcmp() when checking
+for "rsc-table".
+
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Fixes: 67a7bc7f0358 ("remoteproc: Use of_reserved_mem_region_* functions for "memory-region"")
+Link: https://lore.kernel.org/r/20251208233302.684139-1-shenwei.wang@nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/remoteproc/imx_rproc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 137b4d9bb116d..2c6d3e33b9fb4 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -3963,11 +3963,6 @@ void trace_put_event_file(struct trace_event_file *file)
- EXPORT_SYMBOL_GPL(trace_put_event_file);
- 
- #ifdef CONFIG_DYNAMIC_FTRACE
--
--/* Avoid typos */
--#define ENABLE_EVENT_STR	"enable_event"
--#define DISABLE_EVENT_STR	"disable_event"
--
- struct event_probe_data {
- 	struct trace_event_file	*file;
- 	unsigned long			count;
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index 3be8790c14a2c..33f21ab24c921 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -694,7 +694,7 @@ static int imx_rproc_addr_init(struct imx_rproc *priv,
+ 		}
+ 		priv->mem[b].sys_addr = res.start;
+ 		priv->mem[b].size = resource_size(&res);
+-		if (!strcmp(res.name, "rsc-table"))
++		if (strstarts(res.name, "rsc-table"))
+ 			priv->rsc_table = priv->mem[b].cpu_addr;
+ 		b++;
+ 	}
 -- 
 2.51.0
 
