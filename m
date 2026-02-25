@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E415E1EB5E1;
-	Wed, 25 Feb 2026 01:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D260F1EB5E1;
+	Wed, 25 Feb 2026 01:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983372; cv=none; b=F0pP14pXX0hF/p9WBV6yIR305DsaJYz9Swm14RpQ1Xsgmmb5ywKoGjvPPRfyAcC9d7a2ylnHNGpZ3Cy1CbAxPBmjnQZsTMb1XlLuP45c8nnTIRXqGKiLm0Z8QtsBcrvja/gaPsp83Kpe7b9HL3D/r4V40B7RvtVyHMn4X17+BFQ=
+	t=1771983372; cv=none; b=rCIbwIijITKX44ck9u8wpaVCjiWjLKcKa7aGzgBbjv2Qqm5bdtQyPkcx14abEuXHhvMjoSQAHhUdLiRVBp6TC7EFutMBM1SnOAuEKNEC6G+QJRhiEfuqMY36K5E7Ffl10YWWfcqA2KDyPSugpu2cjLI/dKojv7Ac9MjrJ6ERyjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771983372; c=relaxed/simple;
-	bh=/cJFzM6aRijBpKBOt1K8PtmnyDkb54MlE7zxJYgn+n4=;
+	bh=f9C/d4mo/GSdTxN9fTAtnwCqW7HCtQ2ZXMU48avg9uE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NogGrvvSUJ1pIA4nOx1XGCDyb4WEYkqhnHNgL4r8mwCA59rS+QLc0qRn0XSd4U/yEypjBy3KCcGU9aapbJSO6Gtwc1LtzABSFXvFLYujwkDxwWiX5e9lY/+EeA0+EqY1VPAI+5YrhzTpcrUlVr1UV7OTZZxCdFCT3yWFo8nHekg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19bApyUQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m/IZj3ja6MyYU2pg/xleztA+64j9BkiJijjXaOSlnq+BwJt9ByhtfTwR3UjZwSs5+8p9rxLGfrVx/7s4AVJ+zIEfZqHFqtS0nqBh8eBD30JxqKye6Q+sTIeeE3A5ZK0+Tvo8wOaiMR3u+AYJdmLRXzI0QOqa6/YPpbuo9t1AJKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V339VKSO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19bApyUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A479AC19424;
-	Wed, 25 Feb 2026 01:36:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V339VKSO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8743DC19423;
+	Wed, 25 Feb 2026 01:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983371;
-	bh=/cJFzM6aRijBpKBOt1K8PtmnyDkb54MlE7zxJYgn+n4=;
+	s=korg; t=1771983372;
+	bh=f9C/d4mo/GSdTxN9fTAtnwCqW7HCtQ2ZXMU48avg9uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19bApyUQMwpb1DMDB5c6HbsJjpCJ4m5HqWo1Bm+lsDw8FFmiBm2yjZt76EasjqRmO
-	 5PUiUmpOHqCfZQygRMgGchILEnacbEDpQ+mO1gwEAjygXtAppy7hi+uMcnhmmGXElQ
-	 caxbYgpU9l8oVVXfkg0mq/CEFoB7kSTgg5tcTYiI=
+	b=V339VKSOmyL2BlhYc9pIkS2qkoqeBLP7+ywA3ZnaNSU2GI41YxbBi2m5ebtHsjpLA
+	 3c6ki3k+3nn3LvJNtji9PGlOmeBywcDDmM6vOOhJf0QVZsXET02sbkt6FS6ClgrK1u
+	 URXE6o5h6bTM47LLwmNOPLiaeUgzd1k8f/YpiTQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 497/781] pNFS: fix a missing wake up while waiting on NFS_LAYOUT_DRAIN
-Date: Tue, 24 Feb 2026 17:20:06 -0800
-Message-ID: <20260225012411.995709041@linuxfoundation.org>
+Subject: [PATCH 6.19 498/781] scsi: smartpqi: Fix memory leak in pqi_report_phys_luns()
+Date: Tue, 24 Feb 2026 17:20:07 -0800
+Message-ID: <20260225012412.017241961@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,59 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 5248d8474e594d156bee1ed10339cc16e207a28b ]
+[ Upstream commit 41b37312bd9722af77ec7817ccf22d7a4880c289 ]
 
-It is possible to have a task get stuck on waiting on the
-NFS_LAYOUT_DRAIN in the following scenario
+pqi_report_phys_luns() fails to release the rpl_list buffer when
+encountering an unsupported data format or when the allocation for
+rpl_16byte_wwid_list fails. These early returns bypass the cleanup logic,
+leading to memory leaks.
 
-1. cpu a: waiter test NFS_LAYOUT_DRAIN (1) and plh_outstanding (1)
-2. cpu b: atomic_dec_and_test() -> clear bit -> wake up
-3. cpu c: sets NFS_LAYOUT_DRAIN again
-4. cpu a: calls wait_on_bit() sleeps forever.
+Consolidate the error handling by adding an out_free_rpl_list label and use
+goto statements to ensure rpl_list is consistently freed on failure.
 
-To expand on this we have say 2 outstanding pnfs write IO that get
-ESTALE which causes both to call pnfs_destroy_layout() and set the
-NFS_LAYOUT_DRAIN bit but the 1st one doesn't call the
-pnfs_put_layout_hdr() yet (as that would prevent the 2nd ESTALE write
-from trying to call pnfs_destroy_layout()). If the 1st ESTALE write
-is the one that initially sets the NFS_LAYOUT_DRAIN so that new IO
-on this file initiates new LAYOUTGET. Another new write would find
-NFS_LAYOUT_DRAIN set and phl_outstanding>0 (step 1) and would
-wait_on_bit(). LAYOUTGET completes doing step 2. Now, the 2nd of
-ESTALE writes is calling pnfs_destory_layout() and set the
-NFS_LAYOUT_DRAIN bit (step 3). Finally, the waiting write wakes up
-to check the bit and goes back to sleep.
+Compile tested only. Issue found using a prototype static analysis tool and
+code review.
 
-The problem revolves around the fact that if NFS_LAYOUT_INVALID_STID
-was already set, it should not do the work of
-pnfs_mark_layout_stateid_invalid(), thus NFS_LAYOUT_DRAIN will not
-be set more than once for an invalid layout.
-
-Suggested-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Fixes: 880265c77ac4 ("pNFS: Avoid a live lock condition in pnfs_update_layout()")
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: 28ca6d876c5a ("scsi: smartpqi: Add extended report physical LUNs")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Tested-by: Don Brace <don.brace@microchip.com>
+Acked-by: Don Brace <don.brace@microchip.com>
+Link: https://patch.msgid.link/20260131093641.1008117-1-zilin@seu.edu.cn
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index cff225721d1ce..ff8483d3373a8 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -463,7 +463,8 @@ pnfs_mark_layout_stateid_invalid(struct pnfs_layout_hdr *lo,
- 	};
- 	struct pnfs_layout_segment *lseg, *next;
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index fe549e2b7c940..c829d9590558d 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -1241,7 +1241,8 @@ static inline int pqi_report_phys_luns(struct pqi_ctrl_info *ctrl_info, void **b
+ 			dev_err(&ctrl_info->pci_dev->dev,
+ 				"RPL returned unsupported data format %u\n",
+ 				rpl_response_format);
+-			return -EINVAL;
++			rc = -EINVAL;
++			goto out_free_rpl_list;
+ 		} else {
+ 			dev_warn(&ctrl_info->pci_dev->dev,
+ 				"RPL returned extended format 2 instead of 4\n");
+@@ -1253,8 +1254,10 @@ static inline int pqi_report_phys_luns(struct pqi_ctrl_info *ctrl_info, void **b
  
--	set_bit(NFS_LAYOUT_INVALID_STID, &lo->plh_flags);
-+	if (test_and_set_bit(NFS_LAYOUT_INVALID_STID, &lo->plh_flags))
-+		return !list_empty(&lo->plh_segs);
- 	clear_bit(NFS_INO_LAYOUTCOMMIT, &NFS_I(lo->plh_inode)->flags);
- 	list_for_each_entry_safe(lseg, next, &lo->plh_segs, pls_list)
- 		pnfs_clear_lseg_state(lseg, lseg_list);
+ 	rpl_16byte_wwid_list = kmalloc(struct_size(rpl_16byte_wwid_list, lun_entries,
+ 						   num_physicals), GFP_KERNEL);
+-	if (!rpl_16byte_wwid_list)
+-		return -ENOMEM;
++	if (!rpl_16byte_wwid_list) {
++		rc = -ENOMEM;
++		goto out_free_rpl_list;
++	}
+ 
+ 	put_unaligned_be32(num_physicals * sizeof(struct report_phys_lun_16byte_wwid),
+ 		&rpl_16byte_wwid_list->header.list_length);
+@@ -1275,6 +1278,10 @@ static inline int pqi_report_phys_luns(struct pqi_ctrl_info *ctrl_info, void **b
+ 	*buffer = rpl_16byte_wwid_list;
+ 
+ 	return 0;
++
++out_free_rpl_list:
++	kfree(rpl_list);
++	return rc;
+ }
+ 
+ static inline int pqi_report_logical_luns(struct pqi_ctrl_info *ctrl_info, void **buffer)
 -- 
 2.51.0
 
