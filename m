@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B45F2690EC;
-	Wed, 25 Feb 2026 01:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6228A2690EC;
+	Wed, 25 Feb 2026 01:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983688; cv=none; b=D+f8WgUkpTz/jptx8xHVeahYXRHFJDg4MpYDiUtiHioLI0ujq3qnzkvHewDxBvLYscoaLdZz0m/j8mCieidt+HScacMrv2YJKqyTuVqPLRAocuxWIsIBUOfnbtTZDLH6AeG6SfI/Zs0o9Ci4v/AfHYp0XcwenwwK3nER/Us97v0=
+	t=1771983689; cv=none; b=gBtxQQktQfjh4sGL0QvNTZfmnrljxgB7DhdNfTf19IQhAXooLYNiMgOXN4WubyYhHz2KnesSSBOKKDGZQMSmAR4DK6dChN2KKc0gQxlruz0JkbMLDyWzTOCmZtACXnxycu2luWms8iVv7/p4EjgZYECepHPrIGJHfmFhCREMpmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983688; c=relaxed/simple;
-	bh=jz+UEefKkEvT/7EDvNUJ/xRzswZViTuq9fJD6O1DFPY=;
+	s=arc-20240116; t=1771983689; c=relaxed/simple;
+	bh=oTlZXuYVf91GUgB56nTHMbgIuYh1wMHDB1BZdL0CBKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYdnF4H1ukSYnzRQa99rE3d3Rke6WsApDpGU56WHNrDPpPDAtLFV3HdX65rXJhuI1ixlA7asBBtzkly/sACMXXkL1UxuJF2/UjRkzh2Q1Euu3ZtyiDYmRqwLXAJKkS2mSm5ckAFkQOjetFJ+3oqH6UJaXzpVm+fodxSjR7tQ1iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Txf5oI5U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Wns5FsqCQ4J+sRtqdqca3BSZuIYdeGLULsa7eqDSUbbBUjbuRz6PJumqA2fhNLVU3TEuMrkAzVeYGIl0ZzvfidysfDz1k/+5kj1eX0UlPdfSdi7A4dreXui9eB+6lYSxAxgFh9bBMQIXosqegpI36zspC3W1QbLdlS7U/rj2uWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npy+Kkrk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Txf5oI5U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1FDC116D0;
-	Wed, 25 Feb 2026 01:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npy+Kkrk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22891C116D0;
+	Wed, 25 Feb 2026 01:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983688;
-	bh=jz+UEefKkEvT/7EDvNUJ/xRzswZViTuq9fJD6O1DFPY=;
+	s=korg; t=1771983689;
+	bh=oTlZXuYVf91GUgB56nTHMbgIuYh1wMHDB1BZdL0CBKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Txf5oI5UWHVw6bzKhk1H6TRY7EpQ0s/LK1H8ii03nnXDL1e0cdJHrWyx0nz9Inflt
-	 ji9lg5smpOccMPdUNhMRUSm2bP4+tsHhLcGP/412l0o9oCYejC16F2HIk5wDGo1oRi
-	 o9p/lpDcRQIyheKrTeWf+SVSCOgFbYhcTQMK/WYI=
+	b=npy+KkrkFD7QISwlNHpoHdbHQyqzfzo02ayZYEv8r0ztVl7D1DXQJTBe29FE+8EW9
+	 KXh8a5LKQ9FAAmtnPSt09LGvSlTwBa9bbVKpVnfe98NzsYKqHpsc/QMxVga1vIrOXY
+	 9NSQJZmVQFTf2N357MG0r/491/h+xYBbJBof2YDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nihal Kumar Gupta <quic_nihalkum@quicinc.com>,
-	Vikram Sharma <quic_vikramsa@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.19 771/781] dt-bindings: media: qcom,qcs8300-camss: Add missing power supplies
-Date: Tue, 24 Feb 2026 17:24:40 -0800
-Message-ID: <20260225012418.627910241@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mauro Rossi <issor.oruam@gmail.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 745/781] drm/amd/display: Dont call find_analog_engine() twice
+Date: Tue, 24 Feb 2026 17:24:14 -0800
+Message-ID: <20260225012417.998103191@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -47,68 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vikram Sharma <quic_vikramsa@quicinc.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 555e882051a3a7ecc2bcee2b2047822249dcd074 upstream.
+[ Upstream commit 613b1737abe1bd0a65b49851e777231302095e28 ]
 
-Add missing vdda-phy-supply and vdda-pll-supply in the (monaco)qcs8300
-camss binding. While enabling imx412 sensor for qcs8300 we see a need
-to add these supplies which were missing in initial submission.
+The analog engine is already there in the link_analog_engine
+variable and assigned to enc_init_data.analog_engine already.
 
-Fixes: 634a2958fae30 ("media: dt-bindings: Add qcom,qcs8300-camss compatible")
-Cc: stable@vger.kernel.org
-Co-developed-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+I suspect this was a rebase mistake.
+
+Fixes: 436d0d22aa70 ("drm/amd/display: Pass proper DAC encoder ID to VBIOS")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Tested-by: Mauro Rossi <issor.oruam@gmail.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml |   13 ++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/amd/display/dc/link/link_factory.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
-@@ -120,6 +120,14 @@ properties:
-     items:
-       - const: top
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_factory.c b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
+index d9cb6b6714009..9003e0d314e00 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_factory.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
+@@ -648,7 +648,6 @@ static bool construct_phy(struct dc_link *link,
+ 	enc_init_data.channel = get_ddc_line(link);
+ 	enc_init_data.hpd_source = get_hpd_line(link);
+ 	enc_init_data.transmitter = transmitter_from_encoder;
+-	enc_init_data.analog_engine = find_analog_engine(link, &enc_init_data.analog_encoder);
+ 	enc_init_data.encoder = link_encoder;
+ 	enc_init_data.analog_engine = link_analog_engine;
  
-+  vdda-phy-supply:
-+    description:
-+      Phandle to a 0.88V regulator supply to CSI PHYs.
-+
-+  vdda-pll-supply:
-+    description:
-+      Phandle to 1.2V regulator supply to CSI PHYs pll block.
-+
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
- 
-@@ -160,6 +168,8 @@ required:
-   - power-domains
-   - power-domain-names
-   - ports
-+  - vdda-phy-supply
-+  - vdda-pll-supply
- 
- additionalProperties: false
- 
-@@ -328,6 +338,9 @@ examples:
-             power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-             power-domain-names = "top";
- 
-+            vdda-phy-supply = <&vreg_l4a_0p88>;
-+            vdda-pll-supply = <&vreg_l1c_1p2>;
-+
-             ports {
-                 #address-cells = <1>;
-                 #size-cells = <0>;
+-- 
+2.51.0
+
 
 
