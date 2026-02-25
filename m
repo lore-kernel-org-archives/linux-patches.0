@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74EC29ACC0;
-	Wed, 25 Feb 2026 01:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5712BD00C;
+	Wed, 25 Feb 2026 01:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983800; cv=none; b=dohmxLVaoPbcE5ZzTjizirc9A/hEzrmyVb59qiEX16t/DCWW7yovy/SLNE1NH42MF3LflRg3dwszGeUtbIDKkihGQEJPT36+ERuxRFDhaw/amg5gDoq6OLZqn9ifVLOVJap7LwpVy9WYqMhNEPqRGP4rBd1r2WonygeshkBjwCo=
+	t=1771983802; cv=none; b=FwI6TWc4xEBbayYVoMC/fhjfMM6yDkkC8gWD0XE9lXdptrn87y5/87A6/+jrf+I9asN0maMs9yRMSmhqCmB52wZC8Xs4/5kHVPOo/zTOiZ50nGMfivPxNuWP1tcqXSUOXn3U/Vim6lZLu8iCKO1nwINmM6dhUfGzFrhA1B9vFl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983800; c=relaxed/simple;
-	bh=zqQzTzsR6mR5tHnWvEr9WSHGbp4xok1lyYgGhO7D3VU=;
+	s=arc-20240116; t=1771983802; c=relaxed/simple;
+	bh=U/BnbCiK03L+vjirZFFAlwe3RfYy9VWFc/RCdG0YskM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngOGGi4qROOaOXqACA8T3ijNMxOBOVe4vFPKdJbSqDbTEbCGdsgyHfyspoO9yHatlvXH5Ow/E84Pzapwv2nJE2gfwEmTnJoFvDa/WA+7fu2AXfWmRZF/pzN3TIAr3IIgOHIWtDEFod3CZKD000spOrRR6dP3SwfSEw6SDQS/qSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXcLn6Mq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LpogHlkcxU6mlMdVfGFexp9OmFU0YvSV/Okc+e7orJbv7RQ2pXj/fk5ddOuJ+L0Gbu5cbZKyb0bMb82e7ELY4sxrf0/GQNXqKLVsCaNG7/SQPHyIOQW9qGyKrmUsTtcNYiD7rT2/59LIK9unkQlWTG/KpKLuXzx3zRqKJY6DQ6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+fxlh2n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXcLn6Mq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7268AC2BCB2;
-	Wed, 25 Feb 2026 01:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+fxlh2n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD37C116D0;
+	Wed, 25 Feb 2026 01:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983800;
-	bh=zqQzTzsR6mR5tHnWvEr9WSHGbp4xok1lyYgGhO7D3VU=;
+	s=korg; t=1771983802;
+	bh=U/BnbCiK03L+vjirZFFAlwe3RfYy9VWFc/RCdG0YskM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXcLn6MqYIATElIO9kkTEmj/8Uf0/pf4zEMzZp9Rd9P4UnbZqbZAw3pXlpdh2GlfH
-	 sHlZfVkwwZBBnET8RJ94aWM6mzHdtHQQWhYT9FPYEEQUGKsPAwO6ohyBAtsDso7I2U
-	 Rh46ZOpbqTjo7DzyiqD7FFwihHTldF1YpZoS+3JY=
+	b=Z+fxlh2nhbdme012++UEGIrKDHYnbPWzbZX9hwLKCicDJkv7FBYoAh97YhpDIQF/x
+	 CgwDRtAejHOSnSU/KucLCFSY5TdHqNqbJejjoNWjRNXCM72sBojUBXUI1YontDzwIr
+	 La6+LBx1bWQjb3xJPRKBeFyMcYmvOMtv30n43ur4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
+	Shuran Liu <electronlsr@gmail.com>,
+	Peili Gao <gplhust955@gmail.com>,
+	Haoran Ni <haoran.ni.cs@gmail.com>,
+	Zesen Liu <ftyghome@gmail.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 084/641] bpf: Preserve id of register in sync_linked_regs()
-Date: Tue, 24 Feb 2026 17:16:50 -0800
-Message-ID: <20260225012351.126685599@linuxfoundation.org>
+Subject: [PATCH 6.18 085/641] bpf: Fix memory access flags in helper prototypes
+Date: Tue, 24 Feb 2026 17:16:51 -0800
+Message-ID: <20260225012351.154929154@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,93 +55,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Zesen Liu <ftyghome@gmail.com>
 
-[ Upstream commit af9e89d8dd39530c8bd14c33ddf6b502df1071b6 ]
+[ Upstream commit 802eef5afb1865bc5536a5302c068ba2215a1f72 ]
 
-sync_linked_regs() copies the id of known_reg to reg when propagating
-bounds of known_reg to reg using the off of known_reg, but when
-known_reg was linked to reg like:
+After commit 37cce22dbd51 ("bpf: verifier: Refactor helper access type tracking"),
+the verifier started relying on the access type flags in helper
+function prototypes to perform memory access optimizations.
 
-known_reg = reg         ; both known_reg and reg get same id
-known_reg += 4          ; known_reg gets off = 4, and its id gets BPF_ADD_CONST
+Currently, several helper functions utilizing ARG_PTR_TO_MEM lack the
+corresponding MEM_RDONLY or MEM_WRITE flags. This omission causes the
+verifier to incorrectly assume that the buffer contents are unchanged
+across the helper call. Consequently, the verifier may optimize away
+subsequent reads based on this wrong assumption, leading to correctness
+issues.
 
-now when a call to sync_linked_regs() happens, let's say with the following:
+For bpf_get_stack_proto_raw_tp, the original MEM_RDONLY was incorrect
+since the helper writes to the buffer. Change it to ARG_PTR_TO_UNINIT_MEM
+which correctly indicates write access to potentially uninitialized memory.
 
-if known_reg >= 10 goto pc+2
+Similar issues were recently addressed for specific helpers in commit
+ac44dcc788b9 ("bpf: Fix verifier assumptions of bpf_d_path's output buffer")
+and commit 2eb7648558a7 ("bpf: Specify access type of bpf_sysctl_get_name args").
 
-known_reg's new bounds are propagated to reg but now reg gets
-BPF_ADD_CONST from the copy.
+Fix these prototypes by adding the correct memory access flags.
 
-This means if another link to reg is created like:
-
-another_reg = reg       ; another_reg should get the id of reg but
-                          assign_scalar_id_before_mov() sees
-                          BPF_ADD_CONST on reg and assigns a new id to it.
-
-As reg has a new id now, known_reg's link to reg is broken. If we find
-new bounds for known_reg, they will not be propagated to reg.
-
-This can be seen in the selftest added in the next commit:
-
-0: (85) call bpf_get_prandom_u32#7    ; R0=scalar()
-1: (57) r0 &= 255                     ; R0=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
-2: (bf) r1 = r0                       ; R0=scalar(id=1,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R1=scalar(id=1,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
-3: (07) r1 += 4                       ; R1=scalar(id=1+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=259,var_off=(0x0; 0x1ff))
-4: (a5) if r1 < 0xa goto pc+4         ; R1=scalar(id=1+4,smin=umin=smin32=umin32=10,smax=umax=smax32=umax32=259,var_off=(0x0; 0x1ff))
-5: (bf) r2 = r0                       ; R0=scalar(id=2,smin=umin=smin32=umin32=6,smax=umax=smax32=umax32=255) R2=scalar(id=2,smin=umin=smin32=umin32=6,smax=umax=smax32=umax32=255)
-6: (a5) if r1 < 0xe goto pc+2         ; R1=scalar(id=1+4,smin=umin=smin32=umin32=14,smax=umax=smax32=umax32=259,var_off=(0x0; 0x1ff))
-7: (35) if r0 >= 0xa goto pc+1        ; R0=scalar(id=2,smin=umin=smin32=umin32=6,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf))
-8: (37) r0 /= 0
-div by zero
-
-When 4 is verified, r1's bounds are propagated to r0 but r0 also gets
-BPF_ADD_CONST (bug).
-When 5 is verified, r0 gets a new id (2) and its link with r1 is broken.
-
-After 6 we know r1 has bounds [14, 259] and therefore r0 should have
-bounds [10, 255], therefore the branch at 7 is always taken. But because
-r0's id was changed to 2, r1's new bounds are not propagated to r0.
-The verifier still thinks r0 has bounds [6, 255] before 7 and execution
-can reach div by zero.
-
-Fix this by preserving id in sync_linked_regs() like off and subreg_def.
-
-Fixes: 98d7ca374ba4 ("bpf: Track delta between "linked" registers.")
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Fixes: 37cce22dbd51 ("bpf: verifier: Refactor helper access type tracking")
+Co-developed-by: Shuran Liu <electronlsr@gmail.com>
+Signed-off-by: Shuran Liu <electronlsr@gmail.com>
+Co-developed-by: Peili Gao <gplhust955@gmail.com>
+Signed-off-by: Peili Gao <gplhust955@gmail.com>
+Co-developed-by: Haoran Ni <haoran.ni.cs@gmail.com>
+Signed-off-by: Haoran Ni <haoran.ni.cs@gmail.com>
+Signed-off-by: Zesen Liu <ftyghome@gmail.com>
 Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260115151143.1344724-2-puranjay@kernel.org
+Link: https://lore.kernel.org/r/20260120-helper_proto-v3-1-27b0180b4e77@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/bpf/helpers.c     |  2 +-
+ kernel/bpf/syscall.c     |  2 +-
+ kernel/trace/bpf_trace.c |  6 +++---
+ net/core/filter.c        | 20 ++++++++++----------
+ 4 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 89560e455ce7b..14546d1bdb52c 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -16715,6 +16715,7 @@ static void sync_linked_regs(struct bpf_verifier_state *vstate, struct bpf_reg_s
- 		} else {
- 			s32 saved_subreg_def = reg->subreg_def;
- 			s32 saved_off = reg->off;
-+			u32 saved_id = reg->id;
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 81ef159ef89bd..68da6dcfb4bb7 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -1080,7 +1080,7 @@ const struct bpf_func_proto bpf_snprintf_proto = {
+ 	.func		= bpf_snprintf,
+ 	.gpl_only	= true,
+ 	.ret_type	= RET_INTEGER,
+-	.arg1_type	= ARG_PTR_TO_MEM_OR_NULL,
++	.arg1_type	= ARG_PTR_TO_MEM_OR_NULL | MEM_WRITE,
+ 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
+ 	.arg3_type	= ARG_PTR_TO_CONST_STR,
+ 	.arg4_type	= ARG_PTR_TO_MEM | PTR_MAYBE_NULL | MEM_RDONLY,
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index df219e7259099..e9cf69594824c 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -6396,7 +6396,7 @@ static const struct bpf_func_proto bpf_kallsyms_lookup_name_proto = {
+ 	.func		= bpf_kallsyms_lookup_name,
+ 	.gpl_only	= false,
+ 	.ret_type	= RET_INTEGER,
+-	.arg1_type	= ARG_PTR_TO_MEM,
++	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
+ 	.arg3_type	= ARG_ANYTHING,
+ 	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 49e0bdaa7a1bf..e7f1fe44352af 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1022,7 +1022,7 @@ const struct bpf_func_proto bpf_snprintf_btf_proto = {
+ 	.func		= bpf_snprintf_btf,
+ 	.gpl_only	= false,
+ 	.ret_type	= RET_INTEGER,
+-	.arg1_type	= ARG_PTR_TO_MEM,
++	.arg1_type	= ARG_PTR_TO_MEM | MEM_WRITE,
+ 	.arg2_type	= ARG_CONST_SIZE,
+ 	.arg3_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg4_type	= ARG_CONST_SIZE,
+@@ -1526,7 +1526,7 @@ static const struct bpf_func_proto bpf_read_branch_records_proto = {
+ 	.gpl_only       = true,
+ 	.ret_type       = RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+-	.arg2_type      = ARG_PTR_TO_MEM_OR_NULL,
++	.arg2_type      = ARG_PTR_TO_MEM_OR_NULL | MEM_WRITE,
+ 	.arg3_type      = ARG_CONST_SIZE_OR_ZERO,
+ 	.arg4_type      = ARG_ANYTHING,
+ };
+@@ -1661,7 +1661,7 @@ static const struct bpf_func_proto bpf_get_stack_proto_raw_tp = {
+ 	.gpl_only	= true,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+-	.arg2_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
++	.arg2_type	= ARG_PTR_TO_UNINIT_MEM,
+ 	.arg3_type	= ARG_CONST_SIZE_OR_ZERO,
+ 	.arg4_type	= ARG_ANYTHING,
+ };
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 88b265f6ccf89..b9a51f322b655 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6325,7 +6325,7 @@ static const struct bpf_func_proto bpf_xdp_fib_lookup_proto = {
+ 	.gpl_only	= true,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+-	.arg2_type      = ARG_PTR_TO_MEM,
++	.arg2_type      = ARG_PTR_TO_MEM | MEM_WRITE,
+ 	.arg3_type      = ARG_CONST_SIZE,
+ 	.arg4_type	= ARG_ANYTHING,
+ };
+@@ -6380,7 +6380,7 @@ static const struct bpf_func_proto bpf_skb_fib_lookup_proto = {
+ 	.gpl_only	= true,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+-	.arg2_type      = ARG_PTR_TO_MEM,
++	.arg2_type      = ARG_PTR_TO_MEM | MEM_WRITE,
+ 	.arg3_type      = ARG_CONST_SIZE,
+ 	.arg4_type	= ARG_ANYTHING,
+ };
+@@ -7934,9 +7934,9 @@ static const struct bpf_func_proto bpf_tcp_raw_gen_syncookie_ipv4_proto = {
+ 	.gpl_only	= true, /* __cookie_v4_init_sequence() is GPL */
+ 	.pkt_access	= true,
+ 	.ret_type	= RET_INTEGER,
+-	.arg1_type	= ARG_PTR_TO_FIXED_SIZE_MEM,
++	.arg1_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_RDONLY,
+ 	.arg1_size	= sizeof(struct iphdr),
+-	.arg2_type	= ARG_PTR_TO_MEM,
++	.arg2_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg3_type	= ARG_CONST_SIZE_OR_ZERO,
+ };
  
- 			fake_reg.type = SCALAR_VALUE;
- 			__mark_reg_known(&fake_reg, (s32)reg->off - (s32)known_reg->off);
-@@ -16722,10 +16723,11 @@ static void sync_linked_regs(struct bpf_verifier_state *vstate, struct bpf_reg_s
- 			/* reg = known_reg; reg += delta */
- 			copy_register_state(reg, known_reg);
- 			/*
--			 * Must preserve off, id and add_const flag,
-+			 * Must preserve off, id and subreg_def flag,
- 			 * otherwise another sync_linked_regs() will be incorrect.
- 			 */
- 			reg->off = saved_off;
-+			reg->id = saved_id;
- 			reg->subreg_def = saved_subreg_def;
+@@ -7966,9 +7966,9 @@ static const struct bpf_func_proto bpf_tcp_raw_gen_syncookie_ipv6_proto = {
+ 	.gpl_only	= true, /* __cookie_v6_init_sequence() is GPL */
+ 	.pkt_access	= true,
+ 	.ret_type	= RET_INTEGER,
+-	.arg1_type	= ARG_PTR_TO_FIXED_SIZE_MEM,
++	.arg1_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_RDONLY,
+ 	.arg1_size	= sizeof(struct ipv6hdr),
+-	.arg2_type	= ARG_PTR_TO_MEM,
++	.arg2_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg3_type	= ARG_CONST_SIZE_OR_ZERO,
+ };
  
- 			scalar32_min_max_add(reg, &fake_reg);
+@@ -7986,9 +7986,9 @@ static const struct bpf_func_proto bpf_tcp_raw_check_syncookie_ipv4_proto = {
+ 	.gpl_only	= true, /* __cookie_v4_check is GPL */
+ 	.pkt_access	= true,
+ 	.ret_type	= RET_INTEGER,
+-	.arg1_type	= ARG_PTR_TO_FIXED_SIZE_MEM,
++	.arg1_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_RDONLY,
+ 	.arg1_size	= sizeof(struct iphdr),
+-	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM,
++	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_RDONLY,
+ 	.arg2_size	= sizeof(struct tcphdr),
+ };
+ 
+@@ -8010,9 +8010,9 @@ static const struct bpf_func_proto bpf_tcp_raw_check_syncookie_ipv6_proto = {
+ 	.gpl_only	= true, /* __cookie_v6_check is GPL */
+ 	.pkt_access	= true,
+ 	.ret_type	= RET_INTEGER,
+-	.arg1_type	= ARG_PTR_TO_FIXED_SIZE_MEM,
++	.arg1_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_RDONLY,
+ 	.arg1_size	= sizeof(struct ipv6hdr),
+-	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM,
++	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_RDONLY,
+ 	.arg2_size	= sizeof(struct tcphdr),
+ };
+ #endif /* CONFIG_SYN_COOKIES */
 -- 
 2.51.0
 
