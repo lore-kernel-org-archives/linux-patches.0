@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41567242D9B;
-	Wed, 25 Feb 2026 01:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDB24369A;
+	Wed, 25 Feb 2026 01:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982876; cv=none; b=jAEGwrk9N48PhHcYxb7kGLEcA9wGiNYbENKMMoHpIVFjl7J0AmGlwrsF1wPn67CK3lQg8RnFHwkShwR5ZGXlzO/M80JVGP7ToKf0ZVYKv2AJrsTXMSMmegE0oWGQ5CfHeKMNBmh1nurcXCDet2vOf0qQa1l+y2lwecAhHp4f1Tk=
+	t=1771982877; cv=none; b=YcBAd687C+fkpDEO9wfta+2LSoboWd9cNqcx3EXman0X0iZ6nYOkGg4KRAUSP/IMCowcQDv0KLM5J/4biscOZBctcGQYfydlAw+eEs6oMes+sfmqqVQUaE7HyZufWqfNeGcenKjXgl6RQ4ONOGdZ6KzeooDIhTLMHRATKJOC9Y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982876; c=relaxed/simple;
-	bh=OW8opBPZPvHMvw9jbElZHvfhcPUqvGya4KbKLP6hJ5g=;
+	s=arc-20240116; t=1771982877; c=relaxed/simple;
+	bh=CrK5Q5GpE2RS9L6snqFa+NOaS9qpo2g0EiVmBIXZZtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADCACgDi3GcLn/UKNlMlemy+ayxS+xbATBfbtKDcAdR/P7KexSnkd9jlLsMhT8yqyJmHQkwqR1Uz61wJ3RDj9yF6Rh7wRWDa8VuIgpnmQFQEcQSP5Oo+IzFNmLvQbaZhSTl3XvWUEOGZnfreZpXma4gVnpAHx7jKKabRXyDI3IU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGPQdV6M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fBIBiagH/Q4UD/76arEhi9Ru/vH0qxEur2Z9MC9r6NufgkmIx845r9G+gzerMT0pkrlXPdy4uRIoKU7PR6GeQOi5HwFHsLzroR1HBOZuzlnkbnZKzEu4KKNCSwUiBzFrvLn5oQ3vtTPq5LE/evxwq4lequSqahY90Ifbay5GMhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQB24+um; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGPQdV6M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020AEC116D0;
-	Wed, 25 Feb 2026 01:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQB24+um"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EF8C116D0;
+	Wed, 25 Feb 2026 01:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982876;
-	bh=OW8opBPZPvHMvw9jbElZHvfhcPUqvGya4KbKLP6hJ5g=;
+	s=korg; t=1771982877;
+	bh=CrK5Q5GpE2RS9L6snqFa+NOaS9qpo2g0EiVmBIXZZtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGPQdV6MoYwpiqAOrw4D6ZPFzzeO/xBVJiwrMu2msshM/rvF0kQxbXSgfLteaEnu4
-	 Ggrqu2nIAAjWNjPgMOry+0YH69l5fIRMFjNUWYJKEUl22lJsboWTg3EtnsW4UHT+jC
-	 QoAj26ZwsC350/XO97PHyrQwCACRUdrhTu9Pdzuw=
+	b=JQB24+umQxJxUFGlBMFIQjcBsnZa8NRnktEHOyqWUSss3meJt3QqGDawgBjl4Zbat
+	 nmdSqQECrVGSqn9NXJ0V+ERm6x+bkd8xRwg3A0q5KBQP12P11H7GFwZbt5V+9sp5Y9
+	 kdBi9UBL1qOk5JcMt8Mp4ReLF9247CbeY1BABXpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Wu <wusamuel@google.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 060/781] PM: wakeup: Handle empty list in wakeup_sources_walk_start()
-Date: Tue, 24 Feb 2026 17:12:49 -0800
-Message-ID: <20260225012401.178061889@linuxfoundation.org>
+Subject: [PATCH 6.19 061/781] arm64/gcs: Fix error handling in arch_set_shadow_stack_status()
+Date: Tue, 24 Feb 2026 17:12:50 -0800
+Message-ID: <20260225012401.202458583@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,42 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Wu <wusamuel@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 75ce02f4bc9a8b8350b6b1b01872467b0cc960cc ]
+[ Upstream commit 53c998527ffa60f9deda8974a11ad39790684159 ]
 
-In the case of an empty wakeup_sources list, wakeup_sources_walk_start()
-will return an invalid but non-NULL address. This also affects wrappers
-of the aforementioned function, like for_each_wakeup_source().
+alloc_gcs() returns an error-encoded pointer on failure, which comes
+from do_mmap(), not NULL.
 
-Update wakeup_sources_walk_start() to return NULL in case of an empty
-list.
+The current NULL check fails to detect errors, which could lead to using
+an invalid GCS address.
 
-Fixes: b4941adb24c0 ("PM: wakeup: Add routine to help fetch wakeup source object.")
-Signed-off-by: Samuel Wu <wusamuel@google.com>
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20260124012133.2451708-2-wusamuel@google.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Use IS_ERR_VALUE() to properly detect errors, consistent with the
+check in gcs_alloc_thread_stack().
+
+Fixes: b57180c75c7e ("arm64/gcs: Implement shadow stack prctl() interface")
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/wakeup.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/mm/gcs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/power/wakeup.c b/drivers/base/power/wakeup.c
-index 1e1a0e7eeac5f..e69033d16fba0 100644
---- a/drivers/base/power/wakeup.c
-+++ b/drivers/base/power/wakeup.c
-@@ -275,9 +275,7 @@ EXPORT_SYMBOL_GPL(wakeup_sources_read_unlock);
-  */
- struct wakeup_source *wakeup_sources_walk_start(void)
- {
--	struct list_head *ws_head = &wakeup_sources;
--
--	return list_entry_rcu(ws_head->next, struct wakeup_source, entry);
-+	return list_first_or_null_rcu(&wakeup_sources, struct wakeup_source, entry);
- }
- EXPORT_SYMBOL_GPL(wakeup_sources_walk_start);
+diff --git a/arch/arm64/mm/gcs.c b/arch/arm64/mm/gcs.c
+index 6e93f78de79b1..04a23a497f205 100644
+--- a/arch/arm64/mm/gcs.c
++++ b/arch/arm64/mm/gcs.c
+@@ -199,8 +199,8 @@ int arch_set_shadow_stack_status(struct task_struct *task, unsigned long arg)
  
+ 		size = gcs_size(0);
+ 		gcs = alloc_gcs(0, size);
+-		if (!gcs)
+-			return -ENOMEM;
++		if (IS_ERR_VALUE(gcs))
++			return gcs;
+ 
+ 		task->thread.gcspr_el0 = gcs + size - sizeof(u64);
+ 		task->thread.gcs_base = gcs;
 -- 
 2.51.0
 
