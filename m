@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32BC31AF24;
-	Wed, 25 Feb 2026 06:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B2B312806;
+	Wed, 25 Feb 2026 06:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002769; cv=none; b=FnuUG3N/rkeSTuNL5kkeBnHZceY3Md362S8fRYMtBSYdkQujsuYS22cXRKMzwvaei74dpu53dZ3R9NsxIqgGalqKcBF4CHr4fMOm88UzLxTsCtCKV/0JMoDy/Gasj/bQsP+2KVcTCN0Pi9pNGT3DCGR0RA6TKDJQS7oz0Ba7A7g=
+	t=1772002770; cv=none; b=tH7WAOcaQLDl6V2A9vRLNuCYxMte3DjnE84l/XAwKWp8cUIjJpx1rOTdw89I/vlRp5a8wXh/VXoPWCkng6Z8rSOmnW23je8SwDoaFJlQU/Bl2rQXeCRJt6Fb9U1YJz1W9DfcQD+0x8hkgoEbDScU42cITC1v8M4d3aHDeH21UJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002769; c=relaxed/simple;
-	bh=8rz51A8IYMxlQMscsLO0r/TtSFFPp2gim2bcl76axYA=;
+	s=arc-20240116; t=1772002770; c=relaxed/simple;
+	bh=Yz/1R67NkL4pQvnVVGyy87b2obeMgCUVrWxfbcaIoKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rkkm3t9VRVvx99PI9brZNNC0KFNwDrMCdgwaJiRz8LWykLjSJ9VCjKYrJf7XHYUpD6kygKhKlbcXQrlTWgf1H57rDoSMMeey8j0CWGfHXZOCA+u8tOgUtFcR4fmrIASwGvkd2+JB7yc6DPPjVyG8N9sFT/6ZdX2iDL1fjRQU+/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+D9enZ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QfLA1sQU40dd38UkIxVw5DwlqAMBdi2RldWeP8aQoc7W5K7pcP6t8MfDH+ByhkaKcpAzBZL6q1pee7B7ZUosZ527wDvUemqJLcxBjEFLPeD/g6Gm/tVmQlXvKcC6th1x6AnkG8RMDb8VQNJZrbUhw6gChzFd3KrQoPDoLuVkZVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLkrhNUs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+D9enZ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5DAC116D0;
-	Wed, 25 Feb 2026 06:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLkrhNUs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381ABC116D0;
+	Wed, 25 Feb 2026 06:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002769;
-	bh=8rz51A8IYMxlQMscsLO0r/TtSFFPp2gim2bcl76axYA=;
+	s=korg; t=1772002770;
+	bh=Yz/1R67NkL4pQvnVVGyy87b2obeMgCUVrWxfbcaIoKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+D9enZ53ap1UqfQ1mDB1u9t8iCaI/P7WAwXkjqAsKosjxo0UUHWWkMBW9gzH0PBz
-	 vAZVLifgXPXv3VjAmDZ5Z8+Wv1EsslKLU6Cy/0sH8hNj1B+oQuYvqJSJYlwI/f9kJB
-	 FTJVqXnQIl9BOXA78mgPYs5vO79h+bcms9LHVX+E=
+	b=VLkrhNUsaz0lbqGduNDp0gymlxHrKzdZI8n+yaf/WUZj9wRIkcq+IBOCqvvLcdfIg
+	 Sn5y62a4Gju79Vapqmf7EQ1sfrBGi8uwBN6eONfauZqmafmzFH8yCZXgvMvRXJYYLv
+	 5ScjhUEl9RMDPRQV7X9jYq6a3vCxn40N2DrrCRV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Alex Lyakas <alex.lyakas@zadara.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 596/641] drm/xe/mmio: Avoid double-adjust in 64-bit reads
-Date: Tue, 24 Feb 2026 17:25:22 -0800
-Message-ID: <20260225012402.956211410@linuxfoundation.org>
+Subject: [PATCH 6.18 605/641] btrfs: use the correct type to initialize block reserve for delayed refs
+Date: Tue, 24 Feb 2026 17:25:31 -0800
+Message-ID: <20260225012403.173720501@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,59 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 4a9b4e1fa52a6aaa1adbb7f759048df14afed54c ]
+[ Upstream commit 2155d0c0a761a56ce7ede83a26eb23ea0f935260 ]
 
-xe_mmio_read64_2x32() was adjusting register addresses and then
-calling xe_mmio_read32(), which applies the adjustment again.
-This may shift accesses twice if adj_offset < adj_limit. There is
-no issue currently, as for media gt, adj_offset > adj_limit, so
-the 2nd adjust will be a no-op. But it may not work in future.
+When initializing the delayed refs block reserve for a transaction handle
+we are passing a type of BTRFS_BLOCK_RSV_DELOPS, which is meant for
+delayed items and not for delayed refs. The correct type for delayed refs
+is BTRFS_BLOCK_RSV_DELREFS.
 
-To fix it, replace the adjusted-address comparison with a direct
-sanity check that ensures the MMIO address adjustment cutoff never
-falls within the 8-byte range of a 64-bit register. And let
-xe_mmio_read32() handle address translation.
+On release of any excess space reserved in a local delayed refs reserve,
+we also should transfer that excess space to the global block reserve
+(it it's full, we return to the space info for general availability).
 
-v2: rewrite the sanity check in a more natural way. (Matt)
-v3: Add Fixes tag. (Jani)
+By initializing a transaction's local delayed refs block reserve with a
+type of BTRFS_BLOCK_RSV_DELOPS, we were also causing any excess space
+released from the delayed block reserve (fs_info->delayed_block_rsv, used
+for delayed inodes and items) to be transferred to the global block
+reserve instead of the global delayed refs block reserve. This was an
+unintentional change in commit 28270e25c69a ("btrfs: always reserve space
+for delayed refs when starting transaction"), but it's not particularly
+serious as things tend to cancel out each other most of the time and it's
+relatively rare to be anywhere near exhaustion of the global reserve.
 
-Fixes: 07431945d8ae ("drm/xe: Avoid 64-bit register reads")
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://patch.msgid.link/20260130165621.471408-2-shuicheng.lin@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit a30f999681126b128a43137793ac84b6a5b7443f)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fix this by initializing a transaction's local delayed refs reserve with
+a type of BTRFS_BLOCK_RSV_DELREFS and making btrfs_block_rsv_release()
+attempt to transfer unused space from such a reserve into the global block
+reserve, just as we did before that commit for when the block reserve is
+a delayed refs rsv.
+
+Reported-by: Alex Lyakas <alex.lyakas@zadara.com>
+Link: https://lore.kernel.org/linux-btrfs/CAOcd+r0FHG5LWzTSu=LknwSoqxfw+C00gFAW7fuX71+Z5AfEew@mail.gmail.com/
+Fixes: 28270e25c69a ("btrfs: always reserve space for delayed refs when starting transaction")
+Reviewed-by: Alex Lyakas <alex.lyakas@zadara.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_mmio.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/btrfs/block-rsv.c   | 7 ++++---
+ fs/btrfs/transaction.c | 2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_mmio.c b/drivers/gpu/drm/xe/xe_mmio.c
-index ef6f3ea573a2c..6752881af093a 100644
---- a/drivers/gpu/drm/xe/xe_mmio.c
-+++ b/drivers/gpu/drm/xe/xe_mmio.c
-@@ -260,11 +260,11 @@ u64 xe_mmio_read64_2x32(struct xe_mmio *mmio, struct xe_reg reg)
- 	struct xe_reg reg_udw = { .addr = reg.addr + 0x4 };
- 	u32 ldw, udw, oldudw, retries;
+diff --git a/fs/btrfs/block-rsv.c b/fs/btrfs/block-rsv.c
+index 75cd35570a287..fc378d2038a2d 100644
+--- a/fs/btrfs/block-rsv.c
++++ b/fs/btrfs/block-rsv.c
+@@ -278,10 +278,11 @@ u64 btrfs_block_rsv_release(struct btrfs_fs_info *fs_info,
+ 	struct btrfs_block_rsv *target = NULL;
  
--	reg.addr = xe_mmio_adjusted_addr(mmio, reg.addr);
--	reg_udw.addr = xe_mmio_adjusted_addr(mmio, reg_udw.addr);
--
--	/* we shouldn't adjust just one register address */
--	xe_tile_assert(mmio->tile, reg_udw.addr == reg.addr + 0x4);
-+	/*
-+	 * The two dwords of a 64-bit register can never straddle the offset
-+	 * adjustment cutoff.
-+	 */
-+	xe_tile_assert(mmio->tile, !in_range(mmio->adj_limit, reg.addr + 1, 7));
+ 	/*
+-	 * If we are a delayed block reserve then push to the global rsv,
+-	 * otherwise dump into the global delayed reserve if it is not full.
++	 * If we are a delayed refs block reserve then push to the global
++	 * reserve, otherwise dump into the global delayed refs reserve if it is
++	 * not full.
+ 	 */
+-	if (block_rsv->type == BTRFS_BLOCK_RSV_DELOPS)
++	if (block_rsv->type == BTRFS_BLOCK_RSV_DELREFS)
+ 		target = global_rsv;
+ 	else if (block_rsv != global_rsv && !btrfs_block_rsv_full(delayed_rsv))
+ 		target = delayed_rsv;
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index b537bba767806..089712b15d603 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -726,7 +726,7 @@ start_transaction(struct btrfs_root *root, unsigned int num_items,
  
- 	oldudw = xe_mmio_read32(mmio, reg_udw);
- 	for (retries = 5; retries; --retries) {
+ 	h->type = type;
+ 	INIT_LIST_HEAD(&h->new_bgs);
+-	btrfs_init_metadata_block_rsv(fs_info, &h->delayed_rsv, BTRFS_BLOCK_RSV_DELOPS);
++	btrfs_init_metadata_block_rsv(fs_info, &h->delayed_rsv, BTRFS_BLOCK_RSV_DELREFS);
+ 
+ 	smp_mb();
+ 	if (cur_trans->state >= TRANS_STATE_COMMIT_START &&
 -- 
 2.51.0
 
