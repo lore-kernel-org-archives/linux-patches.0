@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD472C17A0;
-	Wed, 25 Feb 2026 06:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094322D839C;
+	Wed, 25 Feb 2026 06:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002621; cv=none; b=Rzd6LgOZ+ssCGzIcvpLuKXLLUUen74DaXXXFzK7quDhyf4XFTfeJK4zKGKTujSyDJqGE8n8O/QOXDEwvwqzXNwUNCFfSpeZjhN7QDXDQmjTr2TkZuRqavbW1AFcQ3J9o6Im8ZS40sBewyVCH28DHiYjdd1gRWjiqe3Wq+Y7nOyU=
+	t=1772002622; cv=none; b=SGBCX9vs8954PWao9B9tDatyNMcZ20OqFEEcp+yoX3bSzsCvj027HDqpt7vg7KXiTp+Hz5+1k0zBWhNFLxYdtC2KoGjAfgC4yPyz9JX8lRB80T4hDcjN3/c0ZNjFslBUJIico/oRvMwEHC6Ivy90iqaFJS+YZqtN0bDZUAug1v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002621; c=relaxed/simple;
-	bh=u69G7a5mOzzXIW8bQAqbKJ6tdSDmxMsqBKh0sN2QJrs=;
+	s=arc-20240116; t=1772002622; c=relaxed/simple;
+	bh=f8xV2xXUxdAHeO02DW524ihdaeVyCeBDsiCcb99U6rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fABUL8+nBkkwBGY8WUTQoTw8bhzgM7RVzP3WUHYykS8xc4xGM0UlkIQEDB3EVmYkj7AlCU9WbrekW3pCg035gJEvbPKUCTh3v4OxEq7ebLJ77HHi3P0zZ9JK8DH6hJl0+VhdfdaXACnYTWp6AYg2tIpKQHlzwshxWxQcvIur344=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UTWa4Ms; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOMs/1n+gyt51svu63mZp6LFv7L9IpgMr5duD9wW9XpdHNjlKrhE3KzYeum6biJKZT3jzie0gyG+eAgMAQDPGO9JSe7Po8OSHTXdzAxQWNdvR5/sjymyELNV+Qm+ni+ZjeFPWGcb/29ZlU445efaOvkuAVFJHy7J/w5aa0V2emI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uG42f7RB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UTWa4Ms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACB4C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uG42f7RB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E16C116D0;
 	Wed, 25 Feb 2026 06:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002621;
-	bh=u69G7a5mOzzXIW8bQAqbKJ6tdSDmxMsqBKh0sN2QJrs=;
+	bh=f8xV2xXUxdAHeO02DW524ihdaeVyCeBDsiCcb99U6rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1UTWa4Ms/WorRuWGSsM26fDh9Lshay7SankOMKxHJY7b3Cr5j+RAWVLK9y4GFssm8
-	 qKR1nEpnm0HkMIL8Yim5mMek+N+DzIC014ySyUqloS/NxevF+/PLb54CB1DjwL4+6U
-	 j2CnCTR5jB0rCQ/FqpYDIs8FxDkbIXevq1exEqnA=
+	b=uG42f7RB4MXAyzM4TntzvdxjTV3+Ilsfg/Su/dROLx8+XAUC2FcWIJv3ythnylsrT
+	 cZNWTariVMN6ayk12hEFqoZPVb7wUshbM70FUmpOC76VtoKrCFMqJDUBoUrKpUAzs+
+	 ToTUsKaQI09hWrFfbGrV/SD0eM1Kp3pCOnwtZtLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 335/641] octeontx2-pf: Unregister devlink on probe failure
-Date: Tue, 24 Feb 2026 17:21:01 -0800
-Message-ID: <20260225012356.796893848@linuxfoundation.org>
+Subject: [PATCH 6.18 336/641] af_unix: Fix memleak of newsk in unix_stream_connect().
+Date: Tue, 24 Feb 2026 17:21:02 -0800
+Message-ID: <20260225012356.819148648@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,34 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 943f3b8bfbf297cf74392b50a7108ce1fe4cbd8c ]
+[ Upstream commit 6884028cd7f275f8bcb854a347265cb1fb0e4bea ]
 
-When probe fails after devlink registration, the missing devlink unregister
-call causing a memory leak.
+When prepare_peercred() fails in unix_stream_connect(),
+unix_release_sock() is not called for newsk, and the memory
+is leaked.
 
-Fixes: 2da489432747 ("octeontx2-pf: devlink params support to set mcam entry count")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Link: https://patch.msgid.link/20260206182645.4032737-1-hkelam@marvell.com
+Let's move prepare_peercred() before unix_create1().
+
+Fixes: fd0a109a0f6b ("net, pidfs: prepare for handing out pidfds for reaped sk->sk_peer_pid")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260207232236.2557549-1-kuniyu@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/unix/af_unix.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index a7a7bc0e1b675..bbf25769f4994 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -3321,6 +3321,7 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- err_sriov_cleannup:
- 	otx2_sriov_vfcfg_cleanup(pf);
- err_pf_sriov_init:
-+	otx2_unregister_dl(pf);
- 	otx2_shutdown_tc(pf);
- err_mcam_flow_del:
- 	otx2_mcam_flow_del(pf);
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index c634a7fc86090..9dad3af700af3 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1671,10 +1671,9 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
+ 
+ 	timeo = sock_sndtimeo(sk, flags & O_NONBLOCK);
+ 
+-	/* First of all allocate resources.
+-	 * If we will make it after state is locked,
+-	 * we will have to recheck all again in any case.
+-	 */
++	err = prepare_peercred(&peercred);
++	if (err)
++		goto out;
+ 
+ 	/* create new sock for complete connection */
+ 	newsk = unix_create1(net, NULL, 0, sock->type);
+@@ -1683,10 +1682,6 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
+ 		goto out;
+ 	}
+ 
+-	err = prepare_peercred(&peercred);
+-	if (err)
+-		goto out;
+-
+ 	/* Allocate skb for sending to listening sock */
+ 	skb = sock_wmalloc(newsk, 1, 0, GFP_KERNEL);
+ 	if (!skb) {
 -- 
 2.51.0
 
