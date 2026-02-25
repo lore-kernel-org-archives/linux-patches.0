@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1882518B0A;
-	Wed, 25 Feb 2026 01:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139DD18B0A;
+	Wed, 25 Feb 2026 01:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983389; cv=none; b=K3CK1zoKOG3D+Y/3bIzH2Zlg1bJ8p025XnFr+1RD4kmslnLCzzcsekGhdbDepMfKrfK0/gq9g6GgAM3tKMx3hAM0STT4b02F6ypR2zHAHraWjerwzLMaQluEpdbcNCrfaB7eZQjNOpyYu/G8Xx5j+rr78K6bUJZEg/jGh+pW+FQ=
+	t=1771983390; cv=none; b=kHhTjsVOfAuJHmO3VC/Gp/FQiH8EAWdQ+7rwOwPusy5ew6URcK3xpzlKMexJG5dEkwsQLzy8zN9+kjjKJnOHObDjOiFakx3IQlJLEr4b94N93ce3FffDDs4SidFmUMh0SkCUbPUVH78kMolDdg77G+mrJx5HH2EyHVQ0AQUKh44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983389; c=relaxed/simple;
-	bh=gQCbjtcz6r17DLWj9UaqlL07ccdKijZQcDwkqdd1MLI=;
+	s=arc-20240116; t=1771983390; c=relaxed/simple;
+	bh=Nn6o5r1KlvY1Zc5guEDxtJoRdXGf+icA20b2yNAzXpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMh1YfWsEmk1GsVhndG158ZycASWDPnnDxjJ3IlmrSu4+3pqjNL0dXeqcqs6lRT9S2r+/9kIwLQJYTmladBBHUqGfGYKDLN+KLsqyxKaIdPvj+J9jq1NclQUkqyso+YjSBGXAtSBTwQuXpcKj7YQDTR9pSdsPDI2eVYoYIPsAcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTdmZeOp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bJ92FGxW0fpn+Ye+qQ18KAJblsFESV0aaSXLZTWRR9/flQuH0lOLsAlRzo5dqkVOmWFiQlV0y2HRHXXoeJtf7j0NEwYgKLmpefnZC01YbJJB5lD/dihvG0K0AabJRJ6Qts/9M28LVVK/Ubr1GS5/XNP7gP89CSUmFmM+IoD43VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpOz80+7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTdmZeOp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6FDC116D0;
-	Wed, 25 Feb 2026 01:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpOz80+7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0265C116D0;
+	Wed, 25 Feb 2026 01:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983389;
-	bh=gQCbjtcz6r17DLWj9UaqlL07ccdKijZQcDwkqdd1MLI=;
+	s=korg; t=1771983390;
+	bh=Nn6o5r1KlvY1Zc5guEDxtJoRdXGf+icA20b2yNAzXpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTdmZeOp1GCsOsc5GJyiKz4BbQn90OGbdWUbx0UHGbREeCk6hKoyHnHtq7s7bVWmI
-	 Bf3l8/FXZKYG8BsI829bupW1pk/NIrHnd4ay+lprndFelO8BE3iDaqjuE3DNztOcMC
-	 CIP6M3JhPambbcY8npMl1S56riM2x7UJacYZjRlU=
+	b=EpOz80+79Kfwzy5n4ES1jC7Ay8BQddv17ztWjqnakT1ik+w0GcLy5JVnM2e9ThfoA
+	 3z+xH+FClGe8YvwuDlDcHEJiJsJpDBm3OXB0uy1Ghr7Z2tKH19zCMSHZU/utcZSgEp
+	 nwrqDoHcRcb6J8oDqN8iPj7Zi4esSHmC05lTpmt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Drew Fustini <fustini@kernel.org>,
-	Yao Zi <ziyao@disroot.org>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Yixun Lan <dlan@gentoo.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 511/781] clk: thead: th1520-ap: Poll for PLL lock and wait for stability
-Date: Tue, 24 Feb 2026 17:20:20 -0800
-Message-ID: <20260225012412.338794381@linuxfoundation.org>
+Subject: [PATCH 6.19 512/781] clk: spacemit: Respect Kconfig setting when building modules
+Date: Tue, 24 Feb 2026 17:20:21 -0800
+Message-ID: <20260225012412.361787684@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,148 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-[ Upstream commit 892abfbed71e8e0fc5d6ccee1e975904805c6327 ]
+[ Upstream commit 5ec8cbbc54c82c0bdae4dbf0e5aecf9817bde2b9 ]
 
-All PLLs found on TH1520 SoC take 21250ns at maximum to lock, and their
-lock status is indicated by register PLL_STS (offset 0x80 inside AP
-clock controller). We should poll the register to ensure the PLL
-actually locks after enabling it.
+Currently, the SPACEMIT_CCU entry is only a switch for enabling entry
+SPACEMIT_K1_CCU. It does not guide the build for common clock codes
+even if it is a tristate entry. This makes this entry useless.
 
-Furthermore, a 30us delay is added after enabling the PLL, after which
-the PLL could be considered stable as stated by vendor clock code.
+Change the Makefile to add a separate build for common clock logic,
+so the SPACEMIT_CCU entry takes effect, also add necessary
+MODULE_LICENSE()/MODULE_DESCRIPTION()/EXPORT_SYMBOL() for the module
+build.
 
-Fixes: 56a48c1833aa ("clk: thead: add support for enabling/disabling PLLs")
-Reviewed-by: Drew Fustini <fustini@kernel.org>
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Signed-off-by: Drew Fustini <fustini@kernel.org>
+Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
+Link: https://lore.kernel.org/r/20251219012819.440972-2-inochiama@gmail.com
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/thead/clk-th1520-ap.c | 34 +++++++++++++++++++++++++++++--
- 1 file changed, 32 insertions(+), 2 deletions(-)
+ drivers/clk/spacemit/Makefile     | 9 +++++++--
+ drivers/clk/spacemit/ccu-k1.c     | 1 +
+ drivers/clk/spacemit/ccu_common.c | 6 ++++++
+ drivers/clk/spacemit/ccu_ddn.c    | 1 +
+ drivers/clk/spacemit/ccu_mix.c    | 9 +++++++++
+ drivers/clk/spacemit/ccu_pll.c    | 1 +
+ 6 files changed, 25 insertions(+), 2 deletions(-)
+ create mode 100644 drivers/clk/spacemit/ccu_common.c
 
-diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
-index 71ad03a998e8e..d870f0c665f8a 100644
---- a/drivers/clk/thead/clk-th1520-ap.c
-+++ b/drivers/clk/thead/clk-th1520-ap.c
-@@ -8,11 +8,14 @@
- #include <dt-bindings/clock/thead,th1520-clk-ap.h>
- #include <linux/bitfield.h>
- #include <linux/clk-provider.h>
-+#include <linux/delay.h>
- #include <linux/device.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
+diff --git a/drivers/clk/spacemit/Makefile b/drivers/clk/spacemit/Makefile
+index 5ec6da61db98e..ad2bf315109b8 100644
+--- a/drivers/clk/spacemit/Makefile
++++ b/drivers/clk/spacemit/Makefile
+@@ -1,5 +1,10 @@
+ # SPDX-License-Identifier: GPL-2.0
  
-+#define TH1520_PLL_STS		0x80
+-obj-$(CONFIG_SPACEMIT_K1_CCU)	= spacemit-ccu-k1.o
+-spacemit-ccu-k1-y		= ccu_pll.o ccu_mix.o ccu_ddn.o
++obj-$(CONFIG_SPACEMIT_CCU)	+= spacemit-ccu.o
++spacemit-ccu-y			+= ccu_common.o
++spacemit-ccu-y			+= ccu_pll.o
++spacemit-ccu-y			+= ccu_mix.o
++spacemit-ccu-y			+= ccu_ddn.o
 +
- #define TH1520_PLL_POSTDIV2	GENMASK(26, 24)
- #define TH1520_PLL_POSTDIV1	GENMASK(22, 20)
- #define TH1520_PLL_FBDIV	GENMASK(19, 8)
-@@ -23,6 +26,13 @@
- #define TH1520_PLL_FRAC		GENMASK(23, 0)
- #define TH1520_PLL_FRAC_BITS    24
++obj-$(CONFIG_SPACEMIT_K1_CCU)	+= spacemit-ccu-k1.o
+ spacemit-ccu-k1-y		+= ccu-k1.o
+diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+index 4761bc1e3b6e6..01d9485b615d3 100644
+--- a/drivers/clk/spacemit/ccu-k1.c
++++ b/drivers/clk/spacemit/ccu-k1.c
+@@ -1204,6 +1204,7 @@ static struct platform_driver k1_ccu_driver = {
+ };
+ module_platform_driver(k1_ccu_driver);
  
-+/*
-+ * All PLLs in TH1520 take 21250ns at maximum to lock, let's take its double
-+ * for safety.
-+ */
-+#define TH1520_PLL_LOCK_TIMEOUT_US	44
-+#define TH1520_PLL_STABLE_DELAY_US	30
++MODULE_IMPORT_NS("CLK_SPACEMIT");
+ MODULE_DESCRIPTION("SpacemiT K1 CCU driver");
+ MODULE_AUTHOR("Haylen Chu <heylenay@4d2.org>");
+ MODULE_LICENSE("GPL");
+diff --git a/drivers/clk/spacemit/ccu_common.c b/drivers/clk/spacemit/ccu_common.c
+new file mode 100644
+index 0000000000000..4412c4104dabb
+--- /dev/null
++++ b/drivers/clk/spacemit/ccu_common.c
+@@ -0,0 +1,6 @@
++// SPDX-License-Identifier: GPL-2.0-only
 +
- struct ccu_internal {
- 	u8	shift;
- 	u8	width;
-@@ -64,6 +74,7 @@ struct ccu_div {
- 
- struct ccu_pll {
- 	struct ccu_common	common;
-+	u32			lock_sts_mask;
- };
- 
- #define TH_CCU_ARG(_shift, _width)					\
-@@ -299,9 +310,21 @@ static void ccu_pll_disable(struct clk_hw *hw)
- static int ccu_pll_enable(struct clk_hw *hw)
- {
- 	struct ccu_pll *pll = hw_to_ccu_pll(hw);
-+	u32 reg;
-+	int ret;
- 
--	return regmap_clear_bits(pll->common.map, pll->common.cfg1,
--				 TH1520_PLL_VCO_RST);
-+	regmap_clear_bits(pll->common.map, pll->common.cfg1,
-+			  TH1520_PLL_VCO_RST);
++#include <linux/module.h>
 +
-+	ret = regmap_read_poll_timeout_atomic(pll->common.map, TH1520_PLL_STS,
-+					      reg, reg & pll->lock_sts_mask,
-+					      5, TH1520_PLL_LOCK_TIMEOUT_US);
-+	if (ret)
-+		return ret;
-+
-+	udelay(TH1520_PLL_STABLE_DELAY_US);
-+
-+	return 0;
- }
- 
- static int ccu_pll_is_enabled(struct clk_hw *hw)
-@@ -389,6 +412,7 @@ static struct ccu_pll cpu_pll0_clk = {
- 					      &clk_pll_ops,
- 					      CLK_IS_CRITICAL),
- 	},
-+	.lock_sts_mask		= BIT(1),
++MODULE_DESCRIPTION("SpacemiT CCU common clock driver");
++MODULE_LICENSE("GPL");
+diff --git a/drivers/clk/spacemit/ccu_ddn.c b/drivers/clk/spacemit/ccu_ddn.c
+index 5b16e273bee5b..b5540e0781ffa 100644
+--- a/drivers/clk/spacemit/ccu_ddn.c
++++ b/drivers/clk/spacemit/ccu_ddn.c
+@@ -84,3 +84,4 @@ const struct clk_ops spacemit_ccu_ddn_ops = {
+ 	.determine_rate = ccu_ddn_determine_rate,
+ 	.set_rate	= ccu_ddn_set_rate,
  };
- 
- static struct ccu_pll cpu_pll1_clk = {
-@@ -401,6 +425,7 @@ static struct ccu_pll cpu_pll1_clk = {
- 					      &clk_pll_ops,
- 					      CLK_IS_CRITICAL),
- 	},
-+	.lock_sts_mask		= BIT(4),
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_ddn_ops, "CLK_SPACEMIT");
+diff --git a/drivers/clk/spacemit/ccu_mix.c b/drivers/clk/spacemit/ccu_mix.c
+index 7b79908753723..67f8b12b4f5b7 100644
+--- a/drivers/clk/spacemit/ccu_mix.c
++++ b/drivers/clk/spacemit/ccu_mix.c
+@@ -198,24 +198,28 @@ const struct clk_ops spacemit_ccu_gate_ops = {
+ 	.enable		= ccu_gate_enable,
+ 	.is_enabled	= ccu_gate_is_enabled,
  };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_gate_ops, "CLK_SPACEMIT");
  
- static struct ccu_pll gmac_pll_clk = {
-@@ -413,6 +438,7 @@ static struct ccu_pll gmac_pll_clk = {
- 					      &clk_pll_ops,
- 					      CLK_IS_CRITICAL),
- 	},
-+	.lock_sts_mask		= BIT(3),
+ const struct clk_ops spacemit_ccu_factor_ops = {
+ 	.determine_rate = ccu_factor_determine_rate,
+ 	.recalc_rate	= ccu_factor_recalc_rate,
+ 	.set_rate	= ccu_factor_set_rate,
  };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_factor_ops, "CLK_SPACEMIT");
  
- static const struct clk_hw *gmac_pll_clk_parent[] = {
-@@ -433,6 +459,7 @@ static struct ccu_pll video_pll_clk = {
- 					      &clk_pll_ops,
- 					      CLK_IS_CRITICAL),
- 	},
-+	.lock_sts_mask		= BIT(7),
+ const struct clk_ops spacemit_ccu_mux_ops = {
+ 	.determine_rate = ccu_mix_determine_rate,
+ 	.get_parent	= ccu_mux_get_parent,
+ 	.set_parent	= ccu_mux_set_parent,
  };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_mux_ops, "CLK_SPACEMIT");
  
- static const struct clk_hw *video_pll_clk_parent[] = {
-@@ -453,6 +480,7 @@ static struct ccu_pll dpu0_pll_clk = {
- 					      &clk_pll_ops,
- 					      0),
- 	},
-+	.lock_sts_mask		= BIT(8),
+ const struct clk_ops spacemit_ccu_div_ops = {
+ 	.determine_rate = ccu_mix_determine_rate,
+ 	.recalc_rate	= ccu_div_recalc_rate,
+ 	.set_rate	= ccu_mix_set_rate,
  };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_div_ops, "CLK_SPACEMIT");
  
- static const struct clk_hw *dpu0_pll_clk_parent[] = {
-@@ -469,6 +497,7 @@ static struct ccu_pll dpu1_pll_clk = {
- 					      &clk_pll_ops,
- 					      0),
- 	},
-+	.lock_sts_mask		= BIT(9),
+ const struct clk_ops spacemit_ccu_factor_gate_ops = {
+ 	.disable	= ccu_gate_disable,
+@@ -226,6 +230,7 @@ const struct clk_ops spacemit_ccu_factor_gate_ops = {
+ 	.recalc_rate	= ccu_factor_recalc_rate,
+ 	.set_rate	= ccu_factor_set_rate,
  };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_factor_gate_ops, "CLK_SPACEMIT");
  
- static const struct clk_hw *dpu1_pll_clk_parent[] = {
-@@ -485,6 +514,7 @@ static struct ccu_pll tee_pll_clk = {
- 					      &clk_pll_ops,
- 					      CLK_IS_CRITICAL),
- 	},
-+	.lock_sts_mask		= BIT(10),
+ const struct clk_ops spacemit_ccu_mux_gate_ops = {
+ 	.disable	= ccu_gate_disable,
+@@ -236,6 +241,7 @@ const struct clk_ops spacemit_ccu_mux_gate_ops = {
+ 	.get_parent	= ccu_mux_get_parent,
+ 	.set_parent	= ccu_mux_set_parent,
  };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_mux_gate_ops, "CLK_SPACEMIT");
  
- static const struct clk_parent_data c910_i0_parents[] = {
+ const struct clk_ops spacemit_ccu_div_gate_ops = {
+ 	.disable	= ccu_gate_disable,
+@@ -246,6 +252,7 @@ const struct clk_ops spacemit_ccu_div_gate_ops = {
+ 	.recalc_rate	= ccu_div_recalc_rate,
+ 	.set_rate	= ccu_mix_set_rate,
+ };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_div_gate_ops, "CLK_SPACEMIT");
+ 
+ const struct clk_ops spacemit_ccu_mux_div_gate_ops = {
+ 	.disable	= ccu_gate_disable,
+@@ -259,6 +266,7 @@ const struct clk_ops spacemit_ccu_mux_div_gate_ops = {
+ 	.recalc_rate	= ccu_div_recalc_rate,
+ 	.set_rate	= ccu_mix_set_rate,
+ };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_mux_div_gate_ops, "CLK_SPACEMIT");
+ 
+ const struct clk_ops spacemit_ccu_mux_div_ops = {
+ 	.get_parent	= ccu_mux_get_parent,
+@@ -268,3 +276,4 @@ const struct clk_ops spacemit_ccu_mux_div_ops = {
+ 	.recalc_rate	= ccu_div_recalc_rate,
+ 	.set_rate	= ccu_mix_set_rate,
+ };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_mux_div_ops, "CLK_SPACEMIT");
+diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
+index d92f0dae65a49..76d0244873d87 100644
+--- a/drivers/clk/spacemit/ccu_pll.c
++++ b/drivers/clk/spacemit/ccu_pll.c
+@@ -157,3 +157,4 @@ const struct clk_ops spacemit_ccu_pll_ops = {
+ 	.determine_rate = ccu_pll_determine_rate,
+ 	.is_enabled	= ccu_pll_is_enabled,
+ };
++EXPORT_SYMBOL_NS_GPL(spacemit_ccu_pll_ops, "CLK_SPACEMIT");
 -- 
 2.51.0
 
