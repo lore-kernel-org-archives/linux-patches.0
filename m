@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE651FE45D;
-	Wed, 25 Feb 2026 01:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8FD242D9B;
+	Wed, 25 Feb 2026 01:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983060; cv=none; b=fFpIUVwcrMgUySJ+avAuoj92VdxGzsfJMbNaa7ob3B3JOUfFGOeQQBN7o1AzLu9nZiu19MRJWTbE4G5ywjTL4pVVw950vX8qQaOimvrd1V7CIaNWr4MQ7bzY+ZmIAVQeqVCaL3F0/antQSz/aI72S8aNEHLDfPypOuIYKMgPBsA=
+	t=1771983061; cv=none; b=GIRpm2EWTI89IkHEoMD9IwQ7wbUNuf3xF9TgHDHeg4BhzBCLKTmG1Ee0Uc7sxB4GfR2W4eb5wP61wmkGChwVI151Of8x3d89JV/YuEKDbfYLKyWvy5ZqhRQNT5mSwgsTfA6+5B+uWowkcLC083S5lbQZ/iPt5i0U+pYESHyMpkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983060; c=relaxed/simple;
-	bh=gGWOeW+z2jhZADuQRbHFrHpL+bLTUdeR8azPzaRdJpM=;
+	s=arc-20240116; t=1771983061; c=relaxed/simple;
+	bh=HACOBU0PkeCXYIEwN0xeDGuZBQV3QuswPVk2JTSazQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fu628TJWt0tBZUMdCgKFRnjJW97O3HV8nRWoFuLZVmn7ejYiLVNGg2N9zV1yW6ZOZ6g+3t7/LsuX8p+JpIdDD7h5evXvP7ApgVEUSqlsppxRgp02Nhb69E33OW0aTQlrOJmNe0qFt9YfEuevfOfvyrfW+mSiqzVMCl5KBrm/F34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sr1MQz3r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UEc/6gFWOPTKKmiad2jZM82kYHphNtt7s4gCMyxdrV84yqqdwoGiUc0hgVS//bIR26r+IaqwqjCXufX2mkUUmD6Rr2rVDkaA1+RusXjZNTOjpfMOEDUtlWMP9MeUUghy53tLVt0/Xpzc5SrwZo8HYXNCoHGYmmsjYh3Ugh4klHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CovG9P0y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sr1MQz3r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC92C116D0;
-	Wed, 25 Feb 2026 01:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CovG9P0y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6885C116D0;
+	Wed, 25 Feb 2026 01:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983059;
-	bh=gGWOeW+z2jhZADuQRbHFrHpL+bLTUdeR8azPzaRdJpM=;
+	s=korg; t=1771983060;
+	bh=HACOBU0PkeCXYIEwN0xeDGuZBQV3QuswPVk2JTSazQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sr1MQz3rOqDhO20nRnNfitVFWiGBvfYkt3aQKeInBINvvrZUx4xIVzkxK3FcXuUWv
-	 806jOBwzLFFAXARG+XMwetBl2YMfOUXEknCWnClXgwx7N+Mqq7r7XMS1k4MPW0i8nA
-	 Pa6EF2sjL5v9o3c5OfF7iT6GrLDcTS/YIVHVH//I=
+	b=CovG9P0yyU/Lrxrxr66j7B2RlHuJkvIt/eSQ0+IXunX4iEYsa9EgD9eKZ3Q1fLgu+
+	 Spn+wKhkxFb8MvGBw3+pghV+eITyvaJXrM+mQFszpFdZu98FH5lkSxZ8v8+FHbSFAa
+	 PGEoyHiClS5V9c/aHi+Umv7IInwyQ+b0P9O1O77I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Karunika Choo <karunika.choo@arm.com>,
+	Liviu Dudau <liviu@dudau.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 224/781] ASoC: SDCA: Allow sample width wild cards in set_usage()
-Date: Tue, 24 Feb 2026 17:15:33 -0800
-Message-ID: <20260225012405.205318764@linuxfoundation.org>
+Subject: [PATCH 6.19 225/781] drm/panthor: Fix NULL pointer dereference on panthor_fw_unplug
+Date: Tue, 24 Feb 2026 17:15:34 -0800
+Message-ID: <20260225012405.231027428@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,37 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Karunika Choo <karunika.choo@arm.com>
 
-[ Upstream commit 87783532d34050e2bff6749a4fe9860e624a0540 ]
+[ Upstream commit 920c6af98e98e6afedf6318a75bac95af8415c6c ]
 
-The SDCA spec allows the sample rate and width to be wild cards, but the
-current implementation of set_usage() only checked for a wild card of
-the sample rate.
+This patch removes the MCU halt and wait for halt procedures during
+panthor_fw_unplug() as the MCU can be in a variety of states or the FW
+may not even be loaded/initialized at all, the latter of which can lead
+to a NULL pointer dereference.
 
-Fixes: 4ed357f72a0e ("ASoC: SDCA: Add hw_params() helper function")
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251216142204.183958-1-simont@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+It should be safe on unplug to just disable the MCU without waiting for
+it to halt as it may not be able to.
+
+Fixes: 514072549865 ("drm/panthor: Support GLB_REQ.STATE field for Mali-G1 GPUs")
+Suggested-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Karunika Choo <karunika.choo@arm.com>
+Reviewed-by: Liviu Dudau <liviu@dudau.co.uk>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Link: https://patch.msgid.link/20251215203312.1084182-1-karunika.choo@arm.com
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdca/sdca_asoc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panthor/panthor_fw.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/sound/soc/sdca/sdca_asoc.c b/sound/soc/sdca/sdca_asoc.c
-index 2d328bbb95b94..498aba9df5d9b 100644
---- a/sound/soc/sdca/sdca_asoc.c
-+++ b/sound/soc/sdca/sdca_asoc.c
-@@ -1478,7 +1478,7 @@ static int set_usage(struct device *dev, struct regmap *regmap,
- 		unsigned int rate = sdca_range(range, SDCA_USAGE_SAMPLE_RATE, i);
- 		unsigned int width = sdca_range(range, SDCA_USAGE_SAMPLE_WIDTH, i);
+diff --git a/drivers/gpu/drm/panthor/panthor_fw.c b/drivers/gpu/drm/panthor/panthor_fw.c
+index 94a3cd6dfa6de..9533b1a31820e 100644
+--- a/drivers/gpu/drm/panthor/panthor_fw.c
++++ b/drivers/gpu/drm/panthor/panthor_fw.c
+@@ -1260,10 +1260,6 @@ void panthor_fw_unplug(struct panthor_device *ptdev)
+ 		if (ptdev->fw->irq.irq)
+ 			panthor_job_irq_suspend(&ptdev->fw->irq);
  
--		if ((!rate || rate == target_rate) && width == target_width) {
-+		if ((!rate || rate == target_rate) && (!width || width == target_width)) {
- 			unsigned int usage = sdca_range(range, SDCA_USAGE_NUMBER, i);
- 			unsigned int reg = SDW_SDCA_CTL(function->desc->adr,
- 							entity->id, sel, 0);
+-		panthor_fw_halt_mcu(ptdev);
+-		if (!panthor_fw_wait_mcu_halted(ptdev))
+-			drm_warn(&ptdev->base, "Failed to halt MCU on unplug");
+-
+ 		panthor_fw_stop(ptdev);
+ 	}
+ 
 -- 
 2.51.0
 
