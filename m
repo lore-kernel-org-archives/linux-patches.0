@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72CEA256C84;
-	Wed, 25 Feb 2026 01:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82495256C84;
+	Wed, 25 Feb 2026 01:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983861; cv=none; b=bo/vK0U2Ux4qDw5sBmYBysQN/SS4xMpsI/hUNAJrQSkf01LZ3HNwH0hGtWUG30PeI0xk7g5WHv+yoQAfw190X9oa6LuWoBo4eAebbIFXSnRf9QME89Lxck3/3wn9ONd5vAK+1iUX83ugu3QxMoFrJIzvza5OrYUnMd/rAcHx4mA=
+	t=1771983862; cv=none; b=JfY6XqSukEfjBv4LShkBrU5vk4e0QbzQYdAzvPRLA8+dqGQDDTbiYlpIht41opL9cpU8hYQvmwHAR99bMKAID4n181T0bei2maTlXBtND0KswwBmhOn0b1R+fnwqo9ssAV6pHyC/uMjxizSG2CuBJCdt4O9CMg7L7BlRIDO9Rnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983861; c=relaxed/simple;
-	bh=WFsYtMSohbn0/iEhgp3ybl2HqXqS7Ml2usLFPmR7Vi8=;
+	s=arc-20240116; t=1771983862; c=relaxed/simple;
+	bh=uciAaTooVvz1ayY2XmTUz6W+4HWFr7aPP1frGlWkAho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pfZ9kIcOvG2dKvIxRvdyR2nHE3Vbtjb0vlv97J+UHlVAI6XpoeTjUH0EcHeAgoXuoIQiivkN6m7Yila5kC83VOStgAvjYnDtzELNLH8dxfBVIUJnSE4ttp11WH96rKHowl8MGGxCUURfo1Yb+DTCe6SWIdS72yX3fJBc9QH/zlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e92z8KhD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PYy+iOySLBEVL7P+hSbB11XRMyzGeAGS4uo0Th1tRrIu1y5WUOCESZea6vPDIa5FBosUbT7VFX7U3E9wfsQgSiddhDOY6IOMHShclF485y4W3NRmQBI7YR+w5QV6Hm1DuN+nSO/2iK7rj30QCFOqAO5MfRQYmcoBk/zQPA/c9xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mXmdRk1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e92z8KhD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3074FC116D0;
-	Wed, 25 Feb 2026 01:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mXmdRk1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CEEC116D0;
+	Wed, 25 Feb 2026 01:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983861;
-	bh=WFsYtMSohbn0/iEhgp3ybl2HqXqS7Ml2usLFPmR7Vi8=;
+	s=korg; t=1771983862;
+	bh=uciAaTooVvz1ayY2XmTUz6W+4HWFr7aPP1frGlWkAho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e92z8KhDIWV7xHbb5Qo0T8HXU2uF482XW0RtFtIyyvzGU/YPjXQ0Cv7aDptGKu0vs
-	 vJDnbJbH5hcxN38RJxNY7fu5/+43cxdJ/ljnzc/aAPHm6j7trp0ZO6PE0RphPCKqu0
-	 e2wLhUBgt/RZ+UFmQMsFe1TsyJKIj6aQJiibdmlY=
+	b=0mXmdRk12tJ+D5EdqZg1B+/e9k3MJBxoJfNIz8kHSxnVQuwhpHmdfJs8JlXDv585K
+	 XvlnOJpjp6LfQpQXdrBRRWtvBoeBJ4YdTAWZn2MW4bxyGBE3uTxzpPrOcevWj8rHeb
+	 5sMhZBHHNnGPxLQxOEEW4xGIdDH3mxp8B9DBZaCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Gonnet <ggonnet.linux@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kery Qi <qikeyu2017@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 095/641] bpf: Fix tcx/netkit detach permissions when prog fd isnt given
-Date: Tue, 24 Feb 2026 17:17:01 -0800
-Message-ID: <20260225012351.405863188@linuxfoundation.org>
+Subject: [PATCH 6.18 086/641] selftests/bpf: Fix resource leak in serial_test_wq on attach failure
+Date: Tue, 24 Feb 2026 17:16:52 -0800
+Message-ID: <20260225012351.179412522@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,86 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Gonnet <ggonnet.linux@gmail.com>
+From: Kery Qi <qikeyu2017@gmail.com>
 
-[ Upstream commit ae23bc81ddf7c17b663c4ed1b21e35527b0a7131 ]
+[ Upstream commit a32ae2658471dd87a2f7a438388ed7d9a5767212 ]
 
-This commit fixes a security issue where BPF_PROG_DETACH on tcx or
-netkit devices could be executed by any user when no program fd was
-provided, bypassing permission checks. The fix adds a capability
-check for CAP_NET_ADMIN or CAP_SYS_ADMIN in this case.
+When wq__attach() fails, serial_test_wq() returns early without calling
+wq__destroy(), leaking the skeleton resources allocated by
+wq__open_and_load(). This causes ASAN leak reports in selftests runs.
 
-Fixes: e420bed02507 ("bpf: Add fd-based tcx multi-prog infra with link support")
-Signed-off-by: Guillaume Gonnet <ggonnet.linux@gmail.com>
-Link: https://lore.kernel.org/r/20260127160200.10395-1-ggonnet.linux@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fix this by jumping to a common clean_up label that calls wq__destroy()
+on all exit paths after successful open_and_load.
+
+Note that the early return after wq__open_and_load() failure is correct
+and doesn't need fixing, since that function returns NULL on failure
+(after internally cleaning up any partial allocations).
+
+Fixes: 8290dba51910 ("selftests/bpf: wq: add bpf_wq_start() checks")
+Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/bpf/20260121094114.1801-3-qikeyu2017@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h       |  5 +++++
- include/linux/bpf_mprog.h | 10 ++++++++++
- kernel/bpf/syscall.c      |  7 ++-----
- 3 files changed, 17 insertions(+), 5 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/wq.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index d808253f2e945..e2dd3a6d495af 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -3200,6 +3200,11 @@ static inline void bpf_prog_report_arena_violation(bool write, unsigned long add
- }
- #endif /* CONFIG_BPF_SYSCALL */
+diff --git a/tools/testing/selftests/bpf/prog_tests/wq.c b/tools/testing/selftests/bpf/prog_tests/wq.c
+index 99e438fe12acd..15ac8e6d17450 100644
+--- a/tools/testing/selftests/bpf/prog_tests/wq.c
++++ b/tools/testing/selftests/bpf/prog_tests/wq.c
+@@ -16,12 +16,12 @@ void serial_test_wq(void)
+ 	/* re-run the success test to check if the timer was actually executed */
  
-+static inline bool bpf_net_capable(void)
-+{
-+	return capable(CAP_NET_ADMIN) || capable(CAP_SYS_ADMIN);
-+}
-+
- static __always_inline int
- bpf_probe_read_kernel_common(void *dst, u32 size, const void *unsafe_ptr)
- {
-diff --git a/include/linux/bpf_mprog.h b/include/linux/bpf_mprog.h
-index 929225f7b0959..0b9f4caeeb0a3 100644
---- a/include/linux/bpf_mprog.h
-+++ b/include/linux/bpf_mprog.h
-@@ -340,4 +340,14 @@ static inline bool bpf_mprog_supported(enum bpf_prog_type type)
- 		return false;
- 	}
- }
-+
-+static inline bool bpf_mprog_detach_empty(enum bpf_prog_type type)
-+{
-+	switch (type) {
-+	case BPF_PROG_TYPE_SCHED_CLS:
-+		return bpf_net_capable();
-+	default:
-+		return false;
-+	}
-+}
- #endif /* __BPF_MPROG_H */
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index e9cf69594824c..f39367765f0c4 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -1365,11 +1365,6 @@ static int map_check_btf(struct bpf_map *map, struct bpf_token *token,
- 	return ret;
+ 	wq_skel = wq__open_and_load();
+-	if (!ASSERT_OK_PTR(wq_skel, "wq_skel_load"))
++	if (!ASSERT_OK_PTR(wq_skel, "wq__open_and_load"))
+ 		return;
+ 
+ 	err = wq__attach(wq_skel);
+ 	if (!ASSERT_OK(err, "wq_attach"))
+-		return;
++		goto clean_up;
+ 
+ 	prog_fd = bpf_program__fd(wq_skel->progs.test_syscall_array_sleepable);
+ 	err = bpf_prog_test_run_opts(prog_fd, &topts);
+@@ -31,6 +31,7 @@ void serial_test_wq(void)
+ 	usleep(50); /* 10 usecs should be enough, but give it extra */
+ 
+ 	ASSERT_EQ(wq_skel->bss->ok_sleepable, (1 << 1), "ok_sleepable");
++clean_up:
+ 	wq__destroy(wq_skel);
  }
  
--static bool bpf_net_capable(void)
--{
--	return capable(CAP_NET_ADMIN) || capable(CAP_SYS_ADMIN);
--}
--
- #define BPF_MAP_CREATE_LAST_FIELD excl_prog_hash_size
- /* called via syscall */
- static int map_create(union bpf_attr *attr, bpfptr_t uattr)
-@@ -4554,6 +4549,8 @@ static int bpf_prog_detach(const union bpf_attr *attr)
- 			prog = bpf_prog_get_type(attr->attach_bpf_fd, ptype);
- 			if (IS_ERR(prog))
- 				return PTR_ERR(prog);
-+		} else if (!bpf_mprog_detach_empty(ptype)) {
-+			return -EPERM;
- 		}
- 	} else if (is_cgroup_prog_type(ptype, 0, false)) {
- 		if (attr->attach_flags || attr->relative_fd)
 -- 
 2.51.0
 
