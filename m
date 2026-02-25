@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BCA20C012;
-	Wed, 25 Feb 2026 01:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF453242D9B;
+	Wed, 25 Feb 2026 01:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983343; cv=none; b=YXwufA8B4Y4cGASbrd0Mw6Ew5bAyCA6HgeNh9s9mGNM+6swEoKj3GzuebxHHNSZTWnsigyfzva7RN5PH/pAe6HNp4kmcHk+uloW2dYZxNM5NfZ/y/COEkR8n3+UrAC7/oXWKPvG7qU5cGdJmoF4KRw/yr4KHlF4NMT5rlpZxHMo=
+	t=1771983344; cv=none; b=ictP4bhNEIouO3yphjqH9zrwvEbkHjZ0wjpogQ7Izh540MsPLQLk9Lvq0ZHepVl+s4QXVwAQTixXzDnWN93aUrGupCnpvzoVIwgZ/FHgTANdrfB1fN07AiAxvqUu2mm5f3pO+r0kiUafM34glokI9KSQFR4KBsGNUU0TW0h4uOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983343; c=relaxed/simple;
-	bh=YuAqcOP4B+sQQYviASQqjrJbu/vouCmmHgMkXXuzaV4=;
+	s=arc-20240116; t=1771983344; c=relaxed/simple;
+	bh=1+xfVaQlVoI/4BZDkVVenVyuIRmrAY60mB56gRLccuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uV12LL/HRn+99hn8iLJv2XGw/9nQniPo2USh8v+L7jBXoUUJ/JmQVYbJVyuHFqpHFmedbCsdxBtIFe4CuMTzthnxiT0nvchol29vKSE6JqoUpIcHqCuX74p8tFS3O+0zfvR/5e4d6OQ8e2LJlC4hGcWeKkBoXQFGggdadby9Yc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oo0ZFRnY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DlttAjG5mkiXpN7AlWSwA3barBR+qo0ZXueGuur/BWBJCyZ67a5FedwuZeWceddlePY4sDoc67qkMkaArz0V72IWOo8mEmES2LyvD/hVyH5svQSyjeKveyHpuA4moojuwuPYOQLqP7p0ieoqUvOfq051ugatnazYmFlMYK2zZCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmfLWtDz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oo0ZFRnY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475C0C116D0;
-	Wed, 25 Feb 2026 01:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmfLWtDz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F919C116D0;
+	Wed, 25 Feb 2026 01:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983343;
-	bh=YuAqcOP4B+sQQYviASQqjrJbu/vouCmmHgMkXXuzaV4=;
+	s=korg; t=1771983344;
+	bh=1+xfVaQlVoI/4BZDkVVenVyuIRmrAY60mB56gRLccuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oo0ZFRnYU+CNl9/j7P8XrfC4m4h89HvDEp6JYvxYNFte7FKYxofPIM1GSgKtTtaFc
-	 yxwoQe5CWbv9ovVD49jeDwIsJtqOi1a9lxxE4EquC6eu5BA67WqlpApaPsTesAhpqb
-	 Ngd0OUf4RVsnWxRQYYS63Wz/vbFrP2hK5aqeOlLE=
+	b=qmfLWtDzERNEtQ6+BzyixFWB+gpFcNvxHGMtFyn89xSbb4uY9xtAJ0u76NFqcP+wK
+	 fZGdVbwQ/Xc7zCCZ8X3H6drlYDXvkPxZSEBulWHiP2Y+iLEkdw3FIi/O4hgQ+mDGfY
+	 f1kDSBfqLgfNQjhWLYDpXq1K9YNaX5O4hNJKLQZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lars Francke <lars.francke@gmail.com>,
 	Yijun Shen <Yijun.Shen@Dell.com>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
 	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 472/781] crypto: ccp - Declare PSP dead if PSP_CMD_TEE_RING_INIT fails
-Date: Tue, 24 Feb 2026 17:19:41 -0800
-Message-ID: <20260225012411.394460181@linuxfoundation.org>
+Subject: [PATCH 6.19 473/781] crypto: ccp - Add an S4 restore flow
+Date: Tue, 24 Feb 2026 17:19:42 -0800
+Message-ID: <20260225012411.417574589@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -57,36 +58,161 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit 5e599d7871bf852e94e8aa08b99724635f2cbf96 ]
+[ Upstream commit 0ba2035026d0ab6c7c7e65ad8b418dc73d5700d9 ]
 
-tee_init_ring() only declares PSP dead if the command times out.
-If there is any other failure it is still considered fatal though.
-Set psp_dead for other failures as well.
+The system will have lost power during S4.  The ring used for TEE
+communications needs to be initialized before use.
 
-Fixes: 949a0c8dd3c2 ("crypto: ccp - Move direct access to some PSP registers out of TEE")
+Fixes: f892a21f51162 ("crypto: ccp - use generic power management")
+Reported-by: Lars Francke <lars.francke@gmail.com>
+Closes: https://lore.kernel.org/platform-driver-x86/CAD-Ua_gfJnQSo8ucS_7ZwzuhoBRJ14zXP7s8b-zX3ZcxcyWePw@mail.gmail.com/
 Tested-by: Yijun Shen <Yijun.Shen@Dell.com>
 Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
 Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://patch.msgid.link/20260116041132.153674-3-superm1@kernel.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://patch.msgid.link/20260116041132.153674-4-superm1@kernel.org
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/tee-dev.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/ccp/psp-dev.c | 11 +++++++++++
+ drivers/crypto/ccp/sp-dev.c  | 12 ++++++++++++
+ drivers/crypto/ccp/sp-dev.h  |  3 +++
+ drivers/crypto/ccp/sp-pci.c  | 16 +++++++++++++++-
+ drivers/crypto/ccp/tee-dev.c |  5 +++++
+ drivers/crypto/ccp/tee-dev.h |  1 +
+ 6 files changed, 47 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/crypto/ccp/psp-dev.c b/drivers/crypto/ccp/psp-dev.c
+index 9e21da0e298ad..5c7f7e02a7d8a 100644
+--- a/drivers/crypto/ccp/psp-dev.c
++++ b/drivers/crypto/ccp/psp-dev.c
+@@ -351,6 +351,17 @@ struct psp_device *psp_get_master_device(void)
+ 	return sp ? sp->psp_data : NULL;
+ }
+ 
++int psp_restore(struct sp_device *sp)
++{
++	struct psp_device *psp = sp->psp_data;
++	int ret = 0;
++
++	if (psp->tee_data)
++		ret = tee_restore(psp);
++
++	return ret;
++}
++
+ void psp_pci_init(void)
+ {
+ 	psp_master = psp_get_master_device();
+diff --git a/drivers/crypto/ccp/sp-dev.c b/drivers/crypto/ccp/sp-dev.c
+index 3467f6db4f505..f204aa5df96e2 100644
+--- a/drivers/crypto/ccp/sp-dev.c
++++ b/drivers/crypto/ccp/sp-dev.c
+@@ -230,6 +230,18 @@ int sp_resume(struct sp_device *sp)
+ 	return 0;
+ }
+ 
++int sp_restore(struct sp_device *sp)
++{
++	if (sp->psp_data) {
++		int ret = psp_restore(sp);
++
++		if (ret)
++			return ret;
++	}
++
++	return sp_resume(sp);
++}
++
+ struct sp_device *sp_get_psp_master_device(void)
+ {
+ 	struct sp_device *i, *ret = NULL;
+diff --git a/drivers/crypto/ccp/sp-dev.h b/drivers/crypto/ccp/sp-dev.h
+index 1335a83fe052e..a83751cfd0060 100644
+--- a/drivers/crypto/ccp/sp-dev.h
++++ b/drivers/crypto/ccp/sp-dev.h
+@@ -141,6 +141,7 @@ void sp_destroy(struct sp_device *sp);
+ 
+ int sp_suspend(struct sp_device *sp);
+ int sp_resume(struct sp_device *sp);
++int sp_restore(struct sp_device *sp);
+ int sp_request_ccp_irq(struct sp_device *sp, irq_handler_t handler,
+ 		       const char *name, void *data);
+ void sp_free_ccp_irq(struct sp_device *sp, void *data);
+@@ -174,6 +175,7 @@ int psp_dev_init(struct sp_device *sp);
+ void psp_pci_init(void);
+ void psp_dev_destroy(struct sp_device *sp);
+ void psp_pci_exit(void);
++int psp_restore(struct sp_device *sp);
+ 
+ #else /* !CONFIG_CRYPTO_DEV_SP_PSP */
+ 
+@@ -181,6 +183,7 @@ static inline int psp_dev_init(struct sp_device *sp) { return 0; }
+ static inline void psp_pci_init(void) { }
+ static inline void psp_dev_destroy(struct sp_device *sp) { }
+ static inline void psp_pci_exit(void) { }
++static inline int psp_restore(struct sp_device *sp) { return 0; }
+ 
+ #endif /* CONFIG_CRYPTO_DEV_SP_PSP */
+ 
+diff --git a/drivers/crypto/ccp/sp-pci.c b/drivers/crypto/ccp/sp-pci.c
+index 8891ceee1d7d0..6ac805d99ccb3 100644
+--- a/drivers/crypto/ccp/sp-pci.c
++++ b/drivers/crypto/ccp/sp-pci.c
+@@ -353,6 +353,13 @@ static int __maybe_unused sp_pci_resume(struct device *dev)
+ 	return sp_resume(sp);
+ }
+ 
++static int __maybe_unused sp_pci_restore(struct device *dev)
++{
++	struct sp_device *sp = dev_get_drvdata(dev);
++
++	return sp_restore(sp);
++}
++
+ #ifdef CONFIG_CRYPTO_DEV_SP_PSP
+ static const struct sev_vdata sevv1 = {
+ 	.cmdresp_reg		= 0x10580,	/* C2PMSG_32 */
+@@ -563,7 +570,14 @@ static const struct pci_device_id sp_pci_table[] = {
+ };
+ MODULE_DEVICE_TABLE(pci, sp_pci_table);
+ 
+-static SIMPLE_DEV_PM_OPS(sp_pci_pm_ops, sp_pci_suspend, sp_pci_resume);
++static const struct dev_pm_ops sp_pci_pm_ops = {
++	.suspend = pm_sleep_ptr(sp_pci_suspend),
++	.resume = pm_sleep_ptr(sp_pci_resume),
++	.freeze = pm_sleep_ptr(sp_pci_suspend),
++	.thaw = pm_sleep_ptr(sp_pci_resume),
++	.poweroff = pm_sleep_ptr(sp_pci_suspend),
++	.restore_early = pm_sleep_ptr(sp_pci_restore),
++};
+ 
+ static struct pci_driver sp_pci_driver = {
+ 	.name = "ccp",
 diff --git a/drivers/crypto/ccp/tee-dev.c b/drivers/crypto/ccp/tee-dev.c
-index 5e1d80724678d..af881daa5855b 100644
+index af881daa5855b..11c4b05e2f3a2 100644
 --- a/drivers/crypto/ccp/tee-dev.c
 +++ b/drivers/crypto/ccp/tee-dev.c
-@@ -125,6 +125,7 @@ static int tee_init_ring(struct psp_tee_device *tee)
- 		dev_err(tee->dev, "tee: ring init command failed (%#010lx)\n",
- 			FIELD_GET(PSP_CMDRESP_STS, reg));
- 		tee_free_ring(tee);
-+		psp_dead = true;
- 		ret = -EIO;
- 	}
+@@ -366,3 +366,8 @@ int psp_check_tee_status(void)
+ 	return 0;
+ }
+ EXPORT_SYMBOL(psp_check_tee_status);
++
++int tee_restore(struct psp_device *psp)
++{
++	return tee_init_ring(psp->tee_data);
++}
+diff --git a/drivers/crypto/ccp/tee-dev.h b/drivers/crypto/ccp/tee-dev.h
+index ea9a2b7c05f57..c23416cb7bb37 100644
+--- a/drivers/crypto/ccp/tee-dev.h
++++ b/drivers/crypto/ccp/tee-dev.h
+@@ -111,5 +111,6 @@ struct tee_ring_cmd {
  
+ int tee_dev_init(struct psp_device *psp);
+ void tee_dev_destroy(struct psp_device *psp);
++int tee_restore(struct psp_device *psp);
+ 
+ #endif /* __TEE_DEV_H__ */
 -- 
 2.51.0
 
