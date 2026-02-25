@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F44D258ED5;
-	Wed, 25 Feb 2026 01:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FE3258ED5;
+	Wed, 25 Feb 2026 01:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983643; cv=none; b=LSJNAuxAxEbGZm7kfnhXRKcBC4yO6t79C1k2x/ZKNRebetpKdIz5xClP5a+l9NaLavMilbaGJQ/kWdUZoSmYRzu2jx7n94mlr/xMnYd9eRf7dAjsTCtkLNGtd6DrNCsYYFIC67i0OknjY/aw8wj4iQLljji9xnvXvPjIrfTVUvM=
+	t=1771983644; cv=none; b=V/I03EeV+PhxFZLp2xv8YBxkhuHlrup38Ci9KNVd3B2O4SxgITZ6WeHmDMjUgwQpXjjpMVGfi6HuyvOsvrgsSzVVFg5/8s0H7N99Rkj19t4ccYYdxcueCnT/XcDI+XFKACH1syKl6O2yPKGaX/ZrRnEAn9+K9wAhfkp/1Eusr+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983643; c=relaxed/simple;
-	bh=THsy3MiMIVrrqTp06gu+6ES7KqNXxccBKx9LCwm8wKU=;
+	s=arc-20240116; t=1771983644; c=relaxed/simple;
+	bh=dIv2FCd7w3YEf00fhntKa9PBrHb9mSYDX1e5LUjBIsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=djI5DoPZjIaYD1uq40JquKEQ80iYjH/dIuapT8l6YC/xswl+m2cUm1F/nTRirqXaH8uEykUj6DDA65/b2X1RLMRaD1Lgwv2rA4GGZ345Do9OumWif9BnIsB12CGviZ0cQQdfvmLJUMKTZcEchVZp34yOGuDoE17c6fmXi0KIwqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrTaedUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tuSs74PaY/CPmy5dJ204dcLSeyeqCTnK/Asa6b1yxcp9KT02Ou4SxCGEGETJsAGsmVYHETA8hR6zx2KjGZvJgUZYB/AKp8OA0NNl7HfGTk5CL3YBaqQ0P8Df+t6aDSjUwgu7vvh5rqthoyo7AKmZMN826PzYAwH7HkM58rhX1tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+XvEKF7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrTaedUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1850DC116D0;
-	Wed, 25 Feb 2026 01:40:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+XvEKF7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E7BC116D0;
+	Wed, 25 Feb 2026 01:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983643;
-	bh=THsy3MiMIVrrqTp06gu+6ES7KqNXxccBKx9LCwm8wKU=;
+	s=korg; t=1771983644;
+	bh=dIv2FCd7w3YEf00fhntKa9PBrHb9mSYDX1e5LUjBIsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrTaedUbS8uSl3ivI149HQp87SfoTh3QYkZnJkPcTZxP7BMZIaRf2NveC7zXox0eL
-	 EClqTFmYo/Aq4lMJzNVlhyFWTZy2kGxwkk+0p5NW/shmKa6tmfvh6HQNqnJ6dBdDLQ
-	 n1TRKWAQi4WKbK4ghN8urcVhNf5JwzOJVtxMb37Q=
+	b=M+XvEKF7SEWAQBLK2CN0Qf6fxVJX8TiqQxrX8Jd2nlxYk8FxJuyqJcGGYv67AUcEm
+	 OKPl/9/q6dqt2/SJzUqxPTBi7n8r/5STK3lX2gFu+EfhI/ZK+FUEE3ckgIYRu1wfWT
+	 VYXm5+wE8T1+/GekgmBbtk7pjLkf3pu8hxy+p/gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
 	Michal Wajdeczko <michal.wajdeczko@intel.com>,
 	Shuicheng Lin <shuicheng.lin@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 731/781] drm/xe/vf: Avoid reading media version when media GT is disabled
-Date: Tue, 24 Feb 2026 17:24:00 -0800
-Message-ID: <20260225012417.662532290@linuxfoundation.org>
+Subject: [PATCH 6.19 732/781] drm/xe: Make xe_modparam.force_vram_bar_size signed
+Date: Tue, 24 Feb 2026 17:24:01 -0800
+Message-ID: <20260225012417.687191378@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -49,65 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Piotr Piórkowski <piotr.piorkowski@intel.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 5e905ec67214444362b81345ef8fde63e58425b6 ]
+[ Upstream commit 1acec6ef0511b92e7974cc5a8768bfd3a659feaf ]
 
-When the media GT is not allowed, a VF must not attempt to read
-the media version from the GuC. The GuC may not be loaded, and
-any attempt to communicate with it would result in a timeout
-and a VF probe failure:
+vram_bar_size is registered as an int module parameter and is documented
+to accept negative values to disable BAR resizing.
+Store it as an int in xe_modparam as well, so negative values work as
+intended and the module_param type matches.
 
-(...)
-[ 1912.406046] xe 0000:01:00.1: [drm] *ERROR* Tile0: GT1: GuC mmio request 0x5507: no reply 0x5507
-[ 1912.407277] xe 0000:01:00.1: [drm] *ERROR* Tile0: GT1: [GUC COMMUNICATION] MMIO send failed (-ETIMEDOUT)
-[ 1912.408689] xe 0000:01:00.1: [drm] *ERROR* VF: Tile0: GT1: Failed to reset GuC state (-ETIMEDOUT)
-[ 1912.413986] xe 0000:01:00.1: probe with driver xe failed with error -110
-
-Let's skip reading the media version for VFs when the media GT is not
-allowed.
-
-v2: move the condition directly to the VF path
-
-Fixes: 7abd69278bb5 ("drm/xe/configfs: Add attribute to disable GT types")
-Signed-off-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://patch.msgid.link/20260202115041.2863357-1-piotr.piorkowski@intel.com
-Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
-(cherry picked from commit 0bcacf56dc0b265f9c47056c6a4f0c1394a8a3f0)
+Fixes: 80742a1aa26e ("drm/xe: Allow to drop vram resizing")
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Link: https://patch.msgid.link/20260202181853.1095736-2-shuicheng.lin@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 25c9aa4dcb5ef2ad9f354d19f8f1eeb690d1c161)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pci.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/xe/xe_module.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
-index 2aa883f5ef797..38ea9d7dad091 100644
---- a/drivers/gpu/drm/xe/xe_pci.c
-+++ b/drivers/gpu/drm/xe/xe_pci.c
-@@ -533,6 +533,12 @@ static int read_gmdid(struct xe_device *xe, enum xe_gmdid_type type, u32 *ver, u
- 		struct xe_gt *gt __free(kfree) = NULL;
- 		int err;
- 
-+		/* Don't try to read media ver if media GT is not allowed */
-+		if (type == GMDID_MEDIA && !xe_configfs_media_gt_allowed(to_pci_dev(xe->drm.dev))) {
-+			*ver = *revid = 0;
-+			return 0;
-+		}
-+
- 		gt = kzalloc(sizeof(*gt), GFP_KERNEL);
- 		if (!gt)
- 			return -ENOMEM;
+diff --git a/drivers/gpu/drm/xe/xe_module.h b/drivers/gpu/drm/xe/xe_module.h
+index 5a3bfea8b7b4c..b668495392701 100644
+--- a/drivers/gpu/drm/xe/xe_module.h
++++ b/drivers/gpu/drm/xe/xe_module.h
+@@ -12,7 +12,7 @@
+ struct xe_modparam {
+ 	bool force_execlist;
+ 	bool probe_display;
+-	u32 force_vram_bar_size;
++	int force_vram_bar_size;
+ 	int guc_log_level;
+ 	char *guc_firmware_path;
+ 	char *huc_firmware_path;
 -- 
 2.51.0
 
