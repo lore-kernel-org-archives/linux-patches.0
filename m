@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172DE18B0A;
-	Wed, 25 Feb 2026 01:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E6418B0A;
+	Wed, 25 Feb 2026 01:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983266; cv=none; b=pK/UkF9uENJ/D5w8dW9NTB4W4Ze6iY1mqyyvDxWDS47QnFkCJyBLXsokZcksdWrpnnh48+k9M0hkKr5gb6vVjbILq8llaZWMxdeXVHbrb/uL5rhil3qeoZn4/MHnK+Dd/OaR3Kknnborr4aa29Yxal5+scEzOWXrWMjcpS3bDsY=
+	t=1771983267; cv=none; b=P6WXhLpjs3w7h7pkvwbX1S6mUwXtD8VnBCiWDYRePy2zNo9/PTtxckB+uQ+FmPprCYjZbXzjTBfM33HldptjxcXo2FvV3usz03B/6wa1Uzh+Zs47SKC9XWBVf1woMHTiJNxt9M0L8a0YMG2yhRgT95Rv1Ap0QdCnbdVhd1Yqh6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983266; c=relaxed/simple;
-	bh=CDacgpqD0BUmR1eX36E5LL6bCrGXC0sVYkeEym346yc=;
+	s=arc-20240116; t=1771983267; c=relaxed/simple;
+	bh=q5K+JJIPlgeSepwFsM2z2dLiLOFJcr3iMSi9ZgP7Zdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJPF1KgUCk8r4Dp1cgloE5ajbUcFIECAUFlNMACGtCYWLQ7f1s6kvYeaVJEM0TFxGmXrINDY8S32JyqXwEWxjzn/yp5RU2OxxNJlVXLHgp8Whc5Pm+F+TkfqOfPGxiPFAmqtNGu3u90zi56oWVO4WOOO1W3hQcNSREaiHW/mMhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/JuuUJg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwHPDucObGLjd/6t6/PJEC3NJa3qns9733mzFxQFvB89YiXQpetKe3SeH8CTLccJAvxXV3b7YU3xskFiCM76It6QnD/3CBz5Lt58yLh6zbmCQkSSnVme9xLUPKMCSVn56SmS1dWp5Np6Gv9Ftz5xCohKFdt6WzaR0JspgBECkvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfXe8Rvw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/JuuUJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A57C116D0;
-	Wed, 25 Feb 2026 01:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfXe8Rvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E417FC116D0;
+	Wed, 25 Feb 2026 01:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983266;
-	bh=CDacgpqD0BUmR1eX36E5LL6bCrGXC0sVYkeEym346yc=;
+	s=korg; t=1771983267;
+	bh=q5K+JJIPlgeSepwFsM2z2dLiLOFJcr3iMSi9ZgP7Zdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/JuuUJgDa27tFd+4+i6RYjoOQkFYWMYzxNDlA5mEl38tU27WYqSPuhlruqT2giGj
-	 2UHYHT4XwddcADCQJ/zGuWx41umTHYSbCqqaHOywbgJrI4Q/NXX4VPoxj0jumbiTNu
-	 6FxWrEaWuPSxKActTWofWzXTvEps2Krpw02lWDnY=
+	b=rfXe8RvwlnXav8B36UIj+99SUl8ILSLOQPLYJh2xdEQQaXnaaMgH1VgbfOY8PRhcu
+	 gBbN2dBPz9xxfArD1GIzHAqdmVKqNLQ3IN9b69ONTqLNET2g9hiGbYnY/3six94iAM
+	 o1BuwI4lyqhgDZ9ZfBam+Zh5TAOtVEZ8QQKL5a10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Scott Mitchell <scott.k.mitch1@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 407/781] amd-xgbe: do not select NET_SELFTESTS when INET is disabled
-Date: Tue, 24 Feb 2026 17:18:36 -0800
-Message-ID: <20260225012409.686629845@linuxfoundation.org>
+Subject: [PATCH 6.19 408/781] netfilter: nfnetlink_queue: optimize verdict lookup with hash table
+Date: Tue, 24 Feb 2026 17:18:37 -0800
+Message-ID: <20260225012409.710521935@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,40 +51,316 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Scott Mitchell <scott.k.mitch1@gmail.com>
 
-[ Upstream commit ee9241524b4682a34ed4b66d8c68c33304810b93 ]
+[ Upstream commit e19079adcd26a25d7d3e586b1837493361fdf8b6 ]
 
-AMD_XGBE currently selects NET_SELFTESTS unconditionally. Since select
-does not honor dependencies, this can force-enable NET_SELFTESTS even
-when INET is disabled (e.g. INET=n randconfig builds).
+The current implementation uses a linear list to find queued packets by
+ID when processing verdicts from userspace. With large queue depths and
+out-of-order verdicting, this O(n) lookup becomes a significant
+bottleneck, causing userspace verdict processing to dominate CPU time.
 
-Fixes build issue when INET is disabled.
+Replace the linear search with a hash table for O(1) average-case
+packet lookup by ID. A global rhashtable spanning all network
+namespaces attributes hash bucket memory to kernel but is subject to
+fixed upper bound.
 
-Fixes: 862a64c83faf ("amd-xgbe: introduce support ethtool selftest")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202602030920.SWN7cwzT-lkp@intel.com/
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Link: https://patch.msgid.link/20260204150020.883639-1-Raju.Rangoju@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Scott Mitchell <scott.k.mitch1@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 207b3ebacb61 ("netfilter: nfnetlink_queue: do shared-unconfirmed check before segmentation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netfilter/nf_queue.h |   3 +
+ net/netfilter/nfnetlink_queue.c  | 146 ++++++++++++++++++++++++-------
+ 2 files changed, 119 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/Kconfig b/drivers/net/ethernet/amd/Kconfig
-index d54dca3074eb6..45e8d698781c1 100644
---- a/drivers/net/ethernet/amd/Kconfig
-+++ b/drivers/net/ethernet/amd/Kconfig
-@@ -165,7 +165,7 @@ config AMD_XGBE
- 	select CRC32
- 	select PHYLIB
- 	select AMD_XGBE_HAVE_ECC if X86
--	select NET_SELFTESTS
-+	imply NET_SELFTESTS
- 	help
- 	  This driver supports the AMD 10GbE Ethernet device found on an
- 	  AMD SoC.
+diff --git a/include/net/netfilter/nf_queue.h b/include/net/netfilter/nf_queue.h
+index 4aeffddb75861..e6803831d6af5 100644
+--- a/include/net/netfilter/nf_queue.h
++++ b/include/net/netfilter/nf_queue.h
+@@ -6,11 +6,13 @@
+ #include <linux/ipv6.h>
+ #include <linux/jhash.h>
+ #include <linux/netfilter.h>
++#include <linux/rhashtable-types.h>
+ #include <linux/skbuff.h>
+ 
+ /* Each queued (to userspace) skbuff has one of these. */
+ struct nf_queue_entry {
+ 	struct list_head	list;
++	struct rhash_head	hash_node;
+ 	struct sk_buff		*skb;
+ 	unsigned int		id;
+ 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
+@@ -20,6 +22,7 @@ struct nf_queue_entry {
+ #endif
+ 	struct nf_hook_state	state;
+ 	u16			size; /* sizeof(entry) + saved route keys */
++	u16			queue_num;
+ 
+ 	/* extra space to store route keys */
+ };
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index 8b7b39d8a1091..336e3ad18e72d 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -30,6 +30,8 @@
+ #include <linux/netfilter/nf_conntrack_common.h>
+ #include <linux/list.h>
+ #include <linux/cgroup-defs.h>
++#include <linux/rhashtable.h>
++#include <linux/jhash.h>
+ #include <net/gso.h>
+ #include <net/sock.h>
+ #include <net/tcp_states.h>
+@@ -47,6 +49,8 @@
+ #endif
+ 
+ #define NFQNL_QMAX_DEFAULT 1024
++#define NFQNL_HASH_MIN     1024
++#define NFQNL_HASH_MAX     1048576
+ 
+ /* We're using struct nlattr which has 16bit nla_len. Note that nla_len
+  * includes the header length. Thus, the maximum packet length that we
+@@ -56,6 +60,26 @@
+  */
+ #define NFQNL_MAX_COPY_RANGE (0xffff - NLA_HDRLEN)
+ 
++/* Composite key for packet lookup: (net, queue_num, packet_id) */
++struct nfqnl_packet_key {
++	possible_net_t net;
++	u32 packet_id;
++	u16 queue_num;
++} __aligned(sizeof(u32));  /* jhash2 requires 32-bit alignment */
++
++/* Global rhashtable - one for entire system, all netns */
++static struct rhashtable nfqnl_packet_map __read_mostly;
++
++/* Helper to initialize composite key */
++static inline void nfqnl_init_key(struct nfqnl_packet_key *key,
++				  struct net *net, u32 packet_id, u16 queue_num)
++{
++	memset(key, 0, sizeof(*key));
++	write_pnet(&key->net, net);
++	key->packet_id = packet_id;
++	key->queue_num = queue_num;
++}
++
+ struct nfqnl_instance {
+ 	struct hlist_node hlist;		/* global list of queues */
+ 	struct rcu_head rcu;
+@@ -100,6 +124,39 @@ static inline u_int8_t instance_hashfn(u_int16_t queue_num)
+ 	return ((queue_num >> 8) ^ queue_num) % INSTANCE_BUCKETS;
+ }
+ 
++/* Extract composite key from nf_queue_entry for hashing */
++static u32 nfqnl_packet_obj_hashfn(const void *data, u32 len, u32 seed)
++{
++	const struct nf_queue_entry *entry = data;
++	struct nfqnl_packet_key key;
++
++	nfqnl_init_key(&key, entry->state.net, entry->id, entry->queue_num);
++
++	return jhash2((u32 *)&key, sizeof(key) / sizeof(u32), seed);
++}
++
++/* Compare stack-allocated key against entry */
++static int nfqnl_packet_obj_cmpfn(struct rhashtable_compare_arg *arg,
++				  const void *obj)
++{
++	const struct nfqnl_packet_key *key = arg->key;
++	const struct nf_queue_entry *entry = obj;
++
++	return !net_eq(entry->state.net, read_pnet(&key->net)) ||
++	       entry->queue_num != key->queue_num ||
++	       entry->id != key->packet_id;
++}
++
++static const struct rhashtable_params nfqnl_rhashtable_params = {
++	.head_offset = offsetof(struct nf_queue_entry, hash_node),
++	.key_len = sizeof(struct nfqnl_packet_key),
++	.obj_hashfn = nfqnl_packet_obj_hashfn,
++	.obj_cmpfn = nfqnl_packet_obj_cmpfn,
++	.automatic_shrinking = true,
++	.min_size = NFQNL_HASH_MIN,
++	.max_size = NFQNL_HASH_MAX,
++};
++
+ static struct nfqnl_instance *
+ instance_lookup(struct nfnl_queue_net *q, u_int16_t queue_num)
+ {
+@@ -191,33 +248,45 @@ instance_destroy(struct nfnl_queue_net *q, struct nfqnl_instance *inst)
+ 	spin_unlock(&q->instances_lock);
+ }
+ 
+-static inline void
++static int
+ __enqueue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
+ {
+-       list_add_tail(&entry->list, &queue->queue_list);
+-       queue->queue_total++;
++	int err;
++
++	entry->queue_num = queue->queue_num;
++
++	err = rhashtable_insert_fast(&nfqnl_packet_map, &entry->hash_node,
++				     nfqnl_rhashtable_params);
++	if (unlikely(err))
++		return err;
++
++	list_add_tail(&entry->list, &queue->queue_list);
++	queue->queue_total++;
++
++	return 0;
+ }
+ 
+ static void
+ __dequeue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
+ {
++	rhashtable_remove_fast(&nfqnl_packet_map, &entry->hash_node,
++			       nfqnl_rhashtable_params);
+ 	list_del(&entry->list);
+ 	queue->queue_total--;
+ }
+ 
+ static struct nf_queue_entry *
+-find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id)
++find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id,
++		   struct net *net)
+ {
+-	struct nf_queue_entry *entry = NULL, *i;
++	struct nfqnl_packet_key key;
++	struct nf_queue_entry *entry;
+ 
+-	spin_lock_bh(&queue->lock);
++	nfqnl_init_key(&key, net, id, queue->queue_num);
+ 
+-	list_for_each_entry(i, &queue->queue_list, list) {
+-		if (i->id == id) {
+-			entry = i;
+-			break;
+-		}
+-	}
++	spin_lock_bh(&queue->lock);
++	entry = rhashtable_lookup_fast(&nfqnl_packet_map, &key,
++				       nfqnl_rhashtable_params);
+ 
+ 	if (entry)
+ 		__dequeue_entry(queue, entry);
+@@ -407,8 +476,7 @@ nfqnl_flush(struct nfqnl_instance *queue, nfqnl_cmpfn cmpfn, unsigned long data)
+ 	spin_lock_bh(&queue->lock);
+ 	list_for_each_entry_safe(entry, next, &queue->queue_list, list) {
+ 		if (!cmpfn || cmpfn(entry, data)) {
+-			list_del(&entry->list);
+-			queue->queue_total--;
++			__dequeue_entry(queue, entry);
+ 			nfqnl_reinject(entry, NF_DROP);
+ 		}
+ 	}
+@@ -888,23 +956,23 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
+ 	if (nf_ct_drop_unconfirmed(entry))
+ 		goto err_out_free_nskb;
+ 
+-	if (queue->queue_total >= queue->queue_maxlen) {
+-		if (queue->flags & NFQA_CFG_F_FAIL_OPEN) {
+-			failopen = 1;
+-			err = 0;
+-		} else {
+-			queue->queue_dropped++;
+-			net_warn_ratelimited("nf_queue: full at %d entries, dropping packets(s)\n",
+-					     queue->queue_total);
+-		}
+-		goto err_out_free_nskb;
+-	}
++	if (queue->queue_total >= queue->queue_maxlen)
++		goto err_out_queue_drop;
++
+ 	entry->id = ++queue->id_sequence;
+ 	*packet_id_ptr = htonl(entry->id);
+ 
++	/* Insert into hash BEFORE unicast. If failure don't send to userspace. */
++	err = __enqueue_entry(queue, entry);
++	if (unlikely(err))
++		goto err_out_queue_drop;
++
+ 	/* nfnetlink_unicast will either free the nskb or add it to a socket */
+ 	err = nfnetlink_unicast(nskb, net, queue->peer_portid);
+ 	if (err < 0) {
++		/* Unicast failed - remove entry we just inserted */
++		__dequeue_entry(queue, entry);
++
+ 		if (queue->flags & NFQA_CFG_F_FAIL_OPEN) {
+ 			failopen = 1;
+ 			err = 0;
+@@ -914,11 +982,22 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
+ 		goto err_out_unlock;
+ 	}
+ 
+-	__enqueue_entry(queue, entry);
+-
+ 	spin_unlock_bh(&queue->lock);
+ 	return 0;
+ 
++err_out_queue_drop:
++	if (queue->flags & NFQA_CFG_F_FAIL_OPEN) {
++		failopen = 1;
++		err = 0;
++	} else {
++		queue->queue_dropped++;
++
++		if (queue->queue_total >= queue->queue_maxlen)
++			net_warn_ratelimited("nf_queue: full at %d entries, dropping packets(s)\n",
++					     queue->queue_total);
++		else
++			net_warn_ratelimited("nf_queue: hash insert failed: %d\n", err);
++	}
+ err_out_free_nskb:
+ 	kfree_skb(nskb);
+ err_out_unlock:
+@@ -1430,7 +1509,7 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
+ 
+ 	verdict = ntohl(vhdr->verdict);
+ 
+-	entry = find_dequeue_entry(queue, ntohl(vhdr->id));
++	entry = find_dequeue_entry(queue, ntohl(vhdr->id), info->net);
+ 	if (entry == NULL)
+ 		return -ENOENT;
+ 
+@@ -1781,10 +1860,14 @@ static int __init nfnetlink_queue_init(void)
+ {
+ 	int status;
+ 
++	status = rhashtable_init(&nfqnl_packet_map, &nfqnl_rhashtable_params);
++	if (status < 0)
++		return status;
++
+ 	status = register_pernet_subsys(&nfnl_queue_net_ops);
+ 	if (status < 0) {
+ 		pr_err("failed to register pernet ops\n");
+-		goto out;
++		goto cleanup_rhashtable;
+ 	}
+ 
+ 	netlink_register_notifier(&nfqnl_rtnl_notifier);
+@@ -1809,7 +1892,8 @@ static int __init nfnetlink_queue_init(void)
+ cleanup_netlink_notifier:
+ 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
+ 	unregister_pernet_subsys(&nfnl_queue_net_ops);
+-out:
++cleanup_rhashtable:
++	rhashtable_destroy(&nfqnl_packet_map);
+ 	return status;
+ }
+ 
+@@ -1821,6 +1905,8 @@ static void __exit nfnetlink_queue_fini(void)
+ 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
+ 	unregister_pernet_subsys(&nfnl_queue_net_ops);
+ 
++	rhashtable_destroy(&nfqnl_packet_map);
++
+ 	rcu_barrier(); /* Wait for completion of call_rcu()'s */
+ }
+ 
 -- 
 2.51.0
 
