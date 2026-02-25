@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F721E2834;
-	Wed, 25 Feb 2026 01:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8D41E2834;
+	Wed, 25 Feb 2026 01:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983629; cv=none; b=GgvcmpB4/JS8/LTwiXTnqhkSIgj0eY4T7ei8K2oeF012o3HM1+PNCRi3j+Suy+O70+AohfWUPpBpSURG/l3fsHdXgZha+opE96iI699uL+EjSq09BJkUtARTQVfM18WRWWK7i1MHO6w9RUw3ZLxAkOFcYl9V/owyz5O9kU9ofbk=
+	t=1771983630; cv=none; b=LAEquyqTIdsf6sH3Wh77t+8u+PvK/LWIimkorhQzHdNy/weP2F23iPVylS+abmPCbtr4zPhU6ZNK5R1nU8CMDclJ2jwmHVGnEmAk/BRjFrWon7WRG4XtB0aHrZQzqqgNOlpykc3yYYMj5rtKhbnrBFJCtSb2cUqy5OWcGNfJDag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983629; c=relaxed/simple;
-	bh=cAij1+YVKbClfI1PB9TJR0KMJGkkd17Yqze00JI8E9E=;
+	s=arc-20240116; t=1771983630; c=relaxed/simple;
+	bh=xQWiE5JhMVvAzQm3MGe/n4kIid53IQSAFM4N71RhQSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MT5CdfWpH0H8+mCEEzE8ACg6OjbAIAX2Aox5JC7P5HjlosM8QGMx+UqD8OpzQjv9AuAKiFCGWpM6H9EjGFipIATt8fZ+Jgiv3CVgysqke3CX3xEVgLguhU7Sh8ABKly722dUR9NCk+YMIxgTPceoxaGbhfZQr6qWR84sT8Qy+dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9ZhjGSa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U6w4MIu8oLMnYGWqckXtb9sv6E9MXO2K+OxdqRaZX72AABEosw+bH/XuMeFVPj984DE+k0noHV8jFLbJNIHPQPTDg9FeScFd+jRwFc2XlrYHZ2Nqfr2FnzJzWzoMltwqnICJjnoCjqzAe4fzcJmLi+rB9w0S4FsRzpTAsfeYeYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kl656bNa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9ZhjGSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122B2C116D0;
-	Wed, 25 Feb 2026 01:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kl656bNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2F7C116D0;
+	Wed, 25 Feb 2026 01:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983629;
-	bh=cAij1+YVKbClfI1PB9TJR0KMJGkkd17Yqze00JI8E9E=;
+	s=korg; t=1771983630;
+	bh=xQWiE5JhMVvAzQm3MGe/n4kIid53IQSAFM4N71RhQSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9ZhjGSaukL5QLtCHj+m28ZJofL6aRP/RRWe1BBde+4wMZSdubxVAIsM+Z1dxQYkQ
-	 ypYc2AfB/JLJ+/umUl79Z+DTqWo4OB8YzIB/iWLJp3eIIR3VOvi4sIyanLI2V7nUgK
-	 qfh9JHqXsEfnft0lOXs26WsV8y0kl9sC+kXB+Bvs=
+	b=kl656bNatgbiaU9yKRHInIpQB02qxg94Byiff92Wqd9rr6M2JxBXqdLY16QFSzDV9
+	 dCOtCknitmg+CmhSOpIxr/25M5HRFe7qG30HArMpqV2T+qWAQZHCsn6DPKg4RUwC97
+	 XS9ba31DZL0tLekkTfRkwBHoQgjtrLJYbiDCyi4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jonathan Kim <jonathan.kim@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 720/781] drm/amdgpu: Fix missing unwind in amdgpu_ib_schedule() error path
-Date: Tue, 24 Feb 2026 17:23:49 -0800
-Message-ID: <20260225012417.396485080@linuxfoundation.org>
+Subject: [PATCH 6.19 721/781] drm/amdkfd: Fix watch_id bounds checking in debug address watch v2
+Date: Tue, 24 Feb 2026 17:23:50 -0800
+Message-ID: <20260225012417.420189577@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -56,79 +58,131 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit ba038065655c45728be346d0b174a6da08d8a5c5 ]
+[ Upstream commit 5a19302cab5cec7ae7f1a60c619951e6c17d8742 ]
 
-amdgpu_ib_schedule() returns early after calling amdgpu_ring_undo().
-This skips the common free_fence cleanup path.  Other error paths were
-already changed to use goto free_fence, but this one was missed.
+The address watch clear code receives watch_id as an unsigned value
+(u32), but some helper functions were using a signed int and checked
+bits by shifting with watch_id.
 
-Change the early return to goto free_fence so all error paths clean up
-the same way.
+If a very large watch_id is passed from userspace, it can be converted
+to a negative value.  This can cause invalid shifts and may access
+memory outside the watch_points array.
+
+drm/amdkfd: Fix watch_id bounds checking in debug address watch v2
+
+Fix this by checking that watch_id is within MAX_WATCH_ADDRESSES before
+using it.  Also use BIT(watch_id) to test and clear bits safely.
+
+This keeps the behavior unchanged for valid watch IDs and avoids
+undefined behavior for invalid ones.
 
 Fixes the below:
-drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c:232 amdgpu_ib_schedule()
-warn: missing unwind goto?
+drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_debug.c:448
+kfd_dbg_trap_clear_dev_address_watch() error: buffer overflow
+'pdd->watch_points' 4 <= u32max user_rl='0-3,2147483648-u32max' uncapped
 
-drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-    124 int amdgpu_ib_schedule(struct amdgpu_ring *ring, unsigned int num_ibs,
-    125                        struct amdgpu_ib *ibs, struct amdgpu_job *job,
-    126                        struct dma_fence **f)
-    127 {
+drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_debug.c
+    433 int kfd_dbg_trap_clear_dev_address_watch(struct kfd_process_device *pdd,
+    434                                         uint32_t watch_id)
+    435 {
+    436         int r;
+    437
+    438         if (!kfd_dbg_owns_dev_watch_id(pdd, watch_id))
 
-    ...
+kfd_dbg_owns_dev_watch_id() doesn't check for negative values so if
+watch_id is larger than INT_MAX it leads to a buffer overflow.
+(Negative shifts are undefined).
 
-    224
-    225         if (ring->funcs->insert_start)
-    226                 ring->funcs->insert_start(ring);
-    227
-    228         if (job) {
-    229                 r = amdgpu_vm_flush(ring, job, need_pipe_sync);
-    230                 if (r) {
-    231                         amdgpu_ring_undo(ring);
---> 232                         return r;
+    439                 return -EINVAL;
+    440
+    441         if (!pdd->dev->kfd->shared_resources.enable_mes) {
+    442                 r = debug_lock_and_unmap(pdd->dev->dqm);
+    443                 if (r)
+    444                         return r;
+    445         }
+    446
+    447         amdgpu_gfx_off_ctrl(pdd->dev->adev, false);
+--> 448         pdd->watch_points[watch_id] = pdd->dev->kfd2kgd->clear_address_watch(
+    449                                                         pdd->dev->adev,
+    450                                                         watch_id);
 
-	The patch changed the other error paths to goto free_fence but
-	this one was accidentally skipped.
+v2: (as per, Jonathan Kim)
+ - Add early watch_id >= MAX_WATCH_ADDRESSES validation in the set path to
+   match the clear path.
+ - Drop the redundant bounds check in kfd_dbg_owns_dev_watch_id().
 
-    233                 }
-    234         }
-    235
-    236         amdgpu_ring_ib_begin(ring);
-
-    ...
-
-    338
-    339 free_fence:
-    340         if (!job)
-    341                 kfree(af);
-    342         return r;
-    343 }
-
-Fixes: f903b85ed0f1 ("drm/amdgpu: fix possible fence leaks from job structure")
+Fixes: e0f85f4690d0 ("drm/amdkfd: add debug set and clear address watch points operation")
 Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Jonathan Kim <jonathan.kim@amd.com>
+Cc: Felix Kuehling <felix.kuehling@amd.com>
 Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: Christian König <christian.koenig@amd.com>
 Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Jonathan Kim <jonathan.kim@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_debug.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-index 44f230d67da24..bfa64cd7a62d4 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-@@ -229,7 +229,7 @@ int amdgpu_ib_schedule(struct amdgpu_ring *ring, unsigned int num_ibs,
- 		r = amdgpu_vm_flush(ring, job, need_pipe_sync);
- 		if (r) {
- 			amdgpu_ring_undo(ring);
--			return r;
-+			goto free_fence;
- 		}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
+index ba99e0f258aee..986cb297de8f8 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
+@@ -401,27 +401,25 @@ static int kfd_dbg_get_dev_watch_id(struct kfd_process_device *pdd, int *watch_i
+ 	return -ENOMEM;
+ }
+ 
+-static void kfd_dbg_clear_dev_watch_id(struct kfd_process_device *pdd, int watch_id)
++static void kfd_dbg_clear_dev_watch_id(struct kfd_process_device *pdd, u32 watch_id)
+ {
+ 	spin_lock(&pdd->dev->watch_points_lock);
+ 
+ 	/* process owns device watch point so safe to clear */
+-	if ((pdd->alloc_watch_ids >> watch_id) & 0x1) {
+-		pdd->alloc_watch_ids &= ~(0x1 << watch_id);
+-		pdd->dev->alloc_watch_ids &= ~(0x1 << watch_id);
++	if (pdd->alloc_watch_ids & BIT(watch_id)) {
++		pdd->alloc_watch_ids &= ~BIT(watch_id);
++		pdd->dev->alloc_watch_ids &= ~BIT(watch_id);
  	}
  
+ 	spin_unlock(&pdd->dev->watch_points_lock);
+ }
+ 
+-static bool kfd_dbg_owns_dev_watch_id(struct kfd_process_device *pdd, int watch_id)
++static bool kfd_dbg_owns_dev_watch_id(struct kfd_process_device *pdd, u32 watch_id)
+ {
+ 	bool owns_watch_id = false;
+ 
+ 	spin_lock(&pdd->dev->watch_points_lock);
+-	owns_watch_id = watch_id < MAX_WATCH_ADDRESSES &&
+-			((pdd->alloc_watch_ids >> watch_id) & 0x1);
+-
++	owns_watch_id = pdd->alloc_watch_ids & BIT(watch_id);
+ 	spin_unlock(&pdd->dev->watch_points_lock);
+ 
+ 	return owns_watch_id;
+@@ -432,6 +430,9 @@ int kfd_dbg_trap_clear_dev_address_watch(struct kfd_process_device *pdd,
+ {
+ 	int r;
+ 
++	if (watch_id >= MAX_WATCH_ADDRESSES)
++		return -EINVAL;
++
+ 	if (!kfd_dbg_owns_dev_watch_id(pdd, watch_id))
+ 		return -EINVAL;
+ 
+@@ -469,6 +470,9 @@ int kfd_dbg_trap_set_dev_address_watch(struct kfd_process_device *pdd,
+ 	if (r)
+ 		return r;
+ 
++	if (*watch_id >= MAX_WATCH_ADDRESSES)
++		return -EINVAL;
++
+ 	if (!pdd->dev->kfd->shared_resources.enable_mes) {
+ 		r = debug_lock_and_unmap(pdd->dev->dqm);
+ 		if (r) {
 -- 
 2.51.0
 
