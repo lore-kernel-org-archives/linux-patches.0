@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8567626F46F;
-	Wed, 25 Feb 2026 01:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983B226F46F;
+	Wed, 25 Feb 2026 01:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983941; cv=none; b=nh3E5vlQHkA2Sknj2qvKQcSwbDA3ofwN67qfDuonDKKYwlaElpQJaEJjc4wC9TuEcG0nvWZT6JUb1ZOkSYuyYOlwOeiNfj5doGOsGJEN3w15qgBQJsRloeJ+ny8ckzjdDb7MWvBxgrYoCyeaQJm7YTk8i9qMDParPuSQU7tVSO8=
+	t=1771983942; cv=none; b=pph71wyvuod/IK2QppRLrQy2mro/m9rKYcPCpcG/hgH2A/eOVfTUte3XzfL/6T6BQCpXVyfMkIpIoXrDN/knvA3muqMWUbmnttwhPecfhAmRtCVfEZs/a/JWLi4emmPuCVlp3KlrQdJd3L14elsqvoz0Xfbi40NLpoBEnaskHy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983941; c=relaxed/simple;
-	bh=q/wdyiqZX6DbOZ1+mb2YAgSrPmGPNx3lvczpWTXiItI=;
+	s=arc-20240116; t=1771983942; c=relaxed/simple;
+	bh=gMXob7u3ke+uQgs3glbPp2kh/0H+ucA/mUfrUUjvI7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F6IEmAq+AUc8IYyLuioH4KJk2YMqaCr8aOmGkgOzD+riPKvkjpK+mMcJZWZf2tPj0V1PKTzy/jvABm4ikyUDV+2Gy+NyhJmBV9t4bcuZbGZ/blCCFYM3vYRwiEgt3rkkCofpA8Aa9Qf/aJ/REU/5iaf2N0wBYzHYAuy5sAwaSf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Tn7U9lY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKunYFlAYR2WzAXeDUuSq/qYvPne3Si+YozNjqe0Z/qhOp3AvrIM4lbsWXpwp98Un3BAoIN5CjhXMCDcx7kFAH65kRfyQjSs/RHdOGbf+skEsg0ECBdEurKgX4OQtRaezjSXgMR54u11z95P7KZlFnITJBXAqc4cirx+VgdIQuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPDSyNuQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Tn7U9lY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4177FC116D0;
-	Wed, 25 Feb 2026 01:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPDSyNuQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E27C116D0;
+	Wed, 25 Feb 2026 01:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983941;
-	bh=q/wdyiqZX6DbOZ1+mb2YAgSrPmGPNx3lvczpWTXiItI=;
+	s=korg; t=1771983942;
+	bh=gMXob7u3ke+uQgs3glbPp2kh/0H+ucA/mUfrUUjvI7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Tn7U9lYTvAIX8EZnKyLj5zSZrL0CQDBW/DsVsLvFLH3uNBdBwmBBBKPJHphsJiUD
-	 hx2O5RB9eeFEMydpRJPxaVBqdDqCaUyd1rm+HpDv2YlGWO5tkceFcgapyyqG6MhWDv
-	 2NEkSHySqEORMQGPyFvAQ/a03ZdP+IgwRmU5yUoM=
+	b=iPDSyNuQF0Zqkk4CWsNQT1lRedbHI5JLHAXJYwkAwbLA1ESKJAG/Mz0oHKGQL0pMS
+	 Vb+/nT/+VnlWfMHtLEkSibxHKGVS6noAjElyjR7bydahQIoNHaVM1xrlK79W4sDqCg
+	 wCGafkp74i5ZIe9uL18C0Yg3c/1ihCTZQXbd+UQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Baihan Li <libaihan@huawei.com>,
 	Yongbang Shi <shiyongbang@huawei.com>,
-	Tao Tian <tiantao6@hisilicon.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Tao Tian <tiantao6@hisilicon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 205/641] drm/hisilicon/hibmc: fix dp probabilistical detect errors after HPD irq
-Date: Tue, 24 Feb 2026 17:18:51 -0800
-Message-ID: <20260225012353.930184915@linuxfoundation.org>
+Subject: [PATCH 6.18 206/641] drm/hisilicon/hibmc: add dp mode valid check
+Date: Tue, 24 Feb 2026 17:18:52 -0800
+Message-ID: <20260225012353.952126268@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -55,214 +55,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Baihan Li <libaihan@huawei.com>
 
-[ Upstream commit 3906e7a3b26d683868704fe262db443207f392fe ]
+[ Upstream commit 607805abfb747b98f43aa57d6d9ba4caed4d106f ]
 
-The issue is that drm_connector_helper_detect_from_ddc() returns wrong
-status when plugging or unplugging the monitor, which may cause the link
-failed err.[0] Use HPD pin status in DP's detect_ctx() for real physical
-monitor in/out, and implement a complete DP detection including read DPCD,
-check if it's a branch device and its sink count for different situations.
+If DP is connected, check the DP BW in mode_valid_ctx() to ensure
+that DP's link rate supports high-resolution data transmission.
 
-[0]:
-	hibme-drm 0000:83:00.0: [drm] *ERROR* channel equalization failed 5 times
-	hibme-drm 0000:83:00.0: [drm] *ERROR* channel equalization failed 5 times
-	hibme-drm 0000:83:00.0: [drm] *ERROR* dp link training failed, ret: -16
-	hibmc-drm 0000:83:00.0: [drm] *ERROR* hibme dp mode set failed: -16
-
-Fixes: 3c7623fb5bb6 ("drm/hisilicon/hibmc: Enable this hot plug detect of irq feature")
+Fixes: 0ab6ea261c1f ("drm/hisilicon/hibmc: add dp module in hibmc")
 Signed-off-by: Baihan Li <libaihan@huawei.com>
 Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Tao Tian <tiantao6@hisilicon.com>
-Link: https://patch.msgid.link/20251210023759.3944834-2-shiyongbang@huawei.com
+Link: https://patch.msgid.link/20251210023759.3944834-3-shiyongbang@huawei.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h  |  4 ++
- drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c    | 19 +++++++
- drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h    |  6 +++
- drivers/gpu/drm/hisilicon/hibmc/dp/dp_reg.h   |  3 ++
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c    | 52 +++++++++++++++++--
- 5 files changed, 80 insertions(+), 4 deletions(-)
+ .../gpu/drm/hisilicon/hibmc/dp/dp_config.h    |  2 ++
+ drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c    | 10 ++++++++++
+ drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h    |  2 ++
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c    | 19 +++++++++++++++++++
+ 4 files changed, 33 insertions(+)
 
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h
-index 4add05c7f161a..f9ee7ebfec55c 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h
-+++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h
-@@ -40,6 +40,10 @@ struct hibmc_dp_dev {
- 	struct mutex lock; /* protects concurrent RW in hibmc_dp_reg_write_field() */
- 	struct hibmc_dp_link link;
- 	u8 dpcd[DP_RECEIVER_CAP_SIZE];
-+	u8 downstream_ports[DP_MAX_DOWNSTREAM_PORTS];
-+	struct drm_dp_desc desc;
-+	bool is_branch;
-+	int hpd_status;
- 	void __iomem *serdes_base;
- };
- 
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
-index 8f0daec7d1749..0ec6ace2d0822 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
-@@ -2,6 +2,7 @@
- // Copyright (c) 2024 Hisilicon Limited.
- 
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/delay.h>
- #include "dp_config.h"
- #include "dp_comm.h"
-@@ -305,3 +306,21 @@ void hibmc_dp_set_cbar(struct hibmc_dp *dp, const struct hibmc_dp_cbar_cfg *cfg)
- 	hibmc_dp_reg_write_field(dp_dev, HIBMC_DP_COLOR_BAR_CTRL, BIT(0), cfg->enable);
- 	writel(HIBMC_DP_SYNC_EN_MASK, dp_dev->base + HIBMC_DP_TIMING_SYNC_CTRL);
- }
-+
-+bool hibmc_dp_check_hpd_status(struct hibmc_dp *dp, int exp_status)
-+{
-+	u32 status;
-+	int ret;
-+
-+	ret = readl_poll_timeout(dp->dp_dev->base + HIBMC_DP_HPD_STATUS, status,
-+				 FIELD_GET(HIBMC_DP_HPD_CUR_STATE, status) == exp_status,
-+				 1000, 100000); /* DP spec says 100ms */
-+	if (ret) {
-+		drm_dbg_dp(dp->drm_dev, "wait hpd status timeout");
-+		return false;
-+	}
-+
-+	dp->dp_dev->hpd_status = exp_status;
-+
-+	return true;
-+}
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h
-index 665f5b166dfb5..59c1eae153c55 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h
-+++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h
-@@ -14,6 +14,11 @@
- 
- struct hibmc_dp_dev;
- 
-+enum hibmc_hpd_status {
-+	HIBMC_HPD_OUT,
-+	HIBMC_HPD_IN,
-+};
-+
- enum hibmc_dp_cbar_pattern {
- 	CBAR_COLOR_BAR,
- 	CBAR_WHITE,
-@@ -60,5 +65,6 @@ void hibmc_dp_reset_link(struct hibmc_dp *dp);
- void hibmc_dp_hpd_cfg(struct hibmc_dp *dp);
- void hibmc_dp_enable_int(struct hibmc_dp *dp);
- void hibmc_dp_disable_int(struct hibmc_dp *dp);
-+bool hibmc_dp_check_hpd_status(struct hibmc_dp *dp, int exp_status);
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_config.h b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_config.h
+index 08f9e1caf7fcb..efb30a7584758 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_config.h
++++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_config.h
+@@ -17,5 +17,7 @@
+ #define HIBMC_DP_LINK_RATE_CAL		27
+ #define HIBMC_DP_SYNC_DELAY(lanes)	((lanes) == 0x2 ? 86 : 46)
+ #define HIBMC_DP_INT_ENABLE		0xc
++/* HIBMC_DP_LINK_RATE_CAL * 10000 * 80% = 216000 */
++#define DP_MODE_VALI_CAL		216000
  
  #endif
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_reg.h b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_reg.h
-index 394b1e933c3ae..64306abcd9866 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_reg.h
-+++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_reg.h
-@@ -24,6 +24,9 @@
- #define HIBMC_DP_CFG_AUX_READY_DATA_BYTE	GENMASK(16, 12)
- #define HIBMC_DP_CFG_AUX			GENMASK(24, 17)
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
+index 0ec6ace2d0822..37549dafa06ca 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
+@@ -264,6 +264,16 @@ void hibmc_dp_reset_link(struct hibmc_dp *dp)
+ 	dp->dp_dev->link.status.channel_equalized = false;
+ }
  
-+#define HIBMC_DP_HPD_STATUS			0x98
-+#define HIBMC_DP_HPD_CUR_STATE		GENMASK(7, 4)
++u8 hibmc_dp_get_link_rate(struct hibmc_dp *dp)
++{
++	return dp->dp_dev->link.cap.link_rate;
++}
 +
- #define HIBMC_DP_PHYIF_CTRL0			0xa0
- #define HIBMC_DP_CFG_SCRAMBLE_EN		BIT(0)
- #define HIBMC_DP_CFG_PAT_SEL			GENMASK(7, 4)
++u8 hibmc_dp_get_lanes(struct hibmc_dp *dp)
++{
++	return dp->dp_dev->link.cap.lanes;
++}
++
+ static const struct hibmc_dp_color_raw g_rgb_raw[] = {
+ 	{CBAR_COLOR_BAR, 0x000, 0x000, 0x000},
+ 	{CBAR_WHITE,     0xfff, 0xfff, 0xfff},
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h
+index 59c1eae153c55..31316fe1ea8db 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h
++++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h
+@@ -66,5 +66,7 @@ void hibmc_dp_hpd_cfg(struct hibmc_dp *dp);
+ void hibmc_dp_enable_int(struct hibmc_dp *dp);
+ void hibmc_dp_disable_int(struct hibmc_dp *dp);
+ bool hibmc_dp_check_hpd_status(struct hibmc_dp *dp, int exp_status);
++u8 hibmc_dp_get_link_rate(struct hibmc_dp *dp);
++u8 hibmc_dp_get_lanes(struct hibmc_dp *dp);
+ 
+ #endif
 diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
-index d06832e62e966..4a66a107900a1 100644
+index 4a66a107900a1..616821e3c933b 100644
 --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
 +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
-@@ -12,6 +12,7 @@
- 
+@@ -13,6 +13,7 @@
  #include "hibmc_drm_drv.h"
  #include "dp/dp_hw.h"
-+#include "dp/dp_comm.h"
+ #include "dp/dp_comm.h"
++#include "dp/dp_config.h"
  
  #define DP_MASKED_SINK_HPD_PLUG_INT	BIT(2)
  
-@@ -31,12 +32,53 @@ static int hibmc_dp_connector_get_modes(struct drm_connector *connector)
- 	return count;
+@@ -81,9 +82,27 @@ static int hibmc_dp_detect(struct drm_connector *connector,
+ 	return connector_status_disconnected;
  }
  
-+static bool hibmc_dp_get_dpcd(struct hibmc_dp_dev *dp_dev)
++static int hibmc_dp_mode_valid(struct drm_connector *connector,
++			       const struct drm_display_mode *mode,
++			       struct drm_modeset_acquire_ctx *ctx,
++			       enum drm_mode_status *status)
 +{
-+	int ret;
++	struct hibmc_dp *dp = to_hibmc_dp(connector);
++	u64 cur_val, max_val;
 +
-+	ret = drm_dp_read_dpcd_caps(dp_dev->aux, dp_dev->dpcd);
-+	if (ret)
-+		return false;
++	/* check DP link BW */
++	cur_val = (u64)mode->clock * HIBMC_DP_BPP;
++	max_val = (u64)hibmc_dp_get_link_rate(dp) * DP_MODE_VALI_CAL * hibmc_dp_get_lanes(dp);
 +
-+	dp_dev->is_branch = drm_dp_is_branch(dp_dev->dpcd);
++	*status = cur_val > max_val ? MODE_CLOCK_HIGH : MODE_OK;
 +
-+	ret = drm_dp_read_desc(dp_dev->aux, &dp_dev->desc, dp_dev->is_branch);
-+	if (ret)
-+		return false;
-+
-+	ret = drm_dp_read_downstream_info(dp_dev->aux, dp_dev->dpcd, dp_dev->downstream_ports);
-+	if (ret)
-+		return false;
-+
-+	return true;
++	return 0;
 +}
 +
- static int hibmc_dp_detect(struct drm_connector *connector,
- 			   struct drm_modeset_acquire_ctx *ctx, bool force)
- {
--	mdelay(200);
-+	struct hibmc_dp *dp = to_hibmc_dp(connector);
-+	struct hibmc_dp_dev *dp_dev = dp->dp_dev;
-+	int ret;
-+
-+	if (dp->irq_status) {
-+		if (dp_dev->hpd_status != HIBMC_HPD_IN)
-+			return connector_status_disconnected;
-+	}
-+
-+	if (!hibmc_dp_get_dpcd(dp_dev))
-+		return connector_status_disconnected;
-+
-+	if (!dp_dev->is_branch)
-+		return connector_status_connected;
-+
-+	if (drm_dp_read_sink_count_cap(connector, dp_dev->dpcd, &dp_dev->desc) &&
-+	    dp_dev->downstream_ports[0] & DP_DS_PORT_HPD) {
-+		ret = drm_dp_read_sink_count(dp_dev->aux);
-+		if (ret > 0)
-+			return connector_status_connected;
-+	}
- 
--	return drm_connector_helper_detect_from_ddc(connector, ctx, force);
-+	return connector_status_disconnected;
- }
- 
  static const struct drm_connector_helper_funcs hibmc_dp_conn_helper_funcs = {
-@@ -115,7 +157,7 @@ irqreturn_t hibmc_dp_hpd_isr(int irq, void *arg)
- {
- 	struct drm_device *dev = (struct drm_device *)arg;
- 	struct hibmc_drm_private *priv = to_hibmc_drm_private(dev);
--	int idx;
-+	int idx, exp_status;
+ 	.get_modes = hibmc_dp_connector_get_modes,
+ 	.detect_ctx = hibmc_dp_detect,
++	.mode_valid_ctx = hibmc_dp_mode_valid,
+ };
  
- 	if (!drm_dev_enter(dev, &idx))
- 		return -ENODEV;
-@@ -123,12 +165,14 @@ irqreturn_t hibmc_dp_hpd_isr(int irq, void *arg)
- 	if (priv->dp.irq_status & DP_MASKED_SINK_HPD_PLUG_INT) {
- 		drm_dbg_dp(&priv->dev, "HPD IN isr occur!\n");
- 		hibmc_dp_hpd_cfg(&priv->dp);
-+		exp_status = HIBMC_HPD_IN;
- 	} else {
- 		drm_dbg_dp(&priv->dev, "HPD OUT isr occur!\n");
- 		hibmc_dp_reset_link(&priv->dp);
-+		exp_status = HIBMC_HPD_OUT;
- 	}
- 
--	if (dev->registered)
-+	if (hibmc_dp_check_hpd_status(&priv->dp, exp_status))
- 		drm_connector_helper_hpd_irq_event(&priv->dp.connector);
- 
- 	drm_dev_exit(idx);
+ static int hibmc_dp_late_register(struct drm_connector *connector)
 -- 
 2.51.0
 
