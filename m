@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C888E239099;
-	Wed, 25 Feb 2026 01:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211331FE45D;
+	Wed, 25 Feb 2026 01:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983992; cv=none; b=nbFKeuszyGU4eBcp73WIBYcTbUfMUUJjx/pZSKntw3WHbK5f51/d1N7QwehBOiD7eqGRwsoWUl4mg4oVLWE6WjkCJluZ037skp5mSBLtlfp/Gzd8tq7MzrV057qMdlMFVBx8VmPjEriLfJAGyiA1bX8HVoUL5LSoHmZf7zjtqRs=
+	t=1771983994; cv=none; b=BF4pR9YNKBExwu/WyPRmGyTQ25GxWCL5fksYzr8exRDzWTmOWHWFa8iA5PEAEdBt+wrAVI2e8GkWSsIbZ/ck1sDszcvhmKRtcUi5vVWDNCg4N/bpj/1/PLPJ5y9IEaf89VMDWp8bD/9nNgk3UoF8XybgN0LpXlz7H/oBq4aI7+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983992; c=relaxed/simple;
-	bh=wEccGvuoyHCyv/ypeHe02letJ070K4WRwwdq7bUsR38=;
+	s=arc-20240116; t=1771983994; c=relaxed/simple;
+	bh=FrSdb+lW6M4NEvHh3D6vj9zhthtQQiBKoSMy5kffpC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mh42gTMXNamTNbZJntb+zs8JJnHzHCP1wT3Eq+RxHmwzsUSdEmyeiv6tjsEDveQMeB1ruD/YTuMFh/447T0t2UHrcxZG44CS75DbQxwWIJFunm6tY1hH7wXljNyct6STdwAFEArjgCeBMrxthXjgdvVKExW7UkZGPOXZtPPUJLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyISykAO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qU7eSvu/B+7Q99Fb+X6yd/v8wq7oEJmO/v4z5dCspywNJGrOwQ3unZc/b8ZpXoV8sORypcwyxAlLETg2x1aHulvCG6yEP7F/lk/Mbntp59fOqx7nE73lXNLZlBcImXs6OomrNvO5uh3pNwTSPY8ZltXUGilnOM38e3nKbgKreSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUOLuHbM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyISykAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D73C116D0;
-	Wed, 25 Feb 2026 01:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUOLuHbM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0EEC116D0;
+	Wed, 25 Feb 2026 01:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983992;
-	bh=wEccGvuoyHCyv/ypeHe02letJ070K4WRwwdq7bUsR38=;
+	s=korg; t=1771983994;
+	bh=FrSdb+lW6M4NEvHh3D6vj9zhthtQQiBKoSMy5kffpC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UyISykAO4BNLFG29xer1FlbAqwXEZLTvCqJN6aXIF0EqJ7nE8LNVPBa1A6r8BWdiT
-	 rtp5O4LQXnRHdHwkn+jdKKSZI3AlS90XH74nJzx1kXknY96TyWpVGe9Ztaexpr7Laz
-	 R4XHlhKFpl0uh880nxtLNqrkq7siHXBybKBwR7c0=
+	b=mUOLuHbMsZZLkwq4Un/DxFXvmZdFRw23BKIrQ0Fqg9yJiSO3YfvG6Hzb1YtpQiMqP
+	 XcVq3EGhQus2fbeS9nfD80jErvsidvB2PyE60sPaBFg0lR4o4dWNgW11zrRS93hLxW
+	 ZqkKzg03V5Qqt75aENyLU9lyMPfsbduOP49Wp7vE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aadityarangan Shridhar Iyengar <adiyenga@cisco.com>,
+	Alistair Popple <apopple@nvidia.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Balbir Singh <balbirs@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 247/641] PCI/PTM: Fix pcie_ptm_create_debugfs() memory leak
-Date: Tue, 24 Feb 2026 17:19:33 -0800
-Message-ID: <20260225012354.843638561@linuxfoundation.org>
+Subject: [PATCH 6.18 248/641] PCI/P2PDMA: Reset page reference count when page mapping fails
+Date: Tue, 24 Feb 2026 17:19:34 -0800
+Message-ID: <20260225012354.864455538@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,53 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aadityarangan Shridhar Iyengar <adiyenga@cisco.com>
+From: Alistair Popple <apopple@nvidia.com>
 
-[ Upstream commit 62171369cf17794ddd88f602c2c84d008ecafcff ]
+[ Upstream commit 83014d82a1100abc89f7712ad67c3e5accaddc43 ]
 
-In pcie_ptm_create_debugfs(), if devm_kasprintf() fails after successfully
-allocating ptm_debugfs with kzalloc(), the function returns without freeing
-the allocated memory, resulting in a memory leak.
+When mapping a p2pdma page the page reference count is initialised to 1
+prior to calling vm_insert_page(). This is to avoid vm_insert_page()
+warning if the page refcount is zero. Prior to setting the page count there
+is a check to ensure the page is currently free (ie. has a zero reference
+count).
 
-Free ptm_debugfs before returning in the devm_kasprintf() error path and in
-pcie_ptm_destroy_debugfs().
+However vm_insert_page() can fail. In this case the pages are freed back to
+the genalloc pool, but that does not reset the page refcount.  So a future
+allocation of the same page will see the elevated page refcount from the
+previous set_page_count() call triggering the VM_WARN_ON_ONCE_PAGE checking
+that the page is free.
 
-Fixes: 132833405e61 ("PCI: Add debugfs support for exposing PTM context")
-Signed-off-by: Aadityarangan Shridhar Iyengar <adiyenga@cisco.com>
-[bhelgaas: squash additional fix from Mani:
-https://lore.kernel.org/r/pdp4xc4d5ee3e547mmdro5riui3mclduqdl7j6iclfbozo2a4c@7m3qdm6yrhuv]
+Fix this by resetting the page refcount to zero using set_page_count().
+Note that put_page() is not used because that would result in freeing the
+page twice due to implicitly calling p2pdma_folio_free().
+
+Fixes: b7e282378773 ("mm/mm_init: move p2pdma page refcount initialisation to p2pdma")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260111163650.33168-1-adiyenga@cisco.com
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Acked-by: Balbir Singh <balbirs@nvidia.com>
+Link: https://patch.msgid.link/20260112005440.998543-1-apopple@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/ptm.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/p2pdma.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/pci/pcie/ptm.c b/drivers/pci/pcie/ptm.c
-index 65e4b008be00d..41d370f082ee4 100644
---- a/drivers/pci/pcie/ptm.c
-+++ b/drivers/pci/pcie/ptm.c
-@@ -519,8 +519,10 @@ struct pci_ptm_debugfs *pcie_ptm_create_debugfs(struct device *dev, void *pdata,
- 		return NULL;
- 
- 	dirname = devm_kasprintf(dev, GFP_KERNEL, "pcie_ptm_%s", dev_name(dev));
--	if (!dirname)
-+	if (!dirname) {
-+		kfree(ptm_debugfs);
- 		return NULL;
-+	}
- 
- 	ptm_debugfs->debugfs = debugfs_create_dir(dirname, NULL);
- 	ptm_debugfs->pdata = pdata;
-@@ -551,6 +553,7 @@ void pcie_ptm_destroy_debugfs(struct pci_ptm_debugfs *ptm_debugfs)
- 
- 	mutex_destroy(&ptm_debugfs->lock);
- 	debugfs_remove_recursive(ptm_debugfs->debugfs);
-+	kfree(ptm_debugfs);
- }
- EXPORT_SYMBOL_GPL(pcie_ptm_destroy_debugfs);
- #endif
+diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+index 12c69bb2b2326..49e395eb013d3 100644
+--- a/drivers/pci/p2pdma.c
++++ b/drivers/pci/p2pdma.c
+@@ -152,6 +152,13 @@ static int p2pmem_alloc_mmap(struct file *filp, struct kobject *kobj,
+ 		ret = vm_insert_page(vma, vaddr, page);
+ 		if (ret) {
+ 			gen_pool_free(p2pdma->pool, (uintptr_t)kaddr, len);
++
++			/*
++			 * Reset the page count. We don't use put_page()
++			 * because we don't want to trigger the
++			 * p2pdma_folio_free() path.
++			 */
++			set_page_count(page, 0);
+ 			percpu_ref_put(ref);
+ 			return ret;
+ 		}
 -- 
 2.51.0
 
