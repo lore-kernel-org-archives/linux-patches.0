@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F3E242D9B;
-	Wed, 25 Feb 2026 01:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0B8251795;
+	Wed, 25 Feb 2026 01:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982836; cv=none; b=UtUQXhE934vx4a+KuNJKo06bS1dNZ6t1AaJB0XDY/GUYxPjrmh8dFuQyVsbm1xE+APe91sF7krizj3NmsEp0inMdjuMd8Ryb1Vkcc9+mH8NewOi668t7O/a9Awa1//lGL4zNjWoTXBrYE3tw7FMG1t7CyMLk+uDA4Nu92blDYXw=
+	t=1771982838; cv=none; b=vA3kfkpPz/X00gBm9KDBAiW5TP6fiBFwCcCOBXKSYlv68nYqlLKah17NLcw9YHkxBVb2NhU4y8ke/JulDzRcAcWRIwrDZDQUv8YxMJhuEqpz0JjrwvqSCtcOgsRaua98nfDnUo+0j7Q9jSaO//FIDlrUATNKJNO9CPkm8Ls4qhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982836; c=relaxed/simple;
-	bh=qGYiAifMWrw3tI5KW+V36kCvI37SCQV+KrCrRJTjY2k=;
+	s=arc-20240116; t=1771982838; c=relaxed/simple;
+	bh=i6lQczBZNxXDTZeUrRai3wqp6UkoKNq1fb8FTheekwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VrU8+0aUfHW0soc4rBJ36MvsBJyKxJUiJ6+UaD+KQ5hTlwyqZQ3QAEShi5MHB88ID9X6Kp4GXwcJugZCGSVI3JbVS88uykUU0tOx7c+a7pg1j9qeH15yOwHRi0svovhcaGJFBYFYxZhSghyNGCtSRr8AqM5Gyi+P5+D3YWcg0Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCCLYzyh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gbHU+LMY0U8TcMemGxUApBj5fZm1qSgPOl/UCiNo8GRXXrkSaBl1tqiPoQ7xRXkjmTrXGlNgiY+jsL/dz1KlkVwFM80O0QhLXab8jzuEKznH8nNkWxrkCTLb4CoDXfcg+9WgjnEZ5hX6GRAsSz67FJRDFut+ItuUub9bEAGdQJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpsnNP+x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCCLYzyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 639C2C116D0;
-	Wed, 25 Feb 2026 01:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpsnNP+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0BAC116D0;
+	Wed, 25 Feb 2026 01:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982836;
-	bh=qGYiAifMWrw3tI5KW+V36kCvI37SCQV+KrCrRJTjY2k=;
+	s=korg; t=1771982837;
+	bh=i6lQczBZNxXDTZeUrRai3wqp6UkoKNq1fb8FTheekwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qCCLYzyhCN3y9HPJJaTDp9EhYXkrccRYowDUCEjLM/gDsUH/16vouaR0oGD/YfTwx
-	 EPvS9pftM6vQsSmN7cLFpDHJ0FbUF5Qackgc3/w60Jp0IU6hGxlO/EqtZ75mrKdSIr
-	 w8TTpNgD2X3C6t8GZfo5OaeEup2XpU/e7e6DdUpM=
+	b=XpsnNP+xsp0ifmH2q8wU8tYEvM5I8mq7ajeFUIbsjA4KKZBjJpG7LwqBw1OdLMOD/
+	 7K/WhzG/yc95Q9Z45WUieq+HwujiOrrGYgLFhY0lQ2MuPRF4GalacqV3zpUeQWLNU1
+	 wpfXJlxfpQ4vqQFz9rtPkegc6pWWPy/3zp0glm/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
+	Dimitrios Apostolou <jimis@gmx.net>,
+	Qu Wenruo <wqu@suse.com>,
 	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 029/781] btrfs: fix block_group_tree dirty_list corruption
-Date: Tue, 24 Feb 2026 17:12:18 -0800
-Message-ID: <20260225012400.413538734@linuxfoundation.org>
+Subject: [PATCH 6.19 030/781] btrfs: fix EEXIST abort due to non-consecutive gaps in chunk allocation
+Date: Tue, 24 Feb 2026 17:12:19 -0800
+Message-ID: <20260225012400.438071968@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,146 +55,491 @@ Content-Transfer-Encoding: 8bit
 
 From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 3a1f4264daed4b419c325a7fe35e756cada3cf82 ]
+[ Upstream commit b14c5e04bd0f722ed631845599d52d03fcae1bc1 ]
 
-When the incompat flag EXTENT_TREE_V2 is set, we unconditionally add the
-block group tree to the switch_commits list before calling
-switch_commit_roots, as we do for the tree root and the chunk root.
-However, the block group tree uses normal root dirty tracking and in any
-transaction that does an allocation and dirties a block group, the block
-group root will already be linked to a list by the dirty_list field and
-this use of list_add_tail() is invalid and corrupts the prev/next
-members of block_group_root->dirty_list.
+I have been observing a number of systems aborting at
+insert_dev_extents() in btrfs_create_pending_block_groups(). The
+following is a sample stack trace of such an abort coming from forced
+chunk allocation (typically behind CONFIG_BTRFS_EXPERIMENTAL) but this
+can theoretically happen to any DUP chunk allocation.
 
-This is apparent on a subsequent list_del on the prev if we enable
-CONFIG_DEBUG_LIST:
+  [81.801] ------------[ cut here ]------------
+  [81.801] BTRFS: Transaction aborted (error -17)
+  [81.801] WARNING: fs/btrfs/block-group.c:2876 at btrfs_create_pending_block_groups+0x721/0x770 [btrfs], CPU#1: bash/319
+  [81.802] Modules linked in: virtio_net btrfs xor zstd_compress raid6_pq null_blk
+  [81.803] CPU: 1 UID: 0 PID: 319 Comm: bash Kdump: loaded Not tainted 6.19.0-rc6+ #319 NONE
+  [81.803] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.17.0-2-2 04/01/2014
+  [81.804] RIP: 0010:btrfs_create_pending_block_groups+0x723/0x770 [btrfs]
+  [81.806] RSP: 0018:ffffa36241a6bce8 EFLAGS: 00010282
+  [81.806] RAX: 000000000000000d RBX: ffff8e699921e400 RCX: 0000000000000000
+  [81.807] RDX: 0000000002040001 RSI: 00000000ffffffef RDI: ffffffffc0608bf0
+  [81.807] RBP: 00000000ffffffef R08: ffff8e69830f6000 R09: 0000000000000007
+  [81.808] R10: ffff8e699921e5e8 R11: 0000000000000000 R12: ffff8e6999228000
+  [81.808] R13: ffff8e6984d82000 R14: ffff8e69966a69c0 R15: ffff8e69aa47b000
+  [81.809] FS:  00007fec6bdd9740(0000) GS:ffff8e6b1b379000(0000) knlGS:0000000000000000
+  [81.809] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [81.810] CR2: 00005604833670f0 CR3: 0000000116679000 CR4: 00000000000006f0
+  [81.810] Call Trace:
+  [81.810]  <TASK>
+  [81.810]  __btrfs_end_transaction+0x3e/0x2b0 [btrfs]
+  [81.811]  btrfs_force_chunk_alloc_store+0xcd/0x140 [btrfs]
+  [81.811]  kernfs_fop_write_iter+0x15f/0x240
+  [81.812]  vfs_write+0x264/0x500
+  [81.812]  ksys_write+0x6c/0xe0
+  [81.812]  do_syscall_64+0x66/0x770
+  [81.812]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [81.813] RIP: 0033:0x7fec6be66197
+  [81.814] RSP: 002b:00007fffb159dd30 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+  [81.815] RAX: ffffffffffffffda RBX: 00007fec6bdd9740 RCX: 00007fec6be66197
+  [81.815] RDX: 0000000000000002 RSI: 0000560483374f80 RDI: 0000000000000001
+  [81.816] RBP: 0000560483374f80 R08: 0000000000000000 R09: 0000000000000000
+  [81.816] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000002
+  [81.817] R13: 00007fec6bfb85c0 R14: 00007fec6bfb5ee0 R15: 00005604833729c0
+  [81.817]  </TASK>
+  [81.817] irq event stamp: 20039
+  [81.818] hardirqs last  enabled at (20047): [<ffffffff99a68302>] __up_console_sem+0x52/0x60
+  [81.818] hardirqs last disabled at (20056): [<ffffffff99a682e7>] __up_console_sem+0x37/0x60
+  [81.819] softirqs last  enabled at (19470): [<ffffffff999d2b46>] __irq_exit_rcu+0x96/0xc0
+  [81.819] softirqs last disabled at (19463): [<ffffffff999d2b46>] __irq_exit_rcu+0x96/0xc0
+  [81.820] ---[ end trace 0000000000000000 ]---
+  [81.820] BTRFS: error (device dm-7 state A) in btrfs_create_pending_block_groups:2876: errno=-17 Object already exists
 
-  [32.1571] ------------[ cut here ]------------
-  [32.1572] list_del corruption. next->prev should beffff958890202538, but was ffff9588992bd538. (next=ffff958890201538)
-  [32.1575] WARNING: lib/list_debug.c:65 at 0x0, CPU#3: sync/607
-  [32.1583] CPU: 3 UID: 0 PID: 607 Comm: sync Not tainted 6.18.0 #24PREEMPT(none)
-  [32.1585] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS1.17.0-4.fc41 04/01/2014
-  [32.1587] RIP: 0010:__list_del_entry_valid_or_report+0x108/0x120
-  [32.1593] RSP: 0018:ffffaa288287fdd0 EFLAGS: 00010202
-  [32.1594] RAX: 0000000000000001 RBX: ffff95889326e800 RCX:ffff958890201538
-  [32.1596] RDX: ffff9588992bd538 RSI: ffff958890202538 RDI:ffffffff82a41e00
-  [32.1597] RBP: ffff958890202538 R08: ffffffff828fc1e8 R09:00000000ffffefff
-  [32.1599] R10: ffffffff8288c200 R11: ffffffff828e4200 R12:ffff958890201538
-  [32.1601] R13: ffff95889326e958 R14: ffff958895c24000 R15:ffff958890202538
-  [32.1603] FS:  00007f0c28eb5740(0000) GS:ffff958af2bd2000(0000)knlGS:0000000000000000
-  [32.1605] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [32.1607] CR2: 00007f0c28e8a3cc CR3: 0000000109942005 CR4:0000000000370ef0
-  [32.1609] Call Trace:
-  [32.1610]  <TASK>
-  [32.1611]  switch_commit_roots+0x82/0x1d0 [btrfs]
-  [32.1615]  btrfs_commit_transaction+0x968/0x1550 [btrfs]
-  [32.1618]  ? btrfs_attach_transaction_barrier+0x23/0x60 [btrfs]
-  [32.1621]  __iterate_supers+0xe8/0x190
-  [32.1622]  ? __pfx_sync_fs_one_sb+0x10/0x10
-  [32.1623]  ksys_sync+0x63/0xb0
-  [32.1624]  __do_sys_sync+0xe/0x20
-  [32.1625]  do_syscall_64+0x73/0x450
-  [32.1626]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [32.1627] RIP: 0033:0x7f0c28d05d2b
-  [32.1632] RSP: 002b:00007ffc9d988048 EFLAGS: 00000246 ORIG_RAX:00000000000000a2
-  [32.1634] RAX: ffffffffffffffda RBX: 00007ffc9d988228 RCX:00007f0c28d05d2b
-  [32.1636] RDX: 00007f0c28e02301 RSI: 00007ffc9d989b21 RDI:00007f0c28dba90d
-  [32.1637] RBP: 0000000000000001 R08: 0000000000000001 R09:0000000000000000
-  [32.1639] R10: 0000000000000000 R11: 0000000000000246 R12:000055b96572cb80
-  [32.1641] R13: 000055b96572b19f R14: 00007f0c28dfa434 R15:000055b96572b034
-  [32.1643]  </TASK>
-  [32.1644] irq event stamp: 0
-  [32.1644] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-  [32.1646] hardirqs last disabled at (0): [<ffffffff81298817>]copy_process+0xb37/0x2260
-  [32.1648] softirqs last  enabled at (0): [<ffffffff81298817>]copy_process+0xb37/0x2260
-  [32.1650] softirqs last disabled at (0): [<0000000000000000>] 0x0
-  [32.1652] ---[ end trace 0000000000000000 ]---
+Inspecting these aborts with drgn, I observed a pattern of overlapping
+chunk_maps. Note how stripe 1 of the first chunk overlaps in physical
+address with stripe 0 of the second chunk.
 
-Furthermore, this list corruption eventually (when we happen to add a
-new block group) results in getting the switch_commits and
-dirty_cowonly_roots lists mixed up and attempting to call update_root
-on the tree root which can't be found in the tree root, resulting in a
-transaction abort:
+Physical Start     Physical End       Length       Logical            Type                 Stripe
+----------------------------------------------------------------------------------------------------
+0x0000000102500000 0x0000000142500000 1.0G         0x0000000641d00000 META|DUP             0/2
+0x0000000142500000 0x0000000182500000 1.0G         0x0000000641d00000 META|DUP             1/2
+0x0000000142500000 0x0000000182500000 1.0G         0x0000000601d00000 META|DUP             0/2
+0x0000000182500000 0x00000001c2500000 1.0G         0x0000000601d00000 META|DUP             1/2
 
-  [87.8269] BTRFS critical (device nvme1n1): unable to find root key (1 0 0) in tree 1
-  [87.8272] ------------[ cut here ]------------
-  [87.8274] BTRFS: Transaction aborted (error -117)
-  [87.8275] WARNING: fs/btrfs/root-tree.c:153 at 0x0, CPU#4: sync/703
-  [87.8285] CPU: 4 UID: 0 PID: 703 Comm: sync Not tainted 6.18.0 #25 PREEMPT(none)
-  [87.8287] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-4.fc41 04/01/2014
-  [87.8289] RIP: 0010:btrfs_update_root+0x296/0x790 [btrfs]
-  [87.8295] RSP: 0018:ffffa58d035dfd60 EFLAGS: 00010282
-  [87.8297] RAX: ffff9a59126ddb68 RBX: ffff9a59126dc000 RCX: 0000000000000000
-  [87.8299] RDX: 0000000000000000 RSI: 00000000ffffff8b RDI: ffffffffc0b28270
-  [87.8301] RBP: ffff9a5904aec000 R08: 0000000000000000 R09: 00000000ffffefff
-  [87.8303] R10: ffffffff9ac8c200 R11: ffffffff9ace4200 R12: 0000000000000001
-  [87.8305] R13: ffff9a59041740e8 R14: ffff9a5904aec1f7 R15: ffff9a590fdefaf0
-  [87.8307] FS:  00007f54cde6b740(0000) GS:ffff9a5b5a81c000(0000) knlGS:0000000000000000
-  [87.8309] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [87.8310] CR2: 00007f54cde403cc CR3: 0000000112902004 CR4: 0000000000370ef0
-  [87.8312] Call Trace:
-  [87.8313]  <TASK>
-  [87.8314]  ? _raw_spin_unlock+0x23/0x40
-  [87.8315]  commit_cowonly_roots+0x1ad/0x250 [btrfs]
-  [87.8317]  ? btrfs_commit_transaction+0x79b/0x1560 [btrfs]
-  [87.8320]  btrfs_commit_transaction+0x8aa/0x1560 [btrfs]
-  [87.8322]  ? btrfs_attach_transaction_barrier+0x23/0x60 [btrfs]
-  [87.8325]  __iterate_supers+0xf1/0x170
-  [87.8326]  ? __pfx_sync_fs_one_sb+0x10/0x10
-  [87.8327]  ksys_sync+0x63/0xb0
-  [87.8328]  __do_sys_sync+0xe/0x20
-  [87.8329]  do_syscall_64+0x73/0x450
-  [87.8330]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [87.8331] RIP: 0033:0x7f54cdd05d2b
-  [87.8336] RSP: 002b:00007fff1b58ff78 EFLAGS: 00000246 ORIG_RAX: 00000000000000a2
-  [87.8338] RAX: ffffffffffffffda RBX: 00007fff1b590158 RCX: 00007f54cdd05d2b
-  [87.8340] RDX: 00007f54cde02301 RSI: 00007fff1b592b66 RDI: 00007f54cddba90d
-  [87.8342] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
-  [87.8344] R10: 0000000000000000 R11: 0000000000000246 R12: 000055e07ca96b80
-  [87.8346] R13: 000055e07ca9519f R14: 00007f54cddfa434 R15: 000055e07ca95034
-  [87.8348]  </TASK>
-  [87.8348] irq event stamp: 0
-  [87.8349] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-  [87.8351] hardirqs last disabled at (0): [<ffffffff99698797>] copy_process+0xb37/0x21e0
-  [87.8353] softirqs last  enabled at (0): [<ffffffff99698797>] copy_process+0xb37/0x21e0
-  [87.8355] softirqs last disabled at (0): [<0000000000000000>] 0x0
-  [87.8357] ---[ end trace 0000000000000000 ]---
-  [87.8358] BTRFS: error (device nvme1n1 state A) in btrfs_update_root:153: errno=-117 Filesystem corrupted
-  [87.8360] BTRFS info (device nvme1n1 state EA): forced readonly
-  [87.8362] BTRFS warning (device nvme1n1 state EA): Skipping commit of aborted transaction.
-  [87.8364] BTRFS: error (device nvme1n1 state EA) in cleanup_transaction:2037: errno=-117 Filesystem corrupted
+Now how could this possibly happen? All chunk allocation is protected by
+the chunk_mutex so racing allocations should see a consistent view of
+the CHUNK_ALLOCATED bit in the chunk allocation extent-io-tree
+(device->alloc_state as set by chunk_map_device_set_bits()) The tree
+itself is protected by a spin lock, and clearing/setting the bits is
+always protected by fs_info->mapping_tree_lock, so no race is apparent.
 
-Since the block group tree was pulled out of the extent tree and uses
-normal root dirty tracking, remove the offending extra list_add. This
-fixes the list corruption and the resulting fs corruption.
+It turns out that there is a subtle bug in the logic regarding chunk
+allocations that have happened in the current transaction, known as
+"pending extents". The chunk allocation as defined in
+find_free_dev_extent() is a loop which searches the commit root of the
+dev_root and looks for gaps between DEV_EXTENT items. For those gaps, it
+then checks alloc_state bitmap for any pending extents and adjusts the
+hole that it finds accordingly. However, the logic in that adjustment
+assumes that the first pending extent is the only one in that range.
 
-Fixes: 14033b08a029 ("btrfs: don't save block group root into super block")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
+e.g., given a layout with two non-consecutive pending extents in a hole
+passed to dev_extent_hole_check() via *hole_start and *hole_size:
+
+  |----pending A----|    real hole     |----pending B----|
+           |           candidate hole        |
+      *hole_start                         *hole_start + *hole_size
+
+the code incorrectly returns a "hole" from the end of pending extent A
+until the passed in hole end, failing to account for pending B.
+
+However, it is not entirely obvious that it is actually possible to
+produce such a layout. I was able to reproduce it, but with some
+contortions: I continued to use the force chunk allocation sysfs file
+and I introduced a long delay (10 seconds) into the start of the cleaner
+thread. I also prevented the unused bgs cleaning logic from ever
+deleting metadata bgs. These help make it easier to deterministically
+produce the condition but shouldn't really matter if you imagine the
+conditions happening by race/luck. Allocations/frees can happen
+concurrently with the cleaner thread preparing to process an unused
+extent and both create some used chunks with an unused chunk
+interleaved, all during one transaction. Then btrfs_delete_unused_bgs()
+sees the unused one and clears it, leaving a range with several pending
+chunk allocations and a gap in the middle.
+
+The basic idea is that the unused_bgs cleanup work happens on a worker
+so if we allocate 3 block groups in one transaction, then the cleaner
+work kicked off by the previous transaction comes through and deletes
+the middle one of the 3, then the commit root shows no dev extents and
+we have the bad pattern in the extent-io-tree. One final consideration
+is that the code happens to loop to the next hole if there are no more
+extents at all, so we need one more dev extent way past the area we are
+working in. Something like the following demonstrates the technique:
+
+  # push the BG frontier out to 20G
+  fallocate -l 20G $mnt/foo
+  # allocate one more that will prevent the "no more dev extents" luck
+  fallocate -l 1G $mnt/sticky
+  # sync
+  sync
+  # clear out the allocation area
+  rm $mnt/foo
+  sync
+  _cleaner
+  # let everything quiesce
+  sleep 20
+  sync
+
+  # dev tree should have one bg 20G out and the rest at the beginning..
+  # sort of like an empty FS but with a random sticky chunk.
+
+  # kick off the cleaner in the background, remember it will sleep 10s
+  # before doing interesting work
+  _cleaner &
+
+  sleep 3
+
+  # create 3 trivial block groups, all empty, all immediately marked as unused.
+  echo 1 > "$(_btrfs_sysfs_space_info $dev metadata)/force_chunk_alloc"
+  echo 1 > "$(_btrfs_sysfs_space_info $dev data)/force_chunk_alloc"
+  echo 1 > "$(_btrfs_sysfs_space_info $dev metadata)/force_chunk_alloc"
+
+  # let the cleaner thread definitely finish, it will remove the data bg
+  sleep 10
+
+  # this allocation sees the non-consecutive pending metadata chunks with
+  # data chunk gap of 1G and allocates a 2G extent in that hole. ENOSPC!
+  echo 1 > "$(_btrfs_sysfs_space_info $dev metadata)/force_chunk_alloc"
+
+As for the fix, it is not that obvious. I could not see a trivial way to
+do it even by adding backup loops into find_free_dev_extent(), so I
+opted to change the semantics of dev_extent_hole_check() to not stop
+looping until it finds a sufficiently big hole. For clarity, this also
+required changing the helper function contains_pending_extent() into two
+new helpers which find the first pending extent and the first suitable
+hole in a range.
+
+I attempted to clean up the documentation and range calculations to be
+as consistent and clear as possible for the future.
+
+I also looked at the zoned case and concluded that the loop there is
+different and not to be unified with this one. As far as I can tell, the
+zoned check will only further constrain the hole so looping back to find
+more holes is acceptable. Though given that zoned really only appends, I
+find it highly unlikely that it is susceptible to this bug.
+
+Fixes: 1b9845081633 ("Btrfs: fix find_free_dev_extent() malfunction in case device tree has hole")
+Reported-by: Dimitrios Apostolou <jimis@gmx.net>
+Closes: https://lore.kernel.org/linux-btrfs/q7760374-q1p4-029o-5149-26p28421s468@tzk.arg/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c | 7 -------
- 1 file changed, 7 deletions(-)
+ fs/btrfs/volumes.c | 243 ++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 183 insertions(+), 60 deletions(-)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index bd03f465e2d3e..e3e0d88d53476 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -2500,13 +2500,6 @@ int btrfs_commit_transaction(struct btrfs_trans_handle *trans)
- 	list_add_tail(&fs_info->chunk_root->dirty_list,
- 		      &cur_trans->switch_commits);
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 8a08412f3529a..99e167a697ba8 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -1505,30 +1505,158 @@ struct btrfs_device *btrfs_scan_one_device(const char *path,
+ }
  
--	if (btrfs_fs_incompat(fs_info, EXTENT_TREE_V2)) {
--		btrfs_set_root_node(&fs_info->block_group_root->root_item,
--				    fs_info->block_group_root->node);
--		list_add_tail(&fs_info->block_group_root->dirty_list,
--			      &cur_trans->switch_commits);
--	}
+ /*
+- * Try to find a chunk that intersects [start, start + len] range and when one
+- * such is found, record the end of it in *start
++ * Find the first pending extent intersecting a range.
++ *
++ * @device:         the device to search
++ * @start:          start of the range to check
++ * @len:            length of the range to check
++ * @pending_start:  output pointer for the start of the found pending extent
++ * @pending_end:    output pointer for the end of the found pending extent (inclusive)
++ *
++ * Search for a pending chunk allocation that intersects the half-open range
++ * [start, start + len).
++ *
++ * Return: true if a pending extent was found, false otherwise.
++ * If the return value is true, store the first pending extent in
++ * [*pending_start, *pending_end]. Otherwise, the two output variables
++ * may still be modified, to something outside the range and should not
++ * be used.
+  */
+-static bool contains_pending_extent(struct btrfs_device *device, u64 *start,
+-				    u64 len)
++static bool first_pending_extent(struct btrfs_device *device, u64 start, u64 len,
++				 u64 *pending_start, u64 *pending_end)
+ {
+-	u64 physical_start, physical_end;
 -
- 	switch_commit_roots(trans);
+ 	lockdep_assert_held(&device->fs_info->chunk_mutex);
  
- 	ASSERT(list_empty(&cur_trans->dirty_bgs));
+-	if (btrfs_find_first_extent_bit(&device->alloc_state, *start,
+-					&physical_start, &physical_end,
++	if (btrfs_find_first_extent_bit(&device->alloc_state, start,
++					pending_start, pending_end,
+ 					CHUNK_ALLOCATED, NULL)) {
+ 
+-		if (in_range(physical_start, *start, len) ||
+-		    in_range(*start, physical_start,
+-			     physical_end + 1 - physical_start)) {
+-			*start = physical_end + 1;
++		if (in_range(*pending_start, start, len) ||
++		    in_range(start, *pending_start, *pending_end + 1 - *pending_start)) {
+ 			return true;
+ 		}
+ 	}
+ 	return false;
+ }
+ 
++/*
++ * Find the first real hole accounting for pending extents.
++ *
++ * @device:         the device containing the candidate hole
++ * @start:          input/output pointer for the hole start position
++ * @len:            input/output pointer for the hole length
++ * @min_hole_size:  the size of hole we are looking for
++ *
++ * Given a potential hole specified by [*start, *start + *len), check for pending
++ * chunk allocations within that range. If pending extents are found, the hole is
++ * adjusted to represent the first true free space that is large enough when
++ * accounting for pending chunks.
++ *
++ * Note that this function must handle various cases involving non consecutive
++ * pending extents.
++ *
++ * Returns: true if a suitable hole was found and false otherwise.
++ * If the return value is true, then *start and *len are set to represent the hole.
++ * If the return value is false, then *start is set to the largest hole we
++ * found and *len is set to its length.
++ * If there are no holes at all, then *start is set to the end of the range and
++ * *len is set to 0.
++ */
++static bool find_hole_in_pending_extents(struct btrfs_device *device, u64 *start,
++					 u64 *len, u64 min_hole_size)
++{
++	u64 pending_start, pending_end;
++	u64 end;
++	u64 max_hole_start = 0;
++	u64 max_hole_len = 0;
++
++	lockdep_assert_held(&device->fs_info->chunk_mutex);
++
++	if (*len == 0)
++		return false;
++
++	end = *start + *len - 1;
++
++	/*
++	 * Loop until we either see a large enough hole or check every pending
++	 * extent overlapping the candidate hole.
++	 * At every hole that we observe, record it if it is the new max.
++	 * At the end of the iteration, set the output variables to the max hole.
++	 */
++	while (true) {
++		if (first_pending_extent(device, *start, *len, &pending_start, &pending_end)) {
++			/*
++			 * Case 1: the pending extent overlaps the start of
++			 * candidate hole. That means the true hole is after the
++			 * pending extent, but we need to find the next pending
++			 * extent to properly size the hole. In the next loop,
++			 * we will reduce to case 2 or 3.
++			 * e.g.,
++			 *
++			 *   |----pending A----|    real hole     |----pending B----|
++			 *            |           candidate hole        |
++			 *         *start                              end
++			 */
++			if (pending_start <= *start) {
++				*start = pending_end + 1;
++				goto next;
++			}
++			/*
++			 * Case 2: The pending extent starts after *start (and overlaps
++			 * [*start, end), so the first hole just goes up to the start
++			 * of the pending extent.
++			 * e.g.,
++			 *
++			 *   |    real hole    |----pending A----|
++			 *   |       candidate hole     |
++			 * *start                      end
++			 */
++			*len = pending_start - *start;
++			if (*len > max_hole_len) {
++				max_hole_start = *start;
++				max_hole_len = *len;
++			}
++			if (*len >= min_hole_size)
++				break;
++			/*
++			 * If the hole wasn't big enough, then we advance past
++			 * the pending extent and keep looking.
++			 */
++			*start = pending_end + 1;
++			goto next;
++		} else {
++			/*
++			 * Case 3: There is no pending extent overlapping the
++			 * range [*start, *start + *len - 1], so the only remaining
++			 * hole is the remaining range.
++			 * e.g.,
++			 *
++			 *   |       candidate hole           |
++			 *   |          real hole             |
++			 * *start                            end
++			 */
++
++			if (*len > max_hole_len) {
++				max_hole_start = *start;
++				max_hole_len = *len;
++			}
++			break;
++		}
++next:
++		if (*start > end)
++			break;
++		*len = end - *start + 1;
++	}
++	if (max_hole_len) {
++		*start = max_hole_start;
++		*len = max_hole_len;
++	} else {
++		*start = end + 1;
++		*len = 0;
++	}
++	return max_hole_len >= min_hole_size;
++}
++
+ static u64 dev_extent_search_start(struct btrfs_device *device)
+ {
+ 	switch (device->fs_devices->chunk_alloc_policy) {
+@@ -1593,59 +1721,57 @@ static bool dev_extent_hole_check_zoned(struct btrfs_device *device,
+ }
+ 
+ /*
+- * Check if specified hole is suitable for allocation.
++ * Validate and adjust a hole for chunk allocation
++ *
++ * @device:      the device containing the candidate hole
++ * @hole_start:  input/output pointer for the hole start position
++ * @hole_size:   input/output pointer for the hole size
++ * @num_bytes:   minimum allocation size required
+  *
+- * @device:	the device which we have the hole
+- * @hole_start: starting position of the hole
+- * @hole_size:	the size of the hole
+- * @num_bytes:	the size of the free space that we need
++ * Check if the specified hole is suitable for allocation and adjust it if
++ * necessary. The hole may be modified to skip over pending chunk allocations
++ * and to satisfy stricter zoned requirements on zoned filesystems.
+  *
+- * This function may modify @hole_start and @hole_size to reflect the suitable
+- * position for allocation. Returns 1 if hole position is updated, 0 otherwise.
++ * For regular (non-zoned) allocation, if the hole after adjustment is smaller
++ * than @num_bytes, the search continues past additional pending extents until
++ * either a sufficiently large hole is found or no more pending extents exist.
++ *
++ * Return: true if a suitable hole was found and false otherwise.
++ * If the return value is true, then *hole_start and *hole_size are set to
++ * represent the hole we found.
++ * If the return value is false, then *hole_start is set to the largest
++ * hole we found and *hole_size is set to its length.
++ * If there are no holes at all, then *hole_start is set to the end of the range
++ * and *hole_size is set to 0.
+  */
+ static bool dev_extent_hole_check(struct btrfs_device *device, u64 *hole_start,
+ 				  u64 *hole_size, u64 num_bytes)
+ {
+-	bool changed = false;
+-	u64 hole_end = *hole_start + *hole_size;
++	bool found = false;
++	const u64 hole_end = *hole_start + *hole_size - 1;
+ 
+-	for (;;) {
+-		/*
+-		 * Check before we set max_hole_start, otherwise we could end up
+-		 * sending back this offset anyway.
+-		 */
+-		if (contains_pending_extent(device, hole_start, *hole_size)) {
+-			if (hole_end >= *hole_start)
+-				*hole_size = hole_end - *hole_start;
+-			else
+-				*hole_size = 0;
+-			changed = true;
+-		}
++	ASSERT(*hole_size > 0);
+ 
+-		switch (device->fs_devices->chunk_alloc_policy) {
+-		default:
+-			btrfs_warn_unknown_chunk_allocation(device->fs_devices->chunk_alloc_policy);
+-			fallthrough;
+-		case BTRFS_CHUNK_ALLOC_REGULAR:
+-			/* No extra check */
+-			break;
+-		case BTRFS_CHUNK_ALLOC_ZONED:
+-			if (dev_extent_hole_check_zoned(device, hole_start,
+-							hole_size, num_bytes)) {
+-				changed = true;
+-				/*
+-				 * The changed hole can contain pending extent.
+-				 * Loop again to check that.
+-				 */
+-				continue;
+-			}
+-			break;
+-		}
++again:
++	*hole_size = hole_end - *hole_start + 1;
++	found = find_hole_in_pending_extents(device, hole_start, hole_size, num_bytes);
++	if (!found)
++		return found;
++	ASSERT(*hole_size >= num_bytes);
+ 
++	switch (device->fs_devices->chunk_alloc_policy) {
++	default:
++		btrfs_warn_unknown_chunk_allocation(device->fs_devices->chunk_alloc_policy);
++		fallthrough;
++	case BTRFS_CHUNK_ALLOC_REGULAR:
++		return found;
++	case BTRFS_CHUNK_ALLOC_ZONED:
++		if (dev_extent_hole_check_zoned(device, hole_start, hole_size, num_bytes))
++			goto again;
+ 		break;
+ 	}
+ 
+-	return changed;
++	return found;
+ }
+ 
+ /*
+@@ -1704,7 +1830,7 @@ static int find_free_dev_extent(struct btrfs_device *device, u64 num_bytes,
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
+-again:
++
+ 	if (search_start >= search_end ||
+ 		test_bit(BTRFS_DEV_STATE_REPLACE_TGT, &device->dev_state)) {
+ 		ret = -ENOSPC;
+@@ -1791,11 +1917,7 @@ static int find_free_dev_extent(struct btrfs_device *device, u64 num_bytes,
+ 	 */
+ 	if (search_end > search_start) {
+ 		hole_size = search_end - search_start;
+-		if (dev_extent_hole_check(device, &search_start, &hole_size,
+-					  num_bytes)) {
+-			btrfs_release_path(path);
+-			goto again;
+-		}
++		dev_extent_hole_check(device, &search_start, &hole_size, num_bytes);
+ 
+ 		if (hole_size > max_hole_size) {
+ 			max_hole_start = search_start;
+@@ -4844,6 +4966,7 @@ int btrfs_shrink_device(struct btrfs_device *device, u64 new_size)
+ 	u64 diff;
+ 	u64 start;
+ 	u64 free_diff = 0;
++	u64 pending_start, pending_end;
+ 
+ 	new_size = round_down(new_size, fs_info->sectorsize);
+ 	start = new_size;
+@@ -4889,7 +5012,7 @@ int btrfs_shrink_device(struct btrfs_device *device, u64 new_size)
+ 	 * in-memory chunks are synced to disk so that the loop below sees them
+ 	 * and relocates them accordingly.
+ 	 */
+-	if (contains_pending_extent(device, &start, diff)) {
++	if (first_pending_extent(device, start, diff, &pending_start, &pending_end)) {
+ 		mutex_unlock(&fs_info->chunk_mutex);
+ 		ret = btrfs_commit_transaction(trans);
+ 		if (ret)
 -- 
 2.51.0
 
