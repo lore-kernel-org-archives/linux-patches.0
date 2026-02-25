@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4101D5141;
-	Wed, 25 Feb 2026 01:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EB826463A;
+	Wed, 25 Feb 2026 01:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983524; cv=none; b=UuStNXGzbZsL68wzkU0bqnX0CzP9pnOYQ+0Q7sA8zhlvmug65Fk84IMJs/eTY1Put82VDvf17bKz71iE8wE+alpjCGmu5Q6rbMnQCr6tad9zNjf2vvXCUqVLCJ+ep2YQZjvePaUvTH6uC9dlqRn5yat3yrqRGYzgLZoQFHGE36o=
+	t=1771983526; cv=none; b=rgeefRkonSsVhgpAp7AJy4jSo/3HDFDOwc/YUXKGsrMdDnpH4yAlD6dO7D6Ex4x+bkFDJ6IcHb68iKeiB16I7DBK12srOtmmbUri01A6EMoqtAzFcXsTPy5mmw+bOEdbjW7fOUgcTLhZ8lLZj8bBFRSFv5+MM/14/ngBEveIarw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983524; c=relaxed/simple;
-	bh=bNG3UjwNVtivgh0mTP6aQ6j3Smrhhwy6haRYUWb2cIc=;
+	s=arc-20240116; t=1771983526; c=relaxed/simple;
+	bh=QT/ogJrDLn45WyZAsRCngGVs35gNiPZsGnUC997ZkrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3WM5vxoOXxOOGI4QxEA+9B8+BxqEHX+Qee+VwUm0vXH7fy58QSePjvJNp5cMBbXx/HfdXn5jyEcAsb4+L7xnK+3OOxAGupS3vyBQnBH9FUcNsXBS5+z/zITUWtsa/SjctI5jpe1Ca5i9x3o0bNdLPWQ4qwWZ809AIYI7rz7MA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIwMrega; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lWa54O08/KhUbJ2/cPr1ZR9TQVcg03SPginu4EcsppA6xtB0g1eD9ZdeYDG3qutLvTpl80GBbFobz9fgJ0jXiD4PSGUddq0hYmCSgP7cWrRxy6gphvJ0gjrU+67siQgIfwe36XCoeFM8UiDPs+Cnt0wXnIYgv1Z1hdKRtkjjCno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGRaakEX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIwMrega"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56897C116D0;
-	Wed, 25 Feb 2026 01:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGRaakEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BDEC116D0;
+	Wed, 25 Feb 2026 01:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983524;
-	bh=bNG3UjwNVtivgh0mTP6aQ6j3Smrhhwy6haRYUWb2cIc=;
+	s=korg; t=1771983525;
+	bh=QT/ogJrDLn45WyZAsRCngGVs35gNiPZsGnUC997ZkrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OIwMregaoa6ZUmwU1wKBA+6eVSTILKm2o7nDQ/aH3oZtlaf4JjzULaWlGQ6FnaVFf
-	 xXEi+I981N5eOFIzasaEl2L7AB2dyz9Thy/q37815vVAm9OVzMwT1eRqTtSJK5h0jH
-	 hvtt+8n1vHGZKR3LgF0U9xdMGkSI6P6dsxZFjQIQ=
+	b=oGRaakEXUO2BJCNyKnLWZBywv86jiuiaYZAY7IMf6f8gyf8TrzuPJttHWtPyYHmXN
+	 C9mWvCBCi9KNOg7O5XVCEaE8zdybzWUOo2n1KZhMKikCQCTBM9FEw2qYCyAvAJGLaW
+	 TKyeMlZrUXrQ78qB3p8VcoYyNDtFsQJb4MYMbFB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sabrina Dubroca <sd@queasysnail.net>,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 632/781] ovpn: set sk_user_data before overriding callbacks
-Date: Tue, 24 Feb 2026 17:22:21 -0800
-Message-ID: <20260225012415.310805183@linuxfoundation.org>
+Subject: [PATCH 6.19 633/781] ovpn: fix possible use-after-free in ovpn_net_xmit
+Date: Tue, 24 Feb 2026 17:22:22 -0800
+Message-ID: <20260225012415.334318524@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,151 +54,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit 93686c472eb7b09a51b97a096449e7092fefcd1f ]
+[ Upstream commit a5ec7baa44ea3a1d6aa0ca31c0ad82edf9affe41 ]
 
-During initialization, we override socket callbacks and set sk_user_data
-to an ovpn_socket instance. Currently, these two operations are
-decoupled: callbacks are overridden before sk_user_data is set. While
-existing callbacks perform safety checks for NULL or non-ovpn
-sk_user_data, this condition causes a "half-formed" state where valid
-packets arriving during attachment trigger error logs (e.g., "invoked on
-non ovpn socket").
+When building the skb_list in ovpn_net_xmit, skb_share_check will free
+the original skb if it is shared. The current implementation continues
+to use the stale skb pointer for subsequent operations:
+- peer lookup,
+- skb_dst_drop (even though all segments produced by skb_gso_segment
+  will have a dst attached),
+- ovpn_peer_stats_increment_tx.
 
-Set sk_user_data before overriding the callbacks so that it can be
-accessed safely from them. Since we already check that the socket has no
-sk_user_data before setting it, this remains safe even if an interrupt
-accesses the socket after sk_user_data is set but before the callbacks
-are overridden.
+Fix this by moving the peer lookup and skb_dst_drop before segmentation
+so that the original skb is still valid when used. Return early if all
+segments fail skb_share_check and the list ends up empty.
+Also switch ovpn_peer_stats_increment_tx to use skb_list.next; the next
+patch fixes the stats logic.
 
-This also requires initializing all protocol-specific fields (such as
-tcp_tx_work and peer links) before calling ovpn_socket_attach, ensuring
-the ovpn_socket is fully formed before it becomes visible to any
-callback.
-
-Fixes: f6226ae7a0cd ("ovpn: introduce the ovpn_socket object")
+Fixes: 08857b5ec5d9 ("ovpn: implement basic TX path (UDP)")
 Signed-off-by: Ralf Lici <ralf@mandelbit.com>
 Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/socket.c | 39 +++++++++++++++++++++------------------
- drivers/net/ovpn/tcp.c    |  9 +++++++--
- drivers/net/ovpn/udp.c    |  1 +
- 3 files changed, 29 insertions(+), 20 deletions(-)
+ drivers/net/ovpn/io.c | 52 ++++++++++++++++++++++++++-----------------
+ 1 file changed, 31 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/ovpn/socket.c b/drivers/net/ovpn/socket.c
-index 9750871ab65ce..448cee3b3f9fa 100644
---- a/drivers/net/ovpn/socket.c
-+++ b/drivers/net/ovpn/socket.c
-@@ -200,6 +200,22 @@ struct ovpn_socket *ovpn_socket_new(struct socket *sock, struct ovpn_peer *peer)
- 	ovpn_sock->sk = sk;
- 	kref_init(&ovpn_sock->refcount);
- 
-+	/* TCP sockets are per-peer, therefore they are linked to their unique
-+	 * peer
-+	 */
-+	if (sk->sk_protocol == IPPROTO_TCP) {
-+		INIT_WORK(&ovpn_sock->tcp_tx_work, ovpn_tcp_tx_work);
-+		ovpn_sock->peer = peer;
-+		ovpn_peer_hold(peer);
-+	} else if (sk->sk_protocol == IPPROTO_UDP) {
-+		/* in UDP we only link the ovpn instance since the socket is
-+		 * shared among multiple peers
-+		 */
-+		ovpn_sock->ovpn = peer->ovpn;
-+		netdev_hold(peer->ovpn->dev, &ovpn_sock->dev_tracker,
-+			    GFP_KERNEL);
+diff --git a/drivers/net/ovpn/io.c b/drivers/net/ovpn/io.c
+index 3e9e7f8444b34..f70c58b10599b 100644
+--- a/drivers/net/ovpn/io.c
++++ b/drivers/net/ovpn/io.c
+@@ -365,7 +365,27 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	/* verify IP header size in network packet */
+ 	proto = ovpn_ip_check_protocol(skb);
+ 	if (unlikely(!proto || skb->protocol != proto))
+-		goto drop;
++		goto drop_no_peer;
++
++	/* retrieve peer serving the destination IP of this packet */
++	peer = ovpn_peer_get_by_dst(ovpn, skb);
++	if (unlikely(!peer)) {
++		switch (skb->protocol) {
++		case htons(ETH_P_IP):
++			net_dbg_ratelimited("%s: no peer to send data to dst=%pI4\n",
++					    netdev_name(ovpn->dev),
++					    &ip_hdr(skb)->daddr);
++			break;
++		case htons(ETH_P_IPV6):
++			net_dbg_ratelimited("%s: no peer to send data to dst=%pI6c\n",
++					    netdev_name(ovpn->dev),
++					    &ipv6_hdr(skb)->daddr);
++			break;
++		}
++		goto drop_no_peer;
 +	}
-+
- 	/* the newly created ovpn_socket is holding reference to sk,
- 	 * therefore we increase its refcounter.
- 	 *
-@@ -212,29 +228,16 @@ struct ovpn_socket *ovpn_socket_new(struct socket *sock, struct ovpn_peer *peer)
++	/* dst was needed for peer selection - it can now be dropped */
++	skb_dst_drop(skb);
  
- 	ret = ovpn_socket_attach(ovpn_sock, sock, peer);
- 	if (ret < 0) {
-+		if (sk->sk_protocol == IPPROTO_TCP)
-+			ovpn_peer_put(peer);
-+		else if (sk->sk_protocol == IPPROTO_UDP)
-+			netdev_put(peer->ovpn->dev, &ovpn_sock->dev_tracker);
-+
- 		sock_put(sk);
- 		kfree(ovpn_sock);
- 		ovpn_sock = ERR_PTR(ret);
--		goto sock_release;
--	}
--
--	/* TCP sockets are per-peer, therefore they are linked to their unique
--	 * peer
--	 */
--	if (sk->sk_protocol == IPPROTO_TCP) {
--		INIT_WORK(&ovpn_sock->tcp_tx_work, ovpn_tcp_tx_work);
--		ovpn_sock->peer = peer;
--		ovpn_peer_hold(peer);
--	} else if (sk->sk_protocol == IPPROTO_UDP) {
--		/* in UDP we only link the ovpn instance since the socket is
--		 * shared among multiple peers
--		 */
--		ovpn_sock->ovpn = peer->ovpn;
--		netdev_hold(peer->ovpn->dev, &ovpn_sock->dev_tracker,
--			    GFP_KERNEL);
+ 	if (skb_is_gso(skb)) {
+ 		segments = skb_gso_segment(skb, 0);
+@@ -396,34 +416,24 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 		__skb_queue_tail(&skb_list, curr);
  	}
+-	skb_list.prev->next = NULL;
  
--	rcu_assign_sk_user_data(sk, ovpn_sock);
- sock_release:
- 	release_sock(sk);
- 	return ovpn_sock;
-diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
-index 0d7f30360d874..f0b4e07ba9245 100644
---- a/drivers/net/ovpn/tcp.c
-+++ b/drivers/net/ovpn/tcp.c
-@@ -487,6 +487,7 @@ int ovpn_tcp_socket_attach(struct ovpn_socket *ovpn_sock,
- 	/* make sure no pre-existing encapsulation handler exists */
- 	if (ovpn_sock->sk->sk_user_data)
- 		return -EBUSY;
-+	rcu_assign_sk_user_data(ovpn_sock->sk, ovpn_sock);
- 
- 	/* only a fully connected socket is expected. Connection should be
- 	 * handled in userspace
-@@ -495,13 +496,14 @@ int ovpn_tcp_socket_attach(struct ovpn_socket *ovpn_sock,
- 		net_err_ratelimited("%s: provided TCP socket is not in ESTABLISHED state: %d\n",
- 				    netdev_name(peer->ovpn->dev),
- 				    ovpn_sock->sk->sk_state);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err;
+-	/* retrieve peer serving the destination IP of this packet */
+-	peer = ovpn_peer_get_by_dst(ovpn, skb);
+-	if (unlikely(!peer)) {
+-		switch (skb->protocol) {
+-		case htons(ETH_P_IP):
+-			net_dbg_ratelimited("%s: no peer to send data to dst=%pI4\n",
+-					    netdev_name(ovpn->dev),
+-					    &ip_hdr(skb)->daddr);
+-			break;
+-		case htons(ETH_P_IPV6):
+-			net_dbg_ratelimited("%s: no peer to send data to dst=%pI6c\n",
+-					    netdev_name(ovpn->dev),
+-					    &ipv6_hdr(skb)->daddr);
+-			break;
+-		}
+-		goto drop;
++	/* no segments survived: don't jump to 'drop' because we already
++	 * incremented the counter for each failure in the loop
++	 */
++	if (unlikely(skb_queue_empty(&skb_list))) {
++		ovpn_peer_put(peer);
++		return NETDEV_TX_OK;
  	}
+-	/* dst was needed for peer selection - it can now be dropped */
+-	skb_dst_drop(skb);
++	skb_list.prev->next = NULL;
  
- 	ret = strp_init(&peer->tcp.strp, ovpn_sock->sk, &cb);
- 	if (ret < 0) {
- 		DEBUG_NET_WARN_ON_ONCE(1);
--		return ret;
-+		goto err;
- 	}
+-	ovpn_peer_stats_increment_tx(&peer->vpn_stats, skb->len);
++	ovpn_peer_stats_increment_tx(&peer->vpn_stats, skb_list.next->len);
+ 	ovpn_send(ovpn, skb_list.next, peer);
  
- 	INIT_WORK(&peer->tcp.defer_del_work, ovpn_tcp_peer_del_work);
-@@ -536,6 +538,9 @@ int ovpn_tcp_socket_attach(struct ovpn_socket *ovpn_sock,
- 	strp_check_rcv(&peer->tcp.strp);
+ 	return NETDEV_TX_OK;
  
- 	return 0;
-+err:
-+	rcu_assign_sk_user_data(ovpn_sock->sk, NULL);
-+	return ret;
- }
- 
- static void ovpn_tcp_close(struct sock *sk, long timeout)
-diff --git a/drivers/net/ovpn/udp.c b/drivers/net/ovpn/udp.c
-index d6a0f7a0b75d7..272b535ecaad4 100644
---- a/drivers/net/ovpn/udp.c
-+++ b/drivers/net/ovpn/udp.c
-@@ -386,6 +386,7 @@ int ovpn_udp_socket_attach(struct ovpn_socket *ovpn_sock, struct socket *sock,
- 			   struct ovpn_priv *ovpn)
- {
- 	struct udp_tunnel_sock_cfg cfg = {
-+		.sk_user_data = ovpn_sock,
- 		.encap_type = UDP_ENCAP_OVPNINUDP,
- 		.encap_rcv = ovpn_udp_encap_recv,
- 		.encap_destroy = ovpn_udp_encap_destroy,
+ drop:
++	ovpn_peer_put(peer);
++drop_no_peer:
+ 	dev_dstats_tx_dropped(ovpn->dev);
+ 	skb_tx_error(skb);
+ 	kfree_skb_list(skb);
 -- 
 2.51.0
 
