@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F7726463A;
-	Wed, 25 Feb 2026 01:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6B8248881;
+	Wed, 25 Feb 2026 01:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983560; cv=none; b=D7i4EIyxaIUyEqyP1LbF8R0EgArqEjHkKMN6VASbs2Ku+D+8TzpYv5l4QT+aWRAn4rndWYLqyRphzZaCdrXIqTgt9lxICINsS8km6DxCvdQ++cGE4sHSkDSJ12CfijwCK28er5E8kx1+fPj8yl4Iezb4irOLf8DoEWcOytL+df4=
+	t=1771983561; cv=none; b=UrP71XYlVKjWcSZvNUoliSKxffsuKaqr1jZiJ5NJ30anUBnYIwibrAE1XL2l2SlRlthkMnK9uTpZVF9bRLeNvNoNnDxt3irHaS5z/CrcoTNPHgKAgDMBHQpRM5B1jR9PdNJNtsXHX+QPwH5kGeVdTaMQHabwgFfyASvyTD7E1PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983560; c=relaxed/simple;
-	bh=ABKhqKn9hioNNi7/qr8aiAI9HezAuZ8VZcdKZZYQNes=;
+	s=arc-20240116; t=1771983561; c=relaxed/simple;
+	bh=yYE1GBjqm3Xc9trLzLK0U/lUANM9Sqdm0O91oPNGKuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PjSdhLSjuCDve0W66BxwYEL3IE+WHKvMfsSOE5Bg+o/SNcLRJj0cVYBUInt9wTodstONFgWg7i0YuOcy4Ew74Zx/PJW3AUQxkLQYwXqeAKYo80nOKhuqBy/4tGKE69M2EBp7wVetGzPqEHVhip7y3MQFU9cbf5am/OxSYptOVco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bt5bcPei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VmwPNijaUtByXXU1wK78bm1zhJjEb0At5k7Ab8GxA9yqP7d1eza1uYEq0ont5KjUPL2BVz3ra4mcj5LQKCX3EAmB/oC97K+4lrljSx8gBL1wJT1nkj0oVkkacmy5fwfVnD/tc0KYUUaqS7sTO50jKIkf4SpRKy3FIUzGVuznnH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJ10iv/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt5bcPei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016DEC19423;
-	Wed, 25 Feb 2026 01:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJ10iv/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1926AC19423;
+	Wed, 25 Feb 2026 01:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983560;
-	bh=ABKhqKn9hioNNi7/qr8aiAI9HezAuZ8VZcdKZZYQNes=;
+	s=korg; t=1771983561;
+	bh=yYE1GBjqm3Xc9trLzLK0U/lUANM9Sqdm0O91oPNGKuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bt5bcPeiGVfxkxWzssLIeRTxyo57x/vofDZdT1Urdf0JpLjcDi0P3aR5fPdeivtRM
-	 CMkh9B/aI4g1U3j8ksElNz4RdrzrjnCmlbNN7pYAzQoSZ3kxhDyQr+gfOpCaTIIwtM
-	 3I3JrGfQu4SAra6EsCf0Ju9nElfmEPZMTvFw3pCc=
+	b=AJ10iv/vDLy+LpEGj9I3RuPpgcqLiRCTkrtl64z0zcZGuqjWWivAOCLdVkppHnrxG
+	 4q4QLu8uuxDpy0izw1O+tCzv0ssrOKQ2ypNykcPZzfkTZd5Wwghhu7wxV2oZ3PV87J
+	 i7muH0bvOcQdx5kb4Avt8W8jpIBfd68vSv4sbMjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 659/781] selftests: forwarding: vxlan_bridge_1d_ipv6: fix test failure with br_netfilter enabled
-Date: Tue, 24 Feb 2026 17:22:48 -0800
-Message-ID: <20260225012415.951107988@linuxfoundation.org>
+Subject: [PATCH 6.19 660/781] selftests: forwarding: fix pedit tests failure with br_netfilter enabled
+Date: Tue, 24 Feb 2026 17:22:49 -0800
+Message-ID: <20260225012415.975168675@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
@@ -55,61 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
 
-[ Upstream commit ce9f6aec0fb780dafc1dfc5f47c688422aff464a ]
+[ Upstream commit a8c198d16c64cdf57f481a4cd3e769502802369e ]
 
-The test generates VXLAN traffic using mausezahn, where the encapsulated
-inner IPv6 packet has an incorrect payload length set in the IPv6 header.
-After VXLAN decapsulation, such packets do not pass sanity checks in
-br_netfilter and are dropped, which causes the test to fail.
+The tests use the tc pedit action to modify the IPv4 source address
+("pedit ex munge ip src set"), but the IP header checksum is not
+recalculated after the modification. As a result, the modified packet
+fails sanity checks in br_netfilter after bridging and is dropped,
+which causes the test to fail.
 
-Fix this by setting the correct IPv6 payload length for the encapsulated
-packet generated by mausezahn, so that the packet is accepted
-by br_netfilter.
+Fix this by ensuring net.bridge.bridge-nf-call-iptables is set to 0
+during the test execution. This prevents the bridge from passing
+L2 traffic to netfilter, bypassing the checksum validation that
+causes the test failure.
 
-tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
-lines 698-706
-
-              )"00:03:"$(           : Payload length
-              )"3a:"$(              : Next header
-              )"04:"$(              : Hop limit
-              )"$saddr:"$(          : IP saddr
-              )"$daddr:"$(          : IP daddr
-              )"80:"$(              : ICMPv6.type
-              )"00:"$(              : ICMPv6.code
-              )"00:"$(              : ICMPv6.checksum
-              )
-
-Data after IPv6 header:
-• 80: — 1 byte (ICMPv6 type)
-• 00: — 1 byte (ICMPv6 code)
-• 00: — 1 byte (ICMPv6 checksum, truncated)
-
-Total: 3 bytes → 00:03 is correct. The old value 00:08 did not match
-the actual payload size.
-
-Fixes: b07e9957f220 ("selftests: forwarding: Add VxLAN tests with a VLAN-unaware bridge for IPv6")
+Fixes: 92ad3828944e ("selftests: forwarding: Add a test for pedit munge SIP and DIP")
+Fixes: 226657ba2389 ("selftests: forwarding: Add a forwarding test for pedit munge dsfield")
 Signed-off-by: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260213131907.43351-3-aleksey.oladko@virtuozzo.com
+Link: https://patch.msgid.link/20260213131907.43351-4-aleksey.oladko@virtuozzo.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/forwarding/pedit_dsfield.sh | 8 ++++++++
+ tools/testing/selftests/net/forwarding/pedit_ip.sh      | 8 ++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
-index a603f7b0a08f0..e642feeada0e7 100755
---- a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
-+++ b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
-@@ -695,7 +695,7 @@ vxlan_encapped_ping_do()
- 		    )"6"$(			  : IP version
- 		    )"$inner_tos"$(               : Traffic class
- 		    )"0:00:00:"$(                 : Flow label
--		    )"00:08:"$(                   : Payload length
-+		    )"00:03:"$(                   : Payload length
- 		    )"3a:"$(                      : Next header
- 		    )"04:"$(                      : Hop limit
- 		    )"$saddr:"$(		  : IP saddr
+diff --git a/tools/testing/selftests/net/forwarding/pedit_dsfield.sh b/tools/testing/selftests/net/forwarding/pedit_dsfield.sh
+index af008fbf2725e..eb2d8034de9c7 100755
+--- a/tools/testing/selftests/net/forwarding/pedit_dsfield.sh
++++ b/tools/testing/selftests/net/forwarding/pedit_dsfield.sh
+@@ -98,12 +98,20 @@ setup_prepare()
+ 	h1_create
+ 	h2_create
+ 	switch_create
++
++	if [ -f /proc/sys/net/bridge/bridge-nf-call-iptables ]; then
++		sysctl_set net.bridge.bridge-nf-call-iptables 0
++	fi
+ }
+ 
+ cleanup()
+ {
+ 	pre_cleanup
+ 
++	if [ -f /proc/sys/net/bridge/bridge-nf-call-iptables ]; then
++		sysctl_restore net.bridge.bridge-nf-call-iptables
++	fi
++
+ 	switch_destroy
+ 	h2_destroy
+ 	h1_destroy
+diff --git a/tools/testing/selftests/net/forwarding/pedit_ip.sh b/tools/testing/selftests/net/forwarding/pedit_ip.sh
+index d14efb2d23b2e..9235674627abd 100755
+--- a/tools/testing/selftests/net/forwarding/pedit_ip.sh
++++ b/tools/testing/selftests/net/forwarding/pedit_ip.sh
+@@ -91,12 +91,20 @@ setup_prepare()
+ 	h1_create
+ 	h2_create
+ 	switch_create
++
++	if [ -f /proc/sys/net/bridge/bridge-nf-call-iptables ]; then
++		sysctl_set net.bridge.bridge-nf-call-iptables 0
++	fi
+ }
+ 
+ cleanup()
+ {
+ 	pre_cleanup
+ 
++	if [ -f /proc/sys/net/bridge/bridge-nf-call-iptables ]; then
++		sysctl_restore net.bridge.bridge-nf-call-iptables
++	fi
++
+ 	switch_destroy
+ 	h2_destroy
+ 	h1_destroy
 -- 
 2.51.0
 
