@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6A618B0A;
-	Wed, 25 Feb 2026 01:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313E418B0A;
+	Wed, 25 Feb 2026 01:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983225; cv=none; b=Lf9FHX0hykIr82vIu8duieVVN7ikOC7uQMEhfl7T17hAm2dMhsNKgOBGBwJY/R2SZQldxrUmDP/g8h8eugfiLoyurygVZoyPDbGzuJ1stF8Zw1VP3IwT9hneoXRSnlhWUwEy3whsOsAc4fjjib3NYYDZ+WIlYh8jEfacmzNZwyE=
+	t=1771983227; cv=none; b=US6794S4LlcI1AHTLlefxjH/gifqOYUR2QfsMzDGmmYSkxACsjicKYfSV5XyiBqw1f3yD/yf3kU9XYqNjO6oxhPk3W6HfNfOrwYLLJADYMwmIHbGWaXVXgHqkxClKS9WkZxY5Clmk1HIdroQ9MjhEUV6iiIWCaQ1Uoo7NzuyM6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983225; c=relaxed/simple;
-	bh=Z86aKaM1oc2mTjlmHj+nUBdO1o7v4Py2pVJ+QngelvQ=;
+	s=arc-20240116; t=1771983227; c=relaxed/simple;
+	bh=PwKtIreEysPNatSvuoUgJXa9W0A1BwNZHMwpAsWTogM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=syokyKF6RBWe1uJYaPrgaPlFjZ1OnAc5e1kHo0qwBG8jHAJSvBNit6xLxBIVMSjjqM8G7eV/hVS9UOS2hgrNxj06yeT8aYR5RdOKbQ65FuUKxAhCd90v+16/zoA+ZVux4SoJd5SawAVScbXIuVV4lnUvPkoFqy8VAVUHHhbbJJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uy9sattO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bwI4+70udq+JJy2C/J4ZtbdJ4bs+ap1Id8Q5gGxrvPulE/TuN4+p0wRQbQ8Ep2HRHb8oG1jad7LmYNh7drhlMC6tqzVm30xGgW3APD7ZGNtqASd6VjCUoFlbzDVxIU52ced90wUmw5Q0IMgXY4JTwRw1xqme2PGhnUqcOVE+bcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjKKTkI8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uy9sattO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EE0C116D0;
-	Wed, 25 Feb 2026 01:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjKKTkI8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A05C116D0;
+	Wed, 25 Feb 2026 01:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983225;
-	bh=Z86aKaM1oc2mTjlmHj+nUBdO1o7v4Py2pVJ+QngelvQ=;
+	s=korg; t=1771983227;
+	bh=PwKtIreEysPNatSvuoUgJXa9W0A1BwNZHMwpAsWTogM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uy9sattOIQmzTl9q3HobwGnw+VQLyzFlNRcnb0xIibf7vdsWMjY6qn4243ZL1OUiD
-	 xWml1ixG7bteek1k+fNM898kMuL9/L5DM9cxNFHkAbXivvo03fnUTJAxbJyTNWmX07
-	 XUhohqpaD1R8bXtWcQIaEnvo9sJlooEhacy1Bh3k=
+	b=MjKKTkI8GWVCRgwV+xN7+Qx+WCZjAyG6crixQ0tAZDXqZeoXLFHDMsAT9ukkLbGfk
+	 flrWywnTXAXOjO82Irqg9fiDO6DNkjtR4mR3gRM6XxSdGFSHHo5r54tYcNGFNm7d3d
+	 P29435x2+X9TcXQxGFed61F4XU7u4xXtt1VuybpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Richter <Simon.Richter@hogyros.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 370/781] PCI: Remove old_size limit from bridge window sizing
-Date: Tue, 24 Feb 2026 17:17:59 -0800
-Message-ID: <20260225012408.762338501@linuxfoundation.org>
+Subject: [PATCH 6.19 371/781] tcp: tcp_tx_timestamp() must look at the rtx queue
+Date: Tue, 24 Feb 2026 17:18:00 -0800
+Message-ID: <20260225012408.788367736@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,119 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f909e3ee3ed1a44202f09ac7e637a0f9ec372225 ]
+[ Upstream commit 838eb9687691d29915797a885b861fd09353386e ]
 
-calculate_memsize() applies lower bound to the resource size before
-aligning the resource size making it impossible to shrink bridge window
-resources. I've not found any justification for this lower bound and
-nothing indicated it was to work around some HW issue.
+tcp_tx_timestamp() is only called at the end of tcp_sendmsg_locked()
+before the final tcp_push().
 
-Prior to the commit 3baeae36039a ("PCI: Use pci_release_resource() instead
-of release_resource()"), releasing a bridge window during BAR resize
-resulted in clearing start and end address of the resource.  Clearing
-addresses destroys the resource size as a side-effect, therefore nullifying
-the effect of the old size lower bound.
+By the time it is called, it is possible all the copied data
+has been sent already (transmit queue is empty).
 
-After the commit 3baeae36039a ("PCI: Use pci_release_resource() instead of
-release_resource()"), BAR resize uses the aligned old size, which results
-in exceeding what fits into the parent window in some cases:
+If this is the case, use the last skb in the rtx queue.
 
-  xe 0030:03:00.0: [drm] Attempting to resize bar from 256MiB -> 16384MiB
-  xe 0030:03:00.0: BAR 0 [mem 0x620c000000000-0x620c000ffffff 64bit]: releasing
-  xe 0030:03:00.0: BAR 2 [mem 0x6200000000000-0x620000fffffff 64bit pref]: releasing
-  pci 0030:02:01.0: bridge window [mem 0x6200000000000-0x620001fffffff 64bit pref]: releasing
-  pci 0030:01:00.0: bridge window [mem 0x6200000000000-0x6203fbff0ffff 64bit pref]: releasing
-  pci 0030:00:00.0: bridge window [mem 0x6200000000000-0x6203fbff0ffff 64bit pref]: was not released (still contains assigned resources)
-  pci 0030:00:00.0: Assigned bridge window [mem 0x6200000000000-0x6203fbff0ffff 64bit pref] to [bus 01-04] free space at [mem 0x6200400000000-0x62007ffffffff 64bit pref]
-  pci 0030:00:00.0: Assigned bridge window [mem 0x6200000000000-0x6203fbff0ffff 64bit pref] to [bus 01-04] cannot fit 0x4000000000 required for 0030:01:00.0 bridging to [bus 02-04]
-
-The old size of 0x6200000000000-0x6203fbff0ffff resource was used as the
-lower bound which results in 0x4000000000 size request due to alignment.
-That exceeds what can fit into the parent window.
-
-Since the lower bound never even was enforced fully because the resource
-addresses were cleared when the bridge window is released, remove the
-old_size lower bound entirely and trust the calculated bridge window size
-is enough.
-
-This same problem may occur on io window side but seems less likely to
-cause issues due to general difference in alignment. Removing the lower
-bound may have other unforeseen consequences in case of io window so it's
-better to leave it as -next material if no problem is reported related to
-io window sizing (BAR resize shouldn't touch io windows anyway).
-
-Fixes: 3baeae36039a ("PCI: Use pci_release_resource() instead of release_resource()")
-Reported-by: Simon Richter <Simon.Richter@hogyros.de>
-Link: https://lore.kernel.org/r/f9a8c975-f5d3-4dd2-988e-4371a1433a60@hogyros.de/
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20251219174036.16738-6-ilpo.jarvinen@linux.intel.com
+Fixes: 75c119afe14f ("tcp: implement rb-tree based retransmit queue")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://patch.msgid.link/20260127123828.4098577-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ net/ipv4/tcp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index ed23778659114..902fdae73c232 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -1070,16 +1070,13 @@ static resource_size_t calculate_memsize(resource_size_t size,
- 					 resource_size_t min_size,
- 					 resource_size_t add_size,
- 					 resource_size_t children_add_size,
--					 resource_size_t old_size,
- 					 resource_size_t align)
- {
- 	if (size < min_size)
- 		size = min_size;
--	if (old_size == 1)
--		old_size = 0;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index d5319ebe24525..81666571ecfb5 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -501,6 +501,9 @@ static void tcp_tx_timestamp(struct sock *sk, struct sockcm_cookie *sockc)
+ 	struct sk_buff *skb = tcp_write_queue_tail(sk);
+ 	u32 tsflags = sockc->tsflags;
  
- 	size = max(size, add_size) + children_add_size;
--	return ALIGN(max(size, old_size), align);
-+	return ALIGN(size, align);
- }
- 
- resource_size_t __weak pcibios_window_alignment(struct pci_bus *bus,
-@@ -1297,7 +1294,6 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
- 	resource_size_t children_add_size = 0;
- 	resource_size_t children_add_align = 0;
- 	resource_size_t add_align = 0;
--	resource_size_t old_size;
- 
- 	if (!b_res)
- 		return;
-@@ -1363,11 +1359,10 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
- 		}
- 	}
- 
--	old_size = resource_size(b_res);
- 	win_align = window_alignment(bus, b_res->flags);
- 	min_align = calculate_head_align(aligns, max_order);
- 	min_align = max(min_align, win_align);
--	size0 = calculate_memsize(size, min_size, 0, 0, old_size, win_align);
-+	size0 = calculate_memsize(size, min_size, 0, 0, win_align);
- 
- 	if (size0) {
- 		resource_set_range(b_res, min_align, size0);
-@@ -1377,7 +1372,7 @@ static void pbus_size_mem(struct pci_bus *bus, unsigned long type,
- 	if (realloc_head && (add_size > 0 || children_add_size > 0)) {
- 		add_align = max(min_align, add_align);
- 		size1 = calculate_memsize(size, min_size, add_size, children_add_size,
--					  old_size, win_align);
-+					  win_align);
- 	}
- 
- 	if (!size0 && !size1) {
++	if (unlikely(!skb))
++		skb = skb_rb_last(&sk->tcp_rtx_queue);
++
+ 	if (tsflags && skb) {
+ 		struct skb_shared_info *shinfo = skb_shinfo(skb);
+ 		struct tcp_skb_cb *tcb = TCP_SKB_CB(skb);
 -- 
 2.51.0
 
