@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32D728D8DF;
-	Wed, 25 Feb 2026 01:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F292A26E708;
+	Wed, 25 Feb 2026 01:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983770; cv=none; b=DTNrBNB/yTmrqWJaLDWAZMF0APVR3Jf0sjaC7JiDdOVbgxBaYQmc7fye5ZDzKp8CrEv8gLk2FOo/PrRfpmhL76NuuyPOW/S6DjGxgvzLAa5QggN3nz1Oj2aWTeqDWBfRRuPvKLmD+L+UwfLabeeHk2qOi3qxAHFtTTmO7nLVEH0=
+	t=1771983772; cv=none; b=UTg0ovEOxJKAhAHtkGC3pdAb1u6uThANBJ3aG0iJt4HAcTwVbgKTDoPccvYoGT5Q5qECM2/Sq5poCJgQIrJ64E88nakE8yDzh9mZm5u1Iia5Y/d696rwX6oekzehA1FzsCdTSpy8H8vffJhstNoXW7CpiI6qRyGe8tpiOHRZ4sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983770; c=relaxed/simple;
-	bh=hQZybT4PwKtWeHTZ53jjF6ZoqC9NS3IXde3Ih/5rucs=;
+	s=arc-20240116; t=1771983772; c=relaxed/simple;
+	bh=oJoXa+k59EZ8+V7HST92Q8aSlq45I7RsBVUb72qTtvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSI2t7tva3V6U97cQpUt8l92ks9qCgWBr6w8MIQ8GZ/fz4nV7xZ8GJvv2bDBlbscl3qvWVp7iK4WXhyBVg0GxYf3N5u6LCGpTVigbmnzkeOnKKhyzhiIYkRtUwvgolsao3Ba5umheIyHBPufg5whupJnNqLdIQDT+BGpNdmz/Uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jo+SrJXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SVJs4FLRp8os57KFw97ABtzheykXMLlMI0Dlcz+kOPz16//erv24n2CyuURYQO56gUZ58R6tWvPAyrA5gqljxZUX1IlAZxOKIRq1XxF+GzEVByP6Uvyvlk8B+pbsdxdyV10G8uQ1ARzAD4u0b6ykPsVmn46ZpfT03bzDwoaSv7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKpU5KGO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jo+SrJXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84732C116D0;
-	Wed, 25 Feb 2026 01:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKpU5KGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB250C116D0;
+	Wed, 25 Feb 2026 01:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983770;
-	bh=hQZybT4PwKtWeHTZ53jjF6ZoqC9NS3IXde3Ih/5rucs=;
+	s=korg; t=1771983771;
+	bh=oJoXa+k59EZ8+V7HST92Q8aSlq45I7RsBVUb72qTtvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jo+SrJXNgXbKG9KU3gc+mg8ZBJlXkS+J9bU7A3g4GGCvXYSt1p1X+viGK6YgX1e0s
-	 8m/LGur5D8atfxlQVdZ8g5M/YTZQJ7Go3EQj2+LLuFKJDNA4iZZ1OugfJFvMIKceCw
-	 6VadZYCz+ygMCqmk+T0Y9YnsMbIGMVaYrhUvEDDw=
+	b=qKpU5KGOedbns5ePECghJqba0DhRe9Hv7kcJPwe5Zhq61CVh3tPBREP3CrdfT9s4r
+	 tb5PSb9ZAZTllnoq6HcNF9Ly8fQdUvv/X4uHPm5cVRPe76lmJfRhenvzbmQGMqqBdr
+	 aIJjAil5H4U91p5rkwd+13n/CxKDSURHt10SqGp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 061/641] s390/cio: Fix device lifecycle handling in css_alloc_subchannel()
-Date: Tue, 24 Feb 2026 17:16:27 -0800
-Message-ID: <20260225012350.529694407@linuxfoundation.org>
+Subject: [PATCH 6.18 062/641] io_uring/kbuf: fix memory leak if io_buffer_add_list fails
+Date: Tue, 24 Feb 2026 17:16:28 -0800
+Message-ID: <20260225012350.554805857@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,47 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit f65c75b0b9b5a390bc3beadcde0a6fbc3ad118f7 ]
+[ Upstream commit 442ae406603a94f1a263654494f425302ceb0445 ]
 
-`css_alloc_subchannel()` calls `device_initialize()` before setting up
-the DMA masks. If `dma_set_coherent_mask()` or `dma_set_mask()` fails,
-the error path frees the subchannel structure directly, bypassing
-the device model reference counting.
+io_register_pbuf_ring() ignores the return value of io_buffer_add_list(),
+which can fail if xa_store() returns an error (e.g., -ENOMEM). When this
+happens, the function returns 0 (success) to the caller, but the
+io_buffer_list structure is neither added to the xarray nor freed.
 
-Once `device_initialize()` has been called, the embedded struct device
-must be released via `put_device()`, allowing the release callback to
-free the container structure.
+In practice this requires failure injection to hit, hence not a real
+issue. But it should get fixed up none the less.
 
-Fix the error path by dropping the initial device reference with
-`put_device()` instead of calling `kfree()` directly.
-
-This ensures correct device lifetime handling and avoids potential
-use-after-free or double-free issues.
-
-Fixes: e5dcf0025d7af ("s390/css: move subchannel lock allocation")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/css.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/kbuf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/s390/cio/css.c b/drivers/s390/cio/css.c
-index be78a57f9bfde..8a70596a55447 100644
---- a/drivers/s390/cio/css.c
-+++ b/drivers/s390/cio/css.c
-@@ -236,7 +236,7 @@ struct subchannel *css_alloc_subchannel(struct subchannel_id schid,
- 	return sch;
- 
- err:
--	kfree(sch);
-+	put_device(&sch->dev);
- 	return ERR_PTR(ret);
- }
- 
+diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
+index d974381d93ff7..308ef71bcb286 100644
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -669,8 +669,9 @@ int io_register_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg)
+ 	bl->buf_ring = br;
+ 	if (reg.flags & IOU_PBUF_RING_INC)
+ 		bl->flags |= IOBL_INC;
+-	io_buffer_add_list(ctx, bl, reg.bgid);
+-	return 0;
++	ret = io_buffer_add_list(ctx, bl, reg.bgid);
++	if (!ret)
++		return 0;
+ fail:
+ 	io_free_region(ctx, &bl->region);
+ 	kfree(bl);
 -- 
 2.51.0
 
