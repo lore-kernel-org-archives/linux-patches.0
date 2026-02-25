@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274862D5926;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A3F2D5926;
 	Wed, 25 Feb 2026 06:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002679; cv=none; b=GCuWI5Cw4BO3U3Dpzkluo9vbYT2wYgxyZdc2PoJ9yYDSDTUTJ9WxQd4//4mRvxtybn7wWYPY/w4nu+IWDlDSGnSGfaM/b1VrI8oo2/J3VOiCV707qOo+jRidVXW7Ek2+xHYQkXCp3Jfx32j65yL56XT7taX9uqaL7RgJH2PnTW0=
+	t=1772002679; cv=none; b=JvMjSN5YWL71xjyO37XqAz2ErNtWI2uRL+CfL93ziL29unp+uH8XVqxoHqXKfL9nlqI46hwQPJ7Ov02CWxxa3SWhibLjxJFL2IdDOEkt64SAok6pFSogb+U5t7DMtxdB6kVgouIioeqqs0klUmVWHugaca0dZtPOvePOAx5gsYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002679; c=relaxed/simple;
-	bh=iUfF+Q6pyfiXKAQUaeLNBPGzl9Wx8w17rb93hGvROkc=;
+	bh=QWMi72Dkxj4LBaD126mx2vGEEhoM4VA46meqskHtKZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ULdZe0wq0O1dme7vLQL+9nxpX3CSoT8KMvlzj40BtL7yIQ+RW4KLlP+G40t/KaqpinOpJUNiB79klkxcDBJxhMuIvMiWZbCHu72yWScDmVVA4QhAwH8oqe0kexmKIbn7ptNfYGsS0JKnkoO3t3a3DEwaGoUI1SCnkIZAUQNYDrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQvBl/2M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rmRkohA13j+cPMLn8Bvlq7+FY44QtQp+0O0pp7iZDGPW/APEVEQfAqx/b+aA8NlICnH0zpXWmV9XSKY+vw1f5VGP7LydOyU4XkBd9DdBTqKUNPBZVq0/UQHBQLT2wrHfMsNleEyhR9dy4O4AWb394WPmN/1QGnHM/0Lgg0HuqOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUf6mzTG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQvBl/2M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0108CC116D0;
-	Wed, 25 Feb 2026 06:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUf6mzTG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9A3C116D0;
+	Wed, 25 Feb 2026 06:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002679;
-	bh=iUfF+Q6pyfiXKAQUaeLNBPGzl9Wx8w17rb93hGvROkc=;
+	bh=QWMi72Dkxj4LBaD126mx2vGEEhoM4VA46meqskHtKZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQvBl/2MuCrS6AgRmjmVsE74KI2IZLWOIY/3uWP5etZ2AfaCqQYvEfwdVeQiBON69
-	 3hyG4aq0fj5drHKF2sEouM9oXj3otsvLQ0dSas12V/wGPwg/sN+1yr741vjSnTgyZc
-	 ZoVR3sg0c4sP41RSQLKf2O/2FCn1P2O9oWPhFB1c=
+	b=TUf6mzTGyLVMlBMjVrZfs3aWkaRxdLxs+ODWhIfQx3OM5JGk4ASjG+vWbXMziGifj
+	 2n03Fnc5/xQcUcvqmRK7Y3zm3Cm+nvQVmtF4x7gP2lQSmGlAEIrtbxauRg56nGuIHu
+	 /DhCdkO96MyHgd3xL4y1j2x1ZZTAEBFh6kueFGDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 423/641] Input: adp5589 - remove a leftover header file
-Date: Tue, 24 Feb 2026 17:22:29 -0800
-Message-ID: <20260225012358.799155050@linuxfoundation.org>
+Subject: [PATCH 6.18 424/641] clk: Move clk_{save,restore}_context() to COMMON_CLK section
+Date: Tue, 24 Feb 2026 17:22:30 -0800
+Message-ID: <20260225012358.822301515@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -47,219 +46,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@mleia.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit f8a6e5eac701369afb5d69aba875dc5fec93003d ]
+[ Upstream commit f47c1b77d0a2a9c0d49ec14302e74f933398d1a3 ]
 
-In commit 3bdbd0858df6 ("Input: adp5589: remove the driver") the last user
-of include/linux/input/adp5589.h was removed along with the whole driver,
-thus the header file can be also removed.
+The clk_save_context() and clk_restore_context() helpers are only
+implemented by the Common Clock Framework.  They are not available when
+using legacy clock frameworks.  Dummy implementations are provided, but
+only if no clock support is available at all.
 
-Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Fixes: 3bdbd0858df6 ("Input: adp5589: remove the driver")
-Link: https://patch.msgid.link/20260113151140.3843753-1-vz@mleia.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Hence when CONFIG_HAVE_CLK=y, but CONFIG_COMMON_CLK is not enabled:
+
+    m68k-linux-gnu-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_resume':
+    air_en8811h.c:(.text+0x83e): undefined reference to `clk_restore_context'
+    m68k-linux-gnu-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_suspend':
+    air_en8811h.c:(.text+0x856): undefined reference to `clk_save_context'
+
+Fix this by moving forward declarations and dummy implementions from the
+HAVE_CLK to the COMMON_CLK section.
+
+Fixes: 8b95d1ce3300c411 ("clk: Add functions to save/restore clock context en-masse")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511301553.eaEz1nEW-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/input/adp5589.h | 180 ----------------------------------
- 1 file changed, 180 deletions(-)
- delete mode 100644 include/linux/input/adp5589.h
+ include/linux/clk.h | 48 ++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/include/linux/input/adp5589.h b/include/linux/input/adp5589.h
-deleted file mode 100644
-index 0e4742c8c81e3..0000000000000
---- a/include/linux/input/adp5589.h
-+++ /dev/null
-@@ -1,180 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-only */
--/*
-- * Analog Devices ADP5589/ADP5585 I/O Expander and QWERTY Keypad Controller
+diff --git a/include/linux/clk.h b/include/linux/clk.h
+index b607482ca77e9..64ff118ffb1a1 100644
+--- a/include/linux/clk.h
++++ b/include/linux/clk.h
+@@ -228,6 +228,23 @@ int devm_clk_rate_exclusive_get(struct device *dev, struct clk *clk);
+  */
+ void clk_rate_exclusive_put(struct clk *clk);
+ 
++/**
++ * clk_save_context - save clock context for poweroff
++ *
++ * Saves the context of the clock register for powerstates in which the
++ * contents of the registers will be lost. Occurs deep within the suspend
++ * code so locking is not necessary.
++ */
++int clk_save_context(void);
++
++/**
++ * clk_restore_context - restore clock context after poweroff
++ *
++ * This occurs with all clocks enabled. Occurs deep within the resume code
++ * so locking is not necessary.
++ */
++void clk_restore_context(void);
++
+ #else
+ 
+ static inline int clk_notifier_register(struct clk *clk,
+@@ -293,6 +310,13 @@ static inline int devm_clk_rate_exclusive_get(struct device *dev, struct clk *cl
+ 
+ static inline void clk_rate_exclusive_put(struct clk *clk) {}
+ 
++static inline int clk_save_context(void)
++{
++	return 0;
++}
++
++static inline void clk_restore_context(void) {}
++
+ #endif
+ 
+ #ifdef CONFIG_HAVE_CLK_PREPARE
+@@ -933,23 +957,6 @@ struct clk *clk_get_parent(struct clk *clk);
+  */
+ struct clk *clk_get_sys(const char *dev_id, const char *con_id);
+ 
+-/**
+- * clk_save_context - save clock context for poweroff
 - *
-- * Copyright 2010-2011 Analog Devices Inc.
+- * Saves the context of the clock register for powerstates in which the
+- * contents of the registers will be lost. Occurs deep within the suspend
+- * code so locking is not necessary.
 - */
+-int clk_save_context(void);
 -
--#ifndef _ADP5589_H
--#define _ADP5589_H
--
--/*
-- * ADP5589 specific GPI and Keymap defines
-- */
--
--#define ADP5589_KEYMAPSIZE	88
--
--#define ADP5589_GPI_PIN_ROW0 97
--#define ADP5589_GPI_PIN_ROW1 98
--#define ADP5589_GPI_PIN_ROW2 99
--#define ADP5589_GPI_PIN_ROW3 100
--#define ADP5589_GPI_PIN_ROW4 101
--#define ADP5589_GPI_PIN_ROW5 102
--#define ADP5589_GPI_PIN_ROW6 103
--#define ADP5589_GPI_PIN_ROW7 104
--#define ADP5589_GPI_PIN_COL0 105
--#define ADP5589_GPI_PIN_COL1 106
--#define ADP5589_GPI_PIN_COL2 107
--#define ADP5589_GPI_PIN_COL3 108
--#define ADP5589_GPI_PIN_COL4 109
--#define ADP5589_GPI_PIN_COL5 110
--#define ADP5589_GPI_PIN_COL6 111
--#define ADP5589_GPI_PIN_COL7 112
--#define ADP5589_GPI_PIN_COL8 113
--#define ADP5589_GPI_PIN_COL9 114
--#define ADP5589_GPI_PIN_COL10 115
--#define GPI_LOGIC1 116
--#define GPI_LOGIC2 117
--
--#define ADP5589_GPI_PIN_ROW_BASE ADP5589_GPI_PIN_ROW0
--#define ADP5589_GPI_PIN_ROW_END ADP5589_GPI_PIN_ROW7
--#define ADP5589_GPI_PIN_COL_BASE ADP5589_GPI_PIN_COL0
--#define ADP5589_GPI_PIN_COL_END ADP5589_GPI_PIN_COL10
--
--#define ADP5589_GPI_PIN_BASE ADP5589_GPI_PIN_ROW_BASE
--#define ADP5589_GPI_PIN_END ADP5589_GPI_PIN_COL_END
--
--#define ADP5589_GPIMAPSIZE_MAX (ADP5589_GPI_PIN_END - ADP5589_GPI_PIN_BASE + 1)
--
--/*
-- * ADP5585 specific GPI and Keymap defines
-- */
--
--#define ADP5585_KEYMAPSIZE	30
--
--#define ADP5585_GPI_PIN_ROW0 37
--#define ADP5585_GPI_PIN_ROW1 38
--#define ADP5585_GPI_PIN_ROW2 39
--#define ADP5585_GPI_PIN_ROW3 40
--#define ADP5585_GPI_PIN_ROW4 41
--#define ADP5585_GPI_PIN_ROW5 42
--#define ADP5585_GPI_PIN_COL0 43
--#define ADP5585_GPI_PIN_COL1 44
--#define ADP5585_GPI_PIN_COL2 45
--#define ADP5585_GPI_PIN_COL3 46
--#define ADP5585_GPI_PIN_COL4 47
--#define GPI_LOGIC 48
--
--#define ADP5585_GPI_PIN_ROW_BASE ADP5585_GPI_PIN_ROW0
--#define ADP5585_GPI_PIN_ROW_END ADP5585_GPI_PIN_ROW5
--#define ADP5585_GPI_PIN_COL_BASE ADP5585_GPI_PIN_COL0
--#define ADP5585_GPI_PIN_COL_END ADP5585_GPI_PIN_COL4
--
--#define ADP5585_GPI_PIN_BASE ADP5585_GPI_PIN_ROW_BASE
--#define ADP5585_GPI_PIN_END ADP5585_GPI_PIN_COL_END
--
--#define ADP5585_GPIMAPSIZE_MAX (ADP5585_GPI_PIN_END - ADP5585_GPI_PIN_BASE + 1)
--
--struct adp5589_gpi_map {
--	unsigned short pin;
--	unsigned short sw_evt;
--};
--
--/* scan_cycle_time */
--#define ADP5589_SCAN_CYCLE_10ms		0
--#define ADP5589_SCAN_CYCLE_20ms		1
--#define ADP5589_SCAN_CYCLE_30ms		2
--#define ADP5589_SCAN_CYCLE_40ms		3
--
--/* RESET_CFG */
--#define RESET_PULSE_WIDTH_500us		0
--#define RESET_PULSE_WIDTH_1ms		1
--#define RESET_PULSE_WIDTH_2ms		2
--#define RESET_PULSE_WIDTH_10ms		3
--
--#define RESET_TRIG_TIME_0ms		(0 << 2)
--#define RESET_TRIG_TIME_1000ms		(1 << 2)
--#define RESET_TRIG_TIME_1500ms		(2 << 2)
--#define RESET_TRIG_TIME_2000ms		(3 << 2)
--#define RESET_TRIG_TIME_2500ms		(4 << 2)
--#define RESET_TRIG_TIME_3000ms		(5 << 2)
--#define RESET_TRIG_TIME_3500ms		(6 << 2)
--#define RESET_TRIG_TIME_4000ms		(7 << 2)
--
--#define RESET_PASSTHRU_EN		(1 << 5)
--#define RESET1_POL_HIGH			(1 << 6)
--#define RESET1_POL_LOW			(0 << 6)
--#define RESET2_POL_HIGH			(1 << 7)
--#define RESET2_POL_LOW			(0 << 7)
--
--/* ADP5589 Mask Bits:
-- * C C C C C C C C C C C | R R R R R R R R
-- * 1 9 8 7 6 5 4 3 2 1 0 | 7 6 5 4 3 2 1 0
-- * 0
-- * ---------------- BIT ------------------
-- * 1 1 1 1 1 1 1 1 1 0 0 | 0 0 0 0 0 0 0 0
-- * 8 7 6 5 4 3 2 1 0 9 8 | 7 6 5 4 3 2 1 0
-- */
--
--#define ADP_ROW(x)	(1 << (x))
--#define ADP_COL(x)	(1 << (x + 8))
--#define ADP5589_ROW_MASK		0xFF
--#define ADP5589_COL_MASK		0xFF
--#define ADP5589_COL_SHIFT		8
--#define ADP5589_MAX_ROW_NUM		7
--#define ADP5589_MAX_COL_NUM		10
--
--/* ADP5585 Mask Bits:
-- * C C C C C | R R R R R R
-- * 4 3 2 1 0 | 5 4 3 2 1 0
+-/**
+- * clk_restore_context - restore clock context after poweroff
 - *
-- * ---- BIT -- -----------
-- * 1 0 0 0 0 | 0 0 0 0 0 0
-- * 0 9 8 7 6 | 5 4 3 2 1 0
+- * This occurs with all clocks enabled. Occurs deep within the resume code
+- * so locking is not necessary.
 - */
+-void clk_restore_context(void);
 -
--#define ADP5585_ROW_MASK		0x3F
--#define ADP5585_COL_MASK		0x1F
--#define ADP5585_ROW_SHIFT		0
--#define ADP5585_COL_SHIFT		6
--#define ADP5585_MAX_ROW_NUM		5
--#define ADP5585_MAX_COL_NUM		4
+ #else /* !CONFIG_HAVE_CLK */
+ 
+ static inline struct clk *clk_get(struct device *dev, const char *id)
+@@ -1129,13 +1136,6 @@ static inline struct clk *clk_get_sys(const char *dev_id, const char *con_id)
+ 	return NULL;
+ }
+ 
+-static inline int clk_save_context(void)
+-{
+-	return 0;
+-}
 -
--#define ADP5585_ROW(x)	(1 << ((x) & ADP5585_ROW_MASK))
--#define ADP5585_COL(x)	(1 << (((x) & ADP5585_COL_MASK) + ADP5585_COL_SHIFT))
+-static inline void clk_restore_context(void) {}
 -
--/* Put one of these structures in i2c_board_info platform_data */
--
--struct adp5589_kpad_platform_data {
--	unsigned keypad_en_mask;	/* Keypad (Rows/Columns) enable mask */
--	const unsigned short *keymap;	/* Pointer to keymap */
--	unsigned short keymapsize;	/* Keymap size */
--	bool repeat;			/* Enable key repeat */
--	bool en_keylock;		/* Enable key lock feature (ADP5589 only)*/
--	unsigned char unlock_key1;	/* Unlock Key 1 (ADP5589 only) */
--	unsigned char unlock_key2;	/* Unlock Key 2 (ADP5589 only) */
--	unsigned char unlock_timer;	/* Time in seconds [0..7] between the two unlock keys 0=disable (ADP5589 only) */
--	unsigned char scan_cycle_time;	/* Time between consecutive scan cycles */
--	unsigned char reset_cfg;	/* Reset config */
--	unsigned short reset1_key_1;	/* Reset Key 1 */
--	unsigned short reset1_key_2;	/* Reset Key 2 */
--	unsigned short reset1_key_3;	/* Reset Key 3 */
--	unsigned short reset2_key_1;	/* Reset Key 1 */
--	unsigned short reset2_key_2;	/* Reset Key 2 */
--	unsigned debounce_dis_mask;	/* Disable debounce mask */
--	unsigned pull_dis_mask;		/* Disable all pull resistors mask */
--	unsigned pullup_en_100k;	/* Pull-Up 100k Enable Mask */
--	unsigned pullup_en_300k;	/* Pull-Up 300k Enable Mask */
--	unsigned pulldown_en_300k;	/* Pull-Down 300k Enable Mask */
--	const struct adp5589_gpi_map *gpimap;
--	unsigned short gpimapsize;
--	const struct adp5589_gpio_platform_data *gpio_data;
--};
--
--struct i2c_client; /* forward declaration */
--
--struct adp5589_gpio_platform_data {
--	int	gpio_start;	/* GPIO Chip base # */
--};
--
--#endif
+ #endif
+ 
+ /* clk_prepare_enable helps cases using clk_enable in non-atomic context. */
 -- 
 2.51.0
 
