@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D194A299937;
-	Wed, 25 Feb 2026 01:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3AD1F5858;
+	Wed, 25 Feb 2026 01:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983984; cv=none; b=MNCKRLZZe8TJMa12en4/kTNDx4XzB/XDumzejFCQ3Xau4LBZLlV0SMMmYI+6S+MnXX7QbRuN472gaMJvDBCFoO/3X5QdI0uersST4LVSOSfe3PUa4MEffz6PpUK2FzUkDf/iyZduthAAmvbxOf115XZQ+IcmsB0FF1RerKiU0Vw=
+	t=1771983985; cv=none; b=TbP6tpqzOKuURD313NwxM/JvKFQq6F6Tfj7jewvBykmLcFDXqkN4x3cittKHmPs4u2ZqHHJPMSkLKm/YFT+G2UDePgjF0pCPcwBsN2YjyE9YVQDhVGRUpF95FxL8cRHrZTWx1iyw6lYXFSUKsCay9ftrQvDq+qj0jc5jRsxJvFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983984; c=relaxed/simple;
-	bh=eG+IW9zlOdGff5q5fePB+P7xVsodkVzNArSJ8hHU2OU=;
+	s=arc-20240116; t=1771983985; c=relaxed/simple;
+	bh=fMPCDPaX1jGxu4HLxJn2ipCy2mMHZHHf9MUOu9bg1v0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aG0ASbgsLIwuFoP8lOBNuHpbefpcC+xtjYf80o+Tamc8Y2Q4eqsO84VEKfRsFgMYszIogXncvOPdkJjG5NlYGwVZA4vm6dhA+fvDUUq5hk7/4gFR2X/rr3ouePgmtIRSYUxu6XwlLkpnuJk0dZZZ2OXCv21YppiATnY5Mj+YpBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IU+u8B+u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P/aS8RZSgZoY8LfmHcYsImnp/I4rV3oBkNBO/JqQTTfXcf6XiVVMN70ZY/SLKoOVsGK7tit0A7uGqfdr7nreCUIgDP7LVyg1m3OM4rgE5oRbVNElPvv/OU7+KQQoesdi1cg+1GNoyFfouqumJR5BLT3Qe++ordrvWhj22Sh8hkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkFnyU+U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IU+u8B+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926FCC116D0;
-	Wed, 25 Feb 2026 01:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkFnyU+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DF4C116D0;
+	Wed, 25 Feb 2026 01:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983984;
-	bh=eG+IW9zlOdGff5q5fePB+P7xVsodkVzNArSJ8hHU2OU=;
+	s=korg; t=1771983985;
+	bh=fMPCDPaX1jGxu4HLxJn2ipCy2mMHZHHf9MUOu9bg1v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IU+u8B+us0py1TNYAAi18PapSa7PXgy5eARS7sUv4DVz+TMHBWdWIOTfIM7tyW1zl
-	 rL5idb47w5GXIb82ltrU3gB0ONZiFBEe/QhhGvQAYY7hm5OuzfdiZE6nO9ibDDoHeR
-	 uqNtnawvNNW9wzGVlrglwlElIu1SNr1oHRZaCn70=
+	b=MkFnyU+UHsIv1E5j7puirtFaUxzaRFGnRDtjdZvm69/NYwStSdSrc3q+k33GVpP7Y
+	 Gm+xECYlc6KI7eapHyH3Cx1DQcAnvgUR8k17pBh74OMAJip7q5CWdYNHeLIBBOBZGu
+	 J9yL9lJRXRJ1nqsRHQEiEdY9PT2MfAhUVhz520BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 186/641] ASoC: nau8821: Fixup nau8821_enable_jack_detect()
-Date: Tue, 24 Feb 2026 17:18:32 -0800
-Message-ID: <20260225012353.518372563@linuxfoundation.org>
+Subject: [PATCH 6.18 187/641] media: chips-media: wave5: Fix memory leak on codec_info allocation failure
+Date: Tue, 24 Feb 2026 17:18:33 -0800
+Message-ID: <20260225012353.539658525@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,82 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 70237853edf0a69773a7370eb74ea2a44dfe3050 ]
+[ Upstream commit a519e21e32398459ba357e67b541402f7295ee1b ]
 
-The nau8821_enable_jack_detect() function was supposed to allow enabling
-or disabling jack events reporting.  However, once enabled, any
-subsequent invocation would fail and the following splat is shown:
+In wave5_vpu_open_enc() and wave5_vpu_open_dec(), a vpu instance is
+allocated via kzalloc(). If the subsequent allocation for inst->codec_info
+fails, the functions return -ENOMEM without freeing the previously
+allocated instance, causing a memory leak.
 
-[ 3136.996771] Hardware name: Valve Jupiter/Jupiter, BIOS F7A0131 01/30/2024
-[ 3136.996773] Workqueue: events_unbound deferred_probe_work_func
-[ 3136.996780] Call Trace:
-[ 3136.996782]  <TASK>
-[ 3136.996787]  dump_stack_lvl+0x6e/0xa0
-[ 3136.996796]  __setup_irq.cold+0x9c/0xce
-[ 3136.996803]  ? __pfx_irq_default_primary_handler+0x10/0x10
-[ 3136.996812]  ? __pfx_nau8821_interrupt+0x10/0x10 [snd_soc_nau8821]
-[ 3136.996825]  request_threaded_irq+0xd9/0x160
-[ 3136.996853]  devm_request_threaded_irq+0x71/0xd0
-[ 3136.996859]  ? __pfx_nau8821_interrupt+0x10/0x10 [snd_soc_nau8821]
-[ 3136.996882]  nau8821_enable_jack_detect+0xa5/0xc0 [snd_soc_nau8821]
-[ 3136.996901]  acp5x_8821_init+0x8d/0xa0 [snd_soc_acp5x_mach]
-[ 3136.996917]  snd_soc_link_init+0x25/0x50 [snd_soc_core]
-[ 3136.996958]  snd_soc_bind_card+0x615/0xd00 [snd_soc_core]
-[ 3136.997026]  snd_soc_register_card+0x1b2/0x1c0 [snd_soc_core]
-[ 3136.997064]  devm_snd_soc_register_card+0x47/0x90 [snd_soc_core]
-[ 3136.997108]  acp5x_probe+0x72/0xb0 [snd_soc_acp5x_mach]
-[...]
-[ 3136.997508] nau8821 i2c-NVTN2020:00: Cannot request irq 58 (-16)
+Fix this by calling kfree() on the instance in this error path to ensure
+it is properly released.
 
-Introduce jdet_active flag to driver data structure and use it to
-provide one-time initialization of the jack detection work queue and
-related interrupt line.
-
-Note this is also a prerequisite for additional fixes around module
-unloading and suspend handling.
-
-Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20251231-nau8821-cleanup-v1-1-6b0b76cbbb64@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9707a6254a8a6 ("media: chips-media: wave5: Add the v4l2 layer")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8821.c | 5 +++++
- sound/soc/codecs/nau8821.h | 1 +
- 2 files changed, 6 insertions(+)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c | 4 +++-
+ drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
-index 4fa9a785513e5..dfb9630bffe29 100644
---- a/sound/soc/codecs/nau8821.c
-+++ b/sound/soc/codecs/nau8821.c
-@@ -1661,8 +1661,13 @@ int nau8821_enable_jack_detect(struct snd_soc_component *component,
- 	int ret;
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+index e3038c18ca362..a4387ed58cac3 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -1753,8 +1753,10 @@ static int wave5_vpu_open_dec(struct file *filp)
+ 	spin_lock_init(&inst->state_spinlock);
  
- 	nau8821->jack = jack;
-+
-+	if (nau8821->jdet_active)
-+		return 0;
-+
- 	/* Initiate jack detection work queue */
- 	INIT_DELAYED_WORK(&nau8821->jdet_work, nau8821_jdet_work);
-+	nau8821->jdet_active = true;
+ 	inst->codec_info = kzalloc(sizeof(*inst->codec_info), GFP_KERNEL);
+-	if (!inst->codec_info)
++	if (!inst->codec_info) {
++		kfree(inst);
+ 		return -ENOMEM;
++	}
  
- 	ret = devm_request_threaded_irq(nau8821->dev, nau8821->irq, NULL,
- 		nau8821_interrupt, IRQF_TRIGGER_LOW | IRQF_ONESHOT,
-diff --git a/sound/soc/codecs/nau8821.h b/sound/soc/codecs/nau8821.h
-index 88602923780d8..f9d7cd8cbd211 100644
---- a/sound/soc/codecs/nau8821.h
-+++ b/sound/soc/codecs/nau8821.h
-@@ -562,6 +562,7 @@ struct nau8821 {
- 	struct snd_soc_dapm_context *dapm;
- 	struct snd_soc_jack *jack;
- 	struct delayed_work jdet_work;
-+	bool jdet_active;
- 	int irq;
- 	int clk_id;
- 	int micbias_voltage;
+ 	v4l2_fh_init(&inst->v4l2_fh, vdev);
+ 	v4l2_fh_add(&inst->v4l2_fh, filp);
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+index 9bfaa9fb3ceb3..94fb5d7c87021 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+@@ -1578,8 +1578,10 @@ static int wave5_vpu_open_enc(struct file *filp)
+ 	inst->ops = &wave5_vpu_enc_inst_ops;
+ 
+ 	inst->codec_info = kzalloc(sizeof(*inst->codec_info), GFP_KERNEL);
+-	if (!inst->codec_info)
++	if (!inst->codec_info) {
++		kfree(inst);
+ 		return -ENOMEM;
++	}
+ 
+ 	v4l2_fh_init(&inst->v4l2_fh, vdev);
+ 	v4l2_fh_add(&inst->v4l2_fh, filp);
 -- 
 2.51.0
 
