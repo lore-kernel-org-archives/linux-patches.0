@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F03E24A05D;
-	Wed, 25 Feb 2026 01:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A5526ED3D;
+	Wed, 25 Feb 2026 01:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983603; cv=none; b=s7+t2gEbqdzU/yd/Wt7ZvTJlV4hhOmi8zpdT1pB1WjnurjXTtc3gomaS57Kr8exJuRfDkqjWVtE976HjCh9bAar5DD+vTcDLsM3qqK3u44UrdMnqhHmmFOTh4vBAa/2NCvmo2KPfgayZmpVBkab2t/YVosyrGRiv+b+f4r9zUOg=
+	t=1771983604; cv=none; b=n2gkHl9PAHCzi5MMguHPNsrnNTclwEP9SeYxybTo8aI22T3gzrH71q2gXozmBt9ajZ+KjQNjx/P3UQHkVEZyv8EXkLbRJqQYWnSQX3IjjPZ4OMXe+B4u6G2rziaRIv9OudaNFp8P10DNpFdsRy485Rgm7QtqhY5/VGWRt8rAL4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983603; c=relaxed/simple;
-	bh=yJTAjGUNd6JMtMfUgaIGzp57zb5h9Xw+QdsueGMCnvc=;
+	s=arc-20240116; t=1771983604; c=relaxed/simple;
+	bh=dCuspvkBgChxKpcrAe19aeMnq1nsvbpkpI8FjxFb31U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQSF8wosROeIW7CDD55ikAXJ4Z2TEynqwATq9HI135G1jCwDahhdL06z1bNum3iAODBF0U3Fbk53Z7kcwDUamGbhVCWr8de9sD3PAKmhfbopaHPYRhS8/hSMlOa4g9H3Sz0K2tmb60sVm5+bncQPaV6kHYIkLiYK9hPBnGjLIJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwZIxzMO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Guj0te8JvpfStNsQgP9mnUYyLI3xk7EK+wqRQkvskQkfliqnR+3iBsgmmVdicbnafISTNI5HGpMG45Wn1gVrmIBkFID8zOtpcKdCDW4gX9TCW7cWLeEiIB4YrtAK0C5kjNcuYl8iqaRe80rww9h78kiYiJTY4WEUnJYqcHfW5KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NybIOJNs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwZIxzMO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C939C116D0;
-	Wed, 25 Feb 2026 01:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NybIOJNs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64370C19423;
+	Wed, 25 Feb 2026 01:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983603;
-	bh=yJTAjGUNd6JMtMfUgaIGzp57zb5h9Xw+QdsueGMCnvc=;
+	s=korg; t=1771983604;
+	bh=dCuspvkBgChxKpcrAe19aeMnq1nsvbpkpI8FjxFb31U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EwZIxzMOyonj+iBMlQrfwztDMfw63dmdNVfJB31JfO89HYtG7hfBN3hDdm11ZnsS/
-	 sXCBYdTs/jzrQehpgDnTVBhP68/f1oIfTnYObEC/doE7EjVtpFW6E5ZK46n28HTOK6
-	 6zw/xbaH1IOmbHE5AZpB1U3+S/bFzMkFLSXxm3x0=
+	b=NybIOJNsN0Zk61FOv3DqIUvEBnXBkWyDzB8ndMgoX0kHdosehSKJrHgWZoCUM9u5t
+	 1+2L63bQaITDo+JlcgHundLECNsRRa5s7/kh03WA0x9UOUEyVBnRdLkiOl7GrUAP/M
+	 GFXbGGi6J9NEpfy6SG6Vyu0EXsMWDtVH+7NxhnhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 665/781] ipvs: skip ipv6 extension headers for csum checks
-Date: Tue, 24 Feb 2026 17:22:54 -0800
-Message-ID: <20260225012416.099104072@linuxfoundation.org>
+Subject: [PATCH 6.19 692/781] apparmor: fix NULL sock in aa_sock_file_perm
+Date: Tue, 24 Feb 2026 17:23:21 -0800
+Message-ID: <20260225012416.733596218@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,201 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 05cfe9863ef049d98141dc2969eefde72fb07625 ]
+[ Upstream commit 00b67657535dfea56e84d11492f5c0f61d0af297 ]
 
-Protocol checksum validation fails for IPv6 if there are extension
-headers before the protocol header. iph->len already contains its
-offset, so use it to fix the problem.
+Deal with the potential that sock and sock-sk can be NULL during
+socket setup or teardown. This could lead to an oops. The fix for NULL
+pointer dereference in __unix_needs_revalidation shows this is at
+least possible for af_unix sockets. While the fix for af_unix sockets
+applies for newer mediation this is still the fall back path for older
+af_unix mediation and other sockets, so ensure it is covered.
 
-Fixes: 2906f66a5682 ("ipvs: SCTP Trasport Loadbalancing Support")
-Fixes: 0bbdd42b7efa ("IPVS: Extend protocol DNAT/SNAT and state handlers")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 56974a6fcfef6 ("apparmor: add base infastructure for socket mediation")
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_proto_sctp.c | 18 ++++++------------
- net/netfilter/ipvs/ip_vs_proto_tcp.c  | 21 +++++++--------------
- net/netfilter/ipvs/ip_vs_proto_udp.c  | 20 +++++++-------------
- 3 files changed, 20 insertions(+), 39 deletions(-)
+ security/apparmor/net.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-index 83e452916403d..63c78a1f3918a 100644
---- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-@@ -10,7 +10,8 @@
- #include <net/ip_vs.h>
+diff --git a/security/apparmor/net.c b/security/apparmor/net.c
+index 45cf25605c345..44c04102062f3 100644
+--- a/security/apparmor/net.c
++++ b/security/apparmor/net.c
+@@ -326,8 +326,10 @@ int aa_sock_file_perm(const struct cred *subj_cred, struct aa_label *label,
+ 	struct socket *sock = (struct socket *) file->private_data;
  
- static int
--sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
-+sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+		unsigned int sctphoff);
+ 	AA_BUG(!label);
+-	AA_BUG(!sock);
+-	AA_BUG(!sock->sk);
++
++	/* sock && sock->sk can be NULL for sockets being set up or torn down */
++	if (!sock || !sock->sk)
++		return 0;
  
- static int
- sctp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
-@@ -108,7 +109,7 @@ sctp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!sctp_csum_check(cp->af, skb, pp))
-+		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
- 			return 0;
- 
- 		/* Call application helper if needed */
-@@ -156,7 +157,7 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!sctp_csum_check(cp->af, skb, pp))
-+		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
- 			return 0;
- 
- 		/* Call application helper if needed */
-@@ -185,19 +186,12 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- }
- 
- static int
--sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
-+sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+		unsigned int sctphoff)
- {
--	unsigned int sctphoff;
- 	struct sctphdr *sh;
- 	__le32 cmp, val;
- 
--#ifdef CONFIG_IP_VS_IPV6
--	if (af == AF_INET6)
--		sctphoff = sizeof(struct ipv6hdr);
--	else
--#endif
--		sctphoff = ip_hdrlen(skb);
--
- 	sh = (struct sctphdr *)(skb->data + sctphoff);
- 	cmp = sh->checksum;
- 	val = sctp_compute_cksum(skb, sctphoff);
-diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-index f68a1533ee455..8cc0a8ce62411 100644
---- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-@@ -28,7 +28,8 @@
- #include <net/ip_vs.h>
- 
- static int
--tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
-+tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+	       unsigned int tcphoff);
- 
- static int
- tcp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
-@@ -165,7 +166,7 @@ tcp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!tcp_csum_check(cp->af, skb, pp))
-+		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
- 			return 0;
- 
- 		/* Call application helper if needed */
-@@ -243,7 +244,7 @@ tcp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!tcp_csum_check(cp->af, skb, pp))
-+		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
- 			return 0;
- 
- 		/*
-@@ -300,17 +301,9 @@ tcp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 
- 
- static int
--tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
-+tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+	       unsigned int tcphoff)
- {
--	unsigned int tcphoff;
--
--#ifdef CONFIG_IP_VS_IPV6
--	if (af == AF_INET6)
--		tcphoff = sizeof(struct ipv6hdr);
--	else
--#endif
--		tcphoff = ip_hdrlen(skb);
--
- 	switch (skb->ip_summed) {
- 	case CHECKSUM_NONE:
- 		skb->csum = skb_checksum(skb, tcphoff, skb->len - tcphoff, 0);
-@@ -321,7 +314,7 @@ tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
- 			if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
- 					    &ipv6_hdr(skb)->daddr,
- 					    skb->len - tcphoff,
--					    ipv6_hdr(skb)->nexthdr,
-+					    IPPROTO_TCP,
- 					    skb->csum)) {
- 				IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
- 						 "Failed checksum for");
-diff --git a/net/netfilter/ipvs/ip_vs_proto_udp.c b/net/netfilter/ipvs/ip_vs_proto_udp.c
-index 0f0107c80dd23..f9de632e38cdd 100644
---- a/net/netfilter/ipvs/ip_vs_proto_udp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_udp.c
-@@ -24,7 +24,8 @@
- #include <net/ip6_checksum.h>
- 
- static int
--udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
-+udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+	       unsigned int udphoff);
- 
- static int
- udp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
-@@ -154,7 +155,7 @@ udp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!udp_csum_check(cp->af, skb, pp))
-+		if (!udp_csum_check(cp->af, skb, pp, udphoff))
- 			return 0;
- 
- 		/*
-@@ -237,7 +238,7 @@ udp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!udp_csum_check(cp->af, skb, pp))
-+		if (!udp_csum_check(cp->af, skb, pp, udphoff))
- 			return 0;
- 
- 		/*
-@@ -296,17 +297,10 @@ udp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 
- 
- static int
--udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
-+udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+	       unsigned int udphoff)
- {
- 	struct udphdr _udph, *uh;
--	unsigned int udphoff;
--
--#ifdef CONFIG_IP_VS_IPV6
--	if (af == AF_INET6)
--		udphoff = sizeof(struct ipv6hdr);
--	else
--#endif
--		udphoff = ip_hdrlen(skb);
- 
- 	uh = skb_header_pointer(skb, udphoff, sizeof(_udph), &_udph);
- 	if (uh == NULL)
-@@ -324,7 +318,7 @@ udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
- 				if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
- 						    &ipv6_hdr(skb)->daddr,
- 						    skb->len - udphoff,
--						    ipv6_hdr(skb)->nexthdr,
-+						    IPPROTO_UDP,
- 						    skb->csum)) {
- 					IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
- 							 "Failed checksum for");
+ 	if (sock->sk->sk_family == PF_UNIX)
+ 		return aa_unix_file_perm(subj_cred, label, op, request, file);
 -- 
 2.51.0
 
