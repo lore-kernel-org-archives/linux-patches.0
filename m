@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FE82BD5BF;
-	Wed, 25 Feb 2026 01:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F320285CA3;
+	Wed, 25 Feb 2026 01:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983803; cv=none; b=gzIyZGHhMf8C0acE/uJWkGo8ADMZumoPUoZ6LpkDuWqZsrdTy81G91+ipQclW9PQw9ed4OQzBCTUL7Vfl/1MNksYlJla1Lf+uzk8ZnFODx0oSsF2+aGhgs18tyFatkGt6znx3tqi7wRv5QtZWL4EWO9d09fHIZwThpsFcOMLNRM=
+	t=1771983804; cv=none; b=F4/GPnFhEZnEUjG8PKc+upI8b6wm+UWzhg0RMsvlunK7Laedi2oS4tWWNd/8/Dv1NWTPi4R1LWKdksqUoJ3vHjsGmT6PUzAGf9xQmifAE1r2jg/sxyAzjdQkfPmi5TG7e8hqp4wTm/6dr+xKBlQuCqwEnpCNg2Y0aahB8zt7ijo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983803; c=relaxed/simple;
-	bh=0WARkBJQlVK/6i/bHHa9v8CtiaIdCUoMa6yf/2jFsO0=;
+	s=arc-20240116; t=1771983804; c=relaxed/simple;
+	bh=pdlg+sKLu2XZVZaVvzGNlTh2fZb8Gn1emEuEojWH6CM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZFaZlxNAtDOxioyxKwEQohxdNYqsy1dJ+YwtoLg7aC2aaRknK93+fuSxdUZ/817RQIgRYEdkhMnHN5wHXgmaK5bszqXAUYk7ydstkQhGt81n3MQSgXamYl4q5QLT5RZuH0Zafp33dcUySdCUvnk/qRxStQnl7HU6VE/HQ2emtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=semEweTU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gFHH4/yVlq2L9Yjot8gDh44bhNjYQaUHaA5PIlkRo5Kpw+5/BBcxyi91O89VaEPEucV7SEp42M3NxrQ2snWd5jlmUG18Sxe/uRcaj2xBFJJqkU15hrCYkk8tAJx/Srq+TjNPO488n4golNSWZyZtfEK1lNiCVMvNc1TSIikXVbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBCYkvpA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="semEweTU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D694AC116D0;
-	Wed, 25 Feb 2026 01:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBCYkvpA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6FDC116D0;
+	Wed, 25 Feb 2026 01:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983803;
-	bh=0WARkBJQlVK/6i/bHHa9v8CtiaIdCUoMa6yf/2jFsO0=;
+	s=korg; t=1771983804;
+	bh=pdlg+sKLu2XZVZaVvzGNlTh2fZb8Gn1emEuEojWH6CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=semEweTU+CHR+7358GYB20o+NwK5gqm5IeELBUyLbHFUFjX0n5ClK62s1/DWaMtGv
-	 6ynFWMa6kXNSOBG75zIuJzBmTUvvKEVi0zgp1YLQ+Nh/NTYmVz9HpeEtFquKdrAeaf
-	 notyns4oAJ5vJ4/3a0VabjWGKsSt2PP7p0hfquVQ=
+	b=tBCYkvpAriUS1SBQ86q2VKRzHz/U/G5hVCHtbpv2MExvWfLPReSorJQEMtqTt2rZI
+	 YrFS7u9bYYcLf63eKJH3VcGPkyI/YrGZGy8IvYFmNGqb2ogdCF06alF/clHhXFMKfd
+	 2lSOPbW2u6SkRAScSwnDlr9D8UwGHr9lL/mFy3HE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fnnas.com>,
-	Li Nan <linan122@huawei.com>,
+	Aleks Todorov <aleksbgbg@google.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/641] md/md-llbitmap: fix percpu_ref not resurrected on suspend timeout
-Date: Tue, 24 Feb 2026 17:16:12 -0800
-Message-ID: <20260225012350.145166269@linuxfoundation.org>
+Subject: [PATCH 6.18 047/641] OPP: Return correct value in dev_pm_opp_get_level
+Date: Tue, 24 Feb 2026 17:16:13 -0800
+Message-ID: <20260225012350.169896596@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,45 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Aleks Todorov <aleksbgbg@google.com>
 
-[ Upstream commit d119bd2e1643cc023210ff3c6f0657e4f914e71d ]
+[ Upstream commit 0b7277e02dabba2a9921a7f4761ae6e627e7297a ]
 
-When llbitmap_suspend_timeout() times out waiting for percpu_ref to
-become zero, it returns -ETIMEDOUT without resurrecting the percpu_ref.
-The caller (md_llbitmap_daemon_fn) then continues to the next page
-without calling llbitmap_resume(), leaving the percpu_ref in a killed
-state permanently.
+Commit 073d3d2ca7d4 ("OPP: Level zero is valid") modified the
+documentation for this function to indicate that errors should return a
+non-zero value to avoid colliding with the OPP level zero, however
+forgot to actually update the return.
 
-Fix this by resurrecting the percpu_ref before returning the error,
-ensuring the page control structure remains usable for subsequent
-operations.
+No in-tree kernel code depends on the error value being 0.
 
-Link: https://lore.kernel.org/linux-raid/20260123182623.3718551-3-yukuai@fnnas.com
-Fixes: 5ab829f1971d ("md/md-llbitmap: introduce new lockless bitmap")
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
+Fixes: 073d3d2ca7d4 ("OPP: Level zero is valid")
+Signed-off-by: Aleks Todorov <aleksbgbg@google.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-llbitmap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/opp/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md-llbitmap.c b/drivers/md/md-llbitmap.c
-index 1eb434306162a..bcb6eae1c711f 100644
---- a/drivers/md/md-llbitmap.c
-+++ b/drivers/md/md-llbitmap.c
-@@ -712,8 +712,10 @@ static int llbitmap_suspend_timeout(struct llbitmap *llbitmap, int page_idx)
- 	percpu_ref_kill(&pctl->active);
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index bba4f7daff8cb..775d4a36f2f54 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -241,7 +241,7 @@ unsigned int dev_pm_opp_get_level(struct dev_pm_opp *opp)
+ {
+ 	if (IS_ERR_OR_NULL(opp) || !opp->available) {
+ 		pr_err("%s: Invalid parameters\n", __func__);
+-		return 0;
++		return U32_MAX;
+ 	}
  
- 	if (!wait_event_timeout(pctl->wait, percpu_ref_is_zero(&pctl->active),
--			llbitmap->mddev->bitmap_info.daemon_sleep * HZ))
-+			llbitmap->mddev->bitmap_info.daemon_sleep * HZ)) {
-+		percpu_ref_resurrect(&pctl->active);
- 		return -ETIMEDOUT;
-+	}
- 
- 	return 0;
- }
+ 	return opp->level;
 -- 
 2.51.0
 
