@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63D921D596;
-	Wed, 25 Feb 2026 01:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4AC1D5ABA;
+	Wed, 25 Feb 2026 01:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982948; cv=none; b=ZW+BEHicY42PjnQl68WIAbyUI9o7XQHiOJWMe/1CHZcMsBERnjCDuZJsqN73MQmr7q/ph/mSdHi2luzTKXNAf6bKE4/83jbREDppGcGl/3bw3OJx3GGoHiZNltkLzwkFMlT0IQWT/6SUN0pA+WvDKVXN/fQpKJjsBZdmUHZ2aHI=
+	t=1771982949; cv=none; b=BOz6OzMATASCwukKIplWTFlA8kr6V1Tm1ccWAOuvBRZr8SDJWwSDosPpxR5lzdrT38DUDLR7OUxTyzjTcGOAmomCjnHwqIjXCBHFcR5mYb5An6s0TxTS3eTgb/Kwc8TMvZzG1IXneDW4typVXC4sDELh/ouBqzAaBacQUu8P/ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982948; c=relaxed/simple;
-	bh=Xr97VkdIHuuXjisPFGeO/8Gjjia4KS1+qEro/TRpdZY=;
+	s=arc-20240116; t=1771982949; c=relaxed/simple;
+	bh=QbpVWe1Z7A42FwHLHJ6y2xMB5y9RJ3597Wf/LUBrz/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=osP4EYqtaHUy+AY1oiQx49zAeRcHDbc36to1Q73GRoRTSiK8o6QveY/DDvgZZEZVEqhNl3IPHMGTVMN9DZmR5lUZjRJoF+fZkCl/8zWLvCT/Oleel/wSAM3o5XjKYQzcKSFRhq5Qo/oDYrcLpWF7INrMCwtRXCruVdO0n/ebbXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XoqdqSFG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lWNdrLOS2nsjiKM/ybVhhkWffsg53fU4NRIkMp75iYPr7Z9etGDLHsVgrC+WBOXhR51yVdVh/2aJgbkuFS4JeKnUqt4zyHJOFa8Ilw5rRv2MWFmn18ALnIFANXpldBuOYYnpLzHaiYG6wtmfBVtUflKuqjA+m9QF50rz4A8STTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIVdPUeT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XoqdqSFG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD9EC116D0;
-	Wed, 25 Feb 2026 01:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIVdPUeT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78857C116D0;
+	Wed, 25 Feb 2026 01:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982948;
-	bh=Xr97VkdIHuuXjisPFGeO/8Gjjia4KS1+qEro/TRpdZY=;
+	s=korg; t=1771982949;
+	bh=QbpVWe1Z7A42FwHLHJ6y2xMB5y9RJ3597Wf/LUBrz/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XoqdqSFGRSfci//J1GOq+4dS0pqxd2ZxWRKcR0lNnc7GLWDxHbwzzh4Gh4PWLlC1g
-	 DrfDIAL2IhKQFa1O7mVqUJK9kv63hyncSpF/MOfoXVTR2WnBz5R0TfiE49KvsnVDdi
-	 BPUJ2lbdR3oK+iESxPWDNRqBghgTLvzmBKPV4TFA=
+	b=bIVdPUeTXgaSdBVgrxTVPwx1becm96exFpgPrduHXFGxUwUai/rV9i4gEYBlDdpLa
+	 0BkN9V6aEtA0rXbb1uTG16bNhwlBL0Lsetpb4PoJwKPg4E86m+bN4ppiQpKefXcfvj
+	 JUKDCKL3pMfU/LW1dswgtOCJ4GizwqqK6e1UmNy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Fernandes <joelagnelf@nvidia.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Chen Jinghuang <chenjinghuang2@huawei.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Andrea Righi <arighi@nvidia.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Christian Loehle <christian.loehle@arm.com>,
+	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 127/781] sched/deadline: Clear the defer params
-Date: Tue, 24 Feb 2026 17:13:56 -0800
-Message-ID: <20260225012402.783939737@linuxfoundation.org>
+Subject: [PATCH 6.19 128/781] sched/rt: Skip currently executing CPU in rto_next_cpu()
+Date: Tue, 24 Feb 2026 17:13:57 -0800
+Message-ID: <20260225012402.812039628@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,41 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Fernandes <joelagnelf@nvidia.com>
+From: Chen Jinghuang <chenjinghuang2@huawei.com>
 
-[ Upstream commit 3cb3b27693bf30defb16aa096158a3b24583b8d2 ]
+[ Upstream commit 94894c9c477e53bcea052e075c53f89df3d2a33e ]
 
-The defer params were not cleared in __dl_clear_params. Clear them.
+CPU0 becomes overloaded when hosting a CPU-bound RT task, a non-CPU-bound
+RT task, and a CFS task stuck in kernel space. When other CPUs switch from
+RT to non-RT tasks, RT load balancing (LB) is triggered; with
+HAVE_RT_PUSH_IPI enabled, they send IPIs to CPU0 to drive the execution
+of rto_push_irq_work_func. During push_rt_task on CPU0,
+if next_task->prio < rq->donor->prio, resched_curr() sets NEED_RESCHED
+and after the push operation completes, CPU0 calls rto_next_cpu().
+Since only CPU0 is overloaded in this scenario, rto_next_cpu() should
+ideally return -1 (no further IPI needed).
 
-Without this is some of my test cases are flaking and the DL timer is
-not starting correctly AFAICS.
+However, multiple CPUs invoking tell_cpu_to_push() during LB increments
+rd->rto_loop_next. Even when rd->rto_cpu is set to -1, the mismatch between
+rd->rto_loop and rd->rto_loop_next forces rto_next_cpu() to restart its
+search from -1. With CPU0 remaining overloaded (satisfying rt_nr_migratory
+&& rt_nr_total > 1), it gets reselected, causing CPU0 to queue irq_work to
+itself and send self-IPIs repeatedly. As long as CPU0 stays overloaded and
+other CPUs run pull_rt_tasks(), it falls into an infinite self-IPI loop,
+which triggers a CPU hardlockup due to continuous self-interrupts.
 
-Fixes: a110a81c52a9 ("sched/deadline: Deferrable dl server")
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+The trigging scenario is as follows:
+
+         cpu0                      cpu1                    cpu2
+                                pull_rt_task
+                              tell_cpu_to_push
+                 <------------irq_work_queue_on
+rto_push_irq_work_func
+       push_rt_task
+    resched_curr(rq)                                   pull_rt_task
+    rto_next_cpu                                     tell_cpu_to_push
+                      <-------------------------- atomic_inc(rto_loop_next)
+rd->rto_loop != next
+     rto_next_cpu
+   irq_work_queue_on
+rto_push_irq_work_func
+
+Fix redundant self-IPI by filtering the initiating CPU in rto_next_cpu().
+This solution has been verified to effectively eliminate spurious self-IPIs
+and prevent CPU hardlockup scenarios.
+
+Fixes: 4bdced5c9a29 ("sched/rt: Simplify the IPI based RT balancing logic")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Suggested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Chen Jinghuang <chenjinghuang2@huawei.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Acked-by: Juri Lelli <juri.lelli@redhat.com>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260126100050.3854740-2-arighi@nvidia.com
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Link: https://patch.msgid.link/20260122012533.673768-1-chenjinghuang2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/sched/rt.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 7bcde7114f1b6..e3a6b8ed1d6db 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -3656,6 +3656,9 @@ static void __dl_clear_params(struct sched_dl_entity *dl_se)
- 	dl_se->dl_non_contending	= 0;
- 	dl_se->dl_overrun		= 0;
- 	dl_se->dl_server		= 0;
-+	dl_se->dl_defer			= 0;
-+	dl_se->dl_defer_running		= 0;
-+	dl_se->dl_defer_armed		= 0;
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index f1867fe8e5c53..e0ff909050190 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2100,6 +2100,7 @@ static void push_rt_tasks(struct rq *rq)
+  */
+ static int rto_next_cpu(struct root_domain *rd)
+ {
++	int this_cpu = smp_processor_id();
+ 	int next;
+ 	int cpu;
  
- #ifdef CONFIG_RT_MUTEXES
- 	dl_se->pi_se			= dl_se;
+@@ -2123,6 +2124,10 @@ static int rto_next_cpu(struct root_domain *rd)
+ 
+ 		rd->rto_cpu = cpu;
+ 
++		/* Do not send IPI to self */
++		if (cpu == this_cpu)
++			continue;
++
+ 		if (cpu < nr_cpu_ids)
+ 			return cpu;
+ 
 -- 
 2.51.0
 
