@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDB24369A;
-	Wed, 25 Feb 2026 01:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24D94369A;
+	Wed, 25 Feb 2026 01:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982877; cv=none; b=YcBAd687C+fkpDEO9wfta+2LSoboWd9cNqcx3EXman0X0iZ6nYOkGg4KRAUSP/IMCowcQDv0KLM5J/4biscOZBctcGQYfydlAw+eEs6oMes+sfmqqVQUaE7HyZufWqfNeGcenKjXgl6RQ4ONOGdZ6KzeooDIhTLMHRATKJOC9Y0=
+	t=1771982878; cv=none; b=ViC+lksxaTOvHcFZ1Jm3STANGQyp+wBQcrxQSHKafnuP6rQqklmyDnFnjZA+KMdm2FLdBq1fhf9jWbKvOHst9oM57hSZJsVWz7WN3WKlDoqXVavtxVtjzpVwiruNnffhsecTApg1CLKwDp4DDiztuKYgAt9+sFNJKsBDuxgBHM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982877; c=relaxed/simple;
-	bh=CrK5Q5GpE2RS9L6snqFa+NOaS9qpo2g0EiVmBIXZZtA=;
+	s=arc-20240116; t=1771982878; c=relaxed/simple;
+	bh=G2Om4FvrwYtR8nv2HUlNmKprkVF9knW4pvk/aNFSZAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBIBiagH/Q4UD/76arEhi9Ru/vH0qxEur2Z9MC9r6NufgkmIx845r9G+gzerMT0pkrlXPdy4uRIoKU7PR6GeQOi5HwFHsLzroR1HBOZuzlnkbnZKzEu4KKNCSwUiBzFrvLn5oQ3vtTPq5LE/evxwq4lequSqahY90Ifbay5GMhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQB24+um; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pcb7EwPVdeclNO+xit85lua9joGOb4Y2dwDxV2AdaT5xXSJqLPWOf1TfsO2qlKnCtCoPHaXPO2zrOP1c1pbkH3cPXL8VNQSVBbqNRkl58qfD9v3WS2V/s7jPzdSB2n4RfhQxGDJEfyzc5p/fvZyP5KmigFEIp7sJuw0BZ+eP+cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLgd1YRF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQB24+um"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EF8C116D0;
-	Wed, 25 Feb 2026 01:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLgd1YRF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4F8C116D0;
+	Wed, 25 Feb 2026 01:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982877;
-	bh=CrK5Q5GpE2RS9L6snqFa+NOaS9qpo2g0EiVmBIXZZtA=;
+	s=korg; t=1771982878;
+	bh=G2Om4FvrwYtR8nv2HUlNmKprkVF9knW4pvk/aNFSZAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQB24+umQxJxUFGlBMFIQjcBsnZa8NRnktEHOyqWUSss3meJt3QqGDawgBjl4Zbat
-	 nmdSqQECrVGSqn9NXJ0V+ERm6x+bkd8xRwg3A0q5KBQP12P11H7GFwZbt5V+9sp5Y9
-	 kdBi9UBL1qOk5JcMt8Mp4ReLF9247CbeY1BABXpk=
+	b=SLgd1YRFwuI82VovP9pEKRLLeFm6gFu2howv3lBLLnEu/IiALxh/XXL40RkX2RqB4
+	 MKsP61O1DdRgG7l1Y7wDRUzVoOplOwfal0H8xLcci915I288V25h2vz0gKzlGIZGWK
+	 HMEn10gQ1nwd4al4Nd0EmovSQdvb3MQFsUYLuE9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	Will Deacon <will@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 061/781] arm64/gcs: Fix error handling in arch_set_shadow_stack_status()
-Date: Tue, 24 Feb 2026 17:12:50 -0800
-Message-ID: <20260225012401.202458583@linuxfoundation.org>
+Subject: [PATCH 6.19 062/781] block: dont use strcpy to copy blockdev name
+Date: Tue, 24 Feb 2026 17:12:51 -0800
+Message-ID: <20260225012401.227389563@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,43 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 53c998527ffa60f9deda8974a11ad39790684159 ]
+[ Upstream commit ee4784a83fb21a2d16ebfdf8877fa6f6a1129150 ]
 
-alloc_gcs() returns an error-encoded pointer on failure, which comes
-from do_mmap(), not NULL.
+0-day bot flagged the use of strcpy() in blk_trace_setup(), because the
+source buffer can theoretically be bigger than the destination buffer.
 
-The current NULL check fails to detect errors, which could lead to using
-an invalid GCS address.
+While none of the current callers pass a string bigger than
+BLKTRACE_BDEV_SIZE, use strscpy() to prevent eventual future misuse and
+silence the checker warnings.
 
-Use IS_ERR_VALUE() to properly detect errors, consistent with the
-check in gcs_alloc_thread_stack().
-
-Fixes: b57180c75c7e ("arm64/gcs: Implement shadow stack prctl() interface")
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202602020718.GUEIRyG9-lkp@intel.com/
+Fixes: 113cbd62824a ("blktrace: pass blk_user_trace2 to setup functions")
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/gcs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/blktrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/gcs.c b/arch/arm64/mm/gcs.c
-index 6e93f78de79b1..04a23a497f205 100644
---- a/arch/arm64/mm/gcs.c
-+++ b/arch/arm64/mm/gcs.c
-@@ -199,8 +199,8 @@ int arch_set_shadow_stack_status(struct task_struct *task, unsigned long arg)
+diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
+index d031c8d80be4f..c4db5c2e71037 100644
+--- a/kernel/trace/blktrace.c
++++ b/kernel/trace/blktrace.c
+@@ -793,7 +793,7 @@ int blk_trace_setup(struct request_queue *q, char *name, dev_t dev,
+ 		return PTR_ERR(bt);
+ 	}
+ 	blk_trace_setup_finalize(q, name, 1, bt, &buts2);
+-	strcpy(buts.name, buts2.name);
++	strscpy(buts.name, buts2.name, BLKTRACE_BDEV_SIZE);
+ 	mutex_unlock(&q->debugfs_mutex);
  
- 		size = gcs_size(0);
- 		gcs = alloc_gcs(0, size);
--		if (!gcs)
--			return -ENOMEM;
-+		if (IS_ERR_VALUE(gcs))
-+			return gcs;
- 
- 		task->thread.gcspr_el0 = gcs + size - sizeof(u64);
- 		task->thread.gcs_base = gcs;
+ 	if (copy_to_user(arg, &buts, sizeof(buts))) {
 -- 
 2.51.0
 
