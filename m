@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0840D258ED5;
-	Wed, 25 Feb 2026 01:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F44D258ED5;
+	Wed, 25 Feb 2026 01:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983642; cv=none; b=NK41DRhx5MyGvnWrybs1zeKrFbMn1aoIdVCEBfVOHgdIAWhC3XMH3aPO0voAzUGPl45uv2mbz6fY1hJDZRh+i8i22YFqezTDiwt+Ef+ssSrC6O9m3LHONeWDWc+WXdutiQAWRVPMxMG/oLnS/tyiOAkpldlbZcuvE3VmLeUREig=
+	t=1771983643; cv=none; b=LSJNAuxAxEbGZm7kfnhXRKcBC4yO6t79C1k2x/ZKNRebetpKdIz5xClP5a+l9NaLavMilbaGJQ/kWdUZoSmYRzu2jx7n94mlr/xMnYd9eRf7dAjsTCtkLNGtd6DrNCsYYFIC67i0OknjY/aw8wj4iQLljji9xnvXvPjIrfTVUvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983642; c=relaxed/simple;
-	bh=ZAI/Kdki0czgfxuhfuLxo+aLSRlhSnilSI9I8WvgvMI=;
+	s=arc-20240116; t=1771983643; c=relaxed/simple;
+	bh=THsy3MiMIVrrqTp06gu+6ES7KqNXxccBKx9LCwm8wKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLFs+0f+EG7EujcpMaQMF+sK0+zX6oG/8q0Jct6r58MuEgWyd7qKAXA8R3eW1v2nRjG0XiRuYkEhl8vN9gkjEYbHzbehRfb8nu+7DjJDeOW07t2SfGHknf0lxWvwyaOm8uTZ7P23fbM60yM7z7xJq+pOAFEa+LjQ/pWzBL2U0D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFa7+fiv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=djI5DoPZjIaYD1uq40JquKEQ80iYjH/dIuapT8l6YC/xswl+m2cUm1F/nTRirqXaH8uEykUj6DDA65/b2X1RLMRaD1Lgwv2rA4GGZ345Do9OumWif9BnIsB12CGviZ0cQQdfvmLJUMKTZcEchVZp34yOGuDoE17c6fmXi0KIwqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrTaedUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFa7+fiv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FEBC116D0;
-	Wed, 25 Feb 2026 01:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrTaedUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1850DC116D0;
+	Wed, 25 Feb 2026 01:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983641;
-	bh=ZAI/Kdki0czgfxuhfuLxo+aLSRlhSnilSI9I8WvgvMI=;
+	s=korg; t=1771983643;
+	bh=THsy3MiMIVrrqTp06gu+6ES7KqNXxccBKx9LCwm8wKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFa7+fivqbh78p9PnCMK6vyLhnp02DAubPLqLHb0UGfM1HolQ6QAQYaf5OMsSLQe9
-	 mct6Bp41khK6IuyJK3wspbf4gXfSqOikODZfwy1wocU8KENFDF3LNmmk6NaXWfN8pq
-	 ZQRLotNEDvxyIJ1Mvr+DphylS9Eq/6I/VzNK+94U=
+	b=IrTaedUbS8uSl3ivI149HQp87SfoTh3QYkZnJkPcTZxP7BMZIaRf2NveC7zXox0eL
+	 EClqTFmYo/Aq4lMJzNVlhyFWTZy2kGxwkk+0p5NW/shmKa6tmfvh6HQNqnJ6dBdDLQ
+	 n1TRKWAQi4WKbK4ghN8urcVhNf5JwzOJVtxMb37Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shekhar Chauhan <shekhar.chauhan@intel.com>,
+	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 730/781] drm/xe/xe2_hpg: Fix handling of Wa_14019988906 & Wa_14019877138
-Date: Tue, 24 Feb 2026 17:23:59 -0800
-Message-ID: <20260225012417.638526218@linuxfoundation.org>
+Subject: [PATCH 6.19 731/781] drm/xe/vf: Avoid reading media version when media GT is disabled
+Date: Tue, 24 Feb 2026 17:24:00 -0800
+Message-ID: <20260225012417.662532290@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,76 +49,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Piotr Piórkowski <piotr.piorkowski@intel.com>
 
-[ Upstream commit bc6387a2e0c1562faa56ce2a98cef50cab809e08 ]
+[ Upstream commit 5e905ec67214444362b81345ef8fde63e58425b6 ]
 
-The PSS_CHICKEN register has been part of the RCS engine's LRC since it
-was first introduced in Xe_LP.  That means that any workarounds that
-adjust its value (such as Wa_14019988906 and Wa_14019877138) need to be
-implemented in the lrc_was[] table so that they become part of the
-default LRC from which all subsequent LRCs are copied.  Although these
-workarounds were implemented correctly on most platforms, they were
-incorrectly placed on the engine_was[] table for Xe2_HPG.
+When the media GT is not allowed, a VF must not attempt to read
+the media version from the GuC. The GuC may not be loaded, and
+any attempt to communicate with it would result in a timeout
+and a VF probe failure:
 
-Move the workarounds to the proper lrc_was[] table and switch the
-'xe_rtp_match_first_render_or_compute' rule to specifically match the
-RCS since that's the engine whose LRC manages the register.
+(...)
+[ 1912.406046] xe 0000:01:00.1: [drm] *ERROR* Tile0: GT1: GuC mmio request 0x5507: no reply 0x5507
+[ 1912.407277] xe 0000:01:00.1: [drm] *ERROR* Tile0: GT1: [GUC COMMUNICATION] MMIO send failed (-ETIMEDOUT)
+[ 1912.408689] xe 0000:01:00.1: [drm] *ERROR* VF: Tile0: GT1: Failed to reset GuC state (-ETIMEDOUT)
+[ 1912.413986] xe 0000:01:00.1: probe with driver xe failed with error -110
 
-Bspec: 65182
-Fixes: 7f3ee7d88058 ("drm/xe/xe2hpg: Add initial GT workarounds")
-Reviewed-by: Shekhar Chauhan <shekhar.chauhan@intel.com>
-Link: https://patch.msgid.link/20260205220508.51905-2-matthew.d.roper@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit e04c609eedf4d6748ac0bcada4de1275b034fed6)
+Let's skip reading the media version for VFs when the media GT is not
+allowed.
+
+v2: move the condition directly to the VF path
+
+Fixes: 7abd69278bb5 ("drm/xe/configfs: Add attribute to disable GT types")
+Signed-off-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Link: https://patch.msgid.link/20260202115041.2863357-1-piotr.piorkowski@intel.com
+Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+(cherry picked from commit 0bcacf56dc0b265f9c47056c6a4f0c1394a8a3f0)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_wa.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/xe/xe_pci.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
-index e32dd2fde6f1c..c7eab0c4af7a8 100644
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -567,16 +567,6 @@ static const struct xe_rtp_entry_sr engine_was[] = {
- 		       FUNC(xe_rtp_match_first_render_or_compute)),
- 	  XE_RTP_ACTIONS(SET(ROW_CHICKEN, EARLY_EOT_DIS))
- 	},
--	{ XE_RTP_NAME("14019988906"),
--	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002),
--		       FUNC(xe_rtp_match_first_render_or_compute)),
--	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
--	},
--	{ XE_RTP_NAME("14019877138"),
--	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002),
--		       FUNC(xe_rtp_match_first_render_or_compute)),
--	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FD_END_COLLECT))
--	},
- 	{ XE_RTP_NAME("14020338487"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002),
- 		       FUNC(xe_rtp_match_first_render_or_compute)),
-@@ -873,6 +863,14 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
- 	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(WM_CHICKEN3, HIZ_PLANE_COMPRESSION_DIS))
- 	},
-+	{ XE_RTP_NAME("14019988906"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002), ENGINE_CLASS(RENDER)),
-+	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
-+	},
-+	{ XE_RTP_NAME("14019877138"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002), ENGINE_CLASS(RENDER)),
-+	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FD_END_COLLECT))
-+	},
- 	{ XE_RTP_NAME("14021490052"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(FF_MODE,
+diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
+index 2aa883f5ef797..38ea9d7dad091 100644
+--- a/drivers/gpu/drm/xe/xe_pci.c
++++ b/drivers/gpu/drm/xe/xe_pci.c
+@@ -533,6 +533,12 @@ static int read_gmdid(struct xe_device *xe, enum xe_gmdid_type type, u32 *ver, u
+ 		struct xe_gt *gt __free(kfree) = NULL;
+ 		int err;
+ 
++		/* Don't try to read media ver if media GT is not allowed */
++		if (type == GMDID_MEDIA && !xe_configfs_media_gt_allowed(to_pci_dev(xe->drm.dev))) {
++			*ver = *revid = 0;
++			return 0;
++		}
++
+ 		gt = kzalloc(sizeof(*gt), GFP_KERNEL);
+ 		if (!gt)
+ 			return -ENOMEM;
 -- 
 2.51.0
 
