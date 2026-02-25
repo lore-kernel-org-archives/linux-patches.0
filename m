@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B2B312806;
-	Wed, 25 Feb 2026 06:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05824312806;
+	Wed, 25 Feb 2026 06:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002770; cv=none; b=tH7WAOcaQLDl6V2A9vRLNuCYxMte3DjnE84l/XAwKWp8cUIjJpx1rOTdw89I/vlRp5a8wXh/VXoPWCkng6Z8rSOmnW23je8SwDoaFJlQU/Bl2rQXeCRJt6Fb9U1YJz1W9DfcQD+0x8hkgoEbDScU42cITC1v8M4d3aHDeH21UJI=
+	t=1772002771; cv=none; b=YWFKuWx4chpgPA71tBhGmkcws7BgNhvVuLtwWPS657jm5lpKfzIzzEgwhvzIBA/d4sNr874RzpG5vAQWWdpVI9UGO3iUDMIZRlG5j8IkyMoGJfKGl73MlWti6gi/wc4SlxtY+xjK/6GJR65oSE1ww1kYxtLxBJY/8NZVVy5BzYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002770; c=relaxed/simple;
-	bh=Yz/1R67NkL4pQvnVVGyy87b2obeMgCUVrWxfbcaIoKQ=;
+	s=arc-20240116; t=1772002771; c=relaxed/simple;
+	bh=b6lYQk3vH2A7VQ+ktftbw53R7DfxRRY95cguShWv1pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfLA1sQU40dd38UkIxVw5DwlqAMBdi2RldWeP8aQoc7W5K7pcP6t8MfDH+ByhkaKcpAzBZL6q1pee7B7ZUosZ527wDvUemqJLcxBjEFLPeD/g6Gm/tVmQlXvKcC6th1x6AnkG8RMDb8VQNJZrbUhw6gChzFd3KrQoPDoLuVkZVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLkrhNUs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NIbqgxdckWFnqTfy4b9pEloz0J43f20Wu3ZO2f6qTWPwAx+wpIE9pnxM4I6C1ok31fOvPA8DnNhv9JolH+Q2NI5Ov50iLeVlS/PAW4PpjSMFJ1WGbY8eM5bZpkAwtvMjmM/KevnPNcdaBQqfgwbkoTBXPRRzNgxHlaRZRPWMPjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhW+0TbA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLkrhNUs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381ABC116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhW+0TbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3133C116D0;
 	Wed, 25 Feb 2026 06:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002770;
-	bh=Yz/1R67NkL4pQvnVVGyy87b2obeMgCUVrWxfbcaIoKQ=;
+	bh=b6lYQk3vH2A7VQ+ktftbw53R7DfxRRY95cguShWv1pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLkrhNUsaz0lbqGduNDp0gymlxHrKzdZI8n+yaf/WUZj9wRIkcq+IBOCqvvLcdfIg
-	 Sn5y62a4Gju79Vapqmf7EQ1sfrBGi8uwBN6eONfauZqmafmzFH8yCZXgvMvRXJYYLv
-	 5ScjhUEl9RMDPRQV7X9jYq6a3vCxn40N2DrrCRV8=
+	b=OhW+0TbA9DUjAaP74SqxJHKaehSTazQvuzDaMrns+45I6wkNQDxBgQE7EWzWZu9mK
+	 YT+melbjchOWCohhMAo3FncZTiP3dpIV3uk0/8rW+u5n8DDPY59chN8V/cb8Sy0q7X
+	 zuziLcmTGURhQXZvOkj7nMgK3GHV9/uVUkcZnk8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Lyakas <alex.lyakas@zadara.com>,
+	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 605/641] btrfs: use the correct type to initialize block reserve for delayed refs
-Date: Tue, 24 Feb 2026 17:25:31 -0800
-Message-ID: <20260225012403.173720501@linuxfoundation.org>
+Subject: [PATCH 6.18 606/641] btrfs: fix invalid leaf access in btrfs_quota_enable() if ref key not found
+Date: Tue, 24 Feb 2026 17:25:32 -0800
+Message-ID: <20260225012403.198012713@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,77 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 2155d0c0a761a56ce7ede83a26eb23ea0f935260 ]
+[ Upstream commit ecb7c2484cfc83a93658907580035a8adf1e0a92 ]
 
-When initializing the delayed refs block reserve for a transaction handle
-we are passing a type of BTRFS_BLOCK_RSV_DELOPS, which is meant for
-delayed items and not for delayed refs. The correct type for delayed refs
-is BTRFS_BLOCK_RSV_DELREFS.
+If btrfs_search_slot_for_read() returns 1, it means we did not find any
+key greater than or equals to the key we asked for, meaning we have
+reached the end of the tree and therefore the path is not valid. If
+this happens we need to break out of the loop and stop, instead of
+continuing and accessing an invalid path.
 
-On release of any excess space reserved in a local delayed refs reserve,
-we also should transfer that excess space to the global block reserve
-(it it's full, we return to the space info for general availability).
-
-By initializing a transaction's local delayed refs block reserve with a
-type of BTRFS_BLOCK_RSV_DELOPS, we were also causing any excess space
-released from the delayed block reserve (fs_info->delayed_block_rsv, used
-for delayed inodes and items) to be transferred to the global block
-reserve instead of the global delayed refs block reserve. This was an
-unintentional change in commit 28270e25c69a ("btrfs: always reserve space
-for delayed refs when starting transaction"), but it's not particularly
-serious as things tend to cancel out each other most of the time and it's
-relatively rare to be anywhere near exhaustion of the global reserve.
-
-Fix this by initializing a transaction's local delayed refs reserve with
-a type of BTRFS_BLOCK_RSV_DELREFS and making btrfs_block_rsv_release()
-attempt to transfer unused space from such a reserve into the global block
-reserve, just as we did before that commit for when the block reserve is
-a delayed refs rsv.
-
-Reported-by: Alex Lyakas <alex.lyakas@zadara.com>
-Link: https://lore.kernel.org/linux-btrfs/CAOcd+r0FHG5LWzTSu=LknwSoqxfw+C00gFAW7fuX71+Z5AfEew@mail.gmail.com/
-Fixes: 28270e25c69a ("btrfs: always reserve space for delayed refs when starting transaction")
-Reviewed-by: Alex Lyakas <alex.lyakas@zadara.com>
+Fixes: 5223cc60b40a ("btrfs: drop the path before adding qgroup items when enabling qgroups")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-rsv.c   | 7 ++++---
- fs/btrfs/transaction.c | 2 +-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ fs/btrfs/qgroup.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/block-rsv.c b/fs/btrfs/block-rsv.c
-index 75cd35570a287..fc378d2038a2d 100644
---- a/fs/btrfs/block-rsv.c
-+++ b/fs/btrfs/block-rsv.c
-@@ -278,10 +278,11 @@ u64 btrfs_block_rsv_release(struct btrfs_fs_info *fs_info,
- 	struct btrfs_block_rsv *target = NULL;
- 
- 	/*
--	 * If we are a delayed block reserve then push to the global rsv,
--	 * otherwise dump into the global delayed reserve if it is not full.
-+	 * If we are a delayed refs block reserve then push to the global
-+	 * reserve, otherwise dump into the global delayed refs reserve if it is
-+	 * not full.
- 	 */
--	if (block_rsv->type == BTRFS_BLOCK_RSV_DELOPS)
-+	if (block_rsv->type == BTRFS_BLOCK_RSV_DELREFS)
- 		target = global_rsv;
- 	else if (block_rsv != global_rsv && !btrfs_block_rsv_full(delayed_rsv))
- 		target = delayed_rsv;
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index b537bba767806..089712b15d603 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -726,7 +726,7 @@ start_transaction(struct btrfs_root *root, unsigned int num_items,
- 
- 	h->type = type;
- 	INIT_LIST_HEAD(&h->new_bgs);
--	btrfs_init_metadata_block_rsv(fs_info, &h->delayed_rsv, BTRFS_BLOCK_RSV_DELOPS);
-+	btrfs_init_metadata_block_rsv(fs_info, &h->delayed_rsv, BTRFS_BLOCK_RSV_DELREFS);
- 
- 	smp_mb();
- 	if (cur_trans->state >= TRANS_STATE_COMMIT_START &&
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 7a1dd250e92c0..302bb3ecf39a3 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1157,11 +1157,14 @@ int btrfs_quota_enable(struct btrfs_fs_info *fs_info,
+ 			}
+ 			if (ret > 0) {
+ 				/*
+-				 * Shouldn't happen, but in case it does we
+-				 * don't need to do the btrfs_next_item, just
+-				 * continue.
++				 * Shouldn't happen because the key should still
++				 * be there (return 0), but in case it does it
++				 * means we have reached the end of the tree -
++				 * there are no more leaves with items that have
++				 * a key greater than or equals to @found_key,
++				 * so just stop the search loop.
+ 				 */
+-				continue;
++				break;
+ 			}
+ 		}
+ 		ret = btrfs_next_item(tree_root, path);
 -- 
 2.51.0
 
