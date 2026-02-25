@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D89C1E2834;
-	Wed, 25 Feb 2026 01:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EE71E2834;
+	Wed, 25 Feb 2026 01:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983174; cv=none; b=Pe0BzIetMO8yc0ZdVJ1Ln8HP1CHc+Sc9YSbPVWO6+x1S8dq02x4dSsmjjod3RExgnutSAF5hTR1zPrPxFVuX4IKqOBmLbDVD/YYeou+fLrOBQIjm0NHTOIcv2LetGvlY/JM8kMjpr+dWrT3GrEeltU9KVG/IwTVXu/uYUhjWvzA=
+	t=1771983175; cv=none; b=qHFEDL0luDPaFnWqn3TpCQizKYtZw+AyoZPFCXztToEqonsqtPyMSSBJ44kWl525oIBQRUXrcyExBc0XvjGmP103JdkDAYuBFEU5GGsqzqJpiJXSKYHNxeEeWry38ENUHt3lfyU/dIIKTiX8h3C+sNGLOuRSr3VSHgr3iDLGCLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983174; c=relaxed/simple;
-	bh=qa/CsHn7+JnWYDq0s2o00dIJ+caETMzqERIeSbI5tMQ=;
+	s=arc-20240116; t=1771983175; c=relaxed/simple;
+	bh=yy3/pnt8Nd6nl/naPdnDOBQLvqZ58i3hiHDZhDCZRpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TjavJ8IM0wjqRBGmgabtEv9g8obkY22FgRI+UE0Ilx81Sc2pOFfp4PVFYJDA+L8Kx1cEV8JKYRkrWUHpDrSUZq013z+WAG/h4KDpS8NAGDiZ/zcf/SYy9PjNL/J8E8fscCAp6Yp3lhKJGJUrup3qUq0rqg1qObP5UvuJoKC75Ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WV+j1di8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kIlD98+zLh58fjwNaJQhOmM3cRpK8N1ZlhKjeAm97EWgVI1E4Cb7otPGafNL3ua8TXTgCUGLEujmY1mJjI2IaHDOTeYcuH8ww2r+0W3k6TMjQLqn3HsoMFrxEMc2RjW/rbf8sB7JNNnuacSFLubuET0hIHo4HMqhhiipiISfYtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B7+P7hsR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WV+j1di8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185F1C116D0;
-	Wed, 25 Feb 2026 01:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7+P7hsR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007E6C116D0;
+	Wed, 25 Feb 2026 01:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983174;
-	bh=qa/CsHn7+JnWYDq0s2o00dIJ+caETMzqERIeSbI5tMQ=;
+	s=korg; t=1771983175;
+	bh=yy3/pnt8Nd6nl/naPdnDOBQLvqZ58i3hiHDZhDCZRpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WV+j1di8faXT2bno7PwbhJ8mS9KkBYxGakilojWRWF1wFiH+T2kFcwvLUVrTo42gz
-	 sUwvR9DXoCz6kxmdGrQC/jFkXO3yyzSitG7oSlvnyN6Oo/5HBnm37Bwf8YaWmCgNne
-	 VwGCI3+rXRJrnbxRfm6XxAHHEiCc9s3ln6/+5C/g=
+	b=B7+P7hsRnW9KEjF4K1y9ZBhTkhrq7c5SDSU8Hx53O70IgghqPl1NyziXAgaNmhydy
+	 hRym+tEAMs6FA5K0cpVK3fmPJnpXGTB/vaN3/Q5596ysOiYXEIqrZMkqK5GM6RzTz+
+	 0ke2jHZtDhgqXjrOKE1ew7xtOAY5FstWM7+JbxHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 326/781] Documentation: tracing: Add PCI tracepoint documentation
-Date: Tue, 24 Feb 2026 17:17:15 -0800
-Message-ID: <20260225012407.703088842@linuxfoundation.org>
+Subject: [PATCH 6.19 327/781] PCI: Do not attempt to set ExtTag for VFs
+Date: Tue, 24 Feb 2026 17:17:16 -0800
+Message-ID: <20260225012407.725153674@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,120 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-[ Upstream commit 8236fc613d44e59f6736d6c3e9efffaf26ab7f00 ]
+[ Upstream commit 73711730a1128d91ebca1a6994ceeb18f36cb0cd ]
 
-The PCI tracing system provides tracepoints to monitor critical hardware
-events that can impact system performance and reliability. Add
-documentation about it.
+The bit for enabling extended tags is Reserved and Preserved (RsvdP) for
+VFs, according to PCIe r7.0 section 7.5.3.4 table 7.21.  Hence, bail out
+early from pci_configure_extended_tags() if the device is a VF.
 
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-[bhelgaas: squash fixes:
-https://lore.kernel.org/r/20260108013956.14351-2-bagasdotme@gmail.com
-https://lore.kernel.org/r/20260108013956.14351-3-bagasdotme@gmail.com]
+Otherwise, we may see incorrect log messages such as:
+
+  kernel: pci 0000:af:00.2: enabling Extended Tags
+
+(af:00.2 is a VF)
+
+Fixes: 60db3a4d8cc9 ("PCI: Enable PCIe Extended Tags if supported")
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20251210132907.58799-4-xueshuai@linux.alibaba.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/20251112095442.1913258-1-haakon.bugge@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/trace/events-pci.rst | 74 ++++++++++++++++++++++++++++++
- Documentation/trace/index.rst      |  1 +
- 2 files changed, 75 insertions(+)
- create mode 100644 Documentation/trace/events-pci.rst
+ drivers/pci/probe.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/trace/events-pci.rst b/Documentation/trace/events-pci.rst
-new file mode 100644
-index 0000000000000..03ff4ad30ddfa
---- /dev/null
-+++ b/Documentation/trace/events-pci.rst
-@@ -0,0 +1,74 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+===========================
-+Subsystem Trace Points: PCI
-+===========================
-+
-+Overview
-+========
-+The PCI tracing system provides tracepoints to monitor critical hardware events
-+that can impact system performance and reliability. These events normally show
-+up here:
-+
-+	/sys/kernel/tracing/events/pci
-+
-+Cf. include/trace/events/pci.h for the events definitions.
-+
-+Available Tracepoints
-+=====================
-+
-+pci_hp_event
-+------------
-+
-+Monitors PCI hotplug events including card insertion/removal and link
-+state changes.
-+::
-+
-+    pci_hp_event  "%s slot:%s, event:%s\n"
-+
-+**Event Types**:
-+
-+* ``LINK_UP`` - PCIe link established
-+* ``LINK_DOWN`` - PCIe link lost
-+* ``CARD_PRESENT`` - Card detected in slot
-+* ``CARD_NOT_PRESENT`` - Card removed from slot
-+
-+**Example Usage**::
-+
-+    # Enable the tracepoint
-+    echo 1 > /sys/kernel/debug/tracing/events/pci/pci_hp_event/enable
-+
-+    # Monitor events (the following output is generated when a device is hotplugged)
-+    cat /sys/kernel/debug/tracing/trace_pipe
-+       irq/51-pciehp-88      [001] .....  1311.177459: pci_hp_event: 0000:00:02.0 slot:10, event:CARD_PRESENT
-+
-+       irq/51-pciehp-88      [001] .....  1311.177566: pci_hp_event: 0000:00:02.0 slot:10, event:LINK_UP
-+
-+pcie_link_event
-+---------------
-+
-+Monitors PCIe link speed changes and provides detailed link status information.
-+::
-+
-+    pcie_link_event  "%s type:%d, reason:%d, cur_bus_speed:%d, max_bus_speed:%d, width:%u, flit_mode:%u, status:%s\n"
-+
-+**Parameters**:
-+
-+* ``type`` - PCIe device type (4=Root Port, etc.)
-+* ``reason`` - Reason for link change:
-+
-+  - ``0`` - Link retrain
-+  - ``1`` - Bus enumeration
-+  - ``2`` - Bandwidth notification enable
-+  - ``3`` - Bandwidth notification IRQ
-+  - ``4`` - Hotplug event
-+
-+
-+**Example Usage**::
-+
-+    # Enable the tracepoint
-+    echo 1 > /sys/kernel/debug/tracing/events/pci/pcie_link_event/enable
-+
-+    # Monitor events (the following output is generated when a device is hotplugged)
-+    cat /sys/kernel/debug/tracing/trace_pipe
-+       irq/51-pciehp-88      [001] .....   381.545386: pcie_link_event: 0000:00:02.0 type:4, reason:4, cur_bus_speed:20, max_bus_speed:23, width:1, flit_mode:0, status:DLLLA
-diff --git a/Documentation/trace/index.rst b/Documentation/trace/index.rst
-index b4a429dc4f7ad..0a40bfabcf19b 100644
---- a/Documentation/trace/index.rst
-+++ b/Documentation/trace/index.rst
-@@ -54,6 +54,7 @@ applications.
-    events-power
-    events-nmi
-    events-msr
-+   events-pci
-    boottime-trace
-    histogram
-    histogram-design
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 41183aed8f5d9..86665658d7047 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -2270,7 +2270,8 @@ int pci_configure_extended_tags(struct pci_dev *dev, void *ign)
+ 	u16 ctl;
+ 	int ret;
+ 
+-	if (!pci_is_pcie(dev))
++	/* PCI_EXP_DEVCTL_EXT_TAG is RsvdP in VFs */
++	if (!pci_is_pcie(dev) || dev->is_virtfn)
+ 		return 0;
+ 
+ 	ret = pcie_capability_read_dword(dev, PCI_EXP_DEVCAP, &cap);
 -- 
 2.51.0
 
