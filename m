@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B271118DB2A;
-	Wed, 25 Feb 2026 01:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35F61EB5E1;
+	Wed, 25 Feb 2026 01:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983248; cv=none; b=kyeYYhKGZ/0GSfuWwSlHIHvnAjuCqT6FQlcwDU8z5O3PS3p01cq8jt4Wza35Yw1YY9f/flqGSYatd2F66N65NaLbOxkCjGlqbic8l3Umx4R9/+mgwF7b5Rqrwbj+0ebk6SNcN3kb3sJuP+ViVGEdOqw+5uaXiGpIVw9CpezIRiM=
+	t=1771983249; cv=none; b=R7YNqDwx/txxr1hkwE+R+1MJUCDmCqc6gwgKNlEpMTgC8kqRDUkcJrz1rlKlIgrvA5hNZ8SlC0OcqZim3LoT+iGfzDaP1Ria2/gyvSgfqHaknWcD7hEYORwatDHO2hebImuJovkID36cN0CRrQigoW1aJNdg4CZnsC6J8dpDI8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983248; c=relaxed/simple;
-	bh=QRoww3ty/0XUsKdVjn3pBfaQL8n9Vl8XMRmm5E2+gkU=;
+	s=arc-20240116; t=1771983249; c=relaxed/simple;
+	bh=UVXqPfrAuRglfxJNmDKPMabbqVDURUVZhtpdDMVuxfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BLkYaPrJUDLIkvkxq72OTmKTOeZvQn/7jwM2W1QWttlOCOu9yGnEVlSMuxii5mCBBP/yCdVnO6v0wPH7Z7TWGZORshgIANxMgsX7aSvLTPhxf+wx7haG/Vv3r0eTsdjQ0t04kzLjQJEnqlC7uuRTF1i4vVwu7FD9SijEVJYv9xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8OhEFP6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fu1+u/Zf6bFla4S7OLdJO3orF5pKpIguFDVAITcBtUgD4yBrpFLJnhytgn6wiJGpgBECHGLmueYM8jJWXW8wdn+Av5AkkLL8R8j0O3hsLhgAsviUr7rEGeASpHspe+IYz6envbltFUx8rMSZBPI/j+edJ7ppQEvQi4IGhf7IZj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKcc1hbc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8OhEFP6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733C1C116D0;
-	Wed, 25 Feb 2026 01:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKcc1hbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA80C116D0;
+	Wed, 25 Feb 2026 01:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983248;
-	bh=QRoww3ty/0XUsKdVjn3pBfaQL8n9Vl8XMRmm5E2+gkU=;
+	s=korg; t=1771983249;
+	bh=UVXqPfrAuRglfxJNmDKPMabbqVDURUVZhtpdDMVuxfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N8OhEFP6iU1Kb+9u040v3ZgxAjRypCXOI+LVTmxX93qsEiP7iglb4FXeTSI7VTqgw
-	 I421SgKojB3vuO49JmwFyIlNJDO5n42AQfdcGEgNKmymY8I4d1bxJiRANT9Mf0uQkp
-	 W1hH8jgDYWZ7X9wxx1SjNUp9EwZDo31CaxJGHMvE=
+	b=WKcc1hbcO3C5BnKLmqut/2OqXdlwG5r2usT100nHZxUOYQ8zYks3QnqYb5soqb/e4
+	 HtrOhhxP3apY9bilZDgrnyk/K6aF5j5+lByyRhvGe83THFgHWWVWB/16tu6HdQgrXp
+	 iKvhCKVfeRUiK/iN7eMM+YShBrsByg9CTs83XN4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 388/781] tcp: disable RFC3168 fallback identifier for CC modules
-Date: Tue, 24 Feb 2026 17:18:17 -0800
-Message-ID: <20260225012409.211884517@linuxfoundation.org>
+Subject: [PATCH 6.19 389/781] tcp: accecn: handle unexpected AccECN negotiation feedback
+Date: Tue, 24 Feb 2026 17:18:18 -0800
+Message-ID: <20260225012409.235415668@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,131 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
 
-[ Upstream commit e68c28f22f46ecfdec3656ae785dd8ccbb4d557d ]
+[ Upstream commit c5ff6b83715919767f181f13e992b5055812a194 ]
 
-When AccECN is not successfully negociated for a TCP flow, it defaults
-fallback to classic ECN (RFC3168). However, L4S service will fallback
-to non-ECN.
+According to Sections 3.1.2 and 3.1.3 of AccECN spec (RFC9768).
 
-This patch enables congestion control module to control whether it
-should not fallback to classic ECN after unsuccessful AccECN negotiation.
-A new CA module flag (TCP_CONG_NO_FALLBACK_RFC3168) identifies this
-behavior expected by the CA.
+In Section 3.1.2, it says an AccECN implementation has no need to
+recognize or support the Server response labelled 'Nonce' or ECN-nonce
+feedback more generally, as RFC 3540 has been reclassified as Historic.
+AccECN is compatible with alternative ECN feedback integrity approaches
+to the nonce. The SYN/ACK labelled 'Nonce' with (AE,CWR,ECE) = (1,0,1)
+is reserved for future use. A TCP Client (A) that receives such a SYN/ACK
+follows the procedure for forward compatibility given in Section 3.1.3.
 
+Then in Section 3.1.3, it says if a TCP Client has sent a SYN requesting
+AccECN feedback with (AE,CWR,ECE) = (1,1,1) then receives a SYN/ACK with
+the currently reserved combination (AE,CWR,ECE) = (1,0,1) but it does not
+have logic specific to such a combination, the Client MUST enable AccECN
+mode as if the SYN/ACK onfirmed that the Server supported AccECN and as
+if it fed back that the IP-ECN field on the SYN had arrived unchanged.
+
+Fixes: 3cae34274c79 ("tcp: accecn: AccECN negotiation").
 Signed-off-by: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260131222515.8485-6-chia-yu.chang@nokia-bell-labs.com
+Link: https://patch.msgid.link/20260131222515.8485-7-chia-yu.chang@nokia-bell-labs.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: c5ff6b837159 ("tcp: accecn: handle unexpected AccECN negotiation feedback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h        | 12 +++++++++++-
- include/net/tcp_ecn.h    | 11 ++++++++---
- net/ipv4/tcp_input.c     |  2 +-
- net/ipv4/tcp_minisocks.c |  7 ++++---
- 4 files changed, 24 insertions(+), 8 deletions(-)
+ include/net/tcp_ecn.h | 44 ++++++++++++++++++++++++++++++-------------
+ 1 file changed, 31 insertions(+), 13 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index c4c25f2e0c0dd..e0a5cf2f78181 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1207,8 +1207,11 @@ enum tcp_ca_ack_event_flags {
- #define TCP_CONG_NEEDS_ACCECN		BIT(2)
- /* Use ECT(1) instead of ECT(0) while the CA is uninitialized */
- #define TCP_CONG_ECT_1_NEGOTIATION	BIT(3)
-+/* Cannot fallback to RFC3168 during AccECN negotiation */
-+#define TCP_CONG_NO_FALLBACK_RFC3168	BIT(4)
- #define TCP_CONG_MASK  (TCP_CONG_NON_RESTRICTED | TCP_CONG_NEEDS_ECN | \
--			TCP_CONG_NEEDS_ACCECN | TCP_CONG_ECT_1_NEGOTIATION)
-+			TCP_CONG_NEEDS_ACCECN | TCP_CONG_ECT_1_NEGOTIATION | \
-+			TCP_CONG_NO_FALLBACK_RFC3168)
- 
- union tcp_cc_info;
- 
-@@ -1354,6 +1357,13 @@ static inline bool tcp_ca_ect_1_negotiation(const struct sock *sk)
- 	return icsk->icsk_ca_ops->flags & TCP_CONG_ECT_1_NEGOTIATION;
- }
- 
-+static inline bool tcp_ca_no_fallback_rfc3168(const struct sock *sk)
-+{
-+	const struct inet_connection_sock *icsk = inet_csk(sk);
-+
-+	return icsk->icsk_ca_ops->flags & TCP_CONG_NO_FALLBACK_RFC3168;
-+}
-+
- static inline void tcp_ca_event(struct sock *sk, const enum tcp_ca_event event)
- {
- 	const struct inet_connection_sock *icsk = inet_csk(sk);
 diff --git a/include/net/tcp_ecn.h b/include/net/tcp_ecn.h
-index fdde1c342b35c..2e1637edf1d3c 100644
+index 2e1637edf1d3c..a709fb1756eb7 100644
 --- a/include/net/tcp_ecn.h
 +++ b/include/net/tcp_ecn.h
-@@ -507,7 +507,9 @@ static inline void tcp_ecn_rcv_synack(struct sock *sk, const struct sk_buff *skb
- 		 * | ECN    | AccECN | 0   0   1  | Classic ECN |
- 		 * +========+========+============+=============+
- 		 */
--		if (tcp_ecn_mode_pending(tp))
-+		if (tcp_ca_no_fallback_rfc3168(sk))
-+			tcp_ecn_mode_set(tp, TCP_ECN_DISABLED);
-+		else if (tcp_ecn_mode_pending(tp))
- 			/* Downgrade from AccECN, or requested initially */
- 			tcp_ecn_mode_set(tp, TCP_ECN_MODE_RFC3168);
- 		break;
-@@ -531,9 +533,11 @@ static inline void tcp_ecn_rcv_synack(struct sock *sk, const struct sk_buff *skb
- 	}
+@@ -473,6 +473,26 @@ static inline u8 tcp_accecn_option_init(const struct sk_buff *skb,
+ 	return TCP_ACCECN_OPT_COUNTER_SEEN;
  }
  
--static inline void tcp_ecn_rcv_syn(struct tcp_sock *tp, const struct tcphdr *th,
-+static inline void tcp_ecn_rcv_syn(struct sock *sk, const struct tcphdr *th,
- 				   const struct sk_buff *skb)
- {
++static inline void tcp_ecn_rcv_synack_accecn(struct sock *sk,
++					     const struct sk_buff *skb, u8 dsf)
++{
 +	struct tcp_sock *tp = tcp_sk(sk);
 +
- 	if (tcp_ecn_mode_pending(tp)) {
- 		if (!tcp_accecn_syn_requested(th)) {
- 			/* Downgrade to classic ECN feedback */
-@@ -545,7 +549,8 @@ static inline void tcp_ecn_rcv_syn(struct tcp_sock *tp, const struct tcphdr *th,
- 			tcp_ecn_mode_set(tp, TCP_ECN_MODE_ACCECN);
- 		}
- 	}
--	if (tcp_ecn_mode_rfc3168(tp) && (!th->ece || !th->cwr))
-+	if (tcp_ecn_mode_rfc3168(tp) &&
-+	    (!th->ece || !th->cwr || tcp_ca_no_fallback_rfc3168(sk)))
++	tcp_ecn_mode_set(tp, TCP_ECN_MODE_ACCECN);
++	tp->syn_ect_rcv = dsf & INET_ECN_MASK;
++	/* Demand Accurate ECN option in response to the SYN on the SYN/ACK
++	 * and the TCP server will try to send one more packet with an AccECN
++	 * Option at a later point during the connection.
++	 */
++	if (tp->rx_opt.accecn &&
++	    tp->saw_accecn_opt < TCP_ACCECN_OPT_COUNTER_SEEN) {
++		u8 saw_opt = tcp_accecn_option_init(skb, tp->rx_opt.accecn);
++
++		tcp_accecn_saw_opt_fail_recv(tp, saw_opt);
++		tp->accecn_opt_demand = 2;
++	}
++}
++
+ /* See Table 2 of the AccECN draft */
+ static inline void tcp_ecn_rcv_synack(struct sock *sk, const struct sk_buff *skb,
+ 				      const struct tcphdr *th, u8 ip_dsfield)
+@@ -495,13 +515,11 @@ static inline void tcp_ecn_rcv_synack(struct sock *sk, const struct sk_buff *skb
  		tcp_ecn_mode_set(tp, TCP_ECN_DISABLED);
- }
- 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 736f8f55ab5a6..0d080a3e27d6f 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6843,7 +6843,7 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
- 		tp->snd_wl1    = TCP_SKB_CB(skb)->seq;
- 		tp->max_window = tp->snd_wnd;
- 
--		tcp_ecn_rcv_syn(tp, th, skb);
-+		tcp_ecn_rcv_syn(sk, th, skb);
- 
- 		tcp_mtup_init(sk);
- 		tcp_sync_mss(sk, icsk->icsk_pmtu_cookie);
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index bd5462154f970..9776c921d1bb4 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -485,9 +485,10 @@ static void tcp_ecn_openreq_child(struct sock *sk,
- 		tp->accecn_opt_demand = 1;
- 		tcp_ecn_received_counters_payload(sk, skb);
- 	} else {
--		tcp_ecn_mode_set(tp, inet_rsk(req)->ecn_ok ?
--				     TCP_ECN_MODE_RFC3168 :
--				     TCP_ECN_DISABLED);
-+		if (inet_rsk(req)->ecn_ok && !tcp_ca_no_fallback_rfc3168(sk))
-+			tcp_ecn_mode_set(tp, TCP_ECN_MODE_RFC3168);
+ 		break;
+ 	case 0x1:
+-	case 0x5:
+ 		/* +========+========+============+=============+
+ 		 * | A      | B      |  SYN/ACK   |  Feedback   |
+ 		 * |        |        |    B->A    |  Mode of A  |
+ 		 * |        |        | AE CWR ECE |             |
+ 		 * +========+========+============+=============+
+-		 * | AccECN | Nonce  | 1   0   1  | (Reserved)  |
+ 		 * | AccECN | ECN    | 0   0   1  | Classic ECN |
+ 		 * | Nonce  | AccECN | 0   0   1  | Classic ECN |
+ 		 * | ECN    | AccECN | 0   0   1  | Classic ECN |
+@@ -509,20 +527,20 @@ static inline void tcp_ecn_rcv_synack(struct sock *sk, const struct sk_buff *skb
+ 		 */
+ 		if (tcp_ca_no_fallback_rfc3168(sk))
+ 			tcp_ecn_mode_set(tp, TCP_ECN_DISABLED);
+-		else if (tcp_ecn_mode_pending(tp))
+-			/* Downgrade from AccECN, or requested initially */
 +		else
-+			tcp_ecn_mode_set(tp, TCP_ECN_DISABLED);
- 	}
- }
- 
+ 			tcp_ecn_mode_set(tp, TCP_ECN_MODE_RFC3168);
+ 		break;
+-	default:
+-		tcp_ecn_mode_set(tp, TCP_ECN_MODE_ACCECN);
+-		tp->syn_ect_rcv = ip_dsfield & INET_ECN_MASK;
+-		if (tp->rx_opt.accecn &&
+-		    tp->saw_accecn_opt < TCP_ACCECN_OPT_COUNTER_SEEN) {
+-			u8 saw_opt = tcp_accecn_option_init(skb, tp->rx_opt.accecn);
+-
+-			tcp_accecn_saw_opt_fail_recv(tp, saw_opt);
+-			tp->accecn_opt_demand = 2;
++	case 0x5:
++		if (tcp_ecn_mode_pending(tp)) {
++			tcp_ecn_rcv_synack_accecn(sk, skb, ip_dsfield);
++			if (INET_ECN_is_ce(ip_dsfield)) {
++				tp->received_ce++;
++				tp->received_ce_pending++;
++			}
+ 		}
++		break;
++	default:
++		tcp_ecn_rcv_synack_accecn(sk, skb, ip_dsfield);
+ 		if (INET_ECN_is_ce(ip_dsfield) &&
+ 		    tcp_accecn_validate_syn_feedback(sk, ace,
+ 						     tp->syn_ect_snt)) {
 -- 
 2.51.0
 
