@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3B4248881;
-	Wed, 25 Feb 2026 01:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5FD1E2834;
+	Wed, 25 Feb 2026 01:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983617; cv=none; b=ax9EQSpxqu/rf+84+MjJ8b9gCv+GvSzsvKe7lZd5cHfFN0cTEf7TkebOsEeEf17DDr/YNWQgdvOLX/qu2FZMzpFIKkeM11GmmLKapDEVPgORIj49N+rIoX94rgMXIeV8NGFEdlD9FnjoKjMNlzS0O7tw0QPPT8XBPBd8b6Rqr4A=
+	t=1771983618; cv=none; b=PxA8jlEeZoe9E05jT7JlkE9C2JRYWzWCCUyRilHbYDppVBS1rqgfbyaMPvM0E75m2AwnPT4wk5DPS5SWZWs4HFbClawAXCcmeOZTpxeVodBoeUkGq7f6p9kzvqY+GqPhlfRImai382sdqb8/xe+epH2rajF9q6j301QK0n4t0gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983617; c=relaxed/simple;
-	bh=A9SJQyncR59m/mxUbnSap5pd5HH8wtCOoJXI8wFKkUM=;
+	s=arc-20240116; t=1771983618; c=relaxed/simple;
+	bh=8ES2urm8JWDC0wYiDBuVe4B3bTdwqx5WULP50NhXjA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+NvH8xcp4t62dAbiWnPw8fGV5wprA9ETl6dSxNO9UaEAJkIxW7ZFhcOzD8EFrGBvN67a7YdAMTiUI+u77c1rX19JDBUcIgkZW89AjKhXVsa7FN1hcZ6vpSf0V/PAUpWHIYIY8JkA//agAVxbhDIK7wcIvDz/0uHrY6EbWZKP5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXLjD80r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=saHhaCsweB6N9l+I3QGbd02oThshpLDfO9S0XnSpD+kK0ryzo/pP8/ygxO3Wk1s3kX4a62+gLQrrQ85Cn1lXX8SkRe4wUGfZd2bh/s1PfUPREXTjkmJvHh2/6iO11OLyDHtny8i+bLwpeohzFqXQLJpAHwsry0RXP7d8p9a7jbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNQv3Bio; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXLjD80r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89712C116D0;
-	Wed, 25 Feb 2026 01:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNQv3Bio"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCB2C116D0;
+	Wed, 25 Feb 2026 01:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983617;
-	bh=A9SJQyncR59m/mxUbnSap5pd5HH8wtCOoJXI8wFKkUM=;
+	s=korg; t=1771983618;
+	bh=8ES2urm8JWDC0wYiDBuVe4B3bTdwqx5WULP50NhXjA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXLjD80reVP47c3bXjUBN4Jdg2IXKQsH9RWAaLM+Ro7W+WDkiEbY5DumlukGTR/Ta
-	 sTMPrrfGnMtLFBpva68rtFa/ob3zJj4SqJJEUNKhJqIsL08YqONFr6uxxGkhHr9fGY
-	 u8F/hjbXbQA6nDt8t5bnVU4rVvtKHL0FhtUXzins=
+	b=gNQv3BioAbWGnpCsEz3A+XZzYUAPdPy1XnjPSn3tU4dV5n2fFobUl5XsCsPXjMveV
+	 hZfLBTkMAzaP7G76jVBBT9vzqPx4bztfUMSagk2gzBiMaeeVR/aeqnsbCuMC5OJg1p
+	 Z5pcDxuQqH59SsK8C9P7Dp+MRGh7zASIy9Gu8COE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	"Jesse.Zhang" <Jesse.zhang@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sunil Khatri <sunil.khatri@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 711/781] drm/amdgpu/sdma6: enable queue resets unconditionally
-Date: Tue, 24 Feb 2026 17:23:40 -0800
-Message-ID: <20260225012417.186774193@linuxfoundation.org>
+Subject: [PATCH 6.19 712/781] drm/amdgpu: clean up the amdgpu_cs_parser_bos
+Date: Tue, 24 Feb 2026 17:23:41 -0800
+Message-ID: <20260225012417.209120416@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,55 +48,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-[ Upstream commit 56423871e9eef1dd069bddef895207fa5ce275fe ]
+[ Upstream commit f025a2b8d93358467b8e8f4b3a617e88c5f02fab ]
 
-There is no firmware version dependency.  This also
-enables sdma queue resets on all SDMA 6.x based
-chips.
+In low memory conditions, kmalloc can fail. In such conditions
+unlock the mutex for a clean exit.
 
-Fixes: 59fd50b8663b ("drm/amdgpu: Add sysfs interface for sdma reset mask")
-Cc: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Jesse.Zhang <Jesse.zhang@amd.com>
+We do not need to amdgpu_bo_list_put as it's been handled in the
+amdgpu_cs_parser_fini.
+
+Fixes: 737da5363cc0 ("drm/amdgpu: update the functions to use amdgpu version of hmm")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202602030017.7E0xShmH-lkp@intel.com/
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c b/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
-index 2170400449872..6809c6d4be5b1 100644
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
-@@ -1351,18 +1351,9 @@ static int sdma_v6_0_sw_init(struct amdgpu_ip_block *ip_block)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index ecdfe6cb36ccd..dac0b15823f2a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -892,8 +892,10 @@ static int amdgpu_cs_parser_bos(struct amdgpu_cs_parser *p,
+ 		struct amdgpu_bo *bo = e->bo;
  
- 	adev->sdma.supported_reset =
- 		amdgpu_get_soft_full_reset_mask(&adev->sdma.instance[0].ring);
--	switch (amdgpu_ip_version(adev, SDMA0_HWIP, 0)) {
--	case IP_VERSION(6, 0, 0):
--	case IP_VERSION(6, 0, 2):
--	case IP_VERSION(6, 0, 3):
--		if ((adev->sdma.instance[0].fw_version >= 21) &&
--		    !amdgpu_sriov_vf(adev) &&
--		    !adev->debug_disable_gpu_ring_reset)
--			adev->sdma.supported_reset |= AMDGPU_RESET_TYPE_PER_QUEUE;
--		break;
--	default:
--		break;
--	}
-+	if (!amdgpu_sriov_vf(adev) &&
-+	    !adev->debug_disable_gpu_ring_reset)
-+		adev->sdma.supported_reset |= AMDGPU_RESET_TYPE_PER_QUEUE;
+ 		e->range = amdgpu_hmm_range_alloc(NULL);
+-		if (unlikely(!e->range))
+-			return -ENOMEM;
++		if (unlikely(!e->range)) {
++			r = -ENOMEM;
++			goto out_free_user_pages;
++		}
  
- 	if (amdgpu_sdma_ras_sw_init(adev)) {
- 		dev_err(adev->dev, "Failed to initialize sdma ras block!\n");
+ 		r = amdgpu_ttm_tt_get_user_pages(bo, e->range);
+ 		if (r)
 -- 
 2.51.0
 
