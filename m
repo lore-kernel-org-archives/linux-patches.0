@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02DE1E2834;
-	Wed, 25 Feb 2026 01:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8771E2834;
+	Wed, 25 Feb 2026 01:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983918; cv=none; b=YzTOLXc+0ZHHcldgE0pEpjljP/nmBfMjh0Nuuj2g1NU/K6SZxa1gsSqssvJj7DZTdFm2yeiGO24HWbIbEQ0MTfU/QLQ1omTXPC6hF6O1ec29WrEMzzmf9ClFhECUiQw486QYcgCZenFVf7G3D8PiKJiE3cMJK9x4LCUStvudIDk=
+	t=1771983919; cv=none; b=Q6/2TN1yAu/FZV/jV8XRnLmvt7e3StY+xhOvw5yLUtYBmsn6cO8MAcQC1L5BxutQTjIwZWB7PxfN3SPzZd0hcIKRkYo9nTzQR6d5I7L8JexlQiAmKkneRyVCerDv5lGLdxIThdfv8NGXs2sTIU26H0I54tFfOUxda7kc7uBZZV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983918; c=relaxed/simple;
-	bh=XdbCMe9X5Nz0Aa665gr02r0xuw7zIx3BhaD8FSCI6mU=;
+	s=arc-20240116; t=1771983919; c=relaxed/simple;
+	bh=R3z3t7jqWv+/XhDpH7A/upBYMRn2zsJaiyiFlWnRvp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhqpPEbBoQ3oJKbvlYCeI8M2mozXpPG4Wap+M+8t9Qhc6QvfVozMufFfjqyyI8Q3CVo7NOiwrHGFJHTUErcGjJRCCLN4i5AB/GYxmMPg4MnvYcCITezkHL7oKC/vw9TH4LMuzUJRaJ3ShlE56j2h7I1uktbTzBee+5OkI7/+18M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvqAAPFJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCUxb+Hy9uH55SfhLR925EujFenZ+pb6+sKOMkQuLWDopNaoeKvBBA9/UsLPlP6gKbObJ+cGY3aa+TveGfcLxWodKTWr1NwGA47znjDolQz3mZ8ZxEYnZ9H69dxAZ45ap842brdWKephEactbOTeyublOhExMKzwtMaABupYw+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGZLf0K+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvqAAPFJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2714AC116D0;
-	Wed, 25 Feb 2026 01:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGZLf0K+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED8AC116D0;
+	Wed, 25 Feb 2026 01:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983918;
-	bh=XdbCMe9X5Nz0Aa665gr02r0xuw7zIx3BhaD8FSCI6mU=;
+	s=korg; t=1771983919;
+	bh=R3z3t7jqWv+/XhDpH7A/upBYMRn2zsJaiyiFlWnRvp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvqAAPFJT1bKblIKuuui4oyRuB0GdXpjFjUfvAn8XsSCXzzwTq3RLifb0ky9cPe9S
-	 UWIzu3aaNU52V6PlPiXl3Ii4Zh2CxRdme8Zy8APabqc9Fk9bhUvcV8Fzm+c2fbYBUW
-	 3DPMIj/fSIvS3/DPqI91qu5M310pByYYhY17woIU=
+	b=VGZLf0K+/dXHLSLH/T2moU+Z2lNolnRpN+ioFQcRi/sO2sfRqQxv6uqnu8GiqyZyF
+	 F/wAFiGPpUj5NQFeF/iN3sKtb4jvIGBtWeRNzeeVC1fX+8lpV0mxa3QPXAVuRPBIvr
+	 yPBeT+/MHxbopHjy6Y3tt6i4F2+6JbXGdfUyzdew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 141/641] ARM: dts: allwinner: sun5i-a13-utoo-p66: delete "power-gpios" property
-Date: Tue, 24 Feb 2026 17:17:47 -0800
-Message-ID: <20260225012352.539695635@linuxfoundation.org>
+Subject: [PATCH 6.18 132/641] arm64: dts: tqma8mpql-mba8mp-ras314: Fix HDMI CEC pad control settings
+Date: Tue, 24 Feb 2026 17:17:38 -0800
+Message-ID: <20260225012352.344509021@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,43 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 0b2761eb1287bd9f62367cccf6626eb3107cef6f ]
+[ Upstream commit 53a5c1d98d1155ece4c9446c0fea55e17d08774a ]
 
-The P66's device tree includes the reference design dtsi files, which
-defines a node and properties for the touchpanel in the common design.
-The P66 dts file then overrides all the properties to match its own
-design, but as the touchpanel model is different, a different schema
-is matched. This other schema uses a different name for the GPIO.
+As per datasheet of the HDMI protection IC the CEC_IC pin has been
+configured as open-drain.
 
-The original submission added the correct GPIO property, but did not
-delete the one inherited from the reference design, causing validation
-errors.
-
-Explicitly delete the incorrect GPIO property.
-
-Fixes: 2a53aff27236 ("ARM: dts: sun5i: Enable touchscreen on Utoo P66")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20251225103616.3203473-4-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: ddabb3ce3f90 ("arm64: dts: freescale: add TQMa8MPQL on MBa8MP-RAS314")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts | 1 +
- 1 file changed, 1 insertion(+)
+ .../arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts b/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
-index be486d28d04fa..428cab5a0e906 100644
---- a/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
-+++ b/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
-@@ -102,6 +102,7 @@ &touchscreen {
- 	/* The P66 uses a different EINT then the reference design */
- 	interrupts = <6 9 IRQ_TYPE_EDGE_FALLING>; /* EINT9 (PG9) */
- 	/* The icn8318 binding expects wake-gpios instead of power-gpios */
-+	/delete-property/ power-gpios;
- 	wake-gpios = <&pio 1 3 GPIO_ACTIVE_HIGH>; /* PB3 */
- 	touchscreen-size-x = <800>;
- 	touchscreen-size-y = <480>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts
+index f7346b3d35fe5..a122f2ed5f531 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts
+@@ -704,7 +704,7 @@ pinctrl_hdmi: hdmigrp {
+ 		fsl,pins = <MX8MP_IOMUXC_HDMI_DDC_SCL__HDMIMIX_HDMI_SCL	0x400001c2>,
+ 			   <MX8MP_IOMUXC_HDMI_DDC_SDA__HDMIMIX_HDMI_SDA	0x400001c2>,
+ 			   <MX8MP_IOMUXC_HDMI_HPD__HDMIMIX_HDMI_HPD	0x40000010>,
+-			   <MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC	0x40000154>;
++			   <MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC	0x40000030>;
+ 	};
+ 
+ 	pinctrl_gpt1: gpt1grp {
 -- 
 2.51.0
 
