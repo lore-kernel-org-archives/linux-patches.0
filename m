@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EC11E2834;
-	Wed, 25 Feb 2026 01:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66125251793;
+	Wed, 25 Feb 2026 01:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983707; cv=none; b=rh1dTFPeyztHNj8SdhvGEojBoRhuY8b4u05ZKgtOLG3S4XS8lXSX+9U7qPuiZwTpHfAyBnQci5cxJL8OnLNPMtUL/w+Egf03GO9o7bWO/R5LBC70CnRR7Unzb/+z4+w7oa3bByBIsj3hCn1A9JbOAYnYcWVxAabrozfbyIL1lo8=
+	t=1771983708; cv=none; b=ZxsKu3FyZF8g3ckJ85nyfAEnU9S8nAcN38BYEPmhUmSot4Q4aJ5nyFUqIV7mVqkt23sNQ5vmFXDY9/WuIS2TE1M/R0gn0Fj3LqC/kvnHaOTro8NoLws28frkdSaxMHUSAylI119IGOPY76xtpJXznT6GtfEdZDqecANqaTaw1Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983707; c=relaxed/simple;
-	bh=H3Es8cx2qoR/XkfVBxMpMqIMsTKZYtUI7ty9DLj5dSE=;
+	s=arc-20240116; t=1771983708; c=relaxed/simple;
+	bh=iYrg0IG3nmGtdB3+wA0JK/tM29klMWYaL9o+8Fptehg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sr4qYjWQWjePFy1H/s1GX2L1tD+yBf75wMmCjvZf5P2zdDswhVQSxfJMv52nRsXBadRk4PoNcYHM15XK1sen8rwaL5ZhhQkwxHM6+cYXkcW0y2DtnOMgVkJ/VN/9Bw8Cwwa00OPlUTVhxkUUgwkBPnuEI2d20R5i68Hwn0BTGmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQjXyYKb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=URpMMI2x+yyW7wsQu+xjhmH6787Z02rahDMTDfHuGfEqamNLWKnVfGKma7bvBRP4ZOgVc3yqJBx6b+1zRS0t9nkm4zMjwoLDmmIrhqxIi8al6PYvFDetpAsmat0tenHIRl3X5tKVNaWUvi0q77BA9kT54lQzgq/ntjjDUc2NTnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCXwXeLz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQjXyYKb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F2BC116D0;
-	Wed, 25 Feb 2026 01:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCXwXeLz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC63CC116D0;
+	Wed, 25 Feb 2026 01:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983706;
-	bh=H3Es8cx2qoR/XkfVBxMpMqIMsTKZYtUI7ty9DLj5dSE=;
+	s=korg; t=1771983708;
+	bh=iYrg0IG3nmGtdB3+wA0JK/tM29klMWYaL9o+8Fptehg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQjXyYKbSGjrzOJH1n2Ts9Zvchm+IDu8rjp+iC+s7e1MAWMaiDfQMLbziWgL7MlWG
-	 Y8j0kWUI1atA7OIxldRWzmOBOmsW/SulT/UsI/qpArJpCdLY2LWxHSpiju+Ghzn/dC
-	 JmQiF+4W/ZSLsKN/3vzjpVx36+xzGuJTeM6TuoWQ=
+	b=PCXwXeLzextUnGc540bIfU/oaYEX9z+DsatF/1DRgQl2M0ELcFOfUYfnwSv10Zbtt
+	 ORP78f0/BHQHbsF0LJh1NUOoEdFRKimWAPf9ruSmVNojNmiry131LAedVntnOkpdin
+	 5rlu7xOtLpsGxL/e3ymRL7e6O3Kv7djyN7i1KVw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 750/781] PCI: dwc: ep: Always clear IB maps on BAR update
-Date: Tue, 24 Feb 2026 17:24:19 -0800
-Message-ID: <20260225012418.116379904@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	"Thomas Richard (TI)" <thomas.richard@bootlin.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.19 751/781] usb: cdns3: fix role switching during resume
+Date: Tue, 24 Feb 2026 17:24:20 -0800
+Message-ID: <20260225012418.141484230@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,82 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Thomas Richard (TI) <thomas.richard@bootlin.com>
 
-[ Upstream commit 8c746e22096579897d1f8f74dbb6b17a6862fb6d ]
+commit 87e4b043b98a1d269be0b812f383881abee0ca45 upstream.
 
-dw_pcie_ep_set_bar() currently tears down existing inbound mappings only
-when either the previous or the new struct pci_epf_bar uses submaps
-(num_submap != 0). If both the old and new mappings are BAR Match Mode,
-reprogramming the same ATU index is sufficient, so no explicit teardown
-was needed.
+If the role change while we are suspended, the cdns3 driver switches to the
+new mode during resume. However, switching to host mode in this context
+causes a NULL pointer dereference.
 
-However, some callers may reuse the same struct pci_epf_bar instance and
-update it in place before calling set_bar() again. In that case
-ep_func->epf_bar[bar] and the passed-in epf_bar can point to the same
-object, so we cannot reliably distinguish BAR Match Mode -> BAR Match Mode
-from Address Match Mode -> BAR Match Mode. As a result, the conditional
-teardown based on num_submap becomes unreliable and existing inbound maps
-may be left active.
+The host role's start() operation registers a xhci-hcd device, but its
+probe is deferred while we are in the resume path. The host role's resume()
+operation assumes the xhci-hcd device is already probed, which is not the
+case, leading to the dereference. Since the start() operation of the new
+role is already called, the resume operation can be skipped.
 
-Call dw_pcie_ep_clear_ib_maps() unconditionally before reprogramming the
-BAR so that in-place updates are handled correctly.
+So skip the resume operation for the new role if a role switch occurs
+during resume. Once the resume sequence is complete, the xhci-hcd device
+can be probed in case of host mode.
 
-This introduces a behavioral change in a corner case: if a BAR
-reprogramming attempt fails (especially for the long-standing BAR Match
-Mode -> BAR Match Mode update case), the previously programmed inbound
-mapping will already have been torn down. This should be acceptable, since
-the caller observes the error and should not use the BAR for any real
-transactions in that case.
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000208
+Mem abort info:
+...
+Data abort info:
+...
+[0000000000000208] pgd=0000000000000000, p4d=0000000000000000
+Internal error: Oops: 0000000096000004 [#1]  SMP
+Modules linked in:
+CPU: 0 UID: 0 PID: 146 Comm: sh Not tainted
+6.19.0-rc7-00013-g6e64f4aabfae-dirty #135 PREEMPT
+Hardware name: Texas Instruments J7200 EVM (DT)
+pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : usb_hcd_is_primary_hcd+0x0/0x1c
+lr : cdns_host_resume+0x24/0x5c
+...
+Call trace:
+ usb_hcd_is_primary_hcd+0x0/0x1c (P)
+ cdns_resume+0x6c/0xbc
+ cdns3_controller_resume.isra.0+0xe8/0x17c
+ cdns3_plat_resume+0x18/0x24
+ platform_pm_resume+0x2c/0x68
+ dpm_run_callback+0x90/0x248
+ device_resume+0x100/0x24c
+ dpm_resume+0x190/0x2ec
+ dpm_resume_end+0x18/0x34
+ suspend_devices_and_enter+0x2b0/0xa44
+ pm_suspend+0x16c/0x5fc
+ state_store+0x80/0xec
+ kobj_attr_store+0x18/0x2c
+ sysfs_kf_write+0x7c/0x94
+ kernfs_fop_write_iter+0x130/0x1dc
+ vfs_write+0x240/0x370
+ ksys_write+0x70/0x108
+ __arm64_sys_write+0x1c/0x28
+ invoke_syscall+0x48/0x10c
+ el0_svc_common.constprop.0+0x40/0xe0
+ do_el0_svc+0x1c/0x28
+ el0_svc+0x34/0x108
+ el0t_64_sync_handler+0xa0/0xe4
+ el0t_64_sync+0x198/0x19c
+Code: 52800003 f9407ca5 d63f00a0 17ffffe4 (f9410401)
+---[ end trace 0000000000000000 ]---
 
-While at it, document that the existing update parameter check is
-best-effort for in-place updates.
-
-Fixes: cc839bef7727 ("PCI: dwc: ep: Support BAR subrange inbound mapping via Address Match Mode iATU")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260202145407.503348-3-den@valinux.co.jp
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 2cf2581cd229 ("usb: cdns3: add power lost support for system resume")
+Signed-off-by: Thomas Richard (TI) <thomas.richard@bootlin.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260130-usb-cdns3-fix-role-switching-during-resume-v1-1-44c456852b52@bootlin.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/usb/cdns3/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 6d3c35dd280f3..59fd6ebf01489 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -518,6 +518,12 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 		/*
- 		 * We can only dynamically change a BAR if the new BAR size and
- 		 * BAR flags do not differ from the existing configuration.
-+		 *
-+		 * Note: this safety check only works when the caller uses
-+		 * a new struct pci_epf_bar in the second set_bar() call.
-+		 * If the same instance is updated in place and passed in,
-+		 * we cannot reliably detect invalid barno/size/flags
-+		 * changes here.
- 		 */
- 		if (ep_func->epf_bar[bar]->barno != bar ||
- 		    ep_func->epf_bar[bar]->size != size ||
-@@ -526,10 +532,12 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+--- a/drivers/usb/cdns3/core.c
++++ b/drivers/usb/cdns3/core.c
+@@ -551,7 +551,7 @@ int cdns_resume(struct cdns *cdns)
+ 		}
+ 	}
  
- 		/*
- 		 * When dynamically changing a BAR, tear down any existing
--		 * mappings before re-programming.
-+		 * mappings before re-programming. This is redundant when
-+		 * both the old and new mappings are BAR Match Mode, but
-+		 * required to handle in-place updates and match-mode
-+		 * changes reliably.
- 		 */
--		if (ep_func->epf_bar[bar]->num_submap || epf_bar->num_submap)
--			dw_pcie_ep_clear_ib_maps(ep, func_no, bar);
-+		dw_pcie_ep_clear_ib_maps(ep, func_no, bar);
+-	if (cdns->roles[cdns->role]->resume)
++	if (!role_changed && cdns->roles[cdns->role]->resume)
+ 		cdns->roles[cdns->role]->resume(cdns, power_lost);
  
- 		/*
- 		 * When dynamically changing a BAR, skip writing the BAR reg, as
--- 
-2.51.0
-
+ 	return 0;
 
 
