@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D142218B0A;
-	Wed, 25 Feb 2026 01:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B2218B0A;
+	Wed, 25 Feb 2026 01:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983308; cv=none; b=X3AWyivsHp5ZHOOEXDQMi0lLga02zWWJy8xnp6d0j4XeTCBgFJfdnjEcsuZRiay8iPJvfkuxSrFWMF+B1uYvdLgje+tySnPx57cOH0xJw64T+FKrHbs2cSYLaSLw/OMk4SWqXgVH1G0V8I/6fWSqTwq+GUelC39+rpaq16N28xY=
+	t=1771983309; cv=none; b=lL+sF4uscWHCenE1RFdCqUVS9Qfe3L4QOddE8vvQwuddSfil2FFEHZeDPP68uxmXgluGnkg4suILUp8dke+PulamLDTq7MPoQnj9lvYQzWDL4p6VdCleM8LUv33a0X3qZcekhpeAj6DPdlDhYyGkMctN9LKuLYu/czYY3LzqZDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983308; c=relaxed/simple;
-	bh=7KjS0ke886oDXewqGckTjgV4STzXTHPvLmGbFNPpJX4=;
+	s=arc-20240116; t=1771983309; c=relaxed/simple;
+	bh=GSW2bIWgSE0F6hhRuXyqaVc/jY7zmo16mR57zAwslHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awoQbpjXVC5rFUX+ViWAewQOKwm/1gmTq5wZTEYYnAeNUBgrRaUSqvV7yY6ZyqroKlp5D0OCLYTsrlFnFx2gEvSdBYDPNeZFjTGOiSMfWNRHPNSmwaTm8/dUYWGpQdxGcjczfow+0oi7iVDD518qaeYwBx7u+wPBrDLhE9jEJxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8/DNGGU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rvsz0ziB+aUmIHhRxUidiRyj1ZP4ap+HWsRjWsiJCPvveAB/19j/rbI4AiWMryaB8fL2nunA0jVrvN5wGWtWTx+vySO0ZkKcsE4FxngZ2wdif0lWzUiIO/kyqpPqTuj7epgE2MnWqASci5WHoO3SoYe2pW5OPaBePoeHbhLIbRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0S2PoIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8/DNGGU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E6BC116D0;
-	Wed, 25 Feb 2026 01:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0S2PoIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4E6C116D0;
+	Wed, 25 Feb 2026 01:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983308;
-	bh=7KjS0ke886oDXewqGckTjgV4STzXTHPvLmGbFNPpJX4=;
+	s=korg; t=1771983309;
+	bh=GSW2bIWgSE0F6hhRuXyqaVc/jY7zmo16mR57zAwslHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m8/DNGGU17rUqTxtw3pFum1FG/hqujpePEEWJ7c0+nvgnMZTGUjvJtDiJ7PG9Czzz
-	 4sxmkNwdVLNIUwZyL//rA3+KcAr3HHj1iNOoQslcXeilglLfIqOdI8igB/U23u+Q4K
-	 jQ5z1+uwoJIu/Di0dZaGDV+UlQo9DcI5ppQe15QY=
+	b=I0S2PoIEIyAXc4F6Eys5faokztzmKbM5ab8jCeUR3LgztUYGELHETHXFl4p3KUCFM
+	 v+4D2TynoBm/rGYWH6GdLmB1dsEeyb/9MTv+wTIr/V4Zu0jO+90M8t4ZVxt3gibM4x
+	 ccIJKl+IUMQuYJZtw905KZQHRK04eUZ5Ehogb8eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aksh Garg <a-garg7@ti.com>,
+	Qiang Yu <qiang.yu@oss.qualcomm.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 399/781] PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support
-Date: Tue, 24 Feb 2026 17:18:28 -0800
-Message-ID: <20260225012409.493949626@linuxfoundation.org>
+Subject: [PATCH 6.19 390/781] PCI: Add preceding capability position support in PCI_FIND_NEXT_*_CAP macros
+Date: Tue, 24 Feb 2026 17:18:19 -0800
+Message-ID: <20260225012409.261446091@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,308 +51,233 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aksh Garg <a-garg7@ti.com>
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
 
-[ Upstream commit 72cb5ed2a5c6d87f71a409347f7d3b228fee6bee ]
+[ Upstream commit a2582e05e39adf9ab82a02561cd6f70738540ae0 ]
 
-The commit 24ede430fa49 ("PCI: designware-ep: Add multiple PFs support
-for DWC") added support for multiple PFs in the DWC driver, but the
-implementation was incomplete. It did not properly support MSI/MSI-X,
-as well as BAR and inbound ATU mapping for multiple PFs. The MSI/MSI-X
-issue was later fixed by commit 47a062609a30 ("PCI: designware-ep:
-Modify MSI and MSIX CAP way of finding") by introducing a per-PF
-struct dw_pcie_ep_func.
+Add support for finding the preceding capability position in PCI
+capability list by extending the capability finding macros with an
+additional parameter. This functionality is essential for modifying PCI
+capability list, as it provides the necessary information to update the
+"next" pointer of the predecessor capability when removing entries.
 
-However, even with both commits, the multiple PF support in the driver
-remains broken because BAR configuration and ATU mappings are managed
-globally in struct dw_pcie_ep, meaning all PFs share the same BAR-to-ATU
-mapping table. This causes one PF's EPF to overwrite the address
-translation of another PF's EPF in the internal ATU region,
-creating conflicts when multiple physical functions attempt to
-configure their BARs independently.
+Modify two macros to accept a new 'prev_ptr' parameter:
+- PCI_FIND_NEXT_CAP - Now accepts 'prev_ptr' parameter for standard
+  capabilities
+- PCI_FIND_NEXT_EXT_CAP - Now accepts 'prev_ptr' parameter for extended
+  capabilities
 
-The commit cfbc98dbf44d ("PCI: dwc: ep: Support BAR subrange inbound
-mapping via Address Match Mode iATU") later introduced Address Match
-Mode support, which suffers from the same multi-PF conflict issue.
+When a capability is found, these macros:
+- Store the position of the preceding capability in *prev_ptr
+  (if prev_ptr != NULL)
+- Maintain all existing functionality when prev_ptr is NULL
 
-Fix this by moving the required members from struct dw_pcie_ep to
-struct dw_pcie_ep_func, similar to what commit 47a062609a30
-("PCI: designware-ep: Modify MSI and MSIX CAP way of finding") did for
-MSI/MSI-X capability support, to allow proper multi-function endpoint
-operation, where each PF can configure its BARs and corresponding
-internal ATU region without interfering with other PFs.
+Update current callers to accommodate this API change by passing NULL to
+'prev_ptr' argument if they do not care about the preceding capability
+position.
 
-Fixes: 24ede430fa49 ("PCI: designware-ep: Add multiple PFs support for DWC")
-Fixes: cc839bef7727 ("PCI: dwc: ep: Support BAR subrange inbound mapping via Address Match Mode iATU")
-Signed-off-by: Aksh Garg <a-garg7@ti.com>
+No functional changes to driver behavior result from this commit as it
+maintains the existing capability finding functionality while adding the
+infrastructure for future capability removal operations.
+
+Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260130115516.515082-3-a-garg7@ti.com
+Link: https://patch.msgid.link/20251109-remove_cap-v1-1-2208f46f4dc2@oss.qualcomm.com
+Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pci/controller/dwc/pcie-designware-ep.c   | 79 +++++++++++--------
- drivers/pci/controller/dwc/pcie-designware.h  | 12 +--
- 2 files changed, 54 insertions(+), 37 deletions(-)
+ drivers/pci/controller/cadence/pcie-cadence.c |  4 ++--
+ .../pci/controller/dwc/pcie-designware-ep.c   |  2 +-
+ drivers/pci/controller/dwc/pcie-designware.c  |  6 ++---
+ drivers/pci/pci.c                             |  8 +++----
+ drivers/pci/pci.h                             | 23 +++++++++++++++----
+ 5 files changed, 29 insertions(+), 14 deletions(-)
 
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
+index e6f1a4ac0fb7a..a1eada56edba7 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.c
++++ b/drivers/pci/controller/cadence/pcie-cadence.c
+@@ -13,13 +13,13 @@
+ u8 cdns_pcie_find_capability(struct cdns_pcie *pcie, u8 cap)
+ {
+ 	return PCI_FIND_NEXT_CAP(cdns_pcie_read_cfg, PCI_CAPABILITY_LIST,
+-				 cap, pcie);
++				 cap, NULL, pcie);
+ }
+ EXPORT_SYMBOL_GPL(cdns_pcie_find_capability);
+ 
+ u16 cdns_pcie_find_ext_capability(struct cdns_pcie *pcie, u8 cap)
+ {
+-	return PCI_FIND_NEXT_EXT_CAP(cdns_pcie_read_cfg, 0, cap, pcie);
++	return PCI_FIND_NEXT_EXT_CAP(cdns_pcie_read_cfg, 0, cap, NULL, pcie);
+ }
+ EXPORT_SYMBOL_GPL(cdns_pcie_find_ext_capability);
+ 
 diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 1cc2985bab03d..6d3c35dd280f3 100644
+index 19571ac2b9617..f6c54625486e2 100644
 --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -115,11 +115,15 @@ static int dw_pcie_ep_ib_atu_bar(struct dw_pcie_ep *ep, u8 func_no, int type,
- 	int ret;
- 	u32 free_win;
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-+	struct dw_pcie_ep_func *ep_func = dw_pcie_ep_get_func_from_ep(ep, func_no);
- 
--	if (!ep->bar_to_atu[bar])
-+	if (!ep_func)
-+		return -EINVAL;
-+
-+	if (!ep_func->bar_to_atu[bar])
- 		free_win = find_first_zero_bit(ep->ib_window_map, pci->num_ib_windows);
- 	else
--		free_win = ep->bar_to_atu[bar] - 1;
-+		free_win = ep_func->bar_to_atu[bar] - 1;
- 
- 	if (free_win >= pci->num_ib_windows) {
- 		dev_err(pci->dev, "No free inbound window\n");
-@@ -137,33 +141,37 @@ static int dw_pcie_ep_ib_atu_bar(struct dw_pcie_ep *ep, u8 func_no, int type,
- 	 * Always increment free_win before assignment, since value 0 is used to identify
- 	 * unallocated mapping.
- 	 */
--	ep->bar_to_atu[bar] = free_win + 1;
-+	ep_func->bar_to_atu[bar] = free_win + 1;
- 	set_bit(free_win, ep->ib_window_map);
- 
- 	return 0;
+@@ -72,7 +72,7 @@ EXPORT_SYMBOL_GPL(dw_pcie_ep_reset_bar);
+ static u8 dw_pcie_ep_find_capability(struct dw_pcie_ep *ep, u8 func_no, u8 cap)
+ {
+ 	return PCI_FIND_NEXT_CAP(dw_pcie_ep_read_cfg, PCI_CAPABILITY_LIST,
+-				 cap, ep, func_no);
++				 cap, NULL, ep, func_no);
  }
  
--static void dw_pcie_ep_clear_ib_maps(struct dw_pcie_ep *ep, enum pci_barno bar)
-+static void dw_pcie_ep_clear_ib_maps(struct dw_pcie_ep *ep, u8 func_no, enum pci_barno bar)
+ /**
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index 75fc8b767fccf..5d7a7e6f5724e 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -226,13 +226,13 @@ void dw_pcie_version_detect(struct dw_pcie *pci)
+ u8 dw_pcie_find_capability(struct dw_pcie *pci, u8 cap)
  {
-+	struct dw_pcie_ep_func *ep_func = dw_pcie_ep_get_func_from_ep(ep, func_no);
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
- 	struct device *dev = pci->dev;
- 	unsigned int i, num;
- 	u32 atu_index;
- 	u32 *indexes;
+ 	return PCI_FIND_NEXT_CAP(dw_pcie_read_cfg, PCI_CAPABILITY_LIST, cap,
+-				 pci);
++				 NULL, pci);
+ }
+ EXPORT_SYMBOL_GPL(dw_pcie_find_capability);
  
-+	if (!ep_func)
-+		return;
-+
- 	/* Tear down the BAR Match Mode mapping, if any. */
--	if (ep->bar_to_atu[bar]) {
--		atu_index = ep->bar_to_atu[bar] - 1;
-+	if (ep_func->bar_to_atu[bar]) {
-+		atu_index = ep_func->bar_to_atu[bar] - 1;
- 		dw_pcie_disable_atu(pci, PCIE_ATU_REGION_DIR_IB, atu_index);
- 		clear_bit(atu_index, ep->ib_window_map);
--		ep->bar_to_atu[bar] = 0;
-+		ep_func->bar_to_atu[bar] = 0;
+ u16 dw_pcie_find_ext_capability(struct dw_pcie *pci, u8 cap)
+ {
+-	return PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, 0, cap, pci);
++	return PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, 0, cap, NULL, pci);
+ }
+ EXPORT_SYMBOL_GPL(dw_pcie_find_ext_capability);
+ 
+@@ -246,7 +246,7 @@ static u16 __dw_pcie_find_vsec_capability(struct dw_pcie *pci, u16 vendor_id,
+ 		return 0;
+ 
+ 	while ((vsec = PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, vsec,
+-					     PCI_EXT_CAP_ID_VNDR, pci))) {
++					     PCI_EXT_CAP_ID_VNDR, NULL, pci))) {
+ 		header = dw_pcie_readl_dbi(pci, vsec + PCI_VNDR_HEADER);
+ 		if (PCI_VNDR_HEADER_ID(header) == vsec_id)
+ 			return vsec;
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index d9d531e8283c2..a05978f5cf2c7 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -426,7 +426,7 @@ static int pci_dev_str_match(struct pci_dev *dev, const char *p,
+ static u8 __pci_find_next_cap(struct pci_bus *bus, unsigned int devfn,
+ 			      u8 pos, int cap)
+ {
+-	return PCI_FIND_NEXT_CAP(pci_bus_read_config, pos, cap, bus, devfn);
++	return PCI_FIND_NEXT_CAP(pci_bus_read_config, pos, cap, NULL, bus, devfn);
+ }
+ 
+ u8 pci_find_next_capability(struct pci_dev *dev, u8 pos, int cap)
+@@ -531,7 +531,7 @@ u16 pci_find_next_ext_capability(struct pci_dev *dev, u16 start, int cap)
+ 		return 0;
+ 
+ 	return PCI_FIND_NEXT_EXT_CAP(pci_bus_read_config, start, cap,
+-				     dev->bus, dev->devfn);
++				     NULL, dev->bus, dev->devfn);
+ }
+ EXPORT_SYMBOL_GPL(pci_find_next_ext_capability);
+ 
+@@ -600,7 +600,7 @@ static u8 __pci_find_next_ht_cap(struct pci_dev *dev, u8 pos, int ht_cap)
+ 		mask = HT_5BIT_CAP_MASK;
+ 
+ 	pos = PCI_FIND_NEXT_CAP(pci_bus_read_config, pos,
+-				PCI_CAP_ID_HT, dev->bus, dev->devfn);
++				PCI_CAP_ID_HT, NULL, dev->bus, dev->devfn);
+ 	while (pos) {
+ 		rc = pci_read_config_byte(dev, pos + 3, &cap);
+ 		if (rc != PCIBIOS_SUCCESSFUL)
+@@ -611,7 +611,7 @@ static u8 __pci_find_next_ht_cap(struct pci_dev *dev, u8 pos, int ht_cap)
+ 
+ 		pos = PCI_FIND_NEXT_CAP(pci_bus_read_config,
+ 					pos + PCI_CAP_LIST_NEXT,
+-					PCI_CAP_ID_HT, dev->bus,
++					PCI_CAP_ID_HT, NULL, dev->bus,
+ 					dev->devfn);
  	}
  
- 	/* Tear down all Address Match Mode mappings, if any. */
--	indexes = ep->ib_atu_indexes[bar];
--	num = ep->num_ib_atu_indexes[bar];
--	ep->ib_atu_indexes[bar] = NULL;
--	ep->num_ib_atu_indexes[bar] = 0;
-+	indexes = ep_func->ib_atu_indexes[bar];
-+	num = ep_func->num_ib_atu_indexes[bar];
-+	ep_func->ib_atu_indexes[bar] = NULL;
-+	ep_func->num_ib_atu_indexes[bar] = 0;
- 	if (!indexes)
- 		return;
- 	for (i = 0; i < num; i++) {
-@@ -248,6 +256,7 @@ static int dw_pcie_ep_validate_submap(struct dw_pcie_ep *ep,
- static int dw_pcie_ep_ib_atu_addr(struct dw_pcie_ep *ep, u8 func_no, int type,
- 				  const struct pci_epf_bar *epf_bar)
- {
-+	struct dw_pcie_ep_func *ep_func = dw_pcie_ep_get_func_from_ep(ep, func_no);
- 	const struct pci_epf_bar_submap *submap = epf_bar->submap;
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
- 	enum pci_barno bar = epf_bar->barno;
-@@ -258,7 +267,7 @@ static int dw_pcie_ep_ib_atu_addr(struct dw_pcie_ep *ep, u8 func_no, int type,
- 	unsigned int i;
- 	u32 *indexes;
- 
--	if (!epf_bar->num_submap || !submap || !epf_bar->size)
-+	if (!ep_func || !epf_bar->num_submap || !submap || !epf_bar->size)
- 		return -EINVAL;
- 
- 	ret = dw_pcie_ep_validate_submap(ep, submap, epf_bar->num_submap,
-@@ -279,8 +288,8 @@ static int dw_pcie_ep_ib_atu_addr(struct dw_pcie_ep *ep, u8 func_no, int type,
- 	if (!indexes)
- 		return -ENOMEM;
- 
--	ep->ib_atu_indexes[bar] = indexes;
--	ep->num_ib_atu_indexes[bar] = 0;
-+	ep_func->ib_atu_indexes[bar] = indexes;
-+	ep_func->num_ib_atu_indexes[bar] = 0;
- 
- 	for (i = 0; i < epf_bar->num_submap; i++) {
- 		size = submap[i].size;
-@@ -308,11 +317,11 @@ static int dw_pcie_ep_ib_atu_addr(struct dw_pcie_ep *ep, u8 func_no, int type,
- 
- 		set_bit(free_win, ep->ib_window_map);
- 		indexes[i] = free_win;
--		ep->num_ib_atu_indexes[bar] = i + 1;
-+		ep_func->num_ib_atu_indexes[bar] = i + 1;
- 	}
- 	return 0;
- err:
--	dw_pcie_ep_clear_ib_maps(ep, bar);
-+	dw_pcie_ep_clear_ib_maps(ep, func_no, bar);
- 	return ret;
- }
- 
-@@ -346,15 +355,16 @@ static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
- 	enum pci_barno bar = epf_bar->barno;
-+	struct dw_pcie_ep_func *ep_func = dw_pcie_ep_get_func_from_ep(ep, func_no);
- 
--	if (!ep->epf_bar[bar])
-+	if (!ep_func || !ep_func->epf_bar[bar])
- 		return;
- 
- 	__dw_pcie_ep_reset_bar(pci, func_no, bar, epf_bar->flags);
- 
--	dw_pcie_ep_clear_ib_maps(ep, bar);
-+	dw_pcie_ep_clear_ib_maps(ep, func_no, bar);
- 
--	ep->epf_bar[bar] = NULL;
-+	ep_func->epf_bar[bar] = NULL;
- }
- 
- static unsigned int dw_pcie_ep_get_rebar_offset(struct dw_pcie_ep *ep, u8 func_no,
-@@ -481,12 +491,16 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- {
- 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-+	struct dw_pcie_ep_func *ep_func = dw_pcie_ep_get_func_from_ep(ep, func_no);
- 	enum pci_barno bar = epf_bar->barno;
- 	size_t size = epf_bar->size;
- 	enum pci_epc_bar_type bar_type;
- 	int flags = epf_bar->flags;
- 	int ret, type;
- 
-+	if (!ep_func)
-+		return -EINVAL;
-+
- 	/*
- 	 * DWC does not allow BAR pairs to overlap, e.g. you cannot combine BARs
- 	 * 1 and 2 to form a 64-bit BAR.
-@@ -500,22 +514,22 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	 * calling clear_bar() would clear the BAR's PCI address assigned by the
- 	 * host).
- 	 */
--	if (ep->epf_bar[bar]) {
-+	if (ep_func->epf_bar[bar]) {
- 		/*
- 		 * We can only dynamically change a BAR if the new BAR size and
- 		 * BAR flags do not differ from the existing configuration.
- 		 */
--		if (ep->epf_bar[bar]->barno != bar ||
--		    ep->epf_bar[bar]->size != size ||
--		    ep->epf_bar[bar]->flags != flags)
-+		if (ep_func->epf_bar[bar]->barno != bar ||
-+		    ep_func->epf_bar[bar]->size != size ||
-+		    ep_func->epf_bar[bar]->flags != flags)
- 			return -EINVAL;
- 
- 		/*
- 		 * When dynamically changing a BAR, tear down any existing
- 		 * mappings before re-programming.
- 		 */
--		if (ep->epf_bar[bar]->num_submap || epf_bar->num_submap)
--			dw_pcie_ep_clear_ib_maps(ep, bar);
-+		if (ep_func->epf_bar[bar]->num_submap || epf_bar->num_submap)
-+			dw_pcie_ep_clear_ib_maps(ep, func_no, bar);
- 
- 		/*
- 		 * When dynamically changing a BAR, skip writing the BAR reg, as
-@@ -574,7 +588,7 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	if (ret)
- 		return ret;
- 
--	ep->epf_bar[bar] = epf_bar;
-+	ep_func->epf_bar[bar] = epf_bar;
- 
- 	return 0;
- }
-@@ -969,7 +983,7 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
- 	bir = FIELD_GET(PCI_MSIX_TABLE_BIR, tbl_offset);
- 	tbl_offset &= PCI_MSIX_TABLE_OFFSET;
- 
--	msix_tbl = ep->epf_bar[bir]->addr + tbl_offset;
-+	msix_tbl = ep_func->epf_bar[bir]->addr + tbl_offset;
- 	msg_addr = msix_tbl[(interrupt_num - 1)].msg_addr;
- 	msg_data = msix_tbl[(interrupt_num - 1)].msg_data;
- 	vec_ctrl = msix_tbl[(interrupt_num - 1)].vector_ctrl;
-@@ -1032,11 +1046,14 @@ EXPORT_SYMBOL_GPL(dw_pcie_ep_deinit);
- 
- static void dw_pcie_ep_init_rebar_registers(struct dw_pcie_ep *ep, u8 func_no)
- {
--	unsigned int offset;
--	unsigned int nbars;
-+	struct dw_pcie_ep_func *ep_func = dw_pcie_ep_get_func_from_ep(ep, func_no);
-+	unsigned int offset, nbars;
- 	enum pci_barno bar;
- 	u32 reg, i, val;
- 
-+	if (!ep_func)
-+		return;
-+
- 	offset = dw_pcie_ep_find_ext_capability(ep, func_no, PCI_EXT_CAP_ID_REBAR);
- 
- 	if (offset) {
-@@ -1063,8 +1080,8 @@ static void dw_pcie_ep_init_rebar_registers(struct dw_pcie_ep *ep, u8 func_no)
- 			 */
- 			val = dw_pcie_ep_readl_dbi(ep, func_no, offset + PCI_REBAR_CTRL);
- 			bar = FIELD_GET(PCI_REBAR_CTRL_BAR_IDX, val);
--			if (ep->epf_bar[bar])
--				pci_epc_bar_size_to_rebar_cap(ep->epf_bar[bar]->size, &val);
-+			if (ep_func->epf_bar[bar])
-+				pci_epc_bar_size_to_rebar_cap(ep_func->epf_bar[bar]->size, &val);
- 			else
- 				val = BIT(4);
- 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 3c4220027415e..5c429b62cb086 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -467,6 +467,12 @@ struct dw_pcie_ep_func {
- 	u8			func_no;
- 	u8			msi_cap;	/* MSI capability offset */
- 	u8			msix_cap;	/* MSI-X capability offset */
-+	u8			bar_to_atu[PCI_STD_NUM_BARS];
-+	struct pci_epf_bar	*epf_bar[PCI_STD_NUM_BARS];
-+
-+	/* Only for Address Match Mode inbound iATU */
-+	u32			*ib_atu_indexes[PCI_STD_NUM_BARS];
-+	unsigned int		num_ib_atu_indexes[PCI_STD_NUM_BARS];
- };
- 
- struct dw_pcie_ep {
-@@ -476,17 +482,11 @@ struct dw_pcie_ep {
- 	phys_addr_t		phys_base;
- 	size_t			addr_size;
- 	size_t			page_size;
--	u8			bar_to_atu[PCI_STD_NUM_BARS];
- 	phys_addr_t		*outbound_addr;
- 	unsigned long		*ib_window_map;
- 	unsigned long		*ob_window_map;
- 	void __iomem		*msi_mem;
- 	phys_addr_t		msi_mem_phys;
--	struct pci_epf_bar	*epf_bar[PCI_STD_NUM_BARS];
--
--	/* Only for Address Match Mode inbound iATU */
--	u32			*ib_atu_indexes[PCI_STD_NUM_BARS];
--	unsigned int		num_ib_atu_indexes[PCI_STD_NUM_BARS];
- 
- 	/* MSI outbound iATU state */
- 	bool			msi_iatu_mapped;
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index e3c2852c80fbd..36f32b8af6ab3 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -106,17 +106,21 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
+  * @read_cfg: Function pointer for reading PCI config space
+  * @start: Starting position to begin search
+  * @cap: Capability ID to find
++ * @prev_ptr: Pointer to store position of preceding capability (optional)
+  * @args: Arguments to pass to read_cfg function
+  *
+- * Search the capability list in PCI config space to find @cap.
++ * Search the capability list in PCI config space to find @cap. If
++ * found, update *prev_ptr with the position of the preceding capability
++ * (if prev_ptr != NULL)
+  * Implements TTL (time-to-live) protection against infinite loops.
+  *
+  * Return: Position of the capability if found, 0 otherwise.
+  */
+-#define PCI_FIND_NEXT_CAP(read_cfg, start, cap, args...)		\
++#define PCI_FIND_NEXT_CAP(read_cfg, start, cap, prev_ptr, args...)	\
+ ({									\
+ 	int __ttl = PCI_FIND_CAP_TTL;					\
+-	u8 __id, __found_pos = 0;					\
++	u8 __id,  __found_pos = 0;					\
++	u8 __prev_pos = (start);					\
+ 	u8 __pos = (start);						\
+ 	u16 __ent;							\
+ 									\
+@@ -135,9 +139,12 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
+ 									\
+ 		if (__id == (cap)) {					\
+ 			__found_pos = __pos;				\
++			if (prev_ptr != NULL)				\
++				*(u8 *)prev_ptr = __prev_pos;		\
+ 			break;						\
+ 		}							\
+ 									\
++		__prev_pos = __pos;					\
+ 		__pos = FIELD_GET(PCI_CAP_LIST_NEXT_MASK, __ent);	\
+ 	}								\
+ 	__found_pos;							\
+@@ -149,21 +156,26 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
+  * @read_cfg: Function pointer for reading PCI config space
+  * @start: Starting position to begin search (0 for initial search)
+  * @cap: Extended capability ID to find
++ * @prev_ptr: Pointer to store position of preceding capability (optional)
+  * @args: Arguments to pass to read_cfg function
+  *
+  * Search the extended capability list in PCI config space to find @cap.
++ * If found, update *prev_ptr with the position of the preceding capability
++ * (if prev_ptr != NULL)
+  * Implements TTL protection against infinite loops using a calculated
+  * maximum search count.
+  *
+  * Return: Position of the capability if found, 0 otherwise.
+  */
+-#define PCI_FIND_NEXT_EXT_CAP(read_cfg, start, cap, args...)		\
++#define PCI_FIND_NEXT_EXT_CAP(read_cfg, start, cap, prev_ptr, args...)	\
+ ({									\
+ 	u16 __pos = (start) ?: PCI_CFG_SPACE_SIZE;			\
+ 	u16 __found_pos = 0;						\
++	u16 __prev_pos;							\
+ 	int __ttl, __ret;						\
+ 	u32 __header;							\
+ 									\
++	__prev_pos = __pos;						\
+ 	__ttl = (PCI_CFG_SPACE_EXP_SIZE - PCI_CFG_SPACE_SIZE) / 8;	\
+ 	while (__ttl-- > 0 && __pos >= PCI_CFG_SPACE_SIZE) {		\
+ 		__ret = read_cfg##_dword(args, __pos, &__header);	\
+@@ -175,9 +187,12 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
+ 									\
+ 		if (PCI_EXT_CAP_ID(__header) == (cap) && __pos != start) {\
+ 			__found_pos = __pos;				\
++			if (prev_ptr != NULL)				\
++				*(u16 *)prev_ptr = __prev_pos;		\
+ 			break;						\
+ 		}							\
+ 									\
++		__prev_pos = __pos;					\
+ 		__pos = PCI_EXT_CAP_NEXT(__header);			\
+ 	}								\
+ 	__found_pos;							\
 -- 
 2.51.0
 
