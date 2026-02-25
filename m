@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111881E2834;
-	Wed, 25 Feb 2026 01:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C02256C8B;
+	Wed, 25 Feb 2026 01:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983714; cv=none; b=kbYNs+lw8n5yS2Uf/7dqv7/z6amBJhZ8A5DvxmxUpNdqMJjt8kH2JeWetcplNmBgTz9rs0TX6WMRKMUZZJ28Pc+04ntj9axa/8yhEuzuVcRylnra14SOQM8Pg/BLkMJ9pSjdn1pzOAWX88mtOvlH6IujElQQfsKUXRGPV/h7RC8=
+	t=1771983715; cv=none; b=kC9JaqmyMbICyJMkEM79FwfC70ZrDFheVLTRQNH0R+roHl99al9eCRw4jI9V6ZNoDkc94CCPCCrW9JsMAY39P2bNxGjZUuqRSecu3jC8pEHZ3iGfFFtfClyJwv+b584NyUKEBf1Iz8CQZ8kCNOaFI/7UAXWQtlp8mn54NtWUYxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983714; c=relaxed/simple;
-	bh=Ibp3cLrBtCZb0HCPfd8LhvNiQX+W6XMi4l918L/pO+g=;
+	s=arc-20240116; t=1771983715; c=relaxed/simple;
+	bh=oiF2/VpCDPglN7M4PT8WGHhHY1GEokQi8rWp1W9wNVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q5dc8qlEzevmfvLI/k7LPPWalaGXW5TWr5/jYamrGdnlZEqADqiY81G9G24AhB77uiVFmmZdvlH9sGh/JVUs5zgxban9pek5galGTpUsXknsCO9Oly685v2wHhk1V+kfsqmEb2h/0oxTMOeZYrHODPnGUXjnZpSA0Dx9qhP0uBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hZg4xb+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fW5o/Fs2OPKAo9zvIY6vvZbUvdbK9c3XxI5NImc5499M/qdv57MW1mP0D3joi40QYlBnh0Ysa+Vrpz9zLlHaWiZ+HlLJc0bfg3EskgwPmG+VYrBMOW4G1svAd4DZLKpTdNxDpH/CeJZKv+sPBxq/W4YluU8rtyPPXaMVKDy9XHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SO13g/rY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hZg4xb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF15AC116D0;
-	Wed, 25 Feb 2026 01:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SO13g/rY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62B3C116D0;
+	Wed, 25 Feb 2026 01:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983714;
-	bh=Ibp3cLrBtCZb0HCPfd8LhvNiQX+W6XMi4l918L/pO+g=;
+	s=korg; t=1771983715;
+	bh=oiF2/VpCDPglN7M4PT8WGHhHY1GEokQi8rWp1W9wNVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hZg4xb+b4BG/9QnOq9FCsjMd+xa2T2/+cFEfkOy1SLTvfF8TPKBye6Rr9kYddRUm
-	 oj+fB21GK1orBDFR9VP2/HCMYMqShpiG+dkOLV96U7bCU4zsYdLvcwcgX13j3gdBQH
-	 APtIsfcx7V/V3cEVZ3BPPiaAccoa39dkKB8P+js4=
+	b=SO13g/rYKPVnoolRb8ikoC5jadzj2Px9fczPcSf/eaEgH+xxNO7MNrNS827EMky2i
+	 q0miHeuNlCXp1NhHUzpMpocuFBMupECL4OPRL4nsk6C3oDMQGGxOfpfqJQRAboT4X0
+	 OWMHrZoj9R42pogmgP3l/vRDF6h91nW7ChGRlUwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 012/641] i3c: master: Update hot-join flag only on success
-Date: Tue, 24 Feb 2026 17:15:38 -0800
-Message-ID: <20260225012349.240934403@linuxfoundation.org>
+Subject: [PATCH 6.18 013/641] gfs2: Retries missing in gfs2_{rename,exchange}
+Date: Tue, 24 Feb 2026 17:15:39 -0800
+Message-ID: <20260225012349.266685810@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,36 +50,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit f0775157b9f9a28ae3eabc8d05b0bc52e8056c80 ]
+[ Upstream commit 11d763f0b0afc2cf5f92f4adae5dbbbbef712f8f ]
 
-To prevent inconsistent state when an error occurs, ensure the hot-join
-flag is updated only when enabling or disabling hot-join succeeds.
+Fix a bug in gfs2's asynchronous glock handling for rename and exchange
+operations.  The original async implementation from commit ad26967b9afa
+("gfs2: Use async glocks for rename") mentioned that retries were needed
+but never implemented them, causing operations to fail with -ESTALE
+instead of retrying on timeout.
 
-Fixes: 317bacf960a48 ("i3c: master: add enable(disable) hot join in sys entry")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260113072702.16268-4-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Also makes the waiting interruptible.
+
+In addition, the timeouts used were too high for situations in which
+timing out is a rare but expected scenario.  Switch to shorter timeouts
+with randomization and exponentional backoff.
+
+Fixes: ad26967b9afa ("gfs2: Use async glocks for rename")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/gfs2/glock.c | 36 +++++++++++++++++++++++++++---------
+ fs/gfs2/glock.h |  3 ++-
+ fs/gfs2/inode.c | 18 ++++++++++++++----
+ 3 files changed, 43 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index bc68a5e7455be..425e36b36009b 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -620,7 +620,8 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
- 	else
- 		ret = master->ops->disable_hotjoin(master);
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index 9f2eb7e385695..7aec6cfdfd91d 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -1354,31 +1354,45 @@ static int glocks_pending(unsigned int num_gh, struct gfs2_holder *ghs)
+  * gfs2_glock_async_wait - wait on multiple asynchronous glock acquisitions
+  * @num_gh: the number of holders in the array
+  * @ghs: the glock holder array
++ * @retries: number of retries attempted so far
+  *
+  * Returns: 0 on success, meaning all glocks have been granted and are held.
+  *          -ESTALE if the request timed out, meaning all glocks were released,
+  *          and the caller should retry the operation.
+  */
  
--	master->hotjoin = enable;
-+	if (!ret)
-+		master->hotjoin = enable;
+-int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs)
++int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs,
++			  unsigned int retries)
+ {
+ 	struct gfs2_sbd *sdp = ghs[0].gh_gl->gl_name.ln_sbd;
+-	int i, ret = 0, timeout = 0;
+ 	unsigned long start_time = jiffies;
++	int i, ret = 0;
++	long timeout;
  
- 	i3c_bus_normaluse_unlock(&master->bus);
+ 	might_sleep();
+-	/*
+-	 * Total up the (minimum hold time * 2) of all glocks and use that to
+-	 * determine the max amount of time we should wait.
+-	 */
+-	for (i = 0; i < num_gh; i++)
+-		timeout += ghs[i].gh_gl->gl_hold_time << 1;
+ 
+-	if (!wait_event_timeout(sdp->sd_async_glock_wait,
++	timeout = GL_GLOCK_MIN_HOLD;
++	if (retries) {
++		unsigned int max_shift;
++		long incr;
++
++		/* Add a random delay and increase the timeout exponentially. */
++		max_shift = BITS_PER_LONG - 2 - __fls(GL_GLOCK_HOLD_INCR);
++		incr = min(GL_GLOCK_HOLD_INCR << min(retries - 1, max_shift),
++			   10 * HZ - GL_GLOCK_MIN_HOLD);
++		schedule_timeout_interruptible(get_random_long() % (incr / 3));
++		if (signal_pending(current))
++			goto interrupted;
++		timeout += (incr / 3) + get_random_long() % (incr / 3);
++	}
++
++	if (!wait_event_interruptible_timeout(sdp->sd_async_glock_wait,
+ 				!glocks_pending(num_gh, ghs), timeout)) {
+ 		ret = -ESTALE; /* request timed out. */
+ 		goto out;
+ 	}
++	if (signal_pending(current))
++		goto interrupted;
+ 
+ 	for (i = 0; i < num_gh; i++) {
+ 		struct gfs2_holder *gh = &ghs[i];
+@@ -1402,6 +1416,10 @@ int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs)
+ 		}
+ 	}
+ 	return ret;
++
++interrupted:
++	ret = -EINTR;
++	goto out;
+ }
+ 
+ /**
+diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
+index d041b922b45e3..2d4fd1a2bbbb8 100644
+--- a/fs/gfs2/glock.h
++++ b/fs/gfs2/glock.h
+@@ -204,7 +204,8 @@ int gfs2_glock_poll(struct gfs2_holder *gh);
+ int gfs2_instantiate(struct gfs2_holder *gh);
+ int gfs2_glock_holder_ready(struct gfs2_holder *gh);
+ int gfs2_glock_wait(struct gfs2_holder *gh);
+-int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs);
++int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs,
++			  unsigned int retries);
+ void gfs2_glock_dq(struct gfs2_holder *gh);
+ void gfs2_glock_dq_wait(struct gfs2_holder *gh);
+ void gfs2_glock_dq_uninit(struct gfs2_holder *gh);
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index d7e35a05c1610..63d9fe7464344 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -1495,7 +1495,7 @@ static int gfs2_rename(struct inode *odir, struct dentry *odentry,
+ 	unsigned int num_gh;
+ 	int dir_rename = 0;
+ 	struct gfs2_diradd da = { .nr_blocks = 0, .save_loc = 0, };
+-	unsigned int x;
++	unsigned int retries = 0, x;
+ 	int error;
+ 
+ 	gfs2_holder_mark_uninitialized(&r_gh);
+@@ -1545,12 +1545,17 @@ static int gfs2_rename(struct inode *odir, struct dentry *odentry,
+ 		num_gh++;
+ 	}
+ 
++again:
+ 	for (x = 0; x < num_gh; x++) {
+ 		error = gfs2_glock_nq(ghs + x);
+ 		if (error)
+ 			goto out_gunlock;
+ 	}
+-	error = gfs2_glock_async_wait(num_gh, ghs);
++	error = gfs2_glock_async_wait(num_gh, ghs, retries);
++	if (error == -ESTALE) {
++		retries++;
++		goto again;
++	}
+ 	if (error)
+ 		goto out_gunlock;
+ 
+@@ -1739,7 +1744,7 @@ static int gfs2_exchange(struct inode *odir, struct dentry *odentry,
+ 	struct gfs2_sbd *sdp = GFS2_SB(odir);
+ 	struct gfs2_holder ghs[4], r_gh;
+ 	unsigned int num_gh;
+-	unsigned int x;
++	unsigned int retries = 0, x;
+ 	umode_t old_mode = oip->i_inode.i_mode;
+ 	umode_t new_mode = nip->i_inode.i_mode;
+ 	int error;
+@@ -1783,13 +1788,18 @@ static int gfs2_exchange(struct inode *odir, struct dentry *odentry,
+ 	gfs2_holder_init(nip->i_gl, LM_ST_EXCLUSIVE, GL_ASYNC, ghs + num_gh);
+ 	num_gh++;
+ 
++again:
+ 	for (x = 0; x < num_gh; x++) {
+ 		error = gfs2_glock_nq(ghs + x);
+ 		if (error)
+ 			goto out_gunlock;
+ 	}
+ 
+-	error = gfs2_glock_async_wait(num_gh, ghs);
++	error = gfs2_glock_async_wait(num_gh, ghs, retries);
++	if (error == -ESTALE) {
++		retries++;
++		goto again;
++	}
+ 	if (error)
+ 		goto out_gunlock;
  
 -- 
 2.51.0
