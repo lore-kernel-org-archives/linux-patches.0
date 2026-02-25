@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210133054C7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AAC318B86;
 	Wed, 25 Feb 2026 06:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002750; cv=none; b=RVvpkHbCSLfPztha9c4/WPD3PJ317gUD2bz7RutVgOjgLufFIJ7uULrChVEFHP/d11MvHh64S/4JVbxhezWTmKG1GRuVtnKQITQk3ssyLCC5c4Nbkyw52bYp4XTnQ12XRnavyhZammjXUcIQR8O6M+l5c2xxwVj9BJwdR9mnwdM=
+	t=1772002750; cv=none; b=uhe5f7XNPafwC0iB+JmMPPA6j03N+RPDLRryV3KLS8DYqHYw20YSHWHDYUbIPnn5ROPQKuU/tsl/3BWlX3jLKPJN1H8DMqydzbd4GIn2y0ruh9gHhPt+gtd/vUf/j96ineihistwLZQERLFt7ceKjylRkGMgzoPuW9BENbLLQvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002750; c=relaxed/simple;
-	bh=t8TODMmQg+Iq49OM8cdJ5F94E8ATmVzq4n65AdgLDcA=;
+	bh=c1pvBslOHKLzuOnU3+8iKwDiVEOddm0+0MrGV4MKfEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6fQZzZZMMA9ffafmEhV+5Ca1zGO9InqKE3+Itz/iow09bz+qmuzsy+q82j/EE/kNFUHhLFB0IXHcuR8McBFZ2k8BcPcO3kTitec9J0X7tnvcy85l0TX8mB3b9JY1N9y3IW4MJsJbAiXS/EwAIJGcd7X2dXhK3VyQ597qCLY1Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iI5lo+GB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c+ydbPv7XikRjiLWDC1vRva/gkgea2oBjNH55695cGfpawx+EqvG+05k18gKZEsCKBOmpIHy99op/dw+woN6GRxLgQNwsaRwCwPgnIuSEE2VuCDotWsNw09Jgua7JKu1Tzv5VCdhj8aIalA8aaaUpDqMbAsKkvPYKKtTYps+t9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJbpb+13; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iI5lo+GB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CBAC116D0;
-	Wed, 25 Feb 2026 06:59:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJbpb+13"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903BDC116D0;
+	Wed, 25 Feb 2026 06:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002750;
-	bh=t8TODMmQg+Iq49OM8cdJ5F94E8ATmVzq4n65AdgLDcA=;
+	bh=c1pvBslOHKLzuOnU3+8iKwDiVEOddm0+0MrGV4MKfEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iI5lo+GB0NId7YVffKgV3mqV5BvFM6IJcVbw5IvUjnpeym7kE9drjPj4iNd2qQjeK
-	 jKePathRkJS9VTuMBMkfOprOG9CHV7dolZBMBFHb7eDFjtX+qlWnaYyPEzYEidz/FI
-	 8YScAZb9DqCteU89a7lNlRURiQ5z7ytTJubPZv3A=
+	b=LJbpb+13EZxvetZVUu9SiTmM2JF6lz7BPje2G+fk9flkY8Qsm/6CMWo39mDAEhJ6N
+	 Czxt5EHo8iJ0WAZwO7Eh7zSUA/b33EUzQidqabKBHQI+7gQJWmu+RLMT0RMqc3TzGW
+	 6u2KAYE6dtxV/aRrTKWVL169rot4IrJ46XYv7pq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
+	Zhengmian Hu <huzhengmian@gmail.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 574/641] apparmor: make label_match return a consistent value
-Date: Tue, 24 Feb 2026 17:25:00 -0800
-Message-ID: <20260225012402.426119971@linuxfoundation.org>
+Subject: [PATCH 6.18 575/641] apparmor: avoid per-cpu hold underflow in aa_get_buffer
+Date: Tue, 24 Feb 2026 17:25:01 -0800
+Message-ID: <20260225012402.449223693@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,78 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Zhengmian Hu <huzhengmian@gmail.com>
 
-[ Upstream commit a4c9efa4dbad6dacad6e8b274e30e814c8353097 ]
+[ Upstream commit 640cf2f09575c9dc344b3f7be2498d31e3923ead ]
 
-compound match is inconsistent in returning a state or an integer error
-this is problemati if the error is ever used as a state in the state
-machine
+When aa_get_buffer() pulls from the per-cpu list it unconditionally
+decrements cache->hold. If hold reaches 0 while count is still non-zero,
+the unsigned decrement wraps to UINT_MAX. This keeps hold non-zero for a
+very long time, so aa_put_buffer() never returns buffers to the global
+list, which can starve other CPUs and force repeated kmalloc(aa_g_path_max)
+allocations.
 
-Fixes: f1bd904175e81 ("apparmor: add the base fns() for domain labels")
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Guard the decrement so hold never underflows.
+Fixes: ea9bae12d028 ("apparmor: cache buffers on percpu list if there is lock contention")
+
+Signed-off-by: Zhengmian Hu <huzhengmian@gmail.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/label.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ security/apparmor/lsm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index 02ee128f53d13..1d3fa5c28d97f 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -1278,7 +1278,7 @@ static inline aa_state_t match_component(struct aa_profile *profile,
-  * @request: permissions to request
-  * @perms: perms struct to set
-  *
-- * Returns: 0 on success else ERROR
-+ * Returns: state match stopped at or DFA_NOMATCH if aborted early
-  *
-  * For the label A//&B//&C this does the perm match for A//&B//&C
-  * @perms should be preinitialized with allperms OR a previous permission
-@@ -1305,7 +1305,7 @@ static int label_compound_match(struct aa_profile *profile,
- 
- 	/* no component visible */
- 	*perms = allperms;
--	return 0;
-+	return state;
- 
- next:
- 	label_for_each_cont(i, label, tp) {
-@@ -1317,14 +1317,11 @@ static int label_compound_match(struct aa_profile *profile,
- 			goto fail;
- 	}
- 	*perms = *aa_lookup_perms(rules->policy, state);
--	if ((perms->allow & request) != request)
--		return -EACCES;
--
--	return 0;
-+	return state;
- 
- fail:
- 	*perms = nullperms;
--	return state;
-+	return DFA_NOMATCH;
- }
- 
- /**
-@@ -1406,11 +1403,12 @@ int aa_label_match(struct aa_profile *profile, struct aa_ruleset *rules,
- 		   struct aa_label *label, aa_state_t state, bool subns,
- 		   u32 request, struct aa_perms *perms)
- {
--	int error = label_compound_match(profile, rules, label, state, subns,
--					 request, perms);
--	if (!error)
--		return error;
-+	aa_state_t tmp = label_compound_match(profile, rules, label, state, subns,
-+					request, perms);
-+	if ((perms->allow & request) == request)
-+		return 0;
- 
-+	/* failed compound_match try component matches */
- 	*perms = allperms;
- 	return label_components_match(profile, rules, label, state, subns,
- 				      request, perms);
+diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
+index be3678d08ed23..13c9bfdf65ff5 100644
+--- a/security/apparmor/lsm.c
++++ b/security/apparmor/lsm.c
+@@ -2136,7 +2136,8 @@ char *aa_get_buffer(bool in_atomic)
+ 	if (!list_empty(&cache->head)) {
+ 		aa_buf = list_first_entry(&cache->head, union aa_buffer, list);
+ 		list_del(&aa_buf->list);
+-		cache->hold--;
++		if (cache->hold)
++			cache->hold--;
+ 		cache->count--;
+ 		put_cpu_ptr(&aa_local_buffers);
+ 		return &aa_buf->buffer[0];
 -- 
 2.51.0
 
