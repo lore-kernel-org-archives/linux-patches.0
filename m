@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8D31D5141;
-	Wed, 25 Feb 2026 01:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366A0262FC0;
+	Wed, 25 Feb 2026 01:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983722; cv=none; b=KAmHQ0Aj3LpjmDByJEvCdTaPC0ES5WTWc5D012ew3vKn8kqZotIQb2UyT+UJQMHZRA3vXkD2cMTS0KnqrhdSp87IQ61wr//8EhwSuY2ZPrz1Yu/s1RPglvgKeiIfMnwIombTGfLaunjz5apdqZ67HefchsjrXbJ/lpFNLGlPNI8=
+	t=1771983724; cv=none; b=mdwX6tHHxL9U7VIjs5h9CCilST1fT6nEWl+3hlA+hRApmbXMWXYL/1+obJr4QSe2VtqHcMWvemCRtEaNYAU5trOHs68w5gUaJ4mxtiEilAQRvbSdosyhOEFCn+IoB1kw5bVJMfp56FN/1OhAEtObBxSxifDACx4oLl/s5WnLNkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983722; c=relaxed/simple;
-	bh=QeTEYCHNKAMoXnIY/Yhge/lBbPcGfjPP7fTWHK/+g9I=;
+	s=arc-20240116; t=1771983724; c=relaxed/simple;
+	bh=SQQVDJx7frtQOaYh4YkCwHssOORnVKOvKxSK40SiErE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fowgymDqbGpSZKWSxVZmzKY+2qQaHOREBsxWhqBVN/5gyk272wDvKewe3rhrxI4ofU2qywNEL/9BzVtg2pYq98rjgwQzRo3r43+fsIUppBFtMWsupHmryFBCg2VhxeukYvrED0Fq7qKzVxbAwAGkUpbt/Y7xiZrs9SB6zgsi5IU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ER2D4jIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IuNe9PDAKtiaG/kA+iigSpycBQNpBj2Vo7qM5B7YZB+OXUoJmbL9KEOcAn0TqoOvxXkUzWeCEN7Sp/zAnrW4njfr/949yRKQ0fLdmg3vL1OOrsg+c6Y23MG6KobMcJI746V6mDRM4BToe69SfxfLNLEc7RYRVQJszQF7ub3N5Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ina9+1pQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ER2D4jIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68B4C19424;
-	Wed, 25 Feb 2026 01:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ina9+1pQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD32AC2BC87;
+	Wed, 25 Feb 2026 01:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983722;
-	bh=QeTEYCHNKAMoXnIY/Yhge/lBbPcGfjPP7fTWHK/+g9I=;
+	s=korg; t=1771983724;
+	bh=SQQVDJx7frtQOaYh4YkCwHssOORnVKOvKxSK40SiErE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ER2D4jIkdzlRpjbiG9W4dzyjB2tHwa8lEsLlSOShmZNWg4QuKevM+eAvvkplws3NJ
-	 O7UBbVulwF6Xs2XDqm9cpGEWvrXc4rtPMBTQFHQ4KtdHIzaCUxOWHLMRxHq00mRD/F
-	 jH6ctbOZgGp2chUM85zBE8efk2CEPcltOasxnrIc=
+	b=ina9+1pQhqT8+SsXmWFQIKVJ72Z26Wyx9GLzjHQSHm2oYvf0R6Mh2QuJXDJhX05fI
+	 sUCskBTVdp4kQnLT4m0n4CAQvlH3UVl8AuA876sTmaDLxeV0DBhJ16+tIakX/0NlEM
+	 IjlXh3+5t1+awBaJelW0GiwrAYxPkJr23rUH+iWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YunJe Shin <ioerts@kookmin.ac.kr>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.18 002/641] RDMA/umad: Reject negative data_len in ib_umad_write
-Date: Tue, 24 Feb 2026 17:15:28 -0800
-Message-ID: <20260225012348.986046651@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 020/641] erofs: get rid of raw bi_end_io() usage
+Date: Tue, 24 Feb 2026 17:15:46 -0800
+Message-ID: <20260225012349.461900919@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -50,57 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YunJe Shin <yjshin0438@gmail.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 5551b02fdbfd85a325bb857f3a8f9c9f33397ed2 upstream.
+[ Upstream commit 80d0c27a0a4af8e0678d7412781482e6f73c22c7 ]
 
-ib_umad_write computes data_len from user-controlled count and the
-MAD header sizes. With a mismatched user MAD header size and RMPP
-header length, data_len can become negative and reach ib_create_send_mad().
-This can make the padding calculation exceed the segment size and trigger
-an out-of-bounds memset in alloc_send_rmpp_list().
+These BIOs are actually harmless in practice, as they are all pseudo
+BIOs and do not use advanced features like chaining.  Using the BIO
+interface is a more friendly and unified approach for both bdev and
+and file-backed I/Os (compared to awkward bvec interfaces).
 
-Add an explicit check to reject negative data_len before creating the
-send buffer.
+Let's use bio_endio() instead.
 
-KASAN splat:
-[  211.363464] BUG: KASAN: slab-out-of-bounds in ib_create_send_mad+0xa01/0x11b0
-[  211.364077] Write of size 220 at addr ffff88800c3fa1f8 by task spray_thread/102
-[  211.365867] ib_create_send_mad+0xa01/0x11b0
-[  211.365887] ib_umad_write+0x853/0x1c80
-
-Fixes: 2be8e3ee8efd ("IB/umad: Add P_Key index support")
-Signed-off-by: YunJe Shin <ioerts@kookmin.ac.kr>
-Link: https://patch.msgid.link/20260203100628.1215408-1-ioerts@kookmin.ac.kr
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Stable-dep-of: bc804a8d7e86 ("erofs: handle end of filesystem properly for file-backed mounts")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/user_mad.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/erofs/fileio.c  | 2 +-
+ fs/erofs/fscache.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/infiniband/core/user_mad.c
-+++ b/drivers/infiniband/core/user_mad.c
-@@ -514,7 +514,8 @@ static ssize_t ib_umad_write(struct file
- 	struct rdma_ah_attr ah_attr;
- 	struct ib_ah *ah;
- 	__be64 *tid;
--	int ret, data_len, hdr_len, copy_offset, rmpp_active;
-+	int ret, hdr_len, copy_offset, rmpp_active;
-+	size_t data_len;
- 	u8 base_version;
- 
- 	if (count < hdr_size(file) + IB_MGMT_RMPP_HDR)
-@@ -588,7 +589,10 @@ static ssize_t ib_umad_write(struct file
+diff --git a/fs/erofs/fileio.c b/fs/erofs/fileio.c
+index a47c6bab98ff9..e2eaa7119bd4f 100644
+--- a/fs/erofs/fileio.c
++++ b/fs/erofs/fileio.c
+@@ -35,13 +35,13 @@ static void erofs_fileio_ki_complete(struct kiocb *iocb, long ret)
+ 	if (rq->bio.bi_end_io) {
+ 		if (ret < 0 && !rq->bio.bi_status)
+ 			rq->bio.bi_status = errno_to_blk_status(ret);
+-		rq->bio.bi_end_io(&rq->bio);
+ 	} else {
+ 		bio_for_each_folio_all(fi, &rq->bio) {
+ 			DBG_BUGON(folio_test_uptodate(fi.folio));
+ 			erofs_onlinefolio_end(fi.folio, ret, false);
+ 		}
  	}
++	bio_endio(&rq->bio);
+ 	bio_uninit(&rq->bio);
+ 	if (refcount_dec_and_test(&rq->ref))
+ 		kfree(rq);
+diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
+index 362acf828279f..7a346e20f7b7a 100644
+--- a/fs/erofs/fscache.c
++++ b/fs/erofs/fscache.c
+@@ -185,7 +185,7 @@ static void erofs_fscache_bio_endio(void *priv, ssize_t transferred_or_error)
  
- 	base_version = ((struct ib_mad_hdr *)&packet->mad.data)->base_version;
--	data_len = count - hdr_size(file) - hdr_len;
-+	if (check_sub_overflow(count, hdr_size(file) + hdr_len, &data_len)) {
-+		ret = -EINVAL;
-+		goto err_ah;
-+	}
- 	packet->msg = ib_create_send_mad(agent,
- 					 be32_to_cpu(packet->mad.hdr.qpn),
- 					 packet->mad.hdr.pkey_index, rmpp_active,
+ 	if (IS_ERR_VALUE(transferred_or_error))
+ 		io->bio.bi_status = errno_to_blk_status(transferred_or_error);
+-	io->bio.bi_end_io(&io->bio);
++	bio_endio(&io->bio);
+ 	BUILD_BUG_ON(offsetof(struct erofs_fscache_bio, io) != 0);
+ 	erofs_fscache_io_put(&io->io);
+ }
+@@ -216,7 +216,7 @@ void erofs_fscache_submit_bio(struct bio *bio)
+ 	if (!ret)
+ 		return;
+ 	bio->bi_status = errno_to_blk_status(ret);
+-	bio->bi_end_io(bio);
++	bio_endio(bio);
+ }
+ 
+ static int erofs_fscache_meta_read_folio(struct file *data, struct folio *folio)
+-- 
+2.51.0
+
 
 
