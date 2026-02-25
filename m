@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C02248F54;
-	Wed, 25 Feb 2026 01:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8750248F54;
+	Wed, 25 Feb 2026 01:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983806; cv=none; b=rrfNMvZumcPQzjPJ/JbkCWek1h1ixa5pON3wGR7xktaASbr8ov8PjOEwsSeLrRDEOj4ImKpns3VsuwbOygI9GqhZZT91qaCw84d7dO7SbsWAwHPj6pVae9PYAycWw9mDPFAJHPonY0PtXB2i2HBmWG+iPM+A6gAVch8tF1Yg6YM=
+	t=1771983807; cv=none; b=rS6puzk6K9xAuigwsxX3d4Nvtl3zQ6sjCzmzvpp5qR2KFpN5SFB2p5dyCKWJRpAhAaJcbVrC3FeRicKLdUmi3k4aOt/tLl4JM7pUpu3R+pKnQJvI7molrywocf1prq/x2/dn9U5SmFkvKqOimtNWC88hjKZGYmm68hqoyd9g63Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983806; c=relaxed/simple;
-	bh=7qg/g7QLNZwNu1vbSjh/ZWajvsaWwdDko814yJ3m4tc=;
+	s=arc-20240116; t=1771983807; c=relaxed/simple;
+	bh=hmCUlpsurcJYA50YdrQhNmb0ThRdokZUgwGXp3A30/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PA6Y1PqZPjIqvvzZJTan5vA55rPyCH1bKW488uufiqY5X2ezJNSQjwTaLUiHFFwi1a4iBcgKJ9RqsjGV0+hKeqM2jUvvv4YNxQal4iu92dWMfCe4tFNABTlPPXZSeX/zAem7LwQ6n/gK2CBu3GAUF8aIt+pAWp+xfjFNAOncfUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCtQ0uOb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEoJEJeJlm+ZKsWZuBOFlSfvdy3AsW/tMQ5vpI9ugPiZJMAGev3snagwU46N2kmqyVRcKGgYNHJGJVOGVHU3hOrPq2L2nPw/CcZmpMrDw3UrD8TBy0p+1fqXDJao4erLAYKub0Qi2SICXOYSHqN2ll+SIAuaaoZ9utOsD+xeN/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7iVopLv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCtQ0uOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F19CC116D0;
-	Wed, 25 Feb 2026 01:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7iVopLv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBAFC116D0;
+	Wed, 25 Feb 2026 01:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983806;
-	bh=7qg/g7QLNZwNu1vbSjh/ZWajvsaWwdDko814yJ3m4tc=;
+	s=korg; t=1771983807;
+	bh=hmCUlpsurcJYA50YdrQhNmb0ThRdokZUgwGXp3A30/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCtQ0uOb+5PtjJpPvdA0ZA8/QO24sKsU1Yqnk57SADTTqoZBmy2FvOmUSvM54tc27
-	 kDdtXTapoFmd0LW+wlhYPxE/1T7iNOgGqrBcXZa8+JoVBpXow1+bG38ZYXL4SjSAB/
-	 8vWjDTFFhwQk51UNHZ0aWX9ip7Zyo659U+9U4kPI=
+	b=A7iVopLvl8KvFBIPqu6mVxwfrg8Yj6oPWTm2UTZMsOQ9iY4UOfp1r5fKXMHNaOSsD
+	 sM4wPK6takm25NC5w7OvceGGPnWrk2NigDN7hsAmApR9mgrSzGC4+kcGkL1bWRRgu9
+	 tpjIcXYvptUrxuBh3miSC8LeLyhL6MaDFG9YoOQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/641] iomap: fix submission side handling of completion side errors
-Date: Tue, 24 Feb 2026 17:16:15 -0800
-Message-ID: <20260225012350.223220731@linuxfoundation.org>
+Subject: [PATCH 6.18 050/641] thermal/of: Fix reference leak in thermal_of_cm_lookup()
+Date: Tue, 24 Feb 2026 17:16:16 -0800
+Message-ID: <20260225012350.247498695@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,46 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 4ad357e39b2ecd5da7bcc7e840ee24d179593cd5 ]
+[ Upstream commit a1fe789a96fe47733c133134fd264cb7ca832395 ]
 
-The "if (dio->error)" in iomap_dio_bio_iter exists to stop submitting
-more bios when a completion already return an error.  Commit cfe057f7db1f
-("iomap_dio_actor(): fix iov_iter bugs") made it revert the iov by
-"copied", which is very wrong given that we've already consumed that
-range and submitted a bio for it.
+In thermal_of_cm_lookup(), tr_np is obtained via of_parse_phandle(), but
+never released.
 
-Fixes: cfe057f7db1f ("iomap_dio_actor(): fix iov_iter bugs")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Use the __free(device_node) cleanup attribute to automatically release
+the node and fix the leak.
+
+Fixes: 423de5b5bc5b ("thermal/of: Fix cdev lookup in thermal_of_should_bind()")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20260124-thermal_of-v1-1-54d3416948cf@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/direct-io.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/thermal/thermal_of.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
-index 6317e4cd42517..e73c71f39bd45 100644
---- a/fs/iomap/direct-io.c
-+++ b/fs/iomap/direct-io.c
-@@ -429,9 +429,13 @@ static int iomap_dio_bio_iter(struct iomap_iter *iter, struct iomap_dio *dio)
- 	nr_pages = bio_iov_vecs_to_alloc(dio->submit.iter, BIO_MAX_VECS);
- 	do {
- 		size_t n;
--		if (dio->error) {
--			iov_iter_revert(dio->submit.iter, copied);
--			copied = ret = 0;
-+
-+		/*
-+		 * If completions already occurred and reported errors, give up now and
-+		 * don't bother submitting more bios.
-+		 */
-+		if (unlikely(data_race(dio->error))) {
-+			ret = 0;
- 			goto out;
- 		}
+diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+index 1a51a4d240ff6..b6d0c92f5522b 100644
+--- a/drivers/thermal/thermal_of.c
++++ b/drivers/thermal/thermal_of.c
+@@ -280,10 +280,10 @@ static bool thermal_of_cm_lookup(struct device_node *cm_np,
+ 				 struct cooling_spec *c)
+ {
+ 	for_each_child_of_node_scoped(cm_np, child) {
+-		struct device_node *tr_np;
+ 		int count, i;
+ 
+-		tr_np = of_parse_phandle(child, "trip", 0);
++		struct device_node *tr_np __free(device_node) =
++			of_parse_phandle(child, "trip", 0);
+ 		if (tr_np != trip->priv)
+ 			continue;
  
 -- 
 2.51.0
