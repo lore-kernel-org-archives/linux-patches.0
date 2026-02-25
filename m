@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B2123D7CF;
-	Wed, 25 Feb 2026 01:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33E018B0A;
+	Wed, 25 Feb 2026 01:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983383; cv=none; b=DganRZvfR36V3FQFfrhDUBvX92lZ3u5ohSzRneRYsyDGs2faqzJi3xmnldEWkUKRMlkzR+qwt7fipbvbmpraQpGjsv8ZLLkWYM86KHCHMmF24ZMYnwq2J6Q5VbLpjMblojUCY/QVEosKF/t2xeJTf+g7IvscnCO4hE1wCV38zWQ=
+	t=1771983384; cv=none; b=hrd1rJ+RbnnLuOlzpk1Fx5Efgjr7sBf28RkJUW6kNoq4hyuItS9boWzrEEhoscs1p8gcauq2MeYA8RsczlTJ0uITuiFFl6zscmlGMORKeKktElbi+278T7+nQIn9zRt1JgisyN6wjg2zcHNiOwIP3xOxrkMjeWxZlTC613gEm04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983383; c=relaxed/simple;
-	bh=8eIGOma6ryY5lbHFJqYvruv0dqu0WGEOEoqO/NOP2yE=;
+	s=arc-20240116; t=1771983384; c=relaxed/simple;
+	bh=bEQPFFhszcs8ziZxBegE8/lBZYOAOQPjeCUCn8fXXJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r0L/dZsBt5zWYlaOF+TTlzcs8nYer0YBdFoKITMNhKSTYJjIGSZ0Rd/0s61GoOqaoeMTDwRk0YVURh46jfhdI+8JgWY0xGuJf55XLIs0CfRegkMYYOVFTV3ZuEMX7T7YZ7mCd8ZpCHEXKoYKS0W9C7eFjCifzHAIpVgzAuotHzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0d9CXBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+aMEh2hNZTnc02P2aEWltPkdLM7RA4MqNvuv4QsLmeaokKeqrjegCM/87QPdv232aZsr4RpI4cJz8Asqn1kspL+8ZI1i3EPP69RU/8q8EzjAugvHe5i1CkUsQeqIWvb2cRjDDs4S4WgYSMnfeqcF0mFN+SlDUNcVxog3BJLU1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbGqK/5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0d9CXBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51833C116D0;
-	Wed, 25 Feb 2026 01:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbGqK/5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BE9C116D0;
+	Wed, 25 Feb 2026 01:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983383;
-	bh=8eIGOma6ryY5lbHFJqYvruv0dqu0WGEOEoqO/NOP2yE=;
+	s=korg; t=1771983384;
+	bh=bEQPFFhszcs8ziZxBegE8/lBZYOAOQPjeCUCn8fXXJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b0d9CXBxKDejZqKL9DEq2h7W0AkDGu3DL/o09Q9c319QTrLwHc7x5NFDR4UZCIerv
-	 FBUg/YLh+Ap2cxRAut7jNVSjtZdgGrK83JoIG6j0y8qaJMYSPNlo4IUDUpnb8vSmn3
-	 OLTQV8QNCp5fQvO8VkRpNlpHQtapKyUfqPI9WkZI=
+	b=WbGqK/5lXP5S8b5Ono5askAtdq1rGHG9IcafWIXWE/14m8b8pJddScfnUmw0Sc9vW
+	 5MRIL6A4gn8PoN0NlLjT3cskJ9MUKm5YlhaQxfXBUiPJP33W+mPoQ0Y1sVtteYazh3
+	 53F8HUbNKKd1nWym+hT3/r1rxvxPHNRV/42wS7xY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Iuliana Prodan <iuliana.prodan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 507/781] remoteproc: imx_dsp_rproc: Only reset carveout memory at RPROC_OFFLINE state
-Date: Tue, 24 Feb 2026 17:20:16 -0800
-Message-ID: <20260225012412.238581291@linuxfoundation.org>
+Subject: [PATCH 6.19 508/781] Revert "mailbox/pcc: support mailbox management of the shared buffer"
+Date: Tue, 24 Feb 2026 17:20:17 -0800
+Message-ID: <20260225012412.264732818@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,44 +51,252 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit b490ddf27be28e64a39c08ae643d7b22561beaf6 ]
+[ Upstream commit f82c3e62b6b8c31d8c56415bf38658f306fda4cb ]
 
-Do not reset memory at suspend and resume stage, because some
-memory is used to save the software state for resume, if it is cleared,
-the resume operation can fail.
+This reverts commit 5378bdf6a611a32500fccf13d14156f219bb0c85.
 
-Fixes: c4c432dfb00f ("remoteproc: imx_dsp_rproc: Add support of recovery and coredump process")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
-Link: https://lore.kernel.org/r/20251218071750.2692132-1-shengjiu.wang@nxp.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Commit 5378bdf6a611 ("mailbox/pcc: support mailbox management of the shared buffer")
+attempted to introduce generic helpers for managing the PCC shared memory,
+but it largely duplicates functionality already provided by the mailbox
+core and leaves gaps:
+
+1. TX preparation: The mailbox framework already supports this via
+  ->tx_prepare callback for mailbox clients. The patch adds
+  pcc_write_to_buffer() and expects clients to toggle pchan->chan.manage_writes,
+  but no drivers set manage_writes, so pcc_write_to_buffer() has no users.
+
+2. RX handling: Data reception is already delivered through
+   mbox_chan_received_data() and client ->rx_callback. The patch adds an
+   optional pchan->chan.rx_alloc, which again has no users and duplicates
+   the existing path.
+
+3. Completion handling: While adding last_tx_done is directionally useful,
+   the implementation only covers Type 3/4 and fails to handle the absence
+   of a command_complete register, so it is incomplete for other types.
+
+Given the duplication and incomplete coverage, revert this change. Any new
+requirements should be addressed in focused follow-ups rather than bundling
+multiple behavioral changes together.
+
+Fixes: 5378bdf6a611 ("mailbox/pcc: support mailbox management of the shared buffer")
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_dsp_rproc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/mailbox/pcc.c | 102 ++----------------------------------------
+ include/acpi/pcc.h    |  29 ------------
+ 2 files changed, 4 insertions(+), 127 deletions(-)
 
-diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
-index 83468558e634e..5a9a8fa031f6d 100644
---- a/drivers/remoteproc/imx_dsp_rproc.c
-+++ b/drivers/remoteproc/imx_dsp_rproc.c
-@@ -1000,9 +1000,11 @@ static int imx_dsp_rproc_load(struct rproc *rproc, const struct firmware *fw)
- 	 * Clear buffers after pm rumtime for internal ocram is not
- 	 * accessible if power and clock are not enabled.
- 	 */
--	list_for_each_entry(carveout, &rproc->carveouts, node) {
--		if (carveout->va)
--			memset(carveout->va, 0, carveout->len);
-+	if (rproc->state == RPROC_OFFLINE) {
-+		list_for_each_entry(carveout, &rproc->carveouts, node) {
-+			if (carveout->va)
-+				memset(carveout->va, 0, carveout->len);
-+		}
- 	}
+diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+index ff292b9e0be9e..0e0a66359d4c3 100644
+--- a/drivers/mailbox/pcc.c
++++ b/drivers/mailbox/pcc.c
+@@ -305,22 +305,6 @@ static void pcc_chan_acknowledge(struct pcc_chan_info *pchan)
+ 		pcc_chan_reg_read_modify_write(&pchan->db);
+ }
  
- 	ret = imx_dsp_rproc_elf_load_segments(rproc, fw);
+-static void *write_response(struct pcc_chan_info *pchan)
+-{
+-	struct pcc_header pcc_header;
+-	void *buffer;
+-	int data_len;
+-
+-	memcpy_fromio(&pcc_header, pchan->chan.shmem,
+-		      sizeof(pcc_header));
+-	data_len = pcc_header.length - sizeof(u32) + sizeof(struct pcc_header);
+-
+-	buffer = pchan->chan.rx_alloc(pchan->chan.mchan->cl, data_len);
+-	if (buffer != NULL)
+-		memcpy_fromio(buffer, pchan->chan.shmem, data_len);
+-	return buffer;
+-}
+-
+ /**
+  * pcc_mbox_irq - PCC mailbox interrupt handler
+  * @irq:	interrupt number
+@@ -332,8 +316,6 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ {
+ 	struct pcc_chan_info *pchan;
+ 	struct mbox_chan *chan = p;
+-	struct pcc_header *pcc_header = chan->active_req;
+-	void *handle = NULL;
+ 
+ 	pchan = chan->con_priv;
+ 
+@@ -357,17 +339,7 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ 	 * required to avoid any possible race in updatation of this flag.
+ 	 */
+ 	pchan->chan_in_use = false;
+-
+-	if (pchan->chan.rx_alloc)
+-		handle = write_response(pchan);
+-
+-	if (chan->active_req) {
+-		pcc_header = chan->active_req;
+-		if (pcc_header->flags & PCC_CMD_COMPLETION_NOTIFY)
+-			mbox_chan_txdone(chan, 0);
+-	}
+-
+-	mbox_chan_received_data(chan, handle);
++	mbox_chan_received_data(chan, NULL);
+ 
+ 	pcc_chan_acknowledge(pchan);
+ 
+@@ -411,24 +383,9 @@ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
+ 	pcc_mchan = &pchan->chan;
+ 	pcc_mchan->shmem = acpi_os_ioremap(pcc_mchan->shmem_base_addr,
+ 					   pcc_mchan->shmem_size);
+-	if (!pcc_mchan->shmem)
+-		goto err;
+-
+-	pcc_mchan->manage_writes = false;
+-
+-	/* This indicates that the channel is ready to accept messages.
+-	 * This needs to happen after the channel has registered
+-	 * its callback. There is no access point to do that in
+-	 * the mailbox API. That implies that the mailbox client must
+-	 * have set the allocate callback function prior to
+-	 * sending any messages.
+-	 */
+-	if (pchan->type == ACPI_PCCT_TYPE_EXT_PCC_SLAVE_SUBSPACE)
+-		pcc_chan_reg_read_modify_write(&pchan->cmd_update);
+-
+-	return pcc_mchan;
++	if (pcc_mchan->shmem)
++		return pcc_mchan;
+ 
+-err:
+ 	mbox_free_channel(chan);
+ 	return ERR_PTR(-ENXIO);
+ }
+@@ -459,38 +416,8 @@ void pcc_mbox_free_channel(struct pcc_mbox_chan *pchan)
+ }
+ EXPORT_SYMBOL_GPL(pcc_mbox_free_channel);
+ 
+-static int pcc_write_to_buffer(struct mbox_chan *chan, void *data)
+-{
+-	struct pcc_chan_info *pchan = chan->con_priv;
+-	struct pcc_mbox_chan *pcc_mbox_chan = &pchan->chan;
+-	struct pcc_header *pcc_header = data;
+-
+-	if (!pchan->chan.manage_writes)
+-		return 0;
+-
+-	/* The PCC header length includes the command field
+-	 * but not the other values from the header.
+-	 */
+-	int len = pcc_header->length - sizeof(u32) + sizeof(struct pcc_header);
+-	u64 val;
+-
+-	pcc_chan_reg_read(&pchan->cmd_complete, &val);
+-	if (!val) {
+-		pr_info("%s pchan->cmd_complete not set", __func__);
+-		return -1;
+-	}
+-	memcpy_toio(pcc_mbox_chan->shmem,  data, len);
+-	return 0;
+-}
+-
+-
+ /**
+- * pcc_send_data - Called from Mailbox Controller code. If
+- *		pchan->chan.rx_alloc is set, then the command complete
+- *		flag is checked and the data is written to the shared
+- *		buffer io memory.
+- *
+- *		If pchan->chan.rx_alloc is not set, then it is used
++ * pcc_send_data - Called from Mailbox Controller code. Used
+  *		here only to ring the channel doorbell. The PCC client
+  *		specific read/write is done in the client driver in
+  *		order to maintain atomicity over PCC channel once
+@@ -506,37 +433,17 @@ static int pcc_send_data(struct mbox_chan *chan, void *data)
+ 	int ret;
+ 	struct pcc_chan_info *pchan = chan->con_priv;
+ 
+-	ret = pcc_write_to_buffer(chan, data);
+-	if (ret)
+-		return ret;
+-
+ 	ret = pcc_chan_reg_read_modify_write(&pchan->cmd_update);
+ 	if (ret)
+ 		return ret;
+ 
+ 	ret = pcc_chan_reg_read_modify_write(&pchan->db);
+-
+ 	if (!ret && pchan->plat_irq > 0)
+ 		pchan->chan_in_use = true;
+ 
+ 	return ret;
+ }
+ 
+-
+-static bool pcc_last_tx_done(struct mbox_chan *chan)
+-{
+-	struct pcc_chan_info *pchan = chan->con_priv;
+-	u64 val;
+-
+-	pcc_chan_reg_read(&pchan->cmd_complete, &val);
+-	if (!val)
+-		return false;
+-	else
+-		return true;
+-}
+-
+-
+-
+ /**
+  * pcc_startup - Called from Mailbox Controller code. Used here
+  *		to request the interrupt.
+@@ -582,7 +489,6 @@ static const struct mbox_chan_ops pcc_chan_ops = {
+ 	.send_data = pcc_send_data,
+ 	.startup = pcc_startup,
+ 	.shutdown = pcc_shutdown,
+-	.last_tx_done = pcc_last_tx_done,
+ };
+ 
+ /**
+diff --git a/include/acpi/pcc.h b/include/acpi/pcc.h
+index 9af3b502f8395..840bfc95bae33 100644
+--- a/include/acpi/pcc.h
++++ b/include/acpi/pcc.h
+@@ -17,35 +17,6 @@ struct pcc_mbox_chan {
+ 	u32 latency;
+ 	u32 max_access_rate;
+ 	u16 min_turnaround_time;
+-
+-	/* Set to true to indicate that the mailbox should manage
+-	 * writing the dat to the shared buffer. This differs from
+-	 * the case where the drivesr are writing to the buffer and
+-	 * using send_data only to  ring the doorbell.  If this flag
+-	 * is set, then the void * data parameter of send_data must
+-	 * point to a kernel-memory buffer formatted in accordance with
+-	 * the PCC specification.
+-	 *
+-	 * The active buffer management will include reading the
+-	 * notify_on_completion flag, and will then
+-	 * call mbox_chan_txdone when the acknowledgment interrupt is
+-	 * received.
+-	 */
+-	bool manage_writes;
+-
+-	/* Optional callback that allows the driver
+-	 * to allocate the memory used for receiving
+-	 * messages.  The return value is the location
+-	 * inside the buffer where the mailbox should write the data.
+-	 */
+-	void *(*rx_alloc)(struct mbox_client *cl,  int size);
+-};
+-
+-struct pcc_header {
+-	u32 signature;
+-	u32 flags;
+-	u32 length;
+-	u32 command;
+ };
+ 
+ /* Generic Communications Channel Shared Memory Region */
 -- 
 2.51.0
 
