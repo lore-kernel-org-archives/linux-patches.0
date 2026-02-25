@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570A61FE45D;
-	Wed, 25 Feb 2026 01:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705FB1D5ABA;
+	Wed, 25 Feb 2026 01:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983022; cv=none; b=CN5JfyUogofFCAcSr8ZDK77P3YIMiSnFaMZcytU0wgRi/CvLtNLhe80gWYvNFHe1tyQ8HJoAD6DGehZrgC/GQAUS+MVgwm2hgkv0z8d3hTMQ+YTTJEeOMK1cTB1EsBP7ntyC2nTiFuYGxst+VEzn0PvHFiuu/q+HRCWPtLCbRIw=
+	t=1771983023; cv=none; b=ozUYqPWdal+tq1h0yi7OYYKR1sQy7y0QTBYKoIia+vdy/WJIDKBH09WXKR8CNsYVzWjckiZkVfg0dPsTreg6huolHsfgTOCc4WZ6vRqNzH0PjkWtf1beKxqcDh/D827zqJb3dMuhlzOaz8BHSfx35iA3iu1rRQeB4qQCzEo2Lno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983022; c=relaxed/simple;
-	bh=WNBqrK1WtcMhgPPmJ66oBkxSVdY3+ZT0AMmlegYGSxk=;
+	s=arc-20240116; t=1771983023; c=relaxed/simple;
+	bh=0/g1iV2Id1M1y2DBz4YYaftrZd5KZheYwCBZfAk9jpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uD0wDedWb7s6l9mMnPU6uJHcNxeb8qqJ1e68vRTkk0AKsv3tjGdQhIjPbwjr/UfIr5jQ9e+bCfglTLzx5UhNDbUh+sPTr1i5ohl8jRgU3CsnOSz/cjKxiYMa7KFAw7KeRMn5Sny7rzqSMTFfzxCjm9H1O6blovmAo2NoNvqhXvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNt2Bg3o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hIOEqYjzeunlnfrUsv4xoDUi+oW1FKdpkr3EsmLp3DzE/HYma7U3+Rwbp5eyjrBOiAr9t1N05EKE3sFlEc+03wfVcs1c9Tl/p+bautYHXk8D6EVBM1Xnmn5ETA/lPkMDuEMvwAx2lqf7ubaMoh9pASXJuZmDX43xvXyGwYX48+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nE5EO9/N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNt2Bg3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D86C116D0;
-	Wed, 25 Feb 2026 01:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nE5EO9/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7DAC19423;
+	Wed, 25 Feb 2026 01:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983022;
-	bh=WNBqrK1WtcMhgPPmJ66oBkxSVdY3+ZT0AMmlegYGSxk=;
+	s=korg; t=1771983023;
+	bh=0/g1iV2Id1M1y2DBz4YYaftrZd5KZheYwCBZfAk9jpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNt2Bg3owVnCzB+CEYWcfPOk00JLayYd+BsKNR15pU62ANHHAZGK179PZS7EGiqxY
-	 /Kr+F5PIGylrdPBQuyOe6dgQ+3d1BUTv8ntuk7mADH4qAo3VaDWQqod+bVqyv0HDFW
-	 WqQCNZcVCv57/00eI9Dpf+N31pKi+EXubl9WxH3I=
+	b=nE5EO9/NHGWa/MykerRe2qHBqxfquzQiw/Ojbvm/RKWMakb1TEr6IdXIcvA0U7hk7
+	 TQ3svcN1FtmPZmpN/PvyKa1jCnuWKObAue4f2nQyT8yMWOpxKd41bRATv1JTeUxYuJ
+	 VEoaEsqjMvdbpS2DH+SlzQHik3pecagXnZQKKviA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 162/781] powerpc/uaccess: Move barrier_nospec() out of allow_read_{from/write}_user()
-Date: Tue, 24 Feb 2026 17:14:31 -0800
-Message-ID: <20260225012403.625690990@linuxfoundation.org>
+Subject: [PATCH 6.19 189/781] arm64: dts: qcom: agatti: Add CX_MEM/DBGC GPU regions
+Date: Tue, 24 Feb 2026 17:14:58 -0800
+Message-ID: <20260225012404.285236408@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,95 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 5fbc09eb0b4f4b1a4b33abebacbeee0d29f195e9 ]
+[ Upstream commit 0fdcc948929a6d673bd0f90631dd6e42090c3dbd ]
 
-Commit 74e19ef0ff80 ("uaccess: Add speculation barrier to
-copy_from_user()") added a redundant barrier_nospec() in
-copy_from_user(), because powerpc is already calling
-barrier_nospec() in allow_read_from_user() and
-allow_read_write_user(). But on other architectures that
-call to barrier_nospec() was missing. So change powerpc
-instead of reverting the above commit and having to fix
-other architectures one by one. This is now possible
-because barrier_nospec() has also been added in
-copy_from_user_iter().
+Describe the GPU register regions, with the former existing but not
+being used much if at all on this silicon, and the latter containing
+various debugging levers generally related to dumping the state of
+the IP upon a crash.
 
-Move barrier_nospec() out of allow_read_from_user() and
-allow_read_write_user(). This will also allow reuse of those
-functions when implementing masked user access which doesn't
-require barrier_nospec().
-
-Don't add it back in raw_copy_from_user() as it is already called
-by copy_from_user() and copy_from_user_iter().
-
-Fixes: 74e19ef0ff80 ("uaccess: Add speculation barrier to copy_from_user()")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/f29612105c5fcbc8ceb7303808ddc1a781f0f6b5.1766574657.git.chleroy@kernel.org
+Fixes: 4faeef52c8e6 ("arm64: dts: qcom: qcm2290: Add GPU nodes")
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Closes: https://lore.kernel.org/linux-arm-msm/8a64f70b-8034-45e7-86a3-0015cf357132@oss.qualcomm.com/T/#m404f1425c36b61467760f058b696b8910340a063
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251229-topic-6115_2290_gpu_dbgc-v1-2-4a24d196389c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/kup.h     | 2 --
- arch/powerpc/include/asm/uaccess.h | 4 ++++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/agatti.dtsi | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/kup.h b/arch/powerpc/include/asm/kup.h
-index dab63b82a8d4f..f2009d7c8cfa7 100644
---- a/arch/powerpc/include/asm/kup.h
-+++ b/arch/powerpc/include/asm/kup.h
-@@ -134,7 +134,6 @@ static __always_inline void kuap_assert_locked(void)
+diff --git a/arch/arm64/boot/dts/qcom/agatti.dtsi b/arch/arm64/boot/dts/qcom/agatti.dtsi
+index 8bf5c5583fc22..969ae1378db2c 100644
+--- a/arch/arm64/boot/dts/qcom/agatti.dtsi
++++ b/arch/arm64/boot/dts/qcom/agatti.dtsi
+@@ -1591,8 +1591,12 @@ usb_dwc3_ss: endpoint {
  
- static __always_inline void allow_read_from_user(const void __user *from, unsigned long size)
- {
--	barrier_nospec();
- 	allow_user_access(NULL, from, size, KUAP_READ);
- }
+ 		gpu: gpu@5900000 {
+ 			compatible = "qcom,adreno-07000200", "qcom,adreno";
+-			reg = <0x0 0x05900000 0x0 0x40000>;
+-			reg-names = "kgsl_3d0_reg_memory";
++			reg = <0x0 0x05900000 0x0 0x40000>,
++			      <0x0 0x0599e000 0x0 0x1000>,
++			      <0x0 0x05961000 0x0 0x800>;
++			reg-names = "kgsl_3d0_reg_memory",
++				    "cx_mem",
++				    "cx_dbgc";
  
-@@ -146,7 +145,6 @@ static __always_inline void allow_write_to_user(void __user *to, unsigned long s
- static __always_inline void allow_read_write_user(void __user *to, const void __user *from,
- 						  unsigned long size)
- {
--	barrier_nospec();
- 	allow_user_access(to, from, size, KUAP_READ_WRITE);
- }
+ 			interrupts = <GIC_SPI 177 IRQ_TYPE_LEVEL_HIGH>;
  
-diff --git a/arch/powerpc/include/asm/uaccess.h b/arch/powerpc/include/asm/uaccess.h
-index 784a00e681fa3..3e622e647d622 100644
---- a/arch/powerpc/include/asm/uaccess.h
-+++ b/arch/powerpc/include/asm/uaccess.h
-@@ -301,6 +301,7 @@ do {								\
- 	__typeof__(sizeof(*(ptr))) __gu_size = sizeof(*(ptr));	\
- 								\
- 	might_fault();					\
-+	barrier_nospec();					\
- 	allow_read_from_user(__gu_addr, __gu_size);		\
- 	__get_user_size_allowed(__gu_val, __gu_addr, __gu_size, __gu_err);	\
- 	prevent_read_from_user(__gu_addr, __gu_size);		\
-@@ -329,6 +330,7 @@ raw_copy_in_user(void __user *to, const void __user *from, unsigned long n)
- {
- 	unsigned long ret;
- 
-+	barrier_nospec();
- 	allow_read_write_user(to, from, n);
- 	ret = __copy_tofrom_user(to, from, n);
- 	prevent_read_write_user(to, from, n);
-@@ -415,6 +417,7 @@ static __must_check __always_inline bool user_access_begin(const void __user *pt
- 
- 	might_fault();
- 
-+	barrier_nospec();
- 	allow_read_write_user((void __user *)ptr, ptr, len);
- 	return true;
- }
-@@ -431,6 +434,7 @@ user_read_access_begin(const void __user *ptr, size_t len)
- 
- 	might_fault();
- 
-+	barrier_nospec();
- 	allow_read_from_user(ptr, len);
- 	return true;
- }
 -- 
 2.51.0
 
