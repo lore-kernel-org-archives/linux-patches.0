@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947DF332914;
-	Wed, 25 Feb 2026 06:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340B83328EC;
+	Wed, 25 Feb 2026 06:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002795; cv=none; b=gAMlQhPaTzSb2PmMD4qJTyTxeWxOOmlmI2tpjC3dSWEPVD5gtDaq2sSTq62RxumqJNV0KkqjrU6ZQCwClnYYwmufHntr1CYHys83O0ZEjLjkgtChzRxn/2t+EDLcMrlGdYD5uxnXmJApO32XoTO2ed9bTexIoQ0+kzng+r+pFjE=
+	t=1772002796; cv=none; b=EC3KyzcjuJ62hDBKkh9JxFzVchBWA+L6XJsnFufL3dofGZy0xQA36R3mNW8puMD0yaovaKqKpM2FYdDPatl6T7qwohgLzZzi2b4YamyNpbmMSkmt7r2uWfglpeytyrVdWwVXsNdTCS4nPDxtZJgu/CuR8PvZVFPs818cfhYIDmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002795; c=relaxed/simple;
-	bh=XoKdUmj9bgMg/eoFkEtGasmnM8YJKOVIfiNOSEXKFUw=;
+	s=arc-20240116; t=1772002796; c=relaxed/simple;
+	bh=drm9G7B8hvxTUkO5fAzq2QbjrlscOUedfCk18v4ehcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z99bYziw9wiIhYQ/NEkoQmupe8pXZkRl3ArTx+9l2HIS8ZAdzqpImV3aGaw9PJDY98BabHzflQiy976RF4uj0NkQGUdF2TG04rZQenxqGOTmZANMDV8eu2D04TG9nT6dz15+FVIYoyuXcOx6KBN2ToFwnO0j1eHlSz1TJ+yiVXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMbcItrr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cgbpiKGukEbF9Njccn5UnYGnwewypMXk0mEn0CveViW1Fh5HiWYLlX+9a1cmYW15+RwkFoJuLE21tZZdEEtBAhnR9ItJrIN9Y/9QLDchkTRX0IYa8jXfiv7Sq7JJDmlsg8L4hyBrFul99hbAxKkx9ERR3VOVAET9IINM+qsREy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PuFaPVDO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMbcItrr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6367FC116D0;
-	Wed, 25 Feb 2026 06:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuFaPVDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 095C5C116D0;
+	Wed, 25 Feb 2026 06:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002795;
-	bh=XoKdUmj9bgMg/eoFkEtGasmnM8YJKOVIfiNOSEXKFUw=;
+	s=korg; t=1772002796;
+	bh=drm9G7B8hvxTUkO5fAzq2QbjrlscOUedfCk18v4ehcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMbcItrrsV3514xiJj5/2OOAqjICgHdlDnsJ+RUgWHRuGv/hqayRGcQ720q3c6NyC
-	 WsqC8qSjSginedzjoXHWti2dtH9GwIE1R7lzNLEWG5kG0PpJV1JjXnno5XY2ZyHdHx
-	 CipgbwcG/JPRPMvqj+eOYr5drdzSz6NNXgXMcRUY=
+	b=PuFaPVDOAGmKQ89mKGmped0kz53pZOiHhquPa31hj+W8R5PuyOWQnnR8p6+jFEbJd
+	 bBqkT2UidQYXpNBpbZHr8P0IFqrqS6y3hCS3QmnHAsf1onn3my8f8jvkoWT9Rrjj65
+	 2wB2DPHMpEwACsH8I9YXGKpTL5BMCkx+OGTgyrfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 640/641] drm/amd/display: Clear HDMI HPD pending work only if it is enabled
-Date: Tue, 24 Feb 2026 17:26:06 -0800
-Message-ID: <20260225012404.009827318@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Tj <tj.iam.tj@proton.me>
+Subject: [PATCH 6.18 600/641] gpio: amd-fch: ionly return allowed values from amd_fch_gpio_get()
+Date: Tue, 24 Feb 2026 17:25:26 -0800
+Message-ID: <20260225012403.055414106@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,43 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Lipski <ivan.lipski@amd.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 17b2c526fd8026d8e0f4c0e7f94fc517e3901589 upstream.
+[ Upstream commit fbd03587ba732c612b8a569d1cf5bed72bd3a27c ]
 
-[Why&How]
-On amdgpu_dm_connector_destroy(), the driver attempts to cancel pending
-HDMI HPD work without checking if the HDMI HPD is enabled.
+As of 86ef402d805d ("gpiolib: sanitize the return value of
+gpio_chip::get()") gpiolib requires drivers implementing GPIOs to only
+return 0, 1 or negative error for the get() callbacks. Ensure that
+amd-fch complies with this requirement.
 
-Added a check that it is enabled before clearing it.
-
-Fixes: 6a681cd90345 ("drm/amd/display: Add an hdmi_hpd_debounce_delay_ms module")
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 86ef402d805d ("gpiolib: sanitize the return value of gpio_chip::get()")
+Reported-and-tested-by: Tj <tj.iam.tj@proton.me>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/aZTlwnvHt2Gho4yN@google.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-amd-fch.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7548,10 +7548,12 @@ static void amdgpu_dm_connector_destroy(
- 		drm_dp_mst_topology_mgr_destroy(&aconnector->mst_mgr);
+diff --git a/drivers/gpio/gpio-amd-fch.c b/drivers/gpio/gpio-amd-fch.c
+index e6c6c3ec7656e..9f329938202bf 100644
+--- a/drivers/gpio/gpio-amd-fch.c
++++ b/drivers/gpio/gpio-amd-fch.c
+@@ -8,6 +8,7 @@
+  *
+  */
  
- 	/* Cancel and flush any pending HDMI HPD debounce work */
--	cancel_delayed_work_sync(&aconnector->hdmi_hpd_debounce_work);
--	if (aconnector->hdmi_prev_sink) {
--		dc_sink_release(aconnector->hdmi_prev_sink);
--		aconnector->hdmi_prev_sink = NULL;
-+	if (aconnector->hdmi_hpd_debounce_delay_ms) {
-+		cancel_delayed_work_sync(&aconnector->hdmi_hpd_debounce_work);
-+		if (aconnector->hdmi_prev_sink) {
-+			dc_sink_release(aconnector->hdmi_prev_sink);
-+			aconnector->hdmi_prev_sink = NULL;
-+		}
- 	}
++#include <linux/bitfield.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/kernel.h>
+@@ -120,15 +121,15 @@ static int amd_fch_gpio_get(struct gpio_chip *gc,
+ 			    unsigned int offset)
+ {
+ 	unsigned long flags;
+-	int ret;
++	u32 val;
+ 	struct amd_fch_gpio_priv *priv = gpiochip_get_data(gc);
+ 	void __iomem *ptr = amd_fch_gpio_addr(priv, offset);
  
- 	if (aconnector->bl_idx != -1) {
+ 	spin_lock_irqsave(&priv->lock, flags);
+-	ret = (readl_relaxed(ptr) & AMD_FCH_GPIO_FLAG_READ);
++	val = readl_relaxed(ptr);
+ 	spin_unlock_irqrestore(&priv->lock, flags);
+ 
+-	return ret;
++	return FIELD_GET(AMD_FCH_GPIO_FLAG_READ, val);
+ }
+ 
+ static int amd_fch_gpio_request(struct gpio_chip *chip,
+-- 
+2.51.0
+
 
 
