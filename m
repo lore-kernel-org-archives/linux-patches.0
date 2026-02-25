@@ -1,92 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F49A1EA7CB;
-	Wed, 25 Feb 2026 14:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8D727FB2A;
+	Wed, 25 Feb 2026 14:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772031062; cv=none; b=hoBS9kj4XxaZ7f3GkRc6DrJDZ026Wm5MgrOFAdkv29qhQe3eWKpo9GH9QYAcLECjofxvigm3d2A7uP4PTOmM39GBY4NjL/7QOd/HA4adNPD35WTq/MMyHoTnRS1A/M3pf7pJVchzlDsgWb3ehFVQONBFiRsQS+ug46IgahzU4GA=
+	t=1772031144; cv=none; b=fi04d1KZuoAf8pJttdk7Z9BOFffyZTiaqhQyGKu+QXGWEQLu57idRVIf02fTV9VSlQniuzNybxF/YKHGUOgyGeBKul/H/uU1pLTB/a21tqknEwQWMu8DPdfdxXAy+87NQcuV9LYmkRpSf6RryLjbAgoMxKzKiJ9YzH5iX2Q5ztI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772031062; c=relaxed/simple;
-	bh=J6QMbiY4SNwOYRDX65ZiPX7WLszOBPYX6J+ex82C6Qw=;
+	s=arc-20240116; t=1772031144; c=relaxed/simple;
+	bh=UfGT9V1k88pqwBKsFxNKMUP0tD3YE96hhC6eZqzPIto=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RVdcjpP1uDfRuxudhLt1QlAcPXqW+W1e/QCrv8TGXmVIFnEnMynC4IMC8sBmkN00nGN+NqJ4RCJST4EIW172rOT0zuO+1SPqoaxkwf0dYB7R7fLuTnhurb99yuiKVm2Pnu2iWJmENh5ySJpASivvTv2y8/Qgear42qsmuEYn/cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubWX7e4F; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=e3tVESOQ9NOZ3sdmeV0i5fLtr6hAvshLTMf6SWb34+ILPmxPhYAQj1sjr4FRskOmmtgo7qrYBJx10scpVN+/8WPCJ6vH4l/SHySxPH5SrfjXetSd/wGccaJ4ZyoMW+fExxPRkBxKFVx/w2xMDm9q1aeza4/ZlkrsKrbXUDo2E6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVxwK6Lv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubWX7e4F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A992FC116D0;
-	Wed, 25 Feb 2026 14:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVxwK6Lv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C9FC116D0;
+	Wed, 25 Feb 2026 14:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772031061;
-	bh=J6QMbiY4SNwOYRDX65ZiPX7WLszOBPYX6J+ex82C6Qw=;
+	s=korg; t=1772031143;
+	bh=UfGT9V1k88pqwBKsFxNKMUP0tD3YE96hhC6eZqzPIto=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ubWX7e4Fxzr2+S0Ozuo5kxhBCcLxBYfyKEd+cb3UqFymivoD08mJHFeEJmcr/ybhb
-	 UWa9e5vFogxTxC+PJoCjlxLEtF8UL0qIRsjMOq/DXpKYniMn1lB8zV1QearKcrNYkz
-	 +bnoivw3sR0c6WgxyV+LAZ5iNBB2zAsza7vsnOPE=
-Date: Wed, 25 Feb 2026 06:50:54 -0800
+	b=DVxwK6LvEK5M7KmmgEG/fOPgdP0QnaoW6aQBn2adO+ZxVgDfl0T+2xNDDPRw4pccX
+	 zjhrD1cKrr2JZGXI2xsfBJ7ANuQ1+a4Yh7bhonWvN2FUvGRgiVz730BfzHnR5MVha7
+	 EcRf+Wk05nnBHgV+l++prjq7NR8an+FtwnMJQ3q0=
+Date: Wed, 25 Feb 2026 06:52:15 -0800
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Daniel Vacek <neelx@suse.com>
+To: Mark Brown <broonie@kernel.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>, David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.18 026/641] btrfs: add orig_logical to btrfs_bio for
- encryption
-Message-ID: <2026022525-bok-amusing-aa38@gregkh>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 000/641] 6.18.14-rc1 review
+Message-ID: <2026022501-linked-baking-3cee@gregkh>
 References: <20260225012348.915798704@linuxfoundation.org>
- <20260225012349.617596661@linuxfoundation.org>
- <CAPjX3Fe8XOkja2L8dv30s4pnzSQDsAExXY5Nh8MFQoPreQUeAQ@mail.gmail.com>
+ <457362d4-c400-47a2-834b-327ded7d6192@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPjX3Fe8XOkja2L8dv30s4pnzSQDsAExXY5Nh8MFQoPreQUeAQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <457362d4-c400-47a2-834b-327ded7d6192@sirena.org.uk>
 
-On Wed, Feb 25, 2026 at 07:15:16AM +0100, Daniel Vacek wrote:
-> On Wed, 25 Feb 2026 at 02:42, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > 6.18-stable review patch.  If anyone has any objections, please let me know.
+On Wed, Feb 25, 2026 at 11:43:11AM +0000, Mark Brown wrote:
+> On Tue, Feb 24, 2026 at 05:15:26PM -0800, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.18.14 release.
+> > There are 641 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > 
-> Hi Greg,
+> > Kevin Brodsky <kevin.brodsky@arm.com>
+> >     selftests/mm: fix faulting-in code in pagemap_ioctl test
 > 
-> This one is a preparation for new feature development, it's not really
-> worth the stable branch. Backporting it makes no sense.
+> This breaks the build of the mm selftests:
 > 
-> Have a nice day,
-> Daniel
+>   CC       pagemap_ioctl
+> pagemap_ioctl.c: In function ‘sanity_tests’:
+> pagemap_ioctl.c:1169:9: error: implicit declaration of function ‘force_read_pages’ [-Wimplicit-function-declaration]
+>  1169 |         force_read_pages(fmem, nr_pages, page_size);
+>       |         ^~~~~~~~~~~~~~~~
 > 
-> > ------------------
-> >
-> > From: Josef Bacik <josef@toxicpanda.com>
-> >
-> > [ Upstream commit bd45e9e3f6232f76fa9bd0e40c1e3409e4449f5e ]
-> >
-> > When checksumming the encrypted bio on writes we need to know which
-> > logical address this checksum is for.  At the point where we get the
-> > encrypted bio the bi_sector is the physical location on the target disk,
-> > so we need to save the original logical offset in the btrfs_bio.  Then
-> > we can use this when checksumming the bio instead of the
-> > bio->iter.bi_sector.
-> >
-> > Note: The patch was taken from v5 of fscrypt patchset
-> > (https://lore.kernel.org/linux-btrfs/cover.1706116485.git.josef@toxicpanda.com/)
-> > which was handled over time by various people: Omar Sandoval, Sweet Tea
-> > Dorminy, Josef Bacik.
-> >
-> > Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-> > Signed-off-by: Daniel Vacek <neelx@suse.com>
-> > Reviewed-by: David Sterba <dsterba@suse.com>
-> > [ add note ]
-> > Signed-off-by: David Sterba <dsterba@suse.com>
-> > Stable-dep-of: b39b26e017c7 ("btrfs: zoned: don't zone append to conventional zone")
+> IIRC there was a patch adding that function.
 
-It was added because of the requirement for this backport.  Let me see
-if that can't be done without this change first...
-
-yup, that still worked, just a bit of fuzz, now dropped, thanks!
+thanks, I've dropped this from all queues now, and will push out a -rc2
+in a bit.
 
 greg k-h
