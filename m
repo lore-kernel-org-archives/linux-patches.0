@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E7C27D782;
-	Wed, 25 Feb 2026 01:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF73B279DC2;
+	Wed, 25 Feb 2026 01:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983837; cv=none; b=OQlVyAIYzel3FM35UVcPRxT0X5yRRuFKG7aL8nfLuOSmH1WL0Q0j7355Mbg01/6f6VIopvR42uS33xBwwA1vXAW91iPblkrVsRROkjujElSSf4AXfa1OfWwpcCI6hylWYn+4vSdwykPkNfqdyzKP1Af7jNJED0wLETFmxsv8BnU=
+	t=1771983838; cv=none; b=NT2gu7ljBbxK+Boo1WJGDfMgnrZSrRXvLX0KjuM8ZViiT6kzRRpzwFi+BfANp8i+diN/3uutUS5lt8MNW+3rc8DX7geug8VM6i2xYqSLM1xaVZll4PH22xa0K6AQBqPfkKtgWxCaq7PxTtkqU/a+kfFaz2iYEXVInw3lKxWyA28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983837; c=relaxed/simple;
-	bh=sPQMVlvH736PJtHxhNp+rAhRCzdpm2whf2vcBsXoPhc=;
+	s=arc-20240116; t=1771983838; c=relaxed/simple;
+	bh=3kH7StKXPbmx5yqj9taCqh3r396jRM1vKEOxQHb4bTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkgCvPmnD7J5ckb2j0FkUWxfw4wv3ynifk2lpGI892dPr7CkJW62XVQl2hEtBKDisWtAfKDrdMLTliFan8HiLQecTSEp0TC7Y7yojO6yBmCqkirXdJdJR9l0ruFWOc86Ek3HmbDBiQDcNAEjsK8JLxi/rohfjrhbMXkhRsBu6eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIxKGUdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VVga7IxDvm0271Wqp2TCF7yMtGRI1M09VggA82Ss9Y+C94nJxlnBmmcVDswBNP56J5P20velgWSQiH+iuKOHl3WxznfXjxiFmkYNqL2eaIrgtSfDx7ep/+CSe4qBate3RtJceYa34pAx3CnABHFZu6kA63gnPUMEomYZ3ltdVQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THlVDycf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIxKGUdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672F7C19424;
-	Wed, 25 Feb 2026 01:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THlVDycf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F130C116D0;
+	Wed, 25 Feb 2026 01:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983837;
-	bh=sPQMVlvH736PJtHxhNp+rAhRCzdpm2whf2vcBsXoPhc=;
+	s=korg; t=1771983838;
+	bh=3kH7StKXPbmx5yqj9taCqh3r396jRM1vKEOxQHb4bTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIxKGUdkSvcfors30j9YpGyVY2e5jqWFT91ZBckkSGncHHBtH2vAyRq6AWZ4FadMk
-	 P7oJdHAwKPzhUkr8Kjc4pNd40Gf+aubaj+amZcPi676SNpGjT7lHygRWo99N51l6n7
-	 FvAW5zLsWC/TXgvjZWFcLGRNsN2rGM+Qgxdbs7Oo=
+	b=THlVDycfBfJkPNwu7z8canj26m7lRylq7qkwPdKEgjRP53g+xCv3B4cXRSZmhTkq7
+	 X6n1aoH294cKZrXFco3C/PMbuJpPaQsHZE33khAO+R4BhaDK5BoC8bATyz95A6tCsI
+	 VqeZouNeVmICAuHtpT2GfRlyimNH84uZFKKevF7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Chen Jinghuang <chenjinghuang2@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Valentin Schneider <vschneid@redhat.com>,
+	Titouan Ameline de Cadeville <titouan.ameline@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 116/641] sched/rt: Skip currently executing CPU in rto_next_cpu()
-Date: Tue, 24 Feb 2026 17:17:22 -0800
-Message-ID: <20260225012351.942296011@linuxfoundation.org>
+Subject: [PATCH 6.18 117/641] fs/tests: exec: drop duplicate bprm_stack_limits test vectors
+Date: Tue, 24 Feb 2026 17:17:23 -0800
+Message-ID: <20260225012351.966666584@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,85 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Jinghuang <chenjinghuang2@huawei.com>
+From: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
 
-[ Upstream commit 94894c9c477e53bcea052e075c53f89df3d2a33e ]
+[ Upstream commit 46a03ea50b5f380bdb99178b8f90b39c6ba1f528 ]
 
-CPU0 becomes overloaded when hosting a CPU-bound RT task, a non-CPU-bound
-RT task, and a CFS task stuck in kernel space. When other CPUs switch from
-RT to non-RT tasks, RT load balancing (LB) is triggered; with
-HAVE_RT_PUSH_IPI enabled, they send IPIs to CPU0 to drive the execution
-of rto_push_irq_work_func. During push_rt_task on CPU0,
-if next_task->prio < rq->donor->prio, resched_curr() sets NEED_RESCHED
-and after the push operation completes, CPU0 calls rto_next_cpu().
-Since only CPU0 is overloaded in this scenario, rto_next_cpu() should
-ideally return -1 (no further IPI needed).
+Remove duplicate entries from the bprm_stack_limits KUnit test vector
+table. The duplicates do not add coverage and only increase test size.
 
-However, multiple CPUs invoking tell_cpu_to_push() during LB increments
-rd->rto_loop_next. Even when rd->rto_cpu is set to -1, the mismatch between
-rd->rto_loop and rd->rto_loop_next forces rto_next_cpu() to restart its
-search from -1. With CPU0 remaining overloaded (satisfying rt_nr_migratory
-&& rt_nr_total > 1), it gets reselected, causing CPU0 to queue irq_work to
-itself and send self-IPIs repeatedly. As long as CPU0 stays overloaded and
-other CPUs run pull_rt_tasks(), it falls into an infinite self-IPI loop,
-which triggers a CPU hardlockup due to continuous self-interrupts.
-
-The trigging scenario is as follows:
-
-         cpu0                      cpu1                    cpu2
-                                pull_rt_task
-                              tell_cpu_to_push
-                 <------------irq_work_queue_on
-rto_push_irq_work_func
-       push_rt_task
-    resched_curr(rq)                                   pull_rt_task
-    rto_next_cpu                                     tell_cpu_to_push
-                      <-------------------------- atomic_inc(rto_loop_next)
-rd->rto_loop != next
-     rto_next_cpu
-   irq_work_queue_on
-rto_push_irq_work_func
-
-Fix redundant self-IPI by filtering the initiating CPU in rto_next_cpu().
-This solution has been verified to effectively eliminate spurious self-IPIs
-and prevent CPU hardlockup scenarios.
-
-Fixes: 4bdced5c9a29 ("sched/rt: Simplify the IPI based RT balancing logic")
-Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Suggested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Chen Jinghuang <chenjinghuang2@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Link: https://patch.msgid.link/20260122012533.673768-1-chenjinghuang2@huawei.com
+Signed-off-by: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
+Fixes: 60371f43e56b ("exec: Add KUnit test for bprm_stack_limits()")
+Link: https://patch.msgid.link/20260203175950.43710-1-titouan.ameline@gmail.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/rt.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/tests/exec_kunit.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index fb07dcfc60a24..d4d994fb8999a 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2100,6 +2100,7 @@ static void push_rt_tasks(struct rq *rq)
-  */
- static int rto_next_cpu(struct root_domain *rd)
- {
-+	int this_cpu = smp_processor_id();
- 	int next;
- 	int cpu;
+diff --git a/fs/tests/exec_kunit.c b/fs/tests/exec_kunit.c
+index 7c77d039680bb..f412d1a0f6bba 100644
+--- a/fs/tests/exec_kunit.c
++++ b/fs/tests/exec_kunit.c
+@@ -87,9 +87,6 @@ static const struct bprm_stack_limits_result bprm_stack_limits_results[] = {
+ 	    .argc = 0, .envc = ARG_MAX / sizeof(void *) - 1 },
+ 	  .expected_argmin = ULONG_MAX - sizeof(void *) },
+ 	/* Raising rlim_stack / 4 to _STK_LIM / 4 * 3 will see more space. */
+-	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * (_STK_LIM / 4 * 3),
+-	    .argc = 0, .envc = 0 },
+-	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
+ 	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * (_STK_LIM / 4 * 3),
+ 	    .argc = 0, .envc = 0 },
+ 	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
+@@ -103,9 +100,6 @@ static const struct bprm_stack_limits_result bprm_stack_limits_results[] = {
+ 	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * _STK_LIM,
+ 	    .argc = 0, .envc = 0 },
+ 	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
+-	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * _STK_LIM,
+-	    .argc = 0, .envc = 0 },
+-	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
+ };
  
-@@ -2123,6 +2124,10 @@ static int rto_next_cpu(struct root_domain *rd)
- 
- 		rd->rto_cpu = cpu;
- 
-+		/* Do not send IPI to self */
-+		if (cpu == this_cpu)
-+			continue;
-+
- 		if (cpu < nr_cpu_ids)
- 			return cpu;
- 
+ static void exec_test_bprm_stack_limits(struct kunit *test)
 -- 
 2.51.0
 
