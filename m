@@ -1,97 +1,205 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B7D1F471F
-	for <patches@lists.linux.dev>; Wed, 25 Feb 2026 06:03:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771999403; cv=none; b=KhioYXW4pjpZEc4t2gxa6CzmPQFymeS8hfO9WSr5XikwkcvDUlmM/tcxU+RmhB+EjhkYtJ/IRr5rlOh/I8lTAvTmbqLkMmezYKoPekAtMZvGVXUGVWSSb9ru6sLeIcfqXR4yet2qI8zlaBwKGVDZ4ubG0GL73bTrJGaja9BQ7xw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771999403; c=relaxed/simple;
-	bh=L7v49LM4lCsZ+L4lXv5UKTamNxG8cMhiIDrHbw4AA+Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AED/2BlJ+EP/kpWBkHsSiZT4mFOOpUPrOAmkvNr3Vv6Mt7kPw0s/nbYf4YBueIjqJibDqOBHRKRK2qnHTvlltOs07OR/MpR3VMQ2qoXi1p6cyXRo8IzXPfkqJsDjmpgAQRYTuWof0ps7dmFoEHi3fWPhQOfPTHPDsS+eY65AvdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=Xis2XnWi; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8EF2F7ACA
+	for <patches@lists.linux.dev>; Wed, 25 Feb 2026 06:15:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772000132; cv=pass; b=ffJ06sInj8bxwK4gbRNiFf/RpGaHLoIGRFSnNSNvTgfflzf8pJAfHVsf1JJxWjzFeScWcihQV9oKcOihtCHb4USYST77yUZrL18wso8k87ZjVZgIKMz/HHw2UsHAuIAHFzbwJuszkO5ncCMd3bvjFMHCZoVatBbwLJWSCp5rRCI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772000132; c=relaxed/simple;
+	bh=6duiW9c2DU7z/mC6LK2GVzrYkzQjoQbV/lc0c0lQsek=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Xj8htsv5vbtA0q4Z9tQnc/sOQsBhyveNuaoldaPvADz5yusv3fb9x0ZIYR5Lqc8NqVl76A1imLqcnffAa124hJfFSRwjbjA4Rs/RHCc3Xe9MfDaQ6nqHJwNBqgK/7moJWU/6M2K3T3dLFDui/BxvXPAJZj4P2vJPJd26z+KQnTk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=L+71Vtvu; arc=pass smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="Xis2XnWi"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-4806f3fc50bso70271775e9.0
-        for <patches@lists.linux.dev>; Tue, 24 Feb 2026 22:03:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="L+71Vtvu"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-436e8758b91so4330476f8f.0
+        for <patches@lists.linux.dev>; Tue, 24 Feb 2026 22:15:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772000128; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Dg22rOu2z+r5Y9yuSQEoeYUKQSk5D4mGLEJ2zXh0LRwx9SMVts+pw9Qk9Mjxt9aOGD
+         RmTdMz2tLBnuql/6Ten7kxjSZ1HUC+Opgy7bHcvlx3N2iavuaGi9TNCxEpO71WbCTye/
+         qmP6cq5XyQ6CXOSmiMFKlnvrHb0Dc3cLc9elICi5y1RMQw9VSP1Tht9FLKBUkMxmAwYz
+         gvFGyGWM1kfs+LeodvuuonAWGzHm4CGiYr96mO4PSfQqVIvnfLiz1mXk/MaBGi2pMD5q
+         ta7u+HLIoibH8W3NeCQ5Q71wbOAemdfhr6ODCmSPKgQ6q8z0oq6SvRUzDkE3qJic09ug
+         YwTA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=fRp4t0j/86MYJauHT8JmZMZ8uXCSwHALvLOqAznr3r0=;
+        fh=k3k3fekveyK/+gFVNO5s+yk/iaBKxrNp94atWOYOOUM=;
+        b=kMI3b6gG4pEP+sgRowqdXDWnOBxp+O16Hus3pRFPy1UOfN/mXiBN+hCMQIq1UVu+A/
+         ZaLVgp/cr3EkAkFS9cuJg4kK9m2o4Ep5h6shbMfhJjJsN6GNMIfziKnFZw6cFYXDuxdy
+         qXMJEJpb5Ag4d2BnLnzfuBneDhceMYZEEmOA/YCEkENKxmRnzdfjIPCq0ZeWl9PlXQHY
+         gw4LNT1X1+d4w34plJh6JPno44IyAzQcOPAwTJKw4D9Zt1vLadSHkuX5J43jv1R4AbJm
+         aj1dXrHcx7cGl2cqSwMSiQs5UkgSIYlBK6yOM0EUJP9SlGj20xpY364Ixrh9apCORVZO
+         B5xw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1771999400; x=1772604200; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VWLAwkGbf7uUhd2DqbFT3Eii2hgXjNWXQkU70sx9YHs=;
-        b=Xis2XnWiDqp5mgF07i2XiLYj4MJ4y7T2np5bHya4jXTN0FzPMdZOVk2HnW5YmV8FbW
-         aJFNnwPLM3L+MaybmlfsJ4i7H+OCeWoBET2Tmc2QXZ5veUKSrr4E2efSpi6Ic4MsVg2Q
-         VKiKYVi+YBhpLcSiFGDlCnnNdyJFuzDrJE/06gUfkT+heAhjYvQ9bA57UgShCRGP/PsF
-         oTmdMhKWXBrUAaSW2gSGMjW77dQMaOmttU27g5uvIoTSpmKl6CuRU2N3MWQsL+ikQshE
-         Qllt7VS9sMV1L7Qb2ovcRru0tqgMVFNoPuXomyRmoT/6LrhfD6bhMrlNOM9xkZZD7hZV
-         +tog==
+        d=suse.com; s=google; t=1772000128; x=1772604928; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fRp4t0j/86MYJauHT8JmZMZ8uXCSwHALvLOqAznr3r0=;
+        b=L+71VtvuzREUsV2CsjilYnuiYUHE1HWAx4D7EqnLHRIYaUPdQTuWMPKkVLZ2HDF2+F
+         olSt1kJ4TKvwyg6y4db9lu7WCWkSFkNF57H1UBrzFbPj1FdvKhfGanv6CTMC1i6TPAyD
+         IfoxCnanNkhSd7LWK6mgRbF8IJ28+/TZ1BdeZPFrEGhsktufvBL0IfMvYmuIuSOULkMK
+         FM+Qa55uu+nBDSCj/IjyMc7Lks1cTYVDclyPqjR8IOHo3S5mgl3DMizIUgjTNrpNOEt3
+         sqHGFbPFaj2HpRGXF0jo9lzvUeesPnSSdS/ysbMiSnySemnTNozgswSK4kCobO7q5mnR
+         nuNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771999400; x=1772604200;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VWLAwkGbf7uUhd2DqbFT3Eii2hgXjNWXQkU70sx9YHs=;
-        b=LoCehwSyzVWNIvz7iKTKJK0wRvrd5CPZwZEcfKTb8SFZ2+U4jNGkNCM6NkT7+yY2DF
-         rABjgu2C6bpuNQiERGYWT6M3NWueeF9CdCO21l5BrRFuXzo+gMkpRWegD8N8W12UgSCM
-         VxAF/i0ui8GgrcH1U7c26oUlgiGKM1vcGOY3MavBNqSyZZPczGrKQyE026gKaBVO6cGn
-         QPFf6UvmupfWLNI2bKATxlNup/z+a7n0QZHCZ85TndnuXeMjLvYKvpZmAi+iiqVDBlph
-         CLuT++gzs532UxiyWjt3noWcSF9vP+taU6nuOzKnABQJdiyehR5rSrhV63qlpVav+iwA
-         zLmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVCXDIkd2/SocfFm3VPZAvVOX28Rh6YM3nWiwFgWgbGoTKwZCWOHuO6bEPEJsY29xbi5SWX06+a@lists.linux.dev
-X-Gm-Message-State: AOJu0YxJd3oaSzQNS3Q8SHEfOt4+GiA/DvnDS63716yli9XAHfpuMadI
-	yTNm9DgSAfW+duKuCEFiCZSQDEtmhBX71Y5BIC1G1WJEmHSjxCf5fnwm4Uauoayw2j0=
-X-Gm-Gg: ATEYQzxkN8n1HhnCI/zftY4pBTSklxlwyhuIfey66RUUJ3PJN4xIQHHlfPNygcprWT3
-	mLajK6mNvZc3yLv4NuHnRqdkxGVpmbA3hFLiSagNw+dJWjZn60eJkT3Ozn9u4QUP5qVx8QixCH2
-	+Vz2EGn7LEfjiBwlN9ojsEwsAHEFPzM439eahigTEUkodm/gCCb/si5lG7n4te4yyJItWxOe3su
-	bZygDxkduXehU8BR0galkRtPp24i5LLQXPDt0bqF3RsygZRxPp51pX5r3GCIRxIzdsnuV9TZd4n
-	VLe/CZZn3t20EYJleznsgx/1NIOwFiZEr8x4z26NQi+XVfVxDxRNiERdL7yieo2YeYaKCUfHi87
-	8t0/zhY8k1Bd3pNNEFeyd0sETRhS868zL9eNb31t7Xgcz+kC3XPS+kI7P1jmETasHYsf9a43cNZ
-	TkMnaFOqhIKaXgr6eptJge5qmYhcdf6t9wLTZ3HZw54DmaCIp4eS7zXKp7XyrnJ5Zaajtm1aM9e
-	agDay3aMIWrFX+HViVC
-X-Received: by 2002:a05:600c:4e4a:b0:483:71f7:2797 with SMTP id 5b1f17b1804b1-483bef2c0eemr23684675e9.14.1771999399921;
-        Tue, 24 Feb 2026 22:03:19 -0800 (PST)
-Received: from u94a (2001-b011-fa04-7b92-b2dc-efff-fee8-7e7a.dynamic-ip6.hinet.net. [2001:b011:fa04:7b92:b2dc:efff:fee8:7e7a])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ad74f5dae6sm131631065ad.21.2026.02.24.22.03.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 22:03:19 -0800 (PST)
-Date: Wed, 25 Feb 2026 14:03:11 +0800
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.19 000/781] 6.19.4-rc1 review
-Message-ID: <xidiil74eoo2ivxxekipdwi53slry3naevkmeee4zsuxl7iw4u@nd23dorketj6>
-References: <20260225012359.695468795@linuxfoundation.org>
+        d=1e100.net; s=20230601; t=1772000128; x=1772604928;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fRp4t0j/86MYJauHT8JmZMZ8uXCSwHALvLOqAznr3r0=;
+        b=q59ZX2pbnoRDwqqdsRXQwhIcEoIUH5kneKEH6WcG9SM7vqQ6UrB+DHiQQDV122BLBP
+         +x55RXQyO4hZOtegnv6hPYN5mZlmwQv47PMhpz2dMkPTNEtNPjRhSD/2iUoJQWV5Elet
+         tHBocdVxHpF56NjahA4tkLpXT8nLMlpk0tuuSdw2QC/X8IIM4P988wUscfm6WWoUffPt
+         2Psh3DTpNfEswi6BbbhpekIEDGsyAZXRDcBnL3T0NqXSXwy/Q5UNtOqRJhxX4teoBsvi
+         O7CugWh80JCdXYzIM40hCFI71Pan/Fo97RCHFoUNxSj1hoSkO1ne3Gqu1Ikw2aXN+X70
+         Vgqw==
+X-Forwarded-Encrypted: i=1; AJvYcCUnWsFLg5e9//xmLEJWtvvOveGn4lzqjcTsqPjXFVI6Mw5bBwM/5aga97BVaZOJBajLPa2PAmch@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz6RKCrDM/abVVBzjxqsFgWaFZoowb2si3yYycyMy7OdLv/BWh6
+	9g2H08AHr6J10pnaBlOJLLfGB3zcRSnu7HWLsnUKnyb3bwvp5p9cCULKmSfLezhTy4QZXS1EzCj
+	vbe1rYob2YHySFX6Zv9B/7xUyKmU1snaoxOEwjNFTr89v8QEySRWg
+X-Gm-Gg: ATEYQzwFhKobNZ7JqFHt7D1txfKQWGb15TVUeKbLtUa922Zgh0TeYBs56dY0xSXrsDN
+	TmAL2catCm3WKjRJAahsPwxkXGoHQlAyexFuPwFemTMEtI6jUuD+LsvNjOoLX5QK5AeFmIsjg3K
+	V9qkqjNHYeYy/GnS3F09jlPTyVxgM1hQmFjELGzjpoI+Z1icHCkqKicuykhPMZ0BPmYr8RTDBie
+	kdJXZD6y9uB1LT6JGo42HquOQ242CVXfxRqUtt44h+3SRsUpQUS53LwQUJiPxcVhdGhU7gpycrv
+	MoKOJaPkPL1Ll4HreT9xnvGg/6r+oZQx10wSustdma2ZJYo0aetrrOP7BdbLO6ia8gFM9tmdSTj
+	FAi/t
+X-Received: by 2002:a5d:5f82:0:b0:436:233c:c7c2 with SMTP id
+ ffacd0b85a97d-4398fa8f511mr1672763f8f.16.1772000127528; Tue, 24 Feb 2026
+ 22:15:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
+References: <20260225012348.915798704@linuxfoundation.org> <20260225012349.617596661@linuxfoundation.org>
+In-Reply-To: <20260225012349.617596661@linuxfoundation.org>
+From: Daniel Vacek <neelx@suse.com>
+Date: Wed, 25 Feb 2026 07:15:16 +0100
+X-Gm-Features: AaiRm50BRHVY9dnqLA8QxSQ_aFijAWbIo40KFzJUtey0yViutItZBb79eS6PYcU
+Message-ID: <CAPjX3Fe8XOkja2L8dv30s4pnzSQDsAExXY5Nh8MFQoPreQUeAQ@mail.gmail.com>
+Subject: Re: [PATCH 6.18 026/641] btrfs: add orig_logical to btrfs_bio for encryption
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Josef Bacik <josef@toxicpanda.com>, David Sterba <dsterba@suse.com>, Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Feb 24, 2026 at 05:11:49PM -0800, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.19.4 release.
-> There are 781 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 27 Feb 2026 01:22:34 +0000.
-> Anything received after that time might be too late.
+On Wed, 25 Feb 2026 at 02:42, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.18-stable review patch.  If anyone has any objections, please let me know.
 
-test_progs, test_progs-no_alu32, test_progs-cpuv4, test_maps,
-test_verifier in BPF selftests all passes[1] on x86_64.
+Hi Greg,
 
-Tested-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+This one is a preparation for new feature development, it's not really
+worth the stable branch. Backporting it makes no sense.
 
-1: https://github.com/shunghsiyu/libbpf/actions/runs/22381308704/job/64782419806
+Have a nice day,
+Daniel
+
+> ------------------
+>
+> From: Josef Bacik <josef@toxicpanda.com>
+>
+> [ Upstream commit bd45e9e3f6232f76fa9bd0e40c1e3409e4449f5e ]
+>
+> When checksumming the encrypted bio on writes we need to know which
+> logical address this checksum is for.  At the point where we get the
+> encrypted bio the bi_sector is the physical location on the target disk,
+> so we need to save the original logical offset in the btrfs_bio.  Then
+> we can use this when checksumming the bio instead of the
+> bio->iter.bi_sector.
+>
+> Note: The patch was taken from v5 of fscrypt patchset
+> (https://lore.kernel.org/linux-btrfs/cover.1706116485.git.josef@toxicpanda.com/)
+> which was handled over time by various people: Omar Sandoval, Sweet Tea
+> Dorminy, Josef Bacik.
+>
+> Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+> Signed-off-by: Daniel Vacek <neelx@suse.com>
+> Reviewed-by: David Sterba <dsterba@suse.com>
+> [ add note ]
+> Signed-off-by: David Sterba <dsterba@suse.com>
+> Stable-dep-of: b39b26e017c7 ("btrfs: zoned: don't zone append to conventional zone")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/btrfs/bio.c       | 10 ++++++++++
+>  fs/btrfs/bio.h       |  2 ++
+>  fs/btrfs/file-item.c |  2 +-
+>  3 files changed, 13 insertions(+), 1 deletion(-)
+>
+> diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+> index 1286c1ac19404..c3d860a2bca42 100644
+> --- a/fs/btrfs/bio.c
+> +++ b/fs/btrfs/bio.c
+> @@ -94,6 +94,8 @@ static struct btrfs_bio *btrfs_split_bio(struct btrfs_fs_info *fs_info,
+>         if (bbio_has_ordered_extent(bbio)) {
+>                 refcount_inc(&orig_bbio->ordered->refs);
+>                 bbio->ordered = orig_bbio->ordered;
+> +               bbio->orig_logical = orig_bbio->orig_logical;
+> +               orig_bbio->orig_logical += map_length;
+>         }
+>         bbio->csum_search_commit_root = orig_bbio->csum_search_commit_root;
+>         atomic_inc(&orig_bbio->pending_ios);
+> @@ -726,6 +728,14 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
+>                 goto end_bbio;
+>         }
+>
+> +       /*
+> +        * For fscrypt writes we will get the encrypted bio after we've remapped
+> +        * our bio to the physical disk location, so we need to save the
+> +        * original bytenr so we know what we're checksumming.
+> +        */
+> +       if (bio_op(bio) == REQ_OP_WRITE && is_data_bbio(bbio))
+> +               bbio->orig_logical = logical;
+> +
+>         map_length = min(map_length, length);
+>         if (use_append)
+>                 map_length = btrfs_append_map_length(bbio, map_length);
+> diff --git a/fs/btrfs/bio.h b/fs/btrfs/bio.h
+> index 9a44b86d561b1..488cdbdd9e2f8 100644
+> --- a/fs/btrfs/bio.h
+> +++ b/fs/btrfs/bio.h
+> @@ -59,6 +59,7 @@ struct btrfs_bio {
+>                  * - pointer to the checksums for this bio
+>                  * - original physical address from the allocator
+>                  *   (for zone append only)
+> +                * - original logical address, used for checksumming fscrypt bios
+>                  */
+>                 struct {
+>                         struct btrfs_ordered_extent *ordered;
+> @@ -67,6 +68,7 @@ struct btrfs_bio {
+>                         struct completion csum_done;
+>                         struct bvec_iter csum_saved_iter;
+>                         u64 orig_physical;
+> +                       u64 orig_logical;
+>                 };
+>
+>                 /* For metadata reads: parentness verification. */
+> diff --git a/fs/btrfs/file-item.c b/fs/btrfs/file-item.c
+> index 4b7c40f05e8f9..48f444bde5fa9 100644
+> --- a/fs/btrfs/file-item.c
+> +++ b/fs/btrfs/file-item.c
+> @@ -815,7 +815,7 @@ int btrfs_csum_one_bio(struct btrfs_bio *bbio, bool async)
+>         if (!sums)
+>                 return -ENOMEM;
+>
+> -       sums->logical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
+> +       sums->logical = bbio->orig_logical;
+>         sums->len = bio->bi_iter.bi_size;
+>         INIT_LIST_HEAD(&sums->list);
+>         bbio->sums = sums;
+> --
+> 2.51.0
+>
+>
+>
