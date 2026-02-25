@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F521EB5E1;
-	Wed, 25 Feb 2026 01:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EC54369A;
+	Wed, 25 Feb 2026 01:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982921; cv=none; b=GdcZ+uPpWjdmRZ9jxJvokjuL69cR66Ma6jl5i0ZQH77ddsflY18CcIHOqir2f0tFU9+/mtgeZ2/BeVh0tM0Vhosbg/8ZVHZO21am30d1d3QcMxv2XmSKNwhg5a6+O/ETuM2O/3Gpl/0k5ADsid5xeIoPceX5wdCVLZ2ODS8ZYOs=
+	t=1771982922; cv=none; b=EKkTgMhXLgVtVTxdJ/bfW5YAS6nNuQma+9lDMCMjyDsqKlYS17pLhX/YzmLlvqanOruAhvaVGm1+L+RpLQQqD4Clz9nIrRs/hHTJ7qXe7rHdt3BtwqydsKQu8Mhuctzfr5T//nUFiuyh5aUGuqXHpXimYpD5OZx2QyCo48xF0Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982921; c=relaxed/simple;
-	bh=CceuJZTjWpI0S4rZSvVWVOc7H/UeCIXpIKrH4YELCeg=;
+	s=arc-20240116; t=1771982922; c=relaxed/simple;
+	bh=m9X5iQog2QwkF7NALmPzdxCe1f3H01Pn2cZYyozfjdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NAU0CYHBcPSVCztcMd0XTda4f092h+tWKTncuKjlgI2xLVRCmKnHxwIh7swp6r1GDnBaMlFpwlRITAM9GhPTLbzxoENk5MCG9Zdgub7fUpG/bqrGIalSXaYjM9XH0K3yc9qdBYbPY+HKq8WBCCHXwZRxSd15sJS/6S7a/EUfVd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/oWwv1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nw+WTrBsCge491WtamjVf+ahr859TQOFX+zo46q9lM3EuOyNrxcuP5SByNDrfn+/sCn9UIe3v6Z5s5fVa5ZoV1QDlKSfTe+mepnYT0tRthGl3FTF4Q29HWiIbDFCvzmVD9PwGGrc00ieG3e3NewM2rcwYu+tZS2Vvd8kTVCCOVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aswZG/cq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/oWwv1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9488C116D0;
-	Wed, 25 Feb 2026 01:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aswZG/cq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3440EC116D0;
+	Wed, 25 Feb 2026 01:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982921;
-	bh=CceuJZTjWpI0S4rZSvVWVOc7H/UeCIXpIKrH4YELCeg=;
+	s=korg; t=1771982922;
+	bh=m9X5iQog2QwkF7NALmPzdxCe1f3H01Pn2cZYyozfjdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/oWwv1DR8r7cHJUUuh9+cHEYNA0gBEo3YLvO/2UYd/2JFTpOQlqKNpdNbCOx8iTC
-	 HKCx5cIAfXa9FgzqE1LfmVckwySz9uViVBIOpOHTAVyOCQoKXt8/lv6rky0+CFeRJi
-	 a8rd0A9sQvaMm5pPTFKexJjIOE7gYNPVefB8mj0o=
+	b=aswZG/cq9Io2qLPj5J0NaheTUSYgrdGreHC4s1/cP2nsbm0niVTDJ88kKGYUhPgQl
+	 Ae+QNZcKXS46SYuaJjcpNbp3dtyardZy4VfYwaIRACzYDZZJV+pEoKHnV4MjJ7wR9p
+	 LYIfLof2UVDxUEJ4U+hA/GGyaXgkH5fv0oWMwZIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Larsson <benjamin.larsson@genexis.eu>,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Amery Hung <ameryhung@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 100/781] hwrng: airoha - set rng quality to 900
-Date: Tue, 24 Feb 2026 17:13:29 -0800
-Message-ID: <20260225012402.139389950@linuxfoundation.org>
+Subject: [PATCH 6.19 101/781] rqspinlock: Fix TAS fallback lock entry creation
+Date: Tue, 24 Feb 2026 17:13:30 -0800
+Message-ID: <20260225012402.164266315@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,65 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit c0008a29a006091d7f9d288620c2456afa23ff27 ]
+[ Upstream commit 82f3b142c99cf44c7b1e70b7720169c646b9760f ]
 
-Airoha uses RAW mode to collect noise from the TRNG. These appear to
-be unprocessed oscillations from the tero loop. For this reason, they
-do not have a perfect distribution and entropy. Simple noise compression
-reduces its size by 9%, so setting the quality to 900 seems reasonable.
-The same value is used by the downstream driver.
+The TAS fallback can be invoked directly when queued spin locks are
+disabled, and through the slow path when paravirt is enabled for queued
+spin locks. In the latter case, the res_spin_lock macro will attempt the
+fast path and already hold the entry when entering the slow path. This
+will lead to creation of extraneous entries that are not released, which
+may cause false positives for deadlock detection.
 
-Compare the size before and after compression:
-$ ls -l random_airoha*
--rw-r--r-- 1 aleksander aleksander 76546048 Jan  3 23:43 random_airoha
--rw-rw-r-- 1 aleksander aleksander 69783562 Jan  5 20:23 random_airoha.zip
+Fix this by always preceding invocation of the TAS fallback in every
+case with the grabbing of the held lock entry, and add a comment to make
+note of this.
 
-FIPS test results:
-$ cat random_airoha | rngtest -c 10000
-rngtest 2.6
-Copyright (c) 2004 by Henrique de Moraes Holschuh
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-rngtest: starting FIPS tests...
-rngtest: bits received from input: 200000032
-rngtest: FIPS 140-2 successes: 0
-rngtest: FIPS 140-2 failures: 10000
-rngtest: FIPS 140-2(2001-10-10) Monobit: 9957
-rngtest: FIPS 140-2(2001-10-10) Poker: 10000
-rngtest: FIPS 140-2(2001-10-10) Runs: 10000
-rngtest: FIPS 140-2(2001-10-10) Long run: 4249
-rngtest: FIPS 140-2(2001-10-10) Continuous run: 0
-rngtest: input channel speed: (min=953.674; avg=27698.935; max=19073.486)Mibits/s
-rngtest: FIPS tests speed: (min=59.791; avg=298.028; max=328.853)Mibits/s
-rngtest: Program run time: 647638 microseconds
-
-In general, these data look like real noise, but with lower entropy
-than expected.
-
-Fixes: e53ca8efcc5e ("hwrng: airoha - add support for Airoha EN7581 TRNG")
-Suggested-by: Benjamin Larsson <benjamin.larsson@genexis.eu>
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: c9102a68c070 ("rqspinlock: Add a test-and-set fallback")
+Reported-by: Amery Hung <ameryhung@gmail.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Tested-by: Amery Hung <ameryhung@gmail.com>
+Link: https://lore.kernel.org/r/20260122115911.3668985-1-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/airoha-trng.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/asm-generic/rqspinlock.h | 2 +-
+ kernel/bpf/rqspinlock.c          | 7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/char/hw_random/airoha-trng.c b/drivers/char/hw_random/airoha-trng.c
-index 1dbfa9505c214..9a648f6d9fd40 100644
---- a/drivers/char/hw_random/airoha-trng.c
-+++ b/drivers/char/hw_random/airoha-trng.c
-@@ -212,6 +212,7 @@ static int airoha_trng_probe(struct platform_device *pdev)
- 	trng->rng.init = airoha_trng_init;
- 	trng->rng.cleanup = airoha_trng_cleanup;
- 	trng->rng.read = airoha_trng_read;
-+	trng->rng.quality = 900;
+diff --git a/include/asm-generic/rqspinlock.h b/include/asm-generic/rqspinlock.h
+index 0f2dcbbfee2f0..5c5cf2f7fc395 100644
+--- a/include/asm-generic/rqspinlock.h
++++ b/include/asm-generic/rqspinlock.h
+@@ -191,7 +191,7 @@ static __always_inline int res_spin_lock(rqspinlock_t *lock)
  
- 	ret = devm_hwrng_register(dev, &trng->rng);
- 	if (ret) {
+ #else
+ 
+-#define res_spin_lock(lock) resilient_tas_spin_lock(lock)
++#define res_spin_lock(lock) ({ grab_held_lock_entry(lock); resilient_tas_spin_lock(lock); })
+ 
+ #endif /* CONFIG_QUEUED_SPINLOCKS */
+ 
+diff --git a/kernel/bpf/rqspinlock.c b/kernel/bpf/rqspinlock.c
+index f7d0c8d4644ed..2fdfa828e3d35 100644
+--- a/kernel/bpf/rqspinlock.c
++++ b/kernel/bpf/rqspinlock.c
+@@ -265,10 +265,11 @@ int __lockfunc resilient_tas_spin_lock(rqspinlock_t *lock)
+ 
+ 	RES_INIT_TIMEOUT(ts);
+ 	/*
+-	 * The fast path is not invoked for the TAS fallback, so we must grab
+-	 * the deadlock detection entry here.
++	 * We are either called directly from res_spin_lock after grabbing the
++	 * deadlock detection entry when queued spinlocks are disabled, or from
++	 * resilient_queued_spin_lock_slowpath after grabbing the deadlock
++	 * detection entry. No need to obtain it here.
+ 	 */
+-	grab_held_lock_entry(lock);
+ 
+ 	/*
+ 	 * Since the waiting loop's time is dependent on the amount of
 -- 
 2.51.0
 
