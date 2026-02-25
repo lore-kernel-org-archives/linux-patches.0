@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A66254B03;
-	Wed, 25 Feb 2026 01:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF879262FE7;
+	Wed, 25 Feb 2026 01:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983465; cv=none; b=OKlB7FMUrz6BC5xsVZDHRvf6pGsGI3vXyDhRLEIlbE8lXTPSqnXd1QqZktc8kZIMGYqCX0RPvJv4irq0bg1TClcFUDml/IO+YY3zFQlycWavxHPVA/lkhp9xM5Rjh6XLXVSV9uel9AJbyaoRryj8QUZZsm8G5VEweu3mG6aB92A=
+	t=1771983466; cv=none; b=qPIAjciTKk7PTwXxjsmMh0JKV/oNJlKiPU+fRIAOXEGCyXrTG8i0FLyp3rxVBmwSnfBkf6+dR1lzNy2MTCIMcvVIaDO1etrTbfWLhzF+HzjT81UD+jZJHNsG3onz75n0ZiN3vYsqzePJVgeQt0HoDjXnAFhU47r2l50nmzuaY8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983465; c=relaxed/simple;
-	bh=vexnOwa4r5tOalQj4urIL7/vnHF7XGitqV403dALA30=;
+	s=arc-20240116; t=1771983466; c=relaxed/simple;
+	bh=IBexiZH8Gj4BoMsIfNUUeRRN0RvP1vWsNPkT5iQlDGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xl2k7Hbv/RV85MFz92thquRu+a51MZT2j3gLyWAXMtMiZ4kMTdZv3XTtv4hDsr/EeyyYg5KA0iBPLkN6cxq0L/evXgIT16uWBlCiQDAJ9dRY45RktLV9+hSgEplX4BtaC4jIZfZ3G9/6Dtiwy9xIiY+hm6ow3SMpjVsbK59HrDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0bMpgj1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0kiL1ZqFItBJlOPmuTti39Z7/W98mg+ER8YsOozR0zpq5f8L9jw8W1Iq0VKbvCQn3S4u1SA8w7iOKn/xi5QUXJUtZAB4MINAuczCzQ6hWrXQGzPXIAxwgiFrR6yaTnejaeq0kRUkDnl4V5rpAnoIAnaMJtGCFeEt6Sr8Dtf0Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWFZ594f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0bMpgj1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616BCC116D0;
-	Wed, 25 Feb 2026 01:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWFZ594f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF41C116D0;
+	Wed, 25 Feb 2026 01:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983465;
-	bh=vexnOwa4r5tOalQj4urIL7/vnHF7XGitqV403dALA30=;
+	s=korg; t=1771983466;
+	bh=IBexiZH8Gj4BoMsIfNUUeRRN0RvP1vWsNPkT5iQlDGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0bMpgj1IX29mw0LPTZ6S100pCUsQrrQ1fhdDLjfxteFtlZ1S0gRmjG/i8j07PMQD
-	 LLzghi4ujnArJv3FckvriPNMsnTcKzwxuVUz7pQe+QtyhS8XXW1oYMWYzb/Mmmf5sv
-	 j+v8EEjI9MXf1HQeLXcpsxPyr2EPOCCuQ1pPpgss=
+	b=sWFZ594f/0gsn8FaFaVbPgid0Hy+BUucLrUj0jCIWsrax6IpHrMfDsffXfO+nenDK
+	 qy4TnzjsgFP/6/dFM3kk11OYVaxz3xbKz2EqCx4nVQGu3z9gS9+EoPXNaYaC90cvWn
+	 onOX4VcszP67+G4PGWLdiFLioiPLu36kl3uvglVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dave Penkler <dpenkler@gmail.com>,
+	Jianhao Xu <jianhao.xu@seu.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 527/781] clk: qcom: gcc-msm8917: Remove ALWAYS_ON flag from cpp_gdsc
-Date: Tue, 24 Feb 2026 17:20:36 -0800
-Message-ID: <20260225012412.723589662@linuxfoundation.org>
+Subject: [PATCH 6.19 574/781] gpib: Fix memory leak in ni_usb_init()
+Date: Tue, 24 Feb 2026 17:21:23 -0800
+Message-ID: <20260225012413.879556991@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,41 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Barnabás Czémán <barnabas.czeman@mainlining.org>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit e4eb42f290aecac0ba355b1f8d7243be6de11f32 ]
+[ Upstream commit b89921eed8cf2d97250bac4be38dbcfbf048b586 ]
 
-cpp_gdsc should not be always on, ALWAYS_ON flag was set accidentally.
+In ni_usb_init(), if ni_usb_setup_init() fails, the function returns
+-EFAULT without freeing the allocated writes buffer, leading to a
+memory leak.
 
-Fixes: 33cc27a47d3a ("clk: qcom: Add global clock controller driver for MSM8917")
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251117-fix-gdsc-cpp-msm8917-msm8953-v1-2-db33adcff28a@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Additionally, ni_usb_setup_init() returns 0 on failure, which causes
+ni_usb_init() to return -EFAULT, an inappropriate error code for this
+situation.
+
+Fix the leak by freeing writes in the error path. Modify
+ni_usb_setup_init() to return -EINVAL on failure and propagate this
+error code in ni_usb_init().
+
+Fixes: 4e127de14fa7 ("staging: gpib: Add National Instruments USB GPIB driver")
+Suggested-by: Greg KH <gregkh@linuxfoundation.org>
+Suggested-by: Dave Penkler <dpenkler@gmail.com>
+Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://patch.msgid.link/20251230034546.929452-1-zilin@seu.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-msm8917.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpib/ni_usb/ni_usb_gpib.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-msm8917.c b/drivers/clk/qcom/gcc-msm8917.c
-index 0a1aa623cd49a..9d1c5a9953e2c 100644
---- a/drivers/clk/qcom/gcc-msm8917.c
-+++ b/drivers/clk/qcom/gcc-msm8917.c
-@@ -3409,7 +3409,6 @@ static struct gdsc cpp_gdsc = {
- 	.pd = {
- 		.name = "cpp_gdsc",
- 	},
--	.flags = ALWAYS_ON,
- 	.pwrsts = PWRSTS_OFF_ON,
- };
+diff --git a/drivers/gpib/ni_usb/ni_usb_gpib.c b/drivers/gpib/ni_usb/ni_usb_gpib.c
+index fdcaa6c00bfea..b6fddb437f552 100644
+--- a/drivers/gpib/ni_usb/ni_usb_gpib.c
++++ b/drivers/gpib/ni_usb/ni_usb_gpib.c
+@@ -1780,7 +1780,7 @@ static int ni_usb_setup_init(struct gpib_board *board, struct ni_usb_register *w
+ 	i++;
+ 	if (i > NUM_INIT_WRITES) {
+ 		dev_err(&usb_dev->dev, "bug!, buffer overrun, i=%i\n", i);
+-		return 0;
++		return -EINVAL;
+ 	}
+ 	return i;
+ }
+@@ -1799,10 +1799,12 @@ static int ni_usb_init(struct gpib_board *board)
+ 		return -ENOMEM;
  
+ 	writes_len = ni_usb_setup_init(board, writes);
+-	if (writes_len)
+-		retval = ni_usb_write_registers(ni_priv, writes, writes_len, &ibsta);
+-	else
+-		return -EFAULT;
++	if (writes_len < 0) {
++		kfree(writes);
++		return writes_len;
++	}
++
++	retval = ni_usb_write_registers(ni_priv, writes, writes_len, &ibsta);
+ 	kfree(writes);
+ 	if (retval) {
+ 		dev_err(&usb_dev->dev, "register write failed, retval=%i\n", retval);
 -- 
 2.51.0
 
