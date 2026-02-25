@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8757822579E;
-	Wed, 25 Feb 2026 01:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983B026158C;
+	Wed, 25 Feb 2026 01:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983798; cv=none; b=MsdBlf48TD9kD5aGL3SYgUBjA3ag+NzMN0mAhVcaPXBl/a/RkdRZW1uG8yPjFpdkZP7Lloai/02ZLHG2StR74zwFgUw/VZW4ofo3PaEHvOCADBl8H5LxejUWysQOE10Jdi4xgtkRvWfS5AFOeXvNVkTg5JwGtZwZ1hPHMPxu3g8=
+	t=1771983799; cv=none; b=rm4+qJs5u7vDrSox0zmmW2zyB3n+nVvXaB0PTKnAjsEh7H3yawSxyDLPtFBqOGzNX7u7tpnZmeZP5TxfcdoyB4fpEVbWU4qHAwQokCUcLkpUsk5KocDoPRulHdF56Itzy3m+S5rspzfWXlSBuPABwNr2xdjxdp4LUwl/2FdRgkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983798; c=relaxed/simple;
-	bh=wuw+4dkF1rJQwFLAuJARYkPOjVWdSN9Q7LMd9oyaM6k=;
+	s=arc-20240116; t=1771983799; c=relaxed/simple;
+	bh=Ykp9gsiTethrN6RcNJ/qsjPtT3JfwP4ZYpq1jE0/Ur8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZMDUiu79+ihxitd77DplZuzgBs83bKLQBnQjsiSJj3GVAAyjostsuRSnrE8Z2beM+wbi/st0EuljESeY9KFP7QbedOaElfHcRF/LSui2OnBylbvOayrV1WpQpXoN62vSOUeZiTDmhy/gAjAlDu1KLh6v2fIwppja3NJMeRIQt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzX+vuVV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=epAFLlSr058o+73YBhVsGhlczW0H4i9aNZemYz4I4HUBCZhHsJTsAaabdi/q8k2lf05z9RDEe5nulqx11INb9Aoi9/l1ROsxrGSd3eewP/O+9nS5t9VhmbhtcSrsFPWsLHtwZ+Hec9x/iJWaIx6mWncEg8nFd9BOmBY21M/Fp7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mb5DUsv9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzX+vuVV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40317C116D0;
-	Wed, 25 Feb 2026 01:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mb5DUsv9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57612C116D0;
+	Wed, 25 Feb 2026 01:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983798;
-	bh=wuw+4dkF1rJQwFLAuJARYkPOjVWdSN9Q7LMd9oyaM6k=;
+	s=korg; t=1771983799;
+	bh=Ykp9gsiTethrN6RcNJ/qsjPtT3JfwP4ZYpq1jE0/Ur8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzX+vuVVTa0G4vLaGX/Gxh9fUYschN3i0Qqs6AW97+UkA5qzJ9MOLtNCvL2jWle3B
-	 WwHyYcnPtgze9R65UaU6wq14eOINsHOWi2VyYlo9NrONzsUni4t1LrdlC65No+Qvfy
-	 OtYquk+2XcQbj4HhD6K4zN86ow9HUZNjUNoDSpro=
+	b=mb5DUsv9RNGzGozvX1twFBe09RlPxvSibrfvdn5lftVOQQiPAMDMbpNYK2sNmaFf6
+	 8c3sPd0MOz5n9R4IHuAoug9+NFBSwTHL2xqhT3/O9RFAubSIxO4BBhafOXesFSKyNi
+	 m0i9DsHU0nfJBwSwrPknJWsraFYZNsTmdt72h/Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Tao <taoqi10@huawei.com>,
 	Chenghai Huang <huangchenghai2@huawei.com>,
+	Zenghui Yu <yuzenghui@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 082/641] crypto: hisilicon/sec2 - support skcipher/aead fallback for hardware queue unavailable
-Date: Tue, 24 Feb 2026 17:16:48 -0800
-Message-ID: <20260225012351.072171787@linuxfoundation.org>
+Subject: [PATCH 6.18 083/641] crypto: hisilicon/sgl - fix inconsistent map/unmap direction issue
+Date: Tue, 24 Feb 2026 17:16:49 -0800
+Message-ID: <20260225012351.099087937@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,217 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Tao <taoqi10@huawei.com>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit e7507439628052363500d717caffb5c2241854dc ]
+[ Upstream commit 4154f7d3b1c133b909d20c44ecb8277e8482aa6b ]
 
-When all hardware queues are busy and no shareable queue,
-new processes fail to apply for queues. To avoid affecting
-tasks, support fallback mechanism when hardware queues are
-unavailable.
+Ensure that the direction for dma_map_sg and dma_unmap_sg is
+consistent.
 
-Fixes: c16a70c1f253 ("crypto: hisilicon/sec - add new algorithm mode for AEAD")
-Signed-off-by: Qi Tao <taoqi10@huawei.com>
+Fixes: 2566de3e06a3 ("crypto: hisilicon - Use fine grained DMA mapping direction")
 Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 62 ++++++++++++++++------
- 1 file changed, 47 insertions(+), 15 deletions(-)
+ drivers/crypto/hisilicon/sgl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index d09d081f42dc7..c462b58d30343 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -663,10 +663,8 @@ static int sec_ctx_base_init(struct sec_ctx *ctx)
- 	int i, ret;
+diff --git a/drivers/crypto/hisilicon/sgl.c b/drivers/crypto/hisilicon/sgl.c
+index 7a9ef2a9972a2..848ad7b101d93 100644
+--- a/drivers/crypto/hisilicon/sgl.c
++++ b/drivers/crypto/hisilicon/sgl.c
+@@ -265,7 +265,7 @@ hisi_acc_sg_buf_map_to_hw_sgl(struct device *dev, struct scatterlist *sgl,
+ 	return curr_hw_sgl;
  
- 	ctx->qps = sec_create_qps();
--	if (!ctx->qps) {
--		pr_err("Can not create sec qps!\n");
-+	if (!ctx->qps)
- 		return -ENODEV;
--	}
+ err_unmap:
+-	dma_unmap_sg(dev, sgl, sg_n, DMA_BIDIRECTIONAL);
++	dma_unmap_sg(dev, sgl, sg_n, dir);
  
- 	sec = container_of(ctx->qps[0]->qm, struct sec_dev, qm);
- 	ctx->sec = sec;
-@@ -702,6 +700,9 @@ static void sec_ctx_base_uninit(struct sec_ctx *ctx)
- {
- 	int i;
- 
-+	if (!ctx->qps)
-+		return;
-+
- 	for (i = 0; i < ctx->sec->ctx_q_num; i++)
- 		sec_release_qp_ctx(ctx, &ctx->qp_ctx[i]);
- 
-@@ -713,6 +714,9 @@ static int sec_cipher_init(struct sec_ctx *ctx)
- {
- 	struct sec_cipher_ctx *c_ctx = &ctx->c_ctx;
- 
-+	if (!ctx->qps)
-+		return 0;
-+
- 	c_ctx->c_key = dma_alloc_coherent(ctx->dev, SEC_MAX_KEY_SIZE,
- 					  &c_ctx->c_key_dma, GFP_KERNEL);
- 	if (!c_ctx->c_key)
-@@ -725,6 +729,9 @@ static void sec_cipher_uninit(struct sec_ctx *ctx)
- {
- 	struct sec_cipher_ctx *c_ctx = &ctx->c_ctx;
- 
-+	if (!ctx->qps)
-+		return;
-+
- 	memzero_explicit(c_ctx->c_key, SEC_MAX_KEY_SIZE);
- 	dma_free_coherent(ctx->dev, SEC_MAX_KEY_SIZE,
- 			  c_ctx->c_key, c_ctx->c_key_dma);
-@@ -746,6 +753,9 @@ static void sec_auth_uninit(struct sec_ctx *ctx)
- {
- 	struct sec_auth_ctx *a_ctx = &ctx->a_ctx;
- 
-+	if (!ctx->qps)
-+		return;
-+
- 	memzero_explicit(a_ctx->a_key, SEC_MAX_AKEY_SIZE);
- 	dma_free_coherent(ctx->dev, SEC_MAX_AKEY_SIZE,
- 			  a_ctx->a_key, a_ctx->a_key_dma);
-@@ -783,7 +793,7 @@ static int sec_skcipher_init(struct crypto_skcipher *tfm)
- 	}
- 
- 	ret = sec_ctx_base_init(ctx);
--	if (ret)
-+	if (ret && ret != -ENODEV)
- 		return ret;
- 
- 	ret = sec_cipher_init(ctx);
-@@ -892,6 +902,9 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 	struct device *dev = ctx->dev;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		goto set_soft_key;
-+
- 	if (c_mode == SEC_CMODE_XTS) {
- 		ret = xts_verify_key(tfm, key, keylen);
- 		if (ret) {
-@@ -922,13 +935,14 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 	}
- 
- 	memcpy(c_ctx->c_key, key, keylen);
--	if (c_ctx->fbtfm) {
--		ret = crypto_sync_skcipher_setkey(c_ctx->fbtfm, key, keylen);
--		if (ret) {
--			dev_err(dev, "failed to set fallback skcipher key!\n");
--			return ret;
--		}
-+
-+set_soft_key:
-+	ret = crypto_sync_skcipher_setkey(c_ctx->fbtfm, key, keylen);
-+	if (ret) {
-+		dev_err(dev, "failed to set fallback skcipher key!\n");
-+		return ret;
- 	}
-+
- 	return 0;
+ 	return ERR_PTR(ret);
  }
- 
-@@ -1392,6 +1406,9 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 	struct crypto_authenc_keys keys;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		return sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
-+
- 	ctx->a_ctx.a_alg = a_alg;
- 	ctx->c_ctx.c_alg = c_alg;
- 	c_ctx->c_mode = c_mode;
-@@ -2048,6 +2065,9 @@ static int sec_skcipher_ctx_init(struct crypto_skcipher *tfm)
- 	if (ret)
- 		return ret;
- 
-+	if (!ctx->qps)
-+		return 0;
-+
- 	if (ctx->sec->qm.ver < QM_HW_V3) {
- 		ctx->type_supported = SEC_BD_TYPE2;
- 		ctx->req_op = &sec_skcipher_req_ops;
-@@ -2056,7 +2076,7 @@ static int sec_skcipher_ctx_init(struct crypto_skcipher *tfm)
- 		ctx->req_op = &sec_skcipher_req_ops_v3;
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- static void sec_skcipher_ctx_exit(struct crypto_skcipher *tfm)
-@@ -2124,7 +2144,7 @@ static int sec_aead_ctx_init(struct crypto_aead *tfm, const char *hash_name)
- 	int ret;
- 
- 	ret = sec_aead_init(tfm);
--	if (ret) {
-+	if (ret && ret != -ENODEV) {
- 		pr_err("hisi_sec2: aead init error!\n");
- 		return ret;
- 	}
-@@ -2166,7 +2186,7 @@ static int sec_aead_xcm_ctx_init(struct crypto_aead *tfm)
- 	int ret;
- 
- 	ret = sec_aead_init(tfm);
--	if (ret) {
-+	if (ret && ret != -ENODEV) {
- 		dev_err(ctx->dev, "hisi_sec2: aead xcm init error!\n");
- 		return ret;
- 	}
-@@ -2311,6 +2331,9 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
- 	bool need_fallback = false;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		goto soft_crypto;
-+
- 	if (!sk_req->cryptlen) {
- 		if (ctx->c_ctx.c_mode == SEC_CMODE_XTS)
- 			return -EINVAL;
-@@ -2328,9 +2351,12 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
- 		return -EINVAL;
- 
- 	if (unlikely(ctx->c_ctx.fallback || need_fallback))
--		return sec_skcipher_soft_crypto(ctx, sk_req, encrypt);
-+		goto soft_crypto;
- 
- 	return ctx->req_op->process(ctx, req);
-+
-+soft_crypto:
-+	return sec_skcipher_soft_crypto(ctx, sk_req, encrypt);
- }
- 
- static int sec_skcipher_encrypt(struct skcipher_request *sk_req)
-@@ -2538,6 +2564,9 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
- 	bool need_fallback = false;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		goto soft_crypto;
-+
- 	req->flag = a_req->base.flags;
- 	req->aead_req.aead_req = a_req;
- 	req->c_req.encrypt = encrypt;
-@@ -2548,11 +2577,14 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
- 	ret = sec_aead_param_check(ctx, req, &need_fallback);
- 	if (unlikely(ret)) {
- 		if (need_fallback)
--			return sec_aead_soft_crypto(ctx, a_req, encrypt);
-+			goto soft_crypto;
- 		return -EINVAL;
- 	}
- 
- 	return ctx->req_op->process(ctx, req);
-+
-+soft_crypto:
-+	return sec_aead_soft_crypto(ctx, a_req, encrypt);
- }
- 
- static int sec_aead_encrypt(struct aead_request *a_req)
 -- 
 2.51.0
 
