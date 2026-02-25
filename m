@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6558E22579E;
-	Wed, 25 Feb 2026 01:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A60D1F03DE;
+	Wed, 25 Feb 2026 01:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983975; cv=none; b=u2P+/tiy50qbKbYI4tr5wS4j05bsBjY/g/TWLYr2xczJ8OjQ+fWE+3twCVfghzD1prpL1LN2H0MKYmgVk5N2+dHYpXDI0BmOgHT04e2AAnvvPQ65VhiI9hDJMMsakfKsGMFYSqcB5opdhIvBKkynwaFWqKj/ZYKfGW69JILJSBA=
+	t=1771983976; cv=none; b=QFEaK+KBHZiQ9XX3wbix0RZQBAEq9jYqnyoR3DtghwrVCsLP54QUXQNIaejmKL9jTSsafPtYahd+czbjZeeO7yZqUTHCxwhb4XqBXznRyhWjC4DtnOEp7iLFCeNFnAuufPZjRAj2JTxtwTrWPx+Wl7yhibbvqrDpTazGXq4M8iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983975; c=relaxed/simple;
-	bh=zHBMs2IUMx63NZg4D3pe+5oqfYN2Jv3sEEvlGlYn67o=;
+	s=arc-20240116; t=1771983976; c=relaxed/simple;
+	bh=Ea2NcJw9co1lrivec4lMNDZULtiyFspYmu+IFDthD5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMsa+WQqsUHFZjgZg8Y0fjPJquA8E2fR+YzBYOJ5AQSHgDX/DIOaYPGQDqwfPoDQzoPT52BF1xa7ZQNB4QOgOI9RUWMIUEonk843qcMQSqjpfuecdk2mWRkiB8zMIs8b5N64NXk3XEO3i2wc6UvEmbEoIO1LFbCZXMiOadXV5R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHCfNqYK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JkXkYNp1lpzohHdmUzlyVUd5pgZuHE0hfPQOSJiYw2Q5bzLPTelXaCXnGdGsi13ydTKBp3MlIZxtcPsSd9bN70uNjUVfIWkKZch4T6gphOPKd3TYMaYWLFQ65AyG1Hzt2pGVHuLE87mxbSWqFOvvvjd/n79CcuhqQhRYMrHt/N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osz5KThO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHCfNqYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2491CC116D0;
-	Wed, 25 Feb 2026 01:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osz5KThO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A94CC116D0;
+	Wed, 25 Feb 2026 01:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983975;
-	bh=zHBMs2IUMx63NZg4D3pe+5oqfYN2Jv3sEEvlGlYn67o=;
+	s=korg; t=1771983976;
+	bh=Ea2NcJw9co1lrivec4lMNDZULtiyFspYmu+IFDthD5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHCfNqYKtBMte9k2ECWSmjeDDu/xGmc67RQBLQ37WoPlr7AmqdlERRyhY+EezTkkc
-	 e4eOpPWsTd4ttk0tbV43ryTrUw555D9EcplJ22r0SxLalhbwAMtgp1wp7WNp7jcvSo
-	 JrN4Uv20l6qGyPQRquojm0R9h0q5nsZ41mBPBJmc=
+	b=osz5KThOtJJZb55BOubgdkRgdYLkbh/FKhV4VwrLnlOex3RaKpLx3epyaSLqpn9R0
+	 iKpuNxNKYqZVC7trdAWQ+k/zvPTua7/QXjjYK+ueKyDI7XtiIKS3SxrTN4k6TzoxQf
+	 F/1WHtLasQCKLe30PGCgU8eksoia64pbZr+Q2jmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 184/641] smack: /smack/doi must be > 0
-Date: Tue, 24 Feb 2026 17:18:30 -0800
-Message-ID: <20260225012353.475356589@linuxfoundation.org>
+Subject: [PATCH 6.18 229/641] ASoC: SDCA: Force some SDCA Controls to be volatile
+Date: Tue, 24 Feb 2026 17:19:15 -0800
+Message-ID: <20260225012354.450999959@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,68 +53,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Andreev <andreev@swemel.ru>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 19c013e1551bf51e1493da1270841d60e4fd3f15 ]
+[ Upstream commit c7b6c6b60594fd1efe35c61bc6a2176b25263ccc ]
 
-/smack/doi allows writing and keeping negative doi values.
-Correct values are 0 < doi <= (max 32-bit positive integer)
+Whilst SDCA does specify an Access Mode for each Control, there is not a
+1-to-1 mapping between that and ASoC's internal representation. Some
+registers require being treated as volatile from the hosts perspective
+even in their Access Mode is Read-Write. Add an explicit list of SDCA
+controls that should be forced volatile.
 
-(2008-02-04, Casey Schaufler)
-Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
-
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20251020155512.353774-10-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 9fad74b79e5f ("ASoC: SDCA: Handle volatile controls correctly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smackfs.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ include/sound/sdca_function.h   |  1 +
+ sound/soc/sdca/sdca_functions.c | 58 +++++++++++++++++++++++++++++++++
+ sound/soc/sdca/sdca_regmap.c    |  9 +----
+ 3 files changed, 60 insertions(+), 8 deletions(-)
 
-diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index b1e5e62f5cbd1..316c2ea401e8a 100644
---- a/security/smack/smackfs.c
-+++ b/security/smack/smackfs.c
-@@ -141,7 +141,7 @@ struct smack_parsed_rule {
- 	int			smk_access2;
+diff --git a/include/sound/sdca_function.h b/include/sound/sdca_function.h
+index ea68856e4c8c4..86fd74146c33d 100644
+--- a/include/sound/sdca_function.h
++++ b/include/sound/sdca_function.h
+@@ -771,6 +771,7 @@ struct sdca_control {
+ 	u8 layers;
+ 
+ 	bool deferrable;
++	bool is_volatile;
+ 	bool has_default;
+ 	bool has_fixed;
  };
+diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
+index 7adbf653bd8ac..4417278e39bb1 100644
+--- a/sound/soc/sdca/sdca_functions.c
++++ b/sound/soc/sdca/sdca_functions.c
+@@ -779,6 +779,62 @@ find_sdca_control_datatype(const struct sdca_entity *entity,
+ 	}
+ }
  
--static int smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
-+static u32 smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
++static bool find_sdca_control_volatile(const struct sdca_entity *entity,
++				       const struct sdca_control *control)
++{
++	switch (control->mode) {
++	case SDCA_ACCESS_MODE_DC:
++		return false;
++	case SDCA_ACCESS_MODE_RO:
++	case SDCA_ACCESS_MODE_RW1S:
++	case SDCA_ACCESS_MODE_RW1C:
++		return true;
++	default:
++		break;
++	}
++
++	switch (SDCA_CTL_TYPE(entity->type, control->sel)) {
++	case SDCA_CTL_TYPE_S(XU, FDL_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(XU, FDL_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(XU, FDL_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(XU, FDL_STATUS):
++	case SDCA_CTL_TYPE_S(XU, FDL_HOST_REQUEST):
++	case SDCA_CTL_TYPE_S(SPE, AUTHTX_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(SPE, AUTHTX_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(SPE, AUTHTX_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(SPE, AUTHRX_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(SPE, AUTHRX_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(SPE, AUTHRX_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(MFPU, AE_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(MFPU, AE_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(MFPU, AE_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(SMPU, HIST_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(SMPU, HIST_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(SMPU, HIST_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(SMPU, DTODTX_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(SMPU, DTODTX_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(SMPU, DTODTX_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(SMPU, DTODRX_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(SMPU, DTODRX_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(SMPU, DTODRX_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(SAPU, DTODTX_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(SAPU, DTODTX_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(SAPU, DTODTX_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(SAPU, DTODRX_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(SAPU, DTODRX_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(SAPU, DTODRX_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(HIDE, HIDTX_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(HIDE, HIDTX_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(HIDE, HIDTX_MESSAGELENGTH):
++	case SDCA_CTL_TYPE_S(HIDE, HIDRX_CURRENTOWNER):
++	case SDCA_CTL_TYPE_S(HIDE, HIDRX_MESSAGEOFFSET):
++	case SDCA_CTL_TYPE_S(HIDE, HIDRX_MESSAGELENGTH):
++		return true;
++	default:
++		return false;
++	}
++}
++
+ static int find_sdca_control_range(struct device *dev,
+ 				   struct fwnode_handle *control_node,
+ 				   struct sdca_control_range *range)
+@@ -927,6 +983,8 @@ static int find_sdca_entity_control(struct device *dev, struct sdca_entity *enti
+ 		break;
+ 	}
  
- /*
-  * Values for parsing cipso rules
-@@ -1562,7 +1562,7 @@ static ssize_t smk_read_doi(struct file *filp, char __user *buf,
- 	if (*ppos != 0)
- 		return 0;
++	control->is_volatile = find_sdca_control_volatile(entity, control);
++
+ 	ret = find_sdca_control_range(dev, control_node, &control->range);
+ 	if (ret) {
+ 		dev_err(dev, "%s: control %#x: range missing: %d\n",
+diff --git a/sound/soc/sdca/sdca_regmap.c b/sound/soc/sdca/sdca_regmap.c
+index 72f893e00ff50..8fa138fca00ff 100644
+--- a/sound/soc/sdca/sdca_regmap.c
++++ b/sound/soc/sdca/sdca_regmap.c
+@@ -147,14 +147,7 @@ bool sdca_regmap_volatile(struct sdca_function_data *function, unsigned int reg)
+ 	if (!control)
+ 		return false;
  
--	sprintf(temp, "%d", smk_cipso_doi_value);
-+	sprintf(temp, "%lu", (unsigned long)smk_cipso_doi_value);
- 	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
- 
- 	return rc;
-@@ -1581,7 +1581,7 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
- 			     size_t count, loff_t *ppos)
- {
- 	char temp[80];
--	int i;
-+	unsigned long u;
- 
- 	if (!smack_privileged(CAP_MAC_ADMIN))
- 		return -EPERM;
-@@ -1594,10 +1594,12 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
- 
- 	temp[count] = '\0';
- 
--	if (sscanf(temp, "%d", &i) != 1)
-+	if (kstrtoul(temp, 10, &u))
- 		return -EINVAL;
- 
--	smk_cipso_doi_value = i;
-+	if (u == CIPSO_V4_DOI_UNKNOWN || u > U32_MAX)
-+		return -EINVAL;
-+	smk_cipso_doi_value = u;
- 
- 	smk_cipso_doi();
+-	switch (control->mode) {
+-	case SDCA_ACCESS_MODE_RO:
+-	case SDCA_ACCESS_MODE_RW1S:
+-	case SDCA_ACCESS_MODE_RW1C:
+-		return true;
+-	default:
+-		return false;
+-	}
++	return control->is_volatile;
+ }
+ EXPORT_SYMBOL_NS(sdca_regmap_volatile, "SND_SOC_SDCA");
  
 -- 
 2.51.0
