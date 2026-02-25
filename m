@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411041D5ABA;
-	Wed, 25 Feb 2026 01:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8CD1D5ABA;
+	Wed, 25 Feb 2026 01:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983088; cv=none; b=T+6Y5aRoaBuaexvd6L8eQa2QBbGNlOoNaj2T2isacGhnSdOPFVRoldqgixwcmx/cFMg3GDhF4VgUtZQoZuUISj3bMjuXupxU9iUeBBzJJi4JLhxwZELzXSxdLGFTvFbWvpqNxEATsJPtgZAamT4+dvyNJOyeNqjCYWeU31ljlT4=
+	t=1771983089; cv=none; b=aYXMstPCjfYTFFVo58pvl+Yx4/yxHYtdf5zlW6AKdGF+9Fq/4Yq9Ou4E9vhIC0oCxd18W77jtwJemElmVK/sCxkLGeZpNTzfZzoB/ER3o8HtuADOBMBFGWA/Oxe+f5WaolZpPRyYwVWjXAZXOhYxemQlHJsFcQE1eYmX1M3rQho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983088; c=relaxed/simple;
-	bh=0XWvAiQjbld8vm+99SokePp/JaOChoBMaaM/EDAfnjg=;
+	s=arc-20240116; t=1771983089; c=relaxed/simple;
+	bh=knVftmp68A1jzapCZwe6Yu4mfUMMqtdCWThbeKUt0nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKb2nfxZuA+Ps/rd1f/ej/7kPLB7O9uhC48TxEpCrFHwechaXwbvEeqELyiXfGW/wIEzf8xtpfJUD01gQvsP5Ya8j1qWzVy5w3U7e+Is1RozAJjsGhTRzKVud2sfI9OMf2wa3t7g2Erx6h4AUDTcKG66JLijPxdo8DGMzBwe350=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASs3kfhe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lcU1880A7PaUsYubTAq4HSUt6E6YKLCBdVIzQtnog8RvBaF3hQMLv4RCjXye+MU81qG25B5qlbtXcX/fhYm+t+WidwvEDvlyIFytGPrzQGYxD7Q6dhAjScn5tp94xE7Zk3HrbqibVOvozzleACV7tx+JnAEcSpI2U2513eKEI7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xw9fUZIW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASs3kfhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE877C116D0;
-	Wed, 25 Feb 2026 01:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xw9fUZIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B37C116D0;
+	Wed, 25 Feb 2026 01:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983087;
-	bh=0XWvAiQjbld8vm+99SokePp/JaOChoBMaaM/EDAfnjg=;
+	s=korg; t=1771983088;
+	bh=knVftmp68A1jzapCZwe6Yu4mfUMMqtdCWThbeKUt0nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ASs3kfhe0ZG9rmeAYgOmIxoKiO6Sd2jCdrijWhMuKVabxyMHbv6WkaeQc1H0CfB9U
-	 QP6OtSPRf6sU6DkayQ1P5TmyAn6HnGTZc2qNtHEWXgK9qXK+wWiuwBZ/Oi+HsXu/1P
-	 VoTkaef/s1sFWdqw82s4Li88zO3TDWMxZOS05lcU=
+	b=xw9fUZIWsCyFlp1eSBO6VvMA+c14PQOSLm3Oi5PePxO33Pdi4ZRlHNzoSO1hJAm8k
+	 xmkZqd0bc+Vc+5/cNiXwreBgzqRvyNCKBb1iY3EDmZhkTnbVsnuvYnEoJyfjO3k2vf
+	 eaZY0vNSj1PezbqjfNwnZlsJo0pEnnY3//rwXvng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahadevan P <mahadevan.p@oss.qualcomm.com>,
+	Teguh Sobirin <teguh@sobir.in>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 247/781] drm/msm/disp/dpu: add merge3d support for sc7280
-Date: Tue, 24 Feb 2026 17:15:56 -0800
-Message-ID: <20260225012405.766206459@linuxfoundation.org>
+Subject: [PATCH 6.19 248/781] drm/msm/dpu: Set vsync source irrespective of mdp top support
+Date: Tue, 24 Feb 2026 17:15:57 -0800
+Message-ID: <20260225012405.791017522@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,81 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahadevan P <mahadevan.p@oss.qualcomm.com>
+From: Teguh Sobirin <teguh@sobir.in>
 
-[ Upstream commit 2892de3f4f985fa779c330468e2f341fdb762ccd ]
+[ Upstream commit 1ad9880f059c9b0943e53714f9a59924cb035bbb ]
 
-On SC7280 targets, display modes with a width greater than the
-max_mixer_width (2400) are rejected during mode validation when
-merge3d is disabled. This limitation exists because, without a
-3D merge block, two layer mixers cannot be combined(non-DSC interface),
-preventing large layers from being split across mixers. As a result,
-higher resolution modes cannot be supported.
+Since DPU 5.x the vsync source TE setup is split between MDP TOP and
+INTF blocks. Currently all code to setup vsync_source is only executed
+if MDP TOP implements the setup_vsync_source() callback. However on
+DPU >= 8.x this callback is not implemented, making DPU driver skip all
+vsync setup. Move the INTF part out of this condition, letting DPU
+driver to setup TE vsync selection on all new DPU devices.
 
-Enable merge3d support on SC7280 to allow combining streams from
-two layer mixers into a single non-DSC interface. This capability
-removes the width restriction and enables buffer sizes beyond the
-2400-pixel limit.
-
-Fixes: 591e34a091d1 ("drm/msm/disp/dpu1: add support for display for SC7280 target")
-Signed-off-by: Mahadevan P <mahadevan.p@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/696713/
-Link: https://lore.kernel.org/r/20260101-4k-v2-1-712ae3c1f816@oss.qualcomm.com
+Signed-off-by: Teguh Sobirin <teguh@sobir.in>
+Fixes: 2f69e5458447 ("drm/msm/dpu: skip watchdog timer programming through TOP on >= SM8450")
+[DB: restored top->ops.setup_vsync_source call]
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/696584/
+Link: https://lore.kernel.org/r/20251230-intf-fix-wd-v6-1-98203d150611@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 8f978b9c34520..2f8688224f343 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -13,6 +13,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = 2400,
-+	.has_3d_merge = true,
- 	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
- };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 9f3957f24c6a3..af5122a514bd1 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -785,6 +785,8 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
+ 		return;
+ 	}
  
-@@ -134,17 +135,24 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
- 		.name = "pingpong_2", .id = PINGPONG_2,
- 		.base = 0x6b000, .len = 0,
- 		.sblk = &sc7280_pp_sblk,
--		.merge_3d = 0,
-+		.merge_3d = MERGE_3D_1,
- 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
- 	}, {
- 		.name = "pingpong_3", .id = PINGPONG_3,
- 		.base = 0x6c000, .len = 0,
- 		.sblk = &sc7280_pp_sblk,
--		.merge_3d = 0,
-+		.merge_3d = MERGE_3D_1,
- 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
- 	},
- };
- 
-+static const struct dpu_merge_3d_cfg sc7280_merge_3d[] = {
-+	{
-+		.name = "merge_3d_1", .id = MERGE_3D_1,
-+		.base = 0x4f000, .len = 0x8,
-+	},
-+};
++	vsync_cfg.vsync_source = disp_info->vsync_source;
 +
- /* NOTE: sc7280 only has one DSC hard slice encoder */
- static const struct dpu_dsc_cfg sc7280_dsc[] = {
- 	{
-@@ -247,6 +255,8 @@ const struct dpu_mdss_cfg dpu_sc7280_cfg = {
- 	.mixer = sc7280_lm,
- 	.pingpong_count = ARRAY_SIZE(sc7280_pp),
- 	.pingpong = sc7280_pp,
-+	.merge_3d_count = ARRAY_SIZE(sc7280_merge_3d),
-+	.merge_3d = sc7280_merge_3d,
- 	.dsc_count = ARRAY_SIZE(sc7280_dsc),
- 	.dsc = sc7280_dsc,
- 	.wb_count = ARRAY_SIZE(sc7280_wb),
+ 	if (hw_mdptop->ops.setup_vsync_source) {
+ 		for (i = 0; i < dpu_enc->num_phys_encs; i++)
+ 			vsync_cfg.ppnumber[i] = dpu_enc->hw_pp[i]->idx;
+@@ -792,17 +794,15 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
+ 		vsync_cfg.pp_count = dpu_enc->num_phys_encs;
+ 		vsync_cfg.frame_rate = drm_mode_vrefresh(&dpu_enc->base.crtc->state->adjusted_mode);
+ 
+-		vsync_cfg.vsync_source = disp_info->vsync_source;
+-
+ 		hw_mdptop->ops.setup_vsync_source(hw_mdptop, &vsync_cfg);
++	}
+ 
+-		for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+-			phys_enc = dpu_enc->phys_encs[i];
++	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
++		phys_enc = dpu_enc->phys_encs[i];
+ 
+-			if (phys_enc->has_intf_te && phys_enc->hw_intf->ops.vsync_sel)
+-				phys_enc->hw_intf->ops.vsync_sel(phys_enc->hw_intf,
+-						vsync_cfg.vsync_source);
+-		}
++		if (phys_enc->has_intf_te && phys_enc->hw_intf->ops.vsync_sel)
++			phys_enc->hw_intf->ops.vsync_sel(phys_enc->hw_intf,
++							 vsync_cfg.vsync_source);
+ 	}
+ }
+ 
 -- 
 2.51.0
 
