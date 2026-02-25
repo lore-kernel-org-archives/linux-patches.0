@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05824312806;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17C0306B21;
 	Wed, 25 Feb 2026 06:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002771; cv=none; b=YWFKuWx4chpgPA71tBhGmkcws7BgNhvVuLtwWPS657jm5lpKfzIzzEgwhvzIBA/d4sNr874RzpG5vAQWWdpVI9UGO3iUDMIZRlG5j8IkyMoGJfKGl73MlWti6gi/wc4SlxtY+xjK/6GJR65oSE1ww1kYxtLxBJY/8NZVVy5BzYI=
+	t=1772002771; cv=none; b=Uiwferv9rcAf2+itK06RLhaFFvscMCoRWaGe5CTzwS5h259YZvPTvyuUm55h+7/oArjPv2ZcgMPmmZxdeY/LSKH8n379XstGg1x28t8Wc0t+5EDHc6omHmXjFpnIcqOBJH9VzcobiPskIsID9stmLbdE09BUYNlj16owEkg1tC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002771; c=relaxed/simple;
-	bh=b6lYQk3vH2A7VQ+ktftbw53R7DfxRRY95cguShWv1pg=;
+	bh=83hmzWWaXbgb7kPpbzMZwCI+pbPYCz9sjLuvv8L9hSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIbqgxdckWFnqTfy4b9pEloz0J43f20Wu3ZO2f6qTWPwAx+wpIE9pnxM4I6C1ok31fOvPA8DnNhv9JolH+Q2NI5Ov50iLeVlS/PAW4PpjSMFJ1WGbY8eM5bZpkAwtvMjmM/KevnPNcdaBQqfgwbkoTBXPRRzNgxHlaRZRPWMPjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhW+0TbA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NSRZc62mEhn/s9xqTHxiGT7TohN5YzYVzy7kHkhDSClfMNe9LWbrmlsMO2w8kSfBkzmnEAXhu6YB0zTUhmZGHNoAEQ8Y6bn1/zdhaX0de18VRlSZgqArGJEylCgEf7y5Hd9Te+G0mAhl+Hxf/dyOiOE/9r4rGFj1cyJIjDt8524=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0detEsU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhW+0TbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3133C116D0;
-	Wed, 25 Feb 2026 06:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0detEsU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB9BC116D0;
+	Wed, 25 Feb 2026 06:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002770;
-	bh=b6lYQk3vH2A7VQ+ktftbw53R7DfxRRY95cguShWv1pg=;
+	s=korg; t=1772002771;
+	bh=83hmzWWaXbgb7kPpbzMZwCI+pbPYCz9sjLuvv8L9hSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OhW+0TbA9DUjAaP74SqxJHKaehSTazQvuzDaMrns+45I6wkNQDxBgQE7EWzWZu9mK
-	 YT+melbjchOWCohhMAo3FncZTiP3dpIV3uk0/8rW+u5n8DDPY59chN8V/cb8Sy0q7X
-	 zuziLcmTGURhQXZvOkj7nMgK3GHV9/uVUkcZnk8w=
+	b=K0detEsU2nCLeamm5BJCMegX2TDdIOADGsGTB/PpKC30xTY4nCMPZIgsTRg++xs20
+	 SACDl4qZ5z5B1dNW7AEv6rjHbl0TkmejWva4s1jCQgMdtt083zDk7IuoK/8XGTeZHx
+	 Ah25jssipj/mK8ui5USXRMflPygU0tdpfDWtM0JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 606/641] btrfs: fix invalid leaf access in btrfs_quota_enable() if ref key not found
-Date: Tue, 24 Feb 2026 17:25:32 -0800
-Message-ID: <20260225012403.198012713@linuxfoundation.org>
+Subject: [PATCH 6.18 607/641] x86/hyperv: Fix error pointer dereference
+Date: Tue, 24 Feb 2026 17:25:33 -0800
+Message-ID: <20260225012403.222665864@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,49 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit ecb7c2484cfc83a93658907580035a8adf1e0a92 ]
+[ Upstream commit 705d01c8d78121ee1634bfc602ac4b0ad1438fab ]
 
-If btrfs_search_slot_for_read() returns 1, it means we did not find any
-key greater than or equals to the key we asked for, meaning we have
-reached the end of the tree and therefore the path is not valid. If
-this happens we need to break out of the loop and stop, instead of
-continuing and accessing an invalid path.
+The function idle_thread_get() can return an error pointer and is not
+checked for it. Add check for error pointer.
 
-Fixes: 5223cc60b40a ("btrfs: drop the path before adding qgroup items when enabling qgroups")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Detected by Smatch:
+arch/x86/hyperv/hv_vtl.c:126 hv_vtl_bringup_vcpu() error:
+'idle' dereferencing possible ERR_PTR()
+
+Fixes: 2b4b90e053a29 ("x86/hyperv: Use per cpu initial stack for vtl context")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/x86/hyperv/hv_vtl.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 7a1dd250e92c0..302bb3ecf39a3 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -1157,11 +1157,14 @@ int btrfs_quota_enable(struct btrfs_fs_info *fs_info,
- 			}
- 			if (ret > 0) {
- 				/*
--				 * Shouldn't happen, but in case it does we
--				 * don't need to do the btrfs_next_item, just
--				 * continue.
-+				 * Shouldn't happen because the key should still
-+				 * be there (return 0), but in case it does it
-+				 * means we have reached the end of the tree -
-+				 * there are no more leaves with items that have
-+				 * a key greater than or equals to @found_key,
-+				 * so just stop the search loop.
- 				 */
--				continue;
-+				break;
- 			}
- 		}
- 		ret = btrfs_next_item(tree_root, path);
+diff --git a/arch/x86/hyperv/hv_vtl.c b/arch/x86/hyperv/hv_vtl.c
+index 042e8712d8dea..8aafccf7a52c7 100644
+--- a/arch/x86/hyperv/hv_vtl.c
++++ b/arch/x86/hyperv/hv_vtl.c
+@@ -105,7 +105,7 @@ static void hv_vtl_ap_entry(void)
+ 
+ static int hv_vtl_bringup_vcpu(u32 target_vp_index, int cpu, u64 eip_ignored)
+ {
+-	u64 status;
++	u64 status, rsp, rip;
+ 	int ret = 0;
+ 	struct hv_enable_vp_vtl *input;
+ 	unsigned long irq_flags;
+@@ -118,9 +118,11 @@ static int hv_vtl_bringup_vcpu(u32 target_vp_index, int cpu, u64 eip_ignored)
+ 	struct desc_struct *gdt;
+ 
+ 	struct task_struct *idle = idle_thread_get(cpu);
+-	u64 rsp = (unsigned long)idle->thread.sp;
++	if (IS_ERR(idle))
++		return PTR_ERR(idle);
+ 
+-	u64 rip = (u64)&hv_vtl_ap_entry;
++	rsp = (unsigned long)idle->thread.sp;
++	rip = (u64)&hv_vtl_ap_entry;
+ 
+ 	native_store_gdt(&gdt_ptr);
+ 	store_idt(&idt_ptr);
 -- 
 2.51.0
 
