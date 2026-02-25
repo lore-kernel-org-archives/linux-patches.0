@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6EE63081C2;
-	Wed, 25 Feb 2026 06:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B9C3081C2;
+	Wed, 25 Feb 2026 06:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002798; cv=none; b=Pio87En637zp5mk8+CzVDVDXjhOeR99xEdVYOkk66U5If9t7htxI+0Ed827/e8xTGkTDXp5fiNZA9n0roah9QVUZhr1nyDUAOoKqgBFj4WhczIUvmGW63opU8dZSmX2/qGRsEdfrpI9lGT5pQ+LD3eplRa7HpcS7bYcX2yu5xa8=
+	t=1772002799; cv=none; b=qNzKnyUz/AiRiaLpszTWWTUvHDlRjlmEZUu0jpwhBqacP2ki2c/uyz18pG+I5iTqSBiPsWISiQUiIHY8ZGj+D6DA6FnRd/k34DH+t2eqizP16f5cwYdd0AR/3fcBkpkwBJncVEMLHGjYR6RzNxIOQQHWYsXED6/Mon/Ba0VSAxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002798; c=relaxed/simple;
-	bh=S8N1t4UEObLBPphNw1d7VCjlRIevEDZnMjELMVukGyw=;
+	s=arc-20240116; t=1772002799; c=relaxed/simple;
+	bh=QwFOFaceIQU9Bbw+c3IEKYrHx/490C0httbAe+SI+yQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GR0d+BZAW+pV17q7ISxtnwmrXo3Eo38VQRdVy1BtaRmhOUnuwsdwO96rnlm4P0svkNl8rWpJMMQ6FeQH0ekeruygIFp3ew0ftu3RWZKOvPlJ8HVs3horaHt1se/Pjoy+9gM0Rq6UOmB8vOgxpWt4k/SuZCprI/uKnLqpEbdumBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHZWAy2k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ESXsCuzhxzUxpJB7jX5bfJtLlAEpE3C33Y1c1JzKBxfiJsRLZSlum0mdKNdDZZhcRm7xmjefEk8aRYpGIif5AfrvdNJIcdyxVCyuTCmmOn3fV9GSBeppbR/cnQJgfL8IhSZO3V0kyW3D9cHMpMgHhepW1vrSrSKVwEFPYiWP+5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vb2GHDLO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHZWAy2k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A787AC116D0;
-	Wed, 25 Feb 2026 06:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vb2GHDLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B4CC19422;
+	Wed, 25 Feb 2026 06:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002798;
-	bh=S8N1t4UEObLBPphNw1d7VCjlRIevEDZnMjELMVukGyw=;
+	s=korg; t=1772002799;
+	bh=QwFOFaceIQU9Bbw+c3IEKYrHx/490C0httbAe+SI+yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHZWAy2kOJLiBwRbH19Gadna/IkELEKNOyO4fIc/kgYJGlDIB7fc8EV8cpxfbRMyH
-	 EuDhOyVe7EXi/zDM9qwuIyEemR2zrDx6h3IKdyCn2wIe14hnPjbN0gAj37ZEBMEdBL
-	 4/MXshNb6ZT/I3wgHWvlWUNA8hbHCTsY3ybMjhW0=
+	b=vb2GHDLO6SF9B9r/x7o5JE3G8n+vp/rLq6l40mJbMBoGYa51rb5JR2XYZuuDQYq/r
+	 A4DEIWzpMobh8OcXyE7sKtGGSQPXCwOwCLsnyOJ6xXGrqUz/tb2TaE9C4FsAqYpDQS
+	 X52c6wQjENDWlh6i5sIw1dCLPjujwqB68bPiW2d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 604/641] btrfs: reset block group size class when it becomes empty
-Date: Tue, 24 Feb 2026 17:25:30 -0800
-Message-ID: <20260225012403.150095554@linuxfoundation.org>
+Subject: [PATCH 6.18 595/641] drm/xe/configfs: Fix parameter name omitted errors
+Date: Tue, 24 Feb 2026 17:25:21 -0800
+Message-ID: <20260225012402.931674614@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,79 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit 5870ec7c8fe57a8b2c65005e5da5efc054faa3e6 ]
+[ Upstream commit 2a673fb4d787ce6672862cb693112378bff86abb ]
 
-Block group size classes are managed consistently everywhere.
-Currently, btrfs_use_block_group_size_class() sets a block group's size
-class to specialize it for a specific allocation size. However, this
-size class remains "stale" even if the block group becomes completely
-empty (both used and reserved bytes reach zero).
+On some configs and old compilers we can get following build errors:
 
-This happens in two scenarios:
+  ../drivers/gpu/drm/xe/xe_configfs.h: In function 'xe_configfs_get_ctx_restore_mid_bb':
+  ../drivers/gpu/drm/xe/xe_configfs.h:40:76: error: parameter name omitted
+   static inline u32 xe_configfs_get_ctx_restore_mid_bb(struct pci_dev *pdev, enum xe_engine_class,
+                                                                            ^~~~~~~~~~~~~~~~~~~~
+  ../drivers/gpu/drm/xe/xe_configfs.h: In function 'xe_configfs_get_ctx_restore_post_bb':
+  ../drivers/gpu/drm/xe/xe_configfs.h:42:77: error: parameter name omitted
+   static inline u32 xe_configfs_get_ctx_restore_post_bb(struct pci_dev *pdev, enum xe_engine_class,
+                                                                             ^~~~~~~~~~~~~~~~~~~~
+when trying to define our configfs stub functions. Fix that.
 
-1. When space reservations are freed (e.g., due to errors or transaction
-   aborts) via btrfs_free_reserved_bytes().
-2. When the last extent in a block group is freed via
-   btrfs_update_block_group().
-
-While size classes are advisory, a stale size class can cause
-find_free_extent to unnecessarily skip candidate block groups during
-initial search loops. This undermines the purpose of size classes to
-reduce fragmentation by keeping block groups restricted to a specific
-size class when they could be reused for any size.
-
-Fix this by resetting the size class to BTRFS_BG_SZ_NONE whenever a
-block group's used and reserved counts both reach zero. This ensures
-that empty block groups are fully available for any allocation size in
-the next cycle.
-
-Fixes: 52bb7a2166af ("btrfs: introduce size class to block group allocator")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 7a4756b2fd04 ("drm/xe/lrc: Allow to add user commands mid context switch")
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Link: https://patch.msgid.link/20260203193745.576-1-michal.wajdeczko@intel.com
+(cherry picked from commit f59cde8a2452b392115d2af8f1143a94725f4827)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/xe/xe_configfs.h | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 144868f02e2aa..f7f6d8cb33114 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -3681,6 +3681,14 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/xe/xe_configfs.h b/drivers/gpu/drm/xe/xe_configfs.h
+index c61e0e47ed94c..08cce375ae0f3 100644
+--- a/drivers/gpu/drm/xe/xe_configfs.h
++++ b/drivers/gpu/drm/xe/xe_configfs.h
+@@ -19,9 +19,11 @@ void xe_configfs_check_device(struct pci_dev *pdev);
+ bool xe_configfs_get_survivability_mode(struct pci_dev *pdev);
+ u64 xe_configfs_get_engines_allowed(struct pci_dev *pdev);
+ bool xe_configfs_get_psmi_enabled(struct pci_dev *pdev);
+-u32 xe_configfs_get_ctx_restore_mid_bb(struct pci_dev *pdev, enum xe_engine_class,
++u32 xe_configfs_get_ctx_restore_mid_bb(struct pci_dev *pdev,
++				       enum xe_engine_class class,
+ 				       const u32 **cs);
+-u32 xe_configfs_get_ctx_restore_post_bb(struct pci_dev *pdev, enum xe_engine_class,
++u32 xe_configfs_get_ctx_restore_post_bb(struct pci_dev *pdev,
++					enum xe_engine_class class,
+ 					const u32 **cs);
+ #else
+ static inline int xe_configfs_init(void) { return 0; }
+@@ -30,9 +32,11 @@ static inline void xe_configfs_check_device(struct pci_dev *pdev) { }
+ static inline bool xe_configfs_get_survivability_mode(struct pci_dev *pdev) { return false; }
+ static inline u64 xe_configfs_get_engines_allowed(struct pci_dev *pdev) { return U64_MAX; }
+ static inline bool xe_configfs_get_psmi_enabled(struct pci_dev *pdev) { return false; }
+-static inline u32 xe_configfs_get_ctx_restore_mid_bb(struct pci_dev *pdev, enum xe_engine_class,
++static inline u32 xe_configfs_get_ctx_restore_mid_bb(struct pci_dev *pdev,
++						     enum xe_engine_class class,
+ 						     const u32 **cs) { return 0; }
+-static inline u32 xe_configfs_get_ctx_restore_post_bb(struct pci_dev *pdev, enum xe_engine_class,
++static inline u32 xe_configfs_get_ctx_restore_post_bb(struct pci_dev *pdev,
++						      enum xe_engine_class class,
+ 						      const u32 **cs) { return 0; }
+ #endif
  
-+static void btrfs_maybe_reset_size_class(struct btrfs_block_group *bg)
-+{
-+	lockdep_assert_held(&bg->lock);
-+	if (btrfs_block_group_should_use_size_class(bg) &&
-+	    bg->used == 0 && bg->reserved == 0)
-+		bg->size_class = BTRFS_BG_SZ_NONE;
-+}
-+
- int btrfs_update_block_group(struct btrfs_trans_handle *trans,
- 			     u64 bytenr, u64 num_bytes, bool alloc)
- {
-@@ -3745,6 +3753,7 @@ int btrfs_update_block_group(struct btrfs_trans_handle *trans,
- 		old_val -= num_bytes;
- 		cache->used = old_val;
- 		cache->pinned += num_bytes;
-+		btrfs_maybe_reset_size_class(cache);
- 		btrfs_space_info_update_bytes_pinned(space_info, num_bytes);
- 		space_info->bytes_used -= num_bytes;
- 		space_info->disk_used -= num_bytes * factor;
-@@ -3865,6 +3874,7 @@ void btrfs_free_reserved_bytes(struct btrfs_block_group *cache, u64 num_bytes,
- 	spin_lock(&cache->lock);
- 	bg_ro = cache->ro;
- 	cache->reserved -= num_bytes;
-+	btrfs_maybe_reset_size_class(cache);
- 	if (is_delalloc)
- 		cache->delalloc_bytes -= num_bytes;
- 	spin_unlock(&cache->lock);
 -- 
 2.51.0
 
