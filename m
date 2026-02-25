@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AEB24677D;
-	Wed, 25 Feb 2026 01:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB16273D6D;
+	Wed, 25 Feb 2026 01:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983754; cv=none; b=Vcq1IIW6jdFI+t2XMfzllGKZUbuparwo+N03zmoOo3CYzHNf/EtpHhJjqpOrS1HNyZjjNu+82Eo6lhQ5kyifcHfdfEVq+95JlSv8EHdoVIRzkCaP8ISHrYqPia32oIp1Mn/dl3DhrytbC+auTFoQT3XvA/vmbv5xsHjUEafrxyg=
+	t=1771983755; cv=none; b=qs/I/k2ADWY6VMSyuh1WvowKPbsRZCQfdHlL056izKKU/ioy3up50icj9AuGoZ8SM2hVZX85mXQEonB6KKBMFPOs/WifRS9GEmOtjXPzyJMFCFWZ7ooea8x799QJqz7Jlm4XoXLoZO7dfoRVbweGJdfdeqUm3vWIuZVeg6qU6+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983754; c=relaxed/simple;
-	bh=u6aER71t1ksAxcPNRKrRrc2lB+xGDQ8VMq93YfzYaJo=;
+	s=arc-20240116; t=1771983755; c=relaxed/simple;
+	bh=XUpJIuRllOpVzgU4MXlMK1ShB04gElXnUAjNlMjjCbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skwU6KiUyD7H+WXJFbe69msegYYsguzFvfgz+WB8xInAzEcRaaibWsDvaXMRroevUNTZV0IPqw6I0MXSXv+FQnkr12RxpFGpMNzFDwIXfyt+ABya2IEeHHVyHIzmbpk5BjRRQmonozn2YY4Yvnut+vELiJapWSVr1l9SCp2imc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tg8I7Mis; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dd2feqhp6YurwymsPdDggrkAF0R0qHaVDsy9cADUlFgz7bMBdK7RuFxdKnH0IqB9zsx+5+ke00YgR9QaTGnh/I5BJS2yLdYc5fArtXqxy39JZzGMG5R0rYp7dOML0sFoODl1bKPMYTT5H1jL8A8ON0eccOd6pnUn6M5fA2SLKFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3sDoauu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tg8I7Mis"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09741C2BC9E;
-	Wed, 25 Feb 2026 01:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3sDoauu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211E4C116D0;
+	Wed, 25 Feb 2026 01:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983754;
-	bh=u6aER71t1ksAxcPNRKrRrc2lB+xGDQ8VMq93YfzYaJo=;
+	s=korg; t=1771983755;
+	bh=XUpJIuRllOpVzgU4MXlMK1ShB04gElXnUAjNlMjjCbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tg8I7MistYUCIziU9tflzIE2L3WXlG5kJSRlbp7go4Rs/OZV9qDraO+EC5aSRCh2x
-	 yRQIkhRA+9CsVrmw/3DOS5PnS0Hr2mRQSlCQMwOuuyt2m7tHvgD7QT3J7LCFqKMaEz
-	 1NCPq9ne/+W+2xKkpMlfEY6Ldsf1TOjB2aW4Ce4U=
+	b=U3sDoauuvlOVzZijhtUGaZ9qEnSKyuSMai6R4YfJ/h1xpYIoNjdXVta7cpH5o3ART
+	 kn9Hh7yRWak0CZurCjIlbByizTI9eB6lCMzrEpXAZ5Ut+8fPXmwmqRfjwOK3gzjL9b
+	 8PWMr3iMyyHwINwqSLX5/NPRw73i6IkgqHLCgN2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Breno Leitao <leitao@debian.org>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/641] i3c: Move device name assignment after i3c_bus_init
-Date: Tue, 24 Feb 2026 17:15:34 -0800
-Message-ID: <20260225012349.142850146@linuxfoundation.org>
+Subject: [PATCH 6.18 009/641] device_cgroup: remove branch hint after code refactor
+Date: Tue, 24 Feb 2026 17:15:35 -0800
+Message-ID: <20260225012349.166789729@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,44 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 3502cea99c7ceb331458cbd34ef6792c83144687 ]
+[ Upstream commit 6784f274722559c0cdaaa418bc8b7b1d61c314f9 ]
 
-Move device name initialization to occur after i3c_bus_init()
-so that i3cbus->id is guaranteed to be assigned before it is used.
+commit 4ef4ac360101 ("device_cgroup: avoid access to ->i_rdev in the
+common case in devcgroup_inode_permission()") reordered the checks in
+devcgroup_inode_permission() to check the inode mode before checking
+i_rdev, for better cache behavior.
 
-Fixes: 9d4f219807d5 ("i3c: fix refcount inconsistency in i3c_master_register")
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260112-upstream_i3c_fix-v1-1-cbbf2cb71809@aspeedtech.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+However, the likely() annotation on the i_rdev check was not updated
+to reflect the new code flow. Originally, when i_rdev was checked
+first, likely(!inode->i_rdev) made sense because most inodes were(?)
+regular files/directories, thus i_rdev == 0.
+
+After the reorder, by the time we reach the i_rdev check, we have
+already confirmed the inode IS a block or character device. Block and
+character special files are precisely defined by having a device number
+(i_rdev), so !inode->i_rdev is now the rare edge case, not the common
+case.
+
+Branch profiling confirmed this is 100% mispredicted:
+
+  correct incorrect  %    Function                      File              Line
+  ------- ---------  -    --------                      ----              ----
+        0   2631904 100   devcgroup_inode_permission    device_cgroup.h   24
+
+Remove likely() to avoid giving the wrong hint to the CPU.
+
+Fixes: 4ef4ac360101 ("device_cgroup: avoid access to ->i_rdev in the common case in devcgroup_inode_permission()")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260107-likely_device-v1-1-0c55f83a7e47@debian.org
+Reviewed-by: Mateusz Guzik <mjguzik@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/device_cgroup.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 66513a27e6e77..bc68a5e7455be 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2884,7 +2884,6 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	INIT_LIST_HEAD(&master->boardinfo.i3c);
+diff --git a/include/linux/device_cgroup.h b/include/linux/device_cgroup.h
+index 0864773a57e8f..822085bc2d202 100644
+--- a/include/linux/device_cgroup.h
++++ b/include/linux/device_cgroup.h
+@@ -21,7 +21,7 @@ static inline int devcgroup_inode_permission(struct inode *inode, int mask)
+ 	if (likely(!S_ISBLK(inode->i_mode) && !S_ISCHR(inode->i_mode)))
+ 		return 0;
  
- 	device_initialize(&master->dev);
--	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
+-	if (likely(!inode->i_rdev))
++	if (!inode->i_rdev)
+ 		return 0;
  
- 	master->dev.dma_mask = parent->dma_mask;
- 	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
-@@ -2894,6 +2893,8 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	if (ret)
- 		goto err_put_dev;
- 
-+	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
-+
- 	ret = of_populate_i3c_bus(master);
- 	if (ret)
- 		goto err_put_dev;
+ 	if (S_ISBLK(inode->i_mode))
 -- 
 2.51.0
 
