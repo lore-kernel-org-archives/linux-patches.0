@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717B3285C9F;
-	Wed, 25 Feb 2026 01:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C888E239099;
+	Wed, 25 Feb 2026 01:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983991; cv=none; b=EwDOFvJIpDSbu0E55C82ngE3H1o7ZoP5G52Hef0+wM6lWE1SgKx+OToF35qFFYcF7Q/IE0eJOw8KiM+QniKJ8lgXmy7G7WEFLbuujMx0JHy91O5u8hjK+fXC0j99ITlGpfzJBPkuV7KCbgWCCPFKRaMIRA/1DN1jdFo6RzXqOiE=
+	t=1771983992; cv=none; b=nbFKeuszyGU4eBcp73WIBYcTbUfMUUJjx/pZSKntw3WHbK5f51/d1N7QwehBOiD7eqGRwsoWUl4mg4oVLWE6WjkCJluZ037skp5mSBLtlfp/Gzd8tq7MzrV057qMdlMFVBx8VmPjEriLfJAGyiA1bX8HVoUL5LSoHmZf7zjtqRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983991; c=relaxed/simple;
-	bh=eOetcmNxe8Lf18pu1a1GPmInKZpzAZ416QvsGS72N/U=;
+	s=arc-20240116; t=1771983992; c=relaxed/simple;
+	bh=wEccGvuoyHCyv/ypeHe02letJ070K4WRwwdq7bUsR38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mntcpdG39Tpj3CH4raZOjv45SjIfDjLMEskrcYWKRhk8+Z1SVPCiAwsaNcOO3PPlRSFMnf0A9M+Z8LeByruX6Kftztd0W4kZbo7+60zG75pJOFyHyXRvV9LkNg5u0TDYV4IkzPGldBGnSyEobpM7lC2anGRvxjJOpl2EThx6PiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziO/Vsss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mh42gTMXNamTNbZJntb+zs8JJnHzHCP1wT3Eq+RxHmwzsUSdEmyeiv6tjsEDveQMeB1ruD/YTuMFh/447T0t2UHrcxZG44CS75DbQxwWIJFunm6tY1hH7wXljNyct6STdwAFEArjgCeBMrxthXjgdvVKExW7UkZGPOXZtPPUJLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyISykAO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziO/Vsss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B26C116D0;
-	Wed, 25 Feb 2026 01:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyISykAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D73C116D0;
+	Wed, 25 Feb 2026 01:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983991;
-	bh=eOetcmNxe8Lf18pu1a1GPmInKZpzAZ416QvsGS72N/U=;
+	s=korg; t=1771983992;
+	bh=wEccGvuoyHCyv/ypeHe02letJ070K4WRwwdq7bUsR38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziO/VsssNOaO2muZMPJkcrGvz5+i6dh2fKrX9dfInGUwbXFX6wWEMQke5aAneBPb0
-	 ZOkbA8zLO8xltY9IiwKwrvWbTM/0hNC/KMxe3PlvX27avOAXlNjdo4ouvm352seDE8
-	 VElRoIdHlD66MoJZOkmSKxkpMldBUGieMUd3ymAQ=
+	b=UyISykAO4BNLFG29xer1FlbAqwXEZLTvCqJN6aXIF0EqJ7nE8LNVPBa1A6r8BWdiT
+	 rtp5O4LQXnRHdHwkn+jdKKSZI3AlS90XH74nJzx1kXknY96TyWpVGe9Ztaexpr7Laz
+	 R4XHlhKFpl0uh880nxtLNqrkq7siHXBybKBwR7c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
+	Aadityarangan Shridhar Iyengar <adiyenga@cisco.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 246/641] dm: use READ_ONCE in dm_blk_report_zones
-Date: Tue, 24 Feb 2026 17:19:32 -0800
-Message-ID: <20260225012354.822784778@linuxfoundation.org>
+Subject: [PATCH 6.18 247/641] PCI/PTM: Fix pcie_ptm_create_debugfs() memory leak
+Date: Tue, 24 Feb 2026 17:19:33 -0800
+Message-ID: <20260225012354.843638561@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,34 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Aadityarangan Shridhar Iyengar <adiyenga@cisco.com>
 
-[ Upstream commit e9f5a55b70ae6187ab64ef2d1232ae2738e31d1f ]
+[ Upstream commit 62171369cf17794ddd88f602c2c84d008ecafcff ]
 
-The functon dm_blk_report_zones reads md->zone_revalidate_map, however it
-may change while the function is running. Use READ_ONCE.
+In pcie_ptm_create_debugfs(), if devm_kasprintf() fails after successfully
+allocating ptm_debugfs with kzalloc(), the function returns without freeing
+the allocated memory, resulting in a memory leak.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 37f53a2c60d0 ("dm: fix dm_blk_report_zones")
-Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
+Free ptm_debugfs before returning in the devm_kasprintf() error path and in
+pcie_ptm_destroy_debugfs().
+
+Fixes: 132833405e61 ("PCI: Add debugfs support for exposing PTM context")
+Signed-off-by: Aadityarangan Shridhar Iyengar <adiyenga@cisco.com>
+[bhelgaas: squash additional fix from Mani:
+https://lore.kernel.org/r/pdp4xc4d5ee3e547mmdro5riui3mclduqdl7j6iclfbozo2a4c@7m3qdm6yrhuv]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260111163650.33168-1-adiyenga@cisco.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-zone.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pcie/ptm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-zone.c b/drivers/md/dm-zone.c
-index ba39c8313f32b..f4950b5f766d3 100644
---- a/drivers/md/dm-zone.c
-+++ b/drivers/md/dm-zone.c
-@@ -56,7 +56,7 @@ int dm_blk_report_zones(struct gendisk *disk, sector_t sector,
- {
- 	struct mapped_device *md = disk->private_data;
- 	struct dm_table *map;
--	struct dm_table *zone_revalidate_map = md->zone_revalidate_map;
-+	struct dm_table *zone_revalidate_map = READ_ONCE(md->zone_revalidate_map);
- 	int srcu_idx, ret = -EIO;
- 	bool put_table = false;
+diff --git a/drivers/pci/pcie/ptm.c b/drivers/pci/pcie/ptm.c
+index 65e4b008be00d..41d370f082ee4 100644
+--- a/drivers/pci/pcie/ptm.c
++++ b/drivers/pci/pcie/ptm.c
+@@ -519,8 +519,10 @@ struct pci_ptm_debugfs *pcie_ptm_create_debugfs(struct device *dev, void *pdata,
+ 		return NULL;
  
+ 	dirname = devm_kasprintf(dev, GFP_KERNEL, "pcie_ptm_%s", dev_name(dev));
+-	if (!dirname)
++	if (!dirname) {
++		kfree(ptm_debugfs);
+ 		return NULL;
++	}
+ 
+ 	ptm_debugfs->debugfs = debugfs_create_dir(dirname, NULL);
+ 	ptm_debugfs->pdata = pdata;
+@@ -551,6 +553,7 @@ void pcie_ptm_destroy_debugfs(struct pci_ptm_debugfs *ptm_debugfs)
+ 
+ 	mutex_destroy(&ptm_debugfs->lock);
+ 	debugfs_remove_recursive(ptm_debugfs->debugfs);
++	kfree(ptm_debugfs);
+ }
+ EXPORT_SYMBOL_GPL(pcie_ptm_destroy_debugfs);
+ #endif
 -- 
 2.51.0
 
