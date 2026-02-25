@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F3E1D5141;
-	Wed, 25 Feb 2026 01:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECF0254B03;
+	Wed, 25 Feb 2026 01:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983443; cv=none; b=bqpYXeD6AgwZ5SfUCb7SSSyazTfwre89XzVyIScoGVp+sSnroSkUyXSR1951I0zVSEv2boh9f+DJAfoXdMl0uPba+KspKX7vSO2auVwD7LNcNPAs1i8rQhUBh3XDCrZ1xswZk/XE/hHGNbfQzht7mlJ+Aw+faQHc237+UfrBZIM=
+	t=1771983443; cv=none; b=JsnRFToqR7NW7I92OYvPa6iz1y20Bj8NvczN1GbbuXSZaxrfTFCfX8QDSDiNHMezXpWtUBSovWC8o9K1rVIWBjn/6urrBMW3nas6GmYLnzyf2uJRm7aYhQNtmVa3TyPnXfBxChuzQ25AYKJttGJ2veG3KvfhMlP+E1r4Mv6FwA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771983443; c=relaxed/simple;
-	bh=0405cv4o7z+OTATBwRo430Oz+exppZjXViXTRRBe3d4=;
+	bh=pfJqqnE5YIU0HdUoyL5fazcvZHFg3nQlhTD0lcM9WwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eOzcTiJcO3u5zG9T32rZCamgauDTVZY5PZqunkLQuFxXDY6JDLfPGhVr3gDs+EfOr8u+L8Hky9FR5PW421I8g7hAHJ/S6fd9z+lGIbzpBl6LK305lLUxGtBnNHSyNzQNyIEix4FKAnOaUuiC3vXixBCGTT2xSQdt6lSxZQWyxEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+xyCBCj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KP7o8OekHgY8bJbN9w5SvKhjYL3w0fYL3JNagKMIlZCAj8hjnJHbzgB9STmItn6tWy2AJK7Nu22bwOcf54AOkH3++pVQEBi5hXGGYtzSrbw2x/1T9sRDiM88LVYrPQSPpnWcfm88wGs6TdIb2RBYcMnlHXVhVqQ9KbyblyR3yBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aL/1dO08; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+xyCBCj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7779AC116D0;
-	Wed, 25 Feb 2026 01:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aL/1dO08"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6150AC116D0;
+	Wed, 25 Feb 2026 01:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983442;
-	bh=0405cv4o7z+OTATBwRo430Oz+exppZjXViXTRRBe3d4=;
+	s=korg; t=1771983443;
+	bh=pfJqqnE5YIU0HdUoyL5fazcvZHFg3nQlhTD0lcM9WwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+xyCBCjHL98TFJNtDJGt39HnZ8/plZfeze6hjdC51ZR9bCsD+rMguBI0E4uTaCgA
-	 ODuaOTyxT3h78nWCDGI81aUR7oDwJDH96PzWVK45aoQGtgzl03+Ue9ygPanu89i0/2
-	 kjPjqnHXL0Pu92s8Y1ufVgcWYIZqE6q62fHgb+4U=
+	b=aL/1dO08FNbUaxzZ91bxIEWKAu5J+2A3UzwGO5c0NlRUlhvLP93pC44pfVWmL+WN+
+	 r2AaH2YmhJ16ljaYp1p5OuIitFH0LblasEtf1sW+Am2460Mi1cqcoWvAlF91s7G1g1
+	 CBPavxhYgFC9STHX8MoARKT7A92mcbVJtFIYJzIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
 	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 559/781] interconnect: mediatek: Dont hijack parent device
-Date: Tue, 24 Feb 2026 17:21:08 -0800
-Message-ID: <20260225012413.513635073@linuxfoundation.org>
+Subject: [PATCH 6.19 560/781] interconnect: mediatek: Aggregate bandwidth with saturating add
+Date: Tue, 24 Feb 2026 17:21:09 -0800
+Message-ID: <20260225012413.536807658@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,49 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit 510f8214440c553e81774c5822437ccf154e9e38 ]
+[ Upstream commit 6ffd02b82243d9907b5f5d2c7a2fc6a62669eece ]
 
-If the intention is that users of the interconnect declare their
-relationship to the child icc_emi node of the dvfsrc controller, then
-this code never worked. That's because it uses the parent dvfsrc device
-as the device it passes to the interconnect core framework, which means
-all the OF parsing is broken.
+By using a regular non-overflow-checking add, the MediaTek icc-emi
+driver will happy wrap at U32_MAX + 1 to 0. As it's common for the
+interconnect core to fill in INT_MAX values, this is not a hypothetical
+situation, but something that actually happens in regular use. This
+would be pretty disasterous if anything used this driver.
 
-Use the actual device instead, and pass the dvfsrc parent into the
-dvfsrc calls.
+Replace the addition with an overflow-checked addition from overflow.h,
+and saturate to U32_MAX if an overflow is detected.
 
 Fixes: b45293799f75 ("interconnect: mediatek: Add MediaTek MT8183/8195 EMI Interconnect driver")
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Link: https://lore.kernel.org/r/20251124-mt8196-dvfsrc-v2-12-d9c1334db9f3@collabora.com
+Link: https://lore.kernel.org/r/20251124-mt8196-dvfsrc-v2-13-d9c1334db9f3@collabora.com
 Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/mediatek/icc-emi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/interconnect/mediatek/icc-emi.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/interconnect/mediatek/icc-emi.c b/drivers/interconnect/mediatek/icc-emi.c
-index 7da740b5fa8d6..182aa2b0623af 100644
+index 182aa2b0623af..dfa3a9cd93998 100644
 --- a/drivers/interconnect/mediatek/icc-emi.c
 +++ b/drivers/interconnect/mediatek/icc-emi.c
-@@ -40,7 +40,7 @@ static int mtk_emi_icc_set(struct icc_node *src, struct icc_node *dst)
- 	if (unlikely(!src->provider))
- 		return -EINVAL;
+@@ -12,6 +12,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
++#include <linux/overflow.h>
+ #include <linux/platform_device.h>
+ #include <linux/soc/mediatek/dvfsrc.h>
  
--	dev = src->provider->dev;
-+	dev = src->provider->dev->parent;
+@@ -22,7 +23,9 @@ static int mtk_emi_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+ {
+ 	struct mtk_icc_node *in = node->data;
  
- 	switch (node->ep) {
- 	case 0:
-@@ -97,7 +97,7 @@ int mtk_emi_icc_probe(struct platform_device *pdev)
- 	if (!data)
- 		return -ENOMEM;
+-	*agg_avg += avg_bw;
++	if (check_add_overflow(*agg_avg, avg_bw, agg_avg))
++		*agg_avg = U32_MAX;
++
+ 	*agg_peak = max_t(u32, *agg_peak, peak_bw);
  
--	provider->dev = pdev->dev.parent;
-+	provider->dev = dev;
- 	provider->set = mtk_emi_icc_set;
- 	provider->aggregate = mtk_emi_icc_aggregate;
- 	provider->xlate = of_icc_xlate_onecell;
+ 	in->sum_avg = *agg_avg;
 -- 
 2.51.0
 
