@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36872494FE;
-	Wed, 25 Feb 2026 01:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B45F2690EC;
+	Wed, 25 Feb 2026 01:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983687; cv=none; b=UeGmabj4Ygl/mv+wEK5BgiQa1lbv/RB7Legg95CwDgTddOZwjYboF2OonZprB2lcwy8iIgTiMK2xn+0/AZ/2wTN4YLhsdQNv0fgwPZbDzaidVIw8pY233kVGqwoF9zk6MhVamDyxe8gzx1EYxU85Rg5Oy5Yk5FJiy6uKK8nG620=
+	t=1771983688; cv=none; b=D+f8WgUkpTz/jptx8xHVeahYXRHFJDg4MpYDiUtiHioLI0ujq3qnzkvHewDxBvLYscoaLdZz0m/j8mCieidt+HScacMrv2YJKqyTuVqPLRAocuxWIsIBUOfnbtTZDLH6AeG6SfI/Zs0o9Ci4v/AfHYp0XcwenwwK3nER/Us97v0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983687; c=relaxed/simple;
-	bh=qadBpM6U4A5mH8tJEM03axnXHHX+A5lmTHZHrWw3lDI=;
+	s=arc-20240116; t=1771983688; c=relaxed/simple;
+	bh=jz+UEefKkEvT/7EDvNUJ/xRzswZViTuq9fJD6O1DFPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YmRQ4OTV0GbDXJQk/a6LgGtOOHfzGKQqbD5U6T9T+yEF8Ezy03nSLGK8+zwknIRCBKSiF4HihzCZDrtD+UecXiP47hvKuY5k6vYyzgh4aCtx6YZEXk+1aXWZNlFh3/9rbUoFX4spHZgDJ9vxEW+wmImf5AidHyStRt8Axp7e5JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xI0VPshQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYdnF4H1ukSYnzRQa99rE3d3Rke6WsApDpGU56WHNrDPpPDAtLFV3HdX65rXJhuI1ixlA7asBBtzkly/sACMXXkL1UxuJF2/UjRkzh2Q1Euu3ZtyiDYmRqwLXAJKkS2mSm5ckAFkQOjetFJ+3oqH6UJaXzpVm+fodxSjR7tQ1iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Txf5oI5U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xI0VPshQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDBCC116D0;
-	Wed, 25 Feb 2026 01:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Txf5oI5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1FDC116D0;
+	Wed, 25 Feb 2026 01:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983686;
-	bh=qadBpM6U4A5mH8tJEM03axnXHHX+A5lmTHZHrWw3lDI=;
+	s=korg; t=1771983688;
+	bh=jz+UEefKkEvT/7EDvNUJ/xRzswZViTuq9fJD6O1DFPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xI0VPshQ0u8rodPs/27d37mCDHWaLjBnvKuTThJx8WmIEE3c8n6o/a5KbhWWUlWJc
-	 Js1Wo/vNnfRDB8RKqF9mSPMGf/Jqk5EDny9UtjeZUi/hXBN6+KH1t+nydKifZv03P7
-	 934F6WqJ3LIr/bcmVMuUJSKuxIIude9J6X8LhPHc=
+	b=Txf5oI5UWHVw6bzKhk1H6TRY7EpQ0s/LK1H8ii03nnXDL1e0cdJHrWyx0nz9Inflt
+	 ji9lg5smpOccMPdUNhMRUSm2bP4+tsHhLcGP/412l0o9oCYejC16F2HIk5wDGo1oRi
+	 o9p/lpDcRQIyheKrTeWf+SVSCOgFbYhcTQMK/WYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nihal Kumar Gupta <quic_nihalkum@quicinc.com>,
+	Vikram Sharma <quic_vikramsa@quicinc.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.19 770/781] dt-bindings: phy: qcom-edp: Add missing clock for X Elite
-Date: Tue, 24 Feb 2026 17:24:39 -0800
-Message-ID: <20260225012418.602263317@linuxfoundation.org>
+	Bryan ODonoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.19 771/781] dt-bindings: media: qcom,qcs8300-camss: Add missing power supplies
+Date: Tue, 24 Feb 2026 17:24:40 -0800
+Message-ID: <20260225012418.627910241@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,80 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
 
-commit 6b99eeacf6abb1ff2d6463c84e490343f39cf11a upstream.
+commit 555e882051a3a7ecc2bcee2b2047822249dcd074 upstream.
 
-On X Elite platform, the eDP PHY uses one more clock called ref.
+Add missing vdda-phy-supply and vdda-pll-supply in the (monaco)qcs8300
+camss binding. While enabling imx412 sensor for qcs8300 we see a need
+to add these supplies which were missing in initial submission.
 
-The current X Elite devices supported upstream work fine without this
-clock, because the boot firmware leaves this clock enabled. But we should
-not rely on that. Also, even though this change breaks the ABI, it is
-needed in order to make the driver disables this clock along with the
-other ones, for a proper bring-down of the entire PHY.
-
-So attach the this ref clock to the PHY.
-
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 5d5607861350 ("dt-bindings: phy: qcom-edp: Add X1E80100 PHY compatibles")
+Fixes: 634a2958fae30 ("media: dt-bindings: Add qcom,qcs8300-camss compatible")
+Cc: stable@vger.kernel.org
+Co-developed-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://patch.msgid.link/20251224-phy-qcom-edp-add-missing-refclk-v5-1-3f45d349b5ac@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml |   28 +++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml |   13 ++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-@@ -37,12 +37,15 @@ properties:
-       - description: PLL register block
- 
-   clocks:
--    maxItems: 2
-+    minItems: 2
-+    maxItems: 3
- 
-   clock-names:
-+    minItems: 2
+--- a/Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
+@@ -120,6 +120,14 @@ properties:
      items:
-       - const: aux
-       - const: cfg_ahb
-+      - const: ref
+       - const: top
  
-   "#clock-cells":
-     const: 1
-@@ -64,6 +67,29 @@ required:
-   - "#clock-cells"
-   - "#phy-cells"
- 
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,x1e80100-dp-phy
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 3
-+          maxItems: 3
-+        clock-names:
-+          minItems: 3
-+          maxItems: 3
-+    else:
-+      properties:
-+        clocks:
-+          minItems: 2
-+          maxItems: 2
-+        clock-names:
-+          minItems: 2
-+          maxItems: 2
++  vdda-phy-supply:
++    description:
++      Phandle to a 0.88V regulator supply to CSI PHYs.
 +
++  vdda-pll-supply:
++    description:
++      Phandle to 1.2V regulator supply to CSI PHYs pll block.
++
+   ports:
+     $ref: /schemas/graph.yaml#/properties/ports
+ 
+@@ -160,6 +168,8 @@ required:
+   - power-domains
+   - power-domain-names
+   - ports
++  - vdda-phy-supply
++  - vdda-pll-supply
+ 
  additionalProperties: false
  
- examples:
+@@ -328,6 +338,9 @@ examples:
+             power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
+             power-domain-names = "top";
+ 
++            vdda-phy-supply = <&vreg_l4a_0p88>;
++            vdda-pll-supply = <&vreg_l1c_1p2>;
++
+             ports {
+                 #address-cells = <1>;
+                 #size-cells = <0>;
 
 
