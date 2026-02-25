@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9161E2834;
-	Wed, 25 Feb 2026 01:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B87C263C7F;
+	Wed, 25 Feb 2026 01:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983819; cv=none; b=YiVJCBEU9d1X0/Qhpi3ZF2+o+xRLXH3gK+kTR/7BqWHQRjE/B0PeoA4ZYRiOv8Fg3bQRZdNN5JZ9ceGl8a+FymoCt5OX6TF3nz2MK9q3woWGpX3d6hTkQwViGVPXml+dxkSRs/u3xMG5IL9l5qbqie91dWyAI8xJ+y9XOIQUpJI=
+	t=1771983820; cv=none; b=nzyGCKb5TclQulI33YPFV+49DslthwhdzR++XHPvxxoygucu+yUYaCBwv7mYwyhjR9tX/R0aYlqmyhmndVCa/vJQgTAg+4L4JyUoOD2H4+eeM8E3x41shRApuyGJi2G/PY5dZCSpxbXRGkzNpkrKqm9KptuMDHbrNxisbAUHESE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983819; c=relaxed/simple;
-	bh=RGimIepXCtEDPH5RpVnvtE8UFd1zcSWrTLhCVfyEQKk=;
+	s=arc-20240116; t=1771983820; c=relaxed/simple;
+	bh=GIblY3GZGMcVr7UfIsfREdJJrx2MYrAlv7qxAeRqBeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KVA9kYxZJH/n60RsEW8yUUNcfjtqq+0WyXPsoN5u9zeeQDVpkosCYblRjIQaEkvDtligB5BPHnbyv7jNIlCqUUPi2CDeqGi5GXW/PisHQ4Wmc3CaaVrfWgmL7E3V5/wp6gEa4KG2L2PSKBZTr7y1Ls9Ve06lGQPbxi22qoU0kiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdnnToyi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CgL5bEVf0hmItqV5+5I+8dzlELWDFrQqL6AeWeoPegl9Ta0JIb/4j/wwaqk70bvGFr4ehTbecMYbxRAWaPgTlKC98Wm+TKsE8e4i5QyOxaiyVkDFC5aJFv2cw8N0ZVgm2NbJ+CsHfbkyDSR3TOUP7b/s0AHVKB4Et5vSol3rHCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6gqwcZL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdnnToyi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FDEC116D0;
-	Wed, 25 Feb 2026 01:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6gqwcZL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DAAC116D0;
+	Wed, 25 Feb 2026 01:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983819;
-	bh=RGimIepXCtEDPH5RpVnvtE8UFd1zcSWrTLhCVfyEQKk=;
+	s=korg; t=1771983820;
+	bh=GIblY3GZGMcVr7UfIsfREdJJrx2MYrAlv7qxAeRqBeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdnnToyim0ncpcgqXj07+DwofL2AW1XozQ6s457D4fVpkdc8jLK64ixHYY3zIvV57
-	 9dr3KCTuBxaXgAWdPnrOy3VKYuifEx80oF1w+Kh7FFH/LC/P8kd7PZDxutzzstSTnR
-	 G/x4ro+T2ScmDlIvqhxZp0TlMB3XXGO0P1+XQ3p8=
+	b=Y6gqwcZLWAiUQ/8bimHZ89uf161ye0PiDkkX6Xiff71+xlXm0k1IEZh0EiTYkxrel
+	 0NSXlQa2PY+Jj06TwNTTywIgAegid/rK9OH+5R6RcsYRNHgTyQUixOO4VnqHM5X/ip
+	 LELwUqvY4so0//HlDcJupDZAqCZgkcUSqTGTYabo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
-	Breno Leitao <leitao@debian.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 103/641] crypto: caam - fix netdev memory leak in dpaa2_caam_probe
-Date: Tue, 24 Feb 2026 17:17:09 -0800
-Message-ID: <20260225012351.611148999@linuxfoundation.org>
+Subject: [PATCH 6.18 104/641] bpf: Fix bpf_xdp_store_bytes proto for read-only arg
+Date: Tue, 24 Feb 2026 17:17:10 -0800
+Message-ID: <20260225012351.636125097@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,143 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 7d43252b3060b0ba4a192dce5dba85a3f39ffe39 ]
+[ Upstream commit 6557f1565d779851c4db9c488c49c05a47a6e72f ]
 
-When commit 0e1a4d427f58 ("crypto: caam: Unembed net_dev structure in
-dpaa2") converted embedded net_device to dynamically allocated pointers,
-it added cleanup in dpaa2_dpseci_disable() but missed adding cleanup in
-dpaa2_dpseci_free() for error paths.
+While making some maps in Cilium read-only from the BPF side, we noticed
+that the bpf_xdp_store_bytes proto is incorrect. In particular, the
+verifier was throwing the following error:
 
-This causes memory leaks when dpaa2_dpseci_dpio_setup() fails during probe
-due to DPIO devices not being ready yet. The kernel's deferred probe
-mechanism handles the retry successfully, but the netdevs allocated during
-the failed probe attempt are never freed, resulting in kmemleak reports
-showing multiple leaked netdev-related allocations all traced back to
-dpaa2_caam_probe().
+  ; ret = ctx_store_bytes(ctx, l3_off + offsetof(struct iphdr, saddr),
+                          &nat->address, 4, 0);
+  635: (79) r1 = *(u64 *)(r10 -144)     ; R1=ctx() R10=fp0 fp-144=ctx()
+  636: (b4) w2 = 26                     ; R2=26
+  637: (b4) w4 = 4                      ; R4=4
+  638: (b4) w5 = 0                      ; R5=0
+  639: (85) call bpf_xdp_store_bytes#190
+  write into map forbidden, value_size=6 off=0 size=4
 
-Fix this by preserving the CPU mask of allocated netdevs during setup and
-using it for cleanup in dpaa2_dpseci_free(). This approach ensures that
-only the CPUs that actually had netdevs allocated will be cleaned up,
-avoiding potential issues with CPU hotplug scenarios.
+nat comes from a BPF_F_RDONLY_PROG map, so R3 is a PTR_TO_MAP_VALUE.
+The verifier checks the helper's memory access to R3 in
+check_mem_size_reg, as it reaches ARG_CONST_SIZE argument. The third
+argument has expected type ARG_PTR_TO_UNINIT_MEM, which includes the
+MEM_WRITE flag. The verifier thus checks for a BPF_WRITE access on R3.
+Given R3 points to a read-only map, the check fails.
 
-Fixes: 0e1a4d427f58 ("crypto: caam: Unembed net_dev structure in dpaa2")
-Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Conversely, ARG_PTR_TO_UNINIT_MEM can also lead to the helper reading
+from uninitialized memory.
+
+This patch simply fixes the expected argument type to match that of
+bpf_skb_store_bytes.
+
+Fixes: 3f364222d032 ("net: xdp: introduce bpf_xdp_pointer utility routine")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/9fa3c9f72d806e82541071c4df88b8cba28ad6a9.1769875479.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/caamalg_qi2.c | 27 +++++++++++++++------------
- drivers/crypto/caam/caamalg_qi2.h |  2 ++
- 2 files changed, 17 insertions(+), 12 deletions(-)
+ net/core/filter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/caam/caamalg_qi2.c b/drivers/crypto/caam/caamalg_qi2.c
-index 107ccb2ade420..c6117c23eb25b 100644
---- a/drivers/crypto/caam/caamalg_qi2.c
-+++ b/drivers/crypto/caam/caamalg_qi2.c
-@@ -4814,7 +4814,8 @@ static void dpaa2_dpseci_free(struct dpaa2_caam_priv *priv)
- {
- 	struct device *dev = priv->dev;
- 	struct fsl_mc_device *ls_dev = to_fsl_mc_device(dev);
--	int err;
-+	struct dpaa2_caam_priv_per_cpu *ppriv;
-+	int i, err;
- 
- 	if (DPSECI_VER(priv->major_ver, priv->minor_ver) > DPSECI_VER(5, 3)) {
- 		err = dpseci_reset(priv->mc_io, 0, ls_dev->mc_handle);
-@@ -4822,6 +4823,12 @@ static void dpaa2_dpseci_free(struct dpaa2_caam_priv *priv)
- 			dev_err(dev, "dpseci_reset() failed\n");
- 	}
- 
-+	for_each_cpu(i, priv->clean_mask) {
-+		ppriv = per_cpu_ptr(priv->ppriv, i);
-+		free_netdev(ppriv->net_dev);
-+	}
-+	free_cpumask_var(priv->clean_mask);
-+
- 	dpaa2_dpseci_congestion_free(priv);
- 	dpseci_close(priv->mc_io, 0, ls_dev->mc_handle);
- }
-@@ -5007,16 +5014,15 @@ static int __cold dpaa2_dpseci_setup(struct fsl_mc_device *ls_dev)
- 	struct device *dev = &ls_dev->dev;
- 	struct dpaa2_caam_priv *priv;
- 	struct dpaa2_caam_priv_per_cpu *ppriv;
--	cpumask_var_t clean_mask;
- 	int err, cpu;
- 	u8 i;
- 
- 	err = -ENOMEM;
--	if (!zalloc_cpumask_var(&clean_mask, GFP_KERNEL))
--		goto err_cpumask;
--
- 	priv = dev_get_drvdata(dev);
- 
-+	if (!zalloc_cpumask_var(&priv->clean_mask, GFP_KERNEL))
-+		goto err_cpumask;
-+
- 	priv->dev = dev;
- 	priv->dpsec_id = ls_dev->obj_desc.id;
- 
-@@ -5118,7 +5124,7 @@ static int __cold dpaa2_dpseci_setup(struct fsl_mc_device *ls_dev)
- 			err = -ENOMEM;
- 			goto err_alloc_netdev;
- 		}
--		cpumask_set_cpu(cpu, clean_mask);
-+		cpumask_set_cpu(cpu, priv->clean_mask);
- 		ppriv->net_dev->dev = *dev;
- 
- 		netif_napi_add_tx_weight(ppriv->net_dev, &ppriv->napi,
-@@ -5126,18 +5132,16 @@ static int __cold dpaa2_dpseci_setup(struct fsl_mc_device *ls_dev)
- 					 DPAA2_CAAM_NAPI_WEIGHT);
- 	}
- 
--	err = 0;
--	goto free_cpumask;
-+	return 0;
- 
- err_alloc_netdev:
--	free_dpaa2_pcpu_netdev(priv, clean_mask);
-+	free_dpaa2_pcpu_netdev(priv, priv->clean_mask);
- err_get_rx_queue:
- 	dpaa2_dpseci_congestion_free(priv);
- err_get_vers:
- 	dpseci_close(priv->mc_io, 0, ls_dev->mc_handle);
- err_open:
--free_cpumask:
--	free_cpumask_var(clean_mask);
-+	free_cpumask_var(priv->clean_mask);
- err_cpumask:
- 	return err;
- }
-@@ -5182,7 +5186,6 @@ static int __cold dpaa2_dpseci_disable(struct dpaa2_caam_priv *priv)
- 		ppriv = per_cpu_ptr(priv->ppriv, i);
- 		napi_disable(&ppriv->napi);
- 		netif_napi_del(&ppriv->napi);
--		free_netdev(ppriv->net_dev);
- 	}
- 
- 	return 0;
-diff --git a/drivers/crypto/caam/caamalg_qi2.h b/drivers/crypto/caam/caamalg_qi2.h
-index 61d1219a202fc..8e65b4b28c7ba 100644
---- a/drivers/crypto/caam/caamalg_qi2.h
-+++ b/drivers/crypto/caam/caamalg_qi2.h
-@@ -42,6 +42,7 @@
-  * @mc_io: pointer to MC portal's I/O object
-  * @domain: IOMMU domain
-  * @ppriv: per CPU pointers to privata data
-+ * @clean_mask: CPU mask of CPUs that have allocated netdevs
-  */
- struct dpaa2_caam_priv {
- 	int dpsec_id;
-@@ -65,6 +66,7 @@ struct dpaa2_caam_priv {
- 
- 	struct dpaa2_caam_priv_per_cpu __percpu *ppriv;
- 	struct dentry *dfs_root;
-+	cpumask_var_t clean_mask;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index b9a51f322b655..d93f7dea828e5 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4133,7 +4133,7 @@ static const struct bpf_func_proto bpf_xdp_store_bytes_proto = {
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+ 	.arg2_type	= ARG_ANYTHING,
+-	.arg3_type	= ARG_PTR_TO_UNINIT_MEM,
++	.arg3_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg4_type	= ARG_CONST_SIZE,
  };
  
- /**
 -- 
 2.51.0
 
