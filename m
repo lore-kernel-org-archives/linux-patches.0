@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114F42550D7;
-	Wed, 25 Feb 2026 01:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196DB1D5141;
+	Wed, 25 Feb 2026 01:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983479; cv=none; b=Lf6StQq3T5OBHSuHqWJ3Yr9BMJzaK4qCFbSyiYQ3OW0KWXc6e6UA4kkrvJVpP62Bt0TLfOF/Uuprkz5QoA2elQmfgWvDhRbH/Pwac0Q8s8L87eLHg9zR8wF6IYj23JIQq3T7Mf26Vq0ymy5S2URqkkOvcH472zPpAcz1VKlVrXE=
+	t=1771983480; cv=none; b=HnLfKawFAeNxtXU2CrHodyRAHcA/+6S1UKBjzyqzmpEU5aN+vjsk1YD1CbqSbtbxeiDmmBH1az+H4zJds+T7KezU3oI7yqMepRXx63Aq0nlIpVE5LINyaVn2BvG8irPr1xV+aM2yviCpJyJ9ROVxifTguJq5LwOjZkgkux46ukk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983479; c=relaxed/simple;
-	bh=BqG6YdlFcCYCzom1hIoRdj/DKpRtIBwIu0YTqh6l8ZU=;
+	s=arc-20240116; t=1771983480; c=relaxed/simple;
+	bh=0AMItDpuyvpODM0mtGdLyzbzSK/+Lu11ObU9aicywSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NuJwNjfUbeEYTunbKpkLe4GxpFVRbUwbzJKhrWTlEaFtW+E04I1VX5VDIZZXFbpzHauZO7Sn4AaNzaOkzjH9iItbtXulMOsXzUMLWNB7JytuZZtLPHaTKYEbxkYyvPZyX9DF5sDNZS1wf/W5sTFLXEgt6xgEzuKBT/Re6eZbDUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOTNIDEn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gChtQllnXogLPsKmaJrPWpdxC/QVFXWgNiY9FMeCaa59R1KJ7oMhJkqfWR1ywLlFJdP6YP2pFvjjWWRpfroc+apDpSVKLbqCdjndk+AOc95VmzueMMPNiRuHHwI3eGOprzjpGCTuhUAMQ75ZI3SZsrMIcicTuciJn44u8l7Ta8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQ7K1tSL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOTNIDEn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36C7C116D0;
-	Wed, 25 Feb 2026 01:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQ7K1tSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0327C116D0;
+	Wed, 25 Feb 2026 01:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983479;
-	bh=BqG6YdlFcCYCzom1hIoRdj/DKpRtIBwIu0YTqh6l8ZU=;
+	s=korg; t=1771983480;
+	bh=0AMItDpuyvpODM0mtGdLyzbzSK/+Lu11ObU9aicywSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOTNIDEnDQTW2/969/j/CRq/LKlXxMU1Lz9mHfnAcZIpWo6Lo2Hd9R8XcCdwBXQjs
-	 owzAPlPhCL9R9cnaqBIZrD7mJEeRVmHO4uNbChuF7fK0lhFI7OX5lKHs8RxijdTP1K
-	 sd2BZvk7REyRFlgz8uI2aFcVjBSzZqJraKhquIPg=
+	b=CQ7K1tSLy+iKBoxKUHYCMcuScGob9nI2l9oPSpTkGlZykFMGHm3FJQ9aEpeQbsvRd
+	 VHZqq2oJLAcY6uTca+fT5kxt+OJIjzmvxLvWhHSWesNHtDiUCDN7Bqq8oC3hSc04WE
+	 HiSUzK8lDw3bPiAOVBLdhk7Xo5zFXsKVNjOj+4Ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 575/781] stm class: Kconfig: correct symbol name
-Date: Tue, 24 Feb 2026 17:21:24 -0800
-Message-ID: <20260225012413.903533381@linuxfoundation.org>
+Subject: [PATCH 6.19 593/781] usb: bdc: fix sleep during atomic
+Date: Tue, 24 Feb 2026 17:21:42 -0800
+Message-ID: <20260225012414.342166899@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -50,46 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit ed1613fc18834b5ec38d3534e96e4bc990289aa2 ]
+[ Upstream commit f1195ca3b4bbd001d3f1264dce91f83dec7777f5 ]
 
-Drop the leading "CONFIG_" when referring to Kconfig symbols--
-it is supplied by the kconfig software.
-This make the default values work as (apparently) expected.
+bdc_run() can be ran during atomic context leading to a sleep during
+atomic warning. Fix this by replacing read_poll_timeout() with
+read_poll_timeout_atomic().
 
-Fixes: a02509f301c6 ("stm class: Factor out default framing protocol")
-Fixes: d69d5e83110f ("stm class: Add MIPI SyS-T protocol support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20251228190502.2480758-1-rdunlap@infradead.org
+Fixes: 75ae051efc9b ("usb: gadget: bdc: use readl_poll_timeout() to simplify code")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260120200754.2488765-1-justin.chen@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/stm/Kconfig | 4 ++--
+ drivers/usb/gadget/udc/bdc/bdc_core.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/stm/Kconfig b/drivers/hwtracing/stm/Kconfig
-index eda6b11d40a1f..cd7f0b0f3fbeb 100644
---- a/drivers/hwtracing/stm/Kconfig
-+++ b/drivers/hwtracing/stm/Kconfig
-@@ -13,7 +13,7 @@ if STM
+diff --git a/drivers/usb/gadget/udc/bdc/bdc_core.c b/drivers/usb/gadget/udc/bdc/bdc_core.c
+index 5c3d8b64c0e76..f47aac078f6be 100644
+--- a/drivers/usb/gadget/udc/bdc/bdc_core.c
++++ b/drivers/usb/gadget/udc/bdc/bdc_core.c
+@@ -35,8 +35,8 @@ static int poll_oip(struct bdc *bdc, u32 usec)
+ 	u32 status;
+ 	int ret;
  
- config STM_PROTO_BASIC
- 	tristate "Basic STM framing protocol driver"
--	default CONFIG_STM
-+	default STM
- 	help
- 	  This is a simple framing protocol for sending data over STM
- 	  devices. This was the protocol that the STM framework used
-@@ -28,7 +28,7 @@ config STM_PROTO_BASIC
- 
- config STM_PROTO_SYS_T
- 	tristate "MIPI SyS-T STM framing protocol driver"
--	default CONFIG_STM
-+	default STM
- 	help
- 	  This is an implementation of MIPI SyS-T protocol to be used
- 	  over the STP transport. In addition to the data payload, it
+-	ret = readl_poll_timeout(bdc->regs + BDC_BDCSC, status,
+-				 (BDC_CSTS(status) != BDC_OIP), 10, usec);
++	ret = readl_poll_timeout_atomic(bdc->regs + BDC_BDCSC, status,
++					(BDC_CSTS(status) != BDC_OIP), 10, usec);
+ 	if (ret)
+ 		dev_err(bdc->dev, "operation timedout BDCSC: 0x%08x\n", status);
+ 	else
 -- 
 2.51.0
 
