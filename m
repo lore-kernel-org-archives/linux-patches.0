@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5232E2FFFB6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0AD2F9D83;
 	Wed, 25 Feb 2026 06:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002627; cv=none; b=VJccdnO/EG2VtX7sznU+YgoKwdJSHP+FJzI7by4DoOEqVJSHLnvACN61rE9vAWiqE9DBOHrcAvEcVApkcAMDvz5ZTDERXiOGvyPztRwighGiem2HY7zT9br8ml4FNbaR75EFy2SKQkUKj07ZuPE3cJfwoqduQ+as5Xb7j+trIXA=
+	t=1772002628; cv=none; b=RrKA9bZV90Fk1IKR9EOLBqYf6E2zbRtTl+giKsnrCLdAmkap4VTCVSSv/EvckprV0TmzfkKYtj5Fi5xJXPDiy2KQ4AQxU06sXcQofesLaHUbD86ZSul0PCDAsj2w/yBLdVtOSGegQRNL+7IYYAyG0qC+FqrDoAqIyl0+Na0Ga6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002627; c=relaxed/simple;
-	bh=hIS7d0dErC/+aWpe7Azq+GW1c5eVrqCjBPodVwIC+HA=;
+	s=arc-20240116; t=1772002628; c=relaxed/simple;
+	bh=Z/yHBie1pYNB+9z+diaxmweAkYXtZCpqVQh+yH4UUUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDJL/m0MXiouhk1wDwfj013EVzpQMwDrqs4VgKYV1ipEBN2U+zI9G2Uh5xmFeQEEjVtQuZZVodmpvVnrT3PI0uIOBdQ88RDa/n/SEwD2V12Skrp0WQSJAgyJWTsWDCnKOpTvnc0FgwxJFDcsq2W+4PQogyZXTHezwt4GzdtA4g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQuSnrTM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h5WZG5R++N5VmxSg6qgZxzgqMkmjRh/RJ8ZVfpVQY0t/wvpqjpa8jj6mQF5RxN2g787KugzNCk9JqQqYiuL03i1IpI4/oWag6tAS/0vbyhjH5J8l1ERWwdMnqWjGKi+aRe1/0QZpQh00Z/qEwlUOISGU1SYRdOliOEyVN4KQmZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYLd2dtr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQuSnrTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBA2C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYLd2dtr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86BDC116D0;
 	Wed, 25 Feb 2026 06:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002627;
-	bh=hIS7d0dErC/+aWpe7Azq+GW1c5eVrqCjBPodVwIC+HA=;
+	bh=Z/yHBie1pYNB+9z+diaxmweAkYXtZCpqVQh+yH4UUUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQuSnrTMwlBgzVJbeFIGK2NoW5miXG44JcpebE+kx3/e8UcfxF1fmNG56RMuNFKaW
-	 uDJCXJPm27lW3Kfi0Aku0Ua2Z7wKxP0wc2oK8v4dIi3PVmp0aSEWawZCWKjhHK/REb
-	 M/vpOlkovLL8tWNAebBOBM9KHNTUpSrz6Z6ibYSw=
+	b=sYLd2dtr56TouyzYW4iDKfOCJadaawXwUhbZS7mhSQbLkQm2MK68kb6+yTkKXGP33
+	 k9wwVtCh8yE9oRm8dMyga6pxMZCnRoobWFMGqk4iRgLLpkw5SrcpZHLAs2cOirjdRe
+	 bXjVgM9hu1FA/r7vLQMNH86//dl94ou4C+2fTK0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Yi Liu <liuy22@mails.tsinghua.edu.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 388/641] power: supply: qcom_battmgr: Recognize "LiP" as lithium-polymer
-Date: Tue, 24 Feb 2026 17:21:54 -0800
-Message-ID: <20260225012357.983964944@linuxfoundation.org>
+Subject: [PATCH 6.18 389/641] RDMA/uverbs: Add __GFP_NOWARN to ib_uverbs_unmarshall_recv() kmalloc
+Date: Tue, 24 Feb 2026 17:21:55 -0800
+Message-ID: <20260225012358.006150881@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Yi Liu <liuy22@mails.tsinghua.edu.cn>
 
-[ Upstream commit c655f45480637aee326b5bd96488d35ab90db2b0 ]
+[ Upstream commit 58b604dfc7bb753f91bc0ccd3fa705e14e6edfb4 ]
 
-On the Dell Latitude 7455, the firmware uses "LiP" with a lowercase 'i'
-for the battery chemistry type, but only all-uppercase "LIP" was being
-recognized. Add the CamelCase variant to the check to fix the "Unknown
-battery technology" warning.
+Since wqe_size in ib_uverbs_unmarshall_recv() is user-provided and already
+validated, but can still be large, add __GFP_NOWARN to suppress memory
+allocation warnings for large sizes, consistent with the similar fix in
+ib_uverbs_post_send().
 
-Fixes: 202ac22b8e2e ("power: supply: qcom_battmgr: Add lithium-polymer entry")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260120235831.479038-1-val@packett.cool
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 67cdb40ca444 ("[IB] uverbs: Implement more commands")
+Signed-off-by: Yi Liu <liuy22@mails.tsinghua.edu.cn>
+Link: https://patch.msgid.link/20260129094900.3517706-1-liuy22@mails.tsinghua.edu.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_battmgr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/uverbs_cmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index e6f01e0122e1c..ff77dba29a3ef 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -1244,7 +1244,8 @@ static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry
- 	if ((!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN)) ||
- 	    (!strncmp(chemistry, "OOI", BATTMGR_CHEMISTRY_LEN)))
- 		return POWER_SUPPLY_TECHNOLOGY_LION;
--	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
-+	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN) ||
-+	    !strncmp(chemistry, "LiP", BATTMGR_CHEMISTRY_LEN))
- 		return POWER_SUPPLY_TECHNOLOGY_LIPO;
+diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
+index 3259e9848cc79..f4616deeca545 100644
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -2242,7 +2242,7 @@ ib_uverbs_unmarshall_recv(struct uverbs_req_iter *iter, u32 wr_count,
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
- 	pr_err("Unknown battery technology '%s'\n", chemistry);
+-	user_wr = kmalloc(wqe_size, GFP_KERNEL);
++	user_wr = kmalloc(wqe_size, GFP_KERNEL | __GFP_NOWARN);
+ 	if (!user_wr)
+ 		return ERR_PTR(-ENOMEM);
+ 
 -- 
 2.51.0
 
