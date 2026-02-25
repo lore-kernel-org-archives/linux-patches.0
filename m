@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B2F283CB5;
-	Wed, 25 Feb 2026 01:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C02248F54;
+	Wed, 25 Feb 2026 01:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983805; cv=none; b=nIg+Po3oo2kGplXYUA7V+GNbWeXy15XYR2Y8tZGBk4kKM2BQt8yS9pP6KNzj4pRxK5Um3DQFcRl52y+9YKJSLQY4oFpH37tP4LJR4gHwqtskkdk1QFvtEsERtbPvv+yjj+kN9TxbjFNw9ghnH9iQzoerHSxup6Gako9/dzMmAFg=
+	t=1771983806; cv=none; b=rrfNMvZumcPQzjPJ/JbkCWek1h1ixa5pON3wGR7xktaASbr8ov8PjOEwsSeLrRDEOj4ImKpns3VsuwbOygI9GqhZZT91qaCw84d7dO7SbsWAwHPj6pVae9PYAycWw9mDPFAJHPonY0PtXB2i2HBmWG+iPM+A6gAVch8tF1Yg6YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983805; c=relaxed/simple;
-	bh=bO4GEV21rmvp0PWgkGBQgS3mSuz+uj2CqIOC8G7TYSs=;
+	s=arc-20240116; t=1771983806; c=relaxed/simple;
+	bh=7qg/g7QLNZwNu1vbSjh/ZWajvsaWwdDko814yJ3m4tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vz6BmKUL+UpGNcxvU+TY8m/B1ASOGTHv6hKE5HjX5372nNaDXAQ5k05dwNJCkXodiXOFd4xoyJbJnf5uToERv8IndLkjYccW/Ge/KI+KdFMJuoMXwwrhXcwkf1AuOWRv7T6xzew9aBqhabIb0mgnxPjehEa3+3aiLXpwsGD+kzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqFyNr4L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PA6Y1PqZPjIqvvzZJTan5vA55rPyCH1bKW488uufiqY5X2ezJNSQjwTaLUiHFFwi1a4iBcgKJ9RqsjGV0+hKeqM2jUvvv4YNxQal4iu92dWMfCe4tFNABTlPPXZSeX/zAem7LwQ6n/gK2CBu3GAUF8aIt+pAWp+xfjFNAOncfUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCtQ0uOb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqFyNr4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479A4C116D0;
-	Wed, 25 Feb 2026 01:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCtQ0uOb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F19CC116D0;
+	Wed, 25 Feb 2026 01:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983805;
-	bh=bO4GEV21rmvp0PWgkGBQgS3mSuz+uj2CqIOC8G7TYSs=;
+	s=korg; t=1771983806;
+	bh=7qg/g7QLNZwNu1vbSjh/ZWajvsaWwdDko814yJ3m4tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqFyNr4LsQ//SpPW3mtjU9bJy62npjImHW60jFrI/dS5Y6h56tTDskEeIT+uP23NR
-	 L2OpNMOTt+abH5wA5ZxGVGPuIR1olmAlXV3unQHxHN1/in/pEcgswE0EpRPayW8OQ4
-	 idg0vmYpJuDo7dDxz4pt9fghhLYpssigYMKXFaGg=
+	b=WCtQ0uOb+5PtjJpPvdA0ZA8/QO24sKsU1Yqnk57SADTTqoZBmy2FvOmUSvM54tc27
+	 kDdtXTapoFmd0LW+wlhYPxE/1T7iNOgGqrBcXZa8+JoVBpXow1+bG38ZYXL4SjSAB/
+	 8vWjDTFFhwQk51UNHZ0aWX9ip7Zyo659U+9U4kPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 048/641] cpufreq: scmi: Fix device_node reference leak in scmi_cpu_domain_id()
-Date: Tue, 24 Feb 2026 17:16:14 -0800
-Message-ID: <20260225012350.196651273@linuxfoundation.org>
+Subject: [PATCH 6.18 049/641] iomap: fix submission side handling of completion side errors
+Date: Tue, 24 Feb 2026 17:16:15 -0800
+Message-ID: <20260225012350.223220731@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,33 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 0b7fbf9333fa4699a53145bad8ce74ea986caa13 ]
+[ Upstream commit 4ad357e39b2ecd5da7bcc7e840ee24d179593cd5 ]
 
-When calling of_parse_phandle_with_args(), the caller is responsible
-to call of_node_put() to release the reference of device node.
-In scmi_cpu_domain_id(), it does not release the reference.
+The "if (dio->error)" in iomap_dio_bio_iter exists to stop submitting
+more bios when a completion already return an error.  Commit cfe057f7db1f
+("iomap_dio_actor(): fix iov_iter bugs") made it revert the iov by
+"copied", which is very wrong given that we've already consumed that
+range and submitted a bio for it.
 
-Fixes: e336baa4193e ("cpufreq: scmi: Prepare to move OF parsing of domain-id to cpufreq")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: cfe057f7db1f ("iomap_dio_actor(): fix iov_iter bugs")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/scmi-cpufreq.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/iomap/direct-io.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index e0e1756180b0c..c7a3b038385b5 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -101,6 +101,7 @@ static int scmi_cpu_domain_id(struct device *cpu_dev)
- 			return -EINVAL;
- 	}
- 
-+	of_node_put(domain_id.np);
- 	return domain_id.args[0];
- }
+diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
+index 6317e4cd42517..e73c71f39bd45 100644
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -429,9 +429,13 @@ static int iomap_dio_bio_iter(struct iomap_iter *iter, struct iomap_dio *dio)
+ 	nr_pages = bio_iov_vecs_to_alloc(dio->submit.iter, BIO_MAX_VECS);
+ 	do {
+ 		size_t n;
+-		if (dio->error) {
+-			iov_iter_revert(dio->submit.iter, copied);
+-			copied = ret = 0;
++
++		/*
++		 * If completions already occurred and reported errors, give up now and
++		 * don't bother submitting more bios.
++		 */
++		if (unlikely(data_race(dio->error))) {
++			ret = 0;
+ 			goto out;
+ 		}
  
 -- 
 2.51.0
