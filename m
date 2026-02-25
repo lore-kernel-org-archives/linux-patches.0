@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD341FE45D;
-	Wed, 25 Feb 2026 01:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1B6256C6C;
+	Wed, 25 Feb 2026 01:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983426; cv=none; b=rZT65/LLeMsYabXTEVpIHMLjK3sp3n6lKS3bFTX9iyrodPwIrPTU8k1lUZNvjdqrhm1Q3Hc9DgSgvByZNspcv7pPVfIRFZc6p2MrnYDdRV4Ul4Cw6/0qSDmluSJy8eXFpyYKg/YxCrCUT9lEYsldVQSPcTfj4d2KPK8+o6Z6waw=
+	t=1771983427; cv=none; b=JFeyECe/WcUlkqbtXZyic4eOsuuRrVumutl8rjPFzkZUVHlmqiuHhB9sji+RER/eLTnJB5VX/PYbVwtfIwIlG8f9aignPnqPtSROH/l6YZpHD/TlcrBQUxVjZrqHVMRkKWrRvT6GvLeXmD1qtgt890+KpsACl5W3Wim7ssJ6n+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983426; c=relaxed/simple;
-	bh=GtS44dLixCMip/VIQIW7Wbow3DAcL2DEbWpCqjRxO+A=;
+	s=arc-20240116; t=1771983427; c=relaxed/simple;
+	bh=JN0wJGxmL8OM6868lSc62Svn2eFrkuHxv48hvnKs49Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbi1yvQ2hMoE+JsxuwrPILo41R8bw0jPW9REHj3F6n3YGWwZQT0QTg+CV5MaaQGnvuxfNVXhy+8LXk76e+DEK1P0SUb0kt/V/lQfyMdL5NrqnJahVeW/s/CAaRjlMgs5Dr7lmFBgG401F0mjEUEPzxPVZG9DqOs8JPe1j2IXe2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ii4lM/H4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=niRtcf/bSA+OtFneQuIuBlzsxmQn/IrNrBqdv18j06zLjIaQf7rVr7go90UMRdQn3CFASZX7NrNW0OS3yPfVRRpgEBaG4yPYUBmtoWjT2b0gvTfI5YYWFzyjt6DqVwJvO6rNuZSNsu470JstZPAaYZgFYae5bzJlnpgjDeM2fNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PsVyrZ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ii4lM/H4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C215EC116D0;
-	Wed, 25 Feb 2026 01:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PsVyrZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AD7C116D0;
+	Wed, 25 Feb 2026 01:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983425;
-	bh=GtS44dLixCMip/VIQIW7Wbow3DAcL2DEbWpCqjRxO+A=;
+	s=korg; t=1771983427;
+	bh=JN0wJGxmL8OM6868lSc62Svn2eFrkuHxv48hvnKs49Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ii4lM/H4eblbJomcC4rg8YK6dw16tYTsLjr4r2S9Ku98ze/Xpb7ORHK1dZ5jlN5XV
-	 c9m7cv3N/119IRDEQRQidsgpux3DWmZY7sBaDP4RPWM1gw8MrZtOTcLSylo54cmlHn
-	 a2S8UopgL5FP3NDmQeCHKXSRer8JqVn5vHBBKJyo=
+	b=0PsVyrZ8nElq5D9Iu9IvwX36oh06HiadkuEnFexeOyFrOxHo/mKwePD7Vw24LvLS3
+	 SxNOMI4namnp2Y/0lLejb1+A3WU6LP7BoWP99y0QveGCBeANa81Ral+1lI9pMyiJJT
+	 J6oW1TG7i95tpuZNTGqSjD/9faFY26df2PB0VoDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@mleia.com>,
 	Brian Masney <bmasney@redhat.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 546/781] clk: nxp: lpc32xx: convert from divider_round_rate() to divider_determine_rate()
-Date: Tue, 24 Feb 2026 17:20:55 -0800
-Message-ID: <20260225012413.189569134@linuxfoundation.org>
+Subject: [PATCH 6.19 529/781] clk: qcom: alpha-pll: convert from divider_round_rate() to divider_determine_rate()
+Date: Tue, 24 Feb 2026 17:20:38 -0800
+Message-ID: <20260225012412.774453706@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,7 +55,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit af943663ccc266e6346e5645b13c0fca71d24395 ]
+[ Upstream commit e1f08613e113f02a3ec18c9a7964de97f940acbf ]
 
 The divider_round_rate() function is now deprecated, so let's migrate
 to divider_determine_rate() instead so that this deprecated API can be
@@ -67,32 +69,63 @@ determine_rate, this was mistakenly converted to:
 This is invalid in the case when an error occurs since it can set the
 rate to a negative value.
 
-Fixes: 0879768df240 ("clk: nxp: lpc32xx: convert from round_rate() to determine_rate()")
-Tested-by: Vladimir Zapolskiy <vz@mleia.com>
-Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
+Fixes: 0e56e3369b60 ("clk: qcom: alpha-pll: convert from round_rate() to determine_rate()")
 Signed-off-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260108-clk-divider-round-rate-v1-14-535a3ed73bf3@redhat.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/nxp/clk-lpc32xx.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 21 ++++++---------------
+ 1 file changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/clk/nxp/clk-lpc32xx.c b/drivers/clk/nxp/clk-lpc32xx.c
-index 23f980cf6a2b5..ae2fa5341a2e4 100644
---- a/drivers/clk/nxp/clk-lpc32xx.c
-+++ b/drivers/clk/nxp/clk-lpc32xx.c
-@@ -975,10 +975,8 @@ static int clk_divider_determine_rate(struct clk_hw *hw,
- 		return 0;
- 	}
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 6aeba40358c11..a84e8bee65346 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -1257,11 +1257,8 @@ static int clk_alpha_pll_postdiv_determine_rate(struct clk_hw *hw,
+ 	else
+ 		table = clk_alpha_div_table;
  
 -	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate,
--				       divider->table, divider->width, divider->flags);
+-				       table, pll->width,
+-				       CLK_DIVIDER_POWER_OF_TWO);
 -
 -	return 0;
-+	return divider_determine_rate(hw, req, divider->table, divider->width,
-+				      divider->flags);
++	return divider_determine_rate(hw, req, table, pll->width,
++				      CLK_DIVIDER_POWER_OF_TWO);
  }
  
- static int clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ static int clk_alpha_pll_postdiv_ro_determine_rate(struct clk_hw *hw,
+@@ -1617,11 +1614,8 @@ static int clk_trion_pll_postdiv_determine_rate(struct clk_hw *hw,
+ {
+ 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
+ 
+-	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate,
+-				       pll->post_div_table,
+-				       pll->width, CLK_DIVIDER_ROUND_CLOSEST);
+-
+-	return 0;
++	return divider_determine_rate(hw, req, pll->post_div_table, pll->width,
++				      CLK_DIVIDER_ROUND_CLOSEST);
+ };
+ 
+ static int
+@@ -1657,11 +1651,8 @@ static int clk_alpha_pll_postdiv_fabia_determine_rate(struct clk_hw *hw,
+ {
+ 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
+ 
+-	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate,
+-				       pll->post_div_table,
+-				       pll->width, CLK_DIVIDER_ROUND_CLOSEST);
+-
+-	return 0;
++	return divider_determine_rate(hw, req, pll->post_div_table, pll->width,
++				      CLK_DIVIDER_ROUND_CLOSEST);
+ }
+ 
+ static int clk_alpha_pll_postdiv_fabia_set_rate(struct clk_hw *hw,
 -- 
 2.51.0
 
