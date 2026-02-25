@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F2420C012;
-	Wed, 25 Feb 2026 01:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDF7265CBE;
+	Wed, 25 Feb 2026 01:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771984006; cv=none; b=US/yxRvCFSVXk1txqIhCctjGAcrEANMWTKyhayoiLxfDwl8ShUW7U8a9+HLrNETCHjUASTDbhxc4uUDL7alE05vxCXNYTGBdt5H4yUJ8DmAKQgAt1PGw2aNzXW46aC+gXW7EKLAYjNom0QlePu2G5R2u6sbXefaREgIjN7xS3V4=
+	t=1771984007; cv=none; b=W7T1asi2L7iUFPM6Koi91YzsTJzfgaFfSHZDTrp5YVMOun0g/4aaxn+f7GBsWxRGyDRE+5abrz8g/SzHAMQ8Co3tqqqh2mm/PSfdM6Hi4gzeQYDhFrGsnFJHA+1U9FeCnlMOBb+LIyljXHdYlst3eMiIvx48Qg8QxMC1Q8+Ea0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771984006; c=relaxed/simple;
-	bh=StMfyMdAexElVfSyxqvE+gZcYWW3iV5EnjPS+gwpa2c=;
+	s=arc-20240116; t=1771984007; c=relaxed/simple;
+	bh=ZhhpiGFh7er93iK67ms0fqWmSqierUy+QHZtBCmj+B0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hunV2mJQRgj7g0fypneczc/LSsX6sFS4eRpuaU+EOR41ZzUQh0hlkFdOVkYr6HFiXIjxenE06p2HYHkxpMovQSFRbLhcap+RLfTu9N8YNbzcXUq50zuqpWdElyQqGlF7ieGCKs/oDVTwBxrvBqtVMckHhH1JNjRXg893ALqgyKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tFGb867E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sM3xg7SZwvf2ry991+MAkc4ubm+TsSfSJv4NBnh1D7sNnd5RX8P9IlFZNWuRSxMiY79Haux5KxCant8aBhptjKAHFp3K17n5Va4Jf4EMmp3/qXsKFXY8Z5M1gYGKs1HhqCgeLm9iga9AgCZuV+My/x/MZyzcecxJ4+b125EfBas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zp/BJ7ld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tFGb867E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17E3C116D0;
-	Wed, 25 Feb 2026 01:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zp/BJ7ld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0384AC116D0;
+	Wed, 25 Feb 2026 01:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771984005;
-	bh=StMfyMdAexElVfSyxqvE+gZcYWW3iV5EnjPS+gwpa2c=;
+	s=korg; t=1771984007;
+	bh=ZhhpiGFh7er93iK67ms0fqWmSqierUy+QHZtBCmj+B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tFGb867EXFe6zT9mERAT4soanzlLGwIfZ8o1jAiVTFzkP11vTL8jAkjsI197g6XgY
-	 31aLHEYhPKSwzQWJRUgbd67ubZ2fz8IqhpxfsnkWhNfXhuuJhcvC4HH9eGlanqcjwy
-	 4t0o2L+JV5j4F7VIv+hhEKydm3nFnFpK5c86y5Us=
+	b=zp/BJ7ld78BthmVazQirU62O0R9fkIM0k2a45MtuqcM/9peHdxy7raNVUlbYlwPR4
+	 +RPrtwGpwH5qitFqizmh91xRGxxViSq+E+0hot4LINVUIwZf7oRnwLUoHA5w89ocuH
+	 b+kYhWIFILfr7aQGQ5KA5Pki0SmaVi8OdwpNr3lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Aleksandra Rukomoinikova <ARukomoinikova@k2.cloud>,
 	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 257/641] netfilter: nf_conncount: make nf_conncount_gc_list() to disable BH
-Date: Tue, 24 Feb 2026 17:19:43 -0800
-Message-ID: <20260225012355.062807501@linuxfoundation.org>
+Subject: [PATCH 6.18 258/641] netfilter: nf_conncount: increase the connection clean up limit to 64
+Date: Tue, 24 Feb 2026 17:19:44 -0800
+Message-ID: <20260225012355.083123436@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,89 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit c0362b5748282e22fa1592a8d3474f726ad964c2 ]
+[ Upstream commit 21d033e472735ecec677f1ae46d6740b5e47a4f3 ]
 
-For convenience when performing GC over the connection list, make
-nf_conncount_gc_list() to disable BH. This unifies the behavior with
-nf_conncount_add() and nf_conncount_count().
+After the optimization to only perform one GC per jiffy, a new problem
+was introduced. If more than 8 new connections are tracked per jiffy the
+list won't be cleaned up fast enough possibly reaching the limit
+wrongly.
 
+In order to prevent this issue, only skip the GC if it was already
+triggered during the same jiffy and the increment is lower than the
+clean up limit. In addition, increase the clean up limit to 64
+connections to avoid triggering GC too often and do more effective GCs.
+
+This has been tested using a HTTP server and several
+performance tools while having nft_connlimit/xt_connlimit or OVS limit
+configured.
+
+Output of slowhttptest + OVS limit at 52000 connections:
+
+ slow HTTP test status on 340th second:
+ initializing:        0
+ pending:             432
+ connected:           51998
+ error:               0
+ closed:              0
+ service available:   YES
+
+Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
+Reported-by: Aleksandra Rukomoinikova <ARukomoinikova@k2.cloud>
+Closes: https://lore.kernel.org/netfilter/b2064e7b-0776-4e14-adb6-c68080987471@k2.cloud/
 Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 21d033e47273 ("netfilter: nf_conncount: increase the connection clean up limit to 64")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c  | 24 +++++++++++++++++-------
- net/netfilter/nft_connlimit.c |  7 +------
- 2 files changed, 18 insertions(+), 13 deletions(-)
+ include/net/netfilter/nf_conntrack_count.h |  1 +
+ net/netfilter/nf_conncount.c               | 15 ++++++++++-----
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
+diff --git a/include/net/netfilter/nf_conntrack_count.h b/include/net/netfilter/nf_conntrack_count.h
+index 52a06de41aa0f..cf0166520cf33 100644
+--- a/include/net/netfilter/nf_conntrack_count.h
++++ b/include/net/netfilter/nf_conntrack_count.h
+@@ -13,6 +13,7 @@ struct nf_conncount_list {
+ 	u32 last_gc;		/* jiffies at most recent gc */
+ 	struct list_head head;	/* connections with the same filtering key */
+ 	unsigned int count;	/* length of list */
++	unsigned int last_gc_count; /* length of list at most recent gc */
+ };
+ 
+ struct nf_conncount_data *nf_conncount_init(struct net *net, unsigned int keylen);
 diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index 828d5c64c68a3..8487808c87614 100644
+index 8487808c87614..288936f5c1bf9 100644
 --- a/net/netfilter/nf_conncount.c
 +++ b/net/netfilter/nf_conncount.c
-@@ -282,8 +282,8 @@ void nf_conncount_list_init(struct nf_conncount_list *list)
- EXPORT_SYMBOL_GPL(nf_conncount_list_init);
+@@ -34,8 +34,9 @@
  
- /* Return true if the list is empty. Must be called with BH disabled. */
--bool nf_conncount_gc_list(struct net *net,
--			  struct nf_conncount_list *list)
-+static bool __nf_conncount_gc_list(struct net *net,
-+				   struct nf_conncount_list *list)
- {
- 	const struct nf_conntrack_tuple_hash *found;
- 	struct nf_conncount_tuple *conn, *conn_n;
-@@ -295,10 +295,6 @@ bool nf_conncount_gc_list(struct net *net,
- 	if ((u32)jiffies == READ_ONCE(list->last_gc))
- 		return false;
+ #define CONNCOUNT_SLOTS		256U
  
--	/* don't bother if other cpu is already doing GC */
--	if (!spin_trylock(&list->list_lock))
--		return false;
--
+-#define CONNCOUNT_GC_MAX_NODES	8
+-#define MAX_KEYLEN		5
++#define CONNCOUNT_GC_MAX_NODES		8
++#define CONNCOUNT_GC_MAX_COLLECT	64
++#define MAX_KEYLEN			5
+ 
+ /* we will save the tuples of all connections we care about */
+ struct nf_conncount_tuple {
+@@ -182,12 +183,13 @@ static int __nf_conncount_add(struct net *net,
+ 		goto out_put;
+ 	}
+ 
+-	if ((u32)jiffies == list->last_gc)
++	if ((u32)jiffies == list->last_gc &&
++	    (list->count - list->last_gc_count) < CONNCOUNT_GC_MAX_COLLECT)
+ 		goto add_new_node;
+ 
+ 	/* check the saved connections */
  	list_for_each_entry_safe(conn, conn_n, &list->head, node) {
+-		if (collect > CONNCOUNT_GC_MAX_NODES)
++		if (collect > CONNCOUNT_GC_MAX_COLLECT)
+ 			break;
+ 
  		found = find_or_evict(net, list, conn);
- 		if (IS_ERR(found)) {
-@@ -327,7 +323,21 @@ bool nf_conncount_gc_list(struct net *net,
+@@ -230,6 +232,7 @@ static int __nf_conncount_add(struct net *net,
+ 		nf_ct_put(found_ct);
+ 	}
+ 	list->last_gc = (u32)jiffies;
++	list->last_gc_count = list->count;
+ 
+ add_new_node:
+ 	if (WARN_ON_ONCE(list->count > INT_MAX)) {
+@@ -277,6 +280,7 @@ void nf_conncount_list_init(struct nf_conncount_list *list)
+ 	spin_lock_init(&list->list_lock);
+ 	INIT_LIST_HEAD(&list->head);
+ 	list->count = 0;
++	list->last_gc_count = 0;
+ 	list->last_gc = (u32)jiffies;
+ }
+ EXPORT_SYMBOL_GPL(nf_conncount_list_init);
+@@ -316,13 +320,14 @@ static bool __nf_conncount_gc_list(struct net *net,
+ 		}
+ 
+ 		nf_ct_put(found_ct);
+-		if (collected > CONNCOUNT_GC_MAX_NODES)
++		if (collected > CONNCOUNT_GC_MAX_COLLECT)
+ 			break;
+ 	}
+ 
  	if (!list->count)
  		ret = true;
  	list->last_gc = (u32)jiffies;
--	spin_unlock(&list->list_lock);
-+
-+	return ret;
-+}
-+
-+bool nf_conncount_gc_list(struct net *net,
-+			  struct nf_conncount_list *list)
-+{
-+	bool ret;
-+
-+	/* don't bother if other cpu is already doing GC */
-+	if (!spin_trylock_bh(&list->list_lock))
-+		return false;
-+
-+	ret = __nf_conncount_gc_list(net, list);
-+	spin_unlock_bh(&list->list_lock);
++	list->last_gc_count = list->count;
  
  	return ret;
  }
-diff --git a/net/netfilter/nft_connlimit.c b/net/netfilter/nft_connlimit.c
-index d4964087bbc5e..714a594859357 100644
---- a/net/netfilter/nft_connlimit.c
-+++ b/net/netfilter/nft_connlimit.c
-@@ -232,13 +232,8 @@ static void nft_connlimit_destroy_clone(const struct nft_ctx *ctx,
- static bool nft_connlimit_gc(struct net *net, const struct nft_expr *expr)
- {
- 	struct nft_connlimit *priv = nft_expr_priv(expr);
--	bool ret;
- 
--	local_bh_disable();
--	ret = nf_conncount_gc_list(net, priv->list);
--	local_bh_enable();
--
--	return ret;
-+	return nf_conncount_gc_list(net, priv->list);
- }
- 
- static struct nft_expr_type nft_connlimit_type;
 -- 
 2.51.0
 
