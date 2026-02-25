@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D212505B2;
-	Wed, 25 Feb 2026 01:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E95C1FE45D;
+	Wed, 25 Feb 2026 01:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983036; cv=none; b=R05jiNcQRHSlDObAt+JGpJksVCVRH72Bi2cojPhs74WmwHEiAnXaOYVveoQHi/KDzg++orm8zT/R+11Ac57sey1d+Oi9QhaD9ORqWJj9QpdrcDw58g6sHd0WMCYAi9Ra6CcAIPbWvt/SGZW62CCuddF5uaC0uG7V3Ei4PvBSmQ4=
+	t=1771983037; cv=none; b=JVaHoZRRxHBu8UHvcPL/+dCQQHzmfAUF9Gb85QmXyOaDSzaGEdFLNRFF1J8nWPw6LqlHijpfo1RwIs/5+arrD/XFSM+VqVux4/8oC6t++2D4DM/RcaMgp3/T7KjRG5t33dZAG9deeuAu2Urk5YlhCzec8bY7I25UrR/h1G+FuAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983036; c=relaxed/simple;
-	bh=IrCkf16gQy6B1ihbOSdIwh5TLsBqTsiAnzy8Eq9mt8o=;
+	s=arc-20240116; t=1771983037; c=relaxed/simple;
+	bh=f9FEO9eJkqckAclrccVktqL/SQrN5RdT/izDDB9/A8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbdqhPkexvIMChCMi3mMnkV/7Q0mL0SMCViWlQ1pt0hIKR2PZVrNXFEECMmcGTDzkRNuabueaaQEp5hQ5DTWCkcR5CEneE5oZ1IZLKAD5TUTkvkUxl6+maM4tjHNGvU8GDGSVyag8jD5ar+vfmmuYXEbVFdm61cHELdxPetGzGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vdRbweAh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3HabyVT+KJhCn357FWFAH9xeLWROZ2lyzFw4BN6JTyHHe8m6KLQ5etzMOMmZZ6z+yAajy+sgPQ5R4++zua7ZpPtQqNfIfe4+WdXLCsMvI6lVzZtdBGjyrXR2R9UxZ/HMiUoioVDlC1vVHhNDVH9k1HofWm6Sxe/8Pwz7rWUCrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7Iotk4h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdRbweAh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47B1C116D0;
-	Wed, 25 Feb 2026 01:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7Iotk4h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06207C116D0;
+	Wed, 25 Feb 2026 01:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983035;
-	bh=IrCkf16gQy6B1ihbOSdIwh5TLsBqTsiAnzy8Eq9mt8o=;
+	s=korg; t=1771983037;
+	bh=f9FEO9eJkqckAclrccVktqL/SQrN5RdT/izDDB9/A8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vdRbweAhnr5XojrpIBzCfGXzqUDfgSyLci+fcs8oGh/WaORlhffJ9PCevb4hx+zTU
-	 sa6FWzLozNNA/AqdQG0NmQ1o0BfNR2Kh8zKYQxB2UH3K5uSBroO1IRNRUpKY/4Yw4s
-	 4mWqptrMepKb9isSsEsVJ5yN6pm1v5bvfDwsBv0g=
+	b=F7Iotk4ht5bUi57C98KsuJZFVgdABpm3H2ZTnIQafew8yquiw38NGRJ2sTm8QrDal
+	 WskPNmrvamzb7yCZX98cBA5VEmby4w7l2lXuf8fK/Yv71OCZ+SviPdBkq1WRxrKuZW
+	 e2To6Dthe04+NKeYjGFOMDAKPSNU27HO+HHTXxzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akash Goel <akash.goel@arm.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
 	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 199/781] drm/panthor: Remove redundant call to disable the MCU
-Date: Tue, 24 Feb 2026 17:15:08 -0800
-Message-ID: <20260225012404.544358081@linuxfoundation.org>
+Subject: [PATCH 6.19 200/781] drm/panthor: fix queue_reset_timeout_locked
+Date: Tue, 24 Feb 2026 17:15:09 -0800
+Message-ID: <20260225012404.568119569@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,34 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akash Goel <akash.goel@arm.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit cedf6765ecfd60197d90437ec648feb8b3e31cb1 ]
+[ Upstream commit ac5b392a8c355001c4c3f230a0e4b1f904e359ca ]
 
-This commit removes the redundant call to disable the MCU firmware
-in the suspend path.
+queue_check_job_completion calls queue_reset_timeout_locked to reset the
+timeout when progress is made. We want the reset to happen when the
+timeout is running, not when it is suspended.
 
-Fixes: 514072549865 ("drm/panthor: Support GLB_REQ.STATE field for Mali-G1 GPUs")
-Signed-off-by: Akash Goel <akash.goel@arm.com>
+Fixes: 345c5b7cc0f85 ("drm/panthor: Make the timeout per-queue instead of per-job")
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
 Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20251203091911.145623-1-akash.goel@arm.com
+Link: https://patch.msgid.link/20251202174028.1600218-1-olvaffe@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/panthor/panthor_sched.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_fw.c b/drivers/gpu/drm/panthor/panthor_fw.c
-index 1a5e3c1a27fbc..94a3cd6dfa6de 100644
---- a/drivers/gpu/drm/panthor/panthor_fw.c
-+++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -1187,7 +1187,6 @@ void panthor_fw_pre_reset(struct panthor_device *ptdev, bool on_hang)
- 		else
- 			ptdev->reset.fast = true;
- 	}
--	panthor_fw_stop(ptdev);
+diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
+index f53fa51d51694..6ac4cec52f9e4 100644
+--- a/drivers/gpu/drm/panthor/panthor_sched.c
++++ b/drivers/gpu/drm/panthor/panthor_sched.c
+@@ -1072,18 +1072,6 @@ group_is_idle(struct panthor_group *group)
+ 	return hweight32(inactive_queues) == group->queue_count;
+ }
  
- 	panthor_job_irq_suspend(&ptdev->fw->irq);
- 	panthor_fw_stop(ptdev);
+-static void
+-queue_reset_timeout_locked(struct panthor_queue *queue)
+-{
+-	lockdep_assert_held(&queue->fence_ctx.lock);
+-
+-	if (queue->timeout.remaining != MAX_SCHEDULE_TIMEOUT) {
+-		mod_delayed_work(queue->scheduler.timeout_wq,
+-				 &queue->timeout.work,
+-				 msecs_to_jiffies(JOB_TIMEOUT_MS));
+-	}
+-}
+-
+ static bool
+ group_can_run(struct panthor_group *group)
+ {
+@@ -1100,6 +1088,18 @@ queue_timeout_is_suspended(struct panthor_queue *queue)
+ 	return queue->timeout.remaining != MAX_SCHEDULE_TIMEOUT;
+ }
+ 
++static void
++queue_reset_timeout_locked(struct panthor_queue *queue)
++{
++	lockdep_assert_held(&queue->fence_ctx.lock);
++
++	if (!queue_timeout_is_suspended(queue)) {
++		mod_delayed_work(queue->scheduler.timeout_wq,
++				 &queue->timeout.work,
++				 msecs_to_jiffies(JOB_TIMEOUT_MS));
++	}
++}
++
+ static void
+ queue_suspend_timeout_locked(struct panthor_queue *queue)
+ {
 -- 
 2.51.0
 
