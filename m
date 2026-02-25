@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAC12FB08C;
-	Wed, 25 Feb 2026 06:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FF9318EE6;
+	Wed, 25 Feb 2026 06:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002758; cv=none; b=mmh3sgFeUUswn1UNwltTY5c99CpHJqpAgU7k3o3hNo6pBF5QnPHo6QjyXAcfjRkNHb0v+L9BigcvnXqmUkwfofi4VL7/giIPFR2ZVi2dDqHpcW4YBLVqdgt0F/rfhFrvcx1cRf40tP2p1AVUn8zYfrNO9zC4tlj0/LVEm6z5ABc=
+	t=1772002758; cv=none; b=Um9ANDt/pgRdlnCrxM5I0TjJ3VviGshSYGItyqgtwg+Y0xpmYl+oH3xzg6u7xOSvo9B3cYkYLaC1yjEkh4QsIqdZR1Mc0r9UH0lLOhnausCMZJjxvNCUUFy7A9oB8H2JI2b7jJsMy2QuYXF39hYe6+6wlQ76gx3louJslKw8gFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002758; c=relaxed/simple;
-	bh=DLdcpEFQtOVxrpHvLa/WnZGWQOBUifETBUkneoagpBg=;
+	bh=8n7qCmy5nHInLyGipCaqLMFM//Z72E/hb5lOaOqklyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfef85HF23aUE1ZDRZk3pofaOxylC8wW+tGXLIm9oq/9rR8sKQZHI/1DzKaYJ6P30PKC6Oyepmjss/pJVNO84vMJrRCfyL5mgj6arEpfjsvjq7tFkQwK1vX0G4qeekmxuddSD7aax6HAPn9ybHBmx1TkpVAN5C7k0kbcotl1lTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKeiy1Pv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KL3jAe60mOvcFHDmS05BiDVtbicPfU8GToInzwQRwi+TWQpuOuHVCD2UvbEivqd3qsQIDt2Vo2Urgz4JOGiyRj0aBSJvQXWV2TysGi2ZwSjlwN4LQv3YWbv2lxqMwRFiSuek2RO16r3KlX1xmEtnWwIgnBvoQuGvCQJVMrxnoEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLdhVUkh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKeiy1Pv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB8AC116D0;
-	Wed, 25 Feb 2026 06:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLdhVUkh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E8CC116D0;
+	Wed, 25 Feb 2026 06:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002757;
-	bh=DLdcpEFQtOVxrpHvLa/WnZGWQOBUifETBUkneoagpBg=;
+	s=korg; t=1772002758;
+	bh=8n7qCmy5nHInLyGipCaqLMFM//Z72E/hb5lOaOqklyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKeiy1Pvgj7pxd2sZsSOAaj5PRnsujp8w+m1xctairwTxPBcWHqrlOI3XTqiBf4vl
-	 yJvK16qN7Qs2pd/XjxB1jxCDq+j4TEC7CxhgBovkyOTHTG1Khb5Xhy56SVVvP59SBm
-	 RT0DrbhAZRbRWPT5Egr43Fc2Mv4cujuQObmUG81c=
+	b=JLdhVUkhuybMaGNPZtDXZ3SwALCEmE8MzDbxF1/46hoUqZnLjhGMdiYlKcA5IWWs3
+	 aeqquIXpBaqawQdnfTC58jWmY3gH6+pVjNmbv32GeWwkhGThpleHVcqxoLnP8b3FAu
+	 gyX8fSQrDXDRfLli/clyeyIyo9t796I4XXwgHdkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	"Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
-	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 585/641] mshv: fix SRCU protection in irqfd resampler ack handler
-Date: Tue, 24 Feb 2026 17:25:11 -0800
-Message-ID: <20260225012402.687400161@linuxfoundation.org>
+Subject: [PATCH 6.18 586/641] ASoC: fsl_xcvr: Revert fix missing lock in fsl_xcvr_mode_put()
+Date: Tue, 24 Feb 2026 17:25:12 -0800
+Message-ID: <20260225012402.711196080@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,49 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit 2e7577cd5ddc1f86d1b6c48caf3cfa87dbb14e34 ]
+[ Upstream commit 9f16d96e1222391a6b996a1b676bec14fb91e3b2 ]
 
-Replace hlist_for_each_entry_rcu() with hlist_for_each_entry_srcu()
-in mshv_irqfd_resampler_ack() to correctly handle SRCU-protected
-linked list traversal.
+This reverts commit f51424872760 ("ASoC: fsl_xcvr: fix missing lock in fsl_xcvr_mode_put()").
 
-The function uses SRCU (sleepable RCU) synchronization via
-partition->pt_irq_srcu, but was incorrectly using the RCU variant
-for list iteration. This could lead to race conditions when the
-list is modified concurrently.
+The original patch attempted to acquire the card->controls_rwsem lock in
+fsl_xcvr_mode_put(). However, this function is called from the upper ALSA
+core function snd_ctl_elem_write(), which already holds the write lock on
+controls_rwsem for the whole put operation. So there is no need to simply
+hold the lock for fsl_xcvr_activate_ctl() again.
 
-Also add srcu_read_lock_held() assertion as required by
-hlist_for_each_entry_srcu() to ensure we're in the proper
-read-side critical section.
+Acquiring the read lock while holding the write lock in the same thread
+results in a deadlock and a hung task, as reported by Alexander Stein.
 
-Fixes: 621191d709b14 ("Drivers: hv: Introduce mshv_root module to expose /dev/mshv to VMMs")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-Acked-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fixes: f51424872760 ("ASoC: fsl_xcvr: fix missing lock in fsl_xcvr_mode_put()")
+Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Closes: https://lore.kernel.org/linux-sound/5056506.GXAFRqVoOG@steina-w/
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Link: https://patch.msgid.link/20260210185714.556385-1-n7l8m4@u.northwestern.edu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/mshv_eventfd.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_xcvr.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/hv/mshv_eventfd.c b/drivers/hv/mshv_eventfd.c
-index 806674722868b..05d643f54f45a 100644
---- a/drivers/hv/mshv_eventfd.c
-+++ b/drivers/hv/mshv_eventfd.c
-@@ -87,8 +87,9 @@ static void mshv_irqfd_resampler_ack(struct mshv_irq_ack_notifier *mian)
+diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
+index 51669e5fe8888..58db4906a01d5 100644
+--- a/sound/soc/fsl/fsl_xcvr.c
++++ b/sound/soc/fsl/fsl_xcvr.c
+@@ -223,13 +223,10 @@ static int fsl_xcvr_mode_put(struct snd_kcontrol *kcontrol,
  
- 	idx = srcu_read_lock(&partition->pt_irq_srcu);
+ 	xcvr->mode = snd_soc_enum_item_to_val(e, item[0]);
  
--	hlist_for_each_entry_rcu(irqfd, &resampler->rsmplr_irqfd_list,
--				 irqfd_resampler_hnode) {
-+	hlist_for_each_entry_srcu(irqfd, &resampler->rsmplr_irqfd_list,
-+				 irqfd_resampler_hnode,
-+				 srcu_read_lock_held(&partition->pt_irq_srcu)) {
- 		if (hv_should_clear_interrupt(irqfd->irqfd_lapic_irq.lapic_control.interrupt_type))
- 			hv_call_clear_virtual_interrupt(partition->pt_id);
- 
+-	down_read(&card->snd_card->controls_rwsem);
+ 	fsl_xcvr_activate_ctl(dai, fsl_xcvr_arc_mode_kctl.name,
+ 			      (xcvr->mode == FSL_XCVR_MODE_ARC));
+ 	fsl_xcvr_activate_ctl(dai, fsl_xcvr_earc_capds_kctl.name,
+ 			      (xcvr->mode == FSL_XCVR_MODE_EARC));
+-	up_read(&card->snd_card->controls_rwsem);
+-
+ 	/* Allow playback for SPDIF only */
+ 	rtd = snd_soc_get_pcm_runtime(card, card->dai_link);
+ 	rtd->pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream_count =
 -- 
 2.51.0
 
