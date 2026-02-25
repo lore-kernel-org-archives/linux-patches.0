@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7BB1FE45D;
-	Wed, 25 Feb 2026 01:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCC91FE45D;
+	Wed, 25 Feb 2026 01:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983458; cv=none; b=HpBgdZ3TOW3VKayszqwznClaK65b7r2FziJVJcN+3lSnXJ6RNyqrGZCheNplb0kM2y3QXHrmDIj22f1CQhU7KbNBFDAa3UlrzzragKxWhf2bwwaqdrzQGgRhUAjw1Oc/MAbmxSjO+0WoNtDC+wRh/wFCla36/HsrWWLFM8+sy1I=
+	t=1771983459; cv=none; b=tJV/7ON2XrU4ZpeEUMvkYIzO4p+Jxgq4Wx2T9Jupe4MAtgvvdlVe0fLsO5842ikJtw4EK8P59TmDpP/foz0D63HWM+ZIBP9+NiEJtbdpvzCW3ZvQr+RdfATsvNqH6Q/IrtVeOffsm8ZCRMb//wiPi8vn/yWJpImTZl27EqipSYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983458; c=relaxed/simple;
-	bh=/zAkctX9s0D4Sgcc4cSczY2gKYBJ8EDFVOCeAbhT7NY=;
+	s=arc-20240116; t=1771983459; c=relaxed/simple;
+	bh=rjsbXpXpGIYdK613B3fHBKz2Dsuq7H5LAcG5teULoq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjRobIACXrUl9FK9j+IhkIsv6G2Hpft6r3NiOi+Y0Fg6jUGXx+ebTMuUCYxrI7ZJtdSjZTMr1mfjVyw8ItBI4zsw1TmF7V2FL2Uk0xos2P8pETQz0rYjgYqCgzL2H0l4lfI2JfAqxW2tGLk3ZcmllaQFfQBoRaW0QRBGWTKBiKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbPR46GO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hxxm9r5+6YldyU8sDhUCNoJ00I2dS4YdH5WTXtqStFT56w7e/DxOe/UeYhrFSok75xQeaur9v6nVDzFXepVgjWgWsSKWP0jI4HM/FDsWJnpLA3IbK//5dI4cPuisJnjQSHiJ1xMLLRX37mp9v6rgZU1lcSTmJsa64OTMi0elDxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wt7FCPKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbPR46GO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5871CC116D0;
-	Wed, 25 Feb 2026 01:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wt7FCPKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF38C116D0;
+	Wed, 25 Feb 2026 01:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983458;
-	bh=/zAkctX9s0D4Sgcc4cSczY2gKYBJ8EDFVOCeAbhT7NY=;
+	s=korg; t=1771983459;
+	bh=rjsbXpXpGIYdK613B3fHBKz2Dsuq7H5LAcG5teULoq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MbPR46GOOemzwNcVZkl7kvBE1s/hZoAyN1T6eLx56Uh9tmsfDUgXLJ0Cpo9tthL9d
-	 9GqoZC4z/OBmnYACqPA29crwBEDE8kujIsd9g7G88qGn9noD0UZpipPENkRAsSL8EU
-	 E7e/cfCXgeBDNRJRFWS6WuIqzZ/dqT0TSN8Z3n/I=
+	b=wt7FCPKQSWUUygPuzrrfdZ8b4gXqvLdTka2HvmC6liJyVIJ2LQMdEXSax6pBDUuEm
+	 llABx1vvYlSbBdJG8giYboI31hMybI2BbnL9YbFqE0jqufNkItskuPium14RIYPR+i
+	 5x/NYNY5BwZLSFyTIdVbv8m4IGG30Wu8gDTpqJYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 572/781] gpib: Fix error code in ibonline()
-Date: Tue, 24 Feb 2026 17:21:21 -0800
-Message-ID: <20260225012413.832310658@linuxfoundation.org>
+Subject: [PATCH 6.19 532/781] Input: adp5589 - remove a leftover header file
+Date: Tue, 24 Feb 2026 17:20:41 -0800
+Message-ID: <20260225012412.849570781@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -44,46 +47,219 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Vladimir Zapolskiy <vz@mleia.com>
 
-[ Upstream commit 96118565d24e7691e423d73be224b3a3fffc4680 ]
+[ Upstream commit f8a6e5eac701369afb5d69aba875dc5fec93003d ]
 
-This accidentally returns 1 on error, but it should return negative
-error codes.
+In commit 3bdbd0858df6 ("Input: adp5589: remove the driver") the last user
+of include/linux/input/adp5589.h was removed along with the whole driver,
+thus the header file can be also removed.
 
-Fixes: 9dde4559e939 ("staging: gpib: Add GPIB common core driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aSlMnaT1M104NJb2@stanley.mountain
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Fixes: 3bdbd0858df6 ("Input: adp5589: remove the driver")
+Link: https://patch.msgid.link/20260113151140.3843753-1-vz@mleia.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpib/common/iblib.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/linux/input/adp5589.h | 180 ----------------------------------
+ 1 file changed, 180 deletions(-)
+ delete mode 100644 include/linux/input/adp5589.h
 
-diff --git a/drivers/gpib/common/iblib.c b/drivers/gpib/common/iblib.c
-index 7cbb6a467177d..b672dd6aad25f 100644
---- a/drivers/gpib/common/iblib.c
-+++ b/drivers/gpib/common/iblib.c
-@@ -227,11 +227,10 @@ int ibonline(struct gpib_board *board)
- #ifndef CONFIG_NIOS2
- 	board->autospoll_task = kthread_run(&autospoll_thread, board,
- 					    "gpib%d_autospoll_kthread", board->minor);
--	retval = IS_ERR(board->autospoll_task);
--	if (retval) {
-+	if (IS_ERR(board->autospoll_task)) {
- 		dev_err(board->gpib_dev, "failed to create autospoll thread\n");
- 		board->interface->detach(board);
--		return retval;
-+		return PTR_ERR(board->autospoll_task);
- 	}
- #endif
- 	board->online = 1;
+diff --git a/include/linux/input/adp5589.h b/include/linux/input/adp5589.h
+deleted file mode 100644
+index 0e4742c8c81e3..0000000000000
+--- a/include/linux/input/adp5589.h
++++ /dev/null
+@@ -1,180 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Analog Devices ADP5589/ADP5585 I/O Expander and QWERTY Keypad Controller
+- *
+- * Copyright 2010-2011 Analog Devices Inc.
+- */
+-
+-#ifndef _ADP5589_H
+-#define _ADP5589_H
+-
+-/*
+- * ADP5589 specific GPI and Keymap defines
+- */
+-
+-#define ADP5589_KEYMAPSIZE	88
+-
+-#define ADP5589_GPI_PIN_ROW0 97
+-#define ADP5589_GPI_PIN_ROW1 98
+-#define ADP5589_GPI_PIN_ROW2 99
+-#define ADP5589_GPI_PIN_ROW3 100
+-#define ADP5589_GPI_PIN_ROW4 101
+-#define ADP5589_GPI_PIN_ROW5 102
+-#define ADP5589_GPI_PIN_ROW6 103
+-#define ADP5589_GPI_PIN_ROW7 104
+-#define ADP5589_GPI_PIN_COL0 105
+-#define ADP5589_GPI_PIN_COL1 106
+-#define ADP5589_GPI_PIN_COL2 107
+-#define ADP5589_GPI_PIN_COL3 108
+-#define ADP5589_GPI_PIN_COL4 109
+-#define ADP5589_GPI_PIN_COL5 110
+-#define ADP5589_GPI_PIN_COL6 111
+-#define ADP5589_GPI_PIN_COL7 112
+-#define ADP5589_GPI_PIN_COL8 113
+-#define ADP5589_GPI_PIN_COL9 114
+-#define ADP5589_GPI_PIN_COL10 115
+-#define GPI_LOGIC1 116
+-#define GPI_LOGIC2 117
+-
+-#define ADP5589_GPI_PIN_ROW_BASE ADP5589_GPI_PIN_ROW0
+-#define ADP5589_GPI_PIN_ROW_END ADP5589_GPI_PIN_ROW7
+-#define ADP5589_GPI_PIN_COL_BASE ADP5589_GPI_PIN_COL0
+-#define ADP5589_GPI_PIN_COL_END ADP5589_GPI_PIN_COL10
+-
+-#define ADP5589_GPI_PIN_BASE ADP5589_GPI_PIN_ROW_BASE
+-#define ADP5589_GPI_PIN_END ADP5589_GPI_PIN_COL_END
+-
+-#define ADP5589_GPIMAPSIZE_MAX (ADP5589_GPI_PIN_END - ADP5589_GPI_PIN_BASE + 1)
+-
+-/*
+- * ADP5585 specific GPI and Keymap defines
+- */
+-
+-#define ADP5585_KEYMAPSIZE	30
+-
+-#define ADP5585_GPI_PIN_ROW0 37
+-#define ADP5585_GPI_PIN_ROW1 38
+-#define ADP5585_GPI_PIN_ROW2 39
+-#define ADP5585_GPI_PIN_ROW3 40
+-#define ADP5585_GPI_PIN_ROW4 41
+-#define ADP5585_GPI_PIN_ROW5 42
+-#define ADP5585_GPI_PIN_COL0 43
+-#define ADP5585_GPI_PIN_COL1 44
+-#define ADP5585_GPI_PIN_COL2 45
+-#define ADP5585_GPI_PIN_COL3 46
+-#define ADP5585_GPI_PIN_COL4 47
+-#define GPI_LOGIC 48
+-
+-#define ADP5585_GPI_PIN_ROW_BASE ADP5585_GPI_PIN_ROW0
+-#define ADP5585_GPI_PIN_ROW_END ADP5585_GPI_PIN_ROW5
+-#define ADP5585_GPI_PIN_COL_BASE ADP5585_GPI_PIN_COL0
+-#define ADP5585_GPI_PIN_COL_END ADP5585_GPI_PIN_COL4
+-
+-#define ADP5585_GPI_PIN_BASE ADP5585_GPI_PIN_ROW_BASE
+-#define ADP5585_GPI_PIN_END ADP5585_GPI_PIN_COL_END
+-
+-#define ADP5585_GPIMAPSIZE_MAX (ADP5585_GPI_PIN_END - ADP5585_GPI_PIN_BASE + 1)
+-
+-struct adp5589_gpi_map {
+-	unsigned short pin;
+-	unsigned short sw_evt;
+-};
+-
+-/* scan_cycle_time */
+-#define ADP5589_SCAN_CYCLE_10ms		0
+-#define ADP5589_SCAN_CYCLE_20ms		1
+-#define ADP5589_SCAN_CYCLE_30ms		2
+-#define ADP5589_SCAN_CYCLE_40ms		3
+-
+-/* RESET_CFG */
+-#define RESET_PULSE_WIDTH_500us		0
+-#define RESET_PULSE_WIDTH_1ms		1
+-#define RESET_PULSE_WIDTH_2ms		2
+-#define RESET_PULSE_WIDTH_10ms		3
+-
+-#define RESET_TRIG_TIME_0ms		(0 << 2)
+-#define RESET_TRIG_TIME_1000ms		(1 << 2)
+-#define RESET_TRIG_TIME_1500ms		(2 << 2)
+-#define RESET_TRIG_TIME_2000ms		(3 << 2)
+-#define RESET_TRIG_TIME_2500ms		(4 << 2)
+-#define RESET_TRIG_TIME_3000ms		(5 << 2)
+-#define RESET_TRIG_TIME_3500ms		(6 << 2)
+-#define RESET_TRIG_TIME_4000ms		(7 << 2)
+-
+-#define RESET_PASSTHRU_EN		(1 << 5)
+-#define RESET1_POL_HIGH			(1 << 6)
+-#define RESET1_POL_LOW			(0 << 6)
+-#define RESET2_POL_HIGH			(1 << 7)
+-#define RESET2_POL_LOW			(0 << 7)
+-
+-/* ADP5589 Mask Bits:
+- * C C C C C C C C C C C | R R R R R R R R
+- * 1 9 8 7 6 5 4 3 2 1 0 | 7 6 5 4 3 2 1 0
+- * 0
+- * ---------------- BIT ------------------
+- * 1 1 1 1 1 1 1 1 1 0 0 | 0 0 0 0 0 0 0 0
+- * 8 7 6 5 4 3 2 1 0 9 8 | 7 6 5 4 3 2 1 0
+- */
+-
+-#define ADP_ROW(x)	(1 << (x))
+-#define ADP_COL(x)	(1 << (x + 8))
+-#define ADP5589_ROW_MASK		0xFF
+-#define ADP5589_COL_MASK		0xFF
+-#define ADP5589_COL_SHIFT		8
+-#define ADP5589_MAX_ROW_NUM		7
+-#define ADP5589_MAX_COL_NUM		10
+-
+-/* ADP5585 Mask Bits:
+- * C C C C C | R R R R R R
+- * 4 3 2 1 0 | 5 4 3 2 1 0
+- *
+- * ---- BIT -- -----------
+- * 1 0 0 0 0 | 0 0 0 0 0 0
+- * 0 9 8 7 6 | 5 4 3 2 1 0
+- */
+-
+-#define ADP5585_ROW_MASK		0x3F
+-#define ADP5585_COL_MASK		0x1F
+-#define ADP5585_ROW_SHIFT		0
+-#define ADP5585_COL_SHIFT		6
+-#define ADP5585_MAX_ROW_NUM		5
+-#define ADP5585_MAX_COL_NUM		4
+-
+-#define ADP5585_ROW(x)	(1 << ((x) & ADP5585_ROW_MASK))
+-#define ADP5585_COL(x)	(1 << (((x) & ADP5585_COL_MASK) + ADP5585_COL_SHIFT))
+-
+-/* Put one of these structures in i2c_board_info platform_data */
+-
+-struct adp5589_kpad_platform_data {
+-	unsigned keypad_en_mask;	/* Keypad (Rows/Columns) enable mask */
+-	const unsigned short *keymap;	/* Pointer to keymap */
+-	unsigned short keymapsize;	/* Keymap size */
+-	bool repeat;			/* Enable key repeat */
+-	bool en_keylock;		/* Enable key lock feature (ADP5589 only)*/
+-	unsigned char unlock_key1;	/* Unlock Key 1 (ADP5589 only) */
+-	unsigned char unlock_key2;	/* Unlock Key 2 (ADP5589 only) */
+-	unsigned char unlock_timer;	/* Time in seconds [0..7] between the two unlock keys 0=disable (ADP5589 only) */
+-	unsigned char scan_cycle_time;	/* Time between consecutive scan cycles */
+-	unsigned char reset_cfg;	/* Reset config */
+-	unsigned short reset1_key_1;	/* Reset Key 1 */
+-	unsigned short reset1_key_2;	/* Reset Key 2 */
+-	unsigned short reset1_key_3;	/* Reset Key 3 */
+-	unsigned short reset2_key_1;	/* Reset Key 1 */
+-	unsigned short reset2_key_2;	/* Reset Key 2 */
+-	unsigned debounce_dis_mask;	/* Disable debounce mask */
+-	unsigned pull_dis_mask;		/* Disable all pull resistors mask */
+-	unsigned pullup_en_100k;	/* Pull-Up 100k Enable Mask */
+-	unsigned pullup_en_300k;	/* Pull-Up 300k Enable Mask */
+-	unsigned pulldown_en_300k;	/* Pull-Down 300k Enable Mask */
+-	const struct adp5589_gpi_map *gpimap;
+-	unsigned short gpimapsize;
+-	const struct adp5589_gpio_platform_data *gpio_data;
+-};
+-
+-struct i2c_client; /* forward declaration */
+-
+-struct adp5589_gpio_platform_data {
+-	int	gpio_start;	/* GPIO Chip base # */
+-};
+-
+-#endif
 -- 
 2.51.0
 
