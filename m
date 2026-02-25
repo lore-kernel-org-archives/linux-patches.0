@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962161E2834;
-	Wed, 25 Feb 2026 01:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88DA1E2834;
+	Wed, 25 Feb 2026 01:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983704; cv=none; b=sBl+mjEwh9CGPZkEwDQ/1eSxkVTBx4pW1I5yQFZRRqtWzadHpirM8cyrNDla9xPBtMMtBV000wT2ZHIXLB7ANFXrLAK2OkAa5nwTULwH1EVep21lfGUTYJbiuaWm0f4PDWUndUbUccan7XGaK3u3itvHrMpppF0z7rpTOkx+4/c=
+	t=1771983705; cv=none; b=a4d7rlHHSQH7td4Pmj53jGzFIDAXUdOZ0m2hdoaYavgG+O4MQNNBsuC/mFwNSSxi06ICKF8b4ueSuYteMfzJVo9j2ymjUtsSVb020wjaY1fy9lYmrvzZ5/dV+VEAMTaCBkRb/18NVdi9QsSqz//G7u4pWmcRqs5SFdJbBmtxNmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983704; c=relaxed/simple;
-	bh=TD4VXvv+bibsqqR/t2EJkNdb3aeXrOBAsknScWhQ6eI=;
+	s=arc-20240116; t=1771983705; c=relaxed/simple;
+	bh=4SodZxA0bGdU5vJR5NFFlGiTPUDIXz04ffAb+Cfy/jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Deuxb2e8CLryk2Rk1uLZJDphqIrcjovP4G3+o2o8Uo1yHSdnEDcZH8TbbKhNnJmtgde2J4LdUxUYbG6hr6D9Pd2LpfZv1Mp+vJFf4gNW7fUIIXRqKMBVKkS/88tWGh2juBZv51bgysnvQs1AUYs2h7b1/cZ3ZsaJvzs5/4KsOhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMrhJQHJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dzCAuvTJJLEKW3g5+SIwdJGzj/PM4H3QT8YiQmBbACLXp4jzuesJ2yN/BSC5qtScsCHAqgwjdf+hiwxSqbD6hFr82Lb0ffxD0GiiywBrf9RP/Za5NBaU6B8OCsoJMqF5JortlhUp77nHfsCLGd/18rzeBBSpplWdxcHbQN9byFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFhmZ+GF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMrhJQHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA0CC116D0;
-	Wed, 25 Feb 2026 01:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFhmZ+GF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BE0C116D0;
+	Wed, 25 Feb 2026 01:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983704;
-	bh=TD4VXvv+bibsqqR/t2EJkNdb3aeXrOBAsknScWhQ6eI=;
+	s=korg; t=1771983705;
+	bh=4SodZxA0bGdU5vJR5NFFlGiTPUDIXz04ffAb+Cfy/jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMrhJQHJx5rTjtt/loxSp2wXzI1yF+/PtgFgPdxkeswXSU67IVsmEqHDUq+887U4X
-	 UUilodyjckkmbvXAPhoCcDamQNKmQELC2RKLEV0ycoZvF5ZUfXPaAlc22lLc2XkuJi
-	 6WbmTQ11FhAi5huekCPpYZH6IWi+vPpDDwWiJ83A=
+	b=rFhmZ+GFOGy5Eya9FuqiG8dV8L7OlH1688NuOaJAAPI2EdQNI1nhJn9CAU6iENSS9
+	 +RPd7hSQjtUxZKb8beJ70oi+cQuGD1uhxxaLeNOJg1qJAO7nWIOxwHjZwjARH0pQeg
+	 dZBYeaG6CDB5bb/MxcJzafr3Vau/XLVppf8rlOEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Hung <alex.hung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 748/781] drm/amd/display: Set CRTC source for DAC using registers
-Date: Tue, 24 Feb 2026 17:24:17 -0800
-Message-ID: <20260225012418.069080142@linuxfoundation.org>
+Subject: [PATCH 6.19 749/781] drm/amd/display: Enable DAC in DCE link encoder
+Date: Tue, 24 Feb 2026 17:24:18 -0800
+Message-ID: <20260225012418.092801261@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -56,269 +56,205 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit cbced93894d145239c83881d7fd953b7392c23a8 ]
+[ Upstream commit 4bd8b5f8bcb57b430c35494d8a2471ce5fd7661d ]
 
-Apparently the VBIOS SelectCRTC_Source function overwrites
-a few registers (such as FMT_*) which DC writes in a different
-place, which can cause problems.
+Ensure that the DAC output is enabled at the correct time by
+moving it to the DCE link encoder similarly to how digital
+outputs are enabled.
 
-Instead of using the SelectCRTC_Source function from the
-VBIOS, use the DAC_SOURCE_SELECT register directly, similarly
-to how it is done for digital link encoders.
+This also removes the call to DAC1EncoderControl from the DCE
+HWSS, which always felt like it was a hacky solution.
 
-Fixes: 3be26d81b150 ("drm/amd/display: Support DAC in dce110_hwseq")
+Fixes: 0fbe321a93ce ("drm/amd/display: Implement DCE analog link encoders (v2)")
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Tested-by: Mauro Rossi <issor.oruam@gmail.com>
 Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/dce/dce_stream_encoder.c   | 23 +++++++++++++---
- .../amd/display/dc/dce/dce_stream_encoder.h   | 12 +++++++--
- .../amd/display/dc/hwss/dce110/dce110_hwseq.c | 26 +------------------
- .../dc/resource/dce100/dce100_resource.c      |  6 +++--
- .../dc/resource/dce60/dce60_resource.c        |  7 +++--
- .../dc/resource/dce80/dce80_resource.c        |  6 +++--
- 6 files changed, 43 insertions(+), 37 deletions(-)
+ .../drm/amd/display/dc/dce/dce_link_encoder.c | 18 +++++++++++++
+ .../drm/amd/display/dc/dce/dce_link_encoder.h |  5 ++++
+ .../amd/display/dc/hwss/dce110/dce110_hwseq.c | 26 +++++++------------
+ .../drm/amd/display/dc/hwss/hw_sequencer.h    |  2 ++
+ .../drm/amd/display/dc/inc/hw/link_encoder.h  |  2 ++
+ .../gpu/drm/amd/display/dc/link/link_dpms.c   | 14 +++++++++-
+ 6 files changed, 50 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c
-index 574618d5d4a4e..87c19f17c799f 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c
-@@ -1498,7 +1498,10 @@ static void dig_connect_to_otg(
- {
- 	struct dce110_stream_encoder *enc110 = DCE110STRENC_FROM_STRENC(enc);
- 
--	REG_UPDATE(DIG_FE_CNTL, DIG_SOURCE_SELECT, tg_inst);
-+	if (enc->id == ENGINE_ID_DACA || enc->id == ENGINE_ID_DACB)
-+		REG_UPDATE(DAC_SOURCE_SELECT, DAC_SOURCE_SELECT, tg_inst);
-+	else
-+		REG_UPDATE(DIG_FE_CNTL, DIG_SOURCE_SELECT, tg_inst);
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+index 48a1b3b492e7f..bec8dab156eec 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+@@ -102,6 +102,7 @@ static const struct link_encoder_funcs dce110_lnk_enc_funcs = {
+ 	.enable_dp_output = dce110_link_encoder_enable_dp_output,
+ 	.enable_dp_mst_output = dce110_link_encoder_enable_dp_mst_output,
+ 	.enable_lvds_output = dce110_link_encoder_enable_lvds_output,
++	.enable_analog_output = dce110_link_encoder_enable_analog_output,
+ 	.disable_output = dce110_link_encoder_disable_output,
+ 	.dp_set_lane_settings = dce110_link_encoder_dp_set_lane_settings,
+ 	.dp_set_phy_pattern = dce110_link_encoder_dp_set_phy_pattern,
+@@ -1192,6 +1193,22 @@ void dce110_link_encoder_enable_lvds_output(
+ 	}
  }
  
- static unsigned int dig_source_otg(
-@@ -1507,7 +1510,10 @@ static unsigned int dig_source_otg(
- 	uint32_t tg_inst = 0;
- 	struct dce110_stream_encoder *enc110 = DCE110STRENC_FROM_STRENC(enc);
++void dce110_link_encoder_enable_analog_output(
++	struct link_encoder *enc,
++	uint32_t pixel_clock)
++{
++	struct dce110_link_encoder *enc110 = TO_DCE110_LINK_ENC(enc);
++	enum bp_result result;
++
++	result = link_dac_encoder_control(enc110, ENCODER_CONTROL_ENABLE, pixel_clock);
++
++	if (result != BP_RESULT_OK) {
++		DC_LOG_ERROR("%s: Failed to execute VBIOS command table!\n",
++			__func__);
++		BREAK_TO_DEBUGGER();
++	}
++}
++
+ /* enables DP PHY output */
+ void dce110_link_encoder_enable_dp_output(
+ 	struct link_encoder *enc,
+@@ -1776,6 +1793,7 @@ static const struct link_encoder_funcs dce60_lnk_enc_funcs = {
+ 	.enable_dp_output = dce60_link_encoder_enable_dp_output,
+ 	.enable_dp_mst_output = dce60_link_encoder_enable_dp_mst_output,
+ 	.enable_lvds_output = dce110_link_encoder_enable_lvds_output,
++	.enable_analog_output = dce110_link_encoder_enable_analog_output,
+ 	.disable_output = dce110_link_encoder_disable_output,
+ 	.dp_set_lane_settings = dce110_link_encoder_dp_set_lane_settings,
+ 	.dp_set_phy_pattern = dce60_link_encoder_dp_set_phy_pattern,
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.h b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.h
+index c58b69bc319b7..6870cb619d208 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.h
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.h
+@@ -273,6 +273,11 @@ void dce110_link_encoder_enable_lvds_output(
+ 	enum clock_source_id clock_source,
+ 	uint32_t pixel_clock);
  
--	REG_GET(DIG_FE_CNTL, DIG_SOURCE_SELECT, &tg_inst);
-+	if (enc->id == ENGINE_ID_DACA || enc->id == ENGINE_ID_DACB)
-+		REG_GET(DAC_SOURCE_SELECT, DAC_SOURCE_SELECT, &tg_inst);
-+	else
-+		REG_GET(DIG_FE_CNTL, DIG_SOURCE_SELECT, &tg_inst);
- 
- 	return tg_inst;
- }
-@@ -1568,16 +1574,25 @@ void dce110_stream_encoder_construct(
- 	enc110->se_mask = se_mask;
- }
- 
--static const struct stream_encoder_funcs dce110_an_str_enc_funcs = {};
-+static const struct stream_encoder_funcs dce110_an_str_enc_funcs = {
-+	.dig_connect_to_otg  = dig_connect_to_otg,
-+	.dig_source_otg = dig_source_otg,
-+};
- 
- void dce110_analog_stream_encoder_construct(
- 	struct dce110_stream_encoder *enc110,
- 	struct dc_context *ctx,
- 	struct dc_bios *bp,
--	enum engine_id eng_id)
-+	enum engine_id eng_id,
-+	const struct dce110_stream_enc_registers *regs,
-+	const struct dce_stream_encoder_shift *se_shift,
-+	const struct dce_stream_encoder_mask *se_mask)
- {
- 	enc110->base.funcs = &dce110_an_str_enc_funcs;
- 	enc110->base.ctx = ctx;
- 	enc110->base.id = eng_id;
- 	enc110->base.bp = bp;
-+	enc110->regs = regs;
-+	enc110->se_shift = se_shift;
-+	enc110->se_mask = se_mask;
- }
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.h b/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.h
-index 068de1392121e..342c0afe6a949 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.h
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.h
-@@ -65,6 +65,7 @@
- 	SRI(AFMT_60958_1, DIG, id), \
- 	SRI(AFMT_60958_2, DIG, id), \
- 	SRI(DIG_FE_CNTL, DIG, id), \
-+	SR(DAC_SOURCE_SELECT), \
- 	SRI(HDMI_CONTROL, DIG, id), \
- 	SRI(HDMI_GC, DIG, id), \
- 	SRI(HDMI_GENERIC_PACKET_CONTROL0, DIG, id), \
-@@ -290,7 +291,8 @@
- #define SE_COMMON_MASK_SH_LIST_DCE80_100(mask_sh)\
- 	SE_COMMON_MASK_SH_LIST_DCE_COMMON(mask_sh),\
- 	SE_SF(TMDS_CNTL, TMDS_PIXEL_ENCODING, mask_sh),\
--	SE_SF(TMDS_CNTL, TMDS_COLOR_FORMAT, mask_sh)
-+	SE_SF(TMDS_CNTL, TMDS_COLOR_FORMAT, mask_sh),\
-+	SE_SF(DAC_SOURCE_SELECT, DAC_SOURCE_SELECT, mask_sh)
- 
- #define SE_COMMON_MASK_SH_LIST_DCE110(mask_sh)\
- 	SE_COMMON_MASK_SH_LIST_DCE_COMMON(mask_sh),\
-@@ -494,6 +496,7 @@ struct dce_stream_encoder_shift {
- 	uint8_t DP_VID_N_MUL;
- 	uint8_t DP_VID_M_DOUBLE_VALUE_EN;
- 	uint8_t DIG_SOURCE_SELECT;
-+	uint8_t DAC_SOURCE_SELECT;
- };
- 
- struct dce_stream_encoder_mask {
-@@ -626,6 +629,7 @@ struct dce_stream_encoder_mask {
- 	uint32_t DP_VID_N_MUL;
- 	uint32_t DP_VID_M_DOUBLE_VALUE_EN;
- 	uint32_t DIG_SOURCE_SELECT;
-+	uint32_t DAC_SOURCE_SELECT;
- };
- 
- struct dce110_stream_enc_registers {
-@@ -653,6 +657,7 @@ struct dce110_stream_enc_registers {
- 	uint32_t AFMT_60958_1;
- 	uint32_t AFMT_60958_2;
- 	uint32_t DIG_FE_CNTL;
-+	uint32_t DAC_SOURCE_SELECT;
- 	uint32_t DP_MSE_RATE_CNTL;
- 	uint32_t DP_MSE_RATE_UPDATE;
- 	uint32_t DP_PIXEL_FORMAT;
-@@ -712,7 +717,10 @@ void dce110_analog_stream_encoder_construct(
- 	struct dce110_stream_encoder *enc110,
- 	struct dc_context *ctx,
- 	struct dc_bios *bp,
--	enum engine_id eng_id);
-+	enum engine_id eng_id,
-+	const struct dce110_stream_enc_registers *regs,
-+	const struct dce_stream_encoder_shift *se_shift,
-+	const struct dce_stream_encoder_mask *se_mask);
- 
- void dce110_se_audio_mute_control(
- 	struct stream_encoder *enc, bool mute);
++/* enables analog output from the DAC */
++void dce110_link_encoder_enable_analog_output(
++	struct link_encoder *enc,
++	uint32_t pixel_clock);
++
+ /* disable PHY output */
+ void dce110_link_encoder_disable_output(
+ 	struct link_encoder *enc,
 diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index fd41e52e4d2f1..c472303276672 100644
+index c472303276672..5896ce5511ab1 100644
 --- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
 +++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -1600,25 +1600,6 @@ static enum dc_status dce110_enable_stream_timing(
- 	return DC_OK;
+@@ -659,20 +659,6 @@ void dce110_update_info_frame(struct pipe_ctx *pipe_ctx)
+ 	}
  }
  
 -static void
--dce110_select_crtc_source(struct pipe_ctx *pipe_ctx)
+-dce110_dac_encoder_control(struct pipe_ctx *pipe_ctx, bool enable)
 -{
 -	struct dc_link *link = pipe_ctx->stream->link;
 -	struct dc_bios *bios = link->ctx->dc_bios;
--	struct bp_crtc_source_select crtc_source_select = {0};
--	enum engine_id engine_id = link->link_enc->preferred_engine;
+-	struct bp_encoder_control encoder_control = {0};
 -
--	if (dc_is_rgb_signal(pipe_ctx->stream->signal))
--		engine_id = link->link_enc->analog_engine;
+-	encoder_control.action = enable ? ENCODER_CONTROL_ENABLE : ENCODER_CONTROL_DISABLE;
+-	encoder_control.engine_id = link->link_enc->analog_engine;
+-	encoder_control.pixel_clock = pipe_ctx->stream->timing.pix_clk_100hz / 10;
 -
--	crtc_source_select.controller_id = CONTROLLER_ID_D0 + pipe_ctx->stream_res.tg->inst;
--	crtc_source_select.color_depth = pipe_ctx->stream->timing.display_color_depth;
--	crtc_source_select.engine_id = engine_id;
--	crtc_source_select.sink_signal = pipe_ctx->stream->signal;
--
--	bios->funcs->select_crtc_source(bios, &crtc_source_select);
+-	bios->funcs->encoder_control(bios, &encoder_control);
 -}
 -
- enum dc_status dce110_apply_single_controller_ctx_to_hw(
- 		struct pipe_ctx *pipe_ctx,
- 		struct dc_state *context,
-@@ -1638,10 +1619,6 @@ enum dc_status dce110_apply_single_controller_ctx_to_hw(
- 		hws->funcs.disable_stream_gating(dc, pipe_ctx);
- 	}
+ void dce110_enable_stream(struct pipe_ctx *pipe_ctx)
+ {
+ 	enum dc_lane_count lane_count =
+@@ -703,8 +689,6 @@ void dce110_enable_stream(struct pipe_ctx *pipe_ctx)
  
--	if (pipe_ctx->stream->signal == SIGNAL_TYPE_RGB) {
--		dce110_select_crtc_source(pipe_ctx);
--	}
--
- 	if (pipe_ctx->stream_res.audio != NULL) {
- 		struct audio_output audio_output = {0};
+ 	tg->funcs->set_early_control(tg, early_control);
  
-@@ -1721,8 +1698,7 @@ enum dc_status dce110_apply_single_controller_ctx_to_hw(
- 		pipe_ctx->stream_res.tg->funcs->set_static_screen_control(
- 				pipe_ctx->stream_res.tg, event_triggers, 2);
+-	if (dc_is_rgb_signal(pipe_ctx->stream->signal))
+-		dce110_dac_encoder_control(pipe_ctx, true);
+ }
  
--	if (!dc_is_virtual_signal(pipe_ctx->stream->signal) &&
--		!dc_is_rgb_signal(pipe_ctx->stream->signal))
-+	if (!dc_is_virtual_signal(pipe_ctx->stream->signal))
- 		pipe_ctx->stream_res.stream_enc->funcs->dig_connect_to_otg(
- 			pipe_ctx->stream_res.stream_enc,
- 			pipe_ctx->stream_res.tg->inst);
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c
-index 83b9abb64bfcb..b78bb595d69ed 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c
-@@ -242,7 +242,8 @@ static const struct dce110_stream_enc_registers stream_enc_regs[] = {
- 	stream_enc_regs(3),
- 	stream_enc_regs(4),
- 	stream_enc_regs(5),
--	stream_enc_regs(6)
-+	stream_enc_regs(6),
-+	{SR(DAC_SOURCE_SELECT),} /* DACA */
+ static enum bp_result link_transmitter_control(
+@@ -3285,6 +3269,15 @@ void dce110_enable_tmds_link_output(struct dc_link *link,
+ 	link->phy_state.symclk_state = SYMCLK_ON_TX_ON;
+ }
+ 
++static void dce110_enable_analog_link_output(
++		struct dc_link *link,
++		uint32_t pix_clk_100hz)
++{
++	link->link_enc->funcs->enable_analog_output(
++			link->link_enc,
++			pix_clk_100hz);
++}
++
+ void dce110_enable_dp_link_output(
+ 		struct dc_link *link,
+ 		const struct link_resource *link_res,
+@@ -3422,6 +3415,7 @@ static const struct hw_sequencer_funcs dce110_funcs = {
+ 	.enable_lvds_link_output = dce110_enable_lvds_link_output,
+ 	.enable_tmds_link_output = dce110_enable_tmds_link_output,
+ 	.enable_dp_link_output = dce110_enable_dp_link_output,
++	.enable_analog_link_output = dce110_enable_analog_link_output,
+ 	.disable_link_output = dce110_disable_link_output,
  };
  
- static const struct dce_stream_encoder_shift se_shift = {
-@@ -491,7 +492,8 @@ static struct stream_encoder *dce100_stream_encoder_create(
- 		return NULL;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
+index 8ed9eea40c564..4f6bd365e055a 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
++++ b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
+@@ -1184,6 +1184,8 @@ struct hw_sequencer_funcs {
+ 			const struct link_resource *link_res,
+ 			enum clock_source_id clock_source,
+ 			uint32_t pixel_clock);
++	void (*enable_analog_link_output)(struct dc_link *link,
++			uint32_t pixel_clock);
+ 	void (*disable_link_output)(struct dc_link *link,
+ 			const struct link_resource *link_res,
+ 			enum signal_type signal);
+diff --git a/drivers/gpu/drm/amd/display/dc/inc/hw/link_encoder.h b/drivers/gpu/drm/amd/display/dc/inc/hw/link_encoder.h
+index e638325e35ecf..b1a88618c5bf8 100644
+--- a/drivers/gpu/drm/amd/display/dc/inc/hw/link_encoder.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/hw/link_encoder.h
+@@ -130,6 +130,8 @@ struct link_encoder_funcs {
+ 	void (*enable_lvds_output)(struct link_encoder *enc,
+ 		enum clock_source_id clock_source,
+ 		uint32_t pixel_clock);
++	void (*enable_analog_output)(struct link_encoder *enc,
++		uint32_t pixel_clock);
+ 	void (*disable_output)(struct link_encoder *link_enc,
+ 		enum signal_type signal);
+ 	void (*dp_set_lane_settings)(struct link_encoder *enc,
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index 6ae1341476171..635f614c06734 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -2208,6 +2208,18 @@ static enum dc_status enable_link_dp_mst(
+ 	return enable_link_dp(state, pipe_ctx);
+ }
  
- 	if (eng_id == ENGINE_ID_DACA || eng_id == ENGINE_ID_DACB) {
--		dce110_analog_stream_encoder_construct(enc110, ctx, ctx->dc_bios, eng_id);
-+		dce110_analog_stream_encoder_construct(enc110, ctx, ctx->dc_bios, eng_id,
-+			&stream_enc_regs[eng_id], &se_shift, &se_mask);
- 		return &enc110->base;
- 	}
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-index 90d826237cf00..6cf2faffc961b 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-@@ -258,7 +258,9 @@ static const struct dce110_stream_enc_registers stream_enc_regs[] = {
- 	stream_enc_regs(2),
- 	stream_enc_regs(3),
- 	stream_enc_regs(4),
--	stream_enc_regs(5)
-+	stream_enc_regs(5),
-+	{0},
-+	{SR(DAC_SOURCE_SELECT),} /* DACA */
- };
- 
- static const struct dce_stream_encoder_shift se_shift = {
-@@ -607,7 +609,8 @@ static struct stream_encoder *dce60_stream_encoder_create(
- 		return NULL;
- 
- 	if (eng_id == ENGINE_ID_DACA || eng_id == ENGINE_ID_DACB) {
--		dce110_analog_stream_encoder_construct(enc110, ctx, ctx->dc_bios, eng_id);
-+		dce110_analog_stream_encoder_construct(enc110, ctx, ctx->dc_bios, eng_id,
-+			&stream_enc_regs[eng_id], &se_shift, &se_mask);
- 		return &enc110->base;
- 	}
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-index cde2c2cba1dd6..066dbf8125a87 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-@@ -258,7 +258,8 @@ static const struct dce110_stream_enc_registers stream_enc_regs[] = {
- 	stream_enc_regs(3),
- 	stream_enc_regs(4),
- 	stream_enc_regs(5),
--	stream_enc_regs(6)
-+	stream_enc_regs(6),
-+	{SR(DAC_SOURCE_SELECT),} /* DACA */
- };
- 
- static const struct dce_stream_encoder_shift se_shift = {
-@@ -614,7 +615,8 @@ static struct stream_encoder *dce80_stream_encoder_create(
- 		return NULL;
- 
- 	if (eng_id == ENGINE_ID_DACA || eng_id == ENGINE_ID_DACB) {
--		dce110_analog_stream_encoder_construct(enc110, ctx, ctx->dc_bios, eng_id);
-+		dce110_analog_stream_encoder_construct(enc110, ctx, ctx->dc_bios, eng_id,
-+			&stream_enc_regs[eng_id], &se_shift, &se_mask);
- 		return &enc110->base;
- 	}
- 
++static enum dc_status enable_link_analog(
++		struct dc_state *state,
++		struct pipe_ctx *pipe_ctx)
++{
++	struct dc_link *link = pipe_ctx->stream->link;
++
++	link->dc->hwss.enable_analog_link_output(
++		link, pipe_ctx->stream->timing.pix_clk_100hz);
++
++	return DC_OK;
++}
++
+ static enum dc_status enable_link_virtual(struct pipe_ctx *pipe_ctx)
+ {
+ 	struct dc_link *link = pipe_ctx->stream->link;
+@@ -2263,7 +2275,7 @@ static enum dc_status enable_link(
+ 		status = DC_OK;
+ 		break;
+ 	case SIGNAL_TYPE_RGB:
+-		status = DC_OK;
++		status = enable_link_analog(state, pipe_ctx);
+ 		break;
+ 	case SIGNAL_TYPE_VIRTUAL:
+ 		status = enable_link_virtual(pipe_ctx);
 -- 
 2.51.0
 
