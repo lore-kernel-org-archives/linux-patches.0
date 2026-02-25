@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33D54369A;
-	Wed, 25 Feb 2026 01:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA13A4369A;
+	Wed, 25 Feb 2026 01:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982959; cv=none; b=IDGFYIIbbUHhTC4XX0LbMBJLCxw9h5k9avUKzOKsI3iWiATJxCYb2ggCgSKuFRq/6WbW2EU+C5BOffrA3HErm6vyEc4be1lzdVzILTcl9RtDyo9iPEM+Qq1sdYFTj7lCaMtboux2NOxL6DLpo+zQKpd38K6jR6GpB+A2BPckqmg=
+	t=1771982961; cv=none; b=cANAkjYQKd2Xjd5xy+GAnMlLtr3E3Po4ZQB4eOH9igXR5v/ssPkeMxRvIfoKbFL+t9Ob5L7lrPtldW5knVb8beC7ID9DcG4w2QCSOgRHMXu2SR6CDcMKT4idEB9IgzExTRg6rSeJrFy/B5vi9Ha+r0jOatSjRFveBc0s7TKBiPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982959; c=relaxed/simple;
-	bh=StJYLfUb9eb59OCXpzrUAHlvD2EfCjgiyBV+u68gOhE=;
+	s=arc-20240116; t=1771982961; c=relaxed/simple;
+	bh=wuxB79if/loLRO72HdiyYy+f4y7vjbOlXUF6DyPcJHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=By38X/z6bfiAIGc887fmo2D0Jjvv/+zu84ty+AwT+kdeGOGd5Q6fy1crKbOlweSODVf7jMpc4tsa1AkdfqMm9Ddr+bqouwbYKF+7Lg/H9dnaO3Iqdq9upH3x2YFri4YGUKqziqy1OrK+vIOTkml5xfrV1AtxWwgYbHD0C/lwYTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSsxXzbo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MUhhPJXNrKNRlu/JFBsIoj5ZB/Ks3LxdcKAyqgJqFMjC9plzKlGgvkKRjl/yMtqYmxghlXh3IDN3uDtHeRvEhHt20sRedLmO2+6D6IhYvEzxnaGqugwSJet68igNX8CZfYj9y/DYw8Ne713KhtKAXHlCPfNCBnEkp+BSPo74XbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmJRI9rj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSsxXzbo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A67C19423;
-	Wed, 25 Feb 2026 01:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmJRI9rj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB38C116D0;
+	Wed, 25 Feb 2026 01:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982959;
-	bh=StJYLfUb9eb59OCXpzrUAHlvD2EfCjgiyBV+u68gOhE=;
+	s=korg; t=1771982960;
+	bh=wuxB79if/loLRO72HdiyYy+f4y7vjbOlXUF6DyPcJHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSsxXzbosXTgkE9/duD2lksUH/7Y3QO2D2GA7Xoer4wGuUyokMVn5eiY8vUocCIPO
-	 XsvksSRGfjythyM3kAXQeq3Rns0SYLC1JJcLV6NSxSuWBY/ynkYP+dqKDe+b+xr4dm
-	 nUJ7I3F6m+4PgRYvrM8QaKplVdO8Py56f+RH6kjA=
+	b=UmJRI9rjr+rl2xuN0BgCcj+aWwY2WLk4GsNi6vyssSdfRUI/+4EYMdo4TBjvt9Ais
+	 K39wWnlxo1O2SpUUvy7wvsZi0MFZfvuyMzx1GChnt0VyLLiv8T+7FklKxvq9ZXwMfY
+	 CKaOi3hKirQ1JwJCOI1SE969x1ntAGPK9G56kpfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 136/781] selftests/xsk: properly handle batch ending in the middle of a packet
-Date: Tue, 24 Feb 2026 17:14:05 -0800
-Message-ID: <20260225012403.006117301@linuxfoundation.org>
+Subject: [PATCH 6.19 137/781] selftests/xsk: fix number of Tx frags in invalid packet
+Date: Tue, 24 Feb 2026 17:14:06 -0800
+Message-ID: <20260225012403.030960421@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,39 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit 42e41b2a0afa04ca49ee2725aadf90ccb058ed28 ]
+[ Upstream commit 88af9fefed412e4bea9a1a771cbe6fe347fa3507 ]
 
-Referenced commit reduced the scope of the variable pkt, so now it has to
-be reinitialized via pkt_stream_get_next_rx_pkt(), which also increments
-some counters. When the packet is interrupted by the batch ending, pkt
-stream therefore proceeds to the next packet, while xsk ring still contains
-the previous one, this results in a pkt_nb mismatch.
+The issue occurs in TOO_MANY_FRAGS test case when xdp_zc_max_segs is set to
+an odd number.
 
-Decrement the affected counters when packet is interrupted.
+TOO_MANY_FRAGS test case contains an invalid packet consisting of
+(xdp_zc_max_segs) frags. Every frag, even the last one has XDP_PKT_CONTD
+flag set. This packet is expected to be dropped. After that, there is a
+valid linear packet, which is expected to be received back.
 
-Fixes: 8913e653e9b8 ("selftests/xsk: Iterate over all the sockets in the receive pkts function")
+Once (xdp_zc_max_segs) is an odd number, the last packet cannot be
+received, if packet forwarding between Rx and Tx interfaces relies on
+the ethernet header, e.g. checks for ETH_P_LOOPBACK. Packet is malformed,
+if all traffic is looped.
+
+Turns out, sending function processes multiple invalid frags as if they
+were in 2-frag packets. So once the invalid mbuf packet contains an odd
+number of those, the valid packet after gets paired with the previous
+invalid descriptor, and hence does not get an ethernet header generated, so
+it is either dropped or malformed.
+
+Make invalid packets in verbatim mode always have only a single frag. For
+such packets, number of frags is otherwise meaningless, as descriptor flags
+are pre-configured in verbatim mode and packet data is not generated for
+invalid descriptors.
+
+Fixes: 697604492b64 ("selftests/xsk: add invalid descriptor test for multi-buffer")
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://lore.kernel.org/r/20260203155103.2305816-2-larysa.zaremba@intel.com
+Link: https://lore.kernel.org/r/20260203155103.2305816-3-larysa.zaremba@intel.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/test_xsk.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/test_xsk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/testing/selftests/bpf/prog_tests/test_xsk.c b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
-index 5af28f359cfda..69a5a9a5189b0 100644
+index 69a5a9a5189b0..bab4a31621c75 100644
 --- a/tools/testing/selftests/bpf/prog_tests/test_xsk.c
 +++ b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
-@@ -1090,6 +1090,8 @@ static int __receive_pkts(struct test_spec *test, struct xsk_socket_info *xsk)
- 			xsk_ring_prod__cancel(&umem->fq, nb_frags);
- 		}
- 		frags_processed -= nb_frags;
-+		pkt_stream_cancel(pkt_stream);
-+		pkts_sent--;
+@@ -433,7 +433,7 @@ static u32 pkt_nb_frags(u32 frame_size, struct pkt_stream *pkt_stream, struct pk
  	}
  
- 	if (ifobj->use_fill_ring)
+ 	/* Search for the end of the packet in verbatim mode */
+-	if (!pkt_continues(pkt->options))
++	if (!pkt_continues(pkt->options) || !pkt->valid)
+ 		return nb_frags;
+ 
+ 	next_frag = pkt_stream->current_pkt_nb;
 -- 
 2.51.0
 
