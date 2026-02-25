@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFF72D6E58;
-	Wed, 25 Feb 2026 06:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3501F2D6E58;
+	Wed, 25 Feb 2026 06:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002671; cv=none; b=lK4vpU67oHMd7Rig8L9v6Ocfvu2KbCcDdHiumdE/lmlD6KC3ZFDJKNBQk9oy0f8KKssIWrCJ4FzQVdOsnnzrbuCbf6UY0C5eaTYNzAb1eGNohNEmo/Di057qfHtLYC9sjg7CsbMEkULaDxFf1IBF0C2wDj6+POr/AgoiZpXTlWg=
+	t=1772002672; cv=none; b=eLl7LGwbXl4LVjcHSbDwbO8pYNFXuAbMZFtAGCCyDou1L87dGSvUdxwlx8+Jsoo3SQai19w3ABomYMoDopMH+ph1P0WcKwHOwuaRT8WgwPwi+CCI9MU4Hwp8kKaTzBKgpRUAJ7cjQCoESa8RqAfISy5nv8GJUEc9Qr4AfoHFlAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002671; c=relaxed/simple;
-	bh=ucPkeDmQ4D2amBpuWrmTlJgRLOCMS5LtcM4BcIKXOB4=;
+	s=arc-20240116; t=1772002672; c=relaxed/simple;
+	bh=fOyS9Yq73ONTJlY3ynt15j8CIx1TQvhBfH/39djOU2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G8jmzOg5N79s5d19/H1OfLuURznlm9tH649SNpAYCW73fq3ltHoL1SPZGl4P48uWGH02AgJatFf5wol+ygDQQW+fRhy9icGfAekQ0TgaIwixtJNHTjecNi/6Z3m6XKuFk2w9iz7yCgRdVNA0Dxo/pEw7xDV6CpqMzIMdL0fdc2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaNTfJ/j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jgoKZayGcTnlsTWKKBPZL9fVO5gMIC7uYuL6r61jDFK/lLcX0AHVatvZOfa3WzAGxaqCGcqKaVNN7vatZytmdIdsitq04PS9MSrPPwmhD11qEUkR0Jt5kR8gzin9jovdzlNEPJ79f9Mv/8ulRIr/34z4ZriyRYYJAScjrF1UAOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtO7Tdow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaNTfJ/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66453C116D0;
-	Wed, 25 Feb 2026 06:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtO7Tdow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E539C19425;
+	Wed, 25 Feb 2026 06:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002671;
-	bh=ucPkeDmQ4D2amBpuWrmTlJgRLOCMS5LtcM4BcIKXOB4=;
+	s=korg; t=1772002672;
+	bh=fOyS9Yq73ONTJlY3ynt15j8CIx1TQvhBfH/39djOU2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yaNTfJ/j+l3g3F659o75XU6GswAT6HMcJH00Ftbb3uOjwcyq40oPRnIcWE5X2CMJb
-	 dAfGAyrrXwN6QcKGweVLhLPZMrkiN56deLsFgtmQsOzuKWowBeBJ0EiRYUbLjclxMO
-	 NiNb5Wk79Mm8/CrNvfnqyTyvq05848VwZbuexm3Q=
+	b=xtO7TdowI84IAn0Ipci8oYbtmZ1AZHFnOthmxLmL7Wq5zK8ii3FadkY4ASdkUAsUg
+	 ILVH3R4IL6xx/K1zeXHHAVgemtfr0hk5lST9VVoFVEV3aVXFlJ7dD8RaqSJIVHBXN1
+	 Yhf/T5ToRN00Z3INZ1yreudREkHnXp+BenXFrxEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Michael Hennerich <michael.hennerich@analog.com>,
+	Derek Foreman <derek.foreman@collabora.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 454/641] dma: dma-axi-dmac: fix HW scatter-gather not looking at the queue
-Date: Tue, 24 Feb 2026 17:23:00 -0800
-Message-ID: <20260225012359.515878588@linuxfoundation.org>
+Subject: [PATCH 6.18 455/641] phy: rockchip: samsung-hdptx: Pre-compute HDMI PLL config for 461.10125 MHz output
+Date: Tue, 24 Feb 2026 17:23:01 -0800
+Message-ID: <20260225012359.541675112@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -46,53 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit bbcbafb99df41a1d81403eb4f5bb443b38228b57 ]
+[ Upstream commit f2daf0c67a1767ff6536aa3e96599afb42ca42e7 ]
 
-For HW scatter gather transfers we still need to look for the queue. The
-HW is capable of queueing 3 concurrent transfers and if we try more than
-that we'll get the submit queue full and should return. Otherwise, if we
-go ahead and program the new transfer, we end up discarding it.
+Attempting to make use of a 1080p@120Hz display mode with 10 bpc RGB on
+my Acer XV275K P3 monitor results in a blank image.  A similar behavior
+has been reported on Philips 279M1RV.
 
-Fixes: e97dc7435972 ("dmaengine: axi-dmac: Add support for scatter-gather transfers")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-base-commit: 398035178503bf662281bbffb4bebce1460a4bc5
-change-id: 20251104-axi-dmac-fixes-and-improvs-e3ad512a329c
-Acked-by: Michael Hennerich <michael.hennerich@analog.com>
-Link: https://patch.msgid.link/20251104-axi-dmac-fixes-and-improvs-v1-2-3e6fd9328f72@analog.com
+The faulty modeline is created by drm_gtf_mode_complex() based on the
+following EDID entry from the Standard Timings block:
+
+  GTF:  1920x1080  119.999987 Hz  16:9    138.840 kHz    368.759000 MHz
+
+It's worth noting the computed pixel clock ends up being slightly higher
+at 368.881000 MHz.  Nevertheless, this seems to work consistently fine
+with 8 bpc RGB.
+
+After switching to 10 bpc, the TMDS character rate expected for the mode
+increases to 461.101250 MHz, as per drm_hdmi_compute_mode_clock().
+
+Since there is no entry for this rate in the ropll_tmds_cfg table, the
+necessary HDMI PLL configuration parameters are calculated dynamically
+by rk_hdptx_phy_clk_pll_calc().  However, the resulting output rate is
+not quite a perfect match, i.e. 461.100000 MHz.  That proved to be the
+actual root cause of the problem.
+
+Add a new entry to the TMDS configuration table and provide the
+necessary frequency division coefficients for the PHY PLL to generate
+the expected 461.101250 MHz output.
+
+Fixes: 9d0ec51d7c22 ("phy: rockchip: samsung-hdptx: Add high color depth management")
+Tested-by: Derek Foreman <derek.foreman@collabora.com>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20251221-phy-hdptx-pll-fix-v2-1-ae4abf7f75a1@collabora.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dma-axi-dmac.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index e22639822045f..0f25f6d8ae71f 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -233,11 +233,9 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
- 	unsigned int flags = 0;
- 	unsigned int val;
- 
--	if (!chan->hw_sg) {
--		val = axi_dmac_read(dmac, AXI_DMAC_REG_START_TRANSFER);
--		if (val) /* Queue is full, wait for the next SOT IRQ */
--			return;
--	}
-+	val = axi_dmac_read(dmac, AXI_DMAC_REG_START_TRANSFER);
-+	if (val) /* Queue is full, wait for the next SOT IRQ */
-+		return;
- 
- 	desc = chan->next_desc;
- 
+diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+index 29de2f7bdae8a..cafa618d70fdc 100644
+--- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
++++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+@@ -414,6 +414,8 @@ struct rk_hdptx_phy {
+ static const struct ropll_config ropll_tmds_cfg[] = {
+ 	{ 594000000ULL, 124, 124, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 62, 1, 16, 5, 0,
+ 	  1, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
++	{ 461101250ULL, 97, 97, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 71, 1, 53, 2, 6,
++	  35, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
+ 	{ 371250000ULL, 155, 155, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 62, 1, 16, 5, 0,
+ 	  1, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
+ 	{ 297000000ULL, 124, 124, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 62, 1, 16, 5, 0,
 -- 
 2.51.0
 
