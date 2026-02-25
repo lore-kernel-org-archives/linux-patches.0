@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E1C18B0A;
-	Wed, 25 Feb 2026 01:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BA818B0A;
+	Wed, 25 Feb 2026 01:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983280; cv=none; b=EbK6wb/+ZJr4bRnQOnh2AV8LPrSrpjCTKhAKuVxm4QDYMEoUtZ7uuUsFGNXNvU/NAbrwb9xbZEk0YrnNmezjcOqLMwNMkac6F/Pq0rpjXbVqCKELhCEF72c8DzD5wIkBihEuLV0xtvqhtk7XOKTwL0+SyvRfgoL3EfADXkOsBIA=
+	t=1771983281; cv=none; b=CO92x70C+H02lh0rEcNV6p0hNCUt9yIF5dZJmUJUvu+erDLxS4rN7ur9KzhSLNU4RluR1SGDo1xXCZ4d3BcnUvk4sHu9ZNkcopWCooahe57h7b+OgF0No/EFkSQds93sreDzLBFbYXxB+GaYFODzPAbddGTo2BseU9NlBtb8PkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983280; c=relaxed/simple;
-	bh=o7Tf4AzcvSmiS+e1ZiUSfHEAAUMrkSQivUvgqKrY2bQ=;
+	s=arc-20240116; t=1771983281; c=relaxed/simple;
+	bh=gksoAF4BqSgSquOyYRFTU2dCG5qOPV4uSD6YhBCBi1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DuumZZuWTlTAPf1UKca1pOW0KQOXjUeZ7zq+MZDJP9W8U6GG7xdukzJYKs6YEjmnm6HaVYJmqSN81z7GdH5hNOrlmlV+IsQdlv7dUuOOsJ+MxMCV8FRMw0LjrFXpMSR9GQya5QH8czibNUZhiHvUfYc9cyvo2mMMdBBj9QLJYAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdSDR4Qx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V8L8JBpRAgvBUoONFQKfta6WMzSVh/IT9Ue7svjpdsV5TuY446Cipr9bcC2k/nWMNdYgkymSfOD8V9XKlrlHBi/jku30ToaSHF4msM3ZiujFbSmwCt4Gw9eaf7KNoSf4XrnRKWrOgt+Re/7lCUSotoir0+y8AjjoyrDxiIUGypY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVyh78CD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdSDR4Qx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EB6C116D0;
-	Wed, 25 Feb 2026 01:34:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVyh78CD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9ACC116D0;
+	Wed, 25 Feb 2026 01:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983280;
-	bh=o7Tf4AzcvSmiS+e1ZiUSfHEAAUMrkSQivUvgqKrY2bQ=;
+	s=korg; t=1771983281;
+	bh=gksoAF4BqSgSquOyYRFTU2dCG5qOPV4uSD6YhBCBi1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdSDR4QxhqEzWCmoWZKinu1bfTR+UStNjDza6jthsEuQWGIUrEREtUX8dHP84PdwR
-	 MfSULsfEDs/6BMfwvd+haYk3u3bjqjiRzDdXQPn9TmRB6D7vpCSwzdYw2XHwyRvv/r
-	 bhDVEfGTdNkxxJz4LGVuPWQgVUW6GeyWuVS07RoI=
+	b=TVyh78CDLL1D+EoC7cJsHAZp6eLPdxhlOhprG7raUsUTLLLMR/rtFFRAQ/t3xTDB/
+	 ZaUq5EnBCRP/dFds15AtjDwOK7ctE+Vc9u9smumoSmtj26WMa48nCWwbhgK4xAlwU+
+	 IieO1xPgOTdPt3BMMJi2Gm9xFLYg0OQMGHV/krZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Niklas Cassel <cassel@kernel.org>,
+	Qiang Yu <qiang.yu@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 419/781] netfilter: nft_set_rbtree: validate open interval overlap
-Date: Tue, 24 Feb 2026 17:18:48 -0800
-Message-ID: <20260225012409.976522840@linuxfoundation.org>
+Subject: [PATCH 6.19 393/781] PCI: dwc: Remove duplicate dw_pcie_ep_hide_ext_capability() function
+Date: Tue, 24 Feb 2026 17:18:22 -0800
+Message-ID: <20260225012409.342282402@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,306 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
 
-[ Upstream commit 648946966a08e4cb1a71619e3d1b12bd7642de7b ]
+[ Upstream commit 86291f774fe8524178446cb2c792939640b4970c ]
 
-Open intervals do not have an end element, in particular an open
-interval at the end of the set is hard to validate because of it is
-lacking the end element, and interval validation relies on such end
-element to perform the checks.
+Remove dw_pcie_ep_hide_ext_capability() and replace its usage with
+dw_pcie_remove_ext_capability(). Both functions serve the same purpose
+of hiding PCIe extended capabilities, but dw_pcie_remove_ext_capability()
+provides a cleaner API that doesn't require the caller to specify the
+previous capability ID.
 
-This patch adds a new flag field to struct nft_set_elem, this is not an
-issue because this is a temporary object that is allocated in the stack
-from the insert/deactivate path. This flag field is used to specify that
-this is the last element in this add/delete command.
-
-The last flag is used, in combination with the start element cookie, to
-check if there is a partial overlap, eg.
-
-   Already exists:   255.255.255.0-255.255.255.254
-   Add interval:     255.255.255.0-255.255.255.255
-                     ~~~~~~~~~~~~~
-             start element overlap
-
-Basically, the idea is to check for an existing end element in the set
-if there is an overlap with an existing start element.
-
-However, the last open interval can come in any position in the add
-command, the corner case can get a bit more complicated:
-
-   Already exists:   255.255.255.0-255.255.255.254
-   Add intervals:    255.255.255.0-255.255.255.255,255.255.255.0-255.255.255.254
-                     ~~~~~~~~~~~~~
-             start element overlap
-
-To catch this overlap, annotate that the new start element is a possible
-overlap, then report the overlap if the next element is another start
-element that confirms that previous element in an open interval at the
-end of the set.
-
-For deletions, do not update the start cookie when deleting an open
-interval, otherwise this can trigger spurious EEXIST when adding new
-elements.
-
-Unfortunately, there is no NFT_SET_ELEM_INTERVAL_OPEN flag which would
-make easier to detect open interval overlaps.
-
-Fixes: 7c84d41416d8 ("netfilter: nft_set_rbtree: Detect partial overlaps on insertion")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Suggested-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Tested-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20251224-remove_dw_pcie_ep_hide_ext_capability-v1-1-4302c9cdc316@oss.qualcomm.com
+Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  4 ++
- net/netfilter/nf_tables_api.c     | 21 +++++++--
- net/netfilter/nft_set_rbtree.c    | 71 ++++++++++++++++++++++++++-----
- 3 files changed, 82 insertions(+), 14 deletions(-)
+ .../pci/controller/dwc/pcie-designware-ep.c   | 39 -------------------
+ drivers/pci/controller/dwc/pcie-designware.h  |  7 ----
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |  4 +-
+ 3 files changed, 1 insertion(+), 49 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 0e266c2d0e7f0..7eac73f9b4ce3 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -278,6 +278,8 @@ struct nft_userdata {
- 	unsigned char		data[];
- };
- 
-+#define NFT_SET_ELEM_INTERNAL_LAST	0x1
-+
- /* placeholder structure for opaque set element backend representation. */
- struct nft_elem_priv { };
- 
-@@ -287,6 +289,7 @@ struct nft_elem_priv { };
-  *	@key: element key
-  *	@key_end: closing element key
-  *	@data: element data
-+ * 	@flags: flags
-  *	@priv: element private data and extensions
-  */
- struct nft_set_elem {
-@@ -302,6 +305,7 @@ struct nft_set_elem {
- 		u32		buf[NFT_DATA_VALUE_MAXLEN / sizeof(u32)];
- 		struct nft_data val;
- 	} data;
-+	u32			flags;
- 	struct nft_elem_priv	*priv;
- };
- 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 198b9c739b559..daef07ee09427 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7269,7 +7269,8 @@ static u32 nft_set_maxsize(const struct nft_set *set)
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 1195d401df19e..cfd59899c7b85 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -75,45 +75,6 @@ static u8 dw_pcie_ep_find_capability(struct dw_pcie_ep *ep, u8 func_no, u8 cap)
+ 				 cap, NULL, ep, func_no);
  }
  
- static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
--			    const struct nlattr *attr, u32 nlmsg_flags)
-+			    const struct nlattr *attr, u32 nlmsg_flags,
-+			    bool last)
+-/**
+- * dw_pcie_ep_hide_ext_capability - Hide a capability from the linked list
+- * @pci: DWC PCI device
+- * @prev_cap: Capability preceding the capability that should be hidden
+- * @cap: Capability that should be hidden
+- *
+- * Return: 0 if success, errno otherwise.
+- */
+-int dw_pcie_ep_hide_ext_capability(struct dw_pcie *pci, u8 prev_cap, u8 cap)
+-{
+-	u16 prev_cap_offset, cap_offset;
+-	u32 prev_cap_header, cap_header;
+-
+-	prev_cap_offset = dw_pcie_find_ext_capability(pci, prev_cap);
+-	if (!prev_cap_offset)
+-		return -EINVAL;
+-
+-	prev_cap_header = dw_pcie_readl_dbi(pci, prev_cap_offset);
+-	cap_offset = PCI_EXT_CAP_NEXT(prev_cap_header);
+-	cap_header = dw_pcie_readl_dbi(pci, cap_offset);
+-
+-	/* cap must immediately follow prev_cap. */
+-	if (PCI_EXT_CAP_ID(cap_header) != cap)
+-		return -EINVAL;
+-
+-	/* Clear next ptr. */
+-	prev_cap_header &= ~GENMASK(31, 20);
+-
+-	/* Set next ptr to next ptr of cap. */
+-	prev_cap_header |= cap_header & GENMASK(31, 20);
+-
+-	dw_pcie_dbi_ro_wr_en(pci);
+-	dw_pcie_writel_dbi(pci, prev_cap_offset, prev_cap_header);
+-	dw_pcie_dbi_ro_wr_dis(pci);
+-
+-	return 0;
+-}
+-EXPORT_SYMBOL_GPL(dw_pcie_ep_hide_ext_capability);
+-
+ static int dw_pcie_ep_write_header(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 				   struct pci_epf_header *hdr)
  {
- 	struct nft_expr *expr_array[NFT_SET_EXPR_MAX] = {};
- 	struct nlattr *nla[NFTA_SET_ELEM_MAX + 1];
-@@ -7555,6 +7556,11 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	if (flags)
- 		*nft_set_ext_flags(ext) = flags;
- 
-+	if (last)
-+		elem.flags = NFT_SET_ELEM_INTERNAL_LAST;
-+	else
-+		elem.flags = 0;
-+
- 	if (obj)
- 		*nft_set_ext_obj(ext) = obj;
- 
-@@ -7718,7 +7724,8 @@ static int nf_tables_newsetelem(struct sk_buff *skb,
- 	nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
- 
- 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
--		err = nft_add_set_elem(&ctx, set, attr, info->nlh->nlmsg_flags);
-+		err = nft_add_set_elem(&ctx, set, attr, info->nlh->nlmsg_flags,
-+				       nla_is_last(attr, rem));
- 		if (err < 0) {
- 			NL_SET_BAD_ATTR(extack, attr);
- 			return err;
-@@ -7841,7 +7848,7 @@ static void nft_trans_elems_destroy_abort(const struct nft_ctx *ctx,
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index f9e2eaa3571e0..8a99a9c393f53 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -906,7 +906,6 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
+ int dw_pcie_ep_raise_msix_irq_doorbell(struct dw_pcie_ep *ep, u8 func_no,
+ 				       u16 interrupt_num);
+ void dw_pcie_ep_reset_bar(struct dw_pcie *pci, enum pci_barno bar);
+-int dw_pcie_ep_hide_ext_capability(struct dw_pcie *pci, u8 prev_cap, u8 cap);
+ struct dw_pcie_ep_func *
+ dw_pcie_ep_get_func_from_ep(struct dw_pcie_ep *ep, u8 func_no);
+ #else
+@@ -964,12 +963,6 @@ static inline void dw_pcie_ep_reset_bar(struct dw_pcie *pci, enum pci_barno bar)
+ {
  }
  
- static int nft_del_setelem(struct nft_ctx *ctx, struct nft_set *set,
--			   const struct nlattr *attr)
-+			   const struct nlattr *attr, bool last)
+-static inline int dw_pcie_ep_hide_ext_capability(struct dw_pcie *pci,
+-						 u8 prev_cap, u8 cap)
+-{
+-	return 0;
+-}
+-
+ static inline struct dw_pcie_ep_func *
+ dw_pcie_ep_get_func_from_ep(struct dw_pcie_ep *ep, u8 func_no)
  {
- 	struct nlattr *nla[NFTA_SET_ELEM_MAX + 1];
- 	struct nft_set_ext_tmpl tmpl;
-@@ -7909,6 +7916,11 @@ static int nft_del_setelem(struct nft_ctx *ctx, struct nft_set *set,
- 	if (flags)
- 		*nft_set_ext_flags(ext) = flags;
+diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+index f8605fe61a415..2f865f67a10a7 100644
+--- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
++++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+@@ -327,9 +327,7 @@ static void rockchip_pcie_ep_hide_broken_ats_cap_rk3588(struct dw_pcie_ep *ep)
+ 	if (!of_device_is_compatible(dev->of_node, "rockchip,rk3588-pcie-ep"))
+ 		return;
  
-+	if (last)
-+		elem.flags = NFT_SET_ELEM_INTERNAL_LAST;
-+	else
-+		elem.flags = 0;
-+
- 	trans = nft_trans_elem_alloc(ctx, NFT_MSG_DELSETELEM, set);
- 	if (trans == NULL)
- 		goto fail_trans;
-@@ -8056,7 +8068,8 @@ static int nf_tables_delsetelem(struct sk_buff *skb,
- 		return nft_set_flush(&ctx, set, genmask);
- 
- 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
--		err = nft_del_setelem(&ctx, set, attr);
-+		err = nft_del_setelem(&ctx, set, attr,
-+				      nla_is_last(attr, rem));
- 		if (err == -ENOENT &&
- 		    NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_DESTROYSETELEM)
- 			continue;
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index a4fb5b517d9de..644d4b9167057 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -304,10 +304,19 @@ static void nft_rbtree_set_start_cookie(struct nft_rbtree *priv,
- 	priv->start_rbe_cookie = (unsigned long)rbe;
+-	if (dw_pcie_ep_hide_ext_capability(pci, PCI_EXT_CAP_ID_SECPCI,
+-					   PCI_EXT_CAP_ID_ATS))
+-		dev_err(dev, "failed to hide ATS capability\n");
++	dw_pcie_remove_ext_capability(pci, PCI_EXT_CAP_ID_ATS);
  }
  
-+static void nft_rbtree_set_start_cookie_open(struct nft_rbtree *priv,
-+					     const struct nft_rbtree_elem *rbe,
-+					     unsigned long open_interval)
-+{
-+	priv->start_rbe_cookie = (unsigned long)rbe | open_interval;
-+}
-+
-+#define NFT_RBTREE_OPEN_INTERVAL	1UL
-+
- static bool nft_rbtree_cmp_start_cookie(struct nft_rbtree *priv,
- 					const struct nft_rbtree_elem *rbe)
- {
--	return priv->start_rbe_cookie == (unsigned long)rbe;
-+	return (priv->start_rbe_cookie & ~NFT_RBTREE_OPEN_INTERVAL) == (unsigned long)rbe;
- }
- 
- static bool nft_rbtree_insert_same_interval(const struct net *net,
-@@ -337,13 +346,14 @@ static bool nft_rbtree_insert_same_interval(const struct net *net,
- 
- static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 			       struct nft_rbtree_elem *new,
--			       struct nft_elem_priv **elem_priv, u64 tstamp)
-+			       struct nft_elem_priv **elem_priv, u64 tstamp, bool last)
- {
- 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL, *rbe_prev;
- 	struct rb_node *node, *next, *parent, **p, *first = NULL;
- 	struct nft_rbtree *priv = nft_set_priv(set);
- 	u8 cur_genmask = nft_genmask_cur(net);
- 	u8 genmask = nft_genmask_next(net);
-+	unsigned long open_interval = 0;
- 	int d;
- 
- 	/* Descend the tree to search for an existing element greater than the
-@@ -449,10 +459,18 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 		}
- 	}
- 
--	if (nft_rbtree_interval_null(set, new))
--		priv->start_rbe_cookie = 0;
--	else if (nft_rbtree_interval_start(new) && priv->start_rbe_cookie)
-+	if (nft_rbtree_interval_null(set, new)) {
- 		priv->start_rbe_cookie = 0;
-+	} else if (nft_rbtree_interval_start(new) && priv->start_rbe_cookie) {
-+		if (nft_set_is_anonymous(set)) {
-+			priv->start_rbe_cookie = 0;
-+		} else if (priv->start_rbe_cookie & NFT_RBTREE_OPEN_INTERVAL) {
-+			/* Previous element is an open interval that partially
-+			 * overlaps with an existing non-open interval.
-+			 */
-+			return -ENOTEMPTY;
-+		}
-+	}
- 
- 	/* - new start element matching existing start element: full overlap
- 	 *   reported as -EEXIST, cleared by caller if NLM_F_EXCL is not given.
-@@ -460,7 +478,27 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	if (rbe_ge && !nft_rbtree_cmp(set, new, rbe_ge) &&
- 	    nft_rbtree_interval_start(rbe_ge) == nft_rbtree_interval_start(new)) {
- 		*elem_priv = &rbe_ge->priv;
--		nft_rbtree_set_start_cookie(priv, rbe_ge);
-+
-+		/* - Corner case: new start element of open interval (which
-+		 *   comes as last element in the batch) overlaps the start of
-+		 *   an existing interval with an end element: partial overlap.
-+		 */
-+		node = rb_first(&priv->root);
-+		rbe = __nft_rbtree_next_active(node, genmask);
-+		if (rbe && nft_rbtree_interval_end(rbe)) {
-+			rbe = nft_rbtree_next_active(rbe, genmask);
-+			if (rbe &&
-+			    nft_rbtree_interval_start(rbe) &&
-+			    !nft_rbtree_cmp(set, new, rbe)) {
-+				if (last)
-+					return -ENOTEMPTY;
-+
-+				/* Maybe open interval? */
-+				open_interval = NFT_RBTREE_OPEN_INTERVAL;
-+			}
-+		}
-+		nft_rbtree_set_start_cookie_open(priv, rbe_ge, open_interval);
-+
- 		return -EEXIST;
- 	}
- 
-@@ -515,6 +553,12 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	    nft_rbtree_interval_end(rbe_ge) && nft_rbtree_interval_end(new))
- 		return -ENOTEMPTY;
- 
-+	/* - start element overlaps an open interval but end element is new:
-+	 *   partial overlap, reported as -ENOEMPTY.
-+	 */
-+	if (!rbe_ge && priv->start_rbe_cookie && nft_rbtree_interval_end(new))
-+		return -ENOTEMPTY;
-+
- 	/* Accepted element: pick insertion point depending on key value */
- 	parent = NULL;
- 	p = &priv->root.rb_node;
-@@ -624,6 +668,7 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 			     struct nft_elem_priv **elem_priv)
- {
- 	struct nft_rbtree_elem *rbe = nft_elem_priv_cast(elem->priv);
-+	bool last = !!(elem->flags & NFT_SET_ELEM_INTERNAL_LAST);
- 	struct nft_rbtree *priv = nft_set_priv(set);
- 	u64 tstamp = nft_net_tstamp(net);
- 	int err;
-@@ -640,8 +685,12 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 		cond_resched();
- 
- 		write_lock_bh(&priv->lock);
--		err = __nft_rbtree_insert(net, set, rbe, elem_priv, tstamp);
-+		err = __nft_rbtree_insert(net, set, rbe, elem_priv, tstamp, last);
- 		write_unlock_bh(&priv->lock);
-+
-+		if (nft_rbtree_interval_end(rbe))
-+			priv->start_rbe_cookie = 0;
-+
- 	} while (err == -EAGAIN);
- 
- 	return err;
-@@ -729,6 +778,7 @@ nft_rbtree_deactivate(const struct net *net, const struct nft_set *set,
- 		      const struct nft_set_elem *elem)
- {
- 	struct nft_rbtree_elem *rbe, *this = nft_elem_priv_cast(elem->priv);
-+	bool last = !!(elem->flags & NFT_SET_ELEM_INTERNAL_LAST);
- 	struct nft_rbtree *priv = nft_set_priv(set);
- 	const struct rb_node *parent = priv->root.rb_node;
- 	u8 genmask = nft_genmask_next(net);
-@@ -769,9 +819,10 @@ nft_rbtree_deactivate(const struct net *net, const struct nft_set *set,
- 				continue;
- 			}
- 
--			if (nft_rbtree_interval_start(rbe))
--				nft_rbtree_set_start_cookie(priv, rbe);
--			else if (!nft_rbtree_deactivate_same_interval(net, priv, rbe))
-+			if (nft_rbtree_interval_start(rbe)) {
-+				if (!last)
-+					nft_rbtree_set_start_cookie(priv, rbe);
-+			} else if (!nft_rbtree_deactivate_same_interval(net, priv, rbe))
- 				return NULL;
- 
- 			nft_rbtree_flush(net, set, &rbe->priv);
+ static void rockchip_pcie_ep_init(struct dw_pcie_ep *ep)
 -- 
 2.51.0
 
