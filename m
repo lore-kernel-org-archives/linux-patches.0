@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20D4262FC0;
-	Wed, 25 Feb 2026 01:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8D31D5141;
+	Wed, 25 Feb 2026 01:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983722; cv=none; b=PDbTWukrWmvbP1hxIWD7fzm1gn6P/xrT1t2lImoDbCGt+HY9F5teF4OTv25aIe8bcPQfosUlL3/a1BtuWWtgpudciLqD/c42y96o+ytxwnbsLNH4JnVj6SLuk9e49Z2T2jXl8GsLtj1cNw/uD02nDekJcaxLKWhFwvMsYeoeg4w=
+	t=1771983722; cv=none; b=KAmHQ0Aj3LpjmDByJEvCdTaPC0ES5WTWc5D012ew3vKn8kqZotIQb2UyT+UJQMHZRA3vXkD2cMTS0KnqrhdSp87IQ61wr//8EhwSuY2ZPrz1Yu/s1RPglvgKeiIfMnwIombTGfLaunjz5apdqZ67HefchsjrXbJ/lpFNLGlPNI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771983722; c=relaxed/simple;
-	bh=uiBLuxeAGZ+qVEXf0evUowLYoPohCjpeX6PMYWJzQu8=;
+	bh=QeTEYCHNKAMoXnIY/Yhge/lBbPcGfjPP7fTWHK/+g9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ah+uom48BcOIgvMH2zY2VkAGwiGJADlQ/MVgGCvKiFCCP5YoJho8WUuqu0k2Ami+rOzqrld5Zq0XiZrDFe/GrwAxgqkUiQbRHalvrO6xQ9J4Z6QmKzhkBTsfSjIDPNWlZxgEMC+963jMfERy9OoxVfQtxo+D2az/y6N/wTBgDUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euzyHPxq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fowgymDqbGpSZKWSxVZmzKY+2qQaHOREBsxWhqBVN/5gyk272wDvKewe3rhrxI4ofU2qywNEL/9BzVtg2pYq98rjgwQzRo3r43+fsIUppBFtMWsupHmryFBCg2VhxeukYvrED0Fq7qKzVxbAwAGkUpbt/Y7xiZrs9SB6zgsi5IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ER2D4jIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euzyHPxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB50BC116D0;
-	Wed, 25 Feb 2026 01:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ER2D4jIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68B4C19424;
+	Wed, 25 Feb 2026 01:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983721;
-	bh=uiBLuxeAGZ+qVEXf0evUowLYoPohCjpeX6PMYWJzQu8=;
+	s=korg; t=1771983722;
+	bh=QeTEYCHNKAMoXnIY/Yhge/lBbPcGfjPP7fTWHK/+g9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=euzyHPxqKa0e+ijsXh7VN2tSwxyEELzyNipW6jmB3hi7M/7+ehf2hqv6K8y/VUReq
-	 3no3wFOorlt4LuxWFhKFGYGmL4tyUliqUrFg2yNn5iqHnpqdvVnLg7yAjyHhDO5f8Y
-	 jJOC27LGG1Q8dCeGxPHQOlJ+R2WuSoa5RtZXaDkY=
+	b=ER2D4jIkdzlRpjbiG9W4dzyjB2tHwa8lEsLlSOShmZNWg4QuKevM+eAvvkplws3NJ
+	 O7UBbVulwF6Xs2XDqm9cpGEWvrXc4rtPMBTQFHQ4KtdHIzaCUxOWHLMRxHq00mRD/F
+	 jH6ctbOZgGp2chUM85zBE8efk2CEPcltOasxnrIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alper Ak <alperyasinak1@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 019/641] tpm: st33zp24: Fix missing cleanup on get_burstcount() error
-Date: Tue, 24 Feb 2026 17:15:45 -0800
-Message-ID: <20260225012349.436622059@linuxfoundation.org>
+	YunJe Shin <ioerts@kookmin.ac.kr>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.18 002/641] RDMA/umad: Reject negative data_len in ib_umad_write
+Date: Tue, 24 Feb 2026 17:15:28 -0800
+Message-ID: <20260225012348.986046651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,43 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alper Ak <alperyasinak1@gmail.com>
+From: YunJe Shin <yjshin0438@gmail.com>
 
-[ Upstream commit 3e91b44c93ad2871f89fc2a98c5e4fe6ca5db3d9 ]
+commit 5551b02fdbfd85a325bb857f3a8f9c9f33397ed2 upstream.
 
-get_burstcount() can return -EBUSY on timeout. When this happens,
-st33zp24_send() returns directly without releasing the locality
-acquired earlier.
+ib_umad_write computes data_len from user-controlled count and the
+MAD header sizes. With a mismatched user MAD header size and RMPP
+header length, data_len can become negative and reach ib_create_send_mad().
+This can make the padding calculation exceed the segment size and trigger
+an out-of-bounds memset in alloc_send_rmpp_list().
 
-Use goto out_err to ensure proper cleanup when get_burstcount() fails.
+Add an explicit check to reject negative data_len before creating the
+send buffer.
 
-Fixes: bf38b8710892 ("tpm/tpm_i2c_stm_st33: Split tpm_i2c_tpm_st33 in 2 layers (core + phy)")
-Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+KASAN splat:
+[  211.363464] BUG: KASAN: slab-out-of-bounds in ib_create_send_mad+0xa01/0x11b0
+[  211.364077] Write of size 220 at addr ffff88800c3fa1f8 by task spray_thread/102
+[  211.365867] ib_create_send_mad+0xa01/0x11b0
+[  211.365887] ib_umad_write+0x853/0x1c80
+
+Fixes: 2be8e3ee8efd ("IB/umad: Add P_Key index support")
+Signed-off-by: YunJe Shin <ioerts@kookmin.ac.kr>
+Link: https://patch.msgid.link/20260203100628.1215408-1-ioerts@kookmin.ac.kr
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/st33zp24/st33zp24.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/user_mad.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
-index 2ed7815e4899b..e2b7451ea7ccd 100644
---- a/drivers/char/tpm/st33zp24/st33zp24.c
-+++ b/drivers/char/tpm/st33zp24/st33zp24.c
-@@ -328,8 +328,10 @@ static int st33zp24_send(struct tpm_chip *chip, unsigned char *buf,
+--- a/drivers/infiniband/core/user_mad.c
++++ b/drivers/infiniband/core/user_mad.c
+@@ -514,7 +514,8 @@ static ssize_t ib_umad_write(struct file
+ 	struct rdma_ah_attr ah_attr;
+ 	struct ib_ah *ah;
+ 	__be64 *tid;
+-	int ret, data_len, hdr_len, copy_offset, rmpp_active;
++	int ret, hdr_len, copy_offset, rmpp_active;
++	size_t data_len;
+ 	u8 base_version;
  
- 	for (i = 0; i < len - 1;) {
- 		burstcnt = get_burstcount(chip);
--		if (burstcnt < 0)
--			return burstcnt;
-+		if (burstcnt < 0) {
-+			ret = burstcnt;
-+			goto out_err;
-+		}
- 		size = min_t(int, len - i - 1, burstcnt);
- 		ret = tpm_dev->ops->send(tpm_dev->phy_id, TPM_DATA_FIFO,
- 					 buf + i, size);
--- 
-2.51.0
-
+ 	if (count < hdr_size(file) + IB_MGMT_RMPP_HDR)
+@@ -588,7 +589,10 @@ static ssize_t ib_umad_write(struct file
+ 	}
+ 
+ 	base_version = ((struct ib_mad_hdr *)&packet->mad.data)->base_version;
+-	data_len = count - hdr_size(file) - hdr_len;
++	if (check_sub_overflow(count, hdr_size(file) + hdr_len, &data_len)) {
++		ret = -EINVAL;
++		goto err_ah;
++	}
+ 	packet->msg = ib_create_send_mad(agent,
+ 					 be32_to_cpu(packet->mad.hdr.qpn),
+ 					 packet->mad.hdr.pkey_index, rmpp_active,
 
 
