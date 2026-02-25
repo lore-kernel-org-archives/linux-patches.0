@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51F7251793;
-	Wed, 25 Feb 2026 01:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE651FE45D;
+	Wed, 25 Feb 2026 01:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983058; cv=none; b=WOPkragtcvh2isONJ8aMhgO0GIGh7wTJknyiYX55dcATroiHXc/U2gR8edUodo38Ht9CBC34gczomqesO/5LhtuDl8Ubvq4Vuo8zS4WJzy3Q3s50lf3f4jS+/ev7j6ey4KXjd9TpiuSHD2tvjwYbSHl00O76BApxa6/D2AX6W/Q=
+	t=1771983060; cv=none; b=fFpIUVwcrMgUySJ+avAuoj92VdxGzsfJMbNaa7ob3B3JOUfFGOeQQBN7o1AzLu9nZiu19MRJWTbE4G5ywjTL4pVVw950vX8qQaOimvrd1V7CIaNWr4MQ7bzY+ZmIAVQeqVCaL3F0/antQSz/aI72S8aNEHLDfPypOuIYKMgPBsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983058; c=relaxed/simple;
-	bh=RKz5rN1U2AW1K8rsPd4MWSSzwKDiom3EVDmWUwVxTkU=;
+	s=arc-20240116; t=1771983060; c=relaxed/simple;
+	bh=gGWOeW+z2jhZADuQRbHFrHpL+bLTUdeR8azPzaRdJpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMH+/tKymEk+tw0jjFQiHJDj/D1FQ2J8V/voDMu93RUJNo0QOxJIDihVl+RJtzpabznz9ncw9s8JQGo3sxldhbGKEKKmScVgmiK5xn+6hj4rmLWd4A65sGiz/aEbrxui1AkI3NfeWMhxI5u+OGuNfV3KLXAcSZRZUx9ikbOuwsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbWrLRC3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fu628TJWt0tBZUMdCgKFRnjJW97O3HV8nRWoFuLZVmn7ejYiLVNGg2N9zV1yW6ZOZ6g+3t7/LsuX8p+JpIdDD7h5evXvP7ApgVEUSqlsppxRgp02Nhb69E33OW0aTQlrOJmNe0qFt9YfEuevfOfvyrfW+mSiqzVMCl5KBrm/F34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sr1MQz3r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbWrLRC3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FCAC116D0;
-	Wed, 25 Feb 2026 01:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sr1MQz3r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC92C116D0;
+	Wed, 25 Feb 2026 01:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983058;
-	bh=RKz5rN1U2AW1K8rsPd4MWSSzwKDiom3EVDmWUwVxTkU=;
+	s=korg; t=1771983059;
+	bh=gGWOeW+z2jhZADuQRbHFrHpL+bLTUdeR8azPzaRdJpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbWrLRC3XtA0wOVRsajLTqVxkVBWtqpN++amq3TnOEdlkusT/VLhGqmHvS8GMYPnZ
-	 2QrF61RHZo6r8OPrHBSqJjCuhL0vaQq44rpvDnfoLRCXxIn0prZlmMXg9KJFruWoO+
-	 ZSe+zeFfBJFJ75IRk4QsM00EnsiGlqwST2Il6KCM=
+	b=sr1MQz3rOqDhO20nRnNfitVFWiGBvfYkt3aQKeInBINvvrZUx4xIVzkxK3FcXuUWv
+	 806jOBwzLFFAXARG+XMwetBl2YMfOUXEknCWnClXgwx7N+Mqq7r7XMS1k4MPW0i8nA
+	 Pa6EF2sjL5v9o3c5OfF7iT6GrLDcTS/YIVHVH//I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 223/781] ALSA: usb-audio: Relax __free() variable declarations
-Date: Tue, 24 Feb 2026 17:15:32 -0800
-Message-ID: <20260225012405.181273512@linuxfoundation.org>
+Subject: [PATCH 6.19 224/781] ASoC: SDCA: Allow sample width wild cards in set_usage()
+Date: Tue, 24 Feb 2026 17:15:33 -0800
+Message-ID: <20260225012405.205318764@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -50,282 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Simon Trimmer <simont@opensource.cirrus.com>
 
-[ Upstream commit 03f705b9ca58b91c6dffe64875ea3d9a38cad9b5 ]
+[ Upstream commit 87783532d34050e2bff6749a4fe9860e624a0540 ]
 
-We used to have a variable declaration with __free() initialized with
-NULL.  This was to keep the old coding style rule, but recently it's
-relaxed and rather recommends to follow the new rule to declare in
-place of use for __free() -- which avoids potential deadlocks or UAFs
-with nested cleanups.
+The SDCA spec allows the sample rate and width to be wild cards, but the
+current implementation of set_usage() only checked for a wild card of
+the sample rate.
 
-Although the current code has no bug, per se, let's follow the new
-standard and move the declaration to the place of assignment (or
-directly assign the allocated result) instead of NULL initializations.
-
-Note that there are still a few remaining __free(kfree) with NULL
-initializations; they are because of the code complexity (the data
-size calculation).
-
-Fixes: 43d4940c944c ("ALSA: usb: scarlett2: Clean ups with guard() and __free()")
-Fixes: 46757a3e7d50 ("ALSA: FCP: Add Focusrite Control Protocol driver")
-Fixes: f7d306b47a24 ("ALSA: usb-audio: Fix a DMA to stack memory bug")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251216140634.171890-12-tiwai@suse.de
+Fixes: 4ed357f72a0e ("ASoC: SDCA: Add hw_params() helper function")
+Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251216142204.183958-1-simont@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/fcp.c             | 36 ++++++++++++++++++------------------
- sound/usb/mixer_scarlett2.c | 21 ++++++++++-----------
- sound/usb/quirks.c          | 13 ++++++-------
- 3 files changed, 34 insertions(+), 36 deletions(-)
+ sound/soc/sdca/sdca_asoc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/fcp.c b/sound/usb/fcp.c
-index 11e9a96b46ffe..1f4595d1e217f 100644
---- a/sound/usb/fcp.c
-+++ b/sound/usb/fcp.c
-@@ -182,10 +182,6 @@ static int fcp_usb(struct usb_mixer_interface *mixer, u32 opcode,
- {
- 	struct fcp_data *private = mixer->private_data;
- 	struct usb_device *dev = mixer->chip->dev;
--	struct fcp_usb_packet *req __free(kfree) = NULL;
--	struct fcp_usb_packet *resp __free(kfree) = NULL;
--	size_t req_buf_size = struct_size(req, data, req_size);
--	size_t resp_buf_size = struct_size(resp, data, resp_size);
- 	int retries = 0;
- 	const int max_retries = 5;
- 	int err;
-@@ -193,10 +189,14 @@ static int fcp_usb(struct usb_mixer_interface *mixer, u32 opcode,
- 	if (!mixer->urb)
- 		return -ENODEV;
+diff --git a/sound/soc/sdca/sdca_asoc.c b/sound/soc/sdca/sdca_asoc.c
+index 2d328bbb95b94..498aba9df5d9b 100644
+--- a/sound/soc/sdca/sdca_asoc.c
++++ b/sound/soc/sdca/sdca_asoc.c
+@@ -1478,7 +1478,7 @@ static int set_usage(struct device *dev, struct regmap *regmap,
+ 		unsigned int rate = sdca_range(range, SDCA_USAGE_SAMPLE_RATE, i);
+ 		unsigned int width = sdca_range(range, SDCA_USAGE_SAMPLE_WIDTH, i);
  
-+	struct fcp_usb_packet *req __free(kfree) = NULL;
-+	size_t req_buf_size = struct_size(req, data, req_size);
- 	req = kmalloc(req_buf_size, GFP_KERNEL);
- 	if (!req)
- 		return -ENOMEM;
- 
-+	struct fcp_usb_packet *resp __free(kfree) = NULL;
-+	size_t resp_buf_size = struct_size(resp, data, resp_size);
- 	resp = kmalloc(resp_buf_size, GFP_KERNEL);
- 	if (!resp)
- 		return -ENOMEM;
-@@ -300,16 +300,17 @@ static int fcp_usb(struct usb_mixer_interface *mixer, u32 opcode,
- static int fcp_reinit(struct usb_mixer_interface *mixer)
- {
- 	struct fcp_data *private = mixer->private_data;
--	void *step0_resp __free(kfree) = NULL;
--	void *step2_resp __free(kfree) = NULL;
- 
- 	if (mixer->urb)
- 		return 0;
- 
--	step0_resp = kmalloc(private->step0_resp_size, GFP_KERNEL);
-+	void *step0_resp __free(kfree) =
-+		kmalloc(private->step0_resp_size, GFP_KERNEL);
- 	if (!step0_resp)
- 		return -ENOMEM;
--	step2_resp = kmalloc(private->step2_resp_size, GFP_KERNEL);
-+
-+	void *step2_resp __free(kfree) =
-+		kmalloc(private->step2_resp_size, GFP_KERNEL);
- 	if (!step2_resp)
- 		return -ENOMEM;
- 
-@@ -464,7 +465,6 @@ static int fcp_ioctl_init(struct usb_mixer_interface *mixer,
- 	struct fcp_init init;
- 	struct usb_device *dev = mixer->chip->dev;
- 	struct fcp_data *private = mixer->private_data;
--	void *resp __free(kfree) = NULL;
- 	void *step2_resp;
- 	int err, buf_size;
- 
-@@ -485,7 +485,8 @@ static int fcp_ioctl_init(struct usb_mixer_interface *mixer,
- 	/* Allocate response buffer */
- 	buf_size = init.step0_resp_size + init.step2_resp_size;
- 
--	resp = kmalloc(buf_size, GFP_KERNEL);
-+	void *resp __free(kfree) =
-+		kmalloc(buf_size, GFP_KERNEL);
- 	if (!resp)
- 		return -ENOMEM;
- 
-@@ -619,7 +620,6 @@ static int fcp_ioctl_set_meter_map(struct usb_mixer_interface *mixer,
- {
- 	struct fcp_meter_map map;
- 	struct fcp_data *private = mixer->private_data;
--	s16 *tmp_map __free(kfree) = NULL;
- 	int err;
- 
- 	if (copy_from_user(&map, arg, sizeof(map)))
-@@ -641,7 +641,8 @@ static int fcp_ioctl_set_meter_map(struct usb_mixer_interface *mixer,
- 		return -EINVAL;
- 
- 	/* Allocate and copy the map data */
--	tmp_map = memdup_array_user(arg->map, map.map_size, sizeof(s16));
-+	s16 *tmp_map __free(kfree) =
-+		memdup_array_user(arg->map, map.map_size, sizeof(s16));
- 	if (IS_ERR(tmp_map))
- 		return PTR_ERR(tmp_map);
- 
-@@ -651,17 +652,16 @@ static int fcp_ioctl_set_meter_map(struct usb_mixer_interface *mixer,
- 
- 	/* If the control doesn't exist, create it */
- 	if (!private->meter_ctl) {
--		s16 *new_map __free(kfree) = NULL;
--		__le32 *meter_levels __free(kfree) = NULL;
--
- 		/* Allocate buffer for the map */
--		new_map = kmalloc_array(map.map_size, sizeof(s16), GFP_KERNEL);
-+		s16 *new_map __free(kfree) =
-+			kmalloc_array(map.map_size, sizeof(s16), GFP_KERNEL);
- 		if (!new_map)
- 			return -ENOMEM;
- 
- 		/* Allocate buffer for reading meter levels */
--		meter_levels = kmalloc_array(map.meter_slots, sizeof(__le32),
--					     GFP_KERNEL);
-+		__le32 *meter_levels __free(kfree) =
-+			kmalloc_array(map.meter_slots, sizeof(__le32),
-+				      GFP_KERNEL);
- 		if (!meter_levels)
- 			return -ENOMEM;
- 
-diff --git a/sound/usb/mixer_scarlett2.c b/sound/usb/mixer_scarlett2.c
-index bef8c9e544dd3..88b7e42d159e0 100644
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -2377,18 +2377,18 @@ static int scarlett2_usb(
- {
- 	struct scarlett2_data *private = mixer->private_data;
- 	struct usb_device *dev = mixer->chip->dev;
--	struct scarlett2_usb_packet *req __free(kfree) = NULL;
--	struct scarlett2_usb_packet *resp __free(kfree) = NULL;
--	size_t req_buf_size = struct_size(req, data, req_size);
--	size_t resp_buf_size = struct_size(resp, data, resp_size);
- 	int retries = 0;
- 	const int max_retries = 5;
- 	int err;
- 
-+	struct scarlett2_usb_packet *req __free(kfree) = NULL;
-+	size_t req_buf_size = struct_size(req, data, req_size);
- 	req = kmalloc(req_buf_size, GFP_KERNEL);
- 	if (!req)
- 		return -ENOMEM;
- 
-+	struct scarlett2_usb_packet *resp __free(kfree) = NULL;
-+	size_t resp_buf_size = struct_size(resp, data, resp_size);
- 	resp = kmalloc(resp_buf_size, GFP_KERNEL);
- 	if (!resp)
- 		return -ENOMEM;
-@@ -3919,9 +3919,9 @@ static int scarlett2_input_select_ctl_info(
- 	struct scarlett2_data *private = mixer->private_data;
- 	int inputs = private->info->gain_input_count;
- 	int i, err;
--	char **values __free(kfree) = NULL;
-+	char **values __free(kfree) =
-+		kcalloc(inputs, sizeof(char *), GFP_KERNEL);
- 
--	values = kcalloc(inputs, sizeof(char *), GFP_KERNEL);
- 	if (!values)
- 		return -ENOMEM;
- 
-@@ -9083,8 +9083,6 @@ static long scarlett2_hwdep_read(struct snd_hwdep *hw,
- 		__le32 len;
- 	} __packed req;
- 
--	u8 *resp __free(kfree) = NULL;
--
- 	/* Flash segment must first be selected */
- 	if (private->flash_write_state != SCARLETT2_FLASH_WRITE_STATE_SELECTED)
- 		return -EINVAL;
-@@ -9122,7 +9120,8 @@ static long scarlett2_hwdep_read(struct snd_hwdep *hw,
- 	req.offset = cpu_to_le32(*offset);
- 	req.len = cpu_to_le32(count);
- 
--	resp = kzalloc(count, GFP_KERNEL);
-+	u8 *resp __free(kfree) =
-+		kzalloc(count, GFP_KERNEL);
- 	if (!resp)
- 		return -ENOMEM;
- 
-@@ -9267,7 +9266,6 @@ static ssize_t scarlett2_devmap_read(
- 	loff_t                 pos)
- {
- 	struct usb_mixer_interface *mixer = entry->private_data;
--	u8           *resp_buf __free(kfree) = NULL;
- 	const size_t  block_size = SCARLETT2_DEVMAP_BLOCK_SIZE;
- 	size_t        copied = 0;
- 
-@@ -9277,7 +9275,8 @@ static ssize_t scarlett2_devmap_read(
- 	if (pos + count > entry->size)
- 		count = entry->size - pos;
- 
--	resp_buf = kmalloc(block_size, GFP_KERNEL);
-+	u8 *resp_buf __free(kfree) =
-+		kmalloc(block_size, GFP_KERNEL);
- 	if (!resp_buf)
- 		return -ENOMEM;
- 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 2d9f28558874c..4f9d19bf1ccac 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -555,7 +555,6 @@ int snd_usb_create_quirk(struct snd_usb_audio *chip,
- static int snd_usb_extigy_boot_quirk(struct usb_device *dev, struct usb_interface *intf)
- {
- 	struct usb_host_config *config = dev->actconfig;
--	struct usb_device_descriptor *new_device_descriptor __free(kfree) = NULL;
- 	int err;
- 
- 	if (le16_to_cpu(get_cfg_desc(config)->wTotalLength) == EXTIGY_FIRMWARE_SIZE_OLD ||
-@@ -566,8 +565,8 @@ static int snd_usb_extigy_boot_quirk(struct usb_device *dev, struct usb_interfac
- 				      0x10, 0x43, 0x0001, 0x000a, NULL, 0);
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error sending boot message: %d\n", err);
--
--		new_device_descriptor = kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
-+		struct usb_device_descriptor *new_device_descriptor __free(kfree) =
-+			kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
- 		if (!new_device_descriptor)
- 			return -ENOMEM;
- 		err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
-@@ -910,7 +909,6 @@ static void mbox2_setup_48_24_magic(struct usb_device *dev)
- static int snd_usb_mbox2_boot_quirk(struct usb_device *dev)
- {
- 	struct usb_host_config *config = dev->actconfig;
--	struct usb_device_descriptor *new_device_descriptor __free(kfree) = NULL;
- 	int err;
- 	u8 bootresponse[0x12];
- 	int fwsize;
-@@ -945,7 +943,8 @@ static int snd_usb_mbox2_boot_quirk(struct usb_device *dev)
- 
- 	dev_dbg(&dev->dev, "device initialised!\n");
- 
--	new_device_descriptor = kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
-+	struct usb_device_descriptor *new_device_descriptor __free(kfree) =
-+		kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
- 	if (!new_device_descriptor)
- 		return -ENOMEM;
- 
-@@ -1267,7 +1266,6 @@ static void mbox3_setup_defaults(struct usb_device *dev)
- static int snd_usb_mbox3_boot_quirk(struct usb_device *dev)
- {
- 	struct usb_host_config *config = dev->actconfig;
--	struct usb_device_descriptor *new_device_descriptor __free(kfree) = NULL;
- 	int err;
- 	int descriptor_size;
- 
-@@ -1280,7 +1278,8 @@ static int snd_usb_mbox3_boot_quirk(struct usb_device *dev)
- 
- 	dev_dbg(&dev->dev, "MBOX3: device initialised!\n");
- 
--	new_device_descriptor = kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
-+	struct usb_device_descriptor *new_device_descriptor __free(kfree) =
-+		kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
- 	if (!new_device_descriptor)
- 		return -ENOMEM;
- 
+-		if ((!rate || rate == target_rate) && width == target_width) {
++		if ((!rate || rate == target_rate) && (!width || width == target_width)) {
+ 			unsigned int usage = sdca_range(range, SDCA_USAGE_NUMBER, i);
+ 			unsigned int reg = SDW_SDCA_CTL(function->desc->adr,
+ 							entity->id, sel, 0);
 -- 
 2.51.0
 
