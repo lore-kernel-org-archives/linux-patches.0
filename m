@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C4E2BAF7;
-	Wed, 25 Feb 2026 01:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7392BAF7;
+	Wed, 25 Feb 2026 01:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983066; cv=none; b=C+o5r+ixmFtldwi8DNLLmtdrpyg3T6Hpv52b87OktCyXcWdQ5XD/cWKDeju4OAgGIa3pq/Szu83VAn0RXs2a1vwiJFEL6dKV33Xco4fziRAk2B2/oCMsrRCGe7mLjHOgDsW8lkExHQ/i+oR3VQkxhwF8Ls8Vt5udjRhLwVhojbg=
+	t=1771983067; cv=none; b=epwebdKPaCsFZoY7w7IewpKNlmpI2OPO6F0yOaTqfvpDDbFwrFyPLsqQlZwoYEk5nQ++mi7r1ZmfzUXK5ppJTnqcObMPuUx2plU+hUZRg4EwAe3t3vaROlmnLc5yX59dRwojhxReP+EwfcEmLmw4yeOL2vytNRWSaTExJbhb31c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983066; c=relaxed/simple;
-	bh=g6cKZZLGmyH0iRqPCR6lfX+i8VavCR3Y+28n2TvZhvs=;
+	s=arc-20240116; t=1771983067; c=relaxed/simple;
+	bh=IrPOJ8OdZXN1KXM4DAvYTLX+PTJEcy138PAvSo76i7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0FwlGDBPnoSEhtQqLIfOFF840HaCHkpk14gBecnAQo0RKTlWRC2X36nee1i14sojzNuLGDJUZReO32P+oPzpXWWSj1NRekVCSu6TCI9Stf8IvzGmRoJqtvnRV0gP8QVcti6gilkjSMVtSdMfVRP5yLG71SyYu8Gb+BaXH3PtNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maPVpqeY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FwUVSIc2rup3l/x7ycaplKnKUP9deKpezL1QlK3iCdDQlQJaI+AXc44PrGqdzXmxZEcFdH2jT1uhetxqefZLHEUiN7twUvAA53OpDtKMETJNBdUnweuzelVqjEQhPMkeRs78G1k1kCqzZhdbMAgbMH85S2rH1UiFG8a73yi/51Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSNAR2ZL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maPVpqeY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14112C116D0;
-	Wed, 25 Feb 2026 01:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSNAR2ZL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5DEC116D0;
+	Wed, 25 Feb 2026 01:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983066;
-	bh=g6cKZZLGmyH0iRqPCR6lfX+i8VavCR3Y+28n2TvZhvs=;
+	s=korg; t=1771983067;
+	bh=IrPOJ8OdZXN1KXM4DAvYTLX+PTJEcy138PAvSo76i7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=maPVpqeY0KWEugCxxNZbaEmE/C01iM5gqGTyBAnOaeYEYRgBmPIePCPPi38x2+BNG
-	 Cbw1guaIgXae/N2mzszgkhiYGujuaE3Sul7NGcuCnUt/2uktIv4ygO3tX3yqCrdTUN
-	 1nOZdu6266O6iXCS7JK6ZkRiJD240En1nYyLAMBo=
+	b=QSNAR2ZLxDJHfu61aSxJw7pFikxUobDSIuOX799yWnUMTO5o8K/01ngGtnH5Sm5sr
+	 VNAIgxcVCGYv/99j7jfx4rXuaiTvJgcPAENsyXJIVFb5UMhDkuffSjZxYJjlxnF8Zb
+	 U5r5dyoqX/Fag/PSGvze42c959G3wXKn7Z8FQyEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Ser <contact@emersion.fr>,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Daniel Stone <daniels@collabora.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Sebastian Wick <sebastian.wick@redhat.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Chris J Arges <carges@cloudflare.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 229/781] drm/atomic: convert drm_atomic_get_{old, new}_colorop_state() into proper functions
-Date: Tue, 24 Feb 2026 17:15:38 -0800
-Message-ID: <20260225012405.329276720@linuxfoundation.org>
+Subject: [PATCH 6.19 230/781] ima: Fix stack-out-of-bounds in is_bprm_creds_for_exec()
+Date: Tue, 24 Feb 2026 17:15:39 -0800
+Message-ID: <20260225012405.352917102@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -56,210 +51,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Chris J Arges <carges@cloudflare.com>
 
-[ Upstream commit e05b08d7d0162cf77fff119367fb1a2d5ab3e669 ]
+[ Upstream commit 377cae9851e8559e9d8b82a78c1ac0abeb18839c ]
 
-There is no real reason to include drm_colorop.h from drm_atomic.h, as
-drm_atomic_get_{old,new}_colorop_state() have no real reason to be
-static inline.
+KASAN reported a stack-out-of-bounds access in ima_appraise_measurement
+from is_bprm_creds_for_exec:
 
-Convert the static inlines to proper functions, and drop the include to
-reduce the include dependencies and improve data hiding.
+BUG: KASAN: stack-out-of-bounds in ima_appraise_measurement+0x12dc/0x16a0
+ Read of size 1 at addr ffffc9000160f940 by task sudo/550
+The buggy address belongs to stack of task sudo/550
+and is located at offset 24 in frame:
+  ima_appraise_measurement+0x0/0x16a0
+This frame has 2 objects:
+  [48, 56) 'file'
+  [80, 148) 'hash'
 
-v2: Fix vkms build failures (Alex)
+This is caused by using container_of on the *file pointer. This offset
+calculation is what triggers the stack-out-of-bounds error.
 
-Fixes: cfc27680ee20 ("drm/colorop: Introduce new drm_colorop mode object")
-Cc: Simon Ser <contact@emersion.fr>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Daniel Stone <daniels@collabora.com>
-Cc: Melissa Wen <mwen@igalia.com>
-Cc: Sebastian Wick <sebastian.wick@redhat.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Link: https://patch.msgid.link/20251219114939.1069851-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+In order to fix this, pass in a bprm_is_check boolean which can be set
+depending on how process_measurement is called. If the caller has a
+linux_binprm pointer and the function is BPRM_CHECK we can determine
+is_check and set it then. Otherwise set it to false.
+
+Fixes: 95b3cdafd7cb7 ("ima: instantiate the bprm_creds_for_exec() hook")
+
+Signed-off-by: Chris J Arges <carges@cloudflare.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/amdgpu_dm/amdgpu_dm_color.c   |  3 ++
- drivers/gpu/drm/drm_atomic.c                  | 32 +++++++++++++++
- drivers/gpu/drm/drm_atomic_helper.c           |  1 +
- .../drm/i915/display/intel_display_types.h    |  1 +
- drivers/gpu/drm/vkms/vkms_composer.c          |  1 +
- drivers/gpu/drm/vkms/vkms_drv.c               |  1 +
- include/drm/drm_atomic.h                      | 39 ++++---------------
- 7 files changed, 47 insertions(+), 31 deletions(-)
+ security/integrity/ima/ima.h          |  6 ++++--
+ security/integrity/ima/ima_appraise.c | 16 +++-------------
+ security/integrity/ima/ima_main.c     | 22 +++++++++++++---------
+ 3 files changed, 20 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
-index 1dcc79b35225f..20a76d81d532d 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
-@@ -23,6 +23,9 @@
-  * Authors: AMD
+diff --git a/security/integrity/ima/ima.h b/security/integrity/ima/ima.h
+index e3d71d8d56e38..89ebe98ffc5e5 100644
+--- a/security/integrity/ima/ima.h
++++ b/security/integrity/ima/ima.h
+@@ -441,7 +441,8 @@ int ima_check_blacklist(struct ima_iint_cache *iint,
+ int ima_appraise_measurement(enum ima_hooks func, struct ima_iint_cache *iint,
+ 			     struct file *file, const unsigned char *filename,
+ 			     struct evm_ima_xattr_data *xattr_value,
+-			     int xattr_len, const struct modsig *modsig);
++			     int xattr_len, const struct modsig *modsig,
++			     bool bprm_is_check);
+ int ima_must_appraise(struct mnt_idmap *idmap, struct inode *inode,
+ 		      int mask, enum ima_hooks func);
+ void ima_update_xattr(struct ima_iint_cache *iint, struct file *file);
+@@ -466,7 +467,8 @@ static inline int ima_appraise_measurement(enum ima_hooks func,
+ 					   const unsigned char *filename,
+ 					   struct evm_ima_xattr_data *xattr_value,
+ 					   int xattr_len,
+-					   const struct modsig *modsig)
++					   const struct modsig *modsig,
++					   bool bprm_is_check)
+ {
+ 	return INTEGRITY_UNKNOWN;
+ }
+diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
+index 5149ff4fd50d2..16c20c578ea87 100644
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -470,17 +470,6 @@ int ima_check_blacklist(struct ima_iint_cache *iint,
+ 	return rc;
+ }
+ 
+-static bool is_bprm_creds_for_exec(enum ima_hooks func, struct file *file)
+-{
+-	struct linux_binprm *bprm;
+-
+-	if (func == BPRM_CHECK) {
+-		bprm = container_of(&file, struct linux_binprm, file);
+-		return bprm->is_check;
+-	}
+-	return false;
+-}
+-
+ /*
+  * ima_appraise_measurement - appraise file measurement
   *
-  */
-+
-+#include <drm/drm_colorop.h>
-+
- #include "amdgpu.h"
- #include "amdgpu_mode.h"
- #include "amdgpu_dm.h"
-diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-index 67e095e398a34..06f0205664fc5 100644
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -641,6 +641,38 @@ drm_atomic_get_colorop_state(struct drm_atomic_state *state,
+@@ -492,7 +481,8 @@ static bool is_bprm_creds_for_exec(enum ima_hooks func, struct file *file)
+ int ima_appraise_measurement(enum ima_hooks func, struct ima_iint_cache *iint,
+ 			     struct file *file, const unsigned char *filename,
+ 			     struct evm_ima_xattr_data *xattr_value,
+-			     int xattr_len, const struct modsig *modsig)
++			     int xattr_len, const struct modsig *modsig,
++			     bool bprm_is_check)
+ {
+ 	static const char op[] = "appraise_data";
+ 	int audit_msgno = AUDIT_INTEGRITY_DATA;
+@@ -514,7 +504,7 @@ int ima_appraise_measurement(enum ima_hooks func, struct ima_iint_cache *iint,
+ 	 * of the script interpreter(userspace). Differentiate kernel and
+ 	 * userspace enforced integrity audit messages.
+ 	 */
+-	if (is_bprm_creds_for_exec(func, file))
++	if (bprm_is_check)
+ 		audit_msgno = AUDIT_INTEGRITY_USERSPACE;
+ 
+ 	/* If reading the xattr failed and there's no modsig, error out. */
+diff --git a/security/integrity/ima/ima_main.c b/security/integrity/ima/ima_main.c
+index 5770cf691912a..1d6229b156fb1 100644
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -236,7 +236,8 @@ static void ima_file_free(struct file *file)
+ static int process_measurement(struct file *file, const struct cred *cred,
+ 			       struct lsm_prop *prop, char *buf, loff_t size,
+ 			       int mask, enum ima_hooks func,
+-			       enum kernel_read_file_id read_id)
++			       enum kernel_read_file_id read_id,
++			       bool bprm_is_check)
+ {
+ 	struct inode *real_inode, *inode = file_inode(file);
+ 	struct ima_iint_cache *iint = NULL;
+@@ -426,7 +427,8 @@ static int process_measurement(struct file *file, const struct cred *cred,
+ 			inode_lock(inode);
+ 			rc = ima_appraise_measurement(func, iint, file,
+ 						      pathname, xattr_value,
+-						      xattr_len, modsig);
++						      xattr_len, modsig,
++						      bprm_is_check);
+ 			inode_unlock(inode);
+ 		}
+ 		if (!rc)
+@@ -493,14 +495,15 @@ static int ima_file_mmap(struct file *file, unsigned long reqprot,
+ 
+ 	if (reqprot & PROT_EXEC) {
+ 		ret = process_measurement(file, current_cred(), &prop, NULL,
+-					  0, MAY_EXEC, MMAP_CHECK_REQPROT, 0);
++					  0, MAY_EXEC, MMAP_CHECK_REQPROT, 0,
++					  false);
+ 		if (ret)
+ 			return ret;
+ 	}
+ 
+ 	if (prot & PROT_EXEC)
+ 		return process_measurement(file, current_cred(), &prop, NULL,
+-					   0, MAY_EXEC, MMAP_CHECK, 0);
++					   0, MAY_EXEC, MMAP_CHECK, 0, false);
+ 
+ 	return 0;
  }
- EXPORT_SYMBOL(drm_atomic_get_colorop_state);
+@@ -584,7 +587,8 @@ static int ima_bprm_check(struct linux_binprm *bprm)
  
-+/**
-+ * drm_atomic_get_old_colorop_state - get colorop state, if it exists
-+ * @state: global atomic state object
-+ * @colorop: colorop to grab
-+ *
-+ * This function returns the old colorop state for the given colorop, or
-+ * NULL if the colorop is not part of the global atomic state.
-+ */
-+struct drm_colorop_state *
-+drm_atomic_get_old_colorop_state(struct drm_atomic_state *state,
-+				 struct drm_colorop *colorop)
-+{
-+	return state->colorops[drm_colorop_index(colorop)].old_state;
-+}
-+EXPORT_SYMBOL(drm_atomic_get_old_colorop_state);
-+
-+/**
-+ * drm_atomic_get_new_colorop_state - get colorop state, if it exists
-+ * @state: global atomic state object
-+ * @colorop: colorop to grab
-+ *
-+ * This function returns the new colorop state for the given colorop, or
-+ * NULL if the colorop is not part of the global atomic state.
-+ */
-+struct drm_colorop_state *
-+drm_atomic_get_new_colorop_state(struct drm_atomic_state *state,
-+				 struct drm_colorop *colorop)
-+{
-+	return state->colorops[drm_colorop_index(colorop)].new_state;
-+}
-+EXPORT_SYMBOL(drm_atomic_get_new_colorop_state);
-+
- static bool
- plane_switching_crtc(const struct drm_plane_state *old_plane_state,
- 		     const struct drm_plane_state *new_plane_state)
-diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index 5beea645035f2..cc1f0c102414f 100644
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -34,6 +34,7 @@
- #include <drm/drm_atomic_uapi.h>
- #include <drm/drm_blend.h>
- #include <drm/drm_bridge.h>
-+#include <drm/drm_colorop.h>
- #include <drm/drm_damage_helper.h>
- #include <drm/drm_device.h>
- #include <drm/drm_drv.h>
-diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
-index 06bf8f7c0989b..6e26751e8d0e3 100644
---- a/drivers/gpu/drm/i915/display/intel_display_types.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_types.h
-@@ -34,6 +34,7 @@
- #include <drm/display/drm_dp_tunnel.h>
- #include <drm/display/drm_dsc.h>
- #include <drm/drm_atomic.h>
-+#include <drm/drm_colorop.h>
- #include <drm/drm_crtc.h>
- #include <drm/drm_encoder.h>
- #include <drm/drm_framebuffer.h>
-diff --git a/drivers/gpu/drm/vkms/vkms_composer.c b/drivers/gpu/drm/vkms/vkms_composer.c
-index 3cf3f26e0d8ea..cd85de4ffd03d 100644
---- a/drivers/gpu/drm/vkms/vkms_composer.c
-+++ b/drivers/gpu/drm/vkms/vkms_composer.c
-@@ -5,6 +5,7 @@
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_blend.h>
-+#include <drm/drm_colorop.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_fixed.h>
- #include <drm/drm_gem_framebuffer_helper.h>
-diff --git a/drivers/gpu/drm/vkms/vkms_drv.c b/drivers/gpu/drm/vkms/vkms_drv.c
-index dd1402f437736..434c295f44ba6 100644
---- a/drivers/gpu/drm/vkms/vkms_drv.c
-+++ b/drivers/gpu/drm/vkms/vkms_drv.c
-@@ -17,6 +17,7 @@
- #include <drm/drm_gem.h>
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
-+#include <drm/drm_colorop.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_fbdev_shmem.h>
- #include <drm/drm_file.h>
-diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
-index 43783891d3594..ff1fecd30478a 100644
---- a/include/drm/drm_atomic.h
-+++ b/include/drm/drm_atomic.h
-@@ -30,7 +30,6 @@
- 
- #include <drm/drm_crtc.h>
- #include <drm/drm_util.h>
--#include <drm/drm_colorop.h>
- 
- /**
-  * struct drm_crtc_commit - track modeset commits on a CRTC
-@@ -707,6 +706,14 @@ drm_atomic_get_plane_state(struct drm_atomic_state *state,
- struct drm_colorop_state *
- drm_atomic_get_colorop_state(struct drm_atomic_state *state,
- 			     struct drm_colorop *colorop);
-+
-+struct drm_colorop_state *
-+drm_atomic_get_old_colorop_state(struct drm_atomic_state *state,
-+				 struct drm_colorop *colorop);
-+struct drm_colorop_state *
-+drm_atomic_get_new_colorop_state(struct drm_atomic_state *state,
-+				 struct drm_colorop *colorop);
-+
- struct drm_connector_state * __must_check
- drm_atomic_get_connector_state(struct drm_atomic_state *state,
- 			       struct drm_connector *connector);
-@@ -803,36 +810,6 @@ drm_atomic_get_new_plane_state(const struct drm_atomic_state *state,
- 	return state->planes[drm_plane_index(plane)].new_state;
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement(bprm->file, current_cred(),
+-				   &prop, NULL, 0, MAY_EXEC, BPRM_CHECK, 0);
++				   &prop, NULL, 0, MAY_EXEC, BPRM_CHECK, 0,
++				   bprm->is_check);
  }
  
--/**
-- * drm_atomic_get_old_colorop_state - get colorop state, if it exists
-- * @state: global atomic state object
-- * @colorop: colorop to grab
-- *
-- * This function returns the old colorop state for the given colorop, or
-- * NULL if the colorop is not part of the global atomic state.
-- */
--static inline struct drm_colorop_state *
--drm_atomic_get_old_colorop_state(struct drm_atomic_state *state,
--				 struct drm_colorop *colorop)
--{
--	return state->colorops[drm_colorop_index(colorop)].old_state;
--}
--
--/**
-- * drm_atomic_get_new_colorop_state - get colorop state, if it exists
-- * @state: global atomic state object
-- * @colorop: colorop to grab
-- *
-- * This function returns the new colorop state for the given colorop, or
-- * NULL if the colorop is not part of the global atomic state.
-- */
--static inline struct drm_colorop_state *
--drm_atomic_get_new_colorop_state(struct drm_atomic_state *state,
--				 struct drm_colorop *colorop)
--{
--	return state->colorops[drm_colorop_index(colorop)].new_state;
--}
--
  /**
-  * drm_atomic_get_old_connector_state - get connector state, if it exists
-  * @state: global atomic state object
+@@ -614,7 +618,7 @@ static int ima_creds_check(struct linux_binprm *bprm, const struct file *file)
+ 
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement((struct file *)file, bprm->cred, &prop, NULL,
+-				   0, MAY_EXEC, CREDS_CHECK, 0);
++				   0, MAY_EXEC, CREDS_CHECK, 0, false);
+ }
+ 
+ /**
+@@ -662,7 +666,7 @@ static int ima_file_check(struct file *file, int mask)
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement(file, current_cred(), &prop, NULL, 0,
+ 				   mask & (MAY_READ | MAY_WRITE | MAY_EXEC |
+-					   MAY_APPEND), FILE_CHECK, 0);
++					   MAY_APPEND), FILE_CHECK, 0, false);
+ }
+ 
+ static int __ima_inode_hash(struct inode *inode, struct file *file, char *buf,
+@@ -881,7 +885,7 @@ static int ima_read_file(struct file *file, enum kernel_read_file_id read_id,
+ 	func = read_idmap[read_id] ?: FILE_CHECK;
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement(file, current_cred(), &prop, NULL, 0,
+-				   MAY_READ, func, 0);
++				   MAY_READ, func, 0, false);
+ }
+ 
+ const int read_idmap[READING_MAX_ID] = {
+@@ -925,7 +929,7 @@ static int ima_post_read_file(struct file *file, char *buf, loff_t size,
+ 	func = read_idmap[read_id] ?: FILE_CHECK;
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement(file, current_cred(), &prop, buf, size,
+-				   MAY_READ, func, read_id);
++				   MAY_READ, func, read_id, false);
+ }
+ 
+ /**
 -- 
 2.51.0
 
