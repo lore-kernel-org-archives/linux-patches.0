@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5EC21D596;
-	Wed, 25 Feb 2026 01:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051C14369A;
+	Wed, 25 Feb 2026 01:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982941; cv=none; b=tOSmN0kj1A3A5DQCo3SDiraNu4LE5/N2NH2pW3vwTDLB4bz6aNU+JDsAkLxXQiGm+6ZlmRV9rSzLXlxgWvXukuFvAMr8wt9e8r2s64RPQ7bkghMazjT2q17rjJ8dBui/5MfxyeBMGU/1spdo75wMnXTJkhvWixW9yC2+zKsq2PQ=
+	t=1771982942; cv=none; b=UD+PIjlIYm06kbt1COcm5TwvUVsWuTcm2Saf6StOkeMn7nqUSdg3eGCqDTSdHZRqAXVGGeMz/RT718C0sutKy7S6DPeJC/TszE4AKKgZrueVqoYVvcejf3aq3UhE0pzJ67YOW00HdfGGN8skx9a/OvKJz6M06dbaUy7EWJTxE8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982941; c=relaxed/simple;
-	bh=KtBmzHG/mp8gR8R4CleJHrol3IReU7gM0WrDhOyp1Hk=;
+	s=arc-20240116; t=1771982942; c=relaxed/simple;
+	bh=6JfrC9Z1TuOkGSHfCin5dt2YIrmReTxnLyDo444llU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjOReACDjLQD1DohXiL7ytgz2e6WLCi3tA5M1eC5dS9ku20fprBQ6mXA02ETEh2lr4Wgnw53glMPf5zspjWv7BghpzQ7lVkwILVZHUvOV4UhPTdpaAOU9a+hPvKq+un8sMAGyVh80g+cALNQ4jqhXakmIoeXv4imrZjlUrDUbdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J093RIB8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kZ4mZD/VbJTXxDqAuE/kl6wNpttMNF02AcRzh0ZyHamv8GI+F69RiTzq3Z2yURA1NBkiEqWQOZJTeA5dbssP+cg119+5cu43gtl0zq3olVTl7NXbbWVvhy5/LAapyegR9NDpbROTDfwt0lG9OImaL7TYag5gBWUbXvfnoTbts+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dygY+3y5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J093RIB8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6302C116D0;
-	Wed, 25 Feb 2026 01:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dygY+3y5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0872C116D0;
+	Wed, 25 Feb 2026 01:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982940;
-	bh=KtBmzHG/mp8gR8R4CleJHrol3IReU7gM0WrDhOyp1Hk=;
+	s=korg; t=1771982941;
+	bh=6JfrC9Z1TuOkGSHfCin5dt2YIrmReTxnLyDo444llU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J093RIB8u0kvIY0w3DMH/+RVQ2ZZA991kSBVWko24W/qxZw+4d6mzN6WoCX10g22l
-	 pN2mYJwGozMIEGzXHLXbyCWTf78Eax7rssU+U6t6cfaOD+S3G+zddVmJBJeBgyidOr
-	 ZbJuEs3SM8IVREu8MJpYE7sRbKpdesJTfNUq6e7Q=
+	b=dygY+3y5Nmffx4u5F5eTP2btQpGt6zql7HN+Vu4kW1g/rIFfvon9HejsZAhuJlOz2
+	 q6T8nYlhI053YZkzm6p+oqFC6y7qVRKmlJ6Q2ZIyi8tPOV0DQER8gUa0fwBKVZh1xd
+	 /iY//stypPAd2vIg+2mjTQbhf/a+pjHQfkyGbLsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaxiong Tian <tianyaxiong@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 064/781] cpufreq: intel_pstate: Enable asym capacity only when CPU SMT is not possible
-Date: Tue, 24 Feb 2026 17:12:53 -0800
-Message-ID: <20260225012401.274733255@linuxfoundation.org>
+Subject: [PATCH 6.19 113/781] selftests/bpf: Fix kprobe multi stacktrace_ips test
+Date: Tue, 24 Feb 2026 17:13:42 -0800
+Message-ID: <20260225012402.449481338@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,48 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yaxiong Tian <tianyaxiong@kylinos.cn>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 1fedbb589448bee9f20bb2ed9c850d1d2cf9963c ]
+[ Upstream commit 0207f94971e72a13380e28022c86da147e8e090f ]
 
-According to the description in the intel_pstate.rst documentation,
-Capacity-Aware Scheduling and Energy-Aware Scheduling are only
-supported on a hybrid processor without SMT. Previously, the system
-used sched_smt_active() for judgment, which is not a strict condition
-because users can switch it on or off via /sys at any time.
+We now include the attached function in the stack trace,
+fixing the test accordingly.
 
-This could lead to incorrect driver settings in certain scenarios.
-For example, on a CPU that supports SMT, a user can disable SMT
-via the nosmt parameter to enable asym capacity, and then re-enable
-SMT via /sys. In such cases, some settings in the driver would no
-longer be correct.
-
-To address this issue, replace sched_smt_active() with cpu_smt_possible(),
-and only enable asym capacity when CPU SMT is not possible.
-
-Fixes: 929ebc93ccaa ("cpufreq: intel_pstate: Set asymmetric CPU capacity on hybrid systems")
-Signed-off-by: Yaxiong Tian <tianyaxiong@kylinos.cn>
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20260203024852.301066-1-tianyaxiong@kylinos.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: c9e208fa93cd ("selftests/bpf: Add stacktrace ips test for kprobe_multi/kretprobe_multi")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260126211837.472802-4-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/intel_pstate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../selftests/bpf/prog_tests/stacktrace_ips.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index ec4abe3745736..1625ec2d0d06a 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -1161,7 +1161,7 @@ static void hybrid_init_cpu_capacity_scaling(bool refresh)
- 	 * the capacity of SMT threads is not deterministic even approximately,
- 	 * do not do that when SMT is in use.
- 	 */
--	if (hwp_is_hybrid && !sched_smt_active() && arch_enable_hybrid_capacity_scale()) {
-+	if (hwp_is_hybrid && !cpu_smt_possible() && arch_enable_hybrid_capacity_scale()) {
- 		hybrid_refresh_cpu_capacity_scaling();
- 		/*
- 		 * Disabling ITMT causes sched domains to be rebuilt to disable asym
+diff --git a/tools/testing/selftests/bpf/prog_tests/stacktrace_ips.c b/tools/testing/selftests/bpf/prog_tests/stacktrace_ips.c
+index c9efdd2a5b18a..c93718dafd9b6 100644
+--- a/tools/testing/selftests/bpf/prog_tests/stacktrace_ips.c
++++ b/tools/testing/selftests/bpf/prog_tests/stacktrace_ips.c
+@@ -74,11 +74,20 @@ static void test_stacktrace_ips_kprobe_multi(bool retprobe)
+ 
+ 	load_kallsyms();
+ 
+-	check_stacktrace_ips(bpf_map__fd(skel->maps.stackmap), skel->bss->stack_key, 4,
+-			     ksym_get_addr("bpf_testmod_stacktrace_test_3"),
+-			     ksym_get_addr("bpf_testmod_stacktrace_test_2"),
+-			     ksym_get_addr("bpf_testmod_stacktrace_test_1"),
+-			     ksym_get_addr("bpf_testmod_test_read"));
++	if (retprobe) {
++		check_stacktrace_ips(bpf_map__fd(skel->maps.stackmap), skel->bss->stack_key, 4,
++				     ksym_get_addr("bpf_testmod_stacktrace_test_3"),
++				     ksym_get_addr("bpf_testmod_stacktrace_test_2"),
++				     ksym_get_addr("bpf_testmod_stacktrace_test_1"),
++				     ksym_get_addr("bpf_testmod_test_read"));
++	} else {
++		check_stacktrace_ips(bpf_map__fd(skel->maps.stackmap), skel->bss->stack_key, 5,
++				     ksym_get_addr("bpf_testmod_stacktrace_test"),
++				     ksym_get_addr("bpf_testmod_stacktrace_test_3"),
++				     ksym_get_addr("bpf_testmod_stacktrace_test_2"),
++				     ksym_get_addr("bpf_testmod_stacktrace_test_1"),
++				     ksym_get_addr("bpf_testmod_test_read"));
++	}
+ 
+ cleanup:
+ 	stacktrace_ips__destroy(skel);
 -- 
 2.51.0
 
