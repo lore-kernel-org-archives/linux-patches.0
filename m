@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96D120C012;
-	Wed, 25 Feb 2026 01:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D503248886;
+	Wed, 25 Feb 2026 01:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983348; cv=none; b=tjKgS2HKMSKCRc1eCemjtYRsGImo872eILEA2jh43wj1KuzlWSdw9MF7WnJsFFvLHQcVL4izpLFCVtABlKhWl+rZYCrnj1ufeddtg3bY679koANd17JATxZzc1EXFSpw9cVitrpycHF61yMa1lLHujntqhLk3Nh0luoiDdd7rrY=
+	t=1771983349; cv=none; b=Ue7VZLeDzmQyCKA4C/SA3Du+kgKVrhhoAnUk8U2ZAJ+PBBiKreSEqhyDjZvj1H/XsWBRxInkGATYJ4fA2tdOpBTMNxKIowVoepjIPUt75IspUSKbaamN5ex49def1TLLAsIxCeknsPbB0eAMU3S4jr2F8FkeCeWipp307cKdOxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983348; c=relaxed/simple;
-	bh=WZNcfxH7l1TeOlHRydgQH99b+K/CK/aRWqei4eDctYo=;
+	s=arc-20240116; t=1771983349; c=relaxed/simple;
+	bh=0cyLp9iaQmDNcv77rnPqUKjXCuKCc+g1mDc7gwhoHc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K5I0RWxg+Sewe5wPXP6aXwCR3LW+cSFZ8iV5Y+GO/wsdxR/4DXGm8+n0Vit2AP++vWGDGDJ87qNzgCv2b1R66eriHc/WsbGiBCZEQ78qoXDq2uNZmpVWPu+8B/FoW0QJ23HZNY0wF5ei+jF/EqzIXdG4w5DzjFJzMC/SqPAN4HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfVPiNqb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h4XEyjgbmTOmHAlN9hLcUKk8qhqd5nJJJWyGraHu4DaDP483xPzgBUtMm9t4Rny1mUJwcoPHb4cB6/FSc3mG5imVncAlLsoCBEiF+UFQAEivviqmSlYzQ8kNLQyYMPzFy+cBXnZxQ/567Duo5bAWjD9NlcMQCW7pPU49iTA4Zmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPRj4UhN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfVPiNqb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A15C116D0;
-	Wed, 25 Feb 2026 01:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPRj4UhN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16E5C116D0;
+	Wed, 25 Feb 2026 01:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983347;
-	bh=WZNcfxH7l1TeOlHRydgQH99b+K/CK/aRWqei4eDctYo=;
+	s=korg; t=1771983348;
+	bh=0cyLp9iaQmDNcv77rnPqUKjXCuKCc+g1mDc7gwhoHc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfVPiNqbo2sPGzgkVP4KGI7/d4T5PsGqUIqVG888j1h2Vlck0wUzeDAeZ8egz9e3I
-	 QG4Z7fCq/Egfaga25LIUT21efXEbWtGAZnVVrXCAZVDPOVKcmyQRWr0gqNf/HWBKeA
-	 n1JR13D4zbSNnsWLEw4HnxMp7km1rWCBQxTshzOQ=
+	b=dPRj4UhNraA4x87KbXZmH6Df+oRzSgn2ABjSwm3YfwcpC0il4v+iI2CWLRdGqtvYj
+	 IuxowywO6mzr3j4GuX6eadi0Y5t8GHTnmbO/BjsJ5+xOGbrwJFgnsJWt1fjkd/A9QT
+	 O8o0IhZHZ1I/tdvRuHzKujpVlISNRVUH3S105rRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Etienne AUJAMES <eaujames@ddn.com>,
-	Parav Pandit <parav@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 440/781] IB/cache: update gid cache on client reregister event
-Date: Tue, 24 Feb 2026 17:19:09 -0800
-Message-ID: <20260225012410.493613315@linuxfoundation.org>
+Subject: [PATCH 6.19 476/781] mtd: parsers: Fix memory leak in mtd_parser_tplink_safeloader_parse()
+Date: Tue, 24 Feb 2026 17:19:45 -0800
+Message-ID: <20260225012411.489425394@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,56 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Etienne AUJAMES <eaujames@ddn.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit ddd6c8c873e912cb1ead79def54de5e24ff71c80 ]
+[ Upstream commit 980ce2b02dd06a4fdf5fee38b2e14becf9cf7b8b ]
 
-Some HCAs (e.g: ConnectX4) do not trigger a IB_EVENT_GID_CHANGE on
-subnet prefix update from SM (PortInfo).
+The function mtd_parser_tplink_safeloader_parse() allocates buf via
+mtd_parser_tplink_safeloader_read_table(). If the allocation for
+parts[idx].name fails inside the loop, the code jumps to the err_free
+label without freeing buf, leading to a memory leak.
 
-Since the commit d58c23c92548 ("IB/core: Only update PKEY and GID caches
-on respective events"), the GID cache is updated exclusively on
-IB_EVENT_GID_CHANGE. If this event is not emitted, the subnet prefix in the
-IPoIB interface’s hardware address remains set to its default value
-(0xfe80000000000000).
+Fix this by freeing the temporary buffer buf in the err_free label.
 
-Then rdma_bind_addr() failed because it relies on hardware address to
-find the port GID (subnet_prefix + port GUID).
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-This patch fixes this issue by updating the GID cache on
-IB_EVENT_CLIENT_REREGISTER event (emitted on PortInfo::ClientReregister=1).
-
-Fixes: d58c23c92548 ("IB/core: Only update PKEY and GID caches on respective events")
-Signed-off-by: Etienne AUJAMES <eaujames@ddn.com>
-Link: https://patch.msgid.link/aVUfsO58QIDn5bGX@eaujamesFR0130
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 00a3588084be ("mtd: parsers: add TP-Link SafeLoader partitions table parser")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cache.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/parsers/tplink_safeloader.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
-index 81cf3c902e819..0fc1c5bce2f0d 100644
---- a/drivers/infiniband/core/cache.c
-+++ b/drivers/infiniband/core/cache.c
-@@ -1537,7 +1537,8 @@ static void ib_cache_event_task(struct work_struct *_work)
- 	 * the cache.
- 	 */
- 	ret = ib_cache_update(work->event.device, work->event.element.port_num,
--			      work->event.event == IB_EVENT_GID_CHANGE,
-+			      work->event.event == IB_EVENT_GID_CHANGE ||
-+			      work->event.event == IB_EVENT_CLIENT_REREGISTER,
- 			      work->event.event == IB_EVENT_PKEY_CHANGE,
- 			      work->enforce_security);
+diff --git a/drivers/mtd/parsers/tplink_safeloader.c b/drivers/mtd/parsers/tplink_safeloader.c
+index e358a029dc70c..4fcaf92d22e4f 100644
+--- a/drivers/mtd/parsers/tplink_safeloader.c
++++ b/drivers/mtd/parsers/tplink_safeloader.c
+@@ -116,6 +116,7 @@ static int mtd_parser_tplink_safeloader_parse(struct mtd_info *mtd,
+ 	return idx;
  
+ err_free:
++	kfree(buf);
+ 	for (idx -= 1; idx >= 0; idx--)
+ 		kfree(parts[idx].name);
+ err_free_parts:
 -- 
 2.51.0
 
