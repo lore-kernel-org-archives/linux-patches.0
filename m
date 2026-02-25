@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439F427603A;
-	Wed, 25 Feb 2026 01:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5716826E6F4;
+	Wed, 25 Feb 2026 01:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983773; cv=none; b=C83z09lbaFOJEiUaBDnkZuX9uCwfiSDkTVX6bo66FatSyqXDbFLzAhhoqvtnPIo/TuXTOCr+ulSxUVffS73DsMaTvH61XC98Dx8VTQDYQ7sANzgjnK2hZuaU+QMG8HFBNMIuwExCVRRUhHwfuW9hiYFN71nkZEAHKNvf67Xq8R0=
+	t=1771983774; cv=none; b=hATl6yUAl+y/Ysm0uJhNPfWyIf2F71KewZQI9QNd6Ye8PtxAaAJigrU6EoevrthSfoZYexLlqDrMensVBn2pbWZT9PVUQfG7GLDm3kdvDosNnERMEud1uEvLt4gkk+MWbRfk3/GciPAKhGq0jVdEtavCr3WrnAUCntMfN4QZI5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983773; c=relaxed/simple;
-	bh=hHljI9zu/7ApduK2xY6MufKtUKdP3+zty8iKq+2ViFw=;
+	s=arc-20240116; t=1771983774; c=relaxed/simple;
+	bh=Vo2yMwofN9BgMIfLlhg2Ifh8OEKxwyfgPWW4GHk/bOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WylV9RZaDX0jJ1cGVKPGQTDJdmzi2qzDjO4J/DUUKMYdaryJiqMUluaoD4opRtCBEat/g2XICdlGlwegbNWxxYk6c7P579DDmaTIOrgSFR5cPipSzsy10PElhUGJ9+dKFaVuukmiHmXUrx/7RYUWsOIx3MHHnWyIKdmkbbblY18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kg05cXiv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4sEyWJ3He9Q7VfmnqKmKf0FbE+568EBe8hr4rLxWr39CbD1k5OpIODsf3SRl8RW4Q+VgEdGHyisnC+OdtU9bnchgjo6JGjVaHF3WNuY+9cHhxsAioNHQYuCWO+nCDOV1Ex+BhRzRRiMQe6gLMzF1mPpI5yAV8m+5sAdjvdzH4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bu1IU2wR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kg05cXiv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4365C19424;
-	Wed, 25 Feb 2026 01:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bu1IU2wR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F03AC116D0;
+	Wed, 25 Feb 2026 01:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983772;
-	bh=hHljI9zu/7ApduK2xY6MufKtUKdP3+zty8iKq+2ViFw=;
+	s=korg; t=1771983774;
+	bh=Vo2yMwofN9BgMIfLlhg2Ifh8OEKxwyfgPWW4GHk/bOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kg05cXivkYp5KEhiaUxYQNmqyeHZKPj3pyw+6uTBElh7rezpNLS/NL+mTGyCOrTZQ
-	 s9Pl7tLCfIf+MIGRzvCFX0JwaJIUkFh2nDC6HWS09znR5h9Hq0P78UtHCRn/18Z/B+
-	 jnBtrWoxYhpRgBiwtZqkAzNR+vorm6tqi14tdofQ=
+	b=bu1IU2wR7iM39W+Zk6fanzNfg6H5US+YP4cu1SCBV1PYHBJujg5kDGeCuvAcz2P2s
+	 PfSRJRV2a0JZe3XEYVpwfHRBThBCY6iCUXboKwy4jZwFypgZx4d90XdILsX0XDGeAY
+	 N6kHWZKIUJWaCK7VivmGyyNmVgOyPYSrDbLtP508=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	x86@kernel.org,
+	Sandipan Das <sandipan.das@amd.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Mingwei Zhang <mizhang@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Xudong Hao <xudong.hao@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 063/641] x86/cpu/amd: Correct the microcode table for Zenbleed
-Date: Tue, 24 Feb 2026 17:16:29 -0800
-Message-ID: <20260225012350.579345028@linuxfoundation.org>
+Subject: [PATCH 6.18 064/641] perf/x86/core: Do not set bit width for unavailable counters
+Date: Tue, 24 Feb 2026 17:16:30 -0800
+Message-ID: <20260225012350.605534549@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,82 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit fb7bfa31b8e8569f154f2fe0ea6c2f03c0f087aa ]
+[ Upstream commit b456a6ba5756b6fb7e651775343e713bd08418e7 ]
 
-The good revisions are tied to exact steppings, meaning it's not valid to
-match on model number alone, let alone a range.
+Not all x86 processors have fixed counters. It may also be the case that
+a processor has only fixed counters and no general-purpose counters. Set
+the bit widths corresponding to each counter type only if such counters
+are available.
 
-This is probably only a latent issue.  From public microcode archives, the
-following CPUs exist 17-30-00, 17-60-00, 17-70-00 and would be captured by the
-model ranges.  They're likely pre-production steppings, and likely didn't get
-Zenbleed microcode, but it's still incorrect to compare them to a different
-steppings revision.
-
-Either way, convert the logic to use x86_match_min_microcode_rev(), which is
-the preferred mechanism.
-
-Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: x86@kernel.org
-Link: https://patch.msgid.link/20251126130352.880424-1-andrew.cooper3@citrix.com
+Fixes: b3d9468a8bd2 ("perf, x86: Expose perf capability to other modules")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Co-developed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Mingwei Zhang <mizhang@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Link: https://patch.msgid.link/20251206001720.468579-11-seanjc@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/amd.c | 30 +++++++++---------------------
- 1 file changed, 9 insertions(+), 21 deletions(-)
+ arch/x86/events/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index 5d46709c58d0b..a92750f3079af 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -951,26 +951,14 @@ static void init_amd_zen1(struct cpuinfo_x86 *c)
- 	}
- }
- 
--static bool cpu_has_zenbleed_microcode(void)
--{
--	u32 good_rev = 0;
--
--	switch (boot_cpu_data.x86_model) {
--	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
--	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
--	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
--	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
--	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
--
--	default:
--		return false;
--	}
--
--	if (boot_cpu_data.microcode < good_rev)
--		return false;
--
--	return true;
--}
-+static const struct x86_cpu_id amd_zenbleed_microcode[] = {
-+	ZEN_MODEL_STEP_UCODE(0x17, 0x31, 0x0, 0x0830107b),
-+	ZEN_MODEL_STEP_UCODE(0x17, 0x60, 0x1, 0x0860010c),
-+	ZEN_MODEL_STEP_UCODE(0x17, 0x68, 0x1, 0x08608107),
-+	ZEN_MODEL_STEP_UCODE(0x17, 0x71, 0x0, 0x08701033),
-+	ZEN_MODEL_STEP_UCODE(0x17, 0xa0, 0x0, 0x08a00009),
-+	{}
-+};
- 
- static void zen2_zenbleed_check(struct cpuinfo_x86 *c)
- {
-@@ -980,7 +968,7 @@ static void zen2_zenbleed_check(struct cpuinfo_x86 *c)
- 	if (!cpu_has(c, X86_FEATURE_AVX))
- 		return;
- 
--	if (!cpu_has_zenbleed_microcode()) {
-+	if (!x86_match_min_microcode_rev(amd_zenbleed_microcode)) {
- 		pr_notice_once("Zenbleed: please update your microcode for the most optimal fix\n");
- 		msr_set_bit(MSR_AMD64_DE_CFG, MSR_AMD64_DE_CFG_ZEN2_FP_BACKUP_FIX_BIT);
- 	} else {
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index dd9ff120ad437..56df4855f38e9 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -3101,8 +3101,8 @@ void perf_get_x86_pmu_capability(struct x86_pmu_capability *cap)
+ 	cap->version		= x86_pmu.version;
+ 	cap->num_counters_gp	= x86_pmu_num_counters(NULL);
+ 	cap->num_counters_fixed	= x86_pmu_num_counters_fixed(NULL);
+-	cap->bit_width_gp	= x86_pmu.cntval_bits;
+-	cap->bit_width_fixed	= x86_pmu.cntval_bits;
++	cap->bit_width_gp	= cap->num_counters_gp ? x86_pmu.cntval_bits : 0;
++	cap->bit_width_fixed	= cap->num_counters_fixed ? x86_pmu.cntval_bits : 0;
+ 	cap->events_mask	= (unsigned int)x86_pmu.events_maskl;
+ 	cap->events_mask_len	= x86_pmu.events_mask_len;
+ 	cap->pebs_ept		= x86_pmu.pebs_ept;
 -- 
 2.51.0
 
