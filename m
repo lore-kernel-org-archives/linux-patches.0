@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035C72494FE;
-	Wed, 25 Feb 2026 01:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454E726056D;
+	Wed, 25 Feb 2026 01:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983544; cv=none; b=UVkqUIbdrpUwFB/RbJB/5hpPDsjNNYT6WD0FWiG0MwAq7Xqy+B6e7J+J/CLUYxiiS4DFiPMnYlZx8tejYPrRwM6UYPm69WVDn0Y1Dy1rNmI/ObnlRUXo2hiPT9p1ddxkGKGiLDv6jUO+WN4lITP8f9DEniTUczgxoFdjNOei3Qs=
+	t=1771983545; cv=none; b=frryWIf95tOHMMjAe3N1iup6bkwKn8hgndd8ONtwOUsc9sVZNiotOvklNGeHFg51mlFdl1+LyQB62mXi/r4za49je2RqkS8QjeOlew8+iIndgw3Rflf2sizXsnB4OlHLhNfJaWcwqbi4hialFJ63TqSRP6Kx2bWvR1wTcxjpdAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983544; c=relaxed/simple;
-	bh=uZqNJvZ+STspT0v0sNDbZR5GTOwPZA1deNvEfHqduqI=;
+	s=arc-20240116; t=1771983545; c=relaxed/simple;
+	bh=RRZs6rbwyKD5SGrl7rGVgVw/ghsCHqn+dy1+4kcCPuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EGIPqaHI5Dbzwe2bU811ecnJxiE4IR3XleuzZMmtJHNKuwmiOM/Pe+9vEFuRWPAlYX8rAUFVSzER8PN3qX0E+Da0haBkVQ0A6yN42N5KH/kw/G5GkU7dsC/43NJOw5SFgToyHEdTfxmaRBesvWIo9Iw32ov+oGFykzXChVVs3TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IY24/3Hn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ky5Ba7O34TfbAK90esCgvpU1UhTFv85sJAVzUgWDRydJH80aVhm8/BuzmfBsNlotIe2bQTsSoqOciKFnJ/TB89tffTQ0VFhdWZiE8cgbVFsr80tpmEdtKiJARjfg/4fuRi5fZGCWQkwgSbqSRlYbfrCB55idMsMPAlfBa8Qd/Yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tzt5IFeI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IY24/3Hn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18E9C116D0;
-	Wed, 25 Feb 2026 01:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tzt5IFeI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0242DC116D0;
+	Wed, 25 Feb 2026 01:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983543;
-	bh=uZqNJvZ+STspT0v0sNDbZR5GTOwPZA1deNvEfHqduqI=;
+	s=korg; t=1771983545;
+	bh=RRZs6rbwyKD5SGrl7rGVgVw/ghsCHqn+dy1+4kcCPuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IY24/3HnxoQVh7zDWUppLfsgamNYERA4Q6K16CafqWeEsvpzwAxyatLRwPNMVmx2v
-	 ml+QRQPSG4VYmTksYFlGr1xihoorDKrfz5SnimLpjiLkEcX0uojQ2sFwSNYh1pyPti
-	 a+/dGrnZNeLoYypvfIRYaw68z5LJuEMWtIvyTkfU=
+	b=Tzt5IFeIj85CK+NDJKaL8ZIt9zpL4Zh0JKUXNIP2BYU/KpGqnskhdqMEFU0Q8L1II
+	 VzStXXmNZZRd7ZwB1tt3/llgTK0dgN6VrCKouy5uv2qp3TtCLbP5sD9xv1hCdBXgF7
+	 tXtKP1Y0Gxgr3O/UPluGE+YjbSLwjK2IChjn0zCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amery Hung <ameryhung@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
+	syzbot+5a0f1995634f7c1dadbf@syzkaller.appspotmail.com,
+	Anton Protopopov <a.s.protopopov@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 647/781] libbpf: Fix invalid write loop logic in bpf_linker__add_buf()
-Date: Tue, 24 Feb 2026 17:22:36 -0800
-Message-ID: <20260225012415.664357783@linuxfoundation.org>
+Subject: [PATCH 6.19 648/781] bpf: Fix a potential use-after-free of BTF object
+Date: Tue, 24 Feb 2026 17:22:37 -0800
+Message-ID: <20260225012415.688919512@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,41 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amery Hung <ameryhung@gmail.com>
+From: Anton Protopopov <a.s.protopopov@gmail.com>
 
-[ Upstream commit 04999b99e81eaa7b6223ec1c03af3bcb4ac57aaa ]
+[ Upstream commit ccd2d799ed4467c07f5ee18c2f5c59bcc990822c ]
 
-Fix bpf_linker__add_buf()'s logic of copying data from memory buffer into
-memfd. In the event of short write not writing entire buf_sz bytes into memfd
-file, we'll append bytes from the beginning of buf *again* (corrupting ELF
-file contents) instead of correctly appending the rest of not-yet-read buf
-contents.
+Refcounting in the check_pseudo_btf_id() function is incorrect:
+the __check_pseudo_btf_id() function might get called with a zero
+refcounted btf. Fix this, and patch related code accordingly.
 
-Closes: https://github.com/libbpf/libbpf/issues/945
-Fixes: 6d5e5e5d7ce1 ("libbpf: Extend linker API to support in-memory ELF files")
-Signed-off-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20260209230134.3530521-1-ameryhung@gmail.com
+v3: rephrase a comment (AI)
+v2: fix a refcount leak introduced in v1 (AI)
+
+Reported-by: syzbot+5a0f1995634f7c1dadbf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5a0f1995634f7c1dadbf
+Fixes: 76145f725532 ("bpf: Refactor check_pseudo_btf_id")
+Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
+Link: https://lore.kernel.org/r/20260209132904.63908-1-a.s.protopopov@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/linker.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 52 +++++++++++++++++++++----------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
-index f4403e3cf9946..78f92c39290af 100644
---- a/tools/lib/bpf/linker.c
-+++ b/tools/lib/bpf/linker.c
-@@ -581,7 +581,7 @@ int bpf_linker__add_buf(struct bpf_linker *linker, void *buf, size_t buf_sz,
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index c9e2e22da3309..a16aca34f5834 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -20685,29 +20685,29 @@ static int find_btf_percpu_datasec(struct btf *btf)
+ }
  
- 	written = 0;
- 	while (written < buf_sz) {
--		ret = write(fd, buf, buf_sz);
-+		ret = write(fd, buf + written, buf_sz - written);
- 		if (ret < 0) {
- 			ret = -errno;
- 			pr_warn("failed to write '%s': %s\n", filename, errstr(ret));
+ /*
+- * Add btf to the used_btfs array and return the index. (If the btf was
+- * already added, then just return the index.) Upon successful insertion
+- * increase btf refcnt, and, if present, also refcount the corresponding
+- * kernel module.
++ * Add btf to the env->used_btfs array. If needed, refcount the
++ * corresponding kernel module. To simplify caller's logic
++ * in case of error or if btf was added before the function
++ * decreases the btf refcount.
+  */
+ static int __add_used_btf(struct bpf_verifier_env *env, struct btf *btf)
+ {
+ 	struct btf_mod_pair *btf_mod;
++	int ret = 0;
+ 	int i;
+ 
+ 	/* check whether we recorded this BTF (and maybe module) already */
+ 	for (i = 0; i < env->used_btf_cnt; i++)
+ 		if (env->used_btfs[i].btf == btf)
+-			return i;
++			goto ret_put;
+ 
+ 	if (env->used_btf_cnt >= MAX_USED_BTFS) {
+ 		verbose(env, "The total number of btfs per program has reached the limit of %u\n",
+ 			MAX_USED_BTFS);
+-		return -E2BIG;
++		ret = -E2BIG;
++		goto ret_put;
+ 	}
+ 
+-	btf_get(btf);
+-
+ 	btf_mod = &env->used_btfs[env->used_btf_cnt];
+ 	btf_mod->btf = btf;
+ 	btf_mod->module = NULL;
+@@ -20716,12 +20716,18 @@ static int __add_used_btf(struct bpf_verifier_env *env, struct btf *btf)
+ 	if (btf_is_module(btf)) {
+ 		btf_mod->module = btf_try_get_module(btf);
+ 		if (!btf_mod->module) {
+-			btf_put(btf);
+-			return -ENXIO;
++			ret = -ENXIO;
++			goto ret_put;
+ 		}
+ 	}
+ 
+-	return env->used_btf_cnt++;
++	env->used_btf_cnt++;
++	return 0;
++
++ret_put:
++	/* Either error or this BTF was already added */
++	btf_put(btf);
++	return ret;
+ }
+ 
+ /* replace pseudo btf_id with kernel symbol address */
+@@ -20818,9 +20824,7 @@ static int check_pseudo_btf_id(struct bpf_verifier_env *env,
+ 
+ 	btf_fd = insn[1].imm;
+ 	if (btf_fd) {
+-		CLASS(fd, f)(btf_fd);
+-
+-		btf = __btf_get_by_fd(f);
++		btf = btf_get_by_fd(btf_fd);
+ 		if (IS_ERR(btf)) {
+ 			verbose(env, "invalid module BTF object FD specified.\n");
+ 			return -EINVAL;
+@@ -20830,17 +20834,17 @@ static int check_pseudo_btf_id(struct bpf_verifier_env *env,
+ 			verbose(env, "kernel is missing BTF, make sure CONFIG_DEBUG_INFO_BTF=y is specified in Kconfig.\n");
+ 			return -EINVAL;
+ 		}
++		btf_get(btf_vmlinux);
+ 		btf = btf_vmlinux;
+ 	}
+ 
+ 	err = __check_pseudo_btf_id(env, insn, aux, btf);
+-	if (err)
++	if (err) {
++		btf_put(btf);
+ 		return err;
++	}
+ 
+-	err = __add_used_btf(env, btf);
+-	if (err < 0)
+-		return err;
+-	return 0;
++	return __add_used_btf(env, btf);
+ }
+ 
+ static bool is_tracing_prog_type(enum bpf_prog_type type)
+@@ -24654,13 +24658,9 @@ static int add_fd_from_fd_array(struct bpf_verifier_env *env, int fd)
+ 		return 0;
+ 	}
+ 
+-	btf = __btf_get_by_fd(f);
+-	if (!IS_ERR(btf)) {
+-		err = __add_used_btf(env, btf);
+-		if (err < 0)
+-			return err;
+-		return 0;
+-	}
++	btf = btf_get_by_fd(fd);
++	if (!IS_ERR(btf))
++		return __add_used_btf(env, btf);
+ 
+ 	verbose(env, "fd %d is not pointing to valid bpf_map or btf\n", fd);
+ 	return PTR_ERR(map);
 -- 
 2.51.0
 
