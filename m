@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B9C30EF6D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C104930EF6D;
 	Wed, 25 Feb 2026 06:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002713; cv=none; b=dYzlUxQt8Z8Zw0Fhl6cJVPfGi3mgFtZXocI55f20xS13pAl5Dm9vhJKU02yzKwJZuky6g1D7V8/wp6x5QLCmedlzV3ypa1aM0wij09PZmR+guVq45zjXcWWbC4qfK9gLOU7lTKB4+sLj4gjthKdWUTm6b7Dxnt6K6VSZiyF4/JU=
+	t=1772002713; cv=none; b=WvLsN+Tm14LVDpt7/HufrRxpzPKgfrLWrnSv/4Ic+RPj+KIamOupYIK0uqwS+ak6mC/l3ldzWzWxsMfsYbsGWvUxKCCgvdQmcTqForaq/a/+PNwlBveGCkXE0E5R32pRBleASGN+bNXfO6xt03cjZbyl9gThS1CJCq78TiXbIgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002713; c=relaxed/simple;
-	bh=zSGNxFsQw+v85Z+SuYBPPS2NQrOVoDpsQnxZvbe/lvE=;
+	bh=wXwRHI4PNoqXXL7QdZexHPHv4QEkjFJoVB2fqZm5aa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BaDtoqCYw1N4bAZ9XZgwebHByB5S4BmVLQMPFiUbOTk1Ca5G9Is8H8Es2EXuJcPuUX8iaiemKXuYY5zTcgKMPAfJH44NRNhIUTKp1DaKVH1iOQ1P4Uk9BBdjkM9GEE/W88n1PyrtMKR6sCE5H7drOBPENKNa9Y5+WessdHlhxlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNj284l1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y3bzTHqh997kCEvS4Q4DC6NKmu6k7NrS+oQXTQqh5LsoR0T4L6Pow+NzGiOYnyvdKAOoDV5dgY9KXrD/xVv9YHLDvyEHnZ/oAyNW6yuB8nsWCEl6b2JjrVj317Gas7LKrqFDUQAOM9+UWhaUpSMC3f1Vv9ECd//KuZSWbFBMka8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuPVm0na; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNj284l1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF116C116D0;
-	Wed, 25 Feb 2026 06:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuPVm0na"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC86C116D0;
+	Wed, 25 Feb 2026 06:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002713;
-	bh=zSGNxFsQw+v85Z+SuYBPPS2NQrOVoDpsQnxZvbe/lvE=;
+	bh=wXwRHI4PNoqXXL7QdZexHPHv4QEkjFJoVB2fqZm5aa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNj284l10K49ujmjkinP+ikdudUBG+vMEmmv3QRDLmcHNaoExKoet3u9NDFnl29C+
-	 FQQdS95JXcEQlpwKsf4XG4YkceRUErNzDALig+Ts4q7zwX6WwsJdOgJxvvdkd4Ga7o
-	 7a4mD0jK7jGZBYRtKKf7QDnm6L0rOAZODKnVIg8c=
+	b=ZuPVm0naajertTwLNMDjlmtamhQ8LXaCeEN5icv86NaPb38D9IMcmkOwXJ5zUzwFY
+	 J4IZIYlB+KWVxSHInp2lGm3+Mi9+/Jkt3uBhsSC97yKa3zTVhyV4JIPWp+2KlhvCXu
+	 6AFY1r0HCV8yrlcNpckw02JPyVlekvqEXJhkdqKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 511/641] ovpn: fix possible use-after-free in ovpn_net_xmit
-Date: Tue, 24 Feb 2026 17:23:57 -0800
-Message-ID: <20260225012400.904983473@linuxfoundation.org>
+Subject: [PATCH 6.18 520/641] net: mscc: ocelot: split xmit into FDMA and register injection paths
+Date: Tue, 24 Feb 2026 17:24:06 -0800
+Message-ID: <20260225012401.128610734@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,111 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit a5ec7baa44ea3a1d6aa0ca31c0ad82edf9affe41 ]
+[ Upstream commit 47f79b20e7fb885aa1623b759a68e8e27401ec4d ]
 
-When building the skb_list in ovpn_net_xmit, skb_share_check will free
-the original skb if it is shared. The current implementation continues
-to use the stale skb pointer for subsequent operations:
-- peer lookup,
-- skb_dst_drop (even though all segments produced by skb_gso_segment
-  will have a dst attached),
-- ovpn_peer_stats_increment_tx.
+Split ocelot_port_xmit() into two separate functions:
+- ocelot_port_xmit_fdma(): handles the FDMA injection path
+- ocelot_port_xmit_inj(): handles the register-based injection path
 
-Fix this by moving the peer lookup and skb_dst_drop before segmentation
-so that the original skb is still valid when used. Return early if all
-segments fail skb_share_check and the list ends up empty.
-Also switch ovpn_peer_stats_increment_tx to use skb_list.next; the next
-patch fixes the stats logic.
+The top-level ocelot_port_xmit() now dispatches to the appropriate
+function based on the ocelot_fdma_enabled static key.
 
-Fixes: 08857b5ec5d9 ("ovpn: implement basic TX path (UDP)")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+This is a pure refactor with no behavioral change. Separating the two
+code paths makes each one simpler and prepares for adding proper locking
+to the register injection path without affecting the FDMA path.
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20260208225602.1339325-3-n7l8m4@u.northwestern.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 026f6513c588 ("net: mscc: ocelot: add missing lock protection in ocelot_port_xmit_inj()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/io.c | 52 ++++++++++++++++++++++++++-----------------
- 1 file changed, 31 insertions(+), 21 deletions(-)
+ drivers/net/ethernet/mscc/ocelot_net.c | 39 ++++++++++++++++++++------
+ 1 file changed, 30 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ovpn/io.c b/drivers/net/ovpn/io.c
-index 3e9e7f8444b34..f70c58b10599b 100644
---- a/drivers/net/ovpn/io.c
-+++ b/drivers/net/ovpn/io.c
-@@ -365,7 +365,27 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
- 	/* verify IP header size in network packet */
- 	proto = ovpn_ip_check_protocol(skb);
- 	if (unlikely(!proto || skb->protocol != proto))
--		goto drop;
-+		goto drop_no_peer;
+diff --git a/drivers/net/ethernet/mscc/ocelot_net.c b/drivers/net/ethernet/mscc/ocelot_net.c
+index ef4a6c768de9b..a7966c174b2e2 100644
+--- a/drivers/net/ethernet/mscc/ocelot_net.c
++++ b/drivers/net/ethernet/mscc/ocelot_net.c
+@@ -571,7 +571,25 @@ static bool ocelot_xmit_timestamp(struct ocelot *ocelot, int port,
+ 	return true;
+ }
+ 
+-static netdev_tx_t ocelot_port_xmit(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t ocelot_port_xmit_fdma(struct sk_buff *skb,
++					 struct net_device *dev)
++{
++	struct ocelot_port_private *priv = netdev_priv(dev);
++	struct ocelot_port *ocelot_port = &priv->port;
++	struct ocelot *ocelot = ocelot_port->ocelot;
++	int port = priv->port.index;
++	u32 rew_op = 0;
 +
-+	/* retrieve peer serving the destination IP of this packet */
-+	peer = ovpn_peer_get_by_dst(ovpn, skb);
-+	if (unlikely(!peer)) {
-+		switch (skb->protocol) {
-+		case htons(ETH_P_IP):
-+			net_dbg_ratelimited("%s: no peer to send data to dst=%pI4\n",
-+					    netdev_name(ovpn->dev),
-+					    &ip_hdr(skb)->daddr);
-+			break;
-+		case htons(ETH_P_IPV6):
-+			net_dbg_ratelimited("%s: no peer to send data to dst=%pI6c\n",
-+					    netdev_name(ovpn->dev),
-+					    &ipv6_hdr(skb)->daddr);
-+			break;
-+		}
-+		goto drop_no_peer;
-+	}
-+	/* dst was needed for peer selection - it can now be dropped */
-+	skb_dst_drop(skb);
- 
- 	if (skb_is_gso(skb)) {
- 		segments = skb_gso_segment(skb, 0);
-@@ -396,34 +416,24 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 		__skb_queue_tail(&skb_list, curr);
- 	}
--	skb_list.prev->next = NULL;
- 
--	/* retrieve peer serving the destination IP of this packet */
--	peer = ovpn_peer_get_by_dst(ovpn, skb);
--	if (unlikely(!peer)) {
--		switch (skb->protocol) {
--		case htons(ETH_P_IP):
--			net_dbg_ratelimited("%s: no peer to send data to dst=%pI4\n",
--					    netdev_name(ovpn->dev),
--					    &ip_hdr(skb)->daddr);
--			break;
--		case htons(ETH_P_IPV6):
--			net_dbg_ratelimited("%s: no peer to send data to dst=%pI6c\n",
--					    netdev_name(ovpn->dev),
--					    &ipv6_hdr(skb)->daddr);
--			break;
--		}
--		goto drop;
-+	/* no segments survived: don't jump to 'drop' because we already
-+	 * incremented the counter for each failure in the loop
-+	 */
-+	if (unlikely(skb_queue_empty(&skb_list))) {
-+		ovpn_peer_put(peer);
++	if (!ocelot_xmit_timestamp(ocelot, port, skb, &rew_op))
 +		return NETDEV_TX_OK;
- 	}
--	/* dst was needed for peer selection - it can now be dropped */
--	skb_dst_drop(skb);
-+	skb_list.prev->next = NULL;
++
++	ocelot_fdma_inject_frame(ocelot, port, rew_op, skb, dev);
++
++	return NETDEV_TX_OK;
++}
++
++static netdev_tx_t ocelot_port_xmit_inj(struct sk_buff *skb,
++					struct net_device *dev)
+ {
+ 	struct ocelot_port_private *priv = netdev_priv(dev);
+ 	struct ocelot_port *ocelot_port = &priv->port;
+@@ -579,24 +597,27 @@ static netdev_tx_t ocelot_port_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	int port = priv->port.index;
+ 	u32 rew_op = 0;
  
--	ovpn_peer_stats_increment_tx(&peer->vpn_stats, skb->len);
-+	ovpn_peer_stats_increment_tx(&peer->vpn_stats, skb_list.next->len);
- 	ovpn_send(ovpn, skb_list.next, peer);
+-	if (!static_branch_unlikely(&ocelot_fdma_enabled) &&
+-	    !ocelot_can_inject(ocelot, 0))
++	if (!ocelot_can_inject(ocelot, 0))
+ 		return NETDEV_TX_BUSY;
+ 
+ 	if (!ocelot_xmit_timestamp(ocelot, port, skb, &rew_op))
+ 		return NETDEV_TX_OK;
+ 
+-	if (static_branch_unlikely(&ocelot_fdma_enabled)) {
+-		ocelot_fdma_inject_frame(ocelot, port, rew_op, skb, dev);
+-	} else {
+-		ocelot_port_inject_frame(ocelot, port, 0, rew_op, skb);
++	ocelot_port_inject_frame(ocelot, port, 0, rew_op, skb);
+ 
+-		consume_skb(skb);
+-	}
++	consume_skb(skb);
  
  	return NETDEV_TX_OK;
+ }
  
- drop:
-+	ovpn_peer_put(peer);
-+drop_no_peer:
- 	dev_dstats_tx_dropped(ovpn->dev);
- 	skb_tx_error(skb);
- 	kfree_skb_list(skb);
++static netdev_tx_t ocelot_port_xmit(struct sk_buff *skb, struct net_device *dev)
++{
++	if (static_branch_unlikely(&ocelot_fdma_enabled))
++		return ocelot_port_xmit_fdma(skb, dev);
++
++	return ocelot_port_xmit_inj(skb, dev);
++}
++
+ enum ocelot_action_type {
+ 	OCELOT_MACT_LEARN,
+ 	OCELOT_MACT_FORGET,
 -- 
 2.51.0
 
