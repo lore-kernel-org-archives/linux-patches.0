@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763EC18B0A;
-	Wed, 25 Feb 2026 01:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BCA20C012;
+	Wed, 25 Feb 2026 01:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983342; cv=none; b=CcoeKoY1/W7nlXts/lPYSQcghK+XmV/QW6M1lg+b2GhafgPZgxzJ3c4NWIvzQmz8JcLIVyIcdR/QYlkaXobt16qZ4t+Tvpx6sc33PDngGl/gK7Vxn3fDSK8s4P/WO5EGBn/lC3LcrlVjjwkI9cjqS40vDeExkDSHg6smVSCtjqs=
+	t=1771983343; cv=none; b=YXwufA8B4Y4cGASbrd0Mw6Ew5bAyCA6HgeNh9s9mGNM+6swEoKj3GzuebxHHNSZTWnsigyfzva7RN5PH/pAe6HNp4kmcHk+uloW2dYZxNM5NfZ/y/COEkR8n3+UrAC7/oXWKPvG7qU5cGdJmoF4KRw/yr4KHlF4NMT5rlpZxHMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983342; c=relaxed/simple;
-	bh=TiAFw/L9JITqQbtS7hFl5X/6as4yavRiD9PjXTm+cws=;
+	s=arc-20240116; t=1771983343; c=relaxed/simple;
+	bh=YuAqcOP4B+sQQYviASQqjrJbu/vouCmmHgMkXXuzaV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uLOcMwjKdK1P8W9bGbjPHAFcK7TdOFZcZZid9LUIDwJqySG72mmCf5K1RqrFnsidmR0rxmh6VLvbHycIb5SQJi+nCo6T1tZTVSNhJppYLhFCMIzjrnuhIEp47eBHXRBN848CAw8Su1r7jM3BTTzSFm5U0nZn6B0xR4qhZjR3UQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGL1cvA0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uV12LL/HRn+99hn8iLJv2XGw/9nQniPo2USh8v+L7jBXoUUJ/JmQVYbJVyuHFqpHFmedbCsdxBtIFe4CuMTzthnxiT0nvchol29vKSE6JqoUpIcHqCuX74p8tFS3O+0zfvR/5e4d6OQ8e2LJlC4hGcWeKkBoXQFGggdadby9Yc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oo0ZFRnY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGL1cvA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306F7C116D0;
-	Wed, 25 Feb 2026 01:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oo0ZFRnY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475C0C116D0;
+	Wed, 25 Feb 2026 01:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983342;
-	bh=TiAFw/L9JITqQbtS7hFl5X/6as4yavRiD9PjXTm+cws=;
+	s=korg; t=1771983343;
+	bh=YuAqcOP4B+sQQYviASQqjrJbu/vouCmmHgMkXXuzaV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YGL1cvA0Y/Ov16s4hYC11cS0Ebq0s4JsqYyOVmYJ2Zcj4aOELH+XeMUkFXN8Yuwy5
-	 Sm+OWEKRCyzMu14M2THssBr+EvwLeCh98G+xeEkMheNdeImqAFUf2D5Rv/XbXqX5B7
-	 8N+YJW/Ntmfj5kdE3EJHE0bg4KSLCXJovDeRkLRg=
+	b=oo0ZFRnYU+CNl9/j7P8XrfC4m4h89HvDEp6JYvxYNFte7FKYxofPIM1GSgKtTtaFc
+	 yxwoQe5CWbv9ovVD49jeDwIsJtqOi1a9lxxE4EquC6eu5BA67WqlpApaPsTesAhpqb
+	 Ngd0OUf4RVsnWxRQYYS63Wz/vbFrP2hK5aqeOlLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars Francke <lars.francke@gmail.com>,
 	Yijun Shen <Yijun.Shen@Dell.com>,
-	Patil Rajesh Reddy <Patil.Reddy@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 471/781] platform/x86/amd/pmf: Prevent TEE errors after hibernate
-Date: Tue, 24 Feb 2026 17:19:40 -0800
-Message-ID: <20260225012411.371661597@linuxfoundation.org>
+Subject: [PATCH 6.19 472/781] crypto: ccp - Declare PSP dead if PSP_CMD_TEE_RING_INIT fails
+Date: Tue, 24 Feb 2026 17:19:41 -0800
+Message-ID: <20260225012411.394460181@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -56,188 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit 48d229c7047128dd52eaf863881bb3e62b5896e5 ]
+[ Upstream commit 5e599d7871bf852e94e8aa08b99724635f2cbf96 ]
 
-After resuming from hibernate, TEE commands can time out and cause PSP
-disables. Fix this by reinitializing the Trusted Application (TA) and
-cancelling the pb workqueue in the hibernate callbacks to avoid these
-errors.
+tee_init_ring() only declares PSP dead if the command times out.
+If there is any other failure it is still considered fatal though.
+Set psp_dead for other failures as well.
 
-ccp 0000:c4:00.2: tee: command 0x5 timed out, disabling PSP
-amd-pmf AMDI0107:00: TEE enact cmd failed. err: ffff000e, ret:0
-amd-pmf AMDI0107:00: TEE enact cmd failed. err: ffff000e, ret:0
-amd-pmf AMDI0107:00: TEE enact cmd failed. err: ffff000e, ret:0
-
-Fixes: ae82cef7d9c5 ("platform/x86/amd/pmf: Add support for PMF-TA interaction")
-Reported-by: Lars Francke <lars.francke@gmail.com>
-Closes: https://lore.kernel.org/platform-driver-x86/CAD-Ua_gfJnQSo8ucS_7ZwzuhoBRJ14zXP7s8b-zX3ZcxcyWePw@mail.gmail.com/
+Fixes: 949a0c8dd3c2 ("crypto: ccp - Move direct access to some PSP registers out of TEE")
 Tested-by: Yijun Shen <Yijun.Shen@Dell.com>
-Co-developed-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Signed-off-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-[ML: Add more tags]
 Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260116041132.153674-2-superm1@kernel.org
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://patch.msgid.link/20260116041132.153674-3-superm1@kernel.org
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/core.c   | 62 ++++++++++++++++++++++++++-
- drivers/platform/x86/amd/pmf/pmf.h    | 10 +++++
- drivers/platform/x86/amd/pmf/tee-if.c | 12 ++----
- 3 files changed, 74 insertions(+), 10 deletions(-)
+ drivers/crypto/ccp/tee-dev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
-index 8fc293c9c5380..15c27edfb6d85 100644
---- a/drivers/platform/x86/amd/pmf/core.c
-+++ b/drivers/platform/x86/amd/pmf/core.c
-@@ -314,6 +314,61 @@ int amd_pmf_init_metrics_table(struct amd_pmf_dev *dev)
- 	return 0;
- }
+diff --git a/drivers/crypto/ccp/tee-dev.c b/drivers/crypto/ccp/tee-dev.c
+index 5e1d80724678d..af881daa5855b 100644
+--- a/drivers/crypto/ccp/tee-dev.c
++++ b/drivers/crypto/ccp/tee-dev.c
+@@ -125,6 +125,7 @@ static int tee_init_ring(struct psp_tee_device *tee)
+ 		dev_err(tee->dev, "tee: ring init command failed (%#010lx)\n",
+ 			FIELD_GET(PSP_CMDRESP_STS, reg));
+ 		tee_free_ring(tee);
++		psp_dead = true;
+ 		ret = -EIO;
+ 	}
  
-+static int amd_pmf_reinit_ta(struct amd_pmf_dev *pdev)
-+{
-+	bool status;
-+	int ret, i;
-+
-+	for (i = 0; i < ARRAY_SIZE(amd_pmf_ta_uuid); i++) {
-+		ret = amd_pmf_tee_init(pdev, &amd_pmf_ta_uuid[i]);
-+		if (ret) {
-+			dev_err(pdev->dev, "TEE init failed for UUID[%d] ret: %d\n", i, ret);
-+			return ret;
-+		}
-+
-+		ret = amd_pmf_start_policy_engine(pdev);
-+		dev_dbg(pdev->dev, "start policy engine ret: %d (UUID idx: %d)\n", ret, i);
-+		status = ret == TA_PMF_TYPE_SUCCESS;
-+		if (status)
-+			break;
-+		amd_pmf_tee_deinit(pdev);
-+	}
-+
-+	return 0;
-+}
-+
-+static int amd_pmf_restore_handler(struct device *dev)
-+{
-+	struct amd_pmf_dev *pdev = dev_get_drvdata(dev);
-+	int ret;
-+
-+	if (pdev->buf) {
-+		ret = amd_pmf_set_dram_addr(pdev, false);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	if (pdev->smart_pc_enabled)
-+		amd_pmf_reinit_ta(pdev);
-+
-+	return 0;
-+}
-+
-+static int amd_pmf_freeze_handler(struct device *dev)
-+{
-+	struct amd_pmf_dev *pdev = dev_get_drvdata(dev);
-+
-+	if (!pdev->smart_pc_enabled)
-+		return 0;
-+
-+	cancel_delayed_work_sync(&pdev->pb_work);
-+	/* Clear all TEE resources */
-+	amd_pmf_tee_deinit(pdev);
-+	pdev->session_id = 0;
-+
-+	return 0;
-+}
-+
- static int amd_pmf_suspend_handler(struct device *dev)
- {
- 	struct amd_pmf_dev *pdev = dev_get_drvdata(dev);
-@@ -347,7 +402,12 @@ static int amd_pmf_resume_handler(struct device *dev)
- 	return 0;
- }
- 
--static DEFINE_SIMPLE_DEV_PM_OPS(amd_pmf_pm, amd_pmf_suspend_handler, amd_pmf_resume_handler);
-+static const struct dev_pm_ops amd_pmf_pm = {
-+	.suspend = amd_pmf_suspend_handler,
-+	.resume = amd_pmf_resume_handler,
-+	.freeze = amd_pmf_freeze_handler,
-+	.restore = amd_pmf_restore_handler,
-+};
- 
- static void amd_pmf_init_features(struct amd_pmf_dev *dev)
- {
-diff --git a/drivers/platform/x86/amd/pmf/pmf.h b/drivers/platform/x86/amd/pmf/pmf.h
-index 9144c8c3bbaf2..513a6309ce130 100644
---- a/drivers/platform/x86/amd/pmf/pmf.h
-+++ b/drivers/platform/x86/amd/pmf/pmf.h
-@@ -129,6 +129,12 @@ struct cookie_header {
- 
- typedef void (*apmf_event_handler_t)(acpi_handle handle, u32 event, void *data);
- 
-+static const uuid_t amd_pmf_ta_uuid[] __used = { UUID_INIT(0xd9b39bf2, 0x66bd, 0x4154, 0xaf, 0xb8,
-+							   0x8a, 0xcc, 0x2b, 0x2b, 0x60, 0xd6),
-+						 UUID_INIT(0x6fd93b77, 0x3fb8, 0x524d, 0xb1, 0x2d,
-+							   0xc5, 0x29, 0xb1, 0x3d, 0x85, 0x43),
-+					       };
-+
- /* APTS PMF BIOS Interface */
- struct amd_pmf_apts_output {
- 	u16 table_version;
-@@ -895,4 +901,8 @@ void amd_pmf_populate_ta_inputs(struct amd_pmf_dev *dev, struct ta_pmf_enact_tab
- void amd_pmf_dump_ta_inputs(struct amd_pmf_dev *dev, struct ta_pmf_enact_table *in);
- int amd_pmf_invoke_cmd_enact(struct amd_pmf_dev *dev);
- 
-+int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid);
-+void amd_pmf_tee_deinit(struct amd_pmf_dev *dev);
-+int amd_pmf_start_policy_engine(struct amd_pmf_dev *dev);
-+
- #endif /* PMF_H */
-diff --git a/drivers/platform/x86/amd/pmf/tee-if.c b/drivers/platform/x86/amd/pmf/tee-if.c
-index 0abce76f89ffe..95ceb906a5f39 100644
---- a/drivers/platform/x86/amd/pmf/tee-if.c
-+++ b/drivers/platform/x86/amd/pmf/tee-if.c
-@@ -27,12 +27,6 @@ module_param(pb_side_load, bool, 0444);
- MODULE_PARM_DESC(pb_side_load, "Sideload policy binaries debug policy failures");
- #endif
- 
--static const uuid_t amd_pmf_ta_uuid[] = { UUID_INIT(0xd9b39bf2, 0x66bd, 0x4154, 0xaf, 0xb8, 0x8a,
--						    0xcc, 0x2b, 0x2b, 0x60, 0xd6),
--					  UUID_INIT(0x6fd93b77, 0x3fb8, 0x524d, 0xb1, 0x2d, 0xc5,
--						    0x29, 0xb1, 0x3d, 0x85, 0x43),
--					};
--
- static const char *amd_pmf_uevent_as_str(unsigned int state)
- {
- 	switch (state) {
-@@ -324,7 +318,7 @@ static void amd_pmf_invoke_cmd(struct work_struct *work)
- 	schedule_delayed_work(&dev->pb_work, msecs_to_jiffies(pb_actions_ms));
- }
- 
--static int amd_pmf_start_policy_engine(struct amd_pmf_dev *dev)
-+int amd_pmf_start_policy_engine(struct amd_pmf_dev *dev)
- {
- 	struct cookie_header *header;
- 	int res;
-@@ -480,7 +474,7 @@ static int amd_pmf_register_input_device(struct amd_pmf_dev *dev)
- 	return 0;
- }
- 
--static int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid)
-+int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid)
- {
- 	u32 size;
- 	int ret;
-@@ -528,7 +522,7 @@ static int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid)
- 	return ret;
- }
- 
--static void amd_pmf_tee_deinit(struct amd_pmf_dev *dev)
-+void amd_pmf_tee_deinit(struct amd_pmf_dev *dev)
- {
- 	if (!dev->tee_ctx)
- 		return;
 -- 
 2.51.0
 
