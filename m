@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462D918DB2A;
-	Wed, 25 Feb 2026 01:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA741D5ABA;
+	Wed, 25 Feb 2026 01:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983131; cv=none; b=atcTXJOe4pgqP+JoZypX3as9+7vYVTDCbfVmQztg5oSEmy2FkDbr9S8zi4ROZ/SUhcpK91tysGSGFa4lIiSBcC1A7aJpAO02QC8WBD9jnNknUhAJ1P8+wlXcatWqnuO/mZHazu2IVvbUZ9GRORJeoM/v655LRRSM/Gg74W74X6k=
+	t=1771983132; cv=none; b=F8KW8QS+rLSNMbztLws7k25rJady/FHRmC7vrX/Bg1OKwXonNqzmE16SYL/4uooho4MilySNUKabvH8aZQPEsagMzoNOeD50nEg7wY43OtIwfARY7ZKPha2jUQ9gsKyP33XYpWTCd0tzkdtgzjjQoICqJsAYui2HjG4eL9lrH6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983131; c=relaxed/simple;
-	bh=XnP1VfhNDa0M/AsqZS0uF6IpiuDDySt2DUz2eW2OIRE=;
+	s=arc-20240116; t=1771983132; c=relaxed/simple;
+	bh=8J45grnlKsoBrB2LI2wjZI8zRwJXskG+OLBKEIBRLMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nD15kC5RG0XGYDVrQStcIEj2zLyMd5uS8ABbMQET4GH1qP1bAKZUk4XgTv4RgyBJebfuE1qfTNnwCeGC70fVZ3mrhVPaJ9nwah2yaGad/OVFhBwyU5BYmjCp5sZjgNpT0hreQ1q/yRHZVEYeYfqnn5i1NzLFeDwVMkEA6WKer5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lihMZIZz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r/8CHslurooN2NzpvEiTpA4R+8bKr2k6TDDpQDQQlIa2zJiKTO3UKryc6kSO/VBMLAx32Nsb21VV2AMNIdzfzlv20qecuy9iv9HNSbXLSCZGFsr7oEBhAp5qYQmNmUjOzeDNFM4WPiDUFmPGyoNLbGzwoIOQRS6g+pV7fGKyJHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j16gMZx/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lihMZIZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C397C116D0;
-	Wed, 25 Feb 2026 01:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j16gMZx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182D9C116D0;
+	Wed, 25 Feb 2026 01:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983131;
-	bh=XnP1VfhNDa0M/AsqZS0uF6IpiuDDySt2DUz2eW2OIRE=;
+	s=korg; t=1771983132;
+	bh=8J45grnlKsoBrB2LI2wjZI8zRwJXskG+OLBKEIBRLMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lihMZIZz2nH0Uy7QWdcO9F6Cbx88RhZyXFqtNQxKBvhCCcxLqfhQuMkZ+70TTIque
-	 0+VbsDvawWScqwmSk7rNCmJlxzveeQA6zrWSGKz9rfBbTwIQvwb6AwIscv0KFwogRR
-	 d+FzhHV/bNN+R2ptyHqfFQcGcoW6iJ6uZK91IRUQ=
+	b=j16gMZx/SDoDKEljE+Z59f/PhcFd6n7Ya3dSj+YOxJFoWf20kGX27GdRhX78DTo4h
+	 8e7pGLfvqDoH9ITECNdKh4pKgumSEEnbbLSaYEt1z1B0YDemznnUF8eduXNkNyvrZv
+	 JTY2gJIo7X88o14Jtgf8wZGvRyekXIohYj4TXSbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 288/781] drm/xe/ptl: Disable DCC on PTL
-Date: Tue, 24 Feb 2026 17:16:37 -0800
-Message-ID: <20260225012406.770843758@linuxfoundation.org>
+Subject: [PATCH 6.19 289/781] drm/xe: Unregister drm device on probe error
+Date: Tue, 24 Feb 2026 17:16:38 -0800
+Message-ID: <20260225012406.794964998@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,85 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 801a6e61f5fbab2c0dd76c8360f45b625b49e410 ]
+[ Upstream commit 96c2c72b817d70e8d110e78b0162e044a0c41f9f ]
 
-On PTL, the recommendation is to disable DCC(Duty Cycle Control) as
-it may cause some regressions due to added latencies. Upcoming GuC
-releases will disable DCC on PTL as well, but we need to force it in
-KMD so that this behavior is propagated to older kernels.
+Call drm_dev_unregister() when xe_device_probe() fails after successful
+drm_dev_register(). This ensures the DRM device is promptly unregistered
+before returning an error, avoiding leaving it registered on the failure
+path.
+Otherwise, there is warn message if xe_device_probe() is called again:
+"
+[  207.322365] [drm:drm_minor_register]
+[  207.322381] debugfs: '128' already exists in 'dri'
+[  207.322432] sysfs: cannot create duplicate filename '/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:01.0/0000:03:00.0/drm/renderD128'
+[  207.322435] CPU: 5 UID: 0 PID: 10261 Comm: modprobe Tainted: G    B   W           6.19.0-rc2-lgci-xe-kernel+ #223 PREEMPT(voluntary)
+[  207.322439] Tainted: [B]=BAD_PAGE, [W]=WARN
+[  207.322440] Hardware name: ASUS System Product Name/PRIME Z790-P WIFI, BIOS 0812 02/24/2023
+[  207.322441] Call Trace:
+[  207.322442]  <TASK>
+[  207.322443]  dump_stack_lvl+0xa0/0xc0
+[  207.322446]  dump_stack+0x10/0x20
+[  207.322448]  sysfs_warn_dup+0xd5/0x110
+[  207.322451]  sysfs_create_dir_ns+0x1f6/0x280
+[  207.322453]  ? __pfx_sysfs_create_dir_ns+0x10/0x10
+[  207.322455]  ? lock_acquire+0x1a4/0x2e0
+[  207.322458]  ? __kasan_check_read+0x11/0x20
+[  207.322461]  kobject_add_internal+0x28d/0x8e0
+[  207.322464]  kobject_add+0x11f/0x1f0
+[  207.322465]  ? lock_acquire+0x1a4/0x2e0
+[  207.322467]  ? __pfx_kobject_add+0x10/0x10
+[  207.322469]  ? __kasan_check_write+0x14/0x20
+[  207.322471]  ? kobject_put+0x62/0x4a0
+[  207.322473]  ? get_device_parent.isra.0+0x1bb/0x4c0
+[  207.322475]  ? kobject_put+0x62/0x4a0
+[  207.322477]  device_add+0x2d7/0x1500
+[  207.322479]  ? __pfx_device_add+0x10/0x10
+[  207.322481]  ? drm_debugfs_add_file+0xfa/0x170
+[  207.322483]  ? drm_debugfs_add_files+0x82/0xd0
+[  207.322485]  ? drm_debugfs_add_files+0x82/0xd0
+[  207.322487]  drm_minor_register+0x10a/0x2d0
+[  207.322489]  drm_dev_register+0x143/0x860
+[  207.322491]  ? xe_configfs_get_psmi_enabled+0x12/0x90 [xe]
+[  207.322667]  xe_device_probe+0x185b/0x2c40 [xe]
+[  207.322812]  ? __pfx___drm_dev_dbg+0x10/0x10
+[  207.322815]  ? add_dr+0x180/0x220
+[  207.322818]  ? __pfx___drmm_mutex_release+0x10/0x10
+[  207.322821]  ? __pfx_xe_device_probe+0x10/0x10 [xe]
+[  207.322966]  ? xe_pm_init_early+0x33a/0x410 [xe]
+[  207.323136]  xe_pci_probe+0x936/0x1250 [xe]
+[  207.323298]  ? lock_acquire+0x1a4/0x2e0
+[  207.323302]  ? __pfx_xe_pci_probe+0x10/0x10 [xe]
+[  207.323464]  local_pci_probe+0xe6/0x1a0
+[  207.323468]  pci_device_probe+0x523/0x840
+[  207.323470]  ? __pfx_pci_device_probe+0x10/0x10
+[  207.323473]  ? sysfs_do_create_link_sd.isra.0+0x8c/0x110
+[  207.323476]  ? sysfs_create_link+0x48/0xc0
+[  207.323479]  really_probe+0x1fd/0x8a0
+...
+"
 
-v2: Update commit message (Rodrigo)
-v3: Rebase
-v4: Fix typo: s/propagted/propagated
-
-Fixes: 5cdb71d3b0db ("drm/xe/ptl: Add GuC FW definition for PTL")
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Link: https://patch.msgid.link/20260124005917.398522-1-vinay.belgaumkar@intel.com
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 40ee63f5df2d5c6471b583df800aac89dc0502a4)
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://patch.msgid.link/20260109211041.2446012-2-shuicheng.lin@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 60bfb8baf8f0d5b0d521744dfd01c880ce1a23f3)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_pc.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ drivers/gpu/drm/xe/xe_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_pc.c b/drivers/gpu/drm/xe/xe_guc_pc.c
-index 951a49fb1d3e4..7f09cf0e495fe 100644
---- a/drivers/gpu/drm/xe/xe_guc_pc.c
-+++ b/drivers/gpu/drm/xe/xe_guc_pc.c
-@@ -1214,6 +1214,36 @@ int xe_guc_pc_set_power_profile(struct xe_guc_pc *pc, const char *buf)
- 	return ret;
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index 9a6d49fcd8e49..ef5acef32f416 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -976,6 +976,7 @@ int xe_device_probe(struct xe_device *xe)
+ 
+ err_unregister_display:
+ 	xe_display_unregister(xe);
++	drm_dev_unregister(&xe->drm);
+ 
+ 	return err;
  }
- 
-+static int pc_action_set_dcc(struct xe_guc_pc *pc, bool enable)
-+{
-+	int ret;
-+
-+	ret = pc_action_set_param(pc,
-+				  SLPC_PARAM_TASK_ENABLE_DCC,
-+				  enable);
-+	if (!ret)
-+		return pc_action_set_param(pc,
-+					   SLPC_PARAM_TASK_DISABLE_DCC,
-+					   !enable);
-+	else
-+		return ret;
-+}
-+
-+static int pc_modify_defaults(struct xe_guc_pc *pc)
-+{
-+	struct xe_device *xe = pc_to_xe(pc);
-+	struct xe_gt *gt = pc_to_gt(pc);
-+	int ret = 0;
-+
-+	if (xe->info.platform == XE_PANTHERLAKE) {
-+		ret = pc_action_set_dcc(pc, false);
-+		if (unlikely(ret))
-+			xe_gt_err(gt, "Failed to modify DCC default: %pe\n", ERR_PTR(ret));
-+	}
-+
-+	return ret;
-+}
-+
- /**
-  * xe_guc_pc_start - Start GuC's Power Conservation component
-  * @pc: Xe_GuC_PC instance
-@@ -1271,6 +1301,10 @@ int xe_guc_pc_start(struct xe_guc_pc *pc)
- 			   ktime_ms_delta(ktime_get(), earlier));
- 	}
- 
-+	ret = pc_modify_defaults(pc);
-+	if (ret)
-+		return ret;
-+
- 	ret = pc_init_freqs(pc);
- 	if (ret)
- 		goto out;
 -- 
 2.51.0
 
