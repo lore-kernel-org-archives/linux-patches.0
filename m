@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468B32F5A2C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7692D8396;
 	Wed, 25 Feb 2026 06:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002651; cv=none; b=RkeLsWbv6BttGEbRDeadONaaC7CH+3KWH5cWVsmdV4SchI+tjGHag9f47K58tGj0QWdt8Ws0b98FJQev6TZnnMfHyUNihFgUDu4tKmi1AygfEGbafst+3D4qmsA46q+cxFkNSA0CmrClusxpbCO97Im39L1O+z3ZRfIXa7yHDbI=
+	t=1772002652; cv=none; b=a/sBdWodVEuaNbJiWTBDU8c5Hz4+PODuROWu5jhCaYHX2CegTBUv6tQyB/whp7+HDW/fyKRAFZ7O6BBVikpPdrSMt6qrxDgirWpyag86hz1lU66G6zCQyvAG8dlKQUShlFO9NOQGUwwcafvgG14sAdveEQiwYDyKiCNlINmJwlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002651; c=relaxed/simple;
-	bh=FKuviGZVmSALmuj0whKkfV325vZ1AAwafiKM5EsT504=;
+	s=arc-20240116; t=1772002652; c=relaxed/simple;
+	bh=k7Wl108p0Czf+q75yfGreCltxC6dmcLTVIomRcy/7P8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+9EsB4X2Mo4dUOANnTCoD2DcEZW6RlNGbjcrDc/vK7zq0rsvBH0dhb5VW6o9T8SIHdJlIFiltWWdDlje7w816EWWm/5bTiSutaVYMzb1U9FSyNjtTVCKwPaoUlOiBdEnmmAej/74dmg6BBZmMzftMFz6tuCLq7IdPAPEncJd/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qh3HfTM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cdj1uZGHya7sMWyOzCokoA7xHdkngHP/L9jW5zt9IGWxcldkrgCZieNz8Hj5NgV06ytmrglVrPtAsqkdAsMoAPPQtrNBAs1+J1gZ0MUl/eBC+UmjoVmNL9Dt1SO9fjD3GC+IarPGao1tYeWHlOzorBlS+tD/+Qmoqg4tRoB0S6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jj47uMBA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qh3HfTM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D90FC116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jj47uMBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9888C116D0;
 	Wed, 25 Feb 2026 06:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002651;
-	bh=FKuviGZVmSALmuj0whKkfV325vZ1AAwafiKM5EsT504=;
+	bh=k7Wl108p0Czf+q75yfGreCltxC6dmcLTVIomRcy/7P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qh3HfTM/w4xQu5+IeWGZiPPw3BdCayui0QrhFGVYffEDLOWAaJjvMuSz5SVcAGRFY
-	 ONJL879K8m1oGtqd/zHvYJjnI4BH5QAPnj9d0BLKh4e/cY1gr09FXqN7IQ4iScmjyQ
-	 vyime361JqmnP2znC61pIs+IaklYxPCyORxzl2UE=
+	b=Jj47uMBA5XSRFHGH5qrwgrFcMvFQw3zcr112Ej26AMd9H+EIpnHYOcHWedVJbL+Vf
+	 1yGkXG/71guCJTzOq+bYuQPxNNmH3OLsQs3kuqDnDcpQ23UiFX49H7Oc/gp31rI8Ka
+	 hWUk8enctiodEOELhUqh+/EqQSa49tVqRpmWSmf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 382/641] RDMA/core: add rdma_rw_max_sge() helper for SQ sizing
-Date: Tue, 24 Feb 2026 17:21:48 -0800
-Message-ID: <20260225012357.849637088@linuxfoundation.org>
+Subject: [PATCH 6.18 373/641] NFS/localio: Handle short writes by retrying
+Date: Tue, 24 Feb 2026 17:21:39 -0800
+Message-ID: <20260225012357.643289829@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,157 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit afcae7d7b8a278a6c29e064f99e5bafd4ac1fb37 ]
+[ Upstream commit 615762059d284b863f9163b53679d95b3dcdd495 ]
 
-svc_rdma_accept() computes sc_sq_depth as the sum of rq_depth and the
-number of rdma_rw contexts (ctxts). This value is used to allocate the
-Send CQ and to initialize the sc_sq_avail credit pool.
+The current code for handling short writes in localio just truncates the
+I/O and then sets an error. While that is close to how the ordinary NFS
+code behaves, it does mean there is a chance the data that got written
+is lost because it isn't persisted.
+To fix this, change localio so that the upper layers can direct the
+behaviour to persist any unstable data by rewriting it, and then
+continuing writing until an ENOSPC is hit.
 
-However, when the device uses memory registration for RDMA operations,
-rdma_rw_init_qp() inflates the QP's max_send_wr by a factor of three
-per context to account for REG and INV work requests. The Send CQ and
-credit pool remain sized for only one work request per context,
-causing Send Queue exhaustion under heavy NFS WRITE workloads.
-
-Introduce rdma_rw_max_sge() to compute the actual number of Send Queue
-entries required for a given number of rdma_rw contexts. Upper layer
-protocols call this helper before creating a Queue Pair so that their
-Send CQs and credit accounting match the QP's true capacity.
-
-Update svc_rdma_accept() to use rdma_rw_max_sge() when computing
-sc_sq_depth, ensuring the credit pool reflects the work requests
-that rdma_rw_init_qp() will reserve.
-
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Fixes: 00bd1439f464 ("RDMA/rw: Support threshold for registration vs scattering to local pages")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://patch.msgid.link/20260128005400.25147-5-cel@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 70ba381e1a43 ("nfs: add LOCALIO support")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/rw.c             | 53 +++++++++++++++++-------
- include/rdma/rw.h                        |  2 +
- net/sunrpc/xprtrdma/svc_rdma_transport.c |  8 +++-
- 3 files changed, 46 insertions(+), 17 deletions(-)
+ fs/nfs/localio.c | 64 +++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 47 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/infiniband/core/rw.c b/drivers/infiniband/core/rw.c
-index 6354ddf2a274c..2522ff1cc462c 100644
---- a/drivers/infiniband/core/rw.c
-+++ b/drivers/infiniband/core/rw.c
-@@ -651,34 +651,57 @@ unsigned int rdma_rw_mr_factor(struct ib_device *device, u32 port_num,
- }
- EXPORT_SYMBOL(rdma_rw_mr_factor);
+diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
+index f537bc3386bf2..ea7b35191d0af 100644
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -58,6 +58,11 @@ struct nfs_local_fsync_ctx {
+ static bool localio_enabled __read_mostly = true;
+ module_param(localio_enabled, bool, 0644);
  
-+/**
-+ * rdma_rw_max_send_wr - compute max Send WRs needed for RDMA R/W contexts
-+ * @dev: RDMA device
-+ * @port_num: port number
-+ * @max_rdma_ctxs: number of rdma_rw_ctx structures
-+ * @create_flags: QP create flags (pass IB_QP_CREATE_INTEGRITY_EN if
-+ *                data integrity will be enabled on the QP)
-+ *
-+ * Returns the total number of Send Queue entries needed for
-+ * @max_rdma_ctxs. The result accounts for memory registration and
-+ * invalidation work requests when the device requires them.
-+ *
-+ * ULPs use this to size Send Queues and Send CQs before creating a
-+ * Queue Pair.
-+ */
-+unsigned int rdma_rw_max_send_wr(struct ib_device *dev, u32 port_num,
-+				 unsigned int max_rdma_ctxs, u32 create_flags)
-+{
-+	unsigned int factor = 1;
-+	unsigned int result;
++static int nfs_local_do_read(struct nfs_local_kiocb *iocb,
++			     const struct rpc_call_ops *call_ops);
++static int nfs_local_do_write(struct nfs_local_kiocb *iocb,
++			      const struct rpc_call_ops *call_ops);
 +
-+	if (create_flags & IB_QP_CREATE_INTEGRITY_EN ||
-+	    rdma_rw_can_use_mr(dev, port_num))
-+		factor += 2;	/* reg + inv */
-+
-+	if (check_mul_overflow(factor, max_rdma_ctxs, &result))
-+		return UINT_MAX;
-+	return result;
-+}
-+EXPORT_SYMBOL(rdma_rw_max_send_wr);
-+
- void rdma_rw_init_qp(struct ib_device *dev, struct ib_qp_init_attr *attr)
+ static inline bool nfs_client_is_local(const struct nfs_client *clp)
  {
--	u32 factor;
-+	unsigned int factor = 1;
+ 	return !!rcu_access_pointer(clp->cl_uuid.net);
+@@ -542,13 +547,50 @@ nfs_local_iocb_release(struct nfs_local_kiocb *iocb)
+ 	nfs_local_iocb_free(iocb);
+ }
  
- 	WARN_ON_ONCE(attr->port_num == 0);
+-static void
+-nfs_local_pgio_release(struct nfs_local_kiocb *iocb)
++static void nfs_local_pgio_restart(struct nfs_local_kiocb *iocb,
++				   struct nfs_pgio_header *hdr)
++{
++	int status = 0;
++
++	iocb->kiocb.ki_pos = hdr->args.offset;
++	iocb->kiocb.ki_flags &= ~(IOCB_DSYNC | IOCB_SYNC | IOCB_DIRECT);
++	iocb->kiocb.ki_complete = NULL;
++	iocb->aio_complete_work = NULL;
++	iocb->end_iter_index = -1;
++
++	switch (hdr->rw_mode) {
++	case FMODE_READ:
++		nfs_local_iters_init(iocb, ITER_DEST);
++		status = nfs_local_do_read(iocb, hdr->task.tk_ops);
++		break;
++	case FMODE_WRITE:
++		nfs_local_iters_init(iocb, ITER_SOURCE);
++		status = nfs_local_do_write(iocb, hdr->task.tk_ops);
++		break;
++	default:
++		status = -EOPNOTSUPP;
++	}
++
++	if (status != 0) {
++		nfs_local_iocb_release(iocb);
++		hdr->task.tk_status = status;
++		nfs_local_hdr_release(hdr, hdr->task.tk_ops);
++	}
++}
++
++static void nfs_local_pgio_release(struct nfs_local_kiocb *iocb)
+ {
+ 	struct nfs_pgio_header *hdr = iocb->hdr;
++	struct rpc_task *task = &hdr->task;
++
++	task->tk_action = NULL;
++	task->tk_ops->rpc_call_done(task, hdr);
  
- 	/*
--	 * Each context needs at least one RDMA READ or WRITE WR.
--	 *
--	 * For some hardware we might need more, eventually we should ask the
--	 * HCA driver for a multiplier here.
--	 */
--	factor = 1;
--
--	/*
--	 * If the device needs MRs to perform RDMA READ or WRITE operations,
--	 * we'll need two additional MRs for the registrations and the
--	 * invalidation.
-+	 * If the device uses MRs to perform RDMA READ or WRITE operations,
-+	 * or if data integrity is enabled, account for registration and
-+	 * invalidation work requests.
- 	 */
- 	if (attr->create_flags & IB_QP_CREATE_INTEGRITY_EN ||
- 	    rdma_rw_can_use_mr(dev, attr->port_num))
--		factor += 2;	/* inv + reg */
-+		factor += 2;	/* reg + inv */
+-	nfs_local_iocb_release(iocb);
+-	nfs_local_hdr_release(hdr, hdr->task.tk_ops);
++	if (task->tk_action == NULL) {
++		nfs_local_iocb_release(iocb);
++		task->tk_ops->rpc_release(hdr);
++	} else
++		nfs_local_pgio_restart(iocb, hdr);
+ }
  
- 	attr->cap.max_send_wr += factor * attr->cap.max_rdma_ctxs;
- 
- 	/*
--	 * But maybe we were just too high in the sky and the device doesn't
--	 * even support all we need, and we'll have to live with what we get..
-+	 * The device might not support all we need, and we'll have to
-+	 * live with what we get.
- 	 */
- 	attr->cap.max_send_wr =
- 		min_t(u32, attr->cap.max_send_wr, dev->attrs.max_qp_wr);
-diff --git a/include/rdma/rw.h b/include/rdma/rw.h
-index d606cac482338..9a8f4b76ce588 100644
---- a/include/rdma/rw.h
-+++ b/include/rdma/rw.h
-@@ -66,6 +66,8 @@ int rdma_rw_ctx_post(struct rdma_rw_ctx *ctx, struct ib_qp *qp, u32 port_num,
- 
- unsigned int rdma_rw_mr_factor(struct ib_device *device, u32 port_num,
- 		unsigned int maxpages);
-+unsigned int rdma_rw_max_send_wr(struct ib_device *dev, u32 port_num,
-+		unsigned int max_rdma_ctxs, u32 create_flags);
- void rdma_rw_init_qp(struct ib_device *dev, struct ib_qp_init_attr *attr);
- int rdma_rw_init_mrs(struct ib_qp *qp, struct ib_qp_init_attr *attr);
- void rdma_rw_cleanup_mrs(struct ib_qp *qp);
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-index 3d7f1413df023..12857381e8610 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -462,7 +462,10 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
- 		newxprt->sc_max_bc_requests = 2;
+ /*
+@@ -776,19 +818,7 @@ static void nfs_local_write_done(struct nfs_local_kiocb *iocb)
+ 		pr_info_ratelimited("nfs: Unexpected direct I/O write alignment failure\n");
  	}
  
--	/* Arbitrary estimate of the needed number of rdma_rw contexts.
-+	/* Estimate the needed number of rdma_rw contexts. The maximum
-+	 * Read and Write chunks have one segment each. Each request
-+	 * can involve one Read chunk and either a Write chunk or Reply
-+	 * chunk; thus a factor of three.
- 	 */
- 	maxpayload = min(xprt->xpt_server->sv_max_payload,
- 			 RPCSVC_MAXPAYLOAD_RDMA);
-@@ -470,7 +473,8 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
- 		rdma_rw_mr_factor(dev, newxprt->sc_port_num,
- 				  maxpayload >> PAGE_SHIFT);
+-	/* Handle short writes as if they are ENOSPC */
+-	status = hdr->res.count;
+-	if (status > 0 && status < hdr->args.count) {
+-		hdr->mds_offset += status;
+-		hdr->args.offset += status;
+-		hdr->args.pgbase += status;
+-		hdr->args.count -= status;
+-		nfs_set_pgio_error(hdr, -ENOSPC, hdr->args.offset);
+-		status = -ENOSPC;
+-		/* record -ENOSPC in terms of nfs_local_pgio_done */
+-		(void) nfs_local_pgio_done(iocb, status, true);
+-	}
+-	if (hdr->task.tk_status < 0)
++	if (status < 0)
+ 		nfs_reset_boot_verifier(hdr->inode);
+ }
  
--	newxprt->sc_sq_depth = rq_depth + ctxts;
-+	newxprt->sc_sq_depth = rq_depth +
-+		rdma_rw_max_send_wr(dev, newxprt->sc_port_num, ctxts, 0);
- 	if (newxprt->sc_sq_depth > dev->attrs.max_qp_wr)
- 		newxprt->sc_sq_depth = dev->attrs.max_qp_wr;
- 	atomic_set(&newxprt->sc_sq_avail, newxprt->sc_sq_depth);
 -- 
 2.51.0
 
