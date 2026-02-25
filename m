@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB29E4369A;
-	Wed, 25 Feb 2026 01:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4D34369A;
+	Wed, 25 Feb 2026 01:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982925; cv=none; b=RoOiEMkDaDdrJN6AF3+tvcmlcSoz+TeFDLTVWCLxvCkwnFJ0v/w6dYwQtayfyGBnbweTiGf3QCAmLb78NKl2Wdjyw1FMmebiK0cwQmeJhLgjrfkRGlOIzfrGGHlJZ17TF93nLEx2kG5FvByc6MgBZHJ+29XPvGVOk7a/fxLoYv4=
+	t=1771982926; cv=none; b=g7LnBeXt+ZQuf4Kiu5+hTu/qtJ4bNFZgVrjaiUlo2WKAe99IO+d67dnd5SrwriHsXMRnUJ0GX39aviYY+E5RIhwrnBgVBVhPXpu9sn+HbEL48Ol2pDNttNjuPlNgHA8McZYSdPtvXkFNOLOdkGUxtO2EIcYiLqg2uzk9uTG92xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982925; c=relaxed/simple;
-	bh=lmQ29mhPmcdOK8NXe6f/1ylnZ4GUGV249DqwbcMHa9U=;
+	s=arc-20240116; t=1771982926; c=relaxed/simple;
+	bh=xfU27sktbIjesrTQl1FAweryaQ7sthpswf+C2MlWiPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hwIwl1ZqwuCm0tidZXET6Y8onAgCrHvvHaD67QGS3MV/u8erEuEOSiHktzPympXnQlrPF+WC7yvdRBMaE6eJ4du+DiKhJDnCv47J44Ta2iztCb3KuPKxcT+r4A/5kRbwYqemqOVEwpwg1McwX5h9eqE8JLczysweUx+bElBtIq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IK2WFCjk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a7FQVBLry0ctW9MGSY8XXKmJ4lD8AJyUjnvsIqtmML14FCI/bruFAen63ZbpNDrTsdN0lpKyGYhuYz2mvaA4zr6gL36bpCREhyvVkYWH3fPAZ0LzAQ/5ccJZfs105JZcsWpKJasK6jD/FN4IKfI1p/9k6DcsHp8MohMOJ+IIcuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJ552OPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IK2WFCjk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D60BC116D0;
-	Wed, 25 Feb 2026 01:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJ552OPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C66C19423;
+	Wed, 25 Feb 2026 01:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982925;
-	bh=lmQ29mhPmcdOK8NXe6f/1ylnZ4GUGV249DqwbcMHa9U=;
+	s=korg; t=1771982926;
+	bh=xfU27sktbIjesrTQl1FAweryaQ7sthpswf+C2MlWiPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IK2WFCjk4pMAdL2iOr83OL/H4dq0nQIOFkhnmkG2gWaBTxtKJYJtTQj2qmU6St3lI
-	 TKtAwxzQ4LV7nlQopoV7WQC2VkDlbAGK5CkSgJnEA4Y/9/xlcUHLHJcDDomIJ9rtIB
-	 WxEg83hAhu9p703foKuW9k+D5nZ6aVGUvOeWhsDQ=
+	b=SJ552OPSFGGzyECnK2nMX/azyQX8lp4trM2JBEWZRGW+pFJ4rFKDHcfwNXktdOYIv
+	 ZoxdlwEjBRCcpnLk/9mGfPBhOCkpsDWCqULH49lL/A3RFbqU42tydMLB5wAY8/omd/
+	 wJHfaW3l4hIpU4/YkGtVltUjuy6S7WcnB09xDmfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	x86@kernel.org,
+	Guillaume Gonnet <ggonnet.linux@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 068/781] x86/cpu/amd: Correct the microcode table for Zenbleed
-Date: Tue, 24 Feb 2026 17:12:57 -0800
-Message-ID: <20260225012401.372170432@linuxfoundation.org>
+Subject: [PATCH 6.19 104/781] bpf: Fix tcx/netkit detach permissions when prog fd isnt given
+Date: Tue, 24 Feb 2026 17:13:33 -0800
+Message-ID: <20260225012402.236913800@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,82 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Guillaume Gonnet <ggonnet.linux@gmail.com>
 
-[ Upstream commit fb7bfa31b8e8569f154f2fe0ea6c2f03c0f087aa ]
+[ Upstream commit ae23bc81ddf7c17b663c4ed1b21e35527b0a7131 ]
 
-The good revisions are tied to exact steppings, meaning it's not valid to
-match on model number alone, let alone a range.
+This commit fixes a security issue where BPF_PROG_DETACH on tcx or
+netkit devices could be executed by any user when no program fd was
+provided, bypassing permission checks. The fix adds a capability
+check for CAP_NET_ADMIN or CAP_SYS_ADMIN in this case.
 
-This is probably only a latent issue.  From public microcode archives, the
-following CPUs exist 17-30-00, 17-60-00, 17-70-00 and would be captured by the
-model ranges.  They're likely pre-production steppings, and likely didn't get
-Zenbleed microcode, but it's still incorrect to compare them to a different
-steppings revision.
-
-Either way, convert the logic to use x86_match_min_microcode_rev(), which is
-the preferred mechanism.
-
-Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: x86@kernel.org
-Link: https://patch.msgid.link/20251126130352.880424-1-andrew.cooper3@citrix.com
+Fixes: e420bed02507 ("bpf: Add fd-based tcx multi-prog infra with link support")
+Signed-off-by: Guillaume Gonnet <ggonnet.linux@gmail.com>
+Link: https://lore.kernel.org/r/20260127160200.10395-1-ggonnet.linux@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/amd.c | 30 +++++++++---------------------
- 1 file changed, 9 insertions(+), 21 deletions(-)
+ include/linux/bpf.h       |  5 +++++
+ include/linux/bpf_mprog.h | 10 ++++++++++
+ kernel/bpf/syscall.c      |  7 ++-----
+ 3 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index bc94ff1e250ad..86059f2c0fcd4 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -951,26 +951,14 @@ static void init_amd_zen1(struct cpuinfo_x86 *c)
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index e5be698256d15..7b2e51216e736 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -3243,6 +3243,11 @@ static inline void bpf_prog_report_arena_violation(bool write, unsigned long add
+ }
+ #endif /* CONFIG_BPF_SYSCALL */
+ 
++static inline bool bpf_net_capable(void)
++{
++	return capable(CAP_NET_ADMIN) || capable(CAP_SYS_ADMIN);
++}
++
+ static __always_inline int
+ bpf_probe_read_kernel_common(void *dst, u32 size, const void *unsafe_ptr)
+ {
+diff --git a/include/linux/bpf_mprog.h b/include/linux/bpf_mprog.h
+index 929225f7b0959..0b9f4caeeb0a3 100644
+--- a/include/linux/bpf_mprog.h
++++ b/include/linux/bpf_mprog.h
+@@ -340,4 +340,14 @@ static inline bool bpf_mprog_supported(enum bpf_prog_type type)
+ 		return false;
  	}
  }
++
++static inline bool bpf_mprog_detach_empty(enum bpf_prog_type type)
++{
++	switch (type) {
++	case BPF_PROG_TYPE_SCHED_CLS:
++		return bpf_net_capable();
++	default:
++		return false;
++	}
++}
+ #endif /* __BPF_MPROG_H */
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index ee116a3b7baf7..763868d327b4a 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -1366,11 +1366,6 @@ static int map_check_btf(struct bpf_map *map, struct bpf_token *token,
+ 	return ret;
+ }
  
--static bool cpu_has_zenbleed_microcode(void)
+-static bool bpf_net_capable(void)
 -{
--	u32 good_rev = 0;
--
--	switch (boot_cpu_data.x86_model) {
--	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
--	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
--	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
--	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
--	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
--
--	default:
--		return false;
--	}
--
--	if (boot_cpu_data.microcode < good_rev)
--		return false;
--
--	return true;
+-	return capable(CAP_NET_ADMIN) || capable(CAP_SYS_ADMIN);
 -}
-+static const struct x86_cpu_id amd_zenbleed_microcode[] = {
-+	ZEN_MODEL_STEP_UCODE(0x17, 0x31, 0x0, 0x0830107b),
-+	ZEN_MODEL_STEP_UCODE(0x17, 0x60, 0x1, 0x0860010c),
-+	ZEN_MODEL_STEP_UCODE(0x17, 0x68, 0x1, 0x08608107),
-+	ZEN_MODEL_STEP_UCODE(0x17, 0x71, 0x0, 0x08701033),
-+	ZEN_MODEL_STEP_UCODE(0x17, 0xa0, 0x0, 0x08a00009),
-+	{}
-+};
- 
- static void zen2_zenbleed_check(struct cpuinfo_x86 *c)
- {
-@@ -980,7 +968,7 @@ static void zen2_zenbleed_check(struct cpuinfo_x86 *c)
- 	if (!cpu_has(c, X86_FEATURE_AVX))
- 		return;
- 
--	if (!cpu_has_zenbleed_microcode()) {
-+	if (!x86_match_min_microcode_rev(amd_zenbleed_microcode)) {
- 		pr_notice_once("Zenbleed: please update your microcode for the most optimal fix\n");
- 		msr_set_bit(MSR_AMD64_DE_CFG, MSR_AMD64_DE_CFG_ZEN2_FP_BACKUP_FIX_BIT);
- 	} else {
+-
+ #define BPF_MAP_CREATE_LAST_FIELD excl_prog_hash_size
+ /* called via syscall */
+ static int map_create(union bpf_attr *attr, bpfptr_t uattr)
+@@ -4565,6 +4560,8 @@ static int bpf_prog_detach(const union bpf_attr *attr)
+ 			prog = bpf_prog_get_type(attr->attach_bpf_fd, ptype);
+ 			if (IS_ERR(prog))
+ 				return PTR_ERR(prog);
++		} else if (!bpf_mprog_detach_empty(ptype)) {
++			return -EPERM;
+ 		}
+ 	} else if (is_cgroup_prog_type(ptype, 0, false)) {
+ 		if (attr->attach_flags || attr->relative_fd)
 -- 
 2.51.0
 
