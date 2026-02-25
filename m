@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4453081D7;
-	Wed, 25 Feb 2026 06:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5316D3081D7;
+	Wed, 25 Feb 2026 06:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002693; cv=none; b=eo3wkqo+BOX1XTOirtx3sLSGaDUs3uPgGTGgaxdn5nzabGQJEPnlCVBR7H2G9I4Y516qkPFnixWXzVBrRHx1EAR4g8mGcp0G7ZAUU/pAVERvorZt7V5CITzUUuLPg73m3uGE9CnuE4KbHHaLd96xv9c65GmlbZ1cn1oX76ePNB0=
+	t=1772002694; cv=none; b=fHerpnqrwwD/msgnXsO6IXfqnQU8nUIdjjjDdBcGVf9GT9unyKinuij4Whx9oMm7Z439HIsd+Zk7qdTlhLGsaFDq4URYIw3FOeaqwjBKRWOu3qmEDSjbJXh/7XHYrjrcwMJrPCqLZs0rjgpCP12YXonaY6alVLMDagDOJO/+xVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002693; c=relaxed/simple;
-	bh=j2xwMmpoxMlzyR54aQX/0bT1RG46u4o+s0ioCK8oRtg=;
+	s=arc-20240116; t=1772002694; c=relaxed/simple;
+	bh=LvPsTPBwJ3HAtTWL/sSbkPggwowCa15cDIQcxedsods=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lnQoovSBZLkK0UXbrUsPWomtLi3GZ2e8qy41hXGM20YbkUPxAeoxcF0do+S98E0lJe2AS4ZMtnUjTtVynhHrt/QvfMmceGg6lPOIwGs+9hdA5gz85TqplLVgUsWLpKUQqyGh3PVbkiPNK05uDmbgpkJDo1Uii/lIC+AH6R+7Zi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZT4/Z/F6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pDhsX05xguWomT8ziEWllsNQf2gf49OjaL2CdDOLuvuVDE/b59bE7yJDwlJBSWepCmHmv71UQRggwM7QBRlyONFsY1Zz5zUh1xwPX7Fx7C/Yo3+C1vsaOerQlEzoSDZMOAZBCz4ecrRYAk06cWbvcN7glkr8gB+9V1KhLjX94Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnsJIMHK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZT4/Z/F6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B10C4AF09;
-	Wed, 25 Feb 2026 06:58:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnsJIMHK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD3EC19425;
+	Wed, 25 Feb 2026 06:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002693;
-	bh=j2xwMmpoxMlzyR54aQX/0bT1RG46u4o+s0ioCK8oRtg=;
+	s=korg; t=1772002694;
+	bh=LvPsTPBwJ3HAtTWL/sSbkPggwowCa15cDIQcxedsods=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZT4/Z/F6Obz01aFqjbhr3ZI1qQvaVW3kvDLD3xi36JlxWYWh48VMu/aZhzw8bjQrn
-	 NwOisJLa+Fa6qcrbC1xjsltwtqTP0U7kFqdpvuFZPYpSisotvVfh4HUXZVXo4b5ZCC
-	 ar1NuiG42tAce/JalScTcdZC6LsWlh2p54rIRyDc=
+	b=HnsJIMHKz5NkJKa6f21gshDaFB0K4LmIPwtui0YbU3EkLp+FeVkJ+Yul5mp1os7xj
+	 EEP7ZEaHXARzj4idvxMXpX1fO22C4dRYb5XKyESYwWeuqRbLdTjQHgOBa9c1L03Izy
+	 YU9HwIjrCzS8wEeLD1VPzKT28uodJJqbT6vOf+6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 488/641] pinctrl: qcom: sm8250-lpass-lpi: Fix i2s2_data_groups definition
-Date: Tue, 24 Feb 2026 17:23:34 -0800
-Message-ID: <20260225012400.342050056@linuxfoundation.org>
+Subject: [PATCH 6.18 489/641] pinctrl: meson: amlogic-a4: Fix device node reference leak in bank helpers
+Date: Tue, 24 Feb 2026 17:23:35 -0800
+Message-ID: <20260225012400.366423005@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,36 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit eabf273c8466af3f033473c2d2267a6ea7946d57 ]
+[ Upstream commit e56aa18eba32fb68ac5e19e44670010095bb189c ]
 
-The i2s2_data function is available on both gpio12 and gpio13. Fix the
-groups definition.
+of_parse_phandle_with_fixed_args() increments the reference count of the
+returned device node, so it must be explicitly released using
+of_node_put() after use.
 
-Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fix the reference leak in aml_bank_pins() and aml_bank_number() by
+adding the missing of_node_put() calls.
+
+Fixes: 6e9be3abb78c ("pinctrl: Add driver support for Amlogic SoCs")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/meson/pinctrl-amlogic-a4.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
-index 64494a86490e2..c27452eece3e6 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
-@@ -73,7 +73,7 @@ static const char * const i2s1_ws_groups[] = { "gpio7" };
- static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
- static const char * const wsa_swr_clk_groups[] = { "gpio10" };
- static const char * const wsa_swr_data_groups[] = { "gpio11" };
--static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
-+static const char * const i2s2_data_groups[] = { "gpio12", "gpio13" };
+diff --git a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
+index d9e3a8d5932a8..f05d8261624a4 100644
+--- a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
++++ b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
+@@ -725,8 +725,9 @@ static u32 aml_bank_pins(struct device_node *np)
+ 	if (of_parse_phandle_with_fixed_args(np, "gpio-ranges", 3,
+ 					     0, &of_args))
+ 		return 0;
+-	else
+-		return of_args.args[2];
++
++	of_node_put(of_args.np);
++	return of_args.args[2];
+ }
  
- static const struct lpi_pingroup sm8250_groups[] = {
- 	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
+ static int aml_bank_number(struct device_node *np)
+@@ -736,8 +737,9 @@ static int aml_bank_number(struct device_node *np)
+ 	if (of_parse_phandle_with_fixed_args(np, "gpio-ranges", 3,
+ 					     0, &of_args))
+ 		return -EINVAL;
+-	else
+-		return of_args.args[1] >> 8;
++
++	of_node_put(of_args.np);
++	return of_args.args[1] >> 8;
+ }
+ 
+ static unsigned int aml_count_pins(struct device_node *np)
 -- 
 2.51.0
 
