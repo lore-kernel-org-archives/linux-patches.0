@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275814369A;
-	Wed, 25 Feb 2026 01:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F73253F11;
+	Wed, 25 Feb 2026 01:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982993; cv=none; b=h1y0uE0mIpz4h1uygnvqZlRI1ZtjhmZQJuqMMOOzPZpo4O5ABQ2XaF5R3LODVHB++lOnJ2GvBJWuiRxTXWaIfhgHhkLUpQlfosLE3zvwQGur3koVPQfRSQBbvFHcHnFFhP8dulPWVip/oReaVbArZrLoxuSo3bfUWZAu6VXG9rk=
+	t=1771982994; cv=none; b=d1tY73YimI+lN1Yleu7YQv1+52WM1ksqZE5dvBPPFBUHrcmKQo6tUUbb9e0MmLsTIf1E/Y3GHpjqXL9kMc2Q1EdpKtGGXg57AacnQ9PtGCYNtUk2YUYr9YJr8ptfwvwiS05Iza5fG3GF6tLEMzVHGL6YG213SmFOsfNNWcvGQu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982993; c=relaxed/simple;
-	bh=SK+ahMm4G/NMO4C9kV/hYzsBvcrepvKsJ+lQX3PdwNU=;
+	s=arc-20240116; t=1771982994; c=relaxed/simple;
+	bh=VYQMtx2sRxw58EQmlfe3Mlaf9d82WHIZR3t4/Yic4ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0K6kg4fTplbGEhqr6o7S/zmbs/jWkJM44LDx2qBisHJ9/w0ersBN8xMa9B2ewZVFyxjSeccxpSu3NQIrkxdX7WPOzTpz4wZeMWQw07DZTY1Hs65bwKF6aC8PRYPAmnfJUc2QXy6hf+AYHCteeccV6phj7Qy45M6gO7AWR24n38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqujWswF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m7lXmjSxnoGfWWwHk4vNugzIJ4ZjkTA7E/eoieVBdmfRccO/qoz3AtSc5AdRCSTK/c19w0Ydfal2tpWOKOTKR7qlG7LMEp4uGXg86osO4fAjeyxF95lDz5TnYZ7119CMNcG3dMkQYwCCHEtIlKOkejZO74mp0Pbf1VNFP9iiA/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGn8IF8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqujWswF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8F4C116D0;
-	Wed, 25 Feb 2026 01:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGn8IF8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DDCC116D0;
+	Wed, 25 Feb 2026 01:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982993;
-	bh=SK+ahMm4G/NMO4C9kV/hYzsBvcrepvKsJ+lQX3PdwNU=;
+	s=korg; t=1771982994;
+	bh=VYQMtx2sRxw58EQmlfe3Mlaf9d82WHIZR3t4/Yic4ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqujWswFje4BM5jRqCgD+wpEYWnmIcQ3YzT/I3kqMDuG0Ecf4FLHgnG/fIVFGn+5h
-	 x23t6B8EIWDFBSQpRgjBforRc8uqwYOkcxKJU8mIEhiJ5QQf5k0/wWzLAkhb/by0mb
-	 /JfB8/T2ZGHbemUEJ1A47wdGax2UrYEMCn22JOJk=
+	b=IGn8IF8gWUh+WkkT/O8uJUZr9YylpKUQsnwb6wEFg5G/SmQi7549Hq9PiQL/xTPjs
+	 BDVViqHgwfoZ3r8yGLUvcPMZYM1BFV6LwBUCbufnWyitM81dDEJQqFXEt+mQo7TkMv
+	 sQte37vhfsdnO+h8SlOVv8RS7FJe0QIvgxKk49fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 120/781] Bluetooth: btintel_pcie: Use IRQF_ONESHOT and default primary handler
-Date: Tue, 24 Feb 2026 17:13:49 -0800
-Message-ID: <20260225012402.612204724@linuxfoundation.org>
+Subject: [PATCH 6.19 121/781] scsi: efct: Use IRQF_ONESHOT and default primary handler
+Date: Tue, 24 Feb 2026 17:13:50 -0800
+Message-ID: <20260225012402.636312903@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,9 +53,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 28abed6569c87eab9071ab56c64433c2f0d9ce51 ]
+[ Upstream commit bd81f07e9a27c341cd7e72be95eb0b7cf3910926 ]
 
-There is no added value in btintel_pcie_msix_isr() compared to
+There is no added value in efct_intr_msix() compared to
 irq_default_primary_handler().
 
 Using a threaded interrupt without a dedicated primary handler mandates
@@ -67,43 +67,41 @@ Use the default primary interrupt handler by specifying NULL and set
 IRQF_ONESHOT so the interrupt source is masked until the secondary
 handler is done.
 
-Fixes: c2b636b3f788d ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+Fixes: 4df84e8466242 ("scsi: elx: efct: Driver initialization routines")
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260128095540.863589-7-bigeasy@linutronix.de
+Link: https://patch.msgid.link/20260128095540.863589-8-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/scsi/elx/efct/efct_driver.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 2936b535479f2..704767b334b98 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1431,11 +1431,6 @@ static void btintel_pcie_msix_rx_handle(struct btintel_pcie_data *data)
- 	}
+diff --git a/drivers/scsi/elx/efct/efct_driver.c b/drivers/scsi/elx/efct/efct_driver.c
+index 1bd42f7db1773..528399f725d42 100644
+--- a/drivers/scsi/elx/efct/efct_driver.c
++++ b/drivers/scsi/elx/efct/efct_driver.c
+@@ -415,12 +415,6 @@ efct_intr_thread(int irq, void *handle)
+ 	return IRQ_HANDLED;
  }
  
--static irqreturn_t btintel_pcie_msix_isr(int irq, void *data)
+-static irqreturn_t
+-efct_intr_msix(int irq, void *handle)
 -{
 -	return IRQ_WAKE_THREAD;
 -}
 -
- static inline bool btintel_pcie_is_rxq_empty(struct btintel_pcie_data *data)
+ static int
+ efct_setup_msix(struct efct *efct, u32 num_intrs)
  {
- 	return data->ia.cr_hia[BTINTEL_PCIE_RXQ_NUM] == data->ia.cr_tia[BTINTEL_PCIE_RXQ_NUM];
-@@ -1537,9 +1532,9 @@ static int btintel_pcie_setup_irq(struct btintel_pcie_data *data)
+@@ -450,7 +444,7 @@ efct_setup_msix(struct efct *efct, u32 num_intrs)
+ 		intr_ctx->index = i;
  
- 		err = devm_request_threaded_irq(&data->pdev->dev,
- 						msix_entry->vector,
--						btintel_pcie_msix_isr,
-+						NULL,
- 						btintel_pcie_irq_msix_handler,
--						IRQF_SHARED,
-+						IRQF_ONESHOT | IRQF_SHARED,
- 						KBUILD_MODNAME,
- 						msix_entry);
- 		if (err) {
+ 		rc = request_threaded_irq(pci_irq_vector(efct->pci, i),
+-					  efct_intr_msix, efct_intr_thread, 0,
++					  NULL, efct_intr_thread, IRQF_ONESHOT,
+ 					  EFCT_DRIVER_NAME, intr_ctx);
+ 		if (rc) {
+ 			dev_err(&efct->pci->dev,
 -- 
 2.51.0
 
