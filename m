@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF879262FE7;
-	Wed, 25 Feb 2026 01:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0259262FE7;
+	Wed, 25 Feb 2026 01:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983466; cv=none; b=qPIAjciTKk7PTwXxjsmMh0JKV/oNJlKiPU+fRIAOXEGCyXrTG8i0FLyp3rxVBmwSnfBkf6+dR1lzNy2MTCIMcvVIaDO1etrTbfWLhzF+HzjT81UD+jZJHNsG3onz75n0ZiN3vYsqzePJVgeQt0HoDjXnAFhU47r2l50nmzuaY8M=
+	t=1771983467; cv=none; b=XCoURz502QILioJFnbOkASZuSafimAfdT7+wQrjiPBCEAgPV+vgYVFU3VDvgWaoZIFemwGi0FMCkP4RObQyc3EDKrcnTkp8SYGscdeHy4bGu6s8dFHeLhsAQFcfq+CI8bhsaea0PsyXdXis2MuLpy24n/mWOeL2FjhugXye++Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983466; c=relaxed/simple;
-	bh=IBexiZH8Gj4BoMsIfNUUeRRN0RvP1vWsNPkT5iQlDGA=;
+	s=arc-20240116; t=1771983467; c=relaxed/simple;
+	bh=xkk9T24dW7k9AFJPuGFDNYzrsOkOFAuQQRO1qhOuVJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0kiL1ZqFItBJlOPmuTti39Z7/W98mg+ER8YsOozR0zpq5f8L9jw8W1Iq0VKbvCQn3S4u1SA8w7iOKn/xi5QUXJUtZAB4MINAuczCzQ6hWrXQGzPXIAxwgiFrR6yaTnejaeq0kRUkDnl4V5rpAnoIAnaMJtGCFeEt6Sr8Dtf0Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWFZ594f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IdG1xQ7ajwAjC9TSYqHnuT35CJSqxQ5QwKx6j4UW+Q7aiIBiha9k+l6NNVChsC6ZAm80ok8IBKZ6vo8v2W+z5sWLaoo8CQ4i/colXHAGk8alpMJm44wT5353HSqGDpH+HCgC7sE2c/2jF/kHeYD+UyvWDA9oTCGoyUZKxMdteYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bT30Xt8d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWFZ594f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF41C116D0;
-	Wed, 25 Feb 2026 01:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bT30Xt8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AD3C116D0;
+	Wed, 25 Feb 2026 01:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983466;
-	bh=IBexiZH8Gj4BoMsIfNUUeRRN0RvP1vWsNPkT5iQlDGA=;
+	s=korg; t=1771983467;
+	bh=xkk9T24dW7k9AFJPuGFDNYzrsOkOFAuQQRO1qhOuVJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWFZ594f/0gsn8FaFaVbPgid0Hy+BUucLrUj0jCIWsrax6IpHrMfDsffXfO+nenDK
-	 qy4TnzjsgFP/6/dFM3kk11OYVaxz3xbKz2EqCx4nVQGu3z9gS9+EoPXNaYaC90cvWn
-	 onOX4VcszP67+G4PGWLdiFLioiPLu36kl3uvglVo=
+	b=bT30Xt8dQ7kngmGG0r2k0W/Pcxi3N/Y4WbR0zNBSdp5/hmfGU5glWrYdXwy89m+6o
+	 cfGDSS5IcxnOmhApr3vuaCKRNVnwjta1XkiYS5ekl2Q3+beAQ2UwT8JW1S4Siqi086
+	 FqKiAZg9EePY9EzoZNVqZxhwU7a+0okyyL+fC/1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>,
-	Jianhao Xu <jianhao.xu@seu.edu.cn>,
-	Zilin Guan <zilin@seu.edu.cn>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 574/781] gpib: Fix memory leak in ni_usb_init()
-Date: Tue, 24 Feb 2026 17:21:23 -0800
-Message-ID: <20260225012413.879556991@linuxfoundation.org>
+Subject: [PATCH 6.19 583/781] coresight: etm3x: Fix cpulocked warning on cpuhp
+Date: Tue, 24 Feb 2026 17:21:32 -0800
+Message-ID: <20260225012414.099939355@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,65 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Antonio Borneo <antonio.borneo@foss.st.com>
 
-[ Upstream commit b89921eed8cf2d97250bac4be38dbcfbf048b586 ]
+[ Upstream commit 1feb0377b9b816f89a04fc381eb19fc6bac9f4a4 ]
 
-In ni_usb_init(), if ni_usb_setup_init() fails, the function returns
--EFAULT without freeing the allocated writes buffer, leading to a
-memory leak.
+When changes [1] and [2] have been applied to the driver etm4x, the
+same modifications have been also collapsed in [3] and applied in
+one shot to the driver etm3x.
+While doing this, the driver etm3x has not been aligned to etm4x on
+the use of non cpuslocked version of cpuhp callback setup APIs.
 
-Additionally, ni_usb_setup_init() returns 0 on failure, which causes
-ni_usb_init() to return -EFAULT, an inappropriate error code for this
-situation.
+The current code triggers two run-time warnings when the kernel is
+compiled with CONFIG_PROVE_LOCKING=y.
 
-Fix the leak by freeing writes in the error path. Modify
-ni_usb_setup_init() to return -EINVAL on failure and propagate this
-error code in ni_usb_init().
+Use non cpuslocked version of cpuhp callback setup APIs in driver
+etm3x, aligning it to the driver etm4x.
 
-Fixes: 4e127de14fa7 ("staging: gpib: Add National Instruments USB GPIB driver")
-Suggested-by: Greg KH <gregkh@linuxfoundation.org>
-Suggested-by: Dave Penkler <dpenkler@gmail.com>
-Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20251230034546.929452-1-zilin@seu.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1] commit 2d1a8bfb61ec ("coresight: etm4x: Fix etm4_count race by
+                          moving cpuhp callbacks to init")
+[2] commit 22a550a306ad ("coresight: etm4x: Allow etm4x to be built
+                          as a module")
+[3] commit 97fe626ce64c ("coresight: etm3x: Allow etm3x to be built
+                          as a module")
+
+Fixes: 97fe626ce64c ("coresight: etm3x: Allow etm3x to be built as a module")
+Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260108152427.357379-1-antonio.borneo@foss.st.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpib/ni_usb/ni_usb_gpib.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm3x-core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpib/ni_usb/ni_usb_gpib.c b/drivers/gpib/ni_usb/ni_usb_gpib.c
-index fdcaa6c00bfea..b6fddb437f552 100644
---- a/drivers/gpib/ni_usb/ni_usb_gpib.c
-+++ b/drivers/gpib/ni_usb/ni_usb_gpib.c
-@@ -1780,7 +1780,7 @@ static int ni_usb_setup_init(struct gpib_board *board, struct ni_usb_register *w
- 	i++;
- 	if (i > NUM_INIT_WRITES) {
- 		dev_err(&usb_dev->dev, "bug!, buffer overrun, i=%i\n", i);
--		return 0;
-+		return -EINVAL;
- 	}
- 	return i;
- }
-@@ -1799,10 +1799,12 @@ static int ni_usb_init(struct gpib_board *board)
- 		return -ENOMEM;
+diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+index a5e809589d3e3..0c011b7041696 100644
+--- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+@@ -795,16 +795,16 @@ static int __init etm_hp_setup(void)
+ {
+ 	int ret;
  
- 	writes_len = ni_usb_setup_init(board, writes);
--	if (writes_len)
--		retval = ni_usb_write_registers(ni_priv, writes, writes_len, &ibsta);
--	else
--		return -EFAULT;
-+	if (writes_len < 0) {
-+		kfree(writes);
-+		return writes_len;
-+	}
-+
-+	retval = ni_usb_write_registers(ni_priv, writes, writes_len, &ibsta);
- 	kfree(writes);
- 	if (retval) {
- 		dev_err(&usb_dev->dev, "register write failed, retval=%i\n", retval);
+-	ret = cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ARM_CORESIGHT_STARTING,
+-						   "arm/coresight:starting",
+-						   etm_starting_cpu, etm_dying_cpu);
++	ret = cpuhp_setup_state_nocalls(CPUHP_AP_ARM_CORESIGHT_STARTING,
++					"arm/coresight:starting",
++					etm_starting_cpu, etm_dying_cpu);
+ 
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ONLINE_DYN,
+-						   "arm/coresight:online",
+-						   etm_online_cpu, NULL);
++	ret = cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN,
++					"arm/coresight:online",
++					etm_online_cpu, NULL);
+ 
+ 	/* HP dyn state ID returned in ret on success */
+ 	if (ret > 0) {
 -- 
 2.51.0
 
