@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CC13002D1;
-	Wed, 25 Feb 2026 06:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D1F3002D1;
+	Wed, 25 Feb 2026 06:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002674; cv=none; b=jDT8q8qVkof26EYQk7phTRiHnEl/P5oIMc8vuRUGS2wklmJ9QEflvVSSXhZZN64PQoH+tddrgkAopDNhTt60n1UPOqMatzKKkHk3qA2x+vqZh3XepmU+YfxHCQ9Fu9pnh4s9JEptgL7uhKS0gwZ1z+Wgn7RUgF0mtHTJlxvynhk=
+	t=1772002675; cv=none; b=QqvZNxXEODUxr+aqrYbdCGMVuRd34htCQW8pHZdKQxXn7SSOcvZQuJtj+XBZX9qhyZ4x8sQszcZDsvkzuyaisr1wobGDIPJOJ62r50QBcXD9ZLCaMBGdrZybfTiOo9Rp8sJ3zqVejYQCasvUzs84YKB78t1Zmpxgh0ZJq2Dswlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002674; c=relaxed/simple;
-	bh=iXK3gSiOLco5rFTIsTLV+rZ/G7cKLpUj70bFLEijsrA=;
+	s=arc-20240116; t=1772002675; c=relaxed/simple;
+	bh=vR/wzsoEPHY2ZZJn+lBZFwdeTPxs4tV6AB+Qo/tBtT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2NMrmHWebeW/9TyiYG6BJ3AIe7uoVKLQZ16EqIdoCJXwZvL4ZKt9oYuWdTPUekrgIU897XpAUWC751eN7622RtsTYhQs+LjjuP6TgTF7UlWT+QKj/lqwP3wYNzIpxAtSJ+1IumnhMTDdTUK4zmHWarVnHczcRWvTv4mOBs1wPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpWpGSB/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8MmiNsJwDWifmf9GvZ17woBKUgZ3X3HOHjxj/3vY5iP0ixP76FxLU+fxxHeULEAiwEgEDHLdQllUgjSOE5qIc3urHezsf2Lpb9898tAAe4wV8WitPlk60M4dUCHKBTqO/ZR4VdR+YUDa2+ABAMWvg2gXz9XB+ou10DDbKmJtws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrT3MiDb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpWpGSB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637D7C116D0;
-	Wed, 25 Feb 2026 06:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrT3MiDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106EEC116D0;
+	Wed, 25 Feb 2026 06:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002674;
-	bh=iXK3gSiOLco5rFTIsTLV+rZ/G7cKLpUj70bFLEijsrA=;
+	s=korg; t=1772002675;
+	bh=vR/wzsoEPHY2ZZJn+lBZFwdeTPxs4tV6AB+Qo/tBtT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FpWpGSB/LOAaVCt/u4BCEFAS4VmDgy9/E4Uzo3JNjdRFscIq5XMhk05HV5cRQLAme
-	 kXiRcw6iNXfrYwRWgooc9o2lJWCFkqrH3wEmya7PLpHbb7nDY/RGO3WFnG3Tobd2K4
-	 i8Z8LFEEJSZiXvHBoroEBkA7NXAycZ5SFj/yJUMM=
+	b=FrT3MiDbBt0DCfYy4boluQXg3NXkzKMbxi/e67Bzoqce0JBGAsIbYL9IBby3mq9tj
+	 AIhIY6WndV+DzNxfe83OfdmeDF8ik+aE9/JwzgeP9q8ESCicsmkR+nsV/f0oXk8NI9
+	 Pf7tAnaS40BHl99agFo2M3hE873jOiRh8NiR1SuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 422/641] clk: microchip: core: remove duplicate determine_rate on pic32_sclk_ops
-Date: Tue, 24 Feb 2026 17:22:28 -0800
-Message-ID: <20260225012358.776190243@linuxfoundation.org>
+Subject: [PATCH 6.18 458/641] iio: test: drop dangling symbol in gain-time-scale helpers
+Date: Tue, 24 Feb 2026 17:23:04 -0800
+Message-ID: <20260225012359.613893981@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,62 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit d93faac66dc04650d924f8f9584216d14f48fb14 ]
+[ Upstream commit d63d868b312478523670b76007dcc5eaedc3ee07 ]
 
-pic32_sclk_ops previously had a sclk_round_rate() member, and this was
-recently converted over to sclk_determine_rate() with the help of a
-Coccinelle semantic patch. pic32_sclk_ops now has two conflicting
-determine_rate ops members.
+The code for this never went upstream. It was replaced by other code,
+so this should be dropped.
 
-Prior to the conversion, pic32_sclk_ops already had a determine_rate
-member that points to __clk_mux_determine_rate(). When both the
-round_rate() and determine_rate() ops are defined, the clk core only
-uses the determine_rate() op. Let's go ahead and drop the recently
-converted sclk_determine_rate() to match the previous functionality
-prior to the conversion.
-
-Fixes: e9f039c08cdc ("clk: microchip: core: convert from round_rate() to determine_rate()")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202511222115.uvHrP95A-lkp@intel.com/
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Link: https://lore.kernel.org/r/20251205-clk-microchip-fixes-v3-1-a02190705e47@redhat.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216748
+Fixes: cf996f039679 ("iio: test: test gain-time-scale helpers")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/microchip/clk-core.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/iio/test/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/microchip/clk-core.c b/drivers/clk/microchip/clk-core.c
-index b34348d491f3e..a0163441dfe5c 100644
---- a/drivers/clk/microchip/clk-core.c
-+++ b/drivers/clk/microchip/clk-core.c
-@@ -780,15 +780,6 @@ static unsigned long sclk_get_rate(struct clk_hw *hw, unsigned long parent_rate)
- 	return parent_rate / div;
- }
- 
--static int sclk_determine_rate(struct clk_hw *hw,
--			       struct clk_rate_request *req)
--{
--	req->rate = calc_best_divided_rate(req->rate, req->best_parent_rate,
--					   SLEW_SYSDIV, 1);
--
--	return 0;
--}
--
- static int sclk_set_rate(struct clk_hw *hw,
- 			 unsigned long rate, unsigned long parent_rate)
- {
-@@ -912,7 +903,6 @@ static int sclk_init(struct clk_hw *hw)
- const struct clk_ops pic32_sclk_ops = {
- 	.get_parent	= sclk_get_parent,
- 	.set_parent	= sclk_set_parent,
--	.determine_rate = sclk_determine_rate,
- 	.set_rate	= sclk_set_rate,
- 	.recalc_rate	= sclk_get_rate,
- 	.init		= sclk_init,
+diff --git a/drivers/iio/test/Kconfig b/drivers/iio/test/Kconfig
+index 6e65e929791ca..4fc17dd0dcd77 100644
+--- a/drivers/iio/test/Kconfig
++++ b/drivers/iio/test/Kconfig
+@@ -8,7 +8,6 @@ config IIO_GTS_KUNIT_TEST
+ 	tristate "Test IIO gain-time-scale helpers" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT
+ 	select IIO_GTS_HELPER
+-	select TEST_KUNIT_DEVICE_HELPERS
+ 	default KUNIT_ALL_TESTS
+ 	help
+ 	  build unit tests for the IIO light sensor gain-time-scale helpers.
 -- 
 2.51.0
 
