@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955EC2D77F5;
-	Wed, 25 Feb 2026 06:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF9F2D77F5;
+	Wed, 25 Feb 2026 06:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002719; cv=none; b=haLWGrgxM5NepXuDmYKI9Tc0UHIZhXsp98XwY6xO50ivLlhQRT7m/OEkIZo/GQgJckVT4BA1hDxXIjqYAEiv3OF2DUgfd4BFfBhLJiiOJOjm0YEDBB/5PTlQ/qx7uuKEOauV8vzp9Ss/bHEgr6E/YVSnr1SyEph94BSzTAPl3zo=
+	t=1772002720; cv=none; b=UO6+7q34h7U9ekezEWA1NOcp5urHKqCTg2L/LPXgmJNO0nNkTPlrCm26RU7wd2gBoxeiir+EQygTaHfeyGAlLEDBn/XRgQP1q9ZcPQlWzBAcn+In0T1nz5XR9+9DagBi3L23Q08joAZC6y3103glNm9ksP9vdY4/Vqa2dP3m51A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002719; c=relaxed/simple;
-	bh=m/2TukzH2o6WaiTi5r0mO9/o03fZ9q4XEq43G5HnOa8=;
+	s=arc-20240116; t=1772002720; c=relaxed/simple;
+	bh=E6+gq3WrAVQ9CSKeb3ZH6T1P4bZTzUV23JQeXsK97U4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idLhJSb+Od/BJARsVJPrT/rT0+9H0h6XETHR75FC3OYAg6j2dWuZd/SWpnBP8qi/PNPlIFGIXvC7Q+SMSueW0JkR8eNV+9+TVQfJ5j03peUQTQLQQR9ZZHdF65rpmSvm1givo6qDmU0ijqmNu35ZSW/Ws0Q0XY5jbxecOxlStFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sft71XOX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hlLe8ID4xQFFWjBsgH+e3Zpx/YNnoiwTcIgMlv2auUA2RbqD7ODZYhMLH+zIDUTDMMiginijUaZXigV/7hzt1uDq/N6EFF34DVnXvtHbiJIFzcrd+HR1/+QjTHDfXW7435+a6zvupmcDwEEh4Ag4AxVl2RdaRjP2slcPzn4abmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1/XY7H7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sft71XOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDC1C116D0;
-	Wed, 25 Feb 2026 06:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1/XY7H7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D0CC116D0;
+	Wed, 25 Feb 2026 06:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002719;
-	bh=m/2TukzH2o6WaiTi5r0mO9/o03fZ9q4XEq43G5HnOa8=;
+	s=korg; t=1772002720;
+	bh=E6+gq3WrAVQ9CSKeb3ZH6T1P4bZTzUV23JQeXsK97U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sft71XOXFhF8lU4yelHojE2f3Ju163PcJaX32MjowNBpD2KGaeRrrQ020tIy91P6w
-	 j5EmIGSzP55Q6DMXtKHCHHVw1bu0HktEH2K/x09Hyu95cPn6gP/PkA19co5tmGWIkC
-	 d1tMOmk0KWp34ynJtfT+XRHtWWrG5Add2jy7DeCU=
+	b=c1/XY7H7gr1UkYlKQh0s/lgjelWbv6e/CwVL43pKMkM9XqkdDbOSkLhiyeV3Ddr3C
+	 DPtrd+24byVpsaGSM5Y25rYivsDtI3rT/8J+TSvW04bywwTtbJ47fi+m1BF6DODApF
+	 DssJNdMwnfMCiTzJj/OXBPrqALIueTGdM0AJJuTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Anton Protopopov <a.s.protopopov@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ralf Lici <ralf@mandelbit.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 529/641] bpf: Add a map/btf from a fd array more consistently
-Date: Tue, 24 Feb 2026 17:24:15 -0800
-Message-ID: <20260225012401.347297629@linuxfoundation.org>
+Subject: [PATCH 6.18 512/641] ovpn: fix VPN TX bytes counting
+Date: Tue, 24 Feb 2026 17:23:58 -0800
+Message-ID: <20260225012400.928559741@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,49 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Protopopov <a.s.protopopov@gmail.com>
+From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit b0b1a8583d8e797114e613139e3e3318a1704690 ]
+[ Upstream commit b660b13d4c6379ca6360f24aaef8c5807fefd237 ]
 
-The add_fd_from_fd_array() function takes a file descriptor as a
-parameter and tries to add either map or btf to the corresponding
-list of used objects. As was reported by Dan Carpenter, since the
-commit c81e4322acf0 ("bpf: Fix a potential use-after-free of BTF
-object"), the fdget() is called twice on the file descriptor, and
-thus userspace, potentially, can replace the file pointed to by the
-file descriptor in between the two calls. On practice, this shouldn't
-break anything on the kernel side, but for consistency fix the code
-such that only one fdget() is executed.
+In ovpn_net_xmit, after GSO segmentation and segment processing, the
+first segment on the list is used to increment VPN TX statistics, which
+fails to account for any subsequent segments in the chain.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/aY689z7gHNv8rgVO@stanley.mountain/
-Fixes: ccd2d799ed44 ("bpf: Fix a potential use-after-free of BTF object")
-Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
-Link: https://lore.kernel.org/r/20260213212949.759321-1-a.s.protopopov@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fix this by accumulating the length of every segment that successfully
+passes skb_share_check into a tx_bytes variable. This ensures the peer
+statistics accurately reflect the total data volume sent, regardless of
+whether the original packet was segmented.
+
+Fixes: 04ca14955f9a ("ovpn: store tunnel and transport statistics")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ovpn/io.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index dade674ffe071..c4fa2268dbbc5 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -24098,9 +24098,11 @@ static int add_fd_from_fd_array(struct bpf_verifier_env *env, int fd)
- 		return 0;
+diff --git a/drivers/net/ovpn/io.c b/drivers/net/ovpn/io.c
+index f70c58b10599b..955c9a37e1f8d 100644
+--- a/drivers/net/ovpn/io.c
++++ b/drivers/net/ovpn/io.c
+@@ -355,6 +355,7 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	struct ovpn_priv *ovpn = netdev_priv(dev);
+ 	struct sk_buff *segments, *curr, *next;
+ 	struct sk_buff_head skb_list;
++	unsigned int tx_bytes = 0;
+ 	struct ovpn_peer *peer;
+ 	__be16 proto;
+ 	int ret;
+@@ -414,6 +415,8 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			continue;
+ 		}
+ 
++		/* only count what we actually send */
++		tx_bytes += curr->len;
+ 		__skb_queue_tail(&skb_list, curr);
  	}
  
--	btf = btf_get_by_fd(fd);
--	if (!IS_ERR(btf))
-+	btf = __btf_get_by_fd(f);
-+	if (!IS_ERR(btf)) {
-+		btf_get(btf);
- 		return __add_used_btf(env, btf);
-+	}
+@@ -426,7 +429,7 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	}
+ 	skb_list.prev->next = NULL;
  
- 	verbose(env, "fd %d is not pointing to valid bpf_map or btf\n", fd);
- 	return PTR_ERR(map);
+-	ovpn_peer_stats_increment_tx(&peer->vpn_stats, skb_list.next->len);
++	ovpn_peer_stats_increment_tx(&peer->vpn_stats, tx_bytes);
+ 	ovpn_send(ovpn, skb_list.next, peer);
+ 
+ 	return NETDEV_TX_OK;
 -- 
 2.51.0
 
