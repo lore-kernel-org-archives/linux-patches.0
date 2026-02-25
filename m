@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F891FE45D;
-	Wed, 25 Feb 2026 01:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC712BAF7;
+	Wed, 25 Feb 2026 01:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983084; cv=none; b=DDxM1nUUM/sHTCX7JKfP0i4AQKkSVkiPDxIx7Z3BI9DvDZ5WowLQrUeq+poHNIdMY6vb9FV00bV++HwUuwQ/mn0epfjMcPwfz3gXlYUPuGczHKXWv0mifJn8Ajd6lu2+X63WFVh/Sm61fCevnyi8iLxPs8QqlMqh0SJx25fngMc=
+	t=1771983086; cv=none; b=Yhsb4cUgnFALlAFPNK0umMUhXpasmKIrQ23dl0wUk9Jso+1JNLWOyr2HG0wzpAa3aSlV9RLBVdXS3rKTj+VnLNyyflqvV5+upixmlgatzfaXIif/Jbsb0d8tJFnpT8fCiMM9MCxMNflnWPxQSkSS/kMiOhIpzh6is4L24c/gbyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983084; c=relaxed/simple;
-	bh=wpVMExUPOGwFDuOFsdsDnbQI2WFUXTUs9zLDW67x9Ug=;
+	s=arc-20240116; t=1771983086; c=relaxed/simple;
+	bh=0WkPLJQYYF0dwbdpHG9B8GU0aoScBAjwgZ2+hpo5sNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMmnx0kC3E1OlOH59Tkt8QwFWI9tRy5+Fn18riBpNaxBXIw61xva2apS8LrkLROfrbQgBZtN569wY8kkwnv28ooNT1TiPt2DzVXsPS9v0tDfLHkJ6RDB+znYdAjW/sfegYlzE8nmpl6G78YbG4cy7oJDoBVtn+KUephflFRe/Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7OgxWZr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cLij5ClCeOIDqFQRzwuz3A4LQG4TJ+YLayyWinqzchJcmwAxRhHLvmJCi01Y1ynM0pkngWsmu5RvzVk7Hy/6bVNtsfV+qkt3DrYRcd720WtnwlEMZOMxCrX7nqNMr9a3FfzHE3Dk7cfP/FBPx17n3tpn9/9A8hLyhkcA+IczpwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDtZ8hdV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7OgxWZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1C0C116D0;
-	Wed, 25 Feb 2026 01:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDtZ8hdV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7363C116D0;
+	Wed, 25 Feb 2026 01:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983084;
-	bh=wpVMExUPOGwFDuOFsdsDnbQI2WFUXTUs9zLDW67x9Ug=;
+	s=korg; t=1771983085;
+	bh=0WkPLJQYYF0dwbdpHG9B8GU0aoScBAjwgZ2+hpo5sNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7OgxWZrR8IbjMm83As9jPo4XkTYbWBt5YXw2jDmWrgXvbv3l23QitziPwsHPPwit
-	 7GlYKLQiY9oMm9xD3JzZcvU72w8WVOBtDYWfQ2CaWm1wzyb0MA/M+GlK41Rq9o80rS
-	 cLW9rpulrUSEHQZe0hxneBe0i1gnCoZNWwQv+H6s=
+	b=VDtZ8hdV9qrnj8jy7uC7RGCoZ8F1vOAcsKSYLUyVCh9XDVj4ynyQq+6IRD1EbJmik
+	 /pS3dFHARrn0Mcl1sOnv0+iiPHq0GCXAyHw1EWKbarincI20tVXyEt875piZqTxB2F
+	 RJcFn27nCll8jjIbOR43kLPA6SyJEkYaVHrHZ1eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Chenyu Chen <chen-yu.chen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Akif Ejaz <akifejaz40@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 245/781] drm/amd/display: Update dc_connection_dac_load to dc_connection_analog_load
-Date: Tue, 24 Feb 2026 17:15:54 -0800
-Message-ID: <20260225012405.716630638@linuxfoundation.org>
+Subject: [PATCH 6.19 210/781] spi: cadence-qspi: Remove redundant pm_runtime_mark_last_busy call
+Date: Tue, 24 Feb 2026 17:15:19 -0800
+Message-ID: <20260225012404.864923852@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,91 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Akif Ejaz <akifejaz40@gmail.com>
 
-[ Upstream commit 57c8690a84bec025a8bc22e5f867fd660c4a3e76 ]
+[ Upstream commit 28d21dfcea0121afec04451733a6c553fd319c8e ]
 
-Update to a more accurate name dc_connection_analog_load.
+The pm_runtime_mark_last_busy() call is redundant in probe function
+as pm_runtime_put_autosuspend() already calls pm_runtime_mark_last_busy()
+internally to update the last access time of the device before queuing
+autosuspend.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 0d89268d20c9 ("drm/amd/display: Don't repeat DAC load detection")
+Remove the pm_runtime_mark_last_busy() call from the probe function.
+
+Tested on StarFive VisionFive 2 v1.2A board.
+
+Fixes: e1f2e77624db ("spi: cadence-qspi: Fix runtime PM imbalance in probe")
+
+Signed-off-by: Akif Ejaz <akifejaz40@gmail.com>
+Link: https://patch.msgid.link/20251203181921.97171-1-akifejaz40@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c    | 2 +-
- drivers/gpu/drm/amd/display/dc/dc_types.h            | 2 +-
- drivers/gpu/drm/amd/display/dc/link/link_detection.c | 8 ++++----
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index a8a59126b2d2b..b31bd6fa70181 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7434,7 +7434,7 @@ amdgpu_dm_connector_poll(struct amdgpu_dm_connector *aconnector, bool force)
- 	 *
- 	 * Only allow to poll such a connector again when forcing.
- 	 */
--	if (!force && link->local_sink && link->type == dc_connection_dac_load)
-+	if (!force && link->local_sink && link->type == dc_connection_analog_load)
- 		return connector->status;
- 
- 	mutex_lock(&aconnector->hpd_lock);
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_types.h b/drivers/gpu/drm/amd/display/dc/dc_types.h
-index f46039f642034..3e63d7bda1661 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
-@@ -354,7 +354,7 @@ enum dc_connection_type {
- 	dc_connection_single,
- 	dc_connection_mst_branch,
- 	dc_connection_sst_branch,
--	dc_connection_dac_load
-+	dc_connection_analog_load
- };
- 
- struct dc_csc_adjustments {
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_detection.c b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-index 7fa6bc97a9193..4f48e7ea75110 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-@@ -1176,7 +1176,7 @@ static bool detect_link_and_local_sink(struct dc_link *link,
- 				/* If we didn't do DAC load detection yet, do it now
- 				 * to verify there really is a display connected.
- 				 */
--				if (link->type != dc_connection_dac_load &&
-+				if (link->type != dc_connection_analog_load &&
- 					!link_detect_dac_load_detect(link)) {
- 					if (prev_sink)
- 						dc_sink_release(prev_sink);
-@@ -1185,7 +1185,7 @@ static bool detect_link_and_local_sink(struct dc_link *link,
- 				}
- 
- 				DC_LOG_INFO("%s detected analog display without EDID\n", __func__);
--				link->type = dc_connection_dac_load;
-+				link->type = dc_connection_analog_load;
- 				sink->edid_caps.analog = true;
- 				break;
- 			}
-@@ -1372,7 +1372,7 @@ static bool detect_link_and_local_sink(struct dc_link *link,
-  * @link: DC link to evaluate (must support analog signalling).
-  * @type: Updated with the detected connection type:
-  *        dc_connection_single (analog via DDC),
-- *        dc_connection_dac_load (via load-detect),
-+ *        dc_connection_analog_load (via load-detect),
-  *        or dc_connection_none.
-  *
-  * Return: true if detection completed.
-@@ -1388,7 +1388,7 @@ static bool link_detect_analog(struct dc_link *link, enum dc_connection_type *ty
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index 965b4cea3388a..b9a560c75c5cd 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -2012,10 +2012,8 @@ static int cqspi_probe(struct platform_device *pdev)
+ 		goto probe_setup_failed;
  	}
  
- 	if (link_detect_dac_load_detect(link)) {
--		*type = dc_connection_dac_load;
-+		*type = dc_connection_analog_load;
- 		return true;
- 	}
+-	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM))) {
+-		pm_runtime_mark_last_busy(dev);
++	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
+ 		pm_runtime_put_autosuspend(dev);
+-	}
  
+ 	return 0;
+ probe_setup_failed:
 -- 
 2.51.0
 
