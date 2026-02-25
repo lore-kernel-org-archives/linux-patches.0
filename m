@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB66D1E2834;
-	Wed, 25 Feb 2026 01:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14721E2834;
+	Wed, 25 Feb 2026 01:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983923; cv=none; b=OP/VNxc+QYZ1I/f/5/V2zr2CaafsK6UpoFRmyPaUSP0B/KfJAZwR+0j3+33G2sdSN/NGD7yZY5wNz9ydKcgVZvl1Ei5dq//Lry1OXoE7fM8H3h+5U8PFIROkRqXMfSfjxwGMhEwBIKHHUYVARosHJpt45k1kHCq3z+XBdmiw3Zs=
+	t=1771983924; cv=none; b=bwtzmVD0mqmjhPMS/lmK1xyBIskYZMmaEdn5kgQs0xnst4Ubf+WuEaFnMJp8ke3w0do8Zj0z9jxLpJ+n4VY8e04tlHT17kljov6giAZ6vO53xQw9upVaER+H0Q7DSXE8qCszl1USoxeAJme9Oezy/Sc3WD3RPqhYaVnEF+DuI9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983923; c=relaxed/simple;
-	bh=dtR9j6mg9xAPWlk7nw6pGZ+p54Zu5tP3tvl4OtbtNmI=;
+	s=arc-20240116; t=1771983924; c=relaxed/simple;
+	bh=17j8Jht65J63DaEWL4ZK7ITXHDrt7CKR3rh69+GFIKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A6UsBeHbxDaCVEE5xzTGhwwwPFRKYZlEBhtb+kfsy6GdC04m6UlRvnwraAo6+nRYlA0p66Oqr8SNSgqHZ0W+kLe1O9bY/Qgei5MM+YbdEn/Dw3j+gVMPdx6kfd/DFfZ7BEf2nfEx5+sc5DzE9zTwCgT8Y9K2SeXae1yPLTO7sAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlkWWg5t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pFLi8S/YY+KgMIGBvjCTwkK2aH5UoC+hmquPlvbSTh/79QmVoya3WRCT8gBOOgH0zRV5vsS7aB9NC5wkyBAynDOvpFjTAtvq0LGo9mLmmgnwPuI1gJ8bgilfY1uD2O3tXf/5bvHNv9iUaY8u95bmbVwL61yaqrTGM3zx2HX0cXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDtN+Ku8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlkWWg5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7B0C116D0;
-	Wed, 25 Feb 2026 01:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDtN+Ku8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F5DC116D0;
+	Wed, 25 Feb 2026 01:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983922;
-	bh=dtR9j6mg9xAPWlk7nw6pGZ+p54Zu5tP3tvl4OtbtNmI=;
+	s=korg; t=1771983923;
+	bh=17j8Jht65J63DaEWL4ZK7ITXHDrt7CKR3rh69+GFIKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlkWWg5tBtOneQX2THRgiuy2cHYaH3kB58pLSLQay6eIXHbJi+3Kgg12YuwJ5VH+H
-	 8fxthBP+cbLEaryDJwtbdfn6O0dsh4ix4Nweqj8YLMvJRBeAWAStHt29Wi+jkdE464
-	 V0DjTlrfb7V1cmCO2bAjOyWyau0pOasR4Ml4npG0=
+	b=rDtN+Ku8mvWdIh+bC+XW7qwsjPMEpctFRgt0ULILhWrFD9nQP6m0J4k3EzDYF5tAp
+	 X5DocLoxS2EDOHAyt5cZt4hIzgl/r8iZd5j9JPCvTHh2atbPINNOfuwxcr7Amgf2Uz
+	 hWVubBYWy67qUEYsZ3gQgqdiqz62x/7ix/6kVOv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	darlington Opara <darlington.opara@amd.com>,
-	Jinage Zhao <jiange.zhao@amd.com>,
-	Monk Liu <Monk.Liu@amd.com>,
-	Emily Deng <Emily.Deng@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Mahadevan P <mahadevan.p@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 190/641] drm/amdgpu: Use explicit VCN instance 0 in SR-IOV init
-Date: Tue, 24 Feb 2026 17:18:36 -0800
-Message-ID: <20260225012353.605457648@linuxfoundation.org>
+Subject: [PATCH 6.18 191/641] drm/msm/disp/dpu: add merge3d support for sc7280
+Date: Tue, 24 Feb 2026 17:18:37 -0800
+Message-ID: <20260225012353.627222093@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -50,181 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Mahadevan P <mahadevan.p@oss.qualcomm.com>
 
-[ Upstream commit af26fa751c2eef66916acbf0d3c3e9159da56186 ]
+[ Upstream commit 2892de3f4f985fa779c330468e2f341fdb762ccd ]
 
-vcn_v2_0_start_sriov() declares a local variable "i" initialized to zero
-and uses it only as the instance index in SOC15_REG_OFFSET(UVD, i, ...).
-The value is never changed and all other fields are taken from
-adev->vcn.inst[0], so this path only ever programs VCN instance 0.
+On SC7280 targets, display modes with a width greater than the
+max_mixer_width (2400) are rejected during mode validation when
+merge3d is disabled. This limitation exists because, without a
+3D merge block, two layer mixers cannot be combined(non-DSC interface),
+preventing large layers from being split across mixers. As a result,
+higher resolution modes cannot be supported.
 
-This triggered a Smatch:
-warn: iterator 'i' not incremented
+Enable merge3d support on SC7280 to allow combining streams from
+two layer mixers into a single non-DSC interface. This capability
+removes the width restriction and enables buffer sizes beyond the
+2400-pixel limit.
 
-Replace the dummy iterator with an explicit instance index of 0 in
-SOC15_REG_OFFSET() calls.
-
-Fixes: dd26858a9cd8 ("drm/amdgpu: implement initialization part on VCN2.0 for SRIOV")
-Reported by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: darlington Opara <darlington.opara@amd.com>
-Cc: Jinage Zhao <jiange.zhao@amd.com>
-Cc: Monk Liu <Monk.Liu@amd.com>
-Cc: Emily Deng <Emily.Deng@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Emily Deng <Emily.Deng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 591e34a091d1 ("drm/msm/disp/dpu1: add support for display for SC7280 target")
+Signed-off-by: Mahadevan P <mahadevan.p@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/696713/
+Link: https://lore.kernel.org/r/20260101-4k-v2-1-712ae3c1f816@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c | 45 ++++++++++++++-------------
- 1 file changed, 23 insertions(+), 22 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-index 8897dcc9c1a0a..e35fae9cdaf66 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-@@ -1964,7 +1964,8 @@ static int vcn_v2_0_start_sriov(struct amdgpu_device *adev)
- 	struct mmsch_v2_0_cmd_end end = { {0} };
- 	struct mmsch_v2_0_init_header *header;
- 	uint32_t *init_table = adev->virt.mm_table.cpu_addr;
--	uint8_t i = 0;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+index 8f978b9c34520..2f8688224f343 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+@@ -13,6 +13,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
+ 	.has_dim_layer = true,
+ 	.has_idle_pc = true,
+ 	.max_linewidth = 2400,
++	.has_3d_merge = true,
+ 	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+ };
+ 
+@@ -134,17 +135,24 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x6b000, .len = 0,
+ 		.sblk = &sc7280_pp_sblk,
+-		.merge_3d = 0,
++		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+ 	}, {
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x6c000, .len = 0,
+ 		.sblk = &sc7280_pp_sblk,
+-		.merge_3d = 0,
++		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+ 	},
+ };
+ 
++static const struct dpu_merge_3d_cfg sc7280_merge_3d[] = {
++	{
++		.name = "merge_3d_1", .id = MERGE_3D_1,
++		.base = 0x4f000, .len = 0x8,
++	},
++};
 +
-+	/* This path only programs VCN instance 0. */
- 
- 	header = (struct mmsch_v2_0_init_header *)init_table;
- 	direct_wt.cmd_header.command_type = MMSCH_COMMAND__DIRECT_REG_WRITE;
-@@ -1983,93 +1984,93 @@ static int vcn_v2_0_start_sriov(struct amdgpu_device *adev)
- 		size = AMDGPU_GPU_PAGE_ALIGN(adev->vcn.inst[0].fw->size + 4);
- 
- 		MMSCH_V2_0_INSERT_DIRECT_RD_MOD_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_STATUS),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_STATUS),
- 			0xFFFFFFFF, 0x00000004);
- 
- 		/* mc resume*/
- 		if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) {
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i,
-+				SOC15_REG_OFFSET(UVD, 0,
- 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_LOW),
- 				adev->firmware.ucode[AMDGPU_UCODE_ID_VCN].tmr_mc_addr_lo);
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i,
-+				SOC15_REG_OFFSET(UVD, 0,
- 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_HIGH),
- 				adev->firmware.ucode[AMDGPU_UCODE_ID_VCN].tmr_mc_addr_hi);
- 			offset = 0;
- 		} else {
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i,
-+				SOC15_REG_OFFSET(UVD, 0,
- 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_LOW),
- 				lower_32_bits(adev->vcn.inst->gpu_addr));
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i,
-+				SOC15_REG_OFFSET(UVD, 0,
- 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_HIGH),
- 				upper_32_bits(adev->vcn.inst->gpu_addr));
- 			offset = size;
- 		}
- 
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_OFFSET0),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_OFFSET0),
- 			0);
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_SIZE0),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_SIZE0),
- 			size);
- 
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_VCPU_CACHE1_64BIT_BAR_LOW),
- 			lower_32_bits(adev->vcn.inst->gpu_addr + offset));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_VCPU_CACHE1_64BIT_BAR_HIGH),
- 			upper_32_bits(adev->vcn.inst->gpu_addr + offset));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_OFFSET1),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_OFFSET1),
- 			0);
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_SIZE1),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_SIZE1),
- 			AMDGPU_VCN_STACK_SIZE);
- 
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_VCPU_CACHE2_64BIT_BAR_LOW),
- 			lower_32_bits(adev->vcn.inst->gpu_addr + offset +
- 				AMDGPU_VCN_STACK_SIZE));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_VCPU_CACHE2_64BIT_BAR_HIGH),
- 			upper_32_bits(adev->vcn.inst->gpu_addr + offset +
- 				AMDGPU_VCN_STACK_SIZE));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_OFFSET2),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_OFFSET2),
- 			0);
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_SIZE2),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_SIZE2),
- 			AMDGPU_VCN_CONTEXT_SIZE);
- 
- 		for (r = 0; r < adev->vcn.inst[0].num_enc_rings; ++r) {
- 			ring = &adev->vcn.inst->ring_enc[r];
- 			ring->wptr = 0;
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i, mmUVD_RB_BASE_LO),
-+				SOC15_REG_OFFSET(UVD, 0, mmUVD_RB_BASE_LO),
- 				lower_32_bits(ring->gpu_addr));
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i, mmUVD_RB_BASE_HI),
-+				SOC15_REG_OFFSET(UVD, 0, mmUVD_RB_BASE_HI),
- 				upper_32_bits(ring->gpu_addr));
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i, mmUVD_RB_SIZE),
-+				SOC15_REG_OFFSET(UVD, 0, mmUVD_RB_SIZE),
- 				ring->ring_size / 4);
- 		}
- 
- 		ring = &adev->vcn.inst->ring_dec;
- 		ring->wptr = 0;
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_RBC_RB_64BIT_BAR_LOW),
- 			lower_32_bits(ring->gpu_addr));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_RBC_RB_64BIT_BAR_HIGH),
- 			upper_32_bits(ring->gpu_addr));
- 		/* force RBC into idle state */
-@@ -2080,7 +2081,7 @@ static int vcn_v2_0_start_sriov(struct amdgpu_device *adev)
- 		tmp = REG_SET_FIELD(tmp, UVD_RBC_RB_CNTL, RB_NO_UPDATE, 1);
- 		tmp = REG_SET_FIELD(tmp, UVD_RBC_RB_CNTL, RB_RPTR_WR_EN, 1);
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_RBC_RB_CNTL), tmp);
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_RBC_RB_CNTL), tmp);
- 
- 		/* add end packet */
- 		tmp = sizeof(struct mmsch_v2_0_cmd_end);
+ /* NOTE: sc7280 only has one DSC hard slice encoder */
+ static const struct dpu_dsc_cfg sc7280_dsc[] = {
+ 	{
+@@ -247,6 +255,8 @@ const struct dpu_mdss_cfg dpu_sc7280_cfg = {
+ 	.mixer = sc7280_lm,
+ 	.pingpong_count = ARRAY_SIZE(sc7280_pp),
+ 	.pingpong = sc7280_pp,
++	.merge_3d_count = ARRAY_SIZE(sc7280_merge_3d),
++	.merge_3d = sc7280_merge_3d,
+ 	.dsc_count = ARRAY_SIZE(sc7280_dsc),
+ 	.dsc = sc7280_dsc,
+ 	.wb_count = ARRAY_SIZE(sc7280_wb),
 -- 
 2.51.0
 
