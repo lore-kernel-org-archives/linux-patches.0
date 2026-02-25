@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7072494FE;
-	Wed, 25 Feb 2026 01:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2C11D5ABA;
+	Wed, 25 Feb 2026 01:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982839; cv=none; b=guJJB1DSp1Fj23K9o+5y1d3XjrVZJJNSyxySv8wrhOTn9UrbwTmQGQiQn7xvO2gfR4I2gKg/42LDFZpeu5ir2AaRikvQRFN5yIe/jyKVau4UA4enbp++PxkpPCEi+8utmoO6lDUtA3gr2QLQW6StrPE9c7uOjpQawfTBUktquV0=
+	t=1771982840; cv=none; b=mw3OPV5J7Zjd/+hkwd07j/55hhXgtMK3OTamyT5lU/xZyPXyjBX54axtq9keav1y7nthythYWActtQ01PSm/1ojTwHwLzWfBUta0Of8pIGfRqBkjTTwuNAYdVXbprQcwAKjmCpiCA/QPMxgOHDrqfURQ+IUyz9pmDt8BXiTdm7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982839; c=relaxed/simple;
-	bh=t6qsHfydwdeDQ78bSaZ9yUxfxqg28T7Gx3twQTivgyQ=;
+	s=arc-20240116; t=1771982840; c=relaxed/simple;
+	bh=wDDWa8Mo8SYCccJJwGRn0s3raO5V9reVT5nypudL3Zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qsQqgpTnXOI91Ad0fnIMMNcQBP45GSbiz61v3kvFLbnC6SSNHWIg3xW/L0Z2ltFOunapDTFfWL5z4CPEfQ9+6fzEFx2vMkzCBT4KomwTb0X4B5YsJevIlsQUsO8ksP2xWsfUCoTYZ/ThHBZ0codJTWSKT6QnwxPgp5bYfdjpMZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bl4PRQVZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cf8g70grdy8zenOLa6KqsS2Kp1hrETgRyjQ+wtaxm2tZF8Yd/FG2HjDiTIWiA9HhOJGpy0WrbNMVvm/AfrOeH0/dQmPHt3ViG1srlfXJdN+Ev/NMYhd2dEt2H94TFy/TIyPaZNuhBxWBcnhC/mDq1gGQFqf02v7Ud4OoXfkTsXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsmDvf5S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bl4PRQVZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA26C116D0;
-	Wed, 25 Feb 2026 01:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsmDvf5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E379EC116D0;
+	Wed, 25 Feb 2026 01:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982839;
-	bh=t6qsHfydwdeDQ78bSaZ9yUxfxqg28T7Gx3twQTivgyQ=;
+	s=korg; t=1771982840;
+	bh=wDDWa8Mo8SYCccJJwGRn0s3raO5V9reVT5nypudL3Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bl4PRQVZRFkfMVKQTZgEkOp85KLn+CJBeCT337nDoGa6hFxvAiVWQyJSVFgXnWPS+
-	 ExuWVqJYvu6/VkTnaIt85KGVNZY2Tgf2NUy1Ns8JSRT0qcd+kwpwQcJrvS4N+Ltmdj
-	 lvE/6s1x+Ex5+nLiahkPk2BswuMZmmo8aFm3ylZ4=
+	b=GsmDvf5SORMSEKSVcsQLp1X2yNuiIUX64n7wKbnvVQo7iwvZgoCdc5jENYaNSmnYb
+	 xwidsvqWuj0q1LeeYe/PLzuGrCiprMvlYdQ9CU5AcCsldj9pdcDAqBOjCgFObj1UHA
+	 WrnJZGdqN/ipPyfdpFe57YhmSswbghBHkgv/PvfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aac438d7a1c44071e04b@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 031/781] gfs2: fix memory leaks in gfs2_fill_super error path
-Date: Tue, 24 Feb 2026 17:12:20 -0800
-Message-ID: <20260225012400.463881553@linuxfoundation.org>
+Subject: [PATCH 6.19 032/781] erofs: fix inline data read failure for ztailpacking pclusters
+Date: Tue, 24 Feb 2026 17:12:21 -0800
+Message-ID: <20260225012400.488389853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,93 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit da6f5bbc2e7902f578b503f2a4c3d8d09ca4b102 ]
+[ Upstream commit c134a40f86efb8d6b5a949ef70e06d5752209be5 ]
 
-Fix two memory leaks in the gfs2_fill_super() error handling path when
-transitioning a filesystem to read-write mode fails.
+Compressed folios for ztailpacking pclusters must be valid before adding
+these pclusters to I/O chains. Otherwise, z_erofs_decompress_pcluster()
+may assume they are already valid and then trigger a NULL pointer
+dereference.
 
-First leak: kthread objects (thread_struct, task_struct, etc.)
-When gfs2_freeze_lock_shared() fails after init_threads() succeeds, the
-created kernel threads (logd and quotad) are never destroyed. This
-occurs because the fail_per_node label doesn't call
-gfs2_destroy_threads().
+It is somewhat hard to reproduce because the inline data is in the same
+block as the tail of the compressed indexes, which are usually read just
+before. However, it may still happen if a fatal signal arrives while
+read_mapping_folio() is running, as shown below:
 
-Second leak: quota bitmap buffer (8192 bytes)
-When gfs2_make_fs_rw() fails after gfs2_quota_init() succeeds but
-before other operations complete, the allocated quota bitmap is never
-freed.
+ erofs: (device dm-1): z_erofs_pcluster_begin: failed to get inline data -4
+ Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
 
-The fix moves thread cleanup to the fail_per_node label to handle all
-error paths uniformly. gfs2_destroy_threads() is safe to call
-unconditionally as it checks for NULL pointers. Quota cleanup is added
-in gfs2_make_fs_rw() to properly handle the withdrawal case where
-quota initialization succeeds but the filesystem is then withdrawn.
+ ...
 
-Thread leak backtrace (gfs2_freeze_lock_shared failure):
-  unreferenced object 0xffff88801d7bca80 (size 4480):
-    copy_process+0x3a1/0x4670 kernel/fork.c:2422
-    kernel_clone+0xf3/0x6e0 kernel/fork.c:2779
-    kthread_create_on_node+0x100/0x150 kernel/kthread.c:478
-    init_threads+0xab/0x350 fs/gfs2/ops_fstype.c:611
-    gfs2_fill_super+0xe5c/0x1240 fs/gfs2/ops_fstype.c:1265
+ pc : z_erofs_decompress_queue+0x4c8/0xa14
+ lr : z_erofs_decompress_queue+0x160/0xa14
+ sp : ffffffc08b3eb3a0
+ x29: ffffffc08b3eb570 x28: ffffffc08b3eb418 x27: 0000000000001000
+ x26: ffffff8086ebdbb8 x25: ffffff8086ebdbb8 x24: 0000000000000001
+ x23: 0000000000000008 x22: 00000000fffffffb x21: dead000000000700
+ x20: 00000000000015e7 x19: ffffff808babb400 x18: ffffffc089edc098
+ x17: 00000000c006287d x16: 00000000c006287d x15: 0000000000000004
+ x14: ffffff80ba8f8000 x13: 0000000000000004 x12: 00000006589a77c9
+ x11: 0000000000000015 x10: 0000000000000000 x9 : 0000000000000000
+ x8 : 0000000000000000 x7 : 0000000000000000 x6 : 000000000000003f
+ x5 : 0000000000000040 x4 : ffffffffffffffe0 x3 : 0000000000000020
+ x2 : 0000000000000008 x1 : 0000000000000000 x0 : 0000000000000000
+ Call trace:
+  z_erofs_decompress_queue+0x4c8/0xa14
+  z_erofs_runqueue+0x908/0x97c
+  z_erofs_read_folio+0x128/0x228
+  filemap_read_folio+0x68/0x128
+  filemap_get_pages+0x44c/0x8b4
+  filemap_read+0x12c/0x5b8
+  generic_file_read_iter+0x4c/0x15c
+  do_iter_readv_writev+0x188/0x1e0
+  vfs_iter_read+0xac/0x1a4
+  backing_file_read_iter+0x170/0x34c
+  ovl_read_iter+0xf0/0x140
+  vfs_read+0x28c/0x344
+  ksys_read+0x80/0xf0
+  __arm64_sys_read+0x24/0x34
+  invoke_syscall+0x60/0x114
+  el0_svc_common+0x88/0xe4
+  do_el0_svc+0x24/0x30
+  el0_svc+0x40/0xa8
+  el0t_64_sync_handler+0x70/0xbc
+  el0t_64_sync+0x1bc/0x1c0
 
-Quota leak backtrace (gfs2_make_fs_rw failure):
-  unreferenced object 0xffff88812de7c000 (size 8192):
-    gfs2_quota_init+0xe5/0x820 fs/gfs2/quota.c:1409
-    gfs2_make_fs_rw+0x7a/0xe0 fs/gfs2/super.c:149
-    gfs2_fill_super+0xfbb/0x1240 fs/gfs2/ops_fstype.c:1275
+Fix this by reading the inline data before allocating and adding
+the pclusters to the I/O chains.
 
-Reported-by: syzbot+aac438d7a1c44071e04b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=aac438d7a1c44071e04b
-Fixes: 6c7410f44961 ("gfs2: gfs2_freeze_lock_shared cleanup")
-Fixes: b66f723bb552 ("gfs2: Improve gfs2_make_fs_rw error handling")
-Link: https://lore.kernel.org/all/20260131062509.77974-1-kartikey406@gmail.com/T/ [v1]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: cecf864d3d76 ("erofs: support inline data decompression")
+Reported-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-and-tested-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/ops_fstype.c | 2 +-
- fs/gfs2/super.c      | 4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/erofs/zdata.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
-index e7a88b717991a..c7d57de7c8f06 100644
---- a/fs/gfs2/ops_fstype.c
-+++ b/fs/gfs2/ops_fstype.c
-@@ -1276,7 +1276,6 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index c62908f1ce478..b71fcf4be484a 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -805,14 +805,26 @@ static int z_erofs_pcluster_begin(struct z_erofs_frontend *fe)
+ 	struct erofs_map_blocks *map = &fe->map;
+ 	struct super_block *sb = fe->inode->i_sb;
+ 	struct z_erofs_pcluster *pcl = NULL;
+-	void *ptr;
++	void *ptr = NULL;
+ 	int ret;
  
- 	if (error) {
- 		gfs2_freeze_unlock(sdp);
--		gfs2_destroy_threads(sdp);
- 		fs_err(sdp, "can't make FS RW: %d\n", error);
- 		goto fail_per_node;
+ 	DBG_BUGON(fe->pcl);
+ 	/* must be Z_EROFS_PCLUSTER_TAIL or pointed to previous pcluster */
+ 	DBG_BUGON(!fe->head);
+ 
+-	if (!(map->m_flags & EROFS_MAP_META)) {
++	if (map->m_flags & EROFS_MAP_META) {
++		ret = erofs_init_metabuf(&map->buf, sb,
++					 erofs_inode_in_metabox(fe->inode));
++		if (ret)
++			return ret;
++		ptr = erofs_bread(&map->buf, map->m_pa, false);
++		if (IS_ERR(ptr)) {
++			erofs_err(sb, "failed to read inline data %pe @ pa %llu of nid %llu",
++				  ptr, map->m_pa, EROFS_I(fe->inode)->nid);
++			return PTR_ERR(ptr);
++		}
++		ptr = map->buf.page;
++	} else {
+ 		while (1) {
+ 			rcu_read_lock();
+ 			pcl = xa_load(&EROFS_SB(sb)->managed_pslots, map->m_pa);
+@@ -852,18 +864,8 @@ static int z_erofs_pcluster_begin(struct z_erofs_frontend *fe)
+ 		/* bind cache first when cached decompression is preferred */
+ 		z_erofs_bind_cache(fe);
+ 	} else {
+-		ret = erofs_init_metabuf(&map->buf, sb,
+-					 erofs_inode_in_metabox(fe->inode));
+-		if (ret)
+-			return ret;
+-		ptr = erofs_bread(&map->buf, map->m_pa, false);
+-		if (IS_ERR(ptr)) {
+-			ret = PTR_ERR(ptr);
+-			erofs_err(sb, "failed to get inline folio %d", ret);
+-			return ret;
+-		}
+-		folio_get(page_folio(map->buf.page));
+-		WRITE_ONCE(fe->pcl->compressed_bvecs[0].page, map->buf.page);
++		folio_get(page_folio((struct page *)ptr));
++		WRITE_ONCE(fe->pcl->compressed_bvecs[0].page, ptr);
+ 		fe->pcl->pageofs_in = map->m_pa & ~PAGE_MASK;
+ 		fe->mode = Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE;
  	}
-@@ -1286,6 +1285,7 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
- 
- fail_per_node:
- 	init_per_node(sdp, UNDO);
-+	gfs2_destroy_threads(sdp);
- fail_inodes:
- 	init_inodes(sdp, UNDO);
- fail_sb:
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index f6cd907b3ec6c..d96160636161c 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -147,8 +147,10 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
- 	}
- 
- 	error = gfs2_quota_init(sdp);
--	if (!error && gfs2_withdrawn(sdp))
-+	if (!error && gfs2_withdrawn(sdp)) {
-+		gfs2_quota_cleanup(sdp);
- 		error = -EIO;
-+	}
- 	if (!error)
- 		set_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
- 	return error;
 -- 
 2.51.0
 
