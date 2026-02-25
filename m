@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376432C17A0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B072C17A0;
 	Wed, 25 Feb 2026 06:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002596; cv=none; b=ePCF5SGzgMS/GbIIcMW/uhzW1ILzEyqJQ5mooYmCq9181arbtVj5gN1exyCL6PM8vkGQ6H45EnneJ3GXbKDT/XysloeWX94BuN6qBbVp5WNPtoKYThNWSnqu40t7R+h6Mpe3l4CY0NcppmOe3lDACDeHFJZnEeSZVE3EsT9OLRI=
+	t=1772002596; cv=none; b=OCxHL9q/hHffWtLwWih2swPueI0wGlZBHAncNSdBmpxa93YfuW4zQoWbpOjKiPKU0YC4vBtgykCiLttcsOeix6c+gKT3NqyeBJJwMXmaWu3TqrOKtHU/RxftmlCx6Rb/SbCeFZjJqhnEN7sBr6OBLmnjkNXklZsWjCUA0/ebu+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002596; c=relaxed/simple;
-	bh=XzXflIM/79lTYgxbktQfUAPSRNU/MhAiah8Mj6AiVkA=;
+	bh=d3H/L1yQrHtA1qE+RYYYET0VbPVRs+S0nPfrCvCx2BM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGNFXMn52viCROiW9yOuFf/sVO2hT5N/NCnAobZuotpZh9Jij2+nND00U52HimMMuPEsVVwk/zXBZKZTei7Y2yzvLMxThVoxylpBecdT8xTDILd6MSbmlFmrxuMOnoeAYWk6mbQcx//jaAxrxEi1bH9auwai9KtblsMUvR1u3kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3WfV/+N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WyRdun68QcI1ptDotxxeq+/pesGJpz9BQ44MsKelRijTr9PAukhrDxNqJkW1+W1dyPlKBsr/EzxQMyd9epWkX9n/BDv4mj3cOAXNp0AdCT9I/2l0qsC9v5jDhfTFmXqaIOETTDS5BxcupO9rHY5s8QAXfhgUp1tcqGNBIAxi7lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5zNEqlX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3WfV/+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E72BC116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5zNEqlX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76D6C19422;
 	Wed, 25 Feb 2026 06:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002596;
-	bh=XzXflIM/79lTYgxbktQfUAPSRNU/MhAiah8Mj6AiVkA=;
+	bh=d3H/L1yQrHtA1qE+RYYYET0VbPVRs+S0nPfrCvCx2BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3WfV/+N8L5Cr17WsboI+1gU7thrPyMp8SWL0maIhD7ighbX8s6t5CrkZqSVl1/SX
-	 bmpH1+/lZ57YOw/tBtstD2ybFXpCejSiYI+IWMRZZi6NXhNjgnBpGfKD7qPowPmzHA
-	 NzIqI0I20WfIbmhwdWN10UbWEkxJcLsywg+ejvt0=
+	b=X5zNEqlXuwgWXjKqr/c3C8x7tXP5gQqMF9YXGVsA8sac3EvBrt3yIvEXrZLOGvF2j
+	 V3DzyNz7saimwUKEZ1NBwGaE23q72i7yXa/sAMaknMlYMMme+pJU0ysLs9yxzbsVSB
+	 fwHIAvzYpw+wNW2ohrBFMsLmIOdNNJkQjGkt6Z6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 341/641] RDMA/hns: Notify ULP of remaining soft-WCs during reset
-Date: Tue, 24 Feb 2026 17:21:07 -0800
-Message-ID: <20260225012356.929564230@linuxfoundation.org>
+Subject: [PATCH 6.18 342/641] RDMA/mlx5: Fix ucaps init error flow
+Date: Tue, 24 Feb 2026 17:21:08 -0800
+Message-ID: <20260225012356.951226566@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,68 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 0789f929900d85b80b343c5f04f8b9444e991384 ]
+[ Upstream commit 6dc78c53de99e4ed9868d4f0fc6da6e46f52fe4d ]
 
-During a reset, software-generated WCs cannot be reported via
-interrupts. This may cause the ULP to miss some WCs.
+In mlx5_ib_stage_caps_init(), if mlx5_ib_init_ucaps() fails after
+mlx5_ib_init_var_table() succeeds, the VAR bitmap is leaked since
+the function returns without cleanup.
 
-To avoid this, add check in the CQ arm process: if a hardware reset
-has occurred and there are still unreported soft-WCs, notify the ULP
-to handle the remaining WCs, thereby preventing any loss of completions.
+Thus, cleanup the var table bitmap in case of error of initializing
+ucaps before exiting, preventing the leak above.
 
-Fixes: 626903e9355b ("RDMA/hns: Add support for reporting wc as software mode")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20260104064057.1582216-5-huangjunxian6@hisilicon.com
+Fixes: cf7174e8982f ("RDMA/mlx5: Create UCAP char devices for supported device capabilities")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/20260104-ib-core-misc-v1-3-00367f77f3a8@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 23 ++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/infiniband/hw/mlx5/main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index b0e7c5c6e2ff5..f895731ad74a0 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -3661,6 +3661,23 @@ static void hns_roce_v2_write_cqc(struct hns_roce_dev *hr_dev,
- 		     HNS_ROCE_V2_CQ_DEFAULT_INTERVAL);
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index fc1e86f6c4097..8f69c8c1ba54d 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -4462,12 +4462,16 @@ static int mlx5_ib_stage_caps_init(struct mlx5_ib_dev *dev)
+ 	    MLX5_HCA_CAP_2_GENERAL_OBJECT_TYPES_RDMA_CTRL) {
+ 		err = mlx5_ib_init_ucaps(dev);
+ 		if (err)
+-			return err;
++			goto err_ucaps;
+ 	}
+ 
+ 	dev->ib_dev.use_cq_dim = true;
+ 
+ 	return 0;
++
++err_ucaps:
++	bitmap_free(dev->var_table.bitmap);
++	return err;
  }
  
-+static bool left_sw_wc(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq)
-+{
-+	struct hns_roce_qp *hr_qp;
-+
-+	list_for_each_entry(hr_qp, &hr_cq->sq_list, sq_node) {
-+		if (hr_qp->sq.head != hr_qp->sq.tail)
-+			return true;
-+	}
-+
-+	list_for_each_entry(hr_qp, &hr_cq->rq_list, rq_node) {
-+		if (hr_qp->rq.head != hr_qp->rq.tail)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static int hns_roce_v2_req_notify_cq(struct ib_cq *ibcq,
- 				     enum ib_cq_notify_flags flags)
- {
-@@ -3669,6 +3686,12 @@ static int hns_roce_v2_req_notify_cq(struct ib_cq *ibcq,
- 	struct hns_roce_v2_db cq_db = {};
- 	u32 notify_flag;
- 
-+	if (hr_dev->state >= HNS_ROCE_DEVICE_STATE_RST_DOWN) {
-+		if ((flags & IB_CQ_REPORT_MISSED_EVENTS) &&
-+		    left_sw_wc(hr_dev, hr_cq))
-+			return 1;
-+		return 0;
-+	}
- 	/*
- 	 * flags = 0, then notify_flag : next
- 	 * flags = 1, then notify flag : solocited
+ static const struct ib_device_ops mlx5_ib_dev_port_ops = {
 -- 
 2.51.0
 
