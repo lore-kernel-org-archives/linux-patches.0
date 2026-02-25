@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826B518B0A;
-	Wed, 25 Feb 2026 01:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA6918B0A;
+	Wed, 25 Feb 2026 01:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983257; cv=none; b=lFa896ghiMI+SZseH+Jac8PArHzglI1rKZHeX9YYBED+j3P8f37yF2AloBUFG4OXotrds6uzaUchO5FLfSwC6QiMg35sUym77q4GGR4IJoXbAP5fHhoCMCB4lJ832RWbnL4PkZF/nZBDEvcdKbnUhFRiGVpQtM6cL2KBPrl5VA8=
+	t=1771983258; cv=none; b=U7z/GHUbWl7Q8Yi5orcuaVFbLTkoD5KeodIK0G+FIwSU7SKZVSzxgearMv/w+8T+vyw0EDVt4Y5FcPNsV7ifmE4lxoeKZI2eS6tCjB+69DlocijxPh8ubfAQJpIrdarQsUAUvBCPHFtow8g8Y9jLU7Wj2jZ47uwXerhpqdpnpOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983257; c=relaxed/simple;
-	bh=3k3j0eYImRl0xyXieE3ldUnnN6elvs4fY6eraqdpIWE=;
+	s=arc-20240116; t=1771983258; c=relaxed/simple;
+	bh=dLOC8WtdoLCIqT4czpy/2SKgBCUBAF9t0uc7zTlO8uQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QKF6FOVW+aYEHrgGUxLwsxKYg9rZ8mp0bKcizLqsEz1PB2NC/urGmTDolnLat1jTUGWMjPp0aZdyfFfUd1AIvy+cz5Ogfy97UZE8rSnzYAgTOU7OfAdVNl9M+0aUTl8Zph63wpExir5Nvr8aomlQeWbnp0bo/7ApQVb/WA58fiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xhssv0AT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q9Nl/6I9sawp8CuuzETzvpNVq9eeDS+GtllWlc2hsFwS4nWa46Z/tUTpbdNsceqtIWZjVBpMv+TE4W9yFCQtIclnn1t2oEeB0YJ4/O8i5SQh660VofC6q8ajrdLlwWqL256pONgD7Xp3Yi1x2yv0m5/vfy1KTmPJCz+bRZ/n/24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lH+9h3YH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xhssv0AT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424B7C116D0;
-	Wed, 25 Feb 2026 01:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lH+9h3YH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C34C116D0;
+	Wed, 25 Feb 2026 01:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983257;
-	bh=3k3j0eYImRl0xyXieE3ldUnnN6elvs4fY6eraqdpIWE=;
+	s=korg; t=1771983258;
+	bh=dLOC8WtdoLCIqT4czpy/2SKgBCUBAF9t0uc7zTlO8uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xhssv0ATCnPYb4tsMmv6cPIGGoiPko5c66eoeQKzul0V6qPMNHLpZcUXoQIxb40li
-	 Xxw3WeEo2o5G4FqkrpbXfvtfzyVWLyYT6mmKnA7WYp7xpJcM1brwrby8+riQ0WRC52
-	 ENrpy5oR6Ef3wb2+M49Ct1dntN9a+Zna2GYcDgyI=
+	b=lH+9h3YHbh9+ZsMYKD0WycjZC/kkyQTNhhx7nvtziFD/sSAtvY1dWzjo+fP7DPI/b
+	 bYFwvBU5jaJm6BxCJUSBP0jOVsybl4l0HjIkCeaIoLo8AHWoBVZsAALPFasnbq6OHx
+	 Q2XgwAppXf43xhCsKjdre4BRsGNm+Tpx+bxdd074=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenbin Yao <wenbin.yao@oss.qualcomm.com>,
-	Qiang Yu <qiang.yu@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Tuo Li <islituo@gmail.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 391/781] PCI: dwc: Add new APIs to remove standard and extended Capability
-Date: Tue, 24 Feb 2026 17:18:20 -0800
-Message-ID: <20260225012409.287893256@linuxfoundation.org>
+Subject: [PATCH 6.19 400/781] of: unittest: fix possible null-pointer dereferences in of_unittest_property_copy()
+Date: Tue, 24 Feb 2026 17:18:29 -0800
+Message-ID: <20260225012409.516957176@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,108 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit 0183562f1e824c0ca6c918309a0978e9a269af3e ]
+[ Upstream commit d289cb7fcefe41a54d8f9c6d0e0947f5f82b15c6 ]
 
-On some platforms, certain PCIe Capabilities may be present in hardware
-but are not fully implemented as defined in PCIe spec. These incomplete
-capabilities should be hidden from the PCI framework to prevent unexpected
-behavior.
+This function first duplicates p1 and p2 into new, and then checks whether
+the duplication succeeds. However, if the duplication fails (e.g.,
+kzalloc() returns NULL in __of_prop_dup()), new will be NULL but is still
+dereferenced in __of_prop_free(). To ensure that the unit test continues to
+run even when duplication fails, add a NULL check before calling
+__of_prop_free().
 
-Introduce two APIs to remove a specific PCIe Capability and Extended
-Capability by updating the previous capability's next offset field to skip
-over the unwanted capability. These APIs allow RC drivers to easily hide
-unsupported or partially implemented capabilities from software.
-
-Co-developed-by: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
-Signed-off-by: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
-Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20251109-remove_cap-v1-2-2208f46f4dc2@oss.qualcomm.com
-Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
+Fixes: 1c5e3d9bf33b ("of: Add a helper to free property struct")
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Link: https://patch.msgid.link/20260105071438.156186-1-islituo@gmail.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 53 ++++++++++++++++++++
- drivers/pci/controller/dwc/pcie-designware.h |  2 +
- 2 files changed, 55 insertions(+)
+ drivers/of/unittest.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 5d7a7e6f5724e..345365ea97c74 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -236,6 +236,59 @@ u16 dw_pcie_find_ext_capability(struct dw_pcie *pci, u8 cap)
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index 3b773aaf9d050..9c184e93f50c6 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -804,11 +804,13 @@ static void __init of_unittest_property_copy(void)
+ 
+ 	new = __of_prop_dup(&p1, GFP_KERNEL);
+ 	unittest(new && propcmp(&p1, new), "empty property didn't copy correctly\n");
+-	__of_prop_free(new);
++	if (new)
++		__of_prop_free(new);
+ 
+ 	new = __of_prop_dup(&p2, GFP_KERNEL);
+ 	unittest(new && propcmp(&p2, new), "non-empty property didn't copy correctly\n");
+-	__of_prop_free(new);
++	if (new)
++		__of_prop_free(new);
+ #endif
  }
- EXPORT_SYMBOL_GPL(dw_pcie_find_ext_capability);
- 
-+void dw_pcie_remove_capability(struct dw_pcie *pci, u8 cap)
-+{
-+	u8 cap_pos, pre_pos, next_pos;
-+	u16 reg;
-+
-+	cap_pos = PCI_FIND_NEXT_CAP(dw_pcie_read_cfg, PCI_CAPABILITY_LIST, cap,
-+				 &pre_pos, pci);
-+	if (!cap_pos)
-+		return;
-+
-+	reg = dw_pcie_readw_dbi(pci, cap_pos);
-+	next_pos = (reg & 0xff00) >> 8;
-+
-+	dw_pcie_dbi_ro_wr_en(pci);
-+	if (pre_pos == PCI_CAPABILITY_LIST)
-+		dw_pcie_writeb_dbi(pci, PCI_CAPABILITY_LIST, next_pos);
-+	else
-+		dw_pcie_writeb_dbi(pci, pre_pos + 1, next_pos);
-+	dw_pcie_dbi_ro_wr_dis(pci);
-+}
-+EXPORT_SYMBOL_GPL(dw_pcie_remove_capability);
-+
-+void dw_pcie_remove_ext_capability(struct dw_pcie *pci, u8 cap)
-+{
-+	int cap_pos, next_pos, pre_pos;
-+	u32 pre_header, header;
-+
-+	cap_pos = PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, 0, cap, &pre_pos, pci);
-+	if (!cap_pos)
-+		return;
-+
-+	header = dw_pcie_readl_dbi(pci, cap_pos);
-+	/*
-+	 * If the first cap at offset PCI_CFG_SPACE_SIZE is removed,
-+	 * only set it's capid to zero as it cannot be skipped.
-+	 */
-+	if (cap_pos == PCI_CFG_SPACE_SIZE) {
-+		dw_pcie_dbi_ro_wr_en(pci);
-+		dw_pcie_writel_dbi(pci, cap_pos, header & 0xffff0000);
-+		dw_pcie_dbi_ro_wr_dis(pci);
-+		return;
-+	}
-+
-+	pre_header = dw_pcie_readl_dbi(pci, pre_pos);
-+	next_pos = PCI_EXT_CAP_NEXT(header);
-+
-+	dw_pcie_dbi_ro_wr_en(pci);
-+	dw_pcie_writel_dbi(pci, pre_pos,
-+			  (pre_header & 0xfffff) | (next_pos << 20));
-+	dw_pcie_dbi_ro_wr_dis(pci);
-+}
-+EXPORT_SYMBOL_GPL(dw_pcie_remove_ext_capability);
-+
- static u16 __dw_pcie_find_vsec_capability(struct dw_pcie *pci, u16 vendor_id,
- 					  u16 vsec_id)
- {
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 31685951a0804..aec4af5194b51 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -562,6 +562,8 @@ void dw_pcie_version_detect(struct dw_pcie *pci);
- 
- u8 dw_pcie_find_capability(struct dw_pcie *pci, u8 cap);
- u16 dw_pcie_find_ext_capability(struct dw_pcie *pci, u8 cap);
-+void dw_pcie_remove_capability(struct dw_pcie *pci, u8 cap);
-+void dw_pcie_remove_ext_capability(struct dw_pcie *pci, u8 cap);
- u16 dw_pcie_find_rasdes_capability(struct dw_pcie *pci);
- u16 dw_pcie_find_ptm_capability(struct dw_pcie *pci);
  
 -- 
 2.51.0
