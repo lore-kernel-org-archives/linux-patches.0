@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9E91E2834;
-	Wed, 25 Feb 2026 01:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1156F1E2834;
+	Wed, 25 Feb 2026 01:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983620; cv=none; b=DQDWSAkLgl9h9Ot+AxSgBwzXe3wRVA1W26pN1AcjXiH3iSc7BGCHINydNTyzXkT9K9Yv6Dq+iLrvIQa9aRefVRy2knR8vmVvr5iHZ3Pdq+/5+qcsoQgxb9KemehkdIIQipwHUjJ4x4YnDY51/aeONZQiDyW0fgNt8pGj8U7e08k=
+	t=1771983622; cv=none; b=ud7UaMsKmu7jHrmUKWpFwb7zpUB2Zu+4DroweM+BTKrNsCpHbHToMqIkNdj4GSkahcWF6+2Do2goKqjyxpVXvseEfsIFWn8yAUtGyfwP2A5j1mn/DP3hOhh0ezj8rI1hhD/T+dScTgFudWfnNDtWRiDuFlmtv5b07ifoRtzjNi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983620; c=relaxed/simple;
-	bh=97R2Cv0yJyxvoRmXa/jdgktpCPsJqhp1n8ITfkwYO0Y=;
+	s=arc-20240116; t=1771983622; c=relaxed/simple;
+	bh=QL4y8vYouebnyklMjaG1sXFfekzFiRdRpHP+wk7TfHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VNfVua3Bvk5HVeFvoFCaZNFO1qaJjO+xR52woLehJqhramR2Cm9lVetgcr/ODQl88fjGRDfyHXeJeXzOIfp7OAs60UEFt7wDa5j+4YIZfdoP+scbXHYhizDHkBMjmkBeawwRP/DftYpJ5Q4gKqq69hvtReed+DEVGt1gNPw+MAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0EoDC9s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XdIsnwReCLA1iIYmT8iECECZdAuvORzUqlSbMvAhcukseWGoai4PV46g+d48+sZkNcDabaBK72/iOaM9PXUz8+yPzUx5me0G9GnYQz/ANVUZSaTRNUpzaQ/2KJz5ix/rAsooCWfvoSHafbepKd+RKgxPsQZ4FnKUSRwtSNdrA6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfD2agCn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0EoDC9s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79351C116D0;
-	Wed, 25 Feb 2026 01:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfD2agCn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D9CC116D0;
+	Wed, 25 Feb 2026 01:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983620;
-	bh=97R2Cv0yJyxvoRmXa/jdgktpCPsJqhp1n8ITfkwYO0Y=;
+	s=korg; t=1771983622;
+	bh=QL4y8vYouebnyklMjaG1sXFfekzFiRdRpHP+wk7TfHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0EoDC9sMQeV1PngBNAJjHtzy82fElHLUVBbwqa7oRbh3+Kje0xd/e4gZN7GAgJus
-	 tYIlSN40/b0/2v4tF2+yaZkQo4YM53DyxdfurOr+vlvXweLPRGZa6M1q9u7KjimHCO
-	 fD7Wd66KKnHrYickBHyrPqENjGuj5KhJNLajvd30=
+	b=bfD2agCnTYAiuy6+RcSt7ll8Wuojd2w1Tzhv4XbCeLAM8F+7Rol2KHG0TEJ+GBCPN
+	 8q6Js4OfXcWtPR+yfJ6onQNRyI8K3V7d1fRoNNkWM3PGgJgvHZBLQf9y49aVh6eAef
+	 q8TPX2b/qL46wZDYJ2TdCNrKIlyRG6m/xcZMOWJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Lee <ryan.lee@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Adam Ford <aford173@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 696/781] apparmor: fix boolean argument in apparmor_mmap_file
-Date: Tue, 24 Feb 2026 17:23:25 -0800
-Message-ID: <20260225012416.827627023@linuxfoundation.org>
+Subject: [PATCH 6.19 714/781] regulator: mt6363: Fix interrmittent timeout
+Date: Tue, 24 Feb 2026 17:23:43 -0800
+Message-ID: <20260225012417.255707796@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,36 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Lee <ryan.lee@canonical.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 48d5268e911abcf7674ec33c9b0b3e952be1175e ]
+[ Upstream commit 1a4b0c999101b2532723f9bd9818b70ffa7580f4 ]
 
-The previous value of GFP_ATOMIC is an int and not a bool, potentially
-resulting in UB when being assigned to a bool. In addition, the mmap hook
-is called outside of locks (i.e. in a non-atomic context), so we can pass
-a fixed constant value of false instead to common_mmap.
+Sometimes, the mt6363 regulator would fail to initialize and return with
+a TIMEOUT error, so add an extra instruction to wake up the bus before
+issuing the commands.
 
-Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Stable-dep-of: 4a134723f9f1 ("apparmor: move check for aa_null file to cover all cases")
+Fixes: 3c36965df808 ("regulator: Add support for MediaTek MT6363 SPMI PMIC Regulators")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Link: https://patch.msgid.link/20260210053708.17239-4-aford173@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/lsm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/mt6363-regulator.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
-index a87cd60ed2069..acca3d6efdbc8 100644
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -584,7 +584,7 @@ static int common_mmap(const char *op, struct file *file, unsigned long prot,
- static int apparmor_mmap_file(struct file *file, unsigned long reqprot,
- 			      unsigned long prot, unsigned long flags)
- {
--	return common_mmap(OP_FMMAP, file, prot, flags, GFP_ATOMIC);
-+	return common_mmap(OP_FMMAP, file, prot, flags, false);
- }
+diff --git a/drivers/regulator/mt6363-regulator.c b/drivers/regulator/mt6363-regulator.c
+index e0fbf92e76851..03af5fa536007 100644
+--- a/drivers/regulator/mt6363-regulator.c
++++ b/drivers/regulator/mt6363-regulator.c
+@@ -861,7 +861,7 @@ static int mt6363_regulator_probe(struct platform_device *pdev)
+ 	struct irq_domain *domain;
+ 	struct irq_fwspec fwspec;
+ 	struct spmi_device *sdev;
+-	int i, ret;
++	int i, ret, val;
  
- static int apparmor_file_mprotect(struct vm_area_struct *vma,
+ 	config.regmap = mt6363_spmi_register_regmap(dev);
+ 	if (IS_ERR(config.regmap))
+@@ -870,6 +870,13 @@ static int mt6363_regulator_probe(struct platform_device *pdev)
+ 	config.dev = dev;
+ 	sdev = to_spmi_device(dev->parent);
+ 
++	/*
++	 * The first read may fail if the bootloader sets sleep mode: wake up
++	 * this PMIC with W/R on the SPMI bus and ignore the first result.
++	 * This matches the MT6373 driver behavior.
++	 */
++	regmap_read(config.regmap, MT6363_TOP_TRAP, &val);
++
+ 	interrupt_parent = of_irq_find_parent(dev->of_node);
+ 	if (!interrupt_parent)
+ 		return dev_err_probe(dev, -EINVAL, "Cannot find IRQ parent\n");
 -- 
 2.51.0
 
