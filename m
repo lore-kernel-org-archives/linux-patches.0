@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C271EB5E1;
-	Wed, 25 Feb 2026 01:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F521EB5E1;
+	Wed, 25 Feb 2026 01:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982920; cv=none; b=AYVexs3owU5MhCpmEkKDHeELzMoxqkXRq4nTX5OS8hrUAvv2VA5nz0Y3uk36tckOvi7himgsT/khFOk1iVF4PzdY9WIU6F64oFlFPzvFvXYx+4B5qRJX15Zbkirps7YI2Ho0w6xTYIAuoOGWPX18jxrO9qw2EzVAGf8RrDG6jzE=
+	t=1771982921; cv=none; b=GdcZ+uPpWjdmRZ9jxJvokjuL69cR66Ma6jl5i0ZQH77ddsflY18CcIHOqir2f0tFU9+/mtgeZ2/BeVh0tM0Vhosbg/8ZVHZO21am30d1d3QcMxv2XmSKNwhg5a6+O/ETuM2O/3Gpl/0k5ADsid5xeIoPceX5wdCVLZ2ODS8ZYOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982920; c=relaxed/simple;
-	bh=/g0vkepwE32IDCYO+duetn5egv43I2dwjGHiNyUFp08=;
+	s=arc-20240116; t=1771982921; c=relaxed/simple;
+	bh=CceuJZTjWpI0S4rZSvVWVOc7H/UeCIXpIKrH4YELCeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NispCpLyifLdtcuVZtl7+18Iz4dtqLiTDqHgshXyx0LWyD1K8pDIoG1jSzOaUOgqRWKZgBr0KXfrO7H3Vlk0yqqzYa7+4Ud4ZbEkw1htakEmwTKi01+7lAJL8EHf4KqfdFaB8IvUkSofEiaw0RvhC3MrSMxXT0LMZz7q/dSXs6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfiJzm3+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NAU0CYHBcPSVCztcMd0XTda4f092h+tWKTncuKjlgI2xLVRCmKnHxwIh7swp6r1GDnBaMlFpwlRITAM9GhPTLbzxoENk5MCG9Zdgub7fUpG/bqrGIalSXaYjM9XH0K3yc9qdBYbPY+HKq8WBCCHXwZRxSd15sJS/6S7a/EUfVd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/oWwv1D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfiJzm3+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F93C116D0;
-	Wed, 25 Feb 2026 01:28:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/oWwv1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9488C116D0;
+	Wed, 25 Feb 2026 01:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982920;
-	bh=/g0vkepwE32IDCYO+duetn5egv43I2dwjGHiNyUFp08=;
+	s=korg; t=1771982921;
+	bh=CceuJZTjWpI0S4rZSvVWVOc7H/UeCIXpIKrH4YELCeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfiJzm3+6mDFCe+OmFtgj4wMMTmO9OfQAUm6Hi3WDvYD989GCnBtPOaDf9LHGIQ9j
-	 EAu2O5qQi7ol5FTuSL6Zo6R6PmTnZlccyovSRIk6hKFtn0YVjrB8v2OEx8jFGt6v4s
-	 l+KAjY3o13G6WH2Kf31J9ogzFwRQO6Ec4oxOY06M=
+	b=k/oWwv1DR8r7cHJUUuh9+cHEYNA0gBEo3YLvO/2UYd/2JFTpOQlqKNpdNbCOx8iTC
+	 HKCx5cIAfXa9FgzqE1LfmVckwySz9uViVBIOpOHTAVyOCQoKXt8/lv6rky0+CFeRJi
+	 a8rd0A9sQvaMm5pPTFKexJjIOE7gYNPVefB8mj0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kardashevskiy <aik@amd.com>,
-	"Tycho Andersen (AMD)" <tycho@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+	Benjamin Larsson <benjamin.larsson@genexis.eu>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 099/781] crypto: ccp - narrow scope of snp_range_list
-Date: Tue, 24 Feb 2026 17:13:28 -0800
-Message-ID: <20260225012402.116858509@linuxfoundation.org>
+Subject: [PATCH 6.19 100/781] hwrng: airoha - set rng quality to 900
+Date: Tue, 24 Feb 2026 17:13:29 -0800
+Message-ID: <20260225012402.139389950@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,62 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tycho Andersen (AMD) <tycho@kernel.org>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit dc8ccab15081efc4f2c5a9fc7b209cd641d29177 ]
+[ Upstream commit c0008a29a006091d7f9d288620c2456afa23ff27 ]
 
-snp_range_list is only used in __sev_snp_init_locked() in the SNP_INIT_EX
-case, move the declaration there and add a __free() cleanup helper for it
-instead of waiting until shutdown.
+Airoha uses RAW mode to collect noise from the TRNG. These appear to
+be unprocessed oscillations from the tero loop. For this reason, they
+do not have a perfect distribution and entropy. Simple noise compression
+reduces its size by 9%, so setting the quality to 900 seems reasonable.
+The same value is used by the downstream driver.
 
-Fixes: 1ca5614b84ee ("crypto: ccp: Add support to initialize the AMD-SP for SEV-SNP")
-Reviewed-by: Alexey Kardashevskiy <aik@amd.com>
-Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Compare the size before and after compression:
+$ ls -l random_airoha*
+-rw-r--r-- 1 aleksander aleksander 76546048 Jan  3 23:43 random_airoha
+-rw-rw-r-- 1 aleksander aleksander 69783562 Jan  5 20:23 random_airoha.zip
+
+FIPS test results:
+$ cat random_airoha | rngtest -c 10000
+rngtest 2.6
+Copyright (c) 2004 by Henrique de Moraes Holschuh
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+rngtest: starting FIPS tests...
+rngtest: bits received from input: 200000032
+rngtest: FIPS 140-2 successes: 0
+rngtest: FIPS 140-2 failures: 10000
+rngtest: FIPS 140-2(2001-10-10) Monobit: 9957
+rngtest: FIPS 140-2(2001-10-10) Poker: 10000
+rngtest: FIPS 140-2(2001-10-10) Runs: 10000
+rngtest: FIPS 140-2(2001-10-10) Long run: 4249
+rngtest: FIPS 140-2(2001-10-10) Continuous run: 0
+rngtest: input channel speed: (min=953.674; avg=27698.935; max=19073.486)Mibits/s
+rngtest: FIPS tests speed: (min=59.791; avg=298.028; max=328.853)Mibits/s
+rngtest: Program run time: 647638 microseconds
+
+In general, these data look like real noise, but with lower entropy
+than expected.
+
+Fixes: e53ca8efcc5e ("hwrng: airoha - add support for Airoha EN7581 TRNG")
+Suggested-by: Benjamin Larsson <benjamin.larsson@genexis.eu>
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+ drivers/char/hw_random/airoha-trng.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index 6e6011e363e3b..1cdadddb744ed 100644
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -127,13 +127,6 @@ static size_t sev_es_tmr_size = SEV_TMR_SIZE;
- #define NV_LENGTH (32 * 1024)
- static void *sev_init_ex_buffer;
+diff --git a/drivers/char/hw_random/airoha-trng.c b/drivers/char/hw_random/airoha-trng.c
+index 1dbfa9505c214..9a648f6d9fd40 100644
+--- a/drivers/char/hw_random/airoha-trng.c
++++ b/drivers/char/hw_random/airoha-trng.c
+@@ -212,6 +212,7 @@ static int airoha_trng_probe(struct platform_device *pdev)
+ 	trng->rng.init = airoha_trng_init;
+ 	trng->rng.cleanup = airoha_trng_cleanup;
+ 	trng->rng.read = airoha_trng_read;
++	trng->rng.quality = 900;
  
--/*
-- * SEV_DATA_RANGE_LIST:
-- *   Array containing range of pages that firmware transitions to HV-fixed
-- *   page state.
-- */
--static struct sev_data_range_list *snp_range_list;
--
- static void __sev_firmware_shutdown(struct sev_device *sev, bool panic);
- 
- static int snp_shutdown_on_panic(struct notifier_block *nb,
-@@ -1361,6 +1354,7 @@ static int snp_filter_reserved_mem_regions(struct resource *rs, void *arg)
- 
- static int __sev_snp_init_locked(int *error, unsigned int max_snp_asid)
- {
-+	struct sev_data_range_list *snp_range_list __free(kfree) = NULL;
- 	struct psp_device *psp = psp_master;
- 	struct sev_data_snp_init_ex data;
- 	struct sev_device *sev;
-@@ -2780,11 +2774,6 @@ static void __sev_firmware_shutdown(struct sev_device *sev, bool panic)
- 		sev_init_ex_buffer = NULL;
- 	}
- 
--	if (snp_range_list) {
--		kfree(snp_range_list);
--		snp_range_list = NULL;
--	}
--
- 	__sev_snp_shutdown_locked(&error, panic);
- }
- 
+ 	ret = devm_hwrng_register(dev, &trng->rng);
+ 	if (ret) {
 -- 
 2.51.0
 
