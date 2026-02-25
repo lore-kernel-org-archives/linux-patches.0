@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801B11FE45D;
-	Wed, 25 Feb 2026 01:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BC813D51E;
+	Wed, 25 Feb 2026 01:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983996; cv=none; b=UoWL841rtdfdK9whLxzgpNqlxlo4YvgroGtbgQ3pW7Rsb/8EyhOVSedSd3LkGx5XFmVlW5OYk8j+nlt1WlS2+hUl/Am80bBh9rs7ORPmAfrKsS6SqrqwdWrBlxA49qrUSqk/mg6Z7jNTaDVzSHoQv3oenmWaPDFiidF/GOslG+M=
+	t=1771983997; cv=none; b=K81PX6QOO/jdhLaCd6E3DZimCgnpmWCFbPy+tpmxCO12xi6m5ks1SEtycWvKbe4YOsMp6+BuqooSJoIVKXC69xEEVjNkWKyAiRStlLdmmYntv4GtOkiDv02X9aGyUEZAOkvU03GqNnweOcnSwGn+WXK7Msm/5kc9qcNXmaZ5fwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983996; c=relaxed/simple;
-	bh=Veu8Ppl5/aa19wLyEVBRlVVLRvdVscextJnh1/Xr77s=;
+	s=arc-20240116; t=1771983997; c=relaxed/simple;
+	bh=zwvB+AZjghFxvN8uspH4jrtFdu3RJaPzl0Ts7A4EQK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GhcZ2/pwdlGOHdYxYkjwo6v4R+Yk/3994LPWJ0BjtC+m3EtgO1wfBDzQFOREI95Lptvn3xZtYX3+798w0ST5DLwuGUAkVE6AHpDQrkegJ7vwz1AtpYKb9PpM4YkUtsQZH/p9hqwtTL0SRMSz+I6m87si7P2RPedimb2AOABsUpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDILo/Ah; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uiwjWLsZJzGuuEkkrJ5pK0Bh/BEugBU3Aln/5Cvo3oF645MWvVtvf9+dpXBYTC9/8wk2OI4uD9LMCtCKUZI7UtHPmL93wQhJmOoVx77Ih2B5OmWsVMg5QqZexSzie61kK8BM0xsuqAFcJyIEs7l0jbT5Uv/L0SQZaJ6bYpQCjyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7Cnr3Ob; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDILo/Ah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5F7C19424;
-	Wed, 25 Feb 2026 01:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7Cnr3Ob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914E8C116D0;
+	Wed, 25 Feb 2026 01:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983996;
-	bh=Veu8Ppl5/aa19wLyEVBRlVVLRvdVscextJnh1/Xr77s=;
+	s=korg; t=1771983997;
+	bh=zwvB+AZjghFxvN8uspH4jrtFdu3RJaPzl0Ts7A4EQK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDILo/Ah956X7ZDorxAb/wBMy44SxBoNTztBfuSXdWpGKLzR+PcipEuJEO9VezxyY
-	 lFJH6q4PaGlK6EVhR6QeZaYfWQNqHuiJXQWQzH4NmJZOzToe6w8lIz4HYYn7JoWGoJ
-	 pEYaoM4b8KjMe5QZilwfx3le2g+YweSpnluZbPvc=
+	b=G7Cnr3ObIjaWUkf2pXu/oFkOWAq0aK/MrNZCY23jAEYVm23fxbyAw+zDKIKn/KzYG
+	 HpsIXDFNn4u0oWfZwLllUqK4mMihfKbUVhuIFc0IsCW8THgQ/1A0whEHRkGmz8IFHj
+	 D6+PWE13B5p3byknXb8VyjpOGQ0dY3bVYZi/BnJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Abhishek Bapat <abhishekbapat@google.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 250/641] wifi: ath12k: do WoW offloads only on primary link
-Date: Tue, 24 Feb 2026 17:19:36 -0800
-Message-ID: <20260225012354.907837201@linuxfoundation.org>
+Subject: [PATCH 6.18 251/641] quota: fix livelock between quotactl and freeze_super
+Date: Tue, 24 Feb 2026 17:19:37 -0800
+Message-ID: <20260225012354.929959023@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,84 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Abhishek Bapat <abhishekbapat@google.com>
 
-[ Upstream commit e62102ac9b773bdb08475aa9ca24dea61ae98708 ]
+[ Upstream commit 77449e453dfc006ad738dec55374c4cbc056fd39 ]
 
-In case of multi-link connection, WCN7850 firmware crashes due to WoW
-offloads enabled on both primary and secondary links.
+When a filesystem is frozen, quotactl_block() enters a retry loop
+waiting for the filesystem to thaw. It acquires s_umount, checks the
+freeze state, drops s_umount and uses sb_start_write() - sb_end_write()
+pair to wait for the unfreeze.
 
-Change to do it only on primary link to fix it.
+However, this retry loop can trigger a livelock issue, specifically on
+kernels with preemption disabled.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00284-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
+The mechanism is as follows:
+1. freeze_super() sets SB_FREEZE_WRITE and calls sb_wait_write().
+2. sb_wait_write() calls percpu_down_write(), which initiates
+   synchronize_rcu().
+3. Simultaneously, quotactl_block() spins in its retry loop, immediately
+   executing the sb_start_write() - sb_end_write() pair.
+4. Because the kernel is non-preemptible and the loop contains no
+   scheduling points, quotactl_block() never yields the CPU. This
+   prevents that CPU from reaching an RCU quiescent state.
+5. synchronize_rcu() in the freezer thread waits indefinitely for the
+   quotactl_block() CPU to report a quiescent state.
+6. quotactl_block() spins indefinitely waiting for the freezer to
+   advance, which it cannot do as it is blocked on the RCU sync.
 
-Fixes: 32f7b19668bd ("wifi: ath12k: support MLO as well if single_chip_mlo_support flag is set")
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251103-ath12-primary-link-wow-v1-1-3cf523dc09f0@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+This results in a hang of the freezer process and 100% CPU usage by the
+quota process.
+
+While this can occur intermittently on multi-core systems, it is
+reliably reproducing on a node with the following script, running both
+the freezer and the quota toggle on the same CPU:
+
+  # mkfs.ext4 -O quota /dev/sda 2g && mkdir a_mount
+  # mount /dev/sda -o quota,usrquota,grpquota a_mount
+  # taskset -c 3 bash -c "while true; do xfs_freeze -f a_mount; \
+    xfs_freeze -u a_mount; done" &
+  # taskset -c 3 bash -c "while true; do quotaon a_mount; \
+    quotaoff a_mount; done" &
+
+Adding cond_resched() to the retry loop fixes the issue. It acts as an
+RCU quiescent state, allowing synchronize_rcu() in percpu_down_write()
+to complete.
+
+Fixes: 576215cffdef ("fs: Drop wait_unfrozen wait queue")
+Signed-off-by: Abhishek Bapat <abhishekbapat@google.com>
+Link: https://patch.msgid.link/20260115213103.1089129-1-abhishekbapat@google.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wow.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/quota/quota.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wow.c b/drivers/net/wireless/ath/ath12k/wow.c
-index e8481626f1940..c78aa95d49791 100644
---- a/drivers/net/wireless/ath/ath12k/wow.c
-+++ b/drivers/net/wireless/ath/ath12k/wow.c
-@@ -135,6 +135,9 @@ static int ath12k_wow_cleanup(struct ath12k *ar)
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
- 
- 	list_for_each_entry(arvif, &ar->arvifs, list) {
-+		if (arvif != &arvif->ahvif->deflink)
-+			continue;
-+
- 		ret = ath12k_wow_vif_cleanup(arvif);
- 		if (ret) {
- 			ath12k_warn(ar->ab, "failed to clean wow wakeups on vdev %i: %d\n",
-@@ -479,8 +482,12 @@ static int ath12k_wow_set_wakeups(struct ath12k *ar,
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
- 
- 	list_for_each_entry(arvif, &ar->arvifs, list) {
-+		if (arvif != &arvif->ahvif->deflink)
-+			continue;
-+
- 		if (ath12k_wow_is_p2p_vdev(arvif->ahvif))
- 			continue;
-+
- 		ret = ath12k_wow_vif_set_wakeups(arvif, wowlan);
- 		if (ret) {
- 			ath12k_warn(ar->ab, "failed to set wow wakeups on vdev %i: %d\n",
-@@ -538,6 +545,9 @@ static int ath12k_wow_nlo_cleanup(struct ath12k *ar)
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
- 
- 	list_for_each_entry(arvif, &ar->arvifs, list) {
-+		if (arvif != &arvif->ahvif->deflink)
-+			continue;
-+
- 		if (ath12k_wow_is_p2p_vdev(arvif->ahvif))
- 			continue;
- 
-@@ -745,6 +755,9 @@ static int ath12k_wow_arp_ns_offload(struct ath12k *ar, bool enable)
- 	list_for_each_entry(arvif, &ar->arvifs, list) {
- 		ahvif = arvif->ahvif;
- 
-+		if (arvif != &ahvif->deflink)
-+			continue;
-+
- 		if (ahvif->vdev_type != WMI_VDEV_TYPE_STA)
- 			continue;
- 
-@@ -776,6 +789,9 @@ static int ath12k_gtk_rekey_offload(struct ath12k *ar, bool enable)
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
- 
- 	list_for_each_entry(arvif, &ar->arvifs, list) {
-+		if (arvif != &arvif->ahvif->deflink)
-+			continue;
-+
- 		if (arvif->ahvif->vdev_type != WMI_VDEV_TYPE_STA ||
- 		    !arvif->is_up ||
- 		    !arvif->rekey_data.enable_offload)
+diff --git a/fs/quota/quota.c b/fs/quota/quota.c
+index 7c2b75a444852..de4379a9c7920 100644
+--- a/fs/quota/quota.c
++++ b/fs/quota/quota.c
+@@ -899,6 +899,7 @@ static struct super_block *quotactl_block(const char __user *special, int cmd)
+ 		sb_start_write(sb);
+ 		sb_end_write(sb);
+ 		put_super(sb);
++		cond_resched();
+ 		goto retry;
+ 	}
+ 	return sb;
 -- 
 2.51.0
 
