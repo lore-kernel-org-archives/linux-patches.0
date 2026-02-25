@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE8B263C7F;
-	Wed, 25 Feb 2026 01:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D7F26E6F4;
+	Wed, 25 Feb 2026 01:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983585; cv=none; b=V7HVLYILqXcIsRrGdoHRdJKcmsf3yclEsJhmyjs/tcs1cjZaGeMbE2+KTuUswLLYP9E+Xat4Phs8+Pip/Bb7jThAyrM4l6EqOSHhOM+JpobG43ShYli75mlrRV4DUSFfuxG28rs20/GXxC0UMHQIz7Alk+Adhe53qNYjsCzMmN8=
+	t=1771983587; cv=none; b=HeupnIOYFjcCCyxLnSbsmsocjaEbCjYh0kv4JE8SxOKB9kIfC/vIK3lolZuhDpCRItF5L99KRLwJ3KDhZjsiuh7fIlzar0VC/wfB26NZ6jzqgmKkyBX8w+At3i3WfpDd2B/cvJpmW91pn6vKt3zehHHxwjZ42GMp1ABQaxpdpes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983585; c=relaxed/simple;
-	bh=cN94lL4DER2lgTN7WJ5GxpSfubevXhKl61TOzQgFkCY=;
+	s=arc-20240116; t=1771983587; c=relaxed/simple;
+	bh=CyltqcXjIMiIfskTzjmrf8IY8W8EddvQUUNE8QfW9rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TmCVnNVo96hu3yrnWesXBIfpuV6qPdRcyheBnXMaqJc0masdsYuKL4jum7c+FBwe9Z9NSFKETZv/r/lxiJ0vnVg4J4AVCTbw4ueo2gmN7ua0XTLSQQLx+lpuc7WCh8WbPzZMdqpJKO4EIkI9sA9G2FxTM/9Fklir7k+jNjU4CD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptUEO259; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NJSnY3vHn/+60+9SOiDo3lrfiypvxh2uGHmv2pNLzrP7BlJZgOn+uvgrmIcU6t/uIdHoDrd4jjWZLoBQRxm1XCUEpMaL7AcwJDPsk3K5dkUWt8VKRTALk6cIv0rR22fqgQeMsWDNm8Iac4gfoOXILh8rOtn8Moe1jcoAKoV7VL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkwUXgHh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptUEO259"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778A6C116D0;
-	Wed, 25 Feb 2026 01:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkwUXgHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97470C116D0;
+	Wed, 25 Feb 2026 01:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983585;
-	bh=cN94lL4DER2lgTN7WJ5GxpSfubevXhKl61TOzQgFkCY=;
+	s=korg; t=1771983586;
+	bh=CyltqcXjIMiIfskTzjmrf8IY8W8EddvQUUNE8QfW9rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ptUEO259PX0Ng4Ye86EtXQ5LFhByb6hbN3fOUiX+sEBZ1WqF0Ksmj1dUmU3Zvtln/
-	 X7p59RDZbnolSaO7BOfSxPin+hrZvYn59UAwj1kEfqSOZftDd7xQQ2ZS1Ofh2DNx/Q
-	 OkU/WbxZIWcavf7h1gSyeu9vkU7xrnFvulu1Ajr8=
+	b=VkwUXgHhbIb5wff+yD3cwmz+Q5HzcF5ta99SJ8/8Xp25inyRQRr/bukFzVRmP0yq2
+	 7jIfp465uSHolWdww/0YqIGTFusH4OXcp7B2NXiefk8EFPJNEcw7FT+7qT9846cz87
+	 NfVcZFApPyNXr+AmzRxbrMdGLmZSKxhOeE39KNaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jacob Keller <Jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 667/781] net: remove WARN_ON_ONCE when accessing forward path array
-Date: Tue, 24 Feb 2026 17:22:56 -0800
-Message-ID: <20260225012416.145155979@linuxfoundation.org>
+Subject: [PATCH 6.19 685/781] net/mlx5: Fix multiport device check over light SFs
+Date: Tue, 24 Feb 2026 17:23:14 -0800
+Message-ID: <20260225012416.574909661@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,37 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 008e7a7c293b30bc43e4368dac6ea3808b75a572 ]
+[ Upstream commit 47bf2e813817159f4d195be83a9b5a640ee6baec ]
 
-Although unlikely, recent support for IPIP tunnels increases chances of
-reaching this WARN_ON_ONCE if userspace manages to build a sufficiently
-long forward path.
+Driver is using num_vhca_ports capability to distinguish between
+multiport master device and multiport slave device. num_vhca_ports is a
+capability the driver sets according to the MAX num_vhca_ports
+capability reported by FW. On the other hand, light SFs doesn't set the
+above capbility.
 
-Remove it.
+This leads to wrong results whenever light SFs is checking whether he is
+a multiport master or slave.
 
-Fixes: ddb94eafab8b ("net: resolve forwarding path from virtual netdevice and HW destination address")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Therefore, use the MAX capability to distinguish between master and
+slave devices.
+
+Fixes: e71383fb9cd1 ("net/mlx5: Light probe local SFs")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Jacob Keller <Jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260218072904.1764634-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/mlx5/driver.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index ccef685023c29..f5e4040e08399 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -738,7 +738,7 @@ static struct net_device_path *dev_fwd_path(struct net_device_path_stack *stack)
+diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
+index 1c54aa6f74fbc..1967d1c79139b 100644
+--- a/include/linux/mlx5/driver.h
++++ b/include/linux/mlx5/driver.h
+@@ -1281,12 +1281,12 @@ static inline bool mlx5_rl_is_supported(struct mlx5_core_dev *dev)
+ static inline int mlx5_core_is_mp_slave(struct mlx5_core_dev *dev)
  {
- 	int k = stack->num_paths++;
+ 	return MLX5_CAP_GEN(dev, affiliate_nic_vport_criteria) &&
+-	       MLX5_CAP_GEN(dev, num_vhca_ports) <= 1;
++	       MLX5_CAP_GEN_MAX(dev, num_vhca_ports) <= 1;
+ }
  
--	if (WARN_ON_ONCE(k >= NET_DEVICE_PATH_STACK_MAX))
-+	if (k >= NET_DEVICE_PATH_STACK_MAX)
- 		return NULL;
+ static inline int mlx5_core_is_mp_master(struct mlx5_core_dev *dev)
+ {
+-	return MLX5_CAP_GEN(dev, num_vhca_ports) > 1;
++	return MLX5_CAP_GEN_MAX(dev, num_vhca_ports) > 1;
+ }
  
- 	return &stack->path[k];
+ static inline int mlx5_core_mp_enabled(struct mlx5_core_dev *dev)
 -- 
 2.51.0
 
