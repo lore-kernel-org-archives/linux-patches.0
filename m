@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB3B314B76;
-	Wed, 25 Feb 2026 06:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5792E314D05;
+	Wed, 25 Feb 2026 06:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002723; cv=none; b=VWmPLUlpOgtCkbi2ReK5yBugDp+SMFRE8sazHTtMsHmTPIf1ZRZdDunVrwx2YX8I2qcxcpza6A2YkksmzRAHUcRLm2uwgg73w373pT1PQWBEn5svSFJOwfdGA693mJlgvL0YqrU3KCLavhP+sz6+OX32j4FJ29jPehkGmdfjTsw=
+	t=1772002724; cv=none; b=XdlGOwjEXx5N3qhZqlF/WILreR2gG8TLKu50z2QEfZjh2MaO4z/Mgqm2yhH0gi7T6pi0SFA/Bl/0R2fSbAndgH/tWpZfFo9Z+72tnYE6Yk+y7skVOkhVMh7uiMw+2wYwtuK1poBG5bcMloilxFSbEDUs5RplgA7faZUwxVPYQBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002723; c=relaxed/simple;
-	bh=WgRldFMEfY1mQ6G5Y5E65uGlJ2Bpmq/H1tZAuoB8pFA=;
+	s=arc-20240116; t=1772002724; c=relaxed/simple;
+	bh=JvztcXwyzHDEC2zMKeiqdOoAty24fRvAID2syR4pumM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNW52YNHRqoy6hIjtydrMAHo4sBRjPPY7FD69yUx3/MeDlEFDzvmqwm4PHTxP2NlsS8opcvJo7xzGMO8uDUX3kLM9oJ+XRUJD6Fcfck1Sac/dnc6x+jb5cDkPJIZwMgKE849Gy58yHcSYPqxGNaKRFi06ax5l1AWpwlhCtyPhX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TE0Rnlpj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PImVhQcpsSavKxC3FVC3hDkeyZoLw3mGfcfVcglmXENoPFIoGd6R+z/5qEI4LqMT4zplYu7Mgi+aBHNDSIXkoaaZvJ1ghW3pGFpNZuIkaSuDJGrWfHHkvegG8I2AXMgsQx9e+tT9qDz7FJfWrPI5DdPJDLoqCqiPzsOjTL3EeMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2tR3ezy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TE0Rnlpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D7CC19425;
-	Wed, 25 Feb 2026 06:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2tR3ezy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFFEC116D0;
+	Wed, 25 Feb 2026 06:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002723;
-	bh=WgRldFMEfY1mQ6G5Y5E65uGlJ2Bpmq/H1tZAuoB8pFA=;
+	s=korg; t=1772002724;
+	bh=JvztcXwyzHDEC2zMKeiqdOoAty24fRvAID2syR4pumM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TE0Rnlpj0S2yE/daCtA5KblXlbkf6yoq5G2ti0yV7iiVh0f+V+G1rDA+2P8eVky8T
-	 Bleqak5tzfolEFZT5qYHXs2ZmGPB/IPD2OWsJ60tdpXu/4prHLdLQhch4Ho6DTWs54
-	 fpJr8GZx7gsl0Ytc95J8lnst6DvBST6lBkp/M1c0=
+	b=d2tR3ezyKg/rZ7w9+oLDMV6lVI5AAx40oy9z8N9AyQwsjcHPIZXyXcQpCGiwWDSr9
+	 PLYiat4atT9WCsKvXmB5lRnrbxP8+2qNCZkh7kVI8ZAsufcw5ovWWaJgtRTN18xftH
+	 wFnsyr5mIw9yUFeW3TMCcsI6xXGIRQXT3KjcP5ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Simon Horman <horms@kernel.org>,
+	Ziyi Guo <n7l8m4@u.northwestern.edu>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 534/641] ovpn: tcp - dont deref NULL sk_socket member after tcp_close()
-Date: Tue, 24 Feb 2026 17:24:20 -0800
-Message-ID: <20260225012401.470664308@linuxfoundation.org>
+Subject: [PATCH 6.18 535/641] net: usb: catc: enable basic endpoint checking
+Date: Tue, 24 Feb 2026 17:24:21 -0800
+Message-ID: <20260225012401.494618139@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,76 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Quartulli <antonio@openvpn.net>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit 94560267d6c41b1ff3fafbab726e3f8a55a6af34 ]
+[ Upstream commit 9e7021d2aeae57c323a6f722ed7915686cdcc123 ]
 
-When deleting a peer in case of keepalive expiration, the peer is
-removed from the OpenVPN hashtable and is temporary inserted in a
-"release list" for further processing.
+catc_probe() fills three URBs with hardcoded endpoint pipes without
+verifying the endpoint descriptors:
 
-This happens in:
-ovpn_peer_keepalive_work()
-  unlock_ovpn(release_list)
+  - usb_sndbulkpipe(usbdev, 1) and usb_rcvbulkpipe(usbdev, 1) for TX/RX
+  - usb_rcvintpipe(usbdev, 2) for interrupt status
 
-This processing includes detaching from the socket being used to
-talk to this peer, by restoring its original proto and socket
-ops/callbacks.
+A malformed USB device can present these endpoints with transfer types
+that differ from what the driver assumes.
 
-In case of TCP it may happen that, while the peer is sitting in
-the release list, userspace decides to close the socket.
-This will result in a concurrent execution of:
+Add a catc_usb_ep enum for endpoint numbers, replacing magic constants
+throughout. Add usb_check_bulk_endpoints() and usb_check_int_endpoints()
+calls after usb_set_interface() to verify endpoint types before use,
+rejecting devices with mismatched descriptors at probe time.
 
-tcp_close(sk)
-  __tcp_close(sk)
-    sock_orphan(sk)
-      sk_set_socket(sk, NULL)
+Similar to
+- commit 90b7f2961798 ("net: usb: rtl8150: enable basic endpoint checking")
+which fixed the issue in rtl8150.
 
-The last function call will set sk->sk_socket to NULL.
-
-When the releasing routine is resumed, ovpn_tcp_socket_detach()
-will attempt to dereference sk->sk_socket to restore its original
-ops member. This operation will crash due to sk->sk_socket being NULL.
-
-Fix this race condition by testing-and-accessing
-sk->sk_socket atomically under sk->sk_callback_lock.
-
-Link: https://lore.kernel.org/netdev/176996279620.3109699.15382994681575380467@eldamar.lan/
-Link: https://github.com/OpenVPN/ovpn-net-next/issues/29
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
-Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
-Link: https://patch.msgid.link/20260212213130.11497-1-antonio@openvpn.net
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Link: https://patch.msgid.link/20260212214154.3609844-1-n7l8m4@u.northwestern.edu
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/tcp.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/net/usb/catc.c | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
-index f0b4e07ba9245..ec2bbc28c1966 100644
---- a/drivers/net/ovpn/tcp.c
-+++ b/drivers/net/ovpn/tcp.c
-@@ -199,7 +199,19 @@ void ovpn_tcp_socket_detach(struct ovpn_socket *ovpn_sock)
- 	sk->sk_data_ready = peer->tcp.sk_cb.sk_data_ready;
- 	sk->sk_write_space = peer->tcp.sk_cb.sk_write_space;
- 	sk->sk_prot = peer->tcp.sk_cb.prot;
--	sk->sk_socket->ops = peer->tcp.sk_cb.ops;
-+
-+	/* tcp_close() may race this function and could set
-+	 * sk->sk_socket to NULL. It does so by invoking
-+	 * sock_orphan(), which holds sk_callback_lock before
-+	 * doing the assignment.
-+	 *
-+	 * For this reason we acquire the same lock to avoid
-+	 * sk_socket to disappear under our feet
-+	 */
-+	write_lock_bh(&sk->sk_callback_lock);
-+	if (sk->sk_socket)
-+		sk->sk_socket->ops = peer->tcp.sk_cb.ops;
-+	write_unlock_bh(&sk->sk_callback_lock);
+diff --git a/drivers/net/usb/catc.c b/drivers/net/usb/catc.c
+index 6759388692f8e..3c824340ffb06 100644
+--- a/drivers/net/usb/catc.c
++++ b/drivers/net/usb/catc.c
+@@ -64,6 +64,16 @@ static const char driver_name[] = "catc";
+ #define CTRL_QUEUE		16	/* Max control requests in flight (power of two) */
+ #define RX_PKT_SZ		1600	/* Max size of receive packet for F5U011 */
  
- 	rcu_assign_sk_user_data(sk, NULL);
- }
++/*
++ * USB endpoints.
++ */
++
++enum catc_usb_ep {
++	CATC_USB_EP_CONTROL	= 0,
++	CATC_USB_EP_BULK	= 1,
++	CATC_USB_EP_INT_IN	= 2,
++};
++
+ /*
+  * Control requests.
+  */
+@@ -772,6 +782,13 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
+ 	u8 broadcast[ETH_ALEN];
+ 	u8 *macbuf;
+ 	int pktsz, ret = -ENOMEM;
++	static const u8 bulk_ep_addr[] = {
++		CATC_USB_EP_BULK | USB_DIR_OUT,
++		CATC_USB_EP_BULK | USB_DIR_IN,
++		0};
++	static const u8 int_ep_addr[] = {
++		CATC_USB_EP_INT_IN | USB_DIR_IN,
++		0};
+ 
+ 	macbuf = kmalloc(ETH_ALEN, GFP_KERNEL);
+ 	if (!macbuf)
+@@ -784,6 +801,14 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
+ 		goto fail_mem;
+ 	}
+ 
++	/* Verify that all required endpoints are present */
++	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr) ||
++	    !usb_check_int_endpoints(intf, int_ep_addr)) {
++		dev_err(dev, "Missing or invalid endpoints\n");
++		ret = -ENODEV;
++		goto fail_mem;
++	}
++
+ 	netdev = alloc_etherdev(sizeof(struct catc));
+ 	if (!netdev)
+ 		goto fail_mem;
+@@ -828,14 +853,14 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
+ 	usb_fill_control_urb(catc->ctrl_urb, usbdev, usb_sndctrlpipe(usbdev, 0),
+ 		NULL, NULL, 0, catc_ctrl_done, catc);
+ 
+-	usb_fill_bulk_urb(catc->tx_urb, usbdev, usb_sndbulkpipe(usbdev, 1),
+-		NULL, 0, catc_tx_done, catc);
++	usb_fill_bulk_urb(catc->tx_urb, usbdev, usb_sndbulkpipe(usbdev, CATC_USB_EP_BULK),
++			  NULL, 0, catc_tx_done, catc);
+ 
+-	usb_fill_bulk_urb(catc->rx_urb, usbdev, usb_rcvbulkpipe(usbdev, 1),
+-		catc->rx_buf, pktsz, catc_rx_done, catc);
++	usb_fill_bulk_urb(catc->rx_urb, usbdev, usb_rcvbulkpipe(usbdev, CATC_USB_EP_BULK),
++			  catc->rx_buf, pktsz, catc_rx_done, catc);
+ 
+-	usb_fill_int_urb(catc->irq_urb, usbdev, usb_rcvintpipe(usbdev, 2),
+-                catc->irq_buf, 2, catc_irq_done, catc, 1);
++	usb_fill_int_urb(catc->irq_urb, usbdev, usb_rcvintpipe(usbdev, CATC_USB_EP_INT_IN),
++			 catc->irq_buf, 2, catc_irq_done, catc, 1);
+ 
+ 	if (!catc->is_f5u011) {
+ 		u32 *buf;
 -- 
 2.51.0
 
