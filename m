@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8BE21D596;
-	Wed, 25 Feb 2026 01:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7743242D9B;
+	Wed, 25 Feb 2026 01:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982860; cv=none; b=ralBOunDRW9pgwdbYTPQUAJPUvMW9C5+jpLsOMdgHW8ZiRR8r5sq0pW4ZkuIbyobLc5hSpnTmBbIx/Ta1iqy9bw3OSyhkYYytAmu6qZFuhHxkJ1rSIB52LgXrIXXxMdepUipaKVkquEenLNx2OiEUtPgu9Y4PB5yMHhyHN4Pdfs=
+	t=1771982861; cv=none; b=Wby8H2Dv6dZIELCj5Z1p1yfN1YjR4tNB4Ier319ahDzn3/PvGaXKKG8OT0vDzKxF6728Ar8343qzpY5zuDBOmLMcRXcOZiYSmfrwBX0VXS00uWoo1qrlUmRXQjuVIwwKiRVDW15DWfcJZV5uLRHckp9uwIjGPSklsiFZrkQm+Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982860; c=relaxed/simple;
-	bh=fEhckbrIp1xiFp7nNdR1TzrCWWep88Lf+1ab/Iu9RII=;
+	s=arc-20240116; t=1771982861; c=relaxed/simple;
+	bh=l5WgrAevuFWflFN6Ww+ImmlmSoT/5T2Y7jiOnjmFLf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgVql9YeBzqndMnMmooGcmHvFkjQ04Bz/j2fho2yrBjpZ04dEZCM4SOBQTONTGVAf7MJMSbdb5kjrsK4NTgKNGXk5xZfysTajxfd/CmovJCJ8XAHRv6BmFE3X4oCrftAx1mjkI95baZ1sjyoS/5pdUfAMABphP7n7Nv1zFjZstU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U57NtN2W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m2rt7DxKZhOx3TRCJlEWRlOMXez4LN2ZZEdycKrRT8ktd1GNkMdSkaiIKkSYYKPB5uo1kC8Lcp6VsV5w0+qmhQKIXu1GMQTMflEy29QHSKWw7kSGcT/Yk8YIc1T1isbRNEiSL3fi9qdyz8rM6tAz9wth/ndRlOnmb16JFY/B4vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLao3u//; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U57NtN2W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EBAC116D0;
-	Wed, 25 Feb 2026 01:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLao3u//"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D50C116D0;
+	Wed, 25 Feb 2026 01:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982860;
-	bh=fEhckbrIp1xiFp7nNdR1TzrCWWep88Lf+1ab/Iu9RII=;
+	s=korg; t=1771982861;
+	bh=l5WgrAevuFWflFN6Ww+ImmlmSoT/5T2Y7jiOnjmFLf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U57NtN2WRPjn9/Bo9tx0tnbeuG5xGA5CVpYQw2H1fFwbWDrWw4b+Kt550ZNTPF4e8
-	 6U29XYvodTPBCjyYAjSwx0w0hx0rr320bEbkWzDdXBjjlBinfdwTvTWI/G0eKE9ddu
-	 UhfpEVmv8XbHfIH68BBPawOIMX/iFLDNNNLVc0Qo=
+	b=gLao3u//ebxzT6gwpAaaV9zcLsDSt9sbJOygkKGDiQe5M7RNshuOjCBo5T2B9//v8
+	 xexvt2heylY8dbalT2qs3mQ55vQ+SZ1u6pd5BJwZmPXJYoaJyPK9gbSExojchCrkcD
+	 xQrt0XD4UW66fQFV/TmlAqzV0ifoDWG+eVBO1/nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
 	Yu Kuai <yukuai@fnnas.com>,
+	Li Nan <linan122@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 047/781] md/raid10: fix any_working flag handling in raid10_sync_request
-Date: Tue, 24 Feb 2026 17:12:36 -0800
-Message-ID: <20260225012400.858957687@linuxfoundation.org>
+Subject: [PATCH 6.19 048/781] md/raid5: fix IO hang with degraded array with llbitmap
+Date: Tue, 24 Feb 2026 17:12:37 -0800
+Message-ID: <20260225012400.881988983@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,45 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Yu Kuai <yukuai@fnnas.com>
 
-[ Upstream commit 99582edb3f62e8ee6c34512021368f53f9b091f2 ]
+[ Upstream commit cd1635d844d26471c56c0a432abdee12fc9ad735 ]
 
-In raid10_sync_request(), 'any_working' indicates if any IO will
-be submitted. When there's only one In_sync disk with badblocks,
-'any_working' might be set to 1 but no IO is submitted. Fix it by
-setting 'any_working' after badblock checks.
+When llbitmap bit state is still unwritten, any new write should force
+rcw, as bitmap_ops->blocks_synced() is checked in handle_stripe_dirtying().
+However, later the same check is missing in need_this_block(), causing
+stripe to deadloop during handling because handle_stripe() will decide
+to go to handle_stripe_fill(), meanwhile need_this_block() always return
+0 and nothing is handled.
 
-Link: https://lore.kernel.org/linux-raid/20260105110300.1442509-11-linan666@huaweicloud.com
-Fixes: e875ecea266a ("md/raid10 record bad blocks as needed during recovery.")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/linux-raid/20260123182623.3718551-2-yukuai@fnnas.com
+Fixes: 5ab829f1971d ("md/md-llbitmap: introduce new lockless bitmap")
 Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid5.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 84be4cc7e8739..3a591e60a1449 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -3402,7 +3402,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 				    !test_bit(In_sync, &rdev->flags))
- 					continue;
- 				/* This is where we read from */
--				any_working = 1;
- 				sector = r10_bio->devs[j].addr;
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index a85878b009f9a..bdf248db1330a 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -3751,9 +3751,14 @@ static int need_this_block(struct stripe_head *sh, struct stripe_head_state *s,
+ 	struct r5dev *dev = &sh->dev[disk_idx];
+ 	struct r5dev *fdev[2] = { &sh->dev[s->failed_num[0]],
+ 				  &sh->dev[s->failed_num[1]] };
++	struct mddev *mddev = sh->raid_conf->mddev;
++	bool force_rcw = false;
+ 	int i;
+-	bool force_rcw = (sh->raid_conf->rmw_level == PARITY_DISABLE_RMW);
  
- 				if (is_badblock(rdev, sector, max_sync,
-@@ -3417,6 +3416,7 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 						continue;
- 					}
- 				}
-+				any_working = 1;
- 				bio = r10_bio->devs[0].bio;
- 				bio->bi_next = biolist;
- 				biolist = bio;
++	if (sh->raid_conf->rmw_level == PARITY_DISABLE_RMW ||
++	    (mddev->bitmap_ops && mddev->bitmap_ops->blocks_synced &&
++	     !mddev->bitmap_ops->blocks_synced(mddev, sh->sector)))
++		force_rcw = true;
+ 
+ 	if (test_bit(R5_LOCKED, &dev->flags) ||
+ 	    test_bit(R5_UPTODATE, &dev->flags))
 -- 
 2.51.0
 
