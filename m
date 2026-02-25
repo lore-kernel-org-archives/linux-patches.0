@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE31918DF80;
-	Wed, 25 Feb 2026 01:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB1E18DF80;
+	Wed, 25 Feb 2026 01:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983934; cv=none; b=AADrWU7Jsfd+U4ETBYBYtsUt93kiyflZg6DixG2fm9b/Dhs0v9y+Bx0OUtQ1VILwVaHKfSFxrrvwe+xee0FyYUKxZWKuK3ZjwZ6gEQG9EPm7A0SPYrAtLStOkN2bJUKrw9RJq2/Xyyf2mqZeeNmGRqQ36ITK8iIW3iSC176kRG0=
+	t=1771983935; cv=none; b=MDhq7fjgNdjOgYVi7DEaVUkRX0VggpRnhFHRaZMeADzaAEXjiXi0aLeiuIgBtVxWEC8MAd7qAuY2w3bk4vZop0vHSJ55ImEtZriqVxVMDnyeuvFkGvRDtdvQXhxX9j49+qHJOJIr2ETG35oAOc4YsxWKE4W3qcaiknr2Mj4Czeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983934; c=relaxed/simple;
-	bh=Uns/O6IWuJ4ZECrPTIgfc8Vcy25TNyJ5x57B/a6n/bk=;
+	s=arc-20240116; t=1771983935; c=relaxed/simple;
+	bh=Z30WJ10w4qKEdXjTXnrXPrXBcTaMHoyODvr4mt0/eiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oPIIsU3VDom9+6r8YkkPDjZmsFmLWC+fmOZWPj96bpnpn1F1YiBRUrUwH88/q6JH/rNaiR1r84OMKTRO+liR26/wgfrJUsArDXUOPQTpHYnqtN5Zxz+Kb6QNKgoaxsTca5UuVWc4Sfy1rwJMEW3dYfyiWIfLFbv3xUqh2Ut9gms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL8xyyYa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HBoEk3/885bbD4FJCVwXGX5efNVorDtmgx1ikwtN34ucZIQvUKwZCeSBmlieU4MSgqPHMmYVCf7fUZvRzaXAbrHhpn7YMFi1C6jr1GAei97k/1c7MesZKeGDxVV3G89qfG0OIfmD9SuJ4LKFvw0oAuKz0RiNoPKmPB5mJ/Hgsdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=065gvbMO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL8xyyYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6A2C116D0;
-	Wed, 25 Feb 2026 01:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="065gvbMO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB34C116D0;
+	Wed, 25 Feb 2026 01:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983934;
-	bh=Uns/O6IWuJ4ZECrPTIgfc8Vcy25TNyJ5x57B/a6n/bk=;
+	s=korg; t=1771983935;
+	bh=Z30WJ10w4qKEdXjTXnrXPrXBcTaMHoyODvr4mt0/eiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tL8xyyYaN4tDVFNP7WNe/J66iZTKmOTWm/WOel2+4/TnQAQUm8miCd/uEaH0S29B7
-	 7VyTebro/hjOFUAzpe6WsJq2hY87uIw9zLnggDlgrrU/Zzpc416yA/lwzICiqU+Tem
-	 uitJtBKeW2PrKstREPwRPdvXhhv8WK0PkdFobFWY=
+	b=065gvbMO5bLij4Ssq4WWT1lLfSq2K5daMAaygKcx0PGI86mGEP0iVZbdgK3XYbY1G
+	 Alsn1mDglDuUvwe8tB7HuAoZtQrd/A2tqMai+PGFm7cNJXmsYLd03GI5vcSW5iNxDw
+	 lFYEe9lxR2r2OxNJ9wjCpd7+TaudWprFmK/mSVzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Alexey Minnekhanov <alexeymin@minlexx.ru>,
+	Brian Masney <bmasney@redhat.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 199/641] drm/msm/dpu: fix CMD panels on DPU 1.x - 3.x
-Date: Tue, 24 Feb 2026 17:18:45 -0800
-Message-ID: <20260225012353.800596771@linuxfoundation.org>
+Subject: [PATCH 6.18 200/641] drm/msm/dsi_phy_14nm: convert from divider_round_rate() to divider_determine_rate()
+Date: Tue, 24 Feb 2026 17:18:46 -0800
+Message-ID: <20260225012353.822605799@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,46 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 59ca3d11f5311d9167015fe4f431701614ae0048 ]
+[ Upstream commit 1d232f793d4dbffd329ad48b52954d4c8ca24db5 ]
 
-DPU units before 4.x don't have a separate CTL_START IRQ to mark the
-begin of the data transfer. In such a case, wait for the frame transfer
-to complete rather than trying to wait for the CTL_START interrupt (and
-obviously hitting the timeout).
+The divider_round_rate() function is now deprecated, so let's migrate
+to divider_determine_rate() instead so that this deprecated API can be
+removed.
 
-Fixes: 050770cbbd26 ("drm/msm/dpu: Fix timeout issues on command mode panels")
-Reported-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Closes: https://lore.kernel.org/r/8e1d33ff-d902-4ae9-9162-e00d17a5e6d1@postmarketos.org
-Patchwork: https://patchwork.freedesktop.org/patch/696490/
-Link: https://lore.kernel.org/r/20251228-mdp5-drop-dpu3-v4-2-7497c3d39179@oss.qualcomm.com
-Tested-by: Alexey Minnekhanov <alexeymin@minlexx.ru>
+Note that when the main function itself was migrated to use
+determine_rate, this was mistakenly converted to:
+
+    req->rate = divider_round_rate(...)
+
+This is invalid in the case when an error occurs since it can set the
+rate to a negative value.
+
+Fixes: cc41f29a6b04 ("drm/msm/dsi_phy_14nm: convert from round_rate() to determine_rate()")
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/697613/
+Link: https://lore.kernel.org/r/20260108-clk-divider-round-rate-v1-24-535a3ed73bf3@redhat.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index 0ec6d67c7c70b..93db1484f6069 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -681,10 +681,11 @@ static int dpu_encoder_phys_cmd_wait_for_commit_done(
- 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
- 		return 0;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+index fdefcbd9c2848..a156c7e7cea83 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+@@ -628,12 +628,7 @@ static int dsi_pll_14nm_postdiv_determine_rate(struct clk_hw *hw,
  
--	if (phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
--		return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
-+	if (phys_enc->irq[INTR_IDX_CTL_START] &&
-+	    !phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
-+		return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
+ 	DBG("DSI%d PLL parent rate=%lu", pll_14nm->phy->id, req->rate);
  
--	return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
-+	return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
+-	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate,
+-				       NULL,
+-				       postdiv->width,
+-				       postdiv->flags);
+-
+-	return 0;
++	return divider_determine_rate(hw, req, NULL, postdiv->width, postdiv->flags);
  }
  
- static void dpu_encoder_phys_cmd_handle_post_kickoff(
+ static int dsi_pll_14nm_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.51.0
 
