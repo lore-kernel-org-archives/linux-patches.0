@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6413B2C0F97;
-	Wed, 25 Feb 2026 06:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2249B2C11CF;
+	Wed, 25 Feb 2026 06:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002552; cv=none; b=Eb/qJ8cCCG+Ni08UYkCnLMvHniNd26QeLP3s9xMwKhnN1Xet2HBVQlwZhbL1aXJ+dIRGtOI7YG643DiJfN1sNypWhMj6Y9tSFITvrybEMXeVMHG7gRuesNAtdDmllA8f0hefa6RZjd186GU3GQoXp/hFF8uMlQLIXzqpSN4XksM=
+	t=1772002554; cv=none; b=hlQeB8zF93bg5kciwA159eNq1mBorA4AbMWn1rZioIUWrfm7wz9MsPZ9Y5CkUXkVmMK/EFO3u1plZqRfNdkp3BQ7uif3H4xrrk0gaBSQH6jS6+93ftbi3CG/dB2OBUl20blwAYgaCrGdIbbbqOiKDInDLRFTWzxwGuj5Y7ZJjLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002552; c=relaxed/simple;
-	bh=FiI+WTgUnyXhQyUHAhTmC+yPhchBmGBXOfaHfZdm+co=;
+	s=arc-20240116; t=1772002554; c=relaxed/simple;
+	bh=MccGiM1Y3ooODc4bUXvkG7hKbNyuwhgRUrJr8O6+Vls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3VRJ8AY1sgbhy2n2Btfvsvxb2gLbEGga9F+fIGlUXK5mraLmJhF22VOwK2MrHJLQXblrFWqJzPX2VgaA9HrQzjStPF8soa+vj8gUGwQcRcrLSKk5+POuLC+y+VKVcLemZ4wjKWV9FydHLcIzuRgRDBDMtQJMtSVEWIW7gm/lkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eAwJRt9Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N0jlW8R+qUXRZvtES2VDDlvzN46kivRsyLqNEEUNxzZdai7pwwKMjjp072GutNfgHsOWxI13iZA7Pd6axQ1r6dpFlVoMocdvjpaVDvywxbl5anqoeHHFqxFMxlGe0MxcsrEph+Vec5u2XD1HMrf+vMnH2/BT04hdDMFcZQ9NAcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmTA4I/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eAwJRt9Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE70DC116D0;
-	Wed, 25 Feb 2026 06:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmTA4I/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6A3C116D0;
+	Wed, 25 Feb 2026 06:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002552;
-	bh=FiI+WTgUnyXhQyUHAhTmC+yPhchBmGBXOfaHfZdm+co=;
+	s=korg; t=1772002553;
+	bh=MccGiM1Y3ooODc4bUXvkG7hKbNyuwhgRUrJr8O6+Vls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAwJRt9YSncoiEI1QF9gmIL5YMVSAryNJP40aLA+NFMDyi+XSJ7okLf6CVCydFEtT
-	 cyWfDA5El+5ZEwMwU12tA+qZAqOoQ3PJJQ0jUFrjyDUgZ6mC3pGSHzd8MXpL2mklTK
-	 Oaf/Cyk0jpZPBcOiL9LOIWgry6jZFq0EHo/PbnWs=
+	b=nmTA4I/5ua5iwzLmyW+O5p7zVVOh7MkXdTV3hDk5vF4of8Wc3Gi3hyV6Y3tqHuC+1
+	 UO1cjoFkiM6L+NP3eT8JcWSt7logn9LjVuIt/fBitxuKySq52ImQcTweqdwzSMTLZ3
+	 pa5M1XPXbticlcSuZYdookChOYIZTfIXsC1XZ4uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Alexey Gladkov <legion@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 292/641] ucount: check for CAP_SYS_RESOURCE using ns_capable_noaudit()
-Date: Tue, 24 Feb 2026 17:20:18 -0800
-Message-ID: <20260225012355.830815388@linuxfoundation.org>
+Subject: [PATCH 6.18 293/641] jfs: avoid -Wtautological-constant-out-of-range-compare warning
+Date: Tue, 24 Feb 2026 17:20:19 -0800
+Message-ID: <20260225012355.852572709@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -55,49 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 0895a000e4fff9e950a7894210db45973e485c35 ]
+[ Upstream commit 7833570dae833028337bb53b7f389825b910c100 ]
 
-The user.* sysctls implement the ctl_table_root::permissions hook and they
-override the file access mode based on the CAP_SYS_RESOURCE capability (at
-most rwx if capable, at most r-- if not).  The capability is being checked
-unconditionally, so if an LSM denies the capability, an audit record may
-be logged even when access is in fact granted.
+A recent change for the range check started triggering a clang warning:
 
-Given the logic in the set_permissions() function in kernel/ucount.c and
-the unfortunate way the permission checking is implemented, it doesn't
-seem viable to avoid false positive denials by deferring the capability
-check.  Thus, do the same as in net_ctl_permissions() (net/sysctl_net.c) -
-switch from ns_capable() to ns_capable_noaudit(), so that the check never
-logs an audit record.
+fs/jfs/jfs_dtree.c:2906:31: error: result of comparison of constant 128 with expression of type 's8' (aka 'signed char') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+ 2906 |                         if (stbl[i] < 0 || stbl[i] >= DTPAGEMAXSLOT) {
+      |                                            ~~~~~~~ ^  ~~~~~~~~~~~~~
+fs/jfs/jfs_dtree.c:3111:30: error: result of comparison of constant 128 with expression of type 's8' (aka 'signed char') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+ 3111 |                 if (stbl[0] < 0 || stbl[0] >= DTPAGEMAXSLOT) {
+      |                                    ~~~~~~~ ^  ~~~~~~~~~~~~~
 
-Link: https://lkml.kernel.org/r/20260122140745.239428-1-omosnace@redhat.com
-Fixes: dbec28460a89 ("userns: Add per user namespace sysctls.")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Acked-by: Serge Hallyn <serge@hallyn.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Alexey Gladkov <legion@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Both the old and the new check were useless, but the previous version
+apparently did not lead to the warning.
+
+Remove the extraneous range check for simplicity.
+
+Fixes: cafc6679824a ("jfs: replace hardcoded magic number with DTPAGEMAXSLOT constant")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/ucount.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_dtree.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/ucount.c b/kernel/ucount.c
-index 586af49fc03e4..fc4a8f2d30965 100644
---- a/kernel/ucount.c
-+++ b/kernel/ucount.c
-@@ -47,7 +47,7 @@ static int set_permissions(struct ctl_table_header *head,
- 	int mode;
+diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
+index 0ab83bb7bbdf9..9ab3f2fc61d17 100644
+--- a/fs/jfs/jfs_dtree.c
++++ b/fs/jfs/jfs_dtree.c
+@@ -2903,7 +2903,7 @@ int jfs_readdir(struct file *file, struct dir_context *ctx)
+ 		stbl = DT_GETSTBL(p);
  
- 	/* Allow users with CAP_SYS_RESOURCE unrestrained access */
--	if (ns_capable(user_ns, CAP_SYS_RESOURCE))
-+	if (ns_capable_noaudit(user_ns, CAP_SYS_RESOURCE))
- 		mode = (table->mode & S_IRWXU) >> 6;
- 	else
- 	/* Allow all others at most read-only access */
+ 		for (i = index; i < p->header.nextindex; i++) {
+-			if (stbl[i] < 0 || stbl[i] >= DTPAGEMAXSLOT) {
++			if (stbl[i] < 0) {
+ 				jfs_err("JFS: Invalid stbl[%d] = %d for inode %ld, block = %lld",
+ 					i, stbl[i], (long)ip->i_ino, (long long)bn);
+ 				free_page(dirent_buf);
+@@ -3108,7 +3108,7 @@ static int dtReadFirst(struct inode *ip, struct btstack * btstack)
+ 		/* get the leftmost entry */
+ 		stbl = DT_GETSTBL(p);
+ 
+-		if (stbl[0] < 0 || stbl[0] >= DTPAGEMAXSLOT) {
++		if (stbl[0] < 0) {
+ 			DT_PUTPAGE(mp);
+ 			jfs_error(ip->i_sb, "stbl[0] out of bound\n");
+ 			return -EIO;
 -- 
 2.51.0
 
