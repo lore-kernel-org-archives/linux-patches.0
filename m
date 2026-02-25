@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44AF2C17A0;
-	Wed, 25 Feb 2026 06:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EA02C17A0;
+	Wed, 25 Feb 2026 06:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002598; cv=none; b=ZpasqzDXhoHC+x3+hj5iO+uLfwmuSLxY9Y15kk653e8cKzK5DE8eW6djqfxDb2FBJ2oJrEezwVz5BuI9kmbZu3KZBwZl7zzKuteKFuJSciTdsHxYy4OGUVEqpElDU1kVTLy8QQ/r4+40QuJPw3KmGINMjHKxHVNsmGkcXyIbJfc=
+	t=1772002599; cv=none; b=ngVuD9IxiGCtuhUucEvYmIGuix6AItBklkxYfh13m3OGdp8ANBX4/QL4/Y9VQFKzRl1hrf93UDTWRaqdACKf8qbkM0aSzS9M8MS6cqNumojzc/HQCek4a5kFIFRzkVBoROqZWDSFDPucaSD5YGtkyzRyOv/BA4LmkXMq8AdvvVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002598; c=relaxed/simple;
-	bh=NTPF+SCv7IwTPXKIpTukm7ts0VMM0Puf8lwyP+fVYDE=;
+	s=arc-20240116; t=1772002599; c=relaxed/simple;
+	bh=1xZAQpZRKWOiegSTRHhxz1HaQ8anZvKN2SfLwkBx8zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e6nkhQU8NkIAceJxx39t56J/SVH0tU8UfWj7eywE+uhphWK2Xn19Fz/vu2shJYA7ivdNecTxMRCZZ0UYaMqb+EAYMsgi10CIg69rnxnJCZ+JPiFoFsg6qJSiOgH41qdx63EZDdv6Mm56xigbfz8pYjYJ/fjursaxqrS2cWe+gMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxduVSHR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PuakiCzwdY5sVb8byLvJ+9CcT9TIQKxO3BoI1nLV7hb/E7wi2kdZco725y9ZVJNM+s9mv16j6GLVDbbiSBl4lDo+et3hRS4Nube1z0hjr1CoGuLNjEP/MVxwPbdZt9EtQlxAzL21euuz/VTC9vl6KDN0sHxQhJtBrSFMlDMJE2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sW3fvmzl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxduVSHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F19C116D0;
-	Wed, 25 Feb 2026 06:56:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sW3fvmzl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C75DC116D0;
+	Wed, 25 Feb 2026 06:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002598;
-	bh=NTPF+SCv7IwTPXKIpTukm7ts0VMM0Puf8lwyP+fVYDE=;
+	s=korg; t=1772002599;
+	bh=1xZAQpZRKWOiegSTRHhxz1HaQ8anZvKN2SfLwkBx8zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxduVSHRBx00WcGAj61eoT/NJy8DrSU/m1jwcnH/x0cNieqoJbHeBEsiJ3wNfyLC+
-	 EQRYUhOdZcZMt4ufTNC1HrdHm+/KwYNfY6slStKH/6m2syD2fbAGtmf/pWCeqDUrsa
-	 hkQav9VPdMHEdvRz9WscQ2RapSAKfdg7aw4VUTwU=
+	b=sW3fvmzlutGsgj/4BXkAIVc3tRGS4PYSqrjxjBrgYUFTpZuP/cQOO5bIo/6nk1tYi
+	 PoF1nxNbnFKdpvwVjT0zMoWzzOFcEDtZ7oo+QDEqpklGqzeRn3YuwLc2MdAM68t2OQ
+	 OX2mFchYUrfq7/UUIgjA9Yo+7WoDEakGVzpfk610=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Waqar Hameed <waqar.hameed@axis.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 345/641] power: supply: act8945a: Fix use-after-free in power_supply_changed()
-Date: Tue, 24 Feb 2026 17:21:11 -0800
-Message-ID: <20260225012357.018844638@linuxfoundation.org>
+Subject: [PATCH 6.18 346/641] power: supply: bq256xx: Fix use-after-free in power_supply_changed()
+Date: Tue, 24 Feb 2026 17:21:12 -0800
+Message-ID: <20260225012357.041349959@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit 3291c51d4684d048dd2eb91b5b65fcfdaf72141f ]
+[ Upstream commit 8005843369723d9c8975b7c4202d1b85d6125302 ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -77,49 +77,45 @@ of using the `power_supply` handle *uninitialized* in
 Fix this racy use-after-free by making sure the IRQ is requested _after_
 the registration of the `power_supply` handle.
 
-Fixes: a09209acd6a8 ("power: supply: act8945a_charger: Add status change update support")
+Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Link: https://patch.msgid.link/bcf3a23b5187df0bba54a8c8fe09f8b8a0031dee.1766268280.git.waqar.hameed@axis.com
+Link: https://patch.msgid.link/39da6da8cc060fa0382ca859f65071e791cb6119.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/act8945a_charger.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/power/supply/bq256xx_charger.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/act8945a_charger.c b/drivers/power/supply/act8945a_charger.c
-index 3901a02f326a5..9dec4486b1439 100644
---- a/drivers/power/supply/act8945a_charger.c
-+++ b/drivers/power/supply/act8945a_charger.c
-@@ -597,14 +597,6 @@ static int act8945a_charger_probe(struct platform_device *pdev)
- 		return irq ?: -ENXIO;
+diff --git a/drivers/power/supply/bq256xx_charger.c b/drivers/power/supply/bq256xx_charger.c
+index ae14162f017a9..d3de4f8b80db1 100644
+--- a/drivers/power/supply/bq256xx_charger.c
++++ b/drivers/power/supply/bq256xx_charger.c
+@@ -1741,6 +1741,12 @@ static int bq256xx_probe(struct i2c_client *client)
+ 		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
  	}
  
--	ret = devm_request_irq(&pdev->dev, irq, act8945a_status_changed,
--			       IRQF_TRIGGER_FALLING, "act8945a_interrupt",
--			       charger);
--	if (ret) {
--		dev_err(&pdev->dev, "failed to request nIRQ pin IRQ\n");
--		return ret;
--	}
--
- 	charger->desc.name = "act8945a-charger";
- 	charger->desc.get_property = act8945a_charger_get_property;
- 	charger->desc.properties = act8945a_charger_props;
-@@ -625,6 +617,14 @@ static int act8945a_charger_probe(struct platform_device *pdev)
- 		return PTR_ERR(charger->psy);
- 	}
- 
-+	ret = devm_request_irq(&pdev->dev, irq, act8945a_status_changed,
-+			       IRQF_TRIGGER_FALLING, "act8945a_interrupt",
-+			       charger);
++	ret = bq256xx_power_supply_init(bq, &psy_cfg, dev);
 +	if (ret) {
-+		dev_err(&pdev->dev, "failed to request nIRQ pin IRQ\n");
++		dev_err(dev, "Failed to register power supply\n");
 +		return ret;
 +	}
 +
- 	platform_set_drvdata(pdev, charger);
+ 	if (client->irq) {
+ 		ret = devm_request_threaded_irq(dev, client->irq, NULL,
+ 						bq256xx_irq_handler_thread,
+@@ -1753,12 +1759,6 @@ static int bq256xx_probe(struct i2c_client *client)
+ 		}
+ 	}
  
- 	INIT_WORK(&charger->work, act8945a_work);
+-	ret = bq256xx_power_supply_init(bq, &psy_cfg, dev);
+-	if (ret) {
+-		dev_err(dev, "Failed to register power supply\n");
+-		return ret;
+-	}
+-
+ 	ret = bq256xx_hw_init(bq);
+ 	if (ret) {
+ 		dev_err(dev, "Cannot initialize the chip.\n");
 -- 
 2.51.0
 
