@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C06A2701DA;
-	Wed, 25 Feb 2026 01:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EF72701DA;
+	Wed, 25 Feb 2026 01:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983782; cv=none; b=kuXL7eCP32R81Bi4gE4jIGL0liOcYqtn61oIjQbJDNVta9tqPramiqZixYLhQOWiitniJtYgaiuQYTecp+b/emEVtMA46MpqMWUQFxX69Zw13eZXKBIQz9aGwqsvkL5LyTdaadi373d5VzpJmArtDqU2Vb8+AJnQ00cy4jy5XdI=
+	t=1771983783; cv=none; b=ifPSO0DbVXcrVNzNbdKPNE7oU+gtmZZ8XQ3XjdQ2WvjbD85IU0v89ELTOi22tqmmGjmC7F1OksGbCiVNiSVXgfOmPv+cydBtylfLA7N+bH3YB0akfgj9moLC+GQH85VeBbyFHoj94/SQ8t7r1dpxP6uBU2o+nyJs/4ONaAn7jiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983782; c=relaxed/simple;
-	bh=ycJH3d5ZMZWHSOurKzZNV/pMXObtGLULX6uqbaIM6ro=;
+	s=arc-20240116; t=1771983783; c=relaxed/simple;
+	bh=wmjehVeucMKAxDYVBXdWXHDv9YsFBrbiiJZPEthqmtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXv44UAUduRXWMOUi3lK7QdOydTe8E0TrXQ8r8QwCmDPermK1z1uNYT/7tIJTZPcXhaPpONp4lxw/aA/CtskfGSsuCHZsizY6lmIODMPC4rZ4KMyDb+pGtY6Ga8pAhD4mkgjEaqq33AXyexaymQ9DSVeDn2LWKVxVK+JMYYXL9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfGSupdl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMahejsHqQV6pOFt5jeFkWVqQ98F5MKNAnYtdAZufGfvvEEbGoUtrP2ynBDpm4KHdcsFJpadU2KSAPKRx8zkeGiDWn42tmHiAmdeTPSJxPBka64zpC589bBwDbVCojRcQMnKDS1FiEQNcc0B36GCcF55dMg7BXflR4XHRyNd1No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3kMK8lk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfGSupdl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF06DC116D0;
-	Wed, 25 Feb 2026 01:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3kMK8lk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F68C116D0;
+	Wed, 25 Feb 2026 01:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983782;
-	bh=ycJH3d5ZMZWHSOurKzZNV/pMXObtGLULX6uqbaIM6ro=;
+	s=korg; t=1771983783;
+	bh=wmjehVeucMKAxDYVBXdWXHDv9YsFBrbiiJZPEthqmtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cfGSupdliXCK565NDBndpnQBEzxO8OM3aSWsGSLba01gSIUPUOgZAATaAZZIOAxXK
-	 vB5/zegofwphgsp3CK/X5ZP8kmPM/YCCPfwSsUJRlie7YmBe2xpVmEJod7b/OYwatA
-	 +UfYMWDBhuBsZfkSXrSv3BE9rzn1Dabpd2AaGMqs=
+	b=e3kMK8lkhXNplpe5CmOoRMWCT8iOtQA5HV+6YKk8jaIPpo2dxyW0Y3ywdhCiIP5t3
+	 WQMTKyE0rrYLCvMomkXObRrnk5Kmm8alOfFbK1A8BjZ31xJPdhffGLXeZHKUCsrV4r
+	 wSXxfaOaCwiD6v5LODIt4RNIgRxXFxNCcu451Eyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Phil Auld <pauld@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/641] md/raid10: fix any_working flag handling in raid10_sync_request
-Date: Tue, 24 Feb 2026 17:16:10 -0800
-Message-ID: <20260225012350.094424517@linuxfoundation.org>
+Subject: [PATCH 6.18 071/641] sched: Fix build for modules using set_tsk_need_resched()
+Date: Tue, 24 Feb 2026 17:16:37 -0800
+Message-ID: <20260225012350.785878693@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,45 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 99582edb3f62e8ee6c34512021368f53f9b091f2 ]
+[ Upstream commit 8d737320166bd145af70a3133a9964b00ca81cba ]
 
-In raid10_sync_request(), 'any_working' indicates if any IO will
-be submitted. When there's only one In_sync disk with badblocks,
-'any_working' might be set to 1 but no IO is submitted. Fix it by
-setting 'any_working' after badblock checks.
+Commit adcc3bfa8806 ("sched: Adapt sched tracepoints for RV task model")
+added a tracepoint to the need_resched action that can be triggered also
+by set_tsk_need_resched.
+This function was previously accessible from out-of-tree modules but
+it's no longer available because the __trace_set_need_resched() symbol
+is not exported (together with the tracepoint itself, which was exported
+in a separate patch) and building such modules fails.
 
-Link: https://lore.kernel.org/linux-raid/20260105110300.1442509-11-linan666@huaweicloud.com
-Fixes: e875ecea266a ("md/raid10 record bad blocks as needed during recovery.")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Export __trace_set_need_resched to modules to fix those build issues.
+
+Fixes: adcc3bfa8806 ("sched: Adapt sched tracepoints for RV task model")
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Phil Auld <pauld@redhat.com>
+Link: https://patch.msgid.link/20260112140413.362202-1-gmonaco@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 14dcd5142eb47..d58ae150b4502 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -3402,7 +3402,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 				    !test_bit(In_sync, &rdev->flags))
- 					continue;
- 				/* This is where we read from */
--				any_working = 1;
- 				sector = r10_bio->devs[j].addr;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index c1e4d8a5947cf..582c3847f483a 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1139,6 +1139,7 @@ void __trace_set_need_resched(struct task_struct *curr, int tif)
+ {
+ 	trace_sched_set_need_resched_tp(curr, smp_processor_id(), tif);
+ }
++EXPORT_SYMBOL_GPL(__trace_set_need_resched);
  
- 				if (is_badblock(rdev, sector, max_sync,
-@@ -3417,6 +3416,7 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 						continue;
- 					}
- 				}
-+				any_working = 1;
- 				bio = r10_bio->devs[0].bio;
- 				bio->bi_next = biolist;
- 				biolist = bio;
+ void resched_curr(struct rq *rq)
+ {
 -- 
 2.51.0
 
