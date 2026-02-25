@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D733016F7;
-	Wed, 25 Feb 2026 06:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CC13002D1;
+	Wed, 25 Feb 2026 06:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002674; cv=none; b=IXTz/FSsj1xDUqRqgvOPiRT3U50RjeJ491zthCmakoFQa4qumxou/+oMJ5v+iADluPfGmcSDeCj6f3gHS4dusLvwAd4a5QFPG+kPXkz47EjUZ17HQw16MKcp1xlTIhcJ53MZw/NelYiWS9AOdNRmO2a+l1HIXIbzKxic/nCCLkM=
+	t=1772002674; cv=none; b=jDT8q8qVkof26EYQk7phTRiHnEl/P5oIMc8vuRUGS2wklmJ9QEflvVSSXhZZN64PQoH+tddrgkAopDNhTt60n1UPOqMatzKKkHk3qA2x+vqZh3XepmU+YfxHCQ9Fu9pnh4s9JEptgL7uhKS0gwZ1z+Wgn7RUgF0mtHTJlxvynhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002674; c=relaxed/simple;
-	bh=xu/LA9qUF5fQDRDOZI+B5fps52WgMVXKbpvQsLNxGAs=;
+	bh=iXK3gSiOLco5rFTIsTLV+rZ/G7cKLpUj70bFLEijsrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CMukaZcAQjMTShBvAAbH0a/HRYOWqaQ5YPQd/krjc4009q+e7czXb4vDbW/6paavC4DIwc+fuoMgnjiaZzPTmITZIcTn5qwOYRjCsB/9deDyQW63Wu8nqjmInPCVf0JNL9izkemi0UGB2lFiWmJ8+PFGn1ZqFsaXPCe2wLR8ITk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wbuti/+J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D2NMrmHWebeW/9TyiYG6BJ3AIe7uoVKLQZ16EqIdoCJXwZvL4ZKt9oYuWdTPUekrgIU897XpAUWC751eN7622RtsTYhQs+LjjuP6TgTF7UlWT+QKj/lqwP3wYNzIpxAtSJ+1IumnhMTDdTUK4zmHWarVnHczcRWvTv4mOBs1wPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpWpGSB/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wbuti/+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26B7C116D0;
-	Wed, 25 Feb 2026 06:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpWpGSB/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637D7C116D0;
+	Wed, 25 Feb 2026 06:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002673;
-	bh=xu/LA9qUF5fQDRDOZI+B5fps52WgMVXKbpvQsLNxGAs=;
+	s=korg; t=1772002674;
+	bh=iXK3gSiOLco5rFTIsTLV+rZ/G7cKLpUj70bFLEijsrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wbuti/+JxYF0G0ldlOXYNUiJ4fR96m92rwFxh+mauGMeRxKSUwpCtav0gxKuVQBev
-	 xAR80PIqLj1hpnfTOo27u4JriIhCmjmMNEh1pqjrIf0MqvP+LOwDlOT0YiFxN6LLUP
-	 +KDmQLdhlGMRAjLBoCJDXRFuOqCL8fYk9d0Zs1Dg=
+	b=FpWpGSB/LOAaVCt/u4BCEFAS4VmDgy9/E4Uzo3JNjdRFscIq5XMhk05HV5cRQLAme
+	 kXiRcw6iNXfrYwRWgooc9o2lJWCFkqrH3wEmya7PLpHbb7nDY/RGO3WFnG3Tobd2K4
+	 i8Z8LFEEJSZiXvHBoroEBkA7NXAycZ5SFj/yJUMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 457/641] soundwire: intel_ace2x: add SND_HDA_CORE dependency
-Date: Tue, 24 Feb 2026 17:23:03 -0800
-Message-ID: <20260225012359.588542696@linuxfoundation.org>
+Subject: [PATCH 6.18 422/641] clk: microchip: core: remove duplicate determine_rate on pic32_sclk_ops
+Date: Tue, 24 Feb 2026 17:22:28 -0800
+Message-ID: <20260225012358.776190243@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,43 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit dc3a6a942e9ee3f18560bfcb16c06bb94f37fabf ]
+[ Upstream commit d93faac66dc04650d924f8f9584216d14f48fb14 ]
 
-The ace2x driver can optionally use the HDA infrastructure, but can still
-build without that. However, with SND_HDA_CORE=m and SND_HDA_ALIGNED_MMIO=y,
-it fails to link as built-in:
+pic32_sclk_ops previously had a sclk_round_rate() member, and this was
+recently converted over to sclk_determine_rate() with the help of a
+Coccinelle semantic patch. pic32_sclk_ops now has two conflicting
+determine_rate ops members.
 
-aarch64-linux-ld: drivers/soundwire/intel_ace2x.o: in function `intel_shim_wake':
-intel_ace2x.c:(.text+0x2518): undefined reference to `snd_hdac_aligned_read'
-aarch64-linux-ld: intel_ace2x.c:(.text+0x25d4): undefined reference to `snd_hdac_aligned_read'
-aarch64-linux-ld: intel_ace2x.c:(.text+0x268c): undefined reference to `snd_hdac_aligned_write'
+Prior to the conversion, pic32_sclk_ops already had a determine_rate
+member that points to __clk_mux_determine_rate(). When both the
+round_rate() and determine_rate() ops are defined, the clk core only
+uses the determine_rate() op. Let's go ahead and drop the recently
+converted sclk_determine_rate() to match the previous functionality
+prior to the conversion.
 
-Add a Kconfig dependency that forces the soundwire driver to be a loadable
-module if necessary.
-
-Fixes: 79e7123c078d ("soundwire: intel_ace2x: fix wakeup handling")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20251223215014.534756-1-arnd@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: e9f039c08cdc ("clk: microchip: core: convert from round_rate() to determine_rate()")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511222115.uvHrP95A-lkp@intel.com/
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Link: https://lore.kernel.org/r/20251205-clk-microchip-fixes-v3-1-a02190705e47@redhat.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/microchip/clk-core.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/drivers/soundwire/Kconfig b/drivers/soundwire/Kconfig
-index ad56393e4c93b..196a7daaabdb8 100644
---- a/drivers/soundwire/Kconfig
-+++ b/drivers/soundwire/Kconfig
-@@ -40,6 +40,7 @@ config SOUNDWIRE_INTEL
- 	select AUXILIARY_BUS
- 	depends on ACPI && SND_SOC
- 	depends on SND_SOC_SOF_HDA_MLINK || !SND_SOC_SOF_HDA_MLINK
-+	depends on SND_HDA_CORE || !SND_HDA_ALIGNED_MMIO
- 	help
- 	  SoundWire Intel Master driver.
- 	  If you have an Intel platform which has a SoundWire Master then
+diff --git a/drivers/clk/microchip/clk-core.c b/drivers/clk/microchip/clk-core.c
+index b34348d491f3e..a0163441dfe5c 100644
+--- a/drivers/clk/microchip/clk-core.c
++++ b/drivers/clk/microchip/clk-core.c
+@@ -780,15 +780,6 @@ static unsigned long sclk_get_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	return parent_rate / div;
+ }
+ 
+-static int sclk_determine_rate(struct clk_hw *hw,
+-			       struct clk_rate_request *req)
+-{
+-	req->rate = calc_best_divided_rate(req->rate, req->best_parent_rate,
+-					   SLEW_SYSDIV, 1);
+-
+-	return 0;
+-}
+-
+ static int sclk_set_rate(struct clk_hw *hw,
+ 			 unsigned long rate, unsigned long parent_rate)
+ {
+@@ -912,7 +903,6 @@ static int sclk_init(struct clk_hw *hw)
+ const struct clk_ops pic32_sclk_ops = {
+ 	.get_parent	= sclk_get_parent,
+ 	.set_parent	= sclk_set_parent,
+-	.determine_rate = sclk_determine_rate,
+ 	.set_rate	= sclk_set_rate,
+ 	.recalc_rate	= sclk_get_rate,
+ 	.init		= sclk_init,
 -- 
 2.51.0
 
