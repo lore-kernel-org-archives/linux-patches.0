@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2AB2F7478;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D1C2F7478;
 	Wed, 25 Feb 2026 06:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002774; cv=none; b=LLjZAkubuhuVKyWnq005Ny+q6yIfpK1mY+QvVNAa3zFVwiBu68QyX0qCDy3wvaeJ62pLvbv1elk0+RTyrIqEWc2R86R1ma1vp+ECdBA6HQuyXMl04BMs6vpMYlhyHMnwI1R+5wX8DY3IWjryBbNhn7NO+AUmrqYWXxgwRf/ApMk=
+	t=1772002774; cv=none; b=DfAwOYvQ5D0vXMSlZ2+0P5D0XjROK7Bv3s/PU6v08B87amzOh2aZRimRNFMOPsIkh7hkcuYBwXUeCh/DnFqhP3TP4k+uj0HDqoQY//fQql6XwVmlpjZti5tVWBtG8DxZiD+6akmbNeTpj93L35A16rnGPgHAS3UjEBOTAVqTrRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002774; c=relaxed/simple;
-	bh=mUKfslrO5ZEsMgFGt08q7DJdsVObrKP54LNFhAOO1GE=;
+	bh=cnaUfR8K7RW8kmMf23mgW3+MPrcrPf1R4WMyj1uCM7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdBEAzU5RISDeAmvf2sMkTyLWlbAgw5CKZy9NSiFOUGoXnkOpuuvUa4T6EF7sudsZrHuqTXfj/5YNTsB8t9VJOz2z4FIiqt9RF8beP+2qkwaiOzhQljSpksACjkb3baYsBQz/NuKyRrW5cF6viHXTjWdGaZqJltmp07xR2Kdolw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOjNG4z/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MOG3P0eucmByDlPnn249MtpuS10FjJaUVkOHXfS70WKMAHHAoDvAIABlvcHCChRaBqd/PbeeOHN08Ec17mxx9dV0NSxL4El+vvTEp+g7H86zmskgU4VNgslOYP1DMmO1iKxPAOZ6IUNn6bHGyaBCRJdQvweaIaVBTBOAys/NAK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fx/iKjVn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOjNG4z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16446C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fx/iKjVn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7E9C116D0;
 	Wed, 25 Feb 2026 06:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002774;
-	bh=mUKfslrO5ZEsMgFGt08q7DJdsVObrKP54LNFhAOO1GE=;
+	bh=cnaUfR8K7RW8kmMf23mgW3+MPrcrPf1R4WMyj1uCM7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOjNG4z/XhLOVw+RpYagOMb0OAHqAb0Q70qptJ+9lc82d+HscGpilHq7gwz4wQ6QY
-	 YzW9sBoMXlMeU3cfwbMqy/XT10WirFOa3YweVQSmu8wHAERfrfGkL2/lXPZMfi1dpt
-	 ut+y+w9HNV0dT0dz4ydhacbXjiku7VA/RmL+wvnE=
+	b=Fx/iKjVn3jUJ/R9+ZThNkjBtRCpq4vJrUEYJLMyTUdYnVPEb5/AIxodNaHgTHqBt/
+	 VXlTWZSzecWkAHeuZY8vZBZy2ppgX4Q5Xeba9RqC8vuke8VXs/LzNOJKsw2dQedMEP
+	 xXUeVU38fpAjy1X82uVxZJ2opZKD9p5BWJqId4oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <me@ziyao.cc>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.18 611/641] MIPS: Work around LLVM bug when gp is used as global register variable
-Date: Tue, 24 Feb 2026 17:25:37 -0800
-Message-ID: <20260225012403.318420633@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.18 612/641] ext4: subdivide EXT4_EXT_DATA_VALID1
+Date: Tue, 24 Feb 2026 17:25:38 -0800
+Message-ID: <20260225012403.342972864@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,98 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <me@ziyao.cc>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 30bfc2d6a1132a89a5f1c3b96c59cf3e4d076ea3 upstream.
+commit 22784ca541c0f01c5ebad14e8228298dc0a390ed upstream.
 
-On MIPS, __current_thread_info is defined as global register variable
-locating in $gp, and is simply assigned with new address during kernel
-relocation.
+When splitting an extent, if the EXT4_GET_BLOCKS_CONVERT flag is set and
+it is necessary to split the target extent in the middle,
+ext4_split_extent() first handles splitting the latter half of the
+extent and passes the EXT4_EXT_DATA_VALID1 flag. This flag implies that
+all blocks before the split point contain valid data; however, this
+assumption is incorrect.
 
-This however is broken with LLVM, which always restores $gp if it finds
-$gp is clobbered in any form, including when intentionally through a
-global register variable. This is against GCC's documentation[1], which
-requires a callee-saved register used as global register variable not to
-be restored if it's clobbered.
+Therefore, subdivid EXT4_EXT_DATA_VALID1 into
+EXT4_EXT_DATA_ENTIRE_VALID1 and EXT4_EXT_DATA_PARTIAL_VALID1, which
+indicate that the first half of the extent is either entirely valid or
+only partially valid, respectively. These two flags cannot be set
+simultaneously.
 
-As a result, $gp will continue to point to the unrelocated kernel after
-the epilog of relocate_kernel(), leading to an early crash in init_idle,
+This patch does not use EXT4_EXT_DATA_PARTIAL_VALID1, it only replaces
+EXT4_EXT_DATA_VALID1 with EXT4_EXT_DATA_ENTIRE_VALID1 at the location
+where it is set, no logical changes.
 
-[    0.000000] CPU 0 Unable to handle kernel paging request at virtual address 0000000000000000, epc == ffffffff81afada8, ra == ffffffff81afad90
-[    0.000000] Oops[#1]:
-[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper Tainted: G        W           6.19.0-rc5-00262-gd3eeb99bbc99-dirty #188 VOLUNTARY
-[    0.000000] Tainted: [W]=WARN
-[    0.000000] Hardware name: loongson,loongson64v-4core-virtio
-[    0.000000] $ 0   : 0000000000000000 0000000000000000 0000000000000001 0000000000000000
-[    0.000000] $ 4   : ffffffff80b80ec0 ffffffff80b53d48 0000000000000000 00000000000f4240
-[    0.000000] $ 8   : 0000000000000100 ffffffff81d82f80 ffffffff81d82f80 0000000000000001
-[    0.000000] $12   : 0000000000000000 ffffffff81776f58 00000000000005da 0000000000000002
-[    0.000000] $16   : ffffffff80b80e40 0000000000000000 ffffffff80b81614 9800000005dfbe80
-[    0.000000] $20   : 00000000540000e0 ffffffff81980000 0000000000000000 ffffffff80f81c80
-[    0.000000] $24   : 0000000000000a26 ffffffff8114fb90
-[    0.000000] $28   : ffffffff80b50000 ffffffff80b53d40 0000000000000000 ffffffff81afad90
-[    0.000000] Hi    : 0000000000000000
-[    0.000000] Lo    : 0000000000000000
-[    0.000000] epc   : ffffffff81afada8 init_idle+0x130/0x270
-[    0.000000] ra    : ffffffff81afad90 init_idle+0x118/0x270
-[    0.000000] Status: 540000e2	KX SX UX KERNEL EXL
-[    0.000000] Cause : 00000008 (ExcCode 02)
-[    0.000000] BadVA : 0000000000000000
-[    0.000000] PrId  : 00006305 (ICT Loongson-3)
-[    0.000000] Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____), tls=0000000000000000)
-[    0.000000] Stack : 9800000005dfbf00 ffffffff8178e950 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 ffffffff81970000 000000000000003f ffffffff810a6528
-[    0.000000]         0000000000000001 9800000005dfbe80 9800000005dfbf00 ffffffff81980000
-[    0.000000]         ffffffff810a6450 ffffffff81afb6c0 0000000000000000 ffffffff810a2258
-[    0.000000]         ffffffff81d82ec8 ffffffff8198d010 ffffffff81b67e80 ffffffff8197dd98
-[    0.000000]         ffffffff81d81c80 ffffffff81930000 0000000000000040 0000000000000000
-[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 000000000000009e ffffffff9fc01000 0000000000000000
-[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 ffffffff81ae86dc ffffffff81b3c741 0000000000000002
-[    0.000000]         ...
-[    0.000000] Call Trace:
-[    0.000000] [<ffffffff81afada8>] init_idle+0x130/0x270
-[    0.000000] [<ffffffff81afb6c0>] sched_init+0x5c8/0x6c0
-[    0.000000] [<ffffffff81ae86dc>] start_kernel+0x27c/0x7a8
-
-This bug has been reported to LLVM[2] and affects version from (at
-least) 18 to 21. Let's work around this by using inline assembly to
-assign $gp before a fix is widely available.
-
-Cc: stable@vger.kernel.org
-Link: https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Global-Register-Variables.html # [1]
-Link: https://github.com/llvm/llvm-project/issues/176546 # [2]
-Signed-off-by: Yao Zi <me@ziyao.cc>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Cc: stable@kernel.org
+Message-ID: <20251129103247.686136-2-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/relocate.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/ext4/extents.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/arch/mips/kernel/relocate.c
-+++ b/arch/mips/kernel/relocate.c
-@@ -420,7 +420,20 @@ void *__init relocate_kernel(void)
- 			goto out;
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -43,8 +43,13 @@
+ #define EXT4_EXT_MARK_UNWRIT1	0x2  /* mark first half unwritten */
+ #define EXT4_EXT_MARK_UNWRIT2	0x4  /* mark second half unwritten */
  
- 		/* The current thread is now within the relocated image */
-+#ifndef CONFIG_CC_IS_CLANG
- 		__current_thread_info = RELOCATED(&init_thread_union);
-+#else
-+		/*
-+		 * LLVM may wrongly restore $gp ($28) in epilog even if it's
-+		 * intentionally modified. Work around this by using inline
-+		 * assembly to assign $gp. $gp couldn't be listed as output or
-+		 * clobber, or LLVM will still restore its original value.
-+		 * See also LLVM upstream issue
-+		 * https://github.com/llvm/llvm-project/issues/176546
-+		 */
-+		asm volatile("move $28, %0" : :
-+			     "r" (RELOCATED(&init_thread_union)));
-+#endif
+-#define EXT4_EXT_DATA_VALID1	0x8  /* first half contains valid data */
+-#define EXT4_EXT_DATA_VALID2	0x10 /* second half contains valid data */
++/* first half contains valid data */
++#define EXT4_EXT_DATA_ENTIRE_VALID1	0x8   /* has entirely valid data */
++#define EXT4_EXT_DATA_PARTIAL_VALID1	0x10  /* has partially valid data */
++#define EXT4_EXT_DATA_VALID1		(EXT4_EXT_DATA_ENTIRE_VALID1 | \
++					 EXT4_EXT_DATA_PARTIAL_VALID1)
++
++#define EXT4_EXT_DATA_VALID2	0x20 /* second half contains valid data */
  
- 		/* Return the new kernel's entry point */
- 		kernel_entry = RELOCATED(start_kernel);
+ static __le32 ext4_extent_block_csum(struct inode *inode,
+ 				     struct ext4_extent_header *eh)
+@@ -3190,8 +3195,9 @@ static struct ext4_ext_path *ext4_split_
+ 	unsigned int ee_len, depth;
+ 	int err = 0;
+ 
+-	BUG_ON((split_flag & (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2)) ==
+-	       (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2));
++	BUG_ON((split_flag & EXT4_EXT_DATA_VALID1) == EXT4_EXT_DATA_VALID1);
++	BUG_ON((split_flag & EXT4_EXT_DATA_VALID1) &&
++	       (split_flag & EXT4_EXT_DATA_VALID2));
+ 
+ 	ext_debug(inode, "logical block %llu\n", (unsigned long long)split);
+ 
+@@ -3373,7 +3379,7 @@ static struct ext4_ext_path *ext4_split_
+ 			split_flag1 |= EXT4_EXT_MARK_UNWRIT1 |
+ 				       EXT4_EXT_MARK_UNWRIT2;
+ 		if (split_flag & EXT4_EXT_DATA_VALID2)
+-			split_flag1 |= EXT4_EXT_DATA_VALID1;
++			split_flag1 |= EXT4_EXT_DATA_ENTIRE_VALID1;
+ 		path = ext4_split_extent_at(handle, inode, path,
+ 				map->m_lblk + map->m_len, split_flag1, flags1);
+ 		if (IS_ERR(path))
+@@ -3732,7 +3738,7 @@ static struct ext4_ext_path *ext4_split_
+ 
+ 	/* Convert to unwritten */
+ 	if (flags & EXT4_GET_BLOCKS_CONVERT_UNWRITTEN) {
+-		split_flag |= EXT4_EXT_DATA_VALID1;
++		split_flag |= EXT4_EXT_DATA_ENTIRE_VALID1;
+ 	/* Convert to initialized */
+ 	} else if (flags & EXT4_GET_BLOCKS_CONVERT) {
+ 		split_flag |= ee_block + ee_len <= eof_block ?
 
 
