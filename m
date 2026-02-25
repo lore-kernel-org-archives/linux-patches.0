@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A9A26ED33;
-	Wed, 25 Feb 2026 01:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AB02701B8;
+	Wed, 25 Feb 2026 01:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983663; cv=none; b=oHSko5y6yanqzBpcIFDrfOFXIhfaAjVV7IP3dgxsrGsP0Ausc5V9GHn+LVKQnjlC0I/qjbmaV8n2a+3oWhAoAz/wTUQf4OA6g8DP112aPpcdPaje5IBs341neCrCyUP2mIvd61Jov0DEqkW1P9Hm9adbE/4FXmOlBdHlIdbbuGk=
+	t=1771983664; cv=none; b=Aa1SQsnICcUIrOsYRoaTIf+O5LEBlWqvXcRm6eB5G1JOS0v3lMyiicQfSAHQjcaCvyiU5q2qTj2mFSgHbLzrImLzavx4v5Iu4/gUcfqw/Mur8x/FGE2FhxBrBcskJ07XLRFQ3/W1lQO4Cz3ZY9lMLOpZ7SKyNlmXlS8xOH7MCac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983663; c=relaxed/simple;
-	bh=6LpMv7Fle0eczVYRsF28QfDX7JYRGBoAbDZ5owSLmHc=;
+	s=arc-20240116; t=1771983664; c=relaxed/simple;
+	bh=p7qo+K8iRIKq4ocrvzPIllFQIGVqNYnuBk2tIjJmfUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZC4BrYZu5CmvgzzroMTBxCPNGZJ/w2APkydHO1k4IxcKdxO9YxMDxlqtqrr+59mSsqPBazeUZw2zbiXxr/jkRHf4RT0PMGHNvgzVpcpz7ifHdg5Ynh7wwz1uAiFc5HfNzUillC3Hc+bVlEUqqiqIjuXXwKsgKclXz0ZwVelgK70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbjXJQtv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCmRyHplU8EC4M57c+vtPSVlTGliFlgctuLdg19xTaVFk2HCjdzxHgNdk5Klotaz/NmwcMvRpGAD1IlAMQ05pOijMC6Z4NAUPC5ShBROJlXD3guhpivT/f2pVEGflGnQn87J06FsqbJz2j2eFO4khoZPYAkJ7m/voKHwN92b+/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwsKyoqs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbjXJQtv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4400C116D0;
-	Wed, 25 Feb 2026 01:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwsKyoqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE17CC116D0;
+	Wed, 25 Feb 2026 01:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983662;
-	bh=6LpMv7Fle0eczVYRsF28QfDX7JYRGBoAbDZ5owSLmHc=;
+	s=korg; t=1771983664;
+	bh=p7qo+K8iRIKq4ocrvzPIllFQIGVqNYnuBk2tIjJmfUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbjXJQtvt8QngJgr3DZQw30mCYAiGB4LT4N83rwLJ2Wydk1qpDnh4lfiruqynEXir
-	 kIWMe1VRjrttrHBbKeUn5PXAMhqUYMcCJJjBFbH58MUVE2wyXYG32AwoyF/5OkYyvE
-	 PER/Him8FdgFNWJEG0R56T3nNSgdzIriz2UmabGE=
+	b=EwsKyoqssUCsB4XYoZXkHCjswYcK4gqf2dJhK2Jpbp/DsNVeHGfNT6YhsePYsU5sq
+	 K/vefRZFjE2jN5aUmBa0EyULJm7AHtcdQgXL/bWOcQfqb4d6bP/kSDag2UosWPsheT
+	 vDbmu4ht4uf5d2A0bgcHwuZnaaqu3itXt0SdppwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	John Johansen <john.johansen@canonical.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 694/781] apparmor: Fix & Optimize table creation from possibly unaligned memory
-Date: Tue, 24 Feb 2026 17:23:23 -0800
-Message-ID: <20260225012416.779556702@linuxfoundation.org>
+Subject: [PATCH 6.19 743/781] ASoC: rockchip: i2s-tdm: Use param rate if not provided by set_sysclk
+Date: Tue, 24 Feb 2026 17:24:12 -0800
+Message-ID: <20260225012417.949531828@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,76 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@kernel.org>
+From: Detlev Casanova <detlev.casanova@collabora.com>
 
-[ Upstream commit 6fc367bfd4c8886e6b1742aabbd1c0bdc310db3a ]
+[ Upstream commit 0783052534f547f8f201dd4554b1df9f1f8615b5 ]
 
-Source blob may come from userspace and might be unaligned.
-Try to optize the copying process by avoiding unaligned memory accesses.
+Drivers will not always call set_sysclk() for all clocks, especially when
+default mclk-fs can be used.
+When that is the case, use the clock rate set in the params multiplied by the
+default mclk-fs.
 
-- Added Fixes tag
-- Added "Fix &" to description as this doesn't just optimize but fixes
-        a potential unaligned memory access
-Fixes: e6e8bf418850d ("apparmor: fix restricted endian type warnings for dfa unpack")
-Signed-off-by: Helge Deller <deller@gmx.de>
-[jj: remove duplicate word "convert" in comment trigger checkpatch warning]
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: 5323186e2e8d ("ASoC: rockchip: i2s_tdm: Re-add the set_sysclk callback")
+Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
+Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20260218201834.924358-1-detlev.casanova@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/match.h | 12 +++++++-----
- security/apparmor/match.c         |  7 +++----
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ sound/soc/rockchip/rockchip_i2s_tdm.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/security/apparmor/include/match.h b/security/apparmor/include/match.h
-index 1fbe82f5021b1..0dde8eda3d1a5 100644
---- a/security/apparmor/include/match.h
-+++ b/security/apparmor/include/match.h
-@@ -104,16 +104,18 @@ struct aa_dfa {
- 	struct table_header *tables[YYTD_ID_TSIZE];
- };
+diff --git a/sound/soc/rockchip/rockchip_i2s_tdm.c b/sound/soc/rockchip/rockchip_i2s_tdm.c
+index 770b9bfbb384a..fc52149ed6ae3 100644
+--- a/sound/soc/rockchip/rockchip_i2s_tdm.c
++++ b/sound/soc/rockchip/rockchip_i2s_tdm.c
+@@ -22,6 +22,7 @@
  
--#define byte_to_byte(X) (X)
--
- #define UNPACK_ARRAY(TABLE, BLOB, LEN, TTYPE, BTYPE, NTOHX)	\
- 	do { \
- 		typeof(LEN) __i; \
- 		TTYPE *__t = (TTYPE *) TABLE; \
- 		BTYPE *__b = (BTYPE *) BLOB; \
--		for (__i = 0; __i < LEN; __i++) { \
--			__t[__i] = NTOHX(__b[__i]); \
--		} \
-+		BUILD_BUG_ON(sizeof(TTYPE) != sizeof(BTYPE)); \
-+		if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN)) \
-+			memcpy(__t, __b, (LEN) * sizeof(BTYPE)); \
-+		else /* copy & convert from big-endian */ \
-+			for (__i = 0; __i < LEN; __i++) { \
-+				__t[__i] = NTOHX(&__b[__i]); \
-+			} \
- 	} while (0)
+ #define DRV_NAME "rockchip-i2s-tdm"
  
- static inline size_t table_size(size_t len, size_t el_size)
-diff --git a/security/apparmor/match.c b/security/apparmor/match.c
-index 26e82ba879d44..bbeb3be68572f 100644
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -67,14 +67,13 @@ static struct table_header *unpack_table(char *blob, size_t bsize)
- 		table->td_flags = th.td_flags;
- 		table->td_lolen = th.td_lolen;
- 		if (th.td_flags == YYTD_DATA8)
--			UNPACK_ARRAY(table->td_data, blob, th.td_lolen,
--				     u8, u8, byte_to_byte);
-+			memcpy(table->td_data, blob, th.td_lolen);
- 		else if (th.td_flags == YYTD_DATA16)
- 			UNPACK_ARRAY(table->td_data, blob, th.td_lolen,
--				     u16, __be16, be16_to_cpu);
-+				     u16, __be16, get_unaligned_be16);
- 		else if (th.td_flags == YYTD_DATA32)
- 			UNPACK_ARRAY(table->td_data, blob, th.td_lolen,
--				     u32, __be32, be32_to_cpu);
-+				     u32, __be32, get_unaligned_be32);
- 		else
- 			goto fail;
- 		/* if table was vmalloced make sure the page tables are synced
++#define DEFAULT_MCLK_FS				256
+ #define CH_GRP_MAX				4  /* The max channel 8 / 2 */
+ #define MULTIPLEX_CH_MAX			10
+ 
+@@ -665,6 +666,15 @@ static int rockchip_i2s_tdm_hw_params(struct snd_pcm_substream *substream,
+ 			mclk_rate = i2s_tdm->mclk_rx_freq;
+ 		}
+ 
++		/*
++		 * When the dai/component driver doesn't need to set mclk-fs for a specific
++		 * clock, it can skip the call to set_sysclk() for that clock.
++		 * In that case, simply use the clock rate from the params and multiply it by
++		 * the default mclk-fs value.
++		 */
++		if (!mclk_rate)
++			mclk_rate = DEFAULT_MCLK_FS * params_rate(params);
++
+ 		err = clk_set_rate(mclk, mclk_rate);
+ 		if (err)
+ 			return err;
 -- 
 2.51.0
 
