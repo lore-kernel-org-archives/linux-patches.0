@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48D02BAF7;
-	Wed, 25 Feb 2026 01:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC5F2BAF7;
+	Wed, 25 Feb 2026 01:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983009; cv=none; b=ZetpYrP7iDFwAT44K095Oo5uFJNOJH/5gnKmPZubo7DLEd+i147rmv5oqCegRmZlvGXaIYLOwSK1m7p0Q6ItFwvy4K9o4DBnU3QztHcNOJR/cObR2UXh3XeEn4wHrJrvC7LLhaDjo71o9TfPaNTwvtp3Yn4KoDlcsHyOfnoMv4o=
+	t=1771983010; cv=none; b=A2mkNgcOhJZ3mL1ZIFo8Yxt9IeiTd640GwBLCjQgRRV0hjiVt6MX5mmdgoJyGnult4J9VY5u8Ft865SULE/qtxiY2K2D6JmCGlbjBCu2P+48Iu7Bw9dmjLnZRa1Fk0RK0IeqKqPUn+9jBk4CR7jAZoB8PV+KhKOc8bnxwVECLXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983009; c=relaxed/simple;
-	bh=90LZYfBO6h1RcchcINqQSDwaoTQxI5R/iLzXpFPObLI=;
+	s=arc-20240116; t=1771983010; c=relaxed/simple;
+	bh=PYtDFhYwoLbTD0dko14iWHn0DZxxzzNMUHbZ0m/rECs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZXvwUBYsOWD3i9vh7f8v3MgASjRQvKDpdseuYLiglWNRrFr364/R9gAetxyZDsdLrQyJHZIDPVT32RpYm4+GsJFOhEMHa0uaWv+LNSiSw5e7ybBPY+e1xkjqKcvaTrX6YkZnT7Jy5d6hw/jxScPn+yepYBePIh2zMSQTtlx5WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZGI10jI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFP4qFML2sxtfdzTYvgi4sH3aA2GxO6iv9j0sPk+9LIYlnbHzT7qgDSkAZzgSqpeJ0OnRaC1F2TBd7R9HyMs58TpfA7CTnvF8AGtXYQkZhCYttC2sGVEJfc9kksJcXqplUtDIo9oA2+Xdon9tn/dBYrtEiIzfEfTmOQERjarsb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WiUwv2tE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZGI10jI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C615C116D0;
-	Wed, 25 Feb 2026 01:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WiUwv2tE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AB0C19423;
+	Wed, 25 Feb 2026 01:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983009;
-	bh=90LZYfBO6h1RcchcINqQSDwaoTQxI5R/iLzXpFPObLI=;
+	s=korg; t=1771983010;
+	bh=PYtDFhYwoLbTD0dko14iWHn0DZxxzzNMUHbZ0m/rECs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZGI10jInJH6x04HqZcNYw0pxjoHZzj122XwbMgTi1e+8iR+qLPi13ttI4UyePL0P
-	 eg86ejUQv+ap1gLfcPxjzZr1RZtshWKFxjBa0SDhDJRKsH/4nuEU2rZrzhK2tEcVto
-	 mLLGxi0rln6y2eA23tN9Rwpvjoy6RhsM93eKIDIE=
+	b=WiUwv2tE23QciBMft68GJ3EsupnS87QWpoUZSNvV+O2nx7ENYzIr4tWDvSXzEQdOd
+	 efZ63vatfQr5GgQ+AErGyvxhCVAuOG8242MU42Ru8eHLbpwAlRrOo4XbnEQ5qCN+rk
+	 j7w59QB72LwYCwmcZZzL0XXxO2XOKgRrUclIKRM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 161/781] ARM: dts: allwinner: sun5i-a13-utoo-p66: delete "power-gpios" property
-Date: Tue, 24 Feb 2026 17:14:30 -0800
-Message-ID: <20260225012403.601988868@linuxfoundation.org>
+Subject: [PATCH 6.19 179/781] arm64: dts: amlogic: g12: assign the MMC A signal clock
+Date: Tue, 24 Feb 2026 17:14:48 -0800
+Message-ID: <20260225012404.035712889@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,43 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 0b2761eb1287bd9f62367cccf6626eb3107cef6f ]
+[ Upstream commit 3c941feaa363f1573a501452391ddf513394c84b ]
 
-The P66's device tree includes the reference design dtsi files, which
-defines a node and properties for the touchpanel in the common design.
-The P66 dts file then overrides all the properties to match its own
-design, but as the touchpanel model is different, a different schema
-is matched. This other schema uses a different name for the GPIO.
+The amlogic MMC driver operate with the assumption that MMC clock
+is configured to provide 24MHz. It uses this path for low
+rates such as 400kHz.
 
-The original submission added the correct GPIO property, but did not
-delete the one inherited from the reference design, causing validation
-errors.
+Assign the clock to make sure it is properly configured
 
-Explicitly delete the incorrect GPIO property.
-
-Fixes: 2a53aff27236 ("ARM: dts: sun5i: Enable touchscreen on Utoo P66")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20251225103616.3203473-4-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 8a6b3ca2d361 ("arm64: dts: meson: g12a: add SDIO controller")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260114-amlogic-mmc-clocks-followup-v1-6-a999fafbe0aa@baylibre.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts b/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
-index be486d28d04fa..428cab5a0e906 100644
---- a/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
-+++ b/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
-@@ -102,6 +102,7 @@ &touchscreen {
- 	/* The P66 uses a different EINT then the reference design */
- 	interrupts = <6 9 IRQ_TYPE_EDGE_FALLING>; /* EINT9 (PG9) */
- 	/* The icn8318 binding expects wake-gpios instead of power-gpios */
-+	/delete-property/ power-gpios;
- 	wake-gpios = <&pio 1 3 GPIO_ACTIVE_HIGH>; /* PB3 */
- 	touchscreen-size-x = <800>;
- 	touchscreen-size-y = <480>;
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+index 0085612cf7351..00609d2da6743 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+@@ -2431,6 +2431,9 @@ sd_emmc_a: mmc@ffe03000 {
+ 				 <&clkc CLKID_FCLK_DIV2>;
+ 			clock-names = "core", "clkin0", "clkin1";
+ 			resets = <&reset RESET_SD_EMMC_A>;
++
++			assigned-clocks = <&clkc CLKID_SD_EMMC_A_CLK0>;
++			assigned-clock-rates = <24000000>;
+ 		};
+ 
+ 		sd_emmc_b: mmc@ffe05000 {
 -- 
 2.51.0
 
