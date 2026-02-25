@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCD3306B21;
-	Wed, 25 Feb 2026 06:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ED42F7478;
+	Wed, 25 Feb 2026 06:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002773; cv=none; b=WaNT4lhwWitJIX3zkkcvouunBXgolIjvXNmFWjf1KLrSyp0UWfaX26q9TAxdZ896c3NPLtmK4pGIYxWmQVFZNID3iBQvz6RZxkaJ+XoJ6aMRNFIU2ysebnHAivFCaafl0zKMxsK/HmDK3Cpcr/bg2+7afRHiaxlr0iYv5DPGnQ4=
+	t=1772002773; cv=none; b=NA68NMobgePWHnP+bsAkazPwQ/WxhYh/1/1JfUmDbj19WNDJURg84Igty8V5H/V/QyrLIbSX4AdVkpbxnBMe3D2+MAcsxsLwxGvp6ReQ72f1QTD5mHazOZHK5Nd+K/G2bwumG06Tn1kznl3fMCUhcJu7K5Qhu/FwG7xcnnROfmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002773; c=relaxed/simple;
-	bh=QGWGEy9nsE5xMiaQTrN17spPEuTGmV6lKu9GcNfCQf8=;
+	bh=fPUtxrZHUIJns/TTTaDDr8s4IZFQPssLOXpVcpEU+rE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pjaAfwc7bES4eNBsgqc8SUv1Rr0H5vN7BDb18Ax5rqtIHH0aGTxYhkDeqjwWkKraoy8g9TQuaYbnaDqbf/I8/k1xv/BxLkWGuJq9RJwfT02uM8/jsE5b1KnlZM2hxXPCvTLS9aosAkFXRCFEGgomFkRh74juFiEp48xshMQfgj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBE+2XqI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E4ouG3s4waDj+SRDQHQFsXOhY9ZV8BN3YfBzbN6aRtATi+7w2+NLinXPbqaUteg+Pu5QzowVbrc7mYauzMEntpMXHFglBjTGm+2NDprzemEHPWJdRpIcP4IcCUe8iOyVc3MUfcD9Dpikp2faclb2rqCoyLhOy6WJZ6TSdrhPiCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzmEc5Nk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBE+2XqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5732C116D0;
-	Wed, 25 Feb 2026 06:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzmEc5Nk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A524C116D0;
+	Wed, 25 Feb 2026 06:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002772;
-	bh=QGWGEy9nsE5xMiaQTrN17spPEuTGmV6lKu9GcNfCQf8=;
+	s=korg; t=1772002773;
+	bh=fPUtxrZHUIJns/TTTaDDr8s4IZFQPssLOXpVcpEU+rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PBE+2XqIl6Bv9cXH5RDDEubFIvkX8pzh2k2IRxE5yuKNdFR+R3ONY6cRX3MWaGPml
-	 1Is59bCyNJX6ci2scd+38ccfeVBZ9FWIMjpXsmpcVhkHD27U8g3aKdRv/uHsK/FMpo
-	 evQkXTIw/bkvRlRRUdNveMTzqwK44D4D8MJeflbQ=
+	b=BzmEc5Nk5Fk+I+XG3hGESDtZ7C/iAyat2808X2mkP1xbYgP8CzxpvFkNSqVMLIMGW
+	 83HPi3p423x2bLnaTnJU8IPHfnq5+aeSAYgTiLbaY/76m7ELvqbcJOmUbVSBziDr5L
+	 90DOD3FI1Y4iYJJ5cffiZg43HTlPAEkw89vnf6lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Kleiner <mario.kleiner.de@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 609/641] drm/amd/display: Use same max plane scaling limits for all 64 bpp formats
-Date: Tue, 24 Feb 2026 17:25:35 -0800
-Message-ID: <20260225012403.269309048@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	"Thomas Richard (TI)" <thomas.richard@bootlin.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.18 610/641] usb: cdns3: fix role switching during resume
+Date: Tue, 24 Feb 2026 17:25:36 -0800
+Message-ID: <20260225012403.293716428@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,77 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Kleiner <mario.kleiner.de@gmail.com>
+From: Thomas Richard (TI) <thomas.richard@bootlin.com>
 
-[ Upstream commit f0157ce46cf0e5e2257e19d590c9b16036ce26d4 ]
+commit 87e4b043b98a1d269be0b812f383881abee0ca45 upstream.
 
-The plane scaling hw seems to have the same min/max plane scaling limits
-for all 16 bpc / 64 bpp interleaved pixel color formats.
+If the role change while we are suspended, the cdns3 driver switches to the
+new mode during resume. However, switching to host mode in this context
+causes a NULL pointer dereference.
 
-Therefore add cases to amdgpu_dm_plane_get_min_max_dc_plane_scaling() for
-all the 16 bpc fixed-point / unorm formats to use the same .fp16
-up/downscaling factor limits as used by the fp16 floating point formats.
+The host role's start() operation registers a xhci-hcd device, but its
+probe is deferred while we are in the resume path. The host role's resume()
+operation assumes the xhci-hcd device is already probed, which is not the
+case, leading to the dereference. Since the start() operation of the new
+role is already called, the resume operation can be skipped.
 
-So far, 16 bpc unorm formats were not handled, and the default: path
-returned max/min factors for 32 bpp argb8888 formats, which were wrong
-and bigger than what many DCE / DCN hw generations could handle.
+So skip the resume operation for the new role if a role switch occurs
+during resume. Once the resume sequence is complete, the xhci-hcd device
+can be probed in case of host mode.
 
-The result sometimes was misscaling of framebuffers with
-DRM_FORMAT_XRGB16161616, DRM_FORMAT_ARGB16161616, DRM_FORMAT_XBGR16161616,
-DRM_FORMAT_ABGR16161616, leading to very wrong looking display, as tested
-on Polaris11 / DCE-11.2.
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000208
+Mem abort info:
+...
+Data abort info:
+...
+[0000000000000208] pgd=0000000000000000, p4d=0000000000000000
+Internal error: Oops: 0000000096000004 [#1]  SMP
+Modules linked in:
+CPU: 0 UID: 0 PID: 146 Comm: sh Not tainted
+6.19.0-rc7-00013-g6e64f4aabfae-dirty #135 PREEMPT
+Hardware name: Texas Instruments J7200 EVM (DT)
+pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : usb_hcd_is_primary_hcd+0x0/0x1c
+lr : cdns_host_resume+0x24/0x5c
+...
+Call trace:
+ usb_hcd_is_primary_hcd+0x0/0x1c (P)
+ cdns_resume+0x6c/0xbc
+ cdns3_controller_resume.isra.0+0xe8/0x17c
+ cdns3_plat_resume+0x18/0x24
+ platform_pm_resume+0x2c/0x68
+ dpm_run_callback+0x90/0x248
+ device_resume+0x100/0x24c
+ dpm_resume+0x190/0x2ec
+ dpm_resume_end+0x18/0x34
+ suspend_devices_and_enter+0x2b0/0xa44
+ pm_suspend+0x16c/0x5fc
+ state_store+0x80/0xec
+ kobj_attr_store+0x18/0x2c
+ sysfs_kf_write+0x7c/0x94
+ kernfs_fop_write_iter+0x130/0x1dc
+ vfs_write+0x240/0x370
+ ksys_write+0x70/0x108
+ __arm64_sys_write+0x1c/0x28
+ invoke_syscall+0x48/0x10c
+ el0_svc_common.constprop.0+0x40/0xe0
+ do_el0_svc+0x1c/0x28
+ el0_svc+0x34/0x108
+ el0t_64_sync_handler+0xa0/0xe4
+ el0t_64_sync+0x198/0x19c
+Code: 52800003 f9407ca5 d63f00a0 17ffffe4 (f9410401)
+---[ end trace 0000000000000000 ]---
 
-So far this went unnoticed, because only few userspace clients used such
-16 bpc unorm framebuffers, and those didn't use hw plane scaling, so they
-did not experience this issue.
-
-With upcoming Mesa 26 exposing 16 bpc unorm formats under both OpenGL
-and Vulkan under Wayland, and the upcoming GNOME 50 Mutter Wayland
-compositor allowing for direct scanout of these formats, the scaling
-hw will be used on these formats if possible for HiDPI display scaling,
-so it is important to use the correct hw scaling limits to avoid wrong
-display.
-
-Tested on AMD Polaris 11 / DCE 11.2 with upcoming Mesa 26 and GNOME 50
-on HiDPI displays with scaling enabled. The mutter Wayland compositor now
-correctly falls back to scaling via desktop compositing instead of direct
-scanout, thereby avoiding wrong image display. For unscaled mode, it
-correctly uses direct scanout.
-
-Fixes: 580204038f5b ("drm/amd/display: Enable support for 16 bpc fixed-point framebuffers.")
-Signed-off-by: Mario Kleiner <mario.kleiner.de@gmail.com>
-Tested-by: Mario Kleiner <mario.kleiner.de@gmail.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Leo Li <sunpeng.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 2cf2581cd229 ("usb: cdns3: add power lost support for system resume")
+Signed-off-by: Thomas Richard (TI) <thomas.richard@bootlin.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260130-usb-cdns3-fix-role-switching-during-resume-v1-1-44c456852b52@bootlin.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/cdns3/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-index e027798ece032..9bb7475e80bad 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-@@ -1059,10 +1059,15 @@ static void amdgpu_dm_plane_get_min_max_dc_plane_scaling(struct drm_device *dev,
- 		*min_downscale = plane_cap->max_downscale_factor.nv12;
- 		break;
+--- a/drivers/usb/cdns3/core.c
++++ b/drivers/usb/cdns3/core.c
+@@ -551,7 +551,7 @@ int cdns_resume(struct cdns *cdns)
+ 		}
+ 	}
  
-+	/* All 64 bpp formats have the same fp16 scaling limits */
- 	case DRM_FORMAT_XRGB16161616F:
- 	case DRM_FORMAT_ARGB16161616F:
- 	case DRM_FORMAT_XBGR16161616F:
- 	case DRM_FORMAT_ABGR16161616F:
-+	case DRM_FORMAT_XRGB16161616:
-+	case DRM_FORMAT_ARGB16161616:
-+	case DRM_FORMAT_XBGR16161616:
-+	case DRM_FORMAT_ABGR16161616:
- 		*max_upscale = plane_cap->max_upscale_factor.fp16;
- 		*min_downscale = plane_cap->max_downscale_factor.fp16;
- 		break;
--- 
-2.51.0
-
+-	if (cdns->roles[cdns->role]->resume)
++	if (!role_changed && cdns->roles[cdns->role]->resume)
+ 		cdns->roles[cdns->role]->resume(cdns, power_lost);
+ 
+ 	return 0;
 
 
