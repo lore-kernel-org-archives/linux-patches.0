@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6E82D77EA;
-	Wed, 25 Feb 2026 06:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD472C17A0;
+	Wed, 25 Feb 2026 06:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002620; cv=none; b=PPFBkPWhZnbyvKNvKjOTo5mpFRO3EbRhpx9GPof9h1Sc2TzWwsPclmNmtjbsfy9uksii/MNEvpqzABpV3b8LZdsZ8D2ygI8CSPFOzhUlRJi67eN6wdPb7NiY1lW9XfGt9fKcMmmavfGM71dlrFyW3HiKOJjPZWoaapkJNUogQmA=
+	t=1772002621; cv=none; b=Rzd6LgOZ+ssCGzIcvpLuKXLLUUen74DaXXXFzK7quDhyf4XFTfeJK4zKGKTujSyDJqGE8n8O/QOXDEwvwqzXNwUNCFfSpeZjhN7QDXDQmjTr2TkZuRqavbW1AFcQ3J9o6Im8ZS40sBewyVCH28DHiYjdd1gRWjiqe3Wq+Y7nOyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002620; c=relaxed/simple;
-	bh=bBAfxyNQyPxGyBvC4W23u+KL7K9XdiqCdVSEwUV95Tw=;
+	s=arc-20240116; t=1772002621; c=relaxed/simple;
+	bh=u69G7a5mOzzXIW8bQAqbKJ6tdSDmxMsqBKh0sN2QJrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aFC9ygYLGyof9XifLZNhL8+1Aujl+Jsn7e8XhQd1hFrikX6lR0Abt/oTaXo26ph2YsYB6aIUBcDqVYdpqQr+oc+CZTibDaQb0/dMBLOgAL3GG3gZ6zJ6H2o7GNOLwPQIVJPYCyu9Trpa2mQBOcEuJm7j29uWbBePV1iY2KHoW9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BisftjRv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fABUL8+nBkkwBGY8WUTQoTw8bhzgM7RVzP3WUHYykS8xc4xGM0UlkIQEDB3EVmYkj7AlCU9WbrekW3pCg035gJEvbPKUCTh3v4OxEq7ebLJ77HHi3P0zZ9JK8DH6hJl0+VhdfdaXACnYTWp6AYg2tIpKQHlzwshxWxQcvIur344=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UTWa4Ms; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BisftjRv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE55C116D0;
-	Wed, 25 Feb 2026 06:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UTWa4Ms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACB4C116D0;
+	Wed, 25 Feb 2026 06:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002620;
-	bh=bBAfxyNQyPxGyBvC4W23u+KL7K9XdiqCdVSEwUV95Tw=;
+	s=korg; t=1772002621;
+	bh=u69G7a5mOzzXIW8bQAqbKJ6tdSDmxMsqBKh0sN2QJrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BisftjRvXL1VUgbANMq2qPcBVg5j9x1ojabpbBvujsRvDAUdfAgnBIfDOpiXdgd+g
-	 H1rl3FPJQQuXq/A1UeKmRlioJHAKJpxPxPvISKq8+yWqWh8uifUKV3MvmjxIt3emy5
-	 Wb1xgQam4YFki07E4QpAjSApSmMvYOyHvwbsT+RQ=
+	b=1UTWa4Ms/WorRuWGSsM26fDh9Lshay7SankOMKxHJY7b3Cr5j+RAWVLK9y4GFssm8
+	 qKR1nEpnm0HkMIL8Yim5mMek+N+DzIC014ySyUqloS/NxevF+/PLb54CB1DjwL4+6U
+	 j2CnCTR5jB0rCQ/FqpYDIs8FxDkbIXevq1exEqnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Dege <michael.dege@renesas.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 334/641] net: renesas: rswitch: fix forwarding offload statemachine
-Date: Tue, 24 Feb 2026 17:21:00 -0800
-Message-ID: <20260225012356.774351720@linuxfoundation.org>
+Subject: [PATCH 6.18 335/641] octeontx2-pf: Unregister devlink on probe failure
+Date: Tue, 24 Feb 2026 17:21:01 -0800
+Message-ID: <20260225012356.796893848@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,71 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Dege <michael.dege@renesas.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit e9a5073a98d940837cbb95e71eed1f28f48e7b30 ]
+[ Upstream commit 943f3b8bfbf297cf74392b50a7108ce1fe4cbd8c ]
 
-A change of the port state of one port, caused the state of another
-port to change. This behvior was unintended.
+When probe fails after devlink registration, the missing devlink unregister
+call causing a memory leak.
 
-Fixes: b7502b1043de ("net: renesas: rswitch: add offloading for L2 switching")
-Signed-off-by: Michael Dege <michael.dege@renesas.com>
-Link: https://patch.msgid.link/20260206-fix-offloading-statemachine-v3-1-07bfba07d03e@renesas.com
+Fixes: 2da489432747 ("octeontx2-pf: devlink params support to set mcam entry count")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Link: https://patch.msgid.link/20260206182645.4032737-1-hkelam@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/rswitch_l2.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/renesas/rswitch_l2.c b/drivers/net/ethernet/renesas/rswitch_l2.c
-index 4a69ec77d69c6..9433cd8adced9 100644
---- a/drivers/net/ethernet/renesas/rswitch_l2.c
-+++ b/drivers/net/ethernet/renesas/rswitch_l2.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /* Renesas Ethernet Switch device driver
-  *
-- * Copyright (C) 2025 Renesas Electronics Corporation
-+ * Copyright (C) 2025 - 2026 Renesas Electronics Corporation
-  */
- 
- #include <linux/err.h>
-@@ -60,6 +60,7 @@ static void rswitch_update_l2_hw_learning(struct rswitch_private *priv)
- static void rswitch_update_l2_hw_forwarding(struct rswitch_private *priv)
- {
- 	struct rswitch_device *rdev;
-+	bool new_forwarding_offload;
- 	unsigned int fwd_mask;
- 
- 	/* calculate fwd_mask with zeroes in bits corresponding to ports that
-@@ -73,8 +74,9 @@ static void rswitch_update_l2_hw_forwarding(struct rswitch_private *priv)
- 	}
- 
- 	rswitch_for_all_ports(priv, rdev) {
--		if ((rdev_for_l2_offload(rdev) && rdev->forwarding_requested) ||
--		    rdev->forwarding_offloaded) {
-+		new_forwarding_offload = (rdev_for_l2_offload(rdev) && rdev->forwarding_requested);
-+
-+		if (new_forwarding_offload || rdev->forwarding_offloaded) {
- 			/* Update allowed offload destinations even for ports
- 			 * with L2 offload enabled earlier.
- 			 *
-@@ -84,13 +86,10 @@ static void rswitch_update_l2_hw_forwarding(struct rswitch_private *priv)
- 				  priv->addr + FWPC2(rdev->port));
- 		}
- 
--		if (rdev_for_l2_offload(rdev) &&
--		    rdev->forwarding_requested &&
--		    !rdev->forwarding_offloaded) {
-+		if (new_forwarding_offload && !rdev->forwarding_offloaded)
- 			rswitch_change_l2_hw_offloading(rdev, true, false);
--		} else if (rdev->forwarding_offloaded) {
-+		else if (!new_forwarding_offload && rdev->forwarding_offloaded)
- 			rswitch_change_l2_hw_offloading(rdev, false, false);
--		}
- 	}
- }
- 
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index a7a7bc0e1b675..bbf25769f4994 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -3321,6 +3321,7 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ err_sriov_cleannup:
+ 	otx2_sriov_vfcfg_cleanup(pf);
+ err_pf_sriov_init:
++	otx2_unregister_dl(pf);
+ 	otx2_shutdown_tc(pf);
+ err_mcam_flow_del:
+ 	otx2_mcam_flow_del(pf);
 -- 
 2.51.0
 
