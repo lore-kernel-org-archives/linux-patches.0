@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CD3265CBE;
-	Wed, 25 Feb 2026 01:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E19265CBE;
+	Wed, 25 Feb 2026 01:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983822; cv=none; b=KVr01OUXrdI2xol+3Emz3E+40JcPZwK26tBjvW6+P1UtkxRvZJ8KJBb5+ligkcecIrbHMdakL+t8iSXByy4YWTQh5de4vKpEpdKSpuPX0YozEh2x7F8MZFSg4BsK+Nf3lgTpyOHWLdXqoqGChsXxHLMgCj8bUTFM/YWXEx68LJI=
+	t=1771983825; cv=none; b=tRxcJg5oFKwDYks8gC/TKUyScmANo8Y4DPbryM94vbmcF1UZzkwTNE0GuFfSDcoy8OmSgEjxL/xAoeGY4Iq5jpKQEGtMO/ZvPnsh0u1Be7D4MFfgH1LrNfQWyGAOIpN7uh3/20bi279/PBc0lLBf9WBaKr/LTh61gIX8EPJTDgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983822; c=relaxed/simple;
-	bh=Emi3e+tIDuebKsnlDDEmZd0c6LpiFfJFouEPTl+MycI=;
+	s=arc-20240116; t=1771983825; c=relaxed/simple;
+	bh=kFQMkW66agkfE/l9hhZm4QbxfFnECwdF1UTUiiB23M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBzq7sM8UC57OwXLA5Ik7ibXet7O9ZJ8kLINnktMygbTln+xDUwHsdyipIgKl324fP3cepJlP9q62ZJ0GZ1tP5v9p8WhZD/SEeEGuC5Wo5cwKGI0fuGN0HBFh+xLJcwKX5CC5LXIxNm3DMe3bsUJ8qQq7+d7IX5AlkwgZOAN54I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJgTZM/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=m0/A/rJV4T7Q2sCu1lMAxa7+FOwlB+5MMxuog41/qKeyPhAX/QBehGgGa61iaQmyPm9BQEc+jarPi+2KWMXHtU44mAPpwxUlvZ9iRZkElk02FoYKLayFBu1zAfrAW2EWedxigjdoSmDnyUIrnSNBU3xG+Shne82hPmgYf0lIfkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVxQ+v/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJgTZM/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26CAC116D0;
-	Wed, 25 Feb 2026 01:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVxQ+v/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C0CC116D0;
+	Wed, 25 Feb 2026 01:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983822;
-	bh=Emi3e+tIDuebKsnlDDEmZd0c6LpiFfJFouEPTl+MycI=;
+	s=korg; t=1771983825;
+	bh=kFQMkW66agkfE/l9hhZm4QbxfFnECwdF1UTUiiB23M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJgTZM/u43hGRyPNwJ/1g0CGDswJM44o5i4Qb4R3zVPzFbXAAw7BOykESACD95Yw5
-	 pRl+zkDgE7l4Nfms2tQIOtz4GsS8FN++3vuvpH2BGrEAOuzlb86iNR/95fiB/kAM7+
-	 SO5mAjiQyfg0AkRsH1CBUIsDDP4D3mGpDzl9h+Ts=
+	b=nVxQ+v/7Z3hzyu7xnWfM03BfcyhjJvhi9krXJ891u80iyjdS2gQkbT7PUcW9J1Xdg
+	 9UiSHeWA46gzu3vNOyPCEP6ptjB/NFRDBSrOcf/XkwKWLQzL3JQo+EWtYG0/yQPwXA
+	 ctQlbJqAxIfXxHCtDr5MvrIGVA+I1VoDgQtWyzHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Antoine Tenart <atenart@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 088/641] crypto: inside-secure/eip93 - fix kernel panic in driver detach
-Date: Tue, 24 Feb 2026 17:16:54 -0800
-Message-ID: <20260225012351.228994279@linuxfoundation.org>
+Subject: [PATCH 6.18 106/641] platform/x86: int0002: Remove IRQF_ONESHOT from request_irq()
+Date: Tue, 24 Feb 2026 17:17:12 -0800
+Message-ID: <20260225012351.685711603@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -46,41 +48,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit b6e32ba6d32503440a3e3e16c8d0521cbb7e0c5d ]
+[ Upstream commit f6bc712877f24dc89bdfd7bdbf1a32f3b9960b34 ]
 
-During driver detach, the same hash algorithm is unregistered multiple
-times due to a wrong iterator.
+Passing IRQF_ONESHOT ensures that the interrupt source is masked until the
+secondary (threaded) handler is done. If only a primary handler is used
+then the flag makes no sense because the interrupt cannot fire (again)
+while its handler is running.
 
-Fixes: 9739f5f93b78 ("crypto: eip93 - Add Inside Secure SafeXcel EIP-93 crypto engine support")
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The flag also prevents force-threading of the primary handler and the
+irq-core will warn about this.
+
+The flag was added to match the flag on the shared handler which uses a
+threaded handler and therefore IRQF_ONESHOT. This is no longer needed
+because devm_request_irq() now passes IRQF_COND_ONESHOT for this case.
+
+Revert adding IRQF_ONESHOT to irqflags.
+
+Fixes: 8f812373d1958 ("platform/x86: intel: int0002_vgpio: Pass IRQF_ONESHOT to request_irq()")
+Reported-by: Borah, Chaitanya Kumar <chaitanya.kumar.borah@intel.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Acked-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260128095540.863589-3-bigeasy@linutronix.de
+Closes: https://lore.kernel.org/all/555f1c56-0f74-41bf-8bd2-6217e0aab0c6@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/inside-secure/eip93/eip93-main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel/int0002_vgpio.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/inside-secure/eip93/eip93-main.c b/drivers/crypto/inside-secure/eip93/eip93-main.c
-index 0b38a567da0e0..3cdc3308dcac8 100644
---- a/drivers/crypto/inside-secure/eip93/eip93-main.c
-+++ b/drivers/crypto/inside-secure/eip93/eip93-main.c
-@@ -90,7 +90,7 @@ static void eip93_unregister_algs(unsigned int i)
- 			crypto_unregister_aead(&eip93_algs[j]->alg.aead);
- 			break;
- 		case EIP93_ALG_TYPE_HASH:
--			crypto_unregister_ahash(&eip93_algs[i]->alg.ahash);
-+			crypto_unregister_ahash(&eip93_algs[j]->alg.ahash);
- 			break;
- 		}
- 	}
+diff --git a/drivers/platform/x86/intel/int0002_vgpio.c b/drivers/platform/x86/intel/int0002_vgpio.c
+index 6f5629dc3f8db..562e880256436 100644
+--- a/drivers/platform/x86/intel/int0002_vgpio.c
++++ b/drivers/platform/x86/intel/int0002_vgpio.c
+@@ -206,8 +206,8 @@ static int int0002_probe(struct platform_device *pdev)
+ 	 * FIXME: augment this if we managed to pull handling of shared
+ 	 * IRQs into gpiolib.
+ 	 */
+-	ret = devm_request_irq(dev, irq, int0002_irq,
+-			       IRQF_ONESHOT | IRQF_SHARED, "INT0002", chip);
++	ret = devm_request_irq(dev, irq, int0002_irq, IRQF_SHARED, "INT0002",
++			       chip);
+ 	if (ret) {
+ 		dev_err(dev, "Error requesting IRQ %d: %d\n", irq, ret);
+ 		return ret;
 -- 
 2.51.0
 
