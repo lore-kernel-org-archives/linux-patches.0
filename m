@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622612C17A0;
-	Wed, 25 Feb 2026 06:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154F12C17A0;
+	Wed, 25 Feb 2026 06:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002606; cv=none; b=D33NPX1GTRkZyRKOXAlVTB55HQdL3iLKtolUXWmnDfmpkN8TgW6PgUSHrJ6zwjMbGriIJtld+U6QF9FUj+apjafbZvCItNZVeKMmzVYIrgCMYIlgJkYWz1MlJZx2RP3YFgo8pSgi3ReU+i6W2YOaz4ecbkPljOBD93nZLCcEJDI=
+	t=1772002607; cv=none; b=lrEz2J8nPE8BUF1U3NXrivRUWgaSPa8bE0LVXc5MoYBGbcUV2xWq+YaBFZKFgvo0QawIXzS6JupEEX42pICSYqG8Gg3hdTYTnTpuoYP+oIrXhlP+RvnBNT4Lz3oYAQgLgMXwWYrYOinCq2K27qLnZI5KAuLVjgs2HmMPqsVFp7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002606; c=relaxed/simple;
-	bh=gvMlASx1q5uXSY0JEnEP4I9fF3daFn0TO+ERHcU6asw=;
+	s=arc-20240116; t=1772002607; c=relaxed/simple;
+	bh=vB9J3tnDQtzFKtogYctvgHb9KSXr+9uybd/9XMkf9aE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdFTn0dWgHWrc0rUTo+MkAcFJiLP5kkiHzK/3bqozOMbrBh598Nqvy/9PJKukPpa7iVz3T+xWeCEY6xCfNRIPAEo7G44maejIE7lsFm1PXpQzyy2+pqR1tw4wJUFovL8DzOS5Pf8dOwmN08uYdHBukjhnaXjqxM4dvYERdmaivg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZGxsJXe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HjyH3yoPKypiyTRcAR5oqqC8ly+LN3KqDmpgxvv4n90Gu4eCNAkrF0tmZ0/G57IMEti6hvp6eZKT+8Eu3Pwp3xW7gHMGCJd27zGmF6jqxun0ALSFBYq5JVTJn/AUr7qvIHFba8I4lpIrN8RvnVj5fN+K9eEBxfJoqoTvBNZHn+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkzGGFZp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZGxsJXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9B1C2BC86;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkzGGFZp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA37EC116D0;
 	Wed, 25 Feb 2026 06:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002606;
-	bh=gvMlASx1q5uXSY0JEnEP4I9fF3daFn0TO+ERHcU6asw=;
+	bh=vB9J3tnDQtzFKtogYctvgHb9KSXr+9uybd/9XMkf9aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZGxsJXe7GG5Rk46scUCZBMjh2wOYTO2mleN3Qohm3xLOD/RU+G3QlmO7KFX1ftxt
-	 3CeezkGMm0PmvXFoyovxnq9kpprg8W1Moy8QKi3vTwJT7PFi6Ci/fv4kG//+nigiKP
-	 9x+VQsS2w4a7h9eVZsXQfiLp4K+r4zsLSe3RoUqU=
+	b=NkzGGFZpPEedKruq7N0vNAObxUeyfUiV1uSmR1p17RhgTJhurv2NjNY/tyIamw4xz
+	 BZ0W9y0gXAH1jYQdherXaOARrxjVNVmF1oMGpDc1qXYi6k5H8TiFGI6b4SNGO/mDME
+	 6PHTJLkudtuHlxHzc5yv36ezl65SwrcK/tQbAzG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waqar Hameed <waqar.hameed@axis.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sathesh Edara <sedara@marvell.com>,
+	Shinas Rasheed <srasheed@marvell.com>,
+	Vimlesh Kumar <vimleshk@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 356/641] power: supply: wm97xx: Fix NULL pointer dereference in power_supply_changed()
-Date: Tue, 24 Feb 2026 17:21:22 -0800
-Message-ID: <20260225012357.257444972@linuxfoundation.org>
+Subject: [PATCH 6.18 330/641] octeon_ep: disable per ring interrupts
+Date: Tue, 24 Feb 2026 17:20:56 -0800
+Message-ID: <20260225012356.685361014@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,95 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waqar Hameed <waqar.hameed@axis.com>
+From: Vimlesh Kumar <vimleshk@marvell.com>
 
-[ Upstream commit 39fe0eac6d755ef215026518985fcf8de9360e9e ]
+[ Upstream commit 73e6ffa37cebee152c07c5f2b8bc70fd2899ea6e ]
 
-In `probe()`, `request_irq()` is called before allocating/registering a
-`power_supply` handle. If an interrupt is fired between the call to
-`request_irq()` and `power_supply_register()`, the `power_supply` handle
-will be used uninitialized in `power_supply_changed()` in
-`wm97xx_bat_update()` (triggered from the interrupt handler). This will
-lead to a `NULL` pointer dereference since
+Disable the MSI-X per ring interrupt for every PF ring when PF
+netdev goes down.
 
-Fix this racy `NULL` pointer dereference by making sure the IRQ is
-requested _after_ the registration of the `power_supply` handle. Since
-the IRQ is the last thing requests in the `probe()` now, remove the
-error path for freeing it. Instead add one for unregistering the
-`power_supply` handle when IRQ request fails.
-
-Fixes: 7c87942aef52 ("wm97xx_battery: Use irq to detect charger state")
-Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Link: https://patch.msgid.link/97b55f0479a932eea7213844bf66f28a974e27a2.1766270196.git.waqar.hameed@axis.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 1f2c2d0cee023 ("octeon_ep: add hardware configuration APIs")
+Signed-off-by: Sathesh Edara <sedara@marvell.com>
+Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
+Signed-off-by: Vimlesh Kumar <vimleshk@marvell.com>
+Link: https://patch.msgid.link/20260206111510.1045092-2-vimleshk@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/wm97xx_battery.c | 34 +++++++++++++++------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ .../ethernet/marvell/octeon_ep/octep_cn9k_pf.c | 18 +++++++++++++++---
+ .../ethernet/marvell/octeon_ep/octep_cnxk_pf.c | 18 +++++++++++++++---
+ .../marvell/octeon_ep/octep_regs_cn9k_pf.h     |  1 +
+ .../marvell/octeon_ep/octep_regs_cnxk_pf.h     |  1 +
+ 4 files changed, 32 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/wm97xx_battery.c b/drivers/power/supply/wm97xx_battery.c
-index b3b0c37a9dd2d..f00722c88c6fe 100644
---- a/drivers/power/supply/wm97xx_battery.c
-+++ b/drivers/power/supply/wm97xx_battery.c
-@@ -178,12 +178,6 @@ static int wm97xx_bat_probe(struct platform_device *dev)
- 				     "failed to get charge GPIO\n");
- 	if (charge_gpiod) {
- 		gpiod_set_consumer_name(charge_gpiod, "BATT CHRG");
--		ret = request_irq(gpiod_to_irq(charge_gpiod),
--				wm97xx_chrg_irq, 0,
--				"AC Detect", dev);
--		if (ret)
--			return dev_err_probe(&dev->dev, ret,
--					     "failed to request GPIO irq\n");
- 		props++;	/* POWER_SUPPLY_PROP_STATUS */
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
+index b5805969404fa..f0bcb5f3c1474 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
+@@ -696,14 +696,26 @@ static void octep_enable_interrupts_cn93_pf(struct octep_device *oct)
+ /* Disable all interrupts */
+ static void octep_disable_interrupts_cn93_pf(struct octep_device *oct)
+ {
+-	u64 intr_mask = 0ULL;
++	u64 reg_val, intr_mask = 0ULL;
+ 	int srn, num_rings, i;
  
-@@ -199,10 +193,8 @@ static int wm97xx_bat_probe(struct platform_device *dev)
- 		props++;	/* POWER_SUPPLY_PROP_VOLTAGE_MIN */
+ 	srn = CFG_GET_PORTS_PF_SRN(oct->conf);
+ 	num_rings = CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf);
  
- 	prop = kcalloc(props, sizeof(*prop), GFP_KERNEL);
--	if (!prop) {
--		ret = -ENOMEM;
--		goto err3;
--	}
-+	if (!prop)
-+		return -ENOMEM;
- 
- 	prop[i++] = POWER_SUPPLY_PROP_PRESENT;
- 	if (charge_gpiod)
-@@ -236,15 +228,27 @@ static int wm97xx_bat_probe(struct platform_device *dev)
- 		schedule_work(&bat_work);
- 	} else {
- 		ret = PTR_ERR(bat_psy);
--		goto err4;
-+		goto free;
+-	for (i = 0; i < num_rings; i++)
+-		intr_mask |= (0x1ULL << (srn + i));
++	for (i = 0; i < num_rings; i++) {
++		intr_mask |= BIT_ULL(srn + i);
++		reg_val = octep_read_csr64(oct,
++					   CN93_SDP_R_IN_INT_LEVELS(srn + i));
++		reg_val &= ~CN93_INT_ENA_BIT;
++		octep_write_csr64(oct,
++				  CN93_SDP_R_IN_INT_LEVELS(srn + i), reg_val);
++
++		reg_val = octep_read_csr64(oct,
++					   CN93_SDP_R_OUT_INT_LEVELS(srn + i));
++		reg_val &= ~CN93_INT_ENA_BIT;
++		octep_write_csr64(oct,
++				  CN93_SDP_R_OUT_INT_LEVELS(srn + i), reg_val);
 +	}
-+
-+	if (charge_gpiod) {
-+		ret = request_irq(gpiod_to_irq(charge_gpiod), wm97xx_chrg_irq,
-+				  0, "AC Detect", dev);
-+		if (ret) {
-+			dev_err_probe(&dev->dev, ret,
-+				      "failed to request GPIO irq\n");
-+			goto unregister;
-+		}
- 	}
  
- 	return 0;
--err4:
-+
-+unregister:
-+	power_supply_unregister(bat_psy);
-+
-+free:
- 	kfree(prop);
--err3:
--	if (charge_gpiod)
--		free_irq(gpiod_to_irq(charge_gpiod), dev);
-+
- 	return ret;
- }
+ 	octep_write_csr64(oct, CN93_SDP_EPF_IRERR_RINT_ENA_W1C, intr_mask);
+ 	octep_write_csr64(oct, CN93_SDP_EPF_ORERR_RINT_ENA_W1C, intr_mask);
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
+index 5de0b5ecbc5fd..07e00887c6940 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
+@@ -720,14 +720,26 @@ static void octep_enable_interrupts_cnxk_pf(struct octep_device *oct)
+ /* Disable all interrupts */
+ static void octep_disable_interrupts_cnxk_pf(struct octep_device *oct)
+ {
+-	u64 intr_mask = 0ULL;
++	u64 reg_val, intr_mask = 0ULL;
+ 	int srn, num_rings, i;
  
+ 	srn = CFG_GET_PORTS_PF_SRN(oct->conf);
+ 	num_rings = CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf);
+ 
+-	for (i = 0; i < num_rings; i++)
+-		intr_mask |= (0x1ULL << (srn + i));
++	for (i = 0; i < num_rings; i++) {
++		intr_mask |= BIT_ULL(srn + i);
++		reg_val = octep_read_csr64(oct,
++					   CNXK_SDP_R_IN_INT_LEVELS(srn + i));
++		reg_val &= ~CNXK_INT_ENA_BIT;
++		octep_write_csr64(oct,
++				  CNXK_SDP_R_IN_INT_LEVELS(srn + i), reg_val);
++
++		reg_val = octep_read_csr64(oct,
++					   CNXK_SDP_R_OUT_INT_LEVELS(srn + i));
++		reg_val &= ~CNXK_INT_ENA_BIT;
++		octep_write_csr64(oct,
++				  CNXK_SDP_R_OUT_INT_LEVELS(srn + i), reg_val);
++	}
+ 
+ 	octep_write_csr64(oct, CNXK_SDP_EPF_IRERR_RINT_ENA_W1C, intr_mask);
+ 	octep_write_csr64(oct, CNXK_SDP_EPF_ORERR_RINT_ENA_W1C, intr_mask);
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
+index ca473502d7a02..95f1dfff90cce 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
+@@ -386,5 +386,6 @@
+ #define CN93_PEM_BAR4_INDEX            7
+ #define CN93_PEM_BAR4_INDEX_SIZE       0x400000ULL
+ #define CN93_PEM_BAR4_INDEX_OFFSET     (CN93_PEM_BAR4_INDEX * CN93_PEM_BAR4_INDEX_SIZE)
++#define CN93_INT_ENA_BIT	BIT_ULL(62)
+ 
+ #endif /* _OCTEP_REGS_CN9K_PF_H_ */
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
+index e637d7c8224d4..4d172a552f80c 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
+@@ -412,5 +412,6 @@
+ #define CNXK_PEM_BAR4_INDEX		7
+ #define CNXK_PEM_BAR4_INDEX_SIZE	0x400000ULL
+ #define CNXK_PEM_BAR4_INDEX_OFFSET	(CNXK_PEM_BAR4_INDEX * CNXK_PEM_BAR4_INDEX_SIZE)
++#define CNXK_INT_ENA_BIT	BIT_ULL(62)
+ 
+ #endif /* _OCTEP_REGS_CNXK_PF_H_ */
 -- 
 2.51.0
 
