@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5152D306B21;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCD3306B21;
 	Wed, 25 Feb 2026 06:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002772; cv=none; b=PY1eroIdVNX79G/9kK16BeFJAwSIa/e1kA3Yz5BRe0eurWdM1w2D2BqxP/ORFNiUEK3gPJXUoXawWOhiyfcGDRKXIlieAtl+tHwmBNSmRcoqfOBpOvP0fWX4l3fRJpyVtr4/yEHUxhUEWW98gkApVpwCcFrTEOVKKiBEHAgv+lM=
+	t=1772002773; cv=none; b=WaNT4lhwWitJIX3zkkcvouunBXgolIjvXNmFWjf1KLrSyp0UWfaX26q9TAxdZ896c3NPLtmK4pGIYxWmQVFZNID3iBQvz6RZxkaJ+XoJ6aMRNFIU2ysebnHAivFCaafl0zKMxsK/HmDK3Cpcr/bg2+7afRHiaxlr0iYv5DPGnQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002772; c=relaxed/simple;
-	bh=kqIqkrxP538sVA1OyBsk4LKx/bPTuvpVT/AeqQ/G1I8=;
+	s=arc-20240116; t=1772002773; c=relaxed/simple;
+	bh=QGWGEy9nsE5xMiaQTrN17spPEuTGmV6lKu9GcNfCQf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZwFOHM8cmiyYEZhtX2f0HFECmK05eCkPvbE363eDuYTtzxj13k1TS1Sj8Qlm+EHZ+4HeI9PN5C1VkqZhZERpPNW4mGbd8oSxRXSIpDXG0nwAxW4Dky7Ua6UdmscRi6jIV0QuYnH69QRZd7gBvqgE0gcbJXFDxHrmpxE0h8bqew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpmuUzum; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pjaAfwc7bES4eNBsgqc8SUv1Rr0H5vN7BDb18Ax5rqtIHH0aGTxYhkDeqjwWkKraoy8g9TQuaYbnaDqbf/I8/k1xv/BxLkWGuJq9RJwfT02uM8/jsE5b1KnlZM2hxXPCvTLS9aosAkFXRCFEGgomFkRh74juFiEp48xshMQfgj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBE+2XqI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpmuUzum"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BC1C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBE+2XqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5732C116D0;
 	Wed, 25 Feb 2026 06:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002772;
-	bh=kqIqkrxP538sVA1OyBsk4LKx/bPTuvpVT/AeqQ/G1I8=;
+	bh=QGWGEy9nsE5xMiaQTrN17spPEuTGmV6lKu9GcNfCQf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gpmuUzumcYLqFGPg+znKni99cIceuAEHBAWN6OqpgKxstCdqez4SoiaHc+iJgbBD7
-	 WQ2w8CTpirhyHzD1eS0KEB7fmTbMdaSM3NmyIYUhY3g5asWLxpIhXfJnyFKbjOWpYS
-	 ckkMrolgPiACHmw95x3nqwNs7WYLcjm2GqqckjCc=
+	b=PBE+2XqIl6Bv9cXH5RDDEubFIvkX8pzh2k2IRxE5yuKNdFR+R3ONY6cRX3MWaGPml
+	 1Is59bCyNJX6ci2scd+38ccfeVBZ9FWIMjpXsmpcVhkHD27U8g3aKdRv/uHsK/FMpo
+	 evQkXTIw/bkvRlRRUdNveMTzqwK44D4D8MJeflbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mario Kleiner <mario.kleiner.de@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 608/641] ASoC: rockchip: i2s-tdm: Use param rate if not provided by set_sysclk
-Date: Tue, 24 Feb 2026 17:25:34 -0800
-Message-ID: <20260225012403.243913832@linuxfoundation.org>
+Subject: [PATCH 6.18 609/641] drm/amd/display: Use same max plane scaling limits for all 64 bpp formats
+Date: Tue, 24 Feb 2026 17:25:35 -0800
+Message-ID: <20260225012403.269309048@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,53 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Detlev Casanova <detlev.casanova@collabora.com>
+From: Mario Kleiner <mario.kleiner.de@gmail.com>
 
-[ Upstream commit 0783052534f547f8f201dd4554b1df9f1f8615b5 ]
+[ Upstream commit f0157ce46cf0e5e2257e19d590c9b16036ce26d4 ]
 
-Drivers will not always call set_sysclk() for all clocks, especially when
-default mclk-fs can be used.
-When that is the case, use the clock rate set in the params multiplied by the
-default mclk-fs.
+The plane scaling hw seems to have the same min/max plane scaling limits
+for all 16 bpc / 64 bpp interleaved pixel color formats.
 
-Fixes: 5323186e2e8d ("ASoC: rockchip: i2s_tdm: Re-add the set_sysclk callback")
-Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
-Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260218201834.924358-1-detlev.casanova@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Therefore add cases to amdgpu_dm_plane_get_min_max_dc_plane_scaling() for
+all the 16 bpc fixed-point / unorm formats to use the same .fp16
+up/downscaling factor limits as used by the fp16 floating point formats.
+
+So far, 16 bpc unorm formats were not handled, and the default: path
+returned max/min factors for 32 bpp argb8888 formats, which were wrong
+and bigger than what many DCE / DCN hw generations could handle.
+
+The result sometimes was misscaling of framebuffers with
+DRM_FORMAT_XRGB16161616, DRM_FORMAT_ARGB16161616, DRM_FORMAT_XBGR16161616,
+DRM_FORMAT_ABGR16161616, leading to very wrong looking display, as tested
+on Polaris11 / DCE-11.2.
+
+So far this went unnoticed, because only few userspace clients used such
+16 bpc unorm framebuffers, and those didn't use hw plane scaling, so they
+did not experience this issue.
+
+With upcoming Mesa 26 exposing 16 bpc unorm formats under both OpenGL
+and Vulkan under Wayland, and the upcoming GNOME 50 Mutter Wayland
+compositor allowing for direct scanout of these formats, the scaling
+hw will be used on these formats if possible for HiDPI display scaling,
+so it is important to use the correct hw scaling limits to avoid wrong
+display.
+
+Tested on AMD Polaris 11 / DCE 11.2 with upcoming Mesa 26 and GNOME 50
+on HiDPI displays with scaling enabled. The mutter Wayland compositor now
+correctly falls back to scaling via desktop compositing instead of direct
+scanout, thereby avoiding wrong image display. For unscaled mode, it
+correctly uses direct scanout.
+
+Fixes: 580204038f5b ("drm/amd/display: Enable support for 16 bpc fixed-point framebuffers.")
+Signed-off-by: Mario Kleiner <mario.kleiner.de@gmail.com>
+Tested-by: Mario Kleiner <mario.kleiner.de@gmail.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_i2s_tdm.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/rockchip/rockchip_i2s_tdm.c b/sound/soc/rockchip/rockchip_i2s_tdm.c
-index d9a1fab7f4031..e4697ee0addc8 100644
---- a/sound/soc/rockchip/rockchip_i2s_tdm.c
-+++ b/sound/soc/rockchip/rockchip_i2s_tdm.c
-@@ -22,6 +22,7 @@
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+index e027798ece032..9bb7475e80bad 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+@@ -1059,10 +1059,15 @@ static void amdgpu_dm_plane_get_min_max_dc_plane_scaling(struct drm_device *dev,
+ 		*min_downscale = plane_cap->max_downscale_factor.nv12;
+ 		break;
  
- #define DRV_NAME "rockchip-i2s-tdm"
- 
-+#define DEFAULT_MCLK_FS				256
- #define CH_GRP_MAX				4  /* The max channel 8 / 2 */
- #define MULTIPLEX_CH_MAX			10
- 
-@@ -665,6 +666,15 @@ static int rockchip_i2s_tdm_hw_params(struct snd_pcm_substream *substream,
- 			mclk_rate = i2s_tdm->mclk_rx_freq;
- 		}
- 
-+		/*
-+		 * When the dai/component driver doesn't need to set mclk-fs for a specific
-+		 * clock, it can skip the call to set_sysclk() for that clock.
-+		 * In that case, simply use the clock rate from the params and multiply it by
-+		 * the default mclk-fs value.
-+		 */
-+		if (!mclk_rate)
-+			mclk_rate = DEFAULT_MCLK_FS * params_rate(params);
-+
- 		err = clk_set_rate(mclk, mclk_rate);
- 		if (err)
- 			return err;
++	/* All 64 bpp formats have the same fp16 scaling limits */
+ 	case DRM_FORMAT_XRGB16161616F:
+ 	case DRM_FORMAT_ARGB16161616F:
+ 	case DRM_FORMAT_XBGR16161616F:
+ 	case DRM_FORMAT_ABGR16161616F:
++	case DRM_FORMAT_XRGB16161616:
++	case DRM_FORMAT_ARGB16161616:
++	case DRM_FORMAT_XBGR16161616:
++	case DRM_FORMAT_ABGR16161616:
+ 		*max_upscale = plane_cap->max_upscale_factor.fp16;
+ 		*min_downscale = plane_cap->max_downscale_factor.fp16;
+ 		break;
 -- 
 2.51.0
 
