@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35F61EB5E1;
-	Wed, 25 Feb 2026 01:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF8218DB2A;
+	Wed, 25 Feb 2026 01:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983249; cv=none; b=R7YNqDwx/txxr1hkwE+R+1MJUCDmCqc6gwgKNlEpMTgC8kqRDUkcJrz1rlKlIgrvA5hNZ8SlC0OcqZim3LoT+iGfzDaP1Ria2/gyvSgfqHaknWcD7hEYORwatDHO2hebImuJovkID36cN0CRrQigoW1aJNdg4CZnsC6J8dpDI8g=
+	t=1771983251; cv=none; b=k282JYzVtnvxgwbItw08VSwRtZMOjaFzAOrm/f49KkaLpQB0lWRAzRE7tfyjuI+ku3XCOOnBEWNYT7rgFDtsrf1bmHRJ90uwTe7qK1lQhFp3RvXftPFJsVCx3iwf0LfDbVWdilQhKwIKmkrsISoVpi73rfxRFLJQwH2Tb1SZzng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983249; c=relaxed/simple;
-	bh=UVXqPfrAuRglfxJNmDKPMabbqVDURUVZhtpdDMVuxfE=;
+	s=arc-20240116; t=1771983251; c=relaxed/simple;
+	bh=eCF/tB5tYvb+0kNqhNLs1A//y9Aqv8ykzUOgqsEg9/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fu1+u/Zf6bFla4S7OLdJO3orF5pKpIguFDVAITcBtUgD4yBrpFLJnhytgn6wiJGpgBECHGLmueYM8jJWXW8wdn+Av5AkkLL8R8j0O3hsLhgAsviUr7rEGeASpHspe+IYz6envbltFUx8rMSZBPI/j+edJ7ppQEvQi4IGhf7IZj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKcc1hbc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C+n6VI7x9/75e6mcve8FsRZeM8ZxYYuIU7Wf9kQFVfZO7b1HxtlQWMqH8teMj/9etTiUPILuQqhtHrIGszCF+Jo1I7tHf8RlA3wuhFCumSM/i/4LQGbFfhtK/TdseDv+/ozZe+8Kiso3YjjzUvT8HqWbvf/LdTruifohidv8IW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bx1owhIv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKcc1hbc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA80C116D0;
-	Wed, 25 Feb 2026 01:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bx1owhIv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBD8C116D0;
+	Wed, 25 Feb 2026 01:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983249;
-	bh=UVXqPfrAuRglfxJNmDKPMabbqVDURUVZhtpdDMVuxfE=;
+	s=korg; t=1771983250;
+	bh=eCF/tB5tYvb+0kNqhNLs1A//y9Aqv8ykzUOgqsEg9/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKcc1hbcO3C5BnKLmqut/2OqXdlwG5r2usT100nHZxUOYQ8zYks3QnqYb5soqb/e4
-	 HtrOhhxP3apY9bilZDgrnyk/K6aF5j5+lByyRhvGe83THFgHWWVWB/16tu6HdQgrXp
-	 iKvhCKVfeRUiK/iN7eMM+YShBrsByg9CTs83XN4M=
+	b=bx1owhIvwUcRfaWtC5Ek/VhUgtRlbwLAzCykDtRhZ750S2cwbWBmWaAMEMbUOuhOU
+	 VpPsnVqjKN9pVmimdcvR17PHYN294DH/DbfjZVa9fSSgA8hlnp+odXIk5IWj0XuQbe
+	 ubdzkyG92PAOjHhVSoVT2t4jXZnTBaa7mSfPMgqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkman <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Luis Chamberalin <mcgrof@kernel.org>,
+	Marc Rutland <mark.rutland@arm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 389/781] tcp: accecn: handle unexpected AccECN negotiation feedback
-Date: Tue, 24 Feb 2026 17:18:18 -0800
-Message-ID: <20260225012409.235415668@linuxfoundation.org>
+Subject: [PATCH 6.19 350/781] module: add helper function for reading module_buildid()
+Date: Tue, 24 Feb 2026 17:17:39 -0800
+Message-ID: <20260225012408.275993227@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,115 +63,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
+From: Petr Mladek <pmladek@suse.com>
 
-[ Upstream commit c5ff6b83715919767f181f13e992b5055812a194 ]
+[ Upstream commit acfdbb4ab2910ff6f03becb569c23ac7b2223913 ]
 
-According to Sections 3.1.2 and 3.1.3 of AccECN spec (RFC9768).
+Add a helper function for reading the optional "build_id" member of struct
+module.  It is going to be used also in ftrace_mod_address_lookup().
 
-In Section 3.1.2, it says an AccECN implementation has no need to
-recognize or support the Server response labelled 'Nonce' or ECN-nonce
-feedback more generally, as RFC 3540 has been reclassified as Historic.
-AccECN is compatible with alternative ECN feedback integrity approaches
-to the nonce. The SYN/ACK labelled 'Nonce' with (AE,CWR,ECE) = (1,0,1)
-is reserved for future use. A TCP Client (A) that receives such a SYN/ACK
-follows the procedure for forward compatibility given in Section 3.1.3.
+Use "#ifdef" instead of "#if IS_ENABLED()" to match the declaration of the
+optional field in struct module.
 
-Then in Section 3.1.3, it says if a TCP Client has sent a SYN requesting
-AccECN feedback with (AE,CWR,ECE) = (1,1,1) then receives a SYN/ACK with
-the currently reserved combination (AE,CWR,ECE) = (1,0,1) but it does not
-have logic specific to such a combination, the Client MUST enable AccECN
-mode as if the SYN/ACK onfirmed that the Server supported AccECN and as
-if it fed back that the IP-ECN field on the SYN had arrived unchanged.
-
-Fixes: 3cae34274c79 ("tcp: accecn: AccECN negotiation").
-Signed-off-by: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260131222515.8485-7-chia-yu.chang@nokia-bell-labs.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lkml.kernel.org/r/20251128135920.217303-4-pmladek@suse.com
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Cc: Aaron Tomlin <atomlin@atomlin.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkman <daniel@iogearbox.net>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Luis Chamberalin <mcgrof@kernel.org>
+Cc: Marc Rutland <mark.rutland@arm.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Sami Tolvanen <samitolvanen@google.com>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: e8a1e7eaa19d ("kallsyms/ftrace: set module buildid in ftrace_mod_address_lookup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp_ecn.h | 44 ++++++++++++++++++++++++++++++-------------
- 1 file changed, 31 insertions(+), 13 deletions(-)
+ include/linux/module.h   | 9 +++++++++
+ kernel/module/kallsyms.c | 9 ++-------
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/tcp_ecn.h b/include/net/tcp_ecn.h
-index 2e1637edf1d3c..a709fb1756eb7 100644
---- a/include/net/tcp_ecn.h
-+++ b/include/net/tcp_ecn.h
-@@ -473,6 +473,26 @@ static inline u8 tcp_accecn_option_init(const struct sk_buff *skb,
- 	return TCP_ACCECN_OPT_COUNTER_SEEN;
- }
+diff --git a/include/linux/module.h b/include/linux/module.h
+index d80c3ea574726..ac254525014cd 100644
+--- a/include/linux/module.h
++++ b/include/linux/module.h
+@@ -748,6 +748,15 @@ static inline void __module_get(struct module *module)
+ 	__mod ? __mod->name : "kernel";		\
+ })
  
-+static inline void tcp_ecn_rcv_synack_accecn(struct sock *sk,
-+					     const struct sk_buff *skb, u8 dsf)
++static inline const unsigned char *module_buildid(struct module *mod)
 +{
-+	struct tcp_sock *tp = tcp_sk(sk);
-+
-+	tcp_ecn_mode_set(tp, TCP_ECN_MODE_ACCECN);
-+	tp->syn_ect_rcv = dsf & INET_ECN_MASK;
-+	/* Demand Accurate ECN option in response to the SYN on the SYN/ACK
-+	 * and the TCP server will try to send one more packet with an AccECN
-+	 * Option at a later point during the connection.
-+	 */
-+	if (tp->rx_opt.accecn &&
-+	    tp->saw_accecn_opt < TCP_ACCECN_OPT_COUNTER_SEEN) {
-+		u8 saw_opt = tcp_accecn_option_init(skb, tp->rx_opt.accecn);
-+
-+		tcp_accecn_saw_opt_fail_recv(tp, saw_opt);
-+		tp->accecn_opt_demand = 2;
-+	}
++#ifdef CONFIG_STACKTRACE_BUILD_ID
++	return mod->build_id;
++#else
++	return NULL;
++#endif
 +}
 +
- /* See Table 2 of the AccECN draft */
- static inline void tcp_ecn_rcv_synack(struct sock *sk, const struct sk_buff *skb,
- 				      const struct tcphdr *th, u8 ip_dsfield)
-@@ -495,13 +515,11 @@ static inline void tcp_ecn_rcv_synack(struct sock *sk, const struct sk_buff *skb
- 		tcp_ecn_mode_set(tp, TCP_ECN_DISABLED);
- 		break;
- 	case 0x1:
--	case 0x5:
- 		/* +========+========+============+=============+
- 		 * | A      | B      |  SYN/ACK   |  Feedback   |
- 		 * |        |        |    B->A    |  Mode of A  |
- 		 * |        |        | AE CWR ECE |             |
- 		 * +========+========+============+=============+
--		 * | AccECN | Nonce  | 1   0   1  | (Reserved)  |
- 		 * | AccECN | ECN    | 0   0   1  | Classic ECN |
- 		 * | Nonce  | AccECN | 0   0   1  | Classic ECN |
- 		 * | ECN    | AccECN | 0   0   1  | Classic ECN |
-@@ -509,20 +527,20 @@ static inline void tcp_ecn_rcv_synack(struct sock *sk, const struct sk_buff *skb
- 		 */
- 		if (tcp_ca_no_fallback_rfc3168(sk))
- 			tcp_ecn_mode_set(tp, TCP_ECN_DISABLED);
--		else if (tcp_ecn_mode_pending(tp))
--			/* Downgrade from AccECN, or requested initially */
-+		else
- 			tcp_ecn_mode_set(tp, TCP_ECN_MODE_RFC3168);
- 		break;
--	default:
--		tcp_ecn_mode_set(tp, TCP_ECN_MODE_ACCECN);
--		tp->syn_ect_rcv = ip_dsfield & INET_ECN_MASK;
--		if (tp->rx_opt.accecn &&
--		    tp->saw_accecn_opt < TCP_ACCECN_OPT_COUNTER_SEEN) {
--			u8 saw_opt = tcp_accecn_option_init(skb, tp->rx_opt.accecn);
--
--			tcp_accecn_saw_opt_fail_recv(tp, saw_opt);
--			tp->accecn_opt_demand = 2;
-+	case 0x5:
-+		if (tcp_ecn_mode_pending(tp)) {
-+			tcp_ecn_rcv_synack_accecn(sk, skb, ip_dsfield);
-+			if (INET_ECN_is_ce(ip_dsfield)) {
-+				tp->received_ce++;
-+				tp->received_ce_pending++;
-+			}
- 		}
-+		break;
-+	default:
-+		tcp_ecn_rcv_synack_accecn(sk, skb, ip_dsfield);
- 		if (INET_ECN_is_ce(ip_dsfield) &&
- 		    tcp_accecn_validate_syn_feedback(sk, ace,
- 						     tp->syn_ect_snt)) {
+ /* Dereference module function descriptor */
+ void *dereference_module_function_descriptor(struct module *mod, void *ptr);
+ 
+diff --git a/kernel/module/kallsyms.c b/kernel/module/kallsyms.c
+index 00a60796327c0..0fc11e45df9b9 100644
+--- a/kernel/module/kallsyms.c
++++ b/kernel/module/kallsyms.c
+@@ -334,13 +334,8 @@ int module_address_lookup(unsigned long addr,
+ 	if (mod) {
+ 		if (modname)
+ 			*modname = mod->name;
+-		if (modbuildid) {
+-#if IS_ENABLED(CONFIG_STACKTRACE_BUILD_ID)
+-			*modbuildid = mod->build_id;
+-#else
+-			*modbuildid = NULL;
+-#endif
+-		}
++		if (modbuildid)
++			*modbuildid = module_buildid(mod);
+ 
+ 		sym = find_kallsyms_symbol(mod, addr, size, offset);
+ 
 -- 
 2.51.0
 
