@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BE0243376;
-	Wed, 25 Feb 2026 01:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F71243376;
+	Wed, 25 Feb 2026 01:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983113; cv=none; b=kHF2pW/nbtqJA10yQuOhzyi32krQQUSqyEoq5hDc0WxQ5+1lacCeOyZmCurX8bQzgxmRsmBr7eQqJFINJJ1CcL6QX2YXKP3zMIskRYQaYqYVqvHM78CK87aYSJrU2KjD3IjDYn6Eyib5/OrPUcEmEJrPaUafYAQ8vZC9vNpCFWc=
+	t=1771983114; cv=none; b=HLfQ3qj8GVdqLR+FWSsRbAIyu1zGg2El6ZKcWu37E0WTdN1MGrq8YpwoCU1QcmPgJHN2vhOWTvI7gxyC0nwkv4cEu6JQVtQoR5krfIzEevRO+AT7qcymxNHspC0bne8t2R6iCUq6lyV0gjrPl3svuRLlxIpYKBy1WYrG9NgJ1wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983113; c=relaxed/simple;
-	bh=/QJ1ShtkSCjQ9d10CSIWnp1s+FP8NAd0cTDCTFB+erE=;
+	s=arc-20240116; t=1771983114; c=relaxed/simple;
+	bh=om+0vS2UhU1lqMCdzQZQ6ZIWITVV1Bhm/xaNnOk7x4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2ueYsuXNqTGQk8NezRXUGJ4me69KGBRaNhamXgmMUlsjcRp2q3wtTO0p/Hv5w81fYHfkL/R4niiEPxUc1NULZHJCoWP9Q7RiIdxgQ6ZFcja8pZIBwS3+fafXrD95YHCxKK/LWcqZD8GQQTbvMoXt5zcO8J8A3k68DkBoHNzH1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BycyypXW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxZ9JfkYFfhik5FW92urVafuO86hilphwzbQ0jMvTIgf6tDm0pM77mLf2E9rP8rzAiDoEwLNBMRYLtUboiR0mr42EPMFraLkT4NDh46BFHhC/LGQJuWljG+FZZQ3qMzrw3CtiPfY7xNpWXwnwUwb+Qg12Il/msxEX48unEW5jq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHlWNW0l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BycyypXW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CC8C116D0;
-	Wed, 25 Feb 2026 01:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHlWNW0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44774C116D0;
+	Wed, 25 Feb 2026 01:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983113;
-	bh=/QJ1ShtkSCjQ9d10CSIWnp1s+FP8NAd0cTDCTFB+erE=;
+	s=korg; t=1771983114;
+	bh=om+0vS2UhU1lqMCdzQZQ6ZIWITVV1Bhm/xaNnOk7x4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BycyypXWaMfLL1c+Ki3rVnZvwlBM4Jfx7aAs0R4B62Af42Ty871rEPZfxxvrAiUQb
-	 PGtlm4qSKAj8jAdojpBlzGhPU3CiWb0qxYzV2niHP4oZTSPZS8MDjiJWZ1fY+/5QCO
-	 KZCtXSlgOZ72nKe6dIPKpck/ph7ZXVBG9eLki/M8=
+	b=vHlWNW0lWSYxn1IvZ0nqKZBdZK8ESJuFbjdSuTNVvonYRrzvmkvxjqK0fXwgRktFQ
+	 TEpsDasT4hmwhT/MZbJWHrQVjgXcZhogPm+e96VmpCNsPZk/4v4FplL/+Q+rfGDfae
+	 eg+kxjqcgsVv699gu3lOJ5BoLbpXPe5iHExj2b7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Tao Tian <tiantao6@hisilicon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 273/781] drm/hisilicon/hibmc: fix no showing problem with loading hibmc manually
-Date: Tue, 24 Feb 2026 17:16:22 -0800
-Message-ID: <20260225012406.392841036@linuxfoundation.org>
+Subject: [PATCH 6.19 274/781] drm/hisilicon/hibmc: Adding reset colorbar cfg in dp init.
+Date: Tue, 24 Feb 2026 17:16:23 -0800
+Message-ID: <20260225012406.418151953@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -55,51 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Baihan Li <libaihan@huawei.com>
 
-[ Upstream commit 0607052a6aee1e3d218a99fae70ba9f14b3b47ed ]
+[ Upstream commit 6dad7fa8581e96321ec8a6a4f8160762466f539a ]
 
-When using command rmmod and insmod, there is no showing in second time
-insmoding. Because DP controller won't send HPD signals, if connection
-doesn't change or controller isn't reset. So add reset before unreset
-in hibmc_dp_hw_init().
-
-And also need to move the HDCP cfg after DP controller de-resets, so
-that HDCP configuration takes effect.
+Add colorbar disable operation before reset chontroller, to make sure
+colorbar status is clear in the DP init, so if rmmod the driver and the
+previous colorbar configuration will not affect the next time insmod the
+driver.
 
 Fixes: 3c7623fb5bb6 ("drm/hisilicon/hibmc: Enable this hot plug detect of irq feature")
 Signed-off-by: Baihan Li <libaihan@huawei.com>
 Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Tao Tian <tiantao6@hisilicon.com>
-Link: https://patch.msgid.link/20251210023759.3944834-4-shiyongbang@huawei.com
+Link: https://patch.msgid.link/20251210023759.3944834-5-shiyongbang@huawei.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
-index 37549dafa06ca..8f8ca940b6b26 100644
+index 8f8ca940b6b26..d5bd3c45649b2 100644
 --- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
 +++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
-@@ -177,13 +177,16 @@ int hibmc_dp_hw_init(struct hibmc_dp *dp)
- 	dp_dev->link.cap.lanes = 0x2;
- 	dp_dev->link.cap.link_rate = DP_LINK_BW_8_1;
- 
--	/* hdcp data */
--	writel(HIBMC_DP_HDCP, dp_dev->base + HIBMC_DP_HDCP_CFG);
+@@ -180,6 +180,8 @@ int hibmc_dp_hw_init(struct hibmc_dp *dp)
  	/* int init */
  	writel(0, dp_dev->base + HIBMC_DP_INTR_ENABLE);
  	writel(HIBMC_DP_INT_RST, dp_dev->base + HIBMC_DP_INTR_ORIGINAL_STATUS);
++	/* clr colorbar */
++	writel(0, dp_dev->base + HIBMC_DP_COLOR_BAR_CTRL);
  	/* rst */
-+	writel(0, dp_dev->base + HIBMC_DP_DPTX_RST_CTRL);
-+	usleep_range(30, 50);
-+	/* de-rst */
- 	writel(HIBMC_DP_DPTX_RST, dp_dev->base + HIBMC_DP_DPTX_RST_CTRL);
-+	/* hdcp data */
-+	writel(HIBMC_DP_HDCP, dp_dev->base + HIBMC_DP_HDCP_CFG);
- 	/* clock enable */
- 	writel(HIBMC_DP_CLK_EN, dp_dev->base + HIBMC_DP_DPTX_CLK_CTRL);
- 
+ 	writel(0, dp_dev->base + HIBMC_DP_DPTX_RST_CTRL);
+ 	usleep_range(30, 50);
 -- 
 2.51.0
 
