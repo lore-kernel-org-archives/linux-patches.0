@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EEC2D6E58;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FE22D6E58;
 	Wed, 25 Feb 2026 06:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002670; cv=none; b=jckpZx6AXP+l1R8R4x86EWyhfKz2DKqHeg3mVF8Ut3LZj6iDxRleQHll6B4u46SZrGzt/a02nYLBPObXEKAssIPp8GzOlUHemYEWqjiQc+jAN6Uxp6Wx/iLCuSDKUEyUqw/n8R7mh1OMCRCez2ZIPCDj1D0HMkpPRdbMoGTO4Jg=
+	t=1772002671; cv=none; b=QAY7N+fBHVf4hWhdoMh9J/TR1xo5GTyt0xY1Z6M7jV08hxUkafX6MQd2YtQ2feYT9f1ciHkkemTf8/YMbaqEnQH3HKc5cfI7UwwPqDNEpz85IDvqN3raMJGTAleKGtB7ZLJHwj+ak+FZSxbRUdfU6kQi/EjWsfQIdYm2D+lRyTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002670; c=relaxed/simple;
-	bh=dcRtYtzlqgJwAS1IKFICwl9bFFl0Epifn/Qsf/gIs9s=;
+	s=arc-20240116; t=1772002671; c=relaxed/simple;
+	bh=3wqnuOaNnteNHLaHNJsdgGUmiI60+E6FNBQfVOR1O+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mA3HicYpWRKedI4ss1Xm0e5GMZes2zZRAu8n+rvHCtvX9n6KyBDp9BcCw/yRiGT9N4UX3NIPl898r1+kUgiNXgOY3pxIlxJ2Of1/WCEbejKe98MRRJNb6GfWLrkTO8lX1HqmslEtFGRGerzABes4jFI/YlouhHrUBOqa/NULVG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUBuBaQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QCDvMKYM7DbNYSZYQphEhLXEqL33jlfc8opSWGWZMtr0sA7B7HBkqHAII9PSPkKGVCCWZ/mSHZL8tlHPyONl/gewp7TWSw5JJW0MQ4W9tqSF0xLXqrRXR/migLJ6l+fLx6z/UwK1C8I9qTnD7RVVAG3lfHObWSfZ197DUtaX8Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXKCQcKe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUBuBaQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EF5C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXKCQcKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DAFC116D0;
 	Wed, 25 Feb 2026 06:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002670;
-	bh=dcRtYtzlqgJwAS1IKFICwl9bFFl0Epifn/Qsf/gIs9s=;
+	bh=3wqnuOaNnteNHLaHNJsdgGUmiI60+E6FNBQfVOR1O+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xUBuBaQmOIfKKVEphyX3DbZGYMlHfWa+u39nR0WiiwM65DHVOarS5gxKrWC8uyvz6
-	 og+UVVO5XK7c04UR579/6S+CUMwDMvgtxHPjW191/hS1lA64pAWGiiFdg4B4LSDz54
-	 giDRvIYObzY09hj3J/7e5TI0i0jvDXaxkz0tPeaE=
+	b=FXKCQcKe5Iy1ZONNULrT8TcOVwXbZeuuudDGD34n9zPuCSIqjin71tydnvNc93CyH
+	 uYQ3zBNqpVZknzpxZKAkzqy6ABADO3kg3TUHGUrCekLsBcJLUQeVRxRjyQW2KxqvP/
+	 kDoutNpvRLr8gcuQyVc/tq+dkjK6cIY0r6Ru9C4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Michael Hennerich <michael.hennerich@analog.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 452/641] dmaengine: mediatek: uart-apdma: Fix above 4G addressing TX/RX
-Date: Tue, 24 Feb 2026 17:22:58 -0800
-Message-ID: <20260225012359.468050477@linuxfoundation.org>
+Subject: [PATCH 6.18 453/641] dma: dma-axi-dmac: fix SW cyclic transfers
+Date: Tue, 24 Feb 2026 17:22:59 -0800
+Message-ID: <20260225012359.491320421@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -45,87 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-[ Upstream commit 58ab9d7b6651d21e1cff1777529f2d3dd0b4e851 ]
+[ Upstream commit 9bd257181fd5c996d922e9991500ad27987cfbf4 ]
 
-The VFF_4G_SUPPORT register is named differently in datasheets,
-and its name is "VFF_ADDR2"; was this named correctly from the
-beginning it would've been clearer that there was a mistake in
-the programming sequence.
+If 'hw_cyclic' is false we should still be able to do cyclic transfers in
+"software". That was not working for the case where 'desc->num_sgs' is 1
+because 'chan->next_desc' is never set with the current desc which means
+that the cyclic transfer only runs once and in the next SOT interrupt we
+do nothing since vchan_next_desc() will return NULL.
 
-This register is supposed to hold the high bits to support the
-DMA addressing above 4G (so, more than 32 bits) and not a bit
-to "enable" the support for VFF 4G.
+Fix it by setting 'chan->next_desc' as soon as we get a new desc via
+vchan_next_desc().
 
-Fix the name of this register, and also fix its usage by writing
-the upper 32 bits of the dma_addr_t on it when the SoC supports
-such feature.
-
-Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20251113122229.23998-6-angelogioacchino.delregno@collabora.com
+Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+base-commit: 398035178503bf662281bbffb4bebce1460a4bc5
+change-id: 20251104-axi-dmac-fixes-and-improvs-e3ad512a329c
+Acked-by: Michael Hennerich <michael.hennerich@analog.com>
+Link: https://patch.msgid.link/20251104-axi-dmac-fixes-and-improvs-v1-1-3e6fd9328f72@analog.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mediatek/mtk-uart-apdma.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/dma/dma-axi-dmac.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
-index 08e15177427b9..96c18c815f1df 100644
---- a/drivers/dma/mediatek/mtk-uart-apdma.c
-+++ b/drivers/dma/mediatek/mtk-uart-apdma.c
-@@ -41,7 +41,7 @@
- #define VFF_STOP_CLR_B		0
- #define VFF_EN_CLR_B		0
- #define VFF_INT_EN_CLR_B	0
--#define VFF_4G_SUPPORT_CLR_B	0
-+#define VFF_ADDR2_CLR_B		0
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index 5b06b0dc67ee1..e22639822045f 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -247,6 +247,7 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
+ 			return;
+ 		list_move_tail(&vdesc->node, &chan->active_descs);
+ 		desc = to_axi_dmac_desc(vdesc);
++		chan->next_desc = desc;
+ 	}
+ 	sg = &desc->sg[desc->num_submitted];
  
- /*
-  * interrupt trigger level for tx
-@@ -72,7 +72,7 @@
- /* TX: the buffer size SW can write. RX: the buffer size HW can write. */
- #define VFF_LEFT_SIZE		0x40
- #define VFF_DEBUG_STATUS	0x50
--#define VFF_4G_SUPPORT		0x54
-+#define VFF_ADDR2		0x54
- 
- struct mtk_uart_apdmadev {
- 	struct dma_device ddev;
-@@ -149,7 +149,7 @@ static void mtk_uart_apdma_start_tx(struct mtk_chan *c)
- 		mtk_uart_apdma_write(c, VFF_INT_FLAG, VFF_TX_INT_CLR_B);
- 
- 		if (mtkd->support_33bits)
--			mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_EN_B);
-+			mtk_uart_apdma_write(c, VFF_ADDR2, upper_32_bits(d->addr));
+@@ -265,8 +266,6 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
+ 		else
+ 			chan->next_desc = NULL;
+ 		flags |= AXI_DMAC_FLAG_LAST;
+-	} else {
+-		chan->next_desc = desc;
  	}
  
- 	mtk_uart_apdma_write(c, VFF_EN, VFF_EN_B);
-@@ -192,7 +192,7 @@ static void mtk_uart_apdma_start_rx(struct mtk_chan *c)
- 		mtk_uart_apdma_write(c, VFF_INT_FLAG, VFF_RX_INT_CLR_B);
- 
- 		if (mtkd->support_33bits)
--			mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_EN_B);
-+			mtk_uart_apdma_write(c, VFF_ADDR2, upper_32_bits(d->addr));
- 	}
- 
- 	mtk_uart_apdma_write(c, VFF_INT_EN, VFF_RX_INT_EN_B);
-@@ -298,7 +298,7 @@ static int mtk_uart_apdma_alloc_chan_resources(struct dma_chan *chan)
- 	}
- 
- 	if (mtkd->support_33bits)
--		mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_SUPPORT_CLR_B);
-+		mtk_uart_apdma_write(c, VFF_ADDR2, VFF_ADDR2_CLR_B);
- 
- err_pm:
- 	pm_runtime_put_noidle(mtkd->ddev.dev);
+ 	sg->hw->id = axi_dmac_read(dmac, AXI_DMAC_REG_TRANSFER_ID);
 -- 
 2.51.0
 
