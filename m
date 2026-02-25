@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF9F2D77F5;
-	Wed, 25 Feb 2026 06:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB0F2FFFB6;
+	Wed, 25 Feb 2026 06:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002720; cv=none; b=UO6+7q34h7U9ekezEWA1NOcp5urHKqCTg2L/LPXgmJNO0nNkTPlrCm26RU7wd2gBoxeiir+EQygTaHfeyGAlLEDBn/XRgQP1q9ZcPQlWzBAcn+In0T1nz5XR9+9DagBi3L23Q08joAZC6y3103glNm9ksP9vdY4/Vqa2dP3m51A=
+	t=1772002721; cv=none; b=Eg265D6rSA2x31pfDyqyc4rZNnMbDYJxP83VPslcms9WA1FKfiVY5Lxws/Nu03Gtb/98uUtvkw1hcsCbG3H+uBAFDlCzm2tW4HRPyODqU5WmgvE4o3oFUunttYevvb1add8iD88B2BLkIZMOZXaVia4Frki5cHlPbCwePGoVT5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002720; c=relaxed/simple;
-	bh=E6+gq3WrAVQ9CSKeb3ZH6T1P4bZTzUV23JQeXsK97U4=;
+	s=arc-20240116; t=1772002721; c=relaxed/simple;
+	bh=GwzGyjFyhibmeyLGyb0gb354MeadJ5KfGndhHZ0rWig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hlLe8ID4xQFFWjBsgH+e3Zpx/YNnoiwTcIgMlv2auUA2RbqD7ODZYhMLH+zIDUTDMMiginijUaZXigV/7hzt1uDq/N6EFF34DVnXvtHbiJIFzcrd+HR1/+QjTHDfXW7435+a6zvupmcDwEEh4Ag4AxVl2RdaRjP2slcPzn4abmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1/XY7H7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E3WDr9VsIRPC1lWFV7HDbe1F4qoWw0S8CAAY9tJUtc0cBPt1eEplrTiMItNSAdoRGxEYcQTSDchUkusqibQiEqMDLrKqMIbLPf1GqJ83+GvE8dJrvDev4elH28wE08DohzJwNQnzDSLZGDpytcTi3Z2AsKMbVrplk9kwcLlKXJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ag614svy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1/XY7H7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D0CC116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ag614svy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EEBC116D0;
 	Wed, 25 Feb 2026 06:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002720;
-	bh=E6+gq3WrAVQ9CSKeb3ZH6T1P4bZTzUV23JQeXsK97U4=;
+	bh=GwzGyjFyhibmeyLGyb0gb354MeadJ5KfGndhHZ0rWig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1/XY7H7gr1UkYlKQh0s/lgjelWbv6e/CwVL43pKMkM9XqkdDbOSkLhiyeV3Ddr3C
-	 DPtrd+24byVpsaGSM5Y25rYivsDtI3rT/8J+TSvW04bywwTtbJ47fi+m1BF6DODApF
-	 DssJNdMwnfMCiTzJj/OXBPrqALIueTGdM0AJJuTI=
+	b=ag614svyR9qB8d16ptO8SSxBHhYBfk9oa50GpqFzt2oDiYEgF2bJaTrlc0AWki9rq
+	 lhjWLTY10NaudHeIbxRHr4bWPOdQgwVT2jcRKiJ4gdu8ImHA4UDS4nPwv87T7f9+dH
+	 kJrL2pdDpr2OzZn0QMb71SP2HsmUBQW5X8V+6d8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Mohsin Bashir <mohsin.bashr@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 512/641] ovpn: fix VPN TX bytes counting
-Date: Tue, 24 Feb 2026 17:23:58 -0800
-Message-ID: <20260225012400.928559741@linuxfoundation.org>
+Subject: [PATCH 6.18 530/641] eth: fbnic: Configure RDE settings for pause frame
+Date: Tue, 24 Feb 2026 17:24:16 -0800
+Message-ID: <20260225012401.371664641@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,58 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Mohsin Bashir <mohsin.bashr@gmail.com>
 
-[ Upstream commit b660b13d4c6379ca6360f24aaef8c5807fefd237 ]
+[ Upstream commit 0135333914d63181f823bd340ae96737c8a820ca ]
 
-In ovpn_net_xmit, after GSO segmentation and segment processing, the
-first segment on the list is used to increment VPN TX statistics, which
-fails to account for any subsequent segments in the chain.
+fbnic supports pause frames. When pause frames are enabled presumably
+user expects lossless operation from the NIC. Make sure we configure
+RDE (Rx DMA Engine) to DROP_NEVER mode to avoid discards due to delays
+in fetching Rx descriptors from the host.
 
-Fix this by accumulating the length of every segment that successfully
-passes skb_share_check into a tx_bytes variable. This ensures the peer
-statistics accurately reflect the total data volume sent, regardless of
-whether the original packet was segmented.
+While at it enable DROP_NEVER when NIC only has a single queue
+configured. In this case the NIC acts as a FIFO so there's no risk
+of head-of-line blocking other queues by making RDE wait. If pause
+is disabled this just moves the packet loss from the DMA engine to
+the Rx buffer.
 
-Fixes: 04ca14955f9a ("ovpn: store tunnel and transport statistics")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Remove redundant call to fbnic_config_drop_mode_rcq(), introduced by
+commit 0cb4c0a13723 ("eth: fbnic: Implement Rx queue
+alloc/start/stop/free"). This call does not add value as
+fbnic_enable_rcq(), which is called immediately afterward, already
+handles this.
+
+Although we do not support autoneg at this time, preserve tx_pause in
+.mac_link_up instead of fbnic_phylink_get_pauseparam()
+
+Signed-off-by: Mohsin Bashir <mohsin.bashr@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251113232610.1151712-1-mohsin.bashr@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: bbeb3bfbffe0 ("eth: fbnic: set FBNIC_QUEUE_RDE_CTL0_EN_HDR_SPLIT on RDE_CTL0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/io.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../net/ethernet/meta/fbnic/fbnic_netdev.h    |  2 ++
+ .../net/ethernet/meta/fbnic/fbnic_phylink.c   |  3 +++
+ drivers/net/ethernet/meta/fbnic/fbnic_txrx.c  | 26 ++++++++++++++++---
+ drivers/net/ethernet/meta/fbnic/fbnic_txrx.h  |  1 +
+ 4 files changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ovpn/io.c b/drivers/net/ovpn/io.c
-index f70c58b10599b..955c9a37e1f8d 100644
---- a/drivers/net/ovpn/io.c
-+++ b/drivers/net/ovpn/io.c
-@@ -355,6 +355,7 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct ovpn_priv *ovpn = netdev_priv(dev);
- 	struct sk_buff *segments, *curr, *next;
- 	struct sk_buff_head skb_list;
-+	unsigned int tx_bytes = 0;
- 	struct ovpn_peer *peer;
- 	__be16 proto;
- 	int ret;
-@@ -414,6 +415,8 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
- 			continue;
- 		}
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.h b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.h
+index b0a87c57910f2..e6ca23a9957d9 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.h
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.h
+@@ -73,6 +73,8 @@ struct fbnic_net {
  
-+		/* only count what we actually send */
-+		tx_bytes += curr->len;
- 		__skb_queue_tail(&skb_list, curr);
+ 	/* Time stamping filter config */
+ 	struct kernel_hwtstamp_config hwtstamp_config;
++
++	bool tx_pause;
+ };
+ 
+ int __fbnic_open(struct fbnic_net *fbn);
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_phylink.c b/drivers/net/ethernet/meta/fbnic/fbnic_phylink.c
+index 7ce3fdd252828..62701923cfe96 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_phylink.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_phylink.c
+@@ -208,6 +208,9 @@ fbnic_phylink_mac_link_up(struct phylink_config *config,
+ 	struct fbnic_net *fbn = netdev_priv(netdev);
+ 	struct fbnic_dev *fbd = fbn->fbd;
+ 
++	fbn->tx_pause = tx_pause;
++	fbnic_config_drop_mode(fbn, tx_pause);
++
+ 	fbd->mac->link_up(fbd, tx_pause, rx_pause);
+ }
+ 
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+index b1e8ce89870f7..e99d17660230c 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+@@ -2573,11 +2573,15 @@ static void fbnic_enable_bdq(struct fbnic_ring *hpq, struct fbnic_ring *ppq)
+ }
+ 
+ static void fbnic_config_drop_mode_rcq(struct fbnic_napi_vector *nv,
+-				       struct fbnic_ring *rcq)
++				       struct fbnic_ring *rcq, bool tx_pause)
+ {
++	struct fbnic_net *fbn = netdev_priv(nv->napi.dev);
+ 	u32 drop_mode, rcq_ctl;
+ 
+-	drop_mode = FBNIC_QUEUE_RDE_CTL0_DROP_IMMEDIATE;
++	if (!tx_pause && fbn->num_rx_queues > 1)
++		drop_mode = FBNIC_QUEUE_RDE_CTL0_DROP_IMMEDIATE;
++	else
++		drop_mode = FBNIC_QUEUE_RDE_CTL0_DROP_NEVER;
+ 
+ 	/* Specify packet layout */
+ 	rcq_ctl = FIELD_PREP(FBNIC_QUEUE_RDE_CTL0_DROP_MODE_MASK, drop_mode) |
+@@ -2587,6 +2591,21 @@ static void fbnic_config_drop_mode_rcq(struct fbnic_napi_vector *nv,
+ 	fbnic_ring_wr32(rcq, FBNIC_QUEUE_RDE_CTL0, rcq_ctl);
+ }
+ 
++void fbnic_config_drop_mode(struct fbnic_net *fbn, bool tx_pause)
++{
++	int i, t;
++
++	for (i = 0; i < fbn->num_napi; i++) {
++		struct fbnic_napi_vector *nv = fbn->napi[i];
++
++		for (t = 0; t < nv->rxt_count; t++) {
++			struct fbnic_q_triad *qt = &nv->qt[nv->txt_count + t];
++
++			fbnic_config_drop_mode_rcq(nv, &qt->cmpl, tx_pause);
++		}
++	}
++}
++
+ static void fbnic_config_rim_threshold(struct fbnic_ring *rcq, u16 nv_idx, u32 rx_desc)
+ {
+ 	u32 threshold;
+@@ -2636,7 +2655,7 @@ static void fbnic_enable_rcq(struct fbnic_napi_vector *nv,
+ 	u32 hds_thresh = fbn->hds_thresh;
+ 	u32 rcq_ctl = 0;
+ 
+-	fbnic_config_drop_mode_rcq(nv, rcq);
++	fbnic_config_drop_mode_rcq(nv, rcq, fbn->tx_pause);
+ 
+ 	/* Force lower bound on MAX_HEADER_BYTES. Below this, all frames should
+ 	 * be split at L4. It would also result in the frames being split at
+@@ -2699,7 +2718,6 @@ static void __fbnic_nv_enable(struct fbnic_napi_vector *nv)
+ 						  &nv->napi);
+ 
+ 		fbnic_enable_bdq(&qt->sub0, &qt->sub1);
+-		fbnic_config_drop_mode_rcq(nv, &qt->cmpl);
+ 		fbnic_enable_rcq(nv, &qt->cmpl);
  	}
- 
-@@ -426,7 +429,7 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
- 	}
- 	skb_list.prev->next = NULL;
- 
--	ovpn_peer_stats_increment_tx(&peer->vpn_stats, skb_list.next->len);
-+	ovpn_peer_stats_increment_tx(&peer->vpn_stats, tx_bytes);
- 	ovpn_send(ovpn, skb_list.next, peer);
- 
- 	return NETDEV_TX_OK;
+ }
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
+index ca37da5a0b179..27776e844e29b 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
+@@ -184,6 +184,7 @@ void fbnic_reset_netif_queues(struct fbnic_net *fbn);
+ irqreturn_t fbnic_msix_clean_rings(int irq, void *data);
+ void fbnic_napi_enable(struct fbnic_net *fbn);
+ void fbnic_napi_disable(struct fbnic_net *fbn);
++void fbnic_config_drop_mode(struct fbnic_net *fbn, bool tx_pause);
+ void fbnic_enable(struct fbnic_net *fbn);
+ void fbnic_disable(struct fbnic_net *fbn);
+ void fbnic_flush(struct fbnic_net *fbn);
 -- 
 2.51.0
 
