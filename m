@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E3224A06D;
-	Wed, 25 Feb 2026 01:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF211D5ABA;
+	Wed, 25 Feb 2026 01:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982854; cv=none; b=M8ul+J4/St/AdL8yrq6b4LY5S9vEjMId27qGRe76VTupjDaXaxq1AVtXX673BVBT42azw0w2FDy4oUJYG+ywDX6gWx0TksLcNwy1xkpAHKhJ+tIU9Z7NBnf563PVTpfcaEVO25b/Nq6B5NsfFDTwr8LcTGPwU9FBwvGDp2haTmA=
+	t=1771982855; cv=none; b=OGKBjiVtGaUWhes3rBJSpBWY0xTNv24K8lEHEazvKwUT4MKw5P6siv/EDCE1SQBcirhnhc1c6mjyZd80GodEyblVVIWy4uXVO6207m3kNOJpcMu/rmgAvnfVNJH3e4eSgEoJ/dLB/Uidvj9Jw3hLauCgis32b/+BT3uNgcmHPZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982854; c=relaxed/simple;
-	bh=HOJ1ke+mbnTsfjSUH80Ots1o/KEm7ZPRqzo3WctfT9g=;
+	s=arc-20240116; t=1771982855; c=relaxed/simple;
+	bh=qYmYx3ThGgOrqC46M5T38gKFdO/hDF1apNi8To2jf64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sq5qp2fb+dVIkXPcshBOxUwXwt7kffswUfeH0vBSkcVj5jHrzD1+FkUVVho++jePyNoH1G2BF/zwt5yO09G11u9Cses2TBTmoj+/yXT1VH7hcMZEXKHFr56S8EDmtSpDpdU1YDhT7PchAvw8mbaXpUGTigZ2K5YBtSpXU3MWMgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pz7s95fD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d41WIW+PraJDQ/QVVNscCgqI3m6Vz5D90C9jGj5eiL6l1Z3FQMNm211110RiwCaweI81jYj1t4kE2uLvGjWVdDBnUDpFTbDr/VzVAeSSBLEDHItOk6CI6lxk6Yca+i1jAJs/+9mBbDOKQBpYvkrGcWWKl7WUFPdeSY3QaDysi70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKy4/fY3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pz7s95fD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01C8C19423;
-	Wed, 25 Feb 2026 01:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKy4/fY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5083BC116D0;
+	Wed, 25 Feb 2026 01:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982854;
-	bh=HOJ1ke+mbnTsfjSUH80Ots1o/KEm7ZPRqzo3WctfT9g=;
+	s=korg; t=1771982855;
+	bh=qYmYx3ThGgOrqC46M5T38gKFdO/hDF1apNi8To2jf64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pz7s95fD9gSQJvdCwurxQDYQhSnbbOGB/MGGDmQVPGCpEooxqC9W3Ju7qO0pwlR1z
-	 vnTA/d+X1mqxmsZPAFMTxXLa8HgiQPjNx0wK1ExBpkCIYa3jNffNLpMM6pqL8PTz3S
-	 +DGmrKb15ykiixromsPj9VkExYBSnjWrBg4Buk70=
+	b=AKy4/fY313lVmqLrRDIs15bPHPhYu3fwXoVKW10YDiKXG/dHgeDPcx2KjTMz8woRy
+	 3qkPpDSbi5c+hGrAcksWGQ2ZsE0JqPGb/w/tgBs+iUjB8RJoejlHL9R5eVenU/ah1d
+	 SIMykJioMaQTjlT54hC2q3aFlO1OdaFcw+6vswkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 043/781] io_uring/sync: validate passed in offset
-Date: Tue, 24 Feb 2026 17:12:32 -0800
-Message-ID: <20260225012400.760850872@linuxfoundation.org>
+Subject: [PATCH 6.19 044/781] cpuidle: governors: menu: Always check timers with tick stopped
+Date: Tue, 24 Feb 2026 17:12:33 -0800
+Message-ID: <20260225012400.784226486@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -50,34 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 649dd18f559891bdafc5532d737c7dfb56060a6d ]
+[ Upstream commit 80606f4eb8d7484ab7f7d6f0fd30d71e6fbcf328 ]
 
-Check if the passed in offset is negative once cast to sync->off. This
-ensures that -EINVAL is returned for that case, like it would be for
-sync_file_range(2).
+After commit 5484e31bbbff ("cpuidle: menu: Skip tick_nohz_get_sleep_length()
+call in some cases"), if the return value of get_typical_interval()
+multiplied by NSEC_PER_USEC is not greater than RESIDENCY_THRESHOLD_NS,
+the menu governor will skip computing the time till the closest timer.
+If that happens when the tick has been stopped already, the selected
+idle state may be too deep due to the subsequent check comparing
+predicted_ns with TICK_NSEC and causing its value to be replaced with
+the expected time till the closest timer, which is KTIME_MAX in that
+case.  That will cause the deepest enabled idle state to be selected,
+but the time till the closest timer very well may be shorter than the
+target residency of that state, in which case a shallower state should
+be used.
 
-Fixes: c992fe2925d7 ("io_uring: add fsync support")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Address this by making menu_select() always compute the time till the
+closest timer when the tick has been stopped.
+
+Also move the predicted_ns check mentioned above into the branch in
+which the time till the closest timer is determined because it only
+needs to be done in that case.
+
+Fixes: 5484e31bbbff ("cpuidle: menu: Skip tick_nohz_get_sleep_length() call in some cases")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/5959091.DvuYhMxLoT@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/sync.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpuidle/governors/menu.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/io_uring/sync.c b/io_uring/sync.c
-index cea2d381ffd2a..ab7fa1cd7dd63 100644
---- a/io_uring/sync.c
-+++ b/io_uring/sync.c
-@@ -62,6 +62,8 @@ int io_fsync_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 		return -EINVAL;
+diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
+index 64d6f7a1c7766..ca863ba03d454 100644
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -239,7 +239,7 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
  
- 	sync->off = READ_ONCE(sqe->off);
-+	if (sync->off < 0)
-+		return -EINVAL;
- 	sync->len = READ_ONCE(sqe->len);
- 	req->flags |= REQ_F_FORCE_ASYNC;
- 	return 0;
+ 	/* Find the shortest expected idle interval. */
+ 	predicted_ns = get_typical_interval(data) * NSEC_PER_USEC;
+-	if (predicted_ns > RESIDENCY_THRESHOLD_NS) {
++	if (predicted_ns > RESIDENCY_THRESHOLD_NS || tick_nohz_tick_stopped()) {
+ 		unsigned int timer_us;
+ 
+ 		/* Determine the time till the closest timer. */
+@@ -259,6 +259,16 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 				   RESOLUTION * DECAY * NSEC_PER_USEC);
+ 		/* Use the lowest expected idle interval to pick the idle state. */
+ 		predicted_ns = min((u64)timer_us * NSEC_PER_USEC, predicted_ns);
++		/*
++		 * If the tick is already stopped, the cost of possible short
++		 * idle duration misprediction is much higher, because the CPU
++		 * may be stuck in a shallow idle state for a long time as a
++		 * result of it.  In that case, say we might mispredict and use
++		 * the known time till the closest timer event for the idle
++		 * state selection.
++		 */
++		if (tick_nohz_tick_stopped() && predicted_ns < TICK_NSEC)
++			predicted_ns = data->next_timer_ns;
+ 	} else {
+ 		/*
+ 		 * Because the next timer event is not going to be determined
+@@ -284,16 +294,6 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		return 0;
+ 	}
+ 
+-	/*
+-	 * If the tick is already stopped, the cost of possible short idle
+-	 * duration misprediction is much higher, because the CPU may be stuck
+-	 * in a shallow idle state for a long time as a result of it.  In that
+-	 * case, say we might mispredict and use the known time till the closest
+-	 * timer event for the idle state selection.
+-	 */
+-	if (tick_nohz_tick_stopped() && predicted_ns < TICK_NSEC)
+-		predicted_ns = data->next_timer_ns;
+-
+ 	/*
+ 	 * Find the idle state with the lowest power while satisfying
+ 	 * our constraints.
 -- 
 2.51.0
 
