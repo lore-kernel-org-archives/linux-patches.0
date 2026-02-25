@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0170128851F;
-	Wed, 25 Feb 2026 01:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AEB24677D;
+	Wed, 25 Feb 2026 01:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983753; cv=none; b=snOFHFaIcsSc5pI3cP4AQzJKa05iByH6anbhadFEAD/4shWdssx2W0ED3LVNRYnTzX+Bq/rduO/u+jtk658TRhVowAZX5Qn5IajuTRm300fWGsO94Eb1QklAEhhO9nJEt0FCUTd3ZnwzCfS6U0E71YeYxLhlq1KQcWrTu9z6z4Q=
+	t=1771983754; cv=none; b=Vcq1IIW6jdFI+t2XMfzllGKZUbuparwo+N03zmoOo3CYzHNf/EtpHhJjqpOrS1HNyZjjNu+82Eo6lhQ5kyifcHfdfEVq+95JlSv8EHdoVIRzkCaP8ISHrYqPia32oIp1Mn/dl3DhrytbC+auTFoQT3XvA/vmbv5xsHjUEafrxyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983753; c=relaxed/simple;
-	bh=88dZP/FQuW/wvsCe+aIuzgrjWmoR1rgac8IKIWWHBVw=;
+	s=arc-20240116; t=1771983754; c=relaxed/simple;
+	bh=u6aER71t1ksAxcPNRKrRrc2lB+xGDQ8VMq93YfzYaJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QVG/ZeE6h6E6dsLJ7+2fdeJIvTpB43Op7C+EFbtVFBCbE1Xqx6YYJ7tD3FaVc57845VqEdc3250Q5RWVuPmPClv64SHddcRHLdtj6Wa3nAoNOomcbzxNegugyziDqvnHMf2eN+cnX5gbjtn4DVGuFZLjPoTD+j63Tm9SlPOenGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlEJQiHv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=skwU6KiUyD7H+WXJFbe69msegYYsguzFvfgz+WB8xInAzEcRaaibWsDvaXMRroevUNTZV0IPqw6I0MXSXv+FQnkr12RxpFGpMNzFDwIXfyt+ABya2IEeHHVyHIzmbpk5BjRRQmonozn2YY4Yvnut+vELiJapWSVr1l9SCp2imc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tg8I7Mis; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlEJQiHv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05D7C19423;
-	Wed, 25 Feb 2026 01:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tg8I7Mis"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09741C2BC9E;
+	Wed, 25 Feb 2026 01:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983752;
-	bh=88dZP/FQuW/wvsCe+aIuzgrjWmoR1rgac8IKIWWHBVw=;
+	s=korg; t=1771983754;
+	bh=u6aER71t1ksAxcPNRKrRrc2lB+xGDQ8VMq93YfzYaJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlEJQiHvEP1P/yXoNwtYTdWT7bYhDVsI73rIfiPnEEApVFVKwDf6EZ6TeZ9dcJU0L
-	 Zz2OZYgkmW0FAHiFMrjhcb/8gHtwVUYyiQZfHogCpozje/RLpzfb3OUthFcvkEtn8z
-	 7/W/NGCzzdQcsRD7/Uz+aC/5wCnZ2cfswLg772Fo=
+	b=Tg8I7MistYUCIziU9tflzIE2L3WXlG5kJSRlbp7go4Rs/OZV9qDraO+EC5aSRCh2x
+	 yRQIkhRA+9CsVrmw/3DOS5PnS0Hr2mRQSlCQMwOuuyt2m7tHvgD7QT3J7LCFqKMaEz
+	 1NCPq9ne/+W+2xKkpMlfEY6Ldsf1TOjB2aW4Ce4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaochen Shen <shenxiaochen@open-hieco.net>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Fenghua Yu <fenghuay@nvidia.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 007/641] selftests/resctrl: Fix a division by zero error on Hygon
-Date: Tue, 24 Feb 2026 17:15:33 -0800
-Message-ID: <20260225012349.117826556@linuxfoundation.org>
+Subject: [PATCH 6.18 008/641] i3c: Move device name assignment after i3c_bus_init
+Date: Tue, 24 Feb 2026 17:15:34 -0800
+Message-ID: <20260225012349.142850146@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,65 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaochen Shen <shenxiaochen@open-hieco.net>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 671ef08d9455f5754d1fc96f5a14e357d6b80936 ]
+[ Upstream commit 3502cea99c7ceb331458cbd34ef6792c83144687 ]
 
-Change to adjust effective L3 cache size with SNC enabled change
-introduced the snc_nodes_per_l3_cache() function to detect the Intel
-Sub-NUMA Clustering (SNC) feature by comparing #CPUs in node0 with #CPUs
-sharing LLC with CPU0. The function was designed to return:
-  (1) >1: SNC mode is enabled.
-  (2)  1: SNC mode is not enabled or not supported.
+Move device name initialization to occur after i3c_bus_init()
+so that i3cbus->id is guaranteed to be assigned before it is used.
 
-However, on certain Hygon CPUs, #CPUs sharing LLC with CPU0 is actually
-less than #CPUs in node0. This results in snc_nodes_per_l3_cache()
-returning 0 (calculated as cache_cpus / node_cpus).
-
-This leads to a division by zero error in get_cache_size():
-  *cache_size /= snc_nodes_per_l3_cache();
-
-Causing the resctrl selftest to fail with:
-  "Floating point exception (core dumped)"
-
-Fix the issue by ensuring snc_nodes_per_l3_cache() returns 1 when SNC
-mode is not supported on the platform.
-
-Updated commit log to fix commit has issues:
-Shuah Khan <skhan@linuxfoundation.org>
-
-Link: https://lore.kernel.org/r/20251217030456.3834956-2-shenxiaochen@open-hieco.net
-Fixes: a1cd99e700ec ("selftests/resctrl: Adjust effective L3 cache size with SNC enabled")
-Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 9d4f219807d5 ("i3c: fix refcount inconsistency in i3c_master_register")
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260112-upstream_i3c_fix-v1-1-cbbf2cb71809@aspeedtech.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/resctrlfs.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/i3c/master.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/resctrl/resctrlfs.c b/tools/testing/selftests/resctrl/resctrlfs.c
-index 195f04c4d1586..b9c1bfb6cc029 100644
---- a/tools/testing/selftests/resctrl/resctrlfs.c
-+++ b/tools/testing/selftests/resctrl/resctrlfs.c
-@@ -243,6 +243,16 @@ int snc_nodes_per_l3_cache(void)
- 		}
- 		snc_mode = cache_cpus / node_cpus;
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index 66513a27e6e77..bc68a5e7455be 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2884,7 +2884,6 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	INIT_LIST_HEAD(&master->boardinfo.i3c);
  
-+		/*
-+		 * On some platforms (e.g. Hygon),
-+		 * cache_cpus < node_cpus, the calculated snc_mode is 0.
-+		 *
-+		 * Set snc_mode = 1 to indicate that SNC mode is not
-+		 * supported on the platform.
-+		 */
-+		if (!snc_mode)
-+			snc_mode = 1;
+ 	device_initialize(&master->dev);
+-	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
+ 
+ 	master->dev.dma_mask = parent->dma_mask;
+ 	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
+@@ -2894,6 +2893,8 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	if (ret)
+ 		goto err_put_dev;
+ 
++	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
 +
- 		if (snc_mode > 1)
- 			ksft_print_msg("SNC-%d mode discovered.\n", snc_mode);
- 	}
+ 	ret = of_populate_i3c_bus(master);
+ 	if (ret)
+ 		goto err_put_dev;
 -- 
 2.51.0
 
