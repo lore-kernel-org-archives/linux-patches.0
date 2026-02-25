@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6461D5ABA;
-	Wed, 25 Feb 2026 01:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA021D5ABA;
+	Wed, 25 Feb 2026 01:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982821; cv=none; b=H2grfBgak8DU55dNbIXjpZ3pWdFdrPTpcpS3avEkaFsvYTCdyYhnrxxJMgAmxpNQC0YW+dxolRiby98kB8A2bX74cJpEVxBA9YIzNL5Q/gkC4xl9nCeEjUu7szJhtrTC8mUA2IRVRut2xHd9bJz41u2S3BnYPwc1XnipTct7Lbs=
+	t=1771982822; cv=none; b=o+xGkHeidnj4uJXby95ReKgusr6eVw57b3jH593iunXXJzozJTvYDsYWft4jAGqEOTxabkrSD/wcBhqsu9u7R2MH0wcx5HRM1EiXpX8qqqmld0tSbc2QA7JhUXzYGCjt95G6JKeSrBrRMiRWKBoSHbdEzy+FV93nm9EUsozbKts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982821; c=relaxed/simple;
-	bh=qwtW7QOEeuPnaCow3yE9nRT5mcf4Ga91CEwcpHeoX4I=;
+	s=arc-20240116; t=1771982822; c=relaxed/simple;
+	bh=SVhGy/VI90+n0zZYEM97z3NeY/2hbtciRZMwUKlzHjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WydcGDrpfkZQ70yjfVkzBerLjPn5KjwJ9CqF4rhjp6b/fSzOT+JeG6tPwy0BIFHMHIICoHK7X96ihLtHPiOBfPZFmGjRj8iMmyWLOSVo/DQDl7ITALG7eBm+EeOFMB4HXEBNMUSMvaIlj/j3lRRiyaGU4ypc8Ic6mUOQ8KygYkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ik4PHBcS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hdW4dYbm8bycbJDxWiVWCVBCbF9xUlhTaRY/GDPoQ1qU9HatFGI5mMRW3+iy28QJ1poohmsHfr1u80OrF9QNO7cHIeR6zYglyan5EDLFGinN58AVaxzZwVWUMT9BMhoRoOZIAJ26JpJoJlPvrZ5sHEbj4Yb1j34lk1WSel3yxTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgVgM6uJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ik4PHBcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F81C116D0;
-	Wed, 25 Feb 2026 01:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgVgM6uJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD54C116D0;
+	Wed, 25 Feb 2026 01:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982821;
-	bh=qwtW7QOEeuPnaCow3yE9nRT5mcf4Ga91CEwcpHeoX4I=;
+	s=korg; t=1771982822;
+	bh=SVhGy/VI90+n0zZYEM97z3NeY/2hbtciRZMwUKlzHjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ik4PHBcSbH6irUJefHt0Dk89vmzWNbfSHyxfaKEGG2qCrRkngnuub1Mo78Fh68+ot
-	 PR0F+kBms9AP4lLNuCy9AC5HsTQLF+xBADj0TYY4mg2GhnyA10+pJkGJCybEFXtfug
-	 EfrbG2eXF4hLnIeSMuQ1LieQmfudjHgQE/IHY2Mg=
+	b=WgVgM6uJe6mV8lWys+t7ZrrEp6dL3eSURzNVuZd41o1cn2AoMGOiKzw/RomQS4yZN
+	 dmVW/9jIkpsreF6AGPdMGqEYLYeUMhadoLXgrF71meoqnAKCtKmJwuPm3iyAimqktf
+	 P2YqQtC+lVSCCOjC8Nm6WPv1ZcBVTaP1GTtW3wn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 016/781] gfs2: Retries missing in gfs2_{rename,exchange}
-Date: Tue, 24 Feb 2026 17:12:05 -0800
-Message-ID: <20260225012400.099137439@linuxfoundation.org>
+	YunJe Shin <ioerts@kookmin.ac.kr>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.19 002/781] RDMA/umad: Reject negative data_len in ib_umad_write
+Date: Tue, 24 Feb 2026 17:11:51 -0800
+Message-ID: <20260225012359.758413644@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -50,178 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: YunJe Shin <yjshin0438@gmail.com>
 
-[ Upstream commit 11d763f0b0afc2cf5f92f4adae5dbbbbef712f8f ]
+commit 5551b02fdbfd85a325bb857f3a8f9c9f33397ed2 upstream.
 
-Fix a bug in gfs2's asynchronous glock handling for rename and exchange
-operations.  The original async implementation from commit ad26967b9afa
-("gfs2: Use async glocks for rename") mentioned that retries were needed
-but never implemented them, causing operations to fail with -ESTALE
-instead of retrying on timeout.
+ib_umad_write computes data_len from user-controlled count and the
+MAD header sizes. With a mismatched user MAD header size and RMPP
+header length, data_len can become negative and reach ib_create_send_mad().
+This can make the padding calculation exceed the segment size and trigger
+an out-of-bounds memset in alloc_send_rmpp_list().
 
-Also makes the waiting interruptible.
+Add an explicit check to reject negative data_len before creating the
+send buffer.
 
-In addition, the timeouts used were too high for situations in which
-timing out is a rare but expected scenario.  Switch to shorter timeouts
-with randomization and exponentional backoff.
+KASAN splat:
+[  211.363464] BUG: KASAN: slab-out-of-bounds in ib_create_send_mad+0xa01/0x11b0
+[  211.364077] Write of size 220 at addr ffff88800c3fa1f8 by task spray_thread/102
+[  211.365867] ib_create_send_mad+0xa01/0x11b0
+[  211.365887] ib_umad_write+0x853/0x1c80
 
-Fixes: ad26967b9afa ("gfs2: Use async glocks for rename")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2be8e3ee8efd ("IB/umad: Add P_Key index support")
+Signed-off-by: YunJe Shin <ioerts@kookmin.ac.kr>
+Link: https://patch.msgid.link/20260203100628.1215408-1-ioerts@kookmin.ac.kr
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/glock.c | 36 +++++++++++++++++++++++++++---------
- fs/gfs2/glock.h |  3 ++-
- fs/gfs2/inode.c | 18 ++++++++++++++----
- 3 files changed, 43 insertions(+), 14 deletions(-)
+ drivers/infiniband/core/user_mad.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 92e029104d8a4..289851d70130b 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -1284,31 +1284,45 @@ static int glocks_pending(unsigned int num_gh, struct gfs2_holder *ghs)
-  * gfs2_glock_async_wait - wait on multiple asynchronous glock acquisitions
-  * @num_gh: the number of holders in the array
-  * @ghs: the glock holder array
-+ * @retries: number of retries attempted so far
-  *
-  * Returns: 0 on success, meaning all glocks have been granted and are held.
-  *          -ESTALE if the request timed out, meaning all glocks were released,
-  *          and the caller should retry the operation.
-  */
+--- a/drivers/infiniband/core/user_mad.c
++++ b/drivers/infiniband/core/user_mad.c
+@@ -514,7 +514,8 @@ static ssize_t ib_umad_write(struct file
+ 	struct rdma_ah_attr ah_attr;
+ 	struct ib_ah *ah;
+ 	__be64 *tid;
+-	int ret, data_len, hdr_len, copy_offset, rmpp_active;
++	int ret, hdr_len, copy_offset, rmpp_active;
++	size_t data_len;
+ 	u8 base_version;
  
--int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs)
-+int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs,
-+			  unsigned int retries)
- {
- 	struct gfs2_sbd *sdp = ghs[0].gh_gl->gl_name.ln_sbd;
--	int i, ret = 0, timeout = 0;
- 	unsigned long start_time = jiffies;
-+	int i, ret = 0;
-+	long timeout;
+ 	if (count < hdr_size(file) + IB_MGMT_RMPP_HDR)
+@@ -588,7 +589,10 @@ static ssize_t ib_umad_write(struct file
+ 	}
  
- 	might_sleep();
--	/*
--	 * Total up the (minimum hold time * 2) of all glocks and use that to
--	 * determine the max amount of time we should wait.
--	 */
--	for (i = 0; i < num_gh; i++)
--		timeout += ghs[i].gh_gl->gl_hold_time << 1;
- 
--	if (!wait_event_timeout(sdp->sd_async_glock_wait,
-+	timeout = GL_GLOCK_MIN_HOLD;
-+	if (retries) {
-+		unsigned int max_shift;
-+		long incr;
-+
-+		/* Add a random delay and increase the timeout exponentially. */
-+		max_shift = BITS_PER_LONG - 2 - __fls(GL_GLOCK_HOLD_INCR);
-+		incr = min(GL_GLOCK_HOLD_INCR << min(retries - 1, max_shift),
-+			   10 * HZ - GL_GLOCK_MIN_HOLD);
-+		schedule_timeout_interruptible(get_random_long() % (incr / 3));
-+		if (signal_pending(current))
-+			goto interrupted;
-+		timeout += (incr / 3) + get_random_long() % (incr / 3);
+ 	base_version = ((struct ib_mad_hdr *)&packet->mad.data)->base_version;
+-	data_len = count - hdr_size(file) - hdr_len;
++	if (check_sub_overflow(count, hdr_size(file) + hdr_len, &data_len)) {
++		ret = -EINVAL;
++		goto err_ah;
 +	}
-+
-+	if (!wait_event_interruptible_timeout(sdp->sd_async_glock_wait,
- 				!glocks_pending(num_gh, ghs), timeout)) {
- 		ret = -ESTALE; /* request timed out. */
- 		goto out;
- 	}
-+	if (signal_pending(current))
-+		goto interrupted;
- 
- 	for (i = 0; i < num_gh; i++) {
- 		struct gfs2_holder *gh = &ghs[i];
-@@ -1332,6 +1346,10 @@ int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs)
- 		}
- 	}
- 	return ret;
-+
-+interrupted:
-+	ret = -EINTR;
-+	goto out;
- }
- 
- /**
-diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
-index 55d5985f32a08..dccbf36b8cb10 100644
---- a/fs/gfs2/glock.h
-+++ b/fs/gfs2/glock.h
-@@ -204,7 +204,8 @@ int gfs2_glock_poll(struct gfs2_holder *gh);
- int gfs2_instantiate(struct gfs2_holder *gh);
- int gfs2_glock_holder_ready(struct gfs2_holder *gh);
- int gfs2_glock_wait(struct gfs2_holder *gh);
--int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs);
-+int gfs2_glock_async_wait(unsigned int num_gh, struct gfs2_holder *ghs,
-+			  unsigned int retries);
- void gfs2_glock_dq(struct gfs2_holder *gh);
- void gfs2_glock_dq_wait(struct gfs2_holder *gh);
- void gfs2_glock_dq_uninit(struct gfs2_holder *gh);
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index 36618e3531996..b6ed069b34872 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -1495,7 +1495,7 @@ static int gfs2_rename(struct inode *odir, struct dentry *odentry,
- 	unsigned int num_gh;
- 	int dir_rename = 0;
- 	struct gfs2_diradd da = { .nr_blocks = 0, .save_loc = 0, };
--	unsigned int x;
-+	unsigned int retries = 0, x;
- 	int error;
- 
- 	gfs2_holder_mark_uninitialized(&r_gh);
-@@ -1545,12 +1545,17 @@ static int gfs2_rename(struct inode *odir, struct dentry *odentry,
- 		num_gh++;
- 	}
- 
-+again:
- 	for (x = 0; x < num_gh; x++) {
- 		error = gfs2_glock_nq(ghs + x);
- 		if (error)
- 			goto out_gunlock;
- 	}
--	error = gfs2_glock_async_wait(num_gh, ghs);
-+	error = gfs2_glock_async_wait(num_gh, ghs, retries);
-+	if (error == -ESTALE) {
-+		retries++;
-+		goto again;
-+	}
- 	if (error)
- 		goto out_gunlock;
- 
-@@ -1739,7 +1744,7 @@ static int gfs2_exchange(struct inode *odir, struct dentry *odentry,
- 	struct gfs2_sbd *sdp = GFS2_SB(odir);
- 	struct gfs2_holder ghs[4], r_gh;
- 	unsigned int num_gh;
--	unsigned int x;
-+	unsigned int retries = 0, x;
- 	umode_t old_mode = oip->i_inode.i_mode;
- 	umode_t new_mode = nip->i_inode.i_mode;
- 	int error;
-@@ -1783,13 +1788,18 @@ static int gfs2_exchange(struct inode *odir, struct dentry *odentry,
- 	gfs2_holder_init(nip->i_gl, LM_ST_EXCLUSIVE, GL_ASYNC, ghs + num_gh);
- 	num_gh++;
- 
-+again:
- 	for (x = 0; x < num_gh; x++) {
- 		error = gfs2_glock_nq(ghs + x);
- 		if (error)
- 			goto out_gunlock;
- 	}
- 
--	error = gfs2_glock_async_wait(num_gh, ghs);
-+	error = gfs2_glock_async_wait(num_gh, ghs, retries);
-+	if (error == -ESTALE) {
-+		retries++;
-+		goto again;
-+	}
- 	if (error)
- 		goto out_gunlock;
- 
--- 
-2.51.0
-
+ 	packet->msg = ib_create_send_mad(agent,
+ 					 be32_to_cpu(packet->mad.hdr.qpn),
+ 					 packet->mad.hdr.pkey_index, rmpp_active,
 
 
