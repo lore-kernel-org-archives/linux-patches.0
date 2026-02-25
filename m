@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A9A26ED3D;
-	Wed, 25 Feb 2026 01:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D0B1E2834;
+	Wed, 25 Feb 2026 01:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983665; cv=none; b=r5tzPVs66ZP3GZur9oHrlFI1i1WrxTDRzfLHBMQ9GuAFWhw8fEfBKK0jlzv/JJPknYUqpZuhhAbzoRgEnZjEvRaeb/DTE2xF89VDtIMSNGotiYCStH1h8AUwLjKr6M2BFGorzOccFwmsUunbQ6EIYb0E/WnK1ztizsXCVwaFnKE=
+	t=1771983666; cv=none; b=iEtSoHCHVZOZcDu7uwWkmQkxVj2cIkZ+jO/bKTWD5ontnuWXX7EXgABtMHBiAJo5PHql/vXeOedMBIfPbbtd/cZNuxiCNYuoG/lGsjSijsB2XdqgbI950287nyS78xP0C1PrY/J1uNeDMKSf4mSlDC4V60URDGi0+BgAGkrKKGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983665; c=relaxed/simple;
-	bh=W9du6xFz8gMdTg1yqpffOofyY6gwlSlyW81apkOJELA=;
+	s=arc-20240116; t=1771983666; c=relaxed/simple;
+	bh=YTtBa+fL6PMiMjCTMQcaXmxCHAgTKYd67KhDNCxJQIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lpu3vADPujMPOKPTH150lVOuFEW83schEXdxRUitmEYqgEjyJJQH+cqJyqTArselzhXdDCv9/mqn7BmVxWt23s+je/424eX3vLqtodkuV0nwymyTBXcAMmqqttiN+JTxPCjYLKKBp3U61Aqks+Gcm2xhKMOOc4UbO+0wSg48pEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ALZF/Zc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mmmszbRke/Ka61ZVWuNWGLV+airGv9sbCmr3bbzpuFpTtKHs0IlbtsWcaZ8TfB7Nk6+X7Div6ASHXhDS8YOdzEDjGOaVsIMn1QqgqStvf7UEh49Iei3KLOJaKFECo4Gp94GFXTQEQTNNu+OVusD8CaiPahkN0lcUAzioHKJ2cIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvEBwPN7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ALZF/Zc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028C3C116D0;
-	Wed, 25 Feb 2026 01:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvEBwPN7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B65C116D0;
+	Wed, 25 Feb 2026 01:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983665;
-	bh=W9du6xFz8gMdTg1yqpffOofyY6gwlSlyW81apkOJELA=;
+	s=korg; t=1771983666;
+	bh=YTtBa+fL6PMiMjCTMQcaXmxCHAgTKYd67KhDNCxJQIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ALZF/ZcFkofyZOJgbW8F+zUo5P9rBck60yR2zWs6Lwk/PcF6tro6OxF+d969Wy5s
-	 uyHeTtRP3kAjqxzC6xq8hEzhi5+BfX3Idi0jCGI5SLtznCXhzRwfZspRysXkNPTXeP
-	 jbhMVyL9szKJMfaUpilujhIFdr0brXmT0Q8XmGSw=
+	b=EvEBwPN7mQstFyDDUXoDmkCZtTyU+zwRPBiqODGZjtsEzok+55RR1uctYd0ZZbpVD
+	 46Yi0RYp9iS+X5O+cjkLxO+pxLHj5wd+7OQOxys6hxdZqrh3JYDcvgyis5vrEEveHW
+	 4aJYwTIMxUYie5DXWlA3o2AcOsGlgefa5Lm0jkig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <me@ziyao.cc>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.19 752/781] MIPS: Work around LLVM bug when gp is used as global register variable
-Date: Tue, 24 Feb 2026 17:24:21 -0800
-Message-ID: <20260225012418.165694518@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.19 753/781] ksmbd: call ksmbd_vfs_kern_path_end_removing() on some error paths
+Date: Tue, 24 Feb 2026 17:24:22 -0800
+Message-ID: <20260225012418.189736209@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,98 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <me@ziyao.cc>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 30bfc2d6a1132a89a5f1c3b96c59cf3e4d076ea3 upstream.
+commit a09dc10d1353f0e92c21eae2a79af1c2b1ddcde8 upstream.
 
-On MIPS, __current_thread_info is defined as global register variable
-locating in $gp, and is simply assigned with new address during kernel
-relocation.
+There are two places where ksmbd_vfs_kern_path_end_removing() needs to be
+called in order to balance what the corresponding successful call to
+ksmbd_vfs_kern_path_start_removing() has done, i.e. drop inode locks and
+put the taken references.  Otherwise there might be potential deadlocks
+and unbalanced locks which are caught like:
 
-This however is broken with LLVM, which always restores $gp if it finds
-$gp is clobbered in any form, including when intentionally through a
-global register variable. This is against GCC's documentation[1], which
-requires a callee-saved register used as global register variable not to
-be restored if it's clobbered.
+BUG: workqueue leaked lock or atomic: kworker/5:21/0x00000000/7596
+     last function: handle_ksmbd_work
+2 locks held by kworker/5:21/7596:
+ #0: ffff8881051ae448 (sb_writers#3){.+.+}-{0:0}, at: ksmbd_vfs_kern_path_locked+0x142/0x660
+ #1: ffff888130e966c0 (&type->i_mutex_dir_key#3/1){+.+.}-{4:4}, at: ksmbd_vfs_kern_path_locked+0x17d/0x660
+CPU: 5 PID: 7596 Comm: kworker/5:21 Not tainted 6.1.162-00456-gc29b353f383b #138
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+Workqueue: ksmbd-io handle_ksmbd_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x44/0x5b
+ process_one_work.cold+0x57/0x5c
+ worker_thread+0x82/0x600
+ kthread+0x153/0x190
+ ret_from_fork+0x22/0x30
+ </TASK>
 
-As a result, $gp will continue to point to the unrelocated kernel after
-the epilog of relocate_kernel(), leading to an early crash in init_idle,
+Found by Linux Verification Center (linuxtesting.org).
 
-[    0.000000] CPU 0 Unable to handle kernel paging request at virtual address 0000000000000000, epc == ffffffff81afada8, ra == ffffffff81afad90
-[    0.000000] Oops[#1]:
-[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper Tainted: G        W           6.19.0-rc5-00262-gd3eeb99bbc99-dirty #188 VOLUNTARY
-[    0.000000] Tainted: [W]=WARN
-[    0.000000] Hardware name: loongson,loongson64v-4core-virtio
-[    0.000000] $ 0   : 0000000000000000 0000000000000000 0000000000000001 0000000000000000
-[    0.000000] $ 4   : ffffffff80b80ec0 ffffffff80b53d48 0000000000000000 00000000000f4240
-[    0.000000] $ 8   : 0000000000000100 ffffffff81d82f80 ffffffff81d82f80 0000000000000001
-[    0.000000] $12   : 0000000000000000 ffffffff81776f58 00000000000005da 0000000000000002
-[    0.000000] $16   : ffffffff80b80e40 0000000000000000 ffffffff80b81614 9800000005dfbe80
-[    0.000000] $20   : 00000000540000e0 ffffffff81980000 0000000000000000 ffffffff80f81c80
-[    0.000000] $24   : 0000000000000a26 ffffffff8114fb90
-[    0.000000] $28   : ffffffff80b50000 ffffffff80b53d40 0000000000000000 ffffffff81afad90
-[    0.000000] Hi    : 0000000000000000
-[    0.000000] Lo    : 0000000000000000
-[    0.000000] epc   : ffffffff81afada8 init_idle+0x130/0x270
-[    0.000000] ra    : ffffffff81afad90 init_idle+0x118/0x270
-[    0.000000] Status: 540000e2	KX SX UX KERNEL EXL
-[    0.000000] Cause : 00000008 (ExcCode 02)
-[    0.000000] BadVA : 0000000000000000
-[    0.000000] PrId  : 00006305 (ICT Loongson-3)
-[    0.000000] Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____), tls=0000000000000000)
-[    0.000000] Stack : 9800000005dfbf00 ffffffff8178e950 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 ffffffff81970000 000000000000003f ffffffff810a6528
-[    0.000000]         0000000000000001 9800000005dfbe80 9800000005dfbf00 ffffffff81980000
-[    0.000000]         ffffffff810a6450 ffffffff81afb6c0 0000000000000000 ffffffff810a2258
-[    0.000000]         ffffffff81d82ec8 ffffffff8198d010 ffffffff81b67e80 ffffffff8197dd98
-[    0.000000]         ffffffff81d81c80 ffffffff81930000 0000000000000040 0000000000000000
-[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 000000000000009e ffffffff9fc01000 0000000000000000
-[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 ffffffff81ae86dc ffffffff81b3c741 0000000000000002
-[    0.000000]         ...
-[    0.000000] Call Trace:
-[    0.000000] [<ffffffff81afada8>] init_idle+0x130/0x270
-[    0.000000] [<ffffffff81afb6c0>] sched_init+0x5c8/0x6c0
-[    0.000000] [<ffffffff81ae86dc>] start_kernel+0x27c/0x7a8
-
-This bug has been reported to LLVM[2] and affects version from (at
-least) 18 to 21. Let's work around this by using inline assembly to
-assign $gp before a fix is widely available.
-
+Fixes: d5fc1400a34b ("smb/server: avoid deadlock when linking with ReplaceIfExists")
 Cc: stable@vger.kernel.org
-Link: https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Global-Register-Variables.html # [1]
-Link: https://github.com/llvm/llvm-project/issues/176546 # [2]
-Signed-off-by: Yao Zi <me@ziyao.cc>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/relocate.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/smb/server/smb2pdu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/mips/kernel/relocate.c
-+++ b/arch/mips/kernel/relocate.c
-@@ -420,7 +420,20 @@ void *__init relocate_kernel(void)
- 			goto out;
- 
- 		/* The current thread is now within the relocated image */
-+#ifndef CONFIG_CC_IS_CLANG
- 		__current_thread_info = RELOCATED(&init_thread_union);
-+#else
-+		/*
-+		 * LLVM may wrongly restore $gp ($28) in epilog even if it's
-+		 * intentionally modified. Work around this by using inline
-+		 * assembly to assign $gp. $gp couldn't be listed as output or
-+		 * clobber, or LLVM will still restore its original value.
-+		 * See also LLVM upstream issue
-+		 * https://github.com/llvm/llvm-project/issues/176546
-+		 */
-+		asm volatile("move $28, %0" : :
-+			     "r" (RELOCATED(&init_thread_union)));
-+#endif
- 
- 		/* Return the new kernel's entry point */
- 		kernel_entry = RELOCATED(start_kernel);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6114,14 +6114,14 @@ static int smb2_create_link(struct ksmbd
+ 				rc = -EINVAL;
+ 				ksmbd_debug(SMB, "cannot delete %s\n",
+ 					    link_name);
+-				goto out;
+ 			}
+ 		} else {
+ 			rc = -EEXIST;
+ 			ksmbd_debug(SMB, "link already exists\n");
+-			goto out;
+ 		}
+ 		ksmbd_vfs_kern_path_end_removing(&path);
++		if (rc)
++			goto out;
+ 	}
+ 	rc = ksmbd_vfs_link(work, target_name, link_name);
+ 	if (rc)
 
 
