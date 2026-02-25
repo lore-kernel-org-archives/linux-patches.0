@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECF0254B03;
-	Wed, 25 Feb 2026 01:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C5624A05D;
+	Wed, 25 Feb 2026 01:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983443; cv=none; b=JsnRFToqR7NW7I92OYvPa6iz1y20Bj8NvczN1GbbuXSZaxrfTFCfX8QDSDiNHMezXpWtUBSovWC8o9K1rVIWBjn/6urrBMW3nas6GmYLnzyf2uJRm7aYhQNtmVa3TyPnXfBxChuzQ25AYKJttGJ2veG3KvfhMlP+E1r4Mv6FwA4=
+	t=1771983445; cv=none; b=spQRnV6ckOvGStnbzH0ieUbjXGpdUB/Cy0WdgJy5YFouHmHiHu8psUOdxakM2gzbNf0Hq/vcfVXrrpfA+5s0UUf4SZZnsNxmfQ3cdCMWlmwnhR2zwpGW03SVYVFzYSzxbMFE3g4cqpIAcExtSG+o/xA+hjuX682KGc3LuI4eMFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983443; c=relaxed/simple;
-	bh=pfJqqnE5YIU0HdUoyL5fazcvZHFg3nQlhTD0lcM9WwY=;
+	s=arc-20240116; t=1771983445; c=relaxed/simple;
+	bh=EHd6D495hWwQsB4tB0PcniG5SIpyubrsMGlR/j5t2Qc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KP7o8OekHgY8bJbN9w5SvKhjYL3w0fYL3JNagKMIlZCAj8hjnJHbzgB9STmItn6tWy2AJK7Nu22bwOcf54AOkH3++pVQEBi5hXGGYtzSrbw2x/1T9sRDiM88LVYrPQSPpnWcfm88wGs6TdIb2RBYcMnlHXVhVqQ9KbyblyR3yBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aL/1dO08; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uwzsAeS9QySw+aV8AREsVXer0rFRiceL1REnfgOW2hNadRz9KHruxycsWN8ZBDQSp8gae3CKQMTwgytdeqIySX/sPp2slNv3I4FYcFs/jdMi87+te7U3/T9b+0TspNzyFbGIdskDhPKN90aMetfWFSgOPXkMJJW7a4Wzt8h7wh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzAyPhEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aL/1dO08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6150AC116D0;
-	Wed, 25 Feb 2026 01:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzAyPhEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16B6C116D0;
+	Wed, 25 Feb 2026 01:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983443;
-	bh=pfJqqnE5YIU0HdUoyL5fazcvZHFg3nQlhTD0lcM9WwY=;
+	s=korg; t=1771983444;
+	bh=EHd6D495hWwQsB4tB0PcniG5SIpyubrsMGlR/j5t2Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aL/1dO08FNbUaxzZ91bxIEWKAu5J+2A3UzwGO5c0NlRUlhvLP93pC44pfVWmL+WN+
-	 r2AaH2YmhJ16ljaYp1p5OuIitFH0LblasEtf1sW+Am2460Mi1cqcoWvAlF91s7G1g1
-	 CBPavxhYgFC9STHX8MoARKT7A92mcbVJtFIYJzIY=
+	b=DzAyPhEK9mqQLU1OVjumIBpkH0Elqx6RCAdoMP11myTAyxD1aVEh/EhIoMX2CH+Gz
+	 BkV54VZ2GyAnlyeA7bONrLQHhVVIlQ6v5iSPvadMi1PxePF45ign1nW+hekhx1buvt
+	 cYkAasYaApw+n4RCbKhB4FfKntV82l0c3wu5aGY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 560/781] interconnect: mediatek: Aggregate bandwidth with saturating add
-Date: Tue, 24 Feb 2026 17:21:09 -0800
-Message-ID: <20260225012413.536807658@linuxfoundation.org>
+Subject: [PATCH 6.19 561/781] dmaengine: mediatek: uart-apdma: Fix above 4G addressing TX/RX
+Date: Tue, 24 Feb 2026 17:21:10 -0800
+Message-ID: <20260225012413.560370866@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,52 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 6ffd02b82243d9907b5f5d2c7a2fc6a62669eece ]
+[ Upstream commit 58ab9d7b6651d21e1cff1777529f2d3dd0b4e851 ]
 
-By using a regular non-overflow-checking add, the MediaTek icc-emi
-driver will happy wrap at U32_MAX + 1 to 0. As it's common for the
-interconnect core to fill in INT_MAX values, this is not a hypothetical
-situation, but something that actually happens in regular use. This
-would be pretty disasterous if anything used this driver.
+The VFF_4G_SUPPORT register is named differently in datasheets,
+and its name is "VFF_ADDR2"; was this named correctly from the
+beginning it would've been clearer that there was a mistake in
+the programming sequence.
 
-Replace the addition with an overflow-checked addition from overflow.h,
-and saturate to U32_MAX if an overflow is detected.
+This register is supposed to hold the high bits to support the
+DMA addressing above 4G (so, more than 32 bits) and not a bit
+to "enable" the support for VFF 4G.
 
-Fixes: b45293799f75 ("interconnect: mediatek: Add MediaTek MT8183/8195 EMI Interconnect driver")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Link: https://lore.kernel.org/r/20251124-mt8196-dvfsrc-v2-13-d9c1334db9f3@collabora.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fix the name of this register, and also fix its usage by writing
+the upper 32 bits of the dma_addr_t on it when the SoC supports
+such feature.
+
+Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20251113122229.23998-6-angelogioacchino.delregno@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/mediatek/icc-emi.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/dma/mediatek/mtk-uart-apdma.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/interconnect/mediatek/icc-emi.c b/drivers/interconnect/mediatek/icc-emi.c
-index 182aa2b0623af..dfa3a9cd93998 100644
---- a/drivers/interconnect/mediatek/icc-emi.c
-+++ b/drivers/interconnect/mediatek/icc-emi.c
-@@ -12,6 +12,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_platform.h>
-+#include <linux/overflow.h>
- #include <linux/platform_device.h>
- #include <linux/soc/mediatek/dvfsrc.h>
+diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
+index 08e15177427b9..96c18c815f1df 100644
+--- a/drivers/dma/mediatek/mtk-uart-apdma.c
++++ b/drivers/dma/mediatek/mtk-uart-apdma.c
+@@ -41,7 +41,7 @@
+ #define VFF_STOP_CLR_B		0
+ #define VFF_EN_CLR_B		0
+ #define VFF_INT_EN_CLR_B	0
+-#define VFF_4G_SUPPORT_CLR_B	0
++#define VFF_ADDR2_CLR_B		0
  
-@@ -22,7 +23,9 @@ static int mtk_emi_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- {
- 	struct mtk_icc_node *in = node->data;
+ /*
+  * interrupt trigger level for tx
+@@ -72,7 +72,7 @@
+ /* TX: the buffer size SW can write. RX: the buffer size HW can write. */
+ #define VFF_LEFT_SIZE		0x40
+ #define VFF_DEBUG_STATUS	0x50
+-#define VFF_4G_SUPPORT		0x54
++#define VFF_ADDR2		0x54
  
--	*agg_avg += avg_bw;
-+	if (check_add_overflow(*agg_avg, avg_bw, agg_avg))
-+		*agg_avg = U32_MAX;
-+
- 	*agg_peak = max_t(u32, *agg_peak, peak_bw);
+ struct mtk_uart_apdmadev {
+ 	struct dma_device ddev;
+@@ -149,7 +149,7 @@ static void mtk_uart_apdma_start_tx(struct mtk_chan *c)
+ 		mtk_uart_apdma_write(c, VFF_INT_FLAG, VFF_TX_INT_CLR_B);
  
- 	in->sum_avg = *agg_avg;
+ 		if (mtkd->support_33bits)
+-			mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_EN_B);
++			mtk_uart_apdma_write(c, VFF_ADDR2, upper_32_bits(d->addr));
+ 	}
+ 
+ 	mtk_uart_apdma_write(c, VFF_EN, VFF_EN_B);
+@@ -192,7 +192,7 @@ static void mtk_uart_apdma_start_rx(struct mtk_chan *c)
+ 		mtk_uart_apdma_write(c, VFF_INT_FLAG, VFF_RX_INT_CLR_B);
+ 
+ 		if (mtkd->support_33bits)
+-			mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_EN_B);
++			mtk_uart_apdma_write(c, VFF_ADDR2, upper_32_bits(d->addr));
+ 	}
+ 
+ 	mtk_uart_apdma_write(c, VFF_INT_EN, VFF_RX_INT_EN_B);
+@@ -298,7 +298,7 @@ static int mtk_uart_apdma_alloc_chan_resources(struct dma_chan *chan)
+ 	}
+ 
+ 	if (mtkd->support_33bits)
+-		mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_SUPPORT_CLR_B);
++		mtk_uart_apdma_write(c, VFF_ADDR2, VFF_ADDR2_CLR_B);
+ 
+ err_pm:
+ 	pm_runtime_put_noidle(mtkd->ddev.dev);
 -- 
 2.51.0
 
