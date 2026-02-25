@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E602BDC03;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5F42BDC03;
 	Wed, 25 Feb 2026 06:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002759; cv=none; b=r0NdFFjPomZnWs2DeQne46kNq6GcYomlyMryqH/q2hNoxNq7ciMdJxQhrvFxdCsiq3cImTP1cQ88JZA6Lw2XzFhaWq2Ba9Y8dRSddC61aZAUcSgCaBGyDSi/1rqUimhK2IdkYSBrlDMSS3TpgZOnW0L+HSoMM0A3/y8SdOY3mb0=
+	t=1772002759; cv=none; b=inJFZNMK3AYSP+R2wIn1BfXUfFMoY2XlZxKiDL2IcZHqWxvd0oIuOaNiFg9hSaNIlQNxXiQKpi6f37N/E+dR9V00b9Ic1GVtJoG9fpoatpLiSOGLvrfS5cjkrJtdGYUMlR8EZrNWwrpAY7zKbUYcLhkD1r/rMmZ0NvldT44+AQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002759; c=relaxed/simple;
-	bh=Yq1cG3+VatBPD1LUa2XXVOh4QjQAywe4c6qim2Qjqyg=;
+	bh=VmKxZkVvqnLaH7N2JS9KHDhjAfPn8jYYERBjquNoBT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfsD/JYYg2xdml2ucrgKQww1yVqL08k1B03Yx52E0qOib+1ANjuBVOfTj/s1QO0aZt/wk9JiMFP8jMhn+qS2rrXkgQLZnGSaRVFIS1cxHwAXcSEDYvrR+f08GgqMdrofLG4Elmmt2EtOqSRJ1cpWMPOVQcUlL5vNzP8a8Fq0wOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYyLIVwa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LR//t61mLdBmpP4ET2YT5OGHERESucTX5u1ayStSqg2Xd72X/Wt2iAn9mThJ5c2zfjWCdfipg+zu6wlL9Uxz71QaYeH4OjA1ZSG3C6ns3Nvo3oFYcumk1EKbykQw5QT9I6UbD2ojfS7xRhfNcec/bhvVR8qHX+Mb6jW+HFIJc5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ix6u58ts; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYyLIVwa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3A5C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ix6u58ts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54C1C116D0;
 	Wed, 25 Feb 2026 06:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002759;
-	bh=Yq1cG3+VatBPD1LUa2XXVOh4QjQAywe4c6qim2Qjqyg=;
+	bh=VmKxZkVvqnLaH7N2JS9KHDhjAfPn8jYYERBjquNoBT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYyLIVwayRhdWg/N9Us78bDv8/TUGwXLodcz+35XcuOwsx0CqjcZkPtro1IBmBsXF
-	 DdGJ7aiMoIFkpbglUiKXthKF9W6uV/EfXBPDx4TBMt9s1FRgMMBmRUH5QQquVFfX/y
-	 2R0DTCgrQ11meG4l/g9i/eTesf9yUL74IczRC90E=
+	b=ix6u58tsRyKDEQB7ooe6spTI+TavSpFDJTuctJN8g8t1O5BdLIYPr7odQaFiPMFk3
+	 Dd6bN4QmJcFHauIj9gBie6UBPv8Jxq6/QSDCI5ATxRfA0mberdk3zADyAQhv3lN5RD
+	 i2pOCRojB5c5K6/qxviS45dcCk+AZsnSibesn0Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Alexandre Ferrieux <alexandre.ferrieux@orange.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 587/641] drm/i915/acpi: free _DSM package when no connectors
-Date: Tue, 24 Feb 2026 17:25:13 -0800
-Message-ID: <20260225012402.735288824@linuxfoundation.org>
+Subject: [PATCH 6.18 588/641] ASoC: codecs: aw88261: Fix erroneous bitmask logic in Awinic init
+Date: Tue, 24 Feb 2026 17:25:14 -0800
+Message-ID: <20260225012402.758190705@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,38 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Alexandre Ferrieux <alexandre.ferrieux@orange.com>
 
-[ Upstream commit 57b85fd53fccfdf14ce7b36d919c31aa752255f8 ]
+[ Upstream commit b82fa9b0c26eeb2fde6017f7de2c3c544484efef ]
 
-acpi_evaluate_dsm_typed() returns an ACPI package in pkg.
-When pkg->package.count == 0, we returned without freeing pkg,
-leaking memory. Free pkg before returning on the empty case.
+The aw88261_dev_reg_update() function sets the Awinic registers in a
+rather nonuniform way:
+  - most registers get directly overwritten from the firmware blob
+  - but a handful of them need more delicate logic to preserve
+    some bits from their current value, according to a register-
+    specific mask
+For the latter, the logic is basically
+       NEW = (OLD & MASK) | (VAL & ~MASK)
+However, the ~MASK value is hand-computed, and in the specific case
+of the SYSCTRL register, in a buggy way.
+This patch restores the proper ~MASK value.
 
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Fixes: 337d7a1621c7 ("drm/i915: Fix invalid access to ACPI _DSM objects")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patch.msgid.link/20260109032549.1826303-1-kaushlendra.kumar@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit c0a27a0ca8a34e96d08bb05a2c5d5ccf63fb8dc0)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 028a2ae25691 ("ASoC: codecs: Add aw88261 amplifier driver")
+Signed-off-by: Alexandre Ferrieux <alexandre.ferrieux@orange.com>
+Link: https://patch.msgid.link/20260211-aw88261-fwname-v1-1-e24e833a019d@fairphone.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_acpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/aw88261.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_acpi.c b/drivers/gpu/drm/i915/display/intel_acpi.c
-index 1addd62882413..1e8b9d1756988 100644
---- a/drivers/gpu/drm/i915/display/intel_acpi.c
-+++ b/drivers/gpu/drm/i915/display/intel_acpi.c
-@@ -96,6 +96,7 @@ static void intel_dsm_platform_mux_info(acpi_handle dhandle)
+diff --git a/sound/soc/codecs/aw88261.c b/sound/soc/codecs/aw88261.c
+index de11ae8dd9d9f..124c0a58d08bd 100644
+--- a/sound/soc/codecs/aw88261.c
++++ b/sound/soc/codecs/aw88261.c
+@@ -423,9 +423,10 @@ static int aw88261_dev_reg_update(struct aw88261 *aw88261,
+ 			if (ret)
+ 				break;
  
- 	if (!pkg->package.count) {
- 		DRM_DEBUG_DRIVER("no connection in _DSM\n");
-+		ACPI_FREE(pkg);
- 		return;
- 	}
++			/* keep all three bits from current hw status */
+ 			read_val &= (~AW88261_AMPPD_MASK) | (~AW88261_PWDN_MASK) |
+ 								(~AW88261_HMUTE_MASK);
+-			reg_val &= (AW88261_AMPPD_MASK | AW88261_PWDN_MASK | AW88261_HMUTE_MASK);
++			reg_val &= (AW88261_AMPPD_MASK & AW88261_PWDN_MASK & AW88261_HMUTE_MASK);
+ 			reg_val |= read_val;
  
+ 			/* enable uls hmute */
 -- 
 2.51.0
 
