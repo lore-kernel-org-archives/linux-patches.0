@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E34D1E2834;
-	Wed, 25 Feb 2026 01:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8311E2834;
+	Wed, 25 Feb 2026 01:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983913; cv=none; b=EChUmkw32ETH3A0zuLNAsG3CMDVNbVWDGmih8XF7V2+pnKTI2w738+uRX+wom4xPvsbcsJBy26CRmddQaJxL1rAIHlZjbrHqBTXmL38BpCNRodKT8OU/ynjkHyIQsYhJmoOqe5xrO6JhDtCstnq9+GjSuOIC9AAI/mQ3mugVoGg=
+	t=1771983914; cv=none; b=ao7Cvq2MTJnquKrQ5kGThHz/R3N3kxbp2F8x2g7XBsJ9uZDUyFXEoEyXGKJ8rNOoPzz+62txiZ0s8hrggO8p2fi5iCbjeoj8/qpZtmg2/YOTaJUD1CZz7sNPsxHyhMfVayXtfF/JnTkolmyTdSQM8axlEGHnO5DCcdrHdWi5kZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983913; c=relaxed/simple;
-	bh=GfPUpKntGUuvRa+a+mk+KDvHAFIVECAVyqx8odsqtb8=;
+	s=arc-20240116; t=1771983914; c=relaxed/simple;
+	bh=dcN6eSgvaO3cpkOWinoAXnbUjVZ6gJkAEvGck50+Uzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXeM7n+pbsLP4TKhHkcYr6kqHpX9IW/A7JXe6918fU9ySb1V0Qa1mtC5Mpz60QkYxT73ybMI8wNj0eDnAgDHnPORwNN0vwWn4gRfaX1Pl8wPz+BjwvwJ8HykGNB8so8KkeWfiBCJu/IfGnOO6fUXzNSzc7HOrksiw2Rv0BctVqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHhSDMAP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VrkQ2pU42363fnDJ2moJKqDO/OJRhpOcwkM5mHTMCwhs3OKkH8kn+JFkjip36Lk16ndL2Ljqg3TRkEG+8DxYYuASFipWy/HCiooDCn4xu7Q6uUQLFKSMnlGCX68JknH00iXC11oWJeolOFD+fKcp0O9unkmqXngSSqc+qd5SDCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TF5e9joS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHhSDMAP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5C3C116D0;
-	Wed, 25 Feb 2026 01:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TF5e9joS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97BB4C19423;
+	Wed, 25 Feb 2026 01:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983913;
-	bh=GfPUpKntGUuvRa+a+mk+KDvHAFIVECAVyqx8odsqtb8=;
+	s=korg; t=1771983914;
+	bh=dcN6eSgvaO3cpkOWinoAXnbUjVZ6gJkAEvGck50+Uzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHhSDMAPbnJkRRkOaxMjfwPivURPomURAh/rX5782RLOb00UtWkcR+89q8aG+ROhJ
-	 o2YL3OG1aj7yzlCUjv4CkDv8GlkW7mTmbFjd1r+rqieeKCf5M5yu4SoHaPpIj+BQXV
-	 q9yLEiSPvqrtDENquz6tN7NBi9bb8tPAHcaDhVAs=
+	b=TF5e9joScO8OqSFDEerVlc6LRMFZXGxs6E5vG9FHv5kiQ+JouIm2AN8CRqkP9x8v6
+	 7by34Y2pPlgjmKy9xk0Gd5FV1IHFIvIlHGpiwztKC0AMTzPAoJGGNt595apagtIAcP
+	 VVnSWm4V2NjN3x1G5aDhR3yVOibhGbxwXxb21sSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Casey Connolly <casey.connolly@linaro.org>,
-	David Heidelberg <david@ixit.cz>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 137/641] arm64: dts: qcom: sdm845-oneplus: Mark l14a regulator as boot-on
-Date: Tue, 24 Feb 2026 17:17:43 -0800
-Message-ID: <20260225012352.453303935@linuxfoundation.org>
+Subject: [PATCH 6.18 138/641] arm64: dts: qcom: x1e80100: Fix USB combo PHYs SS1 and SS2 ref clocks
+Date: Tue, 24 Feb 2026 17:17:44 -0800
+Message-ID: <20260225012352.474732372@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,36 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Connolly <casey.connolly@linaro.org>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit ad33ee060be46794a03d033894c9db3a9d6c1a0f ]
+[ Upstream commit 3af51501e2b8c87564b5cda43b0e5c316cf54717 ]
 
-This regulator is used only for the display, which is enabled by the
-bootloader and left on for continuous splash. Mark it as such.
+It seems the USB combo SS1 and SS2 ref clocks have another gate, unlike
+the SS0. These gates are part of the TCSR clock controller.
 
-Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
+At least on Dell XPS 13 (9345), if the ref clock provided by the TCSR
+clock controller for SS1 PHY is disabled on the clk_disable_unused late
+initcall, the PHY fails to initialize. It doesn't happen on the SS0 PHY
+and the SS2 is not used on this device.
+
+This doesn't seem to be a problem on CRD though. It might be that the
+RPMh has a vote for it from some other consumer and does not actually
+disable it when ther kernel drops its vote.
+
+Either way, these TCSR provided clocks seem to be the correct ones for
+the SS1 and SS2, so use them instead.
+
+Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251118-dts-oneplus-regulators-v2-3-3e67cea1e4e7@ixit.cz
+Link: https://lore.kernel.org/r/20251103-dts-qcom-x1e80100-fix-combo-ref-clks-v1-1-f395ec3cb7e8@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 7169da658dcd0..1036305231b20 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -256,6 +256,7 @@ vreg_l14a_1p88: ldo14 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 662ad694cd914..3290fd8c2d6e6 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -2910,7 +2910,7 @@ usb_1_ss1_qmpphy: phy@fda000 {
+ 			reg = <0 0x00fda000 0 0x4000>;
  
- 		vreg_l17a_1p3: ldo17 {
+ 			clocks = <&gcc GCC_USB3_SEC_PHY_AUX_CLK>,
+-				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&tcsr TCSR_USB4_1_CLKREF_EN>,
+ 				 <&gcc GCC_USB3_SEC_PHY_COM_AUX_CLK>,
+ 				 <&gcc GCC_USB3_SEC_PHY_PIPE_CLK>;
+ 			clock-names = "aux",
+@@ -2981,7 +2981,7 @@ usb_1_ss2_qmpphy: phy@fdf000 {
+ 			reg = <0 0x00fdf000 0 0x4000>;
+ 
+ 			clocks = <&gcc GCC_USB3_TERT_PHY_AUX_CLK>,
+-				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&tcsr TCSR_USB4_2_CLKREF_EN>,
+ 				 <&gcc GCC_USB3_TERT_PHY_COM_AUX_CLK>,
+ 				 <&gcc GCC_USB3_TERT_PHY_PIPE_CLK>;
+ 			clock-names = "aux",
 -- 
 2.51.0
 
