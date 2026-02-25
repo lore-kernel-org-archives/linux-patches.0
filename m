@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21771EB5E1;
-	Wed, 25 Feb 2026 01:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F5E1EB5E1;
+	Wed, 25 Feb 2026 01:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983319; cv=none; b=IMHGf8/NaOyh32o38fGIcOG8OL0U6lLZWL6IY/a9EZR0/usKoe95G3SZLmrXxkhRB/OJHycnVe78nBH/c/eBqz28vk8bCxQAeFNlGSI5hZ55uwsmj33vKHdz2E4h+hifVCHZLKUOVQh9wc9yTV3dBlRI6QMViDc4sJApKczGn90=
+	t=1771983321; cv=none; b=XY+ByL+o4uGm7OpY1ee0v1l9Y7zeNJP7mzy9hEHLikTVsusxxgoNU1BPpFDZWTs0drWMQ8sUpp9r+HYMyX/qZ4+mQnPW7BlQvmp63yoHna+ukKku6g/cua8wMDhVLl+AgqgaBVWlHwKxGrAiB8EAPqQTctlQaqJ2gn6gXslL1Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983319; c=relaxed/simple;
-	bh=5nSwxOX9O9n3ndDs/LRarRFtlGacyFucEw+joj5xAVc=;
+	s=arc-20240116; t=1771983321; c=relaxed/simple;
+	bh=j2Obg1/gHS/t20qUiG7kyDp2jIYU59d62OLjKFjPFKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/fE8gl3kf85oC4781Dk8vyjSUS/Z8GxSKxCOgBAf2VU57SqRIhnuOw7O9/89wIcd4DKjlBMZIdTIBmldKJaUt5ohOxdGHsYaumN3183OIPaMqOLdAqyjV0tJWLA2yOJz1sR8omjNskoRBLnazZd4Rn+Of0uZkmiVqY/85xde4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVWcYD/i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bkiosm8bVJZJKDtviKjqkfG64VA5KozUl1H5KKHGtSYEJtKEEcD7AfD2IYZ9uJZM6x++NcwhCM7d+r7V3qzEdm7ibpZYSmUqwI6SivLL4gMwUDyxQl4RjBTxN8m3//+yrVhoTdG3DPkCVO9akh889bbmrUnjdnlWV3HHSzncxlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3BWbEjY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVWcYD/i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81877C116D0;
-	Wed, 25 Feb 2026 01:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3BWbEjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC713C116D0;
+	Wed, 25 Feb 2026 01:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983319;
-	bh=5nSwxOX9O9n3ndDs/LRarRFtlGacyFucEw+joj5xAVc=;
+	s=korg; t=1771983321;
+	bh=j2Obg1/gHS/t20qUiG7kyDp2jIYU59d62OLjKFjPFKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kVWcYD/icdWq6Y2FA+J+9p7iHOlIklc/Cp0Vl8wznoK1jTZSAgtl8lohisKj+Bd1t
-	 ed02cx3Ay0/lV7xp5yXTdVFfbTqjckOaHRcr09oLFl154d/cCQgGtsEc23JOJrwsov
-	 99AqePO9552R1DO+iGew8fb/lH6IyuN+7Fu2dJK8=
+	b=k3BWbEjYsa/r8OENxZcVqPiMD5MNEJ3rMkXelkDDzIC1KY5yzmuY3wJ5hz2z0ejD2
+	 eExMFu08MCzUjBuxxiYPJTOGbVmxeHOKP+r9oSavWMDXbFJVQZIBWElG8nQTjMQtAd
+	 2aqX8VNBmPkpeXIQAqdma/T5+Rq5lBwQJlPQ2x7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Waqar Hameed <waqar.hameed@axis.com>,
-	Samuel Kayode <samkay014@gmail.com>,
+	Nikita Travkin <nikita@trvn.ru>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 453/781] power: supply: pf1550: Fix use-after-free in power_supply_changed()
-Date: Tue, 24 Feb 2026 17:19:22 -0800
-Message-ID: <20260225012410.823290446@linuxfoundation.org>
+Subject: [PATCH 6.19 454/781] power: supply: pm8916_bms_vm: Fix use-after-free in power_supply_changed()
+Date: Tue, 24 Feb 2026 17:19:23 -0800
+Message-ID: <20260225012410.851300102@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit 838767f5074700552d3f006d867caed65edc7328 ]
+[ Upstream commit 62914959b35e9a1e29cc0f64cb8cfc5075a5366f ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -78,66 +78,52 @@ of using the `power_supply` handle *uninitialized* in
 Fix this racy use-after-free by making sure the IRQ is requested _after_
 the registration of the `power_supply` handle.
 
-Fixes: 4b6b6433a97d ("power: supply: pf1550: add battery charger support")
+Fixes: 098bce1838e0 ("power: supply: Add pm8916 VM-BMS support")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Reviewed-by: Samuel Kayode <samkay014@gmail.com>
-Link: https://patch.msgid.link/ae5a71b7e4dd2967d8fdcc531065cc71b17c86f5.1766268280.git.waqar.hameed@axis.com
+Reviewed-by: Nikita Travkin <nikita@trvn.ru>
+Link: https://patch.msgid.link/2749c09ff81fcac87ae48147e216135450d8c067.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/pf1550-charger.c | 32 +++++++++++++--------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ drivers/power/supply/pm8916_bms_vm.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/power/supply/pf1550-charger.c b/drivers/power/supply/pf1550-charger.c
-index 98f1ee8eca3bc..a457862ef4610 100644
---- a/drivers/power/supply/pf1550-charger.c
-+++ b/drivers/power/supply/pf1550-charger.c
-@@ -584,22 +584,6 @@ static int pf1550_charger_probe(struct platform_device *pdev)
- 		return dev_err_probe(chg->dev, ret,
- 				     "failed to add battery sense work\n");
+diff --git a/drivers/power/supply/pm8916_bms_vm.c b/drivers/power/supply/pm8916_bms_vm.c
+index 5120be086e6ff..de5d571c03e21 100644
+--- a/drivers/power/supply/pm8916_bms_vm.c
++++ b/drivers/power/supply/pm8916_bms_vm.c
+@@ -167,15 +167,6 @@ static int pm8916_bms_vm_battery_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		return -EINVAL;
  
--	for (i = 0; i < PF1550_CHARGER_IRQ_NR; i++) {
--		irq = platform_get_irq(pdev, i);
--		if (irq < 0)
--			return irq;
+-	irq = platform_get_irq_byname(pdev, "fifo");
+-	if (irq < 0)
+-		return irq;
 -
--		chg->virqs[i] = irq;
+-	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_bms_vm_fifo_update_done_irq,
+-					IRQF_ONESHOT, "pm8916_vm_bms", bat);
+-	if (ret)
+-		return ret;
 -
--		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
--						pf1550_charger_irq_handler,
--						IRQF_NO_SUSPEND,
--						"pf1550-charger", chg);
--		if (ret)
--			return dev_err_probe(&pdev->dev, ret,
--					     "failed irq request\n");
--	}
--
- 	psy_cfg.drv_data = chg;
+ 	ret = regmap_bulk_read(bat->regmap, bat->reg + PM8916_PERPH_TYPE, &tmp, 2);
+ 	if (ret)
+ 		goto comm_error;
+@@ -220,6 +211,15 @@ static int pm8916_bms_vm_battery_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Unable to get battery info\n");
  
- 	chg->charger = devm_power_supply_register(&pdev->dev,
-@@ -616,6 +600,22 @@ static int pf1550_charger_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, PTR_ERR(chg->battery),
- 				     "failed: power supply register\n");
++	irq = platform_get_irq_byname(pdev, "fifo");
++	if (irq < 0)
++		return irq;
++
++	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_bms_vm_fifo_update_done_irq,
++					IRQF_ONESHOT, "pm8916_vm_bms", bat);
++	if (ret)
++		return ret;
++
+ 	platform_set_drvdata(pdev, bat);
  
-+	for (i = 0; i < PF1550_CHARGER_IRQ_NR; i++) {
-+		irq = platform_get_irq(pdev, i);
-+		if (irq < 0)
-+			return irq;
-+
-+		chg->virqs[i] = irq;
-+
-+		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
-+						pf1550_charger_irq_handler,
-+						IRQF_NO_SUSPEND,
-+						"pf1550-charger", chg);
-+		if (ret)
-+			return dev_err_probe(&pdev->dev, ret,
-+					     "failed irq request\n");
-+	}
-+
- 	pf1550_dt_parse_dev_info(chg);
- 
- 	return pf1550_reg_init(chg);
+ 	return 0;
 -- 
 2.51.0
 
