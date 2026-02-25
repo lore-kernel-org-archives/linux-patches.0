@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631412C11D6;
-	Wed, 25 Feb 2026 06:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E022C11CD;
+	Wed, 25 Feb 2026 06:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002569; cv=none; b=SMSLvYl7iIuqDWQtFxvKCDnjzZLSZxjis71TyjHB+FNMRXTjOQNWickXd+MPakt6zzA3+5sl+797vapUkNB3lX4GNZXof0JpgKhlxHat+cSoDjNpr02aLTbbTriYwzfGIK1yX32va78f+63/XyyiZc1Ua0NQWeKUe7FJK0VsXuU=
+	t=1772002570; cv=none; b=YVfrdvEzONgxxHNkdy3oSukFBxbE5QexpcGAB7kPNLR3kHwuPKivLqPlYrpoYCjgSMame0uv5Zg6TeyUR6xilyTrMy8mTOZdN7/iCdktKXa2vHJP0dcgczx5aKkc0Wh/iMYplp49dNtATrKFvILD8dxe0f6CpmP577AAZUE2ylo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002569; c=relaxed/simple;
-	bh=AZT0/WdBUPk4dvLbppaHXQmSBIfXqWHG+vSLLIE19og=;
+	s=arc-20240116; t=1772002570; c=relaxed/simple;
+	bh=nESeSyYF8tk5gCcr6tqKEDO3ToDdQP4kBTxXyLQGXf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGjMhSGm/CNjm9dV7ftqvnRywn39hxY/9DldKDOmhs03cs4DUzkgIQ7YpbTeWtqPuWjNXCQ6y9C7/saWpM4Regy4UpuD3ZyLIZne/tllT1p4bFGqixIJ/5r1QusgQd23YryuOddf6cVH6szPr4uuNAwi1LLc38tWgeJM8LEuEvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYJNeMOw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tTGpp+M1h0/rpqUaV/AEEZWB5spvYYXJ+6eX6lxFJhOk4EqUe0jNnKdsndxb5WbqLBHbE5lG/M7uNFGNTt3ptLF6RZawn8N+cQrDgubo/zh+gohgEldapPmE8zX96GEVWp+FpIXo+RRc8KhOB4v3D0Wm3L0goasJDKyr3Z+3EfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUVW5ofF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYJNeMOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C72BC4AF0E;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUVW5ofF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D967FC2BC86;
 	Wed, 25 Feb 2026 06:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002569;
-	bh=AZT0/WdBUPk4dvLbppaHXQmSBIfXqWHG+vSLLIE19og=;
+	bh=nESeSyYF8tk5gCcr6tqKEDO3ToDdQP4kBTxXyLQGXf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lYJNeMOw0HdkrSZ3ZY4J7wTP99BYwxcru3ynHJhp9YWyy1THEaWlsMTMXWDPti42A
-	 CxJJiUYW66zKcpDDUiguyirQj3+iHMG+a6g54I9OPOPVxChHij/j0KeJKZYqxrJfGk
-	 eMiKLMBLo/obIRgjWpLSbvGapVWxhA8h3ewfgs2c=
+	b=SUVW5ofF5QwEJdtlvIBz2hTcebKgPLjEXlNbfCgCpVl2RxsfFb5sHd3xzVrt2lvog
+	 UlG42g4HiqjiRbLLLqip7HZQyHIlwodnrXG7DZakbOoRVyne5JbklIkvdB1Dlui5kq
+	 ahI5ajY9j/icA3XjNwoUUbaaE5UCxaJzIQa3Uudo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Votokina Victoria <Victoria.Votokina@kaspersky.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 302/641] inet: RAW sockets using IPPROTO_RAW MUST drop incoming ICMP
-Date: Tue, 24 Feb 2026 17:20:28 -0800
-Message-ID: <20260225012356.063796219@linuxfoundation.org>
+Subject: [PATCH 6.18 303/641] nfc: hci: shdlc: Stop timers and work before freeing context
+Date: Tue, 24 Feb 2026 17:20:29 -0800
+Message-ID: <20260225012356.084900523@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,92 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Votokina Victoria <Victoria.Votokina@kaspersky.com>
 
-[ Upstream commit c89477ad79446867394360b29bb801010fc3ff22 ]
+[ Upstream commit c9efde1e537baed7648a94022b43836a348a074f ]
 
-Yizhou Zhao reported that simply having one RAW socket on protocol
-IPPROTO_RAW (255) was dangerous.
+llc_shdlc_deinit() purges SHDLC skb queues and frees the llc_shdlc
+structure while its timers and state machine work may still be active.
 
-  socket(AF_INET, SOCK_RAW, 255);
+Timer callbacks can schedule sm_work, and sm_work accesses SHDLC state
+and the skb queues. If teardown happens in parallel with a queued/running
+work item, it can lead to UAF and other shutdown races.
 
-A malicious incoming ICMP packet can set the protocol field to 255
-and match this socket, leading to FNHE cache changes.
+Stop all SHDLC timers and cancel sm_work synchronously before purging the
+queues and freeing the context.
 
-inner = IP(src="192.168.2.1", dst="8.8.8.8", proto=255)/Raw("TEST")
-pkt = IP(src="192.168.1.1", dst="192.168.2.1")/ICMP(type=3, code=4, nexthopmtu=576)/inner
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-"man 7 raw" states:
-
-  A protocol of IPPROTO_RAW implies enabled IP_HDRINCL and is able
-  to send any IP protocol that is specified in the passed header.
-  Receiving of all IP protocols via IPPROTO_RAW is not possible
-  using raw sockets.
-
-Make sure we drop these malicious packets.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Link: https://lore.kernel.org/netdev/20251109134600.292125-1-zhaoyz24@mails.tsinghua.edu.cn/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260203192509.682208-1-edumazet@google.com
+Fixes: 4a61cd6687fc ("NFC: Add an shdlc llc module to llc core")
+Signed-off-by: Votokina Victoria <Victoria.Votokina@kaspersky.com>
+Link: https://patch.msgid.link/20260203113158.2008723-1-Victoria.Votokina@kaspersky.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/icmp.c | 14 ++++++++++----
- net/ipv6/icmp.c |  6 ++++++
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ net/nfc/hci/llc_shdlc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 1b7fb5d935edf..8e10e9e7676c5 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -843,16 +843,22 @@ static void icmp_socket_deliver(struct sk_buff *skb, u32 info)
- 	/* Checkin full IP header plus 8 bytes of protocol to
- 	 * avoid additional coding at protocol handlers.
- 	 */
--	if (!pskb_may_pull(skb, iph->ihl * 4 + 8)) {
--		__ICMP_INC_STATS(dev_net_rcu(skb->dev), ICMP_MIB_INERRORS);
--		return;
--	}
-+	if (!pskb_may_pull(skb, iph->ihl * 4 + 8))
-+		goto out;
+diff --git a/net/nfc/hci/llc_shdlc.c b/net/nfc/hci/llc_shdlc.c
+index 4fc37894860c9..08c8aa1530d8a 100644
+--- a/net/nfc/hci/llc_shdlc.c
++++ b/net/nfc/hci/llc_shdlc.c
+@@ -762,6 +762,14 @@ static void llc_shdlc_deinit(struct nfc_llc *llc)
+ {
+ 	struct llc_shdlc *shdlc = nfc_llc_get_data(llc);
+ 
++	timer_shutdown_sync(&shdlc->connect_timer);
++	timer_shutdown_sync(&shdlc->t1_timer);
++	timer_shutdown_sync(&shdlc->t2_timer);
++	shdlc->t1_active = false;
++	shdlc->t2_active = false;
 +
-+	/* IPPROTO_RAW sockets are not supposed to receive anything. */
-+	if (protocol == IPPROTO_RAW)
-+		goto out;
- 
- 	raw_icmp_error(skb, protocol, info);
- 
- 	ipprot = rcu_dereference(inet_protos[protocol]);
- 	if (ipprot && ipprot->err_handler)
- 		ipprot->err_handler(skb, info);
-+	return;
++	cancel_work_sync(&shdlc->sm_work);
 +
-+out:
-+	__ICMP_INC_STATS(dev_net_rcu(skb->dev), ICMP_MIB_INERRORS);
- }
- 
- static bool icmp_tag_validation(int proto)
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index cf6455cbe2cc9..306eec18e82c1 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -870,6 +870,12 @@ enum skb_drop_reason icmpv6_notify(struct sk_buff *skb, u8 type,
- 	if (reason != SKB_NOT_DROPPED_YET)
- 		goto out;
- 
-+	if (nexthdr == IPPROTO_RAW) {
-+		/* Add a more specific reason later ? */
-+		reason = SKB_DROP_REASON_NOT_SPECIFIED;
-+		goto out;
-+	}
-+
- 	/* BUGGG_FUTURE: we should try to parse exthdrs in this packet.
- 	   Without this we will not able f.e. to make source routed
- 	   pmtu discovery.
+ 	skb_queue_purge(&shdlc->rcv_q);
+ 	skb_queue_purge(&shdlc->send_q);
+ 	skb_queue_purge(&shdlc->ack_pending_q);
 -- 
 2.51.0
 
