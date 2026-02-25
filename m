@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85A22D3EEE;
-	Wed, 25 Feb 2026 06:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994372D29C2;
+	Wed, 25 Feb 2026 06:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002733; cv=none; b=eNJBtnNA7TqNi2DMRR//xlv2YPQENzvHI29UoumWMFH3xZskofMBaEfy30f0vW1EpuLD+OWD+Fv8tiNw8+QDWWxLAZXfmOZ+SmPnp4D8wKeUKHnGL2iWbHDaXlRq9HivfGaDgvXRdmeQD0g+7Kq6bxArXdHn7cK8dSR/hMzLUj4=
+	t=1772002733; cv=none; b=WW1wZOEQsIv8fIg8nLLYX+tbvmcLfkNOWC7KjfLfGcytiNiGDDDjOcc8CSs+XfOyAEiBfUFBT7RSM0It/bjUgHYHFgRCbMlmDqo7HImKAAfMpJI+5fez/5ZQskN1ozFWcq77En8kBls8tQOW5wQTqhvayDFo62NTZ5XUp/zLXVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002733; c=relaxed/simple;
-	bh=1qBglaaCz/JRoiv/bzKzsqD8/0nnaFVclscpoV0DEUA=;
+	bh=EU2M2lxuAt+gmGiYGf9jrHIQIJMQcef5Ryq/c27x2S8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gu0xOAmrHN4wIY3epipv5aDw5ZqQHSE0uTk971s2o6MMNqc3xdqIOMnD1hnmf2MYz+Hb2bSuTtdcdUd3YSnZDOQwi/iwDRaGLRS8t9IG71NdAHDNA/1RBc/PAlXfBWfiie6QCVKgSMQAJ6VWqqgVTgP/M9T0LXUzGodIPQp5f3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwI6rpuD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cngs53aW9v+4QouIuWBGqzsVCFdlIoYmQ/LaDegCyeMy4HZzzjvzHHoe8aTtUTSewjBRD4WI5ngZn8eksVTZFxLBHxBA/LpqbY2IxIE5WuLwh07ukobxQwYlbBRMtOfPoTtRxVGUbE0SVYOjX8bk9OGpeb+bawfkIRus/Ve6HKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6bM/h45; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwI6rpuD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF99CC116D0;
-	Wed, 25 Feb 2026 06:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6bM/h45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70ECDC116D0;
+	Wed, 25 Feb 2026 06:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002732;
-	bh=1qBglaaCz/JRoiv/bzKzsqD8/0nnaFVclscpoV0DEUA=;
+	s=korg; t=1772002733;
+	bh=EU2M2lxuAt+gmGiYGf9jrHIQIJMQcef5Ryq/c27x2S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FwI6rpuDQtnT/znr7AfHJhADp5087fssQFkZfenDhkKGx+/C/1GnTEiumLfd2RT4m
-	 IsXbl+l7KpZSboTg3GLk54r5NjWxtkOhYeg65zoqvx0R6192PeTdFalUwjJ3d9hSGF
-	 5AMA1bz3I14chzD1DhoPD9NGwvC4GIq0qND3dSH0=
+	b=R6bM/h45rhZ1ioqWsbgQkHi4p2V3MXMae99bkSKe8f9ZH/nMSYIrvrTRRHJTf0ZSj
+	 CgokPG/tbeIKDV5kcDWr7VnlBzLJYnV2/5NNWvuelQYYJXY9X6Gz5Jv6K4ftL/s1JO
+	 yXIE/PTvDAy3U0suI745BP9CS2ymSe/U/QSPI9ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Zahka <daniel.zahka@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 547/641] net: psp: select CONFIG_SKB_EXTENSIONS
-Date: Tue, 24 Feb 2026 17:24:33 -0800
-Message-ID: <20260225012401.783119615@linuxfoundation.org>
+Subject: [PATCH 6.18 548/641] ping: annotate data-races in ping_lookup()
+Date: Tue, 24 Feb 2026 17:24:34 -0800
+Message-ID: <20260225012401.805183260@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,57 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6e980df452169f82674f2e650079c1fe0aee343d ]
+[ Upstream commit ad5dfde2a5733aaf652ea3e40c8c5e071e935901 ]
 
-psp now uses skb extensions, failing to build when that is disabled:
+isk->inet_num, isk->inet_rcv_saddr and sk->sk_bound_dev_if
+are read locklessly in ping_lookup().
 
-In file included from include/net/psp.h:7,
-                 from net/psp/psp_sock.c:9:
-include/net/psp/functions.h: In function '__psp_skb_coalesce_diff':
-include/net/psp/functions.h:60:13: error: implicit declaration of function 'skb_ext_find'; did you mean 'skb_ext_copy'? [-Wimplicit-function-declaration]
-   60 |         a = skb_ext_find(one, SKB_EXT_PSP);
-      |             ^~~~~~~~~~~~
-      |             skb_ext_copy
-include/net/psp/functions.h:60:31: error: 'SKB_EXT_PSP' undeclared (first use in this function)
-   60 |         a = skb_ext_find(one, SKB_EXT_PSP);
-      |                               ^~~~~~~~~~~
-include/net/psp/functions.h:60:31: note: each undeclared identifier is reported only once for each function it appears in
-include/net/psp/functions.h: In function '__psp_sk_rx_policy_check':
-include/net/psp/functions.h:94:53: error: 'SKB_EXT_PSP' undeclared (first use in this function)
-   94 |         struct psp_skb_ext *pse = skb_ext_find(skb, SKB_EXT_PSP);
-      |                                                     ^~~~~~~~~~~
-net/psp/psp_sock.c: In function 'psp_sock_recv_queue_check':
-net/psp/psp_sock.c:164:41: error: 'SKB_EXT_PSP' undeclared (first use in this function)
-  164 |                 pse = skb_ext_find(skb, SKB_EXT_PSP);
-      |                                         ^~~~~~~~~~~
+Add READ_ONCE()/WRITE_ONCE() annotations.
 
-Select the Kconfig symbol as we do from its other users.
+The race on isk->inet_rcv_saddr is probably coming from IPv6 support,
+but does not deserve a specific backport.
 
-Fixes: 6b46ca260e22 ("net: psp: add socket security association code")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
-Link: https://patch.msgid.link/20260216105500.2382181-1-arnd@kernel.org
+Fixes: dbca1596bbb0 ("ping: convert to RCU lookups, get rid of rwlock")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260216100149.3319315-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/psp/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/ping.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/net/psp/Kconfig b/net/psp/Kconfig
-index 371e8771f3bd3..84d6b0f254606 100644
---- a/net/psp/Kconfig
-+++ b/net/psp/Kconfig
-@@ -6,6 +6,7 @@ config INET_PSP
- 	bool "PSP Security Protocol support"
- 	depends on INET
- 	select SKB_DECRYPTED
-+	select SKB_EXTENSIONS
- 	select SOCK_VALIDATE_XMIT
- 	help
- 	Enable kernel support for the PSP Security Protocol (PSP).
+diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+index a5227d23bb0b5..690f486173e01 100644
+--- a/net/ipv4/ping.c
++++ b/net/ipv4/ping.c
+@@ -148,7 +148,7 @@ void ping_unhash(struct sock *sk)
+ 	pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
+ 	spin_lock(&ping_table.lock);
+ 	if (sk_del_node_init_rcu(sk)) {
+-		isk->inet_num = 0;
++		WRITE_ONCE(isk->inet_num, 0);
+ 		isk->inet_sport = 0;
+ 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
+ 	}
+@@ -181,31 +181,35 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
+ 	}
+ 
+ 	sk_for_each_rcu(sk, hslot) {
++		int bound_dev_if;
++
+ 		if (!net_eq(sock_net(sk), net))
+ 			continue;
+ 		isk = inet_sk(sk);
+ 
+ 		pr_debug("iterate\n");
+-		if (isk->inet_num != ident)
++		if (READ_ONCE(isk->inet_num) != ident)
+ 			continue;
+ 
++		bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
+ 		if (skb->protocol == htons(ETH_P_IP) &&
+ 		    sk->sk_family == AF_INET) {
++			__be32 rcv_saddr = READ_ONCE(isk->inet_rcv_saddr);
++
+ 			pr_debug("found: %p: num=%d, daddr=%pI4, dif=%d\n", sk,
+-				 (int) isk->inet_num, &isk->inet_rcv_saddr,
+-				 sk->sk_bound_dev_if);
++				 ident, &rcv_saddr,
++				 bound_dev_if);
+ 
+-			if (isk->inet_rcv_saddr &&
+-			    isk->inet_rcv_saddr != ip_hdr(skb)->daddr)
++			if (rcv_saddr && rcv_saddr != ip_hdr(skb)->daddr)
+ 				continue;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 		} else if (skb->protocol == htons(ETH_P_IPV6) &&
+ 			   sk->sk_family == AF_INET6) {
+ 
+ 			pr_debug("found: %p: num=%d, daddr=%pI6c, dif=%d\n", sk,
+-				 (int) isk->inet_num,
++				 ident,
+ 				 &sk->sk_v6_rcv_saddr,
+-				 sk->sk_bound_dev_if);
++				 bound_dev_if);
+ 
+ 			if (!ipv6_addr_any(&sk->sk_v6_rcv_saddr) &&
+ 			    !ipv6_addr_equal(&sk->sk_v6_rcv_saddr,
+@@ -216,8 +220,8 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
+ 			continue;
+ 		}
+ 
+-		if (sk->sk_bound_dev_if && sk->sk_bound_dev_if != dif &&
+-		    sk->sk_bound_dev_if != sdif)
++		if (bound_dev_if && bound_dev_if != dif &&
++		    bound_dev_if != sdif)
+ 			continue;
+ 
+ 		goto exit;
+@@ -392,7 +396,9 @@ static void ping_set_saddr(struct sock *sk, struct sockaddr *saddr)
+ 	if (saddr->sa_family == AF_INET) {
+ 		struct inet_sock *isk = inet_sk(sk);
+ 		struct sockaddr_in *addr = (struct sockaddr_in *) saddr;
+-		isk->inet_rcv_saddr = isk->inet_saddr = addr->sin_addr.s_addr;
++
++		isk->inet_saddr = addr->sin_addr.s_addr;
++		WRITE_ONCE(isk->inet_rcv_saddr, addr->sin_addr.s_addr);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	} else if (saddr->sa_family == AF_INET6) {
+ 		struct sockaddr_in6 *addr = (struct sockaddr_in6 *) saddr;
+@@ -849,7 +855,8 @@ int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
+ 	struct sk_buff *skb;
+ 	int copied, err;
+ 
+-	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk, isk->inet_num);
++	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk,
++		 READ_ONCE(isk->inet_num));
+ 
+ 	err = -EOPNOTSUPP;
+ 	if (flags & MSG_OOB)
 -- 
 2.51.0
 
