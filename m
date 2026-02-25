@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E3A1D5ABA;
-	Wed, 25 Feb 2026 01:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5581E2834;
+	Wed, 25 Feb 2026 01:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983073; cv=none; b=DVQJgq5ANrPkk67Y/tN8TtDWu7My4oeeTFtiG9fOt3oaKsBKCcXBFJLb9jyDfKMKyqk5jg7S/3D1o1GDG6qbpLtIYsN55K/SBmBdHnAdeqJZ67O+qUFNAx3D7WoFl6QzQM1HHLbWthzpEU0UtMVfE1PoZQg8GSaWJ/POlmnb5IE=
+	t=1771983074; cv=none; b=E0S0XbjE1aQEP3ay3ziVTQx/M7Z5I5GRQk0z4yoS4YNPjEyKVWOLvFy11EEEYnh7LZNiLnMt1wHfZrQzyKx6G6NsfR4717sJROZH5DjFP6IuBD49QkVbQMFdqm+jPzVS/xsaeYRdJpq53zRr9ZFvhzTCm33b/Edpnfy8O6h4U6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983073; c=relaxed/simple;
-	bh=7myCAk+HLaMcVNdM8GHqX+4R/g1r2YVfr2yuKPJs+JU=;
+	s=arc-20240116; t=1771983074; c=relaxed/simple;
+	bh=xPr5uvrXkFxcQvvaBKW4Jdh9aRDcfqN6Z2PGrzIvfp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsD1VvU84NIUs0P9rEKuAzeIv1nkdrV0zaSYJhY1CUY/BJ2MAXS0zV5ZeCSeZp+Soq0DV40izNXcNJ8ZJDqs/QmsaRNXnIQ7GdukbMAmQcz/aDXwq4w9e07SYIAl8nfLPRD3B7WRfJ7leRK/5Q1EuuEZIOezwCapKxKr8H9xtK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBzW7Uok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pm1yscfRWFu+njwdzQMF55SEX4JL6uH4uFroE8DZCv5CAtZ2Cjy7wzPoeOghNIukK9cY0kvUX3Vv91B1blTMFwWW1bMGz4NDtpw9WTTGoxQQcEEOqQL3djkpjk8n6b1m1NxRzWJRfxwo3Pu1Szv3XV3E7fRmEBR/lgPktHqiA1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7TsFvRP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBzW7Uok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8711C116D0;
-	Wed, 25 Feb 2026 01:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7TsFvRP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BC3C116D0;
+	Wed, 25 Feb 2026 01:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983072;
-	bh=7myCAk+HLaMcVNdM8GHqX+4R/g1r2YVfr2yuKPJs+JU=;
+	s=korg; t=1771983073;
+	bh=xPr5uvrXkFxcQvvaBKW4Jdh9aRDcfqN6Z2PGrzIvfp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBzW7UokuBybNkow9t6ba/2W1HUGEBD8NwPbz9ivjwhBs3d5hZW3KWGSq7rVECOwI
-	 cN3H4aUuBvdns1Rc1BjePn/JJj83G/nRvIYY6T/XQA0jWbR/pJQtGVaAkjTM7gUhhb
-	 1eIm418IQ7vvhZyVlMw0TrFMcwGWUQA6Nk3IW/Ro=
+	b=w7TsFvRPlD9x47yhXWpilsNJXRhwvyqMXb0qEHiz0ML/tFBPm1IxXVHHl1Nv29GHV
+	 jWwB0FGQ4jZqmP0mz4bC0bCSn+WTnVPi5Tjae+hoyi1mrofRrNi5JT+hvtHu0/2JH/
+	 UA2smOHPyG3rAqcoS1kjXVya37HwhKIRVOqT3PeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 235/781] ASoC: nau8821: Cancel pending work before suspend
-Date: Tue, 24 Feb 2026 17:15:44 -0800
-Message-ID: <20260225012405.473910363@linuxfoundation.org>
+Subject: [PATCH 6.19 209/781] firmware: cs_dsp: Dont use __free() in cs_dsp_load() and cs_dsp_load_coeff()
+Date: Tue, 24 Feb 2026 17:15:18 -0800
+Message-ID: <20260225012404.840774117@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,44 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 7786b10688ac0ebeaff655923cbb2c7d34a98995 ]
+[ Upstream commit ae9ccaed3f6701ee0fe40ad919516e0aa0844f21 ]
 
-A jack detection work that is unscheduled or in progress while executing
-the suspend handler could trigger a race condition.
+Replace the __free(kfree) in cs_dsp_load() and cs_dsp_load_coeff() with
+a kfree(buf) at the end of the function.
 
-Ensure state consistency by cancelling any pending work or wait for its
-execution to complete before processing the suspend.  Since driver
-(re)enables both insert and eject interrupts on resume, there is no risk
-to miss the related jack events.  Therefore, flush_delayed_work() is not
-required here.
+The use of __free() can create new cleanup bugs that are difficult to spot
+because the defective code is idiomatically correct regular C. In these two
+functions the __free() was mixed with gotos, and also used the suspect
+declaration __free(kfree) = NULL;.
 
-Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
-Fixes: ee70bacef1c6 ("ASoC: nau8821: Avoid unnecessary blocking in IRQ handler")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20251231-nau8821-cleanup-v1-3-6b0b76cbbb64@collabora.com
+The __free() did not do anything to simplify the code. There aren't any
+early returns after the pointer is set, and the __free() can be replaced by
+a kfree() at the end of the function.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 900baa6e7bb0 ("firmware: cs_dsp: Remove redundant download buffer allocator")
+Link: https://patch.msgid.link/20251201160729.231867-1-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8821.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/firmware/cirrus/cs_dsp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
-index 2e2714b475012..58d2d5e77c8f4 100644
---- a/sound/soc/codecs/nau8821.c
-+++ b/sound/soc/codecs/nau8821.c
-@@ -1605,6 +1605,10 @@ static int __maybe_unused nau8821_suspend(struct snd_soc_component *component)
+diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
+index 57296f48dad0a..abed96fa5853a 100644
+--- a/drivers/firmware/cirrus/cs_dsp.c
++++ b/drivers/firmware/cirrus/cs_dsp.c
+@@ -1488,7 +1488,7 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
+ 	const struct wmfw_region *region;
+ 	const struct cs_dsp_region *mem;
+ 	const char *region_name;
+-	u8 *buf __free(kfree) = NULL;
++	u8 *buf = NULL;
+ 	size_t buf_len = 0;
+ 	size_t region_len;
+ 	unsigned int reg;
+@@ -1643,6 +1643,8 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
  
- 	if (nau8821->irq)
- 		disable_irq(nau8821->irq);
+ 	ret = 0;
+ out_fw:
++	kfree(buf);
 +
-+	if (nau8821->jdet_active)
-+		cancel_delayed_work_sync(&nau8821->jdet_work);
+ 	if (ret == -EOVERFLOW)
+ 		cs_dsp_err(dsp, "%s: file content overflows file data\n", file);
+ 
+@@ -2174,7 +2176,7 @@ static int cs_dsp_load_coeff(struct cs_dsp *dsp, const struct firmware *firmware
+ 	struct cs_dsp_alg_region *alg_region;
+ 	const char *region_name;
+ 	int ret, pos, blocks, type, offset, reg, version;
+-	u8 *buf __free(kfree) = NULL;
++	u8 *buf = NULL;
+ 	size_t buf_len = 0;
+ 	size_t region_len;
+ 
+@@ -2353,6 +2355,8 @@ static int cs_dsp_load_coeff(struct cs_dsp *dsp, const struct firmware *firmware
+ 
+ 	ret = 0;
+ out_fw:
++	kfree(buf);
 +
- 	snd_soc_dapm_force_bias_level(nau8821->dapm, SND_SOC_BIAS_OFF);
- 	/* Power down codec power; don't support button wakeup */
- 	snd_soc_dapm_disable_pin(nau8821->dapm, "MICBIAS");
+ 	if (ret == -EOVERFLOW)
+ 		cs_dsp_err(dsp, "%s: file content overflows file data\n", file);
+ 
 -- 
 2.51.0
 
