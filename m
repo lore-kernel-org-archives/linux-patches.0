@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EB94369A;
-	Wed, 25 Feb 2026 01:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1FD4369A;
+	Wed, 25 Feb 2026 01:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982881; cv=none; b=QLNTIkIHW2mVzh9r9TXHI4DJpliH9KqiBpfc1D1fLfYOD997GtSKWpxTwC+c/5tu/d83A7T4tYsL0+UVS6mgfoxkYTJ3Tet/dpagWLauYVR7Mqk1E6A3ed2eLqT2f+i+WYIGVUN0eU8S39T6/fKE9s2FMHMGrtuOZejmMhIe+xA=
+	t=1771982882; cv=none; b=gmGTzUNy7PRgn9/Z+GcDsjIgIPP1Lst+rAR9MkYRO8N58zKJa22ERh4BRKo4CYbHf95vqczK+ypQ7EtMrvCGEFWnznD9lDuc93YE6fDHPOeEnM8ITqVATlI8qr6G0Xz9fz3jVmj+f1hNHjesSlRCvqReXyvQ6SG2+UaG2rVwDbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982881; c=relaxed/simple;
-	bh=tJrV0byCyfJS/m6rJXv0xQhBbR/hXOIRG9rqD8sHlIo=;
+	s=arc-20240116; t=1771982882; c=relaxed/simple;
+	bh=Qk9FnEwkm4B0PJoamdeasU572PQ7yRpdYvr5PAbNI/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NdvfC6yleHC+P5+tc6j7KTOf3mm5x8VJ/G2gjM9vo164PLDZn6XVPi7vkX+iHSBLItWB8likD4QXesZ87ut7m9VeqQ6Greqv8eNqgl3WFbL83JQf4xDUozmWO6GTuFbXqLUy5uMkvo4u7hHMjVPl/Qq7LdkU3NN3/QWkLZbPCT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDuriNN1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hL682MqRx6mdRi9Em0wgFH3IUrvU9BUQlvvECtSQrwRJ5aWYfNVA+lb+nBin0B2uBr252YN6R4UcPlEqRGIGGVGlwTBk2sEmkM9IwOZoPAaSU5NUgdn5qqL9mhCjsdNRypK6j4c/eQbxBfkFcwW1EiGMheaoqj6mQBlS2jHKz3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZfxlwI4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDuriNN1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0A9C116D0;
-	Wed, 25 Feb 2026 01:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZfxlwI4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2257C116D0;
+	Wed, 25 Feb 2026 01:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982880;
-	bh=tJrV0byCyfJS/m6rJXv0xQhBbR/hXOIRG9rqD8sHlIo=;
+	s=korg; t=1771982881;
+	bh=Qk9FnEwkm4B0PJoamdeasU572PQ7yRpdYvr5PAbNI/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dDuriNN1PkQQ7ina4hmQZWwGRnaUGYDhbCe1i2JoavrXrxYdDBPM3LlQD2AtbMVqa
-	 P+/6tBhvUe+FLOk5rC+OTjsXOLZTr95pldY6IUwrZAqdJpGwVFHIx8YDzcayNTF95e
-	 PE3Uylchy0CmdASKjWzgyL2dnMnYbAkBi840Oapw=
+	b=RZfxlwI4kr9v87dk1/SSFdrGMXc/stOIgQRujWHXVBBTw+pP2LMS9vWdhLgoNGanv
+	 OM858GprzBO21x+8e9dd6zpIUGdoExbfXpNeb018BM+C67+4aJcl95Hrx2/hOGJ+oz
+	 jfFoh7gJ69HnPwHvqFkDoGRkdz/3G0ONnKB9pc/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nurminen <jani.nurminen@windriver.com>,
-	Fredrik Markstrom <fredrik.markstrom@est.tech>,
-	Ivar Holmqvist <ivar.holmqvist@est.tech>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 022/781] i3c: dw: Initialize spinlock to avoid upsetting lockdep
-Date: Tue, 24 Feb 2026 17:12:11 -0800
-Message-ID: <20260225012400.246272729@linuxfoundation.org>
+Subject: [PATCH 6.19 023/781] i3c: dw: Fix memory leak in dw_i3c_master_i2c_xfers()
+Date: Tue, 24 Feb 2026 17:12:12 -0800
+Message-ID: <20260225012400.270277613@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,37 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredrik Markstrom <fredrik.markstrom@est.tech>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit b58eaa4761ab02fc38c39d674a6bcdd55e00f388 ]
+[ Upstream commit 2537089413514caaa9a5fdeeac3a34d45100f747 ]
 
-The devs_lock spinlock introduced when adding support for ibi:s was
-never initialized.
+The dw_i3c_master_i2c_xfers() function allocates memory for the xfer
+structure using dw_i3c_master_alloc_xfer(). If pm_runtime_resume_and_get()
+fails, the function returns without freeing the allocated xfer, resulting
+in a memory leak.
 
-Fixes: e389b1d72a624 ("i3c: dw: Add support for in-band interrupts")
-Suggested-by: Jani Nurminen <jani.nurminen@windriver.com>
-Signed-off-by: Fredrik Markstrom <fredrik.markstrom@est.tech>
-Reviewed-by: Ivar Holmqvist <ivar.holmqvist@est.tech>
-Link: https://patch.msgid.link/20260116-i3c_dw_initialize_spinlock-v3-1-cf707b6ed75f@est.tech
+Add a dw_i3c_master_free_xfer() call to the error path to ensure the
+allocated memory is properly freed.
+
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
+
+Fixes: 62fe9d06f570 ("i3c: dw: Add power management support")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260126081121.644099-1-zilin@seu.edu.cn
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/dw-i3c-master.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/i3c/master/dw-i3c-master.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-index 889e2ed5bc830..d5b0704040562 100644
+index d5b0704040562..4033bc16677ff 100644
 --- a/drivers/i3c/master/dw-i3c-master.c
 +++ b/drivers/i3c/master/dw-i3c-master.c
-@@ -1570,6 +1570,8 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
- 	spin_lock_init(&master->xferqueue.lock);
- 	INIT_LIST_HEAD(&master->xferqueue.list);
+@@ -1099,6 +1099,7 @@ static int dw_i3c_master_i2c_xfers(struct i2c_dev_desc *dev,
+ 		dev_err(master->dev,
+ 			"<%s> cannot resume i3c bus master, err: %d\n",
+ 			__func__, ret);
++		dw_i3c_master_free_xfer(xfer);
+ 		return ret;
+ 	}
  
-+	spin_lock_init(&master->devs_lock);
-+
- 	writel(INTR_ALL, master->regs + INTR_STATUS);
- 	irq = platform_get_irq(pdev, 0);
- 	ret = devm_request_irq(&pdev->dev, irq,
 -- 
 2.51.0
 
