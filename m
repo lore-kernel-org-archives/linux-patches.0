@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98929248886;
-	Wed, 25 Feb 2026 01:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF887248886;
+	Wed, 25 Feb 2026 01:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983711; cv=none; b=uKXGp9A2B9L68Z/XH73WEqA4tl8JbcVK47x65xnHreEmE5NqDRgzAcYy6/6NcYUsQbYnQ3ydO8ZcY9LMVkNkzm3yyh5u9Wad1kmr/2X9Ex3rPogmk6pkEnu3lbfC/Ppy06tWHc08DFTdxqEPJJFeUFoki/J8826nZ2QXakkS4D4=
+	t=1771983712; cv=none; b=UQOSmvVAK63QCnrRbhPEmMVjyLL0UccW4hZ6Ww6VncA1nnNHOHBg1BANS27+iWENb8GNEXbe7o/GEkbfL/W9vcn9skmOC++GZ3BFnMypxDGZ6XgYk3742yQPyrFQDJukEcdQ9PzAwcVbbgSPHmYByPnwvPdHpcu/i6YauE+k6p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983711; c=relaxed/simple;
-	bh=EdEWTS2t04fQF5fAbAmiJKVDshRUYJ4giqXWuWph26s=;
+	s=arc-20240116; t=1771983712; c=relaxed/simple;
+	bh=e0fhrkZWtvEdea8e3S2freFTjFSIKKhLXW2HnzFPJmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unMwuINoVa/Vb3UkIMLwAwRSw7rjUJ3jPqFjqHutoSQL0H1Q92RwU0siQc1wDhwcCQCyUZjmvLK/spKW1bXclNNk4ZzxSQWPQLDniwJcbp/e+99izD/3hW0jMtTzrfNs/Wxw8pDcYTIygJLaPpW4OSCEvHzCrM4wsEVasDgap4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egfqog2q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=is/rR6UDHySDPoJjbpomK3uHM+fm0iYohXktrHT96ihm7e+I2E1XXXDqKMe0v/vE/0NdxuIImJWNTokC22Q6+3cNe1HP+mmMoFQ4eCbQi19mD/W/N89JblWiNJL4tW3I550huNfcDbMK8UwIajhH+ItS21xossZBBbpCDajvJe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCbJWCUR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egfqog2q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E20C116D0;
-	Wed, 25 Feb 2026 01:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCbJWCUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9F5C116D0;
+	Wed, 25 Feb 2026 01:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983711;
-	bh=EdEWTS2t04fQF5fAbAmiJKVDshRUYJ4giqXWuWph26s=;
+	s=korg; t=1771983712;
+	bh=e0fhrkZWtvEdea8e3S2freFTjFSIKKhLXW2HnzFPJmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=egfqog2q93W2dC/skhFog9Ynz9Q5fNWU7T5qYJPevh22/OLfoEhzAviGyF4XN5sCn
-	 yIk+9JAf8U8jwXgQmtsDGPM1EBhPwg08FUdr5cRZupBU8ltaqkTFnyqVb0jNphBea+
-	 pR9Ekl79f8GKT+IZ8L2akNvLoCR9Ae/Z9bLv1T9o=
+	b=YCbJWCUROeaMRGwAnKOKCwGH5v183Na6q2AXy5KZreXBkbRJUq5/pcuk7ZW9mgRLu
+	 flqlcGPUU1hso0jPeGikVenHxfs7L3ho77jK6xoXwiySpvQc08C29Bx3fA+yn2tjzt
+	 hI3dGyyqn8eFgAHQ/8kq4FR5cw7ztwjcUbZ6TYm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
 	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 010/641] fs: move initializing f_mode before file_ref_init()
-Date: Tue, 24 Feb 2026 17:15:36 -0800
-Message-ID: <20260225012349.192398659@linuxfoundation.org>
+Subject: [PATCH 6.18 011/641] fs: add <linux/init_task.h> for init_fs
+Date: Tue, 24 Feb 2026 17:15:37 -0800
+Message-ID: <20260225012349.216549582@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,54 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit 1219e0feaefc9697f738b223540e8e8906291cb3 ]
+[ Upstream commit 589cff4975afe1a4eaaa1d961652f50b1628d78d ]
 
-The comment above file_ref_init() says:
-"We're SLAB_TYPESAFE_BY_RCU so initialize f_ref last."
-but file_set_fsnotify_mode() was added after file_ref_init().
+The init_fs symbol is defined in <linux/init_task.h> but was
+not included in fs/fs_struct.c so fix by adding the include.
 
-Move it right after setting f_mode, where it makes more sense.
+Fixes the following sparse warning:
+fs/fs_struct.c:150:18: warning: symbol 'init_fs' was not declared. Should it be static?
 
-Fixes: 711f9b8fbe4f4 ("fsnotify: disable pre-content and permission events by default")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20260109211536.3565697-1-amir73il@gmail.com
+Fixes: 3e93cd671813e ("Take fs_struct handling to new file")
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Link: https://patch.msgid.link/20260108115856.238027-1-ben.dooks@codethink.co.uk
 Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file_table.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/fs_struct.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/file_table.c b/fs/file_table.c
-index cd4a3db4659ac..34244fccf2edf 100644
---- a/fs/file_table.c
-+++ b/fs/file_table.c
-@@ -176,6 +176,11 @@ static int init_file(struct file *f, int flags, const struct cred *cred)
+diff --git a/fs/fs_struct.c b/fs/fs_struct.c
+index 28be762ac1c63..a0b40ad5e7423 100644
+--- a/fs/fs_struct.c
++++ b/fs/fs_struct.c
+@@ -6,6 +6,7 @@
+ #include <linux/path.h>
+ #include <linux/slab.h>
+ #include <linux/fs_struct.h>
++#include <linux/init_task.h>
+ #include "internal.h"
  
- 	f->f_flags	= flags;
- 	f->f_mode	= OPEN_FMODE(flags);
-+	/*
-+	 * Disable permission and pre-content events for all files by default.
-+	 * They may be enabled later by fsnotify_open_perm_and_set_mode().
-+	 */
-+	file_set_fsnotify_mode(f, FMODE_NONOTIFY_PERM);
- 
- 	f->f_op		= NULL;
- 	f->f_mapping	= NULL;
-@@ -197,11 +202,6 @@ static int init_file(struct file *f, int flags, const struct cred *cred)
- 	 * refcount bumps we should reinitialize the reused file first.
- 	 */
- 	file_ref_init(&f->f_ref, 1);
--	/*
--	 * Disable permission and pre-content events for all files by default.
--	 * They may be enabled later by fsnotify_open_perm_and_set_mode().
--	 */
--	file_set_fsnotify_mode(f, FMODE_NONOTIFY_PERM);
- 	return 0;
- }
- 
+ /*
 -- 
 2.51.0
 
