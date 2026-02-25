@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB728248881;
-	Wed, 25 Feb 2026 01:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4A0248881;
+	Wed, 25 Feb 2026 01:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983485; cv=none; b=n+Oq36DALPHZ8AJigtJjHG3iVUp+bupXpn6Gbsa+wRZAKoZ71gh9AByp3/rZmd/oiF4X/LFI8e1pOGuFNHZQKNk7IpbskRNnvz9JRBLUh0cNJcED6jxRsA1Pl2sZ3/xVGbovFMAG+6FfDq12Y1ItiAou75Edm+3UXZPCmdTYN+0=
+	t=1771983487; cv=none; b=lMOcFavCWWhuPZHOQH0ttU/tThafP6Mn51wpTNQ4phtOsH7XQZ35QyZ+Oh2pgX89vvnjY8rsfIwCjFPAWttJH/6HjSp7H+jnoxxRE2o8ydCEgowFvij7nL99K4ZDr/NRp+dC2BeRXRXKCVuk2rcpzkeLGtKtsZ67iufmtsDdSNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983485; c=relaxed/simple;
-	bh=zVuLJ8VHl0yp3dK/zoVSN2az0KJiXGD+GthM0P6qj4s=;
+	s=arc-20240116; t=1771983487; c=relaxed/simple;
+	bh=AKVO/4gVHTMjI5iUJ15tgM7ij4Y9vnvM3PcAoc3AhT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WOGcDtHRIqNL6jml4/WGwMDRbet4NnXcszhuhwoj0Yc8IwTqwQmO0f/yGb73erJSBLHAu8p2uKLOOwdGDueazg4bqaula5gSwAwp7ZI+KLrE7HhkIfAlHAOJXi6GZ5mlQ5akNIkUZvPbe95gtrDZMyYJesct7f0gL4OryVdZ+pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vc511V2K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qYs2+ZTIS4GFPjotiR4/88pfqiWOb79OvkfmE25qq58TN4sAIPKI5FD052qmM9nXR8rr16+b4xwslh2NNTkSQg5VpscvlvkjpY702fULRPXrOTgb9b9kQkCOC2JDAeqLBAycmPrs2PYYZ+HVbaxA2PsoWWPKySH75WHKjwC9aj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKy2hKO8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vc511V2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADACC116D0;
-	Wed, 25 Feb 2026 01:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKy2hKO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4075C116D0;
+	Wed, 25 Feb 2026 01:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983485;
-	bh=zVuLJ8VHl0yp3dK/zoVSN2az0KJiXGD+GthM0P6qj4s=;
+	s=korg; t=1771983486;
+	bh=AKVO/4gVHTMjI5iUJ15tgM7ij4Y9vnvM3PcAoc3AhT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vc511V2K9xXklk4RobnfTDC/JddQOVnipJny2JMAD3bh64AFzuvjiJ4t9bvchv8Nf
-	 JoRFhx+zErEFS/w9SqMM1eqdOiBFrnCCzCJWEU54WUzpuEeo6yw3NyC7iB33lyJvo9
-	 as4ez2/bjxM3J+z4Syju5LdeLy8vE/CqwT2HqybM=
+	b=gKy2hKO84znq2hPU7K0qwzIZEONP5Ri34801tlVVZtRjSCVnoTDdbDMR1/thYMyBg
+	 oYqmiwXl+V3meypxA+hQeSzLcAwXQ1GwilScOs29fLA+88tPY1nyTltDgOpA5gJ0jb
+	 kR0xgDwBC3IvQW/9kaA3Yk/WxJ1cQlpLDMFFNoCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 598/781] nfsd: do not allow exporting of special kernel filesystems
-Date: Tue, 24 Feb 2026 17:21:47 -0800
-Message-ID: <20260225012414.463312134@linuxfoundation.org>
+Subject: [PATCH 6.19 599/781] iio: sca3000: Fix a resource leak in sca3000_probe()
+Date: Tue, 24 Feb 2026 17:21:48 -0800
+Message-ID: <20260225012414.488646798@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,79 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit b3c78bc53630d14a5770451ede3a30e7052f3b8b ]
+[ Upstream commit 62b44ebc1f2c71db3ca2d4737c52e433f6f03038 ]
 
-pidfs and nsfs recently gained support for encode/decode of file handles
-via name_to_handle_at(2)/open_by_handle_at(2).
+spi->irq from request_threaded_irq() not released when
+iio_device_register() fails. Add an return value check and jump to a
+common error handler when iio_device_register() fails.
 
-These special kernel filesystems have custom ->open() and ->permission()
-export methods, which nfsd does not respect and it was never meant to be
-used for exporting those filesystems by nfsd.
-
-Therefore, do not allow nfsd to export filesystems with custom ->open()
-or ->permission() methods.
-
-Fixes: b3caba8f7a34a ("pidfs: implement file handle support")
-Fixes: 5222470b2fbb3 ("nsfs: support file handles")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20260129100212.49727-3-amir73il@gmail.com
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 9a4936dc89a3 ("staging:iio:accel:sca3000 Tidy up probe order to avoid a race.")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/export.c         | 8 +++++---
- include/linux/exportfs.h | 9 +++++++++
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ drivers/iio/accel/sca3000.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/export.c b/fs/nfsd/export.c
-index 2a1499f2ad196..09fe268fe2c76 100644
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -427,7 +427,8 @@ static int check_export(const struct path *path, int *flags, unsigned char *uuid
- 	 *       either a device number (so FS_REQUIRES_DEV needed)
- 	 *       or an FSID number (so NFSEXP_FSID or ->uuid is needed).
- 	 * 2:  We must be able to find an inode from a filehandle.
--	 *       This means that s_export_op must be set.
-+	 *       This means that s_export_op must be set and comply with
-+	 *       the requirements for remote filesystem export.
- 	 * 3: We must not currently be on an idmapped mount.
- 	 */
- 	if (!(inode->i_sb->s_type->fs_flags & FS_REQUIRES_DEV) &&
-@@ -437,8 +438,9 @@ static int check_export(const struct path *path, int *flags, unsigned char *uuid
- 		return -EINVAL;
- 	}
+diff --git a/drivers/iio/accel/sca3000.c b/drivers/iio/accel/sca3000.c
+index bfa8a3f5a92f4..9ef4d6e274669 100644
+--- a/drivers/iio/accel/sca3000.c
++++ b/drivers/iio/accel/sca3000.c
+@@ -1489,7 +1489,11 @@ static int sca3000_probe(struct spi_device *spi)
+ 	if (ret)
+ 		goto error_free_irq;
  
--	if (!exportfs_can_decode_fh(inode->i_sb->s_export_op)) {
--		dprintk("exp_export: export of invalid fs type.\n");
-+	if (!exportfs_may_export(inode->i_sb->s_export_op)) {
-+		dprintk("exp_export: export of invalid fs type (%s).\n",
-+			inode->i_sb->s_type->name);
- 		return -EINVAL;
- 	}
- 
-diff --git a/include/linux/exportfs.h b/include/linux/exportfs.h
-index f0cf2714ec52d..9bd93d6bd9a49 100644
---- a/include/linux/exportfs.h
-+++ b/include/linux/exportfs.h
-@@ -317,6 +317,15 @@ static inline bool exportfs_can_decode_fh(const struct export_operations *nop)
- 	return nop && nop->fh_to_dentry;
- }
- 
-+static inline bool exportfs_may_export(const struct export_operations *nop)
-+{
-+	/*
-+	 * Do not allow nfs export for filesystems with custom ->open() or
-+	 * ->permission() ops, which nfsd does not respect (e.g. pidfs, nsfs).
-+	 */
-+	return exportfs_can_decode_fh(nop) && !nop->open && !nop->permission;
-+}
+-	return iio_device_register(indio_dev);
++	ret = iio_device_register(indio_dev);
++	if (ret)
++		goto error_free_irq;
 +
- static inline bool exportfs_can_encode_fh(const struct export_operations *nop,
- 					  int fh_flags)
- {
++	return 0;
+ 
+ error_free_irq:
+ 	if (spi->irq)
 -- 
 2.51.0
 
