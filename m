@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFDE251793;
-	Wed, 25 Feb 2026 01:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10559242D9B;
+	Wed, 25 Feb 2026 01:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982998; cv=none; b=F0ev0nVW2jY4ZADTR5NU2mO6w9cVf+g2of/xEHiNXmyf9gaXpu31niJlIVuz/ec3LrPAtZMz+eyQIcUCwVcWkqNx7aGEtdAq1tsrGE88Ne9syRjwfpLWlAu0m20TQQ23TyMTa1t5yt5LJaQoA/FR8aaV6L6aZLcb/iMooP5KbU8=
+	t=1771982999; cv=none; b=D72XL3+kzsrqS1YPUNSlU6lr9JN8gUnQCgNeZIAIMh5XqcBtlJW2EVmLs+2cPdBXVqtWrdOdZKOdRBpJppk/nUhnl3ganJfih5KjXNY5cJSVFe5TrJAIzJ5I96zSAlluTFXngeMDSK+awFnu30dr+o9hU+gwz1zpfHubhPNIzAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982998; c=relaxed/simple;
-	bh=WS5iJCRYFlL1Ca9i43PPfJ9pJCVkVljcoqUqxOkD1jc=;
+	s=arc-20240116; t=1771982999; c=relaxed/simple;
+	bh=0lVEf9eE7ijoVdUgxMkC9dnlPeSQODUbHpOi1MNT2t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORzkOwsREOmlWACKFyT7KvgTP9rh2v3G0K3rTCvzdVivWerwMKklqPTmvgQxraaVvghH+r8uDgyiOcr2x4h01KcWY3te1/B1f4YbB/dEOalBm8rS6PzcqqNKPmbelhH7mPdZZhq6RDvu6AoKTVp2nt/HUKanAl7DLWRkQOPDvPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HC3lzpJT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dz1nELYlu8QQ9X14E6zF6Gg1emofYSfnB3MIwvtfbpSrpBBX34bwANmO+3u3zgpTzP7NuNzpzxJ8NQs7MPb+WoLV7BVv3uGCxL5UHSiLeRnkCcoA2vPKUoS4lc2DQuSNBQxUXesZ5fq9xPSf5RXUN9Qodrhk1H9KUK/ctWapd+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXZeVd3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HC3lzpJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3930C116D0;
-	Wed, 25 Feb 2026 01:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXZeVd3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BD9C116D0;
+	Wed, 25 Feb 2026 01:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982997;
-	bh=WS5iJCRYFlL1Ca9i43PPfJ9pJCVkVljcoqUqxOkD1jc=;
+	s=korg; t=1771982998;
+	bh=0lVEf9eE7ijoVdUgxMkC9dnlPeSQODUbHpOi1MNT2t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HC3lzpJTQrTtY70KgPJ8hznaevva0w3yPTQHa8XSmhSWux4WyMa6dOHNXUqcaiw+4
-	 fPGCX9M466XzDZgeU5uXl3MZ0HXa5AnumsF8xxmgGzkpiq3jxuk4IUwujNoeQlvUq1
-	 zcpsVsxxDMwMrtdKf8mH1XBlo2B7LFv4TkvhofGs=
+	b=aXZeVd3XyYFQ2eFqFHrJmODU2bIqM5jh5Fd3BwT5wg3eSE7PspAs2iHZRasgGjBOu
+	 R2QLgOhDyIObm9m/ChHDiDfuvTdmIaD0lkRQ5+21Xie/dI9uxAk/isrhn1YBSz+68W
+	 T7ha8107pIrl75dDmSfFYFSpmV/NnkAqGF9SD2m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jerome Brunet <jbrunet@baylibre.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 169/781] arm64: dts: amlogic: s4: assign mmc b clock to 24MHz
-Date: Tue, 24 Feb 2026 17:14:38 -0800
-Message-ID: <20260225012403.795442020@linuxfoundation.org>
+Subject: [PATCH 6.19 170/781] arm64: dts: amlogic: s4: fix mmc clock assignment
+Date: Tue, 24 Feb 2026 17:14:39 -0800
+Message-ID: <20260225012403.820310073@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,47 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 86124a8becb43eed3103f2459399daee8af2c99d ]
+[ Upstream commit 3a115d42922cffc91b303992eadf220111d66c31 ]
 
-The amlogic MMC driver operate with the assumption that MMC clock
-is configured to provide 24MHz. It uses this path for low
-rates such as 400kHz.
+MMC A and C are mis-represented as having their "clkin0" input connected to
+xtal while it is actually connected to the MMC clock, probably in an
+attempt to provide 24MHz to the device on this input.
 
-This assumption did hold true until but it now, but it is apparently
-not the case with s4. The clock has been reported to provide 1GHz
-instead. This is most likely due to how the bootloader is using the MMC
-clock on this platform.
+Fix this and assign the clock to 24MHz to actually provide the required
+rate.
 
-Regardless of why the MMC clock rate is 1GHz, if the MMC driver expects
-24MHz, the clock should be properly assigned, so assign it.
-
-Reported-by: Nick Xie <nick@khadas.com>
-Closes: https://lore.kernel.org/linux-amlogic/20260113011931.40424-1-nick@khadas.com/
 Fixes: 3ab9d54b5d84 ("arm64: dts: amlogic: enable some device nodes for S4")
 Tested-by: Nick Xie <nick@khadas.com>
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260114-amlogic-s4-mmc-fixup-v3-1-a4d3e136b3f2@baylibre.com
+Link: https://patch.msgid.link/20260114-amlogic-s4-mmc-fixup-v3-2-a4d3e136b3f2@baylibre.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-index 9d99ed2994dfa..f314f07062abe 100644
+index f314f07062abe..dfc0a30a6e61b 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-@@ -838,6 +838,9 @@ sd: mmc@fe08a000 {
+@@ -819,13 +819,16 @@ sdio: mmc@fe088000 {
+ 			reg = <0x0 0xfe088000 0x0 0x800>;
+ 			interrupts = <GIC_SPI 176 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&clkc_periphs CLKID_SDEMMC_A>,
+-				 <&xtal>,
++				 <&clkc_periphs CLKID_SD_EMMC_A>,
+ 				 <&clkc_pll CLKID_FCLK_DIV2>;
  			clock-names = "core", "clkin0", "clkin1";
- 			resets = <&reset RESET_SD_EMMC_B>;
+ 			resets = <&reset RESET_SD_EMMC_A>;
+ 			cap-sdio-irq;
+ 			keep-power-in-suspend;
  			status = "disabled";
 +
-+			assigned-clocks = <&clkc_periphs CLKID_SD_EMMC_B>;
++			assigned-clocks = <&clkc_periphs CLKID_SD_EMMC_A>;
 +			assigned-clock-rates = <24000000>;
  		};
  
- 		emmc: mmc@fe08c000 {
+ 		sd: mmc@fe08a000 {
+@@ -848,13 +851,16 @@ emmc: mmc@fe08c000 {
+ 			reg = <0x0 0xfe08c000 0x0 0x800>;
+ 			interrupts = <GIC_SPI 178 IRQ_TYPE_EDGE_RISING>;
+ 			clocks = <&clkc_periphs CLKID_NAND>,
+-				 <&xtal>,
++				 <&clkc_periphs CLKID_SD_EMMC_C>,
+ 				 <&clkc_pll CLKID_FCLK_DIV2>;
+ 			clock-names = "core", "clkin0", "clkin1";
+ 			resets = <&reset RESET_NAND_EMMC>;
+ 			no-sdio;
+ 			no-sd;
+ 			status = "disabled";
++
++			assigned-clocks = <&clkc_periphs CLKID_SD_EMMC_C>;
++			assigned-clock-rates = <24000000>;
+ 		};
+ 	};
+ };
 -- 
 2.51.0
 
