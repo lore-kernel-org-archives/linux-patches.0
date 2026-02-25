@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051C14369A;
-	Wed, 25 Feb 2026 01:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2471A1D5ABA;
+	Wed, 25 Feb 2026 01:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982942; cv=none; b=UD+PIjlIYm06kbt1COcm5TwvUVsWuTcm2Saf6StOkeMn7nqUSdg3eGCqDTSdHZRqAXVGGeMz/RT718C0sutKy7S6DPeJC/TszE4AKKgZrueVqoYVvcejf3aq3UhE0pzJ67YOW00HdfGGN8skx9a/OvKJz6M06dbaUy7EWJTxE8U=
+	t=1771982943; cv=none; b=DCQhtS7q7Q6jiAGc4XBq2t79oYz1b6QI2sotDihepMl3aOAGFIs3mDUb3E+c0Px1+hzamzSWnM+thjQV7yD/PFoV0hX8+3wSSD1eYOg/xf0kkSdHKDi3Qc5F09jXQv+iJAp7HXUXyjXIPYaK8e7y86RnR8pdN3tGSpYvFtxyXFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982942; c=relaxed/simple;
-	bh=6JfrC9Z1TuOkGSHfCin5dt2YIrmReTxnLyDo444llU8=;
+	s=arc-20240116; t=1771982943; c=relaxed/simple;
+	bh=Av5tObUYBTDbZhweYwidHm5Z8oX7Ch59gEKYUXdTEfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZ4mZD/VbJTXxDqAuE/kl6wNpttMNF02AcRzh0ZyHamv8GI+F69RiTzq3Z2yURA1NBkiEqWQOZJTeA5dbssP+cg119+5cu43gtl0zq3olVTl7NXbbWVvhy5/LAapyegR9NDpbROTDfwt0lG9OImaL7TYag5gBWUbXvfnoTbts+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dygY+3y5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LMDjyAlfHHkNwGgD1BYYYzVvjsb3XOMS3dOnJo7B58oEZIQb4GIF8m7uufbY5E8TZhAzh97AxAtNX0TEMRTyMVNSeqUlBbDt7crM5D42W/xGocSAhtuPML83M9xGrU5OPzPfTcqg3jni104uZtlnKGsgOS8Xu//LWfgtLU2Xbss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPSC/kj1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dygY+3y5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0872C116D0;
-	Wed, 25 Feb 2026 01:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPSC/kj1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D914CC116D0;
+	Wed, 25 Feb 2026 01:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982941;
-	bh=6JfrC9Z1TuOkGSHfCin5dt2YIrmReTxnLyDo444llU8=;
+	s=korg; t=1771982943;
+	bh=Av5tObUYBTDbZhweYwidHm5Z8oX7Ch59gEKYUXdTEfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dygY+3y5Nmffx4u5F5eTP2btQpGt6zql7HN+Vu4kW1g/rIFfvon9HejsZAhuJlOz2
-	 q6T8nYlhI053YZkzm6p+oqFC6y7qVRKmlJ6Q2ZIyi8tPOV0DQER8gUa0fwBKVZh1xd
-	 /iY//stypPAd2vIg+2mjTQbhf/a+pjHQfkyGbLsg=
+	b=gPSC/kj18qYMUxSuFBb2Cp+mK128EnioPS8SHgm6dpU6F7SSaJ2Bo/UzjQajEQEVa
+	 ss7mjuiLtY3hXmQ1dAC8FmfUdqw45iONllULFI6wXSqM4JS4l2etXHpNyGcNBIb5KG
+	 e6ccJvrAfhbBAbpfNxNnheEaucNuOQ18S4o5cxgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 113/781] selftests/bpf: Fix kprobe multi stacktrace_ips test
-Date: Tue, 24 Feb 2026 17:13:42 -0800
-Message-ID: <20260225012402.449481338@linuxfoundation.org>
+Subject: [PATCH 6.19 122/781] EDAC/altera: Remove IRQF_ONESHOT
+Date: Tue, 24 Feb 2026 17:13:51 -0800
+Message-ID: <20260225012402.661563268@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,52 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 0207f94971e72a13380e28022c86da147e8e090f ]
+[ Upstream commit 5c858d6c66304b4c7579582ec5235f02d43578ea ]
 
-We now include the attached function in the stack trace,
-fixing the test accordingly.
+Passing IRQF_ONESHOT ensures that the interrupt source is masked until
+the secondary (threaded) handler is done. If only a primary handler is
+used then the flag makes no sense because the interrupt can not fire
+(again) while its handler is running.
 
-Fixes: c9e208fa93cd ("selftests/bpf: Add stacktrace ips test for kprobe_multi/kretprobe_multi")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260126211837.472802-4-jolsa@kernel.org
+The flag also prevents force-threading of the primary handler and the
+irq-core will warn about this.
+
+Remove IRQF_ONESHOT from irqflags.
+
+Fixes: a29d64a45eed1 ("EDAC, altera: Add IRQ Flags to disable IRQ while handling")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260128095540.863589-11-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/stacktrace_ips.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/edac/altera_edac.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/stacktrace_ips.c b/tools/testing/selftests/bpf/prog_tests/stacktrace_ips.c
-index c9efdd2a5b18a..c93718dafd9b6 100644
---- a/tools/testing/selftests/bpf/prog_tests/stacktrace_ips.c
-+++ b/tools/testing/selftests/bpf/prog_tests/stacktrace_ips.c
-@@ -74,11 +74,20 @@ static void test_stacktrace_ips_kprobe_multi(bool retprobe)
- 
- 	load_kallsyms();
- 
--	check_stacktrace_ips(bpf_map__fd(skel->maps.stackmap), skel->bss->stack_key, 4,
--			     ksym_get_addr("bpf_testmod_stacktrace_test_3"),
--			     ksym_get_addr("bpf_testmod_stacktrace_test_2"),
--			     ksym_get_addr("bpf_testmod_stacktrace_test_1"),
--			     ksym_get_addr("bpf_testmod_test_read"));
-+	if (retprobe) {
-+		check_stacktrace_ips(bpf_map__fd(skel->maps.stackmap), skel->bss->stack_key, 4,
-+				     ksym_get_addr("bpf_testmod_stacktrace_test_3"),
-+				     ksym_get_addr("bpf_testmod_stacktrace_test_2"),
-+				     ksym_get_addr("bpf_testmod_stacktrace_test_1"),
-+				     ksym_get_addr("bpf_testmod_test_read"));
-+	} else {
-+		check_stacktrace_ips(bpf_map__fd(skel->maps.stackmap), skel->bss->stack_key, 5,
-+				     ksym_get_addr("bpf_testmod_stacktrace_test"),
-+				     ksym_get_addr("bpf_testmod_stacktrace_test_3"),
-+				     ksym_get_addr("bpf_testmod_stacktrace_test_2"),
-+				     ksym_get_addr("bpf_testmod_stacktrace_test_1"),
-+				     ksym_get_addr("bpf_testmod_test_read"));
-+	}
- 
- cleanup:
- 	stacktrace_ips__destroy(skel);
+diff --git a/drivers/edac/altera_edac.c b/drivers/edac/altera_edac.c
+index 0c5b94e64ea15..4edd2088c2db6 100644
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -1563,8 +1563,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
+ 		goto err_release_group_1;
+ 	}
+ 	rc = devm_request_irq(&altdev->ddev, altdev->sb_irq,
+-			      prv->ecc_irq_handler,
+-			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
++			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
+ 			      ecc_name, altdev);
+ 	if (rc) {
+ 		edac_printk(KERN_ERR, EDAC_DEVICE, "PortB SBERR IRQ error\n");
+@@ -1587,8 +1586,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
+ 		goto err_release_group_1;
+ 	}
+ 	rc = devm_request_irq(&altdev->ddev, altdev->db_irq,
+-			      prv->ecc_irq_handler,
+-			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
++			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
+ 			      ecc_name, altdev);
+ 	if (rc) {
+ 		edac_printk(KERN_ERR, EDAC_DEVICE, "PortB DBERR IRQ error\n");
+@@ -1970,8 +1968,7 @@ static int altr_edac_a10_device_add(struct altr_arria10_edac *edac,
+ 		goto err_release_group1;
+ 	}
+ 	rc = devm_request_irq(edac->dev, altdev->sb_irq, prv->ecc_irq_handler,
+-			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
+-			      ecc_name, altdev);
++			      IRQF_TRIGGER_HIGH, ecc_name, altdev);
+ 	if (rc) {
+ 		edac_printk(KERN_ERR, EDAC_DEVICE, "No SBERR IRQ resource\n");
+ 		goto err_release_group1;
+@@ -1993,7 +1990,7 @@ static int altr_edac_a10_device_add(struct altr_arria10_edac *edac,
+ 		goto err_release_group1;
+ 	}
+ 	rc = devm_request_irq(edac->dev, altdev->db_irq, prv->ecc_irq_handler,
+-			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
++			      IRQF_TRIGGER_HIGH,
+ 			      ecc_name, altdev);
+ 	if (rc) {
+ 		edac_printk(KERN_ERR, EDAC_DEVICE, "No DBERR IRQ resource\n");
 -- 
 2.51.0
 
