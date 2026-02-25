@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B812242D9B;
-	Wed, 25 Feb 2026 01:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4A31F03DE;
+	Wed, 25 Feb 2026 01:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983042; cv=none; b=h6Y8WR3JDRq1SiCKfH+HXQmRLF3KeDSzTyYpz5cot0PbzDYT1lVWoEuc5iHGQ8uC01Jj3wOXDt4uA6BsVT96SCMcP5j4ancZKPNxNVZD25QN1B+A1KuhnVJWUsjl5mc6ftNSsHLRwLKyVsFvREJ6gsqwRP6++MsNaZmiUP8UiK0=
+	t=1771983043; cv=none; b=g6QLxI2O95LZe3NHup9ymfYFIvRw2pP5uhUh0k8BQaiE+nDSrpnFDX5gaGCbJeOOzP6uvV/rfGAA/+YDp5WUJ+Dv/OCmmeNuYA3YjyuRtzYo607bH+lqVTbXN9eDdVQ4yjP6EoyonkYPMWaWFakTuf8FBIM1TyFdp/npSYLCDg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983042; c=relaxed/simple;
-	bh=RxRYDHC+F5Bf0FxwN6eoaBSsY/sOou2hCNYwrwP08+s=;
+	s=arc-20240116; t=1771983043; c=relaxed/simple;
+	bh=+FMRZdwn26PdYbx4BygU6TozC8GRlkvXoYdppNJQ+mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOLiudXGNuDsG4Q0N5hqvhx2YQZDOt+c9fJ5TClqvfGVZboe9+vpGbqiSQL9Mhzvdu5LwvWpnhBXMMU+5q2nzMAIVuYnWJL8BSoOkI7NSPbX7ylb0BxWcUYW1p5cekKQxorkfUBNmxeNKy+Z1r6xpuDvH6PNbjiBH6qs99uEM4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OH5yJLHR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5e8DjS7f3wkjA5B/eNh5eYf4ngDRMWH4aogbvgmeR1isAGBNQqrqdy0LxNoaMunL9dWjwZIiuQGAL0Fq5/7ilFeniOM3ry72uAeu3O9QVoq288WnsFpDpN3p08rO0gJB4SiTl4z1FkNVA0xBHFVMp9T5g0W/h1fk7+b8qImrp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqmZ81QD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OH5yJLHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A6DC116D0;
-	Wed, 25 Feb 2026 01:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqmZ81QD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D88C19423;
+	Wed, 25 Feb 2026 01:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983042;
-	bh=RxRYDHC+F5Bf0FxwN6eoaBSsY/sOou2hCNYwrwP08+s=;
+	s=korg; t=1771983043;
+	bh=+FMRZdwn26PdYbx4BygU6TozC8GRlkvXoYdppNJQ+mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OH5yJLHRidZ+HVRO38VV4d7anN+7780GxRZZz0jLpk5n+2y/4XdG2tlrZwLINBqOC
-	 vbWFeqNHpsp6WR2Jd+16jjM6+e8+QdWGuMOVMxxMI45vod1pHZLttrrC2jIEywcN9A
-	 EdIG7jQRDVQUbdxxR9PCvb3v9nYzCgHgviNBfuZ8=
+	b=DqmZ81QD1+mrEpHqy3q6ci+yYpMF4sln7fg/SDsE+G0syhmxt4xPn2l/jOVDKRoMI
+	 hlArgUXUZcWGXi2KxmJIHsQIw+V7F2zggEQwgwSDjAXlBQ97DIGFmBjBYC1d1rJdhe
+	 tkUmoY/PpGWup7uOJauAEYXby9xeqQtSRINtzYck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Jianhao Xu <jianhao.xu@seu.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 205/781] accel/amdxdna: Fix cu_idx being cleared by memset() during command setup
-Date: Tue, 24 Feb 2026 17:15:14 -0800
-Message-ID: <20260225012404.745719856@linuxfoundation.org>
+Subject: [PATCH 6.19 164/781] soc: mediatek: svs: Fix memory leak in svs_enable_debug_write()
+Date: Tue, 24 Feb 2026 17:14:33 -0800
+Message-ID: <20260225012403.674144810@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,95 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 3d32eb7a5ecff92d83a5fd34c45c171c17d3d5d0 ]
+[ Upstream commit 6259094ee806fb813ca95894c65fb80e2ec98bf1 ]
 
-For one command type, cu_idx is assigned before calling memset() on the
-command structure. This results in cu_idx being overwritten, causing the
-firmware to receive an incomplete or invalid command and leading to
-unexpected command failures.
+In svs_enable_debug_write(), the buf allocated by memdup_user_nul()
+is leaked if kstrtoint() fails.
 
-Fix this by moving the memset() call before initializing cu_idx so that
-all fields are populated in the correct order.
+Fix this by using __free(kfree) to automatically free buf, eliminating
+the need for explicit kfree() calls and preventing leaks.
 
-Fixes: 71829d7f2f70 ("accel/amdxdna: Use MSG_OP_CHAIN_EXEC_NPU when supported")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20251209211639.1636888-1-lizhi.hou@amd.com
+Fixes: 13f1bbcfb582 ("soc: mediatek: SVS: add debug commands")
+Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+[Angelo: Added missing cleanup.h inclusion]
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_message.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/soc/mediatek/mtk-svs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
-index 18cf8e49ea94d..e64dc3152c884 100644
---- a/drivers/accel/amdxdna/aie2_message.c
-+++ b/drivers/accel/amdxdna/aie2_message.c
-@@ -645,6 +645,7 @@ aie2_cmdlist_fill_npu_cf(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *siz
- 	u32 cmd_len;
- 	void *cmd;
+diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
+index f45537546553e..99edecb204f25 100644
+--- a/drivers/soc/mediatek/mtk-svs.c
++++ b/drivers/soc/mediatek/mtk-svs.c
+@@ -9,6 +9,7 @@
+ #include <linux/bits.h>
+ #include <linux/clk.h>
+ #include <linux/completion.h>
++#include <linux/cleanup.h>
+ #include <linux/cpu.h>
+ #include <linux/cpuidle.h>
+ #include <linux/debugfs.h>
+@@ -789,7 +790,7 @@ static ssize_t svs_enable_debug_write(struct file *filp,
+ 	struct svs_bank *svsb = file_inode(filp)->i_private;
+ 	struct svs_platform *svsp = dev_get_drvdata(svsb->dev);
+ 	int enabled, ret;
+-	char *buf = NULL;
++	char *buf __free(kfree) = NULL;
  
-+	memset(npu_slot, 0, sizeof(*npu_slot));
- 	cmd = amdxdna_cmd_get_payload(cmd_bo, &cmd_len);
- 	if (*size < sizeof(*npu_slot) + cmd_len)
+ 	if (count >= PAGE_SIZE)
  		return -EINVAL;
-@@ -653,7 +654,6 @@ aie2_cmdlist_fill_npu_cf(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *siz
- 	if (npu_slot->cu_idx == INVALID_CU_IDX)
- 		return -EINVAL;
+@@ -807,8 +808,6 @@ static ssize_t svs_enable_debug_write(struct file *filp,
+ 		svsb->mode_support = SVSB_MODE_ALL_DISABLE;
+ 	}
  
--	memset(npu_slot, 0, sizeof(*npu_slot));
- 	npu_slot->type = EXEC_NPU_TYPE_NON_ELF;
- 	npu_slot->arg_cnt = cmd_len / sizeof(u32);
- 	memcpy(npu_slot->args, cmd, cmd_len);
-@@ -670,6 +670,7 @@ aie2_cmdlist_fill_npu_dpu(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *si
- 	u32 cmd_len;
- 	u32 arg_sz;
+-	kfree(buf);
+-
+ 	return count;
+ }
  
-+	memset(npu_slot, 0, sizeof(*npu_slot));
- 	sn = amdxdna_cmd_get_payload(cmd_bo, &cmd_len);
- 	arg_sz = cmd_len - sizeof(*sn);
- 	if (cmd_len < sizeof(*sn) || arg_sz > MAX_NPU_ARGS_SIZE)
-@@ -682,7 +683,6 @@ aie2_cmdlist_fill_npu_dpu(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *si
- 	if (npu_slot->cu_idx == INVALID_CU_IDX)
- 		return -EINVAL;
- 
--	memset(npu_slot, 0, sizeof(*npu_slot));
- 	npu_slot->type = EXEC_NPU_TYPE_PARTIAL_ELF;
- 	npu_slot->inst_buf_addr = sn->buffer;
- 	npu_slot->inst_size = sn->buffer_size;
-@@ -702,6 +702,7 @@ aie2_cmdlist_fill_npu_preempt(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t
- 	u32 cmd_len;
- 	u32 arg_sz;
- 
-+	memset(npu_slot, 0, sizeof(*npu_slot));
- 	pd = amdxdna_cmd_get_payload(cmd_bo, &cmd_len);
- 	arg_sz = cmd_len - sizeof(*pd);
- 	if (cmd_len < sizeof(*pd) || arg_sz > MAX_NPU_ARGS_SIZE)
-@@ -714,7 +715,6 @@ aie2_cmdlist_fill_npu_preempt(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t
- 	if (npu_slot->cu_idx == INVALID_CU_IDX)
- 		return -EINVAL;
- 
--	memset(npu_slot, 0, sizeof(*npu_slot));
- 	npu_slot->type = EXEC_NPU_TYPE_PREEMPT;
- 	npu_slot->inst_buf_addr = pd->inst_buf;
- 	npu_slot->save_buf_addr = pd->save_buf;
-@@ -738,6 +738,7 @@ aie2_cmdlist_fill_npu_elf(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *si
- 	u32 cmd_len;
- 	u32 arg_sz;
- 
-+	memset(npu_slot, 0, sizeof(*npu_slot));
- 	pd = amdxdna_cmd_get_payload(cmd_bo, &cmd_len);
- 	arg_sz = cmd_len - sizeof(*pd);
- 	if (cmd_len < sizeof(*pd) || arg_sz > MAX_NPU_ARGS_SIZE)
-@@ -746,7 +747,6 @@ aie2_cmdlist_fill_npu_elf(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *si
- 	if (*size < sizeof(*npu_slot) + arg_sz)
- 		return -EINVAL;
- 
--	memset(npu_slot, 0, sizeof(*npu_slot));
- 	npu_slot->type = EXEC_NPU_TYPE_ELF;
- 	npu_slot->inst_buf_addr = pd->inst_buf;
- 	npu_slot->save_buf_addr = pd->save_buf;
 -- 
 2.51.0
 
