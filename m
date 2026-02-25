@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DF920C012;
-	Wed, 25 Feb 2026 01:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9123248886;
+	Wed, 25 Feb 2026 01:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771984003; cv=none; b=rVgjiPqacRSmfJlI/ENBDF7d+JcCyYqu77jS8uq8NHDk8LyiS9SOvRRrb+LY8EaTlQENBkIOuTMD+IJn3Idi62llgQ5F0TMpdi9gS8UhN5F6PEND6RCRs3YVwD87KZa+dncwiSTl+6BDYXaHdMkEyq4LGhmqa0nC9/+fik57xhU=
+	t=1771984004; cv=none; b=Pj6r4k1uyK3KcOAZY3iWN73pkVA3s4jF6yXshbLn9vLJj2CfoOMb5wgETkwQ8NzQqqyIzNwHLksHGWW63UL5DzYYnXrYNeKmwr0qx5H932mEiD83jjAJ+kSOgeKkGWWp8A4szAMCqVXcLC9WrcgOGT2waqnU9Ug1aIr3eEGkUSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771984003; c=relaxed/simple;
-	bh=Pb/iuWcjPYK0cSeXmAO4tGDQpgkkc9ZK9q8GC8XU998=;
+	s=arc-20240116; t=1771984004; c=relaxed/simple;
+	bh=NRmaXp04joY0e+4ZWnk9fqUu3g7Mvx5gppyU8hH5WAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O3u7hrQ/gU3HXmIkhJe5REsRVKjOM+pIuFiD+Jq/gBJjbm4JQ4IZlASS5be4Lm4zI413j3C5TbmOcaPYzsWySGdP41W2OzZmQaWGSLhaFQhv0Tip763wceET11hTVBIE16brcdWipf2l3qsNMig+j2W7xSaLzxkuUtWYaL+fazQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IntCbekh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q6E0QhJm2m+3wh8iFYgcUyddrMUSs6fX8G8MNLF0xVVBCBgZrXhkJ/6IW0YxhkJhfHVKbqBMtLpqlqcdHoSOwf0t+oZ49A0Q/zvBzALyQu7HztGREa8cPvWSMFLjmhD3fMXCL/iF1TCbN9XViQS2oSvYS+VRzWZdZcRpc06ozfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4+42LJX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IntCbekh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B224C116D0;
-	Wed, 25 Feb 2026 01:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4+42LJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63227C116D0;
+	Wed, 25 Feb 2026 01:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771984003;
-	bh=Pb/iuWcjPYK0cSeXmAO4tGDQpgkkc9ZK9q8GC8XU998=;
+	s=korg; t=1771984004;
+	bh=NRmaXp04joY0e+4ZWnk9fqUu3g7Mvx5gppyU8hH5WAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IntCbekh4v5WH/6mD+tnjhr5jQOtQu5hsOSm2rDGeYanSCandI53IALA6vU/XE6DU
-	 OpBwS30GT5LNJ3i1LcmWCC42vLo+Pu3H6UgEmDabwigfD/Z1iLXV2aYhT7AECqwUpF
-	 PhfviwgU24yCdG3rrR1XDvAAJL1ajl3v6IkfqJSI=
+	b=Z4+42LJX3cIUaI9MhC8x3UcvT0bZh/qF2/4knUOlIOxUFvitE9CqdrESpXncNaTHR
+	 T3Y4sjNxW23TzC7pD5exXwJukX62Mx0+qSCdjyN1oPdnvWmGMMwogod5HyNU0bm5rP
+	 GpojBrGzDbNQKMkzmm1zHxwoKNDDsq3rLJDKCswU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	Baokun Li <libaokun1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 255/641] ext4: fast commit: make s_fc_lock reclaim-safe
-Date: Tue, 24 Feb 2026 17:19:41 -0800
-Message-ID: <20260225012355.020044422@linuxfoundation.org>
+Subject: [PATCH 6.18 256/641] netfilter: nf_tables: reset table validation state on abort
+Date: Tue, 24 Feb 2026 17:19:42 -0800
+Message-ID: <20260225012355.042085508@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,299 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 491f2927ae097e2d405afe0b3fe841931ab8aad2 ]
+[ Upstream commit 6f93616a7323d646d18db9c09f147e453b40fdd7 ]
 
-s_fc_lock can be acquired from inode eviction and thus is
-reclaim unsafe. Since the fast commit path holds s_fc_lock while writing
-the commit log, allocations under the lock can enter reclaim and invert
-the lock order with fs_reclaim. Add ext4_fc_lock()/ext4_fc_unlock()
-helpers which acquire s_fc_lock under memalloc_nofs_save()/restore()
-context and use them everywhere so allocations under the lock cannot
-recurse into filesystem reclaim.
+If a transaction fails the final validation in the commit hook, the table
+validation state is changed to NFT_VALIDATE_DO and a replay of the batch is
+performed.  Every rule insert will then do a graph validation.
 
-Fixes: 6593714d67ba ("ext4: hold s_fc_lock while during fast commit")
-Signed-off-by: Li Chen <me@linux.beauty>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260106120621.440126-1-me@linux.beauty
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+This is much slower, but provides better error reporting to the user
+because we can point at the rule that introduces the validation issue.
+
+Without this reset the affected table(s) remain in full validation mode,
+i.e. on next transaction we start with slow-mode.
+
+This makes the next transaction after a failed incremental update very slow:
+
+ # time iptables-restore < /tmp/ruleset
+ real    0m0.496s [..]
+ # time iptables -A CALLEE -j CALLER
+ iptables v1.8.11 (nf_tables):  RULE_APPEND failed (Too many links): rule in chain CALLEE
+ real    0m0.022s [..]
+ # time iptables-restore < /tmp/ruleset
+ real    1m22.355s [..]
+
+After this patch, 2nd iptables-restore is back to ~0.5s.
+
+Fixes: 9a32e9850686 ("netfilter: nf_tables: don't write table validation state without mutex")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h        | 16 ++++++++++++++
- fs/ext4/fast_commit.c | 51 ++++++++++++++++++++++++-------------------
- 2 files changed, 44 insertions(+), 23 deletions(-)
+ net/netfilter/nf_tables_api.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 57087da6c7bee..933297251f66a 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1771,6 +1771,10 @@ struct ext4_sb_info {
- 	 * Main fast commit lock. This lock protects accesses to the
- 	 * following fields:
- 	 * ei->i_fc_list, s_fc_dentry_q, s_fc_q, s_fc_bytes, s_fc_bh.
-+	 *
-+	 * s_fc_lock can be taken from reclaim context (inode eviction) and is
-+	 * thus reclaim unsafe. Use ext4_fc_lock()/ext4_fc_unlock() helpers
-+	 * when acquiring / releasing the lock.
- 	 */
- 	struct mutex s_fc_lock;
- 	struct buffer_head *s_fc_bh;
-@@ -1815,6 +1819,18 @@ static inline void ext4_writepages_up_write(struct super_block *sb, int ctx)
- 	percpu_up_write(&EXT4_SB(sb)->s_writepages_rwsem);
- }
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 6059a299004d4..df18dfd5a8271 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -11538,6 +11538,13 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
+ 	ret = __nf_tables_abort(net, action);
+ 	nft_gc_seq_end(nft_net, gc_seq);
  
-+static inline int ext4_fc_lock(struct super_block *sb)
-+{
-+	mutex_lock(&EXT4_SB(sb)->s_fc_lock);
-+	return memalloc_nofs_save();
-+}
++	if (action == NFNL_ABORT_NONE) {
++		struct nft_table *table;
 +
-+static inline void ext4_fc_unlock(struct super_block *sb, int ctx)
-+{
-+	memalloc_nofs_restore(ctx);
-+	mutex_unlock(&EXT4_SB(sb)->s_fc_lock);
-+}
++		list_for_each_entry(table, &nft_net->tables, list)
++			table->validate_state = NFT_VALIDATE_SKIP;
++	}
 +
- static inline int ext4_valid_inum(struct super_block *sb, unsigned long ino)
- {
- 	return ino == EXT4_ROOT_INO ||
-diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
-index fa66b08de9994..5bd57d7f921b9 100644
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -231,16 +231,16 @@ static bool ext4_fc_disabled(struct super_block *sb)
- void ext4_fc_del(struct inode *inode)
- {
- 	struct ext4_inode_info *ei = EXT4_I(inode);
--	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
- 	struct ext4_fc_dentry_update *fc_dentry;
- 	wait_queue_head_t *wq;
-+	int alloc_ctx;
+ 	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
  
- 	if (ext4_fc_disabled(inode->i_sb))
- 		return;
- 
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(inode->i_sb);
- 	if (list_empty(&ei->i_fc_list) && list_empty(&ei->i_fc_dilist)) {
--		mutex_unlock(&sbi->s_fc_lock);
-+		ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 		return;
- 	}
- 
-@@ -275,9 +275,9 @@ void ext4_fc_del(struct inode *inode)
- #endif
- 		prepare_to_wait(wq, &wait.wq_entry, TASK_UNINTERRUPTIBLE);
- 		if (ext4_test_inode_state(inode, EXT4_STATE_FC_FLUSHING_DATA)) {
--			mutex_unlock(&sbi->s_fc_lock);
-+			ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 			schedule();
--			mutex_lock(&sbi->s_fc_lock);
-+			alloc_ctx = ext4_fc_lock(inode->i_sb);
- 		}
- 		finish_wait(wq, &wait.wq_entry);
- 	}
-@@ -288,7 +288,7 @@ void ext4_fc_del(struct inode *inode)
- 	 * dentry create references, since it is not needed to log it anyways.
- 	 */
- 	if (list_empty(&ei->i_fc_dilist)) {
--		mutex_unlock(&sbi->s_fc_lock);
-+		ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 		return;
- 	}
- 
-@@ -298,7 +298,7 @@ void ext4_fc_del(struct inode *inode)
- 	list_del_init(&fc_dentry->fcd_dilist);
- 
- 	WARN_ON(!list_empty(&ei->i_fc_dilist));
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 
- 	release_dentry_name_snapshot(&fc_dentry->fcd_name);
- 	kmem_cache_free(ext4_fc_dentry_cachep, fc_dentry);
-@@ -315,6 +315,7 @@ void ext4_fc_mark_ineligible(struct super_block *sb, int reason, handle_t *handl
- 	tid_t tid;
- 	bool has_transaction = true;
- 	bool is_ineligible;
-+	int alloc_ctx;
- 
- 	if (ext4_fc_disabled(sb))
- 		return;
-@@ -329,12 +330,12 @@ void ext4_fc_mark_ineligible(struct super_block *sb, int reason, handle_t *handl
- 			has_transaction = false;
- 		read_unlock(&sbi->s_journal->j_state_lock);
- 	}
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	is_ineligible = ext4_test_mount_flag(sb, EXT4_MF_FC_INELIGIBLE);
- 	if (has_transaction && (!is_ineligible || tid_gt(tid, sbi->s_fc_ineligible_tid)))
- 		sbi->s_fc_ineligible_tid = tid;
- 	ext4_set_mount_flag(sb, EXT4_MF_FC_INELIGIBLE);
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	WARN_ON(reason >= EXT4_FC_REASON_MAX);
- 	sbi->s_fc_stats.fc_ineligible_reason_count[reason]++;
- }
-@@ -358,6 +359,7 @@ static int ext4_fc_track_template(
- 	struct ext4_inode_info *ei = EXT4_I(inode);
- 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
- 	tid_t tid = 0;
-+	int alloc_ctx;
- 	int ret;
- 
- 	tid = handle->h_transaction->t_tid;
-@@ -373,14 +375,14 @@ static int ext4_fc_track_template(
- 	if (!enqueue)
- 		return ret;
- 
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(inode->i_sb);
- 	if (list_empty(&EXT4_I(inode)->i_fc_list))
- 		list_add_tail(&EXT4_I(inode)->i_fc_list,
- 				(sbi->s_journal->j_flags & JBD2_FULL_COMMIT_ONGOING ||
- 				 sbi->s_journal->j_flags & JBD2_FAST_COMMIT_ONGOING) ?
- 				&sbi->s_fc_q[FC_Q_STAGING] :
- 				&sbi->s_fc_q[FC_Q_MAIN]);
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(inode->i_sb, alloc_ctx);
- 
- 	return ret;
- }
-@@ -402,6 +404,7 @@ static int __track_dentry_update(handle_t *handle, struct inode *inode,
- 	struct inode *dir = dentry->d_parent->d_inode;
- 	struct super_block *sb = inode->i_sb;
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
-+	int alloc_ctx;
- 
- 	spin_unlock(&ei->i_fc_lock);
- 
-@@ -425,7 +428,7 @@ static int __track_dentry_update(handle_t *handle, struct inode *inode,
- 	take_dentry_name_snapshot(&node->fcd_name, dentry);
- 	INIT_LIST_HEAD(&node->fcd_dilist);
- 	INIT_LIST_HEAD(&node->fcd_list);
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	if (sbi->s_journal->j_flags & JBD2_FULL_COMMIT_ONGOING ||
- 		sbi->s_journal->j_flags & JBD2_FAST_COMMIT_ONGOING)
- 		list_add_tail(&node->fcd_list,
-@@ -446,7 +449,7 @@ static int __track_dentry_update(handle_t *handle, struct inode *inode,
- 		WARN_ON(!list_empty(&ei->i_fc_dilist));
- 		list_add_tail(&node->fcd_dilist, &ei->i_fc_dilist);
- 	}
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	spin_lock(&ei->i_fc_lock);
- 
- 	return 0;
-@@ -1046,18 +1049,19 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	struct blk_plug plug;
- 	int ret = 0;
- 	u32 crc = 0;
-+	int alloc_ctx;
- 
- 	/*
- 	 * Step 1: Mark all inodes on s_fc_q[MAIN] with
- 	 * EXT4_STATE_FC_FLUSHING_DATA. This prevents these inodes from being
- 	 * freed until the data flush is over.
- 	 */
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	list_for_each_entry(iter, &sbi->s_fc_q[FC_Q_MAIN], i_fc_list) {
- 		ext4_set_inode_state(&iter->vfs_inode,
- 				     EXT4_STATE_FC_FLUSHING_DATA);
- 	}
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 
- 	/* Step 2: Flush data for all the eligible inodes. */
- 	ret = ext4_fc_flush_data(journal);
-@@ -1067,7 +1071,7 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	 * any error from step 2. This ensures that waiters waiting on
- 	 * EXT4_STATE_FC_FLUSHING_DATA can resume.
- 	 */
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	list_for_each_entry(iter, &sbi->s_fc_q[FC_Q_MAIN], i_fc_list) {
- 		ext4_clear_inode_state(&iter->vfs_inode,
- 				       EXT4_STATE_FC_FLUSHING_DATA);
-@@ -1084,7 +1088,7 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	 * prepare_to_wait() in ext4_fc_del().
- 	 */
- 	smp_mb();
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 
- 	/*
- 	 * If we encountered error in Step 2, return it now after clearing
-@@ -1101,12 +1105,12 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	 * previous handles are now drained. We now mark the inodes on the
- 	 * commit queue as being committed.
- 	 */
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	list_for_each_entry(iter, &sbi->s_fc_q[FC_Q_MAIN], i_fc_list) {
- 		ext4_set_inode_state(&iter->vfs_inode,
- 				     EXT4_STATE_FC_COMMITTING);
- 	}
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	jbd2_journal_unlock_updates(journal);
- 
- 	/*
-@@ -1117,6 +1121,7 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 		blkdev_issue_flush(journal->j_fs_dev);
- 
- 	blk_start_plug(&plug);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	/* Step 6: Write fast commit blocks to disk. */
- 	if (sbi->s_fc_bytes == 0) {
- 		/*
-@@ -1134,7 +1139,6 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	}
- 
- 	/* Step 6.2: Now write all the dentry updates. */
--	mutex_lock(&sbi->s_fc_lock);
- 	ret = ext4_fc_commit_dentry_updates(journal, &crc);
- 	if (ret)
- 		goto out;
-@@ -1156,7 +1160,7 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	ret = ext4_fc_write_tail(sb, crc);
- 
- out:
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	blk_finish_plug(&plug);
- 	return ret;
- }
-@@ -1290,6 +1294,7 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	struct ext4_inode_info *ei;
- 	struct ext4_fc_dentry_update *fc_dentry;
-+	int alloc_ctx;
- 
- 	if (full && sbi->s_fc_bh)
- 		sbi->s_fc_bh = NULL;
-@@ -1297,7 +1302,7 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 	trace_ext4_fc_cleanup(journal, full, tid);
- 	jbd2_fc_release_bufs(journal);
- 
--	mutex_lock(&sbi->s_fc_lock);
-+	alloc_ctx = ext4_fc_lock(sb);
- 	while (!list_empty(&sbi->s_fc_q[FC_Q_MAIN])) {
- 		ei = list_first_entry(&sbi->s_fc_q[FC_Q_MAIN],
- 					struct ext4_inode_info,
-@@ -1356,7 +1361,7 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 
- 	if (full)
- 		sbi->s_fc_bytes = 0;
--	mutex_unlock(&sbi->s_fc_lock);
-+	ext4_fc_unlock(sb, alloc_ctx);
- 	trace_ext4_fc_stats(sb);
- }
- 
+ 	/* module autoload needs to happen after GC sequence update because it
 -- 
 2.51.0
 
