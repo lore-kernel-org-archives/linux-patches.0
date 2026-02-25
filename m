@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2752D839C;
-	Wed, 25 Feb 2026 06:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053A42D839C;
+	Wed, 25 Feb 2026 06:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002701; cv=none; b=Y+NkHqY6NNX+rEpdfS3hGCTvtm7NJxTkLeGXCf0Sv6P+8P5jCQLBLpFplBWsEHrhL3mSg3VfxwdSy2xRz6OCdpluYmleHaMQNuubeaVa9EMdpsNVrIwvc1PGvAKRyisIfI3dwgyKMgWBselZANMljPs8Q784bMR6+VbfbaKXjeo=
+	t=1772002702; cv=none; b=Tzca45eiFQg0uNYa612SJXlRVxX5v7fRe0XRVFS7gXRjIXrxXqLQ6siLPEH5fnn+udL27mdgaoY+ECsgtQnN+KLGaTh7ucNL0t9lu6AECeiUYLUehuLsoWYb23GN+tFd2J4aYImYX7omTTb4OVNfvOXxj83cvniTLQ2dohxhHcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002701; c=relaxed/simple;
-	bh=x7rPrJeAmQPuIFt/b5qUSSToR+iqyEoWSYHrFETECis=;
+	s=arc-20240116; t=1772002702; c=relaxed/simple;
+	bh=Rwyh0LBwFipqy9QBLnRW5Qgbqnkos2I0F5MnculfuKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDxALHrNgPMx53X6HwM6NdllGJJ18fJNU5adyHNLo16LGP6LyD4gPZAO4p32uH0lC7doSf0EAS1pu4RA6aS9vkjgVAHQvuG7Dk65frBe+s+3QLMiZjEtu28Q+/DyJJ60vC4tv8xITthhckbI0LC2cdkEENQT0WKJBYYOBPJdMsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEjtqgKP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SBqcKZa+JOU2xmxqMBxaUm0jM6ljlWdmEDc2hD34b4Ij/ahVQ0TAX28yksoWzkBm0j3ijbJ2nFYoaRCpg+zlUw2BipiVAxUSG/pR0f1fAUj5jch58cP1VNYqQzn03tia9OFRckU4vr2QVUOH7iic1KOydlpQmP3JPZ9txtFHzZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCKRD9Wg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEjtqgKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F1AC116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCKRD9Wg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DA3C19422;
 	Wed, 25 Feb 2026 06:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002701;
-	bh=x7rPrJeAmQPuIFt/b5qUSSToR+iqyEoWSYHrFETECis=;
+	bh=Rwyh0LBwFipqy9QBLnRW5Qgbqnkos2I0F5MnculfuKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VEjtqgKPHUiOjXb3DET4vwGPcAru4pPdJdII3Fehu/Ybxdir99ZHe9ZWD9mUMF5NG
-	 hIodNZd0j61zGLFTPc2b8BBIbppZUXX9xtFKXKihb8DBMcq8060/Xmw9EaK7yBazdu
-	 QWbjhgv337sJ78aDcImfIH6TvPu3x6r/QPVLyBNo=
+	b=QCKRD9WgiDXdzZJFrLnfoechKZPn6uYjkfUpZc+TfuT8k4R7yj4aXMwDcm0/BLg+G
+	 afMHTnTmjmVE96rEyYDsMp7NUv+xqZ7H/bgGYCXxctBhP8H/fMw88RB6Ktsy7slUhF
+	 Y9wNg5sye3tcO3Uj3gFp3hzXkBuyloaSyeSVCsRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+08d8956768c96a2c52cf@syzkaller.appspotmail.com,
+	Bartlomiej Kubik <kubik.bartlomiej@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 499/641] io_uring/cancel: de-unionize file and user_data in struct io_cancel_data
-Date: Tue, 24 Feb 2026 17:23:45 -0800
-Message-ID: <20260225012400.611259052@linuxfoundation.org>
+Subject: [PATCH 6.18 500/641] fs/ntfs3: Initialize new folios before use
+Date: Tue, 24 Feb 2026 17:23:46 -0800
+Message-ID: <20260225012400.636829989@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -50,42 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
 
-[ Upstream commit 22dbb0987bd1e0ec3b1e4ad20756a98f99aa4a08 ]
+[ Upstream commit f223ebffa185cc8da934333c5a31ff2d4f992dc9 ]
 
-By having them share the same space in struct io_cancel_data, it ends up
-disallowing IORING_ASYNC_CANCEL_FD|IORING_ASYNC_CANCEL_USERDATA from
-working. Eg you cannot match on both a file and user_data for
-cancelation purposes. This obviously isn't a common use case as nobody
-has reported this, but it does result in -ENOENT potentially being
-returned when trying to match on both, rather than actually doing what
-the API says it would.
+KMSAN reports an uninitialized value in longest_match_std(), invoked
+from ntfs_compress_write(). When new folios are allocated without being
+marked uptodate and ni_read_frame() is skipped because the caller expects
+the frame to be completely overwritten, some reserved folios may remain
+only partially filled, leaving the rest memory uninitialized.
 
-Fixes: 4bf94615b888 ("io_uring: allow IORING_OP_ASYNC_CANCEL with 'fd' key")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 584f60ba22f7 ("ntfs3: Convert ntfs_get_frame_pages() to use a folio")
+Tested-by: syzbot+08d8956768c96a2c52cf@syzkaller.appspotmail.com
+Reported-by: syzbot+08d8956768c96a2c52cf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=08d8956768c96a2c52cf
+
+Signed-off-by: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/cancel.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ntfs3/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/cancel.h b/io_uring/cancel.h
-index 43e9bb74e9d19..eaa4069e258c9 100644
---- a/io_uring/cancel.h
-+++ b/io_uring/cancel.h
-@@ -6,10 +6,8 @@
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 83f0072f0896c..3e61eaf28e088 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -930,7 +930,7 @@ static int ntfs_get_frame_pages(struct address_space *mapping, pgoff_t index,
  
- struct io_cancel_data {
- 	struct io_ring_ctx *ctx;
--	union {
--		u64 data;
--		struct file *file;
--	};
-+	u64 data;
-+	struct file *file;
- 	u8 opcode;
- 	u32 flags;
- 	int seq;
+ 		folio = __filemap_get_folio(mapping, index,
+ 					    FGP_LOCK | FGP_ACCESSED | FGP_CREAT,
+-					    gfp_mask);
++					    gfp_mask | __GFP_ZERO);
+ 		if (IS_ERR(folio)) {
+ 			while (npages--) {
+ 				folio = page_folio(pages[npages]);
 -- 
 2.51.0
 
