@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF472C17A0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E680B2C17A0;
 	Wed, 25 Feb 2026 06:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002601; cv=none; b=PfXJRoGFxFt9/lm1yK4KuPgeBQ3kFbpcpJz/iKR59zMwbfvmdQRjj7Ep29tMRXEnPBbFDS3nPRDJndgopxS1+8eT/zxI7STByxpxNNBtLEzgM7hpobFCislwtmJEl7gE1ylO0oBd3EqCtXNvpGeNBEQ2MY96F39/u58BwjFrHKc=
+	t=1772002602; cv=none; b=r0UvFkQv8NMX3X+CWDy2tAA5Gg4yV42pVms8XpWyAz75vUG5bhpazMegmTWnkA4AlLqULN+16cVRf/eksFPlu/qW2OheQ56nXg8uxBUdG3RDD9l3QHO7wgzfkb+kQFfv6vy4iN3ZT886czyvtzz47PI+PNCJ2fsCR3oLzJl09vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002601; c=relaxed/simple;
-	bh=7C2GQUlM+kaDxdEF/WPFy3AC6nfOlb8w28fCPRNM+LM=;
+	s=arc-20240116; t=1772002602; c=relaxed/simple;
+	bh=WkpxZ+z8ofXC4/VGdnzEipJZP6KzSzeQaWHEjLkSppA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fshwD93o5oem1QhI988nJcOqjx7choShGSmedz1M4XfGvF1hrjDoF8GQuQxZ11nR6xJmGhlRV5NiwxePsa4h+l3FvpqUIzmAOFSlt8hx9LCDgwvSvTm+nf1DkHCU1u0lSqIDD7ihgKT/ZQXAgTJZFHoTj9p7AlKs4Ibyx793ySY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrpdajVu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=laKEUhIVV5EmjrI4r41QbgtxHBJNbo3rRLWzOjoX56ggQMbHAigc+icG/GvlNdKGdMc5anbrICMPJFrPckdp5sVrzOqb31gY49m1Xr1cntI7qmfqE75jS9xthZ4tqn0bP7oE7Fn9inoiQGyv/qRcdrh1Wj/uzi9QB07WrvpE1y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FfN7JuL5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrpdajVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24093C116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FfN7JuL5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAECC116D0;
 	Wed, 25 Feb 2026 06:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002601;
-	bh=7C2GQUlM+kaDxdEF/WPFy3AC6nfOlb8w28fCPRNM+LM=;
+	bh=WkpxZ+z8ofXC4/VGdnzEipJZP6KzSzeQaWHEjLkSppA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NrpdajVuaosc0Gnpg93hA3pj7b10mH+PkCQ8+09CEzw30TTAGBGcfPbCJoHruhGFu
-	 pv2ZgOLAidgDffWu4pzCYr9N6wIfyeg/+MNGNL+UKAcI0j/fDhnjbuNhXKt8mzz5WE
-	 Q2w6a7mRgUytEqBLayuGYAh39lQABrj4F9T2PsA0=
+	b=FfN7JuL5T9N/E/IfEpiCAru6a7jSPz3XVf5heBDEUgMqiielB6fgs6sBOfvKAjbl7
+	 RvieDtqAemc+JyjO2UaiZaZhjQk59QIzsDCO2vlafJSyvD5k5sicY2GIz1vs5ACLCK
+	 VV4q+Xv511i73QG2nP5TzlFDj1AoaG5WyUxBFUnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Waqar Hameed <waqar.hameed@axis.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 348/641] power: supply: cpcap-battery: Fix use-after-free in power_supply_changed()
-Date: Tue, 24 Feb 2026 17:21:14 -0800
-Message-ID: <20260225012357.083194065@linuxfoundation.org>
+Subject: [PATCH 6.18 349/641] power: supply: goldfish: Fix use-after-free in power_supply_changed()
+Date: Tue, 24 Feb 2026 17:21:15 -0800
+Message-ID: <20260225012357.105041621@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit 642f33e34b969eedec334738fd5df95d2dc42742 ]
+[ Upstream commit b2ce982e2e0c888dc55c888ad0e20ea04daf2e6b ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -77,41 +77,45 @@ of using the `power_supply` handle *uninitialized* in
 Fix this racy use-after-free by making sure the IRQ is requested _after_
 the registration of the `power_supply` handle.
 
-Fixes: 874b2adbed12 ("power: supply: cpcap-battery: Add a battery driver")
+Fixes: 84d7b7687489 ("power: Add battery driver for goldfish emulator")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Link: https://patch.msgid.link/81db58d610c9a51a68184f856cd431a934cccee2.1766268280.git.waqar.hameed@axis.com
+Link: https://patch.msgid.link/500a606bb6fb6f2bb8d797e19a00cea9dd7b03c1.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cpcap-battery.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/power/supply/goldfish_battery.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/cpcap-battery.c b/drivers/power/supply/cpcap-battery.c
-index 8106d1edcbc26..507fdc1c866d5 100644
---- a/drivers/power/supply/cpcap-battery.c
-+++ b/drivers/power/supply/cpcap-battery.c
-@@ -1122,10 +1122,6 @@ static int cpcap_battery_probe(struct platform_device *pdev)
+diff --git a/drivers/power/supply/goldfish_battery.c b/drivers/power/supply/goldfish_battery.c
+index 479195e35d734..5aa24e4dc4455 100644
+--- a/drivers/power/supply/goldfish_battery.c
++++ b/drivers/power/supply/goldfish_battery.c
+@@ -224,12 +224,6 @@ static int goldfish_battery_probe(struct platform_device *pdev)
+ 	if (data->irq < 0)
+ 		return -ENODEV;
  
- 	platform_set_drvdata(pdev, ddata);
- 
--	error = cpcap_battery_init_interrupts(pdev, ddata);
--	if (error)
--		return error;
+-	ret = devm_request_irq(&pdev->dev, data->irq,
+-			       goldfish_battery_interrupt,
+-			       IRQF_SHARED, pdev->name, data);
+-	if (ret)
+-		return ret;
 -
- 	error = cpcap_battery_init_iio(ddata);
- 	if (error)
- 		return error;
-@@ -1142,6 +1138,10 @@ static int cpcap_battery_probe(struct platform_device *pdev)
- 		return error;
- 	}
+ 	psy_cfg.drv_data = data;
  
-+	error = cpcap_battery_init_interrupts(pdev, ddata);
-+	if (error)
-+		return error;
+ 	data->ac = devm_power_supply_register(&pdev->dev,
+@@ -244,6 +238,12 @@ static int goldfish_battery_probe(struct platform_device *pdev)
+ 	if (IS_ERR(data->battery))
+ 		return PTR_ERR(data->battery);
+ 
++	ret = devm_request_irq(&pdev->dev, data->irq,
++			       goldfish_battery_interrupt,
++			       IRQF_SHARED, pdev->name, data);
++	if (ret)
++		return ret;
 +
- 	atomic_set(&ddata->active, 1);
- 
- 	error = cpcap_battery_calibrate(ddata);
+ 	GOLDFISH_BATTERY_WRITE(data, BATTERY_INT_ENABLE, BATTERY_INT_MASK);
+ 	return 0;
+ }
 -- 
 2.51.0
 
