@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBAB252917;
-	Wed, 25 Feb 2026 01:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E2622127B;
+	Wed, 25 Feb 2026 01:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983962; cv=none; b=fCK3IQzODeU0ymOaB6m0vLsPt7i/t/sq0hst3OpdUE4EMYWwufU52KiWS14wDBLVlz0WaPuU0YC+v9uKDPeph/D/AEXMpQ7jqopQhre8VJ9feDprlHGcMbaCNHNmC7uc3Tk4s11Ib+FbGqnfnPv32JeUXK3YiZKcP13M8hnIVpM=
+	t=1771983963; cv=none; b=aWJsJa81xlEF9lsQepO7H6nsZQ2UVMZv9G0cKV6RbGiQKQ828zhalP58EBpk8YogJzWy2It2ZpHRHpkjc/USTAhbgTBrdb2KB9LoDf+CPB8WqPD6568j2cjavKv1Gkn+LC3OYe87AmJM4W2ZCupjrHmnN+qTxx/to1LYX3X17Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983962; c=relaxed/simple;
-	bh=UuLu/9X7THhUYAQrb/0w+BeHwt19NrQFPqBYpqEef7A=;
+	s=arc-20240116; t=1771983963; c=relaxed/simple;
+	bh=xS3R1/4R4HhO0UAom0caqAULbhKqGEfnt3tu7/Ta7Lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iNa1Q/Rt7Ek/IRKYRbY1usS1o2LR+c4LqRNfsUZfl7c6tDtwEZTtL5k+mFxHSwB1jpgcVUbHKkfAplmKrCEYMmFtfYjXAK5Hjx+hkOmQLdIbXchHKjd9FUUjvyCDgp72kfxHXzQW0Rw5IF/rJbKi8JQ7ecyKVrk6Q7UQRqLuRAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOYmyHu5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPxDKFpN2LvviNbPqKIIJVUP5zyIUxyhwLgt/UiNGe4feChWsRnopbiq/ZncHe/XrxrABrTAlOWoY9i+Wk6Cn2WJzXRuCIrPw+9p1CYNgv2jSZity2z+hhlxTugdVhPB+Ha2vhFlOc1n4K4/YX9RKGwXDnVReW6tp5wNxLmWseQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMKm83xm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOYmyHu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284D3C116D0;
-	Wed, 25 Feb 2026 01:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMKm83xm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4003DC116D0;
+	Wed, 25 Feb 2026 01:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983962;
-	bh=UuLu/9X7THhUYAQrb/0w+BeHwt19NrQFPqBYpqEef7A=;
+	s=korg; t=1771983963;
+	bh=xS3R1/4R4HhO0UAom0caqAULbhKqGEfnt3tu7/Ta7Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iOYmyHu5SeZH1WSNj5LNQvj3/RQ3J7DNjijPfRXWb+8gZsAeW9Md6DhS2mFd/TD2J
-	 RDUSWLJ5Qe3lQK7p7ZQMf4/pxEdrbZJKkRdEstHeAIpp3G9Q3Xosq5WxrAPdT+uPB/
-	 TkbKx0PoSH8CFcgnotBTTKqT00Qx7ZFhsZ8YS+98=
+	b=QMKm83xmnjIiTzjVB9JteczFkOY0VsmFhAP4HeOzKnipLl2iAZ5nknp19Q1txtzJh
+	 1PPGGs0nTPLfuTgW/GC6zPgpSp4wxwPIuF0pQ8jxW84G2tzO92PNMPjNeydEZ6Gu+h
+	 x9B8oBjQDPwkGUr6QijZdhimKbF6bhCxUQUUW6mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Ketil Johnsen <ketil.johnsen@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 183/641] drm/panthor: Evict groups before VM termination
-Date: Tue, 24 Feb 2026 17:18:29 -0800
-Message-ID: <20260225012353.453905593@linuxfoundation.org>
+Subject: [PATCH 6.18 219/641] drm/xe: Unregister drm device on probe error
+Date: Tue, 24 Feb 2026 17:19:05 -0800
+Message-ID: <20260225012354.232007927@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,88 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ketil Johnsen <ketil.johnsen@arm.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 565ed40b5fc1242f7538a016fce5a85f802d4fb5 ]
+[ Upstream commit 96c2c72b817d70e8d110e78b0162e044a0c41f9f ]
 
-Ensure all related groups are evicted and suspended before VM
-destruction takes place.
+Call drm_dev_unregister() when xe_device_probe() fails after successful
+drm_dev_register(). This ensures the DRM device is promptly unregistered
+before returning an error, avoiding leaving it registered on the failure
+path.
+Otherwise, there is warn message if xe_device_probe() is called again:
+"
+[  207.322365] [drm:drm_minor_register]
+[  207.322381] debugfs: '128' already exists in 'dri'
+[  207.322432] sysfs: cannot create duplicate filename '/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:01.0/0000:03:00.0/drm/renderD128'
+[  207.322435] CPU: 5 UID: 0 PID: 10261 Comm: modprobe Tainted: G    B   W           6.19.0-rc2-lgci-xe-kernel+ #223 PREEMPT(voluntary)
+[  207.322439] Tainted: [B]=BAD_PAGE, [W]=WARN
+[  207.322440] Hardware name: ASUS System Product Name/PRIME Z790-P WIFI, BIOS 0812 02/24/2023
+[  207.322441] Call Trace:
+[  207.322442]  <TASK>
+[  207.322443]  dump_stack_lvl+0xa0/0xc0
+[  207.322446]  dump_stack+0x10/0x20
+[  207.322448]  sysfs_warn_dup+0xd5/0x110
+[  207.322451]  sysfs_create_dir_ns+0x1f6/0x280
+[  207.322453]  ? __pfx_sysfs_create_dir_ns+0x10/0x10
+[  207.322455]  ? lock_acquire+0x1a4/0x2e0
+[  207.322458]  ? __kasan_check_read+0x11/0x20
+[  207.322461]  kobject_add_internal+0x28d/0x8e0
+[  207.322464]  kobject_add+0x11f/0x1f0
+[  207.322465]  ? lock_acquire+0x1a4/0x2e0
+[  207.322467]  ? __pfx_kobject_add+0x10/0x10
+[  207.322469]  ? __kasan_check_write+0x14/0x20
+[  207.322471]  ? kobject_put+0x62/0x4a0
+[  207.322473]  ? get_device_parent.isra.0+0x1bb/0x4c0
+[  207.322475]  ? kobject_put+0x62/0x4a0
+[  207.322477]  device_add+0x2d7/0x1500
+[  207.322479]  ? __pfx_device_add+0x10/0x10
+[  207.322481]  ? drm_debugfs_add_file+0xfa/0x170
+[  207.322483]  ? drm_debugfs_add_files+0x82/0xd0
+[  207.322485]  ? drm_debugfs_add_files+0x82/0xd0
+[  207.322487]  drm_minor_register+0x10a/0x2d0
+[  207.322489]  drm_dev_register+0x143/0x860
+[  207.322491]  ? xe_configfs_get_psmi_enabled+0x12/0x90 [xe]
+[  207.322667]  xe_device_probe+0x185b/0x2c40 [xe]
+[  207.322812]  ? __pfx___drm_dev_dbg+0x10/0x10
+[  207.322815]  ? add_dr+0x180/0x220
+[  207.322818]  ? __pfx___drmm_mutex_release+0x10/0x10
+[  207.322821]  ? __pfx_xe_device_probe+0x10/0x10 [xe]
+[  207.322966]  ? xe_pm_init_early+0x33a/0x410 [xe]
+[  207.323136]  xe_pci_probe+0x936/0x1250 [xe]
+[  207.323298]  ? lock_acquire+0x1a4/0x2e0
+[  207.323302]  ? __pfx_xe_pci_probe+0x10/0x10 [xe]
+[  207.323464]  local_pci_probe+0xe6/0x1a0
+[  207.323468]  pci_device_probe+0x523/0x840
+[  207.323470]  ? __pfx_pci_device_probe+0x10/0x10
+[  207.323473]  ? sysfs_do_create_link_sd.isra.0+0x8c/0x110
+[  207.323476]  ? sysfs_create_link+0x48/0xc0
+[  207.323479]  really_probe+0x1fd/0x8a0
+...
+"
 
-This fixes an issue where panthor_vm_destroy() destroys and unmaps the
-heap context while there are still on slot groups using this.
-The FW will do a write out to the heap context when a CSG (group) is
-suspended, so a premature unmap of the heap context will cause a
-GPU page fault.
-This page fault is quite harmless, and do not affect the continued
-operation of the GPU.
-
-Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Ketil Johnsen <ketil.johnsen@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20251219093546.1227697-1-ketil.johnsen@arm.com
-Co-developed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://patch.msgid.link/20260109211041.2446012-2-shuicheng.lin@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 60bfb8baf8f0d5b0d521744dfd01c880ce1a23f3)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_mmu.c   |  4 ++++
- drivers/gpu/drm/panthor/panthor_sched.c | 14 ++++++++++++++
- drivers/gpu/drm/panthor/panthor_sched.h |  1 +
- 3 files changed, 19 insertions(+)
+ drivers/gpu/drm/xe/xe_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
-index 15961629872e1..0fd8ffec92dd0 100644
---- a/drivers/gpu/drm/panthor/panthor_mmu.c
-+++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-@@ -1561,6 +1561,10 @@ static void panthor_vm_destroy(struct panthor_vm *vm)
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index fe5aadb27b779..0d69cd0e4e798 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -966,6 +966,7 @@ int xe_device_probe(struct xe_device *xe)
  
- 	vm->destroyed = true;
+ err_unregister_display:
+ 	xe_display_unregister(xe);
++	drm_dev_unregister(&xe->drm);
  
-+	/* Tell scheduler to stop all GPU work related to this VM */
-+	if (refcount_read(&vm->as.active_cnt) > 0)
-+		panthor_sched_prepare_for_vm_destruction(vm->ptdev);
-+
- 	mutex_lock(&vm->heaps.lock);
- 	panthor_heap_pool_destroy(vm->heaps.pool);
- 	vm->heaps.pool = NULL;
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 8f11fe73bee23..c7dd98936bd6b 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -2707,6 +2707,20 @@ void panthor_sched_report_mmu_fault(struct panthor_device *ptdev)
- 		panthor_sched_immediate_tick(ptdev);
+ 	return err;
  }
- 
-+void panthor_sched_prepare_for_vm_destruction(struct panthor_device *ptdev)
-+{
-+	/* FW can write out internal state, like the heap context, during CSG
-+	 * suspend. It is therefore important that the scheduler has fully
-+	 * evicted any pending and related groups before VM destruction can
-+	 * safely continue. Failure to do so can lead to GPU page faults.
-+	 * A controlled termination of a Panthor instance involves destroying
-+	 * the group(s) before the VM. This means any relevant group eviction
-+	 * has already been initiated by this point, and we just need to
-+	 * ensure that any pending tick_work() has been completed.
-+	 */
-+	flush_work(&ptdev->scheduler->tick_work.work);
-+}
-+
- void panthor_sched_resume(struct panthor_device *ptdev)
- {
- 	/* Force a tick to re-evaluate after a resume. */
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.h b/drivers/gpu/drm/panthor/panthor_sched.h
-index 742b0b4ff3a3c..6a560ab0a5b31 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.h
-+++ b/drivers/gpu/drm/panthor/panthor_sched.h
-@@ -49,6 +49,7 @@ void panthor_sched_suspend(struct panthor_device *ptdev);
- void panthor_sched_resume(struct panthor_device *ptdev);
- 
- void panthor_sched_report_mmu_fault(struct panthor_device *ptdev);
-+void panthor_sched_prepare_for_vm_destruction(struct panthor_device *ptdev);
- void panthor_sched_report_fw_events(struct panthor_device *ptdev, u32 events);
- 
- void panthor_fdinfo_gather_group_samples(struct panthor_file *pfile);
 -- 
 2.51.0
 
