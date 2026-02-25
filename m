@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C55D1E2834;
-	Wed, 25 Feb 2026 01:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0FA1E2834;
+	Wed, 25 Feb 2026 01:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983152; cv=none; b=m/2N/vm456DPYOhT+EmQwc1IUKfQaHW8l5mhwY7smddPaQaQIhUrRImYccC1QUoTOSxeXOW7+mREVbiLHbNfJ2TYOX55q2Oerv/lhTnTCcq/i0o8XBcsDopABRsci0zD3vyzHQ2g4sUKtUGOpYaEnR7VQh5DelFllL4+q7YzKFc=
+	t=1771983153; cv=none; b=n6OqOCq6YJqCVwZKa+/2tHd78U3rHcziWX+0Jg3UyUaG35sNQ8oC3SkqnkOf//RMOTkTDcZcs2jT4t04NU3qOLfJvsS0MIIW9rMQPgXTMzKBCdA/jZj8jP8jBrEN+JB2dFI/jJzY8q/lOa8SH7RVbnICKlDN45S8UIiJaKS+Ois=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983152; c=relaxed/simple;
-	bh=BfPmA+9oOvW2NAkmW1P67UEks3292a2rXQIz7RHY/qs=;
+	s=arc-20240116; t=1771983153; c=relaxed/simple;
+	bh=TnoZ2E5e8WIOdl/w4U6Oq6n8+hPEIyOYM+aU1QGU+8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BnD/KT4uCDjsRvEKnKl8mJLcIDHQqzdji34WYfyVmtHCqzcduDwlGmdrEhXQF3qHxodzxa2TSLXII5dgY+EyYmIWIkCXIrTJ7Tv1P9xAroPgFgdvdQdprdfwctSjVOZVsRsG3vgvow7ld0f74BuQp2Jf7EUlbk1WIM+qAKQUiHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xf2hoT4W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lYc5s1Z+P/80qKtabIp4PQjump66b2pGaMspHXnSgPPQJUPMsUgBgNTyZf8hePhWO/8fJV6zfFAr+HfV7AsOj9ZKs8xdK2SPT0S8ZH0cMsYJYUfzudiuc2AFPuL6pREWdqOKwAcKkj3lUFW1NfzjS5WJR2C9pgUqiLFeCXfRq0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9tNPETa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xf2hoT4W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACE0C116D0;
-	Wed, 25 Feb 2026 01:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9tNPETa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69695C116D0;
+	Wed, 25 Feb 2026 01:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983152;
-	bh=BfPmA+9oOvW2NAkmW1P67UEks3292a2rXQIz7RHY/qs=;
+	s=korg; t=1771983153;
+	bh=TnoZ2E5e8WIOdl/w4U6Oq6n8+hPEIyOYM+aU1QGU+8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xf2hoT4WkWIxhknywtGUyE8pZYMqzi1BTN1xZO8MKP0gFwRlAq0rcIZYlVy33CnBR
-	 Zdda2RmYzFaHs34vANN9Az+sduFSSBq8OZGUsvSXs9NHHUkCwA4AnmNYAesB2JkCfv
-	 XtKy/E1HRAp/eZoCEYSODWwr2mQ83+ZAI6p+zqX4=
+	b=x9tNPETa/bZAOiryzAPOOL58BvOvhgTF0b1KJsB2+Sq8mMYN4PTDdQ+6E6gk+pPn2
+	 qFyX5Q7NnsAufqCr86df8VktF+9mPxLDQQAcp4LUAm/RCMxkexff25NGpB0bsRqLYP
+	 wlRAaaxUtE3LxbP6A3SrvIk0k6BoIelEmUGAgSC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.19 261/781] drm/msm/disp: set num_planes to 1 for interleaved YUV formats
-Date: Tue, 24 Feb 2026 17:16:10 -0800
-Message-ID: <20260225012406.101883030@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 252/781] mei: late_bind: fix struct intel_lb_component_ops kernel-doc
+Date: Tue, 24 Feb 2026 17:16:01 -0800
+Message-ID: <20260225012405.889488839@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,59 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 6421e1c5075b7e1536a8fcbe6b4086db07103048 ]
+[ Upstream commit 936cae9254e55a39aeaa0c156a764d22f319338b ]
 
-Interleaved YUV formats use only one plane for all pixel data. Specify
-num_planes = 1 for those formats. This was left unnoticed since
-_dpu_format_populate_plane_sizes_linear() overrides layout->num_planes.
+Fix kernel-doc warnings on struct intel_lb_component_ops:
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/688162/
-Link: https://lore.kernel.org/r/20251114-dpu-formats-v3-1-cae312379d49@oss.qualcomm.com
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcm6490-fairphone-fp5
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Warning: include/drm/intel/intel_lb_mei_interface.h:55 Incorrect use of
+  kernel-doc format: * push_payload - Sends a payload to the
+  authentication firmware
+
+And a bunch more. There isn't really support for documenting function
+pointer struct members in kernel-doc, but at least reference the member
+properly.
+
+Fixes: 741eeabb7c78 ("mei: late_bind: add late binding component driver")
+Cc: Alexander Usyskin <alexander.usyskin@intel.com>
+Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
+Link: https://patch.msgid.link/20260107160226.2381388-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp_format.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/drm/intel/intel_lb_mei_interface.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
-index 426782d50cb49..eebedb1a2636e 100644
---- a/drivers/gpu/drm/msm/disp/mdp_format.c
-+++ b/drivers/gpu/drm/msm/disp/mdp_format.c
-@@ -479,25 +479,25 @@ static const struct msm_format mdp_formats[] = {
- 		0, BPC8, BPC8, BPC8,
- 		C2_R_Cr, C0_G_Y, C1_B_Cb, C0_G_Y,
- 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
--		MDP_FETCH_LINEAR, 2),
-+		MDP_FETCH_LINEAR, 1),
- 
- 	INTERLEAVED_YUV_FMT(UYVY,
- 		0, BPC8, BPC8, BPC8,
- 		C1_B_Cb, C0_G_Y, C2_R_Cr, C0_G_Y,
- 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
--		MDP_FETCH_LINEAR, 2),
-+		MDP_FETCH_LINEAR, 1),
- 
- 	INTERLEAVED_YUV_FMT(YUYV,
- 		0, BPC8, BPC8, BPC8,
- 		C0_G_Y, C1_B_Cb, C0_G_Y, C2_R_Cr,
- 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
--		MDP_FETCH_LINEAR, 2),
-+		MDP_FETCH_LINEAR, 1),
- 
- 	INTERLEAVED_YUV_FMT(YVYU,
- 		0, BPC8, BPC8, BPC8,
- 		C0_G_Y, C2_R_Cr, C0_G_Y, C1_B_Cb,
- 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
--		MDP_FETCH_LINEAR, 2),
-+		MDP_FETCH_LINEAR, 1),
- 
- 	/* 3 plane YUV */
- 	PLANAR_YUV_FMT(YUV420,
+diff --git a/include/drm/intel/intel_lb_mei_interface.h b/include/drm/intel/intel_lb_mei_interface.h
+index d65be2cba2ab9..0850738a30fc7 100644
+--- a/include/drm/intel/intel_lb_mei_interface.h
++++ b/include/drm/intel/intel_lb_mei_interface.h
+@@ -53,7 +53,8 @@ enum intel_lb_status {
+  */
+ struct intel_lb_component_ops {
+ 	/**
+-	 * push_payload - Sends a payload to the authentication firmware
++	 * @push_payload: Sends a payload to the authentication firmware
++	 *
+ 	 * @dev: Device struct corresponding to the mei device
+ 	 * @type: Payload type (see &enum intel_lb_type)
+ 	 * @flags: Payload flags bitmap (e.g. %INTEL_LB_FLAGS_IS_PERSISTENT)
 -- 
 2.51.0
 
