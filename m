@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CB21D5ABA;
-	Wed, 25 Feb 2026 01:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC0418DB2A;
+	Wed, 25 Feb 2026 01:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983138; cv=none; b=h6TGfwOK6HyK4QcKNoxEt1Cj4qSpCveA+SspeIm1EYa4jZFD2G138W9tVeXVHNFMa6Dw/msiANQ6F/RqvDES6wTBf5x47SK38aJ5E3YCbcCLAKJFgKwghbOn7UNR+sSuyzEkmcFodCDyW/jM5jPJIc7S6HGYhdULSUrgJOb5Nuc=
+	t=1771983140; cv=none; b=uquR/7xBO1Be8gO8I6pUxNJ9nLwCxfDkbp50k4oMxoY3Mr+rTnymKDFUyclKHV9OOyxfp1Z9ShJRYnuWnTV5qQ0FntbJkmu2XCB45XukYAx9Q4wTJBGunlFx7/Iv5dG93EwZT0UE0H1LjwA5NE6Yqh+jDPQNcPimvXZIvXNkdd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983138; c=relaxed/simple;
-	bh=7tFJsZ+KGxXSvTdxlkcxB/887mFNoi7DkPg3F/UcOhY=;
+	s=arc-20240116; t=1771983140; c=relaxed/simple;
+	bh=euh9su5Sdnj6hPb58bdQGNoZiJo+d0H/xEZiPb7DouM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rNQVaQ2PWcpiMpihtbS2rFmWAfTwCslzQ58gOQP8xLtCg8BZJWgtLZigmdNXBp1lHL1OjmklqIPW9dgVE+Bpjq6MdHPPMSF3XdorE2mQsTiNXoiT/iY/K3ecOm8OSZt0AEEfurAuBJOLxfgY5GcMguFA60DA4tHOttXBGT0/tWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFwUNmXi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hc/RmwV6zF/goKj6hafzoxw6v4beKDJmxxBFAPpTbfsLoca5yCTNG6vkw6uVFsrW+HL0oRffTdiIUZWcHs/5HL4CX++AnABYx0sXU9A6gKBCa48pDobmP/6s2tuKiem6dQdDaiCB7Z1JKaL0qRj0eO/JqpvcsJYOWwChYl0+9k4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbnNO6Nw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFwUNmXi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A5FC116D0;
-	Wed, 25 Feb 2026 01:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbnNO6Nw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FFBC116D0;
+	Wed, 25 Feb 2026 01:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983138;
-	bh=7tFJsZ+KGxXSvTdxlkcxB/887mFNoi7DkPg3F/UcOhY=;
+	s=korg; t=1771983140;
+	bh=euh9su5Sdnj6hPb58bdQGNoZiJo+d0H/xEZiPb7DouM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFwUNmXiGH3NTbDtuK5t/q8sKXo+KWjqTzlZlBYHGRNOTCTLJRs1eOEAILQUCDUiY
-	 SGFEPRZm+9QT8R9vx7q20MqXwvMi3K2/LgMHCaglhQUxVZuEkQyET5yUdXObxx5nxI
-	 7MyNTw+3n9yNHsTUgC31xY/QF8QN3BGgRFXhGyTk=
+	b=jbnNO6NwJUtnHjlS+LwcBIjKFdX9wp6rq4SzbwQMFzcpfMRTRifheThxCybVU2is0
+	 JhgGdf41uSaFqkUxov2lp/8HTfxATBQ9Q5VfIIIeGfA/XrXbruEiTy3RDiuqBxkEGv
+	 7DJ9WLd0YLw+ML8TCcBj/yF81+pio9tmTWoytiRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 293/781] accel/amdxdna: Hold mm structure across iommu_sva_unbind_device()
-Date: Tue, 24 Feb 2026 17:16:42 -0800
-Message-ID: <20260225012406.897133576@linuxfoundation.org>
+Subject: [PATCH 6.19 294/781] accel/amdxdna: Stop job scheduling across aie2_release_resource()
+Date: Tue, 24 Feb 2026 17:16:43 -0800
+Message-ID: <20260225012406.921350988@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,60 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit a9162439ad792afcddc04718408ec1380b7a5f63 ]
+[ Upstream commit f1370241fe8045702bc9d0812b996791f0500f1b ]
 
-Some tests trigger a crash in iommu_sva_unbind_device() due to
-accessing iommu_mm after the associated mm structure has been
-freed.
+Running jobs on a hardware context while it is in the process of
+releasing resources can lead to use-after-free and crashes.
 
-Fix this by taking an explicit reference to the mm structure
-after successfully binding the device, and releasing it only
-after the device is unbound. This ensures the mm remains valid
-for the entire SVA bind/unbind lifetime.
+Fix this by stopping job scheduling before calling
+aie2_release_resource() and restarting it after the release completes.
+Additionally, aie2_sched_job_run() now checks whether the hardware
+context is still active.
 
-Fixes: be462c97b7df ("accel/amdxdna: Add hardware context")
+Fixes: 4fd6ca90fc7f ("accel/amdxdna: Refactor hardware context destroy routine")
 Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260128002356.1858122-1-lizhi.hou@amd.com
+Link: https://patch.msgid.link/20260130003255.2083255-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_pci_drv.c | 3 +++
- drivers/accel/amdxdna/amdxdna_pci_drv.h | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/accel/amdxdna/aie2_ctx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_pci_drv.c b/drivers/accel/amdxdna/amdxdna_pci_drv.c
-index fcc9be23b3de5..bcb0d77b63cbb 100644
---- a/drivers/accel/amdxdna/amdxdna_pci_drv.c
-+++ b/drivers/accel/amdxdna/amdxdna_pci_drv.c
-@@ -83,6 +83,8 @@ static int amdxdna_drm_open(struct drm_device *ddev, struct drm_file *filp)
- 		ret = -ENODEV;
- 		goto unbind_sva;
- 	}
-+	client->mm = current->mm;
-+	mmgrab(client->mm);
- 	init_srcu_struct(&client->hwctx_srcu);
- 	xa_init_flags(&client->hwctx_xa, XA_FLAGS_ALLOC);
- 	mutex_init(&client->mm_lock);
-@@ -119,6 +121,7 @@ static void amdxdna_drm_close(struct drm_device *ddev, struct drm_file *filp)
- 		drm_gem_object_put(to_gobj(client->dev_heap));
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index 42d876a427c59..2c36ed7e9639c 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -315,6 +315,9 @@ aie2_sched_job_run(struct drm_sched_job *sched_job)
+ 	struct dma_fence *fence;
+ 	int ret;
  
- 	iommu_sva_unbind_device(client->sva);
-+	mmdrop(client->mm);
++	if (hwctx->status != HWCTX_STAT_READY)
++		return NULL;
++
+ 	if (!mmget_not_zero(job->mm))
+ 		return ERR_PTR(-ESRCH);
  
- 	XDNA_DBG(xdna, "pid %d closed", client->pid);
- 	kfree(client);
-diff --git a/drivers/accel/amdxdna/amdxdna_pci_drv.h b/drivers/accel/amdxdna/amdxdna_pci_drv.h
-index 0d50c4c8b3533..ec21cb378a472 100644
---- a/drivers/accel/amdxdna/amdxdna_pci_drv.h
-+++ b/drivers/accel/amdxdna/amdxdna_pci_drv.h
-@@ -130,6 +130,7 @@ struct amdxdna_client {
+@@ -693,7 +696,10 @@ void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx)
+ 	aie2_hwctx_wait_for_idle(hwctx);
  
- 	struct iommu_sva		*sva;
- 	int				pasid;
-+	struct mm_struct		*mm;
- };
+ 	/* Request fw to destroy hwctx and cancel the rest pending requests */
++	drm_sched_stop(&hwctx->priv->sched, NULL);
+ 	aie2_release_resource(hwctx);
++	hwctx->status = HWCTX_STAT_STOP;
++	drm_sched_start(&hwctx->priv->sched, 0);
  
- #define amdxdna_for_each_hwctx(client, hwctx_id, entry)		\
+ 	mutex_unlock(&xdna->dev_lock);
+ 	drm_sched_entity_destroy(&hwctx->priv->entity);
 -- 
 2.51.0
 
