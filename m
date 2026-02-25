@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E079248886;
-	Wed, 25 Feb 2026 01:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A551E2834;
+	Wed, 25 Feb 2026 01:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983749; cv=none; b=pwBIAaIDZadr1s9kTjqtHS4JR2TKmYKYMohvH3H23fCV7OHrmlCBmF/ITo+V5DBxp2717sa38ZBL3yeZQJVv6InqZdrDw4NaK4Cba5yj1r9EOljeHOhiKNDzdU4zlJzaMbzcxK99WLe6AwtIanOTq1+gPkfecxsdFuob879tTqM=
+	t=1771983750; cv=none; b=TpCLQ1N3YnPU+EZ5F+aScTC0ydvtYVuEUaAP9QiQB0D6v2N2I/9MpFnAsRy9vBX4KY4TU7582y09IPadtuq2S5IYTpIFFN0EQ+8ZhRQgYcx+sDd+FOFIJQ83eYtvTw4jPVKPev83gy7pVKb8b4haf47Kge8BUfMAR8bDkB13QQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983749; c=relaxed/simple;
-	bh=kbeCrC/NNO4LML2PQLISjxXIxQknEr9o+7CtOJmBSlI=;
+	s=arc-20240116; t=1771983750; c=relaxed/simple;
+	bh=NUcC9p2PUX1+18A2tiu9ZgBTb3JiX27iIAvRO/QfQnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FWc5V8AYeg7ZsP0iE2n7rV0uc3wbUuGXH7MpxgL/5lDA6PlXrjPnaQuIQs6pvtDEvqvw9erRfLM561Qa4EVFRVIQM5y+pyzBdgXkL1DiC+/AgRUCHVDnmv5Ioe5W5tVhcHmaAiTX/fYyh5Em0d+CJ06irDY1tN4xo0/sM/IAXiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zrp6bz2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rsPLt5J0gxhtC8kHs/IV2zqkOAo5CB8VFGBTr333vOY4zQGu3K/Z6TQmU/m7TZXl1o7B5tV6agk7P1I6VWivqyFKowmOj5IanbKMx6+FyVhdiomEEfaKzvg0nJXqdWIOvMoOjRsPo0rf/y5CiU2qnWagtn/QEpoFZHMHHsOnHLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocWKBHKO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zrp6bz2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8B5C116D0;
-	Wed, 25 Feb 2026 01:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocWKBHKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16929C116D0;
+	Wed, 25 Feb 2026 01:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983748;
-	bh=kbeCrC/NNO4LML2PQLISjxXIxQknEr9o+7CtOJmBSlI=;
+	s=korg; t=1771983750;
+	bh=NUcC9p2PUX1+18A2tiu9ZgBTb3JiX27iIAvRO/QfQnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zrp6bz2/42r3KK4S1S/p7KBkWs0S6EiJKNWUHCPdM0x9wfeHDYE1gYKhJQp82yMgt
-	 1HmB/47qjXACkpCQSLKeu+OYD2TheM3U8y6kNY7jeyQGGpF9GgJ4xVe6bp/mUnbZmj
-	 +/BTDFswTlWOnXEHBq+p4QcB9Yz0dMcpkSrDt3TU=
+	b=ocWKBHKOGzgGvqmix3dErOa/zQZHhm4iSGrUqAh0BYG+If3vKvb21KRbRMJ1I0cGe
+	 bR1kOt3ivMNRQlyR9LTbW+YXmEvKA5uW6uwbxmo5N1wZJjHEa3KZ71UfDKoWB1HDw/
+	 CDwdgkG7FFkXuwZBrkoHmIG85RfiJZtYqco2SJs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Tengda Wu <wutengda2@huawei.com>,
+	Yao Kai <yaokai34@huawei.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 040/641] io_uring/sync: validate passed in offset
-Date: Tue, 24 Feb 2026 17:16:06 -0800
-Message-ID: <20260225012349.995257440@linuxfoundation.org>
+Subject: [PATCH 6.18 005/641] rcu: Fix rcu_read_unlock() deadloop due to softirq
+Date: Tue, 24 Feb 2026 17:15:31 -0800
+Message-ID: <20260225012349.068821828@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -50,34 +54,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Yao Kai <yaokai34@huawei.com>
 
-[ Upstream commit 649dd18f559891bdafc5532d737c7dfb56060a6d ]
+[ Upstream commit d41e37f26b3157b3f1d10223863519a943aa239b ]
 
-Check if the passed in offset is negative once cast to sync->off. This
-ensures that -EINVAL is returned for that case, like it would be for
-sync_file_range(2).
+Commit 5f5fa7ea89dc ("rcu: Don't use negative nesting depth in
+__rcu_read_unlock()") removes the recursion-protection code from
+__rcu_read_unlock(). Therefore, we could invoke the deadloop in
+raise_softirq_irqoff() with ftrace enabled as follows:
 
-Fixes: c992fe2925d7 ("io_uring: add fsync support")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+WARNING: CPU: 0 PID: 0 at kernel/trace/trace.c:3021 __ftrace_trace_stack.constprop.0+0x172/0x180
+Modules linked in: my_irq_work(O)
+CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G O 6.18.0-rc7-dirty #23 PREEMPT(full)
+Tainted: [O]=OOT_MODULE
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:__ftrace_trace_stack.constprop.0+0x172/0x180
+RSP: 0018:ffffc900000034a8 EFLAGS: 00010002
+RAX: 0000000000000000 RBX: 0000000000000004 RCX: 0000000000000000
+RDX: 0000000000000003 RSI: ffffffff826d7b87 RDI: ffffffff826e9329
+RBP: 0000000000090009 R08: 0000000000000005 R09: ffffffff82afbc4c
+R10: 0000000000000008 R11: 0000000000011d7a R12: 0000000000000000
+R13: ffff888003874100 R14: 0000000000000003 R15: ffff8880038c1054
+FS:  0000000000000000(0000) GS:ffff8880fa8ea000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055b31fa7f540 CR3: 00000000078f4005 CR4: 0000000000770ef0
+PKRU: 55555554
+Call Trace:
+ <IRQ>
+ trace_buffer_unlock_commit_regs+0x6d/0x220
+ trace_event_buffer_commit+0x5c/0x260
+ trace_event_raw_event_softirq+0x47/0x80
+ raise_softirq_irqoff+0x6e/0xa0
+ rcu_read_unlock_special+0xb1/0x160
+ unwind_next_frame+0x203/0x9b0
+ __unwind_start+0x15d/0x1c0
+ arch_stack_walk+0x62/0xf0
+ stack_trace_save+0x48/0x70
+ __ftrace_trace_stack.constprop.0+0x144/0x180
+ trace_buffer_unlock_commit_regs+0x6d/0x220
+ trace_event_buffer_commit+0x5c/0x260
+ trace_event_raw_event_softirq+0x47/0x80
+ raise_softirq_irqoff+0x6e/0xa0
+ rcu_read_unlock_special+0xb1/0x160
+ unwind_next_frame+0x203/0x9b0
+ __unwind_start+0x15d/0x1c0
+ arch_stack_walk+0x62/0xf0
+ stack_trace_save+0x48/0x70
+ __ftrace_trace_stack.constprop.0+0x144/0x180
+ trace_buffer_unlock_commit_regs+0x6d/0x220
+ trace_event_buffer_commit+0x5c/0x260
+ trace_event_raw_event_softirq+0x47/0x80
+ raise_softirq_irqoff+0x6e/0xa0
+ rcu_read_unlock_special+0xb1/0x160
+ unwind_next_frame+0x203/0x9b0
+ __unwind_start+0x15d/0x1c0
+ arch_stack_walk+0x62/0xf0
+ stack_trace_save+0x48/0x70
+ __ftrace_trace_stack.constprop.0+0x144/0x180
+ trace_buffer_unlock_commit_regs+0x6d/0x220
+ trace_event_buffer_commit+0x5c/0x260
+ trace_event_raw_event_softirq+0x47/0x80
+ raise_softirq_irqoff+0x6e/0xa0
+ rcu_read_unlock_special+0xb1/0x160
+ __is_insn_slot_addr+0x54/0x70
+ kernel_text_address+0x48/0xc0
+ __kernel_text_address+0xd/0x40
+ unwind_get_return_address+0x1e/0x40
+ arch_stack_walk+0x9c/0xf0
+ stack_trace_save+0x48/0x70
+ __ftrace_trace_stack.constprop.0+0x144/0x180
+ trace_buffer_unlock_commit_regs+0x6d/0x220
+ trace_event_buffer_commit+0x5c/0x260
+ trace_event_raw_event_softirq+0x47/0x80
+ __raise_softirq_irqoff+0x61/0x80
+ __flush_smp_call_function_queue+0x115/0x420
+ __sysvec_call_function_single+0x17/0xb0
+ sysvec_call_function_single+0x8c/0xc0
+ </IRQ>
+
+Commit b41642c87716 ("rcu: Fix rcu_read_unlock() deadloop due to IRQ work")
+fixed the infinite loop in rcu_read_unlock_special() for IRQ work by
+setting a flag before calling irq_work_queue_on(). We fix this issue by
+setting the same flag before calling raise_softirq_irqoff() and rename the
+flag to defer_qs_pending for more common.
+
+Fixes: 5f5fa7ea89dc ("rcu: Don't use negative nesting depth in __rcu_read_unlock()")
+Reported-by: Tengda Wu <wutengda2@huawei.com>
+Signed-off-by: Yao Kai <yaokai34@huawei.com>
+Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/sync.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/rcu/tree.h        |  2 +-
+ kernel/rcu/tree_plugin.h | 15 +++++++++------
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/io_uring/sync.c b/io_uring/sync.c
-index cea2d381ffd2a..ab7fa1cd7dd63 100644
---- a/io_uring/sync.c
-+++ b/io_uring/sync.c
-@@ -62,6 +62,8 @@ int io_fsync_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 		return -EINVAL;
+diff --git a/kernel/rcu/tree.h b/kernel/rcu/tree.h
+index b8bbe7960cda7..2265b9c2906e1 100644
+--- a/kernel/rcu/tree.h
++++ b/kernel/rcu/tree.h
+@@ -203,7 +203,7 @@ struct rcu_data {
+ 					/*  during and after the last grace */
+ 					/* period it is aware of. */
+ 	struct irq_work defer_qs_iw;	/* Obtain later scheduler attention. */
+-	int defer_qs_iw_pending;	/* Scheduler attention pending? */
++	int defer_qs_pending;		/* irqwork or softirq pending? */
+ 	struct work_struct strict_work;	/* Schedule readers for strict GPs. */
  
- 	sync->off = READ_ONCE(sqe->off);
-+	if (sync->off < 0)
-+		return -EINVAL;
- 	sync->len = READ_ONCE(sqe->len);
- 	req->flags |= REQ_F_FORCE_ASYNC;
- 	return 0;
+ 	/* 2) batch handling */
+diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
+index d85763336b3c0..cafb1cc8eff84 100644
+--- a/kernel/rcu/tree_plugin.h
++++ b/kernel/rcu/tree_plugin.h
+@@ -487,8 +487,8 @@ rcu_preempt_deferred_qs_irqrestore(struct task_struct *t, unsigned long flags)
+ 	union rcu_special special;
+ 
+ 	rdp = this_cpu_ptr(&rcu_data);
+-	if (rdp->defer_qs_iw_pending == DEFER_QS_PENDING)
+-		rdp->defer_qs_iw_pending = DEFER_QS_IDLE;
++	if (rdp->defer_qs_pending == DEFER_QS_PENDING)
++		rdp->defer_qs_pending = DEFER_QS_IDLE;
+ 
+ 	/*
+ 	 * If RCU core is waiting for this CPU to exit its critical section,
+@@ -645,7 +645,7 @@ static void rcu_preempt_deferred_qs_handler(struct irq_work *iwp)
+ 	 * 5. Deferred QS reporting does not happen.
+ 	 */
+ 	if (rcu_preempt_depth() > 0)
+-		WRITE_ONCE(rdp->defer_qs_iw_pending, DEFER_QS_IDLE);
++		WRITE_ONCE(rdp->defer_qs_pending, DEFER_QS_IDLE);
+ }
+ 
+ /*
+@@ -747,7 +747,10 @@ static void rcu_read_unlock_special(struct task_struct *t)
+ 			// Using softirq, safe to awaken, and either the
+ 			// wakeup is free or there is either an expedited
+ 			// GP in flight or a potential need to deboost.
+-			raise_softirq_irqoff(RCU_SOFTIRQ);
++			if (rdp->defer_qs_pending != DEFER_QS_PENDING) {
++				rdp->defer_qs_pending = DEFER_QS_PENDING;
++				raise_softirq_irqoff(RCU_SOFTIRQ);
++			}
+ 		} else {
+ 			// Enabling BH or preempt does reschedule, so...
+ 			// Also if no expediting and no possible deboosting,
+@@ -756,11 +759,11 @@ static void rcu_read_unlock_special(struct task_struct *t)
+ 			set_tsk_need_resched(current);
+ 			set_preempt_need_resched();
+ 			if (IS_ENABLED(CONFIG_IRQ_WORK) && irqs_were_disabled &&
+-			    needs_exp && rdp->defer_qs_iw_pending != DEFER_QS_PENDING &&
++			    needs_exp && rdp->defer_qs_pending != DEFER_QS_PENDING &&
+ 			    cpu_online(rdp->cpu)) {
+ 				// Get scheduler to re-evaluate and call hooks.
+ 				// If !IRQ_WORK, FQS scan will eventually IPI.
+-				rdp->defer_qs_iw_pending = DEFER_QS_PENDING;
++				rdp->defer_qs_pending = DEFER_QS_PENDING;
+ 				irq_work_queue_on(&rdp->defer_qs_iw, rdp->cpu);
+ 			}
+ 		}
 -- 
 2.51.0
 
