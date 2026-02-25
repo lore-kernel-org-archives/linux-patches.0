@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202BD248881;
-	Wed, 25 Feb 2026 01:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84996256C84;
+	Wed, 25 Feb 2026 01:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983493; cv=none; b=dbzmRcw9xzJORfxIby87WYQS+R+gaHtCgoprSv/MykLxyeI18x5d6/Fmnwag1wsPhrrl/NOSUo/LXRtwBLQT72oEBcITch9rINTvzem8tySsRRYU7Jx/jOByjNEp0E6bLFmG2vOFg9FHU92SKtugD2y3GusRPChaECr5/Os+cvg=
+	t=1771983494; cv=none; b=ENQ3kUxwICewiIXPQd2Abw++Lwfni9wFs/mwGR4KcjsFArA9xmj6wEMW4xbi6os1OZREslh5gxZXJq3yjdWWqyWgOBnWHijev3N1l0s2KXZC03hIzNBDl61Tj7RD91IS2ZtyVZRxwMnuAJFjdsttvTwz/XRkl0AnN3pTse3YDX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983493; c=relaxed/simple;
-	bh=dcBV2UW8xpJAtLJy8HaUd/F9MVmlThlMNB/4ak7hAts=;
+	s=arc-20240116; t=1771983494; c=relaxed/simple;
+	bh=vaKDAJu5PM5zh3RadBJJyWcrCK9Nw11HZ1mnboSRufI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=peG+71g/d8Y163b2dY7HVNqfTgbKUmXMNEKbMSYCZNVkOjHNa31XsDVdsHuC4sWaQpgcGxsZjGUR/0sZlqZJ+Y+ONFBOZeNEW6Ut4QGqWR9fzy8ZadbrB9rg7S0V6+sILyVcc1d8k5bG9zFpI/a1CCtpCqaZ5Jw9BCQ3oSvMjkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6Suiud5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UqbRkPjSWQy95VHYdrd9jd4dScCgo9hNHUcxm5wHhCgSTpGf8NC/12rih31WTGhP98HHyaeiHGve6nIfb28Mg57qHLoElTX/YuLTC/HuQ/dC8PYHwAiGPeF7ib8dBSKesubqYOI+83Y+K8q0NZzXwCtbC0dE40rlr7DDOJM4hpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUJvbG74; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6Suiud5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD506C116D0;
-	Wed, 25 Feb 2026 01:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUJvbG74"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36543C116D0;
+	Wed, 25 Feb 2026 01:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983493;
-	bh=dcBV2UW8xpJAtLJy8HaUd/F9MVmlThlMNB/4ak7hAts=;
+	s=korg; t=1771983494;
+	bh=vaKDAJu5PM5zh3RadBJJyWcrCK9Nw11HZ1mnboSRufI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6Suiud5rEov/afi0M4iXKK87uOJUSVez4oz7bnYSSDS3D//u80zLKvT/yJJ4I2CI
-	 V9L1n3lwFVfpFx+68PAJBGfU51GsfSt34WIMtyLD2VU1VlhCwodG0JvznvHP3RT33d
-	 kWeit47lz0mQ6omW53GeEiG4Vs33IWhPym91AeCo=
+	b=uUJvbG746XRtq703pkK7xtfFwgaZXbZu328nCBoar5D/eeIY8HYNx+oyST6MqOl2O
+	 96GXqfyPgFLbclPNHnlv6Gn9sNyMs0V6BmmEcaqQMxQjCGLT/Hl5dVzptpPJ0frOjH
+	 xSdvPn99tTdcX5ZjlpRJF+oVomU66ySm+vgT9uHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Wei Li <unsw.weili@gmail.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 603/781] pinctrl: meson: amlogic-a4: Fix device node reference leak in bank helpers
-Date: Tue, 24 Feb 2026 17:21:52 -0800
-Message-ID: <20260225012414.584476367@linuxfoundation.org>
+Subject: [PATCH 6.19 604/781] pinctrl: single: fix refcount leak in pcs_add_gpio_func()
+Date: Tue, 24 Feb 2026 17:21:53 -0800
+Message-ID: <20260225012414.609666179@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,54 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Wei Li <unsw.weili@gmail.com>
 
-[ Upstream commit e56aa18eba32fb68ac5e19e44670010095bb189c ]
+[ Upstream commit 353353309b0f7afa407df29e455f9d15b5acc296 ]
 
-of_parse_phandle_with_fixed_args() increments the reference count of the
-returned device node, so it must be explicitly released using
-of_node_put() after use.
+of_parse_phandle_with_args() returns a device_node pointer with refcount
+incremented in gpiospec.np. The loop iterates through all phandles but
+never releases the reference, causing a refcount leak on each iteration.
 
-Fix the reference leak in aml_bank_pins() and aml_bank_number() by
-adding the missing of_node_put() calls.
+Add of_node_put() calls to release the reference after extracting the
+needed arguments and on the error path when devm_kzalloc() fails.
 
-Fixes: 6e9be3abb78c ("pinctrl: Add driver support for Amlogic SoCs")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+This bug was detected by our static analysis tool and verified by my
+code review.
+
+Fixes: a1a277eb76b3 ("pinctrl: single: create new gpio function range")
+Signed-off-by: Wei Li <unsw.weili@gmail.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/meson/pinctrl-amlogic-a4.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/pinctrl/pinctrl-single.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
-index d9e3a8d5932a8..f05d8261624a4 100644
---- a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
-+++ b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
-@@ -725,8 +725,9 @@ static u32 aml_bank_pins(struct device_node *np)
- 	if (of_parse_phandle_with_fixed_args(np, "gpio-ranges", 3,
- 					     0, &of_args))
- 		return 0;
--	else
--		return of_args.args[2];
-+
-+	of_node_put(of_args.np);
-+	return of_args.args[2];
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index 998f23d6c3179..d85e6c1f63218 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -1359,6 +1359,7 @@ static int pcs_add_gpio_func(struct device_node *node, struct pcs_device *pcs)
+ 		}
+ 		range = devm_kzalloc(pcs->dev, sizeof(*range), GFP_KERNEL);
+ 		if (!range) {
++			of_node_put(gpiospec.np);
+ 			ret = -ENOMEM;
+ 			break;
+ 		}
+@@ -1368,6 +1369,7 @@ static int pcs_add_gpio_func(struct device_node *node, struct pcs_device *pcs)
+ 		mutex_lock(&pcs->mutex);
+ 		list_add_tail(&range->node, &pcs->gpiofuncs);
+ 		mutex_unlock(&pcs->mutex);
++		of_node_put(gpiospec.np);
+ 	}
+ 	return ret;
  }
- 
- static int aml_bank_number(struct device_node *np)
-@@ -736,8 +737,9 @@ static int aml_bank_number(struct device_node *np)
- 	if (of_parse_phandle_with_fixed_args(np, "gpio-ranges", 3,
- 					     0, &of_args))
- 		return -EINVAL;
--	else
--		return of_args.args[1] >> 8;
-+
-+	of_node_put(of_args.np);
-+	return of_args.args[1] >> 8;
- }
- 
- static unsigned int aml_count_pins(struct device_node *np)
 -- 
 2.51.0
 
