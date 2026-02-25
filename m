@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E47119FA93;
-	Wed, 25 Feb 2026 01:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498CB19FA93;
+	Wed, 25 Feb 2026 01:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983742; cv=none; b=ofHDnr3GIGkameMgO6MVUm9IPWQOU1fPEVFT0LxDk2MM/IkwkQiRTDRDXDaCP2cTYt4uGMrxI7W4oqzqG4tByzAc/e7ALLkdjY196nmHnEz17ElCWwEUPgljcvVKe4PhnUL9US26neYmfq9qYdaF+IiSpkMu7LZwt6Vnm/PaK4g=
+	t=1771983743; cv=none; b=jJFFErns44RZKJj0twFRHIE/xkKCSXwmpco+ugPupRgLvY4RYakKVvKVhi97C2hmUZnqn7eK8SzfQm4QV+OEjzZt6wpS6Q/6nquvGSXPXQ8T+JCbTNw+mI6D04p7hgJv+7jc8a1LcN4CgXx/IM3PFuDcnm83G5j8jtxueVyWx6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983742; c=relaxed/simple;
-	bh=DmATWHnuaReWS/4dlwsPRBHq6OFUKdPI55SChPdJ8V8=;
+	s=arc-20240116; t=1771983743; c=relaxed/simple;
+	bh=Y8N5gHuJGtKMgwaCu1IS8UKmo6+B8LN6W4vGTN4ewGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJqPIclQ3FLMRozqda5MrxOVzEYi3Ji2y5SoDg8eUiNxXK88HuMO/Lel53m2mVTjPE/++4n4ipR86qDpY+JMzZ1b8hbj7BtRifwc66tY4nh/dBz1HgJ1QfZUD65dFOxqlpe+tt9g+jzsFFMm70vhQj2lG7IsQWyyE2u7f2Y6skY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQxBPMMW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pm7v3Rbhtgio9mh261Lw3DyOhdLIpi960IB4ZhdLdR7DT0xe8VuSkkFnsB6/c0+5y683U3StgFt4M90LLxLsOiJ3YITqg4lC2etrOBYKz78XfdRPVQR+eEN8KYoTXJg+xFx4CZJM0eHNyb0PWFyqx7lw4v4plR9ozyXwIeDSgmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMiMaAjy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQxBPMMW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200ACC116D0;
-	Wed, 25 Feb 2026 01:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMiMaAjy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0F5C116D0;
+	Wed, 25 Feb 2026 01:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983742;
-	bh=DmATWHnuaReWS/4dlwsPRBHq6OFUKdPI55SChPdJ8V8=;
+	s=korg; t=1771983743;
+	bh=Y8N5gHuJGtKMgwaCu1IS8UKmo6+B8LN6W4vGTN4ewGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQxBPMMWG057sqISpIbcTSDuzlmtikZ9Ce9jWvl1bSrhzJzElMfxjstg+rKOYaSoi
-	 HeZkl4KZB1PhYRhlKJw6lx/ReiqQji6vHTwXz1pMvi0o3rdtGGcTuNQmWM8/vFCazB
-	 BmbqwRxSGpFr2aHikVhRyz/7g2/Au0aMNMd6clTs=
+	b=YMiMaAjytD5fWcEXnqEh+SQUm1nbhecDNt+W6CKLfomC1ojRZWJJ3HgqQLbXcsUoX
+	 7d7jh+/GKY/TGCFw9MtJlrYdNju2xQXMgQvWlxLXUnNwQK+g4NP/dbBfwwuzTc/9tD
+	 tWndctQvsI0Nus/z7CWCGsNT1hVPQoE04bT3W5V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Teddy Astie <teddy.astie@vates.tech>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 035/641] ACPI: processor: Update cpuidle driver check in __acpi_processor_start()
-Date: Tue, 24 Feb 2026 17:16:01 -0800
-Message-ID: <20260225012349.847997484@linuxfoundation.org>
+Subject: [PATCH 6.18 036/641] xen/virtio: Dont use grant-dma-ops when running as Dom0
+Date: Tue, 24 Feb 2026 17:16:02 -0800
+Message-ID: <20260225012349.874591875@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,45 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Teddy Astie <teddy.astie@vates.tech>
 
-[ Upstream commit 0089ce1c056aee547115bdc25c223f8f88c08498 ]
+[ Upstream commit dc8ea8714311e549ee93a2b0bdd5487d20bfadbf ]
 
-Commit 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle
-driver registration") moved the ACPI idle driver registration to
-acpi_processor_driver_init() and acpi_processor_power_init() does
-not register an idle driver any more.
+Dom0 inherit devices from the machine and is usually in PV mode.
+If we are running in a virtual that has virtio devices, these devices
+would be considered as using grants with Dom0 as backend, while being
+the said Dom0 itself, while we want to use these devices like regular
+PCI devices.
 
-Accordingly, the cpuidle driver check in __acpi_processor_start() needs
-to be updated to avoid calling acpi_processor_power_init() without a
-cpuidle driver, in which case the registration of the cpuidle device
-in that function would lead to a NULL pointer dereference in
-__cpuidle_register_device().
+Fix this by preventing grant-dma-ops from being used when running as Dom0
+(initial domain). We still keep the device-tree logic as-is.
 
-Fixes: 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle driver registration")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/20251223100914.2407069-4-lihuisong@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Teddy Astie <teddy.astie@vates.tech>
+Fixes: 61367688f1fb0 ("xen/virtio: enable grant based virtio on x86")
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <6698564dd2270a9f7377b78ebfb20cb425cabbe8.1767720955.git.teddy.astie@vates.tech>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/grant-dma-ops.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/processor_driver.c b/drivers/acpi/processor_driver.c
-index 65e779be64ffc..7644de24d2faa 100644
---- a/drivers/acpi/processor_driver.c
-+++ b/drivers/acpi/processor_driver.c
-@@ -166,7 +166,7 @@ static int __acpi_processor_start(struct acpi_device *device)
- 	if (result && !IS_ENABLED(CONFIG_ACPI_CPU_FREQ_PSS))
- 		dev_dbg(&device->dev, "CPPC data invalid or not present\n");
- 
--	if (!cpuidle_get_driver() || cpuidle_get_driver() == &acpi_idle_driver)
-+	if (cpuidle_get_driver() == &acpi_idle_driver)
- 		acpi_processor_power_init(pr);
- 
- 	acpi_pss_perf_init(pr);
+diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
+index 29257d2639dbf..43a918c498c6c 100644
+--- a/drivers/xen/grant-dma-ops.c
++++ b/drivers/xen/grant-dma-ops.c
+@@ -362,7 +362,8 @@ static int xen_grant_init_backend_domid(struct device *dev,
+ 	if (np) {
+ 		ret = xen_dt_grant_init_backend_domid(dev, np, backend_domid);
+ 		of_node_put(np);
+-	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain()) {
++	} else if (!xen_initial_domain() &&
++		   (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain())) {
+ 		dev_info(dev, "Using dom0 as backend\n");
+ 		*backend_domid = 0;
+ 		ret = 0;
 -- 
 2.51.0
 
