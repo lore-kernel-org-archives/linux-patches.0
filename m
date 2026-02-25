@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AA62FB08C;
-	Wed, 25 Feb 2026 06:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABC92D8396;
+	Wed, 25 Feb 2026 06:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002687; cv=none; b=BFvc63SsbEuJL8+CK6tf9CSD5bCN7AAC+8M7tgJ7uJzk03oltH8Hcez8HSSW6OqlG/Pby6BzWXlTnmaQXcyWmTSdcCWYFm5V6/wa6dJk8zJ7Pqp09kk9p7oodEvmleIoIuF6BWchgvZp4dk3K9amHtIMddlIFqfO7C5+vDj7kJk=
+	t=1772002688; cv=none; b=Z9sPYldgyMJi7V6NvbhYuQ/dIdTVgWvcbq4CIP9ZOESpyVHGhV1qQDD4VpOBYiILqSO2gzsA/x41U/olf9VKIdp4KWIF3+uRkJIWeTj9wTNxYN+kNu8igKc4iCSvihT0y2VfLRRKMo9QXvXsa2B8Hc5TPGVwD5gK0TAzGjYFp3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002687; c=relaxed/simple;
-	bh=RUUUhEGVfDSxUsGlOSNdXjo5EvQYlY6HgV7LSwWv1Gw=;
+	s=arc-20240116; t=1772002688; c=relaxed/simple;
+	bh=O51LVO7Ao123ElWKxPRKxJF69/lI5uqlghtmFUmZQtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TEKMhAor92unD1aGGxA3aT35rI+HEe2+UvXDcCAnpxLxn75B/HsTzOLoagSsPS6wINERPgtKGDY/0S6DqQxcZB3VDJ0Fr6TbE9704d8n07QFn1ve8Vhoct6BF9Gw38GNhz9JWo8uCARs0c9hwtc4RT0BPw1RkqHMugbfigwA9kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQJtVrMc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=szzA0TqkhwETpodvRrPD97qW/03CEAuHjzsMEGpruzrZYRFAcVALJ2k7ECs8jLr6NIuU0CjD5sFWWNa9fsPxlA/zfdsoJjVHKJFcJUJIMDQ3vEJjNE+vjaQUmCHLhYEkR9LbrmGt8Zx6bYe08Xbj2Rs0HelgR4/CjRuId5iTPxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7sGr6JP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQJtVrMc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5A9C19422;
-	Wed, 25 Feb 2026 06:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7sGr6JP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53828C116D0;
+	Wed, 25 Feb 2026 06:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002687;
-	bh=RUUUhEGVfDSxUsGlOSNdXjo5EvQYlY6HgV7LSwWv1Gw=;
+	s=korg; t=1772002688;
+	bh=O51LVO7Ao123ElWKxPRKxJF69/lI5uqlghtmFUmZQtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQJtVrMcCIm2GqWzFKECQtRtF+QOl0b4rdsWTNFVo8t8yV44J90YZRbKLLNabTfbi
-	 6Ye6KbD4Nn10y/zEyHA0SPXOdZu5ZSltB73VcU5BmjWffN2EDtspNfx/nXTMhUEGwL
-	 zrp9rEwgDEekfgtDl5NhmKg8lCGY2rfwSrj7Bvu4=
+	b=K7sGr6JP8ojW0f8Blg5yT9dIA3ekfh/DHBmtuYWsHnWYiTd8j+JevKPwTSa3aOfaD
+	 gfQcFTVu+JpxxlnV6fOLwL9r2kKaTtzTKFoLZNRB11LVVGLbFITm4cfoDzKUPR/o1z
+	 DBnEVYAm/+7sFwYD9fbTuIjrMhmOnjZjQ+HOIymQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 480/641] usb: bdc: fix sleep during atomic
-Date: Tue, 24 Feb 2026 17:23:26 -0800
-Message-ID: <20260225012400.146907372@linuxfoundation.org>
+Subject: [PATCH 6.18 481/641] nvmem: an8855: drop an unused Kconfig symbol
+Date: Tue, 24 Feb 2026 17:23:27 -0800
+Message-ID: <20260225012400.172906925@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,39 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit f1195ca3b4bbd001d3f1264dce91f83dec7777f5 ]
+[ Upstream commit 4796eaafd6a170db012395a40385d2baf4f4d118 ]
 
-bdc_run() can be ran during atomic context leading to a sleep during
-atomic warning. Fix this by replacing read_poll_timeout() with
-read_poll_timeout_atomic().
+MFD_AIROHA_AN8855 is referenced here but never defined, so drop it
+from the Kconfig file.
 
-Fixes: 75ae051efc9b ("usb: gadget: bdc: use readl_poll_timeout() to simplify code")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260120200754.2488765-1-justin.chen@broadcom.com
+Fixes: e2258cfd9b98 ("nvmem: an8855: Add support for Airoha AN8855 Switch EFUSE")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260116170846.733558-4-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/bdc/bdc_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvmem/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/bdc/bdc_core.c b/drivers/usb/gadget/udc/bdc/bdc_core.c
-index 5c3d8b64c0e76..f47aac078f6be 100644
---- a/drivers/usb/gadget/udc/bdc/bdc_core.c
-+++ b/drivers/usb/gadget/udc/bdc/bdc_core.c
-@@ -35,8 +35,8 @@ static int poll_oip(struct bdc *bdc, u32 usec)
- 	u32 status;
- 	int ret;
+diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
+index e0d88d3199c11..11b098705ec62 100644
+--- a/drivers/nvmem/Kconfig
++++ b/drivers/nvmem/Kconfig
+@@ -30,7 +30,7 @@ source "drivers/nvmem/layouts/Kconfig"
  
--	ret = readl_poll_timeout(bdc->regs + BDC_BDCSC, status,
--				 (BDC_CSTS(status) != BDC_OIP), 10, usec);
-+	ret = readl_poll_timeout_atomic(bdc->regs + BDC_BDCSC, status,
-+					(BDC_CSTS(status) != BDC_OIP), 10, usec);
- 	if (ret)
- 		dev_err(bdc->dev, "operation timedout BDCSC: 0x%08x\n", status);
- 	else
+ config NVMEM_AN8855_EFUSE
+ 	tristate "Airoha AN8855 eFuse support"
+-	depends on MFD_AIROHA_AN8855 || COMPILE_TEST
++	depends on COMPILE_TEST
+ 	help
+ 	  Say y here to enable support for reading eFuses on Airoha AN8855
+ 	  Switch. These are e.g. used to store factory programmed
 -- 
 2.51.0
 
