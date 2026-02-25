@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4D420C012;
-	Wed, 25 Feb 2026 01:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265F918DB2A;
+	Wed, 25 Feb 2026 01:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983205; cv=none; b=iX9iYCjimp+0XjX0/K+O9/NzirRnoUUOLZaj3Q0vmd2vl2NisoP9cwiaxduzxEvWO6B9Xc6uQQxHm+aC1Hz3J++0QotiutgqJztx+ZTGZCirnwMPmNfp4LieoakJtStMMU85TbE73f63j/ExCgQM4pOasTKQjkyffVxtjWEDrUg=
+	t=1771983206; cv=none; b=Pt8eydzM7MRddfB3ldlsAsk0KEXEgP6k/cXv/rqRpKRW87pVMijn+HAKzWH6yAiqvyxfGEkTZsLwB1wqSiNLkNXb3oiO6E2e7kQBOIUcZLHLwMCCrt5EWcoeYA0QhbdwRjXuQZyIcVPXnLUtm/Iyl6YwDGslLdz+jBjK/fVnXoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983205; c=relaxed/simple;
-	bh=HrfjhNauZBcmvFx5Y79EFkMvWhg7XPkNPoK6TKp9oFE=;
+	s=arc-20240116; t=1771983206; c=relaxed/simple;
+	bh=AjtFBzsbFCHy4S6vLJxqM6VC5g5w0vIN+X0JM//p7Lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6ngZTQn2Hfz4oWt32yN1tJPvZQZuv15wYZXApTOD2B0LVBNgEGO/nRELYQOIne7QH1S5yCLnlKlLn5ww7/VNWz5Ek7Z2v/ldoTASgBL/Fce7Zi8OVsjbFHhrpVbu1mD4pUOh+/s3c0jjKy8izU1DmZXmAjGUHT7iAfl80sqovY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrsM2S6a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ww5hRggfnpqrMXRgh2P5om0bCphrLLEp5WNnqBtQVT447Iq3da7YSPJVxj79nWnXDdNLg4yR3LJCcwJ0CVoRtJ50JH2u41Uo8p6EWTnbV7Q9iiqK39q8ToXRvLR4OknBXGuKQPvUnPRlXwaSOC9stDrogQv2ZbgFVlN1nSvUxwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrXVtw9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrsM2S6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9D6C116D0;
-	Wed, 25 Feb 2026 01:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrXVtw9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F090FC116D0;
+	Wed, 25 Feb 2026 01:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983204;
-	bh=HrfjhNauZBcmvFx5Y79EFkMvWhg7XPkNPoK6TKp9oFE=;
+	s=korg; t=1771983206;
+	bh=AjtFBzsbFCHy4S6vLJxqM6VC5g5w0vIN+X0JM//p7Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrsM2S6aQl8Ayuh8tXmyfJM10taUVeXSmaQCgUXBffVCbqBT8pzD8D1jAfI3Xvqir
-	 ddVuFFzLrWslRcm2tC4hi2LZAWTCBxUQ1IV5/9Y4489phA/hrVy3URLL/AbKtc/GHB
-	 qfRjL2qxOIbZ80V6HNZ8SPJzOe+CAecILhDaqQEs=
+	b=zrXVtw9hWbxDvoi2VCQzFVL8bC3ie1lSAptXpo/+zmKZaenXzpg5MxH2Ac7tm18Dj
+	 bE05MY7SYjn6gIpo7eIH0Nzu6+xTzzk4yHCRXxRBUNVurYTkqv4Sn2KNQlLkT57smU
+	 f/XK1vhqRk9Xp99CAW/6CksTF4I06Kmn9OwzMsAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandra Rukomoinikova <ARukomoinikova@k2.cloud>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Dmytro Maluka <dmaluka@chromium.org>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 346/781] netfilter: nf_conncount: increase the connection clean up limit to 64
-Date: Tue, 24 Feb 2026 17:17:35 -0800
-Message-ID: <20260225012408.179773035@linuxfoundation.org>
+Subject: [PATCH 6.19 355/781] iommu/vt-d: Clear Present bit before tearing down PASID entry
+Date: Tue, 24 Feb 2026 17:17:44 -0800
+Message-ID: <20260225012408.393919685@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,121 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit 21d033e472735ecec677f1ae46d6740b5e47a4f3 ]
+[ Upstream commit 75ed00055c059dedc47b5daaaa2f8a7a019138ff ]
 
-After the optimization to only perform one GC per jiffy, a new problem
-was introduced. If more than 8 new connections are tracked per jiffy the
-list won't be cleaned up fast enough possibly reaching the limit
-wrongly.
+The Intel VT-d Scalable Mode PASID table entry consists of 512 bits (64
+bytes). When tearing down an entry, the current implementation zeros the
+entire 64-byte structure immediately using multiple 64-bit writes.
 
-In order to prevent this issue, only skip the GC if it was already
-triggered during the same jiffy and the increment is lower than the
-clean up limit. In addition, increase the clean up limit to 64
-connections to avoid triggering GC too often and do more effective GCs.
+Since the IOMMU hardware may fetch these 64 bytes using multiple
+internal transactions (e.g., four 128-bit bursts), updating or zeroing
+the entire entry while it is active (P=1) risks a "torn" read. If a
+hardware fetch occurs simultaneously with the CPU zeroing the entry, the
+hardware could observe an inconsistent state, leading to unpredictable
+behavior or spurious faults.
 
-This has been tested using a HTTP server and several
-performance tools while having nft_connlimit/xt_connlimit or OVS limit
-configured.
+Follow the "Guidance to Software for Invalidations" in the VT-d spec
+(Section 6.5.3.3) by implementing the recommended ownership handshake:
 
-Output of slowhttptest + OVS limit at 52000 connections:
+1. Clear only the 'Present' (P) bit of the PASID entry.
+2. Use a dma_wmb() to ensure the cleared bit is visible to hardware
+   before proceeding.
+3. Execute the required invalidation sequence (PASID cache, IOTLB, and
+   Device-TLB flush) to ensure the hardware has released all cached
+   references.
+4. Only after the flushes are complete, zero out the remaining fields
+   of the PASID entry.
 
- slow HTTP test status on 340th second:
- initializing:        0
- pending:             432
- connected:           51998
- error:               0
- closed:              0
- service available:   YES
+Also, add a dma_wmb() in pasid_set_present() to ensure that all other
+fields of the PASID entry are visible to the hardware before the Present
+bit is set.
 
-Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
-Reported-by: Aleksandra Rukomoinikova <ARukomoinikova@k2.cloud>
-Closes: https://lore.kernel.org/netfilter/b2064e7b-0776-4e14-adb6-c68080987471@k2.cloud/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Dmytro Maluka <dmaluka@chromium.org>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20260120061816.2132558-2-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_count.h |  1 +
- net/netfilter/nf_conncount.c               | 15 ++++++++++-----
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/iommu/intel/pasid.c |  6 +++++-
+ drivers/iommu/intel/pasid.h | 14 ++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_conntrack_count.h b/include/net/netfilter/nf_conntrack_count.h
-index 52a06de41aa0f..cf0166520cf33 100644
---- a/include/net/netfilter/nf_conntrack_count.h
-+++ b/include/net/netfilter/nf_conntrack_count.h
-@@ -13,6 +13,7 @@ struct nf_conncount_list {
- 	u32 last_gc;		/* jiffies at most recent gc */
- 	struct list_head head;	/* connections with the same filtering key */
- 	unsigned int count;	/* length of list */
-+	unsigned int last_gc_count; /* length of list at most recent gc */
- };
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index 77b9b147ab50e..b611ad070e729 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -273,7 +273,7 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
  
- struct nf_conncount_data *nf_conncount_init(struct net *net, unsigned int keylen);
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index 8487808c87614..288936f5c1bf9 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -34,8 +34,9 @@
+ 	did = pasid_get_domain_id(pte);
+ 	pgtt = pasid_pte_get_pgtt(pte);
+-	intel_pasid_clear_entry(dev, pasid, fault_ignore);
++	pasid_clear_present(pte);
+ 	spin_unlock(&iommu->lock);
  
- #define CONNCOUNT_SLOTS		256U
+ 	if (!ecap_coherent(iommu->ecap))
+@@ -287,6 +287,10 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
+ 		iommu->flush.flush_iotlb(iommu, did, 0, 0, DMA_TLB_DSI_FLUSH);
  
--#define CONNCOUNT_GC_MAX_NODES	8
--#define MAX_KEYLEN		5
-+#define CONNCOUNT_GC_MAX_NODES		8
-+#define CONNCOUNT_GC_MAX_COLLECT	64
-+#define MAX_KEYLEN			5
- 
- /* we will save the tuples of all connections we care about */
- struct nf_conncount_tuple {
-@@ -182,12 +183,13 @@ static int __nf_conncount_add(struct net *net,
- 		goto out_put;
- 	}
- 
--	if ((u32)jiffies == list->last_gc)
-+	if ((u32)jiffies == list->last_gc &&
-+	    (list->count - list->last_gc_count) < CONNCOUNT_GC_MAX_COLLECT)
- 		goto add_new_node;
- 
- 	/* check the saved connections */
- 	list_for_each_entry_safe(conn, conn_n, &list->head, node) {
--		if (collect > CONNCOUNT_GC_MAX_NODES)
-+		if (collect > CONNCOUNT_GC_MAX_COLLECT)
- 			break;
- 
- 		found = find_or_evict(net, list, conn);
-@@ -230,6 +232,7 @@ static int __nf_conncount_add(struct net *net,
- 		nf_ct_put(found_ct);
- 	}
- 	list->last_gc = (u32)jiffies;
-+	list->last_gc_count = list->count;
- 
- add_new_node:
- 	if (WARN_ON_ONCE(list->count > INT_MAX)) {
-@@ -277,6 +280,7 @@ void nf_conncount_list_init(struct nf_conncount_list *list)
- 	spin_lock_init(&list->list_lock);
- 	INIT_LIST_HEAD(&list->head);
- 	list->count = 0;
-+	list->last_gc_count = 0;
- 	list->last_gc = (u32)jiffies;
+ 	devtlb_invalidation_with_pasid(iommu, dev, pasid);
++	intel_pasid_clear_entry(dev, pasid, fault_ignore);
++	if (!ecap_coherent(iommu->ecap))
++		clflush_cache_range(pte, sizeof(*pte));
++
+ 	if (!fault_ignore)
+ 		intel_iommu_drain_pasid_prq(dev, pasid);
  }
- EXPORT_SYMBOL_GPL(nf_conncount_list_init);
-@@ -316,13 +320,14 @@ static bool __nf_conncount_gc_list(struct net *net,
- 		}
- 
- 		nf_ct_put(found_ct);
--		if (collected > CONNCOUNT_GC_MAX_NODES)
-+		if (collected > CONNCOUNT_GC_MAX_COLLECT)
- 			break;
- 	}
- 
- 	if (!list->count)
- 		ret = true;
- 	list->last_gc = (u32)jiffies;
-+	list->last_gc_count = list->count;
- 
- 	return ret;
+diff --git a/drivers/iommu/intel/pasid.h b/drivers/iommu/intel/pasid.h
+index 3809793e0259f..b67b2dc4ad9c0 100644
+--- a/drivers/iommu/intel/pasid.h
++++ b/drivers/iommu/intel/pasid.h
+@@ -234,9 +234,23 @@ static inline void pasid_set_wpe(struct pasid_entry *pe)
+  */
+ static inline void pasid_set_present(struct pasid_entry *pe)
+ {
++	dma_wmb();
+ 	pasid_set_bits(&pe->val[0], 1 << 0, 1);
  }
+ 
++/*
++ * Clear the Present (P) bit (bit 0) of a scalable-mode PASID table entry.
++ * This initiates the transition of the entry's ownership from hardware
++ * to software. The caller is responsible for fulfilling the invalidation
++ * handshake recommended by the VT-d spec, Section 6.5.3.3 (Guidance to
++ * Software for Invalidations).
++ */
++static inline void pasid_clear_present(struct pasid_entry *pe)
++{
++	pasid_set_bits(&pe->val[0], 1 << 0, 0);
++	dma_wmb();
++}
++
+ /*
+  * Setup Page Walk Snoop bit (Bit 87) of a scalable mode PASID
+  * entry.
 -- 
 2.51.0
 
