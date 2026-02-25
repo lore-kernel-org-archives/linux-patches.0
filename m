@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5928918DB2A;
-	Wed, 25 Feb 2026 01:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8634B1D5ABA;
+	Wed, 25 Feb 2026 01:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983176; cv=none; b=SXAIRvJdf0KSqXGUYgySC9n/FMZy0Jicupr8dQQnjh66edOGLpgDBm/uQiOD6XlvCsGEPnFXLeMJxDYmEGe9Mqaeiwe99ctxapDyQSLt33OHHKef2/VpdY/MfHO1L2ZdV8Hh48PYjIsm3DuPHCXKUVLq0PEeS0B11rVv+4F0Mtg=
+	t=1771983177; cv=none; b=tmYHzBon+eO7YjPzj4y+08wjU8+fVA6/4tFu9zyEtQvPGPJj9bU+fyIeQ/9P6JY8XYdKSiji9wXRta2OGakd/07Y3MKp171Ieh6MlgCiF2Hqhl3pG2dHURvXqyzCSZwtp3lM5j7GbI3vhuDN14C2AZGqu4T7HARihlHK149sZyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983176; c=relaxed/simple;
-	bh=f0uM4oO8tFMz3BE708jldQeZpbPqVkJ3xZeUU8a+Hik=;
+	s=arc-20240116; t=1771983177; c=relaxed/simple;
+	bh=d3E/9qU4wvA1p1P4+fuadpw/EVgVOMkGS/S33/YrVBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7jnb6T+TPlrM5C+avXPHJ+foOshBMGCed6MtExgylPsVJWj7Jh2itcjOSUTxf+aLmtkJjDh8cTK7l6ERQyf/UmZYDWQFLKvcRpAsxSOi6iVvFJZtXDcfsOtTU4jNGG49L9KuL4YqEoSqa155SVqG3NdHRcbh+8aqxWxnEy6O9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyccA5Sw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S5FI7GhXroCEguuQ1u0oYOfvePZxooqawnax/SsoUaohUxW1UmZrzbnO3jl2dmAnDMHzuJmkqGNBKKG88URWk98A6E5aFasbTyqlmjU0uPg8lISeCbD0gRzljzg9sS03MrqzqqM7PuemzdgK/vFhcJlYGx97cj1mdZPtJhYTCWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEsos3SA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyccA5Sw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1679CC116D0;
-	Wed, 25 Feb 2026 01:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEsos3SA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E858C116D0;
+	Wed, 25 Feb 2026 01:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983176;
-	bh=f0uM4oO8tFMz3BE708jldQeZpbPqVkJ3xZeUU8a+Hik=;
+	s=korg; t=1771983177;
+	bh=d3E/9qU4wvA1p1P4+fuadpw/EVgVOMkGS/S33/YrVBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pyccA5SwYyEJsjnQdRZH/e+YbcF8X0/Jf5YcLTuU8LDJzONGMe+V6fy4QcAjTIImj
-	 /1FrH9nZZAERwv/KDUbu/5WHWWvoIcZF2QwGihk+qN7s5QJJm2S+7I6SdEbwNhZSBc
-	 Kv8Sk2qKpTcHDRwyKfpipZ0A2iICG7h+QYH+GVhg=
+	b=bEsos3SAwNr5o6e+s5b3zo2TS23xEb8vRtIZgHGj5/d5XBR5aPtMl0yDKXfF+WmWs
+	 VfNu1XE1JDqIwAXxs5fCa4zsa6iwyRSg1tzbh3G1sfd4coqZ2r/yr9V5IObujjwDQj
+	 hVNZ7FN4IzMbIecX3ELtFNpCMR4HcsmnzanvLbbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Han Gao <gaohan@iscas.ac.cn>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 328/781] PCI: sophgo: Disable L0s and L1 on Sophgo 2044 PCIe Root Ports
-Date: Tue, 24 Feb 2026 17:17:17 -0800
-Message-ID: <20260225012407.748953155@linuxfoundation.org>
+Subject: [PATCH 6.19 302/781] ASoC: SDCA: Remove outdated todo comment
+Date: Tue, 24 Feb 2026 17:16:51 -0800
+Message-ID: <20260225012407.116405811@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,66 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 613f3255a35a95f52575dd8c60b7ac9d711639ce ]
+[ Upstream commit b27b57f85fe3f0eca479556ac55bc9cbd1a5685a ]
 
-Sophgo 2044 Root Ports advertise L0 and L1 capabilities without supporting
-them. Since commit f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM
-states for devicetree platforms") force enabled ASPM on all device tree
-platforms, the issue became evident and the SG2044 Root Port started
-breaking.
+Support for -cn- properties has already been added, however the TODO
+comment noting this feature was required was not removed. Remove the
+now redundant comment.
 
-Hence, disable the L0s and L1 capabilities in the LINKCAP register for the
-SG2044 Root Ports, so that these states won't get enabled.
-
-Fixes: 467d9c0348d6 ("PCI: dwc: Add Sophgo SG2044 PCIe controller driver in Root Complex mode")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-[mani: reworded description and corrected fixes tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Tested-by: Han Gao <gaohan@iscas.ac.cn>
-Link: https://patch.msgid.link/20260109040756.731169-1-inochiama@gmail.com
+Fixes: 50a479527ef01 ("ASoC: SDCA: Add support for -cn- value properties")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260204125944.1134011-2-ckeepax@opensource.cirrus.com
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-sophgo.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ sound/soc/sdca/sdca_functions.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-sophgo.c b/drivers/pci/controller/dwc/pcie-sophgo.c
-index ad4baaa34ffa1..044088898819e 100644
---- a/drivers/pci/controller/dwc/pcie-sophgo.c
-+++ b/drivers/pci/controller/dwc/pcie-sophgo.c
-@@ -161,6 +161,22 @@ static void sophgo_pcie_msi_enable(struct dw_pcie_rp *pp)
- 	raw_spin_unlock_irqrestore(&pp->lock, flags);
+diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
+index 5a1f120487ef0..e86004c9dea03 100644
+--- a/sound/soc/sdca/sdca_functions.c
++++ b/sound/soc/sdca/sdca_functions.c
+@@ -911,10 +911,6 @@ static int find_sdca_control_value(struct device *dev, struct sdca_entity *entit
+ 	return 0;
  }
  
-+static void sophgo_pcie_disable_l0s_l1(struct dw_pcie_rp *pp)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	u32 offset, val;
-+
-+	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+
-+	dw_pcie_dbi_ro_wr_en(pci);
-+
-+	val = dw_pcie_readl_dbi(pci, PCI_EXP_LNKCAP + offset);
-+	val &= ~(PCI_EXP_LNKCAP_ASPM_L0S | PCI_EXP_LNKCAP_ASPM_L1);
-+	dw_pcie_writel_dbi(pci, PCI_EXP_LNKCAP + offset, val);
-+
-+	dw_pcie_dbi_ro_wr_dis(pci);
-+}
-+
- static int sophgo_pcie_host_init(struct dw_pcie_rp *pp)
- {
- 	int irq;
-@@ -171,6 +187,8 @@ static int sophgo_pcie_host_init(struct dw_pcie_rp *pp)
- 
- 	irq_set_chained_handler_and_data(irq, sophgo_pcie_intx_handler, pp);
- 
-+	sophgo_pcie_disable_l0s_l1(pp);
-+
- 	sophgo_pcie_msi_enable(pp);
- 
- 	return 0;
+-/*
+- * TODO: Add support for -cn- properties, allowing different channels to have
+- * different defaults etc.
+- */
+ static int find_sdca_entity_control(struct device *dev, struct sdca_entity *entity,
+ 				    struct fwnode_handle *control_node,
+ 				    struct sdca_control *control)
 -- 
 2.51.0
 
