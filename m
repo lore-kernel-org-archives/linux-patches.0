@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2477624A06D;
-	Wed, 25 Feb 2026 01:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DA3258ED5;
+	Wed, 25 Feb 2026 01:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982930; cv=none; b=Qf5z+FgBPxdn7kn8yPt5ByVKGMqChoCdri98ydXv/iIU6HruYgMExdBbQMSYST0xBnMoNB477S/hfpp/JcHQeUkFVNmwGpDEEKYSmMjQ6pq2GgCY+4w43MA4fHlrpVjgzJ3xcCxl6OCyv0UU4/ZSg43QRSiFglDY3bA8UhzSsAI=
+	t=1771982931; cv=none; b=jiK8rNBw8kACRQAIo1Wnvht2EHRkQWf3SgI3g+Xi+WUogfGnyw9Fy+C6cKbdpSXwtEOIMKQiv6H8rQO8jvoNtKGMv79daGYEGI9ikBEEHngClEl7+SBt1mq4c89Wc4nAGk25DIT2gEjhi+ugnVfUAynEGHYsYM2gzwtytuwpo0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982930; c=relaxed/simple;
-	bh=4mnaiSowEEG4AARCcOPacaU42SbOqpd+aV+YmgsMnGk=;
+	s=arc-20240116; t=1771982931; c=relaxed/simple;
+	bh=q1Ht/6k+aBD9QPCzgXFUQfoH6ZX7WMMIxta5NZfQFkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cJseUTInvDgTQKAt2QZ4S3WxFGE/kHazQzR6EHJvgu/yULjbxiivOSCkT0t7ImKPPAXzKvm1oXZXz10hu2UpNe/D8c5N0p0GyLeWDvC+KBRg7nu++19q5HQ5ZGI+JtXeNzDOM0MX9F1JG7VKMotWHt3ac9WKGkkyd2J/WHsRKN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WschnhJA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XkDvtVOAmU3u5NICO6oMEkqNIjNA0/G1xsOwhD6cBIU5LTqI3oq2+gM/4wfVZXM2z098Qrs8SGO7Uqd68b/ZErKbCliZzaTzFmpm3wb9EK4UdpOcV7+5U8xIynGaV1gnZiZ7l6Q/+xWPz/La7+tF7L6PcYuzXptPPel/kaaWzyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtOY2iNx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WschnhJA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEFFC19423;
-	Wed, 25 Feb 2026 01:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtOY2iNx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0934C2BC87;
+	Wed, 25 Feb 2026 01:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982930;
-	bh=4mnaiSowEEG4AARCcOPacaU42SbOqpd+aV+YmgsMnGk=;
+	s=korg; t=1771982931;
+	bh=q1Ht/6k+aBD9QPCzgXFUQfoH6ZX7WMMIxta5NZfQFkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WschnhJA2ouySj1xBR5h5XUlAJgy4s031vr6ow7R4IAqX7Ln1GggBbNnFbQ9Ze41T
-	 nS4n1CHdaIn/ETtD7rWbRJgQC/aMHJMexIGCuSI2waToTqgJuGIVVc+JnsdffFvUeB
-	 g3D9SNYU9x5eKkhE0+OhlMuVcLPP60XXeUPh/EdQ=
+	b=dtOY2iNxCWY4XY7LwLuKooMHcocz61m6Fm17E2D00BBRHCOUa+DbUzmE/l4QyCMnh
+	 ceT19fEqUXuXB6sLhB+exKNq+WumB9SbI9R2HXaY3/C2RVfVoj7HJq/KwtCunTBE8S
+	 0Y+eEDGeOTDeLNuIFCzEOEQDDZbp2HZQ16eX35o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Luis Gerhorst <luis.gerhorst@fau.de>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 107/781] ftrace,bpf: Remove FTRACE_OPS_FL_JMP ftrace_ops flag
-Date: Tue, 24 Feb 2026 17:13:36 -0800
-Message-ID: <20260225012402.308503399@linuxfoundation.org>
+Subject: [PATCH 6.19 108/781] bpf: Fix verifier_bug_if to account for BPF_CALL
+Date: Tue, 24 Feb 2026 17:13:37 -0800
+Message-ID: <20260225012402.333499681@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,170 +55,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Luis Gerhorst <luis.gerhorst@fau.de>
 
-[ Upstream commit 4be42c92220128b3128854a2d6b0f0ad0bcedbdb ]
+[ Upstream commit cd3b6a3d49f8061d0c4c7e4226783051fe592ae7 ]
 
-At the moment the we allow the jmp attach only for ftrace_ops that
-has FTRACE_OPS_FL_JMP set. This conflicts with following changes
-where we use single ftrace_ops object for all direct call sites,
-so all could be be attached via just call or jmp.
+The BPF verifier assumes `insn_aux->nospec_result` is only set for
+direct memory writes (e.g., `*(u32*)(r1+off) = r2`). However, the
+assertion fails to account for helper calls (e.g.,
+`bpf_skb_load_bytes_relative`) that perform writes to stack memory. Make
+the check more precise to resolve this.
 
-We already limit the jmp attach support with config option and bit
-(LSB) set on the trampoline address. It turns out that's actually
-enough to limit the jmp attach for architecture and only for chosen
-addresses (with LSB bit set).
+The problem is that `BPF_CALL` instructions have `BPF_CLASS(insn->code)
+== BPF_JMP`, which triggers the warning check:
 
-Each user of register_ftrace_direct or modify_ftrace_direct can set
-the trampoline bit (LSB) to indicate it has to be attached by jmp.
+- Helpers like `bpf_skb_load_bytes_relative` write to stack memory
+- `check_helper_call()` loops through `meta.access_size`, calling
+  `check_mem_access(..., BPF_WRITE)`
+- `check_stack_write()` sets `insn_aux->nospec_result = 1`
+- Since `BPF_CALL` is encoded as `BPF_JMP | BPF_CALL`, the warning fires
 
-The bpf trampoline generation code uses trampoline flags to generate
-jmp-attach specific code and ftrace inner code uses the trampoline
-bit (LSB) to handle return from jmp attachment, so there's no harm
-to remove the FTRACE_OPS_FL_JMP bit.
+Execution flow:
 
-The fexit/fmodret performance stays the same (did not drop),
-current code:
+```
+1. Drop capabilities → Enable Spectre mitigation
+2. Load BPF program
+   └─> do_check()
+       ├─> check_cond_jmp_op() → Marks dead branch as speculative
+       │   └─> push_stack(..., speculative=true)
+       ├─> pop_stack() → state->speculative = 1
+       ├─> check_helper_call() → Processes helper in dead branch
+       │   └─> check_mem_access(..., BPF_WRITE)
+       │       └─> insn_aux->nospec_result = 1
+       └─> Checks: state->speculative && insn_aux->nospec_result
+           └─> BPF_CLASS(insn->code) == BPF_JMP → WARNING
+```
 
-  fentry         :   77.904 ± 0.546M/s
-  fexit          :   62.430 ± 0.554M/s
-  fmodret        :   66.503 ± 0.902M/s
+To fix the assert, it would be nice to be able to reuse
+bpf_insn_successors() here, but bpf_insn_successors()->cnt is not
+exactly what we want as it may also be 1 for BPF_JA. Instead, we could
+check opcode_info.can_jump, but then we would have to share the table
+between the functions. This would mean moving the table out of the
+function and adding bpf_opcode_info(). As the verifier_bug_if() only
+runs for insns with nospec_result set, the impact on verification time
+would likely still be negligible. However, I assume sharing
+bpf_opcode_info() between liveness.c and verifier.c will not be worth
+it. It seems as only adjust_jmp_off() could also be simplified using it,
+and there imm/off is touched. Thus it is maybe better to rely on exact
+opcode/class matching there.
 
-with this change:
+Therefore, to avoid this sharing only for a verifier_bug_if(), just
+check the opcode. This should now cover all opcodes for which can_jump
+in bpf_insn_successors() is true.
 
-  fentry         :   80.472 ± 0.061M/s
-  fexit          :   63.995 ± 0.127M/s
-  fmodret        :   67.362 ± 0.175M/s
+Parts of the description and example are taken from the bug report.
 
-Fixes: 25e4e3565d45 ("ftrace: Introduce FTRACE_OPS_FL_JMP")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/bpf/20251230145010.103439-2-jolsa@kernel.org
+Fixes: dadb59104c64 ("bpf: Fix aux usage after do_check_insn()")
+Signed-off-by: Luis Gerhorst <luis.gerhorst@fau.de>
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
+Closes: https://lore.kernel.org/bpf/7678017d-b760-4053-a2d8-a6879b0dbeeb@hust.edu.cn/
+Link: https://lore.kernel.org/r/20260127115912.3026761-2-luis.gerhorst@fau.de
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ftrace.h  |  1 -
- kernel/bpf/trampoline.c | 32 ++++++++++++++------------------
- kernel/trace/ftrace.c   | 14 --------------
- 3 files changed, 14 insertions(+), 33 deletions(-)
+ kernel/bpf/verifier.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/ftrace.h b/include/linux/ftrace.h
-index a3a8989e3268d..cc869c59c1a68 100644
---- a/include/linux/ftrace.h
-+++ b/include/linux/ftrace.h
-@@ -359,7 +359,6 @@ enum {
- 	FTRACE_OPS_FL_DIRECT			= BIT(17),
- 	FTRACE_OPS_FL_SUBOP			= BIT(18),
- 	FTRACE_OPS_FL_GRAPH			= BIT(19),
--	FTRACE_OPS_FL_JMP			= BIT(20),
- };
- 
- #ifndef CONFIG_DYNAMIC_FTRACE_WITH_ARGS
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index 976d89011b157..b9a358d7a78f1 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -214,10 +214,15 @@ static int modify_fentry(struct bpf_trampoline *tr, u32 orig_flags,
- 	int ret;
- 
- 	if (tr->func.ftrace_managed) {
-+		unsigned long addr = (unsigned long) new_addr;
-+
-+		if (bpf_trampoline_use_jmp(tr->flags))
-+			addr = ftrace_jmp_set(addr);
-+
- 		if (lock_direct_mutex)
--			ret = modify_ftrace_direct(tr->fops, (long)new_addr);
-+			ret = modify_ftrace_direct(tr->fops, addr);
- 		else
--			ret = modify_ftrace_direct_nolock(tr->fops, (long)new_addr);
-+			ret = modify_ftrace_direct_nolock(tr->fops, addr);
- 	} else {
- 		ret = bpf_trampoline_update_fentry(tr, orig_flags, old_addr,
- 						   new_addr);
-@@ -240,10 +245,15 @@ static int register_fentry(struct bpf_trampoline *tr, void *new_addr)
- 	}
- 
- 	if (tr->func.ftrace_managed) {
-+		unsigned long addr = (unsigned long) new_addr;
-+
-+		if (bpf_trampoline_use_jmp(tr->flags))
-+			addr = ftrace_jmp_set(addr);
-+
- 		ret = ftrace_set_filter_ip(tr->fops, (unsigned long)ip, 0, 1);
- 		if (ret)
- 			return ret;
--		ret = register_ftrace_direct(tr->fops, (long)new_addr);
-+		ret = register_ftrace_direct(tr->fops, addr);
- 	} else {
- 		ret = bpf_trampoline_update_fentry(tr, 0, NULL, new_addr);
- 	}
-@@ -499,13 +509,6 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
- 	if (err)
- 		goto out_free;
- 
--#ifdef CONFIG_DYNAMIC_FTRACE_WITH_JMP
--	if (bpf_trampoline_use_jmp(tr->flags))
--		tr->fops->flags |= FTRACE_OPS_FL_JMP;
--	else
--		tr->fops->flags &= ~FTRACE_OPS_FL_JMP;
--#endif
--
- 	WARN_ON(tr->cur_image && total == 0);
- 	if (tr->cur_image)
- 		/* progs already running at this address */
-@@ -533,15 +536,8 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
- 	tr->cur_image = im;
- out:
- 	/* If any error happens, restore previous flags */
--	if (err) {
-+	if (err)
- 		tr->flags = orig_flags;
--#ifdef CONFIG_DYNAMIC_FTRACE_WITH_JMP
--		if (bpf_trampoline_use_jmp(tr->flags))
--			tr->fops->flags |= FTRACE_OPS_FL_JMP;
--		else
--			tr->fops->flags &= ~FTRACE_OPS_FL_JMP;
--#endif
--	}
- 	kfree(tlinks);
- 	return err;
- 
-diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index aa758efc37314..93f617e1f191d 100644
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -6049,15 +6049,8 @@ int register_ftrace_direct(struct ftrace_ops *ops, unsigned long addr)
- 	if (ftrace_hash_empty(hash))
- 		return -EINVAL;
- 
--	/* This is a "raw" address, and this should never happen. */
--	if (WARN_ON_ONCE(ftrace_is_jmp(addr)))
--		return -EINVAL;
--
- 	mutex_lock(&direct_mutex);
- 
--	if (ops->flags & FTRACE_OPS_FL_JMP)
--		addr = ftrace_jmp_set(addr);
--
- 	/* Make sure requested entries are not already registered.. */
- 	size = 1 << hash->size_bits;
- 	for (i = 0; i < size; i++) {
-@@ -6178,13 +6171,6 @@ __modify_ftrace_direct(struct ftrace_ops *ops, unsigned long addr)
- 
- 	lockdep_assert_held_once(&direct_mutex);
- 
--	/* This is a "raw" address, and this should never happen. */
--	if (WARN_ON_ONCE(ftrace_is_jmp(addr)))
--		return -EINVAL;
--
--	if (ops->flags & FTRACE_OPS_FL_JMP)
--		addr = ftrace_jmp_set(addr);
--
- 	/* Enable the tmp_ops to have the same functions as the direct ops */
- 	ftrace_ops_init(&tmp_ops);
- 	tmp_ops.func_hash = ops->func_hash;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 8678ce5c97c5a..c9e2e22da3309 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -20615,17 +20615,19 @@ static int do_check(struct bpf_verifier_env *env)
+ 			 * may skip a nospec patched-in after the jump. This can
+ 			 * currently never happen because nospec_result is only
+ 			 * used for the write-ops
+-			 * `*(size*)(dst_reg+off)=src_reg|imm32` which must
+-			 * never skip the following insn. Still, add a warning
+-			 * to document this in case nospec_result is used
+-			 * elsewhere in the future.
++			 * `*(size*)(dst_reg+off)=src_reg|imm32` and helper
++			 * calls. These must never skip the following insn
++			 * (i.e., bpf_insn_successors()'s opcode_info.can_jump
++			 * is false). Still, add a warning to document this in
++			 * case nospec_result is used elsewhere in the future.
+ 			 *
+ 			 * All non-branch instructions have a single
+ 			 * fall-through edge. For these, nospec_result should
+ 			 * already work.
+ 			 */
+-			if (verifier_bug_if(BPF_CLASS(insn->code) == BPF_JMP ||
+-					    BPF_CLASS(insn->code) == BPF_JMP32, env,
++			if (verifier_bug_if((BPF_CLASS(insn->code) == BPF_JMP ||
++					     BPF_CLASS(insn->code) == BPF_JMP32) &&
++					    BPF_OP(insn->code) != BPF_CALL, env,
+ 					    "speculation barrier after jump instruction may not have the desired effect"))
+ 				return -EFAULT;
+ process_bpf_exit:
 -- 
 2.51.0
 
