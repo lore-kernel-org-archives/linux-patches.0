@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C154B24A05D;
-	Wed, 25 Feb 2026 01:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65CF1E2834;
+	Wed, 25 Feb 2026 01:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983700; cv=none; b=M0g33LhYOVv3JRS0NBjFIIIIaFs/j+cQzZU6DdZPEzfneBEZshR3/3ZaNZdIIUB63hNKjzB697n+pGqh3b+6gTR2mbBzuM17vUOsoaSYbaP9E8c9harQ0i3Ig6DqzshhZzFqhemMqZtO1FrMy7Iyf18y/dX0dNcSvIGfjPffJuk=
+	t=1771983702; cv=none; b=C6IkanJNNOxXXvF+L9PGWet1ktLVP5UPQgcDk1FAw+SHmZCE2Bqhfv9oFYAq841EszvHFiuAO0620wULvgvdYg4ANxPXZUEQRVi5SiiNsfywRQCSVJP06Inknbj/WK6T0x5pFbLL9PvkKWR934UacPiI1R/LxOM9E0A432c+fxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983700; c=relaxed/simple;
-	bh=wT9wL3U4M9i9SbWKXC4s8/daJfPm7G3ImKmPZcQKCrk=;
+	s=arc-20240116; t=1771983702; c=relaxed/simple;
+	bh=gJ5uysqsrHe5FZEG/3c2ZdfqMNgzGWHBw1l7edlkIkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSXjGMJR4/aUUjQ5DXmVYeDYZHVwMngyW8EUbjNG7jxspu7UJlc1k6kwm50JZPlrdGTtd6g29yLkTWBpgYNUXoucnyAYVa0Ew+wzXxpcuBA840Nt0/wOQi2V5qFJfhrXjqxbtDHj5SNNvvST0AqZ3V/FpEdJH9hd09N84fd+GgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrSjDrf3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZKxUDbwx6VUEHsMZtEShfxcjrEepquLIyDPNJTo+IuneqpM1kW+3AZb76TqZAeq0SUELwOPMZr9ceVhjNVOfXZitgJIWd9d/gBtIyxsgl7d4LpFi5R2ZJjRPvaoHWNJN1St3jovONgYfLy3t/B8KfNSgCfi9vLEEp6C1hOqZWW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWLux17r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrSjDrf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DB0C116D0;
-	Wed, 25 Feb 2026 01:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWLux17r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51D9C116D0;
+	Wed, 25 Feb 2026 01:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983700;
-	bh=wT9wL3U4M9i9SbWKXC4s8/daJfPm7G3ImKmPZcQKCrk=;
+	s=korg; t=1771983701;
+	bh=gJ5uysqsrHe5FZEG/3c2ZdfqMNgzGWHBw1l7edlkIkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrSjDrf3XiRYJkFiKwhhDHMZR4xYvIQATRmJT8SIN1zojqcK2nl0DJIZkGbjpo3MS
-	 LqVHlXsrCKfoy+vnjWtPV0BOKmykDKNVjKDn4Dp4KL0sIis4JZ0NnPi8mnVX+tME5E
-	 SE3jgnQVwIX8kK2xbwDEyn1Wj0cIH+4wrQwp4t64=
+	b=QWLux17rYGMK/sach7woa2MKOHSPLEzpxBHT2hk6WXHRqi6z91j+F93l5FnXU8eXT
+	 jH/hxfMBMP9Q5fgj3xrmRyOublTpc/2xJo4opE0BeozA23oIYwCg0HFh30ykwJ77bd
+	 Ay9TshkT+7ftYoekNzsokZ2BXZENo3V8wXPej+Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongliang Wang <wanghongliang@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 781/781] net: stmmac: dwmac-loongson: Set clk_csr_i to 100-150MHz
-Date: Tue, 24 Feb 2026 17:24:50 -0800
-Message-ID: <20260225012418.868479123@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mauro Rossi <issor.oruam@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 746/781] drm/amd/display: Turn off DAC in DCE link encoder using VBIOS
+Date: Tue, 24 Feb 2026 17:24:15 -0800
+Message-ID: <20260225012418.022275485@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -45,45 +47,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit e1aa5ef892fb4fa9014a25e87b64b97347919d37 upstream.
+[ Upstream commit e021ee995056ee7e58114edd92bcd4578d8b4bb5 ]
 
-Current clk_csr_i setting of Loongson STMMAC (including LS7A1000/2000
-and LS2K1000/2000/3000) are copy & paste from other drivers. In fact,
-Loongson STMMAC use 125MHz clocks and need 62 freq division to within
-2.5MHz, meeting most PHY MDC requirement. So fix by setting clk_csr_i
-to 100-150MHz, otherwise some PHYs may link fail.
+Apparently, the VBIOS DAC1EncoderControl function is much more
+graceful about turning off the DAC. It writes various DAC
+registers in a specific sequence. Use that instead of just
+clearing the DAC_ENABLE register.
 
-Cc: stable@vger.kernel.org
-Fixes: 30bba69d7db40e7 ("stmmac: pci: Add dwmac support for Loongson")
-Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://patch.msgid.link/20260203062901.2158236-1-chenhuacai@loongson.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Do this in just the dce110_link_encoder_disable_output
+function and remove it from the HWSS.
+
+Fixes: 0fbe321a93ce ("drm/amd/display: Implement DCE analog link encoders (v2)")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Tested-by: Mauro Rossi <issor.oruam@gmail.com>
+Suggested-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../drm/amd/display/dc/dce/dce_link_encoder.c | 30 +++++++++++--------
+ .../amd/display/dc/hwss/dce110/dce110_hwseq.c |  3 --
+ 2 files changed, 17 insertions(+), 16 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -91,8 +91,8 @@ static void loongson_default_data(struct
- 	/* Get bus_id, this can be overwritten later */
- 	plat->bus_id = pci_dev_id(pdev);
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+index 5c1a10f77733a..2e742950a62c7 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+@@ -131,6 +131,21 @@ static enum bp_result link_transmitter_control(
+ 	return result;
+ }
  
--	/* clk_csr_i = 20-35MHz & MDC = clk_csr_i/16 */
--	plat->clk_csr = STMMAC_CSR_20_35M;
-+	/* clk_csr_i = 100-150MHz & MDC = clk_csr_i/62 */
-+	plat->clk_csr = STMMAC_CSR_100_150M;
- 	plat->core_type = DWMAC_CORE_GMAC;
- 	plat->force_sf_dma_mode = 1;
++static enum bp_result link_dac_encoder_control(
++	struct dce110_link_encoder *link_enc,
++	enum bp_encoder_control_action action,
++	uint32_t pix_clk_100hz)
++{
++	struct dc_bios *bios = link_enc->base.ctx->dc_bios;
++	struct bp_encoder_control encoder_control = {0};
++
++	encoder_control.action = action;
++	encoder_control.engine_id = link_enc->base.analog_engine;
++	encoder_control.pixel_clock = pix_clk_100hz / 10;
++
++	return bios->funcs->encoder_control(bios, &encoder_control);
++}
++
+ static void enable_phy_bypass_mode(
+ 	struct dce110_link_encoder *enc110,
+ 	bool enable)
+@@ -1337,19 +1352,8 @@ void dce110_link_encoder_disable_output(
+ 	struct bp_transmitter_control cntl = { 0 };
+ 	enum bp_result result;
  
+-	switch (enc->analog_engine) {
+-	case ENGINE_ID_DACA:
+-		REG_UPDATE(DAC_ENABLE, DAC_ENABLE, 0);
+-		break;
+-	case ENGINE_ID_DACB:
+-		/* DACB doesn't seem to be present on DCE6+,
+-		 * although there are references to it in the register file.
+-		 */
+-		DC_LOG_ERROR("%s DACB is unsupported\n", __func__);
+-		break;
+-	default:
+-		break;
+-	}
++	if (enc->analog_engine != ENGINE_ID_UNKNOWN)
++		link_dac_encoder_control(enc110, ENCODER_CONTROL_DISABLE, 0);
+ 
+ 	/* The code below only applies to connectors that support digital signals. */
+ 	if (enc->transmitter == TRANSMITTER_UNKNOWN)
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index ebd74b43e935e..fd41e52e4d2f1 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1218,9 +1218,6 @@ void dce110_disable_stream(struct pipe_ctx *pipe_ctx)
+ 		dccg->funcs->disable_symclk_se(dccg, stream_enc->stream_enc_inst,
+ 					       link_enc->transmitter - TRANSMITTER_UNIPHY_A);
+ 	}
+-
+-	if (dc_is_rgb_signal(pipe_ctx->stream->signal))
+-		dce110_dac_encoder_control(pipe_ctx, false);
+ }
+ 
+ void dce110_unblank_stream(struct pipe_ctx *pipe_ctx,
+-- 
+2.51.0
+
 
 
