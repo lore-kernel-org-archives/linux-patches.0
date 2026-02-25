@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FDB2BAF7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28186251795;
 	Wed, 25 Feb 2026 01:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983104; cv=none; b=j33wpzTnjI0jBZ4ZhqPQg8FDZ0P026qkX/YcTUBIIKLc4CiMZkgFquAq7FhYle4LrUItfjHosk+DB0W+zCIgcI42wKV2QqgTM2FoGx50KXQy9MuVEZLDC8p7yymhTHRJR6vZyQ95KMiaeGKcd+OIV0KQdQ11r7Rku9nR0xal0DU=
+	t=1771983105; cv=none; b=JX7aaS1+2XBANuh+e2XGDJUcVtQlgFSVKZ9smD9+jUh9N5B3VtNfZYInkueeO4BPlHRAb9CvwDbe5Jp+r8fCPCgQN7cfm2LJhG6bWfuYySP9P/zmxy7gAUTetuwx+k00vh1yl01sjtq254+gaEZUPpXPSt3b0kel4yyLH2D4yNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983104; c=relaxed/simple;
-	bh=KkB1Ewt5Zc/MrpWgP4Yf9HXP1Y2nV99aDX9PXL2dwpc=;
+	s=arc-20240116; t=1771983105; c=relaxed/simple;
+	bh=vthRJy+FZ9jkZxsLB97AGJJt2EgXlkzchoHUHTP5wm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g//EJBPwlSaEh0os3MzmxLmmTy03JTuxgaNNLpGx7MTcYv78phVPVlQuwSc/H42wG2eAEYvjq5yeqhVJxlF1sCbMwsLIeVsGPEnepwFFd41IzYtRp7LfK09o/xLMFmfvE+JvOgKtyXE4OqlO9NedvdW0kTto9QTrC3PfyuZ73Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0a5JTyXr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aNXfzOOrZakoHNZeo1bRH5zXXKNM4criHdBiC5GFBfwSgzzgsYZY58oci9GwwL20IE3vAJ5m2nl/WzxFHsOHHEa60QtHAKJgC4uyiAxuQ5cgZddRr4rOD6UYPw/5CSFuvOSfULyKv6VShOrbT83EgJWIo0nwdW8BNcCqJxlorN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYX9Ia99; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0a5JTyXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE54AC116D0;
-	Wed, 25 Feb 2026 01:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYX9Ia99"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9D7C116D0;
+	Wed, 25 Feb 2026 01:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983103;
-	bh=KkB1Ewt5Zc/MrpWgP4Yf9HXP1Y2nV99aDX9PXL2dwpc=;
+	s=korg; t=1771983104;
+	bh=vthRJy+FZ9jkZxsLB97AGJJt2EgXlkzchoHUHTP5wm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0a5JTyXrvVFuoQ+G2CpjAd1CyHWfvx1/2f0XO0OrDe5Xm39psJrt5QLlSA/gYrVe+
-	 8peEf/cRhVIX4ZeDbnyZ9BfcyGKBue2MPFuaPC2Kh6HcYUrUC80H1vycAwJq/7yp/3
-	 T+WUpG9q6UG6dLKS1j/ODUlYzRodeXXWvvACAzUw=
+	b=cYX9Ia99HR7VwzfLKELjb2Vv2fTSrKnNxxIVQTvupcBJp5ThxfRssBcv8t4tJqq8j
+	 DnPqc7Zk4A9E+0hwjYx9aXmd5bA6MwjjQxtrdCAX4ytaxvCbdzikfchN1oc4SOXAP8
+	 lEdFwCYHpLALoT05ffWp8KNR6oJhP471cpD1Kmhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 265/781] accel/amdxdna: Fix notifier_wq flushing warning
-Date: Tue, 24 Feb 2026 17:16:14 -0800
-Message-ID: <20260225012406.196100242@linuxfoundation.org>
+Subject: [PATCH 6.19 266/781] drm/msm: Fix x2-85 TPL1_DBG_ECO_CNTL1
+Date: Tue, 24 Feb 2026 17:16:15 -0800
+Message-ID: <20260225012406.222009560@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,37 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Rob Clark <robin.clark@oss.qualcomm.com>
 
-[ Upstream commit b36178488d479e9a53bbef2b01280378b5586e60 ]
+[ Upstream commit 56cd8adff8cbe82a13a1db998f1353d68ed84305 ]
 
-Create notifier_wq with WQ_MEM_RECLAIM flag to fix the possible warning.
+We actually need to set b26, just claiming to do so is not enough :-)
 
-  workqueue: WQ_MEM_RECLAIM amdxdna_js:drm_sched_free_job_work [gpu_sched] is flushing !WQ_MEM_RECLAIM notifier_wq:0x0
-
-Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260113173624.256053-1-lizhi.hou@amd.com
+Fixes: 01ff3bf27215 ("drm/msm/a8xx: Add support for Adreno X2-85 GPU")
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/697778/
+Message-ID: <20260109153730.130462-2-robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_pci_drv.c | 2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_pci_drv.c b/drivers/accel/amdxdna/amdxdna_pci_drv.c
-index 1973ab67721be..fcc9be23b3de5 100644
---- a/drivers/accel/amdxdna/amdxdna_pci_drv.c
-+++ b/drivers/accel/amdxdna/amdxdna_pci_drv.c
-@@ -282,7 +282,7 @@ static int amdxdna_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		fs_reclaim_release(GFP_KERNEL);
- 	}
- 
--	xdna->notifier_wq = alloc_ordered_workqueue("notifier_wq", 0);
-+	xdna->notifier_wq = alloc_ordered_workqueue("notifier_wq", WQ_MEM_RECLAIM);
- 	if (!xdna->notifier_wq)
- 		return -ENOMEM;
- 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index 4c042133261c9..550a53a7865eb 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -1689,7 +1689,7 @@ static const struct adreno_reglist_pipe x285_nonctxt_regs[] = {
+ 	{ REG_A7XX_SP_READ_SEL, 0x0001ff00, BIT(PIPE_NONE) },
+ 	{ REG_A6XX_TPL1_DBG_ECO_CNTL, 0x10000000, BIT(PIPE_NONE) },
+ 	/* BIT(26): Disable final clamp for bicubic filtering */
+-	{ REG_A6XX_TPL1_DBG_ECO_CNTL1, 0x00000720, BIT(PIPE_NONE) },
++	{ REG_A6XX_TPL1_DBG_ECO_CNTL1, 0x04000720, BIT(PIPE_NONE) },
+ 	{ REG_A6XX_UCHE_MODE_CNTL, 0x80080000, BIT(PIPE_NONE) },
+ 	{ REG_A8XX_UCHE_CCHE_MODE_CNTL, 0x00001000, BIT(PIPE_NONE) },
+ 	{ REG_A8XX_UCHE_CCHE_CACHE_WAYS, 0x00000800, BIT(PIPE_NONE) },
 -- 
 2.51.0
 
