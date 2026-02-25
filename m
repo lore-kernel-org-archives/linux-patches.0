@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F34276049;
-	Wed, 25 Feb 2026 01:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3971B276049;
+	Wed, 25 Feb 2026 01:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771984016; cv=none; b=GQ3dXcY8aESEzk9CysNM+UoH5IJSXfwFh4wbcEqWE1rRTRwy2VapS7jmxJVmnXMi9vvByuD+mR4tL6RNhjjJi+S7uIHpjopi14b3NJ/zUrIk3PjNd1KE/dVqPLLPU+D2+VkG/cpjKIxVbeec3+xP7o4zgGy0obM56GxfJDq4Wlw=
+	t=1771984017; cv=none; b=JYO+Kw0fj9TtCjgMlDq1r4065p8Dyd4zv8F4HQPmppCaNgI/NYQYM8kyBmoxwCOYo40oYLE/sMIX7hpHLEFQo1Z7q4heonPRU4VSrU70E0MTQzI8LCFE7Ki4kyRObxuldw5n6IzaXUZ5h8zHGrxFy8386i5SbWWwdoFPZan5iFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771984016; c=relaxed/simple;
-	bh=orZBVrloHmYTjv4zYzKcDkeTjE+fTZfVPGdoJ1D7M1Q=;
+	s=arc-20240116; t=1771984017; c=relaxed/simple;
+	bh=hCYCVyC40oDh1WWcR1yRRN1TCjO8VGv/HdGF1rgd3Hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XDsiHvBzJCqlXYvcSxUGzUX4yPsTx7N8XktWbujkRryHJO9QCCuXbvR5noeeCHxYU36ZzHh783dnQEijKWN4gdzmWoL2hokDBTK2qgB9Dzy00y1QYgxWzz0c4ZLPmQ1GxBVx4IqxS/F2trCueJ6loDqR8vmblMOpDvLxJcUQlDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbeVbIsC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FuQ39bDgLPFpP1tnrHr8qxhg8PJVItxeEwpQpthFWcKHhhUBNERJW3jugCXKp0kPlTWwtC/Bb5rByeIeDU8WuI+VAp21TAGdWtw+IT158z+siw/YM4CrupoZBN84mf5Jty67Gsir1Ue+ni518ePLWV26vhDjvNrAYqQCqbUS148=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgAAapMg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbeVbIsC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF8BC116D0;
-	Wed, 25 Feb 2026 01:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgAAapMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7619C116D0;
+	Wed, 25 Feb 2026 01:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771984016;
-	bh=orZBVrloHmYTjv4zYzKcDkeTjE+fTZfVPGdoJ1D7M1Q=;
+	s=korg; t=1771984017;
+	bh=hCYCVyC40oDh1WWcR1yRRN1TCjO8VGv/HdGF1rgd3Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hbeVbIsCX6/w1cq1RbTXGENvCeb7zCXkMMWNAPnlwgkA8617RCePI5s6c0sIYNdPA
-	 L7BecLFSw8K35Zx/lz9JnLPoLTVLVN/N4JrIjbv/Nm0ktxrokkjG97ZkPVjAlJx1DI
-	 eyGRUBMgR1WOX0mY8wiqeSKSMkCq1vbCSfhIRQfU=
+	b=lgAAapMgHFRTk4ohbgo5W7CTZ17diow7ztwvU7rA0pnGUAaA3mm8oT0RsvbLSj8xd
+	 heYiCivH5Yebbq2anaNd26Y+0wb+q93ZVsGssY4yslHn/nA1pQWfA4cL1G8YGUmggV
+	 nO7y8qDmylvDZe5n1y1855wg/eX5WEQQhXsxMV0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=B6rg=20Wedekind?= <joerg@wedekind.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Huang Chenming <chenming.huang@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 264/641] PCI: Mark 3ware-9650SA Root Port Extended Tags as broken
-Date: Tue, 24 Feb 2026 17:19:50 -0800
-Message-ID: <20260225012355.211145528@linuxfoundation.org>
+Subject: [PATCH 6.18 238/641] wifi: cfg80211: Fix use_for flag update on BSS refresh
+Date: Tue, 24 Feb 2026 17:19:24 -0800
+Message-ID: <20260225012354.646915577@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,51 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jörg Wedekind <joerg@wedekind.de>
+From: Huang Chenming <chenming.huang@oss.qualcomm.com>
 
-[ Upstream commit 959ac08a2c2811305be8c2779779e8b0932e5a99 ]
+[ Upstream commit 4073ea516106e5f98ed0476f89cdede8baa98d37 ]
 
-Per PCIe r7.0, sec 2.2.6.2.1 and 7.5.3.4, a Requester may not use 8-bit Tags
-unless its Extended Tag Field Enable is set, but all Receivers/Completers
-must handle 8-bit Tags correctly regardless of their Extended Tag Field
-Enable.
+Userspace may fail to connect to certain BSS that were initially
+marked as unusable due to regulatory restrictions (use_for = 0,
+e.g., 6 GHz power type mismatch). Even after these restrictions
+are removed and the BSS becomes usable, connection attempts still
+fail.
 
-Some devices do not handle 8-bit Tags as Completers, so add a quirk for
-them.  If we find such a device, we disable Extended Tags for the entire
-hierarchy to make peer-to-peer DMA possible.
+The issue occurs in cfg80211_update_known_bss() where the use_for
+flag is updated using bitwise AND (&=) instead of direct assignment.
+Once a BSS is marked with use_for = 0, the AND operation masks out
+any subsequent non-zero values, permanently keeping the flag at 0.
+This causes __cfg80211_get_bss(), invoked by nl80211_assoc_bss(), to
+fail the check "(bss->pub.use_for & use_for) != use_for", thereby
+blocking association.
 
-The 3ware 9650SA seems to have issues with handling 8-bit tags. Mark it as
-broken.
+Replace the bitwise AND operation with direct assignment so the use_for
+flag accurately reflects the current BSS state.
 
-This fixes PCI Parity Errors like :
-
-  3w-9xxx: scsi0: ERROR: (0x06:0x000C): PCI Parity Error: clearing.
-  3w-9xxx: scsi0: ERROR: (0x06:0x000D): PCI Abort: clearing.
-  3w-9xxx: scsi0: ERROR: (0x06:0x000E): Controller Queue Error: clearing.
-  3w-9xxx: scsi0: ERROR: (0x06:0x0010): Microcontroller Error: clearing.
-
-Fixes: 60db3a4d8cc9 ("PCI: Enable PCIe Extended Tags if supported")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=202425
-Signed-off-by: Jörg Wedekind <joerg@wedekind.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260119143114.21948-1-joerg@wedekind.de
+Fixes: d02a12b8e4bb ("wifi: cfg80211: add BSS usage reporting")
+Signed-off-by: Huang Chenming <chenming.huang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251209025733.2098456-1-chenming.huang@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index b9c252aa6fe08..c7e733beaab03 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5581,6 +5581,7 @@ static void quirk_no_ext_tags(struct pci_dev *pdev)
- 	pci_walk_bus(bridge->bus, pci_configure_extended_tags, NULL);
- }
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_3WARE, 0x1004, quirk_no_ext_tags);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_3WARE, 0x1005, quirk_no_ext_tags);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0132, quirk_no_ext_tags);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0140, quirk_no_ext_tags);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0141, quirk_no_ext_tags);
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 90a9187a6b135..9a0c02c23dc56 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1959,7 +1959,7 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
+ 	ether_addr_copy(known->parent_bssid, new->parent_bssid);
+ 	known->pub.max_bssid_indicator = new->pub.max_bssid_indicator;
+ 	known->pub.bssid_index = new->pub.bssid_index;
+-	known->pub.use_for &= new->pub.use_for;
++	known->pub.use_for = new->pub.use_for;
+ 	known->pub.cannot_use_reasons = new->pub.cannot_use_reasons;
+ 	known->bss_source = new->bss_source;
+ 
 -- 
 2.51.0
 
