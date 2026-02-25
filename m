@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5EE24A05D;
-	Wed, 25 Feb 2026 01:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A987924A05D;
+	Wed, 25 Feb 2026 01:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983532; cv=none; b=KtJXViFIadorW5P/+kRUARnUnokboAZ+q5RmbKTze9ao8oUVx2HfCHXuHAw/qug2mTeNbyUGkxQolzWGosQDWP0EX+RH+liaOW+/V9yMHmftsZdBsg5XsZaIDDGMG1qIac31WLhBHp2BAhDkKiiiWm+0lqR2/WQS7sAjsorlBew=
+	t=1771983533; cv=none; b=rC3o7cdQP9joBUZGm3p/81N4oFzezyr7t6ZK+2AYciiX7ziS1ZJpkjolbZ5WWm08d+nGBNuDkEFDU+o6BqUE0CYAkNr3mKcohUghOBi1QHQ1RjvcUWvOKpW596HOSFli8Zn3T6fbI34woGHDyeK7/YUX0Sf9u4aKXGhjj7Cj9rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983532; c=relaxed/simple;
-	bh=XR1MlU3poWCxzKjplDEosTMCXMhKu8vAqKpP8ByZ9Pw=;
+	s=arc-20240116; t=1771983533; c=relaxed/simple;
+	bh=8y8INJeTcsz6hIkgvMlTAKvT7/dDMIGFl2bHmhrf/Tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TxI9UVmzUBPF+eQsdPdVlAHh0POqJJy4Mn+REmBKZ6iSL5g1P6wxxISoyEKiBZ32GhEGPHZv/sd6f2FnVSewJQE1jCpdgsVCxnGM7lyrSc4SVwrX5EVRKPY4iHcbgn/pSBD8XDZwYG2N6QVfIrRtRkIRYGGGEpG3TF7I9zRXrcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdOYE7lG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MwsiiSWEjR2Lte1+zAT4y3DvB3C6C7jxksiw6T5CnMqKfIWLbKGk5x1nKcxzpS2EeAQ7J1b/UztNGbmztEximL1zGGtnksGY495rW/gvlWDsv8n+wnNQP7OXM4H3MJXBHwR/wjTZS77lM8i74aYbZGXdw5mKoeM1F++A1gOs5a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkjv7EyF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdOYE7lG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D72BC116D0;
-	Wed, 25 Feb 2026 01:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkjv7EyF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25AB5C116D0;
+	Wed, 25 Feb 2026 01:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983532;
-	bh=XR1MlU3poWCxzKjplDEosTMCXMhKu8vAqKpP8ByZ9Pw=;
+	s=korg; t=1771983533;
+	bh=8y8INJeTcsz6hIkgvMlTAKvT7/dDMIGFl2bHmhrf/Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdOYE7lGTJQ21gM3+DMJDfLtPOVpJ/ZA49MwJLVSsowR0veJPbFDF0qR+RB5OW7a0
-	 G0RtuUo6PaHiWvJ45Ef5S++3JUNXpqtBszj+eyG3UErx2aTDLdzwI7MVK4uYJid/7P
-	 xLmKvKt1YmDG0MMjbWVRX+cbkO5uNONjE9sfvVjE=
+	b=gkjv7EyF5BeUEALtLFCB/FF/0FCXxwM5uchgvoNY55hmzMhBmwHnpr8rGx8PxMGAG
+	 XDwZBHMaqZEL8CQ/6GVf3HspPLPiC0wzDoZete6QYFj9nFbdGJEEAL87I91e0reoDy
+	 A2Ojfr85vCTns9ZnGLOy+HwEsWBxbLbl3f4dj/w8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jie Zhang <jie.zhang@analog.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 638/781] net: stmmac: fix oops when split header is enabled
-Date: Tue, 24 Feb 2026 17:22:27 -0800
-Message-ID: <20260225012415.454315638@linuxfoundation.org>
+Subject: [PATCH 6.19 621/781] tools/power turbostat: AMD: msr offset 0x611 read failed: Input/output error
+Date: Tue, 24 Feb 2026 17:22:10 -0800
+Message-ID: <20260225012415.042050924@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,77 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Zhang <jzhang918@gmail.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit babab1b42ed68877ef669a08384becf281ad2582 ]
+[ Upstream commit 16cc8f249c702b7cbb4c2c2be7cd8f4fdd5d1d0c ]
 
-For GMAC4, when split header is enabled, in some rare cases, the
-hardware does not fill buf2 of the first descriptor with payload.
-Thus we cannot assume buf2 is always fully filled if it is not
-the last descriptor. Otherwise, the length of buf2 of the second
-descriptor will be calculated wrong and cause an oops:
+Turbostat exits during RAPL probe with:
 
-Unable to handle kernel paging request at virtual address ffff00019246bfc0
-...
-x2 : 0000000000000040 x1 : ffff00019246bfc0 x0 : ffff00009246c000
-Call trace:
- dcache_inval_poc+0x28/0x58 (P)
- dma_direct_sync_single_for_cpu+0x38/0x6c
- __dma_sync_single_for_cpu+0x34/0x6c
- stmmac_napi_poll_rx+0x8f0/0xb60
- __napi_poll.constprop.0+0x30/0x144
- net_rx_action+0x160/0x274
- handle_softirqs+0x1b8/0x1fc
-...
+turbostat: cpu0: msr offset 0x611 read failed: Input/output error
 
-To fix this, the PL bit-field in RDES3 register is used for all
-descriptors, whether it is the last descriptor or not.
+A binary with this bug can be used successfully with
+the option "--no-msr"
 
-Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Jie Zhang <jie.zhang@analog.com>
-Link: https://patch.msgid.link/20260209225037.589130-1-jie.zhang@analog.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this regression by trusting the static AMD RAPL MSR offset.
+
+Fixes: 19476a592bf2 ("tools/power turbostat: Validate RAPL MSRs for AWS Nitro Hypervisor")
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 20 ++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index a379221b96a34..f98fd254315f6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5023,13 +5023,27 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
- 	if (!priv->sph_active)
- 		return 0;
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 5ad45c2ac5bd8..c4c8b6315fd26 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -2135,7 +2135,7 @@ off_t idx_to_offset(int idx)
  
--	/* Not last descriptor */
--	if (status & rx_not_ls)
-+	/* For GMAC4, when split header is enabled, in some rare cases, the
-+	 * hardware does not fill buf2 of the first descriptor with payload.
-+	 * Thus we cannot assume buf2 is always fully filled if it is not
-+	 * the last descriptor. Otherwise, the length of buf2 of the second
-+	 * descriptor will be calculated wrong and cause an oops.
-+	 *
-+	 * If this is the last descriptor, 'plen' is the length of the
-+	 * received packet that was transferred to system memory.
-+	 * Otherwise, it is the accumulated number of bytes that have been
-+	 * transferred for the current packet.
-+	 *
-+	 * Thus 'plen - len' always gives the correct length of buf2.
-+	 */
-+
-+	/* Not GMAC4 and not last descriptor */
-+	if (priv->plat->core_type != DWMAC_CORE_GMAC4 && (status & rx_not_ls))
- 		return priv->dma_conf.dma_buf_sz;
- 
-+	/* GMAC4 or last descriptor */
- 	plen = stmmac_get_rx_frame_len(priv, p, coe);
- 
--	/* Last descriptor */
- 	return plen - len;
- }
- 
+ 	switch (idx) {
+ 	case IDX_PKG_ENERGY:
+-		if (valid_rapl_msrs & RAPL_AMD_F17H)
++		if (platform->plat_rapl_msrs & RAPL_AMD_F17H)
+ 			offset = MSR_PKG_ENERGY_STAT;
+ 		else
+ 			offset = MSR_PKG_ENERGY_STATUS;
 -- 
 2.51.0
 
