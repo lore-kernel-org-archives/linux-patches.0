@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DBB26E6F8;
-	Wed, 25 Feb 2026 01:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F03E24A05D;
+	Wed, 25 Feb 2026 01:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983602; cv=none; b=U0VwBkRo5KYk4Zdeahy/V/QW9G9MK1spbyqniQbTcNVKpU4oZqdsY1WrhebB/KXmRK60ZxzS3rEHC/lX7dJ/gbIe4IHxV8DmezP6Qn66xhNmaf3pPliHsS0FvgxItrthYZorYv9AXm1aklj1WV6mvsPwQvsx3yUp3Tsi85nmnaI=
+	t=1771983603; cv=none; b=s7+t2gEbqdzU/yd/Wt7ZvTJlV4hhOmi8zpdT1pB1WjnurjXTtc3gomaS57Kr8exJuRfDkqjWVtE976HjCh9bAar5DD+vTcDLsM3qqK3u44UrdMnqhHmmFOTh4vBAa/2NCvmo2KPfgayZmpVBkab2t/YVosyrGRiv+b+f4r9zUOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983602; c=relaxed/simple;
-	bh=eXNfrQ6D0F3R/UC318r6tpj4HCNadCbLoap5pPUNjfA=;
+	s=arc-20240116; t=1771983603; c=relaxed/simple;
+	bh=yJTAjGUNd6JMtMfUgaIGzp57zb5h9Xw+QdsueGMCnvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8VzNh1mfQGWIHbg5kSjv4dl4TQl6Zt0FhCdEhYUVD/B4opLeYHMAm6f4oEiYE6EXvFNhq51Ce+CfnuPUAbXl0rMdaz0Cs+VfgAeZc+a2ZPK6dd0dyxJpzdFgLZD2ihtIxyK53xvS/Ssf9reR82FAUuqBRk6z6w1QHQBmoQoj1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKZb7ebQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HQSF8wosROeIW7CDD55ikAXJ4Z2TEynqwATq9HI135G1jCwDahhdL06z1bNum3iAODBF0U3Fbk53Z7kcwDUamGbhVCWr8de9sD3PAKmhfbopaHPYRhS8/hSMlOa4g9H3Sz0K2tmb60sVm5+bncQPaV6kHYIkLiYK9hPBnGjLIJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwZIxzMO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKZb7ebQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05452C116D0;
-	Wed, 25 Feb 2026 01:40:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwZIxzMO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C939C116D0;
+	Wed, 25 Feb 2026 01:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983602;
-	bh=eXNfrQ6D0F3R/UC318r6tpj4HCNadCbLoap5pPUNjfA=;
+	s=korg; t=1771983603;
+	bh=yJTAjGUNd6JMtMfUgaIGzp57zb5h9Xw+QdsueGMCnvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HKZb7ebQXsZcVwv4GO65vVTpeKl0UiIWVY0Ade/EzXJNtRLdLsCN0T3+vlTCIq4yx
-	 phbRNrnCmjOQBSXQC42ts+GkF+bbgrpTjOLmePr7odJIVa5NqxsL+wE6/OgVe7c7Ad
-	 Fqk3lySjv3hbUZEki8eECvI3DvL6uOnn9XpLgIug=
+	b=EwZIxzMOyonj+iBMlQrfwztDMfw63dmdNVfJB31JfO89HYtG7hfBN3hDdm11ZnsS/
+	 sXCBYdTs/jzrQehpgDnTVBhP68/f1oIfTnYObEC/doE7EjVtpFW6E5ZK46n28HTOK6
+	 6zw/xbaH1IOmbHE5AZpB1U3+S/bFzMkFLSXxm3x0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 674/781] ping: annotate data-races in ping_lookup()
-Date: Tue, 24 Feb 2026 17:23:03 -0800
-Message-ID: <20260225012416.312156029@linuxfoundation.org>
+Subject: [PATCH 6.19 665/781] ipvs: skip ipv6 extension headers for csum checks
+Date: Tue, 24 Feb 2026 17:22:54 -0800
+Message-ID: <20260225012416.099104072@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,116 +51,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit ad5dfde2a5733aaf652ea3e40c8c5e071e935901 ]
+[ Upstream commit 05cfe9863ef049d98141dc2969eefde72fb07625 ]
 
-isk->inet_num, isk->inet_rcv_saddr and sk->sk_bound_dev_if
-are read locklessly in ping_lookup().
+Protocol checksum validation fails for IPv6 if there are extension
+headers before the protocol header. iph->len already contains its
+offset, so use it to fix the problem.
 
-Add READ_ONCE()/WRITE_ONCE() annotations.
-
-The race on isk->inet_rcv_saddr is probably coming from IPv6 support,
-but does not deserve a specific backport.
-
-Fixes: dbca1596bbb0 ("ping: convert to RCU lookups, get rid of rwlock")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260216100149.3319315-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2906f66a5682 ("ipvs: SCTP Trasport Loadbalancing Support")
+Fixes: 0bbdd42b7efa ("IPVS: Extend protocol DNAT/SNAT and state handlers")
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ping.c | 31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ net/netfilter/ipvs/ip_vs_proto_sctp.c | 18 ++++++------------
+ net/netfilter/ipvs/ip_vs_proto_tcp.c  | 21 +++++++--------------
+ net/netfilter/ipvs/ip_vs_proto_udp.c  | 20 +++++++-------------
+ 3 files changed, 20 insertions(+), 39 deletions(-)
 
-diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-index cfbd563498e85..0fec4e5645667 100644
---- a/net/ipv4/ping.c
-+++ b/net/ipv4/ping.c
-@@ -148,7 +148,7 @@ void ping_unhash(struct sock *sk)
- 	pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
- 	spin_lock(&ping_table.lock);
- 	if (sk_del_node_init_rcu(sk)) {
--		isk->inet_num = 0;
-+		WRITE_ONCE(isk->inet_num, 0);
- 		isk->inet_sport = 0;
- 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
- 	}
-@@ -181,31 +181,35 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
- 	}
+diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+index 83e452916403d..63c78a1f3918a 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -10,7 +10,8 @@
+ #include <net/ip_vs.h>
  
- 	sk_for_each_rcu(sk, hslot) {
-+		int bound_dev_if;
-+
- 		if (!net_eq(sock_net(sk), net))
- 			continue;
- 		isk = inet_sk(sk);
+ static int
+-sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
++sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++		unsigned int sctphoff);
  
- 		pr_debug("iterate\n");
--		if (isk->inet_num != ident)
-+		if (READ_ONCE(isk->inet_num) != ident)
- 			continue;
+ static int
+ sctp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -108,7 +109,7 @@ sctp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
  
-+		bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
- 		if (skb->protocol == htons(ETH_P_IP) &&
- 		    sk->sk_family == AF_INET) {
-+			__be32 rcv_saddr = READ_ONCE(isk->inet_rcv_saddr);
-+
- 			pr_debug("found: %p: num=%d, daddr=%pI4, dif=%d\n", sk,
--				 (int) isk->inet_num, &isk->inet_rcv_saddr,
--				 sk->sk_bound_dev_if);
-+				 ident, &rcv_saddr,
-+				 bound_dev_if);
+ 		/* Some checks before mangling */
+-		if (!sctp_csum_check(cp->af, skb, pp))
++		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
+ 			return 0;
  
--			if (isk->inet_rcv_saddr &&
--			    isk->inet_rcv_saddr != ip_hdr(skb)->daddr)
-+			if (rcv_saddr && rcv_saddr != ip_hdr(skb)->daddr)
- 				continue;
- #if IS_ENABLED(CONFIG_IPV6)
- 		} else if (skb->protocol == htons(ETH_P_IPV6) &&
- 			   sk->sk_family == AF_INET6) {
+ 		/* Call application helper if needed */
+@@ -156,7 +157,7 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
  
- 			pr_debug("found: %p: num=%d, daddr=%pI6c, dif=%d\n", sk,
--				 (int) isk->inet_num,
-+				 ident,
- 				 &sk->sk_v6_rcv_saddr,
--				 sk->sk_bound_dev_if);
-+				 bound_dev_if);
+ 		/* Some checks before mangling */
+-		if (!sctp_csum_check(cp->af, skb, pp))
++		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
+ 			return 0;
  
- 			if (!ipv6_addr_any(&sk->sk_v6_rcv_saddr) &&
- 			    !ipv6_addr_equal(&sk->sk_v6_rcv_saddr,
-@@ -216,8 +220,8 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
- 			continue;
- 		}
+ 		/* Call application helper if needed */
+@@ -185,19 +186,12 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ }
  
--		if (sk->sk_bound_dev_if && sk->sk_bound_dev_if != dif &&
--		    sk->sk_bound_dev_if != sdif)
-+		if (bound_dev_if && bound_dev_if != dif &&
-+		    bound_dev_if != sdif)
- 			continue;
+ static int
+-sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
++sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++		unsigned int sctphoff)
+ {
+-	unsigned int sctphoff;
+ 	struct sctphdr *sh;
+ 	__le32 cmp, val;
  
- 		goto exit;
-@@ -392,7 +396,9 @@ static void ping_set_saddr(struct sock *sk, struct sockaddr_unsized *saddr)
- 	if (saddr->sa_family == AF_INET) {
- 		struct inet_sock *isk = inet_sk(sk);
- 		struct sockaddr_in *addr = (struct sockaddr_in *) saddr;
--		isk->inet_rcv_saddr = isk->inet_saddr = addr->sin_addr.s_addr;
-+
-+		isk->inet_saddr = addr->sin_addr.s_addr;
-+		WRITE_ONCE(isk->inet_rcv_saddr, addr->sin_addr.s_addr);
- #if IS_ENABLED(CONFIG_IPV6)
- 	} else if (saddr->sa_family == AF_INET6) {
- 		struct sockaddr_in6 *addr = (struct sockaddr_in6 *) saddr;
-@@ -849,7 +855,8 @@ int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
- 	struct sk_buff *skb;
- 	int copied, err;
+-#ifdef CONFIG_IP_VS_IPV6
+-	if (af == AF_INET6)
+-		sctphoff = sizeof(struct ipv6hdr);
+-	else
+-#endif
+-		sctphoff = ip_hdrlen(skb);
+-
+ 	sh = (struct sctphdr *)(skb->data + sctphoff);
+ 	cmp = sh->checksum;
+ 	val = sctp_compute_cksum(skb, sctphoff);
+diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+index f68a1533ee455..8cc0a8ce62411 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+@@ -28,7 +28,8 @@
+ #include <net/ip_vs.h>
  
--	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk, isk->inet_num);
-+	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk,
-+		 READ_ONCE(isk->inet_num));
+ static int
+-tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
++tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int tcphoff);
  
- 	err = -EOPNOTSUPP;
- 	if (flags & MSG_OOB)
+ static int
+ tcp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -165,7 +166,7 @@ tcp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!tcp_csum_check(cp->af, skb, pp))
++		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
+ 			return 0;
+ 
+ 		/* Call application helper if needed */
+@@ -243,7 +244,7 @@ tcp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!tcp_csum_check(cp->af, skb, pp))
++		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
+ 			return 0;
+ 
+ 		/*
+@@ -300,17 +301,9 @@ tcp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 
+ 
+ static int
+-tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
++tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int tcphoff)
+ {
+-	unsigned int tcphoff;
+-
+-#ifdef CONFIG_IP_VS_IPV6
+-	if (af == AF_INET6)
+-		tcphoff = sizeof(struct ipv6hdr);
+-	else
+-#endif
+-		tcphoff = ip_hdrlen(skb);
+-
+ 	switch (skb->ip_summed) {
+ 	case CHECKSUM_NONE:
+ 		skb->csum = skb_checksum(skb, tcphoff, skb->len - tcphoff, 0);
+@@ -321,7 +314,7 @@ tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
+ 			if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+ 					    &ipv6_hdr(skb)->daddr,
+ 					    skb->len - tcphoff,
+-					    ipv6_hdr(skb)->nexthdr,
++					    IPPROTO_TCP,
+ 					    skb->csum)) {
+ 				IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+ 						 "Failed checksum for");
+diff --git a/net/netfilter/ipvs/ip_vs_proto_udp.c b/net/netfilter/ipvs/ip_vs_proto_udp.c
+index 0f0107c80dd23..f9de632e38cdd 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_udp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_udp.c
+@@ -24,7 +24,8 @@
+ #include <net/ip6_checksum.h>
+ 
+ static int
+-udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
++udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int udphoff);
+ 
+ static int
+ udp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -154,7 +155,7 @@ udp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!udp_csum_check(cp->af, skb, pp))
++		if (!udp_csum_check(cp->af, skb, pp, udphoff))
+ 			return 0;
+ 
+ 		/*
+@@ -237,7 +238,7 @@ udp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!udp_csum_check(cp->af, skb, pp))
++		if (!udp_csum_check(cp->af, skb, pp, udphoff))
+ 			return 0;
+ 
+ 		/*
+@@ -296,17 +297,10 @@ udp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 
+ 
+ static int
+-udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
++udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int udphoff)
+ {
+ 	struct udphdr _udph, *uh;
+-	unsigned int udphoff;
+-
+-#ifdef CONFIG_IP_VS_IPV6
+-	if (af == AF_INET6)
+-		udphoff = sizeof(struct ipv6hdr);
+-	else
+-#endif
+-		udphoff = ip_hdrlen(skb);
+ 
+ 	uh = skb_header_pointer(skb, udphoff, sizeof(_udph), &_udph);
+ 	if (uh == NULL)
+@@ -324,7 +318,7 @@ udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
+ 				if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+ 						    &ipv6_hdr(skb)->daddr,
+ 						    skb->len - udphoff,
+-						    ipv6_hdr(skb)->nexthdr,
++						    IPPROTO_UDP,
+ 						    skb->csum)) {
+ 					IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+ 							 "Failed checksum for");
 -- 
 2.51.0
 
