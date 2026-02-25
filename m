@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19941EB5E1;
-	Wed, 25 Feb 2026 01:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459A34369A;
+	Wed, 25 Feb 2026 01:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982911; cv=none; b=P9Z9jk6gpU9iwR1PgxrZVvLwrCLdxldcf8sp5qvbHwMhw5IJFXQWinFWaRCMSnY8+klp5GXYXP5JyzaBuad7c/T646axXbco9TmU1P3BRzck2eOeHOXEckQsT/lqkK72iKSLgOi/ygNO58Iq1vwPYOCCxrzKPJxq2QLQKGOBWiQ=
+	t=1771982913; cv=none; b=H9HwwbzJcZ3gn/NzjnGOeRejG9cX1eGqyR/SlccsvDA2dhuhFO1HI8rBMn/9G20Ry9HTyClfA3QNuIbo1Z5OXQ0vZZkY1JL4Qgj1UCObbzW4YLZayy7zB36fs9R4TlqCVpPRUc4BLjmogpEQt1cRSE1hwV3ZYqbMVmvPu/lYOCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982911; c=relaxed/simple;
-	bh=/tnjhTptpjw8ugyqMvjUbfXivJlt2x3rwbfhgo7cNRE=;
+	s=arc-20240116; t=1771982913; c=relaxed/simple;
+	bh=2dMskO09mWJqMZP9IwXVO8kMXTnTCM3V8sbd0wb/qI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rHaLjV8Ij6wcQAt1kCTiUA1n+dXWcv/ZNx7gxwcJ1CkhrYFjQtghXRSlzy+qIPxB5kxqeU/rRTm6c8A6fb41sBiRJ7vLWa3GzzmPPzWGM4hjWfQ4urdRiG2dg5GTGQUEyxblBCEvqXXUhDRFZf5ftyDBqcDt2Wu/M+gOptsukoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5fHbGjq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pnhUlQu02IxmBWv+SGzxRC7B2br4YNS0E1fCA4cy6aZK/PqUt1a/Fzg1XyyS2F2PuO2breHSkZVxYPzvXIcIEL0SMKTp/2l/WbSOJScxCQq2ttWrpm1yoCbnhHuyPDSNnTNYClKRwc0JQ286tAp4yHWC9zPE/wLlXNfShuhdCzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Np8di75S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5fHbGjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4C5C116D0;
-	Wed, 25 Feb 2026 01:28:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Np8di75S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8862C116D0;
+	Wed, 25 Feb 2026 01:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982911;
-	bh=/tnjhTptpjw8ugyqMvjUbfXivJlt2x3rwbfhgo7cNRE=;
+	s=korg; t=1771982913;
+	bh=2dMskO09mWJqMZP9IwXVO8kMXTnTCM3V8sbd0wb/qI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5fHbGjqeL+drEDB3F8UL5IYVpcpak7ShQVltPZwi3VSgvpKOcjPkIyiNdnxiur5J
-	 Et2wcjaf/WEu1DbS5wCPNVnTqHy7+PiqjSXFgEXqeB/psKblG5u3/g/Repp7jID1jm
-	 0jud5Xi/ggjZsWAy/r0Am3YJjr32MILG+VHSEZYA=
+	b=Np8di75SHy4BGb85ILFpawoLpPihJuRSlqxGD/ITk1XoAfzDb9FFoFsMzeQnPjWR6
+	 JupMkhr5eV2FEGsm6mLiqkwDZM5R0KVe+k4Zd98rHmi56ObsPn4WMziwEGq9YXo+QL
+	 LCfDXSrQmimh0HL1/hK3x9T0VWDrxLJxpSUm7t4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Stephen Eta Zhou <stephen.eta.zhou@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 093/781] clocksource/drivers/timer-sp804: Fix an Oops when read_current_timer is called on ARM32 platforms where the SP804 is not registered as the sched_clock.
-Date: Tue, 24 Feb 2026 17:13:22 -0800
-Message-ID: <20260225012401.972609551@linuxfoundation.org>
+Subject: [PATCH 6.19 067/781] io_uring/kbuf: fix memory leak if io_buffer_add_list fails
+Date: Tue, 24 Feb 2026 17:12:56 -0800
+Message-ID: <20260225012401.347584957@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,86 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Eta Zhou <stephen.eta.zhou@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 694921a93f3e3621e067afc545cedf6fe3b234a9 ]
+[ Upstream commit 442ae406603a94f1a263654494f425302ceb0445 ]
 
-On SP804, the delay timer shares the same clkevt instance with
-sched_clock. On some platforms, when
-sp804_clocksource_and_sched_clock_init is called with use_sched_clock
-not set to 1, sched_clkevt is not properly initialized. However,
-sp804_register_delay_timer is invoked unconditionally, and
-read_current_timer() subsequently calls sp804_read on an uninitialized
-sched_clkevt, leading to a kernel Oops when accessing
-sched_clkevt->value.
+io_register_pbuf_ring() ignores the return value of io_buffer_add_list(),
+which can fail if xa_store() returns an error (e.g., -ENOMEM). When this
+happens, the function returns 0 (success) to the caller, but the
+io_buffer_list structure is neither added to the xarray nor freed.
 
-Declare a dedicated clkevt instance exclusively for delay timer,
-instead of sharing the same clkevt with sched_clock.  This ensures
-that read_current_timer continues to work correctly regardless of
-whether SP804 is selected as the sched_clock.
+In practice this requires failure injection to hit, hence not a real
+issue. But it should get fixed up none the less.
 
-Fixes: 640594a04f11 ("clocksource/drivers/timer-sp804: Fix read_current_timer() issue when clock source is not registered")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512250520.APOMkYRQ-lkp@intel.com/
-Signed-off-by: Stephen Eta Zhou <stephen.eta.zhou@gmail.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://patch.msgid.link/20251225-fix_timersp804-v2-1-a366d7157f58@gmail.com
+Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-sp804.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ io_uring/kbuf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clocksource/timer-sp804.c b/drivers/clocksource/timer-sp804.c
-index e82a95ea47247..d698584273596 100644
---- a/drivers/clocksource/timer-sp804.c
-+++ b/drivers/clocksource/timer-sp804.c
-@@ -106,21 +106,25 @@ static u64 notrace sp804_read(void)
- 	return ~readl_relaxed(sched_clkevt->value);
- }
- 
-+/* Register delay timer backed by the hardware counter */
- #ifdef CONFIG_ARM
- static struct delay_timer delay;
-+static struct sp804_clkevt *delay_clkevt;
-+
- static unsigned long sp804_read_delay_timer_read(void)
- {
--	return sp804_read();
-+	return ~readl_relaxed(delay_clkevt->value);
- }
- 
--static void sp804_register_delay_timer(int freq)
-+static void sp804_register_delay_timer(struct sp804_clkevt *clk, int freq)
- {
-+	delay_clkevt = clk;
- 	delay.freq = freq;
- 	delay.read_current_timer = sp804_read_delay_timer_read;
- 	register_current_timer_delay(&delay);
- }
- #else
--static inline void sp804_register_delay_timer(int freq) {}
-+static inline void sp804_register_delay_timer(struct sp804_clkevt *clk, int freq) {}
- #endif
- 
- static int __init sp804_clocksource_and_sched_clock_init(void __iomem *base,
-@@ -135,8 +139,6 @@ static int __init sp804_clocksource_and_sched_clock_init(void __iomem *base,
- 	if (rate < 0)
- 		return -EINVAL;
- 
--	sp804_register_delay_timer(rate);
--
- 	clkevt = sp804_clkevt_get(base);
- 
- 	writel(0, clkevt->ctrl);
-@@ -152,6 +154,8 @@ static int __init sp804_clocksource_and_sched_clock_init(void __iomem *base,
- 	clocksource_mmio_init(clkevt->value, name,
- 		rate, 200, 32, clocksource_mmio_readl_down);
- 
-+	sp804_register_delay_timer(clkevt, rate);
-+
- 	if (use_sched_clock) {
- 		sched_clkevt = clkevt;
- 		sched_clock_register(sp804_read, 32, rate);
+diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
+index 796d131107ddb..67d4fe576473a 100644
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -669,8 +669,9 @@ int io_register_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg)
+ 	bl->buf_ring = br;
+ 	if (reg.flags & IOU_PBUF_RING_INC)
+ 		bl->flags |= IOBL_INC;
+-	io_buffer_add_list(ctx, bl, reg.bgid);
+-	return 0;
++	ret = io_buffer_add_list(ctx, bl, reg.bgid);
++	if (!ret)
++		return 0;
+ fail:
+ 	io_free_region(ctx->user, &bl->region);
+ 	kfree(bl);
 -- 
 2.51.0
 
