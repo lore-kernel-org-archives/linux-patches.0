@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5851D5ABA;
-	Wed, 25 Feb 2026 01:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2B621D596;
+	Wed, 25 Feb 2026 01:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982937; cv=none; b=QeagwsKoOoMIbE0NMVFPLPG3YjZEPfi1sqVfSEXYPXYKSxkvWBEm0EOMYmlk0v+Ec65ldAB27CmS1simfInDuOwmhbootc9xteGarbBM2Rnq/e3/IYyazsUAPHKVkadDN2Y7r8P16/xZhhmVSUMk4JHbZ9+h25eyJjT2kZoJAf0=
+	t=1771982939; cv=none; b=iDEzM5hTQaHkFO/sxOm8QhFiZketXyUJfXzdL8xoJilo/4gV5uFek1U2b1BIT5Jwn8W43DLmJ8X/7DBw5BeS0DOxUzkJqeMyzQLs8IkeICi+Z4ePc2pmYThNIPgQ6QYx4l/b8MMqhuINpeINAET4WkAHsP6qa8SoIVlIePQ83Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982937; c=relaxed/simple;
-	bh=0auOCzo/nvJWrE2GFS3/ylijvMSRuuVRCGWaoesfk00=;
+	s=arc-20240116; t=1771982939; c=relaxed/simple;
+	bh=7rqpWopB7wUmLzkvQNQViUtvAp+NtjIZOTR+HDyHzNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WVbnMD82n72Qa2KLmWp6d5RNyoLjDP1UGMRxYZ/SjfBMISyKarMMBRxDsRMHpeWPFRc56+y5HN8PJCUtj8PONF3VspEiE553dY17vIswpG97jTkNYvstv/eT58ZStcbXhUTVS7j3+s5PxYHWWbaTEQV67WfQgOoB4++CTuswJck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQebHmcS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZefcMNdCKxG+MrqCaNGARiNBXbAVmssbavg9H1oLhtDQnoVTM4tg/JINQoHSaK4KnILLuFyv72n3cfCQZnriHGF2VPJ4nzS6YW9ctnUyAxtaUrfQTcOEiQMroXJkc82iH/jQd4PiKTcfAuKIerPZpPgc0MvYjq9IdmulXRU52M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBAYakNa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQebHmcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9567BC116D0;
-	Wed, 25 Feb 2026 01:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBAYakNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA29C19423;
+	Wed, 25 Feb 2026 01:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982937;
-	bh=0auOCzo/nvJWrE2GFS3/ylijvMSRuuVRCGWaoesfk00=;
+	s=korg; t=1771982938;
+	bh=7rqpWopB7wUmLzkvQNQViUtvAp+NtjIZOTR+HDyHzNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQebHmcSGo9RyD0gAbX9Y43H+CTJDdEl8snj5oNKweOIJNCkQVTGKSFROCh2wo1Xs
-	 xXqKfJ9Z4pD6qTozVWYAQYzmsmVe2C14rj/QQ1icxbriXmtfPL7CxzUmg1v+SHhxOU
-	 d90KuD59Z23W8p8ml/3q2NVW4G+O4togNlKGZ73k=
+	b=nBAYakNaN8/iiS7OmU33/kzQKaXnkhMY4JC9QHk1Ys4ZB74/3ddXlC7KpKVuE3hdu
+	 iowxHIMCnafpJPnUP98NhErKN6AIFV8OlICpwkSAZCEBvGBvV15tLW4F/cP0GxQHn2
+	 V9qG899TnV/zij+845YxYYArDlCKTVb6XGK135d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Breno Leitao <leitao@debian.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 071/781] crypto: qat - fix warning on adf_pfvf_pf_proto.c
-Date: Tue, 24 Feb 2026 17:13:00 -0800
-Message-ID: <20260225012401.444623200@linuxfoundation.org>
+Subject: [PATCH 6.19 072/781] bpf: bpf_scc_visit instance and backedges accumulation for bpf_loop()
+Date: Tue, 24 Feb 2026 17:13:01 -0800
+Message-ID: <20260225012401.469285850@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,65 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 994689b8f91b02fdb5f64cba2412cde5ef3084b5 ]
+[ Upstream commit f597664454bde5ac45ceaf24da55b590ccfa60e3 ]
 
-Building the QAT driver with -Wmaybe-uninitialized triggers warnings in
-qat_common/adf_pfvf_pf_proto.c. Specifically, the variables blk_type,
-blk_byte, and byte_max may be used uninitialized in handle_blkmsg_req():
+Calls like bpf_loop() or bpf_for_each_map_elem() introduce loops that
+are not explicitly present in the control-flow graph. The verifier
+processes such calls by repeatedly interpreting the callback function
+body within the same verification path (until the current state
+converges with a previous state).
 
-  make M=drivers/crypto/intel/qat W=1 C=2 "KCFLAGS=-Werror" \
-       KBUILD_CFLAGS_KERNEL=-Wmaybe-uninitialized           \
-       CFLAGS_MODULE=-Wmaybe-uninitialized
+Such loops require a bpf_scc_visit instance in order to allow the
+accumulation of the state graph backedges. Otherwise, certain
+checkpoint states created within the bodies of such loops will have
+incomplete precision marks.
 
-  ...
-  warning: ‘byte_max’ may be used uninitialized [-Wmaybe-uninitialized]
-  warning: ‘blk_type’ may be used uninitialized [-Wmaybe-uninitialized]
-  warning: ‘blk_byte’ may be used uninitialized [-Wmaybe-uninitialized]
+See the next patch for an example of a program that leads to the
+verifier accepting an unsafe program.
 
-Although the caller of handle_blkmsg_req() always provides a req.type
-that is handled by the switch, the compiler cannot guarantee this.
-
-Add a default case to the switch statement to handle an invalid req.type.
-
-Fixes: 673184a2a58f ("crypto: qat - introduce support for PFVF block messages")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 96c6aa4c63af ("bpf: compute SCCs in program control flow graph")
+Fixes: c9e31900b54c ("bpf: propagate read/precision marks over state graph backedges")
+Reported-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Tested-by: Breno Leitao <leitao@debian.org>
+Link: https://lore.kernel.org/r/20251229-scc-for-callbacks-v1-1-ceadfe679900@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/intel/qat/qat_common/adf_pfvf_pf_proto.c    | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ kernel/bpf/verifier.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_pfvf_pf_proto.c b/drivers/crypto/intel/qat/qat_common/adf_pfvf_pf_proto.c
-index b9b5e744a3f16..af8dbc7517cf8 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_pfvf_pf_proto.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_pfvf_pf_proto.c
-@@ -148,6 +148,16 @@ static struct pfvf_message handle_blkmsg_req(struct adf_accel_vf_info *vf_info,
- 		blk_byte = FIELD_GET(ADF_VF2PF_SMALL_BLOCK_BYTE_MASK, req.data);
- 		byte_max = ADF_VF2PF_SMALL_BLOCK_BYTE_MAX;
- 		break;
-+	default:
-+		dev_err(&GET_DEV(vf_info->accel_dev),
-+			"Invalid BlockMsg type 0x%.4x received from VF%u\n",
-+			req.type, vf_info->vf_nr);
-+		resp.type = ADF_PF2VF_MSGTYPE_BLKMSG_RESP;
-+		resp.data = FIELD_PREP(ADF_PF2VF_BLKMSG_RESP_TYPE_MASK,
-+				       ADF_PF2VF_BLKMSG_RESP_TYPE_ERROR) |
-+			    FIELD_PREP(ADF_PF2VF_BLKMSG_RESP_DATA_MASK,
-+				       ADF_PF2VF_UNSPECIFIED_ERROR);
-+		return resp;
- 	}
- 
- 	/* Is this a request for CRC or data? */
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 3135643d56955..646025bae96db 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -19835,8 +19835,10 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 				}
+ 			}
+ 			if (bpf_calls_callback(env, insn_idx)) {
+-				if (states_equal(env, &sl->state, cur, RANGE_WITHIN))
++				if (states_equal(env, &sl->state, cur, RANGE_WITHIN)) {
++					loop = true;
+ 					goto hit;
++				}
+ 				goto skip_inf_loop_check;
+ 			}
+ 			/* attempt to detect infinite loop to avoid unnecessary doomed work */
+@@ -25076,15 +25078,18 @@ static int compute_scc(struct bpf_verifier_env *env)
+ 			}
+ 			/*
+ 			 * Assign SCC number only if component has two or more elements,
+-			 * or if component has a self reference.
++			 * or if component has a self reference, or if instruction is a
++			 * callback calling function (implicit loop).
+ 			 */
+-			assign_scc = stack[stack_sz - 1] != w;
+-			for (j = 0; j < succ->cnt; ++j) {
++			assign_scc = stack[stack_sz - 1] != w;	/* two or more elements? */
++			for (j = 0; j < succ->cnt; ++j) {	/* self reference? */
+ 				if (succ->items[j] == w) {
+ 					assign_scc = true;
+ 					break;
+ 				}
+ 			}
++			if (bpf_calls_callback(env, w)) /* implicit loop? */
++				assign_scc = true;
+ 			/* Pop component elements from stack */
+ 			do {
+ 				t = stack[--stack_sz];
 -- 
 2.51.0
 
