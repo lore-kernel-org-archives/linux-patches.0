@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2734C81;
-	Wed, 25 Feb 2026 06:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0202F9D83;
+	Wed, 25 Feb 2026 06:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002722; cv=none; b=Jw9zhhBHKbtNAkN3hS1jjpLEitoPCxtLGxknHClQhCJfG9LcMSjo8MobVqIYxw69zfNMxWpECoypklSwp7KKWfGATbm+PmGbuK8E+KsYWodtZa7tW2PWDU1RDrAgfcqQqKGd3BFixMtCbfMmbIwSZF+avn3wWvS9J8YD+QfHNYc=
+	t=1772002723; cv=none; b=AhIi0au2prjRfeWw1dODHSjPEktXTqP5wKYt92nlrLtgGUFLxjCshkZu7OSl3LBbl3q397AxpOXlRAc0dNCDmNj9cRq/E6Rh29PHlAcd61Nd28MnLAShaIkkqHofZkbmv7zl5xzPHpe9fyyp/NLXkF4oRrA/hL3Z7JBzVJYADlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002722; c=relaxed/simple;
-	bh=ISg45eiW4OKdxCjWR1ITL085KueXdBYO6EAM0OHTO4g=;
+	s=arc-20240116; t=1772002723; c=relaxed/simple;
+	bh=wFbgwDVLEUAalHcVib4+uYKu1+txj2YS9hylUtT4ER8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aU1Og65NTfFeX3VK1KmkTu7RZz+39fBNJbLzh2zSpkWMqYieQZKFMK2HV0oPed0d+SKLPw624rCQ1CFn0Gs6RKzy4lnJPN6tTPYZERHmMQnBAsUAGKQRvboNySEK5FV+4X0yF4wK3hbafOX1pfsPdXKAsr9rDHHvv8t4ocNt0Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qH+wZgR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tfKUh2P34Dogmbx2llmyJDgIEsQ64hxgQw6GhMfejU+amr/n0K/mi9js1qQqseDY/UfGmSBHrMggsVC9R90DEAqTCyJ7C7mdAqTXGQYkLAGo68BekTVbyIGykbTNTPQktvW5nBO1t3w6DCVcWWXVLiz2RmcHuycRH+Wrtmk+qqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3l2rlWs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qH+wZgR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3650AC116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3l2rlWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B7CC19422;
 	Wed, 25 Feb 2026 06:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002722;
-	bh=ISg45eiW4OKdxCjWR1ITL085KueXdBYO6EAM0OHTO4g=;
+	bh=wFbgwDVLEUAalHcVib4+uYKu1+txj2YS9hylUtT4ER8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qH+wZgR/kL3f1gMnABJN4sWm4XHgeAFUfY1FKJL79+p12s5bRF3RpMfItZrnMKqTT
-	 yxKCZQE9u5O/n0DfURiFn04KBK7vCLVNett9BKc+Oxie76vcMVgt/O4lYdOf6KPCSi
-	 9YQWyNfBNRRm2Y6zXSpz67b5f7nYRPK3RGZFSGT0=
+	b=Q3l2rlWsX8NZLTBzQAIym/ZSc1x1gCWGhdRUs5lipTrbcRCUNmqOwQqQeomo5u7Gb
+	 e92ARpcB737mh3cxtTIOJGz/sM6zJmKYG4AwKOyjlUvev9MTvJxnLw84f21kbLN6Ni
+	 YTA/8fBY+hP5NyergX4OsDSgDlO24XaBgtwS2oCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Mohsin Bashir <mohsin.bashr@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 532/641] eth: fbnic: increase FBNIC_HDR_BYTES_MIN from 128 to 256 bytes
-Date: Tue, 24 Feb 2026 17:24:18 -0800
-Message-ID: <20260225012401.418203342@linuxfoundation.org>
+Subject: [PATCH 6.18 533/641] eth: fbnic: set DMA_HINT_L4 for all flows
+Date: Tue, 24 Feb 2026 17:24:19 -0800
+Message-ID: <20260225012401.444916464@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,39 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Bobby Eshleman <bobbyeshleman@meta.com>
 
-[ Upstream commit bd254115f38db3c046332bb62e8719e0dc7c2b53 ]
+[ Upstream commit 0f30a31b55c4179fc55613a75ef41d496687d465 ]
 
-Increase FBNIC_HDR_BYTES_MIN from 128 to 256 bytes. The previous minimum
-was too small to guarantee that very long L2+L3+L4 headers always fit
-within the header buffer. When EN_HDR_SPLIT is disabled and a packet
-exceeds MAX_HEADER_BYTES, splitting occurs at that byte offset instead
-of the header boundary, resulting in some of the header landing in the
-payload page. The increased minimum ensures headers always fit with the
-MAX_HEADER_BYTES cut off and land in the header page.
+fbnic always advertises ETHTOOL_TCP_DATA_SPLIT_ENABLED via ethtool
+.get_ringparam. To enable proper splitting for all flow types, even for
+IP/Ethernet flows, this patch sets DMA_HINT_L4 unconditionally for all
+RSS and NFC flow steering rules. According to the spec, L4 falls back to
+L3 if no valid L4 is found, and L3 falls back to L2 if no L3 is found.
+This makes sure that the correct header boundary is used regardless of
+traffic type. This is important for zero-copy use cases where we must
+ensure that all ZC packets are split correctly.
 
 Fixes: 2b30fc01a6c7 ("eth: fbnic: Add support for HDS configuration")
 Signed-off-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Acked-by: Mohsin Bashir <mohsin.bashr@gmail.com>
-Link: https://patch.msgid.link/20260211-fbnic-tcp-hds-fixes-v1-2-55d050e6f606@meta.com
+Link: https://patch.msgid.link/20260211-fbnic-tcp-hds-fixes-v1-3-55d050e6f606@meta.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_txrx.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c | 3 +++
+ drivers/net/ethernet/meta/fbnic/fbnic_rpc.c     | 5 ++---
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-index 27776e844e29b..51a98f27d5d91 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-@@ -66,7 +66,7 @@ struct fbnic_net;
- 	(4096 - FBNIC_RX_HROOM - FBNIC_RX_TROOM - FBNIC_RX_PAD)
- #define FBNIC_HDS_THRESH_DEFAULT \
- 	(1536 - FBNIC_RX_PAD)
--#define FBNIC_HDR_BYTES_MIN		128
-+#define FBNIC_HDR_BYTES_MIN		256
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c b/drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c
+index 95fac020eb93c..08aed4103323e 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c
+@@ -1142,6 +1142,9 @@ static int fbnic_set_cls_rule_ins(struct fbnic_net *fbn,
+ 		return -EINVAL;
+ 	}
  
- struct fbnic_pkt_buff {
- 	struct xdp_buff buff;
++	dest |= FIELD_PREP(FBNIC_RPC_ACT_TBL0_DMA_HINT,
++			   FBNIC_RCD_HDR_AL_DMA_HINT_L4);
++
+ 	/* Write action table values */
+ 	act_tcam->dest = dest;
+ 	act_tcam->rss_en_mask = fbnic_flow_hash_2_rss_en_mask(fbn, hash_idx);
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c b/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c
+index 7f31e890031c0..42a186db43ea9 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c
+@@ -338,9 +338,8 @@ void fbnic_rss_reinit(struct fbnic_dev *fbd, struct fbnic_net *fbn)
+ 		else if (tstamp_mask & (1u << flow_type))
+ 			dest |= FBNIC_RPC_ACT_TBL0_TS_ENA;
+ 
+-		if (act1_value[flow_type] & FBNIC_RPC_TCAM_ACT1_L4_VALID)
+-			dest |= FIELD_PREP(FBNIC_RPC_ACT_TBL0_DMA_HINT,
+-					   FBNIC_RCD_HDR_AL_DMA_HINT_L4);
++		dest |= FIELD_PREP(FBNIC_RPC_ACT_TBL0_DMA_HINT,
++				   FBNIC_RCD_HDR_AL_DMA_HINT_L4);
+ 
+ 		rss_en_mask = fbnic_flow_hash_2_rss_en_mask(fbn, flow_type);
+ 
 -- 
 2.51.0
 
