@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBD7332ECB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6EE63081C2;
 	Wed, 25 Feb 2026 06:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002798; cv=none; b=MmAmEZfKehvqZzEw0tCADN/4iCwEt4febfDQIz5eo2EOzCWiLcyGDB7IBPdjylSCvLstuDe6atWvqk+fyCImuQ4+k+i0bfInagyQDAjuMGRwNKQN80bF0VMC+JWXzRZGu8ha13xFPIWaV5qMM7U7XFRhe8krVanbeT//mNFzQ18=
+	t=1772002798; cv=none; b=Pio87En637zp5mk8+CzVDVDXjhOeR99xEdVYOkk66U5If9t7htxI+0Ed827/e8xTGkTDXp5fiNZA9n0roah9QVUZhr1nyDUAOoKqgBFj4WhczIUvmGW63opU8dZSmX2/qGRsEdfrpI9lGT5pQ+LD3eplRa7HpcS7bYcX2yu5xa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002798; c=relaxed/simple;
-	bh=6GpdQymy9470807eKOQUNONLkQNRFrkfqWoUXEFOnww=;
+	bh=S8N1t4UEObLBPphNw1d7VCjlRIevEDZnMjELMVukGyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WN5aixWtTm4dOjJA+A9JVL4MJLtPP6yqp4GoLL6zxAM1Vs97MBDIBgLKDW/zoutzbJG8SE4QU+V0eNN+m43F5ausuvCXJjvu86ONLw2k4Zbb690pnPFlJYjhgc0Yj6EnIeueulKBVKfrs/4SX89GOauUMFXNZ/G/peGuXVNkwGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7tcqPve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GR0d+BZAW+pV17q7ISxtnwmrXo3Eo38VQRdVy1BtaRmhOUnuwsdwO96rnlm4P0svkNl8rWpJMMQ6FeQH0ekeruygIFp3ew0ftu3RWZKOvPlJ8HVs3horaHt1se/Pjoy+9gM0Rq6UOmB8vOgxpWt4k/SuZCprI/uKnLqpEbdumBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHZWAy2k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7tcqPve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03669C116D0;
-	Wed, 25 Feb 2026 06:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHZWAy2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A787AC116D0;
+	Wed, 25 Feb 2026 06:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1772002798;
-	bh=6GpdQymy9470807eKOQUNONLkQNRFrkfqWoUXEFOnww=;
+	bh=S8N1t4UEObLBPphNw1d7VCjlRIevEDZnMjELMVukGyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7tcqPveeC4z0xFAzBd+Nbk0mbvL8WFmzk4RAgmp7iseD333HIkVTzTKQa1xIDzyE
-	 +JnZN4JyiZRYsdz0eOK6zG1UVMkMc8iZNietf34akBIyst8t1ESlvVWqGe2QVPB1V3
-	 4UsA6ACoEgV15/KklLg8ixZ/5tfDHPGVRnAisPnc=
+	b=QHZWAy2kOJLiBwRbH19Gadna/IkELEKNOyO4fIc/kgYJGlDIB7fc8EV8cpxfbRMyH
+	 EuDhOyVe7EXi/zDM9qwuIyEemR2zrDx6h3IKdyCn2wIe14hnPjbN0gAj37ZEBMEdBL
+	 4/MXshNb6ZT/I3wgHWvlWUNA8hbHCTsY3ybMjhW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 603/641] btrfs: reduce block group critical section in btrfs_free_reserved_bytes()
-Date: Tue, 24 Feb 2026 17:25:29 -0800
-Message-ID: <20260225012403.126415990@linuxfoundation.org>
+Subject: [PATCH 6.18 604/641] btrfs: reset block group size class when it becomes empty
+Date: Tue, 24 Feb 2026 17:25:30 -0800
+Message-ID: <20260225012403.150095554@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,62 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 8b6fa164ab59f9e3f24e627fe09a0234783e7a8b ]
+[ Upstream commit 5870ec7c8fe57a8b2c65005e5da5efc054faa3e6 ]
 
-There's no need to update the space_info fields (bytes_reserved,
-max_extent_size, bytes_readonly, bytes_zone_unusable) while holding the
-block group's spinlock. So move those updates to happen after we unlock
-the block group (and while holding the space_info locked of course), so
-that all we do under the block group's critical section is to update the
-block group itself.
+Block group size classes are managed consistently everywhere.
+Currently, btrfs_use_block_group_size_class() sets a block group's size
+class to specialize it for a specific allocation size. However, this
+size class remains "stale" even if the block group becomes completely
+empty (both used and reserved bytes reach zero).
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+This happens in two scenarios:
+
+1. When space reservations are freed (e.g., due to errors or transaction
+   aborts) via btrfs_free_reserved_bytes().
+2. When the last extent in a block group is freed via
+   btrfs_update_block_group().
+
+While size classes are advisory, a stale size class can cause
+find_free_extent to unnecessarily skip candidate block groups during
+initial search loops. This undermines the purpose of size classes to
+reduce fragmentation by keeping block groups restricted to a specific
+size class when they could be reused for any size.
+
+Fix this by resetting the size class to BTRFS_BG_SZ_NONE whenever a
+block group's used and reserved counts both reach zero. This ensures
+that empty block groups are fully available for any allocation size in
+the next cycle.
+
+Fixes: 52bb7a2166af ("btrfs: introduce size class to block group allocator")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 5870ec7c8fe5 ("btrfs: reset block group size class when it becomes empty")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ fs/btrfs/block-group.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 035b04e7658d1..144868f02e2aa 100644
+index 144868f02e2aa..f7f6d8cb33114 100644
 --- a/fs/btrfs/block-group.c
 +++ b/fs/btrfs/block-group.c
-@@ -3859,21 +3859,24 @@ void btrfs_free_reserved_bytes(struct btrfs_block_group *cache, u64 num_bytes,
- 			       bool is_delalloc)
- {
- 	struct btrfs_space_info *space_info = cache->space_info;
-+	bool bg_ro;
- 
- 	spin_lock(&space_info->lock);
- 	spin_lock(&cache->lock);
--	if (cache->ro)
-+	bg_ro = cache->ro;
-+	cache->reserved -= num_bytes;
-+	if (is_delalloc)
-+		cache->delalloc_bytes -= num_bytes;
-+	spin_unlock(&cache->lock);
-+
-+	if (bg_ro)
- 		space_info->bytes_readonly += num_bytes;
- 	else if (btrfs_is_zoned(cache->fs_info))
- 		space_info->bytes_zone_unusable += num_bytes;
--	cache->reserved -= num_bytes;
-+
- 	space_info->bytes_reserved -= num_bytes;
- 	space_info->max_extent_size = 0;
- 
--	if (is_delalloc)
--		cache->delalloc_bytes -= num_bytes;
--	spin_unlock(&cache->lock);
--
- 	btrfs_try_granting_tickets(space_info);
- 	spin_unlock(&space_info->lock);
+@@ -3681,6 +3681,14 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
+ 	return ret;
  }
+ 
++static void btrfs_maybe_reset_size_class(struct btrfs_block_group *bg)
++{
++	lockdep_assert_held(&bg->lock);
++	if (btrfs_block_group_should_use_size_class(bg) &&
++	    bg->used == 0 && bg->reserved == 0)
++		bg->size_class = BTRFS_BG_SZ_NONE;
++}
++
+ int btrfs_update_block_group(struct btrfs_trans_handle *trans,
+ 			     u64 bytenr, u64 num_bytes, bool alloc)
+ {
+@@ -3745,6 +3753,7 @@ int btrfs_update_block_group(struct btrfs_trans_handle *trans,
+ 		old_val -= num_bytes;
+ 		cache->used = old_val;
+ 		cache->pinned += num_bytes;
++		btrfs_maybe_reset_size_class(cache);
+ 		btrfs_space_info_update_bytes_pinned(space_info, num_bytes);
+ 		space_info->bytes_used -= num_bytes;
+ 		space_info->disk_used -= num_bytes * factor;
+@@ -3865,6 +3874,7 @@ void btrfs_free_reserved_bytes(struct btrfs_block_group *cache, u64 num_bytes,
+ 	spin_lock(&cache->lock);
+ 	bg_ro = cache->ro;
+ 	cache->reserved -= num_bytes;
++	btrfs_maybe_reset_size_class(cache);
+ 	if (is_delalloc)
+ 		cache->delalloc_bytes -= num_bytes;
+ 	spin_unlock(&cache->lock);
 -- 
 2.51.0
 
