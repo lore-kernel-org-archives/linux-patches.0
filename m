@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0352F2798EA;
-	Wed, 25 Feb 2026 01:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FA5274B3B;
+	Wed, 25 Feb 2026 01:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983760; cv=none; b=Ts+ScI3TDwFEakIro4wxdceRLMiv8+yVXKRa4j+ZKndC3UyIm6CLXUv9U3EvZSYpWBmBlXi158wKuWfoN4WKUCtjoMI6tqxFzyUDTvM9YZ49fgr6gJTKhQOCU4RxmLFm1cisM1KCHkMMnIvTEQjA0lLAJ6Tu5iWRq8fm2eUd8vU=
+	t=1771983761; cv=none; b=UO7OuuKW1vSapEEn+tVX9DgtxatAesx33Jj/K7YUptv8VDvA/lhc6nbnRrydBJ5FZL/mfSO40PkoW/z207IAh3DYmNqKh5kM0/YM8qeZe+PrWZ84gwt4PjRqNvksUjKIkMXU+kQ2HoGI/5uKP0ehSNbdj6E1zm5SWAV7ALOGHPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983760; c=relaxed/simple;
-	bh=8kUU9UQYeM34anwNzMRE0GMh/MfdfeYeJeYyhrFFvao=;
+	s=arc-20240116; t=1771983761; c=relaxed/simple;
+	bh=Fkn1YdcWgDpI6wXsWFV2sBuAwnThAFfRl1ZUMyhQuk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+3+Wwz4iLwuuZX7waiubSMrsCso6nnDfhiCfZTfIRat8vw/rLwf71I+UmmwLEu07X5DbkVmDosxcOkVhc2/StAgWOKNl/FdxZSVeoYkMywdBPBIh0OE5EUteyTZfd4Ph/umitxqG1GwNP4w2CDEdI2f/RBpnNuqfwUF5A2qjvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vy0ZwLb1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nAMmzB5ENAR4dBYsujX70bTtKgldrsPeaUMl79gBHuedGgAQ9B8B6nwCLjL7naMV8GV24d+jghFUsPNFthiskPTuCh3bLaAKcSFHoShrKNFq5ROCyJv9fY8ExubZStCNdSu0uwXyDAAw2yfmg3Sj3i7iiYevyRCZkLSXRbYAupo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OHRsKCzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vy0ZwLb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8BD2C116D0;
-	Wed, 25 Feb 2026 01:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OHRsKCzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1347C116D0;
+	Wed, 25 Feb 2026 01:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983759;
-	bh=8kUU9UQYeM34anwNzMRE0GMh/MfdfeYeJeYyhrFFvao=;
+	s=korg; t=1771983761;
+	bh=Fkn1YdcWgDpI6wXsWFV2sBuAwnThAFfRl1ZUMyhQuk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vy0ZwLb1gAJRiDe4LufOcMaTdqU8eN8k55DggBI6BiXNJ4WPBvm4XhHXfR/QeBBnE
-	 MYig2HkhXIACMJhJDA1II4jx927bNXsvJjsXlWxxzeZ/oJyqXkNnvBho3KpQPQ3hVM
-	 AdI8NurEzAs5aTTuG+K5FEHw55KPjOr5yafHq5lI=
+	b=OHRsKCzTvWVfmoEguUXfgab/omHHahr+EqVWoGfGqf0hlDs/6pBgz42uGd2BRKnWN
+	 yp5xm6Zfz9yYuMp1Kokgtm4bqSs1ryhVvM/L4o+ehv6A3bTkPdl9p8IGX1cNSfar93
+	 THwW8ToQxJwv7PVKTM29CA9A7PcUUtRKv04+yvrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Govindarajulu Varadarajan <govind.varadar@gmail.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	James Dingwall <james@dingwall.me.uk>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 052/641] ublk: Validate SQE128 flag before accessing the cmd
-Date: Tue, 24 Feb 2026 17:16:18 -0800
-Message-ID: <20260225012350.298181082@linuxfoundation.org>
+Subject: [PATCH 6.18 053/641] Partial revert "x86/xen: fix balloon target initialization for PVH dom0"
+Date: Tue, 24 Feb 2026 17:16:19 -0800
+Message-ID: <20260225012350.323319840@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -47,51 +46,141 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Govindarajulu Varadarajan <govind.varadar@gmail.com>
+From: Roger Pau Monne <roger.pau@citrix.com>
 
-[ Upstream commit da7e4b75e50c087d2031a92f6646eb90f7045a67 ]
+[ Upstream commit 0949c646d64697428ff6257d52efa5093566868d ]
 
-ublk_ctrl_cmd_dump() accesses (header *)sqe->cmd before
-IO_URING_F_SQE128 flag check. This could cause out of boundary memory
-access.
+This partially reverts commit 87af633689ce16ddb166c80f32b120e50b1295de so
+the current memory target for PV guests is still fetched from
+start_info->nr_pages, which matches exactly what the toolstack sets the
+initial memory target to.
 
-Move the SQE128 flag check earlier in ublk_ctrl_uring_cmd() to return
--EINVAL immediately if the flag is not set.
+Using get_num_physpages() is possible on PV also, but needs adjusting to
+take into account the ISA hole and the PFN at 0 not considered usable
+memory despite being populated, and hence would need extra adjustments.
+Instead of carrying those extra adjustments switch back to the previous
+code.  That leaves Linux with a difference in how current memory target is
+obtained for HVM vs PV, but that's better than adding extra logic just for
+PV.
 
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Signed-off-by: Govindarajulu Varadarajan <govind.varadar@gmail.com>
-Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+However if switching to start_info->nr_pages for PV domains we need to
+differentiate between released pages (freed back to the hypervisor) as
+opposed to pages in the physmap which are not populated to start with.
+Introduce a new xen_unpopulated_pages to account for papges that have
+never been populated, and hence in the PV case don't need subtracting.
+
+Fixes: 87af633689ce ("x86/xen: fix balloon target initialization for PVH dom0")
+Reported-by: James Dingwall <james@dingwall.me.uk>
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260128110510.46425-2-roger.pau@citrix.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/xen/enlighten.c        |  2 +-
+ drivers/xen/balloon.c           | 19 +++++++++++++++----
+ drivers/xen/unpopulated-alloc.c |  3 +++
+ include/xen/xen.h               |  2 ++
+ 4 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 56058090d223e..965460d4fc76e 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -3841,10 +3841,10 @@ static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
- 	if (issue_flags & IO_URING_F_NONBLOCK)
- 		return -EAGAIN;
+diff --git a/arch/x86/xen/enlighten.c b/arch/x86/xen/enlighten.c
+index 53282dc7d5ac5..23b91bf9b6630 100644
+--- a/arch/x86/xen/enlighten.c
++++ b/arch/x86/xen/enlighten.c
+@@ -470,7 +470,7 @@ int __init arch_xen_unpopulated_init(struct resource **res)
+ 		 * driver to know how much of the physmap is unpopulated and
+ 		 * set an accurate initial memory target.
+ 		 */
+-		xen_released_pages += xen_extra_mem[i].n_pfns;
++		xen_unpopulated_pages += xen_extra_mem[i].n_pfns;
+ 		/* Zero so region is not also added to the balloon driver. */
+ 		xen_extra_mem[i].n_pfns = 0;
+ 	}
+diff --git a/drivers/xen/balloon.c b/drivers/xen/balloon.c
+index 49c3f99263943..8c44a25a7d2b9 100644
+--- a/drivers/xen/balloon.c
++++ b/drivers/xen/balloon.c
+@@ -724,6 +724,7 @@ static int __init balloon_add_regions(void)
+ static int __init balloon_init(void)
+ {
+ 	struct task_struct *task;
++	unsigned long current_pages;
+ 	int rc;
  
--	ublk_ctrl_cmd_dump(cmd);
--
- 	if (!(issue_flags & IO_URING_F_SQE128))
--		goto out;
-+		return -EINVAL;
+ 	if (!xen_domain())
+@@ -731,12 +732,18 @@ static int __init balloon_init(void)
+ 
+ 	pr_info("Initialising balloon driver\n");
+ 
+-	if (xen_released_pages >= get_num_physpages()) {
+-		WARN(1, "Released pages underflow current target");
+-		return -ERANGE;
++	if (xen_pv_domain()) {
++		if (xen_released_pages >= xen_start_info->nr_pages)
++			goto underflow;
++		current_pages = min(xen_start_info->nr_pages -
++		                    xen_released_pages, max_pfn);
++	} else {
++		if (xen_unpopulated_pages >= get_num_physpages())
++			goto underflow;
++		current_pages = get_num_physpages() - xen_unpopulated_pages;
+ 	}
+ 
+-	balloon_stats.current_pages = get_num_physpages() - xen_released_pages;
++	balloon_stats.current_pages = current_pages;
+ 	balloon_stats.target_pages  = balloon_stats.current_pages;
+ 	balloon_stats.balloon_low   = 0;
+ 	balloon_stats.balloon_high  = 0;
+@@ -767,6 +774,10 @@ static int __init balloon_init(void)
+ 	xen_balloon_init();
+ 
+ 	return 0;
 +
-+	ublk_ctrl_cmd_dump(cmd);
++ underflow:
++	WARN(1, "Released pages underflow current target");
++	return -ERANGE;
+ }
+ subsys_initcall(balloon_init);
  
- 	ret = ublk_check_cmd_op(cmd_op);
- 	if (ret)
+diff --git a/drivers/xen/unpopulated-alloc.c b/drivers/xen/unpopulated-alloc.c
+index d6fc2aefe2646..1dc0b495c8e59 100644
+--- a/drivers/xen/unpopulated-alloc.c
++++ b/drivers/xen/unpopulated-alloc.c
+@@ -18,6 +18,9 @@ static unsigned int list_count;
+ 
+ static struct resource *target_resource;
+ 
++/* Pages to subtract from the memory count when setting balloon target. */
++unsigned long xen_unpopulated_pages __initdata;
++
+ /*
+  * If arch is not happy with system "iomem_resource" being used for
+  * the region allocation it can provide it's own view by creating specific
+diff --git a/include/xen/xen.h b/include/xen/xen.h
+index 61854e3f28377..f280c5dcf9236 100644
+--- a/include/xen/xen.h
++++ b/include/xen/xen.h
+@@ -69,11 +69,13 @@ extern u64 xen_saved_max_mem_size;
+ #endif
+ 
+ #ifdef CONFIG_XEN_UNPOPULATED_ALLOC
++extern unsigned long xen_unpopulated_pages;
+ int xen_alloc_unpopulated_pages(unsigned int nr_pages, struct page **pages);
+ void xen_free_unpopulated_pages(unsigned int nr_pages, struct page **pages);
+ #include <linux/ioport.h>
+ int arch_xen_unpopulated_init(struct resource **res);
+ #else
++#define xen_unpopulated_pages 0UL
+ #include <xen/balloon.h>
+ static inline int xen_alloc_unpopulated_pages(unsigned int nr_pages,
+ 		struct page **pages)
 -- 
 2.51.0
 
