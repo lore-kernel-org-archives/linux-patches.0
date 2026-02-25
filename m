@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F86D304BB4;
-	Wed, 25 Feb 2026 06:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC37304BB4;
+	Wed, 25 Feb 2026 06:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002654; cv=none; b=JBvEVXVAK0IiNCU2bnA53nG3UlwxxahJH1gjotyb1PbmkktALSseuZwzsxyPZgvTy+JMdgM5KNFxDrPFSPnOv5n54QcOFPfPfxzf8y6ETdsKq7whz4zRLOq2LO6GZfJlFwyGlFEdM5l6wmiYDI3d38U8jbZmFvubtVmNMm7HV9s=
+	t=1772002655; cv=none; b=ZAsqHLMJbjXi49eugwoSAsTrIBK+0LrLgd7jBNr80CQdVI9onqulowi4+YHeTzoKkz3VgvINjHL+ZaF3eGcLGg5UlZksbjZqcCgtp3Vn1tVyqQlq2tEyN3w1u5BqsJlRwhI/ld10nBuFsjObmIPz+bzPcy/P0X9Jxth6FYRxxKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002654; c=relaxed/simple;
-	bh=wUl2sntJN/vxJCZKT5UdAUFPmrLEsmVojeOpZVs8nkQ=;
+	s=arc-20240116; t=1772002655; c=relaxed/simple;
+	bh=N5IOQGxSJ6kRwgswntdafO0yP7Lu7nhOUotfYOJaSQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNoM7pHQzUWg5AOGCEvcD1uznh6nZdzhxpypRcSPmccIw29ergqXBMzOVNFkZeh2X0T6UWM/uUdiMJLWoFwdUvZIGB55e06ubMUr+8bgFwvbKnNIToReGEV9m5B4Uv3/de91W9LNqJj9s7AfOiyFJV6NfjpDiK7OIoxQmj6I2sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxFJ1Q3k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n+PJMd0BPhsBdetE7WU2CpukeIVyzIQc5cyrwlZGzlyrrdtPS4ipeOSKoliLsT60lpTLB/Ah5oSPyrjkKWo32wlKzpPHUQk9+zMEqGgAE1QEoi6S5oOuOwNzqQOUQpBfqJXh3smjeqMf9RoBT84q9raL9ABYIx1ZT4hxQEmCd0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0BDIxra; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxFJ1Q3k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5816FC116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0BDIxra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CFCC116D0;
 	Wed, 25 Feb 2026 06:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002654;
-	bh=wUl2sntJN/vxJCZKT5UdAUFPmrLEsmVojeOpZVs8nkQ=;
+	s=korg; t=1772002655;
+	bh=N5IOQGxSJ6kRwgswntdafO0yP7Lu7nhOUotfYOJaSQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxFJ1Q3kd+S0QTaEc5fiP9XZ3EOIb26XnP542dMy5v+qD10DR4NjkiMZmXRG7T9P8
-	 b56fYvWpy5UhbTlGRZ3DVtZ4rsovTOc6HG3bio8/pbQKtnBRsi+99C8fh/pCeApU+g
-	 NRgOzEf6y/AhviK8PiRRXZKKFCTIUmoGoLnWzaE0=
+	b=O0BDIxra928MDpT35dZqzsCB0fBua9leYMzYNr7SMNM5Z7uciHOxrFLWT+GMBfHoa
+	 ckUDyMKIchM+4k6flO/ARxh5+1HybgzVtgg1A1+raAxL6ChsRFrSAZQzUekA8cP/rm
+	 iWfXLKfqtzpMfhkInpCf3g4nkZKsMtn0iH9k/0nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 430/641] clk: actions: owl-composite: convert from owl_divider_helper_round_rate() to divider_determine_rate()
-Date: Tue, 24 Feb 2026 17:22:36 -0800
-Message-ID: <20260225012358.963601212@linuxfoundation.org>
+Subject: [PATCH 6.18 431/641] clk: actions: owl-divider: convert from divider_round_rate() to divider_determine_rate()
+Date: Tue, 24 Feb 2026 17:22:37 -0800
+Message-ID: <20260225012358.985455892@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,44 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit d0b7c5bf6c5520c35fecff34da83d390405d3eaf ]
+[ Upstream commit 3ff3360440fa8cc7ef5a4da628d3b770b46a4f73 ]
 
-owl_divider_helper_round_rate() is just a wrapper for
-divider_round_rate(), which is deprecated. Let's migrate to
-divider_determine_rate() instead so that this deprecated API can be
-removed.
+The divider_round_rate() function is now deprecated, so let's migrate
+to divider_determine_rate() instead so that this deprecated API can be
+removed. Additionally, owl_divider_helper_round_rate() is no longer used,
+so let's drop that from the header file as well.
 
+Note that when the main function itself was migrated to use
+determine_rate, this was mistakenly converted to:
+
+    req->rate = divider_round_rate(...)
+
+This is invalid in the case when an error occurs since it can set the
+rate to a negative value.
+
+Fixes: 1b04e12a8bcc ("clk: actions: owl-divider: convert from round_rate() to determine_rate()")
 Acked-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
-Stable-dep-of: 3ff3360440fa ("clk: actions: owl-divider: convert from divider_round_rate() to divider_determine_rate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/actions/owl-composite.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/clk/actions/owl-divider.c | 17 ++---------------
+ drivers/clk/actions/owl-divider.h |  5 -----
+ 2 files changed, 2 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/clk/actions/owl-composite.c b/drivers/clk/actions/owl-composite.c
-index 00b74f8bc4375..9540444307d6c 100644
---- a/drivers/clk/actions/owl-composite.c
-+++ b/drivers/clk/actions/owl-composite.c
-@@ -57,15 +57,10 @@ static int owl_comp_div_determine_rate(struct clk_hw *hw,
- 				       struct clk_rate_request *req)
- {
- 	struct owl_composite *comp = hw_to_owl_comp(hw);
--	long rate;
--
--	rate = owl_divider_helper_round_rate(&comp->common, &comp->rate.div_hw,
--					     req->rate, &req->best_parent_rate);
--	if (rate < 0)
--		return rate;
-+	struct owl_divider_hw *div = &comp->rate.div_hw;
+diff --git a/drivers/clk/actions/owl-divider.c b/drivers/clk/actions/owl-divider.c
+index 118f1393c6780..316ace80e87e3 100644
+--- a/drivers/clk/actions/owl-divider.c
++++ b/drivers/clk/actions/owl-divider.c
+@@ -13,26 +13,13 @@
  
--	req->rate = rate;
+ #include "owl-divider.h"
+ 
+-long owl_divider_helper_round_rate(struct owl_clk_common *common,
+-				const struct owl_divider_hw *div_hw,
+-				unsigned long rate,
+-				unsigned long *parent_rate)
+-{
+-	return divider_round_rate(&common->hw, rate, parent_rate,
+-				  div_hw->table, div_hw->width,
+-				  div_hw->div_flags);
+-}
+-
+ static int owl_divider_determine_rate(struct clk_hw *hw,
+ 				      struct clk_rate_request *req)
+ {
+ 	struct owl_divider *div = hw_to_owl_divider(hw);
+ 
+-	req->rate = owl_divider_helper_round_rate(&div->common, &div->div_hw,
+-						  req->rate,
+-						  &req->best_parent_rate);
+-
 -	return 0;
-+	return divider_determine_rate(&comp->common.hw, req, div->table,
-+				      div->width, div->div_flags);
++	return divider_determine_rate(hw, req, div->div_hw.table,
++				      div->div_hw.width, div->div_hw.div_flags);
  }
  
- static unsigned long owl_comp_div_recalc_rate(struct clk_hw *hw,
+ unsigned long owl_divider_helper_recalc_rate(struct owl_clk_common *common,
+diff --git a/drivers/clk/actions/owl-divider.h b/drivers/clk/actions/owl-divider.h
+index 083be6d80954d..2ba957740c381 100644
+--- a/drivers/clk/actions/owl-divider.h
++++ b/drivers/clk/actions/owl-divider.h
+@@ -56,11 +56,6 @@ static inline struct owl_divider *hw_to_owl_divider(const struct clk_hw *hw)
+ 	return container_of(common, struct owl_divider, common);
+ }
+ 
+-long owl_divider_helper_round_rate(struct owl_clk_common *common,
+-				const struct owl_divider_hw *div_hw,
+-				unsigned long rate,
+-				unsigned long *parent_rate);
+-
+ unsigned long owl_divider_helper_recalc_rate(struct owl_clk_common *common,
+ 					 const struct owl_divider_hw *div_hw,
+ 					 unsigned long parent_rate);
 -- 
 2.51.0
 
