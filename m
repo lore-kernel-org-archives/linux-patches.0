@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA24025A642;
-	Wed, 25 Feb 2026 01:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A3A26E6FA;
+	Wed, 25 Feb 2026 01:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983656; cv=none; b=ERx6fnj7aceZCnmVK4uN4++TcO5VTNJPKeiiDScjcvR0B0jNTevLsUKv7TuuY1OeWutjJJaOeobxkL3eiY4+Sm1kH87P1VXTBoVz3sbgc6kA6LKkNmF8P5HVRd/k0dc9FGBNO6s49AsBEfdnjdrH6hacnOiA+jzsMh61iQJvc0U=
+	t=1771983656; cv=none; b=UBegpfNKgvEh7fbCvRXkeABXHxa5hZtTSIhCXSpiY0KmZgIeCssD5JeWTlCNl4Dh6b7vJVul7tauke9jd3VvVXKJVwCTqPJJ13ePSMytojpgrL+UIup97Z1BiCF3ljqBCa1oLm8IKf433S/IXta7Jz5wbeX6l+2Qy/0/+O4yldQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771983656; c=relaxed/simple;
-	bh=WLaBuml/7bKbvKA0lBEHyKv7hWbyeJtT/qIcEK5xyWk=;
+	bh=OM3dI5QGDlCIDg1gIFGpw4pUnxGrncGnhJwd9UlFB2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W3V+aBEjhsPOydub9XetcUj2GOU0+CKYtKF2rzrDOqFtF+MYcLyhKQmPV7pZF4nZcFu3Ha8MBFURvtYblzBWeMTEOTR0Dq0m6PMaNBa48LYwlNhJfg2RzXv3REBu7NuH3/CRLn9bsJgROWf1yXKoEzsRlrbbZBHefZBX4CKvK4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ueYQZO4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SnGKv3wOI0MY4DPAhh2R6DN8uuJX4siy/jEDR+W++/fdSzMKnvCnqwqUucy+Lg7CA81hxhKDpOPlqXh/t/2HpyeJFQICCoNwgHnFdKzDzrkQh4BJ1W3B4X1KvP7LAbSxtuYVvKAMCrHESOuuGbeY+bjr9CgpllTNZD5ur0Hiwm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVIQj3rJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ueYQZO4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98A2C116D0;
-	Wed, 25 Feb 2026 01:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVIQj3rJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C580C116D0;
+	Wed, 25 Feb 2026 01:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983655;
-	bh=WLaBuml/7bKbvKA0lBEHyKv7hWbyeJtT/qIcEK5xyWk=;
+	s=korg; t=1771983656;
+	bh=OM3dI5QGDlCIDg1gIFGpw4pUnxGrncGnhJwd9UlFB2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ueYQZO4kU/HqS4ZLJ0JwMfGHluQJlPQeWyZl+cQccp4G+R9eTQPj1DJTfeHF8YkCI
-	 +ZLzaUsoY9f9QA5kb+xPYqGHNKQU8Yz/TrmW0sW4r4YvxtfJKOCvlnnJq6T7nOV2ko
-	 e0Lw+TgZkK0Rgr0T9js5W5RSSh1yZ5viaBSZS/WU=
+	b=TVIQj3rJwiUF8HXWiLflq3kcS900iC6ub7v/bcr1Evdl1AOSeqES5/+msbiQ/cQVC
+	 1mmsSIx8ggtviNKlFVZj1I7MSpMQexgRJfJ0XFR70E5yP7i/e2WGaFVInouxMs4t/w
+	 eoVL2c/q2zS7HA/IejwkbHxKlL3GuqSZAHQWsNoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 741/781] drm/amd/display: Only use analog stream encoder with analog engine
-Date: Tue, 24 Feb 2026 17:24:10 -0800
-Message-ID: <20260225012417.903148664@linuxfoundation.org>
+Subject: [PATCH 6.19 699/781] apparmor: move check for aa_null file to cover all cases
+Date: Tue, 24 Feb 2026 17:23:28 -0800
+Message-ID: <20260225012416.900869347@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,46 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 17ff034f805e032ed1358624a71381f9d6e29e9e ]
+[ Upstream commit 4a134723f9f1ad2f3621566259db673350d19cb1 ]
 
-Some GPUs have analog connectors that work with a DP bridge chip
-and don't actually have an internal DAC: Those should not use
-the analog stream encoders.
+files with a dentry pointing aa_null.dentry where already rejected as
+part of file_inheritance. Unfortunately the check in
+common_file_perm() is insufficient to cover all cases causing
+unnecessary audit messages without the original files context.
 
-Fixes: 5834c33fd3f6 ("drm/amd/display: Add concept of analog encoders (v2)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Eg.
+[ 442.886474] audit: type=1400 audit(1704822661.616:329): apparmor="DENIED" operation="file_inherit" class="file" namespace="root//lxd-juju-98527a-0_<var-snap-lxd-common-lxd>" profile="snap.lxd.activate" name="/apparmor/.null" pid=9525 comm="snap-exec"
+
+Further examples of this are in the logs of
+https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2120439
+https://bugs.launchpad.net/ubuntu/+source/snapd/+bug/1952084
+https://bugs.launchpad.net/snapd/+bug/2049099
+
+These messages have no value and should not be sent to the logs.
+AppArmor was already filtering the out in some cases but the original
+patch did not catch all cases. Fix this by push the existing check
+down into two functions that should cover all cases.
+
+Link: https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2122743
+Fixes: 192ca6b55a86 ("apparmor: revalidate files during exec")
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ security/apparmor/file.c | 12 ++++++++++--
+ security/apparmor/lsm.c  |  4 ----
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c
-index a916872db7bd4..83b9abb64bfcb 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c
-@@ -979,7 +979,10 @@ struct stream_encoder *dce100_find_first_free_match_stream_enc_for_link(
- 	struct dc_link *link = stream->link;
- 	enum engine_id preferred_engine = link->link_enc->preferred_engine;
+diff --git a/security/apparmor/file.c b/security/apparmor/file.c
+index 919dbbbc87ab6..7de23e85cd5d0 100644
+--- a/security/apparmor/file.c
++++ b/security/apparmor/file.c
+@@ -154,8 +154,12 @@ static int path_name(const char *op, const struct cred *subj_cred,
+ 	const char *info = NULL;
+ 	int error;
  
--	if (dc_is_rgb_signal(stream->signal))
-+	/* Prefer analog engine if the link encoder has one.
-+	 * Otherwise, it's an external encoder.
-+	 */
-+	if (dc_is_rgb_signal(stream->signal) && link->link_enc->analog_engine != ENGINE_ID_UNKNOWN)
- 		preferred_engine = link->link_enc->analog_engine;
+-	error = aa_path_name(path, flags, buffer, name, &info,
+-			     labels_profile(label)->disconnected);
++	/* don't reaudit files closed during inheritance */
++	if (unlikely(path->dentry == aa_null.dentry))
++		error = -EACCES;
++	else
++		error = aa_path_name(path, flags, buffer, name, &info,
++				     labels_profile(label)->disconnected);
+ 	if (error) {
+ 		fn_for_each_confined(label, profile,
+ 			aa_audit_file(subj_cred,
+@@ -616,6 +620,10 @@ int aa_file_perm(const char *op, const struct cred *subj_cred,
+ 	AA_BUG(!label);
+ 	AA_BUG(!file);
  
- 	for (i = 0; i < pool->stream_enc_count; i++) {
++	/* don't reaudit files closed during inheritance */
++	if (unlikely(file->f_path.dentry == aa_null.dentry))
++		return -EACCES;
++
+ 	fctx = file_ctx(file);
+ 
+ 	rcu_read_lock();
+diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
+index f47d60d8c40a2..8d5d9a966b719 100644
+--- a/security/apparmor/lsm.c
++++ b/security/apparmor/lsm.c
+@@ -525,10 +525,6 @@ static int common_file_perm(const char *op, struct file *file, u32 mask)
+ 	struct aa_label *label;
+ 	int error = 0;
+ 
+-	/* don't reaudit files closed during inheritance */
+-	if (unlikely(file->f_path.dentry == aa_null.dentry))
+-		return -EACCES;
+-
+ 	label = begin_current_label_crit_section();
+ 	error = aa_file_perm(op, current_cred(), label, file, mask, false);
+ 	end_current_label_crit_section(label);
 -- 
 2.51.0
 
