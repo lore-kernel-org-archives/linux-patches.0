@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4AC1D5ABA;
-	Wed, 25 Feb 2026 01:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DC44369A;
+	Wed, 25 Feb 2026 01:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982949; cv=none; b=BOz6OzMATASCwukKIplWTFlA8kr6V1Tm1ccWAOuvBRZr8SDJWwSDosPpxR5lzdrT38DUDLR7OUxTyzjTcGOAmomCjnHwqIjXCBHFcR5mYb5An6s0TxTS3eTgb/Kwc8TMvZzG1IXneDW4typVXC4sDELh/ouBqzAaBacQUu8P/ps=
+	t=1771982950; cv=none; b=FpzlpXvHIPF6HZO/XLxcwYIq03fndiLYJ6wHkps+BCBGb/05FwZvmNUPhRKmzlwdba9/0gf1nRrJRPMrk5/Y28hBOoNalQp0cu4uxL/HVtAEjJOJcIV1GHcHZjGRRFmvRUNr3/QvljWTWKpB/t0YoGg+2jWu5yjyiUwoNa4MQIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982949; c=relaxed/simple;
-	bh=QbpVWe1Z7A42FwHLHJ6y2xMB5y9RJ3597Wf/LUBrz/Y=;
+	s=arc-20240116; t=1771982950; c=relaxed/simple;
+	bh=SO860REjyj45wxn2TOCw9+fh8rakmekf+JSmd5OES00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lWNdrLOS2nsjiKM/ybVhhkWffsg53fU4NRIkMp75iYPr7Z9etGDLHsVgrC+WBOXhR51yVdVh/2aJgbkuFS4JeKnUqt4zyHJOFa8Ilw5rRv2MWFmn18ALnIFANXpldBuOYYnpLzHaiYG6wtmfBVtUflKuqjA+m9QF50rz4A8STTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIVdPUeT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+Gu6oFQkMxzxxY8nPePJaFqhdkkU+4k4ijSJSMaod+B1i8v+tUASWVa29Dqq19wfvkNLNYOj71oO55/+6GrVcG8SbJrkDpxagB1dwd0+RABY3HpP6y3xT14Y1aKZ9gxko23vA+KGBlRw8H5Bb6ziueh4j898Do5GLxxc1A4DP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufC9mZ4D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIVdPUeT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78857C116D0;
-	Wed, 25 Feb 2026 01:29:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufC9mZ4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B80C116D0;
+	Wed, 25 Feb 2026 01:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982949;
-	bh=QbpVWe1Z7A42FwHLHJ6y2xMB5y9RJ3597Wf/LUBrz/Y=;
+	s=korg; t=1771982950;
+	bh=SO860REjyj45wxn2TOCw9+fh8rakmekf+JSmd5OES00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIVdPUeTXgaSdBVgrxTVPwx1becm96exFpgPrduHXFGxUwUai/rV9i4gEYBlDdpLa
-	 0BkN9V6aEtA0rXbb1uTG16bNhwlBL0Lsetpb4PoJwKPg4E86m+bN4ppiQpKefXcfvj
-	 JUKDCKL3pMfU/LW1dswgtOCJ4GizwqqK6e1UmNy0=
+	b=ufC9mZ4DcL4ZukE+3hEjiySSG+LDzgZZc9GbieCqwTGfkXJ0mjq7iFiDZuSoSfHvL
+	 ceURGeFXH2HumTXdjwLqt0uThy1UWkSyZwSc3KxFGawJc3+tJsiakZwvBoJZ/a77sq
+	 NmlBNenadTAmabmyQkcr158rbdF9M+B7FtC5GpeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Chen Jinghuang <chenjinghuang2@huawei.com>,
+	Zicheng Qu <quzicheng@huawei.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Aaron Lu <ziqianlu@bytedance.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 128/781] sched/rt: Skip currently executing CPU in rto_next_cpu()
-Date: Tue, 24 Feb 2026 17:13:57 -0800
-Message-ID: <20260225012402.812039628@linuxfoundation.org>
+Subject: [PATCH 6.19 129/781] sched: Re-evaluate scheduling when migrating queued tasks out of throttled cgroups
+Date: Tue, 24 Feb 2026 17:13:58 -0800
+Message-ID: <20260225012402.836131185@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,85 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Jinghuang <chenjinghuang2@huawei.com>
+From: Zicheng Qu <quzicheng@huawei.com>
 
-[ Upstream commit 94894c9c477e53bcea052e075c53f89df3d2a33e ]
+[ Upstream commit e34881c84c255bc300f24d9fe685324be20da3d1 ]
 
-CPU0 becomes overloaded when hosting a CPU-bound RT task, a non-CPU-bound
-RT task, and a CFS task stuck in kernel space. When other CPUs switch from
-RT to non-RT tasks, RT load balancing (LB) is triggered; with
-HAVE_RT_PUSH_IPI enabled, they send IPIs to CPU0 to drive the execution
-of rto_push_irq_work_func. During push_rt_task on CPU0,
-if next_task->prio < rq->donor->prio, resched_curr() sets NEED_RESCHED
-and after the push operation completes, CPU0 calls rto_next_cpu().
-Since only CPU0 is overloaded in this scenario, rto_next_cpu() should
-ideally return -1 (no further IPI needed).
+Consider the following sequence on a CPU configured with nohz_full:
 
-However, multiple CPUs invoking tell_cpu_to_push() during LB increments
-rd->rto_loop_next. Even when rd->rto_cpu is set to -1, the mismatch between
-rd->rto_loop and rd->rto_loop_next forces rto_next_cpu() to restart its
-search from -1. With CPU0 remaining overloaded (satisfying rt_nr_migratory
-&& rt_nr_total > 1), it gets reselected, causing CPU0 to queue irq_work to
-itself and send self-IPIs repeatedly. As long as CPU0 stays overloaded and
-other CPUs run pull_rt_tasks(), it falls into an infinite self-IPI loop,
-which triggers a CPU hardlockup due to continuous self-interrupts.
+1) A task P runs in cgroup A, and cgroup A becomes throttled due to CFS
+   bandwidth control. The gse (cgroup A) where the task P attached is
+dequeued and the CPU switches to idle.
 
-The trigging scenario is as follows:
+2) Before cgroup A is unthrottled, task P is migrated from cgroup A to
+   another cgroup B (not throttled).
 
-         cpu0                      cpu1                    cpu2
-                                pull_rt_task
-                              tell_cpu_to_push
-                 <------------irq_work_queue_on
-rto_push_irq_work_func
-       push_rt_task
-    resched_curr(rq)                                   pull_rt_task
-    rto_next_cpu                                     tell_cpu_to_push
-                      <-------------------------- atomic_inc(rto_loop_next)
-rd->rto_loop != next
-     rto_next_cpu
-   irq_work_queue_on
-rto_push_irq_work_func
+   During sched_move_task(), the task P is observed as queued but not
+running, and therefore no resched_curr() is triggered.
 
-Fix redundant self-IPI by filtering the initiating CPU in rto_next_cpu().
-This solution has been verified to effectively eliminate spurious self-IPIs
-and prevent CPU hardlockup scenarios.
+3) Since the CPU is nohz_full, it remains in do_idle() waiting for an
+   explicit scheduling event, i.e., resched_curr().
 
-Fixes: 4bdced5c9a29 ("sched/rt: Simplify the IPI based RT balancing logic")
-Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Suggested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Chen Jinghuang <chenjinghuang2@huawei.com>
+4) For kernel <= 5.10: Later, cgroup A is unthrottled. However, the task
+   P has already been migrated out of cgroup A, so unthrottle_cfs_rq()
+may observe load_weight == 0 and return early without resched_curr()
+called. For kernel >= 6.6: The unthrottling path normally triggers
+`resched_curr()` almost cases even when no runnable tasks remain in the
+unthrottled cgroup, preventing the idle stall described above. However,
+if cgroup A is removed before it gets unthrottled, the unthrottling path
+for cgroup A is never executed. In a result, no `resched_curr()` can be
+called.
+
+5) At this point, the task P is runnable in cgroup B (not throttled), but
+the CPU remains in do_idle() with no pending reschedule point. The
+system stays in this state until an unrelated event (e.g. a new task
+wakeup or any cases) that can trigger a resched_curr() breaks the
+nohz_full idle state, and then the task P finally gets scheduled.
+
+The root cause is that sched_move_task() may classify the task as only
+queued, not running, and therefore fails to trigger a resched_curr(),
+while the later unthrottling path no longer has visibility of the
+migrated task.
+
+Preserve the existing behavior for running tasks by issuing
+resched_curr(), and explicitly invoke check_preempt_curr() for tasks
+that were queued at the time of migration. This ensures that runnable
+tasks are reconsidered for scheduling even when nohz_full suppresses
+periodic ticks.
+
+Fixes: 29f59db3a74b ("sched: group-scheduler core")
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Link: https://patch.msgid.link/20260122012533.673768-1-chenjinghuang2@huawei.com
+Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Reviewed-by: Aaron Lu <ziqianlu@bytedance.com>
+Tested-by: Aaron Lu <ziqianlu@bytedance.com>
+Link: https://patch.msgid.link/20260130083438.1122457-1-quzicheng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/rt.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/sched/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index f1867fe8e5c53..e0ff909050190 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2100,6 +2100,7 @@ static void push_rt_tasks(struct rq *rq)
-  */
- static int rto_next_cpu(struct root_domain *rd)
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index c3b6e123fa00e..dbf4e32a063f7 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -9115,6 +9115,7 @@ void sched_move_task(struct task_struct *tsk, bool for_autogroup)
  {
-+	int this_cpu = smp_processor_id();
- 	int next;
- 	int cpu;
+ 	unsigned int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE;
+ 	bool resched = false;
++	bool queued = false;
+ 	struct rq *rq;
  
-@@ -2123,6 +2124,10 @@ static int rto_next_cpu(struct root_domain *rd)
+ 	CLASS(task_rq_lock, rq_guard)(tsk);
+@@ -9126,10 +9127,13 @@ void sched_move_task(struct task_struct *tsk, bool for_autogroup)
+ 			scx_cgroup_move_task(tsk);
+ 		if (scope->running)
+ 			resched = true;
++		queued = scope->queued;
+ 	}
  
- 		rd->rto_cpu = cpu;
+ 	if (resched)
+ 		resched_curr(rq);
++	else if (queued)
++		wakeup_preempt(rq, tsk, 0);
  
-+		/* Do not send IPI to self */
-+		if (cpu == this_cpu)
-+			continue;
-+
- 		if (cpu < nr_cpu_ids)
- 			return cpu;
- 
+ 	__balance_callbacks(rq, &rq_guard.rf);
+ }
 -- 
 2.51.0
 
