@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EAB1E2834;
-	Wed, 25 Feb 2026 01:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9E91E2834;
+	Wed, 25 Feb 2026 01:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983619; cv=none; b=CpATXOgECa4wKuGPs+XH3Gf+NVvaQ6rugJQY9ZjDWLeFp6wJCiGIdTjwQoqaPGcqn8I+L1k8IJ2W7LXgOGvEKuLWlKxNzYpkPjI0LT6Cj1dHm66RbLJP7N3PRmMMfirILUEltYLkNnm3zGi3E6oqZPQ3dHLJIGWl3njA4Cek9eE=
+	t=1771983620; cv=none; b=DQDWSAkLgl9h9Ot+AxSgBwzXe3wRVA1W26pN1AcjXiH3iSc7BGCHINydNTyzXkT9K9Yv6Dq+iLrvIQa9aRefVRy2knR8vmVvr5iHZ3Pdq+/5+qcsoQgxb9KemehkdIIQipwHUjJ4x4YnDY51/aeONZQiDyW0fgNt8pGj8U7e08k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983619; c=relaxed/simple;
-	bh=c/Niyh7Y89BXUusXTtKbgxDX9H1tTkcKRltKuq/ICZI=;
+	s=arc-20240116; t=1771983620; c=relaxed/simple;
+	bh=97R2Cv0yJyxvoRmXa/jdgktpCPsJqhp1n8ITfkwYO0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FvC7SCIsCKNA7cuxr6t9ZfN1o34GxExGZ/zhMrikMBJlB30ZGlPQ8YLncNQBNm3VXV3nqwxgptNZEzUDS+JIsyd2mcswtVtDs8SkT+GO2Db74kdwQou5dK8897xyrhox6ChCtruq3jo2x5dzgP5OKARSfRJj2JCvmzMxNYBIbYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mroqL37w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VNfVua3Bvk5HVeFvoFCaZNFO1qaJjO+xR52woLehJqhramR2Cm9lVetgcr/ODQl88fjGRDfyHXeJeXzOIfp7OAs60UEFt7wDa5j+4YIZfdoP+scbXHYhizDHkBMjmkBeawwRP/DftYpJ5Q4gKqq69hvtReed+DEVGt1gNPw+MAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0EoDC9s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mroqL37w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D91C116D0;
-	Wed, 25 Feb 2026 01:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0EoDC9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79351C116D0;
+	Wed, 25 Feb 2026 01:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983619;
-	bh=c/Niyh7Y89BXUusXTtKbgxDX9H1tTkcKRltKuq/ICZI=;
+	s=korg; t=1771983620;
+	bh=97R2Cv0yJyxvoRmXa/jdgktpCPsJqhp1n8ITfkwYO0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mroqL37wS2ht1VFGSNM0IQK9eY2HiOzE/jUavACFzDSUZQPcJdRWMHivu3MafY/fL
-	 MIE6i4X0ROAV3trjcA6PRGEhdeg5wgt6svYa5Pn5H6mtSLbwg/FJtJurGpbLIVVqGT
-	 1ECVEEG1D53stF5pq8OlgVX5SBV0ux4kPhT2LnDE=
+	b=W0EoDC9sMQeV1PngBNAJjHtzy82fElHLUVBbwqa7oRbh3+Kje0xd/e4gZN7GAgJus
+	 tYIlSN40/b0/2v4tF2+yaZkQo4YM53DyxdfurOr+vlvXweLPRGZa6M1q9u7KjimHCO
+	 fD7Wd66KKnHrYickBHyrPqENjGuj5KhJNLajvd30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	"Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
-	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Ryan Lee <ryan.lee@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 713/781] mshv: fix SRCU protection in irqfd resampler ack handler
-Date: Tue, 24 Feb 2026 17:23:42 -0800
-Message-ID: <20260225012417.233910107@linuxfoundation.org>
+Subject: [PATCH 6.19 696/781] apparmor: fix boolean argument in apparmor_mmap_file
+Date: Tue, 24 Feb 2026 17:23:25 -0800
+Message-ID: <20260225012416.827627023@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,49 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Ryan Lee <ryan.lee@canonical.com>
 
-[ Upstream commit 2e7577cd5ddc1f86d1b6c48caf3cfa87dbb14e34 ]
+[ Upstream commit 48d5268e911abcf7674ec33c9b0b3e952be1175e ]
 
-Replace hlist_for_each_entry_rcu() with hlist_for_each_entry_srcu()
-in mshv_irqfd_resampler_ack() to correctly handle SRCU-protected
-linked list traversal.
+The previous value of GFP_ATOMIC is an int and not a bool, potentially
+resulting in UB when being assigned to a bool. In addition, the mmap hook
+is called outside of locks (i.e. in a non-atomic context), so we can pass
+a fixed constant value of false instead to common_mmap.
 
-The function uses SRCU (sleepable RCU) synchronization via
-partition->pt_irq_srcu, but was incorrectly using the RCU variant
-for list iteration. This could lead to race conditions when the
-list is modified concurrently.
-
-Also add srcu_read_lock_held() assertion as required by
-hlist_for_each_entry_srcu() to ensure we're in the proper
-read-side critical section.
-
-Fixes: 621191d709b14 ("Drivers: hv: Introduce mshv_root module to expose /dev/mshv to VMMs")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-Acked-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+Stable-dep-of: 4a134723f9f1 ("apparmor: move check for aa_null file to cover all cases")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/mshv_eventfd.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ security/apparmor/lsm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hv/mshv_eventfd.c b/drivers/hv/mshv_eventfd.c
-index 0b75ff1edb735..6d176ed8ae516 100644
---- a/drivers/hv/mshv_eventfd.c
-+++ b/drivers/hv/mshv_eventfd.c
-@@ -87,8 +87,9 @@ static void mshv_irqfd_resampler_ack(struct mshv_irq_ack_notifier *mian)
+diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
+index a87cd60ed2069..acca3d6efdbc8 100644
+--- a/security/apparmor/lsm.c
++++ b/security/apparmor/lsm.c
+@@ -584,7 +584,7 @@ static int common_mmap(const char *op, struct file *file, unsigned long prot,
+ static int apparmor_mmap_file(struct file *file, unsigned long reqprot,
+ 			      unsigned long prot, unsigned long flags)
+ {
+-	return common_mmap(OP_FMMAP, file, prot, flags, GFP_ATOMIC);
++	return common_mmap(OP_FMMAP, file, prot, flags, false);
+ }
  
- 	idx = srcu_read_lock(&partition->pt_irq_srcu);
- 
--	hlist_for_each_entry_rcu(irqfd, &resampler->rsmplr_irqfd_list,
--				 irqfd_resampler_hnode) {
-+	hlist_for_each_entry_srcu(irqfd, &resampler->rsmplr_irqfd_list,
-+				 irqfd_resampler_hnode,
-+				 srcu_read_lock_held(&partition->pt_irq_srcu)) {
- 		if (hv_should_clear_interrupt(irqfd->irqfd_lapic_irq.lapic_control.interrupt_type))
- 			hv_call_clear_virtual_interrupt(partition->pt_id);
- 
+ static int apparmor_file_mprotect(struct vm_area_struct *vma,
 -- 
 2.51.0
 
