@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4933243376;
-	Wed, 25 Feb 2026 01:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA02B243376;
+	Wed, 25 Feb 2026 01:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983502; cv=none; b=g2zlvuQgAYnodDg4h2PDXxI4//VdqzbRap2Cs1ci+Vc5HSkIzLxTv/fOeXI/TXdurI+oOgMRPFPynI0DvVtChEZ7qr40U5JLqmqpe7gQg5QSp8LS62C5exRVK0jJkKx2czBSsJCoxnuu7XqXKblN8WtCbTPScSMwwvrXjmfzIjY=
+	t=1771983503; cv=none; b=rO7OulV8cioxUDwy2roSA7cVdQ8V+tl0uHA06L2L/66mpV1UWLxBMpTSghwfFtOzXMXlHUpMTNGIv3pqkMVHsg0TN/4qvEVt33GpZeEfsbN3chM6Jvp65YEJ97kYNYszBX9abyY9vKPPC08owVe7iMYpvbB15KjSzkbi+oV5NGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983502; c=relaxed/simple;
-	bh=gKjr1AF50NVATfxHilq+KhWH/MDcp16wmOPTMCkWV/M=;
+	s=arc-20240116; t=1771983503; c=relaxed/simple;
+	bh=6Z924ZUI+t5jJSkrkTJAHH0CAXNkvmgJCjlqSk2XYnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WAliaEwBV6WVm+AqXFnm00sIMHxHA2kIwYnWNJh1YzAm/TABvDJms8izP2wePmA3Q8gXmLUYKFgDPMx7lj68ZI+A1Ma4hSourOlTIxvVW/5xLGWyi1vflwJlQOhEGa8dPfI+PEaI+uAVyulHXa+vc3OsChCJHiCAGwFk0/7VeSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BhcdAqFF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dNwpwlraByYut7DOquNgawCR8Oit8vJVKWURVyfYoTvdj+logB6uOV05b46n4Fk2yu7X03I3jUW+sgveVZ596xfcj/4I3J9Qkw5Irl9uCpxczhwEDsWryTpOy18Zm89pzKure5qvAHWgEUeKbnUaKXZh16j7BBKYiyyYYoM0faI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIjDnze1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BhcdAqFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931ACC116D0;
-	Wed, 25 Feb 2026 01:38:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIjDnze1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71C5C116D0;
+	Wed, 25 Feb 2026 01:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983502;
-	bh=gKjr1AF50NVATfxHilq+KhWH/MDcp16wmOPTMCkWV/M=;
+	s=korg; t=1771983503;
+	bh=6Z924ZUI+t5jJSkrkTJAHH0CAXNkvmgJCjlqSk2XYnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BhcdAqFFZ7r78i2RcDQhjuKWavS9hh57Hpkbm0a9fMXJ55ybNVEBTPQr1oDMA/GFQ
-	 TYpHaYXkFVO9+ppnVSNzGgHV6EPZkCGwk8rgJZnXQCqKQ6KJPiQfK2Ly1ywqHAz5p8
-	 rhNcECLCFXOBsJk/Et262esX3vegGF/nI910TdWM=
+	b=UIjDnze1ckeBe8sXWPvucyHiKNdAl+FBz6ZtRG2Yqr00LduwRT7NuXwQ9pvcEAk5T
+	 156dpZOn9gW5jTN4A1fIQiWInRwzQ8v0snkM85rp+0HsrdLuHTpsGroBof0fmsYl0O
+	 UTHBQEOCM2tIQ9znO2hDCZ1fqLBi/sJClj+z2SKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Martin Wilck <mwilck@suse.com>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 611/781] drbd: always set BLK_FEAT_STABLE_WRITES
-Date: Tue, 24 Feb 2026 17:22:00 -0800
-Message-ID: <20260225012414.781437998@linuxfoundation.org>
+Subject: [PATCH 6.19 612/781] block: allow IOC_PR_READ_* ioctls with BLK_OPEN_READ
+Date: Tue, 24 Feb 2026 17:22:01 -0800
+Message-ID: <20260225012414.809016664@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,96 +49,150 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-[ Upstream commit 2ebc8d600fb907fa6b1e7095c0b6d84fc47e91ea ]
+[ Upstream commit 5b88af7113feba2f0ae3402bb57cb5c94eea7dc3 ]
 
-DRBD requires stable pages because it may read the same bio data
-multiple times for local disk I/O and network transmission, and in
-some cases for calculating checksums.
+The recently added IOC_PR_READ_* ioctls require the same BLK_OPEN_WRITE
+permission as the older persistent reservation ioctls. This has the
+drawback that udev triggers when the file descriptor is closed,
+resulting in unnecessary activity like scanning partitions even though
+these read-only ioctls do not modify the device.
 
-The BLK_FEAT_STABLE_WRITES flag is set when the device is first
-created, but blk_set_stacking_limits() clears it whenever a
-backing device is attached. In some cases the flag may be
-inherited from the backing device, but we want it to be enabled
-at all times.
+Change IOC_PR_READ_KEYS and IOC_PR_READ_RESERVATION to require
+BLK_OPEN_READ. This prevents unnecessary activity every time `blkpr
+--read-keys` or `blkpr --read-reservation` is invoked by shell scripts,
+for example.
 
-Unconditionally re-enable BLK_FEAT_STABLE_WRITES in
-drbd_reconsider_queue_parameters() after the queue parameter
-negotiations.
+It is safe to reduce the permission requirement from BLK_OPEN_WRITE to
+BLK_OPEN_READ since these two ioctls do not modify the persistent
+reservation state. Userspace cannot use the information fetched by these
+ioctls to make changes to the device unless it later opens the device
+with BLK_OPEN_WRITE.
 
-Also, document why we want this flag enabled in the first place.
-
-Fixes: 1a02f3a73f8c ("block: move the stable_writes flag to queue_limits")
-Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Fixes: 3e2cb9ee76c2 ("block: add IOC_PR_READ_RESERVATION ioctl")
+Fixes: 22a1ffea5f80 ("block: add IOC_PR_READ_KEYS ioctl")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Martin Wilck <mwilck@suse.com>
+Cc: Benjamin Marzinski <bmarzins@redhat.com>
+Suggested-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_main.c |  3 ---
- drivers/block/drbd/drbd_nl.c   | 20 +++++++++++++++++++-
- 2 files changed, 19 insertions(+), 4 deletions(-)
+ block/ioctl.c | 34 +++++++++++++++++++++++-----------
+ 1 file changed, 23 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
-index c73376886e7a5..1f6ac9202b66a 100644
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -2659,9 +2659,6 @@ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsig
- 		 * connect.
- 		 */
- 		.max_hw_sectors		= DRBD_MAX_BIO_SIZE_SAFE >> 8,
--		.features		= BLK_FEAT_WRITE_CACHE | BLK_FEAT_FUA |
--					  BLK_FEAT_ROTATIONAL |
--					  BLK_FEAT_STABLE_WRITES,
- 	};
+diff --git a/block/ioctl.c b/block/ioctl.c
+index 344478348a54e..337e4c3b65b2c 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -318,7 +318,13 @@ int blkdev_compat_ptr_ioctl(struct block_device *bdev, blk_mode_t mode,
+ EXPORT_SYMBOL(blkdev_compat_ptr_ioctl);
+ #endif
  
- 	device = minor_to_device(minor);
-diff --git a/drivers/block/drbd/drbd_nl.c b/drivers/block/drbd/drbd_nl.c
-index 91f3b8afb63ce..b502038be0a92 100644
---- a/drivers/block/drbd/drbd_nl.c
-+++ b/drivers/block/drbd/drbd_nl.c
-@@ -1296,6 +1296,8 @@ void drbd_reconsider_queue_parameters(struct drbd_device *device,
- 		lim.max_segments = drbd_backing_dev_max_segments(device);
- 	} else {
- 		lim.max_segments = BLK_MAX_SEGMENTS;
-+		lim.features = BLK_FEAT_WRITE_CACHE | BLK_FEAT_FUA |
-+			       BLK_FEAT_ROTATIONAL | BLK_FEAT_STABLE_WRITES;
- 	}
+-static bool blkdev_pr_allowed(struct block_device *bdev, blk_mode_t mode)
++enum pr_direction {
++	PR_IN,  /* read from device */
++	PR_OUT, /* write to device */
++};
++
++static bool blkdev_pr_allowed(struct block_device *bdev, blk_mode_t mode,
++		enum pr_direction dir)
+ {
+ 	/* no sense to make reservations for partitions */
+ 	if (bdev_is_partition(bdev))
+@@ -326,11 +332,17 @@ static bool blkdev_pr_allowed(struct block_device *bdev, blk_mode_t mode)
  
- 	lim.max_hw_sectors = new >> SECTOR_SHIFT;
-@@ -1318,8 +1320,24 @@ void drbd_reconsider_queue_parameters(struct drbd_device *device,
- 		lim.max_hw_discard_sectors = 0;
- 	}
- 
--	if (bdev)
-+	if (bdev) {
- 		blk_stack_limits(&lim, &b->limits, 0);
-+		/*
-+		 * blk_set_stacking_limits() cleared the features, and
-+		 * blk_stack_limits() may or may not have inherited
-+		 * BLK_FEAT_STABLE_WRITES from the backing device.
-+		 *
-+		 * DRBD always requires stable writes because:
-+		 * 1. The same bio data is read for both local disk I/O and
-+		 *    network transmission. If the page changes mid-flight,
-+		 *    the local and remote copies could diverge.
-+		 * 2. When data integrity is enabled, DRBD calculates a
-+		 *    checksum before sending the data. If the page changes
-+		 *    between checksum calculation and transmission, the
-+		 *    receiver will detect a checksum mismatch.
-+		 */
-+		lim.features |= BLK_FEAT_STABLE_WRITES;
-+	}
- 
+ 	if (capable(CAP_SYS_ADMIN))
+ 		return true;
++
  	/*
- 	 * If we can handle "zeroes" efficiently on the protocol, we want to do
+-	 * Only allow unprivileged reservations if the file descriptor is open
+-	 * for writing.
++	 * Only allow unprivileged reservation _out_ commands if the file
++	 * descriptor is open for writing. Allow reservation _in_ commands if
++	 * the file descriptor is open for reading since they do not modify the
++	 * device.
+ 	 */
+-	return mode & BLK_OPEN_WRITE;
++	if (dir == PR_IN)
++		return mode & BLK_OPEN_READ;
++	else
++		return mode & BLK_OPEN_WRITE;
+ }
+ 
+ static int blkdev_pr_register(struct block_device *bdev, blk_mode_t mode,
+@@ -339,7 +351,7 @@ static int blkdev_pr_register(struct block_device *bdev, blk_mode_t mode,
+ 	const struct pr_ops *ops = bdev->bd_disk->fops->pr_ops;
+ 	struct pr_registration reg;
+ 
+-	if (!blkdev_pr_allowed(bdev, mode))
++	if (!blkdev_pr_allowed(bdev, mode, PR_OUT))
+ 		return -EPERM;
+ 	if (!ops || !ops->pr_register)
+ 		return -EOPNOTSUPP;
+@@ -357,7 +369,7 @@ static int blkdev_pr_reserve(struct block_device *bdev, blk_mode_t mode,
+ 	const struct pr_ops *ops = bdev->bd_disk->fops->pr_ops;
+ 	struct pr_reservation rsv;
+ 
+-	if (!blkdev_pr_allowed(bdev, mode))
++	if (!blkdev_pr_allowed(bdev, mode, PR_OUT))
+ 		return -EPERM;
+ 	if (!ops || !ops->pr_reserve)
+ 		return -EOPNOTSUPP;
+@@ -375,7 +387,7 @@ static int blkdev_pr_release(struct block_device *bdev, blk_mode_t mode,
+ 	const struct pr_ops *ops = bdev->bd_disk->fops->pr_ops;
+ 	struct pr_reservation rsv;
+ 
+-	if (!blkdev_pr_allowed(bdev, mode))
++	if (!blkdev_pr_allowed(bdev, mode, PR_OUT))
+ 		return -EPERM;
+ 	if (!ops || !ops->pr_release)
+ 		return -EOPNOTSUPP;
+@@ -393,7 +405,7 @@ static int blkdev_pr_preempt(struct block_device *bdev, blk_mode_t mode,
+ 	const struct pr_ops *ops = bdev->bd_disk->fops->pr_ops;
+ 	struct pr_preempt p;
+ 
+-	if (!blkdev_pr_allowed(bdev, mode))
++	if (!blkdev_pr_allowed(bdev, mode, PR_OUT))
+ 		return -EPERM;
+ 	if (!ops || !ops->pr_preempt)
+ 		return -EOPNOTSUPP;
+@@ -411,7 +423,7 @@ static int blkdev_pr_clear(struct block_device *bdev, blk_mode_t mode,
+ 	const struct pr_ops *ops = bdev->bd_disk->fops->pr_ops;
+ 	struct pr_clear c;
+ 
+-	if (!blkdev_pr_allowed(bdev, mode))
++	if (!blkdev_pr_allowed(bdev, mode, PR_OUT))
+ 		return -EPERM;
+ 	if (!ops || !ops->pr_clear)
+ 		return -EOPNOTSUPP;
+@@ -434,7 +446,7 @@ static int blkdev_pr_read_keys(struct block_device *bdev, blk_mode_t mode,
+ 	size_t keys_copy_len;
+ 	int ret;
+ 
+-	if (!blkdev_pr_allowed(bdev, mode))
++	if (!blkdev_pr_allowed(bdev, mode, PR_IN))
+ 		return -EPERM;
+ 	if (!ops || !ops->pr_read_keys)
+ 		return -EOPNOTSUPP;
+@@ -486,7 +498,7 @@ static int blkdev_pr_read_reservation(struct block_device *bdev,
+ 	struct pr_read_reservation out = {};
+ 	int ret;
+ 
+-	if (!blkdev_pr_allowed(bdev, mode))
++	if (!blkdev_pr_allowed(bdev, mode, PR_IN))
+ 		return -EPERM;
+ 	if (!ops || !ops->pr_read_reservation)
+ 		return -EOPNOTSUPP;
 -- 
 2.51.0
 
