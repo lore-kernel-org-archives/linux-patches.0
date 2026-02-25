@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0048C42A9D;
-	Wed, 25 Feb 2026 01:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A75252917;
+	Wed, 25 Feb 2026 01:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983966; cv=none; b=NjOWo0/86Re9EA8cGRXgackdHOJXRSrnSCasftqWD5U6rKq1pGcpey5JQCVk95np0estBWqCwHI9Y97BuYweYC5saV21RQ/bkjLcP96E1JbJoGPAYk1RDAowjdEOleozMcthy1+3Ji/e5PdnY6DsWzvRdg+RSXVcDhr/RarCLTw=
+	t=1771983966; cv=none; b=swZLDupBwsl7jYdvsJ8ih7KDEihbtqSiR9x3C+zA8FuRcKUntZn4MSSfN6NFsXAHDhYj++snSbnESZHVh51eT9ux4bJ/qrtnnNKgW3YeEOxCBTSG4YUPmiVh/47+Pzvx8JuHCQ8T+KJqYlMLN0bMHnWLLLu3mtW8gv8h8YikuKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771983966; c=relaxed/simple;
-	bh=pq5RtppMLdIjXPfMdwnqsG9IbrOzZJrmrh7KJ61+qac=;
+	bh=IS7wjhEMOiWl4I7D72VxDSOwOji2CjSDLcHoM41SAF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kl04/NSdWYO2iCCviOxpKTDvzvdLvBB4OLH6faNSAPxPL99byfI9GuFu2TsfFcnyQFV4vaUugIwLSDCyD3hdadY7gVcCN8t1v+024VaxMruTSObMiYcFHjcVKFFBd5gJyfnxDyuDe2Yg602yncCHN1/Sb+2qRLgHuF7t0UQQJA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSsN32RF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c3uG9gx28RmsYGXUjxDaW6WzU1Rhx3jtDipjaE8KXNrZAVccX++9j/XQACOEX42jI3XdKvr+RyA1cxiFltDFD+OIMHP1icB66/0oOchBCGsU0dxk0gvN+5R7HYfd9qhBssJTf+4xGLSG/hFNyRR68BIPpdz8o8kEGv0RQBjWFPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7p4DrK4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSsN32RF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7011BC116D0;
-	Wed, 25 Feb 2026 01:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7p4DrK4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8965DC116D0;
+	Wed, 25 Feb 2026 01:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983965;
-	bh=pq5RtppMLdIjXPfMdwnqsG9IbrOzZJrmrh7KJ61+qac=;
+	s=korg; t=1771983966;
+	bh=IS7wjhEMOiWl4I7D72VxDSOwOji2CjSDLcHoM41SAF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eSsN32RF8TNfKzJzdik5zUcpeMPx4RhQUFuirB7SQOo3aZRlrvIR7O/9FR+dlyak2
-	 WUvfVQP38UgVdzRuFWDhGDeKpLju2/sqRwTj19/yTgFEfmBCvawG4gz+U0L3m2N2sZ
-	 KSLx75pQjnY5FBNk3CTB07FBiMTsOfRa+NiMG0Q0=
+	b=k7p4DrK4Jouw/fsX2cBWy1bEKBo2C6O/Lz1l7wmJcXMPFfJe16uoVLZiMzgecbbtv
+	 hIG82B689wS4qV8p+W071UyshCQMupsQ6iedjy9HTGfDF6cVDC7eLydYEkKIDoQQeF
+	 0hxuiUvHthDluXqt7zsAcxpZ6YS0orclOEYsA4lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheetal <sheetal@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gwendal Grignou <gwendal@google.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 221/641] ASoC: tegra: Add AHUB writeable_reg for RX holes
-Date: Tue, 24 Feb 2026 17:19:07 -0800
-Message-ID: <20260225012354.275933375@linuxfoundation.org>
+Subject: [PATCH 6.18 222/641] platform/chrome: cros_ec_lightbar: Fix response size initialization
+Date: Tue, 24 Feb 2026 17:19:08 -0800
+Message-ID: <20260225012354.296768161@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,149 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheetal <sheetal@nvidia.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 0ba6286a71581aaf8413a55b9bd90ea3463fd23b ]
+[ Upstream commit ec0dd36dbf8b0b209e63d0cd795451fa2203c736 ]
 
-Add writeable_reg callbacks for Tegra210/186 AHUB RX registers so the
-flat cache only treats valid RX locations as writable, avoiding holes
-in the register map.
+Commit 1e7913ff5f9f ("platform/chrome: cros_ec_lightbar: Reduce
+ligthbar get version command") meant to set smaller values for both
+request and response sizes.
 
-Fixes: 16e1bcc2caf4 ("ASoC: tegra: Add Tegra210 based AHUB driver")
-Signed-off-by: Sheetal <sheetal@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260123095346.1258556-2-sheetal@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+However, it incorrectly assigned the response size to the `result` field
+instead of `insize`.  Fix it.
+
+Reported-by: Gwendal Grignou <gwendal@google.com>
+Closes: https://lore.kernel.org/chrome-platform/CAMHSBOVrrYaB=1nEqZk09VkczCrj=6B-P8Fe29TpPdSDgT2CCQ@mail.gmail.com
+Fixes: 1e7913ff5f9f ("platform/chrome: cros_ec_lightbar: Reduce ligthbar get version command")
+Link: https://lore.kernel.org/r/20260130040335.361997-1-tzungbi@kernel.org
+Reviewed-by: Gwendal Grignou <gwendal@google.com>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/tegra/tegra210_ahub.c | 57 +++++++++++++++++++++++++++++++++
- sound/soc/tegra/tegra210_ahub.h | 30 +++++++++++++++++
- 2 files changed, 87 insertions(+)
+ drivers/platform/chrome/cros_ec_lightbar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/tegra/tegra210_ahub.c b/sound/soc/tegra/tegra210_ahub.c
-index 21aeaeba0b107..01d60a74ad1c3 100644
---- a/sound/soc/tegra/tegra210_ahub.c
-+++ b/sound/soc/tegra/tegra210_ahub.c
-@@ -2049,6 +2049,61 @@ static const struct snd_soc_component_driver tegra264_ahub_component = {
- 	.num_dapm_routes	= ARRAY_SIZE(tegra264_ahub_routes),
- };
- 
-+static bool tegra210_ahub_wr_reg(struct device *dev, unsigned int reg)
-+{
-+	int part;
-+
-+	if (reg % TEGRA210_XBAR_RX_STRIDE)
-+		return false;
-+
-+	for (part = 0; part < TEGRA210_XBAR_UPDATE_MAX_REG; part++) {
-+		switch (reg & ~(part * TEGRA210_XBAR_PART1_RX)) {
-+		case TEGRA210_AXBAR_PART_0_ADMAIF_RX1_0 ... TEGRA210_AXBAR_PART_0_ADMAIF_RX10_0:
-+		case TEGRA210_AXBAR_PART_0_I2S1_RX1_0 ... TEGRA210_AXBAR_PART_0_I2S5_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_SFC1_RX1_0 ... TEGRA210_AXBAR_PART_0_SFC4_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_MIXER1_RX1_0 ... TEGRA210_AXBAR_PART_0_MIXER1_RX10_0:
-+		case TEGRA210_AXBAR_PART_0_SPDIF1_RX1_0 ... TEGRA210_AXBAR_PART_0_SPDIF1_RX2_0:
-+		case TEGRA210_AXBAR_PART_0_AFC1_RX1_0 ... TEGRA210_AXBAR_PART_0_AFC6_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_OPE1_RX1_0 ... TEGRA210_AXBAR_PART_0_OPE2_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_SPKPROT1_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_MVC1_RX1_0 ... TEGRA210_AXBAR_PART_0_MVC2_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_AMX1_RX1_0 ... TEGRA210_AXBAR_PART_0_ADX2_RX1_0:
-+			return true;
-+		default:
-+			break;
-+		}
-+	}
-+
-+	return false;
-+}
-+
-+static bool tegra186_ahub_wr_reg(struct device *dev, unsigned int reg)
-+{
-+	int part;
-+
-+	if (reg % TEGRA210_XBAR_RX_STRIDE)
-+		return false;
-+
-+	for (part = 0; part < TEGRA186_XBAR_UPDATE_MAX_REG; part++) {
-+		switch (reg & ~(part * TEGRA210_XBAR_PART1_RX)) {
-+		case TEGRA210_AXBAR_PART_0_ADMAIF_RX1_0 ... TEGRA186_AXBAR_PART_0_I2S6_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_SFC1_RX1_0 ... TEGRA210_AXBAR_PART_0_SFC4_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_MIXER1_RX1_0 ... TEGRA210_AXBAR_PART_0_MIXER1_RX10_0:
-+		case TEGRA186_AXBAR_PART_0_DSPK1_RX1_0 ... TEGRA186_AXBAR_PART_0_DSPK2_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_AFC1_RX1_0 ... TEGRA210_AXBAR_PART_0_AFC6_RX1_0:
-+		case TEGRA210_AXBAR_PART_0_OPE1_RX1_0:
-+		case TEGRA186_AXBAR_PART_0_MVC1_RX1_0 ... TEGRA186_AXBAR_PART_0_MVC2_RX1_0:
-+		case TEGRA186_AXBAR_PART_0_AMX1_RX1_0 ... TEGRA186_AXBAR_PART_0_AMX3_RX4_0:
-+		case TEGRA210_AXBAR_PART_0_ADX1_RX1_0 ... TEGRA186_AXBAR_PART_0_ASRC1_RX7_0:
-+			return true;
-+		default:
-+			break;
-+		}
-+	}
-+
-+	return false;
-+}
-+
- static bool tegra264_ahub_wr_reg(struct device *dev, unsigned int reg)
- {
- 	int part;
-@@ -2076,6 +2131,7 @@ static const struct regmap_config tegra210_ahub_regmap_config = {
- 	.reg_bits		= 32,
- 	.val_bits		= 32,
- 	.reg_stride		= 4,
-+	.writeable_reg		= tegra210_ahub_wr_reg,
- 	.max_register		= TEGRA210_MAX_REGISTER_ADDR,
- 	.cache_type		= REGCACHE_FLAT,
- };
-@@ -2084,6 +2140,7 @@ static const struct regmap_config tegra186_ahub_regmap_config = {
- 	.reg_bits		= 32,
- 	.val_bits		= 32,
- 	.reg_stride		= 4,
-+	.writeable_reg		= tegra186_ahub_wr_reg,
- 	.max_register		= TEGRA186_MAX_REGISTER_ADDR,
- 	.cache_type		= REGCACHE_FLAT,
- };
-diff --git a/sound/soc/tegra/tegra210_ahub.h b/sound/soc/tegra/tegra210_ahub.h
-index f355b2cfd19b2..acbe640dd3b57 100644
---- a/sound/soc/tegra/tegra210_ahub.h
-+++ b/sound/soc/tegra/tegra210_ahub.h
-@@ -68,6 +68,36 @@
- #define TEGRA210_MAX_REGISTER_ADDR (TEGRA210_XBAR_PART2_RX +		\
- 	(TEGRA210_XBAR_RX_STRIDE * (TEGRA210_XBAR_AUDIO_RX_COUNT - 1)))
- 
-+/* AXBAR register offsets */
-+#define TEGRA186_AXBAR_PART_0_AMX1_RX1_0	0x120
-+#define TEGRA186_AXBAR_PART_0_AMX3_RX4_0	0x14c
-+#define TEGRA186_AXBAR_PART_0_ASRC1_RX7_0	0x1a8
-+#define TEGRA186_AXBAR_PART_0_DSPK1_RX1_0	0xc0
-+#define TEGRA186_AXBAR_PART_0_DSPK2_RX1_0	0xc4
-+#define TEGRA186_AXBAR_PART_0_I2S6_RX1_0	0x54
-+#define TEGRA186_AXBAR_PART_0_MVC1_RX1_0	0x110
-+#define TEGRA186_AXBAR_PART_0_MVC2_RX1_0	0x114
-+#define TEGRA210_AXBAR_PART_0_ADMAIF_RX10_0	0x24
-+#define TEGRA210_AXBAR_PART_0_ADMAIF_RX1_0	0x0
-+#define TEGRA210_AXBAR_PART_0_ADX1_RX1_0	0x160
-+#define TEGRA210_AXBAR_PART_0_ADX2_RX1_0	0x164
-+#define TEGRA210_AXBAR_PART_0_AFC1_RX1_0	0xd0
-+#define TEGRA210_AXBAR_PART_0_AFC6_RX1_0	0xe4
-+#define TEGRA210_AXBAR_PART_0_AMX1_RX1_0	0x140
-+#define TEGRA210_AXBAR_PART_0_I2S1_RX1_0	0x40
-+#define TEGRA210_AXBAR_PART_0_I2S5_RX1_0	0x50
-+#define TEGRA210_AXBAR_PART_0_MIXER1_RX10_0	0xa4
-+#define TEGRA210_AXBAR_PART_0_MIXER1_RX1_0	0x80
-+#define TEGRA210_AXBAR_PART_0_MVC1_RX1_0	0x120
-+#define TEGRA210_AXBAR_PART_0_MVC2_RX1_0	0x124
-+#define TEGRA210_AXBAR_PART_0_OPE1_RX1_0	0x100
-+#define TEGRA210_AXBAR_PART_0_OPE2_RX1_0	0x104
-+#define TEGRA210_AXBAR_PART_0_SFC1_RX1_0	0x60
-+#define TEGRA210_AXBAR_PART_0_SFC4_RX1_0	0x6c
-+#define TEGRA210_AXBAR_PART_0_SPDIF1_RX1_0	0xc0
-+#define TEGRA210_AXBAR_PART_0_SPDIF1_RX2_0	0xc4
-+#define TEGRA210_AXBAR_PART_0_SPKPROT1_RX1_0	0x110
-+
- #define MUX_REG(id) (TEGRA210_XBAR_RX_STRIDE * (id))
- 
- #define MUX_VALUE(npart, nbit) (1 + (nbit) + (npart) * 32)
+diff --git a/drivers/platform/chrome/cros_ec_lightbar.c b/drivers/platform/chrome/cros_ec_lightbar.c
+index 87634f6921b78..6b028615ee245 100644
+--- a/drivers/platform/chrome/cros_ec_lightbar.c
++++ b/drivers/platform/chrome/cros_ec_lightbar.c
+@@ -119,7 +119,7 @@ static int get_lightbar_version(struct cros_ec_dev *ec,
+ 	param = (struct ec_params_lightbar *)msg->data;
+ 	param->cmd = LIGHTBAR_CMD_VERSION;
+ 	msg->outsize = sizeof(param->cmd);
+-	msg->result = sizeof(resp->version);
++	msg->insize = sizeof(resp->version);
+ 	ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
+ 	if (ret < 0 && ret != -EINVAL) {
+ 		ret = 0;
 -- 
 2.51.0
 
