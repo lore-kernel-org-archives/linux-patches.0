@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CA3309EF2;
-	Wed, 25 Feb 2026 06:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAAE3081C2;
+	Wed, 25 Feb 2026 06:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002660; cv=none; b=fkfKsJSSAXHBROCnFWCRM/RFccDov7USVdCGHxQl902o0YHqqEWUmUcXg68Vr2SB/QTERvaNz3WL/55TWlxaMCfOA48b09ibU5kH7mzzJ05O/aFgdRCv7BOc1JCzTD7QnmnSReGGbFY0Ztkj1FI/ixLROnGfbiyX50Rxz0MGsTo=
+	t=1772002661; cv=none; b=CrN6WJ1IBH/2FSPwPzqFdyCXQRkIK8GkobYTu9MjEq+7i1cwgVZRbC7JEbhwmaDIvpsy1pR096WmUI29gr6UjplwEgnVsCf7mOoZwdCV6r8FjfC6qrS4WqMTMqLQcIYqLPIww+i6FX7HCnDTS0gz8VpSazb8MGgyaDZj/4NNLJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002660; c=relaxed/simple;
-	bh=n4vdjzT5NuWeUnqKtc0883EjwIFpcQ4+1lUh4+iYqaI=;
+	s=arc-20240116; t=1772002661; c=relaxed/simple;
+	bh=j483y+6UaDDOHUT9A7QrWwXm5f/oC2XCKQ1rCeYHOLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WpZFa21cbOmJMPhSci4KqSQngzv6nSgIW7j0FYMUjdDApQEp74NGUCk6Sxs/IwkBE7hkIgtneImpnbX7FuuXIhk/JYwvnu3BwLoXEKbiFfLunYt7hszsnF2lgdunr5SLCNivDxlaflEGmjNiIKdiKd0v2R0Y5OGAfIZKEG69glU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFJArp8M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kKNkrgaI+N7ckM2o/ZnCGNDKNE1tWogCwDZWylEO3IRiAAK4WyXDgAPV/jMXk/Vyb3LCB4uyVEs8MR9FHHX5ezC+dRfa+M78q24NyQqo/7s07OFkry50A4wVFr1uHVa3lYKjd/PT/L4WbZfiXAe/nGL8U093gNgtxjo4zrA14G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGDGPvfL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFJArp8M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5DAC116D0;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGDGPvfL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC454C19425;
 	Wed, 25 Feb 2026 06:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002660;
-	bh=n4vdjzT5NuWeUnqKtc0883EjwIFpcQ4+1lUh4+iYqaI=;
+	s=korg; t=1772002661;
+	bh=j483y+6UaDDOHUT9A7QrWwXm5f/oC2XCKQ1rCeYHOLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFJArp8MyTMK+yU022o61mjvnYdZWIWbTIgC4iraWvLql25olFm5tTUYfvkZlYZqq
-	 H8C/omlwSK9715DbLQ7M6BavS+f9cGZVSNOQ9roOR1nHruu0UPfwhPMyl0dMw7ptvT
-	 kLXB2/cm01MuKWlPcPiJFpvEFH/flabAYaSmXjGM=
+	b=lGDGPvfL/MvKGgk/ZFF3kR4lj6aGLQ9ycmy+MAMtb0wFL49iS7gbusULtJHkM6x4s
+	 ckNoe3XZyPDptqu/q2ftJqU3UyNCqvmCdwGBxVYx+y8Gt+AuKrCLCjXpf1MBitBUeC
+	 xh7s0ovsspUVa1kKW+kU9zGXhNu6UxltMBO5WJZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Wang <unicorn_wang@outlook.com>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 438/641] clk: sophgo: sg2042-clkgen: convert from divider_round_rate() to divider_determine_rate()
-Date: Tue, 24 Feb 2026 17:22:44 -0800
-Message-ID: <20260225012359.146868496@linuxfoundation.org>
+Subject: [PATCH 6.18 439/641] clk: sprd: div: convert from divider_round_rate() to divider_determine_rate()
+Date: Tue, 24 Feb 2026 17:22:45 -0800
+Message-ID: <20260225012359.170158624@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 77b04dc19693510ce8ed1c6eda5f5b833e208816 ]
+[ Upstream commit f78fb9422980ceeb340fa3a2e370ae8845798ec7 ]
 
 The divider_round_rate() function is now deprecated, so let's migrate
 to divider_determine_rate() instead so that this deprecated API can be
@@ -67,53 +66,30 @@ determine_rate, this was mistakenly converted to:
 This is invalid in the case when an error occurs since it can set the
 rate to a negative value.
 
-Note that this commit also removes a debugging message that's not really
-needed.
-
-Fixes: 9a3b6993613d ("clk: sophgo: sg2042-clkgen: convert from round_rate() to determine_rate()")
-Tested-by: Chen Wang <unicorn_wang@outlook.com>
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Fixes: deb4740a5ff8 ("clk: sprd: div: convert from round_rate() to determine_rate()")
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sophgo/clk-sg2042-clkgen.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/clk/sprd/div.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/clk/sophgo/clk-sg2042-clkgen.c b/drivers/clk/sophgo/clk-sg2042-clkgen.c
-index 683661b71787c..9725ac4e050a4 100644
---- a/drivers/clk/sophgo/clk-sg2042-clkgen.c
-+++ b/drivers/clk/sophgo/clk-sg2042-clkgen.c
-@@ -180,7 +180,6 @@ static int sg2042_clk_divider_determine_rate(struct clk_hw *hw,
- 					     struct clk_rate_request *req)
+diff --git a/drivers/clk/sprd/div.c b/drivers/clk/sprd/div.c
+index 0134238819680..cd57163a7204c 100644
+--- a/drivers/clk/sprd/div.c
++++ b/drivers/clk/sprd/div.c
+@@ -14,11 +14,7 @@ static int sprd_div_determine_rate(struct clk_hw *hw,
  {
- 	struct sg2042_divider_clock *divider = to_sg2042_clk_divider(hw);
--	unsigned long ret_rate;
- 	u32 bestdiv;
+ 	struct sprd_div *cd = hw_to_sprd_div(hw);
  
- 	/* if read only, just return current value */
-@@ -191,17 +190,13 @@ static int sg2042_clk_divider_determine_rate(struct clk_hw *hw,
- 			bestdiv = readl(divider->reg) >> divider->shift;
- 			bestdiv &= clk_div_mask(divider->width);
- 		}
--		ret_rate = DIV_ROUND_UP_ULL((u64)req->best_parent_rate, bestdiv);
--	} else {
--		ret_rate = divider_round_rate(hw, req->rate, &req->best_parent_rate, NULL,
--					      divider->width, divider->div_flags);
--	}
-+		req->rate = DIV_ROUND_UP_ULL((u64)req->best_parent_rate, bestdiv);
- 
--	pr_debug("--> %s: divider_round_rate: val = %ld\n",
--		 clk_hw_get_name(hw), ret_rate);
--	req->rate = ret_rate;
-+		return 0;
-+	}
- 
+-	req->rate = divider_round_rate(&cd->common.hw, req->rate,
+-				       &req->best_parent_rate,
+-				       NULL, cd->div.width, 0);
+-
 -	return 0;
-+	return divider_determine_rate(hw, req, NULL, divider->width,
-+				      divider->div_flags);
++	return divider_determine_rate(&cd->common.hw, req, NULL, cd->div.width, 0);
  }
  
- static int sg2042_clk_divider_set_rate(struct clk_hw *hw,
+ unsigned long sprd_div_helper_recalc_rate(struct sprd_clk_common *common,
 -- 
 2.51.0
 
