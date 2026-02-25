@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE091FE45D;
-	Wed, 25 Feb 2026 01:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1D61FE45D;
+	Wed, 25 Feb 2026 01:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983417; cv=none; b=apvCMhykUFY0JySOveKjCX2Fp/V8CATd4PpKEbiYAI3BIGno+8UGaK1GJFMjWkH+vqD8uCFQzjxkwkR+39x2+Wlj7z1p5QicUtfaAkO5aXzLCbN0CbeTtyvSHhAJykj7W31UnDJXkako5CYxQqTJ3RIFJwKGrckEw5bO9b+Bu+M=
+	t=1771983418; cv=none; b=f3pEZui5QKub9d6KlcZwsgYsPk3WqtK7CXGGXLukZ8KSjNWFE4w7dlhpfVpYuwta4XhfOfrDenZJJQmkLQ3FzsG/n6gX0r57+bbgAygJkGLl9NkuJX0+aWaLG+haulVIqmkgokeA0RuLBHTNyDgIjEoHVkRNYopG3BCbWZSnpys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983417; c=relaxed/simple;
-	bh=x9iU/W3jXjMBb4GaGDSYBDJC3V2Mj8TNnQm65bJFqAw=;
+	s=arc-20240116; t=1771983418; c=relaxed/simple;
+	bh=wVQIg2ryYfiYbmJi9EXjrgkrXJZjjJUsS+YOd3zt2mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LeEWZj9hGMfpY+XFzzN7YRuvfX4NIV99+/CI4zp02/a9fUdomWP7ps4nIo4mIxb1maq2JLuNR6g4eS7UnDHthWH+db1A0TmbZ7bkFkX+UqdSmoV06lF1jCTC/paDd9mthmchgl2ZPlc4hca58KVaC9ECZAAMjwcXDHdGbwWdVB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8tdiAo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ViH7tdV6+AXsjEZ/LLPfGCgTtNLIYfMnHCHuJORnvR0gKmAm4pd3xt0VqdppuFe+YHYrr/n9ADA8h/E5rYxf3icKF2Q0KzSktqKtQsC1H4f11GkfExF8TngaZGsAakqWLoxa7s2MtGxdnzWkjf5MrGBZa1JXlQnVf91DHtkug5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiLIKWg9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8tdiAo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34376C116D0;
-	Wed, 25 Feb 2026 01:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiLIKWg9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A04C116D0;
+	Wed, 25 Feb 2026 01:36:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983417;
-	bh=x9iU/W3jXjMBb4GaGDSYBDJC3V2Mj8TNnQm65bJFqAw=;
+	s=korg; t=1771983418;
+	bh=wVQIg2ryYfiYbmJi9EXjrgkrXJZjjJUsS+YOd3zt2mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8tdiAo06zgEeNGSxBdSUTShOPNDE6QlPA4Q9IbfwxvAPfvK5rm00XNze5XIgKxze
-	 rawLGAaz3JB/koXczdsvvHymQDcoitHxUTEjpgYZMqnrRDYQmUAbo1XSB9vJ8Xogbz
-	 sxeU0fmc5psbYAbeTcQ+ulI6e1thJGmhhO8QZQ/c=
+	b=ZiLIKWg9YAibTnUAwoVq9MChVqmwR58fU61qAc8GfB/HS+8DsXDYx7NMiaq2g+TOP
+	 FKnY8eCyBHJKt2fGmuSKwOu0f2aZKsmUID3VF5YJOywO7N2ZGsXaU5oz11x6fXxDLY
+	 30feUYQsU04tZETXUkFT8sPAu5NprdZun40B94B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Brian Masney <bmasney@redhat.com>,
-	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 538/781] clk: qcom: gfx3d: add parent to parent request map
-Date: Tue, 24 Feb 2026 17:20:47 -0800
-Message-ID: <20260225012412.993116855@linuxfoundation.org>
+Subject: [PATCH 6.19 539/781] clk: actions: owl-composite: convert from owl_divider_helper_round_rate() to divider_determine_rate()
+Date: Tue, 24 Feb 2026 17:20:48 -0800
+Message-ID: <20260225012413.017786629@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -54,65 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 2583cb925ca1ce450aa5d74a05a67448db970193 ]
+[ Upstream commit d0b7c5bf6c5520c35fecff34da83d390405d3eaf ]
 
-After commit d228ece36345 ("clk: divider: remove round_rate() in favor
-of determine_rate()") determining GFX3D clock rate crashes, because the
-passed parent map doesn't provide the expected best_parent_hw clock
-(with the roundd_rate path before the offending commit the
-best_parent_hw was ignored).
+owl_divider_helper_round_rate() is just a wrapper for
+divider_round_rate(), which is deprecated. Let's migrate to
+divider_determine_rate() instead so that this deprecated API can be
+removed.
 
-Set the field in parent_req in addition to setting it in the req,
-fixing the crash.
-
- clk_hw_round_rate (drivers/clk/clk.c:1764) (P)
- clk_divider_bestdiv (drivers/clk/clk-divider.c:336)
- divider_determine_rate (drivers/clk/clk-divider.c:358)
- clk_alpha_pll_postdiv_determine_rate (drivers/clk/qcom/clk-alpha-pll.c:1275)
- clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
- clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
- __clk_determine_rate (drivers/clk/clk.c:1741)
- clk_gfx3d_determine_rate (drivers/clk/qcom/clk-rcg2.c:1268)
- clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
- clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
- clk_core_round_rate_nolock (drivers/clk/clk.c:1710)
- clk_round_rate (drivers/clk/clk.c:1804)
- dev_pm_opp_set_rate (drivers/opp/core.c:1440 (discriminator 1))
- msm_devfreq_target (drivers/gpu/drm/msm/msm_gpu_devfreq.c:51)
- devfreq_set_target (drivers/devfreq/devfreq.c:360)
- devfreq_update_target (drivers/devfreq/devfreq.c:426)
- devfreq_monitor (drivers/devfreq/devfreq.c:458)
- process_one_work (arch/arm64/include/asm/jump_label.h:36 include/trace/events/workqueue.h:110 kernel/workqueue.c:3284)
- worker_thread (kernel/workqueue.c:3356 (discriminator 2) kernel/workqueue.c:3443 (discriminator 2))
- kthread (kernel/kthread.c:467)
- ret_from_fork (arch/arm64/kernel/entry.S:861)
-
-Fixes: 55213e1acec9 ("clk: qcom: Add gfx3d ping-pong PLL frequency switching")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20260117-db820-fix-gfx3d-v1-1-0f8894d71d63@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Stable-dep-of: 3ff3360440fa ("clk: actions: owl-divider: convert from divider_round_rate() to divider_determine_rate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/actions/owl-composite.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 2838d4cb2d58e..d0a5847f91114 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1264,6 +1264,7 @@ static int clk_gfx3d_determine_rate(struct clk_hw *hw,
- 	if (req->max_rate < parent_req.max_rate)
- 		parent_req.max_rate = req->max_rate;
+diff --git a/drivers/clk/actions/owl-composite.c b/drivers/clk/actions/owl-composite.c
+index 00b74f8bc4375..9540444307d6c 100644
+--- a/drivers/clk/actions/owl-composite.c
++++ b/drivers/clk/actions/owl-composite.c
+@@ -57,15 +57,10 @@ static int owl_comp_div_determine_rate(struct clk_hw *hw,
+ 				       struct clk_rate_request *req)
+ {
+ 	struct owl_composite *comp = hw_to_owl_comp(hw);
+-	long rate;
+-
+-	rate = owl_divider_helper_round_rate(&comp->common, &comp->rate.div_hw,
+-					     req->rate, &req->best_parent_rate);
+-	if (rate < 0)
+-		return rate;
++	struct owl_divider_hw *div = &comp->rate.div_hw;
  
-+	parent_req.best_parent_hw = req->best_parent_hw;
- 	ret = __clk_determine_rate(req->best_parent_hw, &parent_req);
- 	if (ret)
- 		return ret;
+-	req->rate = rate;
+-	return 0;
++	return divider_determine_rate(&comp->common.hw, req, div->table,
++				      div->width, div->div_flags);
+ }
+ 
+ static unsigned long owl_comp_div_recalc_rate(struct clk_hw *hw,
 -- 
 2.51.0
 
