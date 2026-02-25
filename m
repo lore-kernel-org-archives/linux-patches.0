@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100A42D8DCF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2922D8DCF;
 	Wed, 25 Feb 2026 06:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002626; cv=none; b=Z4rp4Y0l3LXBWRtB6ruwGsduQwOaakqf59tIF795GgKZDkbXTmtv2WIzJZhyGqpUkr9TQHvoguPY+56BivclbpDSjTwGCwV5y1yp9EuycXczGT2HvaLq/xFfpNgGl3Sz0qdbbOUnDM3uV7fo6ok6dTdwGkNGW9o2+nzAQjMq4Jo=
+	t=1772002626; cv=none; b=XgseWpDcAgOUCwFWQzTxLV9vKq0l1qkrA+Sqrm21DxK4rDwpj1xxVMpz2EcBQyXIO1iYmZbLtYL47bxe275B3Ct5/SwJmBupW+86sU39LG6Ev7vHobiZEicF+VZNW1KLAn1ngJ/yFUb2ruVcDYBFTP1Nty6462WNOTlTlbiq1uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002626; c=relaxed/simple;
-	bh=XU95D6OmSiSXTvsKTFIup/uk6DbtD2lvpy4Xh09gvbc=;
+	bh=Cegp8TLv9bvqUt9Whrby1MAB/LnL9jWw1XabjVgYFKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oj/Dhbc3ettJlLtxoQ1851Nq6VC2v1awmpEV7jWZKQDvRfcOOzozNcQhEskOQqvsOguTBDaRBVGwYi3858DKYOrAkAeXzFU1VLR37/+Yg9iF8Kq1OsiHzipmvS+J2YUj1gx+FJFNLfcQNGdkPHwxUjtIsUbgmh2uScEyV/78Od0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnHF8c0S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MHyndPuZOoVNR+RG1JJrX5GycspFN5W5ShxB26z+gG0PyK9MDoudFzIlV+wiBov+ilZxaGTk0Ub8MJkyQzSxoL2hNtITfbtjBFDc/8DzkvrXGQmah3d2CePDZ1QZYHz3GczerZPQFXgRfRqJ6yJG5zg2kIDVCequW8MY8A+agzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNS2NhEN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnHF8c0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58DFC19422;
-	Wed, 25 Feb 2026 06:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNS2NhEN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849FBC19425;
+	Wed, 25 Feb 2026 06:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002625;
-	bh=XU95D6OmSiSXTvsKTFIup/uk6DbtD2lvpy4Xh09gvbc=;
+	s=korg; t=1772002626;
+	bh=Cegp8TLv9bvqUt9Whrby1MAB/LnL9jWw1XabjVgYFKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnHF8c0SU5q9pDQxjaYD2MSP5QqDQf4SO/mTLoOrW5iENeVFaZAt6HhOkZIMGBZi5
-	 q6Huq3zfQrgJUREfkZPhVWlaz527O/4Ao338YNEUgFVhmhs2xfqBypdduHkjERWDEP
-	 u/m289nEiob1epRmNFillh99rPC/eimC3wm7Gcc0=
+	b=lNS2NhENF+AXfIcGUC/RkMOhSearShfDXKOQuAGVIu+EZDQY/UYL/DVOQXTanb7hc
+	 31Tza8cCFYbt0aDRjH38aEpmSxX88uVI9NlWHdWgUynJr/t724Gf3j1n/XvTGSP7oR
+	 UM9OAj0BcC9doEGKhpPa/1CfUQlSqB4NXLrfVLng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Waqar Hameed <waqar.hameed@axis.com>,
+	Nikita Travkin <nikita@trvn.ru>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 386/641] hisi_acc_vfio_pci: fix VF reset timeout issue
-Date: Tue, 24 Feb 2026 17:21:52 -0800
-Message-ID: <20260225012357.937839425@linuxfoundation.org>
+Subject: [PATCH 6.18 387/641] power: supply: pm8916_lbc: Fix use-after-free for extcon in IRQ handler
+Date: Tue, 24 Feb 2026 17:21:53 -0800
+Message-ID: <20260225012357.960322187@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,91 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit a22099ed7936f8e8dabbdbadd97d56047797116b ]
+[ Upstream commit 23067259919663580c6f81801847cfc7bd54fd1f ]
 
-If device error occurs during live migration, qemu will
-reset the VF. At this time, VF reset and device reset are performed
-simultaneously. The VF reset will timeout. Therefore, the QM_RESETTING
-flag is used to ensure that VF reset and device reset are performed
-serially.
+Using the `devm_` variant for requesting IRQ _before_ the `devm_`
+variant for allocating/registering the `extcon` handle, means that the
+`extcon` handle will be deallocated/unregistered _before_ the interrupt
+handler (since `devm_` naturally deallocates in reverse allocation
+order). This means that during removal, there is a race condition where
+an interrupt can fire just _after_ the `extcon` handle has been
+freed, *but* just _before_ the corresponding unregistration of the IRQ
+handler has run.
 
-Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Link: https://lore.kernel.org/r/20260122020205.2884497-2-liulongfang@huawei.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+This will lead to the IRQ handler calling `extcon_set_state_sync()` with
+a freed `extcon` handle. Which usually crashes the system or otherwise
+silently corrupts the memory...
+
+Fix this racy use-after-free by making sure the IRQ is requested _after_
+the registration of the `extcon` handle.
+
+Fixes: f8d7a3d21160 ("power: supply: Add driver for pm8916 lbc")
+Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
+Reviewed-by: Nikita Travkin <nikita@trvn.ru>
+Link: https://patch.msgid.link/e2a4cd2fcd42b6cd97d856c17c097289a2aed393.1769163273.git.waqar.hameed@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    | 24 +++++++++++++++++++
- .../vfio/pci/hisilicon/hisi_acc_vfio_pci.h    |  2 ++
- 2 files changed, 26 insertions(+)
+ drivers/power/supply/pm8916_lbc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index d07093d7cc3f5..ed2ae035deb16 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -1169,9 +1169,32 @@ hisi_acc_vfio_pci_get_device_state(struct vfio_device *vdev,
- 	return 0;
- }
+diff --git a/drivers/power/supply/pm8916_lbc.c b/drivers/power/supply/pm8916_lbc.c
+index 3ca717d84aade..6b631012a7959 100644
+--- a/drivers/power/supply/pm8916_lbc.c
++++ b/drivers/power/supply/pm8916_lbc.c
+@@ -327,11 +327,6 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
  
-+static void hisi_acc_vf_pci_reset_prepare(struct pci_dev *pdev)
-+{
-+	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
-+	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
-+	struct device *dev = &qm->pdev->dev;
-+	u32 delay = 0;
+-	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
+-					IRQF_ONESHOT, "pm8916_lbc", chg);
+-	if (ret)
+-		return ret;
+-
+ 	chg->edev = devm_extcon_dev_allocate(dev, pm8916_lbc_charger_cable);
+ 	if (IS_ERR(chg->edev))
+ 		return PTR_ERR(chg->edev);
+@@ -340,6 +335,11 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		return dev_err_probe(dev, ret, "failed to register extcon device\n");
+ 
++	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
++					IRQF_ONESHOT, "pm8916_lbc", chg);
++	if (ret)
++		return ret;
 +
-+	/* All reset requests need to be queued for processing */
-+	while (test_and_set_bit(QM_RESETTING, &qm->misc_ctl)) {
-+		msleep(1);
-+		if (++delay > QM_RESET_WAIT_TIMEOUT) {
-+			dev_err(dev, "reset prepare failed\n");
-+			return;
-+		}
-+	}
-+
-+	hisi_acc_vdev->set_reset_flag = true;
-+}
-+
- static void hisi_acc_vf_pci_aer_reset_done(struct pci_dev *pdev)
- {
- 	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
-+	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
-+
-+	if (hisi_acc_vdev->set_reset_flag)
-+		clear_bit(QM_RESETTING, &qm->misc_ctl);
- 
- 	if (hisi_acc_vdev->core_device.vdev.migration_flags !=
- 				VFIO_MIGRATION_STOP_COPY)
-@@ -1690,6 +1713,7 @@ static const struct pci_device_id hisi_acc_vfio_pci_table[] = {
- MODULE_DEVICE_TABLE(pci, hisi_acc_vfio_pci_table);
- 
- static const struct pci_error_handlers hisi_acc_vf_err_handlers = {
-+	.reset_prepare = hisi_acc_vf_pci_reset_prepare,
- 	.reset_done = hisi_acc_vf_pci_aer_reset_done,
- 	.error_detected = vfio_pci_core_aer_err_detected,
- };
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h
-index 91002ceeebc18..6253fa074003e 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h
-@@ -27,6 +27,7 @@
- 
- #define ERROR_CHECK_TIMEOUT		100
- #define CHECK_DELAY_TIME		100
-+#define QM_RESET_WAIT_TIMEOUT  60000
- 
- #define QM_SQC_VFT_BASE_SHIFT_V2	28
- #define QM_SQC_VFT_BASE_MASK_V2		GENMASK(15, 0)
-@@ -110,6 +111,7 @@ struct hisi_acc_vf_migration_file {
- struct hisi_acc_vf_core_device {
- 	struct vfio_pci_core_device core_device;
- 	u8 match_done;
-+	bool set_reset_flag;
- 	/*
- 	 * io_base is only valid when dev_opened is true,
- 	 * which is protected by open_mutex.
+ 	ret = regmap_read(chg->regmap, chg->reg[LBC_USB] + PM8916_INT_RT_STS, &tmp);
+ 	if (ret)
+ 		goto comm_error;
 -- 
 2.51.0
 
