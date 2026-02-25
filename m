@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1550618B0A;
-	Wed, 25 Feb 2026 01:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC0218B0A;
+	Wed, 25 Feb 2026 01:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983294; cv=none; b=eLMc+OFjWrL2GbVrTPItUPjGr5zlBKjxCjdFyX1h0mEGKYs/NGn/H2zqeEY8GhOEbcHqwFCBbS4jduZ+y+IWwr+s7RTxOoy/1Xxy1eFGpEDOIv7CStI1h/SSz+odglJH1hCwdCoVDLqYSOsLPjM+eQBuVGFjzneduHSQU615R5M=
+	t=1771983295; cv=none; b=St6Y6N68sIatXfzyyOJkk9yjGm/n4DR2/S1Pu0yV8hiy7ZV+DEkJ+HtO2fpF6gq7yPpsjaDaHtHqroNgaqryOky96HUhvR1LkX45cgkjgw8htFSf+/YRZjfh12fAcpK06NotCVgoI9ubF5hOKA4NAaD9p93vdzfX8LjZxNeAoA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983294; c=relaxed/simple;
-	bh=h3cYgwF88s5OW2gow2z4uh9v3+FaIJScQdhRICwuns0=;
+	s=arc-20240116; t=1771983295; c=relaxed/simple;
+	bh=LSexQfAsFpMeZ47F3fMhDTMutuur6gmBAAKoRbmQa3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hOeVYekB2H3mqLSf0cb3+4BhAC6kAy8TnVy2GTA/Zey8crVSAshKnB7upB8kgm1PZiKN3inO73jjMVR+CorrcpIC0yNjGb/Wp4M+HoP5dGLnIp5H/JjwGNHNE0M0lCKGfVi+hsiCvBGUSLemlbrM3EC4K8DmHUcH2490ZMYlmGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgNfFBr/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pE1H1cvzRSxWPR+GdQaP4LwNAAgRnVCNMFOv8Dnu7dLVbgAh8QukfTj2x/aIWueM+BqrQ4K7yfr2JTSPD8JXxMrVwwLC1RPUMiaNF6z4JHMH34Pya6xVnNdyjHmMJV1F943MeqsS/bX5U7nM26h+W4vr7LbXX8ir687YPjwTgY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPDsqv8h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgNfFBr/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48DFC2BC86;
-	Wed, 25 Feb 2026 01:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPDsqv8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF943C116D0;
+	Wed, 25 Feb 2026 01:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983294;
-	bh=h3cYgwF88s5OW2gow2z4uh9v3+FaIJScQdhRICwuns0=;
+	s=korg; t=1771983295;
+	bh=LSexQfAsFpMeZ47F3fMhDTMutuur6gmBAAKoRbmQa3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rgNfFBr/GCEzmogNpT/NlbJCpOedaSdaZ3f3rvyr7+1Z8OTcJg+XXhINxPubm5PGj
-	 3Vn0Zk6PX2qDhJhP0KXCJo0kQgqjC8Ta1h5N90NBZ7ejI+OKFNmLtzOq8Hde4KoMAB
-	 JDhN1z84MqYRDnJiVzWaCufFCDWuHtA7+h2/U/pQ=
+	b=uPDsqv8hymGfKTP3PXOFR26dG4mYlE/KJxCkscuievlHQMc4C4WpwAmNa7tpeKn0l
+	 1w0Bcj+ia7MszEOOlu0S/TKrsyigIYzrvqbEGG7c7DTn13DwWX0UxgW27inj1fFAPn
+	 e4nVO2aD/EwsiVh3SyD+/ZRRJS/ouZlsvxc88uds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1f22cb1769f249df9fa0@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Sean Anderson <seanga2@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 428/781] net: atm: fix crash due to unvalidated vcc pointer in sigd_send()
-Date: Tue, 24 Feb 2026 17:18:57 -0800
-Message-ID: <20260225012410.196063405@linuxfoundation.org>
+Subject: [PATCH 6.19 429/781] net: sunhme: Fix sbus regression
+Date: Tue, 24 Feb 2026 17:18:58 -0800
+Message-ID: <20260225012410.220508779@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,158 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: René Rebe <rene@exactco.de>
 
-[ Upstream commit ae88a5d2f29b69819dc7b04086734439d074a643 ]
+[ Upstream commit 8c5d17834ec104d0abd1bda52fbc04e647fab274 ]
 
-Reproducer available at [1].
+Commit cc216e4b44ce ("net: sunhme: Switch SBUS to devres") changed
+explicit sized of_ioremap with BMAC_REG_SIZEs to
+devm_platform_ioremap_resource mapping all the resource. However,
+this does not work on my Sun Ultra 2 with SBUS HMEs:
 
-The ATM send path (sendmsg -> vcc_sendmsg -> sigd_send) reads the vcc
-pointer from msg->vcc and uses it directly without any validation. This
-pointer comes from userspace via sendmsg() and can be arbitrarily forged:
+hme f0072f38: error -EBUSY: can't request region for resource [mem 0x1ffe8c07000-0x1ffe8c0701f]
+hme f0072f38: Cannot map TCVR registers.
+hme f0072f38: probe with driver hme failed with error -16
+hme f007ab44: error -EBUSY: can't request region for resource [mem 0x1ff28c07000-0x1ff28c0701f]
+hme f007ab44: Cannot map TCVR registers.
+hme f007ab44: probe with driver hme failed with error -16
 
-    int fd = socket(AF_ATMSVC, SOCK_DGRAM, 0);
-    ioctl(fd, ATMSIGD_CTRL);  // become ATM signaling daemon
-    struct msghdr msg = { .msg_iov = &iov, ... };
-    *(unsigned long *)(buf + 4) = 0xdeadbeef;  // fake vcc pointer
-    sendmsg(fd, &msg, 0);  // kernel dereferences 0xdeadbeef
+Turns out the open-firmware resources overlap, at least on this
+machines and PROM version:
 
-In normal operation, the kernel sends the vcc pointer to the signaling
-daemon via sigd_enq() when processing operations like connect(), bind(),
-or listen(). The daemon is expected to return the same pointer when
-responding. However, a malicious daemon can send arbitrary pointer values.
+hexdump /proc/device-tree/sbus@1f,0/SUNW,hme@2,8c00000/reg:
+00 00 00 02 08 c0 00 00  00 00 01 08
+00 00 00 02 08 c0 20 00  00 00 20 00
+00 00 00 02 08 c0 40 00  00 00 20 00
+00 00 00 02 08 c0 60 00  00 00 20 00
+00 00 00 02 08 c0 70 00  00 00 00 20
 
-Fix this by introducing find_get_vcc() which validates the pointer by
-searching through vcc_hash (similar to how sigd_close() iterates over
-all VCCs), and acquires a reference via sock_hold() if found.
+And the driver previously explicitly mapped way smaller mmio regions:
 
-Since struct atm_vcc embeds struct sock as its first member, they share
-the same lifetime. Therefore using sock_hold/sock_put is sufficient to
-keep the vcc alive while it is being used.
+/proc/iomem:
+1ff28c00000-1ff28c00107 : HME Global Regs
+1ff28c02000-1ff28c02033 : HME TX Regs
+1ff28c04000-1ff28c0401f : HME RX Regs
+1ff28c06000-1ff28c0635f : HME BIGMAC Regs
+1ff28c07000-1ff28c0701f : HME Tranceiver Regs
 
-Note that there may be a race with sigd_close() which could mark the vcc
-with various flags (e.g., ATM_VF_RELEASED) after find_get_vcc() returns.
-However, sock_hold() guarantees the memory remains valid, so this race
-only affects the logical state, not memory safety.
+Quirk this specific issue by truncating the previous resource to not
+overlap into the TCVR registers.
 
-[1]: https://gist.github.com/mrpre/1ba5949c45529c511152e2f4c755b0f3
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+1f22cb1769f249df9fa0@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69039850.a70a0220.5b2ed.005d.GAE@google.com/T/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260205095501.131890-1-jiayuan.chen@linux.dev
+Fixes: cc216e4b44ce ("net: sunhme: Switch SBUS to devres")
+Signed-off-by: René Rebe <rene@exactco.de>
+Reviewed-by: Sean Anderson <seanga2@gmail.com>
+Link: https://patch.msgid.link/20260205.170959.89574674688839340.rene@exactco.de
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/signaling.c | 56 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 54 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/sun/sunhme.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/atm/signaling.c b/net/atm/signaling.c
-index e70ae2c113f95..358fbe5e4d1d0 100644
---- a/net/atm/signaling.c
-+++ b/net/atm/signaling.c
-@@ -22,6 +22,36 @@
- 
- struct atm_vcc *sigd = NULL;
- 
-+/*
-+ * find_get_vcc - validate and get a reference to a vcc pointer
-+ * @vcc: the vcc pointer to validate
-+ *
-+ * This function validates that @vcc points to a registered VCC in vcc_hash.
-+ * If found, it increments the socket reference count and returns the vcc.
-+ * The caller must call sock_put(sk_atm(vcc)) when done.
-+ *
-+ * Returns the vcc pointer if valid, NULL otherwise.
-+ */
-+static struct atm_vcc *find_get_vcc(struct atm_vcc *vcc)
-+{
-+	int i;
-+
-+	read_lock(&vcc_sklist_lock);
-+	for (i = 0; i < VCC_HTABLE_SIZE; i++) {
-+		struct sock *s;
-+
-+		sk_for_each(s, &vcc_hash[i]) {
-+			if (atm_sk(s) == vcc) {
-+				sock_hold(s);
-+				read_unlock(&vcc_sklist_lock);
-+				return vcc;
-+			}
-+		}
-+	}
-+	read_unlock(&vcc_sklist_lock);
-+	return NULL;
-+}
-+
- static void sigd_put_skb(struct sk_buff *skb)
- {
- 	if (!sigd) {
-@@ -69,7 +99,14 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 
- 	msg = (struct atmsvc_msg *) skb->data;
- 	WARN_ON(refcount_sub_and_test(skb->truesize, &sk_atm(vcc)->sk_wmem_alloc));
--	vcc = *(struct atm_vcc **) &msg->vcc;
-+
-+	vcc = find_get_vcc(*(struct atm_vcc **)&msg->vcc);
-+	if (!vcc) {
-+		pr_debug("invalid vcc pointer in msg\n");
-+		dev_kfree_skb(skb);
-+		return -EINVAL;
-+	}
-+
- 	pr_debug("%d (0x%lx)\n", (int)msg->type, (unsigned long)vcc);
- 	sk = sk_atm(vcc);
- 
-@@ -100,7 +137,16 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 		clear_bit(ATM_VF_WAITING, &vcc->flags);
- 		break;
- 	case as_indicate:
--		vcc = *(struct atm_vcc **)&msg->listen_vcc;
-+		/* Release the reference from msg->vcc, we'll use msg->listen_vcc instead */
-+		sock_put(sk);
-+
-+		vcc = find_get_vcc(*(struct atm_vcc **)&msg->listen_vcc);
-+		if (!vcc) {
-+			pr_debug("invalid listen_vcc pointer in msg\n");
-+			dev_kfree_skb(skb);
-+			return -EINVAL;
-+		}
-+
- 		sk = sk_atm(vcc);
- 		pr_debug("as_indicate!!!\n");
- 		lock_sock(sk);
-@@ -115,6 +161,8 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 		sk->sk_state_change(sk);
- as_indicate_complete:
- 		release_sock(sk);
-+		/* Paired with find_get_vcc(msg->listen_vcc) above */
-+		sock_put(sk);
- 		return 0;
- 	case as_close:
- 		set_bit(ATM_VF_RELEASED, &vcc->flags);
-@@ -131,11 +179,15 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 		break;
- 	default:
- 		pr_alert("bad message type %d\n", (int)msg->type);
-+		/* Paired with find_get_vcc(msg->vcc) above */
-+		sock_put(sk);
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/sun/sunhme.c b/drivers/net/ethernet/sun/sunhme.c
+index 48f0a96c0e9e3..6669980829980 100644
+--- a/drivers/net/ethernet/sun/sunhme.c
++++ b/drivers/net/ethernet/sun/sunhme.c
+@@ -2551,6 +2551,9 @@ static int happy_meal_sbus_probe_one(struct platform_device *op, int is_qfe)
+ 		goto err_out_clear_quattro;
  	}
- 	sk->sk_state_change(sk);
- out:
- 	dev_kfree_skb(skb);
-+	/* Paired with find_get_vcc(msg->vcc) above */
-+	sock_put(sk);
- 	return 0;
- }
  
++	/* BIGMAC may have bogus sizes */
++	if ((op->resource[3].end - op->resource[3].start) >= BMAC_REG_SIZE)
++		op->resource[3].end = op->resource[3].start + BMAC_REG_SIZE - 1;
+ 	hp->bigmacregs = devm_platform_ioremap_resource(op, 3);
+ 	if (IS_ERR(hp->bigmacregs)) {
+ 		dev_err(&op->dev, "Cannot map BIGMAC registers.\n");
 -- 
 2.51.0
 
