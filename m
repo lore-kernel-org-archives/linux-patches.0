@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6755127F73A;
-	Wed, 25 Feb 2026 01:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DC127FD72;
+	Wed, 25 Feb 2026 01:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983766; cv=none; b=ux+gHIubX5rlCGahBpz7+IR67mBcuxGGvFaXWKyF9K9V9AP8LEbbOkI8xbxLTUJsUFQcF2bI+XTLvD6wTZL9CgeMPtJWw13ZXc8/hBYUJR06HsiODDxs25nwxpakL7lVuFnZREDvv8GKyMkqR31Xz20xQdaKuxqOl/DpKRLcx8Q=
+	t=1771983767; cv=none; b=vGBdJOfrhzctphCP6OC8L8rM5Vj8qsPn/MIwzpASzv8jc7qX08CP/YwbBFqUh6f92Vt7T73JcmkXTc0CRyiaaQ4cTCQmeGnEJg2H/vsmrttzX9K4+Rg2oj+09zE/P2T9Gq/4aNT+f2fC1eSKp7jyDHeZAWF2h2ZNaWs/WC9pbdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983766; c=relaxed/simple;
-	bh=sDpGstOQwx7ypF31LxC5rPu7ToCKDUVSkj89mczTOxM=;
+	s=arc-20240116; t=1771983767; c=relaxed/simple;
+	bh=XQCfY+07BCFluTE2khbwGaaec+VbGfOK4vqk0cOngHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOxonSGW6NVbZKpbVQRs+04Wu3T6t3HWyuN9QxM+9jzSKRQx+M72EuDsHS5gwvOPi8ulbH8LM8fVe69lErtIE3SWo/VQpWt+ZzaHD0EA6AMHwGV1KOc63aiKJXDCngk9Wn5SIv85OyUF9reTETZyOh3olqr3n6juBr4t3OUPc+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNOQ5DTr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MaNnPmM/U9TsUZyrJieK7P2m/12e7piTFcTefrB8RZFpR+DQ0yK5MY6tG13UBjDXt7sH9TVgVu/K3MgbKHqHwLPQhcXjKwT71fRCWHpY3mq53/hDqMq76HFt8dqch3irt7RgvCHaAW4MmZMFBmVeRqXLTwFXhh27bYpPl0uYVYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t15NZrcW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNOQ5DTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC01C116D0;
-	Wed, 25 Feb 2026 01:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t15NZrcW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E20C116D0;
+	Wed, 25 Feb 2026 01:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983766;
-	bh=sDpGstOQwx7ypF31LxC5rPu7ToCKDUVSkj89mczTOxM=;
+	s=korg; t=1771983767;
+	bh=XQCfY+07BCFluTE2khbwGaaec+VbGfOK4vqk0cOngHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNOQ5DTr6b/m/d8II2fkKBaPbwYV6bc2mRbSDCAMRMEWJfHBikA88T/hEruiSLJPr
-	 ZvuH4iX7Kov9UJvEKnQ9+e/hwOH3ZxekaMWQRxkCvdnojGTQlclq38zIYa1VSeO5p3
-	 KZNmkQ5foB8MMPKGysfc2TAmQfd4MlvpUGSS/THc=
+	b=t15NZrcWMOc+xJjzNqEe1edsD/CWbR54/NdouJ3nsxXcKOdyDJvoxGIqvAAiA29OO
+	 YoPdOuuqsQcs6Ip1f6YRFu+/myZ96+QylUP6TVJxSWMOIAbMyHjVIiPBYMfAdimkqB
+	 +rFak0EhTSzI4WXyQRNHtBGsBzY5YkL36nwacqMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Yaxiong Tian <tianyaxiong@kylinos.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/641] perf: arm_spe: Properly set hw.state on failures
-Date: Tue, 24 Feb 2026 17:16:24 -0800
-Message-ID: <20260225012350.454059668@linuxfoundation.org>
+Subject: [PATCH 6.18 059/641] cpufreq: intel_pstate: Enable asym capacity only when CPU SMT is not possible
+Date: Tue, 24 Feb 2026 17:16:25 -0800
+Message-ID: <20260225012350.478666515@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,106 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Yaxiong Tian <tianyaxiong@kylinos.cn>
 
-[ Upstream commit 283182c1c239f6873d1a50e9e710c1a699f2256b ]
+[ Upstream commit 1fedbb589448bee9f20bb2ed9c850d1d2cf9963c ]
 
-When arm_spe_pmu_next_off() fails to calculate a valid limit, it returns
-zero to indicate that tracing should not start.  However, the caller
-arm_spe_perf_aux_output_begin() does not propagate this failure by
-updating hwc->state, cause the error to be silently ignored by upper
-layers.
+According to the description in the intel_pstate.rst documentation,
+Capacity-Aware Scheduling and Energy-Aware Scheduling are only
+supported on a hybrid processor without SMT. Previously, the system
+used sched_smt_active() for judgment, which is not a strict condition
+because users can switch it on or off via /sys at any time.
 
-Because hwc->state remains zero after a failure, arm_spe_pmu_start()
-continues to programs filter registers unnecessarily.  The driver
-still reports success to the perf core, so the core assumes the SPE
-event was enabled and proceeds to enable other events.  This breaks
-event group semantics: SPE is already stopped while other events in the
-same group are enabled.
+This could lead to incorrect driver settings in certain scenarios.
+For example, on a CPU that supports SMT, a user can disable SMT
+via the nosmt parameter to enable asym capacity, and then re-enable
+SMT via /sys. In such cases, some settings in the driver would no
+longer be correct.
 
-Fix this by updating arm_spe_perf_aux_output_begin() to return a status
-code indicating success (0) or failure (-EIO).  Both the interrupt
-handler and arm_spe_pmu_start() check the return value and call
-arm_spe_pmu_stop() to set PERF_HES_STOPPED in hwc->state.
+To address this issue, replace sched_smt_active() with cpu_smt_possible(),
+and only enable asym capacity when CPU SMT is not possible.
 
-In the interrupt handler, the period (e.g., period_left) needs to be
-updated, so PERF_EF_UPDATE is passed to arm_spe_pmu_stop().  When the
-error occurs during event start, the trace unit is not yet enabled, so
-a flag '0' is used to drain buffer and update state only.
-
-Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 929ebc93ccaa ("cpufreq: intel_pstate: Set asymmetric CPU capacity on hybrid systems")
+Signed-off-by: Yaxiong Tian <tianyaxiong@kylinos.cn>
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20260203024852.301066-1-tianyaxiong@kylinos.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_spe_pmu.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/cpufreq/intel_pstate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
-index fa50645feddad..e4e4e63c64c42 100644
---- a/drivers/perf/arm_spe_pmu.c
-+++ b/drivers/perf/arm_spe_pmu.c
-@@ -105,6 +105,8 @@ struct arm_spe_pmu {
- /* Keep track of our dynamic hotplug state */
- static enum cpuhp_state arm_spe_pmu_online;
- 
-+static void arm_spe_pmu_stop(struct perf_event *event, int flags);
-+
- enum arm_spe_pmu_buf_fault_action {
- 	SPE_PMU_BUF_FAULT_ACT_SPURIOUS,
- 	SPE_PMU_BUF_FAULT_ACT_FATAL,
-@@ -582,8 +584,8 @@ static u64 arm_spe_pmu_next_off(struct perf_output_handle *handle)
- 	return limit;
- }
- 
--static void arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
--					  struct perf_event *event)
-+static int arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
-+					 struct perf_event *event)
- {
- 	u64 base, limit;
- 	struct arm_spe_pmu_buf *buf;
-@@ -597,7 +599,6 @@ static void arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
- 	/* Start a new aux session */
- 	buf = perf_aux_output_begin(handle, event);
- 	if (!buf) {
--		event->hw.state |= PERF_HES_STOPPED;
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index 492a10f1bdbfa..38333f7da40db 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -1152,7 +1152,7 @@ static void hybrid_init_cpu_capacity_scaling(bool refresh)
+ 	 * the capacity of SMT threads is not deterministic even approximately,
+ 	 * do not do that when SMT is in use.
+ 	 */
+-	if (hwp_is_hybrid && !sched_smt_active() && arch_enable_hybrid_capacity_scale()) {
++	if (hwp_is_hybrid && !cpu_smt_possible() && arch_enable_hybrid_capacity_scale()) {
+ 		hybrid_refresh_cpu_capacity_scaling();
  		/*
- 		 * We still need to clear the limit pointer, since the
- 		 * profiler might only be disabled by virtue of a fault.
-@@ -617,6 +618,7 @@ static void arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
- 
- out_write_limit:
- 	write_sysreg_s(limit, SYS_PMBLIMITR_EL1);
-+	return (limit & PMBLIMITR_EL1_E) ? 0 : -EIO;
- }
- 
- static void arm_spe_perf_aux_output_end(struct perf_output_handle *handle)
-@@ -756,7 +758,10 @@ static irqreturn_t arm_spe_pmu_irq_handler(int irq, void *dev)
- 		 * when we get to it.
- 		 */
- 		if (!(handle->aux_flags & PERF_AUX_FLAG_TRUNCATED)) {
--			arm_spe_perf_aux_output_begin(handle, event);
-+			if (arm_spe_perf_aux_output_begin(handle, event)) {
-+				arm_spe_pmu_stop(event, PERF_EF_UPDATE);
-+				break;
-+			}
- 			isb();
- 		}
- 		break;
-@@ -851,9 +856,10 @@ static void arm_spe_pmu_start(struct perf_event *event, int flags)
- 	struct perf_output_handle *handle = this_cpu_ptr(spe_pmu->handle);
- 
- 	hwc->state = 0;
--	arm_spe_perf_aux_output_begin(handle, event);
--	if (hwc->state)
-+	if (arm_spe_perf_aux_output_begin(handle, event)) {
-+		arm_spe_pmu_stop(event, 0);
- 		return;
-+	}
- 
- 	reg = arm_spe_event_to_pmsfcr(event);
- 	write_sysreg_s(reg, SYS_PMSFCR_EL1);
+ 		 * Disabling ITMT causes sched domains to be rebuilt to disable asym
 -- 
 2.51.0
 
