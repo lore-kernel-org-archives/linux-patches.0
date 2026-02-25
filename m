@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E663D26560A;
-	Wed, 25 Feb 2026 01:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0840D258ED5;
+	Wed, 25 Feb 2026 01:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983641; cv=none; b=lrNT/27I+/LzyHYx4XD9/DSw031oXUQOjE9k501aR8uUcPXCXU84Yy7+BmZlYQ3Eh9ZY30twE7oFE8u/deHG0QjYTd6NZF66LHzZkEt1tSnFVp8NkeNpjIobTelcbVmGELk1bt471Stmwvxpx4PnH/U1V90ofeCMW7ww3H2bu84=
+	t=1771983642; cv=none; b=NK41DRhx5MyGvnWrybs1zeKrFbMn1aoIdVCEBfVOHgdIAWhC3XMH3aPO0voAzUGPl45uv2mbz6fY1hJDZRh+i8i22YFqezTDiwt+Ef+ssSrC6O9m3LHONeWDWc+WXdutiQAWRVPMxMG/oLnS/tyiOAkpldlbZcuvE3VmLeUREig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983641; c=relaxed/simple;
-	bh=qiqsdTmyQwU5G4YSFaHL/wB1SM0xM536phsWPuTLaos=;
+	s=arc-20240116; t=1771983642; c=relaxed/simple;
+	bh=ZAI/Kdki0czgfxuhfuLxo+aLSRlhSnilSI9I8WvgvMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lD5xaMR7djfCWf640NekBryGjAX6v+C9Ax2LOn3SjjCBxseB/G2fkxbg/Kv5VlZSzcwRMK+ROYR+4znRPl+uTejTDNYQZyD55ckQpwwPTp28B88007y2zvYmuA1puh1+rDiLbQzAZ9keBGbF7zYR08U1b3J8WY63Bx9LkWFRZgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=px8Sn9kg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLFs+0f+EG7EujcpMaQMF+sK0+zX6oG/8q0Jct6r58MuEgWyd7qKAXA8R3eW1v2nRjG0XiRuYkEhl8vN9gkjEYbHzbehRfb8nu+7DjJDeOW07t2SfGHknf0lxWvwyaOm8uTZ7P23fbM60yM7z7xJq+pOAFEa+LjQ/pWzBL2U0D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFa7+fiv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="px8Sn9kg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7ACC116D0;
-	Wed, 25 Feb 2026 01:40:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFa7+fiv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FEBC116D0;
+	Wed, 25 Feb 2026 01:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983640;
-	bh=qiqsdTmyQwU5G4YSFaHL/wB1SM0xM536phsWPuTLaos=;
+	s=korg; t=1771983641;
+	bh=ZAI/Kdki0czgfxuhfuLxo+aLSRlhSnilSI9I8WvgvMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=px8Sn9kgqgs5/jkdSrjRtRWxz4VXbQ+BAUnyYWEK6DUTEKIj0nUZ1IgtuKBuzj51x
-	 3nSLnBFpoxQUBHik2ZJ9H7weHBCxg/Z9G5jvJSBsyDB42T81ivzL9IkWo2KFAKOQQd
-	 tr+ijfsLDNVuG6z0Rw3/lWlQY+D0/bEMz/1bNjhc=
+	b=lFa7+fivqbh78p9PnCMK6vyLhnp02DAubPLqLHb0UGfM1HolQ6QAQYaf5OMsSLQe9
+	 mct6Bp41khK6IuyJK3wspbf4gXfSqOikODZfwy1wocU8KENFDF3LNmmk6NaXWfN8pq
+	 ZQRLotNEDvxyIJ1Mvr+DphylS9Eq/6I/VzNK+94U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shekhar Chauhan <shekhar.chauhan@intel.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 729/781] drm/xe/mmio: Avoid double-adjust in 64-bit reads
-Date: Tue, 24 Feb 2026 17:23:58 -0800
-Message-ID: <20260225012417.614296933@linuxfoundation.org>
+Subject: [PATCH 6.19 730/781] drm/xe/xe2_hpg: Fix handling of Wa_14019988906 & Wa_14019877138
+Date: Tue, 24 Feb 2026 17:23:59 -0800
+Message-ID: <20260225012417.638526218@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,59 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit 4a9b4e1fa52a6aaa1adbb7f759048df14afed54c ]
+[ Upstream commit bc6387a2e0c1562faa56ce2a98cef50cab809e08 ]
 
-xe_mmio_read64_2x32() was adjusting register addresses and then
-calling xe_mmio_read32(), which applies the adjustment again.
-This may shift accesses twice if adj_offset < adj_limit. There is
-no issue currently, as for media gt, adj_offset > adj_limit, so
-the 2nd adjust will be a no-op. But it may not work in future.
+The PSS_CHICKEN register has been part of the RCS engine's LRC since it
+was first introduced in Xe_LP.  That means that any workarounds that
+adjust its value (such as Wa_14019988906 and Wa_14019877138) need to be
+implemented in the lrc_was[] table so that they become part of the
+default LRC from which all subsequent LRCs are copied.  Although these
+workarounds were implemented correctly on most platforms, they were
+incorrectly placed on the engine_was[] table for Xe2_HPG.
 
-To fix it, replace the adjusted-address comparison with a direct
-sanity check that ensures the MMIO address adjustment cutoff never
-falls within the 8-byte range of a 64-bit register. And let
-xe_mmio_read32() handle address translation.
+Move the workarounds to the proper lrc_was[] table and switch the
+'xe_rtp_match_first_render_or_compute' rule to specifically match the
+RCS since that's the engine whose LRC manages the register.
 
-v2: rewrite the sanity check in a more natural way. (Matt)
-v3: Add Fixes tag. (Jani)
-
-Fixes: 07431945d8ae ("drm/xe: Avoid 64-bit register reads")
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://patch.msgid.link/20260130165621.471408-2-shuicheng.lin@intel.com
+Bspec: 65182
+Fixes: 7f3ee7d88058 ("drm/xe/xe2hpg: Add initial GT workarounds")
+Reviewed-by: Shekhar Chauhan <shekhar.chauhan@intel.com>
+Link: https://patch.msgid.link/20260205220508.51905-2-matthew.d.roper@intel.com
 Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit a30f999681126b128a43137793ac84b6a5b7443f)
+(cherry picked from commit e04c609eedf4d6748ac0bcada4de1275b034fed6)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_mmio.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_wa.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_mmio.c b/drivers/gpu/drm/xe/xe_mmio.c
-index 350dca1f09259..3d59440ec44dd 100644
---- a/drivers/gpu/drm/xe/xe_mmio.c
-+++ b/drivers/gpu/drm/xe/xe_mmio.c
-@@ -260,11 +260,11 @@ u64 xe_mmio_read64_2x32(struct xe_mmio *mmio, struct xe_reg reg)
- 	struct xe_reg reg_udw = { .addr = reg.addr + 0x4 };
- 	u32 ldw, udw, oldudw, retries;
- 
--	reg.addr = xe_mmio_adjusted_addr(mmio, reg.addr);
--	reg_udw.addr = xe_mmio_adjusted_addr(mmio, reg_udw.addr);
--
--	/* we shouldn't adjust just one register address */
--	xe_tile_assert(mmio->tile, reg_udw.addr == reg.addr + 0x4);
-+	/*
-+	 * The two dwords of a 64-bit register can never straddle the offset
-+	 * adjustment cutoff.
-+	 */
-+	xe_tile_assert(mmio->tile, !in_range(mmio->adj_limit, reg.addr + 1, 7));
- 
- 	oldudw = xe_mmio_read32(mmio, reg_udw);
- 	for (retries = 5; retries; --retries) {
+diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
+index e32dd2fde6f1c..c7eab0c4af7a8 100644
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -567,16 +567,6 @@ static const struct xe_rtp_entry_sr engine_was[] = {
+ 		       FUNC(xe_rtp_match_first_render_or_compute)),
+ 	  XE_RTP_ACTIONS(SET(ROW_CHICKEN, EARLY_EOT_DIS))
+ 	},
+-	{ XE_RTP_NAME("14019988906"),
+-	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002),
+-		       FUNC(xe_rtp_match_first_render_or_compute)),
+-	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
+-	},
+-	{ XE_RTP_NAME("14019877138"),
+-	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002),
+-		       FUNC(xe_rtp_match_first_render_or_compute)),
+-	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FD_END_COLLECT))
+-	},
+ 	{ XE_RTP_NAME("14020338487"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002),
+ 		       FUNC(xe_rtp_match_first_render_or_compute)),
+@@ -873,6 +863,14 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+ 	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(WM_CHICKEN3, HIZ_PLANE_COMPRESSION_DIS))
+ 	},
++	{ XE_RTP_NAME("14019988906"),
++	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002), ENGINE_CLASS(RENDER)),
++	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
++	},
++	{ XE_RTP_NAME("14019877138"),
++	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002), ENGINE_CLASS(RENDER)),
++	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FD_END_COLLECT))
++	},
+ 	{ XE_RTP_NAME("14021490052"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(FF_MODE,
 -- 
 2.51.0
 
