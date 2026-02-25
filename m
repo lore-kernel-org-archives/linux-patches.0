@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD3718DB2A;
-	Wed, 25 Feb 2026 01:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C9B18DB2A;
+	Wed, 25 Feb 2026 01:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983268; cv=none; b=rmURejN2sTmJ26jwh1kXl5PwX1hAQMIGy2PNTO9Ac7sSGaOp69iDEiBy0rKKYsA1Rliyjm3D0uJ06gS5iRmNHO91r9GPLGbK1iK7pj1KBwlyjeO7dRKaN/Tpvge5KBIF9U1wmny2yt6u6X61GirELchF+VklEVwvrv52uzIf2G4=
+	t=1771983269; cv=none; b=nLJjHAEtcwJXtQdHcuVzoFvMySb0KKkfZfDSyIXcfeNRmJxniKLgxQOTKkr5O5kX2QkBBUgfhzTK+1avW/a9dGhF6TxrWcHjz1DDd5N3iVCAGqcRGIK3ZSxADRua/RfErtnwQ+eY6jAkr5k3Kg18hgKKn56f9M88yZTRy+cjIa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983268; c=relaxed/simple;
-	bh=IXQEvhqQZSpB0AwY3o57CkOC9tSX3edSFKi46VNjteM=;
+	s=arc-20240116; t=1771983269; c=relaxed/simple;
+	bh=nRvxRFONJGF455313GBLGA8zR7MnUN3oTLIs2OaeRuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hpYI0AYLzpY6qDTkSiRys6cGEM/rKeRp5imOOk0PN44GTgXXkvs4miQkAIemYs2nVV4nUmHLmndAlxOGe+FEAliFIAxCZZf/Gde6/NHiZaA5dh+A15ozPfgws5a9ad6243d5wSHIHM2xz54CIjuxMm5DU2ko5gkOHwCgiRgZeMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFNziMJ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlnJBS2sD1tWvenAluy7F1IlNDc+4GN81F7XGtpCCqUCJwr4fmnbJh2EdVAmz5my6kDX2ul33Hcq1GvsDD6iWGIid2kZ1CJrQSqrcCl9TAVvS5JhVx63cuiZMWY/IXMK9/fRVvalntfixHxu5A4mxPn3v//MX7+Q9QquMTfcrWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqyKvb1O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFNziMJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC450C116D0;
-	Wed, 25 Feb 2026 01:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqyKvb1O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37C3C116D0;
+	Wed, 25 Feb 2026 01:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983267;
-	bh=IXQEvhqQZSpB0AwY3o57CkOC9tSX3edSFKi46VNjteM=;
+	s=korg; t=1771983269;
+	bh=nRvxRFONJGF455313GBLGA8zR7MnUN3oTLIs2OaeRuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFNziMJ8YJXVcoHHTsUwFjS0DhwV7pcag7R7aF/lxYzWKO+MEYmbPbHajpdE9Q7EP
-	 9TvqIBh7p5d+UeTjwQPVGiawrB67HthJRsrxntzkP5j4VC17dsCkKu9xoYTt08ihcg
-	 lJ12RumaWRyC+4a5/2eq2i5rF35/M8iuqwUhSD44=
+	b=zqyKvb1O1PuJItYwQHZQ4MsbOf/SRS73P2xOVhjAk8sF0kdxizDnOVng6nML2DULP
+	 EYY1MT+vt9NeU+T3hB7rs89EdQu66E08gEO+Uxa2O81khIxL6yTmh7MKEvUs/ImKA6
+	 jUQIz8wD+P4Nt0uAb4LJLC4Lg0TtkS0Ms6J7D7g8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulrich Weber <ulrich.weber@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Koichiro Den <den@valinux.co.jp>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 409/781] netfilter: nfnetlink_queue: do shared-unconfirmed check before segmentation
-Date: Tue, 24 Feb 2026 17:18:38 -0800
-Message-ID: <20260225012409.734708477@linuxfoundation.org>
+Subject: [PATCH 6.19 392/781] PCI: dwc: ep: Cache MSI outbound iATU mapping
+Date: Tue, 24 Feb 2026 17:18:21 -0800
+Message-ID: <20260225012409.314839089@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,243 +52,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 207b3ebacb6113acaaec0d171d5307032c690004 ]
+[ Upstream commit 8719c64e76bf258cc8f44109740c854f2e2ead2e ]
 
-Ulrich reports a regression with nfqueue:
+dw_pcie_ep_raise_msi_irq() currently programs an outbound iATU window
+for the MSI target address on every interrupt and tears it down again
+via dw_pcie_ep_unmap_addr().
 
-If an application did not set the 'F_GSO' capability flag and a gso
-packet with an unconfirmed nf_conn entry is received all packets are
-now dropped instead of queued, because the check happens after
-skb_gso_segment().  In that case, we did have exclusive ownership
-of the skb and its associated conntrack entry.  The elevated use
-count is due to skb_clone happening via skb_gso_segment().
+On systems that heavily use the AXI bridge interface (for example when
+the integrated eDMA engine is active), this means the outbound iATU
+registers are updated while traffic is in flight. The DesignWare
+endpoint databook 5.40a - "3.10.6.1 iATU Outbound Programming Overview"
+warns that updating iATU registers in this situation is not supported,
+and the behavior is undefined.
 
-Move the check so that its peformed vs. the aggregated packet.
+Under high MSI and eDMA load this pattern results in occasional bogus
+outbound transactions and IOMMU faults, on the RC side, such as:
 
-Then, annotate the individual segments except the first one so we
-can do a 2nd check at reinject time.
+  ipmmu-vmsa eed40000.iommu: Unhandled fault: status 0x00001502 iova 0xfe000000
 
-For the normal case, where userspace does in-order reinjects, this avoids
-packet drops: first reinjected segment continues traversal and confirms
-entry, remaining segments observe the confirmed entry.
+followed by the system becoming unresponsive. This is the actual output
+observed on Renesas R-Car S4, with its ipmmu_hc used with PCIe ch0.
 
-While at it, simplify nf_ct_drop_unconfirmed(): We only care about
-unconfirmed entries with a refcnt > 1, there is no need to special-case
-dying entries.
+There is no need to reprogram the iATU region used for MSI on every
+interrupt. The host-provided MSI address is stable while MSI is enabled,
+and the endpoint driver already dedicates a scratch buffer for MSI
+generation.
 
-This only happens with UDP.  With TCP, the only unconfirmed packet will
-be the TCP SYN, those aren't aggregated by GRO.
+Cache the aligned MSI address and map size, program the outbound iATU
+once, and keep the window enabled. Subsequent interrupts only perform a
+write to the MSI scratch buffer, avoiding dynamic iATU reprogramming in
+the hot path and fixing the lockups seen under load.
 
-Next patch adds a udpgro test case to cover this scenario.
+dw_pcie_ep_raise_msix_irq() is not modified, as each vector can have a
+different msg_addr, and because the msg_addr is allowed to be changed
+while the vector is masked. Neither problem is easy to solve with the
+current design. Instead, the plan is for the DWC vendor drivers to
+transition to dw_pcie_ep_raise_msix_irq_doorbell(), which does not rely
+on the iATU.
 
-Reported-by: Ulrich Weber <ulrich.weber@gmail.com>
-Fixes: 7d8dc1c7be8d ("netfilter: nf_queue: drop packets with cloned unconfirmed conntracks")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+[cassel: improve commit message]
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251222110144.3299523-2-cassel@kernel.org
+Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_queue.h |   1 +
- net/netfilter/nfnetlink_queue.c  | 123 +++++++++++++++++++------------
- 2 files changed, 75 insertions(+), 49 deletions(-)
+ .../pci/controller/dwc/pcie-designware-ep.c   | 48 ++++++++++++++++---
+ drivers/pci/controller/dwc/pcie-designware.h  |  5 ++
+ 2 files changed, 47 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/netfilter/nf_queue.h b/include/net/netfilter/nf_queue.h
-index e6803831d6af5..45eb26b2e95b3 100644
---- a/include/net/netfilter/nf_queue.h
-+++ b/include/net/netfilter/nf_queue.h
-@@ -21,6 +21,7 @@ struct nf_queue_entry {
- 	struct net_device	*physout;
- #endif
- 	struct nf_hook_state	state;
-+	bool			nf_ct_is_unconfirmed;
- 	u16			size; /* sizeof(entry) + saved route keys */
- 	u16			queue_num;
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index f6c54625486e2..1195d401df19e 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -601,6 +601,16 @@ static void dw_pcie_ep_stop(struct pci_epc *epc)
+ 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
  
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 336e3ad18e72d..34548213f2f14 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -438,6 +438,34 @@ static void nf_reinject(struct nf_queue_entry *entry, unsigned int verdict)
- 	nf_queue_entry_free(entry);
- }
- 
-+/* return true if the entry has an unconfirmed conntrack attached that isn't owned by us
-+ * exclusively.
-+ */
-+static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry, bool *is_unconfirmed)
-+{
-+#if IS_ENABLED(CONFIG_NF_CONNTRACK)
-+	struct nf_conn *ct = (void *)skb_nfct(entry->skb);
-+
-+	if (!ct || nf_ct_is_confirmed(ct))
-+		return false;
-+
-+	if (is_unconfirmed)
-+		*is_unconfirmed = true;
-+
-+	/* in some cases skb_clone() can occur after initial conntrack
-+	 * pickup, but conntrack assumes exclusive skb->_nfct ownership for
-+	 * unconfirmed entries.
-+	 *
-+	 * This happens for br_netfilter and with ip multicast routing.
-+	 * This can't be solved with serialization here because one clone
-+	 * could have been queued for local delivery or could be transmitted
-+	 * in parallel on another CPU.
++	/*
++	 * Tear down the dedicated outbound window used for MSI
++	 * generation. This avoids leaking an iATU window across
++	 * endpoint stop/start cycles.
 +	 */
-+	return refcount_read(&ct->ct_general.use) > 1;
-+#endif
-+	return false;
-+}
-+
- static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
- {
- 	const struct nf_ct_hook *ct_hook;
-@@ -465,6 +493,24 @@ static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
- 			break;
- 		}
- 	}
-+
-+	if (verdict != NF_DROP && entry->nf_ct_is_unconfirmed) {
-+		/* If first queued segment was already reinjected then
-+		 * there is a good chance the ct entry is now confirmed.
-+		 *
-+		 * Handle the rare cases:
-+		 *  - out-of-order verdict
-+		 *  - threaded userspace reinjecting in parallel
-+		 *  - first segment was dropped
-+		 *
-+		 * In all of those cases we can't handle this packet
-+		 * because we can't be sure that another CPU won't modify
-+		 * nf_conn->ext in parallel which isn't allowed.
-+		 */
-+		if (nf_ct_drop_unconfirmed(entry, NULL))
-+			verdict = NF_DROP;
++	if (ep->msi_iatu_mapped) {
++		dw_pcie_ep_unmap_addr(epc, 0, 0, ep->msi_mem_phys);
++		ep->msi_iatu_mapped = false;
 +	}
 +
- 	nf_reinject(entry, verdict);
+ 	dw_pcie_stop_link(pci);
  }
  
-@@ -894,49 +940,6 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 	return NULL;
- }
+@@ -702,14 +712,37 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
+ 	msg_addr = ((u64)msg_addr_upper) << 32 | msg_addr_lower;
  
--static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry)
--{
--#if IS_ENABLED(CONFIG_NF_CONNTRACK)
--	static const unsigned long flags = IPS_CONFIRMED | IPS_DYING;
--	struct nf_conn *ct = (void *)skb_nfct(entry->skb);
--	unsigned long status;
--	unsigned int use;
--
--	if (!ct)
--		return false;
--
--	status = READ_ONCE(ct->status);
--	if ((status & flags) == IPS_DYING)
--		return true;
--
--	if (status & IPS_CONFIRMED)
--		return false;
--
--	/* in some cases skb_clone() can occur after initial conntrack
--	 * pickup, but conntrack assumes exclusive skb->_nfct ownership for
--	 * unconfirmed entries.
--	 *
--	 * This happens for br_netfilter and with ip multicast routing.
--	 * We can't be solved with serialization here because one clone could
--	 * have been queued for local delivery.
--	 */
--	use = refcount_read(&ct->ct_general.use);
--	if (likely(use == 1))
--		return false;
--
--	/* Can't decrement further? Exclusive ownership. */
--	if (!refcount_dec_not_one(&ct->ct_general.use))
--		return false;
--
--	skb_set_nfct(entry->skb, 0);
--	/* No nf_ct_put(): we already decremented .use and it cannot
--	 * drop down to 0.
--	 */
--	return true;
--#endif
--	return false;
--}
--
- static int
- __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
- 			struct nf_queue_entry *entry)
-@@ -953,9 +956,6 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
- 	}
- 	spin_lock_bh(&queue->lock);
+ 	msg_addr = dw_pcie_ep_align_addr(epc, msg_addr, &map_size, &offset);
+-	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
+-				  map_size);
+-	if (ret)
+-		return ret;
  
--	if (nf_ct_drop_unconfirmed(entry))
--		goto err_out_free_nskb;
--
- 	if (queue->queue_total >= queue->queue_maxlen)
- 		goto err_out_queue_drop;
- 
-@@ -998,7 +998,6 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
- 		else
- 			net_warn_ratelimited("nf_queue: hash insert failed: %d\n", err);
- 	}
--err_out_free_nskb:
- 	kfree_skb(nskb);
- err_out_unlock:
- 	spin_unlock_bh(&queue->lock);
-@@ -1077,9 +1076,10 @@ __nfqnl_enqueue_packet_gso(struct net *net, struct nfqnl_instance *queue,
- static int
- nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
- {
--	unsigned int queued;
--	struct nfqnl_instance *queue;
- 	struct sk_buff *skb, *segs, *nskb;
-+	bool ct_is_unconfirmed = false;
-+	struct nfqnl_instance *queue;
-+	unsigned int queued;
- 	int err = -ENOBUFS;
- 	struct net *net = entry->state.net;
- 	struct nfnl_queue_net *q = nfnl_queue_pernet(net);
-@@ -1103,6 +1103,15 @@ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
- 		break;
- 	}
- 
-+	/* Check if someone already holds another reference to
-+	 * unconfirmed ct.  If so, we cannot queue the skb:
-+	 * concurrent modifications of nf_conn->ext are not
-+	 * allowed and we can't know if another CPU isn't
-+	 * processing the same nf_conn entry in parallel.
+-	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
++	/*
++	 * Program the outbound iATU once and keep it enabled.
++	 *
++	 * The spec warns that updating iATU registers while there are
++	 * operations in flight on the AXI bridge interface is not
++	 * supported, so we avoid reprogramming the region on every MSI,
++	 * specifically unmapping immediately after writel().
 +	 */
-+	if (nf_ct_drop_unconfirmed(entry, &ct_is_unconfirmed))
++	if (!ep->msi_iatu_mapped) {
++		ret = dw_pcie_ep_map_addr(epc, func_no, 0,
++					  ep->msi_mem_phys, msg_addr,
++					  map_size);
++		if (ret)
++			return ret;
++
++		ep->msi_iatu_mapped = true;
++		ep->msi_msg_addr = msg_addr;
++		ep->msi_map_size = map_size;
++	} else if (WARN_ON_ONCE(ep->msi_msg_addr != msg_addr ||
++				ep->msi_map_size != map_size)) {
++		/*
++		 * The host changed the MSI target address or the required
++		 * mapping size changed. Reprogramming the iATU at runtime is
++		 * unsafe on this controller, so bail out instead of trying to
++		 * update the existing region.
++		 */
 +		return -EINVAL;
-+
- 	if (!skb_is_gso(skb) || ((queue->flags & NFQA_CFG_F_GSO) && !skb_is_gso_sctp(skb)))
- 		return __nfqnl_enqueue_packet(net, queue, entry);
++	}
  
-@@ -1116,7 +1125,23 @@ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
- 		goto out_err;
- 	queued = 0;
- 	err = 0;
+-	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
++	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
+ 
+ 	return 0;
+ }
+@@ -1087,6 +1120,9 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+ 	struct device *dev = pci->dev;
+ 
+ 	INIT_LIST_HEAD(&ep->func_list);
++	ep->msi_iatu_mapped = false;
++	ep->msi_msg_addr = 0;
++	ep->msi_map_size = 0;
+ 
+ 	epc = devm_pci_epc_create(dev, &epc_ops);
+ 	if (IS_ERR(epc)) {
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index aec4af5194b51..f9e2eaa3571e0 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -479,6 +479,11 @@ struct dw_pcie_ep {
+ 	void __iomem		*msi_mem;
+ 	phys_addr_t		msi_mem_phys;
+ 	struct pci_epf_bar	*epf_bar[PCI_STD_NUM_BARS];
 +
- 	skb_list_walk_safe(segs, segs, nskb) {
-+		if (ct_is_unconfirmed && queued > 0) {
-+			/* skb_gso_segment() increments the ct refcount.
-+			 * This is a problem for unconfirmed (not in hash)
-+			 * entries, those can race when reinjections happen
-+			 * in parallel.
-+			 *
-+			 * Annotate this for all queued entries except the
-+			 * first one.
-+			 *
-+			 * As long as the first one is reinjected first it
-+			 * will do the confirmation for us.
-+			 */
-+			entry->nf_ct_is_unconfirmed = ct_is_unconfirmed;
-+		}
-+
- 		if (err == 0)
- 			err = __nfqnl_enqueue_packet_gso(net, queue,
- 							segs, entry);
++	/* MSI outbound iATU state */
++	bool			msi_iatu_mapped;
++	u64			msi_msg_addr;
++	size_t			msi_map_size;
+ };
+ 
+ struct dw_pcie_ops {
 -- 
 2.51.0
 
