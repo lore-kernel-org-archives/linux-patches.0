@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68952248886;
-	Wed, 25 Feb 2026 01:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B36248F54;
+	Wed, 25 Feb 2026 01:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983678; cv=none; b=Stu0jsSwYNhxzRSIYo92TBqtdddLpG8HpHeSe9vZo+AR+Ke81v0H2VsU4upSnJCIEGN+51NvwASSMzotonfkh0RhR3Wt3wh6b5mjXUlLHfUa0X/eLyp9OtN4x0rUjk+6/tcyQIpIlj/BnhHyEkRSertanF4jOJnhQoIpx6qjhNg=
+	t=1771983679; cv=none; b=SORfFPcI6yIjjBVkphWcDTJshBHujVxAWP5q5LuYxJtJby+Tq0zB+LgwYQO1E0AXa7zpK6pLfkysJzBJAtpsGGi/bc8DiMBV8tyk8soyqWxkfj8MCTThemSb1H/C2MjD+rmbz/DG3xBR1mWhnPknOZlwH2Kr4eXblOdLCgMAPEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983678; c=relaxed/simple;
-	bh=fn+pbtlfS47jeOfYk9u72wPYKeKxSbMZodt6EDY6ZzQ=;
+	s=arc-20240116; t=1771983679; c=relaxed/simple;
+	bh=NFHAuuzROCilNZFhPTO9hJJleZRn+dvjZXy94kub9+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emqHRMvnjyLdQ9gKCT6EZq+vBKVtR6DPTs9c0ai2trEuDUHikBq6rhDDB9IKz+IlzZTgDOJfb2prdK09KSwI+wTEfHnIb2N0U7lFBeUSbQTg9eepEBMbUmBqNS0zpCfRG0si4pWYKp9FN5fhGKVxOHWxd+uwoGOdkdCUHOBYIvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHkGlc22; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h2ROZjjs1BRlU9ScTFAy5sthI/NBNgMK2nbzgWIGAPkomdYL8lrDDxAMOc/SvDE/XITKgWUKEA3Obn7P+jTsPjP+q2rR80mmprfoIQl3NZBgECyXPO+KKGa2byUpqNmGmJAzjQPGjlTeGfCUZYbXAA+CzWP+mPi3xASSMCoaGaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l8iFgBhG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHkGlc22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3373EC116D0;
-	Wed, 25 Feb 2026 01:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l8iFgBhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E448C116D0;
+	Wed, 25 Feb 2026 01:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983678;
-	bh=fn+pbtlfS47jeOfYk9u72wPYKeKxSbMZodt6EDY6ZzQ=;
+	s=korg; t=1771983679;
+	bh=NFHAuuzROCilNZFhPTO9hJJleZRn+dvjZXy94kub9+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JHkGlc22Ty+xl7un9Fbi15bpeA3Di16mY/rK8S8bSOm90UMYbAjYDA1Kxe2fwzYZ+
-	 H9TRPnlRcVr4i2uxrEFrELqWJROQ7q0nR9+dBE+WM+o3QCV5kKj3RRnJzy7gAEXJ9U
-	 sRLkO7feSrzjNvWPUWQjkAzv7lF4kO/wbidshgs8=
+	b=l8iFgBhGnBYR1dLcACGhdx+sf2awzeNr4dsH5aEu7IDXfqu8TqS/xO7aLXF7WLEW9
+	 QEB50fFI6jc3n9viGMtpvaDkQfjmQr88Dw0+DE394BVMa7ktMOB5fO1SI8Enb4+gfS
+	 zwmfMlAp1Ri93oODf/HSKZqqpBwvTarhHTWpZgdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
 	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.19 762/781] ext4: fix dirtyclusters double decrement on fs shutdown
-Date: Tue, 24 Feb 2026 17:24:31 -0800
-Message-ID: <20260225012418.409783752@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Pedro Falcato <pfalcato@suse.de>,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.19 763/781] ext4: always allocate blocks only from groups inode can use
+Date: Tue, 24 Feb 2026 17:24:32 -0800
+Message-ID: <20260225012418.433455005@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,116 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Foster <bfoster@redhat.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 94a8cea54cd935c54fa2fba70354757c0fc245e3 upstream.
+commit 4865c768b563deff1b6a6384e74a62f143427b42 upstream.
 
-fstests test generic/388 occasionally reproduces a warning in
-ext4_put_super() associated with the dirty clusters count:
+For filesystems with more than 2^32 blocks inodes using indirect block
+based format cannot use blocks beyond the 32-bit limit.
+ext4_mb_scan_groups_linear() takes care to not select these unsupported
+groups for such inodes however other functions selecting groups for
+allocation don't. So far this is harmless because the other selection
+functions are used only with mb_optimize_scan and this is currently
+disabled for inodes with indirect blocks however in the following patch
+we want to enable mb_optimize_scan regardless of inode format.
 
-  WARNING: CPU: 7 PID: 76064 at fs/ext4/super.c:1324 ext4_put_super+0x48c/0x590 [ext4]
-
-Tracing the failure shows that the warning fires due to an
-s_dirtyclusters_counter value of -1. IOW, this appears to be a
-spurious decrement as opposed to some sort of leak. Further tracing
-of the dirty cluster count deltas and an LLM scan of the resulting
-output identified the cause as a double decrement in the error path
-between ext4_mb_mark_diskspace_used() and the caller
-ext4_mb_new_blocks().
-
-First, note that generic/388 is a shutdown vs. fsstress test and so
-produces a random set of operations and shutdown injections. In the
-problematic case, the shutdown triggers an error return from the
-ext4_handle_dirty_metadata() call(s) made from
-ext4_mb_mark_context(). The changed value is non-zero at this point,
-so ext4_mb_mark_diskspace_used() does not exit after the error
-bubbles up from ext4_mb_mark_context(). Instead, the former
-decrements both cluster counters and returns the error up to
-ext4_mb_new_blocks(). The latter falls into the !ar->len out path
-which decrements the dirty clusters counter a second time, creating
-the inconsistency.
-
-To avoid this problem and simplify ownership of the cluster
-reservation in this codepath, lift the counter reduction to a single
-place in the caller. This makes it more clear that
-ext4_mb_new_blocks() is responsible for acquiring cluster
-reservation (via ext4_claim_free_clusters()) in the !delalloc case
-as well as releasing it, regardless of whether it ends up consumed
-or returned due to failure.
-
-Fixes: 0087d9fb3f29 ("ext4: Fix s_dirty_blocks_counter if block allocation failed with nodelalloc")
-Signed-off-by: Brian Foster <bfoster@redhat.com>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20260113171905.118284-1-bfoster@redhat.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
 Cc: stable@kernel.org
+Link: https://patch.msgid.link/20260114182836.14120-3-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc-test.c |    2 +-
- fs/ext4/mballoc.c      |   21 +++++----------------
- 2 files changed, 6 insertions(+), 17 deletions(-)
+ fs/ext4/mballoc.c |   29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
---- a/fs/ext4/mballoc-test.c
-+++ b/fs/ext4/mballoc-test.c
-@@ -567,7 +567,7 @@ test_mark_diskspace_used_range(struct ku
- 
- 	bitmap = mbt_ctx_bitmap(sb, TEST_GOAL_GROUP);
- 	memset(bitmap, 0, sb->s_blocksize);
--	ret = ext4_mb_mark_diskspace_used(ac, NULL, 0);
-+	ret = ext4_mb_mark_diskspace_used(ac, NULL);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
- 	max = EXT4_CLUSTERS_PER_GROUP(sb);
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -4186,8 +4186,7 @@ out_err:
-  * Returns 0 if success or error code
-  */
- static noinline_for_stack int
--ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
--				handle_t *handle, unsigned int reserv_clstrs)
-+ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac, handle_t *handle)
- {
- 	struct ext4_group_desc *gdp;
- 	struct ext4_sb_info *sbi;
-@@ -4242,13 +4241,6 @@ ext4_mb_mark_diskspace_used(struct ext4_
- 	BUG_ON(changed != ac->ac_b_ex.fe_len);
- #endif
- 	percpu_counter_sub(&sbi->s_freeclusters_counter, ac->ac_b_ex.fe_len);
--	/*
--	 * Now reduce the dirty block count also. Should not go negative
--	 */
--	if (!(ac->ac_flags & EXT4_MB_DELALLOC_RESERVED))
--		/* release all the reserved blocks if non delalloc */
--		percpu_counter_sub(&sbi->s_dirtyclusters_counter,
--				   reserv_clstrs);
- 
- 	return err;
- }
-@@ -6333,7 +6325,7 @@ repeat:
- 			ext4_mb_pa_put_free(ac);
+@@ -892,6 +892,21 @@ mb_update_avg_fragment_size(struct super
  	}
- 	if (likely(ac->ac_status == AC_STATUS_FOUND)) {
--		*errp = ext4_mb_mark_diskspace_used(ac, handle, reserv_clstrs);
-+		*errp = ext4_mb_mark_diskspace_used(ac, handle);
- 		if (*errp) {
- 			ext4_discard_allocated_blocks(ac);
- 			goto errout;
-@@ -6364,12 +6356,9 @@ errout:
- out:
- 	if (inquota && ar->len < inquota)
- 		dquot_free_block(ar->inode, EXT4_C2B(sbi, inquota - ar->len));
--	if (!ar->len) {
--		if ((ar->flags & EXT4_MB_DELALLOC_RESERVED) == 0)
--			/* release all the reserved blocks if non delalloc */
--			percpu_counter_sub(&sbi->s_dirtyclusters_counter,
--						reserv_clstrs);
--	}
-+	/* release any reserved blocks */
-+	if (reserv_clstrs)
-+		percpu_counter_sub(&sbi->s_dirtyclusters_counter, reserv_clstrs);
+ }
  
- 	trace_ext4_allocate_blocks(ar, (unsigned long long)block);
++static ext4_group_t ext4_get_allocation_groups_count(
++				struct ext4_allocation_context *ac)
++{
++	ext4_group_t ngroups = ext4_get_groups_count(ac->ac_sb);
++
++	/* non-extent files are limited to low blocks/groups */
++	if (!(ext4_test_inode_flag(ac->ac_inode, EXT4_INODE_EXTENTS)))
++		ngroups = EXT4_SB(ac->ac_sb)->s_blockfile_groups;
++
++	/* Pairs with smp_wmb() in ext4_update_super() */
++	smp_rmb();
++
++	return ngroups;
++}
++
+ static int ext4_mb_scan_groups_xa_range(struct ext4_allocation_context *ac,
+ 					struct xarray *xa,
+ 					ext4_group_t start, ext4_group_t end)
+@@ -899,7 +914,7 @@ static int ext4_mb_scan_groups_xa_range(
+ 	struct super_block *sb = ac->ac_sb;
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	enum criteria cr = ac->ac_criteria;
+-	ext4_group_t ngroups = ext4_get_groups_count(sb);
++	ext4_group_t ngroups = ext4_get_allocation_groups_count(ac);
+ 	unsigned long group = start;
+ 	struct ext4_group_info *grp;
  
+@@ -951,7 +966,7 @@ static int ext4_mb_scan_groups_p2_aligne
+ 	ext4_group_t start, end;
+ 
+ 	start = group;
+-	end = ext4_get_groups_count(ac->ac_sb);
++	end = ext4_get_allocation_groups_count(ac);
+ wrap_around:
+ 	for (i = ac->ac_2order; i < MB_NUM_ORDERS(ac->ac_sb); i++) {
+ 		ret = ext4_mb_scan_groups_largest_free_order_range(ac, i,
+@@ -1001,7 +1016,7 @@ static int ext4_mb_scan_groups_goal_fast
+ 	ext4_group_t start, end;
+ 
+ 	start = group;
+-	end = ext4_get_groups_count(ac->ac_sb);
++	end = ext4_get_allocation_groups_count(ac);
+ wrap_around:
+ 	i = mb_avg_fragment_size_order(ac->ac_sb, ac->ac_g_ex.fe_len);
+ 	for (; i < MB_NUM_ORDERS(ac->ac_sb); i++) {
+@@ -1083,7 +1098,7 @@ static int ext4_mb_scan_groups_best_avai
+ 		min_order = fls(ac->ac_o_ex.fe_len);
+ 
+ 	start = group;
+-	end = ext4_get_groups_count(ac->ac_sb);
++	end = ext4_get_allocation_groups_count(ac);
+ wrap_around:
+ 	for (i = order; i >= min_order; i--) {
+ 		int frag_order;
+@@ -1182,11 +1197,7 @@ static int ext4_mb_scan_groups(struct ex
+ 	int ret = 0;
+ 	ext4_group_t start;
+ 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
+-	ext4_group_t ngroups = ext4_get_groups_count(ac->ac_sb);
+-
+-	/* non-extent files are limited to low blocks/groups */
+-	if (!(ext4_test_inode_flag(ac->ac_inode, EXT4_INODE_EXTENTS)))
+-		ngroups = sbi->s_blockfile_groups;
++	ext4_group_t ngroups = ext4_get_allocation_groups_count(ac);
+ 
+ 	/* searching for the right group start from the goal value specified */
+ 	start = ac->ac_g_ex.fe_group;
 
 
