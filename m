@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB16E2C15BE;
-	Wed, 25 Feb 2026 01:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AF8256C84;
+	Wed, 25 Feb 2026 01:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983957; cv=none; b=Xnk4CfyFcZTXRhKRBKpnm2URlPC0l8tVADBhKVkY86dTlU/GCWo63FZbiXuiG58WtlZYJjwqCE31HjYKXVNkbGjmYT4xMwtTstZnWHAI0uXRcZALF8X1wkdb77TnOZjpEkKksD+nXJ8723RlSlauRfhfLNBZ9Km0pfXdCCDmP7g=
+	t=1771983958; cv=none; b=qu6GN6L/Z2QAM24mkJCeFjWzTdLJcGyh0AvEcK/YXxMbTxRinLnc0LJImF3gVX+9nfVgHId2VRkJptdUhIb1A2sO52y3VjgasENdo3yjNsVTio7oU5XWaXPXoTq7314zI/5AmLQgShZ2fpTJnPgCdWcg2PLekNniYuXPu5Qq/WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983957; c=relaxed/simple;
-	bh=v3NzUwvjy3C+rYIBsiT/W4RV8gmWyyuVIQjpf1Yia1Q=;
+	s=arc-20240116; t=1771983958; c=relaxed/simple;
+	bh=a8Sghkp2A5Zobs0QhKOBdWCrGp+QoVzbAM7dH/+8x/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o0oQuPEYPCnghLtODG3N7VIMrmHG+tx9dgjNORu1Mp0eegApVb2Ds5D5nNzYyo+/EVjKv5hhF5kdHDP01O7utHngH3/1Zm8tXV+D/GZoMCqYxF58iFf4KM2WztYFtSQSycyGIsLRjKjMnl+g9LNhtMWejOlhMN0viYCt3/I9NXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qB7gOJxB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GcHcNKoHjwiC7vUKCAP0OjaaOnZXKCrusN3AxqcoTI1/PTL3bPH/lLZ3J0+ejqnGB/rx6kcBk8okt1YKT0fOZVJDcJygraNZutiY4ZetyO/zRy67i39qCGMmNoP4MrP0DJkd9wpSS7UbxFVvl06BozOnRjfxIFPHgedP8bq9LUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5V8mQ4Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qB7gOJxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF33C116D0;
-	Wed, 25 Feb 2026 01:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5V8mQ4Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AA2C116D0;
+	Wed, 25 Feb 2026 01:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983957;
-	bh=v3NzUwvjy3C+rYIBsiT/W4RV8gmWyyuVIQjpf1Yia1Q=;
+	s=korg; t=1771983958;
+	bh=a8Sghkp2A5Zobs0QhKOBdWCrGp+QoVzbAM7dH/+8x/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qB7gOJxBSf+rfZqUZxm64mLOR8m91Ba7xTbJhGjzqXclxW2YCJ5XZgf8q8dWFV8IM
-	 vd9xbGtnanSzSvmVg7HcfbODHZuhsaBCWGvdB8gb5KHuTUjGXkG5x2xfjphGOAr5Nz
-	 j8v3bT1cf3KgP4Zst54GVUq2jDNcxZeMnTgU+F1s=
+	b=P5V8mQ4ZAqOg4V9bwO+e/ZL6VafSWPMZ25M9IMb3S5VN8UxpS+XFYrx68TFmUmlsK
+	 3RHgxbbGvrwuCDmEJex15JOYRynr/ZG+mFCzzNWtqjjv8ITMUsr8LdxBo62APb5N6v
+	 eA+v5hVBZCUWH8CbEztWyISO0uqPokDaNDKHGSBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gokul Praveen <g-praveen@ti.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Itay Chamiel <itay.chamiel@q.ai>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 215/641] pwm: tiehrpwm: Enable pwmchips parent device before setting configuration
-Date: Tue, 24 Feb 2026 17:19:01 -0800
-Message-ID: <20260225012354.145818068@linuxfoundation.org>
+Subject: [PATCH 6.18 216/641] media: uvcvideo: Fix allocation for small frame sizes
+Date: Tue, 24 Feb 2026 17:19:02 -0800
+Message-ID: <20260225012354.167753484@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -45,70 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gokul Praveen <g-praveen@ti.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 75e7ed52ac7c1da90f304dcda2906636404df921 ]
+[ Upstream commit 40d3ac25c11310bfaa50ed7614846ef75cb69a1e ]
 
-The period and duty cycle configurations on J7200 and J784S4 SoCs
-does not get reflected after setting them using sysfs nodes.
-This is because at the end of ehrpwm_pwm_config function,
-the put_sync function is called which resets the hardware.
+If a frame has size of less or equal than one packet size
+uvc_alloc_urb_buffers() is unable to allocate memory for it due to a
+off-by-one error.
 
-Hold the PWM controller out of low-power mode during .apply() to
-make sure it accepts the writes to its registers.
+Fix the off-by-one-error and now that we are at it, make sure that
+stream->urb_size has always a valid value when we return from the
+function, even when an error happens.
 
-This renders the calls to pm_runtime_get_sync() and
-pm_runtime_put_sync() in ehrpwm_pwm_config() into no-ops, so
-these can be dropped.
-
-Fixes: 5f027d9b83db ("pwm: tiehrpwm: Implement .apply() callback")
-Signed-off-by: Gokul Praveen <g-praveen@ti.com>
-Suggested-by: Uwe Kleine-König <ukleinek@kernel.org>
-Link: https://patch.msgid.link/20260121061134.15466-1-g-praveen@ti.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: efdc8a9585ce ("V4L/DVB (10295): uvcvideo: Retry URB buffers allocation when the system is low on memory.")
+Reported-by: Itay Chamiel <itay.chamiel@q.ai>
+Closes: https://lore.kernel.org/linux-media/CANiDSCsSoZf2LsCCoWAUbCg6tJT-ypXR1B85aa6rAdMVYr2iBQ@mail.gmail.com/T/#t
+Co-developed-by: Itay Chamiel <itay.chamiel@q.ai>
+Signed-off-by: Itay Chamiel <itay.chamiel@q.ai>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Tested-by: Itay Chamiel <itay.chamiel@q.ai>
+Link: https://patch.msgid.link/20260114-uvc-alloc-urb-v1-1-cedf3fb66711@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tiehrpwm.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/media/usb/uvc/uvc_video.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
-index 7a86cb090f76f..2533c95b0ba9d 100644
---- a/drivers/pwm/pwm-tiehrpwm.c
-+++ b/drivers/pwm/pwm-tiehrpwm.c
-@@ -237,8 +237,6 @@ static int ehrpwm_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	if (period_cycles < 1)
- 		period_cycles = 1;
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index 2094e059d7d39..ec76595f3c4be 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1812,7 +1812,7 @@ static int uvc_alloc_urb_buffers(struct uvc_streaming *stream,
+ 		npackets = UVC_MAX_PACKETS;
  
--	pm_runtime_get_sync(pwmchip_parent(chip));
--
- 	/* Update clock prescaler values */
- 	ehrpwm_modify(pc->mmio_base, TBCTL, TBCTL_CLKDIV_MASK, tb_divval);
+ 	/* Retry allocations until one succeed. */
+-	for (; npackets > 1; npackets /= 2) {
++	for (; npackets > 0; npackets /= 2) {
+ 		stream->urb_size = psize * npackets;
  
-@@ -290,8 +288,6 @@ static int ehrpwm_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	if (!(duty_cycles > period_cycles))
- 		ehrpwm_write(pc->mmio_base, cmp_reg, duty_cycles);
- 
--	pm_runtime_put_sync(pwmchip_parent(chip));
--
+ 		for (i = 0; i < UVC_URBS; ++i) {
+@@ -1837,6 +1837,7 @@ static int uvc_alloc_urb_buffers(struct uvc_streaming *stream,
+ 	uvc_dbg(stream->dev, VIDEO,
+ 		"Failed to allocate URB buffers (%u bytes per packet)\n",
+ 		psize);
++	stream->urb_size = 0;
  	return 0;
  }
  
-@@ -378,6 +374,8 @@ static int ehrpwm_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	int err;
- 	bool enabled = pwm->state.enabled;
- 
-+	guard(pm_runtime_active)(pwmchip_parent(chip));
-+
- 	if (state->polarity != pwm->state.polarity) {
- 		if (enabled) {
- 			ehrpwm_pwm_disable(chip, pwm);
 -- 
 2.51.0
 
