@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E57125A642;
-	Wed, 25 Feb 2026 01:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D546725A642;
+	Wed, 25 Feb 2026 01:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983842; cv=none; b=SuKoLCz+lrQSGLlUVAEGxUG+RdLFuwtPn78gVD3W2SWht5Yc2ve/x8Bu6hRNwnJ1EbjrCgNHTziTYsCDnpcfdwLSVt605JLAZr+/IwKK104iGqPm9uELrohPrtJvxurWV4snEOyCS4WKMtm7mX4FPnGdOI0yFacYAHeVHk28SiY=
+	t=1771983843; cv=none; b=ZorA6bkRjtb2X3lLqjjDleIubJd5I+exTVmDqeTD+LUUm6lHXhnXdwTykaxvCBzjwuVeesotXHsBcdQgnQw+JniLI2YEaXrPosrUT1SV6IRrncg4wcC6LA7t/9ZXfq1IUSDr8tHyPC45DYmHed55CMERHgLG8SkjAyG7wgASy1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983842; c=relaxed/simple;
-	bh=ZeiU29uCH0cAqTQ1EKaa1aW7/trRpcZXMObnADEr9Uo=;
+	s=arc-20240116; t=1771983843; c=relaxed/simple;
+	bh=PMO7C00k1MkQZ//mUkDriTarzSqjUiOHaJecc6eN54s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLj94IWqfrVmjMx4ktjHBHzscKbMau7oGsxMdO/9MYMQAxpOylHAL7O+YpIraqUYyJy0q6M1wvPvr1qc+4mNHJ9P0kAzKZPkbq+CKqmztPmQ2FDgPYkAxNuS2Xw6B8vRZRSIdaEo3/qZiWYpfFqcum7ocsRn5l0+8/8F8P1J3mA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSBSseXG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHsv+FddnGAey4qhtWuddKCJyPMuDtkGclUnlsWT5LlQ8HB06kvoCLsvHF95LUvIPGPhqHQ8Qc8OzNMDEglLijTZmUFqG9Vikt0z+DICUDiYzgD7jrjfM6gTd4HwMQPQSoNhj9YwwoptuDvHzgFuncixtbtylup2KShSUqs8CWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc1vo3rC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSBSseXG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2B2C116D0;
-	Wed, 25 Feb 2026 01:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc1vo3rC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1C5C116D0;
+	Wed, 25 Feb 2026 01:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983842;
-	bh=ZeiU29uCH0cAqTQ1EKaa1aW7/trRpcZXMObnADEr9Uo=;
+	s=korg; t=1771983843;
+	bh=PMO7C00k1MkQZ//mUkDriTarzSqjUiOHaJecc6eN54s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSBSseXG0bxpNKkd03xcGC9JqQN6ZDp2PZpcSSLg+lQFdVUBSjVr8jNvnW8hKzsux
-	 P8iKwn13ww6t5eyI6HUPlmg5cEAjMzX3IQN59yZQQST4eA08JFYH7PprC6ZdFhyg3y
-	 BjvJIoSNLurGCJzebYFeINvIvoffAf01c9LSn1ME=
+	b=Fc1vo3rCZE67ly7oVD3ODCcawI3wj0iSP0iQi230Vr1pKtM3W2UvN7MJM0wKU+jmy
+	 hRYgu4lLcc13h/iMKUIOx0oIA1gSBN0k4oEoJjmaHhbij3faFJ1qSK07nMp+VEBVt2
+	 fkuWwLP69Fu5YYA3QnRkACUwcP2bbcQMl6RvL73M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
+	Jonathan McDowell <noodles@meta.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/641] crypto: starfive - Fix memory leak in starfive_aes_aead_do_one_req()
-Date: Tue, 24 Feb 2026 17:17:26 -0800
-Message-ID: <20260225012352.042872416@linuxfoundation.org>
+Subject: [PATCH 6.18 121/641] hwrng: core - Allow runtime disabling of the HW RNG
+Date: Tue, 24 Feb 2026 17:17:27 -0800
+Message-ID: <20260225012352.068008800@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,58 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Jonathan McDowell <noodles@meta.com>
 
-[ Upstream commit ccb679fdae2e62ed92fd9acb25ed809c0226fcc6 ]
+[ Upstream commit e74b96d77da9eb5ee1b603c937c2adab5134a04b ]
 
-The starfive_aes_aead_do_one_req() function allocates rctx->adata with
-kzalloc() but fails to free it if sg_copy_to_buffer() or
-starfive_aes_hw_init() fails, which lead to memory leaks.
+The HW RNG core allows for manual selection of which RNG device to use,
+but does not allow for no device to be enabled. It may be desirable to
+do this on systems with only a single suitable hardware RNG, where we
+need exclusive access to other functionality on this device. In
+particular when performing TPM firmware upgrades this lets us ensure the
+kernel does not try to access the device.
 
-Since rctx->adata is unconditionally freed after the write_adata
-operations, ensure consistent cleanup by freeing the allocation in these
-earlier error paths as well.
+Before:
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
+root@debian-qemu-efi:~# grep "" /sys/devices/virtual/misc/hw_random/rng_*
+/sys/devices/virtual/misc/hw_random/rng_available:tpm-rng-0
+/sys/devices/virtual/misc/hw_random/rng_current:tpm-rng-0
+/sys/devices/virtual/misc/hw_random/rng_quality:1024
+/sys/devices/virtual/misc/hw_random/rng_selected:0
 
-Fixes: 7467147ef9bf ("crypto: starfive - Use dma for aes requests")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+After:
+
+root@debian-qemu-efi:~# grep "" /sys/devices/virtual/misc/hw_random/rng_*
+/sys/devices/virtual/misc/hw_random/rng_available:tpm-rng-0 none
+/sys/devices/virtual/misc/hw_random/rng_current:tpm-rng-0
+/sys/devices/virtual/misc/hw_random/rng_quality:1024
+/sys/devices/virtual/misc/hw_random/rng_selected:0
+
+root@debian-qemu-efi:~# echo none > /sys/devices/virtual/misc/hw_random/rng_current
+root@debian-qemu-efi:~# grep "" /sys/devices/virtual/misc/hw_random/rng_*
+/sys/devices/virtual/misc/hw_random/rng_available:tpm-rng-0 none
+/sys/devices/virtual/misc/hw_random/rng_current:none
+grep: /sys/devices/virtual/misc/hw_random/rng_quality: No such device
+/sys/devices/virtual/misc/hw_random/rng_selected:1
+
+(Observe using bpftrace no calls to TPM being made)
+
+root@debian-qemu-efi:~# echo "" > /sys/devices/virtual/misc/hw_random/rng_current
+root@debian-qemu-efi:~# grep "" /sys/devices/virtual/misc/hw_random/rng_*
+/sys/devices/virtual/misc/hw_random/rng_available:tpm-rng-0 none
+/sys/devices/virtual/misc/hw_random/rng_current:tpm-rng-0
+/sys/devices/virtual/misc/hw_random/rng_quality:1024
+/sys/devices/virtual/misc/hw_random/rng_selected:0
+
+(Observe using bpftrace that calls to the TPM resume)
+
+Signed-off-by: Jonathan McDowell <noodles@meta.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: cc2f39d6ac48 ("hwrng: core - use RCU and work_struct to fix race condition")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/starfive/jh7110-aes.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/char/hw_random/core.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/starfive/jh7110-aes.c b/drivers/crypto/starfive/jh7110-aes.c
-index 426b24889af85..01195664cc7cd 100644
---- a/drivers/crypto/starfive/jh7110-aes.c
-+++ b/drivers/crypto/starfive/jh7110-aes.c
-@@ -669,8 +669,10 @@ static int starfive_aes_aead_do_one_req(struct crypto_engine *engine, void *areq
- 			return -ENOMEM;
+diff --git a/drivers/char/hw_random/core.c b/drivers/char/hw_random/core.c
+index 018316f546215..56d888bebe0c0 100644
+--- a/drivers/char/hw_random/core.c
++++ b/drivers/char/hw_random/core.c
+@@ -341,6 +341,9 @@ static ssize_t rng_current_store(struct device *dev,
  
- 		if (sg_copy_to_buffer(req->src, sg_nents_for_len(req->src, cryp->assoclen),
--				      rctx->adata, cryp->assoclen) != cryp->assoclen)
-+				      rctx->adata, cryp->assoclen) != cryp->assoclen) {
-+			kfree(rctx->adata);
- 			return -EINVAL;
-+		}
+ 	if (sysfs_streq(buf, "")) {
+ 		err = enable_best_rng();
++	} else if (sysfs_streq(buf, "none")) {
++		cur_rng_set_by_user = 1;
++		drop_current_rng();
+ 	} else {
+ 		list_for_each_entry(rng, &rng_list, list) {
+ 			if (sysfs_streq(rng->name, buf)) {
+@@ -392,7 +395,7 @@ static ssize_t rng_available_show(struct device *dev,
+ 		strlcat(buf, rng->name, PAGE_SIZE);
+ 		strlcat(buf, " ", PAGE_SIZE);
  	}
+-	strlcat(buf, "\n", PAGE_SIZE);
++	strlcat(buf, "none\n", PAGE_SIZE);
+ 	mutex_unlock(&rng_mutex);
  
- 	if (cryp->total_in)
-@@ -681,8 +683,11 @@ static int starfive_aes_aead_do_one_req(struct crypto_engine *engine, void *areq
- 	ctx->rctx = rctx;
+ 	return strlen(buf);
+@@ -544,8 +547,8 @@ int hwrng_register(struct hwrng *rng)
+ 	/* Adjust quality field to always have a proper value */
+ 	rng->quality = min_t(u16, min_t(u16, default_quality, 1024), rng->quality ?: 1024);
  
- 	ret = starfive_aes_hw_init(ctx);
--	if (ret)
-+	if (ret) {
-+		if (cryp->assoclen)
-+			kfree(rctx->adata);
- 		return ret;
-+	}
- 
- 	if (!cryp->assoclen)
- 		goto write_text;
+-	if (!current_rng ||
+-	    (!cur_rng_set_by_user && rng->quality > current_rng->quality)) {
++	if (!cur_rng_set_by_user &&
++	    (!current_rng || rng->quality > current_rng->quality)) {
+ 		/*
+ 		 * Set new rng as current as the new rng source
+ 		 * provides better entropy quality and was not
 -- 
 2.51.0
 
