@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCFD1D5ABA;
-	Wed, 25 Feb 2026 01:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8684369A;
+	Wed, 25 Feb 2026 01:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982984; cv=none; b=OOna2wRLTtAJPmxLrYWx9RX6VGgZ1uQY6VjuMmHxa566WhUZU+EZT+tjK2VzMERBviqzSC2UK6XtNB7T1wJjKzPWUbXqEcpEqHwqwngpYgp8F82mZgGy+j8hJ625oxEuJmXYhqyhk9lhx3F4Z/8eqkzmGxMOBRsaxaxDTT2iqDY=
+	t=1771982985; cv=none; b=M2m7iYSIJHAA8yVT9C1MCZr+anwsUiMHEB9+EcFgE84dhZvD7eTgG6+DUG6v80PJWk0tR7DemVyvJFEhRFWMgcz8P6++YQ1mgwcR+s0iKrNwHTJIoEzyU7g/plUXmzLnFI/cDLEG6XRJQCscd1D751HIKgK7uloOI7XVHGxuVX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982984; c=relaxed/simple;
-	bh=XhjNptZwd9oWtkee2WxYrbjQG/YnqtCne8zJJlaldbA=;
+	s=arc-20240116; t=1771982985; c=relaxed/simple;
+	bh=Eww9/HILV/GOH/DtL2WgC2UljnugCKpiwnQm9VDcRoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFHmjt2C6sTBO9QIdfp+unN9CtUJOI7iWmZm3db3RhqC2bLpOBee3IFVJIE4ybJcHknLQGtBv4lf4YYUX1ytOyFrsIJd8U6xrG4UhjRNbr0IiT4DLh8Ym9QCvnQwjt5hh+kiSEDpUevLFxX5Arec9T9yOJUdIJXD/7FiTE2R/tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijc3Ncam; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KkJLl7MJGzmfg9ZlwtLozd2a2f1TgojUZXZpCYW5k4MOZTr9pg65TpO55NC3OSYMIqexdRICTI0k22J89B0tbrKt+NffJM+6XyzibmSJIS75mjdarM4sVmFGee5N4BCXjwND2rhpqwCvh9dTOx25IFnJmZcVef95ReB6vNBSsJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDBf9Sq4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijc3Ncam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0F0C116D0;
-	Wed, 25 Feb 2026 01:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDBf9Sq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57130C116D0;
+	Wed, 25 Feb 2026 01:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982984;
-	bh=XhjNptZwd9oWtkee2WxYrbjQG/YnqtCne8zJJlaldbA=;
+	s=korg; t=1771982985;
+	bh=Eww9/HILV/GOH/DtL2WgC2UljnugCKpiwnQm9VDcRoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ijc3NcamWpm9Fgcpxj/5z/RqrbKHf+az8ueFzfEuhXKN7Z41oNSIqNw/IGoRL0DS8
-	 Mt2VzsmBXpsnHeU5J/34CZe713L6v9J+QpMwSECvHxaIhCtLpCvBR1BnEFLqULUSgD
-	 sXRYObKqma5uWRo0zLX8PtnobYGH5MogZGPlJhoY=
+	b=GDBf9Sq4F/RM/nu8BIDYvYVfRV8t+2qf1NWQcWGoosTkiKlAPeKCxki7sg38UDSFG
+	 hTGxD15yNYNwkCsjwGxoZ9YhBRjg8O4TC6gABLY1rynrEmIpilKboNcnDmAuL+0P5P
+	 Yt0UswaW+El43JSt9C88LlH7iiF4/oiod6K0dDII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingzhou Zhu <newwheatzjz@zohomail.com>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 154/781] arm64: dts: qcom: sdm850-huawei-matebook-e-2019: Correct ipa_fw_mem for the driver to load successfully
-Date: Tue, 24 Feb 2026 17:14:23 -0800
-Message-ID: <20260225012403.435844863@linuxfoundation.org>
+Subject: [PATCH 6.19 155/781] arm64: dts: qcom: sdm845-oneplus: Dont mark ts supply boot-on
+Date: Tue, 24 Feb 2026 17:14:24 -0800
+Message-ID: <20260225012403.459626534@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,43 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jingzhou Zhu <newwheatzjz@zohomail.com>
+From: Casey Connolly <casey.connolly@linaro.org>
 
-[ Upstream commit bc11f6f1d2470fa59846be077555f9d4b7c2c0d3 ]
+[ Upstream commit c9b98b9dad9749bf2eb7336a6fca31a6af1039d7 ]
 
-The ipa driver refuses to load with the old ipa_fw_mem in newer kernels.
-Shrinking its size to 0x5a000 fixes the problem.
+The touchscreen isn't enabled by bootloader and doesn't need to be
+enabled at boot, only when the driver probes, thus remove the
+regulator-boot-on property.
 
-Fixes: aab69794b55d ("arm64: dts: qcom: Add support for Huawei MateBook E 2019")
-
-Signed-off-by: Jingzhou Zhu <newwheatzjz@zohomail.com>
-Link: https://lore.kernel.org/r/20251208031511.3284-3-newwheatzjz@zohomail.com
+Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251118-dts-oneplus-regulators-v2-1-3e67cea1e4e7@ixit.cz
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts b/arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts
-index a5f025ae7dbe6..f048653818702 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts
-@@ -144,12 +144,12 @@ wlan_msa_mem: wlan-msa@8c400000 {
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index db6dd04c51bb5..ee62adfa6af0b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -148,7 +148,6 @@ ts_1p8_supply: ts-1p8-regulator {
  
- 		ipa_fw_mem: ipa-fw@8df00000 {
--			reg = <0 0x8df00000 0 0x100000>;
-+			reg = <0 0x8df00000 0 0x5a000>;
- 			no-map;
- 		};
+ 		gpio = <&tlmm 88 0>;
+ 		enable-active-high;
+-		regulator-boot-on;
+ 	};
  
--		gpu_mem: gpu@97900000 {
--			reg = <0 0x97900000 0 0x5000>;
-+		gpu_mem: gpu@8df5a000 {
-+			reg = <0 0x8df5a000 0 0x5000>;
- 			no-map;
- 		};
- 
+ 	panel_vci_3v3: panel-vci-3v3-regulator {
 -- 
 2.51.0
 
