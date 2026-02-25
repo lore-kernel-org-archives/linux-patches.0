@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C13B26056D;
-	Wed, 25 Feb 2026 01:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799FB26056D;
+	Wed, 25 Feb 2026 01:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983716; cv=none; b=mwAIB2wIty+tWE+ETOdIAj9KQ+4pqjfN2dVCt93NhApyY65ZVbpJ4zZkjZnbclqkQ35wFyqJYyJGW87fjlshRwWDqfSc854I5AHp2wZw/GLpsn6dBqEyWKlEvK3d427k4k1hi27FR/GABOYfwMgaBbrr2lDyzp+Zvgz3k6seTsI=
+	t=1771983717; cv=none; b=VFHzIrXslUsBOaQ2cXxgFn/pw/WrvTo8pv66syU4p7Ucejb6Ul5MiZm7vIXuHv18Ldx1EVm0VeovyfAUQOxy/hn8cY6dThvwJZQmdRmbc3QQAfwXLQMs5+Lw/s4EYEiVJdgzkqL+bWAiTLDZneGWKvDgVM66RPndH1/We/09ieI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983716; c=relaxed/simple;
-	bh=YkIxeVoaJOEz5cQLgzwdxhhbc3o67Fk6p8dNWSQ0GPE=;
+	s=arc-20240116; t=1771983717; c=relaxed/simple;
+	bh=Bka3rrZhPMbT2lB7/ZqTJJGRenrsywcFI/01M1ahDgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=is3ISRfXpkmMtpTYPRzAs17Vkr9QSSUBI8lm13dZExbwmUFBGKNFJ3JTLAd4TytLXfiwtXazV/MqbArQMz1ZM6B4zG8tHpYZdKuQXNnQA9h7R038v0KDPf39M9wLYcgn0KmaJCHnuc9WrGobNlFYhYnxWkEqqU/JP6Df+vLdS+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1kGWcGu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OwN6H17GzVJm7SsgQ0jc+GIA4tB465ZGB9NgmZW0gxppNPcwiz78kOyRHJ+O6jRwEzQWOjMmaPH12w/HerY6EAYMGT0TtNVzD+ALtYChP1Jwv9Ycroj2QdUaDwWR4MEzrHhdzAkg+qICi0I3r80XYKmWs7nht+GBpmcjRGL63Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQdvSRlT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1kGWcGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF03EC116D0;
-	Wed, 25 Feb 2026 01:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQdvSRlT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D70C116D0;
+	Wed, 25 Feb 2026 01:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983716;
-	bh=YkIxeVoaJOEz5cQLgzwdxhhbc3o67Fk6p8dNWSQ0GPE=;
+	s=korg; t=1771983717;
+	bh=Bka3rrZhPMbT2lB7/ZqTJJGRenrsywcFI/01M1ahDgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1kGWcGuaebj85YKORMmzCMH5HWe5TSV0HY8wELVXWcT5REllQg5qrr1Ap20aafy/
-	 1vTR3iQ+aODZMKSIAHwmC80Bw7PUM1Al7Fv4JepYr/CByc4z5rYIVQJaz6vOOvIy6a
-	 8pRfTSWgwwo1rXD8kqtpk/o/Od6bF04FGSyJC29w=
+	b=sQdvSRlTEO2kU38jsgMogyJUdWTzyZK+70CD5jM5UtIMcL1k+kviXeun/ntKKdZBV
+	 /xdjwvuR487CI9MlccdDmAltYHGTZ/GDzXiKF9ZzVIHlpWBVcPQOHpW6cIpJebvA9F
+	 ZUrb/CaATlRctop+DiBIk6FTt3LPLV55bWeOVRNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+046b605f01802054bff0@syzkaller.appspotmail.com,
+	syzbot+ea1cd4aa4d1e98458a55@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 014/641] gfs2: Fix slab-use-after-free in qd_put
-Date: Tue, 24 Feb 2026 17:15:40 -0800
-Message-ID: <20260225012349.300389769@linuxfoundation.org>
+Subject: [PATCH 6.18 015/641] gfs2: Fix use-after-free in iomap inline data write path
+Date: Tue, 24 Feb 2026 17:15:41 -0800
+Message-ID: <20260225012349.329016823@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,43 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 22150a7d401d9e9169b9b68e05bed95f7f49bf69 ]
+[ Upstream commit faddeb848305e79db89ee0479bb0e33380656321 ]
 
-Commit a475c5dd16e5 ("gfs2: Free quota data objects synchronously")
-started freeing quota data objects during filesystem shutdown instead of
-putting them back onto the LRU list, but it failed to remove these
-objects from the LRU list, causing LRU list corruption.  This caused
-use-after-free when the shrinker (gfs2_qd_shrink_scan) tried to access
-already-freed objects on the LRU list.
+The inline data buffer head (dibh) is being released prematurely in
+gfs2_iomap_begin() via release_metapath() while iomap->inline_data
+still points to dibh->b_data. This causes a use-after-free when
+iomap_write_end_inline() later attempts to write to the inline data
+area.
 
-Fix this by removing qd objects from the LRU list before freeing them in
-qd_put().
+The bug sequence:
+1. gfs2_iomap_begin() calls gfs2_meta_inode_buffer() to read inode
+   metadata into dibh
+2. Sets iomap->inline_data = dibh->b_data + sizeof(struct gfs2_dinode)
+3. Calls release_metapath() which calls brelse(dibh), dropping refcount
+   to 0
+4. kswapd reclaims the page (~39ms later in the syzbot report)
+5. iomap_write_end_inline() tries to memcpy() to iomap->inline_data
+6. KASAN detects use-after-free write to freed memory
 
-Initial fix from Deepanshu Kartikey <kartikey406@gmail.com>.
+Fix by storing dibh in iomap->private and incrementing its refcount
+with get_bh() in gfs2_iomap_begin(). The buffer is then properly
+released in gfs2_iomap_end() after the inline write completes,
+ensuring the page stays alive for the entire iomap operation.
 
-Fixes: a475c5dd16e5 ("gfs2: Free quota data objects synchronously")
-Reported-by: syzbot+046b605f01802054bff0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=046b605f01802054bff0
+Note: A C reproducer is not available for this issue. The fix is based
+on analysis of the KASAN report and code review showing the buffer head
+is freed before use.
+
+[agruenba: Take buffer head reference in gfs2_iomap_begin() to avoid
+leaks in gfs2_iomap_get() and gfs2_iomap_alloc().]
+
+Reported-by: syzbot+ea1cd4aa4d1e98458a55@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ea1cd4aa4d1e98458a55
+Fixes: d0a22a4b03b8 ("gfs2: Fix iomap write page reclaim deadlock")
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/gfs2/bmap.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index f2df01f801b81..898fc3937b449 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -334,6 +334,7 @@ static void qd_put(struct gfs2_quota_data *qd)
- 		lockref_mark_dead(&qd->qd_lockref);
- 		spin_unlock(&qd->qd_lockref.lock);
- 
-+		list_lru_del_obj(&gfs2_qd_lru, &qd->qd_lru);
- 		gfs2_qd_dispose(qd);
- 		return;
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index 131091520de6b..fdcac8e3f2ba2 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -1127,10 +1127,18 @@ static int gfs2_iomap_begin(struct inode *inode, loff_t pos, loff_t length,
+ 			goto out_unlock;
+ 		break;
+ 	default:
+-		goto out_unlock;
++		goto out;
  	}
+ 
+ 	ret = gfs2_iomap_begin_write(inode, pos, length, flags, iomap, &mp);
++	if (ret)
++		goto out_unlock;
++
++out:
++	if (iomap->type == IOMAP_INLINE) {
++		iomap->private = metapath_dibh(&mp);
++		get_bh(iomap->private);
++	}
+ 
+ out_unlock:
+ 	release_metapath(&mp);
+@@ -1144,6 +1152,9 @@ static int gfs2_iomap_end(struct inode *inode, loff_t pos, loff_t length,
+ 	struct gfs2_inode *ip = GFS2_I(inode);
+ 	struct gfs2_sbd *sdp = GFS2_SB(inode);
+ 
++	if (iomap->private)
++		brelse(iomap->private);
++
+ 	switch (flags & (IOMAP_WRITE | IOMAP_ZERO)) {
+ 	case IOMAP_WRITE:
+ 		if (flags & IOMAP_DIRECT)
 -- 
 2.51.0
 
