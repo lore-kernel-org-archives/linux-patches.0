@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490E72BAF7;
-	Wed, 25 Feb 2026 01:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B1C2BAF7;
+	Wed, 25 Feb 2026 01:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983052; cv=none; b=pO6XjKKZ+BllRdzJBYPb+7elyoOeth75v4XB4jEArGhrUJrXa3+9rcSrvTcelYyUVYgKcRWzrXY18wNM2NU0aSTUKTsrwXG4ZNMuyjhpLO+IcS07g1FvHT+4f7AaZDXkBaUfcKGHmDnmPXEL4AgTKVxJxU2L/eVWB65bsQfa9ME=
+	t=1771983053; cv=none; b=pxYhj+pjJdpgxGJ6c6/iyb9CwUO7EzW0GO7Pwi4CDCNfM4XDBZWvst8tTV1Nf+12s74GesiXhji67iObAQ73nsiq9jFL7hhHBc6aQbrJiQZjb/N+Zf1/pRIxkIztz7T6JEzXWlcavL/y0+CKnIleDKr1teTX7GY7CA+NpVtIfI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983052; c=relaxed/simple;
-	bh=IlcBvBTVwSxy/idFuzeaNb3oEVO65ZITZjOzu/+levA=;
+	s=arc-20240116; t=1771983053; c=relaxed/simple;
+	bh=KLE3auA+uAof9BOw2Cog3ntMJZwFCyPiQVzKQAoSvLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDX6SHlZ5JXo9D1h/1GgF24U5LvBRVGGY8Oy7RJQ1h7lLFNE2D6WqRUEjfr2rJQuZWOsrpVakt2aO8ysqS/MyCJ0KkqR/VPqSiDrbdGtVjixIjq7ikBfi8zsJRqWNmJajiiT/3XBewAcQB05z5DHj3nlyzNzLVmGx4IsO1n3IkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mleHfzCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bz7pikUyfIgOkFV1xd0WTelvxGjtTuqm1n1VQyj+5k7hyZ3n0Pt1IPlag3DsF68pseEtqLSbJbuSdNWtEkPX7+tuxU9DdZ3BIZaZXCyzxA6xvwle/GnBdwpQylfsz7QNNXIYWfw5mKV5XPCjryQUGP9+GuQbitSEJja40/7a4Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XSHCpz0O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mleHfzCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A41C116D0;
-	Wed, 25 Feb 2026 01:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XSHCpz0O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA87C116D0;
+	Wed, 25 Feb 2026 01:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983052;
-	bh=IlcBvBTVwSxy/idFuzeaNb3oEVO65ZITZjOzu/+levA=;
+	s=korg; t=1771983053;
+	bh=KLE3auA+uAof9BOw2Cog3ntMJZwFCyPiQVzKQAoSvLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mleHfzCkaaAaOClW5ABn1FTx4MpzMOuODJTn4uL6MKunfP7cXzGCOmt7xfRJLwnVd
-	 OBDpM5wY8WMWJJ8WNqkDd0YYb5eXhWUn5Gwitw4BZbzfYb3NTuMnwP9m4zC3K3GEeF
-	 WCcwfLpyDStLI4aUDXMaemeRRr3XPHamd5v0AAww=
+	b=XSHCpz0Oerk9AtOEl32/ebLt0GhwFZkY++0MDpyx3Kyqt2kekM36PSBJ2Z7Urh9LL
+	 ssnJnMuxy14EINVBeaxUGZWX0f0EHkx9hJq6mQmZTQl8CHfLye+nDgMbGwDISnnVaK
+	 Gr8+g6ZiP5+t+9ZDPaeQfQvt+71WcT/NSYLvNONs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 217/781] ALSA: seq: oss: Relax __free() variable declarations
-Date: Tue, 24 Feb 2026 17:15:26 -0800
-Message-ID: <20260225012405.041149244@linuxfoundation.org>
+Subject: [PATCH 6.19 218/781] ALSA: seq: Relax __free() variable declarations
+Date: Tue, 24 Feb 2026 17:15:27 -0800
+Message-ID: <20260225012405.064474991@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit df27c92753474cc8540e46a476119857ced7ae21 ]
+[ Upstream commit 13bc5c5394b22fd0a0585733bbbd9266159a840c ]
 
 We used to have a variable declaration with __free() initialized with
 NULL.  This was to keep the old coding style rule, but recently it's
@@ -64,251 +64,753 @@ Although the current code has no bug, per se, let's follow the new
 standard and move the declaration to the place of assignment (or
 directly assign the allocated result) instead of NULL initializations.
 
-Fixes: 80ccbe91adab ("ALSA: seq: oss/synth: Clean up with guard and auto cleanup")
-Fixes: 895a46e034f9 ("ALSA: seq: oss/midi: Cleanup with guard and auto-cleanup")
+Note that there is a remaining __free() with NULL initialization; it's
+because of the non-trivial code conditionally assigning the data.
+
+Fixes: 04a86185b785 ("ALSA: seq: Clean up queue locking with auto cleanup")
+Fixes: 0869afc958a0 ("ALSA: seq: Clean up port locking with auto cleanup")
+Fixes: 99e16633958b ("ALSA: seq: Use auto-cleanup for client refcounting")
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251216140634.171890-6-tiwai@suse.de
+Link: https://patch.msgid.link/20251216140634.171890-7-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/oss/seq_oss_init.c  |  4 +--
- sound/core/seq/oss/seq_oss_midi.c  | 45 +++++++++++++++---------------
- sound/core/seq/oss/seq_oss_synth.c | 23 +++++++--------
- 3 files changed, 36 insertions(+), 36 deletions(-)
+ sound/core/seq/seq_clientmgr.c  | 171 ++++++++++++++++----------------
+ sound/core/seq/seq_compat.c     |   4 +-
+ sound/core/seq/seq_midi.c       |  10 +-
+ sound/core/seq/seq_ports.c      |  11 +-
+ sound/core/seq/seq_queue.c      |  32 +++---
+ sound/core/seq/seq_ump_client.c |  16 +--
+ sound/core/seq/seq_virmidi.c    |   4 +-
+ 7 files changed, 126 insertions(+), 122 deletions(-)
 
-diff --git a/sound/core/seq/oss/seq_oss_init.c b/sound/core/seq/oss/seq_oss_init.c
-index 973f057eb731f..e0c368bd09cb6 100644
---- a/sound/core/seq/oss/seq_oss_init.c
-+++ b/sound/core/seq/oss/seq_oss_init.c
-@@ -63,10 +63,10 @@ int __init
- snd_seq_oss_create_client(void)
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index f9a6e497f997c..75a7a2af9d8c9 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -494,9 +494,9 @@ static int check_port_perm(struct snd_seq_client_port *port, unsigned int flags)
+  */
+ static struct snd_seq_client *get_event_dest_client(struct snd_seq_event *event)
  {
- 	int rc;
+-	struct snd_seq_client *dest __free(snd_seq_client) = NULL;
++	struct snd_seq_client *dest __free(snd_seq_client) =
++		snd_seq_client_use_ptr(event->dest.client);
+ 
+-	dest = snd_seq_client_use_ptr(event->dest.client);
+ 	if (dest == NULL)
+ 		return NULL;
+ 	if (! dest->accept_input)
+@@ -565,9 +565,9 @@ static int bounce_error_event(struct snd_seq_client *client,
+ static int update_timestamp_of_queue(struct snd_seq_event *event,
+ 				     int queue, int real_time)
+ {
+-	struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
++	struct snd_seq_queue *q __free(snd_seq_queue) =
++		queueptr(queue);
+ 
+-	q = queueptr(queue);
+ 	if (! q)
+ 		return 0;
+ 	event->queue = queue;
+@@ -609,13 +609,13 @@ static int _snd_seq_deliver_single_event(struct snd_seq_client *client,
+ 					 struct snd_seq_event *event,
+ 					 int atomic, int hop)
+ {
+-	struct snd_seq_client *dest __free(snd_seq_client) = NULL;
+-	struct snd_seq_client_port *dest_port __free(snd_seq_port) = NULL;
+-
+-	dest = get_event_dest_client(event);
++	struct snd_seq_client *dest __free(snd_seq_client) =
++		get_event_dest_client(event);
+ 	if (dest == NULL)
+ 		return -ENOENT;
+-	dest_port = snd_seq_port_use_ptr(dest, event->dest.port);
++
++	struct snd_seq_client_port *dest_port __free(snd_seq_port) =
++		snd_seq_port_use_ptr(dest, event->dest.port);
+ 	if (dest_port == NULL)
+ 		return -ENOENT;
+ 
+@@ -672,7 +672,6 @@ static int __deliver_to_subscribers(struct snd_seq_client *client,
+ 				    struct snd_seq_event *event,
+ 				    int port, int atomic, int hop)
+ {
+-	struct snd_seq_client_port *src_port __free(snd_seq_port) = NULL;
+ 	struct snd_seq_subscribers *subs;
+ 	int err, result = 0, num_ev = 0;
+ 	union __snd_seq_event event_saved;
+@@ -681,7 +680,9 @@ static int __deliver_to_subscribers(struct snd_seq_client *client,
+ 
+ 	if (port < 0)
+ 		return 0;
+-	src_port = snd_seq_port_use_ptr(client, port);
++
++	struct snd_seq_client_port *src_port __free(snd_seq_port) =
++		snd_seq_port_use_ptr(client, port);
+ 	if (!src_port)
+ 		return 0;
+ 
+@@ -801,13 +802,13 @@ static int snd_seq_deliver_event(struct snd_seq_client *client, struct snd_seq_e
+  */
+ int snd_seq_dispatch_event(struct snd_seq_event_cell *cell, int atomic, int hop)
+ {
+-	struct snd_seq_client *client __free(snd_seq_client) = NULL;
+ 	int result;
+ 
+ 	if (snd_BUG_ON(!cell))
+ 		return -EINVAL;
+ 
+-	client = snd_seq_client_use_ptr(cell->event.source.client);
++	struct snd_seq_client *client __free(snd_seq_client) =
++		snd_seq_client_use_ptr(cell->event.source.client);
+ 	if (client == NULL) {
+ 		snd_seq_cell_free(cell); /* release this cell */
+ 		return -EINVAL;
+@@ -1154,10 +1155,10 @@ static int snd_seq_ioctl_system_info(struct snd_seq_client *client, void *arg)
+ static int snd_seq_ioctl_running_mode(struct snd_seq_client *client, void  *arg)
+ {
+ 	struct snd_seq_running_info *info = arg;
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
+-
+ 	/* requested client number */
+-	cptr = client_load_and_use_ptr(info->client);
++	struct snd_seq_client *cptr __free(snd_seq_client) =
++		client_load_and_use_ptr(info->client);
++
+ 	if (cptr == NULL)
+ 		return -ENOENT;		/* don't change !!! */
+ 
+@@ -1207,10 +1208,10 @@ static int snd_seq_ioctl_get_client_info(struct snd_seq_client *client,
+ 					 void *arg)
+ {
+ 	struct snd_seq_client_info *client_info = arg;
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
+-
+ 	/* requested client number */
+-	cptr = client_load_and_use_ptr(client_info->client);
++	struct snd_seq_client *cptr __free(snd_seq_client) =
++		client_load_and_use_ptr(client_info->client);
++
+ 	if (cptr == NULL)
+ 		return -ENOENT;		/* don't change !!! */
+ 
+@@ -1344,14 +1345,14 @@ static int snd_seq_ioctl_delete_port(struct snd_seq_client *client, void *arg)
+ static int snd_seq_ioctl_get_port_info(struct snd_seq_client *client, void *arg)
+ {
+ 	struct snd_seq_port_info *info = arg;
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
+-	struct snd_seq_client_port *port __free(snd_seq_port) = NULL;
+ 
+-	cptr = client_load_and_use_ptr(info->addr.client);
++	struct snd_seq_client *cptr __free(snd_seq_client) =
++		client_load_and_use_ptr(info->addr.client);
+ 	if (cptr == NULL)
+ 		return -ENXIO;
+ 
+-	port = snd_seq_port_use_ptr(cptr, info->addr.port);
++	struct snd_seq_client_port *port __free(snd_seq_port) =
++		snd_seq_port_use_ptr(cptr, info->addr.port);
+ 	if (port == NULL)
+ 		return -ENOENT;			/* don't change */
+ 
+@@ -1367,11 +1368,12 @@ static int snd_seq_ioctl_get_port_info(struct snd_seq_client *client, void *arg)
+ static int snd_seq_ioctl_set_port_info(struct snd_seq_client *client, void *arg)
+ {
+ 	struct snd_seq_port_info *info = arg;
+-	struct snd_seq_client_port *port __free(snd_seq_port) = NULL;
+ 
+ 	if (info->addr.client != client->number) /* only set our own ports ! */
+ 		return -EPERM;
+-	port = snd_seq_port_use_ptr(client, info->addr.port);
++
++	struct snd_seq_client_port *port __free(snd_seq_port) =
++		snd_seq_port_use_ptr(client, info->addr.port);
+ 	if (port) {
+ 		snd_seq_set_port_info(port, info);
+ 		/* notify the change */
+@@ -1444,22 +1446,22 @@ static int snd_seq_ioctl_subscribe_port(struct snd_seq_client *client,
+ 					void *arg)
+ {
+ 	struct snd_seq_port_subscribe *subs = arg;
+-	struct snd_seq_client *receiver __free(snd_seq_client) = NULL;
+-	struct snd_seq_client *sender __free(snd_seq_client) = NULL;
+-	struct snd_seq_client_port *sport __free(snd_seq_port) = NULL;
+-	struct snd_seq_client_port *dport __free(snd_seq_port) = NULL;
+ 	int result;
+ 
+-	receiver = client_load_and_use_ptr(subs->dest.client);
++	struct snd_seq_client *receiver __free(snd_seq_client) =
++		client_load_and_use_ptr(subs->dest.client);
+ 	if (!receiver)
+ 		return -EINVAL;
+-	sender = client_load_and_use_ptr(subs->sender.client);
++	struct snd_seq_client *sender __free(snd_seq_client) =
++		client_load_and_use_ptr(subs->sender.client);
+ 	if (!sender)
+ 		return -EINVAL;
+-	sport = snd_seq_port_use_ptr(sender, subs->sender.port);
++	struct snd_seq_client_port *sport __free(snd_seq_port) =
++		snd_seq_port_use_ptr(sender, subs->sender.port);
+ 	if (!sport)
+ 		return -EINVAL;
+-	dport = snd_seq_port_use_ptr(receiver, subs->dest.port);
++	struct snd_seq_client_port *dport __free(snd_seq_port) =
++		snd_seq_port_use_ptr(receiver, subs->dest.port);
+ 	if (!dport)
+ 		return -EINVAL;
+ 
+@@ -1483,22 +1485,22 @@ static int snd_seq_ioctl_unsubscribe_port(struct snd_seq_client *client,
+ 					  void *arg)
+ {
+ 	struct snd_seq_port_subscribe *subs = arg;
+-	struct snd_seq_client *receiver __free(snd_seq_client) = NULL;
+-	struct snd_seq_client *sender __free(snd_seq_client) = NULL;
+-	struct snd_seq_client_port *sport __free(snd_seq_port) = NULL;
+-	struct snd_seq_client_port *dport __free(snd_seq_port) = NULL;
+ 	int result;
+ 
+-	receiver = snd_seq_client_use_ptr(subs->dest.client);
++	struct snd_seq_client *receiver __free(snd_seq_client) =
++		snd_seq_client_use_ptr(subs->dest.client);
+ 	if (!receiver)
+ 		return -ENXIO;
+-	sender = snd_seq_client_use_ptr(subs->sender.client);
++	struct snd_seq_client *sender __free(snd_seq_client) =
++		snd_seq_client_use_ptr(subs->sender.client);
+ 	if (!sender)
+ 		return -ENXIO;
+-	sport = snd_seq_port_use_ptr(sender, subs->sender.port);
++	struct snd_seq_client_port *sport __free(snd_seq_port) =
++		snd_seq_port_use_ptr(sender, subs->sender.port);
+ 	if (!sport)
+ 		return -ENXIO;
+-	dport = snd_seq_port_use_ptr(receiver, subs->dest.port);
++	struct snd_seq_client_port *dport __free(snd_seq_port) =
++		snd_seq_port_use_ptr(receiver, subs->dest.port);
+ 	if (!dport)
+ 		return -ENXIO;
+ 
+@@ -1518,9 +1520,9 @@ static int snd_seq_ioctl_unsubscribe_port(struct snd_seq_client *client,
+ static int snd_seq_ioctl_create_queue(struct snd_seq_client *client, void *arg)
+ {
+ 	struct snd_seq_queue_info *info = arg;
+-	struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
++	struct snd_seq_queue *q __free(snd_seq_queue) =
++		snd_seq_queue_alloc(client->number, info->locked, info->flags);
+ 
+-	q = snd_seq_queue_alloc(client->number, info->locked, info->flags);
+ 	if (IS_ERR(q))
+ 		return PTR_ERR(q);
+ 
+@@ -1549,9 +1551,9 @@ static int snd_seq_ioctl_get_queue_info(struct snd_seq_client *client,
+ 					void *arg)
+ {
+ 	struct snd_seq_queue_info *info = arg;
+-	struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
++	struct snd_seq_queue *q __free(snd_seq_queue) =
++		queueptr(info->queue);
+ 
+-	q = queueptr(info->queue);
+ 	if (q == NULL)
+ 		return -EINVAL;
+ 
+@@ -1569,7 +1571,6 @@ static int snd_seq_ioctl_set_queue_info(struct snd_seq_client *client,
+ 					void *arg)
+ {
+ 	struct snd_seq_queue_info *info = arg;
+-	struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
+ 
+ 	if (info->owner != client->number)
+ 		return -EINVAL;
+@@ -1584,7 +1585,8 @@ static int snd_seq_ioctl_set_queue_info(struct snd_seq_client *client,
+ 		return -EPERM;
+ 	}	
+ 
+-	q = queueptr(info->queue);
++	struct snd_seq_queue *q __free(snd_seq_queue) =
++		queueptr(info->queue);
+ 	if (! q)
+ 		return -EINVAL;
+ 	if (q->owner != client->number)
+@@ -1599,9 +1601,9 @@ static int snd_seq_ioctl_get_named_queue(struct snd_seq_client *client,
+ 					 void *arg)
+ {
+ 	struct snd_seq_queue_info *info = arg;
+-	struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
++	struct snd_seq_queue *q __free(snd_seq_queue) =
++		snd_seq_queue_find_name(info->name);
+ 
+-	q = snd_seq_queue_find_name(info->name);
+ 	if (q == NULL)
+ 		return -EINVAL;
+ 	info->queue = q->queue;
+@@ -1616,10 +1618,10 @@ static int snd_seq_ioctl_get_queue_status(struct snd_seq_client *client,
+ 					  void *arg)
+ {
+ 	struct snd_seq_queue_status *status = arg;
+-	struct snd_seq_queue *queue __free(snd_seq_queue) = NULL;
+ 	struct snd_seq_timer *tmr;
++	struct snd_seq_queue *queue __free(snd_seq_queue) =
++		queueptr(status->queue);
+ 
+-	queue = queueptr(status->queue);
+ 	if (queue == NULL)
+ 		return -EINVAL;
+ 	memset(status, 0, sizeof(*status));
+@@ -1644,10 +1646,10 @@ static int snd_seq_ioctl_get_queue_tempo(struct snd_seq_client *client,
+ 					 void *arg)
+ {
+ 	struct snd_seq_queue_tempo *tempo = arg;
+-	struct snd_seq_queue *queue __free(snd_seq_queue) = NULL;
+ 	struct snd_seq_timer *tmr;
++	struct snd_seq_queue *queue __free(snd_seq_queue) =
++		queueptr(tempo->queue);
+ 
+-	queue = queueptr(tempo->queue);
+ 	if (queue == NULL)
+ 		return -EINVAL;
+ 	memset(tempo, 0, sizeof(*tempo));
+@@ -1693,10 +1695,10 @@ static int snd_seq_ioctl_get_queue_timer(struct snd_seq_client *client,
+ 					 void *arg)
+ {
+ 	struct snd_seq_queue_timer *timer = arg;
+-	struct snd_seq_queue *queue __free(snd_seq_queue) = NULL;
+ 	struct snd_seq_timer *tmr;
++	struct snd_seq_queue *queue __free(snd_seq_queue) =
++		queueptr(timer->queue);
+ 
+-	queue = queueptr(timer->queue);
+ 	if (queue == NULL)
+ 		return -EINVAL;
+ 
+@@ -1726,10 +1728,10 @@ static int snd_seq_ioctl_set_queue_timer(struct snd_seq_client *client,
+ 		return -EINVAL;
+ 
+ 	if (snd_seq_queue_check_access(timer->queue, client->number)) {
+-		struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
+ 		struct snd_seq_timer *tmr;
++		struct snd_seq_queue *q __free(snd_seq_queue) =
++			queueptr(timer->queue);
+ 
+-		q = queueptr(timer->queue);
+ 		if (q == NULL)
+ 			return -ENXIO;
+ 		guard(mutex)(&q->timer_mutex);
+@@ -1788,9 +1790,9 @@ static int snd_seq_ioctl_get_client_pool(struct snd_seq_client *client,
+ 					 void *arg)
+ {
+ 	struct snd_seq_client_pool *info = arg;
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
++	struct snd_seq_client *cptr __free(snd_seq_client) =
++		client_load_and_use_ptr(info->client);
+ 
+-	cptr = client_load_and_use_ptr(info->client);
+ 	if (cptr == NULL)
+ 		return -ENOENT;
+ 	memset(info, 0, sizeof(*info));
+@@ -1888,13 +1890,13 @@ static int snd_seq_ioctl_get_subscription(struct snd_seq_client *client,
+ 					  void *arg)
+ {
+ 	struct snd_seq_port_subscribe *subs = arg;
+-	struct snd_seq_client *sender __free(snd_seq_client) = NULL;
+-	struct snd_seq_client_port *sport __free(snd_seq_port) = NULL;
+ 
+-	sender = client_load_and_use_ptr(subs->sender.client);
++	struct snd_seq_client *sender __free(snd_seq_client) =
++		client_load_and_use_ptr(subs->sender.client);
+ 	if (!sender)
+ 		return -EINVAL;
+-	sport = snd_seq_port_use_ptr(sender, subs->sender.port);
++	struct snd_seq_client_port *sport __free(snd_seq_port) =
++		snd_seq_port_use_ptr(sender, subs->sender.port);
+ 	if (!sport)
+ 		return -EINVAL;
+ 	return snd_seq_port_get_subscription(&sport->c_src, &subs->dest, subs);
+@@ -1907,16 +1909,16 @@ static int snd_seq_ioctl_get_subscription(struct snd_seq_client *client,
+ static int snd_seq_ioctl_query_subs(struct snd_seq_client *client, void *arg)
+ {
+ 	struct snd_seq_query_subs *subs = arg;
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
+-	struct snd_seq_client_port *port __free(snd_seq_port) = NULL;
+ 	struct snd_seq_port_subs_info *group;
+ 	struct list_head *p;
+ 	int i;
+ 
+-	cptr = client_load_and_use_ptr(subs->root.client);
++	struct snd_seq_client *cptr __free(snd_seq_client) =
++		client_load_and_use_ptr(subs->root.client);
+ 	if (!cptr)
+ 		return -ENXIO;
+-	port = snd_seq_port_use_ptr(cptr, subs->root.port);
++	struct snd_seq_client_port *port __free(snd_seq_port) =
++		snd_seq_port_use_ptr(cptr, subs->root.port);
+ 	if (!port)
+ 		return -ENXIO;
+ 
+@@ -1963,7 +1965,6 @@ static int snd_seq_ioctl_query_next_client(struct snd_seq_client *client,
+ 					   void *arg)
+ {
+ 	struct snd_seq_client_info *info = arg;
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
+ 
+ 	/* search for next client */
+ 	if (info->client < INT_MAX)
+@@ -1971,7 +1972,8 @@ static int snd_seq_ioctl_query_next_client(struct snd_seq_client *client,
+ 	if (info->client < 0)
+ 		info->client = 0;
+ 	for (; info->client < SNDRV_SEQ_MAX_CLIENTS; info->client++) {
+-		cptr = client_load_and_use_ptr(info->client);
++		struct snd_seq_client *cptr __free(snd_seq_client) =
++			client_load_and_use_ptr(info->client);
+ 		if (cptr) {
+ 			get_client_info(cptr, info);
+ 			return 0; /* found */
+@@ -1987,16 +1989,16 @@ static int snd_seq_ioctl_query_next_port(struct snd_seq_client *client,
+ 					 void *arg)
+ {
+ 	struct snd_seq_port_info *info = arg;
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
+-	struct snd_seq_client_port *port __free(snd_seq_port) = NULL;
+ 
+-	cptr = client_load_and_use_ptr(info->addr.client);
++	struct snd_seq_client *cptr __free(snd_seq_client) =
++		client_load_and_use_ptr(info->addr.client);
+ 	if (cptr == NULL)
+ 		return -ENXIO;
+ 
+ 	/* search for next port */
+ 	info->addr.port++;
+-	port = snd_seq_port_query_nearest(cptr, info);
++	struct snd_seq_client_port *port __free(snd_seq_port) =
++		snd_seq_port_query_nearest(cptr, info);
+ 	if (port == NULL)
+ 		return -ENOENT;
+ 
+@@ -2067,7 +2069,6 @@ static int snd_seq_ioctl_client_ump_info(struct snd_seq_client *caller,
+ {
+ 	struct snd_seq_client_ump_info __user *argp =
+ 		(struct snd_seq_client_ump_info __user *)arg;
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
+ 	int client, type, err = 0;
+ 	size_t size;
+ 	void *p;
+@@ -2083,7 +2084,9 @@ static int snd_seq_ioctl_client_ump_info(struct snd_seq_client *caller,
+ 		size = sizeof(struct snd_ump_endpoint_info);
+ 	else
+ 		size = sizeof(struct snd_ump_block_info);
+-	cptr = client_load_and_use_ptr(client);
++
++	struct snd_seq_client *cptr __free(snd_seq_client) =
++		client_load_and_use_ptr(client);
+ 	if (!cptr)
+ 		return -ENOENT;
+ 
+@@ -2342,8 +2345,6 @@ EXPORT_SYMBOL(snd_seq_delete_kernel_client);
+ int snd_seq_kernel_client_enqueue(int client, struct snd_seq_event *ev,
+ 				  struct file *file, bool blocking)
+ {
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
+-
+ 	if (snd_BUG_ON(!ev))
+ 		return -EINVAL;
+ 
+@@ -2360,7 +2361,8 @@ int snd_seq_kernel_client_enqueue(int client, struct snd_seq_event *ev,
+ 	if (check_event_type_and_length(ev))
+ 		return -EINVAL;
+ 
+-	cptr = client_load_and_use_ptr(client);
++	struct snd_seq_client *cptr __free(snd_seq_client) =
++		client_load_and_use_ptr(client);
+ 	if (cptr == NULL)
+ 		return -EINVAL;
+ 	
+@@ -2385,8 +2387,6 @@ EXPORT_SYMBOL(snd_seq_kernel_client_enqueue);
+ int snd_seq_kernel_client_dispatch(int client, struct snd_seq_event * ev,
+ 				   int atomic, int hop)
+ {
+-	struct snd_seq_client *cptr __free(snd_seq_client) = NULL;
+-
+ 	if (snd_BUG_ON(!ev))
+ 		return -EINVAL;
+ 
+@@ -2397,7 +2397,8 @@ int snd_seq_kernel_client_dispatch(int client, struct snd_seq_event * ev,
+ 	if (check_event_type_and_length(ev))
+ 		return -EINVAL;
+ 
+-	cptr = snd_seq_client_use_ptr(client);
++	struct snd_seq_client *cptr __free(snd_seq_client) =
++		snd_seq_client_use_ptr(client);
+ 	if (cptr == NULL)
+ 		return -EINVAL;
+ 
+@@ -2450,9 +2451,9 @@ EXPORT_SYMBOL(snd_seq_kernel_client_ctl);
+ /* a similar like above but taking locks; used only from OSS sequencer layer */
+ int snd_seq_kernel_client_ioctl(int clientid, unsigned int cmd, void *arg)
+ {
+-	struct snd_seq_client *client __free(snd_seq_client) = NULL;
++	struct snd_seq_client *client __free(snd_seq_client) =
++		client_load_and_use_ptr(clientid);
+ 
+-	client = client_load_and_use_ptr(clientid);
+ 	if (!client)
+ 		return -ENXIO;
+ 	guard(mutex)(&client->ioctl_mutex);
+@@ -2597,9 +2598,9 @@ void snd_seq_info_clients_read(struct snd_info_entry *entry,
+ 
+ 	/* list the client table */
+ 	for (c = 0; c < SNDRV_SEQ_MAX_CLIENTS; c++) {
+-		struct snd_seq_client *client __free(snd_seq_client) = NULL;
++		struct snd_seq_client *client __free(snd_seq_client) =
++			client_load_and_use_ptr(c);
+ 
+-		client = client_load_and_use_ptr(c);
+ 		if (client == NULL)
+ 			continue;
+ 		if (client->type == NO_CLIENT)
+diff --git a/sound/core/seq/seq_compat.c b/sound/core/seq/seq_compat.c
+index 643af4c1e8386..260428747e337 100644
+--- a/sound/core/seq/seq_compat.c
++++ b/sound/core/seq/seq_compat.c
+@@ -31,10 +31,10 @@ struct snd_seq_port_info32 {
+ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned int cmd,
+ 					struct snd_seq_port_info32 __user *data32)
+ {
+-	struct snd_seq_port_info *data __free(kfree) = NULL;
+ 	int err;
++	struct snd_seq_port_info *data __free(kfree) =
++		kmalloc(sizeof(*data), GFP_KERNEL);
+ 
+-	data = kmalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+ 
+diff --git a/sound/core/seq/seq_midi.c b/sound/core/seq/seq_midi.c
+index 581e138a31159..73dbef8fb2ac0 100644
+--- a/sound/core/seq/seq_midi.c
++++ b/sound/core/seq/seq_midi.c
+@@ -270,8 +270,6 @@ snd_seq_midisynth_probe(struct device *_dev)
+ 	struct snd_seq_device *dev = to_seq_dev(_dev);
+ 	struct seq_midisynth_client *client;
+ 	struct seq_midisynth *msynth, *ms;
 -	struct snd_seq_port_info *port __free(kfree) = NULL;
- 	struct snd_seq_port_callback port_callback;
+-	struct snd_rawmidi_info *info __free(kfree) = NULL;
+ 	struct snd_rawmidi *rmidi = dev->private_data;
+ 	int newclient = 0;
+ 	unsigned int p, ports;
+@@ -282,7 +280,9 @@ snd_seq_midisynth_probe(struct device *_dev)
+ 
+ 	if (snd_BUG_ON(!card || device < 0 || device >= SNDRV_RAWMIDI_DEVICES))
+ 		return -EINVAL;
+-	info = kmalloc(sizeof(*info), GFP_KERNEL);
++
++	struct snd_rawmidi_info *info __free(kfree) =
++		kmalloc(sizeof(*info), GFP_KERNEL);
+ 	if (! info)
+ 		return -ENOMEM;
+ 	info->device = device;
+@@ -320,7 +320,9 @@ snd_seq_midisynth_probe(struct device *_dev)
+ 	}
+ 
+ 	msynth = kcalloc(ports, sizeof(struct seq_midisynth), GFP_KERNEL);
+-	port = kmalloc(sizeof(*port), GFP_KERNEL);
++
 +	struct snd_seq_port_info *port __free(kfree) =
-+		kzalloc(sizeof(*port), GFP_KERNEL);
++		kmalloc(sizeof(*port), GFP_KERNEL);
+ 	if (msynth == NULL || port == NULL)
+ 		goto __nomem;
+ 
+diff --git a/sound/core/seq/seq_ports.c b/sound/core/seq/seq_ports.c
+index 40fa379847e57..bbec34bba4f99 100644
+--- a/sound/core/seq/seq_ports.c
++++ b/sound/core/seq/seq_ports.c
+@@ -211,14 +211,13 @@ static void clear_subscriber_list(struct snd_seq_client *client,
+ 
+ 	list_for_each_safe(p, n, &grp->list_head) {
+ 		struct snd_seq_subscribers *subs;
+-		struct snd_seq_client *c __free(snd_seq_client) = NULL;
+-		struct snd_seq_client_port *aport __free(snd_seq_port) = NULL;
+ 
+ 		subs = get_subscriber(p, is_src);
+-		if (is_src)
+-			aport = get_client_port(&subs->info.dest, &c);
+-		else
+-			aport = get_client_port(&subs->info.sender, &c);
++		struct snd_seq_client *c __free(snd_seq_client) = NULL;
++		struct snd_seq_client_port *aport __free(snd_seq_port) =
++			is_src ?
++			get_client_port(&subs->info.dest, &c) :
++			get_client_port(&subs->info.sender, &c);
+ 		delete_and_unsubscribe_port(client, port, subs, is_src, false);
+ 
+ 		if (!aport) {
+diff --git a/sound/core/seq/seq_queue.c b/sound/core/seq/seq_queue.c
+index f5c0e401c8ae5..c0c5e1424c5a1 100644
+--- a/sound/core/seq/seq_queue.c
++++ b/sound/core/seq/seq_queue.c
+@@ -211,8 +211,9 @@ struct snd_seq_queue *snd_seq_queue_find_name(char *name)
+ 	int i;
+ 
+ 	for (i = 0; i < SNDRV_SEQ_MAX_QUEUES; i++) {
+-		struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
+-		q = queueptr(i);
++		struct snd_seq_queue *q __free(snd_seq_queue) =
++			queueptr(i);
++
+ 		if (q) {
+ 			if (strncmp(q->name, name, sizeof(q->name)) == 0)
+ 				return no_free_ptr(q);
+@@ -285,12 +286,13 @@ void snd_seq_check_queue(struct snd_seq_queue *q, int atomic, int hop)
+ int snd_seq_enqueue_event(struct snd_seq_event_cell *cell, int atomic, int hop)
+ {
+ 	int dest, err;
+-	struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
+ 
+ 	if (snd_BUG_ON(!cell))
+ 		return -EINVAL;
+ 	dest = cell->event.queue;	/* destination queue */
+-	q = queueptr(dest);
++
++	struct snd_seq_queue *q __free(snd_seq_queue) =
++		queueptr(dest);
+ 	if (q == NULL)
+ 		return -EINVAL;
+ 	/* handle relative time stamps, convert them into absolute */
+@@ -403,10 +405,10 @@ int snd_seq_queue_set_owner(int queueid, int client, int locked)
+ int snd_seq_queue_timer_open(int queueid)
+ {
+ 	int result = 0;
+-	struct snd_seq_queue *queue __free(snd_seq_queue) = NULL;
+ 	struct snd_seq_timer *tmr;
++	struct snd_seq_queue *queue __free(snd_seq_queue) =
++		queueptr(queueid);
+ 
+-	queue = queueptr(queueid);
+ 	if (queue == NULL)
+ 		return -EINVAL;
+ 	tmr = queue->timer;
+@@ -423,10 +425,10 @@ int snd_seq_queue_timer_open(int queueid)
+  */
+ int snd_seq_queue_timer_close(int queueid)
+ {
+-	struct snd_seq_queue *queue __free(snd_seq_queue) = NULL;
+ 	int result = 0;
++	struct snd_seq_queue *queue __free(snd_seq_queue) =
++		queueptr(queueid);
+ 
+-	queue = queueptr(queueid);
+ 	if (queue == NULL)
+ 		return -EINVAL;
+ 	snd_seq_timer_close(queue);
+@@ -479,9 +481,9 @@ static void queue_use(struct snd_seq_queue *queue, int client, int use)
+  */
+ int snd_seq_queue_use(int queueid, int client, int use)
+ {
+-	struct snd_seq_queue *queue __free(snd_seq_queue) = NULL;
++	struct snd_seq_queue *queue __free(snd_seq_queue) =
++		queueptr(queueid);
+ 
+-	queue = queueptr(queueid);
+ 	if (queue == NULL)
+ 		return -EINVAL;
+ 	guard(mutex)(&queue->timer_mutex);
+@@ -496,9 +498,9 @@ int snd_seq_queue_use(int queueid, int client, int use)
+  */
+ int snd_seq_queue_is_used(int queueid, int client)
+ {
+-	struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
++	struct snd_seq_queue *q __free(snd_seq_queue) =
++		queueptr(queueid);
+ 
+-	q = queueptr(queueid);
+ 	if (q == NULL)
+ 		return -EINVAL; /* invalid queue */
+ 	return test_bit(client, q->clients_bitmap) ? 1 : 0;
+@@ -642,11 +644,11 @@ static void snd_seq_queue_process_event(struct snd_seq_queue *q,
+  */
+ int snd_seq_control_queue(struct snd_seq_event *ev, int atomic, int hop)
+ {
+-	struct snd_seq_queue *q __free(snd_seq_queue) = NULL;
+-
+ 	if (snd_BUG_ON(!ev))
+ 		return -EINVAL;
+-	q = queueptr(ev->data.queue.queue);
++
++	struct snd_seq_queue *q __free(snd_seq_queue) =
++		queueptr(ev->data.queue.queue);
+ 
+ 	if (q == NULL)
+ 		return -EINVAL;
+diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
+index 27247babb16de..14b82a31eb195 100644
+--- a/sound/core/seq/seq_ump_client.c
++++ b/sound/core/seq/seq_ump_client.c
+@@ -214,13 +214,13 @@ static bool skip_group(struct seq_ump_client *client, struct snd_ump_group *grou
+ static int seq_ump_group_init(struct seq_ump_client *client, int group_index)
+ {
+ 	struct snd_ump_group *group = &client->ump->groups[group_index];
+-	struct snd_seq_port_info *port __free(kfree) = NULL;
+ 	struct snd_seq_port_callback pcallbacks;
+ 
+ 	if (skip_group(client, group))
+ 		return 0;
  
 -	port = kzalloc(sizeof(*port), GFP_KERNEL);
++	struct snd_seq_port_info *port __free(kfree) =
++		kzalloc(sizeof(*port), GFP_KERNEL);
  	if (!port)
  		return -ENOMEM;
  
-diff --git a/sound/core/seq/oss/seq_oss_midi.c b/sound/core/seq/oss/seq_oss_midi.c
-index 023e5d0a4351d..2d48c25ff4df2 100644
---- a/sound/core/seq/oss/seq_oss_midi.c
-+++ b/sound/core/seq/oss/seq_oss_midi.c
-@@ -65,11 +65,11 @@ static int send_midi_event(struct seq_oss_devinfo *dp, struct snd_seq_event *ev,
- int
- snd_seq_oss_midi_lookup_ports(int client)
+@@ -243,12 +243,12 @@ static int seq_ump_group_init(struct seq_ump_client *client, int group_index)
+ /* update the sequencer ports; called from notify_fb_change callback */
+ static void update_port_infos(struct seq_ump_client *client)
  {
--	struct snd_seq_client_info *clinfo __free(kfree) = NULL;
+-	struct snd_seq_port_info *old __free(kfree) = NULL;
+-	struct snd_seq_port_info *new __free(kfree) = NULL;
+ 	int i, err;
+ 
+-	old = kzalloc(sizeof(*old), GFP_KERNEL);
+-	new = kzalloc(sizeof(*new), GFP_KERNEL);
++	struct snd_seq_port_info *old __free(kfree) =
++		kzalloc(sizeof(*old), GFP_KERNEL);
++	struct snd_seq_port_info *new __free(kfree) =
++		kzalloc(sizeof(*new), GFP_KERNEL);
+ 	if (!old || !new)
+ 		return;
+ 
+@@ -278,12 +278,12 @@ static void update_port_infos(struct seq_ump_client *client)
+ /* create a UMP Endpoint port */
+ static int create_ump_endpoint_port(struct seq_ump_client *client)
+ {
+-	struct snd_seq_port_info *port __free(kfree) = NULL;
+ 	struct snd_seq_port_callback pcallbacks;
+ 	unsigned int rawmidi_info = client->ump->core.info_flags;
+ 	int err;
+ 
+-	port = kzalloc(sizeof(*port), GFP_KERNEL);
++	struct snd_seq_port_info *port __free(kfree) =
++		kzalloc(sizeof(*port), GFP_KERNEL);
+ 	if (!port)
+ 		return -ENOMEM;
+ 
+diff --git a/sound/core/seq/seq_virmidi.c b/sound/core/seq/seq_virmidi.c
+index 9e7fd4993a108..574493fbd50d0 100644
+--- a/sound/core/seq/seq_virmidi.c
++++ b/sound/core/seq/seq_virmidi.c
+@@ -361,13 +361,13 @@ static int snd_virmidi_dev_attach_seq(struct snd_virmidi_dev *rdev)
+ {
+ 	int client;
+ 	struct snd_seq_port_callback pcallbacks;
 -	struct snd_seq_port_info *pinfo __free(kfree) = NULL;
-+	struct snd_seq_client_info *clinfo __free(kfree) =
-+		kzalloc(sizeof(*clinfo), GFP_KERNEL);
+ 	int err;
+ 
+ 	if (rdev->client >= 0)
+ 		return 0;
+ 
+-	pinfo = kzalloc(sizeof(*pinfo), GFP_KERNEL);
 +	struct snd_seq_port_info *pinfo __free(kfree) =
 +		kzalloc(sizeof(*pinfo), GFP_KERNEL);
- 
--	clinfo = kzalloc(sizeof(*clinfo), GFP_KERNEL);
--	pinfo = kzalloc(sizeof(*pinfo), GFP_KERNEL);
- 	if (!clinfo || !pinfo)
+ 	if (!pinfo)
  		return -ENOMEM;
- 	clinfo->client = -1;
-@@ -305,10 +305,10 @@ int
- snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- {
- 	int perm;
--	struct seq_oss_midi *mdev __free(seq_oss_midi) = NULL;
- 	struct snd_seq_port_subscribe subs;
-+	struct seq_oss_midi *mdev __free(seq_oss_midi) =
-+		get_mididev(dp, dev);
  
--	mdev = get_mididev(dp, dev);
- 	if (!mdev)
- 		return -ENODEV;
- 
-@@ -364,10 +364,10 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
- int
- snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
- {
--	struct seq_oss_midi *mdev __free(seq_oss_midi) = NULL;
- 	struct snd_seq_port_subscribe subs;
-+	struct seq_oss_midi *mdev __free(seq_oss_midi) =
-+		get_mididev(dp, dev);
- 
--	mdev = get_mididev(dp, dev);
- 	if (!mdev)
- 		return -ENODEV;
- 	guard(mutex)(&mdev->open_mutex);
-@@ -399,10 +399,10 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
- int
- snd_seq_oss_midi_filemode(struct seq_oss_devinfo *dp, int dev)
- {
--	struct seq_oss_midi *mdev __free(seq_oss_midi) = NULL;
- 	int mode;
-+	struct seq_oss_midi *mdev __free(seq_oss_midi) =
-+		get_mididev(dp, dev);
- 
--	mdev = get_mididev(dp, dev);
- 	if (!mdev)
- 		return 0;
- 
-@@ -422,9 +422,9 @@ snd_seq_oss_midi_filemode(struct seq_oss_devinfo *dp, int dev)
- void
- snd_seq_oss_midi_reset(struct seq_oss_devinfo *dp, int dev)
- {
--	struct seq_oss_midi *mdev __free(seq_oss_midi) = NULL;
-+	struct seq_oss_midi *mdev __free(seq_oss_midi) =
-+		get_mididev(dp, dev);
- 
--	mdev = get_mididev(dp, dev);
- 	if (!mdev)
- 		return;
- 	if (!mdev->opened)
-@@ -468,9 +468,9 @@ snd_seq_oss_midi_reset(struct seq_oss_devinfo *dp, int dev)
- void
- snd_seq_oss_midi_get_addr(struct seq_oss_devinfo *dp, int dev, struct snd_seq_addr *addr)
- {
--	struct seq_oss_midi *mdev __free(seq_oss_midi) = NULL;
-+	struct seq_oss_midi *mdev __free(seq_oss_midi) =
-+		get_mididev(dp, dev);
- 
--	mdev = get_mididev(dp, dev);
- 	if (!mdev)
- 		return;
- 	addr->client = mdev->client;
-@@ -485,11 +485,11 @@ int
- snd_seq_oss_midi_input(struct snd_seq_event *ev, int direct, void *private_data)
- {
- 	struct seq_oss_devinfo *dp = (struct seq_oss_devinfo *)private_data;
--	struct seq_oss_midi *mdev __free(seq_oss_midi) = NULL;
- 
- 	if (dp->readq == NULL)
- 		return 0;
--	mdev = find_slot(ev->source.client, ev->source.port);
-+	struct seq_oss_midi *mdev __free(seq_oss_midi) =
-+		find_slot(ev->source.client, ev->source.port);
- 	if (!mdev)
- 		return 0;
- 	if (!(mdev->opened & PERM_READ))
-@@ -595,9 +595,9 @@ send_midi_event(struct seq_oss_devinfo *dp, struct snd_seq_event *ev, struct seq
- int
- snd_seq_oss_midi_putc(struct seq_oss_devinfo *dp, int dev, unsigned char c, struct snd_seq_event *ev)
- {
--	struct seq_oss_midi *mdev __free(seq_oss_midi) = NULL;
-+	struct seq_oss_midi *mdev __free(seq_oss_midi) =
-+		get_mididev(dp, dev);
- 
--	mdev = get_mididev(dp, dev);
- 	if (!mdev)
- 		return -ENODEV;
- 	if (snd_midi_event_encode_byte(mdev->coder, c, ev)) {
-@@ -613,9 +613,9 @@ snd_seq_oss_midi_putc(struct seq_oss_devinfo *dp, int dev, unsigned char c, stru
- int
- snd_seq_oss_midi_make_info(struct seq_oss_devinfo *dp, int dev, struct midi_info *inf)
- {
--	struct seq_oss_midi *mdev __free(seq_oss_midi) = NULL;
-+	struct seq_oss_midi *mdev __free(seq_oss_midi) =
-+		get_mididev(dp, dev);
- 
--	mdev = get_mididev(dp, dev);
- 	if (!mdev)
- 		return -ENXIO;
- 	inf->device = dev;
-@@ -651,10 +651,9 @@ snd_seq_oss_midi_info_read(struct snd_info_buffer *buf)
- 
- 	snd_iprintf(buf, "\nNumber of MIDI devices: %d\n", max_midi_devs);
- 	for (i = 0; i < max_midi_devs; i++) {
--		struct seq_oss_midi *mdev __free(seq_oss_midi) = NULL;
--
- 		snd_iprintf(buf, "\nmidi %d: ", i);
--		mdev = get_mdev(i);
-+		struct seq_oss_midi *mdev __free(seq_oss_midi) =
-+			get_mdev(i);
- 		if (mdev == NULL) {
- 			snd_iprintf(buf, "*empty*\n");
- 			continue;
-diff --git a/sound/core/seq/oss/seq_oss_synth.c b/sound/core/seq/oss/seq_oss_synth.c
-index 8c4e5913c7e69..beea37ed942cb 100644
---- a/sound/core/seq/oss/seq_oss_synth.c
-+++ b/sound/core/seq/oss/seq_oss_synth.c
-@@ -368,7 +368,6 @@ reset_channels(struct seq_oss_synthinfo *info)
- void
- snd_seq_oss_synth_reset(struct seq_oss_devinfo *dp, int dev)
- {
--	struct seq_oss_synth *rec __free(seq_oss_synth) = NULL;
- 	struct seq_oss_synthinfo *info;
- 
- 	info = get_synthinfo_nospec(dp, dev);
-@@ -391,7 +390,8 @@ snd_seq_oss_synth_reset(struct seq_oss_devinfo *dp, int dev)
- 		return;
- 	}
- 
--	rec = get_sdev(dev);
-+	struct seq_oss_synth *rec __free(seq_oss_synth) =
-+		get_sdev(dev);
- 	if (rec == NULL)
- 		return;
- 	if (rec->oper.reset) {
-@@ -415,7 +415,6 @@ int
- snd_seq_oss_synth_load_patch(struct seq_oss_devinfo *dp, int dev, int fmt,
- 			    const char __user *buf, int p, int c)
- {
--	struct seq_oss_synth *rec __free(seq_oss_synth) = NULL;
- 	struct seq_oss_synthinfo *info;
- 
- 	info = get_synthinfo_nospec(dp, dev);
-@@ -424,7 +423,9 @@ snd_seq_oss_synth_load_patch(struct seq_oss_devinfo *dp, int dev, int fmt,
- 
- 	if (info->is_midi)
- 		return 0;
--	rec = get_synthdev(dp, dev);
-+
-+	struct seq_oss_synth *rec __free(seq_oss_synth) =
-+		get_synthdev(dp, dev);
- 	if (!rec)
- 		return -ENXIO;
- 
-@@ -440,9 +441,9 @@ snd_seq_oss_synth_load_patch(struct seq_oss_devinfo *dp, int dev, int fmt,
- struct seq_oss_synthinfo *
- snd_seq_oss_synth_info(struct seq_oss_devinfo *dp, int dev)
- {
--	struct seq_oss_synth *rec __free(seq_oss_synth) = NULL;
-+	struct seq_oss_synth *rec __free(seq_oss_synth) =
-+		get_synthdev(dp, dev);
- 
--	rec = get_synthdev(dp, dev);
- 	if (rec)
- 		return get_synthinfo_nospec(dp, dev);
- 	return NULL;
-@@ -495,13 +496,14 @@ snd_seq_oss_synth_addr(struct seq_oss_devinfo *dp, int dev, struct snd_seq_event
- int
- snd_seq_oss_synth_ioctl(struct seq_oss_devinfo *dp, int dev, unsigned int cmd, unsigned long addr)
- {
--	struct seq_oss_synth *rec __free(seq_oss_synth) = NULL;
- 	struct seq_oss_synthinfo *info;
- 
- 	info = get_synthinfo_nospec(dp, dev);
- 	if (!info || info->is_midi)
- 		return -ENXIO;
--	rec = get_synthdev(dp, dev);
-+
-+	struct seq_oss_synth *rec __free(seq_oss_synth) =
-+		get_synthdev(dp, dev);
- 	if (!rec)
- 		return -ENXIO;
- 	if (rec->oper.ioctl == NULL)
-@@ -575,10 +577,9 @@ snd_seq_oss_synth_info_read(struct snd_info_buffer *buf)
- 
- 	snd_iprintf(buf, "\nNumber of synth devices: %d\n", max_synth_devs);
- 	for (i = 0; i < max_synth_devs; i++) {
--		struct seq_oss_synth *rec __free(seq_oss_synth) = NULL;
--
- 		snd_iprintf(buf, "\nsynth %d: ", i);
--		rec = get_sdev(i);
-+		struct seq_oss_synth *rec __free(seq_oss_synth) =
-+			get_sdev(i);
- 		if (rec == NULL) {
- 			snd_iprintf(buf, "*empty*\n");
- 			continue;
 -- 
 2.51.0
 
