@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC092550D7;
-	Wed, 25 Feb 2026 01:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404261D5141;
+	Wed, 25 Feb 2026 01:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983407; cv=none; b=oxcvd/7Qds7scmtizJz5YO7L9y91OuYsqnrW+in1ZJ+uucMLNUcmGz/dXnT8ocm5ogBR64LwtQm0iAmDz7PhWfCMwvSKzB+HACr4lzKrWkf+cKIkQoEmBxJl9aNM2tNRPZJ8CaRU2brJr7lIOhjMfGRJKnw1nWrAGwVbdh014QQ=
+	t=1771983409; cv=none; b=Epq9aEvcptWdpOfXNObRtNhkxddtC9IA6LazEfe0To1tSMBUKEGxhdk6Cb0mLkhKXMVMfNtBzWtN4sYdm6o/jdG1PJ9CrT4EW7Km4hFjM5WMKUW1dB9A/5gCW6f3nZJoBSEl1tNPeF96aEiPHOq+nXoa5oz3T/bwXPA9MUazVeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983407; c=relaxed/simple;
-	bh=jPaCXKybXyndeGSShZQX3RyKyLyVxEPKeGSOGjuCImA=;
+	s=arc-20240116; t=1771983409; c=relaxed/simple;
+	bh=NPm/E0oKk9pdANF3js/YGdDzpmeyQzO7zjZmBEd5ots=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FpLKqM+7h5Y0zDXX3Zu0tj6hhSDpdehNDj/22DdKn81IWgUNjC2SbRqBDzgRMOFD1cLB/scaVS5ZtOQlNXFOmPewQoXr5Mmvp+KYeoOBtA8jUvjZ/rB6XW3xZ8b0N0Cc9YQTsVzl1KMuv/YxQC4rQza5VadmERPS6QcFD4x9acI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLPyKxZp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pneVfwT8/91Rs8bv557xBE9rNgFUqpP+SeWYVHSNM7j017Sf1qXjhNHyQqwKGM9+8D4dqgMfJzbXCsj5D8IDG2QPzP4Jkun1TnbB7oADBlcjwozjd7R9TfBz5Yyt5UOl4GokJ2jJzXb6PGK28olpxnaBJXwrQlEDsSyqUMR3GMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWuiAson; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLPyKxZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F73C116D0;
-	Wed, 25 Feb 2026 01:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWuiAson"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B639C116D0;
+	Wed, 25 Feb 2026 01:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983407;
-	bh=jPaCXKybXyndeGSShZQX3RyKyLyVxEPKeGSOGjuCImA=;
+	s=korg; t=1771983408;
+	bh=NPm/E0oKk9pdANF3js/YGdDzpmeyQzO7zjZmBEd5ots=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLPyKxZppz1EbgSnrKM7lgM/aB5gIwUHQDfuOlKjMFdj9flOlLlOrNUd2XiY5evAI
-	 5TLEkqKejqCmLra5SNMvP21EuaNdmQsW5D3/hobB/w+itMkmL/E/iIYgBkJvosCXCF
-	 Czr6+3YKpC7txIdnG/JXfRWESVGZf9lCuOg57vF4=
+	b=LWuiAsonKKM4iCXPocHi4FHznpwwSKs1ZHyTNnd76m3osI8kGZi2rL0mR9JmBYp9N
+	 5bfp5e5c0PdY0+Ixj36EsGeKhKudWjtbwidVKae/5rggYb1AQhN8bE06ytUZa2vmBX
+	 iT4gWglsCi1dKfZdmQZN5sn7lDLtUP1Hshtyqgvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yi Liu <liuy22@mails.tsinghua.edu.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 526/781] clk: qcom: gcc-msm8953: Remove ALWAYS_ON flag from cpp_gdsc
-Date: Tue, 24 Feb 2026 17:20:35 -0800
-Message-ID: <20260225012412.699266580@linuxfoundation.org>
+Subject: [PATCH 6.19 486/781] RDMA/uverbs: Validate wqe_size before using it in ib_uverbs_post_send
+Date: Tue, 24 Feb 2026 17:19:55 -0800
+Message-ID: <20260225012411.732015066@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,40 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Barnabás Czémán <barnabas.czeman@mainlining.org>
+From: Yi Liu <liuy22@mails.tsinghua.edu.cn>
 
-[ Upstream commit 5f613e7034187179a9d088ff5fd02b1089d0cf20 ]
+[ Upstream commit 1956f0a74ccf5dc9c3ef717f2985c3ed3400aab0 ]
 
-cpp_gdsc should not be always on, ALWAYS_ON flag was set accidentally.
+ib_uverbs_post_send() uses cmd.wqe_size from userspace without any
+validation before passing it to kmalloc() and using the allocated
+buffer as struct ib_uverbs_send_wr.
 
-Fixes: 9bb6cfc3c77e ("clk: qcom: Add Global Clock Controller driver for MSM8953")
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251117-fix-gdsc-cpp-msm8917-msm8953-v1-1-db33adcff28a@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+If a user provides a small wqe_size value (e.g., 1), kmalloc() will
+succeed, but subsequent accesses to user_wr->opcode, user_wr->num_sge,
+and other fields will read beyond the allocated buffer, resulting in
+an out-of-bounds read from kernel heap memory. This could potentially
+leak sensitive kernel information to userspace.
+
+Additionally, providing an excessively large wqe_size can trigger a
+WARNING in the memory allocation path, as reported by syzkaller.
+
+This is inconsistent with ib_uverbs_unmarshall_recv() which properly
+validates that wqe_size >= sizeof(struct ib_uverbs_recv_wr) before
+proceeding.
+
+Add the same validation for ib_uverbs_post_send() to ensure wqe_size
+is at least sizeof(struct ib_uverbs_send_wr).
+
+Fixes: c3bea3d2dc53 ("RDMA/uverbs: Use the iterator for ib_uverbs_unmarshall_recv()")
+Signed-off-by: Yi Liu <liuy22@mails.tsinghua.edu.cn>
+Link: https://patch.msgid.link/20260122142900.2356276-2-liuy22@mails.tsinghua.edu.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-msm8953.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/infiniband/core/uverbs_cmd.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-msm8953.c b/drivers/clk/qcom/gcc-msm8953.c
-index 8f29ecc74c50b..8fe1d3e421440 100644
---- a/drivers/clk/qcom/gcc-msm8953.c
-+++ b/drivers/clk/qcom/gcc-msm8953.c
-@@ -3946,7 +3946,6 @@ static struct gdsc cpp_gdsc = {
- 	.pd = {
- 		.name = "cpp_gdsc",
- 	},
--	.flags = ALWAYS_ON,
- 	.pwrsts = PWRSTS_OFF_ON,
- };
+diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
+index ce16404cdfb8c..3259e9848cc79 100644
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -2049,7 +2049,10 @@ static int ib_uverbs_post_send(struct uverbs_attr_bundle *attrs)
+ 	if (ret)
+ 		return ret;
+ 
+-	user_wr = kmalloc(cmd.wqe_size, GFP_KERNEL);
++	if (cmd.wqe_size < sizeof(struct ib_uverbs_send_wr))
++		return -EINVAL;
++
++	user_wr = kmalloc(cmd.wqe_size, GFP_KERNEL | __GFP_NOWARN);
+ 	if (!user_wr)
+ 		return -ENOMEM;
  
 -- 
 2.51.0
