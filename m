@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ED72D7393;
-	Wed, 25 Feb 2026 06:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340C52D7393;
+	Wed, 25 Feb 2026 06:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002684; cv=none; b=hDReh6Del41AS/5eKg65VlSAlC7U6cPp+3m4wO6frC5tTZZBiQmSgtz9PAu2f/HjokYjCMPT3M3Y5Z/XCckVfHBxvU5jLDzYivUGMsq92TjwJ5Qf0USy1M2mptX23qUVSUUs6l3wsfeTdYxnQHZXqEd4xh+sLjMhIuBkRrMaYsg=
+	t=1772002685; cv=none; b=n07hwXrqg4vbe7QbqZw9/7JKvF+ydtGNhu0E11a2/HLfo3b153xnUgHmuD78CufUCHOSVdBgFFV2ND3d5wpgl3UYYCE8AUHG2v6WyaFKo73+AevYTVpTo06lt0y6RtQp71U225K3BuJBt33loRAkUebXI97O+7ylzZn43CRFqC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002684; c=relaxed/simple;
-	bh=q07ayK835PsSs+Vw0KfLZCd+B3q9KIhM1qr89UHPo44=;
+	s=arc-20240116; t=1772002685; c=relaxed/simple;
+	bh=D7Ajchl2pWFzmpbhvwA+qjR0szPqfqo6LntQwvpQBAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPAdOb1qjplgP1VhcliN0g8uJkKCYJeRCUiuAr+LSWTZyRQYMBY/ZYrodQRsxtXOTtP6GXB2aUudtckuAVq4x8o2AiWSvXmSUyQJ2fVIBIJc5BxgOdquItrAuCprPvDCFT19fRApAGoUWwqWXgAlURxAFb+L4Ru95mJP/rFKGuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Te3MWGE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YlyNcdkAGAf2pUH4KmNCDL7mGoIJ4wL/MVb0jAWYsKVqn0oEt67O8uYeaAfTMgxuA/ZHDgVQeREFkIgtMcQ20qjN88nWQXRnJDH73IIA4aka+0nKY2Q6ue+mm5YmoW+8OP+m1ZEW/XJMJxTZnJiovheGic8s1n1NdmFgkIgxg0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jy7iTgVk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Te3MWGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61990C116D0;
-	Wed, 25 Feb 2026 06:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jy7iTgVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE65C116D0;
+	Wed, 25 Feb 2026 06:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002684;
-	bh=q07ayK835PsSs+Vw0KfLZCd+B3q9KIhM1qr89UHPo44=;
+	s=korg; t=1772002685;
+	bh=D7Ajchl2pWFzmpbhvwA+qjR0szPqfqo6LntQwvpQBAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Te3MWGEWv4nP56oKHqM05YJAo44VHFHKDTYyZIok1gc0d/f+2RwqvaLIUl5tp6iw
-	 dYnyb9K9Q8JO4w5h86Jl2EjYcbGbZQUydgllonDkHsXrDG6QZDFjox1LPQf0IWojA6
-	 EzAip3PNqwQBm8ddwHUfzOSquuAYbyje7Fow9jNw=
+	b=Jy7iTgVks7KMs2sOp09uL362gypVQBD9Bzx3gV72kVq0dsHc2JmC8cvM4W8gRXJXO
+	 WF/+7l3kv4wHMTZgzSBjjoWSiWVJxPrBYulfS0Qq3XpVwLIm44sYvZPaIkmB3T1X/0
+	 bjCGxeDFMZFsl4Ck1m8Qh27HbEKNKsS4uZ9TpwlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Junhao He <hejunhao3@h-partners.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 475/641] coresight: tmc-etr: Fix race condition between sysfs and perf mode
-Date: Tue, 24 Feb 2026 17:23:21 -0800
-Message-ID: <20260225012400.027812608@linuxfoundation.org>
+Subject: [PATCH 6.18 476/641] Revert "mmc: rtsx_pci_sdmmc: increase power-on settling delay to 5ms"
+Date: Tue, 24 Feb 2026 17:23:22 -0800
+Message-ID: <20260225012400.051847175@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -52,95 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit e6e43e82c79c97917cbe356c07e8a6f3f982ab53 ]
+[ Upstream commit ff112f1ecd10b72004eac05bae395e1c65f0c63c ]
 
-When trying to run perf and sysfs mode simultaneously, the WARN_ON()
-in tmc_etr_enable_hw() is triggered sometimes:
+This reverts commit aced969e9bf3701dc75cfca57c78c031b7875b9d.
 
- WARNING: CPU: 42 PID: 3911571 at drivers/hwtracing/coresight/coresight-tmc-etr.c:1060 tmc_etr_enable_hw+0xc0/0xd8 [coresight_tmc]
- [..snip..]
- Call trace:
-  tmc_etr_enable_hw+0xc0/0xd8 [coresight_tmc] (P)
-  tmc_enable_etr_sink+0x11c/0x250 [coresight_tmc] (L)
-  tmc_enable_etr_sink+0x11c/0x250 [coresight_tmc]
-  coresight_enable_path+0x1c8/0x218 [coresight]
-  coresight_enable_sysfs+0xa4/0x228 [coresight]
-  enable_source_store+0x58/0xa8 [coresight]
-  dev_attr_store+0x20/0x40
-  sysfs_kf_write+0x4c/0x68
-  kernfs_fop_write_iter+0x120/0x1b8
-  vfs_write+0x2c8/0x388
-  ksys_write+0x74/0x108
-  __arm64_sys_write+0x24/0x38
-  el0_svc_common.constprop.0+0x64/0x148
-  do_el0_svc+0x24/0x38
-  el0_svc+0x3c/0x130
-  el0t_64_sync_handler+0xc8/0xd0
-  el0t_64_sync+0x1ac/0x1b0
- ---[ end trace 0000000000000000 ]---
+It was determined that this was not the correct "fix", so should be
+reverted.
 
-Since the enablement of sysfs mode is separeted into two critical regions,
-one for sysfs buffer allocation and another for hardware enablement, it's
-possible to race with the perf mode. Fix this by double check whether
-the perf mode's been used before enabling the hardware in sysfs mode.
-
- mode:
-   [sysfs mode]                   [perf mode]
-   tmc_etr_get_sysfs_buffer()
-     spin_lock(&drvdata->spinlock)
-     [sysfs buffer allocation]
-     spin_unlock(&drvdata->spinlock)
-                                  spin_lock(&drvdata->spinlock)
-                                  tmc_etr_enable_hw()
-                                    drvdata->etr_buf = etr_perf->etr_buf
-                                  spin_unlock(&drvdata->spinlock)
-   spin_lock(&drvdata->spinlock)
-   tmc_etr_enable_hw()
-     WARN_ON(drvdata->etr_buf) // WARN sicne etr_buf initialized at
-                                  the perf side
-   spin_unlock(&drvdata->spinlock)
-
-With this fix, we retain the check for CS_MODE_PERF in get_etr_sysfs_buf.
-This ensures we verify whether the perf mode's already running before we
-actually allocate the buffer. Then we can save the time of
-allocating/freeing the sysfs buffer if race with the perf mode.
-
-Fixes: 296b01fd106e ("coresight: Refactor out buffer allocation function for ETR")
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Junhao He <hejunhao3@h-partners.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260121101543.2017014-3-wangyushan12@huawei.com
+Fixes: aced969e9bf3 ("mmc: rtsx_pci_sdmmc: increase power-on settling delay to 5ms")
+Cc: Matthew Schwartz <matthew.schwartz@linux.dev>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-tmc-etr.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/mmc/host/rtsx_pci_sdmmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index 60b0e0a6da057..9144b273d415f 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -1306,6 +1306,19 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
+diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
+index b6cf1803c7d27..4db3328f46dfb 100644
+--- a/drivers/mmc/host/rtsx_pci_sdmmc.c
++++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
+@@ -937,7 +937,7 @@ static int sd_power_on(struct realtek_pci_sdmmc *host, unsigned char power_mode)
+ 	if (err < 0)
+ 		return err;
  
- 	raw_spin_lock_irqsave(&drvdata->spinlock, flags);
+-	mdelay(5);
++	mdelay(1);
  
-+	/*
-+	 * Since the sysfs buffer allocation and the hardware enablement is not
-+	 * in the same critical region, it's possible to race with the perf.
-+	 */
-+	if (coresight_get_mode(csdev) == CS_MODE_PERF) {
-+		drvdata->sysfs_buf = NULL;
-+		raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
-+
-+		/* Free allocated memory out side of the spinlock */
-+		tmc_etr_free_sysfs_buf(sysfs_buf);
-+		return -EBUSY;
-+	}
-+
- 	/*
- 	 * In sysFS mode we can have multiple writers per sink.  Since this
- 	 * sink is already enabled no memory is needed and the HW need not be
+ 	err = rtsx_pci_write_register(pcr, CARD_OE, SD_OUTPUT_EN, SD_OUTPUT_EN);
+ 	if (err < 0)
 -- 
 2.51.0
 
