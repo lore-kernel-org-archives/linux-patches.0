@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1001D5ABA;
-	Wed, 25 Feb 2026 01:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8634369A;
+	Wed, 25 Feb 2026 01:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982890; cv=none; b=EpJTxvMlhLrflbehsa+0nGZIkDj5rk3/j55X5oVgDBpEmR81lj72lp5bxpMVd5GCqAFEXWCCI3ME4ZZF4C0QrDIxHhug316tStylAJyQ6E1nsK3SqNUFe4FEwGY0/LGGd01dW30bLKbi8bl2P4hsC7vahXYy9H5liYINHFToVpE=
+	t=1771982891; cv=none; b=Fw5yeEteUrtQdQGb2UR+2U0P3BntjZnXe+Z4WDlwMgJdSokv8HNy1v5xPs+J/+Eh3lL5F7AONzOP5S9Q25OvfDMTPrAcYszfWCKowafRRu4OiNVZdgyflWwpkMyKHDHX5E7paNtT+HXnbBRmLHd/9cPCy7PgRstF7Mzk+5pR4MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982890; c=relaxed/simple;
-	bh=RJX40bqxk/UbnF1D39hvRwLvceyTV2De6DjI50QSKes=;
+	s=arc-20240116; t=1771982891; c=relaxed/simple;
+	bh=hUCHvvJz0r+uBbusOfnCOaE4hdicPWzmg3XqHCyx7dA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfx2twVXIgWt4Wzr8geeQsK6aplnN8kjjS0yXGBEPKwWDyGNP2gwPy707yLzONoOKv5dYUTIRPdjUtcTWx8LiIga3QfnMFGD0mxhlXikN0k1LzYXwRrdR6ojtqTsiQf1d4V9iqRgdTHLPxJqL2upV/YBZUd8KZB9y2MYiBBLMik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVmMtVDf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A65koapH9Rgb3Vh39Et1R/b3Z+/tIjnEGmFh7QmBqtPNVDh64Rsjnk1vbAX5uUSBUxMAzCFPOgLP4EwxI5LQRxWRndn8DfqNTEkRboeuKrhjN5xUzF6fYXa0WwbtRCVnd9f1PJa+9pXdXPDLIbKzLnA0qwJuFYeBUm8HNxXjb78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYiQlZpb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVmMtVDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CFFC116D0;
-	Wed, 25 Feb 2026 01:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYiQlZpb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDC3C116D0;
+	Wed, 25 Feb 2026 01:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982890;
-	bh=RJX40bqxk/UbnF1D39hvRwLvceyTV2De6DjI50QSKes=;
+	s=korg; t=1771982891;
+	bh=hUCHvvJz0r+uBbusOfnCOaE4hdicPWzmg3XqHCyx7dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LVmMtVDfsDrkXTJjx+G8oHYWcIrzPgbah8mKG4rfND3ey4s3+FYeGUgoFVsxGASsA
-	 /lKDnLAQijf1MJANF1djA/gBxYNj4ZelVHUMyA/ihDiO4ZX8+Ozrk1qhysDm9aunGW
-	 FILEOM3n9G0Pe93gEnhMlJF436Axo/8jvsZkaENg=
+	b=zYiQlZpb1LxjxzmrywgkINnFwsON1KVi6RsBPTRH2VbZzVHy/taoAcKCGbyyQG/cm
+	 KDh51yvz2N/RP8QATz4KF137miEyXAjDw0LWj306vP7XKOupF81PxKG9v84ZpUwljG
+	 MRE5UzWzbEls+qqhaI3BPRUZ/tU4ubGpzmn4O3v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Phil Auld <pauld@redhat.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 075/781] sched: Export hidden tracepoints to modules
-Date: Tue, 24 Feb 2026 17:13:04 -0800
-Message-ID: <20260225012401.543570626@linuxfoundation.org>
+Subject: [PATCH 6.19 076/781] ARM: VDSO: Patch out __vdso_clock_getres() if unavailable
+Date: Tue, 24 Feb 2026 17:13:05 -0800
+Message-ID: <20260225012401.567789224@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -46,52 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabriele Monaco <gmonaco@redhat.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 6c125b85f3c87b4bf7dba91af6f27d9600b9dba0 ]
+[ Upstream commit b9fecf0dddfc55cd7d02b0011494da3c613f7cde ]
 
-The tracepoints sched_entry, sched_exit and sched_set_need_resched
-are not exported to tracefs as trace events, this allows only kernel
-code to access them. Helper modules like [1] can be used to still have
-the tracepoints available to ftrace for debugging purposes, but they do
-rely on the tracepoints being exported.
+The vDSO code hides symbols which are non-functional.
+__vdso_clock_getres() was not added to this list when it got introduced.
 
-Export the 3 not exported tracepoints.
-Note that sched_set_state is already exported as the macro is called
-from modules.
-
-[1] - https://github.com/qais-yousef/sched_tp.git
-
-Fixes: adcc3bfa8806 ("sched: Adapt sched tracepoints for RV task model")
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Link: https://patch.msgid.link/20251205131621.135513-9-gmonaco@redhat.com
+Fixes: 052e76a31b4a ("ARM: 8931/1: Add clock_getres entry point")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20251223-vdso-compat-time32-v1-6-97ea7a06a543@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/kernel/vdso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 61c2d65156b50..2df7c1e2aed80 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -119,6 +119,9 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(sched_util_est_cfs_tp);
- EXPORT_TRACEPOINT_SYMBOL_GPL(sched_util_est_se_tp);
- EXPORT_TRACEPOINT_SYMBOL_GPL(sched_update_nr_running_tp);
- EXPORT_TRACEPOINT_SYMBOL_GPL(sched_compute_energy_tp);
-+EXPORT_TRACEPOINT_SYMBOL_GPL(sched_entry_tp);
-+EXPORT_TRACEPOINT_SYMBOL_GPL(sched_exit_tp);
-+EXPORT_TRACEPOINT_SYMBOL_GPL(sched_set_need_resched_tp);
+diff --git a/arch/arm/kernel/vdso.c b/arch/arm/kernel/vdso.c
+index e38a30477f3d7..566c40f0f7c77 100644
+--- a/arch/arm/kernel/vdso.c
++++ b/arch/arm/kernel/vdso.c
+@@ -161,6 +161,7 @@ static void __init patch_vdso(void *ehdr)
+ 		vdso_nullpatch_one(&einfo, "__vdso_gettimeofday");
+ 		vdso_nullpatch_one(&einfo, "__vdso_clock_gettime");
+ 		vdso_nullpatch_one(&einfo, "__vdso_clock_gettime64");
++		vdso_nullpatch_one(&einfo, "__vdso_clock_getres");
+ 	}
+ }
  
- DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
- DEFINE_PER_CPU(struct rnd_state, sched_rnd_state);
 -- 
 2.51.0
 
