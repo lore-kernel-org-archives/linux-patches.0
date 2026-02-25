@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F02F18B0A;
-	Wed, 25 Feb 2026 01:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E93918B0A;
+	Wed, 25 Feb 2026 01:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983238; cv=none; b=WM15iCJAjJfh/hVA6Mwq/6jWgW+EMKLHmyC49Al9fOlJ8hnEZ+Y+AAOPszpuj7oIlOqpwv1qfhRoGfHOHethAGxWEO1k0VV4hKA8BCzpGbbLIMrjIaWF4BJO7mpT4Z5N81FzXVlZWOKiFLePA/bQtUk1Hm2mD/rpvoRA2Jv1iPc=
+	t=1771983239; cv=none; b=nRoI21fjpTh7CNRoIoW3kSG90UDrqQoPicgc6lwqwdi+oTd4OtAQfm/VBnme99yODgeInySgK8xh5OJDPuMxuYhScVoT7Njcydm6Zr9ZlFwuiJARkv0K18Y5pjQFm0fikp/LvtHFP2YaWmROUyVCpY8Z0OGYlKYRkMYSPNddsN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983238; c=relaxed/simple;
-	bh=KhnAnmsGtckcSiIxl2yAeJ7pr417SHzhXMEF4pJEsIk=;
+	s=arc-20240116; t=1771983239; c=relaxed/simple;
+	bh=4nMXJdOj1nguDlRNkq73Y+Y0WvE8hK9vZMFRvloBXnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpEBSY3i0NAWmOj+Upj5aad3J99knuT+xpzprvyeYgmszoiD1dc1HtjA3Ckya+UtAlKivyUc2jIImF5VPVqeBebakoM/F40ScRDlvCGtLlnvLRADSeUU3s9VNWdNmL0npw3DOgwGf8XX0PhEMFQQCS4iMTlYFGpu4nhik4ktwyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXaHBWI/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FEnc2aRc/PKZJAn/mEZHJ2twbqF2jIslhURPXupAE8EKAMadS0v7sb4xhgCPMsoyWrmLqm4tSS4ST+GRLuszTrXjKeWNG67p04Qf4LdCl4DL8E7/KM1+0ocIVkNGfgaHjMYqUgeagrdYwxnQ7WKj4HWVweOK/8Pn47IeRQMSWAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HB8Jft4d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXaHBWI/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD93C116D0;
-	Wed, 25 Feb 2026 01:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HB8Jft4d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BF1C116D0;
+	Wed, 25 Feb 2026 01:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983238;
-	bh=KhnAnmsGtckcSiIxl2yAeJ7pr417SHzhXMEF4pJEsIk=;
+	s=korg; t=1771983239;
+	bh=4nMXJdOj1nguDlRNkq73Y+Y0WvE8hK9vZMFRvloBXnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXaHBWI/vaIscoap8aqI9J/u1OBEk2h1gsh0wVq0hhPiggMu2z9FyVN7v2OIGpGK1
-	 Mt01nnNr4PtGNtCx0rE9bW210e87OWbCPeP3m+fEYBWfnQ3Br/OupMTA02rClz+YVQ
-	 9KMAEltF8sl+YBUmReFqphMQPWeSZtfHArHLGJ8w=
+	b=HB8Jft4d6b24wLek5Yz4VGPReYA92PBN89rER4kxjdnGDWR/SK1d6BnnY8tcVS+s+
+	 rdzjx2u9SJYCxkma2sGPi9LwIumFn2lAr3ZL1eRx9xiRtddc82loDWiJEaQNp6InBv
+	 mpkvgSAsLJ6Hl2CKdSFYwyKGeNCKwRsXxrI1qlps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kevin Brodsky <kevin.brodsky@arm.com>,
+	SeongJae Park <sj@kernel.org>,
+	wang lian <lianux.mm@gmail.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Mark Brown <broonie@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Usama Anjum <Usama.Anjum@arm.com>,
+	Yunsheng Lin <linyunsheng@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 380/781] Revert "net/smc: Introduce TCP ULP support"
-Date: Tue, 24 Feb 2026 17:18:09 -0800
-Message-ID: <20260225012409.014608250@linuxfoundation.org>
+Subject: [PATCH 6.19 381/781] selftests/mm: fix usage of FORCE_READ() in cow tests
+Date: Tue, 24 Feb 2026 17:18:10 -0800
+Message-ID: <20260225012409.039405066@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -55,193 +64,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
 
-[ Upstream commit df31a6b0a3057e66994ad6ccf5d95b9b9514f033 ]
+[ Upstream commit bce1dabd310e87fefe0645fec9ba98b84d37e418 ]
 
-This reverts commit d7cd421da9da2cc7b4d25b8537f66db5c8331c40.
+Commit 5bbc2b785e63 ("selftests/mm: fix FORCE_READ to read input value
+correctly") modified FORCE_READ() to take a value instead of a pointer.
+It also changed most of the call sites accordingly, but missed many of
+them in cow.c.  In those cases, we ended up with the pointer itself being
+read, not the memory it points to.
 
-As reported by Al Viro, the TCP ULP support for SMC is fundamentally
-broken. The implementation attempts to convert an active TCP socket
-into an SMC socket by modifying the underlying `struct file`, dentry,
-and inode in-place, which violates core VFS invariants that assume
-these structures are immutable for an open file, creating a risk of
-use after free errors and general system instability.
+No failure occurred as a result, so it looks like the tests work just fine
+without faulting in.  However, the huge_zeropage tests explicitly check
+that pages are populated, so those became skipped.
 
-Given the severity of this design flaw and the fact that cleaner
-alternatives (e.g., LD_PRELOAD, BPF) exist for legacy application
-transparency, the correct course of action is to remove this feature
-entirely.
+Convert all the remaining FORCE_READ() to fault in the mapped page, as was
+originally intended.  This allows the huge_zeropage tests to run again (3
+tests in total).
 
-Fixes: d7cd421da9da ("net/smc: Introduce TCP ULP support")
-Link: https://lore.kernel.org/netdev/Yus1SycZxcd+wHwz@ZenIV/
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260128055452.98251-1-alibuda@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20260122170224.4056513-5-kevin.brodsky@arm.com
+Fixes: 5bbc2b785e63 ("selftests/mm: fix FORCE_READ to read input value correctly")
+Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
+Acked-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: wang lian <lianux.mm@gmail.com>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Usama Anjum <Usama.Anjum@arm.com>
+Cc: Yunsheng Lin <linyunsheng@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 91 +++---------------------------------------------
- 1 file changed, 4 insertions(+), 87 deletions(-)
+ tools/testing/selftests/mm/cow.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index f97f77b041d97..d8201eb3ac5f3 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -3357,11 +3357,10 @@ int smc_create_clcsk(struct net *net, struct sock *sk, int family)
- 	return 0;
- }
- 
--static int __smc_create(struct net *net, struct socket *sock, int protocol,
--			int kern, struct socket *clcsock)
-+static int smc_create(struct net *net, struct socket *sock, int protocol,
-+		      int kern)
- {
- 	int family = (protocol == SMCPROTO_SMC6) ? PF_INET6 : PF_INET;
--	struct smc_sock *smc;
- 	struct sock *sk;
- 	int rc;
- 
-@@ -3380,15 +3379,7 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
- 	if (!sk)
- 		goto out;
- 
--	/* create internal TCP socket for CLC handshake and fallback */
--	smc = smc_sk(sk);
--
--	rc = 0;
--	if (clcsock)
--		smc->clcsock = clcsock;
--	else
--		rc = smc_create_clcsk(net, sk, family);
--
-+	rc = smc_create_clcsk(net, sk, family);
- 	if (rc) {
- 		sk_common_release(sk);
- 		sock->sk = NULL;
-@@ -3397,76 +3388,12 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
- 	return rc;
- }
- 
--static int smc_create(struct net *net, struct socket *sock, int protocol,
--		      int kern)
--{
--	return __smc_create(net, sock, protocol, kern, NULL);
--}
--
- static const struct net_proto_family smc_sock_family_ops = {
- 	.family	= PF_SMC,
- 	.owner	= THIS_MODULE,
- 	.create	= smc_create,
- };
- 
--static int smc_ulp_init(struct sock *sk)
--{
--	struct socket *tcp = sk->sk_socket;
--	struct net *net = sock_net(sk);
--	struct socket *smcsock;
--	int protocol, ret;
--
--	/* only TCP can be replaced */
--	if (tcp->type != SOCK_STREAM || sk->sk_protocol != IPPROTO_TCP ||
--	    (sk->sk_family != AF_INET && sk->sk_family != AF_INET6))
--		return -ESOCKTNOSUPPORT;
--	/* don't handle wq now */
--	if (tcp->state != SS_UNCONNECTED || !tcp->file || tcp->wq.fasync_list)
--		return -ENOTCONN;
--
--	if (sk->sk_family == AF_INET)
--		protocol = SMCPROTO_SMC;
--	else
--		protocol = SMCPROTO_SMC6;
--
--	smcsock = sock_alloc();
--	if (!smcsock)
--		return -ENFILE;
--
--	smcsock->type = SOCK_STREAM;
--	__module_get(THIS_MODULE); /* tried in __tcp_ulp_find_autoload */
--	ret = __smc_create(net, smcsock, protocol, 1, tcp);
--	if (ret) {
--		sock_release(smcsock); /* module_put() which ops won't be NULL */
--		return ret;
--	}
--
--	/* replace tcp socket to smc */
--	smcsock->file = tcp->file;
--	smcsock->file->private_data = smcsock;
--	smcsock->file->f_inode = SOCK_INODE(smcsock); /* replace inode when sock_close */
--	smcsock->file->f_path.dentry->d_inode = SOCK_INODE(smcsock); /* dput() in __fput */
--	tcp->file = NULL;
--
--	return ret;
--}
--
--static void smc_ulp_clone(const struct request_sock *req, struct sock *newsk,
--			  const gfp_t priority)
--{
--	struct inet_connection_sock *icsk = inet_csk(newsk);
--
--	/* don't inherit ulp ops to child when listen */
--	icsk->icsk_ulp_ops = NULL;
--}
--
--static struct tcp_ulp_ops smc_ulp_ops __read_mostly = {
--	.name		= "smc",
--	.owner		= THIS_MODULE,
--	.init		= smc_ulp_init,
--	.clone		= smc_ulp_clone,
--};
--
- unsigned int smc_net_id;
- 
- static __net_init int smc_net_init(struct net *net)
-@@ -3589,16 +3516,10 @@ static int __init smc_init(void)
- 		pr_err("%s: ib_register fails with %d\n", __func__, rc);
- 		goto out_sock;
+diff --git a/tools/testing/selftests/mm/cow.c b/tools/testing/selftests/mm/cow.c
+index accfd198dbda8..83b3563be26b6 100644
+--- a/tools/testing/selftests/mm/cow.c
++++ b/tools/testing/selftests/mm/cow.c
+@@ -1612,8 +1612,8 @@ static void run_with_huge_zeropage(non_anon_test_fn fn, const char *desc)
+ 	 * the first sub-page and test if we get another sub-page populated
+ 	 * automatically.
+ 	 */
+-	FORCE_READ(mem);
+-	FORCE_READ(smem);
++	FORCE_READ(*mem);
++	FORCE_READ(*smem);
+ 	if (!pagemap_is_populated(pagemap_fd, mem + pagesize) ||
+ 	    !pagemap_is_populated(pagemap_fd, smem + pagesize)) {
+ 		ksft_test_result_skip("Did not get THPs populated\n");
+@@ -1663,8 +1663,8 @@ static void run_with_memfd(non_anon_test_fn fn, const char *desc)
  	}
--
--	rc = tcp_register_ulp(&smc_ulp_ops);
--	if (rc) {
--		pr_err("%s: tcp_ulp_register fails with %d\n", __func__, rc);
--		goto out_ib;
--	}
- 	rc = smc_inet_init();
- 	if (rc) {
- 		pr_err("%s: smc_inet_init fails with %d\n", __func__, rc);
--		goto out_ulp;
-+		goto out_ib;
+ 
+ 	/* Fault the page in. */
+-	FORCE_READ(mem);
+-	FORCE_READ(smem);
++	FORCE_READ(*mem);
++	FORCE_READ(*smem);
+ 
+ 	fn(mem, smem, pagesize);
+ munmap:
+@@ -1719,8 +1719,8 @@ static void run_with_tmpfile(non_anon_test_fn fn, const char *desc)
  	}
- 	rc = bpf_smc_hs_ctrl_init();
- 	if (rc) {
-@@ -3610,8 +3531,6 @@ static int __init smc_init(void)
- 	return 0;
- out_inet:
- 	smc_inet_exit();
--out_ulp:
--	tcp_unregister_ulp(&smc_ulp_ops);
- out_ib:
- 	smc_ib_unregister_client();
- out_sock:
-@@ -3647,7 +3566,6 @@ static void __exit smc_exit(void)
- {
- 	static_branch_disable(&tcp_have_smc);
- 	smc_inet_exit();
--	tcp_unregister_ulp(&smc_ulp_ops);
- 	sock_unregister(PF_SMC);
- 	smc_core_exit();
- 	smc_ib_unregister_client();
-@@ -3672,7 +3590,6 @@ MODULE_AUTHOR("Ursula Braun <ubraun@linux.vnet.ibm.com>");
- MODULE_DESCRIPTION("smc socket address family");
- MODULE_LICENSE("GPL");
- MODULE_ALIAS_NETPROTO(PF_SMC);
--MODULE_ALIAS_TCP_ULP("smc");
- /* 256 for IPPROTO_SMC and 1 for SOCK_STREAM */
- MODULE_ALIAS_NET_PF_PROTO_TYPE(PF_INET, 256, 1);
- #if IS_ENABLED(CONFIG_IPV6)
+ 
+ 	/* Fault the page in. */
+-	FORCE_READ(mem);
+-	FORCE_READ(smem);
++	FORCE_READ(*mem);
++	FORCE_READ(*smem);
+ 
+ 	fn(mem, smem, pagesize);
+ munmap:
+@@ -1773,8 +1773,8 @@ static void run_with_memfd_hugetlb(non_anon_test_fn fn, const char *desc,
+ 	}
+ 
+ 	/* Fault the page in. */
+-	FORCE_READ(mem);
+-	FORCE_READ(smem);
++	FORCE_READ(*mem);
++	FORCE_READ(*smem);
+ 
+ 	fn(mem, smem, hugetlbsize);
+ munmap:
 -- 
 2.51.0
 
