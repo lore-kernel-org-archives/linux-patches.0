@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88DA1E2834;
-	Wed, 25 Feb 2026 01:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EC11E2834;
+	Wed, 25 Feb 2026 01:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983705; cv=none; b=a4d7rlHHSQH7td4Pmj53jGzFIDAXUdOZ0m2hdoaYavgG+O4MQNNBsuC/mFwNSSxi06ICKF8b4ueSuYteMfzJVo9j2ymjUtsSVb020wjaY1fy9lYmrvzZ5/dV+VEAMTaCBkRb/18NVdi9QsSqz//G7u4pWmcRqs5SFdJbBmtxNmE=
+	t=1771983707; cv=none; b=rh1dTFPeyztHNj8SdhvGEojBoRhuY8b4u05ZKgtOLG3S4XS8lXSX+9U7qPuiZwTpHfAyBnQci5cxJL8OnLNPMtUL/w+Egf03GO9o7bWO/R5LBC70CnRR7Unzb/+z4+w7oa3bByBIsj3hCn1A9JbOAYnYcWVxAabrozfbyIL1lo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983705; c=relaxed/simple;
-	bh=4SodZxA0bGdU5vJR5NFFlGiTPUDIXz04ffAb+Cfy/jo=;
+	s=arc-20240116; t=1771983707; c=relaxed/simple;
+	bh=H3Es8cx2qoR/XkfVBxMpMqIMsTKZYtUI7ty9DLj5dSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dzCAuvTJJLEKW3g5+SIwdJGzj/PM4H3QT8YiQmBbACLXp4jzuesJ2yN/BSC5qtScsCHAqgwjdf+hiwxSqbD6hFr82Lb0ffxD0GiiywBrf9RP/Za5NBaU6B8OCsoJMqF5JortlhUp77nHfsCLGd/18rzeBBSpplWdxcHbQN9byFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFhmZ+GF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sr4qYjWQWjePFy1H/s1GX2L1tD+yBf75wMmCjvZf5P2zdDswhVQSxfJMv52nRsXBadRk4PoNcYHM15XK1sen8rwaL5ZhhQkwxHM6+cYXkcW0y2DtnOMgVkJ/VN/9Bw8Cwwa00OPlUTVhxkUUgwkBPnuEI2d20R5i68Hwn0BTGmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQjXyYKb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFhmZ+GF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BE0C116D0;
-	Wed, 25 Feb 2026 01:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQjXyYKb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F2BC116D0;
+	Wed, 25 Feb 2026 01:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983705;
-	bh=4SodZxA0bGdU5vJR5NFFlGiTPUDIXz04ffAb+Cfy/jo=;
+	s=korg; t=1771983706;
+	bh=H3Es8cx2qoR/XkfVBxMpMqIMsTKZYtUI7ty9DLj5dSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFhmZ+GFOGy5Eya9FuqiG8dV8L7OlH1688NuOaJAAPI2EdQNI1nhJn9CAU6iENSS9
-	 +RPd7hSQjtUxZKb8beJ70oi+cQuGD1uhxxaLeNOJg1qJAO7nWIOxwHjZwjARH0pQeg
-	 dZBYeaG6CDB5bb/MxcJzafr3Vau/XLVppf8rlOEM=
+	b=FQjXyYKbSGjrzOJH1n2Ts9Zvchm+IDu8rjp+iC+s7e1MAWMaiDfQMLbziWgL7MlWG
+	 Y8j0kWUI1atA7OIxldRWzmOBOmsW/SulT/UsI/qpArJpCdLY2LWxHSpiju+Ghzn/dC
+	 JmQiF+4W/ZSLsKN/3vzjpVx36+xzGuJTeM6TuoWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mauro Rossi <issor.oruam@gmail.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 749/781] drm/amd/display: Enable DAC in DCE link encoder
-Date: Tue, 24 Feb 2026 17:24:18 -0800
-Message-ID: <20260225012418.092801261@linuxfoundation.org>
+Subject: [PATCH 6.19 750/781] PCI: dwc: ep: Always clear IB maps on BAR update
+Date: Tue, 24 Feb 2026 17:24:19 -0800
+Message-ID: <20260225012418.116379904@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -47,214 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 4bd8b5f8bcb57b430c35494d8a2471ce5fd7661d ]
+[ Upstream commit 8c746e22096579897d1f8f74dbb6b17a6862fb6d ]
 
-Ensure that the DAC output is enabled at the correct time by
-moving it to the DCE link encoder similarly to how digital
-outputs are enabled.
+dw_pcie_ep_set_bar() currently tears down existing inbound mappings only
+when either the previous or the new struct pci_epf_bar uses submaps
+(num_submap != 0). If both the old and new mappings are BAR Match Mode,
+reprogramming the same ATU index is sufficient, so no explicit teardown
+was needed.
 
-This also removes the call to DAC1EncoderControl from the DCE
-HWSS, which always felt like it was a hacky solution.
+However, some callers may reuse the same struct pci_epf_bar instance and
+update it in place before calling set_bar() again. In that case
+ep_func->epf_bar[bar] and the passed-in epf_bar can point to the same
+object, so we cannot reliably distinguish BAR Match Mode -> BAR Match Mode
+from Address Match Mode -> BAR Match Mode. As a result, the conditional
+teardown based on num_submap becomes unreliable and existing inbound maps
+may be left active.
 
-Fixes: 0fbe321a93ce ("drm/amd/display: Implement DCE analog link encoders (v2)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Tested-by: Mauro Rossi <issor.oruam@gmail.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Call dw_pcie_ep_clear_ib_maps() unconditionally before reprogramming the
+BAR so that in-place updates are handled correctly.
+
+This introduces a behavioral change in a corner case: if a BAR
+reprogramming attempt fails (especially for the long-standing BAR Match
+Mode -> BAR Match Mode update case), the previously programmed inbound
+mapping will already have been torn down. This should be acceptable, since
+the caller observes the error and should not use the BAR for any real
+transactions in that case.
+
+While at it, document that the existing update parameter check is
+best-effort for in-place updates.
+
+Fixes: cc839bef7727 ("PCI: dwc: ep: Support BAR subrange inbound mapping via Address Match Mode iATU")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20260202145407.503348-3-den@valinux.co.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/dce/dce_link_encoder.c | 18 +++++++++++++
- .../drm/amd/display/dc/dce/dce_link_encoder.h |  5 ++++
- .../amd/display/dc/hwss/dce110/dce110_hwseq.c | 26 +++++++------------
- .../drm/amd/display/dc/hwss/hw_sequencer.h    |  2 ++
- .../drm/amd/display/dc/inc/hw/link_encoder.h  |  2 ++
- .../gpu/drm/amd/display/dc/link/link_dpms.c   | 14 +++++++++-
- 6 files changed, 50 insertions(+), 17 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-index 48a1b3b492e7f..bec8dab156eec 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-@@ -102,6 +102,7 @@ static const struct link_encoder_funcs dce110_lnk_enc_funcs = {
- 	.enable_dp_output = dce110_link_encoder_enable_dp_output,
- 	.enable_dp_mst_output = dce110_link_encoder_enable_dp_mst_output,
- 	.enable_lvds_output = dce110_link_encoder_enable_lvds_output,
-+	.enable_analog_output = dce110_link_encoder_enable_analog_output,
- 	.disable_output = dce110_link_encoder_disable_output,
- 	.dp_set_lane_settings = dce110_link_encoder_dp_set_lane_settings,
- 	.dp_set_phy_pattern = dce110_link_encoder_dp_set_phy_pattern,
-@@ -1192,6 +1193,22 @@ void dce110_link_encoder_enable_lvds_output(
- 	}
- }
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 6d3c35dd280f3..59fd6ebf01489 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -518,6 +518,12 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 		/*
+ 		 * We can only dynamically change a BAR if the new BAR size and
+ 		 * BAR flags do not differ from the existing configuration.
++		 *
++		 * Note: this safety check only works when the caller uses
++		 * a new struct pci_epf_bar in the second set_bar() call.
++		 * If the same instance is updated in place and passed in,
++		 * we cannot reliably detect invalid barno/size/flags
++		 * changes here.
+ 		 */
+ 		if (ep_func->epf_bar[bar]->barno != bar ||
+ 		    ep_func->epf_bar[bar]->size != size ||
+@@ -526,10 +532,12 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
  
-+void dce110_link_encoder_enable_analog_output(
-+	struct link_encoder *enc,
-+	uint32_t pixel_clock)
-+{
-+	struct dce110_link_encoder *enc110 = TO_DCE110_LINK_ENC(enc);
-+	enum bp_result result;
-+
-+	result = link_dac_encoder_control(enc110, ENCODER_CONTROL_ENABLE, pixel_clock);
-+
-+	if (result != BP_RESULT_OK) {
-+		DC_LOG_ERROR("%s: Failed to execute VBIOS command table!\n",
-+			__func__);
-+		BREAK_TO_DEBUGGER();
-+	}
-+}
-+
- /* enables DP PHY output */
- void dce110_link_encoder_enable_dp_output(
- 	struct link_encoder *enc,
-@@ -1776,6 +1793,7 @@ static const struct link_encoder_funcs dce60_lnk_enc_funcs = {
- 	.enable_dp_output = dce60_link_encoder_enable_dp_output,
- 	.enable_dp_mst_output = dce60_link_encoder_enable_dp_mst_output,
- 	.enable_lvds_output = dce110_link_encoder_enable_lvds_output,
-+	.enable_analog_output = dce110_link_encoder_enable_analog_output,
- 	.disable_output = dce110_link_encoder_disable_output,
- 	.dp_set_lane_settings = dce110_link_encoder_dp_set_lane_settings,
- 	.dp_set_phy_pattern = dce60_link_encoder_dp_set_phy_pattern,
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.h b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.h
-index c58b69bc319b7..6870cb619d208 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.h
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.h
-@@ -273,6 +273,11 @@ void dce110_link_encoder_enable_lvds_output(
- 	enum clock_source_id clock_source,
- 	uint32_t pixel_clock);
+ 		/*
+ 		 * When dynamically changing a BAR, tear down any existing
+-		 * mappings before re-programming.
++		 * mappings before re-programming. This is redundant when
++		 * both the old and new mappings are BAR Match Mode, but
++		 * required to handle in-place updates and match-mode
++		 * changes reliably.
+ 		 */
+-		if (ep_func->epf_bar[bar]->num_submap || epf_bar->num_submap)
+-			dw_pcie_ep_clear_ib_maps(ep, func_no, bar);
++		dw_pcie_ep_clear_ib_maps(ep, func_no, bar);
  
-+/* enables analog output from the DAC */
-+void dce110_link_encoder_enable_analog_output(
-+	struct link_encoder *enc,
-+	uint32_t pixel_clock);
-+
- /* disable PHY output */
- void dce110_link_encoder_disable_output(
- 	struct link_encoder *enc,
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index c472303276672..5896ce5511ab1 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -659,20 +659,6 @@ void dce110_update_info_frame(struct pipe_ctx *pipe_ctx)
- 	}
- }
- 
--static void
--dce110_dac_encoder_control(struct pipe_ctx *pipe_ctx, bool enable)
--{
--	struct dc_link *link = pipe_ctx->stream->link;
--	struct dc_bios *bios = link->ctx->dc_bios;
--	struct bp_encoder_control encoder_control = {0};
--
--	encoder_control.action = enable ? ENCODER_CONTROL_ENABLE : ENCODER_CONTROL_DISABLE;
--	encoder_control.engine_id = link->link_enc->analog_engine;
--	encoder_control.pixel_clock = pipe_ctx->stream->timing.pix_clk_100hz / 10;
--
--	bios->funcs->encoder_control(bios, &encoder_control);
--}
--
- void dce110_enable_stream(struct pipe_ctx *pipe_ctx)
- {
- 	enum dc_lane_count lane_count =
-@@ -703,8 +689,6 @@ void dce110_enable_stream(struct pipe_ctx *pipe_ctx)
- 
- 	tg->funcs->set_early_control(tg, early_control);
- 
--	if (dc_is_rgb_signal(pipe_ctx->stream->signal))
--		dce110_dac_encoder_control(pipe_ctx, true);
- }
- 
- static enum bp_result link_transmitter_control(
-@@ -3285,6 +3269,15 @@ void dce110_enable_tmds_link_output(struct dc_link *link,
- 	link->phy_state.symclk_state = SYMCLK_ON_TX_ON;
- }
- 
-+static void dce110_enable_analog_link_output(
-+		struct dc_link *link,
-+		uint32_t pix_clk_100hz)
-+{
-+	link->link_enc->funcs->enable_analog_output(
-+			link->link_enc,
-+			pix_clk_100hz);
-+}
-+
- void dce110_enable_dp_link_output(
- 		struct dc_link *link,
- 		const struct link_resource *link_res,
-@@ -3422,6 +3415,7 @@ static const struct hw_sequencer_funcs dce110_funcs = {
- 	.enable_lvds_link_output = dce110_enable_lvds_link_output,
- 	.enable_tmds_link_output = dce110_enable_tmds_link_output,
- 	.enable_dp_link_output = dce110_enable_dp_link_output,
-+	.enable_analog_link_output = dce110_enable_analog_link_output,
- 	.disable_link_output = dce110_disable_link_output,
- };
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
-index 8ed9eea40c564..4f6bd365e055a 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
-@@ -1184,6 +1184,8 @@ struct hw_sequencer_funcs {
- 			const struct link_resource *link_res,
- 			enum clock_source_id clock_source,
- 			uint32_t pixel_clock);
-+	void (*enable_analog_link_output)(struct dc_link *link,
-+			uint32_t pixel_clock);
- 	void (*disable_link_output)(struct dc_link *link,
- 			const struct link_resource *link_res,
- 			enum signal_type signal);
-diff --git a/drivers/gpu/drm/amd/display/dc/inc/hw/link_encoder.h b/drivers/gpu/drm/amd/display/dc/inc/hw/link_encoder.h
-index e638325e35ecf..b1a88618c5bf8 100644
---- a/drivers/gpu/drm/amd/display/dc/inc/hw/link_encoder.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/hw/link_encoder.h
-@@ -130,6 +130,8 @@ struct link_encoder_funcs {
- 	void (*enable_lvds_output)(struct link_encoder *enc,
- 		enum clock_source_id clock_source,
- 		uint32_t pixel_clock);
-+	void (*enable_analog_output)(struct link_encoder *enc,
-+		uint32_t pixel_clock);
- 	void (*disable_output)(struct link_encoder *link_enc,
- 		enum signal_type signal);
- 	void (*dp_set_lane_settings)(struct link_encoder *enc,
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-index 6ae1341476171..635f614c06734 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -2208,6 +2208,18 @@ static enum dc_status enable_link_dp_mst(
- 	return enable_link_dp(state, pipe_ctx);
- }
- 
-+static enum dc_status enable_link_analog(
-+		struct dc_state *state,
-+		struct pipe_ctx *pipe_ctx)
-+{
-+	struct dc_link *link = pipe_ctx->stream->link;
-+
-+	link->dc->hwss.enable_analog_link_output(
-+		link, pipe_ctx->stream->timing.pix_clk_100hz);
-+
-+	return DC_OK;
-+}
-+
- static enum dc_status enable_link_virtual(struct pipe_ctx *pipe_ctx)
- {
- 	struct dc_link *link = pipe_ctx->stream->link;
-@@ -2263,7 +2275,7 @@ static enum dc_status enable_link(
- 		status = DC_OK;
- 		break;
- 	case SIGNAL_TYPE_RGB:
--		status = DC_OK;
-+		status = enable_link_analog(state, pipe_ctx);
- 		break;
- 	case SIGNAL_TYPE_VIRTUAL:
- 		status = enable_link_virtual(pipe_ctx);
+ 		/*
+ 		 * When dynamically changing a BAR, skip writing the BAR reg, as
 -- 
 2.51.0
 
