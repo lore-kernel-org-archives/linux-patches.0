@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21C223D7CF;
-	Wed, 25 Feb 2026 01:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96D120C012;
+	Wed, 25 Feb 2026 01:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983346; cv=none; b=Rmk8Ny8Lo3at6lxvav5/F4lxu1Z1oIJkiAi+FhNGXXNv68editO30n8JQx02w1lTL1wMBBTnlvX0iI4KPo707foa0RfiRpzrPfyRjbmDt8z0C9mhjvYY3UrQVDPWKIdz6Pg+nPEfTPUHCvD4nxMX4H9Y/9PBOnyK8HCK0Yzl4VI=
+	t=1771983348; cv=none; b=tjKgS2HKMSKCRc1eCemjtYRsGImo872eILEA2jh43wj1KuzlWSdw9MF7WnJsFFvLHQcVL4izpLFCVtABlKhWl+rZYCrnj1ufeddtg3bY679koANd17JATxZzc1EXFSpw9cVitrpycHF61yMa1lLHujntqhLk3Nh0luoiDdd7rrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983346; c=relaxed/simple;
-	bh=mBt5q2QQVBFQ2p0qCWWOHwY3VUlimZHIBCcOBkZRSoI=;
+	s=arc-20240116; t=1771983348; c=relaxed/simple;
+	bh=WZNcfxH7l1TeOlHRydgQH99b+K/CK/aRWqei4eDctYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pE/Aqo/eiGm+SD/UVJWCSQpnwPY3aiE5VbM2raTjeIcTdGDsm7pb5ebgFsa4eetesJxQloGZ4e51nytj3KRR/iG0HVA1joeKPnHeF5Fj3arCBNoIiUBh4SYTqpzD/Hl6FiKWtLpV0WyGz0mx7F+rQiSM00Hj9aoUERg2pChdNy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWJWrZm/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K5I0RWxg+Sewe5wPXP6aXwCR3LW+cSFZ8iV5Y+GO/wsdxR/4DXGm8+n0Vit2AP++vWGDGDJ87qNzgCv2b1R66eriHc/WsbGiBCZEQ78qoXDq2uNZmpVWPu+8B/FoW0QJ23HZNY0wF5ei+jF/EqzIXdG4w5DzjFJzMC/SqPAN4HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfVPiNqb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWJWrZm/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CD7C116D0;
-	Wed, 25 Feb 2026 01:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfVPiNqb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A15C116D0;
+	Wed, 25 Feb 2026 01:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983346;
-	bh=mBt5q2QQVBFQ2p0qCWWOHwY3VUlimZHIBCcOBkZRSoI=;
+	s=korg; t=1771983347;
+	bh=WZNcfxH7l1TeOlHRydgQH99b+K/CK/aRWqei4eDctYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWJWrZm/TUjysi2uDZ9WU44AcXBFhoRxjFoQxvCCkyq5+AjjDUp1VxQrx/pUWOBW8
-	 iarkiJc7p3p4N6soDL0loPVP5P5TknJ0w7c75T7DrixQpKP74FJW0tL6kFxSZWj/VI
-	 Gg1N0XDyos8w5cCgZEqZGZAvdy3NL0n1wUxbAWf8=
+	b=WfVPiNqbo2sPGzgkVP4KGI7/d4T5PsGqUIqVG888j1h2Vlck0wUzeDAeZ8egz9e3I
+	 QG4Z7fCq/Egfaga25LIUT21efXEbWtGAZnVVrXCAZVDPOVKcmyQRWr0gqNf/HWBKeA
+	 n1JR13D4zbSNnsWLEw4HnxMp7km1rWCBQxTshzOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars Francke <lars.francke@gmail.com>,
-	Yijun Shen <Yijun.Shen@Dell.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Etienne AUJAMES <eaujames@ddn.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 475/781] crypto: ccp - Send PSP_CMD_TEE_RING_DESTROY when PSP_CMD_TEE_RING_INIT fails
-Date: Tue, 24 Feb 2026 17:19:44 -0800
-Message-ID: <20260225012411.464585836@linuxfoundation.org>
+Subject: [PATCH 6.19 440/781] IB/cache: update gid cache on client reregister event
+Date: Tue, 24 Feb 2026 17:19:09 -0800
+Message-ID: <20260225012410.493613315@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -56,107 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Etienne AUJAMES <eaujames@ddn.com>
 
-[ Upstream commit 7b85137caf110a09a4a18f00f730de4709f9afc8 ]
+[ Upstream commit ddd6c8c873e912cb1ead79def54de5e24ff71c80 ]
 
-The hibernate resume sequence involves loading a resume kernel that is just
-used for loading the hibernate image before shifting back to the existing
-kernel.
+Some HCAs (e.g: ConnectX4) do not trigger a IB_EVENT_GID_CHANGE on
+subnet prefix update from SM (PortInfo).
 
-During that hibernate resume sequence the resume kernel may have loaded
-the ccp driver.  If this happens the resume kernel will also have called
-PSP_CMD_TEE_RING_INIT but it will never have called
-PSP_CMD_TEE_RING_DESTROY.
+Since the commit d58c23c92548 ("IB/core: Only update PKEY and GID caches
+on respective events"), the GID cache is updated exclusively on
+IB_EVENT_GID_CHANGE. If this event is not emitted, the subnet prefix in the
+IPoIB interface’s hardware address remains set to its default value
+(0xfe80000000000000).
 
-This is problematic because the existing kernel needs to re-initialize the
-ring.  One could argue that the existing kernel should call destroy
-as part of restore() but there is no guarantee that the resume kernel did
-or didn't load the ccp driver.  There is also no callback opportunity for
-the resume kernel to destroy before handing back control to the existing
-kernel.
+Then rdma_bind_addr() failed because it relies on hardware address to
+find the port GID (subnet_prefix + port GUID).
 
-Similar problems could potentially exist with the use of kdump and
-crash handling. I actually reproduced this issue like this:
+This patch fixes this issue by updating the GID cache on
+IB_EVENT_CLIENT_REREGISTER event (emitted on PortInfo::ClientReregister=1).
 
-1) rmmod ccp
-2) hibernate the system
-3) resume the system
-4) modprobe ccp
-
-The resume kernel will have loaded ccp but never destroyed and then when
-I try to modprobe it fails.
-
-Because of these possible cases add a flow that checks the error code from
-the PSP_CMD_TEE_RING_INIT call and tries to call PSP_CMD_TEE_RING_DESTROY
-if it failed.  If this succeeds then call PSP_CMD_TEE_RING_INIT again.
-
-Fixes: f892a21f51162 ("crypto: ccp - use generic power management")
-Reported-by: Lars Francke <lars.francke@gmail.com>
-Closes: https://lore.kernel.org/platform-driver-x86/CAD-Ua_gfJnQSo8ucS_7ZwzuhoBRJ14zXP7s8b-zX3ZcxcyWePw@mail.gmail.com/
-Tested-by: Yijun Shen <Yijun.Shen@Dell.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://patch.msgid.link/20260116041132.153674-6-superm1@kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: d58c23c92548 ("IB/core: Only update PKEY and GID caches on respective events")
+Signed-off-by: Etienne AUJAMES <eaujames@ddn.com>
+Link: https://patch.msgid.link/aVUfsO58QIDn5bGX@eaujamesFR0130
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/tee-dev.c | 14 ++++++++++++++
- include/linux/psp.h          |  1 +
- 2 files changed, 15 insertions(+)
+ drivers/infiniband/core/cache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccp/tee-dev.c b/drivers/crypto/ccp/tee-dev.c
-index ef1430f86ad62..92ffa412622a2 100644
---- a/drivers/crypto/ccp/tee-dev.c
-+++ b/drivers/crypto/ccp/tee-dev.c
-@@ -113,6 +113,7 @@ static int tee_init_ring(struct psp_tee_device *tee)
- {
- 	int ring_size = MAX_RING_BUFFER_ENTRIES * sizeof(struct tee_ring_cmd);
- 	struct tee_init_ring_cmd *cmd;
-+	bool retry = false;
- 	unsigned int reg;
- 	int ret;
- 
-@@ -135,6 +136,7 @@ static int tee_init_ring(struct psp_tee_device *tee)
- 	/* Send command buffer details to Trusted OS by writing to
- 	 * CPU-PSP message registers
+diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
+index 81cf3c902e819..0fc1c5bce2f0d 100644
+--- a/drivers/infiniband/core/cache.c
++++ b/drivers/infiniband/core/cache.c
+@@ -1537,7 +1537,8 @@ static void ib_cache_event_task(struct work_struct *_work)
+ 	 * the cache.
  	 */
-+retry_init:
- 	ret = psp_mailbox_command(tee->psp, PSP_CMD_TEE_RING_INIT, cmd,
- 				  TEE_DEFAULT_CMD_TIMEOUT, &reg);
- 	if (ret) {
-@@ -145,6 +147,18 @@ static int tee_init_ring(struct psp_tee_device *tee)
- 	}
+ 	ret = ib_cache_update(work->event.device, work->event.element.port_num,
+-			      work->event.event == IB_EVENT_GID_CHANGE,
++			      work->event.event == IB_EVENT_GID_CHANGE ||
++			      work->event.event == IB_EVENT_CLIENT_REREGISTER,
+ 			      work->event.event == IB_EVENT_PKEY_CHANGE,
+ 			      work->enforce_security);
  
- 	if (FIELD_GET(PSP_CMDRESP_STS, reg)) {
-+		/*
-+		 * During the hibernate resume sequence driver may have gotten loaded
-+		 * but the ring not properly destroyed. If the ring doesn't work, try
-+		 * to destroy and re-init once.
-+		 */
-+		if (!retry && FIELD_GET(PSP_CMDRESP_STS, reg) == PSP_TEE_STS_RING_BUSY) {
-+			dev_info(tee->dev, "tee: ring init command failed with busy status, retrying\n");
-+			if (tee_send_destroy_cmd(tee)) {
-+				retry = true;
-+				goto retry_init;
-+			}
-+		}
- 		dev_err(tee->dev, "tee: ring init command failed (%#010lx)\n",
- 			FIELD_GET(PSP_CMDRESP_STS, reg));
- 		tee_free_ring(tee);
-diff --git a/include/linux/psp.h b/include/linux/psp.h
-index 92e60aeef21e1..b337dcce1e991 100644
---- a/include/linux/psp.h
-+++ b/include/linux/psp.h
-@@ -18,6 +18,7 @@
-  * and should include an appropriate local definition in their source file.
-  */
- #define PSP_CMDRESP_STS		GENMASK(15, 0)
-+#define  PSP_TEE_STS_RING_BUSY 0x0000000d  /* Ring already initialized */
- #define PSP_CMDRESP_CMD		GENMASK(23, 16)
- #define PSP_CMDRESP_RESERVED	GENMASK(29, 24)
- #define PSP_CMDRESP_RECOVERY	BIT(30)
 -- 
 2.51.0
 
