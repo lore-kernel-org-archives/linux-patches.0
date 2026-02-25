@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7B321D596;
-	Wed, 25 Feb 2026 01:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A025121D596;
+	Wed, 25 Feb 2026 01:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771982870; cv=none; b=JxL6/7/iETOoZoxhcy8Uc/niOqJctfsJc5iJavCszbwahDskBd8bFF4sXV0FHJWuBkzI+1lkZwOOVwOhjq4EALZD5CxMuVjlXF+wuSfV2VqzlST3dHWhdNa0qv9VNjhyJ0Vy0sQUL0LUhqJ1IbQJLy2o4YeQK35O2H7draYhEJc=
+	t=1771982871; cv=none; b=br0Ka0JkZUIZtxKHylaTCPjDKHQto1dLUlGPI1ei8VCVhfBUZ6daZRL0Kmqgt6QG5XtltIoXpIMtDWdrZNjzN97P1VcvsSpdGJxEFFy+yz9FtDJlGbwYuTZHf5F5Cc2bxs5zv6VXvavB2rr1aEU5ftcgbGFoSfSUGDahyRFVKdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771982870; c=relaxed/simple;
-	bh=6tG94616Mie+Y9od8ss6cVVbzD5eOOkkkP5Do/+O/PU=;
+	s=arc-20240116; t=1771982871; c=relaxed/simple;
+	bh=4AfeZLSwyCl/mNnkxLgnDVs0D0ZDOlydQLZDbZ/+2Mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dODKy9/OCflhL9pQLI7ZuR6bfInuFA45bEr0F89WEEJFiDAYkchhhnEMRi7dUWsKBv+BY5uqMsnXT3az1eoki9vus3OGje4sa1r31h5xl1YKhcJlcrd8CLT0fzxEv6qIABilETXeiMl5LyB5PbZz+NAPpJlYf/XQ9ZwfXeKoUT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBjlU72m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jJ1/bWLQ+V+7bD5D+0o5gbkKVKxKF7FyGfmclwFHHAXjf3oRIYnGgkvhas6H0bOI43b6HF2y8m4y/tOJxN5bNpusJi948gH4d19sOAnT7YsSFAK8l3wp9rLJuKQOXriEZo/eEMyHb9p30nMcC9yv9uZrZkeqjFxK8lAcIag8Rok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJrG3h0W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBjlU72m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46240C116D0;
-	Wed, 25 Feb 2026 01:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJrG3h0W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F07CC19423;
+	Wed, 25 Feb 2026 01:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771982870;
-	bh=6tG94616Mie+Y9od8ss6cVVbzD5eOOkkkP5Do/+O/PU=;
+	s=korg; t=1771982871;
+	bh=4AfeZLSwyCl/mNnkxLgnDVs0D0ZDOlydQLZDbZ/+2Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JBjlU72m07SQ6Qh8p0QO4FblaDjjjzuA/pyLIp5C689ZBGFq5BYw01QKlLuO/Vslj
-	 uob9Nd/ZSk7rIGPotEj1wyFGgWRr57dbtRP1Ezv75syfvCaQswdT4+DM+y/fCJ3b6Z
-	 bfFoI6CLMNeUg+AXGlRqoa1yty1vTTpRxc4ooFsw=
+	b=CJrG3h0WJCoEbm9b8TPxuQE7SSTSC0iLQby0m1cCc9ZwHi7bbJOSie+34+sd/VB2d
+	 3GLvoe4kSbegJs5aID0oQRpR2srhDEoeHuQsOVt1Ocms0D4+Yg29OsA5W+F1VoM9tm
+	 pF7bqEG5tESi3lKo74L4IVt6QT8KaXLmg5HguTfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+ea1cd4aa4d1e98458a55@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 056/781] ublk: use READ_ONCE() to read struct ublksrv_ctrl_cmd
-Date: Tue, 24 Feb 2026 17:12:45 -0800
-Message-ID: <20260225012401.080776686@linuxfoundation.org>
+Subject: [PATCH 6.19 021/781] gfs2: Fix use-after-free in iomap inline data write path
+Date: Tue, 24 Feb 2026 17:12:10 -0800
+Message-ID: <20260225012400.222387762@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,192 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit ed9f54cc1e335096733aed03c2a46de3d58922ed ]
+[ Upstream commit faddeb848305e79db89ee0479bb0e33380656321 ]
 
-struct ublksrv_ctrl_cmd is part of the io_uring_sqe, which may lie in
-userspace-mapped memory. It's racy to access its fields with normal
-loads, as userspace may write to them concurrently. Use READ_ONCE() to
-copy the ublksrv_ctrl_cmd from the io_uring_sqe to the stack. Use the
-local copy in place of the one in the io_uring_sqe.
+The inline data buffer head (dibh) is being released prematurely in
+gfs2_iomap_begin() via release_metapath() while iomap->inline_data
+still points to dibh->b_data. This causes a use-after-free when
+iomap_write_end_inline() later attempts to write to the inline data
+area.
 
-Fixes: 87213b0d847c ("ublk: allow non-blocking ctrl cmds in IO_URING_F_NONBLOCK issue")
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The bug sequence:
+1. gfs2_iomap_begin() calls gfs2_meta_inode_buffer() to read inode
+   metadata into dibh
+2. Sets iomap->inline_data = dibh->b_data + sizeof(struct gfs2_dinode)
+3. Calls release_metapath() which calls brelse(dibh), dropping refcount
+   to 0
+4. kswapd reclaims the page (~39ms later in the syzbot report)
+5. iomap_write_end_inline() tries to memcpy() to iomap->inline_data
+6. KASAN detects use-after-free write to freed memory
+
+Fix by storing dibh in iomap->private and incrementing its refcount
+with get_bh() in gfs2_iomap_begin(). The buffer is then properly
+released in gfs2_iomap_end() after the inline write completes,
+ensuring the page stays alive for the entire iomap operation.
+
+Note: A C reproducer is not available for this issue. The fix is based
+on analysis of the KASAN report and code review showing the buffer head
+is freed before use.
+
+[agruenba: Take buffer head reference in gfs2_iomap_begin() to avoid
+leaks in gfs2_iomap_get() and gfs2_iomap_alloc().]
+
+Reported-by: syzbot+ea1cd4aa4d1e98458a55@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ea1cd4aa4d1e98458a55
+Fixes: d0a22a4b03b8 ("gfs2: Fix iomap write page reclaim deadlock")
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 56 ++++++++++++++++++++++------------------
- 1 file changed, 31 insertions(+), 25 deletions(-)
+ fs/gfs2/bmap.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 0ce0e537fb850..06e0790150d1d 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -3311,12 +3311,11 @@ static int ublk_ctrl_del_dev(struct ublk_device **p_ub, bool wait)
- 	return 0;
- }
- 
--static inline void ublk_ctrl_cmd_dump(struct io_uring_cmd *cmd)
-+static inline void ublk_ctrl_cmd_dump(u32 cmd_op,
-+				      const struct ublksrv_ctrl_cmd *header)
- {
--	const struct ublksrv_ctrl_cmd *header = io_uring_sqe_cmd(cmd->sqe);
--
- 	pr_devel("%s: cmd_op %x, dev id %d qid %d data %llx buf %llx len %u\n",
--			__func__, cmd->cmd_op, header->dev_id, header->queue_id,
-+			__func__, cmd_op, header->dev_id, header->queue_id,
- 			header->data[0], header->addr, header->len);
- }
- 
-@@ -3685,9 +3684,8 @@ static int ublk_char_dev_permission(struct ublk_device *ub,
- }
- 
- static int ublk_ctrl_uring_cmd_permission(struct ublk_device *ub,
--		struct io_uring_cmd *cmd)
-+		u32 cmd_op, struct ublksrv_ctrl_cmd *header)
- {
--	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)io_uring_sqe_cmd(cmd->sqe);
- 	bool unprivileged = ub->dev_info.flags & UBLK_F_UNPRIVILEGED_DEV;
- 	void __user *argp = (void __user *)(unsigned long)header->addr;
- 	char *dev_path = NULL;
-@@ -3703,7 +3701,7 @@ static int ublk_ctrl_uring_cmd_permission(struct ublk_device *ub,
- 		 * know if the specified device is created as unprivileged
- 		 * mode.
- 		 */
--		if (_IOC_NR(cmd->cmd_op) != UBLK_CMD_GET_DEV_INFO2)
-+		if (_IOC_NR(cmd_op) != UBLK_CMD_GET_DEV_INFO2)
- 			return 0;
- 	}
- 
-@@ -3724,7 +3722,7 @@ static int ublk_ctrl_uring_cmd_permission(struct ublk_device *ub,
- 		return PTR_ERR(dev_path);
- 
- 	ret = -EINVAL;
--	switch (_IOC_NR(cmd->cmd_op)) {
-+	switch (_IOC_NR(cmd_op)) {
- 	case UBLK_CMD_GET_DEV_INFO:
- 	case UBLK_CMD_GET_DEV_INFO2:
- 	case UBLK_CMD_GET_QUEUE_AFFINITY:
-@@ -3753,7 +3751,7 @@ static int ublk_ctrl_uring_cmd_permission(struct ublk_device *ub,
- 		header->addr += header->dev_path_len;
- 	}
- 	pr_devel("%s: dev id %d cmd_op %x uid %d gid %d path %s ret %d\n",
--			__func__, ub->ub_number, cmd->cmd_op,
-+			__func__, ub->ub_number, cmd_op,
- 			ub->dev_info.owner_uid, ub->dev_info.owner_gid,
- 			dev_path, ret);
- exit:
-@@ -3777,7 +3775,9 @@ static bool ublk_ctrl_uring_cmd_may_sleep(u32 cmd_op)
- static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
- 		unsigned int issue_flags)
- {
--	const struct ublksrv_ctrl_cmd *header = io_uring_sqe_cmd(cmd->sqe);
-+	/* May point to userspace-mapped memory */
-+	const struct ublksrv_ctrl_cmd *ub_src = io_uring_sqe_cmd(cmd->sqe);
-+	struct ublksrv_ctrl_cmd header;
- 	struct ublk_device *ub = NULL;
- 	u32 cmd_op = cmd->cmd_op;
- 	int ret = -EINVAL;
-@@ -3789,41 +3789,47 @@ static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
- 	if (!(issue_flags & IO_URING_F_SQE128))
- 		return -EINVAL;
- 
--	ublk_ctrl_cmd_dump(cmd);
-+	header.dev_id = READ_ONCE(ub_src->dev_id);
-+	header.queue_id = READ_ONCE(ub_src->queue_id);
-+	header.len = READ_ONCE(ub_src->len);
-+	header.addr = READ_ONCE(ub_src->addr);
-+	header.data[0] = READ_ONCE(ub_src->data[0]);
-+	header.dev_path_len = READ_ONCE(ub_src->dev_path_len);
-+	ublk_ctrl_cmd_dump(cmd_op, &header);
- 
- 	ret = ublk_check_cmd_op(cmd_op);
- 	if (ret)
- 		goto out;
- 
- 	if (cmd_op == UBLK_U_CMD_GET_FEATURES) {
--		ret = ublk_ctrl_get_features(header);
-+		ret = ublk_ctrl_get_features(&header);
- 		goto out;
- 	}
- 
- 	if (_IOC_NR(cmd_op) != UBLK_CMD_ADD_DEV) {
- 		ret = -ENODEV;
--		ub = ublk_get_device_from_id(header->dev_id);
-+		ub = ublk_get_device_from_id(header.dev_id);
- 		if (!ub)
- 			goto out;
- 
--		ret = ublk_ctrl_uring_cmd_permission(ub, cmd);
-+		ret = ublk_ctrl_uring_cmd_permission(ub, cmd_op, &header);
- 		if (ret)
- 			goto put_dev;
- 	}
- 
- 	switch (_IOC_NR(cmd_op)) {
- 	case UBLK_CMD_START_DEV:
--		ret = ublk_ctrl_start_dev(ub, header);
-+		ret = ublk_ctrl_start_dev(ub, &header);
- 		break;
- 	case UBLK_CMD_STOP_DEV:
- 		ret = ublk_ctrl_stop_dev(ub);
- 		break;
- 	case UBLK_CMD_GET_DEV_INFO:
- 	case UBLK_CMD_GET_DEV_INFO2:
--		ret = ublk_ctrl_get_dev_info(ub, header);
-+		ret = ublk_ctrl_get_dev_info(ub, &header);
- 		break;
- 	case UBLK_CMD_ADD_DEV:
--		ret = ublk_ctrl_add_dev(header);
-+		ret = ublk_ctrl_add_dev(&header);
- 		break;
- 	case UBLK_CMD_DEL_DEV:
- 		ret = ublk_ctrl_del_dev(&ub, true);
-@@ -3832,26 +3838,26 @@ static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
- 		ret = ublk_ctrl_del_dev(&ub, false);
- 		break;
- 	case UBLK_CMD_GET_QUEUE_AFFINITY:
--		ret = ublk_ctrl_get_queue_affinity(ub, header);
-+		ret = ublk_ctrl_get_queue_affinity(ub, &header);
- 		break;
- 	case UBLK_CMD_GET_PARAMS:
--		ret = ublk_ctrl_get_params(ub, header);
-+		ret = ublk_ctrl_get_params(ub, &header);
- 		break;
- 	case UBLK_CMD_SET_PARAMS:
--		ret = ublk_ctrl_set_params(ub, header);
-+		ret = ublk_ctrl_set_params(ub, &header);
- 		break;
- 	case UBLK_CMD_START_USER_RECOVERY:
--		ret = ublk_ctrl_start_recovery(ub, header);
-+		ret = ublk_ctrl_start_recovery(ub, &header);
- 		break;
- 	case UBLK_CMD_END_USER_RECOVERY:
--		ret = ublk_ctrl_end_recovery(ub, header);
-+		ret = ublk_ctrl_end_recovery(ub, &header);
- 		break;
- 	case UBLK_CMD_UPDATE_SIZE:
--		ublk_ctrl_set_size(ub, header);
-+		ublk_ctrl_set_size(ub, &header);
- 		ret = 0;
- 		break;
- 	case UBLK_CMD_QUIESCE_DEV:
--		ret = ublk_ctrl_quiesce_dev(ub, header);
-+		ret = ublk_ctrl_quiesce_dev(ub, &header);
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index 131091520de6b..fdcac8e3f2ba2 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -1127,10 +1127,18 @@ static int gfs2_iomap_begin(struct inode *inode, loff_t pos, loff_t length,
+ 			goto out_unlock;
  		break;
  	default:
- 		ret = -EOPNOTSUPP;
-@@ -3863,7 +3869,7 @@ static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
- 		ublk_put_device(ub);
-  out:
- 	pr_devel("%s: cmd done ret %d cmd_op %x, dev id %d qid %d\n",
--			__func__, ret, cmd->cmd_op, header->dev_id, header->queue_id);
-+			__func__, ret, cmd_op, header.dev_id, header.queue_id);
- 	return ret;
- }
+-		goto out_unlock;
++		goto out;
+ 	}
  
+ 	ret = gfs2_iomap_begin_write(inode, pos, length, flags, iomap, &mp);
++	if (ret)
++		goto out_unlock;
++
++out:
++	if (iomap->type == IOMAP_INLINE) {
++		iomap->private = metapath_dibh(&mp);
++		get_bh(iomap->private);
++	}
+ 
+ out_unlock:
+ 	release_metapath(&mp);
+@@ -1144,6 +1152,9 @@ static int gfs2_iomap_end(struct inode *inode, loff_t pos, loff_t length,
+ 	struct gfs2_inode *ip = GFS2_I(inode);
+ 	struct gfs2_sbd *sdp = GFS2_SB(inode);
+ 
++	if (iomap->private)
++		brelse(iomap->private);
++
+ 	switch (flags & (IOMAP_WRITE | IOMAP_ZERO)) {
+ 	case IOMAP_WRITE:
+ 		if (flags & IOMAP_DIRECT)
 -- 
 2.51.0
 
