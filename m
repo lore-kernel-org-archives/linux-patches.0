@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E680B2C17A0;
-	Wed, 25 Feb 2026 06:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964EC2C17A0;
+	Wed, 25 Feb 2026 06:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002602; cv=none; b=r0UvFkQv8NMX3X+CWDy2tAA5Gg4yV42pVms8XpWyAz75vUG5bhpazMegmTWnkA4AlLqULN+16cVRf/eksFPlu/qW2OheQ56nXg8uxBUdG3RDD9l3QHO7wgzfkb+kQFfv6vy4iN3ZT886czyvtzz47PI+PNCJ2fsCR3oLzJl09vg=
+	t=1772002602; cv=none; b=GhpDdyPt/RvnEg12IqNb1ipeUIwasTtqYBxxInhoED7REn3bHzE55d28s8GUz02Atk8Yl5njhba3K9uXNpOIgmrkBH0SzcjFKg6rD5/0Yv0CKS7AsQXmP/HjoVqKosQ/aFrPnPbc/qUyuqZYVxxnk4wrWxqpm6137oQuckZmCXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772002602; c=relaxed/simple;
-	bh=WkpxZ+z8ofXC4/VGdnzEipJZP6KzSzeQaWHEjLkSppA=;
+	bh=g2YLuknNU8oXxps4acA7k/gr5hqtuQ4IfMDXKepuZ8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=laKEUhIVV5EmjrI4r41QbgtxHBJNbo3rRLWzOjoX56ggQMbHAigc+icG/GvlNdKGdMc5anbrICMPJFrPckdp5sVrzOqb31gY49m1Xr1cntI7qmfqE75jS9xthZ4tqn0bP7oE7Fn9inoiQGyv/qRcdrh1Wj/uzi9QB07WrvpE1y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FfN7JuL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D5xOXJ0BBWjVZdnSRvUIPivSe0H2RnaRdNTkKKMhqN2iEffY0mdSvW/NRM9krIV/M66R5L15T6KKeQziBGZgigUqrNIdOqkk1BzeC5AbAcp0CvhCJ4JvFrJkfbYxoWPu0ntb3o50xpeT5W73LBcEzPFTfs9hUa3/qliRjVXo1sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkZQBb9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FfN7JuL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAECC116D0;
-	Wed, 25 Feb 2026 06:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkZQBb9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6302BC116D0;
+	Wed, 25 Feb 2026 06:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002601;
-	bh=WkpxZ+z8ofXC4/VGdnzEipJZP6KzSzeQaWHEjLkSppA=;
+	s=korg; t=1772002602;
+	bh=g2YLuknNU8oXxps4acA7k/gr5hqtuQ4IfMDXKepuZ8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FfN7JuL5T9N/E/IfEpiCAru6a7jSPz3XVf5heBDEUgMqiielB6fgs6sBOfvKAjbl7
-	 RvieDtqAemc+JyjO2UaiZaZhjQk59QIzsDCO2vlafJSyvD5k5sicY2GIz1vs5ACLCK
-	 VV4q+Xv511i73QG2nP5TzlFDj1AoaG5WyUxBFUnA=
+	b=tkZQBb9LRFhpVS8E10Rj13KNCex3oQGyRFk2iNesVet00deNB2x3LtoKAMqiXY2IW
+	 1KRNW09sX/IvYghT1ehxdm4jQ2NLbKqZkpBZe0ZMwNlZoPr3Ngy6a05bVC4rzyiASS
+	 LKwRg0f7fEvenVfxLUDzXCGgnybq2V3PI8vKfXzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Waqar Hameed <waqar.hameed@axis.com>,
+	Nikita Travkin <nikita@trvn.ru>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 349/641] power: supply: goldfish: Fix use-after-free in power_supply_changed()
-Date: Tue, 24 Feb 2026 17:21:15 -0800
-Message-ID: <20260225012357.105041621@linuxfoundation.org>
+Subject: [PATCH 6.18 350/641] power: supply: pm8916_bms_vm: Fix use-after-free in power_supply_changed()
+Date: Tue, 24 Feb 2026 17:21:16 -0800
+Message-ID: <20260225012357.127346288@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit b2ce982e2e0c888dc55c888ad0e20ea04daf2e6b ]
+[ Upstream commit 62914959b35e9a1e29cc0f64cb8cfc5075a5366f ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -77,45 +78,52 @@ of using the `power_supply` handle *uninitialized* in
 Fix this racy use-after-free by making sure the IRQ is requested _after_
 the registration of the `power_supply` handle.
 
-Fixes: 84d7b7687489 ("power: Add battery driver for goldfish emulator")
+Fixes: 098bce1838e0 ("power: supply: Add pm8916 VM-BMS support")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Link: https://patch.msgid.link/500a606bb6fb6f2bb8d797e19a00cea9dd7b03c1.1766268280.git.waqar.hameed@axis.com
+Reviewed-by: Nikita Travkin <nikita@trvn.ru>
+Link: https://patch.msgid.link/2749c09ff81fcac87ae48147e216135450d8c067.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/goldfish_battery.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/power/supply/pm8916_bms_vm.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/power/supply/goldfish_battery.c b/drivers/power/supply/goldfish_battery.c
-index 479195e35d734..5aa24e4dc4455 100644
---- a/drivers/power/supply/goldfish_battery.c
-+++ b/drivers/power/supply/goldfish_battery.c
-@@ -224,12 +224,6 @@ static int goldfish_battery_probe(struct platform_device *pdev)
- 	if (data->irq < 0)
- 		return -ENODEV;
+diff --git a/drivers/power/supply/pm8916_bms_vm.c b/drivers/power/supply/pm8916_bms_vm.c
+index 5120be086e6ff..de5d571c03e21 100644
+--- a/drivers/power/supply/pm8916_bms_vm.c
++++ b/drivers/power/supply/pm8916_bms_vm.c
+@@ -167,15 +167,6 @@ static int pm8916_bms_vm_battery_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		return -EINVAL;
  
--	ret = devm_request_irq(&pdev->dev, data->irq,
--			       goldfish_battery_interrupt,
--			       IRQF_SHARED, pdev->name, data);
+-	irq = platform_get_irq_byname(pdev, "fifo");
+-	if (irq < 0)
+-		return irq;
+-
+-	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_bms_vm_fifo_update_done_irq,
+-					IRQF_ONESHOT, "pm8916_vm_bms", bat);
 -	if (ret)
 -		return ret;
 -
- 	psy_cfg.drv_data = data;
+ 	ret = regmap_bulk_read(bat->regmap, bat->reg + PM8916_PERPH_TYPE, &tmp, 2);
+ 	if (ret)
+ 		goto comm_error;
+@@ -220,6 +211,15 @@ static int pm8916_bms_vm_battery_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Unable to get battery info\n");
  
- 	data->ac = devm_power_supply_register(&pdev->dev,
-@@ -244,6 +238,12 @@ static int goldfish_battery_probe(struct platform_device *pdev)
- 	if (IS_ERR(data->battery))
- 		return PTR_ERR(data->battery);
- 
-+	ret = devm_request_irq(&pdev->dev, data->irq,
-+			       goldfish_battery_interrupt,
-+			       IRQF_SHARED, pdev->name, data);
++	irq = platform_get_irq_byname(pdev, "fifo");
++	if (irq < 0)
++		return irq;
++
++	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_bms_vm_fifo_update_done_irq,
++					IRQF_ONESHOT, "pm8916_vm_bms", bat);
 +	if (ret)
 +		return ret;
 +
- 	GOLDFISH_BATTERY_WRITE(data, BATTERY_INT_ENABLE, BATTERY_INT_MASK);
+ 	platform_set_drvdata(pdev, bat);
+ 
  	return 0;
- }
 -- 
 2.51.0
 
