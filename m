@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B2218B0A;
-	Wed, 25 Feb 2026 01:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D95D18B0A;
+	Wed, 25 Feb 2026 01:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983309; cv=none; b=lL+sF4uscWHCenE1RFdCqUVS9Qfe3L4QOddE8vvQwuddSfil2FFEHZeDPP68uxmXgluGnkg4suILUp8dke+PulamLDTq7MPoQnj9lvYQzWDL4p6VdCleM8LUv33a0X3qZcekhpeAj6DPdlDhYyGkMctN9LKuLYu/czYY3LzqZDs=
+	t=1771983311; cv=none; b=YNY5w6Kd6YNKnE3ZjjTsOvTAyQYlxfw8wRV+NS9EhMvdN9o22UgTVz7oY+IP3qtYHFISu3Bql5acmbsuAcd6tfggjyKK5Px2v4VHofNbIAIm2Bx/3DaOirGvglwoD50zgIUhxdYDdhcKo3svqwHH6dZ1Rs4kNG8pHd/uLSI9oOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983309; c=relaxed/simple;
-	bh=GSW2bIWgSE0F6hhRuXyqaVc/jY7zmo16mR57zAwslHk=;
+	s=arc-20240116; t=1771983311; c=relaxed/simple;
+	bh=irDwe8yRMji4YwO6LAsWlipahdLhe5e/ZsQnEBK4dyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rvsz0ziB+aUmIHhRxUidiRyj1ZP4ap+HWsRjWsiJCPvveAB/19j/rbI4AiWMryaB8fL2nunA0jVrvN5wGWtWTx+vySO0ZkKcsE4FxngZ2wdif0lWzUiIO/kyqpPqTuj7epgE2MnWqASci5WHoO3SoYe2pW5OPaBePoeHbhLIbRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0S2PoIE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MsSmdI+Xknmeiv5ZpIJN0XnzeNPmVi4wCDwqjHrcOwaNU/c6mpReQv/wlpkD2ADbJjM0uQguv/zBoCUiTtZxHzwllQq2ZvG6za763wz6cGWPnId9GVBVvlS1kqrDoyHdtsbW8wVwEey5eTCSaf0qWq+S0Iv74mIXPkUWnLbe6Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivORkHBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0S2PoIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4E6C116D0;
-	Wed, 25 Feb 2026 01:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivORkHBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDCBC116D0;
+	Wed, 25 Feb 2026 01:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983309;
-	bh=GSW2bIWgSE0F6hhRuXyqaVc/jY7zmo16mR57zAwslHk=;
+	s=korg; t=1771983310;
+	bh=irDwe8yRMji4YwO6LAsWlipahdLhe5e/ZsQnEBK4dyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0S2PoIEIyAXc4F6Eys5faokztzmKbM5ab8jCeUR3LgztUYGELHETHXFl4p3KUCFM
-	 v+4D2TynoBm/rGYWH6GdLmB1dsEeyb/9MTv+wTIr/V4Zu0jO+90M8t4ZVxt3gibM4x
-	 ccIJKl+IUMQuYJZtw905KZQHRK04eUZ5Ehogb8eI=
+	b=ivORkHBVkrLGk8a1Am74ad8BwpYHs9wl7P5IAIAWEssmVvFUJ1exLdZ8lSSTAaKLW
+	 kN+XSi2DQtjkFWOLMRie7bsVPvPg7p7Jl2b0qqKP87dIwsYKfCXSRIGD2u+MIwrMfk
+	 wOJfI4Z44xQiUdxy/6rV6XKPRAfQv2zPMq8l/Gnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <qiang.yu@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 390/781] PCI: Add preceding capability position support in PCI_FIND_NEXT_*_CAP macros
-Date: Tue, 24 Feb 2026 17:18:19 -0800
-Message-ID: <20260225012409.261446091@linuxfoundation.org>
+Subject: [PATCH 6.19 437/781] octeontx2-pf: Unregister devlink on probe failure
+Date: Tue, 24 Feb 2026 17:19:06 -0800
+Message-ID: <20260225012410.421027569@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,233 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit a2582e05e39adf9ab82a02561cd6f70738540ae0 ]
+[ Upstream commit 943f3b8bfbf297cf74392b50a7108ce1fe4cbd8c ]
 
-Add support for finding the preceding capability position in PCI
-capability list by extending the capability finding macros with an
-additional parameter. This functionality is essential for modifying PCI
-capability list, as it provides the necessary information to update the
-"next" pointer of the predecessor capability when removing entries.
+When probe fails after devlink registration, the missing devlink unregister
+call causing a memory leak.
 
-Modify two macros to accept a new 'prev_ptr' parameter:
-- PCI_FIND_NEXT_CAP - Now accepts 'prev_ptr' parameter for standard
-  capabilities
-- PCI_FIND_NEXT_EXT_CAP - Now accepts 'prev_ptr' parameter for extended
-  capabilities
-
-When a capability is found, these macros:
-- Store the position of the preceding capability in *prev_ptr
-  (if prev_ptr != NULL)
-- Maintain all existing functionality when prev_ptr is NULL
-
-Update current callers to accommodate this API change by passing NULL to
-'prev_ptr' argument if they do not care about the preceding capability
-position.
-
-No functional changes to driver behavior result from this commit as it
-maintains the existing capability finding functionality while adding the
-infrastructure for future capability removal operations.
-
-Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20251109-remove_cap-v1-1-2208f46f4dc2@oss.qualcomm.com
-Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
+Fixes: 2da489432747 ("octeontx2-pf: devlink params support to set mcam entry count")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Link: https://patch.msgid.link/20260206182645.4032737-1-hkelam@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence.c |  4 ++--
- .../pci/controller/dwc/pcie-designware-ep.c   |  2 +-
- drivers/pci/controller/dwc/pcie-designware.c  |  6 ++---
- drivers/pci/pci.c                             |  8 +++----
- drivers/pci/pci.h                             | 23 +++++++++++++++----
- 5 files changed, 29 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
-index e6f1a4ac0fb7a..a1eada56edba7 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence.c
-@@ -13,13 +13,13 @@
- u8 cdns_pcie_find_capability(struct cdns_pcie *pcie, u8 cap)
- {
- 	return PCI_FIND_NEXT_CAP(cdns_pcie_read_cfg, PCI_CAPABILITY_LIST,
--				 cap, pcie);
-+				 cap, NULL, pcie);
- }
- EXPORT_SYMBOL_GPL(cdns_pcie_find_capability);
- 
- u16 cdns_pcie_find_ext_capability(struct cdns_pcie *pcie, u8 cap)
- {
--	return PCI_FIND_NEXT_EXT_CAP(cdns_pcie_read_cfg, 0, cap, pcie);
-+	return PCI_FIND_NEXT_EXT_CAP(cdns_pcie_read_cfg, 0, cap, NULL, pcie);
- }
- EXPORT_SYMBOL_GPL(cdns_pcie_find_ext_capability);
- 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 19571ac2b9617..f6c54625486e2 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -72,7 +72,7 @@ EXPORT_SYMBOL_GPL(dw_pcie_ep_reset_bar);
- static u8 dw_pcie_ep_find_capability(struct dw_pcie_ep *ep, u8 func_no, u8 cap)
- {
- 	return PCI_FIND_NEXT_CAP(dw_pcie_ep_read_cfg, PCI_CAPABILITY_LIST,
--				 cap, ep, func_no);
-+				 cap, NULL, ep, func_no);
- }
- 
- /**
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 75fc8b767fccf..5d7a7e6f5724e 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -226,13 +226,13 @@ void dw_pcie_version_detect(struct dw_pcie *pci)
- u8 dw_pcie_find_capability(struct dw_pcie *pci, u8 cap)
- {
- 	return PCI_FIND_NEXT_CAP(dw_pcie_read_cfg, PCI_CAPABILITY_LIST, cap,
--				 pci);
-+				 NULL, pci);
- }
- EXPORT_SYMBOL_GPL(dw_pcie_find_capability);
- 
- u16 dw_pcie_find_ext_capability(struct dw_pcie *pci, u8 cap)
- {
--	return PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, 0, cap, pci);
-+	return PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, 0, cap, NULL, pci);
- }
- EXPORT_SYMBOL_GPL(dw_pcie_find_ext_capability);
- 
-@@ -246,7 +246,7 @@ static u16 __dw_pcie_find_vsec_capability(struct dw_pcie *pci, u16 vendor_id,
- 		return 0;
- 
- 	while ((vsec = PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, vsec,
--					     PCI_EXT_CAP_ID_VNDR, pci))) {
-+					     PCI_EXT_CAP_ID_VNDR, NULL, pci))) {
- 		header = dw_pcie_readl_dbi(pci, vsec + PCI_VNDR_HEADER);
- 		if (PCI_VNDR_HEADER_ID(header) == vsec_id)
- 			return vsec;
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index d9d531e8283c2..a05978f5cf2c7 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -426,7 +426,7 @@ static int pci_dev_str_match(struct pci_dev *dev, const char *p,
- static u8 __pci_find_next_cap(struct pci_bus *bus, unsigned int devfn,
- 			      u8 pos, int cap)
- {
--	return PCI_FIND_NEXT_CAP(pci_bus_read_config, pos, cap, bus, devfn);
-+	return PCI_FIND_NEXT_CAP(pci_bus_read_config, pos, cap, NULL, bus, devfn);
- }
- 
- u8 pci_find_next_capability(struct pci_dev *dev, u8 pos, int cap)
-@@ -531,7 +531,7 @@ u16 pci_find_next_ext_capability(struct pci_dev *dev, u16 start, int cap)
- 		return 0;
- 
- 	return PCI_FIND_NEXT_EXT_CAP(pci_bus_read_config, start, cap,
--				     dev->bus, dev->devfn);
-+				     NULL, dev->bus, dev->devfn);
- }
- EXPORT_SYMBOL_GPL(pci_find_next_ext_capability);
- 
-@@ -600,7 +600,7 @@ static u8 __pci_find_next_ht_cap(struct pci_dev *dev, u8 pos, int ht_cap)
- 		mask = HT_5BIT_CAP_MASK;
- 
- 	pos = PCI_FIND_NEXT_CAP(pci_bus_read_config, pos,
--				PCI_CAP_ID_HT, dev->bus, dev->devfn);
-+				PCI_CAP_ID_HT, NULL, dev->bus, dev->devfn);
- 	while (pos) {
- 		rc = pci_read_config_byte(dev, pos + 3, &cap);
- 		if (rc != PCIBIOS_SUCCESSFUL)
-@@ -611,7 +611,7 @@ static u8 __pci_find_next_ht_cap(struct pci_dev *dev, u8 pos, int ht_cap)
- 
- 		pos = PCI_FIND_NEXT_CAP(pci_bus_read_config,
- 					pos + PCI_CAP_LIST_NEXT,
--					PCI_CAP_ID_HT, dev->bus,
-+					PCI_CAP_ID_HT, NULL, dev->bus,
- 					dev->devfn);
- 	}
- 
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index e3c2852c80fbd..36f32b8af6ab3 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -106,17 +106,21 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
-  * @read_cfg: Function pointer for reading PCI config space
-  * @start: Starting position to begin search
-  * @cap: Capability ID to find
-+ * @prev_ptr: Pointer to store position of preceding capability (optional)
-  * @args: Arguments to pass to read_cfg function
-  *
-- * Search the capability list in PCI config space to find @cap.
-+ * Search the capability list in PCI config space to find @cap. If
-+ * found, update *prev_ptr with the position of the preceding capability
-+ * (if prev_ptr != NULL)
-  * Implements TTL (time-to-live) protection against infinite loops.
-  *
-  * Return: Position of the capability if found, 0 otherwise.
-  */
--#define PCI_FIND_NEXT_CAP(read_cfg, start, cap, args...)		\
-+#define PCI_FIND_NEXT_CAP(read_cfg, start, cap, prev_ptr, args...)	\
- ({									\
- 	int __ttl = PCI_FIND_CAP_TTL;					\
--	u8 __id, __found_pos = 0;					\
-+	u8 __id,  __found_pos = 0;					\
-+	u8 __prev_pos = (start);					\
- 	u8 __pos = (start);						\
- 	u16 __ent;							\
- 									\
-@@ -135,9 +139,12 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
- 									\
- 		if (__id == (cap)) {					\
- 			__found_pos = __pos;				\
-+			if (prev_ptr != NULL)				\
-+				*(u8 *)prev_ptr = __prev_pos;		\
- 			break;						\
- 		}							\
- 									\
-+		__prev_pos = __pos;					\
- 		__pos = FIELD_GET(PCI_CAP_LIST_NEXT_MASK, __ent);	\
- 	}								\
- 	__found_pos;							\
-@@ -149,21 +156,26 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
-  * @read_cfg: Function pointer for reading PCI config space
-  * @start: Starting position to begin search (0 for initial search)
-  * @cap: Extended capability ID to find
-+ * @prev_ptr: Pointer to store position of preceding capability (optional)
-  * @args: Arguments to pass to read_cfg function
-  *
-  * Search the extended capability list in PCI config space to find @cap.
-+ * If found, update *prev_ptr with the position of the preceding capability
-+ * (if prev_ptr != NULL)
-  * Implements TTL protection against infinite loops using a calculated
-  * maximum search count.
-  *
-  * Return: Position of the capability if found, 0 otherwise.
-  */
--#define PCI_FIND_NEXT_EXT_CAP(read_cfg, start, cap, args...)		\
-+#define PCI_FIND_NEXT_EXT_CAP(read_cfg, start, cap, prev_ptr, args...)	\
- ({									\
- 	u16 __pos = (start) ?: PCI_CFG_SPACE_SIZE;			\
- 	u16 __found_pos = 0;						\
-+	u16 __prev_pos;							\
- 	int __ttl, __ret;						\
- 	u32 __header;							\
- 									\
-+	__prev_pos = __pos;						\
- 	__ttl = (PCI_CFG_SPACE_EXP_SIZE - PCI_CFG_SPACE_SIZE) / 8;	\
- 	while (__ttl-- > 0 && __pos >= PCI_CFG_SPACE_SIZE) {		\
- 		__ret = read_cfg##_dword(args, __pos, &__header);	\
-@@ -175,9 +187,12 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
- 									\
- 		if (PCI_EXT_CAP_ID(__header) == (cap) && __pos != start) {\
- 			__found_pos = __pos;				\
-+			if (prev_ptr != NULL)				\
-+				*(u16 *)prev_ptr = __prev_pos;		\
- 			break;						\
- 		}							\
- 									\
-+		__prev_pos = __pos;					\
- 		__pos = PCI_EXT_CAP_NEXT(__header);			\
- 	}								\
- 	__found_pos;							\
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index 6b2d8559f0eb1..444bb67494ab7 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -3315,6 +3315,7 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ err_sriov_cleannup:
+ 	otx2_sriov_vfcfg_cleanup(pf);
+ err_pf_sriov_init:
++	otx2_unregister_dl(pf);
+ 	otx2_shutdown_tc(pf);
+ err_mcam_flow_del:
+ 	otx2_mcam_flow_del(pf);
 -- 
 2.51.0
 
