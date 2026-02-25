@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D27C248886;
-	Wed, 25 Feb 2026 01:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68952248886;
+	Wed, 25 Feb 2026 01:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983677; cv=none; b=k31fQcW3xBPAQqPHd8lUl22t+81MtP3eNvyEMf+d/Pu9MnjzxyadbGKNeodotFgC75eFDQWgtk4OxEzcQ0wu/aMogyhQQ28gmTWw50Gxac69HRu7QgLPDMfEy4BkpcCIJiuHRiV8Rj0BvN9uyn+wYktlmtIn6l+boAijAhV4JBM=
+	t=1771983678; cv=none; b=Stu0jsSwYNhxzRSIYo92TBqtdddLpG8HpHeSe9vZo+AR+Ke81v0H2VsU4upSnJCIEGN+51NvwASSMzotonfkh0RhR3Wt3wh6b5mjXUlLHfUa0X/eLyp9OtN4x0rUjk+6/tcyQIpIlj/BnhHyEkRSertanF4jOJnhQoIpx6qjhNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983677; c=relaxed/simple;
-	bh=4+qJQbqqUYS2p9HM9nIjR09yAyEoRy4UBbtoUS89dZs=;
+	s=arc-20240116; t=1771983678; c=relaxed/simple;
+	bh=fn+pbtlfS47jeOfYk9u72wPYKeKxSbMZodt6EDY6ZzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbGEIKGd2K7OLVIGzWjWRD+h6UPqlTts4veO6YdO98DD1LLyQNSj7wIz0O1aVsz4ZPRDj7CKJHh5VqFNde99nUJCm0mo86y2MHGMfuIvJVf4UpzBMBRuo/6A50IEU/xahrOiIbrrDNDXh6lL8TrjC+useqZgl2blRbre9s9EZmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJww1As+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=emqHRMvnjyLdQ9gKCT6EZq+vBKVtR6DPTs9c0ai2trEuDUHikBq6rhDDB9IKz+IlzZTgDOJfb2prdK09KSwI+wTEfHnIb2N0U7lFBeUSbQTg9eepEBMbUmBqNS0zpCfRG0si4pWYKp9FN5fhGKVxOHWxd+uwoGOdkdCUHOBYIvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHkGlc22; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJww1As+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0F0C116D0;
-	Wed, 25 Feb 2026 01:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHkGlc22"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3373EC116D0;
+	Wed, 25 Feb 2026 01:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983677;
-	bh=4+qJQbqqUYS2p9HM9nIjR09yAyEoRy4UBbtoUS89dZs=;
+	s=korg; t=1771983678;
+	bh=fn+pbtlfS47jeOfYk9u72wPYKeKxSbMZodt6EDY6ZzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJww1As+b18rWhDX+rMCr3n+K32Zm/Pm/sdf4FY2uOCK9Q0UJupvfBi8HwJBWgs4Y
-	 Lpl30YM+3sf8WtsUslwFVyqikw2xxs1qax1g9/gXPwjhi0J/MqjtCY2ilK8kAmQXt8
-	 V/bDvbY2JxxkPUyr7FNMPjQP4zJMsMb/fAhtQ5mo=
+	b=JHkGlc22Ty+xl7un9Fbi15bpeA3Di16mY/rK8S8bSOm90UMYbAjYDA1Kxe2fwzYZ+
+	 H9TRPnlRcVr4i2uxrEFrELqWJROQ7q0nR9+dBE+WM+o3QCV5kKj3RRnJzy7gAEXJ9U
+	 sRLkO7feSrzjNvWPUWQjkAzv7lF4kO/wbidshgs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Kleiner <mario.kleiner.de@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 744/781] drm/amd/display: Use same max plane scaling limits for all 64 bpp formats
-Date: Tue, 24 Feb 2026 17:24:13 -0800
-Message-ID: <20260225012417.973547398@linuxfoundation.org>
+	Brian Foster <bfoster@redhat.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.19 762/781] ext4: fix dirtyclusters double decrement on fs shutdown
+Date: Tue, 24 Feb 2026 17:24:31 -0800
+Message-ID: <20260225012418.409783752@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,77 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Kleiner <mario.kleiner.de@gmail.com>
+From: Brian Foster <bfoster@redhat.com>
 
-[ Upstream commit f0157ce46cf0e5e2257e19d590c9b16036ce26d4 ]
+commit 94a8cea54cd935c54fa2fba70354757c0fc245e3 upstream.
 
-The plane scaling hw seems to have the same min/max plane scaling limits
-for all 16 bpc / 64 bpp interleaved pixel color formats.
+fstests test generic/388 occasionally reproduces a warning in
+ext4_put_super() associated with the dirty clusters count:
 
-Therefore add cases to amdgpu_dm_plane_get_min_max_dc_plane_scaling() for
-all the 16 bpc fixed-point / unorm formats to use the same .fp16
-up/downscaling factor limits as used by the fp16 floating point formats.
+  WARNING: CPU: 7 PID: 76064 at fs/ext4/super.c:1324 ext4_put_super+0x48c/0x590 [ext4]
 
-So far, 16 bpc unorm formats were not handled, and the default: path
-returned max/min factors for 32 bpp argb8888 formats, which were wrong
-and bigger than what many DCE / DCN hw generations could handle.
+Tracing the failure shows that the warning fires due to an
+s_dirtyclusters_counter value of -1. IOW, this appears to be a
+spurious decrement as opposed to some sort of leak. Further tracing
+of the dirty cluster count deltas and an LLM scan of the resulting
+output identified the cause as a double decrement in the error path
+between ext4_mb_mark_diskspace_used() and the caller
+ext4_mb_new_blocks().
 
-The result sometimes was misscaling of framebuffers with
-DRM_FORMAT_XRGB16161616, DRM_FORMAT_ARGB16161616, DRM_FORMAT_XBGR16161616,
-DRM_FORMAT_ABGR16161616, leading to very wrong looking display, as tested
-on Polaris11 / DCE-11.2.
+First, note that generic/388 is a shutdown vs. fsstress test and so
+produces a random set of operations and shutdown injections. In the
+problematic case, the shutdown triggers an error return from the
+ext4_handle_dirty_metadata() call(s) made from
+ext4_mb_mark_context(). The changed value is non-zero at this point,
+so ext4_mb_mark_diskspace_used() does not exit after the error
+bubbles up from ext4_mb_mark_context(). Instead, the former
+decrements both cluster counters and returns the error up to
+ext4_mb_new_blocks(). The latter falls into the !ar->len out path
+which decrements the dirty clusters counter a second time, creating
+the inconsistency.
 
-So far this went unnoticed, because only few userspace clients used such
-16 bpc unorm framebuffers, and those didn't use hw plane scaling, so they
-did not experience this issue.
+To avoid this problem and simplify ownership of the cluster
+reservation in this codepath, lift the counter reduction to a single
+place in the caller. This makes it more clear that
+ext4_mb_new_blocks() is responsible for acquiring cluster
+reservation (via ext4_claim_free_clusters()) in the !delalloc case
+as well as releasing it, regardless of whether it ends up consumed
+or returned due to failure.
 
-With upcoming Mesa 26 exposing 16 bpc unorm formats under both OpenGL
-and Vulkan under Wayland, and the upcoming GNOME 50 Mutter Wayland
-compositor allowing for direct scanout of these formats, the scaling
-hw will be used on these formats if possible for HiDPI display scaling,
-so it is important to use the correct hw scaling limits to avoid wrong
-display.
-
-Tested on AMD Polaris 11 / DCE 11.2 with upcoming Mesa 26 and GNOME 50
-on HiDPI displays with scaling enabled. The mutter Wayland compositor now
-correctly falls back to scaling via desktop compositing instead of direct
-scanout, thereby avoiding wrong image display. For unscaled mode, it
-correctly uses direct scanout.
-
-Fixes: 580204038f5b ("drm/amd/display: Enable support for 16 bpc fixed-point framebuffers.")
-Signed-off-by: Mario Kleiner <mario.kleiner.de@gmail.com>
-Tested-by: Mario Kleiner <mario.kleiner.de@gmail.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Leo Li <sunpeng.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0087d9fb3f29 ("ext4: Fix s_dirty_blocks_counter if block allocation failed with nodelalloc")
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Link: https://patch.msgid.link/20260113171905.118284-1-bfoster@redhat.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ext4/mballoc-test.c |    2 +-
+ fs/ext4/mballoc.c      |   21 +++++----------------
+ 2 files changed, 6 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-index 7c4496fb4b9d4..f0946e67aef97 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-@@ -1060,10 +1060,15 @@ static void amdgpu_dm_plane_get_min_max_dc_plane_scaling(struct drm_device *dev,
- 		*min_downscale = plane_cap->max_downscale_factor.nv12;
- 		break;
+--- a/fs/ext4/mballoc-test.c
++++ b/fs/ext4/mballoc-test.c
+@@ -567,7 +567,7 @@ test_mark_diskspace_used_range(struct ku
  
-+	/* All 64 bpp formats have the same fp16 scaling limits */
- 	case DRM_FORMAT_XRGB16161616F:
- 	case DRM_FORMAT_ARGB16161616F:
- 	case DRM_FORMAT_XBGR16161616F:
- 	case DRM_FORMAT_ABGR16161616F:
-+	case DRM_FORMAT_XRGB16161616:
-+	case DRM_FORMAT_ARGB16161616:
-+	case DRM_FORMAT_XBGR16161616:
-+	case DRM_FORMAT_ABGR16161616:
- 		*max_upscale = plane_cap->max_upscale_factor.fp16;
- 		*min_downscale = plane_cap->max_downscale_factor.fp16;
- 		break;
--- 
-2.51.0
-
+ 	bitmap = mbt_ctx_bitmap(sb, TEST_GOAL_GROUP);
+ 	memset(bitmap, 0, sb->s_blocksize);
+-	ret = ext4_mb_mark_diskspace_used(ac, NULL, 0);
++	ret = ext4_mb_mark_diskspace_used(ac, NULL);
+ 	KUNIT_ASSERT_EQ(test, ret, 0);
+ 
+ 	max = EXT4_CLUSTERS_PER_GROUP(sb);
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -4186,8 +4186,7 @@ out_err:
+  * Returns 0 if success or error code
+  */
+ static noinline_for_stack int
+-ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
+-				handle_t *handle, unsigned int reserv_clstrs)
++ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac, handle_t *handle)
+ {
+ 	struct ext4_group_desc *gdp;
+ 	struct ext4_sb_info *sbi;
+@@ -4242,13 +4241,6 @@ ext4_mb_mark_diskspace_used(struct ext4_
+ 	BUG_ON(changed != ac->ac_b_ex.fe_len);
+ #endif
+ 	percpu_counter_sub(&sbi->s_freeclusters_counter, ac->ac_b_ex.fe_len);
+-	/*
+-	 * Now reduce the dirty block count also. Should not go negative
+-	 */
+-	if (!(ac->ac_flags & EXT4_MB_DELALLOC_RESERVED))
+-		/* release all the reserved blocks if non delalloc */
+-		percpu_counter_sub(&sbi->s_dirtyclusters_counter,
+-				   reserv_clstrs);
+ 
+ 	return err;
+ }
+@@ -6333,7 +6325,7 @@ repeat:
+ 			ext4_mb_pa_put_free(ac);
+ 	}
+ 	if (likely(ac->ac_status == AC_STATUS_FOUND)) {
+-		*errp = ext4_mb_mark_diskspace_used(ac, handle, reserv_clstrs);
++		*errp = ext4_mb_mark_diskspace_used(ac, handle);
+ 		if (*errp) {
+ 			ext4_discard_allocated_blocks(ac);
+ 			goto errout;
+@@ -6364,12 +6356,9 @@ errout:
+ out:
+ 	if (inquota && ar->len < inquota)
+ 		dquot_free_block(ar->inode, EXT4_C2B(sbi, inquota - ar->len));
+-	if (!ar->len) {
+-		if ((ar->flags & EXT4_MB_DELALLOC_RESERVED) == 0)
+-			/* release all the reserved blocks if non delalloc */
+-			percpu_counter_sub(&sbi->s_dirtyclusters_counter,
+-						reserv_clstrs);
+-	}
++	/* release any reserved blocks */
++	if (reserv_clstrs)
++		percpu_counter_sub(&sbi->s_dirtyclusters_counter, reserv_clstrs);
+ 
+ 	trace_ext4_allocate_blocks(ar, (unsigned long long)block);
+ 
 
 
