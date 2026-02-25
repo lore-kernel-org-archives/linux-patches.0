@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0185A248881;
-	Wed, 25 Feb 2026 01:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2A0243376;
+	Wed, 25 Feb 2026 01:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983588; cv=none; b=gZF9tb96Th+IqJszny6ME5ATJRFm/E4s/lDrMJM3NSmmDF5t6WT5PSoMZ7uzj/ydLKDcLe+5Gg0Ucqo0e0xSxT+UvxyW9D4NaxThQa1ibyapUNhNxy7txwYcETjd4PrCOOP/sM7MkcT26WAvWu7tPLzxFRtdo+KD8074jR1G7yk=
+	t=1771983589; cv=none; b=WDe4FYOref2YOQUT/DaXa/M52x7b42XRBb4rS4FvT2IpbkVHasJUw3b7hw+OprWs7VeOPoMM90V9tHWysd17Wcizs5BsnrLDrtWxD+UXczWO68SAKQjjg0QcT0NhXDJUA0z32VvVD+MmwTYz0jMzEOACwGYtXrV2rX9Sb/50tEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983588; c=relaxed/simple;
-	bh=8h7sTfDkpni79F9xB+fUCf0ZbnHhSjlF8ZqTwiVk7qE=;
+	s=arc-20240116; t=1771983589; c=relaxed/simple;
+	bh=KOpsJregEoTeYoCiIMeIZnI6QHHRzfWMvj9mY2IQY8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nk1MEveWknAo9XEL3nfcYz+6gEqy/Ta6AYOyNZyJyBKEdb1gkpnTCLfB7TNiEziBJS2YnNx9eK/nAsXfDN4VAgx1hqIUKqRoiZO0vILzcownppfF81aV/Em5ApAIpjuTf32R0+J35Oha86wuUHwU1tY1J1hE+i1w+rw/x7qJrrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1c/PBodE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I2BEcaCOS0gjlOp6K0yvj/TMUI9t3kgyz9HjxqHPjNeK6zWmIQzwkd/7A0FUFJR0oErsCZkBBDGyoSAtrTQo90IKVeEhuM80OqAxDdyH/wvG02/5I8wGYR7TJOPqVm358pJ+/FLVZNUdjz7YwMiuFjTpZjHDL5KC7DpSofV6Kyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s65tRFoA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1c/PBodE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF65C116D0;
-	Wed, 25 Feb 2026 01:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s65tRFoA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7918C116D0;
+	Wed, 25 Feb 2026 01:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983587;
-	bh=8h7sTfDkpni79F9xB+fUCf0ZbnHhSjlF8ZqTwiVk7qE=;
+	s=korg; t=1771983589;
+	bh=KOpsJregEoTeYoCiIMeIZnI6QHHRzfWMvj9mY2IQY8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1c/PBodE/aphGfVkLPxRIH/v6ts5GSNdeb8jdHGMkwOFyDWXrhGBzqECtxS4t6mK2
-	 N2ZO+02q2cmTYDTb21gPW4BexbfHQymLxBth3p6WV3MxcuBmpd1arIe0uQgqxl7fhE
-	 LKX+36xxvkBApsQ6c75ttHDeKl+ajRlWWWiDnuUw=
+	b=s65tRFoA+Ytr3AsEIwDZGSOOhSlNqa8p5ba/QOOAgoV5c90HLclIWF+nnGtJ/FvrQ
+	 GpCauDDqYGjnEZwTKTl4iGeJluptWnPOjpXE3yy4DBxH83rgdzTqh53sagLkerAQO3
+	 QkFQhw/YcxbMvlpp2E50wmtKnwMN1fYs5IjJ75t4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jacob Keller <Jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 686/781] net/mlx5e: Fix misidentification of ASO CQE during poll loop
-Date: Tue, 24 Feb 2026 17:23:15 -0800
-Message-ID: <20260225012416.597114594@linuxfoundation.org>
+Subject: [PATCH 6.19 687/781] net/mlx5: Fix misidentification of write combining CQE during poll loop
+Date: Tue, 24 Feb 2026 17:23:16 -0800
+Message-ID: <20260225012416.620193383@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -56,108 +56,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit ae3cb71e6c4dbda0c0b7c10475b744377813c7bd ]
+[ Upstream commit d451994ebc7d4392610bd4b2ab339b255deb4143 ]
 
-The ASO completion poll loop uses usleep_range() which can sleep much
-longer than requested due to scheduler latency. Under load, we witnessed
-a 20ms+ delay until the process was rescheduled, causing the jiffies
-based timeout to expire while the thread is sleeping.
+The write combining completion poll loop uses usleep_range() which can
+sleep much longer than requested due to scheduler latency. Under load,
+we witnessed a 20ms+ delay until the process was rescheduled, causing
+the jiffies based timeout to expire while the thread is sleeping.
 
 The original do-while loop structure (poll, sleep, check timeout) would
 exit without a final poll when waking after timeout, missing a CQE that
 arrived during sleep.
 
-Instead of the open-coded while loop, use the kernel's
-read_poll_timeout() which always performs an additional check after the
-sleep expiration, and is less error-prone.
+Instead of the open-coded while loop, use the kernel's poll_timeout_us()
+which always performs an additional check after the sleep expiration,
+and is less error-prone.
 
-Note: read_poll_timeout() doesn't accept a sleep range, by passing 10
+Note: poll_timeout_us() doesn't accept a sleep range, by passing 10
 sleep_us the sleep range effectively changes from 2-10 to 3-10 usecs.
 
-Fixes: 739cfa34518e ("net/mlx5: Make ASO poll CQ usable in atomic context")
-Fixes: 7e3fce82d945 ("net/mlx5e: Overcome slow response for first macsec ASO WQE")
+Fixes: d98995b4bf98 ("net/mlx5: Reimplement write combining test")
 Signed-off-by: Gal Pressman <gal@nvidia.com>
 Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Jacob Keller <Jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260218072904.1764634-3-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260218072904.1764634-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc/meter.c  | 10 +++-------
- .../net/ethernet/mellanox/mlx5/core/en_accel/macsec.c  | 10 +++-------
- 2 files changed, 6 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/wc.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/meter.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/meter.c
-index 7819fb2972802..d5d9146efca67 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/meter.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/meter.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
- // Copyright (c) 2021, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/wc.c b/drivers/net/ethernet/mellanox/mlx5/core/wc.c
+index 815a7c97d6b09..04d03be1bb775 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/wc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/wc.c
+@@ -2,6 +2,7 @@
+ // Copyright (c) 2024, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
  
+ #include <linux/io.h>
 +#include <linux/iopoll.h>
- #include <linux/math64.h>
- #include "lib/aso.h"
- #include "en/tc/post_act.h"
-@@ -115,7 +116,6 @@ mlx5e_tc_meter_modify(struct mlx5_core_dev *mdev,
- 	struct mlx5e_flow_meters *flow_meters;
- 	u8 cir_man, cir_exp, cbs_man, cbs_exp;
- 	struct mlx5_aso_wqe *aso_wqe;
--	unsigned long expires;
- 	struct mlx5_aso *aso;
- 	u64 rate, burst;
- 	u8 ds_cnt;
-@@ -187,12 +187,8 @@ mlx5e_tc_meter_modify(struct mlx5_core_dev *mdev,
- 	mlx5_aso_post_wqe(aso, true, &aso_wqe->ctrl);
+ #include <linux/mlx5/transobj.h>
+ #include "lib/clock.h"
+ #include "mlx5_core.h"
+@@ -15,7 +16,7 @@
+ #define TEST_WC_NUM_WQES 255
+ #define TEST_WC_LOG_CQ_SZ (order_base_2(TEST_WC_NUM_WQES))
+ #define TEST_WC_SQ_LOG_WQ_SZ TEST_WC_LOG_CQ_SZ
+-#define TEST_WC_POLLING_MAX_TIME_JIFFIES msecs_to_jiffies(100)
++#define TEST_WC_POLLING_MAX_TIME_USEC (100 * USEC_PER_MSEC)
  
- 	/* With newer FW, the wait for the first ASO WQE is more than 2us, put the wait 10ms. */
--	expires = jiffies + msecs_to_jiffies(10);
+ struct mlx5_wc_cq {
+ 	/* data path - accessed per cqe */
+@@ -359,7 +360,6 @@ static int mlx5_wc_poll_cq(struct mlx5_wc_sq *sq)
+ static void mlx5_core_test_wc(struct mlx5_core_dev *mdev)
+ {
+ 	unsigned int offset = 0;
+-	unsigned long expires;
+ 	struct mlx5_wc_sq *sq;
+ 	int i, err;
+ 
+@@ -389,13 +389,9 @@ static void mlx5_core_test_wc(struct mlx5_core_dev *mdev)
+ 
+ 	mlx5_wc_post_nop(sq, &offset, true);
+ 
+-	expires = jiffies + TEST_WC_POLLING_MAX_TIME_JIFFIES;
 -	do {
--		err = mlx5_aso_poll_cq(aso, true);
+-		err = mlx5_wc_poll_cq(sq);
 -		if (err)
 -			usleep_range(2, 10);
--	} while (err && time_is_after_jiffies(expires));
-+	read_poll_timeout(mlx5_aso_poll_cq, err, !err, 10, 10 * USEC_PER_MSEC,
-+			  false, aso, true);
- 	mutex_unlock(&flow_meters->aso_lock);
+-	} while (mdev->wc_state == MLX5_WC_STATE_UNINITIALIZED &&
+-		 time_is_after_jiffies(expires));
++	poll_timeout_us(mlx5_wc_poll_cq(sq),
++			mdev->wc_state != MLX5_WC_STATE_UNINITIALIZED, 10,
++			TEST_WC_POLLING_MAX_TIME_USEC, false);
  
- 	return err;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-index 528b04d4de416..641cd3a2cdfab 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-@@ -5,6 +5,7 @@
- #include <linux/mlx5/mlx5_ifc.h>
- #include <linux/xarray.h>
- #include <linux/if_vlan.h>
-+#include <linux/iopoll.h>
+ 	mlx5_wc_destroy_sq(sq);
  
- #include "en.h"
- #include "lib/aso.h"
-@@ -1397,7 +1398,6 @@ static int macsec_aso_query(struct mlx5_core_dev *mdev, struct mlx5e_macsec *mac
- 	struct mlx5e_macsec_aso *aso;
- 	struct mlx5_aso_wqe *aso_wqe;
- 	struct mlx5_aso *maso;
--	unsigned long expires;
- 	int err;
- 
- 	aso = &macsec->aso;
-@@ -1411,12 +1411,8 @@ static int macsec_aso_query(struct mlx5_core_dev *mdev, struct mlx5e_macsec *mac
- 	macsec_aso_build_wqe_ctrl_seg(aso, &aso_wqe->aso_ctrl, NULL);
- 
- 	mlx5_aso_post_wqe(maso, false, &aso_wqe->ctrl);
--	expires = jiffies + msecs_to_jiffies(10);
--	do {
--		err = mlx5_aso_poll_cq(maso, false);
--		if (err)
--			usleep_range(2, 10);
--	} while (err && time_is_after_jiffies(expires));
-+	read_poll_timeout(mlx5_aso_poll_cq, err, !err, 10, 10 * USEC_PER_MSEC,
-+			  false, maso, false);
- 
- 	if (err)
- 		goto err_out;
 -- 
 2.51.0
 
