@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0248F1D5ABA;
-	Wed, 25 Feb 2026 01:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D631D5ABA;
+	Wed, 25 Feb 2026 01:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983190; cv=none; b=vGpaKc37EI+uX+P9NvqFf8rq5JXnkwos4r6B3JWBZXqycXIOlCHfpOYDUtzYd56dFDWnuOG0ZiIKILVTmvmxF8c5jA9S6LmGBWBCtXtjjM+Z3rhjfbDN5/gETx9dbMvmv2G0IEWzEvrPS0jAC//Ql/rTh7uhx4vmFCzgvC/MNc0=
+	t=1771983191; cv=none; b=JU9MtYM5Gu2QsonGqMbmQ74NPx8JX9l3R18lBmgvyWBJNxCAYy20p1XYVA8NqkndrY+p7udWI2WQM5TlFrIDtAFZB8Y8aSpFBdoWsFmt9J9Afn14P7ZlczCovXqbGAj+0pUpUvLuNuC6/wMXhsWG1IObP3gWjUwF8ICwhYzsxhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983190; c=relaxed/simple;
-	bh=ChonPSgZDZLZscUWs6vbttXzxVP4V6x9nRjwcaFgyEM=;
+	s=arc-20240116; t=1771983191; c=relaxed/simple;
+	bh=w8l1rbQxRISOy9tGgCL6vaZIg+MzUf2/7CF8FzmO800=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xb3xqh7aDOalGA8EBaz1mlZhz2rMe8CyosEVnmHhlO7xRGOPVkG8Hx8H6hqiu+tPqCVMzHT/+tY/8WpVfK+0PS2dW3ZUDiEs/Yf8N1vy9N5qHTWjlA+koMXFkpk1bIba3yHNpWUZoL3zUmnakXGsPHeeGJBeNRSNaUge2zOf8OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLITzQpz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uBoJ6203gVG5xSdejQWTMZavBva4aQxePslH5oYjr+4VQ3SNutKufoLaAowMVM7rozjojhuwzejcDdo8h8dHqVCbiQkdFO71qYI01/zJKEZVxuUy668WNnVZqOhJU1Q7pb10ODR3mYhdjzEj2bgbuLuCsIVK+fY8yEJLLR+Kk7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGVuJn/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLITzQpz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D53C116D0;
-	Wed, 25 Feb 2026 01:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGVuJn/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D08C116D0;
+	Wed, 25 Feb 2026 01:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983189;
-	bh=ChonPSgZDZLZscUWs6vbttXzxVP4V6x9nRjwcaFgyEM=;
+	s=korg; t=1771983191;
+	bh=w8l1rbQxRISOy9tGgCL6vaZIg+MzUf2/7CF8FzmO800=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLITzQpz1r1QqmeLREU9LAKu6msc7gp3Re+uykLx3Y74zEtAtm1Y5v7Ohj91QmV1P
-	 8Ok7fpl1ojwyIqyblnnu36tfgdpEKg1C8Lg/hzVsK8ppKzRu6HheW964Ne3IYrJ1hv
-	 OWqDtUDHEgSnVXFWJ7YMY0iAWQe/65RFb5SYTW8E=
+	b=HGVuJn/AJHJORDM77hSY0I0a59Zjl26wvsbWnGn2zFvk/FI3AJeq36KdRuE8OZVOx
+	 SoHvGuZQTnkNfJ33PQ9RehVWDp2hRBB84Xtwu2JKtWhwE04ywka/Pz/nCjMON9R4tz
+	 B7LEJ3EtalMxvosoY8enac1WaUzgC+YUggbHyuwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 303/781] ASoC: SDCA: Handle volatile controls correctly
-Date: Tue, 24 Feb 2026 17:16:52 -0800
-Message-ID: <20260225012407.141266741@linuxfoundation.org>
+Subject: [PATCH 6.19 339/781] PCI/pwrctrl: tc9563: Use put_device() instead of i2c_put_adapter()
+Date: Tue, 24 Feb 2026 17:17:28 -0800
+Message-ID: <20260225012408.007648587@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,106 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 9fad74b79e5ff353fe156c4b685cceffa5afdb1d ]
+[ Upstream commit 99ee5837c63d1000f9ce7508591486a7bd8bdedb ]
 
-There are very few volatile controls in SDCA that are exported
-as ALSA controls, typically Detected Mode is the only common
-one. However, the current code does not resume the device when
-these ALSA controls are accessed, which will result in the
-read/write failing.
+The API comment for of_find_i2c_adapter_by_node() recommends using
+put_device() to drop the reference count of I2C adapter instead of using
+i2c_put_adapter(). So replace i2c_put_adapter() with put_device().
 
-Add a new wrapper specifically for volatile controls that will do
-the required pm_runtime operations before accessing the register.
-
-Fixes: c3ca24e3fcb6 ("ASoC: SDCA: Create ALSA controls from DisCo")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260204125944.1134011-3-ckeepax@opensource.cirrus.com
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4c9c7be47310 ("PCI: pwrctrl: Add power control driver for TC9563")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260115-pci-pwrctrl-rework-v5-3-9d26da3ce903@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdca/sdca_asoc.c | 52 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 50 insertions(+), 2 deletions(-)
+ drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/sdca/sdca_asoc.c b/sound/soc/sdca/sdca_asoc.c
-index 498aba9df5d9b..9685281529e9f 100644
---- a/sound/soc/sdca/sdca_asoc.c
-+++ b/sound/soc/sdca/sdca_asoc.c
-@@ -16,6 +16,7 @@
- #include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/overflow.h>
-+#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- #include <linux/soundwire/sdw_registers.h>
- #include <linux/string_helpers.h>
-@@ -792,6 +793,48 @@ static int control_limit_kctl(struct device *dev,
- 	return 0;
+diff --git a/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c b/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
+index ec423432ac655..0a63add84d095 100644
+--- a/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
++++ b/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
+@@ -533,7 +533,7 @@ static int tc9563_pwrctrl_probe(struct platform_device *pdev)
+ 	ctx->client = i2c_new_dummy_device(ctx->adapter, addr);
+ 	if (IS_ERR(ctx->client)) {
+ 		dev_err(dev, "Failed to create I2C client\n");
+-		i2c_put_adapter(ctx->adapter);
++		put_device(&ctx->adapter->dev);
+ 		return PTR_ERR(ctx->client);
+ 	}
+ 
+@@ -613,7 +613,7 @@ static int tc9563_pwrctrl_probe(struct platform_device *pdev)
+ 	tc9563_pwrctrl_power_off(ctx);
+ remove_i2c:
+ 	i2c_unregister_device(ctx->client);
+-	i2c_put_adapter(ctx->adapter);
++	put_device(&ctx->adapter->dev);
+ 	return ret;
  }
  
-+static int volatile_get_volsw(struct snd_kcontrol *kcontrol,
-+			      struct snd_ctl_elem_value *ucontrol)
-+{
-+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
-+	struct device *dev = component->dev;
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0) {
-+		dev_err(dev, "failed to resume reading %s: %d\n",
-+			kcontrol->id.name, ret);
-+		return ret;
-+	}
-+
-+	ret = snd_soc_get_volsw(kcontrol, ucontrol);
-+
-+	pm_runtime_put(dev);
-+
-+	return ret;
-+}
-+
-+static int volatile_put_volsw(struct snd_kcontrol *kcontrol,
-+			      struct snd_ctl_elem_value *ucontrol)
-+{
-+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
-+	struct device *dev = component->dev;
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0) {
-+		dev_err(dev, "failed to resume writing %s: %d\n",
-+			kcontrol->id.name, ret);
-+		return ret;
-+	}
-+
-+	ret = snd_soc_put_volsw(kcontrol, ucontrol);
-+
-+	pm_runtime_put(dev);
-+
-+	return ret;
-+}
-+
- static int populate_control(struct device *dev,
- 			    struct sdca_function_data *function,
- 			    struct sdca_entity *entity,
-@@ -849,8 +892,13 @@ static int populate_control(struct device *dev,
- 	(*kctl)->private_value = (unsigned long)mc;
- 	(*kctl)->iface = SNDRV_CTL_ELEM_IFACE_MIXER;
- 	(*kctl)->info = snd_soc_info_volsw;
--	(*kctl)->get = snd_soc_get_volsw;
--	(*kctl)->put = snd_soc_put_volsw;
-+	if (control->is_volatile) {
-+		(*kctl)->get = volatile_get_volsw;
-+		(*kctl)->put = volatile_put_volsw;
-+	} else {
-+		(*kctl)->get = snd_soc_get_volsw;
-+		(*kctl)->put = snd_soc_put_volsw;
-+	}
+@@ -623,7 +623,7 @@ static void tc9563_pwrctrl_remove(struct platform_device *pdev)
  
- 	if (readonly_control(control))
- 		(*kctl)->access = SNDRV_CTL_ELEM_ACCESS_READ;
+ 	tc9563_pwrctrl_power_off(ctx);
+ 	i2c_unregister_device(ctx->client);
+-	i2c_put_adapter(ctx->adapter);
++	put_device(&ctx->adapter->dev);
+ }
+ 
+ static const struct of_device_id tc9563_pwrctrl_of_match[] = {
 -- 
 2.51.0
 
