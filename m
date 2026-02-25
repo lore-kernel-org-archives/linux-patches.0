@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71482BDC26;
-	Wed, 25 Feb 2026 01:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA9C1FC7;
+	Wed, 25 Feb 2026 01:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983894; cv=none; b=HiqbeHxu/Wj3SSC0OZiZbHV2jdTozgY7zuluRjOOxz2a53OkRFwuds/nuQwWc7SMB1XrRfvs0V/Z3rpbwTJzecwY25Ic8Fb13sWfglJHP9M4OmKZp7NoxP05NeEScx+Gz0Zo2/SSPzCKFZLfdHV7AR6J2wEoK2S0r6UAgnE+bWY=
+	t=1771983896; cv=none; b=PJru5B7vX8xLgci3lR67vACR/WyAe1awej6CPsLk2GfgOEijGQp0xiqiHnyhY3tWC+CKkGW3MDIaEh4b/PqYtx+y+Jxh2Ll1HuuIsD1sC4Kf7p9QzjLrUKrJGvbGJ0iRr3piVxbNQi125G50kffp6wpRM2dw6DZTfQiSKmkcTqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983894; c=relaxed/simple;
-	bh=pWpvNS4I7lyVieQifszMPMb4MUKdliW5DcN28Qs5xf8=;
+	s=arc-20240116; t=1771983896; c=relaxed/simple;
+	bh=TDhr7KS871rrqEjgnXz2/gRZjR9VQzqcke5nLohzajI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hCske8JbeAcugSTcpy8022zz5aQjLZnhq/8BjvnWN59AnWUED0Nr2riJHta+UschFFLDhB0qPqQ88zMYBdAkfMMNENnHUgOEm4Hu2n+OR11hzM2l1pouzcF3JpAtvI+tw9i1IwlUd7t41/9VypVOInt/lE+nSzbSQAMHC3VTEX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=str4n20C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s0Qshe68+d4ei/NqxEPQBdUAfII0xfOQC+jybJrDecIlMdE0XWQCVSXplOH69oNPycYB0q/+J43t8UxCswjKfNzIuICPqmZFPMJz78QzGN6/sEMfcMBEcg4BaPeLS7yLrwWICJTzz75hzMBq8FEdkWGg/B9ypo23narw39o54Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gom7BOeC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="str4n20C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658ECC116D0;
-	Wed, 25 Feb 2026 01:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gom7BOeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7BCC116D0;
+	Wed, 25 Feb 2026 01:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983894;
-	bh=pWpvNS4I7lyVieQifszMPMb4MUKdliW5DcN28Qs5xf8=;
+	s=korg; t=1771983895;
+	bh=TDhr7KS871rrqEjgnXz2/gRZjR9VQzqcke5nLohzajI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=str4n20C9atH8dvp0Mfu6DudE/T1lWtYbQzF/x94NDt7CXmsC8SFng7wYIWyiE7dM
-	 jJgjkB4hgRdzqAcxFbj5NoVckhDi4gAsco8xF0t6jzijl1D/ZCLXQCDRd5jpEk6GMB
-	 itGxXDgKgN6/TKw1PTZiZlC1zJz6NxtL9Yt8J994=
+	b=Gom7BOeCN4RNu3Oq6y5MqktYHwPcLzOgdsS/bUsoQJLoOO15INdr/F2H1o2hM3P5x
+	 5jSjNSrxVJHkRuGZgWtQtP3X3UoUQjoY81jMN8hotZ5Zk2l1D+8LkADohWRwBLdALV
+	 uvWtwnt30jP5mGsmfER30QRkQMwFsXNmM24BvQhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 166/641] arm64: dts: qcom: sm6115: Add CX_MEM/DBGC GPU regions
-Date: Tue, 24 Feb 2026 17:18:12 -0800
-Message-ID: <20260225012353.081275415@linuxfoundation.org>
+Subject: [PATCH 6.18 167/641] reset: canaan: k230: drop OF dependency and enable by default
+Date: Tue, 24 Feb 2026 17:18:13 -0800
+Message-ID: <20260225012353.103254761@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -54,47 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Junhui Liu <junhui.liu@pigmoral.tech>
 
-[ Upstream commit 78c13dac18cf0e6f6cbc6ea85d4f967e6cca9562 ]
+[ Upstream commit c7a5e01e229d21e0560d78bd645b4f7398667ce4 ]
 
-Describe the GPU register regions, with the former existing but not
-being used much if at all on this silicon, and the latter containing
-various debugging levers generally related to dumping the state of
-the IP upon a crash.
+The driver doesn't use any symbols depending on CONFIG_OF, so drop the
+dependency. Also, enable it by default when ARCH_CANAAN is selected.
 
-Fixes: 11750af256f8 ("arm64: dts: qcom: sm6115: Add GPU nodes")
-Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Closes: https://lore.kernel.org/linux-arm-msm/8a64f70b-8034-45e7-86a3-0015cf357132@oss.qualcomm.com/T/#m404f1425c36b61467760f058b696b8910340a063
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251229-topic-6115_2290_gpu_dbgc-v1-3-4a24d196389c@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 360a7a647759 ("reset: canaan: add reset driver for Kendryte K230")
+Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/reset/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 91fc36b59abf9..8b8395f6a2dfc 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -1715,8 +1715,12 @@ usb_dwc3_ss: endpoint {
- 
- 		gpu: gpu@5900000 {
- 			compatible = "qcom,adreno-610.0", "qcom,adreno";
--			reg = <0x0 0x05900000 0x0 0x40000>;
--			reg-names = "kgsl_3d0_reg_memory";
-+			reg = <0x0 0x05900000 0x0 0x40000>,
-+			      <0x0 0x0599e000 0x0 0x1000>,
-+			      <0x0 0x05961000 0x0 0x800>;
-+			reg-names = "kgsl_3d0_reg_memory",
-+				    "cx_mem",
-+				    "cx_dbgc";
- 
- 			/* There's no (real) GMU, so we have to handle quite a bunch of clocks! */
- 			clocks = <&gpucc GPU_CC_GX_GFX3D_CLK>,
+diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
+index 78b7078478d46..b3b9e0f9d8c48 100644
+--- a/drivers/reset/Kconfig
++++ b/drivers/reset/Kconfig
+@@ -150,7 +150,7 @@ config RESET_K210
+ config RESET_K230
+ 	tristate "Reset controller driver for Canaan Kendryte K230 SoC"
+ 	depends on ARCH_CANAAN || COMPILE_TEST
+-	depends on OF
++	default ARCH_CANAAN
+ 	help
+ 	  Support for the Canaan Kendryte K230 RISC-V SoC reset controller.
+ 	  Say Y if you want to control reset signals provided by this
 -- 
 2.51.0
 
