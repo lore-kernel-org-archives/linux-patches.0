@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F1818B0A;
-	Wed, 25 Feb 2026 01:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14481E2834;
+	Wed, 25 Feb 2026 01:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983302; cv=none; b=DO0oH8RBgKX1hFCMCi664spFJSFHNBy2fJRPBPo3civBpSCa1V2DkgKZLCjgPV8fvVGVRAUC7ko2SmsNqFGCnYS/07qeCKKJlMkQUVWe1gJvrjVaLg73YZt0qGmREY6ktZQe4kqsO3KWke3qWrweU/ySAyOSaOchMSbvH/H2IEY=
+	t=1771983304; cv=none; b=NrNlGwENczSSp1Nj6Pbi8qPskn1k4ytuFm0Fe8+q9cK7tt2rp849HW12Ub1b9/UjcpV6G6LzyL3C67tycXLI7eOpyCE69xiFcc1FtaseUyltYK7c4Opr2ME7tNXbHyEU+5euemeBRyvvkWeJq+6XKW7mj0ZphkVYhPMyl3DgLjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983302; c=relaxed/simple;
-	bh=Bdt5ihuaehjst7qSe0NfhtTr+l5Lt3dsm8e1+BKuoQU=;
+	s=arc-20240116; t=1771983304; c=relaxed/simple;
+	bh=vszbcZ8+YfLUtEgE+Ubhf84QNFnONP7LA6RRphsHZmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2y0+2/Q4LzT0+ctL+/RHusfCZLE1yBV6bW+Qi0CP91KgFnbF1AydIY2z6hkNvL6VdBCCkwLnmIZ07BI8mYsIVLFbBVaPbbOo2iDbnMVcQU406P0ZoaEg5q9al71o7cV1pdOf7g1zyuiy4jb5TlolfIQeCHBqHcGfP3LOQl723E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntdbHuEf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IyDBBqPk+11rvUxyOStf+gRbkNmCBPTTLqUk4BMApCFmGO4pR79f/PT95/oYbVGqN62dCZxGyXH+cnojVFMDYUQpM3+95g4Pu/WDDx9OoGIZhvjSSOC3tVvJN0fpLJb3RSJK3lKjnYwDkM3KTVWz1JvIt/T01QExep0qldVN33k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTJWgI62; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntdbHuEf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E82C116D0;
-	Wed, 25 Feb 2026 01:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTJWgI62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C63C116D0;
+	Wed, 25 Feb 2026 01:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983302;
-	bh=Bdt5ihuaehjst7qSe0NfhtTr+l5Lt3dsm8e1+BKuoQU=;
+	s=korg; t=1771983303;
+	bh=vszbcZ8+YfLUtEgE+Ubhf84QNFnONP7LA6RRphsHZmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ntdbHuEfomZr+Sx28C36gJ42kfI8U5XiKpXBiCcLfNk03GsSYrVff9bzL6NM/mMCB
-	 YrQiMy3RqAFBB9pm4W2rulQab4RiF+fyvdrZrFUnCBlklx06PYooVVs6n+yGd08aMh
-	 XBvOkfLbarpgAJOoTpLHQ+CACUEy63WXImIk734w=
+	b=qTJWgI627Dn/c3ibN2q5pDfsy91FxSBQj9o1A9H5SomrmCP3fT67b76a5KGvfHdzR
+	 L5U2xv0ZsYHNy9T1nL9iQ8/zQpJ5RJMHakKv2DyufLHRG5is3lwYXNTyqpxIaRJv7m
+	 xtd1tPUyIzXbtK4XppKl2VZR4wOvPer7F1VlM28A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Joyner <eric.joyner@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 435/781] ionic: Rate limit unknown xcvr type messages
-Date: Tue, 24 Feb 2026 17:19:04 -0800
-Message-ID: <20260225012410.374080436@linuxfoundation.org>
+Subject: [PATCH 6.19 395/781] PCI: endpoint: Add BAR subrange mapping support
+Date: Tue, 24 Feb 2026 17:18:24 -0800
+Message-ID: <20260225012409.394033361@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -52,49 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Joyner <eric.joyner@amd.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit cdb1634de3bf197c0d86487d1fb84c128a79cc7c ]
+[ Upstream commit 31fb95400451040050361e22ff480476964280f0 ]
 
-Running ethtool repeatedly with a transceiver unknown to the driver or
-firmware will cause the driver to spam the kernel logs with "unknown
-xcvr type" messages which can distract from real issues; and this isn't
-interesting information outside of debugging. Fix this by rate limiting
-the output so that there are still notifications but not so many that
-they flood the log.
+Some endpoint platforms have only a small number of usable BARs. At the
+same time, EPF drivers (e.g. vNTB) may need multiple independent inbound
+regions (control/scratchpad, one or more memory windows, and optionally
+MSI or other feature-related regions). Subrange mapping allows these to
+share a single BAR without consuming additional BARs that may not be
+available, or forcing a fragile layout by aggressively packing into a
+single contiguous memory range.
 
-Using dev_dbg_once() would reduce the number of messages further, but
-this would miss the case where a different unknown transceiver type is
-plugged in, and its status is requested.
+Extend the PCI endpoint core to support mapping subranges within a BAR.
+Add an optional 'submap' field in struct pci_epf_bar so an endpoint
+function driver can request inbound mappings that fully cover the BAR.
 
-Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
-Signed-off-by: Eric Joyner <eric.joyner@amd.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Link: https://patch.msgid.link/20260206224651.1491-1-eric.joyner@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Introduce a new EPC feature bit, subrange_mapping, and reject submap
+requests from pci_epc_set_bar() unless the controller advertises both
+subrange_mapping and dynamic_inbound_mapping features.
+
+The submap array describes the complete BAR layout (no overlaps and no
+gaps are allowed to avoid exposing untranslated address ranges). This
+provides the generic infrastructure needed to map multiple logical
+regions into a single BAR at different offsets, without assuming a
+controller-specific inbound address translation mechanism.
+
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20260124145012.2794108-3-den@valinux.co.jp
+Stable-dep-of: 72cb5ed2a5c6 ("PCI: dwc: ep: Add per-PF BAR and inbound ATU mapping support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pci/endpoint/pci-epc-core.c |  8 ++++++++
+ include/linux/pci-epc.h             |  4 ++++
+ include/linux/pci-epf.h             | 23 +++++++++++++++++++++++
+ 3 files changed, 35 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-index 2d9efadb5d2ae..347b0aff100b9 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-@@ -263,9 +263,10 @@ static int ionic_get_link_ksettings(struct net_device *netdev,
- 		/* This means there's no module plugged in */
- 		break;
- 	default:
--		dev_info(lif->ionic->dev, "unknown xcvr type pid=%d / 0x%x\n",
--			 idev->port_info->status.xcvr.pid,
--			 idev->port_info->status.xcvr.pid);
-+		dev_dbg_ratelimited(lif->ionic->dev,
-+				    "unknown xcvr type pid=%d / 0x%x\n",
-+				    idev->port_info->status.xcvr.pid,
-+				    idev->port_info->status.xcvr.pid);
- 		break;
- 	}
+diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+index ca7f19cc973a4..068155819c575 100644
+--- a/drivers/pci/endpoint/pci-epc-core.c
++++ b/drivers/pci/endpoint/pci-epc-core.c
+@@ -596,6 +596,14 @@ int pci_epc_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 	if (!epc_features)
+ 		return -EINVAL;
  
++	if (epf_bar->num_submap && !epf_bar->submap)
++		return -EINVAL;
++
++	if (epf_bar->num_submap &&
++	    !(epc_features->dynamic_inbound_mapping &&
++	      epc_features->subrange_mapping))
++		return -EINVAL;
++
+ 	if (epc_features->bar[bar].type == BAR_RESIZABLE &&
+ 	    (epf_bar->size < SZ_1M || (u64)epf_bar->size > (SZ_128G * 1024)))
+ 		return -EINVAL;
+diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+index 4c8516756c568..c021c7af175fd 100644
+--- a/include/linux/pci-epc.h
++++ b/include/linux/pci-epc.h
+@@ -227,6 +227,9 @@ struct pci_epc_bar_desc {
+  *                           inbound mappings for an already configured BAR
+  *                           (i.e. allow calling pci_epc_set_bar() again
+  *                           without first calling pci_epc_clear_bar())
++ * @subrange_mapping: indicate if the EPC device can map inbound subranges for a
++ *                    BAR. This feature depends on @dynamic_inbound_mapping
++ *                    feature.
+  * @msi_capable: indicate if the endpoint function has MSI capability
+  * @msix_capable: indicate if the endpoint function has MSI-X capability
+  * @intx_capable: indicate if the endpoint can raise INTx interrupts
+@@ -236,6 +239,7 @@ struct pci_epc_bar_desc {
+ struct pci_epc_features {
+ 	unsigned int	linkup_notifier : 1;
+ 	unsigned int	dynamic_inbound_mapping : 1;
++	unsigned int	subrange_mapping : 1;
+ 	unsigned int	msi_capable : 1;
+ 	unsigned int	msix_capable : 1;
+ 	unsigned int	intx_capable : 1;
+diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
+index 48f68c4dcfa5e..7737a7c03260d 100644
+--- a/include/linux/pci-epf.h
++++ b/include/linux/pci-epf.h
+@@ -110,6 +110,22 @@ struct pci_epf_driver {
+ 
+ #define to_pci_epf_driver(drv) container_of_const((drv), struct pci_epf_driver, driver)
+ 
++/**
++ * struct pci_epf_bar_submap - BAR subrange for inbound mapping
++ * @phys_addr: target physical/DMA address for this subrange
++ * @size: the size of the subrange to be mapped
++ *
++ * When pci_epf_bar.num_submap is >0, pci_epf_bar.submap describes the
++ * complete BAR layout. This allows an EPC driver to program multiple
++ * inbound translation windows for a single BAR when supported by the
++ * controller. The array order defines the BAR layout (submap[0] at offset
++ * 0, and each immediately follows the previous one).
++ */
++struct pci_epf_bar_submap {
++	dma_addr_t	phys_addr;
++	size_t		size;
++};
++
+ /**
+  * struct pci_epf_bar - represents the BAR of EPF device
+  * @phys_addr: physical address that should be mapped to the BAR
+@@ -119,6 +135,9 @@ struct pci_epf_driver {
+  *            requirement
+  * @barno: BAR number
+  * @flags: flags that are set for the BAR
++ * @num_submap: number of entries in @submap
++ * @submap: array of subrange descriptors allocated by the caller. See
++ *          struct pci_epf_bar_submap for the semantics in detail.
+  */
+ struct pci_epf_bar {
+ 	dma_addr_t	phys_addr;
+@@ -127,6 +146,10 @@ struct pci_epf_bar {
+ 	size_t		mem_size;
+ 	enum pci_barno	barno;
+ 	int		flags;
++
++	/* Optional sub-range mapping */
++	unsigned int	num_submap;
++	struct pci_epf_bar_submap	*submap;
+ };
+ 
+ /**
 -- 
 2.51.0
 
