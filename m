@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1962313546;
-	Wed, 25 Feb 2026 06:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC6F332ECB;
+	Wed, 25 Feb 2026 06:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772002796; cv=none; b=LXD2GNWyL/DalCFRCTG6gbt4jiCGUJdd+OrJ6xjlTXYDvpv2QoBoFSqQBZ+dDo4A57VWqBdzipDW8pMASMLAJJOEBf6lVmHR5TAC98+UKvLD3U08n/GcOgTyX60gCbNST6movOXSjGEiWjZZapvvOGF2DI09S0fHCknmDlKIwlY=
+	t=1772002797; cv=none; b=Lh+/+dE8Q9zc7AsB0N10/XMMDqZnKC63daMfeBWmEkkDh47OwikFSA90wYuvgaT46JErpTnvLRE+okR0K4fKIkHoCcZSJA0JV/2jGg/NQjPJjpwl/0tP6BzlEgUj9ww+7lg7oVr3NYQpEiknOtiagGNrOGFjkgsX466UMhkekos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772002796; c=relaxed/simple;
-	bh=GQgM9x1nkEadYt6ldUAtfrjxvADFro1H8vkYUu1Z7Ys=;
+	s=arc-20240116; t=1772002797; c=relaxed/simple;
+	bh=6D+VY7t02IedMrrds+M6X4ZBOa/L4Cdf+x+fTNzjHU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qLCwy0KL1ACjLtlwTTLnxA3/W9WnwCwFSeBG4Ql3LHpd4wVIIOXwjXBaL4KrgsPwVYxIghwG8Cq8IQ820ecNWrBMIG6AslkHZ/XZFT7roK5Gcwtc89JAbOWCW58HWMxY+wGAl40OMvDxpGsSDCdNaaW8UDAzrK6MQNIXVkZthyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPK1iizi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bd96fE6kLFDeyrPULrr2mfM6TlHCsbowdy6tD+E5oXOY3qEkkMfk/t/o7BKtAnRxJEn4wm8ppEHxbNSaWsA+zeNdVvUJEV4k4U0p3NjuqNeGll/qgacGugpSvd4TKfddOkghfaqfPcSkcMO5HPir3GzABzJbZm31cRG/6R4bxLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHSpiETd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPK1iizi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1FDC116D0;
-	Wed, 25 Feb 2026 06:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHSpiETd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554A1C116D0;
+	Wed, 25 Feb 2026 06:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1772002796;
-	bh=GQgM9x1nkEadYt6ldUAtfrjxvADFro1H8vkYUu1Z7Ys=;
+	s=korg; t=1772002797;
+	bh=6D+VY7t02IedMrrds+M6X4ZBOa/L4Cdf+x+fTNzjHU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPK1iizic+nM6u35920f+bUzkHKIzXa9QueN+zWccoWOnkWl0bniCdnLd46A1qBZM
-	 97HthUoEtUYHyAUdw9WopBrCTdBqJa+xBSpZ0iN7owIZCag+ir6C83zMHFHPsdfq7Y
-	 Lp39iCR4UtnTXxSDBq/5F0UXW+d5qyoIOmb+iMHQ=
+	b=lHSpiETd5VJ7FRefUS4Antp5amEFf4YSYN6QQsdFTQaSkEhZUznPSWfRdwamTwk9b
+	 u4coYXex2QodRcMqdeoviMGdzzqDK58W8HNhN6YYejg9cuKfWwqvSO3eZvT2UES0zU
+	 fSXOxMajj/XUv093mZ+ZAHJ3RpKGdCXw8zmPPv9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moritz Sanft <ms@edgeless.systems>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <asj@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 601/641] efi: Fix reservation of unaccepted memory table
-Date: Tue, 24 Feb 2026 17:25:27 -0800
-Message-ID: <20260225012403.077794761@linuxfoundation.org>
+Subject: [PATCH 6.18 602/641] btrfs: remove fs_info argument from btrfs_try_granting_tickets()
+Date: Tue, 24 Feb 2026 17:25:28 -0800
+Message-ID: <20260225012403.102124966@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -49,66 +49,150 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Message-ID: <20260225012527.atdF7SkZkjfQZnq83h8AUzBBEa2yi8GRh0JHOFmBLoo@z>
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 0862438c90487e79822d5647f854977d50381505 ]
+[ Upstream commit e3df6408b13a75cf73e543e53453f28261874c6f ]
 
-The reserve_unaccepted() function incorrectly calculates the size of the
-memblock reservation for the unaccepted memory table. It aligns the
-size of the table, but fails to account for cases where the table's
-starting physical address (efi.unaccepted) is not page-aligned.
+We don't need it since we can grab fs_info from the given space_info.
+So remove the fs_info argument.
 
-If the table starts at an offset within a page and its end crosses into
-a subsequent page that the aligned size does not cover, the end of the
-table will not be reserved. This can lead to the table being overwritten
-or inaccessible, causing a kernel panic in accept_memory().
-
-This issue was observed when starting Intel TDX VMs with specific memory
-sizes (e.g., > 64GB).
-
-Fix this by calculating the end address first (including the unaligned
-start) and then aligning it up, ensuring the entire range is covered
-by the reservation.
-
-Fixes: 8dbe33956d96 ("efi/unaccepted: Make sure unaccepted table is mapped")
-Reported-by: Moritz Sanft <ms@edgeless.systems>
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <asj@kernel.org>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 5870ec7c8fe5 ("btrfs: reset block group size class when it becomes empty")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/efi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/btrfs/block-group.c |  4 ++--
+ fs/btrfs/block-rsv.c   |  2 +-
+ fs/btrfs/space-info.c  | 14 +++++++-------
+ fs/btrfs/space-info.h  |  5 ++---
+ 4 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
-index fc407d891348f..c3cf5541ed682 100644
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -691,13 +691,13 @@ static __init int match_config_table(const efi_guid_t *guid,
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index 8bf501fbcc0be..035b04e7658d1 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -3836,7 +3836,7 @@ int btrfs_add_reserved_bytes(struct btrfs_block_group *cache,
+ 	 * that happens.
+ 	 */
+ 	if (num_bytes < ram_bytes)
+-		btrfs_try_granting_tickets(cache->fs_info, space_info);
++		btrfs_try_granting_tickets(space_info);
+ out:
+ 	spin_unlock(&cache->lock);
+ 	spin_unlock(&space_info->lock);
+@@ -3874,7 +3874,7 @@ void btrfs_free_reserved_bytes(struct btrfs_block_group *cache, u64 num_bytes,
+ 		cache->delalloc_bytes -= num_bytes;
+ 	spin_unlock(&cache->lock);
  
- static __init void reserve_unaccepted(struct efi_unaccepted_memory *unaccepted)
- {
--	phys_addr_t start, size;
-+	phys_addr_t start, end;
- 
- 	start = PAGE_ALIGN_DOWN(efi.unaccepted);
--	size = PAGE_ALIGN(sizeof(*unaccepted) + unaccepted->size);
-+	end = PAGE_ALIGN(efi.unaccepted + sizeof(*unaccepted) + unaccepted->size);
- 
--	memblock_add(start, size);
--	memblock_reserve(start, size);
-+	memblock_add(start, end - start);
-+	memblock_reserve(start, end - start);
+-	btrfs_try_granting_tickets(cache->fs_info, space_info);
++	btrfs_try_granting_tickets(space_info);
+ 	spin_unlock(&space_info->lock);
  }
  
- int __init efi_config_parse_tables(const efi_config_table_t *config_tables,
+diff --git a/fs/btrfs/block-rsv.c b/fs/btrfs/block-rsv.c
+index 5ad6de738aee0..75cd35570a287 100644
+--- a/fs/btrfs/block-rsv.c
++++ b/fs/btrfs/block-rsv.c
+@@ -387,7 +387,7 @@ void btrfs_update_global_block_rsv(struct btrfs_fs_info *fs_info)
+ 		num_bytes = block_rsv->reserved - block_rsv->size;
+ 		btrfs_space_info_update_bytes_may_use(sinfo, -num_bytes);
+ 		block_rsv->reserved = block_rsv->size;
+-		btrfs_try_granting_tickets(fs_info, sinfo);
++		btrfs_try_granting_tickets(sinfo);
+ 	}
+ 
+ 	block_rsv->full = (block_rsv->reserved == block_rsv->size);
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index e5c18a29eb7e6..474ed47095ba7 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -378,7 +378,7 @@ void btrfs_add_bg_to_space_info(struct btrfs_fs_info *info,
+ 	btrfs_space_info_update_bytes_zone_unusable(space_info, block_group->zone_unusable);
+ 	if (block_group->length > 0)
+ 		space_info->full = false;
+-	btrfs_try_granting_tickets(info, space_info);
++	btrfs_try_granting_tickets(space_info);
+ 	spin_unlock(&space_info->lock);
+ 
+ 	block_group->space_info = space_info;
+@@ -528,9 +528,9 @@ static void remove_ticket(struct btrfs_space_info *space_info,
+  * This is for space we already have accounted in space_info->bytes_may_use, so
+  * basically when we're returning space from block_rsv's.
+  */
+-void btrfs_try_granting_tickets(struct btrfs_fs_info *fs_info,
+-				struct btrfs_space_info *space_info)
++void btrfs_try_granting_tickets(struct btrfs_space_info *space_info)
+ {
++	struct btrfs_fs_info *fs_info = space_info->fs_info;
+ 	struct list_head *head;
+ 	enum btrfs_reserve_flush_enum flush = BTRFS_RESERVE_NO_FLUSH;
+ 
+@@ -1129,7 +1129,7 @@ static bool maybe_fail_all_tickets(struct btrfs_fs_info *fs_info,
+ 		 * the list.
+ 		 */
+ 		if (!aborted)
+-			btrfs_try_granting_tickets(fs_info, space_info);
++			btrfs_try_granting_tickets(space_info);
+ 	}
+ 	return (tickets_id != space_info->tickets_id);
+ }
+@@ -1549,7 +1549,7 @@ static void priority_reclaim_metadata_space(struct btrfs_fs_info *fs_info,
+ 	 * ticket in front of a smaller ticket that can now be satisfied with
+ 	 * the available space.
+ 	 */
+-	btrfs_try_granting_tickets(fs_info, space_info);
++	btrfs_try_granting_tickets(space_info);
+ 	spin_unlock(&space_info->lock);
+ }
+ 
+@@ -1577,7 +1577,7 @@ static void priority_reclaim_data_space(struct btrfs_fs_info *fs_info,
+ 
+ 	ticket->error = -ENOSPC;
+ 	remove_ticket(space_info, ticket);
+-	btrfs_try_granting_tickets(fs_info, space_info);
++	btrfs_try_granting_tickets(space_info);
+ 	spin_unlock(&space_info->lock);
+ }
+ 
+@@ -2200,5 +2200,5 @@ void btrfs_return_free_space(struct btrfs_space_info *space_info, u64 len)
+ grant:
+ 	/* Add to any tickets we may have. */
+ 	if (len)
+-		btrfs_try_granting_tickets(fs_info, space_info);
++		btrfs_try_granting_tickets(space_info);
+ }
+diff --git a/fs/btrfs/space-info.h b/fs/btrfs/space-info.h
+index a846f63585c95..596a1e923ddfe 100644
+--- a/fs/btrfs/space-info.h
++++ b/fs/btrfs/space-info.h
+@@ -283,8 +283,7 @@ int btrfs_reserve_metadata_bytes(struct btrfs_fs_info *fs_info,
+ 				 struct btrfs_space_info *space_info,
+ 				 u64 orig_bytes,
+ 				 enum btrfs_reserve_flush_enum flush);
+-void btrfs_try_granting_tickets(struct btrfs_fs_info *fs_info,
+-				struct btrfs_space_info *space_info);
++void btrfs_try_granting_tickets(struct btrfs_space_info *space_info);
+ int btrfs_can_overcommit(struct btrfs_fs_info *fs_info,
+ 			 const struct btrfs_space_info *space_info, u64 bytes,
+ 			 enum btrfs_reserve_flush_enum flush);
+@@ -295,7 +294,7 @@ static inline void btrfs_space_info_free_bytes_may_use(
+ {
+ 	spin_lock(&space_info->lock);
+ 	btrfs_space_info_update_bytes_may_use(space_info, -num_bytes);
+-	btrfs_try_granting_tickets(space_info->fs_info, space_info);
++	btrfs_try_granting_tickets(space_info);
+ 	spin_unlock(&space_info->lock);
+ }
+ int btrfs_reserve_data_bytes(struct btrfs_space_info *space_info, u64 bytes,
 -- 
 2.51.0
 
