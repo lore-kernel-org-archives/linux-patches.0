@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA74919FA93;
-	Wed, 25 Feb 2026 01:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC4D2BEC23;
+	Wed, 25 Feb 2026 01:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983871; cv=none; b=FAgSoLRrZcsJhYUIh1NV7qHj2OasaUuYkWfe/l2xtmRfPlR1Megrvg914uuI0MIakyefDpUS09O78fvhI7QEu9PfVPWNkPHiFDb5XS/RhTZp6liCo5a+5Z55lC0QQYCZkqA3AyJ++WbUlhPFb9R4tG6DWfI0smSyx+qYGqacTLA=
+	t=1771983873; cv=none; b=s0fr6UcV4aeoXbGGVjgQM9zS6sqTpDmwmHZPbwPjJo8lt9j2h80Nk86PmeK/EDLGCRBs58ixIa+Tt8CA8klKI0+LLpf8fVRbzcRLPAq0yIMpgImSokk86iE495hh5CrvU3OUcIoCt4R0OH+LyItYGsSWgmr74Dbc9OBjoEH51c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983871; c=relaxed/simple;
-	bh=hZHGz/mZi+JWnIrh9QEhSD3DX/CYbZ5cW4djWR0GeRU=;
+	s=arc-20240116; t=1771983873; c=relaxed/simple;
+	bh=pQfJaW5FySZ6mEuxnYgNccZN0ocpXo77pvixAAOJyug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uB2cmnjgyzyWeA+Q8vDYxtnMOgne2c0tQ4n3EroG2+LM2iOfV+h65ktQpFWSNvBU8FKiyErcCJWwWl+jAiwCuKzDLlxxTTXYSQ5A4VQWyPKfggRo5/yV9J34NH5BhKLmghA/chelnRdmwnXKlwCiqtfmTfNrZificHiKk8VbdVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcRAMTX2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oIx7H5/AaszB+RCkTgJKYAVxPtyv8pMfq3zXZ37hMFCqUDceU/yb0xq6LWkfRH7vyCh7tPkueVsLipt/wOEQiIllydFS7l2D2GLmvOLNarlJMvJI4pGzb/Pl2ewCRJqje0agUv0xlGM4cea+XVtkahj6K8UBAHT6n648Peuvfhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3gpuFZX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcRAMTX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79970C116D0;
-	Wed, 25 Feb 2026 01:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3gpuFZX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD98FC116D0;
+	Wed, 25 Feb 2026 01:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983871;
-	bh=hZHGz/mZi+JWnIrh9QEhSD3DX/CYbZ5cW4djWR0GeRU=;
+	s=korg; t=1771983873;
+	bh=pQfJaW5FySZ6mEuxnYgNccZN0ocpXo77pvixAAOJyug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcRAMTX2LPm0uiWd8rJ32qkcSBxuPrXSjyxS6JpLlGw+IRk48Aci/hrgE3fG8BDmS
-	 6i37CPIoPBJc4VQUN0Z0UcqMWG/1FQ0KLAMg4HsQBPZEHyr03JspitXN6u2yXQIkC9
-	 feCqr06nSqVh9/inMfydQXzPut+cS4qO//UFELII=
+	b=K3gpuFZXr+YtHMxMY69YQQmoPQFy6wq05aZx3tRYAYxZPAhyliuA48HQ1sgq7UeGy
+	 8aD/2rDapULisA/PY69Yaas6xbUUzu1zFqqL4LR3ENWJauqVosa/KrF1wg6P/FWTKr
+	 FJYpUU0MakofSykpVvCFWtg2/ppetcJjzMTQPVsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Nick Xie <nick@khadas.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 148/641] arm64: dts: mediatek: mt8183-jacuzzi-pico6: Fix typo in pinmux node
-Date: Tue, 24 Feb 2026 17:17:54 -0800
-Message-ID: <20260225012352.687732088@linuxfoundation.org>
+Subject: [PATCH 6.18 149/641] arm64: dts: amlogic: s4: assign mmc b clock to 24MHz
+Date: Tue, 24 Feb 2026 17:17:55 -0800
+Message-ID: <20260225012352.709307751@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -51,34 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit b1fc81a986c9b8089db31e21a372cc8b6514e900 ]
+[ Upstream commit 86124a8becb43eed3103f2459399daee8af2c99d ]
 
-Rename "piins-bt-wakeup" to "pins-bt-wakeup" to fix a dtbs_check
-warning happening due to this typo.
+The amlogic MMC driver operate with the assumption that MMC clock
+is configured to provide 24MHz. It uses this path for low
+rates such as 400kHz.
 
-Fixes: 055ef10ccdd4 ("arm64: dts: mt8183: Add jacuzzi pico/pico6 board")
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+This assumption did hold true until but it now, but it is apparently
+not the case with s4. The clock has been reported to provide 1GHz
+instead. This is most likely due to how the bootloader is using the MMC
+clock on this platform.
+
+Regardless of why the MMC clock rate is 1GHz, if the MMC driver expects
+24MHz, the clock should be properly assigned, so assign it.
+
+Reported-by: Nick Xie <nick@khadas.com>
+Closes: https://lore.kernel.org/linux-amlogic/20260113011931.40424-1-nick@khadas.com/
+Fixes: 3ab9d54b5d84 ("arm64: dts: amlogic: enable some device nodes for S4")
+Tested-by: Nick Xie <nick@khadas.com>
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260114-amlogic-s4-mmc-fixup-v3-1-a4d3e136b3f2@baylibre.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts
-index cce326aec1aa5..40af5656d6f15 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts
-@@ -91,7 +91,7 @@ bluetooth@2 {
- 
- &pio {
- 	bt_pins_wakeup: bt-pins-wakeup {
--		piins-bt-wakeup {
-+		pins-bt-wakeup {
- 			pinmux = <PINMUX_GPIO42__FUNC_GPIO42>;
- 			input-enable;
+diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
+index 9d99ed2994dfa..f314f07062abe 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
+@@ -838,6 +838,9 @@ sd: mmc@fe08a000 {
+ 			clock-names = "core", "clkin0", "clkin1";
+ 			resets = <&reset RESET_SD_EMMC_B>;
+ 			status = "disabled";
++
++			assigned-clocks = <&clkc_periphs CLKID_SD_EMMC_B>;
++			assigned-clock-rates = <24000000>;
  		};
+ 
+ 		emmc: mmc@fe08c000 {
 -- 
 2.51.0
 
