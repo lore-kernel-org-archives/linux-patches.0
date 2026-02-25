@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0259262FE7;
-	Wed, 25 Feb 2026 01:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E7A2550D7;
+	Wed, 25 Feb 2026 01:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983467; cv=none; b=XCoURz502QILioJFnbOkASZuSafimAfdT7+wQrjiPBCEAgPV+vgYVFU3VDvgWaoZIFemwGi0FMCkP4RObQyc3EDKrcnTkp8SYGscdeHy4bGu6s8dFHeLhsAQFcfq+CI8bhsaea0PsyXdXis2MuLpy24n/mWOeL2FjhugXye++Wg=
+	t=1771983469; cv=none; b=ALVNtulQpU/lLvB6HVutN5FZIJIPu69LlYu33YmdwOA3EdMqoSw8ieTDmKlZbTjOZCrTFaBf2f8lXH3VpIxMIeYwfVOpCOtjQqoEILXCEjOgH3EsC8ILyg9AxgjYby/MllGtF5rQntATfvp0G56mpBDgma3vvfBWgC1xDI/0NzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983467; c=relaxed/simple;
-	bh=xkk9T24dW7k9AFJPuGFDNYzrsOkOFAuQQRO1qhOuVJY=;
+	s=arc-20240116; t=1771983469; c=relaxed/simple;
+	bh=i5Mgv4d62U8FjC61UqFJXkmYcM9hvABaqzTnQ9LjA/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IdG1xQ7ajwAjC9TSYqHnuT35CJSqxQ5QwKx6j4UW+Q7aiIBiha9k+l6NNVChsC6ZAm80ok8IBKZ6vo8v2W+z5sWLaoo8CQ4i/colXHAGk8alpMJm44wT5353HSqGDpH+HCgC7sE2c/2jF/kHeYD+UyvWDA9oTCGoyUZKxMdteYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bT30Xt8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sDy899aFy8hgFr1DBjcuGT791ZrnCBYhdeHhSB4pskpzEWcLNu1KZ9bQ689h28KCiTgBXr+yqMoZXPhpmgY2vMwoNMhHZtS9ZZY5GZVLY/o1/O+B/8dQa0at8gTieEwjOMxHDFgIXJ8VyB8ngCWDofySus70pB7a6++OpOwU/00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zjs9riNE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bT30Xt8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AD3C116D0;
-	Wed, 25 Feb 2026 01:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zjs9riNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9AF2C116D0;
+	Wed, 25 Feb 2026 01:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983467;
-	bh=xkk9T24dW7k9AFJPuGFDNYzrsOkOFAuQQRO1qhOuVJY=;
+	s=korg; t=1771983468;
+	bh=i5Mgv4d62U8FjC61UqFJXkmYcM9hvABaqzTnQ9LjA/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bT30Xt8dQ7kngmGG0r2k0W/Pcxi3N/Y4WbR0zNBSdp5/hmfGU5glWrYdXwy89m+6o
-	 cfGDSS5IcxnOmhApr3vuaCKRNVnwjta1XkiYS5ekl2Q3+beAQ2UwT8JW1S4Siqi086
-	 FqKiAZg9EePY9EzoZNVqZxhwU7a+0okyyL+fC/1Q=
+	b=Zjs9riNEudQxf6qw/lfYMET9jLQdl+ohL+dCgnqBQCDDLaYWQBgEVqRzRe1CHWsFR
+	 rAJLTPIUp9i1UmRZgP2zrxsV2gyMfy6mkrf84AfU0l/4cAgIOJBn9hni94dSSMH2PE
+	 wZQSIaFYz15NExFejtXEHfXlHzyoX95PH8eSO8LA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	kernel test robot <lkp@intel.com>,
+	Junjie Cao <junjie.cao@intel.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 583/781] coresight: etm3x: Fix cpulocked warning on cpuhp
-Date: Tue, 24 Feb 2026 17:21:32 -0800
-Message-ID: <20260225012414.099939355@linuxfoundation.org>
+Subject: [PATCH 6.19 584/781] backlight: aw99706: Fix build errors caused by wrong gpio header
+Date: Tue, 24 Feb 2026 17:21:33 -0800
+Message-ID: <20260225012414.123635540@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -51,65 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Borneo <antonio.borneo@foss.st.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-[ Upstream commit 1feb0377b9b816f89a04fc381eb19fc6bac9f4a4 ]
+[ Upstream commit b7db7d9c4ffc04210fe631f73a81746d6e2ef24b ]
 
-When changes [1] and [2] have been applied to the driver etm4x, the
-same modifications have been also collapsed in [3] and applied in
-one shot to the driver etm3x.
-While doing this, the driver etm3x has not been aligned to etm4x on
-the use of non cpuslocked version of cpuhp callback setup APIs.
+The driver uses GPIO descriptor API (devm_gpiod_get,
+gpiod_set_value_cansleep, GPIOD_OUT_LOW) but includes the legacy
+<linux/gpio.h> header instead of <linux/gpio/consumer.h>.
 
-The current code triggers two run-time warnings when the kernel is
-compiled with CONFIG_PROVE_LOCKING=y.
+When CONFIG_GPIOLIB is not set, <linux/gpio.h> does not include
+<linux/gpio/consumer.h>, causing build errors:
 
-Use non cpuslocked version of cpuhp callback setup APIs in driver
-etm3x, aligning it to the driver etm4x.
+  error: implicit declaration of function 'gpiod_set_value_cansleep'
+  error: implicit declaration of function 'devm_gpiod_get'
+  error: 'GPIOD_OUT_LOW' undeclared
 
-[1] commit 2d1a8bfb61ec ("coresight: etm4x: Fix etm4_count race by
-                          moving cpuhp callbacks to init")
-[2] commit 22a550a306ad ("coresight: etm4x: Allow etm4x to be built
-                          as a module")
-[3] commit 97fe626ce64c ("coresight: etm3x: Allow etm3x to be built
-                          as a module")
+Fix by including the correct header <linux/gpio/consumer.h>.
 
-Fixes: 97fe626ce64c ("coresight: etm3x: Allow etm3x to be built as a module")
-Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260108152427.357379-1-antonio.borneo@foss.st.com
+Fixes: 147b38a5ad06 ("backlight: aw99706: Add support for Awinic AW99706 backlight")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202512171631.uKXlYwqu-lkp@intel.com/
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Link: https://patch.msgid.link/20260111130117.5041-1-junjie.cao@intel.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm3x-core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/video/backlight/aw99706.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-index a5e809589d3e3..0c011b7041696 100644
---- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-@@ -795,16 +795,16 @@ static int __init etm_hp_setup(void)
- {
- 	int ret;
- 
--	ret = cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ARM_CORESIGHT_STARTING,
--						   "arm/coresight:starting",
--						   etm_starting_cpu, etm_dying_cpu);
-+	ret = cpuhp_setup_state_nocalls(CPUHP_AP_ARM_CORESIGHT_STARTING,
-+					"arm/coresight:starting",
-+					etm_starting_cpu, etm_dying_cpu);
- 
- 	if (ret)
- 		return ret;
- 
--	ret = cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ONLINE_DYN,
--						   "arm/coresight:online",
--						   etm_online_cpu, NULL);
-+	ret = cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN,
-+					"arm/coresight:online",
-+					etm_online_cpu, NULL);
- 
- 	/* HP dyn state ID returned in ret on success */
- 	if (ret > 0) {
+diff --git a/drivers/video/backlight/aw99706.c b/drivers/video/backlight/aw99706.c
+index df5b23b2f7534..938f352aaab7f 100644
+--- a/drivers/video/backlight/aw99706.c
++++ b/drivers/video/backlight/aw99706.c
+@@ -12,7 +12,7 @@
+ #include <linux/backlight.h>
+ #include <linux/bitfield.h>
+ #include <linux/delay.h>
+-#include <linux/gpio.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/i2c.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
 -- 
 2.51.0
 
