@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C05720C012;
-	Wed, 25 Feb 2026 01:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8369020C012;
+	Wed, 25 Feb 2026 01:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983377; cv=none; b=moM4Aftn0+5oXBBE0I3PQowbJmo0qipKTXOOj5yc/Ok8o8I5WP7B+gVq13ZXa8iHGmto9lTMvcuUN/ms0FzTt7a+PacZ0SNKx2EEgvn65//wJUopocHZarwMAKjHyLlSHaVenfI4f+Wpc+5ppMgFADGrVYoO2zLwVHdB814ntTk=
+	t=1771983378; cv=none; b=nxvL87ZLAI1tdW54K8UH4UL9qSzlo1p+YjADdqUnELSm+AA7CkAbSqopmoSz5RarzR6Q91sJoisD15hGtBV+HiyRyUKaDzvQXSf3UIDdEP6lZKqFKaJbNE9en/lzBgYlWBT2wYz3FgrUplEbfO8B7ZarrWCQcBFOVrm/VqbnjXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983377; c=relaxed/simple;
-	bh=FatDsmeB12Z23jWDrGfOVfTiK3/9HwYNOOu5Xr08wTw=;
+	s=arc-20240116; t=1771983378; c=relaxed/simple;
+	bh=XRZFchPwgJEKVJXlc1j1OD4DsyUpcw4bi3RNJhClyeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EpTbg2YC/V5eUGd+99HGalmtjikBzpaYcjsLU6fpVEKrN8o+rpPJNXCf7m3GGieJqv8zQWLChvLioXpnISc/IWY5pT3nnVYkohUQtUuWMItbHY76g3G/hSkl0KPt6ML4zWqMLrRcYXGJIsj+u7Qwm2sRYy0h9MHDr1vHxGr+Bco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veeJdnpv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXoHXeLPtmdNokecioJuubiSm4xweEJtBudiN5YmDVofy4eU8LPxsGUlEakzAiXDd0L2QLfuJ70jelMwhqNzjYeeSy8Wt10JwxRg4qhCjuC9uk2Ofq17Z2RcYhIg+FIYB3ZjWkSF/ZArmxFH5TwIkGCPwfDh+LpKI4sLpp8zILc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BlRtIuIV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veeJdnpv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24AFDC116D0;
-	Wed, 25 Feb 2026 01:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlRtIuIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B43C116D0;
+	Wed, 25 Feb 2026 01:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983377;
-	bh=FatDsmeB12Z23jWDrGfOVfTiK3/9HwYNOOu5Xr08wTw=;
+	s=korg; t=1771983378;
+	bh=XRZFchPwgJEKVJXlc1j1OD4DsyUpcw4bi3RNJhClyeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=veeJdnpvHeKh0H1+eX+8tP/so5CSW/QxKHGJOYxcZGF+tkQumPR7H/+VcH98al7It
-	 bzHBGLoZ7eWvEvDeHWyxl1ATP8d7DACvcHAJINd179k5qpP0uYJX4rVM0pDyQ+KaL+
-	 jYNO5nHObxZiINplXmLmUswOQ42Y7P4G4opGCD68=
+	b=BlRtIuIVylT61F8Z/Z4WeOsN8+C3WAohglh0QwXZW4LHQ0fXoXHsu+yuRQh15/ouR
+	 CIKx1NxaAgAhHFNOENuN+RUZOmxbZlLwglef0Oby997L+7nNJeDGYXqD/7JJ1TxUC5
+	 zpgKj897WkbtTprGhQ/4GR/vOtBWNtoWKxkv5ZmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 501/781] nvdimm: virtio_pmem: serialize flush requests
-Date: Tue, 24 Feb 2026 17:20:10 -0800
-Message-ID: <20260225012412.093837228@linuxfoundation.org>
+Subject: [PATCH 6.19 502/781] fs/nfs: Fix readdir slow-start regression
+Date: Tue, 24 Feb 2026 17:20:11 -0800
+Message-ID: <20260225012412.116889896@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012359.695468795@linuxfoundation.org>
 References: <20260225012359.695468795@linuxfoundation.org>
@@ -53,96 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit a9ba6733c7f1096c4506bf4e34a546e07242df74 ]
+[ Upstream commit 42e7c876b182da65723700f6bc507a8aecb10d3b ]
 
-Under heavy concurrent flush traffic, virtio-pmem can overflow its request
-virtqueue (req_vq): virtqueue_add_sgs() starts returning -ENOSPC and the
-driver logs "no free slots in the virtqueue". Shortly after that the
-device enters VIRTIO_CONFIG_S_NEEDS_RESET and flush requests fail with
-"virtio pmem device needs a reset".
+Commit 580f236737d1 ("NFS: Adjust the amount of readahead
+performed by NFS readdir") reduces the amount of readahead names
+caching done by the client.
 
-Serialize virtio_pmem_flush() with a per-device mutex so only one flush
-request is in-flight at a time. This prevents req_vq descriptor overflow
-under high concurrency.
+The downside of this approach is READDIR now may suffer from
+a slow-start issue, where initially it will fetch names that fit
+in a single page, then in 2, 4, 8 until the maximum supported
+transfer size (usually 1M).
 
-Reproducer (guest with virtio-pmem):
-  - mkfs.ext4 -F /dev/pmem0
-  - mount -t ext4 -o dax,noatime /dev/pmem0 /mnt/bench
-  - fio: ioengine=io_uring rw=randwrite bs=4k iodepth=64 numjobs=64
-        direct=1 fsync=1 runtime=30s time_based=1
-  - dmesg: "no free slots in the virtqueue"
-           "virtio pmem device needs a reset"
+This patch tries to take a balanced approach between mitigating
+the slow-start issue still maintaining some efficiency gains.
 
-Fixes: 6e84200c0a29 ("virtio-pmem: Add virtio pmem driver")
-Signed-off-by: Li Chen <me@linux.beauty>
-Acked-by: Pankaj Gupta <pankaj.gupta.linux@gmail.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260203021353.121091-1-me@linux.beauty
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Fixes: 580f236737d1 ("NFS: Adjust the amount of readahead performed by NFS readdir")
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/nd_virtio.c   | 3 ++-
- drivers/nvdimm/virtio_pmem.c | 1 +
- drivers/nvdimm/virtio_pmem.h | 4 ++++
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ fs/nfs/dir.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvdimm/nd_virtio.c b/drivers/nvdimm/nd_virtio.c
-index c3f07be4aa22a..af82385be7c6a 100644
---- a/drivers/nvdimm/nd_virtio.c
-+++ b/drivers/nvdimm/nd_virtio.c
-@@ -44,6 +44,8 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
- 	unsigned long flags;
- 	int err, err1;
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index e3654f4a1b9aa..571bb40880b2d 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -73,7 +73,7 @@ const struct address_space_operations nfs_dir_aops = {
+ 	.free_folio = nfs_readdir_clear_array,
+ };
  
-+	guard(mutex)(&vpmem->flush_lock);
-+
- 	/*
- 	 * Don't bother to submit the request to the device if the device is
- 	 * not activated.
-@@ -53,7 +55,6 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
- 		return -EIO;
- 	}
+-#define NFS_INIT_DTSIZE PAGE_SIZE
++#define NFS_INIT_DTSIZE SZ_64K
  
--	might_sleep();
- 	req_data = kmalloc(sizeof(*req_data), GFP_KERNEL);
- 	if (!req_data)
- 		return -ENOMEM;
-diff --git a/drivers/nvdimm/virtio_pmem.c b/drivers/nvdimm/virtio_pmem.c
-index 2396d19ce5496..77b1966619059 100644
---- a/drivers/nvdimm/virtio_pmem.c
-+++ b/drivers/nvdimm/virtio_pmem.c
-@@ -64,6 +64,7 @@ static int virtio_pmem_probe(struct virtio_device *vdev)
- 		goto out_err;
- 	}
- 
-+	mutex_init(&vpmem->flush_lock);
- 	vpmem->vdev = vdev;
- 	vdev->priv = vpmem;
- 	err = init_vq(vpmem);
-diff --git a/drivers/nvdimm/virtio_pmem.h b/drivers/nvdimm/virtio_pmem.h
-index 0dddefe594c46..f72cf17f9518f 100644
---- a/drivers/nvdimm/virtio_pmem.h
-+++ b/drivers/nvdimm/virtio_pmem.h
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <uapi/linux/virtio_pmem.h>
- #include <linux/libnvdimm.h>
-+#include <linux/mutex.h>
- #include <linux/spinlock.h>
- 
- struct virtio_pmem_request {
-@@ -35,6 +36,9 @@ struct virtio_pmem {
- 	/* Virtio pmem request queue */
- 	struct virtqueue *req_vq;
- 
-+	/* Serialize flush requests to the device. */
-+	struct mutex flush_lock;
-+
- 	/* nvdimm bus registers virtio pmem device */
- 	struct nvdimm_bus *nvdimm_bus;
- 	struct nvdimm_bus_descriptor nd_desc;
+ static struct nfs_open_dir_context *
+ alloc_nfs_open_dir_context(struct inode *dir)
+@@ -84,7 +84,7 @@ alloc_nfs_open_dir_context(struct inode *dir)
+ 	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL_ACCOUNT);
+ 	if (ctx != NULL) {
+ 		ctx->attr_gencount = nfsi->attr_gencount;
+-		ctx->dtsize = NFS_INIT_DTSIZE;
++		ctx->dtsize = min(NFS_SERVER(dir)->dtsize, NFS_INIT_DTSIZE);
+ 		spin_lock(&dir->i_lock);
+ 		if (list_empty(&nfsi->open_files) &&
+ 		    (nfsi->cache_validity & NFS_INO_DATA_INVAL_DEFER))
 -- 
 2.51.0
 
