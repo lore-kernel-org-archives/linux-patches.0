@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC0424677D;
-	Wed, 25 Feb 2026 01:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BE924677D;
+	Wed, 25 Feb 2026 01:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983832; cv=none; b=KWY4FDQ84PKhaL5/VtCU/vqjvCWfL5GOoM1Jnlwt+zz13Vpj+UTQNnTO6wZLrQyV4V51d0Bk6uMeiFnaso8J0wU+vSOpezlUpP5QKbXSCBABGlJghzVRx6yqOzVbo6sbykSsIK5pE4HRlfF012J67ES66B+cjy9OBG4+mFHeI2w=
+	t=1771983834; cv=none; b=QUDS0W3LFB2r9LEvn1y93yjx1jr4d04yIm6mG6Y9Chtgmg8dDHTa6byvhO2YJ5SzkEWPOzt6XYHIRzbayUJW9o/LqAgo40CureI9DrvDWaVO4oI8zAXgxVTgv67MmPh1br7psWURylhf55YfgPDM9/QUeEllrSw4YIypEbL59xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983832; c=relaxed/simple;
-	bh=UurxWU9pPGG2cDPCWK+kcLEGgW383fHT8MNtO4rccKI=;
+	s=arc-20240116; t=1771983834; c=relaxed/simple;
+	bh=09qKpXl0t+e4P0ebd0zTWm6cXaPOB32fz2frDjlnQwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9jTtaYGJCRejlYIPaPUZ+Xt8EwqcmQ47uRGKE/gqH1oMVIxv7iGRUvffG4lynkVLpp3wCRF2xbgC00hmsawHyaYIMnewwzOKKCs9wDxGikE16gJpUZ/MG2mt/t06oH16kJprSyCmvEugVUJCzH3qV/hEpg0pK0N86sgvDBRKpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a38I8MmW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YUqU0jmYkcHEXHfkV5Jm733LWWNMbnmBennUJhyj2w08VBfTAP0hco86DUAuhZHpoQQcz600xIrbLYU9dK2HW56uF90cKud2NqWgk4dzhOfQt86465w+w1/u2C9P5E92b2h5jMOz/QQrlh/h4WxNIAXf5Gf8+JAtrLRUwuuKKFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fb8mmFWX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a38I8MmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCFDC116D0;
-	Wed, 25 Feb 2026 01:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fb8mmFWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68BEC116D0;
+	Wed, 25 Feb 2026 01:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983832;
-	bh=UurxWU9pPGG2cDPCWK+kcLEGgW383fHT8MNtO4rccKI=;
+	s=korg; t=1771983834;
+	bh=09qKpXl0t+e4P0ebd0zTWm6cXaPOB32fz2frDjlnQwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a38I8MmWkiZMkIpztLzmGqDiO7PEwlilhNTApJinnMV83eLewZS2zLNZm5EQ6RXdi
-	 g0M/SANvcKPtGhmYYSAJT4Y0h1t0dmMiaci211X4G0jLYv5oUoHTZfkkzbHgNX8bmb
-	 QNI0rh3kBJ0xZHM/23QwUyvBDEqe1vs7kRGKQYCk=
+	b=fb8mmFWXRuDzTuqSogaqgmdj6eKj3eCQZONh1bFcHfy4EABcls0RS6aaioL3jRR3v
+	 UoyOsmVWJ9gZcAF3HD58HlRkIzb+WIwgzleY+lkZkHB3EEeSiMpQfDk6IAaUaVkVtA
+	 6OQm99bGyTL7PVzAsvhKJv/hQwulUwGnVGINiU08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Thomas Gleixner <tglx@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 113/641] mfd: wm8350-core: Use IRQF_ONESHOT
-Date: Tue, 24 Feb 2026 17:17:19 -0800
-Message-ID: <20260225012351.862882088@linuxfoundation.org>
+Subject: [PATCH 6.18 114/641] media: pci: mg4b: Use IRQF_NO_THREAD
+Date: Tue, 24 Feb 2026 17:17:20 -0800
+Message-ID: <20260225012351.889478854@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -55,44 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 553b4999cbe231b5011cb8db05a3092dec168aca ]
+[ Upstream commit ef92b98f5f6758a049898b53aa30476010db04fa ]
 
-Using a threaded interrupt without a dedicated primary handler mandates
-the IRQF_ONESHOT flag to mask the interrupt source while the threaded
-handler is active. Otherwise the interrupt can fire again before the
-threaded handler had a chance to run.
+The interrupt handler iio_trigger_generic_data_rdy_poll() will invoke other
+interrupt handlers and this supposed to happen from hard interrupt context.
 
-Mark explained that this should not happen with this hardware since it
-is a slow irqchip which is behind an I2C/ SPI bus but the IRQ-core will
-refuse to accept such a handler.
+Use IRQF_NO_THREAD to forbid forced-threading.
 
-Set IRQF_ONESHOT so the interrupt source is masked until the secondary
-handler is done.
-
-Fixes: 1c6c69525b40e ("genirq: Reject bogus threaded irq requests")
+Fixes: 0ab13674a9bd1 ("media: pci: mgb4: Added Digiteq Automotive MGB4 driver")
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260128095540.863589-16-bigeasy@linutronix.de
+Link: https://patch.msgid.link/20260128095540.863589-21-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mfd/wm8350/core.h | 2 +-
+ drivers/media/pci/mgb4/mgb4_trigger.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/mfd/wm8350/core.h b/include/linux/mfd/wm8350/core.h
-index 5f70d3b5d1b1a..097ef4dfcdac8 100644
---- a/include/linux/mfd/wm8350/core.h
-+++ b/include/linux/mfd/wm8350/core.h
-@@ -667,7 +667,7 @@ static inline int wm8350_register_irq(struct wm8350 *wm8350, int irq,
- 		return -ENODEV;
+diff --git a/drivers/media/pci/mgb4/mgb4_trigger.c b/drivers/media/pci/mgb4/mgb4_trigger.c
+index d7dddc5c8728e..10c23f0c833d5 100644
+--- a/drivers/media/pci/mgb4/mgb4_trigger.c
++++ b/drivers/media/pci/mgb4/mgb4_trigger.c
+@@ -114,7 +114,7 @@ static int probe_trigger(struct iio_dev *indio_dev, int irq)
+ 	if (!st->trig)
+ 		return -ENOMEM;
  
- 	return request_threaded_irq(irq + wm8350->irq_base, NULL,
--				    handler, flags, name, data);
-+				    handler, flags | IRQF_ONESHOT, name, data);
- }
- 
- static inline void wm8350_free_irq(struct wm8350 *wm8350, int irq, void *data)
+-	ret = request_irq(irq, &iio_trigger_generic_data_rdy_poll, 0,
++	ret = request_irq(irq, &iio_trigger_generic_data_rdy_poll, IRQF_NO_THREAD,
+ 			  "mgb4-trigger", st->trig);
+ 	if (ret)
+ 		goto error_free_trig;
 -- 
 2.51.0
 
