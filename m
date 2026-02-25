@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E2624677D;
-	Wed, 25 Feb 2026 01:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD7624677D;
+	Wed, 25 Feb 2026 01:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771983829; cv=none; b=ALzMmHmNL74A3Ohp3G+AqH3l+5YP5vvSYWBl7QkTPfLpnVkH6/WZeeUk0ZnGPXKCJlkRw0v6bVeteuUfuHK0OrivSJCZuRLhp0/44oRDfF5AVDP/9e/SX/GsG2KiMhgJUyFxooTMhAzI1fC3EwoXAalobBRoo3pRNWQbl/r4hkU=
+	t=1771983830; cv=none; b=jMfI3stkyP3CxyamTLTRuM19o9mYw4Zg6w0GU/8Lbr3ybvJKtgLfl1UyjaawmEiVuVqWyjZ6iQE7wd4vQXyCbNNdvEIdiIMvgOrWBDy0YoGMoqfNMhBHKr3usN0B5ajrbejUGWIHkQsh1xdAmzKrAqWsSmdrVjlnREpul8iOfo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771983829; c=relaxed/simple;
-	bh=sWX4Hxc743lh76Y1k/5EFjfE4SWhDqtwK+oyw3wIgUs=;
+	s=arc-20240116; t=1771983830; c=relaxed/simple;
+	bh=jYb/iwTdFa21o1Nh4duX3+s7sij+vjoNTAkGMliY4eQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5iKCUG1Zlk1WQv4J3XjagJV9RQWQ2GoIoym6Wt4PsCjPs6SXED/LQ9blanU9QxQrXIh+g6p6fUCy8VqfxdhZs9Hi7NBqUny4OOgt+w/fpRPMzwJIGBkHvg257vzd0i1YL1+ai4WrY+gmGe9ottg5mSu9qaqW0/g83xCk2uY0Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwOKD9aN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uMgt+sbTfxXLlPN5a4RTeuYPcGKxyUTzQBJzqc9sQJ8ENJ5wsw//RL5JXZLiAvF40skESekaIRFa0GKVjCMRc5+CSR13z4PYHB91dmoJSBmGgTRTCggMIT0gCE+XSt83h49GaA4+T5fSOyIQ41GVU4QOwW4gtah9k1cNnAZTxM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hY6YLxC+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwOKD9aN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F89C116D0;
-	Wed, 25 Feb 2026 01:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hY6YLxC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28617C116D0;
+	Wed, 25 Feb 2026 01:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1771983829;
-	bh=sWX4Hxc743lh76Y1k/5EFjfE4SWhDqtwK+oyw3wIgUs=;
+	s=korg; t=1771983830;
+	bh=jYb/iwTdFa21o1Nh4duX3+s7sij+vjoNTAkGMliY4eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwOKD9aNIagrhGAxv4wqM0D6jXHMth5NmItUfZlIZP5d1BzPrLYiI69pT0a0rUnEQ
-	 fb1jtl0ydeLAFRGYfQFc/ij8oQ82JEuzGU0S66q2Zln1nxjbjBHzXsPYVhY5XpLAwJ
-	 h9wxItnfg7wOz3KfdcutWn6lxQbJkJWVGNn0Bon8=
+	b=hY6YLxC+gMk/sN7/Fjqtlmf5oG8c9z6Cd54EAksmcHVefAwvGJcdPKOYqeoWbdiUI
+	 V3JUjL0M2xWpdodcGIIROdxZSC0uMLEVclVwszkxXxX0QojjAJzU3CGlZ1v/opAFHA
+	 ymxoUfVA0rzRaNKAPCqLmn9cJ6jO2CV0OZKnVsN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Thomas Gleixner <tglx@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 110/641] EDAC/altera: Remove IRQF_ONESHOT
-Date: Tue, 24 Feb 2026 17:17:16 -0800
-Message-ID: <20260225012351.787751952@linuxfoundation.org>
+Subject: [PATCH 6.18 111/641] usb: typec: fusb302: Remove IRQF_ONESHOT
+Date: Tue, 24 Feb 2026 17:17:17 -0800
+Message-ID: <20260225012351.812939390@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225012348.915798704@linuxfoundation.org>
 References: <20260225012348.915798704@linuxfoundation.org>
@@ -53,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 5c858d6c66304b4c7579582ec5235f02d43578ea ]
+[ Upstream commit a7fb84ea70aae9a92a842932206e70ed1b3c7007 ]
 
 Passing IRQF_ONESHOT ensures that the interrupt source is masked until
 the secondary (threaded) handler is done. If only a primary handler is
@@ -65,58 +66,31 @@ irq-core will warn about this.
 
 Remove IRQF_ONESHOT from irqflags.
 
-Fixes: a29d64a45eed1 ("EDAC, altera: Add IRQ Flags to disable IRQ while handling")
+Fixes: 309b6341d5570 ("usb: typec: fusb302: Revert incorrect threaded irq fix")
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260128095540.863589-11-bigeasy@linutronix.de
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260128095540.863589-12-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/altera_edac.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/usb/typec/tcpm/fusb302.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/edac/altera_edac.c b/drivers/edac/altera_edac.c
-index 0c5b94e64ea15..4edd2088c2db6 100644
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1563,8 +1563,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
- 		goto err_release_group_1;
+diff --git a/drivers/usb/typec/tcpm/fusb302.c b/drivers/usb/typec/tcpm/fusb302.c
+index 870a71f953f6c..19ff8217818e7 100644
+--- a/drivers/usb/typec/tcpm/fusb302.c
++++ b/drivers/usb/typec/tcpm/fusb302.c
+@@ -1756,8 +1756,7 @@ static int fusb302_probe(struct i2c_client *client)
  	}
- 	rc = devm_request_irq(&altdev->ddev, altdev->sb_irq,
--			      prv->ecc_irq_handler,
--			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
-+			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
- 			      ecc_name, altdev);
- 	if (rc) {
- 		edac_printk(KERN_ERR, EDAC_DEVICE, "PortB SBERR IRQ error\n");
-@@ -1587,8 +1586,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
- 		goto err_release_group_1;
- 	}
- 	rc = devm_request_irq(&altdev->ddev, altdev->db_irq,
--			      prv->ecc_irq_handler,
--			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
-+			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
- 			      ecc_name, altdev);
- 	if (rc) {
- 		edac_printk(KERN_ERR, EDAC_DEVICE, "PortB DBERR IRQ error\n");
-@@ -1970,8 +1968,7 @@ static int altr_edac_a10_device_add(struct altr_arria10_edac *edac,
- 		goto err_release_group1;
- 	}
- 	rc = devm_request_irq(edac->dev, altdev->sb_irq, prv->ecc_irq_handler,
--			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
--			      ecc_name, altdev);
-+			      IRQF_TRIGGER_HIGH, ecc_name, altdev);
- 	if (rc) {
- 		edac_printk(KERN_ERR, EDAC_DEVICE, "No SBERR IRQ resource\n");
- 		goto err_release_group1;
-@@ -1993,7 +1990,7 @@ static int altr_edac_a10_device_add(struct altr_arria10_edac *edac,
- 		goto err_release_group1;
- 	}
- 	rc = devm_request_irq(edac->dev, altdev->db_irq, prv->ecc_irq_handler,
--			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
-+			      IRQF_TRIGGER_HIGH,
- 			      ecc_name, altdev);
- 	if (rc) {
- 		edac_printk(KERN_ERR, EDAC_DEVICE, "No DBERR IRQ resource\n");
+ 
+ 	ret = request_irq(chip->gpio_int_n_irq, fusb302_irq_intn,
+-			  IRQF_ONESHOT | IRQF_TRIGGER_LOW,
+-			  "fsc_interrupt_int_n", chip);
++			  IRQF_TRIGGER_LOW, "fsc_interrupt_int_n", chip);
+ 	if (ret < 0) {
+ 		dev_err(dev, "cannot request IRQ for GPIO Int_N, ret=%d", ret);
+ 		goto tcpm_unregister_port;
 -- 
 2.51.0
 
