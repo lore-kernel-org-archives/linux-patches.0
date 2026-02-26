@@ -1,145 +1,115 @@
-Received: from mail115-69.sinamail.sina.com.cn (mail115-69.sinamail.sina.com.cn [218.30.115.69])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05208389DF0
-	for <patches@lists.linux.dev>; Thu, 26 Feb 2026 06:28:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EF2311599;
+	Thu, 26 Feb 2026 07:45:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772087318; cv=none; b=hawKwB0J4Vm/wzQdc1ZASmv9Rs7XkuhJ4YTMgw2LrpadJRzsAAPdHmuibcScJnLbxejZaVtIXUTkPESwOkAG3/NzrKg+OXC1OvZ5cXeVtDJHipOETSqifNaPMLvm0cDv+2MoyEV0P7bnVK+Ysl17pMTvZa4g1EpRjt3GJraASQc=
+	t=1772091927; cv=none; b=Yv3hP/ad51WkzyI1wmeXPXKMkwtCWp7s1EqzlxiywqJDT1DIy7AcOfwQBPOIv9/GeiXOUs8jxxAsTf+VZxQXFfJGopXckNsjt2kFLjw8wLB3VEnlNS0pcKzrllAtq2xXYrL9cU5GvLY/6LO6Bpmjq863Osu5bdDGlB92iVbGO5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772087318; c=relaxed/simple;
-	bh=YWJx2iwectzVDSFFlBXYzcYdQaa7y7sUiwn4RbmmyEg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=a4QfvtRu1V70EHEM30SUl4uZAdROQSVi8nHyudB247JnQIz6BTNDAKT8RuJJzwkxT/ylLBjpJceBEU1WdaDgS0RoHxq+jnCKlRFyobOF1+t9quxq08qQO+I6vXxJR38to5bjLHj5hZxQ4ubkCaka9LKGv/EmYftD8QZkSRmD7gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=anXfZJur; arc=none smtp.client-ip=218.30.115.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
+	s=arc-20240116; t=1772091927; c=relaxed/simple;
+	bh=1IbN5lpgxAaO8ppG/o1kIrggMbmfH/Y/DeH37gQka3g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uujZlh9NR/1tcloOSsx+5kYy1NUBIOdd96gLc3R0riv9ygAqKglROPAecfBLyhlQGz9aW1Q2FnDdcl/XRkB4C3i1+X2SmOskoMvaaSLJaX/3vOmtp2L/GtnKYUaULzYxSBe7+21mLd+2BmAOUrMyuz0Ou10uy17DG5kiSscAxiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ptLnmgz+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="anXfZJur"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1772087316;
-	bh=MqeqQg/vs2MGaUssukynotamsBqbwPSc/1lh8gDzQnQ=;
-	h=From:Subject:Date:Message-Id;
-	b=anXfZJur+tX/LAsS0/gCXqKFINjCKPenOxXh3Dbohl1YLyPvLdbEZ6txVcHsrdurg
-	 n9sJX51CdKx9ljiG1H3+LODtTqK7NkvwBZNQ2sCVqlN6QSRHQS1MncexvCbRfGh6k8
-	 NNhUQI8ZfoV+UXLgSCZXZocbIRFpzF7g9+fSMm74=
-X-SMAIL-HELO: NTT-kernel-dev
-Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
-	by sina.cn (10.185.250.22) with ESMTP
-	id 699FE77E00003D67; Thu, 26 Feb 2026 14:26:08 +0800 (CST)
-X-Sender: jianqkang@sina.cn
-X-Auth-ID: jianqkang@sina.cn
-Authentication-Results: sina.cn;
-	 spf=none smtp.mailfrom=jianqkang@sina.cn;
-	 dkim=none header.i=none;
-	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 8123827602223
-X-SMAIL-UIID: 67AC7A49CAFB47ABBF0506D125387A64-20260226-142608-1
-From: Jianqiang kang <jianqkang@sina.cn>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	axboe@kernel.dk
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	asml.silence@gmail.com,
-	io-uring@vger.kernel.org
-Subject: [PATCH 6.1.y] io_uring/io-wq: check IO_WQ_BIT_EXIT inside work run loop
-Date: Thu, 26 Feb 2026 14:26:06 +0800
-Message-Id: <20260226062606.357657-1-jianqkang@sina.cn>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ptLnmgz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FCEC19422;
+	Thu, 26 Feb 2026 07:45:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772091927;
+	bh=1IbN5lpgxAaO8ppG/o1kIrggMbmfH/Y/DeH37gQka3g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ptLnmgz+AzFi9R9PIH/runcaID8THrPJGhwp7ck1abf2WPdP9Divs2tDSxNax5Nre
+	 OWiSIItALllCC9aEdQPHjr2q3QwCfJArR/8H8DXTh/nsbNFsL0Lr9GV37jNzbYXLtb
+	 VbVQHICbtVv6zNt2xuRe+KTMh5OC8+XnB5YsYutNdO/3VqHD6a5yV1Ddr3q8HRC64u
+	 WSUkEjgf9gFs/EEAD3nsmiKjM/R5tAkYW/XF0txEdqE5BRKbHYwwLPxjFlqOCafr+/
+	 +8hgdPyE1jN1dIxQhJWQVBHvg1ksAgZeI/InAqK3/s7zF3yw0zMrIdlFq2lc3HBNr1
+	 5aFLXyoXtEGdA==
+Message-ID: <4bbeb69d-698f-4fe7-86d0-67c6f7e2ebdf@kernel.org>
+Date: Thu, 26 Feb 2026 08:45:23 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.19 767/781] ata: libata-scsi: avoid Non-NCQ command
+ starvation
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Xingui Yang <yangxingui@huawei.com>,
+ Igor Pylypiv <ipylypiv@google.com>, Damien Le Moal <dlemoal@kernel.org>,
+ Niklas Cassel <cassel@kernel.org>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ John Garry <john.g.garry@oracle.com>
+References: <20260225012359.695468795@linuxfoundation.org>
+ <20260225012418.528826275@linuxfoundation.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20260225012418.528826275@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Jens Axboe <axboe@kernel.dk>
+On 25. 02. 26, 2:24, Greg Kroah-Hartman wrote:
+> 6.19-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Damien Le Moal <dlemoal@kernel.org>
+> 
+> commit 0ea84089dbf62a92dc7889c79e6b18fc89260808 upstream.
 
-[ Upstream commit 10dc959398175736e495f71c771f8641e1ca1907 ]
+Hi, this one is broken and needs (very fresh) fixes according to our 
+tooling:
 
-Currently this is checked before running the pending work. Normally this
-is quite fine, as work items either end up blocking (which will create a
-new worker for other items), or they complete fairly quickly. But syzbot
-reports an issue where io-wq takes seemingly forever to exit, and with a
-bit of debugging, this turns out to be because it queues a bunch of big
-(2GB - 4096b) reads with a /dev/msr* file. Since this file type doesn't
-support ->read_iter(), loop_rw_iter() ends up handling them. Each read
-returns 16MB of data read, which takes 20 (!!) seconds. With a bunch of
-these pending, processing the whole chain can take a long time. Easily
-longer than the syzbot uninterruptible sleep timeout of 140 seconds.
-This then triggers a complaint off the io-wq exit path:
+eddb98ad9364 ata: libata-eh: correctly handle deferred qc timeouts
+55db00992663 ata: libata-core: fix cancellation of a port deferred qc work
 
-INFO: task syz.4.135:6326 blocked for more than 143 seconds.
-      Not tainted syzkaller #0
-      Blocked by coredump.
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:syz.4.135       state:D stack:26824 pid:6326  tgid:6324  ppid:5957   task_flags:0x400548 flags:0x00080000
-Call Trace:
- <TASK>
- context_switch kernel/sched/core.c:5256 [inline]
- __schedule+0x1139/0x6150 kernel/sched/core.c:6863
- __schedule_loop kernel/sched/core.c:6945 [inline]
- schedule+0xe7/0x3a0 kernel/sched/core.c:6960
- schedule_timeout+0x257/0x290 kernel/time/sleep_timeout.c:75
- do_wait_for_common kernel/sched/completion.c:100 [inline]
- __wait_for_common+0x2fc/0x4e0 kernel/sched/completion.c:121
- io_wq_exit_workers io_uring/io-wq.c:1328 [inline]
- io_wq_put_and_exit+0x271/0x8a0 io_uring/io-wq.c:1356
- io_uring_clean_tctx+0x10d/0x190 io_uring/tctx.c:203
- io_uring_cancel_generic+0x69c/0x9a0 io_uring/cancel.c:651
- io_uring_files_cancel include/linux/io_uring.h:19 [inline]
- do_exit+0x2ce/0x2bd0 kernel/exit.c:911
- do_group_exit+0xd3/0x2a0 kernel/exit.c:1112
- get_signal+0x2671/0x26d0 kernel/signal.c:3034
- arch_do_signal_or_restart+0x8f/0x7e0 arch/x86/kernel/signal.c:337
- __exit_to_user_mode_loop kernel/entry/common.c:41 [inline]
- exit_to_user_mode_loop+0x8c/0x540 kernel/entry/common.c:75
- __exit_to_user_mode_prepare include/linux/irq-entry-common.h:226 [inline]
- syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:256 [inline]
- syscall_exit_to_user_mode_work include/linux/entry-common.h:159 [inline]
- syscall_exit_to_user_mode include/linux/entry-common.h:194 [inline]
- do_syscall_64+0x4ee/0xf80 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fa02738f749
-RSP: 002b:00007fa0281ae0e8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
-RAX: fffffffffffffe00 RBX: 00007fa0275e6098 RCX: 00007fa02738f749
-RDX: 0000000000000000 RSI: 0000000000000080 RDI: 00007fa0275e6098
-RBP: 00007fa0275e6090 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fa0275e6128 R14: 00007fff14e4fcb0 R15: 00007fff14e4fd98
-
-There's really nothing wrong here, outside of processing these reads
-will take a LONG time. However, we can speed up the exit by checking the
-IO_WQ_BIT_EXIT inside the io_worker_handle_work() loop, as syzbot will
-exit the ring after queueing up all of these reads. Then once the first
-item is processed, io-wq will simply cancel the rest. That should avoid
-syzbot running into this complaint again.
-
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/68a2decc.050a0220.e29e5.0099.GAE@google.com/
-Reported-by: syzbot+4eb282331cab6d5b6588@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ Minor conflict resolved. ]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
----
- io_uring/io-wq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index 04265bf8d319..958e619776f0 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -554,9 +554,9 @@ static void io_worker_handle_work(struct io_worker *worker)
- 	struct io_wqe_acct *acct = io_wqe_get_acct(worker);
- 	struct io_wqe *wqe = worker->wqe;
- 	struct io_wq *wq = wqe->wq;
--	bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
- 
- 	do {
-+		bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
- 		struct io_wq_work *work;
- 
- 		/*
+thanks,
 -- 
-2.34.1
+js
+suse labs
 
