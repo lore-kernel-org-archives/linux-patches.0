@@ -1,92 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4715133A9F7;
-	Thu, 26 Feb 2026 14:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B6F36EA93;
+	Thu, 26 Feb 2026 14:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772114955; cv=none; b=ZWKpKF89ln6VilsltSPQA+nTQD3erhAh+k/z1CHp3bVCidMlEgjvo07ogBqIYELJlhLUrGGyLOVzPoXFfPeIoKOGtDr3pgz9zaPaBCnjcHlCCWe2qyGLoHGQ15Wp7sQu7aJNLBekkwYqsh4mlHHEAd/jFg/VHqwpZF3anw+rPmg=
+	t=1772116486; cv=none; b=CyHn9QUR7ULBHWTd3unSW+MBEK1QyKmojk6VVYEi7FLSHsSq+y8l88rhNGFE0STxd9Izbgqi6Hq0N80qpqQYU8T8JKEffdISvQ+afqIdOK+x66aNi5quCTDfszSog30hf7tFQCs2m6uHLxQQjVftdo7V4oNrWBTkjlpUYrHNAqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772114955; c=relaxed/simple;
-	bh=8WDXKaLHom5c3E/DwCunlAjOlHZNSGTUJkRY5uIDLx4=;
+	s=arc-20240116; t=1772116486; c=relaxed/simple;
+	bh=T/crL0LfDiKdTYndOewz3cqteqv7pFC6DWl7pd7orOs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kbBeudcFUGzQ3mUbRC+G+Nb6Sxsd7dH3Rd24xINUQOZ1LKVYmk3jjzsUHDAcq+VG3m9j0LiweQKbrI1GXyugaO25nfp6jRca10nIDd78YVw6AUSOJrdD1IE0NUM25jByrZaGKnsyXsHXnjIzZtQjYnCmdZEkfQL2XqbFl4uU3bE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6sO2eJx; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=kezSpHeWGwVMrt0b8Cbha1F/DrXTvItD0FU1v3d3Gv+bpMnNsnH5Tr+u/K2Aw8XDSvFACArp7gdDO2sC6yzaRLcP0hze6i/KgI2Fjvdj6+RlOwLt9vgyZaOaVXnfttTgPLx5us6A2ViDokUi4vNZrz+gCamibqVww0juBhA6e5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grTwbtZr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6sO2eJx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B342AC116C6;
-	Thu, 26 Feb 2026 14:09:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772114954;
-	bh=8WDXKaLHom5c3E/DwCunlAjOlHZNSGTUJkRY5uIDLx4=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grTwbtZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8C5C116C6;
+	Thu, 26 Feb 2026 14:34:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1772116486;
+	bh=T/crL0LfDiKdTYndOewz3cqteqv7pFC6DWl7pd7orOs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=W6sO2eJxeOLvlQ9mpL1mZ9pdNYgf/x6X5Vk3jytPpF4EeK4GOxcnfskcBjkXwDBBV
-	 2qq5q2kU1XKnmM99cg64n+IdHCe8KdA2GjbHFihYphUV1uUGBG91N+11GIsz5QtpxO
-	 0NfvN2cBrEpXNTvuy1xGq2lBTE/GPrPkgLdRTOLnEwCvFpV6DltN0qx3CTZ+6BQNW0
-	 bfqqlUuRoRHyRAybpbDIk8nqS68HJ4O1ryrNqw3k/JN6CCEIo6TVj99sko3SfM1NS7
-	 ZTJSJllW0WTGH/QTTJFxoIZiGN4fcxYT5Wq7wKdCUt1+oYza8TsdDQ9MqHgVaZ/wQ7
-	 71YDJv0xlj/Ug==
-Date: Thu, 26 Feb 2026 09:09:13 -0500
-From: Sasha Levin <sashal@kernel.org>
-To: Jan Kara <jack@suse.cz>
-Cc: Amir Goldstein <amir73il@gmail.com>, patches@lists.linux.dev,
-	stable@vger.kernel.org, Jakub Acs <acsjakub@amazon.de>,
-	Christian Brauner <brauner@kernel.org>, viro@zeniv.linux.org.uk,
-	linux-fsdevel@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.19-5.15] fsnotify: Shutdown fsnotify before
- destroying sb's dcache
-Message-ID: <aaBUCU50P-GYMnne@laps>
-References: <20260214212452.782265-1-sashal@kernel.org>
- <20260214212452.782265-85-sashal@kernel.org>
- <CAOQ4uxgKwp2FSAUwqhHN-kTBcy0DsFmLstGUY+zJWppOzTAmHA@mail.gmail.com>
- <z6nyopsvzubwxowiqxdg2yt5v6yu4i3uzlflvryjwuk2su7z4m@35ikyzqbxb46>
+	b=grTwbtZrIP8acC9MtaVeIfCEmaIDGh0XJEjwUORdtY1rdZ+eNTo9znf94Xy0dwKrm
+	 twVeyI5y1DDI0oDtB/8olsHZA2M96iUheDt7rqEJpDNfQxP9UC3RTrqcrDkVkv9Ps2
+	 f/1loIHWRDdaz3NGrFFng7lbCnSQFucGOinLS4FM=
+Date: Thu, 26 Feb 2026 06:34:37 -0800
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Jiri Slaby <jirislaby@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Xingui Yang <yangxingui@huawei.com>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Garry <john.g.garry@oracle.com>
+Subject: Re: [PATCH 6.19 767/781] ata: libata-scsi: avoid Non-NCQ command
+ starvation
+Message-ID: <2026022641-enzyme-atonable-ae2b@gregkh>
+References: <20260225012359.695468795@linuxfoundation.org>
+ <20260225012418.528826275@linuxfoundation.org>
+ <4bbeb69d-698f-4fe7-86d0-67c6f7e2ebdf@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <z6nyopsvzubwxowiqxdg2yt5v6yu4i3uzlflvryjwuk2su7z4m@35ikyzqbxb46>
+In-Reply-To: <4bbeb69d-698f-4fe7-86d0-67c6f7e2ebdf@kernel.org>
 
-On Tue, Feb 17, 2026 at 11:00:42AM +0100, Jan Kara wrote:
->On Sun 15-02-26 09:11:30, Amir Goldstein wrote:
->> On Sat, Feb 14, 2026 at 11:27 PM Sasha Levin <sashal@kernel.org> wrote:
->> >
->> > From: Jan Kara <jack@suse.cz>
->> >
->> > [ Upstream commit 74bd284537b3447c651588101c32a203e4fe1a32 ]
->> >
->> > Currently fsnotify_sb_delete() was called after we have evicted
->> > superblock's dcache and inode cache. This was done mainly so that we
->> > iterate as few inodes as possible when removing inode marks. However, as
->> > Jakub reported, this is problematic because for some filesystems
->> > encoding of file handles uses sb->s_root which gets cleared as part of
->> > dcache eviction. And either delayed fsnotify events or reading fdinfo
->> > for fsnotify group with marks on fs being unmounted may trigger encoding
->> > of file handles during unmount.
->>
->> In retrospect, the text "Now that we iterate inode connectors..."
->> would have helped LLM (as well as human) patch backports understand
->> that this is NOT a standalone patch.
->
->Good point :)
->
->> Sasha,
->>
->> I am very for backporting this fix, but need to backport the series
->> https://lore.kernel.org/linux-fsdevel/20260121135513.12008-1-jack@suse.cz/
->
->Yes. Without commits 94bd01253c3d5 ("fsnotify: Track inode connectors for a
->superblock") and a05fc7edd988c ("fsnotify: Use connector list for
->destroying inode marks") the reordering alone can cause large latencies
->during filesystem unmount.
+On Thu, Feb 26, 2026 at 08:45:23AM +0100, Jiri Slaby wrote:
+> On 25. 02. 26, 2:24, Greg Kroah-Hartman wrote:
+> > 6.19-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Damien Le Moal <dlemoal@kernel.org>
+> > 
+> > commit 0ea84089dbf62a92dc7889c79e6b18fc89260808 upstream.
+> 
+> Hi, this one is broken and needs (very fresh) fixes according to our
+> tooling:
+> 
+> eddb98ad9364 ata: libata-eh: correctly handle deferred qc timeouts
+> 55db00992663 ata: libata-core: fix cancellation of a port deferred qc work
 
-Looks like going even to 6.18 requires a bunch of dependencies, so a backport
-would be appreciated :)
+Ah, good catch.  My tooling doesn't catch "fresh" stuff like this very
+well, I need to revisit that and dig in Linus's and linux-next better
+for this type of thing.
 
--- 
-Thanks,
-Sasha
+Now all queued up, thanks!
+
+greg k-h
