@@ -1,47 +1,46 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011050.outbound.protection.outlook.com [40.93.194.50])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010011.outbound.protection.outlook.com [52.101.193.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D0336A017;
-	Fri, 27 Feb 2026 19:30:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466BA2673B0;
+	Fri, 27 Feb 2026 19:30:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.11
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772220623; cv=fail; b=BTbVdwNvHSnu9OCJissC1qij59xaX27wxYoO26Hbpvqa4op74s38JnLNfAE2LiSrURuYE78ZoW8vSd++KDPL6tVhKeIvCoM0V7y8+jFu0lNz5SbXiFyO/aViAHd2Ou06IXJ3lX54f9JK3fn3saSRI+6hS97ZS03aUWvvr2L9N74=
+	t=1772220632; cv=fail; b=R+kwQ1phdpe5+FcxQKPDRwNT0jxHFb4tpHq96xBBoGxsNcXpklwx5S2Ummj/V5+a3pNjx+D0cwzvpfCJBPUhk3O55tf656NIbLh3xfgpZGwRLQ+X47D51xP8+Wz7OqtpjkrzE+lAiZtMW7OvTQulTOAGXVNOcQ1z4IZUFlY/eyo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772220623; c=relaxed/simple;
-	bh=ggzxyj3uv3HYeiovhH51SI+JIyx7vl4whEdHK8wbhuM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=MGJJdTE4BQo1Il5F7DE9VN9WMxTJqV2xmApyU+LGsG29w1h2gI/D6B9VZBbP/UVpyrYRj3LbMcamaxthBE4oz38B5l64/NU2VzG7Prb/XEBWWrdGyV65WdgXbPodKmRMGBOUcyhUWGwjCb13VqtVpN1aDwDcbKawXGjzZsNAXaQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=OU7vUOPH; arc=fail smtp.client-ip=40.93.194.50
+	s=arc-20240116; t=1772220632; c=relaxed/simple;
+	bh=6u2oJ7vMws41kPrJuopD7SmDzWk8hPyYpsm6jgm+4XA=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=Yyvv0CxCTGimpEDM86F4hsgVIPrAHk8eWs57bCVa3DP4FWrUwT9AP23fuo9GV8fq8hCPISe+hEoa+wERCOkAEBDjLaF3xWBPooWBDxCJeEd8d6593HqW/QRgc2k/EcIw9GZgjWux8snUNTHSHp6+aigLyqd/71Z9kdhqq4laVr0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=hUWDfUGM; arc=fail smtp.client-ip=52.101.193.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OU7vUOPH"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hUWDfUGM"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ishMngvV5KVbBgO25svOPUDt2rfBNdRjKzna17+LlbsDpTw2zumABBeB+IEGyudUrPU7Lwb5+w3rs1lVrzUfrQ5SV8J2mOaMki0x47YzjWqwv1IuzrKAfnOwsW9RR3/Q3f2+ZE5aY7uw9URfdM2El/5T5+UmvLlDgqnBD366/RMhpN2qszQC/KcIl1kAE6LspzWJijO51hZZDNh0D2/kERKggsZliEmq2CgBBub1odsXu+OZQw2Xj4z3vaXyC/1+NzNZjzFPdz4KZqZIeHRZyevBCN6D+3qwrOGelxfL7RT7bi8SPo3Yv/pv55g/xxDcj/ebOVWK90ufe3gRcIE2uA==
+ b=u1oOulnr/Rw4NVh0n4r3Rous8DQAKGrlzkpCdbPSj1OsY+k1AupXcgX+jc893T971BTtrfNIBMXXtKGiZvOdhQyUIb04wRYl53mduCZ1D/ZXo2W1eIhqupVhkabgJP5oh90sS0rAnvADc7pm2TsXjXgLcemOt7illmi/GQXiv+Pd5fryxqTM8mf6l/C/4JtQOAZRwqsOUU/71frjIMtyzV9lIMUBNmaUYFVIsQ469cl0n8p3hMtkerVXpKelu9CAXxiyjYT+sZJMbHZuRraKP0DBLlPU+OCaKlh5dx5Qsbm+jujBVZnMe5iXZ76XrwhQApj/6eCWlHYmWq5iB4tgnA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Cep9wpFjjjENZYo9frNOu9rE5mF4TEZOjOEPiobVHdU=;
- b=bo55Nw6wNdm5YPPdKmkT4pSgM7Zo7e/UWSv2jtNpnj2WsDdTszb4utyPsKqGEIJZOSUUTemQz33hOUF/pZCya4czi6ALT5dhLRQ8NQgCZSEWCTf0rRk0I1kqJCLuh2Ry8TSKsP/mspZv9E8N0qseIMGGjehC41IFy24g1GNnNk0LwbxWFbxfzaaIm5e3nhJws6ItTEgMiOD3lJHLRHgcTzSbpJ0Y9aSxJhMyd4ksDoqmNvh3rI3uR/m4QnNy3ThAsgrATD01tULA8LiB1uMEVn6oP38JkFb3fJMzU+7TaxIAmM4d/VhBNs2LIIDG40GS+7k15sFfYnikcANsh3xBMw==
+ bh=fF/ICA6H0DvnzO5hRCllROkbnH7iPJRHz/4ifqQaPDk=;
+ b=paoHf0X3G6z42yvM5ac9TIr0AhWYhVEOY+LTHL4nnw+LZrKxBsn+EybIjRLkUFx4xYKUPs+F9dFcaet8RCErybcXdJ8ddQ2JpijqROBWm9YtchuZyrHIZ6GdNvpmPySYPqUBdHwTg9Oe27ARaIFph795L6I0qC+KanQST+/5VgiIvlwQkJ6CGdROiNPiOHOpvfVwOtn080Gby8YlwgmipRUpjNTeEoSEfafhd8AMloDIbvBJCrgXRlH+GFAKmT/t8a4k6lyM2vevew7vyUYqzVaI5EWCkH6814+Do5Q48P4+K64Yl4zFfvPrlojXYPP12ZlAwnOgWDjxru+QdoKaQQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Cep9wpFjjjENZYo9frNOu9rE5mF4TEZOjOEPiobVHdU=;
- b=OU7vUOPH9ZV1o6TsP03AJcfGEQVuNHkaRBNjBRoxr17O3YXIQ6zxlShOZq+2mVYjXJhSX/jfVqu6rLm1kkCE1VAQSMOOP4uwr4nmaEPsDvlH73ZX7mQ/Ew2iri8T+NkiWOVzAnSaTKCXakNTh9I9MBYsPtrXih8+DNg9W38ZHG2WJbQnAD1yMmbHJPZxcAyysLZ981ccW+LGyJiLU95eoCGkIBxapFakq6vz4tXnpuijuWVKz4NVrB6oxwD+NPs48JCJK98wzw/zz4UQQ1hNZqJKStbQlCY0iQlpyMB8xDNX61hPioYXH244stqQCTKSZaPGCBhPX1WyvsPyEB9fcA==
+ bh=fF/ICA6H0DvnzO5hRCllROkbnH7iPJRHz/4ifqQaPDk=;
+ b=hUWDfUGM1PZZpWb21Bc47bG8RBJPxtwyhESMfsNXs+UcDCA0UMN7Yni3ZlUh7D8iK8iV8PyERdIZ9LtU464mbdXyLv5sg2OI7xjL7kYw9RtGbNjpxh6beYjDdE7OTgmK8YDBKdvOZB3WbIy09/4k1hO7PYfqRH+5E7lB2jpWKtigSQIG+EgLqMlXhowSD7kOr/lEZGHl8cK4Mv2qwpNzU+fP9kYpvMx2kuAb98FfysnBt0nDTS/7wqzxpabHE6npc4NRszH1+rBy9UvV4NN1eMSYoGMudNPk8yZqaVleAAIr3Mvb1Wp0QWtmK++XLpVkZIcog3KUeDZtapgMTSh+AA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DS0PR12MB8319.namprd12.prod.outlook.com (2603:10b6:8:f7::11) with
+ by SA5PPF3C36BFCB5.namprd12.prod.outlook.com (2603:10b6:80f:fc04::8c7) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.14; Fri, 27 Feb
- 2026 19:30:12 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.21; Fri, 27 Feb
+ 2026 19:30:13 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.014; Fri, 27 Feb 2026
- 19:30:12 +0000
+ 19:30:13 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: iommu@lists.linux.dev,
 	Joerg Roedel <joro@8bytes.org>,
@@ -50,15 +49,13 @@ To: iommu@lists.linux.dev,
 Cc: Kevin Tian <kevin.tian@intel.com>,
 	patches@lists.linux.dev,
 	Samiullah Khawaja <skhawaja@google.com>
-Subject: [PATCH v3 1/2] iommupt: Directly call iommupt's unmap_range()
-Date: Fri, 27 Feb 2026 15:30:10 -0400
-Message-ID: <1-v3-a1777ea76519+370f-iommpt_map_direct_jgg@nvidia.com>
-In-Reply-To: <0-v3-a1777ea76519+370f-iommpt_map_direct_jgg@nvidia.com>
-References:
+Subject: [PATCH v3 0/2] Let iommupt manage changes in page size internally
+Date: Fri, 27 Feb 2026 15:30:09 -0400
+Message-ID: <0-v3-a1777ea76519+370f-iommpt_map_direct_jgg@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MN2PR14CA0026.namprd14.prod.outlook.com
- (2603:10b6:208:23e::31) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL0PR02CA0106.namprd02.prod.outlook.com
+ (2603:10b6:208:51::47) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -67,282 +64,104 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS0PR12MB8319:EE_
-X-MS-Office365-Filtering-Correlation-Id: dcd3b2dc-67ff-41fc-d968-08de7636a000
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SA5PPF3C36BFCB5:EE_
+X-MS-Office365-Filtering-Correlation-Id: 41cac96f-d7f9-40c1-2d6c-08de7636a018
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
 X-Microsoft-Antispam-Message-Info:
-	WOiHr5lvNN4BBlasoDIS5uW+ijKCoeRPpxzqWOr1wjFQO/vQJaDh1EE4VVfNYc/HhgMzuzRTFpsCfwQKtgvHEikCtZSgVuWoCE+WwM/TgSmfpXL9Sf7nOoCNgq9aoJgyrM+A6YkOu2UByq0z9ERxAQqneEuSaI3HsZYNVVwtdZAm8CX3w1C8Zybc1EI0Jb9oWVJxfASZvq89gKU61YQpyJ3I/xR/kpPCkdr3PRyK+VqfhYk/PGZIAieJX0FUmcsYruPHuppPRJvHF4olyrJ+1VQSAI0hBjvEEWSnkvTqjOAaUins3lM4gji05/ZP3F+cYl4I8lgY3edFzbojtMIeuXHsq6bcEaGSGz7yhZs9f1SKcjyztISEAWpJMkvjxuFsIbq73YR+SjPBt5efPAonwow4LUm1ycQu4f5Zh+Cje9aZeynijbhMf7t6Nb+uF2Tz7Av8vVuyzv8RpjpDmOKKp++EjnALU54Tp5sn6mLY4WHewlh4gmKW8ogzGYNK1NLaczI+bGoaxhCISuSydrCCFAj+qzp6RhNuOVGpZWLltxpeOLS/RWJQFhIBhg6xh2CksJ2HUD0yayzOUNtVVoq4v2E6hrIPtUI7TnrvQXv3SN3nYjLqMTLbWor3436a0W4W7EqU3qSP8Xv6SQobXYTw4+QQ4+e42mW6MlnAKBkcMVsY3T1fVNqm8f28aX8cEGTGnE2SrfNIiWplWEbI14SHuU/r9BJBPB/hBpehWNxu2iY=
+	NyPm+tm56FRaUw57+EM0Ui554xOjF39K4ijvM/30P02iHmRCUxBkQL0SSxB8+mOkRaEh+XZliy1eT8nOnt12urI1XlkWSYBm7IO8j3CB5iKuLjG7jDEbiFIDX6jSQhgAEzuYIO+w3qDlnSwHuMXFEdq3yJaZDFAVeD8m/5g+jTwmGuN91WtX/feMOfE8bNTAspiqISlMfMIP9948wEinokv80o9xDUsIQjbSJr73eiGNhhJARPwVVnQL7vADx0r0prW4W9CIER5d1Nb7KHEwFOEWTpFXxKxKUszAmBA+Nzfr3fyxvSj2cG+N4aZsrI6AGEjmm755RHxgeIwR2uDQTpCmQG9/QKCxrrtCxuOWCSKCKWM8lIoxSDa6/rGz56PX4ECM8TLQNT9pcfcdKZXBS4BfuBiYhbPzWnt6TuT/7iPhUBJ/pjX1FJXhiebcTmIl3qKFJcTF/85zqOIm+QW49l9yiYfUuIqf0XMY6oC1NCIn/0NV6HRzqGtm/KcSrRWObA7LFn+rUhsuvkZBnE5RxiSyLfMnHBhbnS+PrhYhfin9LwTNoYc9JEFDuUylEgaZIn2O7iv7RVaKf88QlcczV0xHMeUj33ydQqclh2UfRfbivv/PSwlkq0RcbbB7akohofh/A6ER2ODq0sPPX1O2a6VcJA52QauIkEKA9Fx1ujuQGn65EgBCzCnI6mWHTAqW
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?AfO+Gkx2+KwmXLlZt1JDmMVmNnZzvQPWBS/PbMdanOah6MxY+AJgDegSEhxA?=
- =?us-ascii?Q?t1ryV65aZFfcfY7lyeZ89D68JzD8H4witnSJA4kKeh2K2QoJ7skLq2MKd6fu?=
- =?us-ascii?Q?sdpSBJrJItnCqxlVpWUCHOHFIjLe8K5DsW6p6aZbasg+y/KIgaoXExAahYE2?=
- =?us-ascii?Q?kQjWQazSXc4sXk1WFTvXEq+o/3SGSARIN4n7sUWn8mRp/Q3VuuIiZpqXYlWd?=
- =?us-ascii?Q?Osto7HD/wIYkbnCwlo+YSn/HH68ACZZUsdtP+A3HLtJL6fzUlLsElTWxtm69?=
- =?us-ascii?Q?FhgYOj2ImnW4RO7uGGsRgbF1VODDS+HBoSD3wwFd91iVYPjPiENluS77KZuP?=
- =?us-ascii?Q?fCsne8QoWDvhksyq7m9zPv3S/kmlNZezpuoilwZuNL0v/4zLFZIUfq56PhOj?=
- =?us-ascii?Q?o79chM8T49h/7NJbORALkuQjVnpQamLzmMayLo8HEPrVfR9H8GBKNCYXQyXy?=
- =?us-ascii?Q?ec0o7gkTB51dV4JpmXuG3CGYHgrThH6J4WcAEAOM7Pwg7lKJj8v1jXNuPz+b?=
- =?us-ascii?Q?lQDckzcZya+okPQtcZuMt/jy09bNnXz8LlvUSkPzWuWe9/yWlziozjLCSqyi?=
- =?us-ascii?Q?uq6vXwcOwzxr2K9K7wNj5L0e8ngHzxMt3gVqAvkcl1WuGAFJyHdylP54ruWL?=
- =?us-ascii?Q?ypMDlM7GE10eCJhVtGLaf1WAwoIn34QEXd/7JvpaaotdSjxyameu1xP+Lf4i?=
- =?us-ascii?Q?I5Ht/EX4Cp5s9scrLryc/QwC90uURuuVc1uUw7jHoKfGhijQgw3RdF8qjhxa?=
- =?us-ascii?Q?syKBhwZmCH9i6Y5K/6sXJ1A4lPah8fCZzSplu01nZkULWn9MZJUDOFZYsi8h?=
- =?us-ascii?Q?kCI4jlPalEUAnPQRr/ovT+c2EOgtkFKTKo2x9wAEsFyV9dWqfQbStWWoDQOM?=
- =?us-ascii?Q?16DyXA98GiIvaIPmiQsU0RWwEGgArfNMfnX0tpUnmWWzVlFCAx5x/Q0d9Zr/?=
- =?us-ascii?Q?5JqY6BPoAj4NuQn6ym6Why7iX4ycaocW5LMUarbNvGBTnfEp3OfH+GrxSIWk?=
- =?us-ascii?Q?1pmRApcQ8MfHFyGq27d7ip0j67ZLSmwQ7/PIskMiLf5bF0i9hw/ExMnVayso?=
- =?us-ascii?Q?4UwcxFvy760Y7YuE7S2cqsSQVW/3XOyLknFVSv8SiJTXWZl1ECJme3eWdjv3?=
- =?us-ascii?Q?GN1JXzvNY+YMxwOE/PsBm2ZC4Hgz2A9l+x6BKRtKzDfwX/wEU4sJRc9nMSYU?=
- =?us-ascii?Q?wEQuWJHlGdXFR6Z/wladHyq/oBQwRP1cTenUeXZY35kn2ZtRKxfhXPd4XWiD?=
- =?us-ascii?Q?bxWug/3ZGyHW5DNyWgKGjMl8AaWaTPpc64LvXX4uFNqCmo25xPJ+xGrx+QEe?=
- =?us-ascii?Q?T5PtozpJmkiABjniljZ2VRZZr5uCZLxsIgFLosw8NmV3KmMuCBUkaWjwMnf0?=
- =?us-ascii?Q?xVlWm6kAK5p0sW9hlco4+BDVXfaKmOPA8bTJD+JfYKpgGUJMnKCcxfko4YHS?=
- =?us-ascii?Q?Idmi/2x4mPZrN5jP5w13QdJG1qJT63msvkfqTZ/uo/mTAzVOQ7iDYAHrDj8z?=
- =?us-ascii?Q?WiePSua0CU0gKJD8498eR/028MgQL8Rkgx+6nHzjnXoLOtafVah8YgJOssn+?=
- =?us-ascii?Q?1mXHwTkggp5CanZEkZKheBgPWNrBttC9p0Vu8BhvLknP6LA/DJAS5ZGiquBn?=
- =?us-ascii?Q?9lnFy7Ta1O3U2ZL8Ww2/qJ6e/4kKlC4HL+srnUEBRxVmzcq9KWDDNoWx8tCX?=
- =?us-ascii?Q?yUpPGBCt3PHQ7jgK+q75dCjynCL9gkHvc7Avpglcq1pGvgsndSX2cbVi6MoM?=
- =?us-ascii?Q?CXtko86sqA=3D=3D?=
+	=?us-ascii?Q?us06K6FexCPUHb5s0doHqJERl4fJg8ayo6oTt65AhSMJgXCUHPY0Y2ONer2t?=
+ =?us-ascii?Q?JwYPIoBZ4Yyw6OZA7e5Q1aIaiakLZTSQ1luIl6OXJ8aezX5AUjiZ6fasZy+U?=
+ =?us-ascii?Q?qmkSRTYKQKjAuWQ/Fkm3YqXDMYtuSzotkjv0IDsYyUG64SvAEwNuhtqu8VXN?=
+ =?us-ascii?Q?RKMl2lTmbSqY7ZW3ZdsAXn7SjFNQI7SHuKY0Y5OxUsQd8H6bwLibOdzZkOGS?=
+ =?us-ascii?Q?L3FDtkrvwT9zYAa4Wb40jjMoohkDyeC1P3Q/akWLdxXNsOEyLY5thHGkvXkH?=
+ =?us-ascii?Q?Sge7B19zn1VnMfPOeDiRWz+HI1Gj/kzAZBSAdK9R8eqwAreKypWwHIZw9Scr?=
+ =?us-ascii?Q?QNIEIp9CtcWXlF6Sv954xQiKHGK2tdB4FvUSmy0cxzMwQTwNweDr4qfhlM+k?=
+ =?us-ascii?Q?SRsOGGcfK3/lk5i564PUbdoSyNASRcVtNqrlxSYgv20UTCJY0B4bmfmK2Tqp?=
+ =?us-ascii?Q?35/xqwteuDC07I3e2jO3V3menT//q7+GkkNrewl+4MXpm/eUJhcGZsVrZG/8?=
+ =?us-ascii?Q?Te5kjdsRYTOMtISAsP4ZJeQKIwU96YImu0JD3fxJ+GDmW+Gt12qKbzlZKgRE?=
+ =?us-ascii?Q?RgQTU1JsynCfro/GpuL1R95bTVCWFSeB4TTTeJSKtqaLD0no29i4XB2KAGYq?=
+ =?us-ascii?Q?SukGu6QeINRuAEjsRlFLUxHZTQrGX4hs/qoBv4k2VCOqWAOgzc/qXR22lPd1?=
+ =?us-ascii?Q?18tKVi0oj/77kBLZJfPhFVUJcRpmBzpKUFVrqOTKrcQPsQ4oIu+19EBFGUSZ?=
+ =?us-ascii?Q?s5V+usctWd12LqajWyBwX5abRo7m/zeLSfdbp2ZkhzFuiRZjb/U0tARIRyyd?=
+ =?us-ascii?Q?GGn8Ke+jFRqa2FqqCjupFnA3erN/Fi3I54GNz8xPTinwVcQs0NoH4s0SmHaz?=
+ =?us-ascii?Q?32g+ZKbZga5KPU3rtZqMK0Xc4WY5vpLaSD/YR2KM1kSdt43S+rRDDRr8PrXU?=
+ =?us-ascii?Q?QmM5QpVyjwytm/E/NAA3929uwuldoxB5qWRgk47tEWPmeK/0mrYskijo258R?=
+ =?us-ascii?Q?IPfhEwhxDH9W1x7n59xh5qqY8puQyVXYOEcVBDl8uJ3/6DKHrj5W0kEdSwCV?=
+ =?us-ascii?Q?hhUeGCEz4P3UGoeUakXXt8OypzNfhHuYWtlhdKJ8mxUFkQZ8sN/hQaRH0x5K?=
+ =?us-ascii?Q?LOeTIrOqI7EofKKN5xwMFubMRfhZwmXv9beMB0OMLPjbiXSym6myQqrJJltg?=
+ =?us-ascii?Q?vtVhDVL189Y2bIex5hOXwiF79G47ox3sjsSIOSpXFXufGh+w2oc9/di/TfXR?=
+ =?us-ascii?Q?krsMBnef2sbnI/lq9q2pfIxYpUDcB4MjmSeiDqAOkM9Hy8AIoRkSj5FpW4uQ?=
+ =?us-ascii?Q?YxMYeX4hm+BNcPnRgZJQaKEuPylVNpu5MhFEhqEINoY2htyKrnF2gg7XFyqT?=
+ =?us-ascii?Q?atRGvJIXaWd/WC1CogMhSA52yzrCBxk64h5UzQvuqKPtl+EVkw93BGXWh4dX?=
+ =?us-ascii?Q?iMJ+P804K1MiSRrTnLXOZ+hyMmVEixIfnq/CFndGvErjrA2mLNkVk4we5n2m?=
+ =?us-ascii?Q?oqJwwcirUfIn2oB8EyW9du6G0xaGQole/vdoGx70++kWTtLw1BvHiPYRbZ5T?=
+ =?us-ascii?Q?9GqawpZJwOYONUu2OslvBxBQ+ANcdRUVVzNCF6NDeV+iXZzm+wQokIBk7ZTL?=
+ =?us-ascii?Q?J5mDPU4fsC0t5eDlTlWaG1rcpMqA5nVlxMOH/eqDQLo9X786lbgAUztjty7Z?=
+ =?us-ascii?Q?SwQTDxouk/8HRC0t+reSolMT/tTBDzTR3fdESqwzMFZjCG7HvK0vL0wn3b30?=
+ =?us-ascii?Q?kcKulO9TGw=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dcd3b2dc-67ff-41fc-d968-08de7636a000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 41cac96f-d7f9-40c1-2d6c-08de7636a018
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2026 19:30:12.2740
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2026 19:30:12.4149
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jswcExgcI0yTcuDHcA/ZB3O/Lj+9UOTGFSvid3DxuNlxbWl8al1uFYoDIrlx/V1y
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8319
+X-MS-Exchange-CrossTenant-UserPrincipalName: xbsEtfH26HFRM1IhJejAF15BFkbIb/BNOzm88RMA/Ct8Q6SgJ7WSosKxh4fKaCGJ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPF3C36BFCB5
 
-The common algorithm in iommupt does not require the iommu_pgsize()
-calculations, it can directly unmap any arbitrary range. Add a new function
-pointer to directly call an iommupt unmap_range op and make
-__iommu_unmap() call it directly.
+Currently the core code has some helpers that use iommu_pgsize() to
+fragment operations into single page-size chunks and then the driver has a
+simplified single-page size implementation. This was helpful in
+simplifying the driver code.
 
-Gives about a 5% gain on single page unmappings.
+However, iommupt has a single shared implementation for all formats so we
+can accept a little more complexity. Have the core code directly call
+iommupt with the requested range to map/unmap and rely on it to change the
+page size across the range as required.
 
-The function pointer is run through pt_iommu_ops instead of
-iommu_domain_ops to discourage using it outside iommupt. All drivers with
-their own page tables should continue to use the simplified
-map/unmap_pages() style interfaces.
+The iommupt implementation of unmap is already fine to work like this, and
+the map implementation can reset its walking paramters in-place with a
+little more code.
 
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/generic_pt/iommu_pt.h | 29 ++++------------------
- drivers/iommu/iommu.c               | 27 ++++++++++++++++-----
- include/linux/generic_pt/iommu.h    | 37 ++++++++++++++++++++++++-----
- include/linux/iommu.h               |  1 +
- 4 files changed, 57 insertions(+), 37 deletions(-)
+The net result is about a 5% performance bump in the simple iommupt
+map/unmap benchmarks of mapped alignment, and probably more for
+unaligned/oddly sized ranges that are changing page sizes.
 
-diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
-index 3e33fe64feab22..62d6ae2a97ba63 100644
---- a/drivers/iommu/generic_pt/iommu_pt.h
-+++ b/drivers/iommu/generic_pt/iommu_pt.h
-@@ -1020,34 +1020,12 @@ static __maybe_unused int __unmap_range(struct pt_range *range, void *arg,
- 	return ret;
- }
- 
--/**
-- * unmap_pages() - Make a range of IOVA empty/not present
-- * @domain: Domain to manipulate
-- * @iova: IO virtual address to start
-- * @pgsize: Length of each page
-- * @pgcount: Length of the range in pgsize units starting from @iova
-- * @iotlb_gather: Gather struct that must be flushed on return
-- *
-- * unmap_pages() will remove a translation created by map_pages(). It cannot
-- * subdivide a mapping created by map_pages(), so it should be called with IOVA
-- * ranges that match those passed to map_pages(). The IOVA range can aggregate
-- * contiguous map_pages() calls so long as no individual range is split.
-- *
-- * Context: The caller must hold a write range lock that includes
-- * the whole range.
-- *
-- * Returns: Number of bytes of VA unmapped. iova + res will be the point
-- * unmapping stopped.
-- */
--size_t DOMAIN_NS(unmap_pages)(struct iommu_domain *domain, unsigned long iova,
--			      size_t pgsize, size_t pgcount,
-+static size_t NS(unmap_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
-+			      dma_addr_t len,
- 			      struct iommu_iotlb_gather *iotlb_gather)
- {
--	struct pt_iommu *iommu_table =
--		container_of(domain, struct pt_iommu, domain);
- 	struct pt_unmap_args unmap = { .free_list = IOMMU_PAGES_LIST_INIT(
- 					       unmap.free_list) };
--	pt_vaddr_t len = pgsize * pgcount;
- 	struct pt_range range;
- 	int ret;
- 
-@@ -1062,7 +1040,6 @@ size_t DOMAIN_NS(unmap_pages)(struct iommu_domain *domain, unsigned long iova,
- 
- 	return unmap.unmapped;
- }
--EXPORT_SYMBOL_NS_GPL(DOMAIN_NS(unmap_pages), "GENERIC_PT_IOMMU");
- 
- static void NS(get_info)(struct pt_iommu *iommu_table,
- 			 struct pt_iommu_info *info)
-@@ -1110,6 +1087,7 @@ static void NS(deinit)(struct pt_iommu *iommu_table)
- }
- 
- static const struct pt_iommu_ops NS(ops) = {
-+	.unmap_range = NS(unmap_range),
- #if IS_ENABLED(CONFIG_IOMMUFD_DRIVER) && defined(pt_entry_is_write_dirty) && \
- 	IS_ENABLED(CONFIG_IOMMUFD_TEST) && defined(pt_entry_make_write_dirty)
- 	.set_dirty = NS(set_dirty),
-@@ -1172,6 +1150,7 @@ static int pt_iommu_init_domain(struct pt_iommu *iommu_table,
- 
- 	domain->type = __IOMMU_DOMAIN_PAGING;
- 	domain->pgsize_bitmap = info.pgsize_bitmap;
-+	domain->is_iommupt = true;
- 
- 	if (pt_feature(common, PT_FEAT_DYNAMIC_TOP))
- 		range = _pt_top_range(common,
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 35db5178095404..f68269707101a3 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -34,6 +34,7 @@
- #include <linux/sched/mm.h>
- #include <linux/msi.h>
- #include <uapi/linux/iommufd.h>
-+#include <linux/generic_pt/iommu.h>
- 
- #include "dma-iommu.h"
- #include "iommu-priv.h"
-@@ -2666,13 +2667,12 @@ int iommu_map(struct iommu_domain *domain, unsigned long iova,
- }
- EXPORT_SYMBOL_GPL(iommu_map);
- 
--static size_t __iommu_unmap(struct iommu_domain *domain,
--			    unsigned long iova, size_t size,
--			    struct iommu_iotlb_gather *iotlb_gather)
-+static size_t
-+__iommu_unmap_domain_pgtbl(struct iommu_domain *domain, unsigned long iova,
-+			   size_t size, struct iommu_iotlb_gather *iotlb_gather)
- {
- 	const struct iommu_domain_ops *ops = domain->ops;
- 	size_t unmapped_page, unmapped = 0;
--	unsigned long orig_iova = iova;
- 	unsigned int min_pagesz;
- 
- 	if (unlikely(!(domain->type & __IOMMU_DOMAIN_PAGING)))
-@@ -2718,8 +2718,23 @@ static size_t __iommu_unmap(struct iommu_domain *domain,
- 		unmapped += unmapped_page;
- 	}
- 
--	trace_unmap(orig_iova, size, unmapped);
--	iommu_debug_unmap_end(domain, orig_iova, size, unmapped);
-+	return unmapped;
-+}
-+
-+static size_t __iommu_unmap(struct iommu_domain *domain, unsigned long iova,
-+			    size_t size,
-+			    struct iommu_iotlb_gather *iotlb_gather)
-+{
-+	struct pt_iommu *pt = iommupt_from_domain(domain);
-+	size_t unmapped;
-+
-+	if (pt)
-+		unmapped = pt->ops->unmap_range(pt, iova, size, iotlb_gather);
-+	else
-+		unmapped = __iommu_unmap_domain_pgtbl(domain, iova, size,
-+						      iotlb_gather);
-+	trace_unmap(iova, size, unmapped);
-+	iommu_debug_unmap_end(domain, iova, size, unmapped);
- 	return unmapped;
- }
- 
-diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
-index 9eefbb74efd087..f094f8f44e4e8a 100644
---- a/include/linux/generic_pt/iommu.h
-+++ b/include/linux/generic_pt/iommu.h
-@@ -66,6 +66,13 @@ struct pt_iommu {
- 	struct device *iommu_device;
- };
- 
-+static inline struct pt_iommu *iommupt_from_domain(struct iommu_domain *domain)
-+{
-+	if (!IS_ENABLED(CONFIG_IOMMU_PT) || !domain->is_iommupt)
-+		return NULL;
-+	return container_of(domain, struct pt_iommu, domain);
-+}
-+
- /**
-  * struct pt_iommu_info - Details about the IOMMU page table
-  *
-@@ -80,6 +87,29 @@ struct pt_iommu_info {
- };
- 
- struct pt_iommu_ops {
-+	/**
-+	 * @unmap_range: Make a range of IOVA empty/not present
-+	 * @iommu_table: Table to manipulate
-+	 * @iova: IO virtual address to start
-+	 * @len: Length of the range starting from @iova
-+	 * @iotlb_gather: Gather struct that must be flushed on return
-+	 *
-+	 * unmap_range() will remove a translation created by map_range(). It
-+	 * cannot subdivide a mapping created by map_range(), so it should be
-+	 * called with IOVA ranges that match those passed to map_pages. The
-+	 * IOVA range can aggregate contiguous map_range() calls so long as no
-+	 * individual range is split.
-+	 *
-+	 * Context: The caller must hold a write range lock that includes
-+	 * the whole range.
-+	 *
-+	 * Returns: Number of bytes of VA unmapped. iova + res will be the
-+	 * point unmapping stopped.
-+	 */
-+	size_t (*unmap_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
-+			      dma_addr_t len,
-+			      struct iommu_iotlb_gather *iotlb_gather);
-+
- 	/**
- 	 * @set_dirty: Make the iova write dirty
- 	 * @iommu_table: Table to manipulate
-@@ -198,10 +228,6 @@ struct pt_iommu_cfg {
- 				       unsigned long iova, phys_addr_t paddr,  \
- 				       size_t pgsize, size_t pgcount,          \
- 				       int prot, gfp_t gfp, size_t *mapped);   \
--	size_t pt_iommu_##fmt##_unmap_pages(                                   \
--		struct iommu_domain *domain, unsigned long iova,               \
--		size_t pgsize, size_t pgcount,                                 \
--		struct iommu_iotlb_gather *iotlb_gather);                      \
- 	int pt_iommu_##fmt##_read_and_clear_dirty(                             \
- 		struct iommu_domain *domain, unsigned long iova, size_t size,  \
- 		unsigned long flags, struct iommu_dirty_bitmap *dirty);        \
-@@ -223,8 +249,7 @@ struct pt_iommu_cfg {
-  */
- #define IOMMU_PT_DOMAIN_OPS(fmt)                        \
- 	.iova_to_phys = &pt_iommu_##fmt##_iova_to_phys, \
--	.map_pages = &pt_iommu_##fmt##_map_pages,       \
--	.unmap_pages = &pt_iommu_##fmt##_unmap_pages
-+	.map_pages = &pt_iommu_##fmt##_map_pages
- #define IOMMU_PT_DIRTY_OPS(fmt) \
- 	.read_and_clear_dirty = &pt_iommu_##fmt##_read_and_clear_dirty
- 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 54b8b48c762e88..7ca648c0133634 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -223,6 +223,7 @@ enum iommu_domain_cookie_type {
- struct iommu_domain {
- 	unsigned type;
- 	enum iommu_domain_cookie_type cookie_type;
-+	bool is_iommupt;
- 	const struct iommu_domain_ops *ops;
- 	const struct iommu_dirty_ops *dirty_ops;
- 	const struct iommu_ops *owner; /* Whose domain_alloc we came from */
+Introduce a iommupt_from_domain() function as a general way to convert
+an iommu_domain to a struct pt_iommu if it is a iommupt based domain. I
+expect to keep using this as more optimizations are introduced.
+
+v3:
+ - Rebase to v7.0-rc1
+v2: https://patch.msgid.link/r/0-v2-973a6bdc820f+693-iommpt_map_direct_jgg@nvidia.com
+ - Rebase to latest iommu tree
+ - Adjust to the IOMMU_DEBUG_PAGEALLOC work
+ - Fix missed trace calls for both map and unmap
+ - Add a comment explaining the level changes
+v1: https://patch.msgid.link/r/0-v1-d7be57da596d+3f8c0-iommpt_map_direct_jgg@nvidia.com
+
+Jason Gunthorpe (2):
+  iommupt: Directly call iommupt's unmap_range()
+  iommupt: Avoid rewalking during map
+
+ drivers/iommu/generic_pt/iommu_pt.h         | 162 +++++++++++---------
+ drivers/iommu/generic_pt/kunit_generic_pt.h |  12 ++
+ drivers/iommu/generic_pt/pt_iter.h          |  22 +++
+ drivers/iommu/iommu.c                       |  66 ++++++--
+ include/linux/generic_pt/iommu.h            |  69 +++++++--
+ include/linux/iommu.h                       |   1 +
+ 6 files changed, 231 insertions(+), 101 deletions(-)
+
+
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
 -- 
 2.43.0
 
