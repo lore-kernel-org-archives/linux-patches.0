@@ -1,46 +1,47 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013027.outbound.protection.outlook.com [40.93.196.27])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012043.outbound.protection.outlook.com [52.101.48.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17D627B32C
-	for <patches@lists.linux.dev>; Fri, 27 Feb 2026 01:11:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D674327991A
+	for <patches@lists.linux.dev>; Fri, 27 Feb 2026 01:11:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772154687; cv=fail; b=cfuAddoEZRR+6b4I9YpQ2RfNciwdgeWrR2XNCeU6HXnOjGzBK+EbJVDoTb2hg0uYI6bAklSXVuZd58GavFXUiIFQdko49c2ar+kQbW8iHvWCOe/BAqec77IVUn4hYbraV9x0p0tlFYiRVEj+dw1Gypc3pKBV4HCopI/a466bGz0=
+	t=1772154688; cv=fail; b=BOGbsux9M3khZHf+tZj19dKhV8N+kMk9CBlViXZfL9ymtn9Npr8TkSn763A0fepXKbUvER8jjuc4dk+ENJaZ+7HjKBWpDM+G3bPzYoeTY6GUTQczXLCTc42kGyDHYIGl8Amf3HtC5adST3rQwpN7w9XWN4a2JZY3Dv/fo2vewXA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772154687; c=relaxed/simple;
-	bh=HfiB/i0zmj2Hj9X81EMQ/CQvCE7HL93oIx/50Fiig0Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=MmPiwTke0vuxP52V0rRGAWfiZDnWwVV5G3dzsOpUTFkQo1hFiZQCvZf5COYZDKG657IK54j5sIDJPKRvqZXqXrj4QQk7TnGvWzhf26DqCxD/IJqX5fE9211KLO8YH/xk949Q9NdWM1RoN+fKHx9CcGcxqALVYFPoMA+q2cOVQho=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=N/4UHdDJ; arc=fail smtp.client-ip=40.93.196.27
+	s=arc-20240116; t=1772154688; c=relaxed/simple;
+	bh=4uBjGl/LodNIRCPQtgGTsGNf+H6crIuhq+9x4iidqk0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=l3qEAtmH3sr9ZuQ2HLVJ73XHEANBpPdWt+nFcZGV9wlzNw5s+T/s1ZGg8VcdKNkrvVAq3tOetJeIB/epzi+6eyg6PeH9kSjHzTVQBBJzOpZIbqwJ5Cw9cFzrxu43kekaIWQku0IvaB87a1yO9HlQasmfX7hwmfYdHWZPwyU7rjQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mHIwIrZE; arc=fail smtp.client-ip=52.101.48.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="N/4UHdDJ"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="mHIwIrZE"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jKXcq0/9ZPF9TxG7p+kugcNerLpKVuSJS8pY0uxmImvrSkgRQo30aUF48wWZHLMElxC1wbuMMq/jf05p+efFRK1IKxhzbAOLvoPYNRBTPWVMUSDv8Z8ymMQtwWu2RAVJlkNW9KNUoYZy7VDVlul70DHhQlI1tXa8DOUWO0lqQX9iggD8hCGZ015AsVC/lJMtAQcJaDkZwL+DIni0mlDjBOKVwgDbF27DnG6jHHy5rmDaoioDHmvSg0C1EzGyliHq8gQazQ8yc2iWqcyGmtdjP1druCk7erSbavt5Afay+R3YnAZapR12M80If+UqL0w6otBZ9LoqKZwS0zQrcQsOkw==
+ b=KiuTNxSWgKHNR/8ULF53uiXNRfvAq6pA8Hh70FjEDtTo36ffIAYuir5OopNaU3x6Vq4YyuStQxj0wUFpToRXg+T7Z9vgnFONYMZUiFmIqHraN76H8dGaf8+b4EkrXwBURwlTtxO93n5M5PuMBNiR28VqwZBMYe+HcZldN7feKRO3shiGhVjMa00MlkPRHBdxzhSnConk0miEQF2CosVsHs2JrXRi7bdYd72/SL6qyLMBPjHVKmwU83Cvpz8NSI+c8XhtdQO/5A7ocwookJAegBzVu6aQ3oxdvrXuhaYo1G2DtyIip6tn7qVc0GSJweWqqk3IicPKGrHO9Xo9DI2FHQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XJMnlo9GhZdyPoMScVXZVjt5j3fVVs3Y6rkc6mUnINw=;
- b=MPvM2l0Ec1N89HhoE06VoF2mggCDkV1/FCVhK3XbWolrcAuSTz0JTiW73Ga+rNOJIc3nc9DbVCfiezAaIKJ2yJg27arBDjhgvW+MQXC2U7K9EuCkAzlvr32XkeXKgaSfePCpEyOEUpt7tF+avexNYW9Ri0J4YZyl1t8Kg3DFhZeZJJicz5tZPPRW+wBvuPp8VnwFNh+nC4hXE9OXtKu83TBnv9IdUcNnYkD8HBMBNR8fy70UyGJTyZZQOjIszWsDigJWV6lBBi61Bqp+KFY2EnFrQlak+skuwheOFRWXQx1tTsFMCoylm6vr4DJ10oLbKiNmCz3nM2QerwbfcE8OFw==
+ bh=iB/UMCvkFtchRBq39pKI7UyFuYS1lcriJZgkIVFUM1A=;
+ b=o+8o7XkzocaFYx2Z+MDEFN62yoHelgOOm7M21M65FxkSS0Gb64e2tUMlaB7JqtiMUO+GB2oAJVUOxFoQCNJ39DMT/PYGqcPEj2FQnC7mnDasb5ATqZrgm2XMV0dXVo0gW6jJDyNydXftrpovzna9aJ9Xe0wbyiSHSdM3Lf0UhrB8dJ3IWYXeLa4U2SFuuUN7PbCOsX596F0dwayEbCP/VBt0S5LmytT6wfr+nbhiEjiOD3qNGK7IUomQDyPfa554XNaSACVK27u81ZdnWg2nZiz99g5W5BwBMZ4aImhyXwJ1uaHFOkrSqYyz5fva5lTPsL8nA37okZxN+8FzLL0zLw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XJMnlo9GhZdyPoMScVXZVjt5j3fVVs3Y6rkc6mUnINw=;
- b=N/4UHdDJxIriLhdzWy4UNM55CsXvbIO4oSYDwX48GiPuzNlM6XjZPd3E1VEI5Au8lXjgyUmKCUPhYD1a7YNPDMTsoYbH0YKDDPWz2C+qBnnBKAfkPaMx9uC5hnpZS4TaRdY3111KJTZdSQpQlLGwokeiXG/wWT+91lsD8b3Sa1nV9CIZHNrB+YyhBAfxhupPSKi6CO5YaCq7809w1aKLR7DxizgbI9vsbPd1GdgmMmFlKsz6j1ZpvpLpB6XW49LdBI6YvvMDEee2gH1bM+rzupsaYUJIxLo3wT8omxBYl3QoZAYZm9CdwXhw120pAQXRgQ2LXGxs7UsVoT2l2zOBaw==
+ bh=iB/UMCvkFtchRBq39pKI7UyFuYS1lcriJZgkIVFUM1A=;
+ b=mHIwIrZEKmBXNQGI2UyQ0Q7tO2dkcdThRK6L+46++BHobEoXk/hwod1fVOin0ncVozKI5Zdu27B6/UerQkw++cIlITX45DFSqDW7ieoGVrrgmOrJg776Xfa8lASKfd+jXARQkEE07AA7PJHE9AzbCIZGTeZxhKFoetMiEq8NGFEopEH9PiThj4y7XxeANTxGrpKGs12lnfjdK0ZGFCXH5l2QHM0Qxh9/02DE6yKbOzpSWy7rBE0l3CxIRpD7mmGBbAhFUJZwgB4RncXErNRp+FCuPLhapJSur2B7Db9Ph6fRZnTGJtJnxQwcsZWa7U8F7Ry59A3atOjIan85NN4iFA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by CH2PR12MB9459.namprd12.prod.outlook.com (2603:10b6:610:27d::6) with
+ by CH3PR12MB7571.namprd12.prod.outlook.com (2603:10b6:610:147::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.14; Fri, 27 Feb
- 2026 01:11:18 +0000
+ 2026 01:11:22 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.014; Fri, 27 Feb 2026
- 01:11:17 +0000
+ 01:11:22 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
@@ -48,13 +49,15 @@ To: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
 Cc: patches@lists.linux.dev
-Subject: [PATCH v2 00/13] Provide udata helpers and use them in bnxt_re
-Date: Thu, 26 Feb 2026 21:11:03 -0400
-Message-ID: <0-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
+Subject: [PATCH v2 12/13] RDMA/bnxt_re: Use ib_respond_empty_udata()
+Date: Thu, 26 Feb 2026 21:11:15 -0400
+Message-ID: <12-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
+In-Reply-To: <0-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
+References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BLAPR03CA0075.namprd03.prod.outlook.com
- (2603:10b6:208:329::20) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: MN2PR14CA0024.namprd14.prod.outlook.com
+ (2603:10b6:208:23e::29) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -63,154 +66,160 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CH2PR12MB9459:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6d50c7e8-f307-4c67-0cee-08de759d1be2
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CH3PR12MB7571:EE_
+X-MS-Office365-Filtering-Correlation-Id: 06fdc60b-540c-4dc3-5941-08de759d1cf2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
 X-Microsoft-Antispam-Message-Info:
-	bFvHCyBJH27ToDTFW/GgEK06/9fJ6rCgVy3k1/YlJzcaJ6SBa6yt4fTKN7IqxVzyye/3cF/FZCuMO9xTLMB9gPOZ8sOO8tPkbWauNE562OXvO+ARon2mrL5C2C6EpKakY26R9jje8ue0nkm5PVpUuHlpv8prWIIzrgxtZv3QDIrdOVR8nVoRNkFY4W03cNtG+Ecp74+f6J+REWI5Zk4YDTnZ6iM1Fy06LAkdfGr/6n7BA/04OEYaovejJASSsNz4OIV70WVlyBgbt70wICxRro4PNfSpR+45ujrUZtUh/ZdNOiIqzEwS913qs/QWoLsaKxhjKb43kH4qD77GjtlGk+/QR2ebqVXXhAOrzS1rifVsEVRAQuAmmvYrVzDm/WYcAHK91EzHj4GSHnBGKsGnZzKUnKZKYV0iJfOSYOtMBmYCIbrSu3cpbjV0zytvfxdZoI1KXgAgjMcugptrmnDmwohH0q0AgiBdw5U1vVBkJ0EywDQtsNFaAJc0s9DK662Xzd5OtCEO25VMyxA43E0G+yd2iBulG4xgQ0TWlufZhuXzL+QcyHO95esMNYfdGtf1nCdeY+9Cs9dviPBXevKbINrT0NalJZIvEnF3o29z4tC6wAheuNxKslCHFaBBrb9WF/aFadmg/GflE3AVEmwtEH12TKHF3EnL86HEIyCYymHNvCnBTCrSQiYC3HqDXb9Le6bohLBGGRxl9p5Naj0KIfAYyPD4roxKX7Xp9z96+vU=
+	jL8nWWm/o7mKyzWIZHBvamuxCEkMUmgf/XoDfvl/LNA9DE6OvRXHxZneiuSCZEch2lf5zVU64G5ZBDg7QUUB+WuV4vVSaL9pDDzb5ixTg76+OGt8+xQ8MUjGK7yOt1QnOZJiHI0aV1qnGcSgSoBD+9etng+fjTFr80LVAs/mnXLZmGrOAbDBeYYKlNbv4nJEsPJH6MBSvLCv/z+YyO2X4/a6Engtn9Jw3ubsz4wGi5wKDWBv/tkZWD20eehWLrqdPBWykxVDO8I08B49onphCKaPQupzUUshR+Xrf6vNshgRJW+XNre5D77sgXda06QRhCTvKcYl6jckRUZjLa0z4qaJz3zFre75VYQ5dLZfN2gN0njt3D7wh/6xhtqkhwOI+IgjJyh03p8CY44Kl+IPdWqu6EBxUUw/L6wsVV/oCai+JqVqJ4V0DBQk9BjfBWPBi3v0a+T71FchEYtz+CM4a6ybVFc2aE1s7HRsbf05X0f470Ov8jDmaPG3PDEqRLlHureqOPvTgCZQ7oX17PLxdXsmIUqlQBXLzA6Pa3G1Qtc28DMmI8D/Jg0lm9HESCJS9UIwEQnOwSPS0UVJoTB1ufPokKsb7sGoLmO9SjAcT4PVhGvMskPZRcNJTuuaSvWFT5tBdk/2OzB0UcItk453gZDywcdZTHkQ3IMvKN4TOB3bCcvngPfABnWRnj44a+Y7tzs3mL1Gt0kG+7HPAIuhIY/6m4OaFa1/wGnQSRzrhVg=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?2/i6gFuFGSgpgFTdAaWMHi3Ey2/R1N81PE33HGHsH7ey7zx4YpSxFXNIsvp8?=
- =?us-ascii?Q?rE1RFaKoNHSB2ryDCS0pZT9hWq8Fl0nuHiBFA2C0Dfw9E3HHaMBHale7rR+C?=
- =?us-ascii?Q?1F0jdr8mn5g0ebruG5Y3VjYKBZL4d84pUa/3EO+wpgKUKANy0/9zWwkWRxX2?=
- =?us-ascii?Q?DkBs2VkIoi5BtJb4yptp3noO0tl8oOmvjIs+45d9CvxKDdqpHWCXnXis8F5t?=
- =?us-ascii?Q?bBoXHOnCPcQp4ACCghajh752d1lU5tLOMjV1pFJW6aLAasMAXzJgjYa970RI?=
- =?us-ascii?Q?4Pxv7GZELS2tW5czYdmzRXRbUadDnlNhASdN9/Xn8NhIEt9MsGY6qSL2tBRI?=
- =?us-ascii?Q?R21QMgYOYxpFeEPAe0h+3SUvjJSBc6mlVjAiEiGGJRS97+epTiE5ZMMtv3ft?=
- =?us-ascii?Q?sA+LpSY3cX/hSmt+JOjgcTbTVPuziR6+gBt+0gLdmF5alkh+OeY0iejR0kus?=
- =?us-ascii?Q?waXNQDul44f5xLLQudce0deqDq5EsmPpxelYyr+ySRXUsT0ny9HYlcOmvOZm?=
- =?us-ascii?Q?U/YhVgdA4VU5yWIjyfVBF0KQKNGRY/vq0T2OddDKHmnE63LNUPHtXapfZrNs?=
- =?us-ascii?Q?sLqFJQ5rXpc8bMUxViezCG3DuNAEFNtBLK2sA2q2sjGKTOWMZAaFpuTyK93/?=
- =?us-ascii?Q?Y1uocIGqhKRlwr6OP9Wa2JxwpEHRaesVkovlW0Xu6jsSsJuc8tRIieGexBYo?=
- =?us-ascii?Q?M+b5G9sjmDJSu4kKWZDefCI9owCrc/6QEIOUHIfqy3TdoyJbydr4oWVxeyjS?=
- =?us-ascii?Q?/J/wOIFb4iYzmJoAI1RvX6uIcftRLSuChBcHdKHa5QLKUNbGKOOAFJ+ADSK0?=
- =?us-ascii?Q?dNaJzOYmGyoUiD9gSgeO7mzum2vP1ifeh4GG1qmqIy7+1BEHYLcs7rtMzzn/?=
- =?us-ascii?Q?8g5G3g6X7rCmDboyPgibmj6EeBfH1ouyUbDo2U76wqnCW43dhAjr6Aavlr1G?=
- =?us-ascii?Q?ZKXQfBZZ26uiZFCsQkjypVdj3IideexaR/TGYmgSghvZPc90rJa28puD5Yyn?=
- =?us-ascii?Q?mjyTVoVeT63RCLiX+QYUS4o2J3MeZrip59MkrS3rpC8QY0wA3otwghSubwSF?=
- =?us-ascii?Q?vxv9f89iIjaeze0v087WgMdC7MdfyLffxsbbXoGKygsurzB0ZWw+blwihnnF?=
- =?us-ascii?Q?vCbqSYQ4mhNVKVB2obajiqAPfV9t3o1VFHqv2amUnEazkCv13oT8chGoKa/D?=
- =?us-ascii?Q?WWy61XYqxrsk9abC9NkObyOBjL7l2BzkL6RHzqSJLXn9J3O6LhNlruviUVdZ?=
- =?us-ascii?Q?GvjT85ujKS/wJeB9TN1wwAqtiKaTsc/5V8Ja0vrW3bgDCFOGZtJf8mFOQss+?=
- =?us-ascii?Q?bV1zszXRDFm8S5LYPho+gFnv5yh6T1kojvqvUiB+46yLfgyeSzp3YRcXaYln?=
- =?us-ascii?Q?CGwOT6FUJC1s0Y8bYsR606G0zDApU5cE5cLg+JAKtIe5MApYMJDSGqeQsUcX?=
- =?us-ascii?Q?vcmKayg76gTbji6B1O/xKV4nvlpFt4KxBZum1L/3+rGnsi9yWPrZ3b2UUqgV?=
- =?us-ascii?Q?gxbQXy7c02p3U/B66UnCRahoFPK7uiaTtD7bo3gh3T5j0HX2M8JNIcZsxalq?=
- =?us-ascii?Q?uZXzVTcjLDzqnGV6SsLwCeNwor0hxo6EOJ55zxEp/KjTqjoP2yFN1nKe5+WS?=
- =?us-ascii?Q?iIKOVcAzgPHKgmOb/I9BZuLCsyNhn2sazI7uVrnaBRJv2M5Isk8u3uEDiNVm?=
- =?us-ascii?Q?HA31565FTIfMgj7rHavjGx1W3b8xvwSAYRjezR9FgMfx3gTFYIUGzfm4gwe3?=
- =?us-ascii?Q?HPSistnIjg=3D=3D?=
+	=?us-ascii?Q?9nVJ71M+5M6KjrSqAoWNWqUX0SxSQKn9lwUY28/lqL9stYXLNd7pjNcfctHh?=
+ =?us-ascii?Q?YUqrUp7FZGyg2b27YY8Lw7zxdRO9NtmhJ3k89BW/P/q+TRHW7EOt/RRBaIVy?=
+ =?us-ascii?Q?vgagazuD8GZl6LfIacGSyN61h25cvhVzkQ39kvECEGykm+OLrMhYtMuqmjPd?=
+ =?us-ascii?Q?kRu+ghtLZKwzssiNiBmdenVhJNQQ6xFtslVbPKpoa3REFhernZOusHgihrZM?=
+ =?us-ascii?Q?sew1DLnSgG3PAXwLkR8kZ7fV6cwmM3R7JwBJEpbW+dn2qwIXlOVzlQzBsykw?=
+ =?us-ascii?Q?+3fhSVmcWYMS5BXUfOf+C3OIiL045V8PO2OF9RvCiejgloP8/BAtFtuv9QCh?=
+ =?us-ascii?Q?uepWojLW7GXXt09uMQUleGIgdtRJWIHhuq80FGJx1GsH4mvDOzO50agRVqAK?=
+ =?us-ascii?Q?lVK0KvtVssjNyJF/3qyACqkcmlVs9IuQWpgk8NHg1bssfyAo3bJ8WWgOp+m5?=
+ =?us-ascii?Q?uDK2oSSiLNBd1ER3yUirMEO+1n5fWGIm8uBPQ5Fd/JK99XB7cQUlM3X4Y58U?=
+ =?us-ascii?Q?CxuKCBd+NBCh/hwOmd9cI/dkx2QGsdbjPfTeuM6Tikb8y9JVk8Y2EXt+b4vu?=
+ =?us-ascii?Q?NVagNVS4sOsNndpQ9JC05nAv53uVUMVJgzy1swBYDAsBVQOavLXubnBEbyQf?=
+ =?us-ascii?Q?IXkT7MtKatPlbat0am+kr3nTEFxyouLf6U5ZJfidKqD63U7lUeywFj6kHJ+8?=
+ =?us-ascii?Q?p8IUqLV1a5lACOScQhM7580efprhqozmXviv917yq+jv0MRxW23p8O/hr6zh?=
+ =?us-ascii?Q?PEziNbbuLZgbY0BoR7yLxSSfT6I8sHt8O2E5IRmYaEY+yt29gVUgCcHlYQq1?=
+ =?us-ascii?Q?2jsvCCcgsqOr3Y34lCuE8kGizT3bLLqHVhsNRcVVTaBiCfWwUyqOUrAR3usM?=
+ =?us-ascii?Q?GqtuAS74243mDi0/hNNywZdSSSZaVwenjy+VrPNCrtljbo8VlGHkYTJx0pkG?=
+ =?us-ascii?Q?L254vCie1JYQkzjs4VgOoRctdjdL92BkbbcJbDgFSJZcanJ1IgtMXau8o6BB?=
+ =?us-ascii?Q?y8S5CG+7ZEen850NJY4od5dj3D5zCKIizyaKpExZTqXhuOSEMBZ3kDYhTXr4?=
+ =?us-ascii?Q?mCRZ9oVzh3eGsKlHEaGNUGygZyRQHRFvAH6e3iiBAoAAH6sk7eKNzuV8aB9d?=
+ =?us-ascii?Q?4XTQv3sVi48GDamlvmuRluBLtx6+KYZswlA1wz5YCL7Z7ucXK7NHGhzpHCDs?=
+ =?us-ascii?Q?gVL9fXUl3zv6XGoEyD/LMsgBCVJsfutGKWGQHLFfPLUdXtpj8OMyWworYDOh?=
+ =?us-ascii?Q?gyJsPjzVTM3Sf+5coeg3vUJbFhBVf7yU1Vv7hEmAvQFpygMp42X6x4SLbPc1?=
+ =?us-ascii?Q?23R7HOIbx9tQ/5OwBCSt4p8rdYFKHxeEUzzP+y8J7dBwg3XejP3o/sJk6xCq?=
+ =?us-ascii?Q?RmWSSYi6CcUJzEQTD+Du3rdYHGyMSHYbos8IxaCpBVatzOz+Q1NyEX7K3T0k?=
+ =?us-ascii?Q?aqFDJoewP9QZvbdQ6i7//PDn8lMw+MpJbjtb6dWSdDpaD2sysz7gYwifzNQZ?=
+ =?us-ascii?Q?wof0ZaJ1cKTJA/LMPC35VztVHv/2ydPjANUNnf4GrNFnotM2lqNN66sCAHZh?=
+ =?us-ascii?Q?rnysC+CrFQQDqAmaKkuwBUv5D1fyX8M04FNI066AiikndyGWYIhmyjxZ7ePC?=
+ =?us-ascii?Q?/uhqpbMu2WtKtABOmzcC3h8UA4KmxDBr7OuYPxJd8wPG1+nFP9josA2HV2zv?=
+ =?us-ascii?Q?TH1xzpiMEAWcbLR0h/fq8oyVXZD5YtZEhGlVwoH52aaHRjoASXcXMdrTOLI1?=
+ =?us-ascii?Q?zKyRIh/Xcw=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6d50c7e8-f307-4c67-0cee-08de759d1be2
+X-MS-Exchange-CrossTenant-Network-Message-Id: 06fdc60b-540c-4dc3-5941-08de759d1cf2
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2026 01:11:17.4327
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2026 01:11:19.1363
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: L4m1epyWSdVS01y18JPKxLofTowxY1CTXEozyVUQx6zIWw2ZAcqfozQI+24eU6mG
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB9459
+X-MS-Exchange-CrossTenant-UserPrincipalName: x3tswtE+TNiI4lJNezeoXrhUpZG3JYskA66YEccRNgVZHOTCP12DMbijXxKeT5Bf
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7571
 
-Add new helpers that entirely execute the expected common patterns for
-driver data uAPI forward and backwards compatibility so that drivers don't
-have to open code these.
+Like ib_is_udata_in_empty() for the request side ib_respond_empty_udata()
+is called on the response side if there no response struct.
 
-The helpers were developed by looking at the entire tree and moving every
-driver to use them, but this series only converts bnxt_re as it has a
-pending series to extend the driver data uAPI and the lack of correct
-compatibility handling will be problematic.
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 25 ++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-This handles both the request and response side of the udata using the
-following general rules:
-
-1) The userspace can provide a longer request so long as the trailing
-   part the kernel doesn't understand is all zeros.
-
-   This provides a degree of safety if the userspace wrongly tries to use
-   a new feature the kernel does not understand with some non-zero value.
-
-   It allows a simpler rdma-core implementation because the library can
-   simply always use the latest structs for the request, even if they are
-   bigger. It simply has to avoid using the new members if they are not
-   supported/required.
-
-2) The userspace can provide a shorter request, the kernel will 0 pad it
-   out to fill the storage. The newer kernel should understand that older
-   userspace will provide 0 to new fields. The kernel has three options
-   to enable new request fields:
-     - Input comp_mask that says the field is supported
-     - Look for non-zero values
-     - Check if the udata->inlen size covers the field
-
-   This also corrects any bugs related to not filling in request
-   structures as the new helper always fully writes to the struct.
-
- 3) The userspace can provide a shorter or longer response struct.
-    If shorter the kernel reply is truncated. The kernel should be
-    designed to not write to new reply field unless the userspace has
-    affirmatively requested them.
-
-    If the user buffer is longer then the kernel will zero fill it.
-
-    Userspace has three options to enable new response fields:
-      - Output comp_mask that says the field is supported
-      - Look for non-zero values
-      - Infer the output must be valid because the request contents demand
-        it and old kernels will fail the request
-
-Since bnxt_re has never implemented these rules correctly and now does,
-provide a UCTX flag to tell userspace about it. If
-BNXT_RE_UCNTX_CMASK_UAPI_COMPAT_SUPPORTED is not set then userspace must
-not use any request or response fields beyond the current kernel uAPI.
-
-Using any new fields is only possible on kernels with the flag.
-
-A series converting all drivers to these new helpers is on github, I will
-send it later:
-
-https://github.com/jgunthorpe/linux/commits/rdma_uapi/
-
-v2:
- - Revise the core function implementations completely to use
-   EXPORT_SYMBOLs and integrate debug logging
- - Have ib_is_udata_in_empty() return errno so it can propogate the right
-   code in all cases
- - Remove debug prints
- - Rebase on linus's tree
-v1: https://patch.msgid.link/r/0-v1-89ea7d615ba4+636-bnxt_re_uapi_jgg@nvidia.com
-
-Jason Gunthorpe (13):
-  RDMA: Use copy_struct_from_user() instead of open coding
-  RDMA/core: Add rdma_udata_to_dev()
-  RDMA: Add ib_copy_validate_udata_in()
-  RDMA: Add ib_copy_validate_udata_in_cm()
-  RDMA: Add ib_respond_udata()
-  RDMA: Add ib_is_udata_in_empty()
-  RDMA: Provide documentation about the uABI compatibility rules
-  RDMA/bnxt_re: Add compatibility checks to the uapi path
-  RDMA/bnxt_re: Add compatibility checks to the uapi path for no data
-  RDMA/bnxt_re: Add missing comp_mask validation
-  RDMA/bnxt_re: Use ib_respond_udata()
-  RDMA/bnxt_re: Use ib_respond_empty_udata()
-  RDMA/bnxt_re: Add BNXT_RE_UCNTX_CMASK_UAPI_COMPAT_SUPPORTED
-
- drivers/infiniband/core/ib_core_uverbs.c |  27 +++++
- drivers/infiniband/core/rdma_core.h      |   3 +
- drivers/infiniband/core/uverbs_cmd.c     |  24 +---
- drivers/infiniband/core/uverbs_ioctl.c   |  87 +++++++++++++
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 148 ++++++++++++++++-------
- include/rdma/ib_verbs.h                  |  87 +++++++++++++
- include/rdma/uverbs_ioctl.h              | 101 ++++++++++++++++
- include/uapi/rdma/bnxt_re-abi.h          |   1 +
- 8 files changed, 414 insertions(+), 64 deletions(-)
-
-
-base-commit: 3f4a08e64442340f4807de63e30aef22cc308830
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 663f452946c782..62286a06db8168 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -709,7 +709,7 @@ int bnxt_re_dealloc_pd(struct ib_pd *ib_pd, struct ib_udata *udata)
+ 					   &pd->qplib_pd))
+ 			atomic_dec(&rdev->stats.res.pd_count);
+ 	}
+-	return 0;
++	return ib_respond_empty_udata(udata);
+ }
+ 
+ int bnxt_re_alloc_pd(struct ib_pd *ibpd, struct ib_udata *udata)
+@@ -898,7 +898,7 @@ int bnxt_re_create_ah(struct ib_ah *ib_ah, struct rdma_ah_init_attr *init_attr,
+ 	if (active_ahs > rdev->stats.res.ah_watermark)
+ 		rdev->stats.res.ah_watermark = active_ahs;
+ 
+-	return 0;
++	return ib_respond_empty_udata(udata);
+ }
+ 
+ int bnxt_re_query_ah(struct ib_ah *ib_ah, struct rdma_ah_attr *ah_attr)
+@@ -1053,7 +1053,7 @@ int bnxt_re_destroy_qp(struct ib_qp *ib_qp, struct ib_udata *udata)
+ 	if (scq_nq != rcq_nq)
+ 		bnxt_re_synchronize_nq(rcq_nq);
+ 
+-	return 0;
++	return ib_respond_empty_udata(udata);
+ }
+ 
+ static u8 __from_ib_qp_type(enum ib_qp_type type)
+@@ -1869,7 +1869,7 @@ int bnxt_re_destroy_srq(struct ib_srq *ib_srq, struct ib_udata *udata)
+ 	bnxt_qplib_destroy_srq(&rdev->qplib_res, qplib_srq);
+ 	ib_umem_release(srq->umem);
+ 	atomic_dec(&rdev->stats.res.srq_count);
+-	return 0;
++	return ib_respond_empty_udata(udata);
+ }
+ 
+ static int bnxt_re_init_user_srq(struct bnxt_re_dev *rdev,
+@@ -2030,7 +2030,7 @@ int bnxt_re_modify_srq(struct ib_srq *ib_srq, struct ib_srq_attr *srq_attr,
+ 		/* On success, update the shadow */
+ 		srq->srq_limit = srq_attr->srq_limit;
+ 		/* No need to Build and send response back to udata */
+-		return 0;
++		return ib_respond_empty_udata(udata);
+ 	default:
+ 		ibdev_err(&rdev->ibdev,
+ 			  "Unsupported srq_attr_mask 0x%x", srq_attr_mask);
+@@ -2375,9 +2375,12 @@ int bnxt_re_modify_qp(struct ib_qp *ib_qp, struct ib_qp_attr *qp_attr,
+ 		ibdev_err(&rdev->ibdev, "Failed to modify HW QP");
+ 		return rc;
+ 	}
+-	if (ib_qp->qp_type == IB_QPT_GSI && rdev->gsi_ctx.gsi_sqp)
++	if (ib_qp->qp_type == IB_QPT_GSI && rdev->gsi_ctx.gsi_sqp) {
+ 		rc = bnxt_re_modify_shadow_qp(rdev, qp, qp_attr_mask);
+-	return rc;
++		if (rc)
++			return rc;
++	}
++	return ib_respond_empty_udata(udata);
+ }
+ 
+ int bnxt_re_query_qp(struct ib_qp *ib_qp, struct ib_qp_attr *qp_attr,
+@@ -3174,7 +3177,7 @@ int bnxt_re_destroy_cq(struct ib_cq *ib_cq, struct ib_udata *udata)
+ 
+ 	atomic_dec(&rdev->stats.res.cq_count);
+ 	kfree(cq->cql);
+-	return 0;
++	return ib_respond_empty_udata(udata);
+ }
+ 
+ int bnxt_re_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+@@ -3376,7 +3379,7 @@ int bnxt_re_resize_cq(struct ib_cq *ibcq, int cqe, struct ib_udata *udata)
+ 	cq->ib_cq.cqe = cq->resize_cqe;
+ 	atomic_inc(&rdev->stats.res.resize_count);
+ 
+-	return 0;
++	return ib_respond_empty_udata(udata);
+ 
+ fail:
+ 	if (cq->resize_umem) {
+@@ -4129,7 +4132,9 @@ int bnxt_re_dereg_mr(struct ib_mr *ib_mr, struct ib_udata *udata)
+ 
+ 	kfree(mr);
+ 	atomic_dec(&rdev->stats.res.mr_count);
+-	return rc;
++	if (rc)
++		return rc;
++	return ib_respond_empty_udata(udata);
+ }
+ 
+ static int bnxt_re_set_page(struct ib_mr *ib_mr, u64 addr)
 -- 
 2.43.0
 
