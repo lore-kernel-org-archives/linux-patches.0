@@ -1,115 +1,86 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5F13290CA;
-	Fri, 27 Feb 2026 07:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611342032D;
+	Fri, 27 Feb 2026 13:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772178735; cv=none; b=Ei8gtOcZywvuE8rkt5F3FFv4+qsTw+UCotahioNqI+IUwHP++eGkQKbgOlmxaqD1PHXLHdxdyXfVZnpgcxjq2KM2Ur2ktnqA5u4I1p0OVYlgyjL2J6Ecz181zhgCoxyobAZOiYRO2uBGab/Ak6oavQtcsG/PU6f8JGeYP9ZGByM=
+	t=1772200078; cv=none; b=FLlJDm/53AQTc4lYnuNetAT+LxnUTr0uWKlLHsXHWUaxwSej3bQdQHG4DEqO+2xefw7IVxeAAz0Qige3YgdSFd/uUUMXkd84zUJt+mSVrg4I0bKdknkNoT34az1Je/cSNc2Biz1UAk6XIo37hkwNhOqTeMAulwCkfukR1esLkNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772178735; c=relaxed/simple;
-	bh=jl4HwSQMMfkphJJTB0pYW8VoNTdR65XwjV+D9dbqKfo=;
+	s=arc-20240116; t=1772200078; c=relaxed/simple;
+	bh=MLYtcfYu30A79SvPiG/y1eWPluHhReqVhz9kxWyFv/U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sWSdtr642majKqyCqSJ9k2Yw3cgvmT3070GfEZaDHAk0pwnjfNCgbBjb+THfGnx6B2jZUgKKv04dCtNTJtAZuPh6MfyHKkq4Phh9OWIYPkf1+nWGqKwuu/q/db9XctzKPr8MlTdhAHjWxPtZj7EMvCGp3fXWRAzcxLjUNm7SlLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Qzth/Xxw; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=L69rxaBGBRDJW3AHYk7cG3irEknRQ3O87XSo15WOz1IFnscBPaHRpE7kTBVWZZ6z8LSBG0rcjIIcSrqQq+kq3PZd3LAXYCnngTFFktvTqDGVscqdSkb896TqgiScJg3LQy9Z3aqQiaCSWX66zAeZUEFrmklR6wv1Gxr7t1wKFwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OBGtOx+A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Qzth/Xxw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1772178734; x=1803714734;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=jl4HwSQMMfkphJJTB0pYW8VoNTdR65XwjV+D9dbqKfo=;
-  b=Qzth/Xxw+jREpr/GdOJSiwuXzDhumQ5dnmJyHhWoVrbj13weREduG2Sa
-   K1vApNZ7DGpPbP0Fjxoeq6gj6vyAoWG7zXkygrShC4KJRGhqp1frOt0Td
-   pWO0uDv+WCzigGfehOG/HOU0+5+xr+M1N4FQmdxOmEcNyredDE/qKWsPw
-   /KvQg8O8MZuke5doyOiNJ3QkI7Zw1xPJVALCg5wbI/ZUq3fj0UmHySlNc
-   ViwXJixKAqNfsTZvdNxsmiTt3bqJzw0KqqaYLXQwrX53dLzwFG5nVMhfi
-   +V+LzoMdHuZdDQUoSgJXV9oeiqpOtnm07CYNzAW0RxyHHCYVT/ISgw24p
-   w==;
-X-CSE-ConnectionGUID: OMsg5BZfQEm/Vxxr1B8pMQ==
-X-CSE-MsgGUID: EJsHTliTRoalpUsxj5xi7A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11713"; a="73301969"
-X-IronPort-AV: E=Sophos;i="6.21,313,1763452800"; 
-   d="scan'208";a="73301969"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2026 23:52:06 -0800
-X-CSE-ConnectionGUID: UwQjJSS1SjCucjyUoHa4hw==
-X-CSE-MsgGUID: 2tSJNPdTSOWT+hvepgKmdA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,313,1763452800"; 
-   d="scan'208";a="221451825"
-Received: from lkp-server02.sh.intel.com (HELO a3936d6a266d) ([10.239.97.151])
-  by fmviesa005.fm.intel.com with ESMTP; 26 Feb 2026 23:52:02 -0800
-Received: from kbuild by a3936d6a266d with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vvsd1-00000000ALB-31GO;
-	Fri, 27 Feb 2026 07:51:25 +0000
-Date: Fri, 27 Feb 2026 15:50:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jason Gunthorpe <jgg@nvidia.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>, linux-rdma@vger.kernel.org,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v2 03/13] RDMA: Add ib_copy_validate_udata_in()
-Message-ID: <202602271548.rksoOQrN-lkp@intel.com>
-References: <3-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OBGtOx+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B45EC19425;
+	Fri, 27 Feb 2026 13:47:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772200078;
+	bh=MLYtcfYu30A79SvPiG/y1eWPluHhReqVhz9kxWyFv/U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OBGtOx+AbijjxToDBlEJUkOvlHJiJ2fDXhtvMvqETX8rA8UYdmT3BeKVfSlKK8gJs
+	 xXaD4tgokcoevWSJBe3g+b/R4WomgsNTelIIfVyJoSuUTdztoYmUKMC+zOLAKZVncY
+	 TMWsVWMj2jwIMi80CCWXEDECOccplUUGe2xwHo82cNYsFaqCQJdKQz6pSiNPGeSSpp
+	 yYnaqqMWXeZB8OEQmODVxl1pQAXwIbENEu4ihAHGP8zvaNk43uA0Z7Qknzobn/EaFg
+	 FWMUWD5ZslevzII39Vpu2+eEv8B4gSlp4UdqYCNjMyRgNiAo21tucTZquHIqDEwx7D
+	 cJix3+L18FAiQ==
+Date: Fri, 27 Feb 2026 13:47:51 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 000/641] 6.18.14-rc2 review
+Message-ID: <0cc404f7-f2be-4e31-bf6a-1c46e9d07b54@sirena.org.uk>
+References: <20260225151847.709818960@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="aFVFkaQu+H9CsBBB"
+Content-Disposition: inline
+In-Reply-To: <20260225151847.709818960@linuxfoundation.org>
+X-Cookie: Only fools are quoted.
+
+
+--aFVFkaQu+H9CsBBB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
 
-Hi Jason,
+On Wed, Feb 25, 2026 at 07:51:50AM -0800, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.14 release.
+> There are 641 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-kernel test robot noticed the following build errors:
+Tested-by: Mark Brown <broonie@kernel.org>
 
-[auto build test ERROR on 3f4a08e64442340f4807de63e30aef22cc308830]
+(I mentioned what looked like a regression on IRC the other day, it
+looks bogus from my investigations - just bad timing causing a flaky
+test to flake consistently everywhere I think.)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jason-Gunthorpe/RDMA-Use-copy_struct_from_user-instead-of-open-coding/20260227-093947
-base:   3f4a08e64442340f4807de63e30aef22cc308830
-patch link:    https://lore.kernel.org/r/3-v2-13af4a900857%2B4f13-bnxt_re_uapi_jgg%40nvidia.com
-patch subject: [PATCH v2 03/13] RDMA: Add ib_copy_validate_udata_in()
-config: loongarch-defconfig (https://download.01.org/0day-ci/archive/20260227/202602271548.rksoOQrN-lkp@intel.com/config)
-compiler: clang version 19.1.7 (https://github.com/llvm/llvm-project cd708029e0b2869e80abe31ddb175f7c35361f90)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260227/202602271548.rksoOQrN-lkp@intel.com/reproduce)
+--aFVFkaQu+H9CsBBB
+Content-Type: application/pgp-signature; name="signature.asc"
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202602271548.rksoOQrN-lkp@intel.com/
+-----BEGIN PGP SIGNATURE-----
 
-All errors (new ones prefixed by >>):
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmhoIYACgkQJNaLcl1U
+h9DnOwf+Pf2wJncW6rWjor9HCwsOvt8czl3NdVfj60kmvy23/00GyGKujDrrpIvO
+Y7nounHl6SnoFsGp5ueIt1Lb/VzYE0IKkq3Fx+VJZ34jpes3XQELZPN0ZLAnwPyd
+CZ9AO9t2s0bIBc1ckyBFrEnBpemzuttElXe4VVlaEy0GXgzfokbC/pWe3LC/Cpop
+eQZXQ7/sgzJwPMWWSAKGChZzui+URMeJT0r/3Fxb6b4TG6a5yJc0ll4UjKrafO/s
+ARkOxcTc8YXfg24NYFlZf4F45MJGcLFw6fC1LRCZJ3k8h/mdpHf0jRVxMD+nCxW1
+BPwGZ8djrrt8XQuUogvFNTUn8DILxg==
+=flqs
+-----END PGP SIGNATURE-----
 
-   In file included from drivers/infiniband/core/nldev.c:44:
-   In file included from drivers/infiniband/core/uverbs.h:49:
-   In file included from include/rdma/uverbs_std_types.h:10:
->> include/rdma/uverbs_ioctl.h:964:10: error: use of undeclared identifier 'EVINAL'
-     964 |         return -EVINAL;
-         |                 ^
-   1 error generated.
-
-
-vim +/EVINAL +964 include/rdma/uverbs_ioctl.h
-
-   959	
-   960	static inline int _ib_copy_validate_udata_in(struct ib_udata *udata, void *req,
-   961						     size_t kernel_size,
-   962						     size_t minimum_size)
-   963	{
- > 964		return -EVINAL;
-   965	}
-   966	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+--aFVFkaQu+H9CsBBB--
