@@ -1,183 +1,145 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011026.outbound.protection.outlook.com [40.107.208.26])
+Received: from mail115-24.sinamail.sina.com.cn (mail115-24.sinamail.sina.com.cn [218.30.115.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75983368971;
-	Fri, 27 Feb 2026 01:39:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.26
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772156394; cv=fail; b=hKWpNznOrpqRXOL+ZI4cqIsixBDXvZT9coPQgiGyl5zLj2KIbde/3t1Y7HiWFZlSwSFxhnSr2GmskNMfjqwYuvjyN9hptX9HyZV79MAspJdyU199k22SV9JpnlraWlWq+eorK73+geKphJ85cC7w8PyhKnnXSegwi+p9xKp52nw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772156394; c=relaxed/simple;
-	bh=inyR8nDqeqqaKNBpMcHOg1eo7zb/JrdjPRhnUpA0FkM=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Koyip9y9vqAaTtNFHkGe96cCTEd0iRqKtX1ATOxezCCE4WSmsf2M0p5HSyNcEhZpY3aIhTXUJ+bpQQK1udV+dKvMgL4yq0elb+xC10UMh1D9DTkEWckUXZeHATuYPXn2B4YtX9cBYASnUtqBKVEt5gTio2UofdkQJGUkf8iPnVQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=XOTHE1bL; arc=fail smtp.client-ip=40.107.208.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCC62EA156
+	for <patches@lists.linux.dev>; Fri, 27 Feb 2026 02:18:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.24
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772158737; cv=none; b=tVcv2H+XvOMm99nCWoqghRmdjxAGPXmKYcXFZECMmgIf3Ikugx6bJeyimBuhWN1qWHrfvu7qonsJofg9iEDgsyviBD5qyFRyZAwB2FGTy7BdMsPAtGaWTe6+HrUWixKVNklNxi8ROwF1Vu9Om3cl9tNwaSjOT9HeYNIkT5ANOqw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772158737; c=relaxed/simple;
+	bh=yoBeoacMbK1NAn82kU0drfaAQYOiincR4WZfeQfH/ZE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ClvqnRE2N08bewknXoqxEIwJM4BKWQ5Ra65lgTXhg9jRZLO6dmvv/XVIYiMVDfddqn9FwVClaSX18NuaSLWA7uzfQnHGNoKfXhigaK0cRlBJErVxD95rSTy7jLQ1wLi0LF94yJOP+ZDn4Vw1iJA2iafgJBNa4TC6UEK8AfVn+tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=CmCFPc9k; arc=none smtp.client-ip=218.30.115.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="XOTHE1bL"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ygBWG0xMN66E/S0/Voct5d+rIgrHmpGf9fKiP2OkYTgfYHXXLMWDpkugaCbGCVBNU8YJX1PRRbb5Hly7WK4eBvQgiT9gASfN9DaKOUh/dbC9mOsB3yx1Kbh34SrNiqZQKhqRdQ+n4ULNP3BZd+Ve1xfAgxL7yyBywrUsTUnDo3Pt+lJl642e1Epc8+U8L4FiRVptJoTsMc5/gP7ArvYoCJ11oq3lxy29q03fYpm7UK0CJanjW6ZRcZ3L6zsZmI+ezB44QyYSjWQVG8MnWfHO3YqnBaNcWCRmmxjz24S6d1D5r59YA7kPEpYxUHro83Fp3DoeL4HtC2C/yBlNI2nEpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QG3KPo2Zi7zpNxDyimrJHl1x2mFjafcrqYjxpOuhn/Q=;
- b=LjsDLG9WOhiFfQ5qyaipRJNi44Dyc7RBYms90AVw5BFAuoOgcl+Ca12n0x+K4+N1JqzVPwt++3pRLs1kNMkqFezbVhxBrIMaz5NhbB7pEiYb2My9OhkK4HCp6kI+EweK+vNx4l376+0lXkkaECuIh5KZCRfbuRgmAU6v1QKp7Z7PldfZ+IPK1VRC+uGQrAVOwCTLAmh9FT6k82JwGMi8+TFIOUhgZOAUCCJgKTdsfjJKjym1gtQ3hMxNN4GFCOS/QbxgaUZsgWFk6AilIIDdquqxOwnemes/8Ollvq4TP5ldDxCpSPK+zLkUSKYLQfbpdTlIKjTxFdV4U64fnFE3ng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QG3KPo2Zi7zpNxDyimrJHl1x2mFjafcrqYjxpOuhn/Q=;
- b=XOTHE1bLSdQS8+zAhREyEFpkfv2midUsRY/+7qv4Iptu2cw2Uhz2kJcVlDAjGtu37C99XhN2pcXGgXopk9aicWOj2NeBHR5QpsYIDhJjaGHN4Cwge/S4/r/pCoOu2+PvrCkm1mep94CJdD5Wr9QpTVZbkWKUZPe+JuSIJxzc4+A=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
- by SJ0PR12MB8168.namprd12.prod.outlook.com (2603:10b6:a03:4e7::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.15; Fri, 27 Feb
- 2026 01:39:49 +0000
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::1e6b:ca8b:7715:6fee]) by CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::1e6b:ca8b:7715:6fee%4]) with mapi id 15.20.9654.014; Fri, 27 Feb 2026
- 01:39:49 +0000
-Message-ID: <c6ac32f2-2531-4bd0-abaf-ff76e9cc864e@amd.com>
-Date: Fri, 27 Feb 2026 12:39:28 +1100
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v8 07/15] iommupt: Add map_pages op
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Anup Patel <anup@brainfault.org>,
- Albert Ou <aou@eecs.berkeley.edu>, Jonathan Corbet <corbet@lwn.net>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Justin Stitt <justinstitt@google.com>, linux-doc@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-riscv@lists.infradead.org,
- llvm@lists.linux.dev, Bill Wendling <morbo@google.com>,
- Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
- Miguel Ojeda <ojeda@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Paul Walmsley <pjw@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Shuah Khan <shuah@kernel.org>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Will Deacon <will@kernel.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- James Gowans <jgowans@amazon.com>, Kevin Tian <kevin.tian@intel.com>,
- Michael Roth <michael.roth@amd.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
- Samiullah Khawaja <skhawaja@google.com>, Vasant Hegde <vasant.hegde@amd.com>
-References: <7-v8-d50aeee4481d+55efb-iommu_pt_jgg@nvidia.com>
- <fc4f0354-4e6d-452d-abfb-fe24e53253a2@amd.com>
- <20260117154347.GF1134360@nvidia.com>
- <bc6817bd-4aa5-4033-b89d-88fef637de65@amd.com>
- <20260226150440.GB5933@nvidia.com>
-From: Alexey Kardashevskiy <aik@amd.com>
-Content-Language: en-US
-In-Reply-To: <20260226150440.GB5933@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SY5PR01CA0087.ausprd01.prod.outlook.com
- (2603:10c6:10:1f5::9) To LV3PR12MB9213.namprd12.prod.outlook.com
- (2603:10b6:408:1a6::20)
+	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="CmCFPc9k"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1772158733;
+	bh=+ll0j7P6gB1YHU/QPLWIwnmbPeyItOm5mPcLbuIqgOg=;
+	h=From:Subject:Date:Message-Id;
+	b=CmCFPc9kxehtk8qmyUafg9Q0/afge2kGUZcr1UatquCGLepbemM3ESSRfXaf/eSWR
+	 s9irHLswEDSUjSKqhpUB3JVFSaqgKh1NlNr5Q6Hbu+zDVbcftx9I9vK6rC2FzxVBjf
+	 3sVetoxQFbdoWvAl1dEoQoeHqhAlAYf30ndYYR1s=
+X-SMAIL-HELO: NTT-kernel-dev
+Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
+	by sina.cn (10.185.250.22) with ESMTP
+	id 69A0FF0700000E95; Fri, 27 Feb 2026 10:18:50 +0800 (CST)
+X-Sender: jianqkang@sina.cn
+X-Auth-ID: jianqkang@sina.cn
+Authentication-Results: sina.cn;
+	 spf=none smtp.mailfrom=jianqkang@sina.cn;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=jianqkang@sina.cn
+X-SMAIL-MID: 5772687602230
+X-SMAIL-UIID: BCC5C971CE1645018EB779524CAFFB85-20260227-101850-1
+From: Jianqiang kang <jianqkang@sina.cn>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	axboe@kernel.dk
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	asml.silence@gmail.com,
+	io-uring@vger.kernel.org
+Subject: [PATCH 5.10.y] io_uring/io-wq: check IO_WQ_BIT_EXIT inside work run loop
+Date: Fri, 27 Feb 2026 10:18:47 +0800
+Message-Id: <20260227021847.1242260-1-jianqkang@sina.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|SJ0PR12MB8168:EE_
-X-MS-Office365-Filtering-Correlation-Id: 81792bcf-b0fc-473b-3328-08de75a117f3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	esGhj8Tfq90sFgzjoGS5/uNvt4KCgTcfGVja7tyt3DOAoNrSz+nOuGrp7UPDGxXhfhGm/FqdgzPa6Gh+XEgmk/N+sUxXjPpPa7miHY+WW7Dxlqn5aQRnVnrqijm3giMOzwdko7Rsqa7uBy7/ASQ4r2668nZ5v2XzSmL3ePX50a/zNjda38DkGt0HrQeLb9e88C5AHpMoP4F899HJma2TwoURyR7CNkXFczpiUaarZWD8gH04eeb52VXxNwsym5dlU+9xHfTdrNe9Cvxik8vX4Toez24LslDgWwi9Ve82nrVXmYwxqJBTWTMTQEVQQNlY6VqrVWZDDDznhsyGEK2y9uGoPob2OP+OKoKFv7HJPTXCbCnGswyxc06EZ7049FTe9M1P8HLTrvWC0ZcWz1552PbjMD0x3gJLHiitdenSpRiIq/eUsiavcGP/P//s0OfZU+KDN7mst3lqS71WFiLq4bSACRfrDWbupK7zo9D4IF4w6yFUFLv1U7Ui+IDCt3dDP1dLDI1MPcb1rcZYCVVDdttS0AvV6A58c2P4b1D+qR2FoCE9umCcNTqLwxL0K5ZPgvCr3fMYHocwYSTxep8OA/1sr53EHlk2hq92skrcwWhbv4k50pLT3+ww1xx6GLY+oh7AzsYwsLmPlaFavQJ93N1I2TAXS//MvZFa6QjGj2CdhFTOwqDfuD1uA2BEj1ZX
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB9194.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Tzc5MmZqalVCRWRzVEcrNmV5Y0l6Sk9Wb1V6T2txWS9STE45RUJibXM1VThn?=
- =?utf-8?B?TTRzNGJYelJaU3JzV3FZOWhTRDI2Uk8xckNXYnZDS1hXRElXMHlwYVJMcEJ6?=
- =?utf-8?B?OUpQc3hNVWFnWHdpQnIzWlZGSDhvSVVDRFdpNzhvSGVWTGlNdEo0WmhiWVh3?=
- =?utf-8?B?eTF4aDRrOEZoS2JCTmF1OGw4MCtMcHloODc3eFROZktzZDk3Q2ZMSVNkdXI2?=
- =?utf-8?B?dHFFbzRTd0pMbXJZNm91QjBmOW5EWThISFV3Qk9ONGJjYlpwZFI2am92UGhN?=
- =?utf-8?B?MWl4cklYT2lPOGtLMlNiZzNVa04rZjlXZlNsdXBCeTdRU3dPQTRUeXFjQnht?=
- =?utf-8?B?ZHZwYWJSUW5sZXAyYlRnc0pzQUxiWHYxNjdkWExuRTNGMU9HT1BqOE56MGp6?=
- =?utf-8?B?YjZoUXMvNStpMjU0NXdsWnBXRUNVbUFiZm5Oc0Rxdk80YmZWSFNBLzlvS2lu?=
- =?utf-8?B?L29XTlRxS3lTVmhZUjNWT05rZ2FvNTVRckF6dkYzcW03KzBSSnZQMEZtNUgz?=
- =?utf-8?B?NDlvWVVybXlSZm1xeUkzdVU0ZEpQbzFPTnFSMGZFekdWT2tJVzF0TFBHeEty?=
- =?utf-8?B?WEhRNXp6TDZDY1E3N2JVbVpVSkx2K2h2c09HTVQvR3pKSkVHa1BSQ2VDeE9p?=
- =?utf-8?B?VDhnbVVNUFJ2ZnNQRjlqMkFYUjkxdEZpNHJQMTltc3dmOXR6RWdIVUdtUEsz?=
- =?utf-8?B?WHRoZDZUeWlCbkJvVWVyLzNqTGptS3Nia2wzMThxQldxUU0wT3RwZHZVS2dw?=
- =?utf-8?B?VTZRSk03SU1ZR3NHVmNtdE5tZ2pZdVFRTnZlV2l1ZnNaUzM2RHBYMXZXSWhW?=
- =?utf-8?B?T09zNDNCN0tXRXk0UGQyaHdjcWRWdFJ4MW5SNmpZMDlKOTlmbXRjdXlCNm9R?=
- =?utf-8?B?TFFqRUxNanVveUswSmZpYlFZamVkNUVHOXdUU1pqM0dqc3NteUlnZ1J2dnox?=
- =?utf-8?B?QTNpeG1kWjBPbDhiZlRwdnZjUEp1aHlEUk1NMjR2eE10QlFUZ09ibEdRVFFP?=
- =?utf-8?B?RE55QXpYLzdIckhCZEpVUUovWDlNRFJoK1kyZmZFSjlpOUI3R3lFdDFPbHpF?=
- =?utf-8?B?dnJtN3lmZFhBcVptblBWSU5WT2JwQmp2NVh0YlowQ1dyQmk0ZTd3MjNLZmkv?=
- =?utf-8?B?VWF4b1BwY0tySFFSbEtOL2ZvZTlpL2tYOEc4Z0l3ZUU1ci9sM0VMNHNzMGZK?=
- =?utf-8?B?R3NKWXluODlsaXlXL3RadzFvVktvME5zRDV1NmlRZGV5ZEZVSDN5K2syZ0w0?=
- =?utf-8?B?d2QvM1I0Q3duVHlyVkJ1cFpXcTJWNHBFUkxFMlZkaS9CUUlZYXYxNHlmRFZo?=
- =?utf-8?B?eFBLd1lGM2Q1d0QvUXhLZ3dSVjA4RDNWYXV5a3ZqZmdEbE96ZHpyRUR0WE5t?=
- =?utf-8?B?UEpNV3NIbFdyeDYyYmx2MGlFOHJQMkp0MGlob0lmYmxuSzNUeExvdzQzNnN6?=
- =?utf-8?B?TFJFL08xbXFGd3FiNUNvaGF2ZWcySHhNY0xVVlZleGxiNTdHQXV5ckhZRnNN?=
- =?utf-8?B?MnhzS3BEbzA0dXc1czAwUktjeTRHQmxWcGN2UU14cWdXRHpVdnRabGtkWjRz?=
- =?utf-8?B?NjRGRUg3c0JBb2lSanV4Y3hobDRmV3hGdlMzTWxNTXA3UkxuOC9SeVdKcUpl?=
- =?utf-8?B?ek1CM01YcUtIZWd1WisyNlRwMTVYSWQvSDY5V1hPSFoxV2wvMEFxekUzeWo3?=
- =?utf-8?B?VWhDSHMwY2NtaWRVU2diQW1LQ1NEN0Q0OE91R2ZJU0JPa2txM2Rwdml6cmJM?=
- =?utf-8?B?YUYrdytJMU8ya2JUM0Y0ZnYwcGpQdnZ3VlpROWdvelNPV09KajdJY3VwbUxW?=
- =?utf-8?B?NFoyeGxYSFZQOXM2Q2Q1eE5BZXVWMFZrWVRSSUw3QjA1ZWpRcUJwdXF1cnJO?=
- =?utf-8?B?Mm42TENkdTdIblc2WmRFYmljUDZ6SDdFYktjSFNpTXhsTURsaDRRZ1ZpQ1lo?=
- =?utf-8?B?Z0k3aU1sTkt0Z0Yyamg0a2RMdDlhWUVuQXlzT3Vqa1BFVGprdDM3OGVZNGRX?=
- =?utf-8?B?cVE5M2szNERVdjFidjhUMWdsdHZIN1FYQXNDc3B6WXA2VE5vRitZTUthTVhT?=
- =?utf-8?B?cjB0S0duK05OelVremN3UFF2RS84bFR1ZWFwS1M0WUs4bEY2b3FFL21NWDU2?=
- =?utf-8?B?MS93Y1VRK3lFa0Jnd09QRHllQUJmOHhPSlAreDA0b016MmYva0lUS21xMnEx?=
- =?utf-8?B?VCtPeWhraFJRZDJNYU04YmNHZHhOZHpwck0yRlJGcjlUQTIrSUhqRVdnNU1H?=
- =?utf-8?B?Q0FJZDVyOW9ZaGI5OFpFUFNYcmpPMUhKY2FWUmg3YmJNZXlvQzYwWXVvUVpV?=
- =?utf-8?B?SWV1WEtZL2laYUdBVC9TakdoY29GRTNVNEtOazBZTEJmbU1nZUpyZz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 81792bcf-b0fc-473b-3328-08de75a117f3
-X-MS-Exchange-CrossTenant-AuthSource: LV3PR12MB9213.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2026 01:39:49.0069
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lSeYLy/78UNwtW1c2Zk2ZEFTbjSE+wqOFi9RBeqC9HdHnaii28ow63WFN9mI7dZasTgaCs4V0SnirfqFzSOs1g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB8168
+Content-Transfer-Encoding: 8bit
 
+From: Jens Axboe <axboe@kernel.dk>
 
+[ Upstream commit 10dc959398175736e495f71c771f8641e1ca1907 ]
 
-On 27/2/26 02:04, Jason Gunthorpe wrote:
-> On Thu, Feb 26, 2026 at 10:11:56AM +1100, Alexey Kardashevskiy wrote:
->>> The flow would be some thing like..
->>>    1) Create an IOAS
->>>    2) Create a HWPT. If there is some known upper bound on RMP/etc page
->>>       size then limit the HWPT page size to the upper bound
->>>    3) Map stuff into the ioas
->>>    4) Build the RMP/etc and map ranges of page granularity
->>>    5) Call iommufd to adjust the page size within ranges
->>
->> I am about to try this approach now. 5) means splitting bigger pages
->> to smaller and I remember you working on that hitless IO PDEs
->> smashing, do you have something to play with? I could not spot
->> anything on github but do not want to reinvent. Thanks,
-> 
-> I thought this thread had concluded you needed to use the HW engines
+Currently this is checked before running the pending work. Normally this
+is quite fine, as work items either end up blocking (which will create a
+new worker for other items), or they complete fairly quickly. But syzbot
+reports an issue where io-wq takes seemingly forever to exit, and with a
+bit of debugging, this turns out to be because it queues a bunch of big
+(2GB - 4096b) reads with a /dev/msr* file. Since this file type doesn't
+support ->read_iter(), loop_rw_iter() ends up handling them. Each read
+returns 16MB of data read, which takes 20 (!!) seconds. With a bunch of
+these pending, processing the whole chain can take a long time. Easily
+longer than the syzbot uninterruptible sleep timeout of 140 seconds.
+This then triggers a complaint off the io-wq exit path:
 
-The HW engine has to be used for smashing while DMAing to 2M page being smashed. It is not needed when the insecure->trusted switch happens and IOMMU now needs to match already configured RMP.
-> for this and if so then KVM should maintain the IOMMU S2 where it can
-> synchronize things and access the HW engines?
+INFO: task syz.4.135:6326 blocked for more than 143 seconds.
+      Not tainted syzkaller #0
+      Blocked by coredump.
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:syz.4.135       state:D stack:26824 pid:6326  tgid:6324  ppid:5957   task_flags:0x400548 flags:0x00080000
+Call Trace:
+ <TASK>
+ context_switch kernel/sched/core.c:5256 [inline]
+ __schedule+0x1139/0x6150 kernel/sched/core.c:6863
+ __schedule_loop kernel/sched/core.c:6945 [inline]
+ schedule+0xe7/0x3a0 kernel/sched/core.c:6960
+ schedule_timeout+0x257/0x290 kernel/time/sleep_timeout.c:75
+ do_wait_for_common kernel/sched/completion.c:100 [inline]
+ __wait_for_common+0x2fc/0x4e0 kernel/sched/completion.c:121
+ io_wq_exit_workers io_uring/io-wq.c:1328 [inline]
+ io_wq_put_and_exit+0x271/0x8a0 io_uring/io-wq.c:1356
+ io_uring_clean_tctx+0x10d/0x190 io_uring/tctx.c:203
+ io_uring_cancel_generic+0x69c/0x9a0 io_uring/cancel.c:651
+ io_uring_files_cancel include/linux/io_uring.h:19 [inline]
+ do_exit+0x2ce/0x2bd0 kernel/exit.c:911
+ do_group_exit+0xd3/0x2a0 kernel/exit.c:1112
+ get_signal+0x2671/0x26d0 kernel/signal.c:3034
+ arch_do_signal_or_restart+0x8f/0x7e0 arch/x86/kernel/signal.c:337
+ __exit_to_user_mode_loop kernel/entry/common.c:41 [inline]
+ exit_to_user_mode_loop+0x8c/0x540 kernel/entry/common.c:75
+ __exit_to_user_mode_prepare include/linux/irq-entry-common.h:226 [inline]
+ syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:256 [inline]
+ syscall_exit_to_user_mode_work include/linux/entry-common.h:159 [inline]
+ syscall_exit_to_user_mode include/linux/entry-common.h:194 [inline]
+ do_syscall_64+0x4ee/0xf80 arch/x86/entry/syscall_64.c:100
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fa02738f749
+RSP: 002b:00007fa0281ae0e8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: fffffffffffffe00 RBX: 00007fa0275e6098 RCX: 00007fa02738f749
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 00007fa0275e6098
+RBP: 00007fa0275e6090 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fa0275e6128 R14: 00007fff14e4fcb0 R15: 00007fff14e4fd98
 
-I want to explore the idea of using the gmemfd->iommufd notification mechanism for smashing too (as these smashes are always the result of page state changes and this requires a notification on its own as we figured out) and plumb that HW engine to the IOMMU side, somewhere in the AMD IOMMU driver. Hard to imagine KVM learning about IOMMU.
+There's really nothing wrong here, outside of processing these reads
+will take a LONG time. However, we can speed up the exit by checking the
+IO_WQ_BIT_EXIT inside the io_worker_handle_work() loop, as syzbot will
+exit the ring after queueing up all of these reads. Then once the first
+item is processed, io-wq will simply cancel the rest. That should avoid
+syzbot running into this complaint again.
 
-> My draft for cut is here:
-> 
-> https://github.com/jgunthorpe/linux/commits/iommu_pt_all/
-> iommupt: Add cut_mapping op
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/68a2decc.050a0220.e29e5.0099.GAE@google.com/
+Reported-by: syzbot+4eb282331cab6d5b6588@syzkaller.appspotmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ Minor conflict resolved. ]
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+---
+ io_uring/io-wq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks!
-
+diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
+index c5d249f5d214..926890f5086e 100644
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -554,9 +554,9 @@ static void io_worker_handle_work(struct io_worker *worker)
+ 	struct io_wqe_acct *acct = io_wqe_get_acct(worker);
+ 	struct io_wqe *wqe = worker->wqe;
+ 	struct io_wq *wq = wqe->wq;
+-	bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+ 
+ 	do {
++		bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+ 		struct io_wq_work *work;
+ get_next:
+ 		/*
 -- 
-Alexey
+2.34.1
 
