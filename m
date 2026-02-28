@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3173834A3AB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E440434A3AB
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302668; cv=none; b=DwCA+1c/wuTijSGW1JTedEecpMi1Xx3kxySCdwxhubn4xEZ99EvFgLQh+sR2mu5neD4g4Tkq5uy9zk8SIyjMFwO7fflRDbbsAvPICunBJWB18QVLcKsq2h30uryScYxPoCDbQOpBvEjo3bRtTB3x0zoBlksZUR3nPbLEDj1AOWw=
+	t=1772302669; cv=none; b=J1RHZGweBYDFliZopNhuJKTewKYxUUFp7j/IHhcLyyHjButPcYhHdxapKmspSv8RclpszGgvTxOmSzYd5z3pbG1XAJBwaYdeVT4k3gHM3BuWLcjJakLKu5RxCeXNGLyasNu1xLIzmHRPti+2eORr45HkcKtNwEUEUMbNTW7lZUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302668; c=relaxed/simple;
-	bh=xDaX9oiFMsjUA0rDPMJ4cZdWFw9xgX7mRXhjYX4NcBk=;
+	s=arc-20240116; t=1772302669; c=relaxed/simple;
+	bh=ilTWDM8sYpRaPyj3U99FjkHB9tfSK9FPBoVNkPgjEgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2VQabY8r1ket4nmFZc3psN7rasAAtzKG2Bvapn8MdDI+c7bdz4n3oIqNGkvO7ZEKyI/3Uh7vM1ZiiGQVXpN72ZUhRdqeOQ6lgV4eca5awqF6NAb+IOp7EBFcfMIqsIghp1Q2+hmM9bbFi2geZKXZl40Cx/ox7Qe+U8W/Zqm7wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cJkI6ktd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GrF0LloLYDXShMyWwntQ+KGhA2gyo77MEYXLdwT3fD/iIClg5BFJENVLC80qAIrpCK/5MVJqsRSG9xtI6iFySu0Gp7YtrG0dHz3Lbga/xnN96cvqMpZmQbkaFeNO3lxyueG0h/fFs1+K3IIVHRWlM5Uy84cdCafBCKW4y4lmjis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SLQ/4XPt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cJkI6ktd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94527C19424;
-	Sat, 28 Feb 2026 18:17:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SLQ/4XPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A44C116D0;
+	Sat, 28 Feb 2026 18:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302668;
-	bh=xDaX9oiFMsjUA0rDPMJ4cZdWFw9xgX7mRXhjYX4NcBk=;
+	bh=ilTWDM8sYpRaPyj3U99FjkHB9tfSK9FPBoVNkPgjEgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJkI6ktd7dyov7VuN6hZIcGYNRaFiiwxyemQ+NUgZnU+NvMtQWBmgZ4xu0o3dLYdF
-	 bZK/roO1Amp1ieqzD5854p7v6rBK2EL6wE8fDIpLk/MISqKkbd5Z40haFq6YTUVgd5
-	 9pj840pMLZZc0TJDTIybfQiCV9d2CgOBlWrBG7DXiVbKaAKWMpel0PaHBJWL/+3zQa
-	 OAdmsbDT9qJTYs/OdqitZw0gljYUTYHEyoaWuJsEe/k5gMTi3wCUw6ExQxqFourFBL
-	 isSA6BQ4fhfg8E7C9beBI17eTH7qIGfvFc5rO75sfgvTz23B3N+0rt7THuuPCBbSBl
-	 ryEsxFD3eTQkg==
+	b=SLQ/4XPtEno70mtbll8B+eLLxo9qAdlOxmJpUGE+7ncXuGphB67S/J4JjXGVq8Ou/
+	 CXJw8BbNXoBBAh792holuDjM9tVXcVupNUiWuTltMiJ9+/4TaonmsKZ3PFA7rZiSuj
+	 Ju0myBlQbtE6hLi1F/Ny3TQB0JjFxBtLUIz0LQClruvEFcTbBGohF+hV8c49XVZ3fF
+	 pq9HJGxQCGlq00nmb7AnWjbPUjjI5S+5Cd4vuxIRITn8lrrK34AVhd7k7s0xOk8VJU
+	 vtApr+qDzgWzkS1+bX3ryuorDiOpyYhuBHa2a/uQEdzNaP379uE12v3nVhHXBRo/m9
+	 phowGMcyoST/Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Alper Ak <alperyasinak1@gmail.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/147] tpm: tpm_i2c_infineon: Fix locality leak on get_burstcount() failure
-Date: Sat, 28 Feb 2026 13:15:23 -0500
-Message-ID: <20260228181736.1605592-15-sashal@kernel.org>
+Subject: [PATCH 5.10 016/147] tpm: st33zp24: Fix missing cleanup on get_burstcount() error
+Date: Sat, 28 Feb 2026 13:15:24 -0500
+Message-ID: <20260228181736.1605592-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -49,40 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Alper Ak <alperyasinak1@gmail.com>
 
-[ Upstream commit bbd6e97c836cbeb9606d7b7e5dcf8a1d89525713 ]
+[ Upstream commit 3e91b44c93ad2871f89fc2a98c5e4fe6ca5db3d9 ]
 
-get_burstcount() can return -EBUSY on timeout. When this happens, the
-function returns directly without releasing the locality that was
-acquired at the beginning of tpm_tis_i2c_send().
+get_burstcount() can return -EBUSY on timeout. When this happens,
+st33zp24_send() returns directly without releasing the locality
+acquired earlier.
 
 Use goto out_err to ensure proper cleanup when get_burstcount() fails.
 
-Fixes: aad628c1d91a ("char/tpm: Add new driver for Infineon I2C TIS TPM")
+Fixes: bf38b8710892 ("tpm/tpm_i2c_stm_st33: Split tpm_i2c_tpm_st33 in 2 layers (core + phy)")
 Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_i2c_infineon.c | 6 ++++--
+ drivers/char/tpm/st33zp24/st33zp24.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_i2c_infineon.c b/drivers/char/tpm/tpm_i2c_infineon.c
-index a19d32cb4e942..cabc9e1b49321 100644
---- a/drivers/char/tpm/tpm_i2c_infineon.c
-+++ b/drivers/char/tpm/tpm_i2c_infineon.c
-@@ -543,8 +543,10 @@ static int tpm_tis_i2c_send(struct tpm_chip *chip, u8 *buf, size_t len)
- 		burstcnt = get_burstcount(chip);
+diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
+index 4ec10ab5e5766..33ee4fe693796 100644
+--- a/drivers/char/tpm/st33zp24/st33zp24.c
++++ b/drivers/char/tpm/st33zp24/st33zp24.c
+@@ -381,8 +381,10 @@ static int st33zp24_send(struct tpm_chip *chip, unsigned char *buf,
  
- 		/* burstcnt < 0 = TPM is busy */
+ 	for (i = 0; i < len - 1;) {
+ 		burstcnt = get_burstcount(chip);
 -		if (burstcnt < 0)
 -			return burstcnt;
 +		if (burstcnt < 0) {
-+			rc = burstcnt;
++			ret = burstcnt;
 +			goto out_err;
 +		}
- 
- 		if (burstcnt > (len - 1 - count))
- 			burstcnt = len - 1 - count;
+ 		size = min_t(int, len - i - 1, burstcnt);
+ 		ret = tpm_dev->ops->send(tpm_dev->phy_id, TPM_DATA_FIFO,
+ 					 buf + i, size);
 -- 
 2.51.0
 
