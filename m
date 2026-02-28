@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B391035AC21
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A3335AC28
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302767; cv=none; b=hN44+FeQX2+E4skydXvTtF0jb5JOLaM4vsWvmnbeaet8qwBCTMfeCTPYPvd6/oP1AWltkxcq7aOQagBfmWjglUgTOy+MupL2YeZ0VI+Ype5JPp2Gy0rJgjcLckrSx1A1GNvqKMS+iCq/y5BNoY9yhlTGmeOzvnQoU5KMfdA0Ggk=
+	t=1772302768; cv=none; b=cHoS/S3LlBN1HmDgnwhLnZOcCwV/UDd4dcJ9bKdpbJkqJGUhQn+KP8ZY2ZMwmOzNxhlP6bcdBnf4Hxdz/ceXcHuguKtwdTKDI1kc+kMN2FtHDdnjVM4DHhIZJZCSj/+zi4HcrU6M9Uh5E4QNwBBVbO/HvMEpWsOyToHpzXRX+Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302767; c=relaxed/simple;
-	bh=VgjzyShv/Bg84rAF1gozqk3GC1ab53ONywm3WuR+xU0=;
+	s=arc-20240116; t=1772302768; c=relaxed/simple;
+	bh=0QX6fx5ztsOwbqkdDSx3cDlN5iFEkWOFNLENrERXWbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nz573ChvuslfU2AKFlRHYzXo19Yv3xszMNltRFVMdqc7tkbpLunpKVTN5yX8tmijeRnjpn6T44GE/j9Mr/sOs8BgYzfFz67HLx8x66oF89EGPJ5BWc1ACXmmfmVXxtdnspoeF2++LtZwUGoHXJWWTPo0dPkGfc1QeNxLY6EBs0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KqNT+R0V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=awRmGbL4VXLmhVx8gnzp6ZLMdcq9quD50SH0IlcdDq8Pi70T7LOJqeQ42TSLuMezmDxXs6O/RgDZl6mMSehLzpzHh/0IR1W+clCSXxx0htunSRisOJVdU76rSzz5jenracJx7zYYPbh+XAY3iG7D1xVwyRbjIr22WUzTMTh6wSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9UGHZdK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KqNT+R0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07598C2BC9E;
-	Sat, 28 Feb 2026 18:19:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9UGHZdK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE28C2BCB0;
+	Sat, 28 Feb 2026 18:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302767;
-	bh=VgjzyShv/Bg84rAF1gozqk3GC1ab53ONywm3WuR+xU0=;
+	s=k20201202; t=1772302768;
+	bh=0QX6fx5ztsOwbqkdDSx3cDlN5iFEkWOFNLENrERXWbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KqNT+R0VexrjoUtGe25TVdkrS4fBpfQD0BmgdpywK/hklw0Tt9sgZ9FBXYYA7JjxT
-	 owr9ZIUBn2kY2wD/Tmt2yO7Su1nxz3a50sQWF5+43ruTvGhkJtIY1bK3o2ZQGBS4vP
-	 u7hB9cy9V+CQNxD89nzBqfEOb4BX0LRWgprrdT5pGHHuEVLvI8CplLlK6KUSuOsoSt
-	 alvkIl8Ld838sjPv3JcP4H4UAFXO8Pp0pIV04M6qJLDwLA2+azQ+e/deGX4y53TIFt
-	 VRCNK24GOTT0xxU9pEcwST00zKXHYsqi2OWRT6d0wzvXffU776Tcdy1H7PIj07IwzA
-	 MfpIliIqqzy7A==
+	b=u9UGHZdKZsRK6dHPT4KXRvyYNfe/z6naHdWaJNyd1tt5Vb3L52UOYSDQU/pPQ0f8J
+	 THn2haHw7a6kLgYFcn7OC4yYSTAkamhfGOt0MP0BneGdwLSc3gsYLVc9QtpAjd57Wp
+	 DSJZ5cfGDxsdCjKO5hLUn8v8nf97Dj6cm15RdhvjP1zZMGnypaugzi2zyPV920WPxz
+	 5kG0w96CHg0xrAzbUNpANpASSR7b2otaj6h5kVbQXg3LGHwf2qxGnViBUgi4WMUYzV
+	 /CyOuzDQjFQGx74J6n+3ODjO7l/hORp9rpcD6NyT9N1gEFX+qZsn5W9JoXnaGxbfV6
+	 ej5y/voMSZG1A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Simon Horman <horms@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 139/147] net: usb: catc: enable basic endpoint checking
-Date: Sat, 28 Feb 2026 13:17:27 -0500
-Message-ID: <20260228181736.1605592-139-sashal@kernel.org>
+Subject: [PATCH 5.10 140/147] xen-netback: reject zero-queue configuration from guest
+Date: Sat, 28 Feb 2026 13:17:28 -0500
+Message-ID: <20260228181736.1605592-140-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -50,107 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit 9e7021d2aeae57c323a6f722ed7915686cdcc123 ]
+[ Upstream commit 6d1dc8014334c7fb25719999bca84d811e60a559 ]
 
-catc_probe() fills three URBs with hardcoded endpoint pipes without
-verifying the endpoint descriptors:
+A malicious or buggy Xen guest can write "0" to the xenbus key
+"multi-queue-num-queues". The connect() function in the backend only
+validates the upper bound (requested_num_queues > xenvif_max_queues)
+but not zero, allowing requested_num_queues=0 to reach
+vzalloc(array_size(0, sizeof(struct xenvif_queue))), which triggers
+WARN_ON_ONCE(!size) in __vmalloc_node_range().
 
-  - usb_sndbulkpipe(usbdev, 1) and usb_rcvbulkpipe(usbdev, 1) for TX/RX
-  - usb_rcvintpipe(usbdev, 2) for interrupt status
+On systems with panic_on_warn=1, this allows a guest-to-host denial
+of service.
 
-A malformed USB device can present these endpoints with transfer types
-that differ from what the driver assumes.
+The Xen network interface specification requires
+the queue count to be "greater than zero".
 
-Add a catc_usb_ep enum for endpoint numbers, replacing magic constants
-throughout. Add usb_check_bulk_endpoints() and usb_check_int_endpoints()
-calls after usb_set_interface() to verify endpoint types before use,
-rejecting devices with mismatched descriptors at probe time.
+Add a zero check to match the validation already present
+in xen-blkback, which has included this
+guard since its multi-queue support was added.
 
-Similar to
-- commit 90b7f2961798 ("net: usb: rtl8150: enable basic endpoint checking")
-which fixed the issue in rtl8150.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Simon Horman <horms@kernel.org>
+Fixes: 8d3d53b3e433 ("xen-netback: Add support for multiple queues")
 Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Link: https://patch.msgid.link/20260212214154.3609844-1-n7l8m4@u.northwestern.edu
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20260212224040.86674-1-n7l8m4@u.northwestern.edu
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/catc.c | 37 +++++++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
+ drivers/net/xen-netback/xenbus.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/catc.c b/drivers/net/usb/catc.c
-index 6502f78aeddaa..38951608dc572 100644
---- a/drivers/net/usb/catc.c
-+++ b/drivers/net/usb/catc.c
-@@ -64,6 +64,16 @@ static const char driver_name[] = "catc";
- #define CTRL_QUEUE		16	/* Max control requests in flight (power of two) */
- #define RX_PKT_SZ		1600	/* Max size of receive packet for F5U011 */
- 
-+/*
-+ * USB endpoints.
-+ */
-+
-+enum catc_usb_ep {
-+	CATC_USB_EP_CONTROL	= 0,
-+	CATC_USB_EP_BULK	= 1,
-+	CATC_USB_EP_INT_IN	= 2,
-+};
-+
- /*
-  * Control requests.
-  */
-@@ -772,6 +782,13 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
- 	u8 broadcast[ETH_ALEN];
- 	u8 *macbuf;
- 	int pktsz, ret = -ENOMEM;
-+	static const u8 bulk_ep_addr[] = {
-+		CATC_USB_EP_BULK | USB_DIR_OUT,
-+		CATC_USB_EP_BULK | USB_DIR_IN,
-+		0};
-+	static const u8 int_ep_addr[] = {
-+		CATC_USB_EP_INT_IN | USB_DIR_IN,
-+		0};
- 
- 	macbuf = kmalloc(ETH_ALEN, GFP_KERNEL);
- 	if (!macbuf)
-@@ -784,6 +801,14 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
- 		goto fail_mem;;
+diff --git a/drivers/net/xen-netback/xenbus.c b/drivers/net/xen-netback/xenbus.c
+index 9ee9ce0493fe6..c47e327039a0a 100644
+--- a/drivers/net/xen-netback/xenbus.c
++++ b/drivers/net/xen-netback/xenbus.c
+@@ -735,10 +735,11 @@ static void connect(struct backend_info *be)
+ 	 */
+ 	requested_num_queues = xenbus_read_unsigned(dev->otherend,
+ 					"multi-queue-num-queues", 1);
+-	if (requested_num_queues > xenvif_max_queues) {
++	if (requested_num_queues > xenvif_max_queues ||
++	    requested_num_queues == 0) {
+ 		/* buggy or malicious guest */
+ 		xenbus_dev_fatal(dev, -EINVAL,
+-				 "guest requested %u queues, exceeding the maximum of %u.",
++				 "guest requested %u queues, but valid range is 1 - %u.",
+ 				 requested_num_queues, xenvif_max_queues);
+ 		return;
  	}
- 
-+	/* Verify that all required endpoints are present */
-+	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr) ||
-+	    !usb_check_int_endpoints(intf, int_ep_addr)) {
-+		dev_err(dev, "Missing or invalid endpoints\n");
-+		ret = -ENODEV;
-+		goto fail_mem;
-+	}
-+
- 	netdev = alloc_etherdev(sizeof(struct catc));
- 	if (!netdev)
- 		goto fail_mem;
-@@ -828,14 +853,14 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
- 	usb_fill_control_urb(catc->ctrl_urb, usbdev, usb_sndctrlpipe(usbdev, 0),
- 		NULL, NULL, 0, catc_ctrl_done, catc);
- 
--	usb_fill_bulk_urb(catc->tx_urb, usbdev, usb_sndbulkpipe(usbdev, 1),
--		NULL, 0, catc_tx_done, catc);
-+	usb_fill_bulk_urb(catc->tx_urb, usbdev, usb_sndbulkpipe(usbdev, CATC_USB_EP_BULK),
-+			  NULL, 0, catc_tx_done, catc);
- 
--	usb_fill_bulk_urb(catc->rx_urb, usbdev, usb_rcvbulkpipe(usbdev, 1),
--		catc->rx_buf, pktsz, catc_rx_done, catc);
-+	usb_fill_bulk_urb(catc->rx_urb, usbdev, usb_rcvbulkpipe(usbdev, CATC_USB_EP_BULK),
-+			  catc->rx_buf, pktsz, catc_rx_done, catc);
- 
--	usb_fill_int_urb(catc->irq_urb, usbdev, usb_rcvintpipe(usbdev, 2),
--                catc->irq_buf, 2, catc_irq_done, catc, 1);
-+	usb_fill_int_urb(catc->irq_urb, usbdev, usb_rcvintpipe(usbdev, CATC_USB_EP_INT_IN),
-+			 catc->irq_buf, 2, catc_irq_done, catc, 1);
- 
- 	if (!catc->is_f5u011) {
- 		u32 *buf;
 -- 
 2.51.0
 
