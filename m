@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA1D344D9A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DF0379ED5
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301717; cv=none; b=rmfsinTDDfuryjPLRU6AGBw40jzo6YbrZKaEgziM9ozctZLdxXDLIqTZ3DTbdfP/vW531iDqQCUP8d6ACF5x1PC5oCakTTQs4y8PaGtSyLX3NN++sWPFJuHpPQhB/HuUshhAe1USh4yy8UzFzCVVnV3xf8bsJl6DvEKU6M1cEzU=
+	t=1772301718; cv=none; b=Ze1FUKLgvC5SdawcAlbUVAuI7Vra1/t8938rSXoOXWbzs6Z/szLiyfwvvGCvbCtt1ml28ql7QKjYH6hJsjrQez1fwCnisJBnJ1D1ewln84YZAm/VW/RBZPGnqqxqvujH0S8DmqCzI5mRIYucb1k60krmvlS6r6CDxGvYFIyj344=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301717; c=relaxed/simple;
-	bh=HznJm+DmsYQj75uisWqvdBNIwWgW7Fsw40PhapLa4ww=;
+	s=arc-20240116; t=1772301718; c=relaxed/simple;
+	bh=fyaCtbOiUtLySfq7ZVti8V/t78JmMyDbNKveZWZ6bLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4jDPuTCwebd/Nm2QEhkPSnxDVIcfzF1QiXi21rhfAGSCQe/BzupD3o+TBC43ushLHvcpqmfbdn8yh+J6JGqdoXbst3ZznukSwTkctPkACjN+vbe9oO//i8Q+AhqHCBL5T4rmWqlolVHPfK/ZK/OJIvhDkih4+3+WH+eeYPDxXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nSBy6V/B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XBLAlhxMKb15eYP9nRPSjBMFnAcfShDKmHTlNiOmEhuZ9txBI0NRwjERtB7X+GwjYkZY8VIWu3lCxFXOQX5skiS2FsxkBP3aStWMGKPNWTPh6Iz/7Gyrwicg9Z1hFfawgYqe7HqL1sFK3rltcXQcPGnBKEnEhELbz/E3x5cKrrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=orf610EJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nSBy6V/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C94C19423;
-	Sat, 28 Feb 2026 18:01:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="orf610EJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701F6C116D0;
+	Sat, 28 Feb 2026 18:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301717;
-	bh=HznJm+DmsYQj75uisWqvdBNIwWgW7Fsw40PhapLa4ww=;
+	s=k20201202; t=1772301718;
+	bh=fyaCtbOiUtLySfq7ZVti8V/t78JmMyDbNKveZWZ6bLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nSBy6V/ByooHZLoFuLLlZ/cv7HOQ0ox2XG5WAPB6jsiHDFEI6AfQudlwfZ3P20U4r
-	 fe+2cWhNHXvfLCciIJIemewRIlWluOlnFgF4jvQo1AVKqDhC9zA7372L8Zj5jNtFFr
-	 uXdzYpzTRtRCjogf0sFfNQ4sl0BHKBPxrH1/27myG55ALJkAwzawNVYBLokZmLPvHM
-	 F7pKDtXQ0LzgkJqZtMeXaXz52oX6fOFQ8jv8r6W+e38wSsDQsd7HHm/f70Pask6GVK
-	 ecS5YUBk/6yM3Jf7f4GBdj1brRrkgQs7hR9OLgKsEX7WnKUqs//KZleJAcohbH7v2J
-	 pg/dZ7XeCpAWg==
+	b=orf610EJ8uj9dCKl0lirLU+sOO7Khp99WTnwGcT8/WkIqGX3LB2ADO+72nBzRq+Vn
+	 uBHoZW4kUSufUSb+paSyL2FYlva9wzQeHRNm/kRzYLxlvbmDbHa0+gvhf7u7klxQQv
+	 SGkANc2GgpF5IqoBoFv3jy5Xzl1u5AE3FnEBPZNxZil20yNRXfCF+PTqJFCQLKKvot
+	 0cpEMXg0FDHLycuX9bDtBPEjOrAE7EixkpkW5hY9PRcSMjHCjawXV2vtTPFxExaSGE
+	 f5VcthZkSQOLtSYvqsC7e1bkiAG4ubEZkbXRBgEB2ju8/qB6S6yJOdMklP5LWtKr45
+	 7wsCmN5EtlFcw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jerome Brunet <jbrunet@baylibre.com>,
-	Nick Xie <nick@khadas.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+Cc: Abhash Kumar Jha <a-kumar2@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/385] arm64: dts: amlogic: s4: fix mmc clock assignment
-Date: Sat, 28 Feb 2026 12:55:35 -0500
-Message-ID: <20260228180011.1568201-113-sashal@kernel.org>
+Subject: [PATCH 6.12 114/385] arm64: dts: ti: k3-j784s4-main.dtsi: Move c71_3 node to appropriate order
+Date: Sat, 28 Feb 2026 12:55:36 -0500
+Message-ID: <20260228180011.1568201-114-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,68 +48,70 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Abhash Kumar Jha <a-kumar2@ti.com>
 
-[ Upstream commit 3a115d42922cffc91b303992eadf220111d66c31 ]
+[ Upstream commit 24c9d5fb8bbf5e8c9e6fc2beffeb80ac2da83de4 ]
 
-MMC A and C are mis-represented as having their "clkin0" input connected to
-xtal while it is actually connected to the MMC clock, probably in an
-attempt to provide 24MHz to the device on this input.
+The device tree nodes should be ordered by unit addresses in ascending
+order.
 
-Fix this and assign the clock to 24MHz to actually provide the required
-rate.
+Correct the order by moving the c71_3 DSP node at the end as it has a
+higher unit address.
 
-Fixes: 3ab9d54b5d84 ("arm64: dts: amlogic: enable some device nodes for S4")
-Tested-by: Nick Xie <nick@khadas.com>
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260114-amlogic-s4-mmc-fixup-v3-2-a4d3e136b3f2@baylibre.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Abhash Kumar Jha <a-kumar2@ti.com>
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://patch.msgid.link/20260112085113.3476193-2-a-kumar2@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Stable-dep-of: 61acc4428a7f ("arm64: dts: ti: k3-j784s4-j742s2-main-common.dtsi: Refactor watchdog instances for j784s4")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi | 26 +++++++++++-----------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-index 4c45fd98381e8..7326aaa8d0ed7 100644
---- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-@@ -814,13 +814,16 @@ sdio: mmc@fe088000 {
- 			reg = <0x0 0xfe088000 0x0 0x800>;
- 			interrupts = <GIC_SPI 176 IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clkc_periphs CLKID_SDEMMC_A>,
--				 <&xtal>,
-+				 <&clkc_periphs CLKID_SD_EMMC_A>,
- 				 <&clkc_pll CLKID_FCLK_DIV2>;
- 			clock-names = "core", "clkin0", "clkin1";
- 			resets = <&reset RESET_SD_EMMC_A>;
- 			cap-sdio-irq;
- 			keep-power-in-suspend;
- 			status = "disabled";
-+
-+			assigned-clocks = <&clkc_periphs CLKID_SD_EMMC_A>;
-+			assigned-clock-rates = <24000000>;
- 		};
+diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi
+index 0160fe0da9838..5b7830a3c0975 100644
+--- a/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi
+@@ -6,19 +6,6 @@
+  */
  
- 		sd: mmc@fe08a000 {
-@@ -843,13 +846,16 @@ emmc: mmc@fe08c000 {
- 			reg = <0x0 0xfe08c000 0x0 0x800>;
- 			interrupts = <GIC_SPI 178 IRQ_TYPE_EDGE_RISING>;
- 			clocks = <&clkc_periphs CLKID_NAND>,
--				 <&xtal>,
-+				 <&clkc_periphs CLKID_SD_EMMC_C>,
- 				 <&clkc_pll CLKID_FCLK_DIV2>;
- 			clock-names = "core", "clkin0", "clkin1";
- 			resets = <&reset RESET_NAND_EMMC>;
- 			no-sdio;
- 			no-sd;
+ &cbass_main {
+-	c71_3: dsp@67800000 {
+-		compatible = "ti,j721s2-c71-dsp";
+-		reg = <0x00 0x67800000 0x00 0x00080000>,
+-		      <0x00 0x67e00000 0x00 0x0000c000>;
+-		reg-names = "l2sram", "l1dram";
+-		resets = <&k3_reset 40 1>;
+-		firmware-name = "j784s4-c71_3-fw";
+-		ti,sci = <&sms>;
+-		ti,sci-dev-id = <40>;
+-		ti,sci-proc-ids = <0x33 0xff>;
+-		status = "disabled";
+-	};
+-
+ 	pcie2_rc: pcie@2920000 {
+ 		compatible = "ti,j784s4-pcie-host";
+ 		reg = <0x00 0x02920000 0x00 0x1000>,
+@@ -113,6 +100,19 @@ serdes2: serdes@5020000 {
  			status = "disabled";
-+
-+			assigned-clocks = <&clkc_periphs CLKID_SD_EMMC_C>;
-+			assigned-clock-rates = <24000000>;
  		};
  	};
++
++	c71_3: dsp@67800000 {
++		compatible = "ti,j721s2-c71-dsp";
++		reg = <0x00 0x67800000 0x00 0x00080000>,
++		      <0x00 0x67e00000 0x00 0x0000c000>;
++		reg-names = "l2sram", "l1dram";
++		resets = <&k3_reset 40 1>;
++		firmware-name = "j784s4-c71_3-fw";
++		ti,sci = <&sms>;
++		ti,sci-dev-id = <40>;
++		ti,sci-proc-ids = <0x33 0xff>;
++		status = "disabled";
++	};
  };
+ 
+ &scm_conf {
 -- 
 2.51.0
 
