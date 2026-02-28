@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCF72E040D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA66D375ACC
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301613; cv=none; b=O1Sg/8e17ySS/BKc7CQNgKVE5gQgatekBnSUMzQoLp+roD9wHtRzPQBE/Hwgj2rEdxE461BLkePu/SL1mYR+T1SiUBhD0SYm9pvGLJGq33toWx3EeJpxxNgn5RVL827xKX2iRm3SmQrhMRKsTNKJaMjAY98KuGbPMvBZoRDP3oU=
+	t=1772301613; cv=none; b=jkiz1NoWBX2VH3r51pZNn0hF2tguiPumWCSRUnuPv04Xl3beAPnnqHQUDIDQ6f5YgXPjH7/q/2mazmqnU8fAE/vH0zjZGbd+M8qJGFdIRdV+OBVwqkmV72Nk1FN9vmI7T//ZtkjolpWUfFdI6XOISuBu/UW56+PS6mVkKOWRW9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301613; c=relaxed/simple;
-	bh=rgdtpGXxqx8P6dPo0yWex68Te28mur4T5xhIg6v64LM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=t0JFutBLYxaEEmJCN/l0EDNyUrgpQ04NHyFq8lOsHGvdIh0KN/K0P2OnKgbPrrN1DR2mMR4ZpCjYW4qYX3WDQemaIjjSGGju5kPMhUWtgNNxhufeWPjRSjfLr3xVyTEbK/hsMZT4FnZVLx1K81LPQ1ZcFRjH99clE8tLmBUSuiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ApBFcmMs; arc=none smtp.client-ip=10.30.226.201
+	bh=dngh46TmnsNASgHmfYC2rE5viEdiSU9GGLGhzsepmS8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GjGwUArNIZbPZHCml5OI1Hras1+8Vx67z6TNh5bdyX0xkagPRRvYAX9+6v2RnI66CkokOe1l9+xGozOJzezVDHFzHIvJMpW666OGldC/y91NXEDTA3QoIz55DSQkjGCaE+Wj3zWYNxnCUWsaxyNieSVdma63zspPjekDj+9XVWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y67xqsuz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ApBFcmMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42753C116D0;
-	Sat, 28 Feb 2026 18:00:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y67xqsuz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F59C2BC9E;
+	Sat, 28 Feb 2026 18:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301612;
-	bh=rgdtpGXxqx8P6dPo0yWex68Te28mur4T5xhIg6v64LM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ApBFcmMsm4npkg4b7kpNC/2SWEvE17EpksfKLNVQTcYxEVrfgHaJTKB+wbr3FHGM7
-	 wJeMWKDJmeqUbRBXbvnepGnOCMyX3n4eH0XJK7Pvf+cKya5mwzO+m7JNZ2UarpQ2t/
-	 WbUsgOTfMoVDdDDANHqDh/rYcbdjeXtXHyhCNZ0NB63WW8pxqg3yPljUap02HzLzqR
-	 LfiuDkyQYEXBNkKVU2zOfEkolxn69DlTlvKXlvG3Hb8YdauLUSOtiE9gqnWlYCLHv3
-	 femJ0vY7Bd8auv4w/Z54/wZ7KxvAPkP1kLUDB0GXVIBZxlCJAwwidh36FTwI6rFj0C
-	 g+iRc+I1VTKrQ==
+	s=k20201202; t=1772301613;
+	bh=dngh46TmnsNASgHmfYC2rE5viEdiSU9GGLGhzsepmS8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Y67xqsuz3EjXMQp8rC5sK+tfIVUYwKVeJCX3c3UgazzIW/QMshQnVNNxdIR/3w7wf
+	 1FgdBB6Elcys0AcNpvd8X/lFsbv8wvq3H9cC//x7kipEW60rNVqhE0576zNQm8PVdt
+	 CzYUyMpuCLoRmxWc96NIGI6W/raWWErw8S0pOZm7dNy7yrZ20hA039E0KELzKAMz7F
+	 K2+6AAkFleFRzax4tz1zEVq7l2MGpoFer87bODkE2xJG4yxOrXenslXOrx2TmKto5h
+	 W8/XKL32mywC50AJkYK3fiQtK1fBGLo0ltPb/105X8H80tX4eqfUnc7K0ED6n4lHAq
+	 mH0bnFSySLeyQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: YunJe Shin <yjshin0438@gmail.com>,
 	YunJe Shin <ioerts@kookmin.ac.kr>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
 	Leon Romanovsky <leon@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.12 001/385] RDMA/siw: Fix potential NULL pointer dereference in header processing
-Date: Sat, 28 Feb 2026 12:53:43 -0500
-Message-ID: <20260228180011.1568201-1-sashal@kernel.org>
+Subject: [PATCH 6.12 002/385] RDMA/umad: Reject negative data_len in ib_umad_write
+Date: Sat, 28 Feb 2026 12:53:44 -0500
+Message-ID: <20260228180011.1568201-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
+References: <20260228180011.1568201-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,42 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 From: YunJe Shin <yjshin0438@gmail.com>
 
-commit 14ab3da122bd18920ad57428f6cf4fade8385142 upstream.
+commit 5551b02fdbfd85a325bb857f3a8f9c9f33397ed2 upstream.
 
-If siw_get_hdr() returns -EINVAL before set_rx_fpdu_context(),
-qp->rx_fpdu can be NULL. The error path in siw_tcp_rx_data()
-dereferences qp->rx_fpdu->more_ddp_segs without checking, which
-may lead to a NULL pointer deref. Only check more_ddp_segs when
-rx_fpdu is present.
+ib_umad_write computes data_len from user-controlled count and the
+MAD header sizes. With a mismatched user MAD header size and RMPP
+header length, data_len can become negative and reach ib_create_send_mad().
+This can make the padding calculation exceed the segment size and trigger
+an out-of-bounds memset in alloc_send_rmpp_list().
+
+Add an explicit check to reject negative data_len before creating the
+send buffer.
 
 KASAN splat:
-[  101.384271] KASAN: null-ptr-deref in range [0x00000000000000c0-0x00000000000000c7]
-[  101.385869] RIP: 0010:siw_tcp_rx_data+0x13ad/0x1e50
+[  211.363464] BUG: KASAN: slab-out-of-bounds in ib_create_send_mad+0xa01/0x11b0
+[  211.364077] Write of size 220 at addr ffff88800c3fa1f8 by task spray_thread/102
+[  211.365867] ib_create_send_mad+0xa01/0x11b0
+[  211.365887] ib_umad_write+0x853/0x1c80
 
-Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
+Fixes: 2be8e3ee8efd ("IB/umad: Add P_Key index support")
 Signed-off-by: YunJe Shin <ioerts@kookmin.ac.kr>
-Link: https://patch.msgid.link/20260204092546.489842-1-ioerts@kookmin.ac.kr
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Link: https://patch.msgid.link/20260203100628.1215408-1-ioerts@kookmin.ac.kr
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/user_mad.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_rx.c b/drivers/infiniband/sw/siw/siw_qp_rx.c
-index ed4fc39718b49..06738f582c7af 100644
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -1436,7 +1436,8 @@ int siw_tcp_rx_data(read_descriptor_t *rd_desc, struct sk_buff *skb,
- 		}
- 		if (unlikely(rv != 0 && rv != -EAGAIN)) {
- 			if ((srx->state > SIW_GET_HDR ||
--			     qp->rx_fpdu->more_ddp_segs) && run_completion)
-+			     (qp->rx_fpdu && qp->rx_fpdu->more_ddp_segs)) &&
-+			    run_completion)
- 				siw_rdmap_complete(qp, rv);
+diff --git a/drivers/infiniband/core/user_mad.c b/drivers/infiniband/core/user_mad.c
+index fd67fc9fe85a4..2f7e3c4483fc5 100644
+--- a/drivers/infiniband/core/user_mad.c
++++ b/drivers/infiniband/core/user_mad.c
+@@ -514,7 +514,8 @@ static ssize_t ib_umad_write(struct file *filp, const char __user *buf,
+ 	struct rdma_ah_attr ah_attr;
+ 	struct ib_ah *ah;
+ 	__be64 *tid;
+-	int ret, data_len, hdr_len, copy_offset, rmpp_active;
++	int ret, hdr_len, copy_offset, rmpp_active;
++	size_t data_len;
+ 	u8 base_version;
  
- 			siw_dbg_qp(qp, "rx error %d, rx state %d\n", rv,
+ 	if (count < hdr_size(file) + IB_MGMT_RMPP_HDR)
+@@ -588,7 +589,10 @@ static ssize_t ib_umad_write(struct file *filp, const char __user *buf,
+ 	}
+ 
+ 	base_version = ((struct ib_mad_hdr *)&packet->mad.data)->base_version;
+-	data_len = count - hdr_size(file) - hdr_len;
++	if (check_sub_overflow(count, hdr_size(file) + hdr_len, &data_len)) {
++		ret = -EINVAL;
++		goto err_ah;
++	}
+ 	packet->msg = ib_create_send_mad(agent,
+ 					 be32_to_cpu(packet->mad.hdr.qpn),
+ 					 packet->mad.hdr.pkey_index, rmpp_active,
 -- 
 2.51.0
 
