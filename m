@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A422737F2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1C636C9E0
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302306; cv=none; b=rADFnnPLUSeztkYFGtUO26vXJFNisrG9sLI886CVayjhGmeWlfGgMQV9x9fhAEfP8tNxgJpF9kqIWDKzeW9Y/4RzHzSXBAcw/86nCxK05Fjj8opkKI9vrRAEd8QhNpOso74/lScpCAvdoawVu8QV+gp7FuvFnNUJeeQa7ourbjU=
+	t=1772302306; cv=none; b=TAxjtKXqDEfMHBX3X6M/YIoSH2ymhyj9R9HdQ0y37iI1OAdLinod57ahzDMXUHyfPKue89Vb+OoeEUQhVdccuP2vYp5QKEIxyGO8YHseF7kiUnDFeDSvhQS1CsvMQGxHxjRU6qCVdvaawhzqH38vs74y8avGNzXMAejMqnv4ylc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302306; c=relaxed/simple;
-	bh=PgPlUT3kmH/CP/Upfcoc+vQNakq4OTVImBb7qE1tsAk=;
+	bh=6VaQvCIVojoYPF7gqTD8uN76+OfmwLGJ8FFNSgx8OKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAMdvGdgLLEk5zY64dFmtW6wA/7AKTnNQmqVZON3j23ctUzc+/a2txhq1QW7roB3e13I3aIWMycQNQpHZXTEhvzflmHA9HpMBOFJ8n+/mbNrJX5T6zzWb0+3TqPM+PMsPycI5CHUNKxqTJ5BesCW8xxM6mukFuOQCGHlV0Mb3Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YkGofw6p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=raPbMzvYkXdjFp8/0/qKpF2RnchrKNAOW8ZpHKMqooV51Lw8E8qeHP/og+j86lHVd1cg1abCGJ+pabSWYQ0kbzCoglIyR2L9zsiM5Ws9Kdm0+NNO9IaXaoWfBPE0jz9to6jbf+jD7jiG55x4vNW2tEsK/qwvMShREYmlGyRq58c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdoRGKsF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YkGofw6p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DAC3C116D0;
-	Sat, 28 Feb 2026 18:11:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XdoRGKsF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3777BC19424;
+	Sat, 28 Feb 2026 18:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302306;
-	bh=PgPlUT3kmH/CP/Upfcoc+vQNakq4OTVImBb7qE1tsAk=;
+	bh=6VaQvCIVojoYPF7gqTD8uN76+OfmwLGJ8FFNSgx8OKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YkGofw6pIsui0embQ2ZPthO5RuaDe+K4BOOyubGv9bkphogOZBtCRBus8cLmdn8b6
-	 Tg2TblpdT9rvvugIcRUSB8J2wrcglsv8xbuuQ6fk1ejlTyfplf+IJFW26pc1D3bLN7
-	 NSsUZ/wn5KBndjDU0eH9nOLWvnISbxjme7wzLFYP2tFmab+sW/HZGIaCeR4YZ+I5St
-	 v7uDRSPIhWHoMDAYeZT910k58IbCorV+eMf5232IpiZ1aZBz8vK4KG4FFyTpJb6Wpq
-	 EUjdtIMBztubtKf6fF9aMF3R8dAgEvq2uglnIPhpYBnh2ZlxBx1AGDF4pGHJDk+JJC
-	 rfjks/Hrxi7KA==
+	b=XdoRGKsF8PihCed5BDIzRtFqcYSmcuI0qOrubirPyErE1x0EjeR2p8DCrk2OAmH7A
+	 0A8lWX4IUnpUuBiSEGkKubZ7+svQVyCGzpWx3ISjE3v9VUjAegHSyvrjdKqHUrpMNo
+	 uSkRqlTJY63lK1Y1IrII8VNAcXTu+E4haIM7ip1u9EMp7eQAyTQXwKV0+vGqmB+z5d
+	 OST73d0QOxxczbtqL4rZPFyYM8C/+iXaXtYQLs+qw5+eLrGnfHIGkzXNjLECmUhwYv
+	 o61sDDBJuGyZMPOMtRIISAcFVTC3xSay6KAaDJG10d15029hraDqlH0sfUbSRA4lwy
+	 +evB7bTbHZNcg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jens Axboe <axboe@kernel.dk>,
+Cc: Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/232] io_uring/sync: validate passed in offset
-Date: Sat, 28 Feb 2026 13:07:54 -0500
-Message-ID: <20260228181127.1592657-21-sashal@kernel.org>
+Subject: [PATCH 6.1 022/232] md/raid10: fix any_working flag handling in raid10_sync_request
+Date: Sat, 28 Feb 2026 13:07:55 -0500
+Message-ID: <20260228181127.1592657-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -46,34 +48,45 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 649dd18f559891bdafc5532d737c7dfb56060a6d ]
+[ Upstream commit 99582edb3f62e8ee6c34512021368f53f9b091f2 ]
 
-Check if the passed in offset is negative once cast to sync->off. This
-ensures that -EINVAL is returned for that case, like it would be for
-sync_file_range(2).
+In raid10_sync_request(), 'any_working' indicates if any IO will
+be submitted. When there's only one In_sync disk with badblocks,
+'any_working' might be set to 1 but no IO is submitted. Fix it by
+setting 'any_working' after badblock checks.
 
-Fixes: c992fe2925d7 ("io_uring: add fsync support")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/linux-raid/20260105110300.1442509-11-linan666@huaweicloud.com
+Fixes: e875ecea266a ("md/raid10 record bad blocks as needed during recovery.")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/sync.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/raid10.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/sync.c b/io_uring/sync.c
-index 64e87ea2b8fbb..59f951a4b5241 100644
---- a/io_uring/sync.c
-+++ b/io_uring/sync.c
-@@ -61,6 +61,8 @@ int io_fsync_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 		return -EINVAL;
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 2ae68b7b79598..99ebcb4475024 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3535,7 +3535,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 				    !test_bit(In_sync, &rdev->flags))
+ 					continue;
+ 				/* This is where we read from */
+-				any_working = 1;
+ 				sector = r10_bio->devs[j].addr;
  
- 	sync->off = READ_ONCE(sqe->off);
-+	if (sync->off < 0)
-+		return -EINVAL;
- 	sync->len = READ_ONCE(sqe->len);
- 	return 0;
- }
+ 				if (is_badblock(rdev, sector, max_sync,
+@@ -3550,6 +3549,7 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 						continue;
+ 					}
+ 				}
++				any_working = 1;
+ 				bio = r10_bio->devs[0].bio;
+ 				bio->bi_next = biolist;
+ 				biolist = bio;
 -- 
 2.51.0
 
