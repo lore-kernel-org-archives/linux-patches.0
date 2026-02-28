@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36D5383C73
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D104346AF8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302076; cv=none; b=iRFKB5s4MKqdtTmej9KLK2OtD8SWKT4c+K2kWMfV/+Jr+8IeaA8MPVzwYBKcaf0xTz04UNInxt9toszvuPwWBJT3dWQp9kaKPX7njUGybaa6vyHJAyqo1AUdGt+FgZJAr9xJTRq5bmJiLovbxtER4NvJSVXw9nN21feb/Y85x0s=
+	t=1772302077; cv=none; b=uN2gATJCq7vE8Ke3p3vHY9SZTTztz3gcfszoYocOq0yfs1PHn9LvwDRvMCdgycupkDZ4b3MzA/fRXIOJxdz/r1yorMS8Fadcwqy9OYyBcsxUIbfhkV3nVGf+OAGXvyuId7OINMbSPvLBTdibTNC/tsaZmaInxZDHEZkrVHo7H7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302076; c=relaxed/simple;
-	bh=LetwyJ8txSrCKq4meC++UwO+UDC5DQhN87AgOgaAObw=;
+	s=arc-20240116; t=1772302077; c=relaxed/simple;
+	bh=MlPMPaCEIrZegJ59j4w/JPSGklfdoJyku1pF6/V7SKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mmIHHCMzgjNn3IiHz7l/zGLHrdnWgrtYoDAbq0ZzAkwyB1dwIEQSkX+5k7J8iukRUafi5P9R+/so9IUkADeS5MN7Y071+mH31SKtU7BaCkSBE4QUS3S8ds1QwDuZRGpx6BMVEpT9iTOpo7ozr5FJ1G57TPtSubCbt0A1636ETAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQR3CPd0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F2zytwiQuoLE89xc3V68CrvV21fRyu6nT/i+fi+yGOmtUIX04m60AxAhEbsa3elKDfzyAaWIE5WK0QTiooYaDTHtZSkfU6/6Dw//QvSnW70gsLC1jXEZaOh+kRHHHkpanMRq7X5Engs1lTdsW2g20/82o/BOXJSxXz+MVsZp54E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JDCT5Y9w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQR3CPd0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C54C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JDCT5Y9w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB51CC2BC87;
 	Sat, 28 Feb 2026 18:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302076;
-	bh=LetwyJ8txSrCKq4meC++UwO+UDC5DQhN87AgOgaAObw=;
+	s=k20201202; t=1772302077;
+	bh=MlPMPaCEIrZegJ59j4w/JPSGklfdoJyku1pF6/V7SKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQR3CPd0pniPg+N1d2L/zRi7Qt6GLkf3ogXGdlm5GqnMV8nXqk2gB3fbt9tGlBri8
-	 ORjkdFJzwxgEEJnDX1Akuqm6LY9EtBBbN/R8wfNEgxZkk7WLW9crJmPRSYx4WyDVXt
-	 52f+aAXMrYfgqI2FCpa2tH5o1DDebp+0XUJvib49m1exWUWEHtnqhqPkecNzICFPid
-	 n7UoX1WxO4XMW1N/3DJjBuWUOd5pSAlts71Kf/lGs4I5ZsBkvrB9t46CHF2qetWhXM
-	 1UJQKZlT7xhwYFrjx1dTHG7ZMKoU98PIUprYNja6Y9CVEwE366O8RCmfpDXpJ0hTl+
-	 CZZxFhKCRKF9Q==
+	b=JDCT5Y9w3gNhYeuSwfAPsqp0CCT6oUegBV/FAdlOTPm/WLTm9YkAOKVnhDQfMguS2
+	 Tfzq9KHxYQqv/dDuCHSQ0tdMtUK7LDbh+5k5eT6Lle44UA/d1D1TqY7JttudZAc537
+	 6MXARNTDRBEUxzFyXIS15tMXQntWWt0xux4ylWyLWTBi+sqwErsf2ZZa6ZYZ09Hi+O
+	 Kn6CkdQA3WKKcMRA2wIIbNZe22/LKePqi0sHPQkbl7/avZifs2RVps5OQdidNSbboP
+	 tpie0E6d5B9cz8TFf4zeVCy34FCWQzKO/HJGLDdsARUDG79LG7CDT/F54fVLG0M90M
+	 aDLLkEp4R2G0A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Sai Ritvik Tanksalkar <stanksal@purdue.edu>,
-	Kees Cook <kees@kernel.org>,
+Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/283] pstore/ram: fix buffer overflow in persistent_ram_save_old()
-Date: Sat, 28 Feb 2026 13:03:19 -0500
-Message-ID: <20260228180709.1583486-57-sashal@kernel.org>
+Subject: [PATCH 6.6 058/283] soc: qcom: smem: handle ENOMEM error during probe
+Date: Sat, 28 Feb 2026 13:03:20 -0500
+Message-ID: <20260228180709.1583486-58-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -43,92 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sai Ritvik Tanksalkar <stanksal@purdue.edu>
+From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
 
-[ Upstream commit 5669645c052f235726a85f443769b6fc02f66762 ]
+[ Upstream commit 0fe01a7955f4fef97e7cc6d14bfc5931c660402b ]
 
-persistent_ram_save_old() can be called multiple times for the same
-persistent_ram_zone (e.g., via ramoops_pstore_read -> ramoops_get_next_prz
-for PSTORE_TYPE_DMESG records).
+Fail the driver probe if the region can't be mapped
 
-Currently, the function only allocates prz->old_log when it is NULL,
-but it unconditionally updates prz->old_log_size to the current buffer
-size and then performs memcpy_fromio() using this new size. If the
-buffer size has grown since the first allocation (which can happen
-across different kernel boot cycles), this leads to:
-
-1. A heap buffer overflow (OOB write) in the memcpy_fromio() calls
-2. A subsequent OOB read when ramoops_pstore_read() accesses the buffer
-   using the incorrect (larger) old_log_size
-
-The KASAN splat would look similar to:
-  BUG: KASAN: slab-out-of-bounds in ramoops_pstore_read+0x...
-  Read of size N at addr ... by task ...
-
-The conditions are likely extremely hard to hit:
-
-  0. Crash with a ramoops write of less-than-record-max-size bytes.
-  1. Reboot: ramoops registers, pstore_get_records(0) reads old crash,
-     allocates old_log with size X
-  2. Crash handler registered, timer started (if pstore_update_ms >= 0)
-  3. Oops happens (non-fatal, system continues)
-  4. pstore_dump() writes oops via ramoops_pstore_write() size Y (>X)
-  5. pstore_new_entry = 1, pstore_timer_kick() called
-  6. System continues running (not a panic oops)
-  7. Timer fires after pstore_update_ms milliseconds
-  8. pstore_timefunc() → schedule_work() → pstore_dowork() → pstore_get_records(1)
-  9. ramoops_get_next_prz() → persistent_ram_save_old()
- 10. buffer_size() returns Y, but old_log is X bytes
- 11. Y > X: memcpy_fromio() overflows heap
-
-  Requirements:
-  - a prior crash record exists that did not fill the record size
-    (almost impossible since the crash handler writes as much as it
-    can possibly fit into the record, capped by max record size and
-    the kmsg buffer almost always exceeds the max record size)
-  - pstore_update_ms >= 0 (disabled by default)
-  - Non-fatal oops (system survives)
-
-Free and reallocate the buffer when the new size differs from the
-previously allocated size. This ensures old_log always has sufficient
-space for the data being copied.
-
-Fixes: 201e4aca5aa1 ("pstore/ram: Should update old dmesg buffer before reading")
-Signed-off-by: Sai Ritvik Tanksalkar <stanksal@purdue.edu>
-Link: https://patch.msgid.link/20260201132240.2948732-1-stanksal@purdue.edu
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+Fixes: 20bb6c9de1b7 ("soc: qcom: smem: map only partitions used by local HOST")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251209074610.3751781-1-jorge.ramirez@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/soc/qcom/smem.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index f1848cdd6d348..c9eaacdec37e4 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -298,6 +298,17 @@ void persistent_ram_save_old(struct persistent_ram_zone *prz)
- 	if (!size)
- 		return;
- 
-+	/*
-+	 * If the existing buffer is differently sized, free it so a new
-+	 * one is allocated. This can happen when persistent_ram_save_old()
-+	 * is called early in boot and later for a timer-triggered
-+	 * survivable crash when the crash dumps don't match in size
-+	 * (which would be extremely unlikely given kmsg buffers usually
-+	 * exceed prz buffer sizes).
-+	 */
-+	if (prz->old_log && prz->old_log_size != size)
-+		persistent_ram_free_old(prz);
-+
- 	if (!prz->old_log) {
- 		persistent_ram_ecc_old(prz);
- 		prz->old_log = kvzalloc(size, GFP_KERNEL);
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index 5217ff0a434f5..d039c660d04fb 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -1189,7 +1189,9 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 		smem->item_count = qcom_smem_get_item_count(smem);
+ 		break;
+ 	case SMEM_GLOBAL_HEAP_VERSION:
+-		qcom_smem_map_global(smem, size);
++		ret = qcom_smem_map_global(smem, size);
++		if (ret < 0)
++			return ret;
+ 		smem->item_count = SMEM_ITEM_COUNT;
+ 		break;
+ 	default:
 -- 
 2.51.0
 
