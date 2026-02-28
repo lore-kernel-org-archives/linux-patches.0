@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A754A35AC12
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A6735AC20
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302732; cv=none; b=P6BiO4FJFZm0XlZKj/A4PKLrSYshvqIidHBuHvMgwtV+GoPv/jczT4UBalX1ERNmw7EbN1Pavc1knf2Akg4b/MqjiI4+e+Z8g2FZO5Dn1uiy9JtJN1JqUsZIo9oL04r5qEHE8q1bCaHHnL9IoIjp+Nk7I57kThHFRHfkkOF9Wms=
+	t=1772302733; cv=none; b=tDHPwt8RoARE6+dFUKTNdfv3RN+/YkPooYKJiqfFmzvZZpmWPCVwEHX/VDyXwX5k6N9AERmyPY3ajR5UIHxUo+yCWYtq3ErJR1bDFKBZHHHrX7MQIaLcRRfY+h3wWAiMOmXE2edv/St9G62G4mDgaSjGDGIRlBhe9JqK4wN8VAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302732; c=relaxed/simple;
-	bh=S0Lcse+eXtblkoyqJ0e6/DYsO0vR74jJ9R2nZ9qCRME=;
+	s=arc-20240116; t=1772302733; c=relaxed/simple;
+	bh=RA0ykfmJKkDQI1XUBOGQHD7deHFIvJ33jbcbbOWLtco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBkxcHZmybUVD8J2paoeDP5wYltKrr5pPbqESnA5qBdKu+ayWWgInJDk6aHKBATJTwdUH4q/SpCVm/ymch000W2toiDSedChPqulYY8deFKK+jAxURh7IOL63IhUrXHP7it/s46+8t1LsUuJFIClW10QYSGxNKfHm3F9Rq45Hjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eqHKUJ5z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hkge9bO6aANMav1CRMj3r/e207Puk93w/LByURm+L6yqySwDTQvSYvuh9PUNe/R1Lq6uqW5tAoeR01e9yyCVvk+UANIB2Ofs0X7deGB1ZfEYQz9nFsq8NTkiEeaC44nUy9HMFrbGXSMAROMpQ2LVmDV8cGd71Cox8eta7Pg4qLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LqJMw4hi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eqHKUJ5z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190F8C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LqJMw4hi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD88FC19424;
 	Sat, 28 Feb 2026 18:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302732;
-	bh=S0Lcse+eXtblkoyqJ0e6/DYsO0vR74jJ9R2nZ9qCRME=;
+	s=k20201202; t=1772302733;
+	bh=RA0ykfmJKkDQI1XUBOGQHD7deHFIvJ33jbcbbOWLtco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqHKUJ5zeWZm9EJh2I/xwXEFQDl/nj8FxikH0c7pkxMsGT5YG+IZ0v9SIk2jvC1Ww
-	 oE01IKuGRaJd12jdv3h65EDmW4EHFpnyHP11VRxyuHk6I+dcbhQbwgXFL8TLQmWsAu
-	 CQKq4cUUaGxW/XGTCcg06KJuJzQlE5MrlKPuKR0L02oFkf9ljDvj9ME52Ft/XHlTtr
-	 ppAybLw45fSU246kgC+c/kTEKUtJcq822OEIh5mQuhnXqgzVA5vbj2flV8mo0Nkvo6
-	 Qd18xClgBp7ARby5kcih9FhJoGFPE6gLb7x/JBpcGOkJMDhOZDGkWbLYk3BY5vjNz4
-	 m88sxCHjeS+WA==
+	b=LqJMw4hihS/yiclx/q7N+bs/F+LTDqMCcMTBbXSWenl6tesLsJjhAVsJEKZNkiLW3
+	 ZAPCBwXoMW2eDyFs2kM6gY8W7X8FfoYo8iWa+VaLkxVA20yZkfjj+LZB+QtsZ9mKTJ
+	 mnXA5TSSzf5zyWuNVmm4INq6yLxx3KhzgHciYHuOvBGzGR+12p1pZWiaN+fspUFBLv
+	 3MCH/YTltDoBsVQQ7CqcOv8JUIDurO51s2FxZ8MBjG821LPs85FopduQjqYpfG6gyf
+	 iWybfZIv1aMAhPe4Tn1uWia/pYp1YTQOmmzDxksM+pEfrbWmePCLpO+LnsVKO2ZBne
+	 ghu6JQXxgPeJw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+Cc: Paul Cercueil <paul@crapouillou.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/147] mtd: rawnand: cadence: Fix return type of CDMA send-and-wait helper
-Date: Sat, 28 Feb 2026 13:16:43 -0500
-Message-ID: <20260228181736.1605592-95-sashal@kernel.org>
+Subject: [PATCH 5.10 096/147] PM: core: Redefine pm_ptr() macro
+Date: Sat, 28 Feb 2026 13:16:44 -0500
+Message-ID: <20260228181736.1605592-96-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -47,38 +49,59 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit 6d8226cbbf124bb5613b532216b74c886a4361b7 ]
+[ Upstream commit c06ef740d401d0f4ab188882bf6f8d9cf0f75eaf ]
 
-cadence_nand_cdma_send_and_wait() propagates negative errno values
-from cadence_nand_cdma_send(), returns -ETIMEDOUT on failure and -EIO
-when the CDMA engine reports a command failure.
+The pm_ptr() macro was previously conditionally defined, according to
+the value of the CONFIG_PM option. This meant that the pointed structure
+was either referenced (if CONFIG_PM was set), or never referenced (if
+CONFIG_PM was not set), causing it to be detected as unused by the
+compiler.
 
-However, it is declared as u32, causing error codes to wrap.
-Change the return type to int to correctly propagate errors.
+This worked fine, but required the __maybe_unused compiler attribute to
+be used to every symbol pointed to by a pointer wrapped with pm_ptr().
 
-Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+We can do better. With this change, the pm_ptr() is now defined the
+same, independently of the value of CONFIG_PM. It now uses the (?:)
+ternary operator to conditionally resolve to its argument. Since the
+condition is known at compile time, the compiler will then choose to
+discard the unused symbols, which won't need to be tagged with
+__maybe_unused anymore.
+
+This pm_ptr() macro is usually used with pointers to dev_pm_ops
+structures created with SIMPLE_DEV_PM_OPS() or similar macros. These do
+use a __maybe_unused flag, which is now useless with this change, so it
+later can be removed. However in the meantime it causes no harm, and all
+the drivers still compile fine with the new pm_ptr() macro.
+
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 0ba2035026d0 ("crypto: ccp - Add an S4 restore flow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/cadence-nand-controller.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/pm.h | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/cadence-nand-controller.c b/drivers/mtd/nand/raw/cadence-nand-controller.c
-index db565a0edcfd0..544cf5fe946a7 100644
---- a/drivers/mtd/nand/raw/cadence-nand-controller.c
-+++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
-@@ -1018,7 +1018,7 @@ static int cadence_nand_cdma_send(struct cdns_nand_ctrl *cdns_ctrl,
+diff --git a/include/linux/pm.h b/include/linux/pm.h
+index 52d9724db9dc6..5ac2c9ba5baf7 100644
+--- a/include/linux/pm.h
++++ b/include/linux/pm.h
+@@ -374,11 +374,7 @@ const struct dev_pm_ops __maybe_unused name = { \
+ 	SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
  }
  
- /* Send SDMA command and wait for finish. */
--static u32
-+static int
- cadence_nand_cdma_send_and_wait(struct cdns_nand_ctrl *cdns_ctrl,
- 				u8 thread)
- {
+-#ifdef CONFIG_PM
+-#define pm_ptr(_ptr) (_ptr)
+-#else
+-#define pm_ptr(_ptr) NULL
+-#endif
++#define pm_ptr(_ptr) PTR_IF(IS_ENABLED(CONFIG_PM), (_ptr))
+ 
+ /*
+  * PM_EVENT_ messages
 -- 
 2.51.0
 
