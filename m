@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5539346AC1
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A013133A702
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302081; cv=none; b=O+Zc5rg2pnqAMPMIqa2ja3QkAWyniqovRwt6JDPc6z4IyxyQOjQIc5EDQWyihgiJhs8OvGsRVNlKI5W5K34ds+wkwOPL2xksbeplr8C8VbIj2nrczmvh/1zbRdGAzGmFonssGC7gLiRby5nM7SUO5ef1UtOAqo4AU7aoKqH6PcU=
+	t=1772302082; cv=none; b=UGw57MsMZ3CorSP8CaNzPqOHSEJZet5Q41TiqmW3rofaZaASt+sDbJeDIIjBexHYssvEJIdlTl6qzGcadXwm9FduOmhCR2lJ51LZex11U2aponiHvzyNGjdyRd2UEagm+OplkCnaKoPK+FljC4g+P9d4iNSp61jKiWiY/r5DH7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302081; c=relaxed/simple;
-	bh=9FSlJfuBzqE/VtqRJubcyxozG1CtseSgG/dWmV9PoL0=;
+	s=arc-20240116; t=1772302082; c=relaxed/simple;
+	bh=EGB2OUkpkeLHpdQAAIv6VsAni3JRLiOoHq0sm3y8vaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XdfS9v+9y2gg3ZxXcJCVCxnO3pzQt7lOC/1pj1G7MmTffeGvmE3RHkz2nw3191yRhEj2WocKsf2JyvjxOLknlX3tjU0+zpltwRVFFkTzifhsLfq2zeLO+BqwsUnecP5YrVClLK6PQE6mr5vDqe2MI5IpIlu1yd0ZjBotYS0vU4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yi1daLls; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n+7ZpeVxgF7rvnwvfG3LrVLzIMPYk89IO9mJ+KtsL6K9nYGNmezcGr901nohM6tltgsnMoN3H1J6tauo7iOWH1zYp4rndyy5pJdGbE8IXI/MMVny56Op7eHO7tVnSTnyFF9pSgx9pNwVkcRwpNeGTyZyqd4B0hjkC44tAntfsYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EaFOTR7g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yi1daLls"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC45C19423;
-	Sat, 28 Feb 2026 18:08:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EaFOTR7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8B8C19424;
+	Sat, 28 Feb 2026 18:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302081;
-	bh=9FSlJfuBzqE/VtqRJubcyxozG1CtseSgG/dWmV9PoL0=;
+	s=k20201202; t=1772302082;
+	bh=EGB2OUkpkeLHpdQAAIv6VsAni3JRLiOoHq0sm3y8vaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yi1daLls+z8MIZZFBIN/YdB8cqqPqfUTQgVY/H7zJLPJi+MG4TRjeYI3iUGdpoCpC
-	 x14rIs+hlbp1aLUIz3G4x/cRRwOjtpfLUo+DYoSpwQQrbXWQJSnQG3sHFoZGlqETIG
-	 6oTK9VVV2fDma+sN3qh94HRfom8dGlfYTqQO7adnU/Ziq7Kq2QUnt705yNBqr6V/2u
-	 myQYFJyh6LNqDuSDs32gWUins8lLuaaeHGHIe3dWovQm6p5blRlBStZNvZJOzqcOW6
-	 kGfCUefM/LNE70ozdpFe1r5SWiclJ+Jce2pUcB4YuSq0VfWUQ+oqylgIyZgykkS3Pi
-	 umqnsTege7uWg==
+	b=EaFOTR7goMoatH6b131wHtdG+9ayEJb718MSsBS7gxm1Fe4x04FGbD6JOzTfXHQ9a
+	 O36qS61Oj4u9YjKCgx3HihJSt7zPX8hqoozMtfYCwS+w2JGY5e+1oDsq+f8xh9cyUT
+	 WwM5CDlwf71/OLnr21MO0Cc6L7EBouCTZ/QPsz710acZH4pJmGFdsmUhOQ+gPB6QjO
+	 a/Ju2OoZUxbKXkQOpcsPzYW/WbLpEn8tL6YTWhvKUt1CMY/1WKJLC5MDoMWcLG1KrL
+	 YqLEDhCSEZzGh8OHcsEck+zj1uT1i/btVE9UCSXOYrY5M7QjjnLsfulXQTfWDJXPzP
+	 vnSkEeG6UD6Fw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Casey Connolly <casey.connolly@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/283] arm64: dts: qcom: sdm630: fix gpu_speed_bin size
-Date: Sat, 28 Feb 2026 13:03:25 -0500
-Message-ID: <20260228180709.1583486-63-sashal@kernel.org>
+Subject: [PATCH 6.6 064/283] arm64: dts: qcom: sdm845-oneplus: Don't mark ts supply boot-on
+Date: Sat, 28 Feb 2026 13:03:26 -0500
+Message-ID: <20260228180709.1583486-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,46 +49,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Casey Connolly <casey.connolly@linaro.org>
 
-[ Upstream commit e814796dfcae8905682ac3ac2dd57f512a9f6726 ]
+[ Upstream commit c9b98b9dad9749bf2eb7336a6fca31a6af1039d7 ]
 
-Historically sdm630.dtsi has used 1 byte length for the gpu_speed_bin
-cell, although it spans two bytes (offset 5, size 7 bits). It was being
-accepted by the kernel because before the commit 7a06ef751077 ("nvmem:
-core: fix bit offsets of more than one byte") the kernel didn't have
-length check. After this commit nvmem core rejects QFPROM on sdm630 /
-sdm660, making GPU and USB unusable on those platforms.
+The touchscreen isn't enabled by bootloader and doesn't need to be
+enabled at boot, only when the driver probes, thus remove the
+regulator-boot-on property.
 
-Set the size of the gpu_speed_bin cell to 2 bytes, fixing the parsing
-error. While we are at it, update the length to 8 bits as pointed out by
-Alexey Minnekhanov.
-
-Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Link: https://lore.kernel.org/r/20251211-sdm630-fix-gpu-v2-1-92f0e736dba0@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20251118-dts-oneplus-regulators-v2-1-3e67cea1e4e7@ixit.cz
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 0f3f57fb860ec..74b36cb8bffa8 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -589,8 +589,8 @@ qusb2_hstx_trim: hstx-trim@240 {
- 			};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index bccc52e01da38..c50d335e0761f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -155,7 +155,6 @@ ts_1p8_supply: ts-1p8-regulator {
  
- 			gpu_speed_bin: gpu-speed-bin@41a0 {
--				reg = <0x41a2 0x1>;
--				bits = <5 7>;
-+				reg = <0x41a2 0x2>;
-+				bits = <5 8>;
- 			};
- 		};
+ 		gpio = <&tlmm 88 0>;
+ 		enable-active-high;
+-		regulator-boot-on;
+ 	};
+ };
  
 -- 
 2.51.0
