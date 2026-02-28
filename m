@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3FB34252B
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2362434252B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301774; cv=none; b=g4Td/fn+tRe4vuaDM3yJklpH66ghkM00Pupr0oDpIuTdfP7+AEGxq/UztUqHvsQicDJHlMlKVsCMJI+KLsEswhjD8jMHEJChmCK0hpO6zMmLHLU1SP4ALi1ywSjVcOp/4+TaEPkTMqyrW01AxQtzSSs6aNWK/eJCHLY0hZmOcLY=
+	t=1772301775; cv=none; b=aaHFjb4sdWE/yw1+mW6OehkpAK2WTsjhCr7lNZDYGQ9lbm03S4VRNDAka7SRHciWrwycaAZkMWFwxzr0406rozfFL1C4uOCaBiQzvgfoDne5K/fgjAvtXCedDhpTirZdsvy29GEUcA3td39JAMbsyShMaQAVrv/motq3vUy0FaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301774; c=relaxed/simple;
-	bh=FNCbpSuOGTbr7l5beODturTNZGmgq/0NHyk6+m26uuY=;
+	s=arc-20240116; t=1772301775; c=relaxed/simple;
+	bh=+yHBVrzvNvf3e+OYWrTr3rh7o88KktEN6hOeMWiY4vM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dt1xtIM6dYeiTpeuVPoQGcym5vWMBmXoKky+u0YDAs6jGM57Xaj8qmlqYNhSaY4r/nwWrG7WAOg8LYUKIiv/mU9RCcSN0mmEC0R+w/IwRTa2pRTUfNmo7vq0llkbmVaQrS4by5MfF4Q/xMOKMRxVHcbJVRvKZYr2uDNoUFwZ5A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BXpoiOgM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qdma3E0mjleCneXoSpIxono8m5L9KRuOukQJiE9d6EDkNOFDaTzYg1QjWuZ7O85NM/exTpfnFwhZUbcAHd9c1gE/KYTM99ARdHke9ve5ZPr/nS+D04PxaJi3WyApjkpbFYSd8dX7MM472Dl4Ec6PTI7THwP/hn8z4LhNbOCmICE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X9Sic+dO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BXpoiOgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4C6C19423;
-	Sat, 28 Feb 2026 18:02:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X9Sic+dO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89118C19424;
+	Sat, 28 Feb 2026 18:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301774;
-	bh=FNCbpSuOGTbr7l5beODturTNZGmgq/0NHyk6+m26uuY=;
+	s=k20201202; t=1772301775;
+	bh=+yHBVrzvNvf3e+OYWrTr3rh7o88KktEN6hOeMWiY4vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXpoiOgM4jY58/GKI/6B/C6tsvs4+p252EIMVC4OgCmBDr75dPK7EWY8SzsVQR+m2
-	 U3BW0ggfuIPeANOXvZbv8tleYe15SFwDIp1g4qL9DeiGdiAKjeLj2exQ5rNFGpPJR0
-	 8SDnblsNk89lrbELLZ0yLEG6nM1mrRvutWTflTxHcXyiuk4L6XXTc2No/NiFvadbA+
-	 k6dk6U7cIcLc5a6EnAhEnV1bKI9KlG59DQ/ibxrvNS/FTFASO0vW2GbZ6BPboq4dF5
-	 UDSklIanljZwtrDW/r9OJljWCIHI4nS6W8nsxShBAkpPyeoxRBJnTEXT6kSYQrzLUG
-	 T0bPGdiEgYp0w==
+	b=X9Sic+dO8fLFjY6MG6+oBcgEGm4WS0KFWm6KuGkvLLo1g212JHIr8Z224uOxdLv5d
+	 W1nyKJNTy496kxUMhuYXF4sVuvOLH6mo5kWOsw8X8NUjovIfpxnQcvceRjrQJOh8yg
+	 7qLl1bxdh4EeXribaDV4HsNCVxJUnT6DyukqYia9Nz2FyM8wN4/V1mgubCOMimzp7P
+	 WRjkTZ4CtBCK2rx78b9T870afKjZMl7kZKaBEyQGSDCgZdxxCyEnnuLO8GdkFJSyCd
+	 xAeLImCSH0Gy1XuOIqoMXuyBiSqAxEe0E6Rm6e++o2OnQBumhzz5BLeTtkzOwKlW/T
+	 NBz7OsvBdmoIA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
+Cc: Mikulas Patocka <mpatocka@redhat.com>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 182/385] PCI/portdrv: Fix potential resource leak
-Date: Sat, 28 Feb 2026 12:56:44 -0500
-Message-ID: <20260228180011.1568201-182-sashal@kernel.org>
+Subject: [PATCH 6.12 183/385] dm: fix unlocked test for dm_suspended_md
+Date: Sat, 28 Feb 2026 12:56:45 -0500
+Message-ID: <20260228180011.1568201-183-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -45,47 +43,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 01464a3fdf91c041a381d93a1b6fefbdb819a46f ]
+[ Upstream commit 24c405fdbe215c45e57bba672cc42859038491ee ]
 
-pcie_port_probe_service() unconditionally calls get_device() (unless it
-fails). So drop that reference also unconditionally as it's fine for a
-PCIe driver to not have a remove callback.
+The function dm_blk_report_zones tests if the device is suspended with
+the "dm_suspended_md" call. However, this function is called without
+holding any locks, so the device may be suspended just after it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://patch.msgid.link/e1c68c3b3f1af8427e98ca5e2c79f8bf0ebe2ce4.1764688034.git.u.kleine-koenig@baylibre.com
+Move the call to dm_suspended_md after dm_get_live_table, so that the
+device can't be suspended after the suspended state was tested.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 37f53a2c60d0 ("dm: fix dm_blk_report_zones")
+Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/portdrv.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/dm-zone.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pcie/portdrv.c b/drivers/pci/pcie/portdrv.c
-index ec2c768c687f0..75068c5029b01 100644
---- a/drivers/pci/pcie/portdrv.c
-+++ b/drivers/pci/pcie/portdrv.c
-@@ -555,10 +555,10 @@ static int pcie_port_remove_service(struct device *dev)
- 
- 	pciedev = to_pcie_device(dev);
- 	driver = to_service_driver(dev->driver);
--	if (driver && driver->remove) {
-+	if (driver && driver->remove)
- 		driver->remove(pciedev);
--		put_device(dev);
--	}
+diff --git a/drivers/md/dm-zone.c b/drivers/md/dm-zone.c
+index 04cc36a9d5ca4..d7b1c89fcd87b 100644
+--- a/drivers/md/dm-zone.c
++++ b/drivers/md/dm-zone.c
+@@ -66,11 +66,13 @@ int dm_blk_report_zones(struct gendisk *disk, sector_t sector,
+ 		 * Zone revalidation during __bind() is in progress, but this
+ 		 * call is from a different process
+ 		 */
+-		if (dm_suspended_md(md))
+-			return -EAGAIN;
+-
+ 		map = dm_get_live_table(md, &srcu_idx);
+ 		put_table = true;
 +
-+	put_device(dev);
- 	return 0;
- }
++		if (dm_suspended_md(md)) {
++			ret = -EAGAIN;
++			goto do_put_table;
++		}
+ 	} else {
+ 		/* Zone revalidation during __bind() */
+ 		map = zone_revalidate_map;
+@@ -80,6 +82,7 @@ int dm_blk_report_zones(struct gendisk *disk, sector_t sector,
+ 		ret = dm_blk_do_report_zones(md, map, sector, nr_zones, cb,
+ 					     data);
+ 
++do_put_table:
+ 	if (put_table)
+ 		dm_put_live_table(md, srcu_idx);
  
 -- 
 2.51.0
