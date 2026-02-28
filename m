@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418A333F38A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1050E340A5A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301086; cv=none; b=u6CLLrEFHCD65AXiqIgHphi2JiM9TQQ0swzUOnmzap/5fSsgNiuoO2MuifDxOl92jOjk/HBnuo52zi+b+71+8MFyVZgqH4BJuX65i6QNURdvY84C6zxfthJrmHO+uvOMjvTb9lHDAGiuUPROfwXXD2yyyA7sJrUKUaIhJSoNCCM=
+	t=1772301087; cv=none; b=BA50H9V8B7aWEv2oWYQUAvMZexlyVnlWcYvTQRj685TKVUDDjzVTSF1hZW91ECULlSzYzU42YpvQ4Fw454DYrA56kmxS2U/h7DLR0EQOzmMicD4mfFrUK1qUGjl+dqAmDQQAgFty+ldIJim2J5XPVtjRAKpeMVjN96xrHnoZDuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301086; c=relaxed/simple;
-	bh=HfMBHUooK+Lp9luf0ZHS7pbropNMA8FcQR5o2KD4RwM=;
+	s=arc-20240116; t=1772301087; c=relaxed/simple;
+	bh=Qe6oVHYQDHV1NO9+lVk2T4oGIaNH8nqDeXi7hq8ftyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=otI0ronacFmBKuodtjqRcqq04rBXxq6+3BGqXIcoC3YFRr8NNLZz9Wxh739FzcZplg8/jCpvKMk9/SQlE3mkAvcBktBrUrD7eZpbxrsmGK3YZ4NfIrS828de5OT1qsa0UI1PikzQZ15lclmo2VAp7jp8jvI/Ou+1Oe9EKKoLy0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oDq2ki4B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=soBTII1IIsAvQ11MR6Z6d6QU9yWZKuTtyAwmzC+R95siGe4+3aIrZ0MgypXjeheAERUzJd3r6fWnBIu0mxai/FMNAuRwY8MWaK8L6xUAhJkrDZo7wPqtIdC7C14FvG2jf7EkVCYORryqIdovYG8c43DYKcagJk8z7H7K6gegro4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZExRF2pU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oDq2ki4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4501C116D0;
-	Sat, 28 Feb 2026 17:51:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZExRF2pU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69170C19423;
+	Sat, 28 Feb 2026 17:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301086;
-	bh=HfMBHUooK+Lp9luf0ZHS7pbropNMA8FcQR5o2KD4RwM=;
+	bh=Qe6oVHYQDHV1NO9+lVk2T4oGIaNH8nqDeXi7hq8ftyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oDq2ki4B76q3ICMNMB3DuIvbHouGOm5Jl0jQMPgy+ihJl57NzitH8dX9Um/WKR3//
-	 W2Bk56NH3w3T8YsG/93d5N58O/2bWmeOt91wZdVOpW+4/dIrGuPzI+qm12CwuRBe/f
-	 u/zupIzXws01Xn8Fyd6wp7WlR6xLcLXWWngjZGm2mIV3RzhByQ3lvuaZnbA2OCxNi8
-	 MsWEnZA4gFCGmhCgiXnC+YPxzTCl0ooQyHpD5HKxGzXdRVLIdv91WDO1KpuHvFN0Tq
-	 hlFue5C9Z1t03Mz2khU2517KG4hY32TrfAMhIAZKbqxVRMmHFFGBfM+XSuSBACVfbr
-	 AzOdkvseSvZzQ==
+	b=ZExRF2pUbOgQ2IFF5rEh+8kTmMQ82UiV2tBVnGhAHlMQm8Nh2TdBP2gHwRLtSKo/8
+	 7/D13iuXcieD+FC0xVksR86LoRAs2cngv7Md5JwO5y67ZqaIOiyD+VpXsQ+0a3aIIR
+	 gWIwpOscvCp8gKEcalMirK/VQyr6/AXCRAsnPdeCxtJyqtcAqf8cRh0KlnFmR7W0he
+	 Oy9MmSiEW/8cxsrcmkmpbF6LYMK5VbvVjk/21Sk0ZK4Yde3Z/EMDCemFcNbCB9RJTN
+	 TrdKydejOEH49UJVaLkouJ3SGjUDdM3Cgt94VI/1HgtXP4t8qq2YRifjwQSp+g8OR6
+	 VdiSVaHZr6dEQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Chin-Yen Lee <timlee@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Shawn Lin <shawn.lin@rock-chips.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 235/752] wifi: rtw89: wow: add reason codes for disassociation in WoWLAN mode
-Date: Sat, 28 Feb 2026 12:39:06 -0500
-Message-ID: <20260228174750.1542406-235-sashal@kernel.org>
+Subject: [PATCH 6.18 236/752] PCI: dw-rockchip: Disable BAR 0 and BAR 1 for Root Port
+Date: Sat, 28 Feb 2026 12:39:07 -0500
+Message-ID: <20260228174750.1542406-236-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,51 +47,72 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Chin-Yen Lee <timlee@realtek.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 2fd8f953f25173d14981d8736b6f5bfcd757e51b ]
+[ Upstream commit b5d712e5b87fc56ff838684afb1bae359eb8069f ]
 
-Some APs disconnect clients by sending a Disassociation frame
-rather than a Deauthentication frame. Since these frames use
-different reason codes in WoWLAN mode, this commit adds support
-for handling Disassociation to prevent missed disconnection events.
+Some Rockchip PCIe Root Ports report bogus size of 1GiB for the BAR
+memories and they cause below resource allocation issue during probe.
 
-Signed-off-by: Chin-Yen Lee <timlee@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260110022019.2254969-3-pkshih@realtek.com
+  pci 0000:00:00.0: [1d87:3588] type 01 class 0x060400 PCIe Root Port
+  pci 0000:00:00.0: BAR 0 [mem 0x00000000-0x3fffffff]
+  pci 0000:00:00.0: BAR 1 [mem 0x00000000-0x3fffffff]
+  pci 0000:00:00.0: ROM [mem 0x00000000-0x0000ffff pref]
+	...
+  pci 0000:00:00.0: BAR 0 [mem 0x900000000-0x93fffffff]: assigned
+  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: can't assign; no space
+  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: failed to assign
+  pci 0000:00:00.0: ROM [mem 0xf0200000-0xf020ffff pref]: assigned
+  pci 0000:00:00.0: BAR 0 [mem 0x900000000-0x93fffffff]: releasing
+  pci 0000:00:00.0: ROM [mem 0xf0200000-0xf020ffff pref]: releasing
+  pci 0000:00:00.0: BAR 0 [mem 0x900000000-0x93fffffff]: assigned
+  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: can't assign; no space
+  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: failed to assign
+
+Since there is no use of the Root Port BAR memories, disable both of them.
+
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+[mani: reworded the description and comment]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/1766570461-138256-1-git-send-email-shawn.lin@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/wow.c | 4 ++++
- drivers/net/wireless/realtek/rtw89/wow.h | 1 +
- 2 files changed, 5 insertions(+)
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/wow.c b/drivers/net/wireless/realtek/rtw89/wow.c
-index 5faa51ad896a2..f34cd863d1009 100644
---- a/drivers/net/wireless/realtek/rtw89/wow.c
-+++ b/drivers/net/wireless/realtek/rtw89/wow.c
-@@ -809,6 +809,10 @@ static void rtw89_wow_show_wakeup_reason(struct rtw89_dev *rtwdev)
+diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+index 3e2752c7dd096..79e55b9833e4a 100644
+--- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
++++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+@@ -74,6 +74,8 @@
+ #define  PCIE_LINKUP_MASK		GENMASK(17, 16)
+ #define  PCIE_LTSSM_STATUS_MASK		GENMASK(5, 0)
  
- 	reason = rtw89_read8(rtwdev, wow_reason_reg);
- 	switch (reason) {
-+	case RTW89_WOW_RSN_RX_DISASSOC:
-+		wakeup.disconnect = true;
-+		rtw89_debug(rtwdev, RTW89_DBG_WOW, "WOW: Rx disassoc\n");
-+		break;
- 	case RTW89_WOW_RSN_RX_DEAUTH:
- 		wakeup.disconnect = true;
- 		rtw89_debug(rtwdev, RTW89_DBG_WOW, "WOW: Rx deauth\n");
-diff --git a/drivers/net/wireless/realtek/rtw89/wow.h b/drivers/net/wireless/realtek/rtw89/wow.h
-index d2ba6cebc2a6b..71e07f482174f 100644
---- a/drivers/net/wireless/realtek/rtw89/wow.h
-+++ b/drivers/net/wireless/realtek/rtw89/wow.h
-@@ -33,6 +33,7 @@
- enum rtw89_wake_reason {
- 	RTW89_WOW_RSN_RX_PTK_REKEY = 0x1,
- 	RTW89_WOW_RSN_RX_GTK_REKEY = 0x2,
-+	RTW89_WOW_RSN_RX_DISASSOC = 0x4,
- 	RTW89_WOW_RSN_RX_DEAUTH = 0x8,
- 	RTW89_WOW_RSN_DISCONNECT = 0x10,
- 	RTW89_WOW_RSN_RX_MAGIC_PKT = 0x21,
++#define PCIE_TYPE0_HDR_DBI2_OFFSET      0x100000
++
+ struct rockchip_pcie {
+ 	struct dw_pcie pci;
+ 	void __iomem *apb_base;
+@@ -257,6 +259,8 @@ static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
+ 	if (irq < 0)
+ 		return irq;
+ 
++	pci->dbi_base2 = pci->dbi_base + PCIE_TYPE0_HDR_DBI2_OFFSET;
++
+ 	ret = rockchip_pcie_init_irq_domain(rockchip);
+ 	if (ret < 0)
+ 		dev_err(dev, "failed to init irq domain\n");
+@@ -266,6 +270,10 @@ static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
+ 
+ 	rockchip_pcie_enable_l0s(pci);
+ 
++	/* Disable Root Ports BAR0 and BAR1 as they report bogus size */
++	dw_pcie_writel_dbi2(pci, PCI_BASE_ADDRESS_0, 0x0);
++	dw_pcie_writel_dbi2(pci, PCI_BASE_ADDRESS_1, 0x0);
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
