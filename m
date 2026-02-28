@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE72340A5A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522D0313E31
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301059; cv=none; b=QA/0Y2Gu+sewXkNPiBjpyO7+0NvbEzD4XpkLP0+jedYTD4AD+NbjMFnus9Xap7b0Fa5M5z+9ZcnPoVW8XSaH3PbsReSmeA58is7wExK9P4oZgJHjKO+mKF8Bq70mybmj/VoXnD/NZXq5vy94e/Pduigv0d7IMfDJqsK2Ld5VSx0=
+	t=1772301060; cv=none; b=DHUZMdvQIvLH2HNlQmPW/64HYKZVCNLvYmeFiwWBf3jFgJNZobygqrdMa/fa0lavPtnI58TjFZoTgkw+G/BR0TluP9BHDzAaHF/4+8PxxWP6V9lKzjIbW36wcZ6gzkRWULtROaxyBnbKZArptDuXLJLmhduvA02vvyQhlsXsW+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301059; c=relaxed/simple;
-	bh=jKgCr0GAHW1qTym+61T91FFjvE2xRBzxxMtIV3wVZ0o=;
+	s=arc-20240116; t=1772301060; c=relaxed/simple;
+	bh=qqlcOoyg563JE1Wpv7r2VRKEEVmqBZ8zj2d/aHPFEQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AEG4GZ2tMpP5UTbSNkGpLv6CJQoTduJkVARFXqDQbRBp8aKd45uUwON2lWxlbcDEaXOOrh1yDU5u3EKVzdp8FPhOzjw3F+NkcSjHnfEYAXyX7i0S/xMmPt4pEh3+lm7i5xBPZZcegVA3nrHeCocQeIO4t82the8j+t8sSvpfBbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dBQu7E1y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E93IVCwoMPFl/JZzLaNXrEz3x+E9Fkg3ClWl37Qm8JdZPqBddY8O1fH1iHJQkFh1YyP6os2BxX+ouEHZhYOwWC3+dm5l/myd2eSg8UlZR01Zr/jkSNhWxOtwKQzM3JRbhF9CpIJrEnio4OPKR6k9eNELdAcWEWY4UIuXqLCx1I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ab7FBkzU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dBQu7E1y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE3DC19423;
-	Sat, 28 Feb 2026 17:50:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ab7FBkzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB296C116D0;
+	Sat, 28 Feb 2026 17:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301059;
-	bh=jKgCr0GAHW1qTym+61T91FFjvE2xRBzxxMtIV3wVZ0o=;
+	s=k20201202; t=1772301060;
+	bh=qqlcOoyg563JE1Wpv7r2VRKEEVmqBZ8zj2d/aHPFEQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBQu7E1ygkouCr+ux991lvRRFjaUJ9cRHzEEdOIRTxPb7ipFtoV+NWaoMEiGOKE4W
-	 o20XJVL595Nyp2YJCFEL44PHG3HCUvHRtmwyOpjDmh/kwmRoTT+rIeOXTjjf1y/by2
-	 BKzBd+JLNM1V8kNc2WmHs9wkUQaodYZKlaJ/IQbOiA4qERWR9b3ToXni7RXb7/tuKJ
-	 czxYTbHz1QwG7L2iGBxKix/GyLm6wjij/r+NvzGPCboXGDW/1NdMD0K7Sq1wafzc09
-	 iGxFhjWOaj+F4wzZjqmX1b/VELiFBnzoAB6LGYJ0PnrQwlAz9JOmx2YaMWdsjrUymk
-	 lTtQMcBkBA5Xw==
+	b=Ab7FBkzUbMGwhd4U4PXywVuFrGyw6B6Uo1dU+e5lDzBUv776cegBevjO5AxxBiCfM
+	 vUcwOW/1xrsVd+BSW+XFrMCQRvywf0PX1zgjs5jgK7ndGw4we0gZl/Cc6ub42OV5rb
+	 elEbOwf4ixu6jXUXPysIu6JnIfuuGtj/k7qYCeNF5meJR1vOQydmJ8Ano7Y4JJiJTz
+	 EZEOpvJCcP/55u7JQB/UrCjexJi0I1jTUUhQHZIuCrqFIo7R/W2umxena20Zx5xKwk
+	 d5T06uEv3H3meT4qqdUxbAkGePGZsaxHE9t7DRYlBm0QjnH7bnOBo88amaPkMoHRdA
+	 LrmVSH0eFA6kA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Bastien Nocera <hadess@hadess.net>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Hsieh Hung-En <hungen3108@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 201/752] HID: logitech-hidpp: Add support for Logitech K980
-Date: Sat, 28 Feb 2026 12:38:32 -0500
-Message-ID: <20260228174750.1542406-201-sashal@kernel.org>
+Subject: [PATCH 6.18 202/752] ASoC: es8328: Add error unwind in resume
+Date: Sat, 28 Feb 2026 12:38:33 -0500
+Message-ID: <20260228174750.1542406-202-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,34 +47,55 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Bastien Nocera <hadess@hadess.net>
+From: Hsieh Hung-En <hungen3108@gmail.com>
 
-[ Upstream commit af4fe07a9d963a72438ade96cf090e84b3399d0c ]
+[ Upstream commit 8232e6079ae6f8d3a61d87973cb427385aa469b9 ]
 
-Add support for the solar-charging Logitech K980 keyboard, over
-Bluetooth. Bolt traffic doesn't get routed through logitech-dj, so
-this code isn't triggered when Bolt is used.
+Handle failures in the resume path by unwinding previously enabled
+resources.
 
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+If enabling regulators or syncing the regcache fails, disable regulators
+and unprepare the clock to avoid leaking resources and leaving the device
+in a partially resumed state.
+
+Signed-off-by: Hsieh Hung-En <hungen3108@gmail.com>
+Link: https://patch.msgid.link/20260130160017.2630-6-hungen3108@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/es8328.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 9b612f62d0fba..d117cf0b6de04 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4665,6 +4665,8 @@ static const struct hid_device_id hidpp_devices[] = {
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb037) },
- 	{ /* MX Anywhere 3SB mouse over Bluetooth */
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb038) },
-+	{ /* Slim Solar+ K980 Keyboard over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb391) },
- 	{}
- };
+diff --git a/sound/soc/codecs/es8328.c b/sound/soc/codecs/es8328.c
+index 76159c45e6b52..c0d7ce64b2d96 100644
+--- a/sound/soc/codecs/es8328.c
++++ b/sound/soc/codecs/es8328.c
+@@ -756,17 +756,23 @@ static int es8328_resume(struct snd_soc_component *component)
+ 					es8328->supplies);
+ 	if (ret) {
+ 		dev_err(component->dev, "unable to enable regulators\n");
+-		return ret;
++		goto err_clk;
+ 	}
  
+ 	regcache_mark_dirty(regmap);
+ 	ret = regcache_sync(regmap);
+ 	if (ret) {
+ 		dev_err(component->dev, "unable to sync regcache\n");
+-		return ret;
++		goto err_regulators;
+ 	}
+ 
+ 	return 0;
++
++err_regulators:
++	regulator_bulk_disable(ARRAY_SIZE(es8328->supplies), es8328->supplies);
++err_clk:
++	clk_disable_unprepare(es8328->clk);
++	return ret;
+ }
+ 
+ static int es8328_component_probe(struct snd_soc_component *component)
 -- 
 2.51.0
 
