@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524F6379EF7
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E37F32ED2A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301945; cv=none; b=bSUYTXV7ktcxpa5SgrE9rJFmD2ljC2FatjXPpXAnXbCEM/hyR316spFFv1vxSru5GJuvkQYs/tO8Rnn0sHSzo09YHtSgIoaUHRYferFJtrZpsSC/Cs4YNj6tdIunhQTi891eJd0msyfLObwIlI4UH2TcxQQpvzQWKH3zMioE+ZM=
+	t=1772301946; cv=none; b=NkoZ1TWwACyPChupuZ3UJ1VwKYhfwhyV5Uk71kqW7dmyzqC4Ss0mAIII978/QqE3Kf2PHi6wO3K96cDt7qj4JTaeVtomEXFH7vLVW26AIH1jFWrrjeN8D1kzfw7LI+zR0cUXftVcFBEwI6b8+jNKD2WYKzfllcNyEXsDfJymfMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301945; c=relaxed/simple;
-	bh=MOa7V8RNCbaW3Mqor/W/TJgSvXzmCP8ZCuAVeON//zY=;
+	s=arc-20240116; t=1772301946; c=relaxed/simple;
+	bh=Q/lGpJXeTxX0fJsFL1UrtiKpM2Ph9zj4Cd0eeFvzG6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UO4gF9yMevA26tuKK+WB+WEXhd0VatA4lMwc8afigaT0sZWPcTOJDVNlWNmLO8YSiRvsnlYe/m8//eNErZFTRt3Vtuubi/6F0ql+B8sRwQEZDveeL7sFiS20DfGtYYYht6h3jE6khcTk4CWii3Rtu/uexYdbyTPiWC/1kLTpLMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q5kdjbjk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qLW1erPhtFRiyS5qyiRlQdwpz91vhU6mJhXd/bAl221NQLGtcwxU8NdTQWgFRfF9g7eY26swaa8+/tmn1VtXbeMdp9ULxdZzbFzwu/2u6JBzF5jQd2MhtlQB517BUEiB3WngF+Gaaqgbsx6V/ry2zcFxPO6xcIiyHYs0EKXKtOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p64UAflY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q5kdjbjk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9901AC19424;
-	Sat, 28 Feb 2026 18:05:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p64UAflY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D892C19425;
+	Sat, 28 Feb 2026 18:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301945;
-	bh=MOa7V8RNCbaW3Mqor/W/TJgSvXzmCP8ZCuAVeON//zY=;
+	s=k20201202; t=1772301946;
+	bh=Q/lGpJXeTxX0fJsFL1UrtiKpM2Ph9zj4Cd0eeFvzG6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5kdjbjkUqyAUa+lMeiFpFhEJQ/OSH7ksEHEdZqcGgJU2aBuAYsoZNS9uI3AfTx1Q
-	 bnREHbvLyYx54qF9GTwbL53iharBRmG2up3XMwZAtdUgnsusD/3Z/m/FtSEt5o1rKb
-	 NIPTH3JyRFiwdXOkLaEITgLuRC4toEp2TDyuatFWoO96DWGgr1YK6Qp1L24Trh9QA1
-	 OHbxnuk9P0/LEGRQu0vwFVW6R+e69OG9Y6AdLnHheNGKhP+8WqH7Pg50mJVZPuLo9S
-	 +X26pFCEQO9q/zrI1nJPZntNnrUtn49V/b+wwJP6jvf0XASQUUgMEbl8fAAdZzbWOF
-	 JiLV/ebs/8IoA==
+	b=p64UAflYyEZE/NhR9Or/fOHaDG00U5tv8kx9/GuCpHV2wQ4BttYvJwHjAhOe20A9z
+	 Zwj8vSFwUfWW7czz4/YrmyfRNYeg2XE16GS/9Tnzr9xefHVjOvJ/CF5sUSDa2GOGtL
+	 1514ylG731u9+/K+52p5rfz6ukLm5vyAXzQeEq26pGzrp9Z39upJls64C4mNS6nfu7
+	 siskHoS3i5a8PnvIuNExMkQAOpTZuwzD7D8mtHR4qMsJSGvCeo67Zb693es+fcPCE5
+	 jEnIX+f+QJKvfLTKQ3W2tjBdpshYUVsp7/8Q/ksCMvFNIssylYggCwkMBlReVXLi6B
+	 1FY8+njEvzDWg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 383/385] bpftool: Fix truncated netlink dumps
-Date: Sat, 28 Feb 2026 13:00:05 -0500
-Message-ID: <20260228180011.1568201-383-sashal@kernel.org>
+Subject: [PATCH 6.12 384/385] ping: annotate data-races in ping_lookup()
+Date: Sat, 28 Feb 2026 13:00:06 -0500
+Message-ID: <20260228180011.1568201-384-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,71 +48,116 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3b39d73cc3379360a33eb583b17f21fe55e1288e ]
+[ Upstream commit ad5dfde2a5733aaf652ea3e40c8c5e071e935901 ]
 
-Netlink requires that the recv buffer used during dumps is at least
-min(PAGE_SIZE, 8k) (see the man page). Otherwise the messages will
-get truncated. Make sure bpftool follows this requirement, avoid
-missing information on systems with large pages.
+isk->inet_num, isk->inet_rcv_saddr and sk->sk_bound_dev_if
+are read locklessly in ping_lookup().
 
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Fixes: 7084566a236f ("tools/bpftool: Remove libbpf_internal.h usage in bpftool")
+Add READ_ONCE()/WRITE_ONCE() annotations.
+
+The race on isk->inet_rcv_saddr is probably coming from IPv6 support,
+but does not deserve a specific backport.
+
+Fixes: dbca1596bbb0 ("ping: convert to RCU lookups, get rid of rwlock")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260216100149.3319315-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20260217194150.734701-1-kuba@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/net.c | 5 ++++-
- tools/lib/bpf/netlink.c | 4 +++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ net/ipv4/ping.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
-index 39f208928cdb5..587403a19af3a 100644
---- a/tools/bpf/bpftool/net.c
-+++ b/tools/bpf/bpftool/net.c
-@@ -156,7 +156,7 @@ static int netlink_recv(int sock, __u32 nl_pid, __u32 seq,
- 	bool multipart = true;
- 	struct nlmsgerr *err;
- 	struct nlmsghdr *nh;
--	char buf[4096];
-+	char buf[8192];
- 	int len, ret;
+diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+index f62b17f59bb4a..0089c1605acfe 100644
+--- a/net/ipv4/ping.c
++++ b/net/ipv4/ping.c
+@@ -159,7 +159,7 @@ void ping_unhash(struct sock *sk)
+ 	pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
+ 	spin_lock(&ping_table.lock);
+ 	if (sk_del_node_init_rcu(sk)) {
+-		isk->inet_num = 0;
++		WRITE_ONCE(isk->inet_num, 0);
+ 		isk->inet_sport = 0;
+ 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
+ 	}
+@@ -192,31 +192,35 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
+ 	}
  
- 	while (multipart) {
-@@ -201,6 +201,9 @@ static int netlink_recv(int sock, __u32 nl_pid, __u32 seq,
- 					return ret;
- 			}
- 		}
+ 	sk_for_each_rcu(sk, hslot) {
++		int bound_dev_if;
 +
-+		if (len)
-+			p_err("Invalid message or trailing data in Netlink response: %d bytes left", len);
- 	}
- 	ret = 0;
- done:
-diff --git a/tools/lib/bpf/netlink.c b/tools/lib/bpf/netlink.c
-index 68a2def171751..6f16c4f7b3a43 100644
---- a/tools/lib/bpf/netlink.c
-+++ b/tools/lib/bpf/netlink.c
-@@ -143,7 +143,7 @@ static int libbpf_netlink_recv(int sock, __u32 nl_pid, int seq,
- 	struct nlmsghdr *nh;
- 	int len, ret;
+ 		if (!net_eq(sock_net(sk), net))
+ 			continue;
+ 		isk = inet_sk(sk);
  
--	ret = alloc_iov(&iov, 4096);
-+	ret = alloc_iov(&iov, 8192);
- 	if (ret)
- 		goto done;
+ 		pr_debug("iterate\n");
+-		if (isk->inet_num != ident)
++		if (READ_ONCE(isk->inet_num) != ident)
+ 			continue;
  
-@@ -212,6 +212,8 @@ static int libbpf_netlink_recv(int sock, __u32 nl_pid, int seq,
- 				}
- 			}
++		bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
+ 		if (skb->protocol == htons(ETH_P_IP) &&
+ 		    sk->sk_family == AF_INET) {
++			__be32 rcv_saddr = READ_ONCE(isk->inet_rcv_saddr);
++
+ 			pr_debug("found: %p: num=%d, daddr=%pI4, dif=%d\n", sk,
+-				 (int) isk->inet_num, &isk->inet_rcv_saddr,
+-				 sk->sk_bound_dev_if);
++				 ident, &rcv_saddr,
++				 bound_dev_if);
+ 
+-			if (isk->inet_rcv_saddr &&
+-			    isk->inet_rcv_saddr != ip_hdr(skb)->daddr)
++			if (rcv_saddr && rcv_saddr != ip_hdr(skb)->daddr)
+ 				continue;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 		} else if (skb->protocol == htons(ETH_P_IPV6) &&
+ 			   sk->sk_family == AF_INET6) {
+ 
+ 			pr_debug("found: %p: num=%d, daddr=%pI6c, dif=%d\n", sk,
+-				 (int) isk->inet_num,
++				 ident,
+ 				 &sk->sk_v6_rcv_saddr,
+-				 sk->sk_bound_dev_if);
++				 bound_dev_if);
+ 
+ 			if (!ipv6_addr_any(&sk->sk_v6_rcv_saddr) &&
+ 			    !ipv6_addr_equal(&sk->sk_v6_rcv_saddr,
+@@ -227,8 +231,8 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
+ 			continue;
  		}
-+		if (len)
-+			pr_warn("Invalid message or trailing data in Netlink response: %d bytes left\n", len);
- 	}
- 	ret = 0;
- done:
+ 
+-		if (sk->sk_bound_dev_if && sk->sk_bound_dev_if != dif &&
+-		    sk->sk_bound_dev_if != sdif)
++		if (bound_dev_if && bound_dev_if != dif &&
++		    bound_dev_if != sdif)
+ 			continue;
+ 
+ 		goto exit;
+@@ -403,7 +407,9 @@ static void ping_set_saddr(struct sock *sk, struct sockaddr *saddr)
+ 	if (saddr->sa_family == AF_INET) {
+ 		struct inet_sock *isk = inet_sk(sk);
+ 		struct sockaddr_in *addr = (struct sockaddr_in *) saddr;
+-		isk->inet_rcv_saddr = isk->inet_saddr = addr->sin_addr.s_addr;
++
++		isk->inet_saddr = addr->sin_addr.s_addr;
++		WRITE_ONCE(isk->inet_rcv_saddr, addr->sin_addr.s_addr);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	} else if (saddr->sa_family == AF_INET6) {
+ 		struct sockaddr_in6 *addr = (struct sockaddr_in6 *) saddr;
+@@ -860,7 +866,8 @@ int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
+ 	struct sk_buff *skb;
+ 	int copied, err;
+ 
+-	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk, isk->inet_num);
++	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk,
++		 READ_ONCE(isk->inet_num));
+ 
+ 	err = -EOPNOTSUPP;
+ 	if (flags & MSG_OOB)
 -- 
 2.51.0
 
