@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22BE39B947
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BBF39B94C
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302513; cv=none; b=V3Mc47Y1QLssOdWG0e07yU9bOOt83Ia+jLYd1Cg7NDoXO4bsS3eU/j+G8Jv6dY6kFQgTeMqBde89dQPlNQi3h3s1WjsLzesz/BxX2G8zGgS32p5T8A7Q/wRD3QzbY7kiuKJR25K7pk3yx2VUm89wRTW8iRUIySG0HbqkkvBQvQI=
+	t=1772302514; cv=none; b=DqtyrFzRnjlP3Y6QCYdf+gb5iWDmS28LQ8i/1bQwQx9UHTZq28lJv9qsn49O4m8MQXXNIfAv5CdtEYdjBtj+hAyMBpAsqhY8PBmgruZhqIxq20t67AMZrc699EGgZTuSCMvKHjMa+DgFUDIKbtiCACDK1vHDLktwfjSIy5PP4EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302513; c=relaxed/simple;
-	bh=/8VO0Oj4E5wLdPLzdIVMNTk4c/DfpjmHmm6nWhBM/bw=;
+	s=arc-20240116; t=1772302514; c=relaxed/simple;
+	bh=xDaX9oiFMsjUA0rDPMJ4cZdWFw9xgX7mRXhjYX4NcBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6WOr7rsbtRXCe+falGVj30Nz5YN/rzxUtBq4bWPvoW0aSmkLT2OuwpTyeDB4wvA79IKmvewp9rRjwBzzk8NDJgCFopAbbS784Of5gX9YQF/8x4FKrsgNuur8PwhInQUzak76EGsvW9wXVu1A6brNJK2+fD/gJWdbTBw1NFtvrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cnxmj9LG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=axrDnJZVM4X4Z/HxJMPtEfFwHD6XQd0F9B7vE2pvwDjncEsbRgHHs9sVebDIH4LWgdwoVze9wlyxs5/XyVUx6eGunR1rRfYRF5DBsmY28B/ldd3AIB3JENuoo7xqVN4Z9rQUifyEjGLRpFjsBV7ru4ks9oBQ7dUAcmLx7jy0Vhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=leZMU5yA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cnxmj9LG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2856C19423;
-	Sat, 28 Feb 2026 18:15:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="leZMU5yA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B99C116D0;
+	Sat, 28 Feb 2026 18:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302513;
-	bh=/8VO0Oj4E5wLdPLzdIVMNTk4c/DfpjmHmm6nWhBM/bw=;
+	s=k20201202; t=1772302514;
+	bh=xDaX9oiFMsjUA0rDPMJ4cZdWFw9xgX7mRXhjYX4NcBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cnxmj9LGpKRpXFt7fmGzaG9epWDUbE4XD1477U9BQNAphUKZD45XagF2yky4dEDtO
-	 NWHGSxFiG0LNHfwGJlg0YMDh5+fRkykHvfpFPU6bJ0TTj3sSen2AcI9ZiDPEIRbKWh
-	 hR6ZQ39NMY5mJ9YkzGUhpVtL778SPaBDW6SJrWPjXrb24sjFjk1U+2V6ZvXXEHzGl1
-	 mWCCl+o7Yr8XbRnMgh+cHPw93bapeS6Db0sLilPT8a9Ik2w7pV4SMk4JbJGY3OgudB
-	 P616x7ST5Y9U64XAsxTokAetdfdFrqSfo3lB1ruNfTUrzWXbAP5jfi5vCEnZnWrTu7
-	 V3t6/JNjz+cRg==
+	b=leZMU5yAhIIj8oIr7y5SZwgHiLdNyQI7DuR6687b1SDmsm5nldob3aUvATZrf4euX
+	 8LE/u93/NyP6gp/AtMttRjuDb34cKt7zIUubMvL7v6UZOwvO+LRFLAcfLMZH36A1Jy
+	 fVOJ/vsfu1uxJ8bBpP5m6j9Anoj4EKlCUoidHankLNmz+QShCVJTImg7f24xYlbUgi
+	 Z0yVTudN06xyKn0jmRo/bExVToLWf/GI3eVBsP6mv0e97AE9HqzkugHcE763yGAE+i
+	 dw8ifM1Lf6GnhBrkRIaCRSski4yXuXzEC75Var2f3VCqIiF29OUFzMC+XBL7CN3Kq1
+	 Okcg7dm2CjASw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+ea1cd4aa4d1e98458a55@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+Cc: Alper Ak <alperyasinak1@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 009/164] gfs2: Fix use-after-free in iomap inline data write path
-Date: Sat, 28 Feb 2026 13:12:28 -0500
-Message-ID: <20260228181505.1600663-9-sashal@kernel.org>
+Subject: [PATCH 5.15 010/164] tpm: tpm_i2c_infineon: Fix locality leak on get_burstcount() failure
+Date: Sat, 28 Feb 2026 13:12:29 -0500
+Message-ID: <20260228181505.1600663-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,82 +47,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Alper Ak <alperyasinak1@gmail.com>
 
-[ Upstream commit faddeb848305e79db89ee0479bb0e33380656321 ]
+[ Upstream commit bbd6e97c836cbeb9606d7b7e5dcf8a1d89525713 ]
 
-The inline data buffer head (dibh) is being released prematurely in
-gfs2_iomap_begin() via release_metapath() while iomap->inline_data
-still points to dibh->b_data. This causes a use-after-free when
-iomap_write_end_inline() later attempts to write to the inline data
-area.
+get_burstcount() can return -EBUSY on timeout. When this happens, the
+function returns directly without releasing the locality that was
+acquired at the beginning of tpm_tis_i2c_send().
 
-The bug sequence:
-1. gfs2_iomap_begin() calls gfs2_meta_inode_buffer() to read inode
-   metadata into dibh
-2. Sets iomap->inline_data = dibh->b_data + sizeof(struct gfs2_dinode)
-3. Calls release_metapath() which calls brelse(dibh), dropping refcount
-   to 0
-4. kswapd reclaims the page (~39ms later in the syzbot report)
-5. iomap_write_end_inline() tries to memcpy() to iomap->inline_data
-6. KASAN detects use-after-free write to freed memory
+Use goto out_err to ensure proper cleanup when get_burstcount() fails.
 
-Fix by storing dibh in iomap->private and incrementing its refcount
-with get_bh() in gfs2_iomap_begin(). The buffer is then properly
-released in gfs2_iomap_end() after the inline write completes,
-ensuring the page stays alive for the entire iomap operation.
-
-Note: A C reproducer is not available for this issue. The fix is based
-on analysis of the KASAN report and code review showing the buffer head
-is freed before use.
-
-[agruenba: Take buffer head reference in gfs2_iomap_begin() to avoid
-leaks in gfs2_iomap_get() and gfs2_iomap_alloc().]
-
-Reported-by: syzbot+ea1cd4aa4d1e98458a55@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ea1cd4aa4d1e98458a55
-Fixes: d0a22a4b03b8 ("gfs2: Fix iomap write page reclaim deadlock")
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: aad628c1d91a ("char/tpm: Add new driver for Infineon I2C TIS TPM")
+Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/bmap.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/char/tpm/tpm_i2c_infineon.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
-index 7425c90e47eb5..1e95d777f6737 100644
---- a/fs/gfs2/bmap.c
-+++ b/fs/gfs2/bmap.c
-@@ -1114,10 +1114,18 @@ static int gfs2_iomap_begin(struct inode *inode, loff_t pos, loff_t length,
- 			goto out_unlock;
- 		break;
- 	default:
--		goto out_unlock;
-+		goto out;
- 	}
+diff --git a/drivers/char/tpm/tpm_i2c_infineon.c b/drivers/char/tpm/tpm_i2c_infineon.c
+index a19d32cb4e942..cabc9e1b49321 100644
+--- a/drivers/char/tpm/tpm_i2c_infineon.c
++++ b/drivers/char/tpm/tpm_i2c_infineon.c
+@@ -543,8 +543,10 @@ static int tpm_tis_i2c_send(struct tpm_chip *chip, u8 *buf, size_t len)
+ 		burstcnt = get_burstcount(chip);
  
- 	ret = gfs2_iomap_begin_write(inode, pos, length, flags, iomap, &mp);
-+	if (ret)
-+		goto out_unlock;
-+
-+out:
-+	if (iomap->type == IOMAP_INLINE) {
-+		iomap->private = metapath_dibh(&mp);
-+		get_bh(iomap->private);
-+	}
+ 		/* burstcnt < 0 = TPM is busy */
+-		if (burstcnt < 0)
+-			return burstcnt;
++		if (burstcnt < 0) {
++			rc = burstcnt;
++			goto out_err;
++		}
  
- out_unlock:
- 	release_metapath(&mp);
-@@ -1131,6 +1139,9 @@ static int gfs2_iomap_end(struct inode *inode, loff_t pos, loff_t length,
- 	struct gfs2_inode *ip = GFS2_I(inode);
- 	struct gfs2_sbd *sdp = GFS2_SB(inode);
- 
-+	if (iomap->private)
-+		brelse(iomap->private);
-+
- 	switch (flags & (IOMAP_WRITE | IOMAP_ZERO)) {
- 	case IOMAP_WRITE:
- 		if (flags & IOMAP_DIRECT)
+ 		if (burstcnt > (len - 1 - count))
+ 			burstcnt = len - 1 - count;
 -- 
 2.51.0
 
