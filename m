@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0BB36C9D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C8D36C9EB
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302310; cv=none; b=u2/6RsDCjHGea1WrGmXNXGgWWqNU3QSu5QZJrAsYS2DZqfAwYmOM4jLn5kMIarSjET2hvpe3h0+hRAvREWmky7xKXKTJwDdeoTdc83SjUmuPsvxw5weqPeiqlrV5QlKLpyAHz/6Hhx02vO0HhqStq/W4qO+CNnHTBkBA8j3111k=
+	t=1772302311; cv=none; b=H0zvQGDufgLO29Ao//+a0xxjX4qtQR3blSLsrdY70SSJwrc2f2T4Sl8bL6lRfubMY3WDmvnsUPynZDJPtYu9HjQgWeIlQfuba3Q4wEB6JTp207MB0fyY3rgzA48tP8RDVmbr7eZscgMlt9nuDQ6fpdpUsB/OcJlbxAGYJfUYrBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302310; c=relaxed/simple;
-	bh=/zuPoRkDO8nBTZkEw1fBz7MEaw+E1dr18iIHalF/zQY=;
+	s=arc-20240116; t=1772302311; c=relaxed/simple;
+	bh=RD/GpCQ36bV2Ee+VnF53WUW8n94fM7DX5JEwJhm1X3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uPGkB4VFpHY083aG5IifKCnXdVoZssaXwli0tFyqBsGtBEIsHIYKCGHWc4sCGN9+PXe5CISHXe7R3XtPjQ2R+siSV+7tLpetnJ93NZ5QHEqjBLM78sUmTYOyR7yOBaYhn4pqrG7s9owHV/8JrR/MTbClpvFkc49ZUtKcUt3OZMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DNHTFOYs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTAlmCMzoPplHcyo0abUFEenpOFEyp2Oj7XYqzbsjx+EusF1Jy5/K2hLtOcqulI8WHfd3Uxf+eZbYVpGoZEyQi6Pztu9CGbwtNZdnLWGNxMNF3Zuuc3y/7cNGufLqhMZylaBUBiIIeO2bV9BN8Jmwci8qQSMuXbr4tIRjCUGb8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nGpPlM2h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DNHTFOYs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7FBC116D0;
-	Sat, 28 Feb 2026 18:11:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nGpPlM2h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D35C116D0;
+	Sat, 28 Feb 2026 18:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302310;
-	bh=/zuPoRkDO8nBTZkEw1fBz7MEaw+E1dr18iIHalF/zQY=;
+	s=k20201202; t=1772302311;
+	bh=RD/GpCQ36bV2Ee+VnF53WUW8n94fM7DX5JEwJhm1X3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DNHTFOYshociOlc0Xq3f+tdwTUZcPkciT9aMMz2gDqqJRjSjOJWqpDtWyl1lv8gg6
-	 MFT/0bbGHlky2tt3Bn6cAvfdgTckzyRGfPRlsoXbiw0rKOH8XZpjoNKLVvEjqkg0Gi
-	 BRo16YuTAfGQ63abdcMe2jVz3OlBTqhdZPZtmZ1pLQRCtVavPWTRlFy4bCAqq62W+K
-	 PfDRyx9y6npKZ+07pQvSXb5OLz2iSil/RCEstYU4qwcOvNYciKWEqcgMV3BsWvUpti
-	 ugItLPIKuzS2A0wEBYACAaDI+91woGOtZpd4e2Fck81N+u+M+QseMmjU3dacyU19jh
-	 4HPz5L9vxEN2Q==
+	b=nGpPlM2hNKg2f4I7iHn0wzQbLgpGqGT8N+UOLzc/b9z8Sg0Kn8xr1JPeHnbo46wQ5
+	 U4qE4vBW9pDP8mfpK0aG937Ns3K48u3QeRUvzdmntz8EfkCxRf/Kinqq/WL6vdiE6f
+	 /XWTg9fw/gSf5SxDp6tE8ZIsgyhjw01rJwCc3nEQWA/cZ3rEkc2THOxZwBPExkP6Gb
+	 esyHNNUgPJnHVH9xa+yqJealLMBQc8IUv+tce4vOiPjT9YgSKnJPP6C8E4DPr3U3Uw
+	 tztbFgmOQoXt4E1nDwTSeYrEaQVmFf/nic6uO/dXzw0adQCHFkRMmXGEVzAcALUBoR
+	 5uSMzYaNjhcVg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Gui-Dong Han <hanguidong02@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Salah Triki <salah.triki@gmail.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/232] PM: sleep: wakeirq: harden dev_pm_clear_wake_irq() against races
-Date: Sat, 28 Feb 2026 13:07:59 -0500
-Message-ID: <20260228181127.1592657-26-sashal@kernel.org>
+Subject: [PATCH 6.1 027/232] s390/cio: Fix device lifecycle handling in css_alloc_subchannel()
+Date: Sat, 28 Feb 2026 13:08:00 -0500
+Message-ID: <20260228181127.1592657-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,63 +48,47 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit 5c9ecd8e6437cd55a38ea4f1e1d19cee8e226cb8 ]
+[ Upstream commit f65c75b0b9b5a390bc3beadcde0a6fbc3ad118f7 ]
 
-dev_pm_clear_wake_irq() currently uses a dangerous pattern where
-dev->power.wakeirq is read and checked for NULL outside the lock.
-If two callers invoke this function concurrently, both might see
-a valid pointer and proceed. This could result in a double-free
-when the second caller acquires the lock and tries to release the
-same object.
+`css_alloc_subchannel()` calls `device_initialize()` before setting up
+the DMA masks. If `dma_set_coherent_mask()` or `dma_set_mask()` fails,
+the error path frees the subchannel structure directly, bypassing
+the device model reference counting.
 
-Address this by removing the lockless check of dev->power.wakeirq.
-Instead, acquire dev->power.lock immediately to ensure the check and
-the subsequent operations are atomic. If dev->power.wakeirq is NULL
-under the lock, simply unlock and return. This guarantees that
-concurrent calls cannot race to free the same object.
+Once `device_initialize()` has been called, the embedded struct device
+must be released via `put_device()`, allowing the release callback to
+free the container structure.
 
-Based on a quick scan of current users, I did not find an actual bug as
-drivers seem to rely on their own synchronization. However, since
-asynchronous usage patterns exist (e.g., in
-drivers/net/wireless/ti/wlcore), I believe a race is theoretically
-possible if the API is used less carefully in the future. This change
-hardens the API to be robust against such cases.
+Fix the error path by dropping the initial device reference with
+`put_device()` instead of calling `kfree()` directly.
 
-Fixes: 4990d4fe327b ("PM / Wakeirq: Add automated device wake IRQ handling")
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260203031943.1924-1-hanguidong02@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This ensures correct device lifetime handling and avoids potential
+use-after-free or double-free issues.
+
+Fixes: e5dcf0025d7af ("s390/css: move subchannel lock allocation")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/wakeirq.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/s390/cio/css.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
-index ca0c092ba47fb..09a677c8007a7 100644
---- a/drivers/base/power/wakeirq.c
-+++ b/drivers/base/power/wakeirq.c
-@@ -83,13 +83,16 @@ EXPORT_SYMBOL_GPL(dev_pm_set_wake_irq);
-  */
- void dev_pm_clear_wake_irq(struct device *dev)
- {
--	struct wake_irq *wirq = dev->power.wakeirq;
-+	struct wake_irq *wirq;
- 	unsigned long flags;
+diff --git a/drivers/s390/cio/css.c b/drivers/s390/cio/css.c
+index 98a14c1f3d672..85c1734ebfe88 100644
+--- a/drivers/s390/cio/css.c
++++ b/drivers/s390/cio/css.c
+@@ -247,7 +247,7 @@ struct subchannel *css_alloc_subchannel(struct subchannel_id schid,
+ err_lock:
+ 	kfree(sch->lock);
+ err:
+-	kfree(sch);
++	put_device(&sch->dev);
+ 	return ERR_PTR(ret);
+ }
  
--	if (!wirq)
-+	spin_lock_irqsave(&dev->power.lock, flags);
-+	wirq = dev->power.wakeirq;
-+	if (!wirq) {
-+		spin_unlock_irqrestore(&dev->power.lock, flags);
- 		return;
-+	}
- 
--	spin_lock_irqsave(&dev->power.lock, flags);
- 	device_wakeup_detach_irq(dev);
- 	dev->power.wakeirq = NULL;
- 	spin_unlock_irqrestore(&dev->power.lock, flags);
 -- 
 2.51.0
 
