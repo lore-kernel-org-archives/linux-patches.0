@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C783321D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA71532AABE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301220; cv=none; b=i1do6r+gGplKlCEYrQdkK5sWVtlUVB+p6+wKshxIQaMIbMsLjWjuqjBaKLKJ14Iy6iDe5kE+He13iBoIb9Hlq2j/QMFfzmNTvOQHHGnRubr30TpuwDtceU09srAcox3Qi8lZ1OFaNYM49myAgeEwqewMmDYETA1nNMW/+avV30c=
+	t=1772301221; cv=none; b=O39LqcvpQ+GZrUznBdvgkMT72AffIYVA1+xEF4lTY/GBiQ+ZHhO9OllvHKwtsAH2obBOTCXHepofy6s+Vx0turp0lPDbK7mgBSgin7PTu/V1E9FkT9K1M8j79vELzGnOXpfXomzs6in6+DxHsNwXWojgGz/ia4JmGTEDTrSR5YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301220; c=relaxed/simple;
-	bh=nq9qkBe4okAHoTat6O8vzfoeylYqMxsyWvi3bxn5F+M=;
+	s=arc-20240116; t=1772301221; c=relaxed/simple;
+	bh=fQBx7ID8R19kwDXm1s3pbxKnmBmO0qJDPrYFYhjrKog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAJ3+k4oQOummzFjKgCEagBMmRET3wrA+FjdzdxKn5AL5kSMWeO2Y5Fn895v0mh9wxg+zOkc2BtiIo7Oix0OsgEsPRaVqIpZrez5nZFb/MsNMrgXrzf8oJKGrqAiGSe4ZrvCTJsvWkKpE3lH37Z6ZMywJGtqGV0f5g7bjClMW/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=buN6LaVF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JMnAM7mHGO2OdTfBbO5Peg4a3M9hMXX2pT/IJabNg9PCQwM1TE6TXQibNcfVYMCvgxXG/YenAWER5S0mxjKg4XFlPdGl2wTabCrlTS086Ng6mUIvEo15pRt06munUvnqVV973vGleWb6qa/uIE6NrVmR89jHpKaDE9wohhuAEXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T8MuY5oo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="buN6LaVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13A1C116D0;
-	Sat, 28 Feb 2026 17:53:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T8MuY5oo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC682C19423;
+	Sat, 28 Feb 2026 17:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301220;
-	bh=nq9qkBe4okAHoTat6O8vzfoeylYqMxsyWvi3bxn5F+M=;
+	s=k20201202; t=1772301221;
+	bh=fQBx7ID8R19kwDXm1s3pbxKnmBmO0qJDPrYFYhjrKog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=buN6LaVFgY49yhtCzr11w3CeKNSgriN2dAr+ETOTrDRZlTt9vaXqyHYtAFHcs7CVx
-	 xvNSWuLtcQGKmeqqOlZlCFuI67SatrcANRX4fzTf/tvp/xTMaJMia4MXtEFnYJUOBY
-	 css8IK2YAY3GFvdjmwSwxeIcWAQtmz62Yg+XCeCKEPmfi7KzAyBp7sdoMJpe+jMNJ4
-	 ETQi34cMpiLOGbg51qEZW9KG9EfbNsw+TgEiIcU5gmD7L+g8x6ZNiQ4dHq0bEdLYmz
-	 Kbm/yBEiIGSKcwOPShtd946ZW0mEL6gMokfX9EVM3pN8fYL8L0l59KZFpZJRaxAK4u
-	 Z+LXYFOgpUSLw==
+	b=T8MuY5oo5Ny1Co9TlYEGoASUjpaWwbBrpBc5HaDTN72aHKeWDRDLvmFIjpR+oL9NI
+	 2Ia1npwgMGNPwk5JQxjZg9roqut1zOkH9GDQ9zqUGJ50CU5BHDaMJxXZa+1Fgi0x/X
+	 fcAHn1iSL+eG9riUnZ0rwu+fKSR8MO8fahObVF3FkiT9r2g+jDZMKr29tmMUCcXTx3
+	 MuUXryekCgtr4AEonnM+B8vNrh27/CQYz8hNv4VW1v2zo8NjN4V5kXzSl7xpcsLZ2n
+	 EfkUZgqJw2NgNpug1X+g0FOi3gy90+bZRNfpBsUx/vcpdVkRnLd9cIJ3qVIPllydk5
+	 ed5z5sr1uiokw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
-	syzbot+e136d86d34b42399a8b1@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+Cc: Leon Romanovsky <leonro@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 397/752] xfrm6: fix uninitialized saddr in xfrm6_get_saddr()
-Date: Sat, 28 Feb 2026 12:41:48 -0500
-Message-ID: <20260228174750.1542406-397-sashal@kernel.org>
+Subject: [PATCH 6.18 398/752] xfrm: skip templates check for packet offload tunnel mode
+Date: Sat, 28 Feb 2026 12:41:49 -0500
+Message-ID: <20260228174750.1542406-398-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,79 +51,77 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 1799d8abeabc68ec05679292aaf6cba93b343c05 ]
+[ Upstream commit 0a4524bc69882a4ddb235bb6b279597721bda197 ]
 
-xfrm6_get_saddr() does not check the return value of
-ipv6_dev_get_saddr(). When ipv6_dev_get_saddr() fails to find a suitable
-source address (returns -EADDRNOTAVAIL), saddr->in6 is left
-uninitialized, but xfrm6_get_saddr() still returns 0 (success).
+In packet offload, hardware is responsible to check templates. The
+result of its operation is forwarded through secpath by relevant
+drivers. That secpath is actually removed in __xfrm_policy_check2().
 
-This causes the caller xfrm_tmpl_resolve_one() to use the uninitialized
-address in xfrm_state_find(), triggering KMSAN warning:
+In case packet is forwarded, this secpath is reset in RX, but pushed
+again to TX where policy is rechecked again against dummy secpath
+in xfrm_policy_ok().
 
-=====================================================
-BUG: KMSAN: uninit-value in xfrm_state_find+0x2424/0xa940
- xfrm_state_find+0x2424/0xa940
- xfrm_resolve_and_create_bundle+0x906/0x5a20
- xfrm_lookup_with_ifid+0xcc0/0x3770
- xfrm_lookup_route+0x63/0x2b0
- ip_route_output_flow+0x1ce/0x270
- udp_sendmsg+0x2ce1/0x3400
- inet_sendmsg+0x1ef/0x2a0
- __sock_sendmsg+0x278/0x3d0
- __sys_sendto+0x593/0x720
- __x64_sys_sendto+0x130/0x200
- x64_sys_call+0x332b/0x3e70
- do_syscall_64+0xd3/0xf80
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Such situation causes to unexpected XfrmInTmplMismatch increase.
 
-Local variable tmp.i.i created at:
- xfrm_resolve_and_create_bundle+0x3e3/0x5a20
- xfrm_lookup_with_ifid+0xcc0/0x3770
-=====================================================
+As a solution, simply skip template mismatch check.
 
-Fix by checking the return value of ipv6_dev_get_saddr() and propagating
-the error.
-
-Fixes: a1e59abf8249 ("[XFRM]: Fix wildcard as tunnel source")
-Reported-by: syzbot+e136d86d34b42399a8b1@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68bf1024.a70a0220.7a912.02c2.GAE@google.com/T/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Fixes: 600258d555f0 ("xfrm: delete intermediate secpath entry in packet offload mode")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/xfrm6_policy.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_policy.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
-index 1f19b6f14484c..125ea9a5b8a08 100644
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -57,6 +57,7 @@ static int xfrm6_get_saddr(xfrm_address_t *saddr,
- 	struct dst_entry *dst;
- 	struct net_device *dev;
- 	struct inet6_dev *idev;
-+	int err;
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 62486f8669752..5428185196a1f 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -3801,8 +3801,8 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 		struct xfrm_tmpl *tp[XFRM_MAX_DEPTH];
+ 		struct xfrm_tmpl *stp[XFRM_MAX_DEPTH];
+ 		struct xfrm_tmpl **tpp = tp;
++		int i, k = 0;
+ 		int ti = 0;
+-		int i, k;
  
- 	dst = xfrm6_dst_lookup(params);
- 	if (IS_ERR(dst))
-@@ -68,9 +69,11 @@ static int xfrm6_get_saddr(xfrm_address_t *saddr,
- 		return -EHOSTUNREACH;
- 	}
- 	dev = idev->dev;
--	ipv6_dev_get_saddr(dev_net(dev), dev, &params->daddr->in6, 0,
--			   &saddr->in6);
-+	err = ipv6_dev_get_saddr(dev_net(dev), dev, &params->daddr->in6, 0,
-+				 &saddr->in6);
- 	dst_release(dst);
-+	if (err)
-+		return -EHOSTUNREACH;
- 	return 0;
- }
+ 		sp = skb_sec_path(skb);
+ 		if (!sp)
+@@ -3828,6 +3828,12 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 			tpp = stp;
+ 		}
+ 
++		if (pol->xdo.type == XFRM_DEV_OFFLOAD_PACKET && sp == &dummy)
++			/* This policy template was already checked by HW
++			 * and secpath was removed in __xfrm_policy_check2.
++			 */
++			goto out;
++
+ 		/* For each tunnel xfrm, find the first matching tmpl.
+ 		 * For each tmpl before that, find corresponding xfrm.
+ 		 * Order is _important_. Later we will implement
+@@ -3837,7 +3843,7 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 		 * verified to allow them to be skipped in future policy
+ 		 * checks (e.g. nested tunnels).
+ 		 */
+-		for (i = xfrm_nr-1, k = 0; i >= 0; i--) {
++		for (i = xfrm_nr - 1; i >= 0; i--) {
+ 			k = xfrm_policy_ok(tpp[i], sp, k, family, if_id);
+ 			if (k < 0) {
+ 				if (k < -1)
+@@ -3853,6 +3859,7 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 			goto reject;
+ 		}
+ 
++out:
+ 		xfrm_pols_put(pols, npols);
+ 		sp->verified_cnt = k;
  
 -- 
 2.51.0
