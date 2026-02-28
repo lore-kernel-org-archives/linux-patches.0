@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF84332628
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116D0332628
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301217; cv=none; b=FIKo+MxggMpSvFjZbJK9Zv6XL1qGMfSa9WJSH5+GxctVeUN4bsqMfI9+XEZJ1aikUTWMJtIi0V6WNEV9R1EwYvGJYxyJbD8xDhm4Maw/rUoxhx9WpQ7ZkSTBGWXHOREwa60w63y9XpxKWBhQ5Qnio4zSqKY4PK9WVWAVpTKL6CY=
+	t=1772301218; cv=none; b=rcvkMSskazP1osn8jEtUkQ5/x3sIx1wOjyBmo+m5JafzqaN5hA6bTx+P+zCR5Jv5pS5uZdVn2ZdfoqjRMlBeOuo0myNTlLvmhpXYc61VVEkn0wfSc57tzAIKvQBpqqc4uP2Z57D5hJuND1+TDmWv2LuAhXQsXcIri4TT8+WpQlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301217; c=relaxed/simple;
-	bh=9JOA6572BYDqfDjY//bb7H4d1r4XQRYQMbcpDHSnCOU=;
+	s=arc-20240116; t=1772301218; c=relaxed/simple;
+	bh=stzw8+O1qLWHpiBs5B6E30/TaFmQDt6Mst2++3fJidA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mvEEXp/svWidJWSiEKHaIBrjL2Zbhnh3ZeuKnmlQSYHWZcabTpGqeXdL+fdCkWfbAhZ6m545xL2Xa5GsyQyTPq41v/yzoacoom5odpdQrXIcG8dr5IC8ujOh8nSLZEor3gq9EV2emo3OlHVKIAqtInAviUjZFVoLZgQ7Y46kIaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R32fIewi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J/166K4Vfzc8mmVmJ3OsJdCt1gZsGYc74Rx5rn30FG4YzTrPd+Oih1XNa37aJpcBYBAsaRYU9JoE6e4/yM+yO9mj2t5lr2kNk7OmjqrcpCQm6yKYdFoT7JqVrzHfT8hgFsEqyq7zDApni69DAagrIyy+IJuLL2LUlgDWNvkhnMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o3wqq8Kt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R32fIewi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8D4C116D0;
-	Sat, 28 Feb 2026 17:53:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o3wqq8Kt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7311EC116D0;
+	Sat, 28 Feb 2026 17:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301217;
-	bh=9JOA6572BYDqfDjY//bb7H4d1r4XQRYQMbcpDHSnCOU=;
+	s=k20201202; t=1772301218;
+	bh=stzw8+O1qLWHpiBs5B6E30/TaFmQDt6Mst2++3fJidA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R32fIewizg8IHPnFqXD10QFURLDBZStceiJ61oeMvJaFF+5OZ9PpNUUuGTCffkOjv
-	 MQD/WwOlJBgPZ31mHKBlWVoqOWcoWIPrxLB36MItuPW99+4nf/0thh/jb3lO2xTMxm
-	 la78jEfjisdaku4i8+fV5aqeUQ83JykNkxx/CKhVMVmOEOKz9MWCAg+dwBc4Z+iaE2
-	 leNIR4wenH/PvNWQ4+qZMPeR29CyZE6Mg374e4vAjzgJ8W+a5sfZVX5Yy6HdruIats
-	 282xNBt3xnHlyWAhHVmOo+yT7CNwak+ROs5nCmwDDYbUWGcIUuYAtyzRkXphFMYpZY
-	 kohLyDJv48dOA==
+	b=o3wqq8KtmRcpiH8GVzaNa86P1dtEo7HlA6uAU6zKujmtZ1UnXihjIQQCnFVGxAZFE
+	 IsFALO1Cauyo/U/buchQ8Y/m62Mld/TFs6PjMPiicdKSGdRg+9TA7lzKGPAv2Rc7/S
+	 QTl42hpHndiMcqK40ukf2sLHpzJygQD8nLh5pZndmbJAEMMutsCwTQQYjbiU73tSyw
+	 mFo5tdUuuIXO1p6Zk1+cOKzDLpOz5ovp/LrjB/yvMp6hJI+vNOmD14r4soYWwwexQ3
+	 Xg3agDHlX4I8HrdTgdl5MM2PaWdpJ15NHoN55ICDTGewCyYrj6pllb7sgNID4wJRPc
+	 UnZu4AScVLhYA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Tomas Melin <tomas.melin@vaisala.com>,
-	Harini T <harini.t@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Maciej Grochowski <Maciej.Grochowski@sony.com>,
+	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 393/752] rtc: zynqmp: correct frequency value
-Date: Sat, 28 Feb 2026 12:41:44 -0500
-Message-ID: <20260228174750.1542406-393-sashal@kernel.org>
+Subject: [PATCH 6.18 394/752] ntb: ntb_hw_switchtec: Fix array-index-out-of-bounds access
+Date: Sat, 28 Feb 2026 12:41:45 -0500
+Message-ID: <20260228174750.1542406-394-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,40 +47,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Melin <tomas.melin@vaisala.com>
+From: Maciej Grochowski <Maciej.Grochowski@sony.com>
 
-[ Upstream commit 2724fb4d429cbb724dcb6fa17953040918ebe3a2 ]
+[ Upstream commit c8ba7ad2cc1c7b90570aa347b8ebbe279f1eface ]
 
-Fix calibration value in case a clock reference is provided.
-The actual calibration value written into register is
-frequency - 1.
+Number of MW LUTs depends on NTB configuration and can be set to MAX_MWS,
+This patch protects against invalid index out of bounds access to mw_sizes
+When invalid access print message to user that configuration is not valid.
 
-Reviewed-by: Harini T <harini.t@amd.com>
-Tested-by: Harini T <harini.t@amd.com>
-Signed-off-by: Tomas Melin <tomas.melin@vaisala.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260122-zynqmp-rtc-updates-v4-1-d4edb966b499@vaisala.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Maciej Grochowski <Maciej.Grochowski@sony.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-zynqmp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/ntb/hw/mscc/ntb_hw_switchtec.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/rtc/rtc-zynqmp.c b/drivers/rtc/rtc-zynqmp.c
-index 3baa2b481d9f2..856bc1678e7d3 100644
---- a/drivers/rtc/rtc-zynqmp.c
-+++ b/drivers/rtc/rtc-zynqmp.c
-@@ -345,7 +345,10 @@ static int xlnx_rtc_probe(struct platform_device *pdev)
- 					   &xrtcdev->freq);
- 		if (ret)
- 			xrtcdev->freq = RTC_CALIB_DEF;
-+	} else {
-+		xrtcdev->freq--;
- 	}
+diff --git a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
+index f851397b65d6e..f15ebab138144 100644
+--- a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
++++ b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
+@@ -1314,6 +1314,12 @@ static void switchtec_ntb_init_shared(struct switchtec_ntb *sndev)
+ 	for (i = 0; i < sndev->nr_lut_mw; i++) {
+ 		int idx = sndev->nr_direct_mw + i;
+ 
++		if (idx >= MAX_MWS) {
++			dev_err(&sndev->stdev->dev,
++				"Total number of MW cannot be bigger than %d", MAX_MWS);
++			break;
++		}
 +
- 	ret = readl(xrtcdev->reg_base + RTC_CALIB_RD);
- 	if (!ret)
- 		writel(xrtcdev->freq, (xrtcdev->reg_base + RTC_CALIB_WR));
+ 		sndev->self_shared->mw_sizes[idx] = LUT_SIZE;
+ 	}
+ }
 -- 
 2.51.0
 
