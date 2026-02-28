@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E5936D9FB;
-	Sat, 28 Feb 2026 17:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6B2301F0C;
+	Sat, 28 Feb 2026 17:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301450; cv=none; b=pI+4P6s3afoeDwDtEjN6H5M6YfeTllF08nmjbWIb3T03Gz9tlMYS41F45IuPc1ouX35ySZ3OZqrDhXvHDIuZFY0qI+KBilwfQ9dGdKFEcgJ/b1brWinm0sC1f2GfFxFj+G5OqwuzM8cqOfilukMANJDfjz/6ldoGauptj3/Yaqw=
+	t=1772301451; cv=none; b=k5BM4zQytjjHAhgbzirlTBazxprej8pIjmkyuyM5DjgPSU3Zkaw7K0ceqebeccEXF7dFXdpJUjVJBWIri+dOpgJSnHn1uhaT4XVogpG5IEygy+ZhRx6x+HaFBpo9ObrA75eekG76TjI+bI5wjPMkMl3e2brtRaXoTRoDka6sMJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301450; c=relaxed/simple;
-	bh=tCMzRHsWyYdx+p+srmphj93Pe8F2zhyw2KaMUk7nLZ8=;
+	s=arc-20240116; t=1772301451; c=relaxed/simple;
+	bh=NxGOfkvRJjHXt727XexuhxLaF0DzYjTi8pPM5h4Zgzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOqhU3sR7YDNSpAO6JDj+uxn+HcXQgBUTFEsPIqBmmWxtUhHP9teZU8RjvsAxKJLRdYhhl+I3lHEPgcFITmtornvQCbCiH2i+yrRREiO1gSJvin3/e53SE0nG7aQatmu8bMCE3qBk+vZZUCEuyVVD9jZo+TTCQjafDvXSQayMw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qFDZGi34; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXO7iHc8wslLKiHQskLAjeI5fUbQb61cazojl3FyUd1oLZ5EE+ezSxz6sAIyu5htuKxZQ0Q13rRlDbbOp11wYsc5ZTeFZbVaRL9yDOzR/rpNQRkJ3y+ImDjZQO6rAOLCjEFf4dyDMhEgZfG/9hPoWD62BEyUpPikDuqLMaEdthQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q3wJ6UCW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qFDZGi34"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A377C116D0;
-	Sat, 28 Feb 2026 17:57:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q3wJ6UCW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48845C19424;
+	Sat, 28 Feb 2026 17:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301450;
-	bh=tCMzRHsWyYdx+p+srmphj93Pe8F2zhyw2KaMUk7nLZ8=;
+	bh=NxGOfkvRJjHXt727XexuhxLaF0DzYjTi8pPM5h4Zgzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qFDZGi3417G6MTVuIA4DDAI69wAkJsRcIEEopgbacK9e0OOKBYNBrErhUZj+11S5l
-	 sRLjHkKOkzTWqf26529VgmIeB6gxeNKZpoGEkZ6ktOcLUO5fKtHilz11vzU48AkyXQ
-	 CXubuyk03yJSjWds86/mNAa2SYwoCWFLTIvlqj8BoDYMVIIyQcwr2ruDRLmJNr3Wfg
-	 0gIVvtMG8/flXBC25/NXOQ2Va6Ob+69FbtYUoC6ekpVRFuNH+Go4XJNLOvMaJHYpNs
-	 qbdwhWB6ON1pdP+UQMyM016ec04GKxYvnU/NtUu8JwuQkew5Ej+Cn1RMiT22Y1w3Er
-	 sMd33R8DMhQfw==
+	b=q3wJ6UCWEunzjqewAH3Dvu8Q/Fc5PEpSMVS47f1OrFZyp96+srRKA0ZMVpI4eDs24
+	 fAX5JhKuUlsMDbVREOVjJtUfj1SzSHdEVgD3M/+p33LNQH/GOH768hpMTYboRVXKw9
+	 qOO3ca3dJCBeJs9a/Vg3FEIjezcBYBp8CLNqVBco3mx84oD9rZrk3OrqXgueo/HRNm
+	 ylpKIDQ6FtILuzGvBUJBTuVr80Ybag2PgYMFLNIWBJhiTK96jn+RtN8y4daWiOtoXg
+	 1cqVEkjezCuhEC38fs7XN29lEUgBXMXRq/zccqIAKq2Pd+TJoqMRBNcchvLXztq+GW
+	 zuiiKUTp6Z5Ag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Guangshuo Li <lgs201920130244@gmail.com>,
-	stable@vger.kernel.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+Cc: Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 636/752] powerpc/smp: Add check for kcalloc() failure in parse_thread_groups()
-Date: Sat, 28 Feb 2026 12:45:47 -0500
-Message-ID: <20260228174750.1542406-636-sashal@kernel.org>
+Subject: [PATCH 6.18 637/752] iio: gyro: itg3200: Fix unchecked return value in read_raw
+Date: Sat, 28 Feb 2026 12:45:48 -0500
+Message-ID: <20260228174750.1542406-637-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,37 +49,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit 33c1c6d8a28a2761ac74b0380b2563cf546c2a3a ]
+[ Upstream commit b79b24f578cdb2d657db23e5fafe82c7e6a36b72 ]
 
-As kcalloc() may fail, check its return value to avoid a NULL pointer
-dereference when passing it to of_property_read_u32_array().
+The return value from itg3200_read_reg_s16() is stored in ret but
+never checked. The function unconditionally returns IIO_VAL_INT,
+ignoring potential I2C read failures. This causes garbage data to
+be returned to userspace when the read fails, with no error reported.
 
-Fixes: 790a1662d3a26 ("powerpc/smp: Parse ibm,thread-groups with multiple properties")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250923133235.1862108-1-lgs201920130244@gmail.com
+Add proper error checking to propagate the failure to callers.
+
+Fixes: 9dbf091da080 ("iio: gyro: Add itg3200")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/smp.c | 2 ++
+ drivers/iio/gyro/itg3200_core.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
-index 68edb66c2964b..0cd9c0c21af3e 100644
---- a/arch/powerpc/kernel/smp.c
-+++ b/arch/powerpc/kernel/smp.c
-@@ -822,6 +822,8 @@ static int parse_thread_groups(struct device_node *dn,
- 
- 	count = of_property_count_u32_elems(dn, "ibm,thread-groups");
- 	thread_group_array = kcalloc(count, sizeof(u32), GFP_KERNEL);
-+	if (!thread_group_array)
-+		return -ENOMEM;
- 	ret = of_property_read_u32_array(dn, "ibm,thread-groups",
- 					 thread_group_array, count);
- 	if (ret)
+diff --git a/drivers/iio/gyro/itg3200_core.c b/drivers/iio/gyro/itg3200_core.c
+index cd8a2dae56cd9..bfe95ec1abda9 100644
+--- a/drivers/iio/gyro/itg3200_core.c
++++ b/drivers/iio/gyro/itg3200_core.c
+@@ -93,6 +93,8 @@ static int itg3200_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CHAN_INFO_RAW:
+ 		reg = (u8)chan->address;
+ 		ret = itg3200_read_reg_s16(indio_dev, reg, val);
++		if (ret)
++			return ret;
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_SCALE:
+ 		*val = 0;
 -- 
 2.51.0
 
