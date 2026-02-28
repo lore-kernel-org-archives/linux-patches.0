@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B16636C9D2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3241B33A713
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302227; cv=none; b=r/HGe03XzbwrJcZQP5GMvvbvNqoEwPMhWaDeeYzQzeNGM08HPQ3aLEdMGdmz5LmqJdDekFETr4T0uemT80gj8Gd3ZSfG2GLPI5VwiaxOkaIS83Yvk5o0JXfgQfi0mOsoeq7fn6ZY8LXOZLSKBrvprsNlR6VJKO4bP7Pj9T6LBko=
+	t=1772302228; cv=none; b=kT2hu95ytGekOTFRO+KZHg3b7C+dE18QbL7+7UWFXtcubZB+D+VO0VdocWF636qUvayjro9dfXcIr7Ef9HVPZn787ZM4VHVW/EMa8/a5oTY5xkcKdK2LH/ODz4HeXpO3Yn3lint5P00p5gptTTaMdGaHTpJUAePTiBAEWJQvceM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302227; c=relaxed/simple;
-	bh=+U6bCg4py1qF7HpHbTmb8Jep9Va56degYb3IbwIbBys=;
+	s=arc-20240116; t=1772302228; c=relaxed/simple;
+	bh=SlhDBqUycxRmFqTOxPJTXIaV2tAqSW0l2JmOq1MxwvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvt2souwawCRhyGlOhsy2t6v52EQN4Qt4bMvtp4EV8rSb7Q24J1hD4l8mPZtFl/hT7Roq6mHE7OQZ1M3gTpsTcn096r9izkvl2UylFK7eKCelRlVqBcW0uahjXL63qwMmgQYd0yD5StShPMqNjrYCGtZ/Iqh115hNxDo7sWOp1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DZ36pvSF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HSICrt5Mb9T9aSYgKnckQ6+u+T9yd3ZL3SkyywggHn/wSmhQklUQkBqyQwpVdpkjTbJ3s1BTTK3gDv6ROGqcjTvxyZgSFQzQWRb96Pf4KKaQZ7uK9iKjEThx9sUsWMYvMJ8n+d+nvQKPd+vrm57HOCkFzy5QlujXN8VVWc5mOeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MFZ+d8UF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DZ36pvSF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D7DC19424;
-	Sat, 28 Feb 2026 18:10:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MFZ+d8UF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDEAC19424;
+	Sat, 28 Feb 2026 18:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302227;
-	bh=+U6bCg4py1qF7HpHbTmb8Jep9Va56degYb3IbwIbBys=;
+	s=k20201202; t=1772302228;
+	bh=SlhDBqUycxRmFqTOxPJTXIaV2tAqSW0l2JmOq1MxwvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZ36pvSFlxaSCvgxfpKGn7HJ/l10UH0sDaZ//hBXTg6T+ETwnCxaaY+rdAVPS+8bT
-	 avK6vdfOvfOPJH+0HA6Vd5mjdlpxqPZ20KuWYKP0sqCngzO1jmgjxSBQQ/p+xF+ZT/
-	 MkoqlMsQqFVtT8reVqoaT3U9El4PpRfV2XbvtPMvjXLawEBpWOiT/zhlzGRU/KtaCP
-	 2ozBhF4/VhBxF2STmajOddUpxXkbTaUlj+sNKWvXE8EK4rFY39XC6bMahe4dgocCl6
-	 ucDzkEsxVV075DftErGeT7dkdVK5H+zgX+kl9cbjviikxW+6c91PLhUtryaSMGQOU6
-	 l9GFZ6Wh5DyFA==
+	b=MFZ+d8UFamh0Dml4XrCktXMjZe+EPkIG4VlSNt3TYQqyw7W0Czd8Dl1E9SShWF5Ug
+	 NENXBzCwmNqld/z/yqkQfmbw6UkiH2UvPgMs6Xc/6gcgiQTlrFI73DUtFiP3I0QAj9
+	 hqM7z53JcBhCn/D4uWh9y2O9DCpk4ojev0x6ABvDYA7ZZfwesn/KtE3FvRLWOz3zT1
+	 hdKc5G6F7UQOEcZqGjZY1sjHF+M+8wjlVv8f64sRG1Sxzu890H/njrpwjtk9mBXKG+
+	 eARqWbPjztr/fi5DwLqaFF0ODXNh4GTNWSj/d1upjo/05iXbGhA/nEtjaPJlvH4CYD
+	 74kgJoAbjX2fA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotian Zhang <vulab@iscas.ac.cn>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+Cc: Dzmitry Sankouski <dsankouski@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 236/283] mfd: arizona: Fix regulator resource leak on wm5102_clear_write_sequencer() failure
-Date: Sat, 28 Feb 2026 13:06:18 -0500
-Message-ID: <20260228180709.1583486-236-sashal@kernel.org>
+Subject: [PATCH 6.6 237/283] mfd: simple-mfd-i2c: Add MAX77705 support
+Date: Sat, 28 Feb 2026 13:06:19 -0500
+Message-ID: <20260228180709.1583486-237-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,40 +48,50 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
 
-[ Upstream commit 4feb753ba6e5e5bbaba868b841a2db41c21e56fa ]
+[ Upstream commit 7b591ef98b3fc1ce20c3ccb86715429b72e2e6f0 ]
 
-The wm5102_clear_write_sequencer() helper may return an error
-and just return, bypassing the cleanup sequence and causing
-regulators to remain enabled, leading to a resource leak.
+Add MAX77705 support - fuel gauge and hwmon devices.
+Hwmon provides charger input and system bus measurements.
 
-Change the direct return to jump to the err_reset label to
-properly free the resources.
-
-Fixes: 1c1c6bba57f5 ("mfd: wm5102: Ensure we always boot the device fully")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251214145804.2037-1-vulab@iscas.ac.cn
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250123-starqltechn_integration_upstream-v17-4-8b06685b6612@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
+Stable-dep-of: 8f34c1a64c53 ("mfd: simple-mfd-i2c: Add Delta TN48M CPLD support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/arizona-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/simple-mfd-i2c.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/mfd/arizona-core.c b/drivers/mfd/arizona-core.c
-index 19a0adf8ce3db..35f516d934c8b 100644
---- a/drivers/mfd/arizona-core.c
-+++ b/drivers/mfd/arizona-core.c
-@@ -1100,7 +1100,7 @@ int arizona_dev_init(struct arizona *arizona)
- 		} else if (val & 0x01) {
- 			ret = wm5102_clear_write_sequencer(arizona);
- 			if (ret)
--				return ret;
-+				goto err_reset;
- 		}
- 		break;
- 	default:
+diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+index 6eda79533208a..22159913bea03 100644
+--- a/drivers/mfd/simple-mfd-i2c.c
++++ b/drivers/mfd/simple-mfd-i2c.c
+@@ -83,11 +83,22 @@ static const struct simple_mfd_data maxim_max5970 = {
+ 	.mfd_cell_size = ARRAY_SIZE(max5970_cells),
+ };
+ 
++static const struct mfd_cell max77705_sensor_cells[] = {
++	{ .name = "max77705-battery" },
++	{ .name = "max77705-hwmon", },
++};
++
++static const struct simple_mfd_data maxim_mon_max77705 = {
++	.mfd_cell = max77705_sensor_cells,
++	.mfd_cell_size = ARRAY_SIZE(max77705_sensor_cells),
++};
++
+ static const struct of_device_id simple_mfd_i2c_of_match[] = {
+ 	{ .compatible = "kontron,sl28cpld" },
+ 	{ .compatible = "silergy,sy7636a", .data = &silergy_sy7636a},
+ 	{ .compatible = "maxim,max5970", .data = &maxim_max5970},
+ 	{ .compatible = "maxim,max5978", .data = &maxim_max5970},
++	{ .compatible = "maxim,max77705-battery", .data = &maxim_mon_max77705},
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, simple_mfd_i2c_of_match);
 -- 
 2.51.0
 
