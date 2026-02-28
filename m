@@ -1,117 +1,113 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3535A41C2E7;
-	Sat, 28 Feb 2026 10:25:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0616B42B73E;
+	Sat, 28 Feb 2026 12:09:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772274303; cv=none; b=m1bAWCrtE98x6kDY0Kba/qyba+2719GUrPIiH3CE2n7Jg5IHa0JcnscT45pPnNJYy1wPD1wWtuXfudtuTtru7QOoFDdT30YBgJa8JtYgGu6y2sZtywreCq7pmZKZxdz29nojvJeAo9zhsBiqPUkJMzsj/HxR2eoD1hI7hS2cbHI=
+	t=1772280570; cv=none; b=eurhjf99gRDazHDwy+R6faiRvtWZ9J1+sqF/W9iS6FYH9vDPjTXr4hdILS42zbWtr5Ea+v0ud7YQNK611lIrgNpgx3R1VYrUsmTfkKOhyzx8+FjCUa3HyIlXl9mI/apy5OluAKF7HU0/6XFhWI3FamUAMBaXPhMVMzNfHHXdKbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772274303; c=relaxed/simple;
-	bh=qgxr04DzpqZuuvLJo39Vf9euXNTZ/DZ7hjmExj4iNdE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SrpIqqH8m9542VSUbJC78PGMLFcnJtG+oOURlTn3NU5IXE8OW/iE1HbAO7k0bmiECeEK5QA//rfIhR+1m2p5WEMaHqSYt6TB+KbGhqhLVuOcwxKWcr0KLpjS4DaYraXDa6EFFF9YAV20r4cC1h3Z59VoMNB4Vv2iiu74F5FVcz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=L1vpT7wm; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1772280570; c=relaxed/simple;
+	bh=ayUyN9osXzBMYpasC96SE/5bcYbxEM0e0cC8awLL74U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VFhdJe5y2Z3SF3fzqTktuiY4CLf9A2Wm37P8B57EbxxKPIHSU1ig/qnX01FRe06EfJzucHIoGsm25odIzNcKkrsaz/JpztR7SpbwRQhnbbuv4DS3Cs4AQUQBY1SOsV8OeX/wPWrYyXl1q7iNfhpB9JnobHzH9TCjN3V9av/Cs5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IIVKWnOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="L1vpT7wm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1772274301; x=1803810301;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=qgxr04DzpqZuuvLJo39Vf9euXNTZ/DZ7hjmExj4iNdE=;
-  b=L1vpT7wmFG8KGLOns6WAVMjiwLXH3sz3FfDI3s3XupDlZ3sb0uOmU5qi
-   8KHr4mCcy5p7sbKXU2HClbzut5QGYBWsGS/DlQh1hUHibvDmKx+1VL/qA
-   sLTCMIsY+4DKS9SFeedhnyOEgbeA0vqE/kmdZHKXsalnw/8IuRB+XrQkN
-   hl8VXDNNBRRU9AR4CQ4bUMOTT6O2RIG4VJTzdiiFtmST5WKbMFx+FJez9
-   D8bLRDwU2P+uPjtb9L+hJsTjoitJ0cOSNpAiwnEBlriEyrlOaAX5403vR
-   lO0YE9D7FgXf3PbJM6NCwuuf5rLZ6yoDENaKiimps2b+R98KKG3ifmCtg
-   w==;
-X-CSE-ConnectionGUID: bNMIfo6rTO6ioqhCC2fpbg==
-X-CSE-MsgGUID: WHFZwkjSRa2x+GA1sY9JYg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11714"; a="77216649"
-X-IronPort-AV: E=Sophos;i="6.21,315,1763452800"; 
-   d="scan'208";a="77216649"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2026 02:25:01 -0800
-X-CSE-ConnectionGUID: +rmd393YT4S5jGy/dmhnNg==
-X-CSE-MsgGUID: tryl4o5iRDSH9797dWTdIg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,315,1763452800"; 
-   d="scan'208";a="214914795"
-Received: from lkp-server02.sh.intel.com (HELO a3936d6a266d) ([10.239.97.151])
-  by fmviesa010.fm.intel.com with ESMTP; 28 Feb 2026 02:24:58 -0800
-Received: from kbuild by a3936d6a266d with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vwHVI-00000000BSh-00XA;
-	Sat, 28 Feb 2026 10:24:56 +0000
-Date: Sat, 28 Feb 2026 18:24:21 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jason Gunthorpe <jgg@nvidia.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>, linux-rdma@vger.kernel.org,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
-Cc: oe-kbuild-all@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH v2 03/13] RDMA: Add ib_copy_validate_udata_in()
-Message-ID: <202602281856.cOumhTuc-lkp@intel.com>
-References: <3-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IIVKWnOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2005C116D0;
+	Sat, 28 Feb 2026 12:09:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772280569;
+	bh=ayUyN9osXzBMYpasC96SE/5bcYbxEM0e0cC8awLL74U=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=IIVKWnOEwrNwPTteroIJDba8seDOnIrqD/oCSumLUniy3gKFFspbWFneOgcw8UHJK
+	 RJlwA/M3B8/4HVCqvwou/B1fsF+JIO4ydZ/lgZSqK/15KgYii1/5d4VxaZ1mNMYv+v
+	 4BDAwV/X97Jv7or2ujP+i4tIpQsjasxdA6NtagQC6L0i9ZqDnWEJGE2LndlMsIbqDo
+	 6hdgOrD8yRtIvRF9YitpntVR76YUMKImFWJ2nYAxIzoxdCaoRisfXgQC5ogMMveifz
+	 EpLkGXWFSOFXd4ht3vlJ3vIFQLg+QMtxEfjbjdl9aSKdAufEM/17Vh0kzRrj/t7lBh
+	 YrKzqWaxtSy0g==
+Message-ID: <126c88de-e656-473d-9a3c-0cc24cd2c0f7@kernel.org>
+Date: Sat, 28 Feb 2026 13:09:25 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.19 626/781] kbuild: Add objtool to top-level clean
+ target
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Jens Remus <jremus@linux.ibm.com>,
+ Josh Poimboeuf <jpoimboe@kernel.org>, Nathan Chancellor <nathan@kernel.org>,
+ Sasha Levin <sashal@kernel.org>
+References: <20260225012359.695468795@linuxfoundation.org>
+ <20260225012415.167110696@linuxfoundation.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20260225012415.167110696@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Jason,
+On 25. 02. 26, 2:22, Greg Kroah-Hartman wrote:
+> 6.19-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Josh Poimboeuf <jpoimboe@kernel.org>
+> 
+> [ Upstream commit 68b4fe32d73789dea23e356f468de67c8367ef8f ]
 
-kernel test robot noticed the following build errors:
+Oh, I didn't notice earlier. This breaks external kernel modules build 
+after make clean (which distros do).
 
-[auto build test ERROR on 3f4a08e64442340f4807de63e30aef22cc308830]
+A fix is on the way:
+https://lore.kernel.org/all/20260227-avoid-objtool-binary-removal-clean-v1-1-122f3e55eae9@kernel.org/
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jason-Gunthorpe/RDMA-Use-copy_struct_from_user-instead-of-open-coding/20260227-093947
-base:   3f4a08e64442340f4807de63e30aef22cc308830
-patch link:    https://lore.kernel.org/r/3-v2-13af4a900857%2B4f13-bnxt_re_uapi_jgg%40nvidia.com
-patch subject: [PATCH v2 03/13] RDMA: Add ib_copy_validate_udata_in()
-config: i386-randconfig-141-20260227 (https://download.01.org/0day-ci/archive/20260228/202602281856.cOumhTuc-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.4.0-5) 12.4.0
-smatch version: v0.5.0-8994-gd50c5a4c
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260228/202602281856.cOumhTuc-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202602281856.cOumhTuc-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from include/rdma/uverbs_std_types.h:10,
-                    from drivers/infiniband/core/uverbs.h:49,
-                    from drivers/infiniband/core/nldev.c:44:
-   include/rdma/uverbs_ioctl.h: In function '_ib_copy_validate_udata_in':
->> include/rdma/uverbs_ioctl.h:964:17: error: 'EVINAL' undeclared (first use in this function); did you mean 'EINVAL'?
-     964 |         return -EVINAL;
-         |                 ^~~~~~
-         |                 EINVAL
-   include/rdma/uverbs_ioctl.h:964:17: note: each undeclared identifier is reported only once for each function it appears in
-
-
-vim +964 include/rdma/uverbs_ioctl.h
-
-   959	
-   960	static inline int _ib_copy_validate_udata_in(struct ib_udata *udata, void *req,
-   961						     size_t kernel_size,
-   962						     size_t minimum_size)
-   963	{
- > 964		return -EVINAL;
-   965	}
-   966	
-
+thanks,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+js
+suse labs
+
