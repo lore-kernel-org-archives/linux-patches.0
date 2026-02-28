@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93195340A47
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F406340A47
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301071; cv=none; b=EWbjikkzL4Nm689ct98+V33gVfuFRVkRdKo3R5zc7RiVXZTveXXHEQb1fkjL95XM7Jzq0a4l0CMFdYDW39Z2F+fFrWDMmuDjHuod6vJZ7a/HChDASZZjQbZXjvGjmvx4s6D38HUeoZCkVu5dvHXGqIT1pbC+soWwqz6/HUYITgI=
+	t=1772301072; cv=none; b=g51qakDNry/JFLCLyiUW6gxra9a8HoEWFlYPn9vhM67VxlwWdjcdsUW/kDl90UyL4QbiMTlO7xzECoE3mEDKGsj4nzdHeg7SlEopjkBHXEpYVQhHnQFLhARwxNPaQBbl0PaOVBb+RWbk/iOi0IkHuTqnKIxxHkI61GpiA7Kdcgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301071; c=relaxed/simple;
-	bh=Dt/wMIymTdav/UUeeLS7H4kMK41+6TdhOpRB1a3sCa0=;
+	s=arc-20240116; t=1772301072; c=relaxed/simple;
+	bh=O0oY+q71A49VscNbl9kX2MbMIi7aaoURk4SYzY19jYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UIW+/s4cEE2FoVjxfBGIuxT1jKCYPk9DvVtRwO1MAg+VSyC7SlbXltJ4/0yYnUyQF0dqeyZA1Pck7IOQkc2tfc2X60YioKvkOX2q9nsL65Pft7O+3wWN6NUfbxANUw3eaCjS3Aex0/vNSINgOrWrQncyzSH9EQ0NCpBOb6KgE4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iB15dS5w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hex48ZtoRBbpwjdZSbLigMLu82LuE1eHR0q9kRO2tSI6Pv/PNG8qgqoRMsY9vYLxNQvhDm+6rEWQOS53ZZCigwJWjDPgTN3Fq4ykzYd26OIwJGDjpN681N8lYfwwqvffOoBvonk1RSdvZa6G3L0vxwdrvlOdGW5RGAbWVPlkaaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ItcWu2nX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iB15dS5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039DEC116D0;
-	Sat, 28 Feb 2026 17:51:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ItcWu2nX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC203C19423;
+	Sat, 28 Feb 2026 17:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301071;
-	bh=Dt/wMIymTdav/UUeeLS7H4kMK41+6TdhOpRB1a3sCa0=;
+	s=k20201202; t=1772301072;
+	bh=O0oY+q71A49VscNbl9kX2MbMIi7aaoURk4SYzY19jYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iB15dS5w/1O4614QNgMcXrwApJboxGg6mD76ATmREanrOlDST4lJhY3NUbTdvn2UL
-	 L4t0MBicTfVdDMnppUFBm477QjySzHx0yqQ2NMDl5JSwE6d3uej3cRxt6BG2EOM/S0
-	 9AdcKMNPtVLLP0FuiBOfeATe7/C1QWJmYtvjcjnxeIAOaC4B8oNecTueHFmHk0QL8Y
-	 /cTOeDkVdIewkUHDDf1NGZ+I8t/PAws4IxiO4wUAqsRghQMOomhBGwqzknvO17H5AA
-	 Gnk+eZCiBO+mOLPFybrNW4Yr2GtuwO9rxpGW8H5G2CyqiPu/MAGQ0qN1wavTSxFUlR
-	 cpD7Ww2pBRH2g==
+	b=ItcWu2nXjwyjSlHcF2xBZgQ9Ay09ynYfosl3g9NL1P3yqs5M5vUa8+E/krcjKZapC
+	 vg2uXg3/YDi3PimSay2atShlf129XgV9cmB4DB94qb/DOVfnj9ku46rFndUVa2ABqr
+	 BSKo+TPXuPy4WJ7ZIzXeXXBA8QDAFcPJ2EXgzaL7Aipr6xiOryC88pjx5wJd4zYIFu
+	 NrmCzP+q8JrZcW2OA8b5lzXFedXHWyNddnlCjCDG/xSp7y1GTjLzoTzJJulz+a1Ffz
+	 npEXE+zoYoNYcxts3VPabetFefpc8lp0KCO3uUp0sHEzPwyrOdF3ITcVDLGWriG8Wr
+	 h7SxNShRVBgaQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Hsiu-Ming Chang <cges30901@gmail.com>,
+Cc: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 216/752] wifi: rtw88: rtw8821cu: Add ID for Mercusys MU6H
-Date: Sat, 28 Feb 2026 12:38:47 -0500
-Message-ID: <20260228174750.1542406-216-sashal@kernel.org>
+Subject: [PATCH 6.18 217/752] wifi: rtw89: 8922a: set random mac if efuse contains zeroes
+Date: Sat, 28 Feb 2026 12:38:48 -0500
+Message-ID: <20260228174750.1542406-217-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,35 +47,69 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Hsiu-Ming Chang <cges30901@gmail.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-[ Upstream commit 77653c327e11c71c5363b18a53fbf2b92ed21da4 ]
+[ Upstream commit 41be33d3efc120f6a2c02d12742655f2aa09e1b6 ]
 
-Add support for Mercusys MU6H AC650 High Gain Wireless Dual Band USB
-Adapter V1.30. It is based on RTL8811CU, usb device ID is 2c4e:0105.
+I have some rtl8922ae devices with no permanent mac stored in efuse.
 
-Signed-off-by: Hsiu-Ming Chang <cges30901@gmail.com>
+It could be properly saved and/or configured from user tools like
+NetworkManager, but it would be desirable to be able to initialize it
+somehow to get the device working by default.
+
+So, in the same way as with other devices, if the mac address read from
+efuse contains zeros, a random mac address is assigned to at least allow
+operation, and the user is warned about this in case any action needs to
+be considered.
+
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251205003245.5762-1-cges30901@gmail.com
+Link: https://patch.msgid.link/20251126091905.217951-1-jtornosm@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8821cu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtw89/rtw8922a.c | 22 +++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-index 7a0fffc359e25..8cd09d66655db 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-@@ -37,6 +37,8 @@ static const struct usb_device_id rtw_8821cu_id_table[] = {
- 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Edimax */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xd811, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Edimax */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2c4e, 0x0105, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Mercusys */
- 	{},
- };
- MODULE_DEVICE_TABLE(usb, rtw_8821cu_id_table);
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8922a.c b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
+index 6aa19ad259aca..757dedd1a11d5 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8922a.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
+@@ -636,16 +636,30 @@ static int rtw8922a_read_efuse_rf(struct rtw89_dev *rtwdev, u8 *log_map)
+ static int rtw8922a_read_efuse(struct rtw89_dev *rtwdev, u8 *log_map,
+ 			       enum rtw89_efuse_block block)
+ {
++	struct rtw89_efuse *efuse = &rtwdev->efuse;
++	int ret;
++
+ 	switch (block) {
+ 	case RTW89_EFUSE_BLOCK_HCI_DIG_PCIE_SDIO:
+-		return rtw8922a_read_efuse_pci_sdio(rtwdev, log_map);
++		ret = rtw8922a_read_efuse_pci_sdio(rtwdev, log_map);
++		break;
+ 	case RTW89_EFUSE_BLOCK_HCI_DIG_USB:
+-		return rtw8922a_read_efuse_usb(rtwdev, log_map);
++		ret = rtw8922a_read_efuse_usb(rtwdev, log_map);
++		break;
+ 	case RTW89_EFUSE_BLOCK_RF:
+-		return rtw8922a_read_efuse_rf(rtwdev, log_map);
++		ret = rtw8922a_read_efuse_rf(rtwdev, log_map);
++		break;
+ 	default:
+-		return 0;
++		ret = 0;
++		break;
++	}
++
++	if (!ret && is_zero_ether_addr(efuse->addr)) {
++		rtw89_info(rtwdev, "efuse mac address is zero, using random mac\n");
++		eth_random_addr(efuse->addr);
+ 	}
++
++	return ret;
+ }
+ 
+ #define THM_TRIM_POSITIVE_MASK BIT(6)
 -- 
 2.51.0
 
