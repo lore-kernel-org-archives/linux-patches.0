@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D2638F627
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F2438D017
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302148; cv=none; b=KrlrfT9i1dMQ+PMc4OD0b0yGJH01/vNnWw3gNGJHr608M0g+2vfNvG7J/tMK8sNSlb8iQv0aQXMRC1pSWNmXiNtwaprymByHFQcgG+fxSzyOkQK/i3B2v9vxKleYOiCY8/vmcAA+1KNN6fqiGfiUPocDABvRZ4WdHVBjmGNqkPQ=
+	t=1772302149; cv=none; b=DoRUu90IAWT0sp1AA+BCYVI3DAlMVeg+bNZwpnm77MvkW/Q9xX6GqnGvSlV70lzdZTYKnzeFHOna7YDA0tPWV2tIZua7nwNAH3TE5XyDiw3+WitoKDsnNSzoLPqn2EcGL8oAQ/0AcX9QcY0z7pUWAVAUHdLOe+d9AxLoGlI7FbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302148; c=relaxed/simple;
-	bh=+VzC36pG5CZW+3yzq8QCETen+U2eD7288fnpV8u+vhA=;
+	s=arc-20240116; t=1772302149; c=relaxed/simple;
+	bh=QUWhJWuASyQ3TGmR0hP/rOtSacngwO0yDirEAMfMkVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pr4Tz/rDLW8MZBSYxhSPeoSOaARxrO/HqQU1Natmdxs4gomGd4ZYCNvvjVJEk/wmvKKs3tNUFlgb+0ZbJgu5LC4ims4d5tsegx2LA0hQBwK4ucEPgWdiLfC1bf+nCZ9/eKBAUuznG64PqQWSI1ldatvFn9I+bixmmJkPZyLE78U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KEc9Yn0m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VvE9l64fueSZCmIs599EHtKKtSN5c5ZfY3CXeS47IuW8+zVi6lUWlZPWa9FuZb85850VS7PWC8IrMj455hfN1aq81Zk4clDa811qYuICCNhVsjCz03Axtn0Jexapm1P6nu3VI+jDG/DRhzYMgkUw0265+WiDkOmMyJRugWCy+0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZiRof5RO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KEc9Yn0m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766E8C116D0;
-	Sat, 28 Feb 2026 18:09:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZiRof5RO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8A0C19423;
+	Sat, 28 Feb 2026 18:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302148;
-	bh=+VzC36pG5CZW+3yzq8QCETen+U2eD7288fnpV8u+vhA=;
+	s=k20201202; t=1772302149;
+	bh=QUWhJWuASyQ3TGmR0hP/rOtSacngwO0yDirEAMfMkVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KEc9Yn0mpmLm5IsK6VFumCKG6mlPszBTvxfwCiqIN/0Po4j17ADiNItuMcaLgsKd8
-	 QrUVawsbQhBSd1NGNt1cVjOpZ9qXzTXamw84S2CLSAHtUVUrX5v5jsI+sTGNzXOz9f
-	 Vxf/z1uzHigfHVHAhFcDhvK/byASnL0pZiR7kcig/gQylYxaAboE7n8N6sV9VcfKid
-	 Yz9vTS9ZgikEqazHd/N0DCzo55kgso7aJJ4oI8AGpjnn1beMeG7dyF2mEO4VRJIZys
-	 I9Box4EFR9zPMfE0zodyoNvTAEea1SKWm4Se7qi54BHrZytNpXwgk5CrT0X9PgbWu3
-	 s9IWKklu4xPhw==
+	b=ZiRof5ROZfQV4pVCaZiJpYDkQaAex0ewno9AOaXt/l5M68mqD9QtY2cmLOSzQAw0I
+	 ypsn+4EEJ21ig24QLH9tEyVWtRSlvxE4M43WYYg7oOkBhSsFfM8s7J2EtHgQH1TqCI
+	 ZeNiQeWeZnvjjiOgWxmPdGWyb+C9JChl0qPH8dkW0A0MwqRXAL5ubgivvW+ous3sWo
+	 VgjFRFXsfn8CuujRbU1/RJnvBu7bckSZrWdAIMHkQw/pYjllCKoX05Dqf2eBqZ+YP1
+	 fEYBgq79bwnRLz58cdKeFX0RcUBPEp/Axbc3RWY7UgDiE1vwIzYERidKeSeP3c1/Ye
+	 AXt5/MkMg+4Lg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Bogendoerfer <tbogendoerfer@suse.de>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 142/283] bonding: only set speed/duplex to unknown, if getting speed failed
-Date: Sat, 28 Feb 2026 13:04:44 -0500
-Message-ID: <20260228180709.1583486-142-sashal@kernel.org>
+Subject: [PATCH 6.6 143/283] inet: RAW sockets using IPPROTO_RAW MUST drop incoming ICMP
+Date: Sat, 28 Feb 2026 13:04:45 -0500
+Message-ID: <20260228180709.1583486-143-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -50,72 +50,92 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 48dec8d88af96039a4a17b8c2f148f2a4066e195 ]
+[ Upstream commit c89477ad79446867394360b29bb801010fc3ff22 ]
 
-bond_update_speed_duplex() first set speed/duplex to unknown and
-then asks slave driver for current speed/duplex. Since getting
-speed/duplex might take longer there is a race, where this false state
-is visible by /proc/net/bonding. With commit 691b2bf14946 ("bonding:
- update port speed when getting bond speed") this race gets more visible,
-if user space is calling ethtool on a regular base.
+Yizhou Zhao reported that simply having one RAW socket on protocol
+IPPROTO_RAW (255) was dangerous.
 
-Fix this by only setting speed/duplex to unknown, if link speed is
-really unknown/unusable.
+  socket(AF_INET, SOCK_RAW, 255);
 
-Fixes: 98f41f694f46 ("bonding:update speed/duplex for NETDEV_CHANGE")
-Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20260203141153.51581-1-tbogendoerfer@suse.de
+A malicious incoming ICMP packet can set the protocol field to 255
+and match this socket, leading to FNHE cache changes.
+
+inner = IP(src="192.168.2.1", dst="8.8.8.8", proto=255)/Raw("TEST")
+pkt = IP(src="192.168.1.1", dst="192.168.2.1")/ICMP(type=3, code=4, nexthopmtu=576)/inner
+
+"man 7 raw" states:
+
+  A protocol of IPPROTO_RAW implies enabled IP_HDRINCL and is able
+  to send any IP protocol that is specified in the passed header.
+  Receiving of all IP protocols via IPPROTO_RAW is not possible
+  using raw sockets.
+
+Make sure we drop these malicious packets.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Link: https://lore.kernel.org/netdev/20251109134600.292125-1-zhaoyz24@mails.tsinghua.edu.cn/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260203192509.682208-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/ipv4/icmp.c | 14 ++++++++++----
+ net/ipv6/icmp.c |  6 ++++++
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 4373e300879d9..4f8a59b4ba985 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -727,26 +727,29 @@ static int bond_update_speed_duplex(struct slave *slave)
- 	struct ethtool_link_ksettings ecmd;
- 	int res;
- 
--	slave->speed = SPEED_UNKNOWN;
--	slave->duplex = DUPLEX_UNKNOWN;
--
- 	res = __ethtool_get_link_ksettings(slave_dev, &ecmd);
- 	if (res < 0)
--		return 1;
-+		goto speed_duplex_unknown;
- 	if (ecmd.base.speed == 0 || ecmd.base.speed == ((__u32)-1))
--		return 1;
-+		goto speed_duplex_unknown;
- 	switch (ecmd.base.duplex) {
- 	case DUPLEX_FULL:
- 	case DUPLEX_HALF:
- 		break;
- 	default:
--		return 1;
-+		goto speed_duplex_unknown;
- 	}
- 
- 	slave->speed = ecmd.base.speed;
- 	slave->duplex = ecmd.base.duplex;
- 
- 	return 0;
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index b17549c4e5de8..f3cdfc09d7f06 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -840,16 +840,22 @@ static void icmp_socket_deliver(struct sk_buff *skb, u32 info)
+ 	/* Checkin full IP header plus 8 bytes of protocol to
+ 	 * avoid additional coding at protocol handlers.
+ 	 */
+-	if (!pskb_may_pull(skb, iph->ihl * 4 + 8)) {
+-		__ICMP_INC_STATS(dev_net_rcu(skb->dev), ICMP_MIB_INERRORS);
+-		return;
+-	}
++	if (!pskb_may_pull(skb, iph->ihl * 4 + 8))
++		goto out;
 +
-+speed_duplex_unknown:
-+	slave->speed = SPEED_UNKNOWN;
-+	slave->duplex = DUPLEX_UNKNOWN;
++	/* IPPROTO_RAW sockets are not supposed to receive anything. */
++	if (protocol == IPPROTO_RAW)
++		goto out;
+ 
+ 	raw_icmp_error(skb, protocol, info);
+ 
+ 	ipprot = rcu_dereference(inet_protos[protocol]);
+ 	if (ipprot && ipprot->err_handler)
+ 		ipprot->err_handler(skb, info);
++	return;
 +
-+	return 1;
++out:
++	__ICMP_INC_STATS(dev_net_rcu(skb->dev), ICMP_MIB_INERRORS);
  }
  
- const char *bond_slave_link_status(s8 link)
+ static bool icmp_tag_validation(int proto)
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index c7e815b7ca087..e9e457b7d4eac 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -869,6 +869,12 @@ enum skb_drop_reason icmpv6_notify(struct sk_buff *skb, u8 type,
+ 	if (reason != SKB_NOT_DROPPED_YET)
+ 		goto out;
+ 
++	if (nexthdr == IPPROTO_RAW) {
++		/* Add a more specific reason later ? */
++		reason = SKB_DROP_REASON_NOT_SPECIFIED;
++		goto out;
++	}
++
+ 	/* BUGGG_FUTURE: we should try to parse exthdrs in this packet.
+ 	   Without this we will not able f.e. to make source routed
+ 	   pmtu discovery.
 -- 
 2.51.0
 
