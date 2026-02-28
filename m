@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACA8421A16
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059E1341674
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301190; cv=none; b=j8Pc1rK8RSzFx2XSGZNxAbqhvCsphlzqBsw505GRTpkIQZK+OXEabCaJ8E7bC79p7MbcY+iUIPnyYk2rb0UPrekkqNeKojBH2et1oKotl+Qb4Td/eE0rMyWR1RjOJLfFfivJHT5V8taEVoEc69HIPI34xXkRAORa2lGbCN6EiMY=
+	t=1772301191; cv=none; b=TIMSCnQPxFWxJP63UkZvqEPld4CAb8T1PUoheK0AOXwUARHgb2Jbmuga7UTTuo3sFPZz1+v18lDaXNHlH1rYj/UpKx3MKf36NjQt6wBMpYg1hDFnwXla5ls8XdJftsTPHn+dXxJpOjhTAM0PU4KzKDn6RDH/ub9QhMebBndVaTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301190; c=relaxed/simple;
-	bh=nEBHn/E2vI88MIJ7nIqaANfuIDHotYdC5cPu7qAjxCc=;
+	s=arc-20240116; t=1772301191; c=relaxed/simple;
+	bh=B5NA7MK9dSDpVwXGWNK8EJa14M/xy8gqwy47uVV+8kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/i7xXSodPBeqjCjVtFWT9Y+tvdzSI6niLxleJz64iB9SiSsO0d9FkxLO3R95UTYIfVnkamjjBYc/R5ubeXxtMNaKrK6XYM3A+PsB0z+QPDLDE8+PJcbmGxk2h0YJ1JnaNGj7eKFs6+V83bntpcRPSTbtcim7kxZ3wH2bagotKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BllrImbV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sn+rFmbWvpwjM0n5SbC61iqu0l8CizrjYyAZ7iz+3tt+sfVVLvuqc8rOTJtNZ4NIGiWl980PVa3jTvrNOLJYzHdX1bmew0cqfCIFZFkgoZfvAkF1GFa7r+P4S8OWUCAJb4/JgVhGaxCl5HQqTfy2tyCUkFeaYrLWEVUpr0Prlkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n+oGeiFi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BllrImbV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EB9C19423;
-	Sat, 28 Feb 2026 17:53:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n+oGeiFi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B53C19424;
+	Sat, 28 Feb 2026 17:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301190;
-	bh=nEBHn/E2vI88MIJ7nIqaANfuIDHotYdC5cPu7qAjxCc=;
+	bh=B5NA7MK9dSDpVwXGWNK8EJa14M/xy8gqwy47uVV+8kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BllrImbVsMff3OCklIezNs1Deu744ecUsZHKzAnNEwZLKeRK/P45FO9DoWi0VLnTd
-	 zY7TEtC3wgkPco5ZasaMaqy+7ab3XXczQJ6rhnXeDZlY2byhLrUMv68xtJ2DA4FjDw
-	 wvhb7eJHAH/HBk+i2lBAsS/+kqqWJPtZI/ht55z1Ry6HJJueIMz6PgjWC3OKrOM3VP
-	 Tfje4QhHye3XnnX3gnu4CZTahoN+v2cMkV1a1TJpgNSzHem0eajiid4GgUAdfH1a9n
-	 YCZWBb11x3tdqlyJuIGXTC5h5c/3Zc4ljBswqGwCtFwMBKVeFsqlv0mKZDiov/Hycg
-	 2ZB/rAUtqjHkA==
+	b=n+oGeiFiowlk/rYd8KOnzlQAmO8VpcyrF2vCfDKDDhHSFWsvY207dYWANIMuyiDYr
+	 XY9ks1aTiVgogZpedLZJ1UqaJ6xrBSG5otU4wlLc2xbWG9gBOX1xYyd34W5zGazhx7
+	 La4Q2TAMZA9gMUPGQzZQ3UREnL2+3Ub3SJah9nHipTosUnOAljdnV3Gj0qfktiYTrt
+	 WFEexRWjn40qfiUgn89DhHX1GsTY1UJm8U2lA7AwLVaERj/dvpCB7t5BQw8YTnla5I
+	 l7mFFYGcZmTwBcqmGhZMJg8p52iJ/i56zLnYrWZfxANJscDzql43a+/88gwC551DAb
+	 PlTHMp8Qxt80w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jaehun Gou <p22gone@gmail.com>,
-	Seunghun Han <kkamagui@gmail.com>,
-	Jihoon Kwon <kjh010315@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 360/752] fs: ntfs3: fix infinite loop triggered by zero-sized ATTR_LIST
-Date: Sat, 28 Feb 2026 12:41:11 -0500
-Message-ID: <20260228174750.1542406-360-sashal@kernel.org>
+Subject: [PATCH 6.18 361/752] fs/ntfs3: drop preallocated clusters for sparse and compressed files
+Date: Sat, 28 Feb 2026 12:41:12 -0500
+Message-ID: <20260228174750.1542406-361-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,66 +46,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jaehun Gou <p22gone@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 06909b2549d631a47fcda249d34be26f7ca1711d ]
+[ Upstream commit 3a6aba7f3cf2b46816e08548c254d98de9c74eba ]
 
-We found an infinite loop bug in the ntfs3 file system that can lead to a
-Denial-of-Service (DoS) condition.
+Do not keep preallocated clusters for sparsed and compressed files.
+Preserving preallocation in these cases causes fsx failures when running
+with sparse files and preallocation enabled.
 
-A malformed NTFS image can cause an infinite loop when an ATTR_LIST attribute
-indicates a zero data size while the driver allocates memory for it.
-
-When ntfs_load_attr_list() processes a resident ATTR_LIST with data_size set
-to zero, it still allocates memory because of al_aligned(0). This creates an
-inconsistent state where ni->attr_list.size is zero, but ni->attr_list.le is
-non-null. This causes ni_enum_attr_ex to incorrectly assume that no attribute
-list exists and enumerates only the primary MFT record. When it finds
-ATTR_LIST, the code reloads it and restarts the enumeration, repeating
-indefinitely. The mount operation never completes, hanging the kernel thread.
-
-This patch adds validation to ensure that data_size is non-zero before memory
-allocation. When a zero-sized ATTR_LIST is detected, the function returns
--EINVAL, preventing a DoS vulnerability.
-
-Co-developed-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Co-developed-by: Jihoon Kwon <kjh010315@gmail.com>
-Signed-off-by: Jihoon Kwon <kjh010315@gmail.com>
-Signed-off-by: Jaehun Gou <p22gone@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrlist.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ntfs3/attrib.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/attrlist.c b/fs/ntfs3/attrlist.c
-index a4d74bed74fab..098bd7e8c3d64 100644
---- a/fs/ntfs3/attrlist.c
-+++ b/fs/ntfs3/attrlist.c
-@@ -52,6 +52,11 @@ int ntfs_load_attr_list(struct ntfs_inode *ni, struct ATTRIB *attr)
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index f0ff85b7d76dc..5a7675112e7b8 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -448,8 +448,10 @@ int attr_set_size(struct ntfs_inode *ni, enum ATTR_TYPE type,
  
- 	if (!attr->non_res) {
- 		lsize = le32_to_cpu(attr->res.data_size);
-+		if (!lsize) {
-+			err = -EINVAL;
-+			goto out;
-+		}
-+
- 		/* attr is resident: lsize < record_size (1K or 4K) */
- 		le = kvmalloc(al_aligned(lsize), GFP_KERNEL);
- 		if (!le) {
-@@ -66,6 +71,10 @@ int ntfs_load_attr_list(struct ntfs_inode *ni, struct ATTRIB *attr)
- 		u16 run_off = le16_to_cpu(attr->nres.run_off);
+ 	is_ext = is_attr_ext(attr_b);
+ 	align = sbi->cluster_size;
+-	if (is_ext)
++	if (is_ext) {
+ 		align <<= attr_b->nres.c_unit;
++		keep_prealloc = false;
++	}
  
- 		lsize = le64_to_cpu(attr->nres.data_size);
-+		if (!lsize) {
-+			err = -EINVAL;
-+			goto out;
-+		}
- 
- 		run_init(&ni->attr_list.run);
- 
+ 	old_valid = le64_to_cpu(attr_b->nres.valid_size);
+ 	old_size = le64_to_cpu(attr_b->nres.data_size);
 -- 
 2.51.0
 
