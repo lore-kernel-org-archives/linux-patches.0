@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F1F359A72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D45E359A72
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302388; cv=none; b=rjbdmIg5RvTLMb2nmjb4INAU+jCuGKMqWtYy8REE7gR+k8cObdS9juZStFAJjG0Eb8PQoiaxYoEqft33CM+DwVEjkCkLOWqwJVoi2vMP2yzOfAEZA42ZWDOt6qZ+F+b2hODnriGW4+LEC3DHKSqOlH2RLvw8/ldG1u1CAhd1oig=
+	t=1772302389; cv=none; b=m7TgT9LxjX3qalaBbXUAzYUnhALPKhz4Y0Li33Dq99SSLVg2ikolkl3toYQXKkUxPZskstusiN6A5XCgY58eNYcOxW7pOEYoM/7bKq2hifsqh4nw197Vp38Cv9QtnzK1eMr1HpYElHVZnPTefXFfscquJ1fmco7ncWHDaf06Whc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302388; c=relaxed/simple;
-	bh=gChsSVYdvw2gELx2LPXAxLNd/alJq9G8YTsjwNelCDg=;
+	s=arc-20240116; t=1772302389; c=relaxed/simple;
+	bh=WAB+gmf9xiZTWg8oMAUVNHdsl9+//3/MbeoH0kcmQ+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngsCdv8LWELlU1nVxIKwRZywLaUBnoprviCCJ1Fa96WatOioM3zhHD3sWmNRwbgbMcCD3gml+87P3W5OcGaOykSAGCrG3TUpO3LuaCwhSenjKDG1yHqOjUsO7lbopt7rKCbFhOrqzD0WFjThKlUTuDRSMqrvJ3IsAGk/Ddj+6B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n0YMMCYK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S22KG2nLSxhodseixxlBzkV7C6exN+gV5G6PqRnaan507q2jA3DJCZFj8hM0sZs+GcEi4XhGPMlyKS/Dc6YSUbCHS/ODgK1EYGUWwQ1C1cUqMykmQvVABRwZwgBzd+m5PecX7LVWk+LWwMcWgQjo+p8tx0J+f31gz9W6OqvwpeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qWTHSzjN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n0YMMCYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845EDC116D0;
-	Sat, 28 Feb 2026 18:13:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qWTHSzjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B76C116D0;
+	Sat, 28 Feb 2026 18:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302388;
-	bh=gChsSVYdvw2gELx2LPXAxLNd/alJq9G8YTsjwNelCDg=;
+	bh=WAB+gmf9xiZTWg8oMAUVNHdsl9+//3/MbeoH0kcmQ+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n0YMMCYKnfgs2PD9Vhr3m8NQzbQSv7ceEKgirHTr5Oon9IM9M0/+AFtmRhBFJvF+W
-	 5Zm7ME/nTs0RQwLNqqtP9XJMQmMKVET/YnvZNlWLh6UzRPt+NBF+uAqun6A6W3gh+z
-	 2ChBtm9QNOM42U0ELTmSU5fB/1Ou/oihgg5QDEVYht1ssUk3rfCroxvPenp3Zufz64
-	 yKFk2Dw03Z0Ph6Q52rSYTB6wi5KL/crtO+zvVoQHTH7ghIbeGC9pEDDP0f1MM9qUpp
-	 ls7Bptrze3e29zTySbiqS5idE+sSCRSi4qHx8Eq5b29M1svRMRc4lBlR6zKoipIzXT
-	 wSHhI8tIKKLjA==
+	b=qWTHSzjNIUe+20Gl9HHyBtJmz/BF7H5rHokxyPpJpEWa4cY87f4q+vI7uj/uWFBLB
+	 bda+U/yeANQ0jHCCZQ5dVwAk2xO4wbfxPBAOSzKsfXl8h+rqK4FZFq22tf2UjVGoa9
+	 R/CmXoDX3h2tFtwpJ+4adqO+moyvjF/tXqLp2zyvwoBkCnZfR2XtJAgN2rXVJxDaQ5
+	 woPNIb2EUhVF43brEdexqG2nGcTVjWiysk5Z/vffNRSuop5LX/1dkpvAUm1NEx/loe
+	 HnuaEvGnGXbpqNflELLPGgOelJuFwv5uoszeODF+fYlGiUcLDtMVUHIpFr3CIwHtlJ
+	 r8ldCn+YFWZQw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Anders Grahn <anders.grahn@gmail.com>,
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 117/232] netfilter: nft_counter: fix reset of counters on 32bit archs
-Date: Sat, 28 Feb 2026 13:09:30 -0500
-Message-ID: <20260228181127.1592657-117-sashal@kernel.org>
+Subject: [PATCH 6.1 118/232] netfilter: nft_set_rbtree: check for partial overlaps in anonymous sets
+Date: Sat, 28 Feb 2026 13:09:31 -0500
+Message-ID: <20260228181127.1592657-118-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,73 +47,87 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Anders Grahn <anders.grahn@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 1e13f27e0675552161ab1778be9a23a636dde8a7 ]
+[ Upstream commit 4780ec142cbb24b794129d3080eee5cac2943ffc ]
 
-nft_counter_reset() calls u64_stats_add() with a negative value to reset
-the counter. This will work on 64bit archs, hence the negative value
-added will wrap as a 64bit value which then can wrap the stat counter as
-well.
+Userspace provides an optimized representation in case intervals are
+adjacent, where the end element is omitted.
 
-On 32bit archs, the added negative value will wrap as a 32bit value and
-_not_ wrapping the stat counter properly. In most cases, this would just
-lead to a very large 32bit value being added to the stat counter.
+The existing partial overlap detection logic skips anonymous set checks
+on start elements for this reason.
 
-Fix by introducing u64_stats_sub().
+However, it is possible to add intervals that overlap to this anonymous
+where two start elements with the same, eg. A-B, A-C where C < B.
 
-Fixes: 4a1d3acd6ea8 ("netfilter: nft_counter: Use u64_stats_t for statistic.")
-Signed-off-by: Anders Grahn <anders.grahn@gmail.com>
+      start     end
+	A        B
+      start  end
+        A     C
+
+Restore the check on overlapping start elements to report an overlap.
+
+Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/u64_stats_sync.h | 10 ++++++++++
- net/netfilter/nft_counter.c    |  4 ++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 30 +++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/u64_stats_sync.h b/include/linux/u64_stats_sync.h
-index 79c3bbaa7e13e..0a3f9416f8464 100644
---- a/include/linux/u64_stats_sync.h
-+++ b/include/linux/u64_stats_sync.h
-@@ -89,6 +89,11 @@ static inline void u64_stats_add(u64_stats_t *p, unsigned long val)
- 	local64_add(val, &p->v);
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 021d9e76129a5..426becaad1b94 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -305,11 +305,23 @@ static bool nft_rbtree_update_first(const struct nft_set *set,
+ 	return false;
  }
  
-+static inline void u64_stats_sub(u64_stats_t *p, s64 val)
++/* Only for anonymous sets which do not allow updates, all element are active. */
++static struct nft_rbtree_elem *nft_rbtree_prev_active(struct nft_rbtree_elem *rbe)
 +{
-+	local64_sub(val, &p->v);
++	struct rb_node *node;
++
++	node = rb_prev(&rbe->node);
++	if (!node)
++		return NULL;
++
++	return rb_entry(node, struct nft_rbtree_elem, node);
 +}
 +
- static inline void u64_stats_inc(u64_stats_t *p)
+ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 			       struct nft_rbtree_elem *new,
+ 			       struct nft_set_ext **ext)
  {
- 	local64_inc(&p->v);
-@@ -130,6 +135,11 @@ static inline void u64_stats_add(u64_stats_t *p, unsigned long val)
- 	p->v += val;
- }
- 
-+static inline void u64_stats_sub(u64_stats_t *p, s64 val)
-+{
-+	p->v -= val;
-+}
+-	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
++	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL, *rbe_prev;
+ 	struct rb_node *node, *next, *parent, **p, *first = NULL;
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	u8 cur_genmask = nft_genmask_cur(net);
+@@ -441,11 +453,19 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 	/* - new start element with existing closest, less or equal key value
+ 	 *   being a start element: partial overlap, reported as -ENOTEMPTY.
+ 	 *   Anonymous sets allow for two consecutive start element since they
+-	 *   are constant, skip them to avoid bogus overlap reports.
++	 *   are constant, but validate that this new start element does not
++	 *   sit in between an existing start and end elements: partial overlap,
++	 *   reported as -ENOTEMPTY.
+ 	 */
+-	if (!nft_set_is_anonymous(set) && rbe_le &&
+-	    nft_rbtree_interval_start(rbe_le) && nft_rbtree_interval_start(new))
+-		return -ENOTEMPTY;
++	if (rbe_le &&
++	    nft_rbtree_interval_start(rbe_le) && nft_rbtree_interval_start(new)) {
++		if (!nft_set_is_anonymous(set))
++			return -ENOTEMPTY;
 +
- static inline void u64_stats_inc(u64_stats_t *p)
- {
- 	p->v++;
-diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
-index 8d19bd0012770..7411bba75d4cb 100644
---- a/net/netfilter/nft_counter.c
-+++ b/net/netfilter/nft_counter.c
-@@ -117,8 +117,8 @@ static void nft_counter_reset(struct nft_counter_percpu_priv *priv,
- 	nft_sync = this_cpu_ptr(&nft_counter_sync);
++		rbe_prev = nft_rbtree_prev_active(rbe_le);
++		if (rbe_prev && nft_rbtree_interval_end(rbe_prev))
++			return -ENOTEMPTY;
++	}
  
- 	u64_stats_update_begin(nft_sync);
--	u64_stats_add(&this_cpu->packets, -total->packets);
--	u64_stats_add(&this_cpu->bytes, -total->bytes);
-+	u64_stats_sub(&this_cpu->packets, total->packets);
-+	u64_stats_sub(&this_cpu->bytes, total->bytes);
- 	u64_stats_update_end(nft_sync);
- 
- 	local_bh_enable();
+ 	/* - new end element with existing closest, less or equal key value
+ 	 *   being a end element: partial overlap, reported as -ENOTEMPTY.
 -- 
 2.51.0
 
