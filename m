@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A115371460;
-	Sat, 28 Feb 2026 17:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46640371449;
+	Sat, 28 Feb 2026 17:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301459; cv=none; b=tk/C0BOVfY0fDznRnaqQMi6FpkjT3eBI8cAWGM5J+wa7ol3I68YnOYky9VooAcBi+ajl6/2s1xTjAO4WNAb3skggxL/0MYXqQUixAlo7v65AOH8LiYlPC6S+Dyr2GYP4NL70NIraVh96VSBgzAUN2u8TxAPYfpIhO13a2iOr4Q4=
+	t=1772301460; cv=none; b=MkVPFPwtHrQZ9snt4CpRpQy+EJzx01XBdHj2hB5HXRx4SAwKfroMOL7ApugtGMitWggwwcF5zZjO62MB9UYy2jee7DtSLRpYOmIHrZ+Y4KljsOegGptMKHg5rfCjhy8ArGsaWwT6O4tPCTIbHuq8cs6T2ARs24cC8XxJArRec1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301459; c=relaxed/simple;
-	bh=A1f1QShUP6lQqJ7k1RJjkakWAtceu7yz6XBz1K+AskQ=;
+	s=arc-20240116; t=1772301460; c=relaxed/simple;
+	bh=rjXJLCBeCGvltKD9acB4is1H3g18LgE0Z3h2wPRvfwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLmXs/fXXoLLwpFxFFretfftfr7sFmj3ZYpooji00YwTsAL0ppe34L5T3p/UlWX7Gbr08j7u6HrptKSQEvLNQk6a2Y2T3ez9A/FBeMD+VeCYeA6ZmaBHXiYkHvaWO3vJbkKl+nhIWiVQxro63QS0USlQ0cYFBp9VXUQM6reJE9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X2gOjI9E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fLt9NvPGIE946GYj7uzfUaJ2dCp77jTohO+oPKx4ApwY8gwPkWmOkuil0ej2/5yodhGU7y89NShwJixBjVijPyHb68Zx5kScg4BF7Cr1kNRxE/FErxxHmyF45KL7T/fBDRx8/hRdui4Z7i0MwooLrWq90HdosaKuZt3mqsU9sdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mtFd0CUf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X2gOjI9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAEC5C116D0;
-	Sat, 28 Feb 2026 17:57:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mtFd0CUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF0DC19425;
+	Sat, 28 Feb 2026 17:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301459;
-	bh=A1f1QShUP6lQqJ7k1RJjkakWAtceu7yz6XBz1K+AskQ=;
+	s=k20201202; t=1772301460;
+	bh=rjXJLCBeCGvltKD9acB4is1H3g18LgE0Z3h2wPRvfwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2gOjI9ECiKwcs+H7GJsd6ozM2HqO9XqaK8SbZvsGOtJ6lihdpSUFbazUssuDW3gy
-	 EGNHFX9CFBcmHj6sJAcpfB0w+CNl8BLT2O3V/9XGq0I/zx970noRTbsTV9ub0vbDTD
-	 fsEZjIqJ6Gk9PTtMCt0Qda4SxqDhob+vc1IUov3f4V/oGThD3XIJ2dwyB/71oYSVLf
-	 Y+igb14dxOk2xMSh+AFKkEbkMHUSo4fC3L6enwT5b+uPflA212+eykvgVvpFavFTZ0
-	 JhNYsu6wRMsX833zbTWNqFbeOGdtKa8KgC+hTEC32L5Mf0qujkwPelOw41umKCshE+
-	 cCQRY3UYZ8BTQ==
+	b=mtFd0CUfQkS2JAaztcvF6MFPwZ4x+V/rFrcffh7vAQtRdsISmpnsWQ3bzz7ddePu8
+	 XZ+lKVN5F2VdO82pKClOUFJnzjRbRJjnrM3BEyFBPA+lHvmJnx0bJgfr/ONPpJuedQ
+	 7B+6uszp1RyTpjwG0G/BFbCJ7RBWHGMHHIOPKqIJd7TTVcomJe9yw78AEWQmnah1yc
+	 mnuXgYZsR09gbkhl4uSbsH2EA99FQYwsvr12DpgHsuS19lmW45xj6AYOhW+Fnxsi5V
+	 heJUTSgdxGuOrj5UKgFL8hXiSjZJT6ENuFRiJnquQKeg5X/IpcTb38mKsX6eu8R7u0
+	 6+wnCWEAqcjeg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Li Chen <me@linux.beauty>,
+Cc: Vasily Gorbik <gor@linux.ibm.com>,
 	Baoquan He <bhe@redhat.com>,
-	Alexander Graf <graf@amazon.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Philipp Rudo <prudo@redhat.com>,
-	Ricardo Ribalda Delgado <ribalda@chromium.org>,
-	Ross Zwisler <zwisler@google.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Coiby Xu <coxu@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
 	stable@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 644/752] kexec: derive purgatory entry from symbol
-Date: Sat, 28 Feb 2026 12:45:55 -0500
-Message-ID: <20260228174750.1542406-644-sashal@kernel.org>
+Subject: [PATCH 6.18 645/752] crash_dump: fix dm_crypt keys locking and ref leak
+Date: Sat, 28 Feb 2026 12:45:56 -0500
+Message-ID: <20260228174750.1542406-645-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -56,230 +52,102 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Li Chen <me@linux.beauty>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit 480e1d5c64bb14441f79f2eb9421d5e26f91ea3d ]
+[ Upstream commit 96a54b8ffc8c4567c32fe0b6996669f1132b026d ]
 
-kexec_load_purgatory() derives image->start by locating e_entry inside an
-SHF_EXECINSTR section.  If the purgatory object contains multiple
-executable sections with overlapping sh_addr, the entrypoint check can
-match more than once and trigger a WARN.
+crash_load_dm_crypt_keys() reads dm-crypt volume keys from the user
+keyring.  It uses user_key_payload_locked() without holding key->sem,
+which makes lockdep complain when kexec_file_load() assembles the crash
+image:
 
-Derive the entry section from the purgatory_start symbol when present and
-compute image->start from its final placement.  Keep the existing e_entry
-fallback for purgatories that do not expose the symbol.
+  =============================
+  WARNING: suspicious RCU usage
+  -----------------------------
+  ./include/keys/user-type.h:53 suspicious rcu_dereference_protected() usage!
 
-WARNING: kernel/kexec_file.c:1009 at kexec_load_purgatory+0x395/0x3c0, CPU#10: kexec/1784
-Call Trace:
- <TASK>
- bzImage64_load+0x133/0xa00
- __do_sys_kexec_file_load+0x2b3/0x5c0
- do_syscall_64+0x81/0x610
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  other info that might help us debug this:
 
-[me@linux.beauty: move helper to avoid forward declaration, per Baoquan]
-  Link: https://lkml.kernel.org/r/20260128043511.316860-1-me@linux.beauty
-Link: https://lkml.kernel.org/r/20260120124005.148381-1-me@linux.beauty
-Fixes: 8652d44f466a ("kexec: support purgatories with .text.hot sections")
-Signed-off-by: Li Chen <me@linux.beauty>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: Alexander Graf <graf@amazon.com>
-Cc: Eric Biggers <ebiggers@kernel.org>
-Cc: Li Chen <me@linux.beauty>
-Cc: Philipp Rudo <prudo@redhat.com>
-Cc: Ricardo Ribalda Delgado <ribalda@chromium.org>
-Cc: Ross Zwisler <zwisler@google.com>
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
+  rcu_scheduler_active = 2, debug_locks = 1
+  no locks held by kexec/4875.
+
+  stack backtrace:
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5d/0x80
+   lockdep_rcu_suspicious.cold+0x4e/0x96
+   crash_load_dm_crypt_keys+0x314/0x390
+   bzImage64_load+0x116/0x9a0
+   ? __lock_acquire+0x464/0x1ba0
+   __do_sys_kexec_file_load+0x26a/0x4f0
+   do_syscall_64+0xbd/0x430
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+In addition, the key returned by request_key() is never key_put()'d,
+leaking a key reference on each load attempt.
+
+Take key->sem while copying the payload and drop the key reference
+afterwards.
+
+Link: https://lkml.kernel.org/r/patch.git-2d4d76083a5c.your-ad-here.call-01769426386-ext-2560@work.hours
+Fixes: 479e58549b0f ("crash_dump: store dm crypt keys in kdump reserved memory")
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Coiby Xu <coxu@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_file.c | 131 +++++++++++++++++++++++++-------------------
- 1 file changed, 74 insertions(+), 57 deletions(-)
+ kernel/crash_dump_dm_crypt.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/kexec_file.c b/kernel/kexec_file.c
-index eb62a97942428..2bfbb2d144e69 100644
---- a/kernel/kexec_file.c
-+++ b/kernel/kexec_file.c
-@@ -882,6 +882,60 @@ static int kexec_calculate_store_digests(struct kimage *image)
- }
- 
- #ifdef CONFIG_ARCH_SUPPORTS_KEXEC_PURGATORY
-+/*
-+ * kexec_purgatory_find_symbol - find a symbol in the purgatory
-+ * @pi:		Purgatory to search in.
-+ * @name:	Name of the symbol.
-+ *
-+ * Return: pointer to symbol in read-only symtab on success, NULL on error.
-+ */
-+static const Elf_Sym *kexec_purgatory_find_symbol(struct purgatory_info *pi,
-+						  const char *name)
-+{
-+	const Elf_Shdr *sechdrs;
-+	const Elf_Ehdr *ehdr;
-+	const Elf_Sym *syms;
-+	const char *strtab;
-+	int i, k;
-+
-+	if (!pi->ehdr)
-+		return NULL;
-+
-+	ehdr = pi->ehdr;
-+	sechdrs = (void *)ehdr + ehdr->e_shoff;
-+
-+	for (i = 0; i < ehdr->e_shnum; i++) {
-+		if (sechdrs[i].sh_type != SHT_SYMTAB)
-+			continue;
-+
-+		if (sechdrs[i].sh_link >= ehdr->e_shnum)
-+			/* Invalid strtab section number */
-+			continue;
-+		strtab = (void *)ehdr + sechdrs[sechdrs[i].sh_link].sh_offset;
-+		syms = (void *)ehdr + sechdrs[i].sh_offset;
-+
-+		/* Go through symbols for a match */
-+		for (k = 0; k < sechdrs[i].sh_size/sizeof(Elf_Sym); k++) {
-+			if (ELF_ST_BIND(syms[k].st_info) != STB_GLOBAL)
-+				continue;
-+
-+			if (strcmp(strtab + syms[k].st_name, name) != 0)
-+				continue;
-+
-+			if (syms[k].st_shndx == SHN_UNDEF ||
-+			    syms[k].st_shndx >= ehdr->e_shnum) {
-+				pr_debug("Symbol: %s has bad section index %d.\n",
-+					name, syms[k].st_shndx);
-+				return NULL;
-+			}
-+
-+			/* Found the symbol we are looking for */
-+			return &syms[k];
-+		}
-+	}
-+
-+	return NULL;
-+}
- /*
-  * kexec_purgatory_setup_kbuf - prepare buffer to load purgatory.
-  * @pi:		Purgatory to be loaded.
-@@ -960,6 +1014,10 @@ static int kexec_purgatory_setup_sechdrs(struct purgatory_info *pi,
- 	unsigned long offset;
- 	size_t sechdrs_size;
- 	Elf_Shdr *sechdrs;
-+	const Elf_Sym *entry_sym;
-+	u16 entry_shndx = 0;
-+	unsigned long entry_off = 0;
-+	bool start_fixed = false;
- 	int i;
- 
- 	/*
-@@ -977,6 +1035,12 @@ static int kexec_purgatory_setup_sechdrs(struct purgatory_info *pi,
- 	bss_addr = kbuf->mem + kbuf->bufsz;
- 	kbuf->image->start = pi->ehdr->e_entry;
- 
-+	entry_sym = kexec_purgatory_find_symbol(pi, "purgatory_start");
-+	if (entry_sym) {
-+		entry_shndx = entry_sym->st_shndx;
-+		entry_off = entry_sym->st_value;
-+	}
-+
- 	for (i = 0; i < pi->ehdr->e_shnum; i++) {
- 		unsigned long align;
- 		void *src, *dst;
-@@ -994,6 +1058,13 @@ static int kexec_purgatory_setup_sechdrs(struct purgatory_info *pi,
- 
- 		offset = ALIGN(offset, align);
- 
-+		if (!start_fixed && entry_sym && i == entry_shndx &&
-+		    (sechdrs[i].sh_flags & SHF_EXECINSTR) &&
-+		    entry_off < sechdrs[i].sh_size) {
-+			kbuf->image->start = kbuf->mem + offset + entry_off;
-+			start_fixed = true;
-+		}
-+
- 		/*
- 		 * Check if the segment contains the entry point, if so,
- 		 * calculate the value of image->start based on it.
-@@ -1004,13 +1075,14 @@ static int kexec_purgatory_setup_sechdrs(struct purgatory_info *pi,
- 		 * is not set to the initial value, and warn the user so they
- 		 * have a chance to fix their purgatory's linker script.
- 		 */
--		if (sechdrs[i].sh_flags & SHF_EXECINSTR &&
-+		if (!start_fixed && sechdrs[i].sh_flags & SHF_EXECINSTR &&
- 		    pi->ehdr->e_entry >= sechdrs[i].sh_addr &&
- 		    pi->ehdr->e_entry < (sechdrs[i].sh_addr
- 					 + sechdrs[i].sh_size) &&
--		    !WARN_ON(kbuf->image->start != pi->ehdr->e_entry)) {
-+		    kbuf->image->start == pi->ehdr->e_entry) {
- 			kbuf->image->start -= sechdrs[i].sh_addr;
- 			kbuf->image->start += kbuf->mem + offset;
-+			start_fixed = true;
- 		}
- 
- 		src = (void *)pi->ehdr + sechdrs[i].sh_offset;
-@@ -1128,61 +1200,6 @@ int kexec_load_purgatory(struct kimage *image, struct kexec_buf *kbuf)
- 	return ret;
- }
- 
--/*
-- * kexec_purgatory_find_symbol - find a symbol in the purgatory
-- * @pi:		Purgatory to search in.
-- * @name:	Name of the symbol.
-- *
-- * Return: pointer to symbol in read-only symtab on success, NULL on error.
-- */
--static const Elf_Sym *kexec_purgatory_find_symbol(struct purgatory_info *pi,
--						  const char *name)
--{
--	const Elf_Shdr *sechdrs;
--	const Elf_Ehdr *ehdr;
--	const Elf_Sym *syms;
--	const char *strtab;
--	int i, k;
--
--	if (!pi->ehdr)
--		return NULL;
--
--	ehdr = pi->ehdr;
--	sechdrs = (void *)ehdr + ehdr->e_shoff;
--
--	for (i = 0; i < ehdr->e_shnum; i++) {
--		if (sechdrs[i].sh_type != SHT_SYMTAB)
--			continue;
--
--		if (sechdrs[i].sh_link >= ehdr->e_shnum)
--			/* Invalid strtab section number */
--			continue;
--		strtab = (void *)ehdr + sechdrs[sechdrs[i].sh_link].sh_offset;
--		syms = (void *)ehdr + sechdrs[i].sh_offset;
--
--		/* Go through symbols for a match */
--		for (k = 0; k < sechdrs[i].sh_size/sizeof(Elf_Sym); k++) {
--			if (ELF_ST_BIND(syms[k].st_info) != STB_GLOBAL)
--				continue;
--
--			if (strcmp(strtab + syms[k].st_name, name) != 0)
--				continue;
--
--			if (syms[k].st_shndx == SHN_UNDEF ||
--			    syms[k].st_shndx >= ehdr->e_shnum) {
--				pr_debug("Symbol: %s has bad section index %d.\n",
--						name, syms[k].st_shndx);
--				return NULL;
--			}
--
--			/* Found the symbol we are looking for */
--			return &syms[k];
--		}
--	}
--
--	return NULL;
--}
--
- void *kexec_purgatory_get_symbol_addr(struct kimage *image, const char *name)
+diff --git a/kernel/crash_dump_dm_crypt.c b/kernel/crash_dump_dm_crypt.c
+index 401423ba477da..abb307a23de33 100644
+--- a/kernel/crash_dump_dm_crypt.c
++++ b/kernel/crash_dump_dm_crypt.c
+@@ -143,6 +143,7 @@ static int read_key_from_user_keying(struct dm_crypt_key *dm_key)
  {
- 	struct purgatory_info *pi = &image->purgatory_info;
+ 	const struct user_key_payload *ukp;
+ 	struct key *key;
++	int ret = 0;
+ 
+ 	kexec_dprintk("Requesting logon key %s", dm_key->key_desc);
+ 	key = request_key(&key_type_logon, dm_key->key_desc, NULL);
+@@ -152,20 +153,28 @@ static int read_key_from_user_keying(struct dm_crypt_key *dm_key)
+ 		return PTR_ERR(key);
+ 	}
+ 
++	down_read(&key->sem);
+ 	ukp = user_key_payload_locked(key);
+-	if (!ukp)
+-		return -EKEYREVOKED;
++	if (!ukp) {
++		ret = -EKEYREVOKED;
++		goto out;
++	}
+ 
+ 	if (ukp->datalen > KEY_SIZE_MAX) {
+ 		pr_err("Key size %u exceeds maximum (%u)\n", ukp->datalen, KEY_SIZE_MAX);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 
+ 	memcpy(dm_key->data, ukp->data, ukp->datalen);
+ 	dm_key->key_size = ukp->datalen;
+ 	kexec_dprintk("Get dm crypt key (size=%u) %s: %8ph\n", dm_key->key_size,
+ 		      dm_key->key_desc, dm_key->data);
+-	return 0;
++
++out:
++	up_read(&key->sem);
++	key_put(key);
++	return ret;
+ }
+ 
+ struct config_key {
 -- 
 2.51.0
 
