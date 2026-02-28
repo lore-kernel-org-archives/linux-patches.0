@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2279340A47
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3751433F38A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301111; cv=none; b=rLV1eDUeh7FN3Zwt6Y2gDajck1c7vYoyhT/PHmDqh/8Qob4Kxq9Hpan/jULJjRS4g3bklkg4UZ8y6w1KqLhb6Kl+ukiqFHUeyGDb8Y8gUZ1Z+HhWw9F+X0ZuLn2LUCwQhuook2/rlIEAqubURQgB4Ua38dRMYT0DXjMz3E+gWrU=
+	t=1772301112; cv=none; b=K1uk1DISdjZNe+cAK9URoi6rtrdv0yJ0qmse+w7uHBfoNeXHcJCvH+s44OeJJim9fAQvLfxYwjUkWbeyF7JX0FJ+XZckDAZnUlwPeLO17/AYYaX4kwHdVx/BXPmjh7Qt/QJBa0ici4nKGdXJ1tr8QXVBfH/rbfsy4W3sLX0x30I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301111; c=relaxed/simple;
-	bh=W2Zu8bffyf0YcmUgY9hYpsOx4Ln8hzrk78JdvpIjSgY=;
+	s=arc-20240116; t=1772301112; c=relaxed/simple;
+	bh=fT5XQ90LQsVw7mKPiPlUtlk1NvZ5frplEmUQTEt3UJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BrWA13zAard6gJ8Y0Ri3iuEKZ+cIH8e/OqCbIU8k17jgAVG+RwnvbKLWA0TA4pZRvAHQSGVYhB3243n4Pd+cWeDQYJxTO9FTnz5+OZwu3cLy2B2/lIreFScgvEOWHyXbF2pHojEql4aMbP5HdM4uJiDaL13WP/CTMw3c8ytBkKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gCRwd556; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GaPz89DJw42s27vONAGMhPyD4rjLQob1/btEQ7Z/EsY5ViBNsIihXD35k+zbikTXEv+gnFCe7x3l6CXsrlh/MiRl8ITsYeb6+y48wVV9h1xUGv3XZ1nC15TMBUmhZse0Zj6W5pqI4h4eAa2nfg083i1nJstrAkm6WUATAKHcYGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fJeXGiL+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gCRwd556"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F07C116D0;
-	Sat, 28 Feb 2026 17:51:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fJeXGiL+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DD8C19425;
+	Sat, 28 Feb 2026 17:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301111;
-	bh=W2Zu8bffyf0YcmUgY9hYpsOx4Ln8hzrk78JdvpIjSgY=;
+	s=k20201202; t=1772301112;
+	bh=fT5XQ90LQsVw7mKPiPlUtlk1NvZ5frplEmUQTEt3UJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCRwd5567Xc3wBnibrHpdi4OxRwMRr/tQHF4nwU2UwWMsnbn/PrNOfwy/+uGiSl3Z
-	 dkQvjeXHi2aeEtF4TGkPtDJUDsI44oSn5QTOUGZFSjZX8dx1CgrbaDQPv3+qaKpz1I
-	 4QrqzDJMebPhz++nnp/N6QhuUW2kz72LE0UZAF742XytzR4nKiieYOEmL3A/EVEu4f
-	 HBSGSfEHJOjiZwbB+YH9GDWsfgh8Th/dc3BRkcNCzWl76+DjJfAJD6uzNXPegvUOlD
-	 d5hJAtloQSDQF9uUSSnNxwoN/wtPJNh5xzVPKkL5VJf16UHh5YT9AL8rRvNqmta2A5
-	 MMUPSQAU3lF/w==
+	b=fJeXGiL+S1zPAQ7B9WWhAyUSFSPNW4Nkl9vIixCSDz9iuLuEAJ5WQoclBqkz5nR1e
+	 oeIJ5g2KaYPCpGgcoKCrbI3m22oUAkt+7v5pJkveYhblUAlnH8h4MJJ3NP9OT/q4PL
+	 PmLeAFk7DpS12fQ4hwhdjDyaWsg7t89FcXx8hEBRMgEqQOzR7Aj/KIY9F0WS9OR0/n
+	 orZ25URUw86/RWFkspT8g+VZ2hcgpPpnZeiFjhZavLjTtqrMWnc3pPozF1zo+5OnG6
+	 9JMT86bSb4yoD4mj8mhyF64wS7IwgjufzKyYw3JAr89Tnv0uh4irKzn44ixHxbKjPh
+	 lBOiJKthsT09w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 266/752] gro: change the BUG_ON() in gro_pull_from_frag0()
-Date: Sat, 28 Feb 2026 12:39:37 -0500
-Message-ID: <20260228174750.1542406-266-sashal@kernel.org>
+Subject: [PATCH 6.18 267/752] ipv4: igmp: annotate data-races around idev->mr_maxdelay
+Date: Sat, 28 Feb 2026 12:39:38 -0500
+Message-ID: <20260228174750.1542406-267-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,42 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cbe41362be2c27e0237a94a404ae413cec9c2ad9 ]
+[ Upstream commit e4faaf65a75f650ac4366ddff5dabb826029ca5a ]
 
-Replace the BUG_ON() which never fired with a DEBUG_NET_WARN_ON_ONCE()
+idev->mr_maxdelay is read and written locklessly,
+add READ_ONCE()/WRITE_ONCE() annotations.
 
-$ scripts/bloat-o-meter -t vmlinux.1 vmlinux.2
-add/remove: 2/2 grow/shrink: 1/1 up/down: 370/-254 (116)
-Function                                     old     new   delta
-gro_try_pull_from_frag0                        -     196    +196
-napi_gro_frags                               771     929    +158
-__pfx_gro_try_pull_from_frag0                  -      16     +16
-__pfx_gro_pull_from_frag0                     16       -     -16
-dev_gro_receive                             1514    1464     -50
-gro_pull_from_frag0                          188       -    -188
-Total: Before=22565899, After=22566015, chg +0.00%
+While we are at it, make this field an u32.
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260122045720.1221017-3-edumazet@google.com
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260122172247.2429403-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/inetdevice.h | 2 +-
+ net/ipv4/igmp.c            | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index 482fa7d7f5981..ef61695fbdbb6 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -417,7 +417,7 @@ static void gro_pull_from_frag0(struct sk_buff *skb, int grow)
+diff --git a/include/linux/inetdevice.h b/include/linux/inetdevice.h
+index 5730ba6b1cfaf..dccbeb25f7014 100644
+--- a/include/linux/inetdevice.h
++++ b/include/linux/inetdevice.h
+@@ -38,11 +38,11 @@ struct in_device {
+ 	struct ip_mc_list	*mc_tomb;
+ 	unsigned long		mr_v1_seen;
+ 	unsigned long		mr_v2_seen;
+-	unsigned long		mr_maxdelay;
+ 	unsigned long		mr_qi;		/* Query Interval */
+ 	unsigned long		mr_qri;		/* Query Response Interval */
+ 	unsigned char		mr_qrv;		/* Query Robustness Variable */
+ 	unsigned char		mr_gq_running;
++	u32			mr_maxdelay;
+ 	u32			mr_ifc_count;
+ 	struct timer_list	mr_gq_timer;	/* general query timer */
+ 	struct timer_list	mr_ifc_timer;	/* interface change timer */
+diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
+index 7182f1419c2a4..0adc993c211d7 100644
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -227,7 +227,7 @@ static void igmp_start_timer(struct ip_mc_list *im, int max_delay)
+ 
+ static void igmp_gq_start_timer(struct in_device *in_dev)
  {
- 	struct skb_shared_info *pinfo = skb_shinfo(skb);
+-	int tv = get_random_u32_below(in_dev->mr_maxdelay);
++	int tv = get_random_u32_below(READ_ONCE(in_dev->mr_maxdelay));
+ 	unsigned long exp = jiffies + tv + 2;
  
--	BUG_ON(skb->end - skb->tail < grow);
-+	DEBUG_NET_WARN_ON_ONCE(skb->end - skb->tail < grow);
+ 	if (in_dev->mr_gq_running &&
+@@ -1009,7 +1009,7 @@ static bool igmp_heard_query(struct in_device *in_dev, struct sk_buff *skb,
+ 		max_delay = IGMPV3_MRC(ih3->code)*(HZ/IGMP_TIMER_SCALE);
+ 		if (!max_delay)
+ 			max_delay = 1;	/* can't mod w/ 0 */
+-		in_dev->mr_maxdelay = max_delay;
++		WRITE_ONCE(in_dev->mr_maxdelay, max_delay);
  
- 	memcpy(skb_tail_pointer(skb), NAPI_GRO_CB(skb)->frag0, grow);
- 
+ 		/* RFC3376, 4.1.6. QRV and 4.1.7. QQIC, when the most recently
+ 		 * received value was zero, use the default or statically
 -- 
 2.51.0
 
