@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FB03314C3
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA66B449EBB
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301185; cv=none; b=cPlIl9JPabSQ+9nftMJ6zVqCmPYHPbeDc4QISAfMGYkHRQiZJcdEUDtacChN/U+MGxzLoozXqIE2exWKiQUI0Lam/zIzyDizR9lA5oSxYY+DcdEMnIL0XpM69UVAN3XLYGm+Xs39zX7IeYcisjcJeQJDGEEeCsgz03kEJl55HeY=
+	t=1772301186; cv=none; b=UQyDWt6LmOFxOvuWKpdzeDv2cRv2HxJwYOYbs+SYh8mvMIDlQ/QsRcDTp8AUFXCblgGBTw6AY/oF8kXAk92wiz1YsRr726UdEajsGAnNtvX0G7SFjnxGqbLb4HhMrERAuoboTQS5v6fbowI63+c9Ep6XfuE8VuIEO9XK3yWpB5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301185; c=relaxed/simple;
-	bh=f1c3761UCRyf4cWsV3oJHwqJWcKxzIdOUIZpC3Sf0GI=;
+	s=arc-20240116; t=1772301186; c=relaxed/simple;
+	bh=xTcTq8oodcuv1Ba4/+yqPFIurfKOhpE/WebVsNgyVC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WeiGbusZ7VS8W+DrW1T7AdSgzx5RbMQ4X26BPCSAJtFxsALdgdemJVTmm6ynrDLOKSolD+Kb7g5W1UCVXdJ3l8dmIzALCUHHzP9keXj+we/qbQ9fD+W1ceBXS8EiB8vuIT5Iwku+DHC7UfPrbd1QU07CPk+wLRz4NxkuPgMeSko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TOsV5FXO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J1aN1jjv0aYKKRPSOWLBKZUAleYfSuFYsLtkAnm5i57rM/HmVUXUbjtnt/mOOf7V6Sd8gAt9EMxNYkKKha1JdLwwo3m8oX1zGZzD7MtYraR9/rYeL+hqaZ3WWG2+5+LtiwmcsOoYJs7eB+S+a1MN9Bzv6vWP71zkOhCSaizRx+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GmhAix2u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TOsV5FXO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132E2C19423;
-	Sat, 28 Feb 2026 17:53:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GmhAix2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEE5C116D0;
+	Sat, 28 Feb 2026 17:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301185;
-	bh=f1c3761UCRyf4cWsV3oJHwqJWcKxzIdOUIZpC3Sf0GI=;
+	s=k20201202; t=1772301186;
+	bh=xTcTq8oodcuv1Ba4/+yqPFIurfKOhpE/WebVsNgyVC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TOsV5FXONvWckDvHq1ajAVwEYcMHkbe79XgMo4CnvG/hJi5Jr/+SOiHuzdKbuVHT0
-	 qZyx05MOEdnpUkmufU7P7N1VDs23FhFfFGsW709jtYuRRwCZcDse6nX7lh0wKtZgf8
-	 pZ6usCN9voN/03BsJ/eDAvUSYW/DXOYqL7tKAIYhwvlTF93dd246QqTXAo2osbKQ3e
-	 nUKsi5m9VqlpiXTXLUeS5MQYzXQB8mT2QorHqzh7lq8zhah+tfgbltRTjh/NJ+HIKl
-	 7H+Oun5CFRupfX8CWpuXbabeJX7Cz0SRpma4NBfrg1K52gtsfmvCcF4J+74eixp1e2
-	 J0w9aKHG3q5rA==
+	b=GmhAix2uEZ6H7PFsf18X5Dkbgem6KtEDAW9EeKId5hzjOBHiaXETM5vglqA5+kcvw
+	 UI8yFZ76JFcAEXKwghfuiWhhULjuyxEN4aD9tz0JmYDwm5mXdnUZ/9gDr5o/xIpKVI
+	 BzZiVcSbClCmJqgGl/Q48uTGIl2nr2CScnWvySlkfmZX1D4v5lligBJZNQlL4AAiTb
+	 YsdrXPzsZS7v6YEd8zu95OnN3BckASz0VquvghmE9vChpRRGn9ixTojGpsJb//0W/k
+	 YDNaSrOqpc3RbZj2rDJmrAOP+ZoY88y8SH5nBkkBYMCxnfZ7A50rdMoRNaAtakW5pZ
+	 4rsG/sIeEj71A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 355/752] iio: Use IRQF_NO_THREAD
-Date: Sat, 28 Feb 2026 12:41:06 -0500
-Message-ID: <20260228174750.1542406-355-sashal@kernel.org>
+Subject: [PATCH 6.18 356/752] iio: magnetometer: Remove IRQF_ONESHOT
+Date: Sat, 28 Feb 2026 12:41:07 -0500
+Message-ID: <20260228174750.1542406-356-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -44,92 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 04d390af97f2c28166f7ddfe1a6bda622e3a4766 ]
+[ Upstream commit a54e9440925e6617c98669066b4753c4cdcea8a0 ]
 
-The interrupt handler iio_trigger_generic_data_rdy_poll() will invoke
-other interrupt handler and this supposed to happen from within the
-hardirq.
+Passing IRQF_ONESHOT ensures that the interrupt source is masked until
+the secondary (threaded) handler is done. If only a primary handler is
+used then the flag makes no sense because the interrupt can not fire
+(again) while its handler is running.
+The flag also disallows force-threading of the primary handler and the
+irq-core will warn about this.
+The force-threading functionality is required on PREEMPT_RT because the
+handler is using locks with can sleep on PREEMPT_RT.
 
-Use IRQF_NO_THREAD to forbid forced-threading.
+Remove IRQF_ONESHOT from irqflags.
 
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/bma180.c        | 5 +++--
- drivers/iio/adc/ad7766.c          | 2 +-
- drivers/iio/gyro/itg3200_buffer.c | 8 +++-----
- drivers/iio/light/si1145.c        | 2 +-
- 4 files changed, 8 insertions(+), 9 deletions(-)
+ drivers/iio/magnetometer/ak8975.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/bma180.c b/drivers/iio/accel/bma180.c
-index 8925f5279e627..7bc6761f51354 100644
---- a/drivers/iio/accel/bma180.c
-+++ b/drivers/iio/accel/bma180.c
-@@ -986,8 +986,9 @@ static int bma180_probe(struct i2c_client *client)
- 		}
+diff --git a/drivers/iio/magnetometer/ak8975.c b/drivers/iio/magnetometer/ak8975.c
+index 3fd0171e5d69b..d30315ad85ded 100644
+--- a/drivers/iio/magnetometer/ak8975.c
++++ b/drivers/iio/magnetometer/ak8975.c
+@@ -581,7 +581,7 @@ static int ak8975_setup_irq(struct ak8975_data *data)
+ 		irq = gpiod_to_irq(data->eoc_gpiod);
  
- 		ret = devm_request_irq(dev, client->irq,
--			iio_trigger_generic_data_rdy_poll, IRQF_TRIGGER_RISING,
--			"bma180_event", data->trig);
-+				       iio_trigger_generic_data_rdy_poll,
-+				       IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
-+				       "bma180_event", data->trig);
- 		if (ret) {
- 			dev_err(dev, "unable to request IRQ\n");
- 			goto err_trigger_free;
-diff --git a/drivers/iio/adc/ad7766.c b/drivers/iio/adc/ad7766.c
-index 4d570383ef025..1e6bfe8765ab3 100644
---- a/drivers/iio/adc/ad7766.c
-+++ b/drivers/iio/adc/ad7766.c
-@@ -261,7 +261,7 @@ static int ad7766_probe(struct spi_device *spi)
- 		 * don't enable the interrupt to avoid extra load on the system
- 		 */
- 		ret = devm_request_irq(&spi->dev, spi->irq, ad7766_irq,
--				       IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN,
-+				       IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN | IRQF_NO_THREAD,
- 				       dev_name(&spi->dev),
- 				       ad7766->trig);
- 		if (ret < 0)
-diff --git a/drivers/iio/gyro/itg3200_buffer.c b/drivers/iio/gyro/itg3200_buffer.c
-index a624400a239cb..cf97adfa97274 100644
---- a/drivers/iio/gyro/itg3200_buffer.c
-+++ b/drivers/iio/gyro/itg3200_buffer.c
-@@ -118,11 +118,9 @@ int itg3200_probe_trigger(struct iio_dev *indio_dev)
- 	if (!st->trig)
- 		return -ENOMEM;
- 
--	ret = request_irq(st->i2c->irq,
--			  &iio_trigger_generic_data_rdy_poll,
--			  IRQF_TRIGGER_RISING,
--			  "itg3200_data_rdy",
--			  st->trig);
-+	ret = request_irq(st->i2c->irq, &iio_trigger_generic_data_rdy_poll,
-+			  IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
-+			  "itg3200_data_rdy", st->trig);
- 	if (ret)
- 		goto error_free_trig;
- 
-diff --git a/drivers/iio/light/si1145.c b/drivers/iio/light/si1145.c
-index f8eb251eca8dc..ef0abc4499b74 100644
---- a/drivers/iio/light/si1145.c
-+++ b/drivers/iio/light/si1145.c
-@@ -1248,7 +1248,7 @@ static int si1145_probe_trigger(struct iio_dev *indio_dev)
- 
- 	ret = devm_request_irq(&client->dev, client->irq,
- 			  iio_trigger_generic_data_rdy_poll,
--			  IRQF_TRIGGER_FALLING,
-+			  IRQF_TRIGGER_FALLING | IRQF_NO_THREAD,
- 			  "si1145_irq",
- 			  trig);
- 	if (ret < 0) {
+ 	rc = devm_request_irq(&client->dev, irq, ak8975_irq_handler,
+-			      IRQF_TRIGGER_RISING | IRQF_ONESHOT,
++			      IRQF_TRIGGER_RISING,
+ 			      dev_name(&client->dev), data);
+ 	if (rc < 0) {
+ 		dev_err(&client->dev, "irq %d request failed: %d\n", irq, rc);
 -- 
 2.51.0
 
