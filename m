@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E19835AC21
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2089235AC28
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302759; cv=none; b=s9plhAo1rJgumgxe5GLHwdpEGVUS6iXSDL/DGcJwLtCX2ywpDhWKDJ3xVPaNFejnhNXoDFLSQc2KGvL9EDDcoqPFsVhr7WXJ/jxtoOhdqU1n74+xpfOGkzoj4r72/MRwMPkv//PQAUiY+3I5YZcrbPp4AZMdl5EcSmjNai0iKNY=
+	t=1772302760; cv=none; b=bKSzqUbDFVsthHc3GePaOsLQZ2xrRNSFYK/WPhhMZ8E3482YQ9Tzkh9S0ZviQEynmj410DDPhjhowZqCjMeZVnBkK87ARWXHWAm54EOlGYqo3woe+GIw6kg+03T0gV0fTpgx4xsBTpRlHmz8ozxwMQP5e2Txzu2R0918/AT2ZRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302759; c=relaxed/simple;
-	bh=oq7zcYgp1/34AB0eS5Ys3skVkZ7F3ASe6ZKhwzBm1z0=;
+	s=arc-20240116; t=1772302760; c=relaxed/simple;
+	bh=E9eW5ErHLkvilAYMwJOaKYQsIyu4pcvHiZv2fo0Lt6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QT2ZMwUdx/o+xJc6HeImBEIOs/y1m91KSZqXeIGdkYCCV6Hq0L7RmQ2JaS/f6DfNY+FbgthHgVk5hCol8ol3g5kRpMbGMx+UDYzJokVnuZd15pZvDIb6k7R69UpCpNxtqAtJrgcvs/TM9hAY1nH8AzdD+6Yd6+RVZhoMgczRZns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ggtOGHCG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khHaDEBD7/OCOG4kAU+us4wfcobNVu4LzTmu2fywy7E3sMo2HS7HOxKaCwibKGtjjwmON/WLOVj7nmeWoji72VzhgxJpfrYxKcUMIAKpnPSoLLnT6NsbmV1yqyxUpmoBWBoEAp+Zpd4F/SSGO5hcovlwZhurlOZJfvW4yszvUiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZxFaEZ9s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ggtOGHCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3601C116D0;
-	Sat, 28 Feb 2026 18:19:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZxFaEZ9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DB9C19423;
+	Sat, 28 Feb 2026 18:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302759;
-	bh=oq7zcYgp1/34AB0eS5Ys3skVkZ7F3ASe6ZKhwzBm1z0=;
+	s=k20201202; t=1772302760;
+	bh=E9eW5ErHLkvilAYMwJOaKYQsIyu4pcvHiZv2fo0Lt6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ggtOGHCGTR35nN/hvrYTEKl98YLlyRQELkE5Wvk4K939JeyWoUCPZVXpR7QL3DeiP
-	 9pFSQ9YyL6/uME78olPAALXjcUVUa2CxPTCsJgqHqvNuw4xBMn/bro99ZcRSbekYKe
-	 uZgKseyrPlaVU3OOaNiyLDrddf2zYKfwwby+TF+Hp9OlMDKjqdl/cb+mS/iXQjrDZ1
-	 V00wowMifw0u5es0ASOurYc9rbJdaSyKfj99pyF12j/rtBMSsO5uOdO50Tb7Zv4wPH
-	 aTb1CZJbqfpuC/odHSq7nfyxsHCxVdzsJ5uE8d08KGqiWg/ZvJJ3ZUEks6Vu3N+C6t
-	 VPH0dX3Q0q0xQ==
+	b=ZxFaEZ9sAoonJ4J02m2ixld4ucWyiMitsMxcFeEzGiwoXP46dHnzAoTJO6JOmVQ1K
+	 1Q0DxRkqxvgG2eplfh/dpSPhVhIyb64+Go26W9zFI5ux98SAqG8B7ghjfR2y2OIFyn
+	 e1BkBIbWuVntWHSxWsMKeRpH4p4uFDigxOdKBKKIMwsGV5fhwYtgG2QieDk9uk4oCg
+	 IZKQVjBasVq6mKJ6ixHuB67ZJ/TdquAO6Zu6QeyhSSpccFQ+oPwamilpR3NkEho8uj
+	 gr+hOj3tmje+lM0AAQCtj3S5UsYvhouJQGcGb6pmPuWc8XqsjfyKV4dmBLVLjvPdGd
+	 7voRTMgY1bTjw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotian Zhang <vulab@iscas.ac.cn>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Lee Jones <lee@kernel.org>,
+Cc: Svyatoslav Ryhel <clamor95@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 129/147] mfd: arizona: Fix regulator resource leak on wm5102_clear_write_sequencer() failure
-Date: Sat, 28 Feb 2026 13:17:17 -0500
-Message-ID: <20260228181736.1605592-129-sashal@kernel.org>
+Subject: [PATCH 5.10 130/147] drivers: iio: mpu3050: use dev_err_probe for regulator request
+Date: Sat, 28 Feb 2026 13:17:18 -0500
+Message-ID: <20260228181736.1605592-130-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -48,40 +48,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit 4feb753ba6e5e5bbaba868b841a2db41c21e56fa ]
+[ Upstream commit b010880b9936da14f8035585ab57577aa05be23a ]
 
-The wm5102_clear_write_sequencer() helper may return an error
-and just return, bypassing the cleanup sequence and causing
-regulators to remain enabled, leading to a resource leak.
+Regulator requesting may result in deferred probing error which will
+abort driver probing. To avoid this just use dev_err_probe which handles
+deferred probing.
 
-Change the direct return to jump to the err_reset label to
-properly free the resources.
-
-Fixes: 1c1c6bba57f5 ("mfd: wm5102: Ensure we always boot the device fully")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251214145804.2037-1-vulab@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 3904b28efb2c ("iio: gyro: Add driver for the MPU-3050 gyroscope")
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/arizona-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/gyro/mpu3050-core.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/arizona-core.c b/drivers/mfd/arizona-core.c
-index afdc490836255..18f448fa33328 100644
---- a/drivers/mfd/arizona-core.c
-+++ b/drivers/mfd/arizona-core.c
-@@ -1150,7 +1150,7 @@ int arizona_dev_init(struct arizona *arizona)
- 		} else if (val & 0x01) {
- 			ret = wm5102_clear_write_sequencer(arizona);
- 			if (ret)
--				return ret;
-+				goto err_reset;
- 		}
- 		break;
- 	default:
+diff --git a/drivers/iio/gyro/mpu3050-core.c b/drivers/iio/gyro/mpu3050-core.c
+index 84c6ad4bcccba..7803173c50639 100644
+--- a/drivers/iio/gyro/mpu3050-core.c
++++ b/drivers/iio/gyro/mpu3050-core.c
+@@ -1170,10 +1170,8 @@ int mpu3050_common_probe(struct device *dev,
+ 	mpu3050->regs[1].supply = mpu3050_reg_vlogic;
+ 	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(mpu3050->regs),
+ 				      mpu3050->regs);
+-	if (ret) {
+-		dev_err(dev, "Cannot get regulators\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "Cannot get regulators\n");
+ 
+ 	ret = mpu3050_power_up(mpu3050);
+ 	if (ret)
 -- 
 2.51.0
 
