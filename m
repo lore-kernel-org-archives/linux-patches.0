@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705B239B970
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297CE39B976
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302611; cv=none; b=tpYXssZJI7vzwZ6vVKwE0uLD25buLTUaRjwCFLuDyRsZAzmCLYhMyX3cC9Qgu7PoLHR8WUOuf21dCI9ata27O38/0z8AEetflTnJxidqFa5RnDR2v8GjSUOaYJqrOeLc77pcFfQfKe/QtiRfV0PX86FdorTHkWtvHYKhKRWxbUU=
+	t=1772302612; cv=none; b=PjtdTDCXjU6kPO7nIy4ewr1odrZlpBiSYBkYBdpXDEWz6ybLW5MTYEhz7lzO8A3Jay1udVIX3ekLgL6rqjMtOG9zEMk8TbDWu2pNAoAbQGx42DwuQ7XJ1d22tiyN/P5cK2ceeD6AUP1nBe02jA2YEkmbrDhDEB2d7Qp5fJux8xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302611; c=relaxed/simple;
-	bh=Gnni3G4LGNXaG40nKX3l8bKCD7ylqeTs03XpiWBojes=;
+	s=arc-20240116; t=1772302612; c=relaxed/simple;
+	bh=4lkz5QtqazdIxX2cZN66Jk0z3fss+lyB1L6jK0pFnrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZReKLEe/bLDJJnHFLjFxj+b8nQRJTGFiWfcXof5yT2bccjCxHHeQsIrskbXDHiRPEOdLlvT3ktGKZPFzJ0NkYjBjgelb81BRwrO0XjdPMoxa0YZz+O36HhX3R9jCQ09xC2nEltktugh7tSy8+uFA18dqsGRdLaoJSUS6XM2OUZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qTzwAIAN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cfv0yM29ZQ/KRhbGWzgTXFFz1+7NyLwrN3mKBcSA4e3ZygeUZJLAaKQJe4f3TlFhdid0QSJa8qwnb1NiesrLomU3Awp/YLS4POHLsBYq63ftmpaevxiIRnW+VmbC1XFZZnkuiBBl9FKPJ9JYSaGlkBWWy9eDM7uYCOBAtIArjq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m70ZcX4M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qTzwAIAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB30CC116D0;
-	Sat, 28 Feb 2026 18:16:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m70ZcX4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFE1C19424;
+	Sat, 28 Feb 2026 18:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302611;
-	bh=Gnni3G4LGNXaG40nKX3l8bKCD7ylqeTs03XpiWBojes=;
+	s=k20201202; t=1772302612;
+	bh=4lkz5QtqazdIxX2cZN66Jk0z3fss+lyB1L6jK0pFnrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qTzwAIAN2dKQLufPKOniBnrJHtCwJxDCb3hFnEjgvO1eCLaF0MihDuYQLKbtoNASb
-	 lXJmGBLevKdY+6EKTyzL263ochmRG4qygwUBb5aUbS8HSFYxjj/K161vOnm+oXR8aF
-	 EVdfEVawH5hjJM0r0hez+gfXKMD9pulO1lzKL3vVaav+1aSyp84BLJKzGkir3l9DB+
-	 +VRbOb8jrh0PYtk1bSb+kqrzRLmFQAOOXbh8rscbSlcrgBZyz+ar3m5u/7OmKn3vB9
-	 j1ddSC5qvN+vjVJIJDJTQDMZn3d0BXNGTIBcfbrCqfIsvCLoc0qJt83wwjfF67elta
-	 kCExWOpvRgYNQ==
+	b=m70ZcX4MPEBNItRI/YHIXg0p1bHOv6viswouArCKfGhuEksaVDGZ2FizzEHjkk6X0
+	 5/97D6GUILvnUFZ5hQH2RheH4voDkswQLbF4Gy+fcsqmX5Bxt/o5vM7Drek+7FPRSG
+	 W03cqO0VVSek5bwl/UesawqH65e0uoQu9k+0da4Ljc62AZd9pq1rmaQZe7cSLWLO6C
+	 0pdT4YrdcgqsAC1hcDT4/DIhg/GCyq/5qrJM5u3mCEqHbMhJbYVHLNA+WaXKPoeSEI
+	 +djvPOOvSKVjl3y61JRowWw2cR3fO1ebTWuPGZU9IMcRGinaHF2sGNCEggjRP8V1Ox
+	 QcHrNAT0T5XuA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 127/164] clk: qcom: rcg2: compute 2d using duty fraction directly
-Date: Sat, 28 Feb 2026 13:14:26 -0500
-Message-ID: <20260228181505.1600663-127-sashal@kernel.org>
+Subject: [PATCH 5.15 128/164] clk: meson: gxbb: Limit the HDMI PLL OD to /4 on GXL/GXM SoCs
+Date: Sat, 28 Feb 2026 13:14:27 -0500
+Message-ID: <20260228181505.1600663-128-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -43,71 +43,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit d6205a1878dd4cc9664c4b4829b68a29c0426efc ]
+[ Upstream commit 5b1a43950fd3162af0ce52b13c14a2d29b179d4f ]
 
-The duty-cycle calculation in clk_rcg2_set_duty_cycle() currently
-derives an intermediate percentage `duty_per = (num * 100) / den` and
-then computes:
+GXBB has the HDMI PLL OD in the HHI_HDMI_PLL_CNTL2 register while for
+GXL/GXM the OD has moved to HHI_HDMI_PLL_CNTL3. At first glance the rest
+of the OD setup seems identical.
 
-    d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
+However, looking at the downstream kernel sources as well as testing
+shows that GXL only supports three OD values:
+- register value 0 means: divide by 1
+- register value 1 means: divide by 2
+- register value 2 means: divide by 4
 
-This introduces integer truncation at the percentage step (division by
-`den`) and a redundant scaling by 100, which can reduce precision for
-large `den` and skew the final rounding.
+Using register value 3 (which on GXBB means: divide by 8) still divides
+by 4 as verified using meson-clk-measure. Downstream sources are also
+only using OD register values 0, 1 and 2 for GXL (while for GXBB the
+downstream kernel sources are also using value 3).
 
-Compute `2d` directly from the duty fraction to preserve precision and
-avoid the unnecessary scaling:
+Add clk_div_table and have it replace the CLK_DIVIDER_POWER_OF_TWO flag
+to make the kernel's view of this register match with how the hardware
+actually works.
 
-    d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
-
-This keeps the intended formula `d ≈ n * 2 * (num/den)` while performing
-a single, final rounded division, improving accuracy especially for small
-duty cycles or large denominators. It also removes the unused `duty_per`
-variable, simplifying the code.
-
-There is no functional changes beyond improved numerical accuracy.
-
-Fixes: 7f891faf596ed ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260105-duty_cycle_precision-v2-1-d1d466a6330a@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 69d92293274b ("clk: meson: add the gxl hdmi pll")
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20260105204710.447779-2-martin.blumenstingl@googlemail.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/clk/meson/gxbb.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index f3c225ed57377..05aa831ac7a44 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -400,7 +400,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
- static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
- {
- 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
--	u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
-+	u32 notn_m, n, m, d, not2d, mask, cfg;
- 	int ret;
+diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
+index 35bc13e73c0dd..6f3918f0a7826 100644
+--- a/drivers/clk/meson/gxbb.c
++++ b/drivers/clk/meson/gxbb.c
+@@ -316,12 +316,23 @@ static struct clk_regmap gxbb_hdmi_pll = {
+ 	},
+ };
  
- 	/* Duty-cycle cannot be modified for non-MND RCGs */
-@@ -419,10 +419,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
- 
- 	n = (~(notn_m) + m) & mask;
- 
--	duty_per = (duty->num * 100) / duty->den;
--
- 	/* Calculate 2d value */
--	d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
-+	d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
- 
- 	/*
- 	 * Check bit widths of 2d. If D is too big reduce duty cycle.
++/*
++ * GXL hdmi OD dividers are POWER_OF_TWO dividers but limited to /4.
++ * A divider value of 3 should map to /8 but instead map /4 so ignore it.
++ */
++static const struct clk_div_table gxl_hdmi_pll_od_div_table[] = {
++	{ .val = 0, .div = 1 },
++	{ .val = 1, .div = 2 },
++	{ .val = 2, .div = 4 },
++	{ /* sentinel */ }
++};
++
+ static struct clk_regmap gxl_hdmi_pll_od = {
+ 	.data = &(struct clk_regmap_div_data){
+ 		.offset = HHI_HDMI_PLL_CNTL + 8,
+ 		.shift = 21,
+ 		.width = 2,
+-		.flags = CLK_DIVIDER_POWER_OF_TWO,
++		.table = gxl_hdmi_pll_od_div_table,
+ 	},
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "hdmi_pll_od",
+@@ -339,7 +350,7 @@ static struct clk_regmap gxl_hdmi_pll_od2 = {
+ 		.offset = HHI_HDMI_PLL_CNTL + 8,
+ 		.shift = 23,
+ 		.width = 2,
+-		.flags = CLK_DIVIDER_POWER_OF_TWO,
++		.table = gxl_hdmi_pll_od_div_table,
+ 	},
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "hdmi_pll_od2",
+@@ -357,7 +368,7 @@ static struct clk_regmap gxl_hdmi_pll = {
+ 		.offset = HHI_HDMI_PLL_CNTL + 8,
+ 		.shift = 19,
+ 		.width = 2,
+-		.flags = CLK_DIVIDER_POWER_OF_TWO,
++		.table = gxl_hdmi_pll_od_div_table,
+ 	},
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "hdmi_pll",
 -- 
 2.51.0
 
