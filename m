@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E70340A47
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5321E33F38A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301118; cv=none; b=T9hKXrO22XXM0eDI68QN0NilOoA2NSsR0lsVY68md0feH2ORwzyzeMa5VqZqjU2NopFgb6qtwnCeEpOGSAyDlNl4oSoBN/H2eJd3wZ6/pCeU6HMgSuMyA0O9Cn6fo40Den00vSwTnAyKokL5Pk51NGinm71KheOth3qcQxhIyro=
+	t=1772301119; cv=none; b=YD3gKoMmIbtZojVjzhboUa2XFlLtkRoIG3wLZWJUM2i8igVsIsqQGcrNKfos5JS5INZ3MBD1GjI5k71106av9zuQEiQ1rHG6Sdsmyz4cGWQE+tuGsuyZbylEr/cCwHTvMTXEinCnEyPicgab5C20BczCQO1aAdG7Rhn99c4aEJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301118; c=relaxed/simple;
-	bh=4wLXK5S4UDku9OQOAkxbi5IM0s3pceDMWRtXIPyy4nM=;
+	s=arc-20240116; t=1772301119; c=relaxed/simple;
+	bh=giRcar3JCJclt/BjCfRHpvRQG4hhCmFVp3rLWEXrbLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k04giQlO9czfP7QSB64FWEqi01BYIG/bcurvuG4RWcjr21qTDmnaIJwNX1yEQqrAw9G5uXH4zXpy7Gq2b5aok0hA/7yf7FLaRXfqa6F3MqCp0MxJrveLLBpio3N6dbIB+DcPVD54fBfmSOi+vU6q9bzgygBtkiU+7C7R5bWCFsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kBtg8sRC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EaEj3L/VX2YR8r6OcoHB7G9OV/GqF9G1cdD2xZ8/DAs3HCSr5R1CrZ6lbshczq1Cr5DOP/8P9IOP7+99NfmUMHEgFsPpkA064ekOt2abbs7NG5pV+j3j332q7b0ZvSBhTS4xQCixvHqZZK9rS2h7zKP3/JKsRn5au6dO4/dbFwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RTYucb9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kBtg8sRC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF8AC19425;
-	Sat, 28 Feb 2026 17:51:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RTYucb9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5980C116D0;
+	Sat, 28 Feb 2026 17:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301118;
-	bh=4wLXK5S4UDku9OQOAkxbi5IM0s3pceDMWRtXIPyy4nM=;
+	s=k20201202; t=1772301119;
+	bh=giRcar3JCJclt/BjCfRHpvRQG4hhCmFVp3rLWEXrbLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBtg8sRC1xQBNADQ1X+v3qR43TgfZKXyMCL9/5EFGrpSjuV5grxukJkJGkc6r/onb
-	 xdBfFAYqOZ2l0mt4XJU5XH8jXM1xykNtRk7g4nDLD6FSmgicEmrhubYWNPSRhBAwCV
-	 M2/sm0C4lMmYZ7twbKP8WEJfh091skEmTM8+C6XlWujI7nIDFlbkVI6z6EEpJP7I4v
-	 5GKGJWO2PbIxKVkEr20tS6ArKFwxlDqcPq974cA4YjkTG5ZS+T6mFpz0pV2tid55DF
-	 nsniJJv2Ir3I0q8Rao/GreSBN+xk+RrBvfEDDDqgUsj2cHEovRuxMhqFFC5KQ+hohO
-	 oP0SbJeuH6jMQ==
+	b=RTYucb9LtYcS705PhWrm0XQtvwvzytIV5EVGXJ+vVGXTZUL7bN0/8XNFAUBaXKpnj
+	 v3xBQmPKsAav+umLEkWeM85k7EC4Rr8SPpguU738C5C1D8dtYk81RSKxHUqXeAZwmL
+	 ENpBZK7+WHC73wvukbkK5iylFSUufMxg7SOscGLVkqOuz1rjQhipc3SZJGJ0yfovXu
+	 uVeWQntB3EX/mGcealhxnDGiY8w4QypM7tXXdG0WN20h8NLsNotCY/JWSv33PyfgWA
+	 cxzcynlMluLX9Ne86OY63RagFeIGJJMPXf7JAZzq+M3D6FH6nBTju1Rms9Wk6XkotI
+	 R2HcvATWmH6OQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Stefan=20S=C3=B8rensen?= <ssorensen@roku.com>,
+Cc: Techie Ernie <techieernie@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 275/752] Bluetooth: hci_conn: Set link_policy on incoming ACL connections
-Date: Sat, 28 Feb 2026 12:39:46 -0500
-Message-ID: <20260228174750.1542406-275-sashal@kernel.org>
+Subject: [PATCH 6.18 276/752] Bluetooth: btusb: Add USB ID 0489:e112 for Realtek 8851BE
+Date: Sat, 28 Feb 2026 12:39:47 -0500
+Message-ID: <20260228174750.1542406-276-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -43,54 +43,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Sørensen <ssorensen@roku.com>
+From: Techie Ernie <techieernie@gmail.com>
 
-[ Upstream commit 4bb091013ab0f2edfed3f58bebe658a798cbcc4d ]
+[ Upstream commit e07094a51ad8faf98ea64320799ce550828e97cd ]
 
-The connection link policy is only set when establishing an outgoing
-ACL connection causing connection idle modes not to be available on
-incoming connections. Move the setting of the link policy to the
-creation of the connection so all ACL connection will use the link
-policy set on the HCI device.
+Add USB ID 0489:e112 for the Realtek 8851BE Bluetooth adapter.
+Without this entry, the device is not handled correctly by btusb and Bluetooth fails to initialise.
+Adding the ID enables proper Realtek initialization for Bluetooth to work on various motherboards using this Bluetooth adapter.
 
-Signed-off-by: Stefan Sørensen <ssorensen@roku.com>
+The device identifies as:
+  Bus 001 Device XXX: ID 0489:e112 Foxconn / Hon Hai Bluetooth Radio
+
+Tested on Realtek 8851BE. Bluetooth works after this change is made.
+
+Signed-off-by: Techie Ernie <techieernie@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 1 +
- net/bluetooth/hci_sync.c | 2 --
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 6fc0692abf057..6dbef0cd53037 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -990,6 +990,7 @@ static struct hci_conn *__hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t
- 	switch (type) {
- 	case ACL_LINK:
- 		conn->pkt_type = hdev->pkt_type & ACL_PTYPE_MASK;
-+		conn->link_policy = hdev->link_policy;
- 		conn->mtu = hdev->acl_mtu;
- 		break;
- 	case LE_LINK:
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index f5896c023a9fa..cc1d340a32c62 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6879,8 +6879,6 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index adc5a686c0f59..4c802b0f2f516 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -521,6 +521,8 @@ static const struct usb_device_id quirks_table[] = {
+ 	{ USB_DEVICE(0x0bda, 0xb850), .driver_info = BTUSB_REALTEK },
+ 	{ USB_DEVICE(0x13d3, 0x3600), .driver_info = BTUSB_REALTEK },
+ 	{ USB_DEVICE(0x13d3, 0x3601), .driver_info = BTUSB_REALTEK },
++	{ USB_DEVICE(0x0489, 0xe112), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
- 	conn->attempt++;
- 
--	conn->link_policy = hdev->link_policy;
--
- 	memset(&cp, 0, sizeof(cp));
- 	bacpy(&cp.bdaddr, &conn->dst);
- 	cp.pscan_rep_mode = 0x02;
+ 	/* Realtek 8851BU Bluetooth devices */
+ 	{ USB_DEVICE(0x3625, 0x010b), .driver_info = BTUSB_REALTEK |
 -- 
 2.51.0
 
