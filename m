@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47FE2C21F8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7DD38F629
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302142; cv=none; b=CFCMw2j4xBRr2kyNBmuQ7Nkn4QF8P1ZRNVbItO/nr/9gRgxnKqYkqU5yIt6kf3XjRcA1SK6DXdAUi7w/zOmbvL9z4GPKdKNQuA2cx2VN9G1cXIQi3jC5ydqs8Dpk+tTEx520EN9Av2TWqC5h1mwCdx1yZ2xtH7HH9OqaGM7JBo4=
+	t=1772302143; cv=none; b=iqhgXs0r6rFmcDmbgeVaFWFtqMaRJomlbIbfBOAZfE+yHUlzG3bydLe8jLV3tyIPN/wpgS2mG0G3udBJLKXNp1vqPsUitIVZnrGuMsfv/h2fN1L9AJmpO+J8CPH+3xlscwngwLnU+tVZ2KN1yp0MK2jyG+HJTrTpf1s+yjvWTNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302142; c=relaxed/simple;
-	bh=u8VoxGaXNFIpNxyKxxA/hxdETiHnRlqT6INe15CIwCw=;
+	s=arc-20240116; t=1772302143; c=relaxed/simple;
+	bh=oh6XrtqArh0O971U74hGmJ9jcvIEuj87+cYIgiGnrV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UwAGfwM1A6t7BwF/sVwR2GiveRkBETOY1mONHIOYpzO18NKh6rpADpTRzOIwX7IzCtxN1pZl4Yj/5yxbZGLtrEAvU+eEIXgYuZ0QV9iMW2nBElOJFXzmySdPuZtIZCKbHZ05hwINknykxK+TOSukGcdFZm6wgx8IkoFP7t5edsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BrEvvoj1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IEp/g7Q9dItpiX8/g61CMMm6xZ66aqbz9MTSiKbAuhkpvpOk+LnFMSy3zN+TpgTntZua8IUArATP3y35ZlgrXb3B91J+SIED46Lm7Jh1GRS7B11pwy1Wyyp2JMtRMjm0lJzBi1HJdaqXBj+PC0x5C8ceyV7AbbycwR5mlgQpNUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ioe3dvWV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BrEvvoj1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33881C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ioe3dvWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8677C19425;
 	Sat, 28 Feb 2026 18:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302142;
-	bh=u8VoxGaXNFIpNxyKxxA/hxdETiHnRlqT6INe15CIwCw=;
+	s=k20201202; t=1772302143;
+	bh=oh6XrtqArh0O971U74hGmJ9jcvIEuj87+cYIgiGnrV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrEvvoj1ZT9JpJLIRq3Wf2t+I+MtZbWVpN+wj/GtKVthTOFkeF4rFZYYQbe3ivzuL
-	 p9ItOULiZttMJk0A0gVX4xQFvdMvjbN/LGaXhJ4vKosxdjv36mUeuUbCA16MpVrgXu
-	 5z34XsVNFA0TCtgrrW0+xRYaYuL7sPGhbiNPfO/qP/cmcBbf8hgV1MEwnQazfyYY8E
-	 j1TZ6UBmQIn6iVTj02KkJG2C3NyiKi9dMXhxhQxghdkqWZUvoGFZ0+l1DVcxgjlbfX
-	 XECIDThaxnAukrrEIopGlVgDNOxdFNZcrUm/qwFInkxa0o7Vv74BihGxJW5Te37lWi
-	 v+x4PlVaJ5HMA==
+	b=ioe3dvWVXE6A21FPXFxzIoCM655LJ0W0Tk2TLd2HjblcXr6nSX5j9ySMzNOmTjCR0
+	 gGBNVNTZxSofzwVnE+6sseFe5XtTPzy9AylqKBbi4XlPFpp14Gpfn24AtYP/ghx2oN
+	 6Fb9Ro9F7GVAIl0UXhdTiZ4OTy2LQ3bwpynjSLkvjlt/lwNElOZ7TR92/OsLz4F77g
+	 rERzusV/7DL8uzUfsek61CApuYs4b2xX80MP9/UmH7FCKAbpVaEr90MZ1ym75zw9Nj
+	 djR281blDu+7MIcjvKEd3iYOicIF/9oPyt6+72vK+9QEhAWuAaxmGnou14kjsJl5kF
+	 47nuhxMAOXEKw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Ondrej Mosnacek <omosnace@redhat.com>,
+	Alexey Gladkov <legion@kernel.org>,
+	Serge Hallyn <serge@hallyn.com>,
+	Serge Hallyn <sergeh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/283] PCI/ACPI: Restrict program_hpx_type2() to AER bits
-Date: Sat, 28 Feb 2026 13:04:38 -0500
-Message-ID: <20260228180709.1583486-136-sashal@kernel.org>
+Subject: [PATCH 6.6 137/283] ipc: don't audit capability check in ipc_permissions()
+Date: Sat, 28 Feb 2026 13:04:39 -0500
+Message-ID: <20260228180709.1583486-137-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -43,200 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit 9abf79c8d7b40db0e5a34aa8c744ea60ff9a3fcf ]
+[ Upstream commit 071588136007482d70fd2667b827036bc60b1f8f ]
 
-Previously program_hpx_type2() applied PCIe settings unconditionally,
-which could incorrectly change bits like Extended Tag Field Enable and
-Enable Relaxed Ordering.
+The IPC sysctls implement the ctl_table_root::permissions hook and
+they override the file access mode based on the CAP_CHECKPOINT_RESTORE
+capability, which is being checked regardless of whether any access is
+actually denied or not, so if an LSM denies the capability, an audit
+record may be logged even when access is in fact granted.
 
-When _HPX was added to ACPI r3.0, the intent of the PCIe Setting
-Record (Type 2) in sec 6.2.7.3 was to configure AER registers when the
-OS does not own the AER Capability:
+It wouldn't be viable to restructure the sysctl permission logic to only
+check the capability when the access would be actually denied if it's
+not granted. Thus, do the same as in net_ctl_permissions()
+(net/sysctl_net.c) - switch from ns_capable() to ns_capable_noaudit(),
+so that the check never emits an audit record.
 
-  The PCI Express setting record contains ... [the AER] Uncorrectable
-  Error Mask, Uncorrectable Error Severity, Correctable Error Mask
-  ... to be used when configuring registers in the Advanced Error
-  Reporting Extended Capability Structure ...
-
-  OSPM [1] will only evaluate _HPX with Setting Record – Type 2 if
-  OSPM is not controlling the PCI Express Advanced Error Reporting
-  capability.
-
-ACPI r3.0b, sec 6.2.7.3, added more AER registers, including registers
-in the PCIe Capability with AER-related bits, and the restriction that
-the OS use this only when it owns PCIe native hotplug:
-
-  ... when configuring PCI Express registers in the Advanced Error
-  Reporting Extended Capability Structure *or PCI Express Capability
-  Structure* ...
-
-  An OS that has assumed ownership of native hot plug but does not
-  ... have ownership of the AER register set must use ... the Type 2
-  record to program the AER registers ...
-
-  However, since the Type 2 record also includes register bits that
-  have functions other than AER, the OS must ignore values ... that
-  are not applicable.
-
-Restrict program_hpx_type2() to only the intended purpose:
-
-  - Apply settings only when OS owns PCIe native hotplug but not AER,
-
-  - Only touch the AER-related bits (Error Reporting Enables) in Device
-    Control
-
-  - Don't touch Link Control at all, since nothing there seems AER-related,
-    but log _HPX settings for debugging purposes
-
-Note that Read Completion Boundary is now configured elsewhere, since it is
-unrelated to _HPX.
-
-[1] Operating System-directed configuration and Power Management
-
-Fixes: 40abb96c51bb ("[PATCH] pciehp: Fix programming hotplug parameters")
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260129175237.727059-3-haakon.bugge@oracle.com
+Fixes: 0889f44e2810 ("ipc: Check permissions for checkpoint_restart sysctls at open time")
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Acked-by: Alexey Gladkov <legion@kernel.org>
+Acked-by: Serge Hallyn <serge@hallyn.com>
+Signed-off-by: Serge Hallyn <sergeh@kernel.org>
+Stable-dep-of: 8924336531e2 ("ipc: don't audit capability check in ipc_permissions()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-acpi.c | 59 +++++++++++++++++-------------------------
- drivers/pci/pci.h      |  3 +++
- drivers/pci/pcie/aer.c |  3 ---
- 3 files changed, 27 insertions(+), 38 deletions(-)
+ include/linux/capability.h | 6 ++++++
+ ipc/ipc_sysctl.c           | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci-acpi.c b/drivers/pci/pci-acpi.c
-index 61bded8623d21..508873c526e71 100644
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -246,21 +246,6 @@ static acpi_status decode_type1_hpx_record(union acpi_object *record,
- 	return AE_OK;
+diff --git a/include/linux/capability.h b/include/linux/capability.h
+index 0c356a5179917..767c535dbd38e 100644
+--- a/include/linux/capability.h
++++ b/include/linux/capability.h
+@@ -208,6 +208,12 @@ static inline bool checkpoint_restore_ns_capable(struct user_namespace *ns)
+ 		ns_capable(ns, CAP_SYS_ADMIN);
  }
  
--static bool pcie_root_rcb_set(struct pci_dev *dev)
--{
--	struct pci_dev *rp = pcie_find_root_port(dev);
--	u16 lnkctl;
--
--	if (!rp)
--		return false;
--
--	pcie_capability_read_word(rp, PCI_EXP_LNKCTL, &lnkctl);
--	if (lnkctl & PCI_EXP_LNKCTL_RCB)
--		return true;
--
--	return false;
--}
--
- /* _HPX PCI Express Setting Record (Type 2) */
- struct hpx_type2 {
- 	u32 revision;
-@@ -286,6 +271,7 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
- {
- 	int pos;
- 	u32 reg32;
-+	const struct pci_host_bridge *host;
- 
- 	if (!hpx)
- 		return;
-@@ -293,6 +279,15 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
- 	if (!pci_is_pcie(dev))
- 		return;
- 
-+	host = pci_find_host_bridge(dev->bus);
++static inline bool checkpoint_restore_ns_capable_noaudit(struct user_namespace *ns)
++{
++	return ns_capable_noaudit(ns, CAP_CHECKPOINT_RESTORE) ||
++		ns_capable_noaudit(ns, CAP_SYS_ADMIN);
++}
 +
-+	/*
-+	 * Only do the _HPX Type 2 programming if OS owns PCIe native
-+	 * hotplug but not AER.
-+	 */
-+	if (!host->native_pcie_hotplug || host->native_aer)
-+		return;
-+
- 	if (hpx->revision > 1) {
- 		pci_warn(dev, "PCIe settings rev %d not supported\n",
- 			 hpx->revision);
-@@ -300,33 +295,27 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
- 	}
- 
- 	/*
--	 * Don't allow _HPX to change MPS or MRRS settings.  We manage
--	 * those to make sure they're consistent with the rest of the
--	 * platform.
-+	 * We only allow _HPX to program DEVCTL bits related to AER, namely
-+	 * PCI_EXP_DEVCTL_CERE, PCI_EXP_DEVCTL_NFERE, PCI_EXP_DEVCTL_FERE,
-+	 * and PCI_EXP_DEVCTL_URRE.
-+	 *
-+	 * The rest of DEVCTL is managed by the OS to make sure it's
-+	 * consistent with the rest of the platform.
- 	 */
--	hpx->pci_exp_devctl_and |= PCI_EXP_DEVCTL_PAYLOAD |
--				    PCI_EXP_DEVCTL_READRQ;
--	hpx->pci_exp_devctl_or &= ~(PCI_EXP_DEVCTL_PAYLOAD |
--				    PCI_EXP_DEVCTL_READRQ);
-+	hpx->pci_exp_devctl_and |= ~PCI_EXP_AER_FLAGS;
-+	hpx->pci_exp_devctl_or &= PCI_EXP_AER_FLAGS;
- 
- 	/* Initialize Device Control Register */
- 	pcie_capability_clear_and_set_word(dev, PCI_EXP_DEVCTL,
- 			~hpx->pci_exp_devctl_and, hpx->pci_exp_devctl_or);
- 
--	/* Initialize Link Control Register */
-+	/* Log if _HPX attempts to modify Link Control Register */
- 	if (pcie_cap_has_lnkctl(dev)) {
--
--		/*
--		 * If the Root Port supports Read Completion Boundary of
--		 * 128, set RCB to 128.  Otherwise, clear it.
--		 */
--		hpx->pci_exp_lnkctl_and |= PCI_EXP_LNKCTL_RCB;
--		hpx->pci_exp_lnkctl_or &= ~PCI_EXP_LNKCTL_RCB;
--		if (pcie_root_rcb_set(dev))
--			hpx->pci_exp_lnkctl_or |= PCI_EXP_LNKCTL_RCB;
--
--		pcie_capability_clear_and_set_word(dev, PCI_EXP_LNKCTL,
--			~hpx->pci_exp_lnkctl_and, hpx->pci_exp_lnkctl_or);
-+		if (hpx->pci_exp_lnkctl_and != 0xffff ||
-+		    hpx->pci_exp_lnkctl_or != 0)
-+			pci_info(dev, "_HPX attempts Link Control setting (AND %#06x OR %#06x)\n",
-+				 hpx->pci_exp_lnkctl_and,
-+				 hpx->pci_exp_lnkctl_or);
- 	}
- 
- 	/* Find Advanced Error Reporting Enhanced Capability */
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index d333be3877b2e..24441a26be1e6 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -44,6 +44,9 @@
- #define PCI_BUS_BRIDGE_MEM_WINDOW	1
- #define PCI_BUS_BRIDGE_PREF_MEM_WINDOW	2
- 
-+#define PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
-+				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
-+
- extern const unsigned char pcie_link_speed[];
- extern bool pci_early_dump;
- 
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index 8e700020ee0bc..42a0f86b72fa5 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -218,9 +218,6 @@ void pcie_ecrc_get_policy(char *str)
- }
- #endif	/* CONFIG_PCIE_ECRC */
- 
--#define	PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
--				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
--
- int pcie_aer_is_native(struct pci_dev *dev)
- {
- 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
+ /* audit system wants to get cap info from files as well */
+ int get_vfs_caps_from_disk(struct mnt_idmap *idmap,
+ 			   const struct dentry *dentry,
+diff --git a/ipc/ipc_sysctl.c b/ipc/ipc_sysctl.c
+index b2f39a86f4734..22b12a482ba91 100644
+--- a/ipc/ipc_sysctl.c
++++ b/ipc/ipc_sysctl.c
+@@ -215,7 +215,7 @@ static int ipc_permissions(struct ctl_table_header *head, struct ctl_table *tabl
+ 	if (((table->data == &ns->ids[IPC_SEM_IDS].next_id) ||
+ 	     (table->data == &ns->ids[IPC_MSG_IDS].next_id) ||
+ 	     (table->data == &ns->ids[IPC_SHM_IDS].next_id)) &&
+-	    checkpoint_restore_ns_capable(ns->user_ns))
++	    checkpoint_restore_ns_capable_noaudit(ns->user_ns))
+ 		mode = 0666;
+ 	else
+ #endif
 -- 
 2.51.0
 
