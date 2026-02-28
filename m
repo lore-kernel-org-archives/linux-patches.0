@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5587038D017
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EA3270545
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302195; cv=none; b=AIzcW5clkOBSh9oiQtlEDL505jiMIS9jhrWt6jN8zCAPNehbpxmE9umc4pgwBZiFByo4xyjO5CVZWbkXx5VqqxLBw8Qcn5oEqcs/IdZuS/UVzr5crwDHzuiI0ruolHtfikNZdKz3iklVI957a8o2KzxVnPOed/IqWDi7lFJtnC4=
+	t=1772302196; cv=none; b=NHgh6MifNlifv1xHPnICpvNVmVO6FHiaRQHUVqUk3jVg0TSYqMCHp5lG7LeBep05ea8n8eq9fePMIpYzeAcrlpeKZ4oegwUg3AuMKxCiYjqDGf1NBn3e17ElnKSQ2mksC1QWj+/H7G5W0vTvGWvmqixpevCeCLYfUbJ3X9k660A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302195; c=relaxed/simple;
-	bh=N9aJjbHiRYqPmIkz4MN4GJKNYORZ8zi12Zo4yferKJE=;
+	s=arc-20240116; t=1772302196; c=relaxed/simple;
+	bh=ShaRIg+kityQ5D282p/NSbqyVJtbDtPadlpy3fxwLLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0SsdgD1wq4QmtvdlYq2coRek7YArfkduI04NBc3CIORieBAXpBfas3eHRFwKKefQAPZD30waRObXEO1qaHRcZAL48wz4HqwdLrs9X65lCZsp3Ad4x1YkycD+mg9S9RwCEc7t6LITp7c15HvUjtN7B3HIrgf3WW/SgtnSBD4ZDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eoDlcunD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZ8DUN0JeN8UHEx1Tep9JURwC7jXqiK+uyawv+fNUYO16AdWNTHiIH4bMTn3fptBHsS6JQoBAd3hMBq8hdcgThXfyaTB1W86YYlIlBwE2frEJrEbzC0iOp5SKkq/8TLJ2yhBeBmlGwoE7FUQlLfWChvFUwLd0lv8y5e3y5FG3cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kbIG96qC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoDlcunD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C68C19423;
-	Sat, 28 Feb 2026 18:09:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kbIG96qC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB9BC19424;
+	Sat, 28 Feb 2026 18:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302195;
-	bh=N9aJjbHiRYqPmIkz4MN4GJKNYORZ8zi12Zo4yferKJE=;
+	s=k20201202; t=1772302196;
+	bh=ShaRIg+kityQ5D282p/NSbqyVJtbDtPadlpy3fxwLLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoDlcunDMlVm1F3OYgObnQlsEHmfnN0ArOJuHVC5NuSRBO9HK79Md3c4U0P/aSEwS
-	 uR33Az/Q7Vd5dVz8/BknfsdAW+2q9NMjS9ORLcISm5+KNoHr8UU4oBfuVvNgfCCau3
-	 C4J8Wp0RIe/4yJq/vhpbtTc8Mc3VR6rpdJiSBMvWUU/Oe7ImNRNG8cy5yBU19G5ACq
-	 Jg7paCeUDhmBjdTFLgw5okmAIA7JKFg4LXst6K6e6UKBSRI2R0XKNnVV2Ef6sckjvd
-	 q0r2H8OHX6qhasHZgdo4D2CVMVOGh/nxAURSQ6YYjgqLjhZLgL9I/WkMUBliQmHlKf
-	 Bez7po8yuZrmw==
+	b=kbIG96qCQo1/AieLxCSnUM5vlJ6XKTVG5sY0qCKO0xngqtddoZwLBF5WJseZDXZCu
+	 puZO5zkkg9W7t7t+uAqg6zDa+u111rEKM4NIvOzFTkwq0fD5eEGPipfuXhctx6pG45
+	 T7gnvMEKxmaQDkm/LUv8h4dCwa9TnsnBlNhWK9L3ye4Ri4S7/noLDkFVKi2bna3mMx
+	 kKAYsI3jLQ2D+0mwBfefmWL6uMyuyZm9flLyWiTM0iTkY8iBJHSB9DsJQMcIWD9XEU
+	 TmPQ2LpbIIv8ciSRcnlfhBQAUMMB6bHpXwyv+EIARvDthLfFM42qDxKQWg9TsJF8if
+	 2OTo+EfoycFwA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Yuxiong Wang <yuxiong.wang@linux.alibaba.com>,
-	Huang Ying <ying.huang@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+Cc: Weigang He <geoffreyhe2@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 198/283] cxl: Fix premature commit_end increment on decoder commit failure
-Date: Sat, 28 Feb 2026 13:05:40 -0500
-Message-ID: <20260228180709.1583486-198-sashal@kernel.org>
+Subject: [PATCH 6.6 199/283] mtd: parsers: ofpart: fix OF node refcount leak in parse_fixed_partitions()
+Date: Sat, 28 Feb 2026 13:05:41 -0500
+Message-ID: <20260228180709.1583486-199-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,60 +47,81 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Yuxiong Wang <yuxiong.wang@linux.alibaba.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 7b6f9d9b1ea05c9c22570126547c780e8c6c3f62 ]
+[ Upstream commit 7cce81df7d26d44123bd7620715c8349d96793d7 ]
 
-In cxl_decoder_commit(), commit_end is incremented before verifying
-whether the commit succeeded, and the CXL_DECODER_F_ENABLE bit in
-cxld->flags is only set after a successful commit. As a result, if the
-commit fails, commit_end has been incremented and cxld->reset() has no
-effect since the flag is not set, so commit_end remains incorrectly
-incremented. The inconsistency between commit_end and CXL_DECODER_F_ENABLE
-causes failure during subsequent either commit or reset operations.
+of_get_child_by_name() returns a node pointer with refcount incremented,
+which must be released with of_node_put() when done. However, in
+parse_fixed_partitions(), when dedicated is true (i.e., a "partitions"
+subnode was found), the ofpart_node obtained from of_get_child_by_name()
+is never released on any code path.
 
-Fix this by incrementing commit_end only after confirming the commit
-succeeded. Also, remove the ineffective cxld->reset() call. According to
-CXL Spec r4.0 8.2.4.20.12 Committing Decoder Programming, since
-cxld_await_commit() has cleared the decoder commit bit on failure, no
-additional reset is required.
+Add of_node_put(ofpart_node) calls on all exit paths when dedicated is
+true to fix the reference count leak.
 
-[dj: Fixed commit log 80 char wrapping. ]
-[dj: Fix "Fixes" tag to correct hash length. ]
-[dj: Change spec to r4.0. ]
+This bug was detected by our static analysis tool.
 
-Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
-Signed-off-by: Yuxiong Wang <yuxiong.wang@linux.alibaba.com>
-Acked-by: Huang Ying <ying.huang@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260129064552.31180-1-yuxiong.wang@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 562b4e91d3b2 ("mtd: parsers: ofpart: fix parsing subpartitions")
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/mtd/parsers/ofpart_core.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index 36b20b844b109..f9738c863df0e 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -710,14 +710,13 @@ static int cxl_decoder_commit(struct cxl_decoder *cxld)
- 	writel(ctrl, hdm + CXL_HDM_DECODER0_CTRL_OFFSET(id));
- 	up_read(&cxl_dpa_rwsem);
- 
--	port->commit_end++;
- 	rc = cxld_await_commit(hdm, cxld->id);
- 	if (rc) {
- 		dev_dbg(&port->dev, "%s: error %d committing decoder\n",
- 			dev_name(&cxld->dev), rc);
--		cxld->reset(cxld);
- 		return rc;
+diff --git a/drivers/mtd/parsers/ofpart_core.c b/drivers/mtd/parsers/ofpart_core.c
+index e7b8e9d0a9103..3cf75b56d5a2e 100644
+--- a/drivers/mtd/parsers/ofpart_core.c
++++ b/drivers/mtd/parsers/ofpart_core.c
+@@ -77,6 +77,7 @@ static int parse_fixed_partitions(struct mtd_info *master,
+ 	of_id = of_match_node(parse_ofpart_match_table, ofpart_node);
+ 	if (dedicated && !of_id) {
+ 		/* The 'partitions' subnode might be used by another parser */
++		of_node_put(ofpart_node);
+ 		return 0;
  	}
-+	port->commit_end++;
- 	cxld->flags |= CXL_DECODER_F_ENABLE;
  
- 	return 0;
+@@ -91,12 +92,18 @@ static int parse_fixed_partitions(struct mtd_info *master,
+ 		nr_parts++;
+ 	}
+ 
+-	if (nr_parts == 0)
++	if (nr_parts == 0) {
++		if (dedicated)
++			of_node_put(ofpart_node);
+ 		return 0;
++	}
+ 
+ 	parts = kcalloc(nr_parts, sizeof(*parts), GFP_KERNEL);
+-	if (!parts)
++	if (!parts) {
++		if (dedicated)
++			of_node_put(ofpart_node);
+ 		return -ENOMEM;
++	}
+ 
+ 	i = 0;
+ 	for_each_child_of_node(ofpart_node,  pp) {
+@@ -175,6 +182,9 @@ static int parse_fixed_partitions(struct mtd_info *master,
+ 	if (quirks && quirks->post_parse)
+ 		quirks->post_parse(master, parts, nr_parts);
+ 
++	if (dedicated)
++		of_node_put(ofpart_node);
++
+ 	*pparts = parts;
+ 	return nr_parts;
+ 
+@@ -183,6 +193,8 @@ static int parse_fixed_partitions(struct mtd_info *master,
+ 	       master->name, pp, mtd_node);
+ 	ret = -EINVAL;
+ ofpart_none:
++	if (dedicated)
++		of_node_put(ofpart_node);
+ 	of_node_put(pp);
+ 	kfree(parts);
+ 	return ret;
 -- 
 2.51.0
 
