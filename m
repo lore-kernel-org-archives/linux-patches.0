@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7814C37146D;
-	Sat, 28 Feb 2026 17:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FDE371460;
+	Sat, 28 Feb 2026 17:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301463; cv=none; b=hk+agu1GmJlVv/Qgw1qnk8RirExAFe/0vRlplRCGjElsNP0eQ3HwKA72zDMa/pNSwHBuAIwY3tSMthVPLA4tsg89kmUbiUkuJsQm1p2TvN5g+oh3kT4aKoV4kAwg8OyR1uTfeWbHhoI0o239bB/k2fKFdzMowwADSVetzhwWVoQ=
+	t=1772301464; cv=none; b=ZqqPI8lnAFNfGpi1gzU3PSrbkVzOOM0VRC6APCQbx8999MZD1IpCn2NpyYMFxVynmOzZfNTvA4/HZadO0Myvzww31D4H89JcFbQtu+bcm8eA9zPsXFCwH71jE2RAkqfkT9hvsdKwpb9nk8s2Bdz1FDsCz79KBtztzpLrQgcuGng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301463; c=relaxed/simple;
-	bh=G9GwIaJ9gIxZ5AmUoyBqSUEXGS6+56r2NwHTvwc+K7c=;
+	s=arc-20240116; t=1772301464; c=relaxed/simple;
+	bh=Zeq8st5I0cgj8mYEdEdDCix/cXMYj7QqLZ18R1YqXKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dfgf8k9fRZitUsQKthkLnZzCdHppMuKj2g/ollRcoTuhSgTEdZS8eRD3LwAl2fTrAJgFPehDqa965IEPFhoJtink6950nT5RLzYF6wkbqBMlLVkZH4BEvNv2NBgO6P2lyLdUfjYWY+R8Rr0EiZZHlnxyokPhYOvf8/eqdD9Ih24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cngIKhSO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ckOFkbDoUvuQqU8CubbHlRfUQkehDXLe7vgPLOo8qXxOLWNO2n9cgBwYJ1K1IYNjVhaeIwJTC4KUezaVYrwlOzYXjmeKsTXLjWfXDscZt2/K5r7kXs1U8z1nq54DW4s47QMhxIZEUn4Q5ykSWahm/+xU3n92GQZpqRpYT0XA1Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X3qMn1bk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cngIKhSO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC02C116D0;
-	Sat, 28 Feb 2026 17:57:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X3qMn1bk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE2EC116D0;
+	Sat, 28 Feb 2026 17:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301463;
-	bh=G9GwIaJ9gIxZ5AmUoyBqSUEXGS6+56r2NwHTvwc+K7c=;
+	s=k20201202; t=1772301464;
+	bh=Zeq8st5I0cgj8mYEdEdDCix/cXMYj7QqLZ18R1YqXKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cngIKhSO/9DUB48p1SvFvaUcxkPLbAiTeXUJSH21z7TIWiFseiJlXKszgHWd764IK
-	 vjGwuHU070lF5X07PVKWPoCikzy+Y3v49uXF/6RS3th9Y69nbYAYjJ2eo4VsVgPaqq
-	 4eZQQr+hWNtAQF/7ExuP5MZjJhm5ARPY8GHdW4kvjCiEcXmEtu+KmXWufSToEylT4M
-	 cbaidNa2aplCE9X36GWdtFSBJV9KygQ1z7aXlJRDHzD/3VZcubpcNAUb/n3G2PAqks
-	 FCPBZj9m6Zib1EysldqZKtejWNPVSkMwQWhBeqozxUldm39QuNictcZ39Kw79mj8JN
-	 mK0bHRDZcp24w==
+	b=X3qMn1bkqUqtRADEBeiYAoLUhWTvCALGYZMUKZI7X7iKokgG/W+WPWQM7rlgeKa5R
+	 8im7XNy0OzhgcHANrd6KeAwyQWLtowF4d/8EjuG/Y8QpWVph0bP3YwFlAJ6XcUoepv
+	 x2P41EqCMwPrrGVmpm8loqCqxfFs09Do5OhyyvHR3CRq1xnr4PXngMEhqvdHgb/eCf
+	 KkylF0wOoZj83uV4LDGbQvyTxO6l6RZ3ngev5rpr8J2V7qeTtZUgENG7rgvON2FlgT
+	 ftEl7iTFqUZmw3EX6OWn4IOETqb17F7PwVO8HhezXcmIrshIHqD0loEc4WDzg023uQ
+	 EMgEPXhuznQPA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Niklas Schnelle <schnelle@linux.ibm.com>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
+Cc: Marco Elver <elver@google.com>,
 	stable@vger.kernel.org,
+	Boqun Feng <boqun@kernel.org>,
+	David Laight <david.laight.linux@gmail.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 648/752] PCI/IOV: Fix race between SR-IOV enable/disable and hotplug
-Date: Sat, 28 Feb 2026 12:45:59 -0500
-Message-ID: <20260228174750.1542406-648-sashal@kernel.org>
+Subject: [PATCH 6.18 649/752] arm64: Fix non-atomic __READ_ONCE() with CONFIG_LTO=y
+Date: Sat, 28 Feb 2026 12:46:00 -0500
+Message-ID: <20260228174750.1542406-649-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,63 +50,52 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit a5338e365c4559d7b4d7356116b0eb95b12e08d5 ]
+[ Upstream commit bb0c99e08ab9aa6d04b40cb63c72db9950d51749 ]
 
-Commit 05703271c3cd ("PCI/IOV: Add PCI rescan-remove locking when
-enabling/disabling SR-IOV") tried to fix a race between the VF removal
-inside sriov_del_vfs() and concurrent hot unplug by taking the PCI
-rescan/remove lock in sriov_del_vfs(). Similarly the PCI rescan/remove lock
-was also taken in sriov_add_vfs() to protect addition of VFs.
+The implementation of __READ_ONCE() under CONFIG_LTO=y incorrectly
+qualified the fallback "once" access for types larger than 8 bytes,
+which are not atomic but should still happen "once" and suppress common
+compiler optimizations.
 
-This approach however causes deadlock on trying to remove PFs with SR-IOV
-enabled because PFs disable SR-IOV during removal and this removal happens
-under the PCI rescan/remove lock. So the original fix had to be reverted.
+The cast `volatile typeof(__x)` applied the volatile qualifier to the
+pointer type itself rather than the pointee. This created a volatile
+pointer to a non-volatile type, which violated __READ_ONCE() semantics.
 
-Instead of taking the PCI rescan/remove lock in sriov_add_vfs() and
-sriov_del_vfs(), fix the race that occurs with SR-IOV enable and disable vs
-hotplug higher up in the callchain by taking the lock in
-sriov_numvfs_store() before calling into the driver's sriov_configure()
-callback.
+Fix this by casting to `volatile typeof(*__x) *`.
 
-Fixes: 05703271c3cd ("PCI/IOV: Add PCI rescan-remove locking when enabling/disabling SR-IOV")
-Reported-by: Benjamin Block <bblock@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+With a defconfig + LTO + debug options build, we see the following
+functions to be affected:
+
+	xen_manage_runstate_time (884 -> 944 bytes)
+	xen_steal_clock (248 -> 340 bytes)
+	  ^-- use __READ_ONCE() to load vcpu_runstate_info structs
+
+Fixes: e35123d83ee3 ("arm64: lto: Strengthen READ_ONCE() to acquire when CONFIG_LTO=y")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251216-revert_sriov_lock-v3-2-dac4925a7621@linux.ibm.com
+Reviewed-by: Boqun Feng <boqun@kernel.org>
+Signed-off-by: Marco Elver <elver@google.com>
+Tested-by: David Laight <david.laight.linux@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/iov.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/include/asm/rwonce.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/iov.c b/drivers/pci/iov.c
-index ac4375954c947..c6dc1b44bf602 100644
---- a/drivers/pci/iov.c
-+++ b/drivers/pci/iov.c
-@@ -495,7 +495,9 @@ static ssize_t sriov_numvfs_store(struct device *dev,
+diff --git a/arch/arm64/include/asm/rwonce.h b/arch/arm64/include/asm/rwonce.h
+index 97d9256d33c97..ac370a4a01ee9 100644
+--- a/arch/arm64/include/asm/rwonce.h
++++ b/arch/arm64/include/asm/rwonce.h
+@@ -58,7 +58,7 @@
+ 	default:							\
+ 		atomic = 0;						\
+ 	}								\
+-	atomic ? (typeof(*__x))__u.__val : (*(volatile typeof(__x))__x);\
++	atomic ? (typeof(*__x))__u.__val : (*(volatile typeof(*__x) *)__x);\
+ })
  
- 	if (num_vfs == 0) {
- 		/* disable VFs */
-+		pci_lock_rescan_remove();
- 		ret = pdev->driver->sriov_configure(pdev, 0);
-+		pci_unlock_rescan_remove();
- 		goto exit;
- 	}
- 
-@@ -507,7 +509,9 @@ static ssize_t sriov_numvfs_store(struct device *dev,
- 		goto exit;
- 	}
- 
-+	pci_lock_rescan_remove();
- 	ret = pdev->driver->sriov_configure(pdev, num_vfs);
-+	pci_unlock_rescan_remove();
- 	if (ret < 0)
- 		goto exit;
- 
+ #endif	/* !BUILD_VDSO */
 -- 
 2.51.0
 
