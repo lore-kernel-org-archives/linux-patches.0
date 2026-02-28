@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80A6361648
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB8235A3B7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300919; cv=none; b=EsfM32+rcbcA+N2bp6nPK+/ePEJ/dTXihRjCLqjwsIdcPorEmZGVAN5+LFY2XV8UDQ+IFdLouPEFAW9ymeaoLsH7Ebnk4rEOsuqe/+sU/5JatJ8DsenO4r/oAhbBDgKDOZ8anzpfXxT07XV1RpRsbN9AIqtkJXij+uaYZxxI2QE=
+	t=1772300920; cv=none; b=dvF+P/5bji/GUemZ63QDgh20eNkQXwCS2eo02U1ExMcjDLSTTxxcLypprgGtYWwxBxQrWoBY0A7Sw8dquSnLT1xWOFDddOKT85134AwsphIaPUUEIwUF75MqOGlNhqFG1wCUY0rmdX9gKDtpIEzdn0Q2cnYHOi0M3mhD4ssJx0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300919; c=relaxed/simple;
-	bh=ODzQ1JyARHrdyC5UA0mwYJsbZhzq5UtDcEMzzNfcUgo=;
+	s=arc-20240116; t=1772300920; c=relaxed/simple;
+	bh=jYGMSl7GrHFClHthZd7ZEUTk7vbj8A7hXlDhnywIKxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pBCODQqDe08ndw1OnXh4Fp+P7jZqQuVzCSusupt89kuENv4dDfv88SGRBHjuz55A8+3rLdDviTi6N+/KdYcvJTzzgkAJzYuynl+1zvQXdDGC4oxZNj3Se+fOZt+8mUX3uhXsc5EN15kFaqTwPUs5RR15IZCjkvC+oMNl6ZEEmCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HBI5pUD0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LyKBVGRQAivoZ+V7v/FpxzEsHxUkKJrJD47bKGsS4Rhql7tEY3zG9oh/9LevzUk6K946AjWaRZAPudXkBRpr+6jD6MvCqa7Pib19X7i3i+eT4S+4OFfzByuAyeMJyjJRrMa5k78HYcRUoNM4TGnxeEdAxNNsBsOEb7sr1c2cXpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n85wkwF1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HBI5pUD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E58C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n85wkwF1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD87C19425;
 	Sat, 28 Feb 2026 17:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300919;
-	bh=ODzQ1JyARHrdyC5UA0mwYJsbZhzq5UtDcEMzzNfcUgo=;
+	s=k20201202; t=1772300920;
+	bh=jYGMSl7GrHFClHthZd7ZEUTk7vbj8A7hXlDhnywIKxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HBI5pUD0mmNXdYTHsWXGM+ht1XfMOn1iyrrDTeXyChOZvash7OFVaqkrimZrHAxQ8
-	 vyBMVb/gHItmAGCbV4W4Dx9BTesBztAjHYi+RO/nZNeTYLs3KSV+Ezi7Bdk+Fjk8tp
-	 +jLsvEVcHuBaAs76tXXEQ65dglosOw3IxrMhIZyenBV+SfwBEy/NcC/XOq6twsg5rB
-	 uh+nmYiBOJ3bHPsNTdCZmQBv8P5GMV+HfnhEOwzV2UvVK8pAe0BEmxjEZWFSpK9BKN
-	 /HmUvBdrQIvy5PFfxF5gtJbuVGZG7CLtoT6UwDjCOgsGQmFyBOzvbVz2ZiqzSRLDmG
-	 2ekoVNaCAYWAA==
+	b=n85wkwF1kAypyviSGI7x2Zyn5xTPegYrdDzE1wWgXWdZzIa9XBWyAU1UboYQbpdjx
+	 5RrISjbNeCA5y4VzYhq75W1SbC2/Z6cP2/nGbur5PGwshKfJJdPWP57ro9G3g4St+t
+	 Ur9SzRCeTLWHPAzZUrZYGodDS+6TH+ZjZtHkAZ8GO107og2TRy0qC2Jjurn5Yd2QNN
+	 BwtSzoZmmTUdOpofog7qlWfLXCtdZnxHidvx7eBZgWdFNmS1R67n+pfieoRzmXTYE4
+	 I2hV7A6zNZeaaz39HdyspP3u2ykjQD7t4OanM1QhXR2g307wolg9U6KPiI5DuPkpg3
+	 Yolz2RN0xyniQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Qu Wenruo <wqu@suse.com>,
+Cc: jinbaohong <jinbaohong@synology.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Robbie Ko <robbieko@synology.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/752] btrfs: fallback to buffered IO if the data profile has duplication
-Date: Sat, 28 Feb 2026 12:35:47 -0500
-Message-ID: <20260228174750.1542406-36-sashal@kernel.org>
+Subject: [PATCH 6.18 037/752] btrfs: handle user interrupt properly in btrfs_trim_fs()
+Date: Sat, 28 Feb 2026 12:35:48 -0500
+Message-ID: <20260228174750.1542406-37-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,106 +50,74 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: jinbaohong <jinbaohong@synology.com>
 
-[ Upstream commit 7c2830f00c3e086292c1ee9f27b61efaf8e76c9a ]
+[ Upstream commit bfb670b9183b0e4ba660aff2e396ec1cc01d0761 ]
 
-[BACKGROUND]
-Inspired by a recent kernel bug report, which is related to direct IO
-buffer modification during writeback, that leads to contents mismatch of
-different RAID1 mirrors.
+When a fatal signal is pending or the process is freezing,
+btrfs_trim_block_group() and btrfs_trim_free_extents() return -ERESTARTSYS.
+Currently this is treated as a regular error: the loops continue to the
+next iteration and count it as a block group or device failure.
 
-[CAUSE AND PROBLEMS]
-The root cause is exactly the same explained in commit 968f19c5b1b7
-("btrfs: always fallback to buffered write if the inode requires
-checksum"), that we can not trust direct IO buffer which can be modified
-halfway during writeback.
+Instead, break out of the loops immediately and return -ERESTARTSYS to
+userspace without counting it as a failure. Also skip the device loop
+entirely if the block group loop was interrupted.
 
-Unlike data checksum verification, if this happened on inodes without
-data checksum but has the data has extra mirrors, it will lead to
-stealth data mismatch on different mirrors.
-
-This will be way harder to detect without data checksum.
-
-Furthermore for RAID56, we can even have data without checksum and data
-with checksum mixed inside the same full stripe.
-
-In that case if the direct IO buffer got changed halfway for the
-nodatasum part, the data with checksum immediately lost its ability to
-recover, e.g.:
-
-" " = Good old data or parity calculated using good old data
-"X" = Data modified during writeback
-
-              0                32K                      64K
-  Data 1      |                                         |  Has csum
-  Data 2      |XXXXXXXXXXXXXXXX                         |  No csum
-  Parity      |                                         |
-
-In above case, the parity is calculated using data 1 (has csum, from
-page cache, won't change during writeback), and old data 2 (has no csum,
-direct IO write).
-
-After parity is calculated, but before submission to the storage, direct
-IO buffer of data 2 is modified, causing the range [0, 32K) of data 2
-has a different content.
-
-Now all data is submitted to the storage, and the fs got fully synced.
-
-Then the device of data 1 is lost, has to be rebuilt from data 2 and
-parity. But since the data 2 has some modified data, and the parity is
-calculated using old data, the recovered data is no the same for data 1,
-causing data checksum mismatch.
-
-[FIX]
-Fix the problem by checking the data allocation profile.
-If our data allocation profile is either RAID0 or SINGLE, we can allow
-true zero-copy direct IO and the end user is fully responsible for any
-race.
-
-However this is not going to fix all situations, as it's still possible
-to race with balance where the fs got a new data profile after the data
-allocation profile check.
-But this fix should still greatly reduce the window of the original bug.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=99171
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Robbie Ko <robbieko@synology.com>
+Signed-off-by: jinbaohong <jinbaohong@synology.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/direct-io.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/btrfs/extent-tree.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/btrfs/direct-io.c b/fs/btrfs/direct-io.c
-index e29ea28ce90b9..3836414cbe371 100644
---- a/fs/btrfs/direct-io.c
-+++ b/fs/btrfs/direct-io.c
-@@ -814,6 +814,8 @@ ssize_t btrfs_direct_write(struct kiocb *iocb, struct iov_iter *from)
- 	ssize_t ret;
- 	unsigned int ilock_flags = 0;
- 	struct iomap_dio *dio;
-+	const u64 data_profile = btrfs_data_alloc_profile(fs_info) &
-+				 BTRFS_BLOCK_GROUP_PROFILE_MASK;
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 01337e3f2879c..a48ba97bb3694 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -6568,6 +6568,10 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
+ 						     range->minlen);
  
- 	if (iocb->ki_flags & IOCB_NOWAIT)
- 		ilock_flags |= BTRFS_ILOCK_TRY;
-@@ -827,6 +829,16 @@ ssize_t btrfs_direct_write(struct kiocb *iocb, struct iov_iter *from)
- 	if (iocb->ki_pos + iov_iter_count(from) <= i_size_read(inode) && IS_NOSEC(inode))
- 		ilock_flags |= BTRFS_ILOCK_SHARED;
+ 			trimmed += group_trimmed;
++			if (ret == -ERESTARTSYS || ret == -EINTR) {
++				btrfs_put_block_group(cache);
++				break;
++			}
+ 			if (ret) {
+ 				bg_failed++;
+ 				bg_ret = ret;
+@@ -6581,6 +6585,9 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
+ 			"failed to trim %llu block group(s), last error %d",
+ 			bg_failed, bg_ret);
  
-+	/*
-+	 * If our data profile has duplication (either extra mirrors or RAID56),
-+	 * we can not trust the direct IO buffer, the content may change during
-+	 * writeback and cause different contents written to different mirrors.
-+	 *
-+	 * Thus only RAID0 and SINGLE can go true zero-copy direct IO.
-+	 */
-+	if (data_profile != BTRFS_BLOCK_GROUP_RAID0 && data_profile != 0)
-+		goto buffered;
++	if (ret == -ERESTARTSYS || ret == -EINTR)
++		return ret;
 +
- relock:
- 	ret = btrfs_inode_lock(BTRFS_I(inode), ilock_flags);
- 	if (ret < 0)
+ 	mutex_lock(&fs_devices->device_list_mutex);
+ 	list_for_each_entry(device, &fs_devices->devices, dev_list) {
+ 		if (test_bit(BTRFS_DEV_STATE_MISSING, &device->dev_state))
+@@ -6589,6 +6596,8 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
+ 		ret = btrfs_trim_free_extents(device, &group_trimmed);
+ 
+ 		trimmed += group_trimmed;
++		if (ret == -ERESTARTSYS || ret == -EINTR)
++			break;
+ 		if (ret) {
+ 			dev_failed++;
+ 			dev_ret = ret;
+@@ -6602,6 +6611,8 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
+ 			"failed to trim %llu device(s), last error %d",
+ 			dev_failed, dev_ret);
+ 	range->len = trimmed;
++	if (ret == -ERESTARTSYS || ret == -EINTR)
++		return ret;
+ 	if (bg_ret)
+ 		return bg_ret;
+ 	return dev_ret;
 -- 
 2.51.0
 
