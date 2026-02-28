@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61237313E31
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234A1340A47
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301053; cv=none; b=WAxSPTHBpbJyUouomXvQ2yAtv+/jMuG24uN0O+QBFgGL3GUPBRYe+xLhgW7TRbwFZRGA4FkKFgVHucDHcNx36sYWKfuZBDK2Z/NK58lVguNntGJChCCS3y6DDZMDlMo9aduz9wABIU4w69I2W91IQpfheH8W4K511U9BLb9JQgs=
+	t=1772301054; cv=none; b=cbdPdLZatKjHHiaL5sEFSonEB6eWN2yywyWO+ymO3zZzBDGT+gL/dlghdtrcyRsfm3ULG++9Qpuc1uZeweZBrv7GN1R4VA5UA/QQprnHdabv2zSHdqtX/mTTWHWaGrr4AYiaNC7J8Ut8zHcpqX1jJjJPPKuq5QK4Z6mjDGzBJHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301053; c=relaxed/simple;
-	bh=sFevBPOD0FvGwnUb71/WuTM6PzXGWNrtXGQFKoOiJQI=;
+	s=arc-20240116; t=1772301054; c=relaxed/simple;
+	bh=5MxffBDqvoHOB1DY7qSMtyUJ0WIXROTKZWFL/D1zncE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uo8SL8Ts9ZqNGGgdkC1WTzoohYrF6dsCL3weFrq+CprViVLmm5C5OD2tlr+AWKBAxJOXUsWgqTNzFgIjTNX4SH5+qeFlDg9IO4CtgABSQHug7DXIuLC/tOYK85LNEgXx4+AVenobgp1mY4SwhLDAH6XnDMrSIxZWMfTDf/Jd1a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PLluG4ff; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WIII3LLK7rdNu4qrwXtnPk3XiPm9f23XBtTsy9GDD/ZwT9efCynNLGCxMrkCRtiEGVzw6jstaM7KE/j8kop9KvNwYxecF5PWuN3FKc29xBNotKc3jrWfe4YUWzucrVxfQwx8LDYZnj+2v3Z+26gxO+WzWLA7x5MmrFmPBcp5/Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VNL2MD36; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PLluG4ff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C365C19423;
-	Sat, 28 Feb 2026 17:50:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VNL2MD36"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8664DC19423;
+	Sat, 28 Feb 2026 17:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301053;
-	bh=sFevBPOD0FvGwnUb71/WuTM6PzXGWNrtXGQFKoOiJQI=;
+	s=k20201202; t=1772301054;
+	bh=5MxffBDqvoHOB1DY7qSMtyUJ0WIXROTKZWFL/D1zncE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLluG4ffypnxAxQ13rh6vVWjlGC5VfVZ9qzmpdAlFtvMv4GVPTxBoTGCQSNR6/a2S
-	 EqouL1giD5iLq4h9O5c7eocAjfU/T1VbxceBgI1YwnyMa67wXmMEq3XIn5+1T/262w
-	 bekqJ2tRZpUHHP9itxWGd28644vyrfqJ+QTjZVqDJjc+jijNA+Z+Fg2lBEZOq5pU1g
-	 UYbRzW+tKXA1rVW2Bt0+DErryuEWgIJEsrI8gLfWgej27OpwLb1ME9AcUYk7EU8YYT
-	 Y7obNak4DKvrvxsoDFgvlcxbLKun2amg2wfMk5v1m8vDcdhc0oE0pzVmYCmNKhJ3ea
-	 D1F4LDgjzTo1w==
+	b=VNL2MD36a55KRTkM+L6OoJT3OTtqvy+x0zUnyQyR1OfEfaFAVOPReP7r6z6eWnUyd
+	 JHpzHJFQd676ASCS3fO2UaXPfe81Z11RqFvRggFvceBNw2rMAzcdOc5p+S9xOYbdPc
+	 ak3Xrjb6Aze9YgkcoOhbteK419VyKnkC+ejyAa9nWxFSn4soULvHAnSXe9top/HzlU
+	 ANN9of3QFhA0TyEbOFTRbhfyDGNFXB437FjMVyIGltgCPdATkzqOfgShrD9SgROmV4
+	 Ib1HvXEwjYi2WAzeWXRQZgAw+iM+uFxXnxeVODgsmkQ47KMZ49bpeN2aJMHFT2hqVc
+	 aDe/3HGVTDGQw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: "Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Santhosh Kumar K <s-k6@ti.com>,
+Cc: Chen Ni <nichen@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 193/752] spi: cadence-qspi: Try hard to disable the clocks
-Date: Sat, 28 Feb 2026 12:38:24 -0500
-Message-ID: <20260228174750.1542406-193-sashal@kernel.org>
+Subject: [PATCH 6.18 194/752] ASoC: codecs: max98390: Check return value of devm_gpiod_get_optional() in max98390_i2c_probe()
+Date: Sat, 28 Feb 2026 12:38:25 -0500
+Message-ID: <20260228174750.1542406-194-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,52 +47,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 612227b392eed94a3398dc03334a84a699a82276 ]
+[ Upstream commit a1d14d8364eac2611fe1391c73ff0e5b26064f0e ]
 
-In the remove path, we should try hard to perform all steps as we simply
-cannot fail.
+The devm_gpiod_get_optional() function may return an error pointer
+(ERR_PTR) in case of a genuine failure during GPIO acquisition,
+not just NULL which indicates the legitimate absence of an optional
+GPIO.
 
-The "no runtime PM" quirk must only alter the state of the RPM core, but
-the clocks should still be disabled if that is possible. Move the
-disable call outside of the RPM quirk.
+Add an IS_ERR() check after the function call to catch such errors and
+propagate them to the probe function, ensuring the driver fails to load
+safely rather than proceeding with an invalid pointer.
 
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
-Tested-by: Santhosh Kumar K <s-k6@ti.com>
-Link: https://patch.msgid.link/20260122-schneider-6-19-rc1-qspi-v4-9-f9c21419a3e6@bootlin.com
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://patch.msgid.link/20260130091904.3426149-1-nichen@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/soc/codecs/max98390.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 3689e38ebe56f..b3e4dd72d8b8a 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -2044,6 +2044,7 @@ static void cqspi_remove(struct platform_device *pdev)
- 	const struct cqspi_driver_platdata *ddata;
- 	struct cqspi_st *cqspi = platform_get_drvdata(pdev);
- 	struct device *dev = &pdev->dev;
-+	int ret = 0;
+diff --git a/sound/soc/codecs/max98390.c b/sound/soc/codecs/max98390.c
+index a8a282ff9fc5a..b132ef8c1d2c8 100644
+--- a/sound/soc/codecs/max98390.c
++++ b/sound/soc/codecs/max98390.c
+@@ -1073,6 +1073,9 @@ static int max98390_i2c_probe(struct i2c_client *i2c)
  
- 	ddata = of_device_get_match_data(dev);
+ 	reset_gpio = devm_gpiod_get_optional(&i2c->dev,
+ 					     "reset", GPIOD_OUT_HIGH);
++	if (IS_ERR(reset_gpio))
++		return dev_err_probe(&i2c->dev, PTR_ERR(reset_gpio),
++				     "Failed to get reset gpio\n");
  
-@@ -2059,8 +2060,10 @@ static void cqspi_remove(struct platform_device *pdev)
- 		dma_release_channel(cqspi->rx_chan);
- 
- 	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
--		if (pm_runtime_get_sync(&pdev->dev) >= 0)
--			clk_disable(cqspi->clk);
-+		ret = pm_runtime_get_sync(&pdev->dev);
-+
-+	if (ret >= 0)
-+		clk_disable(cqspi->clk);
- 
- 	if (cqspi->is_jh7110)
- 		cqspi_jh7110_disable_clk(pdev, cqspi);
+ 	/* Power on device */
+ 	if (reset_gpio) {
 -- 
 2.51.0
 
