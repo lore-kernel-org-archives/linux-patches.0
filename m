@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33E439B946
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E619A39B946
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302509; cv=none; b=iXRyJmGFECBVsJiG2poQ+4AjnRqWe0c4AHZkCNo27mcj7Sx/UJqJx8JomuEX289HZfQaw8PuMcZVbv6HaEs2ju6tMU72yPKMccEE9tE2LelM/A4vu802Z93ENuCEbS5yxZYXY81v0Eb5Nsq0x0zhyM/ubgIgN96q3i0lAZ4aE9Q=
+	t=1772302510; cv=none; b=rkL21sNwCG7xsQWVt/YXpN681JlioDXSKNoLGd5/FYo+TlH9u8swiaBi6OwwDhwbby2bWdD/BnLoSLeki1utU4AqrfdDFHg8lN87NVZSXALnzAfCKge75j4Kv/2raOqMCi9iXQWu0wI1DeAYZ9wI2qH3LR1bH7+dYcI4IAOTfIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302509; c=relaxed/simple;
-	bh=vc2MXFmhwzG9O6jwkKk3BJmryInIB0popl+gqWgn6ss=;
+	s=arc-20240116; t=1772302510; c=relaxed/simple;
+	bh=NW73rD4VECkj9JS1Jdyha9U5tIPOfpnVZo1bLuIwMVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tlNhOJ9pgLaVbscQ0vnhSYT7ZHiBNVelxh3uKreQHxbrnpagfN/nQAHsaIIqTg63H7AgyiGzTLHI3vj++RkOmbjcQzx683qH45yxlHigkoj9cgf+s24AlQSRld6wMXDTyw1/Ga520w0WGAu09Rz8pWqfH40ih/aSa3gHZ+sOhqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D6siIRjt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nWu3xn+W2vwoj5JNebf+s8CL5j1L2AUm93hMy7G1O/9LRScDRJUm54D0xMo79GEeUBZWhlgAFkWXszIomDc5C5YSf25/e4V/wdSnQSeLv3476mUhMe4xMnihJb6GXN3O7KmM8I7zyNF1FCBW6yAMwWc9aXEvII/+kxy6THqq3Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OMnuAF6y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D6siIRjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD45C19424;
-	Sat, 28 Feb 2026 18:15:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OMnuAF6y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1612CC116D0;
+	Sat, 28 Feb 2026 18:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302508;
-	bh=vc2MXFmhwzG9O6jwkKk3BJmryInIB0popl+gqWgn6ss=;
+	s=k20201202; t=1772302509;
+	bh=NW73rD4VECkj9JS1Jdyha9U5tIPOfpnVZo1bLuIwMVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6siIRjtPwIVAZSIva2efJE4KAezFPoawmJBXqBLa4QR2a2HTYCni5/A7FdzhzyzW
-	 C2nxp6Q0M7gd0rhpentx5Wlfum3pYfKtJu4+bjod0r4HcDw4A1890tEMa4XHvxAK34
-	 +ZniuTXVUmkYYze8eeU99J3hpKGef2IOjS0Zo9IQGCG2XhGJQ+aoppKGxJ2uonZGfR
-	 QAy3BWbBwPRpGZx2c5RVV6an8fL7j8G2t1Az3T0fjCoMw4KVeHY+UKZXdEoRunXWAz
-	 qeGadSr9TFd1gFOSe643y1UHrQ5YwWxyG+NGCUDGynl0dotV3VH0G1RdJKaMDD+n+R
-	 dTR5n121w6DAA==
+	b=OMnuAF6yBhcnBQAWHJUJUQG4kmj0OxOmy5ivGCfFDcLlmCQRRGxvWaPBhKKKQQE6c
+	 N6AeO8oQPMZtr6Cp21iHvim7oMt6zhg5zVR2+FoYZMVMI3/wjyexy+VpH1Szw/CBdW
+	 5GfgDuslfMQgNuGxLuEdHHgHWdxqiz977dUXZBoZJmfeadp5b8C0YoXvqbH0v6kmIM
+	 ZUpWOXShPJLPyHbUGHLy6ibIwvDdNwQSEkSc4WttvKcqlQ1Defye/z4W0nR5x+5KUy
+	 7f+7K1DaDgjCcZqi73g8nSQmCphGvXOofMxVTRu6yIQgsBLZM+fAxezrh97Wnxz1fk
+	 7NVG53lCo4/qQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Fourier <fourier.thomas@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+Cc: Shardul Bankar <shardul.b@mpiricsoftware.com>,
+	syzbot+1c8ff72d0cd8a50dfeaa@syzkaller.appspotmail.com,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/164] auxdisplay: arm-charlcd: fix release_mem_region() size
-Date: Sat, 28 Feb 2026 13:12:22 -0500
-Message-ID: <20260228181505.1600663-3-sashal@kernel.org>
+Subject: [PATCH 5.15 004/164] hfsplus: return error when node already exists in hfs_bnode_create
+Date: Sat, 28 Feb 2026 13:12:23 -0500
+Message-ID: <20260228181505.1600663-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,37 +48,56 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-[ Upstream commit b5c23a4d291d2ac1dfdd574a68a3a68c8da3069e ]
+[ Upstream commit d8a73cc46c8462a969a7516131feb3096f4c49d3 ]
 
-It seems like, after the request_mem_region(), the corresponding
-release_mem_region() must take the same size. This was done
-in (now removed due to previous refactoring) charlcd_remove()
-but not in the error path in charlcd_probe().
+When hfs_bnode_create() finds that a node is already hashed (which should
+not happen in normal operation), it currently returns the existing node
+without incrementing its reference count. This causes a reference count
+inconsistency that leads to a kernel panic when the node is later freed
+in hfs_bnode_put():
 
-Fixes: ce8962455e90 ("ARM: 6214/2: driver for the character LCD found in ARM refdesigns")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+    kernel BUG at fs/hfsplus/bnode.c:676!
+    BUG_ON(!atomic_read(&node->refcnt))
+
+This scenario can occur when hfs_bmap_alloc() attempts to allocate a node
+that is already in use (e.g., when node 0's bitmap bit is incorrectly
+unset), or due to filesystem corruption.
+
+Returning an existing node from a create path is not normal operation.
+
+Fix this by returning ERR_PTR(-EEXIST) instead of the node when it's
+already hashed. This properly signals the error condition to callers,
+which already check for IS_ERR() return values.
+
+Reported-by: syzbot+1c8ff72d0cd8a50dfeaa@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=1c8ff72d0cd8a50dfeaa
+Link: https://lore.kernel.org/all/784415834694f39902088fa8946850fc1779a318.camel@ibm.com/
+Fixes: 634725a92938 ("[PATCH] hfs: cleanup HFS+ prints")
+Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20251229204938.1907089-1-shardul.b@mpiricsoftware.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/auxdisplay/arm-charlcd.c | 2 +-
+ fs/hfsplus/bnode.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/auxdisplay/arm-charlcd.c b/drivers/auxdisplay/arm-charlcd.c
-index 0b1c99cca7334..f418b133ee752 100644
---- a/drivers/auxdisplay/arm-charlcd.c
-+++ b/drivers/auxdisplay/arm-charlcd.c
-@@ -323,7 +323,7 @@ static int __init charlcd_probe(struct platform_device *pdev)
- out_no_irq:
- 	iounmap(lcd->virtbase);
- out_no_memregion:
--	release_mem_region(lcd->phybase, SZ_4K);
-+	release_mem_region(lcd->phybase, lcd->physize);
- out_no_resource:
- 	kfree(lcd);
- 	return ret;
+diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
+index 7c127922ac0c7..1fa4a1d18b7b2 100644
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -640,7 +640,7 @@ struct hfs_bnode *hfs_bnode_create(struct hfs_btree *tree, u32 num)
+ 	if (node) {
+ 		pr_crit("new node %u already hashed?\n", num);
+ 		WARN_ON(1);
+-		return node;
++		return ERR_PTR(-EEXIST);
+ 	}
+ 	node = __hfs_bnode_create(tree, num);
+ 	if (!node)
 -- 
 2.51.0
 
