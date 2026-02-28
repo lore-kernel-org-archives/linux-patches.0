@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79528301EEF;
-	Sat, 28 Feb 2026 17:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FDC301EE6;
+	Sat, 28 Feb 2026 17:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301405; cv=none; b=QjhskAqXzqjd96DrJWJAoNQtc5NwNeBeuoHgRTfmqCjD/dGFYlrYODjaXGnUtwCdwnxJxmWJNXONoQbFVpBHCzOVp6oJICGXinB57QQZTDAMgqyFj6LmpVU2Jgf+yegaVUqHCt3Th/pb3DKyMefi4GeqB/7QiVNyKCjqB0DLxg8=
+	t=1772301406; cv=none; b=SDQd35kk5s8wo5ww/NFuJb5cIPqP7oUtzs9u7FAi1RSEpCqZukv9ewctu8+1xvGZLh8eBIesqa5JMWoFiWE7lI7yU8YK9FOggGhM4iD1b0m1giPpXrTCn1gJODr+MvYTnCiPowIDfgj76gkOKQUXtvjgv9iNxzCXf/TdKaftQuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301405; c=relaxed/simple;
-	bh=YwH7ocqVR6BTEcFleyAorSaH1+d3lxPTj54krC2x6Lo=;
+	s=arc-20240116; t=1772301406; c=relaxed/simple;
+	bh=DfTHN1u93uLIZw+bEt+LefiO8/Gp2UrF+x2t8RkN7SY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2qYC8LDVVc9z47WNep/l60PbZXzFOHFTJmJOyMgCFQKUfQ/bXVLn9U4qzK3JQstd8MVIQa0/rIen6IQzYmiQV/+ot30Qz9wpQ+d0jTO8Uw0BPDBULlqHkMdrEyVFfreW9Ukszze+jlkclfnol7OcjqnPJ7Tb7KNvqD2s0sWH1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M5baiLJW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O7yCg/m94hiBWZPNzUvZ2M71rgm/kW8k3I3xi8MjxdwfNXdp2lWTIHIu3ZSeyVMx2Z7osy0FzzACvVLD6oXArjKBjfTCWIhiELv5u2lIJcewOehvOmpZTLB6TQcbHCjTrMZO/ndcxHgqKzBD75AIy7KA4HrhlB0hjTx8wBjdUJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TrH0MZ/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M5baiLJW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD93C19423;
-	Sat, 28 Feb 2026 17:56:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TrH0MZ/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E236C19423;
+	Sat, 28 Feb 2026 17:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301405;
-	bh=YwH7ocqVR6BTEcFleyAorSaH1+d3lxPTj54krC2x6Lo=;
+	s=k20201202; t=1772301406;
+	bh=DfTHN1u93uLIZw+bEt+LefiO8/Gp2UrF+x2t8RkN7SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M5baiLJWDZbwOwLVBtY/otjq8P+Ghw9ueZl/mrv5arcnQrQdaign7YwVyif1GhoSA
-	 XouyT+o0wVvvZhkHIP0KY/xYSY1JcwFov2OOS+Q6kJ+dIaqUKMnOuokP/0j5lOWbV2
-	 2YiCq7/UvA/gCeksSnTmL0OnPNxUqiyQlJ8fAB8/Xkmwt41peFbRuYtIfOtyQiCPEC
-	 /MEwehe9OfzmLEN7HOH+P6GyhvgblD4+nxrCFsukk6lndgdz8CJnw7YJ11diJfWdS+
-	 LzrvjNahmmJdAbsa8eQLuyQ06ytcixQ91OJsT/O/KPJ1f0ELjZP0Kzn1L83vHPFeal
-	 RynI5GycmQBng==
+	b=TrH0MZ/vvEXB6JOoOv/HlLiryHKUgRE8XlFH15tmrQbhG04Ug/qgSHsHu1Y13Ed49
+	 +xOXMHCbTXlFRwuBIdp47vq6649etPDEFo4Kd2A49NrMrL9kwPN8KHQZ/VaVvxgHoC
+	 JfB9a1b/trAODjIdunGyD/xg+w7Z2SCNdu778VLRikSg6KyjDHkSVynIl0gmDDWIqf
+	 bMw0d/lhIdUbNF+JsmUSGFD3LYcvL31LCnrj5yf9XPdLrxUpU8nCFn9O1aNAsb4MqQ
+	 Cv/XN0hizjcDK9ZQbvBv4VKG0ELgpPOJaVNAminjbr91QYMz3gbZOUD2R5FHTMAuXA
+	 540ziuRIrx5vQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Johan Hovold <johan@kernel.org>,
 	stable@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 594/752] mfd: qcom-pm8xxx: Fix OF populate on driver rebind
-Date: Sat, 28 Feb 2026 12:45:05 -0500
-Message-ID: <20260228174750.1542406-594-sashal@kernel.org>
+Subject: [PATCH 6.18 595/752] mfd: omap-usb-host: Fix OF populate on driver rebind
+Date: Sat, 28 Feb 2026 12:45:06 -0500
+Message-ID: <20260228174750.1542406-595-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -52,7 +51,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 27a8acea47a93fea6ad0e2df4c20a9b51490e4d9 ]
+[ Upstream commit 24804ba508a3e240501c521685a1c4eb9f574f8e ]
 
 Since commit c6e126de43e7 ("of: Keep track of populated platform
 devices") child devices will not be created by of_platform_populate()
@@ -65,38 +64,31 @@ the child devices are created if the driver is rebound.
 Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
 Cc: stable@vger.kernel.org	# 3.16
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251219110947.24101-1-johan@kernel.org
+Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20251219110714.23919-1-johan@kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/qcom-pm8xxx.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/mfd/omap-usb-host.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index 1149f7102a365..0cf374c015ce7 100644
---- a/drivers/mfd/qcom-pm8xxx.c
-+++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -577,17 +577,11 @@ static int pm8xxx_probe(struct platform_device *pdev)
- 	return rc;
- }
- 
--static int pm8xxx_remove_child(struct device *dev, void *unused)
--{
--	platform_device_unregister(to_platform_device(dev));
--	return 0;
--}
--
- static void pm8xxx_remove(struct platform_device *pdev)
+diff --git a/drivers/mfd/omap-usb-host.c b/drivers/mfd/omap-usb-host.c
+index a77b6fc790f2e..4d29a6e2ed87a 100644
+--- a/drivers/mfd/omap-usb-host.c
++++ b/drivers/mfd/omap-usb-host.c
+@@ -819,8 +819,10 @@ static void usbhs_omap_remove(struct platform_device *pdev)
  {
- 	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
+ 	pm_runtime_disable(&pdev->dev);
  
--	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
-+	of_platform_depopulate(&pdev->dev);
- 	irq_domain_remove(chip->irqdomain);
+-	/* remove children */
+-	device_for_each_child(&pdev->dev, NULL, usbhs_omap_remove_child);
++	if (pdev->dev.of_node)
++		of_platform_depopulate(&pdev->dev);
++	else
++		device_for_each_child(&pdev->dev, NULL, usbhs_omap_remove_child);
  }
  
+ static const struct dev_pm_ops usbhsomap_dev_pm_ops = {
 -- 
 2.51.0
 
