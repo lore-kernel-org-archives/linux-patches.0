@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49E83E9F93
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C503340A79
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301055; cv=none; b=PnL8OwtDQIJAYh3PSXrrlg96OdoMWnbQ/8kLTO746hmdR2L54h3EnvnS5lwHQqGbHtf+0OYaeOapCBiuXHpdm1ONKsO7AKMEqKHwdb+gV0Pz1qJdAZSNfPG5csYslUmBcopGQ0iqCMUFPPSAAdenLrsuFBqjGl7eMTg5+aNxQ4U=
+	t=1772301056; cv=none; b=RLUkHFEfHQj84t+AxdQMhNIKNge9axgoDPrhIKwOAdqwhvwJGZJV/5iYnr+JfJqV0LtPSMeELrh13UDoxT6OPPp4o0c/YHPeg1uMAc6RfPfJUV+tpQtvU1P7JA/C8WTQM1Z0TrOpPcA0Hh1txwqyH0DSEU5Ph5UWN9FJo4oYBY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301055; c=relaxed/simple;
-	bh=2Ot79I3X2Oj5yUiz/a6rQaX8IY9/oBAy2gEDFuNOjHc=;
+	s=arc-20240116; t=1772301056; c=relaxed/simple;
+	bh=HF6QJLMj4durEMEEyikGQooFujvgeRlZgDckJosIKhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJy/O5PTvUZnS6WS0HPW+wBqiClJKb8SwF3mNeusvLfIuGbuCQPydwuNH42iU7GGT13hJOn6ILxGQie6xZM/KhjaFI6pIwRpXBa/gs9s5hKCx59J9uJAbd4ltU+NDGPkFUUcRefP9dUqxKAWS9I+vcLUE/SpogGg6be+3/rHyFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PXq0SkTl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0ksqKwHDVn4BT6hWTGURQR1aj4DsN6/+m24QGxEDIuRcN1wI6EcYlTG4DdFYEI4sV7ivmWoXxzz1ngYvncrGuT2TEHszN04Q39CHbJl9BcFHIHlcF1UP6elY1rSjJU1XBG5tpOOCuZ0IGy5X0GXGAp6jKca/KeSo28s55uqQqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PsLAU5dI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PXq0SkTl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F4BC19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PsLAU5dI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58D6C116D0;
 	Sat, 28 Feb 2026 17:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301055;
-	bh=2Ot79I3X2Oj5yUiz/a6rQaX8IY9/oBAy2gEDFuNOjHc=;
+	s=k20201202; t=1772301056;
+	bh=HF6QJLMj4durEMEEyikGQooFujvgeRlZgDckJosIKhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXq0SkTloVvF7y8eIkafsjEaJOJG3f4IRJ/D86CJTgzYXmuf+4ZGRBPfp0KSpJyP6
-	 Sumb4Ps8MZAqanRVnwUqRwuDNSPXfH4aKCcf55K/kfdEY67HcLi1XKsJqY+XFgo8Xq
-	 HkoBXhKkOiII8F6TGDsi3P1vSATKAsO+HlvvgW2qO+pfMiIa7Tta9EcFf7VeQNLYXM
-	 91gncuaYfntaj3RCGd2xB/b/CRxcz6MUCDbstd5nS/R17YdqVQl02feCbNG305+gn4
-	 cYZqo45JQxKqYh6XW9HEucNPSfSPaBbMQL2JzPY2GQQUm/WQ5UDAYKndmTdA5ppJQC
-	 5y6rLb0T1nUBw==
+	b=PsLAU5dI5065UQjUCtmI3E0jamz5+E5sT/7EBoghpw/pgZypkT7oH6aSR+Fvas/R3
+	 D2fYQChKpLc0FYktI5pMfQx3p4ST9NkCFwnbTgkXTBEJbYvJEuE8b0D5MSRXp/32PM
+	 C1i98SPA8MT7Jv//y4hbyaSjSHddQMkBRYUQNflT9mqT6tQQET3/J6Gb4b8af8tKK7
+	 zqbjjwfQyuHOoIbMB6Jr2kQib6yaNRSfkTSs/PxSKFCGLlNs/3dLb14JzLAYFuhJNA
+	 YFInqgL5Bo2QtF1EIOKIGQuYQrGGP530fudo2bdWoso/hg/3CuxtBqe4ZfhT7LmofI
+	 OneyHF+3OpvdQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Denis Pauk <pauk.denis@gmail.com>,
-	Marcus <shoes2ga@gmail.com>,
+Cc: Anj Duvnjak <avian@extremenerds.net>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 196/752] hwmon: (nct6775) Add ASUS Pro WS WRX90E-SAGE SE
-Date: Sat, 28 Feb 2026 12:38:27 -0500
-Message-ID: <20260228174750.1542406-196-sashal@kernel.org>
+Subject: [PATCH 6.18 197/752] hwmon: (nct6683) Add customer ID for ASRock Z590 Taichi
+Date: Sat, 28 Feb 2026 12:38:28 -0500
+Message-ID: <20260228174750.1542406-197-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,37 +47,61 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Denis Pauk <pauk.denis@gmail.com>
+From: Anj Duvnjak <avian@extremenerds.net>
 
-[ Upstream commit 246167b17c14e8a5142368ac6457e81622055e0a ]
+[ Upstream commit c0fa7879c9850bd4597740a79d4fac5ebfcf69cc ]
 
-Boards Pro WS WRX90E-SAGE SE has got a nct6775 chip, but by default there's
-no use of it because of resource conflict with WMI method.
+Add support for customer ID 0x1621 found on ASRock Z590 Taichi
+boards using the Nuvoton NCT6686D embedded controller.
 
-Add the board to the WMI monitoring list.
+This allows the driver to instantiate without requiring the
+force=1 module parameter.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=204807
-Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
-Tested-by: Marcus <shoes2ga@gmail.com>
-Link: https://lore.kernel.org/r/20251231155316.2048-1-pauk.denis@gmail.com
+Tested on two separate ASRock Z590 Taichi boards, both with
+EC firmware version 1.0 build 01/25/21.
+
+Signed-off-by: Anj Duvnjak <avian@extremenerds.net>
+Link: https://lore.kernel.org/r/20251222220942.10762-1-avian@extremenerds.net
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-platform.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/hwmon/nct6683.rst | 1 +
+ drivers/hwmon/nct6683.c         | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
-index 407945d2cd6a8..0b529a542b0d4 100644
---- a/drivers/hwmon/nct6775-platform.c
-+++ b/drivers/hwmon/nct6775-platform.c
-@@ -1357,6 +1357,7 @@ static const char * const asus_msi_boards[] = {
- 	"Pro WS W680-ACE IPMI",
- 	"Pro WS W790-ACE",
- 	"Pro WS W790E-SAGE SE",
-+	"Pro WS WRX90E-SAGE SE",
- 	"ProArt B650-CREATOR",
- 	"ProArt B660-CREATOR D4",
- 	"ProArt B760-CREATOR D4",
+diff --git a/Documentation/hwmon/nct6683.rst b/Documentation/hwmon/nct6683.rst
+index 3e549ba95a15a..45eec9dd349aa 100644
+--- a/Documentation/hwmon/nct6683.rst
++++ b/Documentation/hwmon/nct6683.rst
+@@ -65,6 +65,7 @@ AMD BC-250			NCT6686D EC firmware version 1.0 build 07/28/21
+ ASRock X570			NCT6683D EC firmware version 1.0 build 06/28/19
+ ASRock X670E			NCT6686D EC firmware version 1.0 build 05/19/22
+ ASRock B650 Steel Legend WiFi	NCT6686D EC firmware version 1.0 build 11/09/23
++ASRock Z590 Taichi		NCT6686D EC firmware version 1.0 build 01/25/21
+ MSI B550			NCT6687D EC firmware version 1.0 build 05/07/20
+ MSI X670-P			NCT6687D EC firmware version 0.0 build 09/27/22
+ MSI X870E			NCT6687D EC firmware version 0.0 build 11/13/24
+diff --git a/drivers/hwmon/nct6683.c b/drivers/hwmon/nct6683.c
+index 6cda35388b24c..4a83804140386 100644
+--- a/drivers/hwmon/nct6683.c
++++ b/drivers/hwmon/nct6683.c
+@@ -181,6 +181,7 @@ superio_exit(int ioreg)
+ #define NCT6683_CUSTOMER_ID_ASROCK2	0xe1b
+ #define NCT6683_CUSTOMER_ID_ASROCK3	0x1631
+ #define NCT6683_CUSTOMER_ID_ASROCK4	0x163e
++#define NCT6683_CUSTOMER_ID_ASROCK5	0x1621
+ 
+ #define NCT6683_REG_BUILD_YEAR		0x604
+ #define NCT6683_REG_BUILD_MONTH		0x605
+@@ -1242,6 +1243,8 @@ static int nct6683_probe(struct platform_device *pdev)
+ 		break;
+ 	case NCT6683_CUSTOMER_ID_ASROCK4:
+ 		break;
++	case NCT6683_CUSTOMER_ID_ASROCK5:
++		break;
+ 	default:
+ 		if (!force)
+ 			return -ENODEV;
 -- 
 2.51.0
 
