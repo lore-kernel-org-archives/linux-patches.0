@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2AD301EFF;
-	Sat, 28 Feb 2026 17:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F36175A62;
+	Sat, 28 Feb 2026 17:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301416; cv=none; b=kh/of59fh9UKi4LKqIx70+7o/53qB0+egAow0cAyoO3EvSXeGRuld+CfjkoR919EJss/JqRN6vhBpve2tpWzVFYGS+HtqUups382Sajx0lVYvB0frsDxjTXXeMK2Ss9K0qo5SQSa0qXubQl0ZHpOErtX/v0H4x9iqSuHp01ps0k=
+	t=1772301417; cv=none; b=bTEo9MPn94DZwRSkOgTRvnK697BwaoRP0M7Ss+SsPokLZ+jqUuOFOFXtxk8E8xitRqjaOfrWmeOQIRO/Ny9ob5sgE8qmM1K8Ze1mA5jL5beFWPz438YIqpCVbhluaP+Xy883DqWAuMWyMvSCsl+9PwE6tfpz6xGR2HESwC8vmdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301416; c=relaxed/simple;
-	bh=IcG3cP6JJLO1/DitGza6K3eA3tb3RpXbCRBy+tjJ8v8=;
+	s=arc-20240116; t=1772301417; c=relaxed/simple;
+	bh=YHuZmIjUa2BPlEXI0I2i4kyZQxQRN6TdlgoXeGuLW00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMtch1iSteYK0oLWHL4mbIAIzyuYjHtx3rn8L0SfrZyeaiMDgyJ/1yLM31LbfaCUTMqyUjWHvpKyvFz2CwvHKfOrBZO9Vlz+EEWfoja7yMPG2IyUa1m4C9vkaL5lVKmGk875k3X9ZjPFC8ppYidigbEAfKTIN58qWWOJ8JkFW9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JGLAS1xh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CMC5Q04BtveI1DXbOZrsrI5+WXdAT1XAYU95rQYpjWF9kVXZQlcIgeYxHXInEM4ML6kLv4pPZQc2ToS5eXD4VypiAxOnpGwRDu+FXMaVwmNsDKdaqdcc37h4OqKQoRjVmW/QaILKEkGBx34eUdJUG4VgiORJqwZBZExMhKIfRZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l4lsS0l1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JGLAS1xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EC4C19423;
-	Sat, 28 Feb 2026 17:56:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l4lsS0l1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82702C116D0;
+	Sat, 28 Feb 2026 17:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301416;
-	bh=IcG3cP6JJLO1/DitGza6K3eA3tb3RpXbCRBy+tjJ8v8=;
+	s=k20201202; t=1772301417;
+	bh=YHuZmIjUa2BPlEXI0I2i4kyZQxQRN6TdlgoXeGuLW00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGLAS1xh34W3QCv0PBfpGlP1LY3sps0yp9nGDZEeNfetc9C9PwbI1vyjE86DTv5K5
-	 iaqVaMsYxChEHaIF9Nw4iqrxGjzHI1ltigdbE9RMTmPRqANIf7ffMJy4gZExM/7RmR
-	 5+EoHQ+Yuqtm4GyNHABtHe/5dJbtAxx1BVIzdWxBU6e8pqOsDxrw0BXsZvhE/EeZYu
-	 P1qDKYtSYO7xWpLDQHLAPtQ28l+Zzw7MqYvQe6eww4ERDABT2kSJpOfvC7+BhW0kQF
-	 ATFIoODv/D8UKvY9mFnCBUW+jB1YOTuI+Pn7KuZ3GmNL+ixA9UpxY65a2qXrOxXX7q
-	 mAusXtb4yuNyw==
+	b=l4lsS0l1kB/8Zs6/zh1z8v7pLJJX1SHG+YyLQFjuyzcEtNVUzD0xsFjzdkhGttjMB
+	 +NEJQ7VkU9ASaUE6bxrTUhhqAgXr1Rz7C5t30Uj7GwWqq8NO5BNiiZZ3SXxaekdWD6
+	 YjJITttoBy/u4Q++Neav6NL0+cA/+mBLC3VC+AXXYYRaIHoYkJpE2dDrkV3x/+2ysJ
+	 7lERtkpEMI1Ln79qNeg7P5WiB0xIaQbeGcryxpCudmZTd3fOmh390QF1Uni7UzdpoK
+	 NFLvUf/JHquN8y8QygxHnwBeyk0JYk0vD/ugoOVn6GRJoRZzy8i5rvZ9q/TOuEuj6/
+	 gOPg237TuyCJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Wayne Chang <waynec@nvidia.com>,
+Cc: "Darrick J. Wong" <djwong@kernel.org>,
 	stable@vger.kernel.org,
-	Wei-Cheng Chen <weichengc@nvidia.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 605/752] usb: host: tegra: Remove manual wake IRQ disposal
-Date: Sat, 28 Feb 2026 12:45:16 -0500
-Message-ID: <20260228174750.1542406-605-sashal@kernel.org>
+Subject: [PATCH 6.18 606/752] xfs: delete attr leaf freemap entries when empty
+Date: Sat, 28 Feb 2026 12:45:17 -0500
+Message-ID: <20260228174750.1542406-606-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,87 +48,73 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Wayne Chang <waynec@nvidia.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit ef548189fd3f44786fb813af0018cc8b3bbed2b9 ]
+[ Upstream commit 6f13c1d2a6271c2e73226864a0e83de2770b6f34 ]
 
-We found that calling irq_dispose_mapping() caused a kernel warning
-when removing the driver. The IRQs are obtained using
-platform_get_irq(), which returns a Linux virtual IRQ number directly
-managed by the device core, not by the OF subsystem. Therefore, the
-driver should not call irq_dispose_mapping() for these IRQs.
+Back in commit 2a2b5932db6758 ("xfs: fix attr leaf header freemap.size
+underflow"), Brian Foster observed that it's possible for a small
+freemap at the end of the end of the xattr entries array to experience
+a size underflow when subtracting the space consumed by an expansion of
+the entries array.  There are only three freemap entries, which means
+that it is not a complete index of all free space in the leaf block.
 
-Fixes: 5df186e2ef11 ("usb: xhci: tegra: Support USB wakeup function for Tegra234")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Signed-off-by: Wei-Cheng Chen <weichengc@nvidia.com>
-Link: https://patch.msgid.link/20260115103621.587366-1-weichengc@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This code can leave behind a zero-length freemap entry with a nonzero
+base.  Subsequent setxattr operations can increase the base up to the
+point that it overlaps with another freemap entry.  This isn't in and of
+itself a problem because the code in _leaf_add that finds free space
+ignores any freemap entry with zero size.
+
+However, there's another bug in the freemap update code in _leaf_add,
+which is that it fails to update a freemap entry that begins midway
+through the xattr entry that was just appended to the array.  That can
+result in the freemap containing two entries with the same base but
+different sizes (0 for the "pushed-up" entry, nonzero for the entry
+that's actually tracking free space).  A subsequent _leaf_add can then
+allocate xattr namevalue entries on top of the entries array, leading to
+data loss.  But fixing that is for later.
+
+For now, eliminate the possibility of confusion by zeroing out the base
+of any freemap entry that has zero size.  Because the freemap is not
+intended to be a complete index of free space, a subsequent failure to
+find any free space for a new xattr will trigger block compaction, which
+regenerates the freemap.
+
+It looks like this bug has been in the codebase for quite a long time.
+
+Cc: <stable@vger.kernel.org> # v2.6.12
+Fixes: 1da177e4c3f415 ("Linux-2.6.12-rc2")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-tegra.c | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+ fs/xfs/libxfs/xfs_attr_leaf.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index c78bed0aa844e..83b1766ff1521 100644
---- a/drivers/usb/host/xhci-tegra.c
-+++ b/drivers/usb/host/xhci-tegra.c
-@@ -1571,7 +1571,6 @@ static int tegra_xusb_setup_wakeup(struct platform_device *pdev, struct tegra_xu
- 		data = irq_get_irq_data(tegra->wake_irqs[i]);
- 		if (!data) {
- 			dev_warn(tegra->dev, "get wake event %d irq data fail\n", i);
--			irq_dispose_mapping(tegra->wake_irqs[i]);
- 			break;
+diff --git a/fs/xfs/libxfs/xfs_attr_leaf.c b/fs/xfs/libxfs/xfs_attr_leaf.c
+index 91c1b30ebaab3..33c6c468ad8d5 100644
+--- a/fs/xfs/libxfs/xfs_attr_leaf.c
++++ b/fs/xfs/libxfs/xfs_attr_leaf.c
+@@ -1580,6 +1580,19 @@ xfs_attr3_leaf_add_work(
+ 				min_t(uint16_t, ichdr->freemap[i].size,
+ 						sizeof(xfs_attr_leaf_entry_t));
  		}
- 
-@@ -1584,16 +1583,6 @@ static int tegra_xusb_setup_wakeup(struct platform_device *pdev, struct tegra_xu
- 	return 0;
++
++		/*
++		 * Don't leave zero-length freemaps with nonzero base lying
++		 * around, because we don't want the code in _remove that
++		 * matches on base address to get confused and create
++		 * overlapping freemaps.  If we end up with no freemap entries
++		 * then the next _add will compact the leaf block and
++		 * regenerate the freemaps.
++		 */
++		if (ichdr->freemap[i].size == 0 && ichdr->freemap[i].base > 0) {
++			ichdr->freemap[i].base = 0;
++			ichdr->holes = 1;
++		}
+ 	}
+ 	ichdr->usedbytes += xfs_attr_leaf_entsize(leaf, args->index);
  }
- 
--static void tegra_xusb_dispose_wake(struct tegra_xusb *tegra)
--{
--	unsigned int i;
--
--	for (i = 0; i < tegra->num_wakes; i++)
--		irq_dispose_mapping(tegra->wake_irqs[i]);
--
--	tegra->num_wakes = 0;
--}
--
- static int tegra_xusb_probe(struct platform_device *pdev)
- {
- 	struct tegra_xusb *tegra;
-@@ -1649,10 +1638,8 @@ static int tegra_xusb_probe(struct platform_device *pdev)
- 		return err;
- 
- 	tegra->padctl = tegra_xusb_padctl_get(&pdev->dev);
--	if (IS_ERR(tegra->padctl)) {
--		err = PTR_ERR(tegra->padctl);
--		goto dispose_wake;
--	}
-+	if (IS_ERR(tegra->padctl))
-+		return PTR_ERR(tegra->padctl);
- 
- 	np = of_parse_phandle(pdev->dev.of_node, "nvidia,xusb-padctl", 0);
- 	if (!np) {
-@@ -1976,8 +1963,6 @@ static int tegra_xusb_probe(struct platform_device *pdev)
- put_padctl:
- 	of_node_put(np);
- 	tegra_xusb_padctl_put(tegra->padctl);
--dispose_wake:
--	tegra_xusb_dispose_wake(tegra);
- 	return err;
- }
- 
-@@ -2010,8 +1995,6 @@ static void tegra_xusb_remove(struct platform_device *pdev)
- 	if (tegra->padctl_irq)
- 		pm_runtime_disable(&pdev->dev);
- 
--	tegra_xusb_dispose_wake(tegra);
--
- 	pm_runtime_put(&pdev->dev);
- 
- 	tegra_xusb_disable(tegra);
 -- 
 2.51.0
 
