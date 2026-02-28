@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90B736C9E0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E6536C9E5
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302293; cv=none; b=OSQphkzNuNC6HvgtyHuCJU3i0CPmc7eKUZX2ihLvnauy8Nof5XTJO0AxcQ8a6HCrT7J7bDgVAf7MfV9KCcaqVMz283FQhJbso419bDlT6nIC71QZ+ov5Zu61GrOKzEfn5ZTjWcpXSQ/PiUKLjZDeFg2feePfwC9Zbx+BVVBgJKc=
+	t=1772302294; cv=none; b=KT4nspqqNErQkxLdy3/63MBC1DyOtn1RT63zo8ACRWCernJYTN8+ey2Q+xD24Lv1hyQv76TIZd9Jp9eGPgXCBYJiGfCYWEitoDcVyE12ZTJ/NLdSdzVLageYWqCeJpswkGtFRwH2FoSioDrhbnlf4zU5b4ZLVLqIdD+qKLyjp+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302293; c=relaxed/simple;
-	bh=9cdRa34sWZ0FWq9r1Rdst/b86zJJUaPxcwpbt3iHRwM=;
+	s=arc-20240116; t=1772302294; c=relaxed/simple;
+	bh=Pv+fL6GVef+FgVdZCVhjT/6LB5qQlPpjA6XnwVVSTS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fwDVOD8vuz/ooV+4FP41YI/7X1EoQDxfF8PHTaSou6r9sRH38fjkORjVcBSoZPDshf+xLQNYwnfsoTvTnUppufSk7e6EH8oSAUs9/9L0fAYfsGpHTjkIjdIzy/Y2bJnw1j36W2eRQZHAV+Vnd2tZoIUaYStBgy6ZZ6RsZX+Q9oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NsvXmMal; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hPztcBsyD0PTPCYVdMl5ajescVmRlsrISrJ3Jl6w5oV/vZrEkNNqYRg3jxGHNz5HFlyyB4qCqULDap/DQ1OorakMi/flPU9XClgPDGhSqbQM+ACFCZEtekm3al1GBqInYT1busIj/F+HhBeqR5ZAKx4LLiMBLwyrVzCG3V+qYFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WcCpeTzA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NsvXmMal"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298FDC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WcCpeTzA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08E0C116D0;
 	Sat, 28 Feb 2026 18:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302293;
-	bh=9cdRa34sWZ0FWq9r1Rdst/b86zJJUaPxcwpbt3iHRwM=;
+	s=k20201202; t=1772302294;
+	bh=Pv+fL6GVef+FgVdZCVhjT/6LB5qQlPpjA6XnwVVSTS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsvXmMalVTnRZ7o9Mxh7FwselbHycEIAzWokmrhA5fX7jEa1/yi4wNR/I935jk+BZ
-	 TJX2vW1h1hDLDeBqVBijl/c8GO6+nbOajYYhmh6gEMdSgCbu/KXifMm+GAfVMdZJnJ
-	 SxIA6i9Q2onsTEjr63cTRO1TzcEOQyJXmbHBKRsrEogsGuCQjWllSv0GI+T9h8PG3F
-	 y/A9O+pnJ8EL+FmqQcwPiI637o6sd9birC7MLbgUs3X4VcoeyFAWNH7gNn/zZtVEUF
-	 /viBE6nb0dKDi05NaC1MqUQdmDv8A4wCG6b9zmtVJim10z0kDPjzMtYYwNCRvnpNcS
-	 UnTFTC6jjpfCw==
+	b=WcCpeTzAQr7YEYUaffIc8DS1Qvb1hRCL3HQaeXx8pa/WvrXU5WZcQ1hoBmHr3iAFN
+	 9N2r5RMj52kzIdaAVVa/lBIOwSggMDN/pXE/sR9wDWrrdphDFXZDXCJo/oS48fq1MQ
+	 zSjfHtP9Na+SWi4YLsq5JIlF7kqYZdjVoA6QO3VYnaBtVceKKTPyPGWwU+BCNryvST
+	 mbHKcWasFtNKBQNBgt4IH13UL8C0ypxBY0A9PgbIYbdwj5rlbNA9L5/DIlTlFm6NVc
+	 QW7eyFmbSede1mVE9u+R8F2M4Gu2lAN5d+jRa833gvT1VQbMvBx9S9EBpExytUlTBt
+	 DxTIn3G7aDzEA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ben Dooks <ben.dooks@codethink.co.uk>,
-	Paul Moore <paul@paul-moore.com>,
+Cc: Billy Tsai <billy_tsai@aspeedtech.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/232] audit: move the compat_xxx_class[] extern declarations to audit_arch.h
-Date: Sat, 28 Feb 2026 13:07:39 -0500
-Message-ID: <20260228181127.1592657-6-sashal@kernel.org>
+Subject: [PATCH 6.1 007/232] i3c: Move device name assignment after i3c_bus_init
+Date: Sat, 28 Feb 2026 13:07:40 -0500
+Message-ID: <20260228181127.1592657-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,74 +48,44 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 76489955c6d4a065ca69dc88faf7a50a59b66f35 ]
+[ Upstream commit 3502cea99c7ceb331458cbd34ef6792c83144687 ]
 
-The comapt_xxx_class symbols aren't declared in anything that
-lib/comapt_audit.c is including (arm64 build) which is causing
-the following sparse warnings:
+Move device name initialization to occur after i3c_bus_init()
+so that i3cbus->id is guaranteed to be assigned before it is used.
 
-lib/compat_audit.c:7:10: warning: symbol 'compat_dir_class'
-  was not declared. Should it be static?
-lib/compat_audit.c:12:10: warning: symbol 'compat_read_class'
-  was not declared. Should it be static?
-lib/compat_audit.c:17:10: warning: symbol 'compat_write_class'
-  was not declared. Should it be static?
-lib/compat_audit.c:22:10: warning: symbol 'compat_chattr_class'
-  was not declared. Should it be static?
-lib/compat_audit.c:27:10: warning: symbol 'compat_signal_class'
-  was not declared. Should it be static?
-
-Trying to fix this by chaning compat_audit.c to inclde <linux/audit.h>
-does not work on arm64 due to compile errors with the extra includes
-that changing this header makes. The simpler thing would be just to
-move the definitons of these symbols out of <linux/audit.h> into
-<linux/audit_arch.h> which is included.
-
-Fixes: 4b58841149dca ("audit: Add generic compat syscall support")
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-[PM: rewrite subject line, fixed line length in description]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 9d4f219807d5 ("i3c: fix refcount inconsistency in i3c_master_register")
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260112-upstream_i3c_fix-v1-1-cbbf2cb71809@aspeedtech.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/audit.h      | 6 ------
- include/linux/audit_arch.h | 7 +++++++
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/i3c/master.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/audit.h b/include/linux/audit.h
-index 6efadd7f60a55..e952868c8d2e9 100644
---- a/include/linux/audit.h
-+++ b/include/linux/audit.h
-@@ -122,12 +122,6 @@ enum audit_nfcfgop {
- extern int __init audit_register_class(int class, unsigned *list);
- extern int audit_classify_syscall(int abi, unsigned syscall);
- extern int audit_classify_arch(int arch);
--/* only for compat system calls */
--extern unsigned compat_write_class[];
--extern unsigned compat_read_class[];
--extern unsigned compat_dir_class[];
--extern unsigned compat_chattr_class[];
--extern unsigned compat_signal_class[];
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index 44574474bda35..fea1f852358c2 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2764,7 +2764,6 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	INIT_LIST_HEAD(&master->boardinfo.i3c);
  
- /* audit_names->type values */
- #define	AUDIT_TYPE_UNKNOWN	0	/* we don't know yet */
-diff --git a/include/linux/audit_arch.h b/include/linux/audit_arch.h
-index 0e34d673ef171..2b8153791e6a5 100644
---- a/include/linux/audit_arch.h
-+++ b/include/linux/audit_arch.h
-@@ -23,4 +23,11 @@ enum auditsc_class_t {
+ 	device_initialize(&master->dev);
+-	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
  
- extern int audit_classify_compat_syscall(int abi, unsigned syscall);
+ 	master->dev.dma_mask = parent->dma_mask;
+ 	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
+@@ -2774,6 +2773,8 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	if (ret)
+ 		goto err_put_dev;
  
-+/* only for compat system calls */
-+extern unsigned compat_write_class[];
-+extern unsigned compat_read_class[];
-+extern unsigned compat_dir_class[];
-+extern unsigned compat_chattr_class[];
-+extern unsigned compat_signal_class[];
++	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
 +
- #endif
+ 	ret = of_populate_i3c_bus(master);
+ 	if (ret)
+ 		goto err_put_dev;
 -- 
 2.51.0
 
