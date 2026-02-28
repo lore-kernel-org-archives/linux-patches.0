@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522D0313E31
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA8340A59
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301060; cv=none; b=DHUZMdvQIvLH2HNlQmPW/64HYKZVCNLvYmeFiwWBf3jFgJNZobygqrdMa/fa0lavPtnI58TjFZoTgkw+G/BR0TluP9BHDzAaHF/4+8PxxWP6V9lKzjIbW36wcZ6gzkRWULtROaxyBnbKZArptDuXLJLmhduvA02vvyQhlsXsW+o=
+	t=1772301061; cv=none; b=MDK1WYUzJMDSzRMGBaP+SFQo8g7b5Tr4Ng62cY6Bb/8h9JS5hr9I61b1wZOfEgOD2RdsohSv7yPG5+kgxKhx5yQRwAwlZ0YR98TsyvZzc0IokoX9WXoc3Ks/kzG4dAEyBpfY1sDtWGZPA7cyhfj2gTiw/t8qGAmzLH/Zk0K6V9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301060; c=relaxed/simple;
-	bh=qqlcOoyg563JE1Wpv7r2VRKEEVmqBZ8zj2d/aHPFEQw=;
+	s=arc-20240116; t=1772301061; c=relaxed/simple;
+	bh=rMUKUdWUcPbxLck9uhMrYsO565EP6ZZSL3ZtvQrKu10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E93IVCwoMPFl/JZzLaNXrEz3x+E9Fkg3ClWl37Qm8JdZPqBddY8O1fH1iHJQkFh1YyP6os2BxX+ouEHZhYOwWC3+dm5l/myd2eSg8UlZR01Zr/jkSNhWxOtwKQzM3JRbhF9CpIJrEnio4OPKR6k9eNELdAcWEWY4UIuXqLCx1I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ab7FBkzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KleabG0K4Aj+RoZ2ahtAcDRnTL4XVLJHbPG45k8tTE6lEqMIg48aJTjHeumiXmFROgiMSyKX2eHQ3a3XNcvZTcdV0uKK0zTS//DjSU/NlILyQjcYD6lojCUqeE8wY55iBVpS+MWokqfEtkqYKTs/GIcEJQeafSjbPcV+pnYAJUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dktGsRgD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ab7FBkzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB296C116D0;
-	Sat, 28 Feb 2026 17:50:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dktGsRgD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1C5C19423;
+	Sat, 28 Feb 2026 17:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301060;
-	bh=qqlcOoyg563JE1Wpv7r2VRKEEVmqBZ8zj2d/aHPFEQw=;
+	bh=rMUKUdWUcPbxLck9uhMrYsO565EP6ZZSL3ZtvQrKu10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ab7FBkzUbMGwhd4U4PXywVuFrGyw6B6Uo1dU+e5lDzBUv776cegBevjO5AxxBiCfM
-	 vUcwOW/1xrsVd+BSW+XFrMCQRvywf0PX1zgjs5jgK7ndGw4we0gZl/Cc6ub42OV5rb
-	 elEbOwf4ixu6jXUXPysIu6JnIfuuGtj/k7qYCeNF5meJR1vOQydmJ8Ano7Y4JJiJTz
-	 EZEOpvJCcP/55u7JQB/UrCjexJi0I1jTUUhQHZIuCrqFIo7R/W2umxena20Zx5xKwk
-	 d5T06uEv3H3meT4qqdUxbAkGePGZsaxHE9t7DRYlBm0QjnH7bnOBo88amaPkMoHRdA
-	 LrmVSH0eFA6kA==
+	b=dktGsRgDVAJXSggBmt8S4XHyrN0UiMvl3RlqJTz2XFFeT2TWyIGadeftltt/UPvSY
+	 /6LtYElbm2bqI1zDHH6AwBDbWMvRtXa4p7sze7g4VaFZN0vgCdocvBMhzYQ+91hbiB
+	 Ryh4YNtADuE1Smk0aUu+KQeXtNgNFPlT1g8MfKJyyLQqVvlhVWrBJRCJCRrTRfscNz
+	 +BNk5kDCYHguSngeS7OU9OaXXbGGIP6Tr8V+9UEaY0nvVH05c+NHLFafvWLDWL9MvM
+	 Mp5Jxf8YzEEYiRU3ZHidTrkwW8ah883KUcy22puVeWf63Y5iq/xEhxooYV5gQ7LuHV
+	 f29KYhdxS+seA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Hsieh Hung-En <hungen3108@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: =?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 202/752] ASoC: es8328: Add error unwind in resume
-Date: Sat, 28 Feb 2026 12:38:33 -0500
-Message-ID: <20260228174750.1542406-202-sashal@kernel.org>
+Subject: [PATCH 6.18 203/752] modpost: Amend ppc64 save/restfpr symnames for -Os build
+Date: Sat, 28 Feb 2026 12:38:34 -0500
+Message-ID: <20260228174750.1542406-203-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -43,59 +43,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Hsieh Hung-En <hungen3108@gmail.com>
+From: René Rebe <rene@exactco.de>
 
-[ Upstream commit 8232e6079ae6f8d3a61d87973cb427385aa469b9 ]
+[ Upstream commit 3cd9763ce4ad999d015cf0734e6b968cead95077 ]
 
-Handle failures in the resume path by unwinding previously enabled
-resources.
+Building a size optimized ppc64 kernel (-Os), gcc emits more FP
+save/restore symbols, that the linker generates on demand into the
+.sfpr section. Explicitly allow-list those in scripts/mod/modpost.c,
+too. They are needed for the amdgpu in-kernel floating point support.
 
-If enabling regulators or syncing the regcache fails, disable regulators
-and unprepare the clock to avoid leaking resources and leaving the device
-in a partially resumed state.
+MODPOST Module.symvers
+ERROR: modpost: "_restfpr_20" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+ERROR: modpost: "_restfpr_26" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+ERROR: modpost: "_restfpr_22" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+ERROR: modpost: "_savegpr1_27" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+ERROR: modpost: "_savegpr1_25" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+ERROR: modpost: "_restfpr_28" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+ERROR: modpost: "_savegpr1_29" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+ERROR: modpost: "_savefpr_20" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+ERROR: modpost: "_savefpr_22" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+ERROR: modpost: "_restfpr_15" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+WARNING: modpost: suppressed 56 unresolved symbol warnings because there were too many)
 
-Signed-off-by: Hsieh Hung-En <hungen3108@gmail.com>
-Link: https://patch.msgid.link/20260130160017.2630-6-hungen3108@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: René Rebe <rene@exactco.de>
+Link: https://patch.msgid.link/20251123.131330.407910684435629198.rene@exactco.de
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8328.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ scripts/mod/modpost.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/es8328.c b/sound/soc/codecs/es8328.c
-index 76159c45e6b52..c0d7ce64b2d96 100644
---- a/sound/soc/codecs/es8328.c
-+++ b/sound/soc/codecs/es8328.c
-@@ -756,17 +756,23 @@ static int es8328_resume(struct snd_soc_component *component)
- 					es8328->supplies);
- 	if (ret) {
- 		dev_err(component->dev, "unable to enable regulators\n");
--		return ret;
-+		goto err_clk;
- 	}
- 
- 	regcache_mark_dirty(regmap);
- 	ret = regcache_sync(regmap);
- 	if (ret) {
- 		dev_err(component->dev, "unable to sync regcache\n");
--		return ret;
-+		goto err_regulators;
- 	}
- 
- 	return 0;
-+
-+err_regulators:
-+	regulator_bulk_disable(ARRAY_SIZE(es8328->supplies), es8328->supplies);
-+err_clk:
-+	clk_disable_unprepare(es8328->clk);
-+	return ret;
- }
- 
- static int es8328_component_probe(struct snd_soc_component *component)
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index 47c8aa2a69392..133dfa16308a3 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -602,6 +602,10 @@ static int ignore_undef_symbol(struct elf_info *info, const char *symname)
+ 		/* Special register function linked on all modules during final link of .ko */
+ 		if (strstarts(symname, "_restgpr0_") ||
+ 		    strstarts(symname, "_savegpr0_") ||
++		    strstarts(symname, "_restgpr1_") ||
++		    strstarts(symname, "_savegpr1_") ||
++		    strstarts(symname, "_restfpr_") ||
++		    strstarts(symname, "_savefpr_") ||
+ 		    strstarts(symname, "_restvr_") ||
+ 		    strstarts(symname, "_savevr_") ||
+ 		    strcmp(symname, ".TOC.") == 0)
 -- 
 2.51.0
 
