@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAFE36D9E9;
-	Sat, 28 Feb 2026 17:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BADB36D9E9
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301441; cv=none; b=nEUyCb40EmH4jw94i7dz+fHo9jggp89itbFfOmETu7mqRvux7I+SkITa8lrWqaEsE9L8bhEwjTDpa1xfNU5YJ03QjCNj78KQyoevfMsO20JM5icHBfGQT0SZksT5vPIQOj4fJtTAuqpsM9THt46rk+ahWKlmWlr0BdU4h2WCv0I=
+	t=1772301442; cv=none; b=Uyud3D+Mm29FnsOJOM/LBqxzWzwpRUA1SJPYsPpN74tMr1dn6TgxqnbAElT4HqO6bdzbMNNyrEgICokB0sHpEazdVnnQrio7C3kXopHBvhuI0YI3tjnOr7y1vA2ApNe4SJowhtuwmLIXn/0jJC3XtgfAx+c7A54DTWfRmTbNewE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301441; c=relaxed/simple;
-	bh=5s8BBKdf4ztkBwOi4i6eDwdPKMgB3eEiCkhMfk7U7/g=;
+	s=arc-20240116; t=1772301442; c=relaxed/simple;
+	bh=JSxcDFknxS5iM5aU8le0mweKjNJSX/1pheTt1QFMtgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXLw7GemV7YnTP0OImRDGgfHnbY8a9IUM5884CM3FYhR9G3pO0npohgh5/K0l5iWK0Rpt8sXasfReVpvPcIoqcQ6JGylCKCP1wLDfPeyB2aGgQGeS36HJxhmEwHiO4EsFnpsAi138adSaKrgkkiav7UBEawTuSkzeAqmYStXfgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PgqvI3s4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dxan0q6gGZyZkrkQ3+FUaV9N8eMLgk6OiKK6FOqFOFKD82OLd2W90CMPQ3/QyvzsVNfVR5LRkJ4faGyDng/TB8QJsCn4wmsezIT2EJAhxN4VRLQeKHHa0BnSptdJgVVAgwUJdMDZlU0HoLoS52P3Hgm1BxpMkhbklRBZLtqzNFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s+Nf5PCk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PgqvI3s4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397DAC2BC87;
-	Sat, 28 Feb 2026 17:57:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s+Nf5PCk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CB2C116D0;
+	Sat, 28 Feb 2026 17:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301441;
-	bh=5s8BBKdf4ztkBwOi4i6eDwdPKMgB3eEiCkhMfk7U7/g=;
+	s=k20201202; t=1772301442;
+	bh=JSxcDFknxS5iM5aU8le0mweKjNJSX/1pheTt1QFMtgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PgqvI3s4uqnL3DfUfiAH4lq2UgquU02rCVyh82FY3zDXPtwSjniftHwAVF1rVQgGc
-	 OKei7XXggxwn8tlzRKTXX0C0O0eRtr2ZO/t3wbBnvbMgHVLEh2qPcslTrMGJRBWh2F
-	 jR1sIc+Z9KYPXESMRAsLJHXKpWDWlrsHKE+WMf/ACrv+BeVVpXuUU/0JCC99uF6PQu
-	 9LgkIVz5iaepsYPKPUoZLJR5DSfwps84SmqsOBjN9ZNxgPr3Ix3g12moa8YycmvNgQ
-	 RJ/GxSKsRDWGC6QPj7eHXJl4e5cDcAg46+ZLNMmuoz0LuPneEdhSSSfv092oohpmLU
-	 oCHlaNaErxUOQ==
+	b=s+Nf5PCkHLSoFWapX5HtR3IFJbUa3bmsokox3BppWvoMoMbVcfvR2HBZL1C5Unc5t
+	 NE1X/F/6kuUeTXJyHvpy/H35eOg19RpLRpFi380NNVlHIx0nukg3rwRABd2wQqJ+Dv
+	 PXm0exo9pTS1xh5n6ZOzLEBRjyW9adNsp6+AOANXFDmiEDiKPnsMEu7upwP79PzO0I
+	 gcY24uiFSAST1kPK1PbopND5VA4O0NFtvdn+mH3ytk1+pBRf66RwXxtjcgQdzZfXNs
+	 Id7wlocPDIkaNK+s+bwZAbD646AdFj/dWWAdG0GD04WHw0rS/kDqpfmFt02nvMFgNk
+	 lGefssbeWGJxw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+d8d4c31d40f868eaea30@syzkaller.appspotmail.com,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Hillf Danton <hdanton@sina.com>,
-	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
+Cc: Haotien Hsu <haotienh@nvidia.com>,
+	stable <stable@kernel.org>,
+	Wayne Chang <waynec@nvidia.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 627/752] mm/vmalloc: prevent RCU stalls in kasan_release_vmalloc_node
-Date: Sat, 28 Feb 2026 12:45:38 -0500
-Message-ID: <20260228174750.1542406-627-sashal@kernel.org>
+Subject: [PATCH 6.18 628/752] usb: gadget: tegra-xudc: Add handling for BLCG_COREPLL_PWRDN
+Date: Sat, 28 Feb 2026 12:45:39 -0500
+Message-ID: <20260228174750.1542406-628-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,88 +49,73 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Haotien Hsu <haotienh@nvidia.com>
 
-[ Upstream commit 5747435e0fd474c24530ef1a6822f47e7d264b27 ]
+[ Upstream commit 1132e90840abf3e7db11f1d28199e9fbc0b0e69e ]
 
-When CONFIG_PAGE_OWNER is enabled, freeing KASAN shadow pages during
-vmalloc cleanup triggers expensive stack unwinding that acquires RCU read
-locks.  Processing a large purge_list without rescheduling can cause the
-task to hold CPU for extended periods (10+ seconds), leading to RCU stalls
-and potential OOM conditions.
+The COREPLL_PWRDN bit in the BLCG register must be set when the XUSB
+device controller is powergated and cleared when it is unpowergated.
+If this bit is not explicitly controlled, the core PLL may remain in an
+incorrect power state across suspend/resume or ELPG transitions.
+Therefore, update the driver to explicitly control this bit during
+powergate transitions.
 
-The issue manifests in purge_vmap_node() -> kasan_release_vmalloc_node()
-where iterating through hundreds or thousands of vmap_area entries and
-freeing their associated shadow pages causes:
-
-  rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-  rcu: Tasks blocked on level-0 rcu_node (CPUs 0-1): P6229/1:b..l
-  ...
-  task:kworker/0:17 state:R running task stack:28840 pid:6229
-  ...
-  kasan_release_vmalloc_node+0x1ba/0xad0 mm/vmalloc.c:2299
-  purge_vmap_node+0x1ba/0xad0 mm/vmalloc.c:2299
-
-Each call to kasan_release_vmalloc() can free many pages, and with
-page_owner tracking, each free triggers save_stack() which performs stack
-unwinding under RCU read lock.  Without yielding, this creates an
-unbounded RCU critical section.
-
-Add periodic cond_resched() calls within the loop to allow:
-- RCU grace periods to complete
-- Other tasks to run
-- Scheduler to preempt when needed
-
-The fix uses need_resched() for immediate response under load, with a
-batch count of 32 as a guaranteed upper bound to prevent worst-case stalls
-even under light load.
-
-Link: https://lkml.kernel.org/r/20260112103612.627247-1-kartikey406@gmail.com
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reported-by: syzbot+d8d4c31d40f868eaea30@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d8d4c31d40f868eaea30
-Link: https://lore.kernel.org/all/20260112084723.622910-1-kartikey406@gmail.com/T/ [v1]
-Suggested-by: Uladzislau Rezki <urezki@gmail.com>
-Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Cc: Hillf Danton <hdanton@sina.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 49db427232fe ("usb: gadget: Add UDC driver for tegra XUSB device mode controller")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Link: https://patch.msgid.link/20260123173121.4093902-1-waynec@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmalloc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/gadget/udc/tegra-xudc.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/mm/vmalloc.c b/mm/vmalloc.c
-index 4fbd6e7dc479a..e2f526ad7abba 100644
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -2241,11 +2241,14 @@ decay_va_pool_node(struct vmap_node *vn, bool full_decay)
- 	reclaim_list_global(&decay_list);
- }
- 
-+#define KASAN_RELEASE_BATCH_SIZE 32
-+
- static void
- kasan_release_vmalloc_node(struct vmap_node *vn)
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index 9d2007f448c04..7f7251c10e952 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -3392,17 +3392,18 @@ static void tegra_xudc_device_params_init(struct tegra_xudc *xudc)
  {
- 	struct vmap_area *va;
- 	unsigned long start, end;
-+	unsigned int batch_count = 0;
+ 	u32 val, imod;
  
- 	start = list_first_entry(&vn->purge_list, struct vmap_area, list)->va_start;
- 	end = list_last_entry(&vn->purge_list, struct vmap_area, list)->va_end;
-@@ -2255,6 +2258,11 @@ kasan_release_vmalloc_node(struct vmap_node *vn)
- 			kasan_release_vmalloc(va->va_start, va->va_end,
- 				va->va_start, va->va_end,
- 				KASAN_VMALLOC_PAGE_RANGE);
-+
-+		if (need_resched() || (++batch_count >= KASAN_RELEASE_BATCH_SIZE)) {
-+			cond_resched();
-+			batch_count = 0;
-+		}
++	val = xudc_readl(xudc, BLCG);
+ 	if (xudc->soc->has_ipfs) {
+-		val = xudc_readl(xudc, BLCG);
+ 		val |= BLCG_ALL;
+ 		val &= ~(BLCG_DFPCI | BLCG_UFPCI | BLCG_FE |
+ 				BLCG_COREPLL_PWRDN);
+ 		val |= BLCG_IOPLL_0_PWRDN;
+ 		val |= BLCG_IOPLL_1_PWRDN;
+ 		val |= BLCG_IOPLL_2_PWRDN;
+-
+-		xudc_writel(xudc, val, BLCG);
++	} else {
++		val &= ~BLCG_COREPLL_PWRDN;
  	}
++	xudc_writel(xudc, val, BLCG);
  
- 	kasan_release_vmalloc(start, end, start, end, KASAN_VMALLOC_TLB_FLUSH);
+ 	if (xudc->soc->port_speed_quirk)
+ 		tegra_xudc_limit_port_speed(xudc);
+@@ -3953,6 +3954,7 @@ static void tegra_xudc_remove(struct platform_device *pdev)
+ static int __maybe_unused tegra_xudc_powergate(struct tegra_xudc *xudc)
+ {
+ 	unsigned long flags;
++	u32 val;
+ 
+ 	dev_dbg(xudc->dev, "entering ELPG\n");
+ 
+@@ -3965,6 +3967,10 @@ static int __maybe_unused tegra_xudc_powergate(struct tegra_xudc *xudc)
+ 
+ 	spin_unlock_irqrestore(&xudc->lock, flags);
+ 
++	val = xudc_readl(xudc, BLCG);
++	val |= BLCG_COREPLL_PWRDN;
++	xudc_writel(xudc, val, BLCG);
++
+ 	clk_bulk_disable_unprepare(xudc->soc->num_clks, xudc->clks);
+ 
+ 	regulator_bulk_disable(xudc->soc->num_supplies, xudc->supplies);
 -- 
 2.51.0
 
