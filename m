@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B10E379EE2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7596B379EE8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301687; cv=none; b=uifd2HMZUDquwMWt76ha4L0DY26UD09F1LieB7+deXCP/+j9bLOxVFnC9gKs0YI62OdTTdjeRNiQyNmnaMEVg3ZrPHOf8Gf+jyykTqUWK8n4i+r0eAy3WaK55raI3cpTGmtrfEI6nyQJDmaxPXoDA+3GYgWDzHoywm2RHCNj5mA=
+	t=1772301688; cv=none; b=kLObJhm853CvsA4Ot/PvVVx+69t/8bv/AY9rDr05us818vIJqEj7QHi+X2rP4ko5FVCnFozppQDUs+9G2RmigwK7zMvMQjHv4HfVFw2Lrhp9736/vIedRYwvbYCPYRp1tZzV0a4kxvX9oSn7wzO98oVTC7Gv8g/EEruOJ/tBKok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301687; c=relaxed/simple;
-	bh=+plbUiYg4git9ZUZt3d+iJEz6iG0cqJMeWYgSfgBTg8=;
+	s=arc-20240116; t=1772301688; c=relaxed/simple;
+	bh=IGjNApjh96lY4ZSrrL3F6rbpgFJLEjJ8pRk8uYa890s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=so6cjmaueFpLNO/Ame2PCpgWSgY4wULjHdoFDxjQi18W3KjYanhA6UtUU41e+HfW+JKLoL/i7LxT3zM0Y3pHplweNJz8Ub+fFS/olhMxOu3LdsG/O9KpDvab220M4MynBqKI71JCZwTHr0kJPRy6KPcGyL0SoATRF5ydU9+zznk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fNF0NOHW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fyeY7teXHhahvDlHGpenrCGTvz9xqyuU/bviUBnas1bKWYlsvS0VmlBufFee1cBhALG25Z/n3D290/lTYX5sEeFjctFuszXamT8++YJyHD6UmyecCgwV8RbF19SZ8NIhpJDr1/Cy6DJb6Y9FfGIQcR0AB84h4ic/QO2cV3Efq2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DsHc20J9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fNF0NOHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F84C19423;
-	Sat, 28 Feb 2026 18:01:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DsHc20J9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E74C116D0;
+	Sat, 28 Feb 2026 18:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301687;
-	bh=+plbUiYg4git9ZUZt3d+iJEz6iG0cqJMeWYgSfgBTg8=;
+	s=k20201202; t=1772301688;
+	bh=IGjNApjh96lY4ZSrrL3F6rbpgFJLEjJ8pRk8uYa890s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fNF0NOHWMAoqWTiBo95i5W2QFmzcJEaFYsevMMI58v8uh1hILxfdJb8zk+IaR/a3+
-	 LXCDpyz0xwhyWbYF0py3BGa80GQ2Zs9ksIq6UC0gtDRtsam9m6QH69MKX+pFdG9saL
-	 4tb2ltdUcrzyb3ZL+ZWwn7ExlqlU40XuPIaHpFGh6KzrSbq65EHoNXrKK3AxSeElN1
-	 wUEu8Mh48WVfHuqJY2TfiOZspkKoaf+IF0yCFB6ZI+pc+yrsT8EgSBRLjuaB07iZGn
-	 u07KDjhD6xJze0ICSE93+A3FN7AeiRmcYOva9nMmTsVsJoZKp2AOyHyL8LcfdP5I6v
-	 7nKz8scm0sutQ==
+	b=DsHc20J9K0rSQeuv5khwuTDpc20YhnoG+zyqefAoP+CzlBhFqe5oBy3yo3N8AbpO8
+	 0QsBk4837LhsOJz2ba3EQwxdSYg8GKFNqXhEDuWWVpNGeK4AZvfpb6r/zMWW7VHcJZ
+	 rJKuJZqlBe6XjRMKzOOWHfU9IbEJUDsmWQ22XwgxcKE6J2f5bGk7WXhrRPoacVxa4j
+	 uDn7SfsjAxZMQTs+iN6xbaN4DHx7TbVqGb6t6YucSfx6/pvVjGH+dmTlPAYh4NlOZP
+	 1Y3yJFUF285uYDRvzgP7kek5SpREPcnFIx1YuqBHkyfu5z4BT+vRGnV2aJzAs8HEOl
+	 7r/QJTCHkEKrA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
 	Thomas Gleixner <tglx@kernel.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/385] genirq: Set IRQF_COND_ONESHOT in devm_request_irq().
-Date: Sat, 28 Feb 2026 12:54:59 -0500
-Message-ID: <20260228180011.1568201-77-sashal@kernel.org>
+Subject: [PATCH 6.12 078/385] platform/x86: int0002: Remove IRQF_ONESHOT from request_irq()
+Date: Sat, 28 Feb 2026 12:55:00 -0500
+Message-ID: <20260228180011.1568201-78-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -43,45 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 943b052ded21feb84f293d40b06af3181cd0d0d7 ]
+[ Upstream commit f6bc712877f24dc89bdfd7bdbf1a32f3b9960b34 ]
 
-The flag IRQF_COND_ONESHOT was already force-added to request_irq() because
-the ACPI SCI interrupt handler is using the IRQF_ONESHOT flag which breaks
-all shared handlers.
+Passing IRQF_ONESHOT ensures that the interrupt source is masked until the
+secondary (threaded) handler is done. If only a primary handler is used
+then the flag makes no sense because the interrupt cannot fire (again)
+while its handler is running.
 
-devm_request_irq() needs the same change since some users, such as
-int0002_vgpio, are using this function instead.
+The flag also prevents force-threading of the primary handler and the
+irq-core will warn about this.
 
-Add IRQF_COND_ONESHOT to the flags passed to devm_request_irq().
+The flag was added to match the flag on the shared handler which uses a
+threaded handler and therefore IRQF_ONESHOT. This is no longer needed
+because devm_request_irq() now passes IRQF_COND_ONESHOT for this case.
 
-Fixes: c37927a203fa2 ("genirq: Set IRQF_COND_ONESHOT in request_irq()")
+Revert adding IRQF_ONESHOT to irqflags.
+
+Fixes: 8f812373d1958 ("platform/x86: intel: int0002_vgpio: Pass IRQF_ONESHOT to request_irq()")
+Reported-by: Borah, Chaitanya Kumar <chaitanya.kumar.borah@intel.com>
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260128095540.863589-2-bigeasy@linutronix.de
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Acked-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260128095540.863589-3-bigeasy@linutronix.de
+Closes: https://lore.kernel.org/all/555f1c56-0f74-41bf-8bd2-6217e0aab0c6@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/interrupt.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel/int0002_vgpio.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index b378fbf885ce3..2125d4d9b44f2 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -215,7 +215,7 @@ static inline int __must_check
- devm_request_irq(struct device *dev, unsigned int irq, irq_handler_t handler,
- 		 unsigned long irqflags, const char *devname, void *dev_id)
- {
--	return devm_request_threaded_irq(dev, irq, handler, NULL, irqflags,
-+	return devm_request_threaded_irq(dev, irq, handler, NULL, irqflags | IRQF_COND_ONESHOT,
- 					 devname, dev_id);
- }
- 
+diff --git a/drivers/platform/x86/intel/int0002_vgpio.c b/drivers/platform/x86/intel/int0002_vgpio.c
+index 0171be8867fce..c5c70319b0f37 100644
+--- a/drivers/platform/x86/intel/int0002_vgpio.c
++++ b/drivers/platform/x86/intel/int0002_vgpio.c
+@@ -195,8 +195,8 @@ static int int0002_probe(struct platform_device *pdev)
+ 	 * FIXME: augment this if we managed to pull handling of shared
+ 	 * IRQs into gpiolib.
+ 	 */
+-	ret = devm_request_irq(dev, irq, int0002_irq,
+-			       IRQF_ONESHOT | IRQF_SHARED, "INT0002", chip);
++	ret = devm_request_irq(dev, irq, int0002_irq, IRQF_SHARED, "INT0002",
++			       chip);
+ 	if (ret) {
+ 		dev_err(dev, "Error requesting IRQ %d: %d\n", irq, ret);
+ 		return ret;
 -- 
 2.51.0
 
