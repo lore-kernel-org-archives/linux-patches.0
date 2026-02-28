@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B52373128;
-	Sat, 28 Feb 2026 17:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4F3373128;
+	Sat, 28 Feb 2026 17:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301508; cv=none; b=dWmsY+0ET9b7yiGIAEag2S4LvimzhlC9JUyLRB0meGRI1ifEgyiPNHqUISLnKO3oP379zSsD6bjsrR+LTF78ks0R9NQMbIa2ceChfk/686SCvlkL1P/I06m5r8cAz4h22Q0UDQYIpaZjH/OmM0PW5AB0DkssMiLbtIconFrYseM=
+	t=1772301509; cv=none; b=LgUJNJV3DANUPn8NgQDEgYZM46Ji8s1kEZsNi4A3i5hZ1u3KtmiEB2JCdW5eqXGHn5N9F+2D3NKcT1JnOyFThS+ojg/S7dW5zudURslLTcaQBLzeC6wkJqFu6XUfuI4XDBOX24cZvN+Te+wOAZcHrKaYvXB6bW/n0YnSPCZ7kKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301508; c=relaxed/simple;
-	bh=sVKXGti/1tHXqLvuJLqu4mRGLNaVilAoFO9v0XPvu+g=;
+	s=arc-20240116; t=1772301509; c=relaxed/simple;
+	bh=lTm5cl+V2jkva3LXIgg4WOknLJI1vQm+hrb7u3EBiZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9SZ+LQdSFhG3mEsnP665Obx+8XSMxsAP7lTIbjuqcUb3DDWbsIDXEo6KSS/h1puNvlCmDgtJW7seA1bQvZ5sRxovcCezEcys2rh2bas3CSA8RTZHrh/atMF1mIWzRfp71s6GaNYabI58EclaNSr+o0ljuV0EyyjttfBXBLpEyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bTgzk/fz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3OIirodLhGyDMxpcgZrdtCcligxbf1YOMzRIJV5Ss63XiVTU593Ievb7jCxvPr825ng9m/lrLoNVopwZziR5JRBjKdgpaN48T2/XWdWvEkwgbbxxA1gcFD293ZEyWabmgdYdjpjFTK+L5kNjMkS3Dp82F5fjmPMzBPOYeGn5tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=byGMcqWE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bTgzk/fz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D028C116D0;
-	Sat, 28 Feb 2026 17:58:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="byGMcqWE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5E5C116D0;
+	Sat, 28 Feb 2026 17:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301508;
-	bh=sVKXGti/1tHXqLvuJLqu4mRGLNaVilAoFO9v0XPvu+g=;
+	s=k20201202; t=1772301509;
+	bh=lTm5cl+V2jkva3LXIgg4WOknLJI1vQm+hrb7u3EBiZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTgzk/fzCm7xk+Fh3m4TQkNDtPpBPiCt7H+KFYDjPkodxHL5eyTRy53RhGbcBaVbY
-	 gKZ3WzFeXkjJ+8SWwIabWzC+a537WZ8IUxjA0D8BekHG3mmLXptwLz2SdNvZkOZOjv
-	 1DCs37VAt3g3za9VCcNWW55GOKBQHVHhwBxikcvAU9RryWqx8UBj0MQckPD6Y8cJ/s
-	 ZPmWcYvyMUTN7kQqBrXV0Diq6qIezP/3b2QmE2HZy+TGyadwFcPjjrbK6+nBHwvTtK
-	 OJ0A1iPyAHRafaieqMHB4YXNj49HMoooyWKDiy44tyyPkHiFOmLB5889xg/OluqN5C
-	 XEyugKoiJ+5pg==
+	b=byGMcqWEzXno+XexYGSt2sC1mnVoBPg/BavZXP9phBmtGpKSPDdLeuk1jXHivnr3J
+	 PaLabgTBKfnnsi5mkyGu15Ab3gH7EVtpulQD30H5pQ2HJhOwNMaF+mNCbNvWuULnFf
+	 C8bQnCO7ZxxiMA5PXH79E6YJSWOOYNsZvLbZENRqBvNmQFEyBq5etBB2Zag61wdM+b
+	 YGxfrp4NE9xsgiwLcFsHhrpL55isapCrYTa340wu3DYGdP2Qtu4rlUot8fpqiGsaj+
+	 4icYwINUryFpjDnxeAgo6+KtlVrUHYHzUF3PGRDKn1A3ISlqmrgtqchrAIgzXoblR+
+	 hEGg18VhEijFA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Fourier <fourier.thomas@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+Cc: Bo Sun <bo@mboxify.com>,
 	stable@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 693/752] net: wan/fsl_ucc_hdlc: Fix dma_free_coherent() in uhdlc_memclean()
-Date: Sat, 28 Feb 2026 12:46:44 -0500
-Message-ID: <20260228174750.1542406-693-sashal@kernel.org>
+Subject: [PATCH 6.18 694/752] octeontx2-af: CGX: fix bitmap leaks
+Date: Sat, 28 Feb 2026 12:46:45 -0500
+Message-ID: <20260228174750.1542406-694-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,53 +50,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Bo Sun <bo@mboxify.com>
 
-[ Upstream commit 36bd7d5deef936c4e1e3cd341598140e5c14c1d3 ]
+[ Upstream commit 3def995c4ede842adf509c410e92d09a0cedc965 ]
 
-The priv->rx_buffer and priv->tx_buffer are alloc'd together as
-contiguous buffers in uhdlc_init() but freed as two buffers in
-uhdlc_memclean().
+The RX/TX flow-control bitmaps (rx_fc_pfvf_bmap and tx_fc_pfvf_bmap)
+are allocated by cgx_lmac_init() but never freed in cgx_lmac_exit().
+Unbinding and rebinding the driver therefore triggers kmemleak:
 
-Change the cleanup to only call dma_free_coherent() once on the whole
-buffer.
+    unreferenced object (size 16):
+        backtrace:
+          rvu_alloc_bitmap
+          cgx_probe
 
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20260206085334.21195-2-fourier.thomas@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Free both bitmaps during teardown.
+
+Fixes: e740003874ed ("octeontx2-af: Flow control resource management")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bo Sun <bo@mboxify.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20260206130925.1087588-2-bo@mboxify.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/fsl_ucc_hdlc.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
-index f999798a56127..dff84731343cc 100644
---- a/drivers/net/wan/fsl_ucc_hdlc.c
-+++ b/drivers/net/wan/fsl_ucc_hdlc.c
-@@ -790,18 +790,14 @@ static void uhdlc_memclean(struct ucc_hdlc_private *priv)
- 
- 	if (priv->rx_buffer) {
- 		dma_free_coherent(priv->dev,
--				  RX_BD_RING_LEN * MAX_RX_BUF_LENGTH,
-+				  (RX_BD_RING_LEN + TX_BD_RING_LEN) * MAX_RX_BUF_LENGTH,
- 				  priv->rx_buffer, priv->dma_rx_addr);
- 		priv->rx_buffer = NULL;
- 		priv->dma_rx_addr = 0;
--	}
- 
--	if (priv->tx_buffer) {
--		dma_free_coherent(priv->dev,
--				  TX_BD_RING_LEN * MAX_RX_BUF_LENGTH,
--				  priv->tx_buffer, priv->dma_tx_addr);
- 		priv->tx_buffer = NULL;
- 		priv->dma_tx_addr = 0;
-+
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index ec0e11c77cbf2..81b55f1416e0d 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -1823,6 +1823,8 @@ static int cgx_lmac_exit(struct cgx *cgx)
+ 		cgx->mac_ops->mac_pause_frm_config(cgx, lmac->lmac_id, false);
+ 		cgx_configure_interrupt(cgx, lmac, lmac->lmac_id, true);
+ 		kfree(lmac->mac_to_index_bmap.bmap);
++		rvu_free_bitmap(&lmac->rx_fc_pfvf_bmap);
++		rvu_free_bitmap(&lmac->tx_fc_pfvf_bmap);
+ 		kfree(lmac->name);
+ 		kfree(lmac);
  	}
- }
- 
 -- 
 2.51.0
 
