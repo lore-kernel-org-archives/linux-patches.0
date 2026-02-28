@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912B63603DE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5399135A3A0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300970; cv=none; b=pJ6TpHz//HlllzBAcFWVBvd8cl3ZHQjfoZkfYjZmYTQ7BelKO1KW35cLOCionRo+4Dg0FXd6cpQSB8NTzNaPh2HLIxF6Z13Yo1HXeZtX1h4/w1QQ6BCyQMhoKhXrImOJ2tjR1STKWSQ5nn/w9qW/l+i1ftvVORz5PyVoOv4+Rxc=
+	t=1772300971; cv=none; b=nneXyEV5xt2lTTmNKKtH65fec2MbOgMV1O26VkWYqRXlDwfcIpVLNWPqjnKHjpu/Jx4NN/fwiYGIriSvKJpBM2GI4bXdwUmOIQEAkqe/HpP8/+U4lhmVTahF3M98EKY5pwRxuhivZRssv3Ixzy/o0LbGAmtw0hYBDaBUT+K2FIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300970; c=relaxed/simple;
-	bh=rbgw5izTleVxv+iMLaezDmiKBi4xS3WfjILjsEfjiqo=;
+	s=arc-20240116; t=1772300971; c=relaxed/simple;
+	bh=npRQ0tXYpgs62t84J3RGWsOTLTpkojqnwhv4hiqG08s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fX5+LkFa/zcIuBARKwQsrkbxlF6CKyyUR3atKjQxZmcwx/4xgVWyP2MhqmadUOD49vuwDGF1i6UCYPJqLbeHvCimoO2giAJvuxC3/hIHzBHY7jwkUEk3Cn35oANVwJyDgzvjhbET1cKcx9qlAyj7quTpClqakk3y9J1bNxR94wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ezj2xZ/X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mQKiVz1pC3J9ekk7L/OOX9ImMCq52I5QEMRhwZpsdUiXADYd1HB/vLPdkwRslGbiKuKbm/qr0i3PAVU5eLp0Mn8pUYF2DYwGJw+/vMC2blrJ+WPVxoeCvAmDlhOXBOOmKe4WdTvvWcS1O/DonLy9t2hER/2PQyncAc4CNC76Ku4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pi8m8WuH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ezj2xZ/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EC6C116D0;
-	Sat, 28 Feb 2026 17:49:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pi8m8WuH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8296C19423;
+	Sat, 28 Feb 2026 17:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300970;
-	bh=rbgw5izTleVxv+iMLaezDmiKBi4xS3WfjILjsEfjiqo=;
+	s=k20201202; t=1772300971;
+	bh=npRQ0tXYpgs62t84J3RGWsOTLTpkojqnwhv4hiqG08s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ezj2xZ/XynvPoeQ+OC2aC05B8rXYNBBp1Ye23avlkUYNcXG//AmZ61wNWbnF/D0Ao
-	 Kh7kDj0ke1Trvy8czqgKOTvL9J/FzERpKa/QlQyDIQ1Dg0zl7/xgcPUqCUPHY+zy3s
-	 tOhk+Fa7GZ52SB+GRzLQdDn3yx0rHRgCSH1YYLaiJ1WIHiJnfMhZu/LfGCM3OcFFqi
-	 T+1Lm7Crqd3rCkPzugpu1IP2oUfNicyuz90bOZHBuiOAzsaRDebKCUPL9+I1W6P5Vj
-	 Q7A2MeNZCUnYOp79vBuE5TkGKaj9qig0tD67ygZLbSO2l3f0KCdon8eRQT7pVB3/HC
-	 i6paB/JvGy3pA==
+	b=pi8m8WuHk9N0KGXx5vqpCUhw5Xbw7BTqJnJ7PIFREqSWyaH7FV3MS/GBn8YDFHE1n
+	 7RN4ZlUT1uy2PEkzEPwyGVx+wcMMu+fnzkd5vG03Qo+FIQsn/9SJZ/G2qp6k8eBoG+
+	 T0Y5Cmv7rgZMCVqWiaNSP1muW8NtP0xj3GrmoCoUtWrpP7GoqM/PG7IOSlg3KO1FSF
+	 ec3CvAAsYEzA45bwuixjHKIYGNq4VLxREHBf44dLA0SJSZNCtJ7rB7Hy4HUFaU6qRi
+	 7mv5KMWX+50J2MJGYORiXS/buedzEOdBzZlAFgMAqQjoWbUMkoqiB01DiCwzuP9k5J
+	 1b1ZXyAFhiNFA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+Cc: Tomas Melin <tomas.melin@vaisala.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 097/752] firmware: arm_ffa: Unmap Rx/Tx buffers on init failure
-Date: Sat, 28 Feb 2026 12:36:48 -0500
-Message-ID: <20260228174750.1542406-97-sashal@kernel.org>
+Subject: [PATCH 6.18 098/752] Revert "arm64: zynqmp: Add an OP-TEE node to the device tree"
+Date: Sat, 28 Feb 2026 12:36:49 -0500
+Message-ID: <20260228174750.1542406-98-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,37 +47,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Tomas Melin <tomas.melin@vaisala.com>
 
-[ Upstream commit 9fda364cb78c8b9e1abe4029f877300c94655742 ]
+[ Upstream commit c197179990124f991fca220d97fac56779a02c6d ]
 
-ffa_init() maps the Rx/Tx buffers via ffa_rxtx_map() but on the
-partition setup failure path it never unmaps them.
+This reverts commit 06d22ed6b6635b17551f386b50bb5aaff9b75fbe.
 
-Add the missing ffa_rxtx_unmap() call in the error path so that
-the Rx/Tx buffers are properly released before freeing the backing
-pages.
+OP-TEE logic in U-Boot automatically injects a reserved-memory
+node along with optee firmware node to kernel device tree.
+The injection logic is dependent on that there is no manually
+defined optee node. Having the node in zynqmp.dtsi effectively
+breaks OP-TEE's insertion of the reserved-memory node, causing
+memory access violations during runtime.
 
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Message-Id: <20251210031656.56194-1-lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Tomas Melin <tomas.melin@vaisala.com>
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/r/20251125-revert-zynqmp-optee-v1-1-d2ce4c0fcaf6@vaisala.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/xilinx/zynqmp.dtsi | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index c501c3104b3a4..11a702e7f641c 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -2093,6 +2093,7 @@ static int __init ffa_init(void)
+diff --git a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
+index 938b014ca9231..b55c6b2e8e0e1 100644
+--- a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
++++ b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
+@@ -192,11 +192,6 @@ psci {
+ 	};
  
- 	pr_err("failed to setup partitions\n");
- 	ffa_notifications_cleanup();
-+	ffa_rxtx_unmap(drv_info->vm_id);
- free_pages:
- 	if (drv_info->tx_buffer)
- 		free_pages_exact(drv_info->tx_buffer, rxtx_bufsz);
+ 	firmware {
+-		optee: optee  {
+-			compatible = "linaro,optee-tz";
+-			method = "smc";
+-		};
+-
+ 		zynqmp_firmware: zynqmp-firmware {
+ 			compatible = "xlnx,zynqmp-firmware";
+ 			#power-domain-cells = <1>;
 -- 
 2.51.0
 
