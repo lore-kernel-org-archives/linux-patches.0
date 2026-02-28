@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279D836C9E3
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BAE2737F2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302300; cv=none; b=brAgbU6S7ziiyRLh2qupCk31XDqf8BEgbYKuT8xUM18mKpwHsj2XAaLzMs9aAJGPE4RHHc6dJZApUKG29m3tAo47kW3n8hC/dJl3/XBiDImJBl2eqlt/wEml1UqvAW9nkm5+aZvkemFwxy+bKMSIfslnc0NakTDEucxZJ6k3foY=
+	t=1772302301; cv=none; b=ZW0lvIfjWwqWMMahFWy/65MO0yf/h1h6e83G2btPzACA0EEPwGP7i4Ebv0HPAq4UxecJFqKmAGya/AGrPG+Eyk51cpt+jLhyUjQPVZouV1/AqWN34TRktIQ1JPA9343h/9PxbrYjD6g/uGuVVcvrJ0jkbolGWLSTIHUYNol86mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302300; c=relaxed/simple;
-	bh=E7jQ1cmHilSN//wnTmDTtLZUoofKbRBI3MHNirvBe30=;
+	s=arc-20240116; t=1772302301; c=relaxed/simple;
+	bh=+5iALZRPN1lAOn7xD/BYqwW/kZLJMgiujcT28VCLHJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C6Rw6P5OfWpPyR7OY5bUqL03mYODWFR4/0yDiKTXj0EYfZGV9tRyOKxyCF5btvxVs5+3vNS1n55hAwZhy0I9wVQ6sK2bxP8kyB7tVWTBd2iTVePDeWKrOUf/6cXO7/zU/nwjG0n0ILN3WLamRASaWRFFKCwQxFDEiclKUlcHpDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EGi+EUnU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bW1FpuXszPaoU97DQ298C+7sNZQ5uPdvUKm6CtXSFhRuRZzpOSVtqzWcs4yhV8qiT4/ojO9IDv1PY1DR/OzcOQdstaprq+7J8q49KCWYxqWC4Mm+kGKrWihWdPlILyaj3S7m+h2ijkqDKKE9vvoiwDzPn5cfpRLIuOe3bT66SAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o/jSPOXZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EGi+EUnU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711CEC19424;
-	Sat, 28 Feb 2026 18:11:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o/jSPOXZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE03C19424;
+	Sat, 28 Feb 2026 18:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302300;
-	bh=E7jQ1cmHilSN//wnTmDTtLZUoofKbRBI3MHNirvBe30=;
+	bh=+5iALZRPN1lAOn7xD/BYqwW/kZLJMgiujcT28VCLHJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EGi+EUnU3SNd+MO1+yjPvhXJsQxZF1cIK4EpsaYvFTAmEu/GMtUxvNA/KCTr8TNGa
-	 UEAXwgiyoxqEuo2Tdra+n3RRdb8XjbXhivTdlubiKiiGgK9A+VSf4MEFtgyrok1q6Y
-	 vPH8wVLlBHnXZvHpyzDfJxmmWE/Qz0LGmkRsRru8DXOfbzcvMBDvzrshiaZQXucveS
-	 crkpmh8aLO9fr0mg2eNIc0ei0ZeZXq84nYmNAGr2+n85L4E5s38GJJ6WlF+1WEcwjd
-	 lCIqoIlXjhn4ZJm/aJmtB4JY+zO+kJ1vKyrrJwsN0g97bjawl4BagTAuwf0LaUf5l6
-	 27o8JGTJJupkg==
+	b=o/jSPOXZXjRkobH6VGGdaqAiDei33mTN6K1kPrVadZNknF/pGjkwjlLTY4v9QxZLn
+	 wKEPpxuntEzeyv1/dLhH8pm3Duu/x0GpQ2xa5aynmnEWCKos06uTa3dKlWToscVvPv
+	 hjC6TcpH2VijNQgpbwLdvDG1cbS+5z7t2vwvzuLaQcHvVoS23waIJubUBaggRlW3pK
+	 Q9iEZwIANuQwDxLWo/Lg23lC/YE7G2R/GR76S5TZYGDt4esccp/3SDMDI/cFkBDv1U
+	 JG1g+E/gqfBtgtbxGvgGqic9rQzx3/syUqkYsdDTYwJRKHkFPKyewYvaBUe/mTCglI
+	 kR18OTz77/OaA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Filipe Manana <fdmanana@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+Cc: Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/232] btrfs: qgroup: return correct error when deleting qgroup relation item
-Date: Sat, 28 Feb 2026 13:07:47 -0500
-Message-ID: <20260228181127.1592657-14-sashal@kernel.org>
+Subject: [PATCH 6.1 015/232] btrfs: fix block_group_tree dirty_list corruption
+Date: Sat, 28 Feb 2026 13:07:48 -0500
+Message-ID: <20260228181127.1592657-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,40 +48,148 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 51b1fcf71c88c3c89e7dcf07869c5de837b1f428 ]
+[ Upstream commit 3a1f4264daed4b419c325a7fe35e756cada3cf82 ]
 
-If we fail to delete the second qgroup relation item, we end up returning
-success or -ENOENT in case the first item does not exist, instead of
-returning the error from the second item deletion.
+When the incompat flag EXTENT_TREE_V2 is set, we unconditionally add the
+block group tree to the switch_commits list before calling
+switch_commit_roots, as we do for the tree root and the chunk root.
+However, the block group tree uses normal root dirty tracking and in any
+transaction that does an allocation and dirties a block group, the block
+group root will already be linked to a list by the dirty_list field and
+this use of list_add_tail() is invalid and corrupts the prev/next
+members of block_group_root->dirty_list.
 
-Fixes: 73798c465b66 ("btrfs: qgroup: Try our best to delete qgroup relations")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+This is apparent on a subsequent list_del on the prev if we enable
+CONFIG_DEBUG_LIST:
+
+  [32.1571] ------------[ cut here ]------------
+  [32.1572] list_del corruption. next->prev should beffff958890202538, but was ffff9588992bd538. (next=ffff958890201538)
+  [32.1575] WARNING: lib/list_debug.c:65 at 0x0, CPU#3: sync/607
+  [32.1583] CPU: 3 UID: 0 PID: 607 Comm: sync Not tainted 6.18.0 #24PREEMPT(none)
+  [32.1585] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS1.17.0-4.fc41 04/01/2014
+  [32.1587] RIP: 0010:__list_del_entry_valid_or_report+0x108/0x120
+  [32.1593] RSP: 0018:ffffaa288287fdd0 EFLAGS: 00010202
+  [32.1594] RAX: 0000000000000001 RBX: ffff95889326e800 RCX:ffff958890201538
+  [32.1596] RDX: ffff9588992bd538 RSI: ffff958890202538 RDI:ffffffff82a41e00
+  [32.1597] RBP: ffff958890202538 R08: ffffffff828fc1e8 R09:00000000ffffefff
+  [32.1599] R10: ffffffff8288c200 R11: ffffffff828e4200 R12:ffff958890201538
+  [32.1601] R13: ffff95889326e958 R14: ffff958895c24000 R15:ffff958890202538
+  [32.1603] FS:  00007f0c28eb5740(0000) GS:ffff958af2bd2000(0000)knlGS:0000000000000000
+  [32.1605] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [32.1607] CR2: 00007f0c28e8a3cc CR3: 0000000109942005 CR4:0000000000370ef0
+  [32.1609] Call Trace:
+  [32.1610]  <TASK>
+  [32.1611]  switch_commit_roots+0x82/0x1d0 [btrfs]
+  [32.1615]  btrfs_commit_transaction+0x968/0x1550 [btrfs]
+  [32.1618]  ? btrfs_attach_transaction_barrier+0x23/0x60 [btrfs]
+  [32.1621]  __iterate_supers+0xe8/0x190
+  [32.1622]  ? __pfx_sync_fs_one_sb+0x10/0x10
+  [32.1623]  ksys_sync+0x63/0xb0
+  [32.1624]  __do_sys_sync+0xe/0x20
+  [32.1625]  do_syscall_64+0x73/0x450
+  [32.1626]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [32.1627] RIP: 0033:0x7f0c28d05d2b
+  [32.1632] RSP: 002b:00007ffc9d988048 EFLAGS: 00000246 ORIG_RAX:00000000000000a2
+  [32.1634] RAX: ffffffffffffffda RBX: 00007ffc9d988228 RCX:00007f0c28d05d2b
+  [32.1636] RDX: 00007f0c28e02301 RSI: 00007ffc9d989b21 RDI:00007f0c28dba90d
+  [32.1637] RBP: 0000000000000001 R08: 0000000000000001 R09:0000000000000000
+  [32.1639] R10: 0000000000000000 R11: 0000000000000246 R12:000055b96572cb80
+  [32.1641] R13: 000055b96572b19f R14: 00007f0c28dfa434 R15:000055b96572b034
+  [32.1643]  </TASK>
+  [32.1644] irq event stamp: 0
+  [32.1644] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
+  [32.1646] hardirqs last disabled at (0): [<ffffffff81298817>]copy_process+0xb37/0x2260
+  [32.1648] softirqs last  enabled at (0): [<ffffffff81298817>]copy_process+0xb37/0x2260
+  [32.1650] softirqs last disabled at (0): [<0000000000000000>] 0x0
+  [32.1652] ---[ end trace 0000000000000000 ]---
+
+Furthermore, this list corruption eventually (when we happen to add a
+new block group) results in getting the switch_commits and
+dirty_cowonly_roots lists mixed up and attempting to call update_root
+on the tree root which can't be found in the tree root, resulting in a
+transaction abort:
+
+  [87.8269] BTRFS critical (device nvme1n1): unable to find root key (1 0 0) in tree 1
+  [87.8272] ------------[ cut here ]------------
+  [87.8274] BTRFS: Transaction aborted (error -117)
+  [87.8275] WARNING: fs/btrfs/root-tree.c:153 at 0x0, CPU#4: sync/703
+  [87.8285] CPU: 4 UID: 0 PID: 703 Comm: sync Not tainted 6.18.0 #25 PREEMPT(none)
+  [87.8287] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-4.fc41 04/01/2014
+  [87.8289] RIP: 0010:btrfs_update_root+0x296/0x790 [btrfs]
+  [87.8295] RSP: 0018:ffffa58d035dfd60 EFLAGS: 00010282
+  [87.8297] RAX: ffff9a59126ddb68 RBX: ffff9a59126dc000 RCX: 0000000000000000
+  [87.8299] RDX: 0000000000000000 RSI: 00000000ffffff8b RDI: ffffffffc0b28270
+  [87.8301] RBP: ffff9a5904aec000 R08: 0000000000000000 R09: 00000000ffffefff
+  [87.8303] R10: ffffffff9ac8c200 R11: ffffffff9ace4200 R12: 0000000000000001
+  [87.8305] R13: ffff9a59041740e8 R14: ffff9a5904aec1f7 R15: ffff9a590fdefaf0
+  [87.8307] FS:  00007f54cde6b740(0000) GS:ffff9a5b5a81c000(0000) knlGS:0000000000000000
+  [87.8309] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [87.8310] CR2: 00007f54cde403cc CR3: 0000000112902004 CR4: 0000000000370ef0
+  [87.8312] Call Trace:
+  [87.8313]  <TASK>
+  [87.8314]  ? _raw_spin_unlock+0x23/0x40
+  [87.8315]  commit_cowonly_roots+0x1ad/0x250 [btrfs]
+  [87.8317]  ? btrfs_commit_transaction+0x79b/0x1560 [btrfs]
+  [87.8320]  btrfs_commit_transaction+0x8aa/0x1560 [btrfs]
+  [87.8322]  ? btrfs_attach_transaction_barrier+0x23/0x60 [btrfs]
+  [87.8325]  __iterate_supers+0xf1/0x170
+  [87.8326]  ? __pfx_sync_fs_one_sb+0x10/0x10
+  [87.8327]  ksys_sync+0x63/0xb0
+  [87.8328]  __do_sys_sync+0xe/0x20
+  [87.8329]  do_syscall_64+0x73/0x450
+  [87.8330]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [87.8331] RIP: 0033:0x7f54cdd05d2b
+  [87.8336] RSP: 002b:00007fff1b58ff78 EFLAGS: 00000246 ORIG_RAX: 00000000000000a2
+  [87.8338] RAX: ffffffffffffffda RBX: 00007fff1b590158 RCX: 00007f54cdd05d2b
+  [87.8340] RDX: 00007f54cde02301 RSI: 00007fff1b592b66 RDI: 00007f54cddba90d
+  [87.8342] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
+  [87.8344] R10: 0000000000000000 R11: 0000000000000246 R12: 000055e07ca96b80
+  [87.8346] R13: 000055e07ca9519f R14: 00007f54cddfa434 R15: 000055e07ca95034
+  [87.8348]  </TASK>
+  [87.8348] irq event stamp: 0
+  [87.8349] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
+  [87.8351] hardirqs last disabled at (0): [<ffffffff99698797>] copy_process+0xb37/0x21e0
+  [87.8353] softirqs last  enabled at (0): [<ffffffff99698797>] copy_process+0xb37/0x21e0
+  [87.8355] softirqs last disabled at (0): [<0000000000000000>] 0x0
+  [87.8357] ---[ end trace 0000000000000000 ]---
+  [87.8358] BTRFS: error (device nvme1n1 state A) in btrfs_update_root:153: errno=-117 Filesystem corrupted
+  [87.8360] BTRFS info (device nvme1n1 state EA): forced readonly
+  [87.8362] BTRFS warning (device nvme1n1 state EA): Skipping commit of aborted transaction.
+  [87.8364] BTRFS: error (device nvme1n1 state EA) in cleanup_transaction:2037: errno=-117 Filesystem corrupted
+
+Since the block group tree was pulled out of the extent tree and uses
+normal root dirty tracking, remove the offending extra list_add. This
+fixes the list corruption and the resulting fs corruption.
+
+Fixes: 14033b08a029 ("btrfs: don't save block group root into super block")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/transaction.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index c95902bf6144d..b175d0a4b3826 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -1575,8 +1575,10 @@ static int __del_qgroup_relation(struct btrfs_trans_handle *trans, u64 src,
- 	if (ret < 0 && ret != -ENOENT)
- 		goto out;
- 	ret2 = del_qgroup_relation_item(trans, dst, src);
--	if (ret2 < 0 && ret2 != -ENOENT)
-+	if (ret2 < 0 && ret2 != -ENOENT) {
-+		ret = ret2;
- 		goto out;
-+	}
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index b22b8e68672c1..6d1113dc2abf2 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -2450,13 +2450,6 @@ int btrfs_commit_transaction(struct btrfs_trans_handle *trans)
+ 	list_add_tail(&fs_info->chunk_root->dirty_list,
+ 		      &cur_trans->switch_commits);
  
- 	/* At least one deletion succeeded, return 0 */
- 	if (!ret || !ret2)
+-	if (btrfs_fs_incompat(fs_info, EXTENT_TREE_V2)) {
+-		btrfs_set_root_node(&fs_info->block_group_root->root_item,
+-				    fs_info->block_group_root->node);
+-		list_add_tail(&fs_info->block_group_root->dirty_list,
+-			      &cur_trans->switch_commits);
+-	}
+-
+ 	switch_commit_roots(trans);
+ 
+ 	ASSERT(list_empty(&cur_trans->dirty_bgs));
 -- 
 2.51.0
 
