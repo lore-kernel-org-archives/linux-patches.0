@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3654E33F38A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CEA3314C3
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301178; cv=none; b=PJSyTgGrUbCS6w1O/jHrXBrQVWEb4UBabubJDUs6IJb6cJ56a25VeyJAn7CWVkXE2s6RFzpTNAN+hFXZ2RC7OlyY4YwPYFiH5HtyUzygeNZGNAkT7cIIY+yeH/fSkxlbWcEoM5n9wMdL9cJZa70ckjYMlOhk9AR5MxpnnukuFSg=
+	t=1772301179; cv=none; b=bRbzVFyMtPPllJIQNsoD6tZrKTzxw3mQK7zlrP0l2VxPh7JpnuWjGeo5K6lp/AaxnXfYv05SkYRmbwaPepeaFq6tRpnQ9lq2Hc9R0L5tEoeegKrhVRJArdizsUvm0VbEpNjFcY9QdTAFGZME0sFXZ/z0/LJ1S2TDQk3znVDg94E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301178; c=relaxed/simple;
-	bh=cMDqkK33dyeBBPrf5Ta6K24p+p4t+4mm1cDDdK4KIqc=;
+	s=arc-20240116; t=1772301179; c=relaxed/simple;
+	bh=VVnje+7+SfWBlrdLKBwQdRyCvKyAE8CdhiGHg4l/OXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0YEQbe9b3Fi2jI2LVyeyusx4KLEwga6EuW7+l+fds8B9r0dsdUzNllzkIQSK8Ssv+s6Q3XKMQGILX+JvdGRk14fGBafDaQ6dYiwjhJp4nxb9T/Rx7m/i/HpLqKLhEVLPEOmS4XGy3bYO6rfbVPbd6HnXX3KXZgzBX5uttBKnnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DnXhZiW+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QWsUx+xX2AdERq9qQeCVNRurjQv+a37D+OnBjsKoFXVgbJHUrvH5gPlG5QJP4O+270c+AI5lxfXUp0L1tLzoW4GvLDRWrDdOX1z3C8Tnf3Y/Eo2xwmW1QophHv+PKkXBaA/02cjdmxw5DF569Lf8HgFoAE6n71aBYPmCSQQ805s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kioGAmg1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DnXhZiW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B8BC19423;
-	Sat, 28 Feb 2026 17:52:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kioGAmg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B53FC116D0;
+	Sat, 28 Feb 2026 17:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301178;
-	bh=cMDqkK33dyeBBPrf5Ta6K24p+p4t+4mm1cDDdK4KIqc=;
+	bh=VVnje+7+SfWBlrdLKBwQdRyCvKyAE8CdhiGHg4l/OXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DnXhZiW+w8N4r44qe9EHN0l2qIUL5eiNAZm2lBJ1anYXBasyIXrzInw4tuPRaMWzN
-	 8aj7xEb4B/zMMyGz2PsYqDbkb4iBhqVlmNRKJV8/oXqop6OsfQ5atVDZ0PTqkQOTIf
-	 pPwvo8Wk7kZyIZNoKX5dNDfqjvTJFm8mWDaMClvZfJOvTSHvdSXkipKk4G8DorudHv
-	 PosCP1xdRIiwrerpRbJmJ17tCbBZL4dQ1F3O6vGl6GqC88JcLTPePQHw7qRXPzE/D2
-	 PcjsknqeAtCZ9Pay8e5FAuOFuOktk2XbWX1ocGPKvgg+eSWBNyJekQF8UBxoIKnD7R
-	 e8nEeN4sDTdAA==
+	b=kioGAmg1+rtEWEtaz3CRl40CQ/SRmXheFi+YgEQoWq23r4hkZZq3pt01ONuDIqtN4
+	 55WgH2X5cS6/QzWfYUWAc/dnElT+R+X5asYqkZdH8CT15xsQQF9fhSRs4hVUCB4qrT
+	 MHjMpqVOxGYlX0hlZj6R2CICNL0axJd7mf8xtdkzqBPiWq5n3RbPqkieCejmXDaSag
+	 GRshCirTtV83KsLcNH+iBTwdgR3R+LiCWHWtEB/a2XzFJzljdufwawUIg/VVEAetkL
+	 RZPC4Z9um6N4TXBvWo4wlILiavH4f09MwQRrkkxXPDSRK5Xt4gGMcbasoB+Bfcpmy9
+	 /S3aSM69T2TJg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Moteen Shah <m-shah@ti.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: =?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 346/752] serial: 8250: 8250_omap.c: Clear DMA RX running status only after DMA termination is done
-Date: Sat, 28 Feb 2026 12:40:57 -0500
-Message-ID: <20260228174750.1542406-346-sashal@kernel.org>
+Subject: [PATCH 6.18 347/752] fix it87_wdt early reboot by reporting running timer
+Date: Sat, 28 Feb 2026 12:40:58 -0500
+Message-ID: <20260228174750.1542406-347-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -43,47 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Moteen Shah <m-shah@ti.com>
+From: René Rebe <rene@exactco.de>
 
-[ Upstream commit a5fd8945a478ff9be14812693891d7c9b4185a50 ]
+[ Upstream commit 88b2ab346436f799b99894a3e9518a3ffa344524 ]
 
-Clear rx_running flag only after DMA teardown polling completes. In the
-previous implementation the flag was being cleared while hardware teardown
-was still in progress, creating a mismatch between software state
-(flag = 0, "ready") and hardware state (still terminating).
+Some products, such as the Ugreen DXP4800 Plus NAS, ship with the it87
+wdt enabled by the firmware and a broken BIOS option that does not
+allow to change the time or turn it off. As this makes installing
+Linux rather difficult, change the it87_wdt to report it running to
+the watchdog core.
 
-Signed-off-by: Moteen Shah <m-shah@ti.com>
-Link: https://patch.msgid.link/20260112081829.63049-3-m-shah@ti.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: René Rebe <rene@exactco.de>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/it87_wdt.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index e26bae0a6488f..272bc07c9a6b5 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -931,7 +931,6 @@ static void __dma_rx_do_complete(struct uart_8250_port *p)
- 		goto out;
+diff --git a/drivers/watchdog/it87_wdt.c b/drivers/watchdog/it87_wdt.c
+index 3b8488c86a2f3..1d9f8591f38d8 100644
+--- a/drivers/watchdog/it87_wdt.c
++++ b/drivers/watchdog/it87_wdt.c
+@@ -188,6 +188,12 @@ static void _wdt_update_timeout(unsigned int t)
+ 		superio_outb(t >> 8, WDTVALMSB);
+ }
  
- 	cookie = dma->rx_cookie;
--	dma->rx_running = 0;
++/* Internal function, should be called after superio_select(GPIO) */
++static bool _wdt_running(void)
++{
++	return superio_inb(WDTVALLSB) || (max_units > 255 && superio_inb(WDTVALMSB));
++}
++
+ static int wdt_update_timeout(unsigned int t)
+ {
+ 	int ret;
+@@ -374,6 +380,12 @@ static int __init it87_wdt_init(void)
+ 		}
+ 	}
  
- 	/* Re-enable RX FIFO interrupt now that transfer is complete */
- 	if (priv->habit & UART_HAS_RHR_IT_DIS) {
-@@ -965,6 +964,7 @@ static void __dma_rx_do_complete(struct uart_8250_port *p)
- 		goto out;
- 	ret = tty_insert_flip_string(tty_port, dma->rx_buf, count);
++	/* wdt already left running by firmware? */
++	if (_wdt_running()) {
++		pr_info("Left running by firmware.\n");
++		set_bit(WDOG_HW_RUNNING, &wdt_dev.status);
++	}
++
+ 	superio_exit();
  
-+	dma->rx_running = 0;
- 	p->port.icount.rx += ret;
- 	p->port.icount.buf_overrun += count - ret;
- out:
+ 	if (timeout < 1 || timeout > max_units * 60) {
 -- 
 2.51.0
 
