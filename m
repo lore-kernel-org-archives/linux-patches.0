@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05603321D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B060243636C
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301192; cv=none; b=OI04jXnyUOS05jfQsbO/KU3ahnxRC93L9c4AEiXYbGZU3SmvBd+2ZAQqng1DtiFnWVNrzwYBtIzrr/Rt2bpZH2ucMGTdHjHisP4MdTwq0S4oaCLUAi//blt0Vnhv49Ctg1vaDDAWcA9EomauYfH5XrTlQDlkeR6mzAoLw0QyCzs=
+	t=1772301192; cv=none; b=S347e5lPZIz7UmiKM5QCknn7XOhAVIUkkG304+Xs90ecDTPi/y8ep2qM68FA17j4TBQMlWaNZFwSy4F7FAX20PNXLqQsxSqwDovZOws688te28fAx5QOn2tF1PLsH7L8hUiBBauglJ7HtqswMal/6mOjbxINVsb7qmeWt+A3ZgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301192; c=relaxed/simple;
-	bh=lhno9CxasPaA40deyQx87nJXvzL976agX6vpuFQs7+M=;
+	bh=gMK2WcOWJT9VZiN/huhIBPabqNf1xlyuX+5Roxcyj/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y1EkXGz/kusveFMd11TYSmEc+aIw279dtzR2KLIx92xl5J6vmMW1irLCx/Hn1dMuBK4tJDZUKq3cnODAddF0xKxnCHxPrgD5zqG2zFi71KfDwED/S44vFRNnPfbfDqUO7TBu94cecg/1rA1LPb/rSaRdsTVetU166rf7woBdz3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s8gt3kWF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tz1/PRjr+z0eRfdoKJxq63UfovzJdqgTcM/+DGF4OIAd1bhnwGIosgxOnza9LLStYa+68g0XB5q1bO3uTnOrVtH1CPRRQkAvM0KZ2DILU7jNR49Ooipr4H+WF7iura4aFNo/7i5xcB16AFhAngXTZ1cfIYNTmO8kCZWqBabPkck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mtENFUP9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s8gt3kWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D59C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mtENFUP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E62CC116D0;
 	Sat, 28 Feb 2026 17:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301192;
-	bh=lhno9CxasPaA40deyQx87nJXvzL976agX6vpuFQs7+M=;
+	s=k20201202; t=1772301191;
+	bh=gMK2WcOWJT9VZiN/huhIBPabqNf1xlyuX+5Roxcyj/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8gt3kWFNJh9H3lewqNljL8qBP8buQHmWF2jFb0Fzyj/Es+ZidRGHOuCadPQP5UU/
-	 Za/+3PBj7mRJNWxz2l6aGPHF5Apxlo1S4Vyqm+4LvV0J9PIUsEt3108IcuTCP4puzx
-	 ckVsMUDtkGl1SaUFgFF7A0Fx1GN8LTOuEr0hptFkFZbqmIGjEOx7gexErA1AjBSPHy
-	 Hfmwm4czAPQZk4DhWHY/DWYPbhnfQmefAPXcsqMtixq9SBjZK5EK8DYp5v2EKmcUKJ
-	 B5uwpD2oCe9bCCVg7V/ekfIJk3OtekGcM7kf5vkARSD/MNV/FAywUXO+S9YxYdWZ7p
-	 w+/1iEtfb0z2A==
+	b=mtENFUP9oL2J1rIxI27ovZMfyI/K9qiLCUr6C6E+F/lEt8WAtnaq7gKMIceQ9nXvc
+	 QeHo+QFvKeSheV81CqtbrtnAxA+TQaWPzh5SbeJbVa7TxWCVNEDS7kD/xAu2KVJ9hY
+	 6GAUD0amPM5Ne1eUxxM0QwqBSl8HuUR6SP/+lP8loAsFjw4TQAiMSEM24WX5g+6PLR
+	 hyOxijpI5bBrLXiL+hf6VvK9+UV+azyBwQq3otkdZpnjQUJQCg7BEnt8Im8Oy7NGLc
+	 GjLuTa0AUv631qUrmUEbBGvvNtsp/8CXaqfnBSbVXcBSG8h3Vy5boahRpoNXCMII+o
+	 b8XxBsUAulvUw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+Cc: Szymon Wilczek <swilczek.lx@gmail.com>,
+	syzbot+d27edf9f96ae85939222@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 363/752] fs/ntfs3: avoid calling run_get_entry() when run == NULL in ntfs_read_run_nb_ra()
-Date: Sat, 28 Feb 2026 12:41:14 -0500
-Message-ID: <20260228174750.1542406-363-sashal@kernel.org>
+Subject: [PATCH 6.18 362/752] ntfs3: fix circular locking dependency in run_unpack_ex
+Date: Sat, 28 Feb 2026 12:41:13 -0500
+Message-ID: <20260228174750.1542406-362-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,42 +48,60 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Szymon Wilczek <swilczek.lx@gmail.com>
 
-[ Upstream commit c5226b96c08a010ebef5fdf4c90572bcd89e4299 ]
+[ Upstream commit 08ce2fee1b869ecbfbd94e0eb2630e52203a2e03 ]
 
-When ntfs_read_run_nb_ra() is invoked with run == NULL the code later
-assumes run is valid and may call run_get_entry(NULL, ...), and also
-uses clen/idx without initializing them. Smatch reported uninitialized
-variable warnings and this can lead to undefined behaviour. This patch
-fixes it.
+Syzbot reported a circular locking dependency between wnd->rw_lock
+(sbi->used.bitmap) and ni->file.run_lock.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202512230646.v5hrYXL0-lkp@intel.com/
+The deadlock scenario:
+1. ntfs_extend_mft() takes ni->file.run_lock then wnd->rw_lock.
+2. run_unpack_ex() takes wnd->rw_lock then tries to acquire
+   ni->file.run_lock inside ntfs_refresh_zone().
+
+This creates an AB-BA deadlock.
+
+Fix this by using down_read_trylock() instead of down_read() when
+acquiring run_lock in run_unpack_ex(). If the lock is contended,
+skip ntfs_refresh_zone() - the MFT zone will be refreshed on the
+next MFT operation. This breaks the circular dependency since we
+never block waiting for run_lock while holding wnd->rw_lock.
+
+Reported-by: syzbot+d27edf9f96ae85939222@syzkaller.appspotmail.com
+Tested-by: syzbot+d27edf9f96ae85939222@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d27edf9f96ae85939222
+Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fsntfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ntfs3/run.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index ef0177b5c6cb0..83df92df1ee0c 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -1252,6 +1252,12 @@ int ntfs_read_run_nb(struct ntfs_sb_info *sbi, const struct runs_tree *run,
- 
- 		} while (len32);
- 
-+		if (!run) {
-+			err = -EINVAL;
-+			goto out;
-+		}
-+
-+		/* Get next fragment to read. */
- 		vcn_next = vcn + clen;
- 		if (!run_get_entry(run, ++idx, &vcn, &lcn, &clen) ||
- 		    vcn != vcn_next) {
+diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
+index 5df55e4adbb11..21decc2922823 100644
+--- a/fs/ntfs3/run.c
++++ b/fs/ntfs3/run.c
+@@ -1124,11 +1124,14 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
+ 			struct rw_semaphore *lock =
+ 				is_mounted(sbi) ? &sbi->mft.ni->file.run_lock :
+ 						  NULL;
+-			if (lock)
+-				down_read(lock);
+-			ntfs_refresh_zone(sbi);
+-			if (lock)
+-				up_read(lock);
++			if (lock) {
++				if (down_read_trylock(lock)) {
++					ntfs_refresh_zone(sbi);
++					up_read(lock);
++				}
++			} else {
++				ntfs_refresh_zone(sbi);
++			}
+ 		}
+ 		up_write(&wnd->rw_lock);
+ 		if (err)
 -- 
 2.51.0
 
