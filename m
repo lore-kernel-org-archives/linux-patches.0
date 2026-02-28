@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BF043636C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD4F421A16
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301160; cv=none; b=VQwStP4eXHgGv3AEvzoiITFSvZY4weaQf1rvJvzDyQ2Zc6Cd9CpUY0UrV+JMBWJ95hGskPGNgKLP/Upfo9RwtYeUqgt7Ltmp1lc+aXQyEeHdeADE4mchzWONB+/uxq8TPBE90wFhqUyFXQ8XRUOpokaVcyQtZxwNisJJsVk91qE=
+	t=1772301161; cv=none; b=lYnAYyTP3p4L8K9QAKpskUBHLvNMeYNHA2xnEvxqBvVvyBLCtkhMcxeuoIGGlAiPeUzAyeWQr9UakQRg2WqRnwHxL6DCeJNo/G1v8rBH9D1EK/lZuo/YIlYOdbrjXKaeyfEO85U/pqbmX0+pb5it3IDMK/YXxa8P4V32Mcw6Yno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301160; c=relaxed/simple;
-	bh=NTHk+Aj+yk0JQZSMKMquAes9wACrqJ8bnwzA5E35qOM=;
+	s=arc-20240116; t=1772301161; c=relaxed/simple;
+	bh=0KWI7mRy87m/nS0+mW6q0c2VaGXP+MWdnuyz1U6iQD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GtZs2+2jN3RX/qa3lFzXW2Gm48GBbBQZoO/EQ2V0J+8Zss6p0AnKiSsOL9A6KRtvf6ce7eD4VVglU6zo8lD7XZh1q0egjzr3ZwRsXcrk+K2AG4BPMn8IH7FbTMjis+kqTPIvu9gCHU2bypcCpIpv/u/lIC97aIcN1211iCLavB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RkjM0QBN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bhBiROmN+rAhPgfC/UjB4kgx3iYsDX1RtRF6ScBu3BHEyy+YARySIfsrzy/zWsc2P1cN/X2NNdllulb62IV3QIV80j37ek+03sdo+iPnkvRKqRIjMuzOwDwi/vKmmPQiHqdWc0Z1sqXdg6FRqc5I7jfm8+zj5IOwQHtNVBuFWuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ecf9m6Xr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RkjM0QBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342EFC19423;
-	Sat, 28 Feb 2026 17:52:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ecf9m6Xr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DD8C19424;
+	Sat, 28 Feb 2026 17:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301159;
-	bh=NTHk+Aj+yk0JQZSMKMquAes9wACrqJ8bnwzA5E35qOM=;
+	s=k20201202; t=1772301160;
+	bh=0KWI7mRy87m/nS0+mW6q0c2VaGXP+MWdnuyz1U6iQD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkjM0QBNUYB4Nj9U/jrT6VIEZm+KtBYGWEzoR6Wp2VzPoyUEneNAAI5kGRgSoj5Nj
-	 IwleltK9e458/+2UJrUqvtP64+PXxNJSxpHgOyaKUg+Hdb03F0WGAq1bxmrvbe7HBd
-	 h86SjyyXuq/B3qglZqOv00Ox4kpuStrKDm2FUHACIrtir0AmsA9Bp0bYQ1hY+rBUd+
-	 3QFGN/ZCio/4oagnDSl/3b/9ud24wslc/bonCAfDH0Nkh9ZV3N5OojvLCasDgt0Wdt
-	 R86THnCpKvYYJo4SjD5zgWErJfNNlUxLS1UXAGStIYDgeAZ0B7D/aFnu0oxOHsigdm
-	 OZRjQ6Y+OawcA==
+	b=Ecf9m6XrnCrGle5vlVGX8Ic67DDS/HHtGrTv5FtJbeUOQ0ZI3eQZWLz53n8CylIwV
+	 rbTX+xMYk3Zf+twVXcIXAZF3q9k+CEhfr14Z2up4l0MXZ4y0EG/i/IBA4+92R305IO
+	 ILTqS/4/L8t2m4yXBikU2ukthg2/dhD541R99r9NJKoApsqYusHeUucLu1UW0hjzyx
+	 R1LYLYgq3LQrx4/VbE1nI6NVEHf2K8d1cJTLf7Nsea6BryEVsumasNmNESYYIY9p6q
+	 jTs/V5HKfMN9QOEMgC9BaMF+FJbSkooCaKfS35BmWJOanVOX3SiCdnsZPaV0SezKDd
+	 SyycCCnKB0dTA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+Cc: Maciej Strozek <mstrozek@opensource.cirrus.com>,
 	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 324/752] soundwire: dmi-quirks: add mapping for Avell B.ON (OEM rebranded of NUC15)
-Date: Sat, 28 Feb 2026 12:40:35 -0500
-Message-ID: <20260228174750.1542406-324-sashal@kernel.org>
+Subject: [PATCH 6.18 325/752] soundwire: intel_auxdevice: add cs42l45 codec to wake_capable_list
+Date: Sat, 28 Feb 2026 12:40:36 -0500
+Message-ID: <20260228174750.1542406-325-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,46 +49,35 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Maciej Strozek <mstrozek@opensource.cirrus.com>
 
-[ Upstream commit 59946373755d71dbd7614ba235e0093159f80b69 ]
+[ Upstream commit f87e5575a6bd1925cd55f500b61b661724372e5f ]
 
-Avell B.ON is an OEM re-branded NUC15 'Bishop County' LAPBC510 and
-LAPBC710.
+Add cs42l45 to the wake_capable_list because it can generate jack events
+whilst the bus is stopped.
 
-Link: https://github.com/thesofproject/linux/issues/5529
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
 Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20251215130947.31385-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251215151729.3911077-1-ckeepax@opensource.cirrus.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/soundwire/intel_auxdevice.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 91ab97a456fa9..5854218e1a274 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -122,6 +122,17 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		},
- 		.driver_data = (void *)intel_tgl_bios,
- 	},
-+	{
-+		/*
-+		 * quirk used for Avell B.ON (OEM rebrand of NUC15 'Bishop County'
-+		 * LAPBC510 and LAPBC710)
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Avell High Performance"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "B.ON"),
-+		},
-+		.driver_data = (void *)intel_tgl_bios,
-+	},
- 	{
- 		/* quirk used for NUC15 'Rooks County' LAPRC510 and LAPRC710 skews */
- 		.matches = {
+diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
+index 6df2601fff909..8752b0e3ce74c 100644
+--- a/drivers/soundwire/intel_auxdevice.c
++++ b/drivers/soundwire/intel_auxdevice.c
+@@ -52,6 +52,7 @@ struct wake_capable_part {
+ 
+ static struct wake_capable_part wake_capable_list[] = {
+ 	{0x01fa, 0x4243},
++	{0x01fa, 0x4245},
+ 	{0x025d, 0x5682},
+ 	{0x025d, 0x700},
+ 	{0x025d, 0x711},
 -- 
 2.51.0
 
