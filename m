@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3B9344D9A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920C2375AAD
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301719; cv=none; b=N29yQQjEahpWzseKAFyBz8HOetgxuvlkEvkL2/LGtGYTfUY2/cj9KaD92T7SRgM6l45vcdbBL0g5ztJf9ZkLU7mXkEqaP6mvprFYK5KoVpiZL6rzxZM4Hleyd90Mjg6HwPN0jnK7wEZMTOrr3p4oEqLBYMyenudRdaVhwEXI9BY=
+	t=1772301720; cv=none; b=Vhlm9d/NL1IRqm/sx8kK09zdty8Ajnv0ILbV2CSOd7LcuiR4ubM/JtD9ABYgV3WNGx2gEkwrAQ6NnODTds44hpXr+aFrit7tJPMxBKTOJmnWLYb68BGGR1Ck8FmTDc5S16JFB6uJV67Snzsiuk7DpecI1hixOueE7oUDaYT4w1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301719; c=relaxed/simple;
-	bh=FX8WZdV09wKxMzdGfHw6UfDVHvE3q7SvkkgUS7jJ810=;
+	s=arc-20240116; t=1772301720; c=relaxed/simple;
+	bh=yK34dXhslRUCupxNFWeKPWwsirufOg3iC8AqBblGhEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MO3cdOiWyPZp016g/y0dwUjiBFazCimjMifz5VFF08LZPTJqaF0w1nq8dXqbomNaNTPfo/0tq8SoGVk/N1jtfbfVp48qD/B9OLiuplDLHrxvRi1791AMIJuwehyUaF8Xhyyy9gJE9iEYxmi96eZCHDWnxOgL2SPrxQMV3qYbJAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eLlsu3mJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gzdCOpGNXu0Q5TZ+f6d9s1KiAa4TtXcw1/4D0vqYEFkFfI05WdejDz4Ec3X9qKoGfhe7mVHXaK5MBeXgnMVOCVGbXVjtdZi3smCn8uOF7E6bXj7HADgbAsZQYwLDTJbKsuxF/YKI/6tFZKx58Cm4/OWb80XZJvp/zQ9N2eqX28E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YNCfXJ2e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eLlsu3mJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD8AC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YNCfXJ2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0232C116D0;
 	Sat, 28 Feb 2026 18:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301719;
-	bh=FX8WZdV09wKxMzdGfHw6UfDVHvE3q7SvkkgUS7jJ810=;
+	s=k20201202; t=1772301720;
+	bh=yK34dXhslRUCupxNFWeKPWwsirufOg3iC8AqBblGhEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLlsu3mJkXGqQPW9dba/kDSsRdSZj15GaNO5f6f9uG7TWBRnpXULIzoq/jpXLVzjA
-	 AUQFyEIO+qNgwLfcGO0CuBo76TMh0VNh9/p1iCRCoK+5ISfDJp9y6lRXwVZfBImSQt
-	 JEDgqSb/ObShNEhAKdl3hklD7CybmdjWqJUonocOU77gMp3pwf8mg68UDSMyE1zFdg
-	 dprUhjp/x4RFpcj4a7rdu0pDOHhDNw+HnKqpEWNquUc88emnY4gCYeZRZctWNjFJli
-	 vsjelyVY0u8wly9mFlKZR6n50vsRn30kQ83S0DUgj1dPkM1YbO5H2zENu8UXaro/sn
-	 e7CIgq9AhR4vA==
+	b=YNCfXJ2eNuzn15aQcyMgPL06j9Wp4tH7IeE+omdKC5VAQNkew1hFFY8iaXEu6vq10
+	 /WVKKheY04hNLH8z9kQ0XXh9yPHsf5NacdOItp5Le6rbabikhiSm8XVzg2EvdCB5Wn
+	 dmnF2qOcxqBvkPofEk4crPYuTeuFtqKkhD+Mz0zsplYlq0y8U3NwrzQjrK4wokgEiV
+	 qitNpYSu58cQpBw6bIP01lADn2tO3F85m4WHXwFVeR7cSnb24XNUuF1c7AvHkDirHE
+	 WoT/2e+82MHa0yvh0MRrdjWPMa5zq7HFG06X+185ZSJQ6AHj2aoC9bzcCjIOL+SeBY
+	 4zLZeVpx8zEnQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotian Zhang <vulab@iscas.ac.cn>,
-	Kevin Hilman <khilman@baylibre.com>,
+Cc: Jerome Brunet <jbrunet@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 116/385] hwspinlock: omap: Handle devm_pm_runtime_enable() errors
-Date: Sat, 28 Feb 2026 12:55:38 -0500
-Message-ID: <20260228180011.1568201-116-sashal@kernel.org>
+Subject: [PATCH 6.12 117/385] arm64: dts: amlogic: c3: assign the MMC signal clocks
+Date: Sat, 28 Feb 2026 12:55:39 -0500
+Message-ID: <20260228180011.1568201-117-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,42 +47,51 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 3bd4edd67b034f8e1f61c86e0eb098de6179e3f2 ]
+[ Upstream commit 69330fd2368371c4eb47d60ace6bca09763d24a0 ]
 
-Although unlikely, devm_pm_runtime_enable() can fail due to memory
-allocations. Without proper error handling, the subsequent
-pm_runtime_resume_and_get() call may operate on incorrectly
-initialized runtime PM state.
+The amlogic MMC driver operate with the assumption that MMC clock
+is configured to provide 24MHz. It uses this path for low
+rates such as 400kHz.
 
-Add error handling to check the return value of
-devm_pm_runtime_enable() and return on failure.
+Assign the clocks to make sure they are properly configured
 
-Fixes: 25f7d74d4514 ("hwspinlock: omap: Use devm_pm_runtime_enable() helper")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251124104805.135-1-vulab@iscas.ac.cn
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Fixes: 520b792e8317 ("arm64: dts: amlogic: add some device nodes for C3")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260114-amlogic-mmc-clocks-followup-v1-1-a999fafbe0aa@baylibre.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwspinlock/omap_hwspinlock.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hwspinlock/omap_hwspinlock.c b/drivers/hwspinlock/omap_hwspinlock.c
-index 27b47b8623c09..2d8de835bc242 100644
---- a/drivers/hwspinlock/omap_hwspinlock.c
-+++ b/drivers/hwspinlock/omap_hwspinlock.c
-@@ -88,7 +88,9 @@ static int omap_hwspinlock_probe(struct platform_device *pdev)
- 	 * make sure the module is enabled and clocked before reading
- 	 * the module SYSSTATUS register
- 	 */
--	devm_pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0)
- 		return ret;
+diff --git a/arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi
+index d0cda759c25d0..edd92500ebc96 100644
+--- a/arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi
++++ b/arch/arm64/boot/dts/amlogic/amlogic-c3.dtsi
+@@ -570,6 +570,10 @@ sdio: mmc@88000 {
+ 				no-sd;
+ 				resets = <&reset RESET_SD_EMMC_A>;
+ 				status = "disabled";
++
++				assigned-clocks = <&clkc_periphs CLKID_SD_EMMC_A>;
++				assigned-clock-rates = <24000000>;
++
+ 			};
+ 
+ 			sd: mmc@8a000 {
+@@ -585,6 +589,9 @@ sd: mmc@8a000 {
+ 				no-sdio;
+ 				resets = <&reset RESET_SD_EMMC_B>;
+ 				status = "disabled";
++
++				assigned-clocks = <&clkc_periphs CLKID_SD_EMMC_B>;
++				assigned-clock-rates = <24000000>;
+ 			};
+ 
+ 			nand: nand-controller@8d000 {
 -- 
 2.51.0
 
