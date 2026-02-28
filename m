@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452BD344044;
-	Sat, 28 Feb 2026 17:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5C7373BE1;
+	Sat, 28 Feb 2026 17:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301544; cv=none; b=nLM3jrMnx43e1LUtU5jOHwdLdYYYcskUEjnE6oloFdpSTdvzIzk8YKg1ukeznEM010JxdJkM7d1zQ5D6DV5gxQ/58wwwouSratAGP8g8YT1jLZgBAdqYV8iS6SAMS8XzN/0yUb3m4JC0c0sUrqtx9jRaid7nj71347zlvqJZP38=
+	t=1772301544; cv=none; b=JYfywDkaFRyZ7aX7L6K8ve4G6+F3kE8+uZC9w1Idd9cWhCo15pliTUn0WEvzF65qDWuYttb7Et/Z0cW6VLSpqp2asjQXXB/0RTer0+jk5fVNrMCYZ/3HgJunrFGak6BzMEUIg8GI5OKCPjJYnrfb0eMV+2zHrx8CLsLOA1KAA6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301544; c=relaxed/simple;
-	bh=yVIuQDKm5RhLW2VsgH1J+w5BddsEVceSrdi1uPTzZOc=;
+	bh=THbQHgaq61jho7D5uWewRwo0XMnNLOZ1XtokK5cfmRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3/R1F6IUGVI5aCO/+m50TAXnKxNOzE38FSgNfr27hwjX0z4QXgvf2MoESlhkhSy9ihwBpKGEqF27/8CZB5d5lKvS41/Qk8RLSwiGgysRuYSGFzAIXv/VknHSFB6d7uqKxw9AurECVNBySJ4St+ab/2TM/pEvnYDtqrlEXT9GFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RSDNhXvV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kkAj7hsZMMP8tIjncsWL3MnKyvlu38U/W/3GvAy9jQBw/gvIO5JTlxC8Q5E7QZlzjMP0oNljsq9pBU8xgF7o5o1KdGaXsOhGtbBkHXe/+X3im9AAzSIfqXuU+ockaVde4Vmq5hwFuKTZgbCDm25/rugFn5yFC7jjSkaIFOANzEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nlGmx39p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RSDNhXvV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCC0C19423;
-	Sat, 28 Feb 2026 17:59:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nlGmx39p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3AFC116D0;
+	Sat, 28 Feb 2026 17:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301543;
-	bh=yVIuQDKm5RhLW2VsgH1J+w5BddsEVceSrdi1uPTzZOc=;
+	s=k20201202; t=1772301544;
+	bh=THbQHgaq61jho7D5uWewRwo0XMnNLOZ1XtokK5cfmRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSDNhXvV/hIto/XjURDqnNcQQoW718TPwCEG/iH7lRoIshLl2fuXLRqeTxgwGBdpO
-	 m/MsjVQQSqqMZG8UvwGVpjfO+7rFnwcV7HeT1UXwdeSWG1/onM2cTPxtK7dERkFelx
-	 +55dZTTEpCN6YjvE4zia7oyH+icCTmGi61BkoUpzfTiu+r+rOp0vhMTe5+yVT55NiZ
-	 8zq6LZS/JdEEZ9qRKc10Q5+TrsudZbAlJ64r2LggAzkI5+Zwv1OMQ12TivlCf1lyyE
-	 gDjyW30dxaVhf/Z38Z8Yj0Gqhj/b3GFRwMGQ8odYm3rOBIztzYc7zViyzMdgB9TOHE
-	 +3jZELxDFDQeQ==
+	b=nlGmx39pVaCKLWdsiLDwXtGxf8UdpLCJe2XkE+nIWuajB2GA6TuwJ8KWfQ3sppvZA
+	 5HZGhE7eo8iqcOzov1DUCGBk/fyQxeCzFshwHWZlU4ep1slOCRnTfEhtCq3tCwlHQQ
+	 /GkvsoMV0gpL5xpo5ZYChEziVhEhE+Uey2UcfmLWvHS5umO2CbBLlx/Jz7mCzghhUX
+	 /KwXy3hEOXTpMYepW17qpx7ms1RO4PLMGFTZuoStwDjsE5pUOpZTpAfqjmuGCBwTpT
+	 98iusBjXyWDydW28OBcZR4a9lrz1zweKwcufeDybl0IWHLmkcFRv0OWNR6ylK5Tf04
+	 IL6agscIc6NZg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Shyam Prasad N <sprasad@microsoft.com>,
+Cc: Ethan Tidmore <ethantidmore06@gmail.com>,
 	stable@vger.kernel.org,
-	Yuchan Nam <entropy1110@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 726/752] cifs: some missing initializations on replay
-Date: Sat, 28 Feb 2026 12:47:17 -0500
-Message-ID: <20260228174750.1542406-726-sashal@kernel.org>
+Subject: [PATCH 6.18 727/752] gpio: nomadik: Add missing IS_ERR() check
+Date: Sat, 28 Feb 2026 12:47:18 -0500
+Message-ID: <20260228174750.1542406-727-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,62 +48,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 14f66f44646333d2bfd7ece36585874fd72f8286 ]
+[ Upstream commit 58433885ee99e8c96757e82ccf6d50646c4dfe09 ]
 
-In several places in the code, we have a label to signify
-the start of the code where a request can be replayed if
-necessary. However, some of these places were missing the
-necessary reinitializations of certain local variables
-before replay.
+The function gpio_device_get_desc() can return an error pointer and is
+not checked for one. Add check for error pointer.
 
-This change makes sure that these variables get initialized
-after the label.
-
+Fixes: ddeb66d2cb10f ("gpio: nomadik: don't print out global GPIO numbers in debugfs callbacks")
 Cc: stable@vger.kernel.org
-Reported-by: Yuchan Nam <entropy1110@gmail.com>
-Tested-by: Yuchan Nam <entropy1110@gmail.com>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Link: https://patch.msgid.link/20260214044531.43539-1-ethantidmore06@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 2 ++
- fs/smb/client/smb2pdu.c | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/gpio/gpio-nomadik.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 1b404def355e9..9c22daff24970 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -1184,6 +1184,7 @@ smb2_set_ea(const unsigned int xid, struct cifs_tcon *tcon,
- 
- replay_again:
- 	/* reinitialize for possible replay */
-+	used_len = 0;
- 	flags = CIFS_CP_CREATE_CLOSE_OP;
- 	oplock = SMB2_OPLOCK_LEVEL_NONE;
- 	server = cifs_pick_channel(ses);
-@@ -1582,6 +1583,7 @@ smb2_ioctl_query_info(const unsigned int xid,
- 
- replay_again:
- 	/* reinitialize for possible replay */
-+	buffer = NULL;
- 	flags = CIFS_CP_CREATE_CLOSE_OP;
- 	oplock = SMB2_OPLOCK_LEVEL_NONE;
- 	server = cifs_pick_channel(ses);
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 8082507586e81..1ef82408ecad6 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2845,6 +2845,7 @@ int smb311_posix_mkdir(const unsigned int xid, struct inode *inode,
- 
- replay_again:
- 	/* reinitialize for possible replay */
-+	pc_buf = NULL;
- 	flags = 0;
- 	n_iov = 2;
- 	server = cifs_pick_channel(ses);
+diff --git a/drivers/gpio/gpio-nomadik.c b/drivers/gpio/gpio-nomadik.c
+index 97c5cd33279d5..e22b713166d71 100644
+--- a/drivers/gpio/gpio-nomadik.c
++++ b/drivers/gpio/gpio-nomadik.c
+@@ -430,6 +430,9 @@ void nmk_gpio_dbg_show_one(struct seq_file *s, struct pinctrl_dev *pctldev,
+ #ifdef CONFIG_PINCTRL_NOMADIK
+ 	if (mode == NMK_GPIO_ALT_C && pctldev) {
+ 		desc = gpio_device_get_desc(chip->gpiodev, offset);
++		if (IS_ERR(desc))
++			return;
++
+ 		mode = nmk_prcm_gpiocr_get_mode(pctldev, desc_to_gpio(desc));
+ 	}
+ #endif
 -- 
 2.51.0
 
