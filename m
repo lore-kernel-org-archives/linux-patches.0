@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B28175A66;
-	Sat, 28 Feb 2026 17:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FB2175A66;
+	Sat, 28 Feb 2026 17:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301374; cv=none; b=IhzKHdB+sDvyO9eineDK/4IZL3PxJsgKK43k1JmGGnfzX4JN2cbhI1KwJc3wglPCZh+RUuWBhptiq0zfQgRvnPuJwbwhQR9H6q+7yJSqt73TCdfO+A2+U/e/6EfchRLkBdW9THfGYqNA0YNvMDOZsr9RTsVpH06RJhQkNdvOc1M=
+	t=1772301375; cv=none; b=ZSr2OWxVLVDxSmeQnaKNhQaHwtStvOUIKnLqxIJWLK/8oBhfmoZAZAObHIXJ7OI1d8ucN7gTHGiIMthk+dRAPAWapoY6HgqPjBDLgDcwyOiCXTdOtM3QxLFAaRk7MTtKB7hKTE0/fs8Ql5RVovSbpUDj9s3SndtGqZmpk9RuxJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301374; c=relaxed/simple;
-	bh=jxTGMT4SzWs+6kgFpvSL1FuyFBlWRxGMQO5evgt2JbE=;
+	s=arc-20240116; t=1772301375; c=relaxed/simple;
+	bh=3NghqsS5OpVK0C7E29HYkyKv7cngY4P93owtSeXWf7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZtMes7IrYgQMvvN5vx++DKxvcHbeoaVUug0UL5CLSiEr+pylaaNXHQC+8ydMiqrrYWUuxng1bczrGCFkIvB/tcvYC3MoxmVlPoZZFTCaiQydYmai+L/cKliV/q9XvmvhCXr7CMHb9BpU97b+C7m1PFH3GcQnC6lg3L3GTd9VIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sUgQ0zt7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JwqjswN1rtQLpuNiR+wS2Mmq9NZquqFJdYenMFC1pdeJhdyJnmn6Z3K9W3tZNomZddPEwUNVxAyQ8Kap1OSo2lluEQEf+LdLM3mMxDnPNOl3cAxiZuRiyBZDUeEr8DPSQhMPXRw1jGUMvObhaFtH+SqqqRAiPsrCy/1gRf1SaU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GFsH2c4m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sUgQ0zt7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4317DC19423;
-	Sat, 28 Feb 2026 17:56:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GFsH2c4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D85C19424;
+	Sat, 28 Feb 2026 17:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301374;
-	bh=jxTGMT4SzWs+6kgFpvSL1FuyFBlWRxGMQO5evgt2JbE=;
+	s=k20201202; t=1772301375;
+	bh=3NghqsS5OpVK0C7E29HYkyKv7cngY4P93owtSeXWf7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sUgQ0zt7/riaAfcl7dqvEXbdb/dt34QNOkgqRjs4GrYKo13kZ8aqcuBMhaQl17YJp
-	 JAQZB5SzFn0BGmgmrUftNfdNFSb1bFd4sNSZSg+eg8jBklrB1qCyJVQmanzMROqXNz
-	 wdY0rL+9ieXhW8EKHas9BmsYELx6NAyTBw5mRFPecc/bXyrnRT0iscJ2ykUdDyqYrH
-	 gk7BiFBRQjujTVVg/79mzsf31XrsLiaz/8USwIuV8JkRuDrOIh1lLoEHC4bberzD1a
-	 IUFi7P75iLTG2p5gYgXxTBgLB+ccsIERh+uQj7DUG6BS4OFM9WCblyu3nbZ060lRA+
-	 ojSuhZ0+0nkuQ==
+	b=GFsH2c4mYGSb4uZRK/vwqJcWOncmyFP0Iy7sREq5PMlLY2Nz8j2H3E/ugCBbfKKFC
+	 pD9jWG2dsPLnxjzFx7GnaV/xtklOZFovHi8hlXCtjRYitGOmQvthDpTvvNBJCx7mPS
+	 uB3YLJMyVPmsUDZFzc8mZhuZby+58v67TzaPif9TcZcouHjhBSbkUTg5TOyvM25j2T
+	 nWgSrdsbAZ8vQmEdiR8JXNnZF1hpJY3jVkvg4avMgnT6wJD9mbg//gdSASQi9xyuAA
+	 AxPuE5EbWgD9egH6qZl57+34u4Elc2W44FVNmUvagIxXfUZQARiDmxL0XEIT5AndIn
+	 49riVfHfGotqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jun Yan <jerrysteve1101@gmail.com>,
+Cc: Renjiang Han <renjiang.han@oss.qualcomm.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
 	stable@vger.kernel.org,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 563/752] arm64: dts: rockchip: Do not enable hdmi_sound node on Pinebook Pro
-Date: Sat, 28 Feb 2026 12:44:34 -0500
-Message-ID: <20260228174750.1542406-563-sashal@kernel.org>
+Subject: [PATCH 6.18 564/752] media: venus: vdec: fix error state assignment for zero bytesused
+Date: Sat, 28 Feb 2026 12:44:35 -0500
+Message-ID: <20260228174750.1542406-564-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,49 +50,48 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jun Yan <jerrysteve1101@gmail.com>
+From: Renjiang Han <renjiang.han@oss.qualcomm.com>
 
-[ Upstream commit b18247f9dab735c9c2d63823d28edc9011e7a1ad ]
+[ Upstream commit 93ecd6ee95c38cb533fa25f48d3c1c8cb69f410f ]
 
-Remove the redundant enabling of the hdmi_sound node in the Pinebook Pro
-board dts file, because the HDMI output is unused on this device. [1][2]
+When hfi_session_flush is issued, all queued buffers are returned to
+the V4L2 driver. Some of these buffers are not processed and have
+bytesused = 0. Currently, the driver marks such buffers as error even
+during drain operations, which can incorrectly flag EOS buffers.
 
-This change also eliminates the following kernel log warning, which is
-caused by the unenabled dependent node of hdmi_sound that ultimately
-results in the node's probe failure:
+Only capture buffers with zero payload (and not EOS) should be marked
+with VB2_BUF_STATE_ERROR. The check is performed inside the non-EOS
+branch to ensure correct handling.
 
-  platform hdmi-sound: deferred probe pending: asoc-simple-card: parse error
-
-[1] https://files.pine64.org/doc/PinebookPro/pinebookpro_v2.1_mainboard_schematic.pdf
-[2] https://files.pine64.org/doc/PinebookPro/pinebookpro_schematic_v21a_20220419.pdf
-
+Fixes: 51df3c81ba10b ("media: venus: vdec: Mark flushed buffers with error state")
+Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
+Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Fixes: 5a65505a69884 ("arm64: dts: rockchip: Add initial support for Pinebook Pro")
-Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
-Reviewed-by: Peter Robinson <pbrobinson@gmail.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://patch.msgid.link/20260116151253.9223-1-jerrysteve1101@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/media/platform/qcom/venus/vdec.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-index eaaca08a76018..a6ac89567bafe 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-@@ -421,10 +421,6 @@ &gpu {
- 	status = "okay";
- };
- 
--&hdmi_sound {
--	status = "okay";
--};
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 55c27345b7d89..ba4d9087bff5d 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1442,10 +1442,10 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+ 				inst->drain_active = false;
+ 				inst->codec_state = VENUS_DEC_STATE_STOPPED;
+ 			}
++		} else {
++			if (!bytesused)
++				state = VB2_BUF_STATE_ERROR;
+ 		}
 -
- &i2c0 {
- 	clock-frequency = <400000>;
- 	i2c-scl-falling-time-ns = <4>;
+-		if (!bytesused)
+-			state = VB2_BUF_STATE_ERROR;
+ 	} else {
+ 		vbuf->sequence = inst->sequence_out++;
+ 	}
 -- 
 2.51.0
 
