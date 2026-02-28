@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151F1338939
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FE1338939
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301794; cv=none; b=fQOE7wsH3LR4o5LmMjllXZwh0wXsB2oyQn5OPyAyD1B32cqmRibs/J3/yMIVS7C6zSFGMMVhdQ7TAyNzfE6R34kdH3I63VttOnXw5ILqJBifo55JE9Ed0NNNdSmXqwxQIJQuRz1R+hliGhGMeqSe1Rfe7CAX09BiorpnMwSSAlg=
+	t=1772301794; cv=none; b=rIXogsyN5EH/3XHxqqsiH+o+OQ5De6E53n6wPhj6qtUmHEquvKXhqkQjnfJZnWdS9Jp+mmL0RQjFnFoGRybOWK1EhnIUr3U7fuiOTfprKu+rfvYww1NS4FPcEXib2Hkl2Nuhdv/7Ifo5ryc+g4yCuht7gP8U72WiagVsOsZg4a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301794; c=relaxed/simple;
-	bh=gTwM/Dqtu91rpwSE1ksK58yGIkdVwH3FHhmuBZUhPmg=;
+	bh=sFWn+EMAatgc7zjbsy8Y2e2zDf/3AnVLzVbXOmXBje8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4BY/EGkjRGrsnkiyO346486XGcQohyADPyjhxGvlZkWiUaJM1jTEBKsIbE0q8aJ+mz24qvAYfqf4ldoXyxgx1L+Ob8GOupX8D4/rObJ6ZsHBZE/HQBaqhn1y9jLU5uHyPbWgUvidRzZ+USDcL/O3RjjmPsB2xOk5/lzZlJMTzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u5HuZsIn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UWsyKkQ00h0np7bTOiY9BTo7HpVDTDLurlAlaCVvfvGGQYZdxF41nfMHOqDf0y+NOExTKzosAoc5A6zc0e3ER8s0YEulJeOXoATXnUDSdSHKkwHJ9Hw2Be2hp8TsshKoPQaNcPQyNzcKwaCHF24Sb+ceChRvIcuItxbBMb45tg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R/Mob2zv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u5HuZsIn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59745C19424;
-	Sat, 28 Feb 2026 18:03:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R/Mob2zv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31679C116D0;
+	Sat, 28 Feb 2026 18:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301793;
-	bh=gTwM/Dqtu91rpwSE1ksK58yGIkdVwH3FHhmuBZUhPmg=;
+	s=k20201202; t=1772301794;
+	bh=sFWn+EMAatgc7zjbsy8Y2e2zDf/3AnVLzVbXOmXBje8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5HuZsIn/w6FAZQN8kS9cdJMtkHMXGHtutqYnIUUlLQgyDbfbdL9zq6DIIkhzrR5k
-	 mUkN3owqPjW49zVs48i3FDs3OK2k9xPq1TS14BbHSAGVeW1b2fA0xBlpLOkYJC+HQS
-	 vLDktVj1hchyOT+UFFkmF1NNAKool914giM0DqDdV9nHx2gAcyblgODvs/109vsWFc
-	 3DHCUDkiZlLz1WGpaNQyR5To8HaYfGvss/HFr4Gme17tVKnkeuSUPuq1patNyAUDdJ
-	 PrMplYuBQcmsldPSD4aLpywdfO3VZ5ddBFeE+KaPZgmyD19SlCfjGkhcclo6+pPvY1
-	 hRYiQmwmLQsuQ==
+	b=R/Mob2zvvTHzDYrVUgXqKiNcUiR+QaK3dXEbf/OW197RcLDyCpg5ldStQ0QcxoKQa
+	 gtXDiufJxN2ysfvQcfjaGC8RX50FhxOanmqG6C1zrRb9fYTh1p1VaHjKi8X/93XroX
+	 kq3yINL9wAOUszj7shOKJtuaMKi9ffFNmru2DvsaQPkatBxITtRN02YO4cGukuEvAl
+	 0BEQGrIUaSTDOcgF5q6bcBmZ98MNqIWcBHP6EumoTHtO/HxWnkPxLE0o1czWA0VFq8
+	 gZ0IKix5P9tQx7gTN7WE1BKhZD8p+nBxwPtGmpzQkl40KNnyN/YzhpZk4xpA2NvEiu
+	 pswzDVcwC7yvQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Chuck Lever <chuck.lever@oracle.com>,
-	NeilBrown <neil@brown.name>,
 	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 204/385] NFS: NFSERR_INVAL is not defined by NFSv2
-Date: Sat, 28 Feb 2026 12:57:06 -0500
-Message-ID: <20260228180011.1568201-204-sashal@kernel.org>
+Subject: [PATCH 6.12 205/385] xdrgen: Initialize data pointer for zero-length items
+Date: Sat, 28 Feb 2026 12:57:07 -0500
+Message-ID: <20260228180011.1568201-205-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -50,74 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 0ac903d1bfdce8ff40657c2b7d996947b72b6645 ]
+[ Upstream commit 27b0fcae8f535fb882b1876227a935dcfdf576aa ]
 
-A documenting comment in include/uapi/linux/nfs.h claims incorrectly
-that NFSv2 defines NFSERR_INVAL. There is no such definition in either
-RFC 1094 or https://pubs.opengroup.org/onlinepubs/9629799/chap7.htm
+The xdrgen decoders for strings and opaque data had an
+optimization that skipped calling xdr_inline_decode() when the
+item length was zero. This left the data pointer uninitialized,
+which could lead to unpredictable behavior when callers access
+it.
 
-NFS3ERR_INVAL is introduced in RFC 1813.
+Remove the zero-length check and always call xdr_inline_decode().
+When passed a length of zero, xdr_inline_decode() returns the
+current buffer position, which is valid and matches the behavior
+of hand-coded XDR decoders throughout the kernel.
 
-NFSD returns NFSERR_INVAL for PROC_GETACL, which has no
-specification (yet).
-
-However, nfsd_map_status() maps nfserr_symlink and nfserr_wrong_type
-to nfserr_inval, which does not align with RFC 1094. This logic was
-introduced only recently by commit 438f81e0e92a ("nfsd: move error
-choice for incorrect object types to version-specific code."). Given
-that we have no INVAL or SERVERFAULT status in NFSv2, probably the
-only choice is NFSERR_IO.
-
-Fixes: 438f81e0e92a ("nfsd: move error choice for incorrect object types to version-specific code.")
-Reviewed-by: NeilBrown <neil@brown.name>
+Fixes: 4b132aacb076 ("tools: Add xdrgen")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs2acl.c        | 2 +-
- fs/nfsd/nfsproc.c        | 2 +-
- include/uapi/linux/nfs.h | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ include/linux/sunrpc/xdrgen/_builtins.h | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfsd/nfs2acl.c b/fs/nfsd/nfs2acl.c
-index 5fb202acb0fd0..0ac538c761800 100644
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -45,7 +45,7 @@ static __be32 nfsacld_proc_getacl(struct svc_rqst *rqstp)
- 	inode = d_inode(fh->fh_dentry);
- 
- 	if (argp->mask & ~NFS_ACL_MASK) {
--		resp->status = nfserr_inval;
-+		resp->status = nfserr_io;
- 		goto out;
- 	}
- 	resp->mask = argp->mask;
-diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
-index 6dda081eb24c0..664171bdefb65 100644
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -32,7 +32,7 @@ static __be32 nfsd_map_status(__be32 status)
- 		break;
- 	case nfserr_symlink:
- 	case nfserr_wrong_type:
--		status = nfserr_inval;
-+		status = nfserr_io;
- 		break;
- 	}
- 	return status;
-diff --git a/include/uapi/linux/nfs.h b/include/uapi/linux/nfs.h
-index 71c7196d32817..e629c49535345 100644
---- a/include/uapi/linux/nfs.h
-+++ b/include/uapi/linux/nfs.h
-@@ -55,7 +55,7 @@
- 	NFSERR_NODEV = 19,		/* v2 v3 v4 */
- 	NFSERR_NOTDIR = 20,		/* v2 v3 v4 */
- 	NFSERR_ISDIR = 21,		/* v2 v3 v4 */
--	NFSERR_INVAL = 22,		/* v2 v3 v4 */
-+	NFSERR_INVAL = 22,		/*    v3 v4 */
- 	NFSERR_FBIG = 27,		/* v2 v3 v4 */
- 	NFSERR_NOSPC = 28,		/* v2 v3 v4 */
- 	NFSERR_ROFS = 30,		/* v2 v3 v4 */
+diff --git a/include/linux/sunrpc/xdrgen/_builtins.h b/include/linux/sunrpc/xdrgen/_builtins.h
+index 66ca3ece951ab..a5ab75d2db044 100644
+--- a/include/linux/sunrpc/xdrgen/_builtins.h
++++ b/include/linux/sunrpc/xdrgen/_builtins.h
+@@ -188,12 +188,10 @@ xdrgen_decode_string(struct xdr_stream *xdr, string *ptr, u32 maxlen)
+ 		return false;
+ 	if (unlikely(maxlen && len > maxlen))
+ 		return false;
+-	if (len != 0) {
+-		p = xdr_inline_decode(xdr, len);
+-		if (unlikely(!p))
+-			return false;
+-		ptr->data = (unsigned char *)p;
+-	}
++	p = xdr_inline_decode(xdr, len);
++	if (unlikely(!p))
++		return false;
++	ptr->data = (unsigned char *)p;
+ 	ptr->len = len;
+ 	return true;
+ }
+@@ -219,12 +217,10 @@ xdrgen_decode_opaque(struct xdr_stream *xdr, opaque *ptr, u32 maxlen)
+ 		return false;
+ 	if (unlikely(maxlen && len > maxlen))
+ 		return false;
+-	if (len != 0) {
+-		p = xdr_inline_decode(xdr, len);
+-		if (unlikely(!p))
+-			return false;
+-		ptr->data = (u8 *)p;
+-	}
++	p = xdr_inline_decode(xdr, len);
++	if (unlikely(!p))
++		return false;
++	ptr->data = (u8 *)p;
+ 	ptr->len = len;
+ 	return true;
+ }
 -- 
 2.51.0
 
