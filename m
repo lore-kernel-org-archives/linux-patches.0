@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CE933A702
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1963446B0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302093; cv=none; b=Tq6yZBrteD4rThui0coGlf8/tIvWs7mBvF2P4cvNDx/mB8KY9ATgh+7CjOu+/IGSPCoSD3UO2TTNlVct3w2VU6FOA0wSq0EqYW+UERNEqSFxTcmLArKuKHyUGxemzqOna6BA0gkZDWsicLN9NVOdhdTtZcZA8zrneqTLAVk6L74=
+	t=1772302093; cv=none; b=ExNHyPNgX+uwi/5vbvvVJigOy9ck0o0MFeZVhcTQAYN4Vt+AOMwv6KegkObinM+NHNRoAeEbzpATXZAh4Q5zfh8BA0hocmTPeyfOcNUmD8F1LYz1OodWd+GbFM0bb1mxcTwyInrGp4Z2CsYlq2ps8qd+fqNQ9ZGBNn5DT630xgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302093; c=relaxed/simple;
-	bh=lpPrQBQ2ep4MKsCW5FqJESbJ7IPUzMI9OTlm/fiiTCA=;
+	bh=87buuuaHIFJgEEmH7PKfpR9SzRpH8IWA+n9gn7ytg3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q94g4tdOnfhmoS8xcJQTJWdS9fSazWCn7xukHDhLd8Q9/twci4QcrwcA0Wbu6dqAKGyGUmuIa0j+ZajvM+JKlWh4ecfx6zp2wvk2SQs4DfAC0trXyZ0Jx3R3OofTyoG2GEsgPTXuG/0qXR/k1qRrNWNcEDSU6m4uHL2qVU9utQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EYQU37rH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S/CLdMK2KncpoPWhEJ8Z9A0ErfSONG/GwQhz5Ax2gHsAO03Dg24R9SfYg/V6ZY4XEToo3LQGDC7TSwdC35xVGqnkUO/nm+ynfHsZvLfwQ5Guyr5WKaQiLKkitylmDW0hAxF76HdskSxemOE1/mCRAo5z9aSK+IRBtF1YSmUTjR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KAF5mqQr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EYQU37rH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611C6C19423;
-	Sat, 28 Feb 2026 18:08:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KAF5mqQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A24C116D0;
+	Sat, 28 Feb 2026 18:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302092;
-	bh=lpPrQBQ2ep4MKsCW5FqJESbJ7IPUzMI9OTlm/fiiTCA=;
+	s=k20201202; t=1772302093;
+	bh=87buuuaHIFJgEEmH7PKfpR9SzRpH8IWA+n9gn7ytg3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EYQU37rHA6jFj0XTw/I+1b14cqHAuBbm7qd+JRrTlTlbZFviiujVgmtPlqv82L+x7
-	 Ad9QQfko9psUaY9qM1YIfmj6ZyylxTzxJBcsMUxb9yWUDT675qLKHkmpleT8C2twx9
-	 QwKP79BF5wu+Nz3LR05FqfeNikjxOiNv9WNYCmgmLgnmrc+30bQ5N9zaKVpA1lDuOD
-	 L2lxFIKNSwCgKS4kExsjdKDcUcfHluPiF0GmFWL+OM2bMnmrpqzzEqMWNSRdqVlIDF
-	 Fe5EWNFcE/WsHZUhpseQ9R2nq/McDKVLaglhKV60g1LTct9SaHZPqolbwd4SJIXtfB
-	 IB4tN6VA/YNnw==
+	b=KAF5mqQry3qwwag4s82lTyCdw0ijOsmv3aPPti6PI40xin8GoiImW+WqiyQzbcwn3
+	 AUoUqV7Pu7Nv6v/HdetJNovzOTNP7m07LlPEAitLHfcKsX0tLtvMjRvTZSdUZhokaq
+	 GZ26K4tcEtr53hrVaHv1iyjBFBAq/xs3VS7IYC4kVDUfV1/vTYtfohDjwjyZyahLYm
+	 TDu3uo7G1ESBSrngCSpn1bYsaJrOhxMGcP7sYtClHVFjeqt8Xxka8g4bpzrsnZxfsF
+	 XzfVHAKeoLXWgTFQBdDktgLROcYb/WC5tdkftrU1RI+Ml9o4bLBF6gqC/7vtRb/LPN
+	 MAYRTdHbQm4kg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jerome Brunet <jbrunet@baylibre.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/283] arm64: dts: amlogic: g12: assign the MMC A signal clock
-Date: Sat, 28 Feb 2026 13:03:39 -0500
-Message-ID: <20260228180709.1583486-77-sashal@kernel.org>
+Subject: [PATCH 6.6 078/283] arm64: dts: qcom: sdm845-db845c: drop CS from SPIO0
+Date: Sat, 28 Feb 2026 13:03:40 -0500
+Message-ID: <20260228180709.1583486-78-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -47,40 +48,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 3c941feaa363f1573a501452391ddf513394c84b ]
+[ Upstream commit 8bfb696ccdc5bcfad7a45b84c2c8a36757070e19 ]
 
-The amlogic MMC driver operate with the assumption that MMC clock
-is configured to provide 24MHz. It uses this path for low
-rates such as 400kHz.
+On SDM845 SPI uses hardware-provided chip select, while specifying
+cs-gpio makes the driver request GPIO pin, which on DB845c conflicts
+with the normal host controllers pinctrl entry.
 
-Assign the clock to make sure it is properly configured
+Drop the cs-gpios property to restore SPI functionality.
 
-Fixes: 8a6b3ca2d361 ("arm64: dts: meson: g12a: add SDIO controller")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260114-amlogic-mmc-clocks-followup-v1-6-a999fafbe0aa@baylibre.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: cb29e7106d4e ("arm64: dts: qcom: db845c: Add support for MCP2517FD")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260106-wcn3990-pwrctl-v2-7-0386204328be@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
-index cf2d073154f43..c5848363df37a 100644
---- a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
-@@ -2341,6 +2341,9 @@ sd_emmc_a: mmc@ffe03000 {
- 				 <&clkc CLKID_FCLK_DIV2>;
- 			clock-names = "core", "clkin0", "clkin1";
- 			resets = <&reset RESET_SD_EMMC_A>;
-+
-+			assigned-clocks = <&clkc CLKID_SD_EMMC_A_CLK0>;
-+			assigned-clock-rates = <24000000>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 0a891a0122446..d2924abd91d22 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -852,7 +852,6 @@ &spi0 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&qup_spi0_default>;
+-	cs-gpios = <&tlmm 3 GPIO_ACTIVE_LOW>;
  
- 		sd_emmc_b: mmc@ffe05000 {
+ 	can@0 {
+ 		compatible = "microchip,mcp2517fd";
 -- 
 2.51.0
 
