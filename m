@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A34B32AABE;
-	Sat, 28 Feb 2026 17:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A819144A730;
+	Sat, 28 Feb 2026 17:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301279; cv=none; b=fhFmBQjQg7+S/bXLrSMKfwEP+vdcQ3SKm3mlGOzYmjGUclUHxdrmq6XYt99rCBjdUAGqmbQeuNg2/MovMCRD+JCaKOXLK/HECE/66x1S4zWaWVapYNpJOL9MZFJt3vUqNn8J+zA+K/gOn+fQfF53OcNX8zyXgIZ4S9qqFdnjTtQ=
+	t=1772301280; cv=none; b=C178pXNK+KHHFjEoPdGeVymLSibGw9uEFqRcSiWYz35b4WkrbHvz294uVZYfzvOz6qtRmeGxxruV9glcCHBtBa+qtnGCnAE1kIgcqyWh2sB4dHfBYCyDKFabdBjW7iIAx7ZhW5UntgaAIrUWgWCpiDDphBBkt09Dt27bv4rHjCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301279; c=relaxed/simple;
-	bh=kU/f+89gQX8msH1ELgzNKPQu5/7ZsX59MFBTN+0lF0Q=;
+	s=arc-20240116; t=1772301280; c=relaxed/simple;
+	bh=auVoWXV1RNh0FwXOVbRVyFBpw7870SHSuTh2DfWtG9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NV2EdGqJeFGxbucGgwxPDJBPibXfb6OM4jT3Mc46BtQRr+c60Ak7panVr9rpXeYMREPI0GBakX2EFH2AObMgF1C2ubDWCvzStRfciAn2AcChNhX6H2ddf0Z1Y01fdP43qhYzmmhMGQG1wMZPshlQgmr23spkQHH7T7APvYRvQQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WGFhZMUA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o78+kmK7w+HOWs/HGd1+IStWbU8T4tGwFeeRYURKLB9CNrE1mmBotzrcGR1yp+XFWUflhRinqPW1+J25IoovIj8FHAlPX+vK7aGTOm+kihphQn8Ft13caT30moHTXH9LfTADdgSjLNNn3bDcmVRmHtrFTvyQNBO9zDcZ7Da00lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rc44y7o8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WGFhZMUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F7FC116D0;
-	Sat, 28 Feb 2026 17:54:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rc44y7o8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A82C116D0;
+	Sat, 28 Feb 2026 17:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301279;
-	bh=kU/f+89gQX8msH1ELgzNKPQu5/7ZsX59MFBTN+0lF0Q=;
+	s=k20201202; t=1772301280;
+	bh=auVoWXV1RNh0FwXOVbRVyFBpw7870SHSuTh2DfWtG9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGFhZMUA+nADDHLFhsWsUZJa8I8YYo4SDxz+b8BB+Ac2RcuDd7HEtf7yBNcWw7uTq
-	 j3zbxndwFc+UvuixZtnoV/VIyKGdO6VnwkETo89J799YRbnNsRMiwuV4eowFmG4N6A
-	 Qmb3+HyRyIcccoTsWyClyaGy2V3xU4Z80mkUpyd5Grm6R3JHwHycjReepSpK0adGC2
-	 gj0oS5prOJPNLi++iPHoHVthvJvQC7W2YG9vkwYn/OaVT3w5xd8awLMglx8Eovftod
-	 7hAxjc9+zikBKuZM+8vVkONtBYQei6MHnZ2aSuN55YuoWkICwiYX+OrqBHU0V4ELk3
-	 MLS1ZM6qfMh6A==
+	b=Rc44y7o8kg2pojuA1oRfBzIAvuxx79Z6N7BSXlQR/9+uLKoIgsDqFCHHNzdS4oUW2
+	 yWLNBtF61Lns+TZ08XBbn1qPiDZmWbXO5LIh+8VIo3tmEAqq5wnZ8uF19UKzRaptCQ
+	 nDfLovY83+YW3lKKgdEoA5ZTKGc63LOfpxSJFOE7Po5LveEtfP3DHdWvSCF0whw/K3
+	 6RZV2xoNIcswee9kpTUZOKXf9Ed3mj0Wf5/vRqH1vX4ZKdA0+aACbAQNoLdbFb/pJ5
+	 jPsaUzzFWKRbqhvKSXvGUJD6n/z51dcPDWLdB/2JHnMqcj3ah+uVkOD3P7zsb1BbYS
+	 BK6wdLTPZYjgQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
@@ -36,9 +36,9 @@ Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 463/752] ASoC: SOF: ipc4-control: Use the correct size for scontrol->ipc_control_data
-Date: Sat, 28 Feb 2026 12:42:54 -0500
-Message-ID: <20260228174750.1542406-463-sashal@kernel.org>
+Subject: [PATCH 6.18 464/752] ASoC: SOF: ipc4-control: Keep the payload size up to date
+Date: Sat, 28 Feb 2026 12:42:55 -0500
+Message-ID: <20260228174750.1542406-464-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -54,56 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit c1876fc33c5976837e4c73719c7582617efc6919 ]
+[ Upstream commit ebcfdbe4add923dfb690e6fb9d158da87ae0b6bf ]
 
-The size of the data behind scontrol->ipc_control_data is stored in
-scontrol->size, use this when copying data for backup/restore.
+When the bytes data is read from the firmware, the size of the payload
+can be different than what it was previously.
+For example when the topology did not contained payload data at all for the
+control, the data size was 0.
+For get operation allow maximum size of payload to be read and then update
+the sizes according to the completed message.
 
-Fixes: db38d86d0c54 ("ASoC: sof: Improve sof_ipc4_bytes_ext_put function")
+Similarly, keep the size in sync when updating the data in firmware.
+
+With the change we will be able to read data from firmware for bytes
+controls which did not had initial payload defined in topology.
+
+Fixes: a062c8899fed ("ASoC: SOF: ipc4-control: Add support for bytes control get and put")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
 Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
 Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://patch.msgid.link/20251217143945.2667-4-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20251217143945.2667-5-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-control.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/sof/ipc4-control.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/sound/soc/sof/ipc4-control.c b/sound/soc/sof/ipc4-control.c
-index 0a05f66ec7d92..80111672c1796 100644
+index 80111672c1796..453ed1643b89c 100644
 --- a/sound/soc/sof/ipc4-control.c
 +++ b/sound/soc/sof/ipc4-control.c
-@@ -66,7 +66,7 @@ static int sof_ipc4_set_get_kcontrol_data(struct snd_sof_control *scontrol,
- 		 * configuration
- 		 */
- 		memcpy(scontrol->ipc_control_data, scontrol->old_ipc_control_data,
--		       scontrol->max_size);
-+		       scontrol->size);
- 		kfree(scontrol->old_ipc_control_data);
- 		scontrol->old_ipc_control_data = NULL;
- 		/* Send the last known good configuration to firmware */
-@@ -567,7 +567,7 @@ static int sof_ipc4_bytes_ext_put(struct snd_sof_control *scontrol,
- 	if (!scontrol->old_ipc_control_data) {
- 		/* Create a backup of the current, valid bytes control */
- 		scontrol->old_ipc_control_data = kmemdup(scontrol->ipc_control_data,
--							 scontrol->max_size, GFP_KERNEL);
-+							 scontrol->size, GFP_KERNEL);
- 		if (!scontrol->old_ipc_control_data)
- 			return -ENOMEM;
- 	}
-@@ -575,7 +575,7 @@ static int sof_ipc4_bytes_ext_put(struct snd_sof_control *scontrol,
- 	/* Copy the whole binary data which includes the ABI header and the payload */
- 	if (copy_from_user(data, tlvd->tlv, header.length)) {
- 		memcpy(scontrol->ipc_control_data, scontrol->old_ipc_control_data,
--		       scontrol->max_size);
-+		       scontrol->size);
- 		kfree(scontrol->old_ipc_control_data);
- 		scontrol->old_ipc_control_data = NULL;
+@@ -426,13 +426,21 @@ static int sof_ipc4_set_get_bytes_data(struct snd_sof_dev *sdev,
+ 	msg->extension = SOF_IPC4_MOD_EXT_MSG_PARAM_ID(data->type);
+ 
+ 	msg->data_ptr = data->data;
+-	msg->data_size = data->size;
++	if (set)
++		msg->data_size = data->size;
++	else
++		msg->data_size = scontrol->max_size - sizeof(*data);
+ 
+ 	ret = sof_ipc4_set_get_kcontrol_data(scontrol, set, lock);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(sdev->dev, "Failed to %s for %s\n",
+ 			set ? "set bytes update" : "get bytes",
+ 			scontrol->name);
++	} else if (!set) {
++		/* Update the sizes according to the received payload data */
++		data->size = msg->data_size;
++		scontrol->size = sizeof(*cdata) + sizeof(*data) + data->size;
++	}
+ 
+ 	msg->data_ptr = NULL;
+ 	msg->data_size = 0;
+@@ -448,6 +456,7 @@ static int sof_ipc4_bytes_put(struct snd_sof_control *scontrol,
+ 	struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
+ 	struct sof_abi_hdr *data = cdata->data;
+ 	size_t size;
++	int ret;
+ 
+ 	if (scontrol->max_size > sizeof(ucontrol->value.bytes.data)) {
+ 		dev_err_ratelimited(scomp->dev,
+@@ -469,9 +478,12 @@ static int sof_ipc4_bytes_put(struct snd_sof_control *scontrol,
+ 	/* copy from kcontrol */
+ 	memcpy(data, ucontrol->value.bytes.data, size);
+ 
+-	sof_ipc4_set_get_bytes_data(sdev, scontrol, true, true);
++	ret = sof_ipc4_set_get_bytes_data(sdev, scontrol, true, true);
++	if (!ret)
++		/* Update the cdata size */
++		scontrol->size = sizeof(*cdata) + size;
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int sof_ipc4_bytes_get(struct snd_sof_control *scontrol,
+@@ -581,6 +593,9 @@ static int sof_ipc4_bytes_ext_put(struct snd_sof_control *scontrol,
  		return -EFAULT;
+ 	}
+ 
++	/* Update the cdata size */
++	scontrol->size = sizeof(*cdata) + header.length;
++
+ 	return sof_ipc4_set_get_bytes_data(sdev, scontrol, true, true);
+ }
+ 
 -- 
 2.51.0
 
