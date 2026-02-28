@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5048E342538
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C86344D9A
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301782; cv=none; b=ocf7/+uPxoWH8x3hgPFVLpFfzNX21IxwpOk9qshn1eeC54cgET43qgySWSLwuiW1PTu+O8KG+0+jERDU863289aLkO5HExAnQ5dCfSMiDCsBTvDJKAserU6wFopWQoPGvXzu2bh004ar3WMWyI98YcdmBu1NVYRi6UEN85Ap1ro=
+	t=1772301783; cv=none; b=kiQjci+jG8y1jq1JgKsM32DiOGl2QKZh6ggBOyvBKGOz0GhCHqWiCtSjsa6bh0sboHo+mUrfL6U1HN/HZi2OCkedfGYs5rE8MRLm7K4LJtDwofpvJHILZHiNL9mmI8L6yj5wf+602rSP9pWPd0L3RrKExKyrV+Z+UHD1u2VXJ84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301782; c=relaxed/simple;
-	bh=oxrT9OsxMwaHeAFB9Bq1PgiVEIL0F4r7hnD3dNHar1A=;
+	s=arc-20240116; t=1772301783; c=relaxed/simple;
+	bh=ik2qGzdlGFDw5v/MNHWXb3cktEIGTU2gw2H1RMAGA84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHKGymqfiGaTA3O/qRoFsG/wSPH7BpFHSrG1/ib49Qx6Zkxnz+NVAta1AsFC3YV0VYBS8i+b+/1Svf9IWdA0FyqlKz/XQBSb3BXvYwvIGxhJ8T48aDGQBefYCnHoTkApsTUdEVZio2UDKgpKLoGyTm8OR5AQ9FpdsqCnHYXnC7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ReAQOCkA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=he3NeuXVqG1env0WJ8zkLQykYd/MKJpd2ujzy+alcYu1HTsL2VHhnWaQmfiLIpYavnuhDkC3bNWIbN8/TdCAGtpsEZUz6H2A456hgyLIA1MfwAYH+6IhiQECzqVNJLq+BmBbAW0GbFFyhMlZYlpnJZ9IyDQUdD2RArghPKF36Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lo7mm463; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ReAQOCkA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED3EC116D0;
-	Sat, 28 Feb 2026 18:03:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lo7mm463"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43088C19423;
+	Sat, 28 Feb 2026 18:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301782;
-	bh=oxrT9OsxMwaHeAFB9Bq1PgiVEIL0F4r7hnD3dNHar1A=;
+	bh=ik2qGzdlGFDw5v/MNHWXb3cktEIGTU2gw2H1RMAGA84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ReAQOCkAhq6GK08J70hQyz5ZgMuwhFjlbElWrUA83rWRahwgrNggvXobUbo9j6TdM
-	 JEIJiNJHQU2XEIBkE3JBvzv1QglXPHTD/uXFj6zBdrc2mWz8ABlC1R0nRNCpIZcbTR
-	 aOqt5rzeBO1QR6/2tTqgSYDaBoWIhXlLucg09FzQLZSo9CzutYBRtvepV5j4Bua65D
-	 Sc7/vWpYN+VF8rRA1ibJYEv1AXUJRG6TeRvVExUJnhrP7lNjMgCv9SJmrG5oG9Uw7P
-	 iZnJ/p5IINsrmgBrEwUhB08XHMsUwXowoliW8o/lFQdP3IPx+uxWm5IO5qXxDC5yia
-	 azPSk7A7I5UYA==
+	b=lo7mm463W35Hp9eY6ixcD9/5AqAIAZ0rOaDRrCu1zqdPRKxvcDq4BhVnBU0Eh0FUf
+	 EvW8CLz2lA4jQGAUdsITphWpIZGCmr3YN6PrF4W3cqLcSawnRqrPONB2QbGx1EBb/J
+	 vu2xVmjdn0qjt7ouzyEc7axwLhB5cOhuv4N5cCwmhbPTCtle2NCXe71v/9vpiTlGgS
+	 AfdZcmq1mD/n0jt4dpuyFcFeIlqx6re79H7OZh2yOe+vBhJT5LxRNDozxXxitXZerC
+	 E1y3Zyb4PWn1u0lwtK8iRgMlAhjH2aXQDzYvkABXHruMEI+pbVtMfvP99rgLLr3uj2
+	 o7DOYFZQzanbQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Florian Westphal <fw@strlen.de>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>,
+	Michal Slabihoudek <michal.slabihoudek@gooddata.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 192/385] netfilter: nft_compat: add more restrictions on netlink attributes
-Date: Sat, 28 Feb 2026 12:56:54 -0500
-Message-ID: <20260228180011.1568201-192-sashal@kernel.org>
+Subject: [PATCH 6.12 193/385] netfilter: nf_conncount: fix tracking of connections from localhost
+Date: Sat, 28 Feb 2026 12:56:55 -0500
+Message-ID: <20260228180011.1568201-193-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,69 +48,67 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit cda26c645946b08f070f20c166d4736767e4a805 ]
+[ Upstream commit de8a70cefcb26cdceaafdc5ac144712681419c29 ]
 
-As far as I can see nothing bad can happen when NFTA_TARGET/MATCH_NAME
-are too large because this calls x_tables helpers which check for the
-length, but it seems better to already reject it during netlink parsing.
+Since commit be102eb6a0e7 ("netfilter: nf_conncount: rework API to use
+sk_buff directly"), we skip the adding and trigger a GC when the ct is
+confirmed. For connections originated from local to local it doesn't
+work because the connection is confirmed on POSTROUTING, therefore
+tracking on the INPUT hook is always skipped.
 
-Rest of the changes avoid silent u8/u16 truncations.
+In order to fix this, we check whether skb input ifindex is set to
+loopback ifindex. If it is then we fallback on a GC plus track operation
+skipping the optimization. This fallback is necessary to avoid
+duplicated tracking of a packet train e.g 10 UDP datagrams sent on a
+burst when initiating the connection.
 
-For _TYPE, its expected to be only 1 or 0. In x_tables world, this
-variable is set by kernel, for IPT_SO_GET_REVISION_TARGET its 1, for
-all others its set to 0.
+Tested with xt_connlimit/nft_connlimit and OVS limit and with a HTTP
+server and iperf3 on UDP mode.
 
-As older versions of nf_tables permitted any value except 1 to mean 'match',
-keep this as-is but sanitize the value for consistency.
-
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Fixes: be102eb6a0e7 ("netfilter: nf_conncount: rework API to use sk_buff directly")
+Reported-by: Michal Slabihoudek <michal.slabihoudek@gooddata.com>
+Closes: https://lore.kernel.org/netfilter/6989BD9F-8C24-4397-9AD7-4613B28BF0DB@gooddata.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_compat.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conncount.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
-index 72711d62fddfa..08f620311b03f 100644
---- a/net/netfilter/nft_compat.c
-+++ b/net/netfilter/nft_compat.c
-@@ -134,7 +134,8 @@ static void nft_target_eval_bridge(const struct nft_expr *expr,
- }
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 288936f5c1bf9..14e62b3263cd9 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -179,14 +179,25 @@ static int __nf_conncount_add(struct net *net,
+ 		return -ENOENT;
  
- static const struct nla_policy nft_target_policy[NFTA_TARGET_MAX + 1] = {
--	[NFTA_TARGET_NAME]	= { .type = NLA_NUL_STRING },
-+	[NFTA_TARGET_NAME]	= { .type = NLA_NUL_STRING,
-+				    .len = XT_EXTENSION_MAXNAMELEN, },
- 	[NFTA_TARGET_REV]	= NLA_POLICY_MAX(NLA_BE32, 255),
- 	[NFTA_TARGET_INFO]	= { .type = NLA_BINARY },
- };
-@@ -434,7 +435,8 @@ static void nft_match_eval(const struct nft_expr *expr,
- }
+ 	if (ct && nf_ct_is_confirmed(ct)) {
+-		err = -EEXIST;
+-		goto out_put;
++		/* local connections are confirmed in postrouting so confirmation
++		 * might have happened before hitting connlimit
++		 */
++		if (skb->skb_iif != LOOPBACK_IFINDEX) {
++			err = -EEXIST;
++			goto out_put;
++		}
++
++		/* this is likely a local connection, skip optimization to avoid
++		 * adding duplicates from a 'packet train'
++		 */
++		goto check_connections;
+ 	}
  
- static const struct nla_policy nft_match_policy[NFTA_MATCH_MAX + 1] = {
--	[NFTA_MATCH_NAME]	= { .type = NLA_NUL_STRING },
-+	[NFTA_MATCH_NAME]	= { .type = NLA_NUL_STRING,
-+				    .len = XT_EXTENSION_MAXNAMELEN },
- 	[NFTA_MATCH_REV]	= NLA_POLICY_MAX(NLA_BE32, 255),
- 	[NFTA_MATCH_INFO]	= { .type = NLA_BINARY },
- };
-@@ -693,7 +695,12 @@ static int nfnl_compat_get_rcu(struct sk_buff *skb,
+ 	if ((u32)jiffies == list->last_gc &&
+ 	    (list->count - list->last_gc_count) < CONNCOUNT_GC_MAX_COLLECT)
+ 		goto add_new_node;
  
- 	name = nla_data(tb[NFTA_COMPAT_NAME]);
- 	rev = ntohl(nla_get_be32(tb[NFTA_COMPAT_REV]));
--	target = ntohl(nla_get_be32(tb[NFTA_COMPAT_TYPE]));
-+	/* x_tables api checks for 'target == 1' to mean target,
-+	 * everything else means 'match'.
-+	 * In x_tables world, the number is set by kernel, not
-+	 * userspace.
-+	 */
-+	target = nla_get_be32(tb[NFTA_COMPAT_TYPE]) == htonl(1);
- 
- 	switch(family) {
- 	case AF_INET:
++check_connections:
+ 	/* check the saved connections */
+ 	list_for_each_entry_safe(conn, conn_n, &list->head, node) {
+ 		if (collect > CONNCOUNT_GC_MAX_COLLECT)
 -- 
 2.51.0
 
