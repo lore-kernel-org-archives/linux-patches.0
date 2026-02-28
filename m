@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6569375256
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E34339B94A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302583; cv=none; b=nxte768QIVYBBa6gNmFLvyHNrdfjNcYpxYOIo0J+B7BF9cEKDlz7szASEQoi8Cd4uevtNqLFqKyXNPpkfVrOdtXyAjyppt/z0m5kv8QRUHhV0QxAq67wvhWt463bHC3rrPV+KygihQw7fUFNLRm0fXmabutggUBYsSXJJkSDMvE=
+	t=1772302584; cv=none; b=hvGvBoXyQLEntn5GfsztcwHLsgmxDrP0UeE/W2qEtxZW/CZaMQvBUA8X+kLr/LK0g2mnOLWHXV92u/rM7LI+WsmjzQnXc/ksh53mdtmu0u4KxSKEMCccqLxu3GiIPEG12BpgBDzq5E0LlDIIwi42SJ/ywmNQRIF7Qg/wpjoGGcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302583; c=relaxed/simple;
-	bh=kFHf55YhVI9c5MUVaZlFR7Em1pAZZ+JX3c9z8lIGZ5c=;
+	s=arc-20240116; t=1772302584; c=relaxed/simple;
+	bh=1akuxA7GZsQW7Wey1++G2Ngio2xTxkznj7ixvl43pkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ode+/5od6p59WvSFkdEghT2gG4eMbHqFm7ad1ZVOYyCpmRDorOFgEea7K2dXd5Mt8CwBZYDqGku6fygs2bU+WhIbWYXtwrd8+oOfUQWoqVqvEYUEvSywdCduYDifluPCrywaznD4bIaSYkg5oeLQVo4xVxDuNHtnpZydSTT8BrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rY+m0E34; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UqP19H3h5j2MoAD42fYzHQxFbdSUp7g4QFhFq0CUagwrakJN/lphkIok2eSFlyyeEJr9rBuhqA7VQrkwmbZumz3UtZs0nZ0bQHd7oYSY+9mbn2B66TVA7boKRzNFuihqqd4bAHgCAhfQhmhNHycjGl9cVZb1LvwPW5vrUCLYRxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u0HmRnrO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rY+m0E34"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102D6C19423;
-	Sat, 28 Feb 2026 18:16:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u0HmRnrO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4DEC19423;
+	Sat, 28 Feb 2026 18:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302583;
-	bh=kFHf55YhVI9c5MUVaZlFR7Em1pAZZ+JX3c9z8lIGZ5c=;
+	s=k20201202; t=1772302584;
+	bh=1akuxA7GZsQW7Wey1++G2Ngio2xTxkznj7ixvl43pkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rY+m0E34kLb74kG58Oo2q3Hhxk1H3pg4i7E/Ei37NCG8GwJENQzYQjuDUxwI5u8HJ
-	 YsmAoFgkbnxes91kz0DQh0974SJo2d4hQjJLzbBwVroeIuuqI/Jz9HSiTO3AOL/zAD
-	 P63iAFbbZVysANQS4GRYUz/vLyDzSzBsf47PoPiUu05kDx/ESJ5VuO/K9gV/EYnx58
-	 N6CUFKO8n5GNKrveJIMxH/E2zH84UdgtTrRhaXSAmTy2aqNre+BcQGhtgheqG5qs/Q
-	 3LEMD60VB6snQa0v1uO9+HZtRMY0KcUZTvwwIITg3j4TWszxCFA7jfik681FAxrsmb
-	 F9Zn7hfa1NaKQ==
+	b=u0HmRnrOCAtjvldAbRbS8G2G1Urzapmhy8sdETIFIHRUuAlPGIUcjndXOtRIHfSxi
+	 e1asiJJ8fcEpb2HhOfSM2j0cKOdi73+hffwzRMkdej6w0CaGFVfZjQSNbgsl03d8WU
+	 AKdJkL1eve36JjctfKn6q3TLqYe2UrPHyxCdQ37uSw+DgDDkwcVbWJpuoR2S+IIVrg
+	 KgJvUP3RH5DfW7lEnJEyMHCAdq4UN6fnwS4+DoNrPUYJba9BTeANumtuPPH74zHYlf
+	 y4YSkTwtMmvlTo2iAXyVnYN7cFzALdgNUgPzh6sX4KHAgAuIUT6BI1ULI7JxsPZCTX
+	 K3kUU75+/K3AA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Etienne AUJAMES <eaujames@ddn.com>,
-	Parav Pandit <parav@nvidia.com>,
+Cc: Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/164] IB/cache: update gid cache on client reregister event
-Date: Sat, 28 Feb 2026 13:13:51 -0500
-Message-ID: <20260228181505.1600663-92-sashal@kernel.org>
+Subject: [PATCH 5.15 093/164] RDMA/hns: Notify ULP of remaining soft-WCs during reset
+Date: Sat, 28 Feb 2026 13:13:52 -0500
+Message-ID: <20260228181505.1600663-93-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -44,54 +44,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Etienne AUJAMES <eaujames@ddn.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit ddd6c8c873e912cb1ead79def54de5e24ff71c80 ]
+[ Upstream commit 0789f929900d85b80b343c5f04f8b9444e991384 ]
 
-Some HCAs (e.g: ConnectX4) do not trigger a IB_EVENT_GID_CHANGE on
-subnet prefix update from SM (PortInfo).
+During a reset, software-generated WCs cannot be reported via
+interrupts. This may cause the ULP to miss some WCs.
 
-Since the commit d58c23c92548 ("IB/core: Only update PKEY and GID caches
-on respective events"), the GID cache is updated exclusively on
-IB_EVENT_GID_CHANGE. If this event is not emitted, the subnet prefix in the
-IPoIB interface’s hardware address remains set to its default value
-(0xfe80000000000000).
+To avoid this, add check in the CQ arm process: if a hardware reset
+has occurred and there are still unreported soft-WCs, notify the ULP
+to handle the remaining WCs, thereby preventing any loss of completions.
 
-Then rdma_bind_addr() failed because it relies on hardware address to
-find the port GID (subnet_prefix + port GUID).
-
-This patch fixes this issue by updating the GID cache on
-IB_EVENT_CLIENT_REREGISTER event (emitted on PortInfo::ClientReregister=1).
-
-Fixes: d58c23c92548 ("IB/core: Only update PKEY and GID caches on respective events")
-Signed-off-by: Etienne AUJAMES <eaujames@ddn.com>
-Link: https://patch.msgid.link/aVUfsO58QIDn5bGX@eaujamesFR0130
-Reviewed-by: Parav Pandit <parav@nvidia.com>
+Fixes: 626903e9355b ("RDMA/hns: Add support for reporting wc as software mode")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20260104064057.1582216-5-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cache.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 23 ++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
-index 91ee3e823a9fe..d43a005a18d37 100644
---- a/drivers/infiniband/core/cache.c
-+++ b/drivers/infiniband/core/cache.c
-@@ -1549,7 +1549,8 @@ static void ib_cache_event_task(struct work_struct *_work)
- 	 * the cache.
- 	 */
- 	ret = ib_cache_update(work->event.device, work->event.element.port_num,
--			      work->event.event == IB_EVENT_GID_CHANGE,
-+			      work->event.event == IB_EVENT_GID_CHANGE ||
-+			      work->event.event == IB_EVENT_CLIENT_REREGISTER,
- 			      work->event.event == IB_EVENT_PKEY_CHANGE,
- 			      work->enforce_security);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 8baf6fb2d1fa5..43b661f971882 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -3376,6 +3376,23 @@ static void hns_roce_v2_write_cqc(struct hns_roce_dev *hr_dev,
+ 		     HNS_ROCE_V2_CQ_DEFAULT_INTERVAL);
+ }
  
++static bool left_sw_wc(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq)
++{
++	struct hns_roce_qp *hr_qp;
++
++	list_for_each_entry(hr_qp, &hr_cq->sq_list, sq_node) {
++		if (hr_qp->sq.head != hr_qp->sq.tail)
++			return true;
++	}
++
++	list_for_each_entry(hr_qp, &hr_cq->rq_list, rq_node) {
++		if (hr_qp->rq.head != hr_qp->rq.tail)
++			return true;
++	}
++
++	return false;
++}
++
+ static int hns_roce_v2_req_notify_cq(struct ib_cq *ibcq,
+ 				     enum ib_cq_notify_flags flags)
+ {
+@@ -3384,6 +3401,12 @@ static int hns_roce_v2_req_notify_cq(struct ib_cq *ibcq,
+ 	struct hns_roce_v2_db cq_db = {};
+ 	u32 notify_flag;
+ 
++	if (hr_dev->state >= HNS_ROCE_DEVICE_STATE_RST_DOWN) {
++		if ((flags & IB_CQ_REPORT_MISSED_EVENTS) &&
++		    left_sw_wc(hr_dev, hr_cq))
++			return 1;
++		return 0;
++	}
+ 	/*
+ 	 * flags = 0, then notify_flag : next
+ 	 * flags = 1, then notify flag : solocited
 -- 
 2.51.0
 
