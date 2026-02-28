@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FBB32AABE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37CD3314C3
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301262; cv=none; b=NT8flYpbWDvzSwO6yt8b+XC4gd8kOT4arMBHIJHdH4NdZDmUtHuWTQqGlg0mKzPjUErAesGMWclXz46IEqXx+PuGl5cdJ8pJxqj3xWWW4+/Xn4vcrslgLmXpK3mKo/VqU8nI0BUoen2BPw8VpTE6dlfG96HfPGuj1wV4boGO4gw=
+	t=1772301264; cv=none; b=AKLwIHHuZR5j/MCzBhpXTwZ1k+HBJ9mV2jHUzBCLWgB92wXDa1aovZqNvqkVZS1leeORGJ/LS2cC7OWapKpr1bgopJPhP34BpY5roho0EI07ZZ4CuZR3xL9uI3Sg9AMuI1YaH5y5c3OtNfKIE3sRWOiUt6qsZMQZvvKWaX0KhNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301262; c=relaxed/simple;
-	bh=E419lU17SR2cobJz6tieblMKpyzRNJc7+8LizYxdkhs=;
+	s=arc-20240116; t=1772301264; c=relaxed/simple;
+	bh=RdkuAf7scFKBUlHx22gyfCGgrI6nOkT0Ss8a3+t2sEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dd74IzzJY0AymB9sUrfAhEz7qSidKYsjCam3RVgMj29Nd4PDu0BA5jeT6QkXq1HtAL+UAI8awYwsHA7HJtPkC5DuCatzS54UJd5o+VMS81zo5CMvqzgfn+3aG0QsStXY16Gho15Oioy0bPCW0iKY9ZmnWEoMo/b/op2zau9z6gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BH4EI/zC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FVYcPsF21J0bXJfhYnnoXyS6sFc3naCBszS60T7ObKcx/Jvm7Hgk1mpWTJR7Wm/N/r9j0p9FUfhFWpwNpGHDmabvS/aa2f2hCMgcqR6P1IcOiLlpJK2KA1ljINxJQcORLRZTIACPBV8asFhKTGfbCqxvPauCx3lfQ2LoDWigsyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H/NnXFih; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BH4EI/zC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5427C19423;
-	Sat, 28 Feb 2026 17:54:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H/NnXFih"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A27C19423;
+	Sat, 28 Feb 2026 17:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301262;
-	bh=E419lU17SR2cobJz6tieblMKpyzRNJc7+8LizYxdkhs=;
+	s=k20201202; t=1772301263;
+	bh=RdkuAf7scFKBUlHx22gyfCGgrI6nOkT0Ss8a3+t2sEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BH4EI/zCjNqE78MSzOMI1ztC6am9eJLiT4AelHxuDPYhwhw9LcEjBGYDqSeXOJhvV
-	 YqLBmbGbOjO15QJonrD6VUOWNUNz0VcBYp2Zmpb/n4fvvV+ES+4fNFOSJQATkv2Otc
-	 HwOIcFtwfLtuBp4IuO8ze4w+hsKaZXrrA5nGU/qWr3Ih+81stUzPNLGGZwCg0hRm+z
-	 cokY0Ia1rx8ceyB8WE80Qwe27BDvEdqLbElgv/+mnoNBR/+yYjlU28Jbxw5POJGASh
-	 aRWl+jGy1Xq/+1gdybSPoyOVTg9nyRVRQD1BFplNcWCEdrWBVC56a0QqEldnXCJ7ab
-	 UmvYMNTGivpJw==
+	b=H/NnXFihlCxWGLPpEIYm9VQ1Qvt3r79PDM5rP8I1QJiCAvPvWTVGdlwmN6qx4qAFJ
+	 Sf/MAyl6B7VhgF0ACuAuYFsNFzBkK/50KnTt0enuvVgXgI5sxmBIYgMw/FKbkukyMM
+	 f3JGYMbCjLBxBMrqsUR9MJtZU+tEP5Of8cFq9jki/nlIPpe+WHmbzbQSLdtEiT0GED
+	 SNIs7LnyGjCMl/rHR3B84uo3v7An/e4MxLLPagIdQWnNqUJjnB6jBdeAs5I/zXb43z
+	 mIxpHVix0e6oMrqs8QJlMLfLc+Ma34Nu2yZqj2O15RwsULBBbvBfqts5pKDPeZyU+u
+	 RFgM8V7VyUKIA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+Cc: Shay Drory <shayd@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Alex Vesker <valex@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 446/752] team: avoid NETDEV_CHANGEMTU event when unregistering slave
-Date: Sat, 28 Feb 2026 12:42:37 -0500
-Message-ID: <20260228174750.1542406-446-sashal@kernel.org>
+Subject: [PATCH 6.18 447/752] net/mlx5: DR, Fix circular locking dependency in dump
+Date: Sat, 28 Feb 2026 12:42:38 -0500
+Message-ID: <20260228174750.1542406-447-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,140 +51,150 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit bb4c698633c0e19717586a6524a33196cff01a32 ]
+[ Upstream commit 2700b7e603af39ca55fe9fc876ca123efd44680f ]
 
-syzbot is reporting
+Fix a circular locking dependency between dbg_mutex and the domain
+rx/tx mutexes that could lead to a deadlock.
 
-  unregister_netdevice: waiting for netdevsim0 to become free. Usage count = 3
-  ref_tracker: netdev@ffff88807dcf8618 has 1/2 users at
-       __netdev_tracker_alloc include/linux/netdevice.h:4400 [inline]
-       netdev_hold include/linux/netdevice.h:4429 [inline]
-       inetdev_init+0x201/0x4e0 net/ipv4/devinet.c:286
-       inetdev_event+0x251/0x1610 net/ipv4/devinet.c:1600
-       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
-       call_netdevice_notifiers_mtu net/core/dev.c:2318 [inline]
-       netif_set_mtu_ext+0x5aa/0x800 net/core/dev.c:9886
-       netif_set_mtu+0xd7/0x1b0 net/core/dev.c:9907
-       dev_set_mtu+0x126/0x260 net/core/dev_api.c:248
-       team_port_del+0xb07/0xcb0 drivers/net/team/team_core.c:1333
-       team_del_slave drivers/net/team/team_core.c:1936 [inline]
-       team_device_event+0x207/0x5b0 drivers/net/team/team_core.c:2929
-       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
-       call_netdevice_notifiers_extack net/core/dev.c:2281 [inline]
-       call_netdevice_notifiers net/core/dev.c:2295 [inline]
-       __dev_change_net_namespace+0xcb7/0x2050 net/core/dev.c:12592
-       do_setlink+0x2ce/0x4590 net/core/rtnetlink.c:3060
-       rtnl_changelink net/core/rtnetlink.c:3776 [inline]
-       __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
-       rtnl_newlink+0x15a9/0x1be0 net/core/rtnetlink.c:4072
-       rtnetlink_rcv_msg+0x7d5/0xbe0 net/core/rtnetlink.c:6958
-       netlink_rcv_skb+0x232/0x4b0 net/netlink/af_netlink.c:2550
-       netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
-       netlink_unicast+0x80f/0x9b0 net/netlink/af_netlink.c:1344
-       netlink_sendmsg+0x813/0xb40 net/netlink/af_netlink.c:1894
+The dump path in dr_dump_domain_all() was acquiring locks in the order:
+  dbg_mutex -> rx.mutex -> tx.mutex
 
-problem. Ido Schimmel found steps to reproduce
+While the table/matcher creation paths acquire locks in the order:
+  rx.mutex -> tx.mutex -> dbg_mutex
 
-  ip link add name team1 type team
-  ip link add name dummy1 mtu 1499 master team1 type dummy
-  ip netns add ns1
-  ip link set dev dummy1 netns ns1
-  ip -n ns1 link del dev dummy1
+This inverted lock ordering creates a circular dependency. Fix this by
+changing dr_dump_domain_all() to acquire the domain lock before
+dbg_mutex, matching the order used in mlx5dr_table_create() and
+mlx5dr_matcher_create().
 
-and also found that the same issue was fixed in the bond driver in
-commit f51048c3e07b ("bonding: avoid NETDEV_CHANGEMTU event when
-unregistering slave").
+Lockdep splat:
+ ======================================================
+ WARNING: possible circular locking dependency detected
+ 6.19.0-rc6net_next_e817c4e #1 Not tainted
+ ------------------------------------------------------
+ sos/30721 is trying to acquire lock:
+ ffff888102df5900 (&dmn->info.rx.mutex){+.+.}-{4:4}, at:
+dr_dump_start+0x131/0x450 [mlx5_core]
 
-Let's do similar thing for the team driver, with commit ad7c7b2172c3 ("net:
-hold netdev instance lock during sysfs operations") and commit 303a8487a657
-("net: s/__dev_set_mtu/__netif_set_mtu/") also applied.
+ but task is already holding lock:
+ ffff888102df5bc0 (&dmn->dump_info.dbg_mutex){+.+.}-{4:4}, at:
+dr_dump_start+0x10b/0x450 [mlx5_core]
 
-Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260224125709.317574-2-idosch@nvidia.com
+ which lock already depends on the new lock.
+
+ the existing dependency chain (in reverse order) is:
+
+ -> #2 (&dmn->dump_info.dbg_mutex){+.+.}-{4:4}:
+        __mutex_lock+0x91/0x1060
+        mlx5dr_matcher_create+0x377/0x5e0 [mlx5_core]
+        mlx5_cmd_dr_create_flow_group+0x62/0xd0 [mlx5_core]
+        mlx5_create_flow_group+0x113/0x1c0 [mlx5_core]
+        mlx5_chains_create_prio+0x453/0x2290 [mlx5_core]
+        mlx5_chains_get_table+0x2e2/0x980 [mlx5_core]
+        esw_chains_create+0x1e6/0x3b0 [mlx5_core]
+        esw_create_offloads_fdb_tables.cold+0x62/0x63f [mlx5_core]
+        esw_offloads_enable+0x76f/0xd20 [mlx5_core]
+        mlx5_eswitch_enable_locked+0x35a/0x500 [mlx5_core]
+        mlx5_devlink_eswitch_mode_set+0x561/0x950 [mlx5_core]
+        devlink_nl_eswitch_set_doit+0x67/0xe0
+        genl_family_rcv_msg_doit+0xe0/0x130
+        genl_rcv_msg+0x188/0x290
+        netlink_rcv_skb+0x4b/0xf0
+        genl_rcv+0x24/0x40
+        netlink_unicast+0x1ed/0x2c0
+        netlink_sendmsg+0x210/0x450
+        __sock_sendmsg+0x38/0x60
+        __sys_sendto+0x119/0x180
+        __x64_sys_sendto+0x20/0x30
+        do_syscall_64+0x70/0xd00
+        entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+ -> #1 (&dmn->info.tx.mutex){+.+.}-{4:4}:
+        __mutex_lock+0x91/0x1060
+        mlx5dr_table_create+0x11d/0x530 [mlx5_core]
+        mlx5_cmd_dr_create_flow_table+0x62/0x140 [mlx5_core]
+        __mlx5_create_flow_table+0x46f/0x960 [mlx5_core]
+        mlx5_create_flow_table+0x16/0x20 [mlx5_core]
+        esw_create_offloads_fdb_tables+0x136/0x240 [mlx5_core]
+        esw_offloads_enable+0x76f/0xd20 [mlx5_core]
+        mlx5_eswitch_enable_locked+0x35a/0x500 [mlx5_core]
+        mlx5_devlink_eswitch_mode_set+0x561/0x950 [mlx5_core]
+        devlink_nl_eswitch_set_doit+0x67/0xe0
+        genl_family_rcv_msg_doit+0xe0/0x130
+        genl_rcv_msg+0x188/0x290
+        netlink_rcv_skb+0x4b/0xf0
+        genl_rcv+0x24/0x40
+        netlink_unicast+0x1ed/0x2c0
+        netlink_sendmsg+0x210/0x450
+        __sock_sendmsg+0x38/0x60
+        __sys_sendto+0x119/0x180
+        __x64_sys_sendto+0x20/0x30
+        do_syscall_64+0x70/0xd00
+        entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+ -> #0 (&dmn->info.rx.mutex){+.+.}-{4:4}:
+        __lock_acquire+0x18b6/0x2eb0
+        lock_acquire+0xd3/0x2c0
+        __mutex_lock+0x91/0x1060
+        dr_dump_start+0x131/0x450 [mlx5_core]
+        seq_read_iter+0xe3/0x410
+        seq_read+0xfb/0x130
+        full_proxy_read+0x53/0x80
+        vfs_read+0xba/0x330
+        ksys_read+0x65/0xe0
+        do_syscall_64+0x70/0xd00
+        entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+  Possible unsafe locking scenario:
+
+        CPU0                    CPU1
+        ----                    ----
+   lock(&dmn->dump_info.dbg_mutex);
+                                lock(&dmn->info.tx.mutex);
+                                lock(&dmn->dump_info.dbg_mutex);
+   lock(&dmn->info.rx.mutex);
+
+                   *** DEADLOCK ***
+
+Fixes: 9222f0b27da2 ("net/mlx5: DR, Add support for dumping steering info")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Reviewed-by: Alex Vesker <valex@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260224114652.1787431-2-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index d5da2f0774637..6ec6708c52e2d 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -1291,7 +1291,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c
+index 030a5776c9374..a4c19af1775f1 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c
+@@ -1050,8 +1050,8 @@ static int dr_dump_domain_all(struct seq_file *file, struct mlx5dr_domain *dmn)
+ 	struct mlx5dr_table *tbl;
+ 	int ret;
  
- static void __team_port_change_port_removed(struct team_port *port);
+-	mutex_lock(&dmn->dump_info.dbg_mutex);
+ 	mlx5dr_domain_lock(dmn);
++	mutex_lock(&dmn->dump_info.dbg_mutex);
  
--static int team_port_del(struct team *team, struct net_device *port_dev)
-+static int team_port_del(struct team *team, struct net_device *port_dev, bool unregister)
- {
- 	struct net_device *dev = team->dev;
- 	struct team_port *port;
-@@ -1329,7 +1329,13 @@ static int team_port_del(struct team *team, struct net_device *port_dev)
- 	__team_port_change_port_removed(port);
+ 	ret = dr_dump_domain(file, dmn);
+ 	if (ret < 0)
+@@ -1064,8 +1064,8 @@ static int dr_dump_domain_all(struct seq_file *file, struct mlx5dr_domain *dmn)
+ 	}
  
- 	team_port_set_orig_dev_addr(port);
--	dev_set_mtu(port_dev, port->orig.mtu);
-+	if (unregister) {
-+		netdev_lock_ops(port_dev);
-+		__netif_set_mtu(port_dev, port->orig.mtu);
-+		netdev_unlock_ops(port_dev);
-+	} else {
-+		dev_set_mtu(port_dev, port->orig.mtu);
-+	}
- 	kfree_rcu(port, rcu);
- 	netdev_info(dev, "Port device %s removed\n", portname);
- 	netdev_compute_master_upper_features(team->dev, true);
-@@ -1633,7 +1639,7 @@ static void team_uninit(struct net_device *dev)
- 	ASSERT_RTNL();
- 
- 	list_for_each_entry_safe(port, tmp, &team->port_list, list)
--		team_port_del(team, port->dev);
-+		team_port_del(team, port->dev, false);
- 
- 	__team_change_mode(team, NULL); /* cleanup */
- 	__team_options_unregister(team, team_options, ARRAY_SIZE(team_options));
-@@ -1932,7 +1938,16 @@ static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
- 
- 	ASSERT_RTNL();
- 
--	return team_port_del(team, port_dev);
-+	return team_port_del(team, port_dev, false);
-+}
-+
-+static int team_del_slave_on_unregister(struct net_device *dev, struct net_device *port_dev)
-+{
-+	struct team *team = netdev_priv(dev);
-+
-+	ASSERT_RTNL();
-+
-+	return team_port_del(team, port_dev, true);
+ unlock_mutex:
+-	mlx5dr_domain_unlock(dmn);
+ 	mutex_unlock(&dmn->dump_info.dbg_mutex);
++	mlx5dr_domain_unlock(dmn);
+ 	return ret;
  }
  
- static netdev_features_t team_fix_features(struct net_device *dev,
-@@ -2925,7 +2940,7 @@ static int team_device_event(struct notifier_block *unused,
- 					       !!netif_oper_up(port->dev));
- 		break;
- 	case NETDEV_UNREGISTER:
--		team_del_slave(port->team->dev, dev);
-+		team_del_slave_on_unregister(port->team->dev, dev);
- 		break;
- 	case NETDEV_FEAT_CHANGE:
- 		if (!port->team->notifier_ctx) {
-@@ -2998,3 +3013,4 @@ MODULE_LICENSE("GPL v2");
- MODULE_AUTHOR("Jiri Pirko <jpirko@redhat.com>");
- MODULE_DESCRIPTION("Ethernet team device driver");
- MODULE_ALIAS_RTNL_LINK(DRV_NAME);
-+MODULE_IMPORT_NS("NETDEV_INTERNAL");
 -- 
 2.51.0
 
