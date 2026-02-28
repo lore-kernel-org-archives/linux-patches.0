@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF57346772
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95351379EF1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302068; cv=none; b=DEGqxrg9VwMhN4MmVziaVoyZHzMx/4eDR4te4NZlg5pCcD8z6UhZECsz59ePl01fE1cA2y5fq69QWMXwZg3apDL+JZoLvjBfxawIhpmQkc4Q7dTJ7OwkBBr3k1ldbt6b0wx7w4YVnj12xX2Z2Cd0nJvglJHxhBkNJgZFgOKwgh4=
+	t=1772302068; cv=none; b=aRPaHszT09lJ8YjNjaQMMAukMF0Msq3WIP/7r326mJCzcqt7sNxJ7Ucz8pt2gNc4ADOP8FllGbQFYVAcODAUWRLe+2+/RJUqfVy1y7UtYSI6cneyRcKKyTopbGoo5/VuPNxjra1455USbuer3A+XHSE038wQGxfL5vwYHEomqv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302068; c=relaxed/simple;
-	bh=jaQ7tiCfZM1LtrQ3dDUWqiToaERPqpoY5ZDYt2wIP68=;
+	bh=eDTbKJeK9t/DTmy4ayF0F6zjHYRkQDJAcYq1jLs4/CU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jtok1P6tLFJ3sAA9wnsveMPKxjfh6T113B0zAFi+ne+b9ez4vQlAWqdSdVoNK/KZLFDynwDE4OZYCpLvasBEM39yvta2qo5e4p5SBIc2tuebn6MfEcFS942wxmNZsJDeJCXotNlPDN6kJK0+o0mdd8hctwQPc9PxMr31Jsjs7Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LnaYpfVI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IqVCfnMxBc4oMfFbp5PpRkj9a/MFBEiRCjvLC04ao9t1wgYROtvfpHZ03jkkBGvxayOjjWteexmWw7c6vLP0dhvGRLjm54LOTqWeD9WhyepVhBQYXdoNU7fKkaZUaK6hwzX2eDpShtHvvmsaT9lEN3unExRXQTjTrzF6b2BJFU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gjIFi7nH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LnaYpfVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9A3C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gjIFi7nH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060EAC116D0;
 	Sat, 28 Feb 2026 18:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302067;
-	bh=jaQ7tiCfZM1LtrQ3dDUWqiToaERPqpoY5ZDYt2wIP68=;
+	s=k20201202; t=1772302068;
+	bh=eDTbKJeK9t/DTmy4ayF0F6zjHYRkQDJAcYq1jLs4/CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnaYpfVIUGsIoPW4eYXvfrTpaNDSLOqx/LKtk5l4f/dNtV0oewUnkDXdRuR6NX/Uv
-	 jwLoUQvtp6XlEF/TGAcOM/tcYLvWlwKKz+Z9kyKqKC8gWiaSKNijlRcUu+SaqYGoi7
-	 xgK3mNQ0P77lAccnXccB7DEioIZu+VV1cO5RmAnuGhgL6k5NREqoNa8bAFR8OIiI0F
-	 z6rFJeaxyLyW0DsebGqmlY2fGJxvlSO/xEA1t37uFS2sqK1xPSEcsuKrIGSDcgCiCN
-	 NyXmQeLeEdqAnQecIroj5QGGXY+jc8j0T3cjKM1HRJUBsAydda+h5WzwhoS4uhMkCi
-	 Gbe+oPvGcuSxw==
+	b=gjIFi7nHICWlgNuyCDOADb9r0alQjwWIk2B90iVRxW5DNSntvJJORI1A7kTD9+CdR
+	 EUnxz/PJFC3C67xXyHgdJaIxSQNikPpZKA1u+qandwOeWzr2VMDdEy72CvZ9YYVMGL
+	 yHd/R0/T1lzyvWcriAVIDCx8MZ1+AYgaXyV/vMsC5Zi4bhhU0cjSUHV77L3OE4DDea
+	 JoVTP5Df0vXwKb3vaBBMSciRqjBYWbfFg2Qn7rJ/2ssF9rJPaFNzjdUnFK5htTFAdn
+	 lsGLacN+FhYkFF9MC36Ulnwg/gaa+O7XArhEA7+yc6taHcVslczBhnrvlTA+alI9tN
+	 izTVEM7xy/g0w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Qi Tao <taoqi10@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/283] crypto: hisilicon/sec2 - support skcipher/aead fallback for hardware queue unavailable
-Date: Sat, 28 Feb 2026 13:03:08 -0500
-Message-ID: <20260228180709.1583486-46-sashal@kernel.org>
+Subject: [PATCH 6.6 047/283] hrtimer: Fix trace oddity
+Date: Sat, 28 Feb 2026 13:03:09 -0500
+Message-ID: <20260228180709.1583486-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,217 +47,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Qi Tao <taoqi10@huawei.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit e7507439628052363500d717caffb5c2241854dc ]
+[ Upstream commit 5d6446f409da00e5a389125ddb5ce09f5bc404c9 ]
 
-When all hardware queues are busy and no shareable queue,
-new processes fail to apply for queues. To avoid affecting
-tasks, support fallback mechanism when hardware queues are
-unavailable.
+It turns out that __run_hrtimer() will trace like:
 
-Fixes: c16a70c1f253 ("crypto: hisilicon/sec - add new algorithm mode for AEAD")
-Signed-off-by: Qi Tao <taoqi10@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+          <idle>-0     [032] d.h2. 20705.474563: hrtimer_cancel:       hrtimer=0xff2db8f77f8226e8
+          <idle>-0     [032] d.h1. 20705.474563: hrtimer_expire_entry: hrtimer=0xff2db8f77f8226e8 now=20699452001850 function=tick_nohz_handler/0x0
+
+Which is a bit nonsensical, the timer doesn't get canceled on
+expiration. The cause is the use of the incorrect debug helper.
+
+Fixes: c6a2a1770245 ("hrtimer: Add tracepoint for hrtimers")
+Reported-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260121143208.219595606@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 62 ++++++++++++++++------
- 1 file changed, 47 insertions(+), 15 deletions(-)
+ kernel/time/hrtimer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index d6727b8ff582b..8db3d2990816e 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -590,10 +590,8 @@ static int sec_ctx_base_init(struct sec_ctx *ctx)
- 	int i, ret;
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index 0320f49bd1f4a..03f488f93cddf 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -1715,7 +1715,7 @@ static void __run_hrtimer(struct hrtimer_cpu_base *cpu_base,
  
- 	ctx->qps = sec_create_qps();
--	if (!ctx->qps) {
--		pr_err("Can not create sec qps!\n");
-+	if (!ctx->qps)
- 		return -ENODEV;
--	}
+ 	lockdep_assert_held(&cpu_base->lock);
  
- 	sec = container_of(ctx->qps[0]->qm, struct sec_dev, qm);
- 	ctx->sec = sec;
-@@ -632,6 +630,9 @@ static void sec_ctx_base_uninit(struct sec_ctx *ctx)
- {
- 	int i;
+-	debug_deactivate(timer);
++	debug_hrtimer_deactivate(timer);
+ 	base->running = timer;
  
-+	if (!ctx->qps)
-+		return;
-+
- 	for (i = 0; i < ctx->sec->ctx_q_num; i++)
- 		sec_release_qp_ctx(ctx, &ctx->qp_ctx[i]);
- 
-@@ -643,6 +644,9 @@ static int sec_cipher_init(struct sec_ctx *ctx)
- {
- 	struct sec_cipher_ctx *c_ctx = &ctx->c_ctx;
- 
-+	if (!ctx->qps)
-+		return 0;
-+
- 	c_ctx->c_key = dma_alloc_coherent(ctx->dev, SEC_MAX_KEY_SIZE,
- 					  &c_ctx->c_key_dma, GFP_KERNEL);
- 	if (!c_ctx->c_key)
-@@ -655,6 +659,9 @@ static void sec_cipher_uninit(struct sec_ctx *ctx)
- {
- 	struct sec_cipher_ctx *c_ctx = &ctx->c_ctx;
- 
-+	if (!ctx->qps)
-+		return;
-+
- 	memzero_explicit(c_ctx->c_key, SEC_MAX_KEY_SIZE);
- 	dma_free_coherent(ctx->dev, SEC_MAX_KEY_SIZE,
- 			  c_ctx->c_key, c_ctx->c_key_dma);
-@@ -676,6 +683,9 @@ static void sec_auth_uninit(struct sec_ctx *ctx)
- {
- 	struct sec_auth_ctx *a_ctx = &ctx->a_ctx;
- 
-+	if (!ctx->qps)
-+		return;
-+
- 	memzero_explicit(a_ctx->a_key, SEC_MAX_AKEY_SIZE);
- 	dma_free_coherent(ctx->dev, SEC_MAX_AKEY_SIZE,
- 			  a_ctx->a_key, a_ctx->a_key_dma);
-@@ -713,7 +723,7 @@ static int sec_skcipher_init(struct crypto_skcipher *tfm)
- 	}
- 
- 	ret = sec_ctx_base_init(ctx);
--	if (ret)
-+	if (ret && ret != -ENODEV)
- 		return ret;
- 
- 	ret = sec_cipher_init(ctx);
-@@ -824,6 +834,9 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 	struct device *dev = ctx->dev;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		goto set_soft_key;
-+
- 	if (c_mode == SEC_CMODE_XTS) {
- 		ret = xts_verify_key(tfm, key, keylen);
- 		if (ret) {
-@@ -854,13 +867,14 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 	}
- 
- 	memcpy(c_ctx->c_key, key, keylen);
--	if (c_ctx->fbtfm) {
--		ret = crypto_sync_skcipher_setkey(c_ctx->fbtfm, key, keylen);
--		if (ret) {
--			dev_err(dev, "failed to set fallback skcipher key!\n");
--			return ret;
--		}
-+
-+set_soft_key:
-+	ret = crypto_sync_skcipher_setkey(c_ctx->fbtfm, key, keylen);
-+	if (ret) {
-+		dev_err(dev, "failed to set fallback skcipher key!\n");
-+		return ret;
- 	}
-+
- 	return 0;
- }
- 
-@@ -1139,6 +1153,9 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 	struct crypto_authenc_keys keys;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		return sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
-+
- 	ctx->a_ctx.a_alg = a_alg;
- 	ctx->c_ctx.c_alg = c_alg;
- 	c_ctx->c_mode = c_mode;
-@@ -1833,6 +1850,9 @@ static int sec_skcipher_ctx_init(struct crypto_skcipher *tfm)
- 	if (ret)
- 		return ret;
- 
-+	if (!ctx->qps)
-+		return 0;
-+
- 	if (ctx->sec->qm.ver < QM_HW_V3) {
- 		ctx->type_supported = SEC_BD_TYPE2;
- 		ctx->req_op = &sec_skcipher_req_ops;
-@@ -1841,7 +1861,7 @@ static int sec_skcipher_ctx_init(struct crypto_skcipher *tfm)
- 		ctx->req_op = &sec_skcipher_req_ops_v3;
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- static void sec_skcipher_ctx_exit(struct crypto_skcipher *tfm)
-@@ -1909,7 +1929,7 @@ static int sec_aead_ctx_init(struct crypto_aead *tfm, const char *hash_name)
- 	int ret;
- 
- 	ret = sec_aead_init(tfm);
--	if (ret) {
-+	if (ret && ret != -ENODEV) {
- 		pr_err("hisi_sec2: aead init error!\n");
- 		return ret;
- 	}
-@@ -1951,7 +1971,7 @@ static int sec_aead_xcm_ctx_init(struct crypto_aead *tfm)
- 	int ret;
- 
- 	ret = sec_aead_init(tfm);
--	if (ret) {
-+	if (ret && ret != -ENODEV) {
- 		dev_err(ctx->dev, "hisi_sec2: aead xcm init error!\n");
- 		return ret;
- 	}
-@@ -2098,6 +2118,9 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
- 	bool need_fallback = false;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		goto soft_crypto;
-+
- 	if (!sk_req->cryptlen) {
- 		if (ctx->c_ctx.c_mode == SEC_CMODE_XTS)
- 			return -EINVAL;
-@@ -2114,9 +2137,12 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
- 		return -EINVAL;
- 
- 	if (unlikely(ctx->c_ctx.fallback || need_fallback))
--		return sec_skcipher_soft_crypto(ctx, sk_req, encrypt);
-+		goto soft_crypto;
- 
- 	return ctx->req_op->process(ctx, req);
-+
-+soft_crypto:
-+	return sec_skcipher_soft_crypto(ctx, sk_req, encrypt);
- }
- 
- static int sec_skcipher_encrypt(struct skcipher_request *sk_req)
-@@ -2346,6 +2372,9 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
- 	bool need_fallback = false;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		goto soft_crypto;
-+
- 	req->flag = a_req->base.flags;
- 	req->aead_req.aead_req = a_req;
- 	req->c_req.encrypt = encrypt;
-@@ -2355,11 +2384,14 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
- 	ret = sec_aead_param_check(ctx, req, &need_fallback);
- 	if (unlikely(ret)) {
- 		if (need_fallback)
--			return sec_aead_soft_crypto(ctx, a_req, encrypt);
-+			goto soft_crypto;
- 		return -EINVAL;
- 	}
- 
- 	return ctx->req_op->process(ctx, req);
-+
-+soft_crypto:
-+	return sec_aead_soft_crypto(ctx, a_req, encrypt);
- }
- 
- static int sec_aead_encrypt(struct aead_request *a_req)
+ 	/*
 -- 
 2.51.0
 
