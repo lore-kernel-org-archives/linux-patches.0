@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C1736C9F0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDCB36C9F0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302377; cv=none; b=PJiVjhqRZlg4W3AeM7TuBs1IZe7HKC7jfvpJ2gLlTXD8QzHzKtChy3YmvjO8omcwrFhutAWzcTHuqfYcpPTIxn5MzvpCDTL2ZeZqDljdCHZIvW/Lb4Iyb+1sK5xYx46bXFx1aFke3Rvkv8gDiz2LdLJNxWGPB9bu7phj2r51Yus=
+	t=1772302378; cv=none; b=C7R104j+82VKqk0P6/Uvgk5wZitAWpMWZGtIQNnzGn5i1/PZrzGpULG9jKoG0mUtxZn7bdIS23idvSpwdg5lxnHTS7/xQzmn09tg1VGjiYhELOLHxjsd1xOezgS9cjK1eKc0yMs8LVPGsGhV0Lm0TUhUur7haDTIZDA39zO+oH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302377; c=relaxed/simple;
-	bh=sfE2NFVt6ZX26tWw8/p1BepEST5BuXeBTc2v/fxuvbI=;
+	s=arc-20240116; t=1772302378; c=relaxed/simple;
+	bh=oH3+oIg4c3Tu/pMLhXmEvOUQ7RVrSvG5C/mgvusaJak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWGlawlG8iHuGixnH+w+dYz27QdSKGLhqwgfl9e3wjT295EzfbWqsxtl3kMnCT3Tc5dSLN+okZpRxRHSQc2FoXPplq7FcWvaclpq23faUQ+AusQT9dDbd8yhJRe2JZeVDu0ZYKvuPsalVIBVOB+5Y9KMlsBEd8Ws+tkUFLUN+k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p8i24wKs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qXpGLw0NWSgo0z+mHOmQGclUFwzMTljI0g+0H5lGzFJXP/+5RNR/jSRBhK5bSuSwQlbnC22mY8h3sV8olCdz6iDfEsaOAVOJRuSVTq6Xu/1w871SDZzCSs30Em4zc6u965CWE9ukj6Ls9IQGEOTyGiex1yWyr/T3iqaoOwZEZkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g13vVdZY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p8i24wKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E174DC19424;
-	Sat, 28 Feb 2026 18:12:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g13vVdZY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4D7C19425;
+	Sat, 28 Feb 2026 18:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302377;
-	bh=sfE2NFVt6ZX26tWw8/p1BepEST5BuXeBTc2v/fxuvbI=;
+	s=k20201202; t=1772302378;
+	bh=oH3+oIg4c3Tu/pMLhXmEvOUQ7RVrSvG5C/mgvusaJak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8i24wKsaxwSRSUkb8T8KAO3fIJwsgbE/33FiHYY3y63SnrcMyPj8o8506IdwVzEX
-	 MZ4BjZ/5zCR31HlzlexsIOD0HsWeRpTgJftEZXW7r0yjrdcfGsgNgcmcCOegDuWLsG
-	 RQs7+DzEyHeg0TfkSfqOugjeIPupmuKCfzGptnrrOe28nby9CI1vJ9mORburjHHG2j
-	 iwrNv5OGDXp5AsQLIZtKogUrYuBpLoPmBuCoFARNBRCinDTu82SjPAK+aYTtpPn3eu
-	 bLUqN+bWIoQzR/UodBnBXoXDflyNoyRYMYOoV1VVsko98fugbHBSgXxc0EUaZyJU5x
-	 jovpaQGPcmrCQ==
+	b=g13vVdZYOqO1OBkapIewJTaFcxDBv2SjuP7ivRBHK4KtvX/S2RJ5bkKr03tN83XaW
+	 8JabbtAbheNBoAePbwXpljWRqlAuwQolulw30Fp2dybixYfw3iEkbvT+4mWVBEOIB1
+	 GdpUV1wMIiN3AeuKO6S/NQdOarflOZV5eY00vQ+b2ae6NOvyknzJtYrARjiIXWjAOg
+	 uZ5auCbvYwxNqKqP6+pmBz9qBxoUoSd5TD/NLwzrA8HqINRYQvf1ZtP/pSFaxsvaj1
+	 0W3ybGETHdRaMD1Uo8fZVGsRRGh92A3lc3cn3Wo81LFczwmyz7LLVs5rKi4U3l25VZ
+	 hCMggd513Kbjw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Anthony Iliopoulos <ailiop@suse.com>,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <chuck.lever@oracle.com>,
+Cc: Zhiyu Zhang <zhiyuzhang999@gmail.com>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/232] nfsd: never defer requests during idmap lookup
-Date: Sat, 28 Feb 2026 13:09:18 -0500
-Message-ID: <20260228181127.1592657-105-sashal@kernel.org>
+Subject: [PATCH 6.1 106/232] fat: avoid parent link count underflow in rmdir
+Date: Sat, 28 Feb 2026 13:09:19 -0500
+Message-ID: <20260228181127.1592657-106-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,150 +51,72 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Anthony Iliopoulos <ailiop@suse.com>
+From: Zhiyu Zhang <zhiyuzhang999@gmail.com>
 
-[ Upstream commit f9c206cdc4266caad6a9a7f46341420a10f03ccb ]
+[ Upstream commit 8cafcb881364af5ef3a8b9fed4db254054033d8a ]
 
-During v4 request compound arg decoding, some ops (e.g. SETATTR)
-can trigger idmap lookup upcalls. When those upcall responses get
-delayed beyond the allowed time limit, cache_check() will mark the
-request for deferral and cause it to be dropped.
+Corrupted FAT images can leave a directory inode with an incorrect
+i_nlink (e.g. 2 even though subdirectories exist). rmdir then
+unconditionally calls drop_nlink(dir) and can drive i_nlink to 0,
+triggering the WARN_ON in drop_nlink().
 
-This prevents nfs4svc_encode_compoundres from being executed, and
-thus the session slot flag NFSD4_SLOT_INUSE never gets cleared.
-Subsequent client requests will fail with NFSERR_JUKEBOX, given
-that the slot will be marked as in-use, making the SEQUENCE op
-fail.
+Add a sanity check in vfat_rmdir() and msdos_rmdir(): only drop the
+parent link count when it is at least 3, otherwise report a filesystem
+error.
 
-Fix this by making sure that the RQ_USEDEFERRAL flag is always
-clear during nfs4svc_decode_compoundargs(), since no v4 request
-should ever be deferred.
-
-Fixes: 2f425878b6a7 ("nfsd: don't use the deferral service, return NFS4ERR_DELAY")
-Signed-off-by: Anthony Iliopoulos <ailiop@suse.com>
-Reviewed-by: NeilBrown <neil@brown.name>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lkml.kernel.org/r/20260101111148.1437-1-zhiyuzhang999@gmail.com
+Fixes: 9a53c3a783c2 ("[PATCH] r/o bind mounts: unlink: monitor i_nlink")
+Signed-off-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+Reported-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+Closes: https://lore.kernel.org/linux-fsdevel/aVN06OKsKxZe6-Kv@casper.infradead.org/T/#t
+Tested-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4idmap.c | 48 +++++++++++++++++++++++++++++++++++++++------
- fs/nfsd/nfs4proc.c  |  2 --
- fs/nfsd/nfs4xdr.c   | 16 +++++++++++++++
- 3 files changed, 58 insertions(+), 8 deletions(-)
+ fs/fat/namei_msdos.c | 7 ++++++-
+ fs/fat/namei_vfat.c  | 7 ++++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4idmap.c b/fs/nfsd/nfs4idmap.c
-index 717e400b16b86..21e5b4c990ef3 100644
---- a/fs/nfsd/nfs4idmap.c
-+++ b/fs/nfsd/nfs4idmap.c
-@@ -643,13 +643,31 @@ static __be32 encode_name_from_id(struct xdr_stream *xdr,
- 	return idmap_id_to_name(xdr, rqstp, type, id);
- }
+diff --git a/fs/fat/namei_msdos.c b/fs/fat/namei_msdos.c
+index efba301d68aec..fba3a07d39478 100644
+--- a/fs/fat/namei_msdos.c
++++ b/fs/fat/namei_msdos.c
+@@ -325,7 +325,12 @@ static int msdos_rmdir(struct inode *dir, struct dentry *dentry)
+ 	err = fat_remove_entries(dir, &sinfo);	/* and releases bh */
+ 	if (err)
+ 		goto out;
+-	drop_nlink(dir);
++	if (dir->i_nlink >= 3)
++		drop_nlink(dir);
++	else {
++		fat_fs_error(sb, "parent dir link count too low (%u)",
++			dir->i_nlink);
++	}
  
--__be32
--nfsd_map_name_to_uid(struct svc_rqst *rqstp, const char *name, size_t namelen,
--		kuid_t *uid)
-+/**
-+ * nfsd_map_name_to_uid - Map user@domain to local UID
-+ * @rqstp: RPC execution context
-+ * @name: user@domain name to be mapped
-+ * @namelen: length of name, in bytes
-+ * @uid: OUT: mapped local UID value
-+ *
-+ * Returns nfs_ok on success or an NFSv4 status code on failure.
-+ */
-+__be32 nfsd_map_name_to_uid(struct svc_rqst *rqstp, const char *name,
-+			    size_t namelen, kuid_t *uid)
- {
- 	__be32 status;
- 	u32 id = -1;
+ 	clear_nlink(inode);
+ 	fat_truncate_time(inode, NULL, S_CTIME);
+diff --git a/fs/fat/namei_vfat.c b/fs/fat/namei_vfat.c
+index 93fa8ddcf4145..3a9a849bc7885 100644
+--- a/fs/fat/namei_vfat.c
++++ b/fs/fat/namei_vfat.c
+@@ -806,7 +806,12 @@ static int vfat_rmdir(struct inode *dir, struct dentry *dentry)
+ 	err = fat_remove_entries(dir, &sinfo);	/* and releases bh */
+ 	if (err)
+ 		goto out;
+-	drop_nlink(dir);
++	if (dir->i_nlink >= 3)
++		drop_nlink(dir);
++	else {
++		fat_fs_error(sb, "parent dir link count too low (%u)",
++			dir->i_nlink);
++	}
  
-+	/*
-+	 * The idmap lookup below triggers an upcall that invokes
-+	 * cache_check(). RQ_USEDEFERRAL must be clear to prevent
-+	 * cache_check() from setting RQ_DROPME via svc_defer().
-+	 * NFSv4 servers are not permitted to drop requests. Also
-+	 * RQ_DROPME will force NFSv4.1 session slot processing to
-+	 * be skipped.
-+	 */
-+	WARN_ON_ONCE(test_bit(RQ_USEDEFERRAL, &rqstp->rq_flags));
-+
- 	if (name == NULL || namelen == 0)
- 		return nfserr_inval;
- 
-@@ -660,13 +678,31 @@ nfsd_map_name_to_uid(struct svc_rqst *rqstp, const char *name, size_t namelen,
- 	return status;
- }
- 
--__be32
--nfsd_map_name_to_gid(struct svc_rqst *rqstp, const char *name, size_t namelen,
--		kgid_t *gid)
-+/**
-+ * nfsd_map_name_to_gid - Map user@domain to local GID
-+ * @rqstp: RPC execution context
-+ * @name: user@domain name to be mapped
-+ * @namelen: length of name, in bytes
-+ * @gid: OUT: mapped local GID value
-+ *
-+ * Returns nfs_ok on success or an NFSv4 status code on failure.
-+ */
-+__be32 nfsd_map_name_to_gid(struct svc_rqst *rqstp, const char *name,
-+			    size_t namelen, kgid_t *gid)
- {
- 	__be32 status;
- 	u32 id = -1;
- 
-+	/*
-+	 * The idmap lookup below triggers an upcall that invokes
-+	 * cache_check(). RQ_USEDEFERRAL must be clear to prevent
-+	 * cache_check() from setting RQ_DROPME via svc_defer().
-+	 * NFSv4 servers are not permitted to drop requests. Also
-+	 * RQ_DROPME will force NFSv4.1 session slot processing to
-+	 * be skipped.
-+	 */
-+	WARN_ON_ONCE(test_bit(RQ_USEDEFERRAL, &rqstp->rq_flags));
-+
- 	if (name == NULL || namelen == 0)
- 		return nfserr_inval;
- 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 714e4c471e863..d29a37f696a44 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2716,8 +2716,6 @@ nfsd4_proc_compound(struct svc_rqst *rqstp)
- 	BUG_ON(cstate->replay_owner);
- out:
- 	cstate->status = status;
--	/* Reset deferral mechanism for RPC deferrals */
--	set_bit(RQ_USEDEFERRAL, &rqstp->rq_flags);
- 	return rpc_success;
- }
- 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 8ef533b2dc351..d37c90691b953 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -5499,6 +5499,22 @@ nfs4svc_decode_compoundargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
- 	args->ops = args->iops;
- 	args->rqstp = rqstp;
- 
-+	/*
-+	 * NFSv4 operation decoders can invoke svc cache lookups
-+	 * that trigger svc_defer() when RQ_USEDEFERRAL is set,
-+	 * setting RQ_DROPME. This creates two problems:
-+	 *
-+	 * 1. Non-idempotency: Compounds make it too hard to avoid
-+	 *    problems if a request is deferred and replayed.
-+	 *
-+	 * 2. Session slot leakage (NFSv4.1+): If RQ_DROPME is set
-+	 *    during decode but SEQUENCE executes successfully, the
-+	 *    session slot will be marked INUSE. The request is then
-+	 *    dropped before encoding, so the slot is never released,
-+	 *    rendering it permanently unusable by the client.
-+	 */
-+	clear_bit(RQ_USEDEFERRAL, &rqstp->rq_flags);
-+
- 	return nfsd4_decode_compound(args);
- }
- 
+ 	clear_nlink(inode);
+ 	fat_truncate_time(inode, NULL, S_ATIME|S_MTIME);
 -- 
 2.51.0
 
