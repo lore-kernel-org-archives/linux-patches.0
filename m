@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65CC421A16
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7470B43D4F4
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301161; cv=none; b=sOLRygeLXqDw0I9CxlWfJgcWFMigZghqc+Sr5HRJwFq99sqODIa2o0InjOw/ya3ghDzzodhN0amAdXewPn9280wVXIvNWSEZeyZVkE7rAslvOKXqt30kexwnL0HmES57jDmRZYGEAxERfg3YMnqTYt4Gjz/AGtD++9Bc8Ei2rro=
+	t=1772301162; cv=none; b=hv5OTc1LFRE+e1BBctmy2F3iiv6F/xK2rHNuFjVMcG8i2QwetKYQxm7SIspytylATh8ijS4QfSf0JjRJODPIi6fmGr8LqiswSHngHN7WwmF1ZT24o0ViWmbgikCKtw90WeUYMkPzLwr9E8HMR9P7cpemagnlFhAuU2+q/NW7pBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301161; c=relaxed/simple;
-	bh=FIzBvFIdzrkXdwEgwPFJPoL4ik+LPGQBoPJ2yMLIVco=;
+	s=arc-20240116; t=1772301162; c=relaxed/simple;
+	bh=YE0rsx0hax6JiTGRRaPO2CiszNWWwDsydZlkEZma7LI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gy6G73LVu2eUAjrbXVmrqjsS8z157GZs6G6O7rmF0N4p7cljEmy02hbJOPotWrv/exDspHOmjGbtQsldU/6Wma46Bq1DYvXBJsqxsi9AQVCE2YlsRPNU2xn1wQxKoIWQxns5OqXfDtG3InyRXsCD9nFl1Zz75ngSqx56oWdKDdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bxUCtC98; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IPm8vTvdJgyYgnkFhpebvTnkLWjfCoYnhg15BxTibVh9CYZc2TOtytdD6tIWP3uKyQRSLAMseMB+szek5k6YLRWKW9Ci/sNhb6jcXQJdRdxmN/CROno1uL2BMxd/uEIrWezI6MApNgkmPTM4NUYdK3/UQoz1EC14/O+PygKC9po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uV8F+bHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bxUCtC98"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1294AC116D0;
-	Sat, 28 Feb 2026 17:52:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uV8F+bHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC16EC19424;
+	Sat, 28 Feb 2026 17:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301161;
-	bh=FIzBvFIdzrkXdwEgwPFJPoL4ik+LPGQBoPJ2yMLIVco=;
+	s=k20201202; t=1772301162;
+	bh=YE0rsx0hax6JiTGRRaPO2CiszNWWwDsydZlkEZma7LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxUCtC98W+OuOdjYaQzBFqeLOZ3blwSg7HKbWz6S/dgnAIICbS9gvRXfMUyjPirAH
-	 zR96eB0nAZLF7oGC/KKtfzoff40CsVihfYqbZIN6ksN6Jpv59tzItdYbCGfVg/SHt9
-	 P2dRoUDClbD5m69QS+fh/HjvI+59mK7+k9IRlrG6CcpjEyYdTnaAxgv+Bi26+JaBrj
-	 wqzTXXQI7+2ElY3iAL7iM4LZBa+Q02nUMoWNbZ/su8Ucquizm7NmIcXxpFPuS5ly7f
-	 Weim809QVQ7oefDTkQVW3DbaEk0LuO9OEdysFhPZKzr7jArRSAnHS+sgYenPt5VVpv
-	 YTmI2y0l4vfyA==
+	b=uV8F+bHO4GGPcmCP5n+erROxFr+1O+vE+PTMxAND711S6TF0wikLKYebUoDXcW/mh
+	 An2MEZ84xT4UKuiOGnBv7gVqK45Ankm28uTUEYEdpEN+XpaET1YICPYzUBGSfqqEbd
+	 tTVQsV9PfWRwHQOZ9AFQUBLoiy1xKRQvpLkSN74j32Vz5JKRTYVQ9E8wrbf20bWS35
+	 sfmD/DScqMf53ouudfEed5PqjM0fy7bl5tP79ZYlLs3nVsp0ThPD8Sodux0zUROFSc
+	 X27QNd0nt7HPijiEFsk4Em4ZdBosnyE6CztIl4m9ODisUGWNPhDUs8p5XPppaW+ZjU
+	 qgw6fNJPZCKrA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Liang Jie <liangjie@lixiang.com>,
-	fanggeng <fanggeng@lixiang.com>,
+Cc: Artem Shimko <a.shimko.dev@gmail.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 326/752] staging: rtl8723bs: fix missing status update on sdio_alloc_irq() failure
-Date: Sat, 28 Feb 2026 12:40:37 -0500
-Message-ID: <20260228174750.1542406-326-sashal@kernel.org>
+Subject: [PATCH 6.18 327/752] serial: 8250_dw: handle clock enable errors in runtime_resume
+Date: Sat, 28 Feb 2026 12:40:38 -0500
+Message-ID: <20260228174750.1542406-327-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,41 +47,55 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Liang Jie <liangjie@lixiang.com>
+From: Artem Shimko <a.shimko.dev@gmail.com>
 
-[ Upstream commit 618b4aec12faabc7579a6b0df046842d798a4c7c ]
+[ Upstream commit d31228143a489ba6ba797896a07541ce06828c09 ]
 
-The return value of sdio_alloc_irq() was not stored in status.
-If sdio_alloc_irq() fails after rtw_drv_register_netdev() succeeds,
-status remains _SUCCESS and the error path skips resource cleanup,
-while rtw_drv_init() still returns success.
+Add error checking for clk_prepare_enable() calls in
+dw8250_runtime_resume(). Currently if either clock fails to enable,
+the function returns success while leaving clocks in inconsistent state.
 
-Store the return value of sdio_alloc_irq() in status and reuse the
-existing error handling which relies on status.
+This change implements comprehensive error handling by checking the return
+values of both clk_prepare_enable() calls. If the second clock enable
+operation fails after the first clock has already been successfully
+enabled, the code now properly cleans up by disabling and unpreparing
+the first clock before returning. The error code is then propagated to
+the caller, ensuring that clock enable failures are properly reported
+rather than being silently ignored.
 
-Reviewed-by: fanggeng <fanggeng@lixiang.com>
-Signed-off-by: Liang Jie <liangjie@lixiang.com>
-Link: https://patch.msgid.link/20251208092730.262499-1-buaajxlj@163.com
+Signed-off-by: Artem Shimko <a.shimko.dev@gmail.com>
+Link: https://patch.msgid.link/20251104145433.2316165-2-a.shimko.dev@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_dw.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-index f3caaa857c864..139ace51486d2 100644
---- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-+++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-@@ -377,7 +377,8 @@ static int rtw_drv_init(
- 	if (status != _SUCCESS)
- 		goto free_if1;
+diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
+index 710ae4d40aec4..0ff500965c103 100644
+--- a/drivers/tty/serial/8250/8250_dw.c
++++ b/drivers/tty/serial/8250/8250_dw.c
+@@ -741,11 +741,18 @@ static int dw8250_runtime_suspend(struct device *dev)
  
--	if (sdio_alloc_irq(dvobj) != _SUCCESS)
-+	status = sdio_alloc_irq(dvobj);
-+	if (status != _SUCCESS)
- 		goto free_if1;
+ static int dw8250_runtime_resume(struct device *dev)
+ {
++	int ret;
+ 	struct dw8250_data *data = dev_get_drvdata(dev);
  
- 	status = _SUCCESS;
+-	clk_prepare_enable(data->pclk);
++	ret = clk_prepare_enable(data->pclk);
++	if (ret)
++		return ret;
+ 
+-	clk_prepare_enable(data->clk);
++	ret = clk_prepare_enable(data->clk);
++	if (ret) {
++		clk_disable_unprepare(data->pclk);
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
