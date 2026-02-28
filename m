@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0BA3314C3
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8782732AABE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301254; cv=none; b=mOxUHRtzGNuZ0FiQMD0XTeY8HLhttigWVhmAPx/0jtxbKkJLjTUfvka6wPCrGU7BM+5pr/Yh53bQeifGnXs3kW6qHjLJkEXLzSHlEpbAUlPHS60bgg51wlYfCZ1Fpg+iEG4cZQhFl2T4CDLk1/xa7QRVzzqd9oUEglKdqH52mb8=
+	t=1772301255; cv=none; b=Yd/V98aOteCOVL40MJ13Td9LPZ/e10wJjeCKWK/H/oPSJyDsrxfaAohfUkl9FdpjIXsb768qKvYGD1MYOlvmVyrhFvuGz0OwXgrQj67Ozjp+rvBt02kl4G3vs0Px+e1gRgI4BxOBPh2Vd+gizTkfioxKO7nk+ROuNWjszTMouHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301254; c=relaxed/simple;
-	bh=OGZD48fu6PNpH83xspNXa6wPfYshq6XiyBcTM2qUohA=;
+	s=arc-20240116; t=1772301255; c=relaxed/simple;
+	bh=4VyEYONTL+TgY1a7SDXvB0Bl/lU4+G5iJWVq4kmxXU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFncnioQXl+iqiS3uuVkVbQ9Iw+G6GnT2qafjvAQa28WnB7/IekqiAShczDWxmSePm9IC8X9SvT7r9VwrWCz5llLClLkxCak612XPmyshkxoacKt0YZC/MTgfuvTXdrlfhyULreA6cm0ONQGzIQ/HI3aPa0dWXt503b7RKlOSPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gp9WuMWF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WcfqExzJUmHT7FELT6g+0ZNW2PbJYhStaIeaLpe6LVcW74DHxJV5SvdhENhrOoGx89lyWrffvGk36oAaHYvCtKbjoe2CIbq6g/F4nR0LNkwP0/VKBBT8jEWmRpOYpD18mStUm5+qmHtZETVuol7GNXVk4aYZXHpiNjO8MyVMpO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TzRP2p2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gp9WuMWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF231C19423;
-	Sat, 28 Feb 2026 17:54:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TzRP2p2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D370CC19424;
+	Sat, 28 Feb 2026 17:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301254;
-	bh=OGZD48fu6PNpH83xspNXa6wPfYshq6XiyBcTM2qUohA=;
+	s=k20201202; t=1772301255;
+	bh=4VyEYONTL+TgY1a7SDXvB0Bl/lU4+G5iJWVq4kmxXU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gp9WuMWFA0QmWR0CSBJjKw9K5jgPaqbMlNDXPYfNp2uAHQri/GSKUoYLTireXJk/6
-	 30kLN0sNhZavlrbDkkmtUnE4IXrI21++Ztq3SEhg6swrj+b2H4wzKhWP5HQNg9YISm
-	 wZssb0MbC5emor/yvz1LaY2jrm8/YaObGE5jLRMyxE+QOKKQ5eSCPp/Jp80hF4pSf/
-	 ANjHv+zINbc9Tmh9cY6gFsJbmCm1kRzK6czAqOc6Sa6wtHV8TVPTU6uaMbBv0CMsDZ
-	 b6fJHLhZtE0yGPfc0ZRKaw9ClshsLEsgNVqDdoT0g+BovQAHCp0z7ZrFJExry5tSzo
-	 am9EGW3qkJIyg==
+	b=TzRP2p2mG+VbMF8vaPJ93FXDC4m487ukfiVNlyFusPY1FvzKeztHlh1qwN53yOo9K
+	 /sShZJRjQpEIU9aNtTSjxlVyFNszEE1SGWmm27iROpGYUkVLNhwkQnsqyG0SZ4Pu9l
+	 QtnHTOGhbGbmYQD7Vlug/Gie1oBibbUt2x1Zqp7Tqer8RqlzcpVpRMb+RuulN7oMQ8
+	 zkKVIBRTPTpX8DKUIGgF8Qf4FgJAod7Z1bDDy0BR9Cupg3dQQAhdgYBVdDOyda2q+c
+	 YyRVExkMrd5fTFd9OnzReEgme2l+9kRXCJDxDAPb7JSQeIGy8Vhk5KHR9EA/4F4jw4
+	 q2UtNSoFKAt9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Willem de Bruijn <willemb@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 437/752] net: Drop the lock in skb_may_tx_timestamp()
-Date: Sat, 28 Feb 2026 12:42:28 -0500
-Message-ID: <20260228174750.1542406-437-sashal@kernel.org>
+Subject: [PATCH 6.18 438/752] net: usb: pegasus: enable basic endpoint checking
+Date: Sat, 28 Feb 2026 12:42:29 -0500
+Message-ID: <20260228174750.1542406-438-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,106 +48,132 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit 983512f3a87fd8dc4c94dfa6b596b6e57df5aad7 ]
+[ Upstream commit 3d7e6ce34f4fcc7083510c28b17a7c36462a25d4 ]
 
-skb_may_tx_timestamp() may acquire sock::sk_callback_lock. The lock must
-not be taken in IRQ context, only softirq is okay. A few drivers receive
-the timestamp via a dedicated interrupt and complete the TX timestamp
-from that handler. This will lead to a deadlock if the lock is already
-write-locked on the same CPU.
+pegasus_probe() fills URBs with hardcoded endpoint pipes without
+verifying the endpoint descriptors:
 
-Taking the lock can be avoided. The socket (pointed by the skb) will
-remain valid until the skb is released. The ->sk_socket and ->file
-member will be set to NULL once the user closes the socket which may
-happen before the timestamp arrives.
-If we happen to observe the pointer while the socket is closing but
-before the pointer is set to NULL then we may use it because both
-pointer (and the file's cred member) are RCU freed.
+  - usb_rcvbulkpipe(dev, 1) for RX data
+  - usb_sndbulkpipe(dev, 2) for TX data
+  - usb_rcvintpipe(dev, 3)  for status interrupts
 
-Drop the lock. Use READ_ONCE() to obtain the individual pointer. Add a
-matching WRITE_ONCE() where the pointer are cleared.
+A malformed USB device can present these endpoints with transfer types
+that differ from what the driver assumes.
 
-Link: https://lore.kernel.org/all/20260205145104.iWinkXHv@linutronix.de
-Fixes: b245be1f4db1a ("net-timestamp: no-payload only sysctl")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260220183858.N4ERjFW6@linutronix.de
+Add a pegasus_usb_ep enum for endpoint numbers, replacing magic
+constants throughout. Add usb_check_bulk_endpoints() and
+usb_check_int_endpoints() calls before any resource allocation to
+verify endpoint types before use, rejecting devices with mismatched
+descriptors at probe time, and avoid triggering assertion.
+
+Similar fix to
+- commit 90b7f2961798 ("net: usb: rtl8150: enable basic endpoint checking")
+- commit 9e7021d2aeae ("net: usb: catc: enable basic endpoint checking")
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260222050633.410165-1-n7l8m4@u.northwestern.edu
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h |  2 +-
- net/core/skbuff.c  | 23 ++++++++++++++++++-----
- net/socket.c       |  2 +-
- 3 files changed, 20 insertions(+), 7 deletions(-)
+ drivers/net/usb/pegasus.c | 35 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 30 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 60bcb13f045c3..9540dcc5a0c01 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2067,7 +2067,7 @@ static inline int sk_rx_queue_get(const struct sock *sk)
+diff --git a/drivers/net/usb/pegasus.c b/drivers/net/usb/pegasus.c
+index c514483134f05..0f16a133c75d1 100644
+--- a/drivers/net/usb/pegasus.c
++++ b/drivers/net/usb/pegasus.c
+@@ -31,6 +31,17 @@ static const char driver_name[] = "pegasus";
+ 			BMSR_100FULL | BMSR_ANEGCAPABLE)
+ #define CARRIER_CHECK_DELAY (2 * HZ)
  
- static inline void sk_set_socket(struct sock *sk, struct socket *sock)
- {
--	sk->sk_socket = sock;
-+	WRITE_ONCE(sk->sk_socket, sock);
- 	if (sock) {
- 		WRITE_ONCE(sk->sk_uid, SOCK_INODE(sock)->i_uid);
- 		WRITE_ONCE(sk->sk_ino, SOCK_INODE(sock)->i_ino);
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 9a763d120925a..60d89899fdb9b 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -5513,15 +5513,28 @@ static void __skb_complete_tx_timestamp(struct sk_buff *skb,
- 
- static bool skb_may_tx_timestamp(struct sock *sk, bool tsonly)
- {
--	bool ret;
-+	struct socket *sock;
-+	struct file *file;
-+	bool ret = false;
- 
- 	if (likely(tsonly || READ_ONCE(sock_net(sk)->core.sysctl_tstamp_allow_data)))
- 		return true;
- 
--	read_lock_bh(&sk->sk_callback_lock);
--	ret = sk->sk_socket && sk->sk_socket->file &&
--	      file_ns_capable(sk->sk_socket->file, &init_user_ns, CAP_NET_RAW);
--	read_unlock_bh(&sk->sk_callback_lock);
-+	/* The sk pointer remains valid as long as the skb is. The sk_socket and
-+	 * file pointer may become NULL if the socket is closed. Both structures
-+	 * (including file->cred) are RCU freed which means they can be accessed
-+	 * within a RCU read section.
-+	 */
-+	rcu_read_lock();
-+	sock = READ_ONCE(sk->sk_socket);
-+	if (!sock)
-+		goto out;
-+	file = READ_ONCE(sock->file);
-+	if (!file)
-+		goto out;
-+	ret = file_ns_capable(file, &init_user_ns, CAP_NET_RAW);
-+out:
-+	rcu_read_unlock();
- 	return ret;
- }
- 
-diff --git a/net/socket.c b/net/socket.c
-index e8892b2187087..2b6e11b085ebd 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -674,7 +674,7 @@ static void __sock_release(struct socket *sock, struct inode *inode)
- 		iput(SOCK_INODE(sock));
++/*
++ * USB endpoints.
++ */
++
++enum pegasus_usb_ep {
++	PEGASUS_USB_EP_CONTROL	= 0,
++	PEGASUS_USB_EP_BULK_IN	= 1,
++	PEGASUS_USB_EP_BULK_OUT	= 2,
++	PEGASUS_USB_EP_INT_IN	= 3,
++};
++
+ static bool loopback;
+ static bool mii_mode;
+ static char *devid;
+@@ -545,7 +556,7 @@ static void read_bulk_callback(struct urb *urb)
+ 		goto tl_sched;
+ goon:
+ 	usb_fill_bulk_urb(pegasus->rx_urb, pegasus->usb,
+-			  usb_rcvbulkpipe(pegasus->usb, 1),
++			  usb_rcvbulkpipe(pegasus->usb, PEGASUS_USB_EP_BULK_IN),
+ 			  pegasus->rx_skb->data, PEGASUS_MTU,
+ 			  read_bulk_callback, pegasus);
+ 	rx_status = usb_submit_urb(pegasus->rx_urb, GFP_ATOMIC);
+@@ -585,7 +596,7 @@ static void rx_fixup(struct tasklet_struct *t)
  		return;
  	}
--	sock->file = NULL;
-+	WRITE_ONCE(sock->file, NULL);
- }
+ 	usb_fill_bulk_urb(pegasus->rx_urb, pegasus->usb,
+-			  usb_rcvbulkpipe(pegasus->usb, 1),
++			  usb_rcvbulkpipe(pegasus->usb, PEGASUS_USB_EP_BULK_IN),
+ 			  pegasus->rx_skb->data, PEGASUS_MTU,
+ 			  read_bulk_callback, pegasus);
+ try_again:
+@@ -713,7 +724,7 @@ static netdev_tx_t pegasus_start_xmit(struct sk_buff *skb,
+ 	((__le16 *) pegasus->tx_buff)[0] = cpu_to_le16(l16);
+ 	skb_copy_from_linear_data(skb, pegasus->tx_buff + 2, skb->len);
+ 	usb_fill_bulk_urb(pegasus->tx_urb, pegasus->usb,
+-			  usb_sndbulkpipe(pegasus->usb, 2),
++			  usb_sndbulkpipe(pegasus->usb, PEGASUS_USB_EP_BULK_OUT),
+ 			  pegasus->tx_buff, count,
+ 			  write_bulk_callback, pegasus);
+ 	if ((res = usb_submit_urb(pegasus->tx_urb, GFP_ATOMIC))) {
+@@ -840,7 +851,7 @@ static int pegasus_open(struct net_device *net)
+ 	set_registers(pegasus, EthID, 6, net->dev_addr);
  
- /**
+ 	usb_fill_bulk_urb(pegasus->rx_urb, pegasus->usb,
+-			  usb_rcvbulkpipe(pegasus->usb, 1),
++			  usb_rcvbulkpipe(pegasus->usb, PEGASUS_USB_EP_BULK_IN),
+ 			  pegasus->rx_skb->data, PEGASUS_MTU,
+ 			  read_bulk_callback, pegasus);
+ 	if ((res = usb_submit_urb(pegasus->rx_urb, GFP_KERNEL))) {
+@@ -851,7 +862,7 @@ static int pegasus_open(struct net_device *net)
+ 	}
+ 
+ 	usb_fill_int_urb(pegasus->intr_urb, pegasus->usb,
+-			 usb_rcvintpipe(pegasus->usb, 3),
++			 usb_rcvintpipe(pegasus->usb, PEGASUS_USB_EP_INT_IN),
+ 			 pegasus->intr_buff, sizeof(pegasus->intr_buff),
+ 			 intr_callback, pegasus, pegasus->intr_interval);
+ 	if ((res = usb_submit_urb(pegasus->intr_urb, GFP_KERNEL))) {
+@@ -1136,10 +1147,24 @@ static int pegasus_probe(struct usb_interface *intf,
+ 	pegasus_t *pegasus;
+ 	int dev_index = id - pegasus_ids;
+ 	int res = -ENOMEM;
++	static const u8 bulk_ep_addr[] = {
++		PEGASUS_USB_EP_BULK_IN | USB_DIR_IN,
++		PEGASUS_USB_EP_BULK_OUT | USB_DIR_OUT,
++		0};
++	static const u8 int_ep_addr[] = {
++		PEGASUS_USB_EP_INT_IN | USB_DIR_IN,
++		0};
+ 
+ 	if (pegasus_blacklisted(dev))
+ 		return -ENODEV;
+ 
++	/* Verify that all required endpoints are present */
++	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr) ||
++	    !usb_check_int_endpoints(intf, int_ep_addr)) {
++		dev_err(&intf->dev, "Missing or invalid endpoints\n");
++		return -ENODEV;
++	}
++
+ 	net = alloc_etherdev(sizeof(struct pegasus));
+ 	if (!net)
+ 		goto out;
 -- 
 2.51.0
 
