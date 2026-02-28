@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F2334252B
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724C6375AC8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301711; cv=none; b=fjqXnsAAptIjN7EgLEJM027gTLPvVlapCqNpEDGWBzP+PIxnOjth+iqXtIuX7PuuGQt0u8bOf+LIAr43Hx0YmeJWa31aCx0+JkfZzxsG5MFNYOdj7H6S3nspJFYopxOxEij45Vb904soRs6PTKhoeMvYZOt6Fj5WmY0LXnLz5TY=
+	t=1772301712; cv=none; b=Zhmu96q26rBrkKHKt4GSMlLzNHGp/NaKsQ3gIN53wFsN7agVFVOWDgJghgwfd/wdmpiOvPIs9UmNlvSh8Z2fWPqESHosRESCgfeS72XsJ22bZzC9xmyE1ccdY+u0hVyWJOTWGxuDBDjpE3pgbBAGskPQ3pELci2uPb9MrbE8frA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301711; c=relaxed/simple;
-	bh=gMr+H+1VK2Cmt3aSmk/qwnImV8FSf3IWWqlTNnDiKTU=;
+	s=arc-20240116; t=1772301712; c=relaxed/simple;
+	bh=j+mswgq77NEhCfOH5nuXFJ7mXyfghs+gyXb5NUCtBF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q0N1aB/m48ZL+o2WXowAdzYVFJgHTo/7b4Pn+KWCCxiw5VAggqm7mlh2e8YyIvktKDGVd41gO2pJdEjEvptpLrhb5WcG9Sb2czp5trm93IosnftA5/I8xoPhxBQSiTbtMLvVEEIs7xY9EJwjwkJN6oSk6hnWqPwQ7oAI3AIAJMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UBrCdrBV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=awsSjwimKHkNM3d5s+mjqspm1f1d5Ax6KD9g/G7w8/RiKSsTDstauPmZR3wZoArDnNO5XzDWbrYSd6TAyuMEUnhQFoRCwFtRHoPIlEy92BMuEQY8mxl00SBR78q3qrTV0FmxsoF8v5yl+mxppwDe9uP38DzyztsI3isfemD41YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=abGJ0fji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UBrCdrBV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E70C116D0;
-	Sat, 28 Feb 2026 18:01:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="abGJ0fji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD015C116D0;
+	Sat, 28 Feb 2026 18:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301711;
-	bh=gMr+H+1VK2Cmt3aSmk/qwnImV8FSf3IWWqlTNnDiKTU=;
+	s=k20201202; t=1772301712;
+	bh=j+mswgq77NEhCfOH5nuXFJ7mXyfghs+gyXb5NUCtBF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBrCdrBVMoH3AdcNZiNCU6dwUuZzODChUIEKlY1TiQzEHHsHgy3bxNJthNUhpdmhm
-	 /UoFftlvKibu6yFHTuMwmBReNDCRRHkIzGdX9e11ScWIy6oo0XHp8oapUdI/pklsma
-	 5olYcxooWYIo1PiP9qtbhkCCrdsPO4534ef/48+tC0GzFPdGWYcPauhuP19kL1CcY5
-	 BGn1T6PrOdYRjMJYzsPtTp+zCC96zG82Llwo8K1F6s7HcQpciGQZCDI8C1cCZYRzOc
-	 shq+N4oqJrhzDFvxFc61MKbkfEiyodGS2eEpHVZE9v0CM/crQ2E/gdy5hyitlvhutB
-	 GfdvP55PdXkeA==
+	b=abGJ0fjiUWcVntZlD+Kkqe78na3W5SWn3jLGoXoCZaFULOGEOfJSXCt8OmMjccSoz
+	 XaYa4HX6VeloNurVRxHuBBNpDLptFClh1U4+wlabH77xzhYKt2Z5jHcrY/9SHKqJKc
+	 gzgwAyma/y6SNvkaSzLmpVbGPRISkwdsopCINolDVhCGdCszfIDM6YYb6h0ds5Yu6e
+	 iQs8v4NpUDCmMrM2nGACkPCSBJyi5Y6NCvogs1T1C33mC5Cd2HChO3N0MsF7vcFnAB
+	 niReFCqvu0apyiaw6K86B0B059YeUX5mam0frs11flKufeZGptL18d7RmRr8uR71zE
+	 1zAoxfxe898HQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotian Zhang <vulab@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Zilin Guan <zilin@seu.edu.cn>,
+	Jianhao Xu <jianhao.xu@seu.edu.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/385] soc: qcom: cmd-db: Use devm_memremap() to fix memory leak in cmd_db_dev_probe
-Date: Sat, 28 Feb 2026 12:55:28 -0500
-Message-ID: <20260228180011.1568201-106-sashal@kernel.org>
+Subject: [PATCH 6.12 107/385] soc: mediatek: svs: Fix memory leak in svs_enable_debug_write()
+Date: Sat, 28 Feb 2026 12:55:29 -0500
+Message-ID: <20260228180011.1568201-107-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,49 +48,56 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 0da7824734d8d83e6a844dd0207f071cb0c50cf4 ]
+[ Upstream commit 6259094ee806fb813ca95894c65fb80e2ec98bf1 ]
 
-If cmd_db_magic_matches() fails after memremap() succeeds, the function
-returns -EINVAL without unmapping the memory region, causing a
-potential resource leak.
+In svs_enable_debug_write(), the buf allocated by memdup_user_nul()
+is leaked if kstrtoint() fails.
 
-Switch to devm_memremap to automatically manage the map resource.
+Fix this by using __free(kfree) to automatically free buf, eliminating
+the need for explicit kfree() calls and preventing leaks.
 
-Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20251216013933.773-1-vulab@iscas.ac.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 13f1bbcfb582 ("soc: mediatek: SVS: add debug commands")
+Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+[Angelo: Added missing cleanup.h inclusion]
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/cmd-db.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/soc/mediatek/mtk-svs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-index ae66c2623d250..84a75d8c4b702 100644
---- a/drivers/soc/qcom/cmd-db.c
-+++ b/drivers/soc/qcom/cmd-db.c
-@@ -349,15 +349,16 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
+diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
+index 4cb8169aec6b5..07ab261e1269d 100644
+--- a/drivers/soc/mediatek/mtk-svs.c
++++ b/drivers/soc/mediatek/mtk-svs.c
+@@ -9,6 +9,7 @@
+ #include <linux/bits.h>
+ #include <linux/clk.h>
+ #include <linux/completion.h>
++#include <linux/cleanup.h>
+ #include <linux/cpu.h>
+ #include <linux/cpuidle.h>
+ #include <linux/debugfs.h>
+@@ -789,7 +790,7 @@ static ssize_t svs_enable_debug_write(struct file *filp,
+ 	struct svs_bank *svsb = file_inode(filp)->i_private;
+ 	struct svs_platform *svsp = dev_get_drvdata(svsb->dev);
+ 	int enabled, ret;
+-	char *buf = NULL;
++	char *buf __free(kfree) = NULL;
+ 
+ 	if (count >= PAGE_SIZE)
  		return -EINVAL;
+@@ -807,8 +808,6 @@ static ssize_t svs_enable_debug_write(struct file *filp,
+ 		svsb->mode_support = SVSB_MODE_ALL_DISABLE;
  	}
  
--	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
--	if (!cmd_db_header) {
--		ret = -ENOMEM;
-+	cmd_db_header = devm_memremap(&pdev->dev, rmem->base, rmem->size, MEMREMAP_WC);
-+	if (IS_ERR(cmd_db_header)) {
-+		ret = PTR_ERR(cmd_db_header);
- 		cmd_db_header = NULL;
- 		return ret;
- 	}
- 
- 	if (!cmd_db_magic_matches(cmd_db_header)) {
- 		dev_err(&pdev->dev, "Invalid Command DB Magic\n");
-+		cmd_db_header = NULL;
- 		return -EINVAL;
- 	}
+-	kfree(buf);
+-
+ 	return count;
+ }
  
 -- 
 2.51.0
