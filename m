@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6D739B95E
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC11C2DFA3A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302516; cv=none; b=pvwDb0nRWbQIQVsOG2exc6ZufQ7Vn3RlJ8n1OjvkSEN4i2XB5S7hH05nrTsbSqd8UaaL1HTsTsTxoNgzdgiMnOtBz7dz3Mi5kSA+FnWjwGXFBj4ExdipWkQBU4nLk+GecIbqbD8cECPVxKnLUTNgtn6lUIhiIyynuZcqnN7HBwI=
+	t=1772302517; cv=none; b=Q1s1I6uHCg+/mllAZvE0SPxf3It6U/Q/EBrB0mcn5cJPI9y2plPr4W0fKcocp2bfK4u+Qo3zM7PI3X40Ervjn4Gsbl16kKpxmxjwg9YdTwm2l4FhBh3BhY8lHqrorPVupr907rt4MC2/YNt2L5CkNbK7DC+B835+WkaTUJiWnn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302516; c=relaxed/simple;
-	bh=BJhQuQ4cEv3l08Qt+kA3W6bw/rt/yBiDZqao4tCQeyk=;
+	s=arc-20240116; t=1772302517; c=relaxed/simple;
+	bh=KvxMqHY0tUezFSEJGncjZ2GT87hdFPjHaiK2RdIi4PI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EOFU84NQQRVXs8SWDgxeUxf77vd2JHoD3za49iB3rPZg26/bat9aEcryVwIKTxlDKdEzzsJmYQ3rV3Jg/UpCqNEXZFQ8rz0pgARGOnGJUS8x/f7LrZtmhxdvJ5jDS4pwzaUiv2cnK4//Xn9v9mqkD45V7+/+rEaGrnAWjpwCRfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lZvazOHQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pWFPWmixVkylmBH+XyfikK8JOvMYYcnIFk3CVkrLVjxsk6LE+auekkfZ1dxqz54njsxrCNp1jIzHDdPfFC+4zorC3zdezzsoLlNlFc+EmVuzHnBbdKX6x433lWGy+S8/osFRMHfDHsgMwTSNe9/d9DiMjScSfujc5X2JbKZhRg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5XqUcUN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lZvazOHQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0C1C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5XqUcUN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F25C116D0;
 	Sat, 28 Feb 2026 18:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302516;
-	bh=BJhQuQ4cEv3l08Qt+kA3W6bw/rt/yBiDZqao4tCQeyk=;
+	s=k20201202; t=1772302517;
+	bh=KvxMqHY0tUezFSEJGncjZ2GT87hdFPjHaiK2RdIi4PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZvazOHQ8FfTkCqtq5sTWk4OF5G9cGRIiyd52tDrgJZyMJMvZQcHeDOi6Px88hY4k
-	 +5EEBIW2iiKi5Z1jObdwAR/qr49vtwr40lP/+z7qHRh4RabgyNdWMmq+K78sMreIvQ
-	 yIfyyPER0eQb72NicUbQGejBKDIwYYO9sJwCMFykBRIgUa/L28riAEKjctFKA3idc3
-	 v587GcZo0TakDcNMca4tq5UnFli34ssQiVUqac5+MB5gMvjIR7NAOdaPrA4MTWAtQg
-	 LEtVHbFl/2iAtJdsCLdjHBGm0z/soogs+1mf/Z48bkxChIQiYDLA1VUvNvMs765G+E
-	 j37gyf4k1IIww==
+	b=S5XqUcUNjtY01pZVNROs1ftnDza2v2qeU/DB/G/f837GyD6e5wetipidbtQNxBb0E
+	 TG6Uz2+1a7PCuQr8ZKunhOhnp254xVfGK3EpRTHtOUVvvi8yKTrVypIXAV4Foyabiz
+	 ht8FZfjRWQoikNA2mo8/uhjjo5qpMxbXJYk1Jpzu5zXxCL+Ij1akFOqutRL003YjlY
+	 4b3LkBLSrIWAQEeBShveHzVUiUnBSjYURaHfCa/M5XQycZG5gVb5LFB2g86AtZqqrJ
+	 sGaPREbWRO/yD4r9vByzIuTpXo0P+OKK2dh3ZWmEYjpV0Q0AzOSB0JfGX5xRJ9N4XN
+	 Jm7qpIRgBsqlQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+Cc: Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/164] md/raid10: fix any_working flag handling in raid10_sync_request
-Date: Sat, 28 Feb 2026 13:12:32 -0500
-Message-ID: <20260228181505.1600663-13-sashal@kernel.org>
+Subject: [PATCH 5.15 014/164] iomap: fix submission side handling of completion side errors
+Date: Sat, 28 Feb 2026 13:12:33 -0500
+Message-ID: <20260228181505.1600663-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,45 +49,47 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 99582edb3f62e8ee6c34512021368f53f9b091f2 ]
+[ Upstream commit 4ad357e39b2ecd5da7bcc7e840ee24d179593cd5 ]
 
-In raid10_sync_request(), 'any_working' indicates if any IO will
-be submitted. When there's only one In_sync disk with badblocks,
-'any_working' might be set to 1 but no IO is submitted. Fix it by
-setting 'any_working' after badblock checks.
+The "if (dio->error)" in iomap_dio_bio_iter exists to stop submitting
+more bios when a completion already return an error.  Commit cfe057f7db1f
+("iomap_dio_actor(): fix iov_iter bugs") made it revert the iov by
+"copied", which is very wrong given that we've already consumed that
+range and submitted a bio for it.
 
-Link: https://lore.kernel.org/linux-raid/20260105110300.1442509-11-linan666@huaweicloud.com
-Fixes: e875ecea266a ("md/raid10 record bad blocks as needed during recovery.")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Fixes: cfe057f7db1f ("iomap_dio_actor(): fix iov_iter bugs")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/iomap/direct-io.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 5b0f38e7c8f13..c6429ef37f9e2 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -3546,7 +3546,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 				    !test_bit(In_sync, &rdev->flags))
- 					continue;
- 				/* This is where we read from */
--				any_working = 1;
- 				sector = r10_bio->devs[j].addr;
+diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
+index 4ee7790f7b2ea..f5b36732b89b3 100644
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -303,9 +303,13 @@ static loff_t iomap_dio_bio_iter(const struct iomap_iter *iter,
+ 	nr_pages = bio_iov_vecs_to_alloc(dio->submit.iter, BIO_MAX_VECS);
+ 	do {
+ 		size_t n;
+-		if (dio->error) {
+-			iov_iter_revert(dio->submit.iter, copied);
+-			copied = ret = 0;
++
++		/*
++		 * If completions already occurred and reported errors, give up now and
++		 * don't bother submitting more bios.
++		 */
++		if (unlikely(data_race(dio->error))) {
++			ret = 0;
+ 			goto out;
+ 		}
  
- 				if (is_badblock(rdev, sector, max_sync,
-@@ -3561,6 +3560,7 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 						continue;
- 					}
- 				}
-+				any_working = 1;
- 				bio = r10_bio->devs[0].bio;
- 				bio->bi_next = biolist;
- 				biolist = bio;
 -- 
 2.51.0
 
