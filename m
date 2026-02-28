@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C76F2737F2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A551236C9E3
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302322; cv=none; b=ZYIxrk1Cz3YWalrriPsvPf1Tpa/tfctlsACOTkrVQASMtil6ips2siyNa2+Ez0L3k3LZ+/iUmiJMDvYXtNeD3Fbu0dBREF/SPJVLJlowrAxVJsNHdvesR0DrL6DUgb1mucLSvhvUNH+xh9ZzqSy3zy6NJjr6bxR5drHtSDwErjw=
+	t=1772302323; cv=none; b=KgNKZuO4GbZXx11OVMGhd3k/w7cyqMlTWlamAdppcyWVLejJ46xRJa2+Q2J9/yN65fIsA0u0HmuAQm7PLCorVnhSMY0YUBXVO3nEw131vdsdx5exeCw+qC0DTjJYwcCXgG433DVRpzrzcAPm55KE2NIJ671EBzITMsHAtfzwuTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302322; c=relaxed/simple;
-	bh=D90zmZOychr1fX84xt4oVcwKQLVPDQX5pYKwxuCjVL0=;
+	s=arc-20240116; t=1772302323; c=relaxed/simple;
+	bh=l52UwOln67jrR8ODwmR/4YoGpTkPhoGJPQm5Jvuu3yY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJ6ZgUFMiEmtopP7oDbpImLDynLCPyHiUtLGG3vfTKm3urH+empBfTGukJ6q8G3cer6LqGjcsxOttfdKivlVqA0mmN/GmfBfDU67YvIw01AAbdtSS8dHL4mTbAtuW0Q/EEftCXXbtvcivt7uVwDakURzl+wbpdx4xGJcAyb+7I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jrwljPmP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dfa/74l3Uch1y1Mo1avULRrtt7are+8oB6OX1OxxcFpFceRV43YHbttlJW9n0XKR+GImo+QnouRELSq0r2Rtd4k6dVKEA6ZnckY9Vm0lutai+nBxZNtQ2qklLcAO1BHzArQBfDjj+2ZyGM6+FabPDEGFe//RpLRhO24BtYibG8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=inGqrUmn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jrwljPmP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04ABC116D0;
-	Sat, 28 Feb 2026 18:12:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="inGqrUmn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A0CC116D0;
+	Sat, 28 Feb 2026 18:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302322;
-	bh=D90zmZOychr1fX84xt4oVcwKQLVPDQX5pYKwxuCjVL0=;
+	s=k20201202; t=1772302323;
+	bh=l52UwOln67jrR8ODwmR/4YoGpTkPhoGJPQm5Jvuu3yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrwljPmPtNZZVjraFlyfRn3OkYZFU9+mUGsgRhT8MI8sAa3sRVc4a9wNF6v/IFq7j
-	 L99r4CsK1/k6xx0Hh4/u9m6iqhEI6300nsdBoCyGZT6cGyprYpyBbUR2GU5CNvzUfA
-	 IJimlpUduBXu2I9PiJKkfoOkyypX/6dml5+dehbaBv313O6NzPWS48t/G9djb2ZlHT
-	 rBaUuRZmgUAwuXzjuOyBPZF+PPUmMX/5Nfehn/Mvbbv1pVVAh4MkBNDsRa51WY2oHQ
-	 JzuKET3YzfmwMn5uNuhAii2ALlUvN9I6W2rOJq2PJx9l2DJhpgvMCLP+nfpsY38HjS
-	 SPCQfmd7ptIiA==
+	b=inGqrUmnIYvTekFN48ktPbO7FQZyM7nUo9cBMBAOWWVAzJVQBY6kgKOZASQOkuTtS
+	 jugQuik1vaNrEDTreSgxE2FV9ZyVmNdvJSbP/oQsqGmKA530aPLgN75LNjd5F86plq
+	 HxnCs0MaD1cgPBZ3UBUyO3cJ5NVTYIKkwyw5OX6vl0Z0JurA1tBjJNaSNLT2gh2CV0
+	 kMuV/Epc3TIZzThr6wcv8G8NhSp0fA/rduy0IRl4o3dnncSB7DXbMCRrBBcEtC6I/w
+	 hMf0sfx1PWlM0/Fv8mtQgf7WEjAS0aCbYd9ndvZDHB0bIlbvlPED0iV1Y1kXIb+VWq
+	 7FIMSmyCBSgrA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/232] bpf, sockmap: Fix incorrect copied_seq calculation
-Date: Sat, 28 Feb 2026 13:08:14 -0500
-Message-ID: <20260228181127.1592657-41-sashal@kernel.org>
+Subject: [PATCH 6.1 042/232] crypto: hisilicon/trng - modifying the order of header files
+Date: Sat, 28 Feb 2026 13:08:15 -0500
+Message-ID: <20260228181127.1592657-42-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,176 +47,54 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit b40cc5adaa80e1471095a62d78233b611d7a558c ]
+[ Upstream commit f5dd7c43022799ac5c4e3a0d445f9c293a198413 ]
 
-A socket using sockmap has its own independent receive queue: ingress_msg.
-This queue may contain data from its own protocol stack or from other
-sockets.
+Header files is included Order-ref: standard library headers,
+OS library headers, and project-specific headers. This patch
+modifies the order of header files according to suggestions.
 
-The issue is that when reading from ingress_msg, we update tp->copied_seq
-by default. However, if the data is not from its own protocol stack,
-tcp->rcv_nxt is not increased. Later, if we convert this socket to a
-native socket, reading from this socket may fail because copied_seq might
-be significantly larger than rcv_nxt.
+In addition, use %u to print unsigned int variables to prevent
+overflow.
 
-This fix also addresses the syzkaller-reported bug referenced in the
-Closes tag.
-
-This patch marks the skmsg objects in ingress_msg. When reading, we update
-copied_seq only if the data is from its own protocol stack.
-
-                                                     FD1:read()
-                                                     --  FD1->copied_seq++
-                                                         |  [read data]
-                                                         |
-                                [enqueue data]           v
-                  [sockmap]     -> ingress to self ->  ingress_msg queue
-FD1 native stack  ------>                                 ^
--- FD1->rcv_nxt++               -> redirect to other      | [enqueue data]
-                                       |                  |
-                                       |             ingress to FD1
-                                       v                  ^
-                                      ...                 |  [sockmap]
-                                                     FD2 native stack
-
-Closes: https://syzkaller.appspot.com/bug?extid=06dbd397158ec0ea4983
-Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260124113314.113584-2-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 3d3135057ff5 ("crypto: hisilicon/trng - support tfms sharing the device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h |  2 ++
- net/core/skmsg.c      | 27 ++++++++++++++++++++++++---
- net/ipv4/tcp_bpf.c    |  5 +++--
- 3 files changed, 29 insertions(+), 5 deletions(-)
+ drivers/crypto/hisilicon/trng/trng.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-index 32bbebf5b71e3..5c5a2d65184c3 100644
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -132,6 +132,8 @@ int sk_msg_memcopy_from_iter(struct sock *sk, struct iov_iter *from,
- 			     struct sk_msg *msg, u32 bytes);
- int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
- 		   int len, int flags);
-+int __sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
-+		     int len, int flags, int *copied_from_self);
- bool sk_msg_is_readable(struct sock *sk);
+diff --git a/drivers/crypto/hisilicon/trng/trng.c b/drivers/crypto/hisilicon/trng/trng.c
+index 97e500db0a825..ec1eaed32d3bc 100644
+--- a/drivers/crypto/hisilicon/trng/trng.c
++++ b/drivers/crypto/hisilicon/trng/trng.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* Copyright (c) 2019 HiSilicon Limited. */
  
- static inline void sk_msg_check_to_free(struct sk_msg *msg, u32 i, u32 bytes)
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 01ca497fe2cd6..444b9b25ade28 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -407,22 +407,26 @@ int sk_msg_memcopy_from_iter(struct sock *sk, struct iov_iter *from,
- }
- EXPORT_SYMBOL_GPL(sk_msg_memcopy_from_iter);
++#include <crypto/internal/rng.h>
+ #include <linux/acpi.h>
+ #include <linux/crypto.h>
+ #include <linux/err.h>
+@@ -13,7 +14,6 @@
+ #include <linux/mutex.h>
+ #include <linux/platform_device.h>
+ #include <linux/random.h>
+-#include <crypto/internal/rng.h>
  
--/* Receive sk_msg from psock->ingress_msg to @msg. */
--int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
--		   int len, int flags)
-+int __sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
-+		     int len, int flags, int *copied_from_self)
- {
- 	struct iov_iter *iter = &msg->msg_iter;
- 	int peek = flags & MSG_PEEK;
- 	struct sk_msg *msg_rx;
- 	int i, copied = 0;
-+	bool from_self;
+ #define HISI_TRNG_REG		0x00F0
+ #define HISI_TRNG_BYTES		4
+@@ -121,7 +121,7 @@ static int hisi_trng_generate(struct crypto_rng *tfm, const u8 *src,
+ 	u32 i;
  
- 	msg_rx = sk_psock_peek_msg(psock);
-+	if (copied_from_self)
-+		*copied_from_self = 0;
-+
- 	while (copied != len) {
- 		struct scatterlist *sge;
- 
- 		if (unlikely(!msg_rx))
- 			break;
- 
-+		from_self = msg_rx->sk == sk;
- 		i = msg_rx->sg.start;
- 		do {
- 			struct page *page;
-@@ -441,6 +445,9 @@ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
- 			}
- 
- 			copied += copy;
-+			if (from_self && copied_from_self)
-+				*copied_from_self += copy;
-+
- 			if (likely(!peek)) {
- 				sge->offset += copy;
- 				sge->length -= copy;
-@@ -485,6 +492,13 @@ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
- out:
- 	return copied;
- }
-+
-+/* Receive sk_msg from psock->ingress_msg to @msg. */
-+int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
-+		   int len, int flags)
-+{
-+	return __sk_msg_recvmsg(sk, psock, msg, len, flags, NULL);
-+}
- EXPORT_SYMBOL_GPL(sk_msg_recvmsg);
- 
- bool sk_msg_is_readable(struct sock *sk)
-@@ -614,6 +628,12 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
- 	if (unlikely(!msg))
- 		return -EAGAIN;
- 	skb_set_owner_r(skb, sk);
-+
-+	/* This is used in tcp_bpf_recvmsg_parser() to determine whether the
-+	 * data originates from the socket's own protocol stack. No need to
-+	 * refcount sk because msg's lifetime is bound to sk via the ingress_msg.
-+	 */
-+	msg->sk = sk;
- 	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg, take_ref);
- 	if (err < 0)
- 		kfree(msg);
-@@ -907,6 +927,7 @@ int sk_psock_msg_verdict(struct sock *sk, struct sk_psock *psock,
- 	sk_msg_compute_data_pointers(msg);
- 	msg->sk = sk;
- 	ret = bpf_prog_run_pin_on_cpu(prog, msg);
-+	msg->sk = NULL;
- 	ret = sk_psock_map_verd(ret, msg->sk_redir);
- 	psock->apply_bytes = msg->apply_bytes;
- 	if (ret == __SK_REDIRECT) {
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 1727ac094e106..8e6c0737bfe12 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -221,6 +221,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 	int peek = flags & MSG_PEEK;
- 	struct sk_psock *psock;
- 	struct tcp_sock *tcp;
-+	int copied_from_self = 0;
- 	int copied = 0;
- 	u32 seq;
- 
-@@ -257,7 +258,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 	if (dlen > SW_DRBG_BLOCKS_NUM * SW_DRBG_BYTES || dlen == 0) {
+-		pr_err("dlen(%d) exceeds limit(%d)!\n", dlen,
++		pr_err("dlen(%u) exceeds limit(%d)!\n", dlen,
+ 			SW_DRBG_BLOCKS_NUM * SW_DRBG_BYTES);
+ 		return -EINVAL;
  	}
- 
- msg_bytes_ready:
--	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
-+	copied = __sk_msg_recvmsg(sk, psock, msg, len, flags, &copied_from_self);
- 	/* The typical case for EFAULT is the socket was gracefully
- 	 * shutdown with a FIN pkt. So check here the other case is
- 	 * some error on copy_page_to_iter which would be unexpected.
-@@ -272,7 +273,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 			goto out;
- 		}
- 	}
--	seq += copied;
-+	seq += copied_from_self;
- 	if (!copied) {
- 		long timeo;
- 		int data;
 -- 
 2.51.0
 
