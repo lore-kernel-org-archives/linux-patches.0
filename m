@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5B2333447
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EC3340290
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301215; cv=none; b=ZSRLkvbAeAWm5hArveMFUMjshqumHDWpKIChn5+W8xOj0HXMd3mId2uLJKcNenH13nrJtwu/+/df/I/Vfx/BzJHnVb4yhlXrfyg+Tv9y6zXSsuT1h4tmnJIQVJrxs8uCS6cebXz0gh/4RCm0PUJDGkESomnNbq9z/LQWpYgia6w=
+	t=1772301216; cv=none; b=RQ8bAtCg4T9qB/xDlRKuGjM4KGVUsMp92B3OzJfoOT6kc6bfro2zs4fepW2o5tnkoHX0wg6Osb2UPDhehpZac1SAXHyOhwdQkx7KdvqV6tXqmVssXwuBzwqlhZPVf0tTzy0tDj09zMpLrfK699F0rRgQkwjKNRg9AT3IuzIvBl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301215; c=relaxed/simple;
-	bh=XbMFJorPElyGQ/hSArPLI1I62rQipWOFxlM56R1D4PA=;
+	s=arc-20240116; t=1772301216; c=relaxed/simple;
+	bh=nGfWN/RyvxmqAuCr2FHXkxLg68q650iTb5z6WbxzE9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+c8BxTGbNmF4Ke3LcBMF/wpqVgI5TTkHTrs6JsjygVtIKgAgz1Ng4+XHEUaBNWes2u6P+0oWcsPwIMyLlNc1FAzgfC20UXuwN6L79nf6w8eO/GScGrZ+pMkHQU/h5DzZ01UJTXGebAsP1TDUGQqcxn+E3BrafceETqINebpqqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=suiITwGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aH5M0FngtLZ13thjfJhE4Nh1hPdfoTayCax38XlAe9T/hdDhjI5/U7OqAu/qatmT2MiWDil06ycWN2XyV+ptjlCOStYFZhGvJh4n9eq/JFEYN+7YXDaCSGnPofKRcCOYMgFuwxnbCZngQHQANbniVh+WuUlIBvFQ9SSzGRZMR4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oMKPaf8A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="suiITwGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C407EC19424;
-	Sat, 28 Feb 2026 17:53:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oMKPaf8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54E4C19423;
+	Sat, 28 Feb 2026 17:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301215;
-	bh=XbMFJorPElyGQ/hSArPLI1I62rQipWOFxlM56R1D4PA=;
+	s=k20201202; t=1772301216;
+	bh=nGfWN/RyvxmqAuCr2FHXkxLg68q650iTb5z6WbxzE9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=suiITwGxSUEIMeC6nep+9gELJL4loNfw3dnG4vymILvp82Wg9Wod+x+x6ak+EypnK
-	 66t6UeZAZTCXz9Dp5LaYLXHm25JQKsfdct+zdh7uGZDVQ8OWbrUsk5+sA56W04jNwc
-	 h5BdgTm8gocYO/TqKWWc/AZQ/r+j4VIUA+SmzCaMhls9ysnyhITUcfYVAabvt71/X8
-	 w3HWi3v8mVPuD776iTEgyKSYuAzIupH+ivEfjg4OiCapSuIFcqG3azRP5JVmFvTR4r
-	 GIaU0ejONP9gWETdjcvjC3vfo8efiOEQm7cjodmI6qZuJAqy6YNhcg8gtq7F35zE8M
-	 SN0aMFT38gBLA==
+	b=oMKPaf8AjBxf3SifitmJuUIODW1CM+CRS+WBij8zh+0FZjWOeN+mmLeIbBoWbyaur
+	 4In5kzPs4o0WeSXoy1Cxe6TXZdFRlCC0FT6UTP9N3vrYHlUog/wjp8EkR89hHVfykQ
+	 LS3w/yFfhjumN6mX4zNhV/H/U2m0nZd2zPkD+3Jbcr+X2iOOzzorurLFgX4BU/Ay6d
+	 5UPSgE9P7YpRr3JV5KGudcpW3A/JC+ILT1JPd0NypCqpaeb3vC4m0kymtY7MdJoHTL
+	 HJqp7QmZqBIdCBmlYmcsJURnuI+gzm4Yox1xirYRZlv3nkuLpgQIS+9PU7YAvuDYH8
+	 j962qulKCk5Yg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+Cc: Victor Zhao <Victor.Zhao@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 391/752] drm/amd/display: Remove conditional for shaper 3DLUT power-on
-Date: Sat, 28 Feb 2026 12:41:42 -0500
-Message-ID: <20260228174750.1542406-391-sashal@kernel.org>
+Subject: [PATCH 6.18 392/752] drm/amdgpu: avoid sdma ring reset in sriov
+Date: Sat, 28 Feb 2026 12:41:43 -0500
+Message-ID: <20260228174750.1542406-392-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,42 +47,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alex Hung <alex.hung@amd.com>
+From: Victor Zhao <Victor.Zhao@amd.com>
 
-[ Upstream commit 1b38a87b8f8020e8ef4563e7752a64182b5a39b9 ]
+[ Upstream commit 5cc7bbd9f1b74d9fe2f7ac08d6ba0477e8d2d65f ]
 
-[Why]
-Shaper programming has high chance to fail on first time after
-power-on or reboot. This can be verified by running IGT's kms_colorop.
+sdma ring reset is not supported in SRIOV. kfd driver does not check
+reset mask, and could queue sdma ring reset during unmap_queues_cpsch.
 
-[How]
-Always power on the shaper and 3DLUT before programming by
-removing the debug flag of low power mode.
+Avoid the ring reset for sriov.
 
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Victor Zhao <Victor.Zhao@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sdma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c b/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c
-index 6f0e017a8ae29..a9d2aa0b5390f 100644
---- a/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c
-+++ b/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c
-@@ -724,8 +724,7 @@ bool mpc32_program_shaper(
- 		return false;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_sdma.c
+index 8b8a04138711c..321310ba2c08e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sdma.c
+@@ -558,6 +558,9 @@ int amdgpu_sdma_reset_engine(struct amdgpu_device *adev, uint32_t instance_id,
+ 	struct amdgpu_ring *gfx_ring = &sdma_instance->ring;
+ 	struct amdgpu_ring *page_ring = &sdma_instance->page;
  
--	if (mpc->ctx->dc->debug.enable_mem_low_power.bits.mpc)
--		mpc32_power_on_shaper_3dlut(mpc, mpcc_id, true);
-+	mpc32_power_on_shaper_3dlut(mpc, mpcc_id, true);
++	if (amdgpu_sriov_vf(adev))
++		return -EOPNOTSUPP;
++
+ 	mutex_lock(&sdma_instance->engine_reset_mutex);
  
- 	current_mode = mpc32_get_shaper_current(mpc, mpcc_id);
- 
+ 	if (!caller_handles_kernel_queues) {
 -- 
 2.51.0
 
