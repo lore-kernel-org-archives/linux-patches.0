@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F5C35AC3C
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05CA35AC28
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302702; cv=none; b=SHLFllosFUxmZ25TnxIwWtvq2MTmGMUq1+OCDf6ibfS4RiK2YO8xH3ZzbQ2X8/ieY5FLSFQ8BqRWu8u/tM7PgVYuMQj2lhZKGmggQdc0IWNePm+5yzObfs6nGXv1gDdxYVfSe+FNZJBYyMBQzEZyzcAnDOcOXancVGCRe3lymWw=
+	t=1772302703; cv=none; b=HiFXUru0fDlW+Yk83rPJnQ5v0WrD88d/OD7Pbd/ipec53sW2SZ3om/+yx8FGvmFMPKIDOxWQj1ZF/fZcbeuQmN5OTbCPpAJyNOgbK4dnOskoEw4RZ94XhnRgmyBLkwVHvChbkWu2nq+1o0xRlMqYOQOlbOgqMufZFHSFMez7AEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302702; c=relaxed/simple;
-	bh=TcJHA4PVCesQPozGcknQRrtYq5zW4Dg90tXplISYUGY=;
+	s=arc-20240116; t=1772302703; c=relaxed/simple;
+	bh=Mp9BNF6AFda0ln1i3C7NqOEwFrr1haYCQwFlJgPOHck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kc6keNbNMVKLzG9AbaGwvE0FttcVekw2WJqF0iQF+yqctuNHSWmV24v4TZO16rGuYIORvj6IO3GV6WEORA9mYzgBKvRJmzkJDQJFMSB+1OD0tbI1tbGYDtxnBQhlmkZpb/QOWmrnKZQKHOIdJg9rrWoHhJgOgHBUJuQfQSekaeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KNOVhHNw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eC0HuVaLb+vChzvYMsQI68WAVymh7tMWWBMMONLm3AMLsd2bmy/LtpU25Qudba+IHma2iS5DNgHeI1YmY1aC5YIQW8kpVU1KFfSpRm0CNEX77yVb79/X5642+SCuECQK5OZiChm4hR6bbIrij+byUad+KQlLIkQnv21vtli3ilM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pqtBWozA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KNOVhHNw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10643C19423;
-	Sat, 28 Feb 2026 18:18:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pqtBWozA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EC4C116D0;
+	Sat, 28 Feb 2026 18:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302702;
-	bh=TcJHA4PVCesQPozGcknQRrtYq5zW4Dg90tXplISYUGY=;
+	s=k20201202; t=1772302703;
+	bh=Mp9BNF6AFda0ln1i3C7NqOEwFrr1haYCQwFlJgPOHck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNOVhHNw2sZVQRd0CvO1dE6+UxaPwWMaWQFSYJRp/8FG6niE5tCCH/7FAybU7+1Fx
-	 cBWqT7aOY2VrzGAzeq9qIPYB+GRdmEDYW4SyknBMZZeqOsFPoWG9/WLNK9f9HikZWP
-	 KVWa0krVql+zUF4uBKt6DNNvSVmYDjrwqy4UvFetu+3j5Kf5J7gpf9vduyRC4TWaDP
-	 +jipsxTYdHssDGVvVcMgd82mPbmoGDaERD21JUF3N3MGfbvxix20CdwZtUg/BG0PJG
-	 3L+ue+rOt3+T2kpJjag6I253Dj3TRnkPfIANgiYvYwJ2zSnqr7lan/HixqhFpr5Zaq
-	 Yv3msP2dPrF6A==
+	b=pqtBWozAJZoBIVNoTlRiONImVdF5w45OVwHkOS0AKSnqy6a65YiH0H/XILTnTjsnI
+	 TEIXYXGfdgpit5pjE0WScskE20aUz/e7wZ8wuDBbVJ6DvtzDztIDYHaW1df6Fg9fxJ
+	 LzqY9gw4zBiYNfyFPaK1Yn8/6RB21+Uc0Si9fwqiB1dxfvSxYfX9nCzf/k/rwEo77A
+	 G6YIqJzZa/QKjhyZ49UlOGbU4ua5XrMV4P0++HP3wZ0DPFsjTeGGT1wh2+loXMTrG6
+	 ZSnMQxXTpRjMwR0ujJenVqIzsJR/TD5whOtAR59ccRO5nZGdSTGvlUt61bg/3sZRwy
+	 teZY91HZfExHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Jean Delvare <jdelvare@suse.de>,
-	Junrui Luo <moonafterrain@outlook.com>,
+Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/147] Revert "hwmon: (ibmpex) fix use-after-free in high/low store"
-Date: Sat, 28 Feb 2026 13:16:07 -0500
-Message-ID: <20260228181736.1605592-59-sashal@kernel.org>
+Subject: [PATCH 5.10 060/147] PCI: mediatek: Fix IRQ domain leak when MSI allocation fails
+Date: Sat, 28 Feb 2026 13:16:08 -0500
+Message-ID: <20260228181736.1605592-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -48,87 +47,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 8bde3e395a85017f12af2b0ba5c3684f5af9c006 ]
+[ Upstream commit 7f0cdcddf8bef1c8c18f9be6708073fd3790a20f ]
 
-This reverts commit 6946c726c3f4c36f0f049e6f97e88c510b15f65d.
+In mtk_pcie_init_irq_domain(), if mtk_pcie_allocate_msi_domains()
+fails after port->irq_domain has been successfully created via
+irq_domain_create_linear(), the function returns directly without
+cleaning up the allocated IRQ domain, resulting in a resource leak.
 
-Jean Delvare points out that the patch does not completely
-fix the reported problem, that it in fact introduces a
-(new) race condition, and that it may actually not be needed in
-the first place.
+Add irq_domain_remove() call in the error path to properly release the
+INTx IRQ domain before returning the error.
 
-Various AI reviews agree. Specific and relevant AI feedback:
-
-"
-This reordering sets the driver data to NULL before removing the sensor
-attributes in the loop below.
-
-ibmpex_show_sensor() retrieves this driver data via dev_get_drvdata() but
-does not check if it is NULL before dereferencing it to access
-data->sensors[].
-
-If a userspace process reads a sensor file (like temp1_input) while this
-delete function is running, could it race with the dev_set_drvdata(...,
-NULL) call here and crash in ibmpex_show_sensor()?
-
-Would it be safer to keep the original order where device_remove_file() is
-called before clearing the driver data? device_remove_file() should wait
-for any active sysfs callbacks to complete, which might already prevent the
-use-after-free this patch intends to fix.
-"
-
-Revert the offending patch. If it can be shown that the originally reported
-alleged race condition does indeed exist, it can always be re-introduced
-with a complete fix.
-
-Reported-by: Jean Delvare <jdelvare@suse.de>
-Closes: https://lore.kernel.org/linux-hwmon/20260121095342.73e723cb@endymion/
-Cc: Jean Delvare <jdelvare@suse.de>
-Cc: Junrui Luo <moonafterrain@outlook.com>
-Fixes: 6946c726c3f4 ("hwmon: (ibmpex) fix use-after-free in high/low store")
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251119023308.476-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ibmpex.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/pci/controller/pcie-mediatek.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/ibmpex.c b/drivers/hwmon/ibmpex.c
-index 235d56e96879c..fe90f0536d76c 100644
---- a/drivers/hwmon/ibmpex.c
-+++ b/drivers/hwmon/ibmpex.c
-@@ -282,9 +282,6 @@ static ssize_t ibmpex_high_low_store(struct device *dev,
- {
- 	struct ibmpex_bmc_data *data = dev_get_drvdata(dev);
+diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
+index ea91d63c8be15..bab962ec7ab46 100644
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -588,8 +588,10 @@ static int mtk_pcie_init_irq_domain(struct mtk_pcie_port *port,
  
--	if (!data)
--		return -ENODEV;
--
- 	ibmpex_reset_high_low_data(data);
+ 	if (IS_ENABLED(CONFIG_PCI_MSI)) {
+ 		ret = mtk_pcie_allocate_msi_domains(port);
+-		if (ret)
++		if (ret) {
++			irq_domain_remove(port->irq_domain);
+ 			return ret;
++		}
+ 	}
  
- 	return count;
-@@ -517,9 +514,6 @@ static void ibmpex_bmc_delete(struct ibmpex_bmc_data *data)
- {
- 	int i, j;
- 
--	hwmon_device_unregister(data->hwmon_dev);
--	dev_set_drvdata(data->bmc_device, NULL);
--
- 	device_remove_file(data->bmc_device,
- 			   &sensor_dev_attr_reset_high_low.dev_attr);
- 	device_remove_file(data->bmc_device, &sensor_dev_attr_name.dev_attr);
-@@ -533,7 +527,8 @@ static void ibmpex_bmc_delete(struct ibmpex_bmc_data *data)
- 		}
- 
- 	list_del(&data->list);
--
-+	dev_set_drvdata(data->bmc_device, NULL);
-+	hwmon_device_unregister(data->hwmon_dev);
- 	ipmi_destroy_user(data->user);
- 	kfree(data->sensors);
- 	kfree(data);
+ 	return 0;
 -- 
 2.51.0
 
