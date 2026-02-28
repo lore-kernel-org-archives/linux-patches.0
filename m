@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AEB383C69
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18451383C69
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302073; cv=none; b=ropSjqIzjWnUbLnLf1j64KMGkKK8RlOZhlZfWbsQH36Rmh+GPiry87Gm/iIFFUfoGM0eZVgAmput8RGSZya6YiC4D9cw4/hoxkNgouejFvg70y2uzYdIk6CwzGE/vqqY1egf3fi8WytEVnqjcyZ6h4b1+08P2jM2CDD89m7tsqk=
+	t=1772302074; cv=none; b=mNuJVOp37JBF75KEihbZCcjV23oq3Is27EqffPQ855tYQJ5KflihIoaHcE4hYAcc7xEn3sbhlvPLDrJiHpUm0XQR/wgfPjLjmyPOo9N9aEna+aaeH8odkSBrIQ7jfG6yDfVXKISIqKaunVgKa4Q8/cvm+MzsZ5Oiw8qtpwoJO0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302073; c=relaxed/simple;
-	bh=UyoWqlxixb3SoMs2BlyTc4bCKC4DVRh2QbtBUz/WhsI=;
+	s=arc-20240116; t=1772302074; c=relaxed/simple;
+	bh=f1KmbxE3Tato8YOSJlhKs7BOwG9oRjD1++nMPx/Xti4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=arGunXCW6Oz6QeV1RWEKp+pVH/6LX6QvpJ4u547OWoiKX6GlG2+AU42FKz2rIS47e0gL6mK3JxwzbpnczBP1A09Y2mKCrA11QO4gKk7BRj/K1aSLeYK+R6TqfNsRpMQkYGOiwEu966VWPghvZmQF/yhJIn6xpU/b1cRazuq7CXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nlTMFVYK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fz25rmQ5keUixQkxnnf8rz+AlmzwhfdGqRfiEcKn2GPFydICrGjHdVcLNs/Uqavcj3lDSen8lAj8u4VBqJlfZ85CdjUUfYUS3jsV8aCjhJAGAJEJ6N3peaDVCmLyCqsY23AJ5I+ckNWpklnQH0jBQwOCTOsW8+LkrFI6el35jDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PpTx837G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nlTMFVYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF51C19425;
-	Sat, 28 Feb 2026 18:07:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PpTx837G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDFBC19425;
+	Sat, 28 Feb 2026 18:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302073;
-	bh=UyoWqlxixb3SoMs2BlyTc4bCKC4DVRh2QbtBUz/WhsI=;
+	s=k20201202; t=1772302074;
+	bh=f1KmbxE3Tato8YOSJlhKs7BOwG9oRjD1++nMPx/Xti4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlTMFVYKeqIxLhTfZOXiezw7WiS6XSawKST34Ap/wVWcLgd+p139tXxktyGXxB4wn
-	 fTyNpA6b0xwGd0czti16OenV8L+2pQ0zMF8fuFv5ndNJUEZ+W56+mWTkT0T4aXaZgE
-	 bbUfZU7URMhoTpPxfrotnZHZhm1z9PI9hE/3kNgq32Z2rJ+xL2W+8QRgQ52DlY62Zh
-	 59CsDnGccTpMXPuniwApArceuZK5PWA1hbJi86Dl8HpzwvSVZ2lq1igs0tjdOUFqWd
-	 NoyQcyUIRrBV/rYMbZY95nrDk/EQ4XCkRXzO9J0MTCgGqa0oyb6z6JhMd0UTqiLuSK
-	 jYeSuIt80GEWg==
+	b=PpTx837GKdeV1Qj/SDWW1KaYT/UvEh6dcX0aj9H69bVJy6iod+hha+ZZj2hboGSJc
+	 sjHBWRwzqBoC1DDwu6kbFu8XhbiXgnZirO7Hg8O2Cvp+K9qiUNeAkmG8QpI6Hgxc5Q
+	 X60usjl22yd9KGv6jb6V1He5RYVk1OJw9OKUDNaPVJCoDvR+5iU6GOmX/w9Lz0fpLL
+	 kXTtOwwtk8ROodjKHrTt20mEdsuJHPjNOx0Hkcw+pwKAQzDwO03Wcb4BYD4Cv8v8dO
+	 IJp2A1y7PkdOuWFm24VcMd++Zfg1rP0RVno4tTiTwuzmo41zN+gPorAn+2tUtFUwon
+	 16Pyk/tYE7CMw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/283] scsi: efct: Use IRQF_ONESHOT and default primary handler
-Date: Sat, 28 Feb 2026 13:03:15 -0500
-Message-ID: <20260228180709.1583486-53-sashal@kernel.org>
+Subject: [PATCH 6.6 054/283] EDAC/altera: Remove IRQF_ONESHOT
+Date: Sat, 28 Feb 2026 13:03:16 -0500
+Message-ID: <20260228180709.1583486-54-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,55 +49,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit bd81f07e9a27c341cd7e72be95eb0b7cf3910926 ]
+[ Upstream commit 5c858d6c66304b4c7579582ec5235f02d43578ea ]
 
-There is no added value in efct_intr_msix() compared to
-irq_default_primary_handler().
+Passing IRQF_ONESHOT ensures that the interrupt source is masked until
+the secondary (threaded) handler is done. If only a primary handler is
+used then the flag makes no sense because the interrupt can not fire
+(again) while its handler is running.
 
-Using a threaded interrupt without a dedicated primary handler mandates
-the IRQF_ONESHOT flag to mask the interrupt source while the threaded
-handler is active. Otherwise the interrupt can fire again before the
-threaded handler had a chance to run.
+The flag also prevents force-threading of the primary handler and the
+irq-core will warn about this.
 
-Use the default primary interrupt handler by specifying NULL and set
-IRQF_ONESHOT so the interrupt source is masked until the secondary
-handler is done.
+Remove IRQF_ONESHOT from irqflags.
 
-Fixes: 4df84e8466242 ("scsi: elx: efct: Driver initialization routines")
+Fixes: a29d64a45eed1 ("EDAC, altera: Add IRQ Flags to disable IRQ while handling")
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260128095540.863589-8-bigeasy@linutronix.de
+Link: https://patch.msgid.link/20260128095540.863589-11-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/elx/efct/efct_driver.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/edac/altera_edac.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/elx/efct/efct_driver.c b/drivers/scsi/elx/efct/efct_driver.c
-index 49fd2cfed70c7..37aba56e07217 100644
---- a/drivers/scsi/elx/efct/efct_driver.c
-+++ b/drivers/scsi/elx/efct/efct_driver.c
-@@ -415,12 +415,6 @@ efct_intr_thread(int irq, void *handle)
- 	return IRQ_HANDLED;
- }
- 
--static irqreturn_t
--efct_intr_msix(int irq, void *handle)
--{
--	return IRQ_WAKE_THREAD;
--}
--
- static int
- efct_setup_msix(struct efct *efct, u32 num_intrs)
- {
-@@ -450,7 +444,7 @@ efct_setup_msix(struct efct *efct, u32 num_intrs)
- 		intr_ctx->index = i;
- 
- 		rc = request_threaded_irq(pci_irq_vector(efct->pci, i),
--					  efct_intr_msix, efct_intr_thread, 0,
-+					  NULL, efct_intr_thread, IRQF_ONESHOT,
- 					  EFCT_DRIVER_NAME, intr_ctx);
- 		if (rc) {
- 			dev_err(&efct->pci->dev,
+diff --git a/drivers/edac/altera_edac.c b/drivers/edac/altera_edac.c
+index 4f8f87207b67b..dc1915ffc3cbe 100644
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -1573,8 +1573,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
+ 		goto err_release_group_1;
+ 	}
+ 	rc = devm_request_irq(&altdev->ddev, altdev->sb_irq,
+-			      prv->ecc_irq_handler,
+-			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
++			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
+ 			      ecc_name, altdev);
+ 	if (rc) {
+ 		edac_printk(KERN_ERR, EDAC_DEVICE, "PortB SBERR IRQ error\n");
+@@ -1597,8 +1596,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
+ 		goto err_release_group_1;
+ 	}
+ 	rc = devm_request_irq(&altdev->ddev, altdev->db_irq,
+-			      prv->ecc_irq_handler,
+-			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
++			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
+ 			      ecc_name, altdev);
+ 	if (rc) {
+ 		edac_printk(KERN_ERR, EDAC_DEVICE, "PortB DBERR IRQ error\n");
+@@ -1981,8 +1979,7 @@ static int altr_edac_a10_device_add(struct altr_arria10_edac *edac,
+ 		goto err_release_group1;
+ 	}
+ 	rc = devm_request_irq(edac->dev, altdev->sb_irq, prv->ecc_irq_handler,
+-			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
+-			      ecc_name, altdev);
++			      IRQF_TRIGGER_HIGH, ecc_name, altdev);
+ 	if (rc) {
+ 		edac_printk(KERN_ERR, EDAC_DEVICE, "No SBERR IRQ resource\n");
+ 		goto err_release_group1;
+@@ -2004,7 +2001,7 @@ static int altr_edac_a10_device_add(struct altr_arria10_edac *edac,
+ 		goto err_release_group1;
+ 	}
+ 	rc = devm_request_irq(edac->dev, altdev->db_irq, prv->ecc_irq_handler,
+-			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
++			      IRQF_TRIGGER_HIGH,
+ 			      ecc_name, altdev);
+ 	if (rc) {
+ 		edac_printk(KERN_ERR, EDAC_DEVICE, "No DBERR IRQ resource\n");
 -- 
 2.51.0
 
