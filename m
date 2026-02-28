@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7741C301EEB;
-	Sat, 28 Feb 2026 17:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79528301EEF;
+	Sat, 28 Feb 2026 17:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301404; cv=none; b=rBBwh71gfCIdBLh+FjVookS41vZhRD4oQjZligoVbnWvSLj0XGDKz13eWlrWGaR/z1owU1x4Jbcatp5qCnuJrlPYND432pBIUeVtucUNwNP3BokzwXlft0jOPXO1ygPm1jSih9Vu/JaHbehtg9bzMvxwYdmIPpBCXPp54fX2bbc=
+	t=1772301405; cv=none; b=QjhskAqXzqjd96DrJWJAoNQtc5NwNeBeuoHgRTfmqCjD/dGFYlrYODjaXGnUtwCdwnxJxmWJNXONoQbFVpBHCzOVp6oJICGXinB57QQZTDAMgqyFj6LmpVU2Jgf+yegaVUqHCt3Th/pb3DKyMefi4GeqB/7QiVNyKCjqB0DLxg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301404; c=relaxed/simple;
-	bh=uxO4sj5MCXLDVJhQZ76jD4v7S/r42pofPA44kewwmDY=;
+	s=arc-20240116; t=1772301405; c=relaxed/simple;
+	bh=YwH7ocqVR6BTEcFleyAorSaH1+d3lxPTj54krC2x6Lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p7kJdDD/Hk6spcuPA8bpNxBBXNb+6+K9CBBMBOOzN1wTJQTcdRITdmlz0Qf1QOPq8bLBfGcBOpyHBnJ0z3/9Jn1Ucr3cTx10OesaQeeEj65yO3De2ef3rj3GxM+2dmoB/ZdO7w2bxz8lfzKp1EM59J55miorwJSIVKQHo1lgNpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qokweMLy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m2qYC8LDVVc9z47WNep/l60PbZXzFOHFTJmJOyMgCFQKUfQ/bXVLn9U4qzK3JQstd8MVIQa0/rIen6IQzYmiQV/+ot30Qz9wpQ+d0jTO8Uw0BPDBULlqHkMdrEyVFfreW9Ukszze+jlkclfnol7OcjqnPJ7Tb7KNvqD2s0sWH1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M5baiLJW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qokweMLy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983DDC19425;
-	Sat, 28 Feb 2026 17:56:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M5baiLJW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD93C19423;
+	Sat, 28 Feb 2026 17:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301404;
-	bh=uxO4sj5MCXLDVJhQZ76jD4v7S/r42pofPA44kewwmDY=;
+	s=k20201202; t=1772301405;
+	bh=YwH7ocqVR6BTEcFleyAorSaH1+d3lxPTj54krC2x6Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qokweMLyRSAywQ4pDfibdl4YtD/YrQ6n4KtGk9qgYKw2rqz5hofNgFmc5JWE1FVlV
-	 5AyD4xbqMWyOdbMQ8WOCGdfV/ejswi5CWAug/Z3zCnYKPjZQLdUkvJyhXj1FErSMtN
-	 CvU9AduD+zAKBM+WS/RUz/A0t1XXaBJSLD1tgzo+7Jqqw307OrABmr6Epg+gIhn/um
-	 FZ4fHVJepTm8q/o2S/Z095jiUbX3eo5idsLhgyIVjWYFSMkQTMGyTni2jY09y2EEYX
-	 MmzqagC1aC8CI77A4/UQz0uIWx7uUmNtd89pIFbxePcJALmc0QLLfKArI8EGuZTuIu
-	 GjodSDihp8D/A==
+	b=M5baiLJWDZbwOwLVBtY/otjq8P+Ghw9ueZl/mrv5arcnQrQdaign7YwVyif1GhoSA
+	 XouyT+o0wVvvZhkHIP0KY/xYSY1JcwFov2OOS+Q6kJ+dIaqUKMnOuokP/0j5lOWbV2
+	 2YiCq7/UvA/gCeksSnTmL0OnPNxUqiyQlJ8fAB8/Xkmwt41peFbRuYtIfOtyQiCPEC
+	 /MEwehe9OfzmLEN7HOH+P6GyhvgblD4+nxrCFsukk6lndgdz8CJnw7YJ11diJfWdS+
+	 LzrvjNahmmJdAbsa8eQLuyQ06ytcixQ91OJsT/O/KPJ1f0ELjZP0Kzn1L83vHPFeal
+	 RynI5GycmQBng==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Janne Grunau <j@jannau.net>,
+Cc: Johan Hovold <johan@kernel.org>,
 	stable@vger.kernel.org,
-	Sven Peter <sven@kernel.org>,
-	Neal Gompa <neal@gompa.dev>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 593/752] mfd: macsmc: Initialize mutex
-Date: Sat, 28 Feb 2026 12:45:04 -0500
-Message-ID: <20260228174750.1542406-593-sashal@kernel.org>
+Subject: [PATCH 6.18 594/752] mfd: qcom-pm8xxx: Fix OF populate on driver rebind
+Date: Sat, 28 Feb 2026 12:45:05 -0500
+Message-ID: <20260228174750.1542406-594-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,39 +50,53 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Janne Grunau <j@jannau.net>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 414f65d6736342c77d4ec5e7373039f4a09250dd ]
+[ Upstream commit 27a8acea47a93fea6ad0e2df4c20a9b51490e4d9 ]
 
-Initialize struct apple_smc's mutex in apple_smc_probe(). Using the
-mutex uninitialized surprisingly resulted only in occasional NULL
-pointer dereferences in apple_smc_read() calls from the probe()
-functions of sub devices.
+Since commit c6e126de43e7 ("of: Keep track of populated platform
+devices") child devices will not be created by of_platform_populate()
+if the devices had previously been deregistered individually so that the
+OF_POPULATED flag is still set in the corresponding OF nodes.
 
-Cc: stable@vger.kernel.org
-Fixes: e038d985c9823 ("mfd: Add Apple Silicon System Management Controller")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Sven Peter <sven@kernel.org>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Link: https://patch.msgid.link/20251231-macsmc-mutex_init-v2-1-5818c9dc9b29@jannau.net
+Switch to using of_platform_depopulate() instead of open coding so that
+the child devices are created if the driver is rebound.
+
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251219110947.24101-1-johan@kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/macsmc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/qcom-pm8xxx.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/mfd/macsmc.c b/drivers/mfd/macsmc.c
-index e6cdae221f1d4..3228e79c86eb5 100644
---- a/drivers/mfd/macsmc.c
-+++ b/drivers/mfd/macsmc.c
-@@ -413,6 +413,7 @@ static int apple_smc_probe(struct platform_device *pdev)
- 	if (!smc)
- 		return -ENOMEM;
+diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
+index 1149f7102a365..0cf374c015ce7 100644
+--- a/drivers/mfd/qcom-pm8xxx.c
++++ b/drivers/mfd/qcom-pm8xxx.c
+@@ -577,17 +577,11 @@ static int pm8xxx_probe(struct platform_device *pdev)
+ 	return rc;
+ }
  
-+	mutex_init(&smc->mutex);
- 	smc->dev = &pdev->dev;
- 	smc->sram_base = devm_platform_get_and_ioremap_resource(pdev, 1, &smc->sram);
- 	if (IS_ERR(smc->sram_base))
+-static int pm8xxx_remove_child(struct device *dev, void *unused)
+-{
+-	platform_device_unregister(to_platform_device(dev));
+-	return 0;
+-}
+-
+ static void pm8xxx_remove(struct platform_device *pdev)
+ {
+ 	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
+ 
+-	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
++	of_platform_depopulate(&pdev->dev);
+ 	irq_domain_remove(chip->irqdomain);
+ }
+ 
 -- 
 2.51.0
 
