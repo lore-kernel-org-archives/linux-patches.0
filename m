@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8DB359A65
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA03359A60
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302411; cv=none; b=ViuJVGBd06lieiRksQlcVmxOboJY8N2bfDmtokgZ7JVRErsLa1EkSO7ln+fs4Fln1FyryyWK4aZm7n2NVIk5Y1s6txB9niizQME9+VErzxYBGsZKNRGrorh/KNF1XXgrzPfMNHDbE5E8dm0Mxya53ekMsKV6LCjwwbk1mAW4r3A=
+	t=1772302412; cv=none; b=Hb4Uv+2Tz9tvowLPFaQHPulY7hDg/rpRWaHeejsfjPVXisp2CrZ5en1kJTRvBmFkSNhm2tv4dd6WXPJqFXZb/ltfCDBKkDji55A4UZkHndOQfCh/hyKL6Xqe/wHVE243n4cpiDX+AwKvAFGxdg9OtieSuLPWUBsV9h1RFMp410k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302411; c=relaxed/simple;
-	bh=6hYmZAbDsLTe5G4GU6gYlGiDS7kGiljeEbE6L8fxfT8=;
+	s=arc-20240116; t=1772302412; c=relaxed/simple;
+	bh=F6oHkv4EZgB9pEI2LJOoK0jkGyV+5+OGzT3IDeNDiOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DkpN6Kydi38fzgZz7e5UwloXLXdTzAiIsYBOrG2AsFCjdhvITeAUeL9Vw4A+C6yIdkHqCixMdod3L1unAt/fUfy+9NxuR4KCCmCCGLs76WY1r4IK0EUY8t5mSS+8ggfsbOXBrfK1B3VjY23Viq70lzgmuKJDtsyv3lz4SJMjJwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rq7EVj8e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S8JoX19ezFrfcRNXXjoNu2m9kej7mcfwvrgsfybdBedjIN4W8drz6lqblWVPqivnP+yrDxYR9zuagzbvon4Zk+zYBGay0IJ45AcOkL5EIvoQBpfaP3sQpuX4oGh1fMKYduYgRJJnXzRFz1s11nIO2wxkQ0cZb+UqKJ1jUbfipec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g7giZdUL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rq7EVj8e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905CDC116D0;
-	Sat, 28 Feb 2026 18:13:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g7giZdUL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C92C19425;
+	Sat, 28 Feb 2026 18:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302411;
-	bh=6hYmZAbDsLTe5G4GU6gYlGiDS7kGiljeEbE6L8fxfT8=;
+	bh=F6oHkv4EZgB9pEI2LJOoK0jkGyV+5+OGzT3IDeNDiOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rq7EVj8evd2i0ICRi2zNudpIxCbbTVsJl904l27gSGEw1+kNluHm0YhTJyuaHzZ6j
-	 y1uKetiKNaa8QD6R3cPsr1bLrMSVv2CF1lAeGEdnRTk9dJqf8gcroO6/kBrZNlc9iP
-	 ObASGvuuqX9teWhJi8Bu8VQf4/MWZboLV3yKvyr1HwDKfWSqb9QxAXlhgzLGv+f1UR
-	 lerS1oJciG8+FTXM43pJSRpDg9GRA4H974I1NKCmjDnW/fWhjx0gbcV7WTHCzoSIvF
-	 iJKu29Gg8V6S/tnZcGXUsMsS164tW5FNAJ0f78+GoFlgSuIhNRbyxlk/4OLAuSYx4A
-	 JdHGsob2RizOg==
+	b=g7giZdULvWla1zmEiFLxi0wT88OlaU2HlIVHWI2YxI6D9CUS8myyxQJRe6ssD33VE
+	 UnwYX+lxsIPhQjWoHqunCTK14uSQM7ZUwHOqJRXinpxhh8tu/F9kbC3cptBlH0fcBf
+	 le1BcqMmFjJGKxpUh1+y3T1LDfdm9bTbC7ZmFuoYumz8KqWmbLkBMiYgV2S7F527qx
+	 Q51/1CiZJ8OFJLNU5bzpFqVo+OmuXzRTV2Sst/R30PMeFwJI7xQ0MqlqBOeOluqOBz
+	 WF/MIL1jXe3kos3+12v/tRCR8twjhCgl166F+PD8iHLKkwCSEX3X5kEb+/xigjxCeQ
+	 Zds7vxou+oEXw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Waqar Hameed <waqar.hameed@axis.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+Cc: Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/232] power: supply: wm97xx: Fix NULL pointer dereference in power_supply_changed()
-Date: Sat, 28 Feb 2026 13:09:57 -0500
-Message-ID: <20260228181127.1592657-144-sashal@kernel.org>
+Subject: [PATCH 6.1 145/232] RDMA/rtrs-srv: Refactor the handling of failure case in map_cont_bufs
+Date: Sat, 28 Feb 2026 13:09:58 -0500
+Message-ID: <20260228181127.1592657-145-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,95 +48,106 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Waqar Hameed <waqar.hameed@axis.com>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit 39fe0eac6d755ef215026518985fcf8de9360e9e ]
+[ Upstream commit 0f597ac618d04beb9de997fda59a29c9d3818fb2 ]
 
-In `probe()`, `request_irq()` is called before allocating/registering a
-`power_supply` handle. If an interrupt is fired between the call to
-`request_irq()` and `power_supply_register()`, the `power_supply` handle
-will be used uninitialized in `power_supply_changed()` in
-`wm97xx_bat_update()` (triggered from the interrupt handler). This will
-lead to a `NULL` pointer dereference since
+Let's call unmap_cont_bufs when failure happens, and also only update
+mrs_num after everything is settled which means we can remove 'mri'.
 
-Fix this racy `NULL` pointer dereference by making sure the IRQ is
-requested _after_ the registration of the `power_supply` handle. Since
-the IRQ is the last thing requests in the `probe()` now, remove the
-error path for freeing it. Instead add one for unregistering the
-`power_supply` handle when IRQ request fails.
-
-Fixes: 7c87942aef52 ("wm97xx_battery: Use irq to detect charger state")
-Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Link: https://patch.msgid.link/97b55f0479a932eea7213844bf66f28a974e27a2.1766270196.git.waqar.hameed@axis.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Acked-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://lore.kernel.org/r/20221117101945.6317-3-guoqing.jiang@linux.dev
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 83835f7c07b5 ("RDMA/rtrs-srv: fix SG mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/wm97xx_battery.c | 34 +++++++++++++++------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-srv.c | 47 +++++++++++---------------
+ 1 file changed, 20 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/power/supply/wm97xx_battery.c b/drivers/power/supply/wm97xx_battery.c
-index a0e1eaa25d93e..e2a41f9c903c5 100644
---- a/drivers/power/supply/wm97xx_battery.c
-+++ b/drivers/power/supply/wm97xx_battery.c
-@@ -178,12 +178,6 @@ static int wm97xx_bat_probe(struct platform_device *dev)
- 				     "failed to get charge GPIO\n");
- 	if (charge_gpiod) {
- 		gpiod_set_consumer_name(charge_gpiod, "BATT CHRG");
--		ret = request_irq(gpiod_to_irq(charge_gpiod),
--				wm97xx_chrg_irq, 0,
--				"AC Detect", dev);
--		if (ret)
--			return dev_err_probe(&dev->dev, ret,
--					     "failed to request GPIO irq\n");
- 		props++;	/* POWER_SUPPLY_PROP_STATUS */
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+index b69d6c5c9442b..c7f4dc7f2f7da 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+@@ -559,9 +559,11 @@ static int map_cont_bufs(struct rtrs_srv_path *srv_path)
+ {
+ 	struct rtrs_srv_sess *srv = srv_path->srv;
+ 	struct rtrs_path *ss = &srv_path->s;
+-	int i, mri, err, mrs_num;
++	int i, err, mrs_num;
+ 	unsigned int chunk_bits;
+ 	int chunks_per_mr = 1;
++	struct ib_mr *mr;
++	struct sg_table *sgt;
+ 
+ 	/*
+ 	 * Here we map queue_depth chunks to MR.  Firstly we have to
+@@ -584,16 +586,14 @@ static int map_cont_bufs(struct rtrs_srv_path *srv_path)
+ 	if (!srv_path->mrs)
+ 		return -ENOMEM;
+ 
+-	srv_path->mrs_num = mrs_num;
+-
+-	for (mri = 0; mri < mrs_num; mri++) {
+-		struct rtrs_srv_mr *srv_mr = &srv_path->mrs[mri];
+-		struct sg_table *sgt = &srv_mr->sgt;
++	for (srv_path->mrs_num = 0; srv_path->mrs_num < mrs_num;
++	     srv_path->mrs_num++) {
++		struct rtrs_srv_mr *srv_mr = &srv_path->mrs[srv_path->mrs_num];
+ 		struct scatterlist *s;
+-		struct ib_mr *mr;
+ 		int nr, nr_sgt, chunks;
+ 
+-		chunks = chunks_per_mr * mri;
++		sgt = &srv_mr->sgt;
++		chunks = chunks_per_mr * srv_path->mrs_num;
+ 		if (!always_invalidate)
+ 			chunks_per_mr = min_t(int, chunks_per_mr,
+ 					      srv->queue_depth - chunks);
+@@ -642,31 +642,24 @@ static int map_cont_bufs(struct rtrs_srv_path *srv_path)
+ 
+ 		ib_update_fast_reg_key(mr, ib_inc_rkey(mr->rkey));
+ 		srv_mr->mr = mr;
+-
+-		continue;
+-err:
+-		while (mri--) {
+-			srv_mr = &srv_path->mrs[mri];
+-			sgt = &srv_mr->sgt;
+-			mr = srv_mr->mr;
+-			rtrs_iu_free(srv_mr->iu, srv_path->s.dev->ib_dev, 1);
+-dereg_mr:
+-			ib_dereg_mr(mr);
+-unmap_sg:
+-			ib_dma_unmap_sg(srv_path->s.dev->ib_dev, sgt->sgl,
+-					sgt->nents, DMA_BIDIRECTIONAL);
+-free_sg:
+-			sg_free_table(sgt);
+-		}
+-		kfree(srv_path->mrs);
+-
+-		return err;
  	}
  
-@@ -199,10 +193,8 @@ static int wm97xx_bat_probe(struct platform_device *dev)
- 		props++;	/* POWER_SUPPLY_PROP_VOLTAGE_MIN */
- 
- 	prop = kcalloc(props, sizeof(*prop), GFP_KERNEL);
--	if (!prop) {
--		ret = -ENOMEM;
--		goto err3;
--	}
-+	if (!prop)
-+		return -ENOMEM;
- 
- 	prop[i++] = POWER_SUPPLY_PROP_PRESENT;
- 	if (charge_gpiod)
-@@ -236,15 +228,27 @@ static int wm97xx_bat_probe(struct platform_device *dev)
- 		schedule_work(&bat_work);
- 	} else {
- 		ret = PTR_ERR(bat_psy);
--		goto err4;
-+		goto free;
-+	}
-+
-+	if (charge_gpiod) {
-+		ret = request_irq(gpiod_to_irq(charge_gpiod), wm97xx_chrg_irq,
-+				  0, "AC Detect", dev);
-+		if (ret) {
-+			dev_err_probe(&dev->dev, ret,
-+				      "failed to request GPIO irq\n");
-+			goto unregister;
-+		}
- 	}
+ 	chunk_bits = ilog2(srv->queue_depth - 1) + 1;
+ 	srv_path->mem_bits = (MAX_IMM_PAYL_BITS - chunk_bits);
  
  	return 0;
--err4:
 +
-+unregister:
-+	power_supply_unregister(bat_psy);
++dereg_mr:
++	ib_dereg_mr(mr);
++unmap_sg:
++	ib_dma_unmap_sg(srv_path->s.dev->ib_dev, sgt->sgl,
++			sgt->nents, DMA_BIDIRECTIONAL);
++free_sg:
++	sg_free_table(sgt);
++err:
++	unmap_cont_bufs(srv_path);
 +
-+free:
- 	kfree(prop);
--err3:
--	if (charge_gpiod)
--		free_irq(gpiod_to_irq(charge_gpiod), dev);
-+
- 	return ret;
++	return err;
  }
  
+ static void rtrs_srv_hb_err_handler(struct rtrs_con *c)
 -- 
 2.51.0
 
