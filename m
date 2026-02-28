@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DFF375AAA
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BCA33D6F7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301625; cv=none; b=WBSnIbVohfPzti8NAFpUp8rj/eM3Ke8Trr9dZmOt9IWDvUFlAHzf1OnEoyR6KrZf28wd39YUs46XQZa2RrIKgOA42gCejdrSqHH3KlzHnsejuI950rEDuHP5jXZX0TYBNBAdhxqAZ4qJkaCEhmHx2cdbjedLjHBSpfnPrO5TcDE=
+	t=1772301626; cv=none; b=hfzHY/lswmogI3SoHb+ZaTsYou0bqj3u2Zt8pqxcMgwULSkMdO5hKEsSS8uHhWa42H7rXEq38wg1SNXGJnf48Aax3srv3rpIFGaopRpdMxweR1iZWBpNOL5RNiSncgOF/GNFQIIC/dL5MvcAbUIjxFdu6Vd8K0AM4534HRfaWkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301625; c=relaxed/simple;
-	bh=mGjJqr2bLuqmF7siDZETL9TJiVks8jJ+bgPMXXiLmxI=;
+	s=arc-20240116; t=1772301626; c=relaxed/simple;
+	bh=x7T7gXRXk2Mez3XQb4rfhR48AD15xz/gzIWXv6zalg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rkHzv3m1RwJV5pGX23SwIRWMX166ETbfRDCiwmbYs0oL1bzcFjdZ9D5gcPb/UKwgVwE90v8OIKomVH0tk/lXa5aX+/CRJhINgOSbtPTjlI0APVJBLpDq5EeCyvKmjdOjLEn9/7zHkvGG2gqnxHFRlUokGfLFA3EIFxkrfCLyuUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WDVLilxF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTZoHE3+XIxpuZaQrH+oF+t9CKq7T8PTikQkEmdSTWYh9TyLO9GZoVE71FJtFSylx49Mp2drjSli0I6vxmqAgZy1SZTDmbkiZbC7oSkC34vu21zxFgEozdZ9Ajl1k0LdBzrpje8uO2nXgWQunRfIJT8Dg8kGCzFAYqQBrBdKcL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SdiTti3N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WDVLilxF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8204C2BC87;
-	Sat, 28 Feb 2026 18:00:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SdiTti3N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0210C116D0;
+	Sat, 28 Feb 2026 18:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301625;
-	bh=mGjJqr2bLuqmF7siDZETL9TJiVks8jJ+bgPMXXiLmxI=;
+	s=k20201202; t=1772301626;
+	bh=x7T7gXRXk2Mez3XQb4rfhR48AD15xz/gzIWXv6zalg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDVLilxFaiz5moEICrrMhoOWc1Y941zmjXiMo4c2izoIG04vMssPGcNNSxuUZqQIj
-	 dgZeM21sYpZK3F0Z9kZIMRBUAXgUumKSFLWtyIDlw/xG4+xUVb1TquU38bhfiL2ght
-	 24jK0KyHZGTrqe9V4VkPbJqCghBm0JeGDVH9BSCwEO5XPhQV4bf5B7+TQHRzQ/1njy
-	 vjFdVbdiT8M0h9wvBBWt0YW9lgeH9FKuKbWisRFKidEOLI0h8kp4wc3N59/bwMKtGP
-	 C9C4rZwLv5RhePl8TjSIuQ3qckW5EH/Wk36YQyX6KTAyMyLfRJ+e6bcYy1r2rx9qV7
-	 6IVssTymSnOSg==
+	b=SdiTti3NI63CK4M2jP5Inc9EB+v5YHU2SkfZQ4PE5aX5UhuGEsKZxl9sayYc3pr7a
+	 l64H+RD6P/MHuX7PZmNXI/WXnkkWsDOhWfIbgqVAwhgajLNQV5k03LlLWsxvJK7Sz9
+	 puopA5G1ZRIJsUlOFoy/phvvYUB0ZaEx70JU+fUVBhXKqPXtvyaG7hgWYcyuC0ZkK4
+	 B8h8vYiXSATSQjev77/eZohFtYexr76L9Znmv35ygzpbDdoaelhr5NFf0G9TttylN9
+	 pClZOtlBfQI2UNyn5uloYMu3utIh8POpngVSPfMP4nPaEKefVwv6nqXw4Di+fwQ/ca
+	 IeRELNuVW1DVQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Zilin Guan <zilin@seu.edu.cn>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Alper Ak <alperyasinak1@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/385] i3c: dw: Fix memory leak in dw_i3c_master_i2c_xfers()
-Date: Sat, 28 Feb 2026 12:53:58 -0500
-Message-ID: <20260228180011.1568201-16-sashal@kernel.org>
+Subject: [PATCH 6.12 017/385] tpm: tpm_i2c_infineon: Fix locality leak on get_burstcount() failure
+Date: Sat, 28 Feb 2026 12:53:59 -0500
+Message-ID: <20260228180011.1568201-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,43 +47,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Alper Ak <alperyasinak1@gmail.com>
 
-[ Upstream commit 2537089413514caaa9a5fdeeac3a34d45100f747 ]
+[ Upstream commit bbd6e97c836cbeb9606d7b7e5dcf8a1d89525713 ]
 
-The dw_i3c_master_i2c_xfers() function allocates memory for the xfer
-structure using dw_i3c_master_alloc_xfer(). If pm_runtime_resume_and_get()
-fails, the function returns without freeing the allocated xfer, resulting
-in a memory leak.
+get_burstcount() can return -EBUSY on timeout. When this happens, the
+function returns directly without releasing the locality that was
+acquired at the beginning of tpm_tis_i2c_send().
 
-Add a dw_i3c_master_free_xfer() call to the error path to ensure the
-allocated memory is properly freed.
+Use goto out_err to ensure proper cleanup when get_burstcount() fails.
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
-
-Fixes: 62fe9d06f570 ("i3c: dw: Add power management support")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260126081121.644099-1-zilin@seu.edu.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: aad628c1d91a ("char/tpm: Add new driver for Infineon I2C TIS TPM")
+Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/dw-i3c-master.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/tpm/tpm_i2c_infineon.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-index eca54cbc1c29a..4c019c746f231 100644
---- a/drivers/i3c/master/dw-i3c-master.c
-+++ b/drivers/i3c/master/dw-i3c-master.c
-@@ -1102,6 +1102,7 @@ static int dw_i3c_master_i2c_xfers(struct i2c_dev_desc *dev,
- 		dev_err(master->dev,
- 			"<%s> cannot resume i3c bus master, err: %d\n",
- 			__func__, ret);
-+		dw_i3c_master_free_xfer(xfer);
- 		return ret;
- 	}
+diff --git a/drivers/char/tpm/tpm_i2c_infineon.c b/drivers/char/tpm/tpm_i2c_infineon.c
+index 81d8a78dc6552..3675faa4a00c7 100644
+--- a/drivers/char/tpm/tpm_i2c_infineon.c
++++ b/drivers/char/tpm/tpm_i2c_infineon.c
+@@ -543,8 +543,10 @@ static int tpm_tis_i2c_send(struct tpm_chip *chip, u8 *buf, size_t len)
+ 		burstcnt = get_burstcount(chip);
  
+ 		/* burstcnt < 0 = TPM is busy */
+-		if (burstcnt < 0)
+-			return burstcnt;
++		if (burstcnt < 0) {
++			rc = burstcnt;
++			goto out_err;
++		}
+ 
+ 		if (burstcnt > (len - 1 - count))
+ 			burstcnt = len - 1 - count;
 -- 
 2.51.0
 
