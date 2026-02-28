@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C561633AD85
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA5135AC20
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302770; cv=none; b=qzSHwvLl5+RxppEfPbsXzmNtSD7+v+eUUweLs32A/lehDACrqD+YHDOX9OR7HVCI1ulpau9TkhLqj0/TtcDm/jc3ibC/ZSl5+i1GapKSgEgrDg0xahkDSh3ua4DVIVxUH/dGhyJQmDNbNrRtq69S4nDnLSoIWDzP8lzuoqq3SaI=
+	t=1772302771; cv=none; b=TuPHPhw63omcCn5RgFZRa6AsWIwGdGJQvvw5WtEld6kG2hiy/GqlT6IUi7njPdZlN6idgkVcXKg2mPanUK9qWVKRgCPW0nwO8A5hXCGcC+ZMOAn698OGiGdYtjycVRftST6nt6EBtj+v8VrEE2DXl7X9Afw3YwIVQwsZbErCtqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302770; c=relaxed/simple;
-	bh=BXjNMcUEvfK4NN6aJ2heKSmeSETSyiRp70VZ8acEueo=;
+	s=arc-20240116; t=1772302771; c=relaxed/simple;
+	bh=81un091ESFW314h6JIVdv1wNKzq4YbRrXXMmAS0sFU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s+758axxTvxCHABE6lE6vrIs6j0y+Am+WRuoTP6KNHoOKxG689MJ8ZYDRGlRH3kbomcEselNZ48JBevy9n9mkcNuNHXK+OFiOJqHdxMoPtWjFs14TYr6EdWQJ86rCdiI5ewyCpwro6tGzAi85xkBEl/ctwg8CUb/Az/DhQJK10Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fiDQKsdY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRm9D3IiL/DPFIBOZ8qSdwi3Mb3pGYZDhB1E4ywywPt56rfSW0VtPBkfRTzlptgaOKMFFjykO7vyeOqbVyWyI/aUOInlsBonih78JSxxjoyF5z/FKd7WtP50oA0Q1RvF+5Mb3vDct2nubCId5jiDXq6IXCPoJtFt948rMbrtj6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RZMTEM1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fiDQKsdY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD5AC2BCC6;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RZMTEM1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CD1C2BCF5;
 	Sat, 28 Feb 2026 18:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302770;
-	bh=BXjNMcUEvfK4NN6aJ2heKSmeSETSyiRp70VZ8acEueo=;
+	s=k20201202; t=1772302771;
+	bh=81un091ESFW314h6JIVdv1wNKzq4YbRrXXMmAS0sFU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fiDQKsdYIIzOjZMVVNJ7Y3rlPhNf4s/By70H2OomQCCh76dc4j8DLlJaMBu0xsFBz
-	 6tRNRbCy1LOB+6ajSyB6UFN0vf3knUrvWH6Aw0F3BqZgqcvoUVE2bz64McKCR5N+58
-	 1ZL/Qx0cfGqi+hw5J2TqdUuD+EP64MMEdygir8xKTUVdso/mSS1lEGkyVueCwCVqDr
-	 kvVZIMPu5C7Cjg7qxaUXtig8Q/Ttrg52DDuKp2+jWVm6qE4JBryQfqq3iwGhMX8/7l
-	 PdQhOvLMzxGIPDh1YBisfjg9USIJqgSkb+tQXg+qmm9cvPz/zaesjXTfEkv2F4yB3U
-	 AcU71N+x6qkXA==
+	b=RZMTEM1zaHVnPm2kTXciJHtJc070rjOMFXQTvI+PkrdmZvwL0g2OQFPyKqWHEkbCa
+	 guh9pmLEFUkp9ikCB9RNvsiaDxYCEEB7qrunY5yYX9ZeUFVf09IvcTEu93RvLdZsvu
+	 mKo1mDHTD8OlFlRzgqehoL/7eaHWwGCYSREvjKrR2E4Pl6q0wZanOAFh3gp76QckKD
+	 pXs37YLIfbP90u+ba/gvqwPPDa6ejqKgVj0/oBlBmlooz79saMp9lmkL6D12I+eacc
+	 R8HxHHnttkvNTxPeu8E8YAHwYqkuIVY3XdVc6uga/ma2NMfLrLv9uzs5kd2NmHXZVC
+	 0UztpiJ5UgnUw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Florian Westphal <fw@strlen.de>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 143/147] netfilter: nf_conntrack_h323: don't pass uninitialised l3num value
-Date: Sat, 28 Feb 2026 13:17:31 -0500
-Message-ID: <20260228181736.1605592-143-sashal@kernel.org>
+Subject: [PATCH 5.10 144/147] ipv6: fix a race in ip6_sock_set_v6only()
+Date: Sat, 28 Feb 2026 13:17:32 -0500
+Message-ID: <20260228181736.1605592-144-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -46,56 +49,51 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a6d28eb8efe96b3e35c92efdf1bfacb0cccf541f ]
+[ Upstream commit 452a3eee22c57a5786ae6db5c97f3b0ec13bb3b7 ]
 
-Mihail Milev reports: Error: UNINIT (CWE-457):
- net/netfilter/nf_conntrack_h323_main.c:1189:2: var_decl:
-	Declaring variable "tuple" without initializer.
- net/netfilter/nf_conntrack_h323_main.c:1197:2:
-	uninit_use_in_call: Using uninitialized value "tuple.src.l3num" when calling "__nf_ct_expect_find".
- net/netfilter/nf_conntrack_expect.c:142:2:
-	read_value: Reading value "tuple->src.l3num" when calling "nf_ct_expect_dst_hash".
+It is unlikely that this function will be ever called
+with isk->inet_num being not zero.
 
-  1195|   	tuple.dst.protonum = IPPROTO_TCP;
-  1196|
-  1197|-> 	exp = __nf_ct_expect_find(net, nf_ct_zone(ct), &tuple);
-  1198|   	if (exp && exp->master == ct)
-  1199|   		return exp;
+Perform the check on isk->inet_num inside the locked section
+for complete safety.
 
-Switch this to a C99 initialiser and set the l3num value.
-
-Fixes: f587de0e2feb ("[NETFILTER]: nf_conntrack/nf_nat: add H.323 helper port")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 9b115749acb24 ("ipv6: add ip6_sock_set_v6only")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260216102202.3343588-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_h323_main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/net/ipv6.h | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_h323_main.c b/net/netfilter/nf_conntrack_h323_main.c
-index 8ba037b76ad3a..106dea9b53a96 100644
---- a/net/netfilter/nf_conntrack_h323_main.c
-+++ b/net/netfilter/nf_conntrack_h323_main.c
-@@ -1228,13 +1228,13 @@ static struct nf_conntrack_expect *find_expect(struct nf_conn *ct,
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 2909233427de0..d7b0710d0d9c1 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -1177,12 +1177,15 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex,
+ 
+ static inline int ip6_sock_set_v6only(struct sock *sk)
  {
- 	struct net *net = nf_ct_net(ct);
- 	struct nf_conntrack_expect *exp;
--	struct nf_conntrack_tuple tuple;
-+	struct nf_conntrack_tuple tuple = {
-+		.src.l3num = nf_ct_l3num(ct),
-+		.dst.protonum = IPPROTO_TCP,
-+		.dst.u.tcp.port = port,
-+	};
+-	if (inet_sk(sk)->inet_num)
+-		return -EINVAL;
++	int ret = 0;
++
+ 	lock_sock(sk);
+-	sk->sk_ipv6only = true;
++	if (inet_sk(sk)->inet_num)
++		ret = -EINVAL;
++	else
++		sk->sk_ipv6only = true;
+ 	release_sock(sk);
+-	return 0;
++	return ret;
+ }
  
--	memset(&tuple.src.u3, 0, sizeof(tuple.src.u3));
--	tuple.src.u.tcp.port = 0;
- 	memcpy(&tuple.dst.u3, addr, sizeof(tuple.dst.u3));
--	tuple.dst.u.tcp.port = port;
--	tuple.dst.protonum = IPPROTO_TCP;
- 
- 	exp = __nf_ct_expect_find(net, nf_ct_zone(ct), &tuple);
- 	if (exp && exp->master == ct)
+ static inline void ip6_sock_set_recverr(struct sock *sk)
 -- 
 2.51.0
 
