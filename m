@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C1F175A62;
-	Sat, 28 Feb 2026 17:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C403175A62;
+	Sat, 28 Feb 2026 17:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301421; cv=none; b=mCUFrQ63C+MUxs83N/Cmti1BREjqwQmsaYdb1ataalBISif+FTa2fQegv48P3C7qqgFhpB/nIXNcxDyd/rrfL/w51u7AuwgEvltu/1n60VIyQJL+8QsCnqRrCSmed4JYsHg2ruJAqGmUBswomiTnJ0QfpKUF3VhPHLpD2UkC5SQ=
+	t=1772301422; cv=none; b=N3CHJaNNCNg+tH/19hsNC5QCEsUsdXfXOqj8CoUwngtUE+pwhavS7vsjIIdEa7hAbNDX04yz8Outy1BmEvaL/ySLNOjIUrJnX2SIHynJigg24o5tZZnFa6IOBRpVVkIKFLlFQgwrS/NII/k8ioFO5tse0m4rI09QZgWfPa0y4pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301421; c=relaxed/simple;
-	bh=CVsQXwErh+3UDMxzd+f1OyBwyYab9vaX/eDRrIKzo50=;
+	s=arc-20240116; t=1772301422; c=relaxed/simple;
+	bh=L6aT3qUTLfThn9I6bCBDwQlKHAfnFbemVlPtE+jyx9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5jRjLr+rgPV4vz+ceHB1jCaHtehry5SkLi+miQlGAMeRnHQFWQ2EKIOjLzvbYZNSNLwQTNqLFUdZoq/NaZSdHtqeznu6yQHC4SCDu3C5TbB+oRskTMwHov23rxdMNcw1VvrETT5ZzEzwW0AVRFvXjkmVojsMi0vGTvWv/2eOek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rk4TjXxC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uMpJJBVNMzt3mdtpib2QH1eglXjl3aC58WXtcqZ+ztbmGRInsoKE6PJ66CMfhCXjOFtApeKp7MvxTEMXKaQKor1zvScePy/mBpmZxOyfo6g3ihg6tutPyUM470Ld6ISVJy2ip0JswGy+OJuO/wWMzGV2mZFqtEG+vH010UP7D5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HjXFzBxs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rk4TjXxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A3EC19423;
-	Sat, 28 Feb 2026 17:57:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HjXFzBxs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BA1C19423;
+	Sat, 28 Feb 2026 17:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301421;
-	bh=CVsQXwErh+3UDMxzd+f1OyBwyYab9vaX/eDRrIKzo50=;
+	s=k20201202; t=1772301422;
+	bh=L6aT3qUTLfThn9I6bCBDwQlKHAfnFbemVlPtE+jyx9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rk4TjXxCgGfKQaPU8MthrQMTi9snVMRzVNsE16MIIcSWadUwsQR7VRwKOn/ei0hRn
-	 +4EUOFGanSOsvqbufRDxuOL7z8y6Z0hW63e435X9nQtoCDXl+N5lRZuu98uT/Wz7vz
-	 fC9+xu/uOM+1SOG0SX03w1Yz2VSxKw9JQ2iV14ks0OxOcFNYoeNZ14VAo6kGTqDH6y
-	 sw41cKQZKaJ7lsuuXyJZTPqUy0uK81gBrcN/oZNV6gELs2Es2nsOd+5HsWJ/wsuO20
-	 +ZiqY68zZ6aFy5rf0VOkAzdteKOrQwKalnkZ3e/h81/7FoIsPDwf3I8iiBU4QWkIwf
-	 KYhPK7XqXMsPw==
+	b=HjXFzBxsFab9NjDzN/4oL44xtChjynTdNLhqE+YJ/ldkMrcnHfXlJo8vn+q5epNfF
+	 8JoKJ8RtteykHOFWnEPfpaMRxaKerMURT3wq9n36HHLYlld5PkROE40nTnaDoqM9tv
+	 HKH7TYEt0IcQEcvUttvwfwMdcjEOWZ0zVNKoEOdChVaE48kOUO1o1t3ODLU1H1suDi
+	 LGKthVFvxsxUG0v7B9BcFn3SaLZHcJDRDKMNSuDyl6qviKBwgMKx+m4WSCmGH437JD
+	 PXofPlu/tZhBZKSbazisCjpL7QVIa5Nhrhqc7mznxtPMQcuknWDMcvC8oK0IACCM91
+	 GRDJcyvfoyNjw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Janne Grunau <j@jannau.net>,
+Cc: Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	stable@vger.kernel.org,
-	Neal Gompa <neal@gompa.dev>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 611/752] spmi: apple: Add "apple,t8103-spmi" compatible
-Date: Sat, 28 Feb 2026 12:45:22 -0500
-Message-ID: <20260228174750.1542406-611-sashal@kernel.org>
+Subject: [PATCH 6.18 612/752] rust/drm: Fix Registration::{new,new_foreign_owned}() docs
+Date: Sat, 28 Feb 2026 12:45:23 -0500
+Message-ID: <20260228174750.1542406-612-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,41 +48,52 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Janne Grunau <j@jannau.net>
+From: Lyude Paul <lyude@redhat.com>
 
-[ Upstream commit 6c54b0a801dd8227237ba0bf0728bb42681cf027 ]
+[ Upstream commit 638eeda8abaa3e6afe6bd5758ef8045a7f33b9a0 ]
 
-After discussion with the devicetree maintainers we agreed to not extend
-lists with the generic compatible "apple,spmi" anymore [1]. Use
-"apple,t8103-spmi" as base compatible as it is the SoC the driver and
-bindings were written for.
+Looks like we've actually had a malformed rustdoc reference in the rustdocs
+for Registration::new_foreign_owned() for a while that, when fixed, still
+couldn't resolve properly because it refers to a private item.
 
-[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
+This is probably leftover from when Registration::new() was public, so drop
+the documentation from that function and fixup the documentation for
+Registration::new_foreign_owned().
 
-Fixes: 77ca75e80c71 ("spmi: add a spmi driver for Apple SoC")
-Cc: stable@vger.kernel.org
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Janne Grunau <j@jannau.net>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://patch.msgid.link/20260123182039.224314-7-sboyd@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 0600032c54b7 ("rust: drm: add DRM driver registration")
+Cc: <stable@vger.kernel.org> # v6.16+
+Link: https://patch.msgid.link/20260122221037.3462081-1-lyude@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spmi/spmi-apple-controller.c | 1 +
- 1 file changed, 1 insertion(+)
+ rust/kernel/drm/driver.rs | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spmi/spmi-apple-controller.c b/drivers/spmi/spmi-apple-controller.c
-index 697b3e8bb0235..87e3ee9d4f2aa 100644
---- a/drivers/spmi/spmi-apple-controller.c
-+++ b/drivers/spmi/spmi-apple-controller.c
-@@ -149,6 +149,7 @@ static int apple_spmi_probe(struct platform_device *pdev)
- }
+diff --git a/rust/kernel/drm/driver.rs b/rust/kernel/drm/driver.rs
+index f30ee4c6245cd..e09f977b5b519 100644
+--- a/rust/kernel/drm/driver.rs
++++ b/rust/kernel/drm/driver.rs
+@@ -121,7 +121,6 @@ pub trait Driver {
+ pub struct Registration<T: Driver>(ARef<drm::Device<T>>);
  
- static const struct of_device_id apple_spmi_match_table[] = {
-+	{ .compatible = "apple,t8103-spmi", },
- 	{ .compatible = "apple,spmi", },
- 	{}
- };
+ impl<T: Driver> Registration<T> {
+-    /// Creates a new [`Registration`] and registers it.
+     fn new(drm: &drm::Device<T>, flags: usize) -> Result<Self> {
+         // SAFETY: `drm.as_raw()` is valid by the invariants of `drm::Device`.
+         to_result(unsafe { bindings::drm_dev_register(drm.as_raw(), flags) })?;
+@@ -129,8 +128,9 @@ impl<T: Driver> Registration<T> {
+         Ok(Self(drm.into()))
+     }
+ 
+-    /// Same as [`Registration::new`}, but transfers ownership of the [`Registration`] to
+-    /// [`devres::register`].
++    /// Registers a new [`Device`](drm::Device) with userspace.
++    ///
++    /// Ownership of the [`Registration`] object is passed to [`devres::register`].
+     pub fn new_foreign_owned(
+         drm: &drm::Device<T>,
+         dev: &device::Device<device::Bound>,
 -- 
 2.51.0
 
