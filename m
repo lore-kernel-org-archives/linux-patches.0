@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E9738F623
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2AD38D014
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302167; cv=none; b=SVrzwXef7ERb+KsiFOQ2ZEXPGwJBgEVj2OO2x9q+mL6xpJUcSrMVvD83R1yQiOeuqlDFl9WnquU3Yd77ftRg8BBbZw8TpQupUpnQ2HTPCDI6YX9ceBs3/bVpU6K+j6gJSdGvE+mSkN9fEMqjoKFCujm6byr+z59FpnROjlTuEo4=
+	t=1772302168; cv=none; b=GZ1qEKQeQBF4CgR4zYC9n7n/5y3WA0vavcgYwnV2sgqueRnssX0Mcox4VcLCCpn4r8TKyx/023TxTemMAGxngBph7jrXNelnw/W+82sZL/h/MDOHn8t3+EC3SxJ4KcPRcifNnLxsme4iNXhN7GMlcGODWJOaUJqV3UkFAYu2/q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302167; c=relaxed/simple;
-	bh=PkkC+irWPdJkFtjWPJ6xp5YXD8j1WVjAD7WxZ2QY6WQ=;
+	s=arc-20240116; t=1772302168; c=relaxed/simple;
+	bh=ULPVU2D00xZ0CNxEWLzRWNoPJpR413weR/RillGL8E4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdhvKlpkrKyaKNQt3z1UQbA0lWwdOZ6MVWAt1wwaTGpiw/CsB+SKLEQHk9fH93bCaG9zCe0vV6A+wE2JL/FRBlQY2RVDUDB3yUmP1YirSv6+g0omaiORPXNYy8XoB2lERzArTIbd0GavUlrduxveQ1q2N0ct4I4fBnS0WxUH/hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HPKwP2i8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tqc6diwmbNE10vRgVZPwvY2/Cq1m8V740hGCTK/ni/kS4bmZLipv6fZti+qUy1nM6DLSgRXLmviwaItzWpCQgeDmfP1Y1LQ88vneH8jUJV+JCU0/puauXt7gflpRFzke+qXycnaQbjQAKunh0qqfKFmoB/nw5ZwSIuw/uhkb6io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SQSm+cRD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HPKwP2i8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04414C116D0;
-	Sat, 28 Feb 2026 18:09:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SQSm+cRD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF60AC19424;
+	Sat, 28 Feb 2026 18:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302167;
-	bh=PkkC+irWPdJkFtjWPJ6xp5YXD8j1WVjAD7WxZ2QY6WQ=;
+	s=k20201202; t=1772302168;
+	bh=ULPVU2D00xZ0CNxEWLzRWNoPJpR413weR/RillGL8E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HPKwP2i8GNeL+8ek3ic2WRvUdIgWZgL6Ii7uyzWdcXwMWJXkPRhc5SNtIM8hWrfXJ
-	 QyPydXfoF8qCXi/GZGknjd03u4NJqk7pawL479GWe0LYJIj9YtS7W2727vUGJo3f+f
-	 uYDw4XFO1mPdZfO/o9DZUeD4NVEWf+y1j+wdjKWu1iUhN2Ei/cigCHylw/gGquzG3O
-	 vv34CAw62UpmyG8812pDx/3DEGfLqlDZIaCwHt/zEa45zFuQ3rk5ekcZWL8RExAleU
-	 0Rkh5Wv9XvGsABkJo26jaVdWuB01yiUH+pKx+wSoCl2AwEILdyA7Hvu99eSqVKi0hG
-	 yz4fj3Xy8qCEQ==
+	b=SQSm+cRD+PiakovnSg1KOrALhtx5+GN1inO9T0LCViiPTB6507nEeU1oX2EooPnBP
+	 fHr4FXT7ceA/q61GKAJCbbJANaIiiNCdx70QrEbYhInpeZGXM354Ra6n4AoF6/ctRE
+	 Gt9A83pNMi1QXRnrBLDUHcdThbe0qVqWPFQvAzgDxeSxI4VEEPA+usu4W4dTO7ms91
+	 wwH+xzulQRj6Fw/hY5cuJd0ntv2fzwdF6BOY5XIi2fLjg+K4U1FSHRuNb8aI7DtQhh
+	 hWaz69z+Nsqgk6bptsrjrTuf9wzSlDSnQss8keJq6XQ3Zfgs4m1vVb2unaTbZBf54K
+	 zVk/zSG0P7jyw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Eric Joyner <eric.joyner@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Hariprasad Kelam <hkelam@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 164/283] ionic: Rate limit unknown xcvr type messages
-Date: Sat, 28 Feb 2026 13:05:06 -0500
-Message-ID: <20260228180709.1583486-164-sashal@kernel.org>
+Subject: [PATCH 6.6 165/283] octeontx2-pf: Unregister devlink on probe failure
+Date: Sat, 28 Feb 2026 13:05:07 -0500
+Message-ID: <20260228180709.1583486-165-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,49 +47,34 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Eric Joyner <eric.joyner@amd.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit cdb1634de3bf197c0d86487d1fb84c128a79cc7c ]
+[ Upstream commit 943f3b8bfbf297cf74392b50a7108ce1fe4cbd8c ]
 
-Running ethtool repeatedly with a transceiver unknown to the driver or
-firmware will cause the driver to spam the kernel logs with "unknown
-xcvr type" messages which can distract from real issues; and this isn't
-interesting information outside of debugging. Fix this by rate limiting
-the output so that there are still notifications but not so many that
-they flood the log.
+When probe fails after devlink registration, the missing devlink unregister
+call causing a memory leak.
 
-Using dev_dbg_once() would reduce the number of messages further, but
-this would miss the case where a different unknown transceiver type is
-plugged in, and its status is requested.
-
-Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
-Signed-off-by: Eric Joyner <eric.joyner@amd.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Link: https://patch.msgid.link/20260206224651.1491-1-eric.joyner@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2da489432747 ("octeontx2-pf: devlink params support to set mcam entry count")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Link: https://patch.msgid.link/20260206182645.4032737-1-hkelam@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-index d76e63f57ff1e..b07dd56b0c76d 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-@@ -222,9 +222,10 @@ static int ionic_get_link_ksettings(struct net_device *netdev,
- 		/* This means there's no module plugged in */
- 		break;
- 	default:
--		dev_info(lif->ionic->dev, "unknown xcvr type pid=%d / 0x%x\n",
--			 idev->port_info->status.xcvr.pid,
--			 idev->port_info->status.xcvr.pid);
-+		dev_dbg_ratelimited(lif->ionic->dev,
-+				    "unknown xcvr type pid=%d / 0x%x\n",
-+				    idev->port_info->status.xcvr.pid,
-+				    idev->port_info->status.xcvr.pid);
- 		break;
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index b4194ec2a1f2d..784130b4b0865 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -3097,6 +3097,7 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	return 0;
  
+ err_pf_sriov_init:
++	otx2_unregister_dl(pf);
+ 	otx2_shutdown_tc(pf);
+ err_mcam_flow_del:
+ 	otx2_mcam_flow_del(pf);
 -- 
 2.51.0
 
