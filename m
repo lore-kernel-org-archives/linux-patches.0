@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A46313E31
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94FA33F38A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301138; cv=none; b=Z8ZOsJ/j94h05h9TF+hDbp+b9UPF+UWFaAHUFigyvfmFb5Q8vTCMG7NXFCubCydV2WfBuQqAQCXOzgb//BNYri9J5OXGqlViCrI7cSnN0buPFJjO7pm3Vqv5MkT9np/I4iepmeRyMCcyPx8l9k14jhQTxlTODSj+fmna1AbJT6Y=
+	t=1772301138; cv=none; b=QXK7rAInqiqoPBqlPgcJj4FYUwM3aecLOLtetNZKTN67H2PWAs7nv/yFsJGxbnarBo6kXUM3CZBeq/zzsHiSG1S4LinErysRRv6UGZK3S49MNwM6LjhX551vtEXtjfePyfzeaPGZi7pucC+nCloaUh4EWeazV9AARSjWD5Xoza8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301138; c=relaxed/simple;
-	bh=kcG1WGu6rdlqlnNBpZrp2bHJDjQL33bmn9XWUHoyw7Y=;
+	bh=5rN1791otkXld9s0yk37EK1HmhIuksVPV/oWgb5wLiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qO8zfR48KEf5yIA7yczFpFN+T/QGx0UQhLU8BSbRRy8H7YLiu6PNPpJT8mlSNNZVEQ06nLwUzd/OCLmT6hvAB2tASgfHnkI4HOSLCilGqHpu95IUcnEGvryKDG+++objJNtjIvRjDwksqErTgUmjt6a4Jh56Kx3Dt/D+LDYpJM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uy2hLMPu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qGkBlQnV7+SbNW1MvYfvtwwMdB8OpAF7oFEpmF24wF9jpC7V9BnFdPzpIYLKGL8Un2G4y2A13JCkrMYZWmfmkXWsGnk2O4dVTe3PVae4HzgRO0PB3Xl1iLhXg+DdPAI8wUFs39f524/ht4ARaheUMLYd9eIPctHEDpnZhUeAikk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ngVw4ibX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uy2hLMPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5431EC19423;
-	Sat, 28 Feb 2026 17:52:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ngVw4ibX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4A8C19423;
+	Sat, 28 Feb 2026 17:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301137;
-	bh=kcG1WGu6rdlqlnNBpZrp2bHJDjQL33bmn9XWUHoyw7Y=;
+	s=k20201202; t=1772301138;
+	bh=5rN1791otkXld9s0yk37EK1HmhIuksVPV/oWgb5wLiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uy2hLMPungmWYNWBoaBjZB0SG1e5aLBheh695AWjkmKi1Bw4gkOQhGTYDxdWtSCUd
-	 PAZxXdojakHZTZU/qFGJ+olHoMTu/ChRg+cjkpnYvqHExm0U+FIOX/lf6ONWtkD/LT
-	 tqlIxvv2WrsgCeZiK7RTcxX/Vn4tGtCrKsIh3CcD65nJqcDAslN8IEsYzusHz7gv2P
-	 Pd1iErTFQLyFvZEtUJ/jjtd+AfmQGKyIC6vzT6ELZcPTj+g5bGU/PateLhQO8q0mbP
-	 jhUe1+R4gorOZeyfGVZmq4BRHE/SCqZEAOHuhd3zKjnBJJsZeNP3+5GO5EeJ3Rq1cK
-	 oWadpgibNKYaw==
+	b=ngVw4ibXqmJQwdH+HfghHCF+tXorywnuqAAh/PmcwjZLmWFBGJv4XouNMh5oayGEs
+	 s4YuG+c8b4k8i31ZPuSnPU+Z+MrbwPEDWNixlKW24B4dhvvuCAMOJ9Hha4peq7GTpY
+	 FC4BucDctyO0At4cHiNW00/obuzR4EylEA7jP7jZQsm8s4jaRpyB9Qvw8lkT9g3Ah7
+	 pZuvGYSwOMMkkD1ONqb2J2GGGw8MCEZVunc4LDEIq6HedOD/PBy8FhiKlwHqVRZmwm
+	 iXL6CKLj9YDfUogyktP0cfQnCZgObQitMKLj7tgnPjZupS4DfFPItCnTXxvW2sKsjw
+	 MVymfaP+g6Ipw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Longfang Liu <liulongfang@huawei.com>,
-	Alex Williamson <alex@shazbot.org>,
+Cc: Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 298/752] hisi_acc_vfio_pci: resolve duplicate migration states
-Date: Sat, 28 Feb 2026 12:40:09 -0500
-Message-ID: <20260228174750.1542406-298-sashal@kernel.org>
+Subject: [PATCH 6.18 299/752] RDMA/rtrs-clt: For conn rejection use actual err number
+Date: Sat, 28 Feb 2026 12:40:10 -0500
+Message-ID: <20260228174750.1542406-299-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,39 +49,45 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Md Haris Iqbal <haris.iqbal@ionos.com>
 
-[ Upstream commit 8c6ac1730a977234dff74cc1753b4a953f59be7b ]
+[ Upstream commit fc290630702b530c2969061e7ef0d869a5b6dc4f ]
 
-In special scenarios involving duplicate migrations, after the
-first migration is completed, if the original VF device is used
-again and then migrated to another destination, the state indicating
-data migration completion for the VF device is not reset.
-This results in the second migration to the destination being skipped
-without performing data migration.
-After the modification, it ensures that a complete data migration
-is performed after the subsequent migration.
+When the connection establishment request is rejected from the server
+side, then the actual error number sent back should be used.
 
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Link: https://lore.kernel.org/r/20260122020205.2884497-4-liulongfang@huawei.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Link: https://patch.msgid.link/20260107161517.56357-10-haris.iqbal@ionos.com
+Reviewed-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
+Reviewed-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index ed2ae035deb16..c7559f1d4e2f2 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -1529,6 +1529,7 @@ static int hisi_acc_vfio_pci_open_device(struct vfio_device *core_vdev)
- 		}
- 		hisi_acc_vdev->mig_state = VFIO_DEVICE_STATE_RUNNING;
- 		hisi_acc_vdev->dev_opened = true;
-+		hisi_acc_vdev->match_done = 0;
- 		mutex_unlock(&hisi_acc_vdev->open_mutex);
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index 2b397a544cb93..8fa1d72bd20a4 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -1923,7 +1923,7 @@ static int rtrs_rdma_conn_rejected(struct rtrs_clt_con *con,
+ 	struct rtrs_path *s = con->c.path;
+ 	const struct rtrs_msg_conn_rsp *msg;
+ 	const char *rej_msg;
+-	int status, errno;
++	int status, errno = -ECONNRESET;
+ 	u8 data_len;
+ 
+ 	status = ev->status;
+@@ -1945,7 +1945,7 @@ static int rtrs_rdma_conn_rejected(struct rtrs_clt_con *con,
+ 			  status, rej_msg);
  	}
  
+-	return -ECONNRESET;
++	return errno;
+ }
+ 
+ void rtrs_clt_close_conns(struct rtrs_clt_path *clt_path, bool wait)
 -- 
 2.51.0
 
