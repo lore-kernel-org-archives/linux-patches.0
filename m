@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33053342173
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086A3449EC3
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301194; cv=none; b=p7VgWnDufFFtarnsAs7xqNh0mTX0MhkUVuvNIGPn+JdtyFOj9leB8cqDbcjzc9L7s1UVckG9FZA/JjN4GR8vEEOIMHflFD0Q6RrJgg27KYv/ZF1OCtZU0CYfzhoAyO9bcqf9PEYs3j2BDyIUTfh8lcEv5N113a+8+pXKNCrywMI=
+	t=1772301195; cv=none; b=VhpTYdJIEe11fWHQp3YrUMeNZPc4O0XACeDdXxVnHtmiq8/2tAONlozMoL+7T5cERpajpuoYhJMClYNQ2RAH7jAWUKwNL8s4Ol75HR2GDPTb29qtCNF9//O2vKUwMYl+xEIEGy2aRxcOsNE2A54SLg+mCKEbqnaqSJU1rAEn9Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301194; c=relaxed/simple;
-	bh=eWITnqWXfaZitEoPiMIQV7/NPA/XVTeyfYJ6Kov8XQY=;
+	s=arc-20240116; t=1772301195; c=relaxed/simple;
+	bh=kJIa65djiJ+H74aDYxuovkWIyg9lxC8OkP4c3FTL02w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzzHadTQryIDAoLIW7WV9nePpSotbhR7AZKBrF5I5yLnM0PYQl9+P0LBn9t1Al9O20i0a2jO5jiNYJsWY80BLsyzbelB6ROSeFNUrWghySEb0liCXjtR4cK1e7KnC4ATlSowEZOBTR+2rQ3dsRedZ2tKflW2R04dFXqlJ4xXJaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LF6kwX0F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZb/ByV0guYSU6yUuITqOmXvrlytBgQki6RjSNlNmeUUHJTb2yLWDYS9YH0eWh7G8EXxJrsQfEVVEoXa74OIbfn78gsT92NRY0/U+HSvuDI1ykZUbhI14TZ2qDPDH62tPpdLNMe/3WylBhyoTX8ktaTYA611NAq7awSTYhzwSR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SCiEM2/K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LF6kwX0F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF02AC19424;
-	Sat, 28 Feb 2026 17:53:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SCiEM2/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A781C19424;
+	Sat, 28 Feb 2026 17:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301194;
-	bh=eWITnqWXfaZitEoPiMIQV7/NPA/XVTeyfYJ6Kov8XQY=;
+	bh=kJIa65djiJ+H74aDYxuovkWIyg9lxC8OkP4c3FTL02w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LF6kwX0F8Wgsi+RFp7xTfpH6Cvyvvl101l9zzOOZnM6nKRiW6Hb5NOAvrz/vo1G9x
-	 6YKLYy22ATZDKNl7LfxNoB3YQCc9ISxMe9K09jige1A29KvT6gZE8UMr3fu8IotzQk
-	 WDFrZ7L5Hl7Dby3hfMvDMgo+SRsHq5wCS4hmrOMEdZH3RKS2996F0fmi2h3nkpRdxP
-	 6zY5mDzUuodjBWB6aV7bMzZJeGzjRmDHV4nf0LmOrVsmdwfj5bsNskyQK53KB5z+A3
-	 I4u257HufbDELpqvwccVQAoUjSVsiy7+ltG5PhCPxBAByQ+1V/d4U2TsieKihwAB+V
-	 SwMXCjvn7a1dg==
+	b=SCiEM2/KGEPe45l22Xhh83AKeyAcIedqSpW7KZjleaVFljyCDYKawRTJIz/Afr0Kr
+	 BP8oENhGlkI8eTdb5gpUc9b7Xb+2X0W72rl3EfrttF/xPSn1R1QcoqMc6ohGSwhy5x
+	 LvCDNZ2KovWSw7Lc8MQFj2jJ/siakuYD21EvI3UGwOb/8hWUew83PKwYEMcxJ4Btms
+	 4Bovcr37RCcv3XUpe8RfiKMpBeFnE5d0XuO7W7b1sKqjXCvgJ7DPGgLp9Aad5a53/E
+	 o07gVarqizZYdarzbqXW0I8+1mzMOI6Ub+ZtX7DNBS2qqMgaRGoL8F4+Er699AWpC9
+	 jJao+a/j8m/YA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ilya Dryomov <idryomov@gmail.com>,
+Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 365/752] libceph: define and enforce CEPH_MAX_KEY_LEN
-Date: Sat, 28 Feb 2026 12:41:16 -0500
-Message-ID: <20260228174750.1542406-365-sashal@kernel.org>
+Subject: [PATCH 6.18 366/752] thermal: int340x: Fix sysfs group leak on DLVR registration failure
+Date: Sat, 28 Feb 2026 12:41:17 -0500
+Message-ID: <20260228174750.1542406-366-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -46,80 +48,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit ac431d597a9bdfc2ba6b314813f29a6ef2b4a3bf ]
+[ Upstream commit 15176b818e048ccf6ef4b96db34eda7b7e98938a ]
 
-When decoding the key, verify that the key material would fit into
-a fixed-size buffer in process_auth_done() and generally has a sane
-length.
+When DLVR sysfs group creation fails in proc_thermal_rfim_add(),
+the function returns immediately without cleaning up the FIVR group
+that may have been created earlier.
 
-The new CEPH_MAX_KEY_LEN check replaces the existing check for a key
-with no key material which is a) not universal since CEPH_CRYPTO_NONE
-has to be excluded and b) doesn't provide much value since a smaller
-than needed key is just as invalid as no key -- this has to be handled
-elsewhere anyway.
+Add proper error unwinding to remove the FIVR group before returning
+failure.
 
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/LV3PR11MB876881B77D32A2854AD2908EF563A@LV3PR11MB8768.namprd11.prod.outlook.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/crypto.c       | 8 +++++---
- net/ceph/crypto.h       | 2 +-
- net/ceph/messenger_v2.c | 2 +-
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ .../thermal/intel/int340x_thermal/processor_thermal_rfim.c   | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/ceph/crypto.c b/net/ceph/crypto.c
-index 01b2ce1e8fc06..5601732cf4faa 100644
---- a/net/ceph/crypto.c
-+++ b/net/ceph/crypto.c
-@@ -37,9 +37,6 @@ static int set_secret(struct ceph_crypto_key *key, void *buf)
- 		return -ENOTSUPP;
+diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
+index 1f3d22b659dbe..635bc8fded1e9 100644
+--- a/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
++++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
+@@ -451,8 +451,11 @@ int proc_thermal_rfim_add(struct pci_dev *pdev, struct proc_thermal_device *proc
+ 			break;
+ 		}
+ 		ret = sysfs_create_group(&pdev->dev.kobj, &dlvr_attribute_group);
+-		if (ret)
++		if (ret) {
++			if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_FIVR)
++				sysfs_remove_group(&pdev->dev.kobj, &fivr_attribute_group);
+ 			return ret;
++		}
  	}
  
--	if (!key->len)
--		return -EINVAL;
--
- 	key->key = kmemdup(buf, key->len, GFP_NOIO);
- 	if (!key->key) {
- 		ret = -ENOMEM;
-@@ -83,6 +80,11 @@ int ceph_crypto_key_decode(struct ceph_crypto_key *key, void **p, void *end)
- 	ceph_decode_copy(p, &key->created, sizeof(key->created));
- 	key->len = ceph_decode_16(p);
- 	ceph_decode_need(p, end, key->len, bad);
-+	if (key->len > CEPH_MAX_KEY_LEN) {
-+		pr_err("secret too big %d\n", key->len);
-+		return -EINVAL;
-+	}
-+
- 	ret = set_secret(key, *p);
- 	memzero_explicit(*p, key->len);
- 	*p += key->len;
-diff --git a/net/ceph/crypto.h b/net/ceph/crypto.h
-index 23de29fc613cf..a20bad6d1e964 100644
---- a/net/ceph/crypto.h
-+++ b/net/ceph/crypto.h
-@@ -5,7 +5,7 @@
- #include <linux/ceph/types.h>
- #include <linux/ceph/buffer.h>
- 
--#define CEPH_KEY_LEN			16
-+#define CEPH_MAX_KEY_LEN		16
- #define CEPH_MAX_CON_SECRET_LEN		64
- 
- /*
-diff --git a/net/ceph/messenger_v2.c b/net/ceph/messenger_v2.c
-index 061eaa047f765..b67f2b582bc76 100644
---- a/net/ceph/messenger_v2.c
-+++ b/net/ceph/messenger_v2.c
-@@ -2361,7 +2361,7 @@ static int process_auth_reply_more(struct ceph_connection *con,
-  */
- static int process_auth_done(struct ceph_connection *con, void *p, void *end)
- {
--	u8 session_key_buf[CEPH_KEY_LEN + 16];
-+	u8 session_key_buf[CEPH_MAX_KEY_LEN + 16];
- 	u8 con_secret_buf[CEPH_MAX_CON_SECRET_LEN + 16];
- 	u8 *session_key = PTR_ALIGN(&session_key_buf[0], 16);
- 	u8 *con_secret = PTR_ALIGN(&con_secret_buf[0], 16);
+ 	if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_DVFS) {
 -- 
 2.51.0
 
