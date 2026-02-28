@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F5836C9E9
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0850C36C9E2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302359; cv=none; b=t3xCuxl6VMaPRbml218DHJCxXoot9U7FZ/WG13tPhzq7/0OXZxeVY8AuyuhUpsctGR50T6UdMRxmpmFwWBuFAPwdRs5nrBTjHYRcEDxu6tz1A8pCk71XvxcuF3ZHkRAtOWfiefxPNMwnMGUgOZ7L0IdwQY9AC0gC9FoZEPnLRSc=
+	t=1772302360; cv=none; b=HSJfRjSvUCfCtdpkjRvr28/GKhQ6XilCU6AQJlG/t3Su5z5AsovERadhlBCx5zcpamLBCclEtg2aIEQfE6vheDKpALS57QbwMY0Thn0gH9p6R+eJAWwjyPopsev5RyagItJUP+PwmL0tN4ete7hs4TLv15dk9mNkTJMe4ieaZZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302359; c=relaxed/simple;
-	bh=1QL6Pcu6xYCUr82c1I+Edg0WJY/+5NxRguUtZhPT5zo=;
+	s=arc-20240116; t=1772302360; c=relaxed/simple;
+	bh=p4rHJPC3o4GDM2pdN5sNIKwiZ0RKIBavWvKJkyUnTbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZ85xePbE/mYu0IZQ8r4Exac0mxCAz920LbP6YhnPMT2tfSmk/yDsVpnlDxzJ+dTzcS+Kv/9FUDf4FES17ljG8f6+T32IFnvRcQnjGG2A3kVTFOYifbOufC2hefAyNGHpJdpZDdHPnn8wjs3Noj5xvD5bF6qMqWaMzCBv0umq3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fAKfI/xe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlQvxxs+r0aMEFpiMnCm2gQgSgF1WpBVTvFGjL6pzqIUaJ1AyVyRBcZq3Rl/2d6y5Osr2o/7sCjomIqqqHWz1emxgPkFKcW2Y/P/XHX7SFSBjwTpZhqgiYp3VZWDWdT1TMdaaEEFOr0o9m8TzH5IrGvyDFAAKVz40NHPhXmlphI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zuz2EDr1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fAKfI/xe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9649AC19424;
-	Sat, 28 Feb 2026 18:12:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zuz2EDr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E350C19423;
+	Sat, 28 Feb 2026 18:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302359;
-	bh=1QL6Pcu6xYCUr82c1I+Edg0WJY/+5NxRguUtZhPT5zo=;
+	bh=p4rHJPC3o4GDM2pdN5sNIKwiZ0RKIBavWvKJkyUnTbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fAKfI/xebn0YZ4LFIf/X9cIPGqsCDAbH4wtOoCfTmTjrKMbs4Sfctp45KXf6aJhke
-	 nCzb5Ok0LRnJryKhm0Mc92Kf337xaZxp94HdFeRWDAbkcG/lY1L51eZVrfEu7AA0q3
-	 VWjcljpi+jVJBDzQUNbtNjWlA4aPkwgZQ72iqsuWsvxO1Gr5839bbZ3nGGyaLxZZyV
-	 ZJSOI0rE/3wHFyYC032e5WQ4YmpTuH/gZatu0xo23rHvcyxwCDoj6pvg39bFwbYhfR
-	 eehi9Wk+C40PkLk9QRke/gWDRHqe8/0vMQ4gDXl45eA7IiQBr3Pu4+Koiv3IBowJgM
-	 TG3j1G2wlHn3g==
+	b=Zuz2EDr1iudKU9gZeeCC7SQgAp8HCQjR0bYGJ7oEXRmveZpZgfRVLSFs+Q8xUDsTy
+	 NZ8hXNmLfnybcJJkOVBh6Isc5GobzVFIYm77N2kyPnuG5fa0jI8YgoaNI01VY8BqrG
+	 HPHKJjq9Fl8qM6HFQoEaDkRApFUlW7avrMIIaJNytGWorGdne6mnZS4ACEd1D3zrHr
+	 s3NNk5olMBA+n4cYZlDgkXP6Kpkzsy1euplgmiwq8MBBJt6sAoyJcSfX3KZppJcgrp
+	 ZEHFr7ei870lPPn7kOPfwbHeFlyH9xai6ySlNDbDue8U3NCQP7fyV4Z0nRhuA5WeGw
+	 okNd0hhGXJgcA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>,
-	Gwendal Grignou <gwendal@google.com>,
+Cc: Francesco Lavra <flavra@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/232] platform/chrome: cros_ec_lightbar: Fix response size initialization
-Date: Sat, 28 Feb 2026 13:08:58 -0500
-Message-ID: <20260228181127.1592657-85-sashal@kernel.org>
+Subject: [PATCH 6.1 086/232] spi: tools: Add include folder to .gitignore
+Date: Sat, 28 Feb 2026 13:08:59 -0500
+Message-ID: <20260228181127.1592657-86-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,41 +47,33 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Francesco Lavra <flavra@baylibre.com>
 
-[ Upstream commit ec0dd36dbf8b0b209e63d0cd795451fa2203c736 ]
+[ Upstream commit 5af56f30c4fcbade4a92f94dadfea517d1db9703 ]
 
-Commit 1e7913ff5f9f ("platform/chrome: cros_ec_lightbar: Reduce
-ligthbar get version command") meant to set smaller values for both
-request and response sizes.
+The Makefile for the SPI tools creates an include/linux/spi folder and some
+symlinks inside it. After running `make -C spi/tools`, this folder shows up
+as untracked in the git status.
+Add the above folder to the .gitignore file.
 
-However, it incorrectly assigned the response size to the `result` field
-instead of `insize`.  Fix it.
-
-Reported-by: Gwendal Grignou <gwendal@google.com>
-Closes: https://lore.kernel.org/chrome-platform/CAMHSBOVrrYaB=1nEqZk09VkczCrj=6B-P8Fe29TpPdSDgT2CCQ@mail.gmail.com
-Fixes: 1e7913ff5f9f ("platform/chrome: cros_ec_lightbar: Reduce ligthbar get version command")
-Link: https://lore.kernel.org/r/20260130040335.361997-1-tzungbi@kernel.org
-Reviewed-by: Gwendal Grignou <gwendal@google.com>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: f325b73dc4db ("spi: tools: move to tools buildsystem")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Link: https://patch.msgid.link/20260209095001.556495-1-flavra@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_lightbar.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/spi/.gitignore | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/chrome/cros_ec_lightbar.c b/drivers/platform/chrome/cros_ec_lightbar.c
-index 469dfc7a4a030..e2365788d4590 100644
---- a/drivers/platform/chrome/cros_ec_lightbar.c
-+++ b/drivers/platform/chrome/cros_ec_lightbar.c
-@@ -117,7 +117,7 @@ static int get_lightbar_version(struct cros_ec_dev *ec,
- 	param = (struct ec_params_lightbar *)msg->data;
- 	param->cmd = LIGHTBAR_CMD_VERSION;
- 	msg->outsize = sizeof(param->cmd);
--	msg->result = sizeof(resp->version);
-+	msg->insize = sizeof(resp->version);
- 	ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
- 	if (ret < 0 && ret != -EINVAL) {
- 		ret = 0;
+diff --git a/tools/spi/.gitignore b/tools/spi/.gitignore
+index 14ddba3d21957..038261b34ed83 100644
+--- a/tools/spi/.gitignore
++++ b/tools/spi/.gitignore
+@@ -1,3 +1,4 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ spidev_fdx
+ spidev_test
++include/
 -- 
 2.51.0
 
