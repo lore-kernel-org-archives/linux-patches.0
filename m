@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0371325710
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C2C34028F
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300975; cv=none; b=UaJ6DkMESKdlKKODJ8brGZt2XgA/i7/kiZcJf6kNkxKRSbq0J/12EPYljsIIf6uF/RN1zmUZZDhTv/+z2wb44zmJZ7lvpICyeubhm3qF7Pj00Xocc1yg74+FzAcDxp+6uOaI2iRX7fRS1GiRNmasStiRBU+rOaON6R0m9Ja1dgk=
+	t=1772300976; cv=none; b=TblJUpEcsCkzemfB0JCgEU2/N4aKg3IoXZ3XBVFysWbMmBIbBvdL/SWkEvtYt9u8G3BSvIUDYhr6Am/beDz5ht3oVSPk9ldsrD7csfpQr3A33OtFOdLoTqcOJNoLHGHNJga/TQltb/PSkHbntzETw8Q19vaUxO7kY7xT80caXOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300975; c=relaxed/simple;
-	bh=xaIgGtio2hQ3S0ThiGuPtYQV1KuDGEDcRMPFl0mXZ0o=;
+	s=arc-20240116; t=1772300976; c=relaxed/simple;
+	bh=GiSdY7QWPuOmRrO/Wej4YIsbBGCxiqtbm54OJsH3IzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jAmgnmie72vqeUr61hIaNqDvwEDlWv/xa84Et1BrfyRCj4Hq760dK0US2NpoHwA6maNlhvCCdvi3oE61rwtKLpSp3YdUKy3xUsO89F/dKtdp9sysffZROok0tmM0FOw86+gvjTwMzikpH5rc1CAcib3BtCcJmFme3oIiLvVtWPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q+cVkNRt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DrfemRrkxX+Oim701AKcfr9jUwChYUMwYTM6EyTH3AqK5sb2y0YhT2HaRKe3XA7zZnxCPVH9zaE+Gs1Vuw+RiyBBb3nG85FzlMeyJ6NHj1cY4SpQmLJEbohAbWznIDZS6h98M6t4clpfhGVmaZXvWSMhoZGOJASbNbtfjmUGU3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lrKDq+3Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q+cVkNRt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0431AC19423;
-	Sat, 28 Feb 2026 17:49:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lrKDq+3Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5438C19424;
+	Sat, 28 Feb 2026 17:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300975;
-	bh=xaIgGtio2hQ3S0ThiGuPtYQV1KuDGEDcRMPFl0mXZ0o=;
+	s=k20201202; t=1772300976;
+	bh=GiSdY7QWPuOmRrO/Wej4YIsbBGCxiqtbm54OJsH3IzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+cVkNRtD+3fZdSaPTy/w3lnkKbuwGxpDOWm8ikUoDWDiL01EANoGQOQ278/ABVMs
-	 L7g5JrW6bR7rYWxMoizKzRNiwKIumEBUGrPgvrQJHf4mmTSTA+Hh9s4EQ7Up5nrvq1
-	 AdIz3KRtp2vtyiSUBZ497fWJ7k2s+x9s5p2zG2SVrFeu3dfLHVe0UcgTOPce3CLgYo
-	 I3g+OwfaeDicSvIIIZn8k8azsWJfy6/9jS3gR71em9QRjlrd80F2pdBa0RexNNxYDD
-	 A/VDH3yRrJ8yvBcNaDQttxNkg2ZhtqxpmqlEvQpb7Zb7haF/2IxhzEIRarTj94DrSy
-	 CwIAa7QMjjUYQ==
+	b=lrKDq+3Q5tFnX/PL2Tsg9rUNhuKsoUiYqoHvG8FKRZ6hmnSnO63uGWc93o3Yi/VbJ
+	 EsZMT/iF7WvE9S0ZoXuheuDZrLII54SCugXF84P6aLTi6axaOZSm3YpxUmdNZ5iNXO
+	 ch89PE86WoJW+SmIfHmjcuFMT0tt9BockBIPFhhk07o3AX22rWLnlUELId6VSdTb3q
+	 RVLldntMMmkb9U1VT7Mbw5cRSB+l0n3SKv/mnA7NI9DbseF5cBEHtpEBKIasMLPXF4
+	 3/E7CGJfbx3uDgo0H1TML71mYss51btFCXABeaq9ekTUZwApC2gSC2x2mmqfGk6zfx
+	 4uQMO9+AGQyuw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: "Borislav Petkov (AMD)" <bp@alien8.de>,
-	kernel test robot <lkp@intel.com>,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+Cc: Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 103/752] x86/sev: Use kfree_sensitive() when freeing a SNP message descriptor
-Date: Sat, 28 Feb 2026 12:36:54 -0500
-Message-ID: <20260228174750.1542406-103-sashal@kernel.org>
+Subject: [PATCH 6.18 104/752] parisc: Prevent interrupts during reboot
+Date: Sat, 28 Feb 2026 12:36:55 -0500
+Message-ID: <20260228174750.1542406-104-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,37 +46,30 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Borislav Petkov (AMD)" <bp@alien8.de>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit af05e558988ed004a20fc4de7d0f80cfbba663f0 ]
+[ Upstream commit 35ac5a728c878594f2ea6c43b57652a16be3c968 ]
 
-Use the proper helper instead of an open-coded variant.
-
-Closes: https://lore.kernel.org/r/202512202235.WHPQkLZu-lkp@intel.com
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Julia Lawall <julia.lawall@inria.fr>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://patch.msgid.link/20260112114147.GBaWTd-8HSy_Xp4S3X@fat_crate.local
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/coco/sev/core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/parisc/kernel/process.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
-index 9ae3b11754e65..c8ddb9febe3d9 100644
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -2008,8 +2008,7 @@ void snp_msg_free(struct snp_msg_desc *mdesc)
- 	free_shared_pages(mdesc->request, sizeof(struct snp_guest_msg));
- 	iounmap((__force void __iomem *)mdesc->secrets);
- 
--	memset(mdesc, 0, sizeof(*mdesc));
--	kfree(mdesc);
-+	kfree_sensitive(mdesc);
- }
- EXPORT_SYMBOL_GPL(snp_msg_free);
- 
+diff --git a/arch/parisc/kernel/process.c b/arch/parisc/kernel/process.c
+index e64ab5d2a40d6..703644e5bfc4a 100644
+--- a/arch/parisc/kernel/process.c
++++ b/arch/parisc/kernel/process.c
+@@ -85,6 +85,9 @@ void machine_restart(char *cmd)
+ #endif
+ 	/* set up a new led state on systems shipped with a LED State panel */
+ 	pdc_chassis_send_status(PDC_CHASSIS_DIRECT_SHUTDOWN);
++
++	/* prevent interrupts during reboot */
++	set_eiem(0);
+ 	
+ 	/* "Normal" system reset */
+ 	pdc_do_reset();
 -- 
 2.51.0
 
