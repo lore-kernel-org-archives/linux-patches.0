@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4409E270545
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1252038CFFE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302176; cv=none; b=hZVFjpoS/Geeo5+SLDygC4B1OYIBy9qBLjawjoUE0LdX9GtVsnDWi7RTCu6Ld/omrQlvvK3R+Y7k3XWJlsUUWSSpJxOqZuXND0uVCNITjvrZp5WVachGVQdiL3s5zLzWx4mnNlS1PReSJ0oQbxhhZA5bT/eQesehFIzAKZIHehQ=
+	t=1772302177; cv=none; b=ERFlbtkC5APvK+Ur/ctsuGIO633AX1Hw1DY9OFWopZ8S3FCZ1DGYhAJC2TToWs6Pd9/rC4u4d5KjUxlfDobNOefXi0yQTyHfeC69oaNwEmpJ8PETVgyMa01r39NN6mD93u+i/iRRbAaHaTMYRlmBv6mjPOTHjWKHMs/9jcBmo+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302176; c=relaxed/simple;
-	bh=ZI8EmwhkU14hhjxXFFt7gI5cGF9/AuGaxZmmSrSOXo4=;
+	s=arc-20240116; t=1772302177; c=relaxed/simple;
+	bh=6aGQ9EXmxtkg3zn4c73M2EK0fokDcKDky/rtwnQ0wEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IIsYwK4hAeWJXmltmmnLGSRZ71Z++ZsPOHTnYf/iGQvesG8wY0lYfphbnYgDONPhFcZcPFSGOfqfDnYhbAGvVPIrvN2/yRe/VLbLEHH8+TQg6fA3wN28RM0mcMFkd+BADAqNJZeu1lbnInonPkA2HqOqacq42HdKwr3+4Q8TXu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=szmQKXjz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WIVJBPGI56xl16jf/yfZiV+R3X8xIKRspsazatWyty8w9pXifx0M1c5ooceQlJwOA4gnjClr5zv11E2FoZji9jjabv3cOE7wVSTs+bMuu1TBoJWc/HxmM5lZE+zgURfJYd5gUS7c+3pHRj5Hg+dErKtvSAkt2KBuRiFP9GOnpE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sp8J8m0f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="szmQKXjz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8121C116D0;
-	Sat, 28 Feb 2026 18:09:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sp8J8m0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE7EC116D0;
+	Sat, 28 Feb 2026 18:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302176;
-	bh=ZI8EmwhkU14hhjxXFFt7gI5cGF9/AuGaxZmmSrSOXo4=;
+	bh=6aGQ9EXmxtkg3zn4c73M2EK0fokDcKDky/rtwnQ0wEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szmQKXjzRhHD4ZLyxZbL6oaK64OhLQ3MjRo0/k/mkg4tc3Uu9W04Gfplk7mxv8vSN
-	 64DS/AOFrzIvnmxxORLQ0DgOw9MFZo/6zLvv9txQT84Riw4Ta0F9HBTNOtranUN2fp
-	 HV0xL/xm4GzztvngawH27racJQGUkqk3Nc0YdxAu68iNqvDw5fic/SUx2u61jMY6R7
-	 MLjQyMFhep/6sOWg62qe0oZSa4G1njIZtG3Itf9Yp193lYqCDpiGKhL87qjUwpJFP5
-	 Zn5z0xSIBBi3pv/cyqGteqbjkazZ5WQBTQUHLPyDMaZ4cZ4LRPHJg4MmpNc72LRgrP
-	 N+pGiiBdIkyDA==
+	b=Sp8J8m0fsKHr4WaPBXbRxp3xpYnirL4CSO36CckTiK66IzPttPVUbDwEbE14sfJ1a
+	 YUWIO4Fl0viRBu1u+/+VPc+kv+STAU9tCX0mDYOCJXeaOvsoNDs9O9fWPPqF6J0OKM
+	 FhvTeoqqKPUDFxLM0ewNcDpe8XW+75gF9Yu0jTClhZVIAzl2rG9OMw9LkBhcZC/q0M
+	 aI2Dear9oVa9hdKovzcZkDGh62+JmJlfgjFcPB5M5hlxcsLLCRh+YO+KqXQczmogab
+	 a2+r3vzkLE2MceMxhJFXqQdaCozA08PW22WbTp1tLLqNmpGBYATFNxMDjO/80Bi/gj
+	 A8sNbnI/ZkJvA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Waqar Hameed <waqar.hameed@axis.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/283] power: supply: goldfish: Fix use-after-free in power_supply_changed()
-Date: Sat, 28 Feb 2026 13:05:17 -0500
-Message-ID: <20260228180709.1583486-175-sashal@kernel.org>
+Subject: [PATCH 6.6 176/283] power: supply: rt9455: Fix use-after-free in power_supply_changed()
+Date: Sat, 28 Feb 2026 13:05:18 -0500
+Message-ID: <20260228180709.1583486-176-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,7 +49,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit b2ce982e2e0c888dc55c888ad0e20ea04daf2e6b ]
+[ Upstream commit e2febe375e5ea5afed92f4cd9711bde8f24ee6d2 ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -73,45 +73,50 @@ of using the `power_supply` handle *uninitialized* in
 Fix this racy use-after-free by making sure the IRQ is requested _after_
 the registration of the `power_supply` handle.
 
-Fixes: 84d7b7687489 ("power: Add battery driver for goldfish emulator")
+Fixes: e86d69dd786e ("power_supply: Add support for Richtek RT9455 battery charger")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Link: https://patch.msgid.link/500a606bb6fb6f2bb8d797e19a00cea9dd7b03c1.1766268280.git.waqar.hameed@axis.com
+Link: https://patch.msgid.link/1567d831e04c3e2fcb9e18dd36b7bcba4634581a.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/goldfish_battery.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/power/supply/rt9455_charger.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/power/supply/goldfish_battery.c b/drivers/power/supply/goldfish_battery.c
-index a58d713d75ce8..4d204f0e18532 100644
---- a/drivers/power/supply/goldfish_battery.c
-+++ b/drivers/power/supply/goldfish_battery.c
-@@ -224,12 +224,6 @@ static int goldfish_battery_probe(struct platform_device *pdev)
- 	if (data->irq < 0)
- 		return -ENODEV;
- 
--	ret = devm_request_irq(&pdev->dev, data->irq,
--			       goldfish_battery_interrupt,
--			       IRQF_SHARED, pdev->name, data);
--	if (ret)
--		return ret;
--
- 	psy_cfg.drv_data = data;
- 
- 	data->ac = power_supply_register(&pdev->dev, &ac_desc, &psy_cfg);
-@@ -245,6 +239,12 @@ static int goldfish_battery_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, data);
- 
-+	ret = devm_request_irq(&pdev->dev, data->irq,
-+			       goldfish_battery_interrupt,
-+			       IRQF_SHARED, pdev->name, data);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/power/supply/rt9455_charger.c b/drivers/power/supply/rt9455_charger.c
+index e4dbacd50a437..248dc2b5e1f7c 100644
+--- a/drivers/power/supply/rt9455_charger.c
++++ b/drivers/power/supply/rt9455_charger.c
+@@ -1663,6 +1663,15 @@ static int rt9455_probe(struct i2c_client *client)
+ 	rt9455_charger_config.supplied_to	= rt9455_charger_supplied_to;
+ 	rt9455_charger_config.num_supplicants	=
+ 					ARRAY_SIZE(rt9455_charger_supplied_to);
 +
- 	GOLDFISH_BATTERY_WRITE(data, BATTERY_INT_ENABLE, BATTERY_INT_MASK);
++	info->charger = devm_power_supply_register(dev, &rt9455_charger_desc,
++						   &rt9455_charger_config);
++	if (IS_ERR(info->charger)) {
++		dev_err(dev, "Failed to register charger\n");
++		ret = PTR_ERR(info->charger);
++		goto put_usb_notifier;
++	}
++
+ 	ret = devm_request_threaded_irq(dev, client->irq, NULL,
+ 					rt9455_irq_handler_thread,
+ 					IRQF_TRIGGER_LOW | IRQF_ONESHOT,
+@@ -1678,14 +1687,6 @@ static int rt9455_probe(struct i2c_client *client)
+ 		goto put_usb_notifier;
+ 	}
+ 
+-	info->charger = devm_power_supply_register(dev, &rt9455_charger_desc,
+-						   &rt9455_charger_config);
+-	if (IS_ERR(info->charger)) {
+-		dev_err(dev, "Failed to register charger\n");
+-		ret = PTR_ERR(info->charger);
+-		goto put_usb_notifier;
+-	}
+-
  	return 0;
- }
+ 
+ put_usb_notifier:
 -- 
 2.51.0
 
