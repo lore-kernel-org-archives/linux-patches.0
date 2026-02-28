@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C62A33A6F2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C171C346E6D
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302174; cv=none; b=TdO4yBlq3ch1pplBAI1ih/OTpGsUNNoTNeFDdOvR7kbXPIgkfSMqTmGiZZuX6SG5GCzbtoALlCAk5XoSxAKSXMG5cSm4ZTBxzqqtCXmgWFlaqNLhi1pgl9+GEliy3PLYxIIc82P/YJ54OYxnI95BIA7oUMJKdsykTcsXQVOmR24=
+	t=1772302174; cv=none; b=ZvntdsxyNqsLLkDg5sV7/04j5SgUhRXGu9nOUrYzVS/ldqVzAkW5l0prul277KAQ0yHVCSjHPHcCtZ127CQRWrlyjNVnLET9uqju/MTB+A/JWaCD3m9F2Jkj+MBbRkzQeK/hz8SGtY5akPC+BapNsC0PGqkTIYY4Q6Yf0OxyUCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302174; c=relaxed/simple;
-	bh=Fx383WXRDsEaQLyejXTWxBuHv1ZL978lLNW4c797m0E=;
+	bh=gwheCZsYVXuDfPf86lYjN9ZyAyZzRU3rGYRXQdsHE44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7whZSPy+fK2sMBXH6Ef7BPfatrHjk8n4/aCkfMMTwMtwbDGzFFo5aOzHdYLIDgYSSyUVQvl8C77ClPeet6zLGelN703M6nFLQZKk9NuPX8p4ovaSIansRZ2ANrdQAxQLN6k27XdTSqsTHbagNQ+Br5XZoJMctTJKfGoTDHdNnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XSX1ZMVS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=efubShwykFUwRU1aML4+NoMO3oqmW9MH3qMtsU2iT5UP5dgbsvGenkmWiuRPzY+90MFyfsHP1OLXBPD1ShUmzoV75yFntRnQEXJcKMwqXSbdbJzQ2XrFalzNBMBNUtQo+m6ogSf1e8qB/m9yC0lvDRG3f/L/ggMrq3vHGWOx3ZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ieNTNeyz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XSX1ZMVS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712A2C19423;
-	Sat, 28 Feb 2026 18:09:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ieNTNeyz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3369FC116D0;
+	Sat, 28 Feb 2026 18:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302173;
-	bh=Fx383WXRDsEaQLyejXTWxBuHv1ZL978lLNW4c797m0E=;
+	s=k20201202; t=1772302174;
+	bh=gwheCZsYVXuDfPf86lYjN9ZyAyZzRU3rGYRXQdsHE44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XSX1ZMVSbWkKTDIrF0rvQjmB13rt66SNg/u+ySg5hKL2B/vYVDSLPfzLlUbVgsZ4d
-	 56e0d7egmsRDwPTcnFBlKp04qPlaNT1IhDT71RzqcxntUnUFIVhIJcbgZwEd3MrZyR
-	 Pjh1yFP32+4LIkXpIO9I49UB7ScjUEMGH7Iop4MCWFeZPSxXB/Pw9rpSgN+sn0FBbZ
-	 BrawoQD7aOIdeKgZnx/yxRETdhFIR/U3Pov5T0Oxfsqt7DCQa4FWrHe2XnJI9CGiXn
-	 xuVypPxbUMHLc2kcLrSZSuZe0EYo9yY0knWNXTikSr4dpK/UEhrRlPcIDru2rbIYgY
-	 34NmufDMSaAXA==
+	b=ieNTNeyzGJ8OPtBp1O9PU35BDm+tcx3Hh/o9YgOqg6f5IbSr0puysxyONqJqM5PRq
+	 4eJvbLAit8vyk0obHmIcLfQaSXo43B7TLvjdm2f/lPcwS7qChlv1SMz1WNgjjQCVXK
+	 0zXKoBRlRzQAqcQboIaVFFeL3u0QnA6M4xiVOJhnRo6C4L8jd0NYIKSD3coBeLmaiu
+	 N5AhXzt8DysngKi3lGGyJ2nUsER+r0/PyG45khyfCzTIFDTxBeigcgMSki4BP77ILv
+	 MX4C1gYi5lEauPAi3ziSn2C0ynYPSQ3JgqAWjsUFYDQDPWmAJEt327qWNmME5Pg7rI
+	 b6JGVBgTy2wDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Waqar Hameed <waqar.hameed@axis.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 172/283] power: supply: bq256xx: Fix use-after-free in power_supply_changed()
-Date: Sat, 28 Feb 2026 13:05:14 -0500
-Message-ID: <20260228180709.1583486-172-sashal@kernel.org>
+Subject: [PATCH 6.6 173/283] power: supply: bq25980: Fix use-after-free in power_supply_changed()
+Date: Sat, 28 Feb 2026 13:05:15 -0500
+Message-ID: <20260228180709.1583486-173-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,7 +49,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit 8005843369723d9c8975b7c4202d1b85d6125302 ]
+[ Upstream commit 5f0b1cb41906e86b64bf69f5ededb83b0d757c27 ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -73,24 +73,24 @@ of using the `power_supply` handle *uninitialized* in
 Fix this racy use-after-free by making sure the IRQ is requested _after_
 the registration of the `power_supply` handle.
 
-Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
+Fixes: 5069185fc18e ("power: supply: bq25980: Add support for the BQ259xx family")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Link: https://patch.msgid.link/39da6da8cc060fa0382ca859f65071e791cb6119.1766268280.git.waqar.hameed@axis.com
+Link: https://patch.msgid.link/8763035cadb959e14787b3837f2d3db61f6e1c34.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq256xx_charger.c | 12 ++++++------
+ drivers/power/supply/bq25980_charger.c | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/bq256xx_charger.c b/drivers/power/supply/bq256xx_charger.c
-index c8368dae69c71..2b0216d32d5f7 100644
---- a/drivers/power/supply/bq256xx_charger.c
-+++ b/drivers/power/supply/bq256xx_charger.c
-@@ -1746,6 +1746,12 @@ static int bq256xx_probe(struct i2c_client *client)
- 		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
+diff --git a/drivers/power/supply/bq25980_charger.c b/drivers/power/supply/bq25980_charger.c
+index d8411722266f5..fd00f9e533548 100644
+--- a/drivers/power/supply/bq25980_charger.c
++++ b/drivers/power/supply/bq25980_charger.c
+@@ -1241,6 +1241,12 @@ static int bq25980_probe(struct i2c_client *client)
+ 		return ret;
  	}
  
-+	ret = bq256xx_power_supply_init(bq, &psy_cfg, dev);
++	ret = bq25980_power_supply_init(bq, dev);
 +	if (ret) {
 +		dev_err(dev, "Failed to register power supply\n");
 +		return ret;
@@ -98,18 +98,18 @@ index c8368dae69c71..2b0216d32d5f7 100644
 +
  	if (client->irq) {
  		ret = devm_request_threaded_irq(dev, client->irq, NULL,
- 						bq256xx_irq_handler_thread,
-@@ -1758,12 +1764,6 @@ static int bq256xx_probe(struct i2c_client *client)
- 		}
+ 						bq25980_irq_handler_thread,
+@@ -1251,12 +1257,6 @@ static int bq25980_probe(struct i2c_client *client)
+ 			return ret;
  	}
  
--	ret = bq256xx_power_supply_init(bq, &psy_cfg, dev);
+-	ret = bq25980_power_supply_init(bq, dev);
 -	if (ret) {
 -		dev_err(dev, "Failed to register power supply\n");
 -		return ret;
 -	}
 -
- 	ret = bq256xx_hw_init(bq);
+ 	ret = bq25980_hw_init(bq);
  	if (ret) {
  		dev_err(dev, "Cannot initialize the chip.\n");
 -- 
