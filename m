@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02931FBEB0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9167E379EF1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301927; cv=none; b=jDr61F27wnBnBMC1iz0K1Dti2bF7a2E8KAEgSoDdWmNvW7BcEmzFDe6oEfVwVdzxA/FPMWYYgIGY2hv3jycPmq23WtdsOYVMMJSIrZilJGrnEiotyNJvIjRC97+HgveatZW+FSp78yDXek0EBVYH1h6HyZHXFVibmd8s2gkZFj0=
+	t=1772301928; cv=none; b=nkriuYE78OIm/0WXux2GOJDaTvg6co3nQzkkAYpLTDiwotzkiQaytFrL6/h7VipTZZ1Tyupn8+I48uu1KFfM04gqaMmvcdRNnIUEmBY9ppxePnOGlmvFeMiBNTMDYSI0cOIK8n0+Hiq8A79Z1txlUP61wwwFLbg+W4E+AhDTar0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301927; c=relaxed/simple;
-	bh=9WghuBAcQ6cONzRHyPpQmgq22aZBPVFaISJzqkpU7rA=;
+	s=arc-20240116; t=1772301928; c=relaxed/simple;
+	bh=0eUO4yL3RN1SAa3yHkMnfieKLsulvgQ1lrTO5z78cMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QKGa0+q7CsVEN28ZS4W3eOAxV+RuXI/ZXphKHCnNfuGTkPX0IfUGh8eF0+JCQJLD09pLAo9V3vUinUaoN/5e7mwyQaxaT3B5Zdajd8uyWXRR5L9sfeka5yeiqvZnRgarRFB899bhRhX2M8+84LPB9Pb8i34Zu0zikiAAhrvDyOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SErXqBt+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jHmRCadxUZLMSypWJKPvM4FaQ9kBBPrdPF63jp3+3jOv0YeFDYNHQQnkh8tjihEgMud2UMyLMrYT7bRE7KqOkmLKAXD0ohtCcUATZRcMz/wbnD1i/vY8qPMbjRiWJ7M1UZFBRkeeVlEm7gstIIThlcbu2v7IXE9LILFNgXhVf4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GrbxeqkA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SErXqBt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C3AC19424;
-	Sat, 28 Feb 2026 18:05:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GrbxeqkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03334C19423;
+	Sat, 28 Feb 2026 18:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301927;
-	bh=9WghuBAcQ6cONzRHyPpQmgq22aZBPVFaISJzqkpU7rA=;
+	s=k20201202; t=1772301928;
+	bh=0eUO4yL3RN1SAa3yHkMnfieKLsulvgQ1lrTO5z78cMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SErXqBt+wDdjXhk4PIMwCxGqy0x/A6YzHr5duANSNy7Xt2RKlI9GOwy7CEmfOcV04
-	 TehcDfjCAPmD+yhB7Wbds2GLfb3Iwl9yPnv4egfuiua/M8N3MUx0HX5Rs9aBCbLVbT
-	 8fgmz9cuHhA+SApG/fBd6ZZrmBzs3U59yOyVpGhwd/Fh25uN0oufRMm2qyKMdJ7OpZ
-	 l09tazxdjUUR3DXbfULwVzyz6p1qNp6H8fBltKS/DLnlksd2WkXOj1FPsSW/GYwh9W
-	 sSMlUmR+kCDuJx0UmRCRIWLIV+rK0iI3Ye4AVjin1gm6+lxUkHMUqtCcTNQtej1S3P
-	 hqxs++5wZubzQ==
+	b=GrbxeqkA1nJqQ9VfrKTVNIrueldZIqIX60QjAS6tIpyzwbKQGljQpt90ZDRnBZilE
+	 Hq6WDIS8df7YLsALiUrgReiEcKSgSACRL0TZrvy2Jbm39PoLs+TgyqM13X1NsvCRWU
+	 WNMFjyp/7zTCmU8aCNlTzembsp9uVpK5GALksyA9bcQs2ZRaw611BhBfb5+G5RaCcb
+	 oc0ML9hEgQtQ37WuEG1Wo5ldLX5EsDJT3ysbm4rRqzltluOBXW/NOXlxQwFHLclNy/
+	 DgWHJxJW/vMpgTCcF3Se1ORkuB9OD2XDAG3zu5rWqaOGQBPMD5lU0LBae+pVKnsLg2
+	 exZbLSjQHhxCg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: zhouwenhao <zhouwenhao7600@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Matt Wu <wuqiang.matt@bytedance.com>,
+Cc: Zhai Can <bczhc0@126.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 362/385] objpool: fix the overestimation of object pooling metadata size
-Date: Sat, 28 Feb 2026 12:59:44 -0500
-Message-ID: <20260228180011.1568201-362-sashal@kernel.org>
+Subject: [PATCH 6.12 363/385] ACPI: PM: Add unused power resource quirk for THUNDEROBOT ZERO
+Date: Sat, 28 Feb 2026 12:59:45 -0500
+Message-ID: <20260228180011.1568201-363-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -49,45 +47,65 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: zhouwenhao <zhouwenhao7600@gmail.com>
+From: Zhai Can <bczhc0@126.com>
 
-[ Upstream commit 5ed4b6b37c647d168ae31035b3f61b705997e043 ]
+[ Upstream commit cd7ef20ba8c6e936dba133b4136537a8ada22976 ]
 
-objpool uses struct objpool_head to store metadata information, and its
-cpu_slots member points to an array of pointers that store the addresses
-of the percpu ring arrays.  However, the memory size allocated during the
-initialization of cpu_slots is nr_cpu_ids * sizeof(struct objpool_slot).
-On a 64-bit machine, the size of struct objpool_slot is 16 bytes, which is
-twice the size of the actual pointer required, and the extra memory is
-never be used, resulting in a waste of memory.  Therefore, the memory size
-required for cpu_slots needs to be corrected.
+On the THUNDEROBOT ZERO laptop, the second NVMe slot and the discrete
+NVIDIA GPU are both controlled by power-resource PXP. Due to the SSDT table
+bug (lack of reference), PXP will be shut dow as an "unused" power resource
+during initialization, making the NVMe slot #2 + NVIDIA both inaccessible.
 
-Link: https://lkml.kernel.org/r/20260202132846.68257-1-zhouwenhao7600@gmail.com
-Fixes: b4edb8d2d464 ("lib: objpool added: ring-array based lockless MPMC")
-Signed-off-by: zhouwenhao <zhouwenhao7600@gmail.com>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Matt Wu <wuqiang.matt@bytedance.com>
-Cc: wuqiang.matt <wuqiang.matt@bytedance.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This issue was introduced by commit a1224f34d72a ("ACPI: PM: Check
+states of power resources during initialization"). Here are test
+results on the three consecutive commits:
+
+(bad again!) a1224f34d72a ACPI: PM: Check states of power resources during initialization
+(good) bc2836859643 ACPI: PM: Do not turn off power resources in unknown state
+(bad) 519d81956ee2 Linux 5.15-rc6
+
+On commit bc2836859643 ("ACPI: PM: Do not turn off power resources in
+unknown state") this was not an issue because the power resource state
+left UNKNOWN thus being ignored.
+
+See also commit 9b04d99788cf ("ACPI: PM: Do not turn of unused power
+resources on the Toshiba Click Mini") which is another almost identical
+case to this one.
+
+Fixes: a1224f34d72a ("ACPI: PM: Check states of power resources during initialization")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221087
+Signed-off-by: Zhai Can <bczhc0@126.com>
+Link: https://patch.msgid.link/20260214161452.2849346-1-bczhc0@126.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/objpool.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/power.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/lib/objpool.c b/lib/objpool.c
-index b998b720c7329..d98fadf1de169 100644
---- a/lib/objpool.c
-+++ b/lib/objpool.c
-@@ -142,7 +142,7 @@ int objpool_init(struct objpool_head *pool, int nr_objs, int object_size,
- 	pool->gfp = gfp & ~__GFP_ZERO;
- 	pool->context = context;
- 	pool->release = release;
--	slot_size = nr_cpu_ids * sizeof(struct objpool_slot);
-+	slot_size = nr_cpu_ids * sizeof(struct objpool_slot *);
- 	pool->cpu_slots = kzalloc(slot_size, pool->gfp);
- 	if (!pool->cpu_slots)
- 		return -ENOMEM;
+diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
+index c2c70139c4f1d..ff5fcd541e50f 100644
+--- a/drivers/acpi/power.c
++++ b/drivers/acpi/power.c
+@@ -1035,6 +1035,19 @@ static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "SATELLITE Click Mini L9W-B"),
+ 		},
+ 	},
++	{
++		/*
++		 * THUNDEROBOT ZERO laptop: Due to its SSDT table bug, power
++		 * resource 'PXP' will be shut down on initialization, making
++		 * the NVMe #2 and the NVIDIA dGPU both unavailable (they're
++		 * both controlled by 'PXP').
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "THUNDEROBOT"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "ZERO"),
++		}
++
++	},
+ 	{}
+ };
+ 
 -- 
 2.51.0
 
