@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4224301EE9;
-	Sat, 28 Feb 2026 17:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CC9301EFA;
+	Sat, 28 Feb 2026 17:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301411; cv=none; b=GGCMK+WwrkRy0zZjG8SL/+tLrUczkJY9c+YwBm/ZBHTuEnsffHe2PfcxGkfbS0SOt3RZrdrE5gnYP5sonuJ/5Fn8dM/gFWMMxwZfrGSbTkE4BK82ZQoHSAgNiLuZZjdKczoK+0Di8XYdicyWltkZM2SbLYYr6pAkWD2mCFBJLHM=
+	t=1772301412; cv=none; b=kzQ4YB3ReXdFoBd2zpqFMcdkhXKoWr8AO1Js4daC4CfkvQYTRjEyfGbAxDn4V6kD63UDQ+XS1Q6Aifx5Q1iNxrzYdeFsPZWqWxzmK86eWewM9g8rhi2aveOgkB/DMExpGZh9I0dsBv74DQtrQFFxI40KpOvNxwey5ikndtt1iBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301411; c=relaxed/simple;
-	bh=5I5i1jjxhUstN2Uv356dakIBSNGCNQhojyelrS41nww=;
+	s=arc-20240116; t=1772301412; c=relaxed/simple;
+	bh=BmlDgvG1YOB0tmrHFKQnhdgR3QT4GDO9xiyEQvTEmJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gc0wMmjwHywsiuATl4jZ5JSdreLvaBTakeOVT4v4dJPDxCGfcXmu89ZW7KvfO+OxbPYcMsuOtdPz7f9rjOS74+XOKFTTboh+oQfA9MwWoaOtMx4WRed1KH6sewueSAXW/DQ1wZ8K9D3y+c9UHXHSUMKTb8n9qBnL0y4l5pg1diE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJ3j+D7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lkgdv8qOTPgZnvJhNyjPdyuqY0xagMyHQU2OG5Mfxt6gjigzt0et72KbpsxnakVgnwSi4zXNP/SDc0KUgDR4G0Iz6rilwDnGGwPb45tkYsDGz05f5x5VUeHmhRoyPVJ1ntty8/H61RomEtI9jI24VnOdDUAxJt1rb8u+Mk2ZX1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XaHRsdRb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJ3j+D7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D54CC19423;
-	Sat, 28 Feb 2026 17:56:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XaHRsdRb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC35C19423;
+	Sat, 28 Feb 2026 17:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301410;
-	bh=5I5i1jjxhUstN2Uv356dakIBSNGCNQhojyelrS41nww=;
+	s=k20201202; t=1772301412;
+	bh=BmlDgvG1YOB0tmrHFKQnhdgR3QT4GDO9xiyEQvTEmJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJ3j+D7w7zrXSmER6Akyd0SmPraodQQFqWUymK2wZkxVYl5FwtelZD/NgiKiF2nE8
-	 fwsZW37zARZvO9uG8DK7g8XUuxlj5jIcrxSZGxj5NKYKMluXw157IfYxRs6Ac7pcRw
-	 dTGQ4qXv2untU1Cs2MdCy/2oVM6lp5+A2K5SkoArYZqT2mdabG/OtscN6ddCY6IG5P
-	 kp/3PJLHCFQPIAykAKakTQUq9HxQcrUg4Zn1E8TOSVANu0cS5vjeJQjGVPEmX2fYRA
-	 bBwkxIxgUjrVwOxAbE/LCWjt22WMPQX1dXjOgRhZbmlMcjwtgGo4mFiVgK+UAt+MFz
-	 Pp4ztzmSnPJAA==
+	b=XaHRsdRb11D+H1NrtTk4M6jzdVRzLKBC3j1sNcJ/ZK6lWN2dbBiMf5lyj5m+90xOy
+	 zUhm07VXO8JWiEPjAj7WAtD1pLeitMLQuiIOICSGaFPX88GGbi+4//PE5r62B0MgD0
+	 /I27eg82Ve3pkStzXy4gZ8qe/V4VOboj/9rPnc399YNO+4EGginXSM0tZW143cFBpy
+	 DlPuageQfTvNkX3+qKBlpGw8fjP372QIgTH5zTjIW+8kIjyNJTHgSIleEGvZS+evR+
+	 yoRCkkdRi9Px4QTPCwSYB/laeajSCR1ftAbJ5A6SJdCiSQ7/0GgNFiXOpJmDKzBAx1
+	 n4iBV61Xz+qZA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Francesco Lavra <flavra@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Jason Gunthorpe <jgg@nvidia.com>,
+	stable@vger.kernel.org,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 600/752] iio: accel: adxl380: Avoid reading more entries than present in FIFO
-Date: Sat, 28 Feb 2026 12:45:11 -0500
-Message-ID: <20260228174750.1542406-600-sashal@kernel.org>
+Subject: [PATCH 6.18 601/752] iommu/arm-smmu-v3: Add update_safe bits to fix STE update sequence
+Date: Sat, 28 Feb 2026 12:45:12 -0500
+Message-ID: <20260228174750.1542406-601-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,42 +52,237 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit c1b14015224cfcccd5356333763f2f4f401bd810 ]
+[ Upstream commit 2781f2a930abb5d27f80b8afbabfa19684833b65 ]
 
-The interrupt handler reads FIFO entries in batches of N samples, where N
-is the number of scan elements that have been enabled. However, the sensor
-fills the FIFO one sample at a time, even when more than one channel is
-enabled. Therefore,the number of entries reported by the FIFO status
-registers may not be a multiple of N; if this number is not a multiple, the
-number of entries read from the FIFO may exceed the number of entries
-actually present.
+C_BAD_STE was observed when updating nested STE from an S1-bypass mode to
+an S1DSS-bypass mode. As both modes enabled S2, the used bit is slightly
+different than the normal S1-bypass and S1DSS-bypass modes. As a result,
+fields like MEV and EATS in S2's used list marked the word1 as a critical
+word that requested a STE.V=0. This breaks a hitless update.
 
-To fix the above issue, round down the number of FIFO entries read from the
-status registers so that it is always a multiple of N.
+However, both MEV and EATS aren't critical in terms of STE update. One
+controls the merge of the events and the other controls the ATS that is
+managed by the driver at the same time via pci_enable_ats().
 
-Fixes: df36de13677a ("iio: accel: add ADXL380 driver")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Add an arm_smmu_get_ste_update_safe() to allow STE update algorithm to
+relax those fields, avoiding the STE update breakages.
+
+After this change, entry_set has no caller checking its return value, so
+change it to void.
+
+Note that this change is required by both MEV and EATS fields, which were
+introduced in different kernel versions. So add get_update_safe() first.
+MEV and EATS will be added to arm_smmu_get_ste_update_safe() separately.
+
+Fixes: 1e8be08d1c91 ("iommu/arm-smmu-v3: Support IOMMU_DOMAIN_NESTED")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/adxl380.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c  | 31 +++++++++++++++++--
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 28 ++++++++++++-----
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  4 +++
+ 3 files changed, 53 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/iio/accel/adxl380.c b/drivers/iio/accel/adxl380.c
-index 6d82873357cb8..217c5ae56d23a 100644
---- a/drivers/iio/accel/adxl380.c
-+++ b/drivers/iio/accel/adxl380.c
-@@ -977,6 +977,7 @@ static irqreturn_t adxl380_irq_handler(int irq, void  *p)
- 	if (ret)
- 		return IRQ_HANDLED;
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
+index d2671bfd37981..b254a94b2003d 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
+@@ -38,13 +38,16 @@ enum arm_smmu_test_master_feat {
+ static bool arm_smmu_entry_differs_in_used_bits(const __le64 *entry,
+ 						const __le64 *used_bits,
+ 						const __le64 *target,
++						const __le64 *safe,
+ 						unsigned int length)
+ {
+ 	bool differs = false;
+ 	unsigned int i;
  
-+	fifo_entries = rounddown(fifo_entries, st->fifo_set_size);
- 	for (i = 0; i < fifo_entries; i += st->fifo_set_size) {
- 		ret = regmap_noinc_read(st->regmap, ADXL380_FIFO_DATA,
- 					&st->fifo_buf[i],
+ 	for (i = 0; i < length; i++) {
+-		if ((entry[i] & used_bits[i]) != target[i])
++		__le64 used = used_bits[i] & ~safe[i];
++
++		if ((entry[i] & used) != (target[i] & used))
+ 			differs = true;
+ 	}
+ 	return differs;
+@@ -56,12 +59,24 @@ arm_smmu_test_writer_record_syncs(struct arm_smmu_entry_writer *writer)
+ 	struct arm_smmu_test_writer *test_writer =
+ 		container_of(writer, struct arm_smmu_test_writer, writer);
+ 	__le64 *entry_used_bits;
++	__le64 *safe_target;
++	__le64 *safe_init;
+ 
+ 	entry_used_bits = kunit_kzalloc(
+ 		test_writer->test, sizeof(*entry_used_bits) * NUM_ENTRY_QWORDS,
+ 		GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test_writer->test, entry_used_bits);
+ 
++	safe_target = kunit_kzalloc(test_writer->test,
++				    sizeof(*safe_target) * NUM_ENTRY_QWORDS,
++				    GFP_KERNEL);
++	KUNIT_ASSERT_NOT_NULL(test_writer->test, safe_target);
++
++	safe_init = kunit_kzalloc(test_writer->test,
++				  sizeof(*safe_init) * NUM_ENTRY_QWORDS,
++				  GFP_KERNEL);
++	KUNIT_ASSERT_NOT_NULL(test_writer->test, safe_init);
++
+ 	pr_debug("STE value is now set to: ");
+ 	print_hex_dump_debug("    ", DUMP_PREFIX_NONE, 16, 8,
+ 			     test_writer->entry,
+@@ -79,14 +94,23 @@ arm_smmu_test_writer_record_syncs(struct arm_smmu_entry_writer *writer)
+ 		 * configuration.
+ 		 */
+ 		writer->ops->get_used(test_writer->entry, entry_used_bits);
++		if (writer->ops->get_update_safe)
++			writer->ops->get_update_safe(test_writer->entry,
++						     test_writer->init_entry,
++						     safe_init);
++		if (writer->ops->get_update_safe)
++			writer->ops->get_update_safe(test_writer->entry,
++						     test_writer->target_entry,
++						     safe_target);
+ 		KUNIT_EXPECT_FALSE(
+ 			test_writer->test,
+ 			arm_smmu_entry_differs_in_used_bits(
+ 				test_writer->entry, entry_used_bits,
+-				test_writer->init_entry, NUM_ENTRY_QWORDS) &&
++				test_writer->init_entry, safe_init,
++				NUM_ENTRY_QWORDS) &&
+ 				arm_smmu_entry_differs_in_used_bits(
+ 					test_writer->entry, entry_used_bits,
+-					test_writer->target_entry,
++					test_writer->target_entry, safe_target,
+ 					NUM_ENTRY_QWORDS));
+ 	}
+ }
+@@ -106,6 +130,7 @@ arm_smmu_v3_test_debug_print_used_bits(struct arm_smmu_entry_writer *writer,
+ static const struct arm_smmu_entry_writer_ops test_ste_ops = {
+ 	.sync = arm_smmu_test_writer_record_syncs,
+ 	.get_used = arm_smmu_get_ste_used,
++	.get_update_safe = arm_smmu_get_ste_update_safe,
+ };
+ 
+ static const struct arm_smmu_entry_writer_ops test_cd_ops = {
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index b4f757e1f105f..e7d62acb4b779 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -1093,6 +1093,13 @@ void arm_smmu_get_ste_used(const __le64 *ent, __le64 *used_bits)
+ }
+ EXPORT_SYMBOL_IF_KUNIT(arm_smmu_get_ste_used);
+ 
++VISIBLE_IF_KUNIT
++void arm_smmu_get_ste_update_safe(const __le64 *cur, const __le64 *target,
++				  __le64 *safe_bits)
++{
++}
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_get_ste_update_safe);
++
+ /*
+  * Figure out if we can do a hitless update of entry to become target. Returns a
+  * bit mask where 1 indicates that qword needs to be set disruptively.
+@@ -1105,13 +1112,22 @@ static u8 arm_smmu_entry_qword_diff(struct arm_smmu_entry_writer *writer,
+ {
+ 	__le64 target_used[NUM_ENTRY_QWORDS] = {};
+ 	__le64 cur_used[NUM_ENTRY_QWORDS] = {};
++	__le64 safe[NUM_ENTRY_QWORDS] = {};
+ 	u8 used_qword_diff = 0;
+ 	unsigned int i;
+ 
+ 	writer->ops->get_used(entry, cur_used);
+ 	writer->ops->get_used(target, target_used);
++	if (writer->ops->get_update_safe)
++		writer->ops->get_update_safe(entry, target, safe);
+ 
+ 	for (i = 0; i != NUM_ENTRY_QWORDS; i++) {
++		/*
++		 * Safe is only used for bits that are used by both entries,
++		 * otherwise it is sequenced according to the unused entry.
++		 */
++		safe[i] &= target_used[i] & cur_used[i];
++
+ 		/*
+ 		 * Check that masks are up to date, the make functions are not
+ 		 * allowed to set a bit to 1 if the used function doesn't say it
+@@ -1120,6 +1136,7 @@ static u8 arm_smmu_entry_qword_diff(struct arm_smmu_entry_writer *writer,
+ 		WARN_ON_ONCE(target[i] & ~target_used[i]);
+ 
+ 		/* Bits can change because they are not currently being used */
++		cur_used[i] &= ~safe[i];
+ 		unused_update[i] = (entry[i] & cur_used[i]) |
+ 				   (target[i] & ~cur_used[i]);
+ 		/*
+@@ -1132,7 +1149,7 @@ static u8 arm_smmu_entry_qword_diff(struct arm_smmu_entry_writer *writer,
+ 	return used_qword_diff;
+ }
+ 
+-static bool entry_set(struct arm_smmu_entry_writer *writer, __le64 *entry,
++static void entry_set(struct arm_smmu_entry_writer *writer, __le64 *entry,
+ 		      const __le64 *target, unsigned int start,
+ 		      unsigned int len)
+ {
+@@ -1148,7 +1165,6 @@ static bool entry_set(struct arm_smmu_entry_writer *writer, __le64 *entry,
+ 
+ 	if (changed)
+ 		writer->ops->sync(writer);
+-	return changed;
+ }
+ 
+ /*
+@@ -1218,12 +1234,9 @@ void arm_smmu_write_entry(struct arm_smmu_entry_writer *writer, __le64 *entry,
+ 		entry_set(writer, entry, target, 0, 1);
+ 	} else {
+ 		/*
+-		 * No inuse bit changed. Sanity check that all unused bits are 0
+-		 * in the entry. The target was already sanity checked by
+-		 * compute_qword_diff().
++		 * No inuse bit changed, though safe bits may have changed.
+ 		 */
+-		WARN_ON_ONCE(
+-			entry_set(writer, entry, target, 0, NUM_ENTRY_QWORDS));
++		entry_set(writer, entry, target, 0, NUM_ENTRY_QWORDS);
+ 	}
+ }
+ EXPORT_SYMBOL_IF_KUNIT(arm_smmu_write_entry);
+@@ -1554,6 +1567,7 @@ static void arm_smmu_ste_writer_sync_entry(struct arm_smmu_entry_writer *writer)
+ static const struct arm_smmu_entry_writer_ops arm_smmu_ste_writer_ops = {
+ 	.sync = arm_smmu_ste_writer_sync_entry,
+ 	.get_used = arm_smmu_get_ste_used,
++	.get_update_safe = arm_smmu_get_ste_update_safe,
+ };
+ 
+ static void arm_smmu_write_ste(struct arm_smmu_master *master, u32 sid,
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+index ae23aacc38402..287e223c054d1 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -900,6 +900,8 @@ struct arm_smmu_entry_writer {
+ 
+ struct arm_smmu_entry_writer_ops {
+ 	void (*get_used)(const __le64 *entry, __le64 *used);
++	void (*get_update_safe)(const __le64 *cur, const __le64 *target,
++				__le64 *safe_bits);
+ 	void (*sync)(struct arm_smmu_entry_writer *writer);
+ };
+ 
+@@ -911,6 +913,8 @@ void arm_smmu_make_s2_domain_ste(struct arm_smmu_ste *target,
+ 
+ #if IS_ENABLED(CONFIG_KUNIT)
+ void arm_smmu_get_ste_used(const __le64 *ent, __le64 *used_bits);
++void arm_smmu_get_ste_update_safe(const __le64 *cur, const __le64 *target,
++				  __le64 *safe_bits);
+ void arm_smmu_write_entry(struct arm_smmu_entry_writer *writer, __le64 *cur,
+ 			  const __le64 *target);
+ void arm_smmu_get_cd_used(const __le64 *ent, __le64 *used_bits);
 -- 
 2.51.0
 
