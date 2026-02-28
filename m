@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CB23446C0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9C33446C0
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301647; cv=none; b=cHCSyyoEPDzn6IPRaKj6FXr6Im62MkKD3lbPyzh27jESh3m4s6uNH8dw1m2Dyljy7GfWEtG1A8U+SQVERbt68Q8JJqGUOf0tNGTFDCBiAXlZ51Go0GQNiVEqxjhMBKZTC3AfbBuLJmJMSll2V9eXSibvrrv9GD4C6qHI+7bRuLA=
+	t=1772301648; cv=none; b=arBIR3tsZvuw9t6H4MoamxSZUw4JuX2rxKmxYbFCsfXcAjzw/7DypSGv15z8BcZEBxJuZM2jzwVVLx8wpvEOHSTPNezLUqOhsfmKzDdyBLCoNp0Cs/MmctlYyMR6IO3Gts0+MzDzXzxiXxoEbf3cCDpiefQok2/FFZ0eHImSsAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301647; c=relaxed/simple;
-	bh=AeoVkPDVr9ojEbJABSTgaMQWuunrU5pwDM5AhJ+Aqs8=;
+	s=arc-20240116; t=1772301648; c=relaxed/simple;
+	bh=fwaCvxdgVdYG4mJevpwrmm6Jo29s1sHiWJIHEYHBjHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqhTlxSU9u6RtPev8x/1eugmD6+WdR+tIXV7bv5oxA73vZE9eF29ZlQG/rwnCUmGrtkz3RSZOUWxwHkRa1/F2awnZQkwkybxnGgHB1tvhfWByMu4EZEG3F9k0h7Wot8Rll1yzcemo2FkhD5xneYOV6ACVZWIikrlR19x6WYBX18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mjEN7PyZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kVIlLGx0JjZSJRVLizJFRv6WVo8w+bhwANNWrmwlwTdMZVIYLnYAwaMGI5KsgL64OCpw78wI7wRHRBwU/YvfGwzWDqUx2w7hnIgWJaanJktZSXDabHGIZZgUaIQW9H3oRg24fWEe2c8Rc9eNEI0eay/gb2Dwta2TBg0o+On2Vv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kGPyvsF1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mjEN7PyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84329C19424;
-	Sat, 28 Feb 2026 18:00:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kGPyvsF1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0F7C19423;
+	Sat, 28 Feb 2026 18:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301647;
-	bh=AeoVkPDVr9ojEbJABSTgaMQWuunrU5pwDM5AhJ+Aqs8=;
+	bh=fwaCvxdgVdYG4mJevpwrmm6Jo29s1sHiWJIHEYHBjHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjEN7PyZCAv8HYBeBAjm9THvaBwilCTIkSkXaKnsgJ0fZF/PZk2tuxQd1bAKIa0QF
-	 /lZHR66kwfLmkZPz5X758pjB0BEZZr8eZFD7y8bcZLZ2OExeUUQt3Npv1Xxj7fvPiv
-	 2jRPjYp8fInL3hjs2TyCgwlKfVAGE4/dL1qypPxCytj+5cWcESFUQW6nfL4yngkE8W
-	 wrQrlhTwlGnvJ9+LR7/CSUKxX2zUTL0eaG+juuJzuupXaGwAyIOhrVO7A9f0erlfy5
-	 IfcB1xtDCTuK/dX5FIHryyjzIGQYD2r3OYHTBUG57S70vIYaa+li83e5l0+ODnbssP
-	 MNZ8z54VFArjQ==
+	b=kGPyvsF1PsDTT+QpZ2KMdOhCFGep5SnQMwbEbFy2HXodf18VpZR83QWj1m0gQ/6D3
+	 ZTuL+pUvja6gwpnzePd4C3aJdwDzFZbV9kwlAP97Zm8Upe8SJ7j3FfiuB3D6nmSPhU
+	 G+LumScta0r8KAQptXaQa/fqRMV2wbxZLFYxGbMX6k8amFfgTEvn7LDf0ajmt6FhMW
+	 5Qv7x+IvLNqXQX8AuQtYcDdh79y2ywqsFrUNc06J3KohqXVfq/PCMMfcyYvxlPvOf1
+	 Y/3TXu3MsCYQhQ/WNDHnUk8APgxgydiPa+MG9TFi5/d62Itw4jNj88GwevY98JCMrR
+	 x6okui17yNCvA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Zilin Guan <zilin@seu.edu.cn>,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+Cc: Samuel Wu <wusamuel@google.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/385] md/raid1: fix memory leak in raid1_run()
-Date: Sat, 28 Feb 2026 12:54:24 -0500
-Message-ID: <20260228180011.1568201-42-sashal@kernel.org>
+Subject: [PATCH 6.12 043/385] PM: wakeup: Handle empty list in wakeup_sources_walk_start()
+Date: Sat, 28 Feb 2026 12:54:25 -0500
+Message-ID: <20260228180011.1568201-43-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,44 +47,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Samuel Wu <wusamuel@google.com>
 
-[ Upstream commit 6abc7d5dcf0ee0f85e16e41c87fbd06231f28753 ]
+[ Upstream commit 75ce02f4bc9a8b8350b6b1b01872467b0cc960cc ]
 
-raid1_run() calls setup_conf() which registers a thread via
-md_register_thread(). If raid1_set_limits() fails, the previously
-registered thread is not unregistered, resulting in a memory leak
-of the md_thread structure and the thread resource itself.
+In the case of an empty wakeup_sources list, wakeup_sources_walk_start()
+will return an invalid but non-NULL address. This also affects wrappers
+of the aforementioned function, like for_each_wakeup_source().
 
-Add md_unregister_thread() to the error path to properly cleanup
-the thread, which aligns with the error handling logic of other paths
-in this function.
+Update wakeup_sources_walk_start() to return NULL in case of an empty
+list.
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
-
-Link: https://lore.kernel.org/linux-raid/20260126071533.606263-1-zilin@seu.edu.cn
-Fixes: 97894f7d3c29 ("md/raid1: use the atomic queue limit update APIs")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Fixes: b4941adb24c0 ("PM: wakeup: Add routine to help fetch wakeup source object.")
+Signed-off-by: Samuel Wu <wusamuel@google.com>
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20260124012133.2451708-2-wusamuel@google.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/power/wakeup.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index f9c18ade06f15..093b04e6be675 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -3247,6 +3247,7 @@ static int raid1_run(struct mddev *mddev)
- 	if (!mddev_is_dm(mddev)) {
- 		ret = raid1_set_limits(mddev);
- 		if (ret) {
-+			md_unregister_thread(mddev, &conf->thread);
- 			if (!mddev->private)
- 				raid1_free(mddev, conf);
- 			return ret;
+diff --git a/drivers/base/power/wakeup.c b/drivers/base/power/wakeup.c
+index 752b417e81290..706cd556a0d69 100644
+--- a/drivers/base/power/wakeup.c
++++ b/drivers/base/power/wakeup.c
+@@ -280,9 +280,7 @@ EXPORT_SYMBOL_GPL(wakeup_sources_read_unlock);
+  */
+ struct wakeup_source *wakeup_sources_walk_start(void)
+ {
+-	struct list_head *ws_head = &wakeup_sources;
+-
+-	return list_entry_rcu(ws_head->next, struct wakeup_source, entry);
++	return list_first_or_null_rcu(&wakeup_sources, struct wakeup_source, entry);
+ }
+ EXPORT_SYMBOL_GPL(wakeup_sources_walk_start);
+ 
 -- 
 2.51.0
 
