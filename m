@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCF338A2A4
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A191C4A33EC
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300982; cv=none; b=R0Whd1PU71EWGl/oxNzBvInKceQ8YHGdos4okHAuWQUZhWSQR0nCC1+fsK1tZbQ28vHSNZxlzkHpbegSEGiZ5tdIfJqfFZAJ2lmGecrh8o4FVU8c3DizunstXSiuZRsmIMMAlMUC27r6MFKf+2rIxvTE9uhFelOIYvYYBYsCfYY=
+	t=1772300983; cv=none; b=Zt7FFRsqxvMA0Xrw2aXZ0Z1GCLJNpECgsLXdgOMwemZ8i69wAKtI9e9o6vQ9ZZMKkM4YIVrWBsBcbHPymZLHgZ3BTQ7Ceo/oUsP5fwph4fUpyLL3d5EZ4F+ge22Ze0eomtVP6fB9XnBQtee+Aki35G+lV5DJJMAGfSRX7HOxYHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300982; c=relaxed/simple;
-	bh=OIc3QhrvqAbcmusi4JachL3maf+enze1ECfwr8eFCg8=;
+	s=arc-20240116; t=1772300983; c=relaxed/simple;
+	bh=l6QofvuS+CaSX3iM2RSm0oFxPH36SSCZb8kic2G8jVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8/X2ky2bkX55zUqPkV7kzfh7bV7AvBBLqmG/dZmQ56yp5PzzFbpzxaPro1ti7iiESdglL1nf0dfsT0Pmten9GeuX5mLabEP9Ebay98MN9FSgTXb6/sELD8JG1z+/w9q2JezkugCRzvaJa1TtJiNhWUbgJP6i59QitZazmtmQBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l1e9Z6ZB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t9/5JY0UR0kKX0qEIomE0tip3150wvLBXKwCDtnaMyNCmfat7RU/XsuO4VmMgK2ugvrf/DzPYoG7YHow8o/pzDQ27RimYWIfe+Mz6+LHFELTMzraGpYGejd2iDHXMrvwDtkChHgGsPXQTB9+hs5AM79tTSK3zNi10lA9KwONiQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e9ZYR5kn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l1e9Z6ZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351B4C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e9ZYR5kn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC271C116D0;
 	Sat, 28 Feb 2026 17:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300982;
-	bh=OIc3QhrvqAbcmusi4JachL3maf+enze1ECfwr8eFCg8=;
+	s=k20201202; t=1772300983;
+	bh=l6QofvuS+CaSX3iM2RSm0oFxPH36SSCZb8kic2G8jVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1e9Z6ZBGrvWWU3JAukrPn31Sr08MwBTz2QW0JQCWH4SZbs+MIKTGyepWdX7PcKuL
-	 8niOm8V8iq2im5bBO1d+ddvARYfiSAJsNChhfojsCPYjOUZQss48uurIMrumu8t8Dr
-	 bBRU1Ad0CpquzXP4NxCoBCVlMRYsDHctPjQ3FWsP4PmSTgN9XbDY4XaesLVt4GHjMM
-	 zpcPN5U+YZSbdksZOICTQaaDWy0zVxhxtVIe6E3mx7gQwbfQCKNSRuhBlqfKVJv4+n
-	 eAVr+sE08mAGZ8Yo2eAzzX8kYSYvN6R/1nlTS+gtJVDGxdzFSepO7sXg/3kcTirxB5
-	 xDOppL9XV8exw==
+	b=e9ZYR5knklbWxQKSAdQhzPEFmLDupMlTfhPGOBu4SRaQXcD6kISRr5e6FN0ELLPXt
+	 UtmRgVxkoymjMmOHhdE2XmyyjCy8xbZItYOhZlts9n/+CSVego5yVYetKnmUG8n1VY
+	 bS2lZcAfTOgHdID5h9mQppHivdkvJd63l1RgO4E2mXFk/ve8uJXs1WsPczd3mxceHf
+	 7vpvnKGO8U0NMFYHb+4omjNY5z20j9qcsca830r7/XWOHP7Tua3dK1W3JTOhu5JMKv
+	 JkpGLPf9ubTjWuhQJ/LjHT5pwvDFYkPf1sMiExq9MDKEzmATkIG90OQrAmmYN2sHJt
+	 JpxkbGi1fEXNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Lizhi Hou <lizhi.hou@amd.com>,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+Cc: Likun Gao <Likun.Gao@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 112/752] accel/amdxdna: Fix tail-pointer polling in mailbox_get_msg()
-Date: Sat, 28 Feb 2026 12:37:03 -0500
-Message-ID: <20260228174750.1542406-112-sashal@kernel.org>
+Subject: [PATCH 6.18 113/752] drm/amdgpu: fix NULL pointer issue buffer funcs
+Date: Sat, 28 Feb 2026 12:37:04 -0500
+Message-ID: <20260228174750.1542406-113-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,61 +48,35 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Likun Gao <Likun.Gao@amd.com>
 
-[ Upstream commit cd77d5a4aaf8c5c1d819f47cf814bf7d4920b0a2 ]
+[ Upstream commit 9877a865d62c9c3e0f4cc369dc9ca9f7f24f5ee9 ]
 
-In mailbox_get_msg(), mailbox_reg_read_non_zero() is called to poll for a
-non-zero tail pointer. This assumed that a zero value indicates an error.
-However, certain corner cases legitimately produce a zero tail pointer.
-To handle these cases, remove mailbox_reg_read_non_zero(). The zero tail
-pointer will be treated as a valid rewind event.
+If SDMA block not enabled, buffer_funcs will not initialize,
+fix the null pointer issue if buffer_funcs not initialized.
 
-Reviewed-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20251204181603.793824-1-lizhi.hou@amd.com
+Signed-off-by: Likun Gao <Likun.Gao@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_mailbox.c | 19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_mailbox.c b/drivers/accel/amdxdna/amdxdna_mailbox.c
-index a80c77a478bff..2bacb89cd80c9 100644
---- a/drivers/accel/amdxdna/amdxdna_mailbox.c
-+++ b/drivers/accel/amdxdna/amdxdna_mailbox.c
-@@ -112,22 +112,6 @@ static u32 mailbox_reg_read(struct mailbox_channel *mb_chann, u32 mbox_reg)
- 	return readl(ringbuf_addr);
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 53b33a636971a..c052da36aa9c2 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3280,7 +3280,8 @@ static int amdgpu_device_ip_init(struct amdgpu_device *adev)
+ 	if (r)
+ 		goto init_failed;
  
--static int mailbox_reg_read_non_zero(struct mailbox_channel *mb_chann, u32 mbox_reg, u32 *val)
--{
--	struct xdna_mailbox_res *mb_res = &mb_chann->mb->res;
--	void __iomem *ringbuf_addr = mb_res->mbox_base + mbox_reg;
--	int ret, value;
--
--	/* Poll till value is not zero */
--	ret = readx_poll_timeout(readl, ringbuf_addr, value,
--				 value, 1 /* us */, 100);
--	if (ret < 0)
--		return ret;
--
--	*val = value;
--	return 0;
--}
--
- static inline void
- mailbox_set_headptr(struct mailbox_channel *mb_chann, u32 headptr_val)
- {
-@@ -288,8 +272,7 @@ static int mailbox_get_msg(struct mailbox_channel *mb_chann)
- 	u32 start_addr;
- 	int ret;
+-	if (adev->mman.buffer_funcs_ring->sched.ready)
++	if (adev->mman.buffer_funcs_ring &&
++	    adev->mman.buffer_funcs_ring->sched.ready)
+ 		amdgpu_ttm_set_buffer_funcs_status(adev, true);
  
--	if (mailbox_reg_read_non_zero(mb_chann, mb_chann->res[CHAN_RES_I2X].mb_tail_ptr_reg, &tail))
--		return -EINVAL;
-+	tail = mailbox_get_tailptr(mb_chann, CHAN_RES_I2X);
- 	head = mb_chann->i2x_head;
- 	ringbuf_size = mailbox_get_ringbuf_size(mb_chann, CHAN_RES_I2X);
- 	start_addr = mb_chann->res[CHAN_RES_I2X].rb_start_addr;
+ 	/* Don't init kfd if whole hive need to be reset during init */
 -- 
 2.51.0
 
