@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6EC38D017
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8081638CFFE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302154; cv=none; b=Ky7MKmYtoeqHDwxTofPIWZxahmB8faXZsTj3a9jKWp0HmDxFd5cntBUt3NAhtcNbxgtb3AqqDEyAQ5/rYNAdrRZJ+Ja2X6LqFPA78ImP8uPP1c4cE3DlSepyz6f9KUje+choCgkrFB2OgbSMyMbGO1W8jiUA6l2KTlzTS5xbigU=
+	t=1772302155; cv=none; b=HOj6woh+o/EeQ3AX54vheJUH0IkotGx4xPNiPxckAWJ/JhvGbcgc7aeziM74Hwivv1LRIyNk0jvEA4DwcnBzDh97Ay/WOs5Kq8zrlXVx2uSgkhY5I1Sy7R0iDmlbq+ry5N7cZBvcDbXHWaSH9WZKFU1VyEh186r5F4xgnAN+pqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302154; c=relaxed/simple;
-	bh=LlGOq97jJgWQlImjYiWvicZdxeg0RSESWxrE+ZkeZag=;
+	s=arc-20240116; t=1772302155; c=relaxed/simple;
+	bh=BTOMh2ULaSbVY2JWiN9WF6YEsweTA4K2OwlfNGRfwNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IjeNQu6oAgpAoET3sP7Noahn5C4tLF+4WO4JpM5ObRugFo3bN7Dx1Ra4bvAWyrZWu9F3ub6R0TAeHfqW9DXhmVt2n3WQQ1ZyVnsX1pj7JIFDfbE2uyLbdwOXyIbsLK1GwJATS60gfPHdqa4OTkbwUn4Sg4dYHJy1V2PJxRadSsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sGzEq5Am; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SlEZoAFJuyB4GySJCYITEL63HE8R+ahC5Ms8f/XDHWXJLE+Gn9mLNhSjtzW/j15B1hrg7Ar/oJ11/N0IxDsLZ8KxOWz94anxvbleYSMsiGJqU+vvlcIep42xQtpSAWTMuFe00g8SYoY/65YUl6rZ3UP/PblerbsCsEhZY3dtjZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L5qlzOVP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sGzEq5Am"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40742C116D0;
-	Sat, 28 Feb 2026 18:09:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L5qlzOVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DCBC19423;
+	Sat, 28 Feb 2026 18:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302153;
-	bh=LlGOq97jJgWQlImjYiWvicZdxeg0RSESWxrE+ZkeZag=;
+	s=k20201202; t=1772302155;
+	bh=BTOMh2ULaSbVY2JWiN9WF6YEsweTA4K2OwlfNGRfwNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGzEq5AmXQY/PMR5Hh1T9D1VIosCwI7uKViPCyqpGgW8mcfsnDQ4vrMaVc1d+1q+S
-	 sU85pFU4DleAOSAq1ZyQUxYRT0UjZMiheucOyl4xsJmjQbvOh0XoiX0ljaGXMCV89H
-	 11D6kqAskGU/Wa0Z9MsvkoWikzX1wg22EdSsbU4BMoeAUNrpkpW5va1JZBZ6qAXUgc
-	 TvEBK5MysDF06b9i7yaZpCHXKGPafrLkTljlp0zVYWXBfUuqvQJFS611fWQVvpC+u0
-	 3xoMg2WLFB0y0Y8WLvDGLM0VXoCTpFFPFDdRV3kK6NtdBiTnccH2tcS1cB8ZNWtwj2
-	 I8MupHVDcTIuA==
+	b=L5qlzOVPslxePbR3zfOT34yVvxO2UUEiTl3rbtNLMZ4k1dJCqDo5jGuAkEMxFLKjv
+	 G9zP2rOwj07t8gxzK09t1emEIkHu7bFraws9tuM35snGkfjgc5J3swR3BJXtzcWXj+
+	 Vog5CoWSEV4lLlX/e0bgitJf4hEKKdZIJymi4cAvQi1ZD5bRNMsKN6pcLYxVCFP9d+
+	 xOnPYnRMLsjUzfHjgYOQkoZA7gkoMi8D2cF8QgRpIGlGE3Pu7RYRa0DHOl9/Jd4XQr
+	 OrH24/rQvFq4qFhsyHeQDUUrADp3PoaSC0UDSmG2FunCdMn1axcAb/LGQnTMT8UGtM
+	 LAdIEQbygREbA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Jinliang Zheng <alexjlzheng@tencent.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	David Hildenbrand <david@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	ruippan <ruippan@tencent.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 149/283] net: hns3: fix double free issue for tx spare buffer
-Date: Sat, 28 Feb 2026 13:04:51 -0500
-Message-ID: <20260228180709.1583486-149-sashal@kernel.org>
+Subject: [PATCH 6.6 150/283] procfs: fix missing RCU protection when reading real_parent in do_task_stat()
+Date: Sat, 28 Feb 2026 13:04:52 -0500
+Message-ID: <20260228180709.1583486-150-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,72 +54,56 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Jinliang Zheng <alexjlzheng@tencent.com>
 
-[ Upstream commit 6d2f142b1e4b203387a92519d9d2e34752a79dbb ]
+[ Upstream commit 76149d53502cf17ef3ae454ff384551236fba867 ]
 
-In hns3_set_ringparam(), a temporary copy (tmp_rings) of the ring structure
-is created for rollback. However, the tx_spare pointer in the original
-ring handle is incorrectly left pointing to the old backup memory.
+When reading /proc/[pid]/stat, do_task_stat() accesses task->real_parent
+without proper RCU protection, which leads to:
 
-Later, if memory allocation fails in hns3_init_all_ring() during the setup,
-the error path attempts to free all newly allocated rings. Since tx_spare
-contains a stale (non-NULL) pointer from the backup, it is mistaken for
-a newly allocated buffer and is erroneously freed, leading to a double-free
-of the backup memory.
+  cpu 0                               cpu 1
+  -----                               -----
+  do_task_stat
+    var = task->real_parent
+                                      release_task
+                                        call_rcu(delayed_put_task_struct)
+    task_tgid_nr_ns(var)
+      rcu_read_lock   <--- Too late to protect task->real_parent!
+      task_pid_ptr    <--- UAF!
+      rcu_read_unlock
 
-The root cause is that the tx_spare field was not cleared after its value
-was saved in tmp_rings, leaving a dangling pointer.
+This patch uses task_ppid_nr_ns() instead of task_tgid_nr_ns() to add
+proper RCU protection for accessing task->real_parent.
 
-Fix this by setting tx_spare to NULL in the original ring structure
-when the creation of the new `tx_spare` fails. This ensures the
-error cleanup path only frees genuinely newly allocated buffers.
-
-Fixes: 907676b130711 ("net: hns3: use tx bounce buffer for small packets")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260205121719.3285730-1-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20260128083007.3173016-1-alexjlzheng@tencent.com
+Fixes: 06fffb1267c9 ("do_task_stat: don't take rcu_read_lock()")
+Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Mateusz Guzik <mjguzik@gmail.com>
+Cc: ruippan <ruippan@tencent.com>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/proc/array.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 34627de2e311e..107e692e8c87a 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -1048,13 +1048,13 @@ static void hns3_init_tx_spare_buffer(struct hns3_enet_ring *ring)
- 	int order;
+diff --git a/fs/proc/array.c b/fs/proc/array.c
+index 5e4f7b411fbdb..363d9331216b9 100644
+--- a/fs/proc/array.c
++++ b/fs/proc/array.c
+@@ -531,7 +531,7 @@ static int do_task_stat(struct seq_file *m, struct pid_namespace *ns,
+ 		}
  
- 	if (!alloc_size)
--		return;
-+		goto not_init;
+ 		sid = task_session_nr_ns(task, ns);
+-		ppid = task_tgid_nr_ns(task->real_parent, ns);
++		ppid = task_ppid_nr_ns(task, ns);
+ 		pgid = task_pgrp_nr_ns(task, ns);
  
- 	order = get_order(alloc_size);
- 	if (order > MAX_ORDER) {
- 		if (net_ratelimit())
- 			dev_warn(ring_to_dev(ring), "failed to allocate tx spare buffer, exceed to max order\n");
--		return;
-+		goto not_init;
- 	}
- 
- 	tx_spare = devm_kzalloc(ring_to_dev(ring), sizeof(*tx_spare),
-@@ -1092,6 +1092,13 @@ static void hns3_init_tx_spare_buffer(struct hns3_enet_ring *ring)
- 	devm_kfree(ring_to_dev(ring), tx_spare);
- devm_kzalloc_error:
- 	ring->tqp->handle->kinfo.tx_spare_buf_size = 0;
-+not_init:
-+	/* When driver init or reset_init, the ring->tx_spare is always NULL;
-+	 * but when called from hns3_set_ringparam, it's usually not NULL, and
-+	 * will be restored if hns3_init_all_ring() failed. So it's safe to set
-+	 * ring->tx_spare to NULL here.
-+	 */
-+	ring->tx_spare = NULL;
- }
- 
- /* Use hns3_tx_spare_space() to make sure there is enough buffer
+ 		unlock_task_sighand(task, &flags);
 -- 
 2.51.0
 
