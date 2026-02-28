@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0058379EFA
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72154379EF1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301902; cv=none; b=jgW4ytzOFl/y00yMKlZf6ycoMQ6Ctv3ESwsnDFkUZnx1AV35e2LONPCEr7M537y4SJXPkbcsWSFdaQTdpiFsNV3Mmqp0u7hVMOX9TPFhdn6kkX06dUlEjeMoq9HjaHYMzHFgT+ynyZeG8lO5wLphFIVvgg7arICuK2OWz3d+9Hs=
+	t=1772301903; cv=none; b=CJ7Qo03eaF2QibdiOTTUEFDlbnhaW92xcSf1Xv6qsyuPNr0NhArQHByOkm8Lwzonl99FvV1e1FaHmb/VpLqJZ4mYuEIcuEeAasGQqrZrNmmS6e6Gl7omwBXHbPF2v07Dj0uYMKYwXuMPF/grdB0zmRhpIyywcc5ZahKDC7rOo1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301902; c=relaxed/simple;
-	bh=UtuYo4GDHQOyKqq+ubCUWqFEWnvi5pW3lyvXM9rSgPI=;
+	s=arc-20240116; t=1772301903; c=relaxed/simple;
+	bh=A3dpKqJTKLdVc6wmVAt9npkwTbYe8jXp6nvFZknbWAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4u4Y5VLJlnZC7ib9y0bksgw22aSuNJ71ENRR3PcyyAKOsR5PG+b0WMBuRXXXhCRF0xiaxvyD2QqUNeUzsfoKSSW1PMMAlVJN7WtNObDBqiTwN0XJS3XXpO4MMU2ofaDaAn8eOVDaxETrrrSz3T/g2BjzlyXKjUZtoiJYgaj730=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RAx5mH65; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TW3roHGjus+5vX7xCORhCyGlRjoic4xr8f0wVBDzJkKxQPCcwraw82f/lb0kDgWAigl18vnonH0je/Fyr1J6l9hyIiUyc/Pp1x3XMff+5aTZuFUiIyEYYyqfsWxOl8iO3+dav2bsNjocG2F6Cy8HDX7PAxxKMxlQLj1K5AtcFSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=elC3Sq+6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RAx5mH65"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF23C19425;
-	Sat, 28 Feb 2026 18:05:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="elC3Sq+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D737DC19424;
+	Sat, 28 Feb 2026 18:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301902;
-	bh=UtuYo4GDHQOyKqq+ubCUWqFEWnvi5pW3lyvXM9rSgPI=;
+	s=k20201202; t=1772301903;
+	bh=A3dpKqJTKLdVc6wmVAt9npkwTbYe8jXp6nvFZknbWAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RAx5mH65Gfdmo+0qTu32KUEBIShWjm5H3HW3MSX69h3LhlvTRDttVzFyC6jip5ud1
-	 Uvmg7w4nf8y9RmsSrGdntJt4+UmNgcrbRMMXjAfDaD3J8mS1/1Yln5jsQyodD/XaIG
-	 1PcHz/IJtYn6cdr0rLHBnk3ce3X+Z4HExON+z9oiE5OW5FeE/dR2bqfl431GUNlAyR
-	 jtlfpUsIoU4p0HhQS22Juk1JDn+8L2iOZoRLCV6Wf5WQ0fEURXbrdRnLNizLRva9DK
-	 UM/N5Pg8ouwhTmy2EBOD8a2QsCFAk/cK6WSvb/fWelGOotj4y98P0sc0w5tGyrneca
-	 mNeOD85emd/pg==
+	b=elC3Sq+6BaFlhD/0lRC8/eexPli083ZOoJw+EdtmzpEVGnqr5ofGLTYBaX4hfZvtV
+	 54PVeZ1SZzSZvXxf0ve3KdG0kH0b7Ml/3A3EFPjEY2Wmn5ojv4x6LTAEKXJfx/q3Lw
+	 ruiQKaBumqcUSxbtYlj74CF5pMCFoIZ+ITTJk44/WOc9E07JXtzoD4Pf8N4l3axxZG
+	 V9wMcsZ87PmTtaYl24tqG5deo6HO9rL+aY9bInNcCG1wCboItFdDg+xChkWd6Oh3LH
+	 2oTigqOpYodaAurVBaoFbpU3GWyFOfZPESH4CS9/xMlnVtM8gALvTowJKCQWZ5hF6s
+	 oG7sEA/uvMOsg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Kery Qi <qikeyu2017@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+Cc: Antonio Borneo <antonio.borneo@foss.st.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 332/385] watchdog: starfive-wdt: Fix PM reference leak in probe error path
-Date: Sat, 28 Feb 2026 12:59:14 -0500
-Message-ID: <20260228180011.1568201-332-sashal@kernel.org>
+Subject: [PATCH 6.12 333/385] coresight: etm3x: Fix cpulocked warning on cpuhp
+Date: Sat, 28 Feb 2026 12:59:15 -0500
+Message-ID: <20260228180011.1568201-333-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,43 +47,65 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Antonio Borneo <antonio.borneo@foss.st.com>
 
-[ Upstream commit 3f2d8d79cceb05a8b8dd200fa81c0dffc59ec46f ]
+[ Upstream commit 1feb0377b9b816f89a04fc381eb19fc6bac9f4a4 ]
 
-The PM reference count is not expected to be incremented on return in
-functions starfive_wdt_probe.
+When changes [1] and [2] have been applied to the driver etm4x, the
+same modifications have been also collapsed in [3] and applied in
+one shot to the driver etm3x.
+While doing this, the driver etm3x has not been aligned to etm4x on
+the use of non cpuslocked version of cpuhp callback setup APIs.
 
-However, pm_runtime_get_sync will increment pm usage counter
-even failed. Forgetting to putting operation will result in a
-reference leak here.
+The current code triggers two run-time warnings when the kernel is
+compiled with CONFIG_PROVE_LOCKING=y.
 
-Replace it with pm_runtime_resume_and_get to keep usage
-counter balanced.
+Use non cpuslocked version of cpuhp callback setup APIs in driver
+etm3x, aligning it to the driver etm4x.
 
-Fixes: db728ea9c7be ("drivers: watchdog: Add StarFive Watchdog driver")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+[1] commit 2d1a8bfb61ec ("coresight: etm4x: Fix etm4_count race by
+                          moving cpuhp callbacks to init")
+[2] commit 22a550a306ad ("coresight: etm4x: Allow etm4x to be built
+                          as a module")
+[3] commit 97fe626ce64c ("coresight: etm3x: Allow etm3x to be built
+                          as a module")
+
+Fixes: 97fe626ce64c ("coresight: etm3x: Allow etm3x to be built as a module")
+Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260108152427.357379-1-antonio.borneo@foss.st.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/starfive-wdt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-etm3x-core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/watchdog/starfive-wdt.c b/drivers/watchdog/starfive-wdt.c
-index 763b11b6f402c..8244f282bee86 100644
---- a/drivers/watchdog/starfive-wdt.c
-+++ b/drivers/watchdog/starfive-wdt.c
-@@ -446,7 +446,7 @@ static int starfive_wdt_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, wdt);
- 	pm_runtime_enable(&pdev->dev);
- 	if (pm_runtime_enabled(&pdev->dev)) {
--		ret = pm_runtime_get_sync(&pdev->dev);
-+		ret = pm_runtime_resume_and_get(&pdev->dev);
- 		if (ret < 0)
- 			return ret;
- 	} else {
+diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+index c103f4c70f5d0..994ae1e08af8b 100644
+--- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+@@ -812,16 +812,16 @@ static int __init etm_hp_setup(void)
+ {
+ 	int ret;
+ 
+-	ret = cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ARM_CORESIGHT_STARTING,
+-						   "arm/coresight:starting",
+-						   etm_starting_cpu, etm_dying_cpu);
++	ret = cpuhp_setup_state_nocalls(CPUHP_AP_ARM_CORESIGHT_STARTING,
++					"arm/coresight:starting",
++					etm_starting_cpu, etm_dying_cpu);
+ 
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ONLINE_DYN,
+-						   "arm/coresight:online",
+-						   etm_online_cpu, NULL);
++	ret = cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN,
++					"arm/coresight:online",
++					etm_online_cpu, NULL);
+ 
+ 	/* HP dyn state ID returned in ret on success */
+ 	if (ret > 0) {
 -- 
 2.51.0
 
