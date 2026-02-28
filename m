@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C8D36C9EB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F152B2737F2
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302311; cv=none; b=H0zvQGDufgLO29Ao//+a0xxjX4qtQR3blSLsrdY70SSJwrc2f2T4Sl8bL6lRfubMY3WDmvnsUPynZDJPtYu9HjQgWeIlQfuba3Q4wEB6JTp207MB0fyY3rgzA48tP8RDVmbr7eZscgMlt9nuDQ6fpdpUsB/OcJlbxAGYJfUYrBQ=
+	t=1772302312; cv=none; b=IXQf42+Qiasc4kOsqQ9TX279k+yZ8gzWd+AasBdDjNRGI0uPimJN3qY1i19/Dy5B0/X526Bq7tR9hljNX/HdNxYMGi70xKIYhLJr3HzKh0r1A8LpIUXJ+vCsmwFClYTWbxRoo5wEigXeeu0EkyWmG0AUTjsebWhD0af6Lv90Vro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302311; c=relaxed/simple;
-	bh=RD/GpCQ36bV2Ee+VnF53WUW8n94fM7DX5JEwJhm1X3o=;
+	s=arc-20240116; t=1772302312; c=relaxed/simple;
+	bh=c/AINV9LiMukHIiNifuK2PU1c3+RxezjeJuoOAs8A2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FTAlmCMzoPplHcyo0abUFEenpOFEyp2Oj7XYqzbsjx+EusF1Jy5/K2hLtOcqulI8WHfd3Uxf+eZbYVpGoZEyQi6Pztu9CGbwtNZdnLWGNxMNF3Zuuc3y/7cNGufLqhMZylaBUBiIIeO2bV9BN8Jmwci8qQSMuXbr4tIRjCUGb8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nGpPlM2h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dYmTl1bdcDpaWG2Nv66dEJgtvEShee+946rys5PmyD/Q/yLPmEGUOQctgJXtPAwlITDOjgQ1pecTDzTf0ZKpt51yf2vMNf45Aqoo+vcb8IdFWhM4JkaE413IS+lzLr8kPa2kTVjwfgrfUUR/t26QN9grHPDIsAlYoeK/lKU/iAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dYyAtl9t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nGpPlM2h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D35C116D0;
-	Sat, 28 Feb 2026 18:11:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dYyAtl9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A9DC19423;
+	Sat, 28 Feb 2026 18:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302311;
-	bh=RD/GpCQ36bV2Ee+VnF53WUW8n94fM7DX5JEwJhm1X3o=;
+	bh=c/AINV9LiMukHIiNifuK2PU1c3+RxezjeJuoOAs8A2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGpPlM2hNKg2f4I7iHn0wzQbLgpGqGT8N+UOLzc/b9z8Sg0Kn8xr1JPeHnbo46wQ5
-	 U4qE4vBW9pDP8mfpK0aG937Ns3K48u3QeRUvzdmntz8EfkCxRf/Kinqq/WL6vdiE6f
-	 /XWTg9fw/gSf5SxDp6tE8ZIsgyhjw01rJwCc3nEQWA/cZ3rEkc2THOxZwBPExkP6Gb
-	 esyHNNUgPJnHVH9xa+yqJealLMBQc8IUv+tce4vOiPjT9YgSKnJPP6C8E4DPr3U3Uw
-	 tztbFgmOQoXt4E1nDwTSeYrEaQVmFf/nic6uO/dXzw0adQCHFkRMmXGEVzAcALUBoR
-	 5uSMzYaNjhcVg==
+	b=dYyAtl9tT23RXmhaZy8U+ppWmgLmXImhrX3c7M5UJleS9BnrcdpZCkOe2E0MNoUVR
+	 JRbuhwoK/Fn4uKMrxvy9OsL2nDFVZiTYPXFy8JiKAQ0FevHhLWQqX56d7x3RKx36pg
+	 S85JdVhEOn4/jCo5Tif1KHv2WfcIcd8a/EJHcmMMr91Wypw7WIDsuNKMYhZLAi5p28
+	 gU8Zpt7rYWPlQ9j2pcGjgtTwQeAiEFIrgU0QmEZ5dahqYEo9ZoiEa6QIuGJ8+7/Qbv
+	 qhGyGmKvv/Lv6VjtW3VbLOLx13agcBdYc/riyDzpaFRuVUnPpsHbkhsAXp04ROoRnS
+	 3CJm2jAvi1woQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Salah Triki <salah.triki@gmail.com>,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+Cc: Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/232] s390/cio: Fix device lifecycle handling in css_alloc_subchannel()
-Date: Sat, 28 Feb 2026 13:08:00 -0500
-Message-ID: <20260228181127.1592657-27-sashal@kernel.org>
+Subject: [PATCH 6.1 028/232] crypto: qat - fix warning on adf_pfvf_pf_proto.c
+Date: Sat, 28 Feb 2026 13:08:01 -0500
+Message-ID: <20260228181127.1592657-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -44,51 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit f65c75b0b9b5a390bc3beadcde0a6fbc3ad118f7 ]
+[ Upstream commit 994689b8f91b02fdb5f64cba2412cde5ef3084b5 ]
 
-`css_alloc_subchannel()` calls `device_initialize()` before setting up
-the DMA masks. If `dma_set_coherent_mask()` or `dma_set_mask()` fails,
-the error path frees the subchannel structure directly, bypassing
-the device model reference counting.
+Building the QAT driver with -Wmaybe-uninitialized triggers warnings in
+qat_common/adf_pfvf_pf_proto.c. Specifically, the variables blk_type,
+blk_byte, and byte_max may be used uninitialized in handle_blkmsg_req():
 
-Once `device_initialize()` has been called, the embedded struct device
-must be released via `put_device()`, allowing the release callback to
-free the container structure.
+  make M=drivers/crypto/intel/qat W=1 C=2 "KCFLAGS=-Werror" \
+       KBUILD_CFLAGS_KERNEL=-Wmaybe-uninitialized           \
+       CFLAGS_MODULE=-Wmaybe-uninitialized
 
-Fix the error path by dropping the initial device reference with
-`put_device()` instead of calling `kfree()` directly.
+  ...
+  warning: ‘byte_max’ may be used uninitialized [-Wmaybe-uninitialized]
+  warning: ‘blk_type’ may be used uninitialized [-Wmaybe-uninitialized]
+  warning: ‘blk_byte’ may be used uninitialized [-Wmaybe-uninitialized]
 
-This ensures correct device lifetime handling and avoids potential
-use-after-free or double-free issues.
+Although the caller of handle_blkmsg_req() always provides a req.type
+that is handled by the switch, the compiler cannot guarantee this.
 
-Fixes: e5dcf0025d7af ("s390/css: move subchannel lock allocation")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Add a default case to the switch statement to handle an invalid req.type.
+
+Fixes: 673184a2a58f ("crypto: qat - introduce support for PFVF block messages")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/css.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/qat/qat_common/adf_pfvf_pf_proto.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/s390/cio/css.c b/drivers/s390/cio/css.c
-index 98a14c1f3d672..85c1734ebfe88 100644
---- a/drivers/s390/cio/css.c
-+++ b/drivers/s390/cio/css.c
-@@ -247,7 +247,7 @@ struct subchannel *css_alloc_subchannel(struct subchannel_id schid,
- err_lock:
- 	kfree(sch->lock);
- err:
--	kfree(sch);
-+	put_device(&sch->dev);
- 	return ERR_PTR(ret);
- }
+diff --git a/drivers/crypto/qat/qat_common/adf_pfvf_pf_proto.c b/drivers/crypto/qat/qat_common/adf_pfvf_pf_proto.c
+index 388e58bcbcaf2..4a1ea3e720329 100644
+--- a/drivers/crypto/qat/qat_common/adf_pfvf_pf_proto.c
++++ b/drivers/crypto/qat/qat_common/adf_pfvf_pf_proto.c
+@@ -148,6 +148,16 @@ static struct pfvf_message handle_blkmsg_req(struct adf_accel_vf_info *vf_info,
+ 		blk_byte = FIELD_GET(ADF_VF2PF_SMALL_BLOCK_BYTE_MASK, req.data);
+ 		byte_max = ADF_VF2PF_SMALL_BLOCK_BYTE_MAX;
+ 		break;
++	default:
++		dev_err(&GET_DEV(vf_info->accel_dev),
++			"Invalid BlockMsg type 0x%.4x received from VF%u\n",
++			req.type, vf_info->vf_nr);
++		resp.type = ADF_PF2VF_MSGTYPE_BLKMSG_RESP;
++		resp.data = FIELD_PREP(ADF_PF2VF_BLKMSG_RESP_TYPE_MASK,
++				       ADF_PF2VF_BLKMSG_RESP_TYPE_ERROR) |
++			    FIELD_PREP(ADF_PF2VF_BLKMSG_RESP_DATA_MASK,
++				       ADF_PF2VF_UNSPECIFIED_ERROR);
++		return resp;
+ 	}
  
+ 	/* Is this a request for CRC or data? */
 -- 
 2.51.0
 
