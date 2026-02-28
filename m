@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8081638CFFE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A5B38F62C;
+	Sat, 28 Feb 2026 18:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302155; cv=none; b=HOj6woh+o/EeQ3AX54vheJUH0IkotGx4xPNiPxckAWJ/JhvGbcgc7aeziM74Hwivv1LRIyNk0jvEA4DwcnBzDh97Ay/WOs5Kq8zrlXVx2uSgkhY5I1Sy7R0iDmlbq+ry5N7cZBvcDbXHWaSH9WZKFU1VyEh186r5F4xgnAN+pqc=
+	t=1772302156; cv=none; b=ET3wKwqjDsoMTRJEzeQ3f5n5yNjsGsyRKAw/PVOIyAcnpjH1VyL6CgOKwN+vh1iiTj/zbF6scVKuhg4M/OU3eN53SfPcflL2KupCQCT8JZdRew0eqqT4ZPA41+sMT1ROmOlkPsFp7EGTJPPWLV4JKd1iT1Pbm5hpkLcjHtEs4rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302155; c=relaxed/simple;
-	bh=BTOMh2ULaSbVY2JWiN9WF6YEsweTA4K2OwlfNGRfwNM=;
+	s=arc-20240116; t=1772302156; c=relaxed/simple;
+	bh=nsgsaktJb3rTZJaRELnd3zg802ys78bGbm5rBVacZsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlEZoAFJuyB4GySJCYITEL63HE8R+ahC5Ms8f/XDHWXJLE+Gn9mLNhSjtzW/j15B1hrg7Ar/oJ11/N0IxDsLZ8KxOWz94anxvbleYSMsiGJqU+vvlcIep42xQtpSAWTMuFe00g8SYoY/65YUl6rZ3UP/PblerbsCsEhZY3dtjZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L5qlzOVP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dhE8EGYdqdlQJX/rRfyL9yI/IGbjMR4Xz79i7O3ZMQnjMECYTFoxH+PY/26+7slspjtbszR3v/dBOVJxkGJgKFTq5w6hdCXZtPaGGdN4b4U+sTXwGrH6IkvHgoBwBuVnjgJ9JODfKL09YZdCiv6N+ezETQVNa6Y+VVKuMdqQSNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mp+NDgjs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L5qlzOVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DCBC19423;
-	Sat, 28 Feb 2026 18:09:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mp+NDgjs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DEEC116D0;
+	Sat, 28 Feb 2026 18:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302155;
-	bh=BTOMh2ULaSbVY2JWiN9WF6YEsweTA4K2OwlfNGRfwNM=;
+	s=k20201202; t=1772302156;
+	bh=nsgsaktJb3rTZJaRELnd3zg802ys78bGbm5rBVacZsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L5qlzOVPslxePbR3zfOT34yVvxO2UUEiTl3rbtNLMZ4k1dJCqDo5jGuAkEMxFLKjv
-	 G9zP2rOwj07t8gxzK09t1emEIkHu7bFraws9tuM35snGkfjgc5J3swR3BJXtzcWXj+
-	 Vog5CoWSEV4lLlX/e0bgitJf4hEKKdZIJymi4cAvQi1ZD5bRNMsKN6pcLYxVCFP9d+
-	 xOnPYnRMLsjUzfHjgYOQkoZA7gkoMi8D2cF8QgRpIGlGE3Pu7RYRa0DHOl9/Jd4XQr
-	 OrH24/rQvFq4qFhsyHeQDUUrADp3PoaSC0UDSmG2FunCdMn1axcAb/LGQnTMT8UGtM
-	 LAdIEQbygREbA==
+	b=Mp+NDgjs8WpRA67tgONp4O1cL9r658GqYK86qZaZoxgwoBOxNxh2/QmqlHQrv3QEQ
+	 A5Qfbhy5tgwYAxChSZScwGvoIdfine+7K+IkKz5w0r/AANXHeCkHC5B48UEBB56z4I
+	 42ddgI3zWqaaPkxKhMlSmJBi6bd4w/R9lqrp/+f8u+74d4klVOO5r6RpRc66CPtMyT
+	 SuPxxMSaF/Vi1JHsNp2s87Um3BaYIFNxMOABXjKMrdeBb+5LMEO0Y6bFYBfTmATgtv
+	 uxkfl+9d7c/Pyp5iCMH36pYO+iahrJ4YyXPvhDNbQuxvh36gEt18MKCKh/6+/Q4k86
+	 EsuNSRKtkRy4g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jinliang Zheng <alexjlzheng@tencent.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	David Hildenbrand <david@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	ruippan <ruippan@tencent.com>,
-	Usama Arif <usamaarif642@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+Cc: Stefan Metzmacher <metze@samba.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/283] procfs: fix missing RCU protection when reading real_parent in do_task_stat()
-Date: Sat, 28 Feb 2026 13:04:52 -0500
-Message-ID: <20260228180709.1583486-150-sashal@kernel.org>
+Subject: [PATCH 6.6 151/283] smb: client: correct value for smbd_max_fragmented_recv_size
+Date: Sat, 28 Feb 2026 13:04:53 -0500
+Message-ID: <20260228180709.1583486-151-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -54,56 +53,76 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jinliang Zheng <alexjlzheng@tencent.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 76149d53502cf17ef3ae454ff384551236fba867 ]
+[ Upstream commit 4a93d1ee2d0206970b6eb13fbffe07938cd95948 ]
 
-When reading /proc/[pid]/stat, do_task_stat() accesses task->real_parent
-without proper RCU protection, which leads to:
+When we download a file without rdma offload or get
+a large directly enumeration from the server,
+the server might want to send up to smbd_max_fragmented_recv_size
+bytes, but if it is too large all our recv buffers
+might already be moved to the recv_io.reassembly.list
+and we're no longer able to grant recv credits.
 
-  cpu 0                               cpu 1
-  -----                               -----
-  do_task_stat
-    var = task->real_parent
-                                      release_task
-                                        call_rcu(delayed_put_task_struct)
-    task_tgid_nr_ns(var)
-      rcu_read_lock   <--- Too late to protect task->real_parent!
-      task_pid_ptr    <--- UAF!
-      rcu_read_unlock
+The maximum fragmented upper-layer payload receive size supported
 
-This patch uses task_ppid_nr_ns() instead of task_tgid_nr_ns() to add
-proper RCU protection for accessing task->real_parent.
+Assume max_payload_per_credit is
+smbd_max_receive_size - 24 = 1340
 
-Link: https://lkml.kernel.org/r/20260128083007.3173016-1-alexjlzheng@tencent.com
-Fixes: 06fffb1267c9 ("do_task_stat: don't take rcu_read_lock()")
-Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: ruippan <ruippan@tencent.com>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The maximum number would be
+smbd_receive_credit_max * max_payload_per_credit
+
+                      1340 * 255 = 341700 (0x536C4)
+
+The minimum value from the spec is 131072 (0x20000)
+
+For now we use the logic we used in ksmbd before:
+                (1364 * 255) / 2 = 173910 (0x2A756)
+
+Fixes: 03bee01d6215 ("CIFS: SMBD: Add SMB Direct protocol initial values and constants")
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/array.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smbdirect.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/fs/proc/array.c b/fs/proc/array.c
-index 5e4f7b411fbdb..363d9331216b9 100644
---- a/fs/proc/array.c
-+++ b/fs/proc/array.c
-@@ -531,7 +531,7 @@ static int do_task_stat(struct seq_file *m, struct pid_namespace *ns,
- 		}
+diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
+index be9be8f363319..359ab64e17d99 100644
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -91,8 +91,23 @@ int smbd_send_credit_target = 255;
+ /* The maximum single message size can be sent to remote peer */
+ int smbd_max_send_size = 1364;
  
- 		sid = task_session_nr_ns(task, ns);
--		ppid = task_tgid_nr_ns(task->real_parent, ns);
-+		ppid = task_ppid_nr_ns(task, ns);
- 		pgid = task_pgrp_nr_ns(task, ns);
+-/*  The maximum fragmented upper-layer payload receive size supported */
+-int smbd_max_fragmented_recv_size = 1024 * 1024;
++/*
++ * The maximum fragmented upper-layer payload receive size supported
++ *
++ * Assume max_payload_per_credit is
++ * smbd_max_receive_size - 24 = 1340
++ *
++ * The maximum number would be
++ * smbd_receive_credit_max * max_payload_per_credit
++ *
++ *                       1340 * 255 = 341700 (0x536C4)
++ *
++ * The minimum value from the spec is 131072 (0x20000)
++ *
++ * For now we use the logic we used in ksmbd before:
++ *                 (1364 * 255) / 2 = 173910 (0x2A756)
++ */
++int smbd_max_fragmented_recv_size = (1364 * 255) / 2;
  
- 		unlock_task_sighand(task, &flags);
+ /*  The maximum single-message size which can be received */
+ int smbd_max_receive_size = 1364;
 -- 
 2.51.0
 
