@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552D43446B0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB67346E6C
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302114; cv=none; b=TbCVhj2KrYFDjE/RiOFl3TBMmVDs5sud5/dN03P11+Y+uikVPFMb7XcXDZE0p+QZLl/BvR9MlnyZbNZcQdOdYkU7oFLFJS9MAgg/e4MJJLpp/EKsSTVl9F/8qkQ1uj+e3AOI5mW3uCap5Wy9fMe35Qu0f3ZA0Yp5oPf3C9WMK5w=
+	t=1772302115; cv=none; b=gmTRspdxp+G56VnsTLpD2wYQybl5YR3PW4QkRq8rO+8tWBn0SWKn74svu7SMSNCLh31mUl5DEAYU72ypAdLuPO9D62DONH4rI7stnfXEmj2C2uHDjcR3kZuqMvEKjTpCYJvW2Vci5MVIAr5XdxJyXh/IgJDq9/gTZjQIhGIWfOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302114; c=relaxed/simple;
-	bh=CSaT2j1UG4Iqo9SlO+p0XxC0+JRFwnnk3jdZVNYi18s=;
+	s=arc-20240116; t=1772302115; c=relaxed/simple;
+	bh=52ultd3Dq9klQuUydyd/vPvGLUfgEvdiFHtD/3pyqf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dsBSG0cGplEOw120+/BbE01pFR4jPqGM7ESeNjSM2ahRSAvwTL0mKw8bGYSbIwIYy/25pUKK916XQwCJMzG7PJZHKAgfvomf7Q6QrhG3JPbE3FtpjB9E4+wblhFjVrCBpM9p/pszyGDPycuVWukKCdVBr/5lMaHoJmOyXDscDIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hp77RvYm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c8DHMdtus3t/W/ZXeUt7afZY5JAExs1VtYYdZZgdj3sNXG1i385+bj1Omi2qMVz2tSwN7Sdkda25B62FNbvXhRYSeJx6yDRXGxP0mzQ+Q/cbFcLQXocyX2gULfiE9kgpSaZ8bPi4DXSVJ4XyU5b4KWPY3nRUDhkO8MM8SGfb+iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WIHtCEFo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hp77RvYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66AAC19423;
-	Sat, 28 Feb 2026 18:08:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WIHtCEFo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C268C2BC87;
+	Sat, 28 Feb 2026 18:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302114;
-	bh=CSaT2j1UG4Iqo9SlO+p0XxC0+JRFwnnk3jdZVNYi18s=;
+	s=k20201202; t=1772302115;
+	bh=52ultd3Dq9klQuUydyd/vPvGLUfgEvdiFHtD/3pyqf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hp77RvYmEwG4PZoaKZtAQc4LMT6AoEb/kbZuf8Ejb8FQlIL3VvqL3AnezsSOrdf2T
-	 monDlgW4GmyYJdXCS/mOLgJfeobCQWCGL7dwWg6xPBjHPzzeEKNtGU6Rh3KdRj4mnt
-	 BSAtNd6DG3bnuJ5sRcmJg1sKBDbdJRKJhq1X8T4Z6VAsHAnOw7sJ9KIWNtEJqm53/E
-	 6MT15YMODQAkt6+R+UjXbo0Sjy1vLxJF7QeirBuQGKjcVpRJk98ODsbHOwP/+3/fM3
-	 PhtcUapSiIB7Zng+5dOtZhonJFKQPLM4nlYV11MvjYRXJpvfE6wUyNYMo0yO0vnCdE
-	 6iwNxhINr7hMA==
+	b=WIHtCEFoh9b/3zP3DRnJqY9a0oZ1Y09ZFlhdqCLtW2J5zGsr9O81xCpeOp7Xp9Sp4
+	 cR6jM6uAiYmzfcn6JTyxrSJ+3EAERJ2NPPsPFr36gBAOiLRYhJrbfPmzY0Tx7DUAJY
+	 8Lua1QfrLwks0B4D6/94nIWOK4JjtteR+muFH3qV3lK4bZpb1XtomWA6OtO3KLpYnt
+	 CNwV/F1Jay0Un5QwkV3mV7W/8aYCOLMd60noW/EiwhmYe5RybD1B2mnRHtLECaxg6Y
+	 4e6jfUhUdXuhNdPDObe+HFrrQc9cUu2mdMtYFqvgaTNLW2RGyOWx54XEh8KW+gT0ov
+	 U32hbnygi9Dhg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Brian Norris <briannorris@google.com>,
-	Brian Norris <briannorris@chromium.org>,
+Cc: Hou Tao <houtao1@huawei.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Alistair Popple <apopple@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/283] PCI/PM: Avoid redundant delays on D3hot->D3cold
-Date: Sat, 28 Feb 2026 13:04:05 -0500
-Message-ID: <20260228180709.1583486-103-sashal@kernel.org>
+Subject: [PATCH 6.6 104/283] PCI/P2PDMA: Release per-CPU pgmap ref when vm_insert_page() fails
+Date: Sat, 28 Feb 2026 13:04:06 -0500
+Message-ID: <20260228180709.1583486-104-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,54 +49,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@google.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 4d982084507d663df160546c4c48066a8887ed89 ]
+[ Upstream commit 6220694c52a5a04102b48109e4f24e958b559bd3 ]
 
-When transitioning to D3cold, __pci_set_power_state() first transitions to
-D3hot. If the device was already in D3hot, this adds excess work:
+When vm_insert_page() fails in p2pmem_alloc_mmap(), p2pmem_alloc_mmap()
+doesn't invoke percpu_ref_put() to free the per-CPU ref of pgmap acquired
+after gen_pool_alloc_owner(), and memunmap_pages() will hang forever when
+trying to remove the PCI device.
 
-  (a) read/modify/write PMCSR; and
-  (b) excess delay (pci_dev_d3_sleep()).
+Fix it by adding the missed percpu_ref_put().
 
-For (b), we already performed the necessary delay on the previous D3hot
-entry; this was extra noticeable when evaluating runtime PM transition
-latency.
-
-Check whether we're already in the target state before continuing.
-
-Note that __pci_set_power_state() already does this same check for other
-state transitions, but D3cold is special because __pci_set_power_state()
-converts it to D3hot for the purposes of PMCSR.
-
-This seems to be an oversight in commit 0aacdc957401 ("PCI/PM: Clean up
-pci_set_low_power_state()").
-
-Fixes: 0aacdc957401 ("PCI/PM: Clean up pci_set_low_power_state()")
-Signed-off-by: Brian Norris <briannorris@google.com>
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-[bhelgaas: reverse test to match other "dev->current_state == state" cases]
+Fixes: 7e9c7ef83d78 ("PCI/P2PDMA: Allow userspace VMA allocations through sysfs")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20251003154008.1.I7a21c240b30062c66471329567a96dceb6274358@changeid
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Link: https://patch.msgid.link/20251220040446.274991-2-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/p2pdma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 9a3f6bb60eb4d..2f6c5bf2ae2f5 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1427,6 +1427,9 @@ static int pci_set_low_power_state(struct pci_dev *dev, pci_power_t state, bool
- 	   || (state == PCI_D2 && !dev->d2_support))
- 		return -EIO;
- 
-+	if (dev->current_state == state)
-+		return 0;
-+
- 	pci_read_config_word(dev, dev->pm_cap + PCI_PM_CTRL, &pmcsr);
- 	if (PCI_POSSIBLE_ERROR(pmcsr)) {
- 		pci_err(dev, "Unable to change power state from %s to %s, device inaccessible\n",
+diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+index 0f1e431bbfc20..f97ac18a8dc8f 100644
+--- a/drivers/pci/p2pdma.c
++++ b/drivers/pci/p2pdma.c
+@@ -143,6 +143,7 @@ static int p2pmem_alloc_mmap(struct file *filp, struct kobject *kobj,
+ 		ret = vm_insert_page(vma, vaddr, virt_to_page(kaddr));
+ 		if (ret) {
+ 			gen_pool_free(p2pdma->pool, (uintptr_t)kaddr, len);
++			percpu_ref_put(ref);
+ 			return ret;
+ 		}
+ 		percpu_ref_get(ref);
 -- 
 2.51.0
 
