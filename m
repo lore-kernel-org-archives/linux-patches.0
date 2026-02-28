@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97587342538
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899A2342538
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301812; cv=none; b=G0ORiOT0iVoPTPIR/TrYcg8s7xwcArW3Wkq3yjA6F+IaJ5eh6TWoO7btqXOxnNEYZ/YelymtY5lD1+xtrgaWW+FR5H2Y+CA08oeglBELiEsxji+qbxP4IxrVlVG1sdVdp9Go209ObbJsHoMx+btdTgSyAnGJ6Ovco3B271TDpEM=
+	t=1772301813; cv=none; b=G/mWrBKITy215Tyk9SxZD+rg565Ruc4HXfLqCFYhtKonNcx1h9Qocwc9zp+k6aYx6t5pjJgWIz8+T0pvaRsDbrQXk+4c8G6g+I7I7JFySWD7gP1Fl0FNJ7NUjJ2IznzmDvAnArsTO1271/l40xOwBqEs7UkFZ0Bj/xcH7OQDjSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301812; c=relaxed/simple;
-	bh=2QFLGyzx5TJQ999hIC55PBCE8FwfB/SRFrxQwGJ/oMc=;
+	s=arc-20240116; t=1772301813; c=relaxed/simple;
+	bh=IoVJKt8d0ZBIvaFm4KRkA66m+tHk/dXXJ3YWsJp109k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFQwFdQHSE0JH29eEAzEKggRINWTKnkrIHlBKha7ftgDRI1jgvplk0M06dN6niiSxOi8N3mdl9CGcuM9QTeE1x+XDzAeNwT5YG2lkkhRcVm8PaRYwTr9yblc3Co1CAYYmMdsgX5Ghy3K1+IuFJgjvBlISrrzCMtQegzy0mKx/O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VymnDEyT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mI4Fe4qlmZvoxVNvzPulxbfnfBRWSnvAPsSLH21ixztLjRuX5uEKfCC3pC5Q/BcEt42URFRhiQf+awCZSnZO078WJxmewEmpyQWWbcS3rZRLcnSz3PLOLxelL4+2lwDJL1wYZIixMbOawX1BWOAsal4thA54kPf3BWJN2mV/Ikw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=asYlZRWl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VymnDEyT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE6CC116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="asYlZRWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1DBC2BC87;
 	Sat, 28 Feb 2026 18:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301812;
-	bh=2QFLGyzx5TJQ999hIC55PBCE8FwfB/SRFrxQwGJ/oMc=;
+	s=k20201202; t=1772301813;
+	bh=IoVJKt8d0ZBIvaFm4KRkA66m+tHk/dXXJ3YWsJp109k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VymnDEyTXtD+cOT2bLzOZzNEOdYW4ulepunVsW1DAuhDVb6pRN2uAwaRSbIBiygDR
-	 ptAyqo5L1cim7EQ0xxLMclbeZDb8DcyFTieXB+jzemtbupBIub6SNsCSlvQUIh2Clt
-	 wHuoEwsJ/CwiH8eE1nYYRX5Lzr7oUKJE5eVzgjOvalb8VB9vJa8zWQbsfM/qf97i+6
-	 a+QvVck9yhVc4wxzlK4wZErZwjVOnu/BlqGkaZdghjAIRnv6r/W+aniN/ohAN0HOKL
-	 7RvlcwxCCLjZK3CnbbKiYd0UtVYzsVq88KutJK1blsmyCBg2mcQodUwulF2In10w/s
-	 064PaYk5Q85mg==
+	b=asYlZRWl5AymVHH1LupW2HQlWG8niAugPKjUgDDH5dtGtukSxbE2fbH8iMgo1M9bU
+	 p3wb6HptZCuV5HPjRnuPwzv4P1U8CkWjDATlZcOmQbYvbkIfQK9vPgcY5jNMX5xLci
+	 tpq/K4EfKgpRs5s5/YbEsJdRY9dAmifY6WzJ+D2EH53+qE4MqjsyPk9uimFkZXZsKp
+	 gzyYHa+hX94w9hWk+nPMcw3BnABpbUbcbXWCcUPKGgjWN7Hho+78BXl6fNBp9u2HWu
+	 JviZW+S3UjZ56/KTrd5I0GRPaZ8WfdBby4Rz0EDfLfGZ2qCuTCmBEWKGUAGf+5dU4m
+	 lJoCRjEi2JcaA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Florian Westphal <fw@strlen.de>,
+Cc: Anders Grahn <anders.grahn@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 226/385] netfilter: nft_set_hash: fix get operation on big endian
-Date: Sat, 28 Feb 2026 12:57:28 -0500
-Message-ID: <20260228180011.1568201-226-sashal@kernel.org>
+Subject: [PATCH 6.12 227/385] netfilter: nft_counter: fix reset of counters on 32bit archs
+Date: Sat, 28 Feb 2026 12:57:29 -0500
+Message-ID: <20260228180011.1568201-227-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -46,55 +47,73 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Anders Grahn <anders.grahn@gmail.com>
 
-[ Upstream commit 2f635adbe2642d398a0be3ab245accd2987be0c3 ]
+[ Upstream commit 1e13f27e0675552161ab1778be9a23a636dde8a7 ]
 
-tests/shell/testcases/packetpath/set_match_nomatch_hash_fast
-fails on big endian with:
+nft_counter_reset() calls u64_stats_add() with a negative value to reset
+the counter. This will work on 64bit archs, hence the negative value
+added will wrap as a 64bit value which then can wrap the stat counter as
+well.
 
-Error: Could not process rule: No such file or directory
-reset element ip test s { 244.147.90.126 }
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Fatal: Cannot fetch element "244.147.90.126"
+On 32bit archs, the added negative value will wrap as a 32bit value and
+_not_ wrapping the stat counter properly. In most cases, this would just
+lead to a very large 32bit value being added to the stat counter.
 
-... because the wrong bucket is searched, jhash() and jhash1_word are
-not interchangeable on big endian.
+Fix by introducing u64_stats_sub().
 
-Fixes: 3b02b0adc242 ("netfilter: nft_set_hash: fix lookups with fixed size hash on big endian")
+Fixes: 4a1d3acd6ea8 ("netfilter: nft_counter: Use u64_stats_t for statistic.")
+Signed-off-by: Anders Grahn <anders.grahn@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_hash.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/linux/u64_stats_sync.h | 10 ++++++++++
+ net/netfilter/nft_counter.c    |  4 ++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index 900eddb93dcc8..e87398cefef00 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -527,15 +527,20 @@ static struct nft_elem_priv *
- nft_hash_get(const struct net *net, const struct nft_set *set,
- 	     const struct nft_set_elem *elem, unsigned int flags)
- {
-+	const u32 *key = (const u32 *)&elem->key.val;
- 	struct nft_hash *priv = nft_set_priv(set);
- 	u8 genmask = nft_genmask_cur(net);
- 	struct nft_hash_elem *he;
- 	u32 hash;
+diff --git a/include/linux/u64_stats_sync.h b/include/linux/u64_stats_sync.h
+index 457879938fc19..3366090a86bd2 100644
+--- a/include/linux/u64_stats_sync.h
++++ b/include/linux/u64_stats_sync.h
+@@ -89,6 +89,11 @@ static inline void u64_stats_add(u64_stats_t *p, unsigned long val)
+ 	local64_add(val, &p->v);
+ }
  
--	hash = jhash(elem->key.val.data, set->klen, priv->seed);
-+	if (set->klen == 4)
-+		hash = jhash_1word(*key, priv->seed);
-+	else
-+		hash = jhash(key, set->klen, priv->seed);
++static inline void u64_stats_sub(u64_stats_t *p, s64 val)
++{
++	local64_sub(val, &p->v);
++}
 +
- 	hash = reciprocal_scale(hash, priv->buckets);
- 	hlist_for_each_entry_rcu(he, &priv->table[hash], node) {
--		if (!memcmp(nft_set_ext_key(&he->ext), elem->key.val.data, set->klen) &&
-+		if (!memcmp(nft_set_ext_key(&he->ext), key, set->klen) &&
- 		    nft_set_elem_active(&he->ext, genmask))
- 			return &he->priv;
- 	}
+ static inline void u64_stats_inc(u64_stats_t *p)
+ {
+ 	local64_inc(&p->v);
+@@ -130,6 +135,11 @@ static inline void u64_stats_add(u64_stats_t *p, unsigned long val)
+ 	p->v += val;
+ }
+ 
++static inline void u64_stats_sub(u64_stats_t *p, s64 val)
++{
++	p->v -= val;
++}
++
+ static inline void u64_stats_inc(u64_stats_t *p)
+ {
+ 	p->v++;
+diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
+index cc73253294963..0d70325280cc5 100644
+--- a/net/netfilter/nft_counter.c
++++ b/net/netfilter/nft_counter.c
+@@ -117,8 +117,8 @@ static void nft_counter_reset(struct nft_counter_percpu_priv *priv,
+ 	nft_sync = this_cpu_ptr(&nft_counter_sync);
+ 
+ 	u64_stats_update_begin(nft_sync);
+-	u64_stats_add(&this_cpu->packets, -total->packets);
+-	u64_stats_add(&this_cpu->bytes, -total->bytes);
++	u64_stats_sub(&this_cpu->packets, total->packets);
++	u64_stats_sub(&this_cpu->bytes, total->bytes);
+ 	u64_stats_update_end(nft_sync);
+ 
+ 	local_bh_enable();
 -- 
 2.51.0
 
