@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A2D33F38A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748B93E9F93
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301088; cv=none; b=BZy5xxkPha14/tIBHHDbciVc6BQyZSbJK9uqv9+3mTb9w4M/6tobtEeRE9LGudf28/8n+HmHoQXOEVpgFba+3GWM0mh/7szf+2qk0Md1AlkfTZxXeG6ch8tFa9Ia77LERBrzPBhbFRLlqGptoIhLA4sMoULJgMO1ZKJLPDGrBhk=
+	t=1772301089; cv=none; b=f/uyqTvS8RErPHc/a5/7+olOzUoeQ4beFX5bDZOpotv4qKdT1Cy5KI2+tl33ps8XiLqil+2wgy/MX+1CsobvVTS0WO28owzEMaPNo1bzMM7NiCylK4HAcBQhVI4biKgHcCkjI8gGO/F7NK2alh8lSDy9+B2NOmcR+3AXdPfqZNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301088; c=relaxed/simple;
-	bh=lcDeFNBWSFo8oY08B/UekAKMABrcudq9S4nux/vEcbQ=;
+	s=arc-20240116; t=1772301089; c=relaxed/simple;
+	bh=CgdJkVn+mWXtfvFOcJ9EKUqPHf17hvlYvkTrqvxh6AI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=deXqpEcpTANggwLX9daTisKH3fMe+65qFNIX0maneQsT9UKYoxcQYnt5M6oE2h1ObUxmuvJo3i9sKT4YZOpfIpgsGyjpf9qSEtRAT6QQCQi20LfcOKx3RY7Nhnb13MIVqw1dCRxFy2rgmxB0LmU5uFp5UaXZzjONGNYBg6PP03w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OVCP8FJH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHXIMqRDf6D7geQ15iOfh+KvvSiNG/kKyEUZ0SvLliTYtS6S8v44TOMe78YkBwXgaWHKIkWBHMKw0UmvNNjEEVeoVKmFdi+UlkxwOyuXC8zKoOrnjXaE5TKHu1xHrMdh8dAB8YTS33UXj6jjm5xiqbSjx96ZRDuQ0yN5HuNCw1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PdyfyFAm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OVCP8FJH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC813C116D0;
-	Sat, 28 Feb 2026 17:51:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PdyfyFAm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED4FC19423;
+	Sat, 28 Feb 2026 17:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301088;
-	bh=lcDeFNBWSFo8oY08B/UekAKMABrcudq9S4nux/vEcbQ=;
+	s=k20201202; t=1772301089;
+	bh=CgdJkVn+mWXtfvFOcJ9EKUqPHf17hvlYvkTrqvxh6AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVCP8FJHKMNIGZqNHipbD/Dzf8KCBIuYelEeuAwQOEr1Za7l00/32SH+M6ZeA6dzu
-	 IwNMijbTle+BfRqbwIrnvvmmlt+aKcwYrYZ0Z62kAtSBKViMaFp2YqDcNwE5SacWpZ
-	 tlay4Hy8rvkCcG6opnmwuzwxTr2ujBDjs+7jaPZb5ReoIB4wn5Gr1KYtT/HScbWGI8
-	 2sDAWoYoaRhpcrQktRzo9M0nCmswS7T+++sF6KfV6tZYCkdmL3tUF9mauke3Eid72G
-	 TZBO3ZshxvOZo8VXOMlh0G2kXDkdlb2vbBlbQwirRyZovps71rBm35TqIVAOk4Bvg9
-	 QY54kj325VzmA==
+	b=PdyfyFAm/Vwc/Iqj1Vo1f5ld9IkvA07YgkIP9cRqTGkk7nya/o4bF0MX7kqAPpMeU
+	 2xEEgI+AhA2NACAtps20xo4rK2XRuY214nSYvG0sgrpPHI1cTm9LorDsejnG1oXyu1
+	 A/veame6FJCgtTmQlpYdcoyoltwuK5rK/Co/rfUU/I9bVylVBFEewcxr4oEvm6XyV8
+	 VRi/YfaRIDZuaJJNCBMkbC/55s/s/DURNnPN3fMnkkUTDDmrsIs/Vk9EegPaLJbQl6
+	 kYeZWXiQQ9qqZf+42OiE7KrjBu80cXWZkWNzSrsyo3Q/lGoPIa47Uu+QSiWGv3NDBV
+	 SUiP+nw4qrSjw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ross Vandegrift <ross@kallisti.us>,
+Cc: Qian Zhang <qian.zhang@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 238/752] wifi: ath11k: add pm quirk for Thinkpad Z13/Z16 Gen1
-Date: Sat, 28 Feb 2026 12:39:09 -0500
-Message-ID: <20260228174750.1542406-238-sashal@kernel.org>
+Subject: [PATCH 6.18 239/752] wifi: ath11k: Fix failure to connect to a 6 GHz AP
+Date: Sat, 28 Feb 2026 12:39:10 -0500
+Message-ID: <20260228174750.1542406-239-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,70 +48,59 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ross Vandegrift <ross@kallisti.us>
+From: Qian Zhang <qian.zhang@oss.qualcomm.com>
 
-[ Upstream commit 4015b1972763d7d513172276e51439f37e622a92 ]
+[ Upstream commit 0bc8c48de6f06c0cac52dde024ffda4433de6234 ]
 
-Z16 Gen1 has the wakeup-from-suspend issues from [1] but was never added
-to the appropriate quirk list.  I've tested this patch on top of 6.18.2,
-it fixes the issue for me on 21D4
+STA fails to connect to a 6 GHz AP with the following errors:
+ ath11k_pci 0000:01:00.0: failed to handle chan list with power type 1
+ wlp1s0: deauthenticating from c8:a3:e8:dd:41:e3 by local choice (Reason: 3=DEAUTH_LEAVING)
 
-Mark Pearson provided the other product IDs covering the second Z16 Gen1
-and both Z13 Gen1 identifiers.  They share the same firmware, and folks
-in the bugzilla report do indeed see the problem on Z13.
+ath11k_reg_handle_chan_list() treats the update as redundant and
+returns -EINVAL. That causes the connection attempt to fail.
 
-[1] - https://bugzilla.kernel.org/show_bug.cgi?id=219196
+Avoid unnecessary validation during association. Apply the regulatory
+redundant check only when the power type is IEEE80211_REG_UNSET_AP,
+which only occurs during core initialization.
 
-Signed-off-by: Ross Vandegrift <ross@kallisti.us>
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
+
+Signed-off-by: Qian Zhang <qian.zhang@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/wj7o2kmb7g54stdjvxp2hjqrnutnq3jbf4s2uh4ctvmlxdq7tf@nbkj2ebakhrd
+Link: https://patch.msgid.link/20260108034607.812885-1-qian.zhang@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/core.c | 28 ++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/net/wireless/ath/ath11k/reg.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
-index 06b4df2370e95..78a1b0edd8b45 100644
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -994,6 +994,34 @@ static const struct dmi_system_id ath11k_pm_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21F9"),
- 		},
- 	},
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = { /* Z13 G1 */
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21D2"),
-+		},
-+	},
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = { /* Z13 G1 */
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21D3"),
-+		},
-+	},
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = { /* Z16 G1 */
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21D4"),
-+		},
-+	},
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = { /* Z16 G1 */
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21D5"),
-+		},
-+	},
- 	{}
- };
+diff --git a/drivers/net/wireless/ath/ath11k/reg.c b/drivers/net/wireless/ath/ath11k/reg.c
+index d62a2014315a0..49b79648752cf 100644
+--- a/drivers/net/wireless/ath/ath11k/reg.c
++++ b/drivers/net/wireless/ath/ath11k/reg.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ #include <linux/rtnetlink.h>
  
+@@ -926,8 +926,11 @@ int ath11k_reg_handle_chan_list(struct ath11k_base *ab,
+ 	 */
+ 	if (ab->default_regd[pdev_idx] && !ab->new_regd[pdev_idx] &&
+ 	    !memcmp((char *)ab->default_regd[pdev_idx]->alpha2,
+-		    (char *)reg_info->alpha2, 2))
+-		goto retfail;
++		    (char *)reg_info->alpha2, 2) &&
++	    power_type == IEEE80211_REG_UNSET_AP) {
++		ath11k_reg_reset_info(reg_info);
++		return 0;
++	}
+ 
+ 	/* Intersect new rules with default regd if a new country setting was
+ 	 * requested, i.e a default regd was already set during initialization
 -- 
 2.51.0
 
