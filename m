@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F97442DFFA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F1733F38A
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301170; cv=none; b=eqwtvigPh4tFdN/ng4stgqcnZIybzr5ncLRLE0N/xCnSe8H6Vt/Vlj2la0rrpjvIOPvVReLqjlvGDnjHR/E2/+lENO3v+XTRBWXj6Lb2+R0xG1T6qBi9Ei7OObdvoT+EDrJJMjF9B9eeJtpReR2TMnEd81R0qQpSpssU9OpJYf0=
+	t=1772301170; cv=none; b=WlCOnQ11LCk4kh3GCb8HylRn6cehjwyGltP9nmQnhEs5NNf3UAesxqz57h+cP7HGtu9sq2C3SEKjoilKNzlMuMvuMxdWdKgT1JzkoPmVZPAjf7mNseDVkc+AG9KuxWGi5HS/WqjsjTrFx0tkCaBFhl4n/ouQFXQ4525suuXJx9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301170; c=relaxed/simple;
-	bh=8YVmarEWy8ZbuTJFypcLTpsl2b93WJec7S8/DfoF4jk=;
+	bh=m1ZSAN/ySeKCQCFbk2w7m2/15nYVBMXoKuwOBd1+OFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5snOXR2+pgpvQD3BrJndnAc6j+3mThDxXrPUTFE+ynmtg5Wv1M+zem0kCMBARO7MzKgWvTqO0EPkgarAiC1ZKg+tyCwEMjZWRcL86jfcAQ8D+FTRfS8aLBkFTjUCnaRm7xNU4HPrcrw15MAIHEkSDlCmc6l0pNCNYK63wBFhyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QgdLOX1+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X896hbTa+AwIgxMQ8dCB5tehK9soYOLmcx2w5OcPRxaVd6mi9IA66ciW1jUVX1bR/2MZKBoQBcevRwWqEVCt4CXT4yvjGBg8VnEP73WqVrBSitZyBQQz5esdf9khaTK3G07Kv2zFl/LKwyrQLejLcgzunjLMI8PiKi+dw2ZuPTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FFyTGRYx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QgdLOX1+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69769C19424;
-	Sat, 28 Feb 2026 17:52:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FFyTGRYx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D5EC19424;
+	Sat, 28 Feb 2026 17:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301170;
-	bh=8YVmarEWy8ZbuTJFypcLTpsl2b93WJec7S8/DfoF4jk=;
+	bh=m1ZSAN/ySeKCQCFbk2w7m2/15nYVBMXoKuwOBd1+OFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QgdLOX1+urbeqjkmdXUUS+rRNodXpimy2YzRkuVSTQkdFdpsVpO1tO5Gtt/f4yFqK
-	 1duNCRbD6yw3USmve1lVkvJNAtYaQCSa+O7TEcBU/cgF9KJVvmnDfas3mD3w3J+hZ8
-	 pUs0BPqRpiOW7VKVuHVvOVGdWg/dtgPsGkNZgEeCKL0kY00XlHf/mWlvoCZE5ejqu8
-	 C4CMX54X5PDvVdUucyiN8RDcaguX7htT8qKGVThmu7y3ypZG6qAenjignqxtn5PE1O
-	 +lPjkzMGV3oIkcTi7qOb0gDoYk3+rJbMROfMf1l+yQF2x/53yYXEYZ/MMqbbD8rIUl
-	 Hfu5SV6onMbYw==
+	b=FFyTGRYx/hjdw55cvxMMk8Fy0CFtKiDeuQVburpXN7sd9IqgARPU+S82O85rBcYm3
+	 fDRcU6UOyIefEQ45M0qbqIDJVyXf7dJ8rn9G+zbbNpoIejgauUy9NEFwSWKBaVxmkf
+	 HxybDaO6kppNH/3TZ9to84gsaRlrs6e5QgwNhCUjyvtMu6wxYbcoKqCK7CJBzBWAyX
+	 3MdBtqC+wARmBACpuYHvPkaw1zfADHycS/MP+C/kUB8OY9yhvEBDlRFV55aaAMda28
+	 T2sciRNZ5shBf7xOLzSXtKYcaLmfslD+1ijKaLV52JqMkd/BJ6ztXtc9mX3Mp6yhBj
+	 hq80M9KQI57gQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Liang Jie <liangjie@lixiang.com>,
-	fanggeng <fanggeng@lixiang.com>,
-	Linus Walleij <linusw@kernel.org>,
+Cc: Markus Perkins <markus@notsyncing.net>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 336/752] pinctrl: mediatek: make devm allocations safer and clearer in mtk_eint_do_init()
-Date: Sat, 28 Feb 2026 12:40:47 -0500
-Message-ID: <20260228174750.1542406-336-sashal@kernel.org>
+Subject: [PATCH 6.18 337/752] misc: eeprom: Fix EWEN/EWDS/ERAL commands for 93xx56 and 93xx66
+Date: Sat, 28 Feb 2026 12:40:48 -0500
+Message-ID: <20260228174750.1542406-337-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,105 +47,65 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Liang Jie <liangjie@lixiang.com>
+From: Markus Perkins <markus@notsyncing.net>
 
-[ Upstream commit 255b721c96046d4c57fa2268e4c72607868ce91f ]
+[ Upstream commit b54c82d6cbfc76647ba558e8e3647eb2b0ba0e2b ]
 
-mtk_eint_do_init() allocates several pointer arrays which are then
-populated in a per-instance loop and freed on error. The arrays are
-currently allocated with devm_kmalloc(), so their entries are left
-uninitialised until the per-instance allocations succeed.
+commit 14374fbb3f06 ("misc: eeprom_93xx46: Add new 93c56 and 93c66
+compatible strings") added support for 93xx56 and 93xx66 eeproms, but
+didn't take into account that the write enable/disable + erase all
+commands are hardcoded for the 6-bit address of the 93xx46.
 
-On a failure in the middle of the loop, the error path iterates over
-the full nbase range and calls devm_kfree() on each element. For
-indices which were never initialised, the corresponding array entries
-contain stack garbage. If any of those happen to be non-zero,
-devm_kfree() will pass them to devres_destroy(), which will WARN
-because there is no matching devm_kmalloc() resource for such bogus
-pointers.
+This commit fixes the command word generation by increasing the number
+of shifts as the address field grows, keeping the command intact.
 
-Improve the robustness and readability by:
+Also, the check for 8-bit or 16-bit mode is no longer required as this
+is already taken into account in the edev->addrlen field.
 
-  - Using devm_kcalloc() for the pointer arrays so that all entries
-    start as NULL, ensuring that only genuinely initialised elements
-    may be freed and preventing spurious WARN_ON()s in the error path.
-  - Switching the allocations to sizeof(*ptr) / sizeof(**ptr) forms,
-    avoiding hard-coded element types and making the code more resilient
-    to future type changes.
-  - Dropping the redundant NULL checks before devm_kfree(), as
-    devm_kfree() safely handles NULL pointers.
-
-The functional behaviour in the successful initialisation path remains
-unchanged, while the error handling becomes simpler and less
-error-prone.
-
-Reviewed-by: fanggeng <fanggeng@lixiang.com>
-Signed-off-by: Liang Jie <liangjie@lixiang.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Markus Perkins <markus@notsyncing.net>
+Link: https://patch.msgid.link/20251202104823.429869-3-markus@notsyncing.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/mtk-eint.c | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ drivers/misc/eeprom/eeprom_93xx46.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
-index 9f175c73613f8..2ea0902b4f660 100644
---- a/drivers/pinctrl/mediatek/mtk-eint.c
-+++ b/drivers/pinctrl/mediatek/mtk-eint.c
-@@ -539,24 +539,32 @@ int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
- 		}
- 	}
+diff --git a/drivers/misc/eeprom/eeprom_93xx46.c b/drivers/misc/eeprom/eeprom_93xx46.c
+index 9cae6f530679b..5230e910a1d11 100644
+--- a/drivers/misc/eeprom/eeprom_93xx46.c
++++ b/drivers/misc/eeprom/eeprom_93xx46.c
+@@ -45,6 +45,7 @@ struct eeprom_93xx46_platform_data {
+ #define OP_START	0x4
+ #define OP_WRITE	(OP_START | 0x1)
+ #define OP_READ		(OP_START | 0x2)
++/* The following addresses are offset for the 1K EEPROM variant in 16-bit mode */
+ #define ADDR_EWDS	0x00
+ #define ADDR_ERAL	0x20
+ #define ADDR_EWEN	0x30
+@@ -191,10 +192,7 @@ static int eeprom_93xx46_ew(struct eeprom_93xx46_dev *edev, int is_on)
+ 	bits = edev->addrlen + 3;
  
--	eint->pin_list = devm_kmalloc(eint->dev, eint->nbase * sizeof(u16 *), GFP_KERNEL);
-+	eint->pin_list = devm_kcalloc(eint->dev, eint->nbase,
-+				      sizeof(*eint->pin_list), GFP_KERNEL);
- 	if (!eint->pin_list)
- 		goto err_pin_list;
+ 	cmd_addr = OP_START << edev->addrlen;
+-	if (edev->pdata->flags & EE_ADDR8)
+-		cmd_addr |= (is_on ? ADDR_EWEN : ADDR_EWDS) << 1;
+-	else
+-		cmd_addr |= (is_on ? ADDR_EWEN : ADDR_EWDS);
++	cmd_addr |= (is_on ? ADDR_EWEN : ADDR_EWDS) << (edev->addrlen - 6);
  
--	eint->wake_mask = devm_kmalloc(eint->dev, eint->nbase * sizeof(u32 *), GFP_KERNEL);
-+	eint->wake_mask = devm_kcalloc(eint->dev, eint->nbase,
-+				       sizeof(*eint->wake_mask), GFP_KERNEL);
- 	if (!eint->wake_mask)
- 		goto err_wake_mask;
+ 	if (has_quirk_instruction_length(edev)) {
+ 		cmd_addr <<= 2;
+@@ -328,10 +326,7 @@ static int eeprom_93xx46_eral(struct eeprom_93xx46_dev *edev)
+ 	bits = edev->addrlen + 3;
  
--	eint->cur_mask = devm_kmalloc(eint->dev, eint->nbase * sizeof(u32 *), GFP_KERNEL);
-+	eint->cur_mask = devm_kcalloc(eint->dev, eint->nbase,
-+				      sizeof(*eint->cur_mask), GFP_KERNEL);
- 	if (!eint->cur_mask)
- 		goto err_cur_mask;
+ 	cmd_addr = OP_START << edev->addrlen;
+-	if (edev->pdata->flags & EE_ADDR8)
+-		cmd_addr |= ADDR_ERAL << 1;
+-	else
+-		cmd_addr |= ADDR_ERAL;
++	cmd_addr |= ADDR_ERAL << (edev->addrlen - 6);
  
- 	for (i = 0; i < eint->nbase; i++) {
--		eint->pin_list[i] = devm_kzalloc(eint->dev, eint->base_pin_num[i] * sizeof(u16),
-+		eint->pin_list[i] = devm_kzalloc(eint->dev,
-+						 eint->base_pin_num[i] * sizeof(**eint->pin_list),
- 						 GFP_KERNEL);
- 		port = DIV_ROUND_UP(eint->base_pin_num[i], 32);
--		eint->wake_mask[i] = devm_kzalloc(eint->dev, port * sizeof(u32), GFP_KERNEL);
--		eint->cur_mask[i] = devm_kzalloc(eint->dev, port * sizeof(u32), GFP_KERNEL);
-+		eint->wake_mask[i] = devm_kzalloc(eint->dev,
-+						  port * sizeof(**eint->wake_mask),
-+						  GFP_KERNEL);
-+		eint->cur_mask[i] = devm_kzalloc(eint->dev,
-+						 port * sizeof(**eint->cur_mask),
-+						 GFP_KERNEL);
- 		if (!eint->pin_list[i] || !eint->wake_mask[i] || !eint->cur_mask[i])
- 			goto err_eint;
- 	}
-@@ -592,12 +600,9 @@ int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
- 
- err_eint:
- 	for (i = 0; i < eint->nbase; i++) {
--		if (eint->cur_mask[i])
--			devm_kfree(eint->dev, eint->cur_mask[i]);
--		if (eint->wake_mask[i])
--			devm_kfree(eint->dev, eint->wake_mask[i]);
--		if (eint->pin_list[i])
--			devm_kfree(eint->dev, eint->pin_list[i]);
-+		devm_kfree(eint->dev, eint->cur_mask[i]);
-+		devm_kfree(eint->dev, eint->wake_mask[i]);
-+		devm_kfree(eint->dev, eint->pin_list[i]);
- 	}
- 	devm_kfree(eint->dev, eint->cur_mask);
- err_cur_mask:
+ 	if (has_quirk_instruction_length(edev)) {
+ 		cmd_addr <<= 2;
 -- 
 2.51.0
 
