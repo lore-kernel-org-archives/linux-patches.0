@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F323633344A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1DA332628
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301227; cv=none; b=rae4fNiOp+ZFe5QNRscwMwzho+DReD13wubQTrFCgcNM2HQRImzfwqr98Kc74Wo2UVfpSzs9lUNweqPpVUON77RPJae+BoyHT33vyQlS6vmJjak69Zvur+yyoYlItcfu2cXBf6mGAtoMW+d0ZNXN0H6xzCZf66iaKxr8eNX9m0Y=
+	t=1772301227; cv=none; b=XGmd7VqzeUigJZmmFTRZ0dhyNcq7OfWKKmt0EzyNuaO49MaBubx5bhWNFA5Y03EPplb5zRj0vqlUcjkHQHHW1KhgaRh77lPW7cAOG4a1KzH2QsyaxALLEqzEuEkT8b7C69x3uaLnmRSyDD1brqsr0yyYo1Ww1puJqdAoehLetjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301227; c=relaxed/simple;
-	bh=dH/i1FBsguOEmUILzyVjTdcuHv2E7eXf4aeX/spdWmg=;
+	bh=sUGRmpIzP6VTIdZXiy1GrpAXt4jwWFVe8WWblpyBuAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvNEa03+A9u8NkAFfeqKf2wMLKgDjZX47W5bCkYYJhHz8cmDi3P9BaOqvSo6XXrZzvjrYdus5g4yh12H7MTwksP6sHTdJq2Cy7cJ98xBVxHKcAs9+FmHaklgmP/iMM4Bdi+r3FZUyt5o1KBztwLY3KqulUPsCMHOowfSSf1mVUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ls/vth/F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KxvCSs04Y3SMgkUTgTVqEZXpwUKb7JjUx0/wAUpUVTBqpqJdwmEC5za+1uIXZb8uD5fqXStOMYk6bgaiRHnqooqeZomi8fCU8ZCxWbSlF/7mzmFV1qFrLRZ1rEpT7hubsDzqPpsCQ2wuY1LgyLbAgKDovv19qwPum8tERXB3uJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d3xvKlj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ls/vth/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C607C19425;
-	Sat, 28 Feb 2026 17:53:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d3xvKlj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26374C19423;
+	Sat, 28 Feb 2026 17:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301226;
-	bh=dH/i1FBsguOEmUILzyVjTdcuHv2E7eXf4aeX/spdWmg=;
+	s=k20201202; t=1772301227;
+	bh=sUGRmpIzP6VTIdZXiy1GrpAXt4jwWFVe8WWblpyBuAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ls/vth/F0+0Eu4G5crIb9EvHJXLkMvi0+pjMfLA+pHot1i+7TdQSkglwVZ+bYQA+3
-	 R01zuP0mgD4cmNSZa76FPCzz9ABj3tJ6L3qlKbQG/LdwWZg8qcKxxNRJipJElCVhV6
-	 9FzgFIx5GPr1pqt5F3RR5SmGYn8aSTT2Vhw11dIrc+H7iDr0JMpW+pU0+SG00l+SMS
-	 /eRB7Ng5A0VaNVn6TrQlxCzoDn/vtieDsbcbnxCd2LoQyrDSZaZXEq4rHGwcv3ekhD
-	 xxTo++rPy7pbcZ7j7OboWcP+AzVXT4IRbipFUzMD8vLw5auMyiPKCk/ShVQonMTqgC
-	 b62jX+qyTgNvQ==
+	b=d3xvKlj9KT/NhQyNJEWPxE3H7+1f1avic2fNN1ERygfb6bcL3lJAIB0E+6kKkFDQ9
+	 3394u/30uFP8P8jTSgIaB5usobd6AK2TyZpxBH5hOzEea+ZVTpZnaA7I4hv7iBQ5oQ
+	 WvbcsGGp8vD2yBO84ClaSM8z0ENhPl+qn9mliJyB6kBE/nveo2TYLgUv5sp55yOQPU
+	 FFPuJXkCbhisaLW6FusqHihSdGdV/T0rfTjWsEz+sXIp/vRnB43FmlnSqDC1N22u0W
+	 +G9HyYXeQiYG/jtFC2Sw172/lZMMYt3sOs8LS54OMF/Wr5qG+Z6AI0736EryqbU66M
+	 q7QgW1KYIE+Ag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Hyunwoo Kim <imv4bel@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 404/752] espintcp: Fix race condition in espintcp_close()
-Date: Sat, 28 Feb 2026 12:41:55 -0500
-Message-ID: <20260228174750.1542406-404-sashal@kernel.org>
+Subject: [PATCH 6.18 405/752] net: usb: kaweth: remove TX queue manipulation in kaweth_set_rx_mode
+Date: Sat, 28 Feb 2026 12:41:56 -0500
+Message-ID: <20260228174750.1542406-405-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,53 +48,74 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit e1512c1db9e8794d8d130addd2615ec27231d994 ]
+[ Upstream commit 64868f5ecadeb359a49bc4485bfa7c497047f13a ]
 
-This issue was discovered during a code audit.
+kaweth_set_rx_mode(), the ndo_set_rx_mode callback, calls
+netif_stop_queue() and netif_wake_queue(). These are TX queue flow
+control functions unrelated to RX multicast configuration.
 
-After cancel_work_sync() is called from espintcp_close(),
-espintcp_tx_work() can still be scheduled from paths such as
-the Delayed ACK handler or ksoftirqd.
-As a result, the espintcp_tx_work() worker may dereference a
-freed espintcp ctx or sk.
+The premature netif_wake_queue() can re-enable TX while tx_urb is still
+in-flight, leading to a double usb_submit_urb() on the same URB:
 
-The following is a simple race scenario:
+kaweth_start_xmit() {
+    netif_stop_queue();
+    usb_submit_urb(kaweth->tx_urb);
+}
 
-           cpu0                             cpu1
+kaweth_set_rx_mode() {
+    netif_stop_queue();
+    netif_wake_queue();             // wakes TX queue before URB is done
+}
 
-  espintcp_close()
-    cancel_work_sync(&ctx->work);
-                                     espintcp_write_space()
-                                       schedule_work(&ctx->work);
+kaweth_start_xmit() {
+    netif_stop_queue();
+    usb_submit_urb(kaweth->tx_urb); // URB submitted while active
+}
 
-To prevent this race condition, cancel_work_sync() is
-replaced with disable_work_sync().
+This triggers the WARN in usb_submit_urb():
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/aZSie7rEdh9Nu0eM@v4bel
+  "URB submitted while active"
+
+This is a similar class of bug fixed in rtl8150 by
+
+- commit 958baf5eaee3 ("net: usb: Remove disruptive netif_wake_queue in rtl8150_set_multicast").
+
+Also kaweth_set_rx_mode() is already functionally broken, the
+real set_rx_mode action is performed by kaweth_async_set_rx_mode(),
+which in turn is not a no-op only at ndo_open() time.
+
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Link: https://patch.msgid.link/20260217175012.1234494-1-n7l8m4@u.northwestern.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/espintcp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/kaweth.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
-index bf744ac9d5a73..8709df716e98e 100644
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -536,7 +536,7 @@ static void espintcp_close(struct sock *sk, long timeout)
- 	sk->sk_prot = &tcp_prot;
- 	barrier();
+diff --git a/drivers/net/usb/kaweth.c b/drivers/net/usb/kaweth.c
+index c9efb7df892ec..e01d14f6c3667 100644
+--- a/drivers/net/usb/kaweth.c
++++ b/drivers/net/usb/kaweth.c
+@@ -765,7 +765,6 @@ static void kaweth_set_rx_mode(struct net_device *net)
  
--	cancel_work_sync(&ctx->work);
-+	disable_work_sync(&ctx->work);
- 	strp_done(&ctx->strp);
+ 	netdev_dbg(net, "Setting Rx mode to %d\n", packet_filter_bitmap);
  
- 	skb_queue_purge(&ctx->out_queue);
+-	netif_stop_queue(net);
+ 
+ 	if (net->flags & IFF_PROMISC) {
+ 		packet_filter_bitmap |= KAWETH_PACKET_FILTER_PROMISCUOUS;
+@@ -775,7 +774,6 @@ static void kaweth_set_rx_mode(struct net_device *net)
+ 	}
+ 
+ 	kaweth->packet_filter_bitmap = packet_filter_bitmap;
+-	netif_wake_queue(net);
+ }
+ 
+ /****************************************************************
 -- 
 2.51.0
 
