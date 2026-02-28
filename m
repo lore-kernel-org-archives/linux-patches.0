@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462C8344D9A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5C7375AC8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301709; cv=none; b=Fuu04kPistrzRUY2Q9sZ5CjmLZnbOmyhQJfK16yHV8JHZMzHqohNTyL7utOdHm7nN4Rw9bU20MxUWNtfjl5w7PuOkZp+2Fa78YVX+ysZyajntK8uz83mPy7GAUkp8x+EORUxdTKucDGdG91OsVz+DojAmd02yJEo1soXGD6M7T0=
+	t=1772301710; cv=none; b=jN1HatNTnOW5gzeLj9J7InaHyh20qFNCLRg+kSAt8onAeKvOBxQsvY9HXy5pgOu9gLyZGcvmbZRsQLrUKcyNTSxW2LhoQ9hyOD7ssF6vcS1cuCNk4EKCoCFimFxVnAoxyWRQXEu9DAETbxyZDQ29AeozBDKfIasbYnPj/8nBSMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301709; c=relaxed/simple;
-	bh=511vdJpOh7yh3gUd06CzNduniqwOhGmnGo9C5NZTJhw=;
+	s=arc-20240116; t=1772301710; c=relaxed/simple;
+	bh=fqxRVY6vrQQzP20e2iyICzJz55/ICj+svh+tsKskA88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8SywEU5ucHKOWgW/Qpc2zZXTNBc3vTjpWGoM+m/ELbl3l6vHwpD2zfjCzuMCqKKdnbbcLkN98ru/HjPAt95WRsdVT3T9CP+IDgjElC/57nX2GWMffjtGxfWI8srjXynJz/7z03NDicAnMCR2j2ZKeVHI5VLy2/cmv39MJiv6XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VZ5Gfw2w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gcb9SjvAfr7GCeExLPvuDexV8faUb9j5IDZe2GZj1TaWCPz5+jtwXyAtfYWgvu84+QNNv5MOzZOkwO4/CNCBHQ/EorDLWoFWIAXiN1wM5GGcl3BNbS6EhRFYnP9ygdMH6tHmlT8Nnjuw23TXdt6c8B4qCs0JTOe3a60wMJnqGWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZyB5+9P4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VZ5Gfw2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B761C116D0;
-	Sat, 28 Feb 2026 18:01:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZyB5+9P4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D832C116D0;
+	Sat, 28 Feb 2026 18:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301709;
-	bh=511vdJpOh7yh3gUd06CzNduniqwOhGmnGo9C5NZTJhw=;
+	bh=fqxRVY6vrQQzP20e2iyICzJz55/ICj+svh+tsKskA88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZ5Gfw2w/ACMcfxEFas0sC/z29rLH2rhzkKlrjKp+mREN0VqBQFhEBQVcrGkWWw3T
-	 ju0Dx1gee33qac/PzY6TbNykfEL9VFennllGumavFW9CVWVI326d8mqJCHUGk+RWF1
-	 2LAo54k2a+mpyWor+QbjNcujntowqGSbBomJb+pArkOe3VYrMyZkD89eDyGgUNFsjz
-	 2fdHUz/9kmYU/4uDeziPBAp+g8fUkZsroLANDrqg7/VXAliJuM/0VpmE71s9566jf7
-	 YOinkyxmYWWd3QoPgWrpv5krLiKul61Oa2CglFcoM4q6gEl0SrvCMqpRrpW4mlpSD/
-	 qJZ8SG+ItdoIA==
+	b=ZyB5+9P4D8RKh30LoEw5MPOLnF7fUBNBdLQrMUSKf5+CRc2f1gzcFox97v5AhRFu5
+	 5fVDHDbzgSYhdCbbv3qrA7fODpNn6F955bTo0GZ4lBur+ZAN0wVYlGrm/9iOzslHdH
+	 6oOFq02t7E2Uz/X7tUVWZIeEIO8OsSg9Hmt91MdHMuP7H3Tg59koqWfQHiiWKYiJ/l
+	 erSj3BatSH9vZmC9IUFeDLHRPkr/hD7TYNmF7Ae8qP17Bn7jnuhcnII2FG69e42X9X
+	 UEsamqiEK3648jSQm8l9Joyck6KU1mlIM2x7AwqOEU6Cvwhuw7wn7G/JaCa3zR1Y1g
+	 8OTQqp6f166Kg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 103/385] arm64: dts: qcom: msm8994-octagon: Fix Analog Devices vendor prefix of AD7147
-Date: Sat, 28 Feb 2026 12:55:25 -0500
-Message-ID: <20260228180011.1568201-103-sashal@kernel.org>
+Subject: [PATCH 6.12 104/385] ARM: dts: allwinner: sun5i-a13-utoo-p66: delete "power-gpios" property
+Date: Sat, 28 Feb 2026 12:55:26 -0500
+Message-ID: <20260228180011.1568201-104-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -49,40 +47,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Chen-Yu Tsai <wens@kernel.org>
 
-[ Upstream commit 7db5fbe508deedec6c183d5056cf3c504c027f40 ]
+[ Upstream commit 0b2761eb1287bd9f62367cccf6626eb3107cef6f ]
 
-Trivial change, Analog Devices vendor prefix is "adi", but there is
-a valid "ad" vendor prefix of another company, this may explain why
-the issue hasn't been discovered by the automatic tests.
+The P66's device tree includes the reference design dtsi files, which
+defines a node and properties for the touchpanel in the common design.
+The P66 dts file then overrides all the properties to match its own
+design, but as the touchpanel model is different, a different schema
+is matched. This other schema uses a different name for the GPIO.
 
-A problem of not described compatible value is out of this change scope.
+The original submission added the correct GPIO property, but did not
+delete the one inherited from the reference design, causing validation
+errors.
 
-Fixes: c636eeb751f6 ("arm64: dts: qcom: msm8994-octagon: Add AD7147 and APDS9930 sensors")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251226003923.3341904-1-vladimir.zapolskiy@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Explicitly delete the incorrect GPIO property.
+
+Fixes: 2a53aff27236 ("ARM: dts: sun5i: Enable touchscreen on Utoo P66")
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20251225103616.3203473-4-wens@kernel.org
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-index 10cd244dea4f7..ef8dfce8d9b2d 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-@@ -378,7 +378,7 @@ &blsp2_i2c1 {
- 	status = "okay";
- 
- 	sideinteraction: touch@2c {
--		compatible = "ad,ad7147_captouch";
-+		compatible = "adi,ad7147_captouch";
- 		reg = <0x2c>;
- 
- 		pinctrl-names = "default", "sleep";
+diff --git a/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts b/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
+index be486d28d04fa..428cab5a0e906 100644
+--- a/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
++++ b/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
+@@ -102,6 +102,7 @@ &touchscreen {
+ 	/* The P66 uses a different EINT then the reference design */
+ 	interrupts = <6 9 IRQ_TYPE_EDGE_FALLING>; /* EINT9 (PG9) */
+ 	/* The icn8318 binding expects wake-gpios instead of power-gpios */
++	/delete-property/ power-gpios;
+ 	wake-gpios = <&pio 1 3 GPIO_ACTIVE_HIGH>; /* PB3 */
+ 	touchscreen-size-x = <800>;
+ 	touchscreen-size-y = <480>;
 -- 
 2.51.0
 
