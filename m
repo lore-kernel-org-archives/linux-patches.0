@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A052132ED2A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0DC1FBEB0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301940; cv=none; b=h6ryWpxXOsxGbSLgR27IVElpuhBok7NLxTeWsKj4QThWF1IuaA4eecZg1tl+/7KXsqJDlyaLXpdEBBKLFMocbmBpBKbK1hnUWxhK6qFKNz9W0FYeH8Msb8lvV0fZxEBZK86nUmVGoqWaD/lp46L+Phwp3i84nRYBurtgDtW2Zr8=
+	t=1772301941; cv=none; b=cNgVCWTMw08gNHJcG0cB9VEKiElZxzCcSjSEpBFShgSDYfXB2PLK1mrc545ysEx91vx/s7gNSnw8TAEGJ5Dj72OIVYfL5o+yrDi/Wrpsm2H1yiTpc2lJoWVRgl3uGlpPZxXoaspJ3JGZ8c2iJJTCcfvcdFWw1b3bGJ2zNCazrfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301940; c=relaxed/simple;
-	bh=5gCvKfs0bTB0F4Kk6OtyP7PM+umeOKiLiMN7hxWE1HA=;
+	s=arc-20240116; t=1772301941; c=relaxed/simple;
+	bh=Q6GBT8Cn62mjIQ9xE9BwRUGdHw3n/wRUyD/DW5egki0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EKVK/L+u4VAD72iuc3Sm7me03u/QvgDD7yiVuvAUmIAQpqpUGL2cB6T1YPR/1Ssx+rWfu+ka/530DOEe/si62PAYBPPxJ5CX4ilv4d2nj7TDqHXU8kmAfZmUlDm0RSplUjX3R3Q60K3nZgidxWCveLY5TrFXqoLxaUNzJdkGKTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7h/kr/6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A7PxzzzLs5pIcuJnrVo388C/eWFsgaUkTVR5s3+VvyR9R5zSuzHTe474b58Wthzkg3nQfrVzMgUwCzV6DUnD1b56IL7LqMW8aa1FA9CLzyykS60JVWqloByS77jw5qQGVtzHm5ofMX6iwjI3wSkqw4rxE4eZO5e8JbtAoycBlpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZrPOiSf4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7h/kr/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0061C19423;
-	Sat, 28 Feb 2026 18:05:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZrPOiSf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7174C19423;
+	Sat, 28 Feb 2026 18:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301940;
-	bh=5gCvKfs0bTB0F4Kk6OtyP7PM+umeOKiLiMN7hxWE1HA=;
+	s=k20201202; t=1772301941;
+	bh=Q6GBT8Cn62mjIQ9xE9BwRUGdHw3n/wRUyD/DW5egki0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X7h/kr/6xqu0UK5o3ggDLpoBNATgsJV5fW8/iX5V/3qiytfLcpoZy+KZpWiBQehnN
-	 i00YXt12/ZdSn7oKaX8+TTFe+1ly8ugafih5WJNf4biscyJHM1rCsSaDMkv/o+RrtS
-	 1Enjjc1wlOThJ0jDNiTDs8jLR5ELFMp1fWFOyYWaxOiK0FPFmRBaeL/pjhUGKmgGYg
-	 8rGSARlOk5dqRa+RXph6cae9Cc3x/wC+Fhc3IBwCOP3mlsRik0Ur4YA8AcxRskh7zR
-	 toVPEvM/w8yIPSWSjuBBiJXj9dD0Znwplk2pFcCJRizn2es8GOEJXqvJhFQVQXoe5I
-	 WW+FNOye7KJUA==
+	b=ZrPOiSf4JamIDwo6hc15DlOYlQvpEeJGZrKWxkY2fe67mLBYxl7/xe9EDdNZ7Rpwl
+	 DlDjPbEvFAD9G4jIdJQK+pTBp16hXoSmIybOReftJHbMI6HQlB+bgE2FfisZk6xcYj
+	 lRk6t+BKsXNVWE8wIN3nGMoVN31jEcukknZVXgIW1JlnoipJtgm5uB3YzT3nk9FlGg
+	 CS94N6YWSzoqjLB56fiCsRyOaU9r28dB/S3NZamB4hKaYdC+tp/jpc3iAHHuMyj4PR
+	 wgkm08U5BnikdbqrPn+QMythr5NLvlhrgZudkQFx7veM2FTRCzoQQhz4atcFq6K34K
+	 gnAKQPwMMb5vA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Aleksei Oladko <aleksey.oladko@virtuozzo.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 377/385] selftests: forwarding: vxlan_bridge_1d_ipv6: fix test failure with br_netfilter enabled
-Date: Sat, 28 Feb 2026 12:59:59 -0500
-Message-ID: <20260228180011.1568201-377-sashal@kernel.org>
+Subject: [PATCH 6.12 378/385] netfilter: nf_conntrack_h323: don't pass uninitialised l3num value
+Date: Sat, 28 Feb 2026 13:00:00 -0500
+Message-ID: <20260228180011.1568201-378-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -44,68 +42,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ce9f6aec0fb780dafc1dfc5f47c688422aff464a ]
+[ Upstream commit a6d28eb8efe96b3e35c92efdf1bfacb0cccf541f ]
 
-The test generates VXLAN traffic using mausezahn, where the encapsulated
-inner IPv6 packet has an incorrect payload length set in the IPv6 header.
-After VXLAN decapsulation, such packets do not pass sanity checks in
-br_netfilter and are dropped, which causes the test to fail.
+Mihail Milev reports: Error: UNINIT (CWE-457):
+ net/netfilter/nf_conntrack_h323_main.c:1189:2: var_decl:
+	Declaring variable "tuple" without initializer.
+ net/netfilter/nf_conntrack_h323_main.c:1197:2:
+	uninit_use_in_call: Using uninitialized value "tuple.src.l3num" when calling "__nf_ct_expect_find".
+ net/netfilter/nf_conntrack_expect.c:142:2:
+	read_value: Reading value "tuple->src.l3num" when calling "nf_ct_expect_dst_hash".
 
-Fix this by setting the correct IPv6 payload length for the encapsulated
-packet generated by mausezahn, so that the packet is accepted
-by br_netfilter.
+  1195|   	tuple.dst.protonum = IPPROTO_TCP;
+  1196|
+  1197|-> 	exp = __nf_ct_expect_find(net, nf_ct_zone(ct), &tuple);
+  1198|   	if (exp && exp->master == ct)
+  1199|   		return exp;
 
-tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
-lines 698-706
+Switch this to a C99 initialiser and set the l3num value.
 
-              )"00:03:"$(           : Payload length
-              )"3a:"$(              : Next header
-              )"04:"$(              : Hop limit
-              )"$saddr:"$(          : IP saddr
-              )"$daddr:"$(          : IP daddr
-              )"80:"$(              : ICMPv6.type
-              )"00:"$(              : ICMPv6.code
-              )"00:"$(              : ICMPv6.checksum
-              )
-
-Data after IPv6 header:
-• 80: — 1 byte (ICMPv6 type)
-• 00: — 1 byte (ICMPv6 code)
-• 00: — 1 byte (ICMPv6 checksum, truncated)
-
-Total: 3 bytes → 00:03 is correct. The old value 00:08 did not match
-the actual payload size.
-
-Fixes: b07e9957f220 ("selftests: forwarding: Add VxLAN tests with a VLAN-unaware bridge for IPv6")
-Signed-off-by: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260213131907.43351-3-aleksey.oladko@virtuozzo.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f587de0e2feb ("[NETFILTER]: nf_conntrack/nf_nat: add H.323 helper port")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_h323_main.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
-index a603f7b0a08f0..e642feeada0e7 100755
---- a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
-+++ b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
-@@ -695,7 +695,7 @@ vxlan_encapped_ping_do()
- 		    )"6"$(			  : IP version
- 		    )"$inner_tos"$(               : Traffic class
- 		    )"0:00:00:"$(                 : Flow label
--		    )"00:08:"$(                   : Payload length
-+		    )"00:03:"$(                   : Payload length
- 		    )"3a:"$(                      : Next header
- 		    )"04:"$(                      : Hop limit
- 		    )"$saddr:"$(		  : IP saddr
+diff --git a/net/netfilter/nf_conntrack_h323_main.c b/net/netfilter/nf_conntrack_h323_main.c
+index 5a9bce24f3c3d..ed983421e2eb2 100644
+--- a/net/netfilter/nf_conntrack_h323_main.c
++++ b/net/netfilter/nf_conntrack_h323_main.c
+@@ -1186,13 +1186,13 @@ static struct nf_conntrack_expect *find_expect(struct nf_conn *ct,
+ {
+ 	struct net *net = nf_ct_net(ct);
+ 	struct nf_conntrack_expect *exp;
+-	struct nf_conntrack_tuple tuple;
++	struct nf_conntrack_tuple tuple = {
++		.src.l3num = nf_ct_l3num(ct),
++		.dst.protonum = IPPROTO_TCP,
++		.dst.u.tcp.port = port,
++	};
+ 
+-	memset(&tuple.src.u3, 0, sizeof(tuple.src.u3));
+-	tuple.src.u.tcp.port = 0;
+ 	memcpy(&tuple.dst.u3, addr, sizeof(tuple.dst.u3));
+-	tuple.dst.u.tcp.port = port;
+-	tuple.dst.protonum = IPPROTO_TCP;
+ 
+ 	exp = __nf_ct_expect_find(net, nf_ct_zone(ct), &tuple);
+ 	if (exp && exp->master == ct)
 -- 
 2.51.0
 
