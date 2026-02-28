@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E39355049
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17E4313E31
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301022; cv=none; b=MeBVEVxDn90ulrgYFkETTPQ3ir2sO7TZ5XIFNFgHs7Oi3+TplKP5lLn0eKZdYnV3uUYNxdwRy/ed+i2+VeSZlzsWomDTSydqWbo0n3Nre3aGvzuSmB/3wNdQTQLmaEui0DGOGLpj5QihLANrxk80kV5wTtizxQVLMtL9yKrL4SI=
+	t=1772301023; cv=none; b=ta4AIZlxZCMGzwDkOHqMp++yx/1dEgA0r3IVn+8Iz/5Ytn/O9J/b6u/iJWor2O3neuHhqPSSllxOXvZ5RymbzfhU1vUmLN7TJpHRw9gdXbUDa0EUk6C3iP64JHe5nMdHmNKVyrA76O+y99QNFPsXxAhgYx20f3zoM/CA3Gi3IuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301022; c=relaxed/simple;
-	bh=7Ai5J78US4WCWcSIRNjDnWgArYAcRIXbS/AvosGatCg=;
+	s=arc-20240116; t=1772301023; c=relaxed/simple;
+	bh=acyDod6XCOH+jKSFS/GSgVrZwDWwzJ9Uzixv95uaBJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQLMSL5HESJ2MoUp5qS8RwUCyUp3WHSVkjf6Xg4FVh2mP8UBQ4xu8Ki3tWX3WVtiJEfHGCCl/0tdMIq2R6tXqGgYwOFkrQrHgbuxzReNlRNw1bOudgX6eVxW6M5lclJlxo/GTlCSDL817SJXrHpOvRp9jbLItUnLExL9ux25tqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YV3oUxuZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hGQx2m684wCh6Vszpw0NQSkuOrKFb77wkqvoLNTbPx29YI6dbWbe77lhse4hJB9+O4skayzbUXTh0zLppQxVAQWooexsMzKBkVWg+5+8yyl9CqVxTRPmYCUmE1KG4t+pLyLi4mtQKjAek1+2HzMQnCpml/oU0vggIdASm4HUis4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TR4U7stW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YV3oUxuZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9E9C19423;
-	Sat, 28 Feb 2026 17:50:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TR4U7stW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77F8C116D0;
+	Sat, 28 Feb 2026 17:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301022;
-	bh=7Ai5J78US4WCWcSIRNjDnWgArYAcRIXbS/AvosGatCg=;
+	s=k20201202; t=1772301023;
+	bh=acyDod6XCOH+jKSFS/GSgVrZwDWwzJ9Uzixv95uaBJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YV3oUxuZ/qcwJSSqRK67GSnIZmXwJBZYsnBrTAZJhBNPCKkNxUWVXtlo5DtDmxbYm
-	 Ysgf4sU0mzwQOrSJaT/Tbnjj6n7bDyOcbYzyPna+DG+gu/0L5xOlXpZt4F96BawXA6
-	 3xG6eB0k5qdFWGoqJiTfDWy7OI69zlA+UzOb2LBS7VZbPo91mnen1Y8tibvLcdKTsS
-	 eAMguYz/m4kPjOQWMLFfH/QQ8l8YBUf/IIxcP7Zid+MCDy7l5uXlEt65t0av2Qldnw
-	 3qAue6SxISfRqrT+3KSiGGS32suc2faHAzY+ML46gATWuyjp+Oaf8ZLarz3C1Yop7s
-	 k1A5wbZwdIi2Q==
+	b=TR4U7stWdaQigEKyfC1xQpmsMiaKysEyH9zc0ftGsZywNJFzfx/Tmd39Bjx2h684N
+	 UsvtP6Lpmr3UWr7psE8bbOievcoNriwzU3BxorfG4a+Je3HHjQ0CpYMCA9rQjWGsX0
+	 ptL0N0OyGsJd2MH38YhbrOVOG3W9Re+p7zHzINa2JABET0FGOyYP6rycPRLdIHQkdS
+	 u6XWbjc1oGr+sOQu+/Okq++5LowcnqYKOTs1bmT5YBi0PbiBIOpeWi4td19BYTPpn7
+	 29VANN433D45wFyVwJ5E/JeQzgykCR6ff/LGYEQ1n93/NnRbBgKgnpKxUugtE73llU
+	 JlMP7hrASvPmQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Yew, Chang Ching" <chang.ching.yew@intel.com>,
+Cc: Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 159/752] media: v4l2-async: Fix error handling on steps after finding a match
-Date: Sat, 28 Feb 2026 12:37:50 -0500
-Message-ID: <20260228174750.1542406-159-sashal@kernel.org>
+Subject: [PATCH 6.18 160/752] media: mt9m114: Avoid a reset low spike during probe()
+Date: Sat, 28 Feb 2026 12:37:51 -0500
+Message-ID: <20260228174750.1542406-160-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,129 +49,53 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-[ Upstream commit 7345d6d356336c448d6b9230ed8704f39679fd12 ]
+[ Upstream commit 84359d0a5e3afce5e3e3b6562efadff690614d5b ]
 
-Once an async connection is found to be matching with an fwnode, a
-sub-device may be registered (in case it wasn't already), its bound
-operation is called, ancillary links are created, the async connection
-is added to the sub-device's list of connections and removed from the
-global waiting connection list. Further on, the sub-device's possible own
-notifier is searched for possible additional matches.
+mt9m114_probe() requests the reset GPIO in output low state:
 
-Fix these specific issues:
+	sensor->reset = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
 
-- If v4l2_async_match_notify() failed before the sub-notifier handling,
-  the async connection was unbound and its entry removed from the
-  sub-device's async connection list. The latter part was also done in
-  v4l2_async_match_notify().
+and then almost immediately afterwards calls mt9m114_power_on() which does:
 
-- The async connection's sd field was only set after creating ancillary
-  links in v4l2_async_match_notify(). It was however dereferenced in
-  v4l2_async_unbind_subdev_one(), which was called on error path of
-  v4l2_async_match_notify() failure.
+		gpiod_set_value(sensor->reset, 1);
+		fsleep(duration);
+		gpiod_set_value(sensor->reset, 0);
 
+which means that if the reset pin was high before this code runs that
+it will very briefly be driven low because of passing GPIOD_OUT_LOW when
+requesting the GPIO only to be driven high again possibly directly after
+that. Such a very brief driving low of the reset pin may put the chip in
+a confused state.
+
+Request the GPIO in high (reset the chip) state instead to avoid this,
+turning the initial gpiod_set_value() in mt9m114_power_on() into a no-op.
+and the fsleep() ensures that it will stay high long enough to properly
+reset the chip.
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Tested-by: "Yew, Chang Ching" <chang.ching.yew@intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-async.c | 45 +++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+ drivers/media/i2c/mt9m114.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
-index ee884a8221fbd..1c08bba9ecb91 100644
---- a/drivers/media/v4l2-core/v4l2-async.c
-+++ b/drivers/media/v4l2-core/v4l2-async.c
-@@ -343,7 +343,6 @@ static int v4l2_async_match_notify(struct v4l2_async_notifier *notifier,
- 				   struct v4l2_subdev *sd,
- 				   struct v4l2_async_connection *asc)
- {
--	struct v4l2_async_notifier *subdev_notifier;
- 	bool registered = false;
- 	int ret;
+diff --git a/drivers/media/i2c/mt9m114.c b/drivers/media/i2c/mt9m114.c
+index 51ebbe7ae9969..554f25071cca6 100644
+--- a/drivers/media/i2c/mt9m114.c
++++ b/drivers/media/i2c/mt9m114.c
+@@ -2434,7 +2434,7 @@ static int mt9m114_probe(struct i2c_client *client)
+ 		goto error_ep_free;
+ 	}
  
-@@ -389,6 +388,25 @@ static int v4l2_async_match_notify(struct v4l2_async_notifier *notifier,
- 	dev_dbg(notifier_dev(notifier), "v4l2-async: %s bound (ret %d)\n",
- 		dev_name(sd->dev), ret);
- 
-+	return 0;
-+
-+err_call_unbind:
-+	v4l2_async_nf_call_unbind(notifier, sd, asc);
-+	list_del(&asc->asc_subdev_entry);
-+
-+err_unregister_subdev:
-+	if (registered)
-+		v4l2_device_unregister_subdev(sd);
-+
-+	return ret;
-+}
-+
-+static int
-+v4l2_async_nf_try_subdev_notifier(struct v4l2_async_notifier *notifier,
-+				  struct v4l2_subdev *sd)
-+{
-+	struct v4l2_async_notifier *subdev_notifier;
-+
- 	/*
- 	 * See if the sub-device has a notifier. If not, return here.
- 	 */
-@@ -404,16 +422,6 @@ static int v4l2_async_match_notify(struct v4l2_async_notifier *notifier,
- 	subdev_notifier->parent = notifier;
- 
- 	return v4l2_async_nf_try_all_subdevs(subdev_notifier);
--
--err_call_unbind:
--	v4l2_async_nf_call_unbind(notifier, sd, asc);
--	list_del(&asc->asc_subdev_entry);
--
--err_unregister_subdev:
--	if (registered)
--		v4l2_device_unregister_subdev(sd);
--
--	return ret;
- }
- 
- /* Test all async sub-devices in a notifier for a match. */
-@@ -445,6 +453,10 @@ v4l2_async_nf_try_all_subdevs(struct v4l2_async_notifier *notifier)
- 		if (ret < 0)
- 			return ret;
- 
-+		ret = v4l2_async_nf_try_subdev_notifier(notifier, sd);
-+		if (ret < 0)
-+			return ret;
-+
- 		/*
- 		 * v4l2_async_match_notify() may lead to registering a
- 		 * new notifier and thus changing the async subdevs
-@@ -829,7 +841,11 @@ int __v4l2_async_register_subdev(struct v4l2_subdev *sd, struct module *module)
- 			ret = v4l2_async_match_notify(notifier, v4l2_dev, sd,
- 						      asc);
- 			if (ret)
--				goto err_unbind;
-+				goto err_unlock;
-+
-+			ret = v4l2_async_nf_try_subdev_notifier(notifier, sd);
-+			if (ret)
-+				goto err_unbind_one;
- 
- 			ret = v4l2_async_nf_try_complete(notifier);
- 			if (ret)
-@@ -853,9 +869,10 @@ int __v4l2_async_register_subdev(struct v4l2_subdev *sd, struct module *module)
- 	if (subdev_notifier)
- 		v4l2_async_nf_unbind_all_subdevs(subdev_notifier);
- 
--	if (asc)
--		v4l2_async_unbind_subdev_one(notifier, asc);
-+err_unbind_one:
-+	v4l2_async_unbind_subdev_one(notifier, asc);
- 
-+err_unlock:
- 	mutex_unlock(&list_lock);
- 
- 	sd->owner = NULL;
+-	sensor->reset = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
++	sensor->reset = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(sensor->reset)) {
+ 		ret = PTR_ERR(sensor->reset);
+ 		dev_err_probe(dev, ret, "Failed to get reset GPIO\n");
 -- 
 2.51.0
 
