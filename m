@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F693359A6B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2001359A70
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302418; cv=none; b=ipEFKwR+ORt4Wee7OyoJ0jvlfEJh3bKbEHapcIiA/gDtIczHzCXmQWCyZmuvXMns9Y5sOV0aVLFWmXcBHFEQ5qZFZAczBWxRs8tWdobT5/lg5tF/dU5X29oNal7x3ATuIm7k1lECSXWlDDsAe1Sjotr7L4wPO/K9hJ579VZtoDk=
+	t=1772302418; cv=none; b=B9mSFhzevTnKVYOm0filqYOuuw9x14Edss/IaavfY75NGgybINhd4tSwJ6Xhn84iqjye/ezLZYfxZDnfsxgsOU0g3H/6MmScAYvs0lzuT+iaCRwfQpEclCU/+/j+V/l/U8yEfArlOqIK+f7smwGSk3mxOg9EEX2ADZCugVtzZhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302418; c=relaxed/simple;
-	bh=r28FSqOYKeJF7IzUqWVW9EryuAaDuYl7shjN+DkgpH0=;
+	bh=8x0OtuhIw3Sm8/M1QIyFxX3QhhFoD4UPnlY8ZV1w1VI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8EAXZPXM/KJblKhSod5PSJHhj12he4hrjMn/rNjYr3Tw5jBnNcyEdJkpGzt5MKLBq/D5313+Bj0FYGe8jf4dGyAVJAxOufboHSyTWKaVyfd35GwIwXHgtQmsExEHysmREKXyk/PVfIo6/Lq8eKKYdSK+NhiDjYpgxlrK/3Gc7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=isu2OmGZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SKQ2MDEnueP8l+FJhF2kXRPSPW7l6SuTQrMtE3uUKI1YWUpVEXndIBs207SaujTd7UvWazXAHyhY4Mi4+Gqy8eXgDncACBYtPfckDS4bpbxdPO3jGVyvTeZCaMj6Ghezb3wvcXfKrQ/tjCfBQjEOpyulacpWRX38nJYoghBBKuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T6tEhLUf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="isu2OmGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A587C116D0;
-	Sat, 28 Feb 2026 18:13:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T6tEhLUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9FBC19425;
+	Sat, 28 Feb 2026 18:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302417;
-	bh=r28FSqOYKeJF7IzUqWVW9EryuAaDuYl7shjN+DkgpH0=;
+	s=k20201202; t=1772302418;
+	bh=8x0OtuhIw3Sm8/M1QIyFxX3QhhFoD4UPnlY8ZV1w1VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=isu2OmGZ0o2dwjrm/StNtXiMfpJeiDqg3FUR5j9kLcdEW7nllgK19rm8WXPAgcK5P
-	 xGbe8kjXB+y3qhrqs4hrGwcrtvYAjokfbvQdJIPQsUtDp11JLoqU79nJXl9iAeIn3S
-	 Ea5LW/gCgDcehjsjC2DB1tbUaeyJp+TlJ7fuV+DDBa99XsdYCJ9rfMwhfOHxDM84D2
-	 VJ1GYoAeszvKZHv3Up8Rd2MUk5MfReIUNKRJb+RR+YnT8wAYGcyiNn4eb7Tf/OzNb4
-	 aImXEIFzNToiHnI+1C84HElOUPjfcYxiv5nWxQYqhZN2HZ9Ln1w05kaaz5/unNg+Xi
-	 kxazPdRJuZLRA==
+	b=T6tEhLUfeFnkhGdszvJvQkXEcp1RNtfcdycEA9JAaVjdxZIZboQCzLrxnX5jR0G+h
+	 7nLMvKAa3nwbveWQxgwF7zStOJ6D2QqCLRpgtIr4lQbkIY9O+sPKXmr5oXOF3UjJsI
+	 4GoX737Ie/O3zmzWkKQXECPJKWMyAxyv4prnszPoC+aJJRYThbzG+673O6CpUKuX+b
+	 fC0HspW3QOuJMzfDUueCO5V4TO92euQoqhSZXyHGtpoxXwr2glWMWEYe2e0opsEA0F
+	 yYkmEN92LWN2CAUq9qYGkDMzl3E/zVy1hR3dLYpwdIQeVzXsLeJg9p28XZZwzJ1DTZ
+	 qIWNHDlGqcvlg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Chuck Lever <chuck.lever@oracle.com>,
-	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/232] RDMA/core: Fix a couple of obvious typos in comments
-Date: Sat, 28 Feb 2026 13:10:05 -0500
-Message-ID: <20260228181127.1592657-152-sashal@kernel.org>
+Subject: [PATCH 6.1 153/232] svcrdma: Remove queue-shortening warnings
+Date: Sat, 28 Feb 2026 13:10:06 -0500
+Message-ID: <20260228181127.1592657-153-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,46 +48,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 0aa44595d61ca9e61239f321fec799518884feb3 ]
+[ Upstream commit b918bfcf370c92ea3b82fa9bb3d017702b5fa4cb ]
 
-Fix typos.
+These won't have much diagnostic value for site administrators.
+Since they can't be disabled, they become noise.
+
+What's more, the subsequent rdma_create_qp() call adjusts the Send
+Queue size (possibly downward) without warning, making the size
+reported by these pr_warns inaccurate.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://lore.kernel.org/r/169643338101.8035.6826446669479247727.stgit@manet.1015granger.net
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Stable-dep-of: afcae7d7b8a2 ("RDMA/core: add rdma_rw_max_sge() helper for SQ sizing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/rw.c | 2 +-
- include/rdma/ib_verbs.h      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/core/rw.c b/drivers/infiniband/core/rw.c
-index 8367974b7998b..6354ddf2a274c 100644
---- a/drivers/infiniband/core/rw.c
-+++ b/drivers/infiniband/core/rw.c
-@@ -666,7 +666,7 @@ void rdma_rw_init_qp(struct ib_device *dev, struct ib_qp_init_attr *attr)
- 	factor = 1;
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+index f776f0cb471f0..7b7e882c7a508 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -408,8 +408,6 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 	rq_depth = newxprt->sc_max_requests + newxprt->sc_max_bc_requests +
+ 		   newxprt->sc_recv_batch;
+ 	if (rq_depth > dev->attrs.max_qp_wr) {
+-		pr_warn("svcrdma: reducing receive depth to %d\n",
+-			dev->attrs.max_qp_wr);
+ 		rq_depth = dev->attrs.max_qp_wr;
+ 		newxprt->sc_recv_batch = 1;
+ 		newxprt->sc_max_requests = rq_depth - 2;
+@@ -419,11 +417,8 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 	ctxts = rdma_rw_mr_factor(dev, newxprt->sc_port_num, RPCSVC_MAXPAGES);
+ 	ctxts *= newxprt->sc_max_requests;
+ 	newxprt->sc_sq_depth = rq_depth + ctxts;
+-	if (newxprt->sc_sq_depth > dev->attrs.max_qp_wr) {
+-		pr_warn("svcrdma: reducing send depth to %d\n",
+-			dev->attrs.max_qp_wr);
++	if (newxprt->sc_sq_depth > dev->attrs.max_qp_wr)
+ 		newxprt->sc_sq_depth = dev->attrs.max_qp_wr;
+-	}
+ 	atomic_set(&newxprt->sc_sq_avail, newxprt->sc_sq_depth);
  
- 	/*
--	 * If the devices needs MRs to perform RDMA READ or WRITE operations,
-+	 * If the device needs MRs to perform RDMA READ or WRITE operations,
- 	 * we'll need two additional MRs for the registrations and the
- 	 * invalidation.
- 	 */
-diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
-index 41eb2a7c9695d..4d00fce739672 100644
---- a/include/rdma/ib_verbs.h
-+++ b/include/rdma/ib_verbs.h
-@@ -1088,7 +1088,7 @@ struct ib_qp_cap {
- 
- 	/*
- 	 * Maximum number of rdma_rw_ctx structures in flight at a time.
--	 * ib_create_qp() will calculate the right amount of neededed WRs
-+	 * ib_create_qp() will calculate the right amount of needed WRs
- 	 * and MRs based on this.
- 	 */
- 	u32	max_rdma_ctxs;
+ 	newxprt->sc_pd = ib_alloc_pd(dev, 0);
 -- 
 2.51.0
 
