@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE16B348895
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33B3348895
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302631; cv=none; b=g+/UQ1Vo36TL2B/zJMEHLVkBJvZ021F0qRCERi0LPMIrBDOp5JvHcV6N+rijMY1Xwd3RL84ya5lFPXpxglOnk7cKtrJAKk3OZ7bae6nYVWW0xzqox74rN5xur9LdxIzpaNEiBeYMTdmp6rfSfhrn/X/ZRnk2gw9Lg7vXSqiyzJk=
+	t=1772302632; cv=none; b=OaeygPFOOenDBcBST1QOy8h7riPZqrnqhubIuE8YNlsv5lgRj8hJSdZ4fIu3WS79RdkaaKGG4pidx6dtsODlfuvh6TYPrKReHKqM2Bnm+ADpkwNhdZpq4he8pxrKRS78pE7QuUsnDBFnAqeocvmJy+BPyYp5yfH66Z6Y0lBQxLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302631; c=relaxed/simple;
-	bh=5giB7c1Sm6qKdwPaiAA9A+QRmrIw1lZHae2P0u3buhw=;
+	s=arc-20240116; t=1772302632; c=relaxed/simple;
+	bh=jxIhhfuDWAA+WmskhCtP6WCnDpQmGiy5i4f+jCh3FE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JhYQ0m58/sv2QCXae3V49fafW80LddzTtB8s+5IVJpUoxBJl1r+Juu9bLlgrTDQjPdeutFf+Dmi09GYVRS4wh5bSYpWlRBcxscDdN7wi1dovi40/fyDo+lfy3CLqwz8K1uIKVzsLMtMis6a2oAb5MdGdGE0KPYLbXfHXQuH92hU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V9qMPd0Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uG3o79AV6YPFxg5ZSO+O3/HFpyr+Pjx7wUx23GtvN0QF6qKfST4+rqElChG+fd529wzBra1qsu0gg4caqru1Vn0XPd2dojBncTAFni8s29WGMFSyag9itcVnuH8kjdK6RsGc9IzlOjcp6VYH0VyErqlusZcMdB/xRCXGGDmw0hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XvyfcStI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V9qMPd0Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249D2C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XvyfcStI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E434C2BC87;
 	Sat, 28 Feb 2026 18:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302631;
-	bh=5giB7c1Sm6qKdwPaiAA9A+QRmrIw1lZHae2P0u3buhw=;
+	s=k20201202; t=1772302632;
+	bh=jxIhhfuDWAA+WmskhCtP6WCnDpQmGiy5i4f+jCh3FE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V9qMPd0QoM/LlY1FIOZSAnKohNKTCwiD1UhY6pX1rJv0dn24WFLRg9qA4ogmK+8Pn
-	 5XfPJb7lImv+LCt68J6mtZqEMEqFu5Sb5PBkd8fs2gI1GQTHchQ7Z5lgouPEsy6+0O
-	 vy+p33UK7rCB2wwfwqno9ZVbakWD0vZvKQj/yYZrFdmVd89W0qfPFgDmymppQ91IaP
-	 1k1lWmcgTq5BjLYRq5G3ilk3ZeLEYtLNxUVDskWLFfYeSM0djeXIbvNM54DAqanuRT
-	 3bMWcgmqHJGZlqfUu9vcaejjre4HEuytoGI1bIs/QoeN4nsNKfDeUoYJ7fkj2B6rel
-	 6HABJi+mMyGXw==
+	b=XvyfcStIub8JNOEkXmY13Fcd0rNqoIIEql2hzpVHiCF7NBYIlNws/Rf8AgH1WXvPh
+	 4DFZ9EL8J0hFVTj/8maKnxe/a7zL1E5gEDcfK1Gyj+5KBbOe8lLgzfQxUedDNShHOK
+	 vNCUGv2kObaxzkGjn32kDIpBEQvFqWjr3VPEhuCfT+GOmvIwhx/idKoeCWUFJwduOM
+	 hoqFizM/+YiOt3HY0jjyLi0aoGj4R4XY4fhjKjzF8viyQbBJzoXB12/HV51S9/W1/c
+	 FCuo3lVYvE57461aWae7Orr4a7c0D1YzDrxMGZzszAmnHUITzs3sP4YMRyEX76RgFO
+	 Y63UlODesdqyA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+Cc: Edward Adam Davis <eadavis@qq.com>,
+	syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/164] backlight: qcom-wled: Support ovp values for PMI8994
-Date: Sat, 28 Feb 2026 13:14:50 -0500
-Message-ID: <20260228181505.1600663-151-sashal@kernel.org>
+Subject: [PATCH 5.15 152/164] fs/ntfs3: prevent infinite loops caused by the next valid being the same
+Date: Sat, 28 Feb 2026 13:14:51 -0500
+Message-ID: <20260228181505.1600663-152-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -45,94 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Barnabás Czémán <barnabas.czeman@mainlining.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit f29f972a6e7e3f187ea4d89b98a76c1981ca4d53 ]
+[ Upstream commit 27b75ca4e51e3e4554dc85dbf1a0246c66106fd3 ]
 
-WLED4 found in PMI8994 supports different ovp values.
+When processing valid within the range [valid : pos), if valid cannot
+be retrieved correctly, for example, if the retrieved valid value is
+always the same, this can trigger a potential infinite loop, similar
+to the hung problem reported by syzbot [1].
 
-Fixes: 6fc632d3e3e0 ("video: backlight: qcom-wled: Add PMI8994 compatible")
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Link: https://patch.msgid.link/20260116-pmi8950-wled-v3-2-e6c93de84079@mainlining.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Adding a check for the valid value within the loop body, and terminating
+the loop and returning -EINVAL if the value is the same as the current
+value, can prevent this.
+
+[1]
+INFO: task syz.4.21:6056 blocked for more than 143 seconds.
+Call Trace:
+ rwbase_write_lock+0x14f/0x750 kernel/locking/rwbase_rt.c:244
+ inode_lock include/linux/fs.h:1027 [inline]
+ ntfs_file_write_iter+0xe6/0x870 fs/ntfs3/file.c:1284
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bcf9e1868c1a0c7e04f1
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/qcom-wled.c | 41 +++++++++++++++++++++++++++--
- 1 file changed, 39 insertions(+), 2 deletions(-)
+ fs/ntfs3/file.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index 21c1fba64ad5d..2ecfbe1b0d3d4 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -1242,6 +1242,15 @@ static const struct wled_var_cfg wled4_ovp_cfg = {
- 	.size = ARRAY_SIZE(wled4_ovp_values),
- };
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index ffb31420085f4..25788df25deeb 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -932,8 +932,12 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
+ 			goto out;
  
-+static const u32 pmi8994_wled_ovp_values[] = {
-+	31000, 29500, 19400, 17800,
-+};
-+
-+static const struct wled_var_cfg pmi8994_wled_ovp_cfg = {
-+	.values = pmi8994_wled_ovp_values,
-+	.size = ARRAY_SIZE(pmi8994_wled_ovp_values),
-+};
-+
- static inline u32 wled5_ovp_values_fn(u32 idx)
- {
- 	/*
-@@ -1355,6 +1364,29 @@ static int wled_configure(struct wled *wled)
- 		},
- 	};
+ 		if (lcn == SPARSE_LCN) {
+-			ni->i_valid = valid =
+-				frame_vbo + ((u64)clen << sbi->cluster_bits);
++			valid = frame_vbo + ((u64)clen << sbi->cluster_bits);
++			if (ni->i_valid == valid) {
++				err = -EINVAL;
++				goto out;
++			}
++			ni->i_valid = valid;
+ 			continue;
+ 		}
  
-+	const struct wled_u32_opts pmi8994_wled_opts[] = {
-+		{
-+			.name = "qcom,current-boost-limit",
-+			.val_ptr = &cfg->boost_i_limit,
-+			.cfg = &wled4_boost_i_limit_cfg,
-+		},
-+		{
-+			.name = "qcom,current-limit-microamp",
-+			.val_ptr = &cfg->string_i_limit,
-+			.cfg = &wled4_string_i_limit_cfg,
-+		},
-+		{
-+			.name = "qcom,ovp-millivolt",
-+			.val_ptr = &cfg->ovp,
-+			.cfg = &pmi8994_wled_ovp_cfg,
-+		},
-+		{
-+			.name = "qcom,switching-freq",
-+			.val_ptr = &cfg->switch_freq,
-+			.cfg = &wled3_switch_freq_cfg,
-+		},
-+	};
-+
- 	const struct wled_u32_opts wled5_opts[] = {
- 		{
- 			.name = "qcom,current-boost-limit",
-@@ -1421,8 +1453,13 @@ static int wled_configure(struct wled *wled)
- 		break;
- 
- 	case 4:
--		u32_opts = wled4_opts;
--		size = ARRAY_SIZE(wled4_opts);
-+		if (of_device_is_compatible(dev->of_node, "qcom,pmi8994-wled")) {
-+			u32_opts = pmi8994_wled_opts;
-+			size = ARRAY_SIZE(pmi8994_wled_opts);
-+		} else {
-+			u32_opts = wled4_opts;
-+			size = ARRAY_SIZE(wled4_opts);
-+		}
- 		*cfg = wled4_config_defaults;
- 		wled->wled_set_brightness = wled4_set_brightness;
- 		wled->wled_sync_toggle = wled3_sync_toggle;
 -- 
 2.51.0
 
