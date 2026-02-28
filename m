@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A920F4A33F1
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9964A3402
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300994; cv=none; b=SYDJsdflsI8lV0vDGPd0YxU4tHweig1kbdbD/55nqAv/HlqkfpVgQfdA8z84iA3g4by/DRl9Cv54iwdBtW0Pe7nLmnH/lSOwC5hD0+otTTy56lsw4yyQwB5vU/u69uLkIcOfjaTh8Q7pTN1teaagqFNzuKoUr+XjYFRvi1zSsk0=
+	t=1772300995; cv=none; b=u5zF/Wt43Bt7ZY2kmsb1U/TogbLoiHINYF2Lo5m2OxwINfITdkWHtAB1F5KVqLHTUhlLvGfJ+ntvAyFY29x+fz7nXDsWBrWCwjfLzQo+ekhncgk6/nzds6De7CkSMwgSVrJ74QqSTTgU05xsahlVVMkhb0bizUFFrEh4OXUPGi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300994; c=relaxed/simple;
-	bh=iIt6d5bJBWv/HXppUH7hgW+elfsL6jgbAZ6J2R5Bz/A=;
+	s=arc-20240116; t=1772300995; c=relaxed/simple;
+	bh=IdhmLKuWOidnkaxRzWz3RCEfg4U/Ju35W0NcPka7ons=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K16X9iuuP+A9W0/WQ2MRbxSwVbfqdn0hmdKDk7y8ZaG7zlE0oN2vP2iRR+vXKRRkLJgDZZteP6/1XHnHkrpNf1wpM/RQuUm8NTC1+DDMBc8tnlDm+6nn2DtYwaxoOt17fy10rpbC5JPXyT84mRy4ZF6vsKTjteKJ/seryCwgwG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UBWvaUt0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I/3+ogx+DZDHNMSSP92G/VjgelFdjQaKoGZxX+CK4sbfjyg43Fqf/dagDW/U4QF4PEAEcBsvYBIpANM7mLSmDtGH5McuFkybhrkCEU8wDnAbPuROh3iRG0O7CYFRQ1MB6SWmtsQz7SDhHxc4iviQ9nkQ6bob+15f7dacOy1dEJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qnloNGlm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UBWvaUt0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8658BC116D0;
-	Sat, 28 Feb 2026 17:49:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qnloNGlm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D68FC19424;
+	Sat, 28 Feb 2026 17:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300994;
-	bh=iIt6d5bJBWv/HXppUH7hgW+elfsL6jgbAZ6J2R5Bz/A=;
+	s=k20201202; t=1772300995;
+	bh=IdhmLKuWOidnkaxRzWz3RCEfg4U/Ju35W0NcPka7ons=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBWvaUt06/hlzoIByzN2+uV1JU79An4CU0qmJ+A6gDLSjeW8Dk2fYN7e1DWAj/QwT
-	 usZnge2I/xdfLA5VOPfDlvfbfSGJLwnk0ZBKS15l6TBJaeQyZ5jOIUB+31t8D94/s6
-	 oHBTKnUfosdk3yudGzmDbd0oEi1iZHM9Rak6BKMFphDU8ttmxx0DT37DMLjA0oDrpN
-	 Dw5oXEUlkPm/favWaOJYc/wbaHujOeHb6S0G6+J088r3Ga3I1sOzTC530pq4sr98Lu
-	 6b4A2olSvbJDfbD0Ux8Fg8OnmOjcuRKw8g8O8hD1/CNLHOpT2ri27RN2f8DJ4D4OUG
-	 zGSgGgpqTKdUQ==
+	b=qnloNGlm9EyNKufyiI/BnU9K0ufEUCi6n3KHoYmmZR5HBGYTsuZgWmnfrVPSytC0r
+	 OJkPNmndZzbOfOFEMEo0V7SLkm8Euon9Nfr+NtGKxgXHqM1wpc6HNF6krJ9DliGKF1
+	 CcgBhqE/kamBkSnpTYGOs/TYGwyYmVDRZSKZUNeVHRW6lcTIxccexZWRLnOxhstQCN
+	 hRevNAYGzdbhzpaGqktqCc9dpuU2SSqrKfRdisg3nZNoYt2y73dpQtj3AHlRj98OFw
+	 vwZDDlB54TCYKm1P1MCayq1ik8GF9jc1aviREdyqC4d+x+H2OfRprK4WK8HDlJAGgU
+	 Bv16EH1pZWIzg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Hans Verkuil <hverkuil@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 125/752] ASoC: SOF: ipc4: Support for sending payload along with LARGE_CONFIG_GET
-Date: Sat, 28 Feb 2026 12:37:16 -0500
-Message-ID: <20260228174750.1542406-125-sashal@kernel.org>
+Subject: [PATCH 6.18 126/752] media: dvb-core: dmxdevfilter must always flush bufs
+Date: Sat, 28 Feb 2026 12:37:17 -0500
+Message-ID: <20260228174750.1542406-126-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,127 +47,108 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Hans Verkuil <hverkuil@xs4all.nl>
 
-[ Upstream commit d96cb0b86d6e8bbbbfa425771606f6c1aebc318e ]
+[ Upstream commit c4e620eccbef76aa5564ebb295e23d6540e27215 ]
 
-There are message types when we would need to send a payload along with
-the LARGE_CONFIG_GET message to provide information to the firmware on
-what data is requested.
-Such cases are the ALSA Kcontrol related messages when the high level
-param_id tells only the type of the control, but the ID/index of the exact
-control is specified in the payload area.
+Currently the buffers are being filled until full, which works fine
+for the transport stream, but not when reading sections, those have
+to be returned to userspace immediately, otherwise dvbv5-scan will
+just wait forever.
 
-The caller must place the payload for TX before calling the set_get_data()
-and this payload will be sent alongside with the message to the firmware.
+Add a 'flush' argument to dvb_vb2_fill_buffer to indicate whether
+the buffer must be flushed or wait until it is full.
 
-The data area will be overwritten by the received data from firmware.
-
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://patch.msgid.link/20251217143945.2667-7-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4.c | 44 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 42 insertions(+), 2 deletions(-)
+ drivers/media/dvb-core/dmxdev.c  | 8 ++++----
+ drivers/media/dvb-core/dvb_vb2.c | 5 +++--
+ include/media/dvb_vb2.h          | 6 ++++--
+ 3 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/sof/ipc4.c b/sound/soc/sof/ipc4.c
-index a4a090e6724a6..20d723f48fff0 100644
---- a/sound/soc/sof/ipc4.c
-+++ b/sound/soc/sof/ipc4.c
-@@ -15,6 +15,7 @@
- #include "sof-audio.h"
- #include "ipc4-fw-reg.h"
- #include "ipc4-priv.h"
-+#include "ipc4-topology.h"
- #include "ipc4-telemetry.h"
- #include "ops.h"
+diff --git a/drivers/media/dvb-core/dmxdev.c b/drivers/media/dvb-core/dmxdev.c
+index 151177e5a06d8..8a9cca6da3e0e 100644
+--- a/drivers/media/dvb-core/dmxdev.c
++++ b/drivers/media/dvb-core/dmxdev.c
+@@ -397,11 +397,11 @@ static int dvb_dmxdev_section_callback(const u8 *buffer1, size_t buffer1_len,
+ 	if (dvb_vb2_is_streaming(&dmxdevfilter->vb2_ctx)) {
+ 		ret = dvb_vb2_fill_buffer(&dmxdevfilter->vb2_ctx,
+ 					  buffer1, buffer1_len,
+-					  buffer_flags);
++					  buffer_flags, true);
+ 		if (ret == buffer1_len)
+ 			ret = dvb_vb2_fill_buffer(&dmxdevfilter->vb2_ctx,
+ 						  buffer2, buffer2_len,
+-						  buffer_flags);
++						  buffer_flags, true);
+ 	} else {
+ 		ret = dvb_dmxdev_buffer_write(&dmxdevfilter->buffer,
+ 					      buffer1, buffer1_len);
+@@ -452,10 +452,10 @@ static int dvb_dmxdev_ts_callback(const u8 *buffer1, size_t buffer1_len,
  
-@@ -433,6 +434,23 @@ static int sof_ipc4_tx_msg(struct snd_sof_dev *sdev, void *msg_data, size_t msg_
- 	return ret;
- }
+ 	if (dvb_vb2_is_streaming(ctx)) {
+ 		ret = dvb_vb2_fill_buffer(ctx, buffer1, buffer1_len,
+-					  buffer_flags);
++					  buffer_flags, false);
+ 		if (ret == buffer1_len)
+ 			ret = dvb_vb2_fill_buffer(ctx, buffer2, buffer2_len,
+-						  buffer_flags);
++						  buffer_flags, false);
+ 	} else {
+ 		if (buffer->error) {
+ 			spin_unlock(&dmxdevfilter->dev->lock);
+diff --git a/drivers/media/dvb-core/dvb_vb2.c b/drivers/media/dvb-core/dvb_vb2.c
+index 29edaaff7a5c9..7444bbc2f24d9 100644
+--- a/drivers/media/dvb-core/dvb_vb2.c
++++ b/drivers/media/dvb-core/dvb_vb2.c
+@@ -249,7 +249,8 @@ int dvb_vb2_is_streaming(struct dvb_vb2_ctx *ctx)
  
-+static bool sof_ipc4_tx_payload_for_get_data(struct sof_ipc4_msg *tx)
-+{
-+	/*
-+	 * Messages that require TX payload with LARGE_CONFIG_GET.
-+	 * The TX payload is placed into the IPC message data section by caller,
-+	 * which needs to be copied to temporary buffer since the received data
-+	 * will overwrite it.
-+	 */
-+	switch (tx->extension & SOF_IPC4_MOD_EXT_MSG_PARAM_ID_MASK) {
-+	case SOF_IPC4_MOD_EXT_MSG_PARAM_ID(SOF_IPC4_SWITCH_CONTROL_PARAM_ID):
-+	case SOF_IPC4_MOD_EXT_MSG_PARAM_ID(SOF_IPC4_ENUM_CONTROL_PARAM_ID):
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
-+
- static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
- 				 size_t payload_bytes, bool set)
+ int dvb_vb2_fill_buffer(struct dvb_vb2_ctx *ctx,
+ 			const unsigned char *src, int len,
+-			enum dmx_buffer_flags *buffer_flags)
++			enum dmx_buffer_flags *buffer_flags,
++			bool flush)
  {
-@@ -444,6 +462,8 @@ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
- 	struct sof_ipc4_msg tx = {{ 0 }};
- 	struct sof_ipc4_msg rx = {{ 0 }};
- 	size_t remaining = payload_bytes;
-+	void *tx_payload_for_get = NULL;
-+	size_t tx_data_size = 0;
- 	size_t offset = 0;
- 	size_t chunk_size;
- 	int ret;
-@@ -469,10 +489,20 @@ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
- 
- 	tx.extension |= SOF_IPC4_MOD_EXT_MSG_FIRST_BLOCK(1);
- 
-+	if (sof_ipc4_tx_payload_for_get_data(&tx)) {
-+		tx_data_size = min(ipc4_msg->data_size, payload_limit);
-+		tx_payload_for_get = kmemdup(ipc4_msg->data_ptr, tx_data_size,
-+					     GFP_KERNEL);
-+		if (!tx_payload_for_get)
-+			return -ENOMEM;
-+	}
-+
- 	/* ensure the DSP is in D0i0 before sending IPC */
- 	ret = snd_sof_dsp_set_power_state(sdev, &target_state);
--	if (ret < 0)
-+	if (ret < 0) {
-+		kfree(tx_payload_for_get);
- 		return ret;
-+	}
- 
- 	/* Serialise IPC TX */
- 	mutex_lock(&sdev->ipc->tx_mutex);
-@@ -506,7 +536,15 @@ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
- 			rx.data_size = chunk_size;
- 			rx.data_ptr = ipc4_msg->data_ptr + offset;
- 
--			tx_size = 0;
-+			if (tx_payload_for_get) {
-+				tx_size = tx_data_size;
-+				tx.data_size = tx_size;
-+				tx.data_ptr = tx_payload_for_get;
-+			} else {
-+				tx_size = 0;
-+				tx.data_size = 0;
-+				tx.data_ptr = NULL;
-+			}
- 			rx_size = chunk_size;
+ 	unsigned long flags = 0;
+ 	void *vbuf = NULL;
+@@ -306,7 +307,7 @@ int dvb_vb2_fill_buffer(struct dvb_vb2_ctx *ctx,
  		}
+ 	}
  
-@@ -553,6 +591,8 @@ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
+-	if (ctx->nonblocking && ctx->buf) {
++	if (flush && ctx->buf) {
+ 		vb2_set_plane_payload(&ctx->buf->vb, 0, ll);
+ 		vb2_buffer_done(&ctx->buf->vb, VB2_BUF_STATE_DONE);
+ 		list_del(&ctx->buf->list);
+diff --git a/include/media/dvb_vb2.h b/include/media/dvb_vb2.h
+index 8cb88452cd6c2..0fbbfc65157e6 100644
+--- a/include/media/dvb_vb2.h
++++ b/include/media/dvb_vb2.h
+@@ -124,7 +124,7 @@ static inline int dvb_vb2_release(struct dvb_vb2_ctx *ctx)
+ 	return 0;
+ };
+ #define dvb_vb2_is_streaming(ctx) (0)
+-#define dvb_vb2_fill_buffer(ctx, file, wait, flags) (0)
++#define dvb_vb2_fill_buffer(ctx, file, wait, flags, flush) (0)
  
- 	mutex_unlock(&sdev->ipc->tx_mutex);
+ static inline __poll_t dvb_vb2_poll(struct dvb_vb2_ctx *ctx,
+ 				    struct file *file,
+@@ -166,10 +166,12 @@ int dvb_vb2_is_streaming(struct dvb_vb2_ctx *ctx);
+  * @buffer_flags:
+  *		pointer to buffer flags as defined by &enum dmx_buffer_flags.
+  *		can be NULL.
++ * @flush:	flush the buffer, even if it isn't full.
+  */
+ int dvb_vb2_fill_buffer(struct dvb_vb2_ctx *ctx,
+ 			const unsigned char *src, int len,
+-			enum dmx_buffer_flags *buffer_flags);
++			enum dmx_buffer_flags *buffer_flags,
++			bool flush);
  
-+	kfree(tx_payload_for_get);
-+
- 	return ret;
- }
- 
+ /**
+  * dvb_vb2_poll - Wrapper to vb2_core_streamon() for Digital TV
 -- 
 2.51.0
 
