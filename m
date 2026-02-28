@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162D4359A65
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024A3347FCC;
+	Sat, 28 Feb 2026 18:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302431; cv=none; b=B8GgZika/Wgnym99HCdvmYOclk2dBRg6qdhxAvCELE4MPTFeZEIo1zsFANZLq6dSkshdi+n9ZT/eqEulESZaLhjO2u5nN+xpLQb7+ypvehKCRrn0qPsYWwH7ZEi8MOSO1mSEkxS3mVekEsc1Bfl+5c4yvHHLyzM5ZM82U5lAo+Q=
+	t=1772302432; cv=none; b=epNya6H8sWR3KeSSzfBzAqbRXqwbBR2OR/V11MpvTwGwvOIyPiHspb0Ntdfqdbqtrdv7JQvgqntn/608Ao7aK0NgMeCwfWlEEcL7yfHJErpspwWDv+CeMmBDoo30Er3PAan2LUyr05ihgNRCpxK8VtCrn9ZjxeFSlYdcZcG6WVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302431; c=relaxed/simple;
-	bh=LzjNOhzoE3uUPij+HZ4md5ycBTHE53V27rhrmGOIQus=;
+	s=arc-20240116; t=1772302432; c=relaxed/simple;
+	bh=vUeFqc4SigPQJZ6Bx9dPgvQ6qYdAUyvXC9qIDH3Zlqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U1nMMaiY8JX7RvBPrPR7DMzuaXr3C/b7PH1+zhz4QTBXoeP49uc4HkN5qt+F12ZQZTqeg00uj/0+168icbqLv8pDODjaieqUuu4pSxOwltT049H+kUJNk4c/mtHtmpO/4GANAPO7xd95PN/2sagNSfiMYusvJWUTR+VB6ms1oKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jm80B4Cc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dzEC3FG4hfRQSgEJFCTuJJ0VosmhfERKxe+Az8vn+bsfI3uW0CZqKdV67Op6l9LGuwS1qVCBcxBfViP9Tr7LhkbOCSlhhMmz64mJI7HSL0C/FMkKzGSlPfU/rnTPAmU9h2snq60GX6OHzLaYz14gWiac1Ibv8pvZL99LUMYVRuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EYdNj3bV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jm80B4Cc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FDE5C116D0;
-	Sat, 28 Feb 2026 18:13:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EYdNj3bV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF87C116D0;
+	Sat, 28 Feb 2026 18:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302431;
-	bh=LzjNOhzoE3uUPij+HZ4md5ycBTHE53V27rhrmGOIQus=;
+	bh=vUeFqc4SigPQJZ6Bx9dPgvQ6qYdAUyvXC9qIDH3Zlqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jm80B4CcnGra4sJN/8j43VN5LV3SsYoYxU+VdoC5n7r3I78QjdKfK/GgKFsFJtJMh
-	 Bdqf9J3x8HjnDT/Swr7mA+zljU6+svPJvpL49fRkedZHp741xIu+UBVc/MdiXUYktK
-	 jEUFcWyATrVlsZPSaIc+qKLlDVVn0iP0Op7wTBTz1uXP6/QiwHDtaOjmEGfPA0SehL
-	 maKyFw2J+4nAonlG+1AnIxIe6WsDQwzAj5eNusRYq5S8J+BhuyxlTkceX/gr2qbYuv
-	 4c7OKAO0eUgHNyoJ6xz2DhYZSgNjXxdek3dKejcWjO85ze88QbypKDMzAyq7Mnm9wL
-	 y/b4eb2jwzOiw==
+	b=EYdNj3bVnBahRdLUyKkDMgOvmbNFfsf1M7grnUnZSqLPdLmb0qkE6GMFTzR96Iyy8
+	 ACcWMUHqpIz2KHNsEX4HUL//3FxWYNLkZjzdsiuFwKLM+cg+xpgI5uQ/O7IC3w005X
+	 qJX5v3sL1z9ZV1IhHh03VMrRD0SYrpRrhCkmKrbfB4/975nlYQxWCS//UKTzTbE569
+	 hNVfRFZHx8D12fMRXPYNH9o/380nCZrmtRHcr1YUrmI2ATkMMHw1tiEdpkQRlU+Ye1
+	 Nvzf4vRYwX0yY7GUAHpU558J+2zaIpBd0HgyO1n8G3gzfzAqGl5QO/tjMDXnQ2l2c0
+	 JoTkk6K/midtw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/232] tracing: Remove duplicate ENABLE_EVENT_STR and DISABLE_EVENT_STR macros
-Date: Sat, 28 Feb 2026 13:10:21 -0500
-Message-ID: <20260228181127.1592657-168-sashal@kernel.org>
+Cc: Yao Zi <me@ziyao.cc>,
+	stable@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: [PATCH 6.1 169/232] MIPS: Work around LLVM bug when gp is used as global register variable
+Date: Sat, 28 Feb 2026 13:10:22 -0500
+Message-ID: <20260228181127.1592657-169-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,41 +49,101 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Yao Zi <me@ziyao.cc>
 
-[ Upstream commit 9df0e49c5b9b8d051529be9994e4f92f2d20be6f ]
+commit 30bfc2d6a1132a89a5f1c3b96c59cf3e4d076ea3 upstream.
 
-The macros ENABLE_EVENT_STR and DISABLE_EVENT_STR were added to trace.h so
-that more than one file can have access to them, but was never removed
-from their original location. Remove the duplicates.
+On MIPS, __current_thread_info is defined as global register variable
+locating in $gp, and is simply assigned with new address during kernel
+relocation.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://patch.msgid.link/20260126130037.4ba201f9@gandalf.local.home
-Fixes: d0bad49bb0a09 ("tracing: Add enable_hist/disable_hist triggers")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This however is broken with LLVM, which always restores $gp if it finds
+$gp is clobbered in any form, including when intentionally through a
+global register variable. This is against GCC's documentation[1], which
+requires a callee-saved register used as global register variable not to
+be restored if it's clobbered.
+
+As a result, $gp will continue to point to the unrelocated kernel after
+the epilog of relocate_kernel(), leading to an early crash in init_idle,
+
+[    0.000000] CPU 0 Unable to handle kernel paging request at virtual address 0000000000000000, epc == ffffffff81afada8, ra == ffffffff81afad90
+[    0.000000] Oops[#1]:
+[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper Tainted: G        W           6.19.0-rc5-00262-gd3eeb99bbc99-dirty #188 VOLUNTARY
+[    0.000000] Tainted: [W]=WARN
+[    0.000000] Hardware name: loongson,loongson64v-4core-virtio
+[    0.000000] $ 0   : 0000000000000000 0000000000000000 0000000000000001 0000000000000000
+[    0.000000] $ 4   : ffffffff80b80ec0 ffffffff80b53d48 0000000000000000 00000000000f4240
+[    0.000000] $ 8   : 0000000000000100 ffffffff81d82f80 ffffffff81d82f80 0000000000000001
+[    0.000000] $12   : 0000000000000000 ffffffff81776f58 00000000000005da 0000000000000002
+[    0.000000] $16   : ffffffff80b80e40 0000000000000000 ffffffff80b81614 9800000005dfbe80
+[    0.000000] $20   : 00000000540000e0 ffffffff81980000 0000000000000000 ffffffff80f81c80
+[    0.000000] $24   : 0000000000000a26 ffffffff8114fb90
+[    0.000000] $28   : ffffffff80b50000 ffffffff80b53d40 0000000000000000 ffffffff81afad90
+[    0.000000] Hi    : 0000000000000000
+[    0.000000] Lo    : 0000000000000000
+[    0.000000] epc   : ffffffff81afada8 init_idle+0x130/0x270
+[    0.000000] ra    : ffffffff81afad90 init_idle+0x118/0x270
+[    0.000000] Status: 540000e2	KX SX UX KERNEL EXL
+[    0.000000] Cause : 00000008 (ExcCode 02)
+[    0.000000] BadVA : 0000000000000000
+[    0.000000] PrId  : 00006305 (ICT Loongson-3)
+[    0.000000] Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____), tls=0000000000000000)
+[    0.000000] Stack : 9800000005dfbf00 ffffffff8178e950 0000000000000000 0000000000000000
+[    0.000000]         0000000000000000 ffffffff81970000 000000000000003f ffffffff810a6528
+[    0.000000]         0000000000000001 9800000005dfbe80 9800000005dfbf00 ffffffff81980000
+[    0.000000]         ffffffff810a6450 ffffffff81afb6c0 0000000000000000 ffffffff810a2258
+[    0.000000]         ffffffff81d82ec8 ffffffff8198d010 ffffffff81b67e80 ffffffff8197dd98
+[    0.000000]         ffffffff81d81c80 ffffffff81930000 0000000000000040 0000000000000000
+[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
+[    0.000000]         0000000000000000 000000000000009e ffffffff9fc01000 0000000000000000
+[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
+[    0.000000]         0000000000000000 ffffffff81ae86dc ffffffff81b3c741 0000000000000002
+[    0.000000]         ...
+[    0.000000] Call Trace:
+[    0.000000] [<ffffffff81afada8>] init_idle+0x130/0x270
+[    0.000000] [<ffffffff81afb6c0>] sched_init+0x5c8/0x6c0
+[    0.000000] [<ffffffff81ae86dc>] start_kernel+0x27c/0x7a8
+
+This bug has been reported to LLVM[2] and affects version from (at
+least) 18 to 21. Let's work around this by using inline assembly to
+assign $gp before a fix is widely available.
+
+Cc: stable@vger.kernel.org
+Link: https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Global-Register-Variables.html # [1]
+Link: https://github.com/llvm/llvm-project/issues/176546 # [2]
+Signed-off-by: Yao Zi <me@ziyao.cc>
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c | 5 -----
- 1 file changed, 5 deletions(-)
+ arch/mips/kernel/relocate.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 6a146dfbbd7e5..55623a9bb64ac 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -3327,11 +3327,6 @@ void trace_put_event_file(struct trace_event_file *file)
- EXPORT_SYMBOL_GPL(trace_put_event_file);
+diff --git a/arch/mips/kernel/relocate.c b/arch/mips/kernel/relocate.c
+index 58fc8d089402b..dcc2763b39d6e 100644
+--- a/arch/mips/kernel/relocate.c
++++ b/arch/mips/kernel/relocate.c
+@@ -420,7 +420,20 @@ void *__init relocate_kernel(void)
+ 			goto out;
  
- #ifdef CONFIG_DYNAMIC_FTRACE
--
--/* Avoid typos */
--#define ENABLE_EVENT_STR	"enable_event"
--#define DISABLE_EVENT_STR	"disable_event"
--
- struct event_probe_data {
- 	struct trace_event_file	*file;
- 	unsigned long			count;
+ 		/* The current thread is now within the relocated image */
++#ifndef CONFIG_CC_IS_CLANG
+ 		__current_thread_info = RELOCATED(&init_thread_union);
++#else
++		/*
++		 * LLVM may wrongly restore $gp ($28) in epilog even if it's
++		 * intentionally modified. Work around this by using inline
++		 * assembly to assign $gp. $gp couldn't be listed as output or
++		 * clobber, or LLVM will still restore its original value.
++		 * See also LLVM upstream issue
++		 * https://github.com/llvm/llvm-project/issues/176546
++		 */
++		asm volatile("move $28, %0" : :
++			     "r" (RELOCATED(&init_thread_union)));
++#endif
+ 
+ 		/* Return the new kernel's entry point */
+ 		kernel_entry = RELOCATED(start_kernel);
 -- 
 2.51.0
 
