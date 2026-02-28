@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70043314C3
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F2632AABE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301246; cv=none; b=YA+Z4vEbiTF8uWanQzmozT1t5GY8fcrH3QkluIxgetha0Jtzm1BzKXPHcix9FzF49RfTpwQeXYkhevysDqUVnCetwMVJzjEbaEhagq+1zMp/mjWWotUSByntmKe3dtN3wQ556oWOfbGNXBSCkPHGlFg8WQPDVMYCBuAhKBoniRw=
+	t=1772301246; cv=none; b=fed10/mlNo7+EZ25pELVKh58VP9lBFG4t7VKUdOUcF2dj2HHfgYVyOelibSpcdcZIo5umC3HadmvdpyFLCEomCpwjHUKJHUHqVWvhTjUNX+5U+0vBDu95jLvtgQUtNsWutaK3y+sNO2XoEyaln+BH3CQCnvNmgQFV+sGjbDcpIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301246; c=relaxed/simple;
-	bh=xaFRN1f9Mf1+D3TQxJtcwOodaDxq9QJkm7qNWrMGVV0=;
+	bh=n1Vv2DYXV8HAIA0FnUEsNJzdRCZg1ew564AnRYWfwCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DIqFxqPiZi1wKg1grLG+T5E/r11HvhJKRwAREotYVFliiCqVLb4iI6ay1EsEfyJoMTDn/7m0gzMUQBcNiFP1o0/xhE/0w7yMKmoOwng1hqPRonZ2elkWRzEWUl3mFZ0q4rXc6/X9PNc283RnEoNQ4jjhxmQJ0aZDLFECIeyuC7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KKY9j9Xh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VTSXMqT/A8Y/vCaIS23fcGEoBayS8ES/9WsSgZu2PF4ERQujsFpVcjNMXvEeRfbD17hWgOZ230A3yVOcJj3SufYLEWATRYfmowCQVqzryu9dHiso3zyXVO22MK5Gj865cCIli9PRpc57E/tLT5TJ4uBmuz3DtmkAJSWwe3DgaNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IFMKcdjX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KKY9j9Xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43248C19425;
-	Sat, 28 Feb 2026 17:54:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IFMKcdjX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5F5C19424;
+	Sat, 28 Feb 2026 17:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301245;
-	bh=xaFRN1f9Mf1+D3TQxJtcwOodaDxq9QJkm7qNWrMGVV0=;
+	s=k20201202; t=1772301246;
+	bh=n1Vv2DYXV8HAIA0FnUEsNJzdRCZg1ew564AnRYWfwCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKY9j9Xhsg7uZ2eMUdSfmvhq0nV7A8TAAnkvafHQpbk8M+jufhD6vxLgnQD0wtQ/K
-	 LhET0CLvb/aLx1AlveVtMqofGSSeFdLORdxrAtVzgEly1W3e1JSFSqmNCm7zZYJqWi
-	 UaNmCQ7RgbgVCJkWWfbHMWF3trXI8JV11Hy4PsUSjwocXnvfd27YWCveVkKmNINljD
-	 gzRC7z71vkJrw61xwUhjcdm6WZmWCEi1HSJop9jsiNqeuEdTYkWESjrax3zdNSzIfQ
-	 qpqjZD9H6aU0LrLmfkCxinVMzJ9ZFmZR9T0Nk6fnHy9+06ajQ/HzM1DtL98FGaZOBV
-	 TPgeRFx2wyGLA==
+	b=IFMKcdjXfGd0HzN0aPS2dwu1CeastRPMv0ck/J1lVVFOGI3bVnvd8wQV3A9d89E6n
+	 5kWcZHgyzjJEbvNaTjT9eqFO5LI+evzI5tCx66T4bqEey/ZNav5o6XjyQ12UTsXCro
+	 eU72kMc7sx8HP3yIammtcOvLkOkn7FLbal3+o5MRKtsZHecKRkaBDcT/gtpBvK96Gq
+	 xNTysNs/FiUQNFt9GhUUu/t9Atm5RCMDfXY+ljvBTFFPd7craxRS2Mep4e9EcKFe3v
+	 WH1d68pG+SuF3a5mD3J+lYpIPup01Y3Eqm9vvgswdCA9o9pmX5LboxHvyKz5l+DlQu
+	 Ssnhx3VFd34wg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
-	syzbot+52624bdfbf2746d37d70@syzkaller.appspotmail.com,
+Cc: Ivan Vecera <ivecera@redhat.com>,
+	Petr Oros <poros@redhat.com>,
+	Prathosh Satish <Prathosh.Satish@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 427/752] kcm: fix zero-frag skb in frag_list on partial sendmsg error
-Date: Sat, 28 Feb 2026 12:42:18 -0500
-Message-ID: <20260228174750.1542406-427-sashal@kernel.org>
+Subject: [PATCH 6.18 428/752] dpll: zl3073x: Cache reference monitor status
+Date: Sat, 28 Feb 2026 12:42:19 -0500
+Message-ID: <20260228174750.1542406-428-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,119 +49,302 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit ca220141fa8ebae09765a242076b2b77338106b0 ]
+[ Upstream commit 5534a8202d7cf9b2e4557517745583c43662b6a8 ]
 
-Syzkaller reported a warning in kcm_write_msgs() when processing a
-message with a zero-fragment skb in the frag_list.
+Instead of reading the ZL_REG_REF_MON_STATUS register every time
+the reference status is needed, cache this value in the zl3073x_ref
+struct.
 
-When kcm_sendmsg() fills MAX_SKB_FRAGS fragments in the current skb,
-it allocates a new skb (tskb) and links it into the frag_list before
-copying data. If the copy subsequently fails (e.g. -EFAULT from
-user memory), tskb remains in the frag_list with zero fragments:
+This is achieved by:
+* Adding a mon_status field to struct zl3073x_ref
+* Introducing zl3073x_dev_ref_status_update() to read the status for
+  all references into this new cache field
+* Calling this update function from the periodic work handler
+* Adding zl3073x_ref_is_status_ok() and zl3073x_dev_ref_is_status_ok()
+  helpers to check the cached value
+* Refactoring all callers in dpll.c to use the new
+  zl3073x_dev_ref_is_status_ok() helper, removing direct register reads
 
-  head skb (msg being assembled, NOT yet in sk_write_queue)
-  +-----------+
-  | frags[17] |  (MAX_SKB_FRAGS, all filled with data)
-  | frag_list-+--> tskb
-  +-----------+    +----------+
-                   | frags[0] |  (empty! copy failed before filling)
-                   +----------+
+This change consolidates all status register reads into a single periodic
+function and reduces I/O bus traffic in dpll callbacks.
 
-For SOCK_SEQPACKET with partial data already copied, the error path
-saves this message via partial_message for later completion. For
-SOCK_SEQPACKET, sock_write_iter() automatically sets MSG_EOR, so a
-subsequent zero-length write(fd, NULL, 0) completes the message and
-queues it to sk_write_queue. kcm_write_msgs() then walks the
-frag_list and hits:
-
-  WARN_ON(!skb_shinfo(skb)->nr_frags)
-
-TCP has a similar pattern where skbs are enqueued before data copy
-and cleaned up on failure via tcp_remove_empty_skb(). KCM was
-missing the equivalent cleanup.
-
-Fix this by tracking the predecessor skb (frag_prev) when allocating
-a new frag_list entry. On error, if the tail skb has zero frags,
-use frag_prev to unlink and free it in O(1) without walking the
-singly-linked frag_list. frag_prev is safe to dereference because
-the entire message chain is only held locally (or in kcm->seq_skb)
-and is not added to sk_write_queue until MSG_EOR, so the send path
-cannot free it underneath us.
-
-Also change the WARN_ON to WARN_ON_ONCE to avoid flooding the log
-if the condition is somehow hit repeatedly.
-
-There are currently no KCM selftests in the kernel tree; a simple
-reproducer is available at [1].
-
-[1] https://gist.github.com/mrpre/a94d431c757e8d6f168f4dd1a3749daa
-
-Reported-by: syzbot+52624bdfbf2746d37d70@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000269a1405a12fdc77@google.com/T/
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260219014256.370092-1-jiayuan.chen@linux.dev
+Reviewed-by: Petr Oros <poros@redhat.com>
+Tested-by: Prathosh Satish <Prathosh.Satish@microchip.com>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Link: https://patch.msgid.link/20251113074105.141379-4-ivecera@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4cfe066a82cd ("dpll: zl3073x: fix REF_PHASE_OFFSET_COMP register width for some chip IDs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/dpll/zl3073x/core.c | 18 +++++++
+ drivers/dpll/zl3073x/core.h | 15 ++++++
+ drivers/dpll/zl3073x/dpll.c | 96 ++++++++-----------------------------
+ drivers/dpll/zl3073x/ref.h  | 14 ++++++
+ 4 files changed, 68 insertions(+), 75 deletions(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index b4f01cb075615..f6d44481954cd 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -628,7 +628,7 @@ static int kcm_write_msgs(struct kcm_sock *kcm)
- 			skb = txm->frag_skb;
- 		}
+diff --git a/drivers/dpll/zl3073x/core.c b/drivers/dpll/zl3073x/core.c
+index 2f340f7eb9ec3..383e2397dd033 100644
+--- a/drivers/dpll/zl3073x/core.c
++++ b/drivers/dpll/zl3073x/core.c
+@@ -591,6 +591,21 @@ zl3073x_dev_state_fetch(struct zl3073x_dev *zldev)
+ 	return rc;
+ }
  
--		if (WARN_ON(!skb_shinfo(skb)->nr_frags) ||
-+		if (WARN_ON_ONCE(!skb_shinfo(skb)->nr_frags) ||
- 		    WARN_ON_ONCE(!skb_frag_page(&skb_shinfo(skb)->frags[0]))) {
- 			ret = -EINVAL;
- 			goto out;
-@@ -749,7 +749,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- {
- 	struct sock *sk = sock->sk;
- 	struct kcm_sock *kcm = kcm_sk(sk);
--	struct sk_buff *skb = NULL, *head = NULL;
-+	struct sk_buff *skb = NULL, *head = NULL, *frag_prev = NULL;
- 	size_t copy, copied = 0;
- 	long timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
- 	int eor = (sock->type == SOCK_DGRAM) ?
-@@ -824,6 +824,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 				else
- 					skb->next = tskb;
- 
-+				frag_prev = skb;
- 				skb = tskb;
- 				skb->ip_summed = CHECKSUM_UNNECESSARY;
- 				continue;
-@@ -933,6 +934,22 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- out_error:
- 	kcm_push(kcm);
- 
-+	/* When MAX_SKB_FRAGS was reached, a new skb was allocated and
-+	 * linked into the frag_list before data copy. If the copy
-+	 * subsequently failed, this skb has zero frags. Remove it from
-+	 * the frag_list to prevent kcm_write_msgs from later hitting
-+	 * WARN_ON(!skb_shinfo(skb)->nr_frags).
-+	 */
-+	if (frag_prev && !skb_shinfo(skb)->nr_frags) {
-+		if (head == frag_prev)
-+			skb_shinfo(head)->frag_list = NULL;
-+		else
-+			frag_prev->next = NULL;
-+		kfree_skb(skb);
-+		/* Update skb as it may be saved in partial_message via goto */
-+		skb = frag_prev;
-+	}
++static void
++zl3073x_dev_ref_status_update(struct zl3073x_dev *zldev)
++{
++	int i, rc;
 +
- 	if (sock->type == SOCK_SEQPACKET) {
- 		/* Wrote some bytes before encountering an
- 		 * error, return partial success.
++	for (i = 0; i < ZL3073X_NUM_REFS; i++) {
++		rc = zl3073x_read_u8(zldev, ZL_REG_REF_MON_STATUS(i),
++				     &zldev->ref[i].mon_status);
++		if (rc)
++			dev_warn(zldev->dev,
++				 "Failed to get REF%u status: %pe\n", i,
++				 ERR_PTR(rc));
++	}
++}
++
+ /**
+  * zl3073x_ref_phase_offsets_update - update reference phase offsets
+  * @zldev: pointer to zl3073x_dev structure
+@@ -710,6 +725,9 @@ zl3073x_dev_periodic_work(struct kthread_work *work)
+ 	struct zl3073x_dpll *zldpll;
+ 	int rc;
+ 
++	/* Update input references status */
++	zl3073x_dev_ref_status_update(zldev);
++
+ 	/* Update DPLL-to-connected-ref phase offsets registers */
+ 	rc = zl3073x_ref_phase_offsets_update(zldev, -1);
+ 	if (rc)
+diff --git a/drivers/dpll/zl3073x/core.h b/drivers/dpll/zl3073x/core.h
+index fe779fc77dd09..4148580d1f343 100644
+--- a/drivers/dpll/zl3073x/core.h
++++ b/drivers/dpll/zl3073x/core.h
+@@ -227,6 +227,21 @@ zl3073x_dev_ref_is_enabled(struct zl3073x_dev *zldev, u8 index)
+ 	return zl3073x_ref_is_enabled(ref);
+ }
+ 
++/*
++ * zl3073x_dev_ref_is_status_ok - check the given input reference status
++ * @zldev: pointer to zl3073x device
++ * @index: input reference index
++ *
++ * Return: true if the status is ok, false otherwise
++ */
++static inline bool
++zl3073x_dev_ref_is_status_ok(struct zl3073x_dev *zldev, u8 index)
++{
++	const struct zl3073x_ref *ref = zl3073x_ref_state_get(zldev, index);
++
++	return zl3073x_ref_is_status_ok(ref);
++}
++
+ /**
+  * zl3073x_dev_synth_dpll_get - get DPLL ID the synth is driven by
+  * @zldev: pointer to zl3073x device
+diff --git a/drivers/dpll/zl3073x/dpll.c b/drivers/dpll/zl3073x/dpll.c
+index 11ca32e1bb829..29a3b55bc823c 100644
+--- a/drivers/dpll/zl3073x/dpll.c
++++ b/drivers/dpll/zl3073x/dpll.c
+@@ -497,19 +497,10 @@ zl3073x_dpll_connected_ref_get(struct zl3073x_dpll *zldpll, u8 *ref)
+ 	if (rc)
+ 		return rc;
+ 
+-	if (ZL3073X_DPLL_REF_IS_VALID(*ref)) {
+-		u8 ref_status;
+-
+-		/* Read the reference monitor status */
+-		rc = zl3073x_read_u8(zldev, ZL_REG_REF_MON_STATUS(*ref),
+-				     &ref_status);
+-		if (rc)
+-			return rc;
+-
+-		/* If the monitor indicates an error nothing is connected */
+-		if (ref_status != ZL_REF_MON_STATUS_OK)
+-			*ref = ZL3073X_DPLL_REF_NONE;
+-	}
++	/* If the monitor indicates an error nothing is connected */
++	if (ZL3073X_DPLL_REF_IS_VALID(*ref) &&
++	    !zl3073x_dev_ref_is_status_ok(zldev, *ref))
++		*ref = ZL3073X_DPLL_REF_NONE;
+ 
+ 	return 0;
+ }
+@@ -524,7 +515,7 @@ zl3073x_dpll_input_pin_phase_offset_get(const struct dpll_pin *dpll_pin,
+ 	struct zl3073x_dpll *zldpll = dpll_priv;
+ 	struct zl3073x_dev *zldev = zldpll->dev;
+ 	struct zl3073x_dpll_pin *pin = pin_priv;
+-	u8 conn_ref, ref, ref_status;
++	u8 conn_ref, ref;
+ 	s64 ref_phase;
+ 	int rc;
+ 
+@@ -537,21 +528,9 @@ zl3073x_dpll_input_pin_phase_offset_get(const struct dpll_pin *dpll_pin,
+ 	 * monitor feature is disabled.
+ 	 */
+ 	ref = zl3073x_input_pin_ref_get(pin->id);
+-	if (!zldpll->phase_monitor && ref != conn_ref) {
+-		*phase_offset = 0;
+-
+-		return 0;
+-	}
+-
+-	/* Get this pin monitor status */
+-	rc = zl3073x_read_u8(zldev, ZL_REG_REF_MON_STATUS(ref), &ref_status);
+-	if (rc)
+-		return rc;
+-
+-	/* Report phase offset only if the input pin signal is present */
+-	if (ref_status != ZL_REF_MON_STATUS_OK) {
++	if ((!zldpll->phase_monitor && ref != conn_ref) ||
++	    !zl3073x_dev_ref_is_status_ok(zldev, ref)) {
+ 		*phase_offset = 0;
+-
+ 		return 0;
+ 	}
+ 
+@@ -777,7 +756,7 @@ zl3073x_dpll_ref_state_get(struct zl3073x_dpll_pin *pin,
+ {
+ 	struct zl3073x_dpll *zldpll = pin->dpll;
+ 	struct zl3073x_dev *zldev = zldpll->dev;
+-	u8 ref, ref_conn, status;
++	u8 ref, ref_conn;
+ 	int rc;
+ 
+ 	ref = zl3073x_input_pin_ref_get(pin->id);
+@@ -797,20 +776,9 @@ zl3073x_dpll_ref_state_get(struct zl3073x_dpll_pin *pin,
+ 	 * pin as selectable.
+ 	 */
+ 	if (zldpll->refsel_mode == ZL_DPLL_MODE_REFSEL_MODE_AUTO &&
+-	    pin->selectable) {
+-		/* Read reference monitor status */
+-		rc = zl3073x_read_u8(zldev, ZL_REG_REF_MON_STATUS(ref),
+-				     &status);
+-		if (rc)
+-			return rc;
+-
+-		/* If the monitor indicates errors report the reference
+-		 * as disconnected
+-		 */
+-		if (status == ZL_REF_MON_STATUS_OK) {
+-			*state = DPLL_PIN_STATE_SELECTABLE;
+-			return 0;
+-		}
++	    zl3073x_dev_ref_is_status_ok(zldev, ref) && pin->selectable) {
++		*state = DPLL_PIN_STATE_SELECTABLE;
++		return 0;
+ 	}
+ 
+ 	/* Otherwise report the pin as disconnected */
+@@ -1832,37 +1800,23 @@ zl3073x_dpll_pin_phase_offset_check(struct zl3073x_dpll_pin *pin)
+ 
+ 	ref = zl3073x_input_pin_ref_get(pin->id);
+ 
++	/* No phase offset if the ref monitor reports signal errors */
++	if (!zl3073x_dev_ref_is_status_ok(zldev, ref))
++		return false;
++
+ 	/* Select register to read phase offset value depending on pin and
+ 	 * phase monitor state:
+ 	 * 1) For connected pin use dpll_phase_err_data register
+ 	 * 2) For other pins use appropriate ref_phase register if the phase
+-	 *    monitor feature is enabled and reference monitor does not
+-	 *    report signal errors for given input pin
++	 *    monitor feature is enabled.
+ 	 */
+-	if (pin->pin_state == DPLL_PIN_STATE_CONNECTED) {
++	if (pin->pin_state == DPLL_PIN_STATE_CONNECTED)
+ 		reg = ZL_REG_DPLL_PHASE_ERR_DATA(zldpll->id);
+-	} else if (zldpll->phase_monitor) {
+-		u8 status;
+-
+-		/* Get reference monitor status */
+-		rc = zl3073x_read_u8(zldev, ZL_REG_REF_MON_STATUS(ref),
+-				     &status);
+-		if (rc) {
+-			dev_err(zldev->dev,
+-				"Failed to read %s refmon status: %pe\n",
+-				pin->label, ERR_PTR(rc));
+-
+-			return false;
+-		}
+-
+-		if (status != ZL_REF_MON_STATUS_OK)
+-			return false;
+-
++	else if (zldpll->phase_monitor)
+ 		reg = ZL_REG_REF_PHASE(ref);
+-	} else {
++	else
+ 		/* The pin is not connected or phase monitor disabled */
+ 		return false;
+-	}
+ 
+ 	/* Read measured phase offset value */
+ 	rc = zl3073x_read_u48(zldev, reg, &phase_offset);
+@@ -1901,22 +1855,14 @@ zl3073x_dpll_pin_ffo_check(struct zl3073x_dpll_pin *pin)
+ {
+ 	struct zl3073x_dpll *zldpll = pin->dpll;
+ 	struct zl3073x_dev *zldev = zldpll->dev;
+-	u8 ref, status;
+ 	s64 ffo;
+-	int rc;
++	u8 ref;
+ 
+ 	/* Get reference monitor status */
+ 	ref = zl3073x_input_pin_ref_get(pin->id);
+-	rc = zl3073x_read_u8(zldev, ZL_REG_REF_MON_STATUS(ref), &status);
+-	if (rc) {
+-		dev_err(zldev->dev, "Failed to read %s refmon status: %pe\n",
+-			pin->label, ERR_PTR(rc));
+-
+-		return false;
+-	}
+ 
+ 	/* Do not report ffo changes if the reference monitor report errors */
+-	if (status != ZL_REF_MON_STATUS_OK)
++	if (!zl3073x_dev_ref_is_status_ok(zldev, ref))
+ 		return false;
+ 
+ 	/* Get the latest measured ref's ffo */
+diff --git a/drivers/dpll/zl3073x/ref.h b/drivers/dpll/zl3073x/ref.h
+index e72f2c8750876..c4931e545d24d 100644
+--- a/drivers/dpll/zl3073x/ref.h
++++ b/drivers/dpll/zl3073x/ref.h
+@@ -14,10 +14,12 @@ struct zl3073x_dev;
+  * struct zl3073x_ref - input reference state
+  * @ffo: current fractional frequency offset
+  * @config: reference config
++ * @mon_status: reference monitor status
+  */
+ struct zl3073x_ref {
+ 	s64	ffo;
+ 	u8	config;
++	u8	mon_status;
+ };
+ 
+ int zl3073x_ref_state_fetch(struct zl3073x_dev *zldev, u8 index);
+@@ -63,4 +65,16 @@ zl3073x_ref_is_enabled(const struct zl3073x_ref *ref)
+ 	return !!FIELD_GET(ZL_REF_CONFIG_ENABLE, ref->config);
+ }
+ 
++/**
++ * zl3073x_ref_is_status_ok - check the given input reference status
++ * @ref: pointer to ref state
++ *
++ * Return: true if the status is ok, false otherwise
++ */
++static inline bool
++zl3073x_ref_is_status_ok(const struct zl3073x_ref *ref)
++{
++	return ref->mon_status == ZL_REF_MON_STATUS_OK;
++}
++
+ #endif /* _ZL3073X_REF_H */
 -- 
 2.51.0
 
