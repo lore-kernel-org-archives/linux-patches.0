@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3718338939
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D5C342538
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301776; cv=none; b=Aju/c92ZFlgYzqQhF5in4j0vfu/sulaN7iatNGKdNwf3HHh44V0QAuxmGoEho6saSIcBAyeUnsM9vYYTjy4IrVETt30fInZaYSZnk6rzVK3yEedjMeq68On9tjX9R+fuDvWNNbW//4L6/GNKsj4+e6lQXQRHwNIdsvexAIAtn/s=
+	t=1772301777; cv=none; b=e30iu/dDzmlC9iqrwBNWcnl8s7Dp0sujrHgTqOTL6+vnvCGDCnqasgzdwK80PBm+ZvHV9JOJxxkzqaxCMrVM1J0Bk5mvBbKQE3+KaqOqcAcr2x41ylU4jS/MHP9YEicUJkbviyMOws507ipLar/3syYQjatygBbFh9O1KgtCH2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301776; c=relaxed/simple;
-	bh=oWEKnfXX31THv7PulVjbObRYYgVGKOhnu6i4WkPzQlM=;
+	s=arc-20240116; t=1772301777; c=relaxed/simple;
+	bh=75/D9RC2Pxqws5VQEIQCJ3+ZJuDRD81/pLpKoby4ov0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpMjASYPAbXxtTEKC6j/HBaqv2J5ckuczsSolrScwjm7XdsahkBbkTUhUX+Awf3XlmfvBd4/rnqzB9acE7mcrWCTY+VORpTNwaUndcp5csulhrUdk1znw72hLeWA53DcKpAjGu4D6amsydLoW1W37YfoQf1gO9aR5acIFKj9llQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wcv3PtxB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r0cFjMK2dSjruTQjHb/UiwAOUOedRk81fTBY0kjOvYVoyGOenR+7mbLzMiolor7FHp/Zkwfhd6qUnYC0ah/ZC5Y4uaHXqSCnOy49NQLYYV3jJAgyAIX7dK6ItnTyj/U0iKYKnWtkxO3aoxQljmM5ftVPYQeE+l+ScZhhP1dO3Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fGVBHHiw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wcv3PtxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF74C19424;
-	Sat, 28 Feb 2026 18:02:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fGVBHHiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F52C116D0;
+	Sat, 28 Feb 2026 18:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301776;
-	bh=oWEKnfXX31THv7PulVjbObRYYgVGKOhnu6i4WkPzQlM=;
+	s=k20201202; t=1772301777;
+	bh=75/D9RC2Pxqws5VQEIQCJ3+ZJuDRD81/pLpKoby4ov0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wcv3PtxBqfEJXboYBQ5V82vjJwSrOQgf/LoeGzxkgu0c++j487jpqGgmKuoVGqWZ+
-	 Yj/DhkhE0gNrqak7WpNiv2OwtbueB/Qh/AOcqB2dWAOJ2W00zs2Gs9xV4M2XQoBiv7
-	 PgCj7I3XUZ5XUbuJkRpDgDjQyvUXaaPbjXzwbrJdfDvCw/XEcMX2csEdwo1qUebTNs
-	 oKTWxDr7NIuJnj7RHTKCWKtN57Eiz955R+aZzC5FbaRabhAL1CjzoSdgMwbdlBO2oO
-	 GLo1janeBbDvtC536ZwGoF27DD3QhCPLTOzmUErlf3fYGXzb8Fh7+BEs+8oubgAoEz
-	 CC/vQKrUUTvaw==
+	b=fGVBHHiw5ucykGIJTCgttc7qSHDMjHhOOC9fY/j/fAjREfNVPYAZtejuyPsgFCOeO
+	 P+u+XAuw+7t7kBVXXCZ06Qo5QAMaKViEZip08PT3EVcKMUbEsa/bZOybWTyoD96N3D
+	 OX/MTw8vRBs9x8QMTlHcFsfgNLuIaFhSbQFSQLx5Muh2aWa6WEbfDsrFSko+ZtfY2c
+	 VKn+B8Kw7gaumovO+ICf8QQgtsSc5uk+A3vlhaMBHcbreQeEUlGY5GNwnXIG0ffb/z
+	 Ai3ntC1Oobn12jnuidVbNs8zuoIXaiX6j3wHAEYKaneO9cJzpoz2t1B0wjF+8yZQdi
+	 xRW8K6GZ41WJg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Abhishek Bapat <abhishekbapat@google.com>,
-	Jan Kara <jack@suse.cz>,
+Cc: Jian Zhang <zhangjian.3032@bytedance.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 185/385] quota: fix livelock between quotactl and freeze_super
-Date: Sat, 28 Feb 2026 12:56:47 -0500
-Message-ID: <20260228180011.1568201-185-sashal@kernel.org>
+Subject: [PATCH 6.12 186/385] net: mctp-i2c: fix duplicate reception of old data
+Date: Sat, 28 Feb 2026 12:56:48 -0500
+Message-ID: <20260228180011.1568201-186-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,71 +47,47 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Abhishek Bapat <abhishekbapat@google.com>
+From: Jian Zhang <zhangjian.3032@bytedance.com>
 
-[ Upstream commit 77449e453dfc006ad738dec55374c4cbc056fd39 ]
+[ Upstream commit ae4744e173fadd092c43eda4ca92dcb74645225a ]
 
-When a filesystem is frozen, quotactl_block() enters a retry loop
-waiting for the filesystem to thaw. It acquires s_umount, checks the
-freeze state, drops s_umount and uses sb_start_write() - sb_end_write()
-pair to wait for the unfreeze.
+The MCTP I2C slave callback did not handle I2C_SLAVE_READ_REQUESTED
+events. As a result, i2c read event will trigger repeated reception of
+old data, reset rx_pos when a read request is received.
 
-However, this retry loop can trigger a livelock issue, specifically on
-kernels with preemption disabled.
-
-The mechanism is as follows:
-1. freeze_super() sets SB_FREEZE_WRITE and calls sb_wait_write().
-2. sb_wait_write() calls percpu_down_write(), which initiates
-   synchronize_rcu().
-3. Simultaneously, quotactl_block() spins in its retry loop, immediately
-   executing the sb_start_write() - sb_end_write() pair.
-4. Because the kernel is non-preemptible and the loop contains no
-   scheduling points, quotactl_block() never yields the CPU. This
-   prevents that CPU from reaching an RCU quiescent state.
-5. synchronize_rcu() in the freezer thread waits indefinitely for the
-   quotactl_block() CPU to report a quiescent state.
-6. quotactl_block() spins indefinitely waiting for the freezer to
-   advance, which it cannot do as it is blocked on the RCU sync.
-
-This results in a hang of the freezer process and 100% CPU usage by the
-quota process.
-
-While this can occur intermittently on multi-core systems, it is
-reliably reproducing on a node with the following script, running both
-the freezer and the quota toggle on the same CPU:
-
-  # mkfs.ext4 -O quota /dev/sda 2g && mkdir a_mount
-  # mount /dev/sda -o quota,usrquota,grpquota a_mount
-  # taskset -c 3 bash -c "while true; do xfs_freeze -f a_mount; \
-    xfs_freeze -u a_mount; done" &
-  # taskset -c 3 bash -c "while true; do quotaon a_mount; \
-    quotaoff a_mount; done" &
-
-Adding cond_resched() to the retry loop fixes the issue. It acts as an
-RCU quiescent state, allowing synchronize_rcu() in percpu_down_write()
-to complete.
-
-Fixes: 576215cffdef ("fs: Drop wait_unfrozen wait queue")
-Signed-off-by: Abhishek Bapat <abhishekbapat@google.com>
-Link: https://patch.msgid.link/20260115213103.1089129-1-abhishekbapat@google.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
+Link: https://patch.msgid.link/20260108101829.1140448-1-zhangjian.3032@bytedance.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 2a14e91b6d76 ("mctp i2c: initialise event handler read bytes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/quota.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/mctp/mctp-i2c.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/quota/quota.c b/fs/quota/quota.c
-index 290157bc7bec2..04c6712d4031c 100644
---- a/fs/quota/quota.c
-+++ b/fs/quota/quota.c
-@@ -899,6 +899,7 @@ static struct super_block *quotactl_block(const char __user *special, int cmd)
- 		sb_start_write(sb);
- 		sb_end_write(sb);
- 		put_super(sb);
-+		cond_resched();
- 		goto retry;
- 	}
- 	return sb;
+diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
+index 503a9174321c6..8a30d0559d60d 100644
+--- a/drivers/net/mctp/mctp-i2c.c
++++ b/drivers/net/mctp/mctp-i2c.c
+@@ -243,6 +243,9 @@ static int mctp_i2c_slave_cb(struct i2c_client *client,
+ 		return 0;
+ 
+ 	switch (event) {
++	case I2C_SLAVE_READ_REQUESTED:
++		midev->rx_pos = 0;
++		break;
+ 	case I2C_SLAVE_WRITE_RECEIVED:
+ 		if (midev->rx_pos < MCTP_I2C_BUFSZ) {
+ 			midev->rx_buffer[midev->rx_pos] = *val;
+@@ -280,6 +283,9 @@ static int mctp_i2c_recv(struct mctp_i2c_dev *midev)
+ 	size_t recvlen;
+ 	int status;
+ 
++	if (midev->rx_pos == 0)
++		return 0;
++
+ 	/* + 1 for the PEC */
+ 	if (midev->rx_pos < MCTP_I2C_MINLEN + 1) {
+ 		ndev->stats.rx_length_errors++;
 -- 
 2.51.0
 
