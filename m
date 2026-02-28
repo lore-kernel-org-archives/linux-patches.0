@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8863E340A59
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371FE2DE717
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301103; cv=none; b=Viik+0y9Rw4sf3xgMGiqdD8GAoa8ifF7rZoBmvhtIhteJQ3C3iFoITlYPyJ4ZM0jIqnv84wtKpa/+98oUo190aZHgCHZY/LkWvxbXTLetZVfscRARAtQqYuk+xXayh52aTq4gGWYBmHphVaMdPVpkJAkN+ba9kBmNo4Ynz8b1IA=
+	t=1772301104; cv=none; b=XzTf56FyqhcWAoJOVVpRo3wqd0itslnP/CLik7Wd1NT5+6jo57sBJ8APLZ1dy4M8v7yt82PNLl2zEQH6r3GDgYKxvbu3doOsEg/FbYqSXUeWt9ciLtYfC+BkE/Ovh1rDN9ZPXWowODNrcd/VgqWKFwmy24gPxIZxjxyBDNNvncw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301103; c=relaxed/simple;
-	bh=bJq2LZ/QHMgMd9+Pf3DGjsGyDKmiuUdJu/6wChtH6Vg=;
+	s=arc-20240116; t=1772301104; c=relaxed/simple;
+	bh=J9hh2TDRS52hjtfXWjezCpSO0luovuop9OjDEah+r/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YyiH3/xPXo+otnJWsl7RCATntZnvtxRS00UIaG8d6v39dujiZT6jR9erqmV/85ddtkigvcG9740BCw0dR5dcwaIEcmzjw7p+xMe3UZ6aJG5+rk/XrVsjlJs4+wk43gcirkeI3DAE9p87vdM52D5Ty0KYRCbjXrHCKGAp5tnNrKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1ep2yzh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aill6lOJWQ7oJqdwDydFPB/lFTgx9TsYw6lyolk6vJECDCbc0g+dNRncgsVczB6gHvnmxf70b7yuV0Iad0DH2bBg4YVcdWMRP2hjuBJDzvnkR1dkcbcHrd5bLq5TO7KCemOgbkUxpZQhE0Ve9oJ5iawoamX0mJx/IgJOzEPhKgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iAq30uw/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1ep2yzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB271C116D0;
-	Sat, 28 Feb 2026 17:51:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iAq30uw/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC45C19423;
+	Sat, 28 Feb 2026 17:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301103;
-	bh=bJq2LZ/QHMgMd9+Pf3DGjsGyDKmiuUdJu/6wChtH6Vg=;
+	s=k20201202; t=1772301104;
+	bh=J9hh2TDRS52hjtfXWjezCpSO0luovuop9OjDEah+r/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q1ep2yzhoaTHBV5pvwcEVDfhKPSThBIe6/gJEUmFLLC1iuKcY/8/SoJQ4m+Wpz22N
-	 Aj7OBXYVlexKdiwSYsHAKxKNUu6CT4ixD7ZvD+YrUJ37f9Wy9JBbyxcgRb/evfB7/K
-	 /wB0kBR7TmWYrvFkJWTMAScc08yCJ+iT79PLPSN7JIp3BkFs5i7nDSobic3v2narA4
-	 WbMLtPGuYqxjiiniK8zATzXTRtyW4hLaATfJqkPSXVH7RPGGZ2MB1EJNHshBBRLo3q
-	 322MOtX4pyP9bA9iuwHV5sdZHHGJrdTqFeN+WgLuHuItYmGsqUMUINjGCC4d2pjBC5
-	 sUG4cp8/sbodg==
+	b=iAq30uw/CjQhRmuJIgg9nYwIWqJPMhpMCLcuPU35zXVjAHmrawYMgubhwnz2zhXod
+	 CxGGoonZ9aO4NXPHfMalivU/t8VJ4N8PFGyvEZh+HLA3WaiH7nf3tt0GDwUP01Bay5
+	 GBtpDi+Uiv4geQHBcEQCLHAw3w5JGuaALMregHgeAadDz6F6KtEOEcQ3fiLEqdJPfG
+	 UjxtaXGD5m+ezTzlcHG7v+KZnYdqhFn2z3sVREvMyNC0HbYa1XCvDy4LoyASJTdoIN
+	 rtEmN+GUoGJJxdDlXSr26stShtu7he+NTpmENz8ImeWxjrSAp7fBNP3yY12J9UCNHv
+	 b+cKtdktg0gag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 256/752] wifi: iwlwifi: mld: Handle rate selection for NAN interface
-Date: Sat, 28 Feb 2026 12:39:27 -0500
-Message-ID: <20260228174750.1542406-256-sashal@kernel.org>
+Subject: [PATCH 6.18 257/752] wifi: iwlwifi: mvm: check the validity of noa_len
+Date: Sat, 28 Feb 2026 12:39:28 -0500
+Message-ID: <20260228174750.1542406-257-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,38 +46,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit dbbeebece03050cd510073ce89fee83844e06b00 ]
+[ Upstream commit 1e3fb3c4a8e6c581d0f4533dba887fabf53d607d ]
 
-Frames transmitted over a NAN interface might not have channel
-information assigned to them. In such cases assign the lowest
-OFDM to the frame.
+Validate iwl_probe_resp_data_notif::noa_attr::len_low since we are using
+its value to determine the noa_len, which is later used for the NoA
+attribute.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20251110180612.72046f98f878.Ib784931fffd0747acd9d7bb22eabbbec5282733e@changeid
+Link: https://patch.msgid.link/20251110150012.99b663d9b424.I206fd54c990ca9e1160b9b94fa8be44e67bcc1b9@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/tx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/tx.c b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-index 3b4b575aadaa5..e3fb4fc4f452e 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-@@ -345,6 +345,11 @@ u8 iwl_mld_get_lowest_rate(struct iwl_mld *mld,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
+index 867807abde664..49ffc4ecee855 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
+@@ -1761,6 +1761,20 @@ void iwl_mvm_probe_resp_data_notif(struct iwl_mvm *mvm,
  
- 	iwl_mld_get_basic_rates_and_band(mld, vif, info, &basic_rates, &band);
+ 	mvmvif = iwl_mvm_vif_from_mac80211(vif);
  
-+	if (band >= NUM_NL80211_BANDS) {
-+		WARN_ON(vif->type != NL80211_IFTYPE_NAN);
-+		return IWL_FIRST_OFDM_RATE;
-+	}
++	/*
++	 * len_low should be 2 + n*13 (where n is the number of descriptors.
++	 * 13 is the size of a NoA descriptor). We can have either one or two
++	 * descriptors.
++	 */
++	if (IWL_FW_CHECK(mvm, notif->noa_active &&
++			 notif->noa_attr.len_low != 2 +
++			 sizeof(struct ieee80211_p2p_noa_desc) &&
++			 notif->noa_attr.len_low != 2 +
++			 sizeof(struct ieee80211_p2p_noa_desc) * 2,
++			 "Invalid noa_attr.len_low (%d)\n",
++			 notif->noa_attr.len_low))
++		return;
 +
- 	sband = mld->hw->wiphy->bands[band];
- 	for_each_set_bit(i, &basic_rates, BITS_PER_LONG) {
- 		u16 hw = sband->bitrates[i].hw_value;
+ 	new_data = kzalloc(sizeof(*new_data), GFP_KERNEL);
+ 	if (!new_data)
+ 		return;
 -- 
 2.51.0
 
