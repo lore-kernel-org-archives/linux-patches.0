@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F706301EE9;
-	Sat, 28 Feb 2026 17:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690F8301F0D;
+	Sat, 28 Feb 2026 17:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301413; cv=none; b=IeH4PtSej8j+K6ir79493rtc7TYFiwkGOt+kSCpCGLDD1N71Re2UYx9zcAubmGrih9IM4WxMwlmuD/BWuYhO0LN0on7vlpLHQS1sw8fQzKrYt+r/s4ua2fgkljpKyjQhyWrOUVx+AbVgJNw4qo1508OTH5NFzlv7+p/obju8X9Y=
+	t=1772301414; cv=none; b=Nsh3VelUnVxnqcyy9pQhdtBzSYRlKMUsEJh+/s31XMaBimWZSMO4W+0pqQTMsm1tXmlYamkXunDo1Y/WuYcvBqyf3/imO/cV8U6/nJb2/S8a/Gf5C1jmnRsniQTgmCSAlUl8CV2yh+65GZMLS+C+n9S4UZx6p84V7pYSCD+a+eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301413; c=relaxed/simple;
-	bh=LFso4gGWa0HLTFJsEh6cRF2qUDdp2Q2CBEykfE4/CpM=;
+	s=arc-20240116; t=1772301414; c=relaxed/simple;
+	bh=rwpnN65rYIVoqLu8TfEfLFo5uFAQg+Ke2vYqkzMDlU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NP7pYKEFjlq8TaJceK586m+PRW5O+ZvWSESKBzXFIdwYMLZbC/4FCytH6eP+hNLtng/SbALjQEqNiZAJlSggUyaBWezhDeEhmqMBOkGsWGFunKLcxHRpvZuhhJd9LXWgSQJS+L2587/F0bxEqAaqVGt15lZy6BhubhMiUWoIvX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OGQ7uQLC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XcN/uVy6vVWA3jwvHaVn8V2IJBRfOV7Pv6iddQ0YYVfPXeeY8oQAabaLd9ByBOpCVBXXP5ntw7Q4/veWwd6WByhRm+sKwhzxz2NEzJZIXIGIgsmgFOsThFpUBWMZUKc1HQZMxBmFoTZUfhPXc2Q0CPUE8lzZn4q84yqx32HODWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HxjsZ2u5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OGQ7uQLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA19C19423;
-	Sat, 28 Feb 2026 17:56:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HxjsZ2u5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1FFC19423;
+	Sat, 28 Feb 2026 17:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301413;
-	bh=LFso4gGWa0HLTFJsEh6cRF2qUDdp2Q2CBEykfE4/CpM=;
+	s=k20201202; t=1772301414;
+	bh=rwpnN65rYIVoqLu8TfEfLFo5uFAQg+Ke2vYqkzMDlU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OGQ7uQLCIl3iOo1ygop+23MMx2GSGnYU9jsALwRTFT93TxCkRjBl2tai+iVrZXZ3C
-	 Sc4DghYtTdrDt+OgPIsOettC+sUDGmGb/orQZ/J3pQ+NDUhUcco3vFzmrpTziPf6mk
-	 Na7JFe2rRM61DVFQF33/1lFLdbrcDasKABdHBEqiNyrOY3p9LrCeat5W0D9NQIm9xS
-	 w4QzOmp7GvimWlGvnKfxWFweUwvtI+pH1+bAP/4mHBJnl4stFYz1seV8BoeVIpyOSD
-	 z52X+K3TvC3SAj7SW7Agc//gfiubm4AIbEAWM8FqIbYSkEMPzHed2oQKiy2iUpV8AG
-	 wLCXLXM42hpDw==
+	b=HxjsZ2u5fUyKFG3wP59tLJzDj9/lcS2Pvdfe6Bh194eAg+fytPMYsNkLrC+lZaKPc
+	 g5rCpBwcRh/dd8m2eKwM0J+igz8Nv0jGhDS4zs/IHJ1i2LsGMD50eeZhzT9BFjeA7+
+	 6fKS98/OYo2Xda5yjQlAGyVnVFrJXmPp2S/a6KWKSbc8g9pDg9jtB+Mpk3mBU8fhPe
+	 rnQ1Jk7D3QqouQrOvDpXrbM52DmAcO4Ul2yXg4R0QcFVUIo3kbLffqe1/SvDsFQao+
+	 ZjHrQx6yBJLoaBiwVpNxMKPtK8swA2Qbm9Xnr9NqBl7WS8F/e+SEZj5ymxMmFn2/QZ
+	 H1GZR+YsQ3FlA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Jason Gunthorpe <jgg@nvidia.com>,
 	stable@vger.kernel.org,
 	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Pranjal Shrivastava <praan@google.com>,
 	Nicolin Chen <nicolinc@nvidia.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 602/752] iommu/arm-smmu-v3: Mark STE MEV safe when computing the update sequence
-Date: Sat, 28 Feb 2026 12:45:13 -0500
-Message-ID: <20260228174750.1542406-602-sashal@kernel.org>
+Subject: [PATCH 6.18 603/752] iommu/arm-smmu-v3: Mark EATS_TRANS safe when computing the update sequence
+Date: Sat, 28 Feb 2026 12:45:14 -0500
+Message-ID: <20260228174750.1542406-603-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -54,56 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit f3c1d372dbb8e5a86923f20db66deabef42bfc9d ]
+[ Upstream commit 7cad800485956a263318930613f8f4a084af8c70 ]
 
-Nested CD tables set the MEV bit to try to reduce multi-fault spamming on
-the hypervisor. Since MEV is in STE word 1 this causes a breaking update
-sequence that is not required and impacts real workloads.
+If VM wants to toggle EATS_TRANS off at the same time as changing the CFG,
+hypervisor will see EATS change to 0 and insert a V=0 breaking update into
+the STE even though the VM did not ask for that.
 
-For the purposes of STE updates the value of MEV doesn't matter, if it is
-set/cleared early or late it just results in a change to the fault reports
-that must be supported by the kernel anyhow. The spec says:
+In bare metal, EATS_TRANS is ignored by CFG=ABORT/BYPASS, which is why this
+does not cause a problem until we have the nested case where CFG is always
+a variation of S2 trans that does use EATS_TRANS.
 
- Note: Software must expect, and be able to deal with, coalesced fault
- records even when MEV == 0.
+Relax the rules for EATS_TRANS sequencing, we don't need it to be exact as
+the enclosing code will always disable ATS at the PCI device when changing
+EATS_TRANS. This ensures there are no ATS transactions that can race with
+an EATS_TRANS change so we don't need to carefully sequence these bits.
 
-So mark STE MEV safe when computing the update sequence, to avoid creating
-a breaking update.
-
-Fixes: da0c56520e88 ("iommu/arm-smmu-v3: Set MEV bit in nested STE for DoS mitigations")
+Fixes: 1e8be08d1c91 ("iommu/arm-smmu-v3: Support IOMMU_DOMAIN_NESTED")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 26 +++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index e7d62acb4b779..bb755c7ef9a79 100644
+index bb755c7ef9a79..1e47da0ce6b9b 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1097,6 +1097,16 @@ VISIBLE_IF_KUNIT
+@@ -1097,6 +1097,32 @@ VISIBLE_IF_KUNIT
  void arm_smmu_get_ste_update_safe(const __le64 *cur, const __le64 *target,
  				  __le64 *safe_bits)
  {
++	const __le64 eats_s1chk =
++		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_S1CHK);
++	const __le64 eats_trans =
++		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_TRANS);
++
 +	/*
-+	 * MEV does not meaningfully impact the operation of the HW, it only
-+	 * changes how many fault events are generated, thus we can relax it
-+	 * when computing the ordering. The spec notes the device can act like
-+	 * MEV=1 anyhow:
++	 * When an STE changes EATS_TRANS, the sequencing code in the attach
++	 * logic already will have the PCI cap for ATS disabled. Thus at this
++	 * moment we can expect that the device will not generate ATS queries
++	 * and so we don't care about the sequencing of EATS. The purpose of
++	 * EATS_TRANS is to protect the system from hostile untrusted devices
++	 * that issue ATS when the PCI config space is disabled. However, if
++	 * EATS_TRANS is being changed, then we must have already trusted the
++	 * device as the EATS_TRANS security block is being disabled.
 +	 *
-+	 *  Note: Software must expect, and be able to deal with, coalesced
-+	 *  fault records even when MEV == 0.
++	 *  Note: now the EATS_TRANS update is moved to the first entry_set().
++	 *  Changing S2S and EATS might transiently result in S2S=1 and EATS=1
++	 *  which is a bad STE (see "5.2 Stream Table Entry"). In such a case,
++	 *  we can't do a hitless update. Also, it should not be added to the
++	 *  safe bits with STRTAB_STE_1_EATS_S1CHK, because EATS=0b11 would be
++	 *  effectively an errant 0b00 configuration.
 +	 */
-+	safe_bits[1] |= cpu_to_le64(STRTAB_STE_1_MEV);
- }
- EXPORT_SYMBOL_IF_KUNIT(arm_smmu_get_ste_update_safe);
- 
++	if (!((cur[1] | target[1]) & cpu_to_le64(eats_s1chk)) &&
++	    !((cur[2] | target[2]) & cpu_to_le64(STRTAB_STE_2_S2S)))
++		safe_bits[1] |= cpu_to_le64(eats_trans);
++
+ 	/*
+ 	 * MEV does not meaningfully impact the operation of the HW, it only
+ 	 * changes how many fault events are generated, thus we can relax it
 -- 
 2.51.0
 
