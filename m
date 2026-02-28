@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36AA34403E
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8367E2DB7B2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301838; cv=none; b=BzXJM6eUNpdaKnPwxH1hzWBaZBh+gk7TbWLs28BY8jxnUbdv81Env09+IY/Rn+8sFao4BVyXA3+f9Kfpe6o3/exm9q6haZhsQklew0x4TZ/fQmQNbu1ucqJnM6+CRyh+uk3ysweNxUoyJaNPJhjlIUTIZKiReIJeR4YAGOMlOG4=
+	t=1772301839; cv=none; b=OnPiPBThXIV6jD2lXjGO0RIzwNi2jBxogZNR/ikGdSWHHw3T36ZvTmnqjJZLHkdpiw5BTHf6HszcvNyCs9oqS/eBWFJNLCCqGfTOu5SNUn5cQoxa73Sr272/nX8/U6xuvAY+rP840HjEkNHEQh7U2wXOxqhpAS4y53FuxdFTc5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301838; c=relaxed/simple;
-	bh=OlUH0PI4B9p/J7S5Gm+/pfjm3CPCoPeNUJiK76/JvDg=;
+	s=arc-20240116; t=1772301839; c=relaxed/simple;
+	bh=0yirEfuMlwNH79HmXX9wLoElLofLWGc3Bg4SYF4qW9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dmbm6PmPzi7IJRxa+TQ+qrzdkdkfsF5LRpweaU8D36gsZ9RHkD8lkcIPVdBJMlnwJ/4ZEpcBVXLZmInK2hUkOnbeZaETg+pHiS/ypBb/eJOezwXHr/sXGiujXIGUlr7jKqw74W2dtTQZgavH1+2ssOxkTjxazDsN7WsMDL7st40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P+ZeYTgY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKoT4b//pBdu53gJDp27aME5z1f1CO4/khbBsX35qgPtmo0I01M+TC3bkv0bhQMiVkb+9Gkfph8zrQKf1Y0rgqO3iERJl68yHzgal+39YTW6mdioGxYyNaNq/plISPDIdpBvFZCmi4vv9B7YCCgbOIyhL3KgfegzsuH9HnpDfFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J7wgSAqX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P+ZeYTgY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C74FC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J7wgSAqX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54B4C19423;
 	Sat, 28 Feb 2026 18:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301838;
-	bh=OlUH0PI4B9p/J7S5Gm+/pfjm3CPCoPeNUJiK76/JvDg=;
+	s=k20201202; t=1772301839;
+	bh=0yirEfuMlwNH79HmXX9wLoElLofLWGc3Bg4SYF4qW9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+ZeYTgYPu2jwUprfpfM7gwk1ZOnT8ViwBEPD1BHhkzDYcp/xf8SJTJwyObLyBX18
-	 eUvECTs9Kh9/RB5u20Fti67kS3lzhJ8jkNhXCdaTEHM5b1q0ROZQTc3gffKMhjSG8Q
-	 DKX3ZsACEgvbwQIM0iTXVCOavskfgfMQuhxbaLjn4s9Diralcwz/M19ozNqVhexQp7
-	 UDT15gEfu8brCipE2uK8HUe+dDlycVWlyuhRGRPJKtGxwIy9ceDzTd2Vx8f1AXwdyb
-	 hbhVWXwjXtR1Xka9rXIpvENuHZprbkE0flhFl3qKWyKRKbW0iYciTcQiRyBacCuoLP
-	 0jJfUM5QtG/DA==
+	b=J7wgSAqXv8I66OYS4Fte8GB4GXFn+ylY3ZdXUccIMQGUUEHIPJ1k4nwXR4zbxuhPN
+	 Jq8uLYbKaIMYvP7YeeWYtE/+wpnzbFah3c2hZEP7tBqzdSxWAk7SRzAD1um5eyS1Jr
+	 ZjeOP+9DrNYsKU0sFXP7ZFBNzVTCjXtZsqWkYS8vsuGazYkTomZjEzf0EfDYFCcGgx
+	 ujv1J4TBNFhLdMLjnnbEef7L9U32n/NlxDaHdLTNfLsYfanBGEgAYDgn3RO5zGEqhP
+	 rWn+8KwWvHbR7Pv1u7d1CUKOLOlR4WJuB5qvR/CKJPxlO+fSqvga3HIAqcttVndMTo
+	 zpPPpVrInu/YA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Waqar Hameed <waqar.hameed@axis.com>,
-	Nikita Travkin <nikita@trvn.ru>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 257/385] power: supply: pm8916_lbc: Fix use-after-free in power_supply_changed()
-Date: Sat, 28 Feb 2026 12:57:59 -0500
-Message-ID: <20260228180011.1568201-257-sashal@kernel.org>
+Subject: [PATCH 6.12 258/385] power: supply: rt9455: Fix use-after-free in power_supply_changed()
+Date: Sat, 28 Feb 2026 12:58:00 -0500
+Message-ID: <20260228180011.1568201-258-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -50,7 +49,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit b7508129978ae1e2ed9b0410396abc05def9c4eb ]
+[ Upstream commit e2febe375e5ea5afed92f4cd9711bde8f24ee6d2 ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -74,52 +73,50 @@ of using the `power_supply` handle *uninitialized* in
 Fix this racy use-after-free by making sure the IRQ is requested _after_
 the registration of the `power_supply` handle.
 
-Fixes: f8d7a3d21160 ("power: supply: Add driver for pm8916 lbc")
+Fixes: e86d69dd786e ("power_supply: Add support for Richtek RT9455 battery charger")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Reviewed-by: Nikita Travkin <nikita@trvn.ru>
-Link: https://patch.msgid.link/64d8dd3675a4e59fa32c3e0ef451f12d1f7ed18f.1766268280.git.waqar.hameed@axis.com
+Link: https://patch.msgid.link/1567d831e04c3e2fcb9e18dd36b7bcba4634581a.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/pm8916_lbc.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/power/supply/rt9455_charger.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/power/supply/pm8916_lbc.c b/drivers/power/supply/pm8916_lbc.c
-index 6d92e98cbecc6..ab324ce3b8721 100644
---- a/drivers/power/supply/pm8916_lbc.c
-+++ b/drivers/power/supply/pm8916_lbc.c
-@@ -274,15 +274,6 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, -EINVAL,
- 				     "Wrong amount of reg values: %d (4 expected)\n", len);
- 
--	irq = platform_get_irq_byname(pdev, "usb_vbus");
--	if (irq < 0)
--		return irq;
--
--	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
--					IRQF_ONESHOT, "pm8916_lbc", chg);
--	if (ret)
--		return ret;
--
- 	ret = device_property_read_u32_array(dev, "reg", chg->reg, len);
- 	if (ret)
- 		return ret;
-@@ -332,6 +323,15 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Unable to get battery info\n");
- 
-+	irq = platform_get_irq_byname(pdev, "usb_vbus");
-+	if (irq < 0)
-+		return irq;
+diff --git a/drivers/power/supply/rt9455_charger.c b/drivers/power/supply/rt9455_charger.c
+index 64a23e3d7bb00..803f4d258da9e 100644
+--- a/drivers/power/supply/rt9455_charger.c
++++ b/drivers/power/supply/rt9455_charger.c
+@@ -1663,6 +1663,15 @@ static int rt9455_probe(struct i2c_client *client)
+ 	rt9455_charger_config.supplied_to	= rt9455_charger_supplied_to;
+ 	rt9455_charger_config.num_supplicants	=
+ 					ARRAY_SIZE(rt9455_charger_supplied_to);
 +
-+	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
-+					IRQF_ONESHOT, "pm8916_lbc", chg);
-+	if (ret)
-+		return ret;
++	info->charger = devm_power_supply_register(dev, &rt9455_charger_desc,
++						   &rt9455_charger_config);
++	if (IS_ERR(info->charger)) {
++		dev_err(dev, "Failed to register charger\n");
++		ret = PTR_ERR(info->charger);
++		goto put_usb_notifier;
++	}
 +
- 	chg->edev = devm_extcon_dev_allocate(dev, pm8916_lbc_charger_cable);
- 	if (IS_ERR(chg->edev))
- 		return PTR_ERR(chg->edev);
+ 	ret = devm_request_threaded_irq(dev, client->irq, NULL,
+ 					rt9455_irq_handler_thread,
+ 					IRQF_TRIGGER_LOW | IRQF_ONESHOT,
+@@ -1678,14 +1687,6 @@ static int rt9455_probe(struct i2c_client *client)
+ 		goto put_usb_notifier;
+ 	}
+ 
+-	info->charger = devm_power_supply_register(dev, &rt9455_charger_desc,
+-						   &rt9455_charger_config);
+-	if (IS_ERR(info->charger)) {
+-		dev_err(dev, "Failed to register charger\n");
+-		ret = PTR_ERR(info->charger);
+-		goto put_usb_notifier;
+-	}
+-
+ 	return 0;
+ 
+ put_usb_notifier:
 -- 
 2.51.0
 
