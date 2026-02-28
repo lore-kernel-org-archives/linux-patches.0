@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A8E35AC06
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9312C35AC21
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302720; cv=none; b=MeLjS1xC+uC0tv/ecY3YJ+eHJ0YiAh01y5EQR5Yf1wNW3iScHEnGLTLTwVA9EWxlr12mjk4VksuzwdzA9bWL6ocdmb/7ud8Ut9xQ71/IFU3VvtJ1AJwHLls03b8zrFjrFbRHEomv4QDGGaZxUzJXUtxMSz7dAHwi/ya43LSEgN0=
+	t=1772302721; cv=none; b=i73vSM1eFNYzIf3DtspAqkm0MgiF+hi0DdlczcGXMdwwvNQwJO5OoatXUb+zssiNfST+ION+PqH7zzH0zKCgNXSUgacxk8AI2d931h7ER+LF9DHjVPgILutIM8qvPHYimQ/AfLE6CrCdSnSzdHpQEm3wtWkypwQeD+ZlIJ91Wus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302720; c=relaxed/simple;
-	bh=xXbVhbL7EiIbb7vtMnisjiKX3lPlhLgMp9+x2b/veOI=;
+	s=arc-20240116; t=1772302721; c=relaxed/simple;
+	bh=AeWOusem6hURs85UCb29tVCiWxycmBC7rJcduJsL0ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JT7SVPu2dfeCQmIYknQ+d9GpCY5T5w3UA9SJoHwHzhZcsQaPFCgYhtis0uakdk0VuArinAm/NbXtiTdqddoQoO4lxX19szgGBV+FLgFktWsF5LlvK8pbLbZS/SQrhXWS31RItEI/PYGGkufQpRShVvYFXfN0u9rqyj58rDJyVrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t0MpGglc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qt17X2zQKK9EOAV1DLFqZXnCn0nJHk6I1iyqGpP8cSOBC26PPjKtZS7rXsYCXR1/8u60VQ+Ia+7e4G+wXwW+C2bcgMJ54t03L9byyu2khZ0T8peSvOMkRFJmR4KsdPwOK59WzSC+/fC5CtHmDpgz1B2HokoHCfN0QywRsQkBibk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=olvAFqzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t0MpGglc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EF5C19424;
-	Sat, 28 Feb 2026 18:18:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olvAFqzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98DBC116D0;
+	Sat, 28 Feb 2026 18:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302720;
-	bh=xXbVhbL7EiIbb7vtMnisjiKX3lPlhLgMp9+x2b/veOI=;
+	s=k20201202; t=1772302721;
+	bh=AeWOusem6hURs85UCb29tVCiWxycmBC7rJcduJsL0ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0MpGglcJx6tZ9cG6KYWaJFqh0NpzaeQZm+oX6OfteNJ/zte8AGiwMlCy/QmxP1j0
-	 cpYpkgJoE5yGMdpjB7ybgk2mvIG9Db9/eh6o+pVelvcoFmUsmG9TCNIitRTlgENKE7
-	 fly2t/CFxhJWaPiqkmVQBgilBrhOLjaYStGh2Gpi/XtiANZqFEGawybaYYQEXIyyLa
-	 p/9ZiNS3G0OV/ZPXbFjJcChwx0q5OZQ5Q3t1rI3XnzpopqMeJgAsfJnlfJIIEjdcLH
-	 Himhdbn3NI9o6IugrFTDnWhorTrlLYY3S9yiaZiXxYvoFQ/qgWlseCi/GbLwoh6Nkj
-	 O2rdNe0OYCVow==
+	b=olvAFqzzGLUKrIjKjoLmTELunoRxMQ6C3sf7q3JZTwbc6m2ge3D7GpS4iTWayiKkk
+	 ZyzfeyLi+Pv1PVSA/aUBWWuShUmFw9KDkviYYPajY7fXdnJP9fO/gE5AdgNurDTCfa
+	 hXo9Cl0mCMF6Bv5RiFDNhucWg/PVbNjEsmjnBxlhYQLPJrq/3XlFJBs+chOo/n18J9
+	 K5aOaPALROfcxntm8gwhpsxMAs6Y54kwAaPTzaJXhrtoqmJa39GldPRD2ZmvtLECRd
+	 goAURm9/ApueJII38zNrxmfyREWrM79SbJoiCHZq5x1iyZdUMkMHCc7RjrgETKLl6V
+	 TNK7gNv4424Mw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
-	syzbot+1f22cb1769f249df9fa0@syzkaller.appspotmail.com,
+	syzbot+827272712bd6d12c79a4@syzkaller.appspotmail.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/147] net: atm: fix crash due to unvalidated vcc pointer in sigd_send()
-Date: Sat, 28 Feb 2026 13:16:28 -0500
-Message-ID: <20260228181736.1605592-80-sashal@kernel.org>
+Subject: [PATCH 5.10 081/147] serial: caif: fix use-after-free in caif_serial ldisc_close()
+Date: Sat, 28 Feb 2026 13:16:29 -0500
+Message-ID: <20260228181736.1605592-81-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -50,150 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit ae88a5d2f29b69819dc7b04086734439d074a643 ]
+[ Upstream commit 308e7e4d0a846359685f40aade023aee7b27284c ]
 
-Reproducer available at [1].
+There is a use-after-free bug in caif_serial where handle_tx() may
+access ser->tty after the tty has been freed.
 
-The ATM send path (sendmsg -> vcc_sendmsg -> sigd_send) reads the vcc
-pointer from msg->vcc and uses it directly without any validation. This
-pointer comes from userspace via sendmsg() and can be arbitrarily forged:
+The race condition occurs between ldisc_close() and packet transmission:
 
-    int fd = socket(AF_ATMSVC, SOCK_DGRAM, 0);
-    ioctl(fd, ATMSIGD_CTRL);  // become ATM signaling daemon
-    struct msghdr msg = { .msg_iov = &iov, ... };
-    *(unsigned long *)(buf + 4) = 0xdeadbeef;  // fake vcc pointer
-    sendmsg(fd, &msg, 0);  // kernel dereferences 0xdeadbeef
+    CPU 0 (close)                     CPU 1 (xmit)
+    -------------                     ------------
+    ldisc_close()
+      tty_kref_put(ser->tty)
+      [tty may be freed here]
+                     <-- race window -->
+                                      caif_xmit()
+                                        handle_tx()
+                                          tty = ser->tty  // dangling ptr
+                                          tty->ops->write() // UAF!
+      schedule_work()
+        ser_release()
+          unregister_netdevice()
 
-In normal operation, the kernel sends the vcc pointer to the signaling
-daemon via sigd_enq() when processing operations like connect(), bind(),
-or listen(). The daemon is expected to return the same pointer when
-responding. However, a malicious daemon can send arbitrary pointer values.
+The root cause is that tty_kref_put() is called in ldisc_close() while
+the network device is still active and can receive packets.
 
-Fix this by introducing find_get_vcc() which validates the pointer by
-searching through vcc_hash (similar to how sigd_close() iterates over
-all VCCs), and acquires a reference via sock_hold() if found.
+Since ser and tty have a 1:1 binding relationship with consistent
+lifecycles (ser is allocated in ldisc_open and freed in ser_release
+via unregister_netdevice, and each ser binds exactly one tty), we can
+safely defer the tty reference release to ser_release() where the
+network device is unregistered.
 
-Since struct atm_vcc embeds struct sock as its first member, they share
-the same lifetime. Therefore using sock_hold/sock_put is sufficient to
-keep the vcc alive while it is being used.
+Fix this by moving tty_kref_put() from ldisc_close() to ser_release(),
+after unregister_netdevice(). This ensures the tty reference is held
+as long as the network device exists, preventing the UAF.
 
-Note that there may be a race with sigd_close() which could mark the vcc
-with various flags (e.g., ATM_VF_RELEASED) after find_get_vcc() returns.
-However, sock_hold() guarantees the memory remains valid, so this race
-only affects the logical state, not memory safety.
+Note: We save ser->tty before unregister_netdevice() because ser is
+embedded in netdev's private data and will be freed along with netdev
+(needs_free_netdev = true).
 
-[1]: https://gist.github.com/mrpre/1ba5949c45529c511152e2f4c755b0f3
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+1f22cb1769f249df9fa0@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69039850.a70a0220.5b2ed.005d.GAE@google.com/T/
+How to reproduce: Add mdelay(500) at the beginning of ldisc_close()
+to widen the race window, then run the reproducer program [1].
+
+Note: There is a separate deadloop issue in handle_tx() when using
+PORT_UNKNOWN serial ports (e.g., /dev/ttyS3 in QEMU without proper
+serial backend). This deadloop exists even without this patch,
+and is likely caused by inconsistency between uart_write_room() and
+uart_write() in serial core. It has been addressed in a separate
+patch [2].
+
+KASAN report:
+
+==================================================================
+BUG: KASAN: slab-use-after-free in handle_tx+0x5d1/0x620
+Read of size 1 at addr ffff8881131e1490 by task caif_uaf_trigge/9929
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x10e/0x1f0
+ print_report+0xd0/0x630
+ kasan_report+0xe4/0x120
+ handle_tx+0x5d1/0x620
+ dev_hard_start_xmit+0x9d/0x6c0
+ __dev_queue_xmit+0x6e2/0x4410
+ packet_xmit+0x243/0x360
+ packet_sendmsg+0x26cf/0x5500
+ __sys_sendto+0x4a3/0x520
+ __x64_sys_sendto+0xe0/0x1c0
+ do_syscall_64+0xc9/0xf80
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f615df2c0d7
+
+Allocated by task 9930:
+
+Freed by task 64:
+
+Last potentially related work creation:
+
+The buggy address belongs to the object at ffff8881131e1000
+ which belongs to the cache kmalloc-cg-2k of size 2048
+The buggy address is located 1168 bytes inside of
+ freed 2048-byte region [ffff8881131e1000, ffff8881131e1800)
+
+The buggy address belongs to the physical page:
+page_owner tracks the page as allocated
+page last free pid 9778 tgid 9778 stack trace:
+
+Memory state around the buggy address:
+ ffff8881131e1380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff8881131e1400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff8881131e1480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                         ^
+ ffff8881131e1500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff8881131e1580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+[1]: https://gist.github.com/mrpre/f683f244544f7b11e7fa87df9e6c2eeb
+[2]: https://lore.kernel.org/linux-serial/20260204074327.226165-1-jiayuan.chen@linux.dev/T/#u
+
+Reported-by: syzbot+827272712bd6d12c79a4@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000a4a7550611e234f5@google.com/T/
+Fixes: 56e0ef527b18 ("drivers/net: caif: fix wrong rtnl_is_locked() usage")
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260205095501.131890-1-jiayuan.chen@linux.dev
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20260206074450.154267-1-jiayuan.chen@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/signaling.c | 56 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 54 insertions(+), 2 deletions(-)
+ drivers/net/caif/caif_serial.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/atm/signaling.c b/net/atm/signaling.c
-index 5de06ab8ed752..5a5d8b1fa8be8 100644
---- a/net/atm/signaling.c
-+++ b/net/atm/signaling.c
-@@ -22,6 +22,36 @@
- 
- struct atm_vcc *sigd = NULL;
- 
-+/*
-+ * find_get_vcc - validate and get a reference to a vcc pointer
-+ * @vcc: the vcc pointer to validate
-+ *
-+ * This function validates that @vcc points to a registered VCC in vcc_hash.
-+ * If found, it increments the socket reference count and returns the vcc.
-+ * The caller must call sock_put(sk_atm(vcc)) when done.
-+ *
-+ * Returns the vcc pointer if valid, NULL otherwise.
-+ */
-+static struct atm_vcc *find_get_vcc(struct atm_vcc *vcc)
-+{
-+	int i;
-+
-+	read_lock(&vcc_sklist_lock);
-+	for (i = 0; i < VCC_HTABLE_SIZE; i++) {
-+		struct sock *s;
-+
-+		sk_for_each(s, &vcc_hash[i]) {
-+			if (atm_sk(s) == vcc) {
-+				sock_hold(s);
-+				read_unlock(&vcc_sklist_lock);
-+				return vcc;
-+			}
-+		}
-+	}
-+	read_unlock(&vcc_sklist_lock);
-+	return NULL;
-+}
-+
- static void sigd_put_skb(struct sk_buff *skb)
+diff --git a/drivers/net/caif/caif_serial.c b/drivers/net/caif/caif_serial.c
+index 39fbd0be179c2..1b6a696182f72 100644
+--- a/drivers/net/caif/caif_serial.c
++++ b/drivers/net/caif/caif_serial.c
+@@ -299,6 +299,7 @@ static void ser_release(struct work_struct *work)
  {
- 	if (!sigd) {
-@@ -69,7 +99,14 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
+ 	struct list_head list;
+ 	struct ser_device *ser, *tmp;
++	struct tty_struct *tty;
  
- 	msg = (struct atmsvc_msg *) skb->data;
- 	WARN_ON(refcount_sub_and_test(skb->truesize, &sk_atm(vcc)->sk_wmem_alloc));
--	vcc = *(struct atm_vcc **) &msg->vcc;
-+
-+	vcc = find_get_vcc(*(struct atm_vcc **)&msg->vcc);
-+	if (!vcc) {
-+		pr_debug("invalid vcc pointer in msg\n");
-+		dev_kfree_skb(skb);
-+		return -EINVAL;
-+	}
-+
- 	pr_debug("%d (0x%lx)\n", (int)msg->type, (unsigned long)vcc);
- 	sk = sk_atm(vcc);
- 
-@@ -100,7 +137,16 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 		clear_bit(ATM_VF_WAITING, &vcc->flags);
- 		break;
- 	case as_indicate:
--		vcc = *(struct atm_vcc **)&msg->listen_vcc;
-+		/* Release the reference from msg->vcc, we'll use msg->listen_vcc instead */
-+		sock_put(sk);
-+
-+		vcc = find_get_vcc(*(struct atm_vcc **)&msg->listen_vcc);
-+		if (!vcc) {
-+			pr_debug("invalid listen_vcc pointer in msg\n");
-+			dev_kfree_skb(skb);
-+			return -EINVAL;
-+		}
-+
- 		sk = sk_atm(vcc);
- 		pr_debug("as_indicate!!!\n");
- 		lock_sock(sk);
-@@ -115,6 +161,8 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 		sk->sk_state_change(sk);
- as_indicate_complete:
- 		release_sock(sk);
-+		/* Paired with find_get_vcc(msg->listen_vcc) above */
-+		sock_put(sk);
- 		return 0;
- 	case as_close:
- 		set_bit(ATM_VF_RELEASED, &vcc->flags);
-@@ -131,11 +179,15 @@ static int sigd_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 		break;
- 	default:
- 		pr_alert("bad message type %d\n", (int)msg->type);
-+		/* Paired with find_get_vcc(msg->vcc) above */
-+		sock_put(sk);
- 		return -EINVAL;
+ 	spin_lock(&ser_lock);
+ 	list_replace_init(&ser_release_list, &list);
+@@ -307,9 +308,11 @@ static void ser_release(struct work_struct *work)
+ 	if (!list_empty(&list)) {
+ 		rtnl_lock();
+ 		list_for_each_entry_safe(ser, tmp, &list, node) {
++			tty = ser->tty;
+ 			dev_close(ser->dev);
+ 			unregister_netdevice(ser->dev);
+ 			debugfs_deinit(ser);
++			tty_kref_put(tty);
+ 		}
+ 		rtnl_unlock();
  	}
- 	sk->sk_state_change(sk);
- out:
- 	dev_kfree_skb(skb);
-+	/* Paired with find_get_vcc(msg->vcc) above */
-+	sock_put(sk);
- 	return 0;
- }
+@@ -370,8 +373,6 @@ static void ldisc_close(struct tty_struct *tty)
+ {
+ 	struct ser_device *ser = tty->disc_data;
  
+-	tty_kref_put(ser->tty);
+-
+ 	spin_lock(&ser_lock);
+ 	list_move(&ser->node, &ser_release_list);
+ 	spin_unlock(&ser_lock);
 -- 
 2.51.0
 
