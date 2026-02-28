@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6ED2737F2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCF92737F2
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302345; cv=none; b=MmcJLHowF0AGwvekVw4QJlOXkLICZqqQ/9Q/kRa0xq3RzpcezX7xjKFqAEH9AMWyN3JJBpE9OhzB7A5JLQpu2Gs6Cma2fNHppbdOahOWLCycy+K1bc89GwKPIUCA5zVKw9DTvUyNURQcFQ5IWEz9Z85TtS35FB0iDVuu6ZrfbLI=
+	t=1772302345; cv=none; b=QAXUO0m5LSGSLz1QBYelhIrGwbsZS3FTz/6cbnIKOwq5IYc/xcaCU8nmScgqHs/DjNlzyePUovrnmR1stdtdwIlojdMOMEs+mxQTSH2Lifl8QQFDB39jWQ8j2BeGemMLkraGQkkfWX07J1d7DLCze1qt9e2nfpDC9wS7T/ODiAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302345; c=relaxed/simple;
-	bh=O9h42/cOQQiz3I0DYi2IVQ/catvVPOV0PDwNmJp7T+I=;
+	bh=LSiE8aeAGpyimheg86gDckYkmuWmjVt1v3vq8DaGVhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bh06/H39RaNUZqdBCP5GQL1WDabR2MTKqY8wHn1O51bo+hNdjS5EEKp718RSii4vvWFoc13+eKlixql1xJOxpzNv2ZBlI24BCm3enJVbTbOF4TBjyRAFofCBqRWzHzmIluT9u52BYwUTAHscdlMh0u6VA8YIPDyL+Vx8tJJoH+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGgUjFE3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F0r1ibeBDZMfJqrbtVwcPpLM9vPZmSv+QJbqKZ/fQsasQNf0Kkc++DPJ7mmWa80Q7zEG/JB1+eJaNCCq7dk0cRAtmOR49VmAW4oIw63m2vT66KGVGVJsYw86zHuYOEJB0PEC7kZYNuhV34p6KybiV02MOrY6xeobWe/RI+X3YOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hR2BF60S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGgUjFE3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE47C19423;
-	Sat, 28 Feb 2026 18:12:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hR2BF60S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E73C116D0;
+	Sat, 28 Feb 2026 18:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302345;
-	bh=O9h42/cOQQiz3I0DYi2IVQ/catvVPOV0PDwNmJp7T+I=;
+	bh=LSiE8aeAGpyimheg86gDckYkmuWmjVt1v3vq8DaGVhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGgUjFE3wf89Bc+H41tAje8b66PUmkVSQyTaIyYn0g5xLiXgqtl/fm8yBHftPwPAs
-	 lZXyghziGkxC543lDwWgFctQQBowwBQWOn9RlxV+OcnYKmaispBj69aIy35QZDHnt0
-	 VrhX0DMSRjJZo6ZWMycGFO+z4P9Nstxglf5yxdHycRTpT2g21fUuhUyC2RBAXUdqhH
-	 vRc4L9RZeuNNwy6VFIVgzkvGpHknqx4lI3Ac7SLx37cKEbNsNykmPv9M0VAVDnbhF7
-	 oCMZ25MPv9pZaJh3rc4vMZI1q9ba6Tvn+z6od7KSRCOLjPOzRiXXYvQn4iJsv6DDmO
-	 3oti24SAJah0g==
+	b=hR2BF60StkvzNgqtO8K4nNL7x8KqX0QM9zmzYaAHpwcDgQ8rJq679ueluJI6pH2sA
+	 ch9RhSDd65UGRwI8000wu0kO0MDJ624ZC/t+eR0VFVl06SfJt+TObRLl1AD413oYl3
+	 hiHgjBbtw2n3Yc2XULq//6eKzOqp4PAPHPVjBTmTyCCq2ivsmPms8T/hEHi7CkWtgR
+	 EJ9R2WWOTRW5Wb9w2PMrJOxfxeKzJ6jmUNBhcqXk5lUArjb78owPsrHo29gTeLeHb5
+	 KovHj1XdLYsnKYRbcE2M+kKhHQ43MVFCv245oumecf3fvhdSBj5TREpNomM8Zez1fw
+	 OvyEhQMbhi5iQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Jerome Brunet <jbrunet@baylibre.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/232] arm64: dts: amlogic: gx: assign the MMC signal clocks
-Date: Sat, 28 Feb 2026 13:08:41 -0500
-Message-ID: <20260228181127.1592657-68-sashal@kernel.org>
+Subject: [PATCH 6.1 069/232] arm64: dts: amlogic: g12: assign the MMC B and C signal clocks
+Date: Sat, 28 Feb 2026 13:08:42 -0500
+Message-ID: <20260228181127.1592657-69-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,7 +49,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 406706559046eebc09a31e8ae5e78620bfd746fe ]
+[ Upstream commit be2ff5fdb0e83e32d4ec4e68a69875cec0d14621 ]
 
 The amlogic MMC driver operate with the assumption that MMC clock
 is configured to provide 24MHz. It uses this path for low
@@ -57,85 +57,40 @@ rates such as 400kHz.
 
 Assign the clocks to make sure they are properly configured
 
-Fixes: 50662499f911 ("ARM64: dts: meson-gx: Use correct mmc clock source 0")
+Fixes: 4759fd87b928 ("arm64: dts: meson: g12a: add mmc nodes")
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260114-amlogic-mmc-clocks-followup-v1-4-a999fafbe0aa@baylibre.com
+Link: https://patch.msgid.link/20260114-amlogic-mmc-clocks-followup-v1-5-a999fafbe0aa@baylibre.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi | 9 +++++++++
- arch/arm64/boot/dts/amlogic/meson-gxl.dtsi  | 9 +++++++++
- 2 files changed, 18 insertions(+)
+ arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
-index 256c46771db78..c57a6f37bc2af 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
-@@ -779,6 +779,9 @@ &sd_emmc_a {
- 		 <&clkc CLKID_FCLK_DIV2>;
- 	clock-names = "core", "clkin0", "clkin1";
- 	resets = <&reset RESET_SD_EMMC_A>;
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+index 88b848c65b0d2..041f1c1ec49ec 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+@@ -2336,6 +2336,9 @@ sd_emmc_b: sd@ffe05000 {
+ 				 <&clkc CLKID_FCLK_DIV2>;
+ 			clock-names = "core", "clkin0", "clkin1";
+ 			resets = <&reset RESET_SD_EMMC_B>;
 +
-+	assigned-clocks = <&clkc CLKID_SD_EMMC_A_CLK0>;
-+	assigned-clock-rates = <24000000>;
- };
++			assigned-clocks = <&clkc CLKID_SD_EMMC_B_CLK0>;
++			assigned-clock-rates = <24000000>;
+ 		};
  
- &sd_emmc_b {
-@@ -787,6 +790,9 @@ &sd_emmc_b {
- 		 <&clkc CLKID_FCLK_DIV2>;
- 	clock-names = "core", "clkin0", "clkin1";
- 	resets = <&reset RESET_SD_EMMC_B>;
+ 		sd_emmc_c: mmc@ffe07000 {
+@@ -2348,6 +2351,9 @@ sd_emmc_c: mmc@ffe07000 {
+ 				 <&clkc CLKID_FCLK_DIV2>;
+ 			clock-names = "core", "clkin0", "clkin1";
+ 			resets = <&reset RESET_SD_EMMC_C>;
 +
-+	assigned-clocks = <&clkc CLKID_SD_EMMC_B_CLK0>;
-+	assigned-clock-rates = <24000000>;
- };
++			assigned-clocks = <&clkc CLKID_SD_EMMC_C_CLK0>;
++			assigned-clock-rates = <24000000>;
+ 		};
  
- &sd_emmc_c {
-@@ -795,6 +801,9 @@ &sd_emmc_c {
- 		 <&clkc CLKID_FCLK_DIV2>;
- 	clock-names = "core", "clkin0", "clkin1";
- 	resets = <&reset RESET_SD_EMMC_C>;
-+
-+	assigned-clocks = <&clkc CLKID_SD_EMMC_C_CLK0>;
-+	assigned-clock-rates = <24000000>;
- };
- 
- &simplefb_hdmi {
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-index a689bd14ece99..fb6e8c466811f 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-@@ -848,6 +848,9 @@ &sd_emmc_a {
- 		 <&clkc CLKID_FCLK_DIV2>;
- 	clock-names = "core", "clkin0", "clkin1";
- 	resets = <&reset RESET_SD_EMMC_A>;
-+
-+	assigned-clocks = <&clkc CLKID_SD_EMMC_A_CLK0>;
-+	assigned-clock-rates = <24000000>;
- };
- 
- &sd_emmc_b {
-@@ -856,6 +859,9 @@ &sd_emmc_b {
- 		 <&clkc CLKID_FCLK_DIV2>;
- 	clock-names = "core", "clkin0", "clkin1";
- 	resets = <&reset RESET_SD_EMMC_B>;
-+
-+	assigned-clocks = <&clkc CLKID_SD_EMMC_B_CLK0>;
-+	assigned-clock-rates = <24000000>;
- };
- 
- &sd_emmc_c {
-@@ -864,6 +870,9 @@ &sd_emmc_c {
- 		 <&clkc CLKID_FCLK_DIV2>;
- 	clock-names = "core", "clkin0", "clkin1";
- 	resets = <&reset RESET_SD_EMMC_C>;
-+
-+	assigned-clocks = <&clkc CLKID_SD_EMMC_C_CLK0>;
-+	assigned-clock-rates = <24000000>;
- };
- 
- &simplefb_hdmi {
+ 		usb: usb@ffe09000 {
 -- 
 2.51.0
 
