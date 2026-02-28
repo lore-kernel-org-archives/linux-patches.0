@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F369135AC28
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE9333AD85
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302761; cv=none; b=JB2gh83RLUOMSqI6v8ihz3vqTt7WewwMQT2AwLxXdmoppAex7LnkoByElF/xw/L0clN3yv1G5gjrB44aMYELetZPEGeVE7Hf/ZBvNStAhxWoyGW899sQ5Rqh1S/MWADmi85+TE2g8GGXd0s/rjlA/fmRkNzlAIi/+imAtB4GX+0=
+	t=1772302761; cv=none; b=qLEgxPDZCNDMci7Ow00HhNQiziE9cCaVHKPTi+FqbxxvrA+38SAlPnjLFhfowdAQNSKRttwNxJoZc5c2rY3V1TMmhDmbQyMFhXBXDZDS4bUX7bZYtBsW7ouwmx1fZoYTmKgJTeBvILIV5DZN2G/fyq/AfeLItGHp1IUIZCbkxHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302761; c=relaxed/simple;
-	bh=QdGCVtes2RiwIYhghycboJt7Tos68ExvR675zNoTOHw=;
+	bh=YmhZtpCPYSJlLtJF+CshU+I+IAYmTStwoe6KCMeCZgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSmymZaZdWYxWXFMVB99obwqoe4IJZT8pgDVPHIfx0ap2zKxGoB4Wc84QPA8TjvlCdgmKsV9jN48tF0iEmaforhHXrVgsnnSfGgXG3m8fwbX3hti7scfC8RbdsEt9Mdi2YsUKbcziuUHjBfP+Io772bUEqPp6Eh5ZkAjnRvhzeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qktGuk4c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IvNmr+ocW5UgKPxxhWA4eac/bhtxodbHvR1YRe8fizUQnjLrYXfnSGWkQ2E3alDOAOwO97pJi/NFEmvKgqXfTXIMm49CAffHHA9y9Hh0uXusfYlT9bgN619AybCJ7Cu6DXpk0VQx56Tvk39GD4ETqGInC6fBznk4pVhjcS+NND0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=crgHcMz7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qktGuk4c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4733EC116D0;
-	Sat, 28 Feb 2026 18:19:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="crgHcMz7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0ACC19423;
+	Sat, 28 Feb 2026 18:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302760;
-	bh=QdGCVtes2RiwIYhghycboJt7Tos68ExvR675zNoTOHw=;
+	s=k20201202; t=1772302761;
+	bh=YmhZtpCPYSJlLtJF+CshU+I+IAYmTStwoe6KCMeCZgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qktGuk4cS8F481lhHGS07bkIDRB2ENrh3e5mcDnlRCCMtKXiHm+ZMZtDv7nhs3KTb
-	 6Bsn6MnnYer8BbNI1U9C94qhIvK5fuTBL64duHIG4PuIIPW4BnU48toLFcUMmp4R8Q
-	 IOmkEm+jbzE9vgNDLBmbDZGXxo14XtnhYD33inhXLpDA9GLYJySXKs0yQ/9cBPrrLN
-	 UamqTkc+Y5HFSHP141S0g/wOAllifns3Pkbw9yuQGbH1Jql7ZDWWjN4FO22wOgEAYN
-	 oQUDLvc6/5sbkdYQgmq6LqwaZGrVHBgLLig8MMhfMwbyI7x2cd73OOnztu3Ldm9nUY
-	 0i7MlNiOxjSPg==
+	b=crgHcMz72DV8yz9SfQ/R0Lh/Gyg7KQ88nUtOkMGUQsCNYusl1nBTTldTn8lBwjXU2
+	 q8OsYVQKCQ7J58eGxIDtX/miNpwU8UNnu9A8IwfFaFRI9Mh00TopjnNXo8J5VM835M
+	 9aIKUnMutm3mEADpjzErIRORvn65PdeX+kZYsLPkdWpIqX+ulauU3njbCuaiD0jRbL
+	 x7Wj95u6RdUZ37Pyttxwn/buzasTp9ipt0otmRwhCqWCNByiBvDkf/nyXrj88kbasQ
+	 ZZUz1hD91OXaEBs9OgcwA1nwWjBqpXsuSf7t/2/8C15KmLRHaiMCxen2g5QQj25iyA
+	 KGdvTS8FD93DA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Felix Gu <ustc.gu@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 131/147] usb: bdc: fix sleep during atomic
-Date: Sat, 28 Feb 2026 13:17:19 -0500
-Message-ID: <20260228181736.1605592-131-sashal@kernel.org>
+Subject: [PATCH 5.10 132/147] pinctrl: equilibrium: Fix device node reference leak in pinbank_init()
+Date: Sat, 28 Feb 2026 13:17:20 -0500
+Message-ID: <20260228181736.1605592-132-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -48,39 +48,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit f1195ca3b4bbd001d3f1264dce91f83dec7777f5 ]
+[ Upstream commit c0b4a4feeb43305a754893d8d9c6b2b5a52d45ac ]
 
-bdc_run() can be ran during atomic context leading to a sleep during
-atomic warning. Fix this by replacing read_poll_timeout() with
-read_poll_timeout_atomic().
+When calling of_parse_phandle_with_fixed_args(), the caller is
+responsible to call of_node_put() to release the reference of device
+node.
 
-Fixes: 75ae051efc9b ("usb: gadget: bdc: use readl_poll_timeout() to simplify code")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260120200754.2488765-1-justin.chen@broadcom.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In pinbank_init(), the reference of the node obtained from the
+"gpio-ranges" property is never released, resulting in a reference
+count leak.
+
+Add the missing of_node_put() call to fix the leak.
+
+Fixes: 1948d5c51dba ("pinctrl: Add pinmux & GPIO controller driver for a new SoC")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Acked-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/bdc/bdc_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-equilibrium.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/gadget/udc/bdc/bdc_core.c b/drivers/usb/gadget/udc/bdc/bdc_core.c
-index fa1a3908ec3bb..69d11b703c8d0 100644
---- a/drivers/usb/gadget/udc/bdc/bdc_core.c
-+++ b/drivers/usb/gadget/udc/bdc/bdc_core.c
-@@ -35,8 +35,8 @@ static int poll_oip(struct bdc *bdc, u32 usec)
- 	u32 status;
- 	int ret;
+diff --git a/drivers/pinctrl/pinctrl-equilibrium.c b/drivers/pinctrl/pinctrl-equilibrium.c
+index 3b6dcaa80e000..55fc9aa61f55a 100644
+--- a/drivers/pinctrl/pinctrl-equilibrium.c
++++ b/drivers/pinctrl/pinctrl-equilibrium.c
+@@ -835,6 +835,7 @@ static int pinbank_init(struct device_node *np,
  
--	ret = readl_poll_timeout(bdc->regs + BDC_BDCSC, status,
--				 (BDC_CSTS(status) != BDC_OIP), 10, usec);
-+	ret = readl_poll_timeout_atomic(bdc->regs + BDC_BDCSC, status,
-+					(BDC_CSTS(status) != BDC_OIP), 10, usec);
- 	if (ret)
- 		dev_err(bdc->dev, "operation timedout BDCSC: 0x%08x\n", status);
- 	else
+ 	bank->pin_base = spec.args[1];
+ 	bank->nr_pins = spec.args[2];
++	of_node_put(spec.np);
+ 
+ 	bank->aval_pinmap = readl(bank->membase + REG_AVAIL);
+ 	bank->id = id;
 -- 
 2.51.0
 
