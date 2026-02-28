@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBF733FE26
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957D733F8A1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300937; cv=none; b=tVV82b+aV4oYeU0k2VBYHkxvlDvJFex7ayvKFjiEpxTwA3RgSycDN7ndbyksHU+6phfA2yzRd7ML8yKCXExa8F6OLolWa6kj0ndYs12qIJMde+cHRSKxcKewTAHF51CUiLpNsXbQSXOzbCfT2IjH0baD1MV9nUbpXdqFegL6yMs=
+	t=1772300938; cv=none; b=kVRtqVl6P1Jv7PPV4gAIA8kMegVG2dJ3pf5EGWM6bXSjOlGbGqdj12VZK07IKQdrqGebg02uwkPbrACWSda22MwgD1zCZ/a/HXXD08zIjeEMAV4If8s960xsEy7Bprd7Dp/09xx2QhxLTObgax2jmpGnnUPFR9ZRMdzMWHjI91Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300937; c=relaxed/simple;
-	bh=fc3Kh2yBtdNTbOHCVECzb73vhKH0BfQwURlu6fT9Hl8=;
+	s=arc-20240116; t=1772300938; c=relaxed/simple;
+	bh=ud9NxTJvziABtcYsdphsPN4vVdkp89h028I62Vg6mrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RGJXBmD7gnwNDzOsuJoUbXMRNvl+Cnvdf1YOcw4U1aExKEFKTznuuxdY/CaW2LI9K+cdJx4ogjCMH85YPXjMdv/LT9ifaIusUt6e6ThbQxjv8AEqRJNpmNg9LX8zzo5l4j51Q+IzgGTxZ9LIb64011f/S8yjk8vgVe6dxzW5NRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fR2HRg5J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EmdcmUirYWOID2UaKHqZ1VrObJ3CrDB8TZhWoy8dcpnEQgR/a+f7rdASfObnHKKy2AGyD0zvw3Iv98QQUcoVUKqXOzwH8FG6Qi0QO3G6X0/vdKTWk/0leakEaQ3/nqFNSDXnP4sB2MV/wGhyAi1LDZdA6Y7nfsjDhdIFJ0dCCrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B514tJsj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fR2HRg5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4135EC19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B514tJsj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040A7C19423;
 	Sat, 28 Feb 2026 17:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300937;
-	bh=fc3Kh2yBtdNTbOHCVECzb73vhKH0BfQwURlu6fT9Hl8=;
+	s=k20201202; t=1772300938;
+	bh=ud9NxTJvziABtcYsdphsPN4vVdkp89h028I62Vg6mrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fR2HRg5JciNoIsaf5MgeMAEJhrEHPkg3cWm6QAnTuBUlLr+OvZ4KJlDOxhWTbdN8u
-	 Zgu2UswZ+uuOAqmNfWYn1o4ynyY5E2FhV+jJIR2bOCstLhIXATDxN5kbMR+20GAJ7C
-	 za+nAPf951hsjruM5qwdnswpFvXYULJ6qZNaP0ggf4LelWQkooe2emzFOw44wQ3Mj1
-	 mDD0s3NQl8sYDCCJ5iUza7dWWNSUIeUgh6H7apFGbo3s2Lfg7ozM7OpmSFuV8WbCcp
-	 yObcWJ9SaqQRMUpjplxuk0gk6x90dmD3ojb//Xha4HdhkU1EQ2h+akJBV8gEjnoaHn
-	 6RebJSAoW/Duw==
+	b=B514tJsjAeDmYnZ9P+6veT0O2f3trIzH55B+LgvsKqlHOchftG5MlUDMllqFNj0L/
+	 o9yeBFIqntSjO//koCBVf8E4vYsMu0ENhfbYbzCyH6bZeyA8NeMg2GLs7k7X/Sb9JO
+	 qofUKX7ptiNcinip91dlv5KlMVxBaZq5uAloqSx6W5R91idY7y3Tw/bJFsZUrJOVFu
+	 OfeBt8UBGBVctXFopQJywA20oiBtjpUQ9JhOZefbLT5H/utXSSDzHwxePpkLbJVXEz
+	 B3EF69C0E3QAzgiEkGPt/u/rp/Ihy8ioV4iJhJ65/i3XI37Fvg2L8dLPKejflYRkrS
+	 DAI6Zman1Pkeg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Daniel Tang <danielzgtg.opensource@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Jens Axboe <axboe@kernel.dk>,
+	syzbot+6c48db7d94402407301e@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/752] powercap: intel_rapl: Add PL4 support for Ice Lake
-Date: Sat, 28 Feb 2026 12:36:09 -0500
-Message-ID: <20260228174750.1542406-58-sashal@kernel.org>
+Subject: [PATCH 6.18 059/752] io_uring/timeout: annotate data race in io_flush_timeouts()
+Date: Sat, 28 Feb 2026 12:36:10 -0500
+Message-ID: <20260228174750.1542406-59-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,34 +47,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Tang <danielzgtg.opensource@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 54b3cd55a515c7c0fcfa0c1f0b10d62c11d64bcc ]
+[ Upstream commit 42b12cb5fd4554679bac06bbdd05dc8b643bcc42 ]
 
-Microsoft Surface Pro 7 firmware throttles the processor upon
-boot/resume. Userspace needs to be able to restore the correct value.
+syzbot correctly reports this as a KCSAN race, as ctx->cached_cq_tail
+should be read under ->uring_lock. This isn't immediately feasible in
+io_flush_timeouts(), but as long as we read a stable value, that should
+be good enough. If two io-wq threads compete on this value, then they
+will both end up calling io_flush_timeouts() and at least one of them
+will see the correct value.
 
-Link: https://github.com/linux-surface/linux-surface/issues/706
-Signed-off-by: Daniel Tang <danielzgtg.opensource@gmail.com>
-Link: https://patch.msgid.link/6088605.ChMirdbgyp@daniel-desktop3
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: syzbot+6c48db7d94402407301e@syzkaller.appspotmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_msr.c | 1 +
- 1 file changed, 1 insertion(+)
+ io_uring/timeout.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/powercap/intel_rapl_msr.c b/drivers/powercap/intel_rapl_msr.c
-index c6b9a7debc354..e827247683dbf 100644
---- a/drivers/powercap/intel_rapl_msr.c
-+++ b/drivers/powercap/intel_rapl_msr.c
-@@ -140,6 +140,7 @@ static int rapl_msr_write_raw(int cpu, struct reg_action *ra)
+diff --git a/io_uring/timeout.c b/io_uring/timeout.c
+index 17e3aab0af367..cd42316d0f3c0 100644
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -129,7 +129,7 @@ __cold void io_flush_timeouts(struct io_ring_ctx *ctx)
+ 	u32 seq;
  
- /* List of verified CPUs. */
- static const struct x86_cpu_id pl4_support_ids[] = {
-+	X86_MATCH_VFM(INTEL_ICELAKE_L, NULL),
- 	X86_MATCH_VFM(INTEL_TIGERLAKE_L, NULL),
- 	X86_MATCH_VFM(INTEL_ALDERLAKE, NULL),
- 	X86_MATCH_VFM(INTEL_ALDERLAKE_L, NULL),
+ 	raw_spin_lock_irq(&ctx->timeout_lock);
+-	seq = ctx->cached_cq_tail - atomic_read(&ctx->cq_timeouts);
++	seq = READ_ONCE(ctx->cached_cq_tail) - atomic_read(&ctx->cq_timeouts);
+ 
+ 	list_for_each_entry_safe(timeout, tmp, &ctx->timeout_list, list) {
+ 		struct io_kiocb *req = cmd_to_io_kiocb(timeout);
 -- 
 2.51.0
 
