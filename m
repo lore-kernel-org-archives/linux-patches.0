@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8D8359A91
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D4C347FDF
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302480; cv=none; b=DkdqAC2oCnd42w34Lm1bcSI7r/G3QxlJr0mduHJmKDjKZaH6/FRzzSOjesskgMD9tRhRJyV9lhwMoo7YIGXziJMUkhwapkMkdzO30UYsEUz9opezyMzYt0RnRxa311DcldjHQRrUWca4mzkb80EYBt0TFi5XD5lESQsJQp7wCzA=
+	t=1772302481; cv=none; b=uu5tneJ7f8C5bYqElIYNSrBnXvFeFWb5tmFo1aWMNt5TM+6a6uflsAqBp61lZtU4kx7blVQ6RKBJvAG8mF7WnIRD3JMD8ViNneG2tmfYezRN90F5AismYFD+p8SvpT7TTEQsZMpI9fp6lsiK88YiaoJWiiP1sXUCAyF+uiDfEJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302480; c=relaxed/simple;
-	bh=nyHbfN+xScB/1FT0MnfMknEdHC7MxVEItiM2iT70C20=;
+	s=arc-20240116; t=1772302481; c=relaxed/simple;
+	bh=UIg75MIevrjaCT/8eFFaWmJdS76453F3OkvZUtzs7sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sthQcfsA/qO0Ae0lixfhszYk3R9lHrvn6Yda5ipd1LpeQzufR5z8W48YGKtnkSGL/ZwSFy6OPQj2HQn9xY7JEHiUx0w89e78RHxmVHMZ0DBzVmlabKRVZM05+zKeEz9qQlM122Aib48j+iZig+9dlnvqRt8xOCHkKHIOlLYuYfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VgToqUG2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a8cHm9sQijv9+3EPWwC16sKzVWrC4DWWz2cQfG6J8la9++hmUSNLtfZxajR3scJcUfefWsXUrBSFUX26sX1O3MP6Y9qhiXdPPs04UVK9PKanKF+sX7awGkXF+oOyyyZPM7pTuZwe/Vify7Am0FHQf3bAhNpPlZkDfR7Tfgerrn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJmUtn1r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VgToqUG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13FCC19423;
-	Sat, 28 Feb 2026 18:14:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJmUtn1r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0FFC19424;
+	Sat, 28 Feb 2026 18:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302480;
-	bh=nyHbfN+xScB/1FT0MnfMknEdHC7MxVEItiM2iT70C20=;
+	s=k20201202; t=1772302481;
+	bh=UIg75MIevrjaCT/8eFFaWmJdS76453F3OkvZUtzs7sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgToqUG21KKWIalRyqqVwDwii4BZKCrif92Rf6Vcoo/LVH7MFLLcPKgEPe0ClmYvt
-	 61O1I5K5U4TkLJYtOiAwGuneWK1wjtQTXm/CR6MfoWv1L8vk2c9jr1R0kf/tjVzc1G
-	 DMvWJNib0GJD3f7TWMJDGKhZ3cPX8ipLc/pP2WQuRX/9xru5y1ua6XigDjfbfnHQo+
-	 JLDPh+Tqn6R7vwGpASyzbQA15Cae5ecvCVKJBSf6Y1oFHLpqi/OdBG3iAxiBAAUxPU
-	 Jj0MdUHr/CHI4/THO3ITjF1S7ZTqWrpiJxd/VGYvIOxclv7LUrCLcy6daSnw+Ix8wr
-	 qs6iKAiihghCQ==
+	b=TJmUtn1roCAal1h8zAdqd2Ay6NQRKVzr22M0IMbjWlbzazntlPDbfawDYLaVTiAHD
+	 dEdyJomG4cWWGG0Nnkl0nzozWTGCHhpnUEC0AQs23YEJHVwWVJpXgkKv6hAKtnfGJg
+	 tqaBYmcM+SHEE0DaWOlS1NHo3JNkxdpLM9kHcRYfhXVoRPklxLFUfkXCIiR5bfB+it
+	 TKBT936tA1ERjOev3HEg0+VwxGvV7ngcNXN0JU6QlDUnZqeD//EQal4/OoqopRqxde
+	 d9jYjPYo9RHS2l1zcm3DIrjDNfWLMfqY6fPvZ07vzmYO6nYYLBrUSVx6x8e8auFVDZ
+	 Y5Q6lmswFdcxw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Jakub Kicinski <kuba@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 227/232] ipv6: fix a race in ip6_sock_set_v6only()
-Date: Sat, 28 Feb 2026 13:11:20 -0500
-Message-ID: <20260228181127.1592657-227-sashal@kernel.org>
+Subject: [PATCH 6.1 228/232] bpftool: Fix truncated netlink dumps
+Date: Sat, 28 Feb 2026 13:11:21 -0500
+Message-ID: <20260228181127.1592657-228-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,51 +48,71 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 452a3eee22c57a5786ae6db5c97f3b0ec13bb3b7 ]
+[ Upstream commit 3b39d73cc3379360a33eb583b17f21fe55e1288e ]
 
-It is unlikely that this function will be ever called
-with isk->inet_num being not zero.
+Netlink requires that the recv buffer used during dumps is at least
+min(PAGE_SIZE, 8k) (see the man page). Otherwise the messages will
+get truncated. Make sure bpftool follows this requirement, avoid
+missing information on systems with large pages.
 
-Perform the check on isk->inet_num inside the locked section
-for complete safety.
-
-Fixes: 9b115749acb24 ("ipv6: add ip6_sock_set_v6only")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260216102202.3343588-1-edumazet@google.com
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Fixes: 7084566a236f ("tools/bpftool: Remove libbpf_internal.h usage in bpftool")
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20260217194150.734701-1-kuba@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ipv6.h | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ tools/bpf/bpftool/net.c | 5 ++++-
+ tools/lib/bpf/netlink.c | 4 +++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index 517bdae78614b..3bf743d601e1c 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -1255,12 +1255,15 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex,
+diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
+index 7c9e86faab6ce..3863c2d986830 100644
+--- a/tools/bpf/bpftool/net.c
++++ b/tools/bpf/bpftool/net.c
+@@ -143,7 +143,7 @@ static int netlink_recv(int sock, __u32 nl_pid, __u32 seq,
+ 	bool multipart = true;
+ 	struct nlmsgerr *err;
+ 	struct nlmsghdr *nh;
+-	char buf[4096];
++	char buf[8192];
+ 	int len, ret;
  
- static inline int ip6_sock_set_v6only(struct sock *sk)
- {
--	if (inet_sk(sk)->inet_num)
--		return -EINVAL;
-+	int ret = 0;
+ 	while (multipart) {
+@@ -188,6 +188,9 @@ static int netlink_recv(int sock, __u32 nl_pid, __u32 seq,
+ 					return ret;
+ 			}
+ 		}
 +
- 	lock_sock(sk);
--	sk->sk_ipv6only = true;
-+	if (inet_sk(sk)->inet_num)
-+		ret = -EINVAL;
-+	else
-+		sk->sk_ipv6only = true;
- 	release_sock(sk);
--	return 0;
-+	return ret;
- }
++		if (len)
++			p_err("Invalid message or trailing data in Netlink response: %d bytes left", len);
+ 	}
+ 	ret = 0;
+ done:
+diff --git a/tools/lib/bpf/netlink.c b/tools/lib/bpf/netlink.c
+index 35104580870c0..ecd6e03b3ba53 100644
+--- a/tools/lib/bpf/netlink.c
++++ b/tools/lib/bpf/netlink.c
+@@ -135,7 +135,7 @@ static int libbpf_netlink_recv(int sock, __u32 nl_pid, int seq,
+ 	struct nlmsghdr *nh;
+ 	int len, ret;
  
- static inline void ip6_sock_set_recverr(struct sock *sk)
+-	ret = alloc_iov(&iov, 4096);
++	ret = alloc_iov(&iov, 8192);
+ 	if (ret)
+ 		goto done;
+ 
+@@ -204,6 +204,8 @@ static int libbpf_netlink_recv(int sock, __u32 nl_pid, int seq,
+ 				}
+ 			}
+ 		}
++		if (len)
++			pr_warn("Invalid message or trailing data in Netlink response: %d bytes left\n", len);
+ 	}
+ 	ret = 0;
+ done:
 -- 
 2.51.0
 
