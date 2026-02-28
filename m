@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261902DECB2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC44533A014
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301872; cv=none; b=bgkZu5DfBRiBn3HURLsE6Bn1q4j9B0xX11nEdwTWmm1LBgwzJMhmk2k+i715ZxDEzdCUXMyffKhJT7tV1ZSVZDQ+LmLYNpC0orPaAVC30ZS/VeUZmy5QuaSMEt+P2zD2Gsc77a812aLFU8COlN2LbDy4Nmj2pz3p1eMEZzZ45lk=
+	t=1772301872; cv=none; b=h2YJgt9cN9o5iMoWyuP/7NF6WxjmsXXRAu3DbonGwX9A90bKRBwGSVijvRenBZL/wCO2O78FxJcHhD7mMnPA73gNS2Mq83D4l7SitjlMgCVUJLml4/6y7Ml7et3zNsEr1QWFSyRDWjHhPXcVermnNzJCsFLvYLlu/C6EVfLnct0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301872; c=relaxed/simple;
-	bh=lsfku1hShHfoFe2ERSsC17TXYNb3iKbdtWGP6fMGWRk=;
+	bh=eK8+5NouAvn3TjRu7r+W3QUCiupbGOVDEjB65FWlPTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAZPRfVdZrjS+w1q95auvP50anHcg3RsJTYN4ldcVL+PUdCAwPLDl4i1y5iFIb4/R3Uq7299hybApCDsL8MtYUaO6mhFMAmrBRi6r/NByopK1/b5MAP0llmWjzxe2e2ligvnduQVYaIPQvqQQ8H/A2pGRdlD1tgoxc5viBrJDDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iw3r+lHt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UEvftWsKXQPDMm4IG3oLaPi0YDtq6VbkzASBklub3KZyXg7QN4FS3r83qy0BIEvk6oTjOSY/s+Kg/1g5qWhDgD6fnczExRTUpCB0HiEw6riNFdB73Dd4TgOjAims/XGRtrAnyu5Sx3wZT9QNe8CGjMvhgr5kO5QWPiwhHYgNDbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jyg56ji8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iw3r+lHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AF9C116D0;
-	Sat, 28 Feb 2026 18:04:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jyg56ji8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B966C116D0;
+	Sat, 28 Feb 2026 18:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301872;
-	bh=lsfku1hShHfoFe2ERSsC17TXYNb3iKbdtWGP6fMGWRk=;
+	bh=eK8+5NouAvn3TjRu7r+W3QUCiupbGOVDEjB65FWlPTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iw3r+lHtFrrYuXhW6BB3VIMnDleIX7Yjh4/yk8Vug1vVZ4JD/6vLGoOb0PqSdIrMr
-	 hwia2B7rnhRdJ788jpiRLJ7GmuvRuMqMJBw7UctYlewYf1hqe/4X7DlUDrAKrCtogY
-	 GAUNlmhj55+P+QAFVMVWTKhyygEpbaHXuTKvt5ufGja7NnfyvPAGjDSlJ0h6Jc9QyD
-	 Dm7ve4VJ7YDRemnGbZz50KeVO94tmj9LfhqFqlbQR7D1uf/zBDyDRRBF7PzDbYLuZR
-	 NTJlon1JlHDSgvTZa4hX09W+GDr7iP/WxyDyPvFsebVBtlCpqs2P0Wl2EFj3Dp0E7u
-	 146mCKwB4qMTw==
+	b=Jyg56ji8tr1kOLSJCPuWJXcGP6NoxCPBS0Mm6v4LP/LtNwv+hTtLSNfkD5KtXpk2O
+	 97oEQIw0K1VqUrY343Bw24o8ACh8p56CbtwVATsO0n1dHey5qd6SiJZD+PfERioF64
+	 Tt7RE06Y1HD9LygMFMo90jvMvwV3DbqHQ//e5AcpS6HIJYj/+Qhd8E9pGirZKjwUyJ
+	 KrxVU8+B0FQUHmpBz/gkoI/UcK4mrwLDV2I09tJ4R3XCIWDGpHt1CBKruLTcKcpjON
+	 MSUdgg6jF11S6iWRJ0gTnwwR+QEctHwjh6pBWPoQsqTAMDi8zN23ftS59MC2/QV/Ak
+	 b1KqAuzwhSehQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
+Cc: Felix Gu <ustc.gu@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 296/385] tracing: Remove duplicate ENABLE_EVENT_STR and DISABLE_EVENT_STR macros
-Date: Sat, 28 Feb 2026 12:58:38 -0500
-Message-ID: <20260228180011.1568201-296-sashal@kernel.org>
+Subject: [PATCH 6.12 297/385] fbdev: of_display_timing: Fix device node reference leak in of_get_display_timings()
+Date: Sat, 28 Feb 2026 12:58:39 -0500
+Message-ID: <20260228180011.1568201-297-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -49,41 +47,53 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 9df0e49c5b9b8d051529be9994e4f92f2d20be6f ]
+[ Upstream commit c39ee2d264f98efa14aa46c9942114cb03c7baa6 ]
 
-The macros ENABLE_EVENT_STR and DISABLE_EVENT_STR were added to trace.h so
-that more than one file can have access to them, but was never removed
-from their original location. Remove the duplicates.
+Use for_each_child_of_node_scoped instead of for_each_child_of_node
+to ensure automatic of_node_put on early exit paths, preventing
+device node reference leak.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://patch.msgid.link/20260126130037.4ba201f9@gandalf.local.home
-Fixes: d0bad49bb0a09 ("tracing: Add enable_hist/disable_hist triggers")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: cc3f414cf2e4 ("video: add of helper for display timings/videomode")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/video/of_display_timing.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index a3d7067eae654..284ea3c3f46a7 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -3609,11 +3609,6 @@ void trace_put_event_file(struct trace_event_file *file)
- EXPORT_SYMBOL_GPL(trace_put_event_file);
+diff --git a/drivers/video/of_display_timing.c b/drivers/video/of_display_timing.c
+index bebd371c6b93e..a4cd446ac5a59 100644
+--- a/drivers/video/of_display_timing.c
++++ b/drivers/video/of_display_timing.c
+@@ -195,7 +195,7 @@ struct display_timings *of_get_display_timings(const struct device_node *np)
+ 	disp->num_timings = 0;
+ 	disp->native_mode = 0;
  
- #ifdef CONFIG_DYNAMIC_FTRACE
--
--/* Avoid typos */
--#define ENABLE_EVENT_STR	"enable_event"
--#define DISABLE_EVENT_STR	"disable_event"
--
- struct event_probe_data {
- 	struct trace_event_file	*file;
- 	unsigned long			count;
+-	for_each_child_of_node(timings_np, entry) {
++	for_each_child_of_node_scoped(timings_np, child) {
+ 		struct display_timing *dt;
+ 		int r;
+ 
+@@ -206,7 +206,7 @@ struct display_timings *of_get_display_timings(const struct device_node *np)
+ 			goto timingfail;
+ 		}
+ 
+-		r = of_parse_display_timing(entry, dt);
++		r = of_parse_display_timing(child, dt);
+ 		if (r) {
+ 			/*
+ 			 * to not encourage wrong devicetrees, fail in case of
+@@ -218,7 +218,7 @@ struct display_timings *of_get_display_timings(const struct device_node *np)
+ 			goto timingfail;
+ 		}
+ 
+-		if (native_mode == entry)
++		if (native_mode == child)
+ 			disp->native_mode = disp->num_timings;
+ 
+ 		disp->timings[disp->num_timings] = dt;
 -- 
 2.51.0
 
