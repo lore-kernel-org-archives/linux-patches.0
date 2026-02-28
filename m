@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF658379ED5
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F2334252B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301710; cv=none; b=NCSWQHYo93w3Gh/ZTrTP4kIzn0bkyeRVo6oKaVv5QMs+J+h52zszpNkK9qvnHzNTKEbjmqFKMDRj1bHM9Sff5Sljfb8WOXu0Br//MT/9ne6m0MWQwfpKc8K5+5fTiFAtZm1mRJilkHirr6ErD/G4LASfk6t3EY7GXxrK5G3EzNY=
+	t=1772301711; cv=none; b=fjqXnsAAptIjN7EgLEJM027gTLPvVlapCqNpEDGWBzP+PIxnOjth+iqXtIuX7PuuGQt0u8bOf+LIAr43Hx0YmeJWa31aCx0+JkfZzxsG5MFNYOdj7H6S3nspJFYopxOxEij45Vb904soRs6PTKhoeMvYZOt6Fj5WmY0LXnLz5TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301710; c=relaxed/simple;
-	bh=o9DcyQmgH4VN0oVPOnT2dMr2trRE1sThXi2QMZzeprc=;
+	s=arc-20240116; t=1772301711; c=relaxed/simple;
+	bh=gMr+H+1VK2Cmt3aSmk/qwnImV8FSf3IWWqlTNnDiKTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIK5aA2aLpNSnjPf4I/gFLDV0vnTIWr+ErZ5SzxdZ4hX4I7nVzYhhPbPOaOhFncm2tiAVsGW4AzeJSpV5NkCmPu20Xw3G7WnPhALXmQcNBStqxhRwnsFtHKi4fu0ARQXUJX2lYBkiYFO4OC46TS4/W9b+S2MZ73mlrv8KM2Pnik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y76qgBGv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0N1aB/m48ZL+o2WXowAdzYVFJgHTo/7b4Pn+KWCCxiw5VAggqm7mlh2e8YyIvktKDGVd41gO2pJdEjEvptpLrhb5WcG9Sb2czp5trm93IosnftA5/I8xoPhxBQSiTbtMLvVEEIs7xY9EJwjwkJN6oSk6hnWqPwQ7oAI3AIAJMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UBrCdrBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y76qgBGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF2AC19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UBrCdrBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E70C116D0;
 	Sat, 28 Feb 2026 18:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301710;
-	bh=o9DcyQmgH4VN0oVPOnT2dMr2trRE1sThXi2QMZzeprc=;
+	s=k20201202; t=1772301711;
+	bh=gMr+H+1VK2Cmt3aSmk/qwnImV8FSf3IWWqlTNnDiKTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y76qgBGvaVejYdSTxUttoLtfseycXtbtRugPBGDqNJcBEwr2uuiShwUTd0cSvyeoH
-	 wJf7AyLa4YFJNL1NTS+9MDNZwqGG9v0d/WrFQwaEUI1lO07Mahuk1ugynFCNgIAW45
-	 8nNJ+i0nBpg4e1H06N7S3QrhkMku5tMMb2Q0UjTbK6yzkiu4paonw7nPENLMprRlIh
-	 UjlXDwDbQANjJz93yBYZgrD7GFN1rGq+s4bX2PrLw//r3qGrlAk28xzvK/exYJIcpo
-	 tNfclfzBn8xLzXTiO1180EaShLHMQD9Lb4iRDSoSKuF691E0If30nX9UdAAovHdGlK
-	 FkD+S70/G5Rcw==
+	b=UBrCdrBVMoH3AdcNZiNCU6dwUuZzODChUIEKlY1TiQzEHHsHgy3bxNJthNUhpdmhm
+	 /UoFftlvKibu6yFHTuMwmBReNDCRRHkIzGdX9e11ScWIy6oo0XHp8oapUdI/pklsma
+	 5olYcxooWYIo1PiP9qtbhkCCrdsPO4534ef/48+tC0GzFPdGWYcPauhuP19kL1CcY5
+	 BGn1T6PrOdYRjMJYzsPtTp+zCC96zG82Llwo8K1F6s7HcQpciGQZCDI8C1cCZYRzOc
+	 shq+N4oqJrhzDFvxFc61MKbkfEiyodGS2eEpHVZE9v0CM/crQ2E/gdy5hyitlvhutB
+	 GfdvP55PdXkeA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/385] powerpc/uaccess: Move barrier_nospec() out of allow_read_{from/write}_user()
-Date: Sat, 28 Feb 2026 12:55:27 -0500
-Message-ID: <20260228180011.1568201-105-sashal@kernel.org>
+Subject: [PATCH 6.12 106/385] soc: qcom: cmd-db: Use devm_memremap() to fix memory leak in cmd_db_dev_probe
+Date: Sat, 28 Feb 2026 12:55:28 -0500
+Message-ID: <20260228180011.1568201-106-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,95 +48,50 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 5fbc09eb0b4f4b1a4b33abebacbeee0d29f195e9 ]
+[ Upstream commit 0da7824734d8d83e6a844dd0207f071cb0c50cf4 ]
 
-Commit 74e19ef0ff80 ("uaccess: Add speculation barrier to
-copy_from_user()") added a redundant barrier_nospec() in
-copy_from_user(), because powerpc is already calling
-barrier_nospec() in allow_read_from_user() and
-allow_read_write_user(). But on other architectures that
-call to barrier_nospec() was missing. So change powerpc
-instead of reverting the above commit and having to fix
-other architectures one by one. This is now possible
-because barrier_nospec() has also been added in
-copy_from_user_iter().
+If cmd_db_magic_matches() fails after memremap() succeeds, the function
+returns -EINVAL without unmapping the memory region, causing a
+potential resource leak.
 
-Move barrier_nospec() out of allow_read_from_user() and
-allow_read_write_user(). This will also allow reuse of those
-functions when implementing masked user access which doesn't
-require barrier_nospec().
+Switch to devm_memremap to automatically manage the map resource.
 
-Don't add it back in raw_copy_from_user() as it is already called
-by copy_from_user() and copy_from_user_iter().
-
-Fixes: 74e19ef0ff80 ("uaccess: Add speculation barrier to copy_from_user()")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/f29612105c5fcbc8ceb7303808ddc1a781f0f6b5.1766574657.git.chleroy@kernel.org
+Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20251216013933.773-1-vulab@iscas.ac.cn
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/kup.h     | 2 --
- arch/powerpc/include/asm/uaccess.h | 4 ++++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/cmd-db.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/kup.h b/arch/powerpc/include/asm/kup.h
-index 2bb03d941e3e8..6737416dde9f0 100644
---- a/arch/powerpc/include/asm/kup.h
-+++ b/arch/powerpc/include/asm/kup.h
-@@ -134,7 +134,6 @@ static __always_inline void kuap_assert_locked(void)
+diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+index ae66c2623d250..84a75d8c4b702 100644
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -349,15 +349,16 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
  
- static __always_inline void allow_read_from_user(const void __user *from, unsigned long size)
- {
--	barrier_nospec();
- 	allow_user_access(NULL, from, size, KUAP_READ);
- }
+-	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
+-	if (!cmd_db_header) {
+-		ret = -ENOMEM;
++	cmd_db_header = devm_memremap(&pdev->dev, rmem->base, rmem->size, MEMREMAP_WC);
++	if (IS_ERR(cmd_db_header)) {
++		ret = PTR_ERR(cmd_db_header);
+ 		cmd_db_header = NULL;
+ 		return ret;
+ 	}
  
-@@ -146,7 +145,6 @@ static __always_inline void allow_write_to_user(void __user *to, unsigned long s
- static __always_inline void allow_read_write_user(void __user *to, const void __user *from,
- 						  unsigned long size)
- {
--	barrier_nospec();
- 	allow_user_access(to, from, size, KUAP_READ_WRITE);
- }
+ 	if (!cmd_db_magic_matches(cmd_db_header)) {
+ 		dev_err(&pdev->dev, "Invalid Command DB Magic\n");
++		cmd_db_header = NULL;
+ 		return -EINVAL;
+ 	}
  
-diff --git a/arch/powerpc/include/asm/uaccess.h b/arch/powerpc/include/asm/uaccess.h
-index 4f5a46a77fa2b..3987a5c33558b 100644
---- a/arch/powerpc/include/asm/uaccess.h
-+++ b/arch/powerpc/include/asm/uaccess.h
-@@ -301,6 +301,7 @@ do {								\
- 	__typeof__(sizeof(*(ptr))) __gu_size = sizeof(*(ptr));	\
- 								\
- 	might_fault();					\
-+	barrier_nospec();					\
- 	allow_read_from_user(__gu_addr, __gu_size);		\
- 	__get_user_size_allowed(__gu_val, __gu_addr, __gu_size, __gu_err);	\
- 	prevent_read_from_user(__gu_addr, __gu_size);		\
-@@ -329,6 +330,7 @@ raw_copy_in_user(void __user *to, const void __user *from, unsigned long n)
- {
- 	unsigned long ret;
- 
-+	barrier_nospec();
- 	allow_read_write_user(to, from, n);
- 	ret = __copy_tofrom_user(to, from, n);
- 	prevent_read_write_user(to, from, n);
-@@ -415,6 +417,7 @@ static __must_check __always_inline bool user_access_begin(const void __user *pt
- 
- 	might_fault();
- 
-+	barrier_nospec();
- 	allow_read_write_user((void __user *)ptr, ptr, len);
- 	return true;
- }
-@@ -431,6 +434,7 @@ user_read_access_begin(const void __user *ptr, size_t len)
- 
- 	might_fault();
- 
-+	barrier_nospec();
- 	allow_read_from_user(ptr, len);
- 	return true;
- }
 -- 
 2.51.0
 
