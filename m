@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0353436C9E7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90B736C9E0
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302293; cv=none; b=OIGPi87mloerPfk6s1DtLK55jHDMHwl3pRuzQoSDrB1BjXdP2phd3zGuuu109dviAEBWg/edqF8eq9kdd0stT/xyDJE7bm5uNpTR+XJ9P3QCIZ5n5VhCmnt4wqbW5tgRRrU/FBfdr9li1x/RyoV7WBngM6HOtoz24AMk85bYvIM=
+	t=1772302293; cv=none; b=OSQphkzNuNC6HvgtyHuCJU3i0CPmc7eKUZX2ihLvnauy8Nof5XTJO0AxcQ8a6HCrT7J7bDgVAf7MfV9KCcaqVMz283FQhJbso419bDlT6nIC71QZ+ov5Zu61GrOKzEfn5ZTjWcpXSQ/PiUKLjZDeFg2feePfwC9Zbx+BVVBgJKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302293; c=relaxed/simple;
-	bh=gOCrc03Zt2BRdjdRb1MkdQ0rU2Y1j7AzOQadYecUgeM=;
+	bh=9cdRa34sWZ0FWq9r1Rdst/b86zJJUaPxcwpbt3iHRwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZTqMCEpxrlsTMOcxBA9gkzS+8Vy2/eLKZ7eJREq43DLAgrCWgw6XHjptrOJixVGznm3vF+IG3POisn3WsgeTQCi+vL5FeqN46DYrn/nYNRTiiTjU7rtKSx5Xu+w/liNqMeb1Y/Gcx38/Ykz8RQa7AW7hRDxU+Yy9AWnyA2KkuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NTt6YyvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fwDVOD8vuz/ooV+4FP41YI/7X1EoQDxfF8PHTaSou6r9sRH38fjkORjVcBSoZPDshf+xLQNYwnfsoTvTnUppufSk7e6EH8oSAUs9/9L0fAYfsGpHTjkIjdIzy/Y2bJnw1j36W2eRQZHAV+Vnd2tZoIUaYStBgy6ZZ6RsZX+Q9oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NsvXmMal; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NTt6YyvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DBBC116D0;
-	Sat, 28 Feb 2026 18:11:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NsvXmMal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298FDC19423;
+	Sat, 28 Feb 2026 18:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302292;
-	bh=gOCrc03Zt2BRdjdRb1MkdQ0rU2Y1j7AzOQadYecUgeM=;
+	s=k20201202; t=1772302293;
+	bh=9cdRa34sWZ0FWq9r1Rdst/b86zJJUaPxcwpbt3iHRwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NTt6YyvD9Hy5PyJOKknpypUK48aIjh3hra+HY6+bX1DXuqbVV/EzmVwblRRJ69GsO
-	 krURnwWdz8LTjISc2od+W/qTJUP0U6JfiGApqXhV1R2CCm2chjpbfWtRO8kGQQ0XL0
-	 IpPqMgrPgpiYUlQ41rTV2PYb0gvGBbwM04Vx2Aqf21RI8OOkrbUyGk2J0v7zPD/1m7
-	 IQteYWanIDsC6P60QpxudvUZc0Jyq3SkLFxg+UedsEuY0QUG1P5Y15tLqSOOwlgaGI
-	 NLMKBNcM460Ilwog4/C4Re9RoXkVZ6tv1ZhwcTOj2ZKR2mqY7BTcl6iAaU5i7ThBOg
-	 k/Mxa15vEX+tQ==
+	b=NsvXmMalVTnRZ7o9Mxh7FwselbHycEIAzWokmrhA5fX7jEa1/yi4wNR/I935jk+BZ
+	 TJX2vW1h1hDLDeBqVBijl/c8GO6+nbOajYYhmh6gEMdSgCbu/KXifMm+GAfVMdZJnJ
+	 SxIA6i9Q2onsTEjr63cTRO1TzcEOQyJXmbHBKRsrEogsGuCQjWllSv0GI+T9h8PG3F
+	 y/A9O+pnJ8EL+FmqQcwPiI637o6sd9birC7MLbgUs3X4VcoeyFAWNH7gNn/zZtVEUF
+	 /viBE6nb0dKDi05NaC1MqUQdmDv8A4wCG6b9zmtVJim10z0kDPjzMtYYwNCRvnpNcS
+	 UnTFTC6jjpfCw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Arnd Bergmann <arnd@arndb.de>,
+Cc: Ben Dooks <ben.dooks@codethink.co.uk>,
 	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/232] audit: avoid missing-prototype warnings
-Date: Sat, 28 Feb 2026 13:07:38 -0500
-Message-ID: <20260228181127.1592657-5-sashal@kernel.org>
+Subject: [PATCH 6.1 006/232] audit: move the compat_xxx_class[] extern declarations to audit_arch.h
+Date: Sat, 28 Feb 2026 13:07:39 -0500
+Message-ID: <20260228181127.1592657-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,72 +47,74 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit e455ca40dbcf2cd50d1e59bf4b2752b300bcdad4 ]
+[ Upstream commit 76489955c6d4a065ca69dc88faf7a50a59b66f35 ]
 
-Building with 'make W=1' reveals two function definitions without
-a previous prototype in the audit code:
+The comapt_xxx_class symbols aren't declared in anything that
+lib/comapt_audit.c is including (arm64 build) which is causing
+the following sparse warnings:
 
-lib/compat_audit.c:32:5: error: no previous prototype for 'audit_classify_compat_syscall' [-Werror=missing-prototypes]
-kernel/audit.c:1813:14: error: no previous prototype for 'audit_serial' [-Werror=missing-prototypes]
+lib/compat_audit.c:7:10: warning: symbol 'compat_dir_class'
+  was not declared. Should it be static?
+lib/compat_audit.c:12:10: warning: symbol 'compat_read_class'
+  was not declared. Should it be static?
+lib/compat_audit.c:17:10: warning: symbol 'compat_write_class'
+  was not declared. Should it be static?
+lib/compat_audit.c:22:10: warning: symbol 'compat_chattr_class'
+  was not declared. Should it be static?
+lib/compat_audit.c:27:10: warning: symbol 'compat_signal_class'
+  was not declared. Should it be static?
 
-The first one needs a declaration from linux/audit.h but cannot
-include that header without causing conflicting (compat) syscall number
-definitions, so move the it into linux/audit_arch.h.
+Trying to fix this by chaning compat_audit.c to inclde <linux/audit.h>
+does not work on arm64 due to compile errors with the extra includes
+that changing this header makes. The simpler thing would be just to
+move the definitons of these symbols out of <linux/audit.h> into
+<linux/audit_arch.h> which is included.
 
-The second one is declared conditionally based on CONFIG_AUDITSYSCALL
-but needed as a local function even when that option is disabled, so
-move the declaration out of the #ifdef block.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 4b58841149dca ("audit: Add generic compat syscall support")
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+[PM: rewrite subject line, fixed line length in description]
 Signed-off-by: Paul Moore <paul@paul-moore.com>
-Stable-dep-of: 76489955c6d4 ("audit: move the compat_xxx_class[] extern declarations to audit_arch.h")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/audit.h      | 2 --
- include/linux/audit_arch.h | 2 ++
- kernel/audit.h             | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ include/linux/audit.h      | 6 ------
+ include/linux/audit_arch.h | 7 +++++++
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/include/linux/audit.h b/include/linux/audit.h
-index 3608992848d3c..6efadd7f60a55 100644
+index 6efadd7f60a55..e952868c8d2e9 100644
 --- a/include/linux/audit.h
 +++ b/include/linux/audit.h
-@@ -129,8 +129,6 @@ extern unsigned compat_dir_class[];
- extern unsigned compat_chattr_class[];
- extern unsigned compat_signal_class[];
+@@ -122,12 +122,6 @@ enum audit_nfcfgop {
+ extern int __init audit_register_class(int class, unsigned *list);
+ extern int audit_classify_syscall(int abi, unsigned syscall);
+ extern int audit_classify_arch(int arch);
+-/* only for compat system calls */
+-extern unsigned compat_write_class[];
+-extern unsigned compat_read_class[];
+-extern unsigned compat_dir_class[];
+-extern unsigned compat_chattr_class[];
+-extern unsigned compat_signal_class[];
  
--extern int audit_classify_compat_syscall(int abi, unsigned syscall);
--
  /* audit_names->type values */
  #define	AUDIT_TYPE_UNKNOWN	0	/* we don't know yet */
- #define	AUDIT_TYPE_NORMAL	1	/* a "normal" audit record */
 diff --git a/include/linux/audit_arch.h b/include/linux/audit_arch.h
-index 8fdb1afe251a1..0e34d673ef171 100644
+index 0e34d673ef171..2b8153791e6a5 100644
 --- a/include/linux/audit_arch.h
 +++ b/include/linux/audit_arch.h
-@@ -21,4 +21,6 @@ enum auditsc_class_t {
- 	AUDITSC_NVALS /* count */
- };
+@@ -23,4 +23,11 @@ enum auditsc_class_t {
  
-+extern int audit_classify_compat_syscall(int abi, unsigned syscall);
+ extern int audit_classify_compat_syscall(int abi, unsigned syscall);
+ 
++/* only for compat system calls */
++extern unsigned compat_write_class[];
++extern unsigned compat_read_class[];
++extern unsigned compat_dir_class[];
++extern unsigned compat_chattr_class[];
++extern unsigned compat_signal_class[];
 +
  #endif
-diff --git a/kernel/audit.h b/kernel/audit.h
-index c57b008b9914e..94738bce40b27 100644
---- a/kernel/audit.h
-+++ b/kernel/audit.h
-@@ -259,8 +259,8 @@ extern struct tty_struct *audit_get_tty(void);
- extern void audit_put_tty(struct tty_struct *tty);
- 
- /* audit watch/mark/tree functions */
--#ifdef CONFIG_AUDITSYSCALL
- extern unsigned int audit_serial(void);
-+#ifdef CONFIG_AUDITSYSCALL
- extern int auditsc_get_stamp(struct audit_context *ctx,
- 			      struct timespec64 *t, unsigned int *serial);
- 
 -- 
 2.51.0
 
