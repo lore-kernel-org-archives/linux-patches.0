@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA77313E31
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE72340A5A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301058; cv=none; b=loJG5r23dr0iD/RNQ8BbcoouaKTuMtGRSCR3M7cou7mLtW8wtZ5gBNwAZJXwZYUY15rk7vax7ZcZYKXN6QU3IU87svbYQQG8oZy2N17dMNaAfQG3cpTHp/7NGcnQBj7mOUjkDSOnxOr1tU9EuLTBwEyyXyKvECbIeQfUX1oKoAo=
+	t=1772301059; cv=none; b=QA/0Y2Gu+sewXkNPiBjpyO7+0NvbEzD4XpkLP0+jedYTD4AD+NbjMFnus9Xap7b0Fa5M5z+9ZcnPoVW8XSaH3PbsReSmeA58is7wExK9P4oZgJHjKO+mKF8Bq70mybmj/VoXnD/NZXq5vy94e/Pduigv0d7IMfDJqsK2Ld5VSx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301058; c=relaxed/simple;
-	bh=itYz9wcroCLYvmUBhLndqkq23hvv7APVzed7gy3USkQ=;
+	s=arc-20240116; t=1772301059; c=relaxed/simple;
+	bh=jKgCr0GAHW1qTym+61T91FFjvE2xRBzxxMtIV3wVZ0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hw9t2lbKpSNeWlieerUwaJnlL8TVzaW3KNjprbfrG3hoqydj6cLUYhDWW18Br7s9/TjMt/j/cWSptjd1VZrmK16PmCWqDPr559crcVQT6+a1FptrJx6tJbDACpOIaERxNBz4IvriKhSElNxIWkaIWELb8zXodZ4Y7rzxg6QRmqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e5+iYaLH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEG4GZ2tMpP5UTbSNkGpLv6CJQoTduJkVARFXqDQbRBp8aKd45uUwON2lWxlbcDEaXOOrh1yDU5u3EKVzdp8FPhOzjw3F+NkcSjHnfEYAXyX7i0S/xMmPt4pEh3+lm7i5xBPZZcegVA3nrHeCocQeIO4t82the8j+t8sSvpfBbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dBQu7E1y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e5+iYaLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EFDC116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dBQu7E1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE3DC19423;
 	Sat, 28 Feb 2026 17:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301058;
-	bh=itYz9wcroCLYvmUBhLndqkq23hvv7APVzed7gy3USkQ=;
+	s=k20201202; t=1772301059;
+	bh=jKgCr0GAHW1qTym+61T91FFjvE2xRBzxxMtIV3wVZ0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5+iYaLH/EE11jQ3lkwUSM7W3DJhd9xwqNgHI6DKlEapRv0MtErVflA9C4OvCz29A
-	 rpgb9hHfqddaDqj+/Hih9E8hWTAz4XVxu9gHF6zkaWFqGSwz90f03ARcCx4lS+lyk+
-	 8WU9sRZwK2UgCsVtOgXzZbZKd4m/H6oyZ9czSLcPJfpdoLNpJlOcyfF9I8ZmNKvgOC
-	 vd/sRbc2cpX9Z74steEJGcyBk7MxmbfN5yQ9V5494M8Y+eVM8VeG5hdvX1E/V6HYAU
-	 WOtpFhW9VJYMPFK0XkYOykDuMzRSYQ3ojC4ujRmI79+DMdq9pGMn6eH1CTpJ3QMsrM
-	 p3j4APseU6ryA==
+	b=dBQu7E1ygkouCr+ux991lvRRFjaUJ9cRHzEEdOIRTxPb7ipFtoV+NWaoMEiGOKE4W
+	 o20XJVL595Nyp2YJCFEL44PHG3HCUvHRtmwyOpjDmh/kwmRoTT+rIeOXTjjf1y/by2
+	 BKzBd+JLNM1V8kNc2WmHs9wkUQaodYZKlaJ/IQbOiA4qERWR9b3ToXni7RXb7/tuKJ
+	 czxYTbHz1QwG7L2iGBxKix/GyLm6wjij/r+NvzGPCboXGDW/1NdMD0K7Sq1wafzc09
+	 iGxFhjWOaj+F4wzZjqmX1b/VELiFBnzoAB6LGYJ0PnrQwlAz9JOmx2YaMWdsjrUymk
+	 lTtQMcBkBA5Xw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Felix Gu <gu_0233@qq.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+Cc: Bastien Nocera <hadess@hadess.net>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 200/752] hwmon: (nct7363) Fix a resource leak in nct7363_present_pwm_fanin
-Date: Sat, 28 Feb 2026 12:38:31 -0500
-Message-ID: <20260228174750.1542406-200-sashal@kernel.org>
+Subject: [PATCH 6.18 201/752] HID: logitech-hidpp: Add support for Logitech K980
+Date: Sat, 28 Feb 2026 12:38:32 -0500
+Message-ID: <20260228174750.1542406-201-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,35 +47,34 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Felix Gu <gu_0233@qq.com>
+From: Bastien Nocera <hadess@hadess.net>
 
-[ Upstream commit 4923bbff0bcffe488b3aa76829c829bd15b02585 ]
+[ Upstream commit af4fe07a9d963a72438ade96cf090e84b3399d0c ]
 
-When calling of_parse_phandle_with_args(), the caller is responsible
-to call of_node_put() to release the reference of device node.
-In nct7363_present_pwm_fanin, it does not release the reference,
-causing a resource leak.
+Add support for the solar-charging Logitech K980 keyboard, over
+Bluetooth. Bolt traffic doesn't get routed through logitech-dj, so
+this code isn't triggered when Bolt is used.
 
-Signed-off-by: Felix Gu <gu_0233@qq.com>
-Link: https://lore.kernel.org/r/tencent_9717645269E4C07D3D131F52201E12E5E10A@qq.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Bastien Nocera <hadess@hadess.net>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct7363.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-logitech-hidpp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/nct7363.c b/drivers/hwmon/nct7363.c
-index e13ab918b1abe..56ac42e4a8653 100644
---- a/drivers/hwmon/nct7363.c
-+++ b/drivers/hwmon/nct7363.c
-@@ -351,6 +351,7 @@ static int nct7363_present_pwm_fanin(struct device *dev,
- 	if (ret)
- 		return ret;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 9b612f62d0fba..d117cf0b6de04 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4665,6 +4665,8 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb037) },
+ 	{ /* MX Anywhere 3SB mouse over Bluetooth */
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb038) },
++	{ /* Slim Solar+ K980 Keyboard over Bluetooth */
++	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb391) },
+ 	{}
+ };
  
-+	of_node_put(args.np);
- 	if (args.args[0] >= NCT7363_PWM_COUNT)
- 		return -EINVAL;
- 	data->pwm_mask |= BIT(args.args[0]);
 -- 
 2.51.0
 
