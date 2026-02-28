@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79C139B974
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705B239B970
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302610; cv=none; b=d4A8A3c3clrsymYXublg/h8lNyGuVeFEczMS4iySKNLgtLNt9W3h41F7mOu8T8cINPY/mhB7aZ9tVywcjuYDgOIU+7y58zYeKTOmuaHYuoCvMFPj17Rk5gE8IT/sNKI351IfFOB6HfqmL8BxJjs9zKDXBwWKD4aTGl5ZHYMrG+g=
+	t=1772302611; cv=none; b=tpYXssZJI7vzwZ6vVKwE0uLD25buLTUaRjwCFLuDyRsZAzmCLYhMyX3cC9Qgu7PoLHR8WUOuf21dCI9ata27O38/0z8AEetflTnJxidqFa5RnDR2v8GjSUOaYJqrOeLc77pcFfQfKe/QtiRfV0PX86FdorTHkWtvHYKhKRWxbUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302610; c=relaxed/simple;
-	bh=k1oheUIR7E0MJ/UsBSmsbkCKqljoOvBgxuJAFkVzAWU=;
+	s=arc-20240116; t=1772302611; c=relaxed/simple;
+	bh=Gnni3G4LGNXaG40nKX3l8bKCD7ylqeTs03XpiWBojes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhayrrjghB+gHHNpJTkiLwTJqpCHNdgyCGGiHsiQr0hB7mMntHGXnoxRhNYvnIgFPZIgJOSlHP6dZVE48es6pZGzV4qgVRTIiDhyoAACRHJ0Yz9l6IqWl0RpUmJ2VsuyUS17X0SfU06HjcQLq9bYe2uj8psifSkLJMwoHVTpePg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YbqNLZ1a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZReKLEe/bLDJJnHFLjFxj+b8nQRJTGFiWfcXof5yT2bccjCxHHeQsIrskbXDHiRPEOdLlvT3ktGKZPFzJ0NkYjBjgelb81BRwrO0XjdPMoxa0YZz+O36HhX3R9jCQ09xC2nEltktugh7tSy8+uFA18dqsGRdLaoJSUS6XM2OUZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qTzwAIAN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YbqNLZ1a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BC5C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qTzwAIAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB30CC116D0;
 	Sat, 28 Feb 2026 18:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302610;
-	bh=k1oheUIR7E0MJ/UsBSmsbkCKqljoOvBgxuJAFkVzAWU=;
+	s=k20201202; t=1772302611;
+	bh=Gnni3G4LGNXaG40nKX3l8bKCD7ylqeTs03XpiWBojes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YbqNLZ1aaLHaKCLT0jSykkD1x7MgvLvoZT/tSDp/8qdvghPfIV7kAlrbTbp3+wEMg
-	 efRKOxtu8FsCGrkhqwWAwTsapO1PH7Ly/KlpTWaglNk+mmpyLZs3KPG2nWZ6K6U3LX
-	 hIiF/23iDGhEMguGE10O7q8wM9nRtvefs0xcp6gZ932zxNcC7p8tvLVDMhnmjuz8x6
-	 CmTsHL3oZrdWVARA9Mhtz7+04FWmePiOMpv2NDV8u+gkH4KikIqcinjZLYCziItALL
-	 XJ9k8bW5wIjzLGiZNy1DJo3o8oOlMbwWB0DMOOTJLktQKrhMbK2GqqD/fUhgK+nP+C
-	 faTA8IjstFZEg==
+	b=qTzwAIAN2dKQLufPKOniBnrJHtCwJxDCb3hFnEjgvO1eCLaF0MihDuYQLKbtoNASb
+	 lXJmGBLevKdY+6EKTyzL263ochmRG4qygwUBb5aUbS8HSFYxjj/K161vOnm+oXR8aF
+	 EVdfEVawH5hjJM0r0hez+gfXKMD9pulO1lzKL3vVaav+1aSyp84BLJKzGkir3l9DB+
+	 +VRbOb8jrh0PYtk1bSb+kqrzRLmFQAOOXbh8rscbSlcrgBZyz+ar3m5u/7OmKn3vB9
+	 j1ddSC5qvN+vjVJIJDJTQDMZn3d0BXNGTIBcfbrCqfIsvCLoc0qJt83wwjfF67elta
+	 kCExWOpvRgYNQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Felix Gu <ustc.gu@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+Cc: Taniya Das <taniya.das@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/164] fbdev: au1200fb: Fix a memory leak in au1200fb_drv_probe()
-Date: Sat, 28 Feb 2026 13:14:25 -0500
-Message-ID: <20260228181505.1600663-126-sashal@kernel.org>
+Subject: [PATCH 5.15 127/164] clk: qcom: rcg2: compute 2d using duty fraction directly
+Date: Sat, 28 Feb 2026 13:14:26 -0500
+Message-ID: <20260228181505.1600663-127-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -43,45 +43,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit ce4e25198a6aaaaf36248edf8daf3d744ec8e309 ]
+[ Upstream commit d6205a1878dd4cc9664c4b4829b68a29c0426efc ]
 
-In au1200fb_drv_probe(), when platform_get_irq fails(), it directly
-returns from the function with an error code, which causes a memory
-leak.
+The duty-cycle calculation in clk_rcg2_set_duty_cycle() currently
+derives an intermediate percentage `duty_per = (num * 100) / den` and
+then computes:
 
-Replace it with a goto label to ensure proper cleanup.
+    d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
 
-Fixes: 4e88761f5f8c ("fbdev: au1200fb: Fix missing IRQ check in au1200fb_drv_probe")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+This introduces integer truncation at the percentage step (division by
+`den`) and a redundant scaling by 100, which can reduce precision for
+large `den` and skew the final rounding.
+
+Compute `2d` directly from the duty fraction to preserve precision and
+avoid the unnecessary scaling:
+
+    d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+
+This keeps the intended formula `d ≈ n * 2 * (num/den)` while performing
+a single, final rounded division, improving accuracy especially for small
+duty cycles or large denominators. It also removes the unused `duty_per`
+variable, simplifying the code.
+
+There is no functional changes beyond improved numerical accuracy.
+
+Fixes: 7f891faf596ed ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260105-duty_cycle_precision-v2-1-d1d466a6330a@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/au1200fb.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/clk-rcg2.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
-index 80f54111baec1..ec1d86f253904 100644
---- a/drivers/video/fbdev/au1200fb.c
-+++ b/drivers/video/fbdev/au1200fb.c
-@@ -1732,8 +1732,10 @@ static int au1200fb_drv_probe(struct platform_device *dev)
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index f3c225ed57377..05aa831ac7a44 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -400,7 +400,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+-	u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
++	u32 notn_m, n, m, d, not2d, mask, cfg;
+ 	int ret;
  
- 	/* Now hook interrupt too */
- 	irq = platform_get_irq(dev, 0);
--	if (irq < 0)
--		return irq;
-+	if (irq < 0) {
-+		ret = irq;
-+		goto failed;
-+	}
+ 	/* Duty-cycle cannot be modified for non-MND RCGs */
+@@ -419,10 +419,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
  
- 	ret = request_irq(irq, au1200fb_handle_irq,
- 			  IRQF_SHARED, "lcd", (void *)dev);
+ 	n = (~(notn_m) + m) & mask;
+ 
+-	duty_per = (duty->num * 100) / duty->den;
+-
+ 	/* Calculate 2d value */
+-	d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
++	d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+ 
+ 	/*
+ 	 * Check bit widths of 2d. If D is too big reduce duty cycle.
 -- 
 2.51.0
 
