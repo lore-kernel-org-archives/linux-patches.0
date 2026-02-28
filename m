@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4DE3321D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F7233F38A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301218; cv=none; b=YPJEgX8gZZTl+k6SJT4lKRJJO9ey8CarRjPQILVVU1MTZtUI4e82OK+6ou0qR0VOuaq7CPQeOcsi9IgE1+XM93awpAaFYLW3GtoGm2VjWLDEb1z3QYU2xHpU1fCVeRBCa6DeKAEAb61s02z/IwbJehDPhV8vUKj/z6tdE1CA6ZE=
+	t=1772301219; cv=none; b=qz3smZd4GFKVyA1VsPNWTbONYvnXMUEm1PYoPIilE6oaumudoT1NblNFPfv0YycOqj3MuNWpuVM38ghQlTkAnDP4Qvdo9JKc/SNvIXPbOsMpR0CRQB+jZqo6ZKoE4RqwsaDM/7/0C4sOsKTurRSQpFDUhqe7RcUy9rBhVW4TOUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301218; c=relaxed/simple;
-	bh=Bd41o2rswMZE6Q+rHhQPOTZy5oI39Vt0D1sCOpwwBwQ=;
+	s=arc-20240116; t=1772301219; c=relaxed/simple;
+	bh=S/ufkfKndE1lpRAhzFu7Mh9CvfodgAG6rXN3XCUlDeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OaCM1sdFvbGcxfLRZWV5V3qmfXD2NvnAxa/P+Aqkgo5yiV+0o1C3cwT9fquPydxuJ7SGbZcGqv6dRaMZ8kZOWnzMXStj4S/Sr6c3lhuhNhYNy8o6VOgAvDCnFpqMfIDkhYRrzYFXJP8jH7kxkPrT75RjROh3FeFy1gcssb75VmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T9vmbQQ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BMH7GLycZM6LBqjmAEmTej7hDTlOWt2wtljlltx33GlQ7hKxGhp7JcMuNv8xTqzgg/mxmbLMI96huvr74UIcH6zIBwv3hh8AhYO6YUcNUrdaRZWtEOCUxojKbMTs45MbcAKbznozy+auczirPQXH63eP/yPLuNadOW2sIco/LEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xxpa7S1M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T9vmbQQ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38867C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xxpa7S1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F8DC116D0;
 	Sat, 28 Feb 2026 17:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301218;
-	bh=Bd41o2rswMZE6Q+rHhQPOTZy5oI39Vt0D1sCOpwwBwQ=;
+	s=k20201202; t=1772301219;
+	bh=S/ufkfKndE1lpRAhzFu7Mh9CvfodgAG6rXN3XCUlDeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T9vmbQQ3h1lsR/3mTddzxFLkxHkncKeJ71EVYXnfVonemISo6kzTYZxz+8ciUOJ5h
-	 1v1tAdwSseoGJoiEIWri62s/Fwilnw7sTMEFzHM7E2ezhs66SB31HbUst7zLxkSH2N
-	 wTtdoBjE5Z25moWAHQqWzoWA+bNxAc+ZALO2JvPBjlWFmk2IbFenv7+ABZNEVxG4nC
-	 jvKdwZN3YAbqsidjiKQT9BUIh5IjjvScofp7bTuxBmzkX/8JzZlss7FlNNUO8ufeJx
-	 RIuaWauHO+al6BUEyQz92r8VeNEF3FsyQSSDoUEYwQwwh1XdQVDZjGqM5nSQY2rhyJ
-	 HuWsjO0SRLEyA==
+	b=Xxpa7S1Mfp36mMrqO5B+/CENWGGHHV1eMxfmnlKrdpbKTd38P/83gR4noSrIZib4R
+	 e3PmcYsvAoQ4H2lHpC2Y/pH1HF1hu3BfxxUk4J0XZwidmMX+oPpOofSXLdJwOAa+Ht
+	 r4CQiFti5uhR1SFM0tQh1BmEV6A7IUeH8PA853lZ8NLUJKwT0MqtpCr1WqFo2TgmSA
+	 7TuLfaRzv4i2A0Wu0eHtjBLGw7xnBvrwe1h1w6jGUlgT4f5IGXGwqkZGOl8jTVTbnZ
+	 0yIqBRXkrfFK/a5HqFOo8ms9LGfViLTC/N4seJee9Nhhf5rWBnonKHM5+d8Ra48+8V
+	 OAVbmbkZBtvOw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Maciej Grochowski <Maciej.Grochowski@sony.com>,
-	Jon Mason <jdmason@kudzu.us>,
+Cc: Ankit Soni <Ankit.Soni@amd.com>,
+	Srikanth Aithal <sraithal@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 395/752] ntb: ntb_hw_switchtec: Fix shift-out-of-bounds for 0 mw lut
-Date: Sat, 28 Feb 2026 12:41:46 -0500
-Message-ID: <20260228174750.1542406-395-sashal@kernel.org>
+Subject: [PATCH 6.18 396/752] iommu/amd: serialize sequence allocation under concurrent TLB invalidations
+Date: Sat, 28 Feb 2026 12:41:47 -0500
+Message-ID: <20260228174750.1542406-396-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,46 +49,112 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Grochowski <Maciej.Grochowski@sony.com>
+From: Ankit Soni <Ankit.Soni@amd.com>
 
-[ Upstream commit 186615f8855a0be4ee7d3fcd09a8ecc10e783b08 ]
+[ Upstream commit 9e249c48412828e807afddc21527eb734dc9bd3d ]
 
-Number of MW LUTs depends on NTB configuration and can be set to zero,
-in such scenario rounddown_pow_of_two will cause undefined behaviour and
-should not be performed.
-This patch ensures that rounddown_pow_of_two is called on valid value.
+With concurrent TLB invalidations, completion wait randomly gets timed out
+because cmd_sem_val was incremented outside the IOMMU spinlock, allowing
+CMD_COMPL_WAIT commands to be queued out of sequence and breaking the
+ordering assumption in wait_on_sem().
+Move the cmd_sem_val increment under iommu->lock so completion sequence
+allocation is serialized with command queuing.
+And remove the unnecessary return.
 
-Signed-off-by: Maciej Grochowski <Maciej.Grochowski@sony.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Fixes: d2a0cac10597 ("iommu/amd: move wait_on_sem() out of spinlock")
+
+Tested-by: Srikanth Aithal <sraithal@amd.com>
+Reported-by: Srikanth Aithal <sraithal@amd.com>
+Signed-off-by: Ankit Soni <Ankit.Soni@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/mscc/ntb_hw_switchtec.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/amd_iommu_types.h |  2 +-
+ drivers/iommu/amd/init.c            |  2 +-
+ drivers/iommu/amd/iommu.c           | 18 ++++++++++++------
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-index f15ebab138144..0536521fa6ccc 100644
---- a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-+++ b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-@@ -1202,7 +1202,8 @@ static void switchtec_ntb_init_mw(struct switchtec_ntb *sndev)
- 				       sndev->mmio_self_ctrl);
+diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
+index a698a2e7ce2a6..b0d919cd1a8fb 100644
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -791,7 +791,7 @@ struct amd_iommu {
  
- 	sndev->nr_lut_mw = ioread16(&sndev->mmio_self_ctrl->lut_table_entries);
--	sndev->nr_lut_mw = rounddown_pow_of_two(sndev->nr_lut_mw);
-+	if (sndev->nr_lut_mw)
-+		sndev->nr_lut_mw = rounddown_pow_of_two(sndev->nr_lut_mw);
+ 	u32 flags;
+ 	volatile u64 *cmd_sem;
+-	atomic64_t cmd_sem_val;
++	u64 cmd_sem_val;
+ 	/*
+ 	 * Track physical address to directly use it in build_completion_wait()
+ 	 * and avoid adding any special checks and handling for kdump.
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 53afb1cb0a6fc..76efd74124b33 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -1879,7 +1879,7 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h,
+ 	iommu->pci_seg = pci_seg;
  
- 	dev_dbg(&sndev->stdev->dev, "MWs: %d direct, %d lut\n",
- 		sndev->nr_direct_mw, sndev->nr_lut_mw);
-@@ -1212,7 +1213,8 @@ static void switchtec_ntb_init_mw(struct switchtec_ntb *sndev)
+ 	raw_spin_lock_init(&iommu->lock);
+-	atomic64_set(&iommu->cmd_sem_val, 0);
++	iommu->cmd_sem_val = 0;
  
- 	sndev->peer_nr_lut_mw =
- 		ioread16(&sndev->mmio_peer_ctrl->lut_table_entries);
--	sndev->peer_nr_lut_mw = rounddown_pow_of_two(sndev->peer_nr_lut_mw);
-+	if (sndev->peer_nr_lut_mw)
-+		sndev->peer_nr_lut_mw = rounddown_pow_of_two(sndev->peer_nr_lut_mw);
+ 	/* Add IOMMU to internal data structures */
+ 	list_add_tail(&iommu->list, &amd_iommu_list);
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 3f2b687947dba..4beef73139611 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -1386,6 +1386,12 @@ static int iommu_queue_command(struct amd_iommu *iommu, struct iommu_cmd *cmd)
+ 	return iommu_queue_command_sync(iommu, cmd, true);
+ }
  
- 	dev_dbg(&sndev->stdev->dev, "Peer MWs: %d direct, %d lut\n",
- 		sndev->peer_nr_direct_mw, sndev->peer_nr_lut_mw);
++static u64 get_cmdsem_val(struct amd_iommu *iommu)
++{
++	lockdep_assert_held(&iommu->lock);
++	return ++iommu->cmd_sem_val;
++}
++
+ /*
+  * This function queues a completion wait command into the command
+  * buffer of an IOMMU
+@@ -1400,11 +1406,11 @@ static int iommu_completion_wait(struct amd_iommu *iommu)
+ 	if (!iommu->need_sync)
+ 		return 0;
+ 
+-	data = atomic64_inc_return(&iommu->cmd_sem_val);
+-	build_completion_wait(&cmd, iommu, data);
+-
+ 	raw_spin_lock_irqsave(&iommu->lock, flags);
+ 
++	data = get_cmdsem_val(iommu);
++	build_completion_wait(&cmd, iommu, data);
++
+ 	ret = __iommu_queue_command_sync(iommu, &cmd, false);
+ 	raw_spin_unlock_irqrestore(&iommu->lock, flags);
+ 
+@@ -3086,10 +3092,11 @@ static void iommu_flush_irt_and_complete(struct amd_iommu *iommu, u16 devid)
+ 		return;
+ 
+ 	build_inv_irt(&cmd, devid);
+-	data = atomic64_inc_return(&iommu->cmd_sem_val);
+-	build_completion_wait(&cmd2, iommu, data);
+ 
+ 	raw_spin_lock_irqsave(&iommu->lock, flags);
++	data = get_cmdsem_val(iommu);
++	build_completion_wait(&cmd2, iommu, data);
++
+ 	ret = __iommu_queue_command_sync(iommu, &cmd, true);
+ 	if (ret)
+ 		goto out_err;
+@@ -3103,7 +3110,6 @@ static void iommu_flush_irt_and_complete(struct amd_iommu *iommu, u16 devid)
+ 
+ out_err:
+ 	raw_spin_unlock_irqrestore(&iommu->lock, flags);
+-	return;
+ }
+ 
+ static inline u8 iommu_get_int_tablen(struct iommu_dev_data *dev_data)
 -- 
 2.51.0
 
