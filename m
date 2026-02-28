@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49ECC383C66
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007DA346AD3
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302100; cv=none; b=UQeNVF0pSWeebClrkFW1bX/l2GT5SmrLtzU6xJ1PiUylyXNiXxl+rdNP4i2f9+PTxZB8BCZU/QCsvKKWiPYU9EUy6ozhpPIb4MqsKPNDp05op3QEqGRMP+dZRQCVQ8rV0425RDV8EMJ5BBufR4Y2jOfGQ2lYOWllfey0INxj9KU=
+	t=1772302101; cv=none; b=lFHNierge6LMuW5+JAHEjeCEWeoltgbVLR5UCos54ECuCO3yVeIZmRrYR+N3joYiwEjdqv25XpQN19PM8CZZY1pG9lpkKneVTz9k8k3hgKc0G8ZHp5dbUeDH6Ur5TZ13TjhHmgjFnPIsPGQPdvXVo94UcPhlLHkLPScsqymUF+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302100; c=relaxed/simple;
-	bh=Qpdafdbmh+HrWRci0qplG9ehd4ir4CE1oPsy3uBUbR4=;
+	s=arc-20240116; t=1772302101; c=relaxed/simple;
+	bh=MC6LiyeMV2J9904VMlLZZl7qVs5YGNGthlllr5lmHWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjZ+0tZwNKkuiRscx3GMn9pXZgFP/npPw0nRFSMixWGZp1QUY/bqaFC6HtXzGpxsQEj47A2+0eWaNOfIs1CC/TzVeF4UCKPAyL+f4U5dUypZfiYG4zTsCzFNBiP2wuRCYJosLp7bOU8g5cBx2hxtGWq7yXU6q5YlaIBSHPUpCxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p1B7Fl79; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OUmHyniPclW55J8oqrAjirvtH6IMIsnrwHy5+p4oZ9YLjsTGESUy4P+TzOeSJWys9/Oty0TdzGbSvQ8L1xxj5RbUKZCCYvDoG4199OH6UihkPWgRcFxyHJQEgqbtzJSsmDDSBU+rymVaCI8zhayqXV9GSrv7gPE5DTwupoEw7YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n2BwHhN2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p1B7Fl79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B02C116D0;
-	Sat, 28 Feb 2026 18:08:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n2BwHhN2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659F2C19424;
+	Sat, 28 Feb 2026 18:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302100;
-	bh=Qpdafdbmh+HrWRci0qplG9ehd4ir4CE1oPsy3uBUbR4=;
+	bh=MC6LiyeMV2J9904VMlLZZl7qVs5YGNGthlllr5lmHWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1B7Fl79EQSdENkDrivK7zdHONvk+U5LDd5pYwXoucbxUkS7VtbImKUIM7wIx8Ta0
-	 x3Ub5rZ6y2DlVezGhKOpjMcnTdAUEy4cjsuJ25sJr6Y/1PAULltVFUdsLjSuFbF7A4
-	 iBHbDUY5+jNm4NYIts04NGtCVRZdYYhP6X8B/1TIWLfjkFhVGtH3lvS5OaA4G2RXQ5
-	 mM4pwZ0DD4MyyOhaqHOJrUIdjpTvv2BL5UfgaRXgjZhoAl+AO6O4WHmKX/DaOOLv6R
-	 JsuYEMtATMVEmMhxAKhGSp5+IIEgzgCJr0Ze2HQEyBepgpzFc4CHzzx3C1jQgWCLXg
-	 HRNKNDJ8mSfTg==
+	b=n2BwHhN2U0TThqKyDtlsjHNf+mKDPpi9f5QjER09p1jo3RDBG/p0txaYO/+daSkg8
+	 q7w8uvJpIxfboqxtjDjcLQKRI2uRKo1z0Yjmc/Qa9d7QbL1wuf6YrCD1ojQhQR7/YD
+	 qrxBWiYqHm+jZsche8J+GQ49Cu6rv9egGlMqbF3ST4lwrjmAzJ07xHsIlDFEEs2jot
+	 wdKi/JoGSqSd+df/mTfhPua8S+YN7UZPLKzz9T0kIZqMlRPuYUVehPSU5gczX6x3YJ
+	 ahBxa4CIeWbI5wk+IgT7ptcjxu6ZpT4zffv7mi/K32L5hSj0jWHFlxX6oUw5TiHE4H
+	 NXXhcEtHPTBKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/283] ASoC: nau8821: Consistently clear interrupts before unmasking
-Date: Sat, 28 Feb 2026 13:03:48 -0500
-Message-ID: <20260228180709.1583486-86-sashal@kernel.org>
+Subject: [PATCH 6.6 087/283] ASoC: nau8821: Avoid unnecessary blocking in IRQ handler
+Date: Sat, 28 Feb 2026 13:03:49 -0500
+Message-ID: <20260228180709.1583486-87-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,165 +49,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit a698679fe8b0fec41d1fb9547a53127a85c1be92 ]
+[ Upstream commit ee70bacef1c6050e4836409927294d744dbcfa72 ]
 
-The interrupt handler attempts to perform some IRQ status clear
-operations *after* rather than *before* unmasking and enabling
-interrupts.  This is a rather fragile approach since it may generally
-lead to missing IRQ requests or causing spurious interrupts.
+The interrupt handler offloads the microphone detection logic to
+nau8821_jdet_work(), which implies a sleep operation.  However, before
+being able to process any subsequent hotplug event, the interrupt
+handler needs to wait for any prior scheduled work to complete.
 
-Make use of the nau8821_irq_status_clear() helper instead of
-manipulating the related register directly and ensure any interrupt
-clearing is performed *after* the target interrupts are disabled/masked
-and *before* proceeding with additional interrupt unmasking/enablement
-operations.
+Move the sleep out of jdet_work by converting it to a delayed work.
+This eliminates the undesired blocking in the interrupt handler when
+attempting to cancel a recently scheduled work item and should help
+reducing transient input reports that might confuse user-space.
 
-This also implicitly drops the redundant clear operation of the ejection
-IRQ in the interrupt handler, since nau8821_eject_jack() has been
-already responsible for clearing all active interrupts.
-
-Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
-Fixes: 2551b6e89936 ("ASoC: nau8821: Add headset button detection")
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20251003-nau8821-jdet-fixes-v1-3-f7b0e2543f09@collabora.com
+Link: https://patch.msgid.link/20251003-nau8821-jdet-fixes-v1-5-f7b0e2543f09@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 70237853edf0 ("ASoC: nau8821: Fixup nau8821_enable_jack_detect()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8821.c | 58 ++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 28 deletions(-)
+ sound/soc/codecs/nau8821.c | 22 ++++++++++++----------
+ sound/soc/codecs/nau8821.h |  2 +-
+ 2 files changed, 13 insertions(+), 11 deletions(-)
 
 diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
-index 48ed75c3a7db2..585884a087ecc 100644
+index 585884a087ecc..7b84939602985 100644
 --- a/sound/soc/codecs/nau8821.c
 +++ b/sound/soc/codecs/nau8821.c
-@@ -1067,20 +1067,24 @@ static void nau8821_eject_jack(struct nau8821 *nau8821)
- 	snd_soc_component_disable_pin(component, "MICBIAS");
- 	snd_soc_dapm_sync(dapm);
- 
-+	/* Disable & mask both insertion & ejection IRQs */
-+	regmap_update_bits(regmap, NAU8821_R12_INTERRUPT_DIS_CTRL,
-+			   NAU8821_IRQ_INSERT_DIS | NAU8821_IRQ_EJECT_DIS,
-+			   NAU8821_IRQ_INSERT_DIS | NAU8821_IRQ_EJECT_DIS);
-+	regmap_update_bits(regmap, NAU8821_R0F_INTERRUPT_MASK,
-+			   NAU8821_IRQ_INSERT_EN | NAU8821_IRQ_EJECT_EN,
-+			   NAU8821_IRQ_INSERT_EN | NAU8821_IRQ_EJECT_EN);
-+
- 	/* Clear all interruption status */
- 	nau8821_irq_status_clear(regmap, 0);
- 
--	/* Enable the insertion interruption, disable the ejection inter-
--	 * ruption, and then bypass de-bounce circuit.
--	 */
-+	/* Enable & unmask the insertion IRQ */
- 	regmap_update_bits(regmap, NAU8821_R12_INTERRUPT_DIS_CTRL,
--		NAU8821_IRQ_EJECT_DIS | NAU8821_IRQ_INSERT_DIS,
--		NAU8821_IRQ_EJECT_DIS);
--	/* Mask unneeded IRQs: 1 - disable, 0 - enable */
-+			   NAU8821_IRQ_INSERT_DIS, 0);
- 	regmap_update_bits(regmap, NAU8821_R0F_INTERRUPT_MASK,
--		NAU8821_IRQ_EJECT_EN | NAU8821_IRQ_INSERT_EN,
--		NAU8821_IRQ_EJECT_EN);
-+			   NAU8821_IRQ_INSERT_EN, 0);
- 
-+	/* Bypass de-bounce circuit */
- 	regmap_update_bits(regmap, NAU8821_R0D_JACK_DET_CTRL,
- 		NAU8821_JACK_DET_DB_BYPASS, NAU8821_JACK_DET_DB_BYPASS);
- 
-@@ -1104,7 +1108,6 @@ static void nau8821_eject_jack(struct nau8821 *nau8821)
- 			NAU8821_IRQ_KEY_RELEASE_DIS |
- 			NAU8821_IRQ_KEY_PRESS_DIS);
- 	}
--
- }
- 
+@@ -1113,16 +1113,12 @@ static void nau8821_eject_jack(struct nau8821 *nau8821)
  static void nau8821_jdet_work(struct work_struct *work)
-@@ -1158,6 +1161,15 @@ static void nau8821_setup_inserted_irq(struct nau8821 *nau8821)
  {
+ 	struct nau8821 *nau8821 =
+-		container_of(work, struct nau8821, jdet_work);
++		container_of(work, struct nau8821, jdet_work.work);
+ 	struct snd_soc_dapm_context *dapm = nau8821->dapm;
+ 	struct snd_soc_component *component = snd_soc_dapm_to_component(dapm);
  	struct regmap *regmap = nau8821->regmap;
+ 	int jack_status_reg, mic_detected, event = 0, event_mask = 0;
  
-+	/* Disable & mask insertion IRQ */
-+	regmap_update_bits(regmap, NAU8821_R12_INTERRUPT_DIS_CTRL,
-+			   NAU8821_IRQ_INSERT_DIS, NAU8821_IRQ_INSERT_DIS);
-+	regmap_update_bits(regmap, NAU8821_R0F_INTERRUPT_MASK,
-+			   NAU8821_IRQ_INSERT_EN, NAU8821_IRQ_INSERT_EN);
+-	snd_soc_component_force_enable_pin(component, "MICBIAS");
+-	snd_soc_dapm_sync(dapm);
+-	msleep(20);
+-
+ 	regmap_read(regmap, NAU8821_R58_I2C_DEVICE_ID, &jack_status_reg);
+ 	mic_detected = !(jack_status_reg & NAU8821_KEYDET);
+ 	if (mic_detected) {
+@@ -1152,6 +1148,7 @@ static void nau8821_jdet_work(struct work_struct *work)
+ 		snd_soc_component_disable_pin(component, "MICBIAS");
+ 		snd_soc_dapm_sync(dapm);
+ 	}
 +
-+	/* Clear insert IRQ status */
-+	nau8821_irq_status_clear(regmap, NAU8821_JACK_INSERT_DETECTED);
-+
- 	/* Enable internal VCO needed for interruptions */
- 	if (nau8821->dapm->bias_level < SND_SOC_BIAS_PREPARE)
- 		nau8821_configure_sysclk(nau8821, NAU8821_CLK_INTERNAL, 0);
-@@ -1177,17 +1189,18 @@ static void nau8821_setup_inserted_irq(struct nau8821 *nau8821)
- 		regmap_update_bits(regmap, NAU8821_R0D_JACK_DET_CTRL,
- 				   NAU8821_JACK_DET_DB_BYPASS, 0);
- 
-+	/* Unmask & enable the ejection IRQs */
- 	regmap_update_bits(regmap, NAU8821_R0F_INTERRUPT_MASK,
--		NAU8821_IRQ_EJECT_EN, 0);
-+			   NAU8821_IRQ_EJECT_EN, 0);
- 	regmap_update_bits(regmap, NAU8821_R12_INTERRUPT_DIS_CTRL,
--		NAU8821_IRQ_EJECT_DIS, 0);
-+			   NAU8821_IRQ_EJECT_DIS, 0);
+ 	event_mask |= SND_JACK_HEADSET;
+ 	snd_soc_jack_report(nau8821->jack, event, event_mask);
  }
- 
- static irqreturn_t nau8821_interrupt(int irq, void *data)
+@@ -1200,6 +1197,7 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
  {
  	struct nau8821 *nau8821 = (struct nau8821 *)data;
  	struct regmap *regmap = nau8821->regmap;
--	int active_irq, clear_irq = 0, event = 0, event_mask = 0;
-+	int active_irq, event = 0, event_mask = 0;
++	struct snd_soc_component *component;
+ 	int active_irq, event = 0, event_mask = 0;
  
  	if (regmap_read(regmap, NAU8821_R10_IRQ_STATUS, &active_irq)) {
- 		dev_err(nau8821->dev, "failed to read irq status\n");
-@@ -1203,14 +1216,13 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
+@@ -1211,7 +1209,7 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
+ 
+ 	if ((active_irq & NAU8821_JACK_EJECT_IRQ_MASK) ==
+ 		NAU8821_JACK_EJECT_DETECTED) {
+-		cancel_work_sync(&nau8821->jdet_work);
++		cancel_delayed_work_sync(&nau8821->jdet_work);
+ 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
  			NAU8821_MICDET_MASK, NAU8821_MICDET_DIS);
  		nau8821_eject_jack(nau8821);
- 		event_mask |= SND_JACK_HEADSET;
--		clear_irq = NAU8821_JACK_EJECT_IRQ_MASK;
- 	} else if (active_irq & NAU8821_KEY_SHORT_PRESS_IRQ) {
- 		event |= NAU8821_BUTTON;
- 		event_mask |= NAU8821_BUTTON;
--		clear_irq = NAU8821_KEY_SHORT_PRESS_IRQ;
-+		nau8821_irq_status_clear(regmap, NAU8821_KEY_SHORT_PRESS_IRQ);
- 	} else if (active_irq & NAU8821_KEY_RELEASE_IRQ) {
- 		event_mask = NAU8821_BUTTON;
--		clear_irq = NAU8821_KEY_RELEASE_IRQ;
-+		nau8821_irq_status_clear(regmap, NAU8821_KEY_RELEASE_IRQ);
+@@ -1225,12 +1223,15 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
+ 		nau8821_irq_status_clear(regmap, NAU8821_KEY_RELEASE_IRQ);
  	} else if ((active_irq & NAU8821_JACK_INSERT_IRQ_MASK) ==
  		NAU8821_JACK_INSERT_DETECTED) {
- 		cancel_work_sync(&nau8821->jdet_work);
-@@ -1220,27 +1232,17 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
- 			/* detect microphone and jack type */
- 			schedule_work(&nau8821->jdet_work);
+-		cancel_work_sync(&nau8821->jdet_work);
++		cancel_delayed_work_sync(&nau8821->jdet_work);
+ 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
+ 			NAU8821_MICDET_MASK, NAU8821_MICDET_EN);
+ 		if (nau8821_is_jack_inserted(regmap)) {
+-			/* detect microphone and jack type */
+-			schedule_work(&nau8821->jdet_work);
++			/* Detect microphone and jack type */
++			component = snd_soc_dapm_to_component(nau8821->dapm);
++			snd_soc_component_force_enable_pin(component, "MICBIAS");
++			snd_soc_dapm_sync(nau8821->dapm);
++			schedule_delayed_work(&nau8821->jdet_work, msecs_to_jiffies(20));
  			/* Turn off insertion interruption at manual mode */
--			regmap_update_bits(regmap,
--				NAU8821_R12_INTERRUPT_DIS_CTRL,
--				NAU8821_IRQ_INSERT_DIS,
--				NAU8821_IRQ_INSERT_DIS);
--			regmap_update_bits(regmap,
--				NAU8821_R0F_INTERRUPT_MASK,
--				NAU8821_IRQ_INSERT_EN,
--				NAU8821_IRQ_INSERT_EN);
  			nau8821_setup_inserted_irq(nau8821);
  		} else {
- 			dev_warn(nau8821->dev,
- 				"Inserted IRQ fired but not connected\n");
- 			nau8821_eject_jack(nau8821);
- 		}
-+	} else {
-+		/* Clear the rightmost interrupt */
-+		nau8821_irq_status_clear(regmap, active_irq);
- 	}
+@@ -1667,7 +1668,8 @@ int nau8821_enable_jack_detect(struct snd_soc_component *component,
  
--	if (!clear_irq)
--		clear_irq = active_irq;
--	/* clears the rightmost interruption */
--	regmap_write(regmap, NAU8821_R11_INT_CLR_KEY_STATUS, clear_irq);
--
- 	if (event_mask)
- 		snd_soc_jack_report(nau8821->jack, event, event_mask);
- 
+ 	nau8821->jack = jack;
+ 	/* Initiate jack detection work queue */
+-	INIT_WORK(&nau8821->jdet_work, nau8821_jdet_work);
++	INIT_DELAYED_WORK(&nau8821->jdet_work, nau8821_jdet_work);
++
+ 	ret = devm_request_threaded_irq(nau8821->dev, nau8821->irq, NULL,
+ 		nau8821_interrupt, IRQF_TRIGGER_LOW | IRQF_ONESHOT,
+ 		"nau8821", nau8821);
+diff --git a/sound/soc/codecs/nau8821.h b/sound/soc/codecs/nau8821.h
+index 00a888ed07ceb..5abb91b087a12 100644
+--- a/sound/soc/codecs/nau8821.h
++++ b/sound/soc/codecs/nau8821.h
+@@ -559,7 +559,7 @@ struct nau8821 {
+ 	struct regmap *regmap;
+ 	struct snd_soc_dapm_context *dapm;
+ 	struct snd_soc_jack *jack;
+-	struct work_struct jdet_work;
++	struct delayed_work jdet_work;
+ 	int irq;
+ 	int clk_id;
+ 	int micbias_voltage;
 -- 
 2.51.0
 
