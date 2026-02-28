@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E74359A65
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60884359A8B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302427; cv=none; b=JF/duMela+2AbnJw9bNPViJMndqh7jdE8N38ecQ9ZkoDU/sCKK7UhGOi2v8Vx59zvvDajXXma+V9XdPDB08PfgmGwu1dfCkBcXj/4K5E3kecnMkU48Pp1bQDa6ArYJWdu8PH3Hqn1NfapKa60FNIPHRjfN4oCV+f0UUajHPOb8k=
+	t=1772302428; cv=none; b=qr1JyGg+C5Xz0bHopN3JQCnzzaLfOq6qDoFSG/tPaiKvbo3PTGlMRSBFdQK83fPYnRyMCbUbfyX8uiWU3opnSRslkcW3GjO1R0zDfx2PrdUvlxJKOwzzTLMA6VMkzGK0dQxBc11y9KIaQsm7cTIJ6e7WTwGT04ygwkB/SCCBJOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302427; c=relaxed/simple;
-	bh=QBseQC6NLecqCS/kqBdFVSv55rxQ7Kmy1PSv2p/dTgE=;
+	s=arc-20240116; t=1772302428; c=relaxed/simple;
+	bh=X+7T8IfsR86kkcOMSc3d/wtVMDhQVqdWt2Cgq+sxbLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KG2zfQOgh+9JmsodgDEwDoI49aY5EIKmqUmaz9sqUh0disc/8MxtJm4fSOeOdNr8DhX7ts+CHdyFcnHNE5MAZuJMEpJsc5L3qQXLn3yb2M6fAiH4t9sk3s8MyibMpcW7EtCpEa6DcvjhmcsXJkASiIEoQ7xKRQD29LCXoDb+Atw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pgoXyj7N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlYgxBc1Ex0fxRVMlV17hLtOMvzk+0dZjtQd3zi60L1xsLuYNLlo4adn7bxFAgRty5rzpjXUNmsy1tqZJW3efahiALBrav3ghVpqyP0+Q2zj+l6+raBEj6Tpdd+gm2j7vEXsLL547VYwADpi9XEfLElyTCgFgvfVi+N0Qa+9c1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fMX6H786; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pgoXyj7N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3FD0C116D0;
-	Sat, 28 Feb 2026 18:13:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fMX6H786"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978F2C19423;
+	Sat, 28 Feb 2026 18:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302427;
-	bh=QBseQC6NLecqCS/kqBdFVSv55rxQ7Kmy1PSv2p/dTgE=;
+	s=k20201202; t=1772302428;
+	bh=X+7T8IfsR86kkcOMSc3d/wtVMDhQVqdWt2Cgq+sxbLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pgoXyj7N/wSWrujPWimfF0bnW6jBFPG/IPMbcCfsuXnSX5FlHMj2LBkxrJ/BCp1r3
-	 ww0n8vgnXaZi49aTx3x1i4lerTZtp59pFZ82TBcWOFJg0/cXFPNOZWPNBSoRKoTjI+
-	 OsYMJPm31REMY6R1aSe4nNa4uMHRifJwIJgja7gjxzyK/SQy/toh4B/hz0Yf+QeETU
-	 nwM73xBtwpjNxYkxCbZTteSGbPp3/7EMIGBPBF3oDk7O10k3n/mvQ0LkM1gfjJBmdG
-	 OShXs4/yOyBpScnYiUGXc+q06CDhFF3fU3T5YXfI7EXfn0ZcqcKNbMdfwzZYXdksSk
-	 kfqeQuQF6G5+w==
+	b=fMX6H786Vhogf/kuFAgS+pS60JaRWFAreWAgTICi8W/mn33Qt7C3BLV8j41GcSlUx
+	 +WE+Ae6y/Z8tf46/eE94i+3ac0qmkUrKhkDObLXVPRYVaVLZvLloSo3ECavQ50U0p3
+	 kqS4RQ0da9e1h6S7ZZ7wLNYprvzRWK8q50JhPZ2kGjepxKogBsn3o/ypbPHJg01kvb
+	 1krOdpkljjUCfOVN7o/lC7MsPVovRM28bT31s8sqNBYeSqtPgwfN1mjrHq2sCLoq+C
+	 eO5xKOg+v/+T2vj9XAZiZlUIeMythAJV2ViKLKqTOwGL1bP0fUbXJIkJzZTY7wC04m
+	 jeXqjUXU75Hcg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Colin Ian King <colin.i.king@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Li Chen <me@linux.beauty>,
+	Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 164/232] scsi: csiostor: Fix dereference of null pointer rn
-Date: Sat, 28 Feb 2026 13:10:17 -0500
-Message-ID: <20260228181127.1592657-164-sashal@kernel.org>
+Subject: [PATCH 6.1 165/232] nvdimm: virtio_pmem: serialize flush requests
+Date: Sat, 28 Feb 2026 13:10:18 -0500
+Message-ID: <20260228181127.1592657-165-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,44 +49,96 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Li Chen <me@linux.beauty>
 
-[ Upstream commit 1982257570b84dc33753d536dd969fd357a014e9 ]
+[ Upstream commit a9ba6733c7f1096c4506bf4e34a546e07242df74 ]
 
-The error exit path when rn is NULL ends up deferencing the null pointer rn
-via the use of the macro CSIO_INC_STATS. Fix this by adding a new error
-return path label after the use of the macro to avoid the deference.
+Under heavy concurrent flush traffic, virtio-pmem can overflow its request
+virtqueue (req_vq): virtqueue_add_sgs() starts returning -ENOSPC and the
+driver logs "no free slots in the virtqueue". Shortly after that the
+device enters VIRTIO_CONFIG_S_NEEDS_RESET and flush requests fail with
+"virtio pmem device needs a reset".
 
-Fixes: a3667aaed569 ("[SCSI] csiostor: Chelsio FCoE offload driver")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Link: https://patch.msgid.link/20260129155332.196338-1-colin.i.king@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Serialize virtio_pmem_flush() with a per-device mutex so only one flush
+request is in-flight at a time. This prevents req_vq descriptor overflow
+under high concurrency.
+
+Reproducer (guest with virtio-pmem):
+  - mkfs.ext4 -F /dev/pmem0
+  - mount -t ext4 -o dax,noatime /dev/pmem0 /mnt/bench
+  - fio: ioengine=io_uring rw=randwrite bs=4k iodepth=64 numjobs=64
+        direct=1 fsync=1 runtime=30s time_based=1
+  - dmesg: "no free slots in the virtqueue"
+           "virtio pmem device needs a reset"
+
+Fixes: 6e84200c0a29 ("virtio-pmem: Add virtio pmem driver")
+Signed-off-by: Li Chen <me@linux.beauty>
+Acked-by: Pankaj Gupta <pankaj.gupta.linux@gmail.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20260203021353.121091-1-me@linux.beauty
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/csiostor/csio_scsi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvdimm/nd_virtio.c   | 3 ++-
+ drivers/nvdimm/virtio_pmem.c | 1 +
+ drivers/nvdimm/virtio_pmem.h | 4 ++++
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/csiostor/csio_scsi.c b/drivers/scsi/csiostor/csio_scsi.c
-index 05e1a63e00c3a..ed40ae6b9800c 100644
---- a/drivers/scsi/csiostor/csio_scsi.c
-+++ b/drivers/scsi/csiostor/csio_scsi.c
-@@ -2074,7 +2074,7 @@ csio_eh_lun_reset_handler(struct scsi_cmnd *cmnd)
- 	struct csio_scsi_level_data sld;
+diff --git a/drivers/nvdimm/nd_virtio.c b/drivers/nvdimm/nd_virtio.c
+index a78e17a43a9d2..90b0fdb72024a 100644
+--- a/drivers/nvdimm/nd_virtio.c
++++ b/drivers/nvdimm/nd_virtio.c
+@@ -44,6 +44,8 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
+ 	unsigned long flags;
+ 	int err, err1;
  
- 	if (!rn)
--		goto fail;
-+		goto fail_ret;
++	guard(mutex)(&vpmem->flush_lock);
++
+ 	/*
+ 	 * Don't bother to submit the request to the device if the device is
+ 	 * not activated.
+@@ -53,7 +55,6 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
+ 		return -EIO;
+ 	}
  
- 	csio_dbg(hw, "Request to reset LUN:%llu (ssni:0x%x tgtid:%d)\n",
- 		      cmnd->device->lun, rn->flowid, rn->scsi_id);
-@@ -2220,6 +2220,7 @@ csio_eh_lun_reset_handler(struct scsi_cmnd *cmnd)
- 	csio_put_scsi_ioreq_lock(hw, scsim, ioreq);
- fail:
- 	CSIO_INC_STATS(rn, n_lun_rst_fail);
-+fail_ret:
- 	return FAILED;
- }
+-	might_sleep();
+ 	req_data = kmalloc(sizeof(*req_data), GFP_KERNEL);
+ 	if (!req_data)
+ 		return -ENOMEM;
+diff --git a/drivers/nvdimm/virtio_pmem.c b/drivers/nvdimm/virtio_pmem.c
+index 20da455d2ef63..ed5376128bbd8 100644
+--- a/drivers/nvdimm/virtio_pmem.c
++++ b/drivers/nvdimm/virtio_pmem.c
+@@ -50,6 +50,7 @@ static int virtio_pmem_probe(struct virtio_device *vdev)
+ 		goto out_err;
+ 	}
  
++	mutex_init(&vpmem->flush_lock);
+ 	vpmem->vdev = vdev;
+ 	vdev->priv = vpmem;
+ 	err = init_vq(vpmem);
+diff --git a/drivers/nvdimm/virtio_pmem.h b/drivers/nvdimm/virtio_pmem.h
+index 0dddefe594c46..f72cf17f9518f 100644
+--- a/drivers/nvdimm/virtio_pmem.h
++++ b/drivers/nvdimm/virtio_pmem.h
+@@ -13,6 +13,7 @@
+ #include <linux/module.h>
+ #include <uapi/linux/virtio_pmem.h>
+ #include <linux/libnvdimm.h>
++#include <linux/mutex.h>
+ #include <linux/spinlock.h>
+ 
+ struct virtio_pmem_request {
+@@ -35,6 +36,9 @@ struct virtio_pmem {
+ 	/* Virtio pmem request queue */
+ 	struct virtqueue *req_vq;
+ 
++	/* Serialize flush requests to the device. */
++	struct mutex flush_lock;
++
+ 	/* nvdimm bus registers virtio pmem device */
+ 	struct nvdimm_bus *nvdimm_bus;
+ 	struct nvdimm_bus_descriptor nd_desc;
 -- 
 2.51.0
 
