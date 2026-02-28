@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985C8343D7B
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6778C36C9CE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302260; cv=none; b=oCLw2sF9qQYM5WDaB1Pm5Ztidm/rVrZHHZrznk3Ae9Ci46XIjof0cA2EP3N4FJyX11XlRLQoYelXk8fw0Kw/PMW2g9/duLrXWP/dhMSPEzWo2uoM4+aNCqrqhS4E+NiOt3dV3pZPC+5TtauCKs9QNq2pHeaLoWZ//+hGDt3DbAI=
+	t=1772302261; cv=none; b=jWDzRbBPIeliKnFS7jds26jrvjXdqgKLdMVaU3+M02P132hF/DSA9x0rRwM70AvOw/zq64pCIwOhCkqFdqmDwepIgHfik4SHxdw6zcV7LoWux1aznX38S2EKicTTtyLCL1vTrns5opXfZmscvX+bx5CF+caIVzMA+vSBXjCYh9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302260; c=relaxed/simple;
-	bh=RVAczk+ph6pUlpLZYejwUMvVnPHuluVjOUrqDsyRkgk=;
+	s=arc-20240116; t=1772302261; c=relaxed/simple;
+	bh=NW9fuqdvgBtihHsto8OROm1ej/dvyaEfmqNZSfghbjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lDQj4zoaE5wfmHQNN+TNLo3nG8Jjp9dUOsfDSuW6j1ZtiuTWPxhUpMmmY+ZfhNihJ8CGlhXjjJNeR0Cu0YhQIm18X/3icCE599VJ81B5TdLKfGsKbCVQLcGKU/l5cx4sOCSc1u3TTip4mZvksGy2lXAPQfiFt87lSPY58q6hHHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rkotx7Uo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=neuuaEMdPXfzQijv/tfjacEUJ5JFgpiZyBn9LeXI2T8IOfnMvdDgurlCIjkTb1JHRcvrabE0nHrvGzAJ/Qi9Y3Uo+0lFAt4Ryf0rp4vZicQOIw50q+uTCK5ypZ56O9QXA5j7KHuXFaMHY4OlXol3VUNGEl6e3iLagT8MFHOSn3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vNBFvDGP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rkotx7Uo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28E1C116D0;
-	Sat, 28 Feb 2026 18:10:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vNBFvDGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40AEC19423;
+	Sat, 28 Feb 2026 18:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302260;
-	bh=RVAczk+ph6pUlpLZYejwUMvVnPHuluVjOUrqDsyRkgk=;
+	s=k20201202; t=1772302261;
+	bh=NW9fuqdvgBtihHsto8OROm1ej/dvyaEfmqNZSfghbjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rkotx7Uo71fOe5JiG3NDgFNGaGr0lH/1Zg2I+mgTeIj7umoZtHagYAORFDNTRCTPk
-	 nTjLkX6RGg7d6N9ZsJ92vsXE37jR6L/qg+aGqe+q28icSwJj838ZQGeMFh7XtkvRX+
-	 oR4gR8pLU5sUPBztCvWKDj/INRMKGY0klhZFoZzdB75N0QPd/Br76o5U33iL7DnOD9
-	 xO2jSx2dboIkwlo+UKcPAxJ8c8CleYV3zxCbsT9LBWORB0Xdx2m8GZ6TV1q2d0zDpm
-	 9sigSyzrIjzUmnfc6mv3nyXH/BwxB17YMG6F85+lHAvmGJdu9eDquGKZfF8X/kXZY8
-	 ZLdKpc2QRHQbQ==
+	b=vNBFvDGP63PeaD3gjSlvwG6F6/LbnEqyzZW1VNDR4QYYF6LHcCALKWN2hWuhto3x2
+	 BHcZAT0VJtC/GI7j7tOUCGzU0kvOy/wIRhoaDd63dvbTUdxaZuNZkMsNgv8jPtkbPY
+	 3NhKPRRDPVcp4IMEUTqzQ+FgkEkurr/cGio1C/xJ0mQATTWIS9hRVGuCuK/TMtTLKt
+	 On1KXzMRGqo3ux27oIyB76fBEg7hIWu0LUmis0x5ntmMBic2igOxouJox42twH9soJ
+	 mYm12oOXzp1BVN4rwk0HFp6/NaPRtXXN8VDGkX7hj4qqLI6YeW6vzkjR5Z9fKlYhnz
+	 Z8IicPgQsSYug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Aleksei Oladko <aleksey.oladko@virtuozzo.com>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 275/283] selftests: forwarding: vxlan_bridge_1d: fix test failure with br_netfilter enabled
-Date: Sat, 28 Feb 2026 13:06:57 -0500
-Message-ID: <20260228180709.1583486-275-sashal@kernel.org>
+Subject: [PATCH 6.6 276/283] selftests: forwarding: vxlan_bridge_1d_ipv6: fix test failure with br_netfilter enabled
+Date: Sat, 28 Feb 2026 13:06:58 -0500
+Message-ID: <20260228180709.1583486-276-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -44,79 +44,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
 From: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
 
-[ Upstream commit 02cb2e6bacbb08ebf6acb61be816efd11e1f4a21 ]
+[ Upstream commit ce9f6aec0fb780dafc1dfc5f47c688422aff464a ]
 
 The test generates VXLAN traffic using mausezahn, where the encapsulated
-inner IPv4 packet contains a zero IP header checksum. After VXLAN
-decapsulation, such packets do not pass sanity checks in br_netfilter
-and are dropped, which causes the test to fail.
+inner IPv6 packet has an incorrect payload length set in the IPv6 header.
+After VXLAN decapsulation, such packets do not pass sanity checks in
+br_netfilter and are dropped, which causes the test to fail.
 
-Fix this by calculating and setting a valid IPv4 header checksum for the
-encapsulated packet generated by mausezahn, so that the packet is accepted
-by br_netfilter. Fixed by using the payload_template_calc_checksum() /
-payload_template_expand_checksum() helpers that are only available
-in v6.3 and newer kernels.
+Fix this by setting the correct IPv6 payload length for the encapsulated
+packet generated by mausezahn, so that the packet is accepted
+by br_netfilter.
 
-Fixes: a0b61f3d8ebf ("selftests: forwarding: vxlan_bridge_1d: Add an ECN decap test")
+tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
+lines 698-706
+
+              )"00:03:"$(           : Payload length
+              )"3a:"$(              : Next header
+              )"04:"$(              : Hop limit
+              )"$saddr:"$(          : IP saddr
+              )"$daddr:"$(          : IP daddr
+              )"80:"$(              : ICMPv6.type
+              )"00:"$(              : ICMPv6.code
+              )"00:"$(              : ICMPv6.checksum
+              )
+
+Data after IPv6 header:
+• 80: — 1 byte (ICMPv6 type)
+• 00: — 1 byte (ICMPv6 code)
+• 00: — 1 byte (ICMPv6 checksum, truncated)
+
+Total: 3 bytes → 00:03 is correct. The old value 00:08 did not match
+the actual payload size.
+
+Fixes: b07e9957f220 ("selftests: forwarding: Add VxLAN tests with a VLAN-unaware bridge for IPv6")
 Signed-off-by: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260213131907.43351-2-aleksey.oladko@virtuozzo.com
+Link: https://patch.msgid.link/20260213131907.43351-3-aleksey.oladko@virtuozzo.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/forwarding/vxlan_bridge_1d.sh         | 26 ++++++++++++-------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
-index eb307ca37bfa6..002551451a728 100755
---- a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
-+++ b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
-@@ -559,6 +559,21 @@ vxlan_encapped_ping_do()
- 	local inner_tos=$1; shift
- 	local outer_tos=$1; shift
- 
-+	local ipv4hdr=$(:
-+		    )"45:"$(                      : IP version + IHL
-+		    )"$inner_tos:"$(              : IP TOS
-+		    )"00:54:"$(                   : IP total length
-+		    )"99:83:"$(                   : IP identification
-+		    )"40:00:"$(                   : IP flags + frag off
-+		    )"40:"$(                      : IP TTL
-+		    )"01:"$(                      : IP proto
-+		    )"CHECKSUM:"$(                : IP header csum
-+		    )"c0:00:02:03:"$(             : IP saddr: 192.0.2.3
-+		    )"c0:00:02:01"$(              : IP daddr: 192.0.2.1
-+		)
-+	local checksum=$(payload_template_calc_checksum "$ipv4hdr")
-+	ipv4hdr=$(payload_template_expand_checksum "$ipv4hdr" $checksum)
-+
- 	$MZ $dev -c $count -d 100msec -q \
- 		-b $next_hop_mac -B $dest_ip \
- 		-t udp tos=$outer_tos,sp=23456,dp=$VXPORT,p=$(:
-@@ -569,16 +584,7 @@ vxlan_encapped_ping_do()
- 		    )"$dest_mac:"$(               : ETH daddr
- 		    )"$(mac_get w2):"$(           : ETH saddr
- 		    )"08:00:"$(                   : ETH type
--		    )"45:"$(                      : IP version + IHL
--		    )"$inner_tos:"$(              : IP TOS
--		    )"00:54:"$(                   : IP total length
--		    )"99:83:"$(                   : IP identification
--		    )"40:00:"$(                   : IP flags + frag off
--		    )"40:"$(                      : IP TTL
--		    )"01:"$(                      : IP proto
--		    )"00:00:"$(                   : IP header csum
--		    )"c0:00:02:03:"$(             : IP saddr: 192.0.2.3
--		    )"c0:00:02:01:"$(             : IP daddr: 192.0.2.1
-+		    )"$ipv4hdr:"$(                : IPv4 header
- 		    )"08:"$(                      : ICMP type
- 		    )"00:"$(                      : ICMP code
- 		    )"8b:f2:"$(                   : ICMP csum
+diff --git a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
+index bd3f7d492af2b..28284a5aa07a9 100755
+--- a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
++++ b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d_ipv6.sh
+@@ -695,7 +695,7 @@ vxlan_encapped_ping_do()
+ 		    )"6"$(			  : IP version
+ 		    )"$inner_tos"$(               : Traffic class
+ 		    )"0:00:00:"$(                 : Flow label
+-		    )"00:08:"$(                   : Payload length
++		    )"00:03:"$(                   : Payload length
+ 		    )"3a:"$(                      : Next header
+ 		    )"04:"$(                      : Hop limit
+ 		    )"$saddr:"$(		  : IP saddr
 -- 
 2.51.0
 
