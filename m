@@ -1,154 +1,119 @@
-Received: from ixit.cz (ixit.cz [185.100.197.86])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF8833ADAE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:26:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF6939449C
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 22:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772303178; cv=none; b=a27dOsJOWtTVH9k9TJ7RGRDq9KduitRgXWG3YfshDUBKYlZgPc+Dy1gPJQyKBkMxyb+7Z4BuvTXZzfLIXhTQlJX3608n6KrmXUWFZe5v2+ms74i9/51Hehx154qB4LlM327DkIZ5VJKw3NzZS3PVuBtSA51qpPBku6dra3H3sCw=
+	t=1772316842; cv=none; b=nbgi1TizwREPGqkdf01FEyda5PwmrsDY6aftCDIzFU9Lo64lZFH6uidyLPMM6nxST/sH/nvl6fipKJ2v0SULLo/dOjJTIX21RX2lK+uv6mHCbTWgCYVyjgYd5DS4vZm1qRrMqbT1iUagZb6jfIUxWr5ibSrr/qWLiOmzjvA7DBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772303178; c=relaxed/simple;
-	bh=DeuKsQADIduiFhEWLb5Buil112J2gV0XZ6sVTpbAiXA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HnbKR4D4hrXGM8UAjyeGB1ak/et7LSttfJR/uSXp4BW/ITsqqXp3Iqig0TLgCuFyZ3lYjSO6g1tz5XvWU2yQYV/uRb//BuL+wj/hFnQdiI0rYYptCNvZjvjsIrtv5Cw//S1BIX9NF6LuB7roPS5gOeYcrTqE1LKcP5qFYGT9gjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=DzVYHj1W; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+	s=arc-20240116; t=1772316842; c=relaxed/simple;
+	bh=YmaOwhLufLLr2rHqj3svb39rppAI7BngrthP8I4DUSE=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=N9tXTsG5v086fAMgnyZv6JDBSUZgZQ4kVoPpuTN+0AUVRNSjOED2JLJkclrNs/eZ4uQ7A3fOshzxsNAYTT7dhx/vGAR0laPaDvyYrHo6XW0hmMcLwPro/MbFLnQl541bAXuUAVpJo1P93+KBlSvmD9dFZOTmQZhIPkQsn/6J9xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GwHx8FxT; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="DzVYHj1W"
-Received: from [IPV6:2a02:f000:10bd:e301::1d7] (unknown [IPv6:2a02:f000:10bd:e301::1d7])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 2DF435341338;
-	Sat, 28 Feb 2026 19:26:13 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1772303173;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=mY/gi8TiIyY8WemTq48GaY4tlatADzOZboibwiW/jao=;
-	b=DzVYHj1WgIwn3EwhunqzBkCI1coi45Xo379LexQSNXEnUkgaA5OglRd98Ps3hAspbqGmQB
-	zmklxjZe33ioSvqKFcrrfmjSCTkr2yU9li8tbhezUoNxaflQAeSf9TTVGydyMlLPxMPym2
-	VVnKaybmWOHB0MGxrOoDxTxFX/KpO78=
-Message-ID: <d5d7ea25-fe49-48e2-9b49-31c03d7e7911@ixit.cz>
-Date: Sat, 28 Feb 2026 19:26:13 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GwHx8FxT"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8c9f6b78ca4so435037485a.0
+        for <patches@lists.linux.dev>; Sat, 28 Feb 2026 14:14:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772316840; x=1772921640; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
+         :message-id:from:references:cc:to:subject:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nr1P/0C2nV683CJOfzLd7UkpSzK419t46a/I54eghlk=;
+        b=GwHx8FxTAfUGvxT1XvmYurjc4F5gDXwTajPeI+XPDNy3aVbQixXsQxI3uM4a2ejnaQ
+         6LBgBWiIc6kWr6Ohbfc0lzLEz0fWKkrYlOdlRXoik3u8XKyl0c9Cj9SHgH8e43/zaz+q
+         LjQbTY8B0KBImaasvtoTtkaCzRlrU89dwmUgMtrMCF/gLPeMOftjH16SgnAUXe+F4GfM
+         DivzUN/LRpTRMD6vJjF0/bSHoLbDZVufnh04gpfiO+6hKKQny7pXKVdAKTkn4H3iUgw0
+         pasbC0sHJ0Gzh/+8DkKtUwJDU8IuqzxL83Y6RjPr44GejVQXNy3JqwhTbXOzp6fTJG1x
+         3+0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772316840; x=1772921640;
+        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
+         :message-id:from:references:cc:to:subject:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nr1P/0C2nV683CJOfzLd7UkpSzK419t46a/I54eghlk=;
+        b=ez0m9r8QdpK6w4xtK+A2MyKTGHF+GH6RQr/I5xMIUTC5/KNOnoSGBze+yy2Gmrx2BA
+         Uuf/0fYGoTr49/5MAOU+D7RReE0wPjYlPaBRCNzvy4nvb4mngGSVs7gtSDx+b+ccxcRH
+         UAoiiBgTsl/HLQb1ky66T00aauJDWCCaNCyYw3wX3vJ587C4isZOcyCtpFKjGouTagGw
+         LI9UEODCBuVDPAWU7mk9xGg7vWBSfXkTQolN62pbmpw40FbLIBZemE8N2Cqa5eALhG5u
+         kCpugIROTuidSAZIUQUYiPW5j5yfUhgLIdIxhsRWGXap6h0TiQxr1lZ9RxyYThvm6C5B
+         ALPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX8/VVzigQ2rm4APcyxHx0lj+bB+2p3vhM6e1wreYD5WCQjv1QevFqW6YJ7Wj0yI6Ah8qxVOBkK@lists.linux.dev
+X-Gm-Message-State: AOJu0YxDMxFzLKOwlgdByf2eYum+LdNdMLs/nuxGnWu8aU5O5vVBYm1w
+	uJ4hVHkoydGKFcxNUAT3vAmcPNpEKQmobOwfr16R8xhmLq0PJm6jGFE=
+X-Gm-Gg: ATEYQzw2Jw88dXlQ9F6sZEmtJBsHtrCvyIlrJOgwn87+A+u+UWvO+8t+ZC4pHjte6zJ
+	PmTnjPTaAuzNeYHVaFj6VT9ks6mDkAGM9MPoYC+yVJJjX68dF63eolCy9GEiOytiQIrzE7IpTem
+	ijfO6Cw7PxTa7yXFLmsm0BD+ZG88wCOfFuZOoHB0mTcnJrWZRg0FJMk0qix0kAucCmKT5M7jS7W
+	MH2QSrfOExHRzAf7eh5Cg3X3Y2oYi0sYBYgaeWjCOUCgGU2RLGA2W1gi0GnH1chaTiCCzaKijfn
+	eiid/hnRcbiFRfMigNbNfst3hm+pGjmmsLyIgX28lVOpeIiCD6WcTGfYttwhnLgDwYJLgILLlSV
+	0yEJbr3G6ok9X1Y1GyffFckRt8vVWe4Kx64dt6qxg87da/hTCMOKVX2VDA2RxGCrRe7OzjW6OG1
+	bsv+VvrUd6xHp7+IM+O/9YazFR7I7yfL2X4aRfnBMlwN53r+3YRUg=
+X-Received: by 2002:a05:620a:7118:b0:8cb:4059:a90d with SMTP id af79cd13be357-8cbc8e50bf3mr964752285a.38.1772316839779;
+        Sat, 28 Feb 2026 14:13:59 -0800 (PST)
+Received: from [120.7.1.23] (135-23-93-252.cpe.pppoe.ca. [135.23.93.252])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf68a0fbsm778891485a.22.2026.02.28.14.13.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 28 Feb 2026 14:13:59 -0800 (PST)
+Subject: Re: [PATCH 6.19 000/844] 6.19.6-rc1 review
+To: Ronald Warsow <rwarsow@gmx.de>, Sasha Levin <sashal@kernel.org>,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260228173244.1509663-1-sashal@kernel.org>
+ <601576c7-970a-4e9d-af5e-c818740be8e8@gmx.de>
+From: Woody Suwalski <terraluna977@gmail.com>
+Message-ID: <879487cc-c667-8cc6-4775-02c7de3b8c27@gmail.com>
+Date: Sat, 28 Feb 2026 17:13:59 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101
+ Firefox/128.0 SeaMonkey/2.53.23
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 037/164] arm64: dts: qcom: sdm845-oneplus: Don't keep
- panel regulator always on
-To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev
-Cc: Casey Connolly <casey.connolly@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>
-References: <20260228181505.1600663-1-sashal@kernel.org>
- <20260228181505.1600663-37-sashal@kernel.org>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20260228181505.1600663-37-sashal@kernel.org>
+In-Reply-To: <601576c7-970a-4e9d-af5e-c818740be8e8@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Just as addition to the 6.12 explanation, currently 6.6 or any older 
-isn't supported by any distribution supporting this phone, so it's 
-slightly irrelevant here, but same rules as for 6.12 should apply here, 
-thus please do not apply this patch. See message bellow
+Ronald Warsow wrote:
+> On 28.02.26 18:18, Sasha Levin wrote:
+>>
+>> This is the start of the stable review cycle for the 6.19.6 release.
+>> There are 844 patches in this series, all will be posted as a response
+>> to this one.  If anyone has any issues with these being applied, please
+>> let me know.
+>>
+>> Responses should be made by Mon Mar  2 05:32:25 PM UTC 2026.
+>> Anything received after that time might be too late.
+>>
+>> The whole patch series can be found in one patch at:
+>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-6.19.y&id2=v6.19.5
+>> or in the git tree and branch at:
+>> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git 
+>> linux-6.19.y
+>> and the diffstat can be found below.
+>>
+>
+> It would be nice to have a download link to an patch-*.gz what Greg 
+> usually provides.
+>
+> ron
+>
+I second this request. Trying to setup a build for  5.10.252-rc1 was 
+tricky...
+We need something similar to
 
-=== 6.12 mail
+https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.251-rc1.gz
 
-I believe this patch SHOULDN'T be backported. The 6.12 trees for sdm845 
-following stable releases may have drivers and setup, which may not be 
-able to work with regulators properly. This got fixed later with fixes 
-to sofef00 and introduction of s6e3fc2x01 driver with proper regulator 
-handling.
-
-The clean (without additional patches) 6.12 stable won't work anyway 
-here, so it would be meaningless add this patch.
-
-Thanks
-David
-
-On 28/02/2026 19:12, Sasha Levin wrote:
-> From: Casey Connolly <casey.connolly@linaro.org>
-> 
-> [ Upstream commit 45d1f42d3e84b5880cf9fab1eb24a7818320eeb7 ]
-> 
-> The panel regulator doesn't need to be always on, so remove this
-> property.
-> 
-> Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
-> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Link: https://lore.kernel.org/r/20251118-dts-oneplus-regulators-v2-2-3e67cea1e4e7@ixit.cz
-> Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->   arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> index 66b86dd292c8a..1a1e344f870ef 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> @@ -232,7 +232,6 @@ vreg_l14a_1p88: ldo14 {
->   			regulator-min-microvolt = <1800000>;
->   			regulator-max-microvolt = <1800000>;
->   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-always-on;
->   		};
->   
->   		vreg_l17a_1p3: ldo17 {
-
--- 
-David Heidelberg
+Thanks, Woody
 
