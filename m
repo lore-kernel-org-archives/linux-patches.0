@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D16934250D
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EED3451A7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301859; cv=none; b=V9tW5EzXv5MXj0dFj1sH/eq8tz58WvKLZieTI4DgB/M+n/CVAazRg/qA6oLyhHaah8DPCj9YrphZNhWRtOPRpznFWpt5pnRm88pVUbhwlVwNNJKYRTOLOKsyGtwcf+GtFbMxos9RWTv9WghEQwrxT/fKccYRmMBoIFDiXmpd4j0=
+	t=1772301860; cv=none; b=ZVtr/29MHEfQGZr9X83yuxTbKZMX6JEeoTWuTp/WCRa8ZSeEs0A99GKGGWp3K/u3XVEbxRgSh1AJk9NUw54oJajshWAc8JZ/VnTN8YaUu67MzAcmVClKLXEWnZ0WRmt+62aGzlZoTSu3vYpBdFh2dzCzFJaN1t2EoCqO6GOkK4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301859; c=relaxed/simple;
-	bh=NF0VMveHceZSqbi/1egEnpXF5ixWijFmhmexK3AHvOQ=;
+	s=arc-20240116; t=1772301860; c=relaxed/simple;
+	bh=CA7unEwoEiZLDQPUVcQ89ZbQfiUu2zN2z3Gz+e208XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFrxrCQZMjEajp9rkkFv2bdYUqfi3UJgZgonl3MP89C8Gt+i6EEyXVuEc1oCEmDPwpATZ6lOQl/MPf8jW35Xp6SfIAPFC2tf5xyZHp7lx0g8s4w6yIjmnPUqpb7h7JTlqEfOz9ic2UUsrrTZCzapS3Zx5P4vDDNBgA6Kn2lnl+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hSG2+4wB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LugQ3F4WHTgkYZNumeJj8kc0zWgHVr9j8iTCHJaK1dY4HrHN7wmKmoZcZtH4tW8MQDX3JP/azew20nghv2pggkayduR9ZLpfRwhE7hl9VWtsvJoA4M0f50f9t0uG3JUIUUjwNCgg2vQxHrjtBIFDfmW8fAO8jEtk06ndXnBEllQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bGUKzwo8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hSG2+4wB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0CAC19423;
-	Sat, 28 Feb 2026 18:04:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bGUKzwo8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3731C19423;
+	Sat, 28 Feb 2026 18:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301859;
-	bh=NF0VMveHceZSqbi/1egEnpXF5ixWijFmhmexK3AHvOQ=;
+	s=k20201202; t=1772301860;
+	bh=CA7unEwoEiZLDQPUVcQ89ZbQfiUu2zN2z3Gz+e208XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSG2+4wBU188eyJHuJCIWx4+10JuvzSciDQ8VTD/ffwmgGXueYIEE+NYCrDtRYGdt
-	 71nvL2BxwXulMD0gabCMC42zta4nPhRXCvhZvxdhZ20j7IFYatu5N9aaU85JEUeM9U
-	 yAi3gsTcBHHDzzTOR2noIhJfpxgI5Y3eK53GTmw83ObOzr4ExkEHMRYspDowrq09XF
-	 EwDB8DV8iQb5iusNo81CYpZ+QSwPtgitD/aueRt2Px6p6CoqlxYvT7dSD2NhQBj+gt
-	 O31H/n/KIchaXK5PKJuvW2MiSez8gUlcY1V6Q/wV8EzMqTeeNIbrGhk/Zte8WOMGuZ
-	 k3qAim7R5hXmg==
+	b=bGUKzwo8H2MyGrqRKCEY7HemB/ITjELGMdiKhlsC8Oes0cxsiIpZfJBgCRH8JhBOQ
+	 EDTdkO4bMV5pe30gj9mu9X7G6urCGJLjbV349Vtsjs/O/F8djRmFmKGh9G4gbRgQyg
+	 cLo3FGg+iUcdPLxCqUr2BfLIaof0EOn7WVWwL0Gn0cbPDYMkUx7JC+CecTjmBAQsG4
+	 /j4WZjCOyE5C4Y1Bwua1ioO32aOeTjB0nlPji3B4j25ewn0wjMTBJz9pjQirOPogdO
+	 aShwXbZ5Wm/zisxz8BnCiHwwNE8y6w4w0aahb2N9mDlUJNWDLgEf84NCDxFHq3rbuf
+	 jUJa09AYllltQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Li Zhijian <lizhijian@fujitsu.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
+Cc: Chuck Lever <chuck.lever@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 281/385] RDMA/rxe: Fix race condition in QP timer handlers
-Date: Sat, 28 Feb 2026 12:58:23 -0500
-Message-ID: <20260228180011.1568201-281-sashal@kernel.org>
+Subject: [PATCH 6.12 282/385] RDMA/core: add rdma_rw_max_sge() helper for SQ sizing
+Date: Sat, 28 Feb 2026 12:58:24 -0500
+Message-ID: <20260228180011.1568201-282-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,114 +48,157 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 87bf646921430e303176edc4eb07c30160361b73 ]
+[ Upstream commit afcae7d7b8a278a6c29e064f99e5bafd4ac1fb37 ]
 
-I encontered the following warning:
- WARNING: drivers/infiniband/sw/rxe/rxe_task.c:249 at rxe_sched_task+0x1c8/0x238 [rdma_rxe], CPU#0: swapper/0/0
-...
-  libsha1 [last unloaded: ip6_udp_tunnel]
- CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G         C          6.19.0-rc5-64k-v8+ #37 PREEMPT
- Tainted: [C]=CRAP
- Hardware name: Raspberry Pi 4 Model B Rev 1.2
- Call trace:
-  rxe_sched_task+0x1c8/0x238 [rdma_rxe] (P)
-  retransmit_timer+0x130/0x188 [rdma_rxe]
-  call_timer_fn+0x68/0x4d0
-  __run_timers+0x630/0x888
-...
- WARNING: drivers/infiniband/sw/rxe/rxe_task.c:38 at rxe_sched_task+0x1c0/0x238 [rdma_rxe], CPU#0: swapper/0/0
-...
- WARNING: drivers/infiniband/sw/rxe/rxe_task.c:111 at do_work+0x488/0x5c8 [rdma_rxe], CPU#3: kworker/u17:4/93400
-...
- refcount_t: underflow; use-after-free.
- WARNING: lib/refcount.c:28 at refcount_warn_saturate+0x138/0x1a0, CPU#3: kworker/u17:4/93400
+svc_rdma_accept() computes sc_sq_depth as the sum of rq_depth and the
+number of rdma_rw contexts (ctxts). This value is used to allocate the
+Send CQ and to initialize the sc_sq_avail credit pool.
 
-The issue is caused by a race condition between retransmit_timer() and
-rxe_destroy_qp, leading to the Queue Pair's (QP) reference count dropping
-to zero during timer handler execution.
+However, when the device uses memory registration for RDMA operations,
+rdma_rw_init_qp() inflates the QP's max_send_wr by a factor of three
+per context to account for REG and INV work requests. The Send CQ and
+credit pool remain sized for only one work request per context,
+causing Send Queue exhaustion under heavy NFS WRITE workloads.
 
-It seems this warning is harmless because rxe_qp_do_cleanup() will flush
-all pending timers and requests.
+Introduce rdma_rw_max_sge() to compute the actual number of Send Queue
+entries required for a given number of rdma_rw contexts. Upper layer
+protocols call this helper before creating a Queue Pair so that their
+Send CQs and credit accounting match the QP's true capacity.
 
-Example of flow causing the issue:
+Update svc_rdma_accept() to use rdma_rw_max_sge() when computing
+sc_sq_depth, ensuring the credit pool reflects the work requests
+that rdma_rw_init_qp() will reserve.
 
-CPU0                                   CPU1
-retransmit_timer() {
-    spin_lock_irqsave
-                           rxe_destroy_qp()
-                            __rxe_cleanup()
-                              __rxe_put() // qp->ref_count decrease to 0
-                            rxe_qp_do_cleanup() {
-    if (qp->valid) {
-        rxe_sched_task() {
-            WARN_ON(rxe_read(task->qp) <= 0);
-        }
-    }
-    spin_unlock_irqrestore
-}
-                              spin_lock_irqsave
-                              qp->valid = 0
-                              spin_unlock_irqrestore
-                            }
-
-Ensure the QP's reference count is maintained and its validity is checked
-within the timer callbacks by adding calls to rxe_get(qp) and corresponding
-rxe_put(qp) after use.
-
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Fixes: d94671632572 ("RDMA/rxe: Rewrite rxe_task.c")
-Link: https://patch.msgid.link/20260120074437.623018-1-lizhijian@fujitsu.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: 00bd1439f464 ("RDMA/rw: Support threshold for registration vs scattering to local pages")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260128005400.25147-5-cel@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_comp.c | 3 +++
- drivers/infiniband/sw/rxe/rxe_req.c  | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/infiniband/core/rw.c             | 53 +++++++++++++++++-------
+ include/rdma/rw.h                        |  2 +
+ net/sunrpc/xprtrdma/svc_rdma_transport.c |  8 +++-
+ 3 files changed, 46 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_comp.c b/drivers/infiniband/sw/rxe/rxe_comp.c
-index d48af21807458..e02c5df0bef14 100644
---- a/drivers/infiniband/sw/rxe/rxe_comp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_comp.c
-@@ -119,12 +119,15 @@ void retransmit_timer(struct timer_list *t)
- 
- 	rxe_dbg_qp(qp, "retransmit timer fired\n");
- 
-+	if (!rxe_get(qp))
-+		return;
- 	spin_lock_irqsave(&qp->state_lock, flags);
- 	if (qp->valid) {
- 		qp->comp.timeout = 1;
- 		rxe_sched_task(&qp->send_task);
- 	}
- 	spin_unlock_irqrestore(&qp->state_lock, flags);
-+	rxe_put(qp);
+diff --git a/drivers/infiniband/core/rw.c b/drivers/infiniband/core/rw.c
+index 6354ddf2a274c..2522ff1cc462c 100644
+--- a/drivers/infiniband/core/rw.c
++++ b/drivers/infiniband/core/rw.c
+@@ -651,34 +651,57 @@ unsigned int rdma_rw_mr_factor(struct ib_device *device, u32 port_num,
  }
+ EXPORT_SYMBOL(rdma_rw_mr_factor);
  
- void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb)
-diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
-index 87a02f0deb000..d08ebb048cb0f 100644
---- a/drivers/infiniband/sw/rxe/rxe_req.c
-+++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -103,6 +103,8 @@ void rnr_nak_timer(struct timer_list *t)
++/**
++ * rdma_rw_max_send_wr - compute max Send WRs needed for RDMA R/W contexts
++ * @dev: RDMA device
++ * @port_num: port number
++ * @max_rdma_ctxs: number of rdma_rw_ctx structures
++ * @create_flags: QP create flags (pass IB_QP_CREATE_INTEGRITY_EN if
++ *                data integrity will be enabled on the QP)
++ *
++ * Returns the total number of Send Queue entries needed for
++ * @max_rdma_ctxs. The result accounts for memory registration and
++ * invalidation work requests when the device requires them.
++ *
++ * ULPs use this to size Send Queues and Send CQs before creating a
++ * Queue Pair.
++ */
++unsigned int rdma_rw_max_send_wr(struct ib_device *dev, u32 port_num,
++				 unsigned int max_rdma_ctxs, u32 create_flags)
++{
++	unsigned int factor = 1;
++	unsigned int result;
++
++	if (create_flags & IB_QP_CREATE_INTEGRITY_EN ||
++	    rdma_rw_can_use_mr(dev, port_num))
++		factor += 2;	/* reg + inv */
++
++	if (check_mul_overflow(factor, max_rdma_ctxs, &result))
++		return UINT_MAX;
++	return result;
++}
++EXPORT_SYMBOL(rdma_rw_max_send_wr);
++
+ void rdma_rw_init_qp(struct ib_device *dev, struct ib_qp_init_attr *attr)
+ {
+-	u32 factor;
++	unsigned int factor = 1;
  
- 	rxe_dbg_qp(qp, "nak timer fired\n");
+ 	WARN_ON_ONCE(attr->port_num == 0);
  
-+	if (!rxe_get(qp))
-+		return;
- 	spin_lock_irqsave(&qp->state_lock, flags);
- 	if (qp->valid) {
- 		/* request a send queue retry */
-@@ -111,6 +113,7 @@ void rnr_nak_timer(struct timer_list *t)
- 		rxe_sched_task(&qp->send_task);
+ 	/*
+-	 * Each context needs at least one RDMA READ or WRITE WR.
+-	 *
+-	 * For some hardware we might need more, eventually we should ask the
+-	 * HCA driver for a multiplier here.
+-	 */
+-	factor = 1;
+-
+-	/*
+-	 * If the device needs MRs to perform RDMA READ or WRITE operations,
+-	 * we'll need two additional MRs for the registrations and the
+-	 * invalidation.
++	 * If the device uses MRs to perform RDMA READ or WRITE operations,
++	 * or if data integrity is enabled, account for registration and
++	 * invalidation work requests.
+ 	 */
+ 	if (attr->create_flags & IB_QP_CREATE_INTEGRITY_EN ||
+ 	    rdma_rw_can_use_mr(dev, attr->port_num))
+-		factor += 2;	/* inv + reg */
++		factor += 2;	/* reg + inv */
+ 
+ 	attr->cap.max_send_wr += factor * attr->cap.max_rdma_ctxs;
+ 
+ 	/*
+-	 * But maybe we were just too high in the sky and the device doesn't
+-	 * even support all we need, and we'll have to live with what we get..
++	 * The device might not support all we need, and we'll have to
++	 * live with what we get.
+ 	 */
+ 	attr->cap.max_send_wr =
+ 		min_t(u32, attr->cap.max_send_wr, dev->attrs.max_qp_wr);
+diff --git a/include/rdma/rw.h b/include/rdma/rw.h
+index d606cac482338..9a8f4b76ce588 100644
+--- a/include/rdma/rw.h
++++ b/include/rdma/rw.h
+@@ -66,6 +66,8 @@ int rdma_rw_ctx_post(struct rdma_rw_ctx *ctx, struct ib_qp *qp, u32 port_num,
+ 
+ unsigned int rdma_rw_mr_factor(struct ib_device *device, u32 port_num,
+ 		unsigned int maxpages);
++unsigned int rdma_rw_max_send_wr(struct ib_device *dev, u32 port_num,
++		unsigned int max_rdma_ctxs, u32 create_flags);
+ void rdma_rw_init_qp(struct ib_device *dev, struct ib_qp_init_attr *attr);
+ int rdma_rw_init_mrs(struct ib_qp *qp, struct ib_qp_init_attr *attr);
+ void rdma_rw_cleanup_mrs(struct ib_qp *qp);
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+index 3d7f1413df023..12857381e8610 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -462,7 +462,10 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 		newxprt->sc_max_bc_requests = 2;
  	}
- 	spin_unlock_irqrestore(&qp->state_lock, flags);
-+	rxe_put(qp);
- }
  
- static void req_check_sq_drain_done(struct rxe_qp *qp)
+-	/* Arbitrary estimate of the needed number of rdma_rw contexts.
++	/* Estimate the needed number of rdma_rw contexts. The maximum
++	 * Read and Write chunks have one segment each. Each request
++	 * can involve one Read chunk and either a Write chunk or Reply
++	 * chunk; thus a factor of three.
+ 	 */
+ 	maxpayload = min(xprt->xpt_server->sv_max_payload,
+ 			 RPCSVC_MAXPAYLOAD_RDMA);
+@@ -470,7 +473,8 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 		rdma_rw_mr_factor(dev, newxprt->sc_port_num,
+ 				  maxpayload >> PAGE_SHIFT);
+ 
+-	newxprt->sc_sq_depth = rq_depth + ctxts;
++	newxprt->sc_sq_depth = rq_depth +
++		rdma_rw_max_send_wr(dev, newxprt->sc_port_num, ctxts, 0);
+ 	if (newxprt->sc_sq_depth > dev->attrs.max_qp_wr)
+ 		newxprt->sc_sq_depth = dev->attrs.max_qp_wr;
+ 	atomic_set(&newxprt->sc_sq_avail, newxprt->sc_sq_depth);
 -- 
 2.51.0
 
