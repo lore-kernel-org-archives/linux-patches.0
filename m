@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF72F344D9A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81C6344D9A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301698; cv=none; b=COJ9T17JxZTp8ljUouIr+BQpKo3pg1C9noOPoMaQDe7A51yQRt3BMZa+gZOVRMXyVbviIjmGShbv0ESC+vljcpiUuH+hVZNeml6qcXdJvvQ1GHa3EhvixPHiBKqJOwT8Utazfot2y7xzh1p9w+kcw+6VKxbDZorAAo3wXfhESJM=
+	t=1772301699; cv=none; b=rwo4Uga3cVjHyHWafo0HQaXaNb7iPzegrAhF01fwn+KfKWs+Dopt/fcb41eqBrmyBkVqfxWENzI3zb5sVLwwX7lWGJ2ce2Qat5nvf02E983pzgfz/g9V4RRAidzNf9aBVwScvWuvoXH2PKC2jtyLR4iHjNT0d58HJ9E3w0KeYXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301698; c=relaxed/simple;
-	bh=qjnaR7bSYY7K4Ij8tTONdCZjgXAvSowkI6az04epq5g=;
+	s=arc-20240116; t=1772301699; c=relaxed/simple;
+	bh=VGkxdHyF1Q5NH6/81pzxeWIA/HdtOp2cxk/TbFCvoMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZXVDnkhUruON/EwgloPOkDdGgguClUGQ1BSYQYzo+BYUMJETXdRlJoyx3tIbN9R0T5KjjfwjespT6FYad3Jp97zEKXr1qGBjTzJB0mVR6q3LqMQNBbkngHi7ki7Res07cWOhDF1EDVVLzN34ObKd9yTLkBTtrWcMc+0x/2IWHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fBb19Xkl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QAeLjbwFNMZFBcaX83Gn93NT2LqfoYeP2jMO/AS/TsiKernd4u/mMIbrdFkLDcdrdm4V+QCsgysyg6YNNUaTQfmkYDakWKD2X6zPkX5zqo9mQfqrJVsv3FfkuNnqG2T46etohcaAHLGyV/VQmauq5EmDznZP/ZsvOUhyyWdRyI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YyEHuluj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fBb19Xkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3963DC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YyEHuluj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129ECC116D0;
 	Sat, 28 Feb 2026 18:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301698;
-	bh=qjnaR7bSYY7K4Ij8tTONdCZjgXAvSowkI6az04epq5g=;
+	s=k20201202; t=1772301699;
+	bh=VGkxdHyF1Q5NH6/81pzxeWIA/HdtOp2cxk/TbFCvoMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBb19Xkl+shPez4RpNpWi575V/2q8c0lFBvQnw9INN0APumLVDwcBXNeNA7tcT71h
-	 6rNdOr5cueJwcLQQz43N7nIoV+SeIGqDAp11RAtHKIquzAbI/pQvNZzKHwqCdk7tXw
-	 n3B/IljIJz5Tj9lP8OXPl/coBs08PG5rglhP0oOmE3wxcW4xwqGlf9w56Fjh3jvCag
-	 JWVHt0tOP0BeYk5Z2Ief7uk19lYbtEv3HKcIdqaTZG1ynL9hewJLrov6ntz0XLx4uZ
-	 LM9KLvYh0ScYBJ/rHnpp7yI36sOO37cn0205kliuGM5dhVChxjV3PreYYXtCRE7PXb
-	 lqnmxPhPbmxIQ==
+	b=YyEHulujLZQ4aGQIJsWperVPkk1PyS6AA3Tjazj09SgaAZ/q9c10gnpwt2+qUE9BA
+	 pZKdK1+NZIMNvqJ4vdbemy/gDWsYEta92yZWnmupW0J5xlyLVNWzglSzlRPoJ+hL9Z
+	 XxSLidHgr9aIUOR+AeeK7vjH21q/TzJ+kqWgyPCK8sMDabFHR+UpNqrGXvxPpY3JkH
+	 fP6ZcsVD2No3EJv1we4tGUc7r6ir0HzRfV4AnJTnbE09ToTxhxNzMcyUAcko/3bi9m
+	 uTyZiUuEcqVT8qFQtg22JNwxj4Q5FiTt1c4G8d2tIQ9/RkbGlD6fsi3BSAtlK2q5V/
+	 RK6kDCjQ564Yw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Dan Carpenter <dan.carpenter@linaro.org>,
+	Tony Luck <tony.luck@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 091/385] soc: qcom: smem: handle ENOMEM error during probe
-Date: Sat, 28 Feb 2026 12:55:13 -0500
-Message-ID: <20260228180011.1568201-91-sashal@kernel.org>
+Subject: [PATCH 6.12 092/385] EDAC/i5000: Fix snprintf() size calculation in calculate_dimm_size()
+Date: Sat, 28 Feb 2026 12:55:14 -0500
+Message-ID: <20260228180011.1568201-92-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,37 +48,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0fe01a7955f4fef97e7cc6d14bfc5931c660402b ]
+[ Upstream commit 7b5c7e83ac405ff9ecbdd92b37a477f4288f8814 ]
 
-Fail the driver probe if the region can't be mapped
+The snprintf() can't really overflow because we're writing a max of 42
+bytes to a PAGE_SIZE buffer.  But the limit calculation doesn't take
+the first 11 bytes that we wrote into consideration so the limit is
+not correct.  Just fix it for correctness even though it doesn't
+affect runtime.
 
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-Fixes: 20bb6c9de1b7 ("soc: qcom: smem: map only partitions used by local HOST")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251209074610.3751781-1-jorge.ramirez@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 64e1fdaf55d6 ("i5000_edac: Fix the logic that retrieves memory information")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Link: https://patch.msgid.link/07cd652c51e77aad5a8350e1a7cd9407e5bbe373.1765290801.git.dan.carpenter@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/smem.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/edac/i5000_edac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-index 170f88ce0e50e..493e218c5fd4e 100644
---- a/drivers/soc/qcom/smem.c
-+++ b/drivers/soc/qcom/smem.c
-@@ -1211,7 +1211,9 @@ static int qcom_smem_probe(struct platform_device *pdev)
- 		smem->item_count = qcom_smem_get_item_count(smem);
- 		break;
- 	case SMEM_GLOBAL_HEAP_VERSION:
--		qcom_smem_map_global(smem, size);
-+		ret = qcom_smem_map_global(smem, size);
-+		if (ret < 0)
-+			return ret;
- 		smem->item_count = SMEM_ITEM_COUNT;
- 		break;
- 	default:
+diff --git a/drivers/edac/i5000_edac.c b/drivers/edac/i5000_edac.c
+index 4b5a71f8739d9..8c6a291e01f6a 100644
+--- a/drivers/edac/i5000_edac.c
++++ b/drivers/edac/i5000_edac.c
+@@ -1111,6 +1111,7 @@ static void calculate_dimm_size(struct i5000_pvt *pvt)
+ 
+ 	n = snprintf(p, space, "           ");
+ 	p += n;
++	space -= n;
+ 	for (branch = 0; branch < MAX_BRANCHES; branch++) {
+ 		n = snprintf(p, space, "       branch %d       | ", branch);
+ 		p += n;
 -- 
 2.51.0
 
