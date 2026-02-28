@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEC533F38A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACA8421A16
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301189; cv=none; b=i3HmFxzfBYvdOxZl6NIdfXW97S36y9Yu2UIG879h58B8KcctU+7+TY6NfkFXp5vgDgKXEy+iY7/OEVKd4Z2GpM8+acOmf/rnIJ/aXDWoqB10KHlCNmWDykuDU+JsmtYclXClG61pht5ekj2z5bfOqPzBPsbUO0EbYwTYadc1/Co=
+	t=1772301190; cv=none; b=j8Pc1rK8RSzFx2XSGZNxAbqhvCsphlzqBsw505GRTpkIQZK+OXEabCaJ8E7bC79p7MbcY+iUIPnyYk2rb0UPrekkqNeKojBH2et1oKotl+Qb4Td/eE0rMyWR1RjOJLfFfivJHT5V8taEVoEc69HIPI34xXkRAORa2lGbCN6EiMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301189; c=relaxed/simple;
-	bh=JDedQdr+8yaAWoZz/IMw+sWnA2zqUVdG0nqQvdXGazM=;
+	s=arc-20240116; t=1772301190; c=relaxed/simple;
+	bh=nEBHn/E2vI88MIJ7nIqaANfuIDHotYdC5cPu7qAjxCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXnFvlnzimAZqdAslM1ZwF1UuihWvHEEa1ISbiO4DEBtfbP/L+RVY1M9j0GJRocagzNrL8zWpjoUvwrKXQeY/uTdWUW4GfCaisP2tXdvTvSm/r8Vz3BAT0hPQIsGURsKam2+kFSZ1IT6BwN322TW57OZTANYYHwotT3SWGWpRUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tYZCwqaK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/i7xXSodPBeqjCjVtFWT9Y+tvdzSI6niLxleJz64iB9SiSsO0d9FkxLO3R95UTYIfVnkamjjBYc/R5ubeXxtMNaKrK6XYM3A+PsB0z+QPDLDE8+PJcbmGxk2h0YJ1JnaNGj7eKFs6+V83bntpcRPSTbtcim7kxZ3wH2bagotKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BllrImbV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tYZCwqaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B2CC2BC9E;
-	Sat, 28 Feb 2026 17:53:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BllrImbV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EB9C19423;
+	Sat, 28 Feb 2026 17:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301189;
-	bh=JDedQdr+8yaAWoZz/IMw+sWnA2zqUVdG0nqQvdXGazM=;
+	s=k20201202; t=1772301190;
+	bh=nEBHn/E2vI88MIJ7nIqaANfuIDHotYdC5cPu7qAjxCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYZCwqaKq71Hg5v5AHi3n1fffmyHbrde07DzLyiMqrOjuGLApr+tFlJcE5eEq0gK3
-	 OWYkJXYwrrEVO5yS5fLRlZup8PLmkDKnrzAboG+lf0VZUNzCKReQrCVhlb6hYvCpQf
-	 nz2bLPUbx62xNxGZNBIsR4VHutXhpfquEWqFCLQ4cRyO5uYt1d0Y9BToPw49N9mVca
-	 0w5tNMEDvdBwdDgiuIknAzTL+Z93nWZr/dnkY2ZeDEAJ9NXGlcp/HF3wiM9q0fLTIr
-	 +H+v164SEWZ8R+d1eZ3Q8M+7yNiKk0/hDvE4g7RZ5KT4xt42ylcny84GGxlc2YII56
-	 5jB3IV2M8pFjw==
+	b=BllrImbVsMff3OCklIezNs1Deu744ecUsZHKzAnNEwZLKeRK/P45FO9DoWi0VLnTd
+	 zY7TEtC3wgkPco5ZasaMaqy+7ab3XXczQJ6rhnXeDZlY2byhLrUMv68xtJ2DA4FjDw
+	 wvhb7eJHAH/HBk+i2lBAsS/+kqqWJPtZI/ht55z1Ry6HJJueIMz6PgjWC3OKrOM3VP
+	 Tfje4QhHye3XnnX3gnu4CZTahoN+v2cMkV1a1TJpgNSzHem0eajiid4GgUAdfH1a9n
+	 YCZWBb11x3tdqlyJuIGXTC5h5c/3Zc4ljBswqGwCtFwMBKVeFsqlv0mKZDiov/Hycg
+	 2ZB/rAUtqjHkA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Jaehun Gou <p22gone@gmail.com>,
@@ -33,9 +33,9 @@ Cc: Jaehun Gou <p22gone@gmail.com>,
 	Jihoon Kwon <kjh010315@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 359/752] fs: ntfs3: fix infinite loop in attr_load_runs_range on inconsistent metadata
-Date: Sat, 28 Feb 2026 12:41:10 -0500
-Message-ID: <20260228174750.1542406-359-sashal@kernel.org>
+Subject: [PATCH 6.18 360/752] fs: ntfs3: fix infinite loop triggered by zero-sized ATTR_LIST
+Date: Sat, 28 Feb 2026 12:41:11 -0500
+Message-ID: <20260228174750.1542406-360-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,30 +51,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Jaehun Gou <p22gone@gmail.com>
 
-[ Upstream commit 4b90f16e4bb5607fb35e7802eb67874038da4640 ]
+[ Upstream commit 06909b2549d631a47fcda249d34be26f7ca1711d ]
 
 We found an infinite loop bug in the ntfs3 file system that can lead to a
 Denial-of-Service (DoS) condition.
 
-A malformed NTFS image can cause an infinite loop when an attribute header
-indicates an empty run list, while directory entries reference it as
-containing actual data. In NTFS, setting evcn=-1 with svcn=0 is a valid way
-to represent an empty run list, and run_unpack() correctly handles this by
-checking if evcn + 1 equals svcn and returning early without parsing any run
-data. However, this creates a problem when there is metadata inconsistency,
-where the attribute header claims to be empty (evcn=-1) but the caller
-expects to read actual data. When run_unpack() immediately returns success
-upon seeing this condition, it leaves the runs_tree uninitialized with
-run->runs as a NULL. The calling function attr_load_runs_range() assumes
-that a successful return means that the runs were loaded and sets clen to 0,
-expecting the next run_lookup_entry() call to succeed. Because runs_tree
-remains uninitialized, run_lookup_entry() continues to fail, and the loop
-increments vcn by zero (vcn += 0), leading to an infinite loop.
+A malformed NTFS image can cause an infinite loop when an ATTR_LIST attribute
+indicates a zero data size while the driver allocates memory for it.
 
-This patch adds a retry counter to detect when run_lookup_entry() fails
-consecutively after attr_load_runs_vcn(). If the run is still not found on
-the second attempt, it indicates corrupted metadata and returns -EINVAL,
-preventing the Denial-of-Service (DoS) vulnerability.
+When ntfs_load_attr_list() processes a resident ATTR_LIST with data_size set
+to zero, it still allocates memory because of al_aligned(0). This creates an
+inconsistent state where ni->attr_list.size is zero, but ni->attr_list.le is
+non-null. This causes ni_enum_attr_ex to incorrectly assume that no attribute
+list exists and enumerates only the primary MFT record. When it finds
+ATTR_LIST, the code reloads it and restarts the enumeration, repeating
+indefinitely. The mount operation never completes, hanging the kernel thread.
+
+This patch adds validation to ensure that data_size is non-zero before memory
+allocation. When a zero-sized ATTR_LIST is detected, the function returns
+-EINVAL, preventing a DoS vulnerability.
 
 Co-developed-by: Seunghun Han <kkamagui@gmail.com>
 Signed-off-by: Seunghun Han <kkamagui@gmail.com>
@@ -84,45 +79,36 @@ Signed-off-by: Jaehun Gou <p22gone@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/ntfs3/attrlist.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index eced9013a8818..f0ff85b7d76dc 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -1354,19 +1354,28 @@ int attr_load_runs_range(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 	CLST vcn;
- 	CLST vcn_last = (to - 1) >> cluster_bits;
- 	CLST lcn, clen;
--	int err;
-+	int err = 0;
-+	int retry = 0;
+diff --git a/fs/ntfs3/attrlist.c b/fs/ntfs3/attrlist.c
+index a4d74bed74fab..098bd7e8c3d64 100644
+--- a/fs/ntfs3/attrlist.c
++++ b/fs/ntfs3/attrlist.c
+@@ -52,6 +52,11 @@ int ntfs_load_attr_list(struct ntfs_inode *ni, struct ATTRIB *attr)
  
- 	for (vcn = from >> cluster_bits; vcn <= vcn_last; vcn += clen) {
- 		if (!run_lookup_entry(run, vcn, &lcn, &clen, NULL)) {
-+			if (retry != 0) { /* Next run_lookup_entry(vcn) also failed. */
-+				err = -EINVAL;
-+				break;
-+			}
- 			err = attr_load_runs_vcn(ni, type, name, name_len, run,
- 						 vcn);
- 			if (err)
--				return err;
-+				break;
+ 	if (!attr->non_res) {
+ 		lsize = le32_to_cpu(attr->res.data_size);
++		if (!lsize) {
++			err = -EINVAL;
++			goto out;
++		}
 +
- 			clen = 0; /* Next run_lookup_entry(vcn) must be success. */
-+			retry++;
- 		}
-+		else
-+			retry = 0;
- 	}
+ 		/* attr is resident: lsize < record_size (1K or 4K) */
+ 		le = kvmalloc(al_aligned(lsize), GFP_KERNEL);
+ 		if (!le) {
+@@ -66,6 +71,10 @@ int ntfs_load_attr_list(struct ntfs_inode *ni, struct ATTRIB *attr)
+ 		u16 run_off = le16_to_cpu(attr->nres.run_off);
  
--	return 0;
-+	return err;
- }
+ 		lsize = le64_to_cpu(attr->nres.data_size);
++		if (!lsize) {
++			err = -EINVAL;
++			goto out;
++		}
  
- #ifdef CONFIG_NTFS3_LZX_XPRESS
+ 		run_init(&ni->attr_list.run);
+ 
 -- 
 2.51.0
 
