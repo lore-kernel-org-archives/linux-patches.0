@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFCE4611C5;
-	Sat, 28 Feb 2026 17:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC63A44CF37;
+	Sat, 28 Feb 2026 17:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301292; cv=none; b=f7afWOfhTLeV6czh0hKUUYe6gbXyqK7dqf/z248WAKgiahoPpM5VXePo0/0TZTKVxlcNJSpISJigft84OP700xeCxauRcuwj6cftREN8seQVmJQLs2inczqRg0Xz9HLzue5RdL2H+QSyfMsmcVTTKvht/JuXIRYa9NSFGcthCCw=
+	t=1772301293; cv=none; b=NGumTSZivYiIqgQ/AuETauhFLvhx/f7NMKi9ZX+iGNMrMF+l/Q4yJ1FIBwMboljSaLGSF4BJJu4XEW+Ze21Yu50KoKyFQJAQIuZ/zJ82Qz8DMV8uFdB9jCztdsZcWbsrfhpeUW9V0WfjJDBM9DdGPRneODYXNozcUbimswCNk/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301292; c=relaxed/simple;
-	bh=KepthDvKN58g5vtpAh7QeLEvGzLhyxX9qFM1TkOmNq4=;
+	s=arc-20240116; t=1772301293; c=relaxed/simple;
+	bh=bGfKsjF47pXSCxClllNTdVYvw3RznaUXJ4RcPFqd6Gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9iAlKdlOKkOP9rOCXQrr3h8c3lwh/4ojoFteDqJoPN1ANXDiydhUB9A8wby3tmivhj+1X6D7IJrj5n0u8AsKcAttgkUrRjEePnAIInrcRmgtD6uj5YNHb7tBeODqy8pl82bC8+iVNMyXRW9xykC3VLckPESgKIUmCPodyxPJpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LLkOBxvE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gHL1wHnYYa6sJpVN4vigEhMoZ5MYHRxciIZu6CKEufUkfNO0a9Xy+ySc+wymdreDp4A3hWBVk19M94lGls0Y73pV1w3Waosg40slCDY67PU/USorTfgLB+JjEPbHmdDHtqTOMM6IR5ManQzO2BXr3K7zRaBAocI/ZJkPyFm4yEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pb6efao6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LLkOBxvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2151EC19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pb6efao6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122C4C116D0;
 	Sat, 28 Feb 2026 17:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301291;
-	bh=KepthDvKN58g5vtpAh7QeLEvGzLhyxX9qFM1TkOmNq4=;
+	s=k20201202; t=1772301292;
+	bh=bGfKsjF47pXSCxClllNTdVYvw3RznaUXJ4RcPFqd6Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLkOBxvE8ixiDBhii1PF6AyY4f6SMJVmyOBdpacSFyzcwHziCDnfcLxknZKPWxYbp
-	 cBV2aZQ8yoFDxzsIetHDJE46JeGdWOP4arOCzL08GBl9x4EnuFDgY9Qd1nrFYP6FXL
-	 6XJQHA0Budjy8IEbrULBUrUsxBg/Qnia/FwJLqpD8Yz4nqQBHPahWs9khhE7Y9Gcps
-	 p6GnBsl41SBdF/XRELuIQ+HGhXQ1AhZTclraJMKr3x/OxV+bIm/z8tVnXOZeYpWhF/
-	 cXtU7Gmaf8DglZW5384Qx91hSttpsTa5uUFSfx6aDPdDxywvmTv6V/6sVFP54xYlpq
-	 mKLL7Edffzg+w==
+	b=Pb6efao68YP1I6D/y7KcB/hkwmqYTxFzmn/Bx+kBA+XUSRfFK17MjvqRhgq+jTxcz
+	 EUV2SgudEWy8ezWHSUxgAg4BpeKEf4Fy6miu2p3JSymRf4MkpYGtvHY3Z1dpgP3jPG
+	 DyLauwBTGgwH13HWZa6+mRqR8HfB7n6qkZumyCiGi5YISgAa4MJCPzcZLRJtdpzlbC
+	 QQF+5IjB3AIk/kAy3twu6cArNnkRyY4n88lxJHP8f71M9h5A3Pfw24svfsbcZicli3
+	 zWB9MFJtUp5ZeFcUdmJQffYBybOvTD6g3m7AtsGj5sDqdX5QeeCtCXQqGA23wyLQ3C
+	 T078PFa6xFfgA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
+Cc: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	stable@vger.kernel.org,
+	Christian Marangi <ansuelsmth@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 476/752] Revert "PCI: dwc: Don't wait for link up if driver can detect Link Up event"
-Date: Sat, 28 Feb 2026 12:43:07 -0500
-Message-ID: <20260228174750.1542406-476-sashal@kernel.org>
+Subject: [PATCH 6.18 477/752] PCI: Use resource_set_range() that correctly sets ->end
+Date: Sat, 28 Feb 2026 12:43:08 -0500
+Message-ID: <20260228174750.1542406-477-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -45,100 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 142d5869f6eec3110adda0ad2d931f5b3c22371d ]
+[ Upstream commit 11721c45a8266a9d0c9684153d20e37159465f96 ]
 
-This reverts commit 8d3bf19f1b585a3cc0027f508b64c33484db8d0d.
+__pci_read_base() sets resource start and end addresses when resource
+is larger than 4G but pci_bus_addr_t or resource_size_t are not capable
+of representing 64-bit PCI addresses. This creates a problematic
+resource that has non-zero flags but the start and end addresses do not
+yield to resource size of 0 but 1.
 
-While this fake hotplugging was a nice idea, it has shown that this feature
-does not handle PCIe switches correctly:
-pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
-pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
-pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
-pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
-pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
-pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
-pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
-pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
-pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
-pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
-pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
-pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
+Replace custom resource addresses setup with resource_set_range()
+that correctly sets end address as -1 which results in resource_size()
+returning 0.
 
-During the initial scan, PCI core doesn't see the switch and since the Root
-Port is not hot plug capable, the secondary bus number gets assigned as the
-subordinate bus number. This means, the PCI core assumes that only one bus
-will appear behind the Root Port since the Root Port is not hot plug
-capable.
+For consistency, also use resource_set_range() in the other branch that
+does size based resource setup.
 
-This works perfectly fine for PCIe endpoints connected to the Root Port,
-since they don't extend the bus. However, if a PCIe switch is connected,
-then there is a problem when the downstream busses starts showing up and
-the PCI core doesn't extend the subordinate bus number and bridge resources
-after initial scan during boot.
-
-So revert the change that skipped dw_pcie_wait_for_link() if the Link up
-IRQ was used by a vendor glue driver.
-
-Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
-Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Fixes: 23b13bc76f35 ("PCI: Fail safely if we can't handle BARs larger than 4GB")
+Link: https://lore.kernel.org/all/20251207215359.28895-1-ansuelsmth@gmail.com/T/#m990492684913c5a158ff0e5fc90697d8ad95351b
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251222064207.3246632-14-cassel@kernel.org
+Cc: Christian Marangi <ansuelsmth@gmail.com>
+Link: https://patch.msgid.link/20251208145654.5294-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++--------
- drivers/pci/controller/dwc/pcie-designware.h      |  1 -
- 2 files changed, 2 insertions(+), 9 deletions(-)
+ drivers/pci/probe.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 702885c53f467..60fadaa1c0bd2 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -664,14 +664,8 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
- 			goto err_remove_edma;
- 	}
- 
--	/*
--	 * Note: Skip the link up delay only when a Link Up IRQ is present.
--	 * If there is no Link Up IRQ, we should not bypass the delay
--	 * because that would require users to manually rescan for devices.
--	 */
--	if (!pp->use_linkup_irq)
--		/* Ignore errors, the link may come up later */
--		dw_pcie_wait_for_link(pci);
-+	/* Ignore errors, the link may come up later */
-+	dw_pcie_wait_for_link(pci);
- 
- 	ret = pci_host_probe(bridge);
- 	if (ret)
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 24bfa5231923a..7c56146b95f6b 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -426,7 +426,6 @@ struct dw_pcie_rp {
- 	bool			use_atu_msg;
- 	int			msg_atu_index;
- 	struct resource		*msg_res;
--	bool			use_linkup_irq;
- 	struct pci_eq_presets	presets;
- 	struct pci_config_window *cfg;
- 	bool			ecam_enabled;
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 7d4f0db5ac265..23833fd7265e2 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -287,8 +287,7 @@ int __pci_read_base(struct pci_dev *dev, enum pci_bar_type type,
+ 		if ((sizeof(pci_bus_addr_t) < 8 || sizeof(resource_size_t) < 8)
+ 		    && sz64 > 0x100000000ULL) {
+ 			res->flags |= IORESOURCE_UNSET | IORESOURCE_DISABLED;
+-			res->start = 0;
+-			res->end = 0;
++			resource_set_range(res, 0, 0);
+ 			pci_err(dev, "%s: can't handle BAR larger than 4GB (size %#010llx)\n",
+ 				res_name, (unsigned long long)sz64);
+ 			goto out;
+@@ -297,8 +296,7 @@ int __pci_read_base(struct pci_dev *dev, enum pci_bar_type type,
+ 		if ((sizeof(pci_bus_addr_t) < 8) && l) {
+ 			/* Above 32-bit boundary; try to reallocate */
+ 			res->flags |= IORESOURCE_UNSET;
+-			res->start = 0;
+-			res->end = sz64 - 1;
++			resource_set_range(res, 0, sz64);
+ 			pci_info(dev, "%s: can't handle BAR above 4GB (bus address %#010llx)\n",
+ 				 res_name, (unsigned long long)l64);
+ 			goto out;
 -- 
 2.51.0
 
