@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4CC340A5A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA77313E31
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301058; cv=none; b=iGC1B6pYGprIOFlBSJUOjyBCqknEqW5HRqMHZFXMBuO33PT86EFDZwu4pP6l3l15ObHjGysRbozhxVAZ+fTaW+yG4yL/9/s/+Ep2v/vgyRRVJ/+MC/qpntby8FWXssibNrM3N4gOxUAzqGyxt0V69d8LJJid3OjtCwC3KBShxLc=
+	t=1772301058; cv=none; b=loJG5r23dr0iD/RNQ8BbcoouaKTuMtGRSCR3M7cou7mLtW8wtZ5gBNwAZJXwZYUY15rk7vax7ZcZYKXN6QU3IU87svbYQQG8oZy2N17dMNaAfQG3cpTHp/7NGcnQBj7mOUjkDSOnxOr1tU9EuLTBwEyyXyKvECbIeQfUX1oKoAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301058; c=relaxed/simple;
-	bh=YXhinGD2EShjI+Ju96y5fdmzoeygDql3kCvvn3JTisw=;
+	bh=itYz9wcroCLYvmUBhLndqkq23hvv7APVzed7gy3USkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NEQkhH0zqSdXmgjM60fVARjBad7/XuG1BKhRowOLCRCND3uddrS5CN6bQIKIRklxdxUhwp72U+zhC9v9BQhg3lJdwbw1rfkQEI0jNpghMCy4O9QZ7I8uEV8xKbol//1UGLrKeWy46s0fsq5LOFQH9sn4ogCUaUVkxMBPPhJdus0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MO1ma90C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hw9t2lbKpSNeWlieerUwaJnlL8TVzaW3KNjprbfrG3hoqydj6cLUYhDWW18Br7s9/TjMt/j/cWSptjd1VZrmK16PmCWqDPr559crcVQT6+a1FptrJx6tJbDACpOIaERxNBz4IvriKhSElNxIWkaIWELb8zXodZ4Y7rzxg6QRmqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e5+iYaLH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MO1ma90C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70487C116D0;
-	Sat, 28 Feb 2026 17:50:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e5+iYaLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EFDC116D0;
+	Sat, 28 Feb 2026 17:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301057;
-	bh=YXhinGD2EShjI+Ju96y5fdmzoeygDql3kCvvn3JTisw=;
+	s=k20201202; t=1772301058;
+	bh=itYz9wcroCLYvmUBhLndqkq23hvv7APVzed7gy3USkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MO1ma90CeIDMNurwvwH5z27Yh9CXiVWWCq3KP+yK6W5NuDFiTpH8LteEjeNlpcjxT
-	 nNb1rFWVfbY+eGAzkCocggBzueCmb2FseLcJer+cOvA4vmDjIfVb22hoM4Bnht2drA
-	 T+A8+9R7vpEGgM7ySio5xz21GHm4yWCSa8rd4UDlO6AhAP21R1kO5UiNmRSu2I+Dla
-	 z8D9/1oI5BZxHDC1Sv/3rMbrzHdaPsi6pyw5NrU8jk52WhW0/6g8/C9s0zDbmVaqaW
-	 6Bn8vXiVrtdhZH4Q2Lz4LwfoqjrbM6z1ldyBHiqeD+BLoPyW4kVWw/TLajNd6W4sp/
-	 EA3qxXplkVcOQ==
+	b=e5+iYaLH/EE11jQ3lkwUSM7W3DJhd9xwqNgHI6DKlEapRv0MtErVflA9C4OvCz29A
+	 rpgb9hHfqddaDqj+/Hih9E8hWTAz4XVxu9gHF6zkaWFqGSwz90f03ARcCx4lS+lyk+
+	 8WU9sRZwK2UgCsVtOgXzZbZKd4m/H6oyZ9czSLcPJfpdoLNpJlOcyfF9I8ZmNKvgOC
+	 vd/sRbc2cpX9Z74steEJGcyBk7MxmbfN5yQ9V5494M8Y+eVM8VeG5hdvX1E/V6HYAU
+	 WOtpFhW9VJYMPFK0XkYOykDuMzRSYQ3ojC4ujRmI79+DMdq9pGMn6eH1CTpJ3QMsrM
+	 p3j4APseU6ryA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: "Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>,
+Cc: Felix Gu <gu_0233@qq.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 199/752] hwmon: (f71882fg) Add F81968 support
-Date: Sat, 28 Feb 2026 12:38:30 -0500
-Message-ID: <20260228174750.1542406-199-sashal@kernel.org>
+Subject: [PATCH 6.18 200/752] hwmon: (nct7363) Fix a resource leak in nct7363_present_pwm_fanin
+Date: Sat, 28 Feb 2026 12:38:31 -0500
+Message-ID: <20260228174750.1542406-200-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,57 +47,35 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>
+From: Felix Gu <gu_0233@qq.com>
 
-[ Upstream commit e4a3d6f79c9933fece64368168c46d6cf5fc2e52 ]
+[ Upstream commit 4923bbff0bcffe488b3aa76829c829bd15b02585 ]
 
-Add hardware monitoring support for the Fintek F81968 Super I/O chip.
-It is fully compatible with F81866.
+When calling of_parse_phandle_with_args(), the caller is responsible
+to call of_node_put() to release the reference of device node.
+In nct7363_present_pwm_fanin, it does not release the reference,
+causing a resource leak.
 
-Several products share compatibility with the F81866. To better distinguish
-between them, ensure that the Product ID is displayed when the device is
-probed.
-
-Signed-off-by: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
-Link: https://lore.kernel.org/r/20251223051040.10227-1-peter_hong@fintek.com.tw
+Signed-off-by: Felix Gu <gu_0233@qq.com>
+Link: https://lore.kernel.org/r/tencent_9717645269E4C07D3D131F52201E12E5E10A@qq.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/f71882fg.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/hwmon/nct7363.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/f71882fg.c b/drivers/hwmon/f71882fg.c
-index df83f9866fbcf..204059d2de6cd 100644
---- a/drivers/hwmon/f71882fg.c
-+++ b/drivers/hwmon/f71882fg.c
-@@ -51,6 +51,7 @@
- #define SIO_F81866_ID		0x1010	/* Chipset ID */
- #define SIO_F71858AD_ID		0x0903	/* Chipset ID */
- #define SIO_F81966_ID		0x1502	/* Chipset ID */
-+#define SIO_F81968_ID		0x1806	/* Chipset ID */
+diff --git a/drivers/hwmon/nct7363.c b/drivers/hwmon/nct7363.c
+index e13ab918b1abe..56ac42e4a8653 100644
+--- a/drivers/hwmon/nct7363.c
++++ b/drivers/hwmon/nct7363.c
+@@ -351,6 +351,7 @@ static int nct7363_present_pwm_fanin(struct device *dev,
+ 	if (ret)
+ 		return ret;
  
- #define REGION_LENGTH		8
- #define ADDR_REG_OFFSET		5
-@@ -2570,6 +2571,7 @@ static int __init f71882fg_find(int sioaddr, struct f71882fg_sio_data *sio_data)
- 		break;
- 	case SIO_F81866_ID:
- 	case SIO_F81966_ID:
-+	case SIO_F81968_ID:
- 		sio_data->type = f81866a;
- 		break;
- 	default:
-@@ -2599,9 +2601,9 @@ static int __init f71882fg_find(int sioaddr, struct f71882fg_sio_data *sio_data)
- 	address &= ~(REGION_LENGTH - 1);	/* Ignore 3 LSB */
- 
- 	err = address;
--	pr_info("Found %s chip at %#x, revision %d\n",
-+	pr_info("Found %s chip at %#x, revision %d, devid: %04x\n",
- 		f71882fg_names[sio_data->type],	(unsigned int)address,
--		(int)superio_inb(sioaddr, SIO_REG_DEVREV));
-+		(int)superio_inb(sioaddr, SIO_REG_DEVREV), devid);
- exit:
- 	superio_exit(sioaddr);
- 	return err;
++	of_node_put(args.np);
+ 	if (args.args[0] >= NCT7363_PWM_COUNT)
+ 		return -EINVAL;
+ 	data->pwm_mask |= BIT(args.args[0]);
 -- 
 2.51.0
 
