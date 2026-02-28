@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0A6340A47
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D99313E31
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301001; cv=none; b=mJy944FH/CKQfmKXgv6iQJiepmLJPBbyVkHGfGKrpb2UjxDEXDXU52z3DD9XcUGgfYzIW5Tjf+bnpYwP3Gzj+45F8ONlTKv1UJyVtuvi3WIZG0+aKOkVI4gtey/wVBc7JOBAmeQ/a/8Fb3yBI92j2sAz7WDFPU3180oNOgBwJk0=
+	t=1772301002; cv=none; b=FWIDiYyDwJ2i2VH3x5uEJalUhNrQnxIYk2gwE8J+Os6qtKIktn7ZEpuKLew+qOEFNg/YQhDkP7qOOqnuBbnqArlxcVQXHfEFoB3hyz1v+JrzE7SLAZlYOvOh/L9WcBlOYpoYONbPPTp3tEtopxacXoo7Eaaaw0S4gZ7bxQOOvPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301001; c=relaxed/simple;
-	bh=hFQSfyc2sFzPu99hh9iKoECuRF196fks64pjmsKHxFY=;
+	s=arc-20240116; t=1772301002; c=relaxed/simple;
+	bh=oQAr/Xnv2B0r7JXssMCcqqeLnDNaYRibh7AF58aAldI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9farmZQOtI4ZmXnzy2rZht6vu5HewR5Fg0hVB0aJBpzsVAxO7sZUbeK3PSP8Ioz1CbmHrRKPojS7ChPosVErrhaBsmHJ3UCFzNV+D6+mClhAGQeTi3joSWsNsUyQS+lSxyIc5agp28BOoL9GzBDGDEI4+C2Xo5XND2zxcQjDf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=crjHSMUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqQk+9DwCOIZ5v8T5Wy8yfgvRyHpDgxE0uqigagKmIjCxVDA+8cOeNpPOhdSYue0CY74P1GVdJNW7QYtxKs0rhrrto10wHDgdiyPJhYo9kIeZI/2I5XZHjVBw/ei7hXhANG4Lpp7JUYxnPOwMA8gVsPMau0e8v0ZC0E6rX+BEko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XNwOKp+v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="crjHSMUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2BBC116D0;
-	Sat, 28 Feb 2026 17:50:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XNwOKp+v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B264AC19424;
+	Sat, 28 Feb 2026 17:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301001;
-	bh=hFQSfyc2sFzPu99hh9iKoECuRF196fks64pjmsKHxFY=;
+	s=k20201202; t=1772301002;
+	bh=oQAr/Xnv2B0r7JXssMCcqqeLnDNaYRibh7AF58aAldI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crjHSMUbrSFNSR25zfleFxXWvD3Ck8OEvmRi1oFF2PqhwCP1wnviVpVDQoXZAffeG
-	 DErjdJSOF4wrHNJK70s+p5hQgvn59f9RBhJcgcAt0ArFBhRy5rDKC+2T+dQxzZKBdn
-	 lVOE2dd+KBWa/hZNEN373PrzvnWq4blFb1nX6oNZWJzzVYD2mKrE6RoNtcn8oaLMcX
-	 zH/9E+7/PyIP8pt0v3Vy7x7C8N/MUFKgvPzao8bxJLRg2UCBQBdgf0XfEPixlA+4I+
-	 9GuuPsQGDo/uXK8RkqMQf0ySSpfu0+w6tNIoFit3jqYNNn5GpEGCPMZ9KUN70y/1ZI
-	 8Iuc+3bKQu5iQ==
+	b=XNwOKp+v46yDDkrOyTMxQYH8JRrlwSigO7HNtb2qWiuJjoNXYBcjaPOQzQGzWfQsY
+	 jpiL4V4+VPJO4NRBsTc8BQQ6lXg7dthfu9V1eARJO19BCv8kFxNwxEc2bFnTIZBp1+
+	 R3eJSQbi9MHImqg2pOVdfjAxt+Z/EAS/yNgkYr5mH0Qk4pTHiq/RQ9zU08TeXPrLFh
+	 WTkslwwDZomoE7THrBL7qSHZ8a02ykDmyBqvFsOGznDXrSslDX3/v3FFSIMWCwNgcc
+	 oA6r2N+Q5piXdWgOMt7tz5w39+pRRnWU/HX87qwcy9kKKv9+rpLOy1RGI+cx51KtZ0
+	 k0ztNVYolbE5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Brandon Brnich <b-brnich@ti.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 134/752] media: chips-media: wave5: Process ready frames when CMD_STOP sent to Encoder
-Date: Sat, 28 Feb 2026 12:37:25 -0500
-Message-ID: <20260228174750.1542406-134-sashal@kernel.org>
+Subject: [PATCH 6.18 135/752] drm/panel: edp: add BOE NV140WUM-T08 panel
+Date: Sat, 28 Feb 2026 12:37:26 -0500
+Message-ID: <20260228174750.1542406-135-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,36 +47,58 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Brandon Brnich <b-brnich@ti.com>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-[ Upstream commit 5da0380de41439ed64ed9a5218850db38544e315 ]
+[ Upstream commit 349d4efadc1f831ebc0b872ba1e3a2b7dd58b72b ]
 
-CMD_STOP being sent to encoder before last job is executed by device_run
-can lead to an occasional dropped frame. Ensure that remaining ready
-buffers are drained by making a call to v4l2_m2m_try_schedule.
+Add powerseq timing info for the BOE NV140WUM-T08 panel used on Lenovo
+Thinkpad T14s gen 6 (Snapdragon X1 Elite) laptops.
 
-Signed-off-by: Brandon Brnich <b-brnich@ti.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+edid-decode (hex):
+
+00 ff ff ff ff ff ff 00 09 e5 26 0c 00 00 00 00
+0a 21 01 04 a5 1e 13 78 03 d6 62 99 5e 5a 8e 27
+25 53 58 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 33 3f 80 dc 70 b0 3c 40 30 20
+36 00 2e bc 10 00 00 1a 00 00 00 fd 00 28 3c 4c
+4c 10 01 0a 20 20 20 20 20 20 00 00 00 fe 00 42
+4f 45 20 43 51 0a 20 20 20 20 20 20 00 00 00 fe
+00 4e 56 31 34 30 57 55 4d 2d 54 30 38 0a 00 fa
+
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260105155134.83266-1-johannes.goede@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/panel/panel-edp.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-index a11f0f7c7d7b0..a254830e4009e 100644
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-@@ -649,6 +649,8 @@ static int wave5_vpu_enc_encoder_cmd(struct file *file, void *fh, struct v4l2_en
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 6a8a4ebc91e21..d1e68c464e308 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1730,6 +1730,12 @@ static const struct panel_delay delay_200_500_p2e100 = {
+ 	.prepare_to_enable = 100,
+ };
  
- 		m2m_ctx->last_src_buf = v4l2_m2m_last_src_buf(m2m_ctx);
- 		m2m_ctx->is_draining = true;
++static const struct panel_delay delay_200_500_p2e200 = {
++	.hpd_absent = 200,
++	.unprepare = 500,
++	.prepare_to_enable = 200,
++};
 +
-+		v4l2_m2m_try_schedule(m2m_ctx);
- 		break;
- 	case V4L2_ENC_CMD_START:
- 		break;
+ static const struct panel_delay delay_200_500_e50 = {
+ 	.hpd_absent = 200,
+ 	.unprepare = 500,
+@@ -1974,6 +1980,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b56, &delay_200_500_e80, "NT140FHM-N47"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b66, &delay_200_500_e80, "NE140WUM-N6G"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c20, &delay_200_500_e80, "NT140FHM-N47"),
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c26, &delay_200_500_p2e200, "NV140WUM-T08"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c93, &delay_200_500_e200, "Unknown"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0cb6, &delay_200_500_e200, "NT116WHM-N44"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0cf6, &delay_200_500_e200, "NV140WUM-N64"),
 -- 
 2.51.0
 
