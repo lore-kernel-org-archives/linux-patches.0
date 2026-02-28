@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF698375AC1
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B9337702C
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301638; cv=none; b=go3A7GXtN3Hu6nfAUSBwtQtq0eoBEPr9JKehLfIqoFz9Hnw84CePimpBj2W5uMksESImyr2BvkOs0FsTBDzD8hA6jljx6CBjjbLVgmdIaUGnpxEWqVb1k7sm+CLKOz/eN1eQNQwtEPn/8yMjK7rG14AwGIvALiss0k6QHEiykyY=
+	t=1772301639; cv=none; b=sy5VVE4HhB6/RjvRFvZgpBV7xRcRy2TiCXJdEeqhq//2n872yWAmhiGHWs5yDXI1DUsQuHuV2uyR+yTMK6qFNXRaoQLMzUrHV76CDkyClo5B+wVPWk48KJ22RVMxJMf8GEFHOl3Wy5IYsTtQ53aJlwbyRdRr68f4hXlApXEw0S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301638; c=relaxed/simple;
-	bh=2gWalRDBM9X5NnGcJ/p2Q+pNLIMpJfNpSmic/L6ncxU=;
+	s=arc-20240116; t=1772301639; c=relaxed/simple;
+	bh=IrbKkHbNtqVJHrMW9k3sWL5TlkGEm0pfXEipIj1+QgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n38SSB1XpNdWiZeqiPyAQShwPrmaDkLPNx7mHyBFqBW5Z/1C/N1tQ/tn3B8CzNDguoyRuLoaxTBgT4vsabHwB0k+uBBH76qR6C+0RuYF+xcFYTk+VIVbq0zXTlbuM9Tn7WG8Vd7x4DDzWvtWcXmEZ9GO1RDWm4E06Ww/pmLlyRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YCgbE7Cb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZ6M8xNvcV0XeGcy67vRfzryQLp2avcwLiyT09MfrIGJeKIC+s67JmIRYQVB8lTOJ/1z4+/AUG+A8SzwwQdkE9F6RcI2RZQ1fJllk/fVTjhRrE/muHwtpBcS9lgZcWVSS0CfziuenRkteU0K+X4rvtemJvKfTgl+DXdGxjnqmGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fTph2Og2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YCgbE7Cb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E15DC19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fTph2Og2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE22C19425;
 	Sat, 28 Feb 2026 18:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301638;
-	bh=2gWalRDBM9X5NnGcJ/p2Q+pNLIMpJfNpSmic/L6ncxU=;
+	s=k20201202; t=1772301639;
+	bh=IrbKkHbNtqVJHrMW9k3sWL5TlkGEm0pfXEipIj1+QgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCgbE7CbbqbpLq7td9rDeYRtA7JgJhNvHmPbjLwO88w1o7pQj3rBRiT3A9oUCwrcT
-	 be9mBSVinhBrZe4aIP5+xa97HElKTQH9q1jLOklIW3uc5enuZyuUlSpO/0CcK0GouX
-	 qAYRxBHgZD3Eb8N+/FhnbhUBFmh74IGs6Ua4lRPi2KSpI4/MfV/eWiuEJiPQhBiuKX
-	 0LeNgw7k1M3QuF52m01RAsfyLUyVgc37FzMmEmulX3M1Vc5x5Xhs4gSegtVSMNVNHP
-	 6sNrdl8YfQv47UpB6YVC3Xwd3WraYgmqbTaplKFsMyrNNx8SxA0xHuZldgAz13UvU0
-	 mvHXQ1X1vvcug==
+	b=fTph2Og2bU9h0PuRJERX6ukHrZgQgkjjE3d6DxA+MG5aix2sIh9e8gRTLqIIV1rIn
+	 is6Ds9WdksGMMaHCB3/KoqlDtrdmUfdvFqHsLSNFK+ZZhehJy8c3kLasplMTKyv88i
+	 FhlHZhO4VNE3c+LEJ73LnsQkgL9YpSgM1JsFCoZ2Dsz/F3hVycO/+bydQbUACBcCf2
+	 RUizmF89cXKLNlke3VJBdGtNqEs2jzh72koL3m7nkeM4uTgAFnScN+BQr/DTHQP5zn
+	 WGsdA2jbkq4KnD/opxL07ByMRcp9auOzSNTrHsQQ93RiRrzrRZYcfSce8zk8t5evni
+	 hWv7u8n+RR/iA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Yu Kuai <yukuai@fnnas.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Li Nan <linan122@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/385] thermal: intel: x86_pkg_temp_thermal: Handle invalid temperature
-Date: Sat, 28 Feb 2026 12:54:14 -0500
-Message-ID: <20260228180011.1568201-32-sashal@kernel.org>
+Subject: [PATCH 6.12 033/385] md/raid5: fix raid5_run() to return error when log_init() fails
+Date: Sat, 28 Feb 2026 12:54:15 -0500
+Message-ID: <20260228180011.1568201-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -46,41 +51,45 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Yu Kuai <yukuai@fnnas.com>
 
-[ Upstream commit 9635c586a559ba0e45b2bfbff79c937ddbaf1a62 ]
+[ Upstream commit 2d9f7150ac197ce79c9c917a004d4cf0b26ad7e0 ]
 
-After commit be0a3600aa1e ("thermal: sysfs: Rework the handling of trip
-point updates"), THERMAL_TEMP_INVALID can be passed to sys_set_trip_temp()
-and it is treated as a regular temperature value there, so the sysfs
-write fails even though it is expected to succeed and disable the given
-trip point.
+Since commit f63f17350e53 ("md/raid5: use the atomic queue limit
+update APIs"), the abort path in raid5_run() returns 'ret' instead of
+-EIO. However, if log_init() fails, 'ret' is still 0 from the previous
+successful call, causing raid5_run() to return success despite the
+failure.
 
-Address this by making sys_set_trip_temp() clear its temp variable when
-it is equal to THERMAL_TEMP_INVALID.
+Fix this by capturing the return value from log_init().
 
-Fixes: be0a3600aa1e ("thermal: sysfs: Rework the handling of trip point updates")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2815400.mvXUDI8C0e@rafael.j.wysocki
+Link: https://lore.kernel.org/linux-raid/20260114171241.3043364-2-yukuai@fnnas.com
+Fixes: f63f17350e53 ("md/raid5: use the atomic queue limit update APIs")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202601130531.LGfcZsa4-lkp@intel.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Xiao Ni <xni@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/x86_pkg_temp_thermal.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/raid5.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/intel/x86_pkg_temp_thermal.c b/drivers/thermal/intel/x86_pkg_temp_thermal.c
-index 8c44f378b61ef..29af9510a6161 100644
---- a/drivers/thermal/intel/x86_pkg_temp_thermal.c
-+++ b/drivers/thermal/intel/x86_pkg_temp_thermal.c
-@@ -127,6 +127,9 @@ sys_set_trip_temp(struct thermal_zone_device *tzd,
- 	u32 l, h, mask, shift, intr;
- 	int tj_max, val, ret;
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 7262b77a8e022..5079943046743 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -8049,7 +8049,8 @@ static int raid5_run(struct mddev *mddev)
+ 			goto abort;
+ 	}
  
-+	if (temp == THERMAL_TEMP_INVALID)
-+		temp = 0;
-+
- 	tj_max = intel_tcc_get_tjmax(zonedev->cpu);
- 	if (tj_max < 0)
- 		return tj_max;
+-	if (log_init(conf, journal_dev, raid5_has_ppl(conf)))
++	ret = log_init(conf, journal_dev, raid5_has_ppl(conf));
++	if (ret)
+ 		goto abort;
+ 
+ 	return 0;
 -- 
 2.51.0
 
