@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F2C359A8C
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC5C359A61
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302423; cv=none; b=JqYcLv74uKaWAGSfpILaH/sCWDx1gRzVTHuWWyW0qPKxFV/bpytLSo7Hcx3mYfbaiNUTJ0/162ed0EnntSWlHnGzNIIlz1BJxNp+hBb9zc0p1UgaMayBth1lgU4x7YdDWkFyyDiJqv0B/VfD6rCYhdnphmBxIOG37Y4fK5bOCzE=
+	t=1772302424; cv=none; b=e+VomIBJk1KUN/qmoS5Nwxf4PT3IE0ToTjljh+vovTD5wnD5VRjutPm6NAhAZnMwUnW9Xi2MDpcJg2dePQS/xFNaHRpNhVi5ugvxFcdasxi43hLC60f6bT6xD+DdeAsSGylyltcim8B8jk3vuzmHzOWyEH6gW9rUlAsfx7qm/vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302423; c=relaxed/simple;
-	bh=ShaRIg+kityQ5D282p/NSbqyVJtbDtPadlpy3fxwLLc=;
+	s=arc-20240116; t=1772302424; c=relaxed/simple;
+	bh=BC1iNI8x3gduPjpFAi9hml7+vOAuf+yA4L+GygD18q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0pR784HRK8mr4MfbecBn0nC0Di1jnTtomjaPIpiwQ4bvoaDeFIH7EtvXc9SyHjxTW34gDMwh+PZt/kSQdx8S7UvA9HIdAP+b7F3W/XdoMjSmig99mhOu8A05GTR1VHdmY5TYtn+29rQZDpOq5Ozv/uh7ykFnrpL9IUupXFr0fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YC2FHXWu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BNobD7dsHVULDulJRGnK42W+h5jdGoPfsebbLPiMHD8OKC9+iS1o5gPulyB8qvyPhYv6hKCBIrPsCM1a0bwpfkMdYLN5x/iSX/Mpuhd8TmRjMxEiepZ2iVaN+U7Umu9wFx1zWyMsg2UUrFZvqRWiRGqFhQl82jg6qxyDCazozvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bNWvskmG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YC2FHXWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA768C116D0;
-	Sat, 28 Feb 2026 18:13:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bNWvskmG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D034C19423;
+	Sat, 28 Feb 2026 18:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302423;
-	bh=ShaRIg+kityQ5D282p/NSbqyVJtbDtPadlpy3fxwLLc=;
+	s=k20201202; t=1772302424;
+	bh=BC1iNI8x3gduPjpFAi9hml7+vOAuf+yA4L+GygD18q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YC2FHXWurxUImJy4i9UmrQma7KKY/nxgqfsBhh2pa6StP/nK73kJ0YapAEWpTe4fx
-	 U1i5zZGM/2+5UJv7mssJqG3OF0HKyUaA4fdeOLCImBVJRxo1vgsltiG84Dljnhs+XV
-	 KTW8ww4XOFGooQQP4lOnp+YzfhLRIPzYLmxE8lH9QIbhvZnklY/6FwtkJvOfsWtGm5
-	 XZh2pfsJ6MY8+GUbj/aYAqRym2ZWk8WrtEdELwiygRv5mZIdJze5YwYf5mXjEsw/Ca
-	 O+CkWmsMExQLSshTgcfRMPyxTL0ZogddfQo2rfRT4dMFU4uLxPTROcS5xSFn0yBdoA
-	 dtIXzqU2sb2/g==
+	b=bNWvskmGc6UTJNDDPauoep2i27bmgENyK8nH7AS10iWOOXHR1D4IjIysagGASfqal
+	 gw4ILEOGAIxHyS529XBTHgXwhviesqYqoUamzAXhJYR+C9RNIpnIdUrcs5gLhCBsKB
+	 W6tKOdVkX6IVP9qPh5kRo/lA6i/L4MolYc8aj7eW4ZKim13rT31pICadnf6Xhn+O9d
+	 8ZAh9AYmZpLcVTL5mPZBF2K10hb3H8hzPRWayFmYm3adBp8UeZxV5zM3tiwIyBc1D4
+	 LXapHCPyfWyn1tp7qXgzxIkb5yPm+OrGZHX9ISFz0xQ1eBy/uH+AVctr86KRDxbEQ0
+	 HFtZWZqJ9NjDQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Weigang He <geoffreyhe2@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+Cc: Yi Liu <liuy22@mails.tsinghua.edu.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 159/232] mtd: parsers: ofpart: fix OF node refcount leak in parse_fixed_partitions()
-Date: Sat, 28 Feb 2026 13:10:12 -0500
-Message-ID: <20260228181127.1592657-159-sashal@kernel.org>
+Subject: [PATCH 6.1 160/232] RDMA/uverbs: Add __GFP_NOWARN to ib_uverbs_unmarshall_recv() kmalloc
+Date: Sat, 28 Feb 2026 13:10:13 -0500
+Message-ID: <20260228181127.1592657-160-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,81 +47,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Yi Liu <liuy22@mails.tsinghua.edu.cn>
 
-[ Upstream commit 7cce81df7d26d44123bd7620715c8349d96793d7 ]
+[ Upstream commit 58b604dfc7bb753f91bc0ccd3fa705e14e6edfb4 ]
 
-of_get_child_by_name() returns a node pointer with refcount incremented,
-which must be released with of_node_put() when done. However, in
-parse_fixed_partitions(), when dedicated is true (i.e., a "partitions"
-subnode was found), the ofpart_node obtained from of_get_child_by_name()
-is never released on any code path.
+Since wqe_size in ib_uverbs_unmarshall_recv() is user-provided and already
+validated, but can still be large, add __GFP_NOWARN to suppress memory
+allocation warnings for large sizes, consistent with the similar fix in
+ib_uverbs_post_send().
 
-Add of_node_put(ofpart_node) calls on all exit paths when dedicated is
-true to fix the reference count leak.
-
-This bug was detected by our static analysis tool.
-
-Fixes: 562b4e91d3b2 ("mtd: parsers: ofpart: fix parsing subpartitions")
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 67cdb40ca444 ("[IB] uverbs: Implement more commands")
+Signed-off-by: Yi Liu <liuy22@mails.tsinghua.edu.cn>
+Link: https://patch.msgid.link/20260129094900.3517706-1-liuy22@mails.tsinghua.edu.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/parsers/ofpart_core.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/uverbs_cmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/parsers/ofpart_core.c b/drivers/mtd/parsers/ofpart_core.c
-index e7b8e9d0a9103..3cf75b56d5a2e 100644
---- a/drivers/mtd/parsers/ofpart_core.c
-+++ b/drivers/mtd/parsers/ofpart_core.c
-@@ -77,6 +77,7 @@ static int parse_fixed_partitions(struct mtd_info *master,
- 	of_id = of_match_node(parse_ofpart_match_table, ofpart_node);
- 	if (dedicated && !of_id) {
- 		/* The 'partitions' subnode might be used by another parser */
-+		of_node_put(ofpart_node);
- 		return 0;
- 	}
+diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
+index 2ed51a7df60fd..2e4265ba35b7f 100644
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -2223,7 +2223,7 @@ ib_uverbs_unmarshall_recv(struct uverbs_req_iter *iter, u32 wr_count,
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
-@@ -91,12 +92,18 @@ static int parse_fixed_partitions(struct mtd_info *master,
- 		nr_parts++;
- 	}
+-	user_wr = kmalloc(wqe_size, GFP_KERNEL);
++	user_wr = kmalloc(wqe_size, GFP_KERNEL | __GFP_NOWARN);
+ 	if (!user_wr)
+ 		return ERR_PTR(-ENOMEM);
  
--	if (nr_parts == 0)
-+	if (nr_parts == 0) {
-+		if (dedicated)
-+			of_node_put(ofpart_node);
- 		return 0;
-+	}
- 
- 	parts = kcalloc(nr_parts, sizeof(*parts), GFP_KERNEL);
--	if (!parts)
-+	if (!parts) {
-+		if (dedicated)
-+			of_node_put(ofpart_node);
- 		return -ENOMEM;
-+	}
- 
- 	i = 0;
- 	for_each_child_of_node(ofpart_node,  pp) {
-@@ -175,6 +182,9 @@ static int parse_fixed_partitions(struct mtd_info *master,
- 	if (quirks && quirks->post_parse)
- 		quirks->post_parse(master, parts, nr_parts);
- 
-+	if (dedicated)
-+		of_node_put(ofpart_node);
-+
- 	*pparts = parts;
- 	return nr_parts;
- 
-@@ -183,6 +193,8 @@ static int parse_fixed_partitions(struct mtd_info *master,
- 	       master->name, pp, mtd_node);
- 	ret = -EINVAL;
- ofpart_none:
-+	if (dedicated)
-+		of_node_put(ofpart_node);
- 	of_node_put(pp);
- 	kfree(parts);
- 	return ret;
 -- 
 2.51.0
 
