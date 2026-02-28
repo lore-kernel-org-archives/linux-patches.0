@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9D7379EE2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2559A379EDF
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301684; cv=none; b=q1DMq+cM1Cda5KHNpK4Fy44dZL2AMERI8xkizA4UOSAzZUxTlm//ME/g+CiLU30qq+HSzvX9G7GemHPSetkPItOy5Eo/zinnzV5GbdPDBFPY1plCbzoKP0dUdI6wXVPKxMPqkodPxeIXtGrKmmFnvJIRox1fy2xatAIa4NOmiJI=
+	t=1772301685; cv=none; b=PY+NtYYvm6NunVq4aQaC1MASp+VBvXNuqWuhOMhFDp3wuZF1sIkgFY9GkkqRwlu/5f+oJiTVd3Djm0kIvbW2z0NTs57lDIgwBl+2+UU89RVBPs+xWsxSGs8Fc7DKR2j1yIFUFHBViQNOR5R0JSQkH8fedK2PvCaIq0CtjsYxWrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301684; c=relaxed/simple;
-	bh=7D1HdyWEJeFKDN+vBI5almh82nURBxEQ74vcxkKRM/Q=;
+	s=arc-20240116; t=1772301685; c=relaxed/simple;
+	bh=xY4a2n/XvHWzIeBqHHaZ0DYsAMWQhYLIOJLf4/61U30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HdaxN7d07FJgeVk+wKkuqtmbuIDafxBqQvGXCqawEvq4G2TimRlLFrdhxxN55UxyC+v+5JaGpfRxUAI5tH5/3+97d5pJjhB/sy6ZWPyb9/z3ZROxj7wlRpTL15rP5Qn4oLA3FZXOYBQu8VoWu2V5izvk1I18flvJLQnsEtWH8NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i7Mb55jC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPPg9+nH9I3Tqm0NQUuU4/x54KzxzNSg1B+j0gKK53l0opFYT3JBWqPNXKTLTvtoBeubUJswd3gJEmmesBUdWIZEz4dlA2UK6fIJrsrfutabusE72MiopFB73WmjxibKAmw3Kxz6DS3aHArKoNfkMLpDnPEE8T06TYEK0apygiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mREckRQT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i7Mb55jC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B910C19423;
-	Sat, 28 Feb 2026 18:01:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mREckRQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74043C19424;
+	Sat, 28 Feb 2026 18:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301684;
-	bh=7D1HdyWEJeFKDN+vBI5almh82nURBxEQ74vcxkKRM/Q=;
+	s=k20201202; t=1772301685;
+	bh=xY4a2n/XvHWzIeBqHHaZ0DYsAMWQhYLIOJLf4/61U30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7Mb55jCzoAXDr21wajVuELBWXqmDrSaMKxO5P6OnPYey/nU6ZVdttVNAN6V87gPo
-	 RLtqkBaAid29n4qVDqJWmmXzt+LTCgyOgtJ2D6c10LFb5kwG8R/PZUIDUFH84luVmj
-	 yLdu1Crz9Qs2+82cNHHgeZNizyH0hJz5I0fe9M1b/EIixrgsPcv6yVh2bpNjyCiRE2
-	 KtV8K3xOfeM0I7IFmVXSB/AheP3+S1y5gHgqgFZUjCDLzXrdc38J27yMILc67ey8nE
-	 TgyGSM/0Aa2iuqTetCURRDejKzrnJqayQTbyV/Pl4WhSwNANrJ8T+rXxG0pMtBdnUd
-	 tLcn3TcFDTsNA==
+	b=mREckRQT75G8w/66zmbLA0XibvzJRV5F8Zmx8FUtr4P6savO4eitljzi5Zc37CQ9c
+	 +TVn0zFpjCZ28UwwduVZxEfjuekoy62rxldePq14tvPCnuEOnBzYOtQ32n5VHCs+bE
+	 +LkMwBASpCf3PTeEE0wSGfT2t1uOVo+5joNX5zDOy5qekVW2aIYmrve64iZBMBK6ao
+	 3krMEBRgBCDV/F9aUGKich/0PffndKxqFIjo1Ktq2YdfjNBJ9JAeoGABKzbOC0bnRn
+	 3okT/g/KG5GFOggDBDs2nvByM/hUwc7R11WVn7xX3G3WdioQH2aNUlMvlslqPEi9IF
+	 k2RZVXvAt/TCQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiri Olsa <jolsa@kernel.org>,
-	Mahe Tardy <mahe.tardy@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+Cc: Weili Qian <qianweili@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/385] x86/fgraph,bpf: Switch kprobe_multi program stack unwind to hw_regs path
-Date: Sat, 28 Feb 2026 12:54:55 -0500
-Message-ID: <20260228180011.1568201-73-sashal@kernel.org>
+Subject: [PATCH 6.12 074/385] crypto: hisilicon/trng - support tfms sharing the device
+Date: Sat, 28 Feb 2026 12:54:56 -0500
+Message-ID: <20260228180011.1568201-74-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -45,110 +44,260 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit aea251799998aa1b78eacdfb308f18ea114ea5b3 ]
+[ Upstream commit 3d3135057ff567d5c09fff4c9ef6391a684e8042 ]
 
-Mahe reported missing function from stack trace on top of kprobe
-multi program. The missing function is the very first one in the
-stacktrace, the one that the bpf program is attached to.
+Since the number of devices is limited, and the number
+of tfms may exceed the number of devices, to ensure that
+tfms can be successfully allocated, support tfms
+sharing the same device.
 
-  # bpftrace -e 'kprobe:__x64_sys_newuname* { print(kstack)}'
-  Attaching 1 probe...
-
-        do_syscall_64+134
-        entry_SYSCALL_64_after_hwframe+118
-
-  ('*' is used for kprobe_multi attachment)
-
-The reason is that the previous change (the Fixes commit) fixed
-stack unwind for tracepoint, but removed attached function address
-from the stack trace on top of kprobe multi programs, which I also
-overlooked in the related test (check following patch).
-
-The tracepoint and kprobe_multi have different stack setup, but use
-same unwind path. I think it's better to keep the previous change,
-which fixed tracepoint unwind and instead change the kprobe multi
-unwind as explained below.
-
-The bpf program stack unwind calls perf_callchain_kernel for kernel
-portion and it follows two unwind paths based on X86_EFLAGS_FIXED
-bit in pt_regs.flags.
-
-When the bit set we unwind from stack represented by pt_regs argument,
-otherwise we unwind currently executed stack up to 'first_frame'
-boundary.
-
-The 'first_frame' value is taken from regs.rsp value, but ftrace_caller
-and ftrace_regs_caller (ftrace trampoline) functions set the regs.rsp
-to the previous stack frame, so we skip the attached function entry.
-
-If we switch kprobe_multi unwind to use the X86_EFLAGS_FIXED bit,
-we set the start of the unwind to the attached function address.
-As another benefit we also cut extra unwind cycles needed to reach
-the 'first_frame' boundary.
-
-The speedup can be measured with trigger bench for kprobe_multi
-program and stacktrace support.
-
-- trigger bench with stacktrace on current code:
-
-        kprobe-multi   :     0.810 ± 0.001M/s
-        kretprobe-multi:     0.808 ± 0.001M/s
-
-- and with the fix:
-
-        kprobe-multi   :     1.264 ± 0.001M/s
-        kretprobe-multi:     1.401 ± 0.002M/s
-
-With the fix, the entry probe stacktrace:
-
-  # bpftrace -e 'kprobe:__x64_sys_newuname* { print(kstack)}'
-  Attaching 1 probe...
-
-        __x64_sys_newuname+9
-        do_syscall_64+134
-        entry_SYSCALL_64_after_hwframe+118
-
-The return probe skips the attached function, because it's no longer
-on the stack at the point of the unwind and this way is the same how
-standard kretprobe works.
-
-  # bpftrace -e 'kretprobe:__x64_sys_newuname* { print(kstack)}'
-  Attaching 1 probe...
-
-        do_syscall_64+134
-        entry_SYSCALL_64_after_hwframe+118
-
-Fixes: 6d08340d1e35 ("Revert "perf/x86: Always store regs->ip in perf_callchain_kernel()"")
-Reported-by: Mahe Tardy <mahe.tardy@gmail.com>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/bpf/20260126211837.472802-3-jolsa@kernel.org
+Fixes: e4d9d10ef4be ("crypto: hisilicon/trng - add support for PRNG")
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/ftrace.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/hisilicon/trng/trng.c | 121 +++++++++++++++++++--------
+ 1 file changed, 86 insertions(+), 35 deletions(-)
 
-diff --git a/arch/x86/include/asm/ftrace.h b/arch/x86/include/asm/ftrace.h
-index bb72bf879aed6..c42f7169fc1c0 100644
---- a/arch/x86/include/asm/ftrace.h
-+++ b/arch/x86/include/asm/ftrace.h
-@@ -48,7 +48,7 @@ arch_ftrace_get_regs(struct ftrace_regs *fregs)
+diff --git a/drivers/crypto/hisilicon/trng/trng.c b/drivers/crypto/hisilicon/trng/trng.c
+index 66c551ecdee80..85a4b99f9055a 100644
+--- a/drivers/crypto/hisilicon/trng/trng.c
++++ b/drivers/crypto/hisilicon/trng/trng.c
+@@ -40,6 +40,7 @@
+ #define SEED_SHIFT_24		24
+ #define SEED_SHIFT_16		16
+ #define SEED_SHIFT_8		8
++#define SW_MAX_RANDOM_BYTES	65520
+ 
+ struct hisi_trng_list {
+ 	struct mutex lock;
+@@ -53,8 +54,10 @@ struct hisi_trng {
+ 	struct list_head list;
+ 	struct hwrng rng;
+ 	u32 ver;
+-	bool is_used;
+-	struct mutex mutex;
++	u32 ctx_num;
++	/* The bytes of the random number generated since the last seeding. */
++	u32 random_bytes;
++	struct mutex lock;
+ };
+ 
+ struct hisi_trng_ctx {
+@@ -63,10 +66,14 @@ struct hisi_trng_ctx {
+ 
+ static atomic_t trng_active_devs;
+ static struct hisi_trng_list trng_devices;
++static int hisi_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait);
+ 
+-static void hisi_trng_set_seed(struct hisi_trng *trng, const u8 *seed)
++static int hisi_trng_set_seed(struct hisi_trng *trng, const u8 *seed)
+ {
+ 	u32 val, seed_reg, i;
++	int ret;
++
++	writel(0x0, trng->base + SW_DRBG_BLOCKS);
+ 
+ 	for (i = 0; i < SW_DRBG_SEED_SIZE;
+ 	     i += SW_DRBG_SEED_SIZE / SW_DRBG_SEED_REGS_NUM) {
+@@ -78,6 +85,20 @@ static void hisi_trng_set_seed(struct hisi_trng *trng, const u8 *seed)
+ 		seed_reg = (i >> SW_DRBG_NUM_SHIFT) % SW_DRBG_SEED_REGS_NUM;
+ 		writel(val, trng->base + SW_DRBG_SEED(seed_reg));
+ 	}
++
++	writel(SW_DRBG_BLOCKS_NUM | (0x1 << SW_DRBG_ENABLE_SHIFT),
++	       trng->base + SW_DRBG_BLOCKS);
++	writel(0x1, trng->base + SW_DRBG_INIT);
++	ret = readl_relaxed_poll_timeout(trng->base + SW_DRBG_STATUS,
++					 val, val & BIT(0), SLEEP_US, TIMEOUT_US);
++	if (ret) {
++		pr_err("failed to init trng(%d)\n", ret);
++		return -EIO;
++	}
++
++	trng->random_bytes = 0;
++
++	return 0;
  }
  
- #define arch_ftrace_partial_regs(regs) do {	\
--	regs->flags &= ~X86_EFLAGS_FIXED;	\
-+	regs->flags |= X86_EFLAGS_FIXED;	\
- 	regs->cs = __KERNEL_CS;			\
- } while (0)
+ static int hisi_trng_seed(struct crypto_rng *tfm, const u8 *seed,
+@@ -85,8 +106,7 @@ static int hisi_trng_seed(struct crypto_rng *tfm, const u8 *seed,
+ {
+ 	struct hisi_trng_ctx *ctx = crypto_rng_ctx(tfm);
+ 	struct hisi_trng *trng = ctx->trng;
+-	u32 val = 0;
+-	int ret = 0;
++	int ret;
  
+ 	if (slen < SW_DRBG_SEED_SIZE) {
+ 		pr_err("slen(%u) is not matched with trng(%d)\n", slen,
+@@ -94,43 +114,45 @@ static int hisi_trng_seed(struct crypto_rng *tfm, const u8 *seed,
+ 		return -EINVAL;
+ 	}
+ 
+-	writel(0x0, trng->base + SW_DRBG_BLOCKS);
+-	hisi_trng_set_seed(trng, seed);
++	mutex_lock(&trng->lock);
++	ret = hisi_trng_set_seed(trng, seed);
++	mutex_unlock(&trng->lock);
+ 
+-	writel(SW_DRBG_BLOCKS_NUM | (0x1 << SW_DRBG_ENABLE_SHIFT),
+-	       trng->base + SW_DRBG_BLOCKS);
+-	writel(0x1, trng->base + SW_DRBG_INIT);
++	return ret;
++}
+ 
+-	ret = readl_relaxed_poll_timeout(trng->base + SW_DRBG_STATUS,
+-					val, val & BIT(0), SLEEP_US, TIMEOUT_US);
+-	if (ret)
+-		pr_err("fail to init trng(%d)\n", ret);
++static int hisi_trng_reseed(struct hisi_trng *trng)
++{
++	u8 seed[SW_DRBG_SEED_SIZE];
++	int size;
+ 
+-	return ret;
++	if (!trng->random_bytes)
++		return 0;
++
++	size = hisi_trng_read(&trng->rng, seed, SW_DRBG_SEED_SIZE, false);
++	if (size != SW_DRBG_SEED_SIZE)
++		return -EIO;
++
++	return hisi_trng_set_seed(trng, seed);
+ }
+ 
+-static int hisi_trng_generate(struct crypto_rng *tfm, const u8 *src,
+-			      unsigned int slen, u8 *dstn, unsigned int dlen)
++static int hisi_trng_get_bytes(struct hisi_trng *trng, u8 *dstn, unsigned int dlen)
+ {
+-	struct hisi_trng_ctx *ctx = crypto_rng_ctx(tfm);
+-	struct hisi_trng *trng = ctx->trng;
+ 	u32 data[SW_DRBG_DATA_NUM];
+ 	u32 currsize = 0;
+ 	u32 val = 0;
+ 	int ret;
+ 	u32 i;
+ 
+-	if (dlen > SW_DRBG_BLOCKS_NUM * SW_DRBG_BYTES || dlen == 0) {
+-		pr_err("dlen(%u) exceeds limit(%d)!\n", dlen,
+-			SW_DRBG_BLOCKS_NUM * SW_DRBG_BYTES);
+-		return -EINVAL;
+-	}
++	ret = hisi_trng_reseed(trng);
++	if (ret)
++		return ret;
+ 
+ 	do {
+ 		ret = readl_relaxed_poll_timeout(trng->base + SW_DRBG_STATUS,
+-		     val, val & BIT(1), SLEEP_US, TIMEOUT_US);
++						 val, val & BIT(1), SLEEP_US, TIMEOUT_US);
+ 		if (ret) {
+-			pr_err("fail to generate random number(%d)!\n", ret);
++			pr_err("failed to generate random number(%d)!\n", ret);
+ 			break;
+ 		}
+ 
+@@ -145,30 +167,57 @@ static int hisi_trng_generate(struct crypto_rng *tfm, const u8 *src,
+ 			currsize = dlen;
+ 		}
+ 
++		trng->random_bytes += SW_DRBG_BYTES;
+ 		writel(0x1, trng->base + SW_DRBG_GEN);
+ 	} while (currsize < dlen);
+ 
+ 	return ret;
+ }
+ 
++static int hisi_trng_generate(struct crypto_rng *tfm, const u8 *src,
++			      unsigned int slen, u8 *dstn, unsigned int dlen)
++{
++	struct hisi_trng_ctx *ctx = crypto_rng_ctx(tfm);
++	struct hisi_trng *trng = ctx->trng;
++	unsigned int currsize = 0;
++	unsigned int block_size;
++	int ret;
++
++	if (!dstn || !dlen) {
++		pr_err("output is error, dlen %u!\n", dlen);
++		return -EINVAL;
++	}
++
++	do {
++		block_size = min_t(unsigned int, dlen - currsize, SW_MAX_RANDOM_BYTES);
++		mutex_lock(&trng->lock);
++		ret = hisi_trng_get_bytes(trng, dstn + currsize, block_size);
++		mutex_unlock(&trng->lock);
++		if (ret)
++			return ret;
++		currsize += block_size;
++	} while (currsize < dlen);
++
++	return 0;
++}
++
+ static int hisi_trng_init(struct crypto_tfm *tfm)
+ {
+ 	struct hisi_trng_ctx *ctx = crypto_tfm_ctx(tfm);
+ 	struct hisi_trng *trng;
+-	int ret = -EBUSY;
++	u32 ctx_num = ~0;
+ 
+ 	mutex_lock(&trng_devices.lock);
+ 	list_for_each_entry(trng, &trng_devices.list, list) {
+-		if (!trng->is_used) {
+-			trng->is_used = true;
++		if (trng->ctx_num < ctx_num) {
++			ctx_num = trng->ctx_num;
+ 			ctx->trng = trng;
+-			ret = 0;
+-			break;
+ 		}
+ 	}
++	ctx->trng->ctx_num++;
+ 	mutex_unlock(&trng_devices.lock);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static void hisi_trng_exit(struct crypto_tfm *tfm)
+@@ -176,7 +225,7 @@ static void hisi_trng_exit(struct crypto_tfm *tfm)
+ 	struct hisi_trng_ctx *ctx = crypto_tfm_ctx(tfm);
+ 
+ 	mutex_lock(&trng_devices.lock);
+-	ctx->trng->is_used = false;
++	ctx->trng->ctx_num--;
+ 	mutex_unlock(&trng_devices.lock);
+ }
+ 
+@@ -238,7 +287,7 @@ static int hisi_trng_del_from_list(struct hisi_trng *trng)
+ 	int ret = -EBUSY;
+ 
+ 	mutex_lock(&trng_devices.lock);
+-	if (!trng->is_used) {
++	if (!trng->ctx_num) {
+ 		list_del(&trng->list);
+ 		ret = 0;
+ 	}
+@@ -262,7 +311,9 @@ static int hisi_trng_probe(struct platform_device *pdev)
+ 	if (IS_ERR(trng->base))
+ 		return PTR_ERR(trng->base);
+ 
+-	trng->is_used = false;
++	trng->ctx_num = 0;
++	trng->random_bytes = SW_MAX_RANDOM_BYTES;
++	mutex_init(&trng->lock);
+ 	trng->ver = readl(trng->base + HISI_TRNG_VERSION);
+ 	if (!trng_devices.is_init) {
+ 		INIT_LIST_HEAD(&trng_devices.list);
 -- 
 2.51.0
 
