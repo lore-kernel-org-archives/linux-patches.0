@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8D838CFF4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DBE359A6F
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302385; cv=none; b=sMlpvZaNHW7GH3w82jm7Yjc+Z7CZN6wyukVoDXOsxr+KdQ1c6RGioIDsI18pO1LE6HA7Pgm/Bvr8XEVkwXbh6NKP36LWFxw1Uf+SPRB29mnvlgBQ5HQMImXrA8gsdCbanq6W5ADgkqLjDPDt6DzAzJ9opRsagj5hCoLHBz/tP6Q=
+	t=1772302386; cv=none; b=Etaed58nY6z6v4cMWBN6VwLoo6vohXiQXtQuQl2ayFghHVuyqxcae+hDEgc1Y01i3xDLaVEg9l/+74xti7P2Oj4uYZhHeLxwmnZ+RPsePIDNZGwqy2FZIzDoODoMKxnLNmEUrMiVTpqUXp0IXlrsZpjEvJGSlngyXY11lf3BZy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302385; c=relaxed/simple;
-	bh=ZMrA7uzQ2simGZTtoTtvGQlaP/h5wgtnsIexAPu5N24=;
+	s=arc-20240116; t=1772302386; c=relaxed/simple;
+	bh=PGxXTo/az+9J17yqFkhEV31Uh9rpR2hcL3Jc4F4XXA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VA4Jukh94FEsXlrcqleBdZHmdHIz+Fj7SGgf0x4SYHLXZsIBcG7WMSXnkrD+iGsIu8dp2q7vEhokGOL1JglI5OSaAqYWnlL20wT758d1TkuUiHf804sxLuvrLiv8gQAtVbVdehdXm+7xPYfq8FMPmIyanxJBUpZ9SJa+knrauRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M5Rb5xbt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z91LpGmZBZqrN2s0E5Qi71ccL8UsJfbCemM1TswjzP8dvU5zYvFKhRA0ikgzKOKREWugsmiVLPd4JPtOkF4FUtWBqKuitTMgzierxHyVcaORNXO2GhO5VM3MqYqPtKqvKWBg5/8s8CRK3N3j2DjO5h10K4QgjIz4dNgmXvwWOXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oq7E6k1X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M5Rb5xbt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA4DC116D0;
-	Sat, 28 Feb 2026 18:13:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oq7E6k1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41417C19424;
+	Sat, 28 Feb 2026 18:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302385;
-	bh=ZMrA7uzQ2simGZTtoTtvGQlaP/h5wgtnsIexAPu5N24=;
+	bh=PGxXTo/az+9J17yqFkhEV31Uh9rpR2hcL3Jc4F4XXA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M5Rb5xbtSXQcA8TusIKlJXmQZOrN92nxp+hd5Bz1BfTm1X3AVhiaw6LOS0qTrD48s
-	 tt8+HQ9QAFKe5yEpRtkuDixMq2EUplZqM48l+mMB+l96dzvlK3paZC9I4AYRf8xqFL
-	 jD8L5A2SGVvNlBySnaEA7qQegac8VbSfOZ04RiCvNP4e5T9j5KlsN+1j65reBmsvnL
-	 0kRBznU25MwbrqKl8TnNgzh4L7jjdxD3n78snOxGlxPgNZfJyatPHXYur8c8wj4Jof
-	 ShmF5xMar3DPaGWhKQ8mt+47MBPsn81A5VcGkmea6vdjF9VEV0srVlpcissPgfodXJ
-	 VvG8CpqacVxHg==
+	b=Oq7E6k1XpB6wkIcXiBeQi2Gb04opj8zoInfAS9ZPIqrJ0wRuSQCpSTzELONGT8kN6
+	 Q5j0hDKB9CskeMoFalFyupMdOO0ul4BJO371pnv/7mgDx3xAMniUsKInLs/Gsnid2v
+	 KbBe+57NarCPM6A2RtRzfbwtRInznI9pcalzb9vORkfTFxN5GfQRNRac2ZcTCUxpHZ
+	 F/Y5Y1YItHcegJTP+g79xZL9T0mYSLk6xRobVtwOxMFB1Bz1CpReVOx7MHZ9EEQfwr
+	 Sg5u7Urzebwfb3u5OvPi8Ev/T4Whtzle03PCJM+0q3C2pWxZR7ExwPPDSfin6H0nC3
+	 CzpxDHileczhQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Bogendoerfer <tbogendoerfer@suse.de>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: ye xingchen <ye.xingchen@zte.com.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/232] bonding: only set speed/duplex to unknown, if getting speed failed
-Date: Sat, 28 Feb 2026 13:09:26 -0500
-Message-ID: <20260228181127.1592657-113-sashal@kernel.org>
+Subject: [PATCH 6.1 114/232] timers: Replace in_irq() with in_hardirq()
+Date: Sat, 28 Feb 2026 13:09:27 -0500
+Message-ID: <20260228181127.1592657-114-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -50,72 +48,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+From: ye xingchen <ye.xingchen@zte.com.cn>
 
-[ Upstream commit 48dec8d88af96039a4a17b8c2f148f2a4066e195 ]
+[ Upstream commit 8be3f96ceddb911539a53d87a66da84a04502366 ]
 
-bond_update_speed_duplex() first set speed/duplex to unknown and
-then asks slave driver for current speed/duplex. Since getting
-speed/duplex might take longer there is a race, where this false state
-is visible by /proc/net/bonding. With commit 691b2bf14946 ("bonding:
- update port speed when getting bond speed") this race gets more visible,
-if user space is calling ethtool on a regular base.
+Replace the obsolete and ambiguous macro in_irq() with new
+macro in_hardirq().
 
-Fix this by only setting speed/duplex to unknown, if link speed is
-really unknown/unusable.
-
-Fixes: 98f41f694f46 ("bonding:update speed/duplex for NETDEV_CHANGE")
-Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20260203141153.51581-1-tbogendoerfer@suse.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://lore.kernel.org/r/20221012012629.334966-1-ye.xingchen@zte.com.cn
+Stable-dep-of: c9efde1e537b ("nfc: hci: shdlc: Stop timers and work before freeing context")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ kernel/time/timer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 71912ddfa7149..113a5504c9ebb 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -712,26 +712,29 @@ static int bond_update_speed_duplex(struct slave *slave)
- 	struct ethtool_link_ksettings ecmd;
- 	int res;
+diff --git a/kernel/time/timer.c b/kernel/time/timer.c
+index d7462b19b2f7e..4a2aeaa85af31 100644
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -1561,7 +1561,7 @@ static int __timer_delete_sync(struct timer_list *timer, bool shutdown)
+ 	 * don't use it in hardirq context, because it
+ 	 * could lead to deadlock.
+ 	 */
+-	WARN_ON(in_irq() && !(timer->flags & TIMER_IRQSAFE));
++	WARN_ON(in_hardirq() && !(timer->flags & TIMER_IRQSAFE));
  
--	slave->speed = SPEED_UNKNOWN;
--	slave->duplex = DUPLEX_UNKNOWN;
--
- 	res = __ethtool_get_link_ksettings(slave_dev, &ecmd);
- 	if (res < 0)
--		return 1;
-+		goto speed_duplex_unknown;
- 	if (ecmd.base.speed == 0 || ecmd.base.speed == ((__u32)-1))
--		return 1;
-+		goto speed_duplex_unknown;
- 	switch (ecmd.base.duplex) {
- 	case DUPLEX_FULL:
- 	case DUPLEX_HALF:
- 		break;
- 	default:
--		return 1;
-+		goto speed_duplex_unknown;
- 	}
- 
- 	slave->speed = ecmd.base.speed;
- 	slave->duplex = ecmd.base.duplex;
- 
- 	return 0;
-+
-+speed_duplex_unknown:
-+	slave->speed = SPEED_UNKNOWN;
-+	slave->duplex = DUPLEX_UNKNOWN;
-+
-+	return 1;
- }
- 
- const char *bond_slave_link_status(s8 link)
+ 	/*
+ 	 * Must be able to sleep on PREEMPT_RT because of the slowpath in
 -- 
 2.51.0
 
