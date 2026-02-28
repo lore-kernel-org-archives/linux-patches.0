@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D88375AC8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD432344D9A
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301734; cv=none; b=SWYb5fqthgJRsBttTI6ksA1SbZO2VvrY/31ucc9cP4u0MTkLlujyf6F5vwWF53MjVlLb0XBjaOoephfjPRCJ2qjyjFvWqajWNtKD2NWhnpaOmKWg0j61HBTunFSqfUWXzJyHOtL7qvfY5o5b2aSKac3+ul1MQuBc5TsLQilKgBM=
+	t=1772301734; cv=none; b=iKZSwUml6dvc0A/6Jc9HuXUwKIgUKKfUZZwf4ot6+wtm3r5lCS85To5ucMZB3jqjmvX7ChgAi2oB4cx8o7qRXtfgcXy9voU4Dv3y3PZUbtCN2q8OGTSLq45TPqL5G51KkH8FHYhQEeAIs8N5I7CVfMYhMlGLX+QZh74kYeOpNaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301734; c=relaxed/simple;
-	bh=K5DiuZsv4IUNm+apO3Ubr+ANYjFiZhbryPVWeSG/2yo=;
+	bh=zYIzl0tjR4joTmSE/21WblCYHDXnig/KEGy6hs2/Epk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aLo0gEwcSDx6AbC+CwwcV8PlGzVWdU9HIPXh3Yfjx81DrLSLwaGZxuTJ5xcF5LXh5e35sQ1YCxu2++yRGuEOanL4hiFHFxSK+bfSC0Rl63XKSgp6sVLK28IUn35BistIZVgQlaB9UXDZdgbXerXH+E6MsQ3k38fwQXt0QPNGGHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bxLJDRdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WEYF82mSDc1kw/JXLe4A4zenk7CWQ5F2bFEUi8T1yvmbzb2z8fBS2PQW6EN0GCdjiT2tck0qcOTS+xHkHLHCFwlnBgAtchZT+JEUkBvV3sCVGuzaKLGSw66n6e3Onza0u2BBUGic95q3vbp9QayIZ4HCp3aeJ5zj11l33xy7xbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SVJp70/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bxLJDRdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B04C116D0;
-	Sat, 28 Feb 2026 18:02:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SVJp70/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A160C19423;
+	Sat, 28 Feb 2026 18:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301734;
-	bh=K5DiuZsv4IUNm+apO3Ubr+ANYjFiZhbryPVWeSG/2yo=;
+	bh=zYIzl0tjR4joTmSE/21WblCYHDXnig/KEGy6hs2/Epk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxLJDRdMuEDGFe5Wr626/6cWLeGxjJsKU+GFaaOtXx4G3ZPUcD3NK1oS9iqXhZi2l
-	 Kg1U3bu08U7nNqiJD1RmSik3d4e0lGDtjcRjFKLJYmoaD1UBOwTxXPMfNYNjiC06gT
-	 2ASKrwfue8b0vy8InR1TihyfyNQ+PRVwV6H5aO2lQG/0k0pu5XovS8bXWoTnIM3p55
-	 EMMf9awWNs31omEbVe9IqFyc1xuC7lhjGRoyK+rlE+0bT1IgxrpBsMCpTY7SzbiF2E
-	 KbH4zLrHWZzBjkbRGmMwemuIR9hZwxsjxeTwkcPzr5RCBqzpZXBfQ4TrFJzNVcsb1n
-	 Etogjy7Z7pnpQ==
+	b=SVJp70/7oS2uzuSw3ZsUMIuL+GZ/dgWO3NsVooXBcG/o5VsbPU7dtCgOopcpjt6xA
+	 +xMZg82gMnE97DInJoEfNgXARhoupNPKtUVt54TIPNrNyBUuewPI5MXL0iFsUWCV31
+	 bKzzti4dbP7p1OS53TLzvNoJ16T2Vkr3v3TJqEvyvudJyMwGezHOEKsqHUIuhdRsVq
+	 Afm0XYiD4Q6CexrsGORi9Kw+AiEzXg1n5BnegfzaBgnDclHey4PVN2ktHd6dVauTRt
+	 nwxagwcbrNH4ZRW49LmGb4BQMrtjRf3CtQvR7krOf2/cYHln9kx5OChKWNUGLSjRhK
+	 VYR8tscfa8Olg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Chia-I Wu <olvaffe@gmail.com>,
+Cc: Lai Jiangshan <jiangshan.ljs@antgroup.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/385] drm/panthor: Make sure we resume the tick when new jobs are submitted
-Date: Sat, 28 Feb 2026 12:55:55 -0500
-Message-ID: <20260228180011.1568201-133-sashal@kernel.org>
+Subject: [PATCH 6.12 134/385] workqueue: Factor out assign_rescuer_work()
+Date: Sat, 28 Feb 2026 12:55:56 -0500
+Message-ID: <20260228180011.1568201-134-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,107 +47,76 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Lai Jiangshan <jiangshan.ljs@antgroup.com>
 
-[ Upstream commit 99820b4b7e50d9651f01d2d55b6b9ba92dcc5b99 ]
+[ Upstream commit 99ed6f62a46e91dc796b785618d646eeded1b230 ]
 
-If the group is already assigned a slot but was idle before this job
-submission, we need to make sure the priority rotation happens in the
-future. Extract the existing logic living in group_schedule_locked()
-and call this new sched_resume_tick() helper from the "group is
-assigned a slot" path.
+Move the code to assign work to rescuer and assign_rescuer_work().
 
-v2:
-- Add R-b
-
-v3:
-- Re-use queue_mask to clear the bit
-- Collect R-b
-
-Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
-Link: https://patch.msgid.link/20251128094839.3856402-8-boris.brezillon@collabora.com
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Lai Jiangshan <jiangshan.ljs@antgroup.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: e5a30c303b07 ("workqueue: Process rescuer work items one-by-one using a cursor")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 43 +++++++++++++++++++------
- 1 file changed, 34 insertions(+), 9 deletions(-)
+ kernel/workqueue.c | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 6be977e69b192..9124df017a1a4 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -2514,14 +2514,33 @@ static void sync_upd_work(struct work_struct *work)
- 		sched_queue_delayed_work(sched, tick, 0);
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 3c87eb98609c0..256d91aff181d 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -3407,6 +3407,23 @@ static int worker_thread(void *__worker)
+ 	goto woke_up;
  }
  
-+static void sched_resume_tick(struct panthor_device *ptdev)
++static bool assign_rescuer_work(struct pool_workqueue *pwq, struct worker *rescuer)
 +{
-+	struct panthor_scheduler *sched = ptdev->scheduler;
-+	u64 delay_jiffies, now;
++	struct worker_pool *pool = pwq->pool;
++	struct work_struct *work, *n;
 +
-+	drm_WARN_ON(&ptdev->base, sched->resched_target != U64_MAX);
-+
-+	/* Scheduler tick was off, recalculate the resched_target based on the
-+	 * last tick event, and queue the scheduler work.
++	/*
++	 * Slurp in all works issued via this workqueue and
++	 * process'em.
 +	 */
-+	now = get_jiffies_64();
-+	sched->resched_target = sched->last_tick + sched->tick_period;
-+	if (sched->used_csg_slot_count == sched->csg_slot_count &&
-+	    time_before64(now, sched->resched_target))
-+		delay_jiffies = min_t(unsigned long, sched->resched_target - now, ULONG_MAX);
-+	else
-+		delay_jiffies = 0;
++	list_for_each_entry_safe(work, n, &pool->worklist, entry) {
++		if (get_work_pwq(work) == pwq && assign_work(work, rescuer, &n))
++			pwq->stats[PWQ_STAT_RESCUED]++;
++	}
 +
-+	sched_queue_delayed_work(sched, tick, delay_jiffies);
++	return !list_empty(&rescuer->scheduled);
 +}
 +
- static void group_schedule_locked(struct panthor_group *group, u32 queue_mask)
- {
- 	struct panthor_device *ptdev = group->ptdev;
- 	struct panthor_scheduler *sched = ptdev->scheduler;
- 	struct list_head *queue = &sched->groups.runnable[group->priority];
--	u64 delay_jiffies = 0;
- 	bool was_idle;
--	u64 now;
+ /**
+  * rescuer_thread - the rescuer thread function
+  * @__rescuer: self
+@@ -3461,7 +3478,6 @@ static int rescuer_thread(void *__rescuer)
+ 		struct pool_workqueue *pwq = list_first_entry(&wq->maydays,
+ 					struct pool_workqueue, mayday_node);
+ 		struct worker_pool *pool = pwq->pool;
+-		struct work_struct *work, *n;
  
- 	if (!group_can_run(group))
- 		return;
-@@ -2566,13 +2585,7 @@ static void group_schedule_locked(struct panthor_group *group, u32 queue_mask)
- 	/* Scheduler tick was off, recalculate the resched_target based on the
- 	 * last tick event, and queue the scheduler work.
- 	 */
--	now = get_jiffies_64();
--	sched->resched_target = sched->last_tick + sched->tick_period;
--	if (sched->used_csg_slot_count == sched->csg_slot_count &&
--	    time_before64(now, sched->resched_target))
--		delay_jiffies = min_t(unsigned long, sched->resched_target - now, ULONG_MAX);
--
--	sched_queue_delayed_work(sched, tick, delay_jiffies);
-+	sched_resume_tick(ptdev);
- }
+ 		__set_current_state(TASK_RUNNING);
+ 		list_del_init(&pwq->mayday_node);
+@@ -3472,18 +3488,9 @@ static int rescuer_thread(void *__rescuer)
  
- static void queue_stop(struct panthor_queue *queue,
-@@ -3129,6 +3142,18 @@ queue_run_job(struct drm_sched_job *sched_job)
+ 		raw_spin_lock_irq(&pool->lock);
  
- 		group_schedule_locked(group, BIT(job->queue_idx));
- 	} else {
-+		u32 queue_mask = BIT(job->queue_idx);
-+		bool resume_tick = group_is_idle(group) &&
-+				   (group->idle_queues & queue_mask) &&
-+				   !(group->blocked_queues & queue_mask) &&
-+				   sched->resched_target == U64_MAX;
-+
-+		/* We just added something to the queue, so it's no longer idle. */
-+		group->idle_queues &= ~queue_mask;
-+
-+		if (resume_tick)
-+			sched_resume_tick(ptdev);
-+
- 		gpu_write(ptdev, CSF_DOORBELL(queue->doorbell_id), 1);
- 		if (!sched->pm.has_ref &&
- 		    !(group->blocked_queues & BIT(job->queue_idx))) {
+-		/*
+-		 * Slurp in all works issued via this workqueue and
+-		 * process'em.
+-		 */
+ 		WARN_ON_ONCE(!list_empty(&rescuer->scheduled));
+-		list_for_each_entry_safe(work, n, &pool->worklist, entry) {
+-			if (get_work_pwq(work) == pwq &&
+-			    assign_work(work, rescuer, &n))
+-				pwq->stats[PWQ_STAT_RESCUED]++;
+-		}
+ 
+-		if (!list_empty(&rescuer->scheduled)) {
++		if (assign_rescuer_work(pwq, rescuer)) {
+ 			process_scheduled_works(rescuer);
+ 
+ 			/*
 -- 
 2.51.0
 
