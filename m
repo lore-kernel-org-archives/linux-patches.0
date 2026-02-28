@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F9142DFFA
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D47341674
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301200; cv=none; b=MvvqLPrOyre8jlAfNFga9S0wnaRiYXZWaRhToNnMhXBSrnYoyq/ex95tOH0/2pHbE1h4VY5fHPRLOjLaj033zFnw9HJcaSEROuvia/cKSNTwMWo45CPwbpSRgSH6eRqf5OQsYiYwqCBjI+ZosqL0fC51+IWeN6mmKIGZNO4tV9g=
+	t=1772301201; cv=none; b=ZcnhPV9x8Qwo0Cg5e0CcsCGd+1DmaUjzYyeUftI/+HThIzgAU8VNlfBpdxnA4a7QlBI4ZEFF//KgirPOqrp17KHVcc1/qOUWw71Il1ZuAyxKUzsYzsPZHg/lfc8+PyJmZzgg1+7aYlYVj2Z2t1F6QYl1CkCNV4OROmQgBzeWTOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301200; c=relaxed/simple;
-	bh=P4+DSjc31sZ+lPxmi+d1cV3XvKHl283IqheB5hvnv0I=;
+	s=arc-20240116; t=1772301201; c=relaxed/simple;
+	bh=+om7j3OIeYvJy31qwL1aOQAuJXnwldHeHf3J34hMdVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LteQdsZ6MlX7qDHD16tJM05OE6FxbD58U4ZWnGNBq+B57TFqNX4drntCD4RfZSRWecvuIjIEXCDXApFiKqdfhAfAIhdkAvlUoituOnIl/u6g/pITNEeOs6S5Lj4v6dZPYzt98plO84TblRGt1jXzGIMavj5hS9ZKux2yAZQKD+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mKo/lNn9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=blQT/6nKqw3JGtJJE6SJqoDMEtYcSl9nAD9/4iEcsZqHJH8qmcUpOnJrRnOYkhbWJ2pWJ0GOb2292CfBoy00PI9nPKb8BiiSyBiuyT+86Vv8th92ZwwVgVn1lAlgNZ8MJdDtlCg1ioEiUwPohX/pqFSg61d3c7YZR3sSjTmmVKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EuaZ2Riy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mKo/lNn9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172B7C2BC87;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EuaZ2Riy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2920C116D0;
 	Sat, 28 Feb 2026 17:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301200;
-	bh=P4+DSjc31sZ+lPxmi+d1cV3XvKHl283IqheB5hvnv0I=;
+	s=k20201202; t=1772301201;
+	bh=+om7j3OIeYvJy31qwL1aOQAuJXnwldHeHf3J34hMdVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKo/lNn9FXOmxxBpgDV/cYK/a0ampJQ+fAhaarww1eEtQhdwBpDMlMc4K/M26rsk6
-	 Kz18/A3qfdtIZzsE5qdn15qy6iL+Sz/STl/FyNBEm3OksaAoxvJ1eA6kKM9DUc2Vb8
-	 dY89EIplQTTgpFJLpXc0WDMQPLj1sjwCd3usQ+1EjAeLSfiyx5MgFkwQXfr3qLgRnX
-	 1sC+cPOK2wG2OGNpNBrHRUJIrmUHliY8ZDXCZ3zsTo7GmLYQb0Y3lY49Fq9ImYPkMO
-	 fy2qVxOr4gIr15dN3+6jtXYUEOgO32TTrM+nc/RjMYWLRMp6gkPnnjFknZF2meYNHp
-	 Xbmr++5iyUwUQ==
+	b=EuaZ2RiyYMUI1gIFH5R+l9ksTjK1tr4BecGcsAOy/QI5TYFtCHGUfgUasgDUpZzb0
+	 ZTI5FIzpZYoUGGBEDGvaTEUaT/i3woiWm52gZdKW4Fl00M2XO0JwSRLTDKxbuxd/VJ
+	 zKQB78eFJ3a+8ro9cD5V/JL/f0zwRHi5C9qi9qfReTdnwhdwLakIB9i8vjVw5g0Ej4
+	 KFrDre2DdIjX3M15nIa119UYN7VuEgvvCADk+jfGBKrzzEQfGXKSmn4kLKBez70CMU
+	 unPmIOQ433SdHl8mOvoS0TFntR4AIaJX6ZJXyBJ+i35zD2lAIZsUpcR2dkqEippYe5
+	 3AACBAnmEBgHQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jack Yu <jack.yu@realtek.com>,
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 373/752] ASoC: rt721-sdca: Fix issue of fail to detect OMTP jack type
-Date: Sat, 28 Feb 2026 12:41:24 -0500
-Message-ID: <20260228174750.1542406-373-sashal@kernel.org>
+Subject: [PATCH 6.18 374/752] regulator: core: Remove regulator supply_name length limit
+Date: Sat, 28 Feb 2026 12:41:25 -0500
+Message-ID: <20260228174750.1542406-374-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,40 +47,65 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jack Yu <jack.yu@realtek.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 5578da7d957fbaf91f6c39ba2363c2d2e4273183 ]
+[ Upstream commit e243cdd87b911ce9968b62e4ab2b680dfadc4341 ]
 
-Add related HP-JD settings to fix issue of fail to detect
-OMTP jack type.
+When creating the regulator object, associated with a consumer device,
+the supply_name is string formatted into a statically sized buffer on
+the stack, then strdup()'ed onto the heap.
 
-Signed-off-by: Jack Yu <jack.yu@realtek.com>
-Link: https://patch.msgid.link/20260210074335.2337830-1-jack.yu@realtek.com
+Not only is the dance on the stack unnecessary, but when the device's
+name is long we might not fit the constructed supply_name in the fixed
+64 byte buffer on the stack.
+
+One such case can be seen on the Qualcomm Rb3Gen2 board, where we find a
+PCIe controller, with a PCIe switch, with a USB controller, with a USB
+hub, consuming a regulator. In this example the dev->kobj.name itself is
+62 characters long.
+
+Drop the temporary buffer on the stack and kasprintf() the string
+directly on the heap, both to simplify the code, and to remove the
+length limitation.
+
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260211-regulator-supply-name-length-v1-1-3875541c1576@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt721-sdca.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/core.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/sound/soc/codecs/rt721-sdca.c b/sound/soc/codecs/rt721-sdca.c
-index 5f7b505d54147..53cec09d29085 100644
---- a/sound/soc/codecs/rt721-sdca.c
-+++ b/sound/soc/codecs/rt721-sdca.c
-@@ -245,12 +245,12 @@ static void rt721_sdca_jack_preset(struct rt721_sdca_priv *rt721)
- 	regmap_write(rt721->mbq_regmap, 0x5b10007, 0x2000);
- 	regmap_write(rt721->mbq_regmap, 0x5B10017, 0x1b0f);
- 	rt_sdca_index_write(rt721->mbq_regmap, RT721_CBJ_CTRL,
--		RT721_CBJ_A0_GAT_CTRL1, 0x2a02);
-+		RT721_CBJ_A0_GAT_CTRL1, 0x2205);
- 	rt_sdca_index_write(rt721->mbq_regmap, RT721_CAP_PORT_CTRL,
- 		RT721_HP_AMP_2CH_CAL4, 0xa105);
- 	rt_sdca_index_write(rt721->mbq_regmap, RT721_VENDOR_ANA_CTL,
- 		RT721_UAJ_TOP_TCON14, 0x3b33);
--	regmap_write(rt721->mbq_regmap, 0x310400, 0x3023);
-+	regmap_write(rt721->mbq_regmap, 0x310400, 0x3043);
- 	rt_sdca_index_write(rt721->mbq_regmap, RT721_VENDOR_ANA_CTL,
- 		RT721_UAJ_TOP_TCON14, 0x3f33);
- 	rt_sdca_index_write(rt721->mbq_regmap, RT721_VENDOR_ANA_CTL,
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 17c60d9547dc5..765bd1b5deb3a 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1838,8 +1838,6 @@ static const struct file_operations constraint_flags_fops = {
+ #endif
+ };
+ 
+-#define REG_STR_SIZE	64
+-
+ static void link_and_create_debugfs(struct regulator *regulator, struct regulator_dev *rdev,
+ 				    struct device *dev)
+ {
+@@ -1887,15 +1885,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
+ 	lockdep_assert_held_once(&rdev->mutex.base);
+ 
+ 	if (dev) {
+-		char buf[REG_STR_SIZE];
+-		int size;
+-
+-		size = snprintf(buf, REG_STR_SIZE, "%s-%s",
+-				dev->kobj.name, supply_name);
+-		if (size >= REG_STR_SIZE)
+-			return NULL;
+-
+-		supply_name = kstrdup(buf, GFP_KERNEL);
++		supply_name = kasprintf(GFP_KERNEL, "%s-%s", dev->kobj.name, supply_name);
+ 		if (supply_name == NULL)
+ 			return NULL;
+ 	} else {
 -- 
 2.51.0
 
