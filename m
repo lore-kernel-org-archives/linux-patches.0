@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65BE35AC28
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6863D34A3DC
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302763; cv=none; b=MO/7Jw1Jg+kxR4+jG1XcKsPpsA8Fh28tWXDD6plgNl29pB2oFxKwn4YunItfcgAyHWjmKdKsOinLBsYGVgWWuWAeHcRFDUjPzvbkdU7kI9jV1t29DKvwJJD2XhL2bGgaKdq74fYOs6JyZ/UHABuwSsOCC+/Qr5ZbOrBO98Y1DMk=
+	t=1772302764; cv=none; b=vAPCWKnrooBhOVTyYfpls3EJSdhyRB6PdRVPXQwjY4947uXBCbR3AFcBAaYdFtcaJrcOy7GviNHLN4yl6IXoosjyVz8MlkpsVFtmE0wexygB4zM/XO0ZnaftMWwEnJrtqAR65NiB7EvaUoUHogcOAzCXhFhXV/PZFKSAE+gKdgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302763; c=relaxed/simple;
-	bh=Y+7EBLlx3XvRZIAFGAYWoimeyMNTYn2SPBM1t1h4aPA=;
+	s=arc-20240116; t=1772302764; c=relaxed/simple;
+	bh=7FuBXoDjyFWkfqQuHCkhgl6rLFGuqtifIM7LQkIvrk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRyXF3J7d57dDXCe2MSEfKteTNy9ITc/CJ2EewQ4msfpkI2YspxI5xdkOh/WSKnyNk4HN4D422ZcLTB7vJ4uZCIWlgVcg0u37oBXXTGRZj9bl2+C6UeJm86DRoysXXS7TSs0Xbfs8x2DQH5vQjX8rxK3tTIOfMQwzCBpdLzO9Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QEQT7p/0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=drt1A1LRGPYyhCMz12etU4K8LESElj5TaQNTLz/Q0QBa6qYAsCCOSaVJPCRs58KS1PmHhvCEFlYP8yeBo6ymWK7qgShhPakD+lbkPr528HclPta+QCd1A8To6J02OVWYqK/jQf2/UZ9L0NRHPwjnyunupHRIdEH1jr+bYGf811Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o8Nyrba6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QEQT7p/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0783FC116D0;
-	Sat, 28 Feb 2026 18:19:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o8Nyrba6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD239C19423;
+	Sat, 28 Feb 2026 18:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302763;
-	bh=Y+7EBLlx3XvRZIAFGAYWoimeyMNTYn2SPBM1t1h4aPA=;
+	s=k20201202; t=1772302764;
+	bh=7FuBXoDjyFWkfqQuHCkhgl6rLFGuqtifIM7LQkIvrk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QEQT7p/0zZhtHGsS2+NUK91Ek+etP/4RbP3pIxnsHOYn1hoKRsPFD51tjVzEj/aSm
-	 gs3WG23rzOFyZLRCc2VBXARg2M9zRBLnULIVrLf8/eINjesCQXCu2b4KLSZcM8/bqz
-	 08sxRjVrsbd99GAhrBoT0DkTJm2ahpZE7rHNStdSHxEGIGUl7KnGrUJKnhE+m7DasX
-	 3PHHXFbYk2OUcukCwxODQl/6HOfhzPWby4ct8DN32Kf7bwkJIxccw9SYTkURqd/Viu
-	 a7DPdqt/gQ+5vvV6ud7YrThrcIhIKTEWBwO6iRWESnXJuWKYtRCeWBDso1CgQtI4Yg
-	 wKOlFk3adipBQ==
+	b=o8Nyrba6xQEpoJzYMLW1Dw99oLZS5bXugZ7ZAgOcg0Akt25zxEM9oELzgnChJ6BgK
+	 oN4kRgba20ncyjO5f6JyAcjVX7F/oJYCVWJilvWIG2VCMcrAEnOVfHXzC7OlVRmysW
+	 GqqnvIr34AJkLsEhrMNCGAIgNsYyVWS8iQvEr0JeN8v2uLGwt9/10ma0BwawcroH9m
+	 VQgm99ejMZ0zTA4HVhdXQ9pT43ZWUuhZ4NrmWEhpN8hk/6HX8ZXityMkgBSP/oaTW3
+	 PzL0MFQVaVclysTPA/QLJ0qy3W45CPzGH6Mv63kwk+ARShWGD8hPQMvBBe0EgvuqTJ
+	 WXpSjl8stxJvw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Wei Li <unsw.weili@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 134/147] iio: sca3000: Fix a resource leak in sca3000_probe()
-Date: Sat, 28 Feb 2026 13:17:22 -0500
-Message-ID: <20260228181736.1605592-134-sashal@kernel.org>
+Subject: [PATCH 5.10 135/147] pinctrl: single: fix refcount leak in pcs_add_gpio_func()
+Date: Sat, 28 Feb 2026 13:17:23 -0500
+Message-ID: <20260228181736.1605592-135-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -48,40 +47,48 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Wei Li <unsw.weili@gmail.com>
 
-[ Upstream commit 62b44ebc1f2c71db3ca2d4737c52e433f6f03038 ]
+[ Upstream commit 353353309b0f7afa407df29e455f9d15b5acc296 ]
 
-spi->irq from request_threaded_irq() not released when
-iio_device_register() fails. Add an return value check and jump to a
-common error handler when iio_device_register() fails.
+of_parse_phandle_with_args() returns a device_node pointer with refcount
+incremented in gpiospec.np. The loop iterates through all phandles but
+never releases the reference, causing a refcount leak on each iteration.
 
-Fixes: 9a4936dc89a3 ("staging:iio:accel:sca3000 Tidy up probe order to avoid a race.")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Add of_node_put() calls to release the reference after extracting the
+needed arguments and on the error path when devm_kzalloc() fails.
+
+This bug was detected by our static analysis tool and verified by my
+code review.
+
+Fixes: a1a277eb76b3 ("pinctrl: single: create new gpio function range")
+Signed-off-by: Wei Li <unsw.weili@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/sca3000.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-single.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/accel/sca3000.c b/drivers/iio/accel/sca3000.c
-index 194738660523d..10a4bf32918a7 100644
---- a/drivers/iio/accel/sca3000.c
-+++ b/drivers/iio/accel/sca3000.c
-@@ -1502,7 +1502,11 @@ static int sca3000_probe(struct spi_device *spi)
- 	if (ret)
- 		goto error_free_irq;
- 
--	return iio_device_register(indio_dev);
-+	ret = iio_device_register(indio_dev);
-+	if (ret)
-+		goto error_free_irq;
-+
-+	return 0;
- 
- error_free_irq:
- 	if (spi->irq)
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index 07bf090420453..491a46e330b30 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -1368,6 +1368,7 @@ static int pcs_add_gpio_func(struct device_node *node, struct pcs_device *pcs)
+ 		}
+ 		range = devm_kzalloc(pcs->dev, sizeof(*range), GFP_KERNEL);
+ 		if (!range) {
++			of_node_put(gpiospec.np);
+ 			ret = -ENOMEM;
+ 			break;
+ 		}
+@@ -1377,6 +1378,7 @@ static int pcs_add_gpio_func(struct device_node *node, struct pcs_device *pcs)
+ 		mutex_lock(&pcs->mutex);
+ 		list_add_tail(&range->node, &pcs->gpiofuncs);
+ 		mutex_unlock(&pcs->mutex);
++		of_node_put(gpiospec.np);
+ 	}
+ 	return ret;
+ }
 -- 
 2.51.0
 
