@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75723603DE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB18326D63
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300978; cv=none; b=Wk43Z7zezm96eA+86ARP9dUf/zk5u/sfD9yF7A8lZJtXE3BkjGwhyVlLysQslFLlonmuGmBQ0vw3ivDm3RPqwQJ5BiJpkqvoQUxF9XES3Vje8oldE4Nn5Q3CxGlOg99v1K+AmUM1EfLAzPn+Wu2XJ7M6OSmCOUOdcSeeQAzL3hs=
+	t=1772300979; cv=none; b=dYVS/nZH5ARfuzO7mThEg0Yo/uglsmj4bQ252IozZwUZ2I8bxeXp/q5CnrlDaj90ykepsgZlgH7Ed/HkTfxYzKtsaolvxw1C5S0X5p03wIYKksj7Al8vg4T4P+Mx6YtWUE/XnMFEii6Rc8D0VURM6hRyNjolzM2y5NDn3fJEp8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300978; c=relaxed/simple;
-	bh=wkjov3Hzo0Vq4Io4iYrVXRYTk90SdR+RN2kGZrPpARE=;
+	s=arc-20240116; t=1772300979; c=relaxed/simple;
+	bh=FY8CeVY88weBCGa2RQnVCBng5D48wMZTOLCW68rPoiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MQvbPsABm+EcTm2S5HKmtgEruWCkoo0M1n2t0+idox4Wv7kGVJ8Q+NdYstQAYNr6P7q8S/H1JPGkM8+Zp+NfEpf++VqmtFdSqzysVoXKKzaMpHpp/PxsMgFmXHZqqsn8thwut1vWll1iuIMEU1lnP4EpDWGy/sIqvEtmeO2o6J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XHicSjYX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uh0j5ShUsmSMtACbdnppcA47h3oj/BFLQnwIQ4Sb5HhXa8+GPa2cBShMdzudLXhBVNXpqoN8heGzSUMINbpOlXhLGYFtxJbEm2az8t+FqsQmn6t80CcI3uermW6Y+1Fa84O/yqyHuSPUD+Hv3fGxfib+x4iZ5HtfsBfoqoA/snY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IdEDdEFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XHicSjYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21856C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IdEDdEFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC18C2BC87;
 	Sat, 28 Feb 2026 17:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300978;
-	bh=wkjov3Hzo0Vq4Io4iYrVXRYTk90SdR+RN2kGZrPpARE=;
+	s=k20201202; t=1772300979;
+	bh=FY8CeVY88weBCGa2RQnVCBng5D48wMZTOLCW68rPoiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHicSjYXSYg06gER7acYq7SbqQgx0iU2fCXFEwWLYQvvbaUqqQiP9S3Bxe0IGKDUq
-	 W01Xh8792YeTNxWMKoDW7Jod4ip6tzPTIDJ3rLvx7Q7PNOcNrldnBrvgeDscT814qm
-	 biHgexVSWWq7iXNwtTV1dzhCFU5AET4Rjzr8phoLE586ebflzTAFTlxfYcacO686hg
-	 dNIktG9t0U9wjR/sx+qOhmJ0yuNHrpNkYKSPdSpsW4UBaWEyEjbMqZUUOEbmB+ysXZ
-	 NGNKkkwPbX/Gfw499gea3/JpnsKrfENjQlW5r/rpddjUlruOQrvOMDJ7ERSRs9/3LF
-	 /oqvNur7H2tUA==
+	b=IdEDdEFVSeXSEmmc7l3aqTD2CQg4KyLPsd6r06wqYgT66i0Xs5O70BhE221pTw0uh
+	 nwp4IlWbT+7FckoZjtuLgnmnYMkL1iX7y2paN8XRdasy3NKvu3EYUIJutqUuLZMlZ6
+	 2lXjIHuAg8tEGBPObe+GxH4XR4/4Cy+hmXuCscZSd4EEdC9+23XIeaLJ6wBiTIidYF
+	 a9yLnitzJHP+gC2nRkYS+oezu2f5QYqy/LK44O71Ai8jiSIZizKM6rihD1ydvAbuMx
+	 goWhMYmR6iTOOGv1aZjPrAZeB+31zlRHSKLZ1GvLplsxMp+M5BEqsCVm8svnwMb+H0
+	 D6EgWw6jSWZWA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+Cc: Suraj Kandpal <suraj.kandpal@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 107/752] drm/xe/vm: Skip ufence association for CPU address mirror VMA during MAP
-Date: Sat, 28 Feb 2026 12:36:58 -0500
-Message-ID: <20260228174750.1542406-107-sashal@kernel.org>
+Subject: [PATCH 6.18 108/752] drm/display/dp_mst: Add protection against 0 vcpi
+Date: Sat, 28 Feb 2026 12:36:59 -0500
+Message-ID: <20260228174750.1542406-108-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -44,46 +44,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-[ Upstream commit 7f08cc5b3cc3bf6416f8b55bff906f67ed75637d ]
+[ Upstream commit 342ccffd9f77fc29fe1c05fd145e4d842bd2feaa ]
 
-The MAP operation for a CPU address mirror VMA does not require ufence
-association because such mappings are not GPU-synchronized and do not
-participate in GPU job completion signaling.
+When releasing a timeslot there is a slight chance we may end up
+with the wrong payload mask due to overflow if the delayed_destroy_work
+ends up coming into play after a DP 2.1 monitor gets disconnected
+which causes vcpi to become 0 then we try to make the payload =
+~BIT(vcpi - 1) which is a negative shift. VCPI id should never
+really be 0 hence skip changing the payload mask if VCPI is 0.
 
-Remove the unnecessary ufence addition for this case to avoid -EBUSY
-failure in check_ufence of unbind ops.
+Otherwise it leads to
+<7> [515.287237] xe 0000:03:00.0: [drm:drm_dp_mst_get_port_malloc
+[drm_display_helper]] port ffff888126ce9000 (3)
+<4> [515.287267] -----------[ cut here ]-----------
+<3> [515.287268] UBSAN: shift-out-of-bounds in
+../drivers/gpu/drm/display/drm_dp_mst_topology.c:4575:36
+<3> [515.287271] shift exponent -1 is negative
+<4> [515.287275] CPU: 7 UID: 0 PID: 3108 Comm: kworker/u64:33 Tainted: G
+S U 6.17.0-rc6-lgci-xe-xe-3795-3e79699fa1b216e92+ #1 PREEMPT(voluntary)
+<4> [515.287279] Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
+<4> [515.287279] Hardware name: ASUS System Product Name/PRIME Z790-P
+WIFI, BIOS 1645 03/15/2024
+<4> [515.287281] Workqueue: drm_dp_mst_wq drm_dp_delayed_destroy_work
+[drm_display_helper]
+<4> [515.287303] Call Trace:
+<4> [515.287304] <TASK>
+<4> [515.287306] dump_stack_lvl+0xc1/0xf0
+<4> [515.287313] dump_stack+0x10/0x20
+<4> [515.287316] __ubsan_handle_shift_out_of_bounds+0x133/0x2e0
+<4> [515.287324] ? drm_atomic_get_private_obj_state+0x186/0x1d0
+<4> [515.287333] drm_dp_atomic_release_time_slots.cold+0x17/0x3d
+[drm_display_helper]
+<4> [515.287355] mst_connector_atomic_check+0x159/0x180 [xe]
+<4> [515.287546] drm_atomic_helper_check_modeset+0x4d9/0xfa0
+<4> [515.287550] ? __ww_mutex_lock.constprop.0+0x6f/0x1a60
+<4> [515.287562] intel_atomic_check+0x119/0x2b80 [xe]
+<4> [515.287740] ? find_held_lock+0x31/0x90
+<4> [515.287747] ? lock_release+0xce/0x2a0
+<4> [515.287754] drm_atomic_check_only+0x6a2/0xb40
+<4> [515.287758] ? drm_atomic_add_affected_connectors+0x12b/0x140
+<4> [515.287765] drm_atomic_commit+0x6e/0xf0
+<4> [515.287766] ? _pfx__drm_printfn_info+0x10/0x10
+<4> [515.287774] drm_client_modeset_commit_atomic+0x25c/0x2b0
+<4> [515.287794] drm_client_modeset_commit_locked+0x60/0x1b0
+<4> [515.287795] ? mutex_lock_nested+0x1b/0x30
+<4> [515.287801] drm_client_modeset_commit+0x26/0x50
+<4> [515.287804] __drm_fb_helper_restore_fbdev_mode_unlocked+0xdc/0x110
+<4> [515.287810] drm_fb_helper_hotplug_event+0x120/0x140
+<4> [515.287814] drm_fbdev_client_hotplug+0x28/0xd0
+<4> [515.287819] drm_client_hotplug+0x6c/0xf0
+<4> [515.287824] drm_client_dev_hotplug+0x9e/0xd0
+<4> [515.287829] drm_kms_helper_hotplug_event+0x1a/0x30
+<4> [515.287834] drm_dp_delayed_destroy_work+0x3df/0x410
+[drm_display_helper]
+<4> [515.287861] process_one_work+0x22b/0x6f0
+<4> [515.287874] worker_thread+0x1e8/0x3d0
+<4> [515.287879] ? __pfx_worker_thread+0x10/0x10
+<4> [515.287882] kthread+0x11c/0x250
+<4> [515.287886] ? __pfx_kthread+0x10/0x10
+<4> [515.287890] ret_from_fork+0x2d7/0x310
+<4> [515.287894] ? __pfx_kthread+0x10/0x10
+<4> [515.287897] ret_from_fork_asm+0x1a/0x30
 
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20251125075628.1182481-6-himal.prasad.ghimiray@intel.com
-Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6303
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Imre Deak <imre.deak@intel.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20251119094650.799135-1-suraj.kandpal@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c | 3 ++-
+ drivers/gpu/drm/display/drm_dp_mst_topology.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index 2444800d0fd35..59ff911f8aad0 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -3179,7 +3179,8 @@ static void op_add_ufence(struct xe_vm *vm, struct xe_vma_op *op,
- {
- 	switch (op->base.op) {
- 	case DRM_GPUVA_OP_MAP:
--		vma_add_ufence(op->map.vma, ufence);
-+		if (!xe_vma_is_cpu_addr_mirror(op->map.vma))
-+			vma_add_ufence(op->map.vma, ufence);
- 		break;
- 	case DRM_GPUVA_OP_REMAP:
- 		if (op->remap.prev)
+diff --git a/drivers/gpu/drm/display/drm_dp_mst_topology.c b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+index 64e5c176d5cce..be749dcad3b58 100644
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -4572,7 +4572,8 @@ int drm_dp_atomic_release_time_slots(struct drm_atomic_state *state,
+ 	if (!payload->delete) {
+ 		payload->pbn = 0;
+ 		payload->delete = true;
+-		topology_state->payload_mask &= ~BIT(payload->vcpi - 1);
++		if (payload->vcpi > 0)
++			topology_state->payload_mask &= ~BIT(payload->vcpi - 1);
+ 	}
+ 
+ 	return 0;
 -- 
 2.51.0
 
