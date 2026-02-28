@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0053321D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5B2333447
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301214; cv=none; b=MuTQO6h5xd8ttBW4kJ++akUdtWmY9f4ZyAkAUusEHfn1g2Dz/85do9A9Q5oM823u8y0n/YEr7LJATkobgzvtpheOJaoiJxM8fnkaNWRXi4smVwYYBhebfbGwQO0kFcCdA+Ug5+xbsESa/9Q8Cl8IIgniLNH86s+110cEjQ+g8sM=
+	t=1772301215; cv=none; b=ZSRLkvbAeAWm5hArveMFUMjshqumHDWpKIChn5+W8xOj0HXMd3mId2uLJKcNenH13nrJtwu/+/df/I/Vfx/BzJHnVb4yhlXrfyg+Tv9y6zXSsuT1h4tmnJIQVJrxs8uCS6cebXz0gh/4RCm0PUJDGkESomnNbq9z/LQWpYgia6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301214; c=relaxed/simple;
-	bh=Frj5Wg4cQizQehTYpq5U9RIBzwG5HQCPs29sGuuHwjo=;
+	s=arc-20240116; t=1772301215; c=relaxed/simple;
+	bh=XbMFJorPElyGQ/hSArPLI1I62rQipWOFxlM56R1D4PA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6AeKdBuSYuBw8GUGzVObC1o/TQtlxdmh306ARA8MxouP49HOP/Y6Y70zCEkm6vdheuWPAiB3FPvv1dA++zZpZ/RkEYdkIrcHZKh95qw+HqTtKSBKBlO2IspizIrYWa1bOGnoxT8JQp77g/kYpCty5S3sp1oo22wx1iAf8RjBAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=faCMALqv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N+c8BxTGbNmF4Ke3LcBMF/wpqVgI5TTkHTrs6JsjygVtIKgAgz1Ng4+XHEUaBNWes2u6P+0oWcsPwIMyLlNc1FAzgfC20UXuwN6L79nf6w8eO/GScGrZ+pMkHQU/h5DzZ01UJTXGebAsP1TDUGQqcxn+E3BrafceETqINebpqqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=suiITwGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="faCMALqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D698DC19423;
-	Sat, 28 Feb 2026 17:53:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="suiITwGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C407EC19424;
+	Sat, 28 Feb 2026 17:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301214;
-	bh=Frj5Wg4cQizQehTYpq5U9RIBzwG5HQCPs29sGuuHwjo=;
+	s=k20201202; t=1772301215;
+	bh=XbMFJorPElyGQ/hSArPLI1I62rQipWOFxlM56R1D4PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faCMALqvoz+s2RD4kEDHPn251MoOmXum6dCDqSgPdYBxNoRPB2ZV9uvsKPrglSbgT
-	 Ssx+41C4nr/k55OJdiQfWOoycoV4vCmEdbpRiHHD30qvlAX0mGTTcsqr/oSH5o6P+r
-	 ocC/3XIsGwFReNqdTeHAHGOEOrGfsIs5O2hVZCjCw1Lv0edmVaQaeuimEHqNPU6tea
-	 OXUFER68OZ8RKoQCEY0ALsbYCZbFKorYWk7TVjIsXmkZ8T59h9we1YggwPJmUbDUHu
-	 GQzU3A7o7nNj3wqkfc1KFe7+8ftZDjPrf6npRPOjCO+77YXB70ICyppKf0jI74rVDH
-	 bFsuQtZtoME8Q==
+	b=suiITwGxSUEIMeC6nep+9gELJL4loNfw3dnG4vymILvp82Wg9Wod+x+x6ak+EypnK
+	 66t6UeZAZTCXz9Dp5LaYLXHm25JQKsfdct+zdh7uGZDVQ8OWbrUsk5+sA56W04jNwc
+	 h5BdgTm8gocYO/TqKWWc/AZQ/r+j4VIUA+SmzCaMhls9ysnyhITUcfYVAabvt71/X8
+	 w3HWi3v8mVPuD776iTEgyKSYuAzIupH+ivEfjg4OiCapSuIFcqG3azRP5JVmFvTR4r
+	 GIaU0ejONP9gWETdjcvjC3vfo8efiOEQm7cjodmI6qZuJAqy6YNhcg8gtq7F35zE8M
+	 SN0aMFT38gBLA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 390/752] arm64: hugetlbpage: avoid unused-but-set-parameter warning (gcc-16)
-Date: Sat, 28 Feb 2026 12:41:41 -0500
-Message-ID: <20260228174750.1542406-390-sashal@kernel.org>
+Subject: [PATCH 6.18 391/752] drm/amd/display: Remove conditional for shaper 3DLUT power-on
+Date: Sat, 28 Feb 2026 12:41:42 -0500
+Message-ID: <20260228174750.1542406-391-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,58 +50,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 729a2e8e9ac47099a967567389cc9d73ef4194ca ]
+[ Upstream commit 1b38a87b8f8020e8ef4563e7752a64182b5a39b9 ]
 
-gcc-16 warns about an instance that older compilers did not:
+[Why]
+Shaper programming has high chance to fail on first time after
+power-on or reboot. This can be verified by running IGT's kms_colorop.
 
-arch/arm64/mm/hugetlbpage.c: In function 'huge_pte_clear':
-arch/arm64/mm/hugetlbpage.c:369:57: error: parameter 'addr' set but not used [-Werror=unused-but-set-parameter=]
+[How]
+Always power on the shaper and 3DLUT before programming by
+removing the debug flag of low power mode.
 
-The issue here is that __pte_clear() does not actually use its second
-argument, but when CONFIG_ARM64_CONTPTE is enabled it still gets
-updated.
-
-Replace the macro with an inline function to let the compiler see
-the argument getting passed down.
-
-Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/pgtable.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
-index 0944e296dd4a4..9016ae8de5c9e 100644
---- a/arch/arm64/include/asm/pgtable.h
-+++ b/arch/arm64/include/asm/pgtable.h
-@@ -175,8 +175,6 @@ static inline pteval_t __phys_to_pte_val(phys_addr_t phys)
- 	__pte(__phys_to_pte_val((phys_addr_t)(pfn) << PAGE_SHIFT) | pgprot_val(prot))
+diff --git a/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c b/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c
+index 6f0e017a8ae29..a9d2aa0b5390f 100644
+--- a/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c
++++ b/drivers/gpu/drm/amd/display/dc/mpc/dcn32/dcn32_mpc.c
+@@ -724,8 +724,7 @@ bool mpc32_program_shaper(
+ 		return false;
+ 	}
  
- #define pte_none(pte)		(!pte_val(pte))
--#define __pte_clear(mm, addr, ptep) \
--				__set_pte(ptep, __pte(0))
- #define pte_page(pte)		(pfn_to_page(pte_pfn(pte)))
+-	if (mpc->ctx->dc->debug.enable_mem_low_power.bits.mpc)
+-		mpc32_power_on_shaper_3dlut(mpc, mpcc_id, true);
++	mpc32_power_on_shaper_3dlut(mpc, mpcc_id, true);
  
- /*
-@@ -1316,6 +1314,13 @@ static inline bool pud_user_accessible_page(pud_t pud)
- /*
-  * Atomic pte/pmd modifications.
-  */
-+
-+static inline void __pte_clear(struct mm_struct *mm,
-+			       unsigned long addr, pte_t *ptep)
-+{
-+	__set_pte(ptep, __pte(0));
-+}
-+
- static inline int __ptep_test_and_clear_young(struct vm_area_struct *vma,
- 					      unsigned long address,
- 					      pte_t *ptep)
+ 	current_mode = mpc32_get_shaper_current(mpc, mpcc_id);
+ 
 -- 
 2.51.0
 
