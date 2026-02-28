@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1098D2737F2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C672533A6F2
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302182; cv=none; b=NOmUynbk1aw8v1SPjStbilGAG6kslbUr5uWvETiHY08PO/pmbi2BfbD+a4ybMm8mZ6b27Qd0B3t9SZh+ALPtizI18kiewMUqA45TuGrrCZky4zumqKFm5XZm/uFt99dNhrXaEMKw72R5oWcOuR/Q8Pi8HNS+cskpAMEtQ7n/LBI=
+	t=1772302182; cv=none; b=pR+Rk8fP2WPhgHbImXVTkUk8T2V3ZtuNADUg+ERdSI9JPRlT3Pp3t2W2lFPB6lKtgiohf70Cmxjfo33iQCE1bYojNrUORs8Ba7nGTTSU+8yoZ69ZL0xlpYC97tugVpurj/nKBxgzgtWpQrxvKhwA99UO14qhqiLyzJKjreRRqGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302182; c=relaxed/simple;
-	bh=6CeozlbN+YPI1gA9B/K4u6Rm1RgKcEWzPrFCIM5P9Ss=;
+	bh=3PQUdqoppMWCEw/60LrWWv9pqIA1R9CbJojKcAgy/Rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5ld0nzgEscyPF0tUPagTm8o7CnJBJ5JXEArA+rqux3UI4dEwXHRPmSRObXbaC3YQvwZiuVGbOrc2ZcxijP6knDGoBYBaxgOo6irskuQx7GchkdvWLZZOfugxyBH5lQT22iRvtyaqo75+bpHg7yJ5wO0V9gSEkVmsgulRknmdT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZPQUIZR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EgKNAPUKB8fbukBM/CILOu3nu9jMZi1fg6Kpzmb9TJdQMAs8BdhsCcavipN3LpMT7WvMEpZxZTbUOJXOYnNMOp0Bl0LyNTJTFAJRjK4ywRGl0wgDsWOm7aAXGLEC1e1kOM4ugZ3w/CwyX+PJn75O+ViDq0hB/e1AYf/JS88rfSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8DmFVXQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZPQUIZR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2B1C116D0;
-	Sat, 28 Feb 2026 18:09:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8DmFVXQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A51C116D0;
+	Sat, 28 Feb 2026 18:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302182;
-	bh=6CeozlbN+YPI1gA9B/K4u6Rm1RgKcEWzPrFCIM5P9Ss=;
+	bh=3PQUdqoppMWCEw/60LrWWv9pqIA1R9CbJojKcAgy/Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZPQUIZR9Yg1kHMm35InukHYByUtTHihFEXOTRiXAXaUDUp0fIL4JTzP0TGBNsS+Z0
-	 j8H8Ni8RMW+B22TvnADdGG5nBBcNN2vfnguqw6cd2CQeap+xr55L89UjMmFh9OFgFv
-	 ozTENhnNOm5IO87AM7Ao3xocK8QNxIPPB6TWGfI34qBQiCH+IaYDfFEWep6Wj9MRy8
-	 lj4QHmmbBqYpt4s2IkkSGjCeFM1ySjRJJQiCjimyYvYQkIAnnmoavAz9q5s7WdRYBE
-	 Z2D2wr4oCKuetlAKByh8viYEylvQhm3R7/4Geuxck7mRpsdnuHiZ0GHb+ySj1JcP8k
-	 lv8+N4BKk0Pzg==
+	b=g8DmFVXQst6rqP1hTsa2s8GVKjTviYAL3w9eiBQNb9UDspAtVklCqlz1gpTzOv+1H
+	 jmcs9O4cMeTU0g2q8o0/tguhEzjUY7vv75F3yeCxXNrmw5O5RMh4sFqrZKxQ3N/Oup
+	 N5r9x64moPrLkC4kpeokdDtuKvZ8UxQDkWUH8fuzOjKXuAPYSKUxHp66PZtb1hmyXD
+	 Gt5VkUn1lLHEilbPOz9I1PWKCOAQtp2oRmQWdKnpAZ4qII/3OAx+y0wwbK7oojZBzD
+	 algz7ptluQFU3woaVZdVBtHg0zsFE2Q2iQFTqn9EAJRupgkGpC/LpWUGPZugbM9OCP
+	 +RHKcNNdlpr+A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Zhu Yanjun <yanjun.Zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+Cc: Malaya Kumar Rout <mrout@redhat.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 182/283] RDMA/rxe: Fix double free in rxe_srq_from_init
-Date: Sat, 28 Feb 2026 13:05:24 -0500
-Message-ID: <20260228180709.1583486-182-sashal@kernel.org>
+Subject: [PATCH 6.6 183/283] tools/power/x86/intel-speed-select: Fix file descriptor leak in isolate_cpus()
+Date: Sat, 28 Feb 2026 13:05:25 -0500
+Message-ID: <20260228180709.1583486-183-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,65 +47,47 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Malaya Kumar Rout <mrout@redhat.com>
 
-[ Upstream commit 0beefd0e15d962f497aad750b2d5e9c3570b66d1 ]
+[ Upstream commit 56c17ee151c6e1a73d77e15b82a8e2130cd8dd16 ]
 
-In rxe_srq_from_init(), the queue pointer 'q' is assigned to
-'srq->rq.queue' before copying the SRQ number to user space.
-If copy_to_user() fails, the function calls rxe_queue_cleanup()
-to free the queue, but leaves the now-invalid pointer in
-'srq->rq.queue'.
+The file descriptor opened in isolate_cpus() when (!level) is true was
+not being closed before returning, causing a file descriptor leak in
+both the error path and the success path.
 
-The caller of rxe_srq_from_init() (rxe_create_srq) eventually
-calls rxe_srq_cleanup() upon receiving the error, which triggers
-a second rxe_queue_cleanup() on the same memory, leading to a
-double free.
+When write() fails at line 950, the function returns at line 953 without
+closing the file descriptor. Similarly, on success, the function returns
+at line 956 without closing the file descriptor.
 
-The call trace looks like this:
-   kmem_cache_free+0x.../0x...
-   rxe_queue_cleanup+0x1a/0x30 [rdma_rxe]
-   rxe_srq_cleanup+0x42/0x60 [rdma_rxe]
-   rxe_elem_release+0x31/0x70 [rdma_rxe]
-   rxe_create_srq+0x12b/0x1a0 [rdma_rxe]
-   ib_create_srq_user+0x9a/0x150 [ib_core]
+Add close(fd) calls before both return statements to fix the resource
+leak. This follows the same pattern used elsewhere in the same function
+where file descriptors are properly closed before returning (see lines
+1005 and 1027).
 
-Fix this by moving 'srq->rq.queue = q' after copy_to_user.
-
-Fixes: aae0484e15f0 ("IB/rxe: avoid srq memory leak")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://patch.msgid.link/20260112015412.29458-1-jiashengjiangcool@gmail.com
-Reviewed-by: Zhu Yanjun <yanjun.Zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 997074df658e ("tools/power/x86/intel-speed-select: Use cgroup v2 isolation")
+Signed-off-by: Malaya Kumar Rout <mrout@redhat.com>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_srq.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/power/x86/intel-speed-select/isst-config.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
-index 2a234f26ac104..c9a7cd38953d3 100644
---- a/drivers/infiniband/sw/rxe/rxe_srq.c
-+++ b/drivers/infiniband/sw/rxe/rxe_srq.c
-@@ -77,9 +77,6 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
- 		goto err_free;
- 	}
- 
--	srq->rq.queue = q;
--	init->attr.max_wr = srq->rq.max_wr;
--
- 	if (uresp) {
- 		if (copy_to_user(&uresp->srq_num, &srq->srq_num,
- 				 sizeof(uresp->srq_num))) {
-@@ -88,6 +85,9 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
+diff --git a/tools/power/x86/intel-speed-select/isst-config.c b/tools/power/x86/intel-speed-select/isst-config.c
+index 5fcc2a92957e7..a5d512866a940 100644
+--- a/tools/power/x86/intel-speed-select/isst-config.c
++++ b/tools/power/x86/intel-speed-select/isst-config.c
+@@ -936,9 +936,11 @@ int isolate_cpus(struct isst_id *id, int mask_size, cpu_set_t *cpu_mask, int lev
+ 		ret = write(fd, "member", strlen("member"));
+ 		if (ret == -1) {
+ 			printf("Can't update to member\n");
++			close(fd);
+ 			return ret;
  		}
+ 
++		close(fd);
+ 		return 0;
  	}
  
-+	srq->rq.queue = q;
-+	init->attr.max_wr = srq->rq.max_wr;
-+
- 	return 0;
- 
- err_free:
 -- 
 2.51.0
 
