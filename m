@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BADB36D9E9
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326A036DA12;
+	Sat, 28 Feb 2026 17:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301442; cv=none; b=Uyud3D+Mm29FnsOJOM/LBqxzWzwpRUA1SJPYsPpN74tMr1dn6TgxqnbAElT4HqO6bdzbMNNyrEgICokB0sHpEazdVnnQrio7C3kXopHBvhuI0YI3tjnOr7y1vA2ApNe4SJowhtuwmLIXn/0jJC3XtgfAx+c7A54DTWfRmTbNewE=
+	t=1772301443; cv=none; b=UuX8iL/7ocrjxlS8+QqI0jVCc0JSZb8USl7yx/A3o3/gWvvhR7H5/fvL7gp29iD998baj7g1qQKjY+ttH/9ZQPAVu0cC/AF/AfQEzQtFu8K+seOkCVspOmv1tMP8T5uSO4xF3tBJg1dF0xOWIKtKKOa0kxg5DOc+Gg77RRGgivc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301442; c=relaxed/simple;
-	bh=JSxcDFknxS5iM5aU8le0mweKjNJSX/1pheTt1QFMtgk=;
+	s=arc-20240116; t=1772301443; c=relaxed/simple;
+	bh=72RPNUc/iXLcDRYOIDPFhqLI8iZaaPVe6lyiIJlNqvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dxan0q6gGZyZkrkQ3+FUaV9N8eMLgk6OiKK6FOqFOFKD82OLd2W90CMPQ3/QyvzsVNfVR5LRkJ4faGyDng/TB8QJsCn4wmsezIT2EJAhxN4VRLQeKHHa0BnSptdJgVVAgwUJdMDZlU0HoLoS52P3Hgm1BxpMkhbklRBZLtqzNFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s+Nf5PCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HxMPjccuKMaF5c6zwNSJ1bhOAdzEA3DEb4z/FYmkUO6PGqOdf95vGbDNWV6Ol7AcibYJ0MTNUK8ZzeU4DOc30mlsJua5/snG8G//el8MCv8WVVXU8N+K54i76+Jj+QDIId4vEGgoLTxxFAOZ9h+467Q/ul8sC/1zXLsJ5ZY+nKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TmRxl3HJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s+Nf5PCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CB2C116D0;
-	Sat, 28 Feb 2026 17:57:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TmRxl3HJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42982C19423;
+	Sat, 28 Feb 2026 17:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301442;
-	bh=JSxcDFknxS5iM5aU8le0mweKjNJSX/1pheTt1QFMtgk=;
+	s=k20201202; t=1772301443;
+	bh=72RPNUc/iXLcDRYOIDPFhqLI8iZaaPVe6lyiIJlNqvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+Nf5PCkHLSoFWapX5HtR3IFJbUa3bmsokox3BppWvoMoMbVcfvR2HBZL1C5Unc5t
-	 NE1X/F/6kuUeTXJyHvpy/H35eOg19RpLRpFi380NNVlHIx0nukg3rwRABd2wQqJ+Dv
-	 PXm0exo9pTS1xh5n6ZOzLEBRjyW9adNsp6+AOANXFDmiEDiKPnsMEu7upwP79PzO0I
-	 gcY24uiFSAST1kPK1PbopND5VA4O0NFtvdn+mH3ytk1+pBRf66RwXxtjcgQdzZfXNs
-	 Id7wlocPDIkaNK+s+bwZAbD646AdFj/dWWAdG0GD04WHw0rS/kDqpfmFt02nvMFgNk
-	 lGefssbeWGJxw==
+	b=TmRxl3HJmzU7hj0uVoH/BymOsrQGNOViqteRMU/HFlgkL0s//BLAbiWBgjyTSq4vM
+	 aCV9GtUSNIZrxnI4KTTJ+0HN+kQSN0FMW5T+RFb/9OcLntkji1WRSVHxXM3jPmXNpS
+	 qiJdgWqSuMgo2lADQJOUmo63fdAv1BX5nNGyUPtTJ7j017/DO96XuWzqrlBtuRvU19
+	 HgEca+YkWvYaxNw638iuYThc/HeIgyIT0o0OGQSuExC4/KnuaXGiN6w3IrCFVdhbo3
+	 MBXQ1itws3mH49RuRr554ahtNmUGLCN7U7oSVh8FfQZ8+Pb+8rXPeKPM8vYXzx7dPn
+	 s7CFm/C8OkrhA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotien Hsu <haotienh@nvidia.com>,
-	stable <stable@kernel.org>,
-	Wayne Chang <waynec@nvidia.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Vlastimil Babka <vbabka@suse.cz>,
+	kernel test robot <oliver.sang@intel.com>,
+	stable@vger.kernel.org,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 628/752] usb: gadget: tegra-xudc: Add handling for BLCG_COREPLL_PWRDN
-Date: Sat, 28 Feb 2026 12:45:39 -0500
-Message-ID: <20260228174750.1542406-628-sashal@kernel.org>
+Subject: [PATCH 6.18 629/752] mm/slab: add rcu_barrier() to kvfree_rcu_barrier_on_cache()
+Date: Sat, 28 Feb 2026 12:45:40 -0500
+Message-ID: <20260228174750.1542406-629-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,73 +51,68 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotien Hsu <haotienh@nvidia.com>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-[ Upstream commit 1132e90840abf3e7db11f1d28199e9fbc0b0e69e ]
+[ Upstream commit b55b423e8518361124ff0a9e15df431b3682ee4f ]
 
-The COREPLL_PWRDN bit in the BLCG register must be set when the XUSB
-device controller is powergated and cleared when it is unpowergated.
-If this bit is not explicitly controlled, the core PLL may remain in an
-incorrect power state across suspend/resume or ELPG transitions.
-Therefore, update the driver to explicitly control this bit during
-powergate transitions.
+After we submit the rcu_free sheaves to call_rcu() we need to make sure
+the rcu callbacks complete. kvfree_rcu_barrier() does that via
+flush_all_rcu_sheaves() but kvfree_rcu_barrier_on_cache() doesn't. Fix
+that.
 
-Fixes: 49db427232fe ("usb: gadget: Add UDC driver for tegra XUSB device mode controller")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Link: https://patch.msgid.link/20260123173121.4093902-1-waynec@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This currently causes no issues because the caches with sheaves we have
+are never destroyed. The problem flagged by kernel test robot was
+reported for a patch that enables sheaves for (almost) all caches, and
+occurred only with CONFIG_KASAN. Harry Yoo found the root cause [1]:
+
+  It turns out the object freed by sheaf_flush_unused() was in KASAN
+  percpu quarantine list (confirmed by dumping the list) by the time
+  __kmem_cache_shutdown() returns an error.
+
+  Quarantined objects are supposed to be flushed by kasan_cache_shutdown(),
+  but things go wrong if the rcu callback (rcu_free_sheaf_nobarn()) is
+  processed after kasan_cache_shutdown() finishes.
+
+  That's why rcu_barrier() in __kmem_cache_shutdown() didn't help,
+  because it's called after kasan_cache_shutdown().
+
+  Calling rcu_barrier() in kvfree_rcu_barrier_on_cache() guarantees
+  that it'll be added to the quarantine list before kasan_cache_shutdown()
+  is called. So it's a valid fix!
+
+[1] https://lore.kernel.org/all/aWd6f3jERlrB5yeF@hyeyoo/
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202601121442.c530bed3-lkp@intel.com
+Fixes: 0f35040de593 ("mm/slab: introduce kvfree_rcu_barrier_on_cache() for cache destruction")
+Cc: stable@vger.kernel.org
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Tested-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ mm/slab_common.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 9d2007f448c04..7f7251c10e952 100644
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -3392,17 +3392,18 @@ static void tegra_xudc_device_params_init(struct tegra_xudc *xudc)
+diff --git a/mm/slab_common.c b/mm/slab_common.c
+index 87bde1d8916be..0f58265ca200e 100644
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -2134,8 +2134,11 @@ EXPORT_SYMBOL_GPL(kvfree_rcu_barrier);
+  */
+ void kvfree_rcu_barrier_on_cache(struct kmem_cache *s)
  {
- 	u32 val, imod;
- 
-+	val = xudc_readl(xudc, BLCG);
- 	if (xudc->soc->has_ipfs) {
--		val = xudc_readl(xudc, BLCG);
- 		val |= BLCG_ALL;
- 		val &= ~(BLCG_DFPCI | BLCG_UFPCI | BLCG_FE |
- 				BLCG_COREPLL_PWRDN);
- 		val |= BLCG_IOPLL_0_PWRDN;
- 		val |= BLCG_IOPLL_1_PWRDN;
- 		val |= BLCG_IOPLL_2_PWRDN;
--
--		xudc_writel(xudc, val, BLCG);
-+	} else {
-+		val &= ~BLCG_COREPLL_PWRDN;
- 	}
-+	xudc_writel(xudc, val, BLCG);
- 
- 	if (xudc->soc->port_speed_quirk)
- 		tegra_xudc_limit_port_speed(xudc);
-@@ -3953,6 +3954,7 @@ static void tegra_xudc_remove(struct platform_device *pdev)
- static int __maybe_unused tegra_xudc_powergate(struct tegra_xudc *xudc)
- {
- 	unsigned long flags;
-+	u32 val;
- 
- 	dev_dbg(xudc->dev, "entering ELPG\n");
- 
-@@ -3965,6 +3967,10 @@ static int __maybe_unused tegra_xudc_powergate(struct tegra_xudc *xudc)
- 
- 	spin_unlock_irqrestore(&xudc->lock, flags);
- 
-+	val = xudc_readl(xudc, BLCG);
-+	val |= BLCG_COREPLL_PWRDN;
-+	xudc_writel(xudc, val, BLCG);
+-	if (s->cpu_sheaves)
++	if (s->cpu_sheaves) {
+ 		flush_rcu_sheaves_on_cache(s);
++		rcu_barrier();
++	}
 +
- 	clk_bulk_disable_unprepare(xudc->soc->num_clks, xudc->clks);
- 
- 	regulator_bulk_disable(xudc->soc->num_supplies, xudc->supplies);
+ 	/*
+ 	 * TODO: Introduce a version of __kvfree_rcu_barrier() that works
+ 	 * on a specific slab cache.
 -- 
 2.51.0
 
