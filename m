@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397D035AC28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB4B3603EC
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302736; cv=none; b=iA282uucHnzEUSnBD2HtYGVFWgogm9jifRYFn73RWhjwQSn+zOCvagHcXSi3XJtbciNcpa7m+I8sBLGkYeCR2qe846aiKER1DGMtQfL5M7dw4imR4zk+4Evc+OrXaGb5qldwqNbKnj2TRDKEbhzAmPOtVoMU6Vk7tmuULrpluLY=
+	t=1772302736; cv=none; b=fLAfTGNkVnOw/Rg/fdBRMtcMfjGU1Sd14ruGjSes4XeeeEpvQ+ZplTGbgu31s5noO9cxCF8A+nVkAJWxWHX2jLfoZOxkCTxZSumYFnmg9p4QWUHXXIvyy84UUXerDVPAG6cMDwejLWskV0Hoxts/lLY3JGP7c6UDXuuXVHoRGcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302736; c=relaxed/simple;
-	bh=SRVzYUSnhSJZM8KQCaBXUXUwWJef5QUJ8Nl814c1hHk=;
+	bh=XqqNWHB2Tjsv/dLLWyOSkjeIM9cY3vNEVjCC3az7YXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uw4Y8FybFtYbfjQ//NWdQ/DOK/TDIaugLPbwJRredCRYb3iibqdgwZqfR0q9Jqo6GxC81iCspglm2AQfZ+pd4ZcvqJZtcK+sV+vgt7Zus1d7fmp5etsGfhnTk2MOnsQpBw1jeDarATZIc3d6k7ZTKWZya6b8RBZynRiGjHw3oaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BzKpZ5Ne; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IdVeavka1dHsDbHg0Ngu1OU6sGrh6tzgr3+YxJS1lcoKtsc4WN45NC7ddQIwac2oliYifU1MaS4miwDB0N83BZtptzqq5ZUxWmnX97SPb/h0LBS3UAMPI/KWqclJNyJNamgvs8dllcg0U6eOcyDiDmwPOvbj1RYBLHZ4DyXZNMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VE1SB2tg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BzKpZ5Ne"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E726C19423;
-	Sat, 28 Feb 2026 18:18:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VE1SB2tg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAF6C19423;
+	Sat, 28 Feb 2026 18:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302736;
-	bh=SRVzYUSnhSJZM8KQCaBXUXUwWJef5QUJ8Nl814c1hHk=;
+	bh=XqqNWHB2Tjsv/dLLWyOSkjeIM9cY3vNEVjCC3az7YXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzKpZ5Ne8V6Xz8HLw1EV4nzGbwis8ChJMG+VatYq9N8ZmSLhIKUB1Vcb2Qy1EQHXW
-	 pzbGqaoelabV0kDkni5Hy/zBhtNnHrYwTiKokgngNiEsloD7bYK2Uo8mWDO7qWd4Eu
-	 TsQhMBOVXGOr4fGPPyV+rpRSi773dIxm40KlVXJ2x1T6Mz8NGdV2U4VGVsFc2w7pT7
-	 qYheMipBOgcQP04Ra2cO0f0C9W6tNJbdbi1rmJUqvYZ6KG8LtkSwsZWXsU//tqFDnV
-	 8kmPVZcLhIS5BUdo0Nl/cCdt/4Ko5MQrjpCDkshgHdUwIkbYjYLX2uiMj8CU7fP9Sl
-	 Noli4u5P+HXNQ==
+	b=VE1SB2tgMEKJS1PqvGMMNVrQvvqK8LQyP7pXTfFFlNTHEZ4eRruhNbhiSh9V4/vIr
+	 no91z/J+L/h+fps12HG1anopeWvRpQAL/yTbwvdmvZEByow7EJ9pcRcNhOeuXfmxrg
+	 yz3Ac6lNwm3blCWflihEmGsuGUjjmv1y0WGGaHKJk7aB+G7UKnGr9kk58Z94dmm1cN
+	 Lv52kbf96YFCNJ3So86E8wu8kdZ0ITkEC0h03/OpkIs2hBNdgOgrtl03LTH1PX3vkE
+	 wN1Hn/OlWKZsyUA3GPgMjlFQpOYzS7aT7Uu+aWaL1gDK3ulRQ28dCoSJnvWUpJp85f
+	 /yTceJJQh3/ug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Yi Liu <liuy22@mails.tsinghua.edu.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+Cc: Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 099/147] RDMA/uverbs: Validate wqe_size before using it in ib_uverbs_post_send
-Date: Sat, 28 Feb 2026 13:16:47 -0500
-Message-ID: <20260228181736.1605592-99-sashal@kernel.org>
+Subject: [PATCH 5.10 100/147] svcrdma: Add a batch Receive posting mechanism
+Date: Sat, 28 Feb 2026 13:16:48 -0500
+Message-ID: <20260228181736.1605592-100-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -47,55 +46,96 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Yi Liu <liuy22@mails.tsinghua.edu.cn>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 1956f0a74ccf5dc9c3ef717f2985c3ed3400aab0 ]
+[ Upstream commit 77f0a2aa5cdde0524eab745f7a117706d3e3014f ]
 
-ib_uverbs_post_send() uses cmd.wqe_size from userspace without any
-validation before passing it to kmalloc() and using the allocated
-buffer as struct ib_uverbs_send_wr.
+Introduce a server-side mechanism similar to commit e340c2d6ef2a
+("xprtrdma: Reduce the doorbell rate (Receive)") to post Receive
+WRs in batch. Its first consumer is svc_rdma_post_recvs(), which
+posts the initial set of Receive WRs.
 
-If a user provides a small wqe_size value (e.g., 1), kmalloc() will
-succeed, but subsequent accesses to user_wr->opcode, user_wr->num_sge,
-and other fields will read beyond the allocated buffer, resulting in
-an out-of-bounds read from kernel heap memory. This could potentially
-leak sensitive kernel information to userspace.
-
-Additionally, providing an excessively large wqe_size can trigger a
-WARNING in the memory allocation path, as reported by syzkaller.
-
-This is inconsistent with ib_uverbs_unmarshall_recv() which properly
-validates that wqe_size >= sizeof(struct ib_uverbs_recv_wr) before
-proceeding.
-
-Add the same validation for ib_uverbs_post_send() to ensure wqe_size
-is at least sizeof(struct ib_uverbs_send_wr).
-
-Fixes: c3bea3d2dc53 ("RDMA/uverbs: Use the iterator for ib_uverbs_unmarshall_recv()")
-Signed-off-by: Yi Liu <liuy22@mails.tsinghua.edu.cn>
-Link: https://patch.msgid.link/20260122142900.2356276-2-liuy22@mails.tsinghua.edu.cn
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: afcae7d7b8a2 ("RDMA/core: add rdma_rw_max_sge() helper for SQ sizing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_cmd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 56 ++++++++++++++++++-------
+ 1 file changed, 42 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
-index 6658de58b5144..cdcdafee07f68 100644
---- a/drivers/infiniband/core/uverbs_cmd.c
-+++ b/drivers/infiniband/core/uverbs_cmd.c
-@@ -2017,7 +2017,10 @@ static int ib_uverbs_post_send(struct uverbs_attr_bundle *attrs)
- 	if (ret)
- 		return ret;
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+index c6ea2903c21a4..4129a2d5cc715 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+@@ -252,6 +252,47 @@ void svc_rdma_release_rqst(struct svc_rqst *rqstp)
+ 		svc_rdma_recv_ctxt_put(rdma, ctxt);
+ }
  
--	user_wr = kmalloc(cmd.wqe_size, GFP_KERNEL);
-+	if (cmd.wqe_size < sizeof(struct ib_uverbs_send_wr))
-+		return -EINVAL;
++static bool svc_rdma_refresh_recvs(struct svcxprt_rdma *rdma,
++				   unsigned int wanted, bool temp)
++{
++	const struct ib_recv_wr *bad_wr = NULL;
++	struct svc_rdma_recv_ctxt *ctxt;
++	struct ib_recv_wr *recv_chain;
++	int ret;
 +
-+	user_wr = kmalloc(cmd.wqe_size, GFP_KERNEL | __GFP_NOWARN);
- 	if (!user_wr)
- 		return -ENOMEM;
++	if (test_bit(XPT_CLOSE, &rdma->sc_xprt.xpt_flags))
++		return false;
++
++	recv_chain = NULL;
++	while (wanted--) {
++		ctxt = svc_rdma_recv_ctxt_get(rdma);
++		if (!ctxt)
++			break;
++
++		trace_svcrdma_post_recv(ctxt);
++		ctxt->rc_temp = temp;
++		ctxt->rc_recv_wr.next = recv_chain;
++		recv_chain = &ctxt->rc_recv_wr;
++	}
++	if (!recv_chain)
++		return false;
++
++	ret = ib_post_recv(rdma->sc_qp, recv_chain, &bad_wr);
++	if (ret)
++		goto err_free;
++	return true;
++
++err_free:
++	trace_svcrdma_rq_post_err(rdma, ret);
++	while (bad_wr) {
++		ctxt = container_of(bad_wr, struct svc_rdma_recv_ctxt,
++				    rc_recv_wr);
++		bad_wr = bad_wr->next;
++		svc_rdma_recv_ctxt_put(rdma, ctxt);
++	}
++	return false;
++}
++
+ static int __svc_rdma_post_recv(struct svcxprt_rdma *rdma,
+ 				struct svc_rdma_recv_ctxt *ctxt)
+ {
+@@ -289,20 +330,7 @@ static int svc_rdma_post_recv(struct svcxprt_rdma *rdma)
+  */
+ bool svc_rdma_post_recvs(struct svcxprt_rdma *rdma)
+ {
+-	struct svc_rdma_recv_ctxt *ctxt;
+-	unsigned int i;
+-	int ret;
+-
+-	for (i = 0; i < rdma->sc_max_requests; i++) {
+-		ctxt = svc_rdma_recv_ctxt_get(rdma);
+-		if (!ctxt)
+-			return false;
+-		ctxt->rc_temp = true;
+-		ret = __svc_rdma_post_recv(rdma, ctxt);
+-		if (ret)
+-			return false;
+-	}
+-	return true;
++	return svc_rdma_refresh_recvs(rdma, rdma->sc_max_requests, true);
+ }
  
+ /**
 -- 
 2.51.0
 
