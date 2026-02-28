@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F7233F38A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C783321D8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301219; cv=none; b=qz3smZd4GFKVyA1VsPNWTbONYvnXMUEm1PYoPIilE6oaumudoT1NblNFPfv0YycOqj3MuNWpuVM38ghQlTkAnDP4Qvdo9JKc/SNvIXPbOsMpR0CRQB+jZqo6ZKoE4RqwsaDM/7/0C4sOsKTurRSQpFDUhqe7RcUy9rBhVW4TOUs=
+	t=1772301220; cv=none; b=i1do6r+gGplKlCEYrQdkK5sWVtlUVB+p6+wKshxIQaMIbMsLjWjuqjBaKLKJ14Iy6iDe5kE+He13iBoIb9Hlq2j/QMFfzmNTvOQHHGnRubr30TpuwDtceU09srAcox3Qi8lZ1OFaNYM49myAgeEwqewMmDYETA1nNMW/+avV30c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301219; c=relaxed/simple;
-	bh=S/ufkfKndE1lpRAhzFu7Mh9CvfodgAG6rXN3XCUlDeI=;
+	s=arc-20240116; t=1772301220; c=relaxed/simple;
+	bh=nq9qkBe4okAHoTat6O8vzfoeylYqMxsyWvi3bxn5F+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BMH7GLycZM6LBqjmAEmTej7hDTlOWt2wtljlltx33GlQ7hKxGhp7JcMuNv8xTqzgg/mxmbLMI96huvr74UIcH6zIBwv3hh8AhYO6YUcNUrdaRZWtEOCUxojKbMTs45MbcAKbznozy+auczirPQXH63eP/yPLuNadOW2sIco/LEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xxpa7S1M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sAJ3+k4oQOummzFjKgCEagBMmRET3wrA+FjdzdxKn5AL5kSMWeO2Y5Fn895v0mh9wxg+zOkc2BtiIo7Oix0OsgEsPRaVqIpZrez5nZFb/MsNMrgXrzf8oJKGrqAiGSe4ZrvCTJsvWkKpE3lH37Z6ZMywJGtqGV0f5g7bjClMW/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=buN6LaVF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xxpa7S1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F8DC116D0;
-	Sat, 28 Feb 2026 17:53:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="buN6LaVF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13A1C116D0;
+	Sat, 28 Feb 2026 17:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301219;
-	bh=S/ufkfKndE1lpRAhzFu7Mh9CvfodgAG6rXN3XCUlDeI=;
+	s=k20201202; t=1772301220;
+	bh=nq9qkBe4okAHoTat6O8vzfoeylYqMxsyWvi3bxn5F+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xxpa7S1Mfp36mMrqO5B+/CENWGGHHV1eMxfmnlKrdpbKTd38P/83gR4noSrIZib4R
-	 e3PmcYsvAoQ4H2lHpC2Y/pH1HF1hu3BfxxUk4J0XZwidmMX+oPpOofSXLdJwOAa+Ht
-	 r4CQiFti5uhR1SFM0tQh1BmEV6A7IUeH8PA853lZ8NLUJKwT0MqtpCr1WqFo2TgmSA
-	 7TuLfaRzv4i2A0Wu0eHtjBLGw7xnBvrwe1h1w6jGUlgT4f5IGXGwqkZGOl8jTVTbnZ
-	 0yIqBRXkrfFK/a5HqFOo8ms9LGfViLTC/N4seJee9Nhhf5rWBnonKHM5+d8Ra48+8V
-	 OAVbmbkZBtvOw==
+	b=buN6LaVFgY49yhtCzr11w3CeKNSgriN2dAr+ETOTrDRZlTt9vaXqyHYtAFHcs7CVx
+	 xvNSWuLtcQGKmeqqOlZlCFuI67SatrcANRX4fzTf/tvp/xTMaJMia4MXtEFnYJUOBY
+	 css8IK2YAY3GFvdjmwSwxeIcWAQtmz62Yg+XCeCKEPmfi7KzAyBp7sdoMJpe+jMNJ4
+	 ETQi34cMpiLOGbg51qEZW9KG9EfbNsw+TgEiIcU5gmD7L+g8x6ZNiQ4dHq0bEdLYmz
+	 Kbm/yBEiIGSKcwOPShtd946ZW0mEL6gMokfX9EVM3pN8fYL8L0l59KZFpZJRaxAK4u
+	 Z+LXYFOgpUSLw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ankit Soni <Ankit.Soni@amd.com>,
-	Srikanth Aithal <sraithal@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
+	syzbot+e136d86d34b42399a8b1@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 396/752] iommu/amd: serialize sequence allocation under concurrent TLB invalidations
-Date: Sat, 28 Feb 2026 12:41:47 -0500
-Message-ID: <20260228174750.1542406-396-sashal@kernel.org>
+Subject: [PATCH 6.18 397/752] xfrm6: fix uninitialized saddr in xfrm6_get_saddr()
+Date: Sat, 28 Feb 2026 12:41:48 -0500
+Message-ID: <20260228174750.1542406-397-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,112 +50,80 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ankit Soni <Ankit.Soni@amd.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 9e249c48412828e807afddc21527eb734dc9bd3d ]
+[ Upstream commit 1799d8abeabc68ec05679292aaf6cba93b343c05 ]
 
-With concurrent TLB invalidations, completion wait randomly gets timed out
-because cmd_sem_val was incremented outside the IOMMU spinlock, allowing
-CMD_COMPL_WAIT commands to be queued out of sequence and breaking the
-ordering assumption in wait_on_sem().
-Move the cmd_sem_val increment under iommu->lock so completion sequence
-allocation is serialized with command queuing.
-And remove the unnecessary return.
+xfrm6_get_saddr() does not check the return value of
+ipv6_dev_get_saddr(). When ipv6_dev_get_saddr() fails to find a suitable
+source address (returns -EADDRNOTAVAIL), saddr->in6 is left
+uninitialized, but xfrm6_get_saddr() still returns 0 (success).
 
-Fixes: d2a0cac10597 ("iommu/amd: move wait_on_sem() out of spinlock")
+This causes the caller xfrm_tmpl_resolve_one() to use the uninitialized
+address in xfrm_state_find(), triggering KMSAN warning:
 
-Tested-by: Srikanth Aithal <sraithal@amd.com>
-Reported-by: Srikanth Aithal <sraithal@amd.com>
-Signed-off-by: Ankit Soni <Ankit.Soni@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+=====================================================
+BUG: KMSAN: uninit-value in xfrm_state_find+0x2424/0xa940
+ xfrm_state_find+0x2424/0xa940
+ xfrm_resolve_and_create_bundle+0x906/0x5a20
+ xfrm_lookup_with_ifid+0xcc0/0x3770
+ xfrm_lookup_route+0x63/0x2b0
+ ip_route_output_flow+0x1ce/0x270
+ udp_sendmsg+0x2ce1/0x3400
+ inet_sendmsg+0x1ef/0x2a0
+ __sock_sendmsg+0x278/0x3d0
+ __sys_sendto+0x593/0x720
+ __x64_sys_sendto+0x130/0x200
+ x64_sys_call+0x332b/0x3e70
+ do_syscall_64+0xd3/0xf80
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Local variable tmp.i.i created at:
+ xfrm_resolve_and_create_bundle+0x3e3/0x5a20
+ xfrm_lookup_with_ifid+0xcc0/0x3770
+=====================================================
+
+Fix by checking the return value of ipv6_dev_get_saddr() and propagating
+the error.
+
+Fixes: a1e59abf8249 ("[XFRM]: Fix wildcard as tunnel source")
+Reported-by: syzbot+e136d86d34b42399a8b1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68bf1024.a70a0220.7a912.02c2.GAE@google.com/T/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h |  2 +-
- drivers/iommu/amd/init.c            |  2 +-
- drivers/iommu/amd/iommu.c           | 18 ++++++++++++------
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ net/ipv6/xfrm6_policy.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index a698a2e7ce2a6..b0d919cd1a8fb 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -791,7 +791,7 @@ struct amd_iommu {
+diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
+index 1f19b6f14484c..125ea9a5b8a08 100644
+--- a/net/ipv6/xfrm6_policy.c
++++ b/net/ipv6/xfrm6_policy.c
+@@ -57,6 +57,7 @@ static int xfrm6_get_saddr(xfrm_address_t *saddr,
+ 	struct dst_entry *dst;
+ 	struct net_device *dev;
+ 	struct inet6_dev *idev;
++	int err;
  
- 	u32 flags;
- 	volatile u64 *cmd_sem;
--	atomic64_t cmd_sem_val;
-+	u64 cmd_sem_val;
- 	/*
- 	 * Track physical address to directly use it in build_completion_wait()
- 	 * and avoid adding any special checks and handling for kdump.
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 53afb1cb0a6fc..76efd74124b33 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -1879,7 +1879,7 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h,
- 	iommu->pci_seg = pci_seg;
- 
- 	raw_spin_lock_init(&iommu->lock);
--	atomic64_set(&iommu->cmd_sem_val, 0);
-+	iommu->cmd_sem_val = 0;
- 
- 	/* Add IOMMU to internal data structures */
- 	list_add_tail(&iommu->list, &amd_iommu_list);
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 3f2b687947dba..4beef73139611 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1386,6 +1386,12 @@ static int iommu_queue_command(struct amd_iommu *iommu, struct iommu_cmd *cmd)
- 	return iommu_queue_command_sync(iommu, cmd, true);
+ 	dst = xfrm6_dst_lookup(params);
+ 	if (IS_ERR(dst))
+@@ -68,9 +69,11 @@ static int xfrm6_get_saddr(xfrm_address_t *saddr,
+ 		return -EHOSTUNREACH;
+ 	}
+ 	dev = idev->dev;
+-	ipv6_dev_get_saddr(dev_net(dev), dev, &params->daddr->in6, 0,
+-			   &saddr->in6);
++	err = ipv6_dev_get_saddr(dev_net(dev), dev, &params->daddr->in6, 0,
++				 &saddr->in6);
+ 	dst_release(dst);
++	if (err)
++		return -EHOSTUNREACH;
+ 	return 0;
  }
  
-+static u64 get_cmdsem_val(struct amd_iommu *iommu)
-+{
-+	lockdep_assert_held(&iommu->lock);
-+	return ++iommu->cmd_sem_val;
-+}
-+
- /*
-  * This function queues a completion wait command into the command
-  * buffer of an IOMMU
-@@ -1400,11 +1406,11 @@ static int iommu_completion_wait(struct amd_iommu *iommu)
- 	if (!iommu->need_sync)
- 		return 0;
- 
--	data = atomic64_inc_return(&iommu->cmd_sem_val);
--	build_completion_wait(&cmd, iommu, data);
--
- 	raw_spin_lock_irqsave(&iommu->lock, flags);
- 
-+	data = get_cmdsem_val(iommu);
-+	build_completion_wait(&cmd, iommu, data);
-+
- 	ret = __iommu_queue_command_sync(iommu, &cmd, false);
- 	raw_spin_unlock_irqrestore(&iommu->lock, flags);
- 
-@@ -3086,10 +3092,11 @@ static void iommu_flush_irt_and_complete(struct amd_iommu *iommu, u16 devid)
- 		return;
- 
- 	build_inv_irt(&cmd, devid);
--	data = atomic64_inc_return(&iommu->cmd_sem_val);
--	build_completion_wait(&cmd2, iommu, data);
- 
- 	raw_spin_lock_irqsave(&iommu->lock, flags);
-+	data = get_cmdsem_val(iommu);
-+	build_completion_wait(&cmd2, iommu, data);
-+
- 	ret = __iommu_queue_command_sync(iommu, &cmd, true);
- 	if (ret)
- 		goto out_err;
-@@ -3103,7 +3110,6 @@ static void iommu_flush_irt_and_complete(struct amd_iommu *iommu, u16 devid)
- 
- out_err:
- 	raw_spin_unlock_irqrestore(&iommu->lock, flags);
--	return;
- }
- 
- static inline u8 iommu_get_int_tablen(struct iommu_dev_data *dev_data)
 -- 
 2.51.0
 
