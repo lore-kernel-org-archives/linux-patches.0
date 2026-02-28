@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0367539B94B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0175347FF8
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302538; cv=none; b=hPRsq5BxdF/vuwVQtBWezDYT8SeQEwY8t+ujc2STMuxVe0xu164eFkk7q4WPewSszJmwaYoH8nvcNpx0ZA0gYgHSQBvgtfFzTFhgYL8ug81QemdRW5Qo6fKGhrGga4264YSZRKmfX630bNdWTYcLyzdeXM2Ap/PnsxlEb7vKr20=
+	t=1772302538; cv=none; b=HHxkD2udAyKxGi/p4v3BOf+JjcdplhJS2RMykeevWukBki/+AzbevezzphkeTgCmuIBUVE1Ky+Ze13MC3j3i+iVPSaippt2skIJlBedNJJU8GN0w4nLeYw4DK3qBbZxJye5iaQmUcdfmN5dqbnZhCVlwMehzm/pR0rdOarzbgE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302538; c=relaxed/simple;
-	bh=6+1dtEgnaqLzbb+Y86Tb3ZmHc4NU0VNxRyPTTvvHJYQ=;
+	bh=fJAUufCRKcleQ2idj0zudljddEuuneFi/X3xaB3hJ/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5LNjjt8Cf+a0TyReD1+GHob8IKQjPoXY4bmhREiTCMzq/vz1XfoFihFTTIBhRbAnNMev5sU/I/hFPcoQN/emqH+7Wb/KVQo15NPOuGqC+iCU1TdVTgUwngnXatYSeLfOOUXYhe4AonH3W3u15vsU05sq4lYujJnbGLvxMBzJbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mV2m6Wtb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rZOkLKUCYA8121b7cykCz/oilFCCPKv9qJZHkaBEWeMk8y2xXJZQDgDB4PYp73b+Djf/O2SPzzlN6/u3OM50CmsCetPBwiz1Ok6o9NO+YYOT6MQguKWqRXNwcQWaQrTip/oer0PwxgClizQcZa4/sdY8iJGx+XlqO+R4wigz9PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yl5Gbf9G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mV2m6Wtb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA7EC19423;
-	Sat, 28 Feb 2026 18:15:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yl5Gbf9G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC5BC2BC87;
+	Sat, 28 Feb 2026 18:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302537;
-	bh=6+1dtEgnaqLzbb+Y86Tb3ZmHc4NU0VNxRyPTTvvHJYQ=;
+	s=k20201202; t=1772302538;
+	bh=fJAUufCRKcleQ2idj0zudljddEuuneFi/X3xaB3hJ/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mV2m6WtbugCxcarAdZMBtAKnDaQWUkxKEvW1k6umvadgc1qK3jIPcq8Fwjxktkbhs
-	 LMAsYIjf/TjlPxxg16tPk5/neLwqYXi9OvfCoe9NySn+1kjXpNDT/E9qUccQM6s8GI
-	 8szRxhLyirC+pSyJtfoXIwA8GGCEPeVGclRXqXeo2pT0lZChtuanU5YrXW19LKEsUi
-	 eOHjQpve4e7pr/RywKyF59cuQz1mQsDpRbu1qTeynQYMD9+t+Zv/ApI5lXrd+3hnve
-	 d0lQ8Bqknd2ZN5Kep+y5SxwwdLgegwVvuzbeKJCQNBBVrfD8uyWCzICOOIa6PDboEB
-	 h48vGoQrbH9bg==
+	b=Yl5Gbf9Gjazd5wsbNyglmAyifhbu54wS+0t+MB5ABQ/X7FXF0iv7O8CN2ogjlvQo6
+	 ZjjjHUMMyIcT0R/3JAeqwjXV6dKZ4t04hpjotxx9DIsi/AGaZhh2bNsrZ+NuLjjySO
+	 ad9R14l5NsZv6p9jFPJNomGHAfFXoQIhZQ3HdqibBQAC3sMAyk9lUtIWdN2fcxvAHe
+	 qrzzkGYGrxPhi/PdOh1yoyPLe0FvE+UYIUDByJKwwBobxCzQV3eM9D2Ouh2B+0DLqu
+	 LaD9D/OAtupYug7JFqDysCUPGECzqmyvrJwWghXTCZtm1YHkhLPuECEAwqJ6n6ZgSd
+	 3ZXCN53nsczfA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Casey Connolly <casey.connolly@linaro.org>,
-	David Heidelberg <david@ixit.cz>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/164] arm64: dts: qcom: sdm845-oneplus: Mark l14a regulator as boot-on
-Date: Sat, 28 Feb 2026 13:12:57 -0500
-Message-ID: <20260228181505.1600663-38-sashal@kernel.org>
+Subject: [PATCH 5.15 039/164] ARM: dts: allwinner: sun5i-a13-utoo-p66: delete "power-gpios" property
+Date: Sat, 28 Feb 2026 13:12:58 -0500
+Message-ID: <20260228181505.1600663-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -49,36 +47,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Casey Connolly <casey.connolly@linaro.org>
+From: Chen-Yu Tsai <wens@kernel.org>
 
-[ Upstream commit ad33ee060be46794a03d033894c9db3a9d6c1a0f ]
+[ Upstream commit 0b2761eb1287bd9f62367cccf6626eb3107cef6f ]
 
-This regulator is used only for the display, which is enabled by the
-bootloader and left on for continuous splash. Mark it as such.
+The P66's device tree includes the reference design dtsi files, which
+defines a node and properties for the touchpanel in the common design.
+The P66 dts file then overrides all the properties to match its own
+design, but as the touchpanel model is different, a different schema
+is matched. This other schema uses a different name for the GPIO.
 
-Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251118-dts-oneplus-regulators-v2-3-3e67cea1e4e7@ixit.cz
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The original submission added the correct GPIO property, but did not
+delete the one inherited from the reference design, causing validation
+errors.
+
+Explicitly delete the incorrect GPIO property.
+
+Fixes: 2a53aff27236 ("ARM: dts: sun5i: Enable touchscreen on Utoo P66")
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20251225103616.3203473-4-wens@kernel.org
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 +
+ arch/arm/boot/dts/sun5i-a13-utoo-p66.dts | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 1a1e344f870ef..a079706f1829d 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -232,6 +232,7 @@ vreg_l14a_1p88: ldo14 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
- 		};
- 
- 		vreg_l17a_1p3: ldo17 {
+diff --git a/arch/arm/boot/dts/sun5i-a13-utoo-p66.dts b/arch/arm/boot/dts/sun5i-a13-utoo-p66.dts
+index be486d28d04fa..428cab5a0e906 100644
+--- a/arch/arm/boot/dts/sun5i-a13-utoo-p66.dts
++++ b/arch/arm/boot/dts/sun5i-a13-utoo-p66.dts
+@@ -102,6 +102,7 @@ &touchscreen {
+ 	/* The P66 uses a different EINT then the reference design */
+ 	interrupts = <6 9 IRQ_TYPE_EDGE_FALLING>; /* EINT9 (PG9) */
+ 	/* The icn8318 binding expects wake-gpios instead of power-gpios */
++	/delete-property/ power-gpios;
+ 	wake-gpios = <&pio 1 3 GPIO_ACTIVE_HIGH>; /* PB3 */
+ 	touchscreen-size-x = <800>;
+ 	touchscreen-size-y = <480>;
 -- 
 2.51.0
 
