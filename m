@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757E8340A59
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61237313E31
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301052; cv=none; b=p6LyABU9IIHGlleANWwEk8NTM7SeuPHzD/jo9J6t9jq2h47W1oUFgQ7CL19Tn6UBed0YshoHxBiKMWRQEkGbPJW3OF34t6KAzzftSL251W/VRhqvb927QXX++kiUCUhjR44fJmd2Azb+2Xvi+bDnmeTGl2nteYFq0xbt324XPy8=
+	t=1772301053; cv=none; b=WAxSPTHBpbJyUouomXvQ2yAtv+/jMuG24uN0O+QBFgGL3GUPBRYe+xLhgW7TRbwFZRGA4FkKFgVHucDHcNx36sYWKfuZBDK2Z/NK58lVguNntGJChCCS3y6DDZMDlMo9aduz9wABIU4w69I2W91IQpfheH8W4K511U9BLb9JQgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301052; c=relaxed/simple;
-	bh=ZBFudmBqGqzuvjbhxMMySTYyxURrpndFhaU3tMvgw0w=;
+	s=arc-20240116; t=1772301053; c=relaxed/simple;
+	bh=sFevBPOD0FvGwnUb71/WuTM6PzXGWNrtXGQFKoOiJQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JUt3Ds2q62yj2+d2VvbDUEcG9kUEb/KRBtaK1Ny41zLMWuDIpCtFOzi2GFD81JTTLUawAj97CWKFO3uN6PjYoMrvd9xSNfF1rFKCFwklx9ibvvJQbop4Y/QbTEljywHt2rmDGMWspS4hzfhL3BMyW443P8/ezY1ykUXAKpHo53I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D5XWmCIW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uo8SL8Ts9ZqNGGgdkC1WTzoohYrF6dsCL3weFrq+CprViVLmm5C5OD2tlr+AWKBAxJOXUsWgqTNzFgIjTNX4SH5+qeFlDg9IO4CtgABSQHug7DXIuLC/tOYK85LNEgXx4+AVenobgp1mY4SwhLDAH6XnDMrSIxZWMfTDf/Jd1a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PLluG4ff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D5XWmCIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00BBC19423;
-	Sat, 28 Feb 2026 17:50:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PLluG4ff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C365C19423;
+	Sat, 28 Feb 2026 17:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301052;
-	bh=ZBFudmBqGqzuvjbhxMMySTYyxURrpndFhaU3tMvgw0w=;
+	s=k20201202; t=1772301053;
+	bh=sFevBPOD0FvGwnUb71/WuTM6PzXGWNrtXGQFKoOiJQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5XWmCIWvwO8I/EdsGgViz9iqErJwymFDfxsTVO57Pm2hYnL2xc9XvjEbcp0UwTqX
-	 1MXt/zwvUQm8iVFSb5SCJtIrTwhUx8q41cdgnrTmwawRTGD2e0ujFReFc6EFwWnVwA
-	 6lfhJjSFSnzC9MYhlXHMctoYRIaKNB+mks4IiuW9UjGZ6vdULQ7tRj+d9LXzasI3Fs
-	 6rF1l4CHGgcu7Fuk7xU44AWobNbgAvKx623V+R1xDimNd78BX+j1z29k7nOTXG5q4H
-	 CbeNu0DQcosDrvDjMg0EwYGF8vwAjrE60KvhkzQ4nsu1QrDNwVAfN0tp+GImeT+2p+
-	 bK2kouAhRlYyQ==
+	b=PLluG4ffypnxAxQ13rh6vVWjlGC5VfVZ9qzmpdAlFtvMv4GVPTxBoTGCQSNR6/a2S
+	 EqouL1giD5iLq4h9O5c7eocAjfU/T1VbxceBgI1YwnyMa67wXmMEq3XIn5+1T/262w
+	 bekqJ2tRZpUHHP9itxWGd28644vyrfqJ+QTjZVqDJjc+jijNA+Z+Fg2lBEZOq5pU1g
+	 UYbRzW+tKXA1rVW2Bt0+DErryuEWgIJEsrI8gLfWgej27OpwLb1ME9AcUYk7EU8YYT
+	 Y7obNak4DKvrvxsoDFgvlcxbLKun2amg2wfMk5v1m8vDcdhc0oE0pzVmYCmNKhJ3ea
+	 D1F4LDgjzTo1w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: "Jesse.Zhang" <Jesse.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: "Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Santhosh Kumar K <s-k6@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 192/752] drm/amdgpu: validate user queue size constraints
-Date: Sat, 28 Feb 2026 12:38:23 -0500
-Message-ID: <20260228174750.1542406-192-sashal@kernel.org>
+Subject: [PATCH 6.18 193/752] spi: cadence-qspi: Try hard to disable the clocks
+Date: Sat, 28 Feb 2026 12:38:24 -0500
+Message-ID: <20260228174750.1542406-193-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -45,52 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Jesse.Zhang" <Jesse.Zhang@amd.com>
+From: "Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>
 
-[ Upstream commit 8079b87c02e531cc91601f72ea8336dd2262fdf1 ]
+[ Upstream commit 612227b392eed94a3398dc03334a84a699a82276 ]
 
-Add validation to ensure user queue sizes meet hardware requirements:
-- Size must be a power of two for efficient ring buffer wrapping
-- Size must be at least AMDGPU_GPU_PAGE_SIZE to prevent undersized allocations
+In the remove path, we should try hard to perform all steps as we simply
+cannot fail.
 
-This prevents invalid configurations that could lead to GPU faults or
-unexpected behavior.
+The "no runtime PM" quirk must only alter the state of the RPM core, but
+the clocks should still be disabled if that is possible. Move the
+disable call outside of the RPM quirk.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
+Tested-by: Santhosh Kumar K <s-k6@ti.com>
+Link: https://patch.msgid.link/20260122-schneider-6-19-rc1-qspi-v4-9-f9c21419a3e6@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/spi/spi-cadence-quadspi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-index 8c41951feb437..eef65833a1c99 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-@@ -656,6 +656,17 @@ static int amdgpu_userq_input_args_validate(struct drm_device *dev,
- 			drm_file_err(filp, "invalidate userq queue va or size\n");
- 			return -EINVAL;
- 		}
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index 3689e38ebe56f..b3e4dd72d8b8a 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -2044,6 +2044,7 @@ static void cqspi_remove(struct platform_device *pdev)
+ 	const struct cqspi_driver_platdata *ddata;
+ 	struct cqspi_st *cqspi = platform_get_drvdata(pdev);
+ 	struct device *dev = &pdev->dev;
++	int ret = 0;
+ 
+ 	ddata = of_device_get_match_data(dev);
+ 
+@@ -2059,8 +2060,10 @@ static void cqspi_remove(struct platform_device *pdev)
+ 		dma_release_channel(cqspi->rx_chan);
+ 
+ 	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
+-		if (pm_runtime_get_sync(&pdev->dev) >= 0)
+-			clk_disable(cqspi->clk);
++		ret = pm_runtime_get_sync(&pdev->dev);
 +
-+		if (!is_power_of_2(args->in.queue_size)) {
-+			drm_file_err(filp, "Queue size must be a power of 2\n");
-+			return -EINVAL;
-+		}
-+
-+		if (args->in.queue_size < AMDGPU_GPU_PAGE_SIZE) {
-+			drm_file_err(filp, "Queue size smaller than AMDGPU_GPU_PAGE_SIZE\n");
-+			return -EINVAL;
-+		}
-+
- 		if (!args->in.wptr_va || !args->in.rptr_va) {
- 			drm_file_err(filp, "invalidate userq queue rptr or wptr\n");
- 			return -EINVAL;
++	if (ret >= 0)
++		clk_disable(cqspi->clk);
+ 
+ 	if (cqspi->is_jh7110)
+ 		cqspi_jh7110_disable_clk(pdev, cqspi);
 -- 
 2.51.0
 
