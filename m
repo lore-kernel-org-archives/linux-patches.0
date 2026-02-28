@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EE4375AC8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B10E379EE2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301686; cv=none; b=CCnO5COh8iGV8CbM0aZr6nDlpRloOEM6OEYoQwOMxf+lMrPqAhfwKXgqLqlxV5EIjZvhJkTWgOCrRVzr18m7acOSo8G3CoBahlehmciYsR3xOj8lBo/p2XfyzwcAW6O+52P6CFB42aKOwGqlF6SN/kVQfkHCzm3aDt5CbH2L9II=
+	t=1772301687; cv=none; b=uifd2HMZUDquwMWt76ha4L0DY26UD09F1LieB7+deXCP/+j9bLOxVFnC9gKs0YI62OdTTdjeRNiQyNmnaMEVg3ZrPHOf8Gf+jyykTqUWK8n4i+r0eAy3WaK55raI3cpTGmtrfEI6nyQJDmaxPXoDA+3GYgWDzHoywm2RHCNj5mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301686; c=relaxed/simple;
-	bh=hkEoNTHdOb0hOgCOcCB9IrSF7MgHptZ1e3UIc78wp+Y=;
+	s=arc-20240116; t=1772301687; c=relaxed/simple;
+	bh=+plbUiYg4git9ZUZt3d+iJEz6iG0cqJMeWYgSfgBTg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MOAzlcak8SZnHZY1RjqF16OWdyw5IWIJ7HpZlmdnxo6sRAooG6rgyQ3yYeax+DYqHNHEbnwnfqeKCR/8Ef07+EfsNbX2hWH14tTPXD21sQx4oPF/y1mCddKjox5RA/XMqo8ysLh6yLz2CPlPdRpkaQDtwyR793xxLKXVyXxLA2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t4fAqFQV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=so6cjmaueFpLNO/Ame2PCpgWSgY4wULjHdoFDxjQi18W3KjYanhA6UtUU41e+HfW+JKLoL/i7LxT3zM0Y3pHplweNJz8Ub+fFS/olhMxOu3LdsG/O9KpDvab220M4MynBqKI71JCZwTHr0kJPRy6KPcGyL0SoATRF5ydU9+zznk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fNF0NOHW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t4fAqFQV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F52C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fNF0NOHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F84C19423;
 	Sat, 28 Feb 2026 18:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301686;
-	bh=hkEoNTHdOb0hOgCOcCB9IrSF7MgHptZ1e3UIc78wp+Y=;
+	s=k20201202; t=1772301687;
+	bh=+plbUiYg4git9ZUZt3d+iJEz6iG0cqJMeWYgSfgBTg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t4fAqFQVQUBrx0/I/oo9bT7DvsKYvVyg5vLEeZd4DHoRpIvSKbXxJftXVix0uELoK
-	 1LKAAc362ocd9rvdzOQJrCLMYCCBKJsgBJu3JtZ6VY/WcF4IQBggzAxxwm2mtBnKIR
-	 jEcTVT/0jrt7mSHwqq3O/l5rqDMnltLDhpsyNnYPCXsklQteEZTyu5jvZZD5PO+ooR
-	 50Z4A6DDabAnCCQULxmD9ieDPzBzw79pkH8ejtKcwRYSj6lNMIzMjI0r9dfScO8l2P
-	 sugyvbDAxodFcij1SPjoHuMVHUz/MdbR3lur3iSlsq8FxVihF5mLcNMWBIeSGEU13V
-	 PevYd2DiJKzFQ==
+	b=fNF0NOHWMAoqWTiBo95i5W2QFmzcJEaFYsevMMI58v8uh1hILxfdJb8zk+IaR/a3+
+	 LXCDpyz0xwhyWbYF0py3BGa80GQ2Zs9ksIq6UC0gtDRtsam9m6QH69MKX+pFdG9saL
+	 4tb2ltdUcrzyb3ZL+ZWwn7ExlqlU40XuPIaHpFGh6KzrSbq65EHoNXrKK3AxSeElN1
+	 wUEu8Mh48WVfHuqJY2TfiOZspkKoaf+IF0yCFB6ZI+pc+yrsT8EgSBRLjuaB07iZGn
+	 u07KDjhD6xJze0ICSE93+A3FN7AeiRmcYOva9nMmTsVsJoZKp2AOyHyL8LcfdP5I6v
+	 7nKz8scm0sutQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/385] bpf: Fix bpf_xdp_store_bytes proto for read-only arg
-Date: Sat, 28 Feb 2026 12:54:58 -0500
-Message-ID: <20260228180011.1568201-76-sashal@kernel.org>
+Subject: [PATCH 6.12 077/385] genirq: Set IRQF_COND_ONESHOT in devm_request_irq().
+Date: Sat, 28 Feb 2026 12:54:59 -0500
+Message-ID: <20260228180011.1568201-77-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,57 +47,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 6557f1565d779851c4db9c488c49c05a47a6e72f ]
+[ Upstream commit 943b052ded21feb84f293d40b06af3181cd0d0d7 ]
 
-While making some maps in Cilium read-only from the BPF side, we noticed
-that the bpf_xdp_store_bytes proto is incorrect. In particular, the
-verifier was throwing the following error:
+The flag IRQF_COND_ONESHOT was already force-added to request_irq() because
+the ACPI SCI interrupt handler is using the IRQF_ONESHOT flag which breaks
+all shared handlers.
 
-  ; ret = ctx_store_bytes(ctx, l3_off + offsetof(struct iphdr, saddr),
-                          &nat->address, 4, 0);
-  635: (79) r1 = *(u64 *)(r10 -144)     ; R1=ctx() R10=fp0 fp-144=ctx()
-  636: (b4) w2 = 26                     ; R2=26
-  637: (b4) w4 = 4                      ; R4=4
-  638: (b4) w5 = 0                      ; R5=0
-  639: (85) call bpf_xdp_store_bytes#190
-  write into map forbidden, value_size=6 off=0 size=4
+devm_request_irq() needs the same change since some users, such as
+int0002_vgpio, are using this function instead.
 
-nat comes from a BPF_F_RDONLY_PROG map, so R3 is a PTR_TO_MAP_VALUE.
-The verifier checks the helper's memory access to R3 in
-check_mem_size_reg, as it reaches ARG_CONST_SIZE argument. The third
-argument has expected type ARG_PTR_TO_UNINIT_MEM, which includes the
-MEM_WRITE flag. The verifier thus checks for a BPF_WRITE access on R3.
-Given R3 points to a read-only map, the check fails.
+Add IRQF_COND_ONESHOT to the flags passed to devm_request_irq().
 
-Conversely, ARG_PTR_TO_UNINIT_MEM can also lead to the helper reading
-from uninitialized memory.
-
-This patch simply fixes the expected argument type to match that of
-bpf_skb_store_bytes.
-
-Fixes: 3f364222d032 ("net: xdp: introduce bpf_xdp_pointer utility routine")
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/9fa3c9f72d806e82541071c4df88b8cba28ad6a9.1769875479.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: c37927a203fa2 ("genirq: Set IRQF_COND_ONESHOT in request_irq()")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260128095540.863589-2-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 +-
+ include/linux/interrupt.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 06e179865a21b..182a7388e84f5 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4140,7 +4140,7 @@ static const struct bpf_func_proto bpf_xdp_store_bytes_proto = {
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_CTX,
- 	.arg2_type	= ARG_ANYTHING,
--	.arg3_type	= ARG_PTR_TO_UNINIT_MEM,
-+	.arg3_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg4_type	= ARG_CONST_SIZE,
- };
+diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
+index b378fbf885ce3..2125d4d9b44f2 100644
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -215,7 +215,7 @@ static inline int __must_check
+ devm_request_irq(struct device *dev, unsigned int irq, irq_handler_t handler,
+ 		 unsigned long irqflags, const char *devname, void *dev_id)
+ {
+-	return devm_request_threaded_irq(dev, irq, handler, NULL, irqflags,
++	return devm_request_threaded_irq(dev, irq, handler, NULL, irqflags | IRQF_COND_ONESHOT,
+ 					 devname, dev_id);
+ }
  
 -- 
 2.51.0
