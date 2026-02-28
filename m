@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1248379EEC
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1869379EE2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301897; cv=none; b=D0nZBI8P+hbMrYi2BBoYItZAivynJnteB4nyH8FR3ZNhkh/P3y/QfX//Np++s6taxHnUGmO8HcvJa5bUrAAyWIQCJWmHqIlS5MTnVvdqNLE0yIbJa0u4c6zM4z2R2vUPc1J8nN2wMNMX4c2u3hpMJTOISOw1+W4OoW6aswYeO5w=
+	t=1772301897; cv=none; b=JLZagddJdNXeguaPZya+S/vFU24H5tJ4H5goMPPRXBAWjgFc5ZylamRb7kZa+baSgO62G/44S+n9dSRPeC62t4iZoF5+5NGN2kH7s+0/GefjmGb57MD5LHo+2sYXV0n2ABdMNAFzUYT+OuzjASo1GUhZPDnY6ckQsLjPny6vqZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301897; c=relaxed/simple;
-	bh=v1wko6TrQGRM0xgrWwYqFmXuq9XGp18AjTjthsBNA0s=;
+	bh=xDoFfkezXp0xr/q6dD0gMIZB2GSrs5mvz9ej24iiAJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FAdeLNY0CvBxlLnTntn48Ksbd7YyPeUoKf/KAzsUvPxQwHRNPwF6iNE9N0SDMyreAxLkiM/BFKSGfrQ/wBtYFyfso14aJe8/OUKhNgOkX18hkCi0xgzqgKoelFhW4QClBEYnl2B7fhea8seSrn4nq52CHLmAfOITXg5LoszXl8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pCzJrww7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XeXEP3EjnA/PkehvMlSf16TLdflziKOdPuFosq1VQuPoGzuN/A1XdIXe0T5TueY8b/Y66rb9r29kvZyiknE60pOg+jhU/6W6SxB5kNB+pFImiwmwdi/OmDfycGL077bDnJxOfO2I2TmqTSBDGIq4SfGJlSpeL8ujugEPCoAVXp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U4OYHpgO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pCzJrww7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC08C19424;
-	Sat, 28 Feb 2026 18:04:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U4OYHpgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21952C19423;
+	Sat, 28 Feb 2026 18:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301896;
-	bh=v1wko6TrQGRM0xgrWwYqFmXuq9XGp18AjTjthsBNA0s=;
+	s=k20201202; t=1772301897;
+	bh=xDoFfkezXp0xr/q6dD0gMIZB2GSrs5mvz9ej24iiAJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCzJrww7oSpP9S0HP3I73ikEiok42hISskqM07Bd/y4gLsAoHxBB13Ce7ttDcbr1z
-	 vt3CCrNbqN89CBVy8fZpxqSj71RIanDBosLgq2xjUlsZ5AI55IPekwGjTE5t15BkVL
-	 y+xI1dbFRPhuvUkPfC4Clq/Gu/N0mA7kJNtV5HfigT7sUOULpDGGH+30kLFa4CIaUC
-	 6TaKfab4OjYojN/6sEZ8Guy9Tb7LN6Ar8hpVw/VeOMW8tB+thlHd1bfoqUdN/DSYlo
-	 T8aihbB9vy2i79jV7xlHRuAcMmgOBO+ISl77EvJLc0MuS85Or81ZPVOX7uTKyvjk6g
-	 rAEvWdQDwIMhA==
+	b=U4OYHpgOaO68ssl+Cg/+oQU47rOz3ig1+ZrSg+XxjQzSveUNH/l8B9NGQlfd/UXtt
+	 HQm6tHclQjkAKnINPsKT49bm7ua0xCwGxaRAG2Ao4L81SLSv/ow1/GDSOINKxbkmgd
+	 aDwjmZhqbfjArsR2Dxio+/5YnZAKzRDl7hMwj6yvt4XfcKSLsoGKpqE550a5Xdp5iQ
+	 ZsLnp+2UmoLNXjTU+ViooVp46n/AUvzVol+9to68CtjyIgSqul8zVfBlQmLxmgyTRk
+	 E+//2+waDycm60B7c9RLn6kHOFbAMsXm2CV0X/yX4FMEvciLeZ8a8ucDM82x12KLy5
+	 LBv/zErvOlaKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Randy Dunlap <rdunlap@infradead.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+Cc: Matthew Schwartz <matthew.schwartz@linux.dev>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 325/385] serial: SH_SCI: improve "DMA support" prompt
-Date: Sat, 28 Feb 2026 12:59:07 -0500
-Message-ID: <20260228180011.1568201-325-sashal@kernel.org>
+Subject: [PATCH 6.12 326/385] mmc: rtsx_pci_sdmmc: increase power-on settling delay to 5ms
+Date: Sat, 28 Feb 2026 12:59:08 -0500
+Message-ID: <20260228180011.1568201-326-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,37 +47,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit 93bb95a11238d66a4c9aa6eabf9774b073a5895c ]
+[ Upstream commit aced969e9bf3701dc75cfca57c78c031b7875b9d ]
 
-Having a prompt of "DMA support" suddenly appear during a
-"make oldconfig" can be confusing. Add a little helpful text to
-the prompt message.
+The existing 1ms delay in sd_power_on is insufficient and causes resume
+errors around 4% of the time.
 
-Fixes: 73a19e4c0301 ("serial: sh-sci: Add DMA support.")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260110232643.3533351-5-rdunlap@infradead.org
+Increasing the delay to 5ms resolves this issue after testing 300
+s2idle cycles.
+
+Fixes: 1f311c94aabd ("mmc: rtsx: add 74 Clocks in power on flow")
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Link: https://patch.msgid.link/20260105060236.400366-3-matthew.schwartz@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/Kconfig | 2 +-
+ drivers/mmc/host/rtsx_pci_sdmmc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/Kconfig b/drivers/tty/serial/Kconfig
-index 09987529b8ba4..1e92b16b6b95e 100644
---- a/drivers/tty/serial/Kconfig
-+++ b/drivers/tty/serial/Kconfig
-@@ -667,7 +667,7 @@ config SERIAL_SH_SCI_EARLYCON
- 	default ARCH_RENESAS
+diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
+index 04aa47f1a24fb..f5bc757ddaa27 100644
+--- a/drivers/mmc/host/rtsx_pci_sdmmc.c
++++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
+@@ -939,7 +939,7 @@ static int sd_power_on(struct realtek_pci_sdmmc *host, unsigned char power_mode)
+ 	if (err < 0)
+ 		return err;
  
- config SERIAL_SH_SCI_DMA
--	bool "DMA support" if EXPERT
-+	bool "Support for DMA on SuperH SCI(F)" if EXPERT
- 	depends on SERIAL_SH_SCI && DMA_ENGINE
- 	default ARCH_RENESAS
+-	mdelay(1);
++	mdelay(5);
  
+ 	err = rtsx_pci_write_register(pcr, CARD_OE, SD_OUTPUT_EN, SD_OUTPUT_EN);
+ 	if (err < 0)
 -- 
 2.51.0
 
