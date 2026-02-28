@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1501347FCC
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7199C359A96
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302460; cv=none; b=mf+npuCUwGwuvLnpRL5TtT+GzEMqYvk0su+bVekb0EOb3V9xsi73D63EDg76RzfVhZIC2avusTuoElomtDp7iG284+jRBmkAlpLHgSdfKY4CxpMTBUYEcs16QAdDLhxlNiSCnfjmrpIm0zvbd1EVIuFQanoeIdCs7NGzaWMLOcI=
+	t=1772302461; cv=none; b=BJquNo1HQLUki7eNtila9pXF6zvZvWwPfDMVFZHqSOyKR9TwLI1Cfp/FgtgOs2OJUn5jbNA840f/cM1Ky9nX3hFNamdsGPtf5rYRT4y6jRq0VB5qNXZDKCAtP/wjKBkJMHVTL8r1pTF2p1H0DaHi6GfDEKYlaA4q9boEYI/fs9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302460; c=relaxed/simple;
-	bh=EkLV4zD8p0X3cUwrqwLi1pV1uj/NTqVUc7Tvs+4ZApA=;
+	s=arc-20240116; t=1772302461; c=relaxed/simple;
+	bh=/KAWWZqUY4xROpcd5fHZLq1VGsl7ahQ43+tnsH7hYE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Og1JkCfmgKBrvN/jgx+MOW6GlnM6zePlEvwHAdmnuPycfr5lJeHboLciQ1/+XkJn4+M5U9fjUyuQ5BoLQ253h98ivuTrHoPt1x8FpDP/kxVAvSM3Yaq83+ePxzceHNlQuFVdB84SSA/V+qvjulWDE/b9wmgvB5nde1X2xJt4rMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iYqK/rpb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XZfFUOyzWel3AXI6yj3U04P1IFEPd5TwFN2kxGLY6z35YnRg9Om4jPQFATZId43E9jEgQEH4jgH6sx65a/DCZ6F8wCftXsoQ+/2G+BunWcScYiJewgDIhnii9SI4SdXwnDeFYrvYfcoqzS1NUw5fPLMipa8NbF7N4EfDyekrL1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t0dbS7Ne; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iYqK/rpb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02108C19423;
-	Sat, 28 Feb 2026 18:14:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t0dbS7Ne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8703C116D0;
+	Sat, 28 Feb 2026 18:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302460;
-	bh=EkLV4zD8p0X3cUwrqwLi1pV1uj/NTqVUc7Tvs+4ZApA=;
+	s=k20201202; t=1772302461;
+	bh=/KAWWZqUY4xROpcd5fHZLq1VGsl7ahQ43+tnsH7hYE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iYqK/rpbb04ZpIOU/gHznPQwn/LRSowJwNjy5us7JKoYoRf9tIWqhnqlw5aZCkl9B
-	 gt1v8bFv1kLTuHhPnVRydMD3FULU3KH23kpyix5lyuFgunR/C1aGoU+RBO+7uFQpHp
-	 IpAr3oqYW29RpfLOK6txyD/3TpE9iwv3L6SIyWzZnPANz1SBXmIxFg1mIkdg1GE5Eo
-	 NWLxBjUbl1LwSrFs2rwypYgrFuNy6MKIQoGkswSREuKDpYdOE/Z1liKu5rxXSOmHLt
-	 8B736yV6C4IXTZ8M2l/fH8+w1zz9apuH2EYyQ/ktdqgll9Q+7WDJMPSyvuGIM4s5oC
-	 dX1LAV+G0oIaA==
+	b=t0dbS7NescZnvNktg2vY3Jn/djW5tjsaaTKoEsvDDhuqeNW2H7ohWA8Iual4fJ3SA
+	 dJoLSUNd4hV+uY0xGeUVmRzUZYmjwdQpMgrbk4R0/LLjS07UwVhpua5RHxrNbc7Qsj
+	 bK13rL0rK7XnOOncsoFt7Wbi0LCLzX1ESFCkBZZ4MS3Zqqb0U/Jp4wCzhGQ5AJZOy5
+	 z7LRdg3UEzoY/W14ma+i8ontpWMAHiiccxURzvt0wAM3JE4HmFJgGj/8xzpL0sKWCS
+	 d7OAcQBAUZSJs+/lnfw/xSTPt6yGrwemQb9IsmhJ5IZi4oAKtkMDwuAR0VqLNEpiLk
+	 fASdV9i4QL2AQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+Cc: Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 202/232] backlight: qcom-wled: Support ovp values for PMI8994
-Date: Sat, 28 Feb 2026 13:10:55 -0500
-Message-ID: <20260228181127.1592657-202-sashal@kernel.org>
+Subject: [PATCH 6.1 203/232] io_uring/cancel: abstract out request match helper
+Date: Sat, 28 Feb 2026 13:10:56 -0500
+Message-ID: <20260228181127.1592657-203-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -45,94 +42,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Barnabás Czémán <barnabas.czeman@mainlining.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit f29f972a6e7e3f187ea4d89b98a76c1981ca4d53 ]
+[ Upstream commit aa5cd116f3c25c05e4724d7b5e24dc9ed9020a12 ]
 
-WLED4 found in PMI8994 supports different ovp values.
+We have different match code in a variety of spots. Start the cleanup of
+this by abstracting out a helper that can be used to check if a given
+request matches the cancelation criteria outlined in io_cancel_data.
 
-Fixes: 6fc632d3e3e0 ("video: backlight: qcom-wled: Add PMI8994 compatible")
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Link: https://patch.msgid.link/20260116-pmi8950-wled-v3-2-e6c93de84079@mainlining.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 22dbb0987bd1 ("io_uring/cancel: de-unionize file and user_data in struct io_cancel_data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/qcom-wled.c | 41 +++++++++++++++++++++++++++--
- 1 file changed, 39 insertions(+), 2 deletions(-)
+ io_uring/cancel.c | 17 +++++++++++++----
+ io_uring/cancel.h |  1 +
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index 434c6c499fdef..8dfb853c7ab7a 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -1244,6 +1244,15 @@ static const struct wled_var_cfg wled4_ovp_cfg = {
- 	.size = ARRAY_SIZE(wled4_ovp_values),
- };
+diff --git a/io_uring/cancel.c b/io_uring/cancel.c
+index b4f5dfacc0c31..88586911b516b 100644
+--- a/io_uring/cancel.c
++++ b/io_uring/cancel.c
+@@ -27,11 +27,11 @@ struct io_cancel {
+ #define CANCEL_FLAGS	(IORING_ASYNC_CANCEL_ALL | IORING_ASYNC_CANCEL_FD | \
+ 			 IORING_ASYNC_CANCEL_ANY | IORING_ASYNC_CANCEL_FD_FIXED)
  
-+static const u32 pmi8994_wled_ovp_values[] = {
-+	31000, 29500, 19400, 17800,
-+};
-+
-+static const struct wled_var_cfg pmi8994_wled_ovp_cfg = {
-+	.values = pmi8994_wled_ovp_values,
-+	.size = ARRAY_SIZE(pmi8994_wled_ovp_values),
-+};
-+
- static inline u32 wled5_ovp_values_fn(u32 idx)
+-static bool io_cancel_cb(struct io_wq_work *work, void *data)
++/*
++ * Returns true if the request matches the criteria outlined by 'cd'.
++ */
++bool io_cancel_req_match(struct io_kiocb *req, struct io_cancel_data *cd)
  {
- 	/*
-@@ -1357,6 +1366,29 @@ static int wled_configure(struct wled *wled)
- 		},
- 	};
- 
-+	const struct wled_u32_opts pmi8994_wled_opts[] = {
-+		{
-+			.name = "qcom,current-boost-limit",
-+			.val_ptr = &cfg->boost_i_limit,
-+			.cfg = &wled4_boost_i_limit_cfg,
-+		},
-+		{
-+			.name = "qcom,current-limit-microamp",
-+			.val_ptr = &cfg->string_i_limit,
-+			.cfg = &wled4_string_i_limit_cfg,
-+		},
-+		{
-+			.name = "qcom,ovp-millivolt",
-+			.val_ptr = &cfg->ovp,
-+			.cfg = &pmi8994_wled_ovp_cfg,
-+		},
-+		{
-+			.name = "qcom,switching-freq",
-+			.val_ptr = &cfg->switch_freq,
-+			.cfg = &wled3_switch_freq_cfg,
-+		},
-+	};
+-	struct io_kiocb *req = container_of(work, struct io_kiocb, work);
+-	struct io_cancel_data *cd = data;
+-
+ 	if (req->ctx != cd->ctx)
+ 		return false;
+ 	if (cd->flags & IORING_ASYNC_CANCEL_ANY) {
+@@ -48,9 +48,18 @@ static bool io_cancel_cb(struct io_wq_work *work, void *data)
+ 			return false;
+ 		req->work.cancel_seq = cd->seq;
+ 	}
 +
- 	const struct wled_u32_opts wled5_opts[] = {
- 		{
- 			.name = "qcom,current-boost-limit",
-@@ -1423,8 +1455,13 @@ static int wled_configure(struct wled *wled)
- 		break;
+ 	return true;
+ }
  
- 	case 4:
--		u32_opts = wled4_opts;
--		size = ARRAY_SIZE(wled4_opts);
-+		if (of_device_is_compatible(dev->of_node, "qcom,pmi8994-wled")) {
-+			u32_opts = pmi8994_wled_opts;
-+			size = ARRAY_SIZE(pmi8994_wled_opts);
-+		} else {
-+			u32_opts = wled4_opts;
-+			size = ARRAY_SIZE(wled4_opts);
-+		}
- 		*cfg = wled4_config_defaults;
- 		wled->wled_set_brightness = wled4_set_brightness;
- 		wled->wled_sync_toggle = wled3_sync_toggle;
++static bool io_cancel_cb(struct io_wq_work *work, void *data)
++{
++	struct io_kiocb *req = container_of(work, struct io_kiocb, work);
++	struct io_cancel_data *cd = data;
++
++	return io_cancel_req_match(req, cd);
++}
++
+ static int io_async_cancel_one(struct io_uring_task *tctx,
+ 			       struct io_cancel_data *cd)
+ {
+diff --git a/io_uring/cancel.h b/io_uring/cancel.h
+index 6a59ee484d0cc..496ce4dac78ed 100644
+--- a/io_uring/cancel.h
++++ b/io_uring/cancel.h
+@@ -21,3 +21,4 @@ int io_try_cancel(struct io_uring_task *tctx, struct io_cancel_data *cd,
+ void init_hash_table(struct io_hash_table *table, unsigned size);
+ 
+ int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg);
++bool io_cancel_req_match(struct io_kiocb *req, struct io_cancel_data *cd);
 -- 
 2.51.0
 
