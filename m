@@ -1,51 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AA938D01D
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C525338D01D
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302129; cv=none; b=rKwTdHFWstrcf81MdZW1FL5kCgwGODJVbIxuCr84tI72nTXG2tbWeXVvDwFX7pX1e1wfyp27cUHdDbCbOsyeqUOY48I3r80NGEdxdesqBebHnJiHjA7HOeV88Q/G7LbIPOf941xmLSqWO5mKq9jT4JesTG+9jbzC6SnvL27EZSM=
+	t=1772302130; cv=none; b=ijFHtWh5Ob0fxpf7ICpwcgbOi+aOEaguGbfrVzoTnkOiLB3H2NUk5waZNpm4zAp6VskzwiaeaMfp+ITva1CwjT+LAxClv4l5Q/IZwjoTIeRcnPXuHK/+JN+0LAyqponm1eQ5yNX2EWCil59H2fosA5xgyHs8j28DmG16L7CLStk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302129; c=relaxed/simple;
-	bh=GkzjuzH8H3IohTasl/8HxdKUayanOBPPg8LESQes8Do=;
+	s=arc-20240116; t=1772302130; c=relaxed/simple;
+	bh=PaUtHwlJmDhGtSLWELDjUxSLImKbD6wZMMeeY6Zmq6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHXE+yS+B/igAnqNycMrFUJkEda7FGqkSyjRV4Ka6VeohHxqNT1vsVUokJiYbEp0Bh1K6Hid1dYT00EdJNlybPqb3SmjI0F0hnGNuBK4IE0Gvcxe6s696dQ9eC2AGy9/Tev+bjdbU3AQzvyeqf12mFRekFLwqrgEFMjEdW1CX4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AQ4dem6P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qI0U7iKOsIZFwgz9uGOTSBPEeJXePsRJoqbDPtjpcboMqLpOuX45SLnzCQ1I2jpZU4bnjCnJO8Qou6NHfLy0NsB22CsyNG3vS58QS6KL16rVb+83YjSLXDCWF5ebMk4ayEHeWzaHP6HJ0dQUKgRyKaW6V7hh/sQ2vKd5xuJO7zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GSkR0IU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AQ4dem6P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A50C19423;
-	Sat, 28 Feb 2026 18:08:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GSkR0IU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274AFC19425;
+	Sat, 28 Feb 2026 18:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302128;
-	bh=GkzjuzH8H3IohTasl/8HxdKUayanOBPPg8LESQes8Do=;
+	s=k20201202; t=1772302130;
+	bh=PaUtHwlJmDhGtSLWELDjUxSLImKbD6wZMMeeY6Zmq6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQ4dem6P7Rzyd3BoFB0cnj77DcvKe8SlcPCMttipCoHt+HVg9AIdRpRYfx3Q+C0li
-	 iznY9myQZ8Q1RL/d7we5dKk1cgm82ThC32hK+77ZH5vEH9sJiBbe/eh1VXz5fi2CMW
-	 ms92RyLiUfrbMdHVIeGr65uEV0Z0rPkY9YM82Mi0pG19fYKzHcU8NsbXCtERwTjU3S
-	 RBEc/VsHYRPQOgwxp2NN03jVOud9NBU1yehVDVn3P4BADGqI9K39SsVVcGN9wykFOS
-	 9aDCI1uq8Zez6F/ZvnDBjE/+j4A1lddsvyNjVImFq+7jt/G4SVIyxjHy8bRYRSrC4r
-	 9Zstf4XxOk/5Q==
+	b=GSkR0IU5m04ifd/k/hpESJnjzwV5phV25LwM50cWFWgzRii9d5EUgnWiqBK1LDcB+
+	 VH/ah2h5YRke3bpcfVAz0+yOYgGH4sFMpqBozBW7IV2gVFfixRt9MlFaMMC3BhyHTD
+	 WKNNbLUMRCWYQK++KzT9zgtVWZEIuRV6UBOZ1vxDED0l646noyRWWlFcQ8u2j/gPE5
+	 Fs/rgO0/iBInl+YkwLckL+4rUp3WylIISZIPDWTbI8AqWqPvoheR+6PqDSSLHZqEK+
+	 WG3ZHqMbNIZzvnB07XyKJFg7NOxTWeOxTtLawHZrzQN8n0qbJHMUSQnYWQ21Sff5/U
+	 e/fQY8Ll7LyUQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Petr Mladek <pmladek@suse.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
 	Aaron Tomlin <atomlin@atomlin.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Daniel Borkman <daniel@iogearbox.net>,
+	Daniel Gomez <da.gomez@samsung.com>,
 	John Fastabend <john.fastabend@gmail.com>,
 	Kees Cook <kees@kernel.org>,
 	Luis Chamberalin <mcgrof@kernel.org>,
 	Marc Rutland <mark.rutland@arm.com>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/283] module: add helper function for reading module_buildid()
-Date: Sat, 28 Feb 2026 13:04:22 -0500
-Message-ID: <20260228180709.1583486-120-sashal@kernel.org>
+Subject: [PATCH 6.6 121/283] kallsyms/ftrace: set module buildid in ftrace_mod_address_lookup()
+Date: Sat, 28 Feb 2026 13:04:23 -0500
+Message-ID: <20260228180709.1583486-121-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -61,75 +61,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Petr Mladek <pmladek@suse.com>
 
-[ Upstream commit acfdbb4ab2910ff6f03becb569c23ac7b2223913 ]
+[ Upstream commit e8a1e7eaa19d0b757b06a2f913e3eeb4b1c002c6 ]
 
-Add a helper function for reading the optional "build_id" member of struct
-module.  It is going to be used also in ftrace_mod_address_lookup().
+__sprint_symbol() might access an invalid pointer when
+kallsyms_lookup_buildid() returns a symbol found by
+ftrace_mod_address_lookup().
 
-Use "#ifdef" instead of "#if IS_ENABLED()" to match the declaration of the
-optional field in struct module.
+The ftrace lookup function must set both @modname and @modbuildid the same
+way as module_address_lookup().
 
-Link: https://lkml.kernel.org/r/20251128135920.217303-4-pmladek@suse.com
+Link: https://lkml.kernel.org/r/20251128135920.217303-7-pmladek@suse.com
+Fixes: 9294523e3768 ("module: add printk formats to add module build ID to stacktraces")
 Signed-off-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Cc: Aaron Tomlin <atomlin@atomlin.com>
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Cc: Alexei Starovoitov <ast@kernel.org>
 Cc: Daniel Borkman <daniel@iogearbox.net>
+Cc: Daniel Gomez <da.gomez@samsung.com>
 Cc: John Fastabend <john.fastabend@gmail.com>
 Cc: Kees Cook <kees@kernel.org>
 Cc: Luis Chamberalin <mcgrof@kernel.org>
 Cc: Marc Rutland <mark.rutland@arm.com>
 Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Petr Pavlu <petr.pavlu@suse.com>
 Cc: Sami Tolvanen <samitolvanen@google.com>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: e8a1e7eaa19d ("kallsyms/ftrace: set module buildid in ftrace_mod_address_lookup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/module.h   | 9 +++++++++
- kernel/module/kallsyms.c | 9 ++-------
- 2 files changed, 11 insertions(+), 7 deletions(-)
+ include/linux/ftrace.h | 6 ++++--
+ kernel/kallsyms.c      | 4 ++--
+ kernel/trace/ftrace.c  | 5 ++++-
+ 3 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/module.h b/include/linux/module.h
-index f58d1eb260fa9..10603f725cae5 100644
---- a/include/linux/module.h
-+++ b/include/linux/module.h
-@@ -735,6 +735,15 @@ static inline void __module_get(struct module *module)
- 	__mod ? __mod->name : "kernel";		\
- })
+diff --git a/include/linux/ftrace.h b/include/linux/ftrace.h
+index e8921871ef9aa..5c3eaf9fc90c4 100644
+--- a/include/linux/ftrace.h
++++ b/include/linux/ftrace.h
+@@ -89,11 +89,13 @@ struct ftrace_direct_func;
+ 	defined(CONFIG_DYNAMIC_FTRACE)
+ const char *
+ ftrace_mod_address_lookup(unsigned long addr, unsigned long *size,
+-		   unsigned long *off, char **modname, char *sym);
++			  unsigned long *off, char **modname,
++			  const unsigned char **modbuildid, char *sym);
+ #else
+ static inline const char *
+ ftrace_mod_address_lookup(unsigned long addr, unsigned long *size,
+-		   unsigned long *off, char **modname, char *sym)
++			  unsigned long *off, char **modname,
++			  const unsigned char **modbuildid, char *sym)
+ {
+ 	return NULL;
+ }
+diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
+index 07f33601cac28..cd44e9c427533 100644
+--- a/kernel/kallsyms.c
++++ b/kernel/kallsyms.c
+@@ -431,8 +431,8 @@ static const char *kallsyms_lookup_buildid(unsigned long addr,
+ 					 offset, modname, namebuf);
  
-+static inline const unsigned char *module_buildid(struct module *mod)
-+{
-+#ifdef CONFIG_STACKTRACE_BUILD_ID
-+	return mod->build_id;
-+#else
-+	return NULL;
-+#endif
-+}
-+
- /* Dereference module function descriptor */
- void *dereference_module_function_descriptor(struct module *mod, void *ptr);
+ 	if (!ret)
+-		ret = ftrace_mod_address_lookup(addr, symbolsize,
+-						offset, modname, namebuf);
++		ret = ftrace_mod_address_lookup(addr, symbolsize, offset,
++						modname, modbuildid, namebuf);
  
-diff --git a/kernel/module/kallsyms.c b/kernel/module/kallsyms.c
-index ef73ae7c89094..8428089791133 100644
---- a/kernel/module/kallsyms.c
-+++ b/kernel/module/kallsyms.c
-@@ -336,13 +336,8 @@ const char *module_address_lookup(unsigned long addr,
- 	if (mod) {
- 		if (modname)
- 			*modname = mod->name;
--		if (modbuildid) {
--#if IS_ENABLED(CONFIG_STACKTRACE_BUILD_ID)
--			*modbuildid = mod->build_id;
--#else
--			*modbuildid = NULL;
--#endif
--		}
-+		if (modbuildid)
-+			*modbuildid = module_buildid(mod);
+ found:
+ 	cleanup_symbol_name(namebuf);
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index 8f2d44e741510..94f7ed57d43e5 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -7046,7 +7046,8 @@ ftrace_func_address_lookup(struct ftrace_mod_map *mod_map,
  
- 		ret = find_kallsyms_symbol(mod, addr, size, offset);
+ const char *
+ ftrace_mod_address_lookup(unsigned long addr, unsigned long *size,
+-		   unsigned long *off, char **modname, char *sym)
++			  unsigned long *off, char **modname,
++			  const unsigned char **modbuildid, char *sym)
+ {
+ 	struct ftrace_mod_map *mod_map;
+ 	const char *ret = NULL;
+@@ -7058,6 +7059,8 @@ ftrace_mod_address_lookup(unsigned long addr, unsigned long *size,
+ 		if (ret) {
+ 			if (modname)
+ 				*modname = mod_map->mod->name;
++			if (modbuildid)
++				*modbuildid = module_buildid(mod_map->mod);
+ 			break;
+ 		}
  	}
 -- 
 2.51.0
