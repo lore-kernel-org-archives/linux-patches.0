@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A901A2DB7B2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9262C333434
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301863; cv=none; b=dc/vVEnUwzMvH6wkubXzNIjWAKHITmyxHKdmLyqniQDA6G93AB+gOpxfZKkjC0vfCV5aW9S1/4qNGjyofZytRUK/i6GvqfEJbj5PBGNqntxeyQ1vfeq0GhjWOFeGyG8x0w+NRIS8SI2CNW9vzITpflGTLD6PfXKq3o9I7V22jYk=
+	t=1772301864; cv=none; b=tLzh4nxk+GuRGMZdw67VZUEo/+4Y7d1E9SGCEO423+TEj5O71B7iBpW/NlME/tc6nCG7cpOMgbgNfA5zRDxrfXsax+Dy9W6Bi6b00OyccadrIG5cadTrVgxLjFLRDzHoFY0ihUkN/0OLRMZscWHnp6OA/HPNU4KiAjBswPvJhXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301863; c=relaxed/simple;
-	bh=IzgKjF09oD/Bye43Y/AyMG7BJrZLvBnfPyLybBNUiAM=;
+	s=arc-20240116; t=1772301864; c=relaxed/simple;
+	bh=18DrQD38hn44o/0AYfhOcv2VP1+mi4X01NSbLxfMI64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XqeaBWJq2prcFeoVn47SDTt9ihRNMVy+oLeWhVQmgaEM4d6t0RWm3GHkYTRF1T4QksRln04shalzoWD6kkAFKjDxcycPVl2oXz2Mid8X6GjzfIqqKkB+jzEzUbtte4k49dpsZlu7sEzRcZKKrWCq4eIB5iwR1BKqI9Njnzn6BUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kJJ9KBKW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SGp14aCnr0aK7zpF8JhNAGP5of9wXt6gNdBOt/J7hj1YqBt1VsD7UZScdsRCuYB2VwZZMuz4xMpicYrp67ZpuqDteXlPqnI8Hec9ublL0qZqHcEYjAMAFl9bEWWnQ4UnN7XRU5l4MmTWztnn+wwHGOrWgf/aeCFW2x/iUAS80BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l6tawvp6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kJJ9KBKW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02817C19424;
-	Sat, 28 Feb 2026 18:04:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l6tawvp6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCBDC116D0;
+	Sat, 28 Feb 2026 18:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301863;
-	bh=IzgKjF09oD/Bye43Y/AyMG7BJrZLvBnfPyLybBNUiAM=;
+	s=k20201202; t=1772301864;
+	bh=18DrQD38hn44o/0AYfhOcv2VP1+mi4X01NSbLxfMI64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJJ9KBKWvaDowZpplC5Qpuv7rpEN1FBpjIDlucC9ERLOeeYZyqsepO2Gu9uzMuIW6
-	 ISc+0D+PIjT9kAPwyajaDlIrdDdtG8RoSjssdqSeC23bgOdaKfpbLyI9c1EUQLBH3S
-	 /LY3+pKurJFsXmhI9Xg0ckYLUbI8j6JBEsH+pT3QTsV0guUZurU/UAu5QaK/HUzRvU
-	 VoWwsQoBT0bbxReU2PCLFPA7z+mCzzLtv6NhaeFTJ8rDynKR/ds0MesrppLfSY77s7
-	 4p9v4hHkV2XiW8kyqQyHoP5D5QTVJVmRmkPYhaHrGQBSICbW1oFLFHWjBpRjxWHN5I
-	 DeEjPyq2ZwZrA==
+	b=l6tawvp6muIYonuc105gzG7zeaG6jttYja8eHA6Mu4zi3WwgWFSuNTXkmKKhcABnS
+	 s1PoEROMrUw9il/vsHcas6n9e2OauQV+CSeGmWcZnIK+XGcOR+FG21iAuB5v9bU/1w
+	 mQ35X5k2+/iXrn2AGMiWldgQzWdniYoVwh9ygHbf5j8oU4JM1byI2hM2ew7Yu04pOs
+	 4hoAYmKn0RGmCFJAk9MGR8dwXAhmyNXj9N+4ErtOtBgqUyy5PiH9+cxKm1JmekGOQy
+	 zhSl5vZWe0VpBYoX3JmqiSvYQjbute+ycZEfpiCkOf536PIhmlnJJ1Be6TvM52X9KT
+	 W1xgi0C4CfLnA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Waqar Hameed <waqar.hameed@axis.com>,
-	Nikita Travkin <nikita@trvn.ru>,
+Cc: Val Packett <val@packett.cool>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 286/385] power: supply: pm8916_lbc: Fix use-after-free for extcon in IRQ handler
-Date: Sat, 28 Feb 2026 12:58:28 -0500
-Message-ID: <20260228180011.1568201-286-sashal@kernel.org>
+Subject: [PATCH 6.12 287/385] power: supply: qcom_battmgr: Recognize "LiP" as lithium-polymer
+Date: Sat, 28 Feb 2026 12:58:29 -0500
+Message-ID: <20260228180011.1568201-287-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,64 +49,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Waqar Hameed <waqar.hameed@axis.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 23067259919663580c6f81801847cfc7bd54fd1f ]
+[ Upstream commit c655f45480637aee326b5bd96488d35ab90db2b0 ]
 
-Using the `devm_` variant for requesting IRQ _before_ the `devm_`
-variant for allocating/registering the `extcon` handle, means that the
-`extcon` handle will be deallocated/unregistered _before_ the interrupt
-handler (since `devm_` naturally deallocates in reverse allocation
-order). This means that during removal, there is a race condition where
-an interrupt can fire just _after_ the `extcon` handle has been
-freed, *but* just _before_ the corresponding unregistration of the IRQ
-handler has run.
+On the Dell Latitude 7455, the firmware uses "LiP" with a lowercase 'i'
+for the battery chemistry type, but only all-uppercase "LIP" was being
+recognized. Add the CamelCase variant to the check to fix the "Unknown
+battery technology" warning.
 
-This will lead to the IRQ handler calling `extcon_set_state_sync()` with
-a freed `extcon` handle. Which usually crashes the system or otherwise
-silently corrupts the memory...
-
-Fix this racy use-after-free by making sure the IRQ is requested _after_
-the registration of the `extcon` handle.
-
-Fixes: f8d7a3d21160 ("power: supply: Add driver for pm8916 lbc")
-Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Reviewed-by: Nikita Travkin <nikita@trvn.ru>
-Link: https://patch.msgid.link/e2a4cd2fcd42b6cd97d856c17c097289a2aed393.1769163273.git.waqar.hameed@axis.com
+Fixes: 202ac22b8e2e ("power: supply: qcom_battmgr: Add lithium-polymer entry")
+Signed-off-by: Val Packett <val@packett.cool>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260120235831.479038-1-val@packett.cool
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/pm8916_lbc.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/power/supply/qcom_battmgr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/pm8916_lbc.c b/drivers/power/supply/pm8916_lbc.c
-index ab324ce3b8721..e6c44f342eeb4 100644
---- a/drivers/power/supply/pm8916_lbc.c
-+++ b/drivers/power/supply/pm8916_lbc.c
-@@ -327,11 +327,6 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index f8bea732ba7f2..a6576248e761e 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -984,7 +984,8 @@ static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry
+ 	if ((!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN)) ||
+ 	    (!strncmp(chemistry, "OOI", BATTMGR_CHEMISTRY_LEN)))
+ 		return POWER_SUPPLY_TECHNOLOGY_LION;
+-	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
++	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN) ||
++	    !strncmp(chemistry, "LiP", BATTMGR_CHEMISTRY_LEN))
+ 		return POWER_SUPPLY_TECHNOLOGY_LIPO;
  
--	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
--					IRQF_ONESHOT, "pm8916_lbc", chg);
--	if (ret)
--		return ret;
--
- 	chg->edev = devm_extcon_dev_allocate(dev, pm8916_lbc_charger_cable);
- 	if (IS_ERR(chg->edev))
- 		return PTR_ERR(chg->edev);
-@@ -340,6 +335,11 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return dev_err_probe(dev, ret, "failed to register extcon device\n");
- 
-+	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
-+					IRQF_ONESHOT, "pm8916_lbc", chg);
-+	if (ret)
-+		return ret;
-+
- 	ret = regmap_read(chg->regmap, chg->reg[LBC_USB] + PM8916_INT_RT_STS, &tmp);
- 	if (ret)
- 		goto comm_error;
+ 	pr_err("Unknown battery technology '%s'\n", chemistry);
 -- 
 2.51.0
 
