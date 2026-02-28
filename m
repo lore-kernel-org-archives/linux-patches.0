@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E440434A3AB
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C273A2AEA
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302669; cv=none; b=J1RHZGweBYDFliZopNhuJKTewKYxUUFp7j/IHhcLyyHjButPcYhHdxapKmspSv8RclpszGgvTxOmSzYd5z3pbG1XAJBwaYdeVT4k3gHM3BuWLcjJakLKu5RxCeXNGLyasNu1xLIzmHRPti+2eORr45HkcKtNwEUEUMbNTW7lZUc=
+	t=1772302669; cv=none; b=F3ToDZ47wtyEstANUB1USHY/q3pSicbEouXUAzVUp2RCZKwfW0n8JhiYQ3Z8spsp1B2VNn9ajd+VFkwJub1aOinKLJ7UWi22JlciwKU64S8X5Lr/cYkXTVcY8Pqc/7j5UZFjWzD5S1stBAXja07k0mqMku+1Ny7Yaq15VaTq1DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302669; c=relaxed/simple;
-	bh=ilTWDM8sYpRaPyj3U99FjkHB9tfSK9FPBoVNkPgjEgA=;
+	bh=OPuRuTdrJOuT51mCbrQ8fDMppnrxu8hLZ606kutHE4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GrF0LloLYDXShMyWwntQ+KGhA2gyo77MEYXLdwT3fD/iIClg5BFJENVLC80qAIrpCK/5MVJqsRSG9xtI6iFySu0Gp7YtrG0dHz3Lbga/xnN96cvqMpZmQbkaFeNO3lxyueG0h/fFs1+K3IIVHRWlM5Uy84cdCafBCKW4y4lmjis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SLQ/4XPt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZWFBAP0J00MROyihDqcRZbctbaHECLNpKBxBKKBpueer0nPMyo+hgIgAC0XOm1fTj9WYhrQitssyDJUXwygkZg+pqIHw9Z050EJecSy1/oKJZG6kRCRgarcOvEzLv8nCVaEPiRzHARzmjOG1bw9iMYw7Jyc69+z0/Q+MWBv65I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pG+dgIyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SLQ/4XPt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A44C116D0;
-	Sat, 28 Feb 2026 18:17:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pG+dgIyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14997C116D0;
+	Sat, 28 Feb 2026 18:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302668;
-	bh=ilTWDM8sYpRaPyj3U99FjkHB9tfSK9FPBoVNkPgjEgA=;
+	s=k20201202; t=1772302669;
+	bh=OPuRuTdrJOuT51mCbrQ8fDMppnrxu8hLZ606kutHE4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLQ/4XPtEno70mtbll8B+eLLxo9qAdlOxmJpUGE+7ncXuGphB67S/J4JjXGVq8Ou/
-	 CXJw8BbNXoBBAh792holuDjM9tVXcVupNUiWuTltMiJ9+/4TaonmsKZ3PFA7rZiSuj
-	 Ju0myBlQbtE6hLi1F/Ny3TQB0JjFxBtLUIz0LQClruvEFcTbBGohF+hV8c49XVZ3fF
-	 pq9HJGxQCGlq00nmb7AnWjbPUjjI5S+5Cd4vuxIRITn8lrrK34AVhd7k7s0xOk8VJU
-	 vtApr+qDzgWzkS1+bX3ryuorDiOpyYhuBHa2a/uQEdzNaP379uE12v3nVhHXBRo/m9
-	 phowGMcyoST/Q==
+	b=pG+dgIyT7E7GJ3lW33klpH41omHlPDDvRzpHTJ6pznLTF3LCzyYvGE5Aawy/44z1J
+	 Ybc2Sn4+QLiuf0tlvq609koJBe5mXURWMTnKMxPL83tPJp+/v3cggD/ORO6pHjZMEu
+	 ytsW1DucpRQz+92YiEftzHhEpE1ffIVoi/hx9GSaE9K4D2hUX/4bvv8Lc/xPA4J2rD
+	 p5TSU15lJjx4p43ES57ngI3UxfHhptslxkc9nvIoqAeo1QNYoynAfdrOWOidH9k4zG
+	 +0E0ELLaxYpmrZ1d/Gc6X+hp1uR3H0SFlfQJ98XHw+u+2rrvnEgyrwnzkDHYVwTCe+
+	 48FH5zfsieS2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alper Ak <alperyasinak1@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+Cc: Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/147] tpm: st33zp24: Fix missing cleanup on get_burstcount() error
-Date: Sat, 28 Feb 2026 13:15:24 -0500
-Message-ID: <20260228181736.1605592-16-sashal@kernel.org>
+Subject: [PATCH 5.10 017/147] btrfs: qgroup: return correct error when deleting qgroup relation item
+Date: Sat, 28 Feb 2026 13:15:25 -0500
+Message-ID: <20260228181736.1605592-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -47,41 +48,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alper Ak <alperyasinak1@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 3e91b44c93ad2871f89fc2a98c5e4fe6ca5db3d9 ]
+[ Upstream commit 51b1fcf71c88c3c89e7dcf07869c5de837b1f428 ]
 
-get_burstcount() can return -EBUSY on timeout. When this happens,
-st33zp24_send() returns directly without releasing the locality
-acquired earlier.
+If we fail to delete the second qgroup relation item, we end up returning
+success or -ENOENT in case the first item does not exist, instead of
+returning the error from the second item deletion.
 
-Use goto out_err to ensure proper cleanup when get_burstcount() fails.
-
-Fixes: bf38b8710892 ("tpm/tpm_i2c_stm_st33: Split tpm_i2c_tpm_st33 in 2 layers (core + phy)")
-Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 73798c465b66 ("btrfs: qgroup: Try our best to delete qgroup relations")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/st33zp24/st33zp24.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/btrfs/qgroup.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
-index 4ec10ab5e5766..33ee4fe693796 100644
---- a/drivers/char/tpm/st33zp24/st33zp24.c
-+++ b/drivers/char/tpm/st33zp24/st33zp24.c
-@@ -381,8 +381,10 @@ static int st33zp24_send(struct tpm_chip *chip, unsigned char *buf,
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index bc1feb97698c9..647feb72c8b0a 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1540,8 +1540,10 @@ static int __del_qgroup_relation(struct btrfs_trans_handle *trans, u64 src,
+ 	if (ret < 0 && ret != -ENOENT)
+ 		goto out;
+ 	ret2 = del_qgroup_relation_item(trans, dst, src);
+-	if (ret2 < 0 && ret2 != -ENOENT)
++	if (ret2 < 0 && ret2 != -ENOENT) {
++		ret = ret2;
+ 		goto out;
++	}
  
- 	for (i = 0; i < len - 1;) {
- 		burstcnt = get_burstcount(chip);
--		if (burstcnt < 0)
--			return burstcnt;
-+		if (burstcnt < 0) {
-+			ret = burstcnt;
-+			goto out_err;
-+		}
- 		size = min_t(int, len - i - 1, burstcnt);
- 		ret = tpm_dev->ops->send(tpm_dev->phy_id, TPM_DATA_FIFO,
- 					 buf + i, size);
+ 	/* At least one deletion succeeded, return 0 */
+ 	if (!ret || !ret2)
 -- 
 2.51.0
 
