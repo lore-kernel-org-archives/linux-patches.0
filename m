@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8124B37223E;
-	Sat, 28 Feb 2026 17:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557A5372255;
+	Sat, 28 Feb 2026 17:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301501; cv=none; b=LQqTVOnUFlLj85C0r/VgrCIRRGJkTSsNIuW7UP4FuZxM83aM24b1TfgXlBaiih6Nu9d0EUoh8ZthksO4CKfNnN+aOe5gojHsbp5uoIjFDVP7Obi3KHCW8KIwaBZNmvp3gxyhTtTuVQOvZagCBGPl1keoGwmeTZYgQhwnVPIbxR8=
+	t=1772301502; cv=none; b=b6rYAiTGLu2FHccvYMFQ+jHrQTiYnQQXg2xYeBlNlUty/rez1oiKlbSZ55mSl3Y6llaZVRGXXgt2YcBhlHAjinUkFYxZoyXTKo241Y18LUAm6qImv+gBmxCWbpRDTBty0Iy4KwJLFhwQhe/kJi+HRih6ErBOYuVxpZvFyLR72hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301501; c=relaxed/simple;
-	bh=3YmsyL7JsOgjjRhEb2dJkfc2tGV7iZrBD8n18IJa8W8=;
+	s=arc-20240116; t=1772301502; c=relaxed/simple;
+	bh=LelZWKh7o+l0tdFfERkHKbBg/0WmIA0wNOavyMzkqBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKJHhOScMHidgucyZogTtubOAdeSjJjTam2uOZAxGxyDOFTeN7CgjktZl6ndtjhf8RuXj+1eST0k7/XIEIm893UV71/c+z2S4rgk9PTKBKpfM4XO/oiBeanAv+O0O96yCSyhIlnx1RUzzM1O8D0QhOcwbnmzQlzr6/gpM83CxfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CQ46o/1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4gFd3UCkDHVJnKSlDQZwZskmQTkssILJu3nmnZJqAxkc+b8sEpw7dq5sYy9zI3ojDlA/CgoxQKTT6Unl2OUhy7DOHYlYvj12KPVkBe7Yz1kvfbTVkinUqPgZy02e+1NEBSYri42d2DWKxuRtW4ol/VFbuv8FxVWgiTy6d003CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MNAOLULx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CQ46o/1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D14C19424;
-	Sat, 28 Feb 2026 17:58:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MNAOLULx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ED0C19423;
+	Sat, 28 Feb 2026 17:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301501;
-	bh=3YmsyL7JsOgjjRhEb2dJkfc2tGV7iZrBD8n18IJa8W8=;
+	s=k20201202; t=1772301502;
+	bh=LelZWKh7o+l0tdFfERkHKbBg/0WmIA0wNOavyMzkqBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CQ46o/1DyvORS1zwOZOH3YVsn4iNdff9/6wRDO4yq25/Bk5WJEkGSHPw0VaUcuwZc
-	 V2sWQk1ui3mO41jtKz7Uwulyn8388hzah/zGEXHpUWJnvzTYo8DqyvddLM12XhLVcr
-	 0NXoN9ACX+6LffWXYtvnyACxIaLpaaTu14C0pLLODguNEwcrkNG+J3CYzDy48Fokbk
-	 TMC7U5dTN7PDcFoBDf03dqDvHHbtPzEoZER58aewM40urDic6fDLMn7/yiKRv28htB
-	 MqlLplaEZ1+xXgkp3jrFZVBaTQZXj0CAUAfS+0DAQe+zqrZCwghouYqOrNd+3xPjF7
-	 cn58RfPkTbYqQ==
+	b=MNAOLULxptmcRVuXoVBHDQdX+lwPTgym1h4wvle/Phepf//0gCsubhdvSG9HkHesl
+	 F2AnHH5qQuDXaZQ26K4k93ktpiGjCSDn2rlUF/xtYA9m0AbFOxgzr6Vlu+mN6BkMHu
+	 hadDz2HQubEwCp+yFuTUZgcLdEwT0sIjnp1zAl4Cgz3QL5NP0xvHJXIWsvxP1OJlnZ
+	 Iqvpa4z5zYmO3w83TN0yPa4lqgKxmqCBVXg4BqCHrEZsNWN3ImHzmWVJ4iyPEFmmjk
+	 +/TnsKAIpm+9e1DRvAORDlFz9LzDOl4NtrXaj0CJopOe0CWk/7aYfAjGUv9Wp09zA3
+	 01OK1h/tBtWJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Miguel Ojeda <ojeda@kernel.org>,
-	David Wood <david@davidtw.co>,
-	Wesley Wiser <wwiser@gmail.com>,
+Cc: Harry Yoo <harry.yoo@oracle.com>,
 	stable@vger.kernel.org,
-	Gary Guo <gary@garyguo.net>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 685/752] rust: kbuild: pass `-Zunstable-options` for Rust 1.95.0
-Date: Sat, 28 Feb 2026 12:46:36 -0500
-Message-ID: <20260228174750.1542406-685-sashal@kernel.org>
+Subject: [PATCH 6.18 686/752] mm/slab: do not access current->mems_allowed_seq if !allow_spin
+Date: Sat, 28 Feb 2026 12:46:37 -0500
+Message-ID: <20260228174750.1542406-686-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,61 +48,97 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Harry Yoo <harry.yoo@oracle.com>
 
-[ Upstream commit 0a9be83e57de0d0ca8ca4ec610bc344f17a8e5e7 ]
+[ Upstream commit 144080a5823b2dbd635acb6decf7ab23182664f3 ]
 
-Custom target specifications are unstable, but starting with Rust 1.95.0,
-`rustc` requires to explicitly pass `-Zunstable-options` to use them [1]:
+Lockdep complains when get_from_any_partial() is called in an NMI
+context, because current->mems_allowed_seq is seqcount_spinlock_t and
+not NMI-safe:
 
-    error: error loading target specification: custom targets are unstable and require `-Zunstable-options`
-      |
-      = help: run `rustc --print target-list` for a list of built-in targets
+  ================================
+  WARNING: inconsistent lock state
+  6.19.0-rc5-kfree-rcu+ #315 Tainted: G                 N
+  --------------------------------
+  inconsistent {INITIAL USE} -> {IN-NMI} usage.
+  kunit_try_catch/9989 [HC1[1]:SC0[0]:HE0:SE1] takes:
+  ffff889085799820 (&____s->seqcount#3){.-.-}-{0:0}, at: ___slab_alloc+0x58f/0xc00
+  {INITIAL USE} state was registered at:
+    lock_acquire+0x185/0x320
+    kernel_init_freeable+0x391/0x1150
+    kernel_init+0x1f/0x220
+    ret_from_fork+0x736/0x8f0
+    ret_from_fork_asm+0x1a/0x30
+  irq event stamp: 56
+  hardirqs last  enabled at (55): [<ffffffff850a68d7>] _raw_spin_unlock_irq+0x27/0x70
+  hardirqs last disabled at (56): [<ffffffff850858ca>] __schedule+0x2a8a/0x6630
+  softirqs last  enabled at (0): [<ffffffff81536711>] copy_process+0x1dc1/0x6a10
+  softirqs last disabled at (0): [<0000000000000000>] 0x0
 
-David (Rust compiler team lead), writes:
+  other info that might help us debug this:
+   Possible unsafe locking scenario:
 
-   "We're destabilising custom targets to allow us to move forward with
-    build-std without accidentally exposing functionality that we'd like
-    to revisit prior to committing to. I'll start a thread on Zulip to
-    discuss with the RfL team how we can come up with an alternative
-    for them."
+         CPU0
+         ----
+    lock(&____s->seqcount#3);
+    <Interrupt>
+      lock(&____s->seqcount#3);
 
-Thus pass it.
+   *** DEADLOCK ***
 
-Cc: David Wood <david@davidtw.co>
-Cc: Wesley Wiser <wwiser@gmail.com>
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust/pull/151534 [1]
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Tested-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260206204535.39431-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+According to Documentation/locking/seqlock.rst, seqcount_t is not
+NMI-safe and seqcount_latch_t should be used when read path can interrupt
+the write-side critical section. In this case, do not access
+current->mems_allowed_seq and avoid retry.
+
+Fixes: af92793e52c3 ("slab: Introduce kmalloc_nolock() and kfree_nolock().")
+Cc: stable@vger.kernel.org
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Link: https://patch.msgid.link/20260210081900.329447-2-harry.yoo@oracle.com
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/Makefile | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/slub.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/rust/Makefile b/rust/Makefile
-index 7842ad0a4ea72..d4618f646b05b 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -437,6 +437,8 @@ $(obj)/$(libpin_init_internal_name): private rustc_target_flags = --cfg kernel
- $(obj)/$(libpin_init_internal_name): $(src)/pin-init/internal/src/lib.rs FORCE
- 	+$(call if_changed_dep,rustc_procmacro)
+diff --git a/mm/slub.c b/mm/slub.c
+index bc6156801e8e6..4e2a3f7656099 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -3594,6 +3594,7 @@ static struct slab *get_any_partial(struct kmem_cache *s,
+ 	enum zone_type highest_zoneidx = gfp_zone(pc->flags);
+ 	struct slab *slab;
+ 	unsigned int cpuset_mems_cookie;
++	bool allow_spin = gfpflags_allow_spinning(pc->flags);
  
-+# `rustc` requires `-Zunstable-options` to use custom target specifications
-+# since Rust 1.95.0 (https://github.com/rust-lang/rust/pull/151534).
- quiet_cmd_rustc_library = $(if $(skip_clippy),RUSTC,$(RUSTC_OR_CLIPPY_QUIET)) L $@
-       cmd_rustc_library = \
- 	OBJTREE=$(abspath $(objtree)) \
-@@ -447,6 +449,7 @@ quiet_cmd_rustc_library = $(if $(skip_clippy),RUSTC,$(RUSTC_OR_CLIPPY_QUIET)) L
- 		--crate-type rlib -L$(objtree)/$(obj) \
- 		--crate-name $(patsubst %.o,%,$(notdir $@)) $< \
- 		--sysroot=/dev/null \
-+		-Zunstable-options \
- 	$(if $(rustc_objcopy),;$(OBJCOPY) $(rustc_objcopy) $@) \
- 	$(cmd_objtool)
+ 	/*
+ 	 * The defrag ratio allows a configuration of the tradeoffs between
+@@ -3618,7 +3619,15 @@ static struct slab *get_any_partial(struct kmem_cache *s,
+ 		return NULL;
  
+ 	do {
+-		cpuset_mems_cookie = read_mems_allowed_begin();
++		/*
++		 * read_mems_allowed_begin() accesses current->mems_allowed_seq,
++		 * a seqcount_spinlock_t that is not NMI-safe. Do not access
++		 * current->mems_allowed_seq and avoid retry when GFP flags
++		 * indicate spinning is not allowed.
++		 */
++		if (allow_spin)
++			cpuset_mems_cookie = read_mems_allowed_begin();
++
+ 		zonelist = node_zonelist(mempolicy_slab_node(), pc->flags);
+ 		for_each_zone_zonelist(zone, z, zonelist, highest_zoneidx) {
+ 			struct kmem_cache_node *n;
+@@ -3640,7 +3649,7 @@ static struct slab *get_any_partial(struct kmem_cache *s,
+ 				}
+ 			}
+ 		}
+-	} while (read_mems_allowed_retry(cpuset_mems_cookie));
++	} while (allow_spin && read_mems_allowed_retry(cpuset_mems_cookie));
+ #endif	/* CONFIG_NUMA */
+ 	return NULL;
+ }
 -- 
 2.51.0
 
