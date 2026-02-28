@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D382D346FA0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E6B346FA0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302243; cv=none; b=LFBC2W8whkbwvQ3mXEd80vRSIp8aNxuvfNmgBX6NuToBJOzw7V0rASpY0qqTiOP1b+//4OKs1KbDXg9kW4Eews9bN/x6J4nUCW5rAfz+gK+7iDmhbpAzssghpyWwYHPGD7pwJhUUdSK6IwMiSR2aE4lSXi3PrC4MYNJ+tASok3o=
+	t=1772302244; cv=none; b=rJxUaPbAExg3WsjM3xNRffTYeGv0h+QSzQf63t2478wNnROtNIOw6GNH/j+193g8+QYUXGFNqA15Swj/sZzNMbWSy2VviKrAHQMfKJeVHe+lBMcnWOV5dpZgJFshQiHvejHP/5qqBmRLqrbtUqS1IqxqFCvwAjxt54ndM9DjgYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302243; c=relaxed/simple;
-	bh=ToBBrG6yhZj32UEh4WWGlV6l3aOIanYZKl6A0j9k/ME=;
+	s=arc-20240116; t=1772302244; c=relaxed/simple;
+	bh=IVwonE9Afna+HNBsS/hv0EUFzgzzUx307BKnRJmfJmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5XS6RslLdnQdSitv1S04u4WPxNnIqfUXhjnX9qweI3xeVjqIouD7JTNl8MkS5BSw3yBzJ/MoVlqxqyHL23/Hk+g73005CpRczjJSMiWXk81w80ahjSwitnwsixVmWRcyQBPkAbJysgz8PtpcG97daW6jOqOPq4NzPK+otZi9b0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X9b7q+qA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L5de4VGDQtoJVcBQFZZJ5/qae3bnBqfIaYaQOlsF7rCIo/jQWQSHkK8jodLGeOq5Y9FSTE7k2TU80lSn4QaYI4CnTapSHkppfO3TIBvGViJNshO9byoFD0pmBnwHo+wL5DUPhDsJjV/IPtUCI4CGBLIbc9LULXYMamHuBFVjAOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YfZTbldU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X9b7q+qA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465D0C19425;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YfZTbldU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0549CC19425;
 	Sat, 28 Feb 2026 18:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302243;
-	bh=ToBBrG6yhZj32UEh4WWGlV6l3aOIanYZKl6A0j9k/ME=;
+	s=k20201202; t=1772302244;
+	bh=IVwonE9Afna+HNBsS/hv0EUFzgzzUx307BKnRJmfJmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9b7q+qAwLw6Gnqwn9USkRFKDBGb4oZuS+UTCWjCvP46r8/cm6zqBJQpzrQJprqul
-	 h880mh43Ltkf/f/DwvZ26XvZQC0l34gLaCTccE6Vv8AtGRPOXK+Lf3z1RioLM/QoUq
-	 zrFyQF+YCIQF5qxMoDCy0ieYirhwZXwquyYNQIcJT7xZeGc2G13IQzFLBW0EiahV7h
-	 YcmUAwFpKNzx72p6FGOx7y0pFCPVvkVPjiTPCaGwQgGCy0oUpG9V6B2n9ZcZF7VJi7
-	 V5Js2VzS08qrjMZ7VyOnIMPiIBmckEBbwhhlulbZTFL0vsltm9s0654vNXu5Sp40yh
-	 eQkcfUsPREhZg==
+	b=YfZTbldUtXBpe3FCmW7hUPY7D3MOanAh1sWGerXBX7TREAPFHeIhN3l7F85j1J44I
+	 UPWijKd58+LXDRuqoreRpT0eqz/TauAVjKumBLifEU2ncoLNIrZtkhCJnOM6ZUatMq
+	 xLja8LgFkBv6+mkGVDOs5r1F5saVOFvY+zlPo5iAX2mhk+EDjEhRjFe/fgVgIjpQVe
+	 FVnQh8EdgYNRd4zE0u1FX7Dtp54Ft1K2fnF3h4cGW04mkmLcxkZm/0lQQ1vyuvq0IO
+	 RE1TNkLoBhsQ3f9lcqnUcVoe5ytNR+nUk6qLMtUwwPqEXonFcDu89Nwnn+dvsPV7B9
+	 0JCxcHLhjCl/Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Sean V Kelley <skelley@nvidia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 256/283] fs/ntfs3: Fix slab-out-of-bounds read in DeleteIndexEntryRoot
-Date: Sat, 28 Feb 2026 13:06:38 -0500
-Message-ID: <20260228180709.1583486-256-sashal@kernel.org>
+Subject: [PATCH 6.6 257/283] ACPI: CPPC: Fix remaining for_each_possible_cpu() to use online CPUs
+Date: Sat, 28 Feb 2026 13:06:39 -0500
+Message-ID: <20260228180709.1583486-257-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -47,49 +47,53 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Sean V Kelley <skelley@nvidia.com>
 
-[ Upstream commit b2bc7c44ed1779fc9eaab9a186db0f0d01439622 ]
+[ Upstream commit 56eb0c0ed345da7815274aa821a8546a073d7e97 ]
 
-In the 'DeleteIndexEntryRoot' case of the 'do_action' function, the
-entry size ('esize') is retrieved from the log record without adequate
-bounds checking.
+per_cpu(cpc_desc_ptr, cpu) object is initialized for only the online
+CPUs via acpi_soft_cpu_online() --> __acpi_processor_start() -->
+acpi_cppc_processor_probe().
 
-Specifically, the code calculates the end of the entry ('e2') using:
-    e2 = Add2Ptr(e1, esize);
+However, send_pcc_cmd() and acpi_get_psd_map() still iterate over all
+possible CPUs. In acpi_get_psd_map(), encountering an offline CPU
+returns -EFAULT, causing cppc_cpufreq initialization to fail.
 
-It then calculates the size for memmove using 'PtrOffset(e2, ...)',
-which subtracts the end pointer from the buffer limit. If 'esize' is
-maliciously large, 'e2' exceeds the used buffer size. This results in
-a negative offset which, when cast to size_t for memmove, interprets
-as a massive unsigned integer, leading to a heap buffer overflow.
+This breaks systems booted with "nosmt" or "nosmt=force".
 
-This commit adds a check to ensure that the entry size ('esize') strictly
-fits within the remaining used space of the index header before performing
-memory operations.
+Fix by using for_each_online_cpu() in both functions.
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 80b8286aeec0 ("ACPI / CPPC: support for batching CPPC requests")
+Signed-off-by: Sean V Kelley <skelley@nvidia.com>
+Link: https://patch.msgid.link/20260211212254.30190-1-skelley@nvidia.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/acpi/cppc_acpi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 2a1aeab53ea4b..598b7f42b5e7e 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -3431,6 +3431,9 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index 16ac219ae6fe5..0bf3861cf79b1 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -347,7 +347,7 @@ static int send_pcc_cmd(int pcc_ss_id, u16 cmd)
+ end:
+ 	if (cmd == CMD_WRITE) {
+ 		if (unlikely(ret)) {
+-			for_each_possible_cpu(i) {
++			for_each_online_cpu(i) {
+ 				struct cpc_desc *desc = per_cpu(cpc_desc_ptr, i);
  
- 		e1 = Add2Ptr(attr, le16_to_cpu(lrh->attr_off));
- 		esize = le16_to_cpu(e1->size);
-+		if (PtrOffset(e1, Add2Ptr(hdr, used)) < esize)
-+			goto dirty_vol;
-+
- 		e2 = Add2Ptr(e1, esize);
+ 				if (!desc)
+@@ -509,7 +509,7 @@ int acpi_get_psd_map(unsigned int cpu, struct cppc_cpudata *cpu_data)
+ 	else if (pdomain->coord_type == DOMAIN_COORD_TYPE_SW_ANY)
+ 		cpu_data->shared_type = CPUFREQ_SHARED_TYPE_ANY;
  
- 		memmove(e1, e2, PtrOffset(e2, Add2Ptr(hdr, used)));
+-	for_each_possible_cpu(i) {
++	for_each_online_cpu(i) {
+ 		if (i == cpu)
+ 			continue;
+ 
 -- 
 2.51.0
 
