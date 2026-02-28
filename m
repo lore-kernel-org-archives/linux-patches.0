@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793172737F2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D8A36C9EB
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302327; cv=none; b=kwVwwfFAl9dhk5nACKBhsKsFYOwhbNWSZlEdvrxvoMUGkxarL9QB+amcAJX98hr4hSkGJfgtZJVFPVRM/ogtKnMbpSI1ztw4mh3YnB8fuIITGk8ctv/qBjbQ9FC/J6SDicgHpa3wwyb+QlDWfoQ5y4+aI+r0edGXwapvwXQFCj0=
+	t=1772302328; cv=none; b=Pu/3tFC8QHcrziThMCvJLi5q1h2mVkrtNm2wubwJQibtRwn6JROfd94ISNK9bSWMQObd/06mWv1q1Rs7R1jYad2YBPLtoTPtGrOfND/o3f4Yq0srk+iAcVZ8PmHNYER+YUflaEFbDSviurYI3/yoePRBeoN7QZdTmKbclnXrAfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302327; c=relaxed/simple;
-	bh=dRLhpepTXNwFk1pQVeRp1JsaIP6PeI4quhvOVy3MNU0=;
+	s=arc-20240116; t=1772302328; c=relaxed/simple;
+	bh=VnPK8dkEkQzQ+SrS6pnl0P3RAEWnpb4IIx0h3sB1GEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cbt1zmacJuAdRWqR9JBpKM8nlpxfU5FFuNs8FvNUHzNe4m/TiOt1Qh2t1+AgCKeJH0krXnd9FTTNcoN3DJpA8ZXc7E8E0s8cK/qyj9fEPuYaQtuGlqr0TV8qlTkTE04Tsz5bvERypLRWn2o2DtS9FbnUdpgKw76tnuNnSIJ/GY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tcnp/kkn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EhJRH6R6fQY+HYFXadK2XkbdPoZfmo9ujT/pvcwpn+kSl5Gnje2YdnNsoR6pqHeXrknAMVQxbFuGpwsmLqF67aaZJJqqv8ytBqmwrCggQL9RPUJ5kqv6Bk9GORGQtAiebkTLqFkyl7wYtvAFZ+huCRi6GMpmSTKAyQbrC3ZUifI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MQ8+bdXO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tcnp/kkn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7E4C116D0;
-	Sat, 28 Feb 2026 18:12:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MQ8+bdXO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3F1C116D0;
+	Sat, 28 Feb 2026 18:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302327;
-	bh=dRLhpepTXNwFk1pQVeRp1JsaIP6PeI4quhvOVy3MNU0=;
+	s=k20201202; t=1772302328;
+	bh=VnPK8dkEkQzQ+SrS6pnl0P3RAEWnpb4IIx0h3sB1GEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcnp/kknM2KfDRf/ccazoXadtE21ezRbe6wEcNNNTnOj7MH5Yk51BSgAo+0/uHqdj
-	 7qaSvXK+UWf65JQAiJdAo4mptq9+tVVNxO2iV2/FF8XJoDzDHGX2e4UrcKfXlNCmKn
-	 5JIE/eKP8IsS94SXwl0c/zlBXr/WbIjx7l+iTyZ3B6d1HtB5fn6VHWzzXFi1ey0iJe
-	 2CN6giIRXvrcPgw7ATV3bZius8yl0wpYZgcGzfyT9qMNAD6cv7bQX80ESfpLubXxfI
-	 KYqEhijpd+T3EPBo/t7WgaMF1ObW+pkHBDdye8l+C/PtZNnVcB3t9hvKCUEjiEI4ub
-	 ZcMZGFdJhvTbA==
+	b=MQ8+bdXOZURl6EJXYLqwKMSbo5XWPi3fIUf28XY9djdnoLTnpxofsTG8HzimVEWpX
+	 AlTHTHqBkaglQUdmFbAhxu6TaBquf9/WhiDERU4+aAsvTev1MKqTiozWFZz9CaFOGY
+	 YdCUYYoLoJDjQVwaGJvnOEoNAGgxbhDGfz9BYWDhzEDUza+JguQMCjK1wRdgmzFTMH
+	 Nbu6fXWi08VEMrigHMc8sB0lo+XqO6p8p5Z1somewktu0QZQzha30WdglNrf+rO2vO
+	 d19hh+YuGK9kPnFqoWEMhZvzpAt6osECkGouKkP3MT+feip0/pexH26ucn2keZScGk
+	 bPSa5zdNuyUiw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+Cc: Chen Jinghuang <chenjinghuang2@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/232] mfd: wm8350-core: Use IRQF_ONESHOT
-Date: Sat, 28 Feb 2026 13:08:20 -0500
-Message-ID: <20260228181127.1592657-47-sashal@kernel.org>
+Subject: [PATCH 6.1 048/232] sched/rt: Skip currently executing CPU in rto_next_cpu()
+Date: Sat, 28 Feb 2026 13:08:21 -0500
+Message-ID: <20260228181127.1592657-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,46 +50,85 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Chen Jinghuang <chenjinghuang2@huawei.com>
 
-[ Upstream commit 553b4999cbe231b5011cb8db05a3092dec168aca ]
+[ Upstream commit 94894c9c477e53bcea052e075c53f89df3d2a33e ]
 
-Using a threaded interrupt without a dedicated primary handler mandates
-the IRQF_ONESHOT flag to mask the interrupt source while the threaded
-handler is active. Otherwise the interrupt can fire again before the
-threaded handler had a chance to run.
+CPU0 becomes overloaded when hosting a CPU-bound RT task, a non-CPU-bound
+RT task, and a CFS task stuck in kernel space. When other CPUs switch from
+RT to non-RT tasks, RT load balancing (LB) is triggered; with
+HAVE_RT_PUSH_IPI enabled, they send IPIs to CPU0 to drive the execution
+of rto_push_irq_work_func. During push_rt_task on CPU0,
+if next_task->prio < rq->donor->prio, resched_curr() sets NEED_RESCHED
+and after the push operation completes, CPU0 calls rto_next_cpu().
+Since only CPU0 is overloaded in this scenario, rto_next_cpu() should
+ideally return -1 (no further IPI needed).
 
-Mark explained that this should not happen with this hardware since it
-is a slow irqchip which is behind an I2C/ SPI bus but the IRQ-core will
-refuse to accept such a handler.
+However, multiple CPUs invoking tell_cpu_to_push() during LB increments
+rd->rto_loop_next. Even when rd->rto_cpu is set to -1, the mismatch between
+rd->rto_loop and rd->rto_loop_next forces rto_next_cpu() to restart its
+search from -1. With CPU0 remaining overloaded (satisfying rt_nr_migratory
+&& rt_nr_total > 1), it gets reselected, causing CPU0 to queue irq_work to
+itself and send self-IPIs repeatedly. As long as CPU0 stays overloaded and
+other CPUs run pull_rt_tasks(), it falls into an infinite self-IPI loop,
+which triggers a CPU hardlockup due to continuous self-interrupts.
 
-Set IRQF_ONESHOT so the interrupt source is masked until the secondary
-handler is done.
+The trigging scenario is as follows:
 
-Fixes: 1c6c69525b40e ("genirq: Reject bogus threaded irq requests")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260128095540.863589-16-bigeasy@linutronix.de
+         cpu0                      cpu1                    cpu2
+                                pull_rt_task
+                              tell_cpu_to_push
+                 <------------irq_work_queue_on
+rto_push_irq_work_func
+       push_rt_task
+    resched_curr(rq)                                   pull_rt_task
+    rto_next_cpu                                     tell_cpu_to_push
+                      <-------------------------- atomic_inc(rto_loop_next)
+rd->rto_loop != next
+     rto_next_cpu
+   irq_work_queue_on
+rto_push_irq_work_func
+
+Fix redundant self-IPI by filtering the initiating CPU in rto_next_cpu().
+This solution has been verified to effectively eliminate spurious self-IPIs
+and prevent CPU hardlockup scenarios.
+
+Fixes: 4bdced5c9a29 ("sched/rt: Simplify the IPI based RT balancing logic")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Suggested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Chen Jinghuang <chenjinghuang2@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Link: https://patch.msgid.link/20260122012533.673768-1-chenjinghuang2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mfd/wm8350/core.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/rt.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/mfd/wm8350/core.h b/include/linux/mfd/wm8350/core.h
-index a3241e4d75486..4816d4f472101 100644
---- a/include/linux/mfd/wm8350/core.h
-+++ b/include/linux/mfd/wm8350/core.h
-@@ -663,7 +663,7 @@ static inline int wm8350_register_irq(struct wm8350 *wm8350, int irq,
- 		return -ENODEV;
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 3a2335bc1d58b..99e5d37b3f6eb 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2230,6 +2230,7 @@ static void push_rt_tasks(struct rq *rq)
+  */
+ static int rto_next_cpu(struct root_domain *rd)
+ {
++	int this_cpu = smp_processor_id();
+ 	int next;
+ 	int cpu;
  
- 	return request_threaded_irq(irq + wm8350->irq_base, NULL,
--				    handler, flags, name, data);
-+				    handler, flags | IRQF_ONESHOT, name, data);
- }
+@@ -2253,6 +2254,10 @@ static int rto_next_cpu(struct root_domain *rd)
  
- static inline void wm8350_free_irq(struct wm8350 *wm8350, int irq, void *data)
+ 		rd->rto_cpu = cpu;
+ 
++		/* Do not send IPI to self */
++		if (cpu == this_cpu)
++			continue;
++
+ 		if (cpu < nr_cpu_ids)
+ 			return cpu;
+ 
 -- 
 2.51.0
 
