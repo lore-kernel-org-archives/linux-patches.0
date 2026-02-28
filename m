@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0438379ED5
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAEA344D9A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301729; cv=none; b=YKDi+ObNd8HztfTihlEVlZmgHItgwsCIfBxnU0FtTq4uojt457bu1mZiKreneAbhs7eBTMGYXkAbxH/RAecqIjFfLB06AiMETTGuoo/iSk/C3mZSn4VSlitCjQD3ApUby1kS67eXGnuxTrmiWDiEFbFqeP0eY3no42jygZUNeCA=
+	t=1772301730; cv=none; b=Ert1IIHngi+rpgYEM/+uHirKVFO6PuHVCYp4hJWeHeW5esxndJLKynNuohzzRk4dXfYM2bqwElg0ajicXieYT3KWacbw5GqjzLt8ehLEwmvyXGtLckL+QBcPTF3DIprtKLW6gOpJSjo5Z53fXH/Knirg+VgdDlYkEq5vfJXKLXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301729; c=relaxed/simple;
-	bh=ln5iVxIkbVPwkTavUvpbic1jBAnTs5g8BgwuExKnqCc=;
+	s=arc-20240116; t=1772301730; c=relaxed/simple;
+	bh=2ARIrTuXH0PJQuxJ+uktNxHGD/lLsUex2jtRplnpIw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtWKw6315z3Zzmvr863AjTE2pa3iGYqVQhrhwsssJs85gyTyYcLwfpUo6gweDrQevZ6ZTkqpL63CpNFtHGPAdHjOtR6f2sSR3q2Pz/lifT/ywgjvoor7JKzZNSZYh8P4l1iLj3n2KNEvMZoi282ke0hUA5mYFw17viRxqtyptaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bdOCip7k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hoqUIbuqaiin5g0pne4PfFQNfV+nyLO/2hdnVGl1ovQTfozqBWlPgDqwr+2tbLYy49F0JxtrtOyIu1S21HzGu/Qi5+iDItM6cLaZePptbay9kMYAotpYCUr+XQqnbBeTJ7HaQCcABsKUBSgyn5VBbfujR2pZ4mJZ71qJTNmN8sU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IKooxPMR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bdOCip7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAB3C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IKooxPMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077CDC116D0;
 	Sat, 28 Feb 2026 18:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301729;
-	bh=ln5iVxIkbVPwkTavUvpbic1jBAnTs5g8BgwuExKnqCc=;
+	s=k20201202; t=1772301730;
+	bh=2ARIrTuXH0PJQuxJ+uktNxHGD/lLsUex2jtRplnpIw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdOCip7knKB/0SvAZE1vp5S9aRlCRMxk7ZS8LQnpHf8KLSa1M+UndhtdB4fgNP97Z
-	 1Yg19mARau2MTbMpsE010dkuj0GFT25s/PDhxBYP+1V2mBxOpbCphnKOVE4S0x50Vp
-	 JPA4LpKbnfOYE7s+A9ZmzahSUH4RsscmBwiC8CRVqp4CMSAOTuOy6ET0QBu4V70FxQ
-	 CHu0+V0nkrmyWi4QZ+RoWY0yvlxfUE0KbRaTSbI2PDPtItpNlq4dioHrk3/s6vDR3G
-	 eOsnuv0vOX+AYnznUOY94y4zlyrm7LC217e1bsGIiBLJnBZve/2V5HDyb8io9WGKHy
-	 2KM3Ron4kziYw==
+	b=IKooxPMRgQxk5+8w2TEnCzL7vlVITUEkSZH9Ji9ZBiW0uegepLaJBEQJhlmwgI8w5
+	 66Cw5vxgnCDYlt8r/fVh0SFN3STPeDP7SFVfgdygy7C1f1YwVmQfCcbC3Llxaorugr
+	 Hltdwoe3a72NYQM9iw3WOJq0S1MD+LOjneIk3qWi6jtomq/4DcDsYoMyyjrLLjq6k1
+	 WRC8ROaYBwRSKo8XyKgIQ30I2KWcPZKvY2j+waYNGv7qojxVqlDf0bHaag2w2j5+up
+	 MNWKEhAl6liVcrC4LnlpgoUxlfmN2UBsBjbrHerT4iO6sYz3hwoXcxxtCWSHPEcFNI
+	 D8kKSTbD/okQw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Boris Brezillon <boris.brezillon@collabora.com>,
 	Steven Price <steven.price@arm.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 128/385] drm/panthor: Recover from panthor_gpu_flush_caches() failures
-Date: Sat, 28 Feb 2026 12:55:50 -0500
-Message-ID: <20260228180011.1568201-128-sashal@kernel.org>
+Subject: [PATCH 6.12 129/385] drm/panthor: Fix the full_tick check
+Date: Sat, 28 Feb 2026 12:55:51 -0500
+Message-ID: <20260228180011.1568201-129-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -49,104 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 3c0a60195b37af83bbbaf223cd3a78945bace49e ]
+[ Upstream commit a3c2d0b40b108bd45d44f6c1dfa33c39d577adcd ]
 
-We have seen a few cases where the whole memory subsystem is blocked
-and flush operations never complete. When that happens, we want to:
-
-- schedule a reset, so we can recover from this situation
-- in the reset path, we need to reset the pending_reqs so we can send
-  new commands after the reset
-- if more panthor_gpu_flush_caches() operations are queued after
-  the timeout, we skip them and return -EIO directly to avoid needless
-  waits (the memory block won't miraculously work again)
-
-Note that we drop the WARN_ON()s because these hangs can be triggered
-with buggy GPU jobs created by the UMD, and there's no way we can
-prevent it. We do keep the error messages though.
+We have a full tick when the remaining time to the next tick is zero,
+not the other way around. Declare a full_tick variable so we don't get
+that test wrong in other places.
 
 v2:
-- New patch
+- Add R-b
 
 v3:
 - Collect R-b
-- Explicitly mention the fact we dropped the WARN_ON()s in the commit
-  message
 
-v4:
-- No changes
-
-Fixes: 5cd894e258c4 ("drm/panthor: Add the GPU logical block")
+Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
 Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20251128084841.3804658-4-boris.brezillon@collabora.com
+Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
+Link: https://patch.msgid.link/20251128094839.3856402-4-boris.brezillon@collabora.com
 Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gpu.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/panthor/panthor_sched.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
-index 1ca2924e6d552..15e4371d98945 100644
---- a/drivers/gpu/drm/panthor/panthor_gpu.c
-+++ b/drivers/gpu/drm/panthor/panthor_gpu.c
-@@ -384,38 +384,42 @@ int panthor_gpu_l2_power_on(struct panthor_device *ptdev)
- int panthor_gpu_flush_caches(struct panthor_device *ptdev,
- 			     u32 l2, u32 lsc, u32 other)
- {
--	bool timedout = false;
- 	unsigned long flags;
-+	int ret = 0;
+diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
+index 1d95decddc273..6cfd44a414802 100644
+--- a/drivers/gpu/drm/panthor/panthor_sched.c
++++ b/drivers/gpu/drm/panthor/panthor_sched.c
+@@ -2338,6 +2338,7 @@ static void tick_work(struct work_struct *work)
+ 	u64 remaining_jiffies = 0, resched_delay;
+ 	u64 now = get_jiffies_64();
+ 	int prio, ret, cookie;
++	bool full_tick;
  
- 	/* Serialize cache flush operations. */
- 	guard(mutex)(&ptdev->gpu->cache_flush_lock);
+ 	if (!drm_dev_enter(&ptdev->base, &cookie))
+ 		return;
+@@ -2349,15 +2350,17 @@ static void tick_work(struct work_struct *work)
+ 	if (time_before64(now, sched->resched_target))
+ 		remaining_jiffies = sched->resched_target - now;
  
- 	spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
--	if (!drm_WARN_ON(&ptdev->base,
--			 ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
-+	if (!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
- 		ptdev->gpu->pending_reqs |= GPU_IRQ_CLEAN_CACHES_COMPLETED;
- 		gpu_write(ptdev, GPU_CMD, GPU_FLUSH_CACHES(l2, lsc, other));
-+	} else {
-+		ret = -EIO;
- 	}
- 	spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
- 
-+	if (ret)
-+		return ret;
++	full_tick = remaining_jiffies == 0;
 +
- 	if (!wait_event_timeout(ptdev->gpu->reqs_acked,
- 				!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED),
- 				msecs_to_jiffies(100))) {
- 		spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
- 		if ((ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED) != 0 &&
- 		    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_CLEAN_CACHES_COMPLETED))
--			timedout = true;
-+			ret = -ETIMEDOUT;
- 		else
- 			ptdev->gpu->pending_reqs &= ~GPU_IRQ_CLEAN_CACHES_COMPLETED;
- 		spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
- 	}
+ 	mutex_lock(&sched->lock);
+ 	if (panthor_device_reset_is_pending(sched->ptdev))
+ 		goto out_unlock;
  
--	if (timedout) {
-+	if (ret) {
-+		panthor_device_schedule_reset(ptdev);
- 		drm_err(&ptdev->base, "Flush caches timeout");
--		return -ETIMEDOUT;
- 	}
+-	tick_ctx_init(sched, &ctx, remaining_jiffies != 0);
++	tick_ctx_init(sched, &ctx, full_tick);
+ 	if (ctx.csg_upd_failed_mask)
+ 		goto out_cleanup_ctx;
  
--	return 0;
-+	return ret;
- }
- 
- /**
-@@ -455,6 +459,7 @@ int panthor_gpu_soft_reset(struct panthor_device *ptdev)
- 		return -ETIMEDOUT;
- 	}
- 
-+	ptdev->gpu->pending_reqs = 0;
- 	return 0;
- }
- 
+-	if (remaining_jiffies) {
++	if (!full_tick) {
+ 		/* Scheduling forced in the middle of a tick. Only RT groups
+ 		 * can preempt non-RT ones. Currently running RT groups can't be
+ 		 * preempted.
 -- 
 2.51.0
 
