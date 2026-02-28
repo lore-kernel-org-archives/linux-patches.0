@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB9533FE12
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9138D33F8A1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300945; cv=none; b=uahmjrMRCO4pjzf8mog7kG9RDsgGRB51NLtgYT0LBTT/TOsgelAylTB1D/fc7yFfOJK2cYS1OZSudWo/tmqtSm7FbnBGIpP7hXIpQ0xTWA84jbJY8L8KKLZlxoxI6pBb3GjfVdqr185kUtNssgkm8USZebrGeDIng/J4Tggaetw=
+	t=1772300946; cv=none; b=puF1UXMHwJBL2drbVoreZA2SxR+UPYboL3sX50VQn5vKZbtsPYieHlP9lLikRPgrZettOwk93FCRr5rbfBPmS19TkDzMK7vJM4GyTqExk9Ra0he0N1HoieMzyvgXLtQPdJCQ+miZS+j6fq2xthBUpbCnReUPllqT7W592LBxPnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300945; c=relaxed/simple;
-	bh=V+50dztDbAqm/7fXgq20C1io7D2TwnP/KrkB9weyZH4=;
+	s=arc-20240116; t=1772300946; c=relaxed/simple;
+	bh=yL/3J+Kc+ufBQbQo8CUEsiiz0KXUEBwUey7O3oZpMAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BSWaSRShGPSEHIFjDX5Fdgyjup+/xhjH9ucUXPGBWsgwFNZ//HeaKiVbAaxY2V3+HT5XlRxSKh9OUOxpwT0JXxWMaskriPZIcIoJTDqq1aomxZcT65f5iKjeonHq6F6JyYVbujOyD5JhLEfjFxbQvuru4XVIuDCXsBZ/vBMAAo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wnb2O1qh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GZ8uShv49+cOopLsG04w/4xnirDWqs2I7+NG7HMwDNyrmWeCmInTmPoLupGleI+5cRpUzrkEaadhOeTRdL58Di7rIhEXDPUGy4tRRMly5aaWOeTSMDeSPq8V9bjku6QgPs0z6XEPerOhGAicA0Y5NBZP3nCQVx/+yvpQmNylGQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rrw1725I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wnb2O1qh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E10FC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rrw1725I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00351C116D0;
 	Sat, 28 Feb 2026 17:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300945;
-	bh=V+50dztDbAqm/7fXgq20C1io7D2TwnP/KrkB9weyZH4=;
+	s=k20201202; t=1772300946;
+	bh=yL/3J+Kc+ufBQbQo8CUEsiiz0KXUEBwUey7O3oZpMAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wnb2O1qhBM1F4oeDvKRD/GGRb3oAIFcLGSigkw1Uz5/gKiXtR6zLRQaabWeShFhQ0
-	 2sP6KMS3EbrC96eeQRV4XHzKv7lH544cw3OgXjAAjpXQnXWVhL3Gp8LYSSkfRoFoav
-	 R5kD3UZ8hfFdy8SFbuBbWPhP9yMj+gTJDYCblnO0RXk5MfrheyTIG28l/5aEGMEy+d
-	 WB7SDmLqW0iAEyusGgA4/h43QNWvZR1l/4Ztixr70B6yBR8TDBWrM7WSyUn3ooIxNV
-	 Q81KvAdJPt6XoJnlwyHqbwwWI55o8WXDtOCHs0iTcmQTZUynA3LaYF0wXEmVFHUj8f
-	 G1Ti6G91981aw==
+	b=Rrw1725IuNzn1eUJGsCdTSqWkKztlKsmMavY4213VHEr6oTxzxedU51ZOAJ7VQCdO
+	 XYhhpoKT5J056OT5vOYsy0BlHYfmXXOGOeB/QduqTnxnFIcyABVDUGgsbP7twcjifb
+	 YxikewcRAJudN5F+6RiTtWw7cTwBR35uxfonp1peAr5TCpcTnR/40NUX9ZJ60/hUb1
+	 LEc8q21ogGTVBk9i70sEHgcaDbp2PIQ2IE66J5P5jLSmaauRt5cJGmKU4S1GBgI43S
+	 rS/35ZveXVbnlBdhIl/VoxOiIb7I7t84C6VwhuiHYuHt2K3pTOXBCmPy73Zey4I+93
+	 jyrK4/erWzAGw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Ata=20=C4=B0lhan=20K=C3=B6kt=C3=BCrk?= <atailhan2006@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Jason Andryuk <jason.andryuk@amd.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/752] ACPI: battery: fix incorrect charging status when current is zero
-Date: Sat, 28 Feb 2026 12:36:19 -0500
-Message-ID: <20260228174750.1542406-68-sashal@kernel.org>
+Subject: [PATCH 6.18 069/752] xenbus: Use .freeze/.thaw to handle xenbus devices
+Date: Sat, 28 Feb 2026 12:36:20 -0500
+Message-ID: <20260228174750.1542406-69-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -43,57 +43,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ata İlhan Köktürk <atailhan2006@gmail.com>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-[ Upstream commit bb1256e0ddc7e9e406164319769b9f8d8389f056 ]
+[ Upstream commit e08dd1ee49838750a514e83c0aa60cd12ba6ecbb ]
 
-On some laptops, such as the Huawei Matebook series, the embedded
-controller continues to report "Charging" status even when the
-charge threshold is reached and no current is being drawn.
+The goal is to fix s2idle and S3 for Xen PV devices.  A domain resuming
+from s3 or s2idle disconnects its PV devices during resume.  The
+backends are not expecting this and do not reconnect.
 
-This incorrect reporting prevents the system from switching to battery
-power profiles, leading to significantly higher power (e.g., 18W instead
-of 7W during browsing) and missed remaining battery time estimation.
+b3e96c0c7562 ("xen: use freeze/restore/thaw PM events for suspend/
+resume/chkpt") changed xen_suspend()/do_suspend() from
+PMSG_SUSPEND/PMSG_RESUME to PMSG_FREEZE/PMSG_THAW/PMSG_RESTORE, but the
+suspend/resume callbacks remained.
 
-Validate the "Charging" state by checking if rate_now is zero. If the
-hardware reports charging but the current is zero, report "Not Charging"
-to user space.
+.freeze/restore are used with hiberation where Linux restarts in a new
+place in the future.  .suspend/resume are useful for runtime power
+management for the duration of a boot.
 
-Signed-off-by: Ata İlhan Köktürk <atailhan2006@gmail.com>
-[ rjw: Whitespace fix, braces added to an inner if (), new comment rewrite ]
-[ rjw: Changelog edits ]
-Link: https://patch.msgid.link/20260129144856.43058-1-atailhan2006@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The current behavior of the callbacks works for an xl save/restore or
+live migration where the domain is restored/migrated to a new location
+and connecting to a not-already-connected backend.
+
+Change xenbus_pm_ops to use .freeze/thaw/restore and drop the
+.suspend/resume hook.  This matches the use in drivers/xen/manage.c for
+save/restore and live migration.  With .suspend/resume empty, PV devices
+are left connected during s2idle and s3, so PV devices are not changed
+and work after resume.
+
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Acked-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20251119224731.61497-2-jason.andryuk@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/xen/xenbus/xenbus_probe_frontend.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 67b76492c839c..8196c17b5a970 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -212,7 +212,14 @@ static int acpi_battery_get_property(struct power_supply *psy,
- 		if (battery->state & ACPI_BATTERY_STATE_DISCHARGING)
- 			val->intval = acpi_battery_handle_discharging(battery);
- 		else if (battery->state & ACPI_BATTERY_STATE_CHARGING)
--			val->intval = POWER_SUPPLY_STATUS_CHARGING;
-+			/* Validate the status by checking the current. */
-+			if (battery->rate_now != ACPI_BATTERY_VALUE_UNKNOWN &&
-+			    battery->rate_now == 0) {
-+				/* On charge but no current (0W/0mA). */
-+				val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
-+			} else {
-+				val->intval = POWER_SUPPLY_STATUS_CHARGING;
-+			}
- 		else if (battery->state & ACPI_BATTERY_STATE_CHARGE_LIMITING)
- 			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
- 		else if (acpi_battery_is_charged(battery))
+diff --git a/drivers/xen/xenbus/xenbus_probe_frontend.c b/drivers/xen/xenbus/xenbus_probe_frontend.c
+index 6d1819269cbe5..199917b6f77ca 100644
+--- a/drivers/xen/xenbus/xenbus_probe_frontend.c
++++ b/drivers/xen/xenbus/xenbus_probe_frontend.c
+@@ -148,11 +148,9 @@ static void xenbus_frontend_dev_shutdown(struct device *_dev)
+ }
+ 
+ static const struct dev_pm_ops xenbus_pm_ops = {
+-	.suspend	= xenbus_dev_suspend,
+-	.resume		= xenbus_frontend_dev_resume,
+ 	.freeze		= xenbus_dev_suspend,
+ 	.thaw		= xenbus_dev_cancel,
+-	.restore	= xenbus_dev_resume,
++	.restore	= xenbus_frontend_dev_resume,
+ };
+ 
+ static struct xen_bus_type xenbus_frontend = {
 -- 
 2.51.0
 
