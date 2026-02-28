@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7223191D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9579C33FE12
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300942; cv=none; b=AL61Oq0XxXQiIvM03iyEQK55aoc1Sre3viF58W24/dWx7PXFZFItTykl3ok+uInqUnFQ1O6+j5se79dQWXDlYnecDtiHpzyS6RlVkUu577loz84iz4dEgGYqQEoHBDzJadyAoigUIC1LtVsj4ebxVHKV6ROSH+dCkLFiLt9ikqo=
+	t=1772300942; cv=none; b=o6T4O+fgZjXxfGSROjnYl+/rBbTZprX2hE0xeFj6K+tyMdL/M5HBbi2c7GyUmgbbl/BYPlppMtvSB6GZvjM45U8W8iwF2lp6Bi1Dd4N6nE/v2uINh+jX/rzj64GzfWZbar6W8L0PIRCb1KqwceU/bzgz+sQGG6Z/p89xPctxKlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772300942; c=relaxed/simple;
-	bh=yOYnnwMEduYVzlWRXIMEL6GEHNr3ekELKXsB5hjHNGw=;
+	bh=SzAOPBObLOGNLSSdBzhd6dsX7YYbnEwO2MQW97Vd6K8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxmzyEI5HrzicBYiWskZN7pBkj5fdG+6HITWRiwEeJgl/0U2Sw62d/WD7+aTRVAObTwMMDWYAwgeW4HqUUwSCnkba97F6ecBhMLbXHLM9WWrfErHEI6bV50U5T04MRT3TYCm4Q8Jql1nKlAd3joCmtEIB/3Vx9k6ObsPlkxx2YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WClVctue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YjDGX04X7zmqwkwWx/AOlt99vhers/Q9M0sGHhiuBKAI2QdN13clIbQCCvbznphMxiobXNiwWgg0heH8d5IXGfMDZ1r0qJvEjVusTddxXvUg7INSKUvBsExglj0n3zsSr7XIgRTPnUU5/5dkY1J7v2lzkTwYfOM51SgIPw9IdvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OlyfX+kh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WClVctue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E286C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OlyfX+kh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0082AC116D0;
 	Sat, 28 Feb 2026 17:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300941;
-	bh=yOYnnwMEduYVzlWRXIMEL6GEHNr3ekELKXsB5hjHNGw=;
+	s=k20201202; t=1772300942;
+	bh=SzAOPBObLOGNLSSdBzhd6dsX7YYbnEwO2MQW97Vd6K8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WClVctueuwrHe5UyRk2ZMEyEuEoxRbYUX9IoMHC7HSVEW9441QfJpMJgSCQsRle/X
-	 hFP9Sqi91HFTOEg12qHZ8sYAxxYRSmkh9R2gawxP0ajw4+ESJ9lDVnzH+SBkABym1x
-	 qisUuFAHaNs2qqfwwgHpG3Ym7kaB+XqitfkpleXyvNrWuaMY5XhCN9QbaI8UWbHVJc
-	 24dE/Q43JMyXB9F0KKEL0s7hs1F1FrcHrrbfwtRz8Zm8Vz54lvwN47+nxCTpITwvG3
-	 wfw7ee6eUh6HQwypkwHZIVecqoWFXb2k4GZhdCGumPZYn20TLp/NLlg183YAJOGEim
-	 +GajFvIc8CG8A==
+	b=OlyfX+khOBlJY7goz/KX5bAOuzTiUwnXU8ZSeczyRaSeYKbrPXIW7jHqKx1urWDuR
+	 kcfg55I27mgZYGaoB61hIov94RF7xNRdHjkPtWQn3+6SVKWNSOZN/Xr7Jxh+0vj/2A
+	 3SAZUCfZFpbryzui8mI2AEwrDISHucnUEcZo1KT1EMcawU29aaxNBzX13Q7OQJHltY
+	 T9xcXoz2CQEdURYnAsOS7oCWfyHMWAxc7eIl0GNJOm+anU18n8EPR2dFgIhFkPj7m+
+	 /c4mXOstotCXA4df6FM06dTa352yds4KYMkmmcPKOoU8sheUfROH04/5PnLVw8LRVP
+	 9QdlKoxethwrQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alexandre Courbot <acourbot@nvidia.com>,
-	Daniel Almeida <daniel.almeida@collabora.com>,
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 063/752] rust: cpufreq: always inline functions using build_assert with arguments
-Date: Sat, 28 Feb 2026 12:36:14 -0500
-Message-ID: <20260228174750.1542406-63-sashal@kernel.org>
+Subject: [PATCH 6.18 064/752] cpufreq: dt-platdev: Block the driver from probing on more QC platforms
+Date: Sat, 28 Feb 2026 12:36:15 -0500
+Message-ID: <20260228174750.1542406-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,36 +47,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Courbot <acourbot@nvidia.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 8c8b12a55614ea05953e8d695e700e6e1322a05d ]
+[ Upstream commit 7b781899072c5701ef9538c365757ee9ab9c00bd ]
 
-`build_assert` relies on the compiler to optimize out its error path.
-Functions using it with its arguments must thus always be inlined,
-otherwise the error path of `build_assert` might not be optimized out,
-triggering a build error.
+Add a number of QC platforms to the blocklist, they all use either the
+qcom-cpufreq-hw driver.
 
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/cpufreq.rs | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpufreq/cpufreq-dt-platdev.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/rust/kernel/cpufreq.rs b/rust/kernel/cpufreq.rs
-index 1a555fcb120a9..df5d9f6f43f3b 100644
---- a/rust/kernel/cpufreq.rs
-+++ b/rust/kernel/cpufreq.rs
-@@ -1015,6 +1015,8 @@ impl<T: Driver> Registration<T> {
-         ..pin_init::zeroed()
-     };
- 
-+    // Always inline to optimize out error path of `build_assert`.
-+    #[inline(always)]
-     const fn copy_name(name: &'static CStr) -> [c_char; CPUFREQ_NAME_LEN] {
-         let src = name.to_bytes_with_nul();
-         let mut dst = [0; CPUFREQ_NAME_LEN];
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index dc11b62399ad5..47dd76acd31e5 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -169,8 +169,11 @@ static const struct of_device_id blocklist[] __initconst = {
+ 	{ .compatible = "qcom,sdm845", },
+ 	{ .compatible = "qcom,sdx75", },
+ 	{ .compatible = "qcom,sm6115", },
++	{ .compatible = "qcom,sm6125", },
++	{ .compatible = "qcom,sm6150", },
+ 	{ .compatible = "qcom,sm6350", },
+ 	{ .compatible = "qcom,sm6375", },
++	{ .compatible = "qcom,sm7125", },
+ 	{ .compatible = "qcom,sm7225", },
+ 	{ .compatible = "qcom,sm7325", },
+ 	{ .compatible = "qcom,sm8150", },
 -- 
 2.51.0
 
