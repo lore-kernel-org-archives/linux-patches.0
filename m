@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4DB346772
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA7F346AC1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302095; cv=none; b=AfrbgIYjENp318AnPsyKSH/g6WjHFpMJX7eJVkslgpXW/Jp7JenDsVLazUR2j3w7R7Fl9mUKqlRHPi8PDw5c3xP0p4nZ4z/9pk1SnMAuUmO5IK03pI0yj3aCZZUBZDUis39v6aYuP0wpXahxOlXYuDcrneEdjCnhTuH3HlXl3qs=
+	t=1772302096; cv=none; b=n0l4OlI9rTaim+yrYkQ4E6mElKFPZ4y+Yn3imQC5Zp2EmV55ZlovY1GYwgz5/MOzWqsyZnUyJL6cE6XhAjjaecksml9YMdoKrK6r+DfzlN2geRXlSGNy3Lzw42ffnjogWOhEQdywVPz+DcHKJjlkolu8RIQgrP1Y1LaLqyx1YZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302095; c=relaxed/simple;
-	bh=1EsHpoKXrTAlsIm+ZPRF8o0N0Zrp6PYYfKsdi8srjlc=;
+	s=arc-20240116; t=1772302096; c=relaxed/simple;
+	bh=s1SovdnODrwXSc2iy75hU7NFJdE8VwLNeJm3eQhLZTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMOFCJiXPP3VhAczeWuBaCVa74IQX3556zc3IigcCD/wup7cvTb1Lqarg7wQiPmQTiSRvngGsw3f746kUZuPAKXG4NLSKwhoOtOPDeA4AudSrpgws+dYIUbhB2nF7Op+rJsCF62IdrDKHENDKkPQXN45B9/wSKgvW6uYb4b8Mgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pv+hKUyZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQHgCrJQAeUYpAA8+wENtZ+BuaqnWxEv7BCTSLkdq21lCHPq55c2RTvfhRe+byCa0FB04VigJYLfCR/ndhjhaV/w88EMStrfTA8mlDn6Gg97RAIW+pbwCCbyzfsHZxrFWsOpIfqhk8OdqQf7K3AGuFH3B686LU9cJOruEg4V/CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iPp51I8T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pv+hKUyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6A2C19424;
-	Sat, 28 Feb 2026 18:08:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iPp51I8T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A47C2BC87;
+	Sat, 28 Feb 2026 18:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302095;
-	bh=1EsHpoKXrTAlsIm+ZPRF8o0N0Zrp6PYYfKsdi8srjlc=;
+	s=k20201202; t=1772302096;
+	bh=s1SovdnODrwXSc2iy75hU7NFJdE8VwLNeJm3eQhLZTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pv+hKUyZfn8YoxSf/mRjpx+mT9h6+xKxliS7yR+/lZQuxdtIXenG5fs5xGiLWHlxE
-	 apKNKU2jzxpfpArFnY3/RppyzQXkb1gHu8KSPE1sJ93JY4bRVkgXAyo9WbRrE/o2UB
-	 OtWYt4y51GI9tYA8cQCBMtgSYTkbTHrUfff6wgPFK1WIBGSrEmVnin0Vj474iY3JSR
-	 3QjOnMLZCteUzsmI6rMaHB6kjvaPQA6TesNm3fnnWg0BEZvKVCpoZTz0hl5UA2t3ML
-	 2+oVyoCgbQaQetOk4E9E3zCGfx4ef/0YW8ksNjA2YZUYkw71fQn9FIDoC/7O0N5+ub
-	 DEsc7nUYofB3g==
+	b=iPp51I8T4r1p+kZ9xiKZJv2YShPK22z/4XJBWKJRQZSypS3atz1fqNEUXKjx0sdRm
+	 gsQzsKPO6d0DWnRH+mzSzKbHgT+cpzt16IJ/4FDMZFPwD0/NACsV6NKCFMY/fFr+hX
+	 IwOIzYqvXxFgSjq4jZfLJKCAZ4kH+KOACQbXZOrqZnnM8P89fbnTRdBaa56aOAFvJN
+	 BCPtn+1PYZNWSYmX4tDxY68FOoGP3a0M6h2iXlUgqr+aCJY7b5zANo0MZu8LnssuQh
+	 8I8gRN2wfz0MvjLXjQemmeBVu5YMgMNu9v0ar3GeQvJ3N5yf4hdVtlEK7E/RykNhtU
+	 e6YP16abuMNTA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Lai Jiangshan <jiangshan.ljs@antgroup.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/283] arm64: dts: qcom: sm6115: Add CX_MEM/DBGC GPU regions
-Date: Sat, 28 Feb 2026 13:03:42 -0500
-Message-ID: <20260228180709.1583486-80-sashal@kernel.org>
+Subject: [PATCH 6.6 081/283] workqueue: Factor out assign_rescuer_work()
+Date: Sat, 28 Feb 2026 13:03:43 -0500
+Message-ID: <20260228180709.1583486-81-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -50,47 +47,76 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Lai Jiangshan <jiangshan.ljs@antgroup.com>
 
-[ Upstream commit 78c13dac18cf0e6f6cbc6ea85d4f967e6cca9562 ]
+[ Upstream commit 99ed6f62a46e91dc796b785618d646eeded1b230 ]
 
-Describe the GPU register regions, with the former existing but not
-being used much if at all on this silicon, and the latter containing
-various debugging levers generally related to dumping the state of
-the IP upon a crash.
+Move the code to assign work to rescuer and assign_rescuer_work().
 
-Fixes: 11750af256f8 ("arm64: dts: qcom: sm6115: Add GPU nodes")
-Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Closes: https://lore.kernel.org/linux-arm-msm/8a64f70b-8034-45e7-86a3-0015cf357132@oss.qualcomm.com/T/#m404f1425c36b61467760f058b696b8910340a063
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251229-topic-6115_2290_gpu_dbgc-v1-3-4a24d196389c@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Lai Jiangshan <jiangshan.ljs@antgroup.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: e5a30c303b07 ("workqueue: Process rescuer work items one-by-one using a cursor")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/workqueue.c | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 5c6fcf725473c..4c6d30404ff13 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -1336,8 +1336,12 @@ usb_dwc3: usb@4e00000 {
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 59b6efb2a11c3..9127d74643fef 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -2808,6 +2808,23 @@ static int worker_thread(void *__worker)
+ 	goto woke_up;
+ }
  
- 		gpu: gpu@5900000 {
- 			compatible = "qcom,adreno-610.0", "qcom,adreno";
--			reg = <0x0 0x05900000 0x0 0x40000>;
--			reg-names = "kgsl_3d0_reg_memory";
-+			reg = <0x0 0x05900000 0x0 0x40000>,
-+			      <0x0 0x0599e000 0x0 0x1000>,
-+			      <0x0 0x05961000 0x0 0x800>;
-+			reg-names = "kgsl_3d0_reg_memory",
-+				    "cx_mem",
-+				    "cx_dbgc";
++static bool assign_rescuer_work(struct pool_workqueue *pwq, struct worker *rescuer)
++{
++	struct worker_pool *pool = pwq->pool;
++	struct work_struct *work, *n;
++
++	/*
++	 * Slurp in all works issued via this workqueue and
++	 * process'em.
++	 */
++	list_for_each_entry_safe(work, n, &pool->worklist, entry) {
++		if (get_work_pwq(work) == pwq && assign_work(work, rescuer, &n))
++			pwq->stats[PWQ_STAT_RESCUED]++;
++	}
++
++	return !list_empty(&rescuer->scheduled);
++}
++
+ /**
+  * rescuer_thread - the rescuer thread function
+  * @__rescuer: self
+@@ -2862,7 +2879,6 @@ static int rescuer_thread(void *__rescuer)
+ 		struct pool_workqueue *pwq = list_first_entry(&wq->maydays,
+ 					struct pool_workqueue, mayday_node);
+ 		struct worker_pool *pool = pwq->pool;
+-		struct work_struct *work, *n;
  
- 			/* There's no (real) GMU, so we have to handle quite a bunch of clocks! */
- 			clocks = <&gpucc GPU_CC_GX_GFX3D_CLK>,
+ 		__set_current_state(TASK_RUNNING);
+ 		list_del_init(&pwq->mayday_node);
+@@ -2873,18 +2889,9 @@ static int rescuer_thread(void *__rescuer)
+ 
+ 		raw_spin_lock_irq(&pool->lock);
+ 
+-		/*
+-		 * Slurp in all works issued via this workqueue and
+-		 * process'em.
+-		 */
+ 		WARN_ON_ONCE(!list_empty(&rescuer->scheduled));
+-		list_for_each_entry_safe(work, n, &pool->worklist, entry) {
+-			if (get_work_pwq(work) == pwq &&
+-			    assign_work(work, rescuer, &n))
+-				pwq->stats[PWQ_STAT_RESCUED]++;
+-		}
+ 
+-		if (!list_empty(&rescuer->scheduled)) {
++		if (assign_rescuer_work(pwq, rescuer)) {
+ 			process_scheduled_works(rescuer);
+ 
+ 			/*
 -- 
 2.51.0
 
