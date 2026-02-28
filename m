@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB102359A61
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E74359A65
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302426; cv=none; b=ojYEp5yzIkYMmWRynJgdudEgzCTdMkwN/46wPSiiTikfeQ/XAbEf5vP/ewHHdQU2Ky038FsrOn1pQbFFowNpWbFfvEcBwLabpHHljoCNVU2T3/UqZ5yR44txkFuZA2H5vT/mvyasTM/F6rx8f4+EhOIjdATGxCtViMDd0C45bEQ=
+	t=1772302427; cv=none; b=JF/duMela+2AbnJw9bNPViJMndqh7jdE8N38ecQ9ZkoDU/sCKK7UhGOi2v8Vx59zvvDajXXma+V9XdPDB08PfgmGwu1dfCkBcXj/4K5E3kecnMkU48Pp1bQDa6ArYJWdu8PH3Hqn1NfapKa60FNIPHRjfN4oCV+f0UUajHPOb8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302426; c=relaxed/simple;
-	bh=3zms6Cqqxv9XnDs71dweZOUuwLLD4UqXPLFb7Oeiet0=;
+	s=arc-20240116; t=1772302427; c=relaxed/simple;
+	bh=QBseQC6NLecqCS/kqBdFVSv55rxQ7Kmy1PSv2p/dTgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZNBYiNZqOKxFZWxniWF/lgPR/xhsdR+4ILw7GWUSc1sow+Y8Z8VL3Bo7xjjjDLBchS3ngt6mQkN69nskybRHtPa3j9SM8sMEkLBlj4tNyHc8oEvYg3ghIOpvs0VW+IyBusLG9zY4YS4mISdf9V8Cw7MX8+rr5HX68NfKkQhMjBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G2XkKdTB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KG2zfQOgh+9JmsodgDEwDoI49aY5EIKmqUmaz9sqUh0disc/8MxtJm4fSOeOdNr8DhX7ts+CHdyFcnHNE5MAZuJMEpJsc5L3qQXLn3yb2M6fAiH4t9sk3s8MyibMpcW7EtCpEa6DcvjhmcsXJkASiIEoQ7xKRQD29LCXoDb+Atw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pgoXyj7N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G2XkKdTB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04820C19423;
-	Sat, 28 Feb 2026 18:13:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pgoXyj7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3FD0C116D0;
+	Sat, 28 Feb 2026 18:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302426;
-	bh=3zms6Cqqxv9XnDs71dweZOUuwLLD4UqXPLFb7Oeiet0=;
+	s=k20201202; t=1772302427;
+	bh=QBseQC6NLecqCS/kqBdFVSv55rxQ7Kmy1PSv2p/dTgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G2XkKdTBZh3VvSTQhBRJl7E3cygJ4C1CdG/OVvWxF13l7XeaswFDTdbuQjhEXct13
-	 4P22ivpINupkRBDtsxmt/IrkxPVLzUXogMTrGSqW4ClwLDQ9QxEXBBWdVqvbwFt4/g
-	 BakkS3pbh15Za9zRbEOBv4IKn+b9ETsrzLqWD/IVLKqS0we3PEEdEhaiAl8rmW/Fn+
-	 HrfJZpD2L/OjELXiCC+F5l7jUazkiX1vaJcpcDrrqGbdhK/I/OUo9L8MzXl7MiWcQK
-	 ujPjGXGMacXG/KRx9Lykal7Nz/jlLyKHruZiX6X+MDOtIf3jHGi8KcOgE8TVIKI10x
-	 NnmNEQXP4jR2w==
+	b=pgoXyj7N/wSWrujPWimfF0bnW6jBFPG/IPMbcCfsuXnSX5FlHMj2LBkxrJ/BCp1r3
+	 ww0n8vgnXaZi49aTx3x1i4lerTZtp59pFZ82TBcWOFJg0/cXFPNOZWPNBSoRKoTjI+
+	 OsYMJPm31REMY6R1aSe4nNa4uMHRifJwIJgja7gjxzyK/SQy/toh4B/hz0Yf+QeETU
+	 nwM73xBtwpjNxYkxCbZTteSGbPp3/7EMIGBPBF3oDk7O10k3n/mvQ0LkM1gfjJBmdG
+	 OShXs4/yOyBpScnYiUGXc+q06CDhFF3fU3T5YXfI7EXfn0ZcqcKNbMdfwzZYXdksSk
+	 kfqeQuQF6G5+w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Zilin Guan <zilin@seu.edu.cn>,
-	Don Brace <don.brace@microchip.com>,
+Cc: Colin Ian King <colin.i.king@gmail.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/232] scsi: smartpqi: Fix memory leak in pqi_report_phys_luns()
-Date: Sat, 28 Feb 2026 13:10:16 -0500
-Message-ID: <20260228181127.1592657-163-sashal@kernel.org>
+Subject: [PATCH 6.1 164/232] scsi: csiostor: Fix dereference of null pointer rn
+Date: Sat, 28 Feb 2026 13:10:17 -0500
+Message-ID: <20260228181127.1592657-164-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,70 +47,44 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 41b37312bd9722af77ec7817ccf22d7a4880c289 ]
+[ Upstream commit 1982257570b84dc33753d536dd969fd357a014e9 ]
 
-pqi_report_phys_luns() fails to release the rpl_list buffer when
-encountering an unsupported data format or when the allocation for
-rpl_16byte_wwid_list fails. These early returns bypass the cleanup logic,
-leading to memory leaks.
+The error exit path when rn is NULL ends up deferencing the null pointer rn
+via the use of the macro CSIO_INC_STATS. Fix this by adding a new error
+return path label after the use of the macro to avoid the deference.
 
-Consolidate the error handling by adding an out_free_rpl_list label and use
-goto statements to ensure rpl_list is consistently freed on failure.
-
-Compile tested only. Issue found using a prototype static analysis tool and
-code review.
-
-Fixes: 28ca6d876c5a ("scsi: smartpqi: Add extended report physical LUNs")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Tested-by: Don Brace <don.brace@microchip.com>
-Acked-by: Don Brace <don.brace@microchip.com>
-Link: https://patch.msgid.link/20260131093641.1008117-1-zilin@seu.edu.cn
+Fixes: a3667aaed569 ("[SCSI] csiostor: Chelsio FCoE offload driver")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Link: https://patch.msgid.link/20260129155332.196338-1-colin.i.king@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/scsi/csiostor/csio_scsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 5c0f23dd808c4..5dd116554ef62 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -1213,7 +1213,8 @@ static inline int pqi_report_phys_luns(struct pqi_ctrl_info *ctrl_info, void **b
- 			dev_err(&ctrl_info->pci_dev->dev,
- 				"RPL returned unsupported data format %u\n",
- 				rpl_response_format);
--			return -EINVAL;
-+			rc = -EINVAL;
-+			goto out_free_rpl_list;
- 		} else {
- 			dev_warn(&ctrl_info->pci_dev->dev,
- 				"RPL returned extended format 2 instead of 4\n");
-@@ -1225,8 +1226,10 @@ static inline int pqi_report_phys_luns(struct pqi_ctrl_info *ctrl_info, void **b
+diff --git a/drivers/scsi/csiostor/csio_scsi.c b/drivers/scsi/csiostor/csio_scsi.c
+index 05e1a63e00c3a..ed40ae6b9800c 100644
+--- a/drivers/scsi/csiostor/csio_scsi.c
++++ b/drivers/scsi/csiostor/csio_scsi.c
+@@ -2074,7 +2074,7 @@ csio_eh_lun_reset_handler(struct scsi_cmnd *cmnd)
+ 	struct csio_scsi_level_data sld;
  
- 	rpl_16byte_wwid_list = kmalloc(struct_size(rpl_16byte_wwid_list, lun_entries,
- 						   num_physicals), GFP_KERNEL);
--	if (!rpl_16byte_wwid_list)
--		return -ENOMEM;
-+	if (!rpl_16byte_wwid_list) {
-+		rc = -ENOMEM;
-+		goto out_free_rpl_list;
-+	}
+ 	if (!rn)
+-		goto fail;
++		goto fail_ret;
  
- 	put_unaligned_be32(num_physicals * sizeof(struct report_phys_lun_16byte_wwid),
- 		&rpl_16byte_wwid_list->header.list_length);
-@@ -1247,6 +1250,10 @@ static inline int pqi_report_phys_luns(struct pqi_ctrl_info *ctrl_info, void **b
- 	*buffer = rpl_16byte_wwid_list;
- 
- 	return 0;
-+
-+out_free_rpl_list:
-+	kfree(rpl_list);
-+	return rc;
+ 	csio_dbg(hw, "Request to reset LUN:%llu (ssni:0x%x tgtid:%d)\n",
+ 		      cmnd->device->lun, rn->flowid, rn->scsi_id);
+@@ -2220,6 +2220,7 @@ csio_eh_lun_reset_handler(struct scsi_cmnd *cmnd)
+ 	csio_put_scsi_ioreq_lock(hw, scsim, ioreq);
+ fail:
+ 	CSIO_INC_STATS(rn, n_lun_rst_fail);
++fail_ret:
+ 	return FAILED;
  }
  
- static inline int pqi_report_logical_luns(struct pqi_ctrl_info *ctrl_info, void **buffer)
 -- 
 2.51.0
 
