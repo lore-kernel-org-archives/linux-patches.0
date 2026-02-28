@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7255B36C9E2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1514936C9E2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302319; cv=none; b=iucd61AakGXI/Vlj6yHUh2QiRqvP7DAw2ptAqNk1npjz1OONE2nUsHyRxwRQ5YdpMa5p0PTntRMk7zaihER23hXo6LJOIvFtZ0QrfAbgQXu0iHYVbcfEdGXhlgnTg1GNcUSxlGT+UaT9BlZzk5UoxExGXFifnttYOt8hewjDccE=
+	t=1772302320; cv=none; b=d/otgv/cmzJwQo3BAOD9sUgW5prg1lSTDsu+PITBh9At5o/HiwJt4ulrt/l+DZE8+HUab6+4+NHpTUUOnIIgZxVFBC4gqj41XMi7+0F5hKBBHyM920dsWKlW5u0UKHU08FSgzFG9IX92WeXkhEb8FjEmsGlirbhQS1H7+QpjBs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302319; c=relaxed/simple;
-	bh=HiHhlEvaaI4qY6El36Q09R+YbneNwYK4VCYa/87ZSA8=;
+	s=arc-20240116; t=1772302320; c=relaxed/simple;
+	bh=Lr3e91NQhe2vtfqmlRt0vGYF6ofMiykbrYPwu5PJJyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IaMOPdbYl8SO+hEaWQ+AOMPMr0X9969yX2VUuZ8eA1y3u5DgVNxvuaTUuKhsdOOXR7sdHY442FDETNgBfek2q0r3x8Uv1s+J8bzQqJ+OTHqJHZa26rMviA1OpiJxV9fRc0HRsP3eLvF/Tqfc+dNgbhj+Gj9EUbhqgegcb0ya2bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jBL44UDU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a4wkRDXQuPFqVRV1B+Mt9X0i/JV3tz3T873DQFX/D0k94i/z3++bX8nxUnVxJvgmee3HygUFgblFP3ulw2lUUpbWZPKjvnAqCMa7qObKKldtYgTjPGA5VrefK+7ikvxhiBBwtRG5lrFucdLC8KFm6M1Azb6+PfFeicBLfqD6fdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HqeV8Hmt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jBL44UDU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C87BC116D0;
-	Sat, 28 Feb 2026 18:11:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HqeV8Hmt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CC3C19423;
+	Sat, 28 Feb 2026 18:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302319;
-	bh=HiHhlEvaaI4qY6El36Q09R+YbneNwYK4VCYa/87ZSA8=;
+	s=k20201202; t=1772302320;
+	bh=Lr3e91NQhe2vtfqmlRt0vGYF6ofMiykbrYPwu5PJJyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBL44UDUi60TBBpzvI07f7JXih7fck9lI9TyzidgRUwXz+Dqnif7iLlyFsh8Iy46N
-	 4PelJFjjOe3QuFqsfKZXLvmQCvuv5dAsC1DzSgSZ3+EGWJKDy69Frq7MdCbCp5zL/k
-	 2maHhDolDBsY1ba5MZPuWfM8ihkzFzjc0W7JFEDFO0PvB9w4IsxkUQQaHe6o70ucJQ
-	 UNhkLirDUe3tGS/JhYNRzFNRSYkBjO6hxaUZ8YmcCfh42WuBGHJrdwveBC/7nAT8iM
-	 Xn9npaiJ9UQV2lNOzU7zKx7hcQ8CHaES035M+acu18KlviQOx+ABUzZDY+qe1y+dYU
-	 VZdzSkuLWkmCQ==
+	b=HqeV8Hmt1DjrgH6phxxMRY+NvcKglJEoSJh5gnmpBv3MLvHaiGthWOdk7Cx0wMrFl
+	 ztQ6srWAgYt4FrLtjgHYxslXSvC3gV6Drx9ePislcYJOCN3zky1vIONCw21PdKUxUv
+	 MEcYQeqpRy3fvUMKf0M7N6t0m55NlDh0es8QEhtvXx7IMSPUs+M84El0S0x4oklxNE
+	 HUsOmK3RhLjONKIOwwdO/5yH8J34mivtGgzQeNQJ0+ZPiTDJuOxuV2narxg1KfNdTa
+	 59Xpkrawy8hAg6JlatHBLXTWfeRn3nPTi4elimIPPXi643pW3Xppjw82dypFx4m0Rk
+	 19jL1uIHEzLFg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Kai Ye <yekai13@huawei.com>,
+Cc: Wenkai Lin <linwenkai6@hisilicon.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/232] crypto: hisilicon/sec - fix spelling mistake 'ckeck' -> 'check'
-Date: Sat, 28 Feb 2026 13:08:10 -0500
-Message-ID: <20260228181127.1592657-37-sashal@kernel.org>
+Subject: [PATCH 6.1 038/232] crypto: hisilicon/sec2 - fix for sec spec check
+Date: Sat, 28 Feb 2026 13:08:11 -0500
+Message-ID: <20260228181127.1592657-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,42 +48,276 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kai Ye <yekai13@huawei.com>
+From: Wenkai Lin <linwenkai6@hisilicon.com>
 
-[ Upstream commit 2132d4efaa66388f1f79c79a920908a22464686b ]
+[ Upstream commit f4f353cb7ae9bb43e34943edb693532a39118eca ]
 
-There are a couple of spelling mistakes in sec2. Fix them.
+During encryption and decryption, user requests
+must be checked first, if the specifications that
+are not supported by the hardware are used, the
+software computing is used for processing.
 
-Signed-off-by: Kai Ye <yekai13@huawei.com>
+Fixes: 2f072d75d1ab ("crypto: hisilicon - Add aead support on SEC2")
+Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: e75074396280 ("crypto: hisilicon/sec2 - support skcipher/aead fallback for hardware queue unavailable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/hisilicon/sec2/sec.h        |   1 -
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 101 ++++++++-------------
+ 2 files changed, 39 insertions(+), 63 deletions(-)
 
+diff --git a/drivers/crypto/hisilicon/sec2/sec.h b/drivers/crypto/hisilicon/sec2/sec.h
+index 30c2b1a64695c..2fc04e210bc4f 100644
+--- a/drivers/crypto/hisilicon/sec2/sec.h
++++ b/drivers/crypto/hisilicon/sec2/sec.h
+@@ -37,7 +37,6 @@ struct sec_aead_req {
+ 	u8 *a_ivin;
+ 	dma_addr_t a_ivin_dma;
+ 	struct aead_request *aead_req;
+-	bool fallback;
+ };
+ 
+ /* SEC request of Crypto */
 diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 292ab0ff2b07c..fe34e17b44424 100644
+index fe34e17b44424..91917a913512a 100644
 --- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
 +++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -2002,7 +2002,7 @@ static int sec_aead_sha512_ctx_init(struct crypto_aead *tfm)
+@@ -690,14 +690,10 @@ static int sec_skcipher_fbtfm_init(struct crypto_skcipher *tfm)
+ 
+ 	c_ctx->fallback = false;
+ 
+-	/* Currently, only XTS mode need fallback tfm when using 192bit key */
+-	if (likely(strncmp(alg, "xts", SEC_XTS_NAME_SZ)))
+-		return 0;
+-
+ 	c_ctx->fbtfm = crypto_alloc_sync_skcipher(alg, 0,
+ 						  CRYPTO_ALG_NEED_FALLBACK);
+ 	if (IS_ERR(c_ctx->fbtfm)) {
+-		pr_err("failed to alloc xts mode fallback tfm!\n");
++		pr_err("failed to alloc fallback tfm for %s!\n", alg);
+ 		return PTR_ERR(c_ctx->fbtfm);
+ 	}
+ 
+@@ -859,7 +855,7 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
+ 	}
+ 
+ 	memcpy(c_ctx->c_key, key, keylen);
+-	if (c_ctx->fallback && c_ctx->fbtfm) {
++	if (c_ctx->fbtfm) {
+ 		ret = crypto_sync_skcipher_setkey(c_ctx->fbtfm, key, keylen);
+ 		if (ret) {
+ 			dev_err(dev, "failed to set fallback skcipher key!\n");
+@@ -1160,8 +1156,10 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
+ 	}
+ 
+ 	ret = crypto_authenc_extractkeys(&keys, key, keylen);
+-	if (ret)
++	if (ret) {
++		dev_err(dev, "sec extract aead keys err!\n");
+ 		goto bad_key;
++	}
+ 
+ 	ret = sec_aead_aes_set_key(c_ctx, &keys);
+ 	if (ret) {
+@@ -1175,12 +1173,6 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
+ 		goto bad_key;
+ 	}
+ 
+-	if (ctx->a_ctx.a_key_len & WORD_MASK) {
+-		ret = -EINVAL;
+-		dev_err(dev, "AUTH key length error!\n");
+-		goto bad_key;
+-	}
+-
+ 	ret = sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
+ 	if (ret) {
+ 		dev_err(dev, "set sec fallback key err!\n");
+@@ -2002,8 +1994,7 @@ static int sec_aead_sha512_ctx_init(struct crypto_aead *tfm)
  	return sec_aead_ctx_init(tfm, "sha512");
  }
  
--static int sec_skcipher_cryptlen_ckeck(struct sec_ctx *ctx,
-+static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx,
- 	struct sec_req *sreq)
+-static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx,
+-	struct sec_req *sreq)
++static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx, struct sec_req *sreq)
  {
  	u32 cryptlen = sreq->c_req.sk_req->cryptlen;
-@@ -2064,7 +2064,7 @@ static int sec_skcipher_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 		}
- 		return 0;
- 	} else if (c_alg == SEC_CALG_AES || c_alg == SEC_CALG_SM4) {
--		return sec_skcipher_cryptlen_ckeck(ctx, sreq);
-+		return sec_skcipher_cryptlen_check(ctx, sreq);
+ 	struct device *dev = ctx->dev;
+@@ -2027,10 +2018,6 @@ static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx,
+ 	case SEC_CMODE_CFB:
+ 	case SEC_CMODE_OFB:
+ 	case SEC_CMODE_CTR:
+-		if (unlikely(ctx->sec->qm.ver < QM_HW_V3)) {
+-			dev_err(dev, "skcipher HW version error!\n");
+-			ret = -EINVAL;
+-		}
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
+@@ -2039,17 +2026,21 @@ static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx,
+ 	return ret;
+ }
+ 
+-static int sec_skcipher_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
++static int sec_skcipher_param_check(struct sec_ctx *ctx,
++				    struct sec_req *sreq, bool *need_fallback)
+ {
+ 	struct skcipher_request *sk_req = sreq->c_req.sk_req;
+ 	struct device *dev = ctx->dev;
+ 	u8 c_alg = ctx->c_ctx.c_alg;
+ 
+-	if (unlikely(!sk_req->src || !sk_req->dst ||
+-		     sk_req->cryptlen > MAX_INPUT_DATA_LEN)) {
++	if (unlikely(!sk_req->src || !sk_req->dst)) {
+ 		dev_err(dev, "skcipher input param error!\n");
+ 		return -EINVAL;
+ 	}
++
++	if (sk_req->cryptlen > MAX_INPUT_DATA_LEN)
++		*need_fallback = true;
++
+ 	sreq->c_req.c_len = sk_req->cryptlen;
+ 
+ 	if (ctx->pbuf_supported && sk_req->cryptlen <= SEC_PBUF_SZ)
+@@ -2107,6 +2098,7 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
+ 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(sk_req);
+ 	struct sec_req *req = skcipher_request_ctx(sk_req);
+ 	struct sec_ctx *ctx = crypto_skcipher_ctx(tfm);
++	bool need_fallback = false;
+ 	int ret;
+ 
+ 	if (!sk_req->cryptlen) {
+@@ -2120,11 +2112,11 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
+ 	req->c_req.encrypt = encrypt;
+ 	req->ctx = ctx;
+ 
+-	ret = sec_skcipher_param_check(ctx, req);
++	ret = sec_skcipher_param_check(ctx, req, &need_fallback);
+ 	if (unlikely(ret))
+ 		return -EINVAL;
+ 
+-	if (unlikely(ctx->c_ctx.fallback))
++	if (unlikely(ctx->c_ctx.fallback || need_fallback))
+ 		return sec_skcipher_soft_crypto(ctx, sk_req, encrypt);
+ 
+ 	return ctx->req_op->process(ctx, req);
+@@ -2257,52 +2249,35 @@ static int sec_aead_spec_check(struct sec_ctx *ctx, struct sec_req *sreq)
+ 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+ 	size_t sz = crypto_aead_authsize(tfm);
+ 	u8 c_mode = ctx->c_ctx.c_mode;
+-	struct device *dev = ctx->dev;
+ 	int ret;
+ 
+-	/* Hardware does not handle cases where authsize is not 4 bytes aligned */
+-	if (c_mode == SEC_CMODE_CBC && (sz & WORD_MASK)) {
+-		sreq->aead_req.fallback = true;
++	if (unlikely(ctx->sec->qm.ver == QM_HW_V2 && !sreq->c_req.c_len))
+ 		return -EINVAL;
+-	}
+ 
+ 	if (unlikely(req->cryptlen + req->assoclen > MAX_INPUT_DATA_LEN ||
+-	    req->assoclen > SEC_MAX_AAD_LEN)) {
+-		dev_err(dev, "aead input spec error!\n");
++		     req->assoclen > SEC_MAX_AAD_LEN))
+ 		return -EINVAL;
+-	}
+ 
+ 	if (c_mode == SEC_CMODE_CCM) {
+-		if (unlikely(req->assoclen > SEC_MAX_CCM_AAD_LEN)) {
+-			dev_err_ratelimited(dev, "CCM input aad parameter is too long!\n");
++		if (unlikely(req->assoclen > SEC_MAX_CCM_AAD_LEN))
+ 			return -EINVAL;
+-		}
+-		ret = aead_iv_demension_check(req);
+-		if (ret) {
+-			dev_err(dev, "aead input iv param error!\n");
+-			return ret;
+-		}
+-	}
+ 
+-	if (sreq->c_req.encrypt)
+-		sreq->c_req.c_len = req->cryptlen;
+-	else
+-		sreq->c_req.c_len = req->cryptlen - sz;
+-	if (c_mode == SEC_CMODE_CBC) {
+-		if (unlikely(sreq->c_req.c_len & (AES_BLOCK_SIZE - 1))) {
+-			dev_err(dev, "aead crypto length error!\n");
++		ret = aead_iv_demension_check(req);
++		if (unlikely(ret))
++			return -EINVAL;
++	} else if (c_mode == SEC_CMODE_CBC) {
++		if (unlikely(sz & WORD_MASK))
++			return -EINVAL;
++		if (unlikely(ctx->a_ctx.a_key_len & WORD_MASK))
+ 			return -EINVAL;
+-		}
  	}
  
- 	dev_err(dev, "skcipher algorithm error!\n");
+ 	return 0;
+ }
+ 
+-static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
++static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq, bool *need_fallback)
+ {
+ 	struct aead_request *req = sreq->aead_req.aead_req;
+-	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+-	size_t authsize = crypto_aead_authsize(tfm);
+ 	struct device *dev = ctx->dev;
+ 	u8 c_alg = ctx->c_ctx.c_alg;
+ 
+@@ -2311,12 +2286,10 @@ static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (ctx->sec->qm.ver == QM_HW_V2) {
+-		if (unlikely(!req->cryptlen || (!sreq->c_req.encrypt &&
+-			     req->cryptlen <= authsize))) {
+-			sreq->aead_req.fallback = true;
+-			return -EINVAL;
+-		}
++	if (unlikely(ctx->c_ctx.c_mode == SEC_CMODE_CBC &&
++		     sreq->c_req.c_len & (AES_BLOCK_SIZE - 1))) {
++		dev_err(dev, "aead cbc mode input data length error!\n");
++		return -EINVAL;
+ 	}
+ 
+ 	/* Support AES or SM4 */
+@@ -2325,8 +2298,10 @@ static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (unlikely(sec_aead_spec_check(ctx, sreq)))
++	if (unlikely(sec_aead_spec_check(ctx, sreq))) {
++		*need_fallback = true;
+ 		return -EINVAL;
++	}
+ 
+ 	if (ctx->pbuf_supported && (req->cryptlen + req->assoclen) <=
+ 		SEC_PBUF_SZ)
+@@ -2370,17 +2345,19 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
+ 	struct crypto_aead *tfm = crypto_aead_reqtfm(a_req);
+ 	struct sec_req *req = aead_request_ctx(a_req);
+ 	struct sec_ctx *ctx = crypto_aead_ctx(tfm);
++	size_t sz = crypto_aead_authsize(tfm);
++	bool need_fallback = false;
+ 	int ret;
+ 
+ 	req->flag = a_req->base.flags;
+ 	req->aead_req.aead_req = a_req;
+ 	req->c_req.encrypt = encrypt;
+ 	req->ctx = ctx;
+-	req->aead_req.fallback = false;
++	req->c_req.c_len = a_req->cryptlen - (req->c_req.encrypt ? 0 : sz);
+ 
+-	ret = sec_aead_param_check(ctx, req);
++	ret = sec_aead_param_check(ctx, req, &need_fallback);
+ 	if (unlikely(ret)) {
+-		if (req->aead_req.fallback)
++		if (need_fallback)
+ 			return sec_aead_soft_crypto(ctx, a_req, encrypt);
+ 		return -EINVAL;
+ 	}
 -- 
 2.51.0
 
