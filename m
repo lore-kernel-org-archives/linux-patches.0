@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AE6301F0D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4A9301F0D;
 	Sat, 28 Feb 2026 17:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301429; cv=none; b=DAEmaW7OONE3GTK7msUleDbBAJAe7pnutnvex49xtt3oe6DvMeUgbk8H0w5crao2q0a1oyUuGNLlHw52YAnghAS8EDT1viKCZGWBqBpoE/BrpobuOTln7jamCqSgQ5R5vZD+xVOhIA9BGZnaCUuDEZV+XqTRYrIOuHqD8LFs8JU=
+	t=1772301430; cv=none; b=GCBdiykEXRH7aOLO9lKn7YHvAQs2CnCBtEXPr5pfiYU++eJrcjYOKWl6FzIhWfAW6omQTNvNbSWLI2TdiLpGkqyKKXzspZ9EFxNt7HLuxEfLY5u8m1sy7nksUJicczC902I3DI0NxXO3q1EyR0a83ayWcoITOvPJanZrppfU5eY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301429; c=relaxed/simple;
-	bh=Aqc0C09FHgHvnnRPqXKzOg3T8s79hVLPi8LPOoDVkRM=;
+	s=arc-20240116; t=1772301430; c=relaxed/simple;
+	bh=iQnX+4o+AUZBwJkC+zOGV7Sf4aoS/SXbeAAQ5OCyguU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1pz/DEiHgF+uBHUtQcEvvMDZqJ0pnPq3juhdUFiOPnU5RQjYNEBOuYWYMHHSlsovKI9v9Ttgy9JR/5JTBhNF+k4tbaG43SLHEAQtIuo98cX87t71pzYP6d8kw0Y/3i1/OA6L+EnDFINyy+1hKaYmnEZQEfaMfrfUxUN1xEMyv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rEwsGaBd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRkny/imQ9fdBiCY9CGBazYqwmzfO2tnPY1wKDRiLJ48b9TrOqJ+e2micrUa4t9sBpOSOB0w9IJ7pMTDp1W0exm+RV+u8JXLvFuNHoZCdRKyC3WE+0/z8tBFCu7vGZY92GbiHrH8fSFYVGS+HL7BXugjSlxLmD/tr6lbJ3XdIlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kSgr2liE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rEwsGaBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58579C19423;
-	Sat, 28 Feb 2026 17:57:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kSgr2liE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F926C116D0;
+	Sat, 28 Feb 2026 17:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301428;
-	bh=Aqc0C09FHgHvnnRPqXKzOg3T8s79hVLPi8LPOoDVkRM=;
+	s=k20201202; t=1772301429;
+	bh=iQnX+4o+AUZBwJkC+zOGV7Sf4aoS/SXbeAAQ5OCyguU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEwsGaBdYcBli4yF811cfHPu1h2JQNdEMjHcu7wxIHtKHgBvZwZsr3+g5pJOfRCRx
-	 uYwtHDXWYoG1i34TXUwGXCm2BicdY70dwWXhIGzousu7HM5s7UxjQu6qyNaFj7tscf
-	 8U/dlF1zQzGOIcdf3FC0qoYdy2el79xcGSCHJnN6ZqZqnA9wU2yfDwrRwB6c08slXK
-	 wStiZR5D2efmG6GhDir+PniAT5vKXmSI8GhSFP95SounR6mFf/qJYA5Blbt8TE+wUi
-	 nzPKs5OuWulWODLSkHWMP5W3MJMNebLg/3rTgqzh6MGT//uhTN6z1fj7+FwCgXxDzK
-	 BC1J9inFUELSA==
+	b=kSgr2liE/9qWaTMRR8Yp0mDbeEunteM35wDKNn16ZZlonjowLu8L6xtv6X35k6ieS
+	 CZMYeGnQurD2lEyw2KRsgoYwEVN86DGSrjtgVA4Tqx+FCdqiSE+Fg3Q+20tPX0CqS7
+	 ewQ2go42eTI2B9aYKubFkP+GIFGP+uH0h/RjqIxqQ4X6MH3lGjf3wh7VxG9H7taGKK
+	 JjwGw6Mec5aIZ/PggEbRoxpwKomRprpgAiWTb0BUX5xKYmfoiX7+Dzhd1nup4O08FM
+	 x29Xo10ZZYUUyAsC4/iyJoPkkUidxQEH6xsgdHii1w9iSroNAT+lxXTZ2uIjSKs0UC
+	 eDjX51d3Bwkzw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jack Wang <jinpu.wang@ionos.com>,
+Cc: Olga Kornievskaia <okorniev@redhat.com>,
 	stable@vger.kernel.org,
-	Yu Kuai <yukuai@fnnas.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 619/752] md/bitmap: fix GPF in write_page caused by resize race
-Date: Sat, 28 Feb 2026 12:45:30 -0500
-Message-ID: <20260228174750.1542406-619-sashal@kernel.org>
+Subject: [PATCH 6.18 620/752] NFSD: fix setting FMODE_NOCMTIME in nfs4_open_delegation
+Date: Sat, 28 Feb 2026 12:45:31 -0500
+Message-ID: <20260228174750.1542406-620-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,53 +49,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jack Wang <jinpu.wang@ionos.com>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-[ Upstream commit 46ef85f854dfa9d5226b3c1c46493d79556c9589 ]
+[ Upstream commit 41b0a87bc60d5ccfa8575481ddb4d4d8758507fa ]
 
-A General Protection Fault occurs in write_page() during array resize:
-RIP: 0010:write_page+0x22b/0x3c0 [md_mod]
+fstests generic/215 and generic/407 were failing because the server
+wasn't updating mtime properly. When deleg attribute support is not
+compiled in and thus no attribute delegation was given, the server
+was skipping updating mtime and ctime because FMODE_NOCMTIME was
+uncoditionally set for the write delegation.
 
-This is a use-after-free race between bitmap_daemon_work() and
-__bitmap_resize(). The daemon iterates over `bitmap->storage.filemap`
-without locking, while the resize path frees that storage via
-md_bitmap_file_unmap(). `quiesce()` does not stop the md thread,
-allowing concurrent access to freed pages.
-
-Fix by holding `mddev->bitmap_info.mutex` during the bitmap update.
-
-Link: https://lore.kernel.org/linux-raid/20260120102456.25169-1-jinpu.wang@ionos.com
-Closes: https://lore.kernel.org/linux-raid/CAMGffE=Mbfp=7xD_hYxXk1PAaCZNSEAVeQGKGy7YF9f2S4=NEA@mail.gmail.com/T/#u
+Fixes: e5e9b24ab8fa ("nfsd: freeze c/mtime updates with outstanding WRITE_ATTRS delegation")
 Cc: stable@vger.kernel.org
-Fixes: d60b479d177a ("md/bitmap: add bitmap_resize function to allow bitmap resizing.")
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 3 ++-
+ fs/nfsd/nfs4state.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 84b7e2af6dbaa..7bb56d0491a2f 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2453,6 +2453,7 @@ static int __bitmap_resize(struct bitmap *bitmap, sector_t blocks,
- 		memcpy(page_address(store.sb_page),
- 		       page_address(bitmap->storage.sb_page),
- 		       sizeof(bitmap_super_t));
-+	mutex_lock(&bitmap->mddev->bitmap_info.mutex);
- 	spin_lock_irq(&bitmap->counts.lock);
- 	md_bitmap_file_unmap(&bitmap->storage);
- 	bitmap->storage = store;
-@@ -2560,7 +2561,7 @@ static int __bitmap_resize(struct bitmap *bitmap, sector_t blocks,
- 			set_page_attr(bitmap, i, BITMAP_PAGE_DIRTY);
- 	}
- 	spin_unlock_irq(&bitmap->counts.lock);
--
-+	mutex_unlock(&bitmap->mddev->bitmap_info.mutex);
- 	if (!init) {
- 		__bitmap_unplug(bitmap);
- 		bitmap->mddev->pers->quiesce(bitmap->mddev, 0);
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 740c40eb5b366..c5dba49c90356 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6356,7 +6356,8 @@ nfs4_open_delegation(struct svc_rqst *rqstp, struct nfsd4_open *open,
+ 		dp->dl_ctime = stat.ctime;
+ 		dp->dl_mtime = stat.mtime;
+ 		spin_lock(&f->f_lock);
+-		f->f_mode |= FMODE_NOCMTIME;
++		if (deleg_ts)
++			f->f_mode |= FMODE_NOCMTIME;
+ 		spin_unlock(&f->f_lock);
+ 		trace_nfsd_deleg_write(&dp->dl_stid.sc_stateid);
+ 	} else {
 -- 
 2.51.0
 
