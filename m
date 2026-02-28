@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0892175A60;
-	Sat, 28 Feb 2026 17:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90041175A7B;
+	Sat, 28 Feb 2026 17:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301386; cv=none; b=Bh+sKwp/oz70c3yD+AZ/KzUejMDkvXOAt/DC9fNDlYwbAa27RxnUBXiEC3ZflRnMOX/jN6Nv8df2QKpj46iTYHEX9swixCmnuwvJMG+c2AnFXqPd9JDj2CtATjQ+qdQabCmRzUdswQa8f3RpstH4TpHhuXrsT0FRC94JOpDr6Pc=
+	t=1772301386; cv=none; b=F6HQFH9GzHI1xm2SMUmTbHH2WcZ90g475do6ow32iZDPQglaR451Nc11KRI17LnQVNfzBQESgRaTz1+koNbVmOhd6CIXmIzDm6Hv7/qyyyWjgQjbeb+VWKXdsi9NlM1SljUWi5sLwsGwaKjHnlcqrCcYMTce1DSyletALzH7IPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301386; c=relaxed/simple;
-	bh=lUk5O7eESbsqaWrLs1QVzAae7+Xwt4nGb9/uTpw8K34=;
+	bh=F4MJejqL9xPFVLoPwmRms9z9fysULGQptS0CePkzVu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aiRMw5DLvzLu07sqhO6yuwMkgVffMVMgZiBS6OwXyespt/V9AoZl/sLOKk8mp/8ZhFzzhXU9154+MwYhOqKZx+TJnyRqDFj0IvwaV4U30mwnJMPdeiFQtvZ/gNqc1iIZ7aiHbhOXN8xX+Yd3cOqoaNlOsJvDg9IPABRSC35VLmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hDsaSTqV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L+Z2ISTj0sMdynD14rdmoNUlDsiaNkf860i+kliK5w7xtwP3VsmrPb5o+OMY/srzjWerSsGGv6KGbjsphK0ByPEutrbh+zBbd4wlYcdxm6MPJlu6IsjicYOSlz1FEa9fkDcghd2j/4+9Ik2Ug3EzsjWP9v2DMNA5DMfqVh8qUy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OCRG8OKF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hDsaSTqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6218C116D0;
-	Sat, 28 Feb 2026 17:56:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OCRG8OKF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD897C19424;
+	Sat, 28 Feb 2026 17:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301385;
-	bh=lUk5O7eESbsqaWrLs1QVzAae7+Xwt4nGb9/uTpw8K34=;
+	s=k20201202; t=1772301386;
+	bh=F4MJejqL9xPFVLoPwmRms9z9fysULGQptS0CePkzVu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDsaSTqV94gsdToWXC7MoxBgmKpRMdgSufsxrQvTAYh+yJQomilM0rn0VZSN+oLLs
-	 +TM3buMRoQpLUiw+u4MIJAcQ1nLcp/y4HK0UFPwNwUPLL4GJa/bf40MHzLQHXSfeIx
-	 fvHt5+hdyXbe9aOKnhD8dwpC1QO6ufH7S8yA0D5BEtQQv6S48rVybqZ2ORe5DIzIwm
-	 JHyT0OOEACFPQJBwhJd5UWCLepTq3Kg2aXnyxXDBaPRCxZ0C2lizGXAPAqqhlpclkX
-	 OXre04pCnRIFnk36AdLOT7yIQAZMmNuMvT/PVCylJk6chPtq2PetJWybO6HS0P4Oku
-	 X8E3xWkHZ8xPQ==
+	b=OCRG8OKFzmlZsQymXYyLFF6BxgD4sKOLHZireZVeBDNXT3tAuoYKy4opBaN1A2d3b
+	 xBHg3YgZ2f9cMD69zdcP2cgs8Btt69LD8EF+SYMq5eEd7fRvcrWvzx/rxTzZq936FU
+	 pPVqbvMTEcaeMlndNsRoXkqCKUukxxlmdFliDIsZ8BXne3iKbXDIjYThgl4p1LcG8r
+	 fzBMujGOAV8O1eHKk0I03cJCW36OSB5dva50ciPqYk63ZWYB+7yA0rri7n7hP7zhpV
+	 9kvyVNnHNM0Su07QlqKZxSnRmup9NeGM7c/Bwrymf/VTdrWISN6uoMIKr4fYs6h03D
+	 L95+RTYUJFnOg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+Cc: Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	stable@vger.kernel.org,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 574/752] media: iris: Prevent output buffer queuing before stream-on completes
-Date: Sat, 28 Feb 2026 12:44:45 -0500
-Message-ID: <20260228174750.1542406-574-sashal@kernel.org>
+Subject: [PATCH 6.18 575/752] drm: of: drm_of_panel_bridge_remove(): fix device_node leak
+Date: Sat, 28 Feb 2026 12:44:46 -0500
+Message-ID: <20260228174750.1542406-575-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,56 +48,44 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit 2c73cfd0cfc44ffe331ccb81f6ac45fc399d9ddb ]
+[ Upstream commit a4b4385d0523e39a7c058cb5a6c8269e513126ca ]
 
-During normal playback, stream-on for input is followed by output, and
-only after input stream-on does actual streaming begin. However, when
-gst-play performs a seek, both input and output streams are stopped,
-and on restart, output stream-on occurs first. At this point, firmware
-has not yet started streaming. Queuing output buffers before the firmware
-begins streaming causes it to process buffers in an invalid state, leading
-to an error response. These buffers are returned to the driver as errors,
-forcing the driver into an error state and stopping playback.
+drm_of_panel_bridge_remove() uses of_graph_get_remote_node() to get a
+device_node but does not put the node reference.
 
-Fix this by deferring output buffer queuing until stream-on completes.
-Input buffers can still be queued before stream-on as required.
-
-Fixes: 92e007ca5ab6 ("media: iris: Add V4L2 streaming support for encoder video device")
-Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: c70087e8f16f ("drm/drm_of: add drm_of_panel_bridge_remove function")
+Cc: stable@vger.kernel.org # v4.15
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patch.msgid.link/20260109-drm-bridge-alloc-getput-drm_of_find_bridge-2-v2-1-8bad3ef90b9f@bootlin.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_vb2.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ include/drm/drm_of.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
-index 139b821f7952f..bf0b8400996ec 100644
---- a/drivers/media/platform/qcom/iris/iris_vb2.c
-+++ b/drivers/media/platform/qcom/iris/iris_vb2.c
-@@ -193,10 +193,14 @@ int iris_vb2_start_streaming(struct vb2_queue *q, unsigned int count)
- 	buf_type = iris_v4l2_type_to_driver(q->type);
+diff --git a/include/drm/drm_of.h b/include/drm/drm_of.h
+index 7f0256dae3f13..f3e55ea2174c0 100644
+--- a/include/drm/drm_of.h
++++ b/include/drm/drm_of.h
+@@ -5,6 +5,7 @@
+ #include <linux/err.h>
+ #include <linux/of_graph.h>
+ #if IS_ENABLED(CONFIG_OF) && IS_ENABLED(CONFIG_DRM_PANEL_BRIDGE)
++#include <linux/of.h>
+ #include <drm/drm_bridge.h>
+ #endif
  
- 	if (inst->domain == DECODER) {
--		if (inst->state == IRIS_INST_STREAMING)
-+		if (buf_type == BUF_INPUT)
-+			ret = iris_queue_deferred_buffers(inst, BUF_INPUT);
+@@ -173,6 +174,8 @@ static inline int drm_of_panel_bridge_remove(const struct device_node *np,
+ 	bridge = of_drm_find_bridge(remote);
+ 	drm_panel_bridge_remove(bridge);
+ 
++	of_node_put(remote);
 +
-+		if (!ret && inst->state == IRIS_INST_STREAMING) {
- 			ret = iris_queue_internal_deferred_buffers(inst, BUF_DPB);
--		if (!ret)
--			ret = iris_queue_deferred_buffers(inst, buf_type);
-+			if (!ret)
-+				ret = iris_queue_deferred_buffers(inst, BUF_OUTPUT);
-+		}
- 	} else {
- 		if (inst->state == IRIS_INST_STREAMING) {
- 			ret = iris_queue_deferred_buffers(inst, BUF_INPUT);
+ 	return 0;
+ #else
+ 	return -EINVAL;
 -- 
 2.51.0
 
