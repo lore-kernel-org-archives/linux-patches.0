@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC00842DFFA
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7010D44BC94
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301156; cv=none; b=Qo+zd6259KWRSruwtjBmIG3Bjzm8bdPMMsA8dvYC6evEdiaLXcLVK6ZGiMGpBNmq98fD2I5KQr8etEGbJyytsinIP5s298oo+ZRo3Hn/bU1U4j45xmUbsseqRDL54zSsV2AhHG3o3QPRvb/zUJS1L4mzOlMbhkRJZ/TXMcERq6c=
+	t=1772301157; cv=none; b=rYfRInqOnQZu6tWNz5dJOxppKweuperw5AQhAm91daOQWhmVn6lVW8hAqQYr/rlEcEEA4QgveKFGNT/zljAB3SI3fucUKqOTtczt8e3ptVtPAj3SaRdrUWbnCHEKPwVyZHXBlm8Ay/ryYoXUTTj9kdtV1kYpXaHK6Z/urlvfnBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301156; c=relaxed/simple;
-	bh=EBltPShLdHRg5MHLH88vzR0tSq7BbpzYUrYZ3TMQlZU=;
+	s=arc-20240116; t=1772301157; c=relaxed/simple;
+	bh=ghFaaLmJj1iPLJhplCjQVJwlTyugZcyZZUzRtfbzkyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4vLAAPED4yfiEeH8u4D3dlIZUCqI56z9IfOXlKLCX750KfPhSFWOpO8nFu9c73t/00kw5lGeWHHhVQ2Rs/28kaXEfYM234SDJo3r9Q3Jrjaz7r9bIVH2GAtCQTnVA5Fuv0zFOsnHES+Ano9OgpPs3sz6HKcQzj4m4KFJDU/dzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cc5HvwU9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UNzp+Au9BOOd1NWBhQGqyc9Q70HmdspWKN1Hrt6PGw5TF9SIXGUGG716NzaJTTh2zDolwkVIGXfg5ZKx3q7if0s0RNZgw8ZaSjwzMJSGZ6SWAS2G+GGkga6b3B4Y7KNREwEzKUIF5K3H50vji6Xtapcm5mNzNNhnO9UJ5FqN46M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vDYyKM3E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cc5HvwU9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FE5C116D0;
-	Sat, 28 Feb 2026 17:52:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vDYyKM3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D280DC116D0;
+	Sat, 28 Feb 2026 17:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301156;
-	bh=EBltPShLdHRg5MHLH88vzR0tSq7BbpzYUrYZ3TMQlZU=;
+	s=k20201202; t=1772301157;
+	bh=ghFaaLmJj1iPLJhplCjQVJwlTyugZcyZZUzRtfbzkyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cc5HvwU9XUQ+Nq4SFn/QtUzBXZhmEZgWY9G5QgSja7K2WgoMTBuqZrZxJUDzPUshD
-	 ApF4ib1Fuyxx0u6FuxOW/n20m3KCzDclTXzY9gAmXSdnnUQiSp6az1PHKB3zo27oe1
-	 y2eGfjkkDZbOsD3Q8Lub+E4kZXXAMrzNsRPvtGb+VpCOc6BGe6Iwhc0ClQHYDb/nmt
-	 3oeqdQHqyloQUv55KAA850bGV4fkMEr42pnrsjPROydwOedTOO95WrB0pakuVEUWcS
-	 t4P4VtndcOYOfIYfHNkofqi4uBP9Fgy9gmBZweHPnPUwZ9U03QyZmDkq+grxcLXScX
-	 Ijm9tJphPfTBw==
+	b=vDYyKM3ElhqfvfDPMcCyg4IbLxGeOM5NVelJjd5WpuxfWX6okUB9G6R7APQe4RLTS
+	 RPE4STTuldpBSQq1VV60ZH8G672OfniwSUbJqq2R+qdTjb/PKv4V8at0MD9dorhnHl
+	 8+m2Xc4tGJ8TGBplv8GnUGhES65cG9H8cX5dbynJvdM5Pfnw+XOAZVmCeZRlBSdqQR
+	 qoV1Vt6OPvoJ4luhZadqeZU4OqyL1WHsrNb4A1+1DMcRXV6iZaWRzRDAs936+tSh4O
+	 qwnsqyeAM5PErAM2zPWYicpU6lgBW5qiAtOk9S2OPtwjIOjJIj4nHVYmQ8YTFDpam0
+	 ztD4HvU7oSvRQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Daniel Peng <Daniel_Peng@pegatron.corp-partner.google.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+Cc: Daniel Palmer <daniel@thingy.jp>,
+	Greg Ungerer <gerg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 320/752] HID: i2c-hid: Add FocalTech FT8112
-Date: Sat, 28 Feb 2026 12:40:31 -0500
-Message-ID: <20260228174750.1542406-320-sashal@kernel.org>
+Subject: [PATCH 6.18 321/752] m68k: nommu: fix memmove() with differently aligned src and dest for 68000
+Date: Sat, 28 Feb 2026 12:40:32 -0500
+Message-ID: <20260228174750.1542406-321-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,53 +47,66 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Peng <Daniel_Peng@pegatron.corp-partner.google.com>
+From: Daniel Palmer <daniel@thingy.jp>
 
-[ Upstream commit 3d9586f1f90c9101b1abf5b0e9d70ca45f5f16db ]
+[ Upstream commit 590fe2f46c8698bb758f9002cb247ca10ce95569 ]
 
-Information for touchscreen model HKO/RB116AS01-2 as below:
-- HID :FTSC1000
-- slave address:0X38
-- Interface:HID over I2C
-- Touch control lC:FT8112
-- I2C ID: PNP0C50
+68000 has different alignment needs to 68020+.
+memcpy() checks if the destination is aligned and does a smaller copy
+to fix the alignment and then critically for 68000 it checks if the
+source is still unaligned and if it is reverts to smaller copies.
 
-Signed-off-by: Daniel Peng <Daniel_Peng@pegatron.corp-partner.google.com>
-Acked-by: Jiri Kosina <jkosina@suse.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20251117094041.300083-2-Daniel_Peng@pegatron.corp-partner.google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+memmove() does not currently do the second part and malfunctions if
+one of the pointers is aligned and the other isn't.
+
+This is apparently getting triggered by printk. If I put breakpoints
+into the new checks added by this commit the first hit looks like this:
+
+memmove (n=205, src=0x2f3971 <printk_shared_pbufs+205>, dest=0x2f3980 <printk_shared_pbufs+220>) at arch/m68k/lib/memmove.c:82
+
+Signed-off-by: Daniel Palmer <daniel@thingy.jp>
+Signed-off-by: Greg Ungerer <gerg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-of-elan.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/m68k/lib/memmove.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-of-elan.c b/drivers/hid/i2c-hid/i2c-hid-of-elan.c
-index 0215f217f6d86..b81fcc6ff49ee 100644
---- a/drivers/hid/i2c-hid/i2c-hid-of-elan.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-of-elan.c
-@@ -168,6 +168,13 @@ static const struct elan_i2c_hid_chip_data elan_ekth6a12nay_chip_data = {
- 	.power_after_backlight = true,
- };
- 
-+static const struct elan_i2c_hid_chip_data focaltech_ft8112_chip_data = {
-+	.post_power_delay_ms = 10,
-+	.post_gpio_reset_on_delay_ms = 150,
-+	.hid_descriptor_address = 0x0001,
-+	.main_supply_name = "vcc33",
-+};
-+
- static const struct elan_i2c_hid_chip_data ilitek_ili9882t_chip_data = {
- 	.post_power_delay_ms = 1,
- 	.post_gpio_reset_on_delay_ms = 200,
-@@ -191,6 +198,7 @@ static const struct elan_i2c_hid_chip_data ilitek_ili2901_chip_data = {
- static const struct of_device_id elan_i2c_hid_of_match[] = {
- 	{ .compatible = "elan,ekth6915", .data = &elan_ekth6915_chip_data },
- 	{ .compatible = "elan,ekth6a12nay", .data = &elan_ekth6a12nay_chip_data },
-+	{ .compatible = "focaltech,ft8112", .data = &focaltech_ft8112_chip_data },
- 	{ .compatible = "ilitek,ili9882t", .data = &ilitek_ili9882t_chip_data },
- 	{ .compatible = "ilitek,ili2901", .data = &ilitek_ili2901_chip_data },
- 	{ }
+diff --git a/arch/m68k/lib/memmove.c b/arch/m68k/lib/memmove.c
+index 6519f7f349f66..e33f00b02e4c0 100644
+--- a/arch/m68k/lib/memmove.c
++++ b/arch/m68k/lib/memmove.c
+@@ -24,6 +24,15 @@ void *memmove(void *dest, const void *src, size_t n)
+ 			src = csrc;
+ 			n--;
+ 		}
++#if defined(CONFIG_M68000)
++		if ((long)src & 1) {
++			char *cdest = dest;
++			const char *csrc = src;
++			for (; n; n--)
++				*cdest++ = *csrc++;
++			return xdest;
++		}
++#endif
+ 		if (n > 2 && (long)dest & 2) {
+ 			short *sdest = dest;
+ 			const short *ssrc = src;
+@@ -66,6 +75,15 @@ void *memmove(void *dest, const void *src, size_t n)
+ 			src = csrc;
+ 			n--;
+ 		}
++#if defined(CONFIG_M68000)
++		if ((long)src & 1) {
++			char *cdest = dest;
++			const char *csrc = src;
++			for (; n; n--)
++				*--cdest = *--csrc;
++			return xdest;
++		}
++#endif
+ 		if (n > 2 && (long)dest & 2) {
+ 			short *sdest = dest;
+ 			const short *ssrc = src;
 -- 
 2.51.0
 
