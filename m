@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B20E37702E
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CFE3446C0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301658; cv=none; b=Jeuzh7NFIwHl/j7vFlJMcL0MZTYAZib8DL9melsdDiOD+UoIfC6Cycd+54OupFKfA/W0Ws54AotleJWNucmIw+wAg/ywhCwuVc3CfEfbLnlXHK6fIa7Tuv1wWae3K51Gd1uxdDm6f5jQX2gH5QJtlwLmjxXryISaZk1cS/NPhQk=
+	t=1772301659; cv=none; b=cF9ad2oalDLhlruOGemHW6nIieXA1TXDU595a5zSITXKh1qKtzUbQGrIQXEwDbP2qx92I2xGcodvKjyYT53nfZvzILNu5TPZLl6p+9Y3ym7q3yNxuZFyG1Dsp/bB3fwDGSCgTuYjiJoI+upNTRot2B9QM/H/6PPfF0OmVSbJglo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301658; c=relaxed/simple;
-	bh=J4OEoe2WuatwtiMfDFEKsXM09bS1OKH3eDoR1bfeLcY=;
+	s=arc-20240116; t=1772301659; c=relaxed/simple;
+	bh=xlvBpnYV0Hm+ATHEeAFE2rENFHtbXlRMy0hDfFItS3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ramHjC+5eXg0UJ4yqV96QnHWYvcfWKe1MjnJVj59SPazIRsyteyQwSbFzs77pds/6Ry4M+qGYhAwFrK3dP0r6pa/mIaoj135e7V0X8biMwXTIN0ti9JErDgp41wvn1iSps/6g6L8B/4D5RNy7aXy5cUqtHgIGkJZnAF/kldid60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uYQuRPBl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBAB14BsOKnZgtYiKN0F/r6aOSd9biBlOjAG+p88VhSWbrJF3ucwdnWNCOwjP6evNhZjMWssVjBq5JNKimsSXXVcMvegJaciFrCvWl8eB7RPSGbEK/3XYgY4ceAV4XJuysZQ+4P+JVTD9NrcBEy0jrxEXlQaOObnR/j0Lk+nisc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ppd4SHXY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uYQuRPBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7DE3C19423;
-	Sat, 28 Feb 2026 18:00:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ppd4SHXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF39AC116D0;
+	Sat, 28 Feb 2026 18:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301658;
-	bh=J4OEoe2WuatwtiMfDFEKsXM09bS1OKH3eDoR1bfeLcY=;
+	s=k20201202; t=1772301659;
+	bh=xlvBpnYV0Hm+ATHEeAFE2rENFHtbXlRMy0hDfFItS3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uYQuRPBlvqRe4JoZnkdLqhntpg7AE0FOpn+4g3iv8lfYFTIGeEttxrhqGGkzf30ME
-	 ILao+NFsWEN/yVv91pbFAqoDsgdgFPtbZllLkn1ArQhK5KrF5p67ZB3+TMbaaGbAYf
-	 HC7RLc0KHbDjEG+xrkUn2aGHLGjFXr/imCJ8G4LxcBCF2T7erhAPYuij2YyN5boFSb
-	 RaVtg1pPWqNMGTYn8wy/j9qVg1OsWQuppYBS/t5VHQE6NKH/F4VXoAMzbHKq98R//q
-	 8EaVACB0Zng0pspbldNrwWdab1BguZQSI8ESNXkhgQGu+kxz0Hc43EPHYKm0Ef5yu8
-	 YVx3jnAQZG2lw==
+	b=ppd4SHXY1pJZVK5Bae0MCkzrUgNxWZFOxlzzaXIft1hBanriL4yaS7Xd1X9JG4tPq
+	 zH/4EciRDo1jdOvcNeHPQ7NcxUqB6a/gkJT0Tao3b7vOKEXh8rKX2EM0cLORSZj/8H
+	 LUj70tNdXX7LC3b3Bw1rUYC/o/9SZj8b49y1gq5WqHPO0mmCZbl3VDnyymPUFKTdCY
+	 uDiyCdjsgBM9cofOO6txeuR6X79gQA6AJZBAM14fGi3VvfEMC2uqi+/7wUDjCMeHU6
+	 MjsNWnXAVLyBpd8kKRhj5UmTfjsweJN64CffaCc201Oec97LoDiA4kqlDFUjbTQm7T
+	 EHQypAJxo6hzA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Qi Tao <taoqi10@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+Cc: Puranjay Mohan <puranjay@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/385] crypto: hisilicon/sec2 - support skcipher/aead fallback for hardware queue unavailable
-Date: Sat, 28 Feb 2026 12:54:38 -0500
-Message-ID: <20260228180011.1568201-56-sashal@kernel.org>
+Subject: [PATCH 6.12 057/385] bpf: Preserve id of register in sync_linked_regs()
+Date: Sat, 28 Feb 2026 12:54:39 -0500
+Message-ID: <20260228180011.1568201-57-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,217 +48,93 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Qi Tao <taoqi10@huawei.com>
+From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit e7507439628052363500d717caffb5c2241854dc ]
+[ Upstream commit af9e89d8dd39530c8bd14c33ddf6b502df1071b6 ]
 
-When all hardware queues are busy and no shareable queue,
-new processes fail to apply for queues. To avoid affecting
-tasks, support fallback mechanism when hardware queues are
-unavailable.
+sync_linked_regs() copies the id of known_reg to reg when propagating
+bounds of known_reg to reg using the off of known_reg, but when
+known_reg was linked to reg like:
 
-Fixes: c16a70c1f253 ("crypto: hisilicon/sec - add new algorithm mode for AEAD")
-Signed-off-by: Qi Tao <taoqi10@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+known_reg = reg         ; both known_reg and reg get same id
+known_reg += 4          ; known_reg gets off = 4, and its id gets BPF_ADD_CONST
+
+now when a call to sync_linked_regs() happens, let's say with the following:
+
+if known_reg >= 10 goto pc+2
+
+known_reg's new bounds are propagated to reg but now reg gets
+BPF_ADD_CONST from the copy.
+
+This means if another link to reg is created like:
+
+another_reg = reg       ; another_reg should get the id of reg but
+                          assign_scalar_id_before_mov() sees
+                          BPF_ADD_CONST on reg and assigns a new id to it.
+
+As reg has a new id now, known_reg's link to reg is broken. If we find
+new bounds for known_reg, they will not be propagated to reg.
+
+This can be seen in the selftest added in the next commit:
+
+0: (85) call bpf_get_prandom_u32#7    ; R0=scalar()
+1: (57) r0 &= 255                     ; R0=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+2: (bf) r1 = r0                       ; R0=scalar(id=1,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R1=scalar(id=1,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+3: (07) r1 += 4                       ; R1=scalar(id=1+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=259,var_off=(0x0; 0x1ff))
+4: (a5) if r1 < 0xa goto pc+4         ; R1=scalar(id=1+4,smin=umin=smin32=umin32=10,smax=umax=smax32=umax32=259,var_off=(0x0; 0x1ff))
+5: (bf) r2 = r0                       ; R0=scalar(id=2,smin=umin=smin32=umin32=6,smax=umax=smax32=umax32=255) R2=scalar(id=2,smin=umin=smin32=umin32=6,smax=umax=smax32=umax32=255)
+6: (a5) if r1 < 0xe goto pc+2         ; R1=scalar(id=1+4,smin=umin=smin32=umin32=14,smax=umax=smax32=umax32=259,var_off=(0x0; 0x1ff))
+7: (35) if r0 >= 0xa goto pc+1        ; R0=scalar(id=2,smin=umin=smin32=umin32=6,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf))
+8: (37) r0 /= 0
+div by zero
+
+When 4 is verified, r1's bounds are propagated to r0 but r0 also gets
+BPF_ADD_CONST (bug).
+When 5 is verified, r0 gets a new id (2) and its link with r1 is broken.
+
+After 6 we know r1 has bounds [14, 259] and therefore r0 should have
+bounds [10, 255], therefore the branch at 7 is always taken. But because
+r0's id was changed to 2, r1's new bounds are not propagated to r0.
+The verifier still thinks r0 has bounds [6, 255] before 7 and execution
+can reach div by zero.
+
+Fix this by preserving id in sync_linked_regs() like off and subreg_def.
+
+Fixes: 98d7ca374ba4 ("bpf: Track delta between "linked" registers.")
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260115151143.1344724-2-puranjay@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 62 ++++++++++++++++------
- 1 file changed, 47 insertions(+), 15 deletions(-)
+ kernel/bpf/verifier.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 8605cb3cae92c..cdd485fcbc5bb 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -591,10 +591,8 @@ static int sec_ctx_base_init(struct sec_ctx *ctx)
- 	int i, ret;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 7b75a2dd8cb8f..08cdf6ace02ac 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -15478,6 +15478,7 @@ static void sync_linked_regs(struct bpf_verifier_state *vstate, struct bpf_reg_s
+ 		} else {
+ 			s32 saved_subreg_def = reg->subreg_def;
+ 			s32 saved_off = reg->off;
++			u32 saved_id = reg->id;
  
- 	ctx->qps = sec_create_qps();
--	if (!ctx->qps) {
--		pr_err("Can not create sec qps!\n");
-+	if (!ctx->qps)
- 		return -ENODEV;
--	}
+ 			fake_reg.type = SCALAR_VALUE;
+ 			__mark_reg_known(&fake_reg, (s32)reg->off - (s32)known_reg->off);
+@@ -15485,10 +15486,11 @@ static void sync_linked_regs(struct bpf_verifier_state *vstate, struct bpf_reg_s
+ 			/* reg = known_reg; reg += delta */
+ 			copy_register_state(reg, known_reg);
+ 			/*
+-			 * Must preserve off, id and add_const flag,
++			 * Must preserve off, id and subreg_def flag,
+ 			 * otherwise another sync_linked_regs() will be incorrect.
+ 			 */
+ 			reg->off = saved_off;
++			reg->id = saved_id;
+ 			reg->subreg_def = saved_subreg_def;
  
- 	sec = container_of(ctx->qps[0]->qm, struct sec_dev, qm);
- 	ctx->sec = sec;
-@@ -633,6 +631,9 @@ static void sec_ctx_base_uninit(struct sec_ctx *ctx)
- {
- 	int i;
- 
-+	if (!ctx->qps)
-+		return;
-+
- 	for (i = 0; i < ctx->sec->ctx_q_num; i++)
- 		sec_release_qp_ctx(ctx, &ctx->qp_ctx[i]);
- 
-@@ -644,6 +645,9 @@ static int sec_cipher_init(struct sec_ctx *ctx)
- {
- 	struct sec_cipher_ctx *c_ctx = &ctx->c_ctx;
- 
-+	if (!ctx->qps)
-+		return 0;
-+
- 	c_ctx->c_key = dma_alloc_coherent(ctx->dev, SEC_MAX_KEY_SIZE,
- 					  &c_ctx->c_key_dma, GFP_KERNEL);
- 	if (!c_ctx->c_key)
-@@ -656,6 +660,9 @@ static void sec_cipher_uninit(struct sec_ctx *ctx)
- {
- 	struct sec_cipher_ctx *c_ctx = &ctx->c_ctx;
- 
-+	if (!ctx->qps)
-+		return;
-+
- 	memzero_explicit(c_ctx->c_key, SEC_MAX_KEY_SIZE);
- 	dma_free_coherent(ctx->dev, SEC_MAX_KEY_SIZE,
- 			  c_ctx->c_key, c_ctx->c_key_dma);
-@@ -677,6 +684,9 @@ static void sec_auth_uninit(struct sec_ctx *ctx)
- {
- 	struct sec_auth_ctx *a_ctx = &ctx->a_ctx;
- 
-+	if (!ctx->qps)
-+		return;
-+
- 	memzero_explicit(a_ctx->a_key, SEC_MAX_AKEY_SIZE);
- 	dma_free_coherent(ctx->dev, SEC_MAX_AKEY_SIZE,
- 			  a_ctx->a_key, a_ctx->a_key_dma);
-@@ -714,7 +724,7 @@ static int sec_skcipher_init(struct crypto_skcipher *tfm)
- 	}
- 
- 	ret = sec_ctx_base_init(ctx);
--	if (ret)
-+	if (ret && ret != -ENODEV)
- 		return ret;
- 
- 	ret = sec_cipher_init(ctx);
-@@ -823,6 +833,9 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 	struct device *dev = ctx->dev;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		goto set_soft_key;
-+
- 	if (c_mode == SEC_CMODE_XTS) {
- 		ret = xts_verify_key(tfm, key, keylen);
- 		if (ret) {
-@@ -853,13 +866,14 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 	}
- 
- 	memcpy(c_ctx->c_key, key, keylen);
--	if (c_ctx->fbtfm) {
--		ret = crypto_sync_skcipher_setkey(c_ctx->fbtfm, key, keylen);
--		if (ret) {
--			dev_err(dev, "failed to set fallback skcipher key!\n");
--			return ret;
--		}
-+
-+set_soft_key:
-+	ret = crypto_sync_skcipher_setkey(c_ctx->fbtfm, key, keylen);
-+	if (ret) {
-+		dev_err(dev, "failed to set fallback skcipher key!\n");
-+		return ret;
- 	}
-+
- 	return 0;
- }
- 
-@@ -1135,6 +1149,9 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 	struct crypto_authenc_keys keys;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		return sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
-+
- 	ctx->a_ctx.a_alg = a_alg;
- 	ctx->c_ctx.c_alg = c_alg;
- 	c_ctx->c_mode = c_mode;
-@@ -1829,6 +1846,9 @@ static int sec_skcipher_ctx_init(struct crypto_skcipher *tfm)
- 	if (ret)
- 		return ret;
- 
-+	if (!ctx->qps)
-+		return 0;
-+
- 	if (ctx->sec->qm.ver < QM_HW_V3) {
- 		ctx->type_supported = SEC_BD_TYPE2;
- 		ctx->req_op = &sec_skcipher_req_ops;
-@@ -1837,7 +1857,7 @@ static int sec_skcipher_ctx_init(struct crypto_skcipher *tfm)
- 		ctx->req_op = &sec_skcipher_req_ops_v3;
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- static void sec_skcipher_ctx_exit(struct crypto_skcipher *tfm)
-@@ -1905,7 +1925,7 @@ static int sec_aead_ctx_init(struct crypto_aead *tfm, const char *hash_name)
- 	int ret;
- 
- 	ret = sec_aead_init(tfm);
--	if (ret) {
-+	if (ret && ret != -ENODEV) {
- 		pr_err("hisi_sec2: aead init error!\n");
- 		return ret;
- 	}
-@@ -1947,7 +1967,7 @@ static int sec_aead_xcm_ctx_init(struct crypto_aead *tfm)
- 	int ret;
- 
- 	ret = sec_aead_init(tfm);
--	if (ret) {
-+	if (ret && ret != -ENODEV) {
- 		dev_err(ctx->dev, "hisi_sec2: aead xcm init error!\n");
- 		return ret;
- 	}
-@@ -2092,6 +2112,9 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
- 	bool need_fallback = false;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		goto soft_crypto;
-+
- 	if (!sk_req->cryptlen) {
- 		if (ctx->c_ctx.c_mode == SEC_CMODE_XTS)
- 			return -EINVAL;
-@@ -2108,9 +2131,12 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
- 		return -EINVAL;
- 
- 	if (unlikely(ctx->c_ctx.fallback || need_fallback))
--		return sec_skcipher_soft_crypto(ctx, sk_req, encrypt);
-+		goto soft_crypto;
- 
- 	return ctx->req_op->process(ctx, req);
-+
-+soft_crypto:
-+	return sec_skcipher_soft_crypto(ctx, sk_req, encrypt);
- }
- 
- static int sec_skcipher_encrypt(struct skcipher_request *sk_req)
-@@ -2315,6 +2341,9 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
- 	bool need_fallback = false;
- 	int ret;
- 
-+	if (!ctx->qps)
-+		goto soft_crypto;
-+
- 	req->flag = a_req->base.flags;
- 	req->aead_req.aead_req = a_req;
- 	req->c_req.encrypt = encrypt;
-@@ -2324,11 +2353,14 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
- 	ret = sec_aead_param_check(ctx, req, &need_fallback);
- 	if (unlikely(ret)) {
- 		if (need_fallback)
--			return sec_aead_soft_crypto(ctx, a_req, encrypt);
-+			goto soft_crypto;
- 		return -EINVAL;
- 	}
- 
- 	return ctx->req_op->process(ctx, req);
-+
-+soft_crypto:
-+	return sec_aead_soft_crypto(ctx, a_req, encrypt);
- }
- 
- static int sec_aead_encrypt(struct aead_request *a_req)
+ 			scalar32_min_max_add(reg, &fake_reg);
 -- 
 2.51.0
 
