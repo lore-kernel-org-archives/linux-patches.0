@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14E74C0413
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A121175A7E;
+	Sat, 28 Feb 2026 17:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301392; cv=none; b=RGyzVdL5Q0SW4S2DFWkZP44yHMrtWjyWS6YfL34G869RxP3YvykcJhEc536y7QtbDH7TYET28IOGRc4khoHEAakd6lDh8cmQ0LR9A8CALbsvaE+hNHjCrMNQy4y95LHBNrgrzQhJWefrC7LfERCJU0JfMEzxMRgLGEnOPhNg9Pc=
+	t=1772301393; cv=none; b=LcekX2m51cNtNNoN/YBp/oQKLF/M9INXtMaqdYtulhVkoWG3hefOLra54bQib7cphbnM3XPjELF+RuuzB7nliPVm3UmOYQIFGn9sJqiXspegb7stmQA7K37+sYvJQXfWw5Hn7B5AVCl2si+dEbZlQspTkBEmMO1S+cxk4a2qKJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301392; c=relaxed/simple;
-	bh=nZpfEUnxRBoAUgmH/6AuFk06MuwRjlxeNi9sgiulmN0=;
+	s=arc-20240116; t=1772301393; c=relaxed/simple;
+	bh=3N2WL6347zenZWHoCxHm+ZIceA41zQD5jFthGbV551c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ApzBJJ2KaIpRgRAgcCf3Pt1a6hAHK/gq8Uz1huztDpTYREKTnjEsKVuIfZ9gmt8C2p8989mlBNNbuXSkoCC8m+c6AKriA160C4SbNRgaLSeAGgclDJQnixgANQz88+DVKO9OPTPKocL3zjZ97Oh899BSN7sJqzh2S5+9urgfKfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pBIHPAcX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TOU5Ng5rv6DTiI9TD9tupk8XiFlB8yLsCs4qRtKDz1sKtZuRTjWKBOJ7e2m4eLRBYU7lyNg0NRFuuUPcXGVLB/hIBfpGYgF8o4p1n4FCAYP7U7qgk95T1v133Rpm6/ODLnxWCqlOaqzeQC/SQ69cbdaaWI5oEE0K3pTI9JifzFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jrs79DPH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pBIHPAcX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9BBC19425;
-	Sat, 28 Feb 2026 17:56:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jrs79DPH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852B1C116D0;
+	Sat, 28 Feb 2026 17:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301392;
-	bh=nZpfEUnxRBoAUgmH/6AuFk06MuwRjlxeNi9sgiulmN0=;
+	s=k20201202; t=1772301393;
+	bh=3N2WL6347zenZWHoCxHm+ZIceA41zQD5jFthGbV551c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBIHPAcXY9KMH5aPa5FZbQ8aS25c2ki78kfjz7vh5FytH847BM/MfdH4lL2rK3st3
-	 DllYahEIUMDDqjsnHEEL5EfnwjuoWtLxzWAqg2oAz3vWwDdK+k/YdvEJSTwVqqeHNK
-	 BXhKNnBs8iXgtWeo2t/J85We8bmXS2VfH9L2sGlVfOXmHlv0PLsWT5TWX5P2gc21qF
-	 q+0cKU0rxYcrMDv6J4TIspHH9bD8YaPCGS1sFP0CKEEWtgwPzFplNs4TI6CJ9YIvuy
-	 Gm2z4zeRTHflh9h0stAcyKkDhJnyu88KS9z90ORxb094YmgfshIr5HP18nHvJkCCof
-	 oHURifX+RJ/KQ==
+	b=jrs79DPHHjnu6GCvuNhQtVJXcCMSpFZfOs9WQgOddp9pK1eh548osfEANu7cFpERh
+	 OQHuoYcX74OZxSQnepnnh7gGcAC6134eX8SS738ztfj4/W2oYXo6VwDzl040TLqudB
+	 kqDipvzTIjQwAafEWA5g97UJvOkTg8OWsUJoG8dDd4+ykmvmBmXhf2zLXrY847mPrI
+	 NoLLFN9f1ri2l8DffFmOxI3fMEOMiOMiq1TpCRidGsMEWxg50MVYrF0REKn87Nygm9
+	 44LSU1suoFWrnRjfEBQ5TlJR2RRFsaHPcRQB18SHCWX1lIzo70JLiarTUGxv6MZSzH
+	 pPEfuKUzvOwvA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	stable@kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Xu Yang <xu.yang_2@nxp.com>,
+	stable@vger.kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 580/752] drm/bridge: anx7625: Fix invalid EDID size
-Date: Sat, 28 Feb 2026 12:44:51 -0500
-Message-ID: <20260228174750.1542406-580-sashal@kernel.org>
+Subject: [PATCH 6.18 581/752] phy: fsl-imx8mq-usb: set platform driver data
+Date: Sat, 28 Feb 2026 12:44:52 -0500
+Message-ID: <20260228174750.1542406-581-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,38 +49,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 1d5362145de96b5d00d590605cc94cdfa572b405 ]
+[ Upstream commit debf8326a435ac746f48173e4742a574810f1ff4 ]
 
-DRM checks EDID block count against allocated size in drm_edid_valid
-function. We have to allocate the right EDID size instead of the max
-size to prevent the EDID to be reported as invalid.
+Add missing platform_set_drvdata() as the data will be used in remove().
 
-Cc: stable@kernel.org
-Fixes: 7c585f9a71aa ("drm/bridge: anx7625: use struct drm_edid more")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251218151307.95491-1-loic.poulain@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: b58f0f86fd61 ("phy: fsl-imx8mq-usb: add tca function driver for imx95")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260120111646.3159766-1-xu.yang_2@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/analogix/anx7625.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/freescale/phy-fsl-imx8mq-usb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index 6f3fdcb6afdb9..4e49e4f28d552 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -1801,7 +1801,7 @@ static const struct drm_edid *anx7625_edid_read(struct anx7625_data *ctx)
- 		return NULL;
- 	}
+diff --git a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
+index bd37b6cb69cdc..8e7b6e10e1f0b 100644
+--- a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
++++ b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
+@@ -662,6 +662,8 @@ static int imx8mq_usb_phy_probe(struct platform_device *pdev)
+ 	if (!imx_phy)
+ 		return -ENOMEM;
  
--	ctx->cached_drm_edid = drm_edid_alloc(edid_buf, FOUR_BLOCK_SIZE);
-+	ctx->cached_drm_edid = drm_edid_alloc(edid_buf, edid_num * ONE_BLOCK_SIZE);
- 	kfree(edid_buf);
- 
- out:
++	platform_set_drvdata(pdev, imx_phy);
++
+ 	imx_phy->clk = devm_clk_get(dev, "phy");
+ 	if (IS_ERR(imx_phy->clk)) {
+ 		dev_err(dev, "failed to get imx8mq usb phy clock\n");
 -- 
 2.51.0
 
