@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A9438CFFE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C9838F62A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302162; cv=none; b=CWz9XR1eaKnJuZxRN8oHQnHdduGLNxWoZYm09lpICgTykE62DIdlLJYtne9fbNiCctNsKtDamm/KCjlED4l8R52id36vREG9Q1AWJukxam+OPQM7Gcfoc/96tJ8wonh2fdR8ZlMVPILV3Pg7CMnHmRjyndDEw4AGRh3nNUUxm1M=
+	t=1772302163; cv=none; b=cm/2Z9nlG7Fm8CbgMa+31+gX3l2k4/Hj2bg2hbTMDXky8Go62N2yjReJzpf5SKQ04GAD18LmfHnOtMqoKSMKbJwe07xf8/ay1Yj7x2kH67dK0TnaIE1UXxhcXQrQHHI8ZT+6zDZxa4U6wqJ3PFVFFab10cKSm8cDUcdEnFgAceM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302162; c=relaxed/simple;
-	bh=NatNncjPfgJMEWU1jBlTq40LKGv1JNKZJ38UKMqewzk=;
+	s=arc-20240116; t=1772302163; c=relaxed/simple;
+	bh=Gm2bLHkFTr0VTvnMFF7cp7ksZB8vp90nRL/P2J3B98Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEDZEzYtuUiThKWikIqPnhaRHL+bUuRFFL1Zk4/dAxu85Azc3STNd5wSM/SPMKix99aSQWk4ZIotd3Vj/3djF2vi/17HWATfjasQGX76hkF1K8AKciSkCotr32D7zVMHIAhG6VRwxVTUQ4CSMHRyuTDShXkM86vibjtXkvWZhDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FvzfrZ5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eHhI31S4xicXkLzC6LH15AsslkN4AFTnfIyPZVmZl8yG01VhkPz7rtGjZSylyt7S4gcaN9HV2H3q5dap0YLIcdvCQjMnEv/w2qsvzvJolyaqr94wHbRxDdX+GjzH81+itQZlqAabYwvWpCJDxX7FtH1HJutkTqmibMryeywZw0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1v9ax3C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FvzfrZ5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D36C19423;
-	Sat, 28 Feb 2026 18:09:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1v9ax3C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA450C116D0;
+	Sat, 28 Feb 2026 18:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302162;
-	bh=NatNncjPfgJMEWU1jBlTq40LKGv1JNKZJ38UKMqewzk=;
+	s=k20201202; t=1772302163;
+	bh=Gm2bLHkFTr0VTvnMFF7cp7ksZB8vp90nRL/P2J3B98Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FvzfrZ5uLZAYrbh+Rabu3UyTBRS/iwyMBiDR7FmUACaTJdCRtJ/L2wjgWqteXpzTU
-	 5/Yc1AHxTb1IoVDAV07TXUA1TzwKyw1d+u4jSaX9hJO5+D85sEQ187QABFpXl3ebBf
-	 kM0qBIpfVQt5H2idsbrPxFsUzD9SyZU5zF0mfb98YMY3+Zh0RSvbZTfmG7zHYvAIyy
-	 fEBY7isENbd2DOTYto0WAYujK2yU6no//6hi8nMTEUKojhfhiw8i9Z7mB8fmKkceYh
-	 ZeJu5UUjX7KPXlLBma+ys0HkJsQy74yZpROjk4SVW9CtSRE5LlNkITvDbpbTwl397a
-	 uG207Ne/MESjQ==
+	b=Q1v9ax3CvH4w+70QAn3tA8cntFKr/635Z2rD/67a0zRAtqqo/I0J7Go3WTWLyeGeG
+	 oiMdEbbiWfP6mV4rxgtvFt21ZWlSZ4gzfiVq0uZSfC/lUNdE0K50VTps0NeKlkmgpO
+	 c/vWWLuFryoqb+X8CAKDpHtkiC9ki1O1VBvRPJKD9TRh9MRQ0EFzA9fmAw/HLICbxc
+	 RGiojscT93UIyA/GCNpDkvlw0I6cRWviKjp7quAz6n7MxJCGCyrDvBcEOln2PQhvY1
+	 /SG2t6ZMQQX4N7TGRwV7r9/nCg1joCS+tN/hM/cSFxq9xJRepqIKg8t4h3bfVdvJX/
+	 dJDyAyVQYudJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Shinas Rasheed <srasheed@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 158/283] octeon_ep: support to fetch firmware info
-Date: Sat, 28 Feb 2026 13:05:00 -0500
-Message-ID: <20260228180709.1583486-158-sashal@kernel.org>
+Subject: [PATCH 6.6 159/283] octeon_ep: restructured interrupt handlers
+Date: Sat, 28 Feb 2026 13:05:01 -0500
+Message-ID: <20260228180709.1583486-159-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,247 +49,542 @@ Content-Transfer-Encoding: 8bit
 
 From: Shinas Rasheed <srasheed@marvell.com>
 
-[ Upstream commit 8d6198a14e2bfb09f190055b387c90b4ac9b49a4 ]
+[ Upstream commit 0b8ef824eedef96f3423f61dde2629755707b168 ]
 
-Add support to fetch firmware info such as heartbeat miss count,
-heartbeat interval. This shall be used for heartbeat monitor.
+Separated queue specific interrupts to register to individual msix-vectors
+instead of using a single generic interrupt handler on a single
+msix-vector.
 
 Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20230918065621.2165449-1-srasheed@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 73e6ffa37ceb ("octeon_ep: disable per ring interrupts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeon_ep/octep_cn9k_pf.c         | 10 +++-----
- .../ethernet/marvell/octeon_ep/octep_config.h | 22 +++++++++++++----
- .../marvell/octeon_ep/octep_ctrl_net.c        | 24 ++++++++++++++++++-
- .../marvell/octeon_ep/octep_ctrl_net.h        | 18 ++++++++++++++
- .../ethernet/marvell/octeon_ep/octep_main.c   | 16 +++++++++----
- .../marvell/octeon_ep/octep_regs_cn9k_pf.h    |  4 ++++
- 6 files changed, 77 insertions(+), 17 deletions(-)
+ .../marvell/octeon_ep/octep_cn9k_pf.c         | 158 ++++++++++----
+ .../ethernet/marvell/octeon_ep/octep_main.c   | 197 +++++++++++++++++-
+ .../ethernet/marvell/octeon_ep/octep_main.h   |  13 +-
+ 3 files changed, 323 insertions(+), 45 deletions(-)
 
 diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-index 90c3a419932d1..f282cd5b29ea5 100644
+index f282cd5b29ea5..d4ee2454675b6 100644
 --- a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
 +++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-@@ -16,9 +16,6 @@
- #define CTRL_MBOX_MAX_PF	128
- #define CTRL_MBOX_SZ		((size_t)(0x400000 / CTRL_MBOX_MAX_PF))
- 
--#define FW_HB_INTERVAL_IN_SECS		1
--#define FW_HB_MISS_COUNT		10
--
- /* Names of Hardware non-queue generic interrupts */
- static char *cn93_non_ioq_msix_names[] = {
- 	"epf_ire_rint",
-@@ -250,12 +247,11 @@ static void octep_init_config_cn93_pf(struct octep_device *oct)
- 		link = PCI_DEVFN(PCI_SLOT(oct->pdev->devfn), link);
- 	}
- 	conf->ctrl_mbox_cfg.barmem_addr = (void __iomem *)oct->mmio[2].hw_addr +
--					   (0x400000ull * 7) +
-+					   CN93_PEM_BAR4_INDEX_OFFSET +
- 					   (link * CTRL_MBOX_SZ);
- 
--	conf->hb_interval = FW_HB_INTERVAL_IN_SECS;
--	conf->max_hb_miss_cnt = FW_HB_MISS_COUNT;
--
-+	conf->fw_info.hb_interval = OCTEP_DEFAULT_FW_HB_INTERVAL;
-+	conf->fw_info.hb_miss_count = OCTEP_DEFAULT_FW_HB_MISS_COUNT;
+@@ -369,34 +369,40 @@ static void octep_setup_mbox_regs_cn93_pf(struct octep_device *oct, int q_no)
+ 	mbox->mbox_read_reg = oct->mmio[0].hw_addr + CN93_SDP_R_MBOX_VF_PF_DATA(q_no);
  }
  
- /* Setup registers for a hardware Tx Queue  */
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_config.h b/drivers/net/ethernet/marvell/octeon_ep/octep_config.h
-index df7cd39d9fce1..1622a6ebf0362 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_config.h
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_config.h
-@@ -49,6 +49,11 @@
- /* Default MTU */
- #define OCTEP_DEFAULT_MTU    1500
- 
-+/* pf heartbeat interval in milliseconds */
-+#define OCTEP_DEFAULT_FW_HB_INTERVAL           1000
-+/* pf heartbeat miss count */
-+#define OCTEP_DEFAULT_FW_HB_MISS_COUNT         20
-+
- /* Macros to get octeon config params */
- #define CFG_GET_IQ_CFG(cfg)             ((cfg)->iq)
- #define CFG_GET_IQ_NUM_DESC(cfg)        ((cfg)->iq.num_descs)
-@@ -181,6 +186,16 @@ struct octep_ctrl_mbox_config {
- 	void __iomem *barmem_addr;
- };
- 
-+/* Info from firmware */
-+struct octep_fw_info {
-+	/* interface pkind */
-+	u16 pkind;
-+	/* heartbeat interval in milliseconds */
-+	u16 hb_interval;
-+	/* heartbeat miss count */
-+	u16 hb_miss_count;
-+};
-+
- /* Data Structure to hold configuration limits and active config */
- struct octep_config {
- 	/* Input Queue attributes. */
-@@ -201,10 +216,7 @@ struct octep_config {
- 	/* ctrl mbox config */
- 	struct octep_ctrl_mbox_config ctrl_mbox_cfg;
- 
--	/* Configured maximum heartbeat miss count */
--	u32 max_hb_miss_cnt;
+-/* Process non-ioq interrupts required to keep pf interface running.
+- * OEI_RINT is needed for control mailbox
+- */
+-static bool octep_poll_non_ioq_interrupts_cn93_pf(struct octep_device *oct)
+-{
+-	bool handled = false;
+-	u64 reg0;
 -
--	/* Configured firmware heartbeat interval in secs */
--	u32 hb_interval;
-+	/* fw info */
-+	struct octep_fw_info fw_info;
- };
- #endif /* _OCTEP_CONFIG_H_ */
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.c b/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.c
-index 17bfd5cdf4620..0594607a25854 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.c
-@@ -26,7 +26,7 @@ static atomic_t ctrl_net_msg_id;
- 
- /* Control plane version in which OCTEP_CTRL_NET_H2F_CMD was added */
- static const u32 octep_ctrl_net_h2f_cmd_versions[OCTEP_CTRL_NET_H2F_CMD_MAX] = {
--	[OCTEP_CTRL_NET_H2F_CMD_INVALID ... OCTEP_CTRL_NET_H2F_CMD_LINK_INFO] =
-+	[OCTEP_CTRL_NET_H2F_CMD_INVALID ... OCTEP_CTRL_NET_H2F_CMD_GET_INFO] =
- 	 OCTEP_CP_VERSION(1, 0, 0)
- };
- 
-@@ -353,6 +353,28 @@ void octep_ctrl_net_recv_fw_messages(struct octep_device *oct)
- 	}
- }
- 
-+int octep_ctrl_net_get_info(struct octep_device *oct, int vfid,
-+			    struct octep_fw_info *info)
+-	/* Check for OEI INTR */
+-	reg0 = octep_read_csr64(oct, CN93_SDP_EPF_OEI_RINT);
+-	if (reg0) {
+-		dev_info(&oct->pdev->dev,
+-			 "Received OEI_RINT intr: 0x%llx\n",
+-			 reg0);
+-		octep_write_csr64(oct, CN93_SDP_EPF_OEI_RINT, reg0);
+-		if (reg0 & CN93_SDP_EPF_OEI_RINT_DATA_BIT_MBOX)
++/* Poll OEI events like heartbeat */
++static void octep_poll_oei_cn93_pf(struct octep_device *oct)
 +{
-+	struct octep_ctrl_net_wait_data d = {0};
-+	struct octep_ctrl_net_h2f_resp *resp;
-+	struct octep_ctrl_net_h2f_req *req;
-+	int err;
++	u64 reg;
 +
-+	req = &d.data.req;
-+	init_send_req(&d.msg, req, 0, vfid);
-+	req->hdr.s.cmd = OCTEP_CTRL_NET_H2F_CMD_GET_INFO;
-+	req->link_info.cmd = OCTEP_CTRL_NET_CMD_GET;
-+	err = octep_send_mbox_req(oct, &d, true);
-+	if (err < 0)
-+		return err;
-+
-+	resp = &d.data.resp;
-+	memcpy(info, &resp->info.fw_info, sizeof(struct octep_fw_info));
-+
-+	return 0;
++	reg = octep_read_csr64(oct, CN93_SDP_EPF_OEI_RINT);
++	if (reg) {
++		octep_write_csr64(oct, CN93_SDP_EPF_OEI_RINT, reg);
++		if (reg & CN93_SDP_EPF_OEI_RINT_DATA_BIT_MBOX)
+ 			queue_work(octep_wq, &oct->ctrl_mbox_task);
+-		else if (reg0 & CN93_SDP_EPF_OEI_RINT_DATA_BIT_HBEAT)
++		else if (reg & CN93_SDP_EPF_OEI_RINT_DATA_BIT_HBEAT)
+ 			atomic_set(&oct->hb_miss_cnt, 0);
+-
+-		handled = true;
+ 	}
 +}
 +
- int octep_ctrl_net_uninit(struct octep_device *oct)
- {
- 	struct octep_ctrl_net_wait_data *pos, *n;
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.h b/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.h
-index 1c2ef4ee31d91..b330f370131be 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.h
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.h
-@@ -41,6 +41,7 @@ enum octep_ctrl_net_h2f_cmd {
- 	OCTEP_CTRL_NET_H2F_CMD_LINK_STATUS,
- 	OCTEP_CTRL_NET_H2F_CMD_RX_STATE,
- 	OCTEP_CTRL_NET_H2F_CMD_LINK_INFO,
-+	OCTEP_CTRL_NET_H2F_CMD_GET_INFO,
- 	OCTEP_CTRL_NET_H2F_CMD_MAX
- };
++/* OEI interrupt handler */
++static irqreturn_t octep_oei_intr_handler_cn93_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
  
-@@ -161,6 +162,11 @@ struct octep_ctrl_net_h2f_resp_cmd_state {
- 	u16 state;
- };
- 
-+/* get info request */
-+struct octep_ctrl_net_h2f_resp_cmd_get_info {
-+	struct octep_fw_info fw_info;
-+};
+-	return handled;
++	octep_poll_oei_cn93_pf(oct);
++	return IRQ_HANDLED;
++}
 +
- /* Host to fw response data */
- struct octep_ctrl_net_h2f_resp {
- 	union octep_ctrl_net_resp_hdr hdr;
-@@ -171,6 +177,7 @@ struct octep_ctrl_net_h2f_resp {
- 		struct octep_ctrl_net_h2f_resp_cmd_state link;
- 		struct octep_ctrl_net_h2f_resp_cmd_state rx;
- 		struct octep_ctrl_net_link_info link_info;
-+		struct octep_ctrl_net_h2f_resp_cmd_get_info info;
- 	};
- } __packed;
- 
-@@ -330,6 +337,17 @@ int octep_ctrl_net_set_link_info(struct octep_device *oct,
-  */
- void octep_ctrl_net_recv_fw_messages(struct octep_device *oct);
- 
-+/** Get info from firmware.
-+ *
-+ * @param oct: non-null pointer to struct octep_device.
-+ * @param vfid: Index of virtual function.
-+ * @param info: non-null pointer to struct octep_fw_info.
-+ *
-+ * return value: 0 on success, -errno on failure.
++/* Process non-ioq interrupts required to keep pf interface running.
++ * OEI_RINT is needed for control mailbox
 + */
-+int octep_ctrl_net_get_info(struct octep_device *oct, int vfid,
-+			    struct octep_fw_info *info);
++static void octep_poll_non_ioq_interrupts_cn93_pf(struct octep_device *oct)
++{
++	octep_poll_oei_cn93_pf(oct);
+ }
+ 
+-/* Interrupts handler for all non-queue generic interrupts. */
+-static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
++/* Interrupt handler for input ring error interrupts. */
++static irqreturn_t octep_ire_intr_handler_cn93_pf(void *dev)
+ {
+ 	struct octep_device *oct = (struct octep_device *)dev;
+ 	struct pci_dev *pdev = oct->pdev;
+@@ -421,8 +427,17 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
+ 						  reg_val);
+ 			}
+ 		}
+-		goto irq_handled;
+ 	}
++	return IRQ_HANDLED;
++}
 +
- /** Uninitialize data for ctrl net.
-  *
-  * @param oct: non-null pointer to struct octep_device.
++/* Interrupt handler for output ring error interrupts. */
++static irqreturn_t octep_ore_intr_handler_cn93_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
++	struct pci_dev *pdev = oct->pdev;
++	u64 reg_val = 0;
++	int i = 0;
+ 
+ 	/* Check for ORERR INTR */
+ 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_ORERR_RINT);
+@@ -440,9 +455,16 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
+ 						  reg_val);
+ 			}
+ 		}
+-
+-		goto irq_handled;
+ 	}
++	return IRQ_HANDLED;
++}
++
++/* Interrupt handler for vf input ring error interrupts. */
++static irqreturn_t octep_vfire_intr_handler_cn93_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
++	struct pci_dev *pdev = oct->pdev;
++	u64 reg_val = 0;
+ 
+ 	/* Check for VFIRE INTR */
+ 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_VFIRE_RINT(0));
+@@ -450,8 +472,16 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
+ 		dev_info(&pdev->dev,
+ 			 "Received VFIRE_RINT intr: 0x%llx\n", reg_val);
+ 		octep_write_csr64(oct, CN93_SDP_EPF_VFIRE_RINT(0), reg_val);
+-		goto irq_handled;
+ 	}
++	return IRQ_HANDLED;
++}
++
++/* Interrupt handler for vf output ring error interrupts. */
++static irqreturn_t octep_vfore_intr_handler_cn93_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
++	struct pci_dev *pdev = oct->pdev;
++	u64 reg_val = 0;
+ 
+ 	/* Check for VFORE INTR */
+ 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_VFORE_RINT(0));
+@@ -459,19 +489,30 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
+ 		dev_info(&pdev->dev,
+ 			 "Received VFORE_RINT intr: 0x%llx\n", reg_val);
+ 		octep_write_csr64(oct, CN93_SDP_EPF_VFORE_RINT(0), reg_val);
+-		goto irq_handled;
+ 	}
++	return IRQ_HANDLED;
++}
+ 
+-	/* Check for MBOX INTR and OEI INTR */
+-	if (octep_poll_non_ioq_interrupts_cn93_pf(oct))
+-		goto irq_handled;
++/* Interrupt handler for dpi dma related interrupts. */
++static irqreturn_t octep_dma_intr_handler_cn93_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
++	u64 reg_val = 0;
+ 
+ 	/* Check for DMA INTR */
+ 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_DMA_RINT);
+ 	if (reg_val) {
+ 		octep_write_csr64(oct, CN93_SDP_EPF_DMA_RINT, reg_val);
+-		goto irq_handled;
+ 	}
++	return IRQ_HANDLED;
++}
++
++/* Interrupt handler for dpi dma transaction error interrupts for VFs  */
++static irqreturn_t octep_dma_vf_intr_handler_cn93_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
++	struct pci_dev *pdev = oct->pdev;
++	u64 reg_val = 0;
+ 
+ 	/* Check for DMA VF INTR */
+ 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_DMA_VF_RINT(0));
+@@ -479,8 +520,16 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
+ 		dev_info(&pdev->dev,
+ 			 "Received DMA_VF_RINT intr: 0x%llx\n", reg_val);
+ 		octep_write_csr64(oct, CN93_SDP_EPF_DMA_VF_RINT(0), reg_val);
+-		goto irq_handled;
+ 	}
++	return IRQ_HANDLED;
++}
++
++/* Interrupt handler for pp transaction error interrupts for VFs  */
++static irqreturn_t octep_pp_vf_intr_handler_cn93_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
++	struct pci_dev *pdev = oct->pdev;
++	u64 reg_val = 0;
+ 
+ 	/* Check for PPVF INTR */
+ 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_PP_VF_RINT(0));
+@@ -488,8 +537,16 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
+ 		dev_info(&pdev->dev,
+ 			 "Received PP_VF_RINT intr: 0x%llx\n", reg_val);
+ 		octep_write_csr64(oct, CN93_SDP_EPF_PP_VF_RINT(0), reg_val);
+-		goto irq_handled;
+ 	}
++	return IRQ_HANDLED;
++}
++
++/* Interrupt handler for mac related interrupts. */
++static irqreturn_t octep_misc_intr_handler_cn93_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
++	struct pci_dev *pdev = oct->pdev;
++	u64 reg_val = 0;
+ 
+ 	/* Check for MISC INTR */
+ 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_MISC_RINT);
+@@ -497,11 +554,17 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
+ 		dev_info(&pdev->dev,
+ 			 "Received MISC_RINT intr: 0x%llx\n", reg_val);
+ 		octep_write_csr64(oct, CN93_SDP_EPF_MISC_RINT, reg_val);
+-		goto irq_handled;
+ 	}
++	return IRQ_HANDLED;
++}
++
++/* Interrupts handler for all reserved interrupts. */
++static irqreturn_t octep_rsvd_intr_handler_cn93_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
++	struct pci_dev *pdev = oct->pdev;
+ 
+ 	dev_info(&pdev->dev, "Reserved interrupts raised; Ignore\n");
+-irq_handled:
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -565,8 +628,15 @@ static void octep_enable_interrupts_cn93_pf(struct octep_device *oct)
+ 	octep_write_csr64(oct, CN93_SDP_EPF_IRERR_RINT_ENA_W1S, intr_mask);
+ 	octep_write_csr64(oct, CN93_SDP_EPF_ORERR_RINT_ENA_W1S, intr_mask);
+ 	octep_write_csr64(oct, CN93_SDP_EPF_OEI_RINT_ENA_W1S, -1ULL);
++
++	octep_write_csr64(oct, CN93_SDP_EPF_VFIRE_RINT_ENA_W1S(0), -1ULL);
++	octep_write_csr64(oct, CN93_SDP_EPF_VFORE_RINT_ENA_W1S(0), -1ULL);
++
+ 	octep_write_csr64(oct, CN93_SDP_EPF_MISC_RINT_ENA_W1S, intr_mask);
+ 	octep_write_csr64(oct, CN93_SDP_EPF_DMA_RINT_ENA_W1S, intr_mask);
++
++	octep_write_csr64(oct, CN93_SDP_EPF_DMA_VF_RINT_ENA_W1S(0), -1ULL);
++	octep_write_csr64(oct, CN93_SDP_EPF_PP_VF_RINT_ENA_W1S(0), -1ULL);
+ }
+ 
+ /* Disable all interrupts */
+@@ -584,8 +654,15 @@ static void octep_disable_interrupts_cn93_pf(struct octep_device *oct)
+ 	octep_write_csr64(oct, CN93_SDP_EPF_IRERR_RINT_ENA_W1C, intr_mask);
+ 	octep_write_csr64(oct, CN93_SDP_EPF_ORERR_RINT_ENA_W1C, intr_mask);
+ 	octep_write_csr64(oct, CN93_SDP_EPF_OEI_RINT_ENA_W1C, -1ULL);
++
++	octep_write_csr64(oct, CN93_SDP_EPF_VFIRE_RINT_ENA_W1C(0), -1ULL);
++	octep_write_csr64(oct, CN93_SDP_EPF_VFORE_RINT_ENA_W1C(0), -1ULL);
++
+ 	octep_write_csr64(oct, CN93_SDP_EPF_MISC_RINT_ENA_W1C, intr_mask);
+ 	octep_write_csr64(oct, CN93_SDP_EPF_DMA_RINT_ENA_W1C, intr_mask);
++
++	octep_write_csr64(oct, CN93_SDP_EPF_DMA_VF_RINT_ENA_W1C(0), -1ULL);
++	octep_write_csr64(oct, CN93_SDP_EPF_PP_VF_RINT_ENA_W1C(0), -1ULL);
+ }
+ 
+ /* Get new Octeon Read Index: index of descriptor that Octeon reads next. */
+@@ -718,7 +795,16 @@ void octep_device_setup_cn93_pf(struct octep_device *oct)
+ 	oct->hw_ops.setup_oq_regs = octep_setup_oq_regs_cn93_pf;
+ 	oct->hw_ops.setup_mbox_regs = octep_setup_mbox_regs_cn93_pf;
+ 
+-	oct->hw_ops.non_ioq_intr_handler = octep_non_ioq_intr_handler_cn93_pf;
++	oct->hw_ops.oei_intr_handler = octep_oei_intr_handler_cn93_pf;
++	oct->hw_ops.ire_intr_handler = octep_ire_intr_handler_cn93_pf;
++	oct->hw_ops.ore_intr_handler = octep_ore_intr_handler_cn93_pf;
++	oct->hw_ops.vfire_intr_handler = octep_vfire_intr_handler_cn93_pf;
++	oct->hw_ops.vfore_intr_handler = octep_vfore_intr_handler_cn93_pf;
++	oct->hw_ops.dma_intr_handler = octep_dma_intr_handler_cn93_pf;
++	oct->hw_ops.dma_vf_intr_handler = octep_dma_vf_intr_handler_cn93_pf;
++	oct->hw_ops.pp_vf_intr_handler = octep_pp_vf_intr_handler_cn93_pf;
++	oct->hw_ops.misc_intr_handler = octep_misc_intr_handler_cn93_pf;
++	oct->hw_ops.rsvd_intr_handler = octep_rsvd_intr_handler_cn93_pf;
+ 	oct->hw_ops.ioq_intr_handler = octep_ioq_intr_handler_cn93_pf;
+ 	oct->hw_ops.soft_reset = octep_soft_reset_cn93_pf;
+ 	oct->hw_ops.reinit_regs = octep_reinit_regs_cn93_pf;
 diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-index c385084546639..32740d0a4216a 100644
+index 32740d0a4216a..b19f756e24489 100644
 --- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
 +++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-@@ -907,9 +907,9 @@ static void octep_hb_timeout_task(struct work_struct *work)
- 	int miss_cnt;
+@@ -155,18 +155,153 @@ static void octep_disable_msix(struct octep_device *oct)
+ }
  
- 	miss_cnt = atomic_inc_return(&oct->hb_miss_cnt);
--	if (miss_cnt < oct->conf->max_hb_miss_cnt) {
-+	if (miss_cnt < oct->conf->fw_info.hb_miss_count) {
- 		queue_delayed_work(octep_wq, &oct->hb_task,
--				   msecs_to_jiffies(oct->conf->hb_interval * 1000));
-+				   msecs_to_jiffies(oct->conf->fw_info.hb_interval));
- 		return;
- 	}
- 
-@@ -1002,8 +1002,7 @@ int octep_device_setup(struct octep_device *oct)
- 
- 	atomic_set(&oct->hb_miss_cnt, 0);
- 	INIT_DELAYED_WORK(&oct->hb_task, octep_hb_timeout_task);
--	queue_delayed_work(octep_wq, &oct->hb_task,
--			   msecs_to_jiffies(oct->conf->hb_interval * 1000));
+ /**
+- * octep_non_ioq_intr_handler() - common handler for all generic interrupts.
++ * octep_oei_intr_handler() - common handler for output endpoint interrupts.
+  *
+  * @irq: Interrupt number.
+  * @data: interrupt data.
+  *
+- * this is common handler for all non-queue (generic) interrupts.
++ * this is common handler for all output endpoint interrupts.
++ */
++static irqreturn_t octep_oei_intr_handler(int irq, void *data)
++{
++	struct octep_device *oct = data;
 +
- 	return 0;
++	return oct->hw_ops.oei_intr_handler(oct);
++}
++
++/**
++ * octep_ire_intr_handler() - common handler for input ring error interrupts.
++ *
++ * @irq: Interrupt number.
++ * @data: interrupt data.
++ *
++ * this is common handler for input ring error interrupts.
++ */
++static irqreturn_t octep_ire_intr_handler(int irq, void *data)
++{
++	struct octep_device *oct = data;
++
++	return oct->hw_ops.ire_intr_handler(oct);
++}
++
++/**
++ * octep_ore_intr_handler() - common handler for output ring error interrupts.
++ *
++ * @irq: Interrupt number.
++ * @data: interrupt data.
++ *
++ * this is common handler for output ring error interrupts.
++ */
++static irqreturn_t octep_ore_intr_handler(int irq, void *data)
++{
++	struct octep_device *oct = data;
++
++	return oct->hw_ops.ore_intr_handler(oct);
++}
++
++/**
++ * octep_vfire_intr_handler() - common handler for vf input ring error interrupts.
++ *
++ * @irq: Interrupt number.
++ * @data: interrupt data.
++ *
++ * this is common handler for vf input ring error interrupts.
++ */
++static irqreturn_t octep_vfire_intr_handler(int irq, void *data)
++{
++	struct octep_device *oct = data;
++
++	return oct->hw_ops.vfire_intr_handler(oct);
++}
++
++/**
++ * octep_vfore_intr_handler() - common handler for vf output ring error interrupts.
++ *
++ * @irq: Interrupt number.
++ * @data: interrupt data.
++ *
++ * this is common handler for vf output ring error interrupts.
+  */
+-static irqreturn_t octep_non_ioq_intr_handler(int irq, void *data)
++static irqreturn_t octep_vfore_intr_handler(int irq, void *data)
+ {
+ 	struct octep_device *oct = data;
  
- unsupported_dev:
-@@ -1133,6 +1132,15 @@ static int octep_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		dev_err(&pdev->dev, "Device setup failed\n");
- 		goto err_octep_config;
- 	}
+-	return oct->hw_ops.non_ioq_intr_handler(oct);
++	return oct->hw_ops.vfore_intr_handler(oct);
++}
 +
-+	octep_ctrl_net_get_info(octep_dev, OCTEP_CTRL_NET_INVALID_VFID,
-+				&octep_dev->conf->fw_info);
-+	dev_info(&octep_dev->pdev->dev, "Heartbeat interval %u msecs Heartbeat miss count %u\n",
-+		 octep_dev->conf->fw_info.hb_interval,
-+		 octep_dev->conf->fw_info.hb_miss_count);
-+	queue_delayed_work(octep_wq, &octep_dev->hb_task,
-+			   msecs_to_jiffies(octep_dev->conf->fw_info.hb_interval));
++/**
++ * octep_dma_intr_handler() - common handler for dpi dma related interrupts.
++ *
++ * @irq: Interrupt number.
++ * @data: interrupt data.
++ *
++ * this is common handler for dpi dma related interrupts.
++ */
++static irqreturn_t octep_dma_intr_handler(int irq, void *data)
++{
++	struct octep_device *oct = data;
 +
- 	INIT_WORK(&octep_dev->tx_timeout_task, octep_tx_timeout_task);
- 	INIT_WORK(&octep_dev->ctrl_mbox_task, octep_ctrl_mbox_task);
- 	INIT_DELAYED_WORK(&octep_dev->intr_poll_task, octep_intr_poll_task);
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
-index b25c3093dc7b4..0a43983e91015 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
-@@ -370,4 +370,8 @@
- /* bit 1 for firmware heartbeat interrupt */
- #define CN93_SDP_EPF_OEI_RINT_DATA_BIT_HBEAT	BIT_ULL(1)
++	return oct->hw_ops.dma_intr_handler(oct);
++}
++
++/**
++ * octep_dma_vf_intr_handler() - common handler for dpi dma transaction error interrupts for VFs.
++ *
++ * @irq: Interrupt number.
++ * @data: interrupt data.
++ *
++ * this is common handler for dpi dma transaction error interrupts for VFs.
++ */
++static irqreturn_t octep_dma_vf_intr_handler(int irq, void *data)
++{
++	struct octep_device *oct = data;
++
++	return oct->hw_ops.dma_vf_intr_handler(oct);
++}
++
++/**
++ * octep_pp_vf_intr_handler() - common handler for pp transaction error interrupts for VFs.
++ *
++ * @irq: Interrupt number.
++ * @data: interrupt data.
++ *
++ * this is common handler for pp transaction error interrupts for VFs.
++ */
++static irqreturn_t octep_pp_vf_intr_handler(int irq, void *data)
++{
++	struct octep_device *oct = data;
++
++	return oct->hw_ops.pp_vf_intr_handler(oct);
++}
++
++/**
++ * octep_misc_intr_handler() - common handler for mac related interrupts.
++ *
++ * @irq: Interrupt number.
++ * @data: interrupt data.
++ *
++ * this is common handler for mac related interrupts.
++ */
++static irqreturn_t octep_misc_intr_handler(int irq, void *data)
++{
++	struct octep_device *oct = data;
++
++	return oct->hw_ops.misc_intr_handler(oct);
++}
++
++/**
++ * octep_rsvd_intr_handler() - common handler for reserved interrupts (future use).
++ *
++ * @irq: Interrupt number.
++ * @data: interrupt data.
++ *
++ * this is common handler for all reserved interrupts.
++ */
++static irqreturn_t octep_rsvd_intr_handler(int irq, void *data)
++{
++	struct octep_device *oct = data;
++
++	return oct->hw_ops.rsvd_intr_handler(oct);
+ }
  
-+#define CN93_PEM_BAR4_INDEX            7
-+#define CN93_PEM_BAR4_INDEX_SIZE       0x400000ULL
-+#define CN93_PEM_BAR4_INDEX_OFFSET     (CN93_PEM_BAR4_INDEX * CN93_PEM_BAR4_INDEX_SIZE)
+ /**
+@@ -222,9 +357,57 @@ static int octep_request_irqs(struct octep_device *oct)
+ 
+ 		snprintf(irq_name, OCTEP_MSIX_NAME_SIZE,
+ 			 "%s-%s", netdev->name, non_ioq_msix_names[i]);
+-		ret = request_irq(msix_entry->vector,
+-				  octep_non_ioq_intr_handler, 0,
+-				  irq_name, oct);
++		if (!strncmp(non_ioq_msix_names[i], "epf_oei_rint",
++			     strlen("epf_oei_rint"))) {
++			ret = request_irq(msix_entry->vector,
++					  octep_oei_intr_handler, 0,
++					  irq_name, oct);
++		} else if (!strncmp(non_ioq_msix_names[i], "epf_ire_rint",
++			   strlen("epf_ire_rint"))) {
++			ret = request_irq(msix_entry->vector,
++					  octep_ire_intr_handler, 0,
++					  irq_name, oct);
++		} else if (!strncmp(non_ioq_msix_names[i], "epf_ore_rint",
++			   strlen("epf_ore_rint"))) {
++			ret = request_irq(msix_entry->vector,
++					  octep_ore_intr_handler, 0,
++					  irq_name, oct);
++		} else if (!strncmp(non_ioq_msix_names[i], "epf_vfire_rint",
++			   strlen("epf_vfire_rint"))) {
++			ret = request_irq(msix_entry->vector,
++					  octep_vfire_intr_handler, 0,
++					  irq_name, oct);
++		} else if (!strncmp(non_ioq_msix_names[i], "epf_vfore_rint",
++			   strlen("epf_vfore_rint"))) {
++			ret = request_irq(msix_entry->vector,
++					  octep_vfore_intr_handler, 0,
++					  irq_name, oct);
++		} else if (!strncmp(non_ioq_msix_names[i], "epf_dma_rint",
++			   strlen("epf_dma_rint"))) {
++			ret = request_irq(msix_entry->vector,
++					  octep_dma_intr_handler, 0,
++					  irq_name, oct);
++		} else if (!strncmp(non_ioq_msix_names[i], "epf_dma_vf_rint",
++			   strlen("epf_dma_vf_rint"))) {
++			ret = request_irq(msix_entry->vector,
++					  octep_dma_vf_intr_handler, 0,
++					  irq_name, oct);
++		} else if (!strncmp(non_ioq_msix_names[i], "epf_pp_vf_rint",
++			   strlen("epf_pp_vf_rint"))) {
++			ret = request_irq(msix_entry->vector,
++					  octep_pp_vf_intr_handler, 0,
++					  irq_name, oct);
++		} else if (!strncmp(non_ioq_msix_names[i], "epf_misc_rint",
++			   strlen("epf_misc_rint"))) {
++			ret = request_irq(msix_entry->vector,
++					  octep_misc_intr_handler, 0,
++					  irq_name, oct);
++		} else {
++			ret = request_irq(msix_entry->vector,
++					  octep_rsvd_intr_handler, 0,
++					  irq_name, oct);
++		}
 +
- #endif /* _OCTEP_REGS_CN9K_PF_H_ */
+ 		if (ret) {
+ 			netdev_err(netdev,
+ 				   "request_irq failed for %s; err=%d",
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.h b/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
+index e0907a7191330..6df902ebb7f33 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
+@@ -65,7 +65,16 @@ struct octep_hw_ops {
+ 	void (*setup_oq_regs)(struct octep_device *oct, int q);
+ 	void (*setup_mbox_regs)(struct octep_device *oct, int mbox);
+ 
+-	irqreturn_t (*non_ioq_intr_handler)(void *ioq_vector);
++	irqreturn_t (*oei_intr_handler)(void *ioq_vector);
++	irqreturn_t (*ire_intr_handler)(void *ioq_vector);
++	irqreturn_t (*ore_intr_handler)(void *ioq_vector);
++	irqreturn_t (*vfire_intr_handler)(void *ioq_vector);
++	irqreturn_t (*vfore_intr_handler)(void *ioq_vector);
++	irqreturn_t (*dma_intr_handler)(void *ioq_vector);
++	irqreturn_t (*dma_vf_intr_handler)(void *ioq_vector);
++	irqreturn_t (*pp_vf_intr_handler)(void *ioq_vector);
++	irqreturn_t (*misc_intr_handler)(void *ioq_vector);
++	irqreturn_t (*rsvd_intr_handler)(void *ioq_vector);
+ 	irqreturn_t (*ioq_intr_handler)(void *ioq_vector);
+ 	int (*soft_reset)(struct octep_device *oct);
+ 	void (*reinit_regs)(struct octep_device *oct);
+@@ -73,7 +82,7 @@ struct octep_hw_ops {
+ 
+ 	void (*enable_interrupts)(struct octep_device *oct);
+ 	void (*disable_interrupts)(struct octep_device *oct);
+-	bool (*poll_non_ioq_interrupts)(struct octep_device *oct);
++	void (*poll_non_ioq_interrupts)(struct octep_device *oct);
+ 
+ 	void (*enable_io_queues)(struct octep_device *oct);
+ 	void (*disable_io_queues)(struct octep_device *oct);
 -- 
 2.51.0
 
