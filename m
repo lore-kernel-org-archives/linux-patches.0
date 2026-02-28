@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A84F33A9DA
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162D4359A65
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302430; cv=none; b=tgdCAtO5aH6toPV2f/oVoKoB5PcZZXrTwVQpTfNMxmjHOJ2Aj74bzJbx/JnjLV24hx0BeTiH+UAo5K1wMc2g58UGiiQL2CM9MPGQEEHz7UbA60y5EmyGo2oeZ6oUHMj7DH4DUkTB15jB+z51MFsETDUBM7fMckZ+/R+HvAAs8Mw=
+	t=1772302431; cv=none; b=B8GgZika/Wgnym99HCdvmYOclk2dBRg6qdhxAvCELE4MPTFeZEIo1zsFANZLq6dSkshdi+n9ZT/eqEulESZaLhjO2u5nN+xpLQb7+ypvehKCRrn0qPsYWwH7ZEi8MOSO1mSEkxS3mVekEsc1Bfl+5c4yvHHLyzM5ZM82U5lAo+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302430; c=relaxed/simple;
-	bh=GZ4D13ahFpDBrVf5kBSOuXKr98arjVrQOObRyOFjJP8=;
+	s=arc-20240116; t=1772302431; c=relaxed/simple;
+	bh=LzjNOhzoE3uUPij+HZ4md5ycBTHE53V27rhrmGOIQus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hTB5R33OBK7RRlANJHNI8TmZrkMBMScyJhxDdz+DXjHts0FR3vaPe+1Yd4zdPzl/nxucsFuox+OqlACOyDQdO3ax0Z2rWCE/xUgqzvzh9za6QTFOWGR2AoYJp2Cg48MJsbROKQ5c+8AIgBEW9X/kfUQXm1zVnORu0YsX7g5/31M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=slS3PvYu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U1nMMaiY8JX7RvBPrPR7DMzuaXr3C/b7PH1+zhz4QTBXoeP49uc4HkN5qt+F12ZQZTqeg00uj/0+168icbqLv8pDODjaieqUuu4pSxOwltT049H+kUJNk4c/mtHtmpO/4GANAPO7xd95PN/2sagNSfiMYusvJWUTR+VB6ms1oKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jm80B4Cc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="slS3PvYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A06C116D0;
-	Sat, 28 Feb 2026 18:13:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jm80B4Cc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FDE5C116D0;
+	Sat, 28 Feb 2026 18:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302430;
-	bh=GZ4D13ahFpDBrVf5kBSOuXKr98arjVrQOObRyOFjJP8=;
+	s=k20201202; t=1772302431;
+	bh=LzjNOhzoE3uUPij+HZ4md5ycBTHE53V27rhrmGOIQus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=slS3PvYuIEbLUPaTPAVlGmSa7NVf9O96830ysj6bwnplWzJoDJNWlYxpgFMRrmaie
-	 B+Y5gTkL8Yc0yeKOxIRSTe+i+jm+h7VKmzgr+dmCR70DcMuKEbbPjFptfFYemj6M9e
-	 X19EDTBF7aPV3n/+XjoAH8uP8QuiqK6+QN4aZIOcg/81xvR8bi5Q1P+dU0mqEvV4po
-	 rQvi4g3hanuWsXne037AhsgSlGn56X1Wv/NrZGid5MZpSBNXwRSO4aZPGDf+eQyec7
-	 WjTjCaFEOTH4YBje2A+uHax88S3XyAI/puBe9J1H57N/A3fDGNerb/s/jm6iAso9mS
-	 WlQhs0H60UsFQ==
+	b=jm80B4CcnGra4sJN/8j43VN5LV3SsYoYxU+VdoC5n7r3I78QjdKfK/GgKFsFJtJMh
+	 Bdqf9J3x8HjnDT/Swr7mA+zljU6+svPJvpL49fRkedZHp741xIu+UBVc/MdiXUYktK
+	 jEUFcWyATrVlsZPSaIc+qKLlDVVn0iP0Op7wTBTz1uXP6/QiwHDtaOjmEGfPA0SehL
+	 maKyFw2J+4nAonlG+1AnIxIe6WsDQwzAj5eNusRYq5S8J+BhuyxlTkceX/gr2qbYuv
+	 4c7OKAO0eUgHNyoJ6xz2DhYZSgNjXxdek3dKejcWjO85ze88QbypKDMzAyq7Mnm9wL
+	 y/b4eb2jwzOiw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Miaoqian Lin <linmq006@gmail.com>,
+Cc: Steven Rostedt <rostedt@goodmis.org>,
 	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Tom Zanussi <zanussi@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 167/232] tracing: Properly process error handling in event_hist_trigger_parse()
-Date: Sat, 28 Feb 2026 13:10:20 -0500
-Message-ID: <20260228181127.1592657-167-sashal@kernel.org>
+Subject: [PATCH 6.1 168/232] tracing: Remove duplicate ENABLE_EVENT_STR and DISABLE_EVENT_STR macros
+Date: Sat, 28 Feb 2026 13:10:21 -0500
+Message-ID: <20260228181127.1592657-168-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -50,48 +49,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 0550069cc25f513ce1f109c88f7c1f01d63297db ]
+[ Upstream commit 9df0e49c5b9b8d051529be9994e4f92f2d20be6f ]
 
-Memory allocated with trigger_data_alloc() requires trigger_data_free()
-for proper cleanup.
-
-Replace kfree() with trigger_data_free() to fix this.
-
-Found via static analysis and code review.
-
-This isn't a real bug due to the current code basically being an open
-coded version of trigger_data_free() without the synchronization. The
-synchronization isn't needed as this is the error path of creation and
-there's nothing to synchronize against yet. Replace the kfree() to be
-consistent with the allocation.
+The macros ENABLE_EVENT_STR and DISABLE_EVENT_STR were added to trace.h so
+that more than one file can have access to them, but was never removed
+from their original location. Remove the duplicates.
 
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://patch.msgid.link/20251211100058.2381268-1-linmq006@gmail.com
-Fixes: e1f187d09e11 ("tracing: Have existing event_command.parse() implementations use helpers")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://patch.msgid.link/20260126130037.4ba201f9@gandalf.local.home
+Fixes: d0bad49bb0a09 ("tracing: Add enable_hist/disable_hist triggers")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 31d60758053d1..356360e75f9a7 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6594,7 +6594,7 @@ static int event_hist_trigger_parse(struct event_command *cmd_ops,
+diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
+index 6a146dfbbd7e5..55623a9bb64ac 100644
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -3327,11 +3327,6 @@ void trace_put_event_file(struct trace_event_file *file)
+ EXPORT_SYMBOL_GPL(trace_put_event_file);
  
- 	remove_hist_vars(hist_data);
- 
--	kfree(trigger_data);
-+	trigger_data_free(trigger_data);
- 
- 	destroy_hist_data(hist_data);
- 	goto out;
+ #ifdef CONFIG_DYNAMIC_FTRACE
+-
+-/* Avoid typos */
+-#define ENABLE_EVENT_STR	"enable_event"
+-#define DISABLE_EVENT_STR	"disable_event"
+-
+ struct event_probe_data {
+ 	struct trace_event_file	*file;
+ 	unsigned long			count;
 -- 
 2.51.0
 
