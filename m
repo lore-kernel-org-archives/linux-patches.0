@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521E34BC02D;
-	Sat, 28 Feb 2026 17:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2229F4BC033;
+	Sat, 28 Feb 2026 17:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301350; cv=none; b=gBJgv7FPC40lqArLlRhyThu5YRu7nBnyS4uQOC0DIozGPdZr1C7ZkRMKvsaSkObctsyvxCyzT6K0OETwqY0qmB1KD+5F9TNVk8DUd5WwJ2owPIsQfeikHfuHYxkfnKnKSX+y8klL1k4To8BAITQ1RM9afkWJpqunsw6Dva3BG8w=
+	t=1772301351; cv=none; b=d5lvX/QwOC27IohfovfwFwW53ryOMpIYnB/hvjzuzSd/D1OzX1lQy2chdDZoLa0Ro+THQFH5sYKXJQyDrzE+vud/grYpJcj/mIr5y7viHrTpsfKJDPy1dp49kdrl25ZVfwwn22VQFhmr22gBHtSN84tHe+cLWHX0B4jt8BiETaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301350; c=relaxed/simple;
-	bh=c3A55tmRUKNtJtG/xnSgd+ZJdr/KmsWNCeJ7nVrLmXk=;
+	s=arc-20240116; t=1772301351; c=relaxed/simple;
+	bh=xmQi6+YKV9ITXwuL3p4IK8mL4FzIuikf+SuQGHCJe74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJDQio5cK9A9ssDgFLYSd04zH+kUY8ZPZ77TU6WR3dYVCG4gEqnRV4PHbJh7LRArRpxY5WSDmIYzL03vA2mcwwCw1IspIlWuQoyWS0WjZ3OSmqj9v99mDFmGle7huESmLRJzS98fyGQ1hB+ttzfwAkuiVvJfyWHE1fuh0wThzAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GVfiiXY9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G32ZmMRDC9ubW6k5uhUZRm0XFkLaM/TBx9jxPCLK/c4GaN7H5BroG2xsFj7u/iQWkNlLEdqG/CnjblFCickG5CROYWIEc7hfZ3pj6bHKlpZ4/goetTtFmbZ8yo6BYP3Y8rJZGgkrmaVSQTPJqw3d16LmM6DR99reuTiGEyw+mGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gBFcN1O6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GVfiiXY9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EBFAC19424;
-	Sat, 28 Feb 2026 17:55:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gBFcN1O6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FCE7C116D0;
+	Sat, 28 Feb 2026 17:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301350;
-	bh=c3A55tmRUKNtJtG/xnSgd+ZJdr/KmsWNCeJ7nVrLmXk=;
+	s=k20201202; t=1772301351;
+	bh=xmQi6+YKV9ITXwuL3p4IK8mL4FzIuikf+SuQGHCJe74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVfiiXY9iYgRjDrQPS46/PbZshU5UnDo9VmKJb5i0/66hO7A0YWtbJWLamaZF3ofN
-	 pGvwvZ5b8qiQSNgmbVDd/h3LNO6rBK4GekKaij5Pal8okKmVbrToQxBOQP4Uczo+aT
-	 b2x8I1EIwQyXJMXRLVkc7LfYe0HFEMgLsJLdfTGOm2FEa7wN8xDbphDwMn3C6+4j3s
-	 +rtdqh41b3nRkWLXFLGlWDCzFN1JmRlhwo6gBEOGW74bkjyD+aZ1Rnxnf8dHvCsj/W
-	 h8AZLSvWCK2iRK1CZL5/KPXFwHXwRC4lYbLn7evvJx0dX6VAAoYJdNs4E9nLrXTdih
-	 KjUUnuDgEDKkA==
+	b=gBFcN1O6ncBL311g2t80J6+rkHhN5Y9++L+wbWSmjaS6okI12iisrPeHwTt5bleWP
+	 //93Nhpw7nqULR1FlaXX3jpvneckqYiFbCIO37vy5i7EbiOt+AeZsBUxbftPr1cQ76
+	 feXkuiLO1trgmfnHiDBVP4g9Yz7n0dMKgtvhjVlusl+uIxm4lq/C5Cboed7QbmFGTi
+	 VkEgXLBYKzsCHAA/9MKFLis07V7CKEAG5KzN/Je8pnpCQoo/C8lnnP5Byrv/5ntje7
+	 Vs9UjgbdNdzWP4K4aLtYsAaPtQPgnE5tR6QVEKkzGceIbXGv0Up0ES1uA+3WQUBYSo
+	 RtODWzX9kXp5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Bingbu Cao <bingbu.cao@intel.com>,
+Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	stable@vger.kernel.org,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 537/752] media: staging/ipu7: Fix the loop bound in l2 table alloc
-Date: Sat, 28 Feb 2026 12:44:08 -0500
-Message-ID: <20260228174750.1542406-537-sashal@kernel.org>
+Subject: [PATCH 6.18 538/752] platform/x86: ISST: Add missing write block check
+Date: Sat, 28 Feb 2026 12:44:09 -0500
+Message-ID: <20260228174750.1542406-538-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -45,42 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Bingbu Cao <bingbu.cao@intel.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit 98cc19a353abc8b48b7d58fd7a455e09e7c3aba3 ]
+[ Upstream commit 0e5aef2795008c80c515f6fa04e377c6e5715958 ]
 
-This patch fixes the incorrect loop bound in alloc_l2_pt(). When
-initializing L2 page table entries, the loop was incorrectly using
-ISP_L1PT_PTES instead of ISP_L2PT_PTES though the ISP_L1PT_PTES is
-equal to ISP_L2PT_PTES.
+If writes are blocked, then return error during SST-CP enable command.
+Add missing write block check in this code path.
 
-Fixes: 71d81c25683a ("media: staging/ipu7: add IPU7 DMA APIs and MMU mapping")
+Fixes: 8bed9ff7dbcc ("platform/x86: ISST: Process read/write blocked feature status")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://patch.msgid.link/20260107060256.1634188-2-srinivas.pandruvada@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/ipu7/ipu7-mmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/staging/media/ipu7/ipu7-mmu.c b/drivers/staging/media/ipu7/ipu7-mmu.c
-index ded1986eb8ba3..ea35cce4830ad 100644
---- a/drivers/staging/media/ipu7/ipu7-mmu.c
-+++ b/drivers/staging/media/ipu7/ipu7-mmu.c
-@@ -231,7 +231,7 @@ static u32 *alloc_l2_pt(struct ipu7_mmu_info *mmu_info)
+diff --git a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+index 34bff2f65a835..f587709ddd473 100644
+--- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+@@ -612,6 +612,9 @@ static long isst_if_core_power_state(void __user *argp)
+ 		return -EINVAL;
  
- 	dev_dbg(mmu_info->dev, "alloc_l2: get_zeroed_page() = %p\n", pt);
- 
--	for (i = 0; i < ISP_L1PT_PTES; i++)
-+	for (i = 0; i < ISP_L2PT_PTES; i++)
- 		pt[i] = mmu_info->dummy_page_pteval;
- 
- 	return pt;
+ 	if (core_power.get_set) {
++		if (power_domain_info->write_blocked)
++			return -EPERM;
++
+ 		_write_cp_info("cp_enable", core_power.enable, SST_CP_CONTROL_OFFSET,
+ 			       SST_CP_ENABLE_START, SST_CP_ENABLE_WIDTH, SST_MUL_FACTOR_NONE)
+ 		_write_cp_info("cp_prio_type", core_power.priority_type, SST_CP_CONTROL_OFFSET,
 -- 
 2.51.0
 
