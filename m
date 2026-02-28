@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DFB340A59
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD13313E31
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301120; cv=none; b=DBSpRmH++YYYfbuEiTbztoCwb6EaualrUBQNwLcLn2clmkjxUDlImlFNCz1gMF2+ypr0ZhvhnBfLUqOISLaZ2rb0YW00lFaiJYe9GGUIf3Vjm/o9xhM+d10EnA+wh0ykQBjDshps42DMKjKyUjvUqtSVIB5WgCRYuhaTUmrKZSY=
+	t=1772301121; cv=none; b=pgIpP5dPx+mLtEVe4FtxH6xu/whXM4GEHZadL/FL/kYuQyW/Gu+w099d+pTZPMCb0G6kOmQnOE6z7nPxcccX0oiqkhCeOVAGGg9aqpovdRTd8fdGUSvfWAHhSHS+S+7HpHhd03ukiNAUmJ/TaJfONNKTz5QXJsbgrfTMb2o1Yt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301120; c=relaxed/simple;
-	bh=ztMf4kGdU8uTqI1YOpF79p0axURD9dV15O5XXqmSRRU=;
+	s=arc-20240116; t=1772301121; c=relaxed/simple;
+	bh=CLLuMZj6sIoa7VbhMD2iLW0toeLneMplK5pMfpFvLDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JtrHVBch5IwnU5CfYcVQzjYu66UWx4cNVabxH1h3d2Nx5jPIVHQXN5Z6QLNT2+HapvC63EQWSO1HUUyHz8tRpBRIUDh8gOYanDq67xiUKI91A8hafbnq7dVh/OaUsDD/9U5cx/o947ZHKD4EZn8klbFoirAX6UgVmAcULQ+8B48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LnvXLWm5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ME7n3y2z6Tjk20EeR/N7QujXhiZlqqHU5QRNfF7/WBsYqee9ykLgnRw4tHJtxdFHmL6wEYUAAbF+dDiUbQknvGPzUBLOWKEkDsnlDawBLej+F0Q86TN7H0ZOIL1XM2Pixr6RmQKTltHUGSnb0OTp0cLEwjffkptTxtBWnXKEBZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CtPOAuvN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LnvXLWm5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78375C19424;
-	Sat, 28 Feb 2026 17:51:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CtPOAuvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40287C19425;
+	Sat, 28 Feb 2026 17:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301120;
-	bh=ztMf4kGdU8uTqI1YOpF79p0axURD9dV15O5XXqmSRRU=;
+	bh=CLLuMZj6sIoa7VbhMD2iLW0toeLneMplK5pMfpFvLDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnvXLWm50hFE+W9dVlwyZAXOQNaL96SPktoCtk2asEix1Eo49gcByr2ksAi2VmrY1
-	 h2s4nKJ1tZCjlS1FtE/HwkoT41W2VGMZGNK0isy1W3dRCdao/TPKHaMc/Es6dVm446
-	 RRxEmmmvIoaO/Mxq908vrMX0gel2FZLo13KpN2jfoemHWGdReN/N1o9KywD5F8FKcV
-	 +nfc8WJ9N3kYceEqaiEzHe+/aeKiJyNMrCTlmeKlwwOIx/CE/orFnI6UzXg8fWoI/0
-	 U8qWfBltdhgobzIu/JhizgX85RPUcMnUs+YuV+5CiqYp1K04mkwaRAzPXc8kLLKfjv
-	 j9x6ag/yPo0Mg==
+	b=CtPOAuvNAc9M8A7lTyuzBM0UeX6dQJd7N0bROODwqKeno10ApiexT4EfJPHjOLZj4
+	 tzBMDs5CVw3v/PLPDbQYPoN/ep9RWmxKWxGjRicKfdvzBELExkKEf8wycThHYhNUqc
+	 ZvTZvlx3JjdRPmBPmouOj0c6PaU4r4R8J6BOM39XVBfzxVMPrSY0FqF98bybCCSmvc
+	 RspN1Herd06UMMPNISm9aP1IbvOqnJvuMfQKrDA3unrgVosMse6oYgAyD1qTq9Ds0q
+	 jGhgrziAaHgWx9FOpFqgkTdX+PyoREk4RRPOEWMpbkD5R5yC9pY/D0B09CMrXmrleN
+	 8XxJ8iKNeZ1vg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Stefan=20S=C3=B8rensen?= <ssorensen@roku.com>,
+Cc: Shell Chen <w27@sorz.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 277/752] Bluetooth: hci_conn: use mod_delayed_work for active mode timeout
-Date: Sat, 28 Feb 2026 12:39:48 -0500
-Message-ID: <20260228174750.1542406-277-sashal@kernel.org>
+Subject: [PATCH 6.18 278/752] Bluetooth: btusb: Add new VID/PID for RTL8852CE
+Date: Sat, 28 Feb 2026 12:39:49 -0500
+Message-ID: <20260228174750.1542406-278-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -43,46 +43,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Sørensen <ssorensen@roku.com>
+From: Shell Chen <w27@sorz.org>
 
-[ Upstream commit 49d0901e260739de2fcc90c0c29f9e31e39a2d9b ]
+[ Upstream commit d9f7c39c6b7548bd70519b241b6c2d1bcc658d4b ]
 
-hci_conn_enter_active_mode() uses queue_delayed_work() with the
-intention that the work will run after the given timeout. However,
-queue_delayed_work() does nothing if the work is already queued, so
-depending on the link policy we may end up putting the connection
-into idle mode every hdev->idle_timeout ms.
+Add VID:PID 13d3:3612 to the quirks_table.
 
-Use mod_delayed_work() instead so the work is queued if not already
-queued, and the timeout is updated otherwise.
+This ID pair is found in the Realtek RTL8852CE PCIe module
+in an ASUS TUF A14 2025 (FA401KM) laptop.
 
-Signed-off-by: Stefan Sørensen <ssorensen@roku.com>
+Tested on aforementioned laptop.
+
+The device info from /sys/kernel/debug/usb/devices is listed as below.
+
+T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3612 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+
+Signed-off-by: Shell Chen <w27@sorz.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 6dbef0cd53037..6a27ac5a751ca 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2592,8 +2592,8 @@ void hci_conn_enter_active_mode(struct hci_conn *conn, __u8 force_active)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 4c802b0f2f516..b70cc8d5e0389 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -561,6 +561,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3592), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3612), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe122), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
  
- timer:
- 	if (hdev->idle_timeout > 0)
--		queue_delayed_work(hdev->workqueue, &conn->idle_work,
--				   msecs_to_jiffies(hdev->idle_timeout));
-+		mod_delayed_work(hdev->workqueue, &conn->idle_work,
-+				 msecs_to_jiffies(hdev->idle_timeout));
- }
- 
- /* Drop all connection on the device */
 -- 
 2.51.0
 
