@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D6A2DE717
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE0C33F38A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301134; cv=none; b=K+hivw3cufWoeNXGZAmKKWJw91HGlPjEhO0thhvN3TDTrbzM28WLcal+yYUmb1KBgQRKV1RNK3XxMwq46jsuxLSR55dpx5xw5YTnUI/ELA3N8o9fLFg4yKIzxcKCRPJC/KuhQqLmfTUVtp4qwjqReJ6Iy95KZFbTFHfekQMVXRo=
+	t=1772301134; cv=none; b=HjAVXkxyTWPbckTUA5GYApwAqOSa+u3nDrzHr5TPM4FqEeozw5ebWt3nUmGQyGvAnVgW0i0OhLHhoQtJxPfwkmKJbHEFxbYwfbiNLh9p79GkGJz8elqhseEZXi9rc+xqvWmneODrVu36MAiKjQUNnDoqJjtBhID1PW/QE8zGCH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301134; c=relaxed/simple;
-	bh=9n/77D7SHGD+jZCD8YEk5TpknP8Mf7bg0I7zM6fLeSc=;
+	bh=QRS6Rs6+lLxepIb0lh4wgtV2FMSpSZwzA8zcT0BNjR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eiX8Atecjnn+cL+vhGrdF8J7kiPBDLvoKxtc9952hltEmPlxsSyyxwvs1Oxwl1TP9NPWVllcurK+2M2ZoqsCagg2J+A5e+HQLrg4POX9Pm9DyxgXzKmXfVQHAih0uDRhENZwt5Qt5P2h0rgMm3SXEPVHpylA00MYJK0g9TU3mcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E/MRu7Tx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prTGTLp2dBgzkLCXEKBRiQO/f67+q5iLtIbgvrCSNEUgkamxSkZq1caxdiVtDsYNL1CJnqgfhinjOXBtnRiHVSkFnk+xl7jrV7qbNTKJC6ZHH9dWJ7yHX/LOhvnYHe196sHpazDkd+XLlYJqEhNdg34E7y7k34wS26NmOtIwguM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JLbuUYeR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E/MRu7Tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4886FC116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JLbuUYeR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118F8C19423;
 	Sat, 28 Feb 2026 17:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301133;
-	bh=9n/77D7SHGD+jZCD8YEk5TpknP8Mf7bg0I7zM6fLeSc=;
+	s=k20201202; t=1772301134;
+	bh=QRS6Rs6+lLxepIb0lh4wgtV2FMSpSZwzA8zcT0BNjR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E/MRu7Txde800Eiirup+7iQRcMbtezjBesme/JP73cHp6KDZwuZY5gClMqXc8IE/W
-	 4QH5rTDpe8JCiOIIyz/42F7qC6vUafuyBrRi7LsByXyZ2luaZNsl4KK5XOQCezvZoM
-	 5TCgVJarU2mO8SDxKCC09kKs8t337uwySzVDK1Gmhz3HMY3ph50xUGed1/pIJrCDUq
-	 YEkF8gypzZCx7Y2l6hAXIow3Unqvr1ADPbY2zGk61Gsd4aUGpQL+2hYT3nEnGsp3MC
-	 CRRAOwP6wve4/9+pwB9jYkCDc6Hah6jieesSKd1Xr2UTnbeCa0a39kj7Q0V/41YB2C
-	 2L+RXQKv5KdZg==
+	b=JLbuUYeRTEbLsL2Vd2aRL9JklWJw25OgRX81xtlQ9dVNuDNI/0EKL9HUlrvaz5aW/
+	 Txs1kszCQi/Ij2QB2uTKJnkbBmRyBnHPMQiLTBmWjI9ItGl11YJj9uYPu03C+wNtwF
+	 z2KaZ7SBUwrxwBG3KKCRbSVyZAyLNLRhX3m/IjD7Mr7FJ4+X0LHvSDng/hQyrTtQpO
+	 asJvkelJ9x3mlUj3mQ1njK7mNVcd50i+KzP0VU2i/eYCRJUOmiXUXBFfL/TW2SsIyR
+	 3dqSgasxk/QDVDg+WzyioTfO9J57vvLo9DJdtBRRo4J9vJpGjD0nnoCPNOlCB8pQIq
+	 bB2+TaRfnN69A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+Cc: Johnny-CC Chang <Johnny-CC.Chang@mediatek.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 293/752] PCI: Add ACS quirk for Qualcomm Hamoa & Glymur
-Date: Sat, 28 Feb 2026 12:40:04 -0500
-Message-ID: <20260228174750.1542406-293-sashal@kernel.org>
+Subject: [PATCH 6.18 294/752] PCI: Mark Nvidia GB10 to avoid bus reset
+Date: Sat, 28 Feb 2026 12:40:05 -0500
+Message-ID: <20260228174750.1542406-294-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,39 +48,45 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+From: Johnny-CC Chang <Johnny-CC.Chang@mediatek.com>
 
-[ Upstream commit 44d2f70b1fd72c339c72983fcffa181beae3e113 ]
+[ Upstream commit c81a2ce6b6a844d1a57d2a69833a9d0f00403f00 ]
 
-The Qualcomm Hamoa & Glymur Root Ports don't advertise an ACS capability,
-but they do provide ACS-like features to disable peer transactions and
-validate bus numbers in requests.
+After asserting Secondary Bus Reset to downstream devices via a GB10 Root
+Port, the link may not retrain correctly, e.g., the link may retrain with a
+lower lane count or config accesses to downstream devices may fail.
 
-Add an ACS quirk for Hamoa & Glymur.
+Prevent use of Secondary Bus Reset for devices below GB10.
 
-Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Signed-off-by: Johnny-CC Chang <Johnny-CC.Chang@mediatek.com>
+[bhelgaas: drop pci_ids.h update (only used once), update commit log]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260109-acs_quirk-v1-1-82adf95a89ae@oss.qualcomm.com
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251113084441.2124737-1-Johnny-CC.Chang@mediatek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pci/quirks.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index c38434d973cd2..62554152caf37 100644
+index 62554152caf37..3c7aebf3d238a 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -5117,6 +5117,10 @@ static const struct pci_dev_acs_enabled {
- 	{ PCI_VENDOR_ID_QCOM, 0x0401, pci_quirk_qcom_rp_acs },
- 	/* QCOM SA8775P root port */
- 	{ PCI_VENDOR_ID_QCOM, 0x0115, pci_quirk_qcom_rp_acs },
-+	/* QCOM Hamoa root port */
-+	{ PCI_VENDOR_ID_QCOM, 0x0111, pci_quirk_qcom_rp_acs },
-+	/* QCOM Glymur root port */
-+	{ PCI_VENDOR_ID_QCOM, 0x0120, pci_quirk_qcom_rp_acs },
- 	/* HXT SD4800 root ports. The ACS design is same as QCOM QDF2xxx */
- 	{ PCI_VENDOR_ID_HXT, 0x0401, pci_quirk_qcom_rp_acs },
- 	/* Intel PCH root ports */
+@@ -3748,6 +3748,14 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
+ 	dev->dev_flags |= PCI_DEV_FLAGS_NO_BUS_RESET;
+ }
+ 
++/*
++ * After asserting Secondary Bus Reset to downstream devices via a GB10
++ * Root Port, the link may not retrain correctly.
++ * https://lore.kernel.org/r/20251113084441.2124737-1-Johnny-CC.Chang@mediatek.com
++ */
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, 0x22CE, quirk_no_bus_reset);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, 0x22D0, quirk_no_bus_reset);
++
+ /*
+  * Some NVIDIA GPU devices do not work with bus reset, SBR needs to be
+  * prevented for those affected devices.
 -- 
 2.51.0
 
