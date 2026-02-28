@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12923375AC8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E23377015
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301661; cv=none; b=LOSPNyn7yN/n9hSbdKvaKvtib0Wv+xT1H/m3oddg+mm4vOJsAG0H1KH7tlnqRaOoqjXMKrMLv9pZa8d0em8fl1S0JFp0dYLKCcwDuLGVpKq4eduRInkUsVciP27uUK56uVndvM1WplrlDyNgA9safiybf4FfE0nPm3Te8nt7Cy8=
+	t=1772301662; cv=none; b=OXHRmG25WIUp1l6v/iZm1lAcdP0q8keGNS+DGWXTSCdNBS5TUi76OPXj3kfyiE01dlRyrormkBHzuA0t9EuiXLJGvVPT2yY2/5cDquGgZF9dxCIISa+7Ijdg8fZ+qmLJJHFJqR1vxdOpIQ9nwkaqMSa+wcQCWiGlLIWsfWT2T2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301661; c=relaxed/simple;
-	bh=dBVI438N2MfctTF8hJulZxtSXRYiqYpzX1jLlInQzKQ=;
+	s=arc-20240116; t=1772301662; c=relaxed/simple;
+	bh=LvJbs8Hw/3sZQCR3hgC1yvGGKZyT5d9JxoYAkibmyf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eoaLE1JKxHOkZsg1YofPk9MLhnF81++LhhmGhbJJ77Lxjp4fNRpOeij6xFFDlU6quGljZ1L9HFnwdkw+jMVkWwphCZiyXAym2ANQID+uJWpu9VwNinWLXIPe6fJC6oLbPTQf4F0lHmD7bSIH+LVZzQouGwf5SNLBRfjDxDO8Sy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p54mMjfc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=olnNTxmOia4ir6t1k90kWLuxLBFzQhHy33+0UzOENxIz8mmy9oSDEsrYRb6AzBP+qoA+x7JAgD3qTqFTsO20A+UO6xxphd2Ed+kIrj/ZNTGPqbdhuupQKD/TeKwUU4wzDMI4hA7mLSkAWxRn3plHK767pU3eBS5VBr9B9pFAveY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cFEe8Xi0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p54mMjfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D87C19423;
-	Sat, 28 Feb 2026 18:01:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cFEe8Xi0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378EDC116D0;
+	Sat, 28 Feb 2026 18:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301661;
-	bh=dBVI438N2MfctTF8hJulZxtSXRYiqYpzX1jLlInQzKQ=;
+	bh=LvJbs8Hw/3sZQCR3hgC1yvGGKZyT5d9JxoYAkibmyf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p54mMjfcnPQ49eN5zavPW3+OuVTKvy78mzsUrlSpcZhQnNgrI60AMfFqLz+uf7jSc
-	 Af8vFMwIR7IhAjwaeYouLSCNv8jwd2/J4hjRzGYFo7Z32nQn8ezaV971k+z7LOqD2O
-	 vXR6SyiiMljL0WImKZR7XnjkYy3Aso/xWbHfcnW0UhOJXkb1nNvnwdLHRXsPW8Qm0h
-	 rz6XUFwAuTRkeISSYcsMNArl225CCVp3Ef/JNnnCwtUvYtPdGwZR5oLuPwVssXG8Yw
-	 c4EBUKtuki7itJWZlIwoUP6eFPKo7ZXmX2nNrxKJYJM/Io5PxDiLy7Hk8Q1nbjEgLy
-	 7yUCE03zw82uQ==
+	b=cFEe8Xi0VjeUkcIfjIiRR/jB0j0k/7YNHVbotFGoq03FU5Iys9ZxtMoMTo9rQivQr
+	 BlleAUbm70F18NJtcYh8Wqvn+xVFTYSnL9HlZlPqBIgOdHf2rqa9zN3SrsOTPn8rP2
+	 iWn4kD3PtZMDKHf/tuOhpltIRFzHcRewcNGPTIsJn/hjZnEzB6KgmvcXJUklsoISaO
+	 uQzR5xLvCW+a6paSHAiuehYCmxTQX52DzZxWIbBDKJ9+z+ou/X7o0/S1MCx9y0+hx6
+	 zXIyBLi+20n4UsP012E190PRYKX8Kh6zbFx7K7Dv6af2d2drJ68bRLcUjX5Hjsacsx
+	 ELywAK1nDlAOw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/385] hrtimer: Fix trace oddity
-Date: Sat, 28 Feb 2026 12:54:41 -0500
-Message-ID: <20260228180011.1568201-59-sashal@kernel.org>
+Subject: [PATCH 6.12 060/385] crypto: ccp - Ensure implicit SEV/SNP init and shutdown in ioctls
+Date: Sat, 28 Feb 2026 12:54:42 -0500
+Message-ID: <20260228180011.1568201-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,41 +48,359 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-[ Upstream commit 5d6446f409da00e5a389125ddb5ce09f5bc404c9 ]
+[ Upstream commit ceac7fb89e8da465aec3ac3c20477f912f5c3a6c ]
 
-It turns out that __run_hrtimer() will trace like:
+Modify the behavior of implicit SEV initialization in some of the
+SEV ioctls to do both SEV initialization and shutdown and add
+implicit SNP initialization and shutdown to some of the SNP ioctls
+so that the change of SEV/SNP platform initialization not being
+done during PSP driver probe time does not break userspace tools
+such as sevtool, etc.
 
-          <idle>-0     [032] d.h2. 20705.474563: hrtimer_cancel:       hrtimer=0xff2db8f77f8226e8
-          <idle>-0     [032] d.h1. 20705.474563: hrtimer_expire_entry: hrtimer=0xff2db8f77f8226e8 now=20699452001850 function=tick_nohz_handler/0x0
+Prior to this patch, SEV has always been initialized before these
+ioctls as SEV initialization is done as part of PSP module probe,
+but now with SEV initialization being moved to KVM module load instead
+of PSP driver probe, the implied SEV INIT actually makes sense and gets
+used and additionally to maintain SEV platform state consistency
+before and after the ioctl SEV shutdown needs to be done after the
+firmware call.
 
-Which is a bit nonsensical, the timer doesn't get canceled on
-expiration. The cause is the use of the incorrect debug helper.
+It is important to do SEV Shutdown here with the SEV/SNP initialization
+moving to KVM, an implicit SEV INIT here as part of the SEV ioctls not
+followed with SEV Shutdown will cause SEV to remain in INIT state and
+then a future SNP INIT in KVM module load will fail.
 
-Fixes: c6a2a1770245 ("hrtimer: Add tracepoint for hrtimers")
-Reported-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260121143208.219595606@infradead.org
+Also ensure that for these SEV ioctls both implicit SNP and SEV INIT is
+done followed by both SEV and SNP shutdown as RMP table must be
+initialized before calling SEV INIT if SNP host support is enabled.
+
+Similarly, prior to this patch, SNP has always been initialized before
+these ioctls as SNP initialization is done as part of PSP module probe,
+therefore, to keep a consistent behavior, SNP init needs to be done
+here implicitly as part of these ioctls followed with SNP shutdown
+before returning from the ioctl to maintain the consistent platform
+state before and after the ioctl.
+
+Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: dc8ccab15081 ("crypto: ccp - narrow scope of snp_range_list")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/hrtimer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/ccp/sev-dev.c | 142 +++++++++++++++++++++++++++++------
+ 1 file changed, 119 insertions(+), 23 deletions(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 184d5c3d89bac..640d2ea4bd1fa 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -1714,7 +1714,7 @@ static void __run_hrtimer(struct hrtimer_cpu_base *cpu_base,
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index bc0ecdb5c79e5..3e08df45a8bdb 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -110,6 +110,8 @@ static void *sev_init_ex_buffer;
+  */
+ static struct sev_data_range_list *snp_range_list;
  
- 	lockdep_assert_held(&cpu_base->lock);
++static void __sev_firmware_shutdown(struct sev_device *sev, bool panic);
++
+ static inline bool sev_version_greater_or_equal(u8 maj, u8 min)
+ {
+ 	struct sev_device *sev = psp_master->sev_data;
+@@ -1399,6 +1401,37 @@ static int sev_get_platform_state(int *state, int *error)
+ 	return rc;
+ }
  
--	debug_deactivate(timer);
-+	debug_hrtimer_deactivate(timer);
- 	base->running = timer;
++static int sev_move_to_init_state(struct sev_issue_cmd *argp, bool *shutdown_required)
++{
++	struct sev_platform_init_args init_args = {0};
++	int rc;
++
++	rc = _sev_platform_init_locked(&init_args);
++	if (rc) {
++		argp->error = SEV_RET_INVALID_PLATFORM_STATE;
++		return rc;
++	}
++
++	*shutdown_required = true;
++
++	return 0;
++}
++
++static int snp_move_to_init_state(struct sev_issue_cmd *argp, bool *shutdown_required)
++{
++	int error, rc;
++
++	rc = __sev_snp_init_locked(&error);
++	if (rc) {
++		argp->error = SEV_RET_INVALID_PLATFORM_STATE;
++		return rc;
++	}
++
++	*shutdown_required = true;
++
++	return 0;
++}
++
+ static int sev_ioctl_do_reset(struct sev_issue_cmd *argp, bool writable)
+ {
+ 	int state, rc;
+@@ -1451,24 +1484,31 @@ static int sev_ioctl_do_platform_status(struct sev_issue_cmd *argp)
+ static int sev_ioctl_do_pek_pdh_gen(int cmd, struct sev_issue_cmd *argp, bool writable)
+ {
+ 	struct sev_device *sev = psp_master->sev_data;
++	bool shutdown_required = false;
+ 	int rc;
  
+ 	if (!writable)
+ 		return -EPERM;
+ 
+ 	if (sev->state == SEV_STATE_UNINIT) {
+-		rc = __sev_platform_init_locked(&argp->error);
++		rc = sev_move_to_init_state(argp, &shutdown_required);
+ 		if (rc)
+ 			return rc;
+ 	}
+ 
+-	return __sev_do_cmd_locked(cmd, NULL, &argp->error);
++	rc = __sev_do_cmd_locked(cmd, NULL, &argp->error);
++
++	if (shutdown_required)
++		__sev_firmware_shutdown(sev, false);
++
++	return rc;
+ }
+ 
+ static int sev_ioctl_do_pek_csr(struct sev_issue_cmd *argp, bool writable)
+ {
+ 	struct sev_device *sev = psp_master->sev_data;
+ 	struct sev_user_data_pek_csr input;
++	bool shutdown_required = false;
+ 	struct sev_data_pek_csr data;
+ 	void __user *input_address;
+ 	void *blob = NULL;
+@@ -1500,7 +1540,7 @@ static int sev_ioctl_do_pek_csr(struct sev_issue_cmd *argp, bool writable)
+ 
+ cmd:
+ 	if (sev->state == SEV_STATE_UNINIT) {
+-		ret = __sev_platform_init_locked(&argp->error);
++		ret = sev_move_to_init_state(argp, &shutdown_required);
+ 		if (ret)
+ 			goto e_free_blob;
+ 	}
+@@ -1521,6 +1561,9 @@ static int sev_ioctl_do_pek_csr(struct sev_issue_cmd *argp, bool writable)
+ 	}
+ 
+ e_free_blob:
++	if (shutdown_required)
++		__sev_firmware_shutdown(sev, false);
++
+ 	kfree(blob);
+ 	return ret;
+ }
+@@ -1736,6 +1779,7 @@ static int sev_ioctl_do_pek_import(struct sev_issue_cmd *argp, bool writable)
+ 	struct sev_device *sev = psp_master->sev_data;
+ 	struct sev_user_data_pek_cert_import input;
+ 	struct sev_data_pek_cert_import data;
++	bool shutdown_required = false;
+ 	void *pek_blob, *oca_blob;
+ 	int ret;
+ 
+@@ -1766,7 +1810,7 @@ static int sev_ioctl_do_pek_import(struct sev_issue_cmd *argp, bool writable)
+ 
+ 	/* If platform is not in INIT state then transition it to INIT */
+ 	if (sev->state != SEV_STATE_INIT) {
+-		ret = __sev_platform_init_locked(&argp->error);
++		ret = sev_move_to_init_state(argp, &shutdown_required);
+ 		if (ret)
+ 			goto e_free_oca;
+ 	}
+@@ -1774,6 +1818,9 @@ static int sev_ioctl_do_pek_import(struct sev_issue_cmd *argp, bool writable)
+ 	ret = __sev_do_cmd_locked(SEV_CMD_PEK_CERT_IMPORT, &data, &argp->error);
+ 
+ e_free_oca:
++	if (shutdown_required)
++		__sev_firmware_shutdown(sev, false);
++
+ 	kfree(oca_blob);
+ e_free_pek:
+ 	kfree(pek_blob);
+@@ -1890,18 +1937,9 @@ static int sev_ioctl_do_pdh_export(struct sev_issue_cmd *argp, bool writable)
+ 	struct sev_data_pdh_cert_export data;
+ 	void __user *input_cert_chain_address;
+ 	void __user *input_pdh_cert_address;
++	bool shutdown_required = false;
+ 	int ret;
+ 
+-	/* If platform is not in INIT state then transition it to INIT. */
+-	if (sev->state != SEV_STATE_INIT) {
+-		if (!writable)
+-			return -EPERM;
+-
+-		ret = __sev_platform_init_locked(&argp->error);
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	if (copy_from_user(&input, (void __user *)argp->data, sizeof(input)))
+ 		return -EFAULT;
+ 
+@@ -1941,6 +1979,17 @@ static int sev_ioctl_do_pdh_export(struct sev_issue_cmd *argp, bool writable)
+ 	data.cert_chain_len = input.cert_chain_len;
+ 
+ cmd:
++	/* If platform is not in INIT state then transition it to INIT. */
++	if (sev->state != SEV_STATE_INIT) {
++		if (!writable) {
++			ret = -EPERM;
++			goto e_free_cert;
++		}
++		ret = sev_move_to_init_state(argp, &shutdown_required);
++		if (ret)
++			goto e_free_cert;
++	}
++
+ 	ret = __sev_do_cmd_locked(SEV_CMD_PDH_CERT_EXPORT, &data, &argp->error);
+ 
+ 	/* If we query the length, FW responded with expected data. */
+@@ -1967,6 +2016,9 @@ static int sev_ioctl_do_pdh_export(struct sev_issue_cmd *argp, bool writable)
+ 	}
+ 
+ e_free_cert:
++	if (shutdown_required)
++		__sev_firmware_shutdown(sev, false);
++
+ 	kfree(cert_blob);
+ e_free_pdh:
+ 	kfree(pdh_blob);
+@@ -1976,12 +2028,13 @@ static int sev_ioctl_do_pdh_export(struct sev_issue_cmd *argp, bool writable)
+ static int sev_ioctl_do_snp_platform_status(struct sev_issue_cmd *argp)
+ {
+ 	struct sev_device *sev = psp_master->sev_data;
++	bool shutdown_required = false;
+ 	struct sev_data_snp_addr buf;
+ 	struct page *status_page;
++	int ret, error;
+ 	void *data;
+-	int ret;
+ 
+-	if (!sev->snp_initialized || !argp->data)
++	if (!argp->data)
+ 		return -EINVAL;
+ 
+ 	status_page = alloc_page(GFP_KERNEL_ACCOUNT);
+@@ -1990,6 +2043,12 @@ static int sev_ioctl_do_snp_platform_status(struct sev_issue_cmd *argp)
+ 
+ 	data = page_address(status_page);
+ 
++	if (!sev->snp_initialized) {
++		ret = snp_move_to_init_state(argp, &shutdown_required);
++		if (ret)
++			goto cleanup;
++	}
++
  	/*
+ 	 * Firmware expects status page to be in firmware-owned state, otherwise
+ 	 * it will report firmware error code INVALID_PAGE_STATE (0x1A).
+@@ -2018,6 +2077,9 @@ static int sev_ioctl_do_snp_platform_status(struct sev_issue_cmd *argp)
+ 		ret = -EFAULT;
+ 
+ cleanup:
++	if (shutdown_required)
++		__sev_snp_shutdown_locked(&error, false);
++
+ 	__free_pages(status_page, 0);
+ 	return ret;
+ }
+@@ -2026,21 +2088,33 @@ static int sev_ioctl_do_snp_commit(struct sev_issue_cmd *argp)
+ {
+ 	struct sev_device *sev = psp_master->sev_data;
+ 	struct sev_data_snp_commit buf;
++	bool shutdown_required = false;
++	int ret, error;
+ 
+-	if (!sev->snp_initialized)
+-		return -EINVAL;
++	if (!sev->snp_initialized) {
++		ret = snp_move_to_init_state(argp, &shutdown_required);
++		if (ret)
++			return ret;
++	}
+ 
+ 	buf.len = sizeof(buf);
+ 
+-	return __sev_do_cmd_locked(SEV_CMD_SNP_COMMIT, &buf, &argp->error);
++	ret = __sev_do_cmd_locked(SEV_CMD_SNP_COMMIT, &buf, &argp->error);
++
++	if (shutdown_required)
++		__sev_snp_shutdown_locked(&error, false);
++
++	return ret;
+ }
+ 
+ static int sev_ioctl_do_snp_set_config(struct sev_issue_cmd *argp, bool writable)
+ {
+ 	struct sev_device *sev = psp_master->sev_data;
+ 	struct sev_user_data_snp_config config;
++	bool shutdown_required = false;
++	int ret, error;
+ 
+-	if (!sev->snp_initialized || !argp->data)
++	if (!argp->data)
+ 		return -EINVAL;
+ 
+ 	if (!writable)
+@@ -2049,17 +2123,29 @@ static int sev_ioctl_do_snp_set_config(struct sev_issue_cmd *argp, bool writable
+ 	if (copy_from_user(&config, (void __user *)argp->data, sizeof(config)))
+ 		return -EFAULT;
+ 
+-	return __sev_do_cmd_locked(SEV_CMD_SNP_CONFIG, &config, &argp->error);
++	if (!sev->snp_initialized) {
++		ret = snp_move_to_init_state(argp, &shutdown_required);
++		if (ret)
++			return ret;
++	}
++
++	ret = __sev_do_cmd_locked(SEV_CMD_SNP_CONFIG, &config, &argp->error);
++
++	if (shutdown_required)
++		__sev_snp_shutdown_locked(&error, false);
++
++	return ret;
+ }
+ 
+ static int sev_ioctl_do_snp_vlek_load(struct sev_issue_cmd *argp, bool writable)
+ {
+ 	struct sev_device *sev = psp_master->sev_data;
+ 	struct sev_user_data_snp_vlek_load input;
++	bool shutdown_required = false;
++	int ret, error;
+ 	void *blob;
+-	int ret;
+ 
+-	if (!sev->snp_initialized || !argp->data)
++	if (!argp->data)
+ 		return -EINVAL;
+ 
+ 	if (!writable)
+@@ -2078,8 +2164,18 @@ static int sev_ioctl_do_snp_vlek_load(struct sev_issue_cmd *argp, bool writable)
+ 
+ 	input.vlek_wrapped_address = __psp_pa(blob);
+ 
++	if (!sev->snp_initialized) {
++		ret = snp_move_to_init_state(argp, &shutdown_required);
++		if (ret)
++			goto cleanup;
++	}
++
+ 	ret = __sev_do_cmd_locked(SEV_CMD_SNP_VLEK_LOAD, &input, &argp->error);
+ 
++	if (shutdown_required)
++		__sev_snp_shutdown_locked(&error, false);
++
++cleanup:
+ 	kfree(blob);
+ 
+ 	return ret;
 -- 
 2.51.0
 
