@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60794373BF2;
-	Sat, 28 Feb 2026 17:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED28534251B;
+	Sat, 28 Feb 2026 17:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301547; cv=none; b=PSmdLxqftpbbjaqvV04N/+B215i6yLA68P+HW1//iiBjvvfNQR7CFRwwrD87mXLldrU4bWB8QP84cAkQByv5z4g2gQa9F0fujV+QAdRcQNfKP+2RGnRcR74Da5qPI9Z5ntFao/kLhFJQWcxTLct/Vkb5PcbcsB978s0vFac9DI0=
+	t=1772301549; cv=none; b=YMFERsZsAEz4nrFsFSbVTQkDYleJZVxrM42kXeh1gjG0KH4LdYXexHz3X5MoegKMQenH4DzX96oU7h5Lbt2GusSS5rZ2hnyRoicffypftc5HdshYTmGHIypStNcCjsX4797eVU7++0WoT+1npKDtgsIaEs+dW9FIdX3CTbKl0/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301547; c=relaxed/simple;
-	bh=vWWgYDOWrP/1sJh38suuQpb9ZQiOHx8/B0uMDWh4wBU=;
+	s=arc-20240116; t=1772301549; c=relaxed/simple;
+	bh=Ad8rp7JJ8JuTBBW0xVn+Hrn34sFXYY/i1r51x1S/7+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CdyofGnI74BhXx9pkajmF34puLhmu1zZgmNf4ImOPoL/RbYcrhnsmfxyClsRBDAsuxVwp3ZflOqmXT2MPoKgACufTS0bk9Mgwcdvyh8fnlNyL4IjMW863vC3P9vqJZIIdxnV0KhkSFInW1BEpsTKI4hqjbQugeFsh1rJOXht47M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rsuf9J1S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LK5jrADHdZQ/Wmlltfkh2a/lkis2GVFBUk9RvnnEWMhF33TMX/sZsS11WoM8pNWQJWlnGCGblzp/eqEN/QE4+yr+BQlt+962PCdDggWYZCrTAXl2pv4/294b28C8dmovKyYhrEjI1DGxwNO55l0RU6NLy6j5BVcobLqJLrt2aJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hipJlZAH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rsuf9J1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF28EC19423;
-	Sat, 28 Feb 2026 17:59:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hipJlZAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88005C116D0;
+	Sat, 28 Feb 2026 17:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301547;
-	bh=vWWgYDOWrP/1sJh38suuQpb9ZQiOHx8/B0uMDWh4wBU=;
+	s=k20201202; t=1772301548;
+	bh=Ad8rp7JJ8JuTBBW0xVn+Hrn34sFXYY/i1r51x1S/7+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rsuf9J1SKVBaTjNc5E9Ab5vPTbuHq5DK4q9xOUzoOz3Jzzbefwdhrxzm0iddWLdPK
-	 QnKwW+hEmabAYBlInAgrKJODkj+Z1zdfgu7+J0WIKmVZhn9ZnEbUUD4xwl+UFH4/T8
-	 McOVlbODCJOQXGo/RLWMn5hjQDJ+dX8IcFN8WuKKni4Dt20eerekgrWJ8QzrsAr25/
-	 EQTdpCulWQt0t4RdWYCK4TF0XFETBNvSNN+kNJNQM2zK2IyxygOtNxbPQqmfoHmNVa
-	 DplI1JGK/dPblRc2y2DyiIDH2/o5bmf7ef1utnW5l+QLldM52P1Oya7V9xGhfwY/Ud
-	 Qe4qxqFdUsr9g==
+	b=hipJlZAHerweD3CWvC+j0Bb/FE/NeKgbU/jjlMTNcYP6rUdAL9EdsKfCJMl1lsW4L
+	 fFjBrjp1OPJd3Py1RipxloCJ/HvjnBy7lEes8IjGv4FA7xj2ZblVi4DyAPiwpTH3gP
+	 XA9zOIo+ClhA0hCs28an28MLnOvqz3CKilzthz2I9k0gJjbv8Gt5+bIs6xaXuC8QWu
+	 /Ysnrswn0xaWjjQaTtIyC2FgnZqeL64QF9IpBs402P4a4PTh1fFMWl1ra1t0pK7Ybe
+	 VIklCofdbjLUNo8GbJ3FPWgE2qGaW33hsP4mqPF4T/C/9cT8PgQHopqA89DjjcWZom
+	 kHwWoLfI6tmTA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Nathan Chancellor <nathan@kernel.org>,
+Cc: Jia Yao <jia.yao@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
 	stable@vger.kernel.org,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 730/752] kbuild: rpm-pkg: Disable automatic requires for manual debuginfo package
-Date: Sat, 28 Feb 2026 12:47:21 -0500
-Message-ID: <20260228174750.1542406-730-sashal@kernel.org>
+Subject: [PATCH 6.18 731/752] drm/xe: Add bounds check on pat_index to prevent OOB kernel read in madvise
+Date: Sat, 28 Feb 2026 12:47:22 -0500
+Message-ID: <20260228174750.1542406-731-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,60 +54,67 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Jia Yao <jia.yao@intel.com>
 
-[ Upstream commit f94711255a73d8938cf3bb405a0af3a4d2700ed1 ]
+[ Upstream commit fbbe32618e97eff81577a01eb7d9adcd64a216d7 ]
 
-Stefano reports that after commit 62089b804895 ("kbuild: rpm-pkg:
-Generate debuginfo package manually"), building with an rpm package
-using rpm 4.20.0 fails with:
+When user provides a bogus pat_index value through the madvise IOCTL, the
+xe_pat_index_get_coh_mode() function performs an array access without
+validating bounds. This allows a malicious user to trigger an out-of-bounds
+kernel read from the xe->pat.table array.
 
-  RPM build errors:
-      Dependency tokens must begin with alpha-numeric, '_' or '/': #�) = 0x0d000002
-      Dependency tokens must begin with alpha-numeric, '_' or '/': �) = 0x0d000000
-      Dependency tokens must begin with alpha-numeric, '_' or '/': ) = 0x7c0e000000
-      Unknown rich dependency op 'Hat': (Red Hat 15.2.1-7)) = 0x3130363230322000
-      Unknown rich dependency op 'Hat': (Red Hat 15.2.1-7)) = 0x4728203a43434800
-      Unknown rich dependency op 'Hat': (Red Hat 15.2.1-7)) = 0x3130363230322000
-      Unknown rich dependency op 'Hat': (Red Hat 15.2.1-7)) = 0x4728203a43434800
+The vulnerability exists because the validation in madvise_args_are_sane()
+directly calls xe_pat_index_get_coh_mode(xe, args->pat_index.val) without
+first checking if pat_index is within [0, xe->pat.n_entries).
 
-This error comes from the automatic requirements feature of rpm. The
--debuginfo subpackage has no dependencies, so disable this feature with
-'AutoReq: 0' for this subpackage, avoiding the error. This matches the
-official %_debug_template macro that rpm provides. While automatic
-provides should be default enabled, be explicit like %_debug_template
-does.
+Although xe_pat_index_get_coh_mode() has a WARN_ON to catch this in debug
+builds, it still performs the unsafe array access in production kernels.
 
-Additionally, while in the area, add the manual debug information
-package to the Development/Debug group, further aligning with
-%_debug_template.
+v2(Matthew Auld)
+- Using array_index_nospec() to mitigate spectre attacks when the value
+is used
 
-Cc: stable@vger.kernel.org
-Fixes: 62089b804895 ("kbuild: rpm-pkg: Generate debuginfo package manually")
-Reported-by: Stefano Garzarella <sgarzare@redhat.com>
-Closes: https://lore.kernel.org/CAGxU2F7FFNgb781_A7a1oL63n9Oy8wsyWceKhUpeZ6mLk=focw@mail.gmail.com/
-Tested-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260216-improve-manual-debuginfo-template-v1-1-e584b3f8d3be@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+v3(Matthew Auld)
+- Put the declarations at the start of the block
+
+Fixes: ada7486c5668 ("drm/xe: Implement madvise ioctl for xe")
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Cc: <stable@vger.kernel.org> # v6.18+
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Shuicheng Lin <shuicheng.lin@intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Jia Yao <jia.yao@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260205161529.1819276-1-jia.yao@intel.com
+(cherry picked from commit 944a3329b05510d55c69c2ef455136e2fc02de29)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/package/kernel.spec | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_vm_madvise.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-index bccf58bdd45fd..b3c956205af00 100644
---- a/scripts/package/kernel.spec
-+++ b/scripts/package/kernel.spec
-@@ -48,6 +48,9 @@ against the %{version} kernel package.
- %if %{with_debuginfo_manual}
- %package debuginfo
- Summary: Debug information package for the Linux kernel
-+Group: Development/Debug
-+AutoReq: 0
-+AutoProv: 1
- %description debuginfo
- This package provides debug information for the kernel image and modules from the
- %{version} package.
+diff --git a/drivers/gpu/drm/xe/xe_vm_madvise.c b/drivers/gpu/drm/xe/xe_vm_madvise.c
+index cad3cf627c3f2..fe7e1b45f5c0c 100644
+--- a/drivers/gpu/drm/xe/xe_vm_madvise.c
++++ b/drivers/gpu/drm/xe/xe_vm_madvise.c
+@@ -268,8 +268,13 @@ static bool madvise_args_are_sane(struct xe_device *xe, const struct drm_xe_madv
+ 		break;
+ 	case DRM_XE_MEM_RANGE_ATTR_PAT:
+ 	{
+-		u16 coh_mode = xe_pat_index_get_coh_mode(xe, args->pat_index.val);
++		u16 pat_index, coh_mode;
+ 
++		if (XE_IOCTL_DBG(xe, args->pat_index.val >= xe->pat.n_entries))
++			return false;
++
++		pat_index = array_index_nospec(args->pat_index.val, xe->pat.n_entries);
++		coh_mode = xe_pat_index_get_coh_mode(xe, pat_index);
+ 		if (XE_IOCTL_DBG(xe, !coh_mode))
+ 			return false;
+ 
 -- 
 2.51.0
 
