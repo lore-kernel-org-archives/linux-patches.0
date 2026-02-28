@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957D733F8A1
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CF033FE12
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300938; cv=none; b=kVRtqVl6P1Jv7PPV4gAIA8kMegVG2dJ3pf5EGWM6bXSjOlGbGqdj12VZK07IKQdrqGebg02uwkPbrACWSda22MwgD1zCZ/a/HXXD08zIjeEMAV4If8s960xsEy7Bprd7Dp/09xx2QhxLTObgax2jmpGnnUPFR9ZRMdzMWHjI91Q=
+	t=1772300939; cv=none; b=CcsSafA3hxuA2Gr4uQgmavieanGoW1dxDFOW7dqUSU7XBNopo7guERitHQlx3JhhUzDD1OctGKJNkR56+LXQUfMQBVQrgfRyf7JxTLn9EKdDnAy4C2MYJRFI4DiX3zeYqmXb+5R+4q2rKpjQTAiz4ag5dqjcVkikXB+yzZN14To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300938; c=relaxed/simple;
-	bh=ud9NxTJvziABtcYsdphsPN4vVdkp89h028I62Vg6mrc=;
+	s=arc-20240116; t=1772300939; c=relaxed/simple;
+	bh=iPHL5fHDNkD0s+OK8W08RPRr3MyV1q3fjkFPa2mlYxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmdcmUirYWOID2UaKHqZ1VrObJ3CrDB8TZhWoy8dcpnEQgR/a+f7rdASfObnHKKy2AGyD0zvw3Iv98QQUcoVUKqXOzwH8FG6Qi0QO3G6X0/vdKTWk/0leakEaQ3/nqFNSDXnP4sB2MV/wGhyAi1LDZdA6Y7nfsjDhdIFJ0dCCrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B514tJsj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i1cG2mFEJH9J9SOdWFLi7pcryuPuDAwSITy1l2yC0ezA9eekY8luWSniRViFKzM/rkAIHfJMUvdhzyxd0sp0zGYSf1nCM0FAoOw4GfRBWBdBR/nvGKApiHGkTbj2dMe0mpFuK0NvNPb01B/ITqUIg1YZNuOmTbkiQj52XiDxO/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p1kGIL2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B514tJsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040A7C19423;
-	Sat, 28 Feb 2026 17:48:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p1kGIL2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB830C19423;
+	Sat, 28 Feb 2026 17:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300938;
-	bh=ud9NxTJvziABtcYsdphsPN4vVdkp89h028I62Vg6mrc=;
+	s=k20201202; t=1772300939;
+	bh=iPHL5fHDNkD0s+OK8W08RPRr3MyV1q3fjkFPa2mlYxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B514tJsjAeDmYnZ9P+6veT0O2f3trIzH55B+LgvsKqlHOchftG5MlUDMllqFNj0L/
-	 o9yeBFIqntSjO//koCBVf8E4vYsMu0ENhfbYbzCyH6bZeyA8NeMg2GLs7k7X/Sb9JO
-	 qofUKX7ptiNcinip91dlv5KlMVxBaZq5uAloqSx6W5R91idY7y3Tw/bJFsZUrJOVFu
-	 OfeBt8UBGBVctXFopQJywA20oiBtjpUQ9JhOZefbLT5H/utXSSDzHwxePpkLbJVXEz
-	 B3EF69C0E3QAzgiEkGPt/u/rp/Ihy8ioV4iJhJ65/i3XI37Fvg2L8dLPKejflYRkrS
-	 DAI6Zman1Pkeg==
+	b=p1kGIL2xPkD2nbDCH/xPrh4iQs1HznoVykrnqGwsFU1EDluObnbATdheeEE+Ln3Zl
+	 lq9gfeQ2CnvayOdjLhtHqLDF1odK5yJQZ4r/Ah5b7WKQtCH2QUHfDQ9jfB/4WPgZ0o
+	 P70uuGHcRCnCsqM92tw6UwLhfNdGBi+tfsnJ9B+qFpTYJMgKdZTl3kKPWPWJhYFibt
+	 vOw4+yJ+dYgxTE5k5qGGPStSk+B4sWTv/ZSJs208PWdGXCCw93NgcWTYalZgMdtXWd
+	 vzh2AFRPJiKluMJHDQZtNbY1KuNNpbmjSPULsgWnIQCeKBd/u3XQugGtT2/NyBWx27
+	 PDrmnbcnbmfxA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jens Axboe <axboe@kernel.dk>,
-	syzbot+6c48db7d94402407301e@syzkaller.appspotmail.com,
+Cc: Magnus Lindholm <linmag7@gmail.com>,
+	Ivan Kokshaysky <ink@unseen.parts>,
+	Matoro Mahri <matoro_mailinglist_kernel@matoro.tk>,
+	Michael Cree <mcree@orcon.net.nz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 059/752] io_uring/timeout: annotate data race in io_flush_timeouts()
-Date: Sat, 28 Feb 2026 12:36:10 -0500
-Message-ID: <20260228174750.1542406-59-sashal@kernel.org>
+Subject: [PATCH 6.18 060/752] alpha: fix user-space corruption during memory compaction
+Date: Sat, 28 Feb 2026 12:36:11 -0500
+Message-ID: <20260228174750.1542406-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,37 +49,258 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit 42b12cb5fd4554679bac06bbdd05dc8b643bcc42 ]
+[ Upstream commit dd5712f3379cfe760267cdd28ff957d9ab4e51c7 ]
 
-syzbot correctly reports this as a KCSAN race, as ctx->cached_cq_tail
-should be read under ->uring_lock. This isn't immediately feasible in
-io_flush_timeouts(), but as long as we read a stable value, that should
-be good enough. If two io-wq threads compete on this value, then they
-will both end up calling io_flush_timeouts() and at least one of them
-will see the correct value.
+Alpha systems can suffer sporadic user-space crashes and heap
+corruption when memory compaction is enabled.
 
-Reported-by: syzbot+6c48db7d94402407301e@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Symptoms include SIGSEGV, glibc allocator failures (e.g. "unaligned
+tcache chunk"), and compiler internal errors. The failures disappear
+when compaction is disabled or when using global TLB invalidation.
+
+The root cause is insufficient TLB shootdown during page migration.
+Alpha relies on ASN-based MM context rollover for instruction cache
+coherency, but this alone is not sufficient to prevent stale data or
+instruction translations from surviving migration.
+
+Fix this by introducing a migration-specific helper that combines:
+  - MM context invalidation (ASN rollover),
+  - immediate per-CPU TLB invalidation (TBI),
+  - synchronous cross-CPU shootdown when required.
+
+The helper is used only by migration/compaction paths to avoid changing
+global TLB semantics.
+
+Additionally, update flush_tlb_other(), pte_clear(), to use
+READ_ONCE()/WRITE_ONCE() for correct SMP memory ordering.
+
+This fixes observed crashes on both UP and SMP Alpha systems.
+
+Reviewed-by: Ivan Kokshaysky <ink@unseen.parts>
+Tested-by: Matoro Mahri <matoro_mailinglist_kernel@matoro.tk>
+Tested-by: Michael Cree <mcree@orcon.net.nz>
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260102173603.18247-2-linmag7@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/timeout.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/alpha/include/asm/pgtable.h  |  33 ++++++++-
+ arch/alpha/include/asm/tlbflush.h |   4 +-
+ arch/alpha/mm/Makefile            |   2 +-
+ arch/alpha/mm/tlbflush.c          | 112 ++++++++++++++++++++++++++++++
+ 4 files changed, 148 insertions(+), 3 deletions(-)
+ create mode 100644 arch/alpha/mm/tlbflush.c
 
-diff --git a/io_uring/timeout.c b/io_uring/timeout.c
-index 17e3aab0af367..cd42316d0f3c0 100644
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -129,7 +129,7 @@ __cold void io_flush_timeouts(struct io_ring_ctx *ctx)
- 	u32 seq;
+diff --git a/arch/alpha/include/asm/pgtable.h b/arch/alpha/include/asm/pgtable.h
+index 90e7a95391022..c9508ec37efc4 100644
+--- a/arch/alpha/include/asm/pgtable.h
++++ b/arch/alpha/include/asm/pgtable.h
+@@ -17,6 +17,7 @@
+ #include <asm/processor.h>	/* For TASK_SIZE */
+ #include <asm/machvec.h>
+ #include <asm/setup.h>
++#include <linux/page_table_check.h>
  
- 	raw_spin_lock_irq(&ctx->timeout_lock);
--	seq = ctx->cached_cq_tail - atomic_read(&ctx->cq_timeouts);
-+	seq = READ_ONCE(ctx->cached_cq_tail) - atomic_read(&ctx->cq_timeouts);
+ struct mm_struct;
+ struct vm_area_struct;
+@@ -183,6 +184,9 @@ extern inline void pud_set(pud_t * pudp, pmd_t * pmdp)
+ { pud_val(*pudp) = _PAGE_TABLE | ((((unsigned long) pmdp) - PAGE_OFFSET) << (32-PAGE_SHIFT)); }
  
- 	list_for_each_entry_safe(timeout, tmp, &ctx->timeout_list, list) {
- 		struct io_kiocb *req = cmd_to_io_kiocb(timeout);
+ 
++extern void migrate_flush_tlb_page(struct vm_area_struct *vma,
++					unsigned long addr);
++
+ extern inline unsigned long
+ pmd_page_vaddr(pmd_t pmd)
+ {
+@@ -202,7 +206,7 @@ extern inline int pte_none(pte_t pte)		{ return !pte_val(pte); }
+ extern inline int pte_present(pte_t pte)	{ return pte_val(pte) & _PAGE_VALID; }
+ extern inline void pte_clear(struct mm_struct *mm, unsigned long addr, pte_t *ptep)
+ {
+-	pte_val(*ptep) = 0;
++	WRITE_ONCE(pte_val(*ptep), 0);
+ }
+ 
+ extern inline int pmd_none(pmd_t pmd)		{ return !pmd_val(pmd); }
+@@ -264,6 +268,33 @@ extern inline pte_t * pte_offset_kernel(pmd_t * dir, unsigned long address)
+ 
+ extern pgd_t swapper_pg_dir[1024];
+ 
++#ifdef CONFIG_COMPACTION
++#define __HAVE_ARCH_PTEP_GET_AND_CLEAR
++
++static inline pte_t ptep_get_and_clear(struct mm_struct *mm,
++					unsigned long address,
++					pte_t *ptep)
++{
++	pte_t pte = READ_ONCE(*ptep);
++
++	pte_clear(mm, address, ptep);
++	return pte;
++}
++
++#define __HAVE_ARCH_PTEP_CLEAR_FLUSH
++
++static inline pte_t ptep_clear_flush(struct vm_area_struct *vma,
++				unsigned long addr, pte_t *ptep)
++{
++	struct mm_struct *mm = vma->vm_mm;
++	pte_t pte = ptep_get_and_clear(mm, addr, ptep);
++
++	page_table_check_pte_clear(mm, pte);
++	migrate_flush_tlb_page(vma, addr);
++	return pte;
++}
++
++#endif
+ /*
+  * The Alpha doesn't have any external MMU info:  the kernel page
+  * tables contain all the necessary information.
+diff --git a/arch/alpha/include/asm/tlbflush.h b/arch/alpha/include/asm/tlbflush.h
+index ba4b359d6c395..0c8529997f54e 100644
+--- a/arch/alpha/include/asm/tlbflush.h
++++ b/arch/alpha/include/asm/tlbflush.h
+@@ -58,7 +58,9 @@ flush_tlb_other(struct mm_struct *mm)
+ 	unsigned long *mmc = &mm->context[smp_processor_id()];
+ 	/* Check it's not zero first to avoid cacheline ping pong
+ 	   when possible.  */
+-	if (*mmc) *mmc = 0;
++
++	if (READ_ONCE(*mmc))
++		WRITE_ONCE(*mmc, 0);
+ }
+ 
+ #ifndef CONFIG_SMP
+diff --git a/arch/alpha/mm/Makefile b/arch/alpha/mm/Makefile
+index 101dbd06b4ceb..2d05664058f64 100644
+--- a/arch/alpha/mm/Makefile
++++ b/arch/alpha/mm/Makefile
+@@ -3,4 +3,4 @@
+ # Makefile for the linux alpha-specific parts of the memory manager.
+ #
+ 
+-obj-y	:= init.o fault.o
++obj-y	:= init.o fault.o tlbflush.o
+diff --git a/arch/alpha/mm/tlbflush.c b/arch/alpha/mm/tlbflush.c
+new file mode 100644
+index 0000000000000..ccbc317b9a348
+--- /dev/null
++++ b/arch/alpha/mm/tlbflush.c
+@@ -0,0 +1,112 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Alpha TLB shootdown helpers
++ *
++ * Copyright (C) 2025 Magnus Lindholm <linmag7@gmail.com>
++ *
++ * Alpha-specific TLB flush helpers that cannot be expressed purely
++ * as inline functions.
++ *
++ * These helpers provide combined MM context handling (ASN rollover)
++ * and immediate TLB invalidation for page migration and memory
++ * compaction paths, where lazy shootdowns are insufficient.
++ */
++
++#include <linux/mm.h>
++#include <linux/smp.h>
++#include <linux/sched.h>
++#include <asm/tlbflush.h>
++#include <asm/pal.h>
++#include <asm/mmu_context.h>
++
++#define asn_locked() (cpu_data[smp_processor_id()].asn_lock)
++
++/*
++ * Migration/compaction helper: combine mm context (ASN) handling with an
++ * immediate per-page TLB invalidate and (for exec) an instruction barrier.
++ *
++ * This mirrors the SMP combined IPI handler semantics, but runs locally on UP.
++ */
++#ifndef CONFIG_SMP
++void migrate_flush_tlb_page(struct vm_area_struct *vma,
++					   unsigned long addr)
++{
++	struct mm_struct *mm = vma->vm_mm;
++	int tbi_type = (vma->vm_flags & VM_EXEC) ? 3 : 2;
++
++	/*
++	 * First do the mm-context side:
++	 * If we're currently running this mm, reload a fresh context ASN.
++	 * Otherwise, mark context invalid.
++	 *
++	 * On UP, this is mostly about matching the SMP semantics and ensuring
++	 * exec/i-cache tagging assumptions hold when compaction migrates pages.
++	 */
++	if (mm == current->active_mm)
++		flush_tlb_current(mm);
++	else
++		flush_tlb_other(mm);
++
++	/*
++	 * Then do the immediate translation kill for this VA.
++	 * For exec mappings, order instruction fetch after invalidation.
++	 */
++	tbi(tbi_type, addr);
++}
++
++#else
++struct tlb_mm_and_addr {
++	struct mm_struct *mm;
++	unsigned long addr;
++	int tbi_type;	/* 2 = DTB, 3 = ITB+DTB */
++};
++
++static void ipi_flush_mm_and_page(void *x)
++{
++	struct tlb_mm_and_addr *d = x;
++
++	/* Part 1: mm context side (Alpha uses ASN/context as a key mechanism). */
++	if (d->mm == current->active_mm && !asn_locked())
++		__load_new_mm_context(d->mm);
++	else
++		flush_tlb_other(d->mm);
++
++	/* Part 2: immediate per-VA invalidation on this CPU. */
++	tbi(d->tbi_type, d->addr);
++}
++
++void migrate_flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
++{
++	struct mm_struct *mm = vma->vm_mm;
++	struct tlb_mm_and_addr d = {
++		.mm = mm,
++		.addr = addr,
++		.tbi_type = (vma->vm_flags & VM_EXEC) ? 3 : 2,
++	};
++
++	/*
++	 * One synchronous rendezvous: every CPU runs ipi_flush_mm_and_page().
++	 * This is the "combined" version of flush_tlb_mm + per-page invalidate.
++	 */
++	preempt_disable();
++	on_each_cpu(ipi_flush_mm_and_page, &d, 1);
++
++	/*
++	 * mimic flush_tlb_mm()'s mm_users<=1 optimization.
++	 */
++	if (atomic_read(&mm->mm_users) <= 1) {
++
++		int cpu, this_cpu;
++		this_cpu = smp_processor_id();
++
++		for (cpu = 0; cpu < NR_CPUS; cpu++) {
++			if (!cpu_online(cpu) || cpu == this_cpu)
++				continue;
++			if (READ_ONCE(mm->context[cpu]))
++				WRITE_ONCE(mm->context[cpu], 0);
++		}
++	}
++	preempt_enable();
++}
++
++#endif
 -- 
 2.51.0
 
