@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A1036C9D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CCE346E70
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302364; cv=none; b=uedpQqs41JuQ8AnmN1Vrf355l64hdpA8WrVLgQ/k9HUZpiPWoOusYEGSIBBZ6xCuQqGfQ0xrgIAKdkbuO4AIx90SIu7m8y9qjUx6tys4ilMDV+4lP0/4hrGA3VwMyWq+2yAZddu2o7ttQ1CiPyYF2SDt6vzsdQt6D7Gd1t3fXss=
+	t=1772302365; cv=none; b=gZ4udMiQCBojcdAmfuES7v1ErxzFzBY8K3glEqcvI+XrpV8p9URLojdzsTeICCIYmQRJot7C9w81hmnmLhYBdeThYH6LVg76y5iJlxOZRucc35oTilmRV7fxEUCuOquveSBUhkLTqhOZeK9hhrlKPym6UblvLbtYDvuKEFIHBQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302364; c=relaxed/simple;
-	bh=ROwxj+gmd7s4885hkdqNcbbj8uF84W1ko9+M41+PICU=;
+	s=arc-20240116; t=1772302365; c=relaxed/simple;
+	bh=7s5r+1ie2ry8z5orN0KoHwGI/OljXSCHco53DShLsLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qa3FjItWQhGKwEZi6cAzSZdB5qwL8y2A/0mvaCxvFWfzJ2XeHux5aTY2ZPhSRYVOn+1Pq6GYxRUuHvAFsJHNVrKVZPgZRHR69OkGvim38AI2yJHzEUkdE/tZ1wCZxY90hn+pROSJj+IcdeLje87sCchLi557BRUKgrhh6lujgMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u8O+YOG3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bJ7qx9MNcULX7ytQRp16Be0xrrTfGJSvZNmzGzgb43B5J4+tKYjY7sXgsdQ1YES6WfxNnKMUmDAI6Wspo3OEY/hZqNndc5y0zrvM/Ff5hBSxDt1U+ei2d6JbcCjEAdcGZkwhTmvXbTfqAMNB5fy/oq0dn/NKsfvYD/zJ+OiwLoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BIGoTIyu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u8O+YOG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED0BC19425;
-	Sat, 28 Feb 2026 18:12:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BIGoTIyu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B08C116D0;
+	Sat, 28 Feb 2026 18:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302364;
-	bh=ROwxj+gmd7s4885hkdqNcbbj8uF84W1ko9+M41+PICU=;
+	s=k20201202; t=1772302365;
+	bh=7s5r+1ie2ry8z5orN0KoHwGI/OljXSCHco53DShLsLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8O+YOG3FTHlw1RuuPqt0Aq6wXKL2HZ033eUq1K3OP04zzeMMRnCRo8uwh6+H5IX4
-	 oaeCcy+oKk6fhETQphR2iLJxBy27fv7Tx+7I0yPwqbljj1zEceNuIJeJ2rmU3UaHUa
-	 FSI89apVxw4+ZvhOTeE95KOhxXBT2QHhgxMVf073V5RhEUyyqf7suJhONA3ze9/la2
-	 DpG/q0TZv3Qotqwx+w9Hg8R8WixhCDL5fheWsrATI7+0CLLeQmYUqmloxerphaD3+O
-	 JYIwIH8Ts7E2AEKPol7Bfs1XQU/EXsh0HruoqMdGSM7FtgmssSVZqpFZLNVurKJmuY
-	 5ZvbKX3QIO+9g==
+	b=BIGoTIyuxJi2hlC4lsFvqM0/fhf9yakA8WQi2bF+0A3Ek8SCy8kqKo1q89541OcXR
+	 eyqmxZv05GdaCr3cQOvB91ihKTO/OOj3p6Y70UKa+Azv4kO/HfK7RcHxOBA69wfBtn
+	 SvhTvzezxn7bsQe6rUwpKgAYVbKZ4V/o5LIlwKRyE8sCqahzI3JndT0WgBH8NlRkN2
+	 RNIoS+/s+Oiw9tbbQzfAhwvM7u7fciLHTFit0e1Alv9c4HzjqGCUcPZ6bmBZ2M9APc
+	 TR/j455449hHFmozMUFj0f7PBbUJZOhutBkzTlQJ35O7lWF5oNlzanYSPy+wqoQ/5O
+	 sz1daHT0L+9fA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/232] PCI: Do not attempt to set ExtTag for VFs
-Date: Sat, 28 Feb 2026 13:09:04 -0500
-Message-ID: <20260228181127.1592657-91-sashal@kernel.org>
+Subject: [PATCH 6.1 092/232] PCI/portdrv: Fix potential resource leak
+Date: Sat, 28 Feb 2026 13:09:05 -0500
+Message-ID: <20260228181127.1592657-92-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,44 +50,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 73711730a1128d91ebca1a6994ceeb18f36cb0cd ]
+[ Upstream commit 01464a3fdf91c041a381d93a1b6fefbdb819a46f ]
 
-The bit for enabling extended tags is Reserved and Preserved (RsvdP) for
-VFs, according to PCIe r7.0 section 7.5.3.4 table 7.21.  Hence, bail out
-early from pci_configure_extended_tags() if the device is a VF.
+pcie_port_probe_service() unconditionally calls get_device() (unless it
+fails). So drop that reference also unconditionally as it's fine for a
+PCIe driver to not have a remove callback.
 
-Otherwise, we may see incorrect log messages such as:
-
-  kernel: pci 0000:af:00.2: enabling Extended Tags
-
-(af:00.2 is a VF)
-
-Fixes: 60db3a4d8cc9 ("PCI: Enable PCIe Extended Tags if supported")
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20251112095442.1913258-1-haakon.bugge@oracle.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/e1c68c3b3f1af8427e98ca5e2c79f8bf0ebe2ce4.1764688034.git.u.kleine-koenig@baylibre.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/probe.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/pcie/portdrv_core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index c37ff0ee53f82..4a72a0163a862 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -2097,7 +2097,8 @@ int pci_configure_extended_tags(struct pci_dev *dev, void *ign)
- 	u16 ctl;
- 	int ret;
+diff --git a/drivers/pci/pcie/portdrv_core.c b/drivers/pci/pcie/portdrv_core.c
+index 332315183cd45..8b7aadc716ae8 100644
+--- a/drivers/pci/pcie/portdrv_core.c
++++ b/drivers/pci/pcie/portdrv_core.c
+@@ -540,10 +540,10 @@ static int pcie_port_remove_service(struct device *dev)
  
--	if (!pci_is_pcie(dev))
-+	/* PCI_EXP_DEVCTL_EXT_TAG is RsvdP in VFs */
-+	if (!pci_is_pcie(dev) || dev->is_virtfn)
- 		return 0;
+ 	pciedev = to_pcie_device(dev);
+ 	driver = to_service_driver(dev->driver);
+-	if (driver && driver->remove) {
++	if (driver && driver->remove)
+ 		driver->remove(pciedev);
+-		put_device(dev);
+-	}
++
++	put_device(dev);
+ 	return 0;
+ }
  
- 	ret = pcie_capability_read_dword(dev, PCI_EXP_DEVCAP, &cap);
 -- 
 2.51.0
 
