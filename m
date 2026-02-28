@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B12A3D903F
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D65A355049
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301101; cv=none; b=JpWaUNGLm3jdiepV9nFv8aU7hrzsmYvigbyVvDZ5+S5fnB93y8vmbLr86tfetbFlt5LVPLpB2YrdmG57vvmR8Z8RuxT1Q6sVJ1oBmtllR2+t2CCsPE1zFlQL0UXYeWd5dBQ766vBX1BTDLbSUzgqAwOzL2xX7IdvtAjRXeRNUMo=
+	t=1772301102; cv=none; b=R7gGrOgbeHmK/uKNuraLwaPT8ImMrACtKrV0ce65wIw1HfloTyqxujyAbFKl2BCtvQSdfvkPsM0fYSmHbXMpxXQ0g0J5D1ahQaFZJCndAJ2jM474TkrUo+KI6kHdSQj3C7V3M2nLSlY68OnVrBquCcYfG4B/9mH7BSiApYpAsx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301101; c=relaxed/simple;
-	bh=cSWzlnpqidfMV0fh8o4QeLP6rReA62/EY2yPIuusBFI=;
+	s=arc-20240116; t=1772301102; c=relaxed/simple;
+	bh=AEUpNpqoAuQ2Q1xqxf2wsmHdmVN+sS86TFOl6l60ZFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0/uOVTEBwvI5A/J++jlzdN6u5j9Kp1OJr8BPdX1W7iqcTGhAfohvTSwgqp9bTquJl2E+Vta1RumyWgLa5Oy6YYPVsgvQW5Ys5e4XgvvRIJC/vmx1VxFmQHDF9ohs3ClQS2KcHMxRDM2pGV34a2sIIW0alKKz4DHd6T+3vQAlF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jtipvc1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O1WAlE+o/G7BwmFVBkZzChM7lJp2YlHK6oNGRtpg3bPGP4C0LYii7RRg7xMwPSneHCTPjhehj+l6SeVxMwTtg2eLSsV04PE+UnN+TvP9a27m6jBzCUJ8QcctJbKFc3YBkgTHmK1kXNZCD7TFOrjhdppsNCiv2RHdw18tvWVSaeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tD+33uoa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jtipvc1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0E1C19424;
-	Sat, 28 Feb 2026 17:51:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tD+33uoa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3310CC116D0;
+	Sat, 28 Feb 2026 17:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301100;
-	bh=cSWzlnpqidfMV0fh8o4QeLP6rReA62/EY2yPIuusBFI=;
+	s=k20201202; t=1772301101;
+	bh=AEUpNpqoAuQ2Q1xqxf2wsmHdmVN+sS86TFOl6l60ZFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jtipvc1DqZ4XuUxzXnCZCJHbFXHdQyf5DlQLmkE8/CoCq3hkLsyi+3vxDXKNLkrUb
-	 OYrhx+0vJK3pRidyQJfPAif8EIMYrMfSNLUwEQGI47zyPKKgZQW03AJBsfBJ9WjoDe
-	 Cm8PSxMELv5ef4b3pRmdhG7Ln2UiuaZBUWeW3N8UeutgmGeJi77IYWUuxciMKhiuoP
-	 WzDqPxveBcEKTZ1vhLgnYGFQSCgjC7V4sQDZ+gKlgoH+e3tKel3TZOnsWfVm+jeIrU
-	 hpcMrPKUR/antPMV+HK+yMVC5B3pZZqrwhk3aYsjdmI6I0AbYloOxF3++cEhzlbpVV
-	 Y321A/jOZ+SJQ==
+	b=tD+33uoaz4oszly7CB7yZGFj+oxIIhplebVveWJ10tn92YZqsrnv78qbyXM1ZjCLk
+	 QbJLyKPTo96l9WAhc32ebd8F7rXLdNFD153Gs58zD0m4E9s4KLs7FjNJXP2b6keqOp
+	 DN+RzsjUGGry9TNJRGiz8nxcxzLV9HGNJk5tsyOM4Bis/r74/M1LzAj5SfHyaEmpwl
+	 GHbNF2DibLXEhqc7m0QFZPLjspPQH6xtGgkpEEzk/kuiOMSIrX7Wcads9EwL8r1P+v
+	 Dhw7xO4PgE5NwWE5YJcH/u38Tzd6L3VEnYJB7v8LxbEZjjeXQ/sEbcLbVnMGHOO2eS
+	 S+ZVy1am5lKeQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Brian Masney <bmasney@redhat.com>,
-	kernel test robot <lkp@intel.com>,
-	Stafford Horne <shorne@gmail.com>,
+Cc: Mingj Ye <insyelu@gmail.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 253/752] openrisc: define arch-specific version of nop()
-Date: Sat, 28 Feb 2026 12:39:24 -0500
-Message-ID: <20260228174750.1542406-253-sashal@kernel.org>
+Subject: [PATCH 6.18 254/752] net: usb: r8152: fix transmit queue timeout
+Date: Sat, 28 Feb 2026 12:39:25 -0500
+Message-ID: <20260228174750.1542406-254-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,51 +48,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Brian Masney <bmasney@redhat.com>
+From: Mingj Ye <insyelu@gmail.com>
 
-[ Upstream commit 0dfffa5479d6260d04d021f69203b1926f73d889 ]
+[ Upstream commit 833dcd75d54f0bf5aa0a0781ff57456b421fbb40 ]
 
-When compiling a driver written for MIPS on OpenRISC that uses the nop()
-function, it fails due to the following error:
+When the TX queue length reaches the threshold, the netdev watchdog
+immediately detects a TX queue timeout.
 
-    drivers/watchdog/pic32-wdt.c: Assembler messages:
-    drivers/watchdog/pic32-wdt.c:125: Error: unrecognized instruction `nop'
+This patch updates the trans_start timestamp of the transmit queue
+on every asynchronous USB URB submission along the transmit path,
+ensuring that the network watchdog accurately reflects ongoing
+transmission activity.
 
-The driver currently uses the generic version of nop() from
-include/asm-generic/barrier.h:
-
-    #ifndef nop
-    #define nop()   asm volatile ("nop")
-    #endif
-
-Let's fix this on OpenRISC by defining an architecture-specific version
-of nop().
-
-This was tested by performing an allmodconfig openrisc cross compile on
-an aarch64 host.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202601180236.BVy480We-lkp@intel.com/
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Signed-off-by: Mingj Ye <insyelu@gmail.com>
+Reviewed-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://patch.msgid.link/20260120015949.84996-1-insyelu@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/openrisc/include/asm/barrier.h | 2 ++
+ drivers/net/usb/r8152.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/openrisc/include/asm/barrier.h b/arch/openrisc/include/asm/barrier.h
-index 7538294721bed..8e592c9909023 100644
---- a/arch/openrisc/include/asm/barrier.h
-+++ b/arch/openrisc/include/asm/barrier.h
-@@ -4,6 +4,8 @@
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 6a43054d5171f..da8de7b1a4891 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -2449,6 +2449,8 @@ static int r8152_tx_agg_fill(struct r8152 *tp, struct tx_agg *agg)
+ 	ret = usb_submit_urb(agg->urb, GFP_ATOMIC);
+ 	if (ret < 0)
+ 		usb_autopm_put_interface_async(tp->intf);
++	else
++		netif_trans_update(tp->netdev);
  
- #define mb() asm volatile ("l.msync" ::: "memory")
- 
-+#define nop() asm volatile ("l.nop")
-+
- #include <asm-generic/barrier.h>
- 
- #endif /* __ASM_BARRIER_H */
+ out_tx_fill:
+ 	return ret;
 -- 
 2.51.0
 
