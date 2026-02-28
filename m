@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B16340A59
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB18340A59
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301130; cv=none; b=k/cJn1fVlmKW5ihXU8vhaR8MHgIyVBHM7DpRe6mvQjsU9rCUrdHM+2EkR4xBrDNsslricIEcu/wjUR83peTxM9se9uBIHVcuS8ZgmlZHjjoZir7qrPimeL3laiAUnNG4B6xvzIr/pALSqEirXM7OS515I+HzripYQ29PcczdjXw=
+	t=1772301131; cv=none; b=ie93w5KfUNYrtMm200/bQzxzvYmnmnvcVUeSnKWNg/zRmNbOwX4IDLFG1S2Sk5RoEHfnLq5ZBb+nXcSd0ckBKT16OTlctS6qQXOvdNz1oJjisVuhmGkDw0fdq4igGpR4SzGJPwogHeg8/n0B/ijZne05fN6PoyLCRi6C54gu30Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301130; c=relaxed/simple;
-	bh=QCzPKq3y9x7uAsM77rTsCrbVlQytvdYrbljTC0G/Qks=;
+	s=arc-20240116; t=1772301131; c=relaxed/simple;
+	bh=ED31FqIejJkXzXn/3lOLWt2dv7853NRNj4AALhSBmjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OK/6uJUMc5MYrPQuDNRWBrBJGuYDjVUrCBMgZTGQq9FdjThurd6EiqQi+q837JmqrmT+958JqiD/7ibASJT2y2//fXNI5YH9+1xI2lvfEtKJYkC2HzIPgldujrgHRRFIylRT2hSZRdqB8BxwoYc4qqg/3ODtCDuKGxm+F83sLAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cc5Qux8i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3QJBWhshP+G4Zwld2mpqXyalk04Fi1a/KE4sxLKSAGfXhdkdfcT9sSSBobnkmV/ijBxjTFMSziTKxKLbR6k+gpsV6J3y70ZPev7TZYRe5fFtyBA82tNv/dEwhvMjxJ8KvcLrj5ZlUfJHp02gmBChitUUuR75QDPO3IK7puNC4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AIdgCtPc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cc5Qux8i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC30C19424;
-	Sat, 28 Feb 2026 17:52:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AIdgCtPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E298C19423;
+	Sat, 28 Feb 2026 17:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301130;
-	bh=QCzPKq3y9x7uAsM77rTsCrbVlQytvdYrbljTC0G/Qks=;
+	s=k20201202; t=1772301131;
+	bh=ED31FqIejJkXzXn/3lOLWt2dv7853NRNj4AALhSBmjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cc5Qux8iC3QHLh2e/TrS189sjWrEOsGnrAciMkxaNpV7FjFDuwNCmOPmnohYL2sFd
-	 UW2SYC9C9l3soMgF/5Pe+5v3UPWyfhfujlKDNM2/aaaq9ta5/k5XdGXPemaE2O3yEq
-	 wN6Kgd1xofA9N67WEvryU0CqAG78yBrLn8ZBiFUSg6JWHIHrBkqUfzOaORFYOjRt+4
-	 NtWnkH2Av5tzPRR/+dljhJlmYFPOpD3N9vdaoD3jX+8kas+CN7GjOUmxXuPS/R3vZ8
-	 Dlgu5KqTaw8l1UAHoK/zzmSp9X9i6j0QSzSu7iSB93Z8gXBT97yR77lEPVAex5rVPO
-	 pc9evaK28e8qA==
+	b=AIdgCtPcjjBfGe5a2N/VQwnESTzUOics/Gs/DImmOEQNIdz3gW3pecqe7xB2yG84C
+	 UMxtmwhXyhzDIri+FW90hVHsCnsl+fVgrR/n9i3wiqEIO4ZHwb6huMJLh+cp0CNe3N
+	 Wi8YuG0XlT8gM84wurDz6gDcE/pBLUs5AAm964fwKMwmrWSSLCIbSVJq2IJzYJ25yU
+	 Oxmk+Raldb2u3P4DfcLJq9aCS3yGJN74WRUy9/eo1Duk0DJk85w3jM6StuBTZ+xKgf
+	 ZrXVIdYk6olXQ+T7haVnkuZ9P2pzXy3zF/PSynQalWj0TRAhETtzV/CioHGBrk7drg
+	 fsoxpfgjVvg0g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alex Williamson <alex.williamson@nvidia.com>,
-	Patrick Bianchi <patrick.w.bianchi@gmail.com>,
+Cc: Lukas Wunner <lukas@wunner.de>,
+	Lucas Van <lucas.van@intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 289/752] PCI: Mark ASM1164 SATA controller to avoid bus reset
-Date: Sat, 28 Feb 2026 12:40:00 -0500
-Message-ID: <20260228174750.1542406-289-sashal@kernel.org>
+Subject: [PATCH 6.18 290/752] PCI/AER: Clear stale errors on reporting agents upon probe
+Date: Sat, 28 Feb 2026 12:40:01 -0500
+Message-ID: <20260228174750.1542406-290-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,49 +49,92 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alex Williamson <alex.williamson@nvidia.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit beb2f81792a8a619e5122b6b24a374861309c54b ]
+[ Upstream commit e242d09b58e869f86071b7889acace4cff215935 ]
 
-User forums report issues when assigning ASM1164 SATA controllers to VMs,
-especially in configurations with multiple controllers.  Logs show the
-device fails to retrain after bus reset.  Reports suggest this is an issue
-across multiple platforms.  The device indicates support for PM reset,
-therefore the device still has a viable function level reset mechanism.
-The reporting user confirms the device is well behaved in this use case
-with bus reset disabled.
+Correctable and Uncorrectable Error Status Registers on reporting agents
+are cleared upon PCI device enumeration in pci_aer_init() to flush past
+events.  They're cleared again when an error is handled by the AER driver.
 
-Reported-by: Patrick Bianchi <patrick.w.bianchi@gmail.com>
-Link: https://forum.proxmox.com/threads/problems-with-pcie-passthrough-with-two-identical-devices.149003/
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+If an agent reports a new error after pci_aer_init() and before the AER
+driver has probed on the corresponding Root Port or Root Complex Event
+Collector, that error is not handled by the AER driver:  It clears the
+Root Error Status Register on probe, but neglects to re-clear the
+Correctable and Uncorrectable Error Status Registers on reporting agents.
+
+The error will eventually be reported when another error occurs.  Which
+is irritating because to an end user it appears as if the earlier error
+has just happened.
+
+Amend the AER driver to clear stale errors on reporting agents upon probe.
+
+Skip reporting agents which have not invoked pci_aer_init() yet to avoid
+using an uninitialized pdev->aer_cap.  They're recognizable by the error
+bits in the Device Control register still being clear.
+
+Reporting agents may execute pci_aer_init() after the AER driver has
+probed, particularly when devices are hotplugged or removed/rescanned via
+sysfs.  For this reason, it continues to be necessary that pci_aer_init()
+clears Correctable and Uncorrectable Error Status Registers.
+
+Reported-by: Lucas Van <lucas.van@intel.com> # off-list
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260109000211.398300-1-alex.williamson@nvidia.com
+Tested-by: Lucas Van <lucas.van@intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Link: https://patch.msgid.link/3011c2ed30c11f858e35e29939add754adea7478.1769332702.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/pci/pcie/aer.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 9e073321b2dd2..c38434d973cd2 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -3791,6 +3791,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_CAVIUM, 0xa100, quirk_no_bus_reset);
-  */
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_TI, 0xb005, quirk_no_bus_reset);
+diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
+index 23bead9415fcd..29504173425cd 100644
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -1603,6 +1603,20 @@ static void aer_disable_irq(struct pci_dev *pdev)
+ 	pci_write_config_dword(pdev, aer + PCI_ERR_ROOT_COMMAND, reg32);
+ }
  
-+/*
-+ * Reports from users making use of PCI device assignment with ASM1164
-+ * controllers indicate an issue with bus reset where the device fails to
-+ * retrain.  The issue appears more common in configurations with multiple
-+ * controllers.  The device does indicate PM reset support (NoSoftRst-),
-+ * therefore this still leaves a viable reset method.
-+ * https://forum.proxmox.com/threads/problems-with-pcie-passthrough-with-two-identical-devices.149003/
-+ */
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ASMEDIA, 0x1164, quirk_no_bus_reset);
++static int clear_status_iter(struct pci_dev *dev, void *data)
++{
++	u16 devctl;
 +
- static void quirk_no_pm_reset(struct pci_dev *dev)
- {
- 	/*
++	/* Skip if pci_enable_pcie_error_reporting() hasn't been called yet */
++	pcie_capability_read_word(dev, PCI_EXP_DEVCTL, &devctl);
++	if (!(devctl & PCI_EXP_AER_FLAGS))
++		return 0;
++
++	pci_aer_clear_status(dev);
++	pcie_clear_device_status(dev);
++	return 0;
++}
++
+ /**
+  * aer_enable_rootport - enable Root Port's interrupts when receiving messages
+  * @rpc: pointer to a Root Port data structure
+@@ -1624,9 +1638,19 @@ static void aer_enable_rootport(struct aer_rpc *rpc)
+ 	pcie_capability_clear_word(pdev, PCI_EXP_RTCTL,
+ 				   SYSTEM_ERROR_INTR_ON_MESG_MASK);
+ 
+-	/* Clear error status */
++	/* Clear error status of this Root Port or RCEC */
+ 	pci_read_config_dword(pdev, aer + PCI_ERR_ROOT_STATUS, &reg32);
+ 	pci_write_config_dword(pdev, aer + PCI_ERR_ROOT_STATUS, reg32);
++
++	/* Clear error status of agents reporting to this Root Port or RCEC */
++	if (reg32 & AER_ERR_STATUS_MASK) {
++		if (pci_pcie_type(pdev) == PCI_EXP_TYPE_RC_EC)
++			pcie_walk_rcec(pdev, clear_status_iter, NULL);
++		else if (pdev->subordinate)
++			pci_walk_bus(pdev->subordinate, clear_status_iter,
++				     NULL);
++	}
++
+ 	pci_read_config_dword(pdev, aer + PCI_ERR_COR_STATUS, &reg32);
+ 	pci_write_config_dword(pdev, aer + PCI_ERR_COR_STATUS, reg32);
+ 	pci_read_config_dword(pdev, aer + PCI_ERR_UNCOR_STATUS, &reg32);
 -- 
 2.51.0
 
