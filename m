@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D1936D9FB;
-	Sat, 28 Feb 2026 17:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CD536D9FB;
+	Sat, 28 Feb 2026 17:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301448; cv=none; b=YBwbE66m2xt5r6s+0vO2u11x97/jzsKvsnmWqZKNXIfZOt2QbEoy7Hk8L7hhBB1O1utqqOoBh+k0l+KinRUzcB6X0++dcPYzIxNFAXcYBnpKIkhMeywFwMC2/3UceI4vmU7xZlNiq2Z7rcoR2zC+v07ef6H9o4nEYybB/MEfEwc=
+	t=1772301449; cv=none; b=iw224psIuOMM3NQVtly0KY9BcXMwgJnWtcuXVcITt5somDCP4oEg7X+7TiKL37HrYtL7itRqLX+GTXWgHjD+nPAZ5PR4pZHBJGBVQNEShk54YHWeqyrauaXvn63EVijShrFNZ7WRQM25JKrErhRipp69PwPIyt1X9yTBaSIVtRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301448; c=relaxed/simple;
-	bh=W6W7FBTM2KboxMZEwq13+hDQwWbf3XoBnHsc68k/l1k=;
+	s=arc-20240116; t=1772301449; c=relaxed/simple;
+	bh=tMR0jwUSTCfCgTboqHcqsTP5vZR4Ew9O/wiWKDWqn88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IZ82fRKdIIXFb0fjWdM1JlGD2tDLpD4syzrt/O0YM5EgOaRxXktL/zCSB1Z1ptYIf+be/y7fz4t7XARmpg6Xpnz0iPKLqeaU4Bvx4v+dmWeTiruU5qtjhWUTbBeR+qlJY1x9rqn4aS8R/GdYNalyEZbu4KaKIAoE4fCL84uy9Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q2dEoW87; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Aty+od0nri7tuzTRSikizJZ/IWeni9OlJNAV7TZoKxFWCs1j3v0HG1SkVl5K9GnxbFw60e+lBNAL0nThNm+M+G72bkCWiwEzfTaGXik9t5CY/Cmme0G8AxK8gH7US+pzK5FAaoa3TGSofXHHuC0aW0BGNUJ7rEavrnAvWYl2Ak0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IcXKsaxP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q2dEoW87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151EDC116D0;
-	Sat, 28 Feb 2026 17:57:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IcXKsaxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 678DEC19425;
+	Sat, 28 Feb 2026 17:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301448;
-	bh=W6W7FBTM2KboxMZEwq13+hDQwWbf3XoBnHsc68k/l1k=;
+	s=k20201202; t=1772301449;
+	bh=tMR0jwUSTCfCgTboqHcqsTP5vZR4Ew9O/wiWKDWqn88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2dEoW87dioPW5R7KzDq/e/moGn9drryBQGR7W3j5aPHz4EpVXIUDe/+oHUzaAaH2
-	 +le0QDn3s+I9WajJtIoPPkJ1d5krQHrldL4Te1pVaNIvu+Kir+Ovq9ifsG1544pGDs
-	 0MDBwtEIlwrB22ehHND5YvL89ngqPKXcNCoW/jiLeImRUghkszU8hmtwiD/0fV8Qkv
-	 63PRUccGLy5l1FUtvrguOnsg6QWSJGicCcx8dORzRHnEsUsh5HwmhdsaNSVCOFxFy2
-	 lhdUahf3txI2fCOAM7uf/EBBG/aij83NMDwigR2wtMBnttZKVtpqQTVyt2Bw2RtYm7
-	 LQMge6MZB9FdA==
+	b=IcXKsaxPgH3RNh1ddTE0HMMgGCbtCo51+teN+M4U0Jbfj11taslUWsAnkrQ7Slp8Q
+	 1y5BrcY/oOH3SWn77iu2Qa0e3SVib5qaOn6OE4Q7PoaTuiN+SQDg1vmJito+8eRZ5q
+	 /mUMyg4qYPMzp4VlMyJ2qKdQwRamE8eTVc+LPPVj8AZBvWhsFEqlZIY19sxd7WWj5a
+	 J1DpucbZ9lt6OrKa+RaQK6Q+UO8KfYjzXOuTIs/w0H2tx1zHFAHZUu2Rxq0G8gwt3v
+	 gylfWSSfiDsTeRqqI27q9o42Q6hTxQf5uU8DhivZpHQ1l9KNZ0Zz6Qj9QFTQgbEHoC
+	 PMEM87QFG08kQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Leo Yan <leo.yan@arm.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
-	Thomas Voegtle <tv@lio96.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+Cc: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
 	stable@vger.kernel.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 634/752] tools: Fix bitfield dependency failure
-Date: Sat, 28 Feb 2026 12:45:45 -0500
-Message-ID: <20260228174750.1542406-634-sashal@kernel.org>
+Subject: [PATCH 6.18 635/752] vhost: move vdpa group bound check to vhost_vdpa
+Date: Sat, 28 Feb 2026 12:45:46 -0500
+Message-ID: <20260228174750.1542406-635-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -55,70 +50,73 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Leo Yan <leo.yan@arm.com>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-[ Upstream commit a537c0da168a08b0b6a7f7bd9e75f4cc8d45ff57 ]
+[ Upstream commit cd025c1e876b4e262e71398236a1550486a73ede ]
 
-A perf build failure was reported by Thomas Voegtle on stable kernel
-v6.6.120:
+Remove duplication by consolidating these here.  This reduces the
+posibility of a parent driver missing them.
 
-    CC      tests/sample-parsing.o
-    CC      util/intel-pt-decoder/intel-pt-pkt-decoder.o
-    CC      util/perf-regs-arch/perf_regs_csky.o
-    CC      util/arm-spe-decoder/arm-spe-pkt-decoder.o
-    CC      util/perf-regs-arch/perf_regs_loongarch.o
-  In file included from util/arm-spe-decoder/arm-spe-pkt-decoder.h:10,
-                   from util/arm-spe-decoder/arm-spe-pkt-decoder.c:14:
-  /local/git/linux-stable-rc/tools/include/linux/bitfield.h: In function ‘le16_encode_bits’:
-  /local/git/linux-stable-rc/tools/include/linux/bitfield.h:166:31: error: implicit declaration of
-  function ‘cpu_to_le16’; did you mean ‘htole16’? [-Werror=implicit-function-declaration]
-    ____MAKE_OP(le##size,u##size,cpu_to_le##size,le##size##_to_cpu) \
-                                 ^~~~~~~~~
-  /local/git/linux-stable-rc/tools/include/linux/bitfield.h:149:9: note: in definition of macro
-  ‘____MAKE_OP’
-    return to((v & field_mask(field)) * field_multiplier(field)); \
-           ^~
-  /local/git/linux-stable-rc/tools/include/linux/bitfield.h:170:1: note: in expansion of macro
-  ‘__MAKE_OP’
-   __MAKE_OP(16)
+While we're at it, fix a bug in vdpa_sim where a valid ASID can be
+assigned to a group equal to ngroups, causing an out of bound write.
 
-Fix this by including linux/kernel.h, which provides the required
-definitions.
-
-The issue was not found on the mainline due to the relevant C files have
-included kernel.h.  It'd be good to merge this change on mainline
-as well for robustness.
-
-Closes: https://lore.kernel.org/stable/3a44500b-d7c8-179f-61f6-e51cb50d3512@lio96.de/
-Fixes: 64d86c03e1441742 ("perf arm-spe: Extend branch operations")
-Reported-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Reported-by: Thomas Voegtle <tv@lio96.de>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Leo Yan <leo.yan@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: bda324fd037a ("vdpasim: control virtqueue support")
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260119143306.1818855-2-eperezma@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/linux/bitfield.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vdpa/mlx5/net/mlx5_vnet.c | 3 ---
+ drivers/vdpa/vdpa_sim/vdpa_sim.c  | 6 ------
+ drivers/vhost/vdpa.c              | 2 +-
+ 3 files changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/tools/include/linux/bitfield.h b/tools/include/linux/bitfield.h
-index 6093fa6db2600..ddf81f24956ba 100644
---- a/tools/include/linux/bitfield.h
-+++ b/tools/include/linux/bitfield.h
-@@ -8,6 +8,7 @@
- #define _LINUX_BITFIELD_H
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index ddaa1366704bb..44062e9d68f00 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -3640,9 +3640,6 @@ static int mlx5_set_group_asid(struct vdpa_device *vdev, u32 group,
+ 	struct mlx5_vdpa_dev *mvdev = to_mvdev(vdev);
+ 	int err = 0;
  
- #include <linux/build_bug.h>
-+#include <linux/kernel.h>
- #include <asm/byteorder.h>
+-	if (group >= MLX5_VDPA_NUMVQ_GROUPS)
+-		return -EINVAL;
+-
+ 	mvdev->mres.group2asid[group] = asid;
  
- /*
+ 	mutex_lock(&mvdev->mres.lock);
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+index c1c6431950e1b..df9c7ddc5d782 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+@@ -606,12 +606,6 @@ static int vdpasim_set_group_asid(struct vdpa_device *vdpa, unsigned int group,
+ 	struct vhost_iotlb *iommu;
+ 	int i;
+ 
+-	if (group > vdpasim->dev_attr.ngroups)
+-		return -EINVAL;
+-
+-	if (asid >= vdpasim->dev_attr.nas)
+-		return -EINVAL;
+-
+ 	iommu = &vdpasim->iommu[asid];
+ 
+ 	mutex_lock(&vdpasim->mutex);
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index b0179e8567aba..7e51eec842b8c 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -680,7 +680,7 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
+ 	case VHOST_VDPA_SET_GROUP_ASID:
+ 		if (copy_from_user(&s, argp, sizeof(s)))
+ 			return -EFAULT;
+-		if (s.num >= vdpa->nas)
++		if (idx >= vdpa->ngroups || s.num >= vdpa->nas)
+ 			return -EINVAL;
+ 		if (!ops->set_group_asid)
+ 			return -EOPNOTSUPP;
 -- 
 2.51.0
 
