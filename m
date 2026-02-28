@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF4E33A702
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBC5346AC1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302103; cv=none; b=KiqlfGn7yIPWzQrRDyJOf+wpzoHHXaehCbBtFmpOB1/9Rj8slycHah6qEQ3Rh0EuASxxiEm+vX4BhgOjKo92NG0+j+uQR8YjSb3sJ/Nhwv4CioIi2OJ1MmDOb8Sd0RcBmq5EwtEtgPyNdgKCjIwjdrngBcesrMplgI1aC9CzaqI=
+	t=1772302104; cv=none; b=rHn8cu5CjPYliugmdwYEHoVknLnMiTMmqNFYo3TVHxuhQm3gUteQkGhAZXGeQivV32ZdMUV1DUmJrPozgpf8AGCXYeA+8098lT870jtE9OVdBLJY03oGla7cFKn95O0I9XEtkekjf4zYUwPTemi26cnKixeEoPMsgiQD2SbB9H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302103; c=relaxed/simple;
-	bh=R0hTfXyUKW4fM+sLUl3oKUHa7mszd+qH6NDEkfKlZgE=;
+	s=arc-20240116; t=1772302104; c=relaxed/simple;
+	bh=Nrz/TmmQJCGxSnFhStX7kGxpfWZbIpXq9SqsN3DbbX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qX69vcPL1BA2iMldBv7YgJDjsaR3oTtW+aPvet8OIuUmAM1IyN25KiiKuQCg7qZwP/HnCPMtSK+LdkkT6HKXuFgCf/iFB9DA7RcHy2iHkiTaKowkR3sv/MmETPwXswQg9PkdzmwB2vR3tUgmP96LC8xHzV3PklnNcff0HPBKTBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LboyWNSS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EGWyEkj8yIB4yYj48Z1Ol0EBg9wn3oRaFdULfWjj4KZjFjYRfJfnvfrpzVbNhp78fFREcMop2RmjeEPPfbwTgmN9FI+wEBTUXHKXv3o3ZQeIM5+i71AT1oNgGiPJTAZ/K1916FvWTgKgfJ0GzxA65LgPLEqfNKGp6XFI4rZK8+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kl0PrU7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LboyWNSS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B979C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kl0PrU7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D229EC116D0;
 	Sat, 28 Feb 2026 18:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302103;
-	bh=R0hTfXyUKW4fM+sLUl3oKUHa7mszd+qH6NDEkfKlZgE=;
+	s=k20201202; t=1772302104;
+	bh=Nrz/TmmQJCGxSnFhStX7kGxpfWZbIpXq9SqsN3DbbX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LboyWNSSJW10UDmUlqPSAGaMJLsdYduHXTJucx+SN4mzKdmrQfYntVIlBqjiVPwon
-	 a0FeM3U7vWRJXFmTIy3G4je7iyEnjkYInaFsdAlPf7tCcD7Za2f+zR6p9+5Gtf6edZ
-	 bvY8uuvXt4PL2+jnO/FEv8HZCi2dXQCiAU5d60u6kUVN3D5SNvAzU3ji+8l5tdZwHT
-	 Q/ZN0FBQKnmEoGNWwpTcRlMbrqtifIkQYmIntlobPZ0GhhnFR33Zp3i0XsnkbvFvZn
-	 UyIHfXBF3b4Q+r9h5Z5EAqzuQ0y6YRVKvqjdtrmzv3u5MoVQtiFbfi0h1x4n1jXLdG
-	 oOsRxg+bmlAqw==
+	b=kl0PrU7YOz2RTcvL1us6DSZF16Mp7f1h+vHxMiOagjBmrtgTA/IHZNwRuVgPFEGkj
+	 TNw1hbtemZhjul8SRdFtLAd7mD4fQJ8K7o5EjcJGisKT9DH2Ys1FvooZl0X2NcEFcp
+	 Xwp63ZmFWSjVkiwLjxXvBsS/ap5IuUhqTymwjQXcXV808vG0woamJ336bTi/xU8bgy
+	 1AJ221xn2RjHoWkCEONXLmwZJdHHDPobYj+qx0gDMQAFPTvob9xvbP3ccDVaQSzkS+
+	 rS2+LPdIaCThSHfFwazWwy6zoVVg/usz97lBjhLRnweB5peG8IJruR27HGkVaLnuu5
+	 F7LKiRP/SjGdQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Mahadevan P <mahadevan.p@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: =?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/283] drm/msm/disp/dpu: add merge3d support for sc7280
-Date: Sat, 28 Feb 2026 13:03:52 -0500
-Message-ID: <20260228180709.1583486-90-sashal@kernel.org>
+Subject: [PATCH 6.6 091/283] regulator: core: move supply check earlier in set_machine_constraints()
+Date: Sat, 28 Feb 2026 13:03:53 -0500
+Message-ID: <20260228180709.1583486-91-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -43,88 +43,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Mahadevan P <mahadevan.p@oss.qualcomm.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit 2892de3f4f985fa779c330468e2f341fdb762ccd ]
+[ Upstream commit 86a8eeb0e913f4b6a55dabba5122098d4e805e55 ]
 
-On SC7280 targets, display modes with a width greater than the
-max_mixer_width (2400) are rejected during mode validation when
-merge3d is disabled. This limitation exists because, without a
-3D merge block, two layer mixers cannot be combined(non-DSC interface),
-preventing large layers from being split across mixers. As a result,
-higher resolution modes cannot be supported.
+Since commit 98e48cd9283d ("regulator: core: resolve supply for
+boot-on/always-on regulators"), set_machine_constraints() can return
+-EPROBE_DEFER very late, after it has done a lot of work and
+configuration of the regulator.
 
-Enable merge3d support on SC7280 to allow combining streams from
-two layer mixers into a single non-DSC interface. This capability
-removes the width restriction and enables buffer sizes beyond the
-2400-pixel limit.
+This means that configuration will happen multiple times for no
+benefit in that case. Furthermore, this can lead to timing-dependent
+voltage glitches as mentioned e.g. in commit 8a866d527ac0 ("regulator:
+core: Resolve supply name earlier to prevent double-init").
 
-Fixes: 591e34a091d1 ("drm/msm/disp/dpu1: add support for display for SC7280 target")
-Signed-off-by: Mahadevan P <mahadevan.p@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/696713/
-Link: https://lore.kernel.org/r/20260101-4k-v2-1-712ae3c1f816@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+We can know that it's going to fail very early, in particular before
+going through the complete regulator configuration by moving some code
+around a little.
+
+Do so to avoid re-configuring the regulator multiple times, also
+avoiding the voltage glitches if we can.
+
+Fixes: 98e48cd9283d ("regulator: core: resolve supply for boot-on/always-on regulators")
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://patch.msgid.link/20260109-regulators-defer-v2-3-1a25dc968e60@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/regulator/core.c | 55 ++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 9195cb996f444..cbaca4bf2864a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -14,6 +14,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = 2400,
-+	.has_3d_merge = true,
- 	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
- };
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 23cdf220ca7db..a1a26743430c0 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1466,6 +1466,33 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 	int ret = 0;
+ 	const struct regulator_ops *ops = rdev->desc->ops;
  
-@@ -145,7 +146,7 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
- 		.base = 0x6b000, .len = 0,
- 		.features = BIT(DPU_PINGPONG_DITHER),
- 		.sblk = &sc7280_pp_sblk,
--		.merge_3d = 0,
-+		.merge_3d = MERGE_3D_1,
- 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
- 		.intr_rdptr = -1,
- 	}, {
-@@ -153,12 +154,19 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
- 		.base = 0x6c000, .len = 0,
- 		.features = BIT(DPU_PINGPONG_DITHER),
- 		.sblk = &sc7280_pp_sblk,
--		.merge_3d = 0,
-+		.merge_3d = MERGE_3D_1,
- 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
- 		.intr_rdptr = -1,
- 	},
- };
- 
-+static const struct dpu_merge_3d_cfg sc7280_merge_3d[] = {
-+	{
-+		.name = "merge_3d_1", .id = MERGE_3D_1,
-+		.base = 0x4f000, .len = 0x8,
-+	},
-+};
++	/*
++	 * If there is no mechanism for controlling the regulator then
++	 * flag it as always_on so we don't end up duplicating checks
++	 * for this so much.  Note that we could control the state of
++	 * a supply to control the output on a regulator that has no
++	 * direct control.
++	 */
++	if (!rdev->ena_pin && !ops->enable) {
++		if (rdev->supply_name && !rdev->supply)
++			return -EPROBE_DEFER;
 +
- /* NOTE: sc7280 only has one DSC hard slice encoder */
- static const struct dpu_dsc_cfg sc7280_dsc[] = {
- 	{
-@@ -265,6 +273,8 @@ const struct dpu_mdss_cfg dpu_sc7280_cfg = {
- 	.mixer = sc7280_lm,
- 	.pingpong_count = ARRAY_SIZE(sc7280_pp),
- 	.pingpong = sc7280_pp,
-+	.merge_3d_count = ARRAY_SIZE(sc7280_merge_3d),
-+	.merge_3d = sc7280_merge_3d,
- 	.dsc_count = ARRAY_SIZE(sc7280_dsc),
- 	.dsc = sc7280_dsc,
- 	.wb_count = ARRAY_SIZE(sc7280_wb),
++		if (rdev->supply)
++			rdev->constraints->always_on =
++				rdev->supply->rdev->constraints->always_on;
++		else
++			rdev->constraints->always_on = true;
++	}
++
++	/*
++	 * If we want to enable this regulator, make sure that we know the
++	 * supplying regulator.
++	 */
++	if (rdev->constraints->always_on || rdev->constraints->boot_on) {
++		if (rdev->supply_name && !rdev->supply)
++			return -EPROBE_DEFER;
++	}
++
+ 	ret = machine_constraints_voltage(rdev, rdev->constraints);
+ 	if (ret != 0)
+ 		return ret;
+@@ -1631,37 +1658,15 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 		}
+ 	}
+ 
+-	/*
+-	 * If there is no mechanism for controlling the regulator then
+-	 * flag it as always_on so we don't end up duplicating checks
+-	 * for this so much.  Note that we could control the state of
+-	 * a supply to control the output on a regulator that has no
+-	 * direct control.
+-	 */
+-	if (!rdev->ena_pin && !ops->enable) {
+-		if (rdev->supply_name && !rdev->supply)
+-			return -EPROBE_DEFER;
+-
+-		if (rdev->supply)
+-			rdev->constraints->always_on =
+-				rdev->supply->rdev->constraints->always_on;
+-		else
+-			rdev->constraints->always_on = true;
+-	}
+-
+ 	/* If the constraints say the regulator should be on at this point
+ 	 * and we have control then make sure it is enabled.
+ 	 */
+ 	if (rdev->constraints->always_on || rdev->constraints->boot_on) {
+ 		bool supply_enabled = false;
+ 
+-		/* If we want to enable this regulator, make sure that we know
+-		 * the supplying regulator.
+-		 */
+-		if (rdev->supply_name && !rdev->supply)
+-			return -EPROBE_DEFER;
+-
+-		/* If supplying regulator has already been enabled,
++		/* We have ensured a potential supply has been resolved above.
++		 *
++		 * If supplying regulator has already been enabled,
+ 		 * it's not intended to have use_count increment
+ 		 * when rdev is only boot-on.
+ 		 */
 -- 
 2.51.0
 
