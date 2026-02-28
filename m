@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91567340A5A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A466355049
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301077; cv=none; b=L0F1i/9LSYpo2WLyP0rKMa/EZeDNUHuWHpnAZCGJzVI6iDDsvEoJq1am+BuMZMKMkl34d1v7ZrqK1B8Zegyr+UZ5h84Iuz1fdptAqb9Z+2lA+lz9gGepLMhR1T/mv32xzUBVx94Z2Dh5Zb02zfM9YyG3talJglcXvmRpxMmxTKc=
+	t=1772301078; cv=none; b=b53vY2jo+M41VQZzjvFZbhO8HxUv66hGwC7F13U1s0asxHKQ465gs4nHrmTSZlPGgsjA4YHEI3njsbyRp3t1om0rsEDI+4I0wMoOdHLHImZZ0TDx4QVdm8LLeRi41DjT4TAlZ/t6H2TBHikA79gPmjv1FT9par4gmijEGLB5jOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301077; c=relaxed/simple;
-	bh=cHUYixm8h1kdxcHkyLLsIHClUhF9li/px0bV+qqgbyA=;
+	s=arc-20240116; t=1772301078; c=relaxed/simple;
+	bh=I0fX+1jlFcw8DChdJT+PT3wBtP0zl/D7Tnn20vE+W3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iTbaJdZs96cxnfb1IR6qUb98jeZprcAVHjREHAlxZjynO0bI6ij0NE7EBhTVMi6PJ73IccyYeDWyXp27/6AWPoOWGvdcvis9xgzl4HTvM3liF5cWn8f1pJ2rmw/NNKbg4YpWOR9rw9vzoVtqR9NbEPLAdshDpBcZFLTifcemyR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DYHYBfb3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kuczVxBLo+CenpQ/a4BFdUQ0KEB12QVyRs18Ftqp9sVWsMrrkD36/wnp7UMsDthU07gdVNEvGd1oINFt3RxhIvdskhBXj1VzG8SPG80zb3LA5jdN2rUp0pO1qy2OC9PdEZ00izIL9os+Oiy+2uaVXCDIvId+Tbxb6vR024gDWGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nKAFoF7Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DYHYBfb3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EC5C116D0;
-	Sat, 28 Feb 2026 17:51:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nKAFoF7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A54C116D0;
+	Sat, 28 Feb 2026 17:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301077;
-	bh=cHUYixm8h1kdxcHkyLLsIHClUhF9li/px0bV+qqgbyA=;
+	s=k20201202; t=1772301078;
+	bh=I0fX+1jlFcw8DChdJT+PT3wBtP0zl/D7Tnn20vE+W3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DYHYBfb3AJCCTFRpBCV1rKFtEzSCVnuarc+MfhZqIkn5sWtJNMYU6WZkNq0SYqSsh
-	 LIOnrfJHSPVwQijy0GfziJA1fSE6BzZgk/BMxgwh2g5ml6fKlb+cHf+Pio6hyBeWRn
-	 b614OukvI9pGV5DoF793oEPnxxN1j0YB29It9/XS0e51kQ/Z8GYV8e23SwK9aLCae1
-	 mc1nk6J+fpTUJ1eCYxB0ZW0uZMn372nOQAmF42rJZIyWNCyxUiMRFvg4WWZrjefUzK
-	 2i6X30fdrkPNvvI4th/nL3q7SVRhoAu6GxC0lqXARvNtfbZgs85e0Ipxzv6ZfkLaT5
-	 qoRyB7LGhfc0A==
+	b=nKAFoF7QcsDfkss7jX3JpEvud/Y32MepMdHg6aI+dtVCmKFBZPaMrSikbl4BC4YX8
+	 aZBA3lFBWRBZO740w3yxHNVaVKbP6fgV+wgepp+7ijfd8/ghmQbusCsQb+izYL5iyK
+	 gv8lW0lIhhD7gDIHo76D37+bDd70YqlcALZMl7kfUSAZK6KhtVddo6WPrk0UsRLY4d
+	 Jn6W9mQOWDU2Lr+t0U68904Ia3OTSXfb4UMtsQUFfH0xgnxmLgm63/GGHcNBZKAcZx
+	 TJ1qKHCooxUH47FuRMLOjIwmVs7ZiwrghehAeR6Epl3V/ASt0TQGcxUlMAb8DPgf8t
+	 dJ4H+iCn6Rv8g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Daniel Gomez <da.gomez@samsung.com>,
+Cc: Ding Hui <dinghui@sangfor.com.cn>,
+	Christoph Hellwig <hch@lst.de>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 224/752] dm: replace -EEXIST with -EBUSY
-Date: Sat, 28 Feb 2026 12:38:55 -0500
-Message-ID: <20260228174750.1542406-224-sashal@kernel.org>
+Subject: [PATCH 6.18 225/752] dm: remove fake timeout to avoid leak request
+Date: Sat, 28 Feb 2026 12:38:56 -0500
+Message-ID: <20260228174750.1542406-225-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,87 +48,84 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Gomez <da.gomez@samsung.com>
+From: Ding Hui <dinghui@sangfor.com.cn>
 
-[ Upstream commit b13ef361d47f09b7aecd18e0383ecc83ff61057e ]
+[ Upstream commit f3a9c95a15d2f4466acad5c68faeff79ca5e9f47 ]
 
-The -EEXIST error code is reserved by the module loading infrastructure
-to indicate that a module is already loaded. When a module's init
-function returns -EEXIST, userspace tools like kmod interpret this as
-"module already loaded" and treat the operation as successful, returning
-0 to the user even though the module initialization actually failed.
+Since commit 15f73f5b3e59 ("blk-mq: move failure injection out of
+blk_mq_complete_request"), drivers are responsible for calling
+blk_should_fake_timeout() at appropriate code paths and opportunities.
 
-This follows the precedent set by commit 54416fd76770 ("netfilter:
-conntrack: helper: Replace -EEXIST by -EBUSY") which fixed the same
-issue in nf_conntrack_helper_register().
+However, the dm driver does not implement its own timeout handler and
+relies on the timeout handling of its slave devices.
 
-Affected modules:
-  * dm_cache dm_clone dm_integrity dm_mirror dm_multipath dm_pcache
-  * dm_vdo dm-ps-round-robin dm_historical_service_time dm_io_affinity
-  * dm_queue_length dm_service_time dm_snapshot
+If an io-timeout-fail error is injected to a dm device, the request
+will be leaked and never completed, causing tasks to hang indefinitely.
 
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Reproduce:
+1. prepare dm which has iscsi slave device
+2. inject io-timeout-fail to dm
+   echo 1 >/sys/class/block/dm-0/io-timeout-fail
+   echo 100 >/sys/kernel/debug/fail_io_timeout/probability
+   echo 10 >/sys/kernel/debug/fail_io_timeout/times
+3. read/write dm
+4. iscsiadm -m node -u
+
+Result: hang task like below
+[  862.243768] INFO: task kworker/u514:2:151 blocked for more than 122 seconds.
+[  862.244133]       Tainted: G            E       6.19.0-rc1+ #51
+[  862.244337] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  862.244718] task:kworker/u514:2  state:D stack:0     pid:151   tgid:151   ppid:2      task_flags:0x4288060 flags:0x00080000
+[  862.245024] Workqueue: iscsi_ctrl_3:1 __iscsi_unbind_session [scsi_transport_iscsi]
+[  862.245264] Call Trace:
+[  862.245587]  <TASK>
+[  862.245814]  __schedule+0x810/0x15c0
+[  862.246557]  schedule+0x69/0x180
+[  862.246760]  blk_mq_freeze_queue_wait+0xde/0x120
+[  862.247688]  elevator_change+0x16d/0x460
+[  862.247893]  elevator_set_none+0x87/0xf0
+[  862.248798]  blk_unregister_queue+0x12e/0x2a0
+[  862.248995]  __del_gendisk+0x231/0x7e0
+[  862.250143]  del_gendisk+0x12f/0x1d0
+[  862.250339]  sd_remove+0x85/0x130 [sd_mod]
+[  862.250650]  device_release_driver_internal+0x36d/0x530
+[  862.250849]  bus_remove_device+0x1dd/0x3f0
+[  862.251042]  device_del+0x38a/0x930
+[  862.252095]  __scsi_remove_device+0x293/0x360
+[  862.252291]  scsi_remove_target+0x486/0x760
+[  862.252654]  __iscsi_unbind_session+0x18a/0x3e0 [scsi_transport_iscsi]
+[  862.252886]  process_one_work+0x633/0xe50
+[  862.253101]  worker_thread+0x6df/0xf10
+[  862.253647]  kthread+0x36d/0x720
+[  862.254533]  ret_from_fork+0x2a6/0x470
+[  862.255852]  ret_from_fork_asm+0x1a/0x30
+[  862.256037]  </TASK>
+
+Remove the blk_should_fake_timeout() check from dm, as dm has no
+native timeout handling and should not attempt to fake timeouts.
+
+Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-exception-store.c | 2 +-
- drivers/md/dm-log.c             | 2 +-
- drivers/md/dm-path-selector.c   | 2 +-
- drivers/md/dm-target.c          | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/dm-rq.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-exception-store.c b/drivers/md/dm-exception-store.c
-index c3799757bf4a0..88f119a0a2ae0 100644
---- a/drivers/md/dm-exception-store.c
-+++ b/drivers/md/dm-exception-store.c
-@@ -116,7 +116,7 @@ int dm_exception_store_type_register(struct dm_exception_store_type *type)
- 	if (!__find_exception_store_type(type->name))
- 		list_add(&type->list, &_exception_store_types);
- 	else
--		r = -EEXIST;
-+		r = -EBUSY;
- 	spin_unlock(&_lock);
+diff --git a/drivers/md/dm-rq.c b/drivers/md/dm-rq.c
+index a6ca92049c10e..5e08546696145 100644
+--- a/drivers/md/dm-rq.c
++++ b/drivers/md/dm-rq.c
+@@ -278,8 +278,7 @@ static void dm_complete_request(struct request *rq, blk_status_t error)
+ 	struct dm_rq_target_io *tio = tio_from_request(rq);
  
- 	return r;
-diff --git a/drivers/md/dm-log.c b/drivers/md/dm-log.c
-index 9d85d045f9d9d..bced5a783ee33 100644
---- a/drivers/md/dm-log.c
-+++ b/drivers/md/dm-log.c
-@@ -121,7 +121,7 @@ int dm_dirty_log_type_register(struct dm_dirty_log_type *type)
- 	if (!__find_dirty_log_type(type->name))
- 		list_add(&type->list, &_log_types);
- 	else
--		r = -EEXIST;
-+		r = -EBUSY;
- 	spin_unlock(&_lock);
+ 	tio->error = error;
+-	if (likely(!blk_should_fake_timeout(rq->q)))
+-		blk_mq_complete_request(rq);
++	blk_mq_complete_request(rq);
+ }
  
- 	return r;
-diff --git a/drivers/md/dm-path-selector.c b/drivers/md/dm-path-selector.c
-index d0b883fabfeb6..2b0ac200f1c02 100644
---- a/drivers/md/dm-path-selector.c
-+++ b/drivers/md/dm-path-selector.c
-@@ -107,7 +107,7 @@ int dm_register_path_selector(struct path_selector_type *pst)
- 
- 	if (__find_path_selector_type(pst->name)) {
- 		kfree(psi);
--		r = -EEXIST;
-+		r = -EBUSY;
- 	} else
- 		list_add(&psi->list, &_path_selectors);
- 
-diff --git a/drivers/md/dm-target.c b/drivers/md/dm-target.c
-index 8fede41adec00..1fd41289de367 100644
---- a/drivers/md/dm-target.c
-+++ b/drivers/md/dm-target.c
-@@ -88,7 +88,7 @@ int dm_register_target(struct target_type *tt)
- 	if (__find_target_type(tt->name)) {
- 		DMERR("%s: '%s' target already registered",
- 		      __func__, tt->name);
--		rv = -EEXIST;
-+		rv = -EBUSY;
- 	} else {
- 		list_add(&tt->list, &_targets);
- 	}
+ /*
 -- 
 2.51.0
 
