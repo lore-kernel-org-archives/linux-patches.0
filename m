@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890904BC010;
-	Sat, 28 Feb 2026 17:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791204BC01F;
+	Sat, 28 Feb 2026 17:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301346; cv=none; b=LPyvwXHBLo8k+zIQ/SOm2ASuDqd3RQG/leotCxhZXScjZb4SbLrTeGrE+6VIzbZrhqVdJ+8dTGdd3nOIB4y0bQHE/2Rdmogjp5mZ2zyUlXrTDtEgNQCoizPvUz9n/d66u57sPHPY/oXyxoQ5TzXdRJ4AtiXKxTOxw+08Sv7eeB8=
+	t=1772301347; cv=none; b=BamKWRssMSzXv6Jnos70TcCauiNu95KcCzxGi4dK5YLb10yAZ8AxigS7ciHLB+wGioI5lgHokX2otnwszb6zjSpgbsa60OQcFNgXGNq4lCdzc67GJun4WfOcNzRNNodL5Zgo6M9AOHfLusroh65AQQG1ATWGlfp6XrOT1/Z/aWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301346; c=relaxed/simple;
-	bh=iUjxghbPGpierS2dmoHzYUTfoL1la1uEPilGAtjgPKQ=;
+	s=arc-20240116; t=1772301347; c=relaxed/simple;
+	bh=j7XjfcggW9wTKQ9kVivPmHRe+sslZnI9iWCZg1j7h3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHfEiaggXV6T4pifWf+fb9NzKe2ifspRTy3zDilNzS5NuZsY08C7uwGWuoUuQWXKj7xS3fRb0chngNY58+hMi4hiZh+tLyEDP+aSf29wPycr/u8VzFDzyJnlrMgF/yndkEKnTWHpdlWLQ/t9wl8cTFg5f3QZpmXbYUczMFA1RdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TIMXlAFy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pg+sqs+BNGuEa6U3voeB3/BN/F48ZuqKSpyRS0T2Lxm2VkJq+srQwWx8CtOoLXVhR25gbvLvYaJgBEqt12JAZBuqt084s591AmRnG7dXN42jGxAXwfo1sqmKjdKgYnh7vyHl1Ujg1AE6BT3OKKM191rsnic7URiHZkRZ7dFcSYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YdkhVrda; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TIMXlAFy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFD7C19423;
-	Sat, 28 Feb 2026 17:55:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YdkhVrda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0698C19423;
+	Sat, 28 Feb 2026 17:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301346;
-	bh=iUjxghbPGpierS2dmoHzYUTfoL1la1uEPilGAtjgPKQ=;
+	s=k20201202; t=1772301347;
+	bh=j7XjfcggW9wTKQ9kVivPmHRe+sslZnI9iWCZg1j7h3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TIMXlAFyWwuDFZnULaXpGRkQg7CeGe9o3Dgx/kVgsE2fVK+8a7W57n4mCtFrAccQu
-	 zetiKS66qRTPrJmoUkka/pH8CC1hU1ofbgf1YT0ozGZmFB++vFJTWpvZPOiDlTfj5/
-	 Dc3Alp6FWQKFF41cs/dL19pYnujkkqlJhUVQs6xfPg0d3vJ2+G5z+fyqX+l2S6OCPC
-	 bndIdjH8TfJQPSuyzCxkgsZp4clQh1aDyY7BdZYysSTP6LEbqHCtKcPVK/R/mlwvkj
-	 4juq4GMTajfhhyRrzh9i5SXA2fVvj5XpOpRY5E6kP+9NGoYmPSuPTdRsqM9Uwv05dr
-	 /zyDoguKzJQhA==
+	b=YdkhVrdaAw8FFuPj2Y9cOvlkiJRtvLELN1VoTlqQ5bh0jcZjiHmlMZojDstYcOLoi
+	 zHqxTxJ0O5GlwVl4YHP1uid5eYs5m9IV1FHRqQxsrFt7AW7kaDlRcX2Wa5ZcnWNblx
+	 rZtxBUFaYUrfG7ecWImqpMTRy36wC8E6odlrjiLJ0ZmBbqSUnGxhHv0RNHA2BjJJrS
+	 UzNI1EGdcHqbGuDvC92aDdiu7FrTN+zOE6QZpSr2BxMyWOUccdjTk5aPr5O7fUs9Zn
+	 GqzURTb//dQ9rK/P8XjO+QVTXgtQFTuPNovEvb4o9fB+omf69z80vjtC+3UCkB0CbL
+	 PvOcy+AoTOU6w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Bingbu Cao <bingbu.cao@intel.com>,
@@ -33,9 +33,9 @@ Cc: Bingbu Cao <bingbu.cao@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 533/752] media: ipu6: Fix RPM reference leak in probe error paths
-Date: Sat, 28 Feb 2026 12:44:04 -0500
-Message-ID: <20260228174750.1542406-533-sashal@kernel.org>
+Subject: [PATCH 6.18 534/752] media: staging/ipu7: Ignore interrupts when device is suspended
+Date: Sat, 28 Feb 2026 12:44:05 -0500
+Message-ID: <20260228174750.1542406-534-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,69 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Bingbu Cao <bingbu.cao@intel.com>
 
-[ Upstream commit 6099f78e4c9223f4de4169d2fd1cded01279da1a ]
+[ Upstream commit 9ad65684b9285c5d66fb417d50e91a25ef8c994d ]
 
-Several error paths in ipu6_pci_probe() were jumping directly to
-out_ipu6_bus_del_devices without releasing the runtime PM reference.
-Add pm_runtime_put_sync() before cleaning up other resources.
+IPU7 devices have shared interrupts with others. In some case when IPU7
+device is suspended, driver get unexpected interrupt and invalid irq
+status 0xffffffff from ISR_STATUS and PB LOCAL_STATUS registers as
+interrupt is triggered from other device on shared irq line.
+
+In order to avoid this issue use pm_runtime_get_if_active() to check if
+IPU7 device is resumed, ignore the invalid irq status and use
+synchronize_irq() in suspend.
 
 Cc: Stable@vger.kernel.org
-Fixes: 25fedc021985 ("media: intel/ipu6: add Intel IPU6 PCI device driver")
+Fixes: b7fe4c0019b1 ("media: staging/ipu7: add Intel IPU7 PCI device driver")
 Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu6/ipu6.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/staging/media/ipu7/ipu7-buttress.c | 17 ++++++++++++++++-
+ drivers/staging/media/ipu7/ipu7.c          |  4 ++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/intel/ipu6/ipu6.c b/drivers/media/pci/intel/ipu6/ipu6.c
-index 1f4f20b9c94dc..a2768f44017a5 100644
---- a/drivers/media/pci/intel/ipu6/ipu6.c
-+++ b/drivers/media/pci/intel/ipu6/ipu6.c
-@@ -630,21 +630,21 @@ static int ipu6_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (ret) {
- 		dev_err_probe(&isp->pdev->dev, ret,
- 			      "Failed to set MMU hardware\n");
--		goto out_ipu6_bus_del_devices;
-+		goto out_ipu6_rpm_put;
+diff --git a/drivers/staging/media/ipu7/ipu7-buttress.c b/drivers/staging/media/ipu7/ipu7-buttress.c
+index e5707f5e300ba..40c6c8473357c 100644
+--- a/drivers/staging/media/ipu7/ipu7-buttress.c
++++ b/drivers/staging/media/ipu7/ipu7-buttress.c
+@@ -342,14 +342,23 @@ irqreturn_t ipu_buttress_isr(int irq, void *isp_ptr)
+ 	u32 disable_irqs = 0;
+ 	u32 irq_status;
+ 	unsigned int i;
++	int active;
+ 
+-	pm_runtime_get_noresume(dev);
++	active = pm_runtime_get_if_active(dev);
++	if (active <= 0)
++		return IRQ_NONE;
+ 
+ 	pb_irq = readl(isp->pb_base + INTERRUPT_STATUS);
+ 	writel(pb_irq, isp->pb_base + INTERRUPT_STATUS);
+ 
+ 	/* check btrs ATS, CFI and IMR errors, BIT(0) is unused for IPU */
+ 	pb_local_irq = readl(isp->pb_base + BTRS_LOCAL_INTERRUPT_MASK);
++	if (pb_local_irq == 0xffffffff) {
++		dev_warn_once(dev, "invalid PB irq status\n");
++		pm_runtime_put_noidle(dev);
++		return IRQ_NONE;
++	}
++
+ 	if (pb_local_irq & ~BIT(0)) {
+ 		dev_warn(dev, "PB interrupt status 0x%x local 0x%x\n", pb_irq,
+ 			 pb_local_irq);
+@@ -370,6 +379,12 @@ irqreturn_t ipu_buttress_isr(int irq, void *isp_ptr)
+ 		return IRQ_NONE;
  	}
  
- 	ret = ipu6_buttress_map_fw_image(isp->psys, isp->cpd_fw,
- 					 &isp->psys->fw_sgt);
- 	if (ret) {
- 		dev_err_probe(&isp->pdev->dev, ret, "failed to map fw image\n");
--		goto out_ipu6_bus_del_devices;
-+		goto out_ipu6_rpm_put;
- 	}
++	if (irq_status == 0xffffffff) {
++		dev_warn_once(dev, "invalid irq status 0x%08x\n", irq_status);
++		pm_runtime_put_noidle(dev);
++		return IRQ_NONE;
++	}
++
+ 	do {
+ 		writel(irq_status, isp->base + BUTTRESS_REG_IRQ_CLEAR);
  
- 	ret = ipu6_cpd_create_pkg_dir(isp->psys, isp->cpd_fw->data);
- 	if (ret) {
- 		dev_err_probe(&isp->pdev->dev, ret,
- 			      "failed to create pkg dir\n");
--		goto out_ipu6_bus_del_devices;
-+		goto out_ipu6_rpm_put;
- 	}
+diff --git a/drivers/staging/media/ipu7/ipu7.c b/drivers/staging/media/ipu7/ipu7.c
+index 5cddc09c72bf2..6c8c3eea44acb 100644
+--- a/drivers/staging/media/ipu7/ipu7.c
++++ b/drivers/staging/media/ipu7/ipu7.c
+@@ -2684,6 +2684,10 @@ static void ipu7_pci_reset_done(struct pci_dev *pdev)
+  */
+ static int ipu7_suspend(struct device *dev)
+ {
++	struct pci_dev *pdev = to_pci_dev(dev);
++
++	synchronize_irq(pdev->irq);
++
+ 	return 0;
+ }
  
- 	ret = devm_request_threaded_irq(dev, pdev->irq, ipu6_buttress_isr,
-@@ -652,7 +652,7 @@ static int ipu6_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 					IRQF_SHARED, IPU6_NAME, isp);
- 	if (ret) {
- 		dev_err_probe(dev, ret, "Requesting irq failed\n");
--		goto out_ipu6_bus_del_devices;
-+		goto out_ipu6_rpm_put;
- 	}
- 
- 	ret = ipu6_buttress_authenticate(isp);
-@@ -683,6 +683,8 @@ static int ipu6_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 
- out_free_irq:
- 	devm_free_irq(dev, pdev->irq, isp);
-+out_ipu6_rpm_put:
-+	pm_runtime_put_sync(&isp->psys->auxdev.dev);
- out_ipu6_bus_del_devices:
- 	if (isp->psys) {
- 		ipu6_cpd_free_pkg_dir(isp->psys);
 -- 
 2.51.0
 
