@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321CC36DA0F;
-	Sat, 28 Feb 2026 17:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EBC371449;
+	Sat, 28 Feb 2026 17:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301475; cv=none; b=V59S6FpSeRjGpswrOcc7TjnsEylSX8oKNeeEBBRVcr2R2l+OXVHXr3iVVvd31K7RSs3Lu/c/N8/3BVccOmnnqOonYW/CCwgpzNsVZOnsV/HNTALLBPPEurCbSp/wePekO+wraIHXc8DQ6h6MkUmsiji1jQ0WniL9EVym4QqSpho=
+	t=1772301476; cv=none; b=cpYW/P6TJ87aWm0nVb43jO2+tN88y7NFaqqizhyAdSi8ROtAbxOnYoxfZEaKmeUF0tq3rXWC8hoAnqtJF5PX3erGH9d76xgO3s9Z758A9yMdIL9hMHaAuwDbzo4g/hIagvNPjwIX2pTnhhcJIikh8/ptFpQaFc5iP+MebzTgl2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301475; c=relaxed/simple;
-	bh=r2vRFvSi6DryR8gEDTFDXYBlGB6BbkYnv7ZGKP5MA2k=;
+	s=arc-20240116; t=1772301476; c=relaxed/simple;
+	bh=dQkMmHrbcqCy/oztNkPAM72dHeZZl1pyQ+qFF3r0YC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fIPvIAlJnZkaK26B2UhdScbuWyx+qvIz4nwgO3o49L1T1Ev+e9xuddyPCVNV50bTseES0af6UO19OPW2SBbwZ5p5g/SYZxlh8adtnzwiT9dowLy6Dsg/x7kVaGxfzbeIfEiYATGdaOQfayiT2ZMbg09AHwfiyj22wxG4jUKKuoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mGomZbeR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4yuJ9PRwXpWFwZWVGAHBtF9HSqH0hFZEhKNeCgoKIl+clW/yOveAxTdy2W9BWzfU7TAzWYi7AMjrkL5ftL0i3xtoTJ08E0/Wgg/13k3dxxTboQAwL/dj/5lv/AnpJHbdfP+w6kyYyduZCDGGezNJVF0/nBynqLcSml74HaXaec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQfhxUGw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mGomZbeR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B351C116D0;
-	Sat, 28 Feb 2026 17:57:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQfhxUGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5930DC116D0;
+	Sat, 28 Feb 2026 17:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301475;
-	bh=r2vRFvSi6DryR8gEDTFDXYBlGB6BbkYnv7ZGKP5MA2k=;
+	s=k20201202; t=1772301476;
+	bh=dQkMmHrbcqCy/oztNkPAM72dHeZZl1pyQ+qFF3r0YC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGomZbeR3Ri8hJF7rFZ+RJcfG0j6kUUTS2QwD6/0jyiMzACmAftu5ryxQISVdi+7/
-	 rhizhgV3E5Ua0a4uAgAXWyb8anE516VAiayCd54PAqMvYBaKaPcRywq4cY5gA5gJu0
-	 pHuypv3UevnWoeKGBp8Zy+TSbQ1cUu4Dp3dIriHMKFwBYOKtKM/SBgethkiX74RsWK
-	 fCtKq7DVW/2UWIYOLAwwcC8zwIR9jXB4f4Ho2ggWGb/lHVojCGzZf0azjPSKP0wxyS
-	 HxxgKzWX9jgJC+MmJjDq+OVzk2tbX2tGjEriKFtZJ+l8/GKpXr8RU3UPb5ctQg53El
-	 fCMP0OGwF3DlA==
+	b=rQfhxUGw1WQ2pt2c0TWRFBQUTnzO9GkV4bKPUR7OjbJg/0+hJl94W6Y++JKxVPtgj
+	 IVOoDEQDL26xAJ+YCGVzqdaqazgL9r5EGuJIZjgaHob9ZXtWhTcaCkbAVskH4wi2sf
+	 KrlcMNofNvTDsNVr3kG0t8IkeSBOa82jKRl6VR0smeSeIjUHO/+kgDdNE/+MA4dtD+
+	 Ct9jUx+s7oSN5jY7dGSV/ZEcp2IDFRAya4lcMiYLemHyXAyt5ZiiJW6LDXXfK5ICvN
+	 u4ZUUjQsEpvZ3PIYtmFrDj3e5Qi8/RT4gTo79/RwJ9/2tqsoVFUOMrq2s4vbrfqFFj
+	 iNszaiy9/ydFw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Harry Yoo <harry.yoo@oracle.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+Cc: Rong Zhang <rongrong@oss.cipunited.com>,
 	stable@vger.kernel.org,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Beiyan Yun <root@infi.wang>,
+	Yao Zi <me@ziyao.cc>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 660/752] mm/slab: use unsigned long for orig_size to ensure proper metadata align
-Date: Sat, 28 Feb 2026 12:46:11 -0500
-Message-ID: <20260228174750.1542406-660-sashal@kernel.org>
+Subject: [PATCH 6.18 661/752] MIPS: Loongson2ef: Register PCI controller in early stage
+Date: Sat, 28 Feb 2026 12:46:12 -0500
+Message-ID: <20260228174750.1542406-661-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,102 +51,77 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Harry Yoo <harry.yoo@oracle.com>
+From: Rong Zhang <rongrong@oss.cipunited.com>
 
-[ Upstream commit b85f369b81aed457acbea4ad3314218254a72fd2 ]
+[ Upstream commit 6a00c043af07492502ba7a2263ddc4cdb01b66a7 ]
 
-When both KASAN and SLAB_STORE_USER are enabled, accesses to
-struct kasan_alloc_meta fields can be misaligned on 64-bit architectures.
-This occurs because orig_size is currently defined as unsigned int,
-which only guarantees 4-byte alignment. When struct kasan_alloc_meta is
-placed after orig_size, it may end up at a 4-byte boundary rather than
-the required 8-byte boundary on 64-bit systems.
+We are about to set loongson_pci_io_resource.start to 0 and adopt
+PCIBIOS_MIN_IO. As the first step, PCI controller needs to be registered
+in early stage to make it the root of other resources (e.g., i8259) and
+prevent resource conflicts.
 
-Note that 64-bit architectures without HAVE_EFFICIENT_UNALIGNED_ACCESS
-are assumed to require 64-bit accesses to be 64-bit aligned.
-See HAVE_64BIT_ALIGNED_ACCESS and commit adab66b71abf ("Revert:
-"ring-buffer: Remove HAVE_64BIT_ALIGNED_ACCESS"") for more details.
+Register it in plat_mem_setup() instead of arch_initcall().
 
-Change orig_size from unsigned int to unsigned long to ensure proper
-alignment for any subsequent metadata. This should not waste additional
-memory because kmalloc objects are already aligned to at least
-ARCH_KMALLOC_MINALIGN.
-
-Closes: https://lore.kernel.org/all/aPrLF0OUK651M4dk@hyeyoo
-Suggested-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Fixes: ae81aad5c2e1 ("MIPS: PCI: Use pci_enable_resources()")
 Cc: stable@vger.kernel.org
-Fixes: 6edf2576a6cc ("mm/slub: enable debugging memory wasting of kmalloc")
-Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
-Closes: https://lore.kernel.org/all/aPrLF0OUK651M4dk@hyeyoo/
-Link: https://patch.msgid.link/20260113061845.159790-2-harry.yoo@oracle.com
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Tested-by: Beiyan Yun <root@infi.wang>
+Tested-by: Yao Zi <me@ziyao.cc>
+Signed-off-by: Rong Zhang <rongrong@oss.cipunited.com>
+Acked-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/mips/include/asm/mach-loongson2ef/loongson.h | 6 ++++++
+ arch/mips/loongson2ef/common/pci.c                | 7 +------
+ arch/mips/loongson2ef/common/setup.c              | 1 +
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index e8cffd89b73d7..bc6156801e8e6 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -863,7 +863,7 @@ static inline bool slab_update_freelist(struct kmem_cache *s, struct slab *slab,
-  * request size in the meta data area, for better debug and sanity check.
-  */
- static inline void set_orig_size(struct kmem_cache *s,
--				void *object, unsigned int orig_size)
-+				void *object, unsigned long orig_size)
- {
- 	void *p = kasan_reset_tag(object);
+diff --git a/arch/mips/include/asm/mach-loongson2ef/loongson.h b/arch/mips/include/asm/mach-loongson2ef/loongson.h
+index 4a098fb102325..0e586787eb87a 100644
+--- a/arch/mips/include/asm/mach-loongson2ef/loongson.h
++++ b/arch/mips/include/asm/mach-loongson2ef/loongson.h
+@@ -324,4 +324,10 @@ extern unsigned long _loongson_addrwincfg_base;
  
-@@ -873,10 +873,10 @@ static inline void set_orig_size(struct kmem_cache *s,
- 	p += get_info_end(s);
- 	p += sizeof(struct track) * 2;
+ #endif	/* ! CONFIG_CPU_SUPPORTS_ADDRWINCFG */
  
--	*(unsigned int *)p = orig_size;
-+	*(unsigned long *)p = orig_size;
- }
- 
--static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
-+static inline unsigned long get_orig_size(struct kmem_cache *s, void *object)
- {
- 	void *p = kasan_reset_tag(object);
- 
-@@ -889,7 +889,7 @@ static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
- 	p += get_info_end(s);
- 	p += sizeof(struct track) * 2;
- 
--	return *(unsigned int *)p;
-+	return *(unsigned long *)p;
- }
- 
- #ifdef CONFIG_SLUB_DEBUG
-@@ -1204,7 +1204,7 @@ static void print_trailer(struct kmem_cache *s, struct slab *slab, u8 *p)
- 		off += 2 * sizeof(struct track);
- 
- 	if (slub_debug_orig_size(s))
--		off += sizeof(unsigned int);
-+		off += sizeof(unsigned long);
- 
- 	off += kasan_metadata_size(s, false);
- 
-@@ -1400,7 +1400,7 @@ static int check_pad_bytes(struct kmem_cache *s, struct slab *slab, u8 *p)
- 		off += 2 * sizeof(struct track);
- 
- 		if (s->flags & SLAB_KMALLOC)
--			off += sizeof(unsigned int);
-+			off += sizeof(unsigned long);
- 	}
- 
- 	off += kasan_metadata_size(s, false);
-@@ -8013,7 +8013,7 @@ static int calculate_sizes(struct kmem_cache_args *args, struct kmem_cache *s)
- 
- 		/* Save the original kmalloc request size */
- 		if (flags & SLAB_KMALLOC)
--			size += sizeof(unsigned int);
-+			size += sizeof(unsigned long);
- 	}
++#ifdef CONFIG_PCI
++void loongson2ef_pcibios_init(void);
++#else
++static inline void loongson2ef_pcibios_init(void) { }
++#endif
++
+ #endif /* __ASM_MACH_LOONGSON2EF_LOONGSON_H */
+diff --git a/arch/mips/loongson2ef/common/pci.c b/arch/mips/loongson2ef/common/pci.c
+index 7d9ea51e8c01e..55524f9a7b96b 100644
+--- a/arch/mips/loongson2ef/common/pci.c
++++ b/arch/mips/loongson2ef/common/pci.c
+@@ -73,15 +73,10 @@ static void __init setup_pcimap(void)
  #endif
+ }
  
+-static int __init pcibios_init(void)
++void __init loongson2ef_pcibios_init(void)
+ {
+ 	setup_pcimap();
+ 
+ 	loongson_pci_controller.io_map_base = mips_io_port_base;
+ 	register_pci_controller(&loongson_pci_controller);
+-
+-
+-	return 0;
+ }
+-
+-arch_initcall(pcibios_init);
+diff --git a/arch/mips/loongson2ef/common/setup.c b/arch/mips/loongson2ef/common/setup.c
+index 4fd27f4f90edb..a639e35acce59 100644
+--- a/arch/mips/loongson2ef/common/setup.c
++++ b/arch/mips/loongson2ef/common/setup.c
+@@ -27,4 +27,5 @@ EXPORT_SYMBOL(__wbflush);
+ 
+ void __init plat_mem_setup(void)
+ {
++	loongson2ef_pcibios_init();
+ }
 -- 
 2.51.0
 
