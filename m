@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D59733F38A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F2233F38A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301163; cv=none; b=kmZmQOLr2vEL+Pcc3S9zP7ai+RlBHJLcwPvboPnbBXfg5RisGnsli5F9AYMj54fPnyRYPCwsngjoN/u0Kq/L/ioov/yd1vxUq4HgfEUmJai5WE6sEyJ3DpfVEwYYXqZ2BaFa3BZYWrbQo+QwLMEu9umSo8yf117aolSeeFHePso=
+	t=1772301164; cv=none; b=RjEbhQ7PZgSKLf9AMUH32/N0KXvOM9TD+t9GuoSh0NQMO/AjuWh1bXCglu59Wn+92A3gXUKm4CA0u7T6Dv2s0hzpi5ZzKIR/u9k7A4QMNCDjM7PO/ghuFFkNFMlwFE223UWh0OEs2wWNTEuVzHpcxKLPxGePb9TkSJuqNQaFQ0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301163; c=relaxed/simple;
-	bh=8zAMf0U81YEL1qf39ogZMH308pvSfd9zxfu9uVwtPU8=;
+	s=arc-20240116; t=1772301164; c=relaxed/simple;
+	bh=4B9zfesSIGCETB9yT7zZ8o1RykvPoYvqKhAu5noR5P0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jl6zExA2zJp+ALbMBZW8I6l9TSJYsn7kDSWYiccMcDeoefkdpE6J6bZER8fVz2umhANI1njavzyC9tAsP76rNOUa96VB9O0uT+mhvd2fqx/fwpkR6jpesJYOA15jSHrO8Mq8cV2bTxQCl/aOZraHOvesl3eR/V9Nx3nBdrMYqRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ngAQp3XH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MeZgSIBbDJXuAbLp9TAhjIAkp6RzAA5tSkY0ZJ14Js9+JxR64zz/YuU4kpMy+6Tq0taO46Gto2dkaqJUtlgbJbwLHChlFGQqtOhRLHYOYpmmDcTgDFY3h8xV5Ae7ol8PLQnlNFvdNZKho6kzGqAZBnrZohihYmkOi5MAhU3/Nw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bWkbKCNC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ngAQp3XH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C39BC116D0;
-	Sat, 28 Feb 2026 17:52:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bWkbKCNC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730DCC116D0;
+	Sat, 28 Feb 2026 17:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301163;
-	bh=8zAMf0U81YEL1qf39ogZMH308pvSfd9zxfu9uVwtPU8=;
+	s=k20201202; t=1772301164;
+	bh=4B9zfesSIGCETB9yT7zZ8o1RykvPoYvqKhAu5noR5P0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngAQp3XHlX9SZbyFvRmFBb+q2Pq9bko6l+j7lH6ylHMP3+M7Q1mlQ0PXM58HRQ9m1
-	 YQoRF4IwAy2mzr2bl+u5CioJXYVqnVtgRXvSQQ71Kwhgey6eHpLAbb3umzUT9lOiow
-	 8vcBO/goljb6GHXTWRoTw2/Io+KfGTxcx0y1Uj55ShRm7w4J0aDyKgnM1EfmSdlV2c
-	 bU9g/KnQ6nQvHmRq8mQ33VFUPw3Kxh+xFZDKs6/QaWxDfFQXnW3A0gMrF/nfN0DOmS
-	 xknmQMifUpDekf88kuDyerRVv9Oh6nwef6USvDc2pIgGM/Jk1bgw/Jqo2ujzIZ4ftx
-	 RU0TQob7/418g==
+	b=bWkbKCNC+wwTk/YCxSme5HQEwSOiwXKM3o8BoMU/tLwAXVt7tkz4tQFh2401Gi2oX
+	 k2bY6JOqN25/jaEg46jbQCZnWHqOkEA7Pdz7gRXvHslSQDehGlr2Ium4Hd0LqbJzBH
+	 u7u3LdppESbFOGoWb0kje+7Y6XADC3sLSO327zNgmMpZGcE1j7ihKo+Vkpw7a+I2aw
+	 A0XiMS88m1yhUa3kQwgYz/ITrhl6fM6CaSodCFOumiJboB8pjUtXVDzlCbofqVXjJt
+	 38tQROBlXW2EPA4TEW7pMpf/67SsWUdKLCvPzca/KmYS3b93bBdGIeZkZ9trbIEHe4
+	 pp9+h4SSsnNtw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Benson Leung <bleung@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Romain Gantois <romain.gantois@bootlin.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 328/752] usb: typec: ucsi: psy: Fix voltage and current max for non-Fixed PDOs
-Date: Sat, 28 Feb 2026 12:40:39 -0500
-Message-ID: <20260228174750.1542406-328-sashal@kernel.org>
+Subject: [PATCH 6.18 329/752] fpga: of-fpga-region: Fail if any bridge is missing
+Date: Sat, 28 Feb 2026 12:40:40 -0500
+Message-ID: <20260228174750.1542406-329-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,120 +48,56 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Benson Leung <bleung@chromium.org>
+From: Romain Gantois <romain.gantois@bootlin.com>
 
-[ Upstream commit 6811e0a08bdce6b2767414caf17fda24c2e4e032 ]
+[ Upstream commit c141c8221bc5089de915d9f26044df892c343c7e ]
 
-ucsi_psy_get_voltage_max and ucsi_psy_get_current_max are calculated
-using whichever pdo is in the last position of the src_pdos array, presuming
-it to be a fixed pdo, so the pdo_fixed_voltage or pdo_max_current
-helpers are used on that last pdo.
+When parsing the region bridge list from the "fpga-bridges" device tree
+property, the of-fpga-region driver will silently ignore bridges which fail
+to be obtained, for example due to a missing bridge driver or invalid
+phandle.
 
-However, non-Fixed PDOs such as Battery PDOs, Augmented PDOs (used for AVS and
-for PPS) may exist, and are always at the end of the array if they do.
-In the event one of these more advanced chargers are attached the helpers for
-fixed return mangled values.
+This can lead to hardware issues if a region bridge stays coupled when
+partial programming is performed.
 
-Here's an example case of a Google Pixel Flex Dual Port 67W USB-C Fast Charger
-with PPS support:
-POWER_SUPPLY_NAME=ucsi-source-psy-cros_ec_ucsi.4.auto2
-POWER_SUPPLY_TYPE=USB
-POWER_SUPPLY_CHARGE_TYPE=Standard
-POWER_SUPPLY_USB_TYPE=C [PD] PD_PPS PD_DRP
-POWER_SUPPLY_ONLINE=1
-POWER_SUPPLY_VOLTAGE_MIN=5000000
-POWER_SUPPLY_VOLTAGE_MAX=13400000
-POWER_SUPPLY_VOLTAGE_NOW=20000000
-POWER_SUPPLY_CURRENT_MAX=5790000
-POWER_SUPPLY_CURRENT_NOW=3250000
+Fail if any of the bridges specified in "fpga-bridges" cannot be obtained.
 
-Voltage Max is reading as 13.4V, but that's an incorrect decode of the PPS
-APDO in the last position. Same goes for CURRENT_MAX. 5.79A is incorrect.
-
-Instead, enumerate through the src_pdos and filter just for Fixed PDOs for
-now, and find the one with the highest voltage and current respectively.
-
-After, from the same charger:
-POWER_SUPPLY_NAME=ucsi-source-psy-cros_ec_ucsi.4.auto2
-POWER_SUPPLY_TYPE=USB
-POWER_SUPPLY_CHARGE_TYPE=Standard
-POWER_SUPPLY_USB_TYPE=C [PD] PD_PPS PD_DRP
-POWER_SUPPLY_ONLINE=1
-POWER_SUPPLY_VOLTAGE_MIN=5000000
-POWER_SUPPLY_VOLTAGE_MAX=20000000
-POWER_SUPPLY_VOLTAGE_NOW=20000000
-POWER_SUPPLY_CURRENT_MAX=4000000
-POWER_SUPPLY_CURRENT_NOW=3250000
-
-Signed-off-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20251208174918.289394-3-bleung@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
+Link: https://lore.kernel.org/r/20251127-of-fpga-region-fail-if-bridges-not-found-v1-1-ca674f8d07eb@bootlin.com
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/psy.c | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ drivers/fpga/of-fpga-region.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/psy.c b/drivers/usb/typec/ucsi/psy.c
-index 8ae900c8c1321..525c6fc2217da 100644
---- a/drivers/usb/typec/ucsi/psy.c
-+++ b/drivers/usb/typec/ucsi/psy.c
-@@ -88,15 +88,20 @@ static int ucsi_psy_get_voltage_max(struct ucsi_connector *con,
- 				    union power_supply_propval *val)
+diff --git a/drivers/fpga/of-fpga-region.c b/drivers/fpga/of-fpga-region.c
+index 43db4bb77138a..caa091224dc54 100644
+--- a/drivers/fpga/of-fpga-region.c
++++ b/drivers/fpga/of-fpga-region.c
+@@ -83,7 +83,7 @@ static struct fpga_manager *of_fpga_region_get_mgr(struct device_node *np)
+  * done with the bridges.
+  *
+  * Return: 0 for success (even if there are no bridges specified)
+- * or -EBUSY if any of the bridges are in use.
++ * or an error code if any of the bridges are not available.
+  */
+ static int of_fpga_region_get_bridges(struct fpga_region *region)
  {
- 	u32 pdo;
-+	int max_voltage = 0;
+@@ -130,10 +130,10 @@ static int of_fpga_region_get_bridges(struct fpga_region *region)
+ 						 &region->bridge_list);
+ 		of_node_put(br);
  
- 	switch (UCSI_CONSTAT(con, PWR_OPMODE)) {
- 	case UCSI_CONSTAT_PWR_OPMODE_PD:
--		if (con->num_pdos > 0) {
--			pdo = con->src_pdos[con->num_pdos - 1];
--			val->intval = pdo_fixed_voltage(pdo) * 1000;
--		} else {
--			val->intval = 0;
-+		for (int i = 0; i < con->num_pdos; i++) {
-+			int pdo_voltage = 0;
-+
-+			pdo = con->src_pdos[i];
-+			if (pdo_type(pdo) == PDO_TYPE_FIXED)
-+				pdo_voltage = pdo_fixed_voltage(pdo) * 1000;
-+			max_voltage = (pdo_voltage > max_voltage) ? pdo_voltage
-+								  : max_voltage;
+-		/* If any of the bridges are in use, give up */
+-		if (ret == -EBUSY) {
++		/* If any of the bridges are not available, give up */
++		if (ret) {
+ 			fpga_bridges_put(&region->bridge_list);
+-			return -EBUSY;
++			return ret;
  		}
-+		val->intval = max_voltage;
- 		break;
- 	case UCSI_CONSTAT_PWR_OPMODE_TYPEC3_0:
- 	case UCSI_CONSTAT_PWR_OPMODE_TYPEC1_5:
-@@ -144,6 +149,7 @@ static int ucsi_psy_get_current_max(struct ucsi_connector *con,
- 				    union power_supply_propval *val)
- {
- 	u32 pdo;
-+	int max_current = 0;
+ 	}
  
- 	if (!UCSI_CONSTAT(con, CONNECTED)) {
- 		val->intval = 0;
-@@ -152,12 +158,16 @@ static int ucsi_psy_get_current_max(struct ucsi_connector *con,
- 
- 	switch (UCSI_CONSTAT(con, PWR_OPMODE)) {
- 	case UCSI_CONSTAT_PWR_OPMODE_PD:
--		if (con->num_pdos > 0) {
--			pdo = con->src_pdos[con->num_pdos - 1];
--			val->intval = pdo_max_current(pdo) * 1000;
--		} else {
--			val->intval = 0;
-+		for (int i = 0; i < con->num_pdos; i++) {
-+			int pdo_current = 0;
-+
-+			pdo = con->src_pdos[i];
-+			if (pdo_type(pdo) == PDO_TYPE_FIXED)
-+				pdo_current = pdo_max_current(pdo) * 1000;
-+			max_current = (pdo_current > max_current) ? pdo_current
-+								  : max_current;
- 		}
-+		val->intval = max_current;
- 		break;
- 	case UCSI_CONSTAT_PWR_OPMODE_TYPEC1_5:
- 		val->intval = UCSI_TYPEC_1_5_CURRENT * 1000;
 -- 
 2.51.0
 
