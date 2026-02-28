@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33B3348895
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746A3346E5E
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302632; cv=none; b=OaeygPFOOenDBcBST1QOy8h7riPZqrnqhubIuE8YNlsv5lgRj8hJSdZ4fIu3WS79RdkaaKGG4pidx6dtsODlfuvh6TYPrKReHKqM2Bnm+ADpkwNhdZpq4he8pxrKRS78pE7QuUsnDBFnAqeocvmJy+BPyYp5yfH66Z6Y0lBQxLg=
+	t=1772302633; cv=none; b=G76CQJ3RXPY42E+GmlpDUlEvUHsJuCFxfu7B64Q05FrunB+hoEgQC5VrKH47iL1f44szbdCSMxCQyyUF3Efit5h2XOmN0r3DC6JWF5Z696pQGi8gTxfSflksaLs22Y/boVGdeKSuMjii5mYHS1Y8e6cd7kFGBQtJxKCuAdCAsr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302632; c=relaxed/simple;
-	bh=jxIhhfuDWAA+WmskhCtP6WCnDpQmGiy5i4f+jCh3FE4=;
+	s=arc-20240116; t=1772302633; c=relaxed/simple;
+	bh=VW0pt+Y6YbBo0h0mncjgPS6aXKoxVpFs+S7HE5S+aUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uG3o79AV6YPFxg5ZSO+O3/HFpyr+Pjx7wUx23GtvN0QF6qKfST4+rqElChG+fd529wzBra1qsu0gg4caqru1Vn0XPd2dojBncTAFni8s29WGMFSyag9itcVnuH8kjdK6RsGc9IzlOjcp6VYH0VyErqlusZcMdB/xRCXGGDmw0hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XvyfcStI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tE8HIrC2S//8RrVqhj/n7fcYonItM0TMaKvi19LNRGNz3ABO+cWWnDEFP8pwXs/fYrulr0wWeL352r/ehIUpwO/u/QjO0q/v/iVbcv98tWA5nktkrwWGZe0tW51Y9Llhc5MK3RheJCQAFf5ruZdI/tHC4rvFoecVK1nWwfToNZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BbA9PWs0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XvyfcStI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E434C2BC87;
-	Sat, 28 Feb 2026 18:17:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BbA9PWs0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C59C19424;
+	Sat, 28 Feb 2026 18:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302632;
-	bh=jxIhhfuDWAA+WmskhCtP6WCnDpQmGiy5i4f+jCh3FE4=;
+	s=k20201202; t=1772302633;
+	bh=VW0pt+Y6YbBo0h0mncjgPS6aXKoxVpFs+S7HE5S+aUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XvyfcStIub8JNOEkXmY13Fcd0rNqoIIEql2hzpVHiCF7NBYIlNws/Rf8AgH1WXvPh
-	 4DFZ9EL8J0hFVTj/8maKnxe/a7zL1E5gEDcfK1Gyj+5KBbOe8lLgzfQxUedDNShHOK
-	 vNCUGv2kObaxzkGjn32kDIpBEQvFqWjr3VPEhuCfT+GOmvIwhx/idKoeCWUFJwduOM
-	 hoqFizM/+YiOt3HY0jjyLi0aoGj4R4XY4fhjKjzF8viyQbBJzoXB12/HV51S9/W1/c
-	 FCuo3lVYvE57461aWae7Orr4a7c0D1YzDrxMGZzszAmnHUITzs3sP4YMRyEX76RgFO
-	 Y63UlODesdqyA==
+	b=BbA9PWs0m9kHiVZYK3ZBZWe/oM4Fr8nSnDyJibSZmiaOCOSgfXBZ0JzI9/9xIjF6H
+	 9S1/NhyNGA1+NLc6q4Olz2ta83ENtEwTTWD7w+Uwo4kb8siLPD8FlJDU0StI5uFBDu
+	 d/3pLbTgZFyIIJd5c9Y242JoBWArfc3Lulunq0FqU24RNxRbZ9NYD8tNADtQy1Jku5
+	 rMaNBvWTW7ciYYwwmCEibV/GLf1TDIQykrVsFeqRJqgA0nrhsjdx1clKpoN3uupnV3
+	 9qVWr8GodttTrl9SRs9H8E6oUl8iByi3g8GIuvWeE0Ughm9lrmjjSRoGAP1WsNsLQb
+	 2T7Zx+lmWcxJQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Edward Adam Davis <eadavis@qq.com>,
-	syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com,
+Cc: Jiasheng Jiang <jiashengjiangcool@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 152/164] fs/ntfs3: prevent infinite loops caused by the next valid being the same
-Date: Sat, 28 Feb 2026 13:14:51 -0500
-Message-ID: <20260228181505.1600663-152-sashal@kernel.org>
+Subject: [PATCH 5.15 153/164] fs/ntfs3: Fix slab-out-of-bounds read in DeleteIndexEntryRoot
+Date: Sat, 28 Feb 2026 13:14:52 -0500
+Message-ID: <20260228181505.1600663-153-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,55 +47,49 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 27b75ca4e51e3e4554dc85dbf1a0246c66106fd3 ]
+[ Upstream commit b2bc7c44ed1779fc9eaab9a186db0f0d01439622 ]
 
-When processing valid within the range [valid : pos), if valid cannot
-be retrieved correctly, for example, if the retrieved valid value is
-always the same, this can trigger a potential infinite loop, similar
-to the hung problem reported by syzbot [1].
+In the 'DeleteIndexEntryRoot' case of the 'do_action' function, the
+entry size ('esize') is retrieved from the log record without adequate
+bounds checking.
 
-Adding a check for the valid value within the loop body, and terminating
-the loop and returning -EINVAL if the value is the same as the current
-value, can prevent this.
+Specifically, the code calculates the end of the entry ('e2') using:
+    e2 = Add2Ptr(e1, esize);
 
-[1]
-INFO: task syz.4.21:6056 blocked for more than 143 seconds.
-Call Trace:
- rwbase_write_lock+0x14f/0x750 kernel/locking/rwbase_rt.c:244
- inode_lock include/linux/fs.h:1027 [inline]
- ntfs_file_write_iter+0xe6/0x870 fs/ntfs3/file.c:1284
+It then calculates the size for memmove using 'PtrOffset(e2, ...)',
+which subtracts the end pointer from the buffer limit. If 'esize' is
+maliciously large, 'e2' exceeds the used buffer size. This results in
+a negative offset which, when cast to size_t for memmove, interprets
+as a massive unsigned integer, leading to a heap buffer overflow.
 
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bcf9e1868c1a0c7e04f1
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+This commit adds a check to ensure that the entry size ('esize') strictly
+fits within the remaining used space of the index header before performing
+memory operations.
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ntfs3/fslog.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index ffb31420085f4..25788df25deeb 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -932,8 +932,12 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
- 			goto out;
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 6fddedca71f32..d3d006b63b27e 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3434,6 +3434,9 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
  
- 		if (lcn == SPARSE_LCN) {
--			ni->i_valid = valid =
--				frame_vbo + ((u64)clen << sbi->cluster_bits);
-+			valid = frame_vbo + ((u64)clen << sbi->cluster_bits);
-+			if (ni->i_valid == valid) {
-+				err = -EINVAL;
-+				goto out;
-+			}
-+			ni->i_valid = valid;
- 			continue;
- 		}
+ 		e1 = Add2Ptr(attr, le16_to_cpu(lrh->attr_off));
+ 		esize = le16_to_cpu(e1->size);
++		if (PtrOffset(e1, Add2Ptr(hdr, used)) < esize)
++			goto dirty_vol;
++
+ 		e2 = Add2Ptr(e1, esize);
  
+ 		memmove(e1, e2, PtrOffset(e2, Add2Ptr(hdr, used)));
 -- 
 2.51.0
 
