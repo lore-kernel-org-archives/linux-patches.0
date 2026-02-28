@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3AC332628
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7416132AABE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301235; cv=none; b=LXMqxwdiDfnLmbImjlIwOBm7GJI+yJ9l3tlkMXwcb2VdrqFo1ObSoc9i2ejDKOTrR9ljWKw+Uk61uk0LF1F7U0qiAxbST24UJIZ/PqY3yuvHHC6E5DmcrLl1JVuvnQ/sqhzk8Ab8U3lgpj9MjbTdRMwBbEdmULGEDkaX3ETV70k=
+	t=1772301236; cv=none; b=DeOZrC3EDVZqLpBR6Q+jfhCObN2J992NrNZDbQxLJeJqkdIBzu2Fi3eYDuc3votacYs3BfjowpcxCIOKO1TrOuPrTCwXuh6gS19wcUk+p2q2r7bDL5tkD11tWb65Xz9EGNu7RvY6YVqdRU2hN3IDZr7nmNSxr0VsSzJtQpOrmxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301235; c=relaxed/simple;
-	bh=DbXUv4jDdo5qXVHpFbFNYw/IsrgpO94wkjxtxp9ErH4=;
+	s=arc-20240116; t=1772301236; c=relaxed/simple;
+	bh=dLPGJNofiRNB53LoWfuvKRZy9fh8nZFlbeV2LQiNivc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbVLkckqs+Kxn11US6yQz6B9JigglDgJf5jczSme8wf/f1lvxBZ01nUCHQ/l+XmBl5roGCrRMtZV2DFg7YubyyYjR3qVUEOUZogbycNdONcZ6SERDpyubldcU9oMezBUCEkV3YU1VIUS7FFLnDAunzidPxaBe36SzCJ2GI1+BSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rOyH5YpR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TmtR/VA2XVfRLSD8uU/n649RAyXOw3ust77piiGRfku4VxAn2Wj80EFhKPYo1hBy2HqaN+gdoR2HwNcUkkXPxsbK1SmIiLT7QYqX3sbtNXXeelLzg5i5ddFp7s+93mmqB8IplXRD0yOyN0QYr9B+jUknAokcKyBaqa/Wy41M+sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R/QBq2T3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rOyH5YpR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDB1C19423;
-	Sat, 28 Feb 2026 17:53:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R/QBq2T3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14C0C116D0;
+	Sat, 28 Feb 2026 17:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301235;
-	bh=DbXUv4jDdo5qXVHpFbFNYw/IsrgpO94wkjxtxp9ErH4=;
+	s=k20201202; t=1772301236;
+	bh=dLPGJNofiRNB53LoWfuvKRZy9fh8nZFlbeV2LQiNivc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOyH5YpRNGn3OH4xfBw7aLysWIn6+Mdq+Qg/RvpCzoLGvFVLYxKeGMeHsfHZlhNiD
-	 f9CvaJMgKoDXWnOmruuyXwYLAP5eOx7mwFBbT/oq4QXXZ1msN4Rn8YrcX8WwkG+5EU
-	 WQs4LOkiQ1IPsBrErXqfpJiCWZoWjYlC5iHi436A8m0tYEkSZka3JSECjbgW3nwPO1
-	 Pe5obnAmW1USEB5zcIsCh1QvDJd+sO/pHHejbLgPLBHmAPe1uED7oifDTtWYK3gg+y
-	 SJtovrywp7RU/R5uIcj5AulRRNhf7YJimglAkuEsM/3VpGEqvm4GAdsUZmm9upvsM+
-	 /J7iKlRcplYKA==
+	b=R/QBq2T3BbnkRmMCZZUX8DS9QYinkhIuqFTq+dnYC4pvNdG7PodVZjFO0CC1DT569
+	 k7Ma7j+MlyRxdxVAjp28qpATt1Fh9+ouXcASs0B+AHhi1u1WD2iNJYZJDXPH3Xzwoh
+	 kkgKnuFanFsFTsHhwayKrjBSdc3plWgDf3KY030pBXQMAtI/TWgVoyuWPqSTdjFOXc
+	 2cJe7UwelU+W1K71Fvzn//OODCHXkB9EgxlR4S/eE937zEpwxhyILxIdhOkBxNlvnY
+	 460Hr3Wo2H/GwTSS6yKXn7642gznSF/MsyNHuBJexXAPG1eAVcLfH8C6Mcr6bam8fQ
+	 axJj3PwoMVt3g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Nicholas Carlini <nicholas@carlini.com>,
-	Stefan Metzmacher <metze@samba.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Jiri Pirko <jiri@nvidia.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 414/752] ksmbd: fix signededness bug in smb_direct_prepare_negotiation()
-Date: Sat, 28 Feb 2026 12:42:05 -0500
-Message-ID: <20260228174750.1542406-414-sashal@kernel.org>
+Subject: [PATCH 6.18 415/752] dma-mapping: avoid random addr value print out on error path
+Date: Sat, 28 Feb 2026 12:42:06 -0500
+Message-ID: <20260228174750.1542406-415-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,49 +47,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Jiri Pirko <jiri@nvidia.com>
 
-[ Upstream commit 6b4f875aac344cdd52a1f34cc70ed2f874a65757 ]
+[ Upstream commit 47322c469d4a63ac45b705ca83680671ff71c975 ]
 
-smb_direct_prepare_negotiation() casts an unsigned __u32 value
-from sp->max_recv_size and req->preferred_send_size to a signed
-int before computing min_t(int, ...). A maliciously provided
-preferred_send_size of 0x80000000 will return as smaller than
-max_recv_size, and then be used to set the maximum allowed
-alowed receive size for the next message.
+dma_addr is unitialized in dma_direct_map_phys() when swiotlb is forced
+and DMA_ATTR_MMIO is set which leads to random value print out in
+warning. Fix that by just returning DMA_MAPPING_ERROR.
 
-By sending a second message with a large value (>1420 bytes)
-the attacker can then achieve a heap buffer overflow.
-
-This fix replaces min_t(int, ...) with min_t(u32)
-
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: e53d29f957b3 ("dma-mapping: convert dma_direct_*map_page to be phys_addr_t based")
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260209153809.250835-2-jiri@resnulli.us
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_rdma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/dma/direct.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 4e74934e1f277..f00bb28a4aa88 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -2414,9 +2414,9 @@ static int smb_direct_prepare(struct ksmbd_transport *t)
- 		goto put;
+diff --git a/kernel/dma/direct.h b/kernel/dma/direct.h
+index da2fadf45bcd6..62f0d9d0ba02e 100644
+--- a/kernel/dma/direct.h
++++ b/kernel/dma/direct.h
+@@ -88,7 +88,7 @@ static inline dma_addr_t dma_direct_map_phys(struct device *dev,
  
- 	req = (struct smbdirect_negotiate_req *)recvmsg->packet;
--	sp->max_recv_size = min_t(int, sp->max_recv_size,
-+	sp->max_recv_size = min_t(u32, sp->max_recv_size,
- 				  le32_to_cpu(req->preferred_send_size));
--	sp->max_send_size = min_t(int, sp->max_send_size,
-+	sp->max_send_size = min_t(u32, sp->max_send_size,
- 				  le32_to_cpu(req->max_receive_size));
- 	sp->max_fragmented_send_size =
- 		le32_to_cpu(req->max_fragmented_size);
+ 	if (is_swiotlb_force_bounce(dev)) {
+ 		if (attrs & DMA_ATTR_MMIO)
+-			goto err_overflow;
++			return DMA_MAPPING_ERROR;
+ 
+ 		return swiotlb_map(dev, phys, size, dir, attrs);
+ 	}
 -- 
 2.51.0
 
