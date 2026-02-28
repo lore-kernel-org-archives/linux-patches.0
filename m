@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFDE47CC68;
-	Sat, 28 Feb 2026 17:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9720E47CC62;
+	Sat, 28 Feb 2026 17:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301302; cv=none; b=Pb51WC5aPVayIqE9rCOUMEvcqcSzQ7UctGlPcEMgPu4flDFw+VHs4HwR2Az8pfQQNKnQ5bd0y3yXp+a3oTx9eqUgSWPAXRyk5SJFzi++vKd/jMv8MtpWX7dAVIWqy4V9ndCSMX482byDAZRbBohyX8RgvsIPzp/GF0rSbZy1tEk=
+	t=1772301303; cv=none; b=Xl2TUZp0WplXKs5sOelJst622f8k83weX0sossmKlWU9K30QaxmLItly+sXJLe53i+81rahmxEQ026MdZTFgbDE6cY4LtCPfVPZ/yICdaT1SEsaXMDVLNkvoEBhFU2fcVWRGU+A3Nh6OHreexPGrfp9htj4hdCOnykwrbNTI87o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301302; c=relaxed/simple;
-	bh=pRAkqO8gN4BpI84SWXWE6HO6Q2oIxqqA0dQ28+mYDoQ=;
+	s=arc-20240116; t=1772301303; c=relaxed/simple;
+	bh=G/i0yfCCMTH7ld5/Si79o0hJH+R6OBJtdI8UewSx2UE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOa5NLS7vRQZnJ4HRy9YVKDCSDWRt27o01+j0uEfURrAUgcVLXUM/bG/J5mUXXAdLHQ4ujrMc6Z8RwmkjwVWzed7ZSCs/Y5AUz9dVWmzNXenxLINA6cZsOyX+uTBCAUxCBmenF3v6xZ3E6W4wn7xJ3zui9PMqk2lIkoTLOJGOl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KDIab6RW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NCvkU+8WPnhu2Ha6Z4BMLn+DYMiGI3WxgaMVa0pIyAXung++OEptlt8Ast3JpcMaYg9N2sv/YpH8M622ue2toglcFlkhIPoLCLvQEBaE/eRC46S87QyZIIG0UcTGnO06/zuFyTgQYjciN3/E5jkmtqiBcF6DoCYszZld1ufoPXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k2UOZ+C9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KDIab6RW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CC9C116D0;
-	Sat, 28 Feb 2026 17:55:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k2UOZ+C9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C1FC116D0;
+	Sat, 28 Feb 2026 17:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301302;
-	bh=pRAkqO8gN4BpI84SWXWE6HO6Q2oIxqqA0dQ28+mYDoQ=;
+	s=k20201202; t=1772301303;
+	bh=G/i0yfCCMTH7ld5/Si79o0hJH+R6OBJtdI8UewSx2UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDIab6RWF7/cIS+8IlUPbwgIz0sYS2eA3TV5ndzUbd972PvfuxneP4B03GctdPYDO
-	 eETqTn2e1shi0gATwqgpAB1kKaj/ZnsNJ2VZPEYjLvLAlpMABPrKN3sQDpbTAvJ7n/
-	 S5TmDncByXcoX+pkxpvK1cI57JEVTrdnAMe87DxebMXM/XuBoo4TGH0UA0seMwLOdT
-	 t9RuIhuR7hj6ysfKm9gPbgopUtBGlLCSQ5z8JmJX40F3t/ZzvK3t0Z8PKZSQ2MEqAQ
-	 X+iyW4bc0lrM+rNgFAqthNKryNzFUMFOKayKvpIhShl4BLtNksQWZqbgDKV0taJsH9
-	 VufxpkxWWBysw==
+	b=k2UOZ+C9jJRq9vqkOucDucIARbgRnPVQiigPVtfBNPaPqSL6dE6zPC5Fqc54H+O5I
+	 myHYjzBnKCXfQ/j9CeBwbgj1UT26wf0lSC7ACgVAv/RrKVuoAsPp4aOdr0G651uqk9
+	 j6x3hBFp2JOPqiK1DIXfHAe3E7eazP4ZsP8qn05MmxQ9/cwLMPpawp6uxt0WkIvncq
+	 l+QNwfxOOYovW+TdHarWiihisqgO4djLDbPcR9TIW18djr/ESuIFSj7A+1O0OfyWHp
+	 U65X1PyuLSBV954i+HokOInD9Tqg92enmc5WdHYV4sq/A9kfkDrXcC/JrkCmdYgX+H
+	 uU2wLXcnupEZg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Xulin Sun <xulin.sun@windriver.com>,
+Cc: Jackson Lee <jackson.lee@chipsnmedia.com>,
 	stable@vger.kernel.org,
+	Nas Chung <nas.chung@chipsnmedia.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Brandon Brnich <b-brnich@ti.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 487/752] media: chips-media: wave5: Fix device cleanup order to prevent kernel panic
-Date: Sat, 28 Feb 2026 12:43:18 -0500
-Message-ID: <20260228174750.1542406-487-sashal@kernel.org>
+Subject: [PATCH 6.18 488/752] media: chips-media: wave5: Fix SError of kernel panic when closed
+Date: Sat, 28 Feb 2026 12:43:19 -0500
+Message-ID: <20260228174750.1542406-488-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,82 +51,191 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Xulin Sun <xulin.sun@windriver.com>
+From: Jackson Lee <jackson.lee@chipsnmedia.com>
 
-[ Upstream commit b74cedac643b02aefa7da881b58a3792859d9748 ]
+[ Upstream commit cbb9c0d50e471483cced55f5b7db4569dcd959a6 ]
 
-Move video device unregistration to the beginning of the remove function
-to ensure all video operations are stopped before cleaning up the worker
-thread and disabling PM runtime. This prevents hardware register access
-after the device has been powered down.
+SError of kernel panic rarely happened while testing fluster.
+The root cause was to enter suspend mode because timeout of autosuspend
+delay happened.
 
-In polling mode, the hrtimer periodically triggers
-wave5_vpu_timer_callback() which queues work to the kthread worker.
-The worker executes wave5_vpu_irq_work_fn() which reads hardware
-registers via wave5_vdi_read_register().
+[   48.834439] SError Interrupt on CPU0, code 0x00000000bf000000 -- SError
+[   48.834455] CPU: 0 UID: 0 PID: 1067 Comm: v4l2h265dec0:sr Not tainted 6.12.9-gc9e21a1ebd75-dirty #7
+[   48.834461] Hardware name: ti Texas Instruments J721S2 EVM/Texas Instruments J721S2 EVM, BIOS 2025.01-00345-gbaf3aaa8ecfa 01/01/2025
+[   48.834464] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   48.834468] pc : wave5_dec_clr_disp_flag+0x40/0x80 [wave5]
+[   48.834488] lr : wave5_dec_clr_disp_flag+0x40/0x80 [wave5]
+[   48.834495] sp : ffff8000856e3a30
+[   48.834497] x29: ffff8000856e3a30 x28: ffff0008093f6010 x27: ffff000809158130
+[   48.834504] x26: 0000000000000000 x25: ffff00080b625000 x24: ffff000804a9ba80
+[   48.834509] x23: ffff000802343028 x22: ffff000809158150 x21: ffff000802218000
+[   48.834513] x20: ffff0008093f6000 x19: ffff0008093f6000 x18: 0000000000000000
+[   48.834518] x17: 0000000000000000 x16: 0000000000000000 x15: 0000ffff74009618
+[   48.834523] x14: 000000010000000c x13: 0000000000000000 x12: 0000000000000000
+[   48.834527] x11: ffffffffffffffff x10: ffffffffffffffff x9 : ffff000802343028
+[   48.834532] x8 : ffff00080b6252a0 x7 : 0000000000000038 x6 : 0000000000000000
+[   48.834536] x5 : ffff00080b625060 x4 : 0000000000000000 x3 : 0000000000000000
+[   48.834541] x2 : 0000000000000000 x1 : ffff800084bf0118 x0 : ffff800084bf0000
+[   48.834547] Kernel panic - not syncing: Asynchronous SError Interrupt
+[   48.834549] CPU: 0 UID: 0 PID: 1067 Comm: v4l2h265dec0:sr Not tainted 6.12.9-gc9e21a1ebd75-dirty #7
+[   48.834554] Hardware name: ti Texas Instruments J721S2 EVM/Texas Instruments J721S2 EVM, BIOS 2025.01-00345-gbaf3aaa8ecfa 01/01/2025
+[   48.834556] Call trace:
+[   48.834559]  dump_backtrace+0x94/0xec
+[   48.834574]  show_stack+0x18/0x24
+[   48.834579]  dump_stack_lvl+0x38/0x90
+[   48.834585]  dump_stack+0x18/0x24
+[   48.834588]  panic+0x35c/0x3e0
+[   48.834592]  nmi_panic+0x40/0x8c
+[   48.834595]  arm64_serror_panic+0x64/0x70
+[   48.834598]  do_serror+0x3c/0x78
+[   48.834601]  el1h_64_error_handler+0x34/0x4c
+[   48.834605]  el1h_64_error+0x64/0x68
+[   48.834608]  wave5_dec_clr_disp_flag+0x40/0x80 [wave5]
+[   48.834615]  wave5_vpu_dec_clr_disp_flag+0x54/0x80 [wave5]
+[   48.834622]  wave5_vpu_dec_buf_queue+0x19c/0x1a0 [wave5]
+[   48.834628]  __enqueue_in_driver+0x3c/0x74 [videobuf2_common]
+[   48.834639]  vb2_core_qbuf+0x508/0x61c [videobuf2_common]
+[   48.834646]  vb2_qbuf+0xa4/0x168 [videobuf2_v4l2]
+[   48.834656]  v4l2_m2m_qbuf+0x80/0x238 [v4l2_mem2mem]
+[   48.834666]  v4l2_m2m_ioctl_qbuf+0x18/0x24 [v4l2_mem2mem]
+[   48.834673]  v4l_qbuf+0x48/0x5c [videodev]
+[   48.834704]  __video_do_ioctl+0x180/0x3f0 [videodev]
+[   48.834725]  video_usercopy+0x2ec/0x68c [videodev]
+[   48.834745]  video_ioctl2+0x18/0x24 [videodev]
+[   48.834766]  v4l2_ioctl+0x40/0x60 [videodev]
+[   48.834786]  __arm64_sys_ioctl+0xa8/0xec
+[   48.834793]  invoke_syscall+0x44/0x100
+[   48.834800]  el0_svc_common.constprop.0+0xc0/0xe0
+[   48.834804]  do_el0_svc+0x1c/0x28
+[   48.834809]  el0_svc+0x30/0xd0
+[   48.834813]  el0t_64_sync_handler+0xc0/0xc4
+[   48.834816]  el0t_64_sync+0x190/0x194
+[   48.834820] SMP: stopping secondary CPUs
+[   48.834831] Kernel Offset: disabled
+[   48.834833] CPU features: 0x08,00002002,80200000,4200421b
+[   48.834837] Memory Limit: none
+[   49.161404] ---[ end Kernel panic - not syncing: Asynchronous SError Interrupt ]---
 
-The original cleanup order disabled PM runtime and powered down hardware
-before unregistering video devices. When autosuspend triggers and powers
-off the hardware, the video devices are still registered and the worker
-thread can still be triggered by the hrtimer, causing it to attempt
-reading registers from powered-off hardware. This results in a bus error
-(synchronous external abort) and kernel panic.
-
-This causes random kernel panics during encoding operations:
-
-  Internal error: synchronous external abort: 0000000096000010
-    [#1] PREEMPT SMP
-  Modules linked in: wave5 rpmsg_ctrl rpmsg_char ...
-  CPU: 0 UID: 0 PID: 1520 Comm: vpu_irq_thread
-    Tainted: G   M    W
-  pc : wave5_vdi_read_register+0x10/0x38 [wave5]
-  lr : wave5_vpu_irq_work_fn+0x28/0x60 [wave5]
-  Call trace:
-   wave5_vdi_read_register+0x10/0x38 [wave5]
-   kthread_worker_fn+0xd8/0x238
-   kthread+0x104/0x120
-   ret_from_fork+0x10/0x20
-  Code: aa1e03e9 d503201f f9416800 8b214000 (b9400000)
-  ---[ end trace 0000000000000000 ]---
-  Kernel panic - not syncing: synchronous external abort:
-    Fatal exception
-
-Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
+Fixes: 2092b3833487 ("media: chips-media: wave5: Support runtime suspend/resume")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xulin Sun <xulin.sun@windriver.com>
+Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Tested-by: Brandon Brnich <b-brnich@ti.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ .../platform/chips-media/wave5/wave5-vpu-dec.c    |  5 ++---
+ .../platform/chips-media/wave5/wave5-vpu-enc.c    |  3 ---
+ .../media/platform/chips-media/wave5/wave5-vpu.c  |  2 +-
+ .../platform/chips-media/wave5/wave5-vpuapi.c     | 15 ---------------
+ 4 files changed, 3 insertions(+), 22 deletions(-)
 
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+index a4387ed58cac3..a90f00f589e04 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -1243,6 +1243,7 @@ static void wave5_vpu_dec_buf_queue_dst(struct vb2_buffer *vb)
+ 	struct vpu_instance *inst = vb2_get_drv_priv(vb->vb2_queue);
+ 	struct v4l2_m2m_ctx *m2m_ctx = inst->v4l2_fh.m2m_ctx;
+ 
++	pm_runtime_resume_and_get(inst->dev->dev);
+ 	vbuf->sequence = inst->queued_dst_buf_num++;
+ 
+ 	if (inst->state == VPU_INST_STATE_PIC_RUN) {
+@@ -1275,6 +1276,7 @@ static void wave5_vpu_dec_buf_queue_dst(struct vb2_buffer *vb)
+ 	} else {
+ 		v4l2_m2m_buf_queue(m2m_ctx, vbuf);
+ 	}
++	pm_runtime_put_autosuspend(inst->dev->dev);
+ }
+ 
+ static void wave5_vpu_dec_buf_queue(struct vb2_buffer *vb)
+@@ -1827,9 +1829,6 @@ static int wave5_vpu_open_dec(struct file *filp)
+ 	if (ret)
+ 		goto cleanup_inst;
+ 
+-	if (list_empty(&dev->instances))
+-		pm_runtime_use_autosuspend(inst->dev->dev);
+-
+ 	list_add_tail(&inst->list, &dev->instances);
+ 
+ 	mutex_unlock(&dev->dev_lock);
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+index a254830e4009e..5388efa63f73d 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+@@ -1773,9 +1773,6 @@ static int wave5_vpu_open_enc(struct file *filp)
+ 	if (ret)
+ 		goto cleanup_inst;
+ 
+-	if (list_empty(&dev->instances))
+-		pm_runtime_use_autosuspend(inst->dev->dev);
+-
+ 	list_add_tail(&inst->list, &dev->instances);
+ 
+ 	mutex_unlock(&dev->dev_lock);
 diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu.c b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
-index 0bcd48df49d0f..77d6c934d0b9d 100644
+index 77d6c934d0b9d..0026f58403620 100644
 --- a/drivers/media/platform/chips-media/wave5/wave5-vpu.c
 +++ b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
-@@ -351,6 +351,10 @@ static void wave5_vpu_remove(struct platform_device *pdev)
- {
- 	struct vpu_device *dev = dev_get_drvdata(&pdev->dev);
+@@ -322,7 +322,7 @@ static int wave5_vpu_probe(struct platform_device *pdev)
+ 	dev_info(&pdev->dev, "Product Code:      0x%x\n", dev->product_code);
+ 	dev_info(&pdev->dev, "Firmware Revision: %u\n", fw_revision);
  
-+	wave5_vpu_enc_unregister_device(dev);
-+	wave5_vpu_dec_unregister_device(dev);
-+	v4l2_device_unregister(&dev->v4l2_dev);
-+
- 	if (dev->irq < 0) {
- 		hrtimer_cancel(&dev->hrtimer);
- 		kthread_cancel_work_sync(&dev->work);
-@@ -364,9 +368,6 @@ static void wave5_vpu_remove(struct platform_device *pdev)
- 	mutex_destroy(&dev->hw_lock);
- 	reset_control_assert(dev->resets);
- 	clk_bulk_disable_unprepare(dev->num_clks, dev->clks);
--	wave5_vpu_enc_unregister_device(dev);
--	wave5_vpu_dec_unregister_device(dev);
--	v4l2_device_unregister(&dev->v4l2_dev);
- 	wave5_vdi_release(&pdev->dev);
- 	ida_destroy(&dev->inst_ida);
- }
+-	pm_runtime_set_autosuspend_delay(&pdev->dev, 100);
++	pm_runtime_set_autosuspend_delay(&pdev->dev, 500);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+ 	pm_runtime_enable(&pdev->dev);
+ 	wave5_vpu_sleep_wake(&pdev->dev, true, NULL, 0);
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c
+index e5e879a13e8b8..e94d6ebc9f816 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c
+@@ -207,8 +207,6 @@ int wave5_vpu_dec_close(struct vpu_instance *inst, u32 *fail_res)
+ 	int retry = 0;
+ 	struct vpu_device *vpu_dev = inst->dev;
+ 	int i;
+-	int inst_count = 0;
+-	struct vpu_instance *inst_elm;
+ 
+ 	*fail_res = 0;
+ 	if (!inst->codec_info)
+@@ -250,11 +248,6 @@ int wave5_vpu_dec_close(struct vpu_instance *inst, u32 *fail_res)
+ 
+ 	wave5_vdi_free_dma_memory(vpu_dev, &p_dec_info->vb_task);
+ 
+-	list_for_each_entry(inst_elm, &vpu_dev->instances, list)
+-		inst_count++;
+-	if (inst_count == 1)
+-		pm_runtime_dont_use_autosuspend(vpu_dev->dev);
+-
+ unlock_and_return:
+ 	mutex_unlock(&vpu_dev->hw_lock);
+ 	pm_runtime_put_sync(inst->dev->dev);
+@@ -720,8 +713,6 @@ int wave5_vpu_enc_close(struct vpu_instance *inst, u32 *fail_res)
+ 	int ret;
+ 	int retry = 0;
+ 	struct vpu_device *vpu_dev = inst->dev;
+-	int inst_count = 0;
+-	struct vpu_instance *inst_elm;
+ 
+ 	*fail_res = 0;
+ 	if (!inst->codec_info)
+@@ -764,12 +755,6 @@ int wave5_vpu_enc_close(struct vpu_instance *inst, u32 *fail_res)
+ 	}
+ 
+ 	wave5_vdi_free_dma_memory(vpu_dev, &p_enc_info->vb_task);
+-
+-	list_for_each_entry(inst_elm, &vpu_dev->instances, list)
+-		inst_count++;
+-	if (inst_count == 1)
+-		pm_runtime_dont_use_autosuspend(vpu_dev->dev);
+-
+ 	mutex_unlock(&vpu_dev->hw_lock);
+ 	pm_runtime_put_sync(inst->dev->dev);
+ 
 -- 
 2.51.0
 
