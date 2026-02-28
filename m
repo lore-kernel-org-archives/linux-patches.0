@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93910340A59
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AEE392811
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301074; cv=none; b=J7RLiBLiNUEhNknITTTzJLAfrltv8tGXnYfSlFDqXURZETm7EaJvjVd17MEs0VnRypRoSof6g8Tz3LoEOQ6no12blCLYB/jGWAC5ewOGeHgzfP3oj7jzWx/D+WqH2I5MVEPcEqG2doOI4w7R6PQoxhm5bnSC1QZaFEKHVZhGP7g=
+	t=1772301075; cv=none; b=X386336waFrmyg1IrO5/J1FW7zJxODV1K0x12nAY25aJfXnQUQCHHE2Q7P4vEZfGNJfNcNvSGrezxh5RAqdXu0hZpIM6coWKzrSR661F+Z1HeC21fV5gXVugey3oja1IU9h3j8VacA6ONk3h77ihcW5J6o4gVODM6ABiCvPLSsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301074; c=relaxed/simple;
-	bh=TjMq3JlWOB7SkfmZ4Bw8pLvN7zg2RmVsVluWLyJiJb0=;
+	s=arc-20240116; t=1772301075; c=relaxed/simple;
+	bh=DSeS++EwEDiKiYQ08hrhNvl4zKjplGTpvpcRwe/cWmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSyYczU7a6J5QKqffyQqvgVeXiLQkL+ECHK7leYiCV131Ya364hjRvPEEol3OORCji+Ldevx3ArJslzkSLMffJiCLplG/LGiVNecOysYmlt36/oUDyMfnlurOcEYzku7OnUGusuXuykExrk+qvvVG/VZbybnF6zC+jZusRH4FK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wa131OZP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aVXXs08PHuaWN2Mqcv+obV2ei81ioBxyjs1+yVCgyASkpzK/YNhSuFZmNEOqFozjaiJG47Hs2QFS1VWl5gWli054H1ImvqgPfJ1D9TcOycNx0cWHZuKMBJ36BUMzXipextSKS5KPiLjD6CbDB/r/+2wVpcM0FTh4Emsva7/7164=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=izapoZUt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wa131OZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B9BC116D0;
-	Sat, 28 Feb 2026 17:51:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="izapoZUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE6DC116D0;
+	Sat, 28 Feb 2026 17:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301074;
-	bh=TjMq3JlWOB7SkfmZ4Bw8pLvN7zg2RmVsVluWLyJiJb0=;
+	s=k20201202; t=1772301075;
+	bh=DSeS++EwEDiKiYQ08hrhNvl4zKjplGTpvpcRwe/cWmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wa131OZPhXQ4E/WXSsabjY00urO8SO01ZRympsLWaW4XoZwLQHjkZ5jxX5YYeVbgt
-	 nvLIb2KlhchcTxA2C+trqF0BzBQ9pGBmiJnhHtwuuRHGGcTSEGleD7Z2ovX4SY+zFD
-	 i69I7HgtcRxcnBdjvBHROd3ziqVKxsjyF3pqb6Nrx4MtwAYCpHh+bUw5D5EQkt/nRa
-	 GFSex5Z3ke3cfzZF62pCSIQALS3dXWlZjVZ4jf2tKfWQuDgkhooRBf42rNB5+NiHAN
-	 mMEl1rmBziTn9Qmk47V1kps0P/pYmMJQKeXBf1hFRC73py0pivQCKv+SFk9On+aNuF
-	 NdK6wXFW22xQA==
+	b=izapoZUthjrh2ITkHYd6dXFxHfthl2Vhx5QQy/aCAX24gslcMja2oxFRdhXRAPLkB
+	 R68uaZQCgqcVbiWi7bkTMW+OEmyCvSqgUpBNW+NkjmvA5T/b7qKuSvEPXTnenkw/8h
+	 0EHUpKqOsf4tK2AbEkQeING/Q5gtDtFgIpeq2o+WuPqXaKLjPObz1KzyencwZrhFLm
+	 XbdEhcWTVTf5s8Fe2lQcLheWjowQvK/j0o2w8knNwECuU7YplxzwIG3x/X9Clneg9R
+	 5Z8pD65EMPFodm2jxyPZKiHSNvFuwI7PMTrumYAfNgTnA3KdcfxH7EWlraTDSn/Eb6
+	 8BGG6/DkOhLXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Chih-Kang Chang <gary.chang@realtek.com>,
+Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 220/752] wifi: rtw89: mcc: reset probe counter when receiving beacon
-Date: Sat, 28 Feb 2026 12:38:51 -0500
-Message-ID: <20260228174750.1542406-220-sashal@kernel.org>
+Subject: [PATCH 6.18 221/752] wifi: rtw88: Use devm_kmemdup() in rtw_set_supported_band()
+Date: Sat, 28 Feb 2026 12:38:52 -0500
+Message-ID: <20260228174750.1542406-221-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,64 +47,82 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 1b40c1c7571fcf926095ed92f25bd87900bdc8ed ]
+[ Upstream commit 2ba12401cc1f2d970fa2e7d5b15abde3f5abd40d ]
 
-For BE chips, needs to transmit QoS null data periodically to ensure
-the connection with AP in GC+STA mode. However, in environments
-with interference, the Qos null data might fail to transmit
-successfully. Therefore, when receive the beacon from AP will
-reset the QoS null data failure counter to avoid unnecessary
-disconnection.
+Simplify the code by using device managed memory allocations.
 
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+This also fixes a memory leak in rtw_register_hw(). The supported bands
+were not freed in the error path.
+
+Copied from commit 145df52a8671 ("wifi: rtw89: Convert
+rtw89_core_set_supported_band to use devm_*").
+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251223030651.480633-13-pkshih@realtek.com
+Link: https://patch.msgid.link/1aa7fdef-2d5b-4a31-a4e9-fac8257ed30d@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/chan.c     | 5 ++++-
- drivers/net/wireless/realtek/rtw89/mac80211.c | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/main.c | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/chan.c b/drivers/net/wireless/realtek/rtw89/chan.c
-index 86f1b39a967fe..8fe6a7ef738f7 100644
---- a/drivers/net/wireless/realtek/rtw89/chan.c
-+++ b/drivers/net/wireless/realtek/rtw89/chan.c
-@@ -2608,17 +2608,20 @@ bool rtw89_mcc_detect_go_bcn(struct rtw89_dev *rtwdev,
- static void rtw89_mcc_detect_connection(struct rtw89_dev *rtwdev,
- 					struct rtw89_mcc_role *role)
+diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
+index f72d12c3b2bc6..6f35357e73246 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.c
++++ b/drivers/net/wireless/realtek/rtw88/main.c
+@@ -1661,11 +1661,13 @@ static u16 rtw_get_max_scan_ie_len(struct rtw_dev *rtwdev)
+ static void rtw_set_supported_band(struct ieee80211_hw *hw,
+ 				   const struct rtw_chip_info *chip)
  {
-+	struct rtw89_vif_link *rtwvif_link = role->rtwvif_link;
- 	struct ieee80211_vif *vif;
- 	bool start_detect;
- 	int ret;
+-	struct rtw_dev *rtwdev = hw->priv;
+ 	struct ieee80211_supported_band *sband;
++	struct rtw_dev *rtwdev = hw->priv;
++	struct device *dev = rtwdev->dev;
  
- 	ret = rtw89_core_send_nullfunc(rtwdev, role->rtwvif_link, true, false,
- 				       RTW89_MCC_PROBE_TIMEOUT);
--	if (ret)
-+	if (ret &&
-+	    READ_ONCE(rtwvif_link->sync_bcn_tsf) == rtwvif_link->last_sync_bcn_tsf)
- 		role->probe_count++;
- 	else
- 		role->probe_count = 0;
+ 	if (chip->band & RTW_BAND_2G) {
+-		sband = kmemdup(&rtw_band_2ghz, sizeof(*sband), GFP_KERNEL);
++		sband = devm_kmemdup(dev, &rtw_band_2ghz, sizeof(*sband),
++				     GFP_KERNEL);
+ 		if (!sband)
+ 			goto err_out;
+ 		if (chip->ht_supported)
+@@ -1674,7 +1676,8 @@ static void rtw_set_supported_band(struct ieee80211_hw *hw,
+ 	}
  
-+	rtwvif_link->last_sync_bcn_tsf = READ_ONCE(rtwvif_link->sync_bcn_tsf);
- 	if (role->probe_count < RTW89_MCC_PROBE_MAX_TRIES)
- 		return;
+ 	if (chip->band & RTW_BAND_5G) {
+-		sband = kmemdup(&rtw_band_5ghz, sizeof(*sband), GFP_KERNEL);
++		sband = devm_kmemdup(dev, &rtw_band_5ghz, sizeof(*sband),
++				     GFP_KERNEL);
+ 		if (!sband)
+ 			goto err_out;
+ 		if (chip->ht_supported)
+@@ -1690,13 +1693,6 @@ static void rtw_set_supported_band(struct ieee80211_hw *hw,
+ 	rtw_err(rtwdev, "failed to set supported band\n");
+ }
  
-diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
-index 7b04183a3a5dd..474be7a5e49c7 100644
---- a/drivers/net/wireless/realtek/rtw89/mac80211.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
-@@ -127,6 +127,7 @@ static int __rtw89_ops_add_iface_link(struct rtw89_dev *rtwdev,
- 	rtwvif_link->reg_6ghz_power = RTW89_REG_6GHZ_POWER_DFLT;
- 	rtwvif_link->rand_tsf_done = false;
- 	rtwvif_link->detect_bcn_count = 0;
-+	rtwvif_link->last_sync_bcn_tsf = 0;
+-static void rtw_unset_supported_band(struct ieee80211_hw *hw,
+-				     const struct rtw_chip_info *chip)
+-{
+-	kfree(hw->wiphy->bands[NL80211_BAND_2GHZ]);
+-	kfree(hw->wiphy->bands[NL80211_BAND_5GHZ]);
+-}
+-
+ static void rtw_vif_smps_iter(void *data, u8 *mac,
+ 			      struct ieee80211_vif *vif)
+ {
+@@ -2320,10 +2316,7 @@ EXPORT_SYMBOL(rtw_register_hw);
  
- 	rcu_read_lock();
- 
+ void rtw_unregister_hw(struct rtw_dev *rtwdev, struct ieee80211_hw *hw)
+ {
+-	const struct rtw_chip_info *chip = rtwdev->chip;
+-
+ 	ieee80211_unregister_hw(hw);
+-	rtw_unset_supported_band(hw, chip);
+ 	rtw_debugfs_deinit(rtwdev);
+ 	rtw_led_deinit(rtwdev);
+ }
 -- 
 2.51.0
 
