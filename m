@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D2236C9E0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E866D36C9E5
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302296; cv=none; b=lQNJUmkU+LLSlUTfP4UPI3UvXlQ8sbVNOaqVy6SRhvOt3ZxgiXoM43C4xg8e8F5fM64NXNSfQFPnotGy/yUDGP5qJ1SuEqot7lFtjyINs2xL5tN3p7nnIG2ZRYc3aPlYNn/n3oThbVZzS9K8wURVBwWZ+tVjZVqFoCv5H/WBNTM=
+	t=1772302297; cv=none; b=QKruC/1bd8Rxt3QynBpgEYTCX/r5Sa4ZcVvrTCfFWSto6n3UPeIq2aL+ra6nIrDM8T0nyvQE8AZCPqKpL8W10mAN2eZbOQcqbnL9W4i5Bs9WaYjxwxSqLoRiKjD/yDJ62PxC7BtzKtSXEgF37k+Dg296w7yASg1fLBa8wqzKxjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302296; c=relaxed/simple;
-	bh=4vsN6sJQl6/9Cqq0DSuax4Dm1GQpR5Gaei1MpE2BsoI=;
+	s=arc-20240116; t=1772302297; c=relaxed/simple;
+	bh=LAioGEN/7FFPsAxopcFMLrb3iMNkI53YZOdz37Eyu2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RCYf6Ax4v0SOAqVMHSK9fkHJYmxQhDlm2jmXJCnxlkcdxFKXFHTR5QZH8JlBuPX5M8FfwRmH9CEUFgJoraVRVvY3q34sbIvPNxmpyrKYWXwD86W8YwN3kbkVTOEwjApVFjQ0mIDBFdXEsWT16fBOyU3bFJOqd2vT6IJCE6QB8ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=poTKcDOX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LTVeADy03TI7nH/c8jWhMGDVy8BawLk76PyWr/UTYXZAsHrOWiRw0wF/35k8h8FQq0P/oPAxn+5S2Cxrk1FxSASpiN25mu6k6EBsiHeniZGynJl4vUpSEJA2lEWy694emh10BLgnUQ5Oc/cWbac9kUvMjJNHpqumKuEPxglIU+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jeAWS5/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="poTKcDOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FE3C19423;
-	Sat, 28 Feb 2026 18:11:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jeAWS5/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0DDC19423;
+	Sat, 28 Feb 2026 18:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302296;
-	bh=4vsN6sJQl6/9Cqq0DSuax4Dm1GQpR5Gaei1MpE2BsoI=;
+	bh=LAioGEN/7FFPsAxopcFMLrb3iMNkI53YZOdz37Eyu2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=poTKcDOXL8R5BFjcGPSKr+t7DOJITMBWYuRkPXcdDJVbgoLY5h0AvuBW2H/ELx+QS
-	 b7m9kJ600EIHMTvhOuOUUSaofq7nTYvKQJrciMKM9hCxexLNouCJrvFruxIDjMA4ET
-	 v0qiTdQ7/19ryivk0lXerkUCXcEFyZas7jKKz9ly5IGRPK0tb3H8Q3W6fsqb9Ec303
-	 GsUMroWF4A5ejPyRFkdsSU3SYNrqFV4H1rHvj8fruNqUddOGJ2jV/qZAhjStXPqh4k
-	 5Hq4/fh0hK2MjCad3iLErcpWq7hG53GPffcdfUQNDwEJgpr10sPzlGggGGVmsEk7me
-	 Wj1oxQiS4N4yw==
+	b=jeAWS5/vY9r1rA4eZprQqFiGfXg9wIdHjcqBbcziPV4QZtBrmhpHZ0BW0IAJ30bWM
+	 NWlRI0aS+BkC3QorGEy48teNswbweFKyEkvh8P7VW6Ftsa5fJc3/QmB0z6uPts2Uzt
+	 uSOVAkI5HdC72mfm4vgIC240I03/gXGh0sq4iTZOipXq10YBkUDdMUSh9Tu8nz2Yy2
+	 Lup9rDP8FObH6h+sWIJx4xfZ+gFI0dWYkvIPpgwnw/THumdRtflgAxO5Vrvoy3pfXL
+	 uSXrPhUfawDEHJjD81AMt4bUVmJz0nGGri3+6fqIKzFuVjJUm9r/ItBhcxH5+M7b9a
+	 ulqGeH8fBa+OA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 009/232] i3c: master: Update hot-join flag only on success
-Date: Sat, 28 Feb 2026 13:07:42 -0500
-Message-ID: <20260228181127.1592657-9-sashal@kernel.org>
+Subject: [PATCH 6.1 010/232] gfs2: Add metapath_dibh helper
+Date: Sat, 28 Feb 2026 13:07:43 -0500
+Message-ID: <20260228181127.1592657-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,37 +46,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit f0775157b9f9a28ae3eabc8d05b0bc52e8056c80 ]
+[ Upstream commit 92099f0c92270c8c7a79e6bc6e0312ad248ea331 ]
 
-To prevent inconsistent state when an error occurs, ensure the hot-join
-flag is updated only when enabling or disabling hot-join succeeds.
+Add a metapath_dibh() helper for extracting the inode's buffer head from
+a metapath.
 
-Fixes: 317bacf960a48 ("i3c: master: add enable(disable) hot join in sys entry")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260113072702.16268-4-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: faddeb848305 ("gfs2: Fix use-after-free in iomap inline data write path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/gfs2/bmap.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index fea1f852358c2..74138c499642e 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -586,7 +586,8 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
- 	else
- 		ret = master->ops->disable_hotjoin(master);
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index 9ad11e5bf14c3..9f0dec17fa431 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -317,6 +317,12 @@ static void gfs2_metapath_ra(struct gfs2_glock *gl, __be64 *start, __be64 *end)
+ 	}
+ }
  
--	master->hotjoin = enable;
-+	if (!ret)
-+		master->hotjoin = enable;
- 
- 	i3c_bus_normaluse_unlock(&master->bus);
- 
++static inline struct buffer_head *
++metapath_dibh(struct metapath *mp)
++{
++	return mp->mp_bh[0];
++}
++
+ static int __fillup_metapath(struct gfs2_inode *ip, struct metapath *mp,
+ 			     unsigned int x, unsigned int h)
+ {
+@@ -660,7 +666,7 @@ static int __gfs2_iomap_alloc(struct inode *inode, struct iomap *iomap,
+ {
+ 	struct gfs2_inode *ip = GFS2_I(inode);
+ 	struct gfs2_sbd *sdp = GFS2_SB(inode);
+-	struct buffer_head *dibh = mp->mp_bh[0];
++	struct buffer_head *dibh = metapath_dibh(mp);
+ 	u64 bn;
+ 	unsigned n, i, blks, alloced = 0, iblks = 0, branch_start = 0;
+ 	size_t dblks = iomap->length >> inode->i_blkbits;
 -- 
 2.51.0
 
