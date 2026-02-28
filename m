@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FBC36920B
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25844361648
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300922; cv=none; b=SbaDLLm7jMIro3H/UXGWxuLQwx4Tive6SRALfo8zdHfZqGAr6lr5qfXP5UCB6mWM1NnVfXxGSsOP/pcfQsfvmN9C+Vik2lC5UXxbH+RCAIdXy+MvP7+9ZqjR/nNygCO85RkD4pPZzDLnVrwmeaZkvjZshAB55+Nq6v15ovu32x0=
+	t=1772300923; cv=none; b=iuVYkU6Kk3wYs6U+c0HJJ+O4MuVD/X9DtP6qVgFEd41M2RozmmYi5Vs4uHdRYFw0A6gt+KNz2uli4Co3LuqgEtRlBGLNwZj4n2wJ3AM4Is4UIO2xPne/WXhS0L2HV1lJWMazjI0oKib2v3oJn++ZIVuy5EfySzGHLtl8C8A8wsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300922; c=relaxed/simple;
-	bh=wv5ACQbq1QkgwgoM5yFwXDuiRkVMo6nSGmwPBVbVL9o=;
+	s=arc-20240116; t=1772300923; c=relaxed/simple;
+	bh=374tPj2mu8u4VHrhq8tRXh7o2UqdGJ4VLtDjst7csRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iRMboZY/hOcqktzStFz/5dNUJnyiM3JW0i3VYvSKNPehmzxc6VMqHMfBqK44HVrMEqPArGKRlhgsPM6/TL6QTeZ4cL1zmXNwoywbtXznL/WGDpE3ZtFFF5NYqcOGRaRIlUl4MoWnHBtNcNSyf6bX/Qg7o9TmnRwTikrO42DCMp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J9aCShpb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CLE9iy56nCm/kxva8KMbyj8kugn5gtBdaAg8lIou3/QeaYrs6hhsuzR7ptkBvNowWPPHmirehGAq2pPkSoWiapBfWpQQcFI7Wpi6vbTgmrqQM/DN/I5t7Q4SI+RK7b46/7ZFEVApcEZForbiUxJPzTRxit2QFwnDHctmDNHyTMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZvnLQd1p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J9aCShpb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB651C19424;
-	Sat, 28 Feb 2026 17:48:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZvnLQd1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC9FC19423;
+	Sat, 28 Feb 2026 17:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300922;
-	bh=wv5ACQbq1QkgwgoM5yFwXDuiRkVMo6nSGmwPBVbVL9o=;
+	s=k20201202; t=1772300923;
+	bh=374tPj2mu8u4VHrhq8tRXh7o2UqdGJ4VLtDjst7csRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J9aCShpbKQVuPn4/0fybteMi8Owi3Z5WDteM5OzpNd23KAUC3KL+VZOmmlLiSkrdC
-	 3oAUEhVHSF2+4WXuTf0ZzpjxvmC/SgmXgnTSS+0KS22tv2Y7uxgl778Z+8UiR4zjOG
-	 xlwyx48tttSs9nb8xwt7xcBvMOYDV+NoTSV9fInl3a/+yXpn/Sek2QvquG8jKxX2SB
-	 1yvhfZ7TS/G0DjF/mGJCB3MBxECSe3OXahP4YmBdVGUm/+dJijtBQhnIo3oNYf1RtA
-	 eflik1UkfVsQ5rCTOPmzF8vA9n1foJtEQ60u6dx6h8vTzDjq4iZbuF+0KTEfzdwQMG
-	 A9gLcJjwqsY4Q==
+	b=ZvnLQd1p4oumwPPjRCjN2hKKktXRyB9Ygnj4HD/hPJYtjatnAUmqIltyJ/e55MEDQ
+	 HVkqGepQTlfDCL/OH/pssZ9G1Q/gFxXQIHtWg+tspaapu8OXK54SMNhPdmj8e5Ra6p
+	 kaXWRbN57tDbpE0PBCZDLicrocB7RMyOn83VjvgRzdMnYxQaLovJIKrtS7MQtVLAFi
+	 OY7oJnci6KVA4THbmasd7WG7q7YehNdoak+DGXPiiO3JZBEhOnB4k6OchqKoMRRbrc
+	 3/tDsblugHFVNS4FtO8XSORwUZTv2dL/+Z6HKjzRMPDTvDoOYPZRI369yJf8z74D/s
+	 H0YJC2adIZoHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 039/752] smb: client: add proper locking around ses->iface_last_update
-Date: Sat, 28 Feb 2026 12:35:50 -0500
-Message-ID: <20260228174750.1542406-39-sashal@kernel.org>
+Subject: [PATCH 6.18 040/752] gfs2: fiemap page fault fix
+Date: Sat, 28 Feb 2026 12:35:51 -0500
+Message-ID: <20260228174750.1542406-40-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,34 +46,67 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit e97dcac3dc0bd37e4b56aaa6874b572a3a461102 ]
+[ Upstream commit e411d74cc5ba290f85d0dd5e4d1df8f1d6d975d2 ]
 
-There is a missing ses->iface_lock in cifs_setup_session,
-around ses->iface_last_update.
+In gfs2_fiemap(), we are calling iomap_fiemap() while holding the inode
+glock.  This can lead to recursive glock taking if the fiemap buffer is
+memory mapped to the same inode and accessing it triggers a page fault.
 
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix by disabling page faults for iomap_fiemap() and faulting in the
+buffer by hand if necessary.
+
+Fixes xfstest generic/742.
+
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/gfs2/inode.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 2f94d93b95e91..d96d23a8f4903 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4267,7 +4267,9 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
- 		ses->ses_status = SES_IN_SETUP;
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 63d9fe7464344..03dd54fb7e8c8 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -2192,6 +2192,14 @@ static int gfs2_getattr(struct mnt_idmap *idmap,
+ 	return 0;
+ }
  
- 		/* force iface_list refresh */
-+		spin_lock(&ses->iface_lock);
- 		ses->iface_last_update = 0;
-+		spin_unlock(&ses->iface_lock);
- 	}
- 	spin_unlock(&ses->ses_lock);
++static bool fault_in_fiemap(struct fiemap_extent_info *fi)
++{
++	struct fiemap_extent __user *dest = fi->fi_extents_start;
++	size_t size = sizeof(*dest) * fi->fi_extents_max;
++
++	return fault_in_safe_writeable((char __user *)dest, size) == 0;
++}
++
+ static int gfs2_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
+ 		       u64 start, u64 len)
+ {
+@@ -2201,14 +2209,22 @@ static int gfs2_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
  
+ 	inode_lock_shared(inode);
+ 
++retry:
+ 	ret = gfs2_glock_nq_init(ip->i_gl, LM_ST_SHARED, 0, &gh);
+ 	if (ret)
+ 		goto out;
+ 
++	pagefault_disable();
+ 	ret = iomap_fiemap(inode, fieinfo, start, len, &gfs2_iomap_ops);
++	pagefault_enable();
+ 
+ 	gfs2_glock_dq_uninit(&gh);
+ 
++	if (ret == -EFAULT && fault_in_fiemap(fieinfo)) {
++		fieinfo->fi_extents_mapped = 0;
++		goto retry;
++	}
++
+ out:
+ 	inode_unlock_shared(inode);
+ 	return ret;
 -- 
 2.51.0
 
