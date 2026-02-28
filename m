@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E8E2DB7B2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3266C333434
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301801; cv=none; b=qEIp2WiwJnCUtzREjcZQSSZTdV6TchayTCthJb70eXMgSplFueY0mxGTEWM+SPo0QZeZx4gupvncgseGPLaY/8sVisFAJYr9Ico2xAWumv/xXJepqbP2TswyUDjs25KP/w9f82OzwjQwUVoUfylgervpIHQQgG4D2Rz90KptGU0=
+	t=1772301802; cv=none; b=l8ExQXnALO/PuPSRBlCGJ8ngw2uBVxauZrY0zsVJn8XLrPnH1iD2Xd5+QnKfsW5Nj1LQPcihIoftXNaIb+sbLMDfbOplxNtr0/OjjiIAmqr7UOSeYQDQg1afqwjuxVWcbPHmO3PK3qNstnJT0HxJZUoPRp9Gowmqg650rUsjaig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301801; c=relaxed/simple;
-	bh=X+2+1VOFHhVmvsr0+SYCJACSjWpn/8CvHV7PkEc7hko=;
+	s=arc-20240116; t=1772301802; c=relaxed/simple;
+	bh=c7oZGCecdRrIR30WxJKcXm5MysjSkFwypUDsS8lUtos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SaYER+5yUfzL5SYltLQGvqujNoMQxm9HMfqCiQ1mmWJ6it2FdtiM/uhrdDV56Pf/MllVgrcWAobSHNtwX2eQKCUUnfSE1YJ5veeQymhRafMpiytK7TXFrule7uMhac1p1DSVwcS0kHSe73ImDI0yj1Km2VjNvHzFD8UIPR8PB/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nPSTWjQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WhTdN59V/sEPcr4aVyGXZclER+Qp0TNQT+8zj9o4ApiFNllNLDPGZnLVCRv6mBBCwbWQo9MrifZFPFdbFBUoriMa62zzl8ESn3R4RoaMHxmLHL20+Y83q/+C7kXYrmjOwSuJB8XhPyIv7KVQgEjblh3lL5RJJvMzKliluElZXVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LV32WNP+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nPSTWjQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D27C19424;
-	Sat, 28 Feb 2026 18:03:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LV32WNP+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A02C19424;
+	Sat, 28 Feb 2026 18:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301801;
-	bh=X+2+1VOFHhVmvsr0+SYCJACSjWpn/8CvHV7PkEc7hko=;
+	s=k20201202; t=1772301802;
+	bh=c7oZGCecdRrIR30WxJKcXm5MysjSkFwypUDsS8lUtos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nPSTWjQEnhfrG2y5JnBp2MSdCH8u09kW4cgfpX818x6hTWIvV9dUCn5Kn6vw5S/9D
-	 e2H4Er8DRN+ueKYYK/jW5j2T4dfsIbOhys7brYrKHjNjOSYNcVSsXaNCEo4xktKAwV
-	 1klRWWHl3uXn+roXZHM8liasgvSujKb4ad6fU0vWtjaahUt+9W5xq1cILp1l7X/qtF
-	 MzjpzZHOQ0CnwASOc/WdmUwGRHg6CPSnUpoimT65JhPUIQPhMKtdahIubRjF+62KA9
-	 3TeajSZFJ10w8fq8/NVFZXgCX4VMShpO9VPqkmQzpAhiALfGSf3/cNWxrhLIH0yRNA
-	 WN5E9vsKUDwJw==
+	b=LV32WNP+QrP9QcR7aGhi/5X5dqD9ltRIME/IAaxYaM2GktERF8PmQhcn5X7Kyfx7T
+	 heGnE/xKZ4Qk/xgNPNTeHXFApfGXL+XbXIkP8ndSU1iZR9Fr18ccTM4ykBVb8BFVE4
+	 5P3CzrrxucylD2gBlmZuul0C0HfSE4jUUk38tqcAwDezRU7JqZRQHdKbjOERVFvhHa
+	 XUVvSVv3S2WQWi4MiVKueVWThZlWA5Qt5Vmz03+nNDRzA6qP3NYdnAT4dZQMsPxHj9
+	 R4JpKouQl9k95G/+yRDz0ebgXZXut/dAzBnMorY0lrWtUWP3X1cKuKm9Yh+B6yPfCp
+	 B8bbmOjw4dNfA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/385] PCI/ACPI: Restrict program_hpx_type2() to AER bits
-Date: Sat, 28 Feb 2026 12:57:15 -0500
-Message-ID: <20260228180011.1568201-213-sashal@kernel.org>
+Subject: [PATCH 6.12 214/385] selftests/mm: pagemap_ioctl: Fix types mismatches shown by compiler options
+Date: Sat, 28 Feb 2026 12:57:16 -0500
+Message-ID: <20260228180011.1568201-214-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -43,200 +43,407 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-[ Upstream commit 9abf79c8d7b40db0e5a34aa8c744ea60ff9a3fcf ]
+[ Upstream commit 43448e5bbbad1fb168b728b8a7c0058ab1397375 ]
 
-Previously program_hpx_type2() applied PCIe settings unconditionally,
-which could incorrectly change bits like Extended Tag Field Enable and
-Enable Relaxed Ordering.
+Fix following warnings caught by compiler:
 
-When _HPX was added to ACPI r3.0, the intent of the PCIe Setting
-Record (Type 2) in sec 6.2.7.3 was to configure AER registers when the
-OS does not own the AER Capability:
+- There are several type mismatches among different variables.
+- Remove unused variable warnings.
 
-  The PCI Express setting record contains ... [the AER] Uncorrectable
-  Error Mask, Uncorrectable Error Severity, Correctable Error Mask
-  ... to be used when configuring registers in the Advanced Error
-  Reporting Extended Capability Structure ...
-
-  OSPM [1] will only evaluate _HPX with Setting Record – Type 2 if
-  OSPM is not controlling the PCI Express Advanced Error Reporting
-  capability.
-
-ACPI r3.0b, sec 6.2.7.3, added more AER registers, including registers
-in the PCIe Capability with AER-related bits, and the restriction that
-the OS use this only when it owns PCIe native hotplug:
-
-  ... when configuring PCI Express registers in the Advanced Error
-  Reporting Extended Capability Structure *or PCI Express Capability
-  Structure* ...
-
-  An OS that has assumed ownership of native hot plug but does not
-  ... have ownership of the AER register set must use ... the Type 2
-  record to program the AER registers ...
-
-  However, since the Type 2 record also includes register bits that
-  have functions other than AER, the OS must ignore values ... that
-  are not applicable.
-
-Restrict program_hpx_type2() to only the intended purpose:
-
-  - Apply settings only when OS owns PCIe native hotplug but not AER,
-
-  - Only touch the AER-related bits (Error Reporting Enables) in Device
-    Control
-
-  - Don't touch Link Control at all, since nothing there seems AER-related,
-    but log _HPX settings for debugging purposes
-
-Note that Read Completion Boundary is now configured elsewhere, since it is
-unrelated to _HPX.
-
-[1] Operating System-directed configuration and Power Management
-
-Fixes: 40abb96c51bb ("[PATCH] pciehp: Fix programming hotplug parameters")
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260129175237.727059-3-haakon.bugge@oracle.com
+Link: https://lkml.kernel.org/r/20241209185624.2245158-3-usama.anjum@collabora.com
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 7e938f00b003 ("selftests/mm: fix faulting-in code in pagemap_ioctl test")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-acpi.c | 59 +++++++++++++++++-------------------------
- drivers/pci/pci.h      |  3 +++
- drivers/pci/pcie/aer.c |  3 ---
- 3 files changed, 27 insertions(+), 38 deletions(-)
+ tools/testing/selftests/mm/pagemap_ioctl.c | 108 +++++++++++----------
+ tools/testing/selftests/mm/vm_util.c       |   2 +-
+ 2 files changed, 59 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/pci/pci-acpi.c b/drivers/pci/pci-acpi.c
-index 0cd8a75e22580..3d02959e222fc 100644
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -271,21 +271,6 @@ static acpi_status decode_type1_hpx_record(union acpi_object *record,
- 	return AE_OK;
+diff --git a/tools/testing/selftests/mm/pagemap_ioctl.c b/tools/testing/selftests/mm/pagemap_ioctl.c
+index bcc73b4e805c6..c3b0f6bf9d0b2 100644
+--- a/tools/testing/selftests/mm/pagemap_ioctl.c
++++ b/tools/testing/selftests/mm/pagemap_ioctl.c
+@@ -34,8 +34,8 @@
+ #define PAGEMAP "/proc/self/pagemap"
+ int pagemap_fd;
+ int uffd;
+-int page_size;
+-int hpage_size;
++unsigned int page_size;
++unsigned int hpage_size;
+ const char *progname;
+ 
+ #define LEN(region)	((region.end - region.start)/page_size)
+@@ -235,7 +235,9 @@ int get_reads(struct page_region *vec, int vec_size)
+ 
+ int sanity_tests_sd(void)
+ {
+-	int mem_size, vec_size, ret, ret2, ret3, i, num_pages = 1000, total_pages = 0;
++	unsigned long long mem_size, vec_size, i, total_pages = 0;
++	long ret, ret2, ret3;
++	int num_pages = 1000;
+ 	int total_writes, total_reads, reads, count;
+ 	struct page_region *vec, *vec2;
+ 	char *mem, *m[2];
+@@ -321,9 +323,9 @@ int sanity_tests_sd(void)
+ 	ret = pagemap_ioctl(mem, mem_size, vec, vec_size, 0, 0, PAGE_IS_WRITTEN, 0,
+ 			    0, PAGE_IS_WRITTEN);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+-	ksft_test_result(ret == mem_size/(page_size * 2),
++	ksft_test_result((unsigned long long)ret == mem_size/(page_size * 2),
+ 			 "%s Repeated pattern of written and non-written pages\n", __func__);
+ 
+ 	/* 4. Repeated pattern of written and non-written pages in parts */
+@@ -331,21 +333,21 @@ int sanity_tests_sd(void)
+ 			    PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			    num_pages/2 - 2, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+ 	ret2 = pagemap_ioctl(mem, mem_size, vec, 2, 0, 0, PAGE_IS_WRITTEN, 0, 0,
+ 			     PAGE_IS_WRITTEN);
+ 	if (ret2 < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret2, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret2, errno, strerror(errno));
+ 
+ 	ret3 = pagemap_ioctl(mem, mem_size, vec, vec_size,
+ 			     PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			     0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret3 < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret3, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret3, errno, strerror(errno));
+ 
+ 	ksft_test_result((ret + ret3) == num_pages/2 && ret2 == 2,
+-			 "%s Repeated pattern of written and non-written pages in parts %d %d %d\n",
++			 "%s Repeated pattern of written and non-written pages in parts %ld %ld %ld\n",
+ 			 __func__, ret, ret3, ret2);
+ 
+ 	/* 5. Repeated pattern of written and non-written pages max_pages */
+@@ -357,13 +359,13 @@ int sanity_tests_sd(void)
+ 			    PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			    num_pages/2, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+ 	ret2 = pagemap_ioctl(mem, mem_size, vec, vec_size,
+ 			     PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			     0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret2 < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret2, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret2, errno, strerror(errno));
+ 
+ 	ksft_test_result(ret == num_pages/2 && ret2 == 1,
+ 			 "%s Repeated pattern of written and non-written pages max_pages\n",
+@@ -378,12 +380,12 @@ int sanity_tests_sd(void)
+ 			    PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			    2, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+ 	ret2 = pagemap_ioctl(mem, mem_size, vec2, vec_size, 0, 0,
+ 			      PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret2 < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret2, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret2, errno, strerror(errno));
+ 
+ 	ksft_test_result(ret == 1 && LEN(vec[0]) == 2 &&
+ 			 vec[0].start == (uintptr_t)(mem + page_size) &&
+@@ -416,7 +418,7 @@ int sanity_tests_sd(void)
+ 	ret = pagemap_ioctl(m[1], mem_size, vec, 1, 0, 0, PAGE_IS_WRITTEN, 0, 0,
+ 			    PAGE_IS_WRITTEN);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+ 	ksft_test_result(ret == 1 && LEN(vec[0]) == mem_size/page_size,
+ 			 "%s Two regions\n", __func__);
+@@ -448,7 +450,7 @@ int sanity_tests_sd(void)
+ 			    PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC, 0,
+ 			    PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+ 	for (i = 0; i < mem_size/page_size; i += 2)
+ 		mem[i * page_size]++;
+@@ -457,7 +459,7 @@ int sanity_tests_sd(void)
+ 			    PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			    mem_size/(page_size*5), PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+ 	total_pages += ret;
+ 
+@@ -465,7 +467,7 @@ int sanity_tests_sd(void)
+ 			    PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			    mem_size/(page_size*5), PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+ 	total_pages += ret;
+ 
+@@ -473,7 +475,7 @@ int sanity_tests_sd(void)
+ 			    PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			    mem_size/(page_size*5), PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+ 	total_pages += ret;
+ 
+@@ -515,9 +517,9 @@ int sanity_tests_sd(void)
+ 					  vec_size, PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 					  0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 			if (ret < 0)
+-				ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++				ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 
+-			if (ret > vec_size)
++			if ((unsigned long)ret > vec_size)
+ 				break;
+ 
+ 			reads = get_reads(vec, ret);
+@@ -554,63 +556,63 @@ int sanity_tests_sd(void)
+ 	ret = pagemap_ioc(mem, 0, vec, vec_size, 0,
+ 			  0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 0 && walk_end == (long)mem,
+ 			 "Walk_end: Same start and end address\n");
+ 
+ 	ret = pagemap_ioc(mem, 0, vec, vec_size, PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			  0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 0 && walk_end == (long)mem,
+ 			 "Walk_end: Same start and end with WP\n");
+ 
+ 	ret = pagemap_ioc(mem, 0, vec, 0, PM_SCAN_WP_MATCHING | PM_SCAN_CHECK_WPASYNC,
+ 			  0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 0 && walk_end == (long)mem,
+ 			 "Walk_end: Same start and end with 0 output buffer\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, vec_size, 0,
+ 			  0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 1 && walk_end == (long)(mem + mem_size),
+ 			 "Walk_end: Big vec\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, 1, 0,
+ 			  0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 1 && walk_end == (long)(mem + mem_size),
+ 			 "Walk_end: vec of minimum length\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, 1, 0,
+ 			  vec_size, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 1 && walk_end == (long)(mem + mem_size),
+ 			 "Walk_end: Max pages specified\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, vec_size, 0,
+ 			  vec_size/2, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 1 && walk_end == (long)(mem + mem_size/2),
+ 			 "Walk_end: Half max pages\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, vec_size, 0,
+ 			  1, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 1 && walk_end == (long)(mem + page_size),
+ 			 "Walk_end: 1 max page\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, vec_size, 0,
+ 			  -1, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 1 && walk_end == (long)(mem + mem_size),
+ 			 "Walk_end: max pages\n");
+ 
+@@ -621,49 +623,49 @@ int sanity_tests_sd(void)
+ 	ret = pagemap_ioc(mem, mem_size, vec, vec_size, 0,
+ 			  0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
+-	ksft_test_result(ret == vec_size/2 && walk_end == (long)(mem + mem_size),
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
++	ksft_test_result((unsigned long)ret == vec_size/2 && walk_end == (long)(mem + mem_size),
+ 			 "Walk_end sparse: Big vec\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, 1, 0,
+ 			  0, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 1 && walk_end == (long)(mem + page_size * 2),
+ 			 "Walk_end sparse: vec of minimum length\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, 1, 0,
+ 			  vec_size, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 1 && walk_end == (long)(mem + page_size * 2),
+ 			 "Walk_end sparse: Max pages specified\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, vec_size/2, 0,
+ 			  vec_size, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
+-	ksft_test_result(ret == vec_size/2 && walk_end == (long)(mem + mem_size),
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
++	ksft_test_result((unsigned long)ret == vec_size/2 && walk_end == (long)(mem + mem_size),
+ 			 "Walk_end sparse: Max pages specified\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, vec_size, 0,
+ 			  vec_size, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
+-	ksft_test_result(ret == vec_size/2 && walk_end == (long)(mem + mem_size),
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
++	ksft_test_result((unsigned long)ret == vec_size/2 && walk_end == (long)(mem + mem_size),
+ 			 "Walk_end sparse: Max pages specified\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, vec_size, 0,
+ 			  vec_size/2, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
+-	ksft_test_result(ret == vec_size/2 && walk_end == (long)(mem + mem_size),
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
++	ksft_test_result((unsigned long)ret == vec_size/2 && walk_end == (long)(mem + mem_size),
+ 			 "Walk_endsparse : Half max pages\n");
+ 
+ 	ret = pagemap_ioc(mem, mem_size, vec, vec_size, 0,
+ 			  1, PAGE_IS_WRITTEN, 0, 0, PAGE_IS_WRITTEN, &walk_end);
+ 	if (ret < 0)
+-		ksft_exit_fail_msg("error %d %d %s\n", ret, errno, strerror(errno));
++		ksft_exit_fail_msg("error %ld %d %s\n", ret, errno, strerror(errno));
+ 	ksft_test_result(ret == 1 && walk_end == (long)(mem + page_size * 2),
+ 			 "Walk_end: 1 max page\n");
+ 
+@@ -674,9 +676,10 @@ int sanity_tests_sd(void)
+ 	return 0;
  }
  
--static bool pcie_root_rcb_set(struct pci_dev *dev)
--{
--	struct pci_dev *rp = pcie_find_root_port(dev);
--	u16 lnkctl;
--
--	if (!rp)
--		return false;
--
--	pcie_capability_read_word(rp, PCI_EXP_LNKCTL, &lnkctl);
--	if (lnkctl & PCI_EXP_LNKCTL_RCB)
--		return true;
--
--	return false;
--}
--
- /* _HPX PCI Express Setting Record (Type 2) */
- struct hpx_type2 {
- 	u32 revision;
-@@ -311,6 +296,7 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
+-int base_tests(char *prefix, char *mem, int mem_size, int skip)
++int base_tests(char *prefix, char *mem, unsigned long long mem_size, int skip)
  {
- 	int pos;
- 	u32 reg32;
-+	const struct pci_host_bridge *host;
+-	int vec_size, written;
++	unsigned long long vec_size;
++	int written;
+ 	struct page_region *vec, *vec2;
  
- 	if (!hpx)
- 		return;
-@@ -318,6 +304,15 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
- 	if (!pci_is_pcie(dev))
- 		return;
+ 	if (skip) {
+@@ -799,8 +802,8 @@ int hpage_unit_tests(void)
+ 	char *map;
+ 	int ret, ret2;
+ 	size_t num_pages = 10;
+-	int map_size = hpage_size * num_pages;
+-	int vec_size = map_size/page_size;
++	unsigned long long map_size = hpage_size * num_pages;
++	unsigned long long vec_size = map_size/page_size;
+ 	struct page_region *vec, *vec2;
  
-+	host = pci_find_host_bridge(dev->bus);
-+
-+	/*
-+	 * Only do the _HPX Type 2 programming if OS owns PCIe native
-+	 * hotplug but not AER.
-+	 */
-+	if (!host->native_pcie_hotplug || host->native_aer)
-+		return;
-+
- 	if (hpx->revision > 1) {
- 		pci_warn(dev, "PCIe settings rev %d not supported\n",
- 			 hpx->revision);
-@@ -325,33 +320,27 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
- 	}
+ 	vec = malloc(sizeof(struct page_region) * vec_size);
+@@ -1047,7 +1050,8 @@ static void test_simple(void)
  
- 	/*
--	 * Don't allow _HPX to change MPS or MRRS settings.  We manage
--	 * those to make sure they're consistent with the rest of the
--	 * platform.
-+	 * We only allow _HPX to program DEVCTL bits related to AER, namely
-+	 * PCI_EXP_DEVCTL_CERE, PCI_EXP_DEVCTL_NFERE, PCI_EXP_DEVCTL_FERE,
-+	 * and PCI_EXP_DEVCTL_URRE.
-+	 *
-+	 * The rest of DEVCTL is managed by the OS to make sure it's
-+	 * consistent with the rest of the platform.
- 	 */
--	hpx->pci_exp_devctl_and |= PCI_EXP_DEVCTL_PAYLOAD |
--				    PCI_EXP_DEVCTL_READRQ;
--	hpx->pci_exp_devctl_or &= ~(PCI_EXP_DEVCTL_PAYLOAD |
--				    PCI_EXP_DEVCTL_READRQ);
-+	hpx->pci_exp_devctl_and |= ~PCI_EXP_AER_FLAGS;
-+	hpx->pci_exp_devctl_or &= PCI_EXP_AER_FLAGS;
+ int sanity_tests(void)
+ {
+-	int mem_size, vec_size, ret, fd, i, buf_size;
++	unsigned long long mem_size, vec_size;
++	int ret, fd, i, buf_size;
+ 	struct page_region *vec;
+ 	char *mem, *fmem;
+ 	struct stat sbuf;
+@@ -1312,7 +1316,9 @@ static ssize_t get_dirty_pages_reset(char *mem, unsigned int count,
+ {
+ 	struct pm_scan_arg arg = {0};
+ 	struct page_region rgns[256];
+-	int i, j, cnt, ret;
++	unsigned long long i, j;
++	long ret;
++	int cnt;
  
- 	/* Initialize Device Control Register */
- 	pcie_capability_clear_and_set_word(dev, PCI_EXP_DEVCTL,
- 			~hpx->pci_exp_devctl_and, hpx->pci_exp_devctl_or);
+ 	arg.size = sizeof(struct pm_scan_arg);
+ 	arg.start = (uintptr_t)mem;
+@@ -1330,7 +1336,7 @@ static ssize_t get_dirty_pages_reset(char *mem, unsigned int count,
+ 		ksft_exit_fail_msg("ioctl failed\n");
  
--	/* Initialize Link Control Register */
-+	/* Log if _HPX attempts to modify Link Control Register */
- 	if (pcie_cap_has_lnkctl(dev)) {
--
--		/*
--		 * If the Root Port supports Read Completion Boundary of
--		 * 128, set RCB to 128.  Otherwise, clear it.
--		 */
--		hpx->pci_exp_lnkctl_and |= PCI_EXP_LNKCTL_RCB;
--		hpx->pci_exp_lnkctl_or &= ~PCI_EXP_LNKCTL_RCB;
--		if (pcie_root_rcb_set(dev))
--			hpx->pci_exp_lnkctl_or |= PCI_EXP_LNKCTL_RCB;
--
--		pcie_capability_clear_and_set_word(dev, PCI_EXP_LNKCTL,
--			~hpx->pci_exp_lnkctl_and, hpx->pci_exp_lnkctl_or);
-+		if (hpx->pci_exp_lnkctl_and != 0xffff ||
-+		    hpx->pci_exp_lnkctl_or != 0)
-+			pci_info(dev, "_HPX attempts Link Control setting (AND %#06x OR %#06x)\n",
-+				 hpx->pci_exp_lnkctl_and,
-+				 hpx->pci_exp_lnkctl_or);
- 	}
+ 	cnt = 0;
+-	for (i = 0; i < ret; ++i) {
++	for (i = 0; i < (unsigned long)ret; ++i) {
+ 		if (rgns[i].categories != PAGE_IS_WRITTEN)
+ 			ksft_exit_fail_msg("wrong flags\n");
  
- 	/* Find Advanced Error Reporting Enhanced Capability */
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index 50da47c3fe72d..b1f393a42a875 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -84,6 +84,9 @@
- #define PCI_BUS_BRIDGE_MEM_WINDOW	1
- #define PCI_BUS_BRIDGE_PREF_MEM_WINDOW	2
+@@ -1384,9 +1390,10 @@ void *thread_proc(void *mem)
+ static void transact_test(int page_size)
+ {
+ 	unsigned int i, count, extra_pages;
++	unsigned int c;
+ 	pthread_t th;
+ 	char *mem;
+-	int ret, c;
++	int ret;
  
-+#define PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
-+				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
-+
- extern const unsigned char pcie_link_speed[];
- extern bool pci_early_dump;
- 
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index e5cbea3a4968b..36b6188a3a46f 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -218,9 +218,6 @@ void pcie_ecrc_get_policy(char *str)
+ 	if (pthread_barrier_init(&start_barrier, NULL, nthreads + 1))
+ 		ksft_exit_fail_msg("pthread_barrier_init\n");
+@@ -1473,9 +1480,10 @@ static void transact_test(int page_size)
+ 			      extra_thread_faults);
  }
- #endif	/* CONFIG_PCIE_ECRC */
  
--#define	PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
--				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
--
- int pcie_aer_is_native(struct pci_dev *dev)
+-int main(int argc, char *argv[])
++int main(int __attribute__((unused)) argc, char *argv[])
  {
- 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
+-	int mem_size, shmid, buf_size, fd, i, ret;
++	int shmid, buf_size, fd, i, ret;
++	unsigned long long mem_size;
+ 	char *mem, *map, *fmem;
+ 	struct stat sbuf;
+ 
+diff --git a/tools/testing/selftests/mm/vm_util.c b/tools/testing/selftests/mm/vm_util.c
+index a4a2805d3d3e7..4fa66a50e81a4 100644
+--- a/tools/testing/selftests/mm/vm_util.c
++++ b/tools/testing/selftests/mm/vm_util.c
+@@ -138,7 +138,7 @@ void clear_softdirty(void)
+ 		ksft_exit_fail_msg("opening clear_refs failed\n");
+ 	ret = write(fd, ctrl, strlen(ctrl));
+ 	close(fd);
+-	if (ret != strlen(ctrl))
++	if (ret != (signed int)strlen(ctrl))
+ 		ksft_exit_fail_msg("writing clear_refs failed\n");
+ }
+ 
 -- 
 2.51.0
 
