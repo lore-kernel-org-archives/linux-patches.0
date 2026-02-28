@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCEA39B946
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0337347FF8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302530; cv=none; b=H/uYoAwWaOr0KIBlUqoqlJ3GFD+v7GsL0PFqvWi+8EYoAjv99NYVvCPdrq1YnSnhvsPhfLHCJiV+SGjjNSoIs3OusCmKbWCbxhHWHMUr0qPbYvx9OIk7otdzdspDgqFYUggWwDNGiBVL3urglw1AwvY3nSXc4ZSCqAQnHBmTd58=
+	t=1772302530; cv=none; b=rFr4kAVhrGQGeo48baHKZiZ+E2VhMhPqRh6vI8uyFF+/3ZfRAbR5Waj8b++8rhZNX04CrEJgyUda1TQCX0cmid/9nsFE+SelydgEdn4/5gwB126LdBZyUtnSaG3d4u1jLICMyAiiBfdTXZJDxKWprh00cVj9Oq1aIsFWJk5D11Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302530; c=relaxed/simple;
-	bh=Trn3UBYMjM270TM+u6CCUhB/u7E2lWB6ibcaSf1Une0=;
+	bh=e31HbL6an6R/5/Kc7afWBOHB7cdJgH5AUFP2Q7y+NOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzrYq+0CHu9z3vGc2+hxglv5nBqbcCCAd1M0dVXVull3S+U8SabjvuwUnGDDX6h3PcyZrbO6Enyfjp4KTh4wycC7RpzqU/MS/8Jj5Oa1v3FGx39q1wiamcdBNaLXJPZncCMqPKloXrObLrKFqLKJOSyYmYQWwHx4ucHspQCe5HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dXJioKv3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TWeTc6fC6F0s3GHvKcwZBHpku4OGFxQQuAzj0o/09kzQX7uhC4GMPs/w9pE2VrvkZe5m3zaWG4MbELd/b64EAh4vUK3lbv0WNdAVN1acuiu8j0OA6Bcoh+N2k4MjD+Jb1wWrmcVDmUuiZsVDFuaODPTF+h4zLuohhL/QsYX38tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZVeZ6UlX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dXJioKv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BFCC19424;
-	Sat, 28 Feb 2026 18:15:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZVeZ6UlX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F030C19423;
+	Sat, 28 Feb 2026 18:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302529;
-	bh=Trn3UBYMjM270TM+u6CCUhB/u7E2lWB6ibcaSf1Une0=;
+	s=k20201202; t=1772302530;
+	bh=e31HbL6an6R/5/Kc7afWBOHB7cdJgH5AUFP2Q7y+NOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXJioKv3B+rtLd349Q5bDbeN/XnVcb2txNPDlTWGFxRg2ZPqKgigQmaX/nzUtCy4v
-	 NxD+rLK117YpdCp2ygHVrdcxS+LWpOw5xcMZx8IoW3ZEici/CHHIMEh917KZM85xJ3
-	 yqRdRts+1e9JGs8uLp7xYL5sTUX+jLGLH4IqmjBcKpiQcaT0n2rL1lMdfAe4JRTRPv
-	 DqSR31IMoExsjHWAfCMfIg6R5Xxgaie3PIoPubtlRq6PTd6rbgjfxb7W8Ol89RzVdG
-	 Q+E7QX5V8i0lOsn5i/BEu/q22Kh/K57q2T3O+mz40rDRmXdXNZ6IPoU4mU40kFO1Gf
-	 oE24vZm8DMMww==
+	b=ZVeZ6UlXUfgZxAcjEMKJR+j6kSNRIRaicixvooVY5aH/0G+lL2KoguCnmsK8+Z7h4
+	 SgUf+euvWmSSmSPV0sNNRmM8IyXfDTL25ncC7NGTNIVugG5bWvG0gTvT/wtmG2MZ7w
+	 ahGJcNnXTd3krBEvsjygDjn4zM7+hkvoyMgYIKr7J9yZnvSjtQRZ/4V73LN5GFD6EB
+	 oK3zHfEXw344+JUz2E2LryItID18YI67cKGseEPx1O7UKL6UxFSvn1D6wyZPI7YNZ9
+	 NAua7Gkj7rpv0o2cNJOf85jz+/7bJMQ1YUq/fwvtBGo+Pyg4i/lseibpCPweLpGvNs
+	 7LZCCaMD3Tkqw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Chen Jinghuang <chenjinghuang2@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Valentin Schneider <vschneid@redhat.com>,
+Cc: Sai Ritvik Tanksalkar <stanksal@purdue.edu>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/164] sched/rt: Skip currently executing CPU in rto_next_cpu()
-Date: Sat, 28 Feb 2026 13:12:48 -0500
-Message-ID: <20260228181505.1600663-29-sashal@kernel.org>
+Subject: [PATCH 5.15 030/164] pstore/ram: fix buffer overflow in persistent_ram_save_old()
+Date: Sat, 28 Feb 2026 13:12:49 -0500
+Message-ID: <20260228181505.1600663-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -46,89 +43,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Chen Jinghuang <chenjinghuang2@huawei.com>
+From: Sai Ritvik Tanksalkar <stanksal@purdue.edu>
 
-[ Upstream commit 94894c9c477e53bcea052e075c53f89df3d2a33e ]
+[ Upstream commit 5669645c052f235726a85f443769b6fc02f66762 ]
 
-CPU0 becomes overloaded when hosting a CPU-bound RT task, a non-CPU-bound
-RT task, and a CFS task stuck in kernel space. When other CPUs switch from
-RT to non-RT tasks, RT load balancing (LB) is triggered; with
-HAVE_RT_PUSH_IPI enabled, they send IPIs to CPU0 to drive the execution
-of rto_push_irq_work_func. During push_rt_task on CPU0,
-if next_task->prio < rq->donor->prio, resched_curr() sets NEED_RESCHED
-and after the push operation completes, CPU0 calls rto_next_cpu().
-Since only CPU0 is overloaded in this scenario, rto_next_cpu() should
-ideally return -1 (no further IPI needed).
+persistent_ram_save_old() can be called multiple times for the same
+persistent_ram_zone (e.g., via ramoops_pstore_read -> ramoops_get_next_prz
+for PSTORE_TYPE_DMESG records).
 
-However, multiple CPUs invoking tell_cpu_to_push() during LB increments
-rd->rto_loop_next. Even when rd->rto_cpu is set to -1, the mismatch between
-rd->rto_loop and rd->rto_loop_next forces rto_next_cpu() to restart its
-search from -1. With CPU0 remaining overloaded (satisfying rt_nr_migratory
-&& rt_nr_total > 1), it gets reselected, causing CPU0 to queue irq_work to
-itself and send self-IPIs repeatedly. As long as CPU0 stays overloaded and
-other CPUs run pull_rt_tasks(), it falls into an infinite self-IPI loop,
-which triggers a CPU hardlockup due to continuous self-interrupts.
+Currently, the function only allocates prz->old_log when it is NULL,
+but it unconditionally updates prz->old_log_size to the current buffer
+size and then performs memcpy_fromio() using this new size. If the
+buffer size has grown since the first allocation (which can happen
+across different kernel boot cycles), this leads to:
 
-The trigging scenario is as follows:
+1. A heap buffer overflow (OOB write) in the memcpy_fromio() calls
+2. A subsequent OOB read when ramoops_pstore_read() accesses the buffer
+   using the incorrect (larger) old_log_size
 
-         cpu0                      cpu1                    cpu2
-                                pull_rt_task
-                              tell_cpu_to_push
-                 <------------irq_work_queue_on
-rto_push_irq_work_func
-       push_rt_task
-    resched_curr(rq)                                   pull_rt_task
-    rto_next_cpu                                     tell_cpu_to_push
-                      <-------------------------- atomic_inc(rto_loop_next)
-rd->rto_loop != next
-     rto_next_cpu
-   irq_work_queue_on
-rto_push_irq_work_func
+The KASAN splat would look similar to:
+  BUG: KASAN: slab-out-of-bounds in ramoops_pstore_read+0x...
+  Read of size N at addr ... by task ...
 
-Fix redundant self-IPI by filtering the initiating CPU in rto_next_cpu().
-This solution has been verified to effectively eliminate spurious self-IPIs
-and prevent CPU hardlockup scenarios.
+The conditions are likely extremely hard to hit:
 
-Fixes: 4bdced5c9a29 ("sched/rt: Simplify the IPI based RT balancing logic")
-Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Suggested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Chen Jinghuang <chenjinghuang2@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Link: https://patch.msgid.link/20260122012533.673768-1-chenjinghuang2@huawei.com
+  0. Crash with a ramoops write of less-than-record-max-size bytes.
+  1. Reboot: ramoops registers, pstore_get_records(0) reads old crash,
+     allocates old_log with size X
+  2. Crash handler registered, timer started (if pstore_update_ms >= 0)
+  3. Oops happens (non-fatal, system continues)
+  4. pstore_dump() writes oops via ramoops_pstore_write() size Y (>X)
+  5. pstore_new_entry = 1, pstore_timer_kick() called
+  6. System continues running (not a panic oops)
+  7. Timer fires after pstore_update_ms milliseconds
+  8. pstore_timefunc() → schedule_work() → pstore_dowork() → pstore_get_records(1)
+  9. ramoops_get_next_prz() → persistent_ram_save_old()
+ 10. buffer_size() returns Y, but old_log is X bytes
+ 11. Y > X: memcpy_fromio() overflows heap
+
+  Requirements:
+  - a prior crash record exists that did not fill the record size
+    (almost impossible since the crash handler writes as much as it
+    can possibly fit into the record, capped by max record size and
+    the kmsg buffer almost always exceeds the max record size)
+  - pstore_update_ms >= 0 (disabled by default)
+  - Non-fatal oops (system survives)
+
+Free and reallocate the buffer when the new size differs from the
+previously allocated size. This ensures old_log always has sufficient
+space for the data being copied.
+
+Fixes: 201e4aca5aa1 ("pstore/ram: Should update old dmesg buffer before reading")
+Signed-off-by: Sai Ritvik Tanksalkar <stanksal@purdue.edu>
+Link: https://patch.msgid.link/20260201132240.2948732-1-stanksal@purdue.edu
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/rt.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/pstore/ram_core.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 9720b3c19ab97..c5122e5f258e4 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2068,6 +2068,7 @@ static void push_rt_tasks(struct rq *rq)
-  */
- static int rto_next_cpu(struct root_domain *rd)
- {
-+	int this_cpu = smp_processor_id();
- 	int next;
- 	int cpu;
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index ec321722384dc..8eb4bea7295b4 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -298,6 +298,17 @@ void persistent_ram_save_old(struct persistent_ram_zone *prz)
+ 	if (!size)
+ 		return;
  
-@@ -2091,6 +2092,10 @@ static int rto_next_cpu(struct root_domain *rd)
- 
- 		rd->rto_cpu = cpu;
- 
-+		/* Do not send IPI to self */
-+		if (cpu == this_cpu)
-+			continue;
++	/*
++	 * If the existing buffer is differently sized, free it so a new
++	 * one is allocated. This can happen when persistent_ram_save_old()
++	 * is called early in boot and later for a timer-triggered
++	 * survivable crash when the crash dumps don't match in size
++	 * (which would be extremely unlikely given kmsg buffers usually
++	 * exceed prz buffer sizes).
++	 */
++	if (prz->old_log && prz->old_log_size != size)
++		persistent_ram_free_old(prz);
 +
- 		if (cpu < nr_cpu_ids)
- 			return cpu;
- 
+ 	if (!prz->old_log) {
+ 		persistent_ram_ecc_old(prz);
+ 		prz->old_log = kmalloc(size, GFP_KERNEL);
 -- 
 2.51.0
 
