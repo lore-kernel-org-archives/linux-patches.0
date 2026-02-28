@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9FA340A47
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8693A340A59
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301127; cv=none; b=rhVHNEcCfjBgsyI7ytpNvqOf6DuXghBojXyv694Mgn0SWFY+gOpF4umKl3Vs+M61BCGn7NcwwG4g4++YqGzoc2awaXctqrH7N6RNMLKqNefr7qHZLE0hHDx+zytlQ/WQbAlCM6K3V/2eJah0zWBMTveTfCbG05jC/mg46NRne/o=
+	t=1772301128; cv=none; b=JvVekRwMmaNBQE5GXK0ui0tWsCpiMX6hvuq1ip9Z8cdLN2W21sEKXVV+fv+0WgYYNTvrzXEQX8XNNeWDtHX0T7n5jnZMAs+iQIy7ID2Ccxyv07nm7uqzVuEw7OQsYWe06UZiD0nSltavFwu0MdFgIJGN1rgdGGXIKSV4db/ddQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301127; c=relaxed/simple;
-	bh=waZC0sqlFxLnN6MicwwPXP13l/tZFkfFMAngKrbv+pk=;
+	s=arc-20240116; t=1772301128; c=relaxed/simple;
+	bh=cpgrSgAkJnKPCIz0KN2av2PGQbA/IqX1Sa5PRbhWHEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSJtAiayQP2BkZwH8+8hkw6iV3xrL4TrAI6mvSaMXJaqT797DHu2GGRPzxnOM+cSFf4jE/ydoIAh7bmpxkwUylPohpGQADjLq0mx+A24ykCWIJYOIzexEQKFHwUBcIy8Q1CDzk8KmafVnLQ5rSZcXwJ0o6VCl76/H+Ja1MQqjQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=luIIjd3r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JaU8dn3bELoLlDxQ2/PXUmiJ9L/+9L4Dco2mOZQ+uNA+0g6/LioZeX0vuHfyNfc2xw/fibquQva6NoUwDqk0MOJvPcYVzH5j8b6QKcFkuBh20qtjhlnUDfZ8o+/EqImOu1XKi5ptbPCkfo70iWZqktIczokMP2f4MjAZSutHQY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h3hSmP+V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="luIIjd3r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95DAC116D0;
-	Sat, 28 Feb 2026 17:52:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h3hSmP+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A830BC116D0;
+	Sat, 28 Feb 2026 17:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301127;
-	bh=waZC0sqlFxLnN6MicwwPXP13l/tZFkfFMAngKrbv+pk=;
+	s=k20201202; t=1772301128;
+	bh=cpgrSgAkJnKPCIz0KN2av2PGQbA/IqX1Sa5PRbhWHEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=luIIjd3ra3Bv11n+0XK3gxseYmAfNnMPdYhCogsgKyiC1Du4DNcyfDaxWwNSfEzts
-	 53Ug7AkLOOGnOjyLhKZKrNnmgmH4vVoeHkgUO+IB7HAJUQ8EVayMsbpZwySRr6mAew
-	 xdqlxjm5OxxHWkM2+zgc8qSiq8jEmIppc5edTfW2ZL/1KjPjX76TPtKkSjEcQbklQl
-	 ixXataJJ6GKkhocx+R2d8Be/Knij2te5+Lqvz8T0hrnPhqTtOcJ8woWIcpyIYzWSqK
-	 oo/KkLoUA6S8mjmidPwVQrlRVJ5mMCiWCK4Yz5AozgkKiYekLlDsOmIw3vKu9o3zGf
-	 819Y3oLpzJc0g==
+	b=h3hSmP+VKr9Bd1fw8rD09Niv4oXHSBymS9HXxxDZKHXf4c0Y33c0F8cXbztYt/kJV
+	 sOqyQjKXr5AqXg2L9OqotCjoyXdTvsc+52JmcfWx5QQV4PZ1L02SLyvoqehHAmzDSG
+	 sXo2V+u1NZEdhFvimKy9nQSQlBUyx9in4gDUfoGHYD5C/HgVWvjtQr/DqNKPQWsuhu
+	 gTbn3PMtyKolU6naEbpWrnGyqcDQwjqwsHX0DbF6mkO9lnRT5KfiXtl6rQUqHVEuh8
+	 T1OVxi4rM+aXdVa82eoEpDjd4ZHvsoHdtvviha5X1bOPOWroKBkAhq45QzPd3vjyNf
+	 lKJDKS8pxsq5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 286/752] net: usb: sr9700: remove code to drive nonexistent multicast filter
-Date: Sat, 28 Feb 2026 12:39:57 -0500
-Message-ID: <20260228174750.1542406-286-sashal@kernel.org>
+Subject: [PATCH 6.18 287/752] vmw_vsock: bypass false-positive Wnonnull warning with gcc-16
+Date: Sat, 28 Feb 2026 12:39:58 -0500
+Message-ID: <20260228174750.1542406-287-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,115 +50,60 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9a9424c756feee9ee6e717405a9d6fa7bacdef08 ]
+[ Upstream commit e25dbf561e03c0c5e36228e3b8b784392819ce85 ]
 
-Several registers referenced in this driver's source code do not
-actually exist (they are not writable and read as zero in my testing).
-They exist in this driver because it originated as a copy of the dm9601
-driver. Notably, these include the multicast filter registers - this
-causes the driver to not support multicast packets correctly. Remove
-the multicast filter code and register definitions. Instead, set the
-chip to receive all multicast filter packets when any multicast
-addresses are in the list.
+The gcc-16.0.1 snapshot produces a false-positive warning that turns
+into a build failure with CONFIG_WERROR:
 
-Reviewed-by: Simon Horman <horms@kernel.org> (from v1)
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Link: https://patch.msgid.link/20260203013924.28582-1-enelsonmoore@gmail.com
+In file included from arch/x86/include/asm/string.h:6,
+                 from net/vmw_vsock/vmci_transport.c:10:
+In function 'vmci_transport_packet_init',
+    inlined from '__vmci_transport_send_control_pkt.constprop' at net/vmw_vsock/vmci_transport.c:198:2:
+arch/x86/include/asm/string_32.h:150:25: error: argument 2 null where non-null expected because argument 3 is nonzero [-Werror=nonnull]
+  150 | #define memcpy(t, f, n) __builtin_memcpy(t, f, n)
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+net/vmw_vsock/vmci_transport.c:164:17: note: in expansion of macro 'memcpy'
+  164 |                 memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
+      |                 ^~~~~~
+arch/x86/include/asm/string_32.h:150:25: note: in a call to built-in function '__builtin_memcpy'
+net/vmw_vsock/vmci_transport.c:164:17: note: in expansion of macro 'memcpy'
+  164 |                 memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
+      |                 ^~~~~~
+
+This seems relatively harmless, and it so far the only instance of this
+warning I have found. The __vmci_transport_send_control_pkt function
+is called either with wait=NULL or with one of the type values that
+pass 'wait' into memcpy() here, but not from the same caller.
+
+Replacing the memcpy with a struct assignment is otherwise the same
+but avoids the warning.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Bryan Tan <bryan-bt.tan@broadcom.com>
+Link: https://patch.msgid.link/20260203163406.2636463-1-arnd@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/Kconfig  |  1 -
- drivers/net/usb/sr9700.c | 25 ++++---------------------
- drivers/net/usb/sr9700.h |  7 +------
- 3 files changed, 5 insertions(+), 28 deletions(-)
+ net/vmw_vsock/vmci_transport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/Kconfig b/drivers/net/usb/Kconfig
-index 856e648d804e0..da0f6a138f4fc 100644
---- a/drivers/net/usb/Kconfig
-+++ b/drivers/net/usb/Kconfig
-@@ -319,7 +319,6 @@ config USB_NET_DM9601
- config USB_NET_SR9700
- 	tristate "CoreChip-sz SR9700 based USB 1.1 10/100 ethernet devices"
- 	depends on USB_USBNET
--	select CRC32
- 	help
- 	  This option adds support for CoreChip-sz SR9700 based USB 1.1
- 	  10/100 Ethernet adapters.
-diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
-index 820c4c5069792..a5d364fbc3639 100644
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -18,7 +18,6 @@
- #include <linux/ethtool.h>
- #include <linux/mii.h>
- #include <linux/usb.h>
--#include <linux/crc32.h>
- #include <linux/usb/usbnet.h>
+diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
+index 7eccd6708d664..aca3132689cf1 100644
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -161,7 +161,7 @@ vmci_transport_packet_init(struct vmci_transport_packet *pkt,
  
- #include "sr9700.h"
-@@ -265,31 +264,15 @@ static const struct ethtool_ops sr9700_ethtool_ops = {
- static void sr9700_set_multicast(struct net_device *netdev)
- {
- 	struct usbnet *dev = netdev_priv(netdev);
--	/* We use the 20 byte dev->data for our 8 byte filter buffer
--	 * to avoid allocating memory that is tricky to free later
--	 */
--	u8 *hashes = (u8 *)&dev->data;
- 	/* rx_ctl setting : enable, disable_long, disable_crc */
- 	u8 rx_ctl = RCR_RXEN | RCR_DIS_CRC | RCR_DIS_LONG;
+ 	case VMCI_TRANSPORT_PACKET_TYPE_WAITING_READ:
+ 	case VMCI_TRANSPORT_PACKET_TYPE_WAITING_WRITE:
+-		memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
++		pkt->u.wait = *wait;
+ 		break;
  
--	memset(hashes, 0x00, SR_MCAST_SIZE);
--	/* broadcast address */
--	hashes[SR_MCAST_SIZE - 1] |= SR_MCAST_ADDR_FLAG;
--	if (netdev->flags & IFF_PROMISC) {
-+	if (netdev->flags & IFF_PROMISC)
- 		rx_ctl |= RCR_PRMSC;
--	} else if (netdev->flags & IFF_ALLMULTI ||
--		   netdev_mc_count(netdev) > SR_MCAST_MAX) {
--		rx_ctl |= RCR_RUNT;
--	} else if (!netdev_mc_empty(netdev)) {
--		struct netdev_hw_addr *ha;
--
--		netdev_for_each_mc_addr(ha, netdev) {
--			u32 crc = ether_crc(ETH_ALEN, ha->addr) >> 26;
--			hashes[crc >> 3] |= 1 << (crc & 0x7);
--		}
--	}
-+	else if (netdev->flags & IFF_ALLMULTI || !netdev_mc_empty(netdev))
-+		/* The chip has no multicast filter */
-+		rx_ctl |= RCR_ALL;
- 
--	sr_write_async(dev, SR_MAR, SR_MCAST_SIZE, hashes);
- 	sr_write_reg_async(dev, SR_RCR, rx_ctl);
- }
- 
-diff --git a/drivers/net/usb/sr9700.h b/drivers/net/usb/sr9700.h
-index ea2b4de621c86..c479908f7d823 100644
---- a/drivers/net/usb/sr9700.h
-+++ b/drivers/net/usb/sr9700.h
-@@ -104,9 +104,7 @@
- #define		WCR_LINKEN		(1 << 5)
- /* Physical Address Reg */
- #define	SR_PAR			0x10	/* 0x10 ~ 0x15 6 bytes for PAR */
--/* Multicast Address Reg */
--#define	SR_MAR			0x16	/* 0x16 ~ 0x1D 8 bytes for MAR */
--/* 0x1e unused */
-+/* 0x16 --> 0x1E unused */
- /* Phy Reset Reg */
- #define	SR_PRR			0x1F
- #define		PRR_PHY_RST		(1 << 0)
-@@ -161,9 +159,6 @@
- /* parameters */
- #define	SR_SHARE_TIMEOUT	1000
- #define	SR_EEPROM_LEN		256
--#define	SR_MCAST_SIZE		8
--#define	SR_MCAST_ADDR_FLAG	0x80
--#define	SR_MCAST_MAX		64
- #define	SR_TX_OVERHEAD		2	/* 2bytes header */
- #define	SR_RX_OVERHEAD		7	/* 3bytes header + 4crc tail */
- 
+ 	case VMCI_TRANSPORT_PACKET_TYPE_REQUEST2:
 -- 
 2.51.0
 
