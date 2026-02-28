@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FE839B974
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A1A37524F
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302598; cv=none; b=DjkLXV0dgEk96sLxCEG16jLYWKqcDQ44QbRssaipS74HfRZn8RFGod/sSKrqEsl7GNcTCI74Bv2asZAecC3uFY7afb0MXWQpHaouY0RfkL1jBzA/uDez4BGOTdNVaMb1FpotH3VI9m4EHg8IEmutR63k66T3+HHXeQj+IneC+iY=
+	t=1772302598; cv=none; b=rJ0DfbPVd6aYHfEG4EJh6zaNfjEskvVF/1RNkES7eyA1VG8D+1/nP38lHvIX+7H077nm1BWMwQidTgWC0hMFuvq3LkdMrUhWNMCjM6sT1TxrpzRbew0y6RD7Bk2Ih2JclAk0yuS72Tand5/h7DCNe5dIECFfihTeQv2lbtPiDY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302598; c=relaxed/simple;
-	bh=ZmW0j4BX5tUxxtXHE16NZgbq3rDIZoOiWaXjhYELD7c=;
+	bh=cGfUnpC9sghwyXmbicDeqT5DUjlzWul5BcEtfGLvd7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3R+5qYCT4ggOuILCg9PyfeO+hhCBCNJdRBIFkFwsTl3uSh6zIpvK/46h9PxmhiB/gXJhq7tPcbdcer8/SYnLumFWhV4zQNx2J65/2r9CVVTBPWEkueZ4IncmowHks+tzZqlxkScVeI40NghhzXHDQGHCfHSqQOE/RZmYiaeNbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKENv3wZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LizhWpepNe4qXB86OdLOi87cOX4KFq7Q6oeIyFP0AyLS44cO9Smg2vsm8o6Dn/xGMoey/VgJnGsU5tFt55d75yowl1CXKO9GKROxOB1LzQd32AKz7eQhbeKsMIz6RNv2v8vYE1CkYe9eN73ccWHR3xAUIIBn8eeUzygPc8HWH1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d5HezFVS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKENv3wZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D58C19423;
-	Sat, 28 Feb 2026 18:16:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d5HezFVS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F24FC116D0;
+	Sat, 28 Feb 2026 18:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302598;
-	bh=ZmW0j4BX5tUxxtXHE16NZgbq3rDIZoOiWaXjhYELD7c=;
+	bh=cGfUnpC9sghwyXmbicDeqT5DUjlzWul5BcEtfGLvd7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKENv3wZZ/e38Kv7/i+GYoWUOmgN/QffKfGw3ChN3I7mQhkAgVd6dzhKx/U+/wCb9
-	 KuCyOV9tcwnPcl7Znm5FVOcqP72h6zVhh9Mr506QQyw+GeSrTXidm9YPvLlnMu9hms
-	 yhcRTaIXMiLdz6b/Jo7i6Hn3CZ5k246c5nIQm3x06k2DY18T2wPGykaZEOpddTVf9b
-	 S62ybRcRTX1XOPQQG5/D3DimesVWrhEaJxkvGYxCFs4xpxwqRX9iQHRN/DGm1ifg5q
-	 Hs+t0ti4qV86/23/glmeJEV51HR7IA+H3X5fu1PfoB4Ku5pRJDYXfJalBwP8wJDM3a
-	 OVqQe/enhCGnQ==
+	b=d5HezFVSWjxdAkqURv0N2O17o1oW8dUcX1dcjGy7OZrIt2clS1ngGjmPy3B4s01u2
+	 2dlJGn6BdPUXTqToNqJC1DjRH1inIAhJ5eUdwuWnHhJzSc0fswRPTIHiDlUduiWYdO
+	 zC/CobAf6XzZ7wC4lNePLywd9f3Y942NjA6R5I49VHJAAFVE6hBsY84Q4coD9HGBnY
+	 bHDySJMG8gd3ft7gHKHc4ip26CtQekjEG50J25CXXmhrlbd67p0Z0xPHrX0jZ3MODY
+	 wfGeqiZFRCtLdHrTVcQjoKrgqh01bsDLgcaXmOp7yk653IP25XC1ap19vDEQPO4eGE
+	 /9s5HHvMHzDBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Zhu Yanjun <yanjun.Zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+Cc: Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/164] RDMA/rxe: Fix double free in rxe_srq_from_init
-Date: Sat, 28 Feb 2026 13:14:09 -0500
-Message-ID: <20260228181505.1600663-110-sashal@kernel.org>
+Subject: [PATCH 5.15 111/164] mtd: rawnand: cadence: Fix return type of CDMA send-and-wait helper
+Date: Sat, 28 Feb 2026 13:14:10 -0500
+Message-ID: <20260228181505.1600663-111-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,55 +47,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 0beefd0e15d962f497aad750b2d5e9c3570b66d1 ]
+[ Upstream commit 6d8226cbbf124bb5613b532216b74c886a4361b7 ]
 
-In rxe_srq_from_init(), the queue pointer 'q' is assigned to
-'srq->rq.queue' before copying the SRQ number to user space.
-If copy_to_user() fails, the function calls rxe_queue_cleanup()
-to free the queue, but leaves the now-invalid pointer in
-'srq->rq.queue'.
+cadence_nand_cdma_send_and_wait() propagates negative errno values
+from cadence_nand_cdma_send(), returns -ETIMEDOUT on failure and -EIO
+when the CDMA engine reports a command failure.
 
-The caller of rxe_srq_from_init() (rxe_create_srq) eventually
-calls rxe_srq_cleanup() upon receiving the error, which triggers
-a second rxe_queue_cleanup() on the same memory, leading to a
-double free.
+However, it is declared as u32, causing error codes to wrap.
+Change the return type to int to correctly propagate errors.
 
-The call trace looks like this:
-   kmem_cache_free+0x.../0x...
-   rxe_queue_cleanup+0x1a/0x30 [rdma_rxe]
-   rxe_srq_cleanup+0x42/0x60 [rdma_rxe]
-   rxe_elem_release+0x31/0x70 [rdma_rxe]
-   rxe_create_srq+0x12b/0x1a0 [rdma_rxe]
-   ib_create_srq_user+0x9a/0x150 [ib_core]
-
-Fix this by moving 'srq->rq.queue = q' after copy_to_user.
-
-Fixes: aae0484e15f0 ("IB/rxe: avoid srq memory leak")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://patch.msgid.link/20260112015412.29458-1-jiashengjiangcool@gmail.com
-Reviewed-by: Zhu Yanjun <yanjun.Zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_srq.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/nand/raw/cadence-nand-controller.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
-index eb1c4c3b3a786..05ae3d183b21d 100644
---- a/drivers/infiniband/sw/rxe/rxe_srq.c
-+++ b/drivers/infiniband/sw/rxe/rxe_srq.c
-@@ -118,6 +118,9 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
- 		}
- 	}
- 
-+	srq->rq.queue = q;
-+	init->attr.max_wr = srq->rq.max_wr;
-+
- 	return 0;
+diff --git a/drivers/mtd/nand/raw/cadence-nand-controller.c b/drivers/mtd/nand/raw/cadence-nand-controller.c
+index 8c8d21af1d9b7..6ba4601681cef 100644
+--- a/drivers/mtd/nand/raw/cadence-nand-controller.c
++++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
+@@ -1018,7 +1018,7 @@ static int cadence_nand_cdma_send(struct cdns_nand_ctrl *cdns_ctrl,
  }
  
+ /* Send SDMA command and wait for finish. */
+-static u32
++static int
+ cadence_nand_cdma_send_and_wait(struct cdns_nand_ctrl *cdns_ctrl,
+ 				u8 thread)
+ {
 -- 
 2.51.0
 
