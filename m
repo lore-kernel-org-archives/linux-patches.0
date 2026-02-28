@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3904D347FCC;
-	Sat, 28 Feb 2026 18:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC8F347FCC;
+	Sat, 28 Feb 2026 18:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302437; cv=none; b=s42+owaW0O/4wmzPGvFOMvycQPLrXaSc2RKxNksmGyc6LcDp4sFD37uIeVV9p7QFfgFyQKs2128xesSV+citN+2Wy3c+8Cy9JA7rDgWFY7fXMyHQMY1gqbDlf74JqgmjePsDCLJhRvRGINmryt4ViMEmbXGkFBl7Ds0/nG2VA3g=
+	t=1772302437; cv=none; b=Y06Kt+TACgBU8rEc2AwT0YfbDRileK5mVBiuhp0s/qXD30DOYJn9+9FPNv5aqUo3MKHQE2WJzYm/x7Lva13cuakywKoqw+JnUa0SSxixaiZ74NgqZdsBwCYNpo70Vk9f3d/zqGsRLDnifIoUYHH/UW5Wkc4m3/U4OQUitPJmPKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302437; c=relaxed/simple;
-	bh=V843j5zIMt2bMiQD8atPRuwhRTpnan1j3Hm2pELodVw=;
+	bh=DfD5e4EFW84B3KvN8gHNJyg3DGnxCVok5TMIpODBfoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcS0A8Zw9uvpcDub7jWxR4+K3RNVHwbOamkdTNlAwW9dZ+MfHf5jSWYR+JVrJN1YWBFKEk8uDaGwBWEtvXk4L0VpHtrUroHzJlfAV6j13jRHpGTSkbS086ZVaKoiWZZIj05lLWgSqpF8nsVB7G2QwLsw0dqQSG9nWdcm71OBHEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b0YF105C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cTwGHCp3Tmc3WTX1P4R3KU/JB5NNOVHVgmb+nrN1TbOuHrYaDUdhFHLaPTyHY+v584KY/hXfqlB67pmvEU3K+gXwg6arbPukzcYcqeUE9BcXJ+lovkjzOwhWp0mJKpP8yIWzwlJwC5Ee9qbXClaWiEVsmjilg6PNWqt8KjMF+zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OviUK1o3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b0YF105C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08601C19423;
-	Sat, 28 Feb 2026 18:13:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OviUK1o3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD98C116D0;
+	Sat, 28 Feb 2026 18:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302436;
-	bh=V843j5zIMt2bMiQD8atPRuwhRTpnan1j3Hm2pELodVw=;
+	s=k20201202; t=1772302437;
+	bh=DfD5e4EFW84B3KvN8gHNJyg3DGnxCVok5TMIpODBfoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b0YF105Ct1NeJ9/6EBnyIdE4vTvXUKV3NuqYN+XqbhqRpVW9fcms45fI8LBRQ2jJd
-	 yFNawxdxtggIrlvzxF5mR+YcQkAdL9eeR8/+S10VdnsK1LVC6miFqN6pbDBdaZu4QI
-	 JXvhJP5Qksj64uNPOC1rQ2qDyYivjsMtvifdvJNMrh/2Kef1AZaIzmzgNbs0TPFMFd
-	 +cMVStUH2M4Oc6Krmnlg7dFl/jjMekyJ1gLO3sxcns86lwErXgRu5aeD+aPcG7U36E
-	 xLWkQhpZcBPjFNVjGfhK4xxWF28lvWNU99SCrZ1Wxl8fYvR08XWFDublJSxSd3Fgga
-	 z7gEH3x9yY+bA==
+	b=OviUK1o3br28/g4p/ok3ogKNQm2l4d50YNY5hAlQ3+IaIpwLYXf3n1orGQjy4tUHd
+	 TMQYhZtxjcZjJRWk0vMY3gn/i/WBWl0jbiBinwcHx7WWQIJsX2pKy5kD5U6pjQ+ZFp
+	 RqW7oAJfgeisvThfB6Rvd6Mrp7Jrd1dBAfrv3SELpZElyk2clMb8t5VPdsHKg3ekGG
+	 9U39uhqNs11M40eAjG6gMSLxtj8vFJGX+BeBFEcoTRtOdSNLc97AF9xfvasdO6EneB
+	 5+w0u7ofPSZ2fl87+jGlJ0fPyplcdw7J3AAVuPNNDmavrLZr53QHSUlpOhxFkn7Sbg
+	 hvX3Prw/nhJ6g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Damien Le Moal <dlemoal@kernel.org>,
+Cc: Chuck Lever <chuck.lever@oracle.com>,
+	Xingjing Deng <micro6947@gmail.com>,
 	stable@vger.kernel.org,
-	Niklas Cassel <cassel@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Igor Pylypiv <ipylypiv@google.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.1 174/232] ata: libata-scsi: refactor ata_scsi_translate()
-Date: Sat, 28 Feb 2026 13:10:27 -0500
-Message-ID: <20260228181127.1592657-174-sashal@kernel.org>
+Subject: [PATCH 6.1 175/232] SUNRPC: auth_gss: fix memory leaks in XDR decoding error paths
+Date: Sat, 28 Feb 2026 13:10:28 -0500
+Message-ID: <20260228181127.1592657-175-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -51,158 +49,225 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit bb3a8154b1a1dc2c86d037482c0a2cf9186829ed upstream.
+commit 3e6397b056335cc56ef0e9da36c95946a19f5118 upstream.
 
-Factor out of ata_scsi_translate() the code handling queued command
-deferral using the port qc_defer callback and issuing the queued
-command with ata_qc_issue() into the new function ata_scsi_qc_issue(),
-and simplify the goto used in ata_scsi_translate().
-While at it, also add a lockdep annotation to check that the port lock
-is held when ata_scsi_translate() is called.
+The gssx_dec_ctx(), gssx_dec_status(), and gssx_dec_name()
+functions allocate memory via gssx_dec_buffer(), which calls
+kmemdup(). When a subsequent decode operation fails, these
+functions return immediately without freeing previously
+allocated buffers, causing memory leaks.
 
-No functional changes.
+The leak in gssx_dec_ctx() is particularly relevant because
+the caller (gssp_accept_sec_context_upcall) initializes several
+buffer length fields to non-zero values, resulting in memory
+allocation:
 
+    struct gssx_ctx rctxh = {
+        .exported_context_token.len = GSSX_max_output_handle_sz,
+        .mech.len = GSS_OID_MAX_LEN,
+        .src_name.display_name.len = GSSX_max_princ_sz,
+        .targ_name.display_name.len = GSSX_max_princ_sz
+    };
+
+If, for example, gssx_dec_name() succeeds for src_name but
+fails for targ_name, the memory allocated for
+exported_context_token, mech, and src_name.display_name
+remains unreferenced and cannot be reclaimed.
+
+Add error handling with goto-based cleanup to free any
+previously allocated buffers before returning an error.
+
+Reported-by: Xingjing Deng <micro6947@gmail.com>
+Closes: https://lore.kernel.org/linux-nfs/CAK+ZN9qttsFDu6h1FoqGadXjMx1QXqPMoYQ=6O9RY4SxVTvKng@mail.gmail.com/
+Fixes: 1d658336b05f ("SUNRPC: Add RPC based upcall mechanism for RPCGSS auth")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c | 81 ++++++++++++++++++++++++---------------
- 1 file changed, 50 insertions(+), 31 deletions(-)
+ net/sunrpc/auth_gss/gss_rpc_xdr.c | 82 ++++++++++++++++++++++++-------
+ 1 file changed, 64 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 430970db482a8..5e49265523084 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1724,6 +1724,42 @@ static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
- 	ata_qc_done(qc);
+diff --git a/net/sunrpc/auth_gss/gss_rpc_xdr.c b/net/sunrpc/auth_gss/gss_rpc_xdr.c
+index cb32ab9a83952..ee91f4d641e6f 100644
+--- a/net/sunrpc/auth_gss/gss_rpc_xdr.c
++++ b/net/sunrpc/auth_gss/gss_rpc_xdr.c
+@@ -320,29 +320,47 @@ static int gssx_dec_status(struct xdr_stream *xdr,
+ 
+ 	/* status->minor_status */
+ 	p = xdr_inline_decode(xdr, 8);
+-	if (unlikely(p == NULL))
+-		return -ENOSPC;
++	if (unlikely(p == NULL)) {
++		err = -ENOSPC;
++		goto out_free_mech;
++	}
+ 	p = xdr_decode_hyper(p, &status->minor_status);
+ 
+ 	/* status->major_status_string */
+ 	err = gssx_dec_buffer(xdr, &status->major_status_string);
+ 	if (err)
+-		return err;
++		goto out_free_mech;
+ 
+ 	/* status->minor_status_string */
+ 	err = gssx_dec_buffer(xdr, &status->minor_status_string);
+ 	if (err)
+-		return err;
++		goto out_free_major_status_string;
+ 
+ 	/* status->server_ctx */
+ 	err = gssx_dec_buffer(xdr, &status->server_ctx);
+ 	if (err)
+-		return err;
++		goto out_free_minor_status_string;
+ 
+ 	/* we assume we have no options for now, so simply consume them */
+ 	/* status->options */
+ 	err = dummy_dec_opt_array(xdr, &status->options);
++	if (err)
++		goto out_free_server_ctx;
+ 
++	return 0;
++
++out_free_server_ctx:
++	kfree(status->server_ctx.data);
++	status->server_ctx.data = NULL;
++out_free_minor_status_string:
++	kfree(status->minor_status_string.data);
++	status->minor_status_string.data = NULL;
++out_free_major_status_string:
++	kfree(status->major_status_string.data);
++	status->major_status_string.data = NULL;
++out_free_mech:
++	kfree(status->mech.data);
++	status->mech.data = NULL;
+ 	return err;
  }
  
-+static int ata_scsi_qc_issue(struct ata_port *ap, struct ata_queued_cmd *qc)
-+{
-+	int ret;
+@@ -505,28 +523,35 @@ static int gssx_dec_name(struct xdr_stream *xdr,
+ 	/* name->name_type */
+ 	err = gssx_dec_buffer(xdr, &dummy_netobj);
+ 	if (err)
+-		return err;
++		goto out_free_display_name;
+ 
+ 	/* name->exported_name */
+ 	err = gssx_dec_buffer(xdr, &dummy_netobj);
+ 	if (err)
+-		return err;
++		goto out_free_display_name;
+ 
+ 	/* name->exported_composite_name */
+ 	err = gssx_dec_buffer(xdr, &dummy_netobj);
+ 	if (err)
+-		return err;
++		goto out_free_display_name;
+ 
+ 	/* we assume we have no attributes for now, so simply consume them */
+ 	/* name->name_attributes */
+ 	err = dummy_dec_nameattr_array(xdr, &dummy_name_attr_array);
+ 	if (err)
+-		return err;
++		goto out_free_display_name;
+ 
+ 	/* we assume we have no options for now, so simply consume them */
+ 	/* name->extensions */
+ 	err = dummy_dec_opt_array(xdr, &dummy_option_array);
++	if (err)
++		goto out_free_display_name;
+ 
++	return 0;
 +
-+	if (!ap->ops->qc_defer)
-+		goto issue;
-+
-+	/* Check if the command needs to be deferred. */
-+	ret = ap->ops->qc_defer(qc);
-+	switch (ret) {
-+	case 0:
-+		break;
-+	case ATA_DEFER_LINK:
-+		ret = SCSI_MLQUEUE_DEVICE_BUSY;
-+		break;
-+	case ATA_DEFER_PORT:
-+		ret = SCSI_MLQUEUE_HOST_BUSY;
-+		break;
-+	default:
-+		WARN_ON_ONCE(1);
-+		ret = SCSI_MLQUEUE_HOST_BUSY;
-+		break;
++out_free_display_name:
++	kfree(name->display_name.data);
++	name->display_name.data = NULL;
+ 	return err;
+ }
+ 
+@@ -649,32 +674,34 @@ static int gssx_dec_ctx(struct xdr_stream *xdr,
+ 	/* ctx->state */
+ 	err = gssx_dec_buffer(xdr, &ctx->state);
+ 	if (err)
+-		return err;
++		goto out_free_exported_context_token;
+ 
+ 	/* ctx->need_release */
+ 	err = gssx_dec_bool(xdr, &ctx->need_release);
+ 	if (err)
+-		return err;
++		goto out_free_state;
+ 
+ 	/* ctx->mech */
+ 	err = gssx_dec_buffer(xdr, &ctx->mech);
+ 	if (err)
+-		return err;
++		goto out_free_state;
+ 
+ 	/* ctx->src_name */
+ 	err = gssx_dec_name(xdr, &ctx->src_name);
+ 	if (err)
+-		return err;
++		goto out_free_mech;
+ 
+ 	/* ctx->targ_name */
+ 	err = gssx_dec_name(xdr, &ctx->targ_name);
+ 	if (err)
+-		return err;
++		goto out_free_src_name;
+ 
+ 	/* ctx->lifetime */
+ 	p = xdr_inline_decode(xdr, 8+8);
+-	if (unlikely(p == NULL))
+-		return -ENOSPC;
++	if (unlikely(p == NULL)) {
++		err = -ENOSPC;
++		goto out_free_targ_name;
 +	}
-+
-+	if (ret) {
-+		/* Force a requeue of the command to defer its execution. */
-+		ata_qc_free(qc);
-+		return ret;
-+	}
-+
-+issue:
-+	ata_qc_issue(qc);
+ 	p = xdr_decode_hyper(p, &ctx->lifetime);
+ 
+ 	/* ctx->ctx_flags */
+@@ -683,17 +710,36 @@ static int gssx_dec_ctx(struct xdr_stream *xdr,
+ 	/* ctx->locally_initiated */
+ 	err = gssx_dec_bool(xdr, &ctx->locally_initiated);
+ 	if (err)
+-		return err;
++		goto out_free_targ_name;
+ 
+ 	/* ctx->open */
+ 	err = gssx_dec_bool(xdr, &ctx->open);
+ 	if (err)
+-		return err;
++		goto out_free_targ_name;
+ 
+ 	/* we assume we have no options for now, so simply consume them */
+ 	/* ctx->options */
+ 	err = dummy_dec_opt_array(xdr, &ctx->options);
++	if (err)
++		goto out_free_targ_name;
 +
 +	return 0;
-+}
-+
- /**
-  *	ata_scsi_translate - Translate then issue SCSI command to ATA device
-  *	@dev: ATA device to which the command is addressed
-@@ -1747,66 +1783,49 @@ static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
-  *	spin_lock_irqsave(host lock)
-  *
-  *	RETURNS:
-- *	0 on success, SCSI_ML_QUEUE_DEVICE_BUSY if the command
-- *	needs to be deferred.
-+ *	0 on success, SCSI_ML_QUEUE_DEVICE_BUSY or SCSI_MLQUEUE_HOST_BUSY if the
-+ *	command needs to be deferred.
-  */
- static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 			      ata_xlat_func_t xlat_func)
- {
- 	struct ata_port *ap = dev->link->ap;
- 	struct ata_queued_cmd *qc;
--	int rc;
  
-+	lockdep_assert_held(ap->lock);
-+
-+	/*
-+	 * ata_scsi_qc_new() calls scsi_done(cmd) in case of failure. So we
-+	 * have nothing further to do when allocating a qc fails.
-+	 */
- 	qc = ata_scsi_qc_new(dev, cmd);
- 	if (!qc)
--		goto err_mem;
-+		return 0;
- 
- 	/* data is present; dma-map it */
- 	if (cmd->sc_data_direction == DMA_FROM_DEVICE ||
- 	    cmd->sc_data_direction == DMA_TO_DEVICE) {
- 		if (unlikely(scsi_bufflen(cmd) < 1)) {
- 			ata_dev_warn(dev, "WARNING: zero len r/w req\n");
--			goto err_did;
-+			cmd->result = (DID_ERROR << 16);
-+			goto done;
- 		}
- 
- 		ata_sg_init(qc, scsi_sglist(cmd), scsi_sg_count(cmd));
--
- 		qc->dma_dir = cmd->sc_data_direction;
- 	}
- 
- 	qc->complete_fn = ata_scsi_qc_complete;
- 
- 	if (xlat_func(qc))
--		goto early_finish;
--
--	if (ap->ops->qc_defer) {
--		if ((rc = ap->ops->qc_defer(qc)))
--			goto defer;
--	}
--
--	/* select device, send command to hardware */
--	ata_qc_issue(qc);
-+		goto done;
- 
--	return 0;
--
--early_finish:
--	ata_qc_free(qc);
--	scsi_done(cmd);
--	return 0;
-+	return ata_scsi_qc_issue(ap, qc);
- 
--err_did:
-+done:
- 	ata_qc_free(qc);
--	cmd->result = (DID_ERROR << 16);
- 	scsi_done(cmd);
--err_mem:
- 	return 0;
--
--defer:
--	ata_qc_free(qc);
--	if (rc == ATA_DEFER_LINK)
--		return SCSI_MLQUEUE_DEVICE_BUSY;
--	else
--		return SCSI_MLQUEUE_HOST_BUSY;
++out_free_targ_name:
++	kfree(ctx->targ_name.display_name.data);
++	ctx->targ_name.display_name.data = NULL;
++out_free_src_name:
++	kfree(ctx->src_name.display_name.data);
++	ctx->src_name.display_name.data = NULL;
++out_free_mech:
++	kfree(ctx->mech.data);
++	ctx->mech.data = NULL;
++out_free_state:
++	kfree(ctx->state.data);
++	ctx->state.data = NULL;
++out_free_exported_context_token:
++	kfree(ctx->exported_context_token.data);
++	ctx->exported_context_token.data = NULL;
+ 	return err;
  }
  
- struct ata_scsi_args {
 -- 
 2.51.0
 
