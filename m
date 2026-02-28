@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0DF36C9D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD51336C9D8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302303; cv=none; b=cY2iP/sKqAQQwmKX3yH/2HhCHlOdnzCzCMlSZKyNqCWxyBAtI19S549OHDIwSA/w+r460FcCl/qP4ij0rjg2qufDGW1oBOJL6yemd5QAfSLwjLCLSk0iCewxlg3bQrVBW3xXTCiPQ7+rh8MkmIqUk9a3nvq+hInwNbzGZgb0//E=
+	t=1772302303; cv=none; b=sDIqf8P1AIVveXj5JpvhQVlcLfSK4jgsi69u5SRPval/9fPdsoviEXH6ACyRoHuY1kJqHofSDtx8ni+n2nmO0UAzcNyq7sAkE7qhmUjnmongnJ95fMGGA4fuQ41K2fOBsBqE7Km3aw+ZsKh9E4st8rQZo3CYfNw0NjOndo5RMC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302303; c=relaxed/simple;
-	bh=oThyo1gZyDr5v6+kh6srDT8e3K0jaR6bM9PJOT/VVAc=;
+	bh=xN0xhrikW4ES7FQFQFlmH/389HanhAco5+B3IFMqLc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxztghlErMOTlrVVyh2gVZeCYsD8HwclusGbJV1BCilAVQIHDojwQvsdO5K71gsw31wd2MtVka3n4XK2H7bE+u+9oLs+iBrn85PdWZ7fwbAvJouwriycapa4Bo53EMUC2Gq/Wd/4D1euWjhYVG+LQP22YxQy4w58rcZy47tAhIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uiGsIL5H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BhhLXcC1+a3mYfFB1j0fOd5GyIvOwv79gE1MLRtpBL2o3tTj3WrYFA6YcoD71TY3hIwGbQW8cXeR3GYxujhf7XOOnfyVMqRaSUz8Ib99mzQuaqvd2eSiPvXK5sjYzjFv5ak/GgOVLle7xEbKB0mIyvjeXSNLHwML8nKbWoQ9zvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ch69NO8h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uiGsIL5H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9F8C116D0;
-	Sat, 28 Feb 2026 18:11:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ch69NO8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C169C19423;
+	Sat, 28 Feb 2026 18:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302302;
-	bh=oThyo1gZyDr5v6+kh6srDT8e3K0jaR6bM9PJOT/VVAc=;
+	s=k20201202; t=1772302303;
+	bh=xN0xhrikW4ES7FQFQFlmH/389HanhAco5+B3IFMqLc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uiGsIL5Hwl4R0SNiBhObQaIxWIzJvH3LJHwi9uGgjKkhUdjanLSW6Ii7yL/it6rhI
-	 gVdQF/EGHI99D5fUEYv98EqrRVk78ZIx39FuVXBvC2jHyQYiUt7+yqIruIwLIE0O5C
-	 sfiSDnS1/DJN/w4MaHD38gAjsXGYudH/moaKkobo8P2HpwtdVNB+10XHI2i78F5hW9
-	 cuMp7MxPrLOWZ7rAGSA5a3hntHC6FfIvKsQ1QQitCmc7A30DiHKoReALV+bwMHS4mh
-	 m0iIGO7kHYCHOh0iNcswfU0dTsVn4RfVyxBCR2LkNFdILWhcn/fSLU0K0+I67PleFQ
-	 lrBr2VTQhwcTA==
+	b=ch69NO8hTBtIkpQcopj2FUN0LIqXKfpfDXQIJMWSCYLmdttHkKEr3qDLTuKtW370j
+	 m2+BxOidWdts4LVhZfGxpCdbrM/c4YlDd0wUU0Q+75965nTWC0TLIuFA1+/GWTURjT
+	 qBYZxmcKDzTWAU7k+0/wJlupSsfE4ppX6YPJOidlBe6LDGX/fCUFD5+jTxp1oPU0rR
+	 E/5kB1fJLPz4gxhUsgGoMGlY0Ue48QyRnCaVRR4ji5sj0Xm5ajDMyI6TDwT4z4pAx9
+	 DI5+2EMgBLMEa0oaLg9AyBXHy///AGT8R0tZRBjyskVSg3VFo/bMqzIbFe0P6m/xxY
+	 S2houlSwwywxg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
@@ -33,9 +33,9 @@ Cc: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
 	Stefano Stabellini <sstabellini@kernel.org>,
 	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/232] xen/virtio: Optimize the setup of "xen-grant-dma" devices
-Date: Sat, 28 Feb 2026 13:07:50 -0500
-Message-ID: <20260228181127.1592657-17-sashal@kernel.org>
+Subject: [PATCH 6.1 018/232] xen/virtio: Handle PCI devices which Host controller is described in DT
+Date: Sat, 28 Feb 2026 13:07:51 -0500
+Message-ID: <20260228181127.1592657-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -51,228 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
 
-[ Upstream commit 035e3a4321f73c352b6408ec2153fa5bc3feb459 ]
+[ Upstream commit ef8ae384b4c9ccefecf4754f34644bd9fb0105b7 ]
 
-This is needed to avoid having to parse the same device-tree
-several times for a given device.
+Use the same "xen-grant-dma" device concept for the PCI devices
+behind device-tree based PCI Host controller, but with one modification.
+Unlike for platform devices, we cannot use generic IOMMU bindings
+(iommus property), as we need to support more flexible configuration.
+The problem is that PCI devices under the single PCI Host controller
+may have the backends running in different Xen domains and thus have
+different endpoints ID (backend domains ID).
 
-For this to work we need to install the xen_virtio_restricted_mem_acc
-callback in Arm's xen_guest_init() which is same callback as x86's
-PV and HVM modes already use and remove the manual assignment in
-xen_setup_dma_ops(). Also we need to split the code to initialize
-backend_domid into a separate function.
+Add ability to deal with generic PCI-IOMMU bindings (iommu-map/
+iommu-map-mask properties) which allows us to describe relationship
+between PCI devices and backend domains ID properly.
 
-Prior to current patch we parsed the device-tree three times:
-1. xen_setup_dma_ops()->...->xen_is_dt_grant_dma_device()
-2. xen_setup_dma_ops()->...->xen_dt_grant_init_backend_domid()
-3. xen_virtio_mem_acc()->...->xen_is_dt_grant_dma_device()
+To avoid having to look up for the PCI Host bridge twice and reduce
+the amount of checks pass an extra struct device_node *np to
+xen_dt_grant_init_backend_domid().
 
-With current patch we parse the device-tree only once in
-xen_virtio_restricted_mem_acc()->...->xen_dt_grant_init_backend_domid()
+So with current patch the code expects iommus property for the platform
+devices and iommu-map/iommu-map-mask properties for PCI devices.
 
-Other benefits are:
-- Not diverge from x86 when setting up Xen grant DMA ops
-- Drop several global functions
+The example of generated by the toolstack iommu-map property
+for two PCI devices 0000:00:01.0 and 0000:00:02.0 whose
+backends are running in different Xen domains with IDs 1 and 2
+respectively:
+iommu-map = <0x08 0xfde9 0x01 0x08 0x10 0xfde9 0x02 0x08>;
 
 Signed-off-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
 Reviewed-by: Xenia Ragiadakou <burzalodowa@gmail.com>
 Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Link: https://lore.kernel.org/r/20221025162004.8501-2-olekstysh@gmail.com
+Link: https://lore.kernel.org/r/20221025162004.8501-3-olekstysh@gmail.com
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Stable-dep-of: dc8ea8714311 ("xen/virtio: Don't use grant-dma-ops when running as Dom0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/xen/enlighten.c    |  2 +-
- drivers/xen/grant-dma-ops.c | 77 ++++++++++++++-----------------------
- include/xen/arm/xen-ops.h   |  4 +-
- include/xen/xen-ops.h       | 16 --------
- 4 files changed, 30 insertions(+), 69 deletions(-)
+ drivers/xen/grant-dma-ops.c | 46 +++++++++++++++++++++++++++++++------
+ 1 file changed, 39 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm/xen/enlighten.c b/arch/arm/xen/enlighten.c
-index eace3607fef41..a395b6c0aae2a 100644
---- a/arch/arm/xen/enlighten.c
-+++ b/arch/arm/xen/enlighten.c
-@@ -442,7 +442,7 @@ static int __init xen_guest_init(void)
- 		return 0;
- 
- 	if (IS_ENABLED(CONFIG_XEN_VIRTIO))
--		virtio_set_mem_acc_cb(xen_virtio_mem_acc);
-+		virtio_set_mem_acc_cb(xen_virtio_restricted_mem_acc);
- 
- 	if (!acpi_disabled)
- 		xen_acpi_guest_init();
 diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
-index daa525df7bdc5..1e797a043980a 100644
+index 1e797a043980a..9784a77fa3c99 100644
 --- a/drivers/xen/grant-dma-ops.c
 +++ b/drivers/xen/grant-dma-ops.c
-@@ -292,50 +292,20 @@ static const struct dma_map_ops xen_grant_dma_ops = {
+@@ -10,6 +10,7 @@
+ #include <linux/module.h>
+ #include <linux/dma-map-ops.h>
+ #include <linux/of.h>
++#include <linux/pci.h>
+ #include <linux/pfn.h>
+ #include <linux/xarray.h>
+ #include <linux/virtio_anchor.h>
+@@ -292,15 +293,43 @@ static const struct dma_map_ops xen_grant_dma_ops = {
  	.dma_supported = xen_grant_dma_supported,
  };
  
--static bool xen_is_dt_grant_dma_device(struct device *dev)
--{
--	struct device_node *iommu_np;
--	bool has_iommu;
--
--	iommu_np = of_parse_phandle(dev->of_node, "iommus", 0);
--	has_iommu = iommu_np &&
--		    of_device_is_compatible(iommu_np, "xen,grant-dma");
--	of_node_put(iommu_np);
--
--	return has_iommu;
--}
--
--bool xen_is_grant_dma_device(struct device *dev)
--{
--	/* XXX Handle only DT devices for now */
--	if (dev->of_node)
--		return xen_is_dt_grant_dma_device(dev);
--
--	return false;
--}
--
--bool xen_virtio_mem_acc(struct virtio_device *dev)
--{
--	if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain())
--		return true;
--
--	return xen_is_grant_dma_device(dev->dev.parent);
--}
--
++static struct device_node *xen_dt_get_node(struct device *dev)
++{
++	if (dev_is_pci(dev)) {
++		struct pci_dev *pdev = to_pci_dev(dev);
++		struct pci_bus *bus = pdev->bus;
++
++		/* Walk up to the root bus to look for PCI Host controller */
++		while (!pci_is_root_bus(bus))
++			bus = bus->parent;
++
++		return of_node_get(bus->bridge->parent->of_node);
++	}
++
++	return of_node_get(dev->of_node);
++}
++
  static int xen_dt_grant_init_backend_domid(struct device *dev,
--					   struct xen_grant_dma_data *data)
-+					   domid_t *backend_domid)
++					   struct device_node *np,
+ 					   domid_t *backend_domid)
  {
- 	struct of_phandle_args iommu_spec;
+-	struct of_phandle_args iommu_spec;
++	struct of_phandle_args iommu_spec = { .args_count = 1 };
  
- 	if (of_parse_phandle_with_args(dev->of_node, "iommus", "#iommu-cells",
- 			0, &iommu_spec)) {
--		dev_err(dev, "Cannot parse iommus property\n");
-+		dev_dbg(dev, "Cannot parse iommus property\n");
- 		return -ESRCH;
+-	if (of_parse_phandle_with_args(dev->of_node, "iommus", "#iommu-cells",
+-			0, &iommu_spec)) {
+-		dev_dbg(dev, "Cannot parse iommus property\n");
+-		return -ESRCH;
++	if (dev_is_pci(dev)) {
++		struct pci_dev *pdev = to_pci_dev(dev);
++		u32 rid = PCI_DEVID(pdev->bus->number, pdev->devfn);
++
++		if (of_map_id(np, rid, "iommu-map", "iommu-map-mask", &iommu_spec.np,
++				iommu_spec.args)) {
++			dev_dbg(dev, "Cannot translate ID\n");
++			return -ESRCH;
++		}
++	} else {
++		if (of_parse_phandle_with_args(np, "iommus", "#iommu-cells",
++				0, &iommu_spec)) {
++			dev_dbg(dev, "Cannot parse iommus property\n");
++			return -ESRCH;
++		}
  	}
  
  	if (!of_device_is_compatible(iommu_spec.np, "xen,grant-dma") ||
- 			iommu_spec.args_count != 1) {
--		dev_err(dev, "Incompatible IOMMU node\n");
-+		dev_dbg(dev, "Incompatible IOMMU node\n");
- 		of_node_put(iommu_spec.np);
- 		return -ESRCH;
- 	}
-@@ -346,12 +316,28 @@ static int xen_dt_grant_init_backend_domid(struct device *dev,
- 	 * The endpoint ID here means the ID of the domain where the
- 	 * corresponding backend is running
- 	 */
--	data->backend_domid = iommu_spec.args[0];
-+	*backend_domid = iommu_spec.args[0];
- 
- 	return 0;
- }
- 
--void xen_grant_setup_dma_ops(struct device *dev)
-+static int xen_grant_init_backend_domid(struct device *dev,
-+					domid_t *backend_domid)
-+{
-+	int ret = -ENODEV;
-+
-+	if (dev->of_node) {
-+		ret = xen_dt_grant_init_backend_domid(dev, backend_domid);
-+	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain()) {
-+		dev_info(dev, "Using dom0 as backend\n");
-+		*backend_domid = 0;
-+		ret = 0;
-+	}
-+
-+	return ret;
-+}
-+
-+static void xen_grant_setup_dma_ops(struct device *dev, domid_t backend_domid)
+@@ -324,10 +353,13 @@ static int xen_dt_grant_init_backend_domid(struct device *dev,
+ static int xen_grant_init_backend_domid(struct device *dev,
+ 					domid_t *backend_domid)
  {
- 	struct xen_grant_dma_data *data;
- 
-@@ -365,16 +351,7 @@ void xen_grant_setup_dma_ops(struct device *dev)
- 	if (!data)
- 		goto err;
++	struct device_node *np;
+ 	int ret = -ENODEV;
  
 -	if (dev->of_node) {
--		if (xen_dt_grant_init_backend_domid(dev, data))
--			goto err;
--	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT)) {
--		dev_info(dev, "Using dom0 as backend\n");
--		data->backend_domid = 0;
--	} else {
--		/* XXX ACPI device unsupported for now */
--		goto err;
--	}
-+	data->backend_domid = backend_domid;
- 
- 	if (store_xen_grant_dma_data(dev, data)) {
- 		dev_err(dev, "Cannot store Xen grant DMA data\n");
-@@ -392,12 +369,14 @@ void xen_grant_setup_dma_ops(struct device *dev)
- 
- bool xen_virtio_restricted_mem_acc(struct virtio_device *dev)
- {
--	bool ret = xen_virtio_mem_acc(dev);
-+	domid_t backend_domid;
- 
--	if (ret)
--		xen_grant_setup_dma_ops(dev->dev.parent);
-+	if (!xen_grant_init_backend_domid(dev->dev.parent, &backend_domid)) {
-+		xen_grant_setup_dma_ops(dev->dev.parent, backend_domid);
-+		return true;
-+	}
- 
--	return ret;
-+	return false;
- }
- 
- MODULE_DESCRIPTION("Xen grant DMA-mapping layer");
-diff --git a/include/xen/arm/xen-ops.h b/include/xen/arm/xen-ops.h
-index b0766a660338f..70073f5a2b545 100644
---- a/include/xen/arm/xen-ops.h
-+++ b/include/xen/arm/xen-ops.h
-@@ -8,9 +8,7 @@
- static inline void xen_setup_dma_ops(struct device *dev)
- {
- #ifdef CONFIG_XEN
--	if (xen_is_grant_dma_device(dev))
--		xen_grant_setup_dma_ops(dev);
--	else if (xen_swiotlb_detect())
-+	if (xen_swiotlb_detect())
- 		dev->dma_ops = &xen_swiotlb_dma_ops;
- #endif
- }
-diff --git a/include/xen/xen-ops.h b/include/xen/xen-ops.h
-index a34f4271a2e9f..47f11bec5e90c 100644
---- a/include/xen/xen-ops.h
-+++ b/include/xen/xen-ops.h
-@@ -216,26 +216,10 @@ static inline void xen_preemptible_hcall_end(void) { }
- #endif /* CONFIG_XEN_PV && !CONFIG_PREEMPTION */
- 
- #ifdef CONFIG_XEN_GRANT_DMA_OPS
--void xen_grant_setup_dma_ops(struct device *dev);
--bool xen_is_grant_dma_device(struct device *dev);
--bool xen_virtio_mem_acc(struct virtio_device *dev);
- bool xen_virtio_restricted_mem_acc(struct virtio_device *dev);
- #else
--static inline void xen_grant_setup_dma_ops(struct device *dev)
--{
--}
--static inline bool xen_is_grant_dma_device(struct device *dev)
--{
--	return false;
--}
--
- struct virtio_device;
- 
--static inline bool xen_virtio_mem_acc(struct virtio_device *dev)
--{
--	return false;
--}
--
- static inline bool xen_virtio_restricted_mem_acc(struct virtio_device *dev)
- {
- 	return false;
+-		ret = xen_dt_grant_init_backend_domid(dev, backend_domid);
++	np = xen_dt_get_node(dev);
++	if (np) {
++		ret = xen_dt_grant_init_backend_domid(dev, np, backend_domid);
++		of_node_put(np);
+ 	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain()) {
+ 		dev_info(dev, "Using dom0 as backend\n");
+ 		*backend_domid = 0;
 -- 
 2.51.0
 
