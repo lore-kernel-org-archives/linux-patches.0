@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102C042DFFA
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BF043636C
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301159; cv=none; b=BOOqYDGZqNZ/DblI/T/phawCkpfHTKuzLheALbLOpj/UioF6QnGbkPV5i1sf5XpjeMkYPlL1L+ITT7hndyicaA5VYFqWgD5kRBzVsrZc6jquly2m4r5PYgSLOaJqfxQ575wit0NgGSU1byp8ZDss3eupVxJQhrCzqkKybwfkt1U=
+	t=1772301160; cv=none; b=VQwStP4eXHgGv3AEvzoiITFSvZY4weaQf1rvJvzDyQ2Zc6Cd9CpUY0UrV+JMBWJ95hGskPGNgKLP/Upfo9RwtYeUqgt7Ltmp1lc+aXQyEeHdeADE4mchzWONB+/uxq8TPBE90wFhqUyFXQ8XRUOpokaVcyQtZxwNisJJsVk91qE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301159; c=relaxed/simple;
-	bh=dUjo4k5J/KvXhmTqVg7UMWfUV5hSPL6zhpvc9ge/hx8=;
+	s=arc-20240116; t=1772301160; c=relaxed/simple;
+	bh=NTHk+Aj+yk0JQZSMKMquAes9wACrqJ8bnwzA5E35qOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a2XBI0ZrUdSAbDOw9m6g9v956MnoNdRN3mHLq+g785Q/pL0kiKlNv8ThyYaAVrexuA8yowHQkTIP0q+QXHMm6RfkrPx6jJUypyqRNf5JWPL9Y7Nc5FcVGfDSVQruh2RcE4tFWj4R6fFkIuQ2+WKEzRSb0gqD1BZsvy6Gk5PE6lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l3en98of; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GtZs2+2jN3RX/qa3lFzXW2Gm48GBbBQZoO/EQ2V0J+8Zss6p0AnKiSsOL9A6KRtvf6ce7eD4VVglU6zo8lD7XZh1q0egjzr3ZwRsXcrk+K2AG4BPMn8IH7FbTMjis+kqTPIvu9gCHU2bypcCpIpv/u/lIC97aIcN1211iCLavB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RkjM0QBN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l3en98of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8B0C19424;
-	Sat, 28 Feb 2026 17:52:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RkjM0QBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342EFC19423;
+	Sat, 28 Feb 2026 17:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301158;
-	bh=dUjo4k5J/KvXhmTqVg7UMWfUV5hSPL6zhpvc9ge/hx8=;
+	s=k20201202; t=1772301159;
+	bh=NTHk+Aj+yk0JQZSMKMquAes9wACrqJ8bnwzA5E35qOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3en98of0Hv6aPH7dR5ZvK1g/QsloZVa8ukFas9LkwJbSVABqXYx5I5UVroIehnIi
-	 tGca7vfJy3zFnb8CbbtBNwAN0X2SsBZvnhBz+M0vLXWVa7JMUFHz6HFP17FLMJdlvQ
-	 g/WmSEls0OHvA/s1nocsMuG8MroBITWBPAJ2LS8go0hEFlwTaKvRFgnRvTzLvruHM4
-	 h9vK1SQvEqfR80GXfxWYD5tth3oDbeiLvowl+wrHTVEr2oqndBVYxAQQqYDpny69zb
-	 mi9uYWzEokXmufEqA68EHnW3zpQJfku6iIXpqbdJfmO3kYzKyBfQOt3g23I/ZTcBHi
-	 f0F+u+R4YbqlA==
+	b=RkjM0QBNUYB4Nj9U/jrT6VIEZm+KtBYGWEzoR6Wp2VzPoyUEneNAAI5kGRgSoj5Nj
+	 IwleltK9e458/+2UJrUqvtP64+PXxNJSxpHgOyaKUg+Hdb03F0WGAq1bxmrvbe7HBd
+	 h86SjyyXuq/B3qglZqOv00Ox4kpuStrKDm2FUHACIrtir0AmsA9Bp0bYQ1hY+rBUd+
+	 3QFGN/ZCio/4oagnDSl/3b/9ud24wslc/bonCAfDH0Nkh9ZV3N5OojvLCasDgt0Wdt
+	 R86THnCpKvYYJo4SjD5zgWErJfNNlUxLS1UXAGStIYDgeAZ0B7D/aFnu0oxOHsigdm
+	 OZRjQ6Y+OawcA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Eugen Hristev <eugen.hristev@linaro.org>,
+Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 323/752] dmaengine: stm32-dma3: use module_platform_driver
-Date: Sat, 28 Feb 2026 12:40:34 -0500
-Message-ID: <20260228174750.1542406-323-sashal@kernel.org>
+Subject: [PATCH 6.18 324/752] soundwire: dmi-quirks: add mapping for Avell B.ON (OEM rebranded of NUC15)
+Date: Sat, 28 Feb 2026 12:40:35 -0500
+Message-ID: <20260228174750.1542406-324-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,43 +49,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 0d41ed4ea496fabbb4dc21171e32d9a924c2a661 ]
+[ Upstream commit 59946373755d71dbd7614ba235e0093159f80b69 ]
 
-Without module_platform_driver(), stm32-dma3 doesn't have a
-module_exit procedure. Once stm32-dma3 module is inserted, it
-can't be removed, marked busy.
-Use module_platform_driver() instead of subsys_initcall() to register
-(insmod) and unregister (rmmod) stm32-dma3 driver.
+Avell B.ON is an OEM re-branded NUC15 'Bishop County' LAPBC510 and
+LAPBC710.
 
-Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://patch.msgid.link/20251121-dma3_improv-v2-1-76a207b13ea6@foss.st.com
+Link: https://github.com/thesofproject/linux/issues/5529
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20251215130947.31385-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/stm32/stm32-dma3.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/soundwire/dmi-quirks.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma3.c
-index 50e7106c5cb73..9500164c8f688 100644
---- a/drivers/dma/stm32/stm32-dma3.c
-+++ b/drivers/dma/stm32/stm32-dma3.c
-@@ -1914,12 +1914,7 @@ static struct platform_driver stm32_dma3_driver = {
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index 91ab97a456fa9..5854218e1a274 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -122,6 +122,17 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)intel_tgl_bios,
  	},
- };
- 
--static int __init stm32_dma3_init(void)
--{
--	return platform_driver_register(&stm32_dma3_driver);
--}
--
--subsys_initcall(stm32_dma3_init);
-+module_platform_driver(stm32_dma3_driver);
- 
- MODULE_DESCRIPTION("STM32 DMA3 controller driver");
- MODULE_AUTHOR("Amelie Delaunay <amelie.delaunay@foss.st.com>");
++	{
++		/*
++		 * quirk used for Avell B.ON (OEM rebrand of NUC15 'Bishop County'
++		 * LAPBC510 and LAPBC710)
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Avell High Performance"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "B.ON"),
++		},
++		.driver_data = (void *)intel_tgl_bios,
++	},
+ 	{
+ 		/* quirk used for NUC15 'Rooks County' LAPRC510 and LAPRC710 skews */
+ 		.matches = {
 -- 
 2.51.0
 
