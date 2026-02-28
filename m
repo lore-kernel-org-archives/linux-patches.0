@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EE7342538
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6EAA338939
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301759; cv=none; b=bPeiSL7W1HeVXl6vjZqq2M9zBXQJ/hZ1jMWv6GO2wZW8NqtLoqPLAKbRRbdjiOannElJ6X41EFyQ4g1MthZ7VTtjWHhSypQJchzgZSxgaYRHxCZMP+niZLOPD6+TJLanWxcGiKGaiYIgsnt8TCmHYxXxqACoFnVSSteoESw3vrk=
+	t=1772301759; cv=none; b=fGgKdgovIudyld0nNTYe/+jHzdn/9bSK/uFVd4S4Pbv8Kn3RiS38Crf5tG8MeX3NfwqDiNc7ut6MKy8oxEW1K1cuWDKLm/Eq2+bxAvkJNjEygDfApFqDKTQVLxTEJrVgPKj83YtrGqd2E5bn1Vw6upaUMn1VObUKzdthxDMXz/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301759; c=relaxed/simple;
-	bh=Xp7DgJRsguXHrDFr5XC4+DEVFFe1oo+xu+Rhfuj5/vU=;
+	bh=ARAz3M9cU7wy6u0prYkWe8RFGv1FekFwsGHrprojO3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UD2/Qr8gg9SGSyohfkQUxeyMZWYrCiXP2qWkgGuZP1Dr8abdUm7el1ZHLy0Bmk/jWxYbER38/32XakJPRiYq4fPPjHYMklw/xUggt/2zhe+rcoXcTxBTJwds2GqYhNYWtFifVZYKMCG6zu786wL0ZI5kjJNq5ZD5kbFga6kQKZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m74PDKLL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e4vecI+cvE3kQzQDQ7+eFq//ifyXTNCTuUXrlXa+zSLHxB9V3teox9enbYNXFW+uC6CWI69IfHGcxNV1/sgPmI325m8BQQSUn5qTrJFxlbKtenIm1E0hx64GIuszLZi15GuaWFlrowujwLxGtqOUnW+kTKJXRac9ch2QTUn9Wic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ne6dlXlK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m74PDKLL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D25C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ne6dlXlK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147BEC116D0;
 	Sat, 28 Feb 2026 18:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301758;
-	bh=Xp7DgJRsguXHrDFr5XC4+DEVFFe1oo+xu+Rhfuj5/vU=;
+	s=k20201202; t=1772301759;
+	bh=ARAz3M9cU7wy6u0prYkWe8RFGv1FekFwsGHrprojO3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m74PDKLLj0dXoq/U44b6ZPZMVP45MRs1K4Ym8cvIeynQor2isaTlwBvy5FUY6Xblh
-	 HRl8zyPrhLXEYpDWz1HH0+FJUaQCQ9zNdGwWIcImX/bKvxCkDcYfO7Gd5zRsy1WG0f
-	 G8bcccRNpQBc/bRA8SDthe+0K3p0H56N6LQe23mPUrXrdx0xt4vkV2MckMYUCtWAOm
-	 t8j1EQk/gOcQR0lXKn4aNJQ/J5oIAzbBeRDbNoE5Dktam0/peAsar6YjqvHnxl/R54
-	 JCs25Ob2W0mt2QGN4RS4IBTsAqyP09aKna0MfQM2iGXZwPFFhUrNl2rCEZ2BQsoS+I
-	 /jnINaYwbbHeQ==
+	b=ne6dlXlK44rJbMboVIi445mrcBPBuWFcAX2+v1tew6V/5sqGoeT84sKojad26bNM+
+	 0R6HRyLPREAuYxvB8tRbf54Vm///gklgWpsd3ACAW5kR5AIzUix3UP9PLjcqyNvqCv
+	 mU7l1wjbizV1z62Mrz10ZHkZmNt4I2T0u4YZgbTEpYeypb8BS5pao5xBeWAYISyVc8
+	 M2+TgNDjVcQ5LfEC76DnHOp3GoI7LF0dmHvieR9WXlA+JXt9uQ5KgQIoHhWbZtNQXS
+	 v3ALY0DUpPSialXkAe3BL6a9rMlV5XCXG02e4jAQb3BGpFKNb0QXDoK6SX0GmCi0sT
+	 T0ZB8al/PQ0Ug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+Cc: Shuicheng Lin <shuicheng.lin@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 163/385] evm: Use ordered xattrs list to calculate HMAC in evm_init_hmac()
-Date: Sat, 28 Feb 2026 12:56:25 -0500
-Message-ID: <20260228180011.1568201-163-sashal@kernel.org>
+Subject: [PATCH 6.12 164/385] drm/xe: Unregister drm device on probe error
+Date: Sat, 28 Feb 2026 12:56:26 -0500
+Message-ID: <20260228180011.1568201-164-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,68 +49,89 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 0496fc9cdc384f67be4413b1c6156eb64fccd5c4 ]
+[ Upstream commit 96c2c72b817d70e8d110e78b0162e044a0c41f9f ]
 
-Commit 8e5d9f916a96 ("smack: deduplicate xattr setting in
-smack_inode_init_security()") introduced xattr_dupval() to simplify setting
-the xattrs to be provided by the SMACK LSM on inode creation, in the
-smack_inode_init_security().
+Call drm_dev_unregister() when xe_device_probe() fails after successful
+drm_dev_register(). This ensures the DRM device is promptly unregistered
+before returning an error, avoiding leaving it registered on the failure
+path.
+Otherwise, there is warn message if xe_device_probe() is called again:
+"
+[  207.322365] [drm:drm_minor_register]
+[  207.322381] debugfs: '128' already exists in 'dri'
+[  207.322432] sysfs: cannot create duplicate filename '/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:01.0/0000:03:00.0/drm/renderD128'
+[  207.322435] CPU: 5 UID: 0 PID: 10261 Comm: modprobe Tainted: G    B   W           6.19.0-rc2-lgci-xe-kernel+ #223 PREEMPT(voluntary)
+[  207.322439] Tainted: [B]=BAD_PAGE, [W]=WARN
+[  207.322440] Hardware name: ASUS System Product Name/PRIME Z790-P WIFI, BIOS 0812 02/24/2023
+[  207.322441] Call Trace:
+[  207.322442]  <TASK>
+[  207.322443]  dump_stack_lvl+0xa0/0xc0
+[  207.322446]  dump_stack+0x10/0x20
+[  207.322448]  sysfs_warn_dup+0xd5/0x110
+[  207.322451]  sysfs_create_dir_ns+0x1f6/0x280
+[  207.322453]  ? __pfx_sysfs_create_dir_ns+0x10/0x10
+[  207.322455]  ? lock_acquire+0x1a4/0x2e0
+[  207.322458]  ? __kasan_check_read+0x11/0x20
+[  207.322461]  kobject_add_internal+0x28d/0x8e0
+[  207.322464]  kobject_add+0x11f/0x1f0
+[  207.322465]  ? lock_acquire+0x1a4/0x2e0
+[  207.322467]  ? __pfx_kobject_add+0x10/0x10
+[  207.322469]  ? __kasan_check_write+0x14/0x20
+[  207.322471]  ? kobject_put+0x62/0x4a0
+[  207.322473]  ? get_device_parent.isra.0+0x1bb/0x4c0
+[  207.322475]  ? kobject_put+0x62/0x4a0
+[  207.322477]  device_add+0x2d7/0x1500
+[  207.322479]  ? __pfx_device_add+0x10/0x10
+[  207.322481]  ? drm_debugfs_add_file+0xfa/0x170
+[  207.322483]  ? drm_debugfs_add_files+0x82/0xd0
+[  207.322485]  ? drm_debugfs_add_files+0x82/0xd0
+[  207.322487]  drm_minor_register+0x10a/0x2d0
+[  207.322489]  drm_dev_register+0x143/0x860
+[  207.322491]  ? xe_configfs_get_psmi_enabled+0x12/0x90 [xe]
+[  207.322667]  xe_device_probe+0x185b/0x2c40 [xe]
+[  207.322812]  ? __pfx___drm_dev_dbg+0x10/0x10
+[  207.322815]  ? add_dr+0x180/0x220
+[  207.322818]  ? __pfx___drmm_mutex_release+0x10/0x10
+[  207.322821]  ? __pfx_xe_device_probe+0x10/0x10 [xe]
+[  207.322966]  ? xe_pm_init_early+0x33a/0x410 [xe]
+[  207.323136]  xe_pci_probe+0x936/0x1250 [xe]
+[  207.323298]  ? lock_acquire+0x1a4/0x2e0
+[  207.323302]  ? __pfx_xe_pci_probe+0x10/0x10 [xe]
+[  207.323464]  local_pci_probe+0xe6/0x1a0
+[  207.323468]  pci_device_probe+0x523/0x840
+[  207.323470]  ? __pfx_pci_device_probe+0x10/0x10
+[  207.323473]  ? sysfs_do_create_link_sd.isra.0+0x8c/0x110
+[  207.323476]  ? sysfs_create_link+0x48/0xc0
+[  207.323479]  really_probe+0x1fd/0x8a0
+...
+"
 
-Unfortunately, moving lsm_get_xattr_slot() caused the SMACK64TRANSMUTE
-xattr be added in the array of new xattrs before SMACK64. This causes the
-HMAC of xattrs calculated by evm_init_hmac() for new files to diverge from
-the one calculated by both evm_calc_hmac_or_hash() and evmctl.
-
-evm_init_hmac() calculates the HMAC of the xattrs of new files based on the
-order LSMs provide them, while evm_calc_hmac_or_hash() and evmctl calculate
-the HMAC based on an ordered xattrs list.
-
-Fix the issue by making evm_init_hmac() calculate the HMAC of new files
-based on the ordered xattrs list too.
-
-Fixes: 8e5d9f916a96 ("smack: deduplicate xattr setting in smack_inode_init_security()")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://patch.msgid.link/20260109211041.2446012-2-shuicheng.lin@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 60bfb8baf8f0d5b0d521744dfd01c880ce1a23f3)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/evm/evm_crypto.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/integrity/evm/evm_crypto.c b/security/integrity/evm/evm_crypto.c
-index 7c06ffd633d24..c588af7cc5f87 100644
---- a/security/integrity/evm/evm_crypto.c
-+++ b/security/integrity/evm/evm_crypto.c
-@@ -401,6 +401,7 @@ int evm_init_hmac(struct inode *inode, const struct xattr *xattrs,
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index 161c73e676640..3ce5bf902f700 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -783,6 +783,7 @@ int xe_device_probe(struct xe_device *xe)
+ static void xe_device_remove_display(struct xe_device *xe)
  {
- 	struct shash_desc *desc;
- 	const struct xattr *xattr;
-+	struct xattr_list *xattr_entry;
+ 	xe_display_unregister(xe);
++	drm_dev_unregister(&xe->drm);
  
- 	desc = init_desc(EVM_XATTR_HMAC, HASH_ALGO_SHA1);
- 	if (IS_ERR(desc)) {
-@@ -408,11 +409,16 @@ int evm_init_hmac(struct inode *inode, const struct xattr *xattrs,
- 		return PTR_ERR(desc);
- 	}
- 
--	for (xattr = xattrs; xattr->name; xattr++) {
--		if (!evm_protected_xattr(xattr->name))
--			continue;
-+	list_for_each_entry_lockless(xattr_entry, &evm_config_xattrnames,
-+				     list) {
-+		for (xattr = xattrs; xattr->name; xattr++) {
-+			if (strcmp(xattr_entry->name +
-+				   XATTR_SECURITY_PREFIX_LEN, xattr->name) != 0)
-+				continue;
- 
--		crypto_shash_update(desc, xattr->value, xattr->value_len);
-+			crypto_shash_update(desc, xattr->value,
-+					    xattr->value_len);
-+		}
- 	}
- 
- 	hmac_add_misc(desc, inode, EVM_XATTR_HMAC, hmac_val);
+ 	drm_dev_unplug(&xe->drm);
+ 	xe_display_driver_remove(xe);
 -- 
 2.51.0
 
