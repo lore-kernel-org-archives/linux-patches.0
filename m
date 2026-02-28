@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FC4359A96
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A274359A97
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302473; cv=none; b=rCqutZtWmv0azIQ6h6QUGeHlPTfzNK+Pyft5mlHe9Bc0An/qI2+Z3lSCQ//3tI3rHT3ARx4ZanExVcmFWXwtHWuuPyFaNmyW/Is+q4vTQzAFsd2uBMPBVj98pECR3wvq1K+yhC0klkOyDRKxNJtznbAtGCa1hun3ifqNNovP3cs=
+	t=1772302474; cv=none; b=MgFXZvL6EVPT5eS2Ly60qCdNMs3B1x03a+yoLmB/WvMQUqe1qaL5grkiekhtmErSC6xYNuNEAYfoXDlCip8DXJrLDRWWj0E0QRLD0Kc+IQVnPfCrqXXJVd2kWdtm7mio62tqa8azmpNYQzyrSIU+ZGqBVzx/CRb08b1UV7+NCwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302473; c=relaxed/simple;
-	bh=k+u0KsvoX8eNjkDBcFpt5tkXP3+pXPdwX4iInp3y71s=;
+	s=arc-20240116; t=1772302474; c=relaxed/simple;
+	bh=LRQ1iczmYPE7XT+j1t48YBVLzm7buiJbeSYIUIrY8I8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRGEgJm9yiSxPGW1ygTR3pi2owWHNXvR+UlcViZP77I+xppZmXAVA0sEig3ovQpPE01PFYt87Sx3g05fc+zoXXbllbOzW7/dTQLhwaiKoBHVsYV3TNfHyyqX9LmFjsTdVX0Fl0bMjlxbGXXf/8YX2ADt04UA0XsgXKFckqM8zyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HZqcgt66; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZnV28qwoOjc90viFJD9k4ieaWhmwGpTUNiXf3QVBU0k33Xc1PbdfhLOl2Pg7gf506bvdIqTVuBOnNGiPaP5sFZffMMaeavSrNi4MRnQGRTnP8fI6cvR1ve2unvps4rynPH1Gpqs418deo/MxCkwgVmslUZUqvPNrsQOmBhupKqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iEg3PiAs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HZqcgt66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4ACC19424;
-	Sat, 28 Feb 2026 18:14:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iEg3PiAs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69996C19424;
+	Sat, 28 Feb 2026 18:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302473;
-	bh=k+u0KsvoX8eNjkDBcFpt5tkXP3+pXPdwX4iInp3y71s=;
+	s=k20201202; t=1772302474;
+	bh=LRQ1iczmYPE7XT+j1t48YBVLzm7buiJbeSYIUIrY8I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZqcgt66uquNtcGsEFxR2d1TkSYm+IHzmguPFzRYxK3OKrKXsxz37kNLzJUuTOydl
-	 COFQtIuWk9/peQH84FQmdmoGvHlMa6apZUE+g9fYf5cFZpaJK5qO6B0X5ZVt7ATyLx
-	 sSa/mqw5f5QysVyqUUCW6vTJvSeG1hMjK5/sD95QxssfLH8L9/tJL7042eECRX/67F
-	 +OthuajRqwPgpCM6HwnQdH/jAeGVN9kSrJT6sGOCnreojyAgm+2AdUG6OxJuPi355/
-	 IBs00TDdtiYzJ4pXdyRX7hkK3WL71ovluBLxQvA0illa6CfvNtoHXFlPKeqtSZ2U72
-	 xqzURsm48br3A==
+	b=iEg3PiAsbhrvhgBtIyMNuStzAyqYmtJIb1cdQTNAekZAmngo9cVm413Hubkc01Ati
+	 DXb01W/rDnZktf2oqEvcks5MyUiJviExKBuqEgKJx8MdsZukS/wBigiuosJPCbB7fR
+	 JPt6YRFF8YoinyoAgaH844GQlZUd1wTcP5LAKdGzoyRBIC0cgJ++hgTnw8drh45Em2
+	 wLvYweBN1A61MmcGWzPG5MY5rHy6oK9wsXwpYobgvzJnKyivFKz6wn6lUvf8b26HsN
+	 qbnSgSILhVP8kCgJp0OPAT0+w03Hwrwk+PPOSW7JiMhbmaiozEzkctm6pZD/rFWF0e
+	 oK86eAYh5OcDA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Daniel Machon <daniel.machon@microchip.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 218/232] net: sparx5/lan969x: fix PTP clock max_adj value
-Date: Sat, 28 Feb 2026 13:11:11 -0500
-Message-ID: <20260228181127.1592657-218-sashal@kernel.org>
+Subject: [PATCH 6.1 219/232] net: usb: catc: enable basic endpoint checking
+Date: Sat, 28 Feb 2026 13:11:12 -0500
+Message-ID: <20260228181127.1592657-219-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,51 +48,109 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit a49d2a2c37a6252c41cbdd505f9d1c58d5a3817a ]
+[ Upstream commit 9e7021d2aeae57c323a6f722ed7915686cdcc123 ]
 
-The max_adj field in ptp_clock_info tells userspace how much the PHC
-clock frequency can be adjusted. ptp4l reads this and will never request
-a correction larger than max_adj.
+catc_probe() fills three URBs with hardcoded endpoint pipes without
+verifying the endpoint descriptors:
 
-On both sparx5 and lan969x the clock offset may never converge because
-the servo needs a frequency correction larger than the current max_adj
-of 200000 (200 ppm) allows. The servo rails at the max and the offset
-stays in the tens of microseconds.
+  - usb_sndbulkpipe(usbdev, 1) and usb_rcvbulkpipe(usbdev, 1) for TX/RX
+  - usb_rcvintpipe(usbdev, 2) for interrupt status
 
-The hardware has no inherent max adjustment limit; frequency correction
-is done by writing a 64-bit clock period increment to CLK_PER_CFG, and
-the register has plenty of range. The 200000 value was just an overly
-conservative software limit. The max_adj is shared between sparx5 and
-lan969x, and the increased value is safe for both.
+A malformed USB device can present these endpoints with transfer types
+that differ from what the driver assumes.
 
-Fix this by increasing max_adj to 10000000 (10000 ppm), giving the
-servo sufficient headroom.
+Add a catc_usb_ep enum for endpoint numbers, replacing magic constants
+throughout. Add usb_check_bulk_endpoints() and usb_check_int_endpoints()
+calls after usb_set_interface() to verify endpoint types before use,
+rejecting devices with mismatched descriptors at probe time.
 
-Fixes: 0933bd04047c ("net: sparx5: Add support for ptp clocks")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260212-sparx5-ptp-max-adj-v2-v1-1-06b200e50ce3@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Similar to
+- commit 90b7f2961798 ("net: usb: rtl8150: enable basic endpoint checking")
+which fixed the issue in rtl8150.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Link: https://patch.msgid.link/20260212214154.3609844-1-n7l8m4@u.northwestern.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/catc.c | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-index 69e76634f9aa8..9c602f19d43b0 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-@@ -565,7 +565,7 @@ static int sparx5_ptp_adjtime(struct ptp_clock_info *ptp, s64 delta)
- static struct ptp_clock_info sparx5_ptp_clock_info = {
- 	.owner		= THIS_MODULE,
- 	.name		= "sparx5 ptp",
--	.max_adj	= 200000,
-+	.max_adj	= 10000000,
- 	.gettime64	= sparx5_ptp_gettime64,
- 	.settime64	= sparx5_ptp_settime64,
- 	.adjtime	= sparx5_ptp_adjtime,
+diff --git a/drivers/net/usb/catc.c b/drivers/net/usb/catc.c
+index ff439ef535ac9..98346cb4ece01 100644
+--- a/drivers/net/usb/catc.c
++++ b/drivers/net/usb/catc.c
+@@ -64,6 +64,16 @@ static const char driver_name[] = "catc";
+ #define CTRL_QUEUE		16	/* Max control requests in flight (power of two) */
+ #define RX_PKT_SZ		1600	/* Max size of receive packet for F5U011 */
+ 
++/*
++ * USB endpoints.
++ */
++
++enum catc_usb_ep {
++	CATC_USB_EP_CONTROL	= 0,
++	CATC_USB_EP_BULK	= 1,
++	CATC_USB_EP_INT_IN	= 2,
++};
++
+ /*
+  * Control requests.
+  */
+@@ -772,6 +782,13 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
+ 	u8 broadcast[ETH_ALEN];
+ 	u8 *macbuf;
+ 	int pktsz, ret = -ENOMEM;
++	static const u8 bulk_ep_addr[] = {
++		CATC_USB_EP_BULK | USB_DIR_OUT,
++		CATC_USB_EP_BULK | USB_DIR_IN,
++		0};
++	static const u8 int_ep_addr[] = {
++		CATC_USB_EP_INT_IN | USB_DIR_IN,
++		0};
+ 
+ 	macbuf = kmalloc(ETH_ALEN, GFP_KERNEL);
+ 	if (!macbuf)
+@@ -784,6 +801,14 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
+ 		goto fail_mem;
+ 	}
+ 
++	/* Verify that all required endpoints are present */
++	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr) ||
++	    !usb_check_int_endpoints(intf, int_ep_addr)) {
++		dev_err(dev, "Missing or invalid endpoints\n");
++		ret = -ENODEV;
++		goto fail_mem;
++	}
++
+ 	netdev = alloc_etherdev(sizeof(struct catc));
+ 	if (!netdev)
+ 		goto fail_mem;
+@@ -828,14 +853,14 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
+ 	usb_fill_control_urb(catc->ctrl_urb, usbdev, usb_sndctrlpipe(usbdev, 0),
+ 		NULL, NULL, 0, catc_ctrl_done, catc);
+ 
+-	usb_fill_bulk_urb(catc->tx_urb, usbdev, usb_sndbulkpipe(usbdev, 1),
+-		NULL, 0, catc_tx_done, catc);
++	usb_fill_bulk_urb(catc->tx_urb, usbdev, usb_sndbulkpipe(usbdev, CATC_USB_EP_BULK),
++			  NULL, 0, catc_tx_done, catc);
+ 
+-	usb_fill_bulk_urb(catc->rx_urb, usbdev, usb_rcvbulkpipe(usbdev, 1),
+-		catc->rx_buf, pktsz, catc_rx_done, catc);
++	usb_fill_bulk_urb(catc->rx_urb, usbdev, usb_rcvbulkpipe(usbdev, CATC_USB_EP_BULK),
++			  catc->rx_buf, pktsz, catc_rx_done, catc);
+ 
+-	usb_fill_int_urb(catc->irq_urb, usbdev, usb_rcvintpipe(usbdev, 2),
+-                catc->irq_buf, 2, catc_irq_done, catc, 1);
++	usb_fill_int_urb(catc->irq_urb, usbdev, usb_rcvintpipe(usbdev, CATC_USB_EP_INT_IN),
++			 catc->irq_buf, 2, catc_irq_done, catc, 1);
+ 
+ 	if (!catc->is_f5u011) {
+ 		u32 *buf;
 -- 
 2.51.0
 
