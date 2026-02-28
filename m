@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1979E4A33F2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1196313E31
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300996; cv=none; b=qgX2AKMHgItSIyCayysSjLds2OSUWomvoI+ctZgONfnme4dq7M9zeqV+rJrRLACTi6nocULGk788v42CepscmmH/bQvjbCbBEt8HREp7DxtjE7bNERPKxTwutX5jjofgkHBcwvySWkIm7gdCJ+NkFLSbs75+sKyZlhphr7/+KSA=
+	t=1772300996; cv=none; b=XIs7Mu63SRp0lDSXWO3x6Tn9pkm8wOHKop5anfgbw5miR4pMbPekS5qTcW/JOY+gusvuPWkfwHnNnguGOixxRUdMkFrYGJeBZwVzjkst7ci35HSXxHUptm26AKgUR5bkbkUX36HvrJjhNjIP3hoEjT9nHN3k682VuxZ+r7txbOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772300996; c=relaxed/simple;
-	bh=9FS0Rl3rOFg+dN6V++aP4jwOMvB+C59lHo7wwSNbwXs=;
+	bh=IsQH2GK7lrSZDfrhWKcM5PD+4pD16JHIZmz5ZCPkWUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=goq5F9fNfJYR3kkanMAOWh57o4s9GIMt6+1todqp0y3KKWAyI0HLPrJdOKlV2Yw55xYdblDynN7IbXaz4lVstJosRX6rNBl2hgACdg7aiHKr+uC4tFdMIgySVMW7IeRpHB9l0fB6ZD97jaIKg+xswqYrmRzSmL6XuKx4m6hwk4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vEDXxPgW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kt/0MPx9nvvmkvZ6ZFPltybmR6IxftZHUgUiZ+yeReL7akSu74m4CKaZD1F21GrCmM03rVbM95dp62M5/wkL37GR5L7nJt2q67RVJx1QbaCsplfm05DTIr9R+M6JrCoVzsFtoMaPnBRZ5fsR+n6HckaZNk0Rdkg1K5tIFo3RHtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TAgZO2cS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vEDXxPgW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611F3C19424;
-	Sat, 28 Feb 2026 17:49:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TAgZO2cS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B5DC116D0;
+	Sat, 28 Feb 2026 17:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300995;
-	bh=9FS0Rl3rOFg+dN6V++aP4jwOMvB+C59lHo7wwSNbwXs=;
+	s=k20201202; t=1772300996;
+	bh=IsQH2GK7lrSZDfrhWKcM5PD+4pD16JHIZmz5ZCPkWUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vEDXxPgWqi34yi8SArEkTnacDR8cFDWuUcISbXTFuGGNmE532Z1C36enVk82O70vD
-	 evLMbNRypXIZioIQ6tKdnDGXoQZl9bGOvpSdldsy2UCRccLKJw9GS0gGYmhfdZv1nO
-	 a9dyNZmvP8fYgpU8NRBRG4gYEYLOD+mylJ0WXab3Rhuc1LnK1FSYOHbcEpe06YREG2
-	 QrGk64i8H/vqR4pwbXuz5Wn4GVVPCqOxpDICSq/9mBSn/dDuD6x9zswKut2bn2wd1Y
-	 A0WXvde6BqNK3h0wuAGCEpSw6HLfq9JmMX5A2c7lyOPu3ycl5/p5EkPLtLbKeBBtKn
-	 eNlw2SL0fEJwg==
+	b=TAgZO2cSSodxmrN33yRy2Iu6oLrDrpnSS4/AQeAA0u41Tn7zDmxOWSZGDTbgNlvXj
+	 DVs4ZAZHE0IQNqP0JxL3+6mzsjjOM/FPjrZ/ABj9BA2eg4O/HvGMqOiKYJ7Fxq/eFH
+	 zD+SY4xFBrJuVlu/T+8FaWfr1ePE7REV4di9TBH3ckdmzb3BGTXB4DXCdq3t53Zwmh
+	 krNEz3E1mmK/BroBhWF1doc2eZ4USZ3pWBn79GKHVr1x1ot+DSMdfAfZJ7dnG9R6Bl
+	 mWLjWBeS/547cDbxt+aMvlEjaJ9D1m/tUfNdjOGDEJMYGRgR2TZgDjon1fe4aBLA1k
+	 e5N18uyDGRf2Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jan Remmet <j.remmet@phytec.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+Cc: Deepak Kumar <deepak.kumar01@st.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 127/752] gpio: pca953x: Add support for TCAL6408 TCAL6416
-Date: Sat, 28 Feb 2026 12:37:18 -0500
-Message-ID: <20260228174750.1542406-127-sashal@kernel.org>
+Subject: [PATCH 6.18 128/752] spi: stm32: fix Overrun issue at < 8bpw
+Date: Sat, 28 Feb 2026 12:37:19 -0500
+Message-ID: <20260228174750.1542406-128-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,71 +48,51 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jan Remmet <j.remmet@phytec.de>
+From: Deepak Kumar <deepak.kumar01@st.com>
 
-[ Upstream commit a30a9cb9bca4296d25f253619883e7013b6be158 ]
+[ Upstream commit 1ac3be217c01d5df55ec5052f81e4f1708f46552 ]
 
-TCAL6408 and TCAL6416 supports latchable inputs and maskable interrupt.
-Tested on a TCAL6416, checked datasheets for the TCAL6408.
+When SPI communication is suspended by hardware automatically, it could
+happen that few bits of next frame are already clocked out due to
+internal synchronization delay.
 
-They use the same programming model ad the NXP PCAL64xx, but
-support a lower supply power (1.08V to 3.6V) compared to PCAL
-(1.65V to 5.5V)
+To achieve a safe suspension, we need to ensure that each word must be
+at least 8 SPI clock cycles long. That's why, if bpw is less than 8
+bits, we need to use midi to reach 8 SPI clock cycles at least.
 
-Datasheet: https://www.ti.com/lit/ds/symlink/tcal6408.pdf
-Datasheet: https://www.ti.com/lit/ds/symlink/tcal6416.pdf
+This will ensure that each word achieve safe suspension and prevent
+overrun condition.
 
-Signed-off-by: Jan Remmet <j.remmet@phytec.de>
-Link: https://lore.kernel.org/r/20251216-wip-jremmet-tcal6416rtw-v2-3-6516d98a9836@phytec.de
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Deepak Kumar <deepak.kumar01@st.com>
+Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Link: https://patch.msgid.link/20251218-stm32-spi-enhancements-v2-2-3b69901ca9fe@foss.st.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/Kconfig        | 4 ++--
- drivers/gpio/gpio-pca953x.c | 6 ++++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/spi/spi-stm32.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-index e053524c5e35f..4d644dcecad93 100644
---- a/drivers/gpio/Kconfig
-+++ b/drivers/gpio/Kconfig
-@@ -1194,11 +1194,11 @@ config GPIO_PCA953X
+diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
+index 2c804c1aef989..80986bd251d29 100644
+--- a/drivers/spi/spi-stm32.c
++++ b/drivers/spi/spi-stm32.c
+@@ -1906,11 +1906,12 @@ static void stm32h7_spi_data_idleness(struct stm32_spi *spi, struct spi_transfer
+ 	cfg2_clrb |= STM32H7_SPI_CFG2_MIDI;
+ 	if ((len > 1) && (spi->cur_midi > 0)) {
+ 		u32 sck_period_ns = DIV_ROUND_UP(NSEC_PER_SEC, spi->cur_speed);
+-		u32 midi = min_t(u32,
+-				 DIV_ROUND_UP(spi->cur_midi, sck_period_ns),
+-				 FIELD_GET(STM32H7_SPI_CFG2_MIDI,
+-				 STM32H7_SPI_CFG2_MIDI));
++		u32 midi = DIV_ROUND_UP(spi->cur_midi, sck_period_ns);
  
- 	  8 bits:       max7310, max7315, pca6107, pca9534, pca9538, pca9554,
- 	                pca9556, pca9557, pca9574, tca6408, tca9554, xra1202,
--			pcal6408, pcal9554b, tca9538
-+			pcal6408, pcal9554b, tca9538, tcal6408
- 
- 	  16 bits:      max7312, max7313, pca9535, pca9539, pca9555, pca9575,
- 	                tca6416, pca6416, pcal6416, pcal9535, pcal9555a, max7318,
--			tca9539
-+			tca9539, tcal6416
- 
- 	  18 bits:	tca6418
- 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index 34cadce9b3101..f7daeadaea57c 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -126,6 +126,9 @@ static const struct i2c_device_id pca953x_id[] = {
- 	{ "tca9539", 16 | PCA953X_TYPE | PCA_INT, },
- 	{ "tca9554", 8  | PCA953X_TYPE | PCA_INT, },
- 	{ "xra1202", 8  | PCA953X_TYPE },
++		if ((spi->cur_bpw + midi) < 8)
++			midi = 8 - spi->cur_bpw;
 +
-+	{ "tcal6408", 8  | PCA953X_TYPE | PCA_LATCH_INT, },
-+	{ "tcal6416", 16 | PCA953X_TYPE | PCA_LATCH_INT, },
- 	{ }
- };
- MODULE_DEVICE_TABLE(i2c, pca953x_id);
-@@ -1466,6 +1469,9 @@ static const struct of_device_id pca953x_dt_ids[] = {
- 	{ .compatible = "ti,tca9538", .data = OF_953X( 8, PCA_INT), },
- 	{ .compatible = "ti,tca9539", .data = OF_953X(16, PCA_INT), },
++		midi = min_t(u32, midi, FIELD_MAX(STM32H7_SPI_CFG2_MIDI));
  
-+	{ .compatible = "ti,tcal6408", .data = OF_953X( 8, PCA_LATCH_INT), },
-+	{ .compatible = "ti,tcal6416", .data = OF_953X(16, PCA_LATCH_INT), },
-+
- 	{ .compatible = "onnn,cat9554", .data = OF_953X( 8, PCA_INT), },
- 	{ .compatible = "onnn,pca9654", .data = OF_953X( 8, PCA_INT), },
- 	{ .compatible = "onnn,pca9655", .data = OF_953X(16, PCA_INT), },
+ 		dev_dbg(spi->dev, "period=%dns, midi=%d(=%dns)\n",
+ 			sck_period_ns, midi, midi * sck_period_ns);
 -- 
 2.51.0
 
