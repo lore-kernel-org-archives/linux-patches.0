@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE13D346AC1
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4DB346772
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302094; cv=none; b=UG3EXAb965v9cbSrJ7mYmw0I+PnJruGclThaXgeZ3xYjc/DFCWHu5+rSfJ0s3De0Rn8AOcSGMkOr2WIvPz9W7eN6RFyFLUiX7Bitn8DpmiKb+ySpJDhHP3I6YKbtkv0k3+OTeopNix4SqUeJn6JQGT+nR8gtL9hPKazXph51N70=
+	t=1772302095; cv=none; b=AfrbgIYjENp318AnPsyKSH/g6WjHFpMJX7eJVkslgpXW/Jp7JenDsVLazUR2j3w7R7Fl9mUKqlRHPi8PDw5c3xP0p4nZ4z/9pk1SnMAuUmO5IK03pI0yj3aCZZUBZDUis39v6aYuP0wpXahxOlXYuDcrneEdjCnhTuH3HlXl3qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302094; c=relaxed/simple;
-	bh=Wly4csatesflYHNNl52dtmeu0PiMQv739oB8LQ1q9As=;
+	s=arc-20240116; t=1772302095; c=relaxed/simple;
+	bh=1EsHpoKXrTAlsIm+ZPRF8o0N0Zrp6PYYfKsdi8srjlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAenXweEycWWbVURn63SRkFcpV3IVTqA/bZwY39Y2lFwwNj9k3KtK8xe094BMKU0XlaxU9j+NTYuZgg/ldNd0/esezGh++vtAG+CsvLBi7dzVO9j2R2NewZc3AEF4PgDmOQoekse9qwm0pqkNcUNDErx1BYEEN1lADwFuLcBPAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c2mBIlbj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMOFCJiXPP3VhAczeWuBaCVa74IQX3556zc3IigcCD/wup7cvTb1Lqarg7wQiPmQTiSRvngGsw3f746kUZuPAKXG4NLSKwhoOtOPDeA4AudSrpgws+dYIUbhB2nF7Op+rJsCF62IdrDKHENDKkPQXN45B9/wSKgvW6uYb4b8Mgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pv+hKUyZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c2mBIlbj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 009D4C19423;
-	Sat, 28 Feb 2026 18:08:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pv+hKUyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6A2C19424;
+	Sat, 28 Feb 2026 18:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302094;
-	bh=Wly4csatesflYHNNl52dtmeu0PiMQv739oB8LQ1q9As=;
+	s=k20201202; t=1772302095;
+	bh=1EsHpoKXrTAlsIm+ZPRF8o0N0Zrp6PYYfKsdi8srjlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2mBIlbjNYQglUv+fIdI1bKcnz3diByjsm95SIHtk2KpRbeTt9tr1FMfu1arX87Se
-	 +dVpi9zdWNq1wcKgbhNBfdPQaBal7Ww8Yd5kNMSQPQRfGQyse77r2RRhbQX1VG2wrc
-	 OIfeehqvQWnytbF8LlQ0FBguYzurhWgTmW6cF7fFwIxqi1nFWGHXrwZ60Z6ofKavYx
-	 W1z+IdIZPF3uPkZpXCo/QlxhxT+u+Djc0Fgm+vpEp9vUk3xGnUtp9h0VzPMXtq3yq4
-	 YWqf9cX8IrQ8tY5gpcrYGK0WI5rX3Uixtr66zBez4FSMq/7wzf8tYkYV7llH1eTm2M
-	 5FjbbvPMLF+hQ==
+	b=pv+hKUyZfn8YoxSf/mRjpx+mT9h6+xKxliS7yR+/lZQuxdtIXenG5fs5xGiLWHlxE
+	 apKNKU2jzxpfpArFnY3/RppyzQXkb1gHu8KSPE1sJ93JY4bRVkgXAyo9WbRrE/o2UB
+	 OtWYt4y51GI9tYA8cQCBMtgSYTkbTHrUfff6wgPFK1WIBGSrEmVnin0Vj474iY3JSR
+	 3QjOnMLZCteUzsmI6rMaHB6kjvaPQA6TesNm3fnnWg0BEZvKVCpoZTz0hl5UA2t3ML
+	 2+oVyoCgbQaQetOk4E9E3zCGfx4ef/0YW8ksNjA2YZUYkw71fQn9FIDoC/7O0N5+ub
+	 DEsc7nUYofB3g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/283] arm64: dts: qcom: sdm845-db845c: specify power for WiFi CH1
-Date: Sat, 28 Feb 2026 13:03:41 -0500
-Message-ID: <20260228180709.1583486-79-sashal@kernel.org>
+Subject: [PATCH 6.6 080/283] arm64: dts: qcom: sm6115: Add CX_MEM/DBGC GPU regions
+Date: Sat, 28 Feb 2026 13:03:42 -0500
+Message-ID: <20260228180709.1583486-80-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,48 +50,47 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit c303e89f7f17c29981d09f8beaaf60937ae8b1f2 ]
+[ Upstream commit 78c13dac18cf0e6f6cbc6ea85d4f967e6cca9562 ]
 
-Specify power supply for the second chain / antenna output of the
-onboard WiFi chip.
+Describe the GPU register regions, with the former existing but not
+being used much if at all on this silicon, and the latter containing
+various debugging levers generally related to dumping the state of
+the IP upon a crash.
 
-Fixes: 3f72e2d3e682 ("arm64: dts: qcom: Add Dragonboard 845c")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260106-wcn3990-pwrctl-v2-8-0386204328be@oss.qualcomm.com
+Fixes: 11750af256f8 ("arm64: dts: qcom: sm6115: Add GPU nodes")
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Closes: https://lore.kernel.org/linux-arm-msm/8a64f70b-8034-45e7-86a3-0015cf357132@oss.qualcomm.com/T/#m404f1425c36b61467760f058b696b8910340a063
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251229-topic-6115_2290_gpu_dbgc-v1-3-4a24d196389c@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index d2924abd91d22..1164f2cf5bc96 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -372,6 +372,12 @@ vreg_l21a_2p95: ldo21 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 5c6fcf725473c..4c6d30404ff13 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -1336,8 +1336,12 @@ usb_dwc3: usb@4e00000 {
  
-+		vreg_l23a_3p3: ldo23 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l24a_3p075: ldo24 {
- 			regulator-min-microvolt = <3088000>;
- 			regulator-max-microvolt = <3088000>;
-@@ -1157,6 +1163,7 @@ &wifi {
- 	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
- 	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
- 	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-+	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
+ 		gpu: gpu@5900000 {
+ 			compatible = "qcom,adreno-610.0", "qcom,adreno";
+-			reg = <0x0 0x05900000 0x0 0x40000>;
+-			reg-names = "kgsl_3d0_reg_memory";
++			reg = <0x0 0x05900000 0x0 0x40000>,
++			      <0x0 0x0599e000 0x0 0x1000>,
++			      <0x0 0x05961000 0x0 0x800>;
++			reg-names = "kgsl_3d0_reg_memory",
++				    "cx_mem",
++				    "cx_dbgc";
  
- 	qcom,snoc-host-cap-8bit-quirk;
- 	qcom,ath10k-calibration-variant = "Thundercomm_DB845C";
+ 			/* There's no (real) GMU, so we have to handle quite a bunch of clocks! */
+ 			clocks = <&gpucc GPU_CC_GX_GFX3D_CLK>,
 -- 
 2.51.0
 
