@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF77371449;
-	Sat, 28 Feb 2026 17:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E3534028B;
+	Sat, 28 Feb 2026 17:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301471; cv=none; b=uvEGI5ALD2rYp7Yc3h7UJaBNWC6OEKSPU8ff/B5LCsbYotlTInTFCJRhWNP4tkpI9L22U6C3lVK2ulMbVvcs55S0OysgRHJRPlZtsjmEKQzY2W5O/Ea/81kWV3iD2gX1OWZ5XYBpB3MR+VPiIQ0FJR7anUZ4DOvdEUGNhtV6LXY=
+	t=1772301472; cv=none; b=VcpxhowzDh2E0Lc5cQc0DYm03OwxMMtcoCpMHtRDkrUtJDuF715Pp18eAgVGuUme/Jz9x103eJxn2WNsyVzEaWC3SbPvVQDArqHEgceJARKk1D5KeQtu8pbKtgDKG11KLv26W1Lg7NaqvBOjWPd7SbqC5NzS4s/dxeyyKT1JD9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301471; c=relaxed/simple;
-	bh=PcxMPwpxFZ+J2wZVU9y8X8w9Nr5Lk9irTFl+JPZeKz8=;
+	s=arc-20240116; t=1772301472; c=relaxed/simple;
+	bh=S7eFNdkVrO8QDXkHBh+Sia2xcyU4ekGamgMGgDtYibg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSdyftn0km795k6vCeVyJZuzMVsaeeS4Ix5QqSKJ4JPy7yr3++gFjx/R+3ENn4FaqDnoVumTn1Z4NBfutUyIVi6fIGaskDpt7Gznfd/Z2ADVbXYynzrwP34NYIwGFH0jbcm6Wj3I8uJ7Z2Z3HjOFNOADxxGWdRZP8P7SveAVjUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QUB1Jk/3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CqTxTHJUjPLMxlvIygn1MhF5XO2JPGfHWJ1TUPcXhVd0xFn8nVQv3jo8HOI8y4W46XTQVicMpFIZocpxZn5dNnCx5pInLgn3DwDt0SjgFm8UuQ/BRY9IFdDnySEYKSdFG+EMybu05UMEfaJqaIIuEvBQyPb+sGwRXn/f9siUj5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eKfPCdR9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QUB1Jk/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871C2C19423;
-	Sat, 28 Feb 2026 17:57:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eKfPCdR9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723FBC116D0;
+	Sat, 28 Feb 2026 17:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301471;
-	bh=PcxMPwpxFZ+J2wZVU9y8X8w9Nr5Lk9irTFl+JPZeKz8=;
+	s=k20201202; t=1772301472;
+	bh=S7eFNdkVrO8QDXkHBh+Sia2xcyU4ekGamgMGgDtYibg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUB1Jk/3okdz0WisQzTAT0+u9HKI8AiIwYPkGldJ3dzj75IjzQaSrIwo0mzAW5i87
-	 L+4G0tgALGrD+zTsiA27HtOW7rGYXsmX+kSiBLdrK2MWnU9c9BZX5Z3yfrYakPdgeV
-	 J37lvN0D0QXIG0Jo2McA0pRCGRngV2AuelzOriP+tCSG+x6B29gRSHBbiPCSCWxs8X
-	 trwmypGs6iSTGIx6MDiOSyOYvxT190cSd3REycQ9pSCWLYAgc1ZOvaptGiBvQ1XhCe
-	 N36k1irqwWDM2FrU8r4BOJzj+Ua3b3fK/11mNeNylvcTigBQV+oTvLVwtOf9ba95TE
-	 SS/eWYvq9kv5A==
+	b=eKfPCdR9+T00K+yACu45s9r/p1X+wG8OYKS/IIWYKfjI85XgkfYDLnVWZydodMeHh
+	 TxsEV4ECzTlj7J9EGaszmcEtuONG6tfcdlOv3X4f+ICb3wGSPSb/QIyABV0K2fWalU
+	 8yQZ+b07s8dhU5Y2KVZoiqupbDciEat9OCE7WVfIFPmJ53w1nu3oqqcb2ZbXA5NOJF
+	 PI7wGWX8ouqr/yefcQELSb90AliaUqGTS4JHSeDBuRU5xwXqSpCO2SM0Ud3kYd9Z1A
+	 IxHBtnJwk0GmSY2NxR0p9+rz1li2au731YTXVhYU3f02KPiuyCOCx1CON3wosoq3NJ
+	 i/D4CYFm8xOMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Peng Fan <peng.fan@nxp.com>,
+Cc: Robin Murphy <robin.murphy@arm.com>,
 	stable@vger.kernel.org,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 656/752] remoteproc: imx_rproc: Fix invalid loaded resource table detection
-Date: Sat, 28 Feb 2026 12:46:07 -0500
-Message-ID: <20260228174750.1542406-656-sashal@kernel.org>
+Subject: [PATCH 6.18 657/752] perf/arm-cmn: Reject unsupported hardware configurations
+Date: Sat, 28 Feb 2026 12:46:08 -0500
+Message-ID: <20260228174750.1542406-657-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,55 +49,73 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 26aa5295010ffaebcf8f1991c53fa7cf2ee1b20d ]
+[ Upstream commit 36c0de02575ce59dfd879eb4ef63d53a68bbf9ce ]
 
-imx_rproc_elf_find_loaded_rsc_table() may incorrectly report a loaded
-resource table even when the current firmware does not provide one.
+So far we've been fairly lax about accepting both unknown CMN models
+(at least with a warning), and unknown revisions of those which we
+do know, as although things do frequently change between releases,
+typically enough remains the same to be somewhat useful for at least
+some basic bringup checks. However, we also make assumptions of the
+maximum supported sizes and numbers of things in various places, and
+there's no guarantee that something new might not be bigger and lead
+to nasty array overflows. Make sure we only try to run on things that
+actually match our assumptions and so will not risk memory corruption.
 
-When the device tree contains a "rsc-table" entry, priv->rsc_table is
-non-NULL and denotes where a resource table would be located if one is
-present in memory. However, when the current firmware has no resource
-table, rproc->table_ptr is NULL. The function still returns
-priv->rsc_table, and the remoteproc core interprets this as a valid loaded
-resource table.
+We have at least always failed on completely unknown node types, so
+update that error message for clarity and consistency too.
 
-Fix this by returning NULL from imx_rproc_elf_find_loaded_rsc_table() when
-there is no resource table for the current firmware (i.e. when
-rproc->table_ptr is NULL). This aligns the function's semantics with the
-remoteproc core: a loaded resource table is only reported when a valid
-table_ptr exists.
-
-With this change, starting firmware without a resource table no longer
-triggers a crash.
-
-Fixes: e954a1bd1610 ("remoteproc: imx_rproc: Use imx specific hook for find_loaded_rsc_table")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Acked-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://lore.kernel.org/r/20260129-imx-rproc-fix-v3-1-fc4e41e6e750@nxp.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: 7819e05a0dce ("perf/arm-cmn: Revamp model detection")
+Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/perf/arm-cmn.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index 8424e6ea5569b..7ef99eac37f1a 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -608,6 +608,10 @@ imx_rproc_elf_find_loaded_rsc_table(struct rproc *rproc, const struct firmware *
- {
- 	struct imx_rproc *priv = rproc->priv;
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index 651edd73bfcb1..4fbafc4b79843 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -2422,6 +2422,15 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 			arm_cmn_init_node_info(cmn, reg & CMN_CHILD_NODE_ADDR, dn);
+ 			dn->portid_bits = xp->portid_bits;
+ 			dn->deviceid_bits = xp->deviceid_bits;
++			/*
++			 * Logical IDs are assigned from 0 per node type, so as
++			 * soon as we see one bigger than expected, we can assume
++			 * there are more than we can cope with.
++			 */
++			if (dn->logid > CMN_MAX_NODES_PER_EVENT) {
++				dev_err(cmn->dev, "Node ID invalid for supported CMN versions: %d\n", dn->logid);
++				return -ENODEV;
++			}
  
-+	/* No resource table in the firmware */
-+	if (!rproc->table_ptr)
-+		return NULL;
-+
- 	if (priv->rsc_table)
- 		return (struct resource_table *)priv->rsc_table;
+ 			switch (dn->type) {
+ 			case CMN_TYPE_DTC:
+@@ -2471,7 +2480,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 				break;
+ 			/* Something has gone horribly wrong */
+ 			default:
+-				dev_err(cmn->dev, "invalid device node type: 0x%x\n", dn->type);
++				dev_err(cmn->dev, "Device node type invalid for supported CMN versions: 0x%x\n", dn->type);
+ 				return -ENODEV;
+ 			}
+ 		}
+@@ -2499,6 +2508,10 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 		cmn->mesh_x = cmn->num_xps;
+ 	cmn->mesh_y = cmn->num_xps / cmn->mesh_x;
  
++	if (max(cmn->mesh_x, cmn->mesh_y) > CMN_MAX_DIMENSION) {
++		dev_err(cmn->dev, "Mesh size invalid for supported CMN versions: %dx%d\n", cmn->mesh_x, cmn->mesh_y);
++		return -ENODEV;
++	}
+ 	/* 1x1 config plays havoc with XP event encodings */
+ 	if (cmn->num_xps == 1)
+ 		dev_warn(cmn->dev, "1x1 config not fully supported, translate XP events manually\n");
 -- 
 2.51.0
 
