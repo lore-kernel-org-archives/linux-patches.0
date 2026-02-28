@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB0339B976
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FE839B974
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302597; cv=none; b=pxT3fCnBzzlI+teYCJ5L4BDh+a/08TXVR9+dOldrLvka/HkRzqAGbOiTo0QOY8+2YhD5qMBvStbEFAQR3gV+TxT01j3QPNsgt+Z0Mxu/fh/ZKkubt484chCvTcxSK0yhJHdu8u0CzBYXb39E1zOxsJSiy2wCJxneBKlPWCGR2c8=
+	t=1772302598; cv=none; b=DjkLXV0dgEk96sLxCEG16jLYWKqcDQ44QbRssaipS74HfRZn8RFGod/sSKrqEsl7GNcTCI74Bv2asZAecC3uFY7afb0MXWQpHaouY0RfkL1jBzA/uDez4BGOTdNVaMb1FpotH3VI9m4EHg8IEmutR63k66T3+HHXeQj+IneC+iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302597; c=relaxed/simple;
-	bh=7AqrAc6D8Y9edyRNZLcAuAZlKO8jjGHyRFHpLrOoyYw=;
+	s=arc-20240116; t=1772302598; c=relaxed/simple;
+	bh=ZmW0j4BX5tUxxtXHE16NZgbq3rDIZoOiWaXjhYELD7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNzFKfcYr3N7wd0endjBOOpiL3uE85X+MuN2TYVNYffIcMRPIAuWrnWzFLXasuYZPzwDC0no4Ul/YhduIAePKjN7Aie9O2dMWF6Ojm6NSvabvAEmo3nfxCEmnMiuyRHCX1xTuvxxT/XRo5S2Xnoq0VaMycwVX5P3QB7/VvpU1Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UMza2+9d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N3R+5qYCT4ggOuILCg9PyfeO+hhCBCNJdRBIFkFwsTl3uSh6zIpvK/46h9PxmhiB/gXJhq7tPcbdcer8/SYnLumFWhV4zQNx2J65/2r9CVVTBPWEkueZ4IncmowHks+tzZqlxkScVeI40NghhzXHDQGHCfHSqQOE/RZmYiaeNbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKENv3wZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UMza2+9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794E2C2BC87;
-	Sat, 28 Feb 2026 18:16:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKENv3wZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D58C19423;
+	Sat, 28 Feb 2026 18:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302597;
-	bh=7AqrAc6D8Y9edyRNZLcAuAZlKO8jjGHyRFHpLrOoyYw=;
+	s=k20201202; t=1772302598;
+	bh=ZmW0j4BX5tUxxtXHE16NZgbq3rDIZoOiWaXjhYELD7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMza2+9dfQf68c9jyK2KxZdlz6cEV1b/p6TjrJ/erxrqGTsJWh/5zMJA9dBt+66S/
-	 9AVPGxkBsxW5q9rhzSxGF77UCXcapOTih+U2t14VqPMpsq6ZfZpEIkTeb7KEZTlwZO
-	 dmktJB9trpwMAQiPDY62TXR5SiPanagzO5VYblR+2lsnV+SRwPYwgf0BgGRcJCn/Uw
-	 8mynAy1wxRPvT25DMnY1qLDN7Gz0p4pqOInWk0W41aerUT2AGmiiL5YwYaDCWC/bUX
-	 LG70W0ZP7LkubH1M5Ndchm/SESIzWF+rVF81phyIsmWwXNSNWV221cQSz5LkKMK5ZX
-	 4DtHbD7b0QiCQ==
+	b=VKENv3wZZ/e38Kv7/i+GYoWUOmgN/QffKfGw3ChN3I7mQhkAgVd6dzhKx/U+/wCb9
+	 KuCyOV9tcwnPcl7Znm5FVOcqP72h6zVhh9Mr506QQyw+GeSrTXidm9YPvLlnMu9hms
+	 yhcRTaIXMiLdz6b/Jo7i6Hn3CZ5k246c5nIQm3x06k2DY18T2wPGykaZEOpddTVf9b
+	 S62ybRcRTX1XOPQQG5/D3DimesVWrhEaJxkvGYxCFs4xpxwqRX9iQHRN/DGm1ifg5q
+	 Hs+t0ti4qV86/23/glmeJEV51HR7IA+H3X5fu1PfoB4Ku5pRJDYXfJalBwP8wJDM3a
+	 OVqQe/enhCGnQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Roman Penyaev <r.peniaev@gmail.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
+Cc: Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Zhu Yanjun <yanjun.Zhu@linux.dev>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/164] RDMA/rtrs-srv: fix SG mapping
-Date: Sat, 28 Feb 2026 13:14:08 -0500
-Message-ID: <20260228181505.1600663-109-sashal@kernel.org>
+Subject: [PATCH 5.15 110/164] RDMA/rxe: Fix double free in rxe_srq_from_init
+Date: Sat, 28 Feb 2026 13:14:09 -0500
+Message-ID: <20260228181505.1600663-110-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -49,83 +48,55 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Roman Penyaev <r.peniaev@gmail.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 83835f7c07b523c7ca2a5ad0a511670b5810539e ]
+[ Upstream commit 0beefd0e15d962f497aad750b2d5e9c3570b66d1 ]
 
-This fixes the following error on the server side:
+In rxe_srq_from_init(), the queue pointer 'q' is assigned to
+'srq->rq.queue' before copying the SRQ number to user space.
+If copy_to_user() fails, the function calls rxe_queue_cleanup()
+to free the queue, but leaves the now-invalid pointer in
+'srq->rq.queue'.
 
-   RTRS server session allocation failed: -EINVAL
+The caller of rxe_srq_from_init() (rxe_create_srq) eventually
+calls rxe_srq_cleanup() upon receiving the error, which triggers
+a second rxe_queue_cleanup() on the same memory, leading to a
+double free.
 
-caused by the caller of the `ib_dma_map_sg()`, which does not expect
-less mapped entries, than requested, which is in the order of things
-and can be easily reproduced on the machine with enabled IOMMU.
+The call trace looks like this:
+   kmem_cache_free+0x.../0x...
+   rxe_queue_cleanup+0x1a/0x30 [rdma_rxe]
+   rxe_srq_cleanup+0x42/0x60 [rdma_rxe]
+   rxe_elem_release+0x31/0x70 [rdma_rxe]
+   rxe_create_srq+0x12b/0x1a0 [rdma_rxe]
+   ib_create_srq_user+0x9a/0x150 [ib_core]
 
-The fix is to treat any positive number of mapped sg entries as a
-successful mapping and cache DMA addresses by traversing modified
-SG table.
+Fix this by moving 'srq->rq.queue = q' after copy_to_user.
 
-Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
-Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
-Link: https://patch.msgid.link/20260107161517.56357-2-haris.iqbal@ionos.com
+Fixes: aae0484e15f0 ("IB/rxe: avoid srq memory leak")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Link: https://patch.msgid.link/20260112015412.29458-1-jiashengjiangcool@gmail.com
+Reviewed-by: Zhu Yanjun <yanjun.Zhu@linux.dev>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_srq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index b5f3cbf0fd79c..8ccac2bce5123 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -597,7 +597,7 @@ static int map_cont_bufs(struct rtrs_srv_path *srv_path)
- 	     srv_path->mrs_num++) {
- 		struct rtrs_srv_mr *srv_mr = &srv_path->mrs[srv_path->mrs_num];
- 		struct scatterlist *s;
--		int nr, nr_sgt, chunks;
-+		int nr, nr_sgt, chunks, ind;
+diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
+index eb1c4c3b3a786..05ae3d183b21d 100644
+--- a/drivers/infiniband/sw/rxe/rxe_srq.c
++++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+@@ -118,6 +118,9 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 		}
+ 	}
  
- 		sgt = &srv_mr->sgt;
- 		chunks = chunks_per_mr * srv_path->mrs_num;
-@@ -627,7 +627,7 @@ static int map_cont_bufs(struct rtrs_srv_path *srv_path)
- 		}
- 		nr = ib_map_mr_sg(mr, sgt->sgl, nr_sgt,
- 				  NULL, max_chunk_size);
--		if (nr != nr_sgt) {
-+		if (nr < nr_sgt) {
- 			err = nr < 0 ? nr : -EINVAL;
- 			goto dereg_mr;
- 		}
-@@ -643,9 +643,24 @@ static int map_cont_bufs(struct rtrs_srv_path *srv_path)
- 				goto dereg_mr;
- 			}
- 		}
--		/* Eventually dma addr for each chunk can be cached */
--		for_each_sg(sgt->sgl, s, nr_sgt, i)
--			srv_path->dma_addr[chunks + i] = sg_dma_address(s);
++	srq->rq.queue = q;
++	init->attr.max_wr = srq->rq.max_wr;
 +
-+		/*
-+		 * Cache DMA addresses by traversing sg entries.  If
-+		 * regions were merged, an inner loop is required to
-+		 * populate the DMA address array by traversing larger
-+		 * regions.
-+		 */
-+		ind = chunks;
-+		for_each_sg(sgt->sgl, s, nr_sgt, i) {
-+			unsigned int dma_len = sg_dma_len(s);
-+			u64 dma_addr = sg_dma_address(s);
-+			u64 dma_addr_end = dma_addr + dma_len;
-+
-+			do {
-+				srv_path->dma_addr[ind++] = dma_addr;
-+				dma_addr += max_chunk_size;
-+			} while (dma_addr < dma_addr_end);
-+		}
+ 	return 0;
+ }
  
- 		ib_update_fast_reg_key(mr, ib_inc_rkey(mr->rkey));
- 		srv_mr->mr = mr;
 -- 
 2.51.0
 
