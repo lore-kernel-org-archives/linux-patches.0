@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71606342146;
-	Sat, 28 Feb 2026 17:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C557342146;
+	Sat, 28 Feb 2026 17:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301498; cv=none; b=hu9AezhIsUpO5iwldb6VdkAirplNWGr8CUK49JZLnePHAfHGd5yHtxs/FBJYHc9t8m+vGiCoXeMM9+Fi+NQ2E43l3UrZQkRkogmJK02CX1/0IAmqt6qvITo2VqizFOE+XVG9wKB2f2A2QrI1DcDhWGz24DfWxJKTpTwkazUl3kE=
+	t=1772301499; cv=none; b=mvnkXC4t/P/VDbJibQeWZi4sZIh3ZoAYRLlq3zipIjiDijaQF91YSUcl/tq0PeAf3bVIeYdSWus90J+bBhy5tqRhjGFCe9MUVp/DdxoTdyEhoMu66Cz4Wmfx/E3PpZO9VRAvYvVCPvU5aOmudnQAGy5OJo7ssysdOwv4cEInESU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301498; c=relaxed/simple;
-	bh=Ssi4ys2hsnK4l5iOGPWzKxKmZumXDR9aWBZNhATU+mw=;
+	s=arc-20240116; t=1772301499; c=relaxed/simple;
+	bh=NHWBKgLnuZz203UKff6k05JnAybLBmhPGgpcQK1TCyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noiXrnXuKdmHCuKlWIq9Lqn95Enql79CVD6Ks8qxmuCGKoZRvYDrmF1bIe3+qTvsZPXa76qwqmXZKnaYbK8GXuOhHEJ17EAN+K6lEtYYlOqyPWgEiNF2310HoKCwp283/5FyIcDgw8Av2g3iRc9JC9LLrzbL0FAhBGzL/pDEQK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tPFY7WiZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=imXUQQKFmeJ/EMnLKnvtw9VXuZoqK18l/sYQyxQQ2+jcaXYqRtJ62uqzvKmid+kVnl5VFWjei7MN0z/QenGykJQALWQoZEWlamR4/I4kmkz6J+ZDvMU0urog5/OjbIaXLWBQIED/WMsxMPJwIMMYagxu28ovd7Tl0iC/cljW+0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EVMx05Tw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tPFY7WiZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE41C2BC87;
-	Sat, 28 Feb 2026 17:58:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EVMx05Tw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D9AC19423;
+	Sat, 28 Feb 2026 17:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301498;
-	bh=Ssi4ys2hsnK4l5iOGPWzKxKmZumXDR9aWBZNhATU+mw=;
+	s=k20201202; t=1772301499;
+	bh=NHWBKgLnuZz203UKff6k05JnAybLBmhPGgpcQK1TCyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPFY7WiZ5lGqN8uwFhAAhkV61ZfvllDWil6Fq4x55fSGlMZWk1u7dgWZjeZx1pNWg
-	 DajxJ4J8uVmBZF1/yAmsKwblOcwRO36Wg0NuwUDuj1N32C330BkeuSvfx4WsflO7yN
-	 SQnPLTcOgrWnq4tPxtS6iA4LMCMn4GqkueSZp91escgwfVhfsi9qQN7LOuIqefhXo4
-	 6sHZhckKtPx3ZtKV7wSYl0hfGbYNjO1uQMf8oo7jDC+XwoA6UHQ1Whf7uu2r7YmZKj
-	 xfyfx7R0jITbwl86SGqXnH97PPREAbuEzKpmlCuJa/9Y2pD5O5S/BEEL2UOEyGgBza
-	 HmgmGUoIoyNOA==
+	b=EVMx05Tw9AYBgdGqvH7UVLtMudX0724sDEiNKfWwMCbcTANAnFtNrrH41x17X12YR
+	 JwrOnKG4qNu7lNjcEZ0IF3aY+lJuS4WySFjL7vrO673l3TwRtEMJKxpG2YFQ1Al+EA
+	 LrGgwsgXlUWGGKezNWy7rdEoMlEP7PIg4bkHbwkR7Ib1uugAQC0YKf1AV8dJN7I9PC
+	 qVO9+eOgGhD5Rlvy1eybq4ndiAxFs1i2qoMI1Wg8mhkaIOuhpzOSIRVLmKTLsOFuU5
+	 q8OHii4ny57J3ANoMGhzfR3LFtO7fNOWGLknNSb1zstruRFznzwgwCDYbLTf6Mc/vj
+	 choIPq86z3C4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+Cc: ethanwu <ethanwu@synology.com>,
 	stable@vger.kernel.org,
-	Waldemar Brodkorb <wbx@openadk.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 682/752] MIPS: rb532: Fix MMIO UART resource registration
-Date: Sat, 28 Feb 2026 12:46:33 -0500
-Message-ID: <20260228174750.1542406-682-sashal@kernel.org>
+Subject: [PATCH 6.18 683/752] ceph: supply snapshot context in ceph_zero_partial_object()
+Date: Sat, 28 Feb 2026 12:46:34 -0500
+Message-ID: <20260228174750.1542406-683-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,49 +49,83 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: ethanwu <ethanwu@synology.com>
 
-[ Upstream commit e93bb4b76cfefb302534246e892c7667491cb8cc ]
+[ Upstream commit f16bd3fa74a2084ee7e16a8a2be7e7399b970907 ]
 
-Since commit 6e690d54cfa8 ("serial: 8250: fix return error code in
-serial8250_request_std_resource()"), registering an 8250 MMIO port
-without mapbase no longer works, as the resource range is derived from
-mapbase/mapsize.
+The ceph_zero_partial_object function was missing proper snapshot
+context for its OSD write operations, which could lead to data
+inconsistencies in snapshots.
 
-Populate mapbase and mapsize accordingly. Also drop ugly membase KSEG1
-pointer and set UPF_IOREMAP instead, letting the 8250 core perform the
-ioremap.
+Reproducer:
+../src/vstart.sh --new -x --localhost --bluestore
+./bin/ceph auth caps client.fs_a mds 'allow rwps fsname=a' mon 'allow r fsname=a' osd 'allow rw tag cephfs data=a'
+mount -t ceph fs_a@.a=/ /mnt/mycephfs/ -o conf=./ceph.conf
+dd if=/dev/urandom of=/mnt/mycephfs/foo bs=64K count=1
+mkdir /mnt/mycephfs/.snap/snap1
+md5sum /mnt/mycephfs/.snap/snap1/foo
+fallocate -p -o 0 -l 4096 /mnt/mycephfs/foo
+echo 3 > /proc/sys/vm/drop/caches
+md5sum /mnt/mycephfs/.snap/snap1/foo # get different md5sum!!
 
-Fixes: 6e690d54cfa8 ("serial: 8250: fix return error code in serial8250_request_std_resource()")
 Cc: stable@vger.kernel.org
-Reported-by: Waldemar Brodkorb <wbx@openadk.org>
-Link: https://lore.kernel.org/linux-mips/aX-d0ShTplHKZT33@waldemar-brodkorb.de/
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: ad7a60de882ac ("ceph: punch hole support")
+Signed-off-by: ethanwu <ethanwu@synology.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/rb532/devices.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ceph/file.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/rb532/devices.c b/arch/mips/rb532/devices.c
-index b7f6f782d9a13..ffa4d38ca95df 100644
---- a/arch/mips/rb532/devices.c
-+++ b/arch/mips/rb532/devices.c
-@@ -212,11 +212,12 @@ static struct platform_device rb532_wdt = {
- static struct plat_serial8250_port rb532_uart_res[] = {
- 	{
- 		.type           = PORT_16550A,
--		.membase	= (char *)KSEG1ADDR(REGBASE + UART0BASE),
-+		.mapbase        = REGBASE + UART0BASE,
-+		.mapsize        = 0x1000,
- 		.irq		= UART0_IRQ,
- 		.regshift	= 2,
- 		.iotype		= UPIO_MEM,
--		.flags		= UPF_BOOT_AUTOCONF,
-+		.flags		= UPF_BOOT_AUTOCONF | UPF_IOREMAP,
- 	},
- 	{
- 		.flags		= 0,
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index 99b30f784ee24..f43a42909e7cf 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2568,6 +2568,7 @@ static int ceph_zero_partial_object(struct inode *inode,
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_osd_request *req;
++	struct ceph_snap_context *snapc;
+ 	int ret = 0;
+ 	loff_t zero = 0;
+ 	int op;
+@@ -2582,12 +2583,25 @@ static int ceph_zero_partial_object(struct inode *inode,
+ 		op = CEPH_OSD_OP_ZERO;
+ 	}
+ 
++	spin_lock(&ci->i_ceph_lock);
++	if (__ceph_have_pending_cap_snap(ci)) {
++		struct ceph_cap_snap *capsnap =
++				list_last_entry(&ci->i_cap_snaps,
++						struct ceph_cap_snap,
++						ci_item);
++		snapc = ceph_get_snap_context(capsnap->context);
++	} else {
++		BUG_ON(!ci->i_head_snapc);
++		snapc = ceph_get_snap_context(ci->i_head_snapc);
++	}
++	spin_unlock(&ci->i_ceph_lock);
++
+ 	req = ceph_osdc_new_request(&fsc->client->osdc, &ci->i_layout,
+ 					ceph_vino(inode),
+ 					offset, length,
+ 					0, 1, op,
+ 					CEPH_OSD_FLAG_WRITE,
+-					NULL, 0, 0, false);
++					snapc, 0, 0, false);
+ 	if (IS_ERR(req)) {
+ 		ret = PTR_ERR(req);
+ 		goto out;
+@@ -2601,6 +2615,7 @@ static int ceph_zero_partial_object(struct inode *inode,
+ 	ceph_osdc_put_request(req);
+ 
+ out:
++	ceph_put_snap_context(snapc);
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
