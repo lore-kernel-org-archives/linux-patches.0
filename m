@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A745333F8A1
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934BF361648
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300926; cv=none; b=PEOxYZKz1Dj68vhaSbEB3xKVjL9F3X1hJUiKU6szxwZHIgDCe3yDUroocdcUbpajp52bOyRre8LnmfUYEm8xDgnUuzrJ0xz27duTtxCsZ1DedwOVgHDS8yHwo9EHj4Wz0ZHq1AsTgRMXP7zLYFX3NdAT9zLfIOe4IWaZArzfTHg=
+	t=1772300927; cv=none; b=rVqTbIhryP0h8hgVs8rvtBGm+ycdH+4id7APSyy8LUEXxo++oJ/1M7byHJBHF5GUZu7zNbYeNn2jHGq+jmvJIc/Xuvy1neqY34lnqKIma/RV4V+uEOo/42bSSB7Ae0n4Lc2auRVZ1gmW+QV1p07w3GcZwV2K41iloF5jnLNJGs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300926; c=relaxed/simple;
-	bh=q5+eTpJEtm/NtSIptrOsXsgToHQsgqbA2ZPIYQf9e64=;
+	s=arc-20240116; t=1772300927; c=relaxed/simple;
+	bh=ac4WStoxKfAasctsVBfwXUUhvWrA9GNM2xoK62d7wz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccGUXkQdUeNxBNhz2o+GYGInQNPuqf1Wb4/jb1O7Z0szVQ701yBN0U4t2Pq5TcMuPHdnodNMJrRP/DCB12nhEA4yWv/bHQXQY2VHemBPv/h0bPadzfQQyUCGvn+GyTHGnGutKfHFvh9dJRB4qm6FB6rU8gHcWe6bcUEq3QMJOCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h4dU9qsg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TCSApQprw2oLthznYUWR9u2AYSKk9n+8XomXNrgFtwxPPLFUmtaWzTLKtUbLqOLrQI+LVdyZQEyg9KGAqEwD58wju8mywvuFJbOBw2Tbi6L3+o3OSsqiHteQetD32PQu1MBtcyRwk0uT2T8zNkjoOd6Sf5mWXYqttkCxmlh9I38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L9LMuPeH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h4dU9qsg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C017C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L9LMuPeH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8A7C19423;
 	Sat, 28 Feb 2026 17:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300926;
-	bh=q5+eTpJEtm/NtSIptrOsXsgToHQsgqbA2ZPIYQf9e64=;
+	s=k20201202; t=1772300927;
+	bh=ac4WStoxKfAasctsVBfwXUUhvWrA9GNM2xoK62d7wz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4dU9qsgdI0FjyVQi5a7O+/QQlIQSthtHB/gf7tBCmHBhsAb0jhvyS3ky0IBKGvYU
-	 OYil0Ks4cR86mfLWKKRF6hgkFnj5lsrf6pkXRsZCpnnZA+n4OjLv6bEHrmC5xaEGqZ
-	 K0/AmeOOFBD9HsXOwlb0CG9VKXz4GNYGNhhQ9TatiBxlFsXoqxrIt5m+IAsdLnjl21
-	 Hinj7p7Pt+xmsv1WTYs4PIa7oYISEmUbvw6NqxGp+S7HY3YcXk0IEIAxVasC/wGQ1p
-	 srxgiAimJnhKTMisp0qUjwtbf0WQepk/+U2zJksCrLUPzk3pyeYjcHw4EavwhM9tNq
-	 oJOqxtulBUmfw==
+	b=L9LMuPeHa8on7U1GpjMxIFa3QAqHKpnNVNibqJun0NKc79LQKUv+6CIdkvhgGrD+f
+	 WA3Fvk97G+zuNWihxiJUK+LTg5m4iN5L8X4poKBCwoeANg4FIHdaF5d+/aLVrqCobw
+	 4T+tkOuu9+tSXXT1OJgUptWoH0Sq3rOP8HdB+QPv6xmh8W1S7yFxq6X2J+dEUESsXx
+	 dFwVY/JLm1csax7zHup50LCK9eRZ9sKu1jw11KrY+o5I3gBA/RQbaFDQiKArr/HZyw
+	 U+bMQtSgfZ4NKUofqOt7LqQ2jMRuQfqruMdA9L8t/vDJofYjiLnEXyg268K4GZISe+
+	 kyvavf30I4kew==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>,
+Cc: Robin Murphy <robin.murphy@arm.com>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 045/752] s390/purgatory: Add -Wno-default-const-init-unsafe to KBUILD_CFLAGS
-Date: Sat, 28 Feb 2026 12:35:56 -0500
-Message-ID: <20260228174750.1542406-45-sashal@kernel.org>
+Subject: [PATCH 6.18 046/752] perf/arm-cmn: Support CMN-600AE
+Date: Sat, 28 Feb 2026 12:35:57 -0500
+Message-ID: <20260228174750.1542406-46-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -46,43 +49,48 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit b4780fe4ddf04b51127a33d705f4a2e224df00fa ]
+[ Upstream commit 12a94953c37e834c3eabb839ce057094946fe67a ]
 
-Add -Wno-default-const-init-unsafe to purgatory KBUILD_CFLAGS, similar
-to scripts/Makefile.extrawarn, since clang generates warnings for the
-dummy variable in typecheck():
+The functional safety features of CMN-600AE have little to no impact on
+the PMU relative to the base CMN-600 design, so for simplicity we can
+reasonably just treat it as the same thing. The only obvious difference
+is that the revision numbers aren't aligned, so we may hide some aliases
+for events which do actually exist, but those can still be specified via
+the underlying "type,eventid" format so it's not too big a deal.
 
-    CC      arch/s390/purgatory/purgatory.o
-      arch/s390/include/asm/ptrace.h:221:9: warning: default initialization of an object of type 'typeof (regs->psw)' (aka 'const psw_t') leaves the object uninitialized [-Wdefault-const-init-var-unsafe]
-        221 |         return psw_bits(regs->psw).pstate;
-            |                ^
-      arch/s390/include/asm/ptrace.h:98:2: note: expanded from macro 'psw_bits'
-         98 |         typecheck(psw_t, __psw);                \
-            |         ^
-      include/linux/typecheck.h:11:12: note: expanded from macro 'typecheck'
-         11 |         typeof(x) __dummy2; \
-            |                   ^
-
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Tested-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/purgatory/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/perf/arm-cmn.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/s390/purgatory/Makefile b/arch/s390/purgatory/Makefile
-index bd39b36e7bd68..cfb73bbcdfe85 100644
---- a/arch/s390/purgatory/Makefile
-+++ b/arch/s390/purgatory/Makefile
-@@ -22,6 +22,7 @@ KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
- KBUILD_CFLAGS += -D__DISABLE_EXPORTS
- KBUILD_CFLAGS += $(CLANG_FLAGS)
- KBUILD_CFLAGS += $(call cc-option,-fno-PIE)
-+KBUILD_CFLAGS += $(call cc-option, -Wno-default-const-init-unsafe)
- KBUILD_AFLAGS := $(filter-out -DCC_USING_EXPOLINE,$(KBUILD_AFLAGS))
- KBUILD_AFLAGS += -D__DISABLE_EXPORTS
- 
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index 23245352a3fc0..651edd73bfcb1 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -210,6 +210,7 @@ enum cmn_model {
+ enum cmn_part {
+ 	PART_CMN600 = 0x434,
+ 	PART_CMN650 = 0x436,
++	PART_CMN600AE = 0x438,
+ 	PART_CMN700 = 0x43c,
+ 	PART_CI700 = 0x43a,
+ 	PART_CMN_S3 = 0x43e,
+@@ -2266,6 +2267,9 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 	reg = readq_relaxed(cfg_region + CMN_CFGM_PERIPH_ID_01);
+ 	part = FIELD_GET(CMN_CFGM_PID0_PART_0, reg);
+ 	part |= FIELD_GET(CMN_CFGM_PID1_PART_1, reg) << 8;
++	/* 600AE is close enough that it's not really worth more complexity */
++	if (part == PART_CMN600AE)
++		part = PART_CMN600;
+ 	if (cmn->part && cmn->part != part)
+ 		dev_warn(cmn->dev,
+ 			 "Firmware binding mismatch: expected part number 0x%x, found 0x%x\n",
 -- 
 2.51.0
 
