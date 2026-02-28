@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8149C33FE12
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D69352F86;
+	Sat, 28 Feb 2026 17:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300908; cv=none; b=mwdls76r8SNJpR9ngm2t6EpD1WvjkA8quIEazjZlg+wEqGbX2KSbd7RIV0HSHZ1utibDgcyn+8vg5aw5hVYTfu6AMUyKGk5PzItya8aycV3IQnXdrXQ0mD8lS7StAal4cMp7K2ZddC6ketx8A3gOtwxnMHT2UOHJ1ukLRZHBdgc=
+	t=1772300909; cv=none; b=HgLqMHJBq5COpqsDKUDEKO4jO/ndWPfelmYt+1jCevWfF1Z299BRawq+nG2/Hgq/7wHwTNaBNDG5VnQAUaJ39sSBJsTk+uBxyGXu8bLJveqNd6rHhPPYnCl4HImX0uqkVhUlOHT+PtAHVm6vaqqlixqSAOchBkCB8QRoKH9qhlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300908; c=relaxed/simple;
-	bh=LkUHDpljvu8fcDtvyAJKn3DwFMy2wkQcc3SEqAiH7BY=;
+	s=arc-20240116; t=1772300909; c=relaxed/simple;
+	bh=n8iukbmTfV+CBCIYw3iJyumSdlOa0DLhcpDjgW67Edc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o86DHFiA6hQM1Rrod2YPIcd3T4swNIexrVsE5Q7quTgiezeqZjg2XBiyqxewQSsJhZa9wkSJiFJqyRKtDbJuAyCZdIHF06akCMTu0Bhrtdo0WzThkX8i0Q2Sy4vORndCwk+K52j7WTmVmq+OUSEgpj0p0TKpBp4azaAnnVccQD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uQJf7niY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OkQWPsinx9/467bdCxRKSxcz74yaYELHfD1otpVEFX7h1lBSJJczOFkwJYleEGOQSOPxrqwzoBiZAB7sXbkBniQMYfjYX/hD6P7WTbTq1alfEMW/Yc+siHCyvsaTRmWaXq+cT2qCvolKrkvf+6lf6ErwOBZkQq0EFxGeGyHLN3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i+28vClk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uQJf7niY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA7EC19423;
-	Sat, 28 Feb 2026 17:48:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i+28vClk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6851CC19424;
+	Sat, 28 Feb 2026 17:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300908;
-	bh=LkUHDpljvu8fcDtvyAJKn3DwFMy2wkQcc3SEqAiH7BY=;
+	s=k20201202; t=1772300909;
+	bh=n8iukbmTfV+CBCIYw3iJyumSdlOa0DLhcpDjgW67Edc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQJf7niYSihHR4TT4bT3FpGX1Lt9yfs2xQAxZcH7PyvuTIvqbIvQvfJBplNH7KBou
-	 J1otOtOiB/9gfI94KpeFjrlHtbUEYoZBXtAAMUj9wSYkkRAZHSGic/OhMYxcioOUxU
-	 OeFZB7BNmZ8d03ztfqKQvNzoPW1cJ2r9hCzc+7xLDjv6pdKfRMHuZIGHSfJ2sFOb1t
-	 /HbFiuyQBuuaYUuEV5f4WuuPH66aLFXp9RTAiAm7OdDf16hEL5KrFt+eCPoDMtaMY7
-	 GJqdmw6eJSkeB9ERsnHFnDvQfLNSH1OPsBnsMCp8HbEX/M70jWbHNFxjoTz4oDqbpG
-	 F8/JIMPn3M4sA==
+	b=i+28vClk7LwOTl3KCk1M4oESLkkoz7ck6/XeJDF+1P+skk59+rjIzsA2HnWyUiku4
+	 jhihExSYal+ytYZWZD8qR+TIXUjwswSzxgqLAbitoCavEEQhbqw+WPU/iRGu8Bo2xW
+	 T6zgjLcFGWUcXGpV2s1LkbJ7laVgx467z4rdAh4Cjs1iLIOR3E1yh/QXTgUdRs5P4y
+	 sBVTYfe8rRCFd6WPRdq/Uutxph+3hPyRh59ji50l3WHCun7qHzC/WpLSjYNMSN0i6a
+	 JreStBtMYdAimeIWmuauocJOFGVjcuZ2w65jcpOAnGi0n7fHHOxnVlYeP0dvJp70jX
+	 ldk89XE/IzCLA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Bhavik Sachdev <b.sachdev1904@gmail.com>,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 022/752] statmount: permission check should return EPERM
-Date: Sat, 28 Feb 2026 12:35:33 -0500
-Message-ID: <20260228174750.1542406-22-sashal@kernel.org>
+Subject: [PATCH 6.18 023/752] hfsplus: fix volume corruption issue for generic/480
+Date: Sat, 28 Feb 2026 12:35:34 -0500
+Message-ID: <20260228174750.1542406-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,36 +49,254 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Bhavik Sachdev <b.sachdev1904@gmail.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit fccbe38a5d06dbe44bcd89196fe1d2c2272a1f4a ]
+[ Upstream commit bea4429eb30190c59b5ac7c8ff6c90176c7c110f ]
 
-Currently, statmount() returns ENOENT when caller is not CAP_SYS_ADMIN
-in the user namespace owner of target mount namespace. This should be
-EPERM instead.
+The xfstests' test-case generic/480 leaves HFS+ volume
+in corrupted state:
 
-Suggested-by: Miklos Szeredi <miklos@szeredi.hu>
-Signed-off-by: Bhavik Sachdev <b.sachdev1904@gmail.com>
-Link: https://patch.msgid.link/20251129091455.757724-2-b.sachdev1904@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+sudo ./check generic/480
+FSTYP -- hfsplus
+PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
+MKFS_OPTIONS -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/480 _check_generic_filesystem: filesystem on /dev/loop51 is inconsistent
+(see XFSTESTS-2/xfstests-dev/results//generic/480.full for details)
+
+Ran: generic/480
+Failures: generic/480
+Failed 1 of 1 tests
+
+sudo fsck.hfsplus -d /dev/loop51
+** /dev/loop51
+Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+Executing fsck_hfs (version 540.1-Linux).
+** Checking non-journaled HFS Plus Volume.
+The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+CheckHardLinks: found 1 pre-Leopard file inodes.
+Incorrect number of file hard links
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+invalid VHB nextCatalogID
+Volume header needs minor repair
+(2, 0)
+Verify Status: VIStat = 0x8000, ABTStat = 0x0000 EBTStat = 0x0000
+CBTStat = 0x0000 CatStat = 0x00000002
+** Repairing volume.
+Incorrect flags for file hard link (id = 19)
+(It should be 0x22 instead of 0x2)
+Incorrect flags for file inode (id = 18)
+(It should be 0x22 instead of 0x2)
+first link ID=0 is < 16 for fileinode=18
+Error getting first link ID for inode = 18 (result=2)
+Invalid first link in hard link chain (id = 18)
+(It should be 19 instead of 0)
+Indirect node 18 needs link count adjustment
+(It should be 1 instead of 2)
+** Rechecking volume.
+** Checking non-journaled HFS Plus Volume.
+The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume untitled was repaired successfully.
+
+The generic/480 test executes such steps on final phase:
+
+"Now remove of the links of our file and create
+a new file with the same name and in the same
+parent directory, and finally fsync this new file."
+
+unlink $SCRATCH_MNT/testdir/bar
+touch $SCRATCH_MNT/testdir/bar
+$XFS_IO_PROG -c "fsync" $SCRATCH_MNT/testdir/bar
+
+"Simulate a power failure and mount the filesystem
+to check that replaying the fsync log/journal
+succeeds, that is the mount operation does not fail."
+
+_flakey_drop_and_remount
+
+The key issue in HFS+ logic is that hfsplus_link(),
+hfsplus_unlink(), hfsplus_rmdir(), hfsplus_symlink(),
+and hfsplus_mknod() methods don't call
+hfsplus_cat_write_inode() for the case of modified
+inode objects. As a result, even if hfsplus_file_fsync()
+is trying to flush the dirty Catalog File, but because of
+not calling hfsplus_cat_write_inode() not all modified
+inodes save the new state into Catalog File's records.
+Finally, simulation of power failure results in inconsistent
+state of Catalog File and FSCK tool reports about
+volume corruption.
+
+This patch adds calling of hfsplus_cat_write_inode()
+method for modified inodes in hfsplus_link(),
+hfsplus_unlink(), hfsplus_rmdir(), hfsplus_symlink(),
+and hfsplus_mknod() methods. Also, it adds debug output
+in several methods.
+
+sudo ./check generic/480
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc1+ #18 SMP PREEMPT_DYNAMIC Thu Dec  4 12:24:45 PST 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/480 16s ...  16s
+Ran: generic/480
+Passed all 1 tests
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20251205000054.3670326-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfsplus/dir.c   | 46 +++++++++++++++++++++++++++++++++++++++++++++-
+ fs/hfsplus/inode.c |  5 +++++
+ 2 files changed, 50 insertions(+), 1 deletion(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 4272349650b14..5b31682db450e 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -5796,7 +5796,7 @@ SYSCALL_DEFINE4(statmount, const struct mnt_id_req __user *, req,
+diff --git a/fs/hfsplus/dir.c b/fs/hfsplus/dir.c
+index cadf0b5f93422..ca5f74a140ec1 100644
+--- a/fs/hfsplus/dir.c
++++ b/fs/hfsplus/dir.c
+@@ -313,6 +313,9 @@ static int hfsplus_link(struct dentry *src_dentry, struct inode *dst_dir,
+ 	if (!S_ISREG(inode->i_mode))
+ 		return -EPERM;
  
- 	if (kreq.mnt_ns_id && (ns != current->nsproxy->mnt_ns) &&
- 	    !ns_capable_noaudit(ns->user_ns, CAP_SYS_ADMIN))
--		return -ENOENT;
-+		return -EPERM;
++	hfs_dbg("src_dir->i_ino %lu, dst_dir->i_ino %lu, inode->i_ino %lu\n",
++		src_dir->i_ino, dst_dir->i_ino, inode->i_ino);
++
+ 	mutex_lock(&sbi->vh_mutex);
+ 	if (inode->i_ino == (u32)(unsigned long)src_dentry->d_fsdata) {
+ 		for (;;) {
+@@ -332,7 +335,7 @@ static int hfsplus_link(struct dentry *src_dentry, struct inode *dst_dir,
+ 		cnid = sbi->next_cnid++;
+ 		src_dentry->d_fsdata = (void *)(unsigned long)cnid;
+ 		res = hfsplus_create_cat(cnid, src_dir,
+-			&src_dentry->d_name, inode);
++					 &src_dentry->d_name, inode);
+ 		if (res)
+ 			/* panic? */
+ 			goto out;
+@@ -350,6 +353,21 @@ static int hfsplus_link(struct dentry *src_dentry, struct inode *dst_dir,
+ 	mark_inode_dirty(inode);
+ 	sbi->file_count++;
+ 	hfsplus_mark_mdb_dirty(dst_dir->i_sb);
++
++	res = hfsplus_cat_write_inode(src_dir);
++	if (res)
++		goto out;
++
++	res = hfsplus_cat_write_inode(dst_dir);
++	if (res)
++		goto out;
++
++	res = hfsplus_cat_write_inode(sbi->hidden_dir);
++	if (res)
++		goto out;
++
++	res = hfsplus_cat_write_inode(inode);
++
+ out:
+ 	mutex_unlock(&sbi->vh_mutex);
+ 	return res;
+@@ -367,6 +385,9 @@ static int hfsplus_unlink(struct inode *dir, struct dentry *dentry)
+ 	if (HFSPLUS_IS_RSRC(inode))
+ 		return -EPERM;
  
- 	ks = kmalloc(sizeof(*ks), GFP_KERNEL_ACCOUNT);
- 	if (!ks)
++	hfs_dbg("dir->i_ino %lu, inode->i_ino %lu\n",
++		dir->i_ino, inode->i_ino);
++
+ 	mutex_lock(&sbi->vh_mutex);
+ 	cnid = (u32)(unsigned long)dentry->d_fsdata;
+ 	if (inode->i_ino == cnid &&
+@@ -408,6 +429,15 @@ static int hfsplus_unlink(struct inode *dir, struct dentry *dentry)
+ 	inode_set_ctime_current(inode);
+ 	mark_inode_dirty(inode);
+ out:
++	if (!res) {
++		res = hfsplus_cat_write_inode(dir);
++		if (!res) {
++			res = hfsplus_cat_write_inode(sbi->hidden_dir);
++			if (!res)
++				res = hfsplus_cat_write_inode(inode);
++		}
++	}
++
+ 	mutex_unlock(&sbi->vh_mutex);
+ 	return res;
+ }
+@@ -429,6 +459,8 @@ static int hfsplus_rmdir(struct inode *dir, struct dentry *dentry)
+ 	inode_set_ctime_current(inode);
+ 	hfsplus_delete_inode(inode);
+ 	mark_inode_dirty(inode);
++
++	res = hfsplus_cat_write_inode(dir);
+ out:
+ 	mutex_unlock(&sbi->vh_mutex);
+ 	return res;
+@@ -465,6 +497,12 @@ static int hfsplus_symlink(struct mnt_idmap *idmap, struct inode *dir,
+ 
+ 	hfsplus_instantiate(dentry, inode, inode->i_ino);
+ 	mark_inode_dirty(inode);
++
++	res = hfsplus_cat_write_inode(dir);
++	if (res)
++		goto out;
++
++	res = hfsplus_cat_write_inode(inode);
+ 	goto out;
+ 
+ out_err:
+@@ -506,6 +544,12 @@ static int hfsplus_mknod(struct mnt_idmap *idmap, struct inode *dir,
+ 
+ 	hfsplus_instantiate(dentry, inode, inode->i_ino);
+ 	mark_inode_dirty(inode);
++
++	res = hfsplus_cat_write_inode(dir);
++	if (res)
++		goto out;
++
++	res = hfsplus_cat_write_inode(inode);
+ 	goto out;
+ 
+ failed_mknod:
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index 7ae6745ca7ae1..c762bf909d1aa 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -328,6 +328,9 @@ int hfsplus_file_fsync(struct file *file, loff_t start, loff_t end,
+ 	struct hfsplus_vh *vhdr = sbi->s_vhdr;
+ 	int error = 0, error2;
+ 
++	hfs_dbg("inode->i_ino %lu, start %llu, end %llu\n",
++		inode->i_ino, start, end);
++
+ 	error = file_write_and_wait_range(file, start, end);
+ 	if (error)
+ 		return error;
+@@ -616,6 +619,8 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	hfsplus_cat_entry entry;
+ 	int res = 0;
+ 
++	hfs_dbg("inode->i_ino %lu\n", inode->i_ino);
++
+ 	if (HFSPLUS_IS_RSRC(inode))
+ 		main_inode = HFSPLUS_I(inode)->rsrc_inode;
+ 
 -- 
 2.51.0
 
