@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425811FBEB0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0344D34250D
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301915; cv=none; b=nI3X4oaqocVmygzVKjRSnK1+Eaj+CZZLcxwjZnKQT9nHATUXOMCY7FKIIiqFOaA8EH2po+ZTaV9uDrMkWrB02v1vXl4I+pOmlwf94ykgXNbCb1ZIpuwb9Yiqomtk59S/iZWXXIP+cfH5JFoRX97rYr/dvuIJq9yoGIVkJ5o/TLo=
+	t=1772301916; cv=none; b=stly6AzuU7QYUbK0xKRtGkhEqEcJfPMDJj0a1i3ZWZg2/wIc6CS1p6qX7fvhqmvClwN9VGxsw+xye2QGv7u0Q9c2juS3ShwYu/gAOZRHvFAK1kd92E38qN2BN/dWSzfizXwdFAEi6X3q9P0aYxQEtCJ98yB80JagNmjAEFVFEjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301915; c=relaxed/simple;
-	bh=LqouKln1HkUR3sanZFx7v6Kcl7Ca++KCYXaFyXqZxbQ=;
+	s=arc-20240116; t=1772301916; c=relaxed/simple;
+	bh=GG+SVGHWOzHlzvUYM0bUu8kewNyHl0A3P5/GzNqmg98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4imF3OtZkS6PwhwH64/2wDm+D24Iq7+N86GKBipndce3N2ujdzsZ98XGKfnH5SYC/7lUHxKIsGdD4lx7OHPGlFz9/4JD9x6n8tJhiqzRNgRrYKgMDhE1Gax6l4ZAn9QXxQUIZCOllWuQzJombN9WlsnOAQilEdSg/QcNz9TD4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lmp1AgSK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CWlACV39TyfgSCEINkJUn7W1vsf3zKx3ovNYE0hLrYkPTnvUdrRTkyEOq19cc6f5wKMUuuEsnhdLNZBbEs4qxUuxmcwbVwOb9TXoU5RcNvEZyNDczFOctqXmcTS4AzXcFgQdOogWuAU+K066NpB2y8DgHP4hRGFk/BhGt8hDZHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bchOq0d4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lmp1AgSK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D835C2BC87;
-	Sat, 28 Feb 2026 18:05:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bchOq0d4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E23C19423;
+	Sat, 28 Feb 2026 18:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301915;
-	bh=LqouKln1HkUR3sanZFx7v6Kcl7Ca++KCYXaFyXqZxbQ=;
+	bh=GG+SVGHWOzHlzvUYM0bUu8kewNyHl0A3P5/GzNqmg98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lmp1AgSK3EC612VLWR40yVLUdnDT/iNscpn64Qg9gHXT7PLVm3FGxr/7GuSvDKODX
-	 hZ9qN7J+2xskAO5N2S7ipqpv5QYRtNrg981IHwvMYr+WQIuOUzoJiNIpFkoIfEwORG
-	 VZCEYfad4Mmz4e4mgj275L4LbUFzASqtnZG0ShHTMJNTj97uoYTwO3SUeWTVr7Y1Vf
-	 5DbQsFHVO8R1itorlRouY0fpe8OLnyUw6Hy0PH6P1YH0p9CCsdqTI3QHVcK6+cKuwU
-	 aOsLTq+dk7Syaq7uGZGKXa8OWB5RHZIJYDXvbhCkzCVESNc+SicVTOqgxLXgru30T+
-	 sBpA0FPVkcv2g==
+	b=bchOq0d4Ixy4uZXx3vI4cXoyBU2wpe8v/tZaabY6SAVlTrJU+ukozMW3tKui8HWmB
+	 azXQmBqty3w1r2ACqpmclBOzGN3mz4omVpgkq8EfN5UIiwLcD0zqgAqp+w7pgyy4of
+	 aOH7sEQ8gNST+9rTl0S3Cxf3uTs1eUoXkD3cTqU9sBPu4yOa0Ryc9VHRDFQob02GhI
+	 J+nsC3X68YILp5lRreM4/BEWoiqWHT+aNGQG7+BYCkJbQhjUSu4LreiqZdHhyXK/3R
+	 v9tm3i+BuLWGMMVm/pCp/v+0T1DOwm8F3fTFyJm066jQl3xUlMKVzoIVkDcXkZ4/VU
+	 Nv9PQTIZTYPJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Luca Weiss <luca.weiss@fairphone.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+Cc: Wei Li <unsw.weili@gmail.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 347/385] pinctrl: qcom: sm8250-lpass-lpi: Fix i2s2_data_groups definition
-Date: Sat, 28 Feb 2026 12:59:29 -0500
-Message-ID: <20260228180011.1568201-347-sashal@kernel.org>
+Subject: [PATCH 6.12 348/385] pinctrl: single: fix refcount leak in pcs_add_gpio_func()
+Date: Sat, 28 Feb 2026 12:59:30 -0500
+Message-ID: <20260228180011.1568201-348-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -49,36 +47,48 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Wei Li <unsw.weili@gmail.com>
 
-[ Upstream commit eabf273c8466af3f033473c2d2267a6ea7946d57 ]
+[ Upstream commit 353353309b0f7afa407df29e455f9d15b5acc296 ]
 
-The i2s2_data function is available on both gpio12 and gpio13. Fix the
-groups definition.
+of_parse_phandle_with_args() returns a device_node pointer with refcount
+incremented in gpiospec.np. The loop iterates through all phandles but
+never releases the reference, causing a refcount leak on each iteration.
 
-Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Add of_node_put() calls to release the reference after extracting the
+needed arguments and on the error path when devm_kzalloc() fails.
+
+This bug was detected by our static analysis tool and verified by my
+code review.
+
+Fixes: a1a277eb76b3 ("pinctrl: single: create new gpio function range")
+Signed-off-by: Wei Li <unsw.weili@gmail.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-single.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
-index 9791d9ba5087c..4e90b29640ff0 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
-@@ -73,7 +73,7 @@ static const char * const i2s1_ws_groups[] = { "gpio7" };
- static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
- static const char * const wsa_swr_clk_groups[] = { "gpio10" };
- static const char * const wsa_swr_data_groups[] = { "gpio11" };
--static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
-+static const char * const i2s2_data_groups[] = { "gpio12", "gpio13" };
- 
- static const struct lpi_pingroup sm8250_groups[] = {
- 	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index 2218d65a7d842..a2fb549307adb 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -1359,6 +1359,7 @@ static int pcs_add_gpio_func(struct device_node *node, struct pcs_device *pcs)
+ 		}
+ 		range = devm_kzalloc(pcs->dev, sizeof(*range), GFP_KERNEL);
+ 		if (!range) {
++			of_node_put(gpiospec.np);
+ 			ret = -ENOMEM;
+ 			break;
+ 		}
+@@ -1368,6 +1369,7 @@ static int pcs_add_gpio_func(struct device_node *node, struct pcs_device *pcs)
+ 		mutex_lock(&pcs->mutex);
+ 		list_add_tail(&range->node, &pcs->gpiofuncs);
+ 		mutex_unlock(&pcs->mutex);
++		of_node_put(gpiospec.np);
+ 	}
+ 	return ret;
+ }
 -- 
 2.51.0
 
