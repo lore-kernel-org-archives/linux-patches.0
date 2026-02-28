@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA821332628
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2949340290
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301212; cv=none; b=G0+BOP4M92dJW2llzJClkBuaIQTC+p+qOJp0rCFBedhNOVbq7HFHf4jrDm3PsK22BWZ9N6xWH0TKYmie+kvt4JR+M5Vgbl6g2yK04nyVQoN58x2rdFmzApu4xRVLxdQKCITU1a/uAhaT4Yugn5tY/Tz1NsnxjGMN3lJ/MBWMULY=
+	t=1772301213; cv=none; b=hLI29ZP0MaxLWM7tbvBrs2j5cJXtI8vEVJo0DyiczUu8+PDMnf/YufuubNNy9WDxAh0z6FFZh7Q1uXyhMdb+QYU8+XLNdngU8kNM/YdCU1OoRXx3OpTcQOb7tjDD4xAGeVXG0hvqX82uCWslsbv8NMEc4ktwBFd0xXga6XUbvZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301212; c=relaxed/simple;
-	bh=67MVi+QWuTxAL0YcIsBaGx9K7NNV9SZyIXHlkpgP4w4=;
+	s=arc-20240116; t=1772301213; c=relaxed/simple;
+	bh=FmRr01DdfDLLOruObW/tsEkSx9zOqwHGqIC11f0aC08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIVm5GxN6gMMfYmb3otjcUfc9yAkFDF85yuSozxrwsZrU6duTK1ivgod/9Szc/cI+6ocV01egIYORFFpyqu1Ek4e8iyvXTNdoRDVMVtJAwn4XH6l4mcKkLyIqXZHwaosKzjQ/qo3H9xPeIudlIdcIal5h7wMdsX1taVnSqIibwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tCrrquzE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G1rsMoH81BqoaID27n0Og19/+QcDltjQgJGaYVao1r5ZfKaqWf8W44KONnyKPxsxbOfJwrWqhQ73CS5gMlnRb8fanWJsw8x7qu42pA86T0XQkZqT3S9YrY1LgZuRqRNZqT03KuVwhtmteI9cci4yBYoIui+jKDH4/8sm6u3+HvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ijJxwefK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tCrrquzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D5FC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ijJxwefK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEBAC116D0;
 	Sat, 28 Feb 2026 17:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301212;
-	bh=67MVi+QWuTxAL0YcIsBaGx9K7NNV9SZyIXHlkpgP4w4=;
+	s=k20201202; t=1772301213;
+	bh=FmRr01DdfDLLOruObW/tsEkSx9zOqwHGqIC11f0aC08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tCrrquzE38VWGpBI3iEM5OgHUaX1mH9AlVJJaUooHYrcRxTwFomI4v56gKYpFAyEo
-	 eTWJTdKZHwYPrYjzW1+7d4j4ioTSOr38SLPxuta287z4wPnx3JATzYF/jABXzisCrk
-	 z79hLpuSAzmTKJjbxzQCWt/xpMpT8rWCcHNNPaWSNQsS/JEiyavKbUyzKcwrI9/KRk
-	 sE5om2jZnarZgNEAlpYlqrH7sndL7adC4Vic1T1VutNDHQxJRXkRq5xRmccQ6Lq6bf
-	 rQX6pbdKVRMiYAD6EtObxnWkL46bPuYKFAviGXlGfmZje/tsum3thGuup1qZllMqUm
-	 LdoRuwzNYiMmQ==
+	b=ijJxwefK2gBkPAJ+cb0JNewJ+1OZbhqyzbF8pVsKU2Yvx3JLHb4ZXQI83fpCu43Xm
+	 XpEhT/bQpXDcJyrtpcW7VDq9L7I5yN3X0MWRZEx3e2pZsyalUguzmwoGPPrhGLdbMP
+	 /g8B3Tqt94k/1fQBbAm8cuwZtrw6gYrYxFXaLCdsONZuILRYbUjko/VO0ZQ34VA4ZT
+	 RB3dy6XrlrcK7+5jGWdY4QdGOmWf4CEPwY7Ouoh1pw3PgSun46wC1eS+5BWSiKbHEn
+	 RICop5iQ/j/OgblwPcoAIOQTIn01t/FcLUqP7gDDfOdGZZGiBDh24Q14HsJCEuqKff
+	 Cz0cUaR24Jakw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Aaron Erhardt <aer@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 388/752] ASoC: amd: amd_sdw: add machine driver quirk for Lenovo models
-Date: Sat, 28 Feb 2026 12:41:39 -0500
-Message-ID: <20260228174750.1542406-388-sashal@kernel.org>
+Subject: [PATCH 6.18 389/752] ALSA: hda/hdmi: Add quirk for TUXEDO IBS14G6
+Date: Sat, 28 Feb 2026 12:41:40 -0500
+Message-ID: <20260228174750.1542406-389-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,52 +48,35 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Aaron Erhardt <aer@tuxedocomputers.com>
 
-[ Upstream commit 3acf517e1ae05ef66561b7a2782690387ce46e21 ]
+[ Upstream commit d649c58bcad8fb9b749e3837136a201632fa109d ]
 
-This patch adds a quirk to include the codec amplifier function for Lenovo
-models listed in the quirk table.
+Depending on the timing during boot, the BIOS might report wrong pin
+capabilities, which can lead to HDMI audio being disabled. Therefore,
+force HDMI audio connection on TUXEDO InfinityBook S 14 Gen6.
 
-Note: In these models, the RT722 codec amplifier is excluded, and an
-external amplifier is used instead.
-
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20260218104734.3641481-3-Vijendar.Mukunda@amd.com
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Aaron Erhardt <aer@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20260218213234.429686-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-sdw-legacy-mach.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/hda/codecs/hdmi/hdmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-index 5a3cfedacbafd..86c534d827448 100644
---- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-@@ -95,6 +95,22 @@ static const struct dmi_system_id soc_sdw_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(ASOC_SDW_CODEC_SPKR),
- 	},
-+	{
-+		.callback = soc_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "21YW"),
-+		},
-+		.driver_data = (void *)(ASOC_SDW_CODEC_SPKR),
-+	},
-+	{
-+		.callback = soc_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "21YX"),
-+		},
-+		.driver_data = (void *)(ASOC_SDW_CODEC_SPKR),
-+	},
+diff --git a/sound/hda/codecs/hdmi/hdmi.c b/sound/hda/codecs/hdmi/hdmi.c
+index 111c9b5335afc..c2e3adc7b3c00 100644
+--- a/sound/hda/codecs/hdmi/hdmi.c
++++ b/sound/hda/codecs/hdmi/hdmi.c
+@@ -1557,6 +1557,7 @@ static const struct snd_pci_quirk force_connect_list[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
+ 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
+ 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
++	SND_PCI_QUIRK(0x1558, 0x14a1, "TUXEDO InfinityBook S 14 Gen6", 1),
+ 	SND_PCI_QUIRK(0x8086, 0x2060, "Intel NUC5CPYB", 1),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
  	{}
- };
- 
 -- 
 2.51.0
 
