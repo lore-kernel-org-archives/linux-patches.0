@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E83A34A3C1
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1DC35AC01
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302692; cv=none; b=fCcIos3QjYg6iptXDFAx6LRck6HdK8qthrsTFFC4ymoSniGfuDiVXTt4hQoTtvr/nuuwVNhPfTWMr4fznp/zS258Tf3AVfB7TgHwY8n2RfecLzdG5MQ8NJraEmYBubrXw0ciKP6wIdatiXa4XyowO52HqJSZWesUHxiFioFwtBg=
+	t=1772302693; cv=none; b=RtWIRh4t47I4zeFflHUGvu0NKV7rcAc2KwvVZMOt10lZ/a0HVDasNgxo1i73DIXwtSqOSQCgVkUwe8WFRcmL5/a99FkH2F3+n7WVyIavMf6MqYR1JP1M9ZxNJl4wYXl/xA81DOi4vBAUGAsGv8/AooOGeMdn3kUlDlVTgGL+vIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302692; c=relaxed/simple;
-	bh=6zSGf+r/ugP1lexIZLV/RmjjjdeGVcnojqsvewazfg4=;
+	s=arc-20240116; t=1772302693; c=relaxed/simple;
+	bh=j0IWsAu2YEKV/ost24opFd4rdfDRngzmJL4Mivcb5nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vqo/tyh0QnxAcTAuvcTHFapemgO1j45lhXT2XeKgzPhlZ3X8Jkx8QYUib/EiuJz5mgdUVlf+t5NmRTXXqWpetAHCfFaWktTh2qZc7eMj97jeZNT4iEtkSvhU3kzlzg5UDr7SGTkDMHraAVFiXZ8Qm+jofw14NRzRdbRPne1QSDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SHs8ci4E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PYOK5IvcpsjOEUsdG4nqI/Z6ChDO0xr2fKsKp92hxhXAr0qGP37yn2FNlNiNujlPGNkHDSX1Q5ePEp+p/AtPC+2zsGZiDpLThprfQvXdHJSYc2/eFLJ7J+IjCKXydr9nO8AFQd88h9UXAK4ao1yvY7eZWC2bQDkE/B4b4JbnhDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H/3NQ9EJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SHs8ci4E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE14AC116D0;
-	Sat, 28 Feb 2026 18:18:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H/3NQ9EJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A508BC19423;
+	Sat, 28 Feb 2026 18:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302692;
-	bh=6zSGf+r/ugP1lexIZLV/RmjjjdeGVcnojqsvewazfg4=;
+	s=k20201202; t=1772302693;
+	bh=j0IWsAu2YEKV/ost24opFd4rdfDRngzmJL4Mivcb5nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHs8ci4EEf3ZEh/yKQ0R/VAmVArfVj0ZlRtcCGuHc+87yTYMq6BvjLSMXUDNijHkz
-	 tjbpz1LOfDmTT+QEuLZ+1zFJrCTjh3NMECFSx/yKhtL5N1HfYOmY38rbVXUzJs6hlT
-	 gTt0MLMqNmPw0Zfgydd2BdJAjtyxMUZRLt4sYPZN3bF0ss0TtceC8U1T9SKkCLRLTB
-	 ltySz2CIURGKjFmBOsPLdCpaqSh2e0NhoLuci6xwub8YoiCrZ2pGuuyFP+0BLy9Lcq
-	 eJ1TiCI/ZsGEwhRkOuGGgWvGt4O0CvIrwvuHD0mkvlx2E9wZzPIVrLlzdg3zuwTiDQ
-	 6/RiplbL4+1Vg==
+	b=H/3NQ9EJq5LSkvPDOe7wMEvVwewkmh7Wgu8r9y/cOGb3maHxBy2cpDQaiPSmSmVB0
+	 3XpdIWgJZ6eoZIChMVvrD9ZvNOO5G9w0+v3xLsR4BTVoCUPNU1Isq99udp8FBjnpvL
+	 USPOzdXmxjlfTYh6JiTc9+UEl3ItfYW3eU9zvTeH7XX4D2qAP6JtwzFuGj+IoBHe7O
+	 OA1Ad+MpZIVocsF5Z5UL+evdEHZyAngPVG3NFsLpH9R//QipvQYuZxRcNb0MJTe1Jb
+	 JQ3CEpe0mT50m9F+mgQpJpSY+5WpCw4cq5kqe4YvXH62uVeKF2abDLNeMYcQHN7vQS
+	 /syD2ZnZz5CuQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/147] arm64: dts: qcom: sdm845-db845c: specify power for WiFi CH1
-Date: Sat, 28 Feb 2026 13:15:54 -0500
-Message-ID: <20260228181736.1605592-46-sashal@kernel.org>
+Subject: [PATCH 5.10 047/147] smack: /smack/doi must be > 0
+Date: Sat, 28 Feb 2026 13:15:55 -0500
+Message-ID: <20260228181736.1605592-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -48,48 +47,69 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit c303e89f7f17c29981d09f8beaaf60937ae8b1f2 ]
+[ Upstream commit 19c013e1551bf51e1493da1270841d60e4fd3f15 ]
 
-Specify power supply for the second chain / antenna output of the
-onboard WiFi chip.
+/smack/doi allows writing and keeping negative doi values.
+Correct values are 0 < doi <= (max 32-bit positive integer)
 
-Fixes: 3f72e2d3e682 ("arm64: dts: qcom: Add Dragonboard 845c")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260106-wcn3990-pwrctl-v2-8-0386204328be@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+(2008-02-04, Casey Schaufler)
+Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
+ security/smack/smackfs.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 31f4f05750940..e327e398d99ed 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -342,6 +342,12 @@ vreg_l21a_2p95: ldo21 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l23a_3p3: ldo23 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l24a_3p075: ldo24 {
- 			regulator-min-microvolt = <3088000>;
- 			regulator-max-microvolt = <3088000>;
-@@ -1039,6 +1045,7 @@ &wifi {
- 	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
- 	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
- 	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-+	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
- 
- 	qcom,snoc-host-cap-8bit-quirk;
+diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
+index 6402626e47c69..c9de9e9bfe63e 100644
+--- a/security/smack/smackfs.c
++++ b/security/smack/smackfs.c
+@@ -138,7 +138,7 @@ struct smack_parsed_rule {
+ 	int			smk_access2;
  };
+ 
+-static int smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
++static u32 smk_cipso_doi_value = SMACK_CIPSO_DOI_DEFAULT;
+ 
+ /*
+  * Values for parsing cipso rules
+@@ -1580,7 +1580,7 @@ static ssize_t smk_read_doi(struct file *filp, char __user *buf,
+ 	if (*ppos != 0)
+ 		return 0;
+ 
+-	sprintf(temp, "%d", smk_cipso_doi_value);
++	sprintf(temp, "%lu", (unsigned long)smk_cipso_doi_value);
+ 	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
+ 
+ 	return rc;
+@@ -1599,7 +1599,7 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
+ 			     size_t count, loff_t *ppos)
+ {
+ 	char temp[80];
+-	int i;
++	unsigned long u;
+ 
+ 	if (!smack_privileged(CAP_MAC_ADMIN))
+ 		return -EPERM;
+@@ -1612,10 +1612,12 @@ static ssize_t smk_write_doi(struct file *file, const char __user *buf,
+ 
+ 	temp[count] = '\0';
+ 
+-	if (sscanf(temp, "%d", &i) != 1)
++	if (kstrtoul(temp, 10, &u))
+ 		return -EINVAL;
+ 
+-	smk_cipso_doi_value = i;
++	if (u == CIPSO_V4_DOI_UNKNOWN || u > U32_MAX)
++		return -EINVAL;
++	smk_cipso_doi_value = u;
+ 
+ 	smk_cipso_doi();
+ 
 -- 
 2.51.0
 
