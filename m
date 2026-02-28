@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97AD392811
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8060B392811
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301012; cv=none; b=L5/4X/8Mi6hv+C5K8lcTTJNUylEm1Giklg08B2juRdyoi4I6w59Ob/0Z18b5yLb3AeJahP5jq9HxVfG55TJB2uFNsg2XT3/dgQ+5hmP8hEcEc1T8xp1utkVneqASQfPGy+1Mm4hed9AWnzGLPwauiAVJFB2rjnz+oAghkO4IPoA=
+	t=1772301013; cv=none; b=d6HjtFDs2fHAD/llIf17P585hvwdD3OPCMDbJIYhHbQMpX667zrqz0LdumMKxDlk30lqYAiif3c1Qpqw4KJEkdeo82JEzSzAdXd7Dmfie6Ep2iYeLRVNXt1H1s2vPH3SZzev0AMgdHlv6pIhEqDj1xQmySADYzlaCHi44TbzclU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301012; c=relaxed/simple;
-	bh=fyNTUx747+1+pSs8k2ik/MRxnBIz1aUs0k/soY181Jk=;
+	s=arc-20240116; t=1772301013; c=relaxed/simple;
+	bh=NdXViqIbCeFA1neOMXmS37bkZswVpAtJBaOwzenjfL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dfJRtXr5XWGwEOZ0ZqhQZXXL6ZP3Q8t1/OZ7v8pFrIEiWJO7/oo6u88jiLTd10P76ZaSD0OTNAkQmQAiYNr/97WO46O0NhR98kwqne92DuDkBepXf84pBD/NxAC1s0x/BNm+Xh8KcW2kQi26CjlZ7ddBvF1wkQVIgyRt1tl1AqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EBygT/r8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hcUx2MlevnuC/gZCBqAuEtEYtlL73wUxqmk69MFULyRW3WU420QucwxOmxjwuvbXf8/T9sM+WUMK4FT3VE1teDn5C+olE2rw1zbX+e0BOYfgHTyKRZcVwzvc2WKbsaeCNplZISNDX/UjYN4CiN1kiWF62FJcgmODIomrLQCE6ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fjUcdJHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EBygT/r8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155FEC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fjUcdJHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2A8C19423;
 	Sat, 28 Feb 2026 17:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301012;
-	bh=fyNTUx747+1+pSs8k2ik/MRxnBIz1aUs0k/soY181Jk=;
+	s=k20201202; t=1772301013;
+	bh=NdXViqIbCeFA1neOMXmS37bkZswVpAtJBaOwzenjfL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBygT/r8lEoEpyVCQpzZRIPsZMlbSDsLfz9F5irFQhZd//ShXbLJwNx1Nrs/EF5wT
-	 F/0AE5nWSrddxguK8ITGjv5nx8cdKCh519IXbGFjVSkQLRAeCde+5MVEmu0tjzY1bZ
-	 Kg0KHhibrmVnlGnKuIFfpiZFyZz8mZQhiEztaS1g083WsQibyaqEFfcQ7/cZeWrsqU
-	 SYIxzSxOA3QuKWzvL2frosbeVnzGSSVZWuLMh/LHz1XYp4n+m/Xa9dnJ8GJUVtEmcp
-	 2JtRLs0KFSJK2lpW0I+1Gw86Uz1vjEo/6oWOFr5O86MCXgmf5Ufl06pYTFWhimvcfQ
-	 5vYfY23hZCfKg==
+	b=fjUcdJHOZ2DA7RwAH7g6Z4UhKwpyDKFXxHJVAkZwAccnvEfD/TLmh4PeHw+/0WYZE
+	 w45Fa+EMN5ghqHT/vQ9Z/G/pwl70YYrKVEVOdsSU3NSKojC9nOGXZUjovqocGgTrqd
+	 QXALzTrN5mgY271mbxTWcid3xP6HdD5bLUN4zSzgHtatuquL0QIWoShIIeZMJRHijd
+	 2W9eboMtgYNfjpgNPoQb7NDWmubws4iWllqBMGlo+CAuMYMMn02FSyU8Tgg1GRksmE
+	 CMjBLRUKhDXPuTWNmK66cHKSqucis5YT/883PzsOajKXu3BG+bUjnHA8Db2UUf9p9J
+	 wBIelkjsZtPJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Matthew Brost <matthew.brost@intel.com>,
-	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+Cc: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 147/752] drm/xe: Only toggle scheduling in TDR if GuC is running
-Date: Sat, 28 Feb 2026 12:37:38 -0500
-Message-ID: <20260228174750.1542406-147-sashal@kernel.org>
+Subject: [PATCH 6.18 148/752] ASoC: wm8962: Add WM8962_ADC_MONOMIX to "3D Coefficients" mask
+Date: Sat, 28 Feb 2026 12:37:39 -0500
+Message-ID: <20260228174750.1542406-148-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,46 +48,34 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-[ Upstream commit dd1ef5e2456558876244795bb22a4d90cb24f160 ]
+[ Upstream commit 66c26346ae30c883eef70acf9cf9054dfdb4fb2f ]
 
-If the firmware is not running during TDR (e.g., when the driver is
-unloading), there's no need to toggle scheduling in the GuC. In such
-cases, skip this step.
+This bit is handled by a separate control.
 
-v4:
- - Bail on wait UC not running (Niranjana)
-
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
-Link: https://patch.msgid.link/20260110012739.2888434-4-matthew.brost@intel.com
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260105-wm8962-l5-fixes-v1-1-f4f4eeacf089@puri.sm
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/wm8962.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index 474789bf6506f..ecee50d827108 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -1298,7 +1298,7 @@ guc_exec_queue_timedout_job(struct drm_sched_job *drm_job)
- 		if (exec_queue_reset(q))
- 			err = -EIO;
+diff --git a/sound/soc/codecs/wm8962.c b/sound/soc/codecs/wm8962.c
+index 08c8ec3aeb449..6491e098bd212 100644
+--- a/sound/soc/codecs/wm8962.c
++++ b/sound/soc/codecs/wm8962.c
+@@ -1760,7 +1760,7 @@ SND_SOC_BYTES("EQR Coefficients", WM8962_EQ24, 18),
  
--		if (!exec_queue_destroyed(q)) {
-+		if (!exec_queue_destroyed(q) && xe_uc_fw_is_running(&guc->fw)) {
- 			/*
- 			 * Wait for any pending G2H to flush out before
- 			 * modifying state
-@@ -1330,6 +1330,7 @@ guc_exec_queue_timedout_job(struct drm_sched_job *drm_job)
- 		 */
- 		smp_rmb();
- 		ret = wait_event_timeout(guc->ct.wq,
-+					 !xe_uc_fw_is_running(&guc->fw) ||
- 					 !exec_queue_pending_disable(q) ||
- 					 xe_guc_read_stopped(guc), HZ * 5);
- 		if (!ret || xe_guc_read_stopped(guc)) {
+ 
+ SOC_SINGLE("3D Switch", WM8962_THREED1, 0, 1, 0),
+-SND_SOC_BYTES_MASK("3D Coefficients", WM8962_THREED1, 4, WM8962_THREED_ENA),
++SND_SOC_BYTES_MASK("3D Coefficients", WM8962_THREED1, 4, WM8962_THREED_ENA | WM8962_ADC_MONOMIX),
+ 
+ SOC_SINGLE("DF1 Switch", WM8962_DF1, 0, 1, 0),
+ SND_SOC_BYTES_MASK("DF1 Coefficients", WM8962_DF1, 7, WM8962_DF1_ENA),
 -- 
 2.51.0
 
