@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F3E34A3DB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7194347FFB
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302695; cv=none; b=YGXM1QclPyuc0W4dQHSDdNzTF5MowKzs1zKjySmonV/Knna/VKfLZCPeLG4dcd7gwWlBfIafFbCBritr4sIJXcR4b/Jh4OQL4MyL/3zZvcpp/5CTO77AdCDKLpHI+STuxzJO6N6uxuo2kL/pHAGhMVx9DthLJSm33Z74IhKBzPw=
+	t=1772302695; cv=none; b=Ilhnx7jBhnr5KSFm74aTzGxAz3OZJX3QyXjJdrCg36xAPT+r8dam0vaUBOmFvNsHsSeFuRLCllMcQa74cQ4z63ATVWk/mPvN8RH+F3As6+V7Nn4dw8tEu5YeKGkfMafNbDbS9WmrHk86r65BQKFRC54+kQbI6JZbUmz4sF/2WFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302695; c=relaxed/simple;
-	bh=2AoXDchTcLkGmFTkb7VGjWyV7nCiqPVhZK1WX3kiXp0=;
+	bh=oKBMiHrawW1UMfgg/06+sM/jsBW0iBtZ6f/ipsXtVwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CuCvGnfXueQb0UQXvAPg9bk6Mv4j3DcSQ5znKodG5iee1HI8x5ooAIaAk20CwSUAIQmJRts+0ITBq51slBywsaN/4V/6QFtLvZSqK9R1ogVySIrkyFqzWhLIismDw4bbVY8aqDkMkZcoo7DCoJTML1xoCW0B/dimW63BDCPDpxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uWlcMkDs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=USUqXtrA+knkFza4Vkyam1+DDJ3HX4KMLgoAXBOXHvmCe22IvKgPp8DcWRyxo70ICegTB0X7mjZoDNa6md/GzUxB1NqPffissPngaTQcBrH//VvflPnunFwWBLa/lkX+oihPjolmgv2Kb9vboATiBkHlMXTqXUuX7hkfseQbKB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kyhboE+d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uWlcMkDs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2369AC116D0;
-	Sat, 28 Feb 2026 18:18:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kyhboE+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DFDC19423;
+	Sat, 28 Feb 2026 18:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302695;
-	bh=2AoXDchTcLkGmFTkb7VGjWyV7nCiqPVhZK1WX3kiXp0=;
+	bh=oKBMiHrawW1UMfgg/06+sM/jsBW0iBtZ6f/ipsXtVwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uWlcMkDscuDxq+s6KGq1zkq1rYr2ZopbEukPmUdpt7c5zPSJo0ZrYN8kxlhvPxtX4
-	 iuYogl93X4cDyJ5QTS/2xV8mDt6iLhc7qMpTNn5+JwV0XUL2sNtKYnmiGh1sGAQ52T
-	 PSdKmBcfiQ/yO6m2C+moHhz0SV9QYyDUI6LLGvw4Nk423znApD7ZhFmEqA4tHxTSqp
-	 VFUeQ+B0LoFUQK0KIazBBCLHQYpYUkYEnqCXmJG8/yHsEZSUP1atkpUmL6Ft6MZIXT
-	 Wmf3GxUWLlpTmkXwnKBcPqcg3+81C5HJITz3ty4/vLzbHGB9AQ885Lw1JSavBAvm02
-	 rSyrQK8PzLdSA==
+	b=kyhboE+dQHm0Ndc46EDzcFXm/3cCSqTzZ46+PwbSXEZs0Bw6a2DwFeBWVVT/3Vuzw
+	 IEYwkhA+ExkKOnp1TbyO6ld2oNKWYICpi3DEjBp3xuJzbxu+XHznWm72INkTvLCYtX
+	 5QTtSp8u0A18ICFE8a28iLHfzVAl1KI9KzOLX1Aw8ojlIoqmNFx7ABb+WjL1NAiGq+
+	 ko236fAPGxamSIAaGfeOL3DCZYjH34SyyXaJdPwXiF7c56dlRgDt/beBR9jc7lIveH
+	 NwiIAskQIrnmim24lPBopV2vcpJdWOHXyuyAEuUvD8rrVweMNIzQ0bj0N3VrK+1Ho1
+	 6S63xlbvzn+Lw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	darlington Opara <darlington.opara@amd.com>,
-	Jinage Zhao <jiange.zhao@amd.com>,
-	Monk Liu <Monk.Liu@amd.com>,
-	Emily Deng <Emily.Deng@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Vincent Whitchurch <vincent.whitchurch@axis.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/147] drm/amdgpu: Use explicit VCN instance 0 in SR-IOV init
-Date: Sat, 28 Feb 2026 13:15:57 -0500
-Message-ID: <20260228181736.1605592-49-sashal@kernel.org>
+Subject: [PATCH 5.10 050/147] regulator: core: Respect off_on_delay at startup
+Date: Sat, 28 Feb 2026 13:15:58 -0500
+Message-ID: <20260228181736.1605592-50-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -48,180 +43,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Vincent Whitchurch <vincent.whitchurch@axis.com>
 
-[ Upstream commit af26fa751c2eef66916acbf0d3c3e9159da56186 ]
+[ Upstream commit a5ccccb3ec0b052804d03df90c0d08689be54170 ]
 
-vcn_v2_0_start_sriov() declares a local variable "i" initialized to zero
-and uses it only as the instance index in SOC15_REG_OFFSET(UVD, i, ...).
-The value is never changed and all other fields are taken from
-adev->vcn.inst[0], so this path only ever programs VCN instance 0.
+We currently do not respect off_on_delay the first time we turn on a
+regulator.  This is problematic since the regulator could have been
+turned off by the bootloader, or it could it have been turned off during
+the probe of the regulator driver (such as when regulator-fixed requests
+the enable GPIO), either of which could potentially have happened less
+than off_on_delay microseconds ago before the first time a client
+requests for the regulator to be turned on.
 
-This triggered a Smatch:
-warn: iterator 'i' not incremented
+We can't know exactly when the regulator was turned off, but initialise
+off_on_delay to the current time when registering the regulator, so that
+we guarantee that we respect the off_on_delay in all cases.
 
-Replace the dummy iterator with an explicit instance index of 0 in
-SOC15_REG_OFFSET() calls.
-
-Fixes: dd26858a9cd8 ("drm/amdgpu: implement initialization part on VCN2.0 for SRIOV")
-Reported by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: darlington Opara <darlington.opara@amd.com>
-Cc: Jinage Zhao <jiange.zhao@amd.com>
-Cc: Monk Liu <Monk.Liu@amd.com>
-Cc: Emily Deng <Emily.Deng@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Emily Deng <Emily.Deng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
+Link: https://lore.kernel.org/r/20210422083044.11479-1-vincent.whitchurch@axis.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 86a8eeb0e913 ("regulator: core: move supply check earlier in set_machine_constraints()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c | 45 ++++++++++++++-------------
- 1 file changed, 23 insertions(+), 22 deletions(-)
+ drivers/regulator/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-index 79bcc78f77045..e2744f172610a 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-@@ -1852,7 +1852,8 @@ static int vcn_v2_0_start_sriov(struct amdgpu_device *adev)
- 	struct mmsch_v2_0_cmd_end end = { {0} };
- 	struct mmsch_v2_0_init_header *header;
- 	uint32_t *init_table = adev->virt.mm_table.cpu_addr;
--	uint8_t i = 0;
-+
-+	/* This path only programs VCN instance 0. */
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 0e2129be02265..38c01516d2ed0 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1529,6 +1529,8 @@ static int set_machine_constraints(struct regulator_dev *rdev)
  
- 	header = (struct mmsch_v2_0_init_header *)init_table;
- 	direct_wt.cmd_header.command_type = MMSCH_COMMAND__DIRECT_REG_WRITE;
-@@ -1871,94 +1872,94 @@ static int vcn_v2_0_start_sriov(struct amdgpu_device *adev)
- 		size = AMDGPU_GPU_PAGE_ALIGN(adev->vcn.fw->size + 4);
+ 		if (rdev->constraints->always_on)
+ 			rdev->use_count++;
++	} else if (rdev->desc->off_on_delay) {
++		rdev->last_off_jiffy = jiffies;
+ 	}
  
- 		MMSCH_V2_0_INSERT_DIRECT_RD_MOD_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_STATUS),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_STATUS),
- 			0xFFFFFFFF, 0x00000004);
- 
- 		/* mc resume*/
- 		if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) {
- 			tmp = AMDGPU_UCODE_ID_VCN;
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i,
-+				SOC15_REG_OFFSET(UVD, 0,
- 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_LOW),
- 				adev->firmware.ucode[tmp].tmr_mc_addr_lo);
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i,
-+				SOC15_REG_OFFSET(UVD, 0,
- 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_HIGH),
- 				adev->firmware.ucode[tmp].tmr_mc_addr_hi);
- 			offset = 0;
- 		} else {
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i,
-+				SOC15_REG_OFFSET(UVD, 0,
- 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_LOW),
- 				lower_32_bits(adev->vcn.inst->gpu_addr));
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i,
-+				SOC15_REG_OFFSET(UVD, 0,
- 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_HIGH),
- 				upper_32_bits(adev->vcn.inst->gpu_addr));
- 			offset = size;
- 		}
- 
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_OFFSET0),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_OFFSET0),
- 			0);
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_SIZE0),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_SIZE0),
- 			size);
- 
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_VCPU_CACHE1_64BIT_BAR_LOW),
- 			lower_32_bits(adev->vcn.inst->gpu_addr + offset));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_VCPU_CACHE1_64BIT_BAR_HIGH),
- 			upper_32_bits(adev->vcn.inst->gpu_addr + offset));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_OFFSET1),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_OFFSET1),
- 			0);
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_SIZE1),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_SIZE1),
- 			AMDGPU_VCN_STACK_SIZE);
- 
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_VCPU_CACHE2_64BIT_BAR_LOW),
- 			lower_32_bits(adev->vcn.inst->gpu_addr + offset +
- 				AMDGPU_VCN_STACK_SIZE));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_VCPU_CACHE2_64BIT_BAR_HIGH),
- 			upper_32_bits(adev->vcn.inst->gpu_addr + offset +
- 				AMDGPU_VCN_STACK_SIZE));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_OFFSET2),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_OFFSET2),
- 			0);
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_SIZE2),
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_SIZE2),
- 			AMDGPU_VCN_CONTEXT_SIZE);
- 
- 		for (r = 0; r < adev->vcn.num_enc_rings; ++r) {
- 			ring = &adev->vcn.inst->ring_enc[r];
- 			ring->wptr = 0;
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i, mmUVD_RB_BASE_LO),
-+				SOC15_REG_OFFSET(UVD, 0, mmUVD_RB_BASE_LO),
- 				lower_32_bits(ring->gpu_addr));
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i, mmUVD_RB_BASE_HI),
-+				SOC15_REG_OFFSET(UVD, 0, mmUVD_RB_BASE_HI),
- 				upper_32_bits(ring->gpu_addr));
- 			MMSCH_V2_0_INSERT_DIRECT_WT(
--				SOC15_REG_OFFSET(UVD, i, mmUVD_RB_SIZE),
-+				SOC15_REG_OFFSET(UVD, 0, mmUVD_RB_SIZE),
- 				ring->ring_size / 4);
- 		}
- 
- 		ring = &adev->vcn.inst->ring_dec;
- 		ring->wptr = 0;
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_RBC_RB_64BIT_BAR_LOW),
- 			lower_32_bits(ring->gpu_addr));
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i,
-+			SOC15_REG_OFFSET(UVD, 0,
- 				mmUVD_LMI_RBC_RB_64BIT_BAR_HIGH),
- 			upper_32_bits(ring->gpu_addr));
- 		/* force RBC into idle state */
-@@ -1969,7 +1970,7 @@ static int vcn_v2_0_start_sriov(struct amdgpu_device *adev)
- 		tmp = REG_SET_FIELD(tmp, UVD_RBC_RB_CNTL, RB_NO_UPDATE, 1);
- 		tmp = REG_SET_FIELD(tmp, UVD_RBC_RB_CNTL, RB_RPTR_WR_EN, 1);
- 		MMSCH_V2_0_INSERT_DIRECT_WT(
--			SOC15_REG_OFFSET(UVD, i, mmUVD_RBC_RB_CNTL), tmp);
-+			SOC15_REG_OFFSET(UVD, 0, mmUVD_RBC_RB_CNTL), tmp);
- 
- 		/* add end packet */
- 		tmp = sizeof(struct mmsch_v2_0_cmd_end);
+ 	print_constraints(rdev);
 -- 
 2.51.0
 
