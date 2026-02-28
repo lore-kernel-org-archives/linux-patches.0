@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD40175A89;
-	Sat, 28 Feb 2026 17:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EFD4C0405;
+	Sat, 28 Feb 2026 17:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301390; cv=none; b=bIGjuN2GvsE8TFuJ/rvaQfSugys010cx2CewmX5TiCsD7pFjgL2gli7HuafPpa5vVfyGADHmQWZjI4CVQNgnsMV08AapTkTSKmmALK+BpT5ytXhh3SaoBArwdaZkMKvv7ijBE0ljNlnNniyy1RS7lEfUg9EN4fwWO1/7DpW57Zk=
+	t=1772301391; cv=none; b=joJvUZqCwPBKMcnoR3l+/mFZ0iTw/bjBVGqlT6mNsNes9Z0BC0F5x0wQIr64IoxAKN+MA/QVqdKkhA1hHdcZQ3ZZPH9DEJeIOTjLp8SabcSaHhcKcMX+7Vg0+gLdItD/DF56TTCbtQq30nEvTJhIolYkZTVM21QLFCiRo28ermk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301390; c=relaxed/simple;
-	bh=acpezPzvl69WK9Iiw/Yx2kb/8Q2BHP9ENnwHM2ALXNE=;
+	s=arc-20240116; t=1772301391; c=relaxed/simple;
+	bh=4+6XYPFog2/mZcMOM50n0plDhfAHYpcy+28mivGvDkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYAyPZ2mkicY9byFWUZIdIPZ2EF7BgPa0JN1hy66/4FYiD+CwfuyqZz9NXUGGSLoE5IxxddRujrCA5UnYWUFzvK+/Bnsfh8/9/uXddWUTiMsPedfTetxYhUyQK07zDlfgbr0Hssi3CR0UGG/h3Wx41eB6REzdZ2Dk1APlm0Nc8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lc8RQ6N4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PdMejP2EdstChlc2ZfnNgfFiGCKfX+6SWNKgJd8YIjkrJ+HcZEKfHRSCyiCHFf0btHEqyNQSINgT4654S0ocmzS27IwCPZzEUutS6TaJm9MjNS10rShvJjimWjpNiay6JK0zcqORrotSwmzGN5Doz78ns7fwVlG7J9Q19NyljeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMPiVDC5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lc8RQ6N4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767D2C19425;
-	Sat, 28 Feb 2026 17:56:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMPiVDC5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A50C2BCAF;
+	Sat, 28 Feb 2026 17:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301390;
-	bh=acpezPzvl69WK9Iiw/Yx2kb/8Q2BHP9ENnwHM2ALXNE=;
+	s=k20201202; t=1772301391;
+	bh=4+6XYPFog2/mZcMOM50n0plDhfAHYpcy+28mivGvDkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lc8RQ6N4P1yOUH6/e6P3IoenmbmgQbWwIXrXGai4YRBHLYb77ToSHCqijSgXStur7
-	 AHAg8baKWSFjDJMOkakJMXynWNQ2OjiAPh1YNafZh+nBnhm0vWKJOuHT9ftXIQ2F+G
-	 X5rCNSpAGXjgKSXYBQ6FIpcA1od9oUo2HD+0h2n7ApTLScaGs+TxgjW4oyN41/LcF5
-	 NgdCaCz6keSx524JLE89S5fE5imSVvE8gTUMDUGUl8TrTjBa/vUONqtC/RKoZCLV25
-	 mmjckllqYt01jcckIm5KwT+TncNHN4gs3wELNwVuum7SOcQU+UrosxldpumcQM5vK2
-	 YHyXKerCLKBnw==
+	b=lMPiVDC5YAV9hwgoKv6Eq6OhmxevSzTWJCJ+lVUlBMFbkOQcWkq7VHn6MVSOUIivq
+	 DXlPGq7/UmLWupwFyQZiYaKVmyafPBWCRrEgWcjetLDH5/PRspi8lxRFnsu3P0UL20
+	 6B4bS1sDyj7LedLmyIjZZL5s4wOPHZZgSBd/JvJJgCDAnU8xFw4/ME5kssxUDRcesj
+	 f9ZBS1wwFxTfXANfMmSh9/NIHg4pRuoimhekS/j+grWq8GiTgRReQhLLvpZ0yIkYnR
+	 VVdAHzEMQoXhk3/odxMHCJ+1tqb3riAMVGxct/Mc3NozKoMdHxpF9Ta0yH9d2S8RKz
+	 739hHzRYbBWoQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Li Wang <liwang@redhat.com>,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+Cc: Sanjay Yadav <sanjay.kumar.yadav@intel.com>,
 	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	Matthew Auld <matthew.auld@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 578/752] selftests/mm/charge_reserved_hugetlb: drop mount size for hugetlbfs
-Date: Sat, 28 Feb 2026 12:44:49 -0500
-Message-ID: <20260228174750.1542406-578-sashal@kernel.org>
+Subject: [PATCH 6.18 579/752] drm/buddy: Prevent BUG_ON by validating rounded allocation
+Date: Sat, 28 Feb 2026 12:44:50 -0500
+Message-ID: <20260228174750.1542406-579-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,91 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Li Wang <liwang@redhat.com>
+From: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
 
-[ Upstream commit 1aa1dd9cc595917882fb6db67725442956f79607 ]
+[ Upstream commit 5488a29596cdba93a60a79398dc9b69d5bdadf92 ]
 
-charge_reserved_hugetlb.sh mounts a hugetlbfs instance at /mnt/huge with a
-fixed size of 256M.  On systems with large base hugepages (e.g.  512MB),
-this is smaller than a single hugepage, so the hugetlbfs mount ends up
-with zero capacity (often visible as size=0 in mount output).
+When DRM_BUDDY_CONTIGUOUS_ALLOCATION is set, the requested size is
+rounded up to the next power-of-two via roundup_pow_of_two().
+Similarly, for non-contiguous allocations with large min_block_size,
+the size is aligned up via round_up(). Both operations can produce a
+rounded size that exceeds mm->size, which later triggers
+BUG_ON(order > mm->max_order).
 
-As a result, write_to_hugetlbfs fails with ENOMEM and the test can hang
-waiting for progress.
+Example scenarios:
+- 9G CONTIGUOUS allocation on 10G VRAM memory:
+  roundup_pow_of_two(9G) = 16G > 10G
+- 9G allocation with 8G min_block_size on 10G VRAM memory:
+  round_up(9G, 8G) = 16G > 10G
 
-=== Error log ===
-  # uname -r
-  6.12.0-xxx.el10.aarch64+64k
+Fix this by checking the rounded size against mm->size. For
+non-contiguous or range allocations where size > mm->size is invalid,
+return -EINVAL immediately. For contiguous allocations without range
+restrictions, allow the request to fall through to the existing
+__alloc_contig_try_harder() fallback.
 
-  #./charge_reserved_hugetlb.sh -cgroup-v2
-  # -----------------------------------------
-  ...
-  # nr hugepages = 10
-  # writing cgroup limit: 5368709120
-  # writing reseravation limit: 5368709120
-  ...
-  # write_to_hugetlbfs: Error mapping the file: Cannot allocate memory
-  # Waiting for hugetlb memory reservation to reach size 2684354560.
-  # 0
-  # Waiting for hugetlb memory reservation to reach size 2684354560.
-  # 0
-  ...
+This ensures invalid user input returns an error or uses the fallback
+path instead of hitting BUG_ON.
 
-  # mount |grep /mnt/huge
-  none on /mnt/huge type hugetlbfs (rw,relatime,seclabel,pagesize=512M,size=0)
+v2: (Matt A)
+- Add Fixes, Cc stable, and Closes tags for context
 
-  # grep -i huge /proc/meminfo
-  ...
-  HugePages_Total:      10
-  HugePages_Free:       10
-  HugePages_Rsvd:        0
-  HugePages_Surp:        0
-  Hugepagesize:     524288 kB
-  Hugetlb:         5242880 kB
-
-Drop the mount args with 'size=256M', so the filesystem capacity is sufficient
-regardless of HugeTLB page size.
-
-Link: https://lkml.kernel.org/r/20251221122639.3168038-3-liwang@redhat.com
-Fixes: 29750f71a9b4 ("hugetlb_cgroup: add hugetlb_cgroup reservation tests")
-Signed-off-by: Li Wang <liwang@redhat.com>
-Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Acked-by: Waiman Long <longman@redhat.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6712
+Fixes: 0a1844bf0b53 ("drm/buddy: Improve contiguous memory allocation")
+Cc: <stable@vger.kernel.org> # v6.7+
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Suggested-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Link: https://patch.msgid.link/20260108113227.2101872-5-sanjay.kumar.yadav@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/charge_reserved_hugetlb.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_buddy.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
-index e1fe16bcbbe88..fa6713892d82d 100755
---- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
-+++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
-@@ -290,7 +290,7 @@ function run_test() {
-   setup_cgroup "hugetlb_cgroup_test" "$cgroup_limit" "$reservation_limit"
+diff --git a/drivers/gpu/drm/drm_buddy.c b/drivers/gpu/drm/drm_buddy.c
+index 3f1a9892f2a39..640d93070bb7c 100644
+--- a/drivers/gpu/drm/drm_buddy.c
++++ b/drivers/gpu/drm/drm_buddy.c
+@@ -1155,6 +1155,15 @@ int drm_buddy_alloc_blocks(struct drm_buddy *mm,
+ 	order = fls(pages) - 1;
+ 	min_order = ilog2(min_block_size) - ilog2(mm->chunk_size);
  
-   mkdir -p /mnt/huge
--  mount -t hugetlbfs -o pagesize=${MB}M,size=256M none /mnt/huge
-+  mount -t hugetlbfs -o pagesize=${MB}M none /mnt/huge
- 
-   write_hugetlbfs_and_get_usage "hugetlb_cgroup_test" "$size" "$populate" \
-     "$write" "/mnt/huge/test" "$method" "$private" "$expect_failure" \
-@@ -344,7 +344,7 @@ function run_multiple_cgroup_test() {
-   setup_cgroup "hugetlb_cgroup_test2" "$cgroup_limit2" "$reservation_limit2"
- 
-   mkdir -p /mnt/huge
--  mount -t hugetlbfs -o pagesize=${MB}M,size=256M none /mnt/huge
-+  mount -t hugetlbfs -o pagesize=${MB}M none /mnt/huge
- 
-   write_hugetlbfs_and_get_usage "hugetlb_cgroup_test1" "$size1" \
-     "$populate1" "$write1" "/mnt/huge/test1" "$method" "$private" \
++	if (order > mm->max_order || size > mm->size) {
++		if ((flags & DRM_BUDDY_CONTIGUOUS_ALLOCATION) &&
++		    !(flags & DRM_BUDDY_RANGE_ALLOCATION))
++			return __alloc_contig_try_harder(mm, original_size,
++							 original_min_size, blocks);
++
++		return -EINVAL;
++	}
++
+ 	do {
+ 		order = min(order, (unsigned int)fls(pages) - 1);
+ 		BUG_ON(order > mm->max_order);
 -- 
 2.51.0
 
