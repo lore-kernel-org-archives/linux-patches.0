@@ -1,52 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DE637147D;
-	Sat, 28 Feb 2026 17:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CEB37147D;
+	Sat, 28 Feb 2026 17:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301527; cv=none; b=Wuh6Lh8XlzYbZ31C+qGcjZB8Lrt3OXWRLAqIsv6lwTcWLrmPEEb8qavONY4/PkJhGOv4QfKZ+lQy+29bHP1GY+9SNdiy6iF2ITxbT0tiIb8hZzd+hNYzkEGEpqOJcKch49/+s9PPJ9X4alq4GqO8ERJ+TZSd5wXGE329oO4VxM4=
+	t=1772301528; cv=none; b=aG6t9vlIEJH+jIknYcwrlxvVvd/y3/aA506XUqX303OstotRmWY2gWMa2UFGq4Dij81PTHendxpsPzV4hRhmEBxRjX3UtfgnGvYHI0BaTInHdZBnbTkHAXgaZjGRqz8Uiq551Bs9cDgyILxtcOqneLfHKI+wvskFZvD9QXTbcpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301527; c=relaxed/simple;
-	bh=VkU3skQLTfRyKDgniXYLmLKp95I0HHMJi3p59XSQEug=;
+	s=arc-20240116; t=1772301528; c=relaxed/simple;
+	bh=DXvnn4pqLxhUTyTe3v2FJbPXsGLM/T0ZvX9QUX762Bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S32+ZcVjiMF1KMbrcKwWqf6jAGrW+3T6rExhOh4IHcTc6mogutsN7cthy9a3UcibsE3+rrYzb6yYeRWg5v28tdUVSJSrhD4UG/WZzLJ3Yn+FhfHP/Tu1ZaClR533m1CS4K1vLHsXbfYG+h0Dv2pyZ/xx20ISyYt6hO29Z5o5re4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W3PyvKEy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KLMh010ES0NbRpuVzcWW18758sIs/3SPeqoQdaBecpdWQaupakZVty9ESmRiQGeqX9WaKVeZVZkB3pIqpSiPUj6TfkQVtdUo/hDnpQGct6DXKk9fBRNAgTx20N+7i35P8f2DVuihcZFO9rrZJ2V5wll4TI6KbGU6lgXVsAPryLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VXZRgj7/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W3PyvKEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD65C19423;
-	Sat, 28 Feb 2026 17:58:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VXZRgj7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED4FC116D0;
+	Sat, 28 Feb 2026 17:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301527;
-	bh=VkU3skQLTfRyKDgniXYLmLKp95I0HHMJi3p59XSQEug=;
+	s=k20201202; t=1772301528;
+	bh=DXvnn4pqLxhUTyTe3v2FJbPXsGLM/T0ZvX9QUX762Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3PyvKEyURqj9FZDtD2RBztvtAcujN4klGPM1tZluSa8f5BH9yX/r0nqu1rIDkqgb
-	 NE2eBXDqo9vK1TxKrcgFlRSRD4WS93iTTZA5cLj9ilBakRIJ1Rh3GjcxJWKGqmKFYm
-	 yZW3Q4LyMil70T1jKom9SO1FjOxgkv174p5LoN872FBTwixe0PKm1BrC8wmKzeSm2u
-	 Cb2G0cY9juMx/h32Z3TlILiWizLxhhkFTeaBb7wZ/MLAzRbFgTdDiSrvlFrHogpYiW
-	 49xj75xwMGkKiXYGjgxrah24OlzwW3w9diLmvaiqCfJPjdn2kugD7FdO3+bMbU9IUr
-	 ecPrgvTZbZuDw==
+	b=VXZRgj7/2nLF7cVGFOswWfbjKQX9QWCKlr0qQRiAnM/8jnkhDoA52u1GMjMVFtmBr
+	 ARxok3ofZ7G7pUqZXM8nBtXSQhuPTKHGgLIUReFBzzzA+fUSwmqs4KiDFEmD28lW9f
+	 itP3zG4x9RC+LaHwt2ZBh8sckGvg+586mcrQkrvmHIPGud7BVwdh8Gqf+6r8sfycNI
+	 URKKxGxhks/APJbCRwlNlvSdn+5+CdHzAsja1HOCAX+O7Zbar4VK1GZzXZovlgxlAB
+	 TjX57DYxh+3cYUTa6c1K1HPPGETEIkaVRuTpFcWM4WwXQ19sVOSZmRNUCsmzEWk9MS
+	 k1l2lsSr19vqw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Brendan Jackman <jackmanb@google.com>,
-	Chris Li <chrisl@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Kairui Song <ryncsn@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Suren Baghdasaryan <surenb@google.com>,
+Cc: Ethan Nelson-Moore <enelsonmoore@gmail.com>,
 	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 709/752] mm/page_alloc: clear page->private in free_pages_prepare()
-Date: Sat, 28 Feb 2026 12:47:00 -0500
-Message-ID: <20260228174750.1542406-709-sashal@kernel.org>
+Subject: [PATCH 6.18 710/752] net: intel: fix PCI device ID conflict between i40e and ipw2200
+Date: Sat, 28 Feb 2026 12:47:01 -0500
+Message-ID: <20260228174750.1542406-710-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -60,63 +50,67 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-[ Upstream commit ac1ea219590c09572ed5992dc233bbf7bb70fef9 ]
+[ Upstream commit d03e094473ecdeb68d853752ba467abe13e1de44 ]
 
-Several subsystems (slub, shmem, ttm, etc.) use page->private but don't
-clear it before freeing pages.  When these pages are later allocated as
-high-order pages and split via split_page(), tail pages retain stale
-page->private values.
+The ID 8086:104f is matched by both i40e and ipw2200. The same device
+ID should not be in more than one driver, because in that case, which
+driver is used is unpredictable. Fix this by taking advantage of the
+fact that i40e devices use PCI_CLASS_NETWORK_ETHERNET and ipw2200
+devices use PCI_CLASS_NETWORK_OTHER to differentiate the devices.
 
-This causes a use-after-free in the swap subsystem.  The swap code uses
-page->private to track swap count continuations, assuming freshly
-allocated pages have page->private == 0.  When stale values are present,
-swap_count_continued() incorrectly assumes the continuation list is valid
-and iterates over uninitialized page->lru containing LIST_POISON values,
-causing a crash:
-
-  KASAN: maybe wild-memory-access in range [0xdead000000000100-0xdead000000000107]
-  RIP: 0010:__do_sys_swapoff+0x1151/0x1860
-
-Fix this by clearing page->private in free_pages_prepare(), ensuring all
-freed pages have clean state regardless of previous use.
-
-Link: https://lkml.kernel.org/r/20260207173615.146159-1-mikhail.v.gavrilov@gmail.com
-Fixes: 3b8000ae185c ("mm/vmalloc: huge vmalloc backing pages should be split rather than compound")
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Suggested-by: Zi Yan <ziy@nvidia.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 2e45d3f4677a ("i40e: Add support for X710 B/P & SFP+ cards")
+Cc: stable@vger.kernel.org
+Acked-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Link: https://patch.msgid.link/20260210021235.16315-1-enelsonmoore@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/i40e/i40e_main.c  | 8 +++++++-
+ drivers/net/wireless/intel/ipw2x00/ipw2200.c | 8 +++++++-
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index f44524e1c92ac..d76f0f60f080d 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1429,6 +1429,7 @@ __always_inline bool __free_pages_prepare(struct page *page,
- 
- 	page_cpupid_reset_last(page);
- 	page->flags.f &= ~PAGE_FLAGS_CHECK_AT_PREP;
-+	page->private = 0;
- 	reset_page_owner(page, order);
- 	page_table_check_free(page, order);
- 	pgalloc_tag_sub(page, 1 << order);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index d3bc3207054f9..02de186dcc8f5 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -75,7 +75,13 @@ static const struct pci_device_id i40e_pci_tbl[] = {
+ 	{PCI_VDEVICE(INTEL, I40E_DEV_ID_10G_BASE_T4), 0},
+ 	{PCI_VDEVICE(INTEL, I40E_DEV_ID_10G_BASE_T_BC), 0},
+ 	{PCI_VDEVICE(INTEL, I40E_DEV_ID_10G_SFP), 0},
+-	{PCI_VDEVICE(INTEL, I40E_DEV_ID_10G_B), 0},
++	/*
++	 * This ID conflicts with ipw2200, but the devices can be differentiated
++	 * because i40e devices use PCI_CLASS_NETWORK_ETHERNET and ipw2200
++	 * devices use PCI_CLASS_NETWORK_OTHER.
++	 */
++	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, I40E_DEV_ID_10G_B),
++		PCI_CLASS_NETWORK_ETHERNET << 8, 0xffff00, 0},
+ 	{PCI_VDEVICE(INTEL, I40E_DEV_ID_KX_X722), 0},
+ 	{PCI_VDEVICE(INTEL, I40E_DEV_ID_QSFP_X722), 0},
+ 	{PCI_VDEVICE(INTEL, I40E_DEV_ID_SFP_X722), 0},
+diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2200.c b/drivers/net/wireless/intel/ipw2x00/ipw2200.c
+index 24a5624ef2071..3876010c2ce8f 100644
+--- a/drivers/net/wireless/intel/ipw2x00/ipw2200.c
++++ b/drivers/net/wireless/intel/ipw2x00/ipw2200.c
+@@ -11387,7 +11387,13 @@ static const struct pci_device_id card_ids[] = {
+ 	{PCI_VENDOR_ID_INTEL, 0x1043, 0x8086, 0x2754, 0, 0, 0},
+ 	{PCI_VENDOR_ID_INTEL, 0x1043, 0x8086, 0x2761, 0, 0, 0},
+ 	{PCI_VENDOR_ID_INTEL, 0x1043, 0x8086, 0x2762, 0, 0, 0},
+-	{PCI_VDEVICE(INTEL, 0x104f), 0},
++	/*
++	 * This ID conflicts with i40e, but the devices can be differentiated
++	 * because i40e devices use PCI_CLASS_NETWORK_ETHERNET and ipw2200
++	 * devices use PCI_CLASS_NETWORK_OTHER.
++	 */
++	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x104f),
++		PCI_CLASS_NETWORK_OTHER << 8, 0xffff00, 0},
+ 	{PCI_VDEVICE(INTEL, 0x4220), 0},	/* BG */
+ 	{PCI_VDEVICE(INTEL, 0x4221), 0},	/* BG */
+ 	{PCI_VDEVICE(INTEL, 0x4223), 0},	/* ABG */
 -- 
 2.51.0
 
