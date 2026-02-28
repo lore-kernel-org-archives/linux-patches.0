@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7F047B43F;
-	Sat, 28 Feb 2026 17:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2CD47B43F;
+	Sat, 28 Feb 2026 17:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301296; cv=none; b=ZLrfPICDVPP4D8DbgPSlLXiY+AG9Lx2ERdwp6Ld0cfb4v8Wv5AJzx0RmQeCAYUobXjGY0Rj0TTfeEzRl5jUeqPgIRYRZDJHqJzmw6hwX7dY4EHMn+5dBwb4uGSdKSmJ6A9plmlYUBnjffsd2at4DDDNi0q2eMU7bBdcLVkLpGYQ=
+	t=1772301297; cv=none; b=i8vfuQoRgAlH9nI9iSKLVVvYlWRv1Xo6u3PeaIvLaZf6dZ+7uL9XCFFGXhpXXSFe/uO+btkIR0f26V65QB17OsX9sTCYXWJOMXG5xZmTNZIK2uBvqgRPqVU6+utc4zDaR8xOD56VD78oZChjd9auEHqnTeHL3HPPOUVXIX1kxS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301296; c=relaxed/simple;
-	bh=fdZxNkDEir7Gj+h8PL+4WK7qPvK1K5hf3Uh8lZeH47E=;
+	s=arc-20240116; t=1772301297; c=relaxed/simple;
+	bh=VUmlSKdJKQXF3sFNo+mJUSJ27aDu1PAe3j7aYFPOhbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9AR8yxCm9fonoOfYeOYxh34mjVQ3DVug2fzVKl5inYmQRo6ZeZ4TfhlkPzymCcuX8tHRITqzP/UO8WxivmAFf/iyASUNroIdxlzmZRusUkDoY5GMdSxi+Iw3n2JeTakwEeLt9FOc/YW2Ae8RVLzPj2R5BMzjtKxt/WuoPPwebM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pVB+IgE/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bJbliNnTv5DqrInXDcvR/NifyMPoyJt18xfWy44vJ9LM2YrX1kZRCYtrv8HLMa0O1elFchIvVB0ZLb+/9T7AjsTIkJDnhW8y27siFzKQDNJhZ6ODItMNF2U1s2p0phqN3rPLBPmUWuwZAcp5yHdgPg8X9FroTCRb90CNTNBF5xQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MjJausvp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pVB+IgE/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3736C2BCB0;
-	Sat, 28 Feb 2026 17:54:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MjJausvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F24C19423;
+	Sat, 28 Feb 2026 17:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301296;
-	bh=fdZxNkDEir7Gj+h8PL+4WK7qPvK1K5hf3Uh8lZeH47E=;
+	s=k20201202; t=1772301297;
+	bh=VUmlSKdJKQXF3sFNo+mJUSJ27aDu1PAe3j7aYFPOhbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pVB+IgE/pPvZI9oPHnwb0eeYK8U9PyD0M95M0FWKITenTjGhmeUCQ22eNP0hqMZG9
-	 8Ou5iTILJs9hu1azOtZCBrWVE2Yyd61kEQSosR2OYvrvVvKmPGvnZ3MmjZfDwgeJWO
-	 MLLQqYgnlrnXEUG+AQ8IyM7goNOtFxk2i5mqRuebfncdORLuM7B6Cq185VDtb/R/6M
-	 CT8sP7EDJFdVMXrWOOiN0YWzoOpMj9Vpl7OicQDx9lLEeq+gZxYo7Ycj+Sj3mLNwE2
-	 +rOA/0n45N0/+NyAeaLF3P30qUGdoNvXpl4KXOf7BF0cUTc4m/uYhYZyuJyjVbNVOB
-	 x98UFDuix7EUg==
+	b=MjJausvpycLvQ57Nz/PuwrMg2Aah2jRTMM6Qmkasu/r7ohEQEPzLKKuH2wo38zr+H
+	 r/tC7YLLfx2U/jhs981GHYAr8du3IPoqSJ+pH+kmKfEGKw5KxvDpiIOlKsBkCoDB/k
+	 LIhlHuRnKKVKX8DccEvDo2u6Ecr0xmGsB208bLQJ1kJIPj6+lf/gI+CtqEd3/M5uUK
+	 ugfcaVnqeDkC9EicTWrn/5x+UuiQWh347uKKaHHfUdn2xRU+xDAY/snTZLjz6wwgJJ
+	 1nmcS3To/jUn9KODZgI+mFx5eyEL37y8yCYkqbJhM5vUxd2HjmLY8Ci4mTGWijNGZa
+	 /DcbO/EmUNzaA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ricardo Ribalda <ribalda@chromium.org>,
+Cc: Irui Wang <irui.wang@mediatek.com>,
 	stable@vger.kernel.org,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 481/752] media: uvcvideo: Fix support for V4L2_CTRL_FLAG_HAS_WHICH_MIN_MAX
-Date: Sat, 28 Feb 2026 12:43:12 -0500
-Message-ID: <20260228174750.1542406-481-sashal@kernel.org>
+Subject: [PATCH 6.18 482/752] media: mediatek: encoder: Fix uninitialized scalar variable issue
+Date: Sat, 28 Feb 2026 12:43:13 -0500
+Message-ID: <20260228174750.1542406-482-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,125 +50,57 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Irui Wang <irui.wang@mediatek.com>
 
-[ Upstream commit 4238bd6dc6ba36f44d89a60338223d5a4f708cbf ]
+[ Upstream commit 88e935de7cf8795d7a6a51385db87ecb361a7050 ]
 
-The VIDIOC_G_EXT_CTRLS with which V4L2_CTRL_WHICH_(MIN|MAX)_VAL can only
-work for controls that have previously announced support for it.
+UNINIT checker finds some instances of variables that are used
+without being initialized, for example using the uninitialized
+value enc_result.is_key_frm can result in unpredictable behavior,
+so initialize these variables after declaring.
 
-This patch fixes the following v4l2-compliance error:
-
-  info: checking extended control 'User Controls' (0x00980001)
-  fail: v4l2-test-controls.cpp(980): ret != EINVAL (got 13)
-        test VIDIOC_G/S/TRY_EXT_CTRLS: FAIL
-
-Fixes: 39d2c891c96e ("media: uvcvideo: support V4L2_CTRL_WHICH_MIN/MAX_VAL")
+Fixes: 4e855a6efa54 ("[media] vcodec: mediatek: Add Mediatek V4L2 Video Encoder Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Irui Wang <irui.wang@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 14 ++++++++++++--
- drivers/media/usb/uvc/uvc_v4l2.c | 10 ++++++----
- drivers/media/usb/uvc/uvcvideo.h |  2 +-
- 3 files changed, 19 insertions(+), 7 deletions(-)
+ .../media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 2905505c240c0..2738ef74c7373 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1432,7 +1432,7 @@ static bool uvc_ctrl_is_readable(u32 which, struct uvc_control *ctrl,
-  * auto_exposure=1, exposure_time_absolute=251.
-  */
- int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
--			   const struct v4l2_ext_controls *ctrls,
-+			   const struct v4l2_ext_controls *ctrls, u32 which,
- 			   unsigned long ioctl)
+diff --git a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc.c b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc.c
+index d815e962ab898..0212ff0462fcc 100644
+--- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc.c
++++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc.c
+@@ -864,7 +864,7 @@ static void vb2ops_venc_buf_queue(struct vb2_buffer *vb)
+ static int vb2ops_venc_start_streaming(struct vb2_queue *q, unsigned int count)
  {
- 	struct uvc_control_mapping *master_map = NULL;
-@@ -1442,14 +1442,24 @@ int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
- 	s32 val;
+ 	struct mtk_vcodec_enc_ctx *ctx = vb2_get_drv_priv(q);
+-	struct venc_enc_param param;
++	struct venc_enc_param param = { };
  	int ret;
  	int i;
-+	/*
-+	 * There is no need to check the ioctl, all the ioctls except
-+	 * VIDIOC_G_EXT_CTRLS use which=V4L2_CTRL_WHICH_CUR_VAL.
-+	 */
-+	bool is_which_min_max = which == V4L2_CTRL_WHICH_MIN_VAL ||
-+				which == V4L2_CTRL_WHICH_MAX_VAL;
  
- 	if (__uvc_query_v4l2_class(chain, v4l2_id, 0) >= 0)
--		return -EACCES;
-+		return is_which_min_max ? -EINVAL : -EACCES;
+@@ -1018,7 +1018,7 @@ static int mtk_venc_encode_header(void *priv)
+ 	int ret;
+ 	struct vb2_v4l2_buffer *src_buf, *dst_buf;
+ 	struct mtk_vcodec_mem bs_buf;
+-	struct venc_done_result enc_result;
++	struct venc_done_result enc_result = { };
  
- 	ctrl = uvc_find_control(chain, v4l2_id, &mapping);
- 	if (!ctrl)
- 		return -EINVAL;
+ 	dst_buf = v4l2_m2m_dst_buf_remove(ctx->m2m_ctx);
+ 	if (!dst_buf) {
+@@ -1139,7 +1139,7 @@ static void mtk_venc_worker(struct work_struct *work)
+ 	struct vb2_v4l2_buffer *src_buf, *dst_buf;
+ 	struct venc_frm_buf frm_buf;
+ 	struct mtk_vcodec_mem bs_buf;
+-	struct venc_done_result enc_result;
++	struct venc_done_result enc_result = { };
+ 	int ret, i;
  
-+	if ((!(ctrl->info.flags & UVC_CTRL_FLAG_GET_MIN) ||
-+	     !(ctrl->info.flags & UVC_CTRL_FLAG_GET_MAX)) && is_which_min_max)
-+		return -EINVAL;
-+
- 	if (ioctl == VIDIOC_G_EXT_CTRLS)
- 		return uvc_ctrl_is_readable(ctrls->which, ctrl, mapping);
- 
-diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
-index 9e4a251eca880..30c160daed8cb 100644
---- a/drivers/media/usb/uvc/uvc_v4l2.c
-+++ b/drivers/media/usb/uvc/uvc_v4l2.c
-@@ -765,14 +765,15 @@ static int uvc_ioctl_query_ext_ctrl(struct file *file, void *priv,
- 
- static int uvc_ctrl_check_access(struct uvc_video_chain *chain,
- 				 struct v4l2_ext_controls *ctrls,
--				 unsigned long ioctl)
-+				 u32 which, unsigned long ioctl)
- {
- 	struct v4l2_ext_control *ctrl = ctrls->controls;
- 	unsigned int i;
- 	int ret = 0;
- 
- 	for (i = 0; i < ctrls->count; ++ctrl, ++i) {
--		ret = uvc_ctrl_is_accessible(chain, ctrl->id, ctrls, ioctl);
-+		ret = uvc_ctrl_is_accessible(chain, ctrl->id, ctrls, which,
-+					     ioctl);
- 		if (ret)
- 			break;
- 	}
-@@ -806,7 +807,7 @@ static int uvc_ioctl_g_ext_ctrls(struct file *file, void *priv,
- 		which = V4L2_CTRL_WHICH_CUR_VAL;
- 	}
- 
--	ret = uvc_ctrl_check_access(chain, ctrls, VIDIOC_G_EXT_CTRLS);
-+	ret = uvc_ctrl_check_access(chain, ctrls, which, VIDIOC_G_EXT_CTRLS);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -840,7 +841,8 @@ static int uvc_ioctl_s_try_ext_ctrls(struct uvc_fh *handle,
- 	if (!ctrls->count)
- 		return 0;
- 
--	ret = uvc_ctrl_check_access(chain, ctrls, ioctl);
-+	ret = uvc_ctrl_check_access(chain, ctrls, V4L2_CTRL_WHICH_CUR_VAL,
-+				    ioctl);
- 	if (ret < 0)
- 		return ret;
- 
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 3f2e832025e71..8480d65ecb85e 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -787,7 +787,7 @@ int uvc_ctrl_get(struct uvc_video_chain *chain, u32 which,
- 		 struct v4l2_ext_control *xctrl);
- int uvc_ctrl_set(struct uvc_fh *handle, struct v4l2_ext_control *xctrl);
- int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
--			   const struct v4l2_ext_controls *ctrls,
-+			   const struct v4l2_ext_controls *ctrls, u32 which,
- 			   unsigned long ioctl);
- 
- int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
+ 	/* check dst_buf, dst_buf may be removed in device_run
 -- 
 2.51.0
 
