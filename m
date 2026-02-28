@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D1133A03F
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8909B1FBEB0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301921; cv=none; b=HYBj4W6pbFtaKbgWvS+tn3XknqfLmc+k8Gex+vTBEmjzPTELg2KuFP7rX58q+aKl2Me0cNPtEOpkCzk8CdyEaPKNkcFcYIBSz2FrTfEGiid9w59U259ygDDmXbYZDG4mgQzTfMVJofilalOR1Gp5llsZ7XaMrS2G78jbPC58T08=
+	t=1772301922; cv=none; b=dcRvYMGK3SGSIvik5T62f5zBoHxjpe/aQmg1c8Y8lscoCnjet3m/ouYcem9M4FM6/ODPjJa62+E2zSPVo7zU6OaiX8Ekfy+2L1pEHA8aRInG6iSBJAAQnHB4KfJHBz2OzjIZFXeD1hs8gZPcnBiNVCeqNo+kz1T3TNDwPxjujUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301921; c=relaxed/simple;
-	bh=0h5BFdsqQpUnGVxiqeAi4PsCQPIVIiY4i+4A280pHVQ=;
+	s=arc-20240116; t=1772301922; c=relaxed/simple;
+	bh=v2KjxhrFriM8WFZQWxPhnJBNWii3JBRMBjbGSW7H/0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oebDgHjHTXU1qK6kZlYo6sGYnjX5Bp3RWpN7ivgoCrnsx+/FpDn6wIcEoq2FG09rjtTk0BVMaYXbkbKTwX3ZmAuCEZIRnwFSh/3rvxmDBS9Y4ocD2zQB56eVxomUqOno5JPWnaWvouEJ2w+dnQhGsWGwHBBc3ByO6ArOcEdxKKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uC7SyO3O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FGFid1MFbEsasL6y54+1fJOpRD3yiKePcs2u8e5UTTzI8QseMv2PXQz5DGTR5rcW7YbsYavFS4W/y+D/6SDq1z0NfPVunTr7rlUomMxdTXvboZQmciVbyQaMtZ2PIvbmbrGoocP6p1W8t31nksDq8gNJskb4bkMHW4Jmcn9KFs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hD7jF/xy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uC7SyO3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154F5C116D0;
-	Sat, 28 Feb 2026 18:05:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hD7jF/xy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAB5C19424;
+	Sat, 28 Feb 2026 18:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301921;
-	bh=0h5BFdsqQpUnGVxiqeAi4PsCQPIVIiY4i+4A280pHVQ=;
+	s=k20201202; t=1772301922;
+	bh=v2KjxhrFriM8WFZQWxPhnJBNWii3JBRMBjbGSW7H/0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uC7SyO3OmiW/8jjOOQKNKkWZeAC0tgCPa8K6Lyok5kdjm8TSqUX7EAVLCS6+F2tX4
-	 DC68z23pu6Xiyfeq5i8aV1cP5a4yCgnoVYnOXZghjqYNdF+YGaJI0mrU41mTPUztwk
-	 xHVdgNjwBI17eXzBEwWPqDVb//BnIOqD3aEAfRZOJWkg0FDAgcDiNtex9qAPKpkKVC
-	 JoPvePf+BhF1i+LeDpCWSKS2ZliZqj1HahfTp6Dyi2/skq4tqL+gndiKV9W6IoAcT5
-	 05FCKf1VHquhBNysPUoFRteomM2AgugESrXLjOSUFD1t1CW6VpX1QNpSQOqIBMYlK/
-	 BZofEzv5gZZDQ==
+	b=hD7jF/xy72hCSAt6+L7MKQRUBlyles2T+Gpoi2iJDF39y4E0SvLG2NdtI0OMR21pZ
+	 gmoNYjU4QrG+57bSjuPrqUvIiVERzWUgNxH1JIKuC3mY1cs5Jysb4Evlg1TYpUbST+
+	 koW36a0s74IfJVsaA6AJ5JUZCYoNPn50iuHxVtGzI0uB/9wvOdBnN1U6r9eV9JWzWJ
+	 440tDgJhiaUbfSKOoFBqFRQEqyp/vrhGxGFTYDx8hsz1WrSzEpv+RyiaLJFLxIyac9
+	 IhDbJWCCoFXxzoTOeNHkZnV1GWBJCzP1soKe921+1jyqH8LJDthKmLRyoBz1ZCeUb8
+	 qwa1pPWGtcOww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>,
-	syzbot+08d8956768c96a2c52cf@syzkaller.appspotmail.com,
+Cc: Edward Adam Davis <eadavis@qq.com>,
+	syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 355/385] fs/ntfs3: Initialize new folios before use
-Date: Sat, 28 Feb 2026 12:59:37 -0500
-Message-ID: <20260228180011.1568201-355-sashal@kernel.org>
+Subject: [PATCH 6.12 356/385] fs/ntfs3: prevent infinite loops caused by the next valid being the same
+Date: Sat, 28 Feb 2026 12:59:38 -0500
+Message-ID: <20260228180011.1568201-356-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,41 +48,55 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit f223ebffa185cc8da934333c5a31ff2d4f992dc9 ]
+[ Upstream commit 27b75ca4e51e3e4554dc85dbf1a0246c66106fd3 ]
 
-KMSAN reports an uninitialized value in longest_match_std(), invoked
-from ntfs_compress_write(). When new folios are allocated without being
-marked uptodate and ni_read_frame() is skipped because the caller expects
-the frame to be completely overwritten, some reserved folios may remain
-only partially filled, leaving the rest memory uninitialized.
+When processing valid within the range [valid : pos), if valid cannot
+be retrieved correctly, for example, if the retrieved valid value is
+always the same, this can trigger a potential infinite loop, similar
+to the hung problem reported by syzbot [1].
 
-Fixes: 584f60ba22f7 ("ntfs3: Convert ntfs_get_frame_pages() to use a folio")
-Tested-by: syzbot+08d8956768c96a2c52cf@syzkaller.appspotmail.com
-Reported-by: syzbot+08d8956768c96a2c52cf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=08d8956768c96a2c52cf
+Adding a check for the valid value within the loop body, and terminating
+the loop and returning -EINVAL if the value is the same as the current
+value, can prevent this.
 
-Signed-off-by: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
+[1]
+INFO: task syz.4.21:6056 blocked for more than 143 seconds.
+Call Trace:
+ rwbase_write_lock+0x14f/0x750 kernel/locking/rwbase_rt.c:244
+ inode_lock include/linux/fs.h:1027 [inline]
+ ntfs_file_write_iter+0xe6/0x870 fs/ntfs3/file.c:1284
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bcf9e1868c1a0c7e04f1
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/file.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index f1122ac5be622..23a637cdb0810 100644
+index 23a637cdb0810..3f144a049d710 100644
 --- a/fs/ntfs3/file.c
 +++ b/fs/ntfs3/file.c
-@@ -964,7 +964,7 @@ static int ntfs_get_frame_pages(struct address_space *mapping, pgoff_t index,
+@@ -1045,8 +1045,12 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
+ 			goto out;
  
- 		folio = __filemap_get_folio(mapping, index,
- 					    FGP_LOCK | FGP_ACCESSED | FGP_CREAT,
--					    gfp_mask);
-+					    gfp_mask | __GFP_ZERO);
- 		if (IS_ERR(folio)) {
- 			while (npages--) {
- 				folio = page_folio(pages[npages]);
+ 		if (lcn == SPARSE_LCN) {
+-			ni->i_valid = valid =
+-				frame_vbo + ((u64)clen << sbi->cluster_bits);
++			valid = frame_vbo + ((u64)clen << sbi->cluster_bits);
++			if (ni->i_valid == valid) {
++				err = -EINVAL;
++				goto out;
++			}
++			ni->i_valid = valid;
+ 			continue;
+ 		}
+ 
 -- 
 2.51.0
 
