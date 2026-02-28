@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA402DB7B2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36AA34403E
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301838; cv=none; b=omjKGAY8J459woAxJKWKsOF05mfJm1xPtMGTXgK0arVvp0AhVSytCfCmaYRZ1qbbVul8rlAqOGdUP4CoIDA0fjXo4/iuyeFVkiO0fdmu/NeAi5uOf2HtvgDRN+CyMfgzikIoZLtq7PKtPLdb9PM2RNw1St+N/ccB3oOZGhdh2bQ=
+	t=1772301838; cv=none; b=BzXJM6eUNpdaKnPwxH1hzWBaZBh+gk7TbWLs28BY8jxnUbdv81Env09+IY/Rn+8sFao4BVyXA3+f9Kfpe6o3/exm9q6haZhsQklew0x4TZ/fQmQNbu1ucqJnM6+CRyh+uk3ysweNxUoyJaNPJhjlIUTIZKiReIJeR4YAGOMlOG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301838; c=relaxed/simple;
-	bh=Nz6hnyNWyM0xSCzLezlRlfJn0L0HOkx1RgaGA/dHPF8=;
+	bh=OlUH0PI4B9p/J7S5Gm+/pfjm3CPCoPeNUJiK76/JvDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oI0l60/HwknnaEz6WpxO8zreH9RL2I2pbn5U7lNrSp/x3usLTXnoWKfOTAC8qVU7mz6yr5vLnr5c1jm4a8k8myUkfoe0ef3MrI+ybuFd8C/nuMj27kv/D4Clzp3aDX2pWgQL2NlP54x8PUruz091MCljachwcCTRWDVgtoSuBBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K/wvyLi3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dmbm6PmPzi7IJRxa+TQ+qrzdkdkfsF5LRpweaU8D36gsZ9RHkD8lkcIPVdBJMlnwJ/4ZEpcBVXLZmInK2hUkOnbeZaETg+pHiS/ypBb/eJOezwXHr/sXGiujXIGUlr7jKqw74W2dtTQZgavH1+2ssOxkTjxazDsN7WsMDL7st40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P+ZeYTgY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K/wvyLi3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454D8C116D0;
-	Sat, 28 Feb 2026 18:03:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P+ZeYTgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C74FC19423;
+	Sat, 28 Feb 2026 18:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301837;
-	bh=Nz6hnyNWyM0xSCzLezlRlfJn0L0HOkx1RgaGA/dHPF8=;
+	s=k20201202; t=1772301838;
+	bh=OlUH0PI4B9p/J7S5Gm+/pfjm3CPCoPeNUJiK76/JvDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K/wvyLi30W0xsUzDXzLO8lp9p+7JBGEGsdg0j0f/SyvDy0EZzEAFXkoPw5gzmuugq
-	 FO7KCev4zH9EBsqqP2VmblNkGKDCxn5voNhv1++O3Mh/c93ZuOec73S5xiuqCH890/
-	 gSqP6Vfg2zY1y66Qva1cqwhMZJoW5o3bGzS6229V3nvKh+k4aC2A6EVQZhqSxDDQnk
-	 b3zt8xua8y56Y9SNqtTFUHYS5mNekLiWWhzcQNq4/n4wPFJd2MYcJC6JuvcgsjmKZR
-	 K57/2OXMct9NAAyUrMeYqbL2sp9lYnXNYOlEjsDnA+78GmmQU5jqmUWTDxFq9LdzOM
-	 bdORL0EYjS0Sw==
+	b=P+ZeYTgYPu2jwUprfpfM7gwk1ZOnT8ViwBEPD1BHhkzDYcp/xf8SJTJwyObLyBX18
+	 eUvECTs9Kh9/RB5u20Fti67kS3lzhJ8jkNhXCdaTEHM5b1q0ROZQTc3gffKMhjSG8Q
+	 DKX3ZsACEgvbwQIM0iTXVCOavskfgfMQuhxbaLjn4s9Diralcwz/M19ozNqVhexQp7
+	 UDT15gEfu8brCipE2uK8HUe+dDlycVWlyuhRGRPJKtGxwIy9ceDzTd2Vx8f1AXwdyb
+	 hbhVWXwjXtR1Xka9rXIpvENuHZprbkE0flhFl3qKWyKRKbW0iYciTcQiRyBacCuoLP
+	 0jJfUM5QtG/DA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Waqar Hameed <waqar.hameed@axis.com>,
 	Nikita Travkin <nikita@trvn.ru>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 256/385] power: supply: pm8916_bms_vm: Fix use-after-free in power_supply_changed()
-Date: Sat, 28 Feb 2026 12:57:58 -0500
-Message-ID: <20260228180011.1568201-256-sashal@kernel.org>
+Subject: [PATCH 6.12 257/385] power: supply: pm8916_lbc: Fix use-after-free in power_supply_changed()
+Date: Sat, 28 Feb 2026 12:57:59 -0500
+Message-ID: <20260228180011.1568201-257-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -50,7 +50,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit 62914959b35e9a1e29cc0f64cb8cfc5075a5366f ]
+[ Upstream commit b7508129978ae1e2ed9b0410396abc05def9c4eb ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -74,52 +74,52 @@ of using the `power_supply` handle *uninitialized* in
 Fix this racy use-after-free by making sure the IRQ is requested _after_
 the registration of the `power_supply` handle.
 
-Fixes: 098bce1838e0 ("power: supply: Add pm8916 VM-BMS support")
+Fixes: f8d7a3d21160 ("power: supply: Add driver for pm8916 lbc")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
 Reviewed-by: Nikita Travkin <nikita@trvn.ru>
-Link: https://patch.msgid.link/2749c09ff81fcac87ae48147e216135450d8c067.1766268280.git.waqar.hameed@axis.com
+Link: https://patch.msgid.link/64d8dd3675a4e59fa32c3e0ef451f12d1f7ed18f.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/pm8916_bms_vm.c | 18 +++++++++---------
+ drivers/power/supply/pm8916_lbc.c | 18 +++++++++---------
  1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/power/supply/pm8916_bms_vm.c b/drivers/power/supply/pm8916_bms_vm.c
-index 5d0dd842509c4..9b069af077be5 100644
---- a/drivers/power/supply/pm8916_bms_vm.c
-+++ b/drivers/power/supply/pm8916_bms_vm.c
-@@ -167,15 +167,6 @@ static int pm8916_bms_vm_battery_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return -EINVAL;
+diff --git a/drivers/power/supply/pm8916_lbc.c b/drivers/power/supply/pm8916_lbc.c
+index 6d92e98cbecc6..ab324ce3b8721 100644
+--- a/drivers/power/supply/pm8916_lbc.c
++++ b/drivers/power/supply/pm8916_lbc.c
+@@ -274,15 +274,6 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, -EINVAL,
+ 				     "Wrong amount of reg values: %d (4 expected)\n", len);
  
--	irq = platform_get_irq_byname(pdev, "fifo");
+-	irq = platform_get_irq_byname(pdev, "usb_vbus");
 -	if (irq < 0)
 -		return irq;
 -
--	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_bms_vm_fifo_update_done_irq,
--					IRQF_ONESHOT, "pm8916_vm_bms", bat);
+-	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
+-					IRQF_ONESHOT, "pm8916_lbc", chg);
 -	if (ret)
 -		return ret;
 -
- 	ret = regmap_bulk_read(bat->regmap, bat->reg + PM8916_PERPH_TYPE, &tmp, 2);
+ 	ret = device_property_read_u32_array(dev, "reg", chg->reg, len);
  	if (ret)
- 		goto comm_error;
-@@ -220,6 +211,15 @@ static int pm8916_bms_vm_battery_probe(struct platform_device *pdev)
+ 		return ret;
+@@ -332,6 +323,15 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
  	if (ret)
  		return dev_err_probe(dev, ret, "Unable to get battery info\n");
  
-+	irq = platform_get_irq_byname(pdev, "fifo");
++	irq = platform_get_irq_byname(pdev, "usb_vbus");
 +	if (irq < 0)
 +		return irq;
 +
-+	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_bms_vm_fifo_update_done_irq,
-+					IRQF_ONESHOT, "pm8916_vm_bms", bat);
++	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
++					IRQF_ONESHOT, "pm8916_lbc", chg);
 +	if (ret)
 +		return ret;
 +
- 	platform_set_drvdata(pdev, bat);
- 
- 	return 0;
+ 	chg->edev = devm_extcon_dev_allocate(dev, pm8916_lbc_charger_cable);
+ 	if (IS_ERR(chg->edev))
+ 		return PTR_ERR(chg->edev);
 -- 
 2.51.0
 
