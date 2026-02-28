@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0617934252B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131C833A03F
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301889; cv=none; b=FtFCUDctp01Xg8iSJHtqqxUwxQCQt2uCUOBtrd7l1FJVi55n88KTVwWBvu61z/G78MinwTIjN0QFS9uM09EsPb1NumffnljqLhjmRG4gjuc+Rj8ySlIeMH/TtC43LF3dkbBjCfSHBekKHmeLcavtn2agfMhXOUd/RX3Jx1MNLWk=
+	t=1772301890; cv=none; b=UfsnL2+U+tX64U4CaLSdGzxqNB2+x3fxZ7lowjykGDUsKcjlzEMdNP8U72nmdUuJLsZKDrikBFBO/XDIzC0H6sszRABr6q22aPMfiacyuJIIOIa68LwjWg0yzi0MD86PebQo9K4Nn+8XWKuSNw1ylwJet/RvO+hmO5gv6asSxs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301889; c=relaxed/simple;
-	bh=9zTQbO4gHA2QdlAnO3HfEHvV2R24PPp4ljue5Cr6SyQ=;
+	s=arc-20240116; t=1772301890; c=relaxed/simple;
+	bh=ehGs6MM5a2Ty25yIgXUqH4rbmpnJ2MCg6fd9pqlBnwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3VLvuho65PqhQdJBBGt2JSQxGRHYL3FaRkyn55meyxZ4RqXhngzjKUZ/otxnvzS5NxvAJ6v2QHFqEEDE6Z9wGlfLOq07Us8RNJ5Sw4t/z96Gh/KFAjIQxwMbCGetbQtb02l/rnGTL6K4NzJQnu/Gs0NK9bUWcU1YdJweYBX3wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hNwSlc6C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i22oHdy27+u8RoEXxy+iui3j42gPtxmWQoUHbvbQJhsK/NMe6B/DHETE+iL6lxdJcJ0h3NqLYU9aDFxaXwmfVxf++5QuVAzElgqSYT388C1pnpObWlty+y0hk9+tUOmWEn3shAFAPCNKz6064yH1AzA7jdaq1dhaMkufacNKKpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qcDTSmJ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hNwSlc6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540D2C19423;
-	Sat, 28 Feb 2026 18:04:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qcDTSmJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EC5C19423;
+	Sat, 28 Feb 2026 18:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301888;
-	bh=9zTQbO4gHA2QdlAnO3HfEHvV2R24PPp4ljue5Cr6SyQ=;
+	s=k20201202; t=1772301889;
+	bh=ehGs6MM5a2Ty25yIgXUqH4rbmpnJ2MCg6fd9pqlBnwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hNwSlc6CscPGZbk98BAmgY63DbSckl4bI4jPhm4ZQnd/DxxHMm4HpO/D0aja0jOKF
-	 RnikhhwnhSX2sYxBZjswZgSoyQSuEZL0t0axlW440vQfVYtkxiJJpnkdKl1W4cI98J
-	 pzhE3kqnK7kyrPuC6BPtOw0GtE0MZuwSscuAtoNvyxeHCW2nhqke3B7VOgXC93wxMn
-	 VT3emDvzLj3MqeVFZqtPrjY2Lck/YWgYScmlgU6rJkhK5ZSpbxIt3FVVcR8d9DZRff
-	 0fVKbeiKphN65unQIo2TyshNMQP0ifFWQGSaebaJ2r6e7oRPHdusW0rlb75nPEjEM9
-	 wcAYabMpBToqg==
+	b=qcDTSmJ0LZNJVaeRXhnqJbAGtCPOc+/ug/83BnziteGim0r8Auqs90NBqitXpXwW3
+	 rNTTXT11IRWm/unmbHMzRJlooRoQyFhnlZGdNGwv+IvuVzdnEBkm8Wa/DV/G9acG5c
+	 ZFgMk88x1/qz4dGVMNAnG4kpWPgnjHLWfIumPoU0g1BbLuegqCBvIAhWOJpdoVBr2Z
+	 eq/vFkWWm4DrxeZLY3KvWj46nlCdw5xIJUHFcw44z8Uox/nFmi/PskbIxWXT7DLfZ/
+	 HuniKMdgoPYMrSFd1jtb89ksn5PXyfz19OaoDjLfc7B8wDLzJ5tZU4vP4bRm8AhGB2
+	 pOSxFYW/tBTjA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+Cc: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 315/385] clk: mediatek: Fix error handling in runtime PM setup
-Date: Sat, 28 Feb 2026 12:58:57 -0500
-Message-ID: <20260228180011.1568201-315-sashal@kernel.org>
+Subject: [PATCH 6.12 316/385] interconnect: mediatek: Don't hijack parent device
+Date: Sat, 28 Feb 2026 12:58:58 -0500
+Message-ID: <20260228180011.1568201-316-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,64 +48,51 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit aa2ad19210a6a444111bce55e8b69579f29318fb ]
+[ Upstream commit 510f8214440c553e81774c5822437ccf154e9e38 ]
 
-devm_pm_runtime_enable() can fail due to memory allocation. The current
-code ignores its return value, and when pm_runtime_resume_and_get() fails,
-it returns directly without unmapping the shared_io region.
+If the intention is that users of the interconnect declare their
+relationship to the child icc_emi node of the dvfsrc controller, then
+this code never worked. That's because it uses the parent dvfsrc device
+as the device it passes to the interconnect core framework, which means
+all the OF parsing is broken.
 
-Add error handling for devm_pm_runtime_enable(). Reorder cleanup labels
-to properly unmap shared_io on pm_runtime_resume_and_get() failure.
+Use the actual device instead, and pass the dvfsrc parent into the
+dvfsrc calls.
 
-Fixes: 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers during probe")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Fixes: b45293799f75 ("interconnect: mediatek: Add MediaTek MT8183/8195 EMI Interconnect driver")
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Link: https://lore.kernel.org/r/20251124-mt8196-dvfsrc-v2-12-d9c1334db9f3@collabora.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mtk.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/interconnect/mediatek/icc-emi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
-index ba1d1c495bc2b..644e5a854f2b6 100644
---- a/drivers/clk/mediatek/clk-mtk.c
-+++ b/drivers/clk/mediatek/clk-mtk.c
-@@ -497,14 +497,16 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
+diff --git a/drivers/interconnect/mediatek/icc-emi.c b/drivers/interconnect/mediatek/icc-emi.c
+index 7da740b5fa8d6..182aa2b0623af 100644
+--- a/drivers/interconnect/mediatek/icc-emi.c
++++ b/drivers/interconnect/mediatek/icc-emi.c
+@@ -40,7 +40,7 @@ static int mtk_emi_icc_set(struct icc_node *src, struct icc_node *dst)
+ 	if (unlikely(!src->provider))
+ 		return -EINVAL;
  
+-	dev = src->provider->dev;
++	dev = src->provider->dev->parent;
  
- 	if (mcd->need_runtime_pm) {
--		devm_pm_runtime_enable(&pdev->dev);
-+		r = devm_pm_runtime_enable(&pdev->dev);
-+		if (r)
-+			goto unmap_io;
- 		/*
- 		 * Do a pm_runtime_resume_and_get() to workaround a possible
- 		 * deadlock between clk_register() and the genpd framework.
- 		 */
- 		r = pm_runtime_resume_and_get(&pdev->dev);
- 		if (r)
--			return r;
-+			goto unmap_io;
- 	}
+ 	switch (node->ep) {
+ 	case 0:
+@@ -97,7 +97,7 @@ int mtk_emi_icc_probe(struct platform_device *pdev)
+ 	if (!data)
+ 		return -ENOMEM;
  
- 	/* Calculate how many clk_hw_onecell_data entries to allocate */
-@@ -618,11 +620,11 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- free_data:
- 	mtk_free_clk_data(clk_data);
- free_base:
--	if (mcd->shared_io && base)
--		iounmap(base);
--
- 	if (mcd->need_runtime_pm)
- 		pm_runtime_put(&pdev->dev);
-+unmap_io:
-+	if (mcd->shared_io && base)
-+		iounmap(base);
- 	return r;
- }
- 
+-	provider->dev = pdev->dev.parent;
++	provider->dev = dev;
+ 	provider->set = mtk_emi_icc_set;
+ 	provider->aggregate = mtk_emi_icc_aggregate;
+ 	provider->xlate = of_icc_xlate_onecell;
 -- 
 2.51.0
 
