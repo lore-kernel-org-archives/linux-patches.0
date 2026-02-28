@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1986B340A5A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2D2340A5A
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301076; cv=none; b=fbX6/hIiXmfb7BqY59jG19zI0YvUCVSNFSBQbc+nVfbdKYwwq8WfaMr4bH+vdSqIAB+PzoEQsPRQDUvg2ld5LfKe4bg+c1ocqsFPX8KVTTAGhYopKKfT0uS9/TyXBkyH1OyHcZ8QGswJVAJgP5/FQCvarQEU7uNCmmdTIRj9qZw=
+	t=1772301076; cv=none; b=dGHbbYUkYTpJnCdheApfBJteqAGgEy/XJrZ8zD+k+yP7DmZFVdpdFIe4ahLUeo7k/B9zYC7EpogeCGFHI2z+l0d87r9dPvpl1aUvzJKUJMtPm5DznzKb2P5hJCN/qbwyIQ3kJ5QctYe6ETAtFGx0mFvgH+FcTjR9mcf2NPARUP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301076; c=relaxed/simple;
-	bh=awD29nvx2aphOkit+4HOtUSGi40fwC+8DL/sgkv8urc=;
+	bh=Pjg8P2UFle7rWhfr8Z4MFeiG/Jq8dBkBsCsNoHErQ7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uy+iCbgJuETP86pxDid3EFwCjxBmbU7okMh8E6csXRWZvqYbGbFmxg/Vz8cUDak9zhS2SmedyfH7Irdl0fKeWLVvFg9Gffkffr0fcTylvR5rGeW4+4weCZHEYJYbZjBMug7m73zpNj96YcpKzGQz0B08KtU1zQoMv0ehYNEOISk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WIA4bv1h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pdcA3a7kKXGNDq29xaIr3Lzo+OF3w+42MBLE6gyKyY8yifrnTyUS7xvrKdAbm7571r2ahlDnfxfBw9XA2HSLq7SXQl5PW7SZDDAv3Ng12xgSLLO83NzUaBoDAvm/ZlLbXX+M7E97JSKkh1Wx/XwEharIKjizT+y128glBbOvtWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQcjUXXI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WIA4bv1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7B5C19423;
-	Sat, 28 Feb 2026 17:51:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQcjUXXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE6EC19425;
+	Sat, 28 Feb 2026 17:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301076;
-	bh=awD29nvx2aphOkit+4HOtUSGi40fwC+8DL/sgkv8urc=;
+	bh=Pjg8P2UFle7rWhfr8Z4MFeiG/Jq8dBkBsCsNoHErQ7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WIA4bv1hDZj2ktdkAU50iFXoqNDb9nPv0dlFT6k5541neNpN+al4u/kH+zkD1bf9z
-	 u/Cuk+JsYfuT4IWaZcTBHZhLKMfEZDtmrUf3F4Mf0BD+vUkaEHp9Xzl6z/GI2Rwwmh
-	 oNKykXJU4FbRs3aiFmEV69QX8kzEWZcgv5sRP3JGt+sPLF9QKxZupR1LZbP8nSy3FS
-	 Gzb4bh2AudBVPGS+cZLQcAQEDAqEt8ffv6vKMTqT4d9nRnQ8aGTOToBipv9+sdpzYg
-	 RosW514AhTO1y+wLaUtIJis1lipI4yAdU+AtnkhX12XjyYvuWXm3e0E829I1+3gGDg
-	 zjvKFZIVC96pg==
+	b=rQcjUXXIM+brUBi6LgVPBrK8x8nhGZpClpUMgXqkOPra6THeDU9CuDgf6X0tSMwMT
+	 kn7IdTwgNFensn49Ek5pa2YNiLwaQCdMzR6PCa5LuWmxEQCrpqkfBRh7f50IllOSfT
+	 /NeR9Jlern1na7cwF7j4CmgpsfQRO9el1APtXKIkuplQvfRL9B7k+2ll29GkoppyOR
+	 MSroidTQtpco1bZnQR391NR6cZUp8oF9XA3KdX/Yyi6JRStJGGpuo/JDKUDDVdvcyy
+	 DtWkHvb5xnwgI31T8FhjTTcrBex4pVJzIpTaT7pLqq+UKMYUvOxENQtgJYY/3ipD6d
+	 ujH47VZZ5mAuQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+Cc: Zong-Zhe Yang <kevin_yang@realtek.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 222/752] wifi: rtw88: Fix inadvertent sharing of struct ieee80211_supported_band data
-Date: Sat, 28 Feb 2026 12:38:53 -0500
-Message-ID: <20260228174750.1542406-222-sashal@kernel.org>
+Subject: [PATCH 6.18 223/752] wifi: rtw89: regd: 6 GHz power type marks default when inactive
+Date: Sat, 28 Feb 2026 12:38:54 -0500
+Message-ID: <20260228174750.1542406-223-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,89 +47,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit fcac0f23d4d20b11014a39f8e2527cdc12ec9c82 ]
+[ Upstream commit 8c96752d99c0b094af68317a8c701b09bd0862d9 ]
 
-Internally wiphy writes to individual channels in this structure,
-so we must not share one static definition of channel list between
-multiple device instances, because that causes hard to debug
-breakage.
+When inactive, 6 GHz power type has been assigned to the default one,
+but missed to mark the local control variable, dflt, true. Then, this
+might let some 6 GHz power info of disconnected APs keep being taken
+into account under certain cases.
 
-For example, with two rtw88 driven devices in the system, channel
-information may get incoherent, preventing channel use.
+So, mark default when inactive.
 
-Copied from commit 0ae36391c804 ("wifi: rtw89: Fix inadverent sharing
-of struct ieee80211_supported_band data").
-
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/e94ad653-2b6d-4284-a33c-8c694f88955b@gmail.com
+Link: https://patch.msgid.link/20251229030926.27004-12-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/main.c | 34 +++++++++++++++++++----
- 1 file changed, 29 insertions(+), 5 deletions(-)
+ drivers/net/wireless/realtek/rtw89/regd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
-index 6f35357e73246..dde2ea6a00e06 100644
---- a/drivers/net/wireless/realtek/rtw88/main.c
-+++ b/drivers/net/wireless/realtek/rtw88/main.c
-@@ -1658,16 +1658,41 @@ static u16 rtw_get_max_scan_ie_len(struct rtw_dev *rtwdev)
- 	return len;
- }
- 
-+static struct ieee80211_supported_band *
-+rtw_sband_dup(struct rtw_dev *rtwdev,
-+	      const struct ieee80211_supported_band *sband)
-+{
-+	struct ieee80211_supported_band *dup;
-+
-+	dup = devm_kmemdup(rtwdev->dev, sband, sizeof(*sband), GFP_KERNEL);
-+	if (!dup)
-+		return NULL;
-+
-+	dup->channels = devm_kmemdup_array(rtwdev->dev, sband->channels,
-+					   sband->n_channels,
-+					   sizeof(*sband->channels),
-+					   GFP_KERNEL);
-+	if (!dup->channels)
-+		return NULL;
-+
-+	dup->bitrates = devm_kmemdup_array(rtwdev->dev, sband->bitrates,
-+					   sband->n_bitrates,
-+					   sizeof(*sband->bitrates),
-+					   GFP_KERNEL);
-+	if (!dup->bitrates)
-+		return NULL;
-+
-+	return dup;
-+}
-+
- static void rtw_set_supported_band(struct ieee80211_hw *hw,
- 				   const struct rtw_chip_info *chip)
- {
- 	struct ieee80211_supported_band *sband;
- 	struct rtw_dev *rtwdev = hw->priv;
--	struct device *dev = rtwdev->dev;
- 
- 	if (chip->band & RTW_BAND_2G) {
--		sband = devm_kmemdup(dev, &rtw_band_2ghz, sizeof(*sband),
--				     GFP_KERNEL);
-+		sband = rtw_sband_dup(rtwdev, &rtw_band_2ghz);
- 		if (!sband)
- 			goto err_out;
- 		if (chip->ht_supported)
-@@ -1676,8 +1701,7 @@ static void rtw_set_supported_band(struct ieee80211_hw *hw,
+diff --git a/drivers/net/wireless/realtek/rtw89/regd.c b/drivers/net/wireless/realtek/rtw89/regd.c
+index 58582f8d2b74c..8211d1277699c 100644
+--- a/drivers/net/wireless/realtek/rtw89/regd.c
++++ b/drivers/net/wireless/realtek/rtw89/regd.c
+@@ -1142,6 +1142,7 @@ static int rtw89_reg_6ghz_power_recalc(struct rtw89_dev *rtwdev,
+ 		}
+ 	} else {
+ 		rtwvif_link->reg_6ghz_power = RTW89_REG_6GHZ_POWER_DFLT;
++		dflt = true;
  	}
  
- 	if (chip->band & RTW_BAND_5G) {
--		sband = devm_kmemdup(dev, &rtw_band_5ghz, sizeof(*sband),
--				     GFP_KERNEL);
-+		sband = rtw_sband_dup(rtwdev, &rtw_band_5ghz);
- 		if (!sband)
- 			goto err_out;
- 		if (chip->ht_supported)
+ 	rcu_read_unlock();
 -- 
 2.51.0
 
