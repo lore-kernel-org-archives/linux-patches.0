@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3013235AC3F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20BB35AC32
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302757; cv=none; b=du1OVfl30BRESCtEq6ywVyDA77gNUVeOGj/1ANzdyjSMvHrzV4JOIC40rxx8ibxOL5V1dZ6Oh9f30XqHujdy5/gsGJY0JtuFboQyRUBcTM+Wa8y0FXwkTzYhVpJDEDLr5jcw2JwIfapTlO1zUOxru2emCqm1fFd2Rb7ZXCLLj+k=
+	t=1772302757; cv=none; b=KZGN7lRn+DEl3AEGA1BOU4xr1HMSXzULJf5qE3ZFOQtI8YZA8FYGea0Eo8ppfQxwANjKA1QT9srh7Fm3cnmfRS8oq1fghy3HXwU/JbzWBs/P8nOu3lDGaaHZIIxRJAGX/jZyKrDbpxIHi4zl+3ewYiryRtqvOAL5D2nbtQF7a90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302757; c=relaxed/simple;
-	bh=NDkpNOtYNIxErHao3KNP4JcIV6Oy/AyJtoBsWnFHoKk=;
+	bh=bpbG38xa/hz+FMvjaizcPHjwft5PyLAkNGbuSBKzpXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dcg69WXNFkOooq/hTNNP6QzHCdlkVaGyiKvWwa8akdds3Af1UNX8tMlVqL9G2iImoyPWFRqpj8mn4TsW1zQIcH/GfoUcrV9P5QQKVa97IHIEPy9u+mioWefoKIBM0BtYcRWQ04Dl0/fDkfU6gbznwWHJOx/GIiZqx4ISXlMvuXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y5Mp0JZ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qp+Dzd6g8sXpWbkPafwDgfW5NZnuEfQqoWIrsfZQSyUJefsIyf3N7sNAX0UxzEEv8uTAVXWWBpPEi5FEXQi8KmrfLXFrc/JVKf01XL7VGxZQVBTz8JtPKeAZOCkpFszQ+xtKdjMsiN+NTK06bEqPgopODYd5gf8pSUH55U2Sklw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H5qCF9Qp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y5Mp0JZ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67324C19424;
-	Sat, 28 Feb 2026 18:19:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H5qCF9Qp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2539BC19423;
+	Sat, 28 Feb 2026 18:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302756;
-	bh=NDkpNOtYNIxErHao3KNP4JcIV6Oy/AyJtoBsWnFHoKk=;
+	s=k20201202; t=1772302757;
+	bh=bpbG38xa/hz+FMvjaizcPHjwft5PyLAkNGbuSBKzpXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5Mp0JZ5ZubDCPhOgOmk5SJRFa2qlZ7I5PLLk0f4W/gijglXGfO9U7nTB+If3B4JX
-	 c+QSSFT+F0lqdvH/2YuP3rGviW8WEwm5IfdjuQsT08vLaPOrsaaaCtPyVqJpPFpNbK
-	 jeAI9hVibDWHk+41KavzHzqC+QzHCc4/TB3wpdPj338uBNFdEBczr3DjlbGE/H8LQm
-	 kVDAIe4c4ODCMW8Jdp3W24htnXQpHxTYclEx9NoD1qK1LKGE2TiSmE6TbeDFgiQwSr
-	 BF54KobTQLx3nlq8k4gJ0hOOk7STiLaTJc1jgX+7qPdTIs6LLU5eriDGPWhhtO9P7O
-	 RQ2JQ3+otpS1g==
+	b=H5qCF9QpjOXRL7XQ/+cVBRtby2Cp/ek0nLVrOdbGe7MrtB5OurLPaBJYlLON3XbZS
+	 AWfOyryIunqNKOGkSRgnBplYFkDkmf2Q20eB5Bjpif2mI+Lhr4hN2hLFytg20TwtR1
+	 iSj6sVNv+8lIbwVP/74QNO5bTMP0tRTheUlSP0X8nqMMSej3xNRBDkq23Rt5SKo/aU
+	 Olip9W6VRBDXTSt9peAVbJKh7n+c/K+1Sh3VrWaY8JUtUGYHo3IlxM6YRn9tOyx7rz
+	 MnA+WqXN0lJKegg70y1Hfh3/1XCzMZOFjOdXmuRdn78VLPnImYYOqOWLLTZqlsjn8Z
+	 sZsi6EGiCO7tA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Antonio Borneo <antonio.borneo@foss.st.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 126/147] mmc: rtsx_pci_sdmmc: increase power-on settling delay to 5ms
-Date: Sat, 28 Feb 2026 13:17:14 -0500
-Message-ID: <20260228181736.1605592-126-sashal@kernel.org>
+Subject: [PATCH 5.10 127/147] coresight: etm3x: Fix cpulocked warning on cpuhp
+Date: Sat, 28 Feb 2026 13:17:15 -0500
+Message-ID: <20260228181736.1605592-127-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -47,38 +47,65 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Antonio Borneo <antonio.borneo@foss.st.com>
 
-[ Upstream commit aced969e9bf3701dc75cfca57c78c031b7875b9d ]
+[ Upstream commit 1feb0377b9b816f89a04fc381eb19fc6bac9f4a4 ]
 
-The existing 1ms delay in sd_power_on is insufficient and causes resume
-errors around 4% of the time.
+When changes [1] and [2] have been applied to the driver etm4x, the
+same modifications have been also collapsed in [3] and applied in
+one shot to the driver etm3x.
+While doing this, the driver etm3x has not been aligned to etm4x on
+the use of non cpuslocked version of cpuhp callback setup APIs.
 
-Increasing the delay to 5ms resolves this issue after testing 300
-s2idle cycles.
+The current code triggers two run-time warnings when the kernel is
+compiled with CONFIG_PROVE_LOCKING=y.
 
-Fixes: 1f311c94aabd ("mmc: rtsx: add 74 Clocks in power on flow")
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Link: https://patch.msgid.link/20260105060236.400366-3-matthew.schwartz@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use non cpuslocked version of cpuhp callback setup APIs in driver
+etm3x, aligning it to the driver etm4x.
+
+[1] commit 2d1a8bfb61ec ("coresight: etm4x: Fix etm4_count race by
+                          moving cpuhp callbacks to init")
+[2] commit 22a550a306ad ("coresight: etm4x: Allow etm4x to be built
+                          as a module")
+[3] commit 97fe626ce64c ("coresight: etm3x: Allow etm3x to be built
+                          as a module")
+
+Fixes: 97fe626ce64c ("coresight: etm3x: Allow etm3x to be built as a module")
+Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260108152427.357379-1-antonio.borneo@foss.st.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-etm3x-core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
-index f0e9a76679945..97f194afcc643 100644
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -932,7 +932,7 @@ static int sd_power_on(struct realtek_pci_sdmmc *host, unsigned char power_mode)
- 	if (err < 0)
- 		return err;
+diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+index 683a69e88efda..721b2129bf1e9 100644
+--- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+@@ -784,16 +784,16 @@ static int __init etm_hp_setup(void)
+ {
+ 	int ret;
  
--	mdelay(1);
-+	mdelay(5);
+-	ret = cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ARM_CORESIGHT_STARTING,
+-						   "arm/coresight:starting",
+-						   etm_starting_cpu, etm_dying_cpu);
++	ret = cpuhp_setup_state_nocalls(CPUHP_AP_ARM_CORESIGHT_STARTING,
++					"arm/coresight:starting",
++					etm_starting_cpu, etm_dying_cpu);
  
- 	err = rtsx_pci_write_register(pcr, CARD_OE, SD_OUTPUT_EN, SD_OUTPUT_EN);
- 	if (err < 0)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ONLINE_DYN,
+-						   "arm/coresight:online",
+-						   etm_online_cpu, NULL);
++	ret = cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN,
++					"arm/coresight:online",
++					etm_online_cpu, NULL);
+ 
+ 	/* HP dyn state ID returned in ret on success */
+ 	if (ret > 0) {
 -- 
 2.51.0
 
