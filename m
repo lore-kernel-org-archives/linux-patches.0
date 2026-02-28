@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B1142DFFA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0188426ECD
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301184; cv=none; b=BurVTFbNMN1cQlTEDoK2C3tDzsZefgl+BHDDLdViaTlBeGto8ivf3pLYy50IP8La9jABpizUgCby0uUFmX9x4sgXNQAitpSpvLK57Hy9k3kTRI8yD9BuwrChgCA/zrDe4Ky1IzMyVex9Wc+Al4FxVB+McllUBQQelJKMx4ELcLw=
+	t=1772301184; cv=none; b=mwmOCIPKKocp1ZXPrWVwdXesu0S3WeYboNXBq+H++HFTEPdq108nj1CHrhzScXYauIo8RT1Pmc+qMujqLY5q2deM0qWVMWVgvI3E9VWnX6HEpCe2MPrg1LXVdQUzDXCseK3M1YQAMpx9TwgRwmnWNhHHOZQh0bZqCwW6SDDa+kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301184; c=relaxed/simple;
-	bh=Z/bdLUj1wqj9sxsuaIVpV0P7vtGpNZAyjM/rPm9AFew=;
+	bh=0UMkOyGjMxIoCr9XoxNfWkc7FQFB4U5HlxQCUve25mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oEZaG7BcsX1S7ILOq2DOiCt0VYdDnAryjzeM3r2ebvV3y9DKDSiSRGkTNCDakPZu0FDe04hUyMtE6rAi+Pa+ouU9GaNL9wqhyeV1t9mGRZG4WLoLmMIBpftuz1IKAV5eNFJpH+PFDdZtF5HQnKvkIM8UYNo8NsQXg72bqP1piuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o5NHg9pg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k2JEOoU0tGEcymLbNpim8Dplthli9kAG2QQtNSdSu54H+AouYyUbqWZlI/HxV9dNl2T3PRgDlqwCqyIuPgQBmUKBZPHWbBU/5h4JqtMYjYywKFsIySYMxCpedlOs+uoizKCzH1H1dqPKpWACJGgy9aWPNkt/K4u8hppa3nWD/5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LClLwIRP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o5NHg9pg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A4DC116D0;
-	Sat, 28 Feb 2026 17:53:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LClLwIRP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0E2C19424;
+	Sat, 28 Feb 2026 17:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301184;
-	bh=Z/bdLUj1wqj9sxsuaIVpV0P7vtGpNZAyjM/rPm9AFew=;
+	bh=0UMkOyGjMxIoCr9XoxNfWkc7FQFB4U5HlxQCUve25mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5NHg9pg44W2Ylu6qdQYh9qo4+fwOPSuCFTET/faVB9lm913LBNNojPziUN6TUrFD
-	 sB4EscTozF6WI2Fm3pteaPTdajGI6Y6HPiH8Z2ZwyjxPd+plefFkMiN7hBTUeSVTB1
-	 LUlZ47BXvTe6EozVhln4cBHzgH59BTBctmwwskmnPdZ40AXGugz1CaQSReInjENUXF
-	 yR5Vf6xCEDOQ5aCAvMR104fAePsdCR/btt5pcGM3NiW4un+V6xOCjnYWt9kAsteeZb
-	 wY+L4/casaZQ09OegcG58bLaSp6yaM7HpxOVo7mJ66JGkNq84aMNj7LYOCiyt70/qa
-	 d70HoqqTPmPgg==
+	b=LClLwIRPQH2ve3drdq6OOR1wdbVGTzoBjaUTirw/ckGZ3Upzlb8GWytKg+vcyD9p5
+	 dqTPf69yPXUee6YeDO4tTA1jkC5WmH6gbi6mlGkvFnQ8ru9e+JSEj5bIIzlwqLkuJW
+	 XczsQlzYCyk/mfJMOXcQgtGweilaqCSvroTz3XWyo42RKGXPEy9VBGRkmf/rmO53RU
+	 u3SAsBJwoE8oEkwKxJUYxYCxi6L1/uxrJ1kc1n/EtG+QdTiJ3gedabjNXvbTJmQNos
+	 DXeX/OBQIXJTWNJQwI8AtTfOjP0tMZA9nDrpQLv30d/aKETZW+O5orVCfo6BtlhCfE
+	 RAba+3esk8guQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Marcus Folkesson <marcus.folkesson@gmail.com>,
+Cc: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 353/752] Revert "mfd: da9052-spi: Change read-mask to write-mask"
-Date: Sat, 28 Feb 2026 12:41:04 -0500
-Message-ID: <20260228174750.1542406-353-sashal@kernel.org>
+Subject: [PATCH 6.18 354/752] mfd: intel-lpss: Add Intel Nova Lake-S PCI IDs
+Date: Sat, 28 Feb 2026 12:41:05 -0500
+Message-ID: <20260228174750.1542406-354-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -43,44 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Marcus Folkesson <marcus.folkesson@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 12daa9c1954542bf98bb942fb2dadf19de79a44b ]
+[ Upstream commit cefd793fa17de708d043adab50e7f96f414b0f1d ]
 
-This reverts commit 2e3378f6c79a1b3f7855ded1ef306ea4406352ed.
+Add Intel Nova Lake-S LPSS PCI IDs.
 
-Almost every register in this chip can be customized via OTP
-memory. Somehow the value for R19, which decide if the flag is set
-on read or write operation, seems to have been overwritten for the chip
-the original patch were written for.
-
-Revert the change to follow the default behavior.
-
-Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
-Link: https://patch.msgid.link/20251124-da9052-revert-v1-1-fbeb2c894002@gmail.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260113172151.48062-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/da9052-spi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/intel-lpss-pci.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/mfd/da9052-spi.c b/drivers/mfd/da9052-spi.c
-index 80fc5c0cac2fb..be5f2b34e18ae 100644
---- a/drivers/mfd/da9052-spi.c
-+++ b/drivers/mfd/da9052-spi.c
-@@ -37,7 +37,7 @@ static int da9052_spi_probe(struct spi_device *spi)
- 	spi_set_drvdata(spi, da9052);
- 
- 	config = da9052_regmap_config;
--	config.write_flag_mask = 1;
-+	config.read_flag_mask = 1;
- 	config.reg_bits = 7;
- 	config.pad_bits = 1;
- 	config.val_bits = 8;
+diff --git a/drivers/mfd/intel-lpss-pci.c b/drivers/mfd/intel-lpss-pci.c
+index 8d92c895d3aef..713a5bfb1a3c2 100644
+--- a/drivers/mfd/intel-lpss-pci.c
++++ b/drivers/mfd/intel-lpss-pci.c
+@@ -437,6 +437,19 @@ static const struct pci_device_id intel_lpss_pci_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x5ac4), (kernel_ulong_t)&bxt_spi_info },
+ 	{ PCI_VDEVICE(INTEL, 0x5ac6), (kernel_ulong_t)&bxt_spi_info },
+ 	{ PCI_VDEVICE(INTEL, 0x5aee), (kernel_ulong_t)&bxt_uart_info },
++	/* NVL-S */
++	{ PCI_VDEVICE(INTEL, 0x6e28), (kernel_ulong_t)&bxt_uart_info },
++	{ PCI_VDEVICE(INTEL, 0x6e29), (kernel_ulong_t)&bxt_uart_info },
++	{ PCI_VDEVICE(INTEL, 0x6e2a), (kernel_ulong_t)&tgl_spi_info },
++	{ PCI_VDEVICE(INTEL, 0x6e2b), (kernel_ulong_t)&tgl_spi_info },
++	{ PCI_VDEVICE(INTEL, 0x6e4c), (kernel_ulong_t)&ehl_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x6e4d), (kernel_ulong_t)&ehl_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x6e4e), (kernel_ulong_t)&ehl_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x6e4f), (kernel_ulong_t)&ehl_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x6e5c), (kernel_ulong_t)&bxt_uart_info },
++	{ PCI_VDEVICE(INTEL, 0x6e5e), (kernel_ulong_t)&tgl_spi_info },
++	{ PCI_VDEVICE(INTEL, 0x6e7a), (kernel_ulong_t)&ehl_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x6e7b), (kernel_ulong_t)&ehl_i2c_info },
+ 	/* ARL-H */
+ 	{ PCI_VDEVICE(INTEL, 0x7725), (kernel_ulong_t)&bxt_uart_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7726), (kernel_ulong_t)&bxt_uart_info },
 -- 
 2.51.0
 
