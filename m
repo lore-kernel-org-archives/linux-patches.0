@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17FA4611C5;
-	Sat, 28 Feb 2026 17:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9C547B43F;
+	Sat, 28 Feb 2026 17:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301294; cv=none; b=svblPvLEmWLIRG6P8yE4Lkvd7FMNns4jVBILsy948s5oyerb1wJMJXqTtYJG4/KS9qmCfrF9cKoPStC5JKoMIuG8hBy+Yjf158Hlb4PcnCdbFVjYJypk5iT3tR1Q8mdMy77pjJ3DQ3BLHWjfzgSaXiJNqV/llY/CJyDe+WphBGs=
+	t=1772301295; cv=none; b=hDhp9H0WXbU1K99Ku3u172v6MhYhpSbntXthv1z0dpyU5nUSqgzdiq8bTwQyLJxCJT9vgyP7lsAIHtCbpmIShdpcg1iz4X9fbKVgn7x7QsDIuMVEJ67CuMWS1BbPTpvWfKxaHzXJKkWsfQsRlMx57oVYgAWWCSbk+IjnDi87/5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301294; c=relaxed/simple;
-	bh=lcawo1snmYO4JkAn7IB+DhZ12UD686+CTTT4COmR6yE=;
+	s=arc-20240116; t=1772301295; c=relaxed/simple;
+	bh=7/IR8FSMgLJn+jx5lefrG4UI8KaNTEfvyd7SrohzmpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7Z/AWNorSP0eRSeCWrSZoSxbXQiE9VPEd/HYrWuIcgwznyugyJgcU00hDQXrINe9FVnu9Autvyat9dghp/OB6sARwfW7t2SqzVaO4x4wERRHRCZyfYWs5R6cn5lvP/KovMMI/KzFmcubJd+DuiGU9Ro6xKpixXIhTqUS54zu0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S1EhJ7XR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mJ3ApuJQSqHgtGdC+EEzRktkNx5GsakgHuylBSE6zuGoYrOnN8bIt0xbK2DmCjEDbO+8gFR8qjadC7W2ZLJKY3Otv/mZwBCzCNI+yOokoQthPxelut2Oj6ZpyPBoqc+u7WnZLFZMApBCMj5g+59HbJxEH7NKxMnQZ1EBuhnN8oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uS64Q3Va; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S1EhJ7XR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15031C19425;
-	Sat, 28 Feb 2026 17:54:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uS64Q3Va"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0304AC2BC87;
+	Sat, 28 Feb 2026 17:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301294;
-	bh=lcawo1snmYO4JkAn7IB+DhZ12UD686+CTTT4COmR6yE=;
+	s=k20201202; t=1772301295;
+	bh=7/IR8FSMgLJn+jx5lefrG4UI8KaNTEfvyd7SrohzmpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1EhJ7XRqTYE+inAOIjsJosYKMfM1jHpnTzmog3HPW6zkuV6zjkOrZuzGzDh0ZT8k
-	 X3EE5BnUZZywtGgHHvMxG4Z77lmgK+3pAEiymYZeM0NPRQ5sCsp1nemYT4cLT1Wy1y
-	 frY6tepjZtrRqrfgCOsNi0ZiIw4J9OgPcP7u07QgXsGY8eb/A0+DVOztBRX6GcTjc7
-	 ziy5KFF0OxLOXI8GzRArHNFQncOK+ZzCWG8KJMf737JUjL8jUX6G8ZC3HPzbZ6qE8Q
-	 XrSzb+RHjJnpyHb+6xHs1OkSNPqcRWG8Xu1kfyt1rRyc+bUcuqFmwdJx33S2bwOl8Q
-	 Qgir8epLfHOQw==
+	b=uS64Q3VakjevcbpepBICleT69NJurAaBXwjXqIZBA/bYzOH5ebN73NyLGb9xR8Odq
+	 HRHjBS/z8WhFWcC4zlRuPpVr3gGQBil1T8s3mdxPzHPA46mdr6r5jZffKMzQBtUaC5
+	 zsfAzwISi6Os4Md4jTzbtF/7WnYUhpRBo8uUz2xjwjylB1OVO/8yoPDUlweQMuurPz
+	 egJwuUsWTjvevcWGw7uXlICsS7zd2YMKLfTevMxehpWtl7rX46lyy983uxt1ZtDQK4
+	 n2kdtrKV+AA4Wf2CYdfj5gVVr4qR9mPDeBoWXiIbrE3d9r3m2IWAyE4nZve3bk+I4a
+	 xS7lhmYBzoISg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alexey Minnekhanov <alexeymin@postmarketos.org>,
+Cc: Eric Biggers <ebiggers@kernel.org>,
 	stable@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 479/752] arm64: dts: qcom: sdm630: Add missing MDSS reset
-Date: Sat, 28 Feb 2026 12:43:10 -0500
-Message-ID: <20260228174750.1542406-479-sashal@kernel.org>
+Subject: [PATCH 6.18 480/752] dm-verity: correctly handle dm_bufio_client_create() failure
+Date: Sat, 28 Feb 2026 12:43:11 -0500
+Message-ID: <20260228174750.1542406-480-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,48 +49,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Minnekhanov <alexeymin@postmarketos.org>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 0c1d1591f898d54eaa4c8f2a1535ab21bf4e42e4 ]
+[ Upstream commit 119f4f04186fa4f33ee6bd39af145cdaff1ff17f ]
 
-If the OS does not support recovering the state left by the
-bootloader it needs a way to reset display hardware, so that it can
-start from a clean state. Add a reference to the relevant reset.
+If either of the calls to dm_bufio_client_create() in verity_fec_ctr()
+fails, then dm_bufio_client_destroy() is later called with an ERR_PTR()
+argument.  That causes a crash.  Fix this.
 
-It fixes display init issue appeared in Linux v6.17: without reset
-device boots into black screen and you need to turn display off/on
-to "fix" it. Also sometimes it can boot into solid blue color
-with these messages in kernel log:
-
-  hw recovery is not complete for ctl:2
-  [drm:dpu_encoder_phys_vid_prepare_for_kickoff:569] [dpu error]enc33
-      intf1 ctl 2 reset failure: -22
-  [drm:dpu_encoder_frame_done_timeout:2727] [dpu error]enc33 frame
-      done timeout
-
-Fixes: 0e789b491ba0 ("pmdomain: core: Leave powered-on genpds on until sync_state")
-Cc: stable@vger.kernel.org # 6.17
-Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251116-sdm660-mdss-reset-v2-3-6219bec0a97f@postmarketos.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
+Cc: stable@vger.kernel.org
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-verity-fec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index b383e480a394d..876a6871745cf 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1563,6 +1563,7 @@ mdss: display-subsystem@c900000 {
- 			reg-names = "mdss_phys", "vbif_phys";
+diff --git a/drivers/md/dm-verity-fec.c b/drivers/md/dm-verity-fec.c
+index e41bde1d3b15b..5365b3987374a 100644
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -533,9 +533,9 @@ void verity_fec_dtr(struct dm_verity *v)
+ 	mempool_exit(&f->output_pool);
+ 	kmem_cache_destroy(f->cache);
  
- 			power-domains = <&mmcc MDSS_GDSC>;
-+			resets = <&mmcc MDSS_BCR>;
+-	if (f->data_bufio)
++	if (!IS_ERR_OR_NULL(f->data_bufio))
+ 		dm_bufio_client_destroy(f->data_bufio);
+-	if (f->bufio)
++	if (!IS_ERR_OR_NULL(f->bufio))
+ 		dm_bufio_client_destroy(f->bufio);
  
- 			clocks = <&mmcc MDSS_AHB_CLK>,
- 				 <&mmcc MDSS_AXI_CLK>,
+ 	if (f->dev)
 -- 
 2.51.0
 
