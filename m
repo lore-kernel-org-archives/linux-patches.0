@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24D6340A5A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D3D43636C
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301091; cv=none; b=K3psYOwPQYPdpj72CBT2vBklshE69T3lK7uzEToQ9Yzb0Q21RCR0CHB1AqMh8CHAo5kwDDiAqMdffqp0bj+GqnHjCMRa5QcCw51/ohRq4gCRId2TWxJGUrJYC/aCbmJSfYujaNZxDOzp56+tbjKdbeqLHP5eGlpPwd4eGqJQbRU=
+	t=1772301092; cv=none; b=MmHpvCObbTWe/pwFcfvvVEMr96wSrwBK8GPdFtnI320u85En7RKEM0fpNxJaombsUG3SKOIsd+Nb4OLStnaAM1Fru6w82z1wiCTIzDnP5qMKkaoCZP8jzjaDScckCM5GcinMtCHaFf1LoqNB3ABDCVqlasiAid+WqPE7ldmH15w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301091; c=relaxed/simple;
-	bh=QyFenIxw6dkDQlrB4OFw1nwczt4vY80C/iYIZoBiqCA=;
+	s=arc-20240116; t=1772301092; c=relaxed/simple;
+	bh=4anH0qLG+21ObCdiuICIxYxlQmKcgpgfT4QMiejqsEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLssrpZSnPzc4jlqw4DXWj/UuBf6KyF/PhVPxOjHaUUHg9EIvBx6khP78h6HrRj9r+O7y7thJx6aWJpsAxqfs24y4wfIZNegPUrFyR7VMp7pT+H8mXECWHjBWPn5Xh8nGhEgd/sRxWhYHPAn1uSPTvIhRLCom6ahB9bBLRzeBSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jfJxEAhg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNJGRtwU0XrkF6koFh03x3vwv5gJXrQYXq57PLSemFmupHL/CxbJPHsjZtlJ2EQInmYbKZM7JhoMidrJkfHxbr3n8duj6vMTUk2/ZuuLO9GzyPZmr0N7sYUE7pt9phQmm2b4Z1Q/ZMHzHO3FQlhhJprOfdkRk8ZtOd+Faa5Ibtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=plU4xT61; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jfJxEAhg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4335AC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="plU4xT61"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A15C19424;
 	Sat, 28 Feb 2026 17:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301091;
-	bh=QyFenIxw6dkDQlrB4OFw1nwczt4vY80C/iYIZoBiqCA=;
+	s=k20201202; t=1772301092;
+	bh=4anH0qLG+21ObCdiuICIxYxlQmKcgpgfT4QMiejqsEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jfJxEAhgwEhUiNo688x9v0lSar3DuDZC4CqJkGTkmO3uy90LuAWGsgSz+YzvxG76h
-	 9HtkN2HAr/b3tlPclytdSL+d2dM1O/WeEEPkmrfzFnZRvNtNjaZ4t3oqHBexHi28VZ
-	 IxlqOnb/33u+K0DlWBVzdg7mFH+BNwcX1IshVF/nTL0xTknV0YecIyumiTlGZtdtt1
-	 Ar8ceNflbgHYdUQNUym/2bNb/nqhtJEpZpJDyYUNHDMw7/PV+QlU2HxHwMZKO42uaY
-	 i8qz3Sn8+K9fyH0kqEEZyjadgZ17+Jg9iWZ6lsVATGJRRykGDtxdqZuud7Ms+AGIgf
-	 qJUObJZgmKJGQ==
+	b=plU4xT61uFwopeBaailHHAkMpPYI5kQ4fc6oS2cWQSC/V+QQvi3aoWnTulLxoBuK/
+	 fji0bvLSrzN/6LZarcfQcZGtJYHLQ7/h7SV8gBtBtbl/edOxWKV4iKCqYHowfi6zvW
+	 dR26JX7n8LErCIMq0+8LNLn2tMjK/KnWbXJz98dhIiaE7w7xqebwMBaUYoVf/SqLf/
+	 xc6yRZ57Vsd9ZZluLeXy8NnkdLe4c1zptXokHCUaa/Q2gJYg3Pl7z5XOTWMsAgYUop
+	 s8TKK1kZQd6uYjH/UHMrN3fBhTwKZn/D0OmJGbrTNDIwMOrd+ZtHNuzsxq+6fN00M7
+	 aW0YJE7Hi/txw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 242/752] wifi: cfg80211: allow only one NAN interface, also in multi radio
-Date: Sat, 28 Feb 2026 12:39:13 -0500
-Message-ID: <20260228174750.1542406-242-sashal@kernel.org>
+Subject: [PATCH 6.18 243/752] ipv6: annotate data-races in ip6_multipath_hash_{policy,fields}()
+Date: Sat, 28 Feb 2026 12:39:14 -0500
+Message-ID: <20260228174750.1542406-243-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,46 +48,39 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e69fda4d07701373354e52b0321bd40311d743d0 ]
+[ Upstream commit 03e9d91dd64e2f5ea632df5d59568d91757efc4d ]
 
-According to Wi-Fi Aware (TM) 4.0 specification 2.8, A NAN device can
-have one NAN management interface. This applies also to multi radio
-devices.
-The current code allows a driver to support more than one NAN interface,
-if those are not in the same radio.
+Add missing READ_ONCE() when reading sysctl values.
 
-Fix it.
-
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260107135129.fdaecec0fe8a.I246b5ba6e9da3ec1481ff197e47f6ce0793d7118@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260115094141.3124990-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ include/net/ipv6.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 87f083d9247a4..2ce6e39926d05 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -658,12 +658,8 @@ int wiphy_verify_iface_combinations(struct wiphy *wiphy,
- 				    c->limits[j].max > 1))
- 				return -EINVAL;
- 
--			/* Only a single NAN can be allowed, avoid this
--			 * check for multi-radio global combination, since it
--			 * hold the capabilities of all radio combinations.
--			 */
--			if (!combined_radio &&
--			    WARN_ON(types & BIT(NL80211_IFTYPE_NAN) &&
-+			/* Only a single NAN can be allowed */
-+			if (WARN_ON(types & BIT(NL80211_IFTYPE_NAN) &&
- 				    c->limits[j].max > 1))
- 				return -EINVAL;
- 
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index f0936df7567e3..7e984e75f3345 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -1010,11 +1010,11 @@ static inline int ip6_default_np_autolabel(struct net *net)
+ #if IS_ENABLED(CONFIG_IPV6)
+ static inline int ip6_multipath_hash_policy(const struct net *net)
+ {
+-	return net->ipv6.sysctl.multipath_hash_policy;
++	return READ_ONCE(net->ipv6.sysctl.multipath_hash_policy);
+ }
+ static inline u32 ip6_multipath_hash_fields(const struct net *net)
+ {
+-	return net->ipv6.sysctl.multipath_hash_fields;
++	return READ_ONCE(net->ipv6.sysctl.multipath_hash_fields);
+ }
+ #else
+ static inline int ip6_multipath_hash_policy(const struct net *net)
 -- 
 2.51.0
 
