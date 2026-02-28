@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE5338F629
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A71A38F629
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302144; cv=none; b=qIIQcc76HJwjQTHIsaMWlM5YgMI9r8/7CJ6iJgpe0pJLdyZ2e9bsjtXn6N6IWqDGskgIYRjoN0xLj2Of/rrU9SoieCid08lEGCV2V6xU2ugN27ZyKW2UPRp/DhwF1kxxU+kDnRRRsq/wEuPOu3nVkouCuDSQ5e06li0pHEeKvxM=
+	t=1772302145; cv=none; b=Ot0Ct0CRCWJuux7wJQxqPSNDw7qTUKz2La/HN13lDfWyJUIaK9DruXbpqZw9PM9Mu3CiHNCHwH7L8vVeCT77NbMK7ZPANCgiw2gtdUmP+ZgZwBrMpYU+Y/pM52f00JAErvSFwBMcRymVtlA+5D9Lzoxe9wbW8WHqLjg75jEEWIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302144; c=relaxed/simple;
-	bh=6wuZXygYBjMa9s6MYDOjhkrnDI9raqsA+0nHrYYqmRw=;
+	s=arc-20240116; t=1772302145; c=relaxed/simple;
+	bh=mpcUwL1rLfTmnPdJ2tSjYQVZkcWYKlhpdB9/zrOqmqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JH1wtOZZj5+YXydLjB+8HyZJBjRHgkdBBaenxuTgcZ4i41Pg28GW3koAZhUsjhphxCE0WqmAzlr3Cmh1Y3AnH2ORN9ijKEhfnsQdzNrSCa6cmiJ1lGrYYkQVC4vL3tdmC/EUP6vo8EWqtxcCppCCuLSWV1odkisqumIqYseA5ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X/ptkhmv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rfBZ+eXwwZqmaxPckz9FYOx+jh7ThCIn65HKuroDqKsni38gflD3a1X2oFpN8koAudED8M0IVwZ6rja1uEirEXbt47C/nfPgni1pS3wkLnjJBxFwcEiyJ5uqNKiWXJWULmgkfMDfCreFQZzw0Sta9CJhIvD+yQMubo0bUAZiUes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jwpIc4d5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X/ptkhmv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B16C19424;
-	Sat, 28 Feb 2026 18:09:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jwpIc4d5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB614C2BC87;
+	Sat, 28 Feb 2026 18:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302144;
-	bh=6wuZXygYBjMa9s6MYDOjhkrnDI9raqsA+0nHrYYqmRw=;
+	s=k20201202; t=1772302145;
+	bh=mpcUwL1rLfTmnPdJ2tSjYQVZkcWYKlhpdB9/zrOqmqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/ptkhmv1s/2ZXOpjzThhXZfdRWrxy30CTELFYyYk+LhydZFOZ9Fr4HYJNlFzTM3G
-	 YwE6q2fJq9cd9zn/NrUA9xSLrt+pEW4Sqx0w4UPBqwRBdm/Xyi7oDxrKiT7ALnVpAS
-	 AJV98YxdKqeWH2NcM1uS3JFWnNc6W3NzZYvOAnpRxrLKdpL2oE52dbjhvQiwK+oC61
-	 C9HVqejo5P1S+w6d6yBJ6PCUwh9ZefoebMhmsrxSUO1QKBazzJ7GTm5evQRPjd8WlZ
-	 uAcW/1R7kCwYbN6CMUfMar3fwrN54NM0UiImgBHx9LBscRmRLk8pq2ebtULnymw6i8
-	 mKtdeMbfZRVGA==
+	b=jwpIc4d5yv+s2BKpbl8RSaQI8Xb28qhXGCR4N7VQphvG3AvnYV96pkUEvm6l4Tnuh
+	 mqBu7CTlOskSk283ckB7/hMIKRtuhg9qzr3aQwm0gK0G/ZSpBcg3L38o9rDP30Ht77
+	 rZ8gAzOIhMKnfyWD5n2Q4j5L52izbyW8ypHk1ZpBGUq1rzffxEEZGTwKCUc6t8NGX0
+	 7ouTD7Xs+3Bd2E6toMjJnoLPxlk/YIwFKY1qK197xiRvrzZlXX/q0cb18ZRsXk0vzx
+	 B+GBdiVpvj1hnOq0VBeRyVcyLbJpWiY42yK+pHzi0Zv/CN2sUCZBE/WbSZzfUZ+Fud
+	 +tH7zSEldI0Hg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ondrej Mosnacek <omosnace@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Alexey Gladkov <legion@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+Cc: Tuo Li <islituo@gmail.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 138/283] ucount: check for CAP_SYS_RESOURCE using ns_capable_noaudit()
-Date: Sat, 28 Feb 2026 13:04:40 -0500
-Message-ID: <20260228180709.1583486-138-sashal@kernel.org>
+Subject: [PATCH 6.6 139/283] of: unittest: fix possible null-pointer dereferences in of_unittest_property_copy()
+Date: Sat, 28 Feb 2026 13:04:41 -0500
+Message-ID: <20260228180709.1583486-139-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -51,49 +47,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit 0895a000e4fff9e950a7894210db45973e485c35 ]
+[ Upstream commit d289cb7fcefe41a54d8f9c6d0e0947f5f82b15c6 ]
 
-The user.* sysctls implement the ctl_table_root::permissions hook and they
-override the file access mode based on the CAP_SYS_RESOURCE capability (at
-most rwx if capable, at most r-- if not).  The capability is being checked
-unconditionally, so if an LSM denies the capability, an audit record may
-be logged even when access is in fact granted.
+This function first duplicates p1 and p2 into new, and then checks whether
+the duplication succeeds. However, if the duplication fails (e.g.,
+kzalloc() returns NULL in __of_prop_dup()), new will be NULL but is still
+dereferenced in __of_prop_free(). To ensure that the unit test continues to
+run even when duplication fails, add a NULL check before calling
+__of_prop_free().
 
-Given the logic in the set_permissions() function in kernel/ucount.c and
-the unfortunate way the permission checking is implemented, it doesn't
-seem viable to avoid false positive denials by deferring the capability
-check.  Thus, do the same as in net_ctl_permissions() (net/sysctl_net.c) -
-switch from ns_capable() to ns_capable_noaudit(), so that the check never
-logs an audit record.
-
-Link: https://lkml.kernel.org/r/20260122140745.239428-1-omosnace@redhat.com
-Fixes: dbec28460a89 ("userns: Add per user namespace sysctls.")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Acked-by: Serge Hallyn <serge@hallyn.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Alexey Gladkov <legion@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1c5e3d9bf33b ("of: Add a helper to free property struct")
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Link: https://patch.msgid.link/20260105071438.156186-1-islituo@gmail.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/ucount.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/unittest.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/ucount.c b/kernel/ucount.c
-index a7fd89693bd2a..44ede7a6b805a 100644
---- a/kernel/ucount.c
-+++ b/kernel/ucount.c
-@@ -45,7 +45,7 @@ static int set_permissions(struct ctl_table_header *head,
- 	int mode;
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index aae4e8ef9e365..4b7e663feee3d 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -800,11 +800,13 @@ static void __init of_unittest_property_copy(void)
  
- 	/* Allow users with CAP_SYS_RESOURCE unrestrained access */
--	if (ns_capable(user_ns, CAP_SYS_RESOURCE))
-+	if (ns_capable_noaudit(user_ns, CAP_SYS_RESOURCE))
- 		mode = (table->mode & S_IRWXU) >> 6;
- 	else
- 	/* Allow all others at most read-only access */
+ 	new = __of_prop_dup(&p1, GFP_KERNEL);
+ 	unittest(new && propcmp(&p1, new), "empty property didn't copy correctly\n");
+-	__of_prop_free(new);
++	if (new)
++		__of_prop_free(new);
+ 
+ 	new = __of_prop_dup(&p2, GFP_KERNEL);
+ 	unittest(new && propcmp(&p2, new), "non-empty property didn't copy correctly\n");
+-	__of_prop_free(new);
++	if (new)
++		__of_prop_free(new);
+ #endif
+ }
+ 
 -- 
 2.51.0
 
