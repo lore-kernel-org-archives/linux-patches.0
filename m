@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCD8383C7B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45A2383C68
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302032; cv=none; b=nMyg/ja8bLJZ7KrzJhVXVpi5jwA/ddA+CP9Edn/9eSyRtDWOvugN7M8LMp835gITE1Ds7vtar9bKCeJ0oo4vl/26NOliCjx9luIg283bzKonaT6KMZPwtgyZpZFq79bBNAryO7Fw+IgTNkhRpgdoPY5tVOB/J3j2+K7fsPR29eU=
+	t=1772302033; cv=none; b=U++3Etycl13Ub+kRDWFbk2rpvmN9Pd1A3aSMHVfkZmNsyfSyJL0luYUS3VTeUQHTLEAhhEx+6mAcitOyUYDvmqcZttoq3XUBOXOXl83U04mg86F9Da1VlocvxMlSAYCDKnT74/4QBHbFR9lBYeJaaPt5sPZxUgr/OorPbuuEL4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302032; c=relaxed/simple;
-	bh=SAglDrCuZLPx3lj9cTsxlDzD/ZzdtaqDulL3isYZ580=;
+	s=arc-20240116; t=1772302033; c=relaxed/simple;
+	bh=vc2MXFmhwzG9O6jwkKk3BJmryInIB0popl+gqWgn6ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QNjvvHbcCJDbVHogW6UKRpJP2cToUkxIqYCxKFbCf+PUXj9/Y4DSr4qYJoh9VtYSR5867sLbE8QK0VUz7lN8o4biz8C7CMMknC5FNbdAp6WuAHHYJf/1eOieoy+S1DIfHR7QrzvvpptkQrdZ+cTTXN39f2BdXr8tLPqYwHGrLcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mD1oOCq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O7kqBw+hAixcxEBS6yj7Q/ZVfmwP/KqUEffJdU+F74V6f1+5oi/eoX32ZBmWoHdFlY43Qgb3UVsyc26Kj0PL1oWrE2LZ3cLs1M207g7Pqhf3EpXITc+vYX0UxVtc+2iVlTFvd06g6GUz/7huPIZ97kwoU3HSqeCd+AGSJYvI4bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MFOlCiS9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mD1oOCq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65774C19424;
-	Sat, 28 Feb 2026 18:07:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MFOlCiS9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC6EC116D0;
+	Sat, 28 Feb 2026 18:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302032;
-	bh=SAglDrCuZLPx3lj9cTsxlDzD/ZzdtaqDulL3isYZ580=;
+	bh=vc2MXFmhwzG9O6jwkKk3BJmryInIB0popl+gqWgn6ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mD1oOCq4GgLVlz9nqmfOctMIGvMgBRLOeSM7MZoxPZP+nc8t5U9uqFMWklVrKkm7e
-	 HUh5BB3WNQgLilAH+RFO49QMYb38jCfZSNaOtqCrEymG8STtSS//PmW/fAM4QUYx58
-	 OzqgveHpAYFuSy0ljyAghPZ8wOKxyABZFX7Vh10BLsUYsVtFKuIAFfg9DlgX6Pr1MJ
-	 QRgS6+uGphbK06F2iQ1TS4fMf1bK3WVKrJcjRfKKUzh9n/fdQgjNkAKKPsKr5atyDj
-	 tH2HTPmvqC3X74mfzuWIY1bW1UupLEqunu5t5koactI04vroVS+0FMiohTEjCEPjIS
-	 lKBwIEcr2IgqA==
+	b=MFOlCiS9IP74cTyl8FciT7SJZwExepJvbKRB8AKXrby+gb5dVcCqhD7SxoOztG6AR
+	 bVh/yfAWQSFENaAknJ7aM/dhXwBUZmIOP4GGMTqFznnvr3o+1Ed7WjlRqDeUrU+Vr+
+	 A42snIn0jMBs+7jiYchqe4e5nYBIWBd5eTh6FbGTdWuNGZCXiZ609uQ218Xncu3lMJ
+	 BNq8lwc1wWVL1kcaQPSl/fb5uBv/5G1TWeQH89ranKPMJM5q/Za7KuO/igYpzfODpc
+	 eAK/+habqC1WR6AYhafx6ygRCivwdlXB+g7vxnsdE3d40BlbdVNQ/J+kxiGu6UJZF/
+	 q0l/mj8AwoNLQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: YunJe Shin <yjshin0438@gmail.com>,
-	YunJe Shin <ioerts@kookmin.ac.kr>,
-	Leon Romanovsky <leon@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.6 002/283] RDMA/umad: Reject negative data_len in ib_umad_write
-Date: Sat, 28 Feb 2026 13:02:24 -0500
-Message-ID: <20260228180709.1583486-2-sashal@kernel.org>
+Cc: Thomas Fourier <fourier.thomas@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 003/283] auxdisplay: arm-charlcd: fix release_mem_region() size
+Date: Sat, 28 Feb 2026 13:02:25 -0500
+Message-ID: <20260228180709.1583486-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,60 +48,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: YunJe Shin <yjshin0438@gmail.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 5551b02fdbfd85a325bb857f3a8f9c9f33397ed2 upstream.
+[ Upstream commit b5c23a4d291d2ac1dfdd574a68a3a68c8da3069e ]
 
-ib_umad_write computes data_len from user-controlled count and the
-MAD header sizes. With a mismatched user MAD header size and RMPP
-header length, data_len can become negative and reach ib_create_send_mad().
-This can make the padding calculation exceed the segment size and trigger
-an out-of-bounds memset in alloc_send_rmpp_list().
+It seems like, after the request_mem_region(), the corresponding
+release_mem_region() must take the same size. This was done
+in (now removed due to previous refactoring) charlcd_remove()
+but not in the error path in charlcd_probe().
 
-Add an explicit check to reject negative data_len before creating the
-send buffer.
-
-KASAN splat:
-[  211.363464] BUG: KASAN: slab-out-of-bounds in ib_create_send_mad+0xa01/0x11b0
-[  211.364077] Write of size 220 at addr ffff88800c3fa1f8 by task spray_thread/102
-[  211.365867] ib_create_send_mad+0xa01/0x11b0
-[  211.365887] ib_umad_write+0x853/0x1c80
-
-Fixes: 2be8e3ee8efd ("IB/umad: Add P_Key index support")
-Signed-off-by: YunJe Shin <ioerts@kookmin.ac.kr>
-Link: https://patch.msgid.link/20260203100628.1215408-1-ioerts@kookmin.ac.kr
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ce8962455e90 ("ARM: 6214/2: driver for the character LCD found in ARM refdesigns")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/user_mad.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/auxdisplay/arm-charlcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/user_mad.c b/drivers/infiniband/core/user_mad.c
-index 2ed749f50a29f..285f251fc014b 100644
---- a/drivers/infiniband/core/user_mad.c
-+++ b/drivers/infiniband/core/user_mad.c
-@@ -514,7 +514,8 @@ static ssize_t ib_umad_write(struct file *filp, const char __user *buf,
- 	struct rdma_ah_attr ah_attr;
- 	struct ib_ah *ah;
- 	__be64 *tid;
--	int ret, data_len, hdr_len, copy_offset, rmpp_active;
-+	int ret, hdr_len, copy_offset, rmpp_active;
-+	size_t data_len;
- 	u8 base_version;
- 
- 	if (count < hdr_size(file) + IB_MGMT_RMPP_HDR)
-@@ -588,7 +589,10 @@ static ssize_t ib_umad_write(struct file *filp, const char __user *buf,
- 	}
- 
- 	base_version = ((struct ib_mad_hdr *)&packet->mad.data)->base_version;
--	data_len = count - hdr_size(file) - hdr_len;
-+	if (check_sub_overflow(count, hdr_size(file) + hdr_len, &data_len)) {
-+		ret = -EINVAL;
-+		goto err_ah;
-+	}
- 	packet->msg = ib_create_send_mad(agent,
- 					 be32_to_cpu(packet->mad.hdr.qpn),
- 					 packet->mad.hdr.pkey_index, rmpp_active,
+diff --git a/drivers/auxdisplay/arm-charlcd.c b/drivers/auxdisplay/arm-charlcd.c
+index 0b1c99cca7334..f418b133ee752 100644
+--- a/drivers/auxdisplay/arm-charlcd.c
++++ b/drivers/auxdisplay/arm-charlcd.c
+@@ -323,7 +323,7 @@ static int __init charlcd_probe(struct platform_device *pdev)
+ out_no_irq:
+ 	iounmap(lcd->virtbase);
+ out_no_memregion:
+-	release_mem_region(lcd->phybase, SZ_4K);
++	release_mem_region(lcd->phybase, lcd->physize);
+ out_no_resource:
+ 	kfree(lcd);
+ 	return ret;
 -- 
 2.51.0
 
