@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCABA33A713
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036B9346FA0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302233; cv=none; b=Uc39TaJIDrsqxRBQ8zcLExKFkwXl2Va+A861I7ckDtHjZm0mhGBIdByGKvbrzvMKsGodwhtnjRPnLViTd8FUzHaATUclkgXCcjP9YqDQ7gpIfAd2lEy0wUU8x05v4SE9ehaVcQHTwV++oPSSvbYzIsqrsk6MibgMbOJ41ydbdj4=
+	t=1772302235; cv=none; b=tfteU1ucao/VP9SLI0Uo/2kybUQpM6cA94ByqBMRPo/BMJOuC8w7eOBDDgmB5Mf6WWYGuj3LEH9EemlXlAFhsz3zURDxkeTaA2Fxpc3y7E5Ex8ImRpmw3PsTvjRsoCK7DHGhFpsazVIXnMKmM8sm6mG+mi6gKC9YhEoZ7lc4s9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302233; c=relaxed/simple;
-	bh=hTNs72C7ULYWoyq33/sdV8JG5+2iCi9fnohOClQi77A=;
+	s=arc-20240116; t=1772302235; c=relaxed/simple;
+	bh=HUQ4xqbsqwrWchhCW0mtGcwQdFqv30NK5yhhhGDdw00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sv+24u9UFAWYzqxBqIJddLoATHNiyjTZpsBPk87aVm1xVv4huiojzyG0HmGjylGMi0mUHE+fBjlwq9BMbDzAagv7ujLE0EXD1xyorjJNpdkQfUaUZBNtdrLw6RYjESDm7WyqTuJZ3jDTSScMLcAXOCFv5IH7AXTSdH9w40B9G+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tx7UTlWp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XCJnMAqP+EP2aLa5jr3WYAU2PIixdde3UWK243RF1M7wdmZGORm1s3JPwYkSv4SldyKjJp0sj+T042aoDOepE0n0Yd142y6Kwv8NTi80YwIo1mYxw81blCesgrEn5YymGCQbA8frxmMQ+DAyT0lyvg9Wm/CD0MAK53ywtWFrLkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FJLfd89a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tx7UTlWp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E14C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FJLfd89a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5C7C19423;
 	Sat, 28 Feb 2026 18:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302233;
-	bh=hTNs72C7ULYWoyq33/sdV8JG5+2iCi9fnohOClQi77A=;
+	s=k20201202; t=1772302234;
+	bh=HUQ4xqbsqwrWchhCW0mtGcwQdFqv30NK5yhhhGDdw00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tx7UTlWpd/h9htV0wazNVbbCUYcmsuoTbKNUNLgnPoPIXoHp1e74/gaNRdPV/zHNO
-	 tJcIRxt0utodpaAY9MXc+vXhHWQu/jDSaM82NMd3zuOIc2IgzeKZ6pEf7s7cjeBoZL
-	 GfSEkEJ7L2y1/Uj2DdqKWcSSCUvuAzTy+J2abUGo57P/v6KZGD06uKEDSkMXxT/ZR2
-	 VIWao8FzfY/HETBFBw5qL10ludnSCNWKtaM7A3i6Fke29yvz7NL+LMKqvHtx/fjY3J
-	 6kX5IwTZ0NCu/HapVlHco0K7BoRW/jvdkoELFLjYAYHVXqzCT8viHcqyXxyC0twHrC
-	 gLSK8UlnnLldg==
+	b=FJLfd89a1I/yDF7MvqS5jEIZA9ar19T6aNVUq1mXYbz7ueosbvWLajkfMlKgItO2O
+	 x9chq41iFmvDuLH6dXXAh8PsXwokJchgBuNlsjL1OSxNkq/zsBceRoyDE9STGlaNM4
+	 NiFDYVQCSWxxIvqVTW7MMIiiUKbKTB1Pc6wGycN7rpTDhmDRUM+eZGmbBGUVqhldOK
+	 kn94GsQsDhwpCK2MQWxz0l6KLOopjPiJ2nwEO/gxt7LxnVJM7xqqVLDZZTTweaS/sV
+	 GUD6LWWLOAILFxIqEEj6pEDqlWoKt09KrUgaP1xOjO9FjVKpm9x40N7ovsCvpQSgxT
+	 sR2W06Q223VDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Felix Gu <ustc.gu@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Linus Walleij <linusw@kernel.org>,
+Cc: Qing Wang <wangqing7171@gmail.com>,
+	syzbot+d130f98b2c265fae5297@syzkaller.appspotmail.com,
+	Amir Goldstein <amir73il@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 244/283] pinctrl: equilibrium: Fix device node reference leak in pinbank_init()
-Date: Sat, 28 Feb 2026 13:06:26 -0500
-Message-ID: <20260228180709.1583486-244-sashal@kernel.org>
+Subject: [PATCH 6.6 245/283] ovl: Fix uninit-value in ovl_fill_real
+Date: Sat, 28 Feb 2026 13:06:27 -0500
+Message-ID: <20260228180709.1583486-245-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,41 +51,56 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Qing Wang <wangqing7171@gmail.com>
 
-[ Upstream commit c0b4a4feeb43305a754893d8d9c6b2b5a52d45ac ]
+[ Upstream commit 1992330d90dd766fcf1730fd7bf2d6af65370ac4 ]
 
-When calling of_parse_phandle_with_fixed_args(), the caller is
-responsible to call of_node_put() to release the reference of device
-node.
+Syzbot reported a KMSAN uninit-value issue in ovl_fill_real.
 
-In pinbank_init(), the reference of the node obtained from the
-"gpio-ranges" property is never released, resulting in a reference
-count leak.
+This iusse's call chain is:
+__do_sys_getdents64()
+    -> iterate_dir()
+        ...
+            -> ext4_readdir()
+                -> fscrypt_fname_alloc_buffer() // alloc
+                -> fscrypt_fname_disk_to_usr // write without tail '\0'
+                -> dir_emit()
+                    -> ovl_fill_real() // read by strcmp()
 
-Add the missing of_node_put() call to fix the leak.
+The string is used to store the decrypted directory entry name for an
+encrypted inode. As shown in the call chain, fscrypt_fname_disk_to_usr()
+write it without null-terminate. However, ovl_fill_real() uses strcmp() to
+compare the name against "..", which assumes a null-terminated string and
+may trigger a KMSAN uninit-value warning when the buffer tail contains
+uninit data.
 
-Fixes: 1948d5c51dba ("pinctrl: Add pinmux & GPIO controller driver for a new SoC")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Acked-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reported-by: syzbot+d130f98b2c265fae5297@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d130f98b2c265fae5297
+Fixes: 4edb83bb1041 ("ovl: constant d_ino for non-merge dirs")
+Signed-off-by: Qing Wang <wangqing7171@gmail.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20260128132406.23768-2-amir73il@gmail.com
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-equilibrium.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/overlayfs/readdir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-equilibrium.c b/drivers/pinctrl/pinctrl-equilibrium.c
-index 5b5ddf7e5d0eb..d7c89c310b373 100644
---- a/drivers/pinctrl/pinctrl-equilibrium.c
-+++ b/drivers/pinctrl/pinctrl-equilibrium.c
-@@ -850,6 +850,7 @@ static int pinbank_init(struct device_node *np,
+diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
+index de39e067ae65a..0d667e9534573 100644
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -659,7 +659,7 @@ static bool ovl_fill_real(struct dir_context *ctx, const char *name,
+ 		container_of(ctx, struct ovl_readdir_translate, ctx);
+ 	struct dir_context *orig_ctx = rdt->orig_ctx;
  
- 	bank->pin_base = spec.args[1];
- 	bank->nr_pins = spec.args[2];
-+	of_node_put(spec.np);
- 
- 	bank->aval_pinmap = readl(bank->membase + REG_AVAIL);
- 	bank->id = id;
+-	if (rdt->parent_ino && strcmp(name, "..") == 0) {
++	if (rdt->parent_ino && namelen == 2 && !strncmp(name, "..", 2)) {
+ 		ino = rdt->parent_ino;
+ 	} else if (rdt->cache) {
+ 		struct ovl_cache_entry *p;
 -- 
 2.51.0
 
