@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FA238F623
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5011D38F623
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302146; cv=none; b=XLds5bfvMgwhQ+N/OsWOLeBiWGccfpPGinWcBF7oUCF062IUvTgEeHQaFWrUOAH94eEq9bmYvXzCaZZ8ub5PzYdeAa5k/yONCXkGKpAmttR5UOKVdpDZsHZpcBrgajVnrtFnuARuYhPXDYARKGj6UrUJw+GZKrLByKkdkScbFpw=
+	t=1772302147; cv=none; b=iX+Og/df1D494v8b0jgsdQtBmO2wEQ87keb6Usa/AZjxXXxRr22d4zqFT95Ne9x9P2xGgfgL8oMhbGL1w655129gSLWK/x3Vk/1dDL0In5NdR+cHryxTjEWjkMTqepKV4V2BejkYu5/TMj9DXytBJ5zY+u66oAC5M8H2t0RPZUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302146; c=relaxed/simple;
-	bh=X8YmMsjnliPiL2aAoOGAMrhclUzXsSpMJEhBscNyjYI=;
+	s=arc-20240116; t=1772302147; c=relaxed/simple;
+	bh=r7Sk7EeAZ/NQENHT4UHoRWbp5+Y6LHUKnXU2bm9jjUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHx3/hbjMb2a0HPtTXKWk8fck0+Vikb1CEbzdBNnU2/rF44a/AgU+uXG1Qpa6hCTcQPNMkbHXnB4vLkXFlmyFCB2bYci2Rx7HBDHPuVmADgvfx6jB1T97fERPs6mDND0bRb7cohz3niuVqyiTKY7xpT8hioN1HoRtJdZqVFUVd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o9bN69Gc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oTmujhPtQGRpi/oVUg2LGYZwcDY5PD8pSOFaAvemK6JHlu0CvC1d8mDmvaekvJ2Cb5glMM9rpsvjhu8SgcmkLJ4hVaODdJ6khc5bd1yl2tJhAvM+TXGbO7eOcTssOQ/Tk/vI7NTK6pEgbni1+at6yyRHEJfXOPQ4nnmQeQD3His=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l/GjmV+r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o9bN69Gc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0859C19423;
-	Sat, 28 Feb 2026 18:09:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l/GjmV+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDAAC19424;
+	Sat, 28 Feb 2026 18:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302146;
-	bh=X8YmMsjnliPiL2aAoOGAMrhclUzXsSpMJEhBscNyjYI=;
+	s=k20201202; t=1772302147;
+	bh=r7Sk7EeAZ/NQENHT4UHoRWbp5+Y6LHUKnXU2bm9jjUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o9bN69GcfqMTSItlSqPDBYQXYBr/CMR67WuxgaZoqW7qEgAK1LR7+qiUkNTaBlvlZ
-	 2eLKjrrpiCWIXMP1/fMJUZdgqdTOqdL3P2L9K6Lchy3BAlUvo5wqnZS20yMrxnqhCe
-	 pjwGHgKtgWAzs73GPwZB5soT5k6AJ2bNUjDqHh2tYpj4lqB+50w7xVC/5fr26Kaoyp
-	 dbdIYsx3pSWyXarVJwb33VWnqRjQYJTvX9tX+c5/kuSK0IEYPV/znO9gNTwesz79KD
-	 STIbPZGKi094KS1Z7esJfBcmYhZDZjQBeuPeq/rwKFLC+qNIenr9TqTfplxS+Sf4wL
-	 ahtBOGKEpjGog==
+	b=l/GjmV+r9zgcmnMqHd/K+rw63+6YWkA95CsXK/tiavxyfwHVl1dSMwUYWMSr36SvB
+	 5VH5iB7TbPx6Yyw1xcQ/268+SHN84kTiNohv5zq9sO/ftsSCuIkhZ1eA2kYkxrMTw4
+	 mFrxt6om21AeUFca5tHusxIdsQDDUDBlmw3IbV7yvb9pQY40QcBu3Hv7qoc9roDJJ0
+	 FJNRxZG/Zop4Zop2K5Vo11md5WkZXQpRsC8VIXR35OMOAGZK/+5R2QhIvBKPRiAuZh
+	 KdyVqFLwZZBJEAgr+y7+VqyFSA4ZXq2ZN0kjB7SH0Q6A77f/lTU6VLn4sF5lWZ6fFv
+	 WS5pU3oCe/eWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+Cc: Anshumali Gaur <agaur@marvell.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/283] mptcp: fix receive space timestamp initialization
-Date: Sat, 28 Feb 2026 13:04:42 -0500
-Message-ID: <20260228180709.1583486-140-sashal@kernel.org>
+Subject: [PATCH 6.6 141/283] octeontx2-af: Fix PF driver crash with kexec kernel booting
+Date: Sat, 28 Feb 2026 13:04:43 -0500
+Message-ID: <20260228180709.1583486-141-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,90 +48,60 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Anshumali Gaur <agaur@marvell.com>
 
-[ Upstream commit 70274765fef555af92a1532d5bd5450c691fca9d ]
+[ Upstream commit 2d2d574309e3ae84ee794869a5da8b4c38753a94 ]
 
-MPTCP initialize the receive buffer stamp in mptcp_rcv_space_init(),
-using the provided subflow stamp. Such helper is invoked in several
-places; for passive sockets, space init happened at clone time.
+During a kexec reboot the hardware is not power-cycled, so AF state from
+the old kernel can persist into the new kernel. When AF and PF drivers
+are built as modules, the PF driver may probe before AF reinitializes
+the hardware.
 
-In such scenario, MPTCP ends-up accesses the subflow stamp before
-its initialization, leading to quite randomic timing for the first
-receive buffer auto-tune event, as the timestamp for newly created
-subflow is not refreshed there.
+The PF driver treats the RVUM block revision as an indication that AF
+initialization is complete. If this value is left uncleared at shutdown,
+PF may incorrectly assume AF is ready and access stale hardware state,
+leading to a crash.
 
-Fix the issue moving the stamp initialization out of the mentioned helper,
-at the data transfer start, and always using a fresh timestamp.
+Clear the RVUM block revision during AF shutdown to avoid PF
+mis-detecting AF readiness after kexec.
 
-Fixes: 013e3179dbd2 ("mptcp: fix rcv space initialization")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260203-net-next-mptcp-misc-feat-6-20-v1-2-31ec8bfc56d1@kernel.org
+Fixes: 54494aa5d1e6 ("octeontx2-af: Add Marvell OcteonTX2 RVU AF driver")
+Signed-off-by: Anshumali Gaur <agaur@marvell.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260203050701.2616685-1-agaur@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 8 ++++----
- net/mptcp/protocol.h | 5 +++++
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index f3856856aa446..85ef9042873be 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2048,8 +2048,8 @@ static void mptcp_rcv_space_adjust(struct mptcp_sock *msk, int copied)
- 
- 	msk->rcvq_space.copied += copied;
- 
--	mstamp = div_u64(tcp_clock_ns(), NSEC_PER_USEC);
--	time = tcp_stamp_us_delta(mstamp, msk->rcvq_space.time);
-+	mstamp = mptcp_stamp();
-+	time = tcp_stamp_us_delta(mstamp, READ_ONCE(msk->rcvq_space.time));
- 
- 	rtt_us = msk->rcvq_space.rtt_us;
- 	if (rtt_us && time < (rtt_us >> 3))
-@@ -3451,6 +3451,7 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 	__mptcp_propagate_sndbuf(nsk, ssk);
- 
- 	mptcp_rcv_space_init(msk, ssk);
-+	msk->rcvq_space.time = mptcp_stamp();
- 
- 	if (mp_opt->suboptions & OPTION_MPTCP_MPC_ACK)
- 		__mptcp_subflow_fully_established(msk, subflow, mp_opt);
-@@ -3468,8 +3469,6 @@ void mptcp_rcv_space_init(struct mptcp_sock *msk, const struct sock *ssk)
- 	msk->rcvq_space.copied = 0;
- 	msk->rcvq_space.rtt_us = 0;
- 
--	msk->rcvq_space.time = tp->tcp_mstamp;
--
- 	/* initial rcv_space offering made to peer */
- 	msk->rcvq_space.space = min_t(u32, tp->rcv_wnd,
- 				      TCP_INIT_CWND * tp->advmss);
-@@ -3688,6 +3687,7 @@ void mptcp_finish_connect(struct sock *ssk)
- 	 * accessing the field below
- 	 */
- 	WRITE_ONCE(msk->local_key, subflow->local_key);
-+	WRITE_ONCE(msk->rcvq_space.time, mptcp_stamp());
- 
- 	mptcp_pm_new_connection(msk, ssk, 0);
- }
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 0fbc1f13bd2d4..58805fbf1f961 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -786,6 +786,11 @@ static inline bool mptcp_is_fully_established(struct sock *sk)
- 	       READ_ONCE(mptcp_sk(sk)->fully_established);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index 846049b6c4d60..a7fcea9b1ee7e 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -3444,11 +3444,22 @@ static void rvu_remove(struct pci_dev *pdev)
+ 	devm_kfree(&pdev->dev, rvu);
  }
  
-+static inline u64 mptcp_stamp(void)
++static void rvu_shutdown(struct pci_dev *pdev)
 +{
-+	return div_u64(tcp_clock_ns(), NSEC_PER_USEC);
++	struct rvu *rvu = pci_get_drvdata(pdev);
++
++	if (!rvu)
++		return;
++
++	rvu_clear_rvum_blk_revid(rvu);
 +}
 +
- void mptcp_rcv_space_init(struct mptcp_sock *msk, const struct sock *ssk);
- void mptcp_data_ready(struct sock *sk, struct sock *ssk);
- bool mptcp_finish_join(struct sock *sk);
+ static struct pci_driver rvu_driver = {
+ 	.name = DRV_NAME,
+ 	.id_table = rvu_id_table,
+ 	.probe = rvu_probe,
+ 	.remove = rvu_remove,
++	.shutdown = rvu_shutdown,
+ };
+ 
+ static int __init rvu_init_module(void)
 -- 
 2.51.0
 
