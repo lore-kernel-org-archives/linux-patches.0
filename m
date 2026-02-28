@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB0D39B953
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6D739B95E
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302516; cv=none; b=nu6rTYj69qXwAr/dxqCVVYeCSJ0dVoVMoWtTmJLHtpfZ7dv9LQEMQawXEbqCvtLQUgJ41SGJkUbJPVi177c+x7E73a5SkEa5iTgywPzStCVINxNwgdr+JA7pw7CWJNu55XdfsVDHQfD32KnVDAqi7T3r0BkU3c9mtGiJWtlaBwg=
+	t=1772302516; cv=none; b=pvwDb0nRWbQIQVsOG2exc6ZufQ7Vn3RlJ8n1OjvkSEN4i2XB5S7hH05nrTsbSqd8UaaL1HTsTsTxoNgzdgiMnOtBz7dz3Mi5kSA+FnWjwGXFBj4ExdipWkQBU4nLk+GecIbqbD8cECPVxKnLUTNgtn6lUIhiIyynuZcqnN7HBwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302516; c=relaxed/simple;
-	bh=NtkLGugsCcEXX+/HxioqjCFXT3WxMU5n3pZUZlohBxw=;
+	bh=BJhQuQ4cEv3l08Qt+kA3W6bw/rt/yBiDZqao4tCQeyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7kA6+W/hfyquRo4zXYOHu9wq9c28EmOkYj0ufIdF59/Dcr4/njIJF69on76mp/wxllSnlJlrVM4QHoTiBmdZ77THVpyL+blGqnOtAl2YB2BzesHRIgLAjT5+yewsVyQqIoCuTDcqX6ZdGmHr7JquxthhTo/Q4T7KNjREDzBVBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AC7Kh6eD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOFU84NQQRVXs8SWDgxeUxf77vd2JHoD3za49iB3rPZg26/bat9aEcryVwIKTxlDKdEzzsJmYQ3rV3Jg/UpCqNEXZFQ8rz0pgARGOnGJUS8x/f7LrZtmhxdvJ5jDS4pwzaUiv2cnK4//Xn9v9mqkD45V7+/+rEaGrnAWjpwCRfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lZvazOHQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AC7Kh6eD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F0BC19423;
-	Sat, 28 Feb 2026 18:15:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lZvazOHQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0C1C19424;
+	Sat, 28 Feb 2026 18:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302515;
-	bh=NtkLGugsCcEXX+/HxioqjCFXT3WxMU5n3pZUZlohBxw=;
+	s=k20201202; t=1772302516;
+	bh=BJhQuQ4cEv3l08Qt+kA3W6bw/rt/yBiDZqao4tCQeyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AC7Kh6eDZ1ChlhwiagH1HCfQ0Gh2FN1qfZiEv0+sgZDUDg5fBkxY+9utnzAFPtLVw
-	 rS0kjO60NA45tkaIFu2J9n1A0aLJfSGAE7oeGywAG0nZU1pEfHWd42HPsIRyCZ9qI0
-	 OgWCGPDhEcE8xAMehxeKsE4ebFAu+h+CRGx/yiSV5Y4V2YFfhOprE6GFYT7wNX96B8
-	 K/vCfLaHBaMDorRpoV2lTZa1YXR3NkjDnrKBc4c8oZVDym8WkuzPc4G7L0O6/WPcz1
-	 heCl4vlhGaAa8MDh/ArPf31CK8i43GamRlZPchXLhSVWt3nFFz7+sc1d4zhvUUGJug
-	 w9Tv82Hhi/B7w==
+	b=lZvazOHQ8FfTkCqtq5sTWk4OF5G9cGRIiyd52tDrgJZyMJMvZQcHeDOi6Px88hY4k
+	 +5EEBIW2iiKi5Z1jObdwAR/qr49vtwr40lP/+z7qHRh4RabgyNdWMmq+K78sMreIvQ
+	 yIfyyPER0eQb72NicUbQGejBKDIwYYO9sJwCMFykBRIgUa/L28riAEKjctFKA3idc3
+	 v587GcZo0TakDcNMca4tq5UnFli34ssQiVUqac5+MB5gMvjIR7NAOdaPrA4MTWAtQg
+	 LEtVHbFl/2iAtJdsCLdjHBGm0z/soogs+1mf/Z48bkxChIQiYDLA1VUvNvMs765G+E
+	 j37gyf4k1IIww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Filipe Manana <fdmanana@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/164] btrfs: qgroup: return correct error when deleting qgroup relation item
-Date: Sat, 28 Feb 2026 13:12:31 -0500
-Message-ID: <20260228181505.1600663-12-sashal@kernel.org>
+Subject: [PATCH 5.15 013/164] md/raid10: fix any_working flag handling in raid10_sync_request
+Date: Sat, 28 Feb 2026 13:12:32 -0500
+Message-ID: <20260228181505.1600663-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,40 +48,45 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 51b1fcf71c88c3c89e7dcf07869c5de837b1f428 ]
+[ Upstream commit 99582edb3f62e8ee6c34512021368f53f9b091f2 ]
 
-If we fail to delete the second qgroup relation item, we end up returning
-success or -ENOENT in case the first item does not exist, instead of
-returning the error from the second item deletion.
+In raid10_sync_request(), 'any_working' indicates if any IO will
+be submitted. When there's only one In_sync disk with badblocks,
+'any_working' might be set to 1 but no IO is submitted. Fix it by
+setting 'any_working' after badblock checks.
 
-Fixes: 73798c465b66 ("btrfs: qgroup: Try our best to delete qgroup relations")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://lore.kernel.org/linux-raid/20260105110300.1442509-11-linan666@huaweicloud.com
+Fixes: e875ecea266a ("md/raid10 record bad blocks as needed during recovery.")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/raid10.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 6cff41c46d02e..4593ca523490f 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -1540,8 +1540,10 @@ static int __del_qgroup_relation(struct btrfs_trans_handle *trans, u64 src,
- 	if (ret < 0 && ret != -ENOENT)
- 		goto out;
- 	ret2 = del_qgroup_relation_item(trans, dst, src);
--	if (ret2 < 0 && ret2 != -ENOENT)
-+	if (ret2 < 0 && ret2 != -ENOENT) {
-+		ret = ret2;
- 		goto out;
-+	}
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 5b0f38e7c8f13..c6429ef37f9e2 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3546,7 +3546,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 				    !test_bit(In_sync, &rdev->flags))
+ 					continue;
+ 				/* This is where we read from */
+-				any_working = 1;
+ 				sector = r10_bio->devs[j].addr;
  
- 	/* At least one deletion succeeded, return 0 */
- 	if (!ret || !ret2)
+ 				if (is_badblock(rdev, sector, max_sync,
+@@ -3561,6 +3560,7 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 						continue;
+ 					}
+ 				}
++				any_working = 1;
+ 				bio = r10_bio->devs[0].bio;
+ 				bio->bi_next = biolist;
+ 				biolist = bio;
 -- 
 2.51.0
 
