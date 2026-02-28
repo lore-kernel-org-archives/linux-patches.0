@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31156333434
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0617934252B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301888; cv=none; b=IwxvjhSqH3+nLOdM2QNds4xM4bGKTWSwtPCgtKnaPY/jrTiKp+iYeWZBILkdxTb4DPBRwZslx+fxfE0vx/Dwdzxak8dqGYHUlkPK4lNBwvNYPXPpcA+sshSZ7ywomYk4YSGCioyuy1MReRGecDLlFAodB3/0miEs7KY/SNaJabs=
+	t=1772301889; cv=none; b=FtFCUDctp01Xg8iSJHtqqxUwxQCQt2uCUOBtrd7l1FJVi55n88KTVwWBvu61z/G78MinwTIjN0QFS9uM09EsPb1NumffnljqLhjmRG4gjuc+Rj8ySlIeMH/TtC43LF3dkbBjCfSHBekKHmeLcavtn2agfMhXOUd/RX3Jx1MNLWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301888; c=relaxed/simple;
-	bh=7ykGTBPi2AIXrDpnUZORvJf4ail8PhoV1oTxFAdxXQM=;
+	s=arc-20240116; t=1772301889; c=relaxed/simple;
+	bh=9zTQbO4gHA2QdlAnO3HfEHvV2R24PPp4ljue5Cr6SyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQMrO65otdoxUKJoNH4TgxS9wRkf+TytR6E13BLgXpGonsyiC06u7tm3txdHJA6QDKJ1/p5L3s2cXBf61chnvTgn5ab/hn2oRnAhNPv1zHxSl2LBtcRk3n3DU3xwboJEYfJCkpSim3JwajsUZ2WAyw115L5RsoSFGAVBAGCFQxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kd5uBp/a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f3VLvuho65PqhQdJBBGt2JSQxGRHYL3FaRkyn55meyxZ4RqXhngzjKUZ/otxnvzS5NxvAJ6v2QHFqEEDE6Z9wGlfLOq07Us8RNJ5Sw4t/z96Gh/KFAjIQxwMbCGetbQtb02l/rnGTL6K4NzJQnu/Gs0NK9bUWcU1YdJweYBX3wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hNwSlc6C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kd5uBp/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538F5C19423;
-	Sat, 28 Feb 2026 18:04:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hNwSlc6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540D2C19423;
+	Sat, 28 Feb 2026 18:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301888;
-	bh=7ykGTBPi2AIXrDpnUZORvJf4ail8PhoV1oTxFAdxXQM=;
+	bh=9zTQbO4gHA2QdlAnO3HfEHvV2R24PPp4ljue5Cr6SyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kd5uBp/a1t2hvnwDZCxKR/lV5S09WvpJqUMycVyfmpBJ3xtMA6Df3ObQDLVp7/orc
-	 0lZ9Vf5aXDR6kvA4TRArx1UKDndfry28K12WTVZ8yZcIyU7qolqn+xs0PAJeDHYSFq
-	 Kf/Hms5uSJ3uSsQOFxJjLbG6Kebba8ZAFUfKVp6I8bZ+APi5xwOUfy6EO0zP+qsi8D
-	 xr77a1lBcF7WFs+447PQLc0MSywHtzT0aeyLJwIAuZY1NnHVrqGhxlLJvd3hcZ2T30
-	 uAgd02Fmxgwf5mr+wfesEW2b+MqH/vYg6NkRPx4WJZbAdkxaeaEfgtKNlms4kBO5mF
-	 F6ZamdBGFS0wA==
+	b=hNwSlc6CscPGZbk98BAmgY63DbSckl4bI4jPhm4ZQnd/DxxHMm4HpO/D0aja0jOKF
+	 RnikhhwnhSX2sYxBZjswZgSoyQSuEZL0t0axlW440vQfVYtkxiJJpnkdKl1W4cI98J
+	 pzhE3kqnK7kyrPuC6BPtOw0GtE0MZuwSscuAtoNvyxeHCW2nhqke3B7VOgXC93wxMn
+	 VT3emDvzLj3MqeVFZqtPrjY2Lck/YWgYScmlgU6rJkhK5ZSpbxIt3FVVcR8d9DZRff
+	 0fVKbeiKphN65unQIo2TyshNMQP0ifFWQGSaebaJ2r6e7oRPHdusW0rlb75nPEjEM9
+	 wcAYabMpBToqg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 314/385] clk: qcom: gfx3d: add parent to parent request map
-Date: Sat, 28 Feb 2026 12:58:56 -0500
-Message-ID: <20260228180011.1568201-314-sashal@kernel.org>
+Subject: [PATCH 6.12 315/385] clk: mediatek: Fix error handling in runtime PM setup
+Date: Sat, 28 Feb 2026 12:58:57 -0500
+Message-ID: <20260228180011.1568201-315-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -50,65 +48,64 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 2583cb925ca1ce450aa5d74a05a67448db970193 ]
+[ Upstream commit aa2ad19210a6a444111bce55e8b69579f29318fb ]
 
-After commit d228ece36345 ("clk: divider: remove round_rate() in favor
-of determine_rate()") determining GFX3D clock rate crashes, because the
-passed parent map doesn't provide the expected best_parent_hw clock
-(with the roundd_rate path before the offending commit the
-best_parent_hw was ignored).
+devm_pm_runtime_enable() can fail due to memory allocation. The current
+code ignores its return value, and when pm_runtime_resume_and_get() fails,
+it returns directly without unmapping the shared_io region.
 
-Set the field in parent_req in addition to setting it in the req,
-fixing the crash.
+Add error handling for devm_pm_runtime_enable(). Reorder cleanup labels
+to properly unmap shared_io on pm_runtime_resume_and_get() failure.
 
- clk_hw_round_rate (drivers/clk/clk.c:1764) (P)
- clk_divider_bestdiv (drivers/clk/clk-divider.c:336)
- divider_determine_rate (drivers/clk/clk-divider.c:358)
- clk_alpha_pll_postdiv_determine_rate (drivers/clk/qcom/clk-alpha-pll.c:1275)
- clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
- clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
- __clk_determine_rate (drivers/clk/clk.c:1741)
- clk_gfx3d_determine_rate (drivers/clk/qcom/clk-rcg2.c:1268)
- clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
- clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
- clk_core_round_rate_nolock (drivers/clk/clk.c:1710)
- clk_round_rate (drivers/clk/clk.c:1804)
- dev_pm_opp_set_rate (drivers/opp/core.c:1440 (discriminator 1))
- msm_devfreq_target (drivers/gpu/drm/msm/msm_gpu_devfreq.c:51)
- devfreq_set_target (drivers/devfreq/devfreq.c:360)
- devfreq_update_target (drivers/devfreq/devfreq.c:426)
- devfreq_monitor (drivers/devfreq/devfreq.c:458)
- process_one_work (arch/arm64/include/asm/jump_label.h:36 include/trace/events/workqueue.h:110 kernel/workqueue.c:3284)
- worker_thread (kernel/workqueue.c:3356 (discriminator 2) kernel/workqueue.c:3443 (discriminator 2))
- kthread (kernel/kthread.c:467)
- ret_from_fork (arch/arm64/kernel/entry.S:861)
-
-Fixes: 55213e1acec9 ("clk: qcom: Add gfx3d ping-pong PLL frequency switching")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20260117-db820-fix-gfx3d-v1-1-0f8894d71d63@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers during probe")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/mediatek/clk-mtk.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 005c1da75dafc..6aa9dcdabffde 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1084,6 +1084,7 @@ static int clk_gfx3d_determine_rate(struct clk_hw *hw,
- 	if (req->max_rate < parent_req.max_rate)
- 		parent_req.max_rate = req->max_rate;
+diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
+index ba1d1c495bc2b..644e5a854f2b6 100644
+--- a/drivers/clk/mediatek/clk-mtk.c
++++ b/drivers/clk/mediatek/clk-mtk.c
+@@ -497,14 +497,16 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
  
-+	parent_req.best_parent_hw = req->best_parent_hw;
- 	ret = __clk_determine_rate(req->best_parent_hw, &parent_req);
- 	if (ret)
- 		return ret;
+ 
+ 	if (mcd->need_runtime_pm) {
+-		devm_pm_runtime_enable(&pdev->dev);
++		r = devm_pm_runtime_enable(&pdev->dev);
++		if (r)
++			goto unmap_io;
+ 		/*
+ 		 * Do a pm_runtime_resume_and_get() to workaround a possible
+ 		 * deadlock between clk_register() and the genpd framework.
+ 		 */
+ 		r = pm_runtime_resume_and_get(&pdev->dev);
+ 		if (r)
+-			return r;
++			goto unmap_io;
+ 	}
+ 
+ 	/* Calculate how many clk_hw_onecell_data entries to allocate */
+@@ -618,11 +620,11 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
+ free_data:
+ 	mtk_free_clk_data(clk_data);
+ free_base:
+-	if (mcd->shared_io && base)
+-		iounmap(base);
+-
+ 	if (mcd->need_runtime_pm)
+ 		pm_runtime_put(&pdev->dev);
++unmap_io:
++	if (mcd->shared_io && base)
++		iounmap(base);
+ 	return r;
+ }
+ 
 -- 
 2.51.0
 
