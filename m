@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28FE4A340D;
-	Sat, 28 Feb 2026 17:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C3D4A340F;
+	Sat, 28 Feb 2026 17:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301306; cv=none; b=pYMTeUaSsS+GE9rVcDvdyyCaeQKYV/VUQX33ezIU7bwL2+ZUYeTMv4t9Va3O9YUqM1FJt1JDfZXTF7mYJwUzghUnURs89KbsYGPedx7Wt/9NLHRTXMFHbLMGl35ilRzB3eC5Zj9vs3gafb9axyc8vfKd7jeZnf4u3nBERHEWIqQ=
+	t=1772301307; cv=none; b=G53hgODtMS4Gf5gzYGKR0Q25RiiX/ceNx5ieoB/snx7pnqwK8MnXmVBEORrhw3fyAyk9qe8Do5FLo/kZTKc1c2+qB+46v8csUoiQXa12CJQC7Sn5uKeV9BqOcmvwArA2X+WRwJVjIlQzT8Y0dpGJQ/q95BF7XNt1YzayC3TRgcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301306; c=relaxed/simple;
-	bh=CQIVdnlJyMptctFBerqJivMDLHUFVdKTfhlLmAJ14vU=;
+	s=arc-20240116; t=1772301307; c=relaxed/simple;
+	bh=3drQ1pntDgD8cKr0pOMNBsPMBL2VYyAvXw5eXc5afp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKZg78QsEQNK7MFD87pZ3BGJtjPsv1G17QJ6Vz31pvLxGje00XJrbPb/2O2P9+J1KBgt8W0gG1kNcZHkOcwtNoQrBEsE7WoPzMBLG/gB/GxbW407GiJSFlBg3sFnu3wrIBEH2adWcfkV6W+MDRp+8BF/XZlG32MuODfx/XUkwkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sRmmJtgl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/4c5D1lWqrx6tM+WB7sekfvxuesM/eJerwIB3s2Pi16ms4Z2FsJSzzxN6uSo12ivLBR583FHQuU49+AEAv3L01/3+CHCb7GjwrsYO+lM6Qy9jewA7Ue3FgpPCoVaMj4fDvyl7JHFqEm8zRvme5ILBT+L2PfYpjMjiQrvN42fkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VoAsJfJu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sRmmJtgl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD94C116D0;
-	Sat, 28 Feb 2026 17:55:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VoAsJfJu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88C9C19424;
+	Sat, 28 Feb 2026 17:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301306;
-	bh=CQIVdnlJyMptctFBerqJivMDLHUFVdKTfhlLmAJ14vU=;
+	s=k20201202; t=1772301307;
+	bh=3drQ1pntDgD8cKr0pOMNBsPMBL2VYyAvXw5eXc5afp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRmmJtglAhiPC85/FvZWQUR2hFzqKC5tQZRy/pvwPuS05Ul9tStC+2fegn0FI/Pqk
-	 SnW6CFpx4gZFUkSbikrjqdLl/x9f4F9XTfAgu2GvO9HSExCjZ/rEKHaeNFKTZ2COCN
-	 NMkk+x+i5UcSCosA+7hJDAGKo0m7cEn/SkpfCYodpGSJeBKJbjWKF3wn/2wmT4d9Xp
-	 4ZpbGaXU9knEWu5zPoYM1hUJG8uP/QOlqDwjKt0ZFstITbpAnfnkTNW2/PQBxB6UcV
-	 4Rk5pYVanidbyP6d8A+nP23xw/nYfXC3HzKbbCdhpyzvLfrVLMfnIVpeX7qlnB3oWd
-	 RNjZaVM9skbvw==
+	b=VoAsJfJu10aCFc61RP8ICpEQtXrZnxUufHrzH+aqKXMsUEBmWAYroGYLfY6/+yHx0
+	 dH+OS2W/cVIsO8ZFR7e3Rtr2/j4ef6w1G5LzPcULUM9/Ao7fdSlzcl+dtdWmhTcPu2
+	 wud7ANbH/NVsobUedUAqIDsaO4pmEDKACHwrPY0rqe4hbj8ifgfLlZjSF88K6hJpIb
+	 nhx10Vlav6HVYlwF7abTLGrwVKi3zyvtDMq46Wl/3oDb7PcxJl+U3TWGaH1FUsAmnQ
+	 O6drhLO2DSXoPKuJmh/mORYBlqyYBRXYbxwXSg/VyxMpvb4Ea7vriBl5pl46OTfSH3
+	 1RIKeBfGsHWbw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+Cc: Abel Vesa <abel.vesa@linaro.org>,
 	stable@vger.kernel.org,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 491/752] media: verisilicon: AV1: Fix tx mode bit setting
-Date: Sat, 28 Feb 2026 12:43:22 -0500
-Message-ID: <20260228174750.1542406-491-sashal@kernel.org>
+Subject: [PATCH 6.18 492/752] arm64: dts: qcom: x1e80100: Add missing TCSR ref clock to the DP PHYs
+Date: Sat, 28 Feb 2026 12:43:23 -0500
+Message-ID: <20260228174750.1542406-492-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,82 +48,64 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit cb3f945c012ab152fd2323e0df34c2b640071738 ]
+[ Upstream commit 0907cab01ff9746ecf08592edd9bd85d2636be58 ]
 
-AV1 specification describes 3 possibles tx modes: 4x4 only, largest and
-select. The hardware allows 5 possibles tx modes: 4x4 only, 8x8, 16x16,
-32x32 and select. Since the both aren't exactly matching we need to add
-a mapping function to set the correct mode on hardware.
+The DP PHYs on X1E80100 need the ref clock which is provided by the
+TCSR CC.
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Fixes: 727a400686a2c ("media: verisilicon: Add Rockchip AV1 decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+The current X Elite devices supported upstream work fine without this
+clock, because the boot firmware leaves this clock enabled. But we should
+not rely on that. Also, even though this change breaks the ABI, it is
+needed in order to make the driver disables this clock along with the
+other ones, for a proper bring-down of the entire PHY.
+
+So lets attach it to each of the DP PHYs in order to do that.
+
+Cc: stable@vger.kernel.org # v6.9
+Fixes: 1940c25eaa63 ("arm64: dts: qcom: x1e80100: Add display nodes")
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20251224-phy-qcom-edp-add-missing-refclk-v5-3-3f45d349b5ac@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../verisilicon/rockchip_vpu981_hw_av1_dec.c  | 27 ++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-index f4f7cb45b1f1b..f52b8208e6b93 100644
---- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-+++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-@@ -72,6 +72,14 @@
- 		: AV1_DIV_ROUND_UP_POW2((_value_), (_n_)));		\
- })
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 512a75da4f13f..6d97329995fe7 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -5811,9 +5811,11 @@ mdss_dp2_phy: phy@aec2a00 {
+ 			      <0 0x0aec2000 0 0x1c8>;
  
-+enum rockchip_av1_tx_mode {
-+	ROCKCHIP_AV1_TX_MODE_ONLY_4X4	= 0,
-+	ROCKCHIP_AV1_TX_MODE_8X8	= 1,
-+	ROCKCHIP_AV1_TX_MODE_16x16	= 2,
-+	ROCKCHIP_AV1_TX_MODE_32x32	= 3,
-+	ROCKCHIP_AV1_TX_MODE_SELECT	= 4,
-+};
-+
- struct rockchip_av1_film_grain {
- 	u8 scaling_lut_y[256];
- 	u8 scaling_lut_cb[256];
-@@ -1935,11 +1943,26 @@ static void rockchip_vpu981_av1_dec_set_reference_frames(struct hantro_ctx *ctx)
- 	rockchip_vpu981_av1_dec_set_other_frames(ctx);
- }
+ 			clocks = <&dispcc DISP_CC_MDSS_DPTX2_AUX_CLK>,
+-				 <&dispcc DISP_CC_MDSS_AHB_CLK>;
++				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++				 <&tcsr TCSR_EDP_CLKREF_EN>;
+ 			clock-names = "aux",
+-				      "cfg_ahb";
++				      "cfg_ahb",
++				      "ref";
  
-+static int rockchip_vpu981_av1_get_hardware_tx_mode(enum v4l2_av1_tx_mode tx_mode)
-+{
-+	switch (tx_mode) {
-+	case V4L2_AV1_TX_MODE_ONLY_4X4:
-+		return ROCKCHIP_AV1_TX_MODE_ONLY_4X4;
-+	case V4L2_AV1_TX_MODE_LARGEST:
-+		return ROCKCHIP_AV1_TX_MODE_32x32;
-+	case V4L2_AV1_TX_MODE_SELECT:
-+		return ROCKCHIP_AV1_TX_MODE_SELECT;
-+	}
-+
-+	return ROCKCHIP_AV1_TX_MODE_32x32;
-+}
-+
- static void rockchip_vpu981_av1_dec_set_parameters(struct hantro_ctx *ctx)
- {
- 	struct hantro_dev *vpu = ctx->dev;
- 	struct hantro_av1_dec_hw_ctx *av1_dec = &ctx->av1_dec;
- 	struct hantro_av1_dec_ctrls *ctrls = &av1_dec->ctrls;
-+	int tx_mode;
+ 			power-domains = <&rpmhpd RPMHPD_MX>;
  
- 	hantro_reg_write(vpu, &av1_skip_mode,
- 			 !!(ctrls->frame->flags & V4L2_AV1_FRAME_FLAG_SKIP_MODE_PRESENT));
-@@ -2005,7 +2028,9 @@ static void rockchip_vpu981_av1_dec_set_parameters(struct hantro_ctx *ctx)
- 			 !!(ctrls->frame->flags & V4L2_AV1_FRAME_FLAG_ALLOW_HIGH_PRECISION_MV));
- 	hantro_reg_write(vpu, &av1_comp_pred_mode,
- 			 (ctrls->frame->flags & V4L2_AV1_FRAME_FLAG_REFERENCE_SELECT) ? 2 : 0);
--	hantro_reg_write(vpu, &av1_transform_mode, (ctrls->frame->tx_mode == 1) ? 3 : 4);
-+
-+	tx_mode = rockchip_vpu981_av1_get_hardware_tx_mode(ctrls->frame->tx_mode);
-+	hantro_reg_write(vpu, &av1_transform_mode, tx_mode);
- 	hantro_reg_write(vpu, &av1_max_cb_size,
- 			 (ctrls->sequence->flags
- 			  & V4L2_AV1_SEQUENCE_FLAG_USE_128X128_SUPERBLOCK) ? 7 : 6);
+@@ -5831,9 +5833,11 @@ mdss_dp3_phy: phy@aec5a00 {
+ 			      <0 0x0aec5000 0 0x1c8>;
+ 
+ 			clocks = <&dispcc DISP_CC_MDSS_DPTX3_AUX_CLK>,
+-				 <&dispcc DISP_CC_MDSS_AHB_CLK>;
++				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++				 <&tcsr TCSR_EDP_CLKREF_EN>;
+ 			clock-names = "aux",
+-				      "cfg_ahb";
++				      "cfg_ahb",
++				      "ref";
+ 
+ 			power-domains = <&rpmhpd RPMHPD_MX>;
+ 
 -- 
 2.51.0
 
