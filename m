@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223DB347FDF
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BA8359A72
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302464; cv=none; b=Qqz99hafa15rR7OWFlMdp0dUFfiPeu3PCLOD4yHBfH5fMbjoq5KZu7UW44HlCuUvqk6ixXK0ZkO4Oai8FnOWRaK1FjFk3C0cdpO+UNk0xHZjx7+vVBFmoq7eYxjTnyLPrkznycIU81GElZXLL9KLCv/BligVBVzhYBlqf7Y4kBw=
+	t=1772302465; cv=none; b=PSjUeDIH/aQR5HAV6l0ezw1suMnNdnXggiuzYqmfQKvCSiirzAJ88IiMSo0J8Fte23d+6MgABh92ykfPRxrzHsiT8uPVFjTRK9KmIsg+mDR8gW2bNsVW3tdhXxHvG0yOtIEQYIb0Acaszn8pPFcHYri0exc1Zrtd3iHlqsRLeQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302464; c=relaxed/simple;
-	bh=gsvBkg4/k8wIf/lOtXXhW4jc3ZJKEGlz8qO7HiOPIqA=;
+	s=arc-20240116; t=1772302465; c=relaxed/simple;
+	bh=RE4VgUnMgZjtPP/cSJkYFCzjYqHkGbbwVSrri+WsfY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JxQRHNVnWjH1VTRUqvWWzG5oc9vf1va0WVxpzBzUbPku12bF/S0jggjNpidOAmDMHMRzt4llO0AR2yqa11iT/L66HI/kt1rZ+nkTAustpQX7n3H2JTosq2ua6rVVGO5yJJIv48mFItVpRPJE6sdgz7UdWfiuyGA9G5z46gK7sAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PB5l0IZ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/SeYtC16X7vnMUo0Kr0ODfYo+tOd3vdztpcPT0G5XN3CBIEBxi3hb3Mqbbn2/EJ9+Lwh2BHB9VZ3jjZhRaT1ChLcOPEugCoJbjVpBZhc+gG0Xt5pJ7TNFBACLzpS4plms6z98L0tcHGhNosAEg5um18u8+PfXQXTd//R2Xr2jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FO0ROkyF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PB5l0IZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994BDC19424;
-	Sat, 28 Feb 2026 18:14:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FO0ROkyF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E22C19425;
+	Sat, 28 Feb 2026 18:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302464;
-	bh=gsvBkg4/k8wIf/lOtXXhW4jc3ZJKEGlz8qO7HiOPIqA=;
+	bh=RE4VgUnMgZjtPP/cSJkYFCzjYqHkGbbwVSrri+WsfY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PB5l0IZ7n8gy3SLcX9VQx6WMVFThtubRrL6RC5k6SwdhvFxUZH7yeDtvQqZCG/yTg
-	 5mrvHVbMz8DyXR0xEJ7yHrIFBMg14F1+EPGBxOCINIFT6sodPf4U6c44J+vhNRrCsk
-	 4drJFYS0I4z/gQp3XzakUNUe9UaAKxMAHNs2CC70kexo9mAKnNyYccJs8/ORr04lpW
-	 PSDqmBr6AGohvz/ugIiFDjmAl2Rnn1GxIF33kfweAi+16uTK74W8lHe79DOVz97MGj
-	 q2P5ZQXvxe3lE6Em4hGhJhYw8FSoRcKPFQ/nqqq+b16ifw8VA1p4QQ24Rv5jXmdpga
-	 bMYfMVkweCT/w==
+	b=FO0ROkyF8MJ7mxcdVeFrJliURjlAO2FHhuRxVeo2xp1Q4LtXlT4Cn/zMavH8X7mTE
+	 VnzKMGMgi62aQaYvKvrk0JZEg0CncqlwxDP/1qEtiBYJUCSDWa9+pSkZVf7SDuXy6x
+	 rtfpDrgjjXz2A/ywp5EO0OgQ9faKTVmUl5G9FiNH7o04mUeO9hKgn+uqWr5SbtwSm+
+	 pCBFEmnQC+Sg9fnektK6U/vMtLKM7Y8F+bl2NAPbyACH33mpKQFUNjvbrlHjRI9iuv
+	 In8DEwJI6s6nRMf9f1OllaO0cNnCDZZvQOXif2UglkiPwOtPgZvBUM0nEXg9qbMRQR
+	 9kLUrHl/HCveg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jens Axboe <axboe@kernel.dk>,
+Cc: Edward Adam Davis <eadavis@qq.com>,
+	syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 207/232] io_uring/cancel: de-unionize file and user_data in struct io_cancel_data
-Date: Sat, 28 Feb 2026 13:11:00 -0500
-Message-ID: <20260228181127.1592657-207-sashal@kernel.org>
+Subject: [PATCH 6.1 208/232] fs/ntfs3: prevent infinite loops caused by the next valid being the same
+Date: Sat, 28 Feb 2026 13:11:01 -0500
+Message-ID: <20260228181127.1592657-208-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -46,42 +48,55 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 22dbb0987bd1e0ec3b1e4ad20756a98f99aa4a08 ]
+[ Upstream commit 27b75ca4e51e3e4554dc85dbf1a0246c66106fd3 ]
 
-By having them share the same space in struct io_cancel_data, it ends up
-disallowing IORING_ASYNC_CANCEL_FD|IORING_ASYNC_CANCEL_USERDATA from
-working. Eg you cannot match on both a file and user_data for
-cancelation purposes. This obviously isn't a common use case as nobody
-has reported this, but it does result in -ENOENT potentially being
-returned when trying to match on both, rather than actually doing what
-the API says it would.
+When processing valid within the range [valid : pos), if valid cannot
+be retrieved correctly, for example, if the retrieved valid value is
+always the same, this can trigger a potential infinite loop, similar
+to the hung problem reported by syzbot [1].
 
-Fixes: 4bf94615b888 ("io_uring: allow IORING_OP_ASYNC_CANCEL with 'fd' key")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Adding a check for the valid value within the loop body, and terminating
+the loop and returning -EINVAL if the value is the same as the current
+value, can prevent this.
+
+[1]
+INFO: task syz.4.21:6056 blocked for more than 143 seconds.
+Call Trace:
+ rwbase_write_lock+0x14f/0x750 kernel/locking/rwbase_rt.c:244
+ inode_lock include/linux/fs.h:1027 [inline]
+ ntfs_file_write_iter+0xe6/0x870 fs/ntfs3/file.c:1284
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bcf9e1868c1a0c7e04f1
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/cancel.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ntfs3/file.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/io_uring/cancel.h b/io_uring/cancel.h
-index fc98622e6166e..7e6d0fca7db28 100644
---- a/io_uring/cancel.h
-+++ b/io_uring/cancel.h
-@@ -4,10 +4,8 @@
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 6d9c1dfe9b1b6..f2d1df2c988a9 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -870,8 +870,12 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
+ 			goto out;
  
- struct io_cancel_data {
- 	struct io_ring_ctx *ctx;
--	union {
--		u64 data;
--		struct file *file;
--	};
-+	u64 data;
-+	struct file *file;
- 	u8 opcode;
- 	u32 flags;
- 	int seq;
+ 		if (lcn == SPARSE_LCN) {
+-			ni->i_valid = valid =
+-				frame_vbo + ((u64)clen << sbi->cluster_bits);
++			valid = frame_vbo + ((u64)clen << sbi->cluster_bits);
++			if (ni->i_valid == valid) {
++				err = -EINVAL;
++				goto out;
++			}
++			ni->i_valid = valid;
+ 			continue;
+ 		}
+ 
 -- 
 2.51.0
 
