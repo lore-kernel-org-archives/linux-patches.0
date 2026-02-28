@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1F633D6F7
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA8A3446BC
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301619; cv=none; b=DuzhgoeuajYOti2rQuDrYmthBLv7CUlGDHnwtV5jBFJUm0NzsiA1p9loUfy7JT6X730YF4WLLAH+yK/K9cMaqmW22fN/q1gMrzfdoIUKVCH4Oy/HtgYqogXM9+cWnUJZ/C27csEYeld3GzOOCNOEb9uXwQEhpn76h7a5mWPxP3U=
+	t=1772301620; cv=none; b=PNQRQJm0OZPcmsAMeF6DcjmtAwn94MFSK05rA3jMcbB9f+7zgfYeAm8HuvRtLf8pBjlVkbdhTteihyiz8h0ZTcS+lwiE/QAIlpTXEye9eHcqMXyW7IK7pLQUUspt7o4xd71iJonV4R2MN0kN7j9+1B7Ihj7vUcvXhatN8CCgJUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301619; c=relaxed/simple;
-	bh=GtAP+K6Aas0k4ypEd45MVyAwd4JugamZ1feR8n+SRSA=;
+	s=arc-20240116; t=1772301620; c=relaxed/simple;
+	bh=uXDZBFBlCh9JEKa0Z6uBDUSQ7GEP1F5gk/R6iPyXv8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMsaJ1DFoxRe46zi2WQpHFlsxp7bqLwezzOIX8J9b8xsdi4VcwuimStucWRhZdxLZlRUUVfF3fDMUpiV4mvBd7G/PM+IptFwM5R6ha7X2p9SLrQ5M4k74Ar/VPYRbXFtx2NI9ykQ16vXHQpr3FKUYjdCC+k/XIEbTtCGF95+Mwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Apl8syrI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTqHNeXDH0g/OkcAXEBLx9ZlN9soDXe7ozONRTePyJ5IL/s7+69pV/r8dxyaGyrvoaPKSis9zkzi7Fl4Q44nNTsNbuaMdLELsKoQOMGwxZ9sEa39xb218tprNVCD077mK8mDBqAiyAzZFCfoPGaZDdfe4GJ6AJrjhmcRmryI+cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EHBJ29/J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Apl8syrI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A56CC19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EHBJ29/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54DAC116D0;
 	Sat, 28 Feb 2026 18:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301619;
-	bh=GtAP+K6Aas0k4ypEd45MVyAwd4JugamZ1feR8n+SRSA=;
+	s=k20201202; t=1772301620;
+	bh=uXDZBFBlCh9JEKa0Z6uBDUSQ7GEP1F5gk/R6iPyXv8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Apl8syrIlDzPEJWnSaeBcTx9WgRSje+z+H7luukn82FoskVl0+Gt4hwUtc054W2K8
-	 Ffxrxi8SZoOrIqsAXVNrxvbJAJZMGOzR/a1BX2h13yDiK6WwCIyVv0YNVSQ7CYQqbk
-	 J8LJ2mRyK4lCfBcrb6TJtkWEcjv047kRR5eVk6jG/l4x8b0/RnlRSY8PoAVqRH1Kar
-	 uRPLRt4iHFASljINXcH/W8MTE0WoyT9+z/vICu0f5uH8/CuVQqP+SnBZqDX6J2cmUA
-	 39mZhgPwt6FkCgpQQDD3x420YOYWEmn2gCAQ4yih0Vw5Lri8F1UH208ZD4kZEBqt97
-	 qYVqe9N5SYKbg==
+	b=EHBJ29/JyQB5jxFlubKiqKJFwMF30qWc6ZZiCUgSCC13ZGmO1kLq+S5WYBjw9KIX7
+	 l4H6dak2X+iOSDqCGbEqXWI8ATB8AxU8b0hNq30zBPY1if9VeivDcmUKSLUDKN1LuP
+	 C2wE/xCqGsczYT6T/aa6wxbz8vZnQxI7rv3ptYZToPrqmVdFQAmr0D1en0rUlz/mfO
+	 6mF1Cyon4+uUXrkwMrHaGxQGX6NZSL+/6klADr6xgQs+V0OHiy5iJ175tCSB7iSgza
+	 lq3pAp9PaAYUs3hi0usXLWw35WAsh/f5BEN775KoYEky2Nj7mAaBWk4lEm2BHvb1Mg
+	 OjF2jkZh9Ebyg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Billy Tsai <billy_tsai@aspeedtech.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Ben Dooks <ben.dooks@codethink.co.uk>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 009/385] i3c: Move device name assignment after i3c_bus_init
-Date: Sat, 28 Feb 2026 12:53:51 -0500
-Message-ID: <20260228180011.1568201-9-sashal@kernel.org>
+Subject: [PATCH 6.12 010/385] fs: add <linux/init_task.h> for 'init_fs'
+Date: Sat, 28 Feb 2026 12:53:52 -0500
+Message-ID: <20260228180011.1568201-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,44 +48,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit 3502cea99c7ceb331458cbd34ef6792c83144687 ]
+[ Upstream commit 589cff4975afe1a4eaaa1d961652f50b1628d78d ]
 
-Move device name initialization to occur after i3c_bus_init()
-so that i3cbus->id is guaranteed to be assigned before it is used.
+The init_fs symbol is defined in <linux/init_task.h> but was
+not included in fs/fs_struct.c so fix by adding the include.
 
-Fixes: 9d4f219807d5 ("i3c: fix refcount inconsistency in i3c_master_register")
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260112-upstream_i3c_fix-v1-1-cbbf2cb71809@aspeedtech.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes the following sparse warning:
+fs/fs_struct.c:150:18: warning: symbol 'init_fs' was not declared. Should it be static?
+
+Fixes: 3e93cd671813e ("Take fs_struct handling to new file")
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Link: https://patch.msgid.link/20260108115856.238027-1-ben.dooks@codethink.co.uk
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/fs_struct.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 6eb779affaba8..5c0cb3f38c90b 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2810,7 +2810,6 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	INIT_LIST_HEAD(&master->boardinfo.i3c);
+diff --git a/fs/fs_struct.c b/fs/fs_struct.c
+index 64c2d0814ed68..100bd3474476b 100644
+--- a/fs/fs_struct.c
++++ b/fs/fs_struct.c
+@@ -6,6 +6,7 @@
+ #include <linux/path.h>
+ #include <linux/slab.h>
+ #include <linux/fs_struct.h>
++#include <linux/init_task.h>
+ #include "internal.h"
  
- 	device_initialize(&master->dev);
--	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
- 
- 	master->dev.dma_mask = parent->dma_mask;
- 	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
-@@ -2820,6 +2819,8 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	if (ret)
- 		goto err_put_dev;
- 
-+	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
-+
- 	ret = of_populate_i3c_bus(master);
- 	if (ret)
- 		goto err_put_dev;
+ /*
 -- 
 2.51.0
 
