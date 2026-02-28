@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB249375AAB
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CF63451A7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301738; cv=none; b=MJHZ4+pAEW9dhvz76f5L/Fc2wWdu703N+gdwmgqmQRR/cZk3/YaDfOAs6nfDR6Y+QHKz/GfqDwH3yXbpUGGO6kwzUmb5NdSP639TWQ8+DgBF1VhQZuwVX2UhCHAYEGnf4Q1Wp3hLn4HnyQdsEvTeKHbV18mYVjO7j99zWk/DG+k=
+	t=1772301739; cv=none; b=JHUK4GTfW4wfc/duhLXo1j2jAdyEq0EvLsOfLR8eO+ze4IqANlJhJRqKN5GcNI2QPQBWn21H+5fmsHvyY8Cmic2GRp3mrOipYvlLmefWvHfJXx0iHDH8GoWDLGIZwbIE4FazKe/f6VbRf7M6uIyLTGj3GzVIHD193/xiPxtrrTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301738; c=relaxed/simple;
-	bh=VYxijYjEDWefCJYh6m9TVK/VfwmNBOCXgYEZhesywI4=;
+	s=arc-20240116; t=1772301739; c=relaxed/simple;
+	bh=uL46H9dio4K1oOzE6bdTzs+f2/y5RdZ616nm1lji634=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SzeBtzaSrBrDk1J+xPEeOwfCkWpnNeqhZ6BqzF2FjMRTUAsWT7Ksm9mTpzTfpZhIDJFISN1xilgcYtIzHVzozWzS2cNYN0F7nq/qresD3n2fxe0IMNPaVFOMdgWnZWCc2AWA1NDerTLqVW6VlQuW3DHXVsXJQu9lYIBhGbCMbHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F/7/vBuo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTJ/KNXF8p5Ur51xl/qE7yvrxxY+cfEHsJLIVJNqcNcQC1pSKxKRgmasIR5WGA+medL6x0CF06lyeWVPfZ/xusCqndLRCXiUNEo4uQxdp3gE6W5bF/26/ix2bu+TAjidqjBiqcRdFi6Lq6X61m1p5MGhFqBuycwXeH1nyFO5vt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MWpwaUYe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F/7/vBuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3C3C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MWpwaUYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00BEC19424;
 	Sat, 28 Feb 2026 18:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301738;
-	bh=VYxijYjEDWefCJYh6m9TVK/VfwmNBOCXgYEZhesywI4=;
+	s=k20201202; t=1772301739;
+	bh=uL46H9dio4K1oOzE6bdTzs+f2/y5RdZ616nm1lji634=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/7/vBuoX7pWrTj0xG9IF/DA17xzMtg2GHrd5TfTTY2dIHS62+I7ABQLNXJAdNIrX
-	 BRkLKp/TPmVXzrONNYb79pGx5vABlQ0H+j/0GpCgGiP9zcvQoVqnoTJX/Eeq+o4P6R
-	 FGXK+2fDFZidfw0jLIPW1UyWHdERGMuHRWhjk8TevlrJjbxQP3C50Y+IzTKqRLPT2Y
-	 Z5m0Kjh2RT8zRVXRMRtoszzVLMola2Z14kwATe7nwrs4bXqemRV+g0Viw8w/T4EZ6S
-	 JutxSGxE72v5ZPvHpeKwxFu7Au0Fxc8QKPOG0K+pw3mawzJcZhl8lsoCwC2mHRIQXY
-	 CfvAYKFifKVWg==
+	b=MWpwaUYehDCEQXxt+EVg9R/YmEc6xrTIeFr+F8Gtk0cbDcdspTBMRBeFUfaCZ0rlj
+	 MSBAzZuKE/nkfrQkyxqqhzB+5MG5cJao8XW+ZC5ENgblEcnl+9c47sRBgrbYQjbayy
+	 I81qpgE5O1pSleJtwC6JZ8C/g2cd5+AfFWzBfXX+HHS6Kkh3thL2ySbSOWE0Qqbtq6
+	 OILVriju2HUInE+0F6x8sRZGuu5QZ/vYDzOrwAk7SE3n/tzjF4GpDNIXXwoBrO1iLn
+	 oTlINwXEmi1i8Z0yrI0cSmIhZoyYG7d1xLK68edH2vDpBGoQxIed+eYMyHWiISdPFW
+	 2OOoID05hp3uA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/385] ALSA: pcm: Relax __free() variable declarations
-Date: Sat, 28 Feb 2026 12:56:01 -0500
-Message-ID: <20260228180011.1568201-139-sashal@kernel.org>
+Subject: [PATCH 6.12 140/385] ALSA: vmaster: Relax __free() variable declarations
+Date: Sat, 28 Feb 2026 12:56:02 -0500
+Message-ID: <20260228180011.1568201-140-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,7 +48,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f3d233daf011abbad2f6ebd0e545b42d2f378a4f ]
+[ Upstream commit 3b7c7bda39e1e48f926fb3d280a5f5d20a939857 ]
 
 We used to have a variable declaration with __free() initialized with
 NULL.  This was to keep the old coding style rule, but recently it's
@@ -60,252 +60,61 @@ Although the current code has no bug, per se, let's follow the new
 standard and move the declaration to the place of assignment (or
 directly assign the allocated result) instead of NULL initializations.
 
-Fixes: ae9213984864 ("ALSA: pcm: Use automatic cleanup of kfree()")
+Fixes: fb9e197f3f27 ("ALSA: vmaster: Use automatic cleanup of kfree()")
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251216140634.171890-4-tiwai@suse.de
+Link: https://patch.msgid.link/20251216140634.171890-9-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm.c        |  4 ++--
- sound/core/pcm_compat.c |  9 ++++----
- sound/core/pcm_native.c | 50 +++++++++++++++++++++--------------------
- 3 files changed, 33 insertions(+), 30 deletions(-)
+ sound/core/vmaster.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index 290690fc2abcb..ff1e9f8c1ecae 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -328,13 +328,13 @@ static const char *snd_pcm_oss_format_name(int format)
- static void snd_pcm_proc_info_read(struct snd_pcm_substream *substream,
- 				   struct snd_info_buffer *buffer)
+diff --git a/sound/core/vmaster.c b/sound/core/vmaster.c
+index c657659b236c4..76cc64245f5df 100644
+--- a/sound/core/vmaster.c
++++ b/sound/core/vmaster.c
+@@ -56,10 +56,10 @@ struct link_follower {
+ 
+ static int follower_update(struct link_follower *follower)
  {
--	struct snd_pcm_info *info __free(kfree) = NULL;
+-	struct snd_ctl_elem_value *uctl __free(kfree) = NULL;
+ 	int err, ch;
++	struct snd_ctl_elem_value *uctl __free(kfree) =
++		kzalloc(sizeof(*uctl), GFP_KERNEL);
+ 
+-	uctl = kzalloc(sizeof(*uctl), GFP_KERNEL);
+ 	if (!uctl)
+ 		return -ENOMEM;
+ 	uctl->id = follower->follower.id;
+@@ -74,7 +74,6 @@ static int follower_update(struct link_follower *follower)
+ /* get the follower ctl info and save the initial values */
+ static int follower_init(struct link_follower *follower)
+ {
+-	struct snd_ctl_elem_info *uinfo __free(kfree) = NULL;
  	int err;
  
- 	if (! substream)
- 		return;
+ 	if (follower->info.count) {
+@@ -84,7 +83,8 @@ static int follower_init(struct link_follower *follower)
+ 		return 0;
+ 	}
  
--	info = kmalloc(sizeof(*info), GFP_KERNEL);
-+	struct snd_pcm_info *info __free(kfree) =
-+		kmalloc(sizeof(*info), GFP_KERNEL);
- 	if (!info)
- 		return;
- 
-diff --git a/sound/core/pcm_compat.c b/sound/core/pcm_compat.c
-index a42ec7f5a1daf..c1c64da2eabd0 100644
---- a/sound/core/pcm_compat.c
-+++ b/sound/core/pcm_compat.c
-@@ -235,7 +235,6 @@ static int snd_pcm_ioctl_hw_params_compat(struct snd_pcm_substream *substream,
- 					  int refine, 
- 					  struct snd_pcm_hw_params32 __user *data32)
+-	uinfo = kmalloc(sizeof(*uinfo), GFP_KERNEL);
++	struct snd_ctl_elem_info *uinfo __free(kfree) =
++		kmalloc(sizeof(*uinfo), GFP_KERNEL);
+ 	if (!uinfo)
+ 		return -ENOMEM;
+ 	uinfo->id = follower->follower.id;
+@@ -341,9 +341,9 @@ static int master_get(struct snd_kcontrol *kcontrol,
+ static int sync_followers(struct link_master *master, int old_val, int new_val)
  {
--	struct snd_pcm_hw_params *data __free(kfree) = NULL;
- 	struct snd_pcm_runtime *runtime;
- 	int err;
+ 	struct link_follower *follower;
+-	struct snd_ctl_elem_value *uval __free(kfree) = NULL;
++	struct snd_ctl_elem_value *uval __free(kfree) =
++		kmalloc(sizeof(*uval), GFP_KERNEL);
  
-@@ -243,7 +242,8 @@ static int snd_pcm_ioctl_hw_params_compat(struct snd_pcm_substream *substream,
- 	if (!runtime)
- 		return -ENOTTY;
- 
--	data = kmalloc(sizeof(*data), GFP_KERNEL);
-+	struct snd_pcm_hw_params *data __free(kfree) =
-+		kmalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
+-	uval = kmalloc(sizeof(*uval), GFP_KERNEL);
+ 	if (!uval)
  		return -ENOMEM;
- 
-@@ -332,7 +332,6 @@ static int snd_pcm_ioctl_xfern_compat(struct snd_pcm_substream *substream,
- 	compat_caddr_t buf;
- 	compat_caddr_t __user *bufptr;
- 	u32 frames;
--	void __user **bufs __free(kfree) = NULL;
- 	int err, ch, i;
- 
- 	if (! substream->runtime)
-@@ -349,7 +348,9 @@ static int snd_pcm_ioctl_xfern_compat(struct snd_pcm_substream *substream,
- 	    get_user(frames, &data32->frames))
- 		return -EFAULT;
- 	bufptr = compat_ptr(buf);
--	bufs = kmalloc_array(ch, sizeof(void __user *), GFP_KERNEL);
-+
-+	void __user **bufs __free(kfree) =
-+		kmalloc_array(ch, sizeof(void __user *), GFP_KERNEL);
- 	if (bufs == NULL)
- 		return -ENOMEM;
- 	for (i = 0; i < ch; i++) {
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index f5a4541fbda00..fc400fa816ec6 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -242,10 +242,10 @@ int snd_pcm_info(struct snd_pcm_substream *substream, struct snd_pcm_info *info)
- int snd_pcm_info_user(struct snd_pcm_substream *substream,
- 		      struct snd_pcm_info __user * _info)
- {
--	struct snd_pcm_info *info __free(kfree) = NULL;
- 	int err;
-+	struct snd_pcm_info *info __free(kfree) =
-+		kmalloc(sizeof(*info), GFP_KERNEL);
- 
--	info = kmalloc(sizeof(*info), GFP_KERNEL);
- 	if (! info)
- 		return -ENOMEM;
- 	err = snd_pcm_info(substream, info);
-@@ -364,7 +364,6 @@ static int constrain_params_by_rules(struct snd_pcm_substream *substream,
- 	struct snd_pcm_hw_constraints *constrs =
- 					&substream->runtime->hw_constraints;
- 	unsigned int k;
--	unsigned int *rstamps __free(kfree) = NULL;
- 	unsigned int vstamps[SNDRV_PCM_HW_PARAM_LAST_INTERVAL + 1];
- 	unsigned int stamp;
- 	struct snd_pcm_hw_rule *r;
-@@ -380,7 +379,8 @@ static int constrain_params_by_rules(struct snd_pcm_substream *substream,
- 	 * Each member of 'rstamps' array represents the sequence number of
- 	 * recent application of corresponding rule.
- 	 */
--	rstamps = kcalloc(constrs->rules_num, sizeof(unsigned int), GFP_KERNEL);
-+	unsigned int *rstamps __free(kfree) =
-+		kcalloc(constrs->rules_num, sizeof(unsigned int), GFP_KERNEL);
- 	if (!rstamps)
- 		return -ENOMEM;
- 
-@@ -583,10 +583,10 @@ EXPORT_SYMBOL(snd_pcm_hw_refine);
- static int snd_pcm_hw_refine_user(struct snd_pcm_substream *substream,
- 				  struct snd_pcm_hw_params __user * _params)
- {
--	struct snd_pcm_hw_params *params __free(kfree) = NULL;
- 	int err;
-+	struct snd_pcm_hw_params *params __free(kfree) =
-+		memdup_user(_params, sizeof(*params));
- 
--	params = memdup_user(_params, sizeof(*params));
- 	if (IS_ERR(params))
- 		return PTR_ERR(params);
- 
-@@ -889,10 +889,10 @@ static int snd_pcm_hw_params(struct snd_pcm_substream *substream,
- static int snd_pcm_hw_params_user(struct snd_pcm_substream *substream,
- 				  struct snd_pcm_hw_params __user * _params)
- {
--	struct snd_pcm_hw_params *params __free(kfree) = NULL;
- 	int err;
-+	struct snd_pcm_hw_params *params __free(kfree) =
-+		memdup_user(_params, sizeof(*params));
- 
--	params = memdup_user(_params, sizeof(*params));
- 	if (IS_ERR(params))
- 		return PTR_ERR(params);
- 
-@@ -2267,7 +2267,6 @@ static int snd_pcm_link(struct snd_pcm_substream *substream, int fd)
- {
- 	struct snd_pcm_file *pcm_file;
- 	struct snd_pcm_substream *substream1;
--	struct snd_pcm_group *group __free(kfree) = NULL;
- 	struct snd_pcm_group *target_group;
- 	bool nonatomic = substream->pcm->nonatomic;
- 	CLASS(fd, f)(fd);
-@@ -2283,7 +2282,8 @@ static int snd_pcm_link(struct snd_pcm_substream *substream, int fd)
- 	if (substream == substream1)
- 		return -EINVAL;
- 
--	group = kzalloc(sizeof(*group), GFP_KERNEL);
-+	struct snd_pcm_group *group __free(kfree) =
-+		kzalloc(sizeof(*group), GFP_KERNEL);
- 	if (!group)
- 		return -ENOMEM;
- 	snd_pcm_group_init(group);
-@@ -3265,7 +3265,6 @@ static int snd_pcm_xfern_frames_ioctl(struct snd_pcm_substream *substream,
- {
- 	struct snd_xfern xfern;
- 	struct snd_pcm_runtime *runtime = substream->runtime;
--	void *bufs __free(kfree) = NULL;
- 	snd_pcm_sframes_t result;
- 
- 	if (runtime->state == SNDRV_PCM_STATE_OPEN)
-@@ -3277,7 +3276,8 @@ static int snd_pcm_xfern_frames_ioctl(struct snd_pcm_substream *substream,
- 	if (copy_from_user(&xfern, _xfern, sizeof(xfern)))
- 		return -EFAULT;
- 
--	bufs = memdup_array_user(xfern.bufs, runtime->channels, sizeof(void *));
-+	void *bufs __free(kfree) =
-+		memdup_array_user(xfern.bufs, runtime->channels, sizeof(void *));
- 	if (IS_ERR(bufs))
- 		return PTR_ERR(bufs);
- 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-@@ -3551,7 +3551,6 @@ static ssize_t snd_pcm_readv(struct kiocb *iocb, struct iov_iter *to)
- 	struct snd_pcm_runtime *runtime;
- 	snd_pcm_sframes_t result;
- 	unsigned long i;
--	void __user **bufs __free(kfree) = NULL;
- 	snd_pcm_uframes_t frames;
- 	const struct iovec *iov = iter_iov(to);
- 
-@@ -3570,7 +3569,9 @@ static ssize_t snd_pcm_readv(struct kiocb *iocb, struct iov_iter *to)
- 	if (!frame_aligned(runtime, iov->iov_len))
- 		return -EINVAL;
- 	frames = bytes_to_samples(runtime, iov->iov_len);
--	bufs = kmalloc_array(to->nr_segs, sizeof(void *), GFP_KERNEL);
-+
-+	void __user **bufs __free(kfree) =
-+		kmalloc_array(to->nr_segs, sizeof(void *), GFP_KERNEL);
- 	if (bufs == NULL)
- 		return -ENOMEM;
- 	for (i = 0; i < to->nr_segs; ++i) {
-@@ -3590,7 +3591,6 @@ static ssize_t snd_pcm_writev(struct kiocb *iocb, struct iov_iter *from)
- 	struct snd_pcm_runtime *runtime;
- 	snd_pcm_sframes_t result;
- 	unsigned long i;
--	void __user **bufs __free(kfree) = NULL;
- 	snd_pcm_uframes_t frames;
- 	const struct iovec *iov = iter_iov(from);
- 
-@@ -3608,7 +3608,9 @@ static ssize_t snd_pcm_writev(struct kiocb *iocb, struct iov_iter *from)
- 	    !frame_aligned(runtime, iov->iov_len))
- 		return -EINVAL;
- 	frames = bytes_to_samples(runtime, iov->iov_len);
--	bufs = kmalloc_array(from->nr_segs, sizeof(void *), GFP_KERNEL);
-+
-+	void __user **bufs __free(kfree) =
-+		kmalloc_array(from->nr_segs, sizeof(void *), GFP_KERNEL);
- 	if (bufs == NULL)
- 		return -ENOMEM;
- 	for (i = 0; i < from->nr_segs; ++i) {
-@@ -4060,15 +4062,15 @@ static void snd_pcm_hw_convert_to_old_params(struct snd_pcm_hw_params_old *opara
- static int snd_pcm_hw_refine_old_user(struct snd_pcm_substream *substream,
- 				      struct snd_pcm_hw_params_old __user * _oparams)
- {
--	struct snd_pcm_hw_params *params __free(kfree) = NULL;
--	struct snd_pcm_hw_params_old *oparams __free(kfree) = NULL;
- 	int err;
- 
--	params = kmalloc(sizeof(*params), GFP_KERNEL);
-+	struct snd_pcm_hw_params *params __free(kfree) =
-+		kmalloc(sizeof(*params), GFP_KERNEL);
- 	if (!params)
- 		return -ENOMEM;
- 
--	oparams = memdup_user(_oparams, sizeof(*oparams));
-+	struct snd_pcm_hw_params_old *oparams __free(kfree) =
-+		memdup_user(_oparams, sizeof(*oparams));
- 	if (IS_ERR(oparams))
- 		return PTR_ERR(oparams);
- 	snd_pcm_hw_convert_from_old_params(params, oparams);
-@@ -4089,15 +4091,15 @@ static int snd_pcm_hw_refine_old_user(struct snd_pcm_substream *substream,
- static int snd_pcm_hw_params_old_user(struct snd_pcm_substream *substream,
- 				      struct snd_pcm_hw_params_old __user * _oparams)
- {
--	struct snd_pcm_hw_params *params __free(kfree) = NULL;
--	struct snd_pcm_hw_params_old *oparams __free(kfree) = NULL;
- 	int err;
- 
--	params = kmalloc(sizeof(*params), GFP_KERNEL);
-+	struct snd_pcm_hw_params *params __free(kfree) =
-+		kmalloc(sizeof(*params), GFP_KERNEL);
- 	if (!params)
- 		return -ENOMEM;
- 
--	oparams = memdup_user(_oparams, sizeof(*oparams));
-+	struct snd_pcm_hw_params_old *oparams __free(kfree) =
-+		memdup_user(_oparams, sizeof(*oparams));
- 	if (IS_ERR(oparams))
- 		return PTR_ERR(oparams);
- 
+ 	list_for_each_entry(follower, &master->followers, list) {
 -- 
 2.51.0
 
