@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1467335AC32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BF735AC33
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302748; cv=none; b=D9s1mtJnR+ByyNmimcN0HJpgPjPzvlC1sJLHexsniCalpoNmTE5n2lVaH7n1RVpM8NOgxvyEq8RO3qbJGVUWr7u2mEpDdxNAdYcMMTHwCVFVdJtfKKSHLHLyFQl5CKPy5WluDSvDsI+xSuwKr3AL/TVedNxYTBv2gr9U6s1+SyM=
+	t=1772302749; cv=none; b=aYHY+v/5HNHws1a2tR8V+d0CWfjL0gyn0ymy2C0sDIIJv2OTKtbqL+VJCVN4OgHMbIY/6EcB6l7zGI/9VtXhinkpOvGtSaFo2NSleBl78L233AXOnWQJ1rXFyWD51ZDRCgY1hfmTZNAPRlo4alSVMx565LE4hmEidDwSCsVtSAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302748; c=relaxed/simple;
-	bh=pO7iFX9FLOBIxU8WkXhzj1g70n0XD++bkuKFdW0zsJc=;
+	s=arc-20240116; t=1772302749; c=relaxed/simple;
+	bh=PVCID+cTLCLzdMDi9KUs7oiEnNITbIKkSD65to2MLn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2KcE6KHzfMpvk3wYG8Miphv56FhcvU350+wR8WTe0GAXASA3IUsLNqlRweTmQuW6bv8hnviNbmLxP5eaZ47g2ahlki9pCgpco1awcA9kDeiyco9d+PCmq03kZEuWEIHZhjasOszEtdmsjaqzDf8QoTQx8i2xPEnMiLA6lHexrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCBxHaok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KOtiZyQCCGb7/tHTLMqYyi21eo+Pz2RticJsIONAyZre0rqOb4sScUAluf/7EzOeMkN1AkFkQ8oe80Rm+fLqH3P2bem5rlUH9Cbqytf2wwKoKQssbB2+BKJKFqzWSER8KrxT7b6/sm6wD40zNpvRnJbT7PGURDFsa+eiPAR1jPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YQL+cuBk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCBxHaok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D02C116D0;
-	Sat, 28 Feb 2026 18:19:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YQL+cuBk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C2AC116D0;
+	Sat, 28 Feb 2026 18:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302748;
-	bh=pO7iFX9FLOBIxU8WkXhzj1g70n0XD++bkuKFdW0zsJc=;
+	bh=PVCID+cTLCLzdMDi9KUs7oiEnNITbIKkSD65to2MLn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCBxHaokU5a+SUoneMM0UBAcBzFh6h8f6EcqLtcovK+FhUCq4r1bhfYjFGU4nB71U
-	 hu7FK9BF2yze9XTBeCRlHQX2CQ7iXpifFkJVCTxz9jMzE3wkl74BCVPRkyW75DWF9q
-	 mcgmpmyAcAimQ0zONJB7+MV0i0pAy3dciJttLyGJPvQC41m7hDXm+eYIwaulW2UybZ
-	 TVtSCNm0/miboziLreqH3xhsR0Gvru1Tj6iND37+kU15CYmV6Ov96pr1c7ybXbt2JD
-	 fhREJ5HNvWUh6GDtf7TICgPakuPq/RIyXgV5RYk5e7Fp3/aaZnXczjhIlNPu+FEWI3
-	 XJsgDDph9NBdA==
+	b=YQL+cuBkHuyNpTbx/nNDViLevLs3EYD+YXKTf8SiC7BxYwcfsZTWH3pae5q0IZ9mG
+	 JjvY3jxSgLYyh8Vr2OHRl4zqsTWn2hhGqcXZShzja/wCuuPeMLu28WZP0U5oc2DEfb
+	 ZU6qmj5z+ceYXMJF6/MZn7HmPUfU27PG1RyitVTonwShKnkHQjc8ktMLLEkMl70q1A
+	 qoWsXo+zTiXUe/V1+MM09lOdaKWe/Ri/BDGB6ZxZze7vJ/Z4JKQ7dCD7DAagcvH0PA
+	 prEtO7mpZX4o2TnOnmKLKKl/Y9RJwoukoxwXYzGcB/a6aQ3iOK04qMEikm75MkxXQ6
+	 8g7JuYcxl4P0w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
+	kernel test robot <lkp@intel.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/147] clk: meson: gxbb: Limit the HDMI PLL OD to /4 on GXL/GXM SoCs
-Date: Sat, 28 Feb 2026 13:17:03 -0500
-Message-ID: <20260228181736.1605592-115-sashal@kernel.org>
+Subject: [PATCH 5.10 116/147] clk: Move clk_{save,restore}_context() to COMMON_CLK section
+Date: Sat, 28 Feb 2026 13:17:04 -0500
+Message-ID: <20260228181736.1605592-116-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -47,85 +48,115 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit 5b1a43950fd3162af0ce52b13c14a2d29b179d4f ]
+[ Upstream commit f47c1b77d0a2a9c0d49ec14302e74f933398d1a3 ]
 
-GXBB has the HDMI PLL OD in the HHI_HDMI_PLL_CNTL2 register while for
-GXL/GXM the OD has moved to HHI_HDMI_PLL_CNTL3. At first glance the rest
-of the OD setup seems identical.
+The clk_save_context() and clk_restore_context() helpers are only
+implemented by the Common Clock Framework.  They are not available when
+using legacy clock frameworks.  Dummy implementations are provided, but
+only if no clock support is available at all.
 
-However, looking at the downstream kernel sources as well as testing
-shows that GXL only supports three OD values:
-- register value 0 means: divide by 1
-- register value 1 means: divide by 2
-- register value 2 means: divide by 4
+Hence when CONFIG_HAVE_CLK=y, but CONFIG_COMMON_CLK is not enabled:
 
-Using register value 3 (which on GXBB means: divide by 8) still divides
-by 4 as verified using meson-clk-measure. Downstream sources are also
-only using OD register values 0, 1 and 2 for GXL (while for GXBB the
-downstream kernel sources are also using value 3).
+    m68k-linux-gnu-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_resume':
+    air_en8811h.c:(.text+0x83e): undefined reference to `clk_restore_context'
+    m68k-linux-gnu-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_suspend':
+    air_en8811h.c:(.text+0x856): undefined reference to `clk_save_context'
 
-Add clk_div_table and have it replace the CLK_DIVIDER_POWER_OF_TWO flag
-to make the kernel's view of this register match with how the hardware
-actually works.
+Fix this by moving forward declarations and dummy implementions from the
+HAVE_CLK to the COMMON_CLK section.
 
-Fixes: 69d92293274b ("clk: meson: add the gxl hdmi pll")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20260105204710.447779-2-martin.blumenstingl@googlemail.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: 8b95d1ce3300c411 ("clk: Add functions to save/restore clock context en-masse")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511301553.eaEz1nEW-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/gxbb.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ include/linux/clk.h | 48 ++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
-index cfdb1ce6d361c..cc99a828eb4d2 100644
---- a/drivers/clk/meson/gxbb.c
-+++ b/drivers/clk/meson/gxbb.c
-@@ -315,12 +315,23 @@ static struct clk_regmap gxbb_hdmi_pll = {
- 	},
- };
+diff --git a/include/linux/clk.h b/include/linux/clk.h
+index 12c85ba606ec5..cfa53819276ec 100644
+--- a/include/linux/clk.h
++++ b/include/linux/clk.h
+@@ -205,6 +205,23 @@ int clk_rate_exclusive_get(struct clk *clk);
+  */
+ void clk_rate_exclusive_put(struct clk *clk);
  
-+/*
-+ * GXL hdmi OD dividers are POWER_OF_TWO dividers but limited to /4.
-+ * A divider value of 3 should map to /8 but instead map /4 so ignore it.
++/**
++ * clk_save_context - save clock context for poweroff
++ *
++ * Saves the context of the clock register for powerstates in which the
++ * contents of the registers will be lost. Occurs deep within the suspend
++ * code so locking is not necessary.
 + */
-+static const struct clk_div_table gxl_hdmi_pll_od_div_table[] = {
-+	{ .val = 0, .div = 1 },
-+	{ .val = 1, .div = 2 },
-+	{ .val = 2, .div = 4 },
-+	{ /* sentinel */ }
-+};
++int clk_save_context(void);
 +
- static struct clk_regmap gxl_hdmi_pll_od = {
- 	.data = &(struct clk_regmap_div_data){
- 		.offset = HHI_HDMI_PLL_CNTL + 8,
- 		.shift = 21,
- 		.width = 2,
--		.flags = CLK_DIVIDER_POWER_OF_TWO,
-+		.table = gxl_hdmi_pll_od_div_table,
- 	},
- 	.hw.init = &(struct clk_init_data){
- 		.name = "hdmi_pll_od",
-@@ -338,7 +349,7 @@ static struct clk_regmap gxl_hdmi_pll_od2 = {
- 		.offset = HHI_HDMI_PLL_CNTL + 8,
- 		.shift = 23,
- 		.width = 2,
--		.flags = CLK_DIVIDER_POWER_OF_TWO,
-+		.table = gxl_hdmi_pll_od_div_table,
- 	},
- 	.hw.init = &(struct clk_init_data){
- 		.name = "hdmi_pll_od2",
-@@ -356,7 +367,7 @@ static struct clk_regmap gxl_hdmi_pll = {
- 		.offset = HHI_HDMI_PLL_CNTL + 8,
- 		.shift = 19,
- 		.width = 2,
--		.flags = CLK_DIVIDER_POWER_OF_TWO,
-+		.table = gxl_hdmi_pll_od_div_table,
- 	},
- 	.hw.init = &(struct clk_init_data){
- 		.name = "hdmi_pll",
++/**
++ * clk_restore_context - restore clock context after poweroff
++ *
++ * This occurs with all clocks enabled. Occurs deep within the resume code
++ * so locking is not necessary.
++ */
++void clk_restore_context(void);
++
+ #else
+ 
+ static inline int clk_notifier_register(struct clk *clk,
+@@ -258,6 +275,13 @@ static inline int clk_rate_exclusive_get(struct clk *clk)
+ 
+ static inline void clk_rate_exclusive_put(struct clk *clk) {}
+ 
++static inline int clk_save_context(void)
++{
++	return 0;
++}
++
++static inline void clk_restore_context(void) {}
++
+ #endif
+ 
+ /**
+@@ -819,23 +843,6 @@ struct clk *clk_get_parent(struct clk *clk);
+  */
+ struct clk *clk_get_sys(const char *dev_id, const char *con_id);
+ 
+-/**
+- * clk_save_context - save clock context for poweroff
+- *
+- * Saves the context of the clock register for powerstates in which the
+- * contents of the registers will be lost. Occurs deep within the suspend
+- * code so locking is not necessary.
+- */
+-int clk_save_context(void);
+-
+-/**
+- * clk_restore_context - restore clock context after poweroff
+- *
+- * This occurs with all clocks enabled. Occurs deep within the resume code
+- * so locking is not necessary.
+- */
+-void clk_restore_context(void);
+-
+ #else /* !CONFIG_HAVE_CLK */
+ 
+ static inline struct clk *clk_get(struct device *dev, const char *id)
+@@ -1002,13 +1009,6 @@ static inline struct clk *clk_get_sys(const char *dev_id, const char *con_id)
+ 	return NULL;
+ }
+ 
+-static inline int clk_save_context(void)
+-{
+-	return 0;
+-}
+-
+-static inline void clk_restore_context(void) {}
+-
+ #endif
+ 
+ /* clk_prepare_enable helps cases using clk_enable in non-atomic context. */
 -- 
 2.51.0
 
