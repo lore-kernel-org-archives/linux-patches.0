@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250C639B976
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D438939B974
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302639; cv=none; b=YSlawaL4X+Qs5XXpn9f+cCP8pjaB+8Gs+DVnaaIqeYz8rpIecdlda5UupeiXBhRT+0KsRUT396qw6byw+2F6QgqgRD9EIaR3aEGpz4qq7k01FtvtaLVgfZSCZPV8fxLuGmXA27E3gALetI1yuUkp7A7paIvjJ5v3gNDSxRrXKeo=
+	t=1772302639; cv=none; b=bDgE3pajwbUluDRg6RbIfBQYAt2X0k3SV5wRNce+sejD2IuAE8YxComQfx7tT4XU9RTApGn+GMrNN7qVfM/l1GMEw3D2VkjaSZAD5+nxQa6E/MZL/nTBn2nnVL+o1VVKbnPXdacTWSw2HSBjg+0e8+5eeHbTP6+QHqmEUN+IZHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302639; c=relaxed/simple;
-	bh=lYu80QE+IQs47tnOyUZvuauwzVKC77R2uNtiObzrkSI=;
+	bh=nystGe1yVUUM/j2rbGNIkv8mPybE0O/ohdiygyxb+4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZ9KPVVepCVPBf9fW3ZkdCLvVUvmLE2KvdW6kj6ePF5mnG91mkemPBw0+2uwVoDhUADOezi9iB8eRyPAlcJnKSQ+J8J9aunL/tlIkiUAFxsP2/q3FRNQqG//qeEkO0mGdA3j4D+FaLhSfsYHDDCpZ7cdFo0/5wGgsgyl+hLViLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OT3FtdGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ieSKOZ/igIaE4udWwGVQlUDQ92afbj68y+HoKjMbXUv2G1aR5QPj5YE3aRAqrwrF2m7+uJkCK+MQ5GQnYFR18ci250k2eH4k2XOlmJBrC+Dn038htTtZwrp+xsJIP/1DbvyYXtMb5rkXBUG5t/oshxcR1aoJaHuuJ3iI55i0tgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MWGWf/DB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OT3FtdGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924A9C116D0;
-	Sat, 28 Feb 2026 18:17:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MWGWf/DB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F6BC19423;
+	Sat, 28 Feb 2026 18:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302639;
-	bh=lYu80QE+IQs47tnOyUZvuauwzVKC77R2uNtiObzrkSI=;
+	bh=nystGe1yVUUM/j2rbGNIkv8mPybE0O/ohdiygyxb+4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OT3FtdGMY2I4kgelBnaadVsEGr6CvL0DwrvkWTacp5dODE77g7CZnyUowOQ0IqMp0
-	 7+S/jvqcvMwRIiquaDrxY5O4QUjdy50l9OzZX1MRxuCSLHsnKWjJNpDdYK2OAVROhU
-	 eYlRL3nvvdK0UMMyqJjkYevzGmKe/lrWMi0SJhe8tOS5rQzzfVV7GHpGVv9lNzOwji
-	 XO3BmJKr3urExzfclZ0QWwfKeUHVmPO0KXya/x5Jp5mC8g471B+AuO2qVUN91Y+6Go
-	 joZDYNqSLTOZCl9wR3CJjBuseLkwe++2P9nJnmF7GZ/MGx8hrTdziFvtU9lBJrU9wz
-	 CQidQTUirrpiA==
+	b=MWGWf/DBvijrOxdEAnuUtLwKnT5L5ClWWwhTltIBpEW+lIDVMd6itR3vlmHPDYYCF
+	 k52Q5B9Y4z1wIy5qNumzBDU/FP7P3Cq3TjnrOsT9gZUeOrDDq6bOg0bVHzYmxA1bsO
+	 MJie70yytqA6gywuTM9q9AWaWsJDKc0nBh62V/jEtuEAwabGX2+bCgHQXzCLqMXbzV
+	 r90NhKIxlDX1NFobfAxueES+On+jdNjYc9Qsr8eMMqlpBlQX4+OLLpNXx7JPeq2kbz
+	 mU6t9QbomX6ihBnLX9cIg5ZhphMFtn6a0pI9uwjDsYVQmjhq9nTGXTAjST6N3Zn2Nr
+	 nseOi4Z3DbrQA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Florian Westphal <fw@strlen.de>,
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 160/164] netfilter: nf_conntrack_h323: don't pass uninitialised l3num value
-Date: Sat, 28 Feb 2026 13:14:59 -0500
-Message-ID: <20260228181505.1600663-160-sashal@kernel.org>
+Subject: [PATCH 5.15 161/164] net: remove WARN_ON_ONCE when accessing forward path array
+Date: Sat, 28 Feb 2026 13:15:00 -0500
+Message-ID: <20260228181505.1600663-161-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -46,56 +47,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a6d28eb8efe96b3e35c92efdf1bfacb0cccf541f ]
+[ Upstream commit 008e7a7c293b30bc43e4368dac6ea3808b75a572 ]
 
-Mihail Milev reports: Error: UNINIT (CWE-457):
- net/netfilter/nf_conntrack_h323_main.c:1189:2: var_decl:
-	Declaring variable "tuple" without initializer.
- net/netfilter/nf_conntrack_h323_main.c:1197:2:
-	uninit_use_in_call: Using uninitialized value "tuple.src.l3num" when calling "__nf_ct_expect_find".
- net/netfilter/nf_conntrack_expect.c:142:2:
-	read_value: Reading value "tuple->src.l3num" when calling "nf_ct_expect_dst_hash".
+Although unlikely, recent support for IPIP tunnels increases chances of
+reaching this WARN_ON_ONCE if userspace manages to build a sufficiently
+long forward path.
 
-  1195|   	tuple.dst.protonum = IPPROTO_TCP;
-  1196|
-  1197|-> 	exp = __nf_ct_expect_find(net, nf_ct_zone(ct), &tuple);
-  1198|   	if (exp && exp->master == ct)
-  1199|   		return exp;
+Remove it.
 
-Switch this to a C99 initialiser and set the l3num value.
-
-Fixes: f587de0e2feb ("[NETFILTER]: nf_conntrack/nf_nat: add H.323 helper port")
+Fixes: ddb94eafab8b ("net: resolve forwarding path from virtual netdevice and HW destination address")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_h323_main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_h323_main.c b/net/netfilter/nf_conntrack_h323_main.c
-index 2eb31ffb3d141..b479dc148d7bf 100644
---- a/net/netfilter/nf_conntrack_h323_main.c
-+++ b/net/netfilter/nf_conntrack_h323_main.c
-@@ -1229,13 +1229,13 @@ static struct nf_conntrack_expect *find_expect(struct nf_conn *ct,
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 977146a70b8c1..48abe997e6f3b 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -750,7 +750,7 @@ static struct net_device_path *dev_fwd_path(struct net_device_path_stack *stack)
  {
- 	struct net *net = nf_ct_net(ct);
- 	struct nf_conntrack_expect *exp;
--	struct nf_conntrack_tuple tuple;
-+	struct nf_conntrack_tuple tuple = {
-+		.src.l3num = nf_ct_l3num(ct),
-+		.dst.protonum = IPPROTO_TCP,
-+		.dst.u.tcp.port = port,
-+	};
+ 	int k = stack->num_paths++;
  
--	memset(&tuple.src.u3, 0, sizeof(tuple.src.u3));
--	tuple.src.u.tcp.port = 0;
- 	memcpy(&tuple.dst.u3, addr, sizeof(tuple.dst.u3));
--	tuple.dst.u.tcp.port = port;
--	tuple.dst.protonum = IPPROTO_TCP;
+-	if (WARN_ON_ONCE(k >= NET_DEVICE_PATH_STACK_MAX))
++	if (k >= NET_DEVICE_PATH_STACK_MAX)
+ 		return NULL;
  
- 	exp = __nf_ct_expect_find(net, nf_ct_zone(ct), &tuple);
- 	if (exp && exp->master == ct)
+ 	return &stack->path[k];
 -- 
 2.51.0
 
