@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0C136DA0F;
-	Sat, 28 Feb 2026 17:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CAE371449;
+	Sat, 28 Feb 2026 17:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301469; cv=none; b=l2fkYteE8dBfjqgQf7UFDPJcVVeHrlnA15ssLh9NnB6a5M5OycbKyDwihj9xKrAWuD002aKz7f9XBHAUjaNgqI9fro5GfRlykzd5HIHmnx0t7IkfFn8t2SCYZZD1JkDg/56bGFOxHdgsjMti2GMBe9YMk1hUqhXNCpyRD9akdmo=
+	t=1772301470; cv=none; b=b89MD9oAeIWlBzGZRYZnw0WAuA/f9FJOWVIP/6AYYvEqiYxdaZ6W9k6IUdT9L7CBmc+vjgzVW4pxaKtBGWtlTQP8ZwymK3jTbIPYApUSk/1/l5NnQteJHLbx0jSzq+letdjyYxrNj3mZksYJpyObDfSvkivwNdpEdU1T72msRs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301469; c=relaxed/simple;
-	bh=yMS0BgmJmKe5TSW4NOligMEP01OzhOnh2Eem50LILFY=;
+	s=arc-20240116; t=1772301470; c=relaxed/simple;
+	bh=BtSpHfQMzoFDLttl9VVIBoTEmBefOt+s2VRPaJJlC2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GU3zhg+S1ndhIX4GPmPz0xkivofcBD8Vde6O3EblqAO1qMdWOSDtxbWuh984ylMHSGqEKqiGxcXalnyvnqeMnKfG/O+M+KJ5+vUkiLgAZlhYF8Wc0KK20S3FLhi1+10R9YUbvFW3GQH3a934G4NTt2vchzpbTjr8kAj1/dAztRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kXKohXoq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZoFmEM9icv/x33f4kJJHuqW4xRlJleU3JAbQBhjyZ6bZSYeLIlU9vm7x1e2Rwob8aYJzk5MvKu3vJsUI4z8y1Ms6G3DwsCWNDXFZKkGy3DEYQpORoy0b315yFq3BR22n/BAhL8eySTaHEyl4TTs941kGDUmp2zvgTqPZBnlMqqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oBbGdHAC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kXKohXoq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEEAC19424;
-	Sat, 28 Feb 2026 17:57:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oBbGdHAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E26CC116D0;
+	Sat, 28 Feb 2026 17:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301469;
-	bh=yMS0BgmJmKe5TSW4NOligMEP01OzhOnh2Eem50LILFY=;
+	s=k20201202; t=1772301470;
+	bh=BtSpHfQMzoFDLttl9VVIBoTEmBefOt+s2VRPaJJlC2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kXKohXoq3PrQXO87O4fAE5tuIo8cQhWXXA3BdTvfnJ1mf/OtmBG/WOzv8UJtHmRSu
-	 naGnL8BZu5v5DySdsGT8tUo6JFlDCS8ySXGE4+mtqZP1gptloWOtQvBhuJe0H2YGfv
-	 Uubp8XQPXTQ/oUA58HLoGbo5YHgYlTVDKvwMC/kMpmb3u7hSHHxp6cKnYFpF7suDHm
-	 4nIkfEA1EnSGabVEDbLE355kwoZ9nztnjUdu4w28eaPGpf3DbEbTZx6mlv+sCpxO4b
-	 XkCGwGMYAgvEl6Ma8lbTUh+7KERAFhDqyKH6DMByLKxwzrDCTaET5dzb9V2gjF5rki
-	 loIyTfzpywnAg==
+	b=oBbGdHACi3S5HM0NSFXVdf8QE5sgP4CX3/NzpmFH/1uefL9yoKljjWQZI+SdUBiSn
+	 Q2dxus4FgbxY3yf0I1n+oPMkbqxY3+kjgsi2UZVtVYJEu0cbm7htA3UqHHQjOzSEtN
+	 hgzO0whPBioG46DlWSx/nruz5c5igy+hlvC0Md//+fcB9VHytfC7jUNNOaiCpkpspI
+	 3/ghdZcLuWiuYCWQYgVblVuI65k2pvUym32qgnNZciFxgzmsFb26OcIFIKn9HrdmQ5
+	 7apVJHALvYdNduYw5xrI6zKMsBHlN4fAZCvxCKCeTsxI3Vz+GWazLQwC6Bfq341p4U
+	 9ojVI6Ml7a6/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Naohiro Aota <naohiro.aota@wdc.com>,
+Cc: jinbaohong <jinbaohong@synology.com>,
 	stable@vger.kernel.org,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Robbie Ko <robbieko@synology.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 654/752] btrfs: zoned: fixup last alloc pointer after extent removal for DUP
-Date: Sat, 28 Feb 2026 12:46:05 -0500
-Message-ID: <20260228174750.1542406-654-sashal@kernel.org>
+Subject: [PATCH 6.18 655/752] btrfs: continue trimming remaining devices on failure
+Date: Sat, 28 Feb 2026 12:46:06 -0500
+Message-ID: <20260228174750.1542406-655-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,56 +51,45 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: jinbaohong <jinbaohong@synology.com>
 
-[ Upstream commit e2d848649e64de39fc1b9c64002629b4daa1105d ]
+[ Upstream commit 912d1c6680bdb40b72b1b9204706f32b6eb842c3 ]
 
-When a block group is composed of a sequential write zone and a
-conventional zone, we recover the (pseudo) write pointer of the
-conventional zone using the end of the last allocated position.
+Commit 93bba24d4b5a ("btrfs: Enhance btrfs_trim_fs function to handle
+error better") intended to make device trimming continue even if one
+device fails, tracking failures and reporting them at the end. However,
+it used 'break' instead of 'continue', causing the loop to exit on the
+first device failure.
 
-However, if the last extent in a block group is removed, the last extent
-position will be smaller than the other real write pointer position.
-Then, that will cause an error due to mismatch of the write pointers.
+Fix this by replacing 'break' with 'continue'.
 
-We can fixup this case by moving the alloc_offset to the corresponding
-write pointer position.
-
-Fixes: c0d90a79e8e6 ("btrfs: zoned: fix alloc_offset calculation for partly conventional block groups")
-CC: stable@vger.kernel.org # 6.16+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Fixes: 93bba24d4b5a ("btrfs: Enhance btrfs_trim_fs function to handle error better")
+CC: stable@vger.kernel.org # 5.4+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Robbie Ko <robbieko@synology.com>
+Signed-off-by: jinbaohong <jinbaohong@synology.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/btrfs/extent-tree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 8e6e96660fa66..4cbe1ba7af66d 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1442,6 +1442,20 @@ static int btrfs_load_block_group_dup(struct btrfs_block_group *bg,
- 		return -EIO;
- 	}
- 
-+	/*
-+	 * When the last extent is removed, last_alloc can be smaller than the other write
-+	 * pointer. In that case, last_alloc should be moved to the corresponding write
-+	 * pointer position.
-+	 */
-+	for (int i = 0; i < map->num_stripes; i++) {
-+		if (zone_info[i].alloc_offset == WP_CONVENTIONAL)
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index a48ba97bb3694..08b7109299472 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -6601,7 +6601,7 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
+ 		if (ret) {
+ 			dev_failed++;
+ 			dev_ret = ret;
+-			break;
 +			continue;
-+		if (last_alloc <= zone_info[i].alloc_offset) {
-+			last_alloc = zone_info[i].alloc_offset;
-+			break;
-+		}
-+	}
-+
- 	if (zone_info[0].alloc_offset == WP_CONVENTIONAL)
- 		zone_info[0].alloc_offset = last_alloc;
- 
+ 		}
+ 	}
+ 	mutex_unlock(&fs_devices->device_list_mutex);
 -- 
 2.51.0
 
