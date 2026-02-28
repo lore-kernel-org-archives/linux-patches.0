@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3226A346772
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B77346E66
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302105; cv=none; b=IheFljOsBhyJhXlFlUMvZZ0qf8TeTFc+cXc+mH+8ZMQNtP95yGs7cDS3ORgCUNeTTV8sojV+JfVDQMRcTg0jR9ZiEW5M/FcGnomlbZtXMQcVmfy8NjkZaKIcPPf9xc1z74uWnAaBmuNWV9b0umpOEXubVb0qE0up335DMkheh5U=
+	t=1772302106; cv=none; b=fbLCXGNLRrMDIPx28DJHBwu01PEwjKZwT6AmFWdvFjgJoBBS/rhnXgzKNtkMA2JNSizgpDyOwhsUUU6cK5hv1Jft6aFWn0i23D6eg0DOt/EkeRV3n/4XEvCyKtx8tYagVT24VKcAKdraUlyKZNC2ORL4gygOzhBswjvPag9d468=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302105; c=relaxed/simple;
-	bh=ufSIWzOEOzbzm+08GmYByYTOshZsAS+ZZW+WONif0Rk=;
+	s=arc-20240116; t=1772302106; c=relaxed/simple;
+	bh=M73fkeFO/Awv509urLNj6yBLDbowa8gvnl6tGLLNoKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=orGPGVuJ4KUQ1dAVc1tN2G00Y0Lpevuv6XCA+jk6h9ICLAAOYulPlBX64qtX+sdkF6gBDr1UYI7etaK0Kq+tLbR/PHMMd8EyWyye/IQbwOGY3ga1igGy1A7ZTY6Ry+lyr9OWY/w7lzSz7ZX8C6qQ0mh0e9fl5AWeYGbbOfc8hwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U3j6sH8k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mZTFcsQucDHtYHsBo0fHb0y/SB3FKGTQ5UCVfPBvi4WlcgmlJJPkkSNDER6BDOTERo5KT7NJ5qD4Ng613E0HIx7hxhuErtTALDcuQjYBAJ6zN7hdO7pT3lWR2IUma/Fp598rYarZpaezcW6FfI6ChhCQxDC6PfBRembENTZYUg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SgvWfwmQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U3j6sH8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D35C19424;
-	Sat, 28 Feb 2026 18:08:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SgvWfwmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B503C116D0;
+	Sat, 28 Feb 2026 18:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302105;
-	bh=ufSIWzOEOzbzm+08GmYByYTOshZsAS+ZZW+WONif0Rk=;
+	bh=M73fkeFO/Awv509urLNj6yBLDbowa8gvnl6tGLLNoKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3j6sH8kwHx6I2SwPSiQ9CgXhdeVHZRR9f22HagzopE74ilJl0SzhqzLiQ5jvEYXW
-	 C7B9xFml8xPKUlDDedKBa3Ihf4kWt4U8+gmzCGNqK5Cy+pvyYbP8LoZrrz+o++OXAL
-	 uRyMJss7dfqUQD2jfJVzEGq4JPIic3tGum4rKopVNJldZ5zc60iStdkvV7mRs849Tp
-	 7zKzCRosAGZTfNSTb7WepIsozPmuNoj+6tWQiexsRFRGv9GG7aD0U1fGwss4h9+5Ew
-	 PJPmNY+hOOIirJcAUBBngv5C7zaFRyZv3aS67YV/QdCAXH8sD4xQlo9ay+JKnlzw0v
-	 983Iv+5fvbC3w==
+	b=SgvWfwmQlwKmbk6pmjQLNjIyXx7kt0LbwhYu31i2Lj7vs5z9VAF55cAhmCQYzJiNE
+	 mkHTDQvgdyJYyctlTkl2FEbyK+3lWB92+4zXmJTheZDY54XhaI9ygJVQdBX9E0AAlw
+	 88DniRtGbOsKtE/raYRUPqHhJrWKWHWeVAjCagwtRXL4zoqFD7OdENWdyDYT2AuUC8
+	 7I9F9LTLZQFUPC+w+ZI3IZZ6UWuRMk/4FUqnwSoJNspGukMIWlsmlceSpX9bmFU9Zt
+	 hJgH54Oj2TuWPl/SP2RCpZhnMxOyDTeFcXs1o5QebhcB2ZjpdvwMJRiFlzYLeYAFK8
+	 Iv70DIuPBn5Fw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotian Zhang <vulab@iscas.ac.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Alexey Minnekhanov <alexeymin@minlexx.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/283] HID: playstation: Add missing check for input_ff_create_memless
-Date: Sat, 28 Feb 2026 13:03:54 -0500
-Message-ID: <20260228180709.1583486-92-sashal@kernel.org>
+Subject: [PATCH 6.6 093/283] drm/msm/dpu: fix CMD panels on DPU 1.x - 3.x
+Date: Sat, 28 Feb 2026 13:03:55 -0500
+Message-ID: <20260228180709.1583486-93-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -47,39 +48,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit e6807641ac94e832988655a1c0e60ccc806b76dc ]
+[ Upstream commit 59ca3d11f5311d9167015fe4f431701614ae0048 ]
 
-The ps_gamepad_create() function calls input_ff_create_memless()
-without verifying its return value,  which can lead to incorrect
-behavior or potential crashes when FF effects are triggered.
+DPU units before 4.x don't have a separate CTL_START IRQ to mark the
+begin of the data transfer. In such a case, wait for the frame transfer
+to complete rather than trying to wait for the CTL_START interrupt (and
+obviously hitting the timeout).
 
-Add a check for the return value of input_ff_create_memless().
-
-Fixes: 51151098d7ab ("HID: playstation: add DualSense classic rumble support.")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 050770cbbd26 ("drm/msm/dpu: Fix timeout issues on command mode panels")
+Reported-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Closes: https://lore.kernel.org/r/8e1d33ff-d902-4ae9-9162-e00d17a5e6d1@postmarketos.org
+Patchwork: https://patchwork.freedesktop.org/patch/696490/
+Link: https://lore.kernel.org/r/20251228-mdp5-drop-dpu3-v4-2-7497c3d39179@oss.qualcomm.com
+Tested-by: Alexey Minnekhanov <alexeymin@minlexx.ru>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-playstation.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
-index 32f65c45fdc8a..199f76988bae8 100644
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -732,7 +732,9 @@ static struct input_dev *ps_gamepad_create(struct hid_device *hdev,
- #if IS_ENABLED(CONFIG_PLAYSTATION_FF)
- 	if (play_effect) {
- 		input_set_capability(gamepad, EV_FF, FF_RUMBLE);
--		input_ff_create_memless(gamepad, NULL, play_effect);
-+		ret = input_ff_create_memless(gamepad, NULL, play_effect);
-+		if (ret)
-+			return ERR_PTR(ret);
- 	}
- #endif
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index 83a804ebf8d7e..fd2400c4665d2 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -675,10 +675,11 @@ static int dpu_encoder_phys_cmd_wait_for_commit_done(
+ 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+ 		return 0;
  
+-	if (phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
+-		return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
++	if (phys_enc->irq[INTR_IDX_CTL_START] &&
++	    !phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
++		return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
+ 
+-	return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
++	return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
+ }
+ 
+ static void dpu_encoder_phys_cmd_handle_post_kickoff(
 -- 
 2.51.0
 
