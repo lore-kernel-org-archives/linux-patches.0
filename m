@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07844BC004;
-	Sat, 28 Feb 2026 17:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF23F328B71;
+	Sat, 28 Feb 2026 17:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301340; cv=none; b=t6fnASN8qzSAo10hHXQPQ63TiqEiPbGnBidsDyYMmJ+zVXUsVcbPz6LAeOs+DMG801pZYBMOr+WGdkLkmOZS+XaNKlI+fK2JOpssObIvCNB1urJ85YDnTZpGKgiEXbGhnmRgplNT1YDaxLmRPLA7mZIeNUbr05koBPF8geWotGg=
+	t=1772301341; cv=none; b=KqnZioUyQAGDt90zOo+TYvkoG9ay801vW4T8FKi3ruukozdTFR3wQbynjLdVlG/tiP9jnCVOFAp0+wgLoa5UER7NlrmGH77BlKUD9m2XP5DAyWB7H2acYz0+NkCBE9cpyO674As0Z40v/CgYJDzN5jRayw+c/wp+TaTA/VL4/Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301340; c=relaxed/simple;
-	bh=b6WhtVEP2p+gcJPlwCLcllZp1eYEWxVNgELP2T2BLQU=;
+	s=arc-20240116; t=1772301341; c=relaxed/simple;
+	bh=VyZLVXUPkudy58ZFvfqr7Up7sGe3c+Vwfqt4FqfURlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHOjtlStZgPT5PsU0FwEGmRWH/LOFokB2kWc6Bo7s8En4sOvSvCPUMQArmaPshVvPiqTuWrqnNzcEcYXpMg4dzL75l/y4nlIwuwlhGUc5alUTqSoWHtadye0PFCBMVF4GaGcY4dgcaFsCVy506eITibB6VY0oYHmNB6AXWD2F3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g3F7o0NA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1tEOWX5Sm6cC/vSSQrdon0dohyG0pfnQEv21tH9fEwAhBRm3SwrcbE9UW4kxXOtp2vgbNFmQiWdwEeXabmr3qFc1hY95Q/qmfL/oC1+cZeF734hQefKxXEXhtd/uk037m7YaSKUnR/cUMTXpm8jeqztag5oofzqmIRxYEu4duQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T7ayVPJh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g3F7o0NA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4BDC116D0;
-	Sat, 28 Feb 2026 17:55:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T7ayVPJh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BECC19424;
+	Sat, 28 Feb 2026 17:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301340;
-	bh=b6WhtVEP2p+gcJPlwCLcllZp1eYEWxVNgELP2T2BLQU=;
+	s=k20201202; t=1772301341;
+	bh=VyZLVXUPkudy58ZFvfqr7Up7sGe3c+Vwfqt4FqfURlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g3F7o0NAOZu0X//wl6PHiRzQ8xduREbkhdhdKXw31A9GzmFg3S8KHzYaRyvT26aUQ
-	 FuRSmbT/vmcxp4qdCYQ1V0R+prbKRaI2vYYdAcNsl0Q0tWufqvMW70ew8pvvWdU+NG
-	 3igBNmOqbq/7W0X/+JtYaNinzhNoeHILy9QphQCQfCxOuQWXY63I16cMya0G3hHwTw
-	 yEsQPyIgAZqKDjjF53m++x0CersYW9oWHDssQnJApPoRdrS117A+LgfHU4l/9UIoLB
-	 Aj3Wu+/tERzENngpAT8/Q4dT9vAb4IDA6K+CXLUgMGL+tpa6siDHnK5vptjjmC1PCx
-	 iETx12nRqY2qw==
+	b=T7ayVPJhxJcr11NvCUnRaGkAXMRzFOhQky2WsUrO5mMheRGpgqpUPNHTNgD5A1S24
+	 vWyODXEp/0ykNFacC/VcHNiiYYHTCOrwWM+aGHcjFuckS1cy96/50dZU0V190tgSUc
+	 Th+Pox6dPb2cmpg18uCbVszti62fgz8CJdY9Jj+58C4ZF4kHdMJeSAO7FiFG+3m9JP
+	 p6ifaLTbzPwcdpZAXV+LhMcW/wQbJewDOxrPFr/ywtZCdn+4QUUc0aT40EX8lmqwkm
+	 t768OPDyPfxxdqLpDUnoAJKbWTrTazwdoepfXmd3V0Wfkqz1BZm6QU8D9ltGn4SnHo
+	 plVcDo7M4PpUQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: David Plowman <david.plowman@raspberrypi.com>,
+Cc: Jai Luthra <jai.luthra@ideasonboard.com>,
 	stable@vger.kernel.org,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 527/752] media: i2c: ov5647: Sensor should report RAW color space
-Date: Sat, 28 Feb 2026 12:43:58 -0500
-Message-ID: <20260228174750.1542406-527-sashal@kernel.org>
+Subject: [PATCH 6.18 528/752] media: i2c: ov5647: Fix PIXEL_RATE value for VGA mode
+Date: Sat, 28 Feb 2026 12:43:59 -0500
+Message-ID: <20260228174750.1542406-528-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,65 +50,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: David Plowman <david.plowman@raspberrypi.com>
+From: Jai Luthra <jai.luthra@ideasonboard.com>
 
-[ Upstream commit f007586b1e89dcea40168415d0422cb7a0fc31b1 ]
+[ Upstream commit c063632b494b02e891442d10f17e37b7fcfab9b3 ]
 
-As this sensor captures RAW bayer frames, the colorspace should be
-V4L2_COLORSPACE_RAW instead of SRGB.
+The pixel rate for VGA (640x480) mode is configured in the mode's table
+to be 58.333 MPix/s instead of 55 MPix/s, so fix it.
 
-Fixes: a8df5af695a1 ("media: ov5647: Add SGGBR10_1X10 modes")
+Fixes: 911f4516ee2b ("media: ov5647: Support V4L2_CID_PIXEL_RATE")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Plowman <david.plowman@raspberrypi.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Link: https://lore.kernel.org/all/CAPY8ntA2TCf9FuB6Nk%2BOn%2By6N_PMuYPAOAr3Yx8YESwe4skWvw@mail.gmail.com/
+Suggested-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Jai Luthra <jai.luthra@ideasonboard.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5647.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/i2c/ov5647.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/media/i2c/ov5647.c b/drivers/media/i2c/ov5647.c
-index 191954497e3db..c0f1121b025e5 100644
+index c0f1121b025e5..bf5b0bd8d6acb 100644
 --- a/drivers/media/i2c/ov5647.c
 +++ b/drivers/media/i2c/ov5647.c
-@@ -508,7 +508,7 @@ static const struct ov5647_mode ov5647_modes[] = {
- 	{
- 		.format = {
- 			.code		= MEDIA_BUS_FMT_SBGGR10_1X10,
--			.colorspace	= V4L2_COLORSPACE_SRGB,
-+			.colorspace	= V4L2_COLORSPACE_RAW,
- 			.field		= V4L2_FIELD_NONE,
- 			.width		= 2592,
- 			.height		= 1944
-@@ -529,7 +529,7 @@ static const struct ov5647_mode ov5647_modes[] = {
- 	{
- 		.format = {
- 			.code		= MEDIA_BUS_FMT_SBGGR10_1X10,
--			.colorspace	= V4L2_COLORSPACE_SRGB,
-+			.colorspace	= V4L2_COLORSPACE_RAW,
- 			.field		= V4L2_FIELD_NONE,
- 			.width		= 1920,
- 			.height		= 1080
-@@ -550,7 +550,7 @@ static const struct ov5647_mode ov5647_modes[] = {
- 	{
- 		.format = {
- 			.code		= MEDIA_BUS_FMT_SBGGR10_1X10,
--			.colorspace	= V4L2_COLORSPACE_SRGB,
-+			.colorspace	= V4L2_COLORSPACE_RAW,
- 			.field		= V4L2_FIELD_NONE,
- 			.width		= 1296,
- 			.height		= 972
-@@ -571,7 +571,7 @@ static const struct ov5647_mode ov5647_modes[] = {
- 	{
- 		.format = {
- 			.code		= MEDIA_BUS_FMT_SBGGR10_1X10,
--			.colorspace	= V4L2_COLORSPACE_SRGB,
-+			.colorspace	= V4L2_COLORSPACE_RAW,
- 			.field		= V4L2_FIELD_NONE,
- 			.width		= 640,
- 			.height		= 480
+@@ -582,7 +582,7 @@ static const struct ov5647_mode ov5647_modes[] = {
+ 			.width		= 2560,
+ 			.height		= 1920,
+ 		},
+-		.pixel_rate	= 55000000,
++		.pixel_rate	= 58333000,
+ 		.hts		= 1852,
+ 		.vts		= 0x1f8,
+ 		.reg_list	= ov5647_640x480_10bpp,
 -- 
 2.51.0
 
