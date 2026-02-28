@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDB235AC25
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F7D35AC18
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302684; cv=none; b=qDsHoJJAKDQUlUgByl9wtatGJBFrv3/1hmB6QqVfeh2anT5aiOF1enLqHzQADC5AWByZ4d5wsrPRtNbYHFI7AsfWKxma958Z6M9i0TanfmtWd/KOJiQcrNhhUM+CEixLJ6YrriMtLYwMuLHrjC7s67I4oLduAZBiIclWbuUiZ3A=
+	t=1772302685; cv=none; b=SNQCaa9ZrksIYCWQQBjQg56RjEPB6+cHBg2ELifsGLg67urwwqfuIQB/O3w6mEXdZKzlB4l0OyUZIcqpzfY1AH2gxeIz4Qp2or9E5yGUQ7T22iqR01dPscfRLObdrzR4vx0vmm8EiXxxstnvJNu4BTHJ1fFMWt3mHn/QtnO+ZEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302684; c=relaxed/simple;
-	bh=L2Gqpp0UJWb1UkKnR2+aEcXAYWwnGRL/JV8Shsj5i9U=;
+	s=arc-20240116; t=1772302685; c=relaxed/simple;
+	bh=fJAUufCRKcleQ2idj0zudljddEuuneFi/X3xaB3hJ/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6uLyHh8YsfZy0ngsNK7waHSQMBS3peADUL9AmG1AQqhIa0DP6OED5aPgiPOoTyYcu7Ogk+9ck4dmjKP21BLKnIqrEBuoLmoc1hCiUofrkp+b/ULzPPdLpxJuMqA4AgIuGFCMipMu/gfzjmWmXtT3+zBzfjHm1wYXCPUaXiHj0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fKcG2KAI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OcS9g3C1EWmNkbh5IZD33RvKTYY9/eM+5RVEtmsd8FocL343L5jn3MAybHH7Nqx4b2vVOe2fQWoa49BwFCk8hGy+P6otWVR4WIf3UtpgWQTP5qzL19o9B67mRRLNBijmkX7g6iIXZm/7y+ZLCaJHQqC5gO73utqJsq3Mqm9Lx1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LmLT+VOu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fKcG2KAI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16248C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LmLT+VOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3AA9C19423;
 	Sat, 28 Feb 2026 18:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302684;
-	bh=L2Gqpp0UJWb1UkKnR2+aEcXAYWwnGRL/JV8Shsj5i9U=;
+	s=k20201202; t=1772302685;
+	bh=fJAUufCRKcleQ2idj0zudljddEuuneFi/X3xaB3hJ/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKcG2KAIj+O0rzmUNUbpJkqVzX9HrbLW99EE0vuGvOnRGPKVy1tWUKkWOn+bdnvx9
-	 e/xQn21Ji5cOvuWYWU/CEVrBhPnzv2uSX6XRjU3WU1H519Xn27Bqtk7x8quSNt8bS7
-	 hyiAc7CZI+xS3o4bYs+QrHM/EF2rKoMFcYmp13t/mCH0uivlFkvuApFDLUqM/ypcm3
-	 FbZugljhfurnNTGuMUqYD8DdLXEY7qyf1OeIZrMdajJkubIU5mpWr8d5igOICyJJhU
-	 gwBkfUc91D5UBePCRhxofsVkuQbApHQn5uIMrBWh3d4zKne1do+kuxaAEfO4vmIqPp
-	 5sByxGPUhEIkQ==
+	b=LmLT+VOuvBTnOy4wONjsp8UQz14Ylvihpms2ftIXoZXiFNGQqqEm7RfF96ucsKxBp
+	 B+S7E9RaI/tuhRHTojQ2iJoyZsSkm2i6DKTCQ3D/AIALWq0UAtvu8A892g7ReySnHV
+	 0VVNhKT2XUXc8j0kzcTRu7j7whJZIut8EoGO/BgtVw1ioCIixTjMFVKiMHzYo7I0FY
+	 1lXNDfiqRG6COnKsl2BPQ7zAB9uNnWu/QfU2EW6TX+UszS2fV6wV4lnKPkm05tO0LW
+	 mp7a3hWM3JiN9nHaAYHpP7ARjFGlTcwCtJQqgJI/LILfwXRaedaLF+p/yyH3w8roZU
+	 UgYzUTgbV6xXQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/147] arm64: dts: qcom: sdm630: fix gpu_speed_bin size
-Date: Sat, 28 Feb 2026 13:15:44 -0500
-Message-ID: <20260228181736.1605592-36-sashal@kernel.org>
+Subject: [PATCH 5.10 037/147] ARM: dts: allwinner: sun5i-a13-utoo-p66: delete "power-gpios" property
+Date: Sat, 28 Feb 2026 13:15:45 -0500
+Message-ID: <20260228181736.1605592-37-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -49,47 +47,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Chen-Yu Tsai <wens@kernel.org>
 
-[ Upstream commit e814796dfcae8905682ac3ac2dd57f512a9f6726 ]
+[ Upstream commit 0b2761eb1287bd9f62367cccf6626eb3107cef6f ]
 
-Historically sdm630.dtsi has used 1 byte length for the gpu_speed_bin
-cell, although it spans two bytes (offset 5, size 7 bits). It was being
-accepted by the kernel because before the commit 7a06ef751077 ("nvmem:
-core: fix bit offsets of more than one byte") the kernel didn't have
-length check. After this commit nvmem core rejects QFPROM on sdm630 /
-sdm660, making GPU and USB unusable on those platforms.
+The P66's device tree includes the reference design dtsi files, which
+defines a node and properties for the touchpanel in the common design.
+The P66 dts file then overrides all the properties to match its own
+design, but as the touchpanel model is different, a different schema
+is matched. This other schema uses a different name for the GPIO.
 
-Set the size of the gpu_speed_bin cell to 2 bytes, fixing the parsing
-error. While we are at it, update the length to 8 bits as pointed out by
-Alexey Minnekhanov.
+The original submission added the correct GPIO property, but did not
+delete the one inherited from the reference design, causing validation
+errors.
 
-Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Link: https://lore.kernel.org/r/20251211-sdm630-fix-gpu-v2-1-92f0e736dba0@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Explicitly delete the incorrect GPIO property.
+
+Fixes: 2a53aff27236 ("ARM: dts: sun5i: Enable touchscreen on Utoo P66")
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20251225103616.3203473-4-wens@kernel.org
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/sun5i-a13-utoo-p66.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index c39e67fa64650..cc43d014c5038 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -467,8 +467,8 @@ qusb2_hstx_trim: hstx-trim@240 {
- 			};
- 
- 			gpu_speed_bin: gpu-speed-bin@41a0 {
--				reg = <0x41a2 0x1>;
--				bits = <5 7>;
-+				reg = <0x41a2 0x2>;
-+				bits = <5 8>;
- 			};
- 		};
- 
+diff --git a/arch/arm/boot/dts/sun5i-a13-utoo-p66.dts b/arch/arm/boot/dts/sun5i-a13-utoo-p66.dts
+index be486d28d04fa..428cab5a0e906 100644
+--- a/arch/arm/boot/dts/sun5i-a13-utoo-p66.dts
++++ b/arch/arm/boot/dts/sun5i-a13-utoo-p66.dts
+@@ -102,6 +102,7 @@ &touchscreen {
+ 	/* The P66 uses a different EINT then the reference design */
+ 	interrupts = <6 9 IRQ_TYPE_EDGE_FALLING>; /* EINT9 (PG9) */
+ 	/* The icn8318 binding expects wake-gpios instead of power-gpios */
++	/delete-property/ power-gpios;
+ 	wake-gpios = <&pio 1 3 GPIO_ACTIVE_HIGH>; /* PB3 */
+ 	touchscreen-size-x = <800>;
+ 	touchscreen-size-y = <480>;
 -- 
 2.51.0
 
