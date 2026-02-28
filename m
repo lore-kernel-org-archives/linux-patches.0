@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3063B5315
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A6C355049
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301099; cv=none; b=cq0i2lRhszjATkJOnWGlWaTMq6YTjZ5lFbWrDJEW6eRnbHrK5dlEjMFHB4J22hB3fp1pQuemKVW/zZLGkBKyPe1+u1Lzr3S3qhdzneEmoI8yRE/335ViQXAZtVS7jin5naUT6nKXhsfSftjElCgQjN/7GV3S5MNGq7C4g7tww+E=
+	t=1772301100; cv=none; b=mvaPBYKgFLWXHjZ4vIBhvd+5TrVyICq0rxgWWK2W4HKZWDya8Hnr0zYxIknh2/6+p1stqkZ+1CpAqcChMZDrUVS31hTgxYjfs7WHq0rCj0IOJ2nAqvb5CEMjTPU0v8rTJ+mSQx+cYvlt3/RVr2XWCby3D/d6b52COzr3e6VAG3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301099; c=relaxed/simple;
-	bh=on/aqGeJbNw8FM9p0WkiZd/V+zdZqbfsc57tB34OKOg=;
+	s=arc-20240116; t=1772301100; c=relaxed/simple;
+	bh=pFE7KMqNgpCOcihLdheVtz6wir2jtJW5f5QbLKUawRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NvoGvOh3SrkzOFeki1WofpCiP0IpI3QNrWaK5hXvOY1C/GgBnswGPKdM1fIy7GSmSwnXDFJKnfkxgg+ufW7xsK/86NKlTsIe/t0A/sDEvPio+M6dVsbV4gxhGjpbZ3A3UVseL58fKtW2SMwCk8jxMetHIn9g/D9VaEZjEe1iggI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lOpGbWgx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=miBu2rhf+bx7UIG/RLGjIGrJxROuk/IOG2rwY37pmBIT0GcKWK+qYNPXhOhQpnBmtIUMLNEffbxeohFmnUDGeOXAjZIvhmVdNPCF+EOMGrEPiJ6jOTmjtr0zS0HYEfeoH2CbMW8F0Spbr0nnSHADQVyL2lctN5Xlt/tFrmKUEGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gaqiy8fj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lOpGbWgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD86C116D0;
-	Sat, 28 Feb 2026 17:51:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gaqiy8fj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924A6C19423;
+	Sat, 28 Feb 2026 17:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301099;
-	bh=on/aqGeJbNw8FM9p0WkiZd/V+zdZqbfsc57tB34OKOg=;
+	s=k20201202; t=1772301100;
+	bh=pFE7KMqNgpCOcihLdheVtz6wir2jtJW5f5QbLKUawRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lOpGbWgxmEPn4KspUwWpJtYs0vEP0Y4YxSNnxcheNt7a9tQIeQ8bBlWk67jpBNFaC
-	 mkMRxlu3MlcKFKQ1M5WxVpIIgQi7FHSCedBXQt3TMiyu5Eo5cvcJ5e9/LdxV8SKRGx
-	 Rq7bCaD6qyxqGq6gz1R5W1t2EGU771ovHWw9VheICKpp2iZk4ftqOL0zw8SL4r/8iF
-	 QX08OKgLdjFIX0tbEsfEBeFY+u757p8SqYSQlfvuE5CNH56mfT43w1SX/RGailg0AL
-	 JrPhdEOJzc9sfEOYRbsnIY8heHJsnRB58Be0RQXf8lESK83U3/e3/w31oWQBSvPzTg
-	 FSY2laf6N+9rQ==
+	b=gaqiy8fjmfvQLxCUE2qM9b1Ue/fh+F3AIOzny2aC/j/Lugo7r6cGNVXi4FSonHuYw
+	 8qAi/nx4Ne9es11fE9qtZK1lXfccV/lCVNLZLa57zsj6KiX9984PU9ZvtxMPtOPAtV
+	 6GC+01gnjSHV1P44LmeyWJxd+v+Mkdys5P87ZBOTcd6uZx9a9CYAi5h+Y0l0ObCZxw
+	 AYY8eobHncdJVYkJ9PO5IjFJqt2m7hh4wljCHIUBfcRQjiz4iQHeyLOfXFmtNkhCPD
+	 gjyWftBxqX0JeIDkJogRlK5+4DfayCXgXHvgbiHNHOCFzFDEoyt3Yfa0GIO9DtKa3U
+	 zvCFNmuHTh7Ig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Yuto Hamaguchi <Hamaguchi.Yuto@da.MitsubishiElectric.co.jp>,
-	Florian Westphal <fw@strlen.de>,
+Cc: Florian Westphal <fw@strlen.de>,
+	sungzii <sungzii@pm.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 251/752] netfilter: nf_conntrack: Add allow_clash to generic protocol handler
-Date: Sat, 28 Feb 2026 12:39:22 -0500
-Message-ID: <20260228174750.1542406-251-sashal@kernel.org>
+Subject: [PATCH 6.18 252/752] netfilter: xt_tcpmss: check remaining length before reading optlen
+Date: Sat, 28 Feb 2026 12:39:23 -0500
+Message-ID: <20260228174750.1542406-252-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,39 +47,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Yuto Hamaguchi <Hamaguchi.Yuto@da.MitsubishiElectric.co.jp>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 8a49fc8d8a3e83dc51ec05bcd4007bdea3c56eec ]
+[ Upstream commit 735ee8582da3d239eb0c7a53adca61b79fb228b3 ]
 
-The upstream commit, 71d8c47fc653711c41bc3282e5b0e605b3727956
- ("netfilter: conntrack: introduce clash resolution on insertion race"),
-sets allow_clash=true in the UDP/UDPLITE protocol handler
-but does not set it in the generic protocol handler.
+Quoting reporter:
+  In net/netfilter/xt_tcpmss.c (lines 53-68), the TCP option parser reads
+ op[i+1] directly without validating the remaining option length.
 
-As a result, packets composed of connectionless protocols at each layer,
-such as UDP over IP-in-IP, still drop packets due to conflicts during conntrack insertion.
+  If the last byte of the option field is not EOL/NOP (0/1), the code attempts
+  to index op[i+1]. In the case where i + 1 == optlen, this causes an
+  out-of-bounds read, accessing memory past the optlen boundary
+  (either reading beyond the stack buffer _opt or the
+  following payload).
 
-To resolve this, this patch sets allow_clash in the nf_conntrack_l4proto_generic.
-
-Signed-off-by: Yuto Hamaguchi <Hamaguchi.Yuto@da.MitsubishiElectric.co.jp>
+Reported-by: sungzii <sungzii@pm.me>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_generic.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/xt_tcpmss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_generic.c b/net/netfilter/nf_conntrack_proto_generic.c
-index e831637bc8ca8..cb260eb3d012c 100644
---- a/net/netfilter/nf_conntrack_proto_generic.c
-+++ b/net/netfilter/nf_conntrack_proto_generic.c
-@@ -67,6 +67,7 @@ void nf_conntrack_generic_init_net(struct net *net)
- const struct nf_conntrack_l4proto nf_conntrack_l4proto_generic =
- {
- 	.l4proto		= 255,
-+	.allow_clash            = true,
- #ifdef CONFIG_NF_CONNTRACK_TIMEOUT
- 	.ctnl_timeout		= {
- 		.nlattr_to_obj	= generic_timeout_nlattr_to_obj,
+diff --git a/net/netfilter/xt_tcpmss.c b/net/netfilter/xt_tcpmss.c
+index 37704ab017992..0d32d4841cb32 100644
+--- a/net/netfilter/xt_tcpmss.c
++++ b/net/netfilter/xt_tcpmss.c
+@@ -61,7 +61,7 @@ tcpmss_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 			return (mssval >= info->mss_min &&
+ 				mssval <= info->mss_max) ^ info->invert;
+ 		}
+-		if (op[i] < 2)
++		if (op[i] < 2 || i == optlen - 1)
+ 			i++;
+ 		else
+ 			i += op[i+1] ? : 1;
 -- 
 2.51.0
 
