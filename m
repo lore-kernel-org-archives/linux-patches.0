@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363C0392811
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CDB392811
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301003; cv=none; b=bwUe1TyFMs8G3hnoV5dPFnhwOmTZd5cZ8gteLMQrAxQ6cdosKo60GjYeHG9OiswzF19Pgy1uuqNnzRWGmcV77sU7/qEk5/eBRffg6TC8kRNHMuWUwgBLCntqFgQvhBNRREPUIiDfcsO1HD+yiB+MKCkTi0XUaHuH+ZHFkxl9wLo=
+	t=1772301004; cv=none; b=gVrvkQMh4GNoAZKmjC0UH1QBqTt1+gvGuQCPCUwfipUU8+6JjoSHjO+JtQ1mWMWSlg7MQfD5EMMrFNMfVBRrwexYj+yB7uwcAhvXr4nIcgaJIm2oYRiwASZOuF4GNWZSLl/oE/4VVpkrblg+JV+Erm+tG1k49cNnfvwE6cloJvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301003; c=relaxed/simple;
-	bh=NOzhfqd4DjmFiQKuS+a1GuPqV7fhkO86AfFKKYFbbyk=;
+	s=arc-20240116; t=1772301004; c=relaxed/simple;
+	bh=D7nUUwIovDpspinNd2KGl13spb6T8MiLircZ8wMKkUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c0lMsEK1jhpoX0Wv9qkg7ngToiMja8H5Ra8lUoCoVMVZ1nmioUEW5ONEvKH5i/lFloZpHBhUm2+1Aj9XWrgJonh9uoEHjZI5o8mWTv3Ufo2KoCLc7SSJiXcekoomtNJ826cVs1OpcCeABL5sPuJnEziDiczPSq5Gk+MhpRmixtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GgjFOud/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=egIpawJHVCgJNSkrnNcuqojgldi3cYiwk6oV1MDSyT/dId+nUAAyOSirglhYYW7ofCqyjBr7eEQo03hYvo6Dbw9sWl7ht0fAu71vPuCrn97KY1K3+QuYGswTPjySgugPeO2AytRk6RJw9mp5w32zNJMOS7rnqEtVB8LKZX4d6J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Busr4kON; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GgjFOud/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77366C116D0;
-	Sat, 28 Feb 2026 17:50:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Busr4kON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D35C19424;
+	Sat, 28 Feb 2026 17:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301003;
-	bh=NOzhfqd4DjmFiQKuS+a1GuPqV7fhkO86AfFKKYFbbyk=;
+	bh=D7nUUwIovDpspinNd2KGl13spb6T8MiLircZ8wMKkUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgjFOud/NrXYuBM6yxBT9nlOE3516UIt101KRF9Jv37nsdNDTJ824tZCIXuIL7RXD
-	 gLkXFMrSyf97qY/h5fp6k+iv22qqNtyeCCHwBUKPUSdULXJAO8EEzWQoZnS+7kCgjb
-	 LrlpIXjZLS6rg4V0vIi2W3OkvzWGyZcRP3vclFK8IajQG1E8eSZWrz6SYn0N4JzrER
-	 IBkUw6I8QW7Uwi3Z9vY26YYKWXMpvMxM26b7cYS5a1oHZh02gWoh2JyBBnGEZtvBFz
-	 cu32L6Kvy8MvF2UJryV0dJw7vaAiyLhd7WocsHE60jdIEiUIDtosPly7QvHjkpEuEo
-	 bFjIprD3IqKYQ==
+	b=Busr4kON0Oa60crA3NYQfP9jwAk16j6zlpQSwVHsNw/7PgPzopKwDfKwl6IR9Uiq8
+	 eZ1zzsJFblKCoNEsgS7RCSWfEZCKOm0m5Xsz4HcSOZNh3UMopDtndyIUS+uCl3FsGB
+	 TOP7Hgn28l0JhsuTvvchuvVHIo9KLGca3q2zeGs/G3/QLkrJj3z040GDcLNdi0MnPL
+	 FBgM/DdJCaprKTw1oIC+So4tJu2jn2CX5SB9sg8qk2yPoFAUY4TIwexXEyA4LHknAb
+	 9ggozwOmdTzorD5jaJqo5t52lDqjdNIxryWZ2ybnbs/FjmTpQ1s9Ib67LqG1Bh5NoQ
+	 GKhTA7B1rXxMA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Tim Huang <tim.huang@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 136/752] media: mediatek: vcodec: Don't try to decode 422/444 VP9
-Date: Sat, 28 Feb 2026 12:37:27 -0500
-Message-ID: <20260228174750.1542406-136-sashal@kernel.org>
+Subject: [PATCH 6.18 137/752] drm/amdgpu: add support for HDP IP version 6.1.1
+Date: Sat, 28 Feb 2026 12:37:28 -0500
+Message-ID: <20260228174750.1542406-137-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,38 +48,32 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From: Tim Huang <tim.huang@amd.com>
 
-[ Upstream commit 3e92d7e4935084ecdbdc88880cc4688618ae1557 ]
+[ Upstream commit e2fd14f579b841f54a9b7162fef15234d8c0627a ]
 
-This is not supported by the hardware and trying to decode
-these leads to LAT timeout errors.
+This initializes HDP IP version 6.1.1.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c      | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c
-index d873159b9b306..9eef3ff2b1278 100644
---- a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_stateless.c
-@@ -502,6 +502,12 @@ static int mtk_vdec_s_ctrl(struct v4l2_ctrl *ctrl)
- 			mtk_v4l2_vdec_err(ctx, "VP9: bit_depth:%d", frame->bit_depth);
- 			return -EINVAL;
- 		}
-+
-+		if (!(frame->flags & V4L2_VP9_FRAME_FLAG_X_SUBSAMPLING) ||
-+		    !(frame->flags & V4L2_VP9_FRAME_FLAG_Y_SUBSAMPLING)) {
-+			mtk_v4l2_vdec_err(ctx, "VP9: only 420 subsampling is supported");
-+			return -EINVAL;
-+		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+index dd7b2b796427c..54a045a0bda96 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -2995,6 +2995,7 @@ int amdgpu_discovery_set_ip_blocks(struct amdgpu_device *adev)
+ 	case IP_VERSION(6, 0, 0):
+ 	case IP_VERSION(6, 0, 1):
+ 	case IP_VERSION(6, 1, 0):
++	case IP_VERSION(6, 1, 1):
+ 		adev->hdp.funcs = &hdp_v6_0_funcs;
  		break;
- 	case V4L2_CID_STATELESS_AV1_SEQUENCE:
- 		seq = (struct v4l2_ctrl_av1_sequence *)hdr_ctrl->p_new.p;
+ 	case IP_VERSION(7, 0, 0):
 -- 
 2.51.0
 
