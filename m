@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D96379ED5
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB07338939
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301728; cv=none; b=Uq/+DTC8Tznd/SHZTEELIUwQyE7hfxEGepfoCpVTeNOJn6GCzbDzVR/rTRKUZ2aJGadhOuqF+wsU7/RUV/rHz5bNIJ++5Zi2s2EBRaQ3bRMb7F65x2fnl8Ibw3mlJPNA1mnoLerK+gSZt7sG8by3Usp+Fe4TCSrHZxWI+7wJzCc=
+	t=1772301729; cv=none; b=uwpScHoJmwIYRy0ynywAVfgYYKVqAWmiBUTEUf/x0vq2AczybbKUS2Jt5oJ+XgpWEJepm9hdgEjpP4lvV4sGVhTiBEN/duFDbOKGwHDCvVEevVf8B/oAwf2yQK4kwcUhw0RgYNVwe+ZOioRr9W9oftbexRLIR8M32U5Wc7sW90Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301728; c=relaxed/simple;
-	bh=7ObWGwtHY6eqgT1kSzApBIYRsjhClRXIH0tdYKtLzIo=;
+	s=arc-20240116; t=1772301729; c=relaxed/simple;
+	bh=IzXyQrn4Zk7TmX6CDeV1EzZwhlsMaeUWV/1MqiYAFu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qf3y21kHKMTNBCbBrE5yVcbmdxzG4+F3infVal9+k2ZtOqEVjB8v7Wy5KWwLDJwbVxeotmLXUkh92uj9t4JzGWvGbzzTXpyZZZT1n5NdEmjmCbV59HUmqHElDAaOk0py0dz1P3THjm1ghI6UjxA9meqxf+iu8MkypjGF2tdeeD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u7pJqlsM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=orLn9Id2mePmTmE5Ap9Zk2rSAee4MTmPjmiUrjeP+eMpfOj2d1onbjDwtOTaVZ0Odb2rFks2t1bXYBPfpQl2GVcY+QVy6NizOCVzuUp2s7SLsvwUNfr+qT8bCmPxdrm67a5W6naYplPQBJFXm+PCLGdB/JxkqXzfWYjxDpjD+JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ruEN+Jfx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u7pJqlsM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F8DC116D0;
-	Sat, 28 Feb 2026 18:02:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ruEN+Jfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E077C116D0;
+	Sat, 28 Feb 2026 18:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301727;
-	bh=7ObWGwtHY6eqgT1kSzApBIYRsjhClRXIH0tdYKtLzIo=;
+	s=k20201202; t=1772301729;
+	bh=IzXyQrn4Zk7TmX6CDeV1EzZwhlsMaeUWV/1MqiYAFu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7pJqlsMywmWU4rlBiMLgTK+FRVDdtbgvEJXlUsg3oVozekTCP2NS1arPagzlRuzD
-	 3xVOea79TIiN9hixxi63TUlm95Ug+O12ARQETHa6/QmAG+l3MGYNXD0ONsrcXKxmC0
-	 GC2l2ujDzxHnJmrgzIj+Edr6PTzzYDnemGosdrGk68xPq/LWbTUlMCTjtSz1lo+olU
-	 h54BV22IgHy3NxuesRWK8jouWgtbmRCteARADihutg0fZLqDqCyYGVjoy6gG+I30Kq
-	 mp1i+AMIsBokvBwv+rPevNcn4v16RZpQy0Rx1+oYiLWe+iBeh4zkBnOCQqdRc3azGY
-	 vbhdMbJyUhAJQ==
+	b=ruEN+JfxlenKPdniDTIRlBDThuG8Dtqf0SF0OKGZafRBr1e31TY9O3854dsv7Bteb
+	 f/xyQyuruhcRNe2SWwe3J2tcuANmYZH3gbhTl2bEqbVcusS5uIlSlC2QdajVOoha/K
+	 m/WmTPLMsnhE3wy9UKAC+2aNKK1TM6A0fo5jRfDCpkeYdXyV/8gXY2NrekJH9FI0Ja
+	 8YWDbX+a+QejVdJO3PTelBimCA48dHxhguJplS7O5SyN6JN8EXt0ZxlR1GPb9Dmtv6
+	 eyf/allakKGQDIGHS8EknlQyA4qxf+HxJymsjO4gP+DMcwbOPEFwGwikoot7assgv/
+	 UmFaKboA3G6Ig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
@@ -34,9 +34,9 @@ Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 126/385] arm64: dts: qcom: agatti: Add CX_MEM/DBGC GPU regions
-Date: Sat, 28 Feb 2026 12:55:48 -0500
-Message-ID: <20260228180011.1568201-126-sashal@kernel.org>
+Subject: [PATCH 6.12 127/385] arm64: dts: qcom: sm6115: Add CX_MEM/DBGC GPU regions
+Date: Sat, 28 Feb 2026 12:55:49 -0500
+Message-ID: <20260228180011.1568201-127-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -52,34 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 0fdcc948929a6d673bd0f90631dd6e42090c3dbd ]
+[ Upstream commit 78c13dac18cf0e6f6cbc6ea85d4f967e6cca9562 ]
 
 Describe the GPU register regions, with the former existing but not
 being used much if at all on this silicon, and the latter containing
 various debugging levers generally related to dumping the state of
 the IP upon a crash.
 
-Fixes: 4faeef52c8e6 ("arm64: dts: qcom: qcm2290: Add GPU nodes")
+Fixes: 11750af256f8 ("arm64: dts: qcom: sm6115: Add GPU nodes")
 Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Closes: https://lore.kernel.org/linux-arm-msm/8a64f70b-8034-45e7-86a3-0015cf357132@oss.qualcomm.com/T/#m404f1425c36b61467760f058b696b8910340a063
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251229-topic-6115_2290_gpu_dbgc-v1-2-4a24d196389c@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20251229-topic-6115_2290_gpu_dbgc-v1-3-4a24d196389c@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcm2290.dtsi | 8 ++++++--
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-index e75e6354b2d52..dbc78b2d5095a 100644
---- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-@@ -1434,8 +1434,12 @@ usb_dwc3_ss: endpoint {
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 4adadfd1e51ae..e33da2975240f 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -1688,8 +1688,12 @@ usb_dwc3_ss: endpoint {
  
  		gpu: gpu@5900000 {
- 			compatible = "qcom,adreno-07000200", "qcom,adreno";
+ 			compatible = "qcom,adreno-610.0", "qcom,adreno";
 -			reg = <0x0 0x05900000 0x0 0x40000>;
 -			reg-names = "kgsl_3d0_reg_memory";
 +			reg = <0x0 0x05900000 0x0 0x40000>,
@@ -89,8 +89,8 @@ index e75e6354b2d52..dbc78b2d5095a 100644
 +				    "cx_mem",
 +				    "cx_dbgc";
  
- 			interrupts = <GIC_SPI 177 IRQ_TYPE_LEVEL_HIGH>;
- 
+ 			/* There's no (real) GMU, so we have to handle quite a bunch of clocks! */
+ 			clocks = <&gpucc GPU_CC_GX_GFX3D_CLK>,
 -- 
 2.51.0
 
