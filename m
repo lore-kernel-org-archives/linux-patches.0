@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C4A375AC1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF698375AC1
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301638; cv=none; b=Zcop2L8E6dWdbXA2pccGBMgQbbr7wDS245tzLnwo0jp0mkA3KqLyVFDn7lfbiO4Kfxl/rUWFqUaAv41w4NAAbbOO/WTEgrSycjvkrr4CY4i8HWt0l2LdZ9WkNtsb0VFARdpMpmJffZArh5B5Xzv/X5xj7DJYgELy4IVD9o2hY+Q=
+	t=1772301638; cv=none; b=go3A7GXtN3Hu6nfAUSBwtQtq0eoBEPr9JKehLfIqoFz9Hnw84CePimpBj2W5uMksESImyr2BvkOs0FsTBDzD8hA6jljx6CBjjbLVgmdIaUGnpxEWqVb1k7sm+CLKOz/eN1eQNQwtEPn/8yMjK7rG14AwGIvALiss0k6QHEiykyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301638; c=relaxed/simple;
-	bh=HqhzGSVJRu5VvQrM4c+N5ADqSBwhj7jwDQM0fSVkkKo=;
+	bh=2gWalRDBM9X5NnGcJ/p2Q+pNLIMpJfNpSmic/L6ncxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3RAvMICvTmYz/WfhLzZv26dfRcdYOWCz74twzokVZ6jv88o4o7RqkZRgMZmzFO6ZeHV9uq58WEghD1Um7t0E/KYoE+cafBg3rZ6nqIfygo5un83jlHkks+92+aQ9N+PVNPmroxzGlIgmGpXA09npoejBGCD9tEsjZV7/bvrYC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U/k8Rqp1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n38SSB1XpNdWiZeqiPyAQShwPrmaDkLPNx7mHyBFqBW5Z/1C/N1tQ/tn3B8CzNDguoyRuLoaxTBgT4vsabHwB0k+uBBH76qR6C+0RuYF+xcFYTk+VIVbq0zXTlbuM9Tn7WG8Vd7x4DDzWvtWcXmEZ9GO1RDWm4E06Ww/pmLlyRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YCgbE7Cb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U/k8Rqp1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1F4C116D0;
-	Sat, 28 Feb 2026 18:00:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YCgbE7Cb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E15DC19424;
+	Sat, 28 Feb 2026 18:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301637;
-	bh=HqhzGSVJRu5VvQrM4c+N5ADqSBwhj7jwDQM0fSVkkKo=;
+	s=k20201202; t=1772301638;
+	bh=2gWalRDBM9X5NnGcJ/p2Q+pNLIMpJfNpSmic/L6ncxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/k8Rqp1rc2RLDcdEOBnDHXJRkbIYH+dc56Uofgh7uTxU7ykaROtoswnay8ZB3EPN
-	 zFAkHjfWK7q9IaoksEzvUEVddFbcOP6HS2XvKy1iPokSz+d2TLISoOTvYOO+mBTl7T
-	 o6TdfUuMWNxUl7Fba6VW5apGVtf1aCTy/dS1bzGhx1/w8N1hx7PHo6alU33/dR8dyC
-	 agd5a9nbTF5YgKP3F3BPODqd6wU47oEtfVM/jfFF0CTnZLcpP0GlI85STq4il/hNT1
-	 XXAwPIUZqp6mvkIjfBiGdv7B93abDnZNQa05E4Ixtasiw+gCQgSCbV2nmpII1V0Nhn
-	 L2edhiGPKRZ+g==
+	b=YCgbE7CbbqbpLq7td9rDeYRtA7JgJhNvHmPbjLwO88w1o7pQj3rBRiT3A9oUCwrcT
+	 be9mBSVinhBrZe4aIP5+xa97HElKTQH9q1jLOklIW3uc5enuZyuUlSpO/0CcK0GouX
+	 qAYRxBHgZD3Eb8N+/FhnbhUBFmh74IGs6Ua4lRPi2KSpI4/MfV/eWiuEJiPQhBiuKX
+	 0LeNgw7k1M3QuF52m01RAsfyLUyVgc37FzMmEmulX3M1Vc5x5Xhs4gSegtVSMNVNHP
+	 6sNrdl8YfQv47UpB6YVC3Xwd3WraYgmqbTaplKFsMyrNNx8SxA0xHuZldgAz13UvU0
+	 mvHXQ1X1vvcug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/385] cpuidle: governors: menu: Always check timers with tick stopped
-Date: Sat, 28 Feb 2026 12:54:13 -0500
-Message-ID: <20260228180011.1568201-31-sashal@kernel.org>
+Subject: [PATCH 6.12 032/385] thermal: intel: x86_pkg_temp_thermal: Handle invalid temperature
+Date: Sat, 28 Feb 2026 12:54:14 -0500
+Message-ID: <20260228180011.1568201-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -49,84 +48,39 @@ Content-Transfer-Encoding: 8bit
 
 From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 80606f4eb8d7484ab7f7d6f0fd30d71e6fbcf328 ]
+[ Upstream commit 9635c586a559ba0e45b2bfbff79c937ddbaf1a62 ]
 
-After commit 5484e31bbbff ("cpuidle: menu: Skip tick_nohz_get_sleep_length()
-call in some cases"), if the return value of get_typical_interval()
-multiplied by NSEC_PER_USEC is not greater than RESIDENCY_THRESHOLD_NS,
-the menu governor will skip computing the time till the closest timer.
-If that happens when the tick has been stopped already, the selected
-idle state may be too deep due to the subsequent check comparing
-predicted_ns with TICK_NSEC and causing its value to be replaced with
-the expected time till the closest timer, which is KTIME_MAX in that
-case.  That will cause the deepest enabled idle state to be selected,
-but the time till the closest timer very well may be shorter than the
-target residency of that state, in which case a shallower state should
-be used.
+After commit be0a3600aa1e ("thermal: sysfs: Rework the handling of trip
+point updates"), THERMAL_TEMP_INVALID can be passed to sys_set_trip_temp()
+and it is treated as a regular temperature value there, so the sysfs
+write fails even though it is expected to succeed and disable the given
+trip point.
 
-Address this by making menu_select() always compute the time till the
-closest timer when the tick has been stopped.
+Address this by making sys_set_trip_temp() clear its temp variable when
+it is equal to THERMAL_TEMP_INVALID.
 
-Also move the predicted_ns check mentioned above into the branch in
-which the time till the closest timer is determined because it only
-needs to be done in that case.
-
-Fixes: 5484e31bbbff ("cpuidle: menu: Skip tick_nohz_get_sleep_length() call in some cases")
+Fixes: be0a3600aa1e ("thermal: sysfs: Rework the handling of trip point updates")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/5959091.DvuYhMxLoT@rafael.j.wysocki
+Link: https://patch.msgid.link/2815400.mvXUDI8C0e@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/menu.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/thermal/intel/x86_pkg_temp_thermal.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index 3be761961f1be..0ce7323450011 100644
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -245,7 +245,7 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+diff --git a/drivers/thermal/intel/x86_pkg_temp_thermal.c b/drivers/thermal/intel/x86_pkg_temp_thermal.c
+index 8c44f378b61ef..29af9510a6161 100644
+--- a/drivers/thermal/intel/x86_pkg_temp_thermal.c
++++ b/drivers/thermal/intel/x86_pkg_temp_thermal.c
+@@ -127,6 +127,9 @@ sys_set_trip_temp(struct thermal_zone_device *tzd,
+ 	u32 l, h, mask, shift, intr;
+ 	int tj_max, val, ret;
  
- 	/* Find the shortest expected idle interval. */
- 	predicted_ns = get_typical_interval(data) * NSEC_PER_USEC;
--	if (predicted_ns > RESIDENCY_THRESHOLD_NS) {
-+	if (predicted_ns > RESIDENCY_THRESHOLD_NS || tick_nohz_tick_stopped()) {
- 		unsigned int timer_us;
- 
- 		/* Determine the time till the closest timer. */
-@@ -265,6 +265,16 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 				   RESOLUTION * DECAY * NSEC_PER_USEC);
- 		/* Use the lowest expected idle interval to pick the idle state. */
- 		predicted_ns = min((u64)timer_us * NSEC_PER_USEC, predicted_ns);
-+		/*
-+		 * If the tick is already stopped, the cost of possible short
-+		 * idle duration misprediction is much higher, because the CPU
-+		 * may be stuck in a shallow idle state for a long time as a
-+		 * result of it.  In that case, say we might mispredict and use
-+		 * the known time till the closest timer event for the idle
-+		 * state selection.
-+		 */
-+		if (tick_nohz_tick_stopped() && predicted_ns < TICK_NSEC)
-+			predicted_ns = data->next_timer_ns;
- 	} else {
- 		/*
- 		 * Because the next timer event is not going to be determined
-@@ -290,16 +300,6 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 		return 0;
- 	}
- 
--	/*
--	 * If the tick is already stopped, the cost of possible short idle
--	 * duration misprediction is much higher, because the CPU may be stuck
--	 * in a shallow idle state for a long time as a result of it.  In that
--	 * case, say we might mispredict and use the known time till the closest
--	 * timer event for the idle state selection.
--	 */
--	if (tick_nohz_tick_stopped() && predicted_ns < TICK_NSEC)
--		predicted_ns = data->next_timer_ns;
--
- 	/*
- 	 * Find the idle state with the lowest power while satisfying
- 	 * our constraints.
++	if (temp == THERMAL_TEMP_INVALID)
++		temp = 0;
++
+ 	tj_max = intel_tcc_get_tjmax(zonedev->cpu);
+ 	if (tj_max < 0)
+ 		return tj_max;
 -- 
 2.51.0
 
