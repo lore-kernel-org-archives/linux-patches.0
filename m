@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C6B355049
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE34F3603DE
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300969; cv=none; b=cCYs9T3SdWtmYqKtNfrPcgPFUiPdn9hX1+0lG4O35UWM4b+NlMTmQAEXW8Y/k7Hm+ugyBDkAi+T68lWUm5qpMAeTOTmjH9HK4POZ6a1QtKaH77LlSSU7cH+0iQckeV0Wi/mLE5Lh0rha1kPB72LSaylw90tWfQS9pAppaK5026c=
+	t=1772300969; cv=none; b=VusKc2u25am+G4rKjrb/fO9aDMQcOCV/G4wSEDP3Jktd6MP3aD58qUaZF8DkQdoncODU4TnWNG0RyRaBbwnP0aqVw73pZBAAHhesfrYVylAVXZn9ad9fYi+AsZkdQX+m50jYVM6ufeoLTdnmdQNd1mbvHQNFZbFHmXg1c8pngbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772300969; c=relaxed/simple;
-	bh=j5xNUslQNcpWHSQ8UAeGt65hKPEGFjMUP9W6SWona0E=;
+	bh=hqFVOjlF5+ZO2pilwS5gg2mQkEKBO5ayny0CHgbb+js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSuNe8dnpR0K1dpYjYo0/RjAilRH7r6MwKeTZs9PXlqRqmimPOfBdP0qYAKz5dft4I9Sg7SPrmpSbqkSq5Iyrqa8X/IzCMP7GOv6k79urXjrqUzHcCmyKRyOEeEe6rFMF//azbQdWC8LC1sEdaptzAsfz77szTVquAyNdj1/62I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HnRn+1MC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=odDrsoH3B0D5eb1j2V4HfS0y2TOMgtDBBUlmL7ZJ69+p6xiv6SwQ7NJVGCJ4TAe4thAEPFeQyqNLRF1/etYa2jaJ/0O/7qzjjGao+LegUrQRf1ECfPCWQm9L2KyK6ftbIrV32LQ5YXey3GTPQnhCFNHsMbq8o09gpsYkay6Sq4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mC5M9sjP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HnRn+1MC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C96CC116D0;
-	Sat, 28 Feb 2026 17:49:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mC5M9sjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE38C116D0;
+	Sat, 28 Feb 2026 17:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772300969;
-	bh=j5xNUslQNcpWHSQ8UAeGt65hKPEGFjMUP9W6SWona0E=;
+	bh=hqFVOjlF5+ZO2pilwS5gg2mQkEKBO5ayny0CHgbb+js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnRn+1MCF9/Rxg0MdYxFJBfcacctZZ5keBnVeJagCbY1C3tPUCxFKMRZoyYqXvGmb
-	 D4QG9t4iPnufGTJ/QmRoMoQp9f7QZFeQoayCeKYQoJonlLenEzkGmYnBCh1tvCl8Wq
-	 Y/jTxFC9sPSK5BfEKtg1u7TEo048Qxi+gOISHI0w9AvW5PIG4SDvtFn12awzuNfJj5
-	 s7nPI/MPGzjcIJQKpXISm5hRynftYhqFZkKrVZFNLsRzzLmwTKl17yDgCvmVgbXzHb
-	 5FR5TSNBPh6+FjntyiiU9RkTy7LlkQsT+wNDthtlsHcBNXweG70SvWl0UYRq0D2psz
-	 Xb3P9NR80XHfg==
+	b=mC5M9sjPlOiGmmr0gY02pSv8PwSz4oAuz1x2GGNeFlsWIcGOs1oyVIJRzpgHQ3xpO
+	 JfSyxAZIoDXBUvx33EPLHoukhggRCHkAGKdLZ5CBQqw16y8iP1gMOBy86P/14tEt3Z
+	 BuEieDJ1gwUsDw6VLNfbLH1ipfVnEX8MGwn/8fRjFi+R6waB6LAn0s0DIVnPy3QLq5
+	 WCEL7mGXmhq4xRtrbpahejMkziEjfzmYboOGaKZQcaf38lDnnZEDyg/gCqsWn+T2Cd
+	 yBxEKfwG3Mp007+VwIqPekhJd0lB9BIAheE3ltsOsf6Rhpmd520bpdtam59W6aGYwa
+	 s9WbMbT2B8LQg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Joel Fernandes <joelagnelf@nvidia.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
-	Christian Loehle <christian.loehle@arm.com>,
+Cc: Ruipeng Qi <ruipengqi3@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 095/752] sched/debug: Fix updating of ppos on server write ops
-Date: Sat, 28 Feb 2026 12:36:46 -0500
-Message-ID: <20260228174750.1542406-95-sashal@kernel.org>
+Subject: [PATCH 6.18 096/752] pstore: ram_core: fix incorrect success return when vmap() fails
+Date: Sat, 28 Feb 2026 12:36:47 -0500
+Message-ID: <20260228174750.1542406-96-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,63 +47,47 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Joel Fernandes <joelagnelf@nvidia.com>
+From: Ruipeng Qi <ruipengqi3@gmail.com>
 
-[ Upstream commit 6080fb211672aec6ce8f2f5a2e0b4eae736f2027 ]
+[ Upstream commit 05363abc7625cf18c96e67f50673cd07f11da5e9 ]
 
-Updating "ppos" on error conditions does not make much sense. The pattern
-is to return the error code directly without modifying the position, or
-modify the position on success and return the number of bytes written.
+In persistent_ram_vmap(), vmap() may return NULL on failure.
 
-Since on success, the return value of apply is 0, there is no point in
-modifying ppos either. Fix it by removing all this and just returning
-error code or number of bytes written on success.
+If offset is non-zero, adding offset_in_page(start) causes the function
+to return a non-NULL pointer even though the mapping failed.
+persistent_ram_buffer_map() therefore incorrectly returns success.
 
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260126100050.3854740-3-arighi@nvidia.com
+Subsequent access to prz->buffer may dereference an invalid address
+and cause crashes.
+
+Add proper NULL checking for vmap() failures.
+
+Signed-off-by: Ruipeng Qi <ruipengqi3@gmail.com>
+Link: https://patch.msgid.link/20260203020358.3315299-1-ruipengqi3@gmail.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/debug.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/pstore/ram_core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
-index 41caa22e0680a..93f009e1076d8 100644
---- a/kernel/sched/debug.c
-+++ b/kernel/sched/debug.c
-@@ -345,8 +345,8 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
- 	long cpu = (long) ((struct seq_file *) filp->private_data)->private;
- 	struct rq *rq = cpu_rq(cpu);
- 	u64 runtime, period;
-+	int retval = 0;
- 	size_t err;
--	int retval;
- 	u64 value;
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index c9eaacdec37e4..7b6d6378a3b87 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -457,6 +457,13 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size,
+ 	vaddr = vmap(pages, page_count, VM_MAP | VM_IOREMAP, prot);
+ 	kfree(pages);
  
- 	err = kstrtoull_from_user(ubuf, cnt, 10, &value);
-@@ -380,8 +380,6 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
- 		dl_server_stop(&rq->fair_server);
- 
- 		retval = dl_server_apply_params(&rq->fair_server, runtime, period, 0);
--		if (retval)
--			cnt = retval;
- 
- 		if (!runtime)
- 			printk_deferred("Fair server disabled in CPU %d, system may crash due to starvation.\n",
-@@ -389,6 +387,9 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
- 
- 		if (rq->cfs.h_nr_queued)
- 			dl_server_start(&rq->fair_server);
++	/*
++	 * vmap() may fail and return NULL. Do not add the offset in this
++	 * case, otherwise a NULL mapping would appear successful.
++	 */
++	if (!vaddr)
++		return NULL;
 +
-+		if (retval < 0)
-+			return retval;
- 	}
- 
- 	*ppos += cnt;
+ 	/*
+ 	 * Since vmap() uses page granularity, we must add the offset
+ 	 * into the page here, to get the byte granularity address
 -- 
 2.51.0
 
