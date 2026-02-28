@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2D2340A5A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91567340A5A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301076; cv=none; b=dGHbbYUkYTpJnCdheApfBJteqAGgEy/XJrZ8zD+k+yP7DmZFVdpdFIe4ahLUeo7k/B9zYC7EpogeCGFHI2z+l0d87r9dPvpl1aUvzJKUJMtPm5DznzKb2P5hJCN/qbwyIQ3kJ5QctYe6ETAtFGx0mFvgH+FcTjR9mcf2NPARUP0=
+	t=1772301077; cv=none; b=L0F1i/9LSYpo2WLyP0rKMa/EZeDNUHuWHpnAZCGJzVI6iDDsvEoJq1am+BuMZMKMkl34d1v7ZrqK1B8Zegyr+UZ5h84Iuz1fdptAqb9Z+2lA+lz9gGepLMhR1T/mv32xzUBVx94Z2Dh5Zb02zfM9YyG3talJglcXvmRpxMmxTKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301076; c=relaxed/simple;
-	bh=Pjg8P2UFle7rWhfr8Z4MFeiG/Jq8dBkBsCsNoHErQ7Q=;
+	s=arc-20240116; t=1772301077; c=relaxed/simple;
+	bh=cHUYixm8h1kdxcHkyLLsIHClUhF9li/px0bV+qqgbyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pdcA3a7kKXGNDq29xaIr3Lzo+OF3w+42MBLE6gyKyY8yifrnTyUS7xvrKdAbm7571r2ahlDnfxfBw9XA2HSLq7SXQl5PW7SZDDAv3Ng12xgSLLO83NzUaBoDAvm/ZlLbXX+M7E97JSKkh1Wx/XwEharIKjizT+y128glBbOvtWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQcjUXXI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iTbaJdZs96cxnfb1IR6qUb98jeZprcAVHjREHAlxZjynO0bI6ij0NE7EBhTVMi6PJ73IccyYeDWyXp27/6AWPoOWGvdcvis9xgzl4HTvM3liF5cWn8f1pJ2rmw/NNKbg4YpWOR9rw9vzoVtqR9NbEPLAdshDpBcZFLTifcemyR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DYHYBfb3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQcjUXXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE6EC19425;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DYHYBfb3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EC5C116D0;
 	Sat, 28 Feb 2026 17:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301076;
-	bh=Pjg8P2UFle7rWhfr8Z4MFeiG/Jq8dBkBsCsNoHErQ7Q=;
+	s=k20201202; t=1772301077;
+	bh=cHUYixm8h1kdxcHkyLLsIHClUhF9li/px0bV+qqgbyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQcjUXXIM+brUBi6LgVPBrK8x8nhGZpClpUMgXqkOPra6THeDU9CuDgf6X0tSMwMT
-	 kn7IdTwgNFensn49Ek5pa2YNiLwaQCdMzR6PCa5LuWmxEQCrpqkfBRh7f50IllOSfT
-	 /NeR9Jlern1na7cwF7j4CmgpsfQRO9el1APtXKIkuplQvfRL9B7k+2ll29GkoppyOR
-	 MSroidTQtpco1bZnQR391NR6cZUp8oF9XA3KdX/Yyi6JRStJGGpuo/JDKUDDVdvcyy
-	 DtWkHvb5xnwgI31T8FhjTTcrBex4pVJzIpTaT7pLqq+UKMYUvOxENQtgJYY/3ipD6d
-	 ujH47VZZ5mAuQ==
+	b=DYHYBfb3AJCCTFRpBCV1rKFtEzSCVnuarc+MfhZqIkn5sWtJNMYU6WZkNq0SYqSsh
+	 LIOnrfJHSPVwQijy0GfziJA1fSE6BzZgk/BMxgwh2g5ml6fKlb+cHf+Pio6hyBeWRn
+	 b614OukvI9pGV5DoF793oEPnxxN1j0YB29It9/XS0e51kQ/Z8GYV8e23SwK9aLCae1
+	 mc1nk6J+fpTUJ1eCYxB0ZW0uZMn372nOQAmF42rJZIyWNCyxUiMRFvg4WWZrjefUzK
+	 2i6X30fdrkPNvvI4th/nL3q7SVRhoAu6GxC0lqXARvNtfbZgs85e0Ipxzv6ZfkLaT5
+	 qoRyB7LGhfc0A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Zong-Zhe Yang <kevin_yang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Daniel Gomez <da.gomez@samsung.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 223/752] wifi: rtw89: regd: 6 GHz power type marks default when inactive
-Date: Sat, 28 Feb 2026 12:38:54 -0500
-Message-ID: <20260228174750.1542406-223-sashal@kernel.org>
+Subject: [PATCH 6.18 224/752] dm: replace -EEXIST with -EBUSY
+Date: Sat, 28 Feb 2026 12:38:55 -0500
+Message-ID: <20260228174750.1542406-224-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,37 +47,87 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Daniel Gomez <da.gomez@samsung.com>
 
-[ Upstream commit 8c96752d99c0b094af68317a8c701b09bd0862d9 ]
+[ Upstream commit b13ef361d47f09b7aecd18e0383ecc83ff61057e ]
 
-When inactive, 6 GHz power type has been assigned to the default one,
-but missed to mark the local control variable, dflt, true. Then, this
-might let some 6 GHz power info of disconnected APs keep being taken
-into account under certain cases.
+The -EEXIST error code is reserved by the module loading infrastructure
+to indicate that a module is already loaded. When a module's init
+function returns -EEXIST, userspace tools like kmod interpret this as
+"module already loaded" and treat the operation as successful, returning
+0 to the user even though the module initialization actually failed.
 
-So, mark default when inactive.
+This follows the precedent set by commit 54416fd76770 ("netfilter:
+conntrack: helper: Replace -EEXIST by -EBUSY") which fixed the same
+issue in nf_conntrack_helper_register().
 
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251229030926.27004-12-pkshih@realtek.com
+Affected modules:
+  * dm_cache dm_clone dm_integrity dm_mirror dm_multipath dm_pcache
+  * dm_vdo dm-ps-round-robin dm_historical_service_time dm_io_affinity
+  * dm_queue_length dm_service_time dm_snapshot
+
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/regd.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-exception-store.c | 2 +-
+ drivers/md/dm-log.c             | 2 +-
+ drivers/md/dm-path-selector.c   | 2 +-
+ drivers/md/dm-target.c          | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/regd.c b/drivers/net/wireless/realtek/rtw89/regd.c
-index 58582f8d2b74c..8211d1277699c 100644
---- a/drivers/net/wireless/realtek/rtw89/regd.c
-+++ b/drivers/net/wireless/realtek/rtw89/regd.c
-@@ -1142,6 +1142,7 @@ static int rtw89_reg_6ghz_power_recalc(struct rtw89_dev *rtwdev,
- 		}
- 	} else {
- 		rtwvif_link->reg_6ghz_power = RTW89_REG_6GHZ_POWER_DFLT;
-+		dflt = true;
- 	}
+diff --git a/drivers/md/dm-exception-store.c b/drivers/md/dm-exception-store.c
+index c3799757bf4a0..88f119a0a2ae0 100644
+--- a/drivers/md/dm-exception-store.c
++++ b/drivers/md/dm-exception-store.c
+@@ -116,7 +116,7 @@ int dm_exception_store_type_register(struct dm_exception_store_type *type)
+ 	if (!__find_exception_store_type(type->name))
+ 		list_add(&type->list, &_exception_store_types);
+ 	else
+-		r = -EEXIST;
++		r = -EBUSY;
+ 	spin_unlock(&_lock);
  
- 	rcu_read_unlock();
+ 	return r;
+diff --git a/drivers/md/dm-log.c b/drivers/md/dm-log.c
+index 9d85d045f9d9d..bced5a783ee33 100644
+--- a/drivers/md/dm-log.c
++++ b/drivers/md/dm-log.c
+@@ -121,7 +121,7 @@ int dm_dirty_log_type_register(struct dm_dirty_log_type *type)
+ 	if (!__find_dirty_log_type(type->name))
+ 		list_add(&type->list, &_log_types);
+ 	else
+-		r = -EEXIST;
++		r = -EBUSY;
+ 	spin_unlock(&_lock);
+ 
+ 	return r;
+diff --git a/drivers/md/dm-path-selector.c b/drivers/md/dm-path-selector.c
+index d0b883fabfeb6..2b0ac200f1c02 100644
+--- a/drivers/md/dm-path-selector.c
++++ b/drivers/md/dm-path-selector.c
+@@ -107,7 +107,7 @@ int dm_register_path_selector(struct path_selector_type *pst)
+ 
+ 	if (__find_path_selector_type(pst->name)) {
+ 		kfree(psi);
+-		r = -EEXIST;
++		r = -EBUSY;
+ 	} else
+ 		list_add(&psi->list, &_path_selectors);
+ 
+diff --git a/drivers/md/dm-target.c b/drivers/md/dm-target.c
+index 8fede41adec00..1fd41289de367 100644
+--- a/drivers/md/dm-target.c
++++ b/drivers/md/dm-target.c
+@@ -88,7 +88,7 @@ int dm_register_target(struct target_type *tt)
+ 	if (__find_target_type(tt->name)) {
+ 		DMERR("%s: '%s' target already registered",
+ 		      __func__, tt->name);
+-		rv = -EEXIST;
++		rv = -EBUSY;
+ 	} else {
+ 		list_add(&tt->list, &_targets);
+ 	}
 -- 
 2.51.0
 
