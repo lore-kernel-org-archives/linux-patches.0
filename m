@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E765E39B94E
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79C139B974
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302610; cv=none; b=filGNCfx41nVM8GFnmi16zYIXyirOV+1ZkpvregZcmf8x8/9tN22DILYAU5oSfHVu3xg2PGj8hcDMqAjMqHzZxxk1dqsc23rpzP6wxAWyA9f0mud//scRTyVdGAWVF9HZceCVI+yGlZVX7nRry5wIiYBNg7uRpRncUIcP3Sci9Q=
+	t=1772302610; cv=none; b=d4A8A3c3clrsymYXublg/h8lNyGuVeFEczMS4iySKNLgtLNt9W3h41F7mOu8T8cINPY/mhB7aZ9tVywcjuYDgOIU+7y58zYeKTOmuaHYuoCvMFPj17Rk5gE8IT/sNKI351IfFOB6HfqmL8BxJjs9zKDXBwWKD4aTGl5ZHYMrG+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302610; c=relaxed/simple;
-	bh=bN/644zBTSd900vC2SE3jke87FUYoA6ClsrCDeBiMuk=;
+	bh=k1oheUIR7E0MJ/UsBSmsbkCKqljoOvBgxuJAFkVzAWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lBdxhHhfnuuldIpFc2Er3NRzQNnhyeCAdLqBsr4VVbzGgbw4Gbvl717NAUwCBes7BBuz3rFSpErblkkFYXOK/hqinLuL2M2StfycpZTkm9oM8YnXc+pY9Kuby3tnGAuBwpY5vJsnmXvJP4rB7EFE68EArpdeDiw0cx6Xe3e+aFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KsbQoONZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YhayrrjghB+gHHNpJTkiLwTJqpCHNdgyCGGiHsiQr0hB7mMntHGXnoxRhNYvnIgFPZIgJOSlHP6dZVE48es6pZGzV4qgVRTIiDhyoAACRHJ0Yz9l6IqWl0RpUmJ2VsuyUS17X0SfU06HjcQLq9bYe2uj8psifSkLJMwoHVTpePg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YbqNLZ1a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KsbQoONZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAA0C116D0;
-	Sat, 28 Feb 2026 18:16:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YbqNLZ1a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BC5C19424;
+	Sat, 28 Feb 2026 18:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302609;
-	bh=bN/644zBTSd900vC2SE3jke87FUYoA6ClsrCDeBiMuk=;
+	s=k20201202; t=1772302610;
+	bh=k1oheUIR7E0MJ/UsBSmsbkCKqljoOvBgxuJAFkVzAWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KsbQoONZ6mK+7VTeHkqYEszg7RhfcO/q4Hilkc3DEHtnPBUQDSAWuAwDovfDNfkhd
-	 4fU6LQLkbmo0Z4mk2+Glztg8HmrChG4GRbHfXUKnytrQpfQvYaXPTaImk6mhSiDLWg
-	 14HxfHHtVA6zCPfDCoaTAGXCSXl4vh2cUoLMD4VRpgoLwJyj0XUbVZ1GTNkyQmbJD+
-	 vlJZJ2DaGsfLZGOac692V3viZU8qzqJ+pkwRcFXC5tHjHYmqNfWTsY3yKxyno26u3C
-	 eShyuJ+led3P13pSXCnH/w6OImYy6bCLLRYA3PtkiHd/a41kWA5YYOzmAkUKuVVzC3
-	 HSoA2wPq9ZJjQ==
+	b=YbqNLZ1aaLHaKCLT0jSykkD1x7MgvLvoZT/tSDp/8qdvghPfIV7kAlrbTbp3+wEMg
+	 efRKOxtu8FsCGrkhqwWAwTsapO1PH7Ly/KlpTWaglNk+mmpyLZs3KPG2nWZ6K6U3LX
+	 hIiF/23iDGhEMguGE10O7q8wM9nRtvefs0xcp6gZ932zxNcC7p8tvLVDMhnmjuz8x6
+	 CmTsHL3oZrdWVARA9Mhtz7+04FWmePiOMpv2NDV8u+gkH4KikIqcinjZLYCziItALL
+	 XJ9k8bW5wIjzLGiZNy1DJo3o8oOlMbwWB0DMOOTJLktQKrhMbK2GqqD/fUhgK+nP+C
+	 faTA8IjstFZEg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
+Cc: Felix Gu <ustc.gu@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 125/164] tracing: Remove duplicate ENABLE_EVENT_STR and DISABLE_EVENT_STR macros
-Date: Sat, 28 Feb 2026 13:14:24 -0500
-Message-ID: <20260228181505.1600663-125-sashal@kernel.org>
+Subject: [PATCH 5.15 126/164] fbdev: au1200fb: Fix a memory leak in au1200fb_drv_probe()
+Date: Sat, 28 Feb 2026 13:14:25 -0500
+Message-ID: <20260228181505.1600663-126-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -49,41 +47,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 9df0e49c5b9b8d051529be9994e4f92f2d20be6f ]
+[ Upstream commit ce4e25198a6aaaaf36248edf8daf3d744ec8e309 ]
 
-The macros ENABLE_EVENT_STR and DISABLE_EVENT_STR were added to trace.h so
-that more than one file can have access to them, but was never removed
-from their original location. Remove the duplicates.
+In au1200fb_drv_probe(), when platform_get_irq fails(), it directly
+returns from the function with an error code, which causes a memory
+leak.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://patch.msgid.link/20260126130037.4ba201f9@gandalf.local.home
-Fixes: d0bad49bb0a09 ("tracing: Add enable_hist/disable_hist triggers")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Replace it with a goto label to ensure proper cleanup.
+
+Fixes: 4e88761f5f8c ("fbdev: au1200fb: Fix missing IRQ check in au1200fb_drv_probe")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/video/fbdev/au1200fb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 4e282deb6f787..1dfdbd365c8c2 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -3294,11 +3294,6 @@ void trace_put_event_file(struct trace_event_file *file)
- EXPORT_SYMBOL_GPL(trace_put_event_file);
+diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
+index 80f54111baec1..ec1d86f253904 100644
+--- a/drivers/video/fbdev/au1200fb.c
++++ b/drivers/video/fbdev/au1200fb.c
+@@ -1732,8 +1732,10 @@ static int au1200fb_drv_probe(struct platform_device *dev)
  
- #ifdef CONFIG_DYNAMIC_FTRACE
--
--/* Avoid typos */
--#define ENABLE_EVENT_STR	"enable_event"
--#define DISABLE_EVENT_STR	"disable_event"
--
- struct event_probe_data {
- 	struct trace_event_file	*file;
- 	unsigned long			count;
+ 	/* Now hook interrupt too */
+ 	irq = platform_get_irq(dev, 0);
+-	if (irq < 0)
+-		return irq;
++	if (irq < 0) {
++		ret = irq;
++		goto failed;
++	}
+ 
+ 	ret = request_irq(irq, au1200fb_handle_irq,
+ 			  IRQF_SHARED, "lcd", (void *)dev);
 -- 
 2.51.0
 
