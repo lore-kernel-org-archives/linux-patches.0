@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81F1346E5E
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C72437524F
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302636; cv=none; b=rmVk9reO1VHDh4za/DS4knnoUvwvfrFuzj2DkFLOmNi23DTQISvhgkYoCTSIL1av4Dmyds/Sb5pjYx5Cwdu5EU04AS2Uxbfjx86OuxWV3ga+arEJynWrXFYvJvk2pMu07EeK6ZnK0RzGtoSFiVqbR856jM8F9eDjXy3HMOO23ko=
+	t=1772302637; cv=none; b=YwSoryvumYq5O/tnPV4dOcuSilgmFHW35XtUC8ub0fVcQ9GLKS4erP5A3RT5fKkN22EyvwbwlS4l+DjgQ9dtUOd+DWj8UGtl93S/gS8/g8FjjIYLj6whFto6R3n8CZeUNGrTa213yh+0uBROs0bDhDZjZyaehVqdE9tWZ555XPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302636; c=relaxed/simple;
-	bh=Uf1UZIon7C5DSW4giGDSW75xiD9DepQ5nBuFFONDb5A=;
+	s=arc-20240116; t=1772302637; c=relaxed/simple;
+	bh=rREs2BS59hyc6Q43XGA3HAssKVarVw9KylKxLDEHd4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FL1ERXuUhRG2vqrZptXGhhnh2NrXEEOygNbRSD/BMfYrs1LYIjYCMrYkeEt3hR+e4IESphNi7GQtR4fmUXTs0iWzBcTBjSoeeh84RrhYvAb0Tc4EytcM/3O0Koh35BQ1CcpCWrfMO57ZaEiYV7CkLApXJNlIHkEM3RpQWd/x6H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LlPhvu2t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FyaSbOvPWn+0oQ1oO49iVM4gbPdI5q+cOZEthYj/goR0CGFws+ObCVuUTq7OvLix/ntlmxVuhLxgn5CER61Gc2BnpbBQiJQnzUazV/ccKbH8wa2iad60LqKc7N7Gu4o0TzeuZoagU8w/AWVU0BbrDaq/+gxx2ijjVOdUeNUMrq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D2iGYIL0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LlPhvu2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2065BC19425;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D2iGYIL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0EEC19423;
 	Sat, 28 Feb 2026 18:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302636;
-	bh=Uf1UZIon7C5DSW4giGDSW75xiD9DepQ5nBuFFONDb5A=;
+	s=k20201202; t=1772302637;
+	bh=rREs2BS59hyc6Q43XGA3HAssKVarVw9KylKxLDEHd4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LlPhvu2tW6WgPQdEyU0at1SyXqhMUZZlglQtwOQVh2siD4fzP191ghnJrTOr/Oe5p
-	 lpsBaaRrOkLpwo9UlHPXWCNXh837JCqFQLgNNGDD7h9bZ9vfDMEtJ4ozqf4LkA6t/U
-	 c6FvSrFN9Pa7rKc4NHDoyqagynkJmzyQPRRrWas+uRSIxYrGTI0sobP8Ym4jI+DdCM
-	 wEXHBWx1ljNISkNXRu7ZFOXxxxppfDyf7MdYlpkpYrFWMWlARPgcF+EISaNU9tz7oE
-	 OYEk4PAl63jIltVFoxNRIaQIeTzQlcBEG3JkOVLzTIP3X22C3UAaTdGNwU2KwMcpqa
-	 8HEMpXT/L7J7Q==
+	b=D2iGYIL0QnXNukL0Jl98AUTA0NchgH0+aITFE6Tn1vAhQs3w6GbU8mEG/hNFalJ3k
+	 RdgnxL5uTwqCC2cmAvfBnvbknrVxVswgP8cIR9ZOXuR6XX/hKRnq2INWDtkr9F63l0
+	 sVrBT1uQ520C07J7wnqa1f1wg6jkicLye+pB1ks1IkIvJdezWq0TJbB5Cn2WAentRw
+	 FFJXNpi7aduXF4KXI0QPNooyUnbGLKR2WtXQ3w5hAb+0oD8HG/ocI1ucTTMFa+mA9w
+	 EEcLXaGkxiHpJ5K5wnGL+o1RSjDJCsVx9Tu52fWhiepz7a4SSvcYNWoP1hi75oFb3O
+	 n6/UibjG89Z6A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Juergen Gross <jgross@suse.com>,
+Cc: Allison Henderson <achender@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 157/164] xen-netback: reject zero-queue configuration from guest
-Date: Sat, 28 Feb 2026 13:14:56 -0500
-Message-ID: <20260228181505.1600663-157-sashal@kernel.org>
+Subject: [PATCH 5.15 158/164] net/rds: rds_sendmsg should not discard payload_len
+Date: Sat, 28 Feb 2026 13:14:57 -0500
+Message-ID: <20260228181505.1600663-158-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,55 +48,48 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 6d1dc8014334c7fb25719999bca84d811e60a559 ]
+[ Upstream commit da29e453dcb3aa7cabead7915f5f945d0add3a52 ]
 
-A malicious or buggy Xen guest can write "0" to the xenbus key
-"multi-queue-num-queues". The connect() function in the backend only
-validates the upper bound (requested_num_queues > xenvif_max_queues)
-but not zero, allowing requested_num_queues=0 to reach
-vzalloc(array_size(0, sizeof(struct xenvif_queue))), which triggers
-WARN_ON_ONCE(!size) in __vmalloc_node_range().
+Commit 3db6e0d172c9 ("rds: use RCU to synchronize work-enqueue with
+connection teardown") modifies rds_sendmsg to avoid enqueueing work
+while a tear down is in progress. However, it also changed the return
+value of rds_sendmsg to that of rds_send_xmit instead of the
+payload_len. This means the user may incorrectly receive errno values
+when it should have simply received a payload of 0 while the peer
+attempts a reconnections.  So this patch corrects the teardown handling
+code to only use the out error path in that case, thus restoring the
+original payload_len return value.
 
-On systems with panic_on_warn=1, this allows a guest-to-host denial
-of service.
-
-The Xen network interface specification requires
-the queue count to be "greater than zero".
-
-Add a zero check to match the validation already present
-in xen-blkback, which has included this
-guard since its multi-queue support was added.
-
-Fixes: 8d3d53b3e433 ("xen-netback: Add support for multiple queues")
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://patch.msgid.link/20260212224040.86674-1-n7l8m4@u.northwestern.edu
+Fixes: 3db6e0d172c9 ("rds: use RCU to synchronize work-enqueue with connection teardown")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260213035409.1963391-1-achender@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netback/xenbus.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/rds/send.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/xen-netback/xenbus.c b/drivers/net/xen-netback/xenbus.c
-index e85b3c5d4acce..5b78d9172aac9 100644
---- a/drivers/net/xen-netback/xenbus.c
-+++ b/drivers/net/xen-netback/xenbus.c
-@@ -735,10 +735,11 @@ static void connect(struct backend_info *be)
- 	 */
- 	requested_num_queues = xenbus_read_unsigned(dev->otherend,
- 					"multi-queue-num-queues", 1);
--	if (requested_num_queues > xenvif_max_queues) {
-+	if (requested_num_queues > xenvif_max_queues ||
-+	    requested_num_queues == 0) {
- 		/* buggy or malicious guest */
- 		xenbus_dev_fatal(dev, -EINVAL,
--				 "guest requested %u queues, exceeding the maximum of %u.",
-+				 "guest requested %u queues, but valid range is 1 - %u.",
- 				 requested_num_queues, xenvif_max_queues);
- 		return;
+diff --git a/net/rds/send.c b/net/rds/send.c
+index 85c27d9aa33a3..9a23f8f2bcfa7 100644
+--- a/net/rds/send.c
++++ b/net/rds/send.c
+@@ -1383,9 +1383,11 @@ int rds_sendmsg(struct socket *sock, struct msghdr *msg, size_t payload_len)
+ 		else
+ 			queue_delayed_work(rds_wq, &cpath->cp_send_w, 1);
+ 		rcu_read_unlock();
++
++		if (ret)
++			goto out;
  	}
+-	if (ret)
+-		goto out;
++
+ 	rds_message_put(rm);
+ 
+ 	for (ind = 0; ind < vct.indx; ind++)
 -- 
 2.51.0
 
