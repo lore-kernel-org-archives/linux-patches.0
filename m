@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E80433F378;
-	Sat, 28 Feb 2026 17:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C04F3090D5
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300906; cv=none; b=JcCU5bnd2NYJsdvD0iLa7lRgzhuBaOURrTvx495Uk1tfJufBu4iH2Y9w1lMcSrcXd+CUAdxN5jq3hYqplNQ+oXOWaaD7zeMtFxIotCEcb9McMomOPuOn6HeAc6zS69J8hxNsgRQoRPXCl6t3o4ry4XK8kJiSYxg0jw7GzFzCtsQ=
+	t=1772300907; cv=none; b=n9YpPoJ+zncO5ZGPCTR4rhxdTalJdwhPqy+daVFDGdMpQc2dcUITN/W5BKZrtDhO4F7PGPbCfh8sf22D4mJIIY7AxCsQsm6Ljr7fUnIapuB7V05DbpCZttfLyUeAhi1KWVrMsvVzuSZ5o4HgjJX/IF84aacQbOIGYVQx80qc9W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300906; c=relaxed/simple;
-	bh=bjZvF3HoqucTEu5JA0Fv2fjutW/UGHafxWfYSwNBAoY=;
+	s=arc-20240116; t=1772300907; c=relaxed/simple;
+	bh=D5N9c4KjXXhj07dBWuc9h4/fSwtFdozgTaLnNQb5bUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMn1JA9WdMN4HEEq98r/az171CysHV6Nc96aSfp5dMOA0nJS2riXskxyRgR6Df+h9zmG8c+DeD177pCuMzIo/Y28dSjGXL4gwJJDgeCkRmEdPHoO2SMFzjZgBANa+4TudaDR8VhHopzgi+n2FRSzNIRhYFc9sEiwwQydIWZOg2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SFPrCK9U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JCtEAffkuaB1KjtxoROgd29muP4CfifvdBYBZZS/ECEYmj3V9jN0dOVD4hh+lDo5K0wQayJZfbcOB+Qfp7wrlAFYLAbhJKLxOCVKuFzTGbkYUvYffgHPuDco5vqOMpdCa7sZ3VOs9D/ZxVkK0fmgt1UgD/zB7SJWdh0BtObWVdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rwCzGn2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SFPrCK9U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3584DC116D0;
-	Sat, 28 Feb 2026 17:48:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rwCzGn2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0683C19425;
+	Sat, 28 Feb 2026 17:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300906;
-	bh=bjZvF3HoqucTEu5JA0Fv2fjutW/UGHafxWfYSwNBAoY=;
+	s=k20201202; t=1772300907;
+	bh=D5N9c4KjXXhj07dBWuc9h4/fSwtFdozgTaLnNQb5bUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFPrCK9UMveqTujE8khluLueeERuSiYW1ugxUhArv9/SMwyBd7dYCWaSx6QH5cTHi
-	 kSvmwd137fKg0+i3QYsrtXnx5a6q+TVgDYJawwzNtvqz0aHs7ZWjllmn2IfG0LR/g1
-	 oWoljd7r1ZTU2c9z6XdreHddETeu+XKDX4iUwoUzqS7Rt/c53osjsDOn6d0JwHhro+
-	 jEG94HMBpBSEPWr0aZyifixwUSjvRUgZ7o635KauXOhU0v6GE+rqErq67LMND5mJIc
-	 QJjBBpZkC3mYcCe0TL6/3jkwIdanilX64bHX+42WVtMOokeYwrNnOqKH3nzihzwhbX
-	 Nhz3mO8TIrbNA==
+	b=rwCzGn2mUA6lYhul+UXMg9Ovb98VEFmxkYuFJFW+o25qh2yUtxAHsgd0NYCkjzRJ0
+	 8bs96NkEgKpqoxe5f+TTRsw273QVsuG77Os/7d5rSdRdNScfMfswE1QjMv8cnKJelm
+	 g28htXN4QTeDFIusy6A9Yk3TuoG+6PQoNAXIS/J7IWEF6VYoWJxhmT3W5BPF1z9xB7
+	 dFWoJrlJ+Bj0maABxR7kErsfcFbrN4CZpLEbhAj2ynSfj2Rnb9tQAvuGnUWnvP7XEN
+	 kiFb0r8cY6J+Q2qEyZgPTI1tHsWKZodH/MalsyzptVTbi3x+Dg6vQ/AUsmPfAR8JWQ
+	 S19Ygvi+rwuTg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Richter <tmricht@linux.ibm.com>,
-	Jan Polensky <japo@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	linux-s390@vger.kernel.org,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+Cc: "Anthony Pighin (Nokia)" <anthony.pighin@nokia.com>,
+	Esben Haabendal <esben@geanix.com>,
+	Nick Bowler <nbowler@draconx.ca>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/752] perf test: Fix test case perftool-testsuite_report for s390
-Date: Sat, 28 Feb 2026 12:35:31 -0500
-Message-ID: <20260228174750.1542406-20-sashal@kernel.org>
+Subject: [PATCH 6.18 021/752] rtc: interface: Alarm race handling should not discard preceding error
+Date: Sat, 28 Feb 2026 12:35:32 -0500
+Message-ID: <20260228174750.1542406-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -55,112 +49,50 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: "Anthony Pighin (Nokia)" <anthony.pighin@nokia.com>
 
-[ Upstream commit 3d012b8614ee020666f3dd15af9f65dc487e3f5f ]
+[ Upstream commit 81be22cd4ace020045cc6d31255c6f7c071eb7c0 ]
 
-Test case perftool-testsuite_report fails on s390 for some time
-now.
+Commit 795cda8338ea ("rtc: interface: Fix long-standing race when setting
+alarm") should not discard any errors from the preceding validations.
 
-Root cause is a time out which is too tight for large s390 machines.
-The time out value addr2line_timeout_ms is per default set to 1 second.
+Prior to that commit, if the alarm feature was disabled, or the
+set_alarm failed, a meaningful error code would be returned to the
+caller for further action.
 
-This is the maximum time the function read_addr2line_record() waits for
-a reply from the forked off tool addr2line, which is started as a child
-in interactive mode.
+After, more often than not, the __rtc_read_time will cause a success
+return code instead, misleading the caller.
 
-It reads stdin (an address in hexadecimal) and replies on stdout with
-function name, file name and line number. This might take more than one
-second.
+An example of this is when timer_enqueue is called for a rtc-abx080x
+device. Since that driver does not clear the alarm feature bit, but
+instead relies on the set_alarm operation to return invalid, the discard
+of the return code causes very different behaviour; i.e.
+    hwclock: select() to /dev/rtc0 to wait for clock tick timed out
 
-However one second is not always enough and the reply from addr2line
-tool is not received. Function read_addr2line_record() fails and emits
-a warning, which is not expected by the test case. It fails.
-
-Output before:
-
- # perf test -F 133
- -- [ PASS ] -- perf_report :: setup :: prepare the perf.data file
- ==================
- [ perf record: Woken up 1 times to write data ]
- [ perf record: Captured and wrote 0.087 MB \
-	/tmp/perftool-testsuite_report.FHz/perf_report/perf.data.1 \
-	(207 samples) ]
- ==================
- -- [ PASS ] -- perf_report :: setup :: prepare the perf.data.1 file
- ## [ PASS ] ## perf_report :: setup SUMMARY
- -- [ SKIP ] -- perf_report :: test_basic :: help message :: testcase skipped
- Line did not match any pattern: "cmd__addr2line /usr/lib/debug/lib/modules/
- 	6.19.0-20260205.rc8.git366.9845cf73f7db.300.fc43.s390x+next/
-	vmlinux: could not read first record"
- Line did not match any pattern: "cmd__addr2line /usr/lib/debug/lib/modules/
-	6.19.0-20260205.rc8.git366.9845cf73f7db.300.fc43.s390x+next/
-	vmlinux: could not read first record"
- -- [ FAIL ] -- perf_report :: test_basic :: basic execution
-	(output regexp parsing)
- ....
- 133: perftool-testsuite_report      : FAILED!
-
-Output after:
-
- # ./perf test -F 133
- -- [ PASS ] -- perf_report :: setup :: prepare the perf.data file
- ==================
- [ perf record: Woken up 1 times to write data ]
- [ perf record: Captured and wrote 0.087 MB \
-	 /tmp/perftool-testsuite_report.Mlp/perf_report/perf.data.1
-	 (188 samples) ]
- ==================
- -- [ PASS ] -- perf_report :: setup :: prepare the perf.data.1 file
- ## [ PASS ] ## perf_report :: setup SUMMARY
- -- [ SKIP ] -- perf_report :: test_basic :: help message :: testcase skipped
- -- [ PASS ] -- perf_report :: test_basic :: basic execution
- -- [ PASS ] -- perf_report :: test_basic :: number of samples
- -- [ PASS ] -- perf_report :: test_basic :: header
- -- [ PASS ] -- perf_report :: test_basic :: header timestamp
- -- [ PASS ] -- perf_report :: test_basic :: show CPU utilization
- -- [ PASS ] -- perf_report :: test_basic :: pid
- -- [ PASS ] -- perf_report :: test_basic :: non-existing symbol
- -- [ PASS ] -- perf_report :: test_basic :: symbol filter
- -- [ PASS ] -- perf_report :: test_basic :: latency header
- -- [ PASS ] -- perf_report :: test_basic :: default report for latency profile
- -- [ PASS ] -- perf_report :: test_basic :: latency report for latency profile
- -- [ PASS ] -- perf_report :: test_basic :: parallelism histogram
- ## [ PASS ] ## perf_report :: test_basic SUMMARY
- 133: perftool-testsuite_report      : Ok
- #
-
-Fixes: 257046a36750a6db ("perf srcline: Fallback between addr2line implementations")
-Reviewed-by: Jan Polensky <japo@linux.ibm.com>
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: linux-s390@vger.kernel.org
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 795cda8338ea ("rtc: interface: Fix long-standing race when setting alarm")
+Signed-off-by: Anthony Pighin (Nokia) <anthony.pighin@nokia.com>
+Reviewed-by: Esben Haabendal <esben@geanix.com>
+Tested-by: Nick Bowler <nbowler@draconx.ca>
+Link: https://patch.msgid.link/BN0PR08MB6951415A751F236375A2945683D1A@BN0PR08MB6951.namprd08.prod.outlook.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/addr2line.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/rtc/interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/addr2line.c b/tools/perf/util/addr2line.c
-index f2d94a3272d71..a8b39f4f202b6 100644
---- a/tools/perf/util/addr2line.c
-+++ b/tools/perf/util/addr2line.c
-@@ -18,8 +18,8 @@
- 
- #define MAX_INLINE_NEST 1024
- 
--/* If addr2line doesn't return data for 1 second then timeout. */
--int addr2line_timeout_ms = 1 * 1000;
-+/* If addr2line doesn't return data for 5 seconds then timeout. */
-+int addr2line_timeout_ms = 5 * 1000;
- 
- static int filename_split(char *filename, unsigned int *line_nr)
- {
+diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
+index b8b298efd9a9c..1906f4884a834 100644
+--- a/drivers/rtc/interface.c
++++ b/drivers/rtc/interface.c
+@@ -457,7 +457,7 @@ static int __rtc_set_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
+ 	 * are in, we can return -ETIME to signal that the timer has already
+ 	 * expired, which is true in both cases.
+ 	 */
+-	if ((scheduled - now) <= 1) {
++	if (!err && (scheduled - now) <= 1) {
+ 		err = __rtc_read_time(rtc, &tm);
+ 		if (err)
+ 			return err;
 -- 
 2.51.0
 
