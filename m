@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F47432ED2A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD4134250D
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301942; cv=none; b=SOozCI5PbxKWnNE+dU/+ECyupkz2PEUF4/nbM/USAazyvPechxFbdHaakPq9iXZS2Ov1lunyqRILJNZ0Vvx+j3Z2zuRebxOKC1gmq9CmuHaJjAvFXWxiSdvNEqDQgOSt88rIZtLjk/rOaGUvNY3Z50Iye6Dt9kYIZFNEtz86mKA=
+	t=1772301942; cv=none; b=ckYC6tCp8hBjLKsViBLsL3TrjAo2EoCi+/9qJ08KJwjHprMpZU0mjfir6xIByXlWqO2aTDNgfYL35iHZ2V0p6qd5imwj62s7NckMF+RTTGpwU6jz0jQ+iS2S1nutmUpV2r/83c1JyY/VGrhXPTNatp4mcLE4Hx74x7GgNF/xAIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301942; c=relaxed/simple;
-	bh=jscaZRorEQn4QV26UB6lCf2P8roqynxLWjwZvM5QmwU=;
+	bh=Q2FF34X8jhhMEbaoOW/mJFnbO/nF1vkKeoqJq/yvFg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acMAvakk/N9cRNCyzAFslzNJuemeBZRlqnhlvbWBnzbc4MDB5hXgD1jqW/afFGefK038njpjLJyQcfh55Aq0VP3U30bhIIZeErAaAKcUGDPWQvYTaUNihQukXlwSWDCpZZuNNgKnZte4uvKUPO71qrMBm0zLxeibbnTqoA2MPmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fhXxH+U1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B+oAc5DBOhxM4hVwQw5puqa5PBw54Pmrawkv1ZYXjqHJ2A1J0ur0tgIfRDXlWMV7rYMDvyKKvwkJnPSMckMuB4T/FO2FTHdP8xxhh3eUKhh9uv/zulutpe85Xr1V1M/sG0jnvqb+8xi4QAk25gIl/gn5Az8cRwzkB5pF3Q4YsZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GtmXDAjM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fhXxH+U1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72372C116D0;
-	Sat, 28 Feb 2026 18:05:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GtmXDAjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35ECEC19423;
+	Sat, 28 Feb 2026 18:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301941;
-	bh=jscaZRorEQn4QV26UB6lCf2P8roqynxLWjwZvM5QmwU=;
+	s=k20201202; t=1772301942;
+	bh=Q2FF34X8jhhMEbaoOW/mJFnbO/nF1vkKeoqJq/yvFg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fhXxH+U1nPLnB331K6YhnJfuqdONhQgLAR9xlS54uG8t3sgwOXwLqviZ02ujLy26m
-	 g8WX6C5fZHoFXuVlGYQ+AHBT3SwRngEzCDl5XxXi3gMtBxr8jQysyAzDlJ1ddUB6u5
-	 AzmFIimlET1dqdVyod3JEcrUSIElmcGnKd1sccNI1bng0l2uRnE+CVMZQsDmQfaUjV
-	 n5U1+n7KM3nfTZjc3bSVhM9XWdcSfbnTkRcqT06I8tDNq2Ye9UxL05kTNcKEQiQAtF
-	 /wramd34Z4Z9pbleeIrDgwxAQkOVUUJ/SsCiY2OE3XGSR7pw21LGF96+FU5kKBnk3J
-	 uAA8o8i6mlMUQ==
+	b=GtmXDAjMm1ddHIEw1A96oeJUmTMKISmrK1r2lGLN5eQS9CAaJ18mSB4WfrhiDN3Nm
+	 veQ66GVneJRnxf9TemiHeKzpUelaRZR169SkKMZg2aK0ef3Qo25zK/OarosNOqr4dI
+	 kFf7I5uN/EtuNdcA2aYpN2BTrmBfu+VEtcdCqKTCYCxAwGDlSj57FgKO/4yrRQnWq7
+	 W3u/66uhLeH+EAl8rFTz8OZMnSROiw+C2gaVwGlFS45wOzOQClVilSDHjZNJZPJkyF
+	 x8/a0coUjXCF2ciYkpo6QvtfD+MSRg/v1yMoot0ltC6naABquzAFchQZqmsE2WAwz1
+	 Wev3SuY4AVZ5A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Julian Anastasov <ja@ssi.bg>,
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 379/385] ipvs: do not keep dest_dst if dev is going down
-Date: Sat, 28 Feb 2026 13:00:01 -0500
-Message-ID: <20260228180011.1568201-379-sashal@kernel.org>
+Subject: [PATCH 6.12 380/385] net: remove WARN_ON_ONCE when accessing forward path array
+Date: Sat, 28 Feb 2026 13:00:02 -0500
+Message-ID: <20260228180011.1568201-380-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,127 +47,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 8fde939b0206afc1d5846217a01a16b9bc8c7896 ]
+[ Upstream commit 008e7a7c293b30bc43e4368dac6ea3808b75a572 ]
 
-There is race between the netdev notifier ip_vs_dst_event()
-and the code that caches dst with dev that is going down.
-As the FIB can be notified for the closed device after our
-handler finishes, it is possible valid route to be returned
-and cached resuling in a leaked dev reference until the dest
-is not removed.
+Although unlikely, recent support for IPIP tunnels increases chances of
+reaching this WARN_ON_ONCE if userspace manages to build a sufficiently
+long forward path.
 
-To prevent new dest_dst to be attached to dest just after the
-handler dropped the old one, add a netif_running() check
-to make sure the notifier handler is not currently running
-for device that is closing.
+Remove it.
 
-Fixes: 7a4f0761fce3 ("IPVS: init and cleanup restructuring")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Fixes: ddb94eafab8b ("net: resolve forwarding path from virtual netdevice and HW destination address")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_xmit.c | 46 ++++++++++++++++++++++++++-------
- 1 file changed, 36 insertions(+), 10 deletions(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index fa2db17f6298b..8892f261451e9 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -295,6 +295,12 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
- 	return true;
- }
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 1d276a26a360d..553317ad6f1b4 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -720,7 +720,7 @@ static struct net_device_path *dev_fwd_path(struct net_device_path_stack *stack)
+ {
+ 	int k = stack->num_paths++;
  
-+/* rt has device that is down */
-+static bool rt_dev_is_down(const struct net_device *dev)
-+{
-+	return dev && !netif_running(dev);
-+}
-+
- /* Get route to destination or remote server */
- static int
- __ip_vs_get_out_rt(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
-@@ -310,9 +316,11 @@ __ip_vs_get_out_rt(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
+-	if (WARN_ON_ONCE(k >= NET_DEVICE_PATH_STACK_MAX))
++	if (k >= NET_DEVICE_PATH_STACK_MAX)
+ 		return NULL;
  
- 	if (dest) {
- 		dest_dst = __ip_vs_dst_check(dest);
--		if (likely(dest_dst))
-+		if (likely(dest_dst)) {
- 			rt = dst_rtable(dest_dst->dst_cache);
--		else {
-+			if (ret_saddr)
-+				*ret_saddr = dest_dst->dst_saddr.ip;
-+		} else {
- 			dest_dst = ip_vs_dest_dst_alloc();
- 			spin_lock_bh(&dest->dst_lock);
- 			if (!dest_dst) {
-@@ -328,14 +336,22 @@ __ip_vs_get_out_rt(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
- 				ip_vs_dest_dst_free(dest_dst);
- 				goto err_unreach;
- 			}
--			__ip_vs_dst_set(dest, dest_dst, &rt->dst, 0);
-+			/* It is forbidden to attach dest->dest_dst if
-+			 * device is going down.
-+			 */
-+			if (!rt_dev_is_down(dst_dev_rcu(&rt->dst)))
-+				__ip_vs_dst_set(dest, dest_dst, &rt->dst, 0);
-+			else
-+				noref = 0;
- 			spin_unlock_bh(&dest->dst_lock);
- 			IP_VS_DBG(10, "new dst %pI4, src %pI4, refcnt=%d\n",
- 				  &dest->addr.ip, &dest_dst->dst_saddr.ip,
- 				  rcuref_read(&rt->dst.__rcuref));
-+			if (ret_saddr)
-+				*ret_saddr = dest_dst->dst_saddr.ip;
-+			if (!noref)
-+				ip_vs_dest_dst_free(dest_dst);
- 		}
--		if (ret_saddr)
--			*ret_saddr = dest_dst->dst_saddr.ip;
- 	} else {
- 		noref = 0;
- 
-@@ -472,9 +488,11 @@ __ip_vs_get_out_rt_v6(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
- 
- 	if (dest) {
- 		dest_dst = __ip_vs_dst_check(dest);
--		if (likely(dest_dst))
-+		if (likely(dest_dst)) {
- 			rt = dst_rt6_info(dest_dst->dst_cache);
--		else {
-+			if (ret_saddr)
-+				*ret_saddr = dest_dst->dst_saddr.in6;
-+		} else {
- 			u32 cookie;
- 
- 			dest_dst = ip_vs_dest_dst_alloc();
-@@ -495,14 +513,22 @@ __ip_vs_get_out_rt_v6(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
- 			}
- 			rt = dst_rt6_info(dst);
- 			cookie = rt6_get_cookie(rt);
--			__ip_vs_dst_set(dest, dest_dst, &rt->dst, cookie);
-+			/* It is forbidden to attach dest->dest_dst if
-+			 * device is going down.
-+			 */
-+			if (!rt_dev_is_down(dst_dev_rcu(&rt->dst)))
-+				__ip_vs_dst_set(dest, dest_dst, &rt->dst, cookie);
-+			else
-+				noref = 0;
- 			spin_unlock_bh(&dest->dst_lock);
- 			IP_VS_DBG(10, "new dst %pI6, src %pI6, refcnt=%d\n",
- 				  &dest->addr.in6, &dest_dst->dst_saddr.in6,
- 				  rcuref_read(&rt->dst.__rcuref));
-+			if (ret_saddr)
-+				*ret_saddr = dest_dst->dst_saddr.in6;
-+			if (!noref)
-+				ip_vs_dest_dst_free(dest_dst);
- 		}
--		if (ret_saddr)
--			*ret_saddr = dest_dst->dst_saddr.in6;
- 	} else {
- 		noref = 0;
- 		dst = __ip_vs_route_output_v6(net, daddr, ret_saddr, do_xfrm,
+ 	return &stack->path[k];
 -- 
 2.51.0
 
