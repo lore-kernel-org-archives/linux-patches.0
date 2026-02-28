@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0433F359A73
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0746133A9DA
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302433; cv=none; b=aAks3yEcGSIb8aBNf/N+4GyRr9J7tEW5IDf8ZIAyhTNPK8P2++pTHzbtM7fPn8+sDVdnpa9x2Mu8x6p+nXCBAKUJiEK62K0ODEh6RGS40Wj3hHLhut2vIFT9ZiZMEWahLdaWHAe3cRKi9QSsXNm9SJyZIbJN/KmKudcK6wgPVUc=
+	t=1772302434; cv=none; b=P2kfL7sgSevzcLJBfVcq1SvpMrRy/1xLCH1UbbJw8votP0942q/xDfYeWc+bPG1ekUkpVAyCWoB2efzUv7xuwvpsGJOVpurygsh8IJh0ohwyYqPr6GV2hT7YJrc0E/L+DQ0pFJMVfgxAw6lGzWGkIS3v4g8Tbkh+RsNxCY13Ugw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302433; c=relaxed/simple;
-	bh=ydDWJ/2BF3aKyW9nfVs1dGbkLJVxJHoGb/nuXugozaY=;
+	s=arc-20240116; t=1772302434; c=relaxed/simple;
+	bh=KE0f7HYcDm0UjSa74GFNW/ssrO+KTdyNmnQN3aXDofw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMazsQ49gWJKx7OsN0RwrtkmYxzkNbO/KUkGruuVNlJwRn6YcnnxCDD0n+KlLJoOpwUqDBeqlxTL+r1F+ymEeZEgOt8hKHxhe9W1Vxngl09XAVgW2IzmF642PztgDr9vWzqvy99fH/NF4d5vZl4v8TYplhvRhf99AhL/XcJeuRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=orHj9EOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gWJ+uTqJ7yt47OXCYHbwcwdGaQJkXhOQB90rXt2Gozq1aTLJTmWHtIS9uDz3DFd9SBePXXZTlZvx29y4m0INuz9Bi1BZAk2jt7OWaHeGQhzvWkOqt/J/hg3/56A5C9p3G03Z74FO1FuHRRyaSd6z2KZJbGRw/kC4hSPM/iPC4pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eT+wBI7S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="orHj9EOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2763AC19425;
-	Sat, 28 Feb 2026 18:13:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eT+wBI7S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A620C116D0;
+	Sat, 28 Feb 2026 18:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302432;
-	bh=ydDWJ/2BF3aKyW9nfVs1dGbkLJVxJHoGb/nuXugozaY=;
+	s=k20201202; t=1772302433;
+	bh=KE0f7HYcDm0UjSa74GFNW/ssrO+KTdyNmnQN3aXDofw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orHj9EOPuUN5UoeAJOVwft3xBXLLu9LatsbiPCzP6SuAf4buVCCcd1Z9lLC+1hbt0
-	 IYcQb9FISbdRb0bqULR+qTN2vibK14Ww1fAwkOc460EKF+TDPOF6ARvAedy81y2LUy
-	 CoQ/Wbt66S7R7KlKBtIbFlhu9Vf3Tg7OkdkZO3SvQmhhNHUAZHWvAPz9wrml9Gjs00
-	 7++5tz6JE5Jvt1b+T6eEF5uDR6E5T3VD8GMsl/njlbeYTGFChRMsoWjemsrO1hrTfk
-	 PgMLmIzJLLaAkc5qMSO/Gkz5yHnvrd4oIYsUwEcQ6E8rz96s7eSOzwY0iMCHVRUNLg
-	 sl1sVM3uwjfww==
+	b=eT+wBI7S+KxsaSH6RyjAKsHtJ6PIqV7LkRwXJptpX93komRpugEBclvxAUtxOIF7V
+	 oNHVgHzNBP9LXRo+HCDiIeC2CnqjfYdpbUMJamu49wJF64YCuZsw+cp0IoUZgYYACE
+	 ovgxI5wcEVxBZ19CCxnNWvqVJ+AoUhpgxRU3CoSwMCwLovaDy5Kk2zyzzmujmCvj6R
+	 u/nEpTrSGKTpYkKeGPbytkWNQ20BbMDjYNGiLMUI4mKfjIdb+xMtwAEvV0JF+TRsho
+	 oPmqOQmm3cC7c/ye4hnAeQfg4W2fVtu2pRF0y2yGxg/2Zv/u0YMApZadLguM1S8KlK
+	 MqBDXMHQZnbGw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Zhang Yi <yi.zhang@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+Cc: Zilin Guan <zilin@seu.edu.cn>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Baokun Li <libaokun1@huawei.com>,
-	stable@kernel.org,
 	Theodore Ts'o <tytso@mit.edu>,
+	stable@kernel.org,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.1 170/232] ext4: don't cache extent during splitting extent
-Date: Sat, 28 Feb 2026 13:10:23 -0500
-Message-ID: <20260228181127.1592657-170-sashal@kernel.org>
+Subject: [PATCH 6.1 171/232] ext4: fix memory leak in ext4_ext_shift_extents()
+Date: Sat, 28 Feb 2026 13:10:24 -0500
+Message-ID: <20260228181127.1592657-171-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -50,77 +50,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-commit 8b4b19a2f96348d70bfa306ef7d4a13b0bcbea79 upstream.
+commit ca81109d4a8f192dc1cbad4a1ee25246363c2833 upstream.
 
-Caching extents during the splitting process is risky, as it may result
-in stale extents remaining in the status tree. Moreover, in most cases,
-the corresponding extent block entries are likely already cached before
-the split happens, making caching here not particularly useful.
+In ext4_ext_shift_extents(), if the extent is NULL in the while loop, the
+function returns immediately without releasing the path obtained via
+ext4_find_extent(), leading to a memory leak.
 
-Assume we have an unwritten extent, and then DIO writes the first half.
+Fix this by jumping to the out label to ensure the path is properly
+released.
 
-  [UUUUUUUUUUUUUUUU] on-disk extent        U: unwritten extent
-  [UUUUUUUUUUUUUUUU] extent status tree
-  |<-   ->| ----> dio write this range
-
-First, when ext4_split_extent_at() splits this extent, it truncates the
-existing extent and then inserts a new one. During this process, this
-extent status entry may be shrunk, and calls to ext4_find_extent() and
-ext4_cache_extents() may occur, which could potentially insert the
-truncated range as a hole into the extent status tree. After the split
-is completed, this hole is not replaced with the correct status.
-
-  [UUUUUUU|UUUUUUUU] on-disk extent        U: unwritten extent
-  [UUUUUUU|HHHHHHHH] extent status tree    H: hole
-
-Then, the outer calling functions will not correct this remaining hole
-extent either. Finally, if we perform a delayed buffer write on this
-latter part, it will re-insert the delayed extent and cause an error in
-space accounting.
-
-In adition, if the unwritten extent cache is not shrunk during the
-splitting, ext4_cache_extents() also conflicts with existing extents
-when caching extents. In the future, we will add checks when caching
-extents, which will trigger a warning. Therefore, Do not cache extents
-that are being split.
-
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Fixes: a18ed359bdddc ("ext4: always check ext4_ext_find_extent result")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Cc: stable@kernel.org
-Message-ID: <20251129103247.686136-6-yi.zhang@huaweicloud.com>
+Link: https://patch.msgid.link/20251225084800.905701-1-zilin@seu.edu.cn
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ext4/extents.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 1aad4ae0e7ae4..1398da08fd5a3 100644
+index 1398da08fd5a3..1df7174774694 100644
 --- a/fs/ext4/extents.c
 +++ b/fs/ext4/extents.c
-@@ -3174,6 +3174,9 @@ static int ext4_split_extent_at(handle_t *handle,
- 	BUG_ON((split_flag & (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2)) ==
- 	       (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2));
- 
-+	/* Do not cache extents that are in the process of being modified. */
-+	flags |= EXT4_EX_NOCACHE;
-+
- 	ext_debug(inode, "logical block %llu\n", (unsigned long long)split);
- 
- 	ext4_ext_show_leaf(inode, path);
-@@ -3344,6 +3347,9 @@ static int ext4_split_extent(handle_t *handle,
- 	ee_len = ext4_ext_get_actual_len(ex);
- 	unwritten = ext4_ext_is_unwritten(ex);
- 
-+	/* Do not cache extents that are in the process of being modified. */
-+	flags |= EXT4_EX_NOCACHE;
-+
- 	if (map->m_lblk + map->m_len < ee_block + ee_len) {
- 		split_flag1 = split_flag & EXT4_EXT_MAY_ZEROOUT;
- 		flags1 = flags | EXT4_GET_BLOCKS_PRE_IO;
+@@ -5262,7 +5262,8 @@ ext4_ext_shift_extents(struct inode *inode, handle_t *handle,
+ 		if (!extent) {
+ 			EXT4_ERROR_INODE(inode, "unexpected hole at %lu",
+ 					 (unsigned long) *iterator);
+-			return -EFSCORRUPTED;
++			ret = -EFSCORRUPTED;
++			goto out;
+ 		}
+ 		if (SHIFT == SHIFT_LEFT && *iterator >
+ 		    le32_to_cpu(extent->ee_block)) {
 -- 
 2.51.0
 
