@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30704340A59
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A8E340A59
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301080; cv=none; b=MVwmC7TGQELvxcjAtMD3RDfwABgOqGaBoVdWtdwDR5GiH1MKwlte18I/whAkwQ/vUrOdSKgYo8tAgCMOTQ6u4wIhokcWbOjZzPsQR0kVOf3YZkjTgNae7L/5cvyvCrJzGriOujwHjdglhQQoCutnSxMru6Wzf879dYK/OIliU6Q=
+	t=1772301081; cv=none; b=e/okBX0A7wxBvDKxb2b7KhoeMGeFpmiuSo+ihuyhdnBZrl4VyVyI54CojS5b1nB3IbwGjxw3JKKLw/6h8710LUSXNH6JlwyqwZhGa8Z4V2Y1uN7+j8s9nMAsnx14OrdMwErFa/nsGEGrPruJR0eeA9MWMnB0ekcHSsqwARusMXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301080; c=relaxed/simple;
-	bh=1eJRIi7rZxnG0yH3rK9b/31SZFamPACMOK8xQRNA2Kc=;
+	s=arc-20240116; t=1772301081; c=relaxed/simple;
+	bh=YNl1ruKeNTu0Qjgg2uYFCwt3Hi3Kc4jaKDuPweeGFDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCDy0AtFVWNzF1fayaGygjppQP6R97NLlVPvSTiB3ypNrhFHY4nqZOpbM4PQbxk++BrjzvBfamfZYBMObcRvcxL9jHxycFshRwRCjnxe3KLj7Rv1z/Q+udtUQCGZxw2kEa0tgjefeYqeCR0YNfevCyTeuGfOA91TcDKD2GmOg0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tq6R4QpK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uDj0RoBcQpynDp+eFZFqw0rl8CPXjuxEIE3Cz/pDLO1tVG4u1qlHzEHeNDLce+uOvZ77z0l1fLh4LTaDc7xvPQFM/Csx6PatSgtIdYOGQpH092m4LOZ80JBv/f2djwF5uvPpH7g6nf2su+FLckw3RCMIPL+sjZ6VTkgPBZvKtiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KlgSJ7gL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tq6R4QpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9509EC19423;
-	Sat, 28 Feb 2026 17:51:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KlgSJ7gL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B92C19423;
+	Sat, 28 Feb 2026 17:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301080;
-	bh=1eJRIi7rZxnG0yH3rK9b/31SZFamPACMOK8xQRNA2Kc=;
+	bh=YNl1ruKeNTu0Qjgg2uYFCwt3Hi3Kc4jaKDuPweeGFDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tq6R4QpKy2owxZ2xEoe3J+RBz0odwk/UrFD4/An5z9oxlM3h6PyIbNbCaJZRxVwy1
-	 ZflGw97o33wHvAV/Wsw6am07XxE6PwLek9Untp1refy+TmnLxBrwKglsel9dN5QgwN
-	 THsJTZDGKBQV2Qt5Iles00G6b3TfgXyGUj4ZAUEREAz9ciWUVpGTgfwc5JciuLIft7
-	 DnpuyxprTUd6qURWU5FOAqK/NXDMd9bEDg2FdEnrITE/6+7NZ7vN906KQcvockKcdK
-	 O4IHcR93k+dKSCE/t+uJpv55mfrzXp7OpnzIcgsyKuyJUl34BxKeBAbsRbuLDq6EOA
-	 I0iTAgUrkqUAw==
+	b=KlgSJ7gLSlHcaITF7+w8TkibtvecM3/Y74GnPclXDg/kGBr17PkMrw4iYgjl6zfTR
+	 U0Jhzeljkzw5ULgedxjElaUehnNqhpExq2V75hi42M5Uwd7OQUWfeJeBmxnwKlM3oT
+	 b/N81pcdA91OtYbMAxDZS1oLzYQizzRGj1G/3oB2e19ppRcgyPBCDPvpUzQWZeifkR
+	 ZXXpEQVZzh6iBLHG+30OlfIJggO40gTbz7JXslQTBRmw4NNRguPlv5yKOYF2Yz/IIi
+	 kCpbzprDpemGKrrG/wX9uSI6MYoSXoKUB8Ja0o7m/5KOTJi5rqN35n+9XSvBuF9g2c
+	 H8ygjQjli9e5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Slark Xiao <slark_xiao@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Kuan-Chung Chen <damon.chen@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 227/752] net: wwan: mhi: Add network support for Foxconn T99W760
-Date: Sat, 28 Feb 2026 12:38:58 -0500
-Message-ID: <20260228174750.1542406-227-sashal@kernel.org>
+Subject: [PATCH 6.18 228/752] wifi: rtw89: fix potential zero beacon interval in beacon tracking
+Date: Sat, 28 Feb 2026 12:38:59 -0500
+Message-ID: <20260228174750.1542406-228-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,36 +47,76 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Kuan-Chung Chen <damon.chen@realtek.com>
 
-[ Upstream commit 915a5f60ad947e8dd515d2cc77a96a14dffb3f15 ]
+[ Upstream commit eb57be32f438c57c88d6ce756101c1dfbcc03bba ]
 
-T99W760 is designed based on Qualcomm SDX35 chip. It use similar
-architecture with SDX72/SDX75 chip. So we need to assign initial
-link id for this device to make sure network available.
+During fuzz testing, it was discovered that bss_conf->beacon_int
+might be zero, which could result in a division by zero error in
+subsequent calculations. Set a default value of 100 TU if the
+interval is zero to ensure stability.
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-Link: https://patch.msgid.link/20260105022646.10630-1-slark_xiao@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20251231090647.56407-11-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/mhi_wwan_mbim.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/core.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wwan/mhi_wwan_mbim.c b/drivers/net/wwan/mhi_wwan_mbim.c
-index f8bc9a39bfa30..1d7e3ad900c12 100644
---- a/drivers/net/wwan/mhi_wwan_mbim.c
-+++ b/drivers/net/wwan/mhi_wwan_mbim.c
-@@ -98,7 +98,8 @@ static struct mhi_mbim_link *mhi_mbim_get_link_rcu(struct mhi_mbim_context *mbim
- static int mhi_mbim_get_link_mux_id(struct mhi_controller *cntrl)
- {
- 	if (strcmp(cntrl->name, "foxconn-dw5934e") == 0 ||
--	    strcmp(cntrl->name, "foxconn-t99w640") == 0)
-+	    strcmp(cntrl->name, "foxconn-t99w640") == 0 ||
-+	    strcmp(cntrl->name, "foxconn-t99w760") == 0)
- 		return WDS_BIND_MUX_DATA_PORT_MUX_ID;
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index 917b2adede61d..ed6018f54f20a 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -2655,7 +2655,7 @@ static void rtw89_core_bcn_track_assoc(struct rtw89_dev *rtwdev,
  
- 	return 0;
+ 	rcu_read_lock();
+ 	bss_conf = rtw89_vif_rcu_dereference_link(rtwvif_link, true);
+-	beacon_int = bss_conf->beacon_int;
++	beacon_int = bss_conf->beacon_int ?: 100;
+ 	dtim = bss_conf->dtim_period;
+ 	rcu_read_unlock();
+ 
+@@ -2685,9 +2685,7 @@ static void rtw89_core_bcn_track_reset(struct rtw89_dev *rtwdev)
+ 	memset(&rtwdev->bcn_track, 0, sizeof(rtwdev->bcn_track));
+ }
+ 
+-static void rtw89_vif_rx_bcn_stat(struct rtw89_dev *rtwdev,
+-				  struct ieee80211_bss_conf *bss_conf,
+-				  struct sk_buff *skb)
++static void rtw89_vif_rx_bcn_stat(struct rtw89_dev *rtwdev, struct sk_buff *skb)
+ {
+ #define RTW89_APPEND_TSF_2GHZ 384
+ #define RTW89_APPEND_TSF_5GHZ 52
+@@ -2696,7 +2694,7 @@ static void rtw89_vif_rx_bcn_stat(struct rtw89_dev *rtwdev,
+ 	struct ieee80211_rx_status *rx_status = IEEE80211_SKB_RXCB(skb);
+ 	struct rtw89_beacon_stat *bcn_stat = &rtwdev->phystat.bcn_stat;
+ 	struct rtw89_beacon_track_info *bcn_track = &rtwdev->bcn_track;
+-	u32 bcn_intvl_us = ieee80211_tu_to_usec(bss_conf->beacon_int);
++	u32 bcn_intvl_us = ieee80211_tu_to_usec(bcn_track->beacon_int);
+ 	u64 tsf = le64_to_cpu(mgmt->u.beacon.timestamp);
+ 	u8 wp, num = bcn_stat->num;
+ 	u16 append;
+@@ -2704,6 +2702,10 @@ static void rtw89_vif_rx_bcn_stat(struct rtw89_dev *rtwdev,
+ 	if (!RTW89_CHK_FW_FEATURE(BEACON_TRACKING, &rtwdev->fw))
+ 		return;
+ 
++	/* Skip if not yet associated */
++	if (!bcn_intvl_us)
++		return;
++
+ 	switch (rx_status->band) {
+ 	default:
+ 	case NL80211_BAND_2GHZ:
+@@ -2791,7 +2793,7 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
+ 		pkt_stat->beacon_rate = desc_info->data_rate;
+ 		pkt_stat->beacon_len = skb->len;
+ 
+-		rtw89_vif_rx_bcn_stat(rtwdev, bss_conf, skb);
++		rtw89_vif_rx_bcn_stat(rtwdev, skb);
+ 	}
+ 
+ 	if (!ether_addr_equal(bss_conf->addr, hdr->addr1))
 -- 
 2.51.0
 
