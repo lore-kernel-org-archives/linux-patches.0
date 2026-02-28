@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BFC375AAB
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B2934252B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301753; cv=none; b=MNRJJtZrXxO06rLnIEj/WGdBlBK6Iya37MaDq9Tk3j8T7rUKnsoVnbJ9K+zwBhBbn9H8/4fd8AhMcuYV+JdpE2GoYQkl7Dx1Y1grj9QOo54rWP4gwkghtI6uIK5RjC/i0LaPGckEHhxZ1A6JFzFrUYLcUZmUL0FPaU7iF4rJcEg=
+	t=1772301753; cv=none; b=PJ5B0JWjKwKbbSUk7zWocLdvdRoEL+xDKs5C/qblnv2pueC/mYKfAffgQ+JLjC0V8pq7/TZIP0ycFhdsKPqVWZ1o/okrrRt1CL2gZ2mhbT3cT/4nJRWOFUyzwKI09SAfClhek1TEoViSAB3QthcMSZ/RNvXMtUBy1jkYdXtNnXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301753; c=relaxed/simple;
-	bh=+ZVP6EIyE6lXd55iweAzyBma49OThhDRPeRC4mflIbw=;
+	bh=4khIAANd8p8Ede6CAQ0T9TPLlRWl9qABBgc6d8V3/l8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lYyMoq/Mo/rO45B5Zmun/wXWnQH3u7D6OmWrLnXoho3v+2oXhIInI94YFYqNu5eux1FwRq/1zx6ps8mPZZHigRP9gw6nq28MehpP/IH+QSmiWY2bjD4Aw4/Uu/KkjPy43P/sI8SH6z31C2+8ximRl0xy3DDNGoKBGUQSNixn1cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PY226hu0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q9dxSGUd5WqI/kAH7h+BMzci9/UiKzZOk6VCsrdroccGIQOEf94rz4V2GJR9SRyA6XVw5RMUPap9FqN0MXhS62zPRnX01WiBd7sa9h/3c7dheKXN44BwanyW466nnPFY7MzEB6IzZHX1zycaPxWXKP8/RzPtB0Ls4CHMdU1+RTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y8pfBp/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PY226hu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB17C19425;
-	Sat, 28 Feb 2026 18:02:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y8pfBp/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E168C19423;
+	Sat, 28 Feb 2026 18:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301752;
-	bh=+ZVP6EIyE6lXd55iweAzyBma49OThhDRPeRC4mflIbw=;
+	s=k20201202; t=1772301753;
+	bh=4khIAANd8p8Ede6CAQ0T9TPLlRWl9qABBgc6d8V3/l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PY226hu0bHm5/gvKNYERutcpYBcQpW0oKKilC25zJVhXiOs5L+yB3VJGZIPm8qIQO
-	 Yj8JNpKP4OljonJSLxyjXvGQlNDAbZW2nYRUoXF7vtpFIsSNlH4rF2XaECB8fu6EwC
-	 VAvuEh1ePpnx+P4WmNE1WVcGW3e6wiWrKV6MK94o2+OlzNk97Q+AyBj15aNDGsQeMp
-	 zUlXVSZ7Id15pzCxYLxW6uXzXRZZM2+DwFEabPvVVTpss8Yjgni5sje7CuJ2XphZat
-	 IWxpJqD3hD6IUzzc5hXWll2ZNlqL6jGcKs6Qju9wEfbK24kqet3Ip27sUkSGaVXU26
-	 j6gTnX6BHCC9A==
+	b=Y8pfBp/SvFGPejCBBGOu0np+RTcEzQZGyC5wEXgF+GyBrDOQYncSLedQthleqtiF6
+	 hQUkXVuJfSjyQ09uCvVO86pW4w8ONXOCDujMiWo5Z4hLs9Dtri3yKrJEFD705hfFPv
+	 mcyW+TiewQnjoAQbqav3dD/uH2L4Zc9IMbHXSL4I3jRGYsquDW6+OKRxHbwrjZVcNZ
+	 DKcUT7SWyPKVFREKqiuztrtMHcMU8rtHAarW+uGP8IlqH7h91vS6ktRyjDdJIqNHkX
+	 CvumYxa473Zd9gZrPQepJMkMcvlonk7t2wnCk6EvpOmcv2y4Ounv8jnDuV/nDLMzvC
+	 mjcHs0NnAT6zQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Alexey Minnekhanov <alexeymin@minlexx.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 156/385] drm/msm/disp: set num_planes to 1 for interleaved YUV formats
-Date: Sat, 28 Feb 2026 12:56:18 -0500
-Message-ID: <20260228180011.1568201-156-sashal@kernel.org>
+Subject: [PATCH 6.12 157/385] drm/msm/dpu: fix CMD panels on DPU 1.x - 3.x
+Date: Sat, 28 Feb 2026 12:56:19 -0500
+Message-ID: <20260228180011.1568201-157-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -50,57 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 6421e1c5075b7e1536a8fcbe6b4086db07103048 ]
+[ Upstream commit 59ca3d11f5311d9167015fe4f431701614ae0048 ]
 
-Interleaved YUV formats use only one plane for all pixel data. Specify
-num_planes = 1 for those formats. This was left unnoticed since
-_dpu_format_populate_plane_sizes_linear() overrides layout->num_planes.
+DPU units before 4.x don't have a separate CTL_START IRQ to mark the
+begin of the data transfer. In such a case, wait for the frame transfer
+to complete rather than trying to wait for the CTL_START interrupt (and
+obviously hitting the timeout).
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/688162/
-Link: https://lore.kernel.org/r/20251114-dpu-formats-v3-1-cae312379d49@oss.qualcomm.com
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcm6490-fairphone-fp5
+Fixes: 050770cbbd26 ("drm/msm/dpu: Fix timeout issues on command mode panels")
+Reported-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Closes: https://lore.kernel.org/r/8e1d33ff-d902-4ae9-9162-e00d17a5e6d1@postmarketos.org
+Patchwork: https://patchwork.freedesktop.org/patch/696490/
+Link: https://lore.kernel.org/r/20251228-mdp5-drop-dpu3-v4-2-7497c3d39179@oss.qualcomm.com
+Tested-by: Alexey Minnekhanov <alexeymin@minlexx.ru>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp_format.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
-index 426782d50cb49..eebedb1a2636e 100644
---- a/drivers/gpu/drm/msm/disp/mdp_format.c
-+++ b/drivers/gpu/drm/msm/disp/mdp_format.c
-@@ -479,25 +479,25 @@ static const struct msm_format mdp_formats[] = {
- 		0, BPC8, BPC8, BPC8,
- 		C2_R_Cr, C0_G_Y, C1_B_Cb, C0_G_Y,
- 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
--		MDP_FETCH_LINEAR, 2),
-+		MDP_FETCH_LINEAR, 1),
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index 6fc31d47cd1dc..65dad86edb46e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -677,10 +677,11 @@ static int dpu_encoder_phys_cmd_wait_for_commit_done(
+ 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+ 		return 0;
  
- 	INTERLEAVED_YUV_FMT(UYVY,
- 		0, BPC8, BPC8, BPC8,
- 		C1_B_Cb, C0_G_Y, C2_R_Cr, C0_G_Y,
- 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
--		MDP_FETCH_LINEAR, 2),
-+		MDP_FETCH_LINEAR, 1),
+-	if (phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
+-		return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
++	if (phys_enc->irq[INTR_IDX_CTL_START] &&
++	    !phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
++		return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
  
- 	INTERLEAVED_YUV_FMT(YUYV,
- 		0, BPC8, BPC8, BPC8,
- 		C0_G_Y, C1_B_Cb, C0_G_Y, C2_R_Cr,
- 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
--		MDP_FETCH_LINEAR, 2),
-+		MDP_FETCH_LINEAR, 1),
+-	return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
++	return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
+ }
  
- 	INTERLEAVED_YUV_FMT(YVYU,
- 		0, BPC8, BPC8, BPC8,
- 		C0_G_Y, C2_R_Cr, C0_G_Y, C1_B_Cb,
- 		false, CHROMA_H2V1, 4, 2, MSM_FORMAT_FLAG_YUV,
--		MDP_FETCH_LINEAR, 2),
-+		MDP_FETCH_LINEAR, 1),
- 
- 	/* 3 plane YUV */
- 	PLANAR_YUV_FMT(YUV420,
+ static void dpu_encoder_phys_cmd_handle_post_kickoff(
 -- 
 2.51.0
 
