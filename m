@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C26421A16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF015449EBB
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301150; cv=none; b=RPxyhIPOjDf8FZv1qsKvCJmUHs/atfkDFpG1dSlLHMNtpVFaf2ZxlF/r9CAcAQaAd0uGeX8/7r0R/ZF7lh0b556uxsm9XHw4MLTOFTO69JR/5OfmLJ2D/oP8o/5ZnBU1oQy+Nut0kR0prhpsgNyVw5WSJ5NBGNRwJaXXTZ4aoqA=
+	t=1772301151; cv=none; b=vBBGTxYutrKDMwiRXXf6wB9y3vhRVnzfHaRqOQbHLp11lixIXJ0TlbcoHAp2bRTQelxqMUIq3j2hW3xuRcdYdgTWf+z58MxBx2kbTiFVrGb2GT14cxHfMfMiDh0U5hwubCBZOSuVcLGyTDzs7aBsEt454OF1gc9OIq4Hho9lnlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301150; c=relaxed/simple;
-	bh=zewmezckcapVIGLR/SEXo0DCkA/JWHsz4NUGR/Ja8jA=;
+	s=arc-20240116; t=1772301151; c=relaxed/simple;
+	bh=aLpQTaDCsoaCt2G3eAu3tYCXL6/FwZb475hYCkU+bTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eeGs6LrgWlmAhwU5zQ6CO8yxN3kIzAv61/x+7XVQtSOZt+MYttTSzKzdtt45/m3eXpOY8Qptpszuvg6gknp8ZW88PKJmST58IHCLGNf2i2SMjZpCSSG4BzUU7TLhaBhvKlRRiBgwtIC5Lwy8vLoUXhIH2Qv5uYIxHCtZ/R5R4NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zf90UZ7Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hj3f39XMfoLtoHs27nOut13FwVKfwUe9yzGC9nndEE9erUy5nXd29+IkosEo0rbk371EN19qiBTtY0Aku6YiBI9vtPTOoc4hyJ9WnPYBX/pZg2UFTXfeZ6DANld5UvRK898XA1nIG8lQqVftzPZPvM1NO7Qo7vd8rq5jaETd3nU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZR6ZxDro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zf90UZ7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AD5C2BC87;
-	Sat, 28 Feb 2026 17:52:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZR6ZxDro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F6E7C19423;
+	Sat, 28 Feb 2026 17:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301149;
-	bh=zewmezckcapVIGLR/SEXo0DCkA/JWHsz4NUGR/Ja8jA=;
+	s=k20201202; t=1772301150;
+	bh=aLpQTaDCsoaCt2G3eAu3tYCXL6/FwZb475hYCkU+bTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zf90UZ7Qsw2aW3EKxswYcWpQm92dv5EtTXVO0s5I6ZI7XjyFmio0k2Gx7G1Ecm+sU
-	 7ia9w+WqBMp9Q+uq2DhGi34VLa0T2xa0vNXe+8MZAx/DIMUik2k5y1s5pY3m9+WI+8
-	 HHwac77MZmV/DiELAWvmD0g5OTwqqik00W5psmTGlrQWcg19DGmqONUntcDmG6Gkkt
-	 2K7JCrBJzW6NmghJ9LUXtw6o9SutqbUGgxSost/amiLggbAZvX21B/iEHAKKG1Iig9
-	 JNzCl+Nh/uE1QKGB3PAuE5Oh92QG5BEpaEseOtU7UuDVLG/igkdkU/CFh0OZajf6u3
-	 VS/4SQe49Bp1Q==
+	b=ZR6ZxDroRIQyiNE5CEc869ecnxnL79FvKb9H7sswx+Tp01MafBa3rpYeyw0wYsUDx
+	 HBrBECu51CKFlolBoz9Iwp7wbuIA1Jtk9VcJtoltmmyr6f9DxvVUlTUx4e8Q/zQHvT
+	 RQbNJLlx95J0OHoGGYbc6scIu7elomgXVXv08YavAVocyBCPqG2hdULFZVzEuZ8jdf
+	 yKZW5ig6byAPjgxuknUKEuWPDLDx5NWfYgB0a8RGscLKKMhsmEeSOrt5NYO3o9ZFbq
+	 SV/toA9YjPz/SXfZyRV13ckbHkxXkLbj98CPPkUNUF7DpoyAIGhZFa6VMJWNYWBNJR
+	 KDOjQElX+edEA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jacky Bai <ping.bai@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
+Cc: Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 312/752] mailbox: imx: Skip the suspend flag for i.MX7ULP
-Date: Sat, 28 Feb 2026 12:40:23 -0500
-Message-ID: <20260228174750.1542406-312-sashal@kernel.org>
+Subject: [PATCH 6.18 313/752] mailbox: mchp-ipc-sbi: fix uninitialized symbol and other smatch warnings
+Date: Sat, 28 Feb 2026 12:40:24 -0500
+Message-ID: <20260228174750.1542406-313-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,75 +49,86 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jacky Bai <ping.bai@nxp.com>
+From: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
 
-[ Upstream commit 673b570825ace0dcb2ac0c676080559d505c6f40 ]
+[ Upstream commit bc4d17e495cd3b02bcb2e10f575763a5ff31f80b ]
 
-In current imx-mailbox driver, the MU IRQ is configured with
-'IRQF_NO_SUSPEND' flag set. So during linux suspend/resume flow,
-the MU IRQ is always enabled. With commit 892cb524ae8a ("mailbox: imx:
-fix wakeup failure from freeze mode"), if the MU IRQ is triggered after
-the priv->suspended flag has been set, the system suspend will be
-aborted.
+Fix uninitialized symbol 'hartid' warning in mchp_ipc_cluster_aggr_isr()
+by introducing a 'found' flag to track whether the IRQ matches any
+online hart. If no match is found, return IRQ_NONE.
 
-On i.MX7ULP platform, certain drivers that depend on rpmsg may need
-to send rpmsg request and receive an acknowledgment from the remote
-core during the late_suspend stage. Early suspend abort is not
-expected, and the i.MX7ULP already has additional hardware and
-software to make sure the system can be wakeup from freeze mode
-correctly when MU IRQ is trigger.
+Also fix other smatch warnings by removing dead code in
+mchp_ipc_startup() and by returning -ENODEV in dev_err_probe() if the
+Microchip SBI extension is not found.
 
-Skip the 'suspend' flag handling logic on i.MX7ULP to avoid the
-early abort when doing suspend.
+Fixes below smatch warnings:
+drivers/mailbox/mailbox-mchp-ipc-sbi.c:187 mchp_ipc_cluster_aggr_isr() error: uninitialized symbol 'hartid'.
+drivers/mailbox/mailbox-mchp-ipc-sbi.c:324 mchp_ipc_startup() warn: ignoring unreachable code.
+drivers/mailbox/mailbox-mchp-ipc-sbi.c:422 mchp_ipc_probe() warn: passing zero to 'dev_err_probe'
 
-Signed-off-by: Jacky Bai <ping.bai@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202512171533.CDLdScMY-lkp@intel.com/
+Signed-off-by: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/imx-mailbox.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/mailbox/mailbox-mchp-ipc-sbi.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index 6778afc64a048..003f9236c35e0 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -122,6 +122,7 @@ struct imx_mu_dcfg {
- 	u32	xRR;		/* Receive Register0 */
- 	u32	xSR[IMX_MU_xSR_MAX];	/* Status Registers */
- 	u32	xCR[IMX_MU_xCR_MAX];	/* Control Registers */
-+	bool	skip_suspend_flag;
- };
+diff --git a/drivers/mailbox/mailbox-mchp-ipc-sbi.c b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
+index d444491a584e8..b87bf2fb4b9b9 100644
+--- a/drivers/mailbox/mailbox-mchp-ipc-sbi.c
++++ b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
+@@ -174,17 +174,21 @@ static irqreturn_t mchp_ipc_cluster_aggr_isr(int irq, void *data)
+ 	struct mchp_ipc_msg ipc_msg;
+ 	struct mchp_ipc_status status_msg;
+ 	int ret;
+-	unsigned long hartid;
+ 	u32 i, chan_index, chan_id;
++	bool found = false;
  
- #define IMX_MU_xSR_GIPn(type, x) (type & IMX_MU_V2 ? BIT(x) : BIT(28 + (3 - (x))))
-@@ -988,6 +989,7 @@ static const struct imx_mu_dcfg imx_mu_cfg_imx7ulp = {
- 	.xRR	= 0x40,
- 	.xSR	= {0x60, 0x60, 0x60, 0x60},
- 	.xCR	= {0x64, 0x64, 0x64, 0x64, 0x64},
-+	.skip_suspend_flag = true,
- };
- 
- static const struct imx_mu_dcfg imx_mu_cfg_imx8ulp = {
-@@ -1071,7 +1073,8 @@ static int __maybe_unused imx_mu_suspend_noirq(struct device *dev)
- 			priv->xcr[i] = imx_mu_read(priv, priv->dcfg->xCR[i]);
+ 	/* Find out the hart that originated the irq */
+ 	for_each_online_cpu(i) {
+-		hartid = cpuid_to_hartid_map(i);
+-		if (irq == ipc->cluster_cfg[i].irq)
++		if (irq == ipc->cluster_cfg[i].irq) {
++			found = true;
+ 			break;
++		}
  	}
  
--	priv->suspend = true;
-+	if (!priv->dcfg->skip_suspend_flag)
-+		priv->suspend = true;
+-	status_msg.cluster = hartid;
++	if (unlikely(!found))
++		return IRQ_NONE;
++
++	status_msg.cluster = cpuid_to_hartid_map(i);
+ 	memcpy(ipc->cluster_cfg[i].buf_base, &status_msg, sizeof(struct mchp_ipc_status));
  
- 	return 0;
- }
-@@ -1094,7 +1097,8 @@ static int __maybe_unused imx_mu_resume_noirq(struct device *dev)
- 			imx_mu_write(priv, priv->xcr[i], priv->dcfg->xCR[i]);
+ 	ret = mchp_ipc_sbi_send(SBI_EXT_IPC_STATUS, ipc->cluster_cfg[i].buf_base_addr);
+@@ -321,13 +325,6 @@ static int mchp_ipc_startup(struct mbox_chan *chan)
+ 		goto fail_free_buf_msg_rx;
  	}
  
--	priv->suspend = false;
-+	if (!priv->dcfg->skip_suspend_flag)
-+		priv->suspend = false;
+-	if (ret) {
+-		dev_err(ipc->dev, "failed to register interrupt(s)\n");
+-		goto fail_free_buf_msg_rx;
+-	}
+-
+-	return ret;
+-
+ fail_free_buf_msg_rx:
+ 	kfree(chan_info->msg_buf_rx);
+ fail_free_buf_msg_tx:
+@@ -419,7 +416,7 @@ static int mchp_ipc_probe(struct platform_device *pdev)
  
- 	return 0;
- }
+ 	ret = sbi_probe_extension(SBI_EXT_MICROCHIP_TECHNOLOGY);
+ 	if (ret <= 0)
+-		return dev_err_probe(dev, ret, "Microchip SBI extension not detected\n");
++		return dev_err_probe(dev, -ENODEV, "Microchip SBI extension not detected\n");
+ 
+ 	ipc = devm_kzalloc(dev, sizeof(*ipc), GFP_KERNEL);
+ 	if (!ipc)
 -- 
 2.51.0
 
