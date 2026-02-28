@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD8039B970
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B2039B977
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302614; cv=none; b=DD7px4f1xHgoKrjk2+o+s2PRRx1qlYdGHAEaDUcReh66C9nRjvrV3qw1VF3xRxgLUQJ9rFtwhUlVkxmEbFfz3c+HpniQaRjII9ewEUu8GvyrdjrAyyecLue3Ha3qXidganq9XDSvt6EO0Gq4huHii3BcmSiTPqDivlforVLceiY=
+	t=1772302615; cv=none; b=OQNBCR6x6F85njXeCX5SO1FI6wPaSl69znKtImhSTPLrRisB/sCpMq3pkQe96QH689YGygAaAchOXsxIWyl7VDxLOnW6RPN1C3uaRNkLN6GQ6OmTExJ4A1vIov6bxGOpwANhVTH6P7kNfZ8Hb5IvMdnt/e7AoJ7AS4SUhvew4ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302614; c=relaxed/simple;
-	bh=CJ+Bz7cWYNKqpvbf/CNeALrzCXwwog1rvZ0IUKc6aw8=;
+	s=arc-20240116; t=1772302615; c=relaxed/simple;
+	bh=BD7m/a5WUmp8Dg6eOkpfZRJfOPUyGHa6SIuhVoMEisI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNfz3EhoL3wD+dpBjMKKojD8wAFo8zGj5NzdzRII6IQ5Y+1kdAztd6sGnVmUmUAKKvwz38EBgfsIMEnsUPMMXaR74Vz8nqs/8g1ZyIZwO+ugPbPYVpnWHddMx0OEkqUOM6ClhzoJf9TNl4z6eodXmll1N8MqjNkwxC4RW0EbX+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bvUaur1N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OiTmjvluZklswCk6qJGdvvZcqkE5Z4h1Mh50gZU0/aKFieYDr+Mae8HSRbEQIvMGk4Ve1g3wzs/MnWT/dv0rPdcRNzP4JUBUNOh3QRI3z4X3Y14ZT3yGO5GuUahOWL6GbvEymIPrnh4Jdrro9Rt/WWsnQbVSObNv8PMriQYoJQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJAfHxZS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bvUaur1N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03675C19424;
-	Sat, 28 Feb 2026 18:16:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJAfHxZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EDCC19423;
+	Sat, 28 Feb 2026 18:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302614;
-	bh=CJ+Bz7cWYNKqpvbf/CNeALrzCXwwog1rvZ0IUKc6aw8=;
+	s=k20201202; t=1772302615;
+	bh=BD7m/a5WUmp8Dg6eOkpfZRJfOPUyGHa6SIuhVoMEisI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvUaur1NqySY1BrLsvO1lwUAVkECSjLzW2u3SWWv7ZBqo9DYZmCsNTXYOXj8Rhdtr
-	 sgNFefoo57r8sYooCtGQwZkqcussf2GlkKmKbwhfsmZwdz+U7Lst3USAxNxIwiZ7Zk
-	 QBKlwl8JkagdYtY97hmscI99HqTMKNkPcOVt+QWyxMUhBPNocCoYzymuXLqswjg48N
-	 0K3i25e6JaA7ENp3ssJF7Mvmuy2FhbYXcXUCykVGGhu2+vZbrjpEKqwXk3TM3ml6IQ
-	 Yktl7CdOzrOx2dfv1vRCBDoMIVT4INEXhPyJjQdhQQWkHNQJRwGrXvBhbAlZV5/MIk
-	 9Regtrwa4Wbtw==
+	b=BJAfHxZSxhXph7FfGIK605tYsJ7Vwhmw85Iwocq4Zr4s426RTseYDLAPnY4cDYgl6
+	 LhS41lJM26IHBorJIjx2k2nse+ca7ORzyRUtWCYazCnnBudqgdtyGOP20QX1hjzFP0
+	 a5f8hurAWtezqqOtVSJbZjm9iEllqHFItiG0q6Q4RjAR5R6SxaDDWcLPyjOGrhU2lb
+	 45XLws5L96z3w27X53a5lh8Y24w5dv3PZuFI0B9oLt8w0GB6psHYtCZ4w+WjGqsXcA
+	 NXl0rU6A2wvlujD72fujSfGFzrv6nZ7T3Sa+OEoIZksGMVNC/xeZdSBr+NPU5YumdX
+	 kBc18YlGW0CNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Petr Hodina <petr.hodina@protonmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	David Heidelberg <david@ixit.cz>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/164] clk: qcom: dispcc-sdm845: Enable parents for pixel clocks
-Date: Sat, 28 Feb 2026 13:14:30 -0500
-Message-ID: <20260228181505.1600663-131-sashal@kernel.org>
+Subject: [PATCH 5.15 132/164] dmaengine: mediatek: uart-apdma: Fix above 4G addressing TX/RX
+Date: Sat, 28 Feb 2026 13:14:31 -0500
+Message-ID: <20260228181505.1600663-132-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -49,47 +47,81 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Petr Hodina <petr.hodina@protonmail.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit a1d63493634e98360140027fef49d82b1ff0a267 ]
+[ Upstream commit 58ab9d7b6651d21e1cff1777529f2d3dd0b4e851 ]
 
-Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
-clocks are enabled during clock operations, preventing potential
-stability issues during display configuration.
+The VFF_4G_SUPPORT register is named differently in datasheets,
+and its name is "VFF_ADDR2"; was this named correctly from the
+beginning it would've been clearer that there was a mistake in
+the programming sequence.
 
-Fixes: 81351776c9fb ("clk: qcom: Add display clock controller driver for SDM845")
-Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: David Heidelberg <david@ixit.cz>
-Link: https://lore.kernel.org/r/20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This register is supposed to hold the high bits to support the
+DMA addressing above 4G (so, more than 32 bits) and not a bit
+to "enable" the support for VFF 4G.
+
+Fix the name of this register, and also fix its usage by writing
+the upper 32 bits of the dma_addr_t on it when the SoC supports
+such feature.
+
+Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20251113122229.23998-6-angelogioacchino.delregno@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sdm845.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/mediatek/mtk-uart-apdma.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
-index e792e0b130d33..eae6dcff18da5 100644
---- a/drivers/clk/qcom/dispcc-sdm845.c
-+++ b/drivers/clk/qcom/dispcc-sdm845.c
-@@ -280,7 +280,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
- 		.name = "disp_cc_mdss_pclk0_clk_src",
- 		.parent_data = disp_cc_parent_data_4,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_4),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
-@@ -295,7 +295,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk1_clk_src = {
- 		.name = "disp_cc_mdss_pclk1_clk_src",
- 		.parent_data = disp_cc_parent_data_4,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_4),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
+diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
+index 0acf6a92a4ad3..c1e132a110ffb 100644
+--- a/drivers/dma/mediatek/mtk-uart-apdma.c
++++ b/drivers/dma/mediatek/mtk-uart-apdma.c
+@@ -42,7 +42,7 @@
+ #define VFF_STOP_CLR_B		0
+ #define VFF_EN_CLR_B		0
+ #define VFF_INT_EN_CLR_B	0
+-#define VFF_4G_SUPPORT_CLR_B	0
++#define VFF_ADDR2_CLR_B		0
+ 
+ /*
+  * interrupt trigger level for tx
+@@ -73,7 +73,7 @@
+ /* TX: the buffer size SW can write. RX: the buffer size HW can write. */
+ #define VFF_LEFT_SIZE		0x40
+ #define VFF_DEBUG_STATUS	0x50
+-#define VFF_4G_SUPPORT		0x54
++#define VFF_ADDR2		0x54
+ 
+ struct mtk_uart_apdmadev {
+ 	struct dma_device ddev;
+@@ -150,7 +150,7 @@ static void mtk_uart_apdma_start_tx(struct mtk_chan *c)
+ 		mtk_uart_apdma_write(c, VFF_INT_FLAG, VFF_TX_INT_CLR_B);
+ 
+ 		if (mtkd->support_33bits)
+-			mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_EN_B);
++			mtk_uart_apdma_write(c, VFF_ADDR2, upper_32_bits(d->addr));
+ 	}
+ 
+ 	mtk_uart_apdma_write(c, VFF_EN, VFF_EN_B);
+@@ -193,7 +193,7 @@ static void mtk_uart_apdma_start_rx(struct mtk_chan *c)
+ 		mtk_uart_apdma_write(c, VFF_INT_FLAG, VFF_RX_INT_CLR_B);
+ 
+ 		if (mtkd->support_33bits)
+-			mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_EN_B);
++			mtk_uart_apdma_write(c, VFF_ADDR2, upper_32_bits(d->addr));
+ 	}
+ 
+ 	mtk_uart_apdma_write(c, VFF_INT_EN, VFF_RX_INT_EN_B);
+@@ -299,7 +299,7 @@ static int mtk_uart_apdma_alloc_chan_resources(struct dma_chan *chan)
+ 	}
+ 
+ 	if (mtkd->support_33bits)
+-		mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_SUPPORT_CLR_B);
++		mtk_uart_apdma_write(c, VFF_ADDR2, VFF_ADDR2_CLR_B);
+ 
+ err_pm:
+ 	pm_runtime_put_noidle(mtkd->ddev.dev);
 -- 
 2.51.0
 
