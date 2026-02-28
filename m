@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5372B348875
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B0B37524F
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302607; cv=none; b=bgfLPEn+jxnWVM2Zp9YxEEqiKW5rMRXAvyXu2NfEwHnG3gGZcUgWiDnVl0dvtFd/5fGzjEG37OASUcY4ODgaM+QLRBHRqJYIgjiKBJN/2Mv2cksFOas9t7YTTtnMbOdY3m2VPYm4px+06qIPZqA9F868PotSfBeVdf7omI4HHhA=
+	t=1772302608; cv=none; b=P+uJpiWBMo/8J80YR+2KqWG+VkdN3RVQ6A4DUShusrqmbojwnU+T+XoCMtlg4ZIxZ97W6eh4MhMEYtBYpFpWHG2z+7/CJCV2bEQFM3w/LNxdbkom98/INE3eEo3y//YtpogKHaDG0B9719QSEhQtFu2tZLrV2EG6ePfAdyYva8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302607; c=relaxed/simple;
-	bh=TVF2r5DPXvKKCFkc30/0+ysSuxwOrBxplYvmlGd121I=;
+	s=arc-20240116; t=1772302608; c=relaxed/simple;
+	bh=HfhvTey7/FHVnlRB6PHItdu1Cg7z3ANDEMy3QucTxFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5pks8aRIW6HdMc1f4PNCHftI2B3LY8Z1K4lzwm02dOUhh6hYR8Nz7f8fEoW6k/5LyA2Wgtxlf0IUqoe+HoCsWCjgz+ZoYwgsy9lCQwEuJZmrp1Cp1sCX8X4fdsRWfzGRB6MVTRODFVKedVXxZZJN0eLzWzsu5oVIA6vrJ3uniw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tjS6TXhJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cnORgyu1pZmE3Xsfh28TsJrVbe6xL2yd6P75tl5GcWHg5G4lopDLBCk44oehFwHVjyelENkjdczY+ZadE0nccm4DZj8hsZCUJrMrDU4LJfJcTgbeEpjHyjv4HaeoxQp1ZRjxAAppqPA0osae3o9A09FQxkIRoVkMKrWCwjlQuW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RuMWe6Ur; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tjS6TXhJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B9AC116D0;
-	Sat, 28 Feb 2026 18:16:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RuMWe6Ur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB84C116D0;
+	Sat, 28 Feb 2026 18:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302607;
-	bh=TVF2r5DPXvKKCFkc30/0+ysSuxwOrBxplYvmlGd121I=;
+	s=k20201202; t=1772302608;
+	bh=HfhvTey7/FHVnlRB6PHItdu1Cg7z3ANDEMy3QucTxFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tjS6TXhJrCyIh+h6H1jDVd/qVRdhwB2k/yv0vYqSyvB0nxffhGFKk/eqYAIvAkh2X
-	 XEM5/dwgwpx38Txe6XRa9e8Rx4J+WLs2rxHxgWDKxBeThvjKuiz+OYZ6ubMQKQaGu1
-	 TJ1HI4x0ChxiO6iISydXPrfbqK7ysrvUrHoJiJNINgS6Yn/EqxTGXyVVzGGcHJ3dp6
-	 dt/pQ8y9ww9gVhayhHTSxey1zljwb1HWnmt1LX8CmlODhe9Hpod7jwK+gdCHEyBGyZ
-	 +QDPTNULo4vzFxa+6L1BamtB1V1MpN3j2lZypQhhsEgm6d27HbML+GtP0maNp271WH
-	 BYFLAcf+O3ofg==
+	b=RuMWe6UrQT8pZ+3140Z974beuj4Ax3bupvNnwuu1UW7t125DoPzmKGaBI6qJJcfSY
+	 ieq8xFAxuK6qakLHEgmsYtlzGTj+GjwmEyrsa9saHlvuGcD2nnq7uQ7swScdTUc8hG
+	 iNafHmmYGFEqJuvE1iHKtJ2+WEHeBkT6DkWkxU3pQFy+lQlY0DjyIXkXhu/d2DMZbb
+	 htAtTTozBiUciuZ5AldZZXZAKCSxI+xKIVMHhm2GTichQL7jBM1wWBn8/3g09kTlMV
+	 v9uVy+coTzWBtQRf2YXtwX6fSx2jQOOribtobkeGREa/jZvduvW6NNOqxpZtgg74c0
+	 DX+Ed36rg1ubw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Olga Kornievskaia <okorniev@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+Cc: Colin Ian King <colin.i.king@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/164] pNFS: fix a missing wake up while waiting on NFS_LAYOUT_DRAIN
-Date: Sat, 28 Feb 2026 13:14:21 -0500
-Message-ID: <20260228181505.1600663-122-sashal@kernel.org>
+Subject: [PATCH 5.15 123/164] scsi: csiostor: Fix dereference of null pointer rn
+Date: Sat, 28 Feb 2026 13:14:22 -0500
+Message-ID: <20260228181505.1600663-123-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,59 +47,44 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 5248d8474e594d156bee1ed10339cc16e207a28b ]
+[ Upstream commit 1982257570b84dc33753d536dd969fd357a014e9 ]
 
-It is possible to have a task get stuck on waiting on the
-NFS_LAYOUT_DRAIN in the following scenario
+The error exit path when rn is NULL ends up deferencing the null pointer rn
+via the use of the macro CSIO_INC_STATS. Fix this by adding a new error
+return path label after the use of the macro to avoid the deference.
 
-1. cpu a: waiter test NFS_LAYOUT_DRAIN (1) and plh_outstanding (1)
-2. cpu b: atomic_dec_and_test() -> clear bit -> wake up
-3. cpu c: sets NFS_LAYOUT_DRAIN again
-4. cpu a: calls wait_on_bit() sleeps forever.
-
-To expand on this we have say 2 outstanding pnfs write IO that get
-ESTALE which causes both to call pnfs_destroy_layout() and set the
-NFS_LAYOUT_DRAIN bit but the 1st one doesn't call the
-pnfs_put_layout_hdr() yet (as that would prevent the 2nd ESTALE write
-from trying to call pnfs_destroy_layout()). If the 1st ESTALE write
-is the one that initially sets the NFS_LAYOUT_DRAIN so that new IO
-on this file initiates new LAYOUTGET. Another new write would find
-NFS_LAYOUT_DRAIN set and phl_outstanding>0 (step 1) and would
-wait_on_bit(). LAYOUTGET completes doing step 2. Now, the 2nd of
-ESTALE writes is calling pnfs_destory_layout() and set the
-NFS_LAYOUT_DRAIN bit (step 3). Finally, the waiting write wakes up
-to check the bit and goes back to sleep.
-
-The problem revolves around the fact that if NFS_LAYOUT_INVALID_STID
-was already set, it should not do the work of
-pnfs_mark_layout_stateid_invalid(), thus NFS_LAYOUT_DRAIN will not
-be set more than once for an invalid layout.
-
-Suggested-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Fixes: 880265c77ac4 ("pNFS: Avoid a live lock condition in pnfs_update_layout()")
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: a3667aaed569 ("[SCSI] csiostor: Chelsio FCoE offload driver")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Link: https://patch.msgid.link/20260129155332.196338-1-colin.i.king@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs.c | 3 ++-
+ drivers/scsi/csiostor/csio_scsi.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 50d608f6c6906..041cb7a96e8d9 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -464,7 +464,8 @@ pnfs_mark_layout_stateid_invalid(struct pnfs_layout_hdr *lo,
- 	};
- 	struct pnfs_layout_segment *lseg, *next;
+diff --git a/drivers/scsi/csiostor/csio_scsi.c b/drivers/scsi/csiostor/csio_scsi.c
+index 3b2eb6ce1fcff..59d7dadfbfb71 100644
+--- a/drivers/scsi/csiostor/csio_scsi.c
++++ b/drivers/scsi/csiostor/csio_scsi.c
+@@ -2070,7 +2070,7 @@ csio_eh_lun_reset_handler(struct scsi_cmnd *cmnd)
+ 	struct csio_scsi_level_data sld;
  
--	set_bit(NFS_LAYOUT_INVALID_STID, &lo->plh_flags);
-+	if (test_and_set_bit(NFS_LAYOUT_INVALID_STID, &lo->plh_flags))
-+		return !list_empty(&lo->plh_segs);
- 	clear_bit(NFS_INO_LAYOUTCOMMIT, &NFS_I(lo->plh_inode)->flags);
- 	list_for_each_entry_safe(lseg, next, &lo->plh_segs, pls_list)
- 		pnfs_clear_lseg_state(lseg, lseg_list);
+ 	if (!rn)
+-		goto fail;
++		goto fail_ret;
+ 
+ 	csio_dbg(hw, "Request to reset LUN:%llu (ssni:0x%x tgtid:%d)\n",
+ 		      cmnd->device->lun, rn->flowid, rn->scsi_id);
+@@ -2215,6 +2215,7 @@ csio_eh_lun_reset_handler(struct scsi_cmnd *cmnd)
+ 	csio_put_scsi_ioreq_lock(hw, scsim, ioreq);
+ fail:
+ 	CSIO_INC_STATS(rn, n_lun_rst_fail);
++fail_ret:
+ 	return FAILED;
+ }
+ 
 -- 
 2.51.0
 
