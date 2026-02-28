@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AFD38F623
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319E338F629
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302132; cv=none; b=JDHPmZGiriMFO+Azktr9+9/ouJLIH2tIMzmzMCOZKK4+xY8NI2g5o5PJTEuQw7ihkniA3q7pQINXoCzoFtPKtCjC56mrFG5o9T0wpWgKzUhDjnXdo0ROHcC/uMeJg0/FMILHMcSTi4lOkupjVH00d6lOwWs/i00kPE4qFF7ZVts=
+	t=1772302133; cv=none; b=FBz/IhigzPMzlOKo0W14/Fr5tzdCulcJxz3zoazmRhLdx4qVvrNaKZlnZyrO2cCSc08L2orwKsOyO/upXQfdvskLhDsU3qUhchtGEzM5c51uLRpYGc6PeOXWcr0V31Tj+4kcYLZLnbl/RhZq63svRelAvR2hPKTzsJHhg1LPHPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302132; c=relaxed/simple;
-	bh=px3BH+gpChuei5n+8twfbfGjr4i6zwn0gorBNR3OxVo=;
+	s=arc-20240116; t=1772302133; c=relaxed/simple;
+	bh=FMvcOBzM6GVPkIBzfsmJlbbz4/gYc1gXPbsBpSae/TI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=od09k/kvWaG4qNAmCbKqYoP99BBl2H7EAbwR+sUmYIyQqUnsudlZ3NXz/dd9647Fj6cIvuc4jXIybx3mY9gWXIbWwkBAE2RaUMEdYT1dLfpsDVvmBV1/rqgtCgAZbNKwG+ewyNUfj2hLrIIhvot42vuwKCjVSSF+IO+q8VZFyV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ve70CTkd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+RVNALU6fjvqQf+5fPJ1rTpSHjrqUoInvwrlzhE3cBWP45UlCTXWiA88AdoW5k4nOwh6gykWaG9EAGib8EoeMNSIY4bXyQDDaJc3wsCjv9QZoW5+9O73+mwIGELmhY+wYLPu4IRsSezHaRZwA8Mst5/myi5BiVs2npEZd9Y5vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dk9L5e3L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ve70CTkd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2BCC116D0;
-	Sat, 28 Feb 2026 18:08:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dk9L5e3L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9839FC19423;
+	Sat, 28 Feb 2026 18:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302132;
-	bh=px3BH+gpChuei5n+8twfbfGjr4i6zwn0gorBNR3OxVo=;
+	s=k20201202; t=1772302133;
+	bh=FMvcOBzM6GVPkIBzfsmJlbbz4/gYc1gXPbsBpSae/TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ve70CTkdnQQfq5zjknJMFEyalofxqJkauuizeY/QegPUjawuRLzbv1OFKJnrLEniG
-	 T7Y78Ue2i7s7jVembU/dkxyImeagJzoptk+taajFlKrsfGZ2dbr4/587zni/J7rkdP
-	 TZBs+uKRsdJPCgOiHyuvGP/j9tiViUSOmCHZnnQ1bcqE6Zzts86wCYR+Si82sEyG1x
-	 c8ZylxIUG/3pi95XrZMbqz7Qk2kdp9ftjgeAW72Ffi7OnZP7Pu50dru8/4KzL5zK9J
-	 taolHoElMGbNBgBdCM2x5vAvjVdAZRkM+JQyxONzZfU+LeagZ7fd9Ck+1ed5740Atq
-	 yKGo41PnrigVQ==
+	b=Dk9L5e3LI36/6dUgs55LGKPWyEtHK7UxE9cjZMn86PQDOXTPRFljTcZAzG7F45PEc
+	 ZkrhRelLeZhBMP8QcLr3ZOGxuFGNiSI2+5RXwRDywWO54f3xvPT9JK+AIyE1e2/qRw
+	 v8hfGC+rqUBn/wrKnMdV1dBE4sjRF7yM1qIQ6Ocj+n5dtNsugWUU0+Sk729VLClJzf
+	 qtgyVJXqbsC5JTFecg6a5vhlQmhKJiLTwG780RSJ912HFWBjR/qM6B2FlXnRehHlDZ
+	 c888YQ5KFoo/grbl0YnDS98yG1l9bF4sMLKUWOxYrE9RYRVQnqB1Cv9+8iX31MzgAL
+	 rGYkRWNj7lnCg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Dmytro Maluka <dmaluka@chromium.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+Cc: Mikulas Patocka <mpatocka@redhat.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/283] iommu/vt-d: Flush cache for PASID table before using it
-Date: Sat, 28 Feb 2026 13:04:25 -0500
-Message-ID: <20260228180709.1583486-123-sashal@kernel.org>
+Subject: [PATCH 6.6 124/283] dm: use bio_clone_blkg_association
+Date: Sat, 28 Feb 2026 13:04:26 -0500
+Message-ID: <20260228180709.1583486-124-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,53 +47,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Dmytro Maluka <dmaluka@chromium.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 22d169bdd2849fe6bd18c2643742e1c02be6451c ]
+[ Upstream commit 2df8b310bcfe76827fd71092f58a2493ee6590b0 ]
 
-When writing the address of a freshly allocated zero-initialized PASID
-table to a PASID directory entry, do that after the CPU cache flush for
-this PASID table, not before it, to avoid the time window when this
-PASID table may be already used by non-coherent IOMMU hardware while
-its contents in RAM is still some random old data, not zero-initialized.
+The origin bio carries blk-cgroup information which could be set from
+foreground(task_css(css) - wbc->wb->blkcg_css), so the blkcg won't
+control buffer io since commit ca522482e3eaf ("dm: pass NULL bdev to
+bio_alloc_clone"). The synchronous io is still under control by blkcg,
+because 'bio->bi_blkg' is set by io submitting task which has been added
+into 'cgroup.procs'.
 
-Fixes: 194b3348bdbb ("iommu/vt-d: Fix PASID directory pointer coherency")
-Signed-off-by: Dmytro Maluka <dmaluka@chromium.org>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20251221123508.37495-1-dmaluka@chromium.org
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fix it by using bio_clone_blkg_association when submitting a cloned bio.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220985
+Fixes: ca522482e3eaf ("dm: pass NULL bdev to bio_alloc_clone")
+Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Tested-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/md/dm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 8faa93cffac45..07c8b0df8e2a8 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -207,6 +207,9 @@ static struct pasid_entry *intel_pasid_get_entry(struct device *dev, u32 pasid)
- 		if (!entries)
- 			return NULL;
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index f0c4c3553c016..1d03536fded00 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1363,6 +1363,8 @@ void dm_submit_bio_remap(struct bio *clone, struct bio *tgt_clone)
+ 	if (!tgt_clone)
+ 		tgt_clone = clone;
  
-+		if (!ecap_coherent(info->iommu->ecap))
-+			clflush_cache_range(entries, VTD_PAGE_SIZE);
++	bio_clone_blkg_association(tgt_clone, io->orig_bio);
 +
- 		/*
- 		 * The pasid directory table entry won't be freed after
- 		 * allocation. No worry about the race with free and
-@@ -218,10 +221,8 @@ static struct pasid_entry *intel_pasid_get_entry(struct device *dev, u32 pasid)
- 			free_pgtable_page(entries);
- 			goto retry;
- 		}
--		if (!ecap_coherent(info->iommu->ecap)) {
--			clflush_cache_range(entries, VTD_PAGE_SIZE);
-+		if (!ecap_coherent(info->iommu->ecap))
- 			clflush_cache_range(&dir[dir_index].val, sizeof(*dir));
--		}
- 	}
- 
- 	return &entries[index];
+ 	/*
+ 	 * Account io->origin_bio to DM dev on behalf of target
+ 	 * that took ownership of IO with DM_MAPIO_SUBMITTED.
 -- 
 2.51.0
 
