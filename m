@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AAF35AC21
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65BE35AC28
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302762; cv=none; b=n9SQ8umjLn9xqsWx0jz6fPTT14XmdtDEmlzIBUrAMrbNmP6V/iELjHwCTA0a/IJ8//0o8C8Tuz6PiKMsFAta1gGwEfUxajdnfaKHwnh8Al7T18dRz1gfgeaUsPmQsbNcGcZZIsO+6/oe4fuplJD/8oyrcova6D6eHvA3E7G5fT0=
+	t=1772302763; cv=none; b=MO/7Jw1Jg+kxR4+jG1XcKsPpsA8Fh28tWXDD6plgNl29pB2oFxKwn4YunItfcgAyHWjmKdKsOinLBsYGVgWWuWAeHcRFDUjPzvbkdU7kI9jV1t29DKvwJJD2XhL2bGgaKdq74fYOs6JyZ/UHABuwSsOCC+/Qr5ZbOrBO98Y1DMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302762; c=relaxed/simple;
-	bh=GXEJQKyIk9slipmBN5HeNHSR86ZZLx/DxvScrjq72JA=;
+	s=arc-20240116; t=1772302763; c=relaxed/simple;
+	bh=Y+7EBLlx3XvRZIAFGAYWoimeyMNTYn2SPBM1t1h4aPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/OA7LIzVT0uMZDmWpU/ugtHriml84LGXUenvjdcSbvHGTCObm0IO+QhS0s7TxhgqwebcnHnt0KR21M79KDpWBF4MXPztPIST7/1i5BRQkcf0CPqSeBGiePTQD2Kx3AFdWJ2Jkg6OV44hqHE5TX0Q5N7fRC2di6o9S2jnYeCiX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kTezmOml; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rRyXF3J7d57dDXCe2MSEfKteTNy9ITc/CJ2EewQ4msfpkI2YspxI5xdkOh/WSKnyNk4HN4D422ZcLTB7vJ4uZCIWlgVcg0u37oBXXTGRZj9bl2+C6UeJm86DRoysXXS7TSs0Xbfs8x2DQH5vQjX8rxK3tTIOfMQwzCBpdLzO9Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QEQT7p/0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kTezmOml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71D3C116D0;
-	Sat, 28 Feb 2026 18:19:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QEQT7p/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0783FC116D0;
+	Sat, 28 Feb 2026 18:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302762;
-	bh=GXEJQKyIk9slipmBN5HeNHSR86ZZLx/DxvScrjq72JA=;
+	s=k20201202; t=1772302763;
+	bh=Y+7EBLlx3XvRZIAFGAYWoimeyMNTYn2SPBM1t1h4aPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTezmOml9tn+bvrfnIrFlqLoMDI2zV9c0M/lfqrpB6YYeOkXFomq8vYP7f9jXTkJa
-	 V1pILRAbgl9DohuZph5rRlRgUMko8eAfDVPqh/RfmmY7HQaHiYqOh6/Ecl0iEz9Wwn
-	 6l1Nxr+aBCJ0YrDfT8i6JDojiLasroIV79YvZrL4MKqf6+RoPt7J8T3WZnZbvBXamQ
-	 morriPrrgLC6iIDvD6bJOvjuSxgo388g3+e1fy9AGC4esvOesN6tbrkQueNVa/mPRi
-	 BSAijLM20uDYCvY+C46fsc4eJV0IGqnIT9s4cYtIJNlYF++7VGAhxBRwkPvI6XwSDn
-	 ARu4+JryLKUgA==
+	b=QEQT7p/0zZhtHGsS2+NUK91Ek+etP/4RbP3pIxnsHOYn1hoKRsPFD51tjVzEj/aSm
+	 gs3WG23rzOFyZLRCc2VBXARg2M9zRBLnULIVrLf8/eINjesCQXCu2b4KLSZcM8/bqz
+	 08sxRjVrsbd99GAhrBoT0DkTJm2ahpZE7rHNStdSHxEGIGUl7KnGrUJKnhE+m7DasX
+	 3PHHXFbYk2OUcukCwxODQl/6HOfhzPWby4ct8DN32Kf7bwkJIxccw9SYTkURqd/Viu
+	 a7DPdqt/gQ+5vvV6ud7YrThrcIhIKTEWBwO6iRWESnXJuWKYtRCeWBDso1CgQtI4Yg
+	 wKOlFk3adipBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Qing Wang <wangqing7171@gmail.com>,
-	syzbot+d130f98b2c265fae5297@syzkaller.appspotmail.com,
-	Amir Goldstein <amir73il@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 133/147] ovl: Fix uninit-value in ovl_fill_real
-Date: Sat, 28 Feb 2026 13:17:21 -0500
-Message-ID: <20260228181736.1605592-133-sashal@kernel.org>
+Subject: [PATCH 5.10 134/147] iio: sca3000: Fix a resource leak in sca3000_probe()
+Date: Sat, 28 Feb 2026 13:17:22 -0500
+Message-ID: <20260228181736.1605592-134-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -51,56 +48,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Qing Wang <wangqing7171@gmail.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 1992330d90dd766fcf1730fd7bf2d6af65370ac4 ]
+[ Upstream commit 62b44ebc1f2c71db3ca2d4737c52e433f6f03038 ]
 
-Syzbot reported a KMSAN uninit-value issue in ovl_fill_real.
+spi->irq from request_threaded_irq() not released when
+iio_device_register() fails. Add an return value check and jump to a
+common error handler when iio_device_register() fails.
 
-This iusse's call chain is:
-__do_sys_getdents64()
-    -> iterate_dir()
-        ...
-            -> ext4_readdir()
-                -> fscrypt_fname_alloc_buffer() // alloc
-                -> fscrypt_fname_disk_to_usr // write without tail '\0'
-                -> dir_emit()
-                    -> ovl_fill_real() // read by strcmp()
-
-The string is used to store the decrypted directory entry name for an
-encrypted inode. As shown in the call chain, fscrypt_fname_disk_to_usr()
-write it without null-terminate. However, ovl_fill_real() uses strcmp() to
-compare the name against "..", which assumes a null-terminated string and
-may trigger a KMSAN uninit-value warning when the buffer tail contains
-uninit data.
-
-Reported-by: syzbot+d130f98b2c265fae5297@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d130f98b2c265fae5297
-Fixes: 4edb83bb1041 ("ovl: constant d_ino for non-merge dirs")
-Signed-off-by: Qing Wang <wangqing7171@gmail.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20260128132406.23768-2-amir73il@gmail.com
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 9a4936dc89a3 ("staging:iio:accel:sca3000 Tidy up probe order to avoid a race.")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/readdir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/accel/sca3000.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
-index cc1e802570644..09a5542723787 100644
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -654,7 +654,7 @@ static int ovl_fill_real(struct dir_context *ctx, const char *name,
- 		container_of(ctx, struct ovl_readdir_translate, ctx);
- 	struct dir_context *orig_ctx = rdt->orig_ctx;
+diff --git a/drivers/iio/accel/sca3000.c b/drivers/iio/accel/sca3000.c
+index 194738660523d..10a4bf32918a7 100644
+--- a/drivers/iio/accel/sca3000.c
++++ b/drivers/iio/accel/sca3000.c
+@@ -1502,7 +1502,11 @@ static int sca3000_probe(struct spi_device *spi)
+ 	if (ret)
+ 		goto error_free_irq;
  
--	if (rdt->parent_ino && strcmp(name, "..") == 0) {
-+	if (rdt->parent_ino && namelen == 2 && !strncmp(name, "..", 2)) {
- 		ino = rdt->parent_ino;
- 	} else if (rdt->cache) {
- 		struct ovl_cache_entry *p;
+-	return iio_device_register(indio_dev);
++	ret = iio_device_register(indio_dev);
++	if (ret)
++		goto error_free_irq;
++
++	return 0;
+ 
+ error_free_irq:
+ 	if (spi->irq)
 -- 
 2.51.0
 
