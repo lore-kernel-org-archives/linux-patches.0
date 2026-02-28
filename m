@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE45340A59
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C55340A59
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301073; cv=none; b=TkIth12RubBgmTf+gZsG4wUek7cWaSUAvUBvROyIxM/iTSca9kFgMdWva34AtTRRCzJW9N/8quI/19HBbeAnueXpE51QRMSNqCyCSe0BBBekV3kYVH+aiGc2nNP5jDV1kN+5EO4DLV0k+ve6OEIa8XcMOIpu4IGn6rbGPE08SFk=
+	t=1772301073; cv=none; b=QZZte3/C/qa7yHKoHqg+1OOiV3ufN8TIx5SbmSUrQCQ6/ghTKzwdkT9h4Z+ns/1A6T5bH0q/ImaKTtE7MapqUA4vgze0ayJqGRUo96BHYSluIE6xj1gp4K29VME3T1VFi5NKsc5q4+yyy7wbf2sjmUYW2+vBldkmLBeRkbprF0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301073; c=relaxed/simple;
-	bh=cPVK0TWIcGIHlHv1wT+b9K68csugq+4rHgrP3wgMpjw=;
+	bh=wFq4d3ALJG7o8NFf5E7PzDOA1+OuEiswcuwFfR4BW5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hyxA5XDsFUz5MPQDUFx+PHHtMpK3f4XZkKNBWCMvmRxxMQ9kpkikLPPjpj0Mx4skk/hfomhIbj3B+SONuuJgD3H1jP+gOI5Rz4g09HqQwFkQE3pmbTthwt8O0GqRnpTeReW9FvDgCHxP+OqJp3MfzLHEkuBROJdOXIm/AJnTbTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXaCj+sI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3j2AhcoWV1oH4N3Z7t1PE/Ttq5HsMGIcWjxTTI+8e4bx8hSdK29Kj8tEf16OXRq/PzF6vfULPAUIgPSnQXADYrpifYnf529+y3qFuZHzyhxzM3+XoidcSdStQO7RuL+8mQq4l5UYb9zYw8Fh94eDOO/4ecVYnfR5QnZmdmAOvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KFhZw7HW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RXaCj+sI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80062C19424;
-	Sat, 28 Feb 2026 17:51:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KFhZw7HW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44238C116D0;
+	Sat, 28 Feb 2026 17:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301073;
-	bh=cPVK0TWIcGIHlHv1wT+b9K68csugq+4rHgrP3wgMpjw=;
+	bh=wFq4d3ALJG7o8NFf5E7PzDOA1+OuEiswcuwFfR4BW5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXaCj+sIUoMkrdGiwOrgQkUDps9TfzwasWF6JLn+BuQUPxHnDFPVypdnwhFxvlCHc
-	 9iVKMYrU8OFlu/L7fVyiHQ6kWFye4hsugsYoJ81o3EEl2Mv403b/dkygzFVHCAxmXF
-	 0qGQjqdMxAg01a2vHmRdhuhLQMOfbD/WhsUAi9N20W7Z30iVKYEDkKyWmuRwuu7tdz
-	 8nWhLHULXrikcSrdbpguo6NrPbiUcY2jdnBkIDXYpyn3yaflMLBPI0mErHbhgkk9Tn
-	 ghIg03rhhniEvtmRJR4S3hWFkMlcZWtsGTJeAveNSwGwXPTiKqRPyBcOuYpfLENiNB
-	 uAo0VNwS0ZJpQ==
+	b=KFhZw7HWtpK2BNSQH4awadZwWzYvnX939m/si6KHXdmEIaDBKqH7W6SCk7JzVHbgt
+	 128ZcRQWe7HYXCLRX7iQnqoTi1jdwzhKJMVVXWwK4gvZN27Yi3urptDL0b24DRBfNd
+	 UwtyarZjv6Zilm1x3TGQz6C7t7MYsM/4fvTyInMZa+XqbsV7rs+8bzEnwmyhE7pxbu
+	 QoQA4K+75uIx5NaLq/vEY4Hsph9WgDnPRVTPCUMkRTm3xNErETuRTYugC59GjkD8Y6
+	 lGwuk9S9rX6YfGBio+URzrSVmq1r85XMyuDUqsomfWwVZW6lZ6x+K7pna+tK+V1qUE
+	 dmPIbzoneDbbg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Zong-Zhe Yang <kevin_yang@realtek.com>,
+Cc: Chih-Kang Chang <gary.chang@realtek.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 218/752] wifi: rtw89: ser: enable error IMR after recovering from L1
-Date: Sat, 28 Feb 2026 12:38:49 -0500
-Message-ID: <20260228174750.1542406-218-sashal@kernel.org>
+Subject: [PATCH 6.18 219/752] wifi: rtw89: setting TBTT AGG number when mac port initialization
+Date: Sat, 28 Feb 2026 12:38:50 -0500
+Message-ID: <20260228174750.1542406-219-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,88 +47,61 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit f4de946bdb379f543e3a599f8f048d741ad4a58e ]
+[ Upstream commit 5e5f83fba48381098b26a8b2513a6d5fc5c66ccb ]
 
-After recovering from L1, explicitly enable error IMR to ensure next
-L1 SER (system error recovery) can work normally.
+When initializing mac port, needs to set TBTT AGG number to trigger TBTT
+related interrupts. Otherwise, after sending join info H2C command with
+disconnection mode, firmware will clear TBTT AGG number. Without the
+setting from mac port initialization after that, this port will not be
+able to transmit beacons.
 
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251223030651.480633-6-pkshih@realtek.com
+Link: https://patch.msgid.link/20251223030651.480633-12-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.c    |  1 +
- drivers/net/wireless/realtek/rtw89/mac.h    |  1 +
- drivers/net/wireless/realtek/rtw89/mac_be.c |  1 +
- drivers/net/wireless/realtek/rtw89/ser.c    | 10 ++++++++++
- 4 files changed, 13 insertions(+)
+ drivers/net/wireless/realtek/rtw89/mac.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index fd11b8fb3c899..2de75d22c97f2 100644
+index 2de75d22c97f2..df429bdef7956 100644
 --- a/drivers/net/wireless/realtek/rtw89/mac.c
 +++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -7016,6 +7016,7 @@ const struct rtw89_mac_gen_def rtw89_mac_gen_ax = {
- 	.check_mac_en = rtw89_mac_check_mac_en_ax,
- 	.sys_init = sys_init_ax,
- 	.trx_init = trx_init_ax,
-+	.err_imr_ctrl = err_imr_ctrl_ax,
- 	.hci_func_en = rtw89_mac_hci_func_en_ax,
- 	.dmac_func_pre_en = rtw89_mac_dmac_func_pre_en_ax,
- 	.dle_func_en = dle_func_en_ax,
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
-index 25fe5e5c8a979..51e37c183a35e 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.h
-+++ b/drivers/net/wireless/realtek/rtw89/mac.h
-@@ -999,6 +999,7 @@ struct rtw89_mac_gen_def {
- 			    enum rtw89_mac_hwmod_sel sel);
- 	int (*sys_init)(struct rtw89_dev *rtwdev);
- 	int (*trx_init)(struct rtw89_dev *rtwdev);
-+	void (*err_imr_ctrl)(struct rtw89_dev *rtwdev, bool en);
- 	void (*hci_func_en)(struct rtw89_dev *rtwdev);
- 	void (*dmac_func_pre_en)(struct rtw89_dev *rtwdev);
- 	void (*dle_func_en)(struct rtw89_dev *rtwdev, bool enable);
-diff --git a/drivers/net/wireless/realtek/rtw89/mac_be.c b/drivers/net/wireless/realtek/rtw89/mac_be.c
-index ef69672b6862e..e33297220f8b5 100644
---- a/drivers/net/wireless/realtek/rtw89/mac_be.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac_be.c
-@@ -2594,6 +2594,7 @@ const struct rtw89_mac_gen_def rtw89_mac_gen_be = {
- 	.check_mac_en = rtw89_mac_check_mac_en_be,
- 	.sys_init = sys_init_be,
- 	.trx_init = trx_init_be,
-+	.err_imr_ctrl = err_imr_ctrl_be,
- 	.hci_func_en = rtw89_mac_hci_func_en_be,
- 	.dmac_func_pre_en = rtw89_mac_dmac_func_pre_en_be,
- 	.dle_func_en = dle_func_en_be,
-diff --git a/drivers/net/wireless/realtek/rtw89/ser.c b/drivers/net/wireless/realtek/rtw89/ser.c
-index f99e179f7ff9f..7fdc69578da31 100644
---- a/drivers/net/wireless/realtek/rtw89/ser.c
-+++ b/drivers/net/wireless/realtek/rtw89/ser.c
-@@ -431,6 +431,14 @@ static void hal_send_m4_event(struct rtw89_ser *ser)
- 	rtw89_mac_set_err_status(rtwdev, MAC_AX_ERR_L1_RCVY_EN);
+@@ -4262,6 +4262,7 @@ static void rtw89_mac_bcn_drop(struct rtw89_dev *rtwdev,
+ #define BCN_HOLD_DEF 200
+ #define BCN_MASK_DEF 0
+ #define TBTT_ERLY_DEF 5
++#define TBTT_AGG_DEF 1
+ #define BCN_SET_UNIT 32
+ #define BCN_ERLY_SET_DLY (10 * 2)
+ 
+@@ -4565,6 +4566,16 @@ static void rtw89_mac_port_cfg_tbtt_early(struct rtw89_dev *rtwdev,
+ 				B_AX_TBTTERLY_MASK, TBTT_ERLY_DEF);
  }
  
-+static void hal_enable_err_imr(struct rtw89_ser *ser)
++static void rtw89_mac_port_cfg_tbtt_agg(struct rtw89_dev *rtwdev,
++					struct rtw89_vif_link *rtwvif_link)
 +{
-+	struct rtw89_dev *rtwdev = container_of(ser, struct rtw89_dev, ser);
 +	const struct rtw89_mac_gen_def *mac = rtwdev->chip->mac_def;
++	const struct rtw89_port_reg *p = mac->port_base;
 +
-+	mac->err_imr_ctrl(rtwdev, true);
++	rtw89_write16_port_mask(rtwdev, rtwvif_link, p->tbtt_agg,
++				B_AX_TBTT_AGG_NUM_MASK, TBTT_AGG_DEF);
 +}
 +
- /* state handler */
- static void ser_idle_st_hdl(struct rtw89_ser *ser, u8 evt)
+ static void rtw89_mac_port_cfg_bss_color(struct rtw89_dev *rtwdev,
+ 					 struct rtw89_vif_link *rtwvif_link)
  {
-@@ -552,6 +560,8 @@ static void ser_do_hci_st_hdl(struct rtw89_ser *ser, u8 evt)
- 		break;
- 
- 	case SER_EV_MAC_RESET_DONE:
-+		hal_enable_err_imr(ser);
-+
- 		ser_state_goto(ser, SER_IDLE_ST);
- 		break;
- 
+@@ -4825,6 +4836,7 @@ int rtw89_mac_port_update(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvi
+ 	rtw89_mac_port_cfg_bcn_hold_time(rtwdev, rtwvif_link);
+ 	rtw89_mac_port_cfg_bcn_mask_area(rtwdev, rtwvif_link);
+ 	rtw89_mac_port_cfg_tbtt_early(rtwdev, rtwvif_link);
++	rtw89_mac_port_cfg_tbtt_agg(rtwdev, rtwvif_link);
+ 	rtw89_mac_port_cfg_bss_color(rtwdev, rtwvif_link);
+ 	rtw89_mac_port_cfg_mbssid(rtwdev, rtwvif_link);
+ 	rtw89_mac_port_cfg_func_en(rtwdev, rtwvif_link, true);
 -- 
 2.51.0
 
