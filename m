@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAAA359A8B
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53497359A8B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302445; cv=none; b=ZT86TfzQBI/F72mnZQkFm1AWqFt6YB/X0LncQhaCsT27PfyxP+WB3lHFr1jaHNlV2zNkMj+lD4ZmA4UadiKxOTTJFklZ42RRbIOqj2Mlzb5chIVxwSRkRiE3VVgbrJVhriQJDAyBcg80hYseZKiW6rY3cto4QXMj/lnypctA+50=
+	t=1772302446; cv=none; b=XsMV8tW74cHFL+nyxoyw62SWP4QjSeL0b2bHrGHPXoTCHrVZLfjUKglkHOGZu/gzh9AvJ9AudM/YyenYwvG1uKRsr2UN2c7FI/mJqZDMRKKYwzaX/oQ4y4SP/35F3/M/n8Z4Lf2pg3d+KTX9J9KgLQnftGb4R4bFn7AE1Jyp1Oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302445; c=relaxed/simple;
-	bh=JTn9QaFbkPYzy8XLB8om/ts+INi7zdRJpYlGisdfurM=;
+	s=arc-20240116; t=1772302446; c=relaxed/simple;
+	bh=BD7m/a5WUmp8Dg6eOkpfZRJfOPUyGHa6SIuhVoMEisI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSd7rUhFuuCEvj2wt6woNdVbii7CkA/lNQIf+FmuLwOkbaOdrgAiLenKjwb780tPlWW/pGS/uJtKLmZ4ixfvLulfjKM8/uoY5yC0WXrA9iuPRd2cbkihCgaA7Q4e2gXWXIW/IsSI3XuviWDzY87OkAU+iT+PHL4MiRmzd+8aUjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a7vwIOAS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S2EoywyrYWFE3EI419uhYi1BbVZixcnvr7XFEoHTH+6tzobPwiH1RK01UrB2T+iDSb+hI3o2CtzRxn2GAnh2WnpVVhoCmk3XGRwav05sOnhQSu04g0W1SeEhlAul0jWKV6e5mVEzPhiLbyxIEXrl4loFVzgJ1BaNm1gcwjJsj0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YV03FNfg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a7vwIOAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A55C116D0;
-	Sat, 28 Feb 2026 18:14:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YV03FNfg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD26C19423;
+	Sat, 28 Feb 2026 18:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302445;
-	bh=JTn9QaFbkPYzy8XLB8om/ts+INi7zdRJpYlGisdfurM=;
+	s=k20201202; t=1772302446;
+	bh=BD7m/a5WUmp8Dg6eOkpfZRJfOPUyGHa6SIuhVoMEisI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a7vwIOAS0ugg0MH8pMi7I2YF2pHsSKJrxSNNWnZVuhqqoEoNh5WeWsajXOZ1FFuri
-	 PjV+hj77zYTTKl0U5VLhGlvQcS+ln59ilZKPRruBA9SMk3/75Bv66AS/hxKHxEKbn5
-	 bdA79OaDzZNowdrwj4eIs/iC6O1vBi4p/PMI98oPQqyVUzYTTxmA3M0yaW2Fj7HDpF
-	 O2QrQTDKljTCQ8BFfrOENNJCAVlXRU96MS1SoHwzMvHWlByQtS7WiLTLOlDQK6Aiky
-	 olhPyD1drrZVAYp4s+8MhTXAG02PaczJIGWTJTDxgpyeJgXwqx6TENfRkISXqQmxZO
-	 p1ANHZHHVNscA==
+	b=YV03FNfgFUQBRFMdue/SYWcz3TfPCwHAnVaYDhi+R0ZDqX5jQJK6zcizBo+TeVgFm
+	 gkmZ4xeLQFrWPhKIIXw8SGnMHF7T1bE0H3cyTJklrCbiapEruqCatQJmnpbMCUbWlN
+	 hQWl+kaT4KMvJDQJskFClkgRRy2B4MFeGEGArC5tYzj4R5LaotfYiOOtQqzalMEBcd
+	 9tpvUekC0J3+TTMtbTOtXH2WPFWQkegBPWK+ceEabuhFPwu2OcOFg99uiPkQRjwmR1
+	 jCDWRk8hHbfuyvv38z+eDiVIo9fc5X5yiByyEFsG7IpmtxRGPTiFc/zL2d8GMBiat5
+	 OnBq6q69FgCqA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotian Zhang <vulab@iscas.ac.cn>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 184/232] clk: mediatek: Fix error handling in runtime PM setup
-Date: Sat, 28 Feb 2026 13:10:37 -0500
-Message-ID: <20260228181127.1592657-184-sashal@kernel.org>
+Subject: [PATCH 6.1 185/232] dmaengine: mediatek: uart-apdma: Fix above 4G addressing TX/RX
+Date: Sat, 28 Feb 2026 13:10:38 -0500
+Message-ID: <20260228181127.1592657-185-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,64 +47,81 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit aa2ad19210a6a444111bce55e8b69579f29318fb ]
+[ Upstream commit 58ab9d7b6651d21e1cff1777529f2d3dd0b4e851 ]
 
-devm_pm_runtime_enable() can fail due to memory allocation. The current
-code ignores its return value, and when pm_runtime_resume_and_get() fails,
-it returns directly without unmapping the shared_io region.
+The VFF_4G_SUPPORT register is named differently in datasheets,
+and its name is "VFF_ADDR2"; was this named correctly from the
+beginning it would've been clearer that there was a mistake in
+the programming sequence.
 
-Add error handling for devm_pm_runtime_enable(). Reorder cleanup labels
-to properly unmap shared_io on pm_runtime_resume_and_get() failure.
+This register is supposed to hold the high bits to support the
+DMA addressing above 4G (so, more than 32 bits) and not a bit
+to "enable" the support for VFF 4G.
 
-Fixes: 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers during probe")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fix the name of this register, and also fix its usage by writing
+the upper 32 bits of the dma_addr_t on it when the SoC supports
+such feature.
+
+Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20251113122229.23998-6-angelogioacchino.delregno@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mtk.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/dma/mediatek/mtk-uart-apdma.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
-index c2ca3d7576c22..589f425a2daf2 100644
---- a/drivers/clk/mediatek/clk-mtk.c
-+++ b/drivers/clk/mediatek/clk-mtk.c
-@@ -489,14 +489,16 @@ int mtk_clk_simple_probe(struct platform_device *pdev)
+diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
+index 0acf6a92a4ad3..c1e132a110ffb 100644
+--- a/drivers/dma/mediatek/mtk-uart-apdma.c
++++ b/drivers/dma/mediatek/mtk-uart-apdma.c
+@@ -42,7 +42,7 @@
+ #define VFF_STOP_CLR_B		0
+ #define VFF_EN_CLR_B		0
+ #define VFF_INT_EN_CLR_B	0
+-#define VFF_4G_SUPPORT_CLR_B	0
++#define VFF_ADDR2_CLR_B		0
  
+ /*
+  * interrupt trigger level for tx
+@@ -73,7 +73,7 @@
+ /* TX: the buffer size SW can write. RX: the buffer size HW can write. */
+ #define VFF_LEFT_SIZE		0x40
+ #define VFF_DEBUG_STATUS	0x50
+-#define VFF_4G_SUPPORT		0x54
++#define VFF_ADDR2		0x54
  
- 	if (mcd->need_runtime_pm) {
--		devm_pm_runtime_enable(&pdev->dev);
-+		r = devm_pm_runtime_enable(&pdev->dev);
-+		if (r)
-+			goto unmap_io;
- 		/*
- 		 * Do a pm_runtime_resume_and_get() to workaround a possible
- 		 * deadlock between clk_register() and the genpd framework.
- 		 */
- 		r = pm_runtime_resume_and_get(&pdev->dev);
- 		if (r)
--			return r;
-+			goto unmap_io;
+ struct mtk_uart_apdmadev {
+ 	struct dma_device ddev;
+@@ -150,7 +150,7 @@ static void mtk_uart_apdma_start_tx(struct mtk_chan *c)
+ 		mtk_uart_apdma_write(c, VFF_INT_FLAG, VFF_TX_INT_CLR_B);
+ 
+ 		if (mtkd->support_33bits)
+-			mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_EN_B);
++			mtk_uart_apdma_write(c, VFF_ADDR2, upper_32_bits(d->addr));
  	}
  
- 	/* Calculate how many clk_hw_onecell_data entries to allocate */
-@@ -597,11 +599,11 @@ int mtk_clk_simple_probe(struct platform_device *pdev)
- free_data:
- 	mtk_free_clk_data(clk_data);
- free_base:
--	if (mcd->shared_io && base)
--		iounmap(base);
--
- 	if (mcd->need_runtime_pm)
- 		pm_runtime_put(&pdev->dev);
-+unmap_io:
-+	if (mcd->shared_io && base)
-+		iounmap(base);
- 	return r;
- }
- EXPORT_SYMBOL_GPL(mtk_clk_simple_probe);
+ 	mtk_uart_apdma_write(c, VFF_EN, VFF_EN_B);
+@@ -193,7 +193,7 @@ static void mtk_uart_apdma_start_rx(struct mtk_chan *c)
+ 		mtk_uart_apdma_write(c, VFF_INT_FLAG, VFF_RX_INT_CLR_B);
+ 
+ 		if (mtkd->support_33bits)
+-			mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_EN_B);
++			mtk_uart_apdma_write(c, VFF_ADDR2, upper_32_bits(d->addr));
+ 	}
+ 
+ 	mtk_uart_apdma_write(c, VFF_INT_EN, VFF_RX_INT_EN_B);
+@@ -299,7 +299,7 @@ static int mtk_uart_apdma_alloc_chan_resources(struct dma_chan *chan)
+ 	}
+ 
+ 	if (mtkd->support_33bits)
+-		mtk_uart_apdma_write(c, VFF_4G_SUPPORT, VFF_4G_SUPPORT_CLR_B);
++		mtk_uart_apdma_write(c, VFF_ADDR2, VFF_ADDR2_CLR_B);
+ 
+ err_pm:
+ 	pm_runtime_put_noidle(mtkd->ddev.dev);
 -- 
 2.51.0
 
