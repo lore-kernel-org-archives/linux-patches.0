@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7416132AABE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E5532AABE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301236; cv=none; b=DeOZrC3EDVZqLpBR6Q+jfhCObN2J992NrNZDbQxLJeJqkdIBzu2Fi3eYDuc3votacYs3BfjowpcxCIOKO1TrOuPrTCwXuh6gS19wcUk+p2q2r7bDL5tkD11tWb65Xz9EGNu7RvY6YVqdRU2hN3IDZr7nmNSxr0VsSzJtQpOrmxI=
+	t=1772301237; cv=none; b=QLU0AFHXMKDjc6b4QqsNmmMo4yTQazXq+2n6quJsUeHN+PO4Wrx0MQ0kxz8kLTDNd+Zp8Xf94pFuriYUctWZlJC8mXkugvw85M0zvDLvEnzaN0epEBXmBbH+RR8OCdYoMsM56hNOmPh2GJBvalGWE/A4JdN5UAUzuDO7rtaiuxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301236; c=relaxed/simple;
-	bh=dLPGJNofiRNB53LoWfuvKRZy9fh8nZFlbeV2LQiNivc=;
+	s=arc-20240116; t=1772301237; c=relaxed/simple;
+	bh=Z3JggKkIQWZ7ZM1BGBwbAxjDIQXOhJSkTCR4Gf/52sM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TmtR/VA2XVfRLSD8uU/n649RAyXOw3ust77piiGRfku4VxAn2Wj80EFhKPYo1hBy2HqaN+gdoR2HwNcUkkXPxsbK1SmIiLT7QYqX3sbtNXXeelLzg5i5ddFp7s+93mmqB8IplXRD0yOyN0QYr9B+jUknAokcKyBaqa/Wy41M+sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R/QBq2T3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYl+6qtkKX2HJEILqBIx78tfFuKYdvL5fe9BjiiJ2AOWCZNUkyMPMyDgA4sCelqUIGKzAprEUfGekgUeCwG8v+Paw+RWDTFLCBYT5hgFFQ6fLdyDetHIq/yxfnHp9c4Ha0tL+oVjgu4cuRJBTiRv14xXq+J3kb+sRlJMQZSDlfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DcD7tKFb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R/QBq2T3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14C0C116D0;
-	Sat, 28 Feb 2026 17:53:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DcD7tKFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7130C116D0;
+	Sat, 28 Feb 2026 17:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301236;
-	bh=dLPGJNofiRNB53LoWfuvKRZy9fh8nZFlbeV2LQiNivc=;
+	s=k20201202; t=1772301237;
+	bh=Z3JggKkIQWZ7ZM1BGBwbAxjDIQXOhJSkTCR4Gf/52sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/QBq2T3BbnkRmMCZZUX8DS9QYinkhIuqFTq+dnYC4pvNdG7PodVZjFO0CC1DT569
-	 k7Ma7j+MlyRxdxVAjp28qpATt1Fh9+ouXcASs0B+AHhi1u1WD2iNJYZJDXPH3Xzwoh
-	 kkgKnuFanFsFTsHhwayKrjBSdc3plWgDf3KY030pBXQMAtI/TWgVoyuWPqSTdjFOXc
-	 2cJe7UwelU+W1K71Fvzn//OODCHXkB9EgxlR4S/eE937zEpwxhyILxIdhOkBxNlvnY
-	 460Hr3Wo2H/GwTSS6yKXn7642gznSF/MsyNHuBJexXAPG1eAVcLfH8C6Mcr6bam8fQ
-	 axJj3PwoMVt3g==
+	b=DcD7tKFbZh9JTsYPvd8Rz3LxPUGdZLiQ9dOzCCkBBMmC025cgKIa2tK1AnDCasuut
+	 qxR1IJOpShdFgETg8v0biv/Repg+uCxL0FaTz5tQOQTH960yzPgp07d8K+8o51J7IN
+	 7Zh31imzZYGd/imlWU9WtSA8s7kOM5cOufDp34n6mO9g84EIFVGiqb+nKrebDA8ShF
+	 oCTGUauqSpoOmhm978t2Qh0L0DpoIxF4ft4uq0ZoFNPvOWr0JMZ5HyOntUBF4TB8sr
+	 mr0Vfg+wyK9flnA0XUFooIDbSVbP/GATA7os3NblMUSJOcyrGmw1uQCpBzZQERWgH9
+	 ZtI2Pka6nNIpQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiri Pirko <jiri@nvidia.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	Jouni Malinen <j@w1.fi>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 415/752] dma-mapping: avoid random addr value print out on error path
-Date: Sat, 28 Feb 2026 12:42:06 -0500
-Message-ID: <20260228174750.1542406-415-sashal@kernel.org>
+Subject: [PATCH 6.18 416/752] wifi: cfg80211: wext: fix IGTK key ID off-by-one
+Date: Sat, 28 Feb 2026 12:42:07 -0500
+Message-ID: <20260228174750.1542406-416-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,36 +47,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 47322c469d4a63ac45b705ca83680671ff71c975 ]
+[ Upstream commit c8d7f21ead727485ebf965e2b4d42d4a4f0840f6 ]
 
-dma_addr is unitialized in dma_direct_map_phys() when swiotlb is forced
-and DMA_ATTR_MMIO is set which leads to random value print out in
-warning. Fix that by just returning DMA_MAPPING_ERROR.
+The IGTK key ID must be 4 or 5, but the code checks against
+key ID + 1, so must check against 5/6 rather than 4/5. Fix
+that.
 
-Fixes: e53d29f957b3 ("dma-mapping: convert dma_direct_*map_page to be phys_addr_t based")
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260209153809.250835-2-jiri@resnulli.us
+Reported-by: Jouni Malinen <j@w1.fi>
+Fixes: 08645126dd24 ("cfg80211: implement wext key handling")
+Link: https://patch.msgid.link/20260209181220.362205-2-johannes@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/direct.h | 2 +-
+ net/wireless/wext-compat.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/dma/direct.h b/kernel/dma/direct.h
-index da2fadf45bcd6..62f0d9d0ba02e 100644
---- a/kernel/dma/direct.h
-+++ b/kernel/dma/direct.h
-@@ -88,7 +88,7 @@ static inline dma_addr_t dma_direct_map_phys(struct device *dev,
+diff --git a/net/wireless/wext-compat.c b/net/wireless/wext-compat.c
+index 1241fda78a68c..680500fa57cfd 100644
+--- a/net/wireless/wext-compat.c
++++ b/net/wireless/wext-compat.c
+@@ -684,7 +684,7 @@ static int cfg80211_wext_siwencodeext(struct net_device *dev,
  
- 	if (is_swiotlb_force_bounce(dev)) {
- 		if (attrs & DMA_ATTR_MMIO)
--			goto err_overflow;
-+			return DMA_MAPPING_ERROR;
- 
- 		return swiotlb_map(dev, phys, size, dir, attrs);
- 	}
+ 	idx = erq->flags & IW_ENCODE_INDEX;
+ 	if (cipher == WLAN_CIPHER_SUITE_AES_CMAC) {
+-		if (idx < 4 || idx > 5) {
++		if (idx < 5 || idx > 6) {
+ 			idx = wdev->wext.default_mgmt_key;
+ 			if (idx < 0)
+ 				return -EINVAL;
 -- 
 2.51.0
 
