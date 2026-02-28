@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38EF39B946
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06CC39B946
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302520; cv=none; b=FxGd0OgQqZ87p0nsVLMqRt9z55rR8Uh9u7XGQE3/SFFulnARmIBissV30RljH3RoszpwtpiEJ+ZI1Q4JflGgLGCt9mJn2XlRooJ0jBtiH+/NBB7nBvaMlJHhC+o+vsROQv9FPyzlb4BW3hqzE3HXMs0ZkpQBdHZp2mwERwY5D48=
+	t=1772302521; cv=none; b=Eo4zHJU/XHf9SOGOyw0tCnpLW3/wWaRYOXXRY2ggLgu0xUo4cvsCJnFe9v4Vh2tz/a9wox2IFw1cqSrmeFunloIv7LzMyEnONbBusULhKOBTqe0CubyBH4Nzy4EOC+hgLrifjSgMHd16HMQXDDuEzWzZQuBYgDl44NZjqGXVf+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302520; c=relaxed/simple;
-	bh=zo3zIFH9qrF9J0RpUtvVmckqMGpkYgj99di/zOQHI24=;
+	s=arc-20240116; t=1772302521; c=relaxed/simple;
+	bh=ujUVZKhZD+LUAEG0RFj7e23Jb2qt7N/o+4t7PjJVupA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rcN+WRNVcNwCNyUBSyHSVlmeM2yd1YFUuJkSRVdQEyOWso09y80tULPBfk7lfVY4O8qaS5nwMHoURBRgKboCmoligYTeW2Agz67d3CGKY85tlNmwa7DYOQkEnP0MnNJ1lCNqj3PjGLkC4fiHqwyI+I4JtexRWmJ2w2bN3b/J2B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hhZAkmeV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IWgvvni4lb2g79qBLbkDR9FbuoWJtQNhJGmJ8+8eNVj9wE3ulkGFosnInHuiJ2PY+0qlv7M41vu1OfI4YvZZV7rn+F1a6889+YfEKHiJ7l4ARjUWQ7fpfIXzXxUKalnW65Y984KcCJIc9FnOV1ypqDdBFgm5iZDhGIMBQn3AfkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SNvKmF57; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hhZAkmeV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3577AC116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SNvKmF57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CBDC116D0;
 	Sat, 28 Feb 2026 18:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302520;
-	bh=zo3zIFH9qrF9J0RpUtvVmckqMGpkYgj99di/zOQHI24=;
+	s=k20201202; t=1772302521;
+	bh=ujUVZKhZD+LUAEG0RFj7e23Jb2qt7N/o+4t7PjJVupA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhZAkmeVdDX7w5fhRIWiSU9WGkIfNV251PntP+EtjS7lO/kGDtEzc3CmzmdrfTHTu
-	 ZB6N2AQcIZxYzsHrOxHMSuWsTIQ3ItRfBrHsxCtW6XBsW8y/Ek/ufre1qpuQ13YqZH
-	 OhKIu05uLJjKF5TiZV2iadJBXfLsd5BqAvexlTo0mv9QA3wzVnaE0wyXabu2m4rtDb
-	 r4144ZNfo5BJI2ATvbzuxLQ1wKfJGT2d/ePZK51P6pvchus7O3lwBCmFl0+QmUKPE7
-	 2ys4R+85mb/hcD8cGCpeCSucRp2Lau3O1HvYv5EPHcJtLyTsGxKLbT4wqvbTpFjr2w
-	 EtCdMj/RDmvMg==
+	b=SNvKmF57wKQ7f97oTmmI6C1+VGaxBgYKaQhFIW8ApLEfluO/6/dWgeRpqz82EZrH4
+	 r1Y2HJkPLuIOI+BlzDlXgo3haDMBEHuRSnq0hOEv1kOavno+K/KrMSwwbTk5SSZ+t5
+	 pVgzylXtAhwJTPbDTwFCRGsOQ/FyZcM09mbiisV/cjhXdSomrnaiFZ9uAz5kyW0xki
+	 TQXY0hrdo33DUgps/PpciamwFR/COLlk7LTUQNG9FB9kK6OEojmtjVyIADV2LS/mnF
+	 /ZIS+xXoLP/M7H36vLhFYn26W8h9l+YZ6ZWOuANy+vrd3z6108cFGaP9dXm9UngTE6
+	 rF2p3TAMIwoAA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+Cc: Varun R Mallya <varunrmallya@gmail.com>,
+	Harrison Green <harrisonmichaelgreen@gmail.com>,
+	Alan Maguire <alan.maguire@oracle.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/164] libbpf: Fix dumping big-endian bitfields
-Date: Sat, 28 Feb 2026 13:12:37 -0500
-Message-ID: <20260228181505.1600663-18-sashal@kernel.org>
+Subject: [PATCH 5.15 019/164] libbpf: Fix OOB read in btf_dump_get_bitfield_value
+Date: Sat, 28 Feb 2026 13:12:38 -0500
+Message-ID: <20260228181505.1600663-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -47,64 +49,57 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Varun R Mallya <varunrmallya@gmail.com>
 
-[ Upstream commit c9e982b879465ca74e3593ce82808aa259265a71 ]
+[ Upstream commit 5714ca8cba5ed736f3733663c446cbee63a10a64 ]
 
-On big-endian arches not only bytes, but also bits are numbered in
-reverse order (see e.g. S/390 ELF ABI Supplement, but this is also true
-for other big-endian arches as well).
+When dumping bitfield data, btf_dump_get_bitfield_value() reads data
+based on the underlying type's size (t->size). However, it does not
+verify that the provided data buffer (data_sz) is large enough to
+contain these bytes.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+If btf_dump__dump_type_data() is called with a buffer smaller than
+the type's size, this leads to an out-of-bounds read. This was
+confirmed by AddressSanitizer in the linked issue.
+
+Fix this by ensuring we do not read past the provided data_sz limit.
+
+Fixes: a1d3cc3c5eca ("libbpf: Avoid use of __int128 in typed dump display")
+Reported-by: Harrison Green <harrisonmichaelgreen@gmail.com>
+Suggested-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Varun R Mallya <varunrmallya@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20211013160902.428340-3-iii@linux.ibm.com
-Stable-dep-of: 5714ca8cba5e ("libbpf: Fix OOB read in btf_dump_get_bitfield_value")
+Link: https://lore.kernel.org/bpf/20260106233527.163487-1-varunrmallya@gmail.com
+
+Closes: https://github.com/libbpf/libbpf/issues/928
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf_dump.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ tools/lib/bpf/btf_dump.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index d62b2d2e8aacb..91ab07901a1bc 100644
+index 91ab07901a1bc..fc329c2cf9df2 100644
 --- a/tools/lib/bpf/btf_dump.c
 +++ b/tools/lib/bpf/btf_dump.c
-@@ -1656,29 +1656,28 @@ static int btf_dump_get_bitfield_value(struct btf_dump *d,
- 				       __u64 *value)
- {
+@@ -1658,9 +1658,18 @@ static int btf_dump_get_bitfield_value(struct btf_dump *d,
  	__u16 left_shift_bits, right_shift_bits;
--	__u8 nr_copy_bits, nr_copy_bytes;
  	const __u8 *bytes = data;
--	int sz = t->size;
-+	__u8 nr_copy_bits;
+ 	__u8 nr_copy_bits;
++	__u8 start_bit, nr_bytes;
  	__u64 num = 0;
  	int i;
  
++	/* Calculate how many bytes cover the bitfield */
++	start_bit = bits_offset % 8;
++	nr_bytes = (start_bit + bit_sz + 7) / 8;
++
++	/* Bound check */
++	if (data + nr_bytes > d->typed_dump->data_end)
++		return -E2BIG;
++
  	/* Maximum supported bitfield size is 64 bits */
--	if (sz > 8) {
--		pr_warn("unexpected bitfield size %d\n", sz);
-+	if (t->size > 8) {
-+		pr_warn("unexpected bitfield size %d\n", t->size);
- 		return -EINVAL;
- 	}
- 
- 	/* Bitfield value retrieval is done in two steps; first relevant bytes are
- 	 * stored in num, then we left/right shift num to eliminate irrelevant bits.
- 	 */
--	nr_copy_bits = bit_sz + bits_offset;
--	nr_copy_bytes = t->size;
- #if __BYTE_ORDER == __LITTLE_ENDIAN
--	for (i = nr_copy_bytes - 1; i >= 0; i--)
-+	for (i = t->size - 1; i >= 0; i--)
- 		num = num * 256 + bytes[i];
-+	nr_copy_bits = bit_sz + bits_offset;
- #elif __BYTE_ORDER == __BIG_ENDIAN
--	for (i = 0; i < nr_copy_bytes; i++)
-+	for (i = 0; i < t->size; i++)
- 		num = num * 256 + bytes[i];
-+	nr_copy_bits = t->size * 8 - bits_offset;
- #else
- # error "Unrecognized __BYTE_ORDER__"
- #endif
+ 	if (t->size > 8) {
+ 		pr_warn("unexpected bitfield size %d\n", t->size);
 -- 
 2.51.0
 
