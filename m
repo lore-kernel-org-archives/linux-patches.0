@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F24833F38A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B16340A59
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301129; cv=none; b=fkesMQzQ/QZji5yTMhNGT5GZSpv2LWcgghRJphB1FIc8Jxdd0uHk4n6lFpIotf81na3T2rd8vkxbUCR1NZ1Xjcqt4poKKFZQ6vPrIufxRaCkvlut6L0qEO55qdRkdekmMLuZONFY8p4pUPgxCqsnXgEwWLll7knd8jgj4uK1VCU=
+	t=1772301130; cv=none; b=k/cJn1fVlmKW5ihXU8vhaR8MHgIyVBHM7DpRe6mvQjsU9rCUrdHM+2EkR4xBrDNsslricIEcu/wjUR83peTxM9se9uBIHVcuS8ZgmlZHjjoZir7qrPimeL3laiAUnNG4B6xvzIr/pALSqEirXM7OS515I+HzripYQ29PcczdjXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301129; c=relaxed/simple;
-	bh=7ozLu9srNkLFIb6bnDfwaHxmOfjHap/v3IqrRMFdmy0=;
+	s=arc-20240116; t=1772301130; c=relaxed/simple;
+	bh=QCzPKq3y9x7uAsM77rTsCrbVlQytvdYrbljTC0G/Qks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CBOX5qauy9kbGy2F6WMupydXsKYxfYvNXDKu8D0B8Eylup8cChhOj/Iy7FwAysWTbXL8ac+b+aGarZvqPgT4sQl6xWtMoboPmCpIAgyFnVgpH3QDD+qyPTY9A2ZY/u3aqk8IAKcv8IUelVanl2/7Mh8J028FNiWzv+643kXRAgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dZ08Epnj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OK/6uJUMc5MYrPQuDNRWBrBJGuYDjVUrCBMgZTGQq9FdjThurd6EiqQi+q837JmqrmT+958JqiD/7ibASJT2y2//fXNI5YH9+1xI2lvfEtKJYkC2HzIPgldujrgHRRFIylRT2hSZRdqB8BxwoYc4qqg/3ODtCDuKGxm+F83sLAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cc5Qux8i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dZ08Epnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB902C19423;
-	Sat, 28 Feb 2026 17:52:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cc5Qux8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC30C19424;
+	Sat, 28 Feb 2026 17:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301129;
-	bh=7ozLu9srNkLFIb6bnDfwaHxmOfjHap/v3IqrRMFdmy0=;
+	s=k20201202; t=1772301130;
+	bh=QCzPKq3y9x7uAsM77rTsCrbVlQytvdYrbljTC0G/Qks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZ08EpnjaRggBjfz2hUijilOTDml+w65DBt09wzDEetHgE3RCwLMiPqPE3Xe3mDuM
-	 kilgoxFBVc190a6Axa7baIHm5fyxq3zh7LFZdWbg0wSfPnEe0cwQ9dPC7o5dw69iXc
-	 0DQZtbXGn/ox0sS0ip4onHsLVPmLgoSt9SVEQeNoOJzB7D2UdLfqiUE2CXYvcVXYNF
-	 uGsvllWSK2DTjghb3ZyRyt+2B6kc+GdcroGiJmqlDRgIK9oi8aPebxs9zQDGpyaIlc
-	 g9KQn65JfZRgEYr0j0TcncdNqrqzflAggIyhHZmDiSsVTIDdLmYT2aJ3oH9kFglRSV
-	 EzS76qSdS3/mg==
+	b=Cc5Qux8iC3QHLh2e/TrS189sjWrEOsGnrAciMkxaNpV7FjFDuwNCmOPmnohYL2sFd
+	 UW2SYC9C9l3soMgF/5Pe+5v3UPWyfhfujlKDNM2/aaaq9ta5/k5XdGXPemaE2O3yEq
+	 wN6Kgd1xofA9N67WEvryU0CqAG78yBrLn8ZBiFUSg6JWHIHrBkqUfzOaORFYOjRt+4
+	 NtWnkH2Av5tzPRR/+dljhJlmYFPOpD3N9vdaoD3jX+8kas+CN7GjOUmxXuPS/R3vZ8
+	 Dlgu5KqTaw8l1UAHoK/zzmSp9X9i6j0QSzSu7iSB93Z8gXBT97yR77lEPVAex5rVPO
+	 pc9evaK28e8qA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Allison Henderson <allison.henderson@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Alex Williamson <alex.williamson@nvidia.com>,
+	Patrick Bianchi <patrick.w.bianchi@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 288/752] net/rds: Clear reconnect pending bit
-Date: Sat, 28 Feb 2026 12:39:59 -0500
-Message-ID: <20260228174750.1542406-288-sashal@kernel.org>
+Subject: [PATCH 6.18 289/752] PCI: Mark ASM1164 SATA controller to avoid bus reset
+Date: Sat, 28 Feb 2026 12:40:00 -0500
+Message-ID: <20260228174750.1542406-289-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -44,42 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Alex Williamson <alex.williamson@nvidia.com>
 
-[ Upstream commit b89fc7c2523b2b0750d91840f4e52521270d70ed ]
+[ Upstream commit beb2f81792a8a619e5122b6b24a374861309c54b ]
 
-When canceling the reconnect worker, care must be taken to reset the
-reconnect-pending bit. If the reconnect worker has not yet been
-scheduled before it is canceled, the reconnect-pending bit will stay
-on forever.
+User forums report issues when assigning ASM1164 SATA controllers to VMs,
+especially in configurations with multiple controllers.  Logs show the
+device fails to retrain after bus reset.  Reports suggest this is an issue
+across multiple platforms.  The device indicates support for PM reset,
+therefore the device still has a viable function level reset mechanism.
+The reporting user confirms the device is well behaved in this use case
+with bus reset disabled.
 
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Allison Henderson <allison.henderson@oracle.com>
-Link: https://patch.msgid.link/20260203055723.1085751-6-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Patrick Bianchi <patrick.w.bianchi@gmail.com>
+Link: https://forum.proxmox.com/threads/problems-with-pcie-passthrough-with-two-identical-devices.149003/
+Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260109000211.398300-1-alex.williamson@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/connection.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/quirks.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index ad8027e6f54ef..dbfea6fa11260 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -429,6 +429,8 @@ void rds_conn_shutdown(struct rds_conn_path *cp)
- 	 * to the conn hash, so we never trigger a reconnect on this
- 	 * conn - the reconnect is always triggered by the active peer. */
- 	cancel_delayed_work_sync(&cp->cp_conn_w);
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 9e073321b2dd2..c38434d973cd2 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -3791,6 +3791,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_CAVIUM, 0xa100, quirk_no_bus_reset);
+  */
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_TI, 0xb005, quirk_no_bus_reset);
+ 
++/*
++ * Reports from users making use of PCI device assignment with ASM1164
++ * controllers indicate an issue with bus reset where the device fails to
++ * retrain.  The issue appears more common in configurations with multiple
++ * controllers.  The device does indicate PM reset support (NoSoftRst-),
++ * therefore this still leaves a viable reset method.
++ * https://forum.proxmox.com/threads/problems-with-pcie-passthrough-with-two-identical-devices.149003/
++ */
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ASMEDIA, 0x1164, quirk_no_bus_reset);
 +
-+	clear_bit(RDS_RECONNECT_PENDING, &cp->cp_flags);
- 	rcu_read_lock();
- 	if (!hlist_unhashed(&conn->c_hash_node)) {
- 		rcu_read_unlock();
+ static void quirk_no_pm_reset(struct pci_dev *dev)
+ {
+ 	/*
 -- 
 2.51.0
 
