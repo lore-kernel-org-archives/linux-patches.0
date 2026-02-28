@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DD1373143;
-	Sat, 28 Feb 2026 17:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB3A373141;
+	Sat, 28 Feb 2026 17:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301510; cv=none; b=BklviG+ydFrM8lqapVs2IULLkaotZnKu34V3xuAsMyG46gAvHAjDTP0LpmfcAaQmjBAQqkHSds0xQsVgvCrAgE68KB93lYxd9i1E397pP47U4in6Yqbjtsd1IARjZSdxWlM1NP+RwDWJHVwOGWeIQtaLuOxVT0bhKTU+rh5TKDw=
+	t=1772301511; cv=none; b=drADyRNYEnIIfvQsQ4ELnhyDX1IivOZMsbor8l8dl8jwqxp0PoJRJ5r1+4lm8VQ3bK0oXx5LxgTa0xsNzvc9jHt7QnBC6doOpDHpH5Qlanui5anXutyOcFlgNC7U6XILUMBNOd6O6KHnrY3zXBorzhvIbSy1vaNObgxpK16hvVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301510; c=relaxed/simple;
-	bh=RczUF9kkuILK3lHcDztuudYaK1X19QCq4DINrhOjoqU=;
+	s=arc-20240116; t=1772301511; c=relaxed/simple;
+	bh=G4eFtNv3Fsch3fZYKLdT73Hxi+luVylOgZvfXpQleOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l9y7OUHB8B4b76w83wlYF7nETRsSUukJg/qQahYOISvtPJ7SKhMoNHSAmf+VTiGPELrQJHHZlhwUbMOIDhOCJTlw68ji8LBaTbv11TpOt3F0gjEJmFS8xfMzm/eXnjOVQJVcaTrwgxpMGnVGRjdoXDhOi93LKdSXHhR8pT+vhh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RUSDUCKF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AujUmNZboWVAVnBi1vsSWe9CwK9Z4xC2c4lgmapd5O8a8062t4XwLAc5yPk7yGnYRzAXGiVhXXGJt6Zxa4dMUzzxSbeKUjVoQyqTGOCcNx9eYisdu3GU5Mlh77WZUUz0a8+I7KJB7Y+/CFtBaITwsC6dXW/JhbkYfk/Cw1zVCzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gHYkeb8k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RUSDUCKF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B46AC116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gHYkeb8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00120C19423;
 	Sat, 28 Feb 2026 17:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301510;
-	bh=RczUF9kkuILK3lHcDztuudYaK1X19QCq4DINrhOjoqU=;
+	s=k20201202; t=1772301511;
+	bh=G4eFtNv3Fsch3fZYKLdT73Hxi+luVylOgZvfXpQleOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RUSDUCKFwIupdwNInFQKgpOh3NGu8oZXzDQMYJmgQt4SkqnF0QVdUnEjjz8EwEsDw
-	 KkHEBDZKiO/G590O3Sb6L4uh2SSvqldgh+R2lsOkxSpSzfscmkvp2aqNBc1t7Se/cF
-	 I+DmiAnhoa/xvE3DRk4iyBq7AYm2Nsjdt+m+l5tcHI6Tpk1dJc+rS9NwvkwCAtfTEh
-	 H8BZVSWTy9ia0Sh4DowdAYDzrqyTSRs0Pq7GS+BCOIr1gO9HlcQWKnvBdCnoay48vn
-	 00c4YhSuA+FvY/3U1od8vYKqbQF8dQ4AAVgcWuR7fFt1g6lcz7vnC+Ag2TzTNwsLmE
-	 VZK99AD9dL7aA==
+	b=gHYkeb8k2htw2/kE5eorRxMH3u0Q1Vcn4WgvvxxMOUyKMgjPZfTCyFnYNZnw6kW8O
+	 MC+3IYUScMtfPI1iu/4rV2pIWYDXcwqE1bOFi1Bvp7Fcy/liKsEtYKIzPOA7DjPQgK
+	 vtuyz3qwumrFpsURJiWvZU0bHJgB2zu8SCpT9iBqosHNtP1TeSd2BYOwnQqY3jmlfM
+	 si2F5F4GdV/pN1dea8mhAsUf9gUFT0gSNG0mk5lsjgJW4QAl4nO2t2Ths+T50DV6r8
+	 M5o7j/8bFeVkgxIns7wFPYepZzvLJsOgm+f9vsD+9KE363ejnzboNlkpOt9spBNdhj
+	 PmP33N8YQFOug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Kevin Hao <haokexin@gmail.com>,
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	stable@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 696/752] net: macb: Fix tx/rx malfunction after phy link down and up
-Date: Sat, 28 Feb 2026 12:46:47 -0500
-Message-ID: <20260228174750.1542406-696-sashal@kernel.org>
+Subject: [PATCH 6.18 697/752] tracing: Fix to set write permission to per-cpu buffer_size_kb
+Date: Sat, 28 Feb 2026 12:46:48 -0500
+Message-ID: <20260228174750.1542406-697-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,77 +49,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kevin Hao <haokexin@gmail.com>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-[ Upstream commit bf9cf80cab81e39701861a42877a28295ade266f ]
+[ Upstream commit f844282deed7481cf2f813933229261e27306551 ]
 
-In commit 99537d5c476c ("net: macb: Relocate mog_init_rings() callback
-from macb_mac_link_up() to macb_open()"), the mog_init_rings() callback
-was moved from macb_mac_link_up() to macb_open() to resolve a deadlock
-issue. However, this change introduced a tx/rx malfunction following
-phy link down and up events. The issue arises from a mismatch between
-the software queue->tx_head, queue->tx_tail, queue->rx_prepared_head,
-and queue->rx_tail values and the hardware's internal tx/rx queue
-pointers.
+Since the per-cpu buffer_size_kb file is writable for changing
+per-cpu ring buffer size, the file should have the write access
+permission.
 
-According to the Zynq UltraScale TRM [1], when tx/rx is disabled, the
-internal tx queue pointer resets to the value in the tx queue base
-address register, while the internal rx queue pointer remains unchanged.
-The following is quoted from the Zynq UltraScale TRM:
-  When transmit is disabled, with bit [3] of the network control register
-  set low, the transmit-buffer queue pointer resets to point to the address
-  indicated by the transmit-buffer queue base address register. Disabling
-  receive does not have the same effect on the receive-buffer queue
-  pointer.
-
-Additionally, there is no need to reset the RBQP and TBQP registers in a
-phy event callback. Therefore, move macb_init_buffers() to macb_open().
-In a phy link up event, the only required action is to reset the tx
-software head and tail pointers to align with the hardware's behavior.
-
-[1] https://docs.amd.com/v/u/en-US/ug1085-zynq-ultrascale-trm
-
-Fixes: 99537d5c476c ("net: macb: Relocate mog_init_rings() callback from macb_mac_link_up() to macb_open()")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260208-macb-init-ring-v1-1-939a32c14635@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/177071301597.2293046.11683339475076917920.stgit@mhiramat.tok.corp.google.com
+Fixes: 21ccc9cd7211 ("tracing: Disable "other" permission bits in the tracefs files")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ kernel/trace/trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 064fccdcf6994..90550055c71c1 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -741,14 +741,12 @@ static void macb_mac_link_up(struct phylink_config *config,
- 		if (rx_pause)
- 			ctrl |= MACB_BIT(PAE);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 907923d5f8bbb..e1d902464e080 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9183,7 +9183,7 @@ tracing_init_tracefs_percpu(struct trace_array *tr, long cpu)
+ 	trace_create_cpu_file("stats", TRACE_MODE_READ, d_cpu,
+ 				tr, cpu, &tracing_stats_fops);
  
--		/* Initialize rings & buffers as clearing MACB_BIT(TE) in link down
--		 * cleared the pipeline and control registers.
--		 */
--		macb_init_buffers(bp);
--
--		for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue)
-+		for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
-+			queue->tx_head = 0;
-+			queue->tx_tail = 0;
- 			queue_writel(queue, IER,
- 				     bp->rx_intr_mask | MACB_TX_INT_FLAGS | MACB_BIT(HRESP));
-+		}
- 	}
+-	trace_create_cpu_file("buffer_size_kb", TRACE_MODE_READ, d_cpu,
++	trace_create_cpu_file("buffer_size_kb", TRACE_MODE_WRITE, d_cpu,
+ 				tr, cpu, &tracing_entries_fops);
  
- 	macb_or_gem_writel(bp, NCFGR, ctrl);
-@@ -2991,6 +2989,7 @@ static int macb_open(struct net_device *dev)
- 	}
- 
- 	bp->macbgem_ops.mog_init_rings(bp);
-+	macb_init_buffers(bp);
- 
- 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
- 		napi_enable(&queue->napi_rx);
+ 	if (tr->range_addr_start)
 -- 
 2.51.0
 
