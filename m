@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42AD347FCC;
-	Sat, 28 Feb 2026 18:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821E9359A8B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302438; cv=none; b=KTDx4EeU36AcHAQPN2triXbT5YBZ0z8LJLyiz5BD3bgYsL0XWZCeJOyaM8jGzAv5XleOVE4c0+CdOkmgXIKMRB92EtdxeKNmZV8Qyn1tMk91tO6jzJKTZEG44qGo4zxBfD3h0pDyRimpyJtYnLYv0FR9jni7r6ICqHvYpJsmvtk=
+	t=1772302439; cv=none; b=N29O6Bn4V5lNcEWK0f6vLeBs/J0JEWybHAYyVN4pQyNdjzwqMoTvDd7NSREr5A77tXZjzaWplUIXUoRre8DUySF7I4u6OUcQ9ptIVg2XiEe0DblNtRxoF9BOfTzN+XkgR9DRbQUSKQNyK4YzzkubQFXH099T07jCk0nD5QpWSDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302438; c=relaxed/simple;
-	bh=Z6L9Lz9s1n90ASYbuykRsrtcy9VRJg3MdNLm71XjeQ4=;
+	s=arc-20240116; t=1772302439; c=relaxed/simple;
+	bh=B32L9PFJTh1MX/2D5jmbSV6S90vZvZq+TXUDxsvdmzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCoqA9XBZAqeW9JcZdoc3pWCRH8R9axnSnadfPw7Mwh4UQPMeTMzIjT2arG09GD99pdLgH56N3wiT/by9z8d3Uh7XybaqhnmUzBhPSHTnZ/k0Hx/eY/Cfj3I+6gou1n3ZMphtYv8U+6ZulbZ+KxDXCz2js+VKi2apse0NubuaEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KE/0oDgt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pHJAgBVIMOVXSLYIT2+9sli7CWnzEIlrpcGeJTnP9EtdGNgN5PYq6saCEbvhPunurLtGnKrw5H8eSbGWB36BTBp5ZvA+RkyQOUsdOCJxFMVadvQTMRtWAjcR9EfDPMBAFBmafnTob84rH2Cv9qKJdhSvc41Als9xGByQ4171Bus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J4po2NvO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KE/0oDgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5C6C2BC87;
-	Sat, 28 Feb 2026 18:13:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J4po2NvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA32C19423;
+	Sat, 28 Feb 2026 18:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302438;
-	bh=Z6L9Lz9s1n90ASYbuykRsrtcy9VRJg3MdNLm71XjeQ4=;
+	s=k20201202; t=1772302439;
+	bh=B32L9PFJTh1MX/2D5jmbSV6S90vZvZq+TXUDxsvdmzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KE/0oDgt0SGHk+O1N4+k0LxjNEj4GlgSXz6zMQmyFkL79W6z5HBD0HaipAnsha0se
-	 /cYUj9J23r1J65W6jx3jJP2hRHmc9aghjqBxzGd6dvsp2pvnTIitK2HK6wNtaJih2H
-	 DykRK+XmWwkh8RKTieC2jH6s3sZlbuSf63jmrYBV1hKyTGb3yIO01tL9heJDmOJhy7
-	 K18WUrUcrCduspe9pwC4hZGxiqrvVLQalcVmK1wcMvSQcxPkhPm30MwjLjB0kmT9i/
-	 GyUHc0OuOUVuT5pVZ67HGdS35PsGUbqar8toAVTsvkFdr/CpeEop8GGQVR6n64OENY
-	 P1VvcWEXIKv2Q==
+	b=J4po2NvOrNZWBb9qACP2N+JIETazZnYZwWdJrrTEemcCvaWt0XrDBsVcK6/DsmMEP
+	 oNSSNcxNYSAwtQgS7PXbTB2WaKU3jFb2oVzZMgqO9afrZWXXWYLapjxS3fyzxCFato
+	 99m4BJjc56thgSL6ywqNPm5QoGg7FoChVoZMyPYxD0/4nkh3KDkiNpJKumTRpG1SKt
+	 WmjVaLV8xL/DUI1/z09oOdxJ44d9oCwObxIFHSFM8UEMrDOLFf+qVGIJ0sSuPdovSX
+	 rbhBLkoaVoHFeVRvZg+oKr8KC7jeuw0eK0K354Sy0W4XK3rioBbr1cWwH3W/nel2W7
+	 Ojaoqyh6n/Beg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Daniel Hodges <git@danielhodges.dev>,
-	stable@vger.kernel.org,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.1 176/232] SUNRPC: fix gss_auth kref leak in gss_alloc_msg error path
-Date: Sat, 28 Feb 2026 13:10:29 -0500
-Message-ID: <20260228181127.1592657-176-sashal@kernel.org>
+Cc: Felix Gu <ustc.gu@gmail.com>,
+	Helge Deller <deller@gmx.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 177/232] fbdev: au1200fb: Fix a memory leak in au1200fb_drv_probe()
+Date: Sat, 28 Feb 2026 13:10:30 -0500
+Message-ID: <20260228181127.1592657-177-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,54 +47,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Hodges <git@danielhodges.dev>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit dd2fdc3504592d85e549c523b054898a036a6afe upstream.
+[ Upstream commit ce4e25198a6aaaaf36248edf8daf3d744ec8e309 ]
 
-Commit 5940d1cf9f42 ("SUNRPC: Rebalance a kref in auth_gss.c") added
-a kref_get(&gss_auth->kref) call to balance the gss_put_auth() done
-in gss_release_msg(), but forgot to add a corresponding kref_put()
-on the error path when kstrdup_const() fails.
+In au1200fb_drv_probe(), when platform_get_irq fails(), it directly
+returns from the function with an error code, which causes a memory
+leak.
 
-If service_name is non-NULL and kstrdup_const() fails, the function
-jumps to err_put_pipe_version which calls put_pipe_version() and
-kfree(gss_msg), but never releases the gss_auth reference. This leads
-to a kref leak where the gss_auth structure is never freed.
+Replace it with a goto label to ensure proper cleanup.
 
-Add a forward declaration for gss_free_callback() and call kref_put()
-in the err_put_pipe_version error path to properly release the
-reference taken earlier.
-
-Fixes: 5940d1cf9f42 ("SUNRPC: Rebalance a kref in auth_gss.c")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Hodges <git@danielhodges.dev>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4e88761f5f8c ("fbdev: au1200fb: Fix missing IRQ check in au1200fb_drv_probe")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/auth_gss.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/video/fbdev/au1200fb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
-index 3ef511d7af190..85e6f6b3c6d8e 100644
---- a/net/sunrpc/auth_gss/auth_gss.c
-+++ b/net/sunrpc/auth_gss/auth_gss.c
-@@ -39,6 +39,8 @@ static const struct rpc_authops authgss_ops;
- static const struct rpc_credops gss_credops;
- static const struct rpc_credops gss_nullops;
+diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
+index fd3ff398d234a..f55f3380f17e5 100644
+--- a/drivers/video/fbdev/au1200fb.c
++++ b/drivers/video/fbdev/au1200fb.c
+@@ -1732,8 +1732,10 @@ static int au1200fb_drv_probe(struct platform_device *dev)
  
-+static void gss_free_callback(struct kref *kref);
-+
- #define GSS_RETRY_EXPIRED 5
- static unsigned int gss_expired_cred_retry_delay = GSS_RETRY_EXPIRED;
+ 	/* Now hook interrupt too */
+ 	irq = platform_get_irq(dev, 0);
+-	if (irq < 0)
+-		return irq;
++	if (irq < 0) {
++		ret = irq;
++		goto failed;
++	}
  
-@@ -535,6 +537,7 @@ gss_alloc_msg(struct gss_auth *gss_auth,
- 	}
- 	return gss_msg;
- err_put_pipe_version:
-+	kref_put(&gss_auth->kref, gss_free_callback);
- 	put_pipe_version(gss_auth->net);
- err_free_msg:
- 	kfree(gss_msg);
+ 	ret = request_irq(irq, au1200fb_handle_irq,
+ 			  IRQF_SHARED, "lcd", (void *)dev);
 -- 
 2.51.0
 
