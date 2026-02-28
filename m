@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8741439B943
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5731C36C9F9
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302510; cv=none; b=SUOHagnLIJfRPx51E+WhhC8t6w2E7Vl1F2uPyzAciIVv3t6o6l4sYIW74k71dRXJiZNuZYf21FFhzNL8c+ydH40zaxiJ20jj2wL3IdnMRZunJ1lROyOdsA7dVVL0IDNt1pG6paz2FG95oJJ0TbT6ONYVd2OAe9ecg43jAGv68dY=
+	t=1772302511; cv=none; b=kHSeTtrrHvGJ18WRVcwJbRxBYMn6Gb4cwF+/6/yHWT1mePoNzErE8E7Fof5VPEuO7eNSZM+fflufgi7L91z4pAlFynjZipeYJcvxBbIcF+l7XjKlPZly4AVvZiuGDhZZ9i1WqMsdcKPeUlB22Iobax86UJ7pXJeBAU0eQgkhKEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302510; c=relaxed/simple;
-	bh=XeKr5qLiDuJIcKq/JbYsf77v/HH56eG6NOLSWrESaio=;
+	s=arc-20240116; t=1772302511; c=relaxed/simple;
+	bh=mHJmrwaxZINKHNRls8CI9EabtQtlulthJxcKpg3Gjls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OEEY/ffcZWvDuNMCBLv/X0zNEB4inEeGUey1QsA8iOi2NkgvrJjtaoVPzYoSSCwilx1ygRQf64ee771J7K0hVaBVY4lsaIl6FeLZV74tkp9KpbGVd6B8YsTSf9OH42vQviWTUW+l1kxEOmXcMuB/xtrobjoibYycxbKVehjV3jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B25ru0z6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KXR5zWEGJp2oHHr1RJpeLMW0dhjUFqbSeDzL9JYf2DgBBMpNJpsIYiDO7Lij8I1B/Cu59KAdyAZ2yTSph4+oVAde5b2hX8vgHIIPPbdZDRfK+ugPVUGohAuAGZrUQa45G+9YmW4iL59vmxoMlWxg3AnuGmfXt9KPv/NzxWAQIXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rTJH+1KL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B25ru0z6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31B4C19425;
-	Sat, 28 Feb 2026 18:15:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rTJH+1KL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D44C116D0;
+	Sat, 28 Feb 2026 18:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302510;
-	bh=XeKr5qLiDuJIcKq/JbYsf77v/HH56eG6NOLSWrESaio=;
+	s=k20201202; t=1772302511;
+	bh=mHJmrwaxZINKHNRls8CI9EabtQtlulthJxcKpg3Gjls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B25ru0z6eh6xBVO8r5b6LWqttnsBlCT1mdJEo0TW7DEZMySfAbNTgbvmkty4mYtLb
-	 zIR+gdwgkyAHh781+tMf9HQ2ZQGOUvCE+FsU11gSVmPjrmfKapXRuOe4usal+MWqXr
-	 IPspIl98ZK3Q5YbP7vxXAMoKK5YWyaaqF2RLJwp1D922AgWI54GRfCAr+D89tgafPl
-	 fDhZZr5PdSYhTRS3GIfLqrwixMLLgd9Mqog/bsaWwC+5Ynuy+GmBJj6T4PtYjht6pp
-	 dLKZpiE0bj3lSay/7Gt3ZNfff66LD+baPJqvpEd9imMnNCJ4UZzx0hh0ob3bjMwg08
-	 Iz2Fw8e2dx0ow==
+	b=rTJH+1KLYLB4kasxsys5dDp99tAwtec6wTzSTx22zaL3i15oL+hPOuptvE7lXL2Gs
+	 GUxwGk4XTRyrLCMHC6XDJ66mLn8Kv8VM7Uo5K6KMWrCMyBbmYnFZABErkCsFc3ROBf
+	 glW8c2XVE2pvMxHPA03EAsxMgYwEqDgHRIq26SP0FIX1NwWDzgdvWd0Nu2QinZDWFu
+	 hP/46dWNxxNh9eYJDL7LyOKoC/C4J6htpT7kWzKoUDaiSLfgbNunhxxpqWcAXnpWsm
+	 LGlNE/KKsndJhsDnWRgMcqtqoldIIuBLGJ6gorIhXGiLLq0u33vm6ZBdn78/zfE1uA
+	 EPCPaPcGCJqjg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jamie Iles <quic_jiles@quicinc.com>,
+Cc: Billy Tsai <billy_tsai@aspeedtech.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/164] i3c: remove i2c board info from i2c_dev_desc
-Date: Sat, 28 Feb 2026 13:12:24 -0500
-Message-ID: <20260228181505.1600663-5-sashal@kernel.org>
+Subject: [PATCH 5.15 006/164] i3c: Move device name assignment after i3c_bus_init
+Date: Sat, 28 Feb 2026 13:12:25 -0500
+Message-ID: <20260228181505.1600663-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -47,102 +48,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jamie Iles <quic_jiles@quicinc.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 31b9887c7258ca47d9c665a80f19f006c86756b1 ]
+[ Upstream commit 3502cea99c7ceb331458cbd34ef6792c83144687 ]
 
-I2C board info is only required during adapter setup so there is no
-requirement to keeping a pointer to it once running.  To support dynamic
-device addition we can't rely on board info - user-space creation
-through sysfs won't have a boardinfo.
+Move device name initialization to occur after i3c_bus_init()
+so that i3cbus->id is guaranteed to be assigned before it is used.
 
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Jamie Iles <quic_jiles@quicinc.com>
+Fixes: 9d4f219807d5 ("i3c: fix refcount inconsistency in i3c_master_register")
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260112-upstream_i3c_fix-v1-1-cbbf2cb71809@aspeedtech.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20220117174816.1963463-2-quic_jiles@quicinc.com
-Stable-dep-of: 3502cea99c7c ("i3c: Move device name assignment after i3c_bus_init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c       | 18 ++++++++++--------
- include/linux/i3c/master.h |  1 -
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ drivers/i3c/master.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index e2777db13762f..a99c727a23042 100644
+index a99c727a23042..dee694024f280 100644
 --- a/drivers/i3c/master.c
 +++ b/drivers/i3c/master.c
-@@ -610,7 +610,7 @@ static void i3c_master_free_i2c_dev(struct i2c_dev_desc *dev)
+@@ -2497,12 +2497,13 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	INIT_LIST_HEAD(&master->boardinfo.i3c);
  
- static struct i2c_dev_desc *
- i3c_master_alloc_i2c_dev(struct i3c_master_controller *master,
--			 const struct i2c_dev_boardinfo *boardinfo)
-+			 u16 addr, u8 lvr)
- {
- 	struct i2c_dev_desc *dev;
+ 	device_initialize(&master->dev);
+-	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
  
-@@ -619,9 +619,8 @@ i3c_master_alloc_i2c_dev(struct i3c_master_controller *master,
- 		return ERR_PTR(-ENOMEM);
+ 	ret = i3c_bus_init(i3cbus);
+ 	if (ret)
+ 		goto err_put_dev;
  
- 	dev->common.master = master;
--	dev->boardinfo = boardinfo;
--	dev->addr = boardinfo->base.addr;
--	dev->lvr = boardinfo->lvr;
-+	dev->addr = addr;
-+	dev->lvr = lvr;
- 
- 	return dev;
- }
-@@ -695,7 +694,7 @@ i3c_master_find_i2c_dev_by_addr(const struct i3c_master_controller *master,
- 	struct i2c_dev_desc *dev;
- 
- 	i3c_bus_for_each_i2cdev(&master->bus, dev) {
--		if (dev->boardinfo->base.addr == addr)
-+		if (dev->addr == addr)
- 			return dev;
- 	}
- 
-@@ -1692,7 +1691,9 @@ static int i3c_master_bus_init(struct i3c_master_controller *master)
- 					     i2cboardinfo->base.addr,
- 					     I3C_ADDR_SLOT_I2C_DEV);
- 
--		i2cdev = i3c_master_alloc_i2c_dev(master, i2cboardinfo);
-+		i2cdev = i3c_master_alloc_i2c_dev(master,
-+						  i2cboardinfo->base.addr,
-+						  i2cboardinfo->lvr);
- 		if (IS_ERR(i2cdev)) {
- 			ret = PTR_ERR(i2cdev);
- 			goto err_detach_devs;
-@@ -2178,6 +2179,7 @@ static int i3c_master_i2c_adapter_init(struct i3c_master_controller *master)
- {
- 	struct i2c_adapter *adap = i3c_master_to_i2c_adapter(master);
- 	struct i2c_dev_desc *i2cdev;
-+	struct i2c_dev_boardinfo *i2cboardinfo;
- 	int ret;
- 
- 	adap->dev.parent = master->dev.parent;
-@@ -2197,8 +2199,8 @@ static int i3c_master_i2c_adapter_init(struct i3c_master_controller *master)
- 	 * We silently ignore failures here. The bus should keep working
- 	 * correctly even if one or more i2c devices are not registered.
- 	 */
--	i3c_bus_for_each_i2cdev(&master->bus, i2cdev)
--		i2cdev->dev = i2c_new_client_device(adap, &i2cdev->boardinfo->base);
-+	list_for_each_entry(i2cboardinfo, &master->boardinfo.i2c, node)
-+		i2cdev->dev = i2c_new_client_device(adap, &i2cboardinfo->base);
- 
- 	return 0;
- }
-diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
-index 9cb39d901cd5f..604a126b78c83 100644
---- a/include/linux/i3c/master.h
-+++ b/include/linux/i3c/master.h
-@@ -85,7 +85,6 @@ struct i2c_dev_boardinfo {
-  */
- struct i2c_dev_desc {
- 	struct i3c_i2c_dev_desc common;
--	const struct i2c_dev_boardinfo *boardinfo;
- 	struct i2c_client *dev;
- 	u16 addr;
- 	u8 lvr;
++	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
++
+ 	ret = of_populate_i3c_bus(master);
+ 	if (ret)
+ 		goto err_put_dev;
 -- 
 2.51.0
 
