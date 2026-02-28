@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B77346E66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB885346AD3
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302106; cv=none; b=fbLCXGNLRrMDIPx28DJHBwu01PEwjKZwT6AmFWdvFjgJoBBS/rhnXgzKNtkMA2JNSizgpDyOwhsUUU6cK5hv1Jft6aFWn0i23D6eg0DOt/EkeRV3n/4XEvCyKtx8tYagVT24VKcAKdraUlyKZNC2ORL4gygOzhBswjvPag9d468=
+	t=1772302107; cv=none; b=uL8ZuqXjvI5MP0HCVm7zVXJJDtCDBaWMH7gI3yLVaCXsGrutNO6FA45WXpmQNvpuDLSNNqi29ohaSy1qD/S8G5AWwvhRIfIyKjL3FSLVFP1dJCC85rCbRsTB8vhQwF5eVl6lODdJ89w+nJ8265BTXmbI/ri+m+FPwEbkRVE+hbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302106; c=relaxed/simple;
-	bh=M73fkeFO/Awv509urLNj6yBLDbowa8gvnl6tGLLNoKE=;
+	s=arc-20240116; t=1772302107; c=relaxed/simple;
+	bh=UfC3MoOwIBRK0abys2L8aX616dJwW/EOJXHvCPa4A04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZTFcsQucDHtYHsBo0fHb0y/SB3FKGTQ5UCVfPBvi4WlcgmlJJPkkSNDER6BDOTERo5KT7NJ5qD4Ng613E0HIx7hxhuErtTALDcuQjYBAJ6zN7hdO7pT3lWR2IUma/Fp598rYarZpaezcW6FfI6ChhCQxDC6PfBRembENTZYUg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SgvWfwmQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nmyfhh5u18EVKeeawyvGCTN/GDL1O4RYucpD1gw6bNhjQNXtpqP2p8CXBZGjbdpK/dLFJpgRytappJO3n0iRY1wyV27sqdpNj98+Fc2Fc4bsDpKaXTyT/fZmuL//XlvFZqOG9nSEeo5AIW+Q13Zs8eTVWXLFbsWCcv5zuaiXOFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pu6rz+Uw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SgvWfwmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B503C116D0;
-	Sat, 28 Feb 2026 18:08:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pu6rz+Uw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34811C19425;
+	Sat, 28 Feb 2026 18:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302105;
-	bh=M73fkeFO/Awv509urLNj6yBLDbowa8gvnl6tGLLNoKE=;
+	s=k20201202; t=1772302106;
+	bh=UfC3MoOwIBRK0abys2L8aX616dJwW/EOJXHvCPa4A04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgvWfwmQlwKmbk6pmjQLNjIyXx7kt0LbwhYu31i2Lj7vs5z9VAF55cAhmCQYzJiNE
-	 mkHTDQvgdyJYyctlTkl2FEbyK+3lWB92+4zXmJTheZDY54XhaI9ygJVQdBX9E0AAlw
-	 88DniRtGbOsKtE/raYRUPqHhJrWKWHWeVAjCagwtRXL4zoqFD7OdENWdyDYT2AuUC8
-	 7I9F9LTLZQFUPC+w+ZI3IZZ6UWuRMk/4FUqnwSoJNspGukMIWlsmlceSpX9bmFU9Zt
-	 hJgH54Oj2TuWPl/SP2RCpZhnMxOyDTeFcXs1o5QebhcB2ZjpdvwMJRiFlzYLeYAFK8
-	 Iv70DIuPBn5Fw==
+	b=Pu6rz+UwTKzWA+DuZUzgtXnyvIVKIWcK9U43NMCs2DfsAJrjcuDCj+MuWt0cIxAMo
+	 IAkUahcCXiaIvEZ+UYYVlOueY+f02XfmEaUW0wfczNtfeppdqpxnf/KYoCZaVXp5eG
+	 txg8e2iHbKvEW6qVfTrkv7E3rjQ3VR8nXOhUJgNYVP6uNoLXcpqBNHCjW+DH99Qhr1
+	 Phm3f76wCb+e+ra2RJDn2wi0k01RIno8GYbFg2Ic6fg/JbQpsWNuFncapSeTnIvRyf
+	 0mZ0xeXMnKvedxlKTclca4Pkw43CEePvsAQNKG/Z9d+kd8OiV8LaNaM/HteebhCjVT
+	 JlU8OIvNDpiXw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Alexey Minnekhanov <alexeymin@minlexx.ru>,
+Cc: David Heidelberg <david@ixit.cz>,
+	Mehdi Djait <mehdi.djait@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/283] drm/msm/dpu: fix CMD panels on DPU 1.x - 3.x
-Date: Sat, 28 Feb 2026 13:03:55 -0500
-Message-ID: <20260228180709.1583486-93-sashal@kernel.org>
+Subject: [PATCH 6.6 094/283] media: ccs: Accommodate C-PHY into the calculation
+Date: Sat, 28 Feb 2026 13:03:56 -0500
+Message-ID: <20260228180709.1583486-94-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,46 +49,51 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 59ca3d11f5311d9167015fe4f431701614ae0048 ]
+[ Upstream commit 3085977e734dab74adebb1dda195befce25addff ]
 
-DPU units before 4.x don't have a separate CTL_START IRQ to mark the
-begin of the data transfer. In such a case, wait for the frame transfer
-to complete rather than trying to wait for the CTL_START interrupt (and
-obviously hitting the timeout).
+We need to set correct mode for PLL to calculate correct frequency.
+Signalling mode is known at this point, so use it for that.
 
-Fixes: 050770cbbd26 ("drm/msm/dpu: Fix timeout issues on command mode panels")
-Reported-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Closes: https://lore.kernel.org/r/8e1d33ff-d902-4ae9-9162-e00d17a5e6d1@postmarketos.org
-Patchwork: https://patchwork.freedesktop.org/patch/696490/
-Link: https://lore.kernel.org/r/20251228-mdp5-drop-dpu3-v4-2-7497c3d39179@oss.qualcomm.com
-Tested-by: Alexey Minnekhanov <alexeymin@minlexx.ru>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 47b6eaf36eba ("media: ccs-pll: Differentiate between CSI-2 D-PHY and C-PHY")
+Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+[Sakari Ailus: Drop extra newline.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/i2c/ccs/ccs-core.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index 83a804ebf8d7e..fd2400c4665d2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -675,10 +675,11 @@ static int dpu_encoder_phys_cmd_wait_for_commit_done(
- 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
- 		return 0;
+diff --git a/drivers/media/i2c/ccs/ccs-core.c b/drivers/media/i2c/ccs/ccs-core.c
+index 4d31b2bb8f09f..5611db7e1b326 100644
+--- a/drivers/media/i2c/ccs/ccs-core.c
++++ b/drivers/media/i2c/ccs/ccs-core.c
+@@ -3530,7 +3530,21 @@ static int ccs_probe(struct i2c_client *client)
+ 	sensor->scale_m = CCS_LIM(sensor, SCALER_N_MIN);
  
--	if (phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
--		return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
-+	if (phys_enc->irq[INTR_IDX_CTL_START] &&
-+	    !phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
-+		return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
- 
--	return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
-+	return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
- }
- 
- static void dpu_encoder_phys_cmd_handle_post_kickoff(
+ 	/* prepare PLL configuration input values */
+-	sensor->pll.bus_type = CCS_PLL_BUS_TYPE_CSI2_DPHY;
++	switch (sensor->hwcfg.csi_signalling_mode) {
++	case CCS_CSI_SIGNALING_MODE_CSI_2_CPHY:
++		sensor->pll.bus_type = CCS_PLL_BUS_TYPE_CSI2_CPHY;
++		break;
++	case CCS_CSI_SIGNALING_MODE_CSI_2_DPHY:
++	case SMIAPP_CSI_SIGNALLING_MODE_CCP2_DATA_CLOCK:
++	case SMIAPP_CSI_SIGNALLING_MODE_CCP2_DATA_STROBE:
++		sensor->pll.bus_type = CCS_PLL_BUS_TYPE_CSI2_DPHY;
++		break;
++	default:
++		dev_err(&client->dev, "unsupported signalling mode %u\n",
++			sensor->hwcfg.csi_signalling_mode);
++		rval = -EINVAL;
++		goto out_cleanup;
++	}
+ 	sensor->pll.csi2.lanes = sensor->hwcfg.lanes;
+ 	if (CCS_LIM(sensor, CLOCK_CALCULATION) &
+ 	    CCS_CLOCK_CALCULATION_LANE_SPEED) {
 -- 
 2.51.0
 
