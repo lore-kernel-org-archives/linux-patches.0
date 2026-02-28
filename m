@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9C33446C0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD51344D80
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301648; cv=none; b=arBIR3tsZvuw9t6H4MoamxSZUw4JuX2rxKmxYbFCsfXcAjzw/7DypSGv15z8BcZEBxJuZM2jzwVVLx8wpvEOHSTPNezLUqOhsfmKzDdyBLCoNp0Cs/MmctlYyMR6IO3Gts0+MzDzXzxiXxoEbf3cCDpiefQok2/FFZ0eHImSsAw=
+	t=1772301648; cv=none; b=gzthGLPr2mdSTUEFgE25wQJuB/mP9tdH1RLzJ8RqIGzqCRCMMUfsXx4z27LRPAMk6Bkh33eo46QiVwRJAjhRQlsVCHQ1uEbgfwcIcuViiiEs5u6rdbu9EHxH+vozReO401f5uy8ug6P3wJIBwE3DbaJrM+vjw4yhZur1tcNZTig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301648; c=relaxed/simple;
-	bh=fwaCvxdgVdYG4mJevpwrmm6Jo29s1sHiWJIHEYHBjHA=;
+	bh=nD3rhexcwvr6FJ8/u7+6dcm/MxodFI3tbeSOgjSgUq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kVIlLGx0JjZSJRVLizJFRv6WVo8w+bhwANNWrmwlwTdMZVIYLnYAwaMGI5KsgL64OCpw78wI7wRHRBwU/YvfGwzWDqUx2w7hnIgWJaanJktZSXDabHGIZZgUaIQW9H3oRg24fWEe2c8Rc9eNEI0eay/gb2Dwta2TBg0o+On2Vv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kGPyvsF1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQwTEmW/C+l0NZs4SBcvX7fFI918WE3ZSN7w2adkYJuF1d2rTWLcCt/MOj1GkjpOd8aluzELhCXKKGxdJts/03FmHh1WNd9uzpdgaGh6nMLhEKN3hAbUXIN8t0rxjR1K/S6Aw2O+b3u9aJKRDs3osqJCYzhwogR6E9XEQrXaqxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LibH2iz6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kGPyvsF1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0F7C19423;
-	Sat, 28 Feb 2026 18:00:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LibH2iz6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD05C19424;
+	Sat, 28 Feb 2026 18:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301647;
-	bh=fwaCvxdgVdYG4mJevpwrmm6Jo29s1sHiWJIHEYHBjHA=;
+	s=k20201202; t=1772301648;
+	bh=nD3rhexcwvr6FJ8/u7+6dcm/MxodFI3tbeSOgjSgUq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGPyvsF1PsDTT+QpZ2KMdOhCFGep5SnQMwbEbFy2HXodf18VpZR83QWj1m0gQ/6D3
-	 ZTuL+pUvja6gwpnzePd4C3aJdwDzFZbV9kwlAP97Zm8Upe8SJ7j3FfiuB3D6nmSPhU
-	 G+LumScta0r8KAQptXaQa/fqRMV2wbxZLFYxGbMX6k8amFfgTEvn7LDf0ajmt6FhMW
-	 5Qv7x+IvLNqXQX8AuQtYcDdh79y2ywqsFrUNc06J3KohqXVfq/PCMMfcyYvxlPvOf1
-	 Y/3TXu3MsCYQhQ/WNDHnUk8APgxgydiPa+MG9TFi5/d62Itw4jNj88GwevY98JCMrR
-	 x6okui17yNCvA==
+	b=LibH2iz6PTmA+Q3FTbjzcyFVcmLKSTUG/nIkkh/dmGErFL2gCZLZvC0X12ows8JlO
+	 k/E3x125pF54geUIrcSjmUGcmeshgKWc3uKaMnl6Y0WNl5x3rkVmAOaOmxeeSp6k7T
+	 BLCnDaaPvAz1Xuc5jo04HMwwgPIqkXfp7scG5cMewl8/uG4j7bm52fJNyxUPz9NiPp
+	 88aadXAeG/IWQ4Ir8LpxvfCA7k0Wr3+baY5T3LhuudFhHB7JIBxomDVdLSITr26ta5
+	 RZ2EERi+lIafULwV8vbxBGR/JMG50CCYRMheNgwAMG6U26zgTNYuFIFpoQQC0OM/OC
+	 VXMFJYn7IUyBg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Samuel Wu <wusamuel@google.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Leo Yan <leo.yan@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/385] PM: wakeup: Handle empty list in wakeup_sources_walk_start()
-Date: Sat, 28 Feb 2026 12:54:25 -0500
-Message-ID: <20260228180011.1568201-43-sashal@kernel.org>
+Subject: [PATCH 6.12 044/385] perf: arm_spe: Properly set hw.state on failures
+Date: Sat, 28 Feb 2026 12:54:26 -0500
+Message-ID: <20260228180011.1568201-44-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,42 +47,106 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Wu <wusamuel@google.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 75ce02f4bc9a8b8350b6b1b01872467b0cc960cc ]
+[ Upstream commit 283182c1c239f6873d1a50e9e710c1a699f2256b ]
 
-In the case of an empty wakeup_sources list, wakeup_sources_walk_start()
-will return an invalid but non-NULL address. This also affects wrappers
-of the aforementioned function, like for_each_wakeup_source().
+When arm_spe_pmu_next_off() fails to calculate a valid limit, it returns
+zero to indicate that tracing should not start.  However, the caller
+arm_spe_perf_aux_output_begin() does not propagate this failure by
+updating hwc->state, cause the error to be silently ignored by upper
+layers.
 
-Update wakeup_sources_walk_start() to return NULL in case of an empty
-list.
+Because hwc->state remains zero after a failure, arm_spe_pmu_start()
+continues to programs filter registers unnecessarily.  The driver
+still reports success to the perf core, so the core assumes the SPE
+event was enabled and proceeds to enable other events.  This breaks
+event group semantics: SPE is already stopped while other events in the
+same group are enabled.
 
-Fixes: b4941adb24c0 ("PM: wakeup: Add routine to help fetch wakeup source object.")
-Signed-off-by: Samuel Wu <wusamuel@google.com>
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20260124012133.2451708-2-wusamuel@google.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix this by updating arm_spe_perf_aux_output_begin() to return a status
+code indicating success (0) or failure (-EIO).  Both the interrupt
+handler and arm_spe_pmu_start() check the return value and call
+arm_spe_pmu_stop() to set PERF_HES_STOPPED in hwc->state.
+
+In the interrupt handler, the period (e.g., period_left) needs to be
+updated, so PERF_EF_UPDATE is passed to arm_spe_pmu_stop().  When the
+error occurs during event start, the trace unit is not yet enabled, so
+a flag '0' is used to drain buffer and update state only.
+
+Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/wakeup.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/perf/arm_spe_pmu.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/base/power/wakeup.c b/drivers/base/power/wakeup.c
-index 752b417e81290..706cd556a0d69 100644
---- a/drivers/base/power/wakeup.c
-+++ b/drivers/base/power/wakeup.c
-@@ -280,9 +280,7 @@ EXPORT_SYMBOL_GPL(wakeup_sources_read_unlock);
-  */
- struct wakeup_source *wakeup_sources_walk_start(void)
- {
--	struct list_head *ws_head = &wakeup_sources;
--
--	return list_entry_rcu(ws_head->next, struct wakeup_source, entry);
-+	return list_first_or_null_rcu(&wakeup_sources, struct wakeup_source, entry);
- }
- EXPORT_SYMBOL_GPL(wakeup_sources_walk_start);
+diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
+index abd23430dc033..2fce871a1882d 100644
+--- a/drivers/perf/arm_spe_pmu.c
++++ b/drivers/perf/arm_spe_pmu.c
+@@ -102,6 +102,8 @@ struct arm_spe_pmu {
+ /* Keep track of our dynamic hotplug state */
+ static enum cpuhp_state arm_spe_pmu_online;
  
++static void arm_spe_pmu_stop(struct perf_event *event, int flags);
++
+ enum arm_spe_pmu_buf_fault_action {
+ 	SPE_PMU_BUF_FAULT_ACT_SPURIOUS,
+ 	SPE_PMU_BUF_FAULT_ACT_FATAL,
+@@ -497,8 +499,8 @@ static u64 arm_spe_pmu_next_off(struct perf_output_handle *handle)
+ 	return limit;
+ }
+ 
+-static void arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
+-					  struct perf_event *event)
++static int arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
++					 struct perf_event *event)
+ {
+ 	u64 base, limit;
+ 	struct arm_spe_pmu_buf *buf;
+@@ -506,7 +508,6 @@ static void arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
+ 	/* Start a new aux session */
+ 	buf = perf_aux_output_begin(handle, event);
+ 	if (!buf) {
+-		event->hw.state |= PERF_HES_STOPPED;
+ 		/*
+ 		 * We still need to clear the limit pointer, since the
+ 		 * profiler might only be disabled by virtue of a fault.
+@@ -526,6 +527,7 @@ static void arm_spe_perf_aux_output_begin(struct perf_output_handle *handle,
+ 
+ out_write_limit:
+ 	write_sysreg_s(limit, SYS_PMBLIMITR_EL1);
++	return (limit & PMBLIMITR_EL1_E) ? 0 : -EIO;
+ }
+ 
+ static void arm_spe_perf_aux_output_end(struct perf_output_handle *handle)
+@@ -665,7 +667,10 @@ static irqreturn_t arm_spe_pmu_irq_handler(int irq, void *dev)
+ 		 * when we get to it.
+ 		 */
+ 		if (!(handle->aux_flags & PERF_AUX_FLAG_TRUNCATED)) {
+-			arm_spe_perf_aux_output_begin(handle, event);
++			if (arm_spe_perf_aux_output_begin(handle, event)) {
++				arm_spe_pmu_stop(event, PERF_EF_UPDATE);
++				break;
++			}
+ 			isb();
+ 		}
+ 		break;
+@@ -760,9 +765,10 @@ static void arm_spe_pmu_start(struct perf_event *event, int flags)
+ 	struct perf_output_handle *handle = this_cpu_ptr(spe_pmu->handle);
+ 
+ 	hwc->state = 0;
+-	arm_spe_perf_aux_output_begin(handle, event);
+-	if (hwc->state)
++	if (arm_spe_perf_aux_output_begin(handle, event)) {
++		arm_spe_pmu_stop(event, 0);
+ 		return;
++	}
+ 
+ 	reg = arm_spe_event_to_pmsfcr(event);
+ 	write_sysreg_s(reg, SYS_PMSFCR_EL1);
 -- 
 2.51.0
 
