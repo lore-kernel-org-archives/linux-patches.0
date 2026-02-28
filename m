@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667D63A2AE1
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5373A2AE1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302663; cv=none; b=KNrmlGzX1Hlxh1xzB7MlCoKJgAWaohDWur7ha7emcGGYtily5KLQQz+N56qL3AZLT/t1Vax9Hn2kmjGaxgSf81PMU+sVOf1pCW9RZJ+62IoDO6oMouH0/ozi0HLX8z5Kzlolr0I/4cbra6ZGseD4V8pMMZSEuAcBzTdEFHCy8tk=
+	t=1772302664; cv=none; b=nRcLkVV9eyoalD7ipqdmme9IVCuFyeCdzxls9vtITlvnYbBysTR3SzpG9OKI3P+aA6ZMJkdJsCxS7tQMXx76ZGqxoTWcHpDOPmsp2wsaxltoT8UW4a+ajISLSgEdZj1iJdRghB4I1hesCODIruPojN+m33YKxnzb4IH9JX1achg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302663; c=relaxed/simple;
-	bh=XyV6u3KIJgHjlKWEbV6+tSCazb+XuECZAT+marlY0s0=;
+	s=arc-20240116; t=1772302664; c=relaxed/simple;
+	bh=IYpztofmuAThepboPbrskmyvVQ7kjZgaCX2xskHHu5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPh5FXRs4DhJxzSCBSd3EuQPGh2B5bkH+9As63s1pso0c4gr/BYjmbowbFV0qMCk7vCfRRzTdrQEbPR2b9v9YVAHKXZggrLqmNLN7tD2I+zg835R0ywj7+K1xTcjOGUvSxDgOzGdEVywrvM0spwlmsNX4yukrdwVusfdvs4ZEbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EW0boVtE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NJKpCVARtZfsILee/upr+y38ebqWvrbYKpoHnEsoCOG05eci56frtV7pdpB3DR4sPm+bJScFwAU32u8IvuG3yHKAarlioXmm2x8d5pQmQZxptl3UMeB5ihuwx1Ie9ROXGGBCjbdwXf+aLt96nV8MqVkltLTl37mSxbu7AfT5HlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GW/IYd4Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EW0boVtE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2925C19424;
-	Sat, 28 Feb 2026 18:17:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GW/IYd4Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE4CC116D0;
+	Sat, 28 Feb 2026 18:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302663;
-	bh=XyV6u3KIJgHjlKWEbV6+tSCazb+XuECZAT+marlY0s0=;
+	bh=IYpztofmuAThepboPbrskmyvVQ7kjZgaCX2xskHHu5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EW0boVtEIr+96aUCIihUa6W6ojnKOgHo3zhx1PO7CAaabYELzh3Oef8K5ANDX5DMm
-	 j3Vuhas1Yc6X9aCLtABQIT15/KupQEHFdhhH4wk6uKHlbdXM72y3xuzwUTt6fVWZo2
-	 Xv/yR1wss+N8r7fjhXn1dBEHdLDnW2PvIwOP8GagC2fea53XHKuSqtn0mHI4EMsji1
-	 q+JiHhb8wDJV8Qoe5O9ppaZvH3owi0taAbceEXzsm8Z6oltNg38K8AmDk93Zq2aYcD
-	 t6Ndh4e+S60mz50BghddBdUxcQopDrinemzSUs0VK95Ym2ip1xGzfnCuM7AJzs3CFg
-	 a0WDxMjq+B3TA==
+	b=GW/IYd4ZemVtuT5sKbLMD3vAZECrHO39958e6GGoPcBONrrIHgrCpmeWS3apfkw1I
+	 1FzADKnrQNl1M4WumUXMwO9E2x4+036ZPb2FJDp+UkXigojZBexhjReh9c0aRsQFi8
+	 F0vbLtyTS8NrFmS3RFGN/93YU8o/W3/O9A2m5h6EDKPzXcmzoK+uU9aMKKr9AZlJpc
+	 v+IeEcHQ5pIzK1Q00LS2ksen4YvisVO+l5qWiOP+Nts+o5vAvVyZtchtzGaHJJiLHk
+	 Vo2nqd4h2Egv30c3hrbs/ivBuCcH9S9Rq5h63HXmevqVTLv53xCHqEAJ0XuqbcjWSA
+	 Tf1Rw75+dL0Xw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/147] gfs2: Add new gfs2_iomap_get helper
-Date: Sat, 28 Feb 2026 13:15:16 -0500
-Message-ID: <20260228181736.1605592-8-sashal@kernel.org>
+Subject: [PATCH 5.10 009/147] gfs2: Turn gfs2_extent_map into gfs2_{get,alloc}_extent
+Date: Sat, 28 Feb 2026 13:15:17 -0500
+Message-ID: <20260228181736.1605592-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -48,245 +48,190 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 54992257fe4bb9f76f66b3863492aa8cc5567790 ]
+[ Upstream commit 9153dac13a6966b63183bac450d5cd39b07cc85c ]
 
-Rename the current gfs2_iomap_get and gfs2_iomap_alloc functions to __*.
-Add a new gfs2_iomap_get helper that doesn't expose struct metapath.
-Rename gfs2_iomap_get_alloc to gfs2_iomap_alloc.  Use the new helpers
-where they make sense.
+Convert gfs2_extent_map to iomap and split it into gfs2_get_extent and
+gfs2_alloc_extent.  Instead of hardcoding the extent size, pass it in
+via the extlen parameter.
 
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Stable-dep-of: faddeb848305 ("gfs2: Fix use-after-free in iomap inline data write path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/bmap.c | 65 +++++++++++++++++++++++++++-----------------------
- fs/gfs2/bmap.h |  6 +++--
- fs/gfs2/file.c |  5 ++--
- 3 files changed, 41 insertions(+), 35 deletions(-)
+ fs/gfs2/bmap.c     | 59 ++++++++++++++++++++++++++++++----------------
+ fs/gfs2/bmap.h     |  6 +++--
+ fs/gfs2/dir.c      | 13 +++++-----
+ fs/gfs2/quota.c    |  4 ++--
+ fs/gfs2/recovery.c |  4 ++--
+ 5 files changed, 53 insertions(+), 33 deletions(-)
 
 diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
-index 3d60ad9982c87..8ec1114ab452c 100644
+index 8ec1114ab452c..41e98499862db 100644
 --- a/fs/gfs2/bmap.c
 +++ b/fs/gfs2/bmap.c
-@@ -629,7 +629,7 @@ enum alloc_state {
- };
- 
- /**
-- * gfs2_iomap_alloc - Build a metadata tree of the requested height
-+ * __gfs2_iomap_alloc - Build a metadata tree of the requested height
-  * @inode: The GFS2 inode
-  * @iomap: The iomap structure
-  * @mp: The metapath, with proper height information calculated
-@@ -639,7 +639,7 @@ enum alloc_state {
-  *  ii) Indirect blocks to fill in lower part of the metadata tree
-  * iii) Data blocks
-  *
-- * This function is called after gfs2_iomap_get, which works out the
-+ * This function is called after __gfs2_iomap_get, which works out the
-  * total number of blocks which we need via gfs2_alloc_size.
-  *
-  * We then do the actual allocation asking for an extent at a time (if
-@@ -657,8 +657,8 @@ enum alloc_state {
-  * Returns: errno on error
-  */
- 
--static int gfs2_iomap_alloc(struct inode *inode, struct iomap *iomap,
--			    struct metapath *mp)
-+static int __gfs2_iomap_alloc(struct inode *inode, struct iomap *iomap,
-+			      struct metapath *mp)
- {
- 	struct gfs2_inode *ip = GFS2_I(inode);
- 	struct gfs2_sbd *sdp = GFS2_SB(inode);
-@@ -799,10 +799,10 @@ static u64 gfs2_alloc_size(struct inode *inode, struct metapath *mp, u64 size)
- 
- 	/*
- 	 * For writes to stuffed files, this function is called twice via
--	 * gfs2_iomap_get, before and after unstuffing. The size we return the
-+	 * __gfs2_iomap_get, before and after unstuffing. The size we return the
- 	 * first time needs to be large enough to get the reservation and
- 	 * allocation sizes right.  The size we return the second time must
--	 * be exact or else gfs2_iomap_alloc won't do the right thing.
-+	 * be exact or else __gfs2_iomap_alloc won't do the right thing.
- 	 */
- 
- 	if (gfs2_is_stuffed(ip) || mp->mp_fheight != mp->mp_aheight) {
-@@ -826,7 +826,7 @@ static u64 gfs2_alloc_size(struct inode *inode, struct metapath *mp, u64 size)
+@@ -1316,28 +1316,47 @@ int gfs2_block_map(struct inode *inode, sector_t lblock,
+ 	return ret;
  }
  
- /**
-- * gfs2_iomap_get - Map blocks from an inode to disk blocks
-+ * __gfs2_iomap_get - Map blocks from an inode to disk blocks
-  * @inode: The inode
-  * @pos: Starting position in bytes
-  * @length: Length to map, in bytes
-@@ -836,9 +836,9 @@ static u64 gfs2_alloc_size(struct inode *inode, struct metapath *mp, u64 size)
-  *
-  * Returns: errno
-  */
--static int gfs2_iomap_get(struct inode *inode, loff_t pos, loff_t length,
--			  unsigned flags, struct iomap *iomap,
--			  struct metapath *mp)
-+static int __gfs2_iomap_get(struct inode *inode, loff_t pos, loff_t length,
-+			    unsigned flags, struct iomap *iomap,
-+			    struct metapath *mp)
+-/*
+- * Deprecated: do not use in new code
+- */
+-int gfs2_extent_map(struct inode *inode, u64 lblock, int *new, u64 *dblock, unsigned *extlen)
++int gfs2_get_extent(struct inode *inode, u64 lblock, u64 *dblock,
++		    unsigned int *extlen)
  {
- 	struct gfs2_inode *ip = GFS2_I(inode);
- 	struct gfs2_sbd *sdp = GFS2_SB(inode);
-@@ -972,12 +972,10 @@ static int gfs2_iomap_get(struct inode *inode, loff_t pos, loff_t length,
- int gfs2_lblk_to_dblk(struct inode *inode, u32 lblock, u64 *dblock)
- {
- 	struct iomap iomap = { };
--	struct metapath mp = { .mp_aheight = 1, };
- 	loff_t pos = (loff_t)lblock << inode->i_blkbits;
+-	struct buffer_head bh = { .b_state = 0, .b_blocknr = 0 };
++	unsigned int blkbits = inode->i_blkbits;
++	struct iomap iomap = { };
++	unsigned int len;
  	int ret;
- 
--	ret = gfs2_iomap_get(inode, pos, i_blocksize(inode), 0, &iomap, &mp);
--	release_metapath(&mp);
-+	ret = gfs2_iomap_get(inode, pos, i_blocksize(inode), &iomap);
- 	if (ret == 0)
- 		*dblock = iomap.addr >> inode->i_blkbits;
- 
-@@ -1106,14 +1104,14 @@ static int gfs2_iomap_begin_write(struct inode *inode, loff_t pos,
- 			if (ret)
- 				goto out_trans_end;
- 			release_metapath(mp);
--			ret = gfs2_iomap_get(inode, iomap->offset,
--					     iomap->length, flags, iomap, mp);
-+			ret = __gfs2_iomap_get(inode, iomap->offset,
-+					       iomap->length, flags, iomap, mp);
- 			if (ret)
- 				goto out_trans_end;
- 		}
- 
- 		if (iomap->type == IOMAP_HOLE) {
--			ret = gfs2_iomap_alloc(inode, iomap, mp);
-+			ret = __gfs2_iomap_alloc(inode, iomap, mp);
- 			if (ret) {
- 				gfs2_trans_end(sdp);
- 				gfs2_inplace_release(ip);
-@@ -1165,7 +1163,7 @@ static int gfs2_iomap_begin(struct inode *inode, loff_t pos, loff_t length,
- 			goto out;
- 	}
- 
--	ret = gfs2_iomap_get(inode, pos, length, flags, iomap, &mp);
-+	ret = __gfs2_iomap_get(inode, pos, length, flags, iomap, &mp);
- 	if (ret)
- 		goto out_unlock;
- 
-@@ -1286,9 +1284,7 @@ int gfs2_block_map(struct inode *inode, sector_t lblock,
- 	struct gfs2_inode *ip = GFS2_I(inode);
- 	loff_t pos = (loff_t)lblock << inode->i_blkbits;
- 	loff_t length = bh_map->b_size;
--	struct metapath mp = { .mp_aheight = 1, };
- 	struct iomap iomap = { };
--	int flags = create ? IOMAP_WRITE : 0;
- 	int ret;
- 
- 	clear_buffer_mapped(bh_map);
-@@ -1296,10 +1292,10 @@ int gfs2_block_map(struct inode *inode, sector_t lblock,
- 	clear_buffer_boundary(bh_map);
- 	trace_gfs2_bmap(ip, bh_map, lblock, create, 1);
- 
--	ret = gfs2_iomap_get(inode, pos, length, flags, &iomap, &mp);
--	if (create && !ret && iomap.type == IOMAP_HOLE)
--		ret = gfs2_iomap_alloc(inode, &iomap, &mp);
--	release_metapath(&mp);
-+	if (!create)
-+		ret = gfs2_iomap_get(inode, pos, length, &iomap);
-+	else
-+		ret = gfs2_iomap_alloc(inode, pos, length, &iomap);
- 	if (ret)
- 		goto out;
- 
-@@ -1457,15 +1453,26 @@ static int trunc_start(struct inode *inode, u64 newsize)
- 	return error;
- }
- 
--int gfs2_iomap_get_alloc(struct inode *inode, loff_t pos, loff_t length,
--			 struct iomap *iomap)
-+int gfs2_iomap_get(struct inode *inode, loff_t pos, loff_t length,
-+		   struct iomap *iomap)
-+{
-+	struct metapath mp = { .mp_aheight = 1, };
-+	int ret;
+-	int create = *new;
+-
+-	BUG_ON(!extlen);
+-	BUG_ON(!dblock);
+-	BUG_ON(!new);
+-
+-	bh.b_size = BIT(inode->i_blkbits + (create ? 0 : 5));
+-	ret = gfs2_block_map(inode, lblock, &bh, create);
+-	*extlen = bh.b_size >> inode->i_blkbits;
+-	*dblock = bh.b_blocknr;
+-	if (buffer_new(&bh))
+-		*new = 1;
+-	else
+-		*new = 0;
+-	return ret;
 +
-+	ret = __gfs2_iomap_get(inode, pos, length, 0, iomap, &mp);
-+	release_metapath(&mp);
-+	return ret;
++	ret = gfs2_iomap_get(inode, lblock << blkbits, *extlen << blkbits,
++			     &iomap);
++	if (ret)
++		return ret;
++	if (iomap.type != IOMAP_MAPPED)
++		return -EIO;
++	*dblock = iomap.addr >> blkbits;
++	len = iomap.length >> blkbits;
++	if (len < *extlen)
++		*extlen = len;
++	return 0;
 +}
 +
-+int gfs2_iomap_alloc(struct inode *inode, loff_t pos, loff_t length,
-+		     struct iomap *iomap)
- {
- 	struct metapath mp = { .mp_aheight = 1, };
- 	int ret;
- 
--	ret = gfs2_iomap_get(inode, pos, length, IOMAP_WRITE, iomap, &mp);
-+	ret = __gfs2_iomap_get(inode, pos, length, IOMAP_WRITE, iomap, &mp);
- 	if (!ret && iomap->type == IOMAP_HOLE)
--		ret = gfs2_iomap_alloc(inode, iomap, &mp);
-+		ret = __gfs2_iomap_alloc(inode, iomap, &mp);
- 	release_metapath(&mp);
- 	return ret;
- }
-@@ -2516,7 +2523,6 @@ int __gfs2_punch_hole(struct file *file, loff_t offset, loff_t length)
- static int gfs2_map_blocks(struct iomap_writepage_ctx *wpc, struct inode *inode,
- 		loff_t offset)
- {
--	struct metapath mp = { .mp_aheight = 1, };
- 	int ret;
- 
- 	if (WARN_ON_ONCE(gfs2_is_stuffed(GFS2_I(inode))))
-@@ -2527,8 +2533,7 @@ static int gfs2_map_blocks(struct iomap_writepage_ctx *wpc, struct inode *inode,
- 		return 0;
- 
- 	memset(&wpc->iomap, 0, sizeof(wpc->iomap));
--	ret = gfs2_iomap_get(inode, offset, INT_MAX, 0, &wpc->iomap, &mp);
--	release_metapath(&mp);
-+	ret = gfs2_iomap_get(inode, offset, INT_MAX, &wpc->iomap);
- 	return ret;
++int gfs2_alloc_extent(struct inode *inode, u64 lblock, u64 *dblock,
++		      unsigned int *extlen, bool *new)
++{
++	unsigned int blkbits = inode->i_blkbits;
++	struct iomap iomap = { };
++	unsigned int len;
++	int ret;
++
++	ret = gfs2_iomap_alloc(inode, lblock << blkbits, *extlen << blkbits,
++			       &iomap);
++	if (ret)
++		return ret;
++	if (iomap.type != IOMAP_MAPPED)
++		return -EIO;
++	*dblock = iomap.addr >> blkbits;
++	len = iomap.length >> blkbits;
++	if (len < *extlen)
++		*extlen = len;
++	*new = iomap.flags & IOMAP_F_NEW;
++	return 0;
  }
  
+ /*
 diff --git a/fs/gfs2/bmap.h b/fs/gfs2/bmap.h
-index aed4632d47d30..c63efee8aaa43 100644
+index c63efee8aaa43..67ef7cf7fdacc 100644
 --- a/fs/gfs2/bmap.h
 +++ b/fs/gfs2/bmap.h
-@@ -49,8 +49,10 @@ extern const struct iomap_writeback_ops gfs2_writeback_ops;
- extern int gfs2_unstuff_dinode(struct gfs2_inode *ip, struct page *page);
- extern int gfs2_block_map(struct inode *inode, sector_t lblock,
- 			  struct buffer_head *bh, int create);
--extern int gfs2_iomap_get_alloc(struct inode *inode, loff_t pos, loff_t length,
--				struct iomap *iomap);
-+extern int gfs2_iomap_get(struct inode *inode, loff_t pos, loff_t length,
-+			  struct iomap *iomap);
-+extern int gfs2_iomap_alloc(struct inode *inode, loff_t pos, loff_t length,
-+			    struct iomap *iomap);
- extern int gfs2_extent_map(struct inode *inode, u64 lblock, int *new,
- 			   u64 *dblock, unsigned *extlen);
+@@ -53,8 +53,10 @@ extern int gfs2_iomap_get(struct inode *inode, loff_t pos, loff_t length,
+ 			  struct iomap *iomap);
+ extern int gfs2_iomap_alloc(struct inode *inode, loff_t pos, loff_t length,
+ 			    struct iomap *iomap);
+-extern int gfs2_extent_map(struct inode *inode, u64 lblock, int *new,
+-			   u64 *dblock, unsigned *extlen);
++extern int gfs2_get_extent(struct inode *inode, u64 lblock, u64 *dblock,
++			   unsigned int *extlen);
++extern int gfs2_alloc_extent(struct inode *inode, u64 lblock, u64 *dblock,
++			     unsigned *extlen, bool *new);
  extern int gfs2_setattr_size(struct inode *inode, u64 size);
-diff --git a/fs/gfs2/file.c b/fs/gfs2/file.c
-index 5e2fe456ed922..ec5000e13bb70 100644
---- a/fs/gfs2/file.c
-+++ b/fs/gfs2/file.c
-@@ -422,7 +422,7 @@ static int gfs2_allocate_page_backing(struct page *page, unsigned int length)
- 	do {
- 		struct iomap iomap = { };
+ extern void gfs2_trim_blocks(struct inode *inode);
+ extern int gfs2_truncatei_resume(struct gfs2_inode *ip);
+diff --git a/fs/gfs2/dir.c b/fs/gfs2/dir.c
+index c0f2875c946c9..4517ffb7c13d2 100644
+--- a/fs/gfs2/dir.c
++++ b/fs/gfs2/dir.c
+@@ -159,7 +159,7 @@ static int gfs2_dir_write_data(struct gfs2_inode *ip, const char *buf,
+ 	unsigned int o;
+ 	int copied = 0;
+ 	int error = 0;
+-	int new = 0;
++	bool new = false;
  
--		if (gfs2_iomap_get_alloc(page->mapping->host, pos, length, &iomap))
-+		if (gfs2_iomap_alloc(page->mapping->host, pos, length, &iomap))
- 			return -EIO;
+ 	if (!size)
+ 		return 0;
+@@ -189,9 +189,9 @@ static int gfs2_dir_write_data(struct gfs2_inode *ip, const char *buf,
+ 			amount = sdp->sd_sb.sb_bsize - o;
  
- 		if (length < iomap.length)
-@@ -1001,8 +1001,7 @@ static int fallocate_chunk(struct inode *inode, loff_t offset, loff_t len,
- 	while (offset < end) {
- 		struct iomap iomap = { };
+ 		if (!extlen) {
+-			new = 1;
+-			error = gfs2_extent_map(&ip->i_inode, lblock, &new,
+-						&dblock, &extlen);
++			extlen = 1;
++			error = gfs2_alloc_extent(&ip->i_inode, lblock, &dblock,
++						  &extlen, &new);
+ 			if (error)
+ 				goto fail;
+ 			error = -EIO;
+@@ -286,15 +286,14 @@ static int gfs2_dir_read_data(struct gfs2_inode *ip, __be64 *buf,
+ 	while (copied < size) {
+ 		unsigned int amount;
+ 		struct buffer_head *bh;
+-		int new;
  
--		error = gfs2_iomap_get_alloc(inode, offset, end - offset,
--					     &iomap);
-+		error = gfs2_iomap_alloc(inode, offset, end - offset, &iomap);
- 		if (error)
- 			goto out;
- 		offset = iomap.offset + iomap.length;
+ 		amount = size - copied;
+ 		if (amount > sdp->sd_sb.sb_bsize - o)
+ 			amount = sdp->sd_sb.sb_bsize - o;
+ 
+ 		if (!extlen) {
+-			new = 0;
+-			error = gfs2_extent_map(&ip->i_inode, lblock, &new,
++			extlen = 32;
++			error = gfs2_get_extent(&ip->i_inode, lblock,
+ 						&dblock, &extlen);
+ 			if (error || !dblock)
+ 				goto fail;
+diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
+index 8c226aa286336..984ca5057d9d5 100644
+--- a/fs/gfs2/quota.c
++++ b/fs/gfs2/quota.c
+@@ -1394,8 +1394,8 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
+ 		unsigned int y;
+ 
+ 		if (!extlen) {
+-			int new = 0;
+-			error = gfs2_extent_map(&ip->i_inode, x, &new, &dblock, &extlen);
++			extlen = 32;
++			error = gfs2_get_extent(&ip->i_inode, x, &dblock, &extlen);
+ 			if (error)
+ 				goto fail;
+ 		}
+diff --git a/fs/gfs2/recovery.c b/fs/gfs2/recovery.c
+index 8f9c6480a5df4..b925ba068af50 100644
+--- a/fs/gfs2/recovery.c
++++ b/fs/gfs2/recovery.c
+@@ -34,12 +34,12 @@ int gfs2_replay_read_block(struct gfs2_jdesc *jd, unsigned int blk,
+ {
+ 	struct gfs2_inode *ip = GFS2_I(jd->jd_inode);
+ 	struct gfs2_glock *gl = ip->i_gl;
+-	int new = 0;
+ 	u64 dblock;
+ 	u32 extlen;
+ 	int error;
+ 
+-	error = gfs2_extent_map(&ip->i_inode, blk, &new, &dblock, &extlen);
++	extlen = 32;
++	error = gfs2_get_extent(&ip->i_inode, blk, &dblock, &extlen);
+ 	if (error)
+ 		return error;
+ 	if (!dblock) {
 -- 
 2.51.0
 
