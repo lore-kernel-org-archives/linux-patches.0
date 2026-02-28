@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD962DE717
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C50340A47
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301106; cv=none; b=j2/LpaBnS/ug7piNUWn8MGYFFzMJtdfAth8nRPQcMchlY99rUHSmLmOYv4fdUrz6ATeSrDxPaeRWtAm1K5mFQRYFxz568SaeGj6e4yPmQbdjQSFMR+EfgoCTyot//z5qYY9FASi4yAq19LXq4YHNW6GdHSpFHVo9c+cP46MJ/Ao=
+	t=1772301107; cv=none; b=Fyfw+IylVc0zOJ+2fP0kEGtMMYvBZKOI/0CJdYj/Yd7dcj729sNp4iEuxYKvZBOXg1rYGskjT/JElyOgNUz13YjtXvcF98RjrM8iJ9wkxh8XjfFBbbIkpoHKRHjoHSQrtHONGCHDRQ6n/fHYaIUHffxPHSveUufA3iLAJ08SnWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301106; c=relaxed/simple;
-	bh=n5tXH2gD6+CtWNUQdR7C/L6vhkUZT3ktzg7iQZppVJQ=;
+	s=arc-20240116; t=1772301107; c=relaxed/simple;
+	bh=e3ZXd0XXxi0wpZ4x26jBB6Oe3mMb01vU4qY4HNeryYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NlV9NHs3zw0UmPbAESC4oJgm5lNriaoe6CL9CYPpkMBQLBSmi27gcSOgcINBugHiZ+57/6K69nmFaaAL33mNffWNz5kTv49/yQbljZYTC6CVUieRyxqwbCrgT7NyPlKcTvVeyOXHxVb8gGRBn/VRxEVHsNNJbPxW0abZonAaCUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A9XudTMY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R0neQbDfwkyTD0FTjoIJ83ivE6UEBaMbSwTYMPQ3nREUMArH+gJY6180NehjZ/VEm1sAxu9NZKAFpbi4wqoXq5mCQWZXiy3h8nMl9vUqN3hz8YAxTYNf2j8cciNlGGVnrZmg3I7py7YWGkUQqfjjRlnaiW8xf6Vjs8Iy5n5e3yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BoUMTF8Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A9XudTMY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93B0C19423;
-	Sat, 28 Feb 2026 17:51:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BoUMTF8Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F5CC19425;
+	Sat, 28 Feb 2026 17:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301106;
-	bh=n5tXH2gD6+CtWNUQdR7C/L6vhkUZT3ktzg7iQZppVJQ=;
+	s=k20201202; t=1772301107;
+	bh=e3ZXd0XXxi0wpZ4x26jBB6Oe3mMb01vU4qY4HNeryYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A9XudTMY2zux4hoQGlZ6FoFPQmQXoY/AxjjrQu70fXxjxyqpL3qzsjxfjgZ+lPWDV
-	 i9oWpIgy6DWUhYqTk6rcA1oI4tB/RB+iVNcJS08nqrQ0zOG5MjHtjeCMuh44D9vJ5w
-	 CLUbIuIt8crapmaH/efS/ugEEfaCWjlL/RB3rLZqtTCgHYXrj1CFetkuukQlWJFHwo
-	 ZpBey6+w6NLhvrf2TkuActdHJT8z78zLZno3oNC55uVRT3cx+WrPWsAj22eBiknzO/
-	 rfNY+i5os4jb5asrkCDsW+Kn+Pb3NXqP7Pd/0xBSuzKpy6R8jZyapE9mviLlJD8PmQ
-	 N6s4pAMjFaXwg==
+	b=BoUMTF8QBOz9LxGIkAi8ES3tf4PHVP5+qKKVuwYRlYgSHYZzTQYG7Xowtc7g4QHlD
+	 zR87IEAeVvFh6S+PJ303yTzxZ5XIsbXcctlMW3xvpelKrEm/3hulIn1BFKmfru08VU
+	 INQHDkhk8idorsi/G+SgoB+c2MzFWG3rjW89spNr3tnVbsigVlq9mJ4lM8+eFEu/QO
+	 vQq78mvx8892e10g/uP9/7IzIgLkMWUQTcpSFpIDgUv/lkDUKVbCagsFOWZ9ozicGP
+	 ItiuGnD/9TkTepQMCQAkXvf2hIHe08ddt4acrtVX3KtqX0I8iQanL9u9mxVe6So/lT
+	 1F0t0EBHavsug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Nidhish A N <nidhish.a.n@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 260/752] wifi: iwlwifi: mld: Fix primary link selection logic
-Date: Sat, 28 Feb 2026 12:39:31 -0500
-Message-ID: <20260228174750.1542406-260-sashal@kernel.org>
+Subject: [PATCH 6.18 261/752] driver core: faux: stop using static struct device
+Date: Sat, 28 Feb 2026 12:39:32 -0500
+Message-ID: <20260228174750.1542406-261-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,91 +48,75 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Nidhish A N <nidhish.a.n@intel.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 7a749db26cab2334d5b356ac31e6f1147c7682da ]
+[ Upstream commit 61b76d07d2b46a86ea91267d36449fc78f8a1f6e ]
 
-When assigning emlsr.primary with emlsr.selected_primary
-we are checking if BIT(mld_vif->emlsr.selected_links) are
-a part of vif->active_links. This is incorrect as
-emlsr.selected_links is a bitmap of possibly two selected links.
-Therefore, performing the BIT() operation on it does not
-yield any meaningful result and almost always leads to
-incorrect primary link selection.
+faux_bus_root should not have been a static struct device, but rather a
+dynamically created structure so that lockdep and other testing tools do
+not trip over it (as well as being the right thing overall to do.)  Fix
+this up by making it properly dynamic.
 
-Additionally, we cannot rely on vif->active_links at this
-stage of the link switch flow because it contains both the
-removed links and also the newly added links.
-For example, if we had selected links in the past (0x11)
-and we now select links because of TTLM/debugfs (0x100),
-vif->active_links will now be (0x111) and primary link
-will be 0, while 0 is not even an active link. Thus,
-we create our own bitmap of final active links.
-
-Signed-off-by: Nidhish A N <nidhish.a.n@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260111193638.38b2e14e3a20.Ie81a88dfff0c5d2becedabab8398702808f6b1bf@changeid
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://lore.kernel.org/lkml/CALbr=LYKJsj6cbrDLA07qioKhWJcRj+gW8=bq5=4ZvpEe2c4Yg@mail.gmail.com/
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/2026012145-lapping-countless-ef81@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/mld/mac80211.c | 23 ++++++++++++-------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/base/faux.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-index 2a7e7417d7d84..0f2db3ed58530 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-@@ -980,7 +980,9 @@ int iwl_mld_assign_vif_chanctx(struct ieee80211_hw *hw,
+diff --git a/drivers/base/faux.c b/drivers/base/faux.c
+index 21dd02124231a..23d7258172325 100644
+--- a/drivers/base/faux.c
++++ b/drivers/base/faux.c
+@@ -29,9 +29,7 @@ struct faux_object {
+ };
+ #define to_faux_object(dev) container_of_const(dev, struct faux_object, faux_dev.dev)
+ 
+-static struct device faux_bus_root = {
+-	.init_name	= "faux",
+-};
++static struct device *faux_bus_root;
+ 
+ static int faux_match(struct device *dev, const struct device_driver *drv)
  {
- 	struct iwl_mld *mld = IWL_MAC80211_GET_MLD(hw);
- 	struct iwl_mld_link *mld_link = iwl_mld_link_from_mac80211(link);
--	unsigned int n_active = iwl_mld_count_active_links(mld, vif);
-+	struct iwl_mld_link *temp_mld_link;
-+	struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(vif);
-+	u16 final_active_links = 0;
+@@ -152,7 +150,7 @@ struct faux_device *faux_device_create_with_groups(const char *name,
+ 	if (parent)
+ 		dev->parent = parent;
+ 	else
+-		dev->parent = &faux_bus_root;
++		dev->parent = faux_bus_root;
+ 	dev->bus = &faux_bus_type;
+ 	dev_set_name(dev, "%s", name);
+ 	device_set_pm_not_required(dev);
+@@ -236,9 +234,15 @@ int __init faux_bus_init(void)
+ {
  	int ret;
  
- 	lockdep_assert_wiphy(mld->wiphy);
-@@ -988,10 +990,7 @@ int iwl_mld_assign_vif_chanctx(struct ieee80211_hw *hw,
- 	if (WARN_ON(!mld_link))
- 		return -EINVAL;
+-	ret = device_register(&faux_bus_root);
++	faux_bus_root = kzalloc(sizeof(*faux_bus_root), GFP_KERNEL);
++	if (!faux_bus_root)
++		return -ENOMEM;
++
++	dev_set_name(faux_bus_root, "faux");
++
++	ret = device_register(faux_bus_root);
+ 	if (ret) {
+-		put_device(&faux_bus_root);
++		put_device(faux_bus_root);
+ 		return ret;
+ 	}
  
--	/* if the assigned one was not counted yet, count it now */
- 	if (!rcu_access_pointer(mld_link->chan_ctx)) {
--		n_active++;
--
- 		/* Track addition of non-BSS link */
- 		if (ieee80211_vif_type_p2p(vif) != NL80211_IFTYPE_STATION) {
- 			ret = iwl_mld_emlsr_check_non_bss_block(mld, 1);
-@@ -1012,17 +1011,25 @@ int iwl_mld_assign_vif_chanctx(struct ieee80211_hw *hw,
+@@ -256,6 +260,6 @@ int __init faux_bus_init(void)
+ 	bus_unregister(&faux_bus_type);
  
- 	rcu_assign_pointer(mld_link->chan_ctx, ctx);
- 
--	if (n_active > 1) {
--		struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(vif);
-+	/* We cannot rely on vif->active_links at this stage as it contains
-+	 * both the removed links and the newly added links.
-+	 * Therefore, we create our own bitmap of the final active links,
-+	 * which does not include the removed links.
-+	 */
-+	for_each_mld_vif_valid_link(mld_vif, temp_mld_link) {
-+		if (rcu_access_pointer(temp_mld_link->chan_ctx))
-+			final_active_links |= BIT(link_id);
-+	}
- 
-+	if (hweight16(final_active_links) > 1) {
- 		/* Indicate to mac80211 that EML is enabled */
- 		vif->driver_flags |= IEEE80211_VIF_EML_ACTIVE;
- 		mld_vif->emlsr.last_entry_ts = jiffies;
- 
--		if (vif->active_links & BIT(mld_vif->emlsr.selected_links))
-+		if (final_active_links == mld_vif->emlsr.selected_links)
- 			mld_vif->emlsr.primary = mld_vif->emlsr.selected_primary;
- 		else
--			mld_vif->emlsr.primary = __ffs(vif->active_links);
-+			mld_vif->emlsr.primary = __ffs(final_active_links);
- 
- 		iwl_dbg_tlv_time_point(&mld->fwrt, IWL_FW_INI_TIME_ESR_LINK_UP,
- 				       NULL);
+ error_bus:
+-	device_unregister(&faux_bus_root);
++	device_unregister(faux_bus_root);
+ 	return ret;
+ }
 -- 
 2.51.0
 
