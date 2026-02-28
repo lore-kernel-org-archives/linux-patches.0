@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490FB338939
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E08342538
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301751; cv=none; b=Y4n6B8JOy69Ql1nUxQmqpzhNmDZjE0R7nqWj9qevZvbDIMwyNqQmQaF2miNV3YACtTSfdDjqct/YBz2Goj4UP1fAtN3mHaPf8X8tDpEEfsABVJbXEALsJCzgyTfmNtNFxs7EppmZ38Xeg5GX8G1uum5m/2uuhsaZpTQHewOO91M=
+	t=1772301752; cv=none; b=FeKqDkYHDvvXXj7Y4s09suz6rwkAMRCBfc2B0QiDDZlcWY9ZmF0mmnxBRJJrJDJpIxgjh17Cb2CiRDJa5Y+eq6HrzUfNcqcVStB/Nqaz5K9TzORPZhBQNT4oR7/SZvqOmHXQM3k5VawPxwMshSf4UmwewxfB1nSwE920xaFPdpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301751; c=relaxed/simple;
-	bh=3y49546T6d/tPdaYEn1VK5fBQi2CdmUuv79nk7KIQVk=;
+	s=arc-20240116; t=1772301752; c=relaxed/simple;
+	bh=659phb0CeW0nNQ3yoSfmY5u7mDeEXiccDIQFmiOyaHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aJqN2gWZU0kFjljjOoxwx9Bb7bzDpfiTDB9oLDh7a8/jyr5ebq22Nj0CurBqzBxa9xNJ0awUCagTBI6OAYsHru2Vj7PPyZRkawZS2iP8AxB6BpcA/Sj/NRzDuFnG0WxAwLbrxroTSuezEbAMMDPszExHEYN/262SPG1AxgiRtJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tSngfoYZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F+0nMygyAsyktpAQvWTfgNWzwyEgYmtlMyJJoAmT8xVI+i/AUgXscOVUvOiWvbismxfDhs3DjqQ6/azF7KBGBbPTl3oeOvznkWWw/r2aYXNt+1DrK4QGXxPf/9384//4gvMb0W7jWa4Jrsq8+btSTuF687pl1l+CeIFfgZAyrk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DDk1I7O/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tSngfoYZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52FAC2BC87;
-	Sat, 28 Feb 2026 18:02:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DDk1I7O/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B2AC116D0;
+	Sat, 28 Feb 2026 18:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301751;
-	bh=3y49546T6d/tPdaYEn1VK5fBQi2CdmUuv79nk7KIQVk=;
+	bh=659phb0CeW0nNQ3yoSfmY5u7mDeEXiccDIQFmiOyaHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tSngfoYZmKxFRSAObjdZ9aFaXbMV2DwjEREC9mgu7i/JI+CusyZ0kUOWnzHzeppL/
-	 HHqEcgF++7qKfGHDIDjWihel/zSVzyROGVaFTgykZFQS4sdsbw9qLDkjtowtYa5O/r
-	 29tSdxiQYTsrBmjP4SCXa+ZKPOTfcxfa9BZ7MsMoZvSNAVU+zBHPqhOdXn3PaGOckr
-	 XOsgDHsX7sS4pfKclplEziofo6c6Hg8kOoQlxW6stc0A+C87F33nrxLp9UXimH8God
-	 EVHL5Z6s3y8CceTEwHhQWYUvvtGDVjA7MGCukRxeAPI/knKWh04aT3Y/SZ6IuKzrK1
-	 web46/sw03MLQ==
+	b=DDk1I7O/GVLBK0XdNjhIzX4rlk8qmleAOLtgsDiNdoH/YbFETPXTZ2Mx3YlGMX+lP
+	 lDhgrZczkay0bESVpP1aRv8Tg/FLsqRUVitZeOberFbRNHKTsnzJ+f2FtB+NNPprMH
+	 QWIzxyhpKfOqSt6rzYUtuhm89KUJkJFIVC79Ng9T8J7c8Vo6G2kdEbmRNLYWuC/imE
+	 yeZ5Y8BbFkKclt3c+P8+0RCs+buuYJv2EnUDCJ7fQshBaH5R/xL0YCykplQrz/4pmS
+	 nq52H85LI7jZNF07GUjSvEOtVO1jVxE6UUrqY6xEamMOojoTobboVKUb4iQ1xxw8Pr
+	 U5pZ6e8mJMhEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/385] regulator: core: move supply check earlier in set_machine_constraints()
-Date: Sat, 28 Feb 2026 12:56:16 -0500
-Message-ID: <20260228180011.1568201-154-sashal@kernel.org>
+Subject: [PATCH 6.12 155/385] HID: playstation: Add missing check for input_ff_create_memless
+Date: Sat, 28 Feb 2026 12:56:17 -0500
+Message-ID: <20260228180011.1568201-155-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -43,120 +43,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 86a8eeb0e913f4b6a55dabba5122098d4e805e55 ]
+[ Upstream commit e6807641ac94e832988655a1c0e60ccc806b76dc ]
 
-Since commit 98e48cd9283d ("regulator: core: resolve supply for
-boot-on/always-on regulators"), set_machine_constraints() can return
--EPROBE_DEFER very late, after it has done a lot of work and
-configuration of the regulator.
+The ps_gamepad_create() function calls input_ff_create_memless()
+without verifying its return value,  which can lead to incorrect
+behavior or potential crashes when FF effects are triggered.
 
-This means that configuration will happen multiple times for no
-benefit in that case. Furthermore, this can lead to timing-dependent
-voltage glitches as mentioned e.g. in commit 8a866d527ac0 ("regulator:
-core: Resolve supply name earlier to prevent double-init").
+Add a check for the return value of input_ff_create_memless().
 
-We can know that it's going to fail very early, in particular before
-going through the complete regulator configuration by moving some code
-around a little.
-
-Do so to avoid re-configuring the regulator multiple times, also
-avoiding the voltage glitches if we can.
-
-Fixes: 98e48cd9283d ("regulator: core: resolve supply for boot-on/always-on regulators")
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://patch.msgid.link/20260109-regulators-defer-v2-3-1a25dc968e60@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 51151098d7ab ("HID: playstation: add DualSense classic rumble support.")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 55 ++++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 25 deletions(-)
+ drivers/hid/hid-playstation.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 1c0748fee6846..078d3dc50aa3f 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1406,6 +1406,33 @@ static int set_machine_constraints(struct regulator_dev *rdev)
- 	int ret = 0;
- 	const struct regulator_ops *ops = rdev->desc->ops;
- 
-+	/*
-+	 * If there is no mechanism for controlling the regulator then
-+	 * flag it as always_on so we don't end up duplicating checks
-+	 * for this so much.  Note that we could control the state of
-+	 * a supply to control the output on a regulator that has no
-+	 * direct control.
-+	 */
-+	if (!rdev->ena_pin && !ops->enable) {
-+		if (rdev->supply_name && !rdev->supply)
-+			return -EPROBE_DEFER;
-+
-+		if (rdev->supply)
-+			rdev->constraints->always_on =
-+				rdev->supply->rdev->constraints->always_on;
-+		else
-+			rdev->constraints->always_on = true;
-+	}
-+
-+	/*
-+	 * If we want to enable this regulator, make sure that we know the
-+	 * supplying regulator.
-+	 */
-+	if (rdev->constraints->always_on || rdev->constraints->boot_on) {
-+		if (rdev->supply_name && !rdev->supply)
-+			return -EPROBE_DEFER;
-+	}
-+
- 	ret = machine_constraints_voltage(rdev, rdev->constraints);
- 	if (ret != 0)
- 		return ret;
-@@ -1571,37 +1598,15 @@ static int set_machine_constraints(struct regulator_dev *rdev)
- 		}
+diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
+index 71a8d4ec9913b..b13a8f27cda0c 100644
+--- a/drivers/hid/hid-playstation.c
++++ b/drivers/hid/hid-playstation.c
+@@ -739,7 +739,9 @@ static struct input_dev *ps_gamepad_create(struct hid_device *hdev,
+ #if IS_ENABLED(CONFIG_PLAYSTATION_FF)
+ 	if (play_effect) {
+ 		input_set_capability(gamepad, EV_FF, FF_RUMBLE);
+-		input_ff_create_memless(gamepad, NULL, play_effect);
++		ret = input_ff_create_memless(gamepad, NULL, play_effect);
++		if (ret)
++			return ERR_PTR(ret);
  	}
+ #endif
  
--	/*
--	 * If there is no mechanism for controlling the regulator then
--	 * flag it as always_on so we don't end up duplicating checks
--	 * for this so much.  Note that we could control the state of
--	 * a supply to control the output on a regulator that has no
--	 * direct control.
--	 */
--	if (!rdev->ena_pin && !ops->enable) {
--		if (rdev->supply_name && !rdev->supply)
--			return -EPROBE_DEFER;
--
--		if (rdev->supply)
--			rdev->constraints->always_on =
--				rdev->supply->rdev->constraints->always_on;
--		else
--			rdev->constraints->always_on = true;
--	}
--
- 	/* If the constraints say the regulator should be on at this point
- 	 * and we have control then make sure it is enabled.
- 	 */
- 	if (rdev->constraints->always_on || rdev->constraints->boot_on) {
- 		bool supply_enabled = false;
- 
--		/* If we want to enable this regulator, make sure that we know
--		 * the supplying regulator.
--		 */
--		if (rdev->supply_name && !rdev->supply)
--			return -EPROBE_DEFER;
--
--		/* If supplying regulator has already been enabled,
-+		/* We have ensured a potential supply has been resolved above.
-+		 *
-+		 * If supplying regulator has already been enabled,
- 		 * it's not intended to have use_count increment
- 		 * when rdev is only boot-on.
- 		 */
 -- 
 2.51.0
 
