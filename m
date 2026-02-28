@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E5532AABE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B5532AABE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301237; cv=none; b=QLU0AFHXMKDjc6b4QqsNmmMo4yTQazXq+2n6quJsUeHN+PO4Wrx0MQ0kxz8kLTDNd+Zp8Xf94pFuriYUctWZlJC8mXkugvw85M0zvDLvEnzaN0epEBXmBbH+RR8OCdYoMsM56hNOmPh2GJBvalGWE/A4JdN5UAUzuDO7rtaiuxA=
+	t=1772301238; cv=none; b=aYsD9bwcNTsDqcGc+DwuN9m0vRT05EI+Dl68QIZ9y3gKHWu661pkgRGZeXfZau65PbfNUhsAW49LVl+WMSy8j1g9ypW5Hzg8PQtajG80MkBYRYZmDkY81s8VY0hi5kT/LF8+vI0wvyYZu+nALYUP2qM4xq4R2Y27MvaNa09A1wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301237; c=relaxed/simple;
-	bh=Z3JggKkIQWZ7ZM1BGBwbAxjDIQXOhJSkTCR4Gf/52sM=;
+	s=arc-20240116; t=1772301238; c=relaxed/simple;
+	bh=V5zwxPQQmhoylxmdGBbyD7S0kz+77ermZOUg3JESav4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FYl+6qtkKX2HJEILqBIx78tfFuKYdvL5fe9BjiiJ2AOWCZNUkyMPMyDgA4sCelqUIGKzAprEUfGekgUeCwG8v+Paw+RWDTFLCBYT5hgFFQ6fLdyDetHIq/yxfnHp9c4Ha0tL+oVjgu4cuRJBTiRv14xXq+J3kb+sRlJMQZSDlfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DcD7tKFb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzStPkG79Tx+xl28vtvbD5filjgNGx3TUjAuYoCw3ZmYwTto6iY41IMS6arR/vJVJxpGkgKKyLptpWbxmJ+NMgLDCHS/05NxuyhPZlecNxX69dIQYyyonpgoFUIFk5FbJxwBoI8pWT01N/oZt+Y6CM9ZezSNsM3KgAyat6x8vqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oSylXh9q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DcD7tKFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7130C116D0;
-	Sat, 28 Feb 2026 17:53:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oSylXh9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70483C116D0;
+	Sat, 28 Feb 2026 17:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301237;
-	bh=Z3JggKkIQWZ7ZM1BGBwbAxjDIQXOhJSkTCR4Gf/52sM=;
+	s=k20201202; t=1772301238;
+	bh=V5zwxPQQmhoylxmdGBbyD7S0kz+77ermZOUg3JESav4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcD7tKFbZh9JTsYPvd8Rz3LxPUGdZLiQ9dOzCCkBBMmC025cgKIa2tK1AnDCasuut
-	 qxR1IJOpShdFgETg8v0biv/Repg+uCxL0FaTz5tQOQTH960yzPgp07d8K+8o51J7IN
-	 7Zh31imzZYGd/imlWU9WtSA8s7kOM5cOufDp34n6mO9g84EIFVGiqb+nKrebDA8ShF
-	 oCTGUauqSpoOmhm978t2Qh0L0DpoIxF4ft4uq0ZoFNPvOWr0JMZ5HyOntUBF4TB8sr
-	 mr0Vfg+wyK9flnA0XUFooIDbSVbP/GATA7os3NblMUSJOcyrGmw1uQCpBzZQERWgH9
-	 ZtI2Pka6nNIpQ==
+	b=oSylXh9q9O8Z2csu4jjhnX953Bmh4woJrCl6OXYipvI1h4A2NciEX11saQ12dSaT6
+	 /yAQetT8a+06+PCTU60zA6tvUH5DeaEITLYPLqq3QhxXRfHp9PT8eb3sLK9apS3cd5
+	 jqcUlifs4z0VIvXDh20i8AzSkyFZFPzkXXnRzQ9sKuCPA4fIiVt8JuyGoBVfwk/oxV
+	 n7yHwC5qAUEewx4d9/2icW6y9ugSUqsXrq3w8rtiKlsK64Uuiu1GAFnj6qFkH+mjl1
+	 +0kzgoqS7ICGgmTKGB2KrA5C/spzet4I6aa7G7k/nbOfL2nYr/2TfcXrHPtrALy7Sy
+	 f1pov18sJ8E1A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	Jouni Malinen <j@w1.fi>,
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 416/752] wifi: cfg80211: wext: fix IGTK key ID off-by-one
-Date: Sat, 28 Feb 2026 12:42:07 -0500
-Message-ID: <20260228174750.1542406-416-sashal@kernel.org>
+Subject: [PATCH 6.18 417/752] wifi: brcmfmac: Fix potential kernel oops when probe fails
+Date: Sat, 28 Feb 2026 12:42:08 -0500
+Message-ID: <20260228174750.1542406-417-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,36 +48,90 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit c8d7f21ead727485ebf965e2b4d42d4a4f0840f6 ]
+[ Upstream commit 243307a0d1b0d01538e202c00454c28b21d4432e ]
 
-The IGTK key ID must be 4 or 5, but the code checks against
-key ID + 1, so must check against 5/6 rather than 4/5. Fix
-that.
+When probe of the sdio brcmfmac device fails for some reasons (i.e.
+missing firmware), the sdiodev->bus is set to error instead of NULL, thus
+the cleanup later in brcmf_sdio_remove() tries to free resources via
+invalid bus pointer. This happens because sdiodev->bus is set 2 times:
+first in brcmf_sdio_probe() and second time in brcmf_sdiod_probe(). Fix
+this by chaning the brcmf_sdio_probe() function to return the error code
+and set sdio->bus only there.
 
-Reported-by: Jouni Malinen <j@w1.fi>
-Fixes: 08645126dd24 ("cfg80211: implement wext key handling")
-Link: https://patch.msgid.link/20260209181220.362205-2-johannes@sipsolutions.net
+Fixes: 0ff0843310b7 ("wifi: brcmfmac: Add optional lpo clock enable support")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Arend van Spriel<arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260203102133.1478331-1-m.szyprowski@samsung.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/wext-compat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 7 +++----
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c   | 7 ++++---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h   | 2 +-
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/net/wireless/wext-compat.c b/net/wireless/wext-compat.c
-index 1241fda78a68c..680500fa57cfd 100644
---- a/net/wireless/wext-compat.c
-+++ b/net/wireless/wext-compat.c
-@@ -684,7 +684,7 @@ static int cfg80211_wext_siwencodeext(struct net_device *dev,
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+index 6a3f187320fc4..13952dfeb3e30 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -951,11 +951,10 @@ int brcmf_sdiod_probe(struct brcmf_sdio_dev *sdiodev)
+ 		goto out;
  
- 	idx = erq->flags & IW_ENCODE_INDEX;
- 	if (cipher == WLAN_CIPHER_SUITE_AES_CMAC) {
--		if (idx < 4 || idx > 5) {
-+		if (idx < 5 || idx > 6) {
- 			idx = wdev->wext.default_mgmt_key;
- 			if (idx < 0)
- 				return -EINVAL;
+ 	/* try to attach to the target device */
+-	sdiodev->bus = brcmf_sdio_probe(sdiodev);
+-	if (IS_ERR(sdiodev->bus)) {
+-		ret = PTR_ERR(sdiodev->bus);
++	ret = brcmf_sdio_probe(sdiodev);
++	if (ret)
+ 		goto out;
+-	}
++
+ 	brcmf_sdiod_host_fixup(sdiodev->func2->card->host);
+ out:
+ 	if (ret)
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index 8cf9d7e7c3f70..4e6ed02c15913 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -4445,7 +4445,7 @@ brcmf_sdio_prepare_fw_request(struct brcmf_sdio *bus)
+ 	return fwreq;
+ }
+ 
+-struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
++int brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
+ {
+ 	int ret;
+ 	struct brcmf_sdio *bus;
+@@ -4551,11 +4551,12 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
+ 		goto fail;
+ 	}
+ 
+-	return bus;
++	return 0;
+ 
+ fail:
+ 	brcmf_sdio_remove(bus);
+-	return ERR_PTR(ret);
++	sdiodev->bus = NULL;
++	return ret;
+ }
+ 
+ /* Detach and free everything */
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
+index 0d18ed15b4032..80180d5c6c879 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
+@@ -358,7 +358,7 @@ void brcmf_sdiod_freezer_uncount(struct brcmf_sdio_dev *sdiodev);
+ int brcmf_sdiod_probe(struct brcmf_sdio_dev *sdiodev);
+ int brcmf_sdiod_remove(struct brcmf_sdio_dev *sdiodev);
+ 
+-struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev);
++int brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev);
+ void brcmf_sdio_remove(struct brcmf_sdio *bus);
+ void brcmf_sdio_isr(struct brcmf_sdio *bus, bool in_isr);
+ 
 -- 
 2.51.0
 
