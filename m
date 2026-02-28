@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821A635A3B7
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D8B35A3B7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300912; cv=none; b=YGPnknfuvLEDh7G2Izt8eLeGCNRALyP+9WqO9lupMh+3apDntyMmouMkxXNIqDz7MlR/2/xLRkquqs6duBT3m9CHcNX00AZU6DEF6tnIPlEfD0bwFku7kqWpir7HMtlyS/tb+IvhE+BTmZ6AhyJex/KipCcIkS2Ie36vYsUgIFo=
+	t=1772300913; cv=none; b=lb2c7341uTimZws3fHNnABll+rZT5e63biegeNeFtJgD3d3nk8XB5E0UKiH4za1YmurR3EkHHjOsKwjWb0/w+4lBpHMaWRgnpgKRSpn4NgGkTHoTOTsDlSEbkF87g6g+dEDeZ7yQbACefRdZiA73Bm65azUl/JRdTfYjOVcNLwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300912; c=relaxed/simple;
-	bh=uh5vMZZu0wmCiPj396XXx6Lbu8bmBqqs0/+o6Ks378M=;
+	s=arc-20240116; t=1772300913; c=relaxed/simple;
+	bh=x3mFUwKG+WkAkFMJ/2Po3saOmtkk6EbTvNzoqVjfVOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8TLj9AamKMRWgyYF95kaqMIXAKTfA65aSIyJB9WKF9rna+5PQkgXgkmm4V5+3ynzbE9kuL/YBDiK1ktVRxDrScd+NlNDc2APZCbVXU8c9YFB8bzEB3jjSdeE/fXq9LaLp5Iym26XjQtzyYl2pomlumJqkuHbrtCc0FYjDzHfUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JEBhUbia; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClT2CULHyrDo9BFT+FQnE3g/HmzOtYLnAvwhw3ecrzq5XTUNQXkTas8Z7Rq4PEMrjyzGuf8cTU6zQhzEJxi4lusHu3SeCT2zpA7GEBW7w6o9lsbmPIQMHJekeyINOTceLEUaTymj+I6KerLajqvP4Y/FFZfTqfT118TRIUuUbkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PeUxvOvt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JEBhUbia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF14CC19425;
-	Sat, 28 Feb 2026 17:48:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PeUxvOvt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A739DC116D0;
+	Sat, 28 Feb 2026 17:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300912;
-	bh=uh5vMZZu0wmCiPj396XXx6Lbu8bmBqqs0/+o6Ks378M=;
+	s=k20201202; t=1772300913;
+	bh=x3mFUwKG+WkAkFMJ/2Po3saOmtkk6EbTvNzoqVjfVOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JEBhUbiaMYs0qd4RSxqbC/UCOtLob0zm+jVpxy+kzHAgRqiy7WS+L8ca2En8KAONs
-	 T2MU9W6ul62Ty6Z1dSX1b+ZkCnQr+wjtSVLoGQ0g0BCLMf7YIg0TJI7w7MwaB70H0U
-	 lrrC5pVywETCto8r8PwcReMPO7TdfH7jni4k0sN6G1s6c01gfWE5IfhJYRlL72x4q0
-	 R9y3XejEFXoMJnmCmJOdTeBvO2Cm7JDmqjoLBN4gpMbUb+vTNR2lPCDC0HIE3B1/MW
-	 NzukK6dc2mZGJ0FYL4EmUkKACQqJYlW+wJIcVsAaVATOfVYelwdyKKywi8CBpOVcjD
-	 DgaOWTqUnpetA==
+	b=PeUxvOvtDghByvKqJ7eSZutaluvvhh/k9dFpIY+JqS8Zuf/Ma5tTrQyOuZMyL+1AR
+	 1/e87VpbZc5bEoBDMLyDW7pjmPjymFmMr0ttXUFHNKam8KH48YUFWTYtQZXJ2QPrXz
+	 07bzJX9f60GY+5k74U4i734pr4RjwfheZ+sqYvNfAXypxJ7NXnzfa2dCV0IxV00bdw
+	 6ma1GwTQcm43wCg2kJ66M31WSMTr/VBKuWay6RDZtZWaBQV/G/wtM2B5RvKw25q+la
+	 hTZYbWHSrE9PI4PAEXKpwr6BiR5hhyMKd0gjeqXwph36dC05AyZO4bVWLjbZ6AQIXt
+	 04ewoBvDYBpnw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Clint George <clintbgeorge@gmail.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+Cc: Jeffrey Bencteux <jeff@bencteux.fr>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 027/752] kselftest/kublk: include message in _Static_assert for C11 compatibility
-Date: Sat, 28 Feb 2026 12:35:38 -0500
-Message-ID: <20260228174750.1542406-27-sashal@kernel.org>
+Subject: [PATCH 6.18 028/752] audit: add missing syscalls to read class
+Date: Sat, 28 Feb 2026 12:35:39 -0500
+Message-ID: <20260228174750.1542406-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,82 +47,45 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Clint George <clintbgeorge@gmail.com>
+From: Jeffrey Bencteux <jeff@bencteux.fr>
 
-[ Upstream commit 3e6ad272bb8b3199bad952e7b077102af2d8df03 ]
+[ Upstream commit bcb90a2834c7393c26df9609b889a3097b7700cd ]
 
-Add descriptive message in the _Static_assert to comply with the C11
-standard requirement to prevent compiler from throwing out error. The
-compiler throws an error when _Static_assert is used without a message as
-that is a C23 extension.
+The "at" variant of getxattr() and listxattr() are missing from the
+audit read class. Calling getxattrat() or listxattrat() on a file to
+read its extended attributes will bypass audit rules such as:
 
-[] Testing:
-The diff between before and after of running the kselftest test of the
-module shows no regression on system with x86 architecture
+-w /tmp/test -p rwa -k test_rwa
 
-[] Error log:
-~/Desktop/kernel-dev/linux-v1/tools/testing/selftests/ublk$ make LLVM=1 W=1
-  CC       kublk
-In file included from kublk.c:6:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from null.c:3:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from file_backed.c:3:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from common.c:3:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from stripe.c:3:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from fault_inject.c:11:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-make: *** [../lib.mk:225: ~/Desktop/kernel-dev/linux-v1/tools/testing/selftests/ublk/kublk] Error 1
+The current patch adds missing syscalls to the audit read class.
 
-Link: https://lore.kernel.org/r/20251215085022.7642-1-clintbgeorge@gmail.com
-Signed-off-by: Clint George <clintbgeorge@gmail.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Jeffrey Bencteux <jeff@bencteux.fr>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ublk/kublk.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/asm-generic/audit_read.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/testing/selftests/ublk/kublk.h b/tools/testing/selftests/ublk/kublk.h
-index 1b8833a400643..39839c711c797 100644
---- a/tools/testing/selftests/ublk/kublk.h
-+++ b/tools/testing/selftests/ublk/kublk.h
-@@ -220,7 +220,7 @@ static inline __u64 build_user_data(unsigned tag, unsigned op,
- 		unsigned tgt_data, unsigned q_id, unsigned is_target_io)
- {
- 	/* we only have 7 bits to encode q_id */
--	_Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-+	_Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7, "UBLK_MAX_QUEUES_SHIFT must be <= 7");
- 	assert(!(tag >> 16) && !(op >> 8) && !(tgt_data >> 16) && !(q_id >> 7));
- 
- 	return tag | (op << 16) | (tgt_data << 24) |
+diff --git a/include/asm-generic/audit_read.h b/include/asm-generic/audit_read.h
+index 7bb7b5a83ae2e..fb9991f53fb6f 100644
+--- a/include/asm-generic/audit_read.h
++++ b/include/asm-generic/audit_read.h
+@@ -4,9 +4,15 @@ __NR_readlink,
+ #endif
+ __NR_quotactl,
+ __NR_listxattr,
++#ifdef __NR_listxattrat
++__NR_listxattrat,
++#endif
+ __NR_llistxattr,
+ __NR_flistxattr,
+ __NR_getxattr,
++#ifdef __NR_getxattrat
++__NR_getxattrat,
++#endif
+ __NR_lgetxattr,
+ __NR_fgetxattr,
+ #ifdef __NR_readlinkat
 -- 
 2.51.0
 
