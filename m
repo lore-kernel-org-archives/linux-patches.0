@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF154BC03C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259FD4BCAC7;
 	Sat, 28 Feb 2026 17:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301364; cv=none; b=TvSDyzkstSCwvNGeEW0BtMP4gKPgnSzKqmAY4FUb3QoCq1hvB+eDzJpVMeb/UEfldJCzbDXatSQauUcasnG6x8yRQ/2fUHcWy6ReVJrFT7vc1+5Dx/1P/iPCrceni1ASGJ5vNgrtrK7tiKo9/UFjtpWtO5Qhe+g11b8MBRnDiFU=
+	t=1772301365; cv=none; b=kXK+Qg9NiOx3WjyTS8Jn8R8BKgwCKpWiSxSOwbH0FhXGCUZXRqxk21UyQrK8N73vl8rVzp225T8vKaY0HCTnZa9kTtBB1r0Ri/cBhMhtVEeqgVhc7NmLIrBT79RUTqvBEZKJb8DssC3QX9D67Q/7eCdY932Kjlwus4VKHgeWkIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301364; c=relaxed/simple;
-	bh=s3yDxUuIIIvd2yaG41DZabKKL38dVe+r2GKckN3hqmE=;
+	s=arc-20240116; t=1772301365; c=relaxed/simple;
+	bh=yTTyB47Ztk/N1dRwdYvfAmvLvNR6akIwIhIhlTILdN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=claRPxeEzR05mZyTjXAELcLDgZ5oOzXb7wxaUc++ayAFeQnT/6JdjzKGfrx6UfDvMQvLh4rWXKT7Le3MQPkm7xVQXERRfs3FALTj+JGQ6yMrlbuApbgiZRzqva86AsTX9xQR9/n2esgADtrDoEcxpGWGEkYhU+OoipS0kL3FjFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W+hZmSHj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AXd4OdnLL18cnil1nR6KwUxkZTz3ADsEs6uHSwTleKtcb0W/qLupvtBEM4TG/F9UM8NyXKz8xTOUdeknqiHvJVg2+Tn57AWFDywPVApQYuyj/xFuG32EQHyw6A8KAay/8UH64DqFGmYEdIbxJqXrB4NBvWnKlZwAKn0fXl2wqok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NL2A5nIF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W+hZmSHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C607C2BCB0;
-	Sat, 28 Feb 2026 17:56:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NL2A5nIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345FBC19425;
+	Sat, 28 Feb 2026 17:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301363;
-	bh=s3yDxUuIIIvd2yaG41DZabKKL38dVe+r2GKckN3hqmE=;
+	s=k20201202; t=1772301364;
+	bh=yTTyB47Ztk/N1dRwdYvfAmvLvNR6akIwIhIhlTILdN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+hZmSHjY21xBivhv73oRN7VuySEj6Ovz5Eg5q/NtI+AgAxjS972ceXwAN2tKb4xU
-	 gxwPy2696zIXCVjE+XTO0Tz88oGVRiyvmob3VaiqZfPwvkPfq/Eb2U5Q9wmyIpTyjz
-	 2NqW5JQ0IIPi0u7imI8Y90y6ROMWqk8SdiF3GuaGw45/v43gDycY4eJCPpGHDiz7Oo
-	 7EIrWMUFhqT6PZeJWcEpZ43X9zGLmBRXxmtNj8rJmeBrPpE+sRyNLsnfPM46hI+RhB
-	 7LEcp8vjXRKE34Dhzg2KjO8fzI5+jhG2Q5v1415jyjSwwKwIDGc6Ydgi9UQo3WTY2E
-	 N8GwQ5+GxI0TA==
+	b=NL2A5nIF6HqYyO9c72xzmCWZvI/NbQJEvgQoYtU9ZyMjhVjZVVTk2/baOgZWhmDPC
+	 AJACJnso1RKDd+6K883k11Xt4ZRQUpBtNIP+/k0cBw+r3AOVlhE6JRjUQdzclOQrwQ
+	 INFwHj3YZMNzq5kFgYIDSifsCy/he4I6pXE3JMJkzNWu5zYv1RvTEHE8Fc/5+ZMfby
+	 oEFaJk8wv+K/0NDk5Z6xXFSkGeRQwjada9xGqOB3islQi5pbRRpZ2dXiazRz03N8fu
+	 dGAnbkl4KfKnajz3/S5jEzdXvNgismMeZ2qOk8H77+if2gEn2zUZ3gCsM31X71G9k/
+	 KteSG71kVkjGQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+Cc: Shawn Lin <shawn.lin@rock-chips.com>,
 	stable@vger.kernel.org,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 552/752] media: i2c: ov01a10: Fix digital gain range
-Date: Sat, 28 Feb 2026 12:44:23 -0500
-Message-ID: <20260228174750.1542406-552-sashal@kernel.org>
+Subject: [PATCH 6.18 553/752] arm64: dts: rockchip: Fix SD card support for RK3576 EVB1
+Date: Sat, 28 Feb 2026 12:44:24 -0500
+Message-ID: <20260228174750.1542406-553-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,37 +48,80 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Mehdi Djait <mehdi.djait@linux.intel.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 91848c99ed6a98daf77f4cb7d44cf3f13bc6998f ]
+[ Upstream commit 7226664bf952c4cfddccd74b154a7d994608d153 ]
 
-Digital gain wraps-around at the maximum of 16838 / 0x3fff.
-Fix the maximum digital gain by setting it to 0x3fff.
+When runtime suspend is enabled, the associated power domain is powered
+off, which resets the registers, including the power control bit. As a result,
+the card loses power during runtime suspend. The card should still be able
+to process I/O with the help of mmc_blk_mq_rw_recovery(), which is suboptimal.
+To address this issue, we must use vmmc-supply with a GPIO based method to
+maintain power to the card. Also, add cd-gpios method to make hot-plug work
+correctly during idle periods.
 
-Signed-off-by: Mehdi Djait <mehdi.djait@linux.intel.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Fixes: 0827b58dabff ("media: i2c: add ov01a10 image sensor driver")
+Fixes: f135a1a07352 ("arm64: dts: rockchip: Add rk3576 evb1 board")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://patch.msgid.link/1768524932-163929-5-git-send-email-shawn.lin@rock-chips.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov01a10.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../boot/dts/rockchip/rk3576-evb1-v10.dts     | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/media/i2c/ov01a10.c b/drivers/media/i2c/ov01a10.c
-index 3ad516e4d3698..c1a7373a6311c 100644
---- a/drivers/media/i2c/ov01a10.c
-+++ b/drivers/media/i2c/ov01a10.c
-@@ -57,7 +57,7 @@
- #define OV01A10_REG_DIGITAL_GAIN_GR	0x3513
- #define OV01A10_REG_DIGITAL_GAIN_R	0x3516
- #define OV01A10_DGTL_GAIN_MIN		0
--#define OV01A10_DGTL_GAIN_MAX		0x3ffff
-+#define OV01A10_DGTL_GAIN_MAX		0x3fff
- #define OV01A10_DGTL_GAIN_STEP		1
- #define OV01A10_DGTL_GAIN_DEFAULT	1024
+diff --git a/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts b/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts
+index db8fef7a4f1b9..ffe55f970f461 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3576-evb1-v10.dts
+@@ -223,6 +223,18 @@ vcc_3v3_s0: regulator-vcc-3v3-s0 {
+ 		vin-supply = <&vcc_3v3_s3>;
+ 	};
  
++	vcc3v3_sd: regulator-vcc-3v3-sd {
++		compatible = "regulator-fixed";
++		enable-active-high;
++		gpios = <&gpio0 RK_PB6 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&sdmmc_pwren>;
++		regulator-name = "vcc3v3_sd";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		vin-supply = <&vcc_3v3_s0>;
++	};
++
+ 	vcc_ufs_s0: regulator-vcc-ufs-s0 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vcc_ufs_s0";
+@@ -810,6 +822,12 @@ pcie0_rst: pcie0-rst {
+ 		};
+ 	};
+ 
++	sdmmc {
++		sdmmc_pwren: sdmmc-pwren {
++			rockchip,pins = <0 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
+ 	usb {
+ 		usb_host_pwren: usb-host-pwren {
+ 			rockchip,pins = <0 RK_PC7 RK_FUNC_GPIO &pcfg_pull_none>;
+@@ -851,11 +869,15 @@ &sdmmc {
+ 	bus-width = <4>;
+ 	cap-mmc-highspeed;
+ 	cap-sd-highspeed;
++	cd-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+ 	max-frequency = <200000000>;
+ 	no-sdio;
+ 	no-mmc;
++	pinctrl-names = "default";
++	pinctrl-0 = <&sdmmc0_clk &sdmmc0_cmd &sdmmc0_det &sdmmc0_bus4>;
+ 	sd-uhs-sdr104;
++	vmmc-supply = <&vcc3v3_sd>;
+ 	vqmmc-supply = <&vccio_sd_s0>;
+ 	status = "okay";
+ };
 -- 
 2.51.0
 
