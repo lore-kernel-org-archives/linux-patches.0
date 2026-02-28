@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C295359A90
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056DA347FED
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302483; cv=none; b=ls3V796uCbkW3eJ9kdUSLtm5jdt3jWC6hL0pFRMLZFMM8nbl6zo8d0BBVERPEbUkdmSKNmT0m92IbS9DIFlt+7aOxVcdFpGfesTHJW8VZmvE8Pi7YQHjE8DPB++Zsv4WwsgfcrqFmu22b/32AQlBA+RoedUDcgjwE8GMV40iTkc=
+	t=1772302484; cv=none; b=oc9bJahfFh2OroawwO8aD9nBn3K6uVSa8MRtxsTVgdqo+WQgrph1XOBbpMiZaaTpQiHPYuHMu6O/G9zeipsHWtYoTef60mCwBWx5gizdNlOB1loZQJydQ6ZTjXu/hkrJkoevXuRGBD3X8yooZzolh1Nv4xUaDFQXeCeFfudnfw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302483; c=relaxed/simple;
-	bh=jnRecfv/XJqnUIMxF0RgIoxzmy+NlndjokjRF9Sli5s=;
+	s=arc-20240116; t=1772302484; c=relaxed/simple;
+	bh=VBdUIFvKnhYPfTpXauJvVkKGV+FN5nphzp7g8Blzurk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQM/N4xSFwYA6LdaA6EsnRHtnX6imPv9iOx6OB41OFlhMuKwXsajfRH093o44BeVxlzGN1IfsQPC3QaOftQovk2ZTjIhHId5NCiB/7F9V1JmkSnvrWkqqmwj6REkv+bsHqAZdaq2fmLifm7DZHjlAqWwvwPX//xP94w7WuulxfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iLTwKvb7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dN47CWcTfadurIOssU+CoZqcwxm2PSkQPCRwbtSkjAeAkUO6dXBWfnq9wQyEjbMrzSrUa9H7Lc2DDPG9EDGeVczQw1+y+SuNFJzZPrhr9OCsw99kLtC3g+if9xujktm6a6iusfU+BHxLKSgcmnhzwqqw3Oirvx2LvqFuvffA2hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YP+tGrGS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iLTwKvb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63900C19424;
-	Sat, 28 Feb 2026 18:14:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YP+tGrGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5228EC19423;
+	Sat, 28 Feb 2026 18:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302483;
-	bh=jnRecfv/XJqnUIMxF0RgIoxzmy+NlndjokjRF9Sli5s=;
+	bh=VBdUIFvKnhYPfTpXauJvVkKGV+FN5nphzp7g8Blzurk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLTwKvb7lnuH88hl8VoscA4j57vkGuGVNQ3OPNy1RvxjpR51r/5QajWJ4wodRhf6X
-	 qnvA7fenW2TPbkV6ZzSfxwEymUUHCL1/CQD+MG5erIBKewLOMhYJxh8BTxrbflWPAu
-	 zLTtWdIGd/cvdIe3ve9in77YTVUK41HNlxsgAGXDbzybmaDBNrpzex3fLIR7WUk1FD
-	 bHNnc6ahw89yQzMDDC6vYXpC19c0apmmcR1yHESTQ3SPWdOpaJB9qNMerV/DvTWkWc
-	 GAurb9hn8q3zHqpO72CUlWpdFesGd3b5fq2tYXzCD5RLdzVZdmG9UPmmiAGovUYNDF
-	 9Kj37Z3itubBQ==
+	b=YP+tGrGS9jX7wo8oQ7BgpK0zr5jozDGtjlJ6URovHKYIaf9+KLbmyrc1s17Nnzm4q
+	 Z6VnCHhUOKov9UvcS/T8kUxNf37oocfwiaWh07cawMa4a2MiCvOlz50opNuz7BqD9b
+	 v95L7w6m3wIIV+ELXkTEQs3fcjGHMhg7JVd03/F/R6Ef20vX5Wasphpjlf0KeI2PAX
+	 8b/Hzm9Ox50qGbYk/Lqt10b4N4FXh2nuDUI5yIO9sAsMsI2fFscO+3XdZpbwh4wvWE
+	 dkCCSkPkUBXPNZ3LDRksojpHRDtvpUSnnUyLu2NfgX03uSfK+fui0x2wd8n9CBJjel
+	 x7Akf1Bk+FSrQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Yue Haibing <yuehaibing@huawei.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 230/232] inet: ping: check sock_net() in ping_get_port() and ping_lookup()
-Date: Sat, 28 Feb 2026 13:11:23 -0500
-Message-ID: <20260228181127.1592657-230-sashal@kernel.org>
+Subject: [PATCH 6.1 231/232] ping: annotate data-races in ping_lookup()
+Date: Sat, 28 Feb 2026 13:11:24 -0500
+Message-ID: <20260228181127.1592657-231-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -51,80 +50,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 59f26d86b2a16f1406f3b42025062b6d1fba5dd5 ]
+[ Upstream commit ad5dfde2a5733aaf652ea3e40c8c5e071e935901 ]
 
-We need to check socket netns before considering them in ping_get_port().
-Otherwise, one malicious netns could 'consume' all ports.
+isk->inet_num, isk->inet_rcv_saddr and sk->sk_bound_dev_if
+are read locklessly in ping_lookup().
 
-Add corresponding check in ping_lookup().
+Add READ_ONCE()/WRITE_ONCE() annotations.
 
-Fixes: c319b4d76b9e ("net: ipv4: add IPPROTO_ICMP socket kind")
+The race on isk->inet_rcv_saddr is probably coming from IPv6 support,
+but does not deserve a specific backport.
+
+Fixes: dbca1596bbb0 ("ping: convert to RCU lookups, get rid of rwlock")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Yue Haibing <yuehaibing@huawei.com>
-Link: https://patch.msgid.link/20250829153054.474201-2-edumazet@google.com
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260216100149.3319315-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ad5dfde2a573 ("ping: annotate data-races in ping_lookup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ping.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/ipv4/ping.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
 diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-index aae5ad6303a97..ee0e2df5d62e0 100644
+index ee0e2df5d62e0..effe91a19a7a2 100644
 --- a/net/ipv4/ping.c
 +++ b/net/ipv4/ping.c
-@@ -77,6 +77,7 @@ static inline struct hlist_head *ping_hashslot(struct ping_table *table,
- 
- int ping_get_port(struct sock *sk, unsigned short ident)
- {
-+	struct net *net = sock_net(sk);
- 	struct inet_sock *isk, *isk2;
- 	struct hlist_head *hlist;
- 	struct sock *sk2 = NULL;
-@@ -90,9 +91,10 @@ int ping_get_port(struct sock *sk, unsigned short ident)
- 		for (i = 0; i < (1L << 16); i++, result++) {
- 			if (!result)
- 				result++; /* avoid zero */
--			hlist = ping_hashslot(&ping_table, sock_net(sk),
--					    result);
-+			hlist = ping_hashslot(&ping_table, net, result);
- 			sk_for_each(sk2, hlist) {
-+				if (!net_eq(sock_net(sk2), net))
-+					continue;
- 				isk2 = inet_sk(sk2);
- 
- 				if (isk2->inet_num == result)
-@@ -108,8 +110,10 @@ int ping_get_port(struct sock *sk, unsigned short ident)
- 		if (i >= (1L << 16))
- 			goto fail;
- 	} else {
--		hlist = ping_hashslot(&ping_table, sock_net(sk), ident);
-+		hlist = ping_hashslot(&ping_table, net, ident);
- 		sk_for_each(sk2, hlist) {
-+			if (!net_eq(sock_net(sk2), net))
-+				continue;
- 			isk2 = inet_sk(sk2);
- 
- 			/* BUG? Why is this reuse and not reuseaddr? ping.c
-@@ -129,7 +133,7 @@ int ping_get_port(struct sock *sk, unsigned short ident)
- 		pr_debug("was not hashed\n");
- 		sk_add_node_rcu(sk, hlist);
- 		sock_set_flag(sk, SOCK_RCU_FREE);
--		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
-+		sock_prot_inuse_add(net, sk->sk_prot, 1);
+@@ -159,7 +159,7 @@ void ping_unhash(struct sock *sk)
+ 	pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
+ 	spin_lock(&ping_table.lock);
+ 	if (sk_del_node_init_rcu(sk)) {
+-		isk->inet_num = 0;
++		WRITE_ONCE(isk->inet_num, 0);
+ 		isk->inet_sport = 0;
+ 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
  	}
- 	spin_unlock(&ping_table.lock);
- 	return 0;
-@@ -188,6 +192,8 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
+@@ -192,31 +192,35 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
  	}
  
  	sk_for_each_rcu(sk, hslot) {
-+		if (!net_eq(sock_net(sk), net))
-+			continue;
++		int bound_dev_if;
++
+ 		if (!net_eq(sock_net(sk), net))
+ 			continue;
  		isk = inet_sk(sk);
  
  		pr_debug("iterate\n");
+-		if (isk->inet_num != ident)
++		if (READ_ONCE(isk->inet_num) != ident)
+ 			continue;
+ 
++		bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
+ 		if (skb->protocol == htons(ETH_P_IP) &&
+ 		    sk->sk_family == AF_INET) {
++			__be32 rcv_saddr = READ_ONCE(isk->inet_rcv_saddr);
++
+ 			pr_debug("found: %p: num=%d, daddr=%pI4, dif=%d\n", sk,
+-				 (int) isk->inet_num, &isk->inet_rcv_saddr,
+-				 sk->sk_bound_dev_if);
++				 ident, &rcv_saddr,
++				 bound_dev_if);
+ 
+-			if (isk->inet_rcv_saddr &&
+-			    isk->inet_rcv_saddr != ip_hdr(skb)->daddr)
++			if (rcv_saddr && rcv_saddr != ip_hdr(skb)->daddr)
+ 				continue;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 		} else if (skb->protocol == htons(ETH_P_IPV6) &&
+ 			   sk->sk_family == AF_INET6) {
+ 
+ 			pr_debug("found: %p: num=%d, daddr=%pI6c, dif=%d\n", sk,
+-				 (int) isk->inet_num,
++				 ident,
+ 				 &sk->sk_v6_rcv_saddr,
+-				 sk->sk_bound_dev_if);
++				 bound_dev_if);
+ 
+ 			if (!ipv6_addr_any(&sk->sk_v6_rcv_saddr) &&
+ 			    !ipv6_addr_equal(&sk->sk_v6_rcv_saddr,
+@@ -227,8 +231,8 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
+ 			continue;
+ 		}
+ 
+-		if (sk->sk_bound_dev_if && sk->sk_bound_dev_if != dif &&
+-		    sk->sk_bound_dev_if != sdif)
++		if (bound_dev_if && bound_dev_if != dif &&
++		    bound_dev_if != sdif)
+ 			continue;
+ 
+ 		goto exit;
+@@ -403,7 +407,9 @@ static void ping_set_saddr(struct sock *sk, struct sockaddr *saddr)
+ 	if (saddr->sa_family == AF_INET) {
+ 		struct inet_sock *isk = inet_sk(sk);
+ 		struct sockaddr_in *addr = (struct sockaddr_in *) saddr;
+-		isk->inet_rcv_saddr = isk->inet_saddr = addr->sin_addr.s_addr;
++
++		isk->inet_saddr = addr->sin_addr.s_addr;
++		WRITE_ONCE(isk->inet_rcv_saddr, addr->sin_addr.s_addr);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	} else if (saddr->sa_family == AF_INET6) {
+ 		struct sockaddr_in6 *addr = (struct sockaddr_in6 *) saddr;
+@@ -865,7 +871,8 @@ int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
+ 	struct sk_buff *skb;
+ 	int copied, err;
+ 
+-	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk, isk->inet_num);
++	pr_debug("ping_recvmsg(sk=%p,sk->num=%u)\n", isk,
++		 READ_ONCE(isk->inet_num));
+ 
+ 	err = -EOPNOTSUPP;
+ 	if (flags & MSG_OOB)
 -- 
 2.51.0
 
