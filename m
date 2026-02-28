@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B8F359A71
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B690359A63
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302409; cv=none; b=PfO3ahmzh5CY5oFPqfwqQKayzabmdxtYRoJ9Ln5UalprBNG9bN9mvHK5/MmM77rHNFYy6w/VCGwSQmAXRsU+13kaJsMwApa2h50ua7XScDFLWyjWfVCdDzR9bP3kUeA1uKYdFPo1axYovzt8xoq4b9g1K7ed0gUmA7TWr5+qzH8=
+	t=1772302410; cv=none; b=FqYSbz4KkO89GsWpfwNSrl6hc4cCYVfw4FPZW/Y05MXnpu/okAL+aiuJ3Uee4U+p7S0DyFKi9BI2Bq255JyFguhqTRI7Ioz1FmDnCXRrIjs4/PoSVqlLkTZRo+D7UEaMyCNACvVcJo0hBai20bTdxaJ7wwigbvMt8rYj3P64VB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302409; c=relaxed/simple;
-	bh=Hs4w6l+cfUQviG4d0qm8C1PVPbWkF3fTSJF48h19n04=;
+	s=arc-20240116; t=1772302410; c=relaxed/simple;
+	bh=1cPKyVlEf8SAhxJWpXaVqcAa8PDUszgUwl7yA84vCXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJcS8WhXhDqxlydXk9Ugt561GFNjzfgEYQ4hKAUmi4jIETY0grbOsqz/0wFbuYyAldT6LWTnQoQ12Qor4yzvs2OsnQhJWorBAE7A0Wa0FKZaNXagtpc+ph7YpJooWLr0B4lJU6QHOGMjvl2bwMwmLjWUbpcoymULZWbU9rIrCr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fmzIx5vc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gJZsoOsxJVfqB/zNuqJUkUaZf831dRzIltpqvFbKr83Q8IaPtl1p2rU/SlBcHOnzgPOnDXoiBdKnrPDFm/FGO+db9YP70xo+lmSEccYOa/iAubFerBQRoZn8V2ftZZlqyOfpLQMIT2ixOgbj1gOzVbuFYWa7K+n01T1uuVctBR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QY12tsIA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fmzIx5vc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8115C19423;
-	Sat, 28 Feb 2026 18:13:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QY12tsIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54F3C116D0;
+	Sat, 28 Feb 2026 18:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302409;
-	bh=Hs4w6l+cfUQviG4d0qm8C1PVPbWkF3fTSJF48h19n04=;
+	s=k20201202; t=1772302410;
+	bh=1cPKyVlEf8SAhxJWpXaVqcAa8PDUszgUwl7yA84vCXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmzIx5vcPhlfxO8asg3d14MOFoWqMquMT5UoYZdDBWfgL6Mg6fnRmV7yyWlqqnFVv
-	 6lULEB9cmZexzKjnggRYpsPyK8VHLuqyEmHBSgew/+ef2Sr3rlijkMaGRHdrJSH9Nv
-	 Pw3rlJb8qtIg+wgpDUFJdI7AeTJpKM4jC1PPmjWj0I4gR8+EGaTAeNUmmZYTwMu33P
-	 cMY7w0oCTlLJWG8nrr14efgU3DafBIn5FrrFmt6qOpBhdVi0MxU4a9kLGIsslUEeq2
-	 2ROlb5I8p01CgMTmEtl4lawjWFcusJBjUFjNTQBokE67omJR/bEQhGe3T41qlEilNS
-	 W4R61WBSyRzag==
+	b=QY12tsIAFcp0cnSxyXtbnrgg1IsSdTTgHHfNdJhCb7bg/rpv99toR+MXlSNgEXGx3
+	 UoilOsl+Y49jYUobQcq4G2dAKROu87YrCbFTq1Dssn8pbDaXFhRc2KflA2zgUdqLuM
+	 cic4R2buQe9LUOJbPzNqGwnX/uhmsnVdfQIEnVbuVjU85Xa8WcpHePqUJJtSnKyWsF
+	 pUiu+3Nj5NthXwKoVYQtQVykpvixMxuOwjR7a7P64LPyuBavbLR5ygDp45HhNr8YBv
+	 Iincn7WjslEdR7zhK2mxchIcOhidioKf3emZHwECaBN6gSk4JU7PaeKf7R7zu/T3df
+	 DaxnMdsaD8Evg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alexander Koskovich <AKoskovich@pm.me>,
-	Alexander Koskovich <akoskovich@pm.me>,
+Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+	Matt Ranostay <matt@ranostay.sg>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/232] power: reset: nvmem-reboot-mode: respect cell size for nvmem_cell_write
-Date: Sat, 28 Feb 2026 13:09:55 -0500
-Message-ID: <20260228181127.1592657-142-sashal@kernel.org>
+Subject: [PATCH 6.1 143/232] power: supply: bq27xxx: fix wrong errno when bus ops are unsupported
+Date: Sat, 28 Feb 2026 13:09:56 -0500
+Message-ID: <20260228181127.1592657-143-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,61 +48,59 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Koskovich <AKoskovich@pm.me>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 36b05629226413836cfbb3fbe6689cd188bca156 ]
+[ Upstream commit 688364a11647dc09ba1e4429313e0008066ec790 ]
 
-Some platforms expose reboot mode cells that are smaller than an
-unsigned int, in which cases lead to write failures. Read the cell
-first to determine actual size and only write the number of bytes the
-cell can hold.
+bq27xxx_write(), bq27xxx_read_block(), and bq27xxx_write_block()
+return -EPERM when the bus callback pointer is NULL. A NULL callback
+indicates the operation is not supported by the bus/driver,
+not that permission is denied.
 
-Fixes: 7a78a7f7695b ("power: reset: nvmem-reboot-mode: use NVMEM as reboot mode write interface")
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-Link: https://patch.msgid.link/20251214191529.2470580-1-akoskovich@pm.me
+Return -EOPNOTSUPP instead of -EPERM when di->bus.write/
+read_bulk/write_bulk is NULL.
+
+Fixes: 14073f6614f6 ("power: supply: bq27xxx: Add bulk transfer bus methods")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Matt Ranostay <matt@ranostay.sg>
+Link: https://patch.msgid.link/20251204083436.1367-1-vulab@iscas.ac.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/reset/nvmem-reboot-mode.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/power/reset/nvmem-reboot-mode.c b/drivers/power/reset/nvmem-reboot-mode.c
-index e229308d43e25..819f11bae788b 100644
---- a/drivers/power/reset/nvmem-reboot-mode.c
-+++ b/drivers/power/reset/nvmem-reboot-mode.c
-@@ -10,6 +10,7 @@
- #include <linux/nvmem-consumer.h>
- #include <linux/platform_device.h>
- #include <linux/reboot-mode.h>
-+#include <linux/slab.h>
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 5a11424ae774e..f973b25c7bf3d 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1162,7 +1162,7 @@ static inline int bq27xxx_write(struct bq27xxx_device_info *di, int reg_index,
+ 		return -EINVAL;
  
- struct nvmem_reboot_mode {
- 	struct reboot_mode_driver reboot;
-@@ -19,12 +20,22 @@ struct nvmem_reboot_mode {
- static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot,
- 				    unsigned int magic)
- {
--	int ret;
- 	struct nvmem_reboot_mode *nvmem_rbm;
-+	size_t buf_len;
-+	void *buf;
-+	int ret;
+ 	if (!di->bus.write)
+-		return -EPERM;
++		return -EOPNOTSUPP;
  
- 	nvmem_rbm = container_of(reboot, struct nvmem_reboot_mode, reboot);
- 
--	ret = nvmem_cell_write(nvmem_rbm->cell, &magic, sizeof(magic));
-+	buf = nvmem_cell_read(nvmem_rbm->cell, &buf_len);
-+	if (IS_ERR(buf))
-+		return PTR_ERR(buf);
-+	kfree(buf);
-+
-+	if (buf_len > sizeof(magic))
-+		return -EINVAL;
-+
-+	ret = nvmem_cell_write(nvmem_rbm->cell, &magic, buf_len);
+ 	ret = di->bus.write(di, di->regs[reg_index], value, single);
  	if (ret < 0)
- 		dev_err(reboot->dev, "update reboot mode bits failed\n");
+@@ -1181,7 +1181,7 @@ static inline int bq27xxx_read_block(struct bq27xxx_device_info *di, int reg_ind
+ 		return -EINVAL;
  
+ 	if (!di->bus.read_bulk)
+-		return -EPERM;
++		return -EOPNOTSUPP;
+ 
+ 	ret = di->bus.read_bulk(di, di->regs[reg_index], data, len);
+ 	if (ret < 0)
+@@ -1200,7 +1200,7 @@ static inline int bq27xxx_write_block(struct bq27xxx_device_info *di, int reg_in
+ 		return -EINVAL;
+ 
+ 	if (!di->bus.write_bulk)
+-		return -EPERM;
++		return -EOPNOTSUPP;
+ 
+ 	ret = di->bus.write_bulk(di, di->regs[reg_index], data, len);
+ 	if (ret < 0)
 -- 
 2.51.0
 
