@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D434047CC8B;
-	Sat, 28 Feb 2026 17:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DBC33F377;
+	Sat, 28 Feb 2026 17:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301368; cv=none; b=WRjBh0Czct1EWsSuEAx1sNX6H3hmmXyN/SagiL8HAmafdBhdrIAsALdACvhrn6Xfcji3aNO5FjPqpGHHDpPaNLeEc7fbnJ+ys+i6nCBlD1KsSG80z6zGLGVlnIDzSQ+ea7/JlgPQk6yba1UtoGBNwD4apa6dW8OgJ0tq3J5BUgc=
+	t=1772301369; cv=none; b=iuCU6HGTaoOUlJOKe5mtduoXcDr++Co6XjZsohxfUtYuzXl3VNdl+lK5Pleev4oPBd4sM4vBpBjAFm33xLoOGxOI7CXrLk7HFP9LZWlq4jovPo5YCBK0zKNOE83aDu2ErqrsaXQmNqS8JWTUOrsMVCGZZ8ibIWMvpfBsGHvf0C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301368; c=relaxed/simple;
-	bh=Cm3Acueks74K3t3lu0l9cCWxVbRtb9UfZ0hmO+LeLZg=;
+	s=arc-20240116; t=1772301369; c=relaxed/simple;
+	bh=O5aNiLJoyiy/UOTviuDS1y3ZaxH8fE5X2bobRckl83s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NJ0kYlrcTgHSYEZsTPUJI6sjhiOIrBnU2FKdNbQHi0ttN6ya8skMItipYt6zm8O94VisMOsxBvZoqfQkIYipl/f54uM5mQTs1b0bdK/APIWaCWatVZqhbFjp2vzPHSS3nSMWV8TDz491OY7zQqbNI8ht4OaOdbOiMT6WbCsXqnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ozC8pNhZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kJJWvWdWOp6TJctJ9kmHpfMdmEmuGaCPSY76xYe/BB1JZa7IeRD925OTBozEHrOLRTH38qcFIg9HhOw0KEf6n+vMHzj7hdjMZ2BcQ7rIwt3JQRKf/ZVnKKyr4bXyfEw91emcXwBBioB+Ye7BAz7Y+xXFT8RrGy55zhgp7Qjuhhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fRx+xC0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ozC8pNhZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96F3C116D0;
-	Sat, 28 Feb 2026 17:56:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fRx+xC0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F07C7C19424;
+	Sat, 28 Feb 2026 17:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301368;
-	bh=Cm3Acueks74K3t3lu0l9cCWxVbRtb9UfZ0hmO+LeLZg=;
+	s=k20201202; t=1772301369;
+	bh=O5aNiLJoyiy/UOTviuDS1y3ZaxH8fE5X2bobRckl83s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozC8pNhZqwageXQGDYz43uJ6Z6Gh+wAXI+UyfLmFojECdPLC5N+5tw8KRyQe0UszV
-	 /QAqZvWqzR3NU32khzQ3yG5wpEoTY3d/l5ZAEFXvu8LqPw4siUxxq9jeftpZENMOkB
-	 DIifi9bzbS/MKNtd3FTy6oN1ICZzb3D2gz6KzfkHUIGcBCxgms/IpNw/s90wdSM9pZ
-	 tx1kmy0idvrb8my8FVIFfHVZLRsTFXjAxCcO2DEqVmbZnBi4aQo2zSe1q9N/LIlpyM
-	 gcXlNC1ZQVmPIz9IsMtgQPtHCOFPrPjAP74eghU4WZieoyD87KqvynSRFhYMk4Aaxq
-	 zS9rYmYXvevRQ==
+	b=fRx+xC0/x7Jm6m7eIlWmT3xacDFutBiZ3E+bFbzvCTmon74QR9URMb1LsdbvbtQ96
+	 5xlBx3+4vuxbGo8oE3HsFdRESn2v5xB/Tu2Ucc4Yvay5IAtU3qpKDEc1+9jn3UySek
+	 VgA1l4NJBvsMJBpcMC1GHQObTzwGBFKO1c+8UXeIzUmJZ/TBajhfsFM7OyANAD6cp9
+	 c5BqiLxiAh4Hv2YJ1XDzOPujjbBK9/int3bL6C3cioM0A8KxX1iosFqjbeURUfHo9e
+	 amXdpbbBv2SxSCxZQRjarKbPpJKYqiII+r7of/kEVc9dJA+SyX4Xzz1DXz0ivGLpgm
+	 VEqqfLuuMWzsQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	stable@vger.kernel.org,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 557/752] drm/i915/psr: Don't enable Panel Replay on sink if globally disabled
-Date: Sat, 28 Feb 2026 12:44:28 -0500
-Message-ID: <20260228174750.1542406-557-sashal@kernel.org>
+Subject: [PATCH 6.18 558/752] reset: gpio: suppress bind attributes in sysfs
+Date: Sat, 28 Feb 2026 12:44:29 -0500
+Message-ID: <20260228174750.1542406-558-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,57 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit 69f83f167463bad26104af7fbc114ce1f80366b0 ]
+[ Upstream commit 16de4c6a8fe9ff497ca1aba33ef0dbee09f11952 ]
 
-With some panels informing support for Panel Replay we are observing
-problems if having Panel Replay enable bit set on sink when forced to use
-PSR instead of Panel Replay. Avoid these problems by not setting Panel
-Replay enable bit in sink when Panel Replay is globally disabled during
-link training. I.e. disabled by module parameter.
+This is a special device that's created dynamically and is supposed to
+stay in memory forever. We also currently don't have a devlink between
+it and the actual reset consumer. Suppress sysfs bind attributes so that
+user-space can't unbind the device because - as of now - it will cause a
+use-after-free splat from any user that puts the reset control handle.
 
-The enable bit is still set when disabling Panel Replay via debugfs
-interface. Added note comment about this.
-
-Fixes: 68f3a505b367 ("drm/i915/psr: Enable Panel Replay on sink always when it's supported")
-Cc: Mika Kahola <mika.kahola@intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: <stable@vger.kernel.org> # v6.15+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patch.msgid.link/20260115070039.368965-1-jouni.hogander@intel.com
-(cherry picked from commit c5a52cd04e24f0ae53fda26f74ab027b8c548e0e)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: cee544a40e44 ("reset: gpio: Add GPIO-based reset controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/reset/reset-gpio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 6d9c95e5c0255..38d1df919d1ab 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -813,7 +813,12 @@ static void intel_psr_enable_sink(struct intel_dp *intel_dp,
- 
- void intel_psr_panel_replay_enable_sink(struct intel_dp *intel_dp)
- {
--	if (CAN_PANEL_REPLAY(intel_dp))
-+	/*
-+	 * NOTE: We might want to trigger mode set when
-+	 * disabling/enabling Panel Replay via debugfs interface to
-+	 * ensure this bit is cleared/set accordingly.
-+	 */
-+	if (CAN_PANEL_REPLAY(intel_dp) && panel_replay_global_enabled(intel_dp))
- 		drm_dp_dpcd_writeb(&intel_dp->aux, PANEL_REPLAY_CONFIG,
- 				   DP_PANEL_REPLAY_ENABLE);
- }
+diff --git a/drivers/reset/reset-gpio.c b/drivers/reset/reset-gpio.c
+index 2290b25b67035..15353ba5758c3 100644
+--- a/drivers/reset/reset-gpio.c
++++ b/drivers/reset/reset-gpio.c
+@@ -110,6 +110,7 @@ static struct platform_driver reset_gpio_driver = {
+ 	.id_table	= reset_gpio_ids,
+ 	.driver	= {
+ 		.name = "reset-gpio",
++		.suppress_bind_attrs = true,
+ 	},
+ };
+ module_platform_driver(reset_gpio_driver);
 -- 
 2.51.0
 
