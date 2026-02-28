@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA83E34252B
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAC734250D
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301815; cv=none; b=ZlxAbgGijbLYkmY5RKe8SbCwW7xskZh0GuDXMYQBVxanjFmPraj1Pwx3vAmYAwSLUNttQTSXD9anlhkqURWY96Q0NUBjuRhg/5KE4j0ZI+ZiwuBCtVTX41yRFV6AnhzunerMadld8EnHA+uVAzS/IJsGLWQqrnzx8M+idjj1g7U=
+	t=1772301815; cv=none; b=Kv5uV4ZKM6ABQ5FXGF41XCSQq28cndvY/JzpqDCaYtO1GQpLgUt8BzZPLUuRkikKDdwQDMcx74pkqhHiF50PehffnGN6MUCqcdjOywIZdT8vLNnvug0HCVLUcC3MUphX66/WJnnG5tSiqKBCEMDDDbOWBbZdSbalySlHElC7Lls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301815; c=relaxed/simple;
-	bh=1EaHXsOFgxzXw5O/ZMiEuJjpHDQx2ph/2TwB1VzQyTA=;
+	bh=ei7LqxZ7esI31qRW8KE0Jp8Qx7ScRfDgPlqpG1DzBcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DWsxA6pzExukdsW13HsM1oC/qRpQu+RQc4hMPphmP7H8/sHWldPKnloa0vFK3deNnYDwy4V7DEJeO0zBRHyBi1b1W5bYhMitcXEkTcc/RKgcpsJJhHiH/e7DuR4NMArGZ2MtjOTaRVs8XWAaghFPDV3ItLgLvBvUEcsYBytM8YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J9JIwrbi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i5KVLgjCrPpLWrI0Mz1QlmB2SW2YKBgjyxM72hBrbqEMOrWeAq8EiI/2fj8qWLntDOuRDGBRs/glvDIvpqDQBBSbb6FdqgBgCD8uqLactDoHFFVmSGO2fhVYONjwmH0CMBbOLYO8rEkXTiOfVu/YRB8Nc/O0qTstC+sLNuaSBPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KzABzVEf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J9JIwrbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47440C2BC87;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KzABzVEf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF4AC116D0;
 	Sat, 28 Feb 2026 18:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301814;
-	bh=1EaHXsOFgxzXw5O/ZMiEuJjpHDQx2ph/2TwB1VzQyTA=;
+	s=k20201202; t=1772301815;
+	bh=ei7LqxZ7esI31qRW8KE0Jp8Qx7ScRfDgPlqpG1DzBcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J9JIwrbiOGa0dePjzj43QtghcTaMgGwal/WVkKBujZk1McsP2Xrg2V4nSGgoBIfMX
-	 qdmc9Gme7/D69boWRIUm/9BTPzo3NqcWS3xqFvdyORY6jedvTyNBBvQ7aAndN99xPJ
-	 Z7jAXU0Q+mS5vNvCOet6A7b6ojwk3vCUkXt1Qa92OaAhfQx9UzTFq7q+k29pmBWqNa
-	 Qzg1Q94wSX/8UcTqbOPQ34Eg8XrGVn4JQiVIygRFZd0wMZ76xqvNPJPdspIY5zo62/
-	 yIG/XxdQR0olXtfFwZAWdU9gGBxUkFFPt/p8yjJaNH38d7kOKKjvyVSeUTug/KGp71
-	 e07kIjDxhyvLg==
+	b=KzABzVEfq/KduGyhdD8htht7mpdLWeR9kRuJaL8iKXFa8lBLKLu0LXGjC7ODe8dvA
+	 8RjT/heEVeIBLzng8kX6W42QRDMr0I7DP4dAc9MlbyzIt3nRZh898M0IdpCqFpR3Da
+	 WQOpoVnLs3sp8VDAOvAllaymMsxarpbZfnPRCLS65I6EYuBP0hWEca452DfQIH8vbH
+	 w1fUDUQIQOXZX1XEj1aWlSiKlpIpFf5QpeJoapNxb44iUvTkg++0Dj/aWQ3NU/f+GE
+	 J+2eBFrRLde9YdGpkI4CxWbrFZdERWudbEHjiFj8SkjD8lQ4RCYNv5Z1E/BYth4p9n
+	 DHMgrTY17xZNg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+Cc: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 229/385] netfilter: nft_set_rbtree: check for partial overlaps in anonymous sets
-Date: Sat, 28 Feb 2026 12:57:31 -0500
-Message-ID: <20260228180011.1568201-229-sashal@kernel.org>
+Subject: [PATCH 6.12 230/385] PCI: Add ACS quirk for Pericom PI7C9X2G404 switches [12d8:b404]
+Date: Sat, 28 Feb 2026 12:57:32 -0500
+Message-ID: <20260228180011.1568201-230-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,87 +47,44 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
 
-[ Upstream commit 4780ec142cbb24b794129d3080eee5cac2943ffc ]
+[ Upstream commit 5907a90551e9f7968781f3a6ab8684458959beb3 ]
 
-Userspace provides an optimized representation in case intervals are
-adjacent, where the end element is omitted.
+12d8:b404 is apparently another PCI ID for Pericom PI7C9X2G404 (as
+identified by the chip silkscreen and lspci).
 
-The existing partial overlap detection logic skips anonymous set checks
-on start elements for this reason.
+It is also affected by the PI7C9X2G errata (e.g. a network card attached
+to it fails under load when P2P Redirect Request is enabled), so apply
+the same quirk to this PCI ID too.
 
-However, it is possible to add intervals that overlap to this anonymous
-where two start elements with the same, eg. A-B, A-C where C < B.
+PCI bridge [0604]: Pericom Semiconductor PI7C9X2G404 EV/SV PCIe2 4-Port/4-Lane Packet Switch [12d8:b404] (rev 01)
 
-      start     end
-	A        B
-      start  end
-        A     C
-
-Restore the check on overlapping start elements to report an overlap.
-
-Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: acd61ffb2f16 ("PCI: Add ACS quirk for Pericom PI7C9X2G switches")
+Closes: https://lore.kernel.org/all/a1d926f0-4cb5-4877-a4df-617902648d80@green-communications.fr/
+Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260119160915.26456-1-nicolas.cavallari@green-communications.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ drivers/pci/quirks.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 0bbce4505b977..48ad51a448e7b 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -309,11 +309,23 @@ static bool nft_rbtree_update_first(const struct nft_set *set,
- 	return false;
- }
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 49a2d6858b4b7..d9ba1786fc1ae 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -6189,6 +6189,10 @@ DECLARE_PCI_FIXUP_ENABLE(PCI_VENDOR_ID_PERICOM, 0x2303,
+ 			 pci_fixup_pericom_acs_store_forward);
+ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_PERICOM, 0x2303,
+ 			 pci_fixup_pericom_acs_store_forward);
++DECLARE_PCI_FIXUP_ENABLE(PCI_VENDOR_ID_PERICOM, 0xb404,
++			 pci_fixup_pericom_acs_store_forward);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_PERICOM, 0xb404,
++			 pci_fixup_pericom_acs_store_forward);
  
-+/* Only for anonymous sets which do not allow updates, all element are active. */
-+static struct nft_rbtree_elem *nft_rbtree_prev_active(struct nft_rbtree_elem *rbe)
-+{
-+	struct rb_node *node;
-+
-+	node = rb_prev(&rbe->node);
-+	if (!node)
-+		return NULL;
-+
-+	return rb_entry(node, struct nft_rbtree_elem, node);
-+}
-+
- static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 			       struct nft_rbtree_elem *new,
- 			       struct nft_elem_priv **elem_priv)
+ static void nvidia_ion_ahci_fixup(struct pci_dev *pdev)
  {
--	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
-+	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL, *rbe_prev;
- 	struct rb_node *node, *next, *parent, **p, *first = NULL;
- 	struct nft_rbtree *priv = nft_set_priv(set);
- 	u8 cur_genmask = nft_genmask_cur(net);
-@@ -451,11 +463,19 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	/* - new start element with existing closest, less or equal key value
- 	 *   being a start element: partial overlap, reported as -ENOTEMPTY.
- 	 *   Anonymous sets allow for two consecutive start element since they
--	 *   are constant, skip them to avoid bogus overlap reports.
-+	 *   are constant, but validate that this new start element does not
-+	 *   sit in between an existing start and end elements: partial overlap,
-+	 *   reported as -ENOTEMPTY.
- 	 */
--	if (!nft_set_is_anonymous(set) && rbe_le &&
--	    nft_rbtree_interval_start(rbe_le) && nft_rbtree_interval_start(new))
--		return -ENOTEMPTY;
-+	if (rbe_le &&
-+	    nft_rbtree_interval_start(rbe_le) && nft_rbtree_interval_start(new)) {
-+		if (!nft_set_is_anonymous(set))
-+			return -ENOTEMPTY;
-+
-+		rbe_prev = nft_rbtree_prev_active(rbe_le);
-+		if (rbe_prev && nft_rbtree_interval_end(rbe_prev))
-+			return -ENOTEMPTY;
-+	}
- 
- 	/* - new end element with existing closest, less or equal key value
- 	 *   being a end element: partial overlap, reported as -ENOTEMPTY.
 -- 
 2.51.0
 
