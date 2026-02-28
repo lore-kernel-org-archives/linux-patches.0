@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CA933A03F
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9142A34250D
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301910; cv=none; b=BI3qKEzG4nZfx0liFekljDVUe7jzALakNYALM/QC58aSb5xJeKRUgOoXJ7JzlWvuMS+DMAn/coWZ56wwXWBg5FlkMsJiiWXAuDSnVOSUqPcCIk7YRmoC09MGLlswxxQccad5sQXnTxeByXKrbS12aUychTQauKUfRjq9t8LwiEI=
+	t=1772301911; cv=none; b=GgXIAx4z+TT/OMIESBTp25qdXULklm9/z6PutGZ+AwbhBSjnVISX+c+h6Gctqv/08aVkw6DTwFtSOmPVaNgPJYCHNbY2I7gukWTCc8XD2o6OhqHFJLiAJCPtFViRrNTRVap6SUfz5ELnO9jKVyaSaB9bnhRjFulA6iXzpdZwMKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301910; c=relaxed/simple;
-	bh=sibmR26qkbLRR9WPp9gh1ecBWa6uN53FRacC0ZmYd6g=;
+	s=arc-20240116; t=1772301911; c=relaxed/simple;
+	bh=2gLHjR+IQhwLbWmifR4WqVbxKDM36B2EFT5IqySWgoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kp37uA6ZeKaJuc99nrbvcgCoAeD9ISm2mB0IkEIPP/IWDgG8b4RTf6Ph3QOD42uw5iKGpvnJSl/cjTTUYA/D2tOc7OyWwF37388KOHhs7mTMw61ErH9lP1hbEQonzEhje3jioMwJ69lcH+naFTm+OPye6WTYTmAua/K6KuLp8yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G01YuNsj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dfEVOcJxXv3XIMS16m0TZEB28W+1wCE4Sm17tApEwaaxCBxXa9lzLAcqcdGdGZ7a8+Xldirbitq010X021ecXhQbmFbjYM+CKGBP1CT2ytkCejH2AEGNHZhxlCh/d3YQGd3+dWmPshZzMAkWe52cjZPHDz0rGloHgvix3EJODeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bVmSluri; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G01YuNsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11179C19423;
-	Sat, 28 Feb 2026 18:05:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bVmSluri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F0DC116D0;
+	Sat, 28 Feb 2026 18:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301910;
-	bh=sibmR26qkbLRR9WPp9gh1ecBWa6uN53FRacC0ZmYd6g=;
+	s=k20201202; t=1772301911;
+	bh=2gLHjR+IQhwLbWmifR4WqVbxKDM36B2EFT5IqySWgoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G01YuNsjgWfkss3MeSFf1x8LVEVXXeBpSD6QT40tP0F+Bf6qP5gQ3DXhtHxNjowIB
-	 JuRdy1N2tqwMgn4CsVvbEuqNvftaGrLDAIVYmOWwP/sjuKCOcl7cnB+0Pawqi4YmC7
-	 svjy1NvkdLMnAe78G4a6z6rQ8qPBBlpKunUdVaQhYXds1X83Lo1IwwGtOKiireH8dR
-	 ZS178NNF+hXrF5w4OdWdM5Au9tqpXPUae/am0N8dVFwUvbIsSISCtGKzeP1H4yRpoo
-	 am27qCKgbeieYtCh1T+SY/cu2Df71SmuwM6Iz/o13Z8bnoL5uIWTwux4CeZQn8FMH5
-	 1BK6jVN0p16VQ==
+	b=bVmSluriv2SRyeFLlQfLJsTjlOtepuhoHKWa6TdsybyESNhauBORMlqqCyeJRtdLC
+	 ++mCsF0zZn64/C2Pe+a3+zg8Qhzt+LsOj46SbBB20CO+2qPOK2aLpeaY6ZZNmF7QtW
+	 /ZH5v9rP6NZFItmgADrMipVo13hVQ9aQJvi33mZ/HixW4/Gl1s7DrC1HZ0dO2Fdat5
+	 XvxB0tpbDbia+0wwQpl4xhrvmkawejuJK3k3BKsoyNkbdaYvTBZA42H+q0HqqU82qr
+	 ZhLrlTWnnQD7Nam9COjUVZ1ay76nMUJr+RvLl9ISRuCnxG+jpRMQT9+NZi11rRL2wD
+	 x87/YHKDtCS2A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Svyatoslav Ryhel <clamor95@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 342/385] drivers: iio: mpu3050: use dev_err_probe for regulator request
-Date: Sat, 28 Feb 2026 12:59:24 -0500
-Message-ID: <20260228180011.1568201-342-sashal@kernel.org>
+Subject: [PATCH 6.12 343/385] usb: bdc: fix sleep during atomic
+Date: Sat, 28 Feb 2026 12:59:25 -0500
+Message-ID: <20260228180011.1568201-343-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,40 +48,39 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit b010880b9936da14f8035585ab57577aa05be23a ]
+[ Upstream commit f1195ca3b4bbd001d3f1264dce91f83dec7777f5 ]
 
-Regulator requesting may result in deferred probing error which will
-abort driver probing. To avoid this just use dev_err_probe which handles
-deferred probing.
+bdc_run() can be ran during atomic context leading to a sleep during
+atomic warning. Fix this by replacing read_poll_timeout() with
+read_poll_timeout_atomic().
 
-Fixes: 3904b28efb2c ("iio: gyro: Add driver for the MPU-3050 gyroscope")
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 75ae051efc9b ("usb: gadget: bdc: use readl_poll_timeout() to simplify code")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260120200754.2488765-1-justin.chen@broadcom.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/gyro/mpu3050-core.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/udc/bdc/bdc_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/gyro/mpu3050-core.c b/drivers/iio/gyro/mpu3050-core.c
-index 35af68b41408f..4dcd0cc545518 100644
---- a/drivers/iio/gyro/mpu3050-core.c
-+++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -1165,10 +1165,8 @@ int mpu3050_common_probe(struct device *dev,
- 	mpu3050->regs[1].supply = mpu3050_reg_vlogic;
- 	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(mpu3050->regs),
- 				      mpu3050->regs);
--	if (ret) {
--		dev_err(dev, "Cannot get regulators\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Cannot get regulators\n");
+diff --git a/drivers/usb/gadget/udc/bdc/bdc_core.c b/drivers/usb/gadget/udc/bdc/bdc_core.c
+index 5149e2b7f0508..7fded329076cc 100644
+--- a/drivers/usb/gadget/udc/bdc/bdc_core.c
++++ b/drivers/usb/gadget/udc/bdc/bdc_core.c
+@@ -35,8 +35,8 @@ static int poll_oip(struct bdc *bdc, u32 usec)
+ 	u32 status;
+ 	int ret;
  
- 	ret = mpu3050_power_up(mpu3050);
+-	ret = readl_poll_timeout(bdc->regs + BDC_BDCSC, status,
+-				 (BDC_CSTS(status) != BDC_OIP), 10, usec);
++	ret = readl_poll_timeout_atomic(bdc->regs + BDC_BDCSC, status,
++					(BDC_CSTS(status) != BDC_OIP), 10, usec);
  	if (ret)
+ 		dev_err(bdc->dev, "operation timedout BDCSC: 0x%08x\n", status);
+ 	else
 -- 
 2.51.0
 
