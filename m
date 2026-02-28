@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF563451A7
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F71334252B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301747; cv=none; b=FtCV8JQqp05jIcDsjX7DPtcdkuJvrWMdKQuxq61G2QxHs7HxRebAsuO3S8exDEOmUmCu7DSxhkoNDJe8CNSVTZ7XpFlqD2RuoIawnjjjMgMy+VgvPYU/yXEhX+Umf739/jVQNosXrLuohRxv8ligbwqdpY3KwFTTaR9uX8lVs1Y=
+	t=1772301748; cv=none; b=H5ZULGVtZZ3/T3YVRcmr2iBaSws4LVhC2WH6Uu1HfjU0sZvFii4bv5jHcOpIagJwU/dMs0T40eaf1seR+g1CzTYy/GGUzKtuyqSnZqBqkeUGleB1BVIrH2CUHDIJpzagRCmPFlvG/D+jWm7uRNjmhzl53rHeeEve1WshgtV8Kug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301747; c=relaxed/simple;
-	bh=o8kgWcVdcYcnSjRWJaeWuVN67QZzESu3IbTqgu9Doco=;
+	s=arc-20240116; t=1772301748; c=relaxed/simple;
+	bh=HGhVyo6TaSMqZJa3nQ1CbE/cS53V0HYejrw7ZzWugOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JamlbeDTeSNB9l4j5iVbyBa6JpxlErbWvui7AYTGdc7LdVJlUIt2cBaetYXLmLPCG+fKtuOHY3DKpV8fIGPYIDo4ruog08Lou01HgoSfOZ6/0pqPN9zMneGaFEDHc8EE/IMgUOerc5YXQ024H4nE+gM+KFv/IbX+J1ydt73pvBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J9GPA2sH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RTqaKSWRbYq+bP5fWw6+cN7oDbXUoAz2aXPp6qpu3vYiys5x8tZDq9hEjtusnQlXxYVxnYAv52aTtOcRkv723vaJ8xRDq32XH15nmassveC85VxpajFAMW0yeTo/CWW2f9eoUqisKGTsHItpMLQIiJBt0G581q5VAkOdjyUZSt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NsTOsy4g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J9GPA2sH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08562C116D0;
-	Sat, 28 Feb 2026 18:02:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NsTOsy4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203D2C116D0;
+	Sat, 28 Feb 2026 18:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301746;
-	bh=o8kgWcVdcYcnSjRWJaeWuVN67QZzESu3IbTqgu9Doco=;
+	s=k20201202; t=1772301748;
+	bh=HGhVyo6TaSMqZJa3nQ1CbE/cS53V0HYejrw7ZzWugOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J9GPA2sH3fmtjF+n4FKUHaFILdYTRO2Os7mhrd9GsFMfpI8jEbiGODAdJ1b3mA5fz
-	 kWmej6M92rYw477myc9ma1amDQRuVcdJ1WhVQRm+Q4Ul0HalhIPETMFDz1bikjwUuT
-	 ofCKlUaLXEfrzoE5b4xQ/QAU4kRnQJwor1XoVXzpkA4jAbonCPZamUMzIwHRH3YFOt
-	 EDxjq8OelqTAkOGbybqHN2vPuFGm07JtFm+KXVZAL6XGs996WzEvgSzNB5FfRRz0+Z
-	 YAQDqcD5JUQP6JlwImvEE3byfjjTIHdLwjGXdqvUcXm+rjjT0v8uGbTJiFdKL3IS4i
-	 hv3Er3XSCb2/Q==
+	b=NsTOsy4gW+YXSNHs1ghZ7jvRnGCb7RxONHpUqj5jLvveO/ALQIokl1Ts3M+IqcjmC
+	 LqqZVDdHzFdQafSuChQzWH31DUtRkb4elxQCF8a7XnY/Tt6pvbIccFVJERcN+bryD8
+	 3+lkTrPEQ9uSHINRbEKE3ozZm+b4ThqOMhpe2Wgulm8tIrx5eCVYFZmNnzuDisr1QG
+	 JsEt4Pz5DfjTzg2sK/jZxpeMh+rdstvarTEKyyzPYHmLKSA8v07W7Jh1NwwMK7OOk+
+	 vDaZPzX6IxVnavG2Q5aNYtVAxZESjPESqTeIhg4rztMCrM+ODI/n+pjlabWsInTp1t
+	 GIZVaWe3WrQ5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Gang BA <Gang.Ba@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	darlington Opara <darlington.opara@amd.com>,
+	Jinage Zhao <jiange.zhao@amd.com>,
+	Monk Liu <Monk.Liu@amd.com>,
+	Emily Deng <Emily.Deng@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 149/385] drm/amdkfd: Fix signal_eviction_fence() bool return value
-Date: Sat, 28 Feb 2026 12:56:11 -0500
-Message-ID: <20260228180011.1568201-149-sashal@kernel.org>
+Subject: [PATCH 6.12 150/385] drm/amdgpu: Use explicit VCN instance 0 in SR-IOV init
+Date: Sat, 28 Feb 2026 12:56:12 -0500
+Message-ID: <20260228180011.1568201-150-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -54,72 +55,172 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 31dc58adda9874420ab8fa5a2f9c43377745753a ]
+[ Upstream commit af26fa751c2eef66916acbf0d3c3e9159da56186 ]
 
-signal_eviction_fence() is declared to return bool, but returns -EINVAL
-when no eviction fence is present.  This makes the "no fence" or "the
-NULL-fence" path evaluate to true and triggers a Smatch warning.
+vcn_v2_0_start_sriov() declares a local variable "i" initialized to zero
+and uses it only as the instance index in SOC15_REG_OFFSET(UVD, i, ...).
+The value is never changed and all other fields are taken from
+adev->vcn.inst[0], so this path only ever programs VCN instance 0.
 
-v2: Return true instead to explicitly indicate that there is no eviction
-fence to signal and that eviction is already complete. This matches the
-existing caller logic where a NULL fence means "nothing to do" and
-allows restore handling to proceed normally. (Christian)
+This triggered a Smatch:
+warn: iterator 'i' not incremented
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_process.c:2099 signal_eviction_fence()
-warn: '(-22)' is not bool
+Replace the dummy iterator with an explicit instance index of 0 in
+SOC15_REG_OFFSET() calls.
 
-drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_process.c
-    2090 static bool signal_eviction_fence(struct kfd_process *p)
-                ^^^^
-
-    2091 {
-    2092         struct dma_fence *ef;
-    2093         bool ret;
-    2094
-    2095         rcu_read_lock();
-    2096         ef = dma_fence_get_rcu_safe(&p->ef);
-    2097         rcu_read_unlock();
-    2098         if (!ef)
---> 2099                 return -EINVAL;
-
-		This should be either true or false.
-		Probably true because presumably
-		it has been tested?
-
-    2100
-    2101         ret = dma_fence_check_and_signal(ef);
-    2102         dma_fence_put(ef);
-    2103
-    2104         return ret;
-    2105 }
-
-Fixes: 37865e02e6cc ("drm/amdkfd: Fix eviction fence handling")
+Fixes: dd26858a9cd8 ("drm/amdgpu: implement initialization part on VCN2.0 for SRIOV")
 Reported by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Philip Yang <Philip.Yang@amd.com>
-Cc: Gang BA <Gang.Ba@amd.com>
-Cc: Felix Kuehling <felix.kuehling@amd.com>
+Cc: darlington Opara <darlington.opara@amd.com>
+Cc: Jinage Zhao <jiange.zhao@amd.com>
+Cc: Monk Liu <Monk.Liu@amd.com>
+Cc: Emily Deng <Emily.Deng@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Emily Deng <Emily.Deng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c | 45 ++++++++++++++-------------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 45923da7709fd..64f3a0687f8a2 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1970,7 +1970,7 @@ static int signal_eviction_fence(struct kfd_process *p)
- 	ef = dma_fence_get_rcu_safe(&p->ef);
- 	rcu_read_unlock();
- 	if (!ef)
--		return -EINVAL;
-+		return true;
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
+index f085fdaafae00..9479bf9ea30fe 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
+@@ -1913,7 +1913,8 @@ static int vcn_v2_0_start_sriov(struct amdgpu_device *adev)
+ 	struct mmsch_v2_0_cmd_end end = { {0} };
+ 	struct mmsch_v2_0_init_header *header;
+ 	uint32_t *init_table = adev->virt.mm_table.cpu_addr;
+-	uint8_t i = 0;
++
++	/* This path only programs VCN instance 0. */
  
- 	ret = dma_fence_signal(ef);
- 	dma_fence_put(ef);
+ 	header = (struct mmsch_v2_0_init_header *)init_table;
+ 	direct_wt.cmd_header.command_type = MMSCH_COMMAND__DIRECT_REG_WRITE;
+@@ -1932,93 +1933,93 @@ static int vcn_v2_0_start_sriov(struct amdgpu_device *adev)
+ 		size = AMDGPU_GPU_PAGE_ALIGN(adev->vcn.fw[0]->size + 4);
+ 
+ 		MMSCH_V2_0_INSERT_DIRECT_RD_MOD_WT(
+-			SOC15_REG_OFFSET(UVD, i, mmUVD_STATUS),
++			SOC15_REG_OFFSET(UVD, 0, mmUVD_STATUS),
+ 			0xFFFFFFFF, 0x00000004);
+ 
+ 		/* mc resume*/
+ 		if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) {
+ 			MMSCH_V2_0_INSERT_DIRECT_WT(
+-				SOC15_REG_OFFSET(UVD, i,
++				SOC15_REG_OFFSET(UVD, 0,
+ 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_LOW),
+ 				adev->firmware.ucode[AMDGPU_UCODE_ID_VCN].tmr_mc_addr_lo);
+ 			MMSCH_V2_0_INSERT_DIRECT_WT(
+-				SOC15_REG_OFFSET(UVD, i,
++				SOC15_REG_OFFSET(UVD, 0,
+ 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_HIGH),
+ 				adev->firmware.ucode[AMDGPU_UCODE_ID_VCN].tmr_mc_addr_hi);
+ 			offset = 0;
+ 		} else {
+ 			MMSCH_V2_0_INSERT_DIRECT_WT(
+-				SOC15_REG_OFFSET(UVD, i,
++				SOC15_REG_OFFSET(UVD, 0,
+ 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_LOW),
+ 				lower_32_bits(adev->vcn.inst->gpu_addr));
+ 			MMSCH_V2_0_INSERT_DIRECT_WT(
+-				SOC15_REG_OFFSET(UVD, i,
++				SOC15_REG_OFFSET(UVD, 0,
+ 					mmUVD_LMI_VCPU_CACHE_64BIT_BAR_HIGH),
+ 				upper_32_bits(adev->vcn.inst->gpu_addr));
+ 			offset = size;
+ 		}
+ 
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_OFFSET0),
++			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_OFFSET0),
+ 			0);
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_SIZE0),
++			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_SIZE0),
+ 			size);
+ 
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i,
++			SOC15_REG_OFFSET(UVD, 0,
+ 				mmUVD_LMI_VCPU_CACHE1_64BIT_BAR_LOW),
+ 			lower_32_bits(adev->vcn.inst->gpu_addr + offset));
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i,
++			SOC15_REG_OFFSET(UVD, 0,
+ 				mmUVD_LMI_VCPU_CACHE1_64BIT_BAR_HIGH),
+ 			upper_32_bits(adev->vcn.inst->gpu_addr + offset));
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_OFFSET1),
++			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_OFFSET1),
+ 			0);
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_SIZE1),
++			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_SIZE1),
+ 			AMDGPU_VCN_STACK_SIZE);
+ 
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i,
++			SOC15_REG_OFFSET(UVD, 0,
+ 				mmUVD_LMI_VCPU_CACHE2_64BIT_BAR_LOW),
+ 			lower_32_bits(adev->vcn.inst->gpu_addr + offset +
+ 				AMDGPU_VCN_STACK_SIZE));
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i,
++			SOC15_REG_OFFSET(UVD, 0,
+ 				mmUVD_LMI_VCPU_CACHE2_64BIT_BAR_HIGH),
+ 			upper_32_bits(adev->vcn.inst->gpu_addr + offset +
+ 				AMDGPU_VCN_STACK_SIZE));
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_OFFSET2),
++			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_OFFSET2),
+ 			0);
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i, mmUVD_VCPU_CACHE_SIZE2),
++			SOC15_REG_OFFSET(UVD, 0, mmUVD_VCPU_CACHE_SIZE2),
+ 			AMDGPU_VCN_CONTEXT_SIZE);
+ 
+ 		for (r = 0; r < adev->vcn.num_enc_rings; ++r) {
+ 			ring = &adev->vcn.inst->ring_enc[r];
+ 			ring->wptr = 0;
+ 			MMSCH_V2_0_INSERT_DIRECT_WT(
+-				SOC15_REG_OFFSET(UVD, i, mmUVD_RB_BASE_LO),
++				SOC15_REG_OFFSET(UVD, 0, mmUVD_RB_BASE_LO),
+ 				lower_32_bits(ring->gpu_addr));
+ 			MMSCH_V2_0_INSERT_DIRECT_WT(
+-				SOC15_REG_OFFSET(UVD, i, mmUVD_RB_BASE_HI),
++				SOC15_REG_OFFSET(UVD, 0, mmUVD_RB_BASE_HI),
+ 				upper_32_bits(ring->gpu_addr));
+ 			MMSCH_V2_0_INSERT_DIRECT_WT(
+-				SOC15_REG_OFFSET(UVD, i, mmUVD_RB_SIZE),
++				SOC15_REG_OFFSET(UVD, 0, mmUVD_RB_SIZE),
+ 				ring->ring_size / 4);
+ 		}
+ 
+ 		ring = &adev->vcn.inst->ring_dec;
+ 		ring->wptr = 0;
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i,
++			SOC15_REG_OFFSET(UVD, 0,
+ 				mmUVD_LMI_RBC_RB_64BIT_BAR_LOW),
+ 			lower_32_bits(ring->gpu_addr));
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i,
++			SOC15_REG_OFFSET(UVD, 0,
+ 				mmUVD_LMI_RBC_RB_64BIT_BAR_HIGH),
+ 			upper_32_bits(ring->gpu_addr));
+ 		/* force RBC into idle state */
+@@ -2029,7 +2030,7 @@ static int vcn_v2_0_start_sriov(struct amdgpu_device *adev)
+ 		tmp = REG_SET_FIELD(tmp, UVD_RBC_RB_CNTL, RB_NO_UPDATE, 1);
+ 		tmp = REG_SET_FIELD(tmp, UVD_RBC_RB_CNTL, RB_RPTR_WR_EN, 1);
+ 		MMSCH_V2_0_INSERT_DIRECT_WT(
+-			SOC15_REG_OFFSET(UVD, i, mmUVD_RBC_RB_CNTL), tmp);
++			SOC15_REG_OFFSET(UVD, 0, mmUVD_RBC_RB_CNTL), tmp);
+ 
+ 		/* add end packet */
+ 		tmp = sizeof(struct mmsch_v2_0_cmd_end);
 -- 
 2.51.0
 
