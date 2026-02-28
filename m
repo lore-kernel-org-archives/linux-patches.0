@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5399135A3A0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BCF636E475
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300971; cv=none; b=nneXyEV5xt2lTTmNKKtH65fec2MbOgMV1O26VkWYqRXlDwfcIpVLNWPqjnKHjpu/Jx4NN/fwiYGIriSvKJpBM2GI4bXdwUmOIQEAkqe/HpP8/+U4lhmVTahF3M98EKY5pwRxuhivZRssv3Ixzy/o0LbGAmtw0hYBDaBUT+K2FIA=
+	t=1772300972; cv=none; b=muIVRxB5nimFEDokiKXezbhtCs8wh/H+axp7gvfa3SCNCOvMYwVvpO080sfYelrSwgJBBd0PE4mRDVlTtYGYI4zQ5nb/cdeOOxjbWR/YiDS4GibIAdJLPD75tL8ljif1yBY/ExVymt8dytc0XLdy3vJUhHeouR6KIGxCKLs7nP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300971; c=relaxed/simple;
-	bh=npRQ0tXYpgs62t84J3RGWsOTLTpkojqnwhv4hiqG08s=;
+	s=arc-20240116; t=1772300972; c=relaxed/simple;
+	bh=LuI33bgiqRzgyD0cSy4CWOiV+N3FunkXLe//Bqkj0P8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQKiVz1pC3J9ekk7L/OOX9ImMCq52I5QEMRhwZpsdUiXADYd1HB/vLPdkwRslGbiKuKbm/qr0i3PAVU5eLp0Mn8pUYF2DYwGJw+/vMC2blrJ+WPVxoeCvAmDlhOXBOOmKe4WdTvvWcS1O/DonLy9t2hER/2PQyncAc4CNC76Ku4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pi8m8WuH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dYAU6gvjCjv1HPZECqX7mb8HC0+8cU3x9A0sEq8Hg83OTJYFfyhoagvyTNRI/N0acOigKryOyxiqpqFYNXoNzgqgPJYWVTrDiOhQkki2M7mEOw5KjKBqMhQZFM2Lyo+b4MIOwi7+hcI3/8tjIfSRI4qYZz3cNJ1nhK59XtZz2Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kI1ZTErc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pi8m8WuH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8296C19423;
-	Sat, 28 Feb 2026 17:49:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kI1ZTErc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF0BC19423;
+	Sat, 28 Feb 2026 17:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300971;
-	bh=npRQ0tXYpgs62t84J3RGWsOTLTpkojqnwhv4hiqG08s=;
+	s=k20201202; t=1772300972;
+	bh=LuI33bgiqRzgyD0cSy4CWOiV+N3FunkXLe//Bqkj0P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pi8m8WuHk9N0KGXx5vqpCUhw5Xbw7BTqJnJ7PIFREqSWyaH7FV3MS/GBn8YDFHE1n
-	 7RN4ZlUT1uy2PEkzEPwyGVx+wcMMu+fnzkd5vG03Qo+FIQsn/9SJZ/G2qp6k8eBoG+
-	 T0Y5Cmv7rgZMCVqWiaNSP1muW8NtP0xj3GrmoCoUtWrpP7GoqM/PG7IOSlg3KO1FSF
-	 ec3CvAAsYEzA45bwuixjHKIYGNq4VLxREHBf44dLA0SJSZNCtJ7rB7Hy4HUFaU6qRi
-	 7mv5KMWX+50J2MJGYORiXS/buedzEOdBzZlAFgMAqQjoWbUMkoqiB01DiCwzuP9k5J
-	 1b1ZXyAFhiNFA==
+	b=kI1ZTErcPhtL52/4NIset1l0dFdiEZU7Twubj+EUN4XCDxFOkVGZAuMD3FiEafn5y
+	 cT8drvaibP22BiYTGHtUqqWREf9GgdICZBhoNt8nU2FEdJXeHuty9puLVD96+74UTA
+	 KFJ7smRzHrTKBQ81qe++ug4JUrknCdqP1sp2fwucWUCAd72qL9FzqkTXUblLv06JlG
+	 RqsIL+GsqNsiy0A+LMqEK5mwQPtQ1LbT57UiW2RIMTy1WlUNdTFe/Ln1vBjDpXNKAB
+	 ZokmeSZu4QaI16Gv1dLjQl2pKMrJ9P/MbtVjbR2BVGNUnJFmy03dyr8v4dbWivZ+Wt
+	 jSsuKLCJUUUMQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Tomas Melin <tomas.melin@vaisala.com>,
-	Michal Simek <michal.simek@amd.com>,
+Cc: Lili Li <lili.li@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 098/752] Revert "arm64: zynqmp: Add an OP-TEE node to the device tree"
-Date: Sat, 28 Feb 2026 12:36:49 -0500
-Message-ID: <20260228174750.1542406-98-sashal@kernel.org>
+Subject: [PATCH 6.18 099/752] EDAC/igen6: Add more Intel Panther Lake-H SoCs support
+Date: Sat, 28 Feb 2026 12:36:50 -0500
+Message-ID: <20260228174750.1542406-99-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,43 +48,59 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Melin <tomas.melin@vaisala.com>
+From: Lili Li <lili.li@intel.com>
 
-[ Upstream commit c197179990124f991fca220d97fac56779a02c6d ]
+[ Upstream commit 4c36e6106997b6ad8f4a279b4bdbca3ed6f53c6c ]
 
-This reverts commit 06d22ed6b6635b17551f386b50bb5aaff9b75fbe.
+Add more Intel Panther Lake-H SoC compute die IDs for EDAC support.
 
-OP-TEE logic in U-Boot automatically injects a reserved-memory
-node along with optee firmware node to kernel device tree.
-The injection logic is dependent on that there is no manually
-defined optee node. Having the node in zynqmp.dtsi effectively
-breaks OP-TEE's insertion of the reserved-memory node, causing
-memory access violations during runtime.
-
-Signed-off-by: Tomas Melin <tomas.melin@vaisala.com>
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/20251125-revert-zynqmp-optee-v1-1-d2ce4c0fcaf6@vaisala.com
+Signed-off-by: Lili Li <lili.li@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Link: https://patch.msgid.link/20251124131537.3633983-1-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/xilinx/zynqmp.dtsi | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/edac/igen6_edac.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
-index 938b014ca9231..b55c6b2e8e0e1 100644
---- a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
-+++ b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
-@@ -192,11 +192,6 @@ psci {
- 	};
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index 2fc59f9eed691..9202e6e2daf4e 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -274,6 +274,16 @@ static struct work_struct ecclog_work;
+ #define DID_PTL_H_SKU1	0xb000
+ #define DID_PTL_H_SKU2	0xb001
+ #define DID_PTL_H_SKU3	0xb002
++#define DID_PTL_H_SKU4	0xb003
++#define DID_PTL_H_SKU5	0xb004
++#define DID_PTL_H_SKU6	0xb005
++#define DID_PTL_H_SKU7	0xb008
++#define DID_PTL_H_SKU8	0xb011
++#define DID_PTL_H_SKU9	0xb014
++#define DID_PTL_H_SKU10	0xb015
++#define DID_PTL_H_SKU11	0xb028
++#define DID_PTL_H_SKU12	0xb029
++#define DID_PTL_H_SKU13	0xb02a
  
- 	firmware {
--		optee: optee  {
--			compatible = "linaro,optee-tz";
--			method = "smc";
--		};
--
- 		zynqmp_firmware: zynqmp-firmware {
- 			compatible = "xlnx,zynqmp-firmware";
- 			#power-domain-cells = <1>;
+ /* Compute die IDs for Wildcat Lake with IBECC */
+ #define DID_WCL_SKU1	0xfd00
+@@ -636,6 +646,16 @@ static struct pci_device_id igen6_pci_tbl[] = {
+ 	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU1), (kernel_ulong_t)&mtl_p_cfg },
+ 	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU2), (kernel_ulong_t)&mtl_p_cfg },
+ 	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU3), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU4), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU5), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU6), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU7), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU8), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU9), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU10), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU11), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU12), (kernel_ulong_t)&mtl_p_cfg },
++	{ PCI_VDEVICE(INTEL, DID_PTL_H_SKU13), (kernel_ulong_t)&mtl_p_cfg },
+ 	{ PCI_VDEVICE(INTEL, DID_WCL_SKU1), (kernel_ulong_t)&wcl_cfg },
+ 	{ },
+ };
 -- 
 2.51.0
 
