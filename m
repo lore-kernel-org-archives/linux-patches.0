@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2618E2DE717
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43F02DE717
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301109; cv=none; b=qyJu4Y32e4/SZYt6KNd7gAugWq9GRt2EZ/gp9HcklRFM4enWQv7RljBUJfBpsAznCxuUv7PV6UrIwQIfRVkVpfEhQPJTpNurscbeaFLjOiuwoaURRhDzxM0rjCTFdBn8yaRgYGKlIi7xPoH2I49L+cjHgVRJYUXZ8I3Nmmb14GQ=
+	t=1772301109; cv=none; b=iMHrehQMVssfjtKUdYYxvj0XRjDprDGnB7mAGaCuv6TVgPY8SHzldCYa29buU4j6smY2ZEbFPKDG6+ZRfPmYBMWIvu0vN6JfyNP7YCSls1FZVmAbRGzm3jrNAORQKQU31lYuK3sM7m47NF2S4D4N3ycyLUfZcfP5oLob2Y8ImTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301109; c=relaxed/simple;
-	bh=LdrVkIQv8aPAJVZRIakDY6g9NKU6Qt7ODTGijZEzq9U=;
+	bh=O6C8S6vRXBsHphTnKx+9Jk67r9IKqOeq5Szq5CasPt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lO+WfujPnrHk+8mMK00azYmtfnKnUGIeyJMOZDqsOPQVUp0Vpd6c90RHBn0NKgdpFZlJrSAHTWV349E87wC2mpCq+FQVCHFPI3acb2odoGTh5L/qFkxujyrFtpLcuw9/JXYEFEVRjXKbg5g1t5UfhIYtVYldC4Qr+AD8RRG87Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GGeAgbYl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MK9pXFIMyUKh+Ko4zdybrU9wmHIb2KFUGuSsX/PDOpvrvsEnNNDOVz+HPl2rRFcYCtkucADTHYdf/yNANherMf24FCraZFewyiXEb4RQUpXCiQ4ppPLs56JytPctexBg2Q0g4CdrK3JJOA5v35RPye2Qr95ObURhnRBsxJe210E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vN3D658R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GGeAgbYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E674C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vN3D658R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB0AC19425;
 	Sat, 28 Feb 2026 17:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301108;
-	bh=LdrVkIQv8aPAJVZRIakDY6g9NKU6Qt7ODTGijZEzq9U=;
+	s=k20201202; t=1772301109;
+	bh=O6C8S6vRXBsHphTnKx+9Jk67r9IKqOeq5Szq5CasPt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGeAgbYlSBtDfhlxsvATQxns6PjB+hJ+1KOEnYjtAKKsoV+wyWPg0a1d1czXVhVwy
-	 9ukYEV0SINicnVHIxHYgblTq1p8x3b2+kxs0DKGc3fu/6CLHjBbFW5rCvELbEOS6Je
-	 5S2yMLlw9XCG4FRd3NAYfY3Y3XhoS4K20JsPobsYa0N66P7Fq1ue9fgZZnBwPmytEk
-	 kN2Grr22iUBwuGYvHNyA86QzFUQFibMrqA+wWF7nZnHpw3iTc8oPlr1GSb4cbvF1yT
-	 v32h6KZ6oAwDyoFQ/Q4SiDiLuF9vEBFMSKzN8cGC4WZs998m+f4fm7VjYBqEw6Kbpx
-	 c15WuJ+cgWe0Q==
+	b=vN3D658RcFZUajg6E9r8vWWB2PzHK8YSwRFKi5j16cbFbynNyPeeYbdHzwKQKC4jX
+	 0gW6bH9Z1gy32g20jTNfwvlpnU9HXyoiiL8QJi7wyuLogXRbQ3RlioH/tn7EtO5iiB
+	 ZUK9p5aNK96ffMISzVI4BEODcENNkzEV8KDJZZROF8kQX6Do6FNEPRPsK3ZSVcMyiC
+	 xVgZicNELVzGFwJS/wPtdSdtMJZwYZWFfUizdHPPETQ/VKbd13su26J1kY9tt+CoJV
+	 HyX1+m/S/2zvvvt5lpue6S1KSH9Dbi50L1bhxSDKHdCQpwWuPkVMinq4/W4vGJupSf
+	 lzLWUsxiCOMNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Po-Hao Huang <phhuang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Gerd Rausch <gerd.rausch@oracle.com>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 263/752] wifi: rtw89: 8922a: add digital compensation for 2GHz
-Date: Sat, 28 Feb 2026 12:39:34 -0500
-Message-ID: <20260228174750.1542406-263-sashal@kernel.org>
+Subject: [PATCH 6.18 264/752] net/rds: No shortcut out of RDS_CONN_ERROR
+Date: Sat, 28 Feb 2026 12:39:35 -0500
+Message-ID: <20260228174750.1542406-264-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,121 +48,90 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Po-Hao Huang <phhuang@realtek.com>
+From: Gerd Rausch <gerd.rausch@oracle.com>
 
-[ Upstream commit 8da7e88682d58a7c2e2c2101e49d3c9c9ac481b0 ]
+[ Upstream commit ad22d24be635c6beab6a1fdd3f8b1f3c478d15da ]
 
-This fixes transmit power too low under 2GHz connection. Previously
-we missed the settings of 2GHz, add the according calibrated tables.
+RDS connections carry a state "rds_conn_path::cp_state"
+and transitions from one state to another and are conditional
+upon an expected state: "rds_conn_path_transition."
 
-Signed-off-by: Po-Hao Huang <phhuang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260117044157.2392958-10-pkshih@realtek.com
+There is one exception to this conditionality, which is
+"RDS_CONN_ERROR" that can be enforced by "rds_conn_path_drop"
+regardless of what state the condition is currently in.
+
+But as soon as a connection enters state "RDS_CONN_ERROR",
+the connection handling code expects it to go through the
+shutdown-path.
+
+The RDS/TCP multipath changes added a shortcut out of
+"RDS_CONN_ERROR" straight back to "RDS_CONN_CONNECTING"
+via "rds_tcp_accept_one_path" (e.g. after "rds_tcp_state_change").
+
+A subsequent "rds_tcp_reset_callbacks" can then transition
+the state to "RDS_CONN_RESETTING" with a shutdown-worker queued.
+
+That'll trip up "rds_conn_init_shutdown", which was
+never adjusted to handle "RDS_CONN_RESETTING" and subsequently
+drops the connection with the dreaded "DR_INV_CONN_STATE",
+which leaves "RDS_SHUTDOWN_WORK_QUEUED" on forever.
+
+So we do two things here:
+
+a) Don't shortcut "RDS_CONN_ERROR", but take the longer
+   path through the shutdown code.
+
+b) Add "RDS_CONN_RESETTING" to the expected states in
+  "rds_conn_init_shutdown" so that we won't error out
+  and get stuck, if we ever hit weird state transitions
+  like this again."
+
+Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
+Signed-off-by: Allison Henderson <allison.henderson@oracle.com>
+Link: https://patch.msgid.link/20260122055213.83608-2-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/rtw8922a.c | 57 +++++++++++++++----
- 1 file changed, 47 insertions(+), 10 deletions(-)
+ net/rds/connection.c | 2 ++
+ net/rds/tcp_listen.c | 5 -----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8922a.c b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-index 757dedd1a11d5..730e5d0d65750 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-@@ -1770,6 +1770,32 @@ static int rtw8922a_ctrl_rx_path_tmac(struct rtw89_dev *rtwdev,
- }
+diff --git a/net/rds/connection.c b/net/rds/connection.c
+index 68bc88cce84ec..ad8027e6f54ef 100644
+--- a/net/rds/connection.c
++++ b/net/rds/connection.c
+@@ -382,6 +382,8 @@ void rds_conn_shutdown(struct rds_conn_path *cp)
+ 		if (!rds_conn_path_transition(cp, RDS_CONN_UP,
+ 					      RDS_CONN_DISCONNECTING) &&
+ 		    !rds_conn_path_transition(cp, RDS_CONN_ERROR,
++					      RDS_CONN_DISCONNECTING) &&
++		    !rds_conn_path_transition(cp, RDS_CONN_RESETTING,
+ 					      RDS_CONN_DISCONNECTING)) {
+ 			rds_conn_path_error(cp,
+ 					    "shutdown called in state %d\n",
+diff --git a/net/rds/tcp_listen.c b/net/rds/tcp_listen.c
+index 91e34af3fe5d5..65c5425a02de4 100644
+--- a/net/rds/tcp_listen.c
++++ b/net/rds/tcp_listen.c
+@@ -59,9 +59,6 @@ void rds_tcp_keepalive(struct socket *sock)
+  * socket and force a reconneect from smaller -> larger ip addr. The reason
+  * we special case cp_index 0 is to allow the rds probe ping itself to itself
+  * get through efficiently.
+- * Since reconnects are only initiated from the node with the numerically
+- * smaller ip address, we recycle conns in RDS_CONN_ERROR on the passive side
+- * by moving them to CONNECTING in this function.
+  */
+ static
+ struct rds_tcp_connection *rds_tcp_accept_one_path(struct rds_connection *conn)
+@@ -86,8 +83,6 @@ struct rds_tcp_connection *rds_tcp_accept_one_path(struct rds_connection *conn)
+ 		struct rds_conn_path *cp = &conn->c_path[i];
  
- #define DIGITAL_PWR_COMP_REG_NUM 22
-+static const u32 rtw8922a_digital_pwr_comp_2g_s0_val[][DIGITAL_PWR_COMP_REG_NUM] = {
-+	{0x012C0064, 0x04B00258, 0x00432710, 0x019000A7, 0x06400320,
-+	 0x0D05091D, 0x14D50FA0, 0x00000000, 0x01010000, 0x00000101,
-+	 0x01010101, 0x02020201, 0x02010000, 0x03030202, 0x00000303,
-+	 0x03020101, 0x06060504, 0x01010000, 0x06050403, 0x01000606,
-+	 0x05040202, 0x07070706},
-+	{0x012C0064, 0x04B00258, 0x00432710, 0x019000A7, 0x06400320,
-+	 0x0D05091D, 0x14D50FA0, 0x00000000, 0x01010100, 0x00000101,
-+	 0x01000000, 0x01010101, 0x01010000, 0x02020202, 0x00000404,
-+	 0x03020101, 0x04040303, 0x02010000, 0x03030303, 0x00000505,
-+	 0x03030201, 0x05050303},
-+};
-+
-+static const u32 rtw8922a_digital_pwr_comp_2g_s1_val[][DIGITAL_PWR_COMP_REG_NUM] = {
-+	{0x012C0064, 0x04B00258, 0x00432710, 0x019000A7, 0x06400320,
-+	 0x0D05091D, 0x14D50FA0, 0x01010000, 0x01010101, 0x00000101,
-+	 0x01010100, 0x01010101, 0x01010000, 0x02020202, 0x01000202,
-+	 0x02020101, 0x03030202, 0x02010000, 0x05040403, 0x01000606,
-+	 0x05040302, 0x07070605},
-+	{0x012C0064, 0x04B00258, 0x00432710, 0x019000A7, 0x06400320,
-+	 0x0D05091D, 0x14D50FA0, 0x00000000, 0x01010100, 0x00000101,
-+	 0x01010000, 0x02020201, 0x02010100, 0x03030202, 0x01000404,
-+	 0x04030201, 0x05050404, 0x01010100, 0x04030303, 0x01000505,
-+	 0x03030101, 0x05050404},
-+};
-+
- static const u32 rtw8922a_digital_pwr_comp_val[][DIGITAL_PWR_COMP_REG_NUM] = {
- 	{0x012C0096, 0x044C02BC, 0x00322710, 0x015E0096, 0x03C8028A,
- 	 0x0BB80708, 0x17701194, 0x02020100, 0x03030303, 0x01000303,
-@@ -1784,7 +1810,7 @@ static const u32 rtw8922a_digital_pwr_comp_val[][DIGITAL_PWR_COMP_REG_NUM] = {
- };
- 
- static void rtw8922a_set_digital_pwr_comp(struct rtw89_dev *rtwdev,
--					  bool enable, u8 nss,
-+					  u8 band, u8 nss,
- 					  enum rtw89_rf_path path)
- {
- 	static const u32 ltpc_t0[2] = {R_BE_LTPC_T0_PATH0, R_BE_LTPC_T0_PATH1};
-@@ -1792,14 +1818,25 @@ static void rtw8922a_set_digital_pwr_comp(struct rtw89_dev *rtwdev,
- 	u32 addr, val;
- 	u32 i;
- 
--	if (nss == 1)
--		digital_pwr_comp = rtw8922a_digital_pwr_comp_val[0];
--	else
--		digital_pwr_comp = rtw8922a_digital_pwr_comp_val[1];
-+	if (nss == 1) {
-+		if (band == RTW89_BAND_2G)
-+			digital_pwr_comp = path == RF_PATH_A ?
-+				rtw8922a_digital_pwr_comp_2g_s0_val[0] :
-+				rtw8922a_digital_pwr_comp_2g_s1_val[0];
-+		else
-+			digital_pwr_comp = rtw8922a_digital_pwr_comp_val[0];
-+	} else {
-+		if (band == RTW89_BAND_2G)
-+			digital_pwr_comp = path == RF_PATH_A ?
-+				rtw8922a_digital_pwr_comp_2g_s0_val[1] :
-+				rtw8922a_digital_pwr_comp_2g_s1_val[1];
-+		else
-+			digital_pwr_comp = rtw8922a_digital_pwr_comp_val[1];
-+	}
- 
- 	addr = ltpc_t0[path];
- 	for (i = 0; i < DIGITAL_PWR_COMP_REG_NUM; i++, addr += 4) {
--		val = enable ? digital_pwr_comp[i] : 0;
-+		val = digital_pwr_comp[i];
- 		rtw89_phy_write32(rtwdev, addr, val);
- 	}
- }
-@@ -1808,7 +1845,7 @@ static void rtw8922a_digital_pwr_comp(struct rtw89_dev *rtwdev,
- 				      enum rtw89_phy_idx phy_idx)
- {
- 	const struct rtw89_chan *chan = rtw89_chan_get(rtwdev, RTW89_CHANCTX_0);
--	bool enable = chan->band_type != RTW89_BAND_2G;
-+	u8 band = chan->band_type;
- 	u8 path;
- 
- 	if (rtwdev->mlo_dbcc_mode == MLO_1_PLUS_1_1RF) {
-@@ -1816,10 +1853,10 @@ static void rtw8922a_digital_pwr_comp(struct rtw89_dev *rtwdev,
- 			path = RF_PATH_A;
- 		else
- 			path = RF_PATH_B;
--		rtw8922a_set_digital_pwr_comp(rtwdev, enable, 1, path);
-+		rtw8922a_set_digital_pwr_comp(rtwdev, band, 1, path);
- 	} else {
--		rtw8922a_set_digital_pwr_comp(rtwdev, enable, 2, RF_PATH_A);
--		rtw8922a_set_digital_pwr_comp(rtwdev, enable, 2, RF_PATH_B);
-+		rtw8922a_set_digital_pwr_comp(rtwdev, band, 2, RF_PATH_A);
-+		rtw8922a_set_digital_pwr_comp(rtwdev, band, 2, RF_PATH_B);
- 	}
- }
- 
+ 		if (rds_conn_path_transition(cp, RDS_CONN_DOWN,
+-					     RDS_CONN_CONNECTING) ||
+-		    rds_conn_path_transition(cp, RDS_CONN_ERROR,
+ 					     RDS_CONN_CONNECTING)) {
+ 			return cp->cp_transport_data;
+ 		}
 -- 
 2.51.0
 
