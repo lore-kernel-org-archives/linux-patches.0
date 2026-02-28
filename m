@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BAF375256
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75BF39B946
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302552; cv=none; b=m5QaR9BbY9Bn/pG9BUrQi3Y+SBMXly0kj/7EgQY3RNUpkh9Nq18iubH79QJggUZ3QOp3CQHsPkDL4SRGeVFgciJW9Tuo7GqiDqlAHmyBzUfEpEfrLVSsFkK71wzdEkWq2+p6jB3GIHMPkMZN7B3bwtBZhmCMatpT+duTJsv42OI=
+	t=1772302553; cv=none; b=Y/8VLwqAEcRnYKs831O9b8ve9d2vNXeWdPgr+AG/8qq7ibNGukAFAOoydtEhhPgG2mn24x22VDHdJkWAFaytGotQ4arnHa4JxojrTJqF5cvE30zP0Pb6iL31OjlX7rG/WDe5TTZYP8XYB/rYg8zD4q5TnkIwwKbpvddt2/m8anc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302552; c=relaxed/simple;
-	bh=fdbi5USS7aYi3363xW4pMUT4Xq/lowpLh7B9yLQi2/c=;
+	s=arc-20240116; t=1772302553; c=relaxed/simple;
+	bh=nnb3AXXPXbQwadlWlRYDgfNoUrBrn3K9Do/6rpR0cto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6qtDSI3PpoPtYUTRQKaT36Xk3xnyM39PK9qXIxV44TqX5ddazE/j/BVNCgCqlvT1lwqrhXIegnGVf9J+8/9JgdqPHZ85kRtJQnpo6f7aCRFOH/IxorxIu0HkoXxzduISuwj313pcfYpV1fRFj5fE/yzK1+wYXFXSZjS2gq5a8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zw+N7IIO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m5FMuo+DzIl9i+DWjsmZqbKKIu6uCLhTyjTVmWQU2ghLc0/IoTua3PVA/QDmaSzp7IN3wMzS6/YdOfjoumpHJaSp6FR2+61irJ3z+g6PCpnVcuk0l53cmEaRQjqvC+56N+2U7lQCK9sAS5YmDlP1Qe5mrjLLYSCKJtcUs/8uj6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R6A1k6VO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zw+N7IIO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E055C19423;
-	Sat, 28 Feb 2026 18:15:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R6A1k6VO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA16C19424;
+	Sat, 28 Feb 2026 18:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302551;
-	bh=fdbi5USS7aYi3363xW4pMUT4Xq/lowpLh7B9yLQi2/c=;
+	s=k20201202; t=1772302552;
+	bh=nnb3AXXPXbQwadlWlRYDgfNoUrBrn3K9Do/6rpR0cto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zw+N7IIOGkqjthPAVQWaTk5RJfX/Yo41uS0UfJkVD1jaN0R47+OTkeTEvabSnPqDK
-	 yX6VUSmw5z42YPfHrRB9hfGVXJv66eF3aqP3zIAnYW5sUKlNvH/F9dh52X4YFyLVJi
-	 ZLD5q/QKr+Nuz7Gaxn4DLl5eL7M58Llp1oR9N1/7X5tMzJZu9XnSqs4hSNNhHw6aZG
-	 0LvC566N1HwsA3ePObYJuU3ugMvdcpg0equpq+7QBMmKJqwQLaczxeeCjpCZQe5aX4
-	 0DLyf3V/Biake2XQyGDAds4UyrPDne4dAP8hJU8BJwpJbnA2TyzFmCnATYdMdk1XmF
-	 UvohBNY55IzzQ==
+	b=R6A1k6VO6XRPNoDx4XIaaV/fdEBwGJcL7fCIZtKIOE+MHLjFs3SwjumwRStqCgNOq
+	 h0MYvoJDrR2arR2Q1/hDLpjPl34XTd33EgaKS0Ooeq7DfDBmtUeO2G8PzXzHiDOlP0
+	 huPVC7hHTNY/Y13GzTERQdRbmhI0Xx6aMD/4UN1FtgVPE3Av2YmmkvcBb+B42G2nf6
+	 z261c2Js+jmJvu9Q6CNqm1P1sGaGENEqM8fwvjuLaDN4fJriM1yr5LOBGDvloZLPYq
+	 EDFnYeP17UxIEiX77UxJK3WOejXOANI6wflZ3OShtI2q5JR0qcbIxN9ZDmllENADwq
+	 GGhWSqcr+0OIQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: David Heidelberg <david@ixit.cz>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+Cc: Ricardo Ribalda <ribalda@chromium.org>,
+	Itay Chamiel <itay.chamiel@q.ai>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/164] media: ccs: Accommodate C-PHY into the calculation
-Date: Sat, 28 Feb 2026 13:13:14 -0500
-Message-ID: <20260228181505.1600663-55-sashal@kernel.org>
+Subject: [PATCH 5.15 056/164] media: uvcvideo: Fix allocation for small frame sizes
+Date: Sat, 28 Feb 2026 13:13:15 -0500
+Message-ID: <20260228181505.1600663-56-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -49,51 +49,55 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: David Heidelberg <david@ixit.cz>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 3085977e734dab74adebb1dda195befce25addff ]
+[ Upstream commit 40d3ac25c11310bfaa50ed7614846ef75cb69a1e ]
 
-We need to set correct mode for PLL to calculate correct frequency.
-Signalling mode is known at this point, so use it for that.
+If a frame has size of less or equal than one packet size
+uvc_alloc_urb_buffers() is unable to allocate memory for it due to a
+off-by-one error.
 
-Fixes: 47b6eaf36eba ("media: ccs-pll: Differentiate between CSI-2 D-PHY and C-PHY")
-Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-[Sakari Ailus: Drop extra newline.]
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fix the off-by-one-error and now that we are at it, make sure that
+stream->urb_size has always a valid value when we return from the
+function, even when an error happens.
+
+Fixes: efdc8a9585ce ("V4L/DVB (10295): uvcvideo: Retry URB buffers allocation when the system is low on memory.")
+Reported-by: Itay Chamiel <itay.chamiel@q.ai>
+Closes: https://lore.kernel.org/linux-media/CANiDSCsSoZf2LsCCoWAUbCg6tJT-ypXR1B85aa6rAdMVYr2iBQ@mail.gmail.com/T/#t
+Co-developed-by: Itay Chamiel <itay.chamiel@q.ai>
+Signed-off-by: Itay Chamiel <itay.chamiel@q.ai>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Tested-by: Itay Chamiel <itay.chamiel@q.ai>
+Link: https://patch.msgid.link/20260114-uvc-alloc-urb-v1-1-cedf3fb66711@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ccs/ccs-core.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_video.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ccs/ccs-core.c b/drivers/media/i2c/ccs/ccs-core.c
-index 789f288bd1ed8..97123d8b326a5 100644
---- a/drivers/media/i2c/ccs/ccs-core.c
-+++ b/drivers/media/i2c/ccs/ccs-core.c
-@@ -3524,7 +3524,21 @@ static int ccs_probe(struct i2c_client *client)
- 	sensor->scale_m = CCS_LIM(sensor, SCALER_N_MIN);
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index 4739633e30879..f868a13280a1e 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1736,7 +1736,7 @@ static int uvc_alloc_urb_buffers(struct uvc_streaming *stream,
+ 		npackets = UVC_MAX_PACKETS;
  
- 	/* prepare PLL configuration input values */
--	sensor->pll.bus_type = CCS_PLL_BUS_TYPE_CSI2_DPHY;
-+	switch (sensor->hwcfg.csi_signalling_mode) {
-+	case CCS_CSI_SIGNALING_MODE_CSI_2_CPHY:
-+		sensor->pll.bus_type = CCS_PLL_BUS_TYPE_CSI2_CPHY;
-+		break;
-+	case CCS_CSI_SIGNALING_MODE_CSI_2_DPHY:
-+	case SMIAPP_CSI_SIGNALLING_MODE_CCP2_DATA_CLOCK:
-+	case SMIAPP_CSI_SIGNALLING_MODE_CCP2_DATA_STROBE:
-+		sensor->pll.bus_type = CCS_PLL_BUS_TYPE_CSI2_DPHY;
-+		break;
-+	default:
-+		dev_err(&client->dev, "unsupported signalling mode %u\n",
-+			sensor->hwcfg.csi_signalling_mode);
-+		rval = -EINVAL;
-+		goto out_cleanup;
-+	}
- 	sensor->pll.csi2.lanes = sensor->hwcfg.lanes;
- 	if (CCS_LIM(sensor, CLOCK_CALCULATION) &
- 	    CCS_CLOCK_CALCULATION_LANE_SPEED) {
+ 	/* Retry allocations until one succeed. */
+-	for (; npackets > 1; npackets /= 2) {
++	for (; npackets > 0; npackets /= 2) {
+ 		stream->urb_size = psize * npackets;
+ 
+ 		for (i = 0; i < UVC_URBS; ++i) {
+@@ -1761,6 +1761,7 @@ static int uvc_alloc_urb_buffers(struct uvc_streaming *stream,
+ 	uvc_dbg(stream->dev, VIDEO,
+ 		"Failed to allocate URB buffers (%u bytes per packet)\n",
+ 		psize);
++	stream->urb_size = 0;
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
