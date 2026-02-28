@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D61233FE12
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4FA3603DE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300929; cv=none; b=pMA/yhg3QcltY/k+NO7SW1JruBQJ534cVT/O/IhhFdQyrLxeJtAoBB903aJRXoKVyBVGA4O7REjCrgBiIWrF3SyI8Zghtdof+CR1jA8t9SDvbXFqbYe75sArPXy+RVkuLjzOTUzbojuIcaeq06QlRjQ9sIsa/pCH1siJrN7yciU=
+	t=1772300930; cv=none; b=U8G+kcS8VBtQ0AQudOGdB6+apMPOO/aur8o/YU9dD1xtl50e5bordrivUIh4p/491OLunAhe0k6U7T/JwXmg4cNx6Dwid/kcVUx6wZ5LjOugKYhf0O6gppVYIzGCuMJmg0OTd4sLpmIN//l1W1q67oevwLuzIV1CxOlzcTt+IyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300929; c=relaxed/simple;
-	bh=WbOc48pJBDDfUlPeP7anR7Ynv05Vmmb383+6hK4/yFY=;
+	s=arc-20240116; t=1772300930; c=relaxed/simple;
+	bh=LXfydIHbtyS7K6xEZPDR93d+R5QphdM5i5xDyAVm46E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2IDzBdnFZdE9QRcBbPMUKa7Uy8D99zhTDm/ld0zmMwQUlVwmqXzpmQksuIs7fKe/cHIjuSUIyGPPP6ZlNwDb9LNrSfKdpg3+bkLNjuCvo637E16rIBcHDMEJ+rHLUsLKVmfUrB/XfQdgVSxEheYsMPhjF1t+JC7Y9QhDBy397g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YMmRRau3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ATu9PFRpoEgPd7nIhA50UvHro4xos1LsjE9lDyDOh93OlOOVNKVRD/O66Ozkmruhh4BXEmd5pUw7HyOJBpks1Zs+1pLWHxsIAW+bzx3+AZWHjqfME6H9aLvwpfdEjRBfxxXKDipt8xT2OW8tPgxGk/6qFVa5xGkJVAyYZESkPD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R8nV0lIJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YMmRRau3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9460FC116D0;
-	Sat, 28 Feb 2026 17:48:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R8nV0lIJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AD4C19423;
+	Sat, 28 Feb 2026 17:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300929;
-	bh=WbOc48pJBDDfUlPeP7anR7Ynv05Vmmb383+6hK4/yFY=;
+	s=k20201202; t=1772300930;
+	bh=LXfydIHbtyS7K6xEZPDR93d+R5QphdM5i5xDyAVm46E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMmRRau3aPB+mbxEzp0OcjqGhb7Kin66ZVIFNqqCNx9/xlDVUw3REF2l9VIglsJWo
-	 +sGDIquGbpRuET/aCgF7fOvYQ+dmjvCT7ZUJbjcz4+CS3BU8TyRalMG6Ojc0Sfr4u8
-	 lFKr6y4+/ZRIPgyxfX327FcgWaFBzRkd+rB2qGdY6Qbi1Gk4hc0Zic4uhoe9OtrbBt
-	 MMarCFTYBAGUGyPQRNsUNn9bD1qhTexFzGoLnygVJJKsYXWUUsyhNsSXq/zSn1a3IB
-	 BxOOzS/R8zjzC2nuiwBV+qc/rjWKcSRAtUQ2qO1YD77PQfFS+sy+/tRK9gj1ie2J1v
-	 HJ7XVi7K8sLGw==
+	b=R8nV0lIJfD+gv2Wzh5hADF+w0W+ecUSnXCwHoQW6c3wnreAx+3UI2nqjchJrO0/u2
+	 BAojY7tWht89eCYgg0Eewtex9jyjZ5cCOoHpoc4ji3lcXDN8386bh6ObkMkFrslwaV
+	 Ff9F09N1vPo5OvsCdFm05tZboVTmRkmv1IOFpmEoDrCMYEBkDDZZmetsFNhxMDJMK7
+	 nNF3EB5bFuPX2OfHz3/ihEV8Vr6iwC2RjdvdpC3zZvZ2JyXk/mY2HxCieRCtTUyPVU
+	 dgmEgsU4UGbK35QSqfKkVI2LqAW6wPGGJs6oWCSX2fgucwCH6tFadckR5KECpBOL1d
+	 7fa37AtyqaucQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Md Haris Iqbal <haris.iqbal@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Hou Wenlong <houwenlong.hwl@antgroup.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 048/752] rnbd-srv: Zero the rsp buffer before using it
-Date: Sat, 28 Feb 2026 12:35:59 -0500
-Message-ID: <20260228174750.1542406-48-sashal@kernel.org>
+Subject: [PATCH 6.18 049/752] x86/xen/pvh: Enable PAE mode for 32-bit guest only when CONFIG_X86_PAE is set
+Date: Sat, 28 Feb 2026 12:36:00 -0500
+Message-ID: <20260228174750.1542406-49-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,45 +47,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Md Haris Iqbal <haris.iqbal@ionos.com>
+From: Hou Wenlong <houwenlong.hwl@antgroup.com>
 
-[ Upstream commit 69d26698e4fd44935510553809007151b2fe4db5 ]
+[ Upstream commit db9aded979b491a24871e1621cd4e8822dbca859 ]
 
-Before using the data buffer to send back the response message, zero it
-completely. This prevents any stray bytes to be picked up by the client
-side when there the message is exchanged between different protocol
-versions.
+The PVH entry is available for 32-bit KVM guests, and 32-bit KVM guests
+do not depend on CONFIG_X86_PAE. However, mk_early_pgtbl_32() builds
+different pagetables depending on whether CONFIG_X86_PAE is set.
+Therefore, enabling PAE mode for 32-bit KVM guests without
+CONFIG_X86_PAE being set would result in a boot failure during CR3
+loading.
 
-Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <d09ce9a134eb9cbc16928a5b316969f8ba606b81.1768017442.git.houwenlong.hwl@antgroup.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-srv.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/platform/pvh/head.S | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
-index 9b3fdc202e152..7eeb321d61402 100644
---- a/drivers/block/rnbd/rnbd-srv.c
-+++ b/drivers/block/rnbd/rnbd-srv.c
-@@ -551,6 +551,8 @@ static void rnbd_srv_fill_msg_open_rsp(struct rnbd_msg_open_rsp *rsp,
- {
- 	struct block_device *bdev = file_bdev(sess_dev->bdev_file);
+diff --git a/arch/x86/platform/pvh/head.S b/arch/x86/platform/pvh/head.S
+index 344030c1a81d4..53ee2d53fcf8e 100644
+--- a/arch/x86/platform/pvh/head.S
++++ b/arch/x86/platform/pvh/head.S
+@@ -91,10 +91,12 @@ SYM_CODE_START(pvh_start_xen)
  
-+	memset(rsp, 0, sizeof(*rsp));
-+
- 	rsp->hdr.type = cpu_to_le16(RNBD_MSG_OPEN_RSP);
- 	rsp->device_id = cpu_to_le32(sess_dev->device_id);
- 	rsp->nsectors = cpu_to_le64(bdev_nr_sectors(bdev));
-@@ -657,6 +659,7 @@ static void process_msg_sess_info(struct rnbd_srv_session *srv_sess,
+ 	leal rva(early_stack_end)(%ebp), %esp
  
- 	trace_process_msg_sess_info(srv_sess, sess_info_msg);
++#if defined(CONFIG_X86_64) || defined(CONFIG_X86_PAE)
+ 	/* Enable PAE mode. */
+ 	mov %cr4, %eax
+ 	orl $X86_CR4_PAE, %eax
+ 	mov %eax, %cr4
++#endif
  
-+	memset(rsp, 0, sizeof(*rsp));
- 	rsp->hdr.type = cpu_to_le16(RNBD_MSG_SESS_INFO_RSP);
- 	rsp->ver = srv_sess->ver;
- }
+ #ifdef CONFIG_X86_64
+ 	/* Enable Long mode. */
 -- 
 2.51.0
 
