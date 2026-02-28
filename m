@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46D3325710
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0371325710
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300974; cv=none; b=sOsbI0BCeaegVMA6UxujlDu2rsbn196k/1jrxeKGjf/zjYyFC+yezDfPAA5weJ2ZXhlCl/BTgwiWImc8vURfaWtT/TSczkAnQknOSElnbIfukNQjzOKiCgYMM9bHLJMMn/WY+rFIKyqNUVQ4p65KTRib6EuZOSutYT2lAcrfzmk=
+	t=1772300975; cv=none; b=UaJ6DkMESKdlKKODJ8brGZt2XgA/i7/kiZcJf6kNkxKRSbq0J/12EPYljsIIf6uF/RN1zmUZZDhTv/+z2wb44zmJZ7lvpICyeubhm3qF7Pj00Xocc1yg74+FzAcDxp+6uOaI2iRX7fRS1GiRNmasStiRBU+rOaON6R0m9Ja1dgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300974; c=relaxed/simple;
-	bh=uZiaFSzPj05fK+Caj/goHYRSBC6v9HZFf3WZoHgNqrU=;
+	s=arc-20240116; t=1772300975; c=relaxed/simple;
+	bh=xaIgGtio2hQ3S0ThiGuPtYQV1KuDGEDcRMPFl0mXZ0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sz25lBny/Zms+4FmITXpDJpRJrzwJ6RshogDCQU1s7gq3jW2foO6V7fzdMSpybjIh2S2xM5PzA29taoR70ka/Up7uK3JLKAHPh01ZXvhnqQWw0wf8zxNGDD03w9BijwBpX0ZJsZ1yYFMVG5f7/ZOIyMb2A/9JnRb69qlgucfSkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TC7v7eGi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jAmgnmie72vqeUr61hIaNqDvwEDlWv/xa84Et1BrfyRCj4Hq760dK0US2NpoHwA6maNlhvCCdvi3oE61rwtKLpSp3YdUKy3xUsO89F/dKtdp9sysffZROok0tmM0FOw86+gvjTwMzikpH5rc1CAcib3BtCcJmFme3oIiLvVtWPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q+cVkNRt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TC7v7eGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0ED3C19423;
-	Sat, 28 Feb 2026 17:49:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q+cVkNRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0431AC19423;
+	Sat, 28 Feb 2026 17:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300974;
-	bh=uZiaFSzPj05fK+Caj/goHYRSBC6v9HZFf3WZoHgNqrU=;
+	s=k20201202; t=1772300975;
+	bh=xaIgGtio2hQ3S0ThiGuPtYQV1KuDGEDcRMPFl0mXZ0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TC7v7eGisOXsK2YR1yB03n/Ne7o8HAz0DskYwZNgswoAzZWqS2SwqpQE3pq+y8Vpf
-	 w5n/O00LXsGUfTegk65LHWS5cnr5I+SpwYHMY58fkhpiSgaB10j2L3hyuedv8to76C
-	 ZrLLugycAgAfisC2GSRP1BKU43BWd7GL2mzunNtYzars8d429OlyIOJ4wi4ISmHkCK
-	 m7AuVd/wtzvSAXQxSYpDO2afV4t3U3hGH2CnRzIYXwM2k8qf+mYmetd2n8fITEA8oc
-	 6JosLBDp0/SWsTEj/NsBvoasI1XCFjrF4Fr+QF7B59YGM9zKvkDKmugXofCdou0LWu
-	 9BdSLVs2lUaDw==
+	b=q+cVkNRtD+3fZdSaPTy/w3lnkKbuwGxpDOWm8ikUoDWDiL01EANoGQOQ278/ABVMs
+	 L7g5JrW6bR7rYWxMoizKzRNiwKIumEBUGrPgvrQJHf4mmTSTA+Hh9s4EQ7Up5nrvq1
+	 AdIz3KRtp2vtyiSUBZ497fWJ7k2s+x9s5p2zG2SVrFeu3dfLHVe0UcgTOPce3CLgYo
+	 I3g+OwfaeDicSvIIIZn8k8azsWJfy6/9jS3gR71em9QRjlrd80F2pdBa0RexNNxYDD
+	 A/VDH3yRrJ8yvBcNaDQttxNkg2ZhtqxpmqlEvQpb7Zb7haF/2IxhzEIRarTj94DrSy
+	 CwIAa7QMjjUYQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Peng Fan <peng.fan@nxp.com>,
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>,
 	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Julia Lawall <julia.lawall@inria.fr>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 102/752] soc: imx8m: Fix error handling for clk_prepare_enable()
-Date: Sat, 28 Feb 2026 12:36:53 -0500
-Message-ID: <20260228174750.1542406-102-sashal@kernel.org>
+Subject: [PATCH 6.18 103/752] x86/sev: Use kfree_sensitive() when freeing a SNP message descriptor
+Date: Sat, 28 Feb 2026 12:36:54 -0500
+Message-ID: <20260228174750.1542406-103-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,43 +49,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-[ Upstream commit f6ef3d9ff81240e9bcc030f2da132eb0f8a761d7 ]
+[ Upstream commit af05e558988ed004a20fc4de7d0f80cfbba663f0 ]
 
-imx8m_soc_prepare() directly returns the result of clk_prepare_enable(),
-which skips proper cleanup if the clock enable fails. Check the return
-value of clk_prepare_enable() and release resources if failure.
+Use the proper helper instead of an open-coded variant.
 
+Closes: https://lore.kernel.org/r/202512202235.WHPQkLZu-lkp@intel.com
 Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202601111406.ZVV3YaiU-lkp@intel.com/
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Reported-by: Julia Lawall <julia.lawall@inria.fr>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://patch.msgid.link/20260112114147.GBaWTd-8HSy_Xp4S3X@fat_crate.local
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/coco/sev/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index 04a1b60f2f2b5..8e2322999f099 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -148,7 +148,11 @@ static int imx8m_soc_prepare(struct platform_device *pdev, const char *ocotp_com
- 		goto err_clk;
- 	}
+diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
+index 9ae3b11754e65..c8ddb9febe3d9 100644
+--- a/arch/x86/coco/sev/core.c
++++ b/arch/x86/coco/sev/core.c
+@@ -2008,8 +2008,7 @@ void snp_msg_free(struct snp_msg_desc *mdesc)
+ 	free_shared_pages(mdesc->request, sizeof(struct snp_guest_msg));
+ 	iounmap((__force void __iomem *)mdesc->secrets);
  
--	return clk_prepare_enable(drvdata->clk);
-+	ret = clk_prepare_enable(drvdata->clk);
-+	if (ret)
-+		goto err_clk;
-+
-+	return 0;
+-	memset(mdesc, 0, sizeof(*mdesc));
+-	kfree(mdesc);
++	kfree_sensitive(mdesc);
+ }
+ EXPORT_SYMBOL_GPL(snp_msg_free);
  
- err_clk:
- 	iounmap(drvdata->ocotp_base);
 -- 
 2.51.0
 
