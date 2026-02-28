@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCC9175A60;
-	Sat, 28 Feb 2026 17:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B742175A6B;
+	Sat, 28 Feb 2026 17:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301381; cv=none; b=WdUnU49TGclFPxvBhum+iov6wnaAilwL31r0YKiDDmsjc6NG8JLDy5y5TiRK9hPbQN9lIhxMf9Zw6ULNuX1OI7FqcPOaJ7PHmSVTJVVztGv3NQkWokD9T5UNKAGTtZy/c+h3X+Vv502tTA87JlyRVBCrq76JOf5GneSER/mXTec=
+	t=1772301382; cv=none; b=Na0upI+YgqOps45iSwDVPjmgkCHPw9cV/mJzPJm8o76L6KFzwkceQqqj1btcpb2KttjapCq5qZOukomPri1qFt+30cCR98JidnvfqqaxLJGa9PXoMtQl2HG+xseQyL/QrZR7/EdWUnpdVHu04MZITsfXvMXQaU4WSHd7njohppM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301381; c=relaxed/simple;
-	bh=DqQ5COpFoz06QmMiwWfHYxRSvwdv6KAznqtOtdj5Fkc=;
+	s=arc-20240116; t=1772301382; c=relaxed/simple;
+	bh=WUsRuruEkxpAMqh0Uu3xdJSu86ZQCYJ04nhKUOAW3EA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LexEMeNqnAUrNVFaAAk6uEM0qYa4gswv9eRr+ehFFO2HHyEU2iVOsPp/SLWpwumO68B5HLMEtrD1IKXX7VBdfEa/wgLWJLgugogSLh+stWubUu2ZuGBRVgXoC1/Gvzgt1zVUJbTPJw6jkY5kBJ4O8SOQnurIpwJCOwqJRIyN39I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U05uOGwF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snvD0H4DWx2tZo4vzbtyXbhZ55rMhj1bPMTHC9vEWhyGbaL3GMSrgFSo1OgXrcdoeGdVGR589r8jVPar+AIjr8x9WDXxKlGDpo+lm6u4rXq+PlTaoHZje5UHeuVk2D6zgdioQMjFygqMZu53LBO3CrJrSwRVeHLfWyQjxosSQ3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qSmlUx+3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U05uOGwF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3193C19423;
-	Sat, 28 Feb 2026 17:56:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qSmlUx+3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5162C19424;
+	Sat, 28 Feb 2026 17:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301381;
-	bh=DqQ5COpFoz06QmMiwWfHYxRSvwdv6KAznqtOtdj5Fkc=;
+	s=k20201202; t=1772301382;
+	bh=WUsRuruEkxpAMqh0Uu3xdJSu86ZQCYJ04nhKUOAW3EA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U05uOGwFoX+fgHH49vzKnQnIemeYd4893t0WXJ2aUPzPq/yvwkS/1l1Jnow1bHqBZ
-	 4qbjYtyfYsa2Iitywzf71OzN9k2kKpK2SWGrqTPSBoX3tViiH1rA4pgeIB9Klsznro
-	 zwSjh1qz3IDe2EGCvLO3MMqk/LFLS7+7XP9EQCUTKRwb0jynQG5SPUyE7dSoVVw4Ma
-	 9F2zy3F84WyBFHvvq63NCX7S/EZnae74cRVePIBNSeJbu4E5C7NBNleanP0ITGr6H0
-	 cusfQBUvX7gV4WzLm/+il74UpLRI4kTkCK9dSPrqW2Y4gACJM3ZZ+EUnfGaFd6KYQT
-	 w34kmNPlFXFBA==
+	b=qSmlUx+3Rgqazr1HoxDGaFvUYgYOYQB3IowMSCoNW8728SC2wfisWyunQECgkjdrm
+	 HS85uEP911OYSQ4/yEiCb6qhykSgocnBwdgrfbDDDpi0djxdl/HpSagZiOBh/n+u4g
+	 wrmJMC+DHXcnzECeuspVLlYk9Qag9STRvwTwepbKRqCVcaj2ifAvzGM/yCyqEIrcFP
+	 3ewWw3KzdSCf16H6LH41eB1XqLwMxn5r5qIt8Q3Zjlv8398eQrUu4zuqljDa/fkbOQ
+	 XQZzFnJqJ7G/Nl3yxJjh7cNB6Q+gT8fzKXS/H5DTAxZlFqAJffljf5VfSB8kYoucyt
+	 4tQ0UAG8F9OTw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
@@ -34,9 +34,9 @@ Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
 	stable@vger.kernel.org,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 570/752] media: iris: Add buffer to list only after successful allocation
-Date: Sat, 28 Feb 2026 12:44:41 -0500
-Message-ID: <20260228174750.1542406-570-sashal@kernel.org>
+Subject: [PATCH 6.18 571/752] media: iris: Skip resolution set on first IPSC
+Date: Sat, 28 Feb 2026 12:44:42 -0500
+Message-ID: <20260228174750.1542406-571-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -52,18 +52,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 
-[ Upstream commit 2d0bbd982dfdd67da488a772f7a8a1bdca7642bf ]
+[ Upstream commit 811dbc546f47559dc9d2098c612acfd47e32479e ]
 
-Move `list_add_tail()` to after `dma_alloc_attrs()` succeeds when creating
-internal buffers. Previously, the buffer was enqueued in `buffers->list`
-before the DMA allocation. If the allocation failed, the function returned
-`-ENOMEM` while leaving a partially initialized buffer in the list, which
-could lead to inconsistent state and potential leaks.
+The resolution property is not supposed to be set during reconfig.
+Existing iris_drc_pending(inst) check is insufficient, as it doesn't
+cover the first port setting change.
 
-By adding the buffer to the list only after `dma_alloc_attrs()` succeeds,
-we ensure the list contains only valid, fully initialized buffers.
+Extend the conditional check to also skip resolution setting when
+the instance is in IRIS_INST_SUB_FIRST_IPSC.
 
-Fixes: 73702f45db81 ("media: iris: allocate, initialize and queue internal buffers")
+Fixes: caf205548769 ("media: iris: Avoid updating frame size to firmware during reconfig")
 Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
@@ -72,31 +70,22 @@ Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_buffer.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
-index c0900038e7def..006ad855a8e51 100644
---- a/drivers/media/platform/qcom/iris/iris_buffer.c
-+++ b/drivers/media/platform/qcom/iris/iris_buffer.c
-@@ -340,12 +340,15 @@ static int iris_create_internal_buffer(struct iris_inst *inst,
- 	buffer->index = index;
- 	buffer->buffer_size = buffers->size;
- 	buffer->dma_attrs = DMA_ATTR_WRITE_COMBINE | DMA_ATTR_NO_KERNEL_MAPPING;
--	list_add_tail(&buffer->list, &buffers->list);
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+index 4de03f31eaf38..ffb50c98a5b6f 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+@@ -733,7 +733,7 @@ static int iris_hfi_gen1_set_resolution(struct iris_inst *inst, u32 plane)
+ 	struct hfi_framesize fs;
+ 	int ret;
  
- 	buffer->kvaddr = dma_alloc_attrs(core->dev, buffer->buffer_size,
- 					 &buffer->device_addr, GFP_KERNEL, buffer->dma_attrs);
--	if (!buffer->kvaddr)
-+	if (!buffer->kvaddr) {
-+		kfree(buffer);
- 		return -ENOMEM;
-+	}
-+
-+	list_add_tail(&buffer->list, &buffers->list);
- 
- 	return 0;
- }
+-	if (!iris_drc_pending(inst)) {
++	if (!iris_drc_pending(inst) && !(inst->sub_state & IRIS_INST_SUB_FIRST_IPSC)) {
+ 		fs.buffer_type = HFI_BUFFER_INPUT;
+ 		fs.width = inst->fmt_src->fmt.pix_mp.width;
+ 		fs.height = inst->fmt_src->fmt.pix_mp.height;
 -- 
 2.51.0
 
