@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF8E36920B
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8030D36E475
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300955; cv=none; b=KJPH9UF0AbvgXZ7tOibbcGB27rGhCSzTi7/gCH9szgIZR824SSj2AeZvX7xkCmpvBM5PiSiaEHp7SD/6kip+mzUSiAxkBrFWQHdY7wxYmpUOWZ7LZOGZHDB0rFIGIxm4NPOECXGLzSaIyfxrL2YG2MhRE73UXEoldpDqyTwNSJA=
+	t=1772300956; cv=none; b=Xa+Jbj2xeYbWchjKa55wnQN8T3cXxsAshRRvuH4le+pTTTgY73l2C3CczvQBMtY1uvqFvtc2EkeXH9hvYY3gwRuwjEKuzupdO4CcJ/Kcr4y/uSqpy2jPBjEWgyKaaHCeWnxP9UV1cOf5MPlpn8jtJpN+p7EFNCwVB2e0oOjeEZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300955; c=relaxed/simple;
-	bh=/sFLEGoPvy247x726FRzRMzSVwRs0/oyefh2ZLMQ6Bc=;
+	s=arc-20240116; t=1772300956; c=relaxed/simple;
+	bh=zz3M9mpjhNOrmlHz15hpQTc3IFIDCq+wlZspWI8Z17g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWmHyOIwcBSSA69UepISVUy+qpNpyKOhG4rzevZnxCoUJRRbSpCvI88XGJ+siTWa24m7FOiY6RmM7I5GVtVteGoCexfED3Lp6o/8oKeBx5+Sdg934MgdOAQnKVMrp6tG2UnREhLEnmluofTap6u3smRWujtRE/CL0qNhakl/RRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGaDqzj/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iJmHgFX7nmiSqC40fbBQZ+/kOZM0P2ihlYSPgSq3sZ9xX3OPvPp2758vX3Z+FZcMjtee3+V8II8+twvXM2aL+y8GB/nlt+DhUPbfItAvv4w/pGiPnuzzdY3buwSOCQTXmEreoAVvPTQlTA6h6vdT7RB9i6rmuydW+I2lcFt81KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mB6R3x6c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGaDqzj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16335C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mB6R3x6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3280C19425;
 	Sat, 28 Feb 2026 17:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300955;
-	bh=/sFLEGoPvy247x726FRzRMzSVwRs0/oyefh2ZLMQ6Bc=;
+	s=k20201202; t=1772300956;
+	bh=zz3M9mpjhNOrmlHz15hpQTc3IFIDCq+wlZspWI8Z17g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGaDqzj/luCMnbN52KtUS3hemjBhl5u/bFVS3mYGFoGBM39VnUq7vd3qNOj85ujx7
-	 38ggnH69jMGMERWF43p3tUstDxQC8gFJUjzpdVbPlMVbPiYiJH3MvXaFEcamAUdXkW
-	 yg+dckjhFmLRsfYchROlTYGXIqr0eks2s3/maK3H+nC+0GzhRkqYBuSy5oA0i45Wwv
-	 GwQRCWDlAfhXvVxMxqE1yKZiZ5JzQx8VEdxgWiXHQh1ZNel7EAp98xzurarNHw66lb
-	 9g920jyyulZbZfMsBuaPIeaHcRoYH3NGZFJlzjrRrcaUWgM4g23CnQm9szwIJWwX0q
-	 k8sB8k0f7QkkQ==
+	b=mB6R3x6cRBG+ZabDlK9Qv9jP40QWd2PDuupNXhDkt0zwu8xJKqxYUYghP3Ti7fet0
+	 BZi7zfUTU5pHc+gX6ITjkFvmSi/cSmhwJvX0DTJK3TO5DWJBQRTV4lr1ocVtC2Nfs2
+	 flz3rgdocMSyJ38/y12PU8LlzQEUig0pVd6bR1djGFF2W1galsUOjrNvDFxT3dRxyr
+	 kMysL/0zAi5gRZTn1JKg291ixSpXqfN4eFTMxXdztbpNtFZ7yE2CJYwnuv071zzrzH
+	 HYFXvMWeHZkCl9STTeLnSLG2bY+vEn7nIIQavypQZocQfNOKqYIczwLrBoEy7xlwZk
+	 NpSYHD5c/krOw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Martin Schiller <ms@dev.tdt.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+Cc: Sami Tolvanen <samitolvanen@google.com>,
+	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 079/752] perf/x86/intel: Add Airmont NP
-Date: Sat, 28 Feb 2026 12:36:30 -0500
-Message-ID: <20260228174750.1542406-79-sashal@kernel.org>
+Subject: [PATCH 6.18 080/752] gendwarfksyms: Fix build on 32-bit hosts
+Date: Sat, 28 Feb 2026 12:36:31 -0500
+Message-ID: <20260228174750.1542406-80-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -44,38 +43,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Martin Schiller <ms@dev.tdt.de>
+From: Sami Tolvanen <samitolvanen@google.com>
 
-[ Upstream commit a08340fd291671c54d379d285b2325490ce90ddd ]
+[ Upstream commit ddc54f912a551f6eb0bbcfc3880f45fe27a252cb ]
 
-The Intel / MaxLinear Airmont NP (aka Lightning Mountain) supports the
-same architectual and non-architecural events as Airmont.
+We have interchangeably used unsigned long for some of the types
+defined in elfutils, assuming they're always 64-bit. This obviously
+fails when building gendwarfksyms on 32-bit hosts. Fix the types.
 
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20251124074846.9653-3-ms@dev.tdt.de
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/linux-modules/aRcxzPxtJblVSh1y@kitsune.suse.cz/
+Tested-by: Michal Suchánek <msuchanek@suse.de>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ scripts/gendwarfksyms/dwarf.c   | 4 +++-
+ scripts/gendwarfksyms/symbols.c | 5 +++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 32d551f2646a7..55d8df7b0fdaa 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -7029,6 +7029,7 @@ __init int intel_pmu_init(void)
- 	case INTEL_ATOM_SILVERMONT_D:
- 	case INTEL_ATOM_SILVERMONT_MID:
- 	case INTEL_ATOM_AIRMONT:
-+	case INTEL_ATOM_AIRMONT_NP:
- 	case INTEL_ATOM_SILVERMONT_MID2:
- 		memcpy(hw_cache_event_ids, slm_hw_cache_event_ids,
- 			sizeof(hw_cache_event_ids));
+diff --git a/scripts/gendwarfksyms/dwarf.c b/scripts/gendwarfksyms/dwarf.c
+index 3538a7d9cb070..e76d732f5f602 100644
+--- a/scripts/gendwarfksyms/dwarf.c
++++ b/scripts/gendwarfksyms/dwarf.c
+@@ -750,6 +750,7 @@ static void process_enumerator_type(struct state *state, struct die *cache,
+ 				    Dwarf_Die *die)
+ {
+ 	bool overridden = false;
++	unsigned long override;
+ 	Dwarf_Word value;
+ 
+ 	if (stable) {
+@@ -761,7 +762,8 @@ static void process_enumerator_type(struct state *state, struct die *cache,
+ 			return;
+ 
+ 		overridden = kabi_get_enumerator_value(
+-			state->expand.current_fqn, cache->fqn, &value);
++			state->expand.current_fqn, cache->fqn, &override);
++		value = override;
+ 	}
+ 
+ 	process_list_comma(state, cache);
+diff --git a/scripts/gendwarfksyms/symbols.c b/scripts/gendwarfksyms/symbols.c
+index ecddcb5ffcdfb..42cd27c9cec4f 100644
+--- a/scripts/gendwarfksyms/symbols.c
++++ b/scripts/gendwarfksyms/symbols.c
+@@ -3,6 +3,7 @@
+  * Copyright (C) 2024 Google LLC
+  */
+ 
++#include <inttypes.h>
+ #include "gendwarfksyms.h"
+ 
+ #define SYMBOL_HASH_BITS 12
+@@ -242,7 +243,7 @@ static void elf_for_each_global(int fd, elf_symbol_callback_t func, void *arg)
+ 				error("elf_getdata failed: %s", elf_errmsg(-1));
+ 
+ 			if (shdr->sh_entsize != sym_size)
+-				error("expected sh_entsize (%lu) to be %zu",
++				error("expected sh_entsize (%" PRIu64 ") to be %zu",
+ 				      shdr->sh_entsize, sym_size);
+ 
+ 			nsyms = shdr->sh_size / shdr->sh_entsize;
+@@ -292,7 +293,7 @@ static void set_symbol_addr(struct symbol *sym, void *arg)
+ 		hash_add(symbol_addrs, &sym->addr_hash,
+ 			 symbol_addr_hash(&sym->addr));
+ 
+-		debug("%s -> { %u, %lx }", sym->name, sym->addr.section,
++		debug("%s -> { %u, %" PRIx64 " }", sym->name, sym->addr.section,
+ 		      sym->addr.address);
+ 	} else if (sym->addr.section != addr->section ||
+ 		   sym->addr.address != addr->address) {
 -- 
 2.51.0
 
