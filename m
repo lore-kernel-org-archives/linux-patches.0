@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD51336C9D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29C236C9E3
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302303; cv=none; b=sDIqf8P1AIVveXj5JpvhQVlcLfSK4jgsi69u5SRPval/9fPdsoviEXH6ACyRoHuY1kJqHofSDtx8ni+n2nmO0UAzcNyq7sAkE7qhmUjnmongnJ95fMGGA4fuQ41K2fOBsBqE7Km3aw+ZsKh9E4st8rQZo3CYfNw0NjOndo5RMC0=
+	t=1772302304; cv=none; b=CBH5aaSQWM93k9LbEDCWUxkXEQiA6ETF30HlVE8EfhEJyk/SXbIiwR1yp9FyqVgPd998iXsVYENPj1PmSQLNElPZiJsR0/oRB57gDYBUWertxZfC3gOFmd88Zef4tANunl9r8Co407ocDONSkVzGsDSK3iCBwG6ffe3jrSWDpxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302303; c=relaxed/simple;
-	bh=xN0xhrikW4ES7FQFQFlmH/389HanhAco5+B3IFMqLc0=;
+	s=arc-20240116; t=1772302304; c=relaxed/simple;
+	bh=6OYWL4b9WvFaf1PM6WVHSd1BFYq6ywzlhYSxR1XvxN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhhLXcC1+a3mYfFB1j0fOd5GyIvOwv79gE1MLRtpBL2o3tTj3WrYFA6YcoD71TY3hIwGbQW8cXeR3GYxujhf7XOOnfyVMqRaSUz8Ib99mzQuaqvd2eSiPvXK5sjYzjFv5ak/GgOVLle7xEbKB0mIyvjeXSNLHwML8nKbWoQ9zvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ch69NO8h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDjzRmdA02azADokLRBXikfKT8qkkeLTf4TNg+e6FdmL/T9VEHhpdlstUPa/ACnLIOuxWkE9cnDuyCCQrTmqHqZv7cMCDoIeo1QG1rnhcoo0NLd79CDxek2eXdALLz0wRp/+e+0fa7YjaqwIRP+Wl2tGcROiInIdvLonu56IGFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fj9AwHgD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ch69NO8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C169C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fj9AwHgD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1105DC19424;
 	Sat, 28 Feb 2026 18:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302303;
-	bh=xN0xhrikW4ES7FQFQFlmH/389HanhAco5+B3IFMqLc0=;
+	s=k20201202; t=1772302304;
+	bh=6OYWL4b9WvFaf1PM6WVHSd1BFYq6ywzlhYSxR1XvxN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ch69NO8hTBtIkpQcopj2FUN0LIqXKfpfDXQIJMWSCYLmdttHkKEr3qDLTuKtW370j
-	 m2+BxOidWdts4LVhZfGxpCdbrM/c4YlDd0wUU0Q+75965nTWC0TLIuFA1+/GWTURjT
-	 qBYZxmcKDzTWAU7k+0/wJlupSsfE4ppX6YPJOidlBe6LDGX/fCUFD5+jTxp1oPU0rR
-	 E/5kB1fJLPz4gxhUsgGoMGlY0Ue48QyRnCaVRR4ji5sj0Xm5ajDMyI6TDwT4z4pAx9
-	 DI5+2EMgBLMEa0oaLg9AyBXHy///AGT8R0tZRBjyskVSg3VFo/bMqzIbFe0P6m/xxY
-	 S2houlSwwywxg==
+	b=Fj9AwHgDUU7F3zEjliRq4PH1X7jHJmn1YZmwgk+cLArm0FuUUjw6qvwViQ7mDOFhc
+	 6dErEsm3kekEaLZQV1LiBzlr8TriRo8hvp7xESUG5lyrSnvXiURKvR0XGN5Q9UIaDP
+	 HMYM0T4RD7YkrHbfDMptg90HqdCAdic8/qWSMfMAmvKjEN2qBaeemCvvLZEd4fZj9D
+	 MW1fhB2H/Ga7uq50kjRckRkQoVmZyyqFGeAES/2VoZOreH2j80NcYEn4myf1yEFlw0
+	 71OPqi3gsM7pJaBAPfPPsiQhJKEVL1nkhfRSNM5r6ZIHe5K8KwVMeRcNEbjOux4/29
+	 3rg/OKPNws/6w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-	Xenia Ragiadakou <burzalodowa@gmail.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
+Cc: Teddy Astie <teddy.astie@vates.tech>,
 	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/232] xen/virtio: Handle PCI devices which Host controller is described in DT
-Date: Sat, 28 Feb 2026 13:07:51 -0500
-Message-ID: <20260228181127.1592657-18-sashal@kernel.org>
+Subject: [PATCH 6.1 019/232] xen/virtio: Don't use grant-dma-ops when running as Dom0
+Date: Sat, 28 Feb 2026 13:07:52 -0500
+Message-ID: <20260228181127.1592657-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,123 +47,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+From: Teddy Astie <teddy.astie@vates.tech>
 
-[ Upstream commit ef8ae384b4c9ccefecf4754f34644bd9fb0105b7 ]
+[ Upstream commit dc8ea8714311e549ee93a2b0bdd5487d20bfadbf ]
 
-Use the same "xen-grant-dma" device concept for the PCI devices
-behind device-tree based PCI Host controller, but with one modification.
-Unlike for platform devices, we cannot use generic IOMMU bindings
-(iommus property), as we need to support more flexible configuration.
-The problem is that PCI devices under the single PCI Host controller
-may have the backends running in different Xen domains and thus have
-different endpoints ID (backend domains ID).
+Dom0 inherit devices from the machine and is usually in PV mode.
+If we are running in a virtual that has virtio devices, these devices
+would be considered as using grants with Dom0 as backend, while being
+the said Dom0 itself, while we want to use these devices like regular
+PCI devices.
 
-Add ability to deal with generic PCI-IOMMU bindings (iommu-map/
-iommu-map-mask properties) which allows us to describe relationship
-between PCI devices and backend domains ID properly.
+Fix this by preventing grant-dma-ops from being used when running as Dom0
+(initial domain). We still keep the device-tree logic as-is.
 
-To avoid having to look up for the PCI Host bridge twice and reduce
-the amount of checks pass an extra struct device_node *np to
-xen_dt_grant_init_backend_domid().
-
-So with current patch the code expects iommus property for the platform
-devices and iommu-map/iommu-map-mask properties for PCI devices.
-
-The example of generated by the toolstack iommu-map property
-for two PCI devices 0000:00:01.0 and 0000:00:02.0 whose
-backends are running in different Xen domains with IDs 1 and 2
-respectively:
-iommu-map = <0x08 0xfde9 0x01 0x08 0x10 0xfde9 0x02 0x08>;
-
-Signed-off-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
-Reviewed-by: Xenia Ragiadakou <burzalodowa@gmail.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Link: https://lore.kernel.org/r/20221025162004.8501-3-olekstysh@gmail.com
+Signed-off-by: Teddy Astie <teddy.astie@vates.tech>
+Fixes: 61367688f1fb0 ("xen/virtio: enable grant based virtio on x86")
+Reviewed-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Stable-dep-of: dc8ea8714311 ("xen/virtio: Don't use grant-dma-ops when running as Dom0")
+Message-ID: <6698564dd2270a9f7377b78ebfb20cb425cabbe8.1767720955.git.teddy.astie@vates.tech>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/grant-dma-ops.c | 46 +++++++++++++++++++++++++++++++------
- 1 file changed, 39 insertions(+), 7 deletions(-)
+ drivers/xen/grant-dma-ops.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
-index 1e797a043980a..9784a77fa3c99 100644
+index 9784a77fa3c99..46cc47bd1dd0f 100644
 --- a/drivers/xen/grant-dma-ops.c
 +++ b/drivers/xen/grant-dma-ops.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/dma-map-ops.h>
- #include <linux/of.h>
-+#include <linux/pci.h>
- #include <linux/pfn.h>
- #include <linux/xarray.h>
- #include <linux/virtio_anchor.h>
-@@ -292,15 +293,43 @@ static const struct dma_map_ops xen_grant_dma_ops = {
- 	.dma_supported = xen_grant_dma_supported,
- };
- 
-+static struct device_node *xen_dt_get_node(struct device *dev)
-+{
-+	if (dev_is_pci(dev)) {
-+		struct pci_dev *pdev = to_pci_dev(dev);
-+		struct pci_bus *bus = pdev->bus;
-+
-+		/* Walk up to the root bus to look for PCI Host controller */
-+		while (!pci_is_root_bus(bus))
-+			bus = bus->parent;
-+
-+		return of_node_get(bus->bridge->parent->of_node);
-+	}
-+
-+	return of_node_get(dev->of_node);
-+}
-+
- static int xen_dt_grant_init_backend_domid(struct device *dev,
-+					   struct device_node *np,
- 					   domid_t *backend_domid)
- {
--	struct of_phandle_args iommu_spec;
-+	struct of_phandle_args iommu_spec = { .args_count = 1 };
- 
--	if (of_parse_phandle_with_args(dev->of_node, "iommus", "#iommu-cells",
--			0, &iommu_spec)) {
--		dev_dbg(dev, "Cannot parse iommus property\n");
--		return -ESRCH;
-+	if (dev_is_pci(dev)) {
-+		struct pci_dev *pdev = to_pci_dev(dev);
-+		u32 rid = PCI_DEVID(pdev->bus->number, pdev->devfn);
-+
-+		if (of_map_id(np, rid, "iommu-map", "iommu-map-mask", &iommu_spec.np,
-+				iommu_spec.args)) {
-+			dev_dbg(dev, "Cannot translate ID\n");
-+			return -ESRCH;
-+		}
-+	} else {
-+		if (of_parse_phandle_with_args(np, "iommus", "#iommu-cells",
-+				0, &iommu_spec)) {
-+			dev_dbg(dev, "Cannot parse iommus property\n");
-+			return -ESRCH;
-+		}
- 	}
- 
- 	if (!of_device_is_compatible(iommu_spec.np, "xen,grant-dma") ||
-@@ -324,10 +353,13 @@ static int xen_dt_grant_init_backend_domid(struct device *dev,
- static int xen_grant_init_backend_domid(struct device *dev,
- 					domid_t *backend_domid)
- {
-+	struct device_node *np;
- 	int ret = -ENODEV;
- 
--	if (dev->of_node) {
--		ret = xen_dt_grant_init_backend_domid(dev, backend_domid);
-+	np = xen_dt_get_node(dev);
-+	if (np) {
-+		ret = xen_dt_grant_init_backend_domid(dev, np, backend_domid);
-+		of_node_put(np);
- 	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain()) {
+@@ -360,7 +360,8 @@ static int xen_grant_init_backend_domid(struct device *dev,
+ 	if (np) {
+ 		ret = xen_dt_grant_init_backend_domid(dev, np, backend_domid);
+ 		of_node_put(np);
+-	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain()) {
++	} else if (!xen_initial_domain() &&
++		   (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain())) {
  		dev_info(dev, "Using dom0 as backend\n");
  		*backend_domid = 0;
+ 		ret = 0;
 -- 
 2.51.0
 
