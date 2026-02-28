@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E43379EF7
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B34C379EF1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301900; cv=none; b=DkJXQMHVHk8L5OKWHiUXDbV6j5s134pVM7JvKGcFFwxEEhduc0iECj91DwqhFZ/0ay1FvjPyZ/dZPdJYcwIoJT4iYfhGJRekPYVa8Ejdw3Rs8CF9aBW3TfspWbRaaEw+/YccIOuFcqIAtpclyj6oPcRjOmPMdlE059WcMSSqIqg=
+	t=1772301901; cv=none; b=lJ8TDBkKrm2Qle1cWnyPVPNJYGhI8r2p10Ea5JVCrxNyBGD1AFMKZ+P6tYxsqOKMrRN7k3+lEdvwmYS1ZG3UTRW41rQrPweOy1keASAIjBQ167B+8TDhDrXwqACu6YM2FenzD+Ftg1K4y0uM8lB77LFhS79Fz+BpBYVhcy8GHwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301900; c=relaxed/simple;
-	bh=ZGTEnqYYJeNtsR/A51neWJQ7VQyXG4DodzsN9qlnQ0g=;
+	s=arc-20240116; t=1772301901; c=relaxed/simple;
+	bh=UjwpdonoHHNRoB4Sq29DVk7N3h17GMi3uVWtIx7G7rQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UYC9968hd++j39HAt3iHsK7eTk95iLkmg4GoDP0QLZ2ZEBis1cysEd6+T/sQXPgC1W/MTv10+PDug3ctxH2PP7ERYJi/ADNeaUoccLDUxHADXQWlT8BCNFHpcYOGKp9aFJy25Gq64qv4Goxu1z3ve82tq5/eSCNMrRba1BqfR48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gckd7WWL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M45PiziuTdE0CJaRnIysKQfQUG+nZL4z3ePlCNHC0yH/HK5PcdnQEg9x4AilSa28cuBRl5ACyt4hMYsEbBlvxx/0vSKBiyNvCViR65O7wCRSuQpmRrJBORdXINrVN4s764uaYrwqbeXN6TOgGttmKWOwNTcB7tC1yuxTOwa5mTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UiCp75O+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gckd7WWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DBBC116D0;
-	Sat, 28 Feb 2026 18:04:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UiCp75O+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C333C19424;
+	Sat, 28 Feb 2026 18:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301900;
-	bh=ZGTEnqYYJeNtsR/A51neWJQ7VQyXG4DodzsN9qlnQ0g=;
+	bh=UjwpdonoHHNRoB4Sq29DVk7N3h17GMi3uVWtIx7G7rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gckd7WWLOSjMbdY32cBLkqyo3iS7zFF0zAII5Me1SYPFUl5JiSJAx1pLa+OmSgc7W
-	 qHiJxyHNX4Y86Txd22F8nCuhwbriGC2EULwGFa8uK+6SP8siVZY7iUNpd2k1XQ6ESS
-	 qDK7GRQhmsfp/RCoHd6k2oQu/nOu65mfECQVH8bX8tkJrnoCY4LrHlx7V1Bx1WArgB
-	 0OosV8sTGMJS+8G31Wtd3xrYd0n/muHxlZJNiALa7kmB4kXCeQ+nfdEZHbx7hVDzxv
-	 fFf5uRLSWSopkYhK7Pf8MjXHc2KqZB04qB+BYwTfRmZlWKvKVCyMBnHMpqOc7Hq0La
-	 WdQcKrFovg2Gg==
+	b=UiCp75O+s+GF6HGzKLanxh3SwU/kAWZdWe/IVh637oFOcIYjO0fZGmKnkiBU03zR2
+	 9uO0frIqP5ZnRt06d/wlGCfifRlj6wmPl92HvTFGaCpj/em+HAlCBjL6WdjGDCNkiC
+	 nOrqPvpsbxkDRdf1wp5Z4qNEEWY53P2gRGyBhNvN3YUzjpoRcUo1gKjd0yvBU8VHEn
+	 jeIlg0QdqboIzkEXChrFAxROQc9WeDC7PuCexkvlrk0hh5xqDAbtMtNDqvNq5f98hd
+	 /CT05u8H8U0GfzJb1AnBbOlmMdTvGAnh6umz0UKypuf8wLSX4Amx5z74PVV9BNDMIy
+	 Y3GwP7XD2RnAA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Petre Rodan <petre.rodan@subdimension.ro>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 329/385] iio: pressure: mprls0025pa: fix interrupt flag
-Date: Sat, 28 Feb 2026 12:59:11 -0500
-Message-ID: <20260228180011.1568201-329-sashal@kernel.org>
+Subject: [PATCH 6.12 330/385] iio: pressure: mprls0025pa: fix scan_type struct
+Date: Sat, 28 Feb 2026 12:59:12 -0500
+Message-ID: <20260228180011.1568201-330-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -50,9 +50,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Petre Rodan <petre.rodan@subdimension.ro>
 
-[ Upstream commit fff3f1a7d805684e4701a70bfaeba39622b59dbc ]
+[ Upstream commit 8a228e036926f7e57421d750c3724e63f11b808a ]
 
-Interrupt falling/rising flags should only be defined in the device tree.
+Fix the scan_type sign and realbits assignment.
+
+The pressure is a 24bit unsigned int between output_min and output_max.
+
+ transfer function A: 10%   to 90%   of 2^24
+ transfer function B:  2.5% to 22.5% of 2^24
+ transfer function C: 20%   to 80%   of 2^24
+[MPR_FUNCTION_A] = { .output_min = 1677722, .output_max = 15099494 }
+[MPR_FUNCTION_B] = { .output_min =  419430, .output_max =  3774874 }
+[MPR_FUNCTION_C] = { .output_min = 3355443, .output_max = 13421773 }
 
 Fixes: 713337d9143e ("iio: pressure: Honeywell mprls0025pa pressure sensor")
 Signed-off-by: Petre Rodan <petre.rodan@subdimension.ro>
@@ -60,26 +69,24 @@ Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/mprls0025pa.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/iio/pressure/mprls0025pa.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/iio/pressure/mprls0025pa.c b/drivers/iio/pressure/mprls0025pa.c
-index 3b6145348c2e3..7ecb928655421 100644
+index 7ecb928655421..367644269fec4 100644
 --- a/drivers/iio/pressure/mprls0025pa.c
 +++ b/drivers/iio/pressure/mprls0025pa.c
-@@ -418,10 +418,8 @@ int mpr_common_probe(struct device *dev, const struct mpr_ops *ops, int irq)
- 	data->offset = div_s64_rem(offset, NANO, &data->offset2);
- 
- 	if (data->irq > 0) {
--		ret = devm_request_irq(dev, data->irq, mpr_eoc_handler,
--				       IRQF_TRIGGER_RISING,
--				       dev_name(dev),
--				       data);
-+		ret = devm_request_irq(dev, data->irq, mpr_eoc_handler, 0,
-+				       dev_name(dev), data);
- 		if (ret)
- 			return dev_err_probe(dev, ret,
- 					  "request irq %d failed\n", data->irq);
+@@ -160,8 +160,8 @@ static const struct iio_chan_spec mpr_channels[] = {
+ 					BIT(IIO_CHAN_INFO_OFFSET),
+ 		.scan_index = 0,
+ 		.scan_type = {
+-			.sign = 's',
+-			.realbits = 32,
++			.sign = 'u',
++			.realbits = 24,
+ 			.storagebits = 32,
+ 			.endianness = IIO_CPU,
+ 		},
 -- 
 2.51.0
 
