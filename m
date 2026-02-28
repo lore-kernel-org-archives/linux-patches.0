@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF70325710
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C6B355049
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300968; cv=none; b=eLHeyGRKT8FfNr27+xTTiMx+fmQd8Eymbxxh9D87ptDnzcOX8tGazlZk/n3XdoEY/kn3jVXWH8BHAO7tLZtQUuyryNtG9EATGjo1mlDZ1vs09hWWt1WmuXwm12N2b4tgKyT7YOtl9wkPfzUpHxA82hswwT2F0wABAt01v0O1zNE=
+	t=1772300969; cv=none; b=cCYs9T3SdWtmYqKtNfrPcgPFUiPdn9hX1+0lG4O35UWM4b+NlMTmQAEXW8Y/k7Hm+ugyBDkAi+T68lWUm5qpMAeTOTmjH9HK4POZ6a1QtKaH77LlSSU7cH+0iQckeV0Wi/mLE5Lh0rha1kPB72LSaylw90tWfQS9pAppaK5026c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300968; c=relaxed/simple;
-	bh=qBb3984FcUVkn6ObiM6blPgcfp4SWEUhlMD4uB277ag=;
+	s=arc-20240116; t=1772300969; c=relaxed/simple;
+	bh=j5xNUslQNcpWHSQ8UAeGt65hKPEGFjMUP9W6SWona0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LwAVcvxBQL8UzUIAvp2K6LfQLRr9Ogg5jM8W1c3Osqlgo2QeAX7vsl7dcDcHPBf/ALibzOFxKFGj7LSw4vLvk1hLujIdGX6xw82SLt6yfs8Zp7xfnVDBIMU8xwV/jsbFnaGid/R59qio0LssPsYz+AydQWmODmsrz9NVohw3+6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fPtgHS2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSuNe8dnpR0K1dpYjYo0/RjAilRH7r6MwKeTZs9PXlqRqmimPOfBdP0qYAKz5dft4I9Sg7SPrmpSbqkSq5Iyrqa8X/IzCMP7GOv6k79urXjrqUzHcCmyKRyOEeEe6rFMF//azbQdWC8LC1sEdaptzAsfz77szTVquAyNdj1/62I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HnRn+1MC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fPtgHS2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474E8C116D0;
-	Sat, 28 Feb 2026 17:49:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HnRn+1MC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C96CC116D0;
+	Sat, 28 Feb 2026 17:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300967;
-	bh=qBb3984FcUVkn6ObiM6blPgcfp4SWEUhlMD4uB277ag=;
+	s=k20201202; t=1772300969;
+	bh=j5xNUslQNcpWHSQ8UAeGt65hKPEGFjMUP9W6SWona0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fPtgHS2NX3IZPuFMdJn7lINH6RFXI20o8kl3gDepOejZgInXKOd2RNlxnsCMMdWSI
-	 Pq4gcHLu/3TC6RzQY+0UGgLUqPgnOFjlP+/SLl0LuilJPNQWuyqWYBcdM7Wmo/UznE
-	 sd/NAQD74TFua8bVKUBIs0ywbvf7fPAo94/bydDkEW3dvsHPRDBgOuoYBy97SXlxGu
-	 Mmq4dpi+KmaHFLsbybD+lrDHGwTemM1rsQJD8pF47+JfaKTRcGEV9sc3cTESDnDGZq
-	 KRSIuorJpfsL/y9VVFQVnTNTKbU+WHPT/C/K7S58/7LJKGlWkQ8bz9OKrwIL7z5GKT
-	 G+UmWgreIqayg==
+	b=HnRn+1MCF9/Rxg0MdYxFJBfcacctZZ5keBnVeJagCbY1C3tPUCxFKMRZoyYqXvGmb
+	 D4QG9t4iPnufGTJ/QmRoMoQp9f7QZFeQoayCeKYQoJonlLenEzkGmYnBCh1tvCl8Wq
+	 Y/jTxFC9sPSK5BfEKtg1u7TEo048Qxi+gOISHI0w9AvW5PIG4SDvtFn12awzuNfJj5
+	 s7nPI/MPGzjcIJQKpXISm5hRynftYhqFZkKrVZFNLsRzzLmwTKl17yDgCvmVgbXzHb
+	 5FR5TSNBPh6+FjntyiiU9RkTy7LlkQsT+wNDthtlsHcBNXweG70SvWl0UYRq0D2psz
+	 Xb3P9NR80XHfg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+Cc: Joel Fernandes <joelagnelf@nvidia.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
+	Christian Loehle <christian.loehle@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 094/752] char: tpm: cr50: Remove IRQF_ONESHOT
-Date: Sat, 28 Feb 2026 12:36:45 -0500
-Message-ID: <20260228174750.1542406-94-sashal@kernel.org>
+Subject: [PATCH 6.18 095/752] sched/debug: Fix updating of ppos on server write ops
+Date: Sat, 28 Feb 2026 12:36:46 -0500
+Message-ID: <20260228174750.1542406-95-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,57 +51,63 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Joel Fernandes <joelagnelf@nvidia.com>
 
-[ Upstream commit 1affd29ffbd50125a5492c6be1dbb1f04be18d4f ]
+[ Upstream commit 6080fb211672aec6ce8f2f5a2e0b4eae736f2027 ]
 
-Passing IRQF_ONESHOT ensures that the interrupt source is masked until
-the secondary (threaded) handler is done. If only a primary handler is
-used then the flag makes no sense because the interrupt can not fire
-(again) while its handler is running.
+Updating "ppos" on error conditions does not make much sense. The pattern
+is to return the error code directly without modifying the position, or
+modify the position on success and return the number of bytes written.
 
-The flag also prevents force-threading of the primary handler and the
-irq-core will warn about this.
+Since on success, the return value of apply is 0, there is no point in
+modifying ppos either. Fix it by removing all this and just returning
+error code or number of bytes written on success.
 
-Remove IRQF_ONESHOT from irqflags.
-
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://patch.msgid.link/20260128095540.863589-10-bigeasy@linutronix.de
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260126100050.3854740-3-arighi@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_i2c_cr50.c | 3 +--
- drivers/char/tpm/tpm_tis_spi_cr50.c | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ kernel/sched/debug.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_i2c_cr50.c b/drivers/char/tpm/tpm_tis_i2c_cr50.c
-index fc6891a0b6936..b48cacacc0664 100644
---- a/drivers/char/tpm/tpm_tis_i2c_cr50.c
-+++ b/drivers/char/tpm/tpm_tis_i2c_cr50.c
-@@ -749,8 +749,7 @@ static int tpm_cr50_i2c_probe(struct i2c_client *client)
+diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
+index 41caa22e0680a..93f009e1076d8 100644
+--- a/kernel/sched/debug.c
++++ b/kernel/sched/debug.c
+@@ -345,8 +345,8 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
+ 	long cpu = (long) ((struct seq_file *) filp->private_data)->private;
+ 	struct rq *rq = cpu_rq(cpu);
+ 	u64 runtime, period;
++	int retval = 0;
+ 	size_t err;
+-	int retval;
+ 	u64 value;
  
- 	if (client->irq > 0) {
- 		rc = devm_request_irq(dev, client->irq, tpm_cr50_i2c_int_handler,
--				      IRQF_TRIGGER_FALLING | IRQF_ONESHOT |
--				      IRQF_NO_AUTOEN,
-+				      IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN,
- 				      dev->driver->name, chip);
- 		if (rc < 0) {
- 			dev_err(dev, "Failed to probe IRQ %d\n", client->irq);
-diff --git a/drivers/char/tpm/tpm_tis_spi_cr50.c b/drivers/char/tpm/tpm_tis_spi_cr50.c
-index f4937280e9406..32920b4cecfb4 100644
---- a/drivers/char/tpm/tpm_tis_spi_cr50.c
-+++ b/drivers/char/tpm/tpm_tis_spi_cr50.c
-@@ -287,7 +287,7 @@ int cr50_spi_probe(struct spi_device *spi)
- 	if (spi->irq > 0) {
- 		ret = devm_request_irq(&spi->dev, spi->irq,
- 				       cr50_spi_irq_handler,
--				       IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-+				       IRQF_TRIGGER_RISING,
- 				       "cr50_spi", cr50_phy);
- 		if (ret < 0) {
- 			if (ret == -EPROBE_DEFER)
+ 	err = kstrtoull_from_user(ubuf, cnt, 10, &value);
+@@ -380,8 +380,6 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
+ 		dl_server_stop(&rq->fair_server);
+ 
+ 		retval = dl_server_apply_params(&rq->fair_server, runtime, period, 0);
+-		if (retval)
+-			cnt = retval;
+ 
+ 		if (!runtime)
+ 			printk_deferred("Fair server disabled in CPU %d, system may crash due to starvation.\n",
+@@ -389,6 +387,9 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
+ 
+ 		if (rq->cfs.h_nr_queued)
+ 			dl_server_start(&rq->fair_server);
++
++		if (retval < 0)
++			return retval;
+ 	}
+ 
+ 	*ppos += cnt;
 -- 
 2.51.0
 
