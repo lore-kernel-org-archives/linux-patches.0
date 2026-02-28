@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F42834252B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE94C34252B
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301695; cv=none; b=EeFE4RtEThtSHoOnQzVJIAt0k/KNls6u4SrGJUMcfjyI5OBI720loavuO1g2mEpva6HmC5jUERyIVB7hp7GZWMd3iLipBZ3TSDy18c8bqBzaBZ4QgYQECE2gY75MrfXGtVVbina/9jheNMsf09PcYStaq8CSd1svFfKcM0AQWYQ=
+	t=1772301695; cv=none; b=V85YRnwjeGqw1oXL1T9SDll1oh2e6T8Mnltflk2r8FRlVgKUsQyNJq0Pj0p3J6CDbD0zPtSRmr2H+rJQi76GvjEWSoowDO5AEk2vceDc/tg/rYpU7J41X3PZH/0BglcwKxY7+M3ZF6dtMdZN5rNN7WqaA2BQaVWFTB1FW3dq80k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301695; c=relaxed/simple;
-	bh=RSl8P1d+iWdlJoDhcQTIXWhPOuhg7YK2eHJIecdQaXo=;
+	bh=7ZqA44pwoDDDq8yaqbf2WQtRq40cPl6ZcM24X/l7EeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vB+yBC/lQgmGr8uSSBn2vFcZdY9L2XRk48pur923v1f9KFsGYOJv3WgKPrCXdzg8oHZbdUwHF/R+ODSRfKuBUDCYHdRl8qpt3L056ugT3aFDCoMcVw9DaORkV+vg7jCo4qEEGB2L9Q/oD7wPxieqDE1LEANa9RqsRyygSW0lo3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i2UPJSkZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ftweK94MS3PoQs+diIsvIK0Mo2m4gYAU1SI+UOjsR6neyI0LTIn23BBJ2FYzqjtwbQUKr3wBaAxhSdpsoGrR0Xe34wVEImr5vf8sGHDH1oVbLqyRPpat4jRr+v8/fi7jgrEiVfBF1wQCNGTd8+jBfiAak1ZC8JttF3yhiKXxe6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J2xNnTN/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i2UPJSkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760F9C19423;
-	Sat, 28 Feb 2026 18:01:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J2xNnTN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3495FC19423;
+	Sat, 28 Feb 2026 18:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301694;
-	bh=RSl8P1d+iWdlJoDhcQTIXWhPOuhg7YK2eHJIecdQaXo=;
+	s=k20201202; t=1772301695;
+	bh=7ZqA44pwoDDDq8yaqbf2WQtRq40cPl6ZcM24X/l7EeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2UPJSkZ9/8Y38rqt5VL8hUd1sVgm6loO6izu3H9/hRjKBvrQ5doLSq0LRW3YZilS
-	 P6imSfLfjGyO3F8Z+0rHHukTnXRA/o4vOA6SvS/o856ehYaPyCZlv6joOZe65fVy3d
-	 Q4F7o+CwnlFaMq5F9KPjFk7TRTBz+5bLT3rqY8vnNAOXCzfZnLld9TjbtusbxQYpRh
-	 bCsFu3ey3y+JbjLljfL1n7y+xLuoEPpXDHVp1+n8ZdYyDu4OV4SFn2Dhun9jaaZIRn
-	 hEBTNvnClldTxYXWQDD6A8AZdvOBmTLzjb8Uo0ZvCQ4XSE+f6xht+X3kajcvHCkzZQ
-	 kD/MCHN/Y4GNg==
+	b=J2xNnTN/aedbjnPhnBFNgPOgc2gO37rMNJlOHrJI6PiflG8xtKRFbsp6PO+j2wiuJ
+	 /IdQ0QEXE6gSwK2nGsAN6XHdzegHbVZTtuNGwCtqoWi4KHQPqh7fKUxRbGxby2S1pZ
+	 g4GY+48U/7H1oMhKryV/xxYrE9ijatFheBeusQoLB6QJVnTNbRnkfxjWGAtAMRtJn5
+	 p7lHKU+ZioheL0OJfkYVFeDmvatd6S+xOdVR1ZJGNEWO943DgpweK/aNy2fro6Nx4e
+	 RtYveC3JpJOyPywWD6y6XCnEOXL1fqiKdx93Si0O0sRm+LajoQ6HhoBbr6nKsrljtC
+	 M5Odv2ILrqtFQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>,
-	Kees Cook <kees@kernel.org>,
+Cc: Zilin Guan <zilin@seu.edu.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 086/385] fs/tests: exec: drop duplicate bprm_stack_limits test vectors
-Date: Sat, 28 Feb 2026 12:55:08 -0500
-Message-ID: <20260228180011.1568201-86-sashal@kernel.org>
+Subject: [PATCH 6.12 087/385] crypto: starfive - Fix memory leak in starfive_aes_aead_do_one_req()
+Date: Sat, 28 Feb 2026 12:55:09 -0500
+Message-ID: <20260228180011.1568201-87-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,46 +47,58 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 46a03ea50b5f380bdb99178b8f90b39c6ba1f528 ]
+[ Upstream commit ccb679fdae2e62ed92fd9acb25ed809c0226fcc6 ]
 
-Remove duplicate entries from the bprm_stack_limits KUnit test vector
-table. The duplicates do not add coverage and only increase test size.
+The starfive_aes_aead_do_one_req() function allocates rctx->adata with
+kzalloc() but fails to free it if sg_copy_to_buffer() or
+starfive_aes_hw_init() fails, which lead to memory leaks.
 
-Signed-off-by: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
-Fixes: 60371f43e56b ("exec: Add KUnit test for bprm_stack_limits()")
-Link: https://patch.msgid.link/20260203175950.43710-1-titouan.ameline@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Since rctx->adata is unconditionally freed after the write_adata
+operations, ensure consistent cleanup by freeing the allocation in these
+earlier error paths as well.
+
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
+
+Fixes: 7467147ef9bf ("crypto: starfive - Use dma for aes requests")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tests/exec_kunit.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/crypto/starfive/jh7110-aes.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/tests/exec_kunit.c b/fs/tests/exec_kunit.c
-index 7c77d039680bb..f412d1a0f6bba 100644
---- a/fs/tests/exec_kunit.c
-+++ b/fs/tests/exec_kunit.c
-@@ -87,9 +87,6 @@ static const struct bprm_stack_limits_result bprm_stack_limits_results[] = {
- 	    .argc = 0, .envc = ARG_MAX / sizeof(void *) - 1 },
- 	  .expected_argmin = ULONG_MAX - sizeof(void *) },
- 	/* Raising rlim_stack / 4 to _STK_LIM / 4 * 3 will see more space. */
--	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * (_STK_LIM / 4 * 3),
--	    .argc = 0, .envc = 0 },
--	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
- 	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * (_STK_LIM / 4 * 3),
- 	    .argc = 0, .envc = 0 },
- 	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
-@@ -103,9 +100,6 @@ static const struct bprm_stack_limits_result bprm_stack_limits_results[] = {
- 	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * _STK_LIM,
- 	    .argc = 0, .envc = 0 },
- 	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
--	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * _STK_LIM,
--	    .argc = 0, .envc = 0 },
--	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
- };
+diff --git a/drivers/crypto/starfive/jh7110-aes.c b/drivers/crypto/starfive/jh7110-aes.c
+index 86a1a1fa9f8f9..04f2f97ce238a 100644
+--- a/drivers/crypto/starfive/jh7110-aes.c
++++ b/drivers/crypto/starfive/jh7110-aes.c
+@@ -673,8 +673,10 @@ static int starfive_aes_aead_do_one_req(struct crypto_engine *engine, void *areq
+ 					     "Failed to alloc memory for adata");
  
- static void exec_test_bprm_stack_limits(struct kunit *test)
+ 		if (sg_copy_to_buffer(req->src, sg_nents_for_len(req->src, cryp->assoclen),
+-				      rctx->adata, cryp->assoclen) != cryp->assoclen)
++				      rctx->adata, cryp->assoclen) != cryp->assoclen) {
++			kfree(rctx->adata);
+ 			return -EINVAL;
++		}
+ 	}
+ 
+ 	if (cryp->total_in)
+@@ -685,8 +687,11 @@ static int starfive_aes_aead_do_one_req(struct crypto_engine *engine, void *areq
+ 	ctx->rctx = rctx;
+ 
+ 	ret = starfive_aes_hw_init(ctx);
+-	if (ret)
++	if (ret) {
++		if (cryp->assoclen)
++			kfree(rctx->adata);
+ 		return ret;
++	}
+ 
+ 	if (!cryp->assoclen)
+ 		goto write_text;
 -- 
 2.51.0
 
