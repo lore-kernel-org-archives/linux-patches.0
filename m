@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CF033FE12
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBC433F8A1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300939; cv=none; b=CcsSafA3hxuA2Gr4uQgmavieanGoW1dxDFOW7dqUSU7XBNopo7guERitHQlx3JhhUzDD1OctGKJNkR56+LXQUfMQBVQrgfRyf7JxTLn9EKdDnAy4C2MYJRFI4DiX3zeYqmXb+5R+4q2rKpjQTAiz4ag5dqjcVkikXB+yzZN14To=
+	t=1772300940; cv=none; b=iE1AkyR3TBXOobYBneNa+RoCOFavN4+6HdsjrXt2u/lWFQEbn3Hn6Qay8c4EECFsZs6MG80ZS+wWo71njBKEHBY0W1rSQCXDMWywoAWdI18r9Qhm9AgTOw2CAcKExYMeMU+/zPMDwwIi2U9feZRB/BBBu+i5i5sK1vzJNyLlhbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300939; c=relaxed/simple;
-	bh=iPHL5fHDNkD0s+OK8W08RPRr3MyV1q3fjkFPa2mlYxo=;
+	s=arc-20240116; t=1772300940; c=relaxed/simple;
+	bh=sUj53CCzyRZ+Nl+bD3YaS0/JzC1/MC3O53QNnmpsXGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1cG2mFEJH9J9SOdWFLi7pcryuPuDAwSITy1l2yC0ezA9eekY8luWSniRViFKzM/rkAIHfJMUvdhzyxd0sp0zGYSf1nCM0FAoOw4GfRBWBdBR/nvGKApiHGkTbj2dMe0mpFuK0NvNPb01B/ITqUIg1YZNuOmTbkiQj52XiDxO/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p1kGIL2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LGQ9Hp0ZrMpxtSc29F9HPl/DvT/4S9hWxjEVuop4rPEEcDanCRyNSWXK2gTdiPf/oUhR9SIONgmGO8OIB0zHT2Von3p5PdoAoj5sKYV0aKJSsTOTA6BiR8OFPcKGgEcw3ZbO4s327BKZRcKabZI0BM6bL8ndug0RIINScsrML08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nDEfTdvU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p1kGIL2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB830C19423;
-	Sat, 28 Feb 2026 17:48:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nDEfTdvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A61C19424;
+	Sat, 28 Feb 2026 17:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300939;
-	bh=iPHL5fHDNkD0s+OK8W08RPRr3MyV1q3fjkFPa2mlYxo=;
+	s=k20201202; t=1772300940;
+	bh=sUj53CCzyRZ+Nl+bD3YaS0/JzC1/MC3O53QNnmpsXGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1kGIL2xPkD2nbDCH/xPrh4iQs1HznoVykrnqGwsFU1EDluObnbATdheeEE+Ln3Zl
-	 lq9gfeQ2CnvayOdjLhtHqLDF1odK5yJQZ4r/Ah5b7WKQtCH2QUHfDQ9jfB/4WPgZ0o
-	 P70uuGHcRCnCsqM92tw6UwLhfNdGBi+tfsnJ9B+qFpTYJMgKdZTl3kKPWPWJhYFibt
-	 vOw4+yJ+dYgxTE5k5qGGPStSk+B4sWTv/ZSJs208PWdGXCCw93NgcWTYalZgMdtXWd
-	 vzh2AFRPJiKluMJHDQZtNbY1KuNNpbmjSPULsgWnIQCeKBd/u3XQugGtT2/NyBWx27
-	 PDrmnbcnbmfxA==
+	b=nDEfTdvU7y3O1DgZM5tp2hm2rZrjU4zz0tiMyM5/5YpHY6LBARjEAhbdNpDu0WE2d
+	 abYrBi6KO062zBsJNNvnci/jtGfXQCJ8EnnnC44ta9CmVTOHZ0gyuuuMIGcL94k0uW
+	 qnk1XXC9TGBhslW0fncO8uBZIWYs4wF+63vEEa8L+sU5DB68Vg4IZvo2PlPrF7aUvE
+	 QcDY/rJUF5XaaVBEyP0nFDJ57e3P5wNUrBaqTEBhG4vY1IG1XYSd7uhmSunNCyL3Sn
+	 wQf2toT26haGBfyi9JuvPyTNdb0zQX1I6Vtlx3QrMesPiQuqI9o95tEawK5hB8R43x
+	 ym9zj9PIMB5WA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Magnus Lindholm <linmag7@gmail.com>,
-	Ivan Kokshaysky <ink@unseen.parts>,
-	Matoro Mahri <matoro_mailinglist_kernel@matoro.tk>,
-	Michael Cree <mcree@orcon.net.nz>,
+Cc: Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 060/752] alpha: fix user-space corruption during memory compaction
-Date: Sat, 28 Feb 2026 12:36:11 -0500
-Message-ID: <20260228174750.1542406-60-sashal@kernel.org>
+Subject: [PATCH 6.18 061/752] md-cluster: fix NULL pointer dereference in process_metadata_update
+Date: Sat, 28 Feb 2026 12:36:12 -0500
+Message-ID: <20260228174750.1542406-61-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,258 +47,59 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Magnus Lindholm <linmag7@gmail.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit dd5712f3379cfe760267cdd28ff957d9ab4e51c7 ]
+[ Upstream commit f150e753cb8dd756085f46e86f2c35ce472e0a3c ]
 
-Alpha systems can suffer sporadic user-space crashes and heap
-corruption when memory compaction is enabled.
+The function process_metadata_update() blindly dereferences the 'thread'
+pointer (acquired via rcu_dereference_protected) within the wait_event()
+macro.
 
-Symptoms include SIGSEGV, glibc allocator failures (e.g. "unaligned
-tcache chunk"), and compiler internal errors. The failures disappear
-when compaction is disabled or when using global TLB invalidation.
+While the code comment states "daemon thread must exist", there is a valid
+race condition window during the MD array startup sequence (md_run):
 
-The root cause is insufficient TLB shootdown during page migration.
-Alpha relies on ASN-based MM context rollover for instruction cache
-coherency, but this alone is not sufficient to prevent stale data or
-instruction translations from surviving migration.
+1. bitmap_load() is called, which invokes md_cluster_ops->join().
+2. join() starts the "cluster_recv" thread (recv_daemon).
+3. At this point, recv_daemon is active and processing messages.
+4. However, mddev->thread (the main MD thread) is not initialized until
+   later in md_run().
 
-Fix this by introducing a migration-specific helper that combines:
-  - MM context invalidation (ASN rollover),
-  - immediate per-CPU TLB invalidation (TBI),
-  - synchronous cross-CPU shootdown when required.
+If a METADATA_UPDATED message is received from a remote node during this
+specific window, process_metadata_update() will be called while
+mddev->thread is still NULL, leading to a kernel panic.
 
-The helper is used only by migration/compaction paths to avoid changing
-global TLB semantics.
+To fix this, we must validate the 'thread' pointer. If it is NULL, we
+release the held lock (no_new_dev_lockres) and return early, safely
+ignoring the update request as the array is not yet fully ready to
+process it.
 
-Additionally, update flush_tlb_other(), pte_clear(), to use
-READ_ONCE()/WRITE_ONCE() for correct SMP memory ordering.
-
-This fixes observed crashes on both UP and SMP Alpha systems.
-
-Reviewed-by: Ivan Kokshaysky <ink@unseen.parts>
-Tested-by: Matoro Mahri <matoro_mailinglist_kernel@matoro.tk>
-Tested-by: Michael Cree <mcree@orcon.net.nz>
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260102173603.18247-2-linmag7@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/linux-raid/20260117145903.28921-1-jiashengjiangcool@gmail.com
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/include/asm/pgtable.h  |  33 ++++++++-
- arch/alpha/include/asm/tlbflush.h |   4 +-
- arch/alpha/mm/Makefile            |   2 +-
- arch/alpha/mm/tlbflush.c          | 112 ++++++++++++++++++++++++++++++
- 4 files changed, 148 insertions(+), 3 deletions(-)
- create mode 100644 arch/alpha/mm/tlbflush.c
+ drivers/md/md-cluster.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/alpha/include/asm/pgtable.h b/arch/alpha/include/asm/pgtable.h
-index 90e7a95391022..c9508ec37efc4 100644
---- a/arch/alpha/include/asm/pgtable.h
-+++ b/arch/alpha/include/asm/pgtable.h
-@@ -17,6 +17,7 @@
- #include <asm/processor.h>	/* For TASK_SIZE */
- #include <asm/machvec.h>
- #include <asm/setup.h>
-+#include <linux/page_table_check.h>
+diff --git a/drivers/md/md-cluster.c b/drivers/md/md-cluster.c
+index 11f1e91d387d8..896279988dfd5 100644
+--- a/drivers/md/md-cluster.c
++++ b/drivers/md/md-cluster.c
+@@ -549,8 +549,13 @@ static void process_metadata_update(struct mddev *mddev, struct cluster_msg *msg
  
- struct mm_struct;
- struct vm_area_struct;
-@@ -183,6 +184,9 @@ extern inline void pud_set(pud_t * pudp, pmd_t * pmdp)
- { pud_val(*pudp) = _PAGE_TABLE | ((((unsigned long) pmdp) - PAGE_OFFSET) << (32-PAGE_SHIFT)); }
+ 	dlm_lock_sync(cinfo->no_new_dev_lockres, DLM_LOCK_CR);
  
- 
-+extern void migrate_flush_tlb_page(struct vm_area_struct *vma,
-+					unsigned long addr);
-+
- extern inline unsigned long
- pmd_page_vaddr(pmd_t pmd)
- {
-@@ -202,7 +206,7 @@ extern inline int pte_none(pte_t pte)		{ return !pte_val(pte); }
- extern inline int pte_present(pte_t pte)	{ return pte_val(pte) & _PAGE_VALID; }
- extern inline void pte_clear(struct mm_struct *mm, unsigned long addr, pte_t *ptep)
- {
--	pte_val(*ptep) = 0;
-+	WRITE_ONCE(pte_val(*ptep), 0);
- }
- 
- extern inline int pmd_none(pmd_t pmd)		{ return !pmd_val(pmd); }
-@@ -264,6 +268,33 @@ extern inline pte_t * pte_offset_kernel(pmd_t * dir, unsigned long address)
- 
- extern pgd_t swapper_pg_dir[1024];
- 
-+#ifdef CONFIG_COMPACTION
-+#define __HAVE_ARCH_PTEP_GET_AND_CLEAR
-+
-+static inline pte_t ptep_get_and_clear(struct mm_struct *mm,
-+					unsigned long address,
-+					pte_t *ptep)
-+{
-+	pte_t pte = READ_ONCE(*ptep);
-+
-+	pte_clear(mm, address, ptep);
-+	return pte;
-+}
-+
-+#define __HAVE_ARCH_PTEP_CLEAR_FLUSH
-+
-+static inline pte_t ptep_clear_flush(struct vm_area_struct *vma,
-+				unsigned long addr, pte_t *ptep)
-+{
-+	struct mm_struct *mm = vma->vm_mm;
-+	pte_t pte = ptep_get_and_clear(mm, addr, ptep);
-+
-+	page_table_check_pte_clear(mm, pte);
-+	migrate_flush_tlb_page(vma, addr);
-+	return pte;
-+}
-+
-+#endif
- /*
-  * The Alpha doesn't have any external MMU info:  the kernel page
-  * tables contain all the necessary information.
-diff --git a/arch/alpha/include/asm/tlbflush.h b/arch/alpha/include/asm/tlbflush.h
-index ba4b359d6c395..0c8529997f54e 100644
---- a/arch/alpha/include/asm/tlbflush.h
-+++ b/arch/alpha/include/asm/tlbflush.h
-@@ -58,7 +58,9 @@ flush_tlb_other(struct mm_struct *mm)
- 	unsigned long *mmc = &mm->context[smp_processor_id()];
- 	/* Check it's not zero first to avoid cacheline ping pong
- 	   when possible.  */
--	if (*mmc) *mmc = 0;
-+
-+	if (READ_ONCE(*mmc))
-+		WRITE_ONCE(*mmc, 0);
- }
- 
- #ifndef CONFIG_SMP
-diff --git a/arch/alpha/mm/Makefile b/arch/alpha/mm/Makefile
-index 101dbd06b4ceb..2d05664058f64 100644
---- a/arch/alpha/mm/Makefile
-+++ b/arch/alpha/mm/Makefile
-@@ -3,4 +3,4 @@
- # Makefile for the linux alpha-specific parts of the memory manager.
- #
- 
--obj-y	:= init.o fault.o
-+obj-y	:= init.o fault.o tlbflush.o
-diff --git a/arch/alpha/mm/tlbflush.c b/arch/alpha/mm/tlbflush.c
-new file mode 100644
-index 0000000000000..ccbc317b9a348
---- /dev/null
-+++ b/arch/alpha/mm/tlbflush.c
-@@ -0,0 +1,112 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Alpha TLB shootdown helpers
-+ *
-+ * Copyright (C) 2025 Magnus Lindholm <linmag7@gmail.com>
-+ *
-+ * Alpha-specific TLB flush helpers that cannot be expressed purely
-+ * as inline functions.
-+ *
-+ * These helpers provide combined MM context handling (ASN rollover)
-+ * and immediate TLB invalidation for page migration and memory
-+ * compaction paths, where lazy shootdowns are insufficient.
-+ */
-+
-+#include <linux/mm.h>
-+#include <linux/smp.h>
-+#include <linux/sched.h>
-+#include <asm/tlbflush.h>
-+#include <asm/pal.h>
-+#include <asm/mmu_context.h>
-+
-+#define asn_locked() (cpu_data[smp_processor_id()].asn_lock)
-+
-+/*
-+ * Migration/compaction helper: combine mm context (ASN) handling with an
-+ * immediate per-page TLB invalidate and (for exec) an instruction barrier.
-+ *
-+ * This mirrors the SMP combined IPI handler semantics, but runs locally on UP.
-+ */
-+#ifndef CONFIG_SMP
-+void migrate_flush_tlb_page(struct vm_area_struct *vma,
-+					   unsigned long addr)
-+{
-+	struct mm_struct *mm = vma->vm_mm;
-+	int tbi_type = (vma->vm_flags & VM_EXEC) ? 3 : 2;
-+
-+	/*
-+	 * First do the mm-context side:
-+	 * If we're currently running this mm, reload a fresh context ASN.
-+	 * Otherwise, mark context invalid.
-+	 *
-+	 * On UP, this is mostly about matching the SMP semantics and ensuring
-+	 * exec/i-cache tagging assumptions hold when compaction migrates pages.
-+	 */
-+	if (mm == current->active_mm)
-+		flush_tlb_current(mm);
-+	else
-+		flush_tlb_other(mm);
-+
-+	/*
-+	 * Then do the immediate translation kill for this VA.
-+	 * For exec mappings, order instruction fetch after invalidation.
-+	 */
-+	tbi(tbi_type, addr);
-+}
-+
-+#else
-+struct tlb_mm_and_addr {
-+	struct mm_struct *mm;
-+	unsigned long addr;
-+	int tbi_type;	/* 2 = DTB, 3 = ITB+DTB */
-+};
-+
-+static void ipi_flush_mm_and_page(void *x)
-+{
-+	struct tlb_mm_and_addr *d = x;
-+
-+	/* Part 1: mm context side (Alpha uses ASN/context as a key mechanism). */
-+	if (d->mm == current->active_mm && !asn_locked())
-+		__load_new_mm_context(d->mm);
-+	else
-+		flush_tlb_other(d->mm);
-+
-+	/* Part 2: immediate per-VA invalidation on this CPU. */
-+	tbi(d->tbi_type, d->addr);
-+}
-+
-+void migrate_flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
-+{
-+	struct mm_struct *mm = vma->vm_mm;
-+	struct tlb_mm_and_addr d = {
-+		.mm = mm,
-+		.addr = addr,
-+		.tbi_type = (vma->vm_flags & VM_EXEC) ? 3 : 2,
-+	};
-+
-+	/*
-+	 * One synchronous rendezvous: every CPU runs ipi_flush_mm_and_page().
-+	 * This is the "combined" version of flush_tlb_mm + per-page invalidate.
-+	 */
-+	preempt_disable();
-+	on_each_cpu(ipi_flush_mm_and_page, &d, 1);
-+
-+	/*
-+	 * mimic flush_tlb_mm()'s mm_users<=1 optimization.
-+	 */
-+	if (atomic_read(&mm->mm_users) <= 1) {
-+
-+		int cpu, this_cpu;
-+		this_cpu = smp_processor_id();
-+
-+		for (cpu = 0; cpu < NR_CPUS; cpu++) {
-+			if (!cpu_online(cpu) || cpu == this_cpu)
-+				continue;
-+			if (READ_ONCE(mm->context[cpu]))
-+				WRITE_ONCE(mm->context[cpu], 0);
-+		}
+-	/* daemaon thread must exist */
+ 	thread = rcu_dereference_protected(mddev->thread, true);
++	if (!thread) {
++		pr_warn("md-cluster: Received metadata update but MD thread is not ready\n");
++		dlm_unlock_sync(cinfo->no_new_dev_lockres);
++		return;
 +	}
-+	preempt_enable();
-+}
 +
-+#endif
+ 	wait_event(thread->wqueue,
+ 		   (got_lock = mddev_trylock(mddev)) ||
+ 		    test_bit(MD_CLUSTER_HOLDING_MUTEX_FOR_RECVD, &cinfo->state));
 -- 
 2.51.0
 
