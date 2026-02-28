@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749C036C9E6
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D2236C9E0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302295; cv=none; b=aDaJMC+bMLif4fyKl8Qf7og3lb//rQgyY7Ypodlhp6K900vD8eNZJQWrirxvc5+KTdEIG2aRwyyVlvvRb4aHaN+vzYgXRNEzULwYNJwRgs6l4ypFTgd7v55FnKMserU7VIjZuWdPLjLk5JeLImB5vzV7Q0ADBkjIQ9wjUKi7lVU=
+	t=1772302296; cv=none; b=lQNJUmkU+LLSlUTfP4UPI3UvXlQ8sbVNOaqVy6SRhvOt3ZxgiXoM43C4xg8e8F5fM64NXNSfQFPnotGy/yUDGP5qJ1SuEqot7lFtjyINs2xL5tN3p7nnIG2ZRYc3aPlYNn/n3oThbVZzS9K8wURVBwWZ+tVjZVqFoCv5H/WBNTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302295; c=relaxed/simple;
-	bh=mi98M0NtUiWOAzTxHoAUPCHLfOuTIf9vsM+ym3LXw3s=;
+	s=arc-20240116; t=1772302296; c=relaxed/simple;
+	bh=4vsN6sJQl6/9Cqq0DSuax4Dm1GQpR5Gaei1MpE2BsoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZ+YHGSLiwbTHnBaEIUScta1gEpWKvRE4VL9mFvQhXJMx/5m9iqZYPAgRlHwVXPhAyMZ3kxosslQI0PZKsRJp+ZaQG3LVAYqLmSjWt9U8hbpq5oolf6DBa3v73GGum33FJgq6P8PMLZKJ8fqJNV2wV7xvaBLycZ8HLC+KTWSaWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bjEeVolG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RCYf6Ax4v0SOAqVMHSK9fkHJYmxQhDlm2jmXJCnxlkcdxFKXFHTR5QZH8JlBuPX5M8FfwRmH9CEUFgJoraVRVvY3q34sbIvPNxmpyrKYWXwD86W8YwN3kbkVTOEwjApVFjQ0mIDBFdXEsWT16fBOyU3bFJOqd2vT6IJCE6QB8ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=poTKcDOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bjEeVolG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95C2C19425;
-	Sat, 28 Feb 2026 18:11:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="poTKcDOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FE3C19423;
+	Sat, 28 Feb 2026 18:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302295;
-	bh=mi98M0NtUiWOAzTxHoAUPCHLfOuTIf9vsM+ym3LXw3s=;
+	s=k20201202; t=1772302296;
+	bh=4vsN6sJQl6/9Cqq0DSuax4Dm1GQpR5Gaei1MpE2BsoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bjEeVolGegDGcR1wOF5cbd+hoDtpk+bYtO2nVtaA+RkQyc5DEt8GLahYyRSWEQ/FA
-	 aDu/Du1ehyaCfm5ABJIcfOcwaI4Janr0vQCoZtEa5/34MCDY5WBpuhnSUDHhY00scX
-	 dlQaHP/Ius8qKGNgyzlicsHRZ80i6rz8IDOipGJChsPDWrz57FNG0b+exN566rnUum
-	 ktT5R2jDKtZ74nK+fd7L76o6Xvld2ILreU4rKygDGqkeZhA+kKtjGlyEWkBdZewlR0
-	 u7SnvinO0Yd8+YTbIZePo6rw94GbfQL8fV2sj15zuBXZ+xhNbaqyNRfJP8LJmCNZo+
-	 DbHWhcb+ekItQ==
+	b=poTKcDOXL8R5BFjcGPSKr+t7DOJITMBWYuRkPXcdDJVbgoLY5h0AvuBW2H/ELx+QS
+	 b7m9kJ600EIHMTvhOuOUUSaofq7nTYvKQJrciMKM9hCxexLNouCJrvFruxIDjMA4ET
+	 v0qiTdQ7/19ryivk0lXerkUCXcEFyZas7jKKz9ly5IGRPK0tb3H8Q3W6fsqb9Ec303
+	 GsUMroWF4A5ejPyRFkdsSU3SYNrqFV4H1rHvj8fruNqUddOGJ2jV/qZAhjStXPqh4k
+	 5Hq4/fh0hK2MjCad3iLErcpWq7hG53GPffcdfUQNDwEJgpr10sPzlGggGGVmsEk7me
+	 Wj1oxQiS4N4yw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ben Dooks <ben.dooks@codethink.co.uk>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/232] fs: add <linux/init_task.h> for 'init_fs'
-Date: Sat, 28 Feb 2026 13:07:41 -0500
-Message-ID: <20260228181127.1592657-8-sashal@kernel.org>
+Subject: [PATCH 6.1 009/232] i3c: master: Update hot-join flag only on success
+Date: Sat, 28 Feb 2026 13:07:42 -0500
+Message-ID: <20260228181127.1592657-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,38 +48,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 589cff4975afe1a4eaaa1d961652f50b1628d78d ]
+[ Upstream commit f0775157b9f9a28ae3eabc8d05b0bc52e8056c80 ]
 
-The init_fs symbol is defined in <linux/init_task.h> but was
-not included in fs/fs_struct.c so fix by adding the include.
+To prevent inconsistent state when an error occurs, ensure the hot-join
+flag is updated only when enabling or disabling hot-join succeeds.
 
-Fixes the following sparse warning:
-fs/fs_struct.c:150:18: warning: symbol 'init_fs' was not declared. Should it be static?
-
-Fixes: 3e93cd671813e ("Take fs_struct handling to new file")
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Link: https://patch.msgid.link/20260108115856.238027-1-ben.dooks@codethink.co.uk
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 317bacf960a48 ("i3c: master: add enable(disable) hot join in sys entry")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260113072702.16268-4-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs_struct.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i3c/master.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fs_struct.c b/fs/fs_struct.c
-index 04b3f5b9c6295..0b0f88259cc60 100644
---- a/fs/fs_struct.c
-+++ b/fs/fs_struct.c
-@@ -6,6 +6,7 @@
- #include <linux/path.h>
- #include <linux/slab.h>
- #include <linux/fs_struct.h>
-+#include <linux/init_task.h>
- #include "internal.h"
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index fea1f852358c2..74138c499642e 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -586,7 +586,8 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
+ 	else
+ 		ret = master->ops->disable_hotjoin(master);
  
- /*
+-	master->hotjoin = enable;
++	if (!ret)
++		master->hotjoin = enable;
+ 
+ 	i3c_bus_normaluse_unlock(&master->bus);
+ 
 -- 
 2.51.0
 
