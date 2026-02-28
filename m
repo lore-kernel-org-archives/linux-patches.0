@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEBB3451CC
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F989333434
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301820; cv=none; b=OrNWSzJRdriak2IIRL18x14a19UGwlMCttGjrfjwUedxImPMkM09ZRCU021f4UDVgzAGHuDQs9aY8v33mjDFaVAPQtQ991n8y+t7Cmp0g99d6l5WFDcFn+tiKQG4oY2cyPIq0e8sUvXikKxAH+8si3JVSyB8HQP6gvR1D12w52w=
+	t=1772301821; cv=none; b=ehCieaz9qVyHdS4KAde6DfnoHGnMt8/KAwqRh73gVD/T6hd7AzqJBr8aQVS/x1sZD+OLoSYasRb7hS6GV+eMyW8jCYVyW/JqIjOizAQ1uBu0pwUdiKixhFJqMWtI0AXGg3B0h/En31zsGCy1z+H40EZGVcBi3dnw1osQRcIY7Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301820; c=relaxed/simple;
-	bh=PdSmqa0tna4ZJjUyZ0AXO+jfpye2djY1z4VwjRr54mo=;
+	s=arc-20240116; t=1772301821; c=relaxed/simple;
+	bh=ibnFo5Ual+3BC4zOzKZGUO9Wp8eJM/Imlm5xLSgM9oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YR0yZ1qXIPVgDFZLCKYkxHkhqtDQK8TGmdOGPrwFFne5KSpumbN1KScTi5cAF/BvCVJ64WXjRb8p2lwSauKnwiCha4JWlCBTV049LpmvAMrsWY1co7voMDtiZe9VR92wU27RowmpGI6HWCD1iX9//wFiqZdSSzvXUIEBZHWOm9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HLHiANrE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S+WfUc2vIu2lTu2Psr0TB0LQczZ4hcp5/9wUNsIh3FZ4H32RvFjVFMjr18iIupWb4M9raaefEuNnzXbozVNz020D56+gxmEpNYy9bW4Ngh4ffwaLEZu6E5bEP2eR7r5UDL1bCKa8IwsqIqcf1TrZgaLv4c5N5cqpzm8F+mxZDwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=StwlIWog; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HLHiANrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329A8C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="StwlIWog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4B8C116D0;
 	Sat, 28 Feb 2026 18:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301820;
-	bh=PdSmqa0tna4ZJjUyZ0AXO+jfpye2djY1z4VwjRr54mo=;
+	s=k20201202; t=1772301821;
+	bh=ibnFo5Ual+3BC4zOzKZGUO9Wp8eJM/Imlm5xLSgM9oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLHiANrEtgurDMrGmY2gQWg6GXxeQdSTBzPJqoa4wWmowGOmdSYuoplVcgc9cJ2kB
-	 u3pV9Piog40loN1ms+lqDBlb0HvATZkNuirDz7WpDU2dKRYIwLleGULsbMmazntogS
-	 X3xIbyA2lzxCST5Bf8mprQxMoqyJRmy21ANKOHX5aP5Yy5C/Pcd7fL52On3MLq/3TX
-	 hVQ133+KTiJN9G3TN2Up0rxXKLfX3PWHKsBLoCx6rgw0HPI+gd17qmZpbaB+6H2sYe
-	 1UsziFYjwitgA0065yHtDHqcGVW7ZxklCSYujGSC350M9mNS+5/kF/WylIYGUPlqrh
-	 WAkaUwgWrvdog==
+	b=StwlIWog6eGt656PP8+2i+r3OvivR45wdn9WYgsVWBS+QA+pRCKOhSnqALxYPSPrr
+	 Ncr+6UbOIS26eXMAmomW18wAJq20oQwr7ttGGANfxaDceFGPQVprxunyHis0zlnVDL
+	 32zJFcGOjj99TVARsJU5fdYcfs6LYV4f8xpBmkEDczpEBw62Hes2Ohe3ijX+CWwsTn
+	 rRPtTddGF7iNYIELyvQ/zVQdKx0OxMU8Tx41mj6/VUjNi36COKmX6N0C6iVwNbFTIc
+	 tCf2GhQxgiTiOgWjTvzKNwpmkOWsVr9Twv0mcQwWDmcXU0rcvdxeVWVGm57UyIpERv
+	 S6k6vGrqLfZJg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Sean Anderson <seanga2@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 235/385] net: sunhme: Fix sbus regression
-Date: Sat, 28 Feb 2026 12:57:37 -0500
-Message-ID: <20260228180011.1568201-235-sashal@kernel.org>
+Subject: [PATCH 6.12 236/385] net: Add skb_dstref_steal and skb_dstref_restore
+Date: Sat, 28 Feb 2026 12:57:38 -0500
+Message-ID: <20260228180011.1568201-236-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -44,73 +43,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: René Rebe <rene@exactco.de>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit 8c5d17834ec104d0abd1bda52fbc04e647fab274 ]
+[ Upstream commit c3f0c02997c7f8489fec259e28e0e04e9811edac ]
 
-Commit cc216e4b44ce ("net: sunhme: Switch SBUS to devres") changed
-explicit sized of_ioremap with BMAC_REG_SIZEs to
-devm_platform_ioremap_resource mapping all the resource. However,
-this does not work on my Sun Ultra 2 with SBUS HMEs:
+Going forward skb_dst_set will assert that skb dst_entry
+is empty during skb_dst_set to prevent potential leaks. There
+are few places that still manually manage dst_entry not using
+the helpers. Convert them to the following new helpers:
+- skb_dstref_steal that resets dst_entry and returns previous dst_entry
+  value
+- skb_dstref_restore that restores dst_entry previously reset via
+  skb_dstref_steal
 
-hme f0072f38: error -EBUSY: can't request region for resource [mem 0x1ffe8c07000-0x1ffe8c0701f]
-hme f0072f38: Cannot map TCVR registers.
-hme f0072f38: probe with driver hme failed with error -16
-hme f007ab44: error -EBUSY: can't request region for resource [mem 0x1ff28c07000-0x1ff28c0701f]
-hme f007ab44: Cannot map TCVR registers.
-hme f007ab44: probe with driver hme failed with error -16
-
-Turns out the open-firmware resources overlap, at least on this
-machines and PROM version:
-
-hexdump /proc/device-tree/sbus@1f,0/SUNW,hme@2,8c00000/reg:
-00 00 00 02 08 c0 00 00  00 00 01 08
-00 00 00 02 08 c0 20 00  00 00 20 00
-00 00 00 02 08 c0 40 00  00 00 20 00
-00 00 00 02 08 c0 60 00  00 00 20 00
-00 00 00 02 08 c0 70 00  00 00 00 20
-
-And the driver previously explicitly mapped way smaller mmio regions:
-
-/proc/iomem:
-1ff28c00000-1ff28c00107 : HME Global Regs
-1ff28c02000-1ff28c02033 : HME TX Regs
-1ff28c04000-1ff28c0401f : HME RX Regs
-1ff28c06000-1ff28c0635f : HME BIGMAC Regs
-1ff28c07000-1ff28c0701f : HME Tranceiver Regs
-
-Quirk this specific issue by truncating the previous resource to not
-overlap into the TCVR registers.
-
-Fixes: cc216e4b44ce ("net: sunhme: Switch SBUS to devres")
-Signed-off-by: René Rebe <rene@exactco.de>
-Reviewed-by: Sean Anderson <seanga2@gmail.com>
-Link: https://patch.msgid.link/20260205.170959.89574674688839340.rene@exactco.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250818154032.3173645-2-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 81b84de32bb2 ("xfrm: fix ip_rt_bug race in icmp_route_lookup reverse path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sunhme.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/skbuff.h | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/net/ethernet/sun/sunhme.c b/drivers/net/ethernet/sun/sunhme.c
-index 50ace461a1af4..89ac15190770d 100644
---- a/drivers/net/ethernet/sun/sunhme.c
-+++ b/drivers/net/ethernet/sun/sunhme.c
-@@ -2551,6 +2551,9 @@ static int happy_meal_sbus_probe_one(struct platform_device *op, int is_qfe)
- 		goto err_out_clear_quattro;
- 	}
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 2e26a054d260c..4344724a97821 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1146,6 +1146,38 @@ static inline struct dst_entry *skb_dst(const struct sk_buff *skb)
+ 	return (struct dst_entry *)(skb->_skb_refdst & SKB_DST_PTRMASK);
+ }
  
-+	/* BIGMAC may have bogus sizes */
-+	if ((op->resource[3].end - op->resource[3].start) >= BMAC_REG_SIZE)
-+		op->resource[3].end = op->resource[3].start + BMAC_REG_SIZE - 1;
- 	hp->bigmacregs = devm_platform_ioremap_resource(op, 3);
- 	if (IS_ERR(hp->bigmacregs)) {
- 		dev_err(&op->dev, "Cannot map BIGMAC registers.\n");
++/**
++ * skb_dstref_steal() - return current dst_entry value and clear it
++ * @skb: buffer
++ *
++ * Resets skb dst_entry without adjusting its reference count. Useful in
++ * cases where dst_entry needs to be temporarily reset and restored.
++ * Note that the returned value cannot be used directly because it
++ * might contain SKB_DST_NOREF bit.
++ *
++ * When in doubt, prefer skb_dst_drop() over skb_dstref_steal() to correctly
++ * handle dst_entry reference counting.
++ *
++ * Returns: original skb dst_entry.
++ */
++static inline unsigned long skb_dstref_steal(struct sk_buff *skb)
++{
++	unsigned long refdst = skb->_skb_refdst;
++
++	skb->_skb_refdst = 0;
++	return refdst;
++}
++
++/**
++ * skb_dstref_restore() - restore skb dst_entry removed via skb_dstref_steal()
++ * @skb: buffer
++ * @refdst: dst entry from a call to skb_dstref_steal()
++ */
++static inline void skb_dstref_restore(struct sk_buff *skb, unsigned long refdst)
++{
++	skb->_skb_refdst = refdst;
++}
++
+ /**
+  * skb_dst_set - sets skb dst
+  * @skb: buffer
 -- 
 2.51.0
 
