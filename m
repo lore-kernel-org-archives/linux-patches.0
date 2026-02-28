@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCF7340A79
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560D0313E31
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301067; cv=none; b=STc17+xzAnrQHI2fQBNyRkDkbOdnHjnSupIQt0ljlFiPyP/Sc5gjjs2gchpX/krn+4N5D3gj1J1cv061xKfhu/kZv7qMY0wOzIY2bFjkJ25dAWpFKD0u7UKRFjKgHeAHk+zHDX7HAEPV/+pNgi7/7ScgOiXpzqlSlQBmpM3h7hw=
+	t=1772301068; cv=none; b=GX7KfqrITOp1OJHhG5GnySJ6e/GHZ+aYS6gu7lVlfpfe+dMYLapA0vvZOATeWq2OCJNNlya1yZB4ce1lpfIPCHghtQ0hB2F3uZ91ga4ahyzBFSE/vePrzgLRmeSzyHuABiTjQVs2rnuafuiafoU78ScTlrPeGBxCTvJj7S8dBAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301067; c=relaxed/simple;
-	bh=LyZ/27qtiTLH0I9CxW4AZjmAEqEIB2XWjddTJGCZlFQ=;
+	s=arc-20240116; t=1772301068; c=relaxed/simple;
+	bh=lrmkfEUu4w0lrbRBiahKpHE0krA3exWJACHWwDbLqs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qboO6EYxYvvbjVKkxtw4WoC/XI7N+nZb9nXt6JobtL0z/gc7j6arEUaZE0DhF2JZvrDV+BzFc1EH6Y5/ok6GKt/Tl/Nbncht9MLQ7MW6Zy+3fEXEI34iAyXpcuyd0T/CyZNrbNDj0gbOdkyKV43SgzJfmRTKWQwieQaNCDKBKEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CKlwsqqm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOvXU5k377k3/Yqi4CNczdpy7OmCtoSU4KHSQmkK9ZH9cE7ptpdZolgagBZmHgAur52OI5cztuG1zRdKk0UN61MwyvfX9BM/AXBQ3tsXdkK3pLOSqe+W20SaerxU7dtn+0be5NfMq/Tse0DZZYq0raddAHO1Gp8Df/Ad2YnpdYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SGuqbZgf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CKlwsqqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EE5C19423;
-	Sat, 28 Feb 2026 17:51:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SGuqbZgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FBBC116D0;
+	Sat, 28 Feb 2026 17:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301067;
-	bh=LyZ/27qtiTLH0I9CxW4AZjmAEqEIB2XWjddTJGCZlFQ=;
+	s=k20201202; t=1772301068;
+	bh=lrmkfEUu4w0lrbRBiahKpHE0krA3exWJACHWwDbLqs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CKlwsqqm0nPj7tHEIDqufxfnl5OQex1o65+UTkrw5nK1MJ7VN2HC15+mVnXowiFyq
-	 Ykzh+tdYX7/lFTI3yT0hnrBfcwxwz+L7rztajUnC2TIpGeVe54CGAyQPd82CzosWwA
-	 H5U5OwU2esZEY5pDuo9cglB/A6eDeez8gHWeKKHA8iRhVll9gBLNlI//fKUdNOSYr+
-	 jJQFcOPnp4L8mFHCeBhWusn8b+8fx7CBYl3XzV/U5hnD0Y1PMukfdgS4Ipdhdd0Bcd
-	 LnBIueGVooLR8T6k0b5jYYgfLoUV62JKAGueOu+uqJfsVt+Y0VK+ZlPz2IBV/vFEtv
-	 cum/AkKz1u5zg==
+	b=SGuqbZgf36n2rD0FzEY8LFk90Nazgj2cVasCzdMCijc0RP1dhCsG/XCaTmsM3Xi+j
+	 B5Vghhq5pNJfvSqWwJCVN1TEZBlCIYcaRiNvp0MPjN0gF1iTp5WGPHpZQcVQGRseDi
+	 Ho5kSfOzrmj3J4g3qH82+K6nCWhNw7uB5pXqeigvVQYv8bMbBOAR+WwiJnIsKk4Zsi
+	 9bTfmxxO4Y3BN/baO18ivrGrHFfJiTqNjJZ3Lc3b5hyl6xNiv0md04U1ORUoFoG/N7
+	 sew3pJw1lDOu6zXcpFBVWXJ/Iyz6a2TxO1a2AxYsRtpwLSrqfVJkMF2LV1z9XB6iuM
+	 SR2ZnZRDKoefQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+Cc: Jori Koolstra <jkoolstra@xs4all.nl>,
+	syzbot+9131ddfd7870623b719f@syzkaller.appspotmail.com,
 	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 211/752] jfs: Add missing set_freezable() for freezable kthread
-Date: Sat, 28 Feb 2026 12:38:42 -0500
-Message-ID: <20260228174750.1542406-211-sashal@kernel.org>
+Subject: [PATCH 6.18 212/752] jfs: nlink overflow in jfs_rename
+Date: Sat, 28 Feb 2026 12:38:43 -0500
+Message-ID: <20260228174750.1542406-212-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,35 +48,52 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Jori Koolstra <jkoolstra@xs4all.nl>
 
-[ Upstream commit eb0cfcf265714b419cc3549895a00632e76732ae ]
+[ Upstream commit 9218dc26fd922b09858ecd3666ed57dfd8098da8 ]
 
-The jfsIOWait() thread calls try_to_freeze() but lacks set_freezable(),
-causing it to remain non-freezable by default. This prevents proper
-freezing during system suspend.
+If nlink is maximal for a directory (-1) and inside that directory you
+perform a rename for some child directory (not moving from the parent),
+then the nlink of the first directory is first incremented and later
+decremented. Normally this is fine, but when nlink = -1 this causes a
+wrap around to 0, and then drop_nlink issues a warning.
 
-Add set_freezable() to make the thread freezable as intended.
+After applying the patch syzbot no longer issues any warnings. I also
+ran some basic fs tests to look for any regressions.
 
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
+Reported-by: syzbot+9131ddfd7870623b719f@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=9131ddfd7870623b719f
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_logmgr.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/jfs/namei.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jfs/jfs_logmgr.c b/fs/jfs/jfs_logmgr.c
-index b343c5ea11592..5b1c5da041630 100644
---- a/fs/jfs/jfs_logmgr.c
-+++ b/fs/jfs/jfs_logmgr.c
-@@ -2311,6 +2311,7 @@ int jfsIOWait(void *arg)
- {
- 	struct lbuf *bp;
- 
-+	set_freezable();
- 	do {
- 		spin_lock_irq(&log_redrive_lock);
- 		while ((bp = log_redrive_list)) {
+diff --git a/fs/jfs/namei.c b/fs/jfs/namei.c
+index 65a218eba8faf..7879c049632b3 100644
+--- a/fs/jfs/namei.c
++++ b/fs/jfs/namei.c
+@@ -1228,7 +1228,7 @@ static int jfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
+ 				jfs_err("jfs_rename: dtInsert returned -EIO");
+ 			goto out_tx;
+ 		}
+-		if (S_ISDIR(old_ip->i_mode))
++		if (S_ISDIR(old_ip->i_mode) && old_dir != new_dir)
+ 			inc_nlink(new_dir);
+ 	}
+ 	/*
+@@ -1244,7 +1244,9 @@ static int jfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
+ 		goto out_tx;
+ 	}
+ 	if (S_ISDIR(old_ip->i_mode)) {
+-		drop_nlink(old_dir);
++		if (new_ip || old_dir != new_dir)
++			drop_nlink(old_dir);
++
+ 		if (old_dir != new_dir) {
+ 			/*
+ 			 * Change inode number of parent for moved directory
 -- 
 2.51.0
 
