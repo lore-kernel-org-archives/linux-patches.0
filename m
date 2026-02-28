@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99640346FD0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A4536C9CE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302248; cv=none; b=EEI1ZZnMwhLB/WaUv1mgKdmcpl++bozREaKwKNcj5sOsZsTpTbVef3DviRa5ufsVCb5GzIcIxVAthEMneDxPE4fowYNdrzlohMB87FsIc4c2DId7X5hJIxhhSBlwTMkULfhJZLTo9pSe05GQ638DlOA3JZLrlzxHaKuxN0ThhxI=
+	t=1772302249; cv=none; b=oaLTc7hV91cKPQ8mQzhZFoFLuxfsXYI3Q2ZJkvGVk7NQRLHdJpE0qclqTLbJ+o1HWZUxmHeBBMAneVzq0WLTWbBdZneqn6lW0BQ8z4jAIEQqA3WpeAYNG5J0lMESw7k7884wK79Alj4TdSZFtb2sbZ8mPahhcKL1n8YcId9FnG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302248; c=relaxed/simple;
-	bh=XBDPE7aKd2KxLA9ZwgzrR2vGcjitbtRY680684sxQvU=;
+	s=arc-20240116; t=1772302249; c=relaxed/simple;
+	bh=0eUO4yL3RN1SAa3yHkMnfieKLsulvgQ1lrTO5z78cMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UT62tEM9+8xk7XtAlQozwNrNpPqpiq1JZydf28AI5Vob8mLEwKH4KF9nbptBKlIyiR1VZ5Do9eh+eGyMTXNtrJC7gGYCgXshsG1dQpnKF1YdZ7lQV/XV1P42HKoBwXDk3wNH5pSjDgAtbcAoJf860V4wBJ6hf/ubS46Rzfsw/Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NSySFCo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CUyVJ/pjKaBfa09LL9C3glvrSK3iBJ1SrdrR5VYO4ob6dCDh2VUt34f2Vz0BTC10TuYNgkrRVSU/tv24Gvqeg8LQbu4y0oqBR4nrsg7pzFrfF9Q+T1zj7SoV/8VJoFt0p7K7SMgbvv5VW2lV0Cr8/AYY/4bkB3ZeZgeyxMZQxhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=taBo+qVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NSySFCo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE41FC19424;
-	Sat, 28 Feb 2026 18:10:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="taBo+qVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1385C19423;
+	Sat, 28 Feb 2026 18:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302248;
-	bh=XBDPE7aKd2KxLA9ZwgzrR2vGcjitbtRY680684sxQvU=;
+	s=k20201202; t=1772302249;
+	bh=0eUO4yL3RN1SAa3yHkMnfieKLsulvgQ1lrTO5z78cMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NSySFCo0r6X5DuXWuOVwfcR0UB9gw4Ux+SSIfQpkzWy+j4A+P+gRdxCvV/InFFc00
-	 kJ78/6VgEzW9QagTvIUP20yDsqbPfg+NQpLbrT9VafNjxwTxOlujIGmYB2JzWKJFQt
-	 ibnX68QcLCGlHwVcARl9mqGgpqrpgMADp0t4Ct9hiV5B6rpK5ylstzjdlQh9wO1dsG
-	 Z3Cu/3Es5u+7P5M0iw7D1LuqP2tjUZEpPVYo1mYny5ngNUmP1kJQiYOIERijjeyk0U
-	 lBR1MiahpdpadOOZHBQq6jlncQZqpOq4+Cm5Ph1wTBSExlz0VOj8g2t/iD3BEOLotK
-	 hhLym9z6nOiGA==
+	b=taBo+qVBpurnoscTkMoPW9ssFg+30ScJB/WLrnq9Gmj0iCpjtodIMBQ0da8d5WQcU
+	 lzy7hh3HQiAIrKWGhBQNfehES+RdWa9s6cG7BgRksJkb0AQo/RW6fbl2E3123amO4E
+	 K0k7LX/nEFIO4/WezRij3J8Gord2DYv5UwuoB2jsOX7O1SkstF72n7q1A9cPfEK6lD
+	 1PB9u5Olv1XLR+qSFE7tVXyyxUf5nx/nZxfpF1WoGYi3w8p5kCzF1ahjhh+TwfP5UP
+	 0CQ2hTy3GxdllOt9rIfidPJVBx1JlmAKY+gNzHQdg+jEnl1MiFCBtA/36dltF2Ec/1
+	 DOn91sqTc2gxQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Aristeu Rozanski <aris@redhat.com>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Shuah Khan <shuah@kernel.org>,
-	liuye <liuye@kylinos.cn>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+Cc: Zhai Can <bczhc0@126.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 261/283] selftests/memfd: use IPC semaphore instead of SIGSTOP/SIGCONT
-Date: Sat, 28 Feb 2026 13:06:43 -0500
-Message-ID: <20260228180709.1583486-261-sashal@kernel.org>
+Subject: [PATCH 6.6 262/283] ACPI: PM: Add unused power resource quirk for THUNDEROBOT ZERO
+Date: Sat, 28 Feb 2026 13:06:44 -0500
+Message-ID: <20260228180709.1583486-262-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -51,238 +47,64 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Aristeu Rozanski <aris@redhat.com>
+From: Zhai Can <bczhc0@126.com>
 
-[ Upstream commit b24335521de92fd2ee22460072b75367ca8860b0 ]
+[ Upstream commit cd7ef20ba8c6e936dba133b4136537a8ada22976 ]
 
-selftests/memfd: use IPC semaphore instead of SIGSTOP/SIGCONT
+On the THUNDEROBOT ZERO laptop, the second NVMe slot and the discrete
+NVIDIA GPU are both controlled by power-resource PXP. Due to the SSDT table
+bug (lack of reference), PXP will be shut dow as an "unused" power resource
+during initialization, making the NVMe slot #2 + NVIDIA both inaccessible.
 
-In order to synchronize new processes to test inheritance of memfd_noexec
-sysctl, memfd_test sets up the sysctl with a value before creating the new
-process.  The new process then sends itself a SIGSTOP in order to wait for
-the parent to flip the sysctl value and send a SIGCONT signal.
+This issue was introduced by commit a1224f34d72a ("ACPI: PM: Check
+states of power resources during initialization"). Here are test
+results on the three consecutive commits:
 
-This would work as intended if it wasn't the fact that the new process is
-being created with CLONE_NEWPID, which creates a new PID namespace and the
-new process has PID 1 in this namespace.  There're restrictions on sending
-signals to PID 1 and, although it's relaxed for other than root PID
-namespace, it's biting us here.  In this specific case the SIGSTOP sent by
-the new process is ignored (no error to kill() is returned) and it never
-stops its execution.  This is usually not noticiable as the parent usually
-manages to set the new sysctl value before the child has a chance to run
-and the test succeeds.  But if you run the test in a loop, it eventually
-reproduces:
+(bad again!) a1224f34d72a ACPI: PM: Check states of power resources during initialization
+(good) bc2836859643 ACPI: PM: Do not turn off power resources in unknown state
+(bad) 519d81956ee2 Linux 5.15-rc6
 
-	while [ 1 ]; do ./memfd_test >log 2>&1 || break; done; cat log
+On commit bc2836859643 ("ACPI: PM: Do not turn off power resources in
+unknown state") this was not an issue because the power resource state
+left UNKNOWN thus being ignored.
 
-So this patch replaces the SIGSTOP/SIGCONT synchronization with IPC
-semaphore.
+See also commit 9b04d99788cf ("ACPI: PM: Do not turn of unused power
+resources on the Toshiba Click Mini") which is another almost identical
+case to this one.
 
-Link: https://lkml.kernel.org/r/a7776389-b3d6-4b18-b438-0b0e3ed1fd3b@work
-Fixes: 6469b66e3f5a ("selftests: improve vm.memfd_noexec sysctl tests")
-Signed-off-by: Aristeu Rozanski <aris@redhat.com>
-Cc: Aleksa Sarai <cyphar@cyphar.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: liuye <liuye@kylinos.cn>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a1224f34d72a ("ACPI: PM: Check states of power resources during initialization")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221087
+Signed-off-by: Zhai Can <bczhc0@126.com>
+Link: https://patch.msgid.link/20260214161452.2849346-1-bczhc0@126.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/memfd/memfd_test.c | 113 +++++++++++++++++++--
- 1 file changed, 105 insertions(+), 8 deletions(-)
+ drivers/acpi/power.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tools/testing/selftests/memfd/memfd_test.c b/tools/testing/selftests/memfd/memfd_test.c
-index da88dbe37dda9..f2042de4bab8e 100644
---- a/tools/testing/selftests/memfd/memfd_test.c
-+++ b/tools/testing/selftests/memfd/memfd_test.c
-@@ -18,6 +18,9 @@
- #include <sys/stat.h>
- #include <sys/syscall.h>
- #include <sys/wait.h>
-+#include <sys/types.h>
-+#include <sys/ipc.h>
-+#include <sys/sem.h>
- #include <unistd.h>
- #include <ctype.h>
- 
-@@ -39,6 +42,20 @@
- 		    F_SEAL_EXEC)
- 
- #define MFD_NOEXEC_SEAL	0x0008U
-+union semun {
-+	int val;
-+	struct semid_ds *buf;
-+	unsigned short int *array;
-+	struct seminfo *__buf;
-+};
+diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
+index c2c70139c4f1d..ff5fcd541e50f 100644
+--- a/drivers/acpi/power.c
++++ b/drivers/acpi/power.c
+@@ -1035,6 +1035,19 @@ static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "SATELLITE Click Mini L9W-B"),
+ 		},
+ 	},
++	{
++		/*
++		 * THUNDEROBOT ZERO laptop: Due to its SSDT table bug, power
++		 * resource 'PXP' will be shut down on initialization, making
++		 * the NVMe #2 and the NVIDIA dGPU both unavailable (they're
++		 * both controlled by 'PXP').
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "THUNDEROBOT"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "ZERO"),
++		}
 +
-+/*
-+ * we use semaphores on nested wait tasks due the use of CLONE_NEWPID: the
-+ * child will be PID 1 and can't send SIGSTOP to themselves due special
-+ * treatment of the init task, so the SIGSTOP/SIGCONT synchronization
-+ * approach can't be used here.
-+ */
-+#define SEM_KEY 0xdeadbeef
- 
- /*
-  * Default is not to test hugetlbfs
-@@ -1333,8 +1350,22 @@ static int sysctl_nested(void *arg)
- 
- static int sysctl_nested_wait(void *arg)
- {
--	/* Wait for a SIGCONT. */
--	kill(getpid(), SIGSTOP);
-+	int sem = semget(SEM_KEY, 1, 0600);
-+	struct sembuf sembuf;
-+
-+	if (sem < 0) {
-+		perror("semget:");
-+		abort();
-+	}
-+	sembuf.sem_num = 0;
-+	sembuf.sem_flg = 0;
-+	sembuf.sem_op = 0;
-+
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		abort();
-+	}
-+
- 	return sysctl_nested(arg);
- }
- 
-@@ -1355,7 +1386,9 @@ static void test_sysctl_sysctl2_failset(void)
- 
- static int sysctl_nested_child(void *arg)
- {
--	int pid;
-+	int pid, sem;
-+	union semun semun;
-+	struct sembuf sembuf;
- 
- 	printf("%s nested sysctl 0\n", memfd_str);
- 	sysctl_assert_write("0");
-@@ -1389,23 +1422,53 @@ static int sysctl_nested_child(void *arg)
- 			   test_sysctl_sysctl2_failset);
- 	join_thread(pid);
- 
-+	sem = semget(SEM_KEY, 1, IPC_CREAT | 0600);
-+	if (sem < 0) {
-+		perror("semget:");
-+		return 1;
-+	}
-+	semun.val = 1;
-+	sembuf.sem_op = -1;
-+	sembuf.sem_flg = 0;
-+	sembuf.sem_num = 0;
-+
- 	/* Verify that the rules are actually inherited after fork. */
- 	printf("%s nested sysctl 0 -> 1 after fork\n", memfd_str);
- 	sysctl_assert_write("0");
- 
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl1_failset);
- 	sysctl_assert_write("1");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	printf("%s nested sysctl 0 -> 2 after fork\n", memfd_str);
- 	sysctl_assert_write("0");
- 
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl2_failset);
- 	sysctl_assert_write("2");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	/*
-@@ -1415,28 +1478,62 @@ static int sysctl_nested_child(void *arg)
- 	 */
- 	printf("%s nested sysctl 2 -> 1 after fork\n", memfd_str);
- 	sysctl_assert_write("2");
-+
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl2);
- 	sysctl_assert_write("1");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	printf("%s nested sysctl 2 -> 0 after fork\n", memfd_str);
- 	sysctl_assert_write("2");
-+
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl2);
- 	sysctl_assert_write("0");
--	kill(pid, SIGCONT);
-+
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
- 	printf("%s nested sysctl 1 -> 0 after fork\n", memfd_str);
- 	sysctl_assert_write("1");
-+
-+	if (semctl(sem, 0, SETVAL, semun) < 0) {
-+		perror("semctl:");
-+		return 1;
-+	}
-+
- 	pid = spawn_thread(CLONE_NEWPID, sysctl_nested_wait,
- 			   test_sysctl_sysctl1);
- 	sysctl_assert_write("0");
--	kill(pid, SIGCONT);
-+	/* Allow child to continue */
-+	if (semop(sem, &sembuf, 1) < 0) {
-+		perror("semop:");
-+		return 1;
-+	}
- 	join_thread(pid);
- 
-+	semctl(sem, 0, IPC_RMID);
-+
- 	return 0;
- }
++	},
+ 	{}
+ };
  
 -- 
 2.51.0
