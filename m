@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE11E3314C3
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FBE332EA7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301252; cv=none; b=EwSwhNPU9kYs0/tcWsgIpX/jsxPkMW+iPk0w1Gm2ko5wa6zeUO+uhVN+6iIre3y7wZPSO+4wI1IGFjXeXl9Qj6FeeakObddFagNso1rYD6CqgglHrcZ6IE6Emm0dJhIs9bFTkJzLOoq51dXDIsb+aT+2zDw3zQD4yT6TxtAHMb8=
+	t=1772301253; cv=none; b=J/DfkJdas8E4fyPWk4+FOKHQfoPIVZp4PqgX7d2l4DlJbO7+4qJbHKaSAINsWhW+iqDK+u5wsHfO5sbj4fShjLQVO0TwATHKK2nKqxs1JKksuzP2YNmjIXNadsfv9e+zqzE0X5rIEnG8SN7y5RfBE4OX5Qp6JMNqvhyWIUmGquI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301252; c=relaxed/simple;
-	bh=yH2Z9AcWUq5d8W1YQjCN4M2P2vtr+m3C/YvoCnfwbgA=;
+	s=arc-20240116; t=1772301253; c=relaxed/simple;
+	bh=RZJViCNLIiBqodozrBC42YiKsU8srBesroCSyoWxziI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJsqgZ7+jYUiFW1rpm3ulyicxMtnGOSNTAKD7t4mwODGcDgnuy4W0vjbgrFbigJtbkRjrLR0+ypRyCLrodN1zZBPEgX/90FqowqRRQpjFzshupk1Wxijkg8L5eef3IZ9v4wsYyANmUl4yARSfueO6Bb2/iIX9eWYQxtbQEXbpUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tJnnAMpf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GqdE3ThYu9tf0NPe4EyBGCF0h23t3hVWiWxB+TpfXl9ZIc+XML29q07D8NrMa/tDHratMTWJD9XTtFQVM2/kYorFGptKjDQD1ZQNZaBuMglehkeDU/6oSI4FUfsN5nl3Q5qSsHGx+2UpyfxVlWRKkpuQ9tJTP1NEAYUMcGuPzcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZjuxZ1/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tJnnAMpf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE2BC19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZjuxZ1/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035A5C19425;
 	Sat, 28 Feb 2026 17:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301252;
-	bh=yH2Z9AcWUq5d8W1YQjCN4M2P2vtr+m3C/YvoCnfwbgA=;
+	s=k20201202; t=1772301253;
+	bh=RZJViCNLIiBqodozrBC42YiKsU8srBesroCSyoWxziI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tJnnAMpf5Jpa7ZS3ozIn/402dJ0OT/ZizQVnUZth6f+z4mtxeOaD/XeFJ75bLG1HE
-	 nl+WuZIxou1x6HbdTfWsEvyVv4PrhO9pZa2cpS72jnFsXs7i/eQNuztGrGbrMRBVp8
-	 eqR367cFlBta0CX+kLlj6G1P4pdOvH3vY+ZMlTavctbOrJdOEcC91DogpnCjz7Crnq
-	 ypcq06xjsBsG5QX8cfxKNXMEOoQGc5r3ZhIjo4sRYVmNSrxs1o/bUtff67C/7BgAFW
-	 tCtQuS6Gh3cH1aMqMwmJQ+n2JSOK6q8D9i0LRyTOb1pJDbkGoq/ECIUcGZiUzUo8xc
-	 Xh2s+itulgyvA==
+	b=ZjuxZ1/M2cqqsnFPLZAwNJij8v6oh5rlJdF451jRj95qYkUr5vgjC9JP1iSWtfkra
+	 v2Blpq6ieHXYyH24vfEZ27G3yf/OOng0XhJZr40PX+Vrc3C/5H35EF/+zidzmBUBZ6
+	 iIoVWSt2Jy3h5nclUGcyHd8Myk85/7agAzwGrHM/iTJNaKPIxPbFVmfcVDBhU2xIMW
+	 vIpgtNc7CkRV+spIMuSQfJU3iTqICKwqt/XDY+wy9XyayYLKPugYGcgYoWlENqX8d0
+	 AH42sbrTBd9uPVjwOb0dJnAal5fZRn7/69sLdrs1BluEZN0LU+JJgrpn07kSitUpRr
+	 GDrlkmILm4v4g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Kamal Heib <kheib@redhat.com>,
+Cc: Jason Gunthorpe <jgg@nvidia.com>,
+	Michael Margolin <mrgolin@amazon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 435/752] RDMA/ionic: Fix potential NULL pointer dereference in ionic_query_port
-Date: Sat, 28 Feb 2026 12:42:26 -0500
-Message-ID: <20260228174750.1542406-435-sashal@kernel.org>
+Subject: [PATCH 6.18 436/752] RDMA/efa: Fix typo in efa_alloc_mr()
+Date: Sat, 28 Feb 2026 12:42:27 -0500
+Message-ID: <20260228174750.1542406-436-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,37 +48,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kamal Heib <kheib@redhat.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit fd80bd7105f88189f47d465ca8cb7d115570de30 ]
+[ Upstream commit f22c77ce49db0589103d96487dca56f5b2136362 ]
 
-The function ionic_query_port() calls ib_device_get_netdev() without
-checking the return value which could lead to NULL pointer dereference,
-Fix it by checking the return value and return -ENODEV if the 'ndev' is
-NULL.
+The pattern is to check the entire driver request space, not just
+sizeof something unrelated.
 
-Fixes: 2075bbe8ef03 ("RDMA/ionic: Register device ops for miscellaneous functionality")
-Signed-off-by: Kamal Heib <kheib@redhat.com>
-Link: https://patch.msgid.link/20260220222125.16973-2-kheib@redhat.com
+Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://patch.msgid.link/1-v1-83e918d69e73+a9-rdma_udata_rc_jgg@nvidia.com
+Acked-by: Michael Margolin <mrgolin@amazon.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/ionic/ionic_ibdev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/efa/efa_verbs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/ionic/ionic_ibdev.c b/drivers/infiniband/hw/ionic/ionic_ibdev.c
-index 164046d00e5d4..bd4c73e530d08 100644
---- a/drivers/infiniband/hw/ionic/ionic_ibdev.c
-+++ b/drivers/infiniband/hw/ionic/ionic_ibdev.c
-@@ -81,6 +81,8 @@ static int ionic_query_port(struct ib_device *ibdev, u32 port,
- 		return -EINVAL;
+diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+index 755bba8d58bbc..5cab7dd70aebf 100644
+--- a/drivers/infiniband/hw/efa/efa_verbs.c
++++ b/drivers/infiniband/hw/efa/efa_verbs.c
+@@ -1663,7 +1663,7 @@ static struct efa_mr *efa_alloc_mr(struct ib_pd *ibpd, int access_flags,
+ 	struct efa_mr *mr;
  
- 	ndev = ib_device_get_netdev(ibdev, port);
-+	if (!ndev)
-+		return -ENODEV;
- 
- 	if (netif_running(ndev) && netif_carrier_ok(ndev)) {
- 		attr->state = IB_PORT_ACTIVE;
+ 	if (udata && udata->inlen &&
+-	    !ib_is_udata_cleared(udata, 0, sizeof(udata->inlen))) {
++	    !ib_is_udata_cleared(udata, 0, udata->inlen)) {
+ 		ibdev_dbg(&dev->ibdev,
+ 			  "Incompatible ABI params, udata not cleared\n");
+ 		return ERR_PTR(-EINVAL);
 -- 
 2.51.0
 
