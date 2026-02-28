@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A6332AABE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6F732AABE;
 	Sat, 28 Feb 2026 17:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301274; cv=none; b=uU2ggVnOyATXt2jPKzObNf4519/tLqwVLiP53z0VMjR4hIAJ1tSla6k0N9ECuM3nCQdZdsspZaVXUm+yz4R9iM+DJszCuuhBEIBeRaKbP3odX78uuujsMp+/TPoi0ETrmB56H4Sf0ObgCxycP0XXSuOeXq6E3KkMXHG4W3O/dwQ=
+	t=1772301275; cv=none; b=VULxxCsNg6TfwzI9aKy+gl6rB2CABdxUgi0zQevVtwQVnETbSf17zS9J8meOtk+FGwbotxmBaduNaIRZgwTDn4Zwu/opKAsAtehRHgiWkDfyZggpy3/fYEEGAiTAgdLoQUWTFijpBHr92ZTQhbhFmfoVbjeuBuIZqJ9PCF1Hi/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301274; c=relaxed/simple;
-	bh=NB5XY87O7EfO6zDXO0usrFrFzoKKA8vAHWquwHOy5uc=;
+	s=arc-20240116; t=1772301275; c=relaxed/simple;
+	bh=sOZafZMaT3kqNgOBlTSDIK2K+h1oEj84NBZvSxfy35E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkaB8WIY7Tm7AIBmQAcwRoOw6J5PWZjW00ZbpVURd4pG1mgZ8YVBfn9NDw2OQ6gn4DJbBe2HOWvuTVqPwrmzC3VNOxstwZvvKGP0DyJlTphhKyaY08mKsHAV8JUc4mTdu9onhk8uUT9p5eqGLRFcj2A4CmVqPgstrOxLx7aJHQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ECmkLmJV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r+pD3OqQUPaUCg50sTHm+UFsJpDwxLmEXb9DUr4l8z1wsBHpDcDLGxaUjMXubUI5H4loz62mnsWkZBQUzYrybFn8r8MfugF3oJ7zjH6BP2kw+wn5vC7m200t1RAgPZwKpewGqLZK4fiC1lfy5u7cApw6UJQMcrytqfHCbO7xWDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cY1Ifs8U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ECmkLmJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E31C19424;
-	Sat, 28 Feb 2026 17:54:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cY1Ifs8U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36421C19423;
+	Sat, 28 Feb 2026 17:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301273;
-	bh=NB5XY87O7EfO6zDXO0usrFrFzoKKA8vAHWquwHOy5uc=;
+	s=k20201202; t=1772301274;
+	bh=sOZafZMaT3kqNgOBlTSDIK2K+h1oEj84NBZvSxfy35E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ECmkLmJVSVHE9rXPZHHyaPuEX+V4DLwfQHPTTr678EDc1tq7LTb8L8f9Uc96S0cpj
-	 rqfVx9W46bZ1y0aLhaukpyML+tcC34Jb3HXkL7r5npmtMcIGohOftaK4JLcCzkMd2X
-	 8Q/VvfVtPUe4I8inEIH7PEPTE1hc0Mi/ZnLXBdqytOztcsS1fSqOR0/cCw3OGPqPQQ
-	 C/REGDkToR62OpCPtReYSh0TnlkuBesBSNMUUl2PDGQpSLKcp4M6awlJU0JYJEHxZZ
-	 RUyN7wzXv4zJdcV0iW9r1m6yq6ZbbUnlYIOvQ5qDMCY7BULf3paHMxbyt6VXUA4Cao
-	 dNIgCeM4pMnVA==
+	b=cY1Ifs8UTz4Bk7CZ8WwX48FFtfuTgEFZbFOjFg3LTE+VwEYlfm+12n69tdM85qkGN
+	 2zFWTGUCtSF7+6xl9R12Ev8xjJMFKQOs4Gba7/FSIXP/nq059aZ/Jp7gdQVtDYHgZc
+	 IOMlsgNWZwGIbKO8/5kJVYHUbDZPXkZ8nOcnkHSPAjW7fQXVczFMYSj7aKX0ZoE2Ts
+	 dWuZj3t0c0o7ZCeiKRFWUU1fcyp6XLiOn2Mk6MZ6aFd33H+VLeCZDQ4LwqXCOLQxDb
+	 WeJDIBMOdzKik/ZRHdl6SwCEBoBUu248Gx5oXSHbhPZSfTvb8aIroXHv/7FQUm+3sf
+	 0rNtNq6b01mJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>,
+Cc: Francesco Dolcini <francesco.dolcini@toradex.com>,
 	stable@vger.kernel.org,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 458/752] hfsplus: ensure sb->s_fs_info is always cleaned up
-Date: Sat, 28 Feb 2026 12:42:49 -0500
-Message-ID: <20260228174750.1542406-458-sashal@kernel.org>
+Subject: [PATCH 6.18 459/752] arm64: dts: ti: am62p-verdin: Fix SD regulator startup delay
+Date: Sat, 28 Feb 2026 12:42:50 -0500
+Message-ID: <20260228174750.1542406-459-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,74 +48,37 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 126fb0ce99431126b44a6c360192668c818f641f ]
+[ Upstream commit de86dbc0fb00bd3773db4b05d9f5926f0faa2244 ]
 
-When hfsplus was converted to the new mount api a bug was introduced by
-changing the allocation pattern of sb->s_fs_info. If setup_bdev_super()
-fails after a new superblock has been allocated by sget_fc(), but before
-hfsplus_fill_super() takes ownership of the filesystem-specific s_fs_info
-data it was leaked.
+The power switch used to power the SD card interface might have
+more than 2ms turn-on time, increase the startup delay to 20ms to
+prevent failures.
 
-Fix this by freeing sb->s_fs_info in hfsplus_kill_super().
-
+Fixes: 87f95ea316ac ("arm64: dts: ti: Add Toradex Verdin AM62P")
 Cc: stable@vger.kernel.org
-Fixes: 432f7c78cb00 ("hfsplus: convert hfsplus to use the new mount api")
-Reported-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20251201222843.82310-3-mehdi.benhadjkhelifa@gmail.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20251209084126.33282-1-francesco@dolcini.it
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/super.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62p-verdin.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/hfsplus/super.c b/fs/hfsplus/super.c
-index bb819ae608fd9..5230d368bd4f2 100644
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -350,8 +350,6 @@ static void hfsplus_put_super(struct super_block *sb)
- 	hfs_btree_close(sbi->ext_tree);
- 	kfree(sbi->s_vhdr_buf);
- 	kfree(sbi->s_backup_vhdr_buf);
--	call_rcu(&sbi->rcu, delayed_free);
--
- 	hfs_dbg("finished\n");
- }
+diff --git a/arch/arm64/boot/dts/ti/k3-am62p-verdin.dtsi b/arch/arm64/boot/dts/ti/k3-am62p-verdin.dtsi
+index 99810047614e3..b7d559c61f3f8 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62p-verdin.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62p-verdin.dtsi
+@@ -112,7 +112,7 @@ reg_sd1_vmmc: regulator-sdhci1-vmmc {
+ 		regulator-max-microvolt = <3300000>;
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-name = "+V3.3_SD";
+-		startup-delay-us = <2000>;
++		startup-delay-us = <20000>;
+ 	};
  
-@@ -656,7 +654,6 @@ static int hfsplus_fill_super(struct super_block *sb, struct fs_context *fc)
- out_unload_nls:
- 	unload_nls(sbi->nls);
- 	unload_nls(nls);
--	kfree(sbi);
- 	return err;
- }
- 
-@@ -715,10 +712,18 @@ static int hfsplus_init_fs_context(struct fs_context *fc)
- 	return 0;
- }
- 
-+static void hfsplus_kill_super(struct super_block *sb)
-+{
-+	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
-+
-+	kill_block_super(sb);
-+	call_rcu(&sbi->rcu, delayed_free);
-+}
-+
- static struct file_system_type hfsplus_fs_type = {
- 	.owner		= THIS_MODULE,
- 	.name		= "hfsplus",
--	.kill_sb	= kill_block_super,
-+	.kill_sb	= hfsplus_kill_super,
- 	.fs_flags	= FS_REQUIRES_DEV,
- 	.init_fs_context = hfsplus_init_fs_context,
- };
+ 	reg_sd1_vqmmc: regulator-sdhci1-vqmmc {
 -- 
 2.51.0
 
