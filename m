@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA30433A014
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D76C2DB7B2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301796; cv=none; b=IA/KmjyPCq4wmCJ1wpFLRRXeQs+4vH4g/eIDbCoEX8TVs4aR6Np32EkgprdgUqOSnurkOMYDhKU8PTb4DqqQZ665T2Dsc3mDsFNOADNxpNX0yfWsfOMY7/IixPeSfSxykGZLemxY+oCgFxv0wmgheNHLe19/D6jpd4y4i7Xd6sQ=
+	t=1772301797; cv=none; b=u9GAemQxVa+FSTC5hjKEFcUMAiO5HY0IlLVIdV6hmgGqodbHdxeP5LT2BcJItVxfnc2qvBV0c6DWA8no+OFrvZV5bHiUIFyL/qnsmKfTpr9wxzk6s/+kkiqXGMg//pZ1zpIoqXP1eHydGMh+Yo6xTrDIhpZEwctkx9X29sChnrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301796; c=relaxed/simple;
-	bh=aKabhdStAFMUn/XjaiQHp7GO70ALNUJxpM1ql6gntlo=;
+	s=arc-20240116; t=1772301797; c=relaxed/simple;
+	bh=EXkCIrA1QmIU9xfP2mptPDeP5GsmtT2NFeNxjqtbVW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVPIRe5DYJnOTjFdtlzK44jiZrLNcBBDR7hd9kxtNQRzLMWeVLsMeIOCd8DdkhWFnJLd2sWXhsEprXzbkCShFvbZY23IdMYUK6JUqTTBwJee4id3rFWem2xz4y6toRWnogVVD3JVz7WJPuXxFeJnacqt7AtZerrwl1PW2x13tCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GP2GqLAt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F4y7CFHi9vdkQJsPTTptOLS7zHTYalQ2RSneeXMdExExi71EGTg+0x4lvOBzcUaa2F2fRg0BSNWfa4rhHVQa6SmmBgeg9gf1oEuceuq9Zjo2vVjB9JO5rfkeGTeV+Dj7e+CRu+MtVv0OS042/ie9jKnV4SH3OZXT6GwZ7MoxGQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bz1WLJNh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GP2GqLAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77C6C19423;
-	Sat, 28 Feb 2026 18:03:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bz1WLJNh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD2FC19424;
+	Sat, 28 Feb 2026 18:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301796;
-	bh=aKabhdStAFMUn/XjaiQHp7GO70ALNUJxpM1ql6gntlo=;
+	s=k20201202; t=1772301797;
+	bh=EXkCIrA1QmIU9xfP2mptPDeP5GsmtT2NFeNxjqtbVW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GP2GqLAtWEYDtM6YbLktt0h1SscIPonB2D5u6iXmQCe07yHdshfV0nHb8WYBCpImm
-	 fVALkFUgHm7BgHkSVOhR302G15H0EK8LMNynkL1AsVumKiM3p2ilqngbiAxDdmXUDr
-	 iYDW1ma/IzXNAC+Gmz26R9Lp4jTAiO2qczmTHR95FLGDbmNi6DKFr1Eq83UC1cciPY
-	 9fORA4bicUdCUV2Z0SsB5Tq+8AJNkPMuDHtE9q5DVycQpdAQK5wNwu4bImZ7+pgqnR
-	 NUx5uCfb90+SAxF/b+25Pfk6XHbb+qcWpqurKAJh3ddeQjM+hbvGklIhJ5UMaV54sO
-	 j6lBLfiYVorFg==
+	b=bz1WLJNhe5N67OUfTkXCXWd1L7LgEDh83QJ5kN2RLxo3QcpMdSltrpEwF+SPSdJzH
+	 rPzf4Kp8k5Qk1luAqd88dqEx4/zM8qfYQTomHbEDDpIumYmnFGxvrUk0b9p90wJixH
+	 mBGET+of2QXeQ0gPat1jwZknpoLQ322mQ3vaztt7BDnONnTR89gWCD4ZqbSv5pIvPS
+	 0DQjm5TTXkbVr2UBRd7LgHLOdhR2T0jsrxwzs+0qSDVLDnvaxo9zAMU85aURsRXJ2m
+	 +LGAB6oNlmxVltdTBb75ZtGV5TW+Orv0S5C/AxdLkJPVGjN2weN3EnDCAH91qeorho
+	 nRtc9zKGL5QfQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Zhiyu Zhang <zhiyuzhang999@gmail.com>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 207/385] fat: avoid parent link count underflow in rmdir
-Date: Sat, 28 Feb 2026 12:57:09 -0500
-Message-ID: <20260228180011.1568201-207-sashal@kernel.org>
+Subject: [PATCH 6.12 208/385] tcp: tcp_tx_timestamp() must look at the rtx queue
+Date: Sat, 28 Feb 2026 12:57:10 -0500
+Message-ID: <20260228180011.1568201-208-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -51,72 +48,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8cafcb881364af5ef3a8b9fed4db254054033d8a ]
+[ Upstream commit 838eb9687691d29915797a885b861fd09353386e ]
 
-Corrupted FAT images can leave a directory inode with an incorrect
-i_nlink (e.g. 2 even though subdirectories exist). rmdir then
-unconditionally calls drop_nlink(dir) and can drive i_nlink to 0,
-triggering the WARN_ON in drop_nlink().
+tcp_tx_timestamp() is only called at the end of tcp_sendmsg_locked()
+before the final tcp_push().
 
-Add a sanity check in vfat_rmdir() and msdos_rmdir(): only drop the
-parent link count when it is at least 3, otherwise report a filesystem
-error.
+By the time it is called, it is possible all the copied data
+has been sent already (transmit queue is empty).
 
-Link: https://lkml.kernel.org/r/20260101111148.1437-1-zhiyuzhang999@gmail.com
-Fixes: 9a53c3a783c2 ("[PATCH] r/o bind mounts: unlink: monitor i_nlink")
-Signed-off-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
-Reported-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
-Closes: https://lore.kernel.org/linux-fsdevel/aVN06OKsKxZe6-Kv@casper.infradead.org/T/#t
-Tested-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+If this is the case, use the last skb in the rtx queue.
+
+Fixes: 75c119afe14f ("tcp: implement rb-tree based retransmit queue")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://patch.msgid.link/20260127123828.4098577-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/namei_msdos.c | 7 ++++++-
- fs/fat/namei_vfat.c  | 7 ++++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ net/ipv4/tcp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/fat/namei_msdos.c b/fs/fat/namei_msdos.c
-index f06f6ba643cc8..c75e3791514a2 100644
---- a/fs/fat/namei_msdos.c
-+++ b/fs/fat/namei_msdos.c
-@@ -325,7 +325,12 @@ static int msdos_rmdir(struct inode *dir, struct dentry *dentry)
- 	err = fat_remove_entries(dir, &sinfo);	/* and releases bh */
- 	if (err)
- 		goto out;
--	drop_nlink(dir);
-+	if (dir->i_nlink >= 3)
-+		drop_nlink(dir);
-+	else {
-+		fat_fs_error(sb, "parent dir link count too low (%u)",
-+			dir->i_nlink);
-+	}
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index ad5f30cefdf96..4090107b0c4d5 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -481,6 +481,9 @@ static void tcp_tx_timestamp(struct sock *sk, u16 tsflags)
+ {
+ 	struct sk_buff *skb = tcp_write_queue_tail(sk);
  
- 	clear_nlink(inode);
- 	fat_truncate_time(inode, NULL, S_CTIME);
-diff --git a/fs/fat/namei_vfat.c b/fs/fat/namei_vfat.c
-index 15bf32c21ac0d..31d37e2b4f679 100644
---- a/fs/fat/namei_vfat.c
-+++ b/fs/fat/namei_vfat.c
-@@ -806,7 +806,12 @@ static int vfat_rmdir(struct inode *dir, struct dentry *dentry)
- 	err = fat_remove_entries(dir, &sinfo);	/* and releases bh */
- 	if (err)
- 		goto out;
--	drop_nlink(dir);
-+	if (dir->i_nlink >= 3)
-+		drop_nlink(dir);
-+	else {
-+		fat_fs_error(sb, "parent dir link count too low (%u)",
-+			dir->i_nlink);
-+	}
- 
- 	clear_nlink(inode);
- 	fat_truncate_time(inode, NULL, S_ATIME|S_MTIME);
++	if (unlikely(!skb))
++		skb = skb_rb_last(&sk->tcp_rtx_queue);
++
+ 	if (tsflags && skb) {
+ 		struct skb_shared_info *shinfo = skb_shinfo(skb);
+ 		struct tcp_skb_cb *tcb = TCP_SKB_CB(skb);
 -- 
 2.51.0
 
