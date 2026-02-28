@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E6B346FA0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8258333A713
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302244; cv=none; b=rJxUaPbAExg3WsjM3xNRffTYeGv0h+QSzQf63t2478wNnROtNIOw6GNH/j+193g8+QYUXGFNqA15Swj/sZzNMbWSy2VviKrAHQMfKJeVHe+lBMcnWOV5dpZgJFshQiHvejHP/5qqBmRLqrbtUqS1IqxqFCvwAjxt54ndM9DjgYQ=
+	t=1772302245; cv=none; b=kgXVr3BUAOnX+aYBd90w6ISM3YDTU6xcxH9cuYQ+40Ck6LhGGKSO9OV6V2ZEbuDAWlt53Nce20gr7rucRIfzDJlxsZ317p8ToH1yEeQ5y+kEqWztMP/SlP039raoN0eIs/kWXHt4OHyFn++nmsegFWk2AU+3MxzdO/xxcXWbrXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302244; c=relaxed/simple;
-	bh=IVwonE9Afna+HNBsS/hv0EUFzgzzUx307BKnRJmfJmw=;
+	s=arc-20240116; t=1772302245; c=relaxed/simple;
+	bh=CmCEB8bD5CNDIjLm8CKUlVvOIAb0Gj7MMO+gA7DzELU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5de4VGDQtoJVcBQFZZJ5/qae3bnBqfIaYaQOlsF7rCIo/jQWQSHkK8jodLGeOq5Y9FSTE7k2TU80lSn4QaYI4CnTapSHkppfO3TIBvGViJNshO9byoFD0pmBnwHo+wL5DUPhDsJjV/IPtUCI4CGBLIbc9LULXYMamHuBFVjAOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YfZTbldU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rYN5iP4tcylvEvPoAxgtlUqv1XVS1pbm6CGTIKUpDDUi1IF9o4haHH7bgQkEy7PjWVnB/46IBZPkqvxYVSpHqvdkt7y42sC5sl0RcF+9Iq5lZe30spEVnU/a/mOSeVynZTVNEJVE1Rf45AC6Gsyg0S2ezDkQ4d6cZ8pTD7iAHLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bg8CLbVw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YfZTbldU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0549CC19425;
-	Sat, 28 Feb 2026 18:10:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bg8CLbVw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4D0C19424;
+	Sat, 28 Feb 2026 18:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302244;
-	bh=IVwonE9Afna+HNBsS/hv0EUFzgzzUx307BKnRJmfJmw=;
+	s=k20201202; t=1772302245;
+	bh=CmCEB8bD5CNDIjLm8CKUlVvOIAb0Gj7MMO+gA7DzELU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YfZTbldUtXBpe3FCmW7hUPY7D3MOanAh1sWGerXBX7TREAPFHeIhN3l7F85j1J44I
-	 UPWijKd58+LXDRuqoreRpT0eqz/TauAVjKumBLifEU2ncoLNIrZtkhCJnOM6ZUatMq
-	 xLja8LgFkBv6+mkGVDOs5r1F5saVOFvY+zlPo5iAX2mhk+EDjEhRjFe/fgVgIjpQVe
-	 FVnQh8EdgYNRd4zE0u1FX7Dtp54Ft1K2fnF3h4cGW04mkmLcxkZm/0lQQ1vyuvq0IO
-	 RE1TNkLoBhsQ3f9lcqnUcVoe5ytNR+nUk6qLMtUwwPqEXonFcDu89Nwnn+dvsPV7B9
-	 0JCxcHLhjCl/Q==
+	b=Bg8CLbVwWqe3klaSfMsIVQNYIsaxH9zFr1961+hrP1deh5a6IQeuBq0XWD5z332PX
+	 XeOmsbujZ4GV3DFWIgGlJpTi35b3yY6oleM+1HteQsZ3dC7b0CvUIc3yLxMQ6v9wMI
+	 NnEqSlkyvrqSwwyU9rv79kmb1/JxpuqWI5pw6UiLwqJZO3yL87OeWcECcEJrpXsV+B
+	 j+0MjwV858y23ZuPIX/6Xp8x9MU7W+BgXrljn8voRvJgvkHc1GJfDCIFmnVLinpjLB
+	 HGsjzS6Oxrilt2ms+dh1Oq6S+mJoJoEL1/DK22o+9EeGpwUTCiVufMVcAqOeBKBoUR
+	 g4trp73RHU4bw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Sean V Kelley <skelley@nvidia.com>,
+Cc: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 257/283] ACPI: CPPC: Fix remaining for_each_possible_cpu() to use online CPUs
-Date: Sat, 28 Feb 2026 13:06:39 -0500
-Message-ID: <20260228180709.1583486-257-sashal@kernel.org>
+Subject: [PATCH 6.6 258/283] powercap: intel_rapl_tpmi: Remove FW_BUG from invalid version check
+Date: Sat, 28 Feb 2026 13:06:40 -0500
+Message-ID: <20260228180709.1583486-258-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -47,52 +49,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sean V Kelley <skelley@nvidia.com>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit 56eb0c0ed345da7815274aa821a8546a073d7e97 ]
+[ Upstream commit c7d54dafa042cf379859dba265fe5afef6fa8770 ]
 
-per_cpu(cpc_desc_ptr, cpu) object is initialized for only the online
-CPUs via acpi_soft_cpu_online() --> __acpi_processor_start() -->
-acpi_cppc_processor_probe().
+On partitioned systems, multiple TPMI instances may exist per package,
+but RAPL registers are only valid on one instance since RAPL has
+package-scope control. Other instances return invalid versions during
+domain parsing, which is expected behavior on such systems.
 
-However, send_pcc_cmd() and acpi_get_psd_map() still iterate over all
-possible CPUs. In acpi_get_psd_map(), encountering an offline CPU
-returns -EFAULT, causing cppc_cpufreq initialization to fail.
+Currently this generates a firmware bug warning:
 
-This breaks systems booted with "nosmt" or "nosmt=force".
+  intel_rapl_tpmi: [Firmware Bug]: Invalid version
 
-Fix by using for_each_online_cpu() in both functions.
+Remove the FW_BUG tag, downgrade to pr_debug(), and update the message
+to clarify that invalid versions are expected on partitioned systems
+where only one instance can be valid.
 
-Fixes: 80b8286aeec0 ("ACPI / CPPC: support for batching CPPC requests")
-Signed-off-by: Sean V Kelley <skelley@nvidia.com>
-Link: https://patch.msgid.link/20260211212254.30190-1-skelley@nvidia.com
+Fixes: 9eef7f9da928 ("powercap: intel_rapl: Introduce RAPL TPMI interface driver")
+Reported-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20260211223401.1575776-1-sathyanarayanan.kuppuswamy@linux.intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/powercap/intel_rapl_tpmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 16ac219ae6fe5..0bf3861cf79b1 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -347,7 +347,7 @@ static int send_pcc_cmd(int pcc_ss_id, u16 cmd)
- end:
- 	if (cmd == CMD_WRITE) {
- 		if (unlikely(ret)) {
--			for_each_possible_cpu(i) {
-+			for_each_online_cpu(i) {
- 				struct cpc_desc *desc = per_cpu(cpc_desc_ptr, i);
+diff --git a/drivers/powercap/intel_rapl_tpmi.c b/drivers/powercap/intel_rapl_tpmi.c
+index 1c48dba0ba96a..6958c2f0b7660 100644
+--- a/drivers/powercap/intel_rapl_tpmi.c
++++ b/drivers/powercap/intel_rapl_tpmi.c
+@@ -156,7 +156,7 @@ static int parse_one_domain(struct tpmi_rapl_package *trp, u32 offset)
+ 	tpmi_domain_flags = tpmi_domain_header >> 32 & 0xffff;
  
- 				if (!desc)
-@@ -509,7 +509,7 @@ int acpi_get_psd_map(unsigned int cpu, struct cppc_cpudata *cpu_data)
- 	else if (pdomain->coord_type == DOMAIN_COORD_TYPE_SW_ANY)
- 		cpu_data->shared_type = CPUFREQ_SHARED_TYPE_ANY;
- 
--	for_each_possible_cpu(i) {
-+	for_each_online_cpu(i) {
- 		if (i == cpu)
- 			continue;
+ 	if (tpmi_domain_version == TPMI_VERSION_INVALID) {
+-		pr_warn(FW_BUG "Invalid version\n");
++		pr_debug("Invalid version, other instances may be valid\n");
+ 		return -ENODEV;
+ 	}
  
 -- 
 2.51.0
