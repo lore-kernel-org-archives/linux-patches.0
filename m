@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21214ADDA5;
-	Sat, 28 Feb 2026 17:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EB94ADDA5;
+	Sat, 28 Feb 2026 17:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301320; cv=none; b=WUejpzBomB167TbDpjEcOmNPZ8+qcquRLkVXbFLGKmKPcRPq9o2Mc1MBcYer0RRlhrAmi2uCcKvrnhie4/S21xTr8yVSnv8KMMkxgwqUkTd7M1SbSU2LpkU9wReOwkzHhU7OjZTZnjhzV3MJim5vfX0iOssYwEboHJpiMgC2FN4=
+	t=1772301321; cv=none; b=o1alqGI5ScXsU0RwynBubHpgiddyFtlGqIFdUSA7EwJqGPD1KIxtsUZYOJLIx8kUXscvXh2vKZOKg74P6gxYuye6fgNNcO5fv+GsaArjN7O2/vODei0J59mZes6wIrS89JiEDKG7kHr59/dSelKL/TWLj3C0BBwy5rYdgU4GUyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301320; c=relaxed/simple;
-	bh=n0VniU4APJKLrJCnBIPdgoAwN0WnPU4AK3Ij7JCIl2k=;
+	s=arc-20240116; t=1772301321; c=relaxed/simple;
+	bh=9sarrJusHP7eAiZ0RwmOWlsWxVMbOU+eohGE96VMNH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMuq7dItfPwIz5s9yqziwwN1XFS+Me175qZm/EiTmmtmhyp8PmGeqxJC7mo7uMwktCZrKxRYwmAomcopABttg4VE/H20GD9aHMt3MYtunl6YDw53SRP4i4VtE3BcrEx/XmOuRYmeX4tX1xk/jeAts+O9DDOk8UnD36RdrlRadF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JhopiDjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Et5yr4VAMtHYUvuLrtGjzzDC7qWsWAGjy+97mN3vJl+5wJIKUbP+x8nYgeuHQxYVaBLnvSNgKUtFtc91CFLbvIAzMOMUMRe4lO/fPdhxHrlFL3MeRgtEvZzknNHJRIpVBbJVv/sQZH5rDtug3+keaevDj4CpCwNfdxmNQXI+wo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rf5FrnFg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JhopiDjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C084C116D0;
-	Sat, 28 Feb 2026 17:55:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rf5FrnFg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247D9C19423;
+	Sat, 28 Feb 2026 17:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301319;
-	bh=n0VniU4APJKLrJCnBIPdgoAwN0WnPU4AK3Ij7JCIl2k=;
+	s=k20201202; t=1772301320;
+	bh=9sarrJusHP7eAiZ0RwmOWlsWxVMbOU+eohGE96VMNH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JhopiDjW8YHbEr7yiefDMqnNWffytPK1GErHDGY8VbiJ+nQY3rEiiPfp/DzGa1b0f
-	 QCNbI9NYv9ZXxjPu8nsOfr1HTQP0cz89yO7m0QfzoH0fQ7cdfWAgirz3Lh1lylE3R2
-	 ia3FHG+5GQCTxOYlFyhSQHf/HP5OMFVq03isH8W6F3XKdjoK2DFG69BcJJsgJC7e+/
-	 81xgYnZnysX/rSQczl3VuDrm2B7XNqX3FcB3Bbf93VbyCos2R81JvV5onjGjMBq/ic
-	 G/qyn54opkgNS2SESyAVgSkkIioZIPdyhO7L/12zi7tdYJNnu7ueAQWMstyN5imkCh
-	 LYYLKfTuzafHw==
+	b=Rf5FrnFgFLApPb/lyRpfQOu5F7wIsuBxUVXl8CjS/A5DPGigtFGgx4BUuQZChX7g+
+	 qAYZjdYmys3+M0gteaRr0BbsNn8R2HW+pZwcuBjcyKWJ/ee6lXTvfilSRJzxTQQqF2
+	 bCFCyLmako2ZYcWcsCoYiuL2s79tWwv/PjfDk4MIFP37AztLXMzpMxoFoyGpYd+TAP
+	 l8QWa+Gz+rqOagoHjlf93veuc6ibxMfW38sVdPKPmauUCggTmm15T1iCGKhllKC3Yf
+	 bSPigEuotWQXRg/k40epqOvsahfKzhLCFnpqKr53PMzkfep+rCDOJ9f0VjVx0gXGM1
+	 JOaQGM4/BAL0g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Janne Grunau <j@jannau.net>,
+Cc: Ming Qian <ming.qian@oss.nxp.com>,
 	stable@vger.kernel.org,
-	Sven Peter <sven@kernel.org>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 506/752] arm64: dts: apple: t8112-j473: Keep the HDMI port powered on
-Date: Sat, 28 Feb 2026 12:43:37 -0500
-Message-ID: <20260228174750.1542406-506-sashal@kernel.org>
+Subject: [PATCH 6.18 507/752] media: amphion: Drop min_queued_buffers assignment
+Date: Sat, 28 Feb 2026 12:43:38 -0500
+Message-ID: <20260228174750.1542406-507-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,63 +50,51 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Janne Grunau <j@jannau.net>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-[ Upstream commit 3e4e729325131fe6f7473a0673f7d8cdde53f5a0 ]
+[ Upstream commit 5633ec763a2a18cef6c5ac9250e4f4b8786e7999 ]
 
-Add the display controller and DPTX phy power-domains to the framebuffer
-node to keep the framebuffer and display out working after device probing
-finished.
-The OS has more control about the display pipeline used for the HDMI
-output on M2 based devices. The HDMI output is driven by an integrated
-DisplayPort to HDMI converter (Parade PS190). The DPTX phy is now
-controlled by the OS and no longer by firmware running on the display
-co-processor. This allows using the second display controller on the
-second USB type-c port or tunneling 2 DisplayPort connections over
-USB4/Thunderbolt.
-The m1n1 bootloader uses the second display controller to drive the HDMI
-output. Adjust for this difference compared to the notebooks as well.
+The min_queued_buffers field controls when start_streaming() is called
+by the vb2 core (it delays the callback until at least N buffers are
+queued). Setting it to 1 affects the timing of start_streaming(), which
+breaks the seek flow in decoder scenarios and causes test failures.
 
-Fixes: 2d5ce3fbef32 ("arm64: dts: apple: t8112: Initial t8112 (M2) device trees")
+The current driver implementation does not rely on this minimum buffer
+requirement and handles streaming start correctly with the default
+value of 0, so remove these assignments.
+
+Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Janne Grunau <j@jannau.net>
-Link: https://patch.msgid.link/20260108-apple-dt-pmgr-fixes-v1-1-cfdce629c0a8@jannau.net
-Signed-off-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/apple/t8112-j473.dts | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/media/platform/amphion/vpu_v4l2.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/apple/t8112-j473.dts b/arch/arm64/boot/dts/apple/t8112-j473.dts
-index 06fe257f08be4..4ae1ce919dafc 100644
---- a/arch/arm64/boot/dts/apple/t8112-j473.dts
-+++ b/arch/arm64/boot/dts/apple/t8112-j473.dts
-@@ -21,6 +21,25 @@ aliases {
- 	};
- };
- 
-+/*
-+ * Keep the power-domains used for the HDMI port on.
-+ */
-+&framebuffer0 {
-+	power-domains = <&ps_dispext_cpu0>, <&ps_dptx_ext_phy>;
-+};
-+
-+/*
-+ * The M2 Mac mini uses dispext for the HDMI output so it's not necessary to
-+ * keep disp0 power-domains always-on.
-+ */
-+&ps_disp0_sys {
-+	/delete-property/ apple,always-on;
-+};
-+
-+&ps_disp0_fe {
-+	/delete-property/ apple,always-on;
-+};
-+
- /*
-  * Force the bus number assignments so that we can declare some of the
-  * on-board devices and properties that are populated by the bootloader
+diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
+index 47dff9a35bb46..1fb887b9098c6 100644
+--- a/drivers/media/platform/amphion/vpu_v4l2.c
++++ b/drivers/media/platform/amphion/vpu_v4l2.c
+@@ -670,7 +670,6 @@ static int vpu_m2m_queue_init(void *priv, struct vb2_queue *src_vq, struct vb2_q
+ 		src_vq->mem_ops = &vb2_vmalloc_memops;
+ 	src_vq->drv_priv = inst;
+ 	src_vq->buf_struct_size = sizeof(struct vpu_vb2_buffer);
+-	src_vq->min_queued_buffers = 1;
+ 	src_vq->dev = inst->vpu->dev;
+ 	src_vq->lock = &inst->lock;
+ 	ret = vb2_queue_init(src_vq);
+@@ -687,7 +686,6 @@ static int vpu_m2m_queue_init(void *priv, struct vb2_queue *src_vq, struct vb2_q
+ 		dst_vq->mem_ops = &vb2_vmalloc_memops;
+ 	dst_vq->drv_priv = inst;
+ 	dst_vq->buf_struct_size = sizeof(struct vpu_vb2_buffer);
+-	dst_vq->min_queued_buffers = 1;
+ 	dst_vq->dev = inst->vpu->dev;
+ 	dst_vq->lock = &inst->lock;
+ 	ret = vb2_queue_init(dst_vq);
 -- 
 2.51.0
 
