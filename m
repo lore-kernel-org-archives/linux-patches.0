@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1763321D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F4B33F38A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301231; cv=none; b=WaT92tcBQ0P1GE0y0tZbbCqVyU2GlE1RHLz+/ltJcYvnn4DyY21xmYGY1PJKhI1DAz2njStMBEJttDNjxdXMWksA9P2h7nu897WourcGrCobxz0iip8uTSi7sG4SQEYEKw9gRdvlra901Pr65PXYFbRuIHMa1ZeeJA5nwO4Pms8=
+	t=1772301232; cv=none; b=Psjhqc9dw8bvlusWJP5lDyuiyoneYSXe+j1vioUVVE+WS9ViZQ2BcypcHf0VK45szRdIQGybqLvRM67sJ6XXPENwtyFmYdxbgfx5cTmQLVYmU9RreUwELIbHLIx4+Y1yWXG2BOg6osbo4V39swj5IEjGEY/YNjEmAYjsebLT3Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301231; c=relaxed/simple;
-	bh=K+vWixumeWL2fRMPBy/mNqW6qNoi92HvkM4bZ8OqI4w=;
+	s=arc-20240116; t=1772301232; c=relaxed/simple;
+	bh=O+K1q1+wR6440kqlwgDo0GiaKAZ4CBiRYFoHICkaVBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ob7he29iAJ857CAv82WVD3Ry3ysBU3mo1TqCC1emTk4EC3bv6G/RfOcwnIc3VrERxDboqDsg57gLUC6YRDvMyvb4FKicj7lRNHTIhiCsZ0Qg4Apdf2rU2+Qy0rFoqw61xsXikL3VAzlBkDNs+ZCR9d91aUu+iZm9N5Lup1+x7s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qYn2kZzR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pO3TiOCOdS77SD2e+Ho5jMNV4leWrSGlg44W3FEkIp0KTbRyDQeKwBuuXtJIQboYJgaXHB+4+j+Bp5IosV/62kMSFsUOXIna8rWi7F1r9ocEc9TFB9AD+AfN6oZGvGEITKmZSKrzQJ27mGArHBXd+ZnlVHxfHkpCCZHPmZKmC1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kcBHJXUf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qYn2kZzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24012C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kcBHJXUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3712C19424;
 	Sat, 28 Feb 2026 17:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301231;
-	bh=K+vWixumeWL2fRMPBy/mNqW6qNoi92HvkM4bZ8OqI4w=;
+	s=k20201202; t=1772301232;
+	bh=O+K1q1+wR6440kqlwgDo0GiaKAZ4CBiRYFoHICkaVBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYn2kZzRVrb59qQPBl+5Ww7A9wUkcWmwzehpMPICcYhxznCZQa4GTlc/2/a+9gPVv
-	 A/xMn80d3MJzkH7z62GW35fv4gRDrlLHU3F15ONSUw6Fx3kcoFbnDa383Y6fPZEIG1
-	 A5++ZDfBjNKf3Cenxz3TKdn0I26XvgCDNO8Ewscg0pH/mY2hhg2MGV/OhdW1llLBG2
-	 AGplXBMn7BBJUo4Tdl1fn7TF+cC4+h8HxHt4eEqr3AE2iDhBfzg2UpQd0G5gle7gy2
-	 44ix0G1nKjXuT6c/POUtYTmb8PnlEkqPQZ/tidHdPhkWaA19pM4z0lj/x0F8WNThN4
-	 p6lPTA+1xrQ4Q==
+	b=kcBHJXUfs7u7zC1+Ng85iJW2wfCPI9/XFu79EinV5SJlr+7VNUemne43Uhuv8mzN1
+	 1LgPS+mf1RlGA1uqxoUAjY+TwsRBO53VczPfhUiJVL1mNtp3aA+JYelhPRJeY6JHVQ
+	 Rjdr0Ty4B/X2Moz5Hncc+kCWQtT1LEq/lyFGKKyKbPxvU3OEVtOhi07SLqBvEsQF+f
+	 vz9mjVzl5qwlVUQk4rcCfIzkJ8s55En+vlu0qc5tktJx5DNN7OH8Jdu0j+DIaIOwOC
+	 puMhmIDRPSHKJ5mRs0tCbN8Ftg+amk3cfVgvCH615lstZrp1YPcg6NyC0TQaUicR89
+	 OGnsCbb6plEBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Kuniyuki Iwashima <kuniyu@google.com>,
-	syzbot <syzkaller@googlegroups.com>,
+Cc: Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kicinski@meta.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 410/752] udplite: Fix null-ptr-deref in __udp_enqueue_schedule_skb().
-Date: Sat, 28 Feb 2026 12:42:01 -0500
-Message-ID: <20260228174750.1542406-410-sashal@kernel.org>
+Subject: [PATCH 6.18 411/752] bnxt_en: Fix RSS context delete logic
+Date: Sat, 28 Feb 2026 12:42:02 -0500
+Message-ID: <20260228174750.1542406-411-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,126 +50,66 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit 470c7ca2b4c3e3a51feeb952b7f97a775b5c49cd ]
+[ Upstream commit e123d9302d223767bd910bfbcfe607bae909f8ac ]
 
-syzbot reported null-ptr-deref of udp_sk(sk)->udp_prod_queue. [0]
+We need to free the corresponding RSS context VNIC
+in FW everytime an RSS context is deleted in driver.
+Commit 667ac333dbb7 added a check to delete the VNIC
+in FW only when netif_running() is true to help delete
+RSS contexts with interface down.
 
-Since the cited commit, udp_lib_init_sock() can fail, as can
-udp_init_sock() and udpv6_init_sock().
+Having that condition will make the driver leak VNICs
+in FW whenever close() happens with active RSS contexts.
+On the subsequent open(), as part of RSS context restoration,
+we will end up trying to create extra VNICs for which we
+did not make any reservation. FW can fail this request,
+thereby making us lose active RSS contexts.
 
-Let's handle the error in udplite_sk_init() and udplitev6_sk_init().
+Suppose an RSS context is deleted already and we try to
+process a delete request again, then the HWRM functions
+will check for validity of the request and they simply
+return if the resource is already freed. So, even for
+delete-when-down cases, netif_running() check is not
+necessary.
 
-[0]:
-BUG: KASAN: null-ptr-deref in instrument_atomic_read include/linux/instrumented.h:82 [inline]
-BUG: KASAN: null-ptr-deref in atomic_read include/linux/atomic/atomic-instrumented.h:32 [inline]
-BUG: KASAN: null-ptr-deref in __udp_enqueue_schedule_skb+0x151/0x1480 net/ipv4/udp.c:1719
-Read of size 4 at addr 0000000000000008 by task syz.2.18/2944
+Remove the netif_running() condition check when deleting
+an RSS context.
 
-CPU: 1 UID: 0 PID: 2944 Comm: syz.2.18 Not tainted syzkaller #0 PREEMPTLAZY
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-Call Trace:
- <IRQ>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- kasan_report+0xa2/0xe0 mm/kasan/report.c:595
- check_region_inline mm/kasan/generic.c:-1 [inline]
- kasan_check_range+0x264/0x2c0 mm/kasan/generic.c:200
- instrument_atomic_read include/linux/instrumented.h:82 [inline]
- atomic_read include/linux/atomic/atomic-instrumented.h:32 [inline]
- __udp_enqueue_schedule_skb+0x151/0x1480 net/ipv4/udp.c:1719
- __udpv6_queue_rcv_skb net/ipv6/udp.c:795 [inline]
- udpv6_queue_rcv_one_skb+0xa2e/0x1ad0 net/ipv6/udp.c:906
- udp6_unicast_rcv_skb+0x227/0x380 net/ipv6/udp.c:1064
- ip6_protocol_deliver_rcu+0xe17/0x1540 net/ipv6/ip6_input.c:438
- ip6_input_finish+0x191/0x350 net/ipv6/ip6_input.c:489
- NF_HOOK+0x354/0x3f0 include/linux/netfilter.h:318
- ip6_input+0x16c/0x2b0 net/ipv6/ip6_input.c:500
- NF_HOOK+0x354/0x3f0 include/linux/netfilter.h:318
- __netif_receive_skb_one_core net/core/dev.c:6149 [inline]
- __netif_receive_skb+0xd3/0x370 net/core/dev.c:6262
- process_backlog+0x4d6/0x1160 net/core/dev.c:6614
- __napi_poll+0xae/0x320 net/core/dev.c:7678
- napi_poll net/core/dev.c:7741 [inline]
- net_rx_action+0x60d/0xdc0 net/core/dev.c:7893
- handle_softirqs+0x209/0x8d0 kernel/softirq.c:622
- do_softirq+0x52/0x90 kernel/softirq.c:523
- </IRQ>
- <TASK>
- __local_bh_enable_ip+0xe7/0x120 kernel/softirq.c:450
- local_bh_enable include/linux/bottom_half.h:33 [inline]
- rcu_read_unlock_bh include/linux/rcupdate.h:924 [inline]
- __dev_queue_xmit+0x109c/0x2dc0 net/core/dev.c:4856
- __ip6_finish_output net/ipv6/ip6_output.c:-1 [inline]
- ip6_finish_output+0x158/0x4e0 net/ipv6/ip6_output.c:219
- NF_HOOK_COND include/linux/netfilter.h:307 [inline]
- ip6_output+0x342/0x580 net/ipv6/ip6_output.c:246
- ip6_send_skb+0x1d7/0x3c0 net/ipv6/ip6_output.c:1984
- udp_v6_send_skb+0x9a5/0x1770 net/ipv6/udp.c:1442
- udp_v6_push_pending_frames+0xa2/0x140 net/ipv6/udp.c:1469
- udpv6_sendmsg+0xfe0/0x2830 net/ipv6/udp.c:1759
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg+0xe5/0x270 net/socket.c:742
- __sys_sendto+0x3eb/0x580 net/socket.c:2206
- __do_sys_sendto net/socket.c:2213 [inline]
- __se_sys_sendto net/socket.c:2209 [inline]
- __x64_sys_sendto+0xde/0x100 net/socket.c:2209
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xd2/0xf20 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7f67b4d9c629
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f67b5c98028 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007f67b5015fa0 RCX: 00007f67b4d9c629
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
-RBP: 00007f67b4e32b39 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000040000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f67b5016038 R14: 00007f67b5015fa0 R15: 00007ffe3cb66dd8
- </TASK>
-
-Fixes: b650bf0977d3 ("udp: remove busylock and add per NUMA queues")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260219173142.310741-1-kuniyu@google.com
+Reported-by: Jakub Kicinski <kicinski@meta.com>
+Fixes: 667ac333dbb7 ("eth: bnxt: allow deleting RSS contexts when the device is down")
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20260219185313.2682148-2-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udplite.c | 3 +--
- net/ipv6/udplite.c | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/udplite.c b/net/ipv4/udplite.c
-index d3e621a11a1aa..826e9e79eb19c 100644
---- a/net/ipv4/udplite.c
-+++ b/net/ipv4/udplite.c
-@@ -20,10 +20,9 @@ EXPORT_SYMBOL(udplite_table);
- /* Designate sk as UDP-Lite socket */
- static int udplite_sk_init(struct sock *sk)
- {
--	udp_init_sock(sk);
- 	pr_warn_once("UDP-Lite is deprecated and scheduled to be removed in 2025, "
- 		     "please contact the netdev mailing list\n");
--	return 0;
-+	return udp_init_sock(sk);
- }
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 95c774d98da66..427eb02ae5056 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -10809,12 +10809,10 @@ void bnxt_del_one_rss_ctx(struct bnxt *bp, struct bnxt_rss_ctx *rss_ctx,
+ 	struct bnxt_ntuple_filter *ntp_fltr;
+ 	int i;
  
- static int udplite_rcv(struct sk_buff *skb)
-diff --git a/net/ipv6/udplite.c b/net/ipv6/udplite.c
-index 2cec542437f74..e867721cda4d3 100644
---- a/net/ipv6/udplite.c
-+++ b/net/ipv6/udplite.c
-@@ -16,10 +16,9 @@
- 
- static int udplitev6_sk_init(struct sock *sk)
- {
--	udpv6_init_sock(sk);
- 	pr_warn_once("UDP-Lite is deprecated and scheduled to be removed in 2025, "
- 		     "please contact the netdev mailing list\n");
--	return 0;
-+	return udpv6_init_sock(sk);
- }
- 
- static int udplitev6_rcv(struct sk_buff *skb)
+-	if (netif_running(bp->dev)) {
+-		bnxt_hwrm_vnic_free_one(bp, &rss_ctx->vnic);
+-		for (i = 0; i < BNXT_MAX_CTX_PER_VNIC; i++) {
+-			if (vnic->fw_rss_cos_lb_ctx[i] != INVALID_HW_RING_ID)
+-				bnxt_hwrm_vnic_ctx_free_one(bp, vnic, i);
+-		}
++	bnxt_hwrm_vnic_free_one(bp, &rss_ctx->vnic);
++	for (i = 0; i < BNXT_MAX_CTX_PER_VNIC; i++) {
++		if (vnic->fw_rss_cos_lb_ctx[i] != INVALID_HW_RING_ID)
++			bnxt_hwrm_vnic_ctx_free_one(bp, vnic, i);
+ 	}
+ 	if (!all)
+ 		return;
 -- 
 2.51.0
 
