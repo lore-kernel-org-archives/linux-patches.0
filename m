@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A59313E31
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4165355049
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300989; cv=none; b=KxFRRXWri169cvDCkCNmkgjqtMGI2+Ea03+dr+txMC12xLRqkcQTLAcqUd5OZg/IjJK5pA7zDBJlP/FE9ZbzdXHlGk0Ry+D1jz28A+ki2xquNegG01mYUKr0r+TFZ8+IvfX7jIbKdmx9KGb6v8EsU25F7hiOkM72Rlhe0LeBABI=
+	t=1772300989; cv=none; b=NEdyoBvyjtQvMFoMCWmguhtbYNub0+FgXrpuEACQN+j6Dtd4nDDtGuRRzfoho/UW5hSbv62UxrUklAsN9EwPv9MYjWP1WnezB2DmruYAyJ7VcziAdL0os9AZRER2AhQ9p559i+2ihYLC8PPByGRNDsn7ejQIt9+d5A5tXBbkUps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772300989; c=relaxed/simple;
-	bh=9WsAo2Ugs0V8Qdj254ysnVVQAIKuGRQi2/3/rIE0ixA=;
+	bh=ioaz2LX6Riu+loomCejEGpzXL8egcwvTRFq/OvGpw7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYUyrRG8bZK0JO4MXOtMBltk02qpCm4X8VmKUt7MbEHFVra8GYIh2lE8dHDKghHo/Kvy70+WEr4CFQoWzVhvLwUKLW7fLNCQO1hiRdzA61uOMNBL5Z9mFRLbodYGfa8tpnZ6+a4uEREWyepotJ1i7Qxt4q4BFTnC7unUEi0jiLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dv1sw8L/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qHkk1OfLT9VX5AZkCnAN9WGJw2pUzYyyCrkJ/M/8IELVSl/b0AXxYN48CKitXUsQp7LGRuTMu7AZhuhltfMj/2wMd24W5yrc0GWUg94pmy4n8HuTwK1rTl50nto/T4Ic9pQEJsEiVVBVPkIzhqp70FzUGY6h5i5FV2Q4ov2eot0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g2h9YrQA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dv1sw8L/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0DCC19423;
-	Sat, 28 Feb 2026 17:49:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g2h9YrQA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417A7C19425;
+	Sat, 28 Feb 2026 17:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772300989;
-	bh=9WsAo2Ugs0V8Qdj254ysnVVQAIKuGRQi2/3/rIE0ixA=;
+	bh=ioaz2LX6Riu+loomCejEGpzXL8egcwvTRFq/OvGpw7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dv1sw8L/L1NybPN3NQVefm6jDyNqj5bgrk1g+BUl05ia0vZQbk4rQ0ngsmEtrv91B
-	 HHYSASVN69LEYYoZF2kx2+JY+xgmSY5f5VVSfG+VgIauCPBQysy+1Wiiqyl5Gu+0Fp
-	 Vmn+UHxUq2L4UbmTxa6aDetQZdKlKB2hmZxiOxz6im/mekLxHPJQnt2fQtU9LZJZdk
-	 iXgGqOMl80XODjiLssSLcRIax2IeyCZOaklNxbxBkgiW1nxODLuJwx14O+xoGQD78B
-	 camU1BSUTctcK/bfmn/S6pybowZDQoqvL1IBIxoqE3EGLhDqD8ysVUTLF2iLgh9rNY
-	 iTAIzENCvvHDg==
+	b=g2h9YrQAqxI56lA+8ksdHKnePlNqm1Mi4GgnhEQIVTBDIZfHSOnx3TJsnvKoqBHSm
+	 58LvRbWdjSqWjfmt4FdRDlthmLtKg1P925KWYOPu9YQZTjI28VH+30ZkXBfhTsn0VW
+	 PQ/llttEE252Ggoz3JzRK3efQuBEZDTE9G2hywyaihC2vTqafV8zxuG/UUHYQsp/yX
+	 QHOTqr2R4i+oixjqTB+YIqMjqo1dtDFU6D1vfmDvb14E3mwRmehDXmqwLa8HCGffZl
+	 pOUJbCVSAT7GxaxyUNXdOMNMfI2b2X6PfA67ljjvNK0iCtLiVkykiI4QaLegW/Shce
+	 tLBG+XG9sLHBg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Philip Yang <Philip.Yang@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Jonathan Marek <jonathan@marek.ca>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 119/752] drm/amdkfd: Handle GPU reset and drain retry fault race
-Date: Sat, 28 Feb 2026 12:37:10 -0500
-Message-ID: <20260228174750.1542406-119-sashal@kernel.org>
+Subject: [PATCH 6.18 120/752] spi-geni-qcom: initialize mode related registers to 0
+Date: Sat, 28 Feb 2026 12:37:11 -0500
+Message-ID: <20260228174750.1542406-120-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,61 +47,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit 5b57c3c3f22336e8fd5edb7f0fef3c7823f8eac1 ]
+[ Upstream commit 739062a9f1e9a77a9687c8fd30f8e5dd12ec70be ]
 
-Only check and drain IH1 ring if CAM is not enabled.
+setup_fifo_params assumes these will be zero, it won't write these
+registers if the initial mode is zero.
 
-If GPU is under reset, don't access IH to drain retry fault.
-
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Link: https://patch.msgid.link/20251120211204.24078-4-jonathan@marek.ca
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/spi/spi-geni-qcom.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 49dd0a81114e4..6daa70ace261f 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -33,6 +33,7 @@
- #include "amdgpu_hmm.h"
- #include "amdgpu.h"
- #include "amdgpu_xgmi.h"
-+#include "amdgpu_reset.h"
- #include "kfd_priv.h"
- #include "kfd_svm.h"
- #include "kfd_migrate.h"
-@@ -2343,6 +2344,9 @@ static void svm_range_drain_retry_fault(struct svm_range_list *svms)
- 
- 		pr_debug("drain retry fault gpu %d svms %p\n", i, svms);
- 
-+		if (!down_read_trylock(&pdd->dev->adev->reset_domain->sem))
-+			continue;
-+
- 		amdgpu_ih_wait_on_checkpoint_process_ts(pdd->dev->adev,
- 				pdd->dev->adev->irq.retry_cam_enabled ?
- 				&pdd->dev->adev->irq.ih :
-@@ -2352,6 +2356,7 @@ static void svm_range_drain_retry_fault(struct svm_range_list *svms)
- 			amdgpu_ih_wait_on_checkpoint_process_ts(pdd->dev->adev,
- 				&pdd->dev->adev->irq.ih_soft);
- 
-+		up_read(&pdd->dev->adev->reset_domain->sem);
- 
- 		pr_debug("drain retry fault gpu %d svms 0x%p done\n", i, svms);
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index a0d8d3425c6c6..9e9953469b3a0 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -724,6 +724,12 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ 	case 0:
+ 		mas->cur_xfer_mode = GENI_SE_FIFO;
+ 		geni_se_select_mode(se, GENI_SE_FIFO);
++		/* setup_fifo_params assumes that these registers start with a zero value */
++		writel(0, se->base + SE_SPI_LOOPBACK);
++		writel(0, se->base + SE_SPI_DEMUX_SEL);
++		writel(0, se->base + SE_SPI_CPHA);
++		writel(0, se->base + SE_SPI_CPOL);
++		writel(0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
+ 		ret = 0;
+ 		break;
  	}
-@@ -2535,7 +2540,7 @@ svm_range_unmap_from_cpu(struct mm_struct *mm, struct svm_range *prange,
- 		adev = pdd->dev->adev;
- 
- 		/* Check and drain ih1 ring if cam not available */
--		if (adev->irq.ih1.ring_size) {
-+		if (!adev->irq.retry_cam_enabled && adev->irq.ih1.ring_size) {
- 			ih = &adev->irq.ih1;
- 			checkpoint_wptr = amdgpu_ih_get_wptr(adev, ih);
- 			if (ih->rptr != checkpoint_wptr) {
 -- 
 2.51.0
 
