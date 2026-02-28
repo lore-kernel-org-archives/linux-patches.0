@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5C7375AC8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF658379ED5
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301710; cv=none; b=jN1HatNTnOW5gzeLj9J7InaHyh20qFNCLRg+kSAt8onAeKvOBxQsvY9HXy5pgOu9gLyZGcvmbZRsQLrUKcyNTSxW2LhoQ9hyOD7ssF6vcS1cuCNk4EKCoCFimFxVnAoxyWRQXEu9DAETbxyZDQ29AeozBDKfIasbYnPj/8nBSMc=
+	t=1772301710; cv=none; b=NCSWQHYo93w3Gh/ZTrTP4kIzn0bkyeRVo6oKaVv5QMs+J+h52zszpNkK9qvnHzNTKEbjmqFKMDRj1bHM9Sff5Sljfb8WOXu0Br//MT/9ne6m0MWQwfpKc8K5+5fTiFAtZm1mRJilkHirr6ErD/G4LASfk6t3EY7GXxrK5G3EzNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301710; c=relaxed/simple;
-	bh=fqxRVY6vrQQzP20e2iyICzJz55/ICj+svh+tsKskA88=;
+	bh=o9DcyQmgH4VN0oVPOnT2dMr2trRE1sThXi2QMZzeprc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gcb9SjvAfr7GCeExLPvuDexV8faUb9j5IDZe2GZj1TaWCPz5+jtwXyAtfYWgvu84+QNNv5MOzZOkwO4/CNCBHQ/EorDLWoFWIAXiN1wM5GGcl3BNbS6EhRFYnP9ygdMH6tHmlT8Nnjuw23TXdt6c8B4qCs0JTOe3a60wMJnqGWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZyB5+9P4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIK5aA2aLpNSnjPf4I/gFLDV0vnTIWr+ErZ5SzxdZ4hX4I7nVzYhhPbPOaOhFncm2tiAVsGW4AzeJSpV5NkCmPu20Xw3G7WnPhALXmQcNBStqxhRwnsFtHKi4fu0ARQXUJX2lYBkiYFO4OC46TS4/W9b+S2MZ73mlrv8KM2Pnik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y76qgBGv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZyB5+9P4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D832C116D0;
-	Sat, 28 Feb 2026 18:01:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y76qgBGv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF2AC19424;
+	Sat, 28 Feb 2026 18:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301709;
-	bh=fqxRVY6vrQQzP20e2iyICzJz55/ICj+svh+tsKskA88=;
+	s=k20201202; t=1772301710;
+	bh=o9DcyQmgH4VN0oVPOnT2dMr2trRE1sThXi2QMZzeprc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZyB5+9P4D8RKh30LoEw5MPOLnF7fUBNBdLQrMUSKf5+CRc2f1gzcFox97v5AhRFu5
-	 5fVDHDbzgSYhdCbbv3qrA7fODpNn6F955bTo0GZ4lBur+ZAN0wVYlGrm/9iOzslHdH
-	 6oOFq02t7E2Uz/X7tUVWZIeEIO8OsSg9Hmt91MdHMuP7H3Tg59koqWfQHiiWKYiJ/l
-	 erSj3BatSH9vZmC9IUFeDLHRPkr/hD7TYNmF7Ae8qP17Bn7jnuhcnII2FG69e42X9X
-	 UEsamqiEK3648jSQm8l9Joyck6KU1mlIM2x7AwqOEU6Cvwhuw7wn7G/JaCa3zR1Y1g
-	 8OTQqp6f166Kg==
+	b=Y76qgBGvaVejYdSTxUttoLtfseycXtbtRugPBGDqNJcBEwr2uuiShwUTd0cSvyeoH
+	 wJf7AyLa4YFJNL1NTS+9MDNZwqGG9v0d/WrFQwaEUI1lO07Mahuk1ugynFCNgIAW45
+	 8nNJ+i0nBpg4e1H06N7S3QrhkMku5tMMb2Q0UjTbK6yzkiu4paonw7nPENLMprRlIh
+	 UjlXDwDbQANjJz93yBYZgrD7GFN1rGq+s4bX2PrLw//r3qGrlAk28xzvK/exYJIcpo
+	 tNfclfzBn8xLzXTiO1180EaShLHMQD9Lb4iRDSoSKuF691E0If30nX9UdAAovHdGlK
+	 FkD+S70/G5Rcw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/385] ARM: dts: allwinner: sun5i-a13-utoo-p66: delete "power-gpios" property
-Date: Sat, 28 Feb 2026 12:55:26 -0500
-Message-ID: <20260228180011.1568201-104-sashal@kernel.org>
+Subject: [PATCH 6.12 105/385] powerpc/uaccess: Move barrier_nospec() out of allow_read_{from/write}_user()
+Date: Sat, 28 Feb 2026 12:55:27 -0500
+Message-ID: <20260228180011.1568201-105-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,43 +47,95 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 0b2761eb1287bd9f62367cccf6626eb3107cef6f ]
+[ Upstream commit 5fbc09eb0b4f4b1a4b33abebacbeee0d29f195e9 ]
 
-The P66's device tree includes the reference design dtsi files, which
-defines a node and properties for the touchpanel in the common design.
-The P66 dts file then overrides all the properties to match its own
-design, but as the touchpanel model is different, a different schema
-is matched. This other schema uses a different name for the GPIO.
+Commit 74e19ef0ff80 ("uaccess: Add speculation barrier to
+copy_from_user()") added a redundant barrier_nospec() in
+copy_from_user(), because powerpc is already calling
+barrier_nospec() in allow_read_from_user() and
+allow_read_write_user(). But on other architectures that
+call to barrier_nospec() was missing. So change powerpc
+instead of reverting the above commit and having to fix
+other architectures one by one. This is now possible
+because barrier_nospec() has also been added in
+copy_from_user_iter().
 
-The original submission added the correct GPIO property, but did not
-delete the one inherited from the reference design, causing validation
-errors.
+Move barrier_nospec() out of allow_read_from_user() and
+allow_read_write_user(). This will also allow reuse of those
+functions when implementing masked user access which doesn't
+require barrier_nospec().
 
-Explicitly delete the incorrect GPIO property.
+Don't add it back in raw_copy_from_user() as it is already called
+by copy_from_user() and copy_from_user_iter().
 
-Fixes: 2a53aff27236 ("ARM: dts: sun5i: Enable touchscreen on Utoo P66")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20251225103616.3203473-4-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 74e19ef0ff80 ("uaccess: Add speculation barrier to copy_from_user()")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/f29612105c5fcbc8ceb7303808ddc1a781f0f6b5.1766574657.git.chleroy@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/include/asm/kup.h     | 2 --
+ arch/powerpc/include/asm/uaccess.h | 4 ++++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts b/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
-index be486d28d04fa..428cab5a0e906 100644
---- a/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
-+++ b/arch/arm/boot/dts/allwinner/sun5i-a13-utoo-p66.dts
-@@ -102,6 +102,7 @@ &touchscreen {
- 	/* The P66 uses a different EINT then the reference design */
- 	interrupts = <6 9 IRQ_TYPE_EDGE_FALLING>; /* EINT9 (PG9) */
- 	/* The icn8318 binding expects wake-gpios instead of power-gpios */
-+	/delete-property/ power-gpios;
- 	wake-gpios = <&pio 1 3 GPIO_ACTIVE_HIGH>; /* PB3 */
- 	touchscreen-size-x = <800>;
- 	touchscreen-size-y = <480>;
+diff --git a/arch/powerpc/include/asm/kup.h b/arch/powerpc/include/asm/kup.h
+index 2bb03d941e3e8..6737416dde9f0 100644
+--- a/arch/powerpc/include/asm/kup.h
++++ b/arch/powerpc/include/asm/kup.h
+@@ -134,7 +134,6 @@ static __always_inline void kuap_assert_locked(void)
+ 
+ static __always_inline void allow_read_from_user(const void __user *from, unsigned long size)
+ {
+-	barrier_nospec();
+ 	allow_user_access(NULL, from, size, KUAP_READ);
+ }
+ 
+@@ -146,7 +145,6 @@ static __always_inline void allow_write_to_user(void __user *to, unsigned long s
+ static __always_inline void allow_read_write_user(void __user *to, const void __user *from,
+ 						  unsigned long size)
+ {
+-	barrier_nospec();
+ 	allow_user_access(to, from, size, KUAP_READ_WRITE);
+ }
+ 
+diff --git a/arch/powerpc/include/asm/uaccess.h b/arch/powerpc/include/asm/uaccess.h
+index 4f5a46a77fa2b..3987a5c33558b 100644
+--- a/arch/powerpc/include/asm/uaccess.h
++++ b/arch/powerpc/include/asm/uaccess.h
+@@ -301,6 +301,7 @@ do {								\
+ 	__typeof__(sizeof(*(ptr))) __gu_size = sizeof(*(ptr));	\
+ 								\
+ 	might_fault();					\
++	barrier_nospec();					\
+ 	allow_read_from_user(__gu_addr, __gu_size);		\
+ 	__get_user_size_allowed(__gu_val, __gu_addr, __gu_size, __gu_err);	\
+ 	prevent_read_from_user(__gu_addr, __gu_size);		\
+@@ -329,6 +330,7 @@ raw_copy_in_user(void __user *to, const void __user *from, unsigned long n)
+ {
+ 	unsigned long ret;
+ 
++	barrier_nospec();
+ 	allow_read_write_user(to, from, n);
+ 	ret = __copy_tofrom_user(to, from, n);
+ 	prevent_read_write_user(to, from, n);
+@@ -415,6 +417,7 @@ static __must_check __always_inline bool user_access_begin(const void __user *pt
+ 
+ 	might_fault();
+ 
++	barrier_nospec();
+ 	allow_read_write_user((void __user *)ptr, ptr, len);
+ 	return true;
+ }
+@@ -431,6 +434,7 @@ user_read_access_begin(const void __user *ptr, size_t len)
+ 
+ 	might_fault();
+ 
++	barrier_nospec();
+ 	allow_read_from_user(ptr, len);
+ 	return true;
+ }
 -- 
 2.51.0
 
