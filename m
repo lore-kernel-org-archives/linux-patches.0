@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEC738D01A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BDB38F620
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302124; cv=none; b=I1nC/FN93YvPb2YBKyhgT60e/Kvqp75V/4u2VCCgpp3wPlIMuC/KJtzqLr9Ta3FqokVKjeXdmzzl2xzSxIE2/bHhS3y023NAabp1Nt6FOuN2LpEfw1E0oRKM2Ot9BWyJXTWiLbBTRxSSEWxbKA3gVk+BuaVRudlwQaODwYzRgrk=
+	t=1772302124; cv=none; b=rufNGZedsq3IphNoevImrqWQCAoPLKXHM83e4HJTHEmEa8b3V+6U8mjeyKAOX+gOmv9rTvI+bDTXgBcsxEB1jDgC1rp9ef76mohb4cvsD/ncdHJSUq31xblzrTRRbVsMgfAceL+RX0kX4XCIUO8u6Cv8Cq/y7v0g3YGsBWxsJes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302124; c=relaxed/simple;
-	bh=Djilq7lFIAU4ZgZCWhrv1IcmkWo2ib1QhbL91s1bzRY=;
+	bh=HSdW39q43kmBaHfzUlPNAtBTA1bWZhFz8wiixKjE14I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PrSA9vrlWS9OoFyzYHuDpTrCpZ6V0h9eE7/LLLf/FJTjyLQNoUwm/W4kVxUMESaG08un/pMGnF1G5X+4BnbKEkRcwcC03x4gJrB58EJAnnZ36pSGVx8v66dKLh0j5IkWhsm6N/GuSAP7c7vV81/nWgz85if5Vlnlm+9H45ak65I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xf8hf2aW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oUYF06nvd/SS7exiZdLACUD1elT4YIj52vsRGw+tjs+DSxNMDB2F2ATyh08MfpEiZws6dOXVzIFGwqMpNIEzrg16EEAe6TsxAFMw5Yg6pn3Z6v+DXvGD0JMCuW3mD1xhjr3QACGNJ4ZRVaTm2IEyp947uX/NAhO3NjEodX5usHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GJCdnAPD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xf8hf2aW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74ADFC19423;
-	Sat, 28 Feb 2026 18:08:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GJCdnAPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DA0C116D0;
+	Sat, 28 Feb 2026 18:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302123;
-	bh=Djilq7lFIAU4ZgZCWhrv1IcmkWo2ib1QhbL91s1bzRY=;
+	s=k20201202; t=1772302124;
+	bh=HSdW39q43kmBaHfzUlPNAtBTA1bWZhFz8wiixKjE14I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xf8hf2aWvk42daQA+Ca2TFmAGCBeCaErCw0+6nEoGMAf9G1Uciwy6qED2TirgKxpz
-	 snD0jrUOmO02Q/+ggb/TgGUeKhUNv7fZQh01x+InQYr1OjqxjmMozi6QbrwpVepymU
-	 wlsXYojeNcurVgnlGdQfUaNwVgsWvespvh4J+yJjQivr+bPDjQW6bNgY9EZRE/IRpH
-	 s1sUjGjROPGLwEpIccRDAxUiMxkAoj9UH0hGf9yRJmk/v/Fa/tEuk/funEX0Mm9U3k
-	 o1IqiPd1WA9sPTBB1J/E0DqIMeSOGtGMqdHuVp7+GELgwxSmP28FP/5S1R0K/tCA5C
-	 5HFU98igno2Og==
+	b=GJCdnAPDzvvvuFqi54LXIs+jz4v55VJxFRYoCS9gOr+OdzwMJEac3kmw5mCWdA4Ga
+	 aKkC2oOTjrWUnHR5BGyV5HCSW5ucLwSH4PFq2V7RYQY4DHrOQMy7qhg2LReJC0FiDA
+	 jF2VRwazZALTFGxze0fiU73FQA275SRzLLf108bWOUVV1E2BiBu5vcnWlZQ31+FB0S
+	 zGPyrebnw6JtGYrov+h7TFQzJtkQWD/6MmoqCdc0Qw9Z7rWcRrzqrVMUekM7Blvbhy
+	 sq3N/GaUfFj/ZFKhhsvEq9bmKkguSvERIulQYFAHBHQOjLB/8OO7VLbU2sHZ6eauJ6
+	 KqPv6JHaq9QYw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Florian Westphal <fw@strlen.de>,
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 115/283] netfilter: nf_tables: reset table validation state on abort
-Date: Sat, 28 Feb 2026 13:04:17 -0500
-Message-ID: <20260228180709.1583486-115-sashal@kernel.org>
+Subject: [PATCH 6.6 116/283] netfilter: nf_conncount: make nf_conncount_gc_list() to disable BH
+Date: Sat, 28 Feb 2026 13:04:18 -0500
+Message-ID: <20260228180709.1583486-116-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -46,57 +47,91 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 6f93616a7323d646d18db9c09f147e453b40fdd7 ]
+[ Upstream commit c0362b5748282e22fa1592a8d3474f726ad964c2 ]
 
-If a transaction fails the final validation in the commit hook, the table
-validation state is changed to NFT_VALIDATE_DO and a replay of the batch is
-performed.  Every rule insert will then do a graph validation.
+For convenience when performing GC over the connection list, make
+nf_conncount_gc_list() to disable BH. This unifies the behavior with
+nf_conncount_add() and nf_conncount_count().
 
-This is much slower, but provides better error reporting to the user
-because we can point at the rule that introduces the validation issue.
-
-Without this reset the affected table(s) remain in full validation mode,
-i.e. on next transaction we start with slow-mode.
-
-This makes the next transaction after a failed incremental update very slow:
-
- # time iptables-restore < /tmp/ruleset
- real    0m0.496s [..]
- # time iptables -A CALLEE -j CALLER
- iptables v1.8.11 (nf_tables):  RULE_APPEND failed (Too many links): rule in chain CALLEE
- real    0m0.022s [..]
- # time iptables-restore < /tmp/ruleset
- real    1m22.355s [..]
-
-After this patch, 2nd iptables-restore is back to ~0.5s.
-
-Fixes: 9a32e9850686 ("netfilter: nf_tables: don't write table validation state without mutex")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 21d033e47273 ("netfilter: nf_conncount: increase the connection clean up limit to 64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/netfilter/nf_conncount.c  | 24 +++++++++++++++++-------
+ net/netfilter/nft_connlimit.c |  7 +------
+ 2 files changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a0a5d19fa8506..8532d832aad6a 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10824,6 +10824,13 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
- 	ret = __nf_tables_abort(net, action);
- 	nft_gc_seq_end(nft_net, gc_seq);
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index a2c5a7ba0c6fc..70e9662fe1777 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -282,8 +282,8 @@ void nf_conncount_list_init(struct nf_conncount_list *list)
+ EXPORT_SYMBOL_GPL(nf_conncount_list_init);
  
-+	if (action == NFNL_ABORT_NONE) {
-+		struct nft_table *table;
-+
-+		list_for_each_entry(table, &nft_net->tables, list)
-+			table->validate_state = NFT_VALIDATE_SKIP;
-+	}
-+
- 	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
+ /* Return true if the list is empty. Must be called with BH disabled. */
+-bool nf_conncount_gc_list(struct net *net,
+-			  struct nf_conncount_list *list)
++static bool __nf_conncount_gc_list(struct net *net,
++				   struct nf_conncount_list *list)
+ {
+ 	const struct nf_conntrack_tuple_hash *found;
+ 	struct nf_conncount_tuple *conn, *conn_n;
+@@ -295,10 +295,6 @@ bool nf_conncount_gc_list(struct net *net,
+ 	if ((u32)jiffies == READ_ONCE(list->last_gc))
+ 		return false;
  
- 	/* module autoload needs to happen after GC sequence update because it
+-	/* don't bother if other cpu is already doing GC */
+-	if (!spin_trylock(&list->list_lock))
+-		return false;
+-
+ 	list_for_each_entry_safe(conn, conn_n, &list->head, node) {
+ 		found = find_or_evict(net, list, conn);
+ 		if (IS_ERR(found)) {
+@@ -327,7 +323,21 @@ bool nf_conncount_gc_list(struct net *net,
+ 	if (!list->count)
+ 		ret = true;
+ 	list->last_gc = (u32)jiffies;
+-	spin_unlock(&list->list_lock);
++
++	return ret;
++}
++
++bool nf_conncount_gc_list(struct net *net,
++			  struct nf_conncount_list *list)
++{
++	bool ret;
++
++	/* don't bother if other cpu is already doing GC */
++	if (!spin_trylock_bh(&list->list_lock))
++		return false;
++
++	ret = __nf_conncount_gc_list(net, list);
++	spin_unlock_bh(&list->list_lock);
+ 
+ 	return ret;
+ }
+diff --git a/net/netfilter/nft_connlimit.c b/net/netfilter/nft_connlimit.c
+index 83a7d5769396c..5dd50b3ab5a45 100644
+--- a/net/netfilter/nft_connlimit.c
++++ b/net/netfilter/nft_connlimit.c
+@@ -232,13 +232,8 @@ static void nft_connlimit_destroy_clone(const struct nft_ctx *ctx,
+ static bool nft_connlimit_gc(struct net *net, const struct nft_expr *expr)
+ {
+ 	struct nft_connlimit *priv = nft_expr_priv(expr);
+-	bool ret;
+ 
+-	local_bh_disable();
+-	ret = nf_conncount_gc_list(net, priv->list);
+-	local_bh_enable();
+-
+-	return ret;
++	return nf_conncount_gc_list(net, priv->list);
+ }
+ 
+ static struct nft_expr_type nft_connlimit_type;
 -- 
 2.51.0
 
