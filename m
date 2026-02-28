@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5376435AC20
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2748F34A76A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302769; cv=none; b=Cjwyv7J6wpXeA+iIC132dIiLVyR0SqTHir4CYsniSSc7970OAM6P/C6IAlz1+zEKHOrcJKtzHbJgl9BWTicru8P6ZGAuLkvAmOE59mP3NQC2gH0IuPAH/aJtN5TMTt1s5VGwkvC0G4raRj62Mw73cxU6vHrDN5jWy/v7Dyd2rvs=
+	t=1772302770; cv=none; b=X4N7Ws3qNW5bfXvSQjzEkywofj7wHr/Z6ZGrQvNpR5mSQ+8KvmvY/LUwGFNWQxp9JOAaw3HCk+Fl4dAxTnlcN0DeO6oE4l9Jsp1Rr/nJHZ4gwhOtEAHIivnCizIOo3CigB2Bbp8VpUPi6r+ACsiNX4mJu9FBMamG9FMOcKPmRaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302769; c=relaxed/simple;
-	bh=mIHCDE+qDDTaRlB96J22S7xRcCI0c1uCYmUudVAwpnQ=;
+	s=arc-20240116; t=1772302770; c=relaxed/simple;
+	bh=XiT7NApPLc06gKL+8BS3iHKyZxeqOCmalPr9Tc/jQ5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ej6gpKe0G/OwwJM20RB99WGCDzpCCDl92XvS3iSHxEA6WwXqobMG7W9NKOT+xU2MgVFMJewnSfhg+pfNXTr8bNRWvXTvYhuJ4VkTYxdV4CsvVzJ6pAwZ//uGb9KP7DZ5DXEFzwmZLIqL8bRL2J2Zr0MJ5VLDGu8Rk/UIybi6FZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pwIU4o/E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A73szZG71uAIyX9vmlEtKbf5yMnB/6voLUYoaD9jnbpYKdsLvn2PPB/0bqfp3ieL8Ilv9CMrpvhrfQ6cjRZQmIwJgnIveEbyIuzmi254dqKFN/w8UhzuDG3NTVdHjwo+G3L7zyHPKxgxF8eC77ai7TTZq8ReJHRS5RtE7gzINE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=undTH2TS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pwIU4o/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35D7C2BCB4;
-	Sat, 28 Feb 2026 18:19:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="undTH2TS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78612C2BCB1;
+	Sat, 28 Feb 2026 18:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302769;
-	bh=mIHCDE+qDDTaRlB96J22S7xRcCI0c1uCYmUudVAwpnQ=;
+	s=k20201202; t=1772302770;
+	bh=XiT7NApPLc06gKL+8BS3iHKyZxeqOCmalPr9Tc/jQ5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwIU4o/E/2viBM0aUNrUMlLt2eotT3mXreS6ZLhppWINu6wwdDY0A9553izDnwnaL
-	 gR13JHJ8Ng5i42sXFOZbmetI64hs8xXhVpjRRQkCiHvF5QSfFPT0bDcs5ySdUoPatw
-	 EuRVMD1sUE04mS/e9qWT4l84Fr/IhD5PMLs/JCy8ML2f8X7pcSiZ5cfEhSSBG5RyxP
-	 6K80zPJjdaFsR9NVKCc7eJueCjgc5KpKttAQV5nFxWKA0KvpfkK2jbEK/iq9aGAH+X
-	 iRtqDSd6iTzG7+fe2aU5bnIA/AfwkAn01JSlP2gf+n4z2m3IEbexYEv9subtClXlzO
-	 ncQGPiOMksLew==
+	b=undTH2TSqTxcj31uEQaR/XUe5l9aqAGE//1eKQdePoh1QZPxZ8vHa/cki57WcCvt7
+	 Aj9wwb4oLzj7sGNb1NMzVbuQAWjXVkwI8ILa255GebHTXO1g+jDFt70hygpMUF3XXN
+	 SagOl/fm3lCvQOaKx4CoJjX8yLA1g6KdiULICjIWflh7sZB6+bHkgqZWq/MLV2WFh/
+	 dJJ7nAR9A1cmWhQCMM+oZZbafZhiRigdoolZgHJB+3zpugikbQbPw+hUlulPOi1K13
+	 87Lot7YfzcDbBdx0AgweD2E5zDrb0xXkby7j2eEC2gwRyc1SL1Po44zBFfTD6q01Lp
+	 CAO/HKlzLPz2Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Allison Henderson <achender@kernel.org>,
-	Simon Horman <horms@kernel.org>,
+Cc: Aleksei Oladko <aleksey.oladko@virtuozzo.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 141/147] net/rds: rds_sendmsg should not discard payload_len
-Date: Sat, 28 Feb 2026 13:17:29 -0500
-Message-ID: <20260228181736.1605592-141-sashal@kernel.org>
+Subject: [PATCH 5.10 142/147] selftests: forwarding: vxlan_bridge_1d: fix test failure with br_netfilter enabled
+Date: Sat, 28 Feb 2026 13:17:30 -0500
+Message-ID: <20260228181736.1605592-142-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -48,48 +48,75 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Allison Henderson <achender@kernel.org>
+From: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
 
-[ Upstream commit da29e453dcb3aa7cabead7915f5f945d0add3a52 ]
+[ Upstream commit 02cb2e6bacbb08ebf6acb61be816efd11e1f4a21 ]
 
-Commit 3db6e0d172c9 ("rds: use RCU to synchronize work-enqueue with
-connection teardown") modifies rds_sendmsg to avoid enqueueing work
-while a tear down is in progress. However, it also changed the return
-value of rds_sendmsg to that of rds_send_xmit instead of the
-payload_len. This means the user may incorrectly receive errno values
-when it should have simply received a payload of 0 while the peer
-attempts a reconnections.  So this patch corrects the teardown handling
-code to only use the out error path in that case, thus restoring the
-original payload_len return value.
+The test generates VXLAN traffic using mausezahn, where the encapsulated
+inner IPv4 packet contains a zero IP header checksum. After VXLAN
+decapsulation, such packets do not pass sanity checks in br_netfilter
+and are dropped, which causes the test to fail.
 
-Fixes: 3db6e0d172c9 ("rds: use RCU to synchronize work-enqueue with connection teardown")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260213035409.1963391-1-achender@kernel.org
+Fix this by calculating and setting a valid IPv4 header checksum for the
+encapsulated packet generated by mausezahn, so that the packet is accepted
+by br_netfilter. Fixed by using the payload_template_calc_checksum() /
+payload_template_expand_checksum() helpers that are only available
+in v6.3 and newer kernels.
+
+Fixes: a0b61f3d8ebf ("selftests: forwarding: vxlan_bridge_1d: Add an ECN decap test")
+Signed-off-by: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260213131907.43351-2-aleksey.oladko@virtuozzo.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/send.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../net/forwarding/vxlan_bridge_1d.sh         | 26 ++++++++++++-------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/net/rds/send.c b/net/rds/send.c
-index 1923eaa91e939..131c59cd5abb0 100644
---- a/net/rds/send.c
-+++ b/net/rds/send.c
-@@ -1383,9 +1383,11 @@ int rds_sendmsg(struct socket *sock, struct msghdr *msg, size_t payload_len)
- 		else
- 			queue_delayed_work(rds_wq, &cpath->cp_send_w, 1);
- 		rcu_read_unlock();
-+
-+		if (ret)
-+			goto out;
- 	}
--	if (ret)
--		goto out;
-+
- 	rds_message_put(rm);
+diff --git a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
+index 0ccb1dda099ae..446e31477491c 100755
+--- a/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
++++ b/tools/testing/selftests/net/forwarding/vxlan_bridge_1d.sh
+@@ -559,6 +559,21 @@ vxlan_encapped_ping_do()
+ 	local inner_tos=$1; shift
+ 	local outer_tos=$1; shift
  
- 	for (ind = 0; ind < vct.indx; ind++)
++	local ipv4hdr=$(:
++		    )"45:"$(                      : IP version + IHL
++		    )"$inner_tos:"$(              : IP TOS
++		    )"00:54:"$(                   : IP total length
++		    )"99:83:"$(                   : IP identification
++		    )"40:00:"$(                   : IP flags + frag off
++		    )"40:"$(                      : IP TTL
++		    )"01:"$(                      : IP proto
++		    )"CHECKSUM:"$(                : IP header csum
++		    )"c0:00:02:03:"$(             : IP saddr: 192.0.2.3
++		    )"c0:00:02:01"$(              : IP daddr: 192.0.2.1
++		)
++	local checksum=$(payload_template_calc_checksum "$ipv4hdr")
++	ipv4hdr=$(payload_template_expand_checksum "$ipv4hdr" $checksum)
++
+ 	$MZ $dev -c $count -d 100msec -q \
+ 		-b $next_hop_mac -B $dest_ip \
+ 		-t udp tos=$outer_tos,sp=23456,dp=$VXPORT,p=$(:
+@@ -569,16 +584,7 @@ vxlan_encapped_ping_do()
+ 		    )"$dest_mac:"$(               : ETH daddr
+ 		    )"$(mac_get w2):"$(           : ETH saddr
+ 		    )"08:00:"$(                   : ETH type
+-		    )"45:"$(                      : IP version + IHL
+-		    )"$inner_tos:"$(              : IP TOS
+-		    )"00:54:"$(                   : IP total length
+-		    )"99:83:"$(                   : IP identification
+-		    )"40:00:"$(                   : IP flags + frag off
+-		    )"40:"$(                      : IP TTL
+-		    )"01:"$(                      : IP proto
+-		    )"00:00:"$(                   : IP header csum
+-		    )"c0:00:02:03:"$(             : IP saddr: 192.0.2.3
+-		    )"c0:00:02:01:"$(             : IP daddr: 192.0.2.1
++		    )"$ipv4hdr:"$(                : IPv4 header
+ 		    )"08:"$(                      : ICMP type
+ 		    )"00:"$(                      : ICMP code
+ 		    )"8b:f2:"$(                   : ICMP csum
 -- 
 2.51.0
 
