@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE0A313E31
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49E83E9F93
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301055; cv=none; b=tTxifz8IwNOAy+7mmlAO/IliB6bczesWrJN8hDF//Wb6SPwtlyZh6yFY/y6fC+KJkeHHQV86Tp0hvNtnZTJbzWLVuY2hA7SQUK5TbqQj9e6eRmOV4w1ei3YlRAWBMczystEn8RUjmFZaCK4W8XeGZbT8gA3/lTY/0LoT9pRZm2Y=
+	t=1772301055; cv=none; b=PnL8OwtDQIJAYh3PSXrrlg96OdoMWnbQ/8kLTO746hmdR2L54h3EnvnS5lwHQqGbHtf+0OYaeOapCBiuXHpdm1ONKsO7AKMEqKHwdb+gV0Pz1qJdAZSNfPG5csYslUmBcopGQ0iqCMUFPPSAAdenLrsuFBqjGl7eMTg5+aNxQ4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301055; c=relaxed/simple;
-	bh=IoRAKXrojNunKUEtjtnRxBOfEvG+GvL74JAcKv2iLis=;
+	bh=2Ot79I3X2Oj5yUiz/a6rQaX8IY9/oBAy2gEDFuNOjHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PS+GtaMv3vsGIo5pZGEUra2V3jl6wVZa+wiJggfynW+sPk9Bv/EKwLKyIgwl6JwfPsns1LmDo3UFkQaqMgOerNYodTM17w9BtfugaXPF3tB9LWAL0/wxoisguG1tWULt/AQrvObTCdwBr5wEcysDMuWyEIKXou2QNzIDneRAO7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H406qhS+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IJy/O5PTvUZnS6WS0HPW+wBqiClJKb8SwF3mNeusvLfIuGbuCQPydwuNH42iU7GGT13hJOn6ILxGQie6xZM/KhjaFI6pIwRpXBa/gs9s5hKCx59J9uJAbd4ltU+NDGPkFUUcRefP9dUqxKAWS9I+vcLUE/SpogGg6be+3/rHyFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PXq0SkTl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H406qhS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A2AC19423;
-	Sat, 28 Feb 2026 17:50:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PXq0SkTl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F4BC19424;
+	Sat, 28 Feb 2026 17:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301054;
-	bh=IoRAKXrojNunKUEtjtnRxBOfEvG+GvL74JAcKv2iLis=;
+	s=k20201202; t=1772301055;
+	bh=2Ot79I3X2Oj5yUiz/a6rQaX8IY9/oBAy2gEDFuNOjHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H406qhS+6naybLitC6izUEhXzE7uA3xcDgsJSzAXxe6DfOpuLSH/9oR706agwEixg
-	 m0XhsDQLWPAuyvPzfh97M6209Eav/O2KtxiX3Mm1NYJbssqqfchqTAtp/ID2ob4Y32
-	 V5Dz9Kyk1nVJ9Z6ChD3PXn68VDmNRfpXUc7GYjEMOm/NhaCyZwXxlUr9DdIfTN3TNA
-	 X3lSgjgmgS4w61XVwqaXhM4XfJVSGUPbMU/uwu7Al+bMp5M7Z55rjGmJxDZPned86I
-	 /u6Aqe39dExTDyk3xZP2C70fhS9h7RVUnsKdXgS3IPjaoegpkibq9YFR6pamr0xrn/
-	 TfXy4Kj2/0gpA==
+	b=PXq0SkTloVvF7y8eIkafsjEaJOJG3f4IRJ/D86CJTgzYXmuf+4ZGRBPfp0KSpJyP6
+	 Sumb4Ps8MZAqanRVnwUqRwuDNSPXfH4aKCcf55K/kfdEY67HcLi1XKsJqY+XFgo8Xq
+	 HkoBXhKkOiII8F6TGDsi3P1vSATKAsO+HlvvgW2qO+pfMiIa7Tta9EcFf7VeQNLYXM
+	 91gncuaYfntaj3RCGd2xB/b/CRxcz6MUCDbstd5nS/R17YdqVQl02feCbNG305+gn4
+	 cYZqo45JQxKqYh6XW9HEucNPSfSPaBbMQL2JzPY2GQQUm/WQ5UDAYKndmTdA5ppJQC
+	 5y6rLb0T1nUBw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+Cc: Denis Pauk <pauk.denis@gmail.com>,
+	Marcus <shoes2ga@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 195/752] hwmon: (dell-smm) Add support for Dell OptiPlex 7080
-Date: Sat, 28 Feb 2026 12:38:26 -0500
-Message-ID: <20260228174750.1542406-195-sashal@kernel.org>
+Subject: [PATCH 6.18 196/752] hwmon: (nct6775) Add ASUS Pro WS WRX90E-SAGE SE
+Date: Sat, 28 Feb 2026 12:38:27 -0500
+Message-ID: <20260228174750.1542406-196-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -44,47 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Denis Pauk <pauk.denis@gmail.com>
 
-[ Upstream commit 46c3e87a79179454f741f797c274dd25f5c6125e ]
+[ Upstream commit 246167b17c14e8a5142368ac6457e81622055e0a ]
 
-The Dell OptiPlex 7080 supports the legacy SMM interface for reading
-sensors and performing fan control. Whitelist this machine so that
-this driver loads automatically.
+Boards Pro WS WRX90E-SAGE SE has got a nct6775 chip, but by default there's
+no use of it because of resource conflict with WMI method.
 
-Closes: https://github.com/Wer-Wolf/i8kutils/issues/16
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Acked-by: Pali Rohár <pali@kernel.org>
-Link: https://lore.kernel.org/r/20260104000654.6406-1-W_Armin@gmx.de
+Add the board to the WMI monitoring list.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=204807
+Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
+Tested-by: Marcus <shoes2ga@gmail.com>
+Link: https://lore.kernel.org/r/20251231155316.2048-1-pauk.denis@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/dell-smm-hwmon.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hwmon/nct6775-platform.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
-index f3d484a9f708b..768690a597f4d 100644
---- a/drivers/hwmon/dell-smm-hwmon.c
-+++ b/drivers/hwmon/dell-smm-hwmon.c
-@@ -1325,6 +1325,13 @@ static const struct dmi_system_id i8k_dmi_table[] __initconst = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "MP061"),
- 		},
- 	},
-+	{
-+		.ident = "Dell OptiPlex 7080",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7080"),
-+		},
-+	},
- 	{
- 		.ident = "Dell OptiPlex 7060",
- 		.matches = {
+diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
+index 407945d2cd6a8..0b529a542b0d4 100644
+--- a/drivers/hwmon/nct6775-platform.c
++++ b/drivers/hwmon/nct6775-platform.c
+@@ -1357,6 +1357,7 @@ static const char * const asus_msi_boards[] = {
+ 	"Pro WS W680-ACE IPMI",
+ 	"Pro WS W790-ACE",
+ 	"Pro WS W790E-SAGE SE",
++	"Pro WS WRX90E-SAGE SE",
+ 	"ProArt B650-CREATOR",
+ 	"ProArt B660-CREATOR D4",
+ 	"ProArt B760-CREATOR D4",
 -- 
 2.51.0
 
