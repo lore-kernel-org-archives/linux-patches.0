@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119D3355055
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDE535AC0F
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302717; cv=none; b=lBuMRF0d1JBqYEcDQ8PD+QWSVl92sjZ4wBnsgeFt39X++vdpsP3sGtSzMCFDdibW7gdczpmZmrji7M5Av0XFyncKMTI5uwLTMBGuaTMbh15DK7V4O1NaCOs7Z8AXR5XumS09Uce3cdJ/oH0pxzs9hwK254yB5PC+Kp9G2numGZw=
+	t=1772302717; cv=none; b=YZnFvNDfaV3JWKnvbXFnsJAknBLz1ERpUdLW4jkc/YvOR/GO7RCZlnNjTago3cCOE6vPlcg2CXye8EWzHuDWtgVnmSH1dvZDROaD4cSmHqFp99TiXdv/Sw8i6rN8oLzXpRjCCpHUbtAMToXLRktCgP17EXxEir4IsLAjESQImoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302717; c=relaxed/simple;
-	bh=IalDYb15xOuJp6N6GbMCNM35Jzn/FIITYO1Wli1yrp8=;
+	bh=kOhDHXsztiXohiCXCBElHawiPymNhbrV1ezRuWcNvUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKDYabG/65QIgEB3hcBK5qbYIG8ujybOxdmKPV/Rxt7HzgcphIQCcRvYUSnkKsPbkC/aqc9ToxOhQByCNJd5pozMlERKRA5NuP59vQ4wQg0IPlLFnrqgDMXdN+oMEIhABEZB1CQuJFillUEGPqsvHEC4nDVh7GHybKA5ZVAkCwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=StQh+jk+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OxNQ/BjaBx80g5aW20g0aFDHl55NsmSrVbiH+zUt4iNKBkEh5pebstbl71smsWmq0QImexAYQ1W6uDcFfGaF9Pde6I4r+xeoI52P1w4wnMG+vt80niW+e+TuR94F7ECFcjrAxmfeTxylMngcjJzAzBPWAmB2/rFvOJg3HGxNU9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GnxVm9sI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="StQh+jk+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C9BC19425;
-	Sat, 28 Feb 2026 18:18:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GnxVm9sI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374C9C116D0;
+	Sat, 28 Feb 2026 18:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302717;
-	bh=IalDYb15xOuJp6N6GbMCNM35Jzn/FIITYO1Wli1yrp8=;
+	bh=kOhDHXsztiXohiCXCBElHawiPymNhbrV1ezRuWcNvUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=StQh+jk+INAOzj/IKsBo99y5k7YYEPt1X68iNXw0Vmy/zwMyPCGZAk2u1rSMMz6DY
-	 dkgAfbq4PGL5zo1vgLzdp/OUMzLVlrG/vqltAbTmkgM3pad99X3EZ2lEZ1ZOfHQshJ
-	 SKFEP5z6TeuT1PUIGwmyTxjn7iVIs1IPthKPL/xZTPUUIpLHT9M2CWwsilX5HAfAT/
-	 X5ktVdfdHpZjAbF9nqN1mQh+OzJc5WbdQVNTXnGLx3DXVoQDRZzKlDPYSPTl0qi8Cn
-	 kOerVrYrqwD7EBGBrxYwo08KGgc81Xp8zphvSFWibi2jbvgbbjxIiV+msFJGO+4EBW
-	 xvSmr9EbroDKg==
+	b=GnxVm9sIIFBsS/jfWN34nt5R86/AS/9Gc0DVeb3bpE3AxUrJ7zuE0wgxMKuaU6aBy
+	 LGCIOG+7pAc0Q6G53NK50LigYLD4fkTw0bW9nmG7ecPLhVDDP3An3AK5TghlybsW6R
+	 vSF1u/gIXuv79os/DjQOm9tZA4Cib6JVV7M+0OaV5lK5xCfJQ/fDOmrP/9Xs++hF/e
+	 j29F9c0GJyn44oLDQQUYJvOf5nS2cgaJV6h3lEY0IcuyKCkG2Po5VB365l5e9hSLTR
+	 04nHPjqewAperUN5ONqvwAVgwh2SSxbp6nMXm+VfV40uzSSgs2LRINgJFlz/A3KmAy
+	 LtUcc/GW/6DmQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Bogendoerfer <tbogendoerfer@suse.de>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 076/147] bonding: only set speed/duplex to unknown, if getting speed failed
-Date: Sat, 28 Feb 2026 13:16:24 -0500
-Message-ID: <20260228181736.1605592-76-sashal@kernel.org>
+Subject: [PATCH 5.10 077/147] netfilter: nft_set_hash: fix get operation on big endian
+Date: Sat, 28 Feb 2026 13:16:25 -0500
+Message-ID: <20260228181736.1605592-77-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -50,72 +46,55 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 48dec8d88af96039a4a17b8c2f148f2a4066e195 ]
+[ Upstream commit 2f635adbe2642d398a0be3ab245accd2987be0c3 ]
 
-bond_update_speed_duplex() first set speed/duplex to unknown and
-then asks slave driver for current speed/duplex. Since getting
-speed/duplex might take longer there is a race, where this false state
-is visible by /proc/net/bonding. With commit 691b2bf14946 ("bonding:
- update port speed when getting bond speed") this race gets more visible,
-if user space is calling ethtool on a regular base.
+tests/shell/testcases/packetpath/set_match_nomatch_hash_fast
+fails on big endian with:
 
-Fix this by only setting speed/duplex to unknown, if link speed is
-really unknown/unusable.
+Error: Could not process rule: No such file or directory
+reset element ip test s { 244.147.90.126 }
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Fatal: Cannot fetch element "244.147.90.126"
 
-Fixes: 98f41f694f46 ("bonding:update speed/duplex for NETDEV_CHANGE")
-Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20260203141153.51581-1-tbogendoerfer@suse.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+... because the wrong bucket is searched, jhash() and jhash1_word are
+not interchangeable on big endian.
+
+Fixes: 3b02b0adc242 ("netfilter: nft_set_hash: fix lookups with fixed size hash on big endian")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/netfilter/nft_set_hash.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index a6d552a83ca43..1d8a6690527aa 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -638,26 +638,29 @@ static int bond_update_speed_duplex(struct slave *slave)
- 	struct ethtool_link_ksettings ecmd;
- 	int res;
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index 8656cb61dd211..3a0d3fd4e42cd 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -511,15 +511,20 @@ static bool nft_hash_lookup(const struct net *net, const struct nft_set *set,
+ static void *nft_hash_get(const struct net *net, const struct nft_set *set,
+ 			  const struct nft_set_elem *elem, unsigned int flags)
+ {
++	const u32 *key = (const u32 *)&elem->key.val;
+ 	struct nft_hash *priv = nft_set_priv(set);
+ 	u8 genmask = nft_genmask_cur(net);
+ 	struct nft_hash_elem *he;
+ 	u32 hash;
  
--	slave->speed = SPEED_UNKNOWN;
--	slave->duplex = DUPLEX_UNKNOWN;
--
- 	res = __ethtool_get_link_ksettings(slave_dev, &ecmd);
- 	if (res < 0)
--		return 1;
-+		goto speed_duplex_unknown;
- 	if (ecmd.base.speed == 0 || ecmd.base.speed == ((__u32)-1))
--		return 1;
-+		goto speed_duplex_unknown;
- 	switch (ecmd.base.duplex) {
- 	case DUPLEX_FULL:
- 	case DUPLEX_HALF:
- 		break;
- 	default:
--		return 1;
-+		goto speed_duplex_unknown;
+-	hash = jhash(elem->key.val.data, set->klen, priv->seed);
++	if (set->klen == 4)
++		hash = jhash_1word(*key, priv->seed);
++	else
++		hash = jhash(key, set->klen, priv->seed);
++
+ 	hash = reciprocal_scale(hash, priv->buckets);
+ 	hlist_for_each_entry_rcu(he, &priv->table[hash], node) {
+-		if (!memcmp(nft_set_ext_key(&he->ext), elem->key.val.data, set->klen) &&
++		if (!memcmp(nft_set_ext_key(&he->ext), key, set->klen) &&
+ 		    nft_set_elem_active(&he->ext, genmask))
+ 			return he;
  	}
- 
- 	slave->speed = ecmd.base.speed;
- 	slave->duplex = ecmd.base.duplex;
- 
- 	return 0;
-+
-+speed_duplex_unknown:
-+	slave->speed = SPEED_UNKNOWN;
-+	slave->duplex = DUPLEX_UNKNOWN;
-+
-+	return 1;
- }
- 
- const char *bond_slave_link_status(s8 link)
 -- 
 2.51.0
 
