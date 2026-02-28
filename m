@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3144747CC8F;
-	Sat, 28 Feb 2026 17:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2620D47CC8F;
+	Sat, 28 Feb 2026 17:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301394; cv=none; b=aQyAiAsv8EGyV0VhuX3qql8d2YH/OKShd6iRp4BjlxPjeKRZwEkFpAJuCKelCKTyFo8m6Z9AvfQ1KHYFVmRPZYCmHth0E/WsVZpEODA/Xeya0NPT+BGoKhsHG3q3lmFtsKEz4vvAG0gZcl1TM6N0ZbMnGbLCMCdYJ77MIDQlwDk=
+	t=1772301395; cv=none; b=rIOaAU/HV26/yWyfHS2ZjqmPDTKSHu2+8RfLL/2GMM1TBHQI0cwB2OQ/WKYHNwheWBzyf43OAMvrj0Q5+C6PpIbsADZf3ntCkHWqOgkdyoOzAAeRIlLeoATqpIm31HgWGrDql/a+xCV7pSGVq3S2oOMMhhoDCsxR9n/va5zW8Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301394; c=relaxed/simple;
-	bh=Yn8aPSK44wcQBVlLgN1ww1KzhXsniWmDfVEhhgbIoSI=;
+	s=arc-20240116; t=1772301395; c=relaxed/simple;
+	bh=N7CdfqBKedIpGbc05wZJXcW3C4kxgnQn9K71vRcipjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jy36ydIVYuriS7fWpcwYrTv3onuxe0ZgcNZdOKaBVQu3/rGSJf1o/ZreVIFjkJ0aiCGVMlMVFldnEtLvHjNfdNzw4FWrUDLGvnE0fyZQQkBFofF8NAMCR185Bs6Zl20y3G2DX21LZadVFt6wsNNR2FfU4YvF6j+alkoYWxbyBsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WRFqLfn7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SuGdpvDuXFzjsL5n9FLaZ7XO/zrgURv4ry2puYPiU+Qz8Yg4EuAGSVRbKyo0TJGVsItKLBVt+Rnn94bfGes6cMTz5vuiy2Ih3jJA5CccKp2W91PZdXqYebedJh0+f7ua6zY1Oy6CPnUGj/jKF83rLP1Th6Or9uZ+X/IWPWpOCHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OMcJK+cl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WRFqLfn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBFEC19423;
-	Sat, 28 Feb 2026 17:56:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OMcJK+cl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5648AC19424;
+	Sat, 28 Feb 2026 17:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301394;
-	bh=Yn8aPSK44wcQBVlLgN1ww1KzhXsniWmDfVEhhgbIoSI=;
+	s=k20201202; t=1772301395;
+	bh=N7CdfqBKedIpGbc05wZJXcW3C4kxgnQn9K71vRcipjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRFqLfn7GwRIEYvm2UY0/17VUeHombAoh5IJnCIl3JuENF9BtRSKcpN214P4oGVAv
-	 qbShoYowri5VO7jiuD+y20gX0G/gUSishtWNr5AS+0S9KlspEYS8flU1FFF/Oudwsy
-	 TySXIi9jZKmc2N/hE9YBwugDXfCxED4V8WGZoOwxo999dpqDxU4kFZ3m5TCJMMA7iz
-	 YkbkvYxGMbB27FCwJJtGwkuYF+DbSyHBYe5LbOra8qprM6nbG59LJDjkS/oQgXnknC
-	 2/6QO13xYPgwCKi9CbRkuDE7EpG+4KRsN40Qo6kD+00E2VbPsnxsSZkydSkVr0JiYK
-	 jzJY4yX6drdjw==
+	b=OMcJK+cljA1tCDU2heZFPjZzx0/o48WHSWPzZv1aE0zuaUwaxNONwIZbG1PdEkQcZ
+	 cIBxvmC+9k0upugtBC4uEfjOAMDCsJVXjKLRyZyl9UDcCqqW0a74bAMTicGwQhFkfY
+	 oMGIrnOpgai07uw9HWh3yKR6L9vVSPZNBkWaY8jju6gJvHV5V4iFubt+uD9NLF0Gbf
+	 BEygkJoaA8lFzPzkwma0twXMGJ08iqqHUkLD7q0ETVxLV738D6AEh8ohs46yewv2wu
+	 5K4CRVrWCdUyhx6rLe79NFKPyw1RagBIItht5X8jPqbuovMb3WGA+LijNm6L95ka83
+	 mg9nVDqq2FDwA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
+Cc: "Darrick J. Wong" <djwong@kernel.org>,
 	stable@vger.kernel.org,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 582/752] PCI: dwc: Skip waiting for L2/L3 Ready if dw_pcie_rp::skip_l23_wait is true
-Date: Sat, 28 Feb 2026 12:44:53 -0500
-Message-ID: <20260228174750.1542406-582-sashal@kernel.org>
+Subject: [PATCH 6.18 583/752] xfs: mark data structures corrupt on EIO and ENODATA
+Date: Sat, 28 Feb 2026 12:44:54 -0500
+Message-ID: <20260228174750.1542406-583-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,103 +49,80 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit 58a17b2647ba5aac47e3ffafd0a9b92bf4a9bcbe ]
+[ Upstream commit f39854a3fb2f06dc69b81ada002b641ba5b4696b ]
 
-In NXP i.MX6QP and i.MX7D SoCs, LTSSM registers are not accessible once
-PME_Turn_Off message is broadcasted to the link. So there is no way to
-verify whether the link has entered L2/L3 Ready state or not.
+I learned a few things this year: first, blk_status_to_errno can return
+ENODATA for critical media errors; and second, the scrub code doesn't
+mark data structures as corrupt on ENODATA or EIO.
 
-Hence, add a new flag 'dw_pcie_rp::skip_l23_ready' and set it to 'true' for
-the above mentioned SoCs. This flag when set, will allow the DWC core to
-skip polling for L2/L3 Ready state and just wait for 10ms as recommended in
-the PCIe spec r6.0, sec 5.3.3.2.1.
+Currently, scrub failing to capture these errors isn't all that
+impactful -- the checking code will exit to userspace with EIO/ENODATA,
+and xfs_scrub will log a complaint and exit with nonzero status.  Most
+people treat fsck tools failing as a sign that the fs is corrupt, but
+online fsck should mark the metadata bad and keep moving.
 
-Fixes: a528d1a72597 ("PCI: imx6: Use DWC common suspend resume method")
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-[mani: renamed flag to skip_l23_ready and reworded description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260114083300.3689672-2-hongxing.zhu@nxp.com
+Cc: stable@vger.kernel.org # v4.15
+Fixes: 4700d22980d459 ("xfs: create helpers to record and deal with scrub problems")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c             |  5 +++++
- drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++++++++
- drivers/pci/controller/dwc/pcie-designware.h      |  1 +
- 3 files changed, 16 insertions(+)
+ fs/xfs/scrub/btree.c   | 2 ++
+ fs/xfs/scrub/common.c  | 4 ++++
+ fs/xfs/scrub/dabtree.c | 2 ++
+ 3 files changed, 8 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 34f8f69ddfae9..a42164c870548 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -116,6 +116,7 @@ enum imx_pcie_variants {
- #define IMX_PCIE_FLAG_BROKEN_SUSPEND		BIT(9)
- #define IMX_PCIE_FLAG_HAS_LUT			BIT(10)
- #define IMX_PCIE_FLAG_8GT_ECN_ERR051586		BIT(11)
-+#define IMX_PCIE_FLAG_SKIP_L23_READY		BIT(12)
- 
- #define imx_check_flag(pci, val)	(pci->drvdata->flags & val)
- 
-@@ -1795,6 +1796,8 @@ static int imx_pcie_probe(struct platform_device *pdev)
- 		 */
- 		imx_pcie_add_lut_by_rid(imx_pcie, 0);
- 	} else {
-+		if (imx_check_flag(imx_pcie, IMX_PCIE_FLAG_SKIP_L23_READY))
-+			pci->pp.skip_l23_ready = true;
- 		pci->pp.use_atu_msg = true;
- 		ret = dw_pcie_host_init(&pci->pp);
- 		if (ret < 0)
-@@ -1856,6 +1859,7 @@ static const struct imx_pcie_drvdata drvdata[] = {
- 		.variant = IMX6QP,
- 		.flags = IMX_PCIE_FLAG_IMX_PHY |
- 			 IMX_PCIE_FLAG_SPEED_CHANGE_WORKAROUND |
-+			 IMX_PCIE_FLAG_SKIP_L23_READY |
- 			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND,
- 		.dbi_length = 0x200,
- 		.gpr = "fsl,imx6q-iomuxc-gpr",
-@@ -1872,6 +1876,7 @@ static const struct imx_pcie_drvdata drvdata[] = {
- 		.variant = IMX7D,
- 		.flags = IMX_PCIE_FLAG_SUPPORTS_SUSPEND |
- 			 IMX_PCIE_FLAG_HAS_APP_RESET |
-+			 IMX_PCIE_FLAG_SKIP_L23_READY |
- 			 IMX_PCIE_FLAG_HAS_PHY_RESET,
- 		.gpr = "fsl,imx7d-iomuxc-gpr",
- 		.mode_off[0] = IOMUXC_GPR12,
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 60fadaa1c0bd2..03d01d051e9b0 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -1161,6 +1161,16 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
- 			return ret;
- 	}
- 
-+	/*
-+	 * Some SoCs do not support reading the LTSSM register after
-+	 * PME_Turn_Off broadcast. For those SoCs, skip waiting for L2/L3 Ready
-+	 * state and wait 10ms as recommended in PCIe spec r6.0, sec 5.3.3.2.1.
-+	 */
-+	if (pci->pp.skip_l23_ready) {
-+		mdelay(PCIE_PME_TO_L2_TIMEOUT_US/1000);
-+		goto stop_link;
-+	}
-+
- 	ret = read_poll_timeout(dw_pcie_get_ltssm, val,
- 				val == DW_PCIE_LTSSM_L2_IDLE ||
- 				val <= DW_PCIE_LTSSM_DETECT_WAIT,
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 7c56146b95f6b..96e89046614da 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -430,6 +430,7 @@ struct dw_pcie_rp {
- 	struct pci_config_window *cfg;
- 	bool			ecam_enabled;
- 	bool			native_ecam;
-+	bool                    skip_l23_ready;
- };
- 
- struct dw_pcie_ep_ops {
+diff --git a/fs/xfs/scrub/btree.c b/fs/xfs/scrub/btree.c
+index acade92c5fce1..b497f6a474c77 100644
+--- a/fs/xfs/scrub/btree.c
++++ b/fs/xfs/scrub/btree.c
+@@ -42,6 +42,8 @@ __xchk_btree_process_error(
+ 		break;
+ 	case -EFSBADCRC:
+ 	case -EFSCORRUPTED:
++	case -EIO:
++	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
+ 		*error = 0;
+diff --git a/fs/xfs/scrub/common.c b/fs/xfs/scrub/common.c
+index 2ef7742be7d3d..e6145c2eda02a 100644
+--- a/fs/xfs/scrub/common.c
++++ b/fs/xfs/scrub/common.c
+@@ -103,6 +103,8 @@ __xchk_process_error(
+ 		break;
+ 	case -EFSBADCRC:
+ 	case -EFSCORRUPTED:
++	case -EIO:
++	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
+ 		*error = 0;
+@@ -177,6 +179,8 @@ __xchk_fblock_process_error(
+ 		break;
+ 	case -EFSBADCRC:
+ 	case -EFSCORRUPTED:
++	case -EIO:
++	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
+ 		*error = 0;
+diff --git a/fs/xfs/scrub/dabtree.c b/fs/xfs/scrub/dabtree.c
+index 056de4819f866..a6a5d3a75d994 100644
+--- a/fs/xfs/scrub/dabtree.c
++++ b/fs/xfs/scrub/dabtree.c
+@@ -45,6 +45,8 @@ xchk_da_process_error(
+ 		break;
+ 	case -EFSBADCRC:
+ 	case -EFSCORRUPTED:
++	case -EIO:
++	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= XFS_SCRUB_OFLAG_CORRUPT;
+ 		*error = 0;
 -- 
 2.51.0
 
