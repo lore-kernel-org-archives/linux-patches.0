@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589634BC018;
-	Sat, 28 Feb 2026 17:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521E34BC02D;
+	Sat, 28 Feb 2026 17:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301349; cv=none; b=O8ts28zS7UYEbWo/0rWF4Q00Tq1LYAIZYoUynojcC8saKu7sKUgjBd6Xgqqf1vh1UyMg3EYXvAfCoZLm3e1avdUD2ODz4orSZH5+WoaMAYFgvwE+K9a32eXe4ZXm+8/XSRNS1mwp7CknyfMN+2dVdY5nnqfsCwycWS6WfXKltbc=
+	t=1772301350; cv=none; b=gBJgv7FPC40lqArLlRhyThu5YRu7nBnyS4uQOC0DIozGPdZr1C7ZkRMKvsaSkObctsyvxCyzT6K0OETwqY0qmB1KD+5F9TNVk8DUd5WwJ2owPIsQfeikHfuHYxkfnKnKSX+y8klL1k4To8BAITQ1RM9afkWJpqunsw6Dva3BG8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301349; c=relaxed/simple;
-	bh=lhXnGwmdh85DzCOT/wLJjkLUSg5MH+79X/nuB8V2xns=;
+	s=arc-20240116; t=1772301350; c=relaxed/simple;
+	bh=c3A55tmRUKNtJtG/xnSgd+ZJdr/KmsWNCeJ7nVrLmXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSulL+5ORhw1GCTiO2Gjt/rLaqNKMdWVRBakNslkxVe4iFnwreCgzcVxoexDIjDdFJkK1JoBSH31B8RAFtyrS0dSYviX6T6aU1Nj8cKOQwVkEtDUTHPcMoFwbaw9fC9/g1DqqSh0UBaA6eprMLjXtsggFKa935xO3OWfBvhXdZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KXrfUTyX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nJDQio5cK9A9ssDgFLYSd04zH+kUY8ZPZ77TU6WR3dYVCG4gEqnRV4PHbJh7LRArRpxY5WSDmIYzL03vA2mcwwCw1IspIlWuQoyWS0WjZ3OSmqj9v99mDFmGle7huESmLRJzS98fyGQ1hB+ttzfwAkuiVvJfyWHE1fuh0wThzAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GVfiiXY9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KXrfUTyX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D81C116D0;
-	Sat, 28 Feb 2026 17:55:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GVfiiXY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EBFAC19424;
+	Sat, 28 Feb 2026 17:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301349;
-	bh=lhXnGwmdh85DzCOT/wLJjkLUSg5MH+79X/nuB8V2xns=;
+	s=k20201202; t=1772301350;
+	bh=c3A55tmRUKNtJtG/xnSgd+ZJdr/KmsWNCeJ7nVrLmXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KXrfUTyXnufHNKU823sutpVnji5IhYVTKT6MhZ2i4A40gdG1/gc48ikrJH2Oqrnnm
-	 2JYQSrUszIkyMYrJYJi5U1wPJguwOqalkdFv7COFIhLG00E/eVODkAcSrOpZ4UmJOn
-	 d2PHH4raUOVu4kxn1aju40JSbOl1mV6OkBUOuaPf6NPfMEevBOpSoGlQTO/ml+NPQW
-	 9SGwvHN+alR2OjPwzvtH+DbDwaHRZi6DL4w5G/rrF3bv+myKihrP2BAuAhQoKIY5Nb
-	 zshnuZWTUz7bkgPSZwIIIq8fFmVAIm9HMLbTCWk1USq5vKb6EvEr5TK2/DMCmmRc2K
-	 WPLq2USkr6iAA==
+	b=GVfiiXY9iYgRjDrQPS46/PbZshU5UnDo9VmKJb5i0/66hO7A0YWtbJWLamaZF3ofN
+	 pGvwvZ5b8qiQSNgmbVDd/h3LNO6rBK4GekKaij5Pal8okKmVbrToQxBOQP4Uczo+aT
+	 b2x8I1EIwQyXJMXRLVkc7LfYe0HFEMgLsJLdfTGOm2FEa7wN8xDbphDwMn3C6+4j3s
+	 +rtdqh41b3nRkWLXFLGlWDCzFN1JmRlhwo6gBEOGW74bkjyD+aZ1Rnxnf8dHvCsj/W
+	 h8AZLSvWCK2iRK1CZL5/KPXFwHXwRC4lYbLn7evvJx0dX6VAAoYJdNs4E9nLrXTdih
+	 KjUUnuDgEDKkA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Bingbu Cao <bingbu.cao@intel.com>,
-	Stable@vger.kernel.org,
+	stable@vger.kernel.org,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 536/752] media: staging/ipu7: Update CDPHY register settings
-Date: Sat, 28 Feb 2026 12:44:07 -0500
-Message-ID: <20260228174750.1542406-536-sashal@kernel.org>
+Subject: [PATCH 6.18 537/752] media: staging/ipu7: Fix the loop bound in l2 table alloc
+Date: Sat, 28 Feb 2026 12:44:08 -0500
+Message-ID: <20260228174750.1542406-537-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -51,70 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Bingbu Cao <bingbu.cao@intel.com>
 
-[ Upstream commit f7923e6bafcad686adb51cc100ba1860f8b43922 ]
+[ Upstream commit 98cc19a353abc8b48b7d58fd7a455e09e7c3aba3 ]
 
-Some CPHY settings needs to updated according to the latest guide from
-SNPS. This patch program 45ohm for tuning resistance to fix CPHY problem
-and update the ITMINRX and GMODE for CPHY.
+This patch fixes the incorrect loop bound in alloc_l2_pt(). When
+initializing L2 page table entries, the loop was incorrectly using
+ISP_L1PT_PTES instead of ISP_L2PT_PTES though the ISP_L1PT_PTES is
+equal to ISP_L2PT_PTES.
 
-Cc: Stable@vger.kernel.org
-Fixes: a516d36bdc3d ("media: staging/ipu7: add IPU7 input system device driver")
+Fixes: 71d81c25683a ("media: staging/ipu7: add IPU7 DMA APIs and MMU mapping")
+Cc: stable@vger.kernel.org
 Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/ipu7/ipu7-isys-csi-phy.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/staging/media/ipu7/ipu7-mmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/ipu7/ipu7-isys-csi-phy.c b/drivers/staging/media/ipu7/ipu7-isys-csi-phy.c
-index b8c5db7ae3009..d8f3592ad6201 100644
---- a/drivers/staging/media/ipu7/ipu7-isys-csi-phy.c
-+++ b/drivers/staging/media/ipu7/ipu7-isys-csi-phy.c
-@@ -124,6 +124,7 @@ static const struct cdr_fbk_cap_prog_params table7[] = {
- 	{ 1350, 1589, 4 },
- 	{ 1590, 1949, 5 },
- 	{ 1950, 2499, 6 },
-+	{ 2500, 3500, 7 },
- 	{ }
- };
+diff --git a/drivers/staging/media/ipu7/ipu7-mmu.c b/drivers/staging/media/ipu7/ipu7-mmu.c
+index ded1986eb8ba3..ea35cce4830ad 100644
+--- a/drivers/staging/media/ipu7/ipu7-mmu.c
++++ b/drivers/staging/media/ipu7/ipu7-mmu.c
+@@ -231,7 +231,7 @@ static u32 *alloc_l2_pt(struct ipu7_mmu_info *mmu_info)
  
-@@ -838,9 +839,10 @@ static void ipu7_isys_cphy_config(struct ipu7_isys *isys, u8 id, u8 lanes,
- 		dwc_phy_write_mask(isys, id, reg + 0x400 * i,
- 				   reset_thresh, 9, 11);
+ 	dev_dbg(mmu_info->dev, "alloc_l2: get_zeroed_page() = %p\n", pt);
  
-+	/* Tuning ITMINRX to 2 for CPHY */
- 	reg = CORE_DIG_CLANE_0_RW_LP_0;
- 	for (i = 0; i < trios; i++)
--		dwc_phy_write_mask(isys, id, reg + 0x400 * i, 1, 12, 15);
-+		dwc_phy_write_mask(isys, id, reg + 0x400 * i, 2, 12, 15);
+-	for (i = 0; i < ISP_L1PT_PTES; i++)
++	for (i = 0; i < ISP_L2PT_PTES; i++)
+ 		pt[i] = mmu_info->dummy_page_pteval;
  
- 	reg = CORE_DIG_CLANE_0_RW_LP_2;
- 	for (i = 0; i < trios; i++)
-@@ -860,7 +862,11 @@ static void ipu7_isys_cphy_config(struct ipu7_isys *isys, u8 id, u8 lanes,
- 	for (i = 0; i < (lanes + 1); i++) {
- 		reg = CORE_DIG_IOCTRL_RW_AFE_LANE0_CTRL_2_9 + 0x400 * i;
- 		dwc_phy_write_mask(isys, id, reg, 4U, 0, 2);
--		dwc_phy_write_mask(isys, id, reg, 0U, 3, 4);
-+		/* Set GMODE to 2 when CPHY >= 1.5Gsps */
-+		if (mbps >= 1500)
-+			dwc_phy_write_mask(isys, id, reg, 2U, 3, 4);
-+		else
-+			dwc_phy_write_mask(isys, id, reg, 0U, 3, 4);
- 
- 		reg = CORE_DIG_IOCTRL_RW_AFE_LANE0_CTRL_2_7 + 0x400 * i;
- 		dwc_phy_write_mask(isys, id, reg, cap_prog, 10, 12);
-@@ -930,8 +936,9 @@ static int ipu7_isys_phy_config(struct ipu7_isys *isys, u8 id, u8 lanes,
- 			   7, 12, 14);
- 	dwc_phy_write_mask(isys, id, CORE_DIG_IOCTRL_RW_AFE_CB_CTRL_2_7,
- 			   0, 8, 10);
-+	/* resistance tuning: 1 for 45ohm, 0 for 50ohm */
- 	dwc_phy_write_mask(isys, id, CORE_DIG_IOCTRL_RW_AFE_CB_CTRL_2_5,
--			   0, 8, 8);
-+			   1, 8, 8);
- 
- 	if (aggregation)
- 		phy_mode = isys->csi2[0].phy_mode;
+ 	return pt;
 -- 
 2.51.0
 
