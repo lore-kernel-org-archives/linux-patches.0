@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65AD342146;
-	Sat, 28 Feb 2026 17:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E6837224D;
+	Sat, 28 Feb 2026 17:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301495; cv=none; b=h2jqTY4pzVQf1X9dX09xEZlnYb5z6DsgBokg+k+VLAuAcTDkv/ZgzjkaZTHys6z6dFi3EiYN2A37UMFWKvDYPO77tlDM9762uqTO3Oh4G5ftT+VwWED6/qwM0HekKKmiwp77wqwnz5EPjriBUkMUBClgOXLVRgIh26L1hjVNKH8=
+	t=1772301496; cv=none; b=O3SYQW7FDvKaHvwuafnm1m86YHfEwMv00g5z5lgx4GiwWm/Ke79S8fEXpgd+uv7K/c0oCVWRbxbXz/XD+f9gvhe4R4eVEa1HZ+x1l9f1n9UI5rDCJE3mFI/lW5B+TbahJ/9A7TK5iZHMuc3UotjdD56r/+4c9yD/vgg4V9GcaAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301495; c=relaxed/simple;
-	bh=TQTkrtF8gABHNPg2/yy95aF+YdemXS0lgTpOAC/8nAk=;
+	s=arc-20240116; t=1772301496; c=relaxed/simple;
+	bh=doQYmoj5Ue5MGqSM1/caFzg561LPLFI4l4+iCvmp3Es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqjbbDTRu+RDdryDLqORZrNfm3ub9HPLiXiHN/SlJLidRPsYjFYYW9gaOb4ra4cV2dk2VieFqEpXpF5g8QWSB6dOurqYYs2/rIVKeI8CmNTy9mUSa3VOd4H1WaOhm3HpAsE1ppHtqewCaySrG8QFqsU087WdeyNWRdNYOTHTc5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sS1XNCAW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XEq93vML95nTqxjJ9yvqxOST/uDz1rW2CwTh/4n1DGUQetrry1TBaCtg1d7gqhrvssZm0a1FCpMaZF8XETVGfXy52xyltgkpkGcPOG93hj7tJxy47FnYkcK0RUlLmjcTiJUf3ifXyaFiyI6UrabNdL4QCU8qlk9ljtDUFA2auKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aHbqGQJP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sS1XNCAW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854F1C19424;
-	Sat, 28 Feb 2026 17:58:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aHbqGQJP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB71AC116D0;
+	Sat, 28 Feb 2026 17:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301495;
-	bh=TQTkrtF8gABHNPg2/yy95aF+YdemXS0lgTpOAC/8nAk=;
+	s=k20201202; t=1772301496;
+	bh=doQYmoj5Ue5MGqSM1/caFzg561LPLFI4l4+iCvmp3Es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sS1XNCAW5z88MHNom8k2CpMSpuATU5tRVWDBYy/z7glpmabjENBrZftNeVTK+rnsD
-	 CHty3SoaJuPsHVk/Hl5pnd3V4vdayRtRdazX+olRR25MsB5GOU6TJMKeSMwea62kgD
-	 u+kvgQogEyzlKqg3rcTB4CElbd3hgCuSVarltYAn9f4iWnwxvp6PPAnyceXgIhEvqg
-	 WZfmCbci+DTowg1mHiVb2Ip/8FfYJcsM9u2AztqUYCYqxjpIpZ+UwvptOj5B21wAtz
-	 kcVHxbdkwdMg4Zfy4uQuAlKyJG3YGN028p6hPq1VUrg/++0UJ1y9VK3RVPov1OEtQC
-	 UJoTKOW6T4hew==
+	b=aHbqGQJPYSsgxGfSPaj5FAhLhhqNyt563vvP/3YURfSX7zgVvHV872SbdXdVsegLI
+	 vEogDaRlCU4dWRQwwO0x3ARib7cC7pEfbW4ozObmJpryDOeL+bb4pB9OiNelUkQ/b6
+	 APK2EBJ5/LRFqR2k2sByHPL+HC07OL9jb1VEBpmTzLKOyEbVivfJp8elX82FuqM8FL
+	 jmGfV2QIQrj8nw98JZWhR/4FThkkzifrysdU/kFdgoiZCbjOVW9y9j++IiLAXhf11H
+	 AFtLReWhHO+62qqHwcxVUt+WcWOpEou8eXhE8koNcIHLcQVKrY8RU9QTBDF8fy+O7N
+	 05ctZBgNPKf5A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Shengming Hu <hu.shengming@zte.com.cn>,
-	Petr Mladek <pmladek@suse.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Zhang Run <zhang.run@zte.com.cn>,
+Cc: Carlos Song <carlos.song@nxp.com>,
 	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 679/752] watchdog/softlockup: fix sample ring index wrap in need_counting_irqs()
-Date: Sat, 28 Feb 2026 12:46:30 -0500
-Message-ID: <20260228174750.1542406-679-sashal@kernel.org>
+Subject: [PATCH 6.18 680/752] i2c: imx-lpi2c: fix SMBus block read NACK after byte count
+Date: Sat, 28 Feb 2026 12:46:31 -0500
+Message-ID: <20260228174750.1542406-680-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -53,45 +50,218 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Shengming Hu <hu.shengming@zte.com.cn>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit cafe4074a7221dca2fa954dd1ab0cf99b6318e23 ]
+[ Upstream commit efdc383d1cc28d45cbf5a23b5ffa997010aaacb4 ]
 
-cpustat_tail indexes cpustat_util[], which is a NUM_SAMPLE_PERIODS-sized
-ring buffer. need_counting_irqs() currently wraps the index using
-NUM_HARDIRQ_REPORT, which only happens to match NUM_SAMPLE_PERIODS.
+The LPI2C controller sends a NACK at the end of a receive command
+unless another receive command is already queued in MTDR. During
+SMBus block reads, this causes the controller to NACK immediately
+after receiving the block length byte, aborting the transfer before
+the data bytes are read.
 
-Use NUM_SAMPLE_PERIODS for the wrap to keep the ring math correct even if
-the NUM_HARDIRQ_REPORT or  NUM_SAMPLE_PERIODS changes.
+Fix this by queueing a second receive command as soon as the block
+length byte is received, keeping MTDR non-empty and ensuring
+continuous ACKs. The initial receive command reads the block length,
+and the subsequent command reads the remaining data bytes according
+to the reported length.
 
-Link: https://lkml.kernel.org/r/tencent_7068189CB6D6689EB353F3D17BF5A5311A07@qq.com
-Fixes: e9a9292e2368 ("watchdog/softlockup: Report the most frequent interrupts")
-Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Zhang Run <zhang.run@zte.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a55fa9d0e42e ("i2c: imx-lpi2c: add low power i2c bus driver")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Cc: <stable@vger.kernel.org> # v4.10+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260123105459.3448822-1-carlos.song@nxp.com
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watchdog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-imx-lpi2c.c | 107 ++++++++++++++++++++++-------
+ 1 file changed, 83 insertions(+), 24 deletions(-)
 
-diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 5b62d10027836..25d134306e146 100644
---- a/kernel/watchdog.c
-+++ b/kernel/watchdog.c
-@@ -521,7 +521,7 @@ static bool need_counting_irqs(void)
- 	u8 util;
- 	int tail = __this_cpu_read(cpustat_tail);
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index d882126c1778c..519a1ac832a41 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -5,6 +5,7 @@
+  * Copyright 2016 Freescale Semiconductor, Inc.
+  */
  
--	tail = (tail + NUM_HARDIRQ_REPORT - 1) % NUM_HARDIRQ_REPORT;
-+	tail = (tail + NUM_SAMPLE_PERIODS - 1) % NUM_SAMPLE_PERIODS;
- 	util = __this_cpu_read(cpustat_util[tail][STATS_HARDIRQ]);
- 	return util > HARDIRQ_PERCENT_THRESH;
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/completion.h>
+ #include <linux/delay.h>
+@@ -90,6 +91,7 @@
+ #define MRDR_RXEMPTY	BIT(14)
+ #define MDER_TDDE	BIT(0)
+ #define MDER_RDDE	BIT(1)
++#define MSR_RDF_ASSERTED(x) FIELD_GET(MSR_RDF, (x))
+ 
+ #define SCR_SEN		BIT(0)
+ #define SCR_RST		BIT(1)
+@@ -461,7 +463,7 @@ static bool lpi2c_imx_write_txfifo(struct lpi2c_imx_struct *lpi2c_imx, bool atom
+ 
+ static bool lpi2c_imx_read_rxfifo(struct lpi2c_imx_struct *lpi2c_imx, bool atomic)
+ {
+-	unsigned int blocklen, remaining;
++	unsigned int remaining;
+ 	unsigned int temp, data;
+ 
+ 	do {
+@@ -472,15 +474,6 @@ static bool lpi2c_imx_read_rxfifo(struct lpi2c_imx_struct *lpi2c_imx, bool atomi
+ 		lpi2c_imx->rx_buf[lpi2c_imx->delivered++] = data & 0xff;
+ 	} while (1);
+ 
+-	/*
+-	 * First byte is the length of remaining packet in the SMBus block
+-	 * data read. Add it to msgs->len.
+-	 */
+-	if (lpi2c_imx->block_data) {
+-		blocklen = lpi2c_imx->rx_buf[0];
+-		lpi2c_imx->msglen += blocklen;
+-	}
+-
+ 	remaining = lpi2c_imx->msglen - lpi2c_imx->delivered;
+ 
+ 	if (!remaining) {
+@@ -493,12 +486,7 @@ static bool lpi2c_imx_read_rxfifo(struct lpi2c_imx_struct *lpi2c_imx, bool atomi
+ 	lpi2c_imx_set_rx_watermark(lpi2c_imx);
+ 
+ 	/* multiple receive commands */
+-	if (lpi2c_imx->block_data) {
+-		lpi2c_imx->block_data = 0;
+-		temp = remaining;
+-		temp |= (RECV_DATA << 8);
+-		writel(temp, lpi2c_imx->base + LPI2C_MTDR);
+-	} else if (!(lpi2c_imx->delivered & 0xff)) {
++	if (!(lpi2c_imx->delivered & 0xff)) {
+ 		temp = (remaining > CHUNK_DATA ? CHUNK_DATA : remaining) - 1;
+ 		temp |= (RECV_DATA << 8);
+ 		writel(temp, lpi2c_imx->base + LPI2C_MTDR);
+@@ -536,18 +524,77 @@ static int lpi2c_imx_write_atomic(struct lpi2c_imx_struct *lpi2c_imx,
+ 	return err;
  }
+ 
+-static void lpi2c_imx_read_init(struct lpi2c_imx_struct *lpi2c_imx,
+-				struct i2c_msg *msgs)
++static unsigned int lpi2c_SMBus_block_read_length_byte(struct lpi2c_imx_struct *lpi2c_imx)
+ {
+-	unsigned int temp;
++	unsigned int data;
++
++	data = readl(lpi2c_imx->base + LPI2C_MRDR);
++	lpi2c_imx->rx_buf[lpi2c_imx->delivered++] = data & 0xff;
++
++	return data;
++}
++
++static int lpi2c_imx_read_init(struct lpi2c_imx_struct *lpi2c_imx,
++			       struct i2c_msg *msgs)
++{
++	unsigned int temp, val, block_len;
++	int ret;
+ 
+ 	lpi2c_imx->rx_buf = msgs->buf;
+ 	lpi2c_imx->block_data = msgs->flags & I2C_M_RECV_LEN;
+ 
+ 	lpi2c_imx_set_rx_watermark(lpi2c_imx);
+-	temp = msgs->len > CHUNK_DATA ? CHUNK_DATA - 1 : msgs->len - 1;
+-	temp |= (RECV_DATA << 8);
+-	writel(temp, lpi2c_imx->base + LPI2C_MTDR);
++
++	if (!lpi2c_imx->block_data) {
++		temp = msgs->len > CHUNK_DATA ? CHUNK_DATA - 1 : msgs->len - 1;
++		temp |= (RECV_DATA << 8);
++		writel(temp, lpi2c_imx->base + LPI2C_MTDR);
++	} else {
++		/*
++		 * The LPI2C controller automatically sends a NACK after the last byte of a
++		 * receive command, unless the next command in MTDR is also a receive command.
++		 * If MTDR is empty when a receive completes, a NACK is sent by default.
++		 *
++		 * To comply with the SMBus block read spec, we start with a 2-byte read:
++		 * The first byte in RXFIFO is the block length. Once this byte arrives, the
++		 * controller immediately updates MTDR with the next read command, ensuring
++		 * continuous ACK instead of NACK.
++		 *
++		 * The second byte is the first block data byte. Therefore, the subsequent
++		 * read command should request (block_len - 1) bytes, since one data byte
++		 * has already been read.
++		 */
++
++		writel((RECV_DATA << 8) | 0x01, lpi2c_imx->base + LPI2C_MTDR);
++
++		ret = readl_poll_timeout(lpi2c_imx->base + LPI2C_MSR, val,
++					 MSR_RDF_ASSERTED(val), 1, 1000);
++		if (ret) {
++			dev_err(&lpi2c_imx->adapter.dev, "SMBus read count failed %d\n", ret);
++			return ret;
++		}
++
++		/* Read block length byte and confirm this SMBus transfer meets protocol */
++		block_len = lpi2c_SMBus_block_read_length_byte(lpi2c_imx);
++		if (block_len == 0 || block_len > I2C_SMBUS_BLOCK_MAX) {
++			dev_err(&lpi2c_imx->adapter.dev, "Invalid SMBus block read length\n");
++			return -EPROTO;
++		}
++
++		/*
++		 * When block_len shows more bytes need to be read, update second read command to
++		 * keep MTDR non-empty and ensuring continuous ACKs. Only update command register
++		 * here. All block bytes will be read out at IRQ handler or lpi2c_imx_read_atomic()
++		 * function.
++		 */
++		if (block_len > 1)
++			writel((RECV_DATA << 8) | (block_len - 2), lpi2c_imx->base + LPI2C_MTDR);
++
++		lpi2c_imx->msglen += block_len;
++		msgs->len += block_len;
++	}
++
++	return 0;
+ }
+ 
+ static bool lpi2c_imx_read_chunk_atomic(struct lpi2c_imx_struct *lpi2c_imx)
+@@ -592,6 +639,10 @@ static bool is_use_dma(struct lpi2c_imx_struct *lpi2c_imx, struct i2c_msg *msg)
+ 	if (!lpi2c_imx->can_use_dma)
+ 		return false;
+ 
++	/* DMA is not suitable for SMBus block read */
++	if (msg->flags & I2C_M_RECV_LEN)
++		return false;
++
+ 	/*
+ 	 * A system-wide suspend or resume transition is in progress. LPI2C should use PIO to
+ 	 * transfer data to avoid issue caused by no ready DMA HW resource.
+@@ -609,10 +660,14 @@ static bool is_use_dma(struct lpi2c_imx_struct *lpi2c_imx, struct i2c_msg *msg)
+ static int lpi2c_imx_pio_xfer(struct lpi2c_imx_struct *lpi2c_imx,
+ 			      struct i2c_msg *msg)
+ {
++	int ret;
++
+ 	reinit_completion(&lpi2c_imx->complete);
+ 
+ 	if (msg->flags & I2C_M_RD) {
+-		lpi2c_imx_read_init(lpi2c_imx, msg);
++		ret = lpi2c_imx_read_init(lpi2c_imx, msg);
++		if (ret)
++			return ret;
+ 		lpi2c_imx_intctrl(lpi2c_imx, MIER_RDIE | MIER_NDIE);
+ 	} else {
+ 		lpi2c_imx_write(lpi2c_imx, msg);
+@@ -624,8 +679,12 @@ static int lpi2c_imx_pio_xfer(struct lpi2c_imx_struct *lpi2c_imx,
+ static int lpi2c_imx_pio_xfer_atomic(struct lpi2c_imx_struct *lpi2c_imx,
+ 				     struct i2c_msg *msg)
+ {
++	int ret;
++
+ 	if (msg->flags & I2C_M_RD) {
+-		lpi2c_imx_read_init(lpi2c_imx, msg);
++		ret = lpi2c_imx_read_init(lpi2c_imx, msg);
++		if (ret)
++			return ret;
+ 		return lpi2c_imx_read_atomic(lpi2c_imx, msg);
+ 	}
+ 
 -- 
 2.51.0
 
