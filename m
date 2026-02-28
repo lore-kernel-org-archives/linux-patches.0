@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F96247CC8F;
-	Sat, 28 Feb 2026 17:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9C7301EE3;
+	Sat, 28 Feb 2026 17:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301399; cv=none; b=EwgVKzsG4clDupKibm9C5MXFl2+i2F1/0RHGsUeQJSfMPEXwUs/mBkpeOHx6Cax/tbTK8N9tSsI31+MUgVe+ead8hN2uWGUbXuqnsYiDIYeMtF3HVQ3+7rYNO9N0bgwEqpbCs4UePvBNY7M/288b1n2WDNdEWQF5jFoU6KtnwlE=
+	t=1772301399; cv=none; b=PUhXDzFFSvT17U/KM4asF92t3aBJNvuRShE6Td2sdWipQSYeFkBgBN1kn0T3KJdu2kysztr+YsOfqBIksM+Q3OFsr2P3a2g8X8bCWMPEGA2s/Q3JIkq78ynQcABRV/6I6Z3YWyFJ06vbh/w2MVxi9G8ph/UYriYp4GuknEbeWPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301399; c=relaxed/simple;
-	bh=wy+9C6HkEMy+Plt9bFUgURSkZS2Cy297b2bowbpBP6E=;
+	bh=rQsxdeDZ480m7skH3l8/h/NuJK1gSv8geEtcIRimRQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYba8C4izRpROG5Y6nCBPgM+HRBx9Uyf6JF91clsN2rbtkLSmFFxbhQyk41aTiDrDCkHsvQBr/JFlpbvQ0/23L9v0sOEyrs+/pv402HPdOEaZEvs1U547YLAvh4qZuwx96n+cRc3QL+vnPgzeo6YHKf8KpomJ5Di+au30506wIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SbOi2hmz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UqbyQnNlyUQI1J0CI/UwTcc9GT39e1NFdL9PPPsgOm7ytXDh1Q0YPmpseFI25WNWGV4PITrd+iyJNsW7TpJwOCCQKWqT+BsMq96xt/k9lHmN+odzgM7oJucKjD93lmI+lieUiYwaSQ5DLf1YNMDGSRpY6Ue1KNCxBy1UxKc9LiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t1V1wEih; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SbOi2hmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B48C19423;
-	Sat, 28 Feb 2026 17:56:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t1V1wEih"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B681C19424;
+	Sat, 28 Feb 2026 17:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301398;
-	bh=wy+9C6HkEMy+Plt9bFUgURSkZS2Cy297b2bowbpBP6E=;
+	s=k20201202; t=1772301399;
+	bh=rQsxdeDZ480m7skH3l8/h/NuJK1gSv8geEtcIRimRQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SbOi2hmzjSjefsQhikWsefB5Q08OtiVP3hyMBKJjuALVj/JkaDgNZ11N0ym37YNkK
-	 a6tRe7H8C1y40uH9vpILYxEweZ6FhBrjMQUwOYYRTqI8uwG58ZctqaxzbEm4J75jMv
-	 40eF86P3vVc0PEvl6f/P23B9buOCrlM/4qhVLXX3qHpIDf11rTbQaS68UqUgCFTrcN
-	 gKXHbHEMiEgfPQqK8A74sP6Efbqv2vKGwTidk9SG+HId2E0PwzG126TleExcW+P7a0
-	 JHQKMNj/tts6Obv5pWxsVWmnFmlISXaDO962CahhS4Pu5YTVixvIX4HHYYVekpwWnb
-	 +trR7GIF3kJXw==
+	b=t1V1wEihq4Wc8AT/kXxtdYaFUCQAOrwFtabI35CwSEwcGI56y0cyaHUZ+QET7TLUf
+	 5KKutzmO+jGoGeKqq+6P4iJExAM0xWl9lvWNibRa7ejuM/KzvD+UQoKP22KeXBaUqe
+	 6GM5zYg57y6cW4LX+q02JvVburTdYl+xwFB1XjwODOyuc9dnf330d34Nm62wWA52vd
+	 AEgfdv35HCnG1LQspzdj5DoimTDtMdJ04lwko1Vvk6T3BwBkKg+8DB48I+vEY9O/HH
+	 aOW5OvTW4NIC6HHEL+Y02zrvX4PAKa9LOwoTGLufMupkoEIpRDNcPgZGC8Tbzdozhp
+	 TMSm4pjJThVQA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Michal Pecio <michal.pecio@gmail.com>,
+Cc: Jinhui Guo <guojinhui.liam@bytedance.com>,
 	stable@vger.kernel.org,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 587/752] media: uvcvideo: Return queued buffers on start_streaming() failure
-Date: Sat, 28 Feb 2026 12:44:58 -0500
-Message-ID: <20260228174750.1542406-587-sashal@kernel.org>
+Subject: [PATCH 6.18 588/752] iommu/vt-d: Flush dev-IOTLB only when PCIe device is accessible in scalable mode
+Date: Sat, 28 Feb 2026 12:44:59 -0500
+Message-ID: <20260228174750.1542406-588-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -46,70 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-[ Upstream commit 4cf3b6fd54ebb1ebc977bdc47fb6cfcf9a471a22 ]
+[ Upstream commit 10e60d87813989e20eac1f3eda30b3bae461e7f9 ]
 
-Return buffers if streaming fails to start due to uvc_pm_get() error.
+Commit 4fc82cd907ac ("iommu/vt-d: Don't issue ATS Invalidation
+request when device is disconnected") relies on
+pci_dev_is_disconnected() to skip ATS invalidation for
+safely-removed devices, but it does not cover link-down caused
+by faults, which can still hard-lock the system.
 
-This bug may be responsible for a warning I got running
+For example, if a VM fails to connect to the PCIe device,
+"virsh destroy" is executed to release resources and isolate
+the fault, but a hard-lockup occurs while releasing the group fd.
 
-    while :; do yavta -c3 /dev/video0; done
+Call Trace:
+ qi_submit_sync
+ qi_flush_dev_iotlb
+ intel_pasid_tear_down_entry
+ device_block_translation
+ blocking_domain_attach_dev
+ __iommu_attach_device
+ __iommu_device_set_domain
+ __iommu_group_set_domain_internal
+ iommu_detach_group
+ vfio_iommu_type1_detach_group
+ vfio_group_detach_container
+ vfio_group_fops_release
+ __fput
 
-on an xHCI controller which failed under this workload.
-I had no luck reproducing this warning again to confirm.
+Although pci_device_is_present() is slower than
+pci_dev_is_disconnected(), it still takes only ~70 µs on a
+ConnectX-5 (8 GT/s, x2) and becomes even faster as PCIe speed
+and width increase.
 
-xhci_hcd 0000:09:00.0: HC died; cleaning up
-usb 13-2: USB disconnect, device number 2
-WARNING: CPU: 2 PID: 29386 at drivers/media/common/videobuf2/videobuf2-core.c:1803 vb2_start_streaming+0xac/0x120
+Besides, devtlb_invalidation_with_pasid() is called only in the
+paths below, which are far less frequent than memory map/unmap.
 
-Fixes: 7dd56c47784a ("media: uvcvideo: Remove stream->is_streaming field")
+1. mm-struct release
+2. {attach,release}_dev
+3. set/remove PASID
+4. dirty-tracking setup
+
+The gain in system stability far outweighs the negligible cost
+of using pci_device_is_present() instead of pci_dev_is_disconnected()
+to decide when to skip ATS invalidation, especially under GDR
+high-load conditions.
+
+Fixes: 4fc82cd907ac ("iommu/vt-d: Don't issue ATS Invalidation request when device is disconnected")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://patch.msgid.link/20251015133642.3dede646.michal.pecio@gmail.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Link: https://lore.kernel.org/r/20251211035946.2071-3-guojinhui.liam@bytedance.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_queue.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/iommu/intel/pasid.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_queue.c b/drivers/media/usb/uvc/uvc_queue.c
-index 790184c9843d2..e838c6c1893a6 100644
---- a/drivers/media/usb/uvc/uvc_queue.c
-+++ b/drivers/media/usb/uvc/uvc_queue.c
-@@ -177,18 +177,20 @@ static int uvc_start_streaming_video(struct vb2_queue *vq, unsigned int count)
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index d13099a6cb9c3..6782ba5f5e57f 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -219,7 +219,7 @@ devtlb_invalidation_with_pasid(struct intel_iommu *iommu,
+ 	if (!info || !info->ats_enabled)
+ 		return;
  
- 	ret = uvc_pm_get(stream->dev);
- 	if (ret)
--		return ret;
-+		goto err_buffers;
+-	if (pci_dev_is_disconnected(to_pci_dev(dev)))
++	if (!pci_device_is_present(to_pci_dev(dev)))
+ 		return;
  
- 	queue->buf_used = 0;
- 
- 	ret = uvc_video_start_streaming(stream);
--	if (ret == 0)
--		return 0;
-+	if (ret)
-+		goto err_pm;
- 
--	uvc_pm_put(stream->dev);
-+	return 0;
- 
-+err_pm:
-+	uvc_pm_put(stream->dev);
-+err_buffers:
- 	uvc_queue_return_buffers(queue, UVC_BUF_STATE_QUEUED);
--
- 	return ret;
- }
- 
+ 	sid = PCI_DEVID(info->bus, info->devfn);
 -- 
 2.51.0
 
