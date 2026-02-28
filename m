@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A8E340A59
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8818355049
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301081; cv=none; b=e/okBX0A7wxBvDKxb2b7KhoeMGeFpmiuSo+ihuyhdnBZrl4VyVyI54CojS5b1nB3IbwGjxw3JKKLw/6h8710LUSXNH6JlwyqwZhGa8Z4V2Y1uN7+j8s9nMAsnx14OrdMwErFa/nsGEGrPruJR0eeA9MWMnB0ekcHSsqwARusMXU=
+	t=1772301081; cv=none; b=VCAs1s7oEayK7NLhxEWgfgT1ekvub8VgAyPllJLYylsVToWtGrePbyHVrHS45mlb75GnEmcJ0UZbwmxvnaBJDMuEibWD9aeDkx3IqkRzES0oaeC6o5+9ieinTN41m9VzOfqAd2+C43drd+wMgvODxd+vCCrLJmwPD5Gn8nLopWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301081; c=relaxed/simple;
-	bh=YNl1ruKeNTu0Qjgg2uYFCwt3Hi3Kc4jaKDuPweeGFDA=;
+	bh=nzItiEz8QVYN0Ia+mYqox2oKSRk3JCPx68U3AHsJe1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDj0RoBcQpynDp+eFZFqw0rl8CPXjuxEIE3Cz/pDLO1tVG4u1qlHzEHeNDLce+uOvZ77z0l1fLh4LTaDc7xvPQFM/Csx6PatSgtIdYOGQpH092m4LOZ80JBv/f2djwF5uvPpH7g6nf2su+FLckw3RCMIPL+sjZ6VTkgPBZvKtiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KlgSJ7gL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qI+x1NMYaljIX7ny28ZlfbK+X9HtShIa41JaEUcYpJFcSrsKz/utH83D0QZNuRHdSt9RV+tYj1jcGDJlsnctm0h4qizYbmdAiZ7Xz6MMBJmkm3m39X+Wj699r9WqNLoZJP1Y4SC/y3Ftg60uY0Ctzo2J0Vm8zJ/Z2WWy2S1db/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WlAQs70S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KlgSJ7gL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B92C19423;
-	Sat, 28 Feb 2026 17:51:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WlAQs70S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5AAC19425;
+	Sat, 28 Feb 2026 17:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301080;
-	bh=YNl1ruKeNTu0Qjgg2uYFCwt3Hi3Kc4jaKDuPweeGFDA=;
+	s=k20201202; t=1772301081;
+	bh=nzItiEz8QVYN0Ia+mYqox2oKSRk3JCPx68U3AHsJe1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KlgSJ7gLSlHcaITF7+w8TkibtvecM3/Y74GnPclXDg/kGBr17PkMrw4iYgjl6zfTR
-	 U0Jhzeljkzw5ULgedxjElaUehnNqhpExq2V75hi42M5Uwd7OQUWfeJeBmxnwKlM3oT
-	 b/N81pcdA91OtYbMAxDZS1oLzYQizzRGj1G/3oB2e19ppRcgyPBCDPvpUzQWZeifkR
-	 ZXXpEQVZzh6iBLHG+30OlfIJggO40gTbz7JXslQTBRmw4NNRguPlv5yKOYF2Yz/IIi
-	 kCpbzprDpemGKrrG/wX9uSI6MYoSXoKUB8Ja0o7m/5KOTJi5rqN35n+9XSvBuF9g2c
-	 H8ygjQjli9e5w==
+	b=WlAQs70Sfurvnj9nLDlZEwBQZ4AXTPfY5hF0QJBzMWvcdZlXUrmu1fTE1kxy07h6J
+	 vxsERyPzfTITCcmvvxiVAoximqPREl8MV8Jgf5NZiUzTP3cEhF6TEPoM8Np9QI6l+S
+	 tg+9TVqOCNdIGMOPU2JSZwvrqpMM3QulBTYD1uJYehFu7Bv6dxop4ovqRpgeHWzMrG
+	 Kko4tuMnZF2g7vVL5yESAKN9tM0/HjkkG5qVV8C8BmAUlsLRPrv7zpg/McHoOzkAHz
+	 GWxzLj2kkWMspzLyShNLOM8n1waCXM1tK6VQvYkUQTYaWpP5T3lTHXDjTPUR+jqv+L
+	 UM6gM9F4dUH5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Kuan-Chung Chen <damon.chen@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Wander Lairson Costa <wander@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 228/752] wifi: rtw89: fix potential zero beacon interval in beacon tracking
-Date: Sat, 28 Feb 2026 12:38:59 -0500
-Message-ID: <20260228174750.1542406-228-sashal@kernel.org>
+Subject: [PATCH 6.18 229/752] rtla: Fix NULL pointer dereference in actions_parse
+Date: Sat, 28 Feb 2026 12:39:00 -0500
+Message-ID: <20260228174750.1542406-229-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,76 +47,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kuan-Chung Chen <damon.chen@realtek.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit eb57be32f438c57c88d6ce756101c1dfbcc03bba ]
+[ Upstream commit a0890f9dbd24b302d327fe7dad9b9c5be0e278aa ]
 
-During fuzz testing, it was discovered that bss_conf->beacon_int
-might be zero, which could result in a division by zero error in
-subsequent calculations. Set a default value of 100 TU if the
-interval is zero to ensure stability.
+The actions_parse() function uses strtok() to tokenize the trigger
+string, but does not check if the returned token is NULL before
+passing it to strcmp(). If the trigger parameter is an empty string
+or contains only delimiter characters, strtok() returns NULL, causing
+strcmp() to dereference a NULL pointer and crash the program.
 
-Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251231090647.56407-11-pkshih@realtek.com
+This issue can be triggered by malformed user input or edge cases in
+trigger string parsing. Add a NULL check immediately after the strtok()
+call to validate that a token was successfully extracted before using
+it. If no token is found, the function now returns -1 to indicate a
+parsing error.
+
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Link: https://lore.kernel.org/r/20260106133655.249887-13-wander@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ tools/tracing/rtla/src/actions.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 917b2adede61d..ed6018f54f20a 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -2655,7 +2655,7 @@ static void rtw89_core_bcn_track_assoc(struct rtw89_dev *rtwdev,
+diff --git a/tools/tracing/rtla/src/actions.c b/tools/tracing/rtla/src/actions.c
+index 8945aee58d511..15986505b4376 100644
+--- a/tools/tracing/rtla/src/actions.c
++++ b/tools/tracing/rtla/src/actions.c
+@@ -141,6 +141,8 @@ actions_parse(struct actions *self, const char *trigger, const char *tracefn)
  
- 	rcu_read_lock();
- 	bss_conf = rtw89_vif_rcu_dereference_link(rtwvif_link, true);
--	beacon_int = bss_conf->beacon_int;
-+	beacon_int = bss_conf->beacon_int ?: 100;
- 	dtim = bss_conf->dtim_period;
- 	rcu_read_unlock();
+ 	strcpy(trigger_c, trigger);
+ 	token = strtok(trigger_c, ",");
++	if (!token)
++		return -1;
  
-@@ -2685,9 +2685,7 @@ static void rtw89_core_bcn_track_reset(struct rtw89_dev *rtwdev)
- 	memset(&rtwdev->bcn_track, 0, sizeof(rtwdev->bcn_track));
- }
- 
--static void rtw89_vif_rx_bcn_stat(struct rtw89_dev *rtwdev,
--				  struct ieee80211_bss_conf *bss_conf,
--				  struct sk_buff *skb)
-+static void rtw89_vif_rx_bcn_stat(struct rtw89_dev *rtwdev, struct sk_buff *skb)
- {
- #define RTW89_APPEND_TSF_2GHZ 384
- #define RTW89_APPEND_TSF_5GHZ 52
-@@ -2696,7 +2694,7 @@ static void rtw89_vif_rx_bcn_stat(struct rtw89_dev *rtwdev,
- 	struct ieee80211_rx_status *rx_status = IEEE80211_SKB_RXCB(skb);
- 	struct rtw89_beacon_stat *bcn_stat = &rtwdev->phystat.bcn_stat;
- 	struct rtw89_beacon_track_info *bcn_track = &rtwdev->bcn_track;
--	u32 bcn_intvl_us = ieee80211_tu_to_usec(bss_conf->beacon_int);
-+	u32 bcn_intvl_us = ieee80211_tu_to_usec(bcn_track->beacon_int);
- 	u64 tsf = le64_to_cpu(mgmt->u.beacon.timestamp);
- 	u8 wp, num = bcn_stat->num;
- 	u16 append;
-@@ -2704,6 +2702,10 @@ static void rtw89_vif_rx_bcn_stat(struct rtw89_dev *rtwdev,
- 	if (!RTW89_CHK_FW_FEATURE(BEACON_TRACKING, &rtwdev->fw))
- 		return;
- 
-+	/* Skip if not yet associated */
-+	if (!bcn_intvl_us)
-+		return;
-+
- 	switch (rx_status->band) {
- 	default:
- 	case NL80211_BAND_2GHZ:
-@@ -2791,7 +2793,7 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
- 		pkt_stat->beacon_rate = desc_info->data_rate;
- 		pkt_stat->beacon_len = skb->len;
- 
--		rtw89_vif_rx_bcn_stat(rtwdev, bss_conf, skb);
-+		rtw89_vif_rx_bcn_stat(rtwdev, skb);
- 	}
- 
- 	if (!ether_addr_equal(bss_conf->addr, hdr->addr1))
+ 	if (strcmp(token, "trace") == 0)
+ 		type = ACTION_TRACE_OUTPUT;
 -- 
 2.51.0
 
