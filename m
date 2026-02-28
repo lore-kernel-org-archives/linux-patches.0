@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1FD36C9D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B9136C9E3
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302315; cv=none; b=WN0Uf2b+/MQGwd5Eg5EH9huvpG/JUoDfDdJup5w04sZE6jbHPDdDofBO7SDZtiTgb8jMAPuz86KHD4PYT0YbjKymTohU3FDtsWkjW/b5OlI+89sx21JS93CHbEwZ15qDsMx7SYk+GMGKVa/GGDxFJjWUytf/QwTuupU6huyxO2c=
+	t=1772302316; cv=none; b=LhInnfjUUc8MbTyvIJ7SnkMOfvkkrYP6enU2aYPC7PnXIe4sFNw82dzGfWVipBLeMddE60pve+i0DLHf1/TEVXIawPpiuYcGKinvLVjGpjgyGGvK14Z4VbeHJxkJzlVGwSPXlOSWgPNx07hbSWY7I9OxLus7IzTDRFl+31slX3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302315; c=relaxed/simple;
-	bh=2QrBIXSMCnntHiTeaL+fWzXsS1ata4VH2uYK+QctfWE=;
+	s=arc-20240116; t=1772302316; c=relaxed/simple;
+	bh=CoByT++M7jXtrNZTWF0mDOceAMLwMK8z3ClqgtFUzQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kp3MuVqiS2bgeAP7AlVQ2p6Ll16zUBnlS+JENKI/AzuyCQv5ps8Y2gnvgH08HDAP5Kvj8UzfyWWHP1+HmljPDy2TjA0UbPMMEwWTh1b6fghEvDfOiHkD8aynd/GSFYqaArLYfgFZ82CRB2CNqH7t8qLeLRxdp3TQEElPDnXtfGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WTR20oYv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZrTRfUT+ucvH48FIkjvlvVK9WOiLOA/Sh0CB5ejE9Acnb8Gs3A5MqKhG9cI2/9QBCewGXmbcOHFw8DKQK5MNnB9IpvPcV9LnBabzRUmAA/8HXDVqsocmHYnsxtSSayAJ5Hf9ex5Skr8u9qE4jxRzeO9fSh11tJdhksWDBny5+6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ORjlNuQ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WTR20oYv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB60C116D0;
-	Sat, 28 Feb 2026 18:11:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ORjlNuQ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67914C116D0;
+	Sat, 28 Feb 2026 18:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302315;
-	bh=2QrBIXSMCnntHiTeaL+fWzXsS1ata4VH2uYK+QctfWE=;
+	bh=CoByT++M7jXtrNZTWF0mDOceAMLwMK8z3ClqgtFUzQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WTR20oYvsZx9SjcHRjruNC0dOTnrQHya3XPsH0eUhvwvRiOMql+0NN0buoXkl0hS6
-	 9THKLYRXhV4p+7nF+/ikaAKtK+7XEu439ixbLwpHqf2FrUr1FOPk0eWPbYPmjDgL5t
-	 d1xTlBQuxIWRUf3YVyg2Ksy0zCvgkWVTWQFrrz6uiATJMz4K0KulyzosurXA621jtG
-	 VeBs06ErOTEMjIPT7i4b5oVVKSza3Hoftfl5HXdK54Nwqv4Cypqt3Enxzl5UJ2t3mp
-	 Es/Bbh5ezMU39e+ixy7T/hY6QiX6XIByarIF5g7NhoQi/LwDIUwE8C0bUPJO74fwJH
-	 ZlIgIP+ultL+g==
+	b=ORjlNuQ5DgsngGW8JqcMeDzmWuQkqrlrxu2VxQvBklHx+cX5/a4KjHIXrXduuh3b4
+	 bCfhM6CVmns+KuD/L3X7tc+deRP1GStz+8YGsyVTgrVHvoYhfBCFtoTJShbpFqTTnZ
+	 DtVnuGh/ww1A/HPDIoj62De4nzyhzOr0Akp6YFb+SnVjiq9Ai1bZhBW70ctBwvoL9l
+	 2CKmgCHdgaYqbfKvljnjzI/Pg5fpY+TAUQrNAyNgp35H1UoCCGhM1zD5is35ZMNy8/
+	 p+nJSX5n5c5qphuEbmN+DNzlSBS723V1Gw9hx982txMoxXK6oSdPBoxCnfZ0D2o2da
+	 1ejV9qhfPvvmA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Thomas Fourier <fourier.thomas@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/232] crypto: cavium - fix dma_free_coherent() size
-Date: Sat, 28 Feb 2026 13:08:05 -0500
-Message-ID: <20260228181127.1592657-32-sashal@kernel.org>
+Subject: [PATCH 6.1 033/232] crypto: octeontx - fix dma_free_coherent() size
+Date: Sat, 28 Feb 2026 13:08:06 -0500
+Message-ID: <20260228181127.1592657-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,31 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 941676c30ba5b40a01bed92448f457ce62fd1f07 ]
+[ Upstream commit 624a6760bf8464965c17c8df10b40b557eaa3002 ]
 
 The size of the buffer in alloc_command_queues() is
-curr->size + CPT_NEXT_CHUNK_PTR_SIZE, so used that length for
+curr->size + OTX_CPT_NEXT_CHUNK_PTR_SIZE, so used that length for
 dma_free_coherent().
 
-Fixes: c694b233295b ("crypto: cavium - Add the Virtual Function driver for CPT")
+Fixes: 10b4f09491bf ("crypto: marvell - add the Virtual Function driver for CPT")
 Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/cavium/cpt/cptvf_main.c | 3 ++-
+ drivers/crypto/marvell/octeontx/otx_cptvf_main.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/cavium/cpt/cptvf_main.c b/drivers/crypto/cavium/cpt/cptvf_main.c
-index c246920e6f540..bccd680c7f7ee 100644
---- a/drivers/crypto/cavium/cpt/cptvf_main.c
-+++ b/drivers/crypto/cavium/cpt/cptvf_main.c
-@@ -180,7 +180,8 @@ static void free_command_queues(struct cpt_vf *cptvf,
+diff --git a/drivers/crypto/marvell/octeontx/otx_cptvf_main.c b/drivers/crypto/marvell/octeontx/otx_cptvf_main.c
+index 88a41d1ca5f64..6c0bfb3ea1c9f 100644
+--- a/drivers/crypto/marvell/octeontx/otx_cptvf_main.c
++++ b/drivers/crypto/marvell/octeontx/otx_cptvf_main.c
+@@ -168,7 +168,8 @@ static void free_command_queues(struct otx_cptvf *cptvf,
+ 			chunk = list_first_entry(&cqinfo->queue[i].chead,
+ 					struct otx_cpt_cmd_chunk, nextchunk);
  
- 		hlist_for_each_entry_safe(chunk, node, &cqinfo->queue[i].chead,
- 					  nextchunk) {
 -			dma_free_coherent(&pdev->dev, chunk->size,
 +			dma_free_coherent(&pdev->dev,
-+					  chunk->size + CPT_NEXT_CHUNK_PTR_SIZE,
++					  chunk->size + OTX_CPT_NEXT_CHUNK_PTR_SIZE,
  					  chunk->head,
  					  chunk->dma_addr);
  			chunk->head = NULL;
