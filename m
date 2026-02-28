@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B6739B974
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16E339B94E
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302613; cv=none; b=WCj1liTBq5yfIMFWPLHIacTnho2/+oXk+SSwP8e8zLVCQlWpt4MPsNYH6rX/z/8Uw5BO8zOLe80wywe+Q5V3PHpWJjZQ9zrgLCeqPjP7U+orO8G4SHyhQf/YqyN12xAP9SyWjDZ6UWwpQbYp3wwxezvf2tfBoDVE4PmQflT64RE=
+	t=1772302613; cv=none; b=I201CXwfaUQhNHn1x89htYXLNZ5xt9Y3YKO6J9KXGgQAjxpN6kBPRQ4PSwTIOXarr43vAkae82clLdtJ/Qln/BD/5zWpqR8Ah6YxPbKIlKVbg5nEF7yGShAU3wR3RJ5IO8avuHrtFB8SA3KSaF94WrsCFM9EPReKOO5k3pRvuG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302613; c=relaxed/simple;
-	bh=n5y23WWqhEThf5yrD0ZaUkRk9OYK3rffUwCCHj8tmo4=;
+	bh=XP6N5YXgtjQpRNibQG6StG7RKydx0bbQ+qDAWw+uAWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qM6HoxJX+OdWbIXUHZwsntdbm2g7JebK+/E+/cUv1CgMDFiR0A0rjO35Isggiryyy46wnX0xIPO9WgJC+9MyM8lgEDViMvh10vlK4DYjRAWGNB4aupwHn+kU66Lmiy7EoTY7SvjBlGR3681qc5CLrj1QBFqfBuiO0s/apQLTKAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8iXVqQv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMsLEOwaguDe5pfs9V6z6Gex8pj5+EZ6s/dUizFV9zKExPJ3mITyandGAvIsUyzq1Sf9U+GxMZxVYoBYCObfa/nWOLGeL3aoy607U3YGlhJ/J2wy74ohQDk8CRQ2N77QQuBzjUb7w3EVBTcD59ylA83dqvgEixdqyuKqjEehLQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iy4/JMvI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8iXVqQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F155C116D0;
-	Sat, 28 Feb 2026 18:16:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iy4/JMvI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288A0C116D0;
+	Sat, 28 Feb 2026 18:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302612;
-	bh=n5y23WWqhEThf5yrD0ZaUkRk9OYK3rffUwCCHj8tmo4=;
+	s=k20201202; t=1772302613;
+	bh=XP6N5YXgtjQpRNibQG6StG7RKydx0bbQ+qDAWw+uAWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g8iXVqQvHXW7vQ2vKvu2cFAW4HsOYQoptTkJxLZVNN/gUVtiLAvMnz+CkVt7P0TL3
-	 sQERLSCTLzzb+auIJkggExQhPXjpqCd/wt4vVVjS7lLZuuVm7NUeZOS7LQiV6RjyKY
-	 6uRW8OPsrkAvN5aZICdl+MClPzr+//FTsiAQgR+tydNi8YwIwMbfoWmeblm+qzBimn
-	 DmVDPwGeNoZA5ZzpBgxU0tKkElxeC+aw2WPG6si2UeapDUfsH5XrZF/AfXBr2ghR34
-	 pi/osuwGvumboj87TfIKpukkW8M/B9USbFf/ZY27aS6iafRvWeL0xlk5QoZoiplzLS
-	 r0xlP6vCBQh4A==
+	b=Iy4/JMvIpTpFtIfTFBPLBMLMKtzIQxrowAPyZ+P/+3erVzcu5ExR0RRTgT2MvmCmX
+	 GpsWL7UfCz4oMnQOl1eugoRHCmuZcyZ+S5DYWhQlLPojOOkbudTVCgnv45c0ilMYX/
+	 9cCiU/+H/11MqvTN9rJj7oRs2piSZIhGNAqqvYwxOpv9tI621PePvc02rtHppWvIfM
+	 gGmbpEK5sF47n0mWBpR/CR6NMixyfQ25pKLQHwbk7LYzIivH15yeQ1KWHt03T7BxA1
+	 YyeOWC3M6IIWBglRcUOpDPEXhaizuOQkx3PsK7Fjcix9AVz83FvU75cOCxUNWgEt85
+	 6h6pjHrfm/FkA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
+	kernel test robot <lkp@intel.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 129/164] clk: qcom: gcc-msm8953: Remove ALWAYS_ON flag from cpp_gdsc
-Date: Sat, 28 Feb 2026 13:14:28 -0500
-Message-ID: <20260228181505.1600663-129-sashal@kernel.org>
+Subject: [PATCH 5.15 130/164] clk: Move clk_{save,restore}_context() to COMMON_CLK section
+Date: Sat, 28 Feb 2026 13:14:29 -0500
+Message-ID: <20260228181505.1600663-130-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -44,39 +44,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Barnabás Czémán <barnabas.czeman@mainlining.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit 5f613e7034187179a9d088ff5fd02b1089d0cf20 ]
+[ Upstream commit f47c1b77d0a2a9c0d49ec14302e74f933398d1a3 ]
 
-cpp_gdsc should not be always on, ALWAYS_ON flag was set accidentally.
+The clk_save_context() and clk_restore_context() helpers are only
+implemented by the Common Clock Framework.  They are not available when
+using legacy clock frameworks.  Dummy implementations are provided, but
+only if no clock support is available at all.
 
-Fixes: 9bb6cfc3c77e ("clk: qcom: Add Global Clock Controller driver for MSM8953")
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251117-fix-gdsc-cpp-msm8917-msm8953-v1-1-db33adcff28a@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Hence when CONFIG_HAVE_CLK=y, but CONFIG_COMMON_CLK is not enabled:
+
+    m68k-linux-gnu-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_resume':
+    air_en8811h.c:(.text+0x83e): undefined reference to `clk_restore_context'
+    m68k-linux-gnu-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_suspend':
+    air_en8811h.c:(.text+0x856): undefined reference to `clk_save_context'
+
+Fix this by moving forward declarations and dummy implementions from the
+HAVE_CLK to the COMMON_CLK section.
+
+Fixes: 8b95d1ce3300c411 ("clk: Add functions to save/restore clock context en-masse")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511301553.eaEz1nEW-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-msm8953.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/linux/clk.h | 48 ++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-msm8953.c b/drivers/clk/qcom/gcc-msm8953.c
-index 9d11f993843db..0d7235e1fd9e4 100644
---- a/drivers/clk/qcom/gcc-msm8953.c
-+++ b/drivers/clk/qcom/gcc-msm8953.c
-@@ -3947,7 +3947,6 @@ static struct gdsc cpp_gdsc = {
- 	.pd = {
- 		.name = "cpp_gdsc",
- 	},
--	.flags = ALWAYS_ON,
- 	.pwrsts = PWRSTS_OFF_ON,
- };
+diff --git a/include/linux/clk.h b/include/linux/clk.h
+index 05ab315aa84bc..47ab2d1adc4a1 100644
+--- a/include/linux/clk.h
++++ b/include/linux/clk.h
+@@ -216,6 +216,23 @@ int clk_rate_exclusive_get(struct clk *clk);
+  */
+ void clk_rate_exclusive_put(struct clk *clk);
  
++/**
++ * clk_save_context - save clock context for poweroff
++ *
++ * Saves the context of the clock register for powerstates in which the
++ * contents of the registers will be lost. Occurs deep within the suspend
++ * code so locking is not necessary.
++ */
++int clk_save_context(void);
++
++/**
++ * clk_restore_context - restore clock context after poweroff
++ *
++ * This occurs with all clocks enabled. Occurs deep within the resume code
++ * so locking is not necessary.
++ */
++void clk_restore_context(void);
++
+ #else
+ 
+ static inline int clk_notifier_register(struct clk *clk,
+@@ -276,6 +293,13 @@ static inline int clk_rate_exclusive_get(struct clk *clk)
+ 
+ static inline void clk_rate_exclusive_put(struct clk *clk) {}
+ 
++static inline int clk_save_context(void)
++{
++	return 0;
++}
++
++static inline void clk_restore_context(void) {}
++
+ #endif
+ 
+ #ifdef CONFIG_HAVE_CLK_PREPARE
+@@ -859,23 +883,6 @@ struct clk *clk_get_parent(struct clk *clk);
+  */
+ struct clk *clk_get_sys(const char *dev_id, const char *con_id);
+ 
+-/**
+- * clk_save_context - save clock context for poweroff
+- *
+- * Saves the context of the clock register for powerstates in which the
+- * contents of the registers will be lost. Occurs deep within the suspend
+- * code so locking is not necessary.
+- */
+-int clk_save_context(void);
+-
+-/**
+- * clk_restore_context - restore clock context after poweroff
+- *
+- * This occurs with all clocks enabled. Occurs deep within the resume code
+- * so locking is not necessary.
+- */
+-void clk_restore_context(void);
+-
+ #else /* !CONFIG_HAVE_CLK */
+ 
+ static inline struct clk *clk_get(struct device *dev, const char *id)
+@@ -1042,13 +1049,6 @@ static inline struct clk *clk_get_sys(const char *dev_id, const char *con_id)
+ 	return NULL;
+ }
+ 
+-static inline int clk_save_context(void)
+-{
+-	return 0;
+-}
+-
+-static inline void clk_restore_context(void) {}
+-
+ #endif
+ 
+ /* clk_prepare_enable helps cases using clk_enable in non-atomic context. */
 -- 
 2.51.0
 
