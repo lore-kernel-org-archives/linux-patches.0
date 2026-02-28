@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AC8332EA7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70043314C3
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301245; cv=none; b=BZNplMIwT69ANy3aOiZ1GPBx0wUMQDnwNShhXIOxmyYgvjY7WelwkgAhbax4CeDu+ydc7fpP4kqPdkIa2I1voVkzh60NE5rugBjVE3o5rc5Qe4BmwsTK7VlF6dF6dTMLD3rDeA9zlRqOZONdlq3EjWtg7U2w44mIsI6N6dsB+aU=
+	t=1772301246; cv=none; b=YA+Z4vEbiTF8uWanQzmozT1t5GY8fcrH3QkluIxgetha0Jtzm1BzKXPHcix9FzF49RfTpwQeXYkhevysDqUVnCetwMVJzjEbaEhagq+1zMp/mjWWotUSByntmKe3dtN3wQ556oWOfbGNXBSCkPHGlFg8WQPDVMYCBuAhKBoniRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301245; c=relaxed/simple;
-	bh=aM7GcsWZOka3mZdbPvxUduPH0aSaXivgWTN99CfH0do=;
+	s=arc-20240116; t=1772301246; c=relaxed/simple;
+	bh=xaFRN1f9Mf1+D3TQxJtcwOodaDxq9QJkm7qNWrMGVV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XuFtVzHSujxX6b2G7ze4dcnPwIVNtyH7DqQuyHAkLoEq3pY9YD9mByoz/nuwFDBByowGTF2zI3kOo36FHAOGJWBZahE25qj0zkQK+3qQYTKTas3f1wk45Y91BcvGvX6wvS+4scQf2ztFmRl7gMjsLx00+ZaWveBLY2PtpOQVa6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rdhqrVso; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DIqFxqPiZi1wKg1grLG+T5E/r11HvhJKRwAREotYVFliiCqVLb4iI6ay1EsEfyJoMTDn/7m0gzMUQBcNiFP1o0/xhE/0w7yMKmoOwng1hqPRonZ2elkWRzEWUl3mFZ0q4rXc6/X9PNc283RnEoNQ4jjhxmQJ0aZDLFECIeyuC7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KKY9j9Xh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rdhqrVso"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A3BC19424;
-	Sat, 28 Feb 2026 17:54:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KKY9j9Xh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43248C19425;
+	Sat, 28 Feb 2026 17:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301245;
-	bh=aM7GcsWZOka3mZdbPvxUduPH0aSaXivgWTN99CfH0do=;
+	bh=xaFRN1f9Mf1+D3TQxJtcwOodaDxq9QJkm7qNWrMGVV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rdhqrVsoe5DNR8UKS7xA9pj5rQfJBPnFYJYeDj5mOshhOg9TJaup2iQdruZTHWTmQ
-	 NZi9sG2bWAuLKyYEfl53TvMMVP0+42H1XqDO7PsizGbbu3kQG5Ug+UWbHhJ0KW3PEF
-	 9FHtewwOSU5ELvPgKzCquXbqYBcW5uPom4eWTFI2nlX1MmnEJn62LH8xGd6f0HTb6C
-	 TinbSdlpy7QWBwMysu5NaNzKEQgPMY4SQJXyBnkJSVVmtFnu32IEc3Wts6gNBcTLxW
-	 uXe1wpS3hiLKwjfGaajP2QcNBzlfn/5QupeyzwtB96bcQST6rjifXWpbCa1bT19z/t
-	 J8i9UBb/upIEw==
+	b=KKY9j9Xhsg7uZ2eMUdSfmvhq0nV7A8TAAnkvafHQpbk8M+jufhD6vxLgnQD0wtQ/K
+	 LhET0CLvb/aLx1AlveVtMqofGSSeFdLORdxrAtVzgEly1W3e1JSFSqmNCm7zZYJqWi
+	 UaNmCQ7RgbgVCJkWWfbHMWF3trXI8JV11Hy4PsUSjwocXnvfd27YWCveVkKmNINljD
+	 gzRC7z71vkJrw61xwUhjcdm6WZmWCEi1HSJop9jsiNqeuEdTYkWESjrax3zdNSzIfQ
+	 qpqjZD9H6aU0LrLmfkCxinVMzJ9ZFmZR9T0Nk6fnHy9+06ajQ/HzM1DtL98FGaZOBV
+	 TPgeRFx2wyGLA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Hyunwoo Kim <imv4bel@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Sabrina Dubroca <sd@queasysnail.net>,
+Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
+	syzbot+52624bdfbf2746d37d70@syzkaller.appspotmail.com,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 426/752] tls: Fix race condition in tls_sw_cancel_work_tx()
-Date: Sat, 28 Feb 2026 12:42:17 -0500
-Message-ID: <20260228174750.1542406-426-sashal@kernel.org>
+Subject: [PATCH 6.18 427/752] kcm: fix zero-frag skb in frag_list on partial sendmsg error
+Date: Sat, 28 Feb 2026 12:42:18 -0500
+Message-ID: <20260228174750.1542406-427-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,58 +48,119 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 7bb09315f93dce6acc54bf59e5a95ba7365c2be4 ]
+[ Upstream commit ca220141fa8ebae09765a242076b2b77338106b0 ]
 
-This issue was discovered during a code audit.
+Syzkaller reported a warning in kcm_write_msgs() when processing a
+message with a zero-fragment skb in the frag_list.
 
-After cancel_delayed_work_sync() is called from tls_sk_proto_close(),
-tx_work_handler() can still be scheduled from paths such as the
-Delayed ACK handler or ksoftirqd.
-As a result, the tx_work_handler() worker may dereference a freed
-TLS object.
+When kcm_sendmsg() fills MAX_SKB_FRAGS fragments in the current skb,
+it allocates a new skb (tskb) and links it into the frag_list before
+copying data. If the copy subsequently fails (e.g. -EFAULT from
+user memory), tskb remains in the frag_list with zero fragments:
 
-The following is a simple race scenario:
+  head skb (msg being assembled, NOT yet in sk_write_queue)
+  +-----------+
+  | frags[17] |  (MAX_SKB_FRAGS, all filled with data)
+  | frag_list-+--> tskb
+  +-----------+    +----------+
+                   | frags[0] |  (empty! copy failed before filling)
+                   +----------+
 
-          cpu0                         cpu1
+For SOCK_SEQPACKET with partial data already copied, the error path
+saves this message via partial_message for later completion. For
+SOCK_SEQPACKET, sock_write_iter() automatically sets MSG_EOR, so a
+subsequent zero-length write(fd, NULL, 0) completes the message and
+queues it to sk_write_queue. kcm_write_msgs() then walks the
+frag_list and hits:
 
-tls_sk_proto_close()
-  tls_sw_cancel_work_tx()
-                                 tls_write_space()
-                                   tls_sw_write_space()
-                                     if (!test_and_set_bit(BIT_TX_SCHEDULED, &tx_ctx->tx_bitmask))
-    set_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask);
-    cancel_delayed_work_sync(&ctx->tx_work.work);
-                                     schedule_delayed_work(&tx_ctx->tx_work.work, 0);
+  WARN_ON(!skb_shinfo(skb)->nr_frags)
 
-To prevent this race condition, cancel_delayed_work_sync() is
-replaced with disable_delayed_work_sync().
+TCP has a similar pattern where skbs are enqueued before data copy
+and cleaned up on failure via tcp_remove_empty_skb(). KCM was
+missing the equivalent cleanup.
 
-Fixes: f87e62d45e51 ("net/tls: remove close callback sock unlock/lock around TX work flush")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/aZgsFO6nfylfvLE7@v4bel
+Fix this by tracking the predecessor skb (frag_prev) when allocating
+a new frag_list entry. On error, if the tail skb has zero frags,
+use frag_prev to unlink and free it in O(1) without walking the
+singly-linked frag_list. frag_prev is safe to dereference because
+the entire message chain is only held locally (or in kcm->seq_skb)
+and is not added to sk_write_queue until MSG_EOR, so the send path
+cannot free it underneath us.
+
+Also change the WARN_ON to WARN_ON_ONCE to avoid flooding the log
+if the condition is somehow hit repeatedly.
+
+There are currently no KCM selftests in the kernel tree; a simple
+reproducer is available at [1].
+
+[1] https://gist.github.com/mrpre/a94d431c757e8d6f168f4dd1a3749daa
+
+Reported-by: syzbot+52624bdfbf2746d37d70@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000269a1405a12fdc77@google.com/T/
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260219014256.370092-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/kcm/kcmsock.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index d171353699800..c6a708ee21dc8 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2533,7 +2533,7 @@ void tls_sw_cancel_work_tx(struct tls_context *tls_ctx)
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index b4f01cb075615..f6d44481954cd 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -628,7 +628,7 @@ static int kcm_write_msgs(struct kcm_sock *kcm)
+ 			skb = txm->frag_skb;
+ 		}
  
- 	set_bit(BIT_TX_CLOSING, &ctx->tx_bitmask);
- 	set_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask);
--	cancel_delayed_work_sync(&ctx->tx_work.work);
-+	disable_delayed_work_sync(&ctx->tx_work.work);
- }
+-		if (WARN_ON(!skb_shinfo(skb)->nr_frags) ||
++		if (WARN_ON_ONCE(!skb_shinfo(skb)->nr_frags) ||
+ 		    WARN_ON_ONCE(!skb_frag_page(&skb_shinfo(skb)->frags[0]))) {
+ 			ret = -EINVAL;
+ 			goto out;
+@@ -749,7 +749,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct kcm_sock *kcm = kcm_sk(sk);
+-	struct sk_buff *skb = NULL, *head = NULL;
++	struct sk_buff *skb = NULL, *head = NULL, *frag_prev = NULL;
+ 	size_t copy, copied = 0;
+ 	long timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
+ 	int eor = (sock->type == SOCK_DGRAM) ?
+@@ -824,6 +824,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 				else
+ 					skb->next = tskb;
  
- void tls_sw_release_resources_tx(struct sock *sk)
++				frag_prev = skb;
+ 				skb = tskb;
+ 				skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 				continue;
+@@ -933,6 +934,22 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ out_error:
+ 	kcm_push(kcm);
+ 
++	/* When MAX_SKB_FRAGS was reached, a new skb was allocated and
++	 * linked into the frag_list before data copy. If the copy
++	 * subsequently failed, this skb has zero frags. Remove it from
++	 * the frag_list to prevent kcm_write_msgs from later hitting
++	 * WARN_ON(!skb_shinfo(skb)->nr_frags).
++	 */
++	if (frag_prev && !skb_shinfo(skb)->nr_frags) {
++		if (head == frag_prev)
++			skb_shinfo(head)->frag_list = NULL;
++		else
++			frag_prev->next = NULL;
++		kfree_skb(skb);
++		/* Update skb as it may be saved in partial_message via goto */
++		skb = frag_prev;
++	}
++
+ 	if (sock->type == SOCK_SEQPACKET) {
+ 		/* Wrote some bytes before encountering an
+ 		 * error, return partial success.
 -- 
 2.51.0
 
