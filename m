@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37CD3314C3
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE51B332EA7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301264; cv=none; b=AKLwIHHuZR5j/MCzBhpXTwZ1k+HBJ9mV2jHUzBCLWgB92wXDa1aovZqNvqkVZS1leeORGJ/LS2cC7OWapKpr1bgopJPhP34BpY5roho0EI07ZZ4CuZR3xL9uI3Sg9AMuI1YaH5y5c3OtNfKIE3sRWOiUt6qsZMQZvvKWaX0KhNk=
+	t=1772301264; cv=none; b=kboROtl1iwFU7s6bgVSl5MOntWbCZTh6YqeGqJKgk0rk7TdEouzgUuQ5lren9pyitob3q6scTt6SYRFYV/M+sS4005MuUVGB0UjElzEQI9SvFCVvuuYbO2B5pWszn58EhG456B87rk3/C9urctnZxXC3870XnYXuBkQbsxJYV50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301264; c=relaxed/simple;
-	bh=RdkuAf7scFKBUlHx22gyfCGgrI6nOkT0Ss8a3+t2sEM=;
+	bh=HOEFadT1XOWDeWomSRq7gVuDauwBWhjeXApIjqBti40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVYcPsF21J0bXJfhYnnoXyS6sFc3naCBszS60T7ObKcx/Jvm7Hgk1mpWTJR7Wm/N/r9j0p9FUfhFWpwNpGHDmabvS/aa2f2hCMgcqR6P1IcOiLlpJK2KA1ljINxJQcORLRZTIACPBV8asFhKTGfbCqxvPauCx3lfQ2LoDWigsyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H/NnXFih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TuqGJrWri3W1vB5rCn1aSUqmNFT/qeN8qMKjLWD0jLTwtq/WjzNMF03aB6/JwknXeTXrp/lTQYxwSFy6JGbM08WjRMXzdQJuDtCE9rUWkYiMCXMsuFdvI4rCi955oM7Dw5ASvDfz/rOsM8gyEbyaHCq0XxZSDp+5h/yuFsT+bJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lcrkQtSv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H/NnXFih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A27C19423;
-	Sat, 28 Feb 2026 17:54:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lcrkQtSv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144CDC116D0;
+	Sat, 28 Feb 2026 17:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301263;
-	bh=RdkuAf7scFKBUlHx22gyfCGgrI6nOkT0Ss8a3+t2sEM=;
+	s=k20201202; t=1772301264;
+	bh=HOEFadT1XOWDeWomSRq7gVuDauwBWhjeXApIjqBti40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H/NnXFihlCxWGLPpEIYm9VQ1Qvt3r79PDM5rP8I1QJiCAvPvWTVGdlwmN6qx4qAFJ
-	 Sf/MAyl6B7VhgF0ACuAuYFsNFzBkK/50KnTt0enuvVgXgI5sxmBIYgMw/FKbkukyMM
-	 f3JGYMbCjLBxBMrqsUR9MJtZU+tEP5Of8cFq9jki/nlIPpe+WHmbzbQSLdtEiT0GED
-	 SNIs7LnyGjCMl/rHR3B84uo3v7An/e4MxLLPagIdQWnNqUJjnB6jBdeAs5I/zXb43z
-	 mIxpHVix0e6oMrqs8QJlMLfLc+Ma34Nu2yZqj2O15RwsULBBbvBfqts5pKDPeZyU+u
-	 RFgM8V7VyUKIA==
+	b=lcrkQtSvrXJHSaH+jIaNUROXbbQowRre46Ovwa73vMxxvSlTmOlpz6/icBmNgzoNp
+	 fSktXbJ9n4GzX9pd/4REUw7ia91XXme+ERkz+TDATXh0/F12gCVEPg06zMsHpaI07Z
+	 WYOVUwNfalaxz0iowCVNLnDuygEmPHOwXvcqLYpcMPo6ntrzOANziLXIrbx63KhJwn
+	 GUrkcNoySpWDFNVn0HL9bdaCB2ppMKgXh9pGd+kmYCAUNZa5orll2chmJ2RmSPN7Dd
+	 K7h0JyLnyFTFDX58bs+Yj9bPKBm0SPxkWzQRj+INxXrMsSHePATICLqYEzWUa+jkZ+
+	 9xTC1KnhVEU1A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Shay Drory <shayd@nvidia.com>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Alex Vesker <valex@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 447/752] net/mlx5: DR, Fix circular locking dependency in dump
-Date: Sat, 28 Feb 2026 12:42:38 -0500
-Message-ID: <20260228174750.1542406-447-sashal@kernel.org>
+Subject: [PATCH 6.18 448/752] net/mlx5: LAG, disable MPESW in lag_disable_change()
+Date: Sat, 28 Feb 2026 12:42:39 -0500
+Message-ID: <20260228174750.1542406-448-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -53,148 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 2700b7e603af39ca55fe9fc876ca123efd44680f ]
+[ Upstream commit bd7b9f83fb9f85228c3ac9748d9cba9fab7fb5a2 ]
 
-Fix a circular locking dependency between dbg_mutex and the domain
-rx/tx mutexes that could lead to a deadlock.
+mlx5_lag_disable_change() unconditionally called mlx5_disable_lag() when
+LAG was active, which is incorrect for MLX5_LAG_MODE_MPESW.
+Hnece, call mlx5_disable_mpesw() when running in MPESW mode.
 
-The dump path in dr_dump_domain_all() was acquiring locks in the order:
-  dbg_mutex -> rx.mutex -> tx.mutex
-
-While the table/matcher creation paths acquire locks in the order:
-  rx.mutex -> tx.mutex -> dbg_mutex
-
-This inverted lock ordering creates a circular dependency. Fix this by
-changing dr_dump_domain_all() to acquire the domain lock before
-dbg_mutex, matching the order used in mlx5dr_table_create() and
-mlx5dr_matcher_create().
-
-Lockdep splat:
- ======================================================
- WARNING: possible circular locking dependency detected
- 6.19.0-rc6net_next_e817c4e #1 Not tainted
- ------------------------------------------------------
- sos/30721 is trying to acquire lock:
- ffff888102df5900 (&dmn->info.rx.mutex){+.+.}-{4:4}, at:
-dr_dump_start+0x131/0x450 [mlx5_core]
-
- but task is already holding lock:
- ffff888102df5bc0 (&dmn->dump_info.dbg_mutex){+.+.}-{4:4}, at:
-dr_dump_start+0x10b/0x450 [mlx5_core]
-
- which lock already depends on the new lock.
-
- the existing dependency chain (in reverse order) is:
-
- -> #2 (&dmn->dump_info.dbg_mutex){+.+.}-{4:4}:
-        __mutex_lock+0x91/0x1060
-        mlx5dr_matcher_create+0x377/0x5e0 [mlx5_core]
-        mlx5_cmd_dr_create_flow_group+0x62/0xd0 [mlx5_core]
-        mlx5_create_flow_group+0x113/0x1c0 [mlx5_core]
-        mlx5_chains_create_prio+0x453/0x2290 [mlx5_core]
-        mlx5_chains_get_table+0x2e2/0x980 [mlx5_core]
-        esw_chains_create+0x1e6/0x3b0 [mlx5_core]
-        esw_create_offloads_fdb_tables.cold+0x62/0x63f [mlx5_core]
-        esw_offloads_enable+0x76f/0xd20 [mlx5_core]
-        mlx5_eswitch_enable_locked+0x35a/0x500 [mlx5_core]
-        mlx5_devlink_eswitch_mode_set+0x561/0x950 [mlx5_core]
-        devlink_nl_eswitch_set_doit+0x67/0xe0
-        genl_family_rcv_msg_doit+0xe0/0x130
-        genl_rcv_msg+0x188/0x290
-        netlink_rcv_skb+0x4b/0xf0
-        genl_rcv+0x24/0x40
-        netlink_unicast+0x1ed/0x2c0
-        netlink_sendmsg+0x210/0x450
-        __sock_sendmsg+0x38/0x60
-        __sys_sendto+0x119/0x180
-        __x64_sys_sendto+0x20/0x30
-        do_syscall_64+0x70/0xd00
-        entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
- -> #1 (&dmn->info.tx.mutex){+.+.}-{4:4}:
-        __mutex_lock+0x91/0x1060
-        mlx5dr_table_create+0x11d/0x530 [mlx5_core]
-        mlx5_cmd_dr_create_flow_table+0x62/0x140 [mlx5_core]
-        __mlx5_create_flow_table+0x46f/0x960 [mlx5_core]
-        mlx5_create_flow_table+0x16/0x20 [mlx5_core]
-        esw_create_offloads_fdb_tables+0x136/0x240 [mlx5_core]
-        esw_offloads_enable+0x76f/0xd20 [mlx5_core]
-        mlx5_eswitch_enable_locked+0x35a/0x500 [mlx5_core]
-        mlx5_devlink_eswitch_mode_set+0x561/0x950 [mlx5_core]
-        devlink_nl_eswitch_set_doit+0x67/0xe0
-        genl_family_rcv_msg_doit+0xe0/0x130
-        genl_rcv_msg+0x188/0x290
-        netlink_rcv_skb+0x4b/0xf0
-        genl_rcv+0x24/0x40
-        netlink_unicast+0x1ed/0x2c0
-        netlink_sendmsg+0x210/0x450
-        __sock_sendmsg+0x38/0x60
-        __sys_sendto+0x119/0x180
-        __x64_sys_sendto+0x20/0x30
-        do_syscall_64+0x70/0xd00
-        entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
- -> #0 (&dmn->info.rx.mutex){+.+.}-{4:4}:
-        __lock_acquire+0x18b6/0x2eb0
-        lock_acquire+0xd3/0x2c0
-        __mutex_lock+0x91/0x1060
-        dr_dump_start+0x131/0x450 [mlx5_core]
-        seq_read_iter+0xe3/0x410
-        seq_read+0xfb/0x130
-        full_proxy_read+0x53/0x80
-        vfs_read+0xba/0x330
-        ksys_read+0x65/0xe0
-        do_syscall_64+0x70/0xd00
-        entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock(&dmn->dump_info.dbg_mutex);
-                                lock(&dmn->info.tx.mutex);
-                                lock(&dmn->dump_info.dbg_mutex);
-   lock(&dmn->info.rx.mutex);
-
-                   *** DEADLOCK ***
-
-Fixes: 9222f0b27da2 ("net/mlx5: DR, Add support for dumping steering info")
+Fixes: a32327a3a02c ("net/mlx5: Lag, Control MultiPort E-Switch single FDB mode")
 Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Reviewed-by: Alex Vesker <valex@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260224114652.1787431-2-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260224114652.1787431-3-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c   | 8 ++++++--
+ drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c | 8 ++++----
+ drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.h | 5 +++++
+ 3 files changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c
-index 030a5776c9374..a4c19af1775f1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/sws/dr_dbg.c
-@@ -1050,8 +1050,8 @@ static int dr_dump_domain_all(struct seq_file *file, struct mlx5dr_domain *dmn)
- 	struct mlx5dr_table *tbl;
- 	int ret;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index 8ec04a5f434dd..2d6019a32669c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -1652,8 +1652,12 @@ void mlx5_lag_disable_change(struct mlx5_core_dev *dev)
+ 	mutex_lock(&ldev->lock);
  
--	mutex_lock(&dmn->dump_info.dbg_mutex);
- 	mlx5dr_domain_lock(dmn);
-+	mutex_lock(&dmn->dump_info.dbg_mutex);
+ 	ldev->mode_changes_in_progress++;
+-	if (__mlx5_lag_is_active(ldev))
+-		mlx5_disable_lag(ldev);
++	if (__mlx5_lag_is_active(ldev)) {
++		if (ldev->mode == MLX5_LAG_MODE_MPESW)
++			mlx5_lag_disable_mpesw(ldev);
++		else
++			mlx5_disable_lag(ldev);
++	}
  
- 	ret = dr_dump_domain(file, dmn);
- 	if (ret < 0)
-@@ -1064,8 +1064,8 @@ static int dr_dump_domain_all(struct seq_file *file, struct mlx5dr_domain *dmn)
- 	}
- 
- unlock_mutex:
--	mlx5dr_domain_unlock(dmn);
- 	mutex_unlock(&dmn->dump_info.dbg_mutex);
-+	mlx5dr_domain_unlock(dmn);
- 	return ret;
+ 	mutex_unlock(&ldev->lock);
+ 	mlx5_devcom_comp_unlock(dev->priv.hca_devcom_comp);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
+index 2d86af8f0d9b8..c217998604fdb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
+@@ -65,7 +65,7 @@ static int mlx5_mpesw_metadata_set(struct mlx5_lag *ldev)
+ 	return err;
  }
  
+-static int enable_mpesw(struct mlx5_lag *ldev)
++static int mlx5_lag_enable_mpesw(struct mlx5_lag *ldev)
+ {
+ 	struct mlx5_core_dev *dev0;
+ 	int err;
+@@ -124,7 +124,7 @@ static int enable_mpesw(struct mlx5_lag *ldev)
+ 	return err;
+ }
+ 
+-static void disable_mpesw(struct mlx5_lag *ldev)
++void mlx5_lag_disable_mpesw(struct mlx5_lag *ldev)
+ {
+ 	if (ldev->mode == MLX5_LAG_MODE_MPESW) {
+ 		mlx5_mpesw_metadata_cleanup(ldev);
+@@ -150,9 +150,9 @@ static void mlx5_mpesw_work(struct work_struct *work)
+ 	}
+ 
+ 	if (mpesww->op == MLX5_MPESW_OP_ENABLE)
+-		mpesww->result = enable_mpesw(ldev);
++		mpesww->result = mlx5_lag_enable_mpesw(ldev);
+ 	else if (mpesww->op == MLX5_MPESW_OP_DISABLE)
+-		disable_mpesw(ldev);
++		mlx5_lag_disable_mpesw(ldev);
+ unlock:
+ 	mutex_unlock(&ldev->lock);
+ 	mlx5_devcom_comp_unlock(devcom);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.h b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.h
+index 02520f27a033c..46de93ed790de 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.h
+@@ -31,5 +31,10 @@ int mlx5_lag_mpesw_do_mirred(struct mlx5_core_dev *mdev,
+ bool mlx5_lag_is_mpesw(struct mlx5_core_dev *dev);
+ void mlx5_lag_mpesw_disable(struct mlx5_core_dev *dev);
+ int mlx5_lag_mpesw_enable(struct mlx5_core_dev *dev);
++#ifdef CONFIG_MLX5_ESWITCH
++void mlx5_lag_disable_mpesw(struct mlx5_lag *ldev);
++#else
++static inline void mlx5_lag_disable_mpesw(struct mlx5_lag *ldev) {}
++#endif /* CONFIG_MLX5_ESWITCH */
+ 
+ #endif /* __MLX5_LAG_MPESW_H__ */
 -- 
 2.51.0
 
