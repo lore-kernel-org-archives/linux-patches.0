@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C9838F62A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA1238D014
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302163; cv=none; b=cm/2Z9nlG7Fm8CbgMa+31+gX3l2k4/Hj2bg2hbTMDXky8Go62N2yjReJzpf5SKQ04GAD18LmfHnOtMqoKSMKbJwe07xf8/ay1Yj7x2kH67dK0TnaIE1UXxhcXQrQHHI8ZT+6zDZxa4U6wqJ3PFVFFab10cKSm8cDUcdEnFgAceM=
+	t=1772302164; cv=none; b=jG2uHettBffcsq5aPM+xDqZQP9Y1PQLlq+TajFzPoJLya+SSjoy9NnBdKRIZqZvSmEdyYcfNU2qTtkqv5NYS1Hal/oa2vvBM6RmxEpFuIePQBv5FvJBPttHEvnhIwQooAXS/Fg7g08QmlRDTINTfCZ1MBNN6mdHz+jpmYBta//Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302163; c=relaxed/simple;
-	bh=Gm2bLHkFTr0VTvnMFF7cp7ksZB8vp90nRL/P2J3B98Q=;
+	s=arc-20240116; t=1772302164; c=relaxed/simple;
+	bh=xkszsojJstC8kq1NiM/WbJmA5tdL7ujVa3tSO22w9OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHhI31S4xicXkLzC6LH15AsslkN4AFTnfIyPZVmZl8yG01VhkPz7rtGjZSylyt7S4gcaN9HV2H3q5dap0YLIcdvCQjMnEv/w2qsvzvJolyaqr94wHbRxDdX+GjzH81+itQZlqAabYwvWpCJDxX7FtH1HJutkTqmibMryeywZw0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1v9ax3C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+M7FIswYx2RYb4iOz5Io1RcOJm3C2VUvPGabn5ciPAVlOzD6YdSb1jvQVavRoM1fc1ijNi15ekJzzh4lSYhQbfkqZ4iSbeauzF0PTci/9HASwFghzJpr7+/eXTayvgr39gtkzPhOBiAQKjOfjnHLC801WCvc3m3vprWyjF5KTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O4KG+mMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1v9ax3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA450C116D0;
-	Sat, 28 Feb 2026 18:09:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O4KG+mMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7B0C116D0;
+	Sat, 28 Feb 2026 18:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302163;
-	bh=Gm2bLHkFTr0VTvnMFF7cp7ksZB8vp90nRL/P2J3B98Q=;
+	s=k20201202; t=1772302164;
+	bh=xkszsojJstC8kq1NiM/WbJmA5tdL7ujVa3tSO22w9OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q1v9ax3CvH4w+70QAn3tA8cntFKr/635Z2rD/67a0zRAtqqo/I0J7Go3WTWLyeGeG
-	 oiMdEbbiWfP6mV4rxgtvFt21ZWlSZ4gzfiVq0uZSfC/lUNdE0K50VTps0NeKlkmgpO
-	 c/vWWLuFryoqb+X8CAKDpHtkiC9ki1O1VBvRPJKD9TRh9MRQ0EFzA9fmAw/HLICbxc
-	 RGiojscT93UIyA/GCNpDkvlw0I6cRWviKjp7quAz6n7MxJCGCyrDvBcEOln2PQhvY1
-	 /SG2t6ZMQQX4N7TGRwV7r9/nCg1joCS+tN/hM/cSFxq9xJRepqIKg8t4h3bfVdvJX/
-	 dJDyAyVQYudJA==
+	b=O4KG+mMfevKAkHdtyGl2aBab/HaiIHR0xQbeFGJlf019mvauzp1AqxShCxSQPRVdd
+	 +GSc2N192K2w/kqHsep8ArHPlbUT4MF5zmc7Pns/I5WneWIKdlpBfEwv7KvnRWbwNL
+	 X26txq+77JTUa2dw8aIC7IROK2r+YsbETJaHm3dqoioLii3g7KU8+m7EEvsbe/7jTB
+	 xjPcGZ56+fpItGzzxeuiD/03tDnBa/dJeGeggdSi/21ZverebdyT2/5zhu8wpjy8N4
+	 08hfoIP84HrIwhUCVBlHdkAD72624TifMcVnyIVfN1M5viPC18mysDzO6Bv/GyzgA/
+	 t7Pbey4ZJvm9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Shinas Rasheed <srasheed@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/283] octeon_ep: restructured interrupt handlers
-Date: Sat, 28 Feb 2026 13:05:01 -0500
-Message-ID: <20260228180709.1583486-159-sashal@kernel.org>
+Subject: [PATCH 6.6 160/283] octeon_ep: support Octeon CN10K devices
+Date: Sat, 28 Feb 2026 13:05:02 -0500
+Message-ID: <20260228180709.1583486-160-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,542 +49,1427 @@ Content-Transfer-Encoding: 8bit
 
 From: Shinas Rasheed <srasheed@marvell.com>
 
-[ Upstream commit 0b8ef824eedef96f3423f61dde2629755707b168 ]
+[ Upstream commit 0807dc76f3bf500f9a22465eedd2290da7357efb ]
 
-Separated queue specific interrupts to register to individual msix-vectors
-instead of using a single generic interrupt handler on a single
-msix-vector.
+Add PCI Endpoint NIC support for Octeon CN10K devices.
+CN10K devices are part of Octeon 10 family products with
+similar PCI NIC characteristics. These include:
+- CN10KA
+- CNF10KA
+- CNF10KB
+- CN10KB
+
+Update supported device list in Documentation
 
 Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
-Link: https://lore.kernel.org/r/20230918065621.2165449-1-srasheed@marvell.com
+Link: https://lore.kernel.org/r/20231117103817.2468176-1-srasheed@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 73e6ffa37ceb ("octeon_ep: disable per ring interrupts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeon_ep/octep_cn9k_pf.c         | 158 ++++++++++----
- .../ethernet/marvell/octeon_ep/octep_main.c   | 197 +++++++++++++++++-
- .../ethernet/marvell/octeon_ep/octep_main.h   |  13 +-
- 3 files changed, 323 insertions(+), 45 deletions(-)
+ .../ethernet/marvell/octeon_ep.rst            |   4 +
+ .../net/ethernet/marvell/octeon_ep/Makefile   |   3 +-
+ .../marvell/octeon_ep/octep_cnxk_pf.c         | 886 ++++++++++++++++++
+ .../ethernet/marvell/octeon_ep/octep_main.c   |  20 +
+ .../ethernet/marvell/octeon_ep/octep_main.h   |   6 +
+ .../marvell/octeon_ep/octep_regs_cnxk_pf.h    | 400 ++++++++
+ 6 files changed, 1318 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
+ create mode 100644 drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-index f282cd5b29ea5..d4ee2454675b6 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-@@ -369,34 +369,40 @@ static void octep_setup_mbox_regs_cn93_pf(struct octep_device *oct, int q_no)
- 	mbox->mbox_read_reg = oct->mmio[0].hw_addr + CN93_SDP_R_MBOX_VF_PF_DATA(q_no);
- }
+diff --git a/Documentation/networking/device_drivers/ethernet/marvell/octeon_ep.rst b/Documentation/networking/device_drivers/ethernet/marvell/octeon_ep.rst
+index cad96c8d1f97d..613a818d5db6e 100644
+--- a/Documentation/networking/device_drivers/ethernet/marvell/octeon_ep.rst
++++ b/Documentation/networking/device_drivers/ethernet/marvell/octeon_ep.rst
+@@ -24,6 +24,10 @@ Supported Devices
+ Currently, this driver support following devices:
+  * Network controller: Cavium, Inc. Device b200
+  * Network controller: Cavium, Inc. Device b400
++ * Network controller: Cavium, Inc. Device b900
++ * Network controller: Cavium, Inc. Device ba00
++ * Network controller: Cavium, Inc. Device bc00
++ * Network controller: Cavium, Inc. Device bd00
  
--/* Process non-ioq interrupts required to keep pf interface running.
-- * OEI_RINT is needed for control mailbox
-- */
--static bool octep_poll_non_ioq_interrupts_cn93_pf(struct octep_device *oct)
--{
--	bool handled = false;
--	u64 reg0;
--
--	/* Check for OEI INTR */
--	reg0 = octep_read_csr64(oct, CN93_SDP_EPF_OEI_RINT);
--	if (reg0) {
--		dev_info(&oct->pdev->dev,
--			 "Received OEI_RINT intr: 0x%llx\n",
--			 reg0);
--		octep_write_csr64(oct, CN93_SDP_EPF_OEI_RINT, reg0);
--		if (reg0 & CN93_SDP_EPF_OEI_RINT_DATA_BIT_MBOX)
-+/* Poll OEI events like heartbeat */
-+static void octep_poll_oei_cn93_pf(struct octep_device *oct)
-+{
-+	u64 reg;
+ Interface Control
+ =================
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/Makefile b/drivers/net/ethernet/marvell/octeon_ep/Makefile
+index 2026c8118158c..02a4a21bc2986 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/Makefile
++++ b/drivers/net/ethernet/marvell/octeon_ep/Makefile
+@@ -6,4 +6,5 @@
+ obj-$(CONFIG_OCTEON_EP) += octeon_ep.o
+ 
+ octeon_ep-y := octep_main.o octep_cn9k_pf.o octep_tx.o octep_rx.o \
+-	       octep_ethtool.o octep_ctrl_mbox.o octep_ctrl_net.o
++	       octep_ethtool.o octep_ctrl_mbox.o octep_ctrl_net.o \
++	       octep_cnxk_pf.o
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
+new file mode 100644
+index 0000000000000..abb03e9119e72
+--- /dev/null
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
+@@ -0,0 +1,886 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Marvell Octeon EP (EndPoint) Ethernet Driver
++ *
++ * Copyright (C) 2020 Marvell.
++ *
++ */
 +
-+	reg = octep_read_csr64(oct, CN93_SDP_EPF_OEI_RINT);
-+	if (reg) {
-+		octep_write_csr64(oct, CN93_SDP_EPF_OEI_RINT, reg);
-+		if (reg & CN93_SDP_EPF_OEI_RINT_DATA_BIT_MBOX)
- 			queue_work(octep_wq, &oct->ctrl_mbox_task);
--		else if (reg0 & CN93_SDP_EPF_OEI_RINT_DATA_BIT_HBEAT)
-+		else if (reg & CN93_SDP_EPF_OEI_RINT_DATA_BIT_HBEAT)
- 			atomic_set(&oct->hb_miss_cnt, 0);
--
--		handled = true;
- 	}
++#include <linux/pci.h>
++#include <linux/netdevice.h>
++#include <linux/etherdevice.h>
++
++#include "octep_config.h"
++#include "octep_main.h"
++#include "octep_regs_cnxk_pf.h"
++
++/* We will support 128 pf's in control mbox */
++#define CTRL_MBOX_MAX_PF	128
++#define CTRL_MBOX_SZ		((size_t)(0x400000 / CTRL_MBOX_MAX_PF))
++
++/* Names of Hardware non-queue generic interrupts */
++static char *cnxk_non_ioq_msix_names[] = {
++	"epf_ire_rint",
++	"epf_ore_rint",
++	"epf_vfire_rint",
++	"epf_rsvd0",
++	"epf_vfore_rint",
++	"epf_rsvd1",
++	"epf_mbox_rint",
++	"epf_rsvd2_0",
++	"epf_rsvd2_1",
++	"epf_dma_rint",
++	"epf_dma_vf_rint",
++	"epf_rsvd3",
++	"epf_pp_vf_rint",
++	"epf_rsvd3",
++	"epf_misc_rint",
++	"epf_rsvd5",
++	/* Next 16 are for OEI_RINT */
++	"epf_oei_rint0",
++	"epf_oei_rint1",
++	"epf_oei_rint2",
++	"epf_oei_rint3",
++	"epf_oei_rint4",
++	"epf_oei_rint5",
++	"epf_oei_rint6",
++	"epf_oei_rint7",
++	"epf_oei_rint8",
++	"epf_oei_rint9",
++	"epf_oei_rint10",
++	"epf_oei_rint11",
++	"epf_oei_rint12",
++	"epf_oei_rint13",
++	"epf_oei_rint14",
++	"epf_oei_rint15",
++	/* IOQ interrupt */
++	"octeon_ep"
++};
++
++/* Dump useful hardware CSRs for debug purpose */
++static void cnxk_dump_regs(struct octep_device *oct, int qno)
++{
++	struct device *dev = &oct->pdev->dev;
++
++	dev_info(dev, "IQ-%d register dump\n", qno);
++	dev_info(dev, "R[%d]_IN_INSTR_DBELL[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_IN_INSTR_DBELL(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_IN_INSTR_DBELL(qno)));
++	dev_info(dev, "R[%d]_IN_CONTROL[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_IN_CONTROL(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_IN_CONTROL(qno)));
++	dev_info(dev, "R[%d]_IN_ENABLE[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_IN_ENABLE(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_IN_ENABLE(qno)));
++	dev_info(dev, "R[%d]_IN_INSTR_BADDR[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_IN_INSTR_BADDR(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_IN_INSTR_BADDR(qno)));
++	dev_info(dev, "R[%d]_IN_INSTR_RSIZE[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_IN_INSTR_RSIZE(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_IN_INSTR_RSIZE(qno)));
++	dev_info(dev, "R[%d]_IN_CNTS[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_IN_CNTS(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_IN_CNTS(qno)));
++	dev_info(dev, "R[%d]_IN_INT_LEVELS[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_IN_INT_LEVELS(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_IN_INT_LEVELS(qno)));
++	dev_info(dev, "R[%d]_IN_PKT_CNT[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_IN_PKT_CNT(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_IN_PKT_CNT(qno)));
++	dev_info(dev, "R[%d]_IN_BYTE_CNT[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_IN_BYTE_CNT(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_IN_BYTE_CNT(qno)));
++
++	dev_info(dev, "OQ-%d register dump\n", qno);
++	dev_info(dev, "R[%d]_OUT_SLIST_DBELL[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_OUT_SLIST_DBELL(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_OUT_SLIST_DBELL(qno)));
++	dev_info(dev, "R[%d]_OUT_CONTROL[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_OUT_CONTROL(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_OUT_CONTROL(qno)));
++	dev_info(dev, "R[%d]_OUT_ENABLE[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_OUT_ENABLE(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_OUT_ENABLE(qno)));
++	dev_info(dev, "R[%d]_OUT_SLIST_BADDR[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_OUT_SLIST_BADDR(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_OUT_SLIST_BADDR(qno)));
++	dev_info(dev, "R[%d]_OUT_SLIST_RSIZE[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_OUT_SLIST_RSIZE(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_OUT_SLIST_RSIZE(qno)));
++	dev_info(dev, "R[%d]_OUT_CNTS[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_OUT_CNTS(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_OUT_CNTS(qno)));
++	dev_info(dev, "R[%d]_OUT_INT_LEVELS[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_OUT_INT_LEVELS(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_OUT_INT_LEVELS(qno)));
++	dev_info(dev, "R[%d]_OUT_PKT_CNT[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_OUT_PKT_CNT(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_OUT_PKT_CNT(qno)));
++	dev_info(dev, "R[%d]_OUT_BYTE_CNT[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_OUT_BYTE_CNT(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_OUT_BYTE_CNT(qno)));
++	dev_info(dev, "R[%d]_ERR_TYPE[0x%llx]: 0x%016llx\n",
++		 qno, CNXK_SDP_R_ERR_TYPE(qno),
++		 octep_read_csr64(oct, CNXK_SDP_R_ERR_TYPE(qno)));
++}
++
++/* Reset Hardware Tx queue */
++static int cnxk_reset_iq(struct octep_device *oct, int q_no)
++{
++	struct octep_config *conf = oct->conf;
++	u64 val = 0ULL;
++
++	dev_dbg(&oct->pdev->dev, "Reset PF IQ-%d\n", q_no);
++
++	/* Get absolute queue number */
++	q_no += conf->pf_ring_cfg.srn;
++
++	/* Disable the Tx/Instruction Ring */
++	octep_write_csr64(oct, CNXK_SDP_R_IN_ENABLE(q_no), val);
++
++	/* clear the Instruction Ring packet/byte counts and doorbell CSRs */
++	octep_write_csr64(oct, CNXK_SDP_R_IN_CNTS(q_no), val);
++	octep_write_csr64(oct, CNXK_SDP_R_IN_INT_LEVELS(q_no), val);
++	octep_write_csr64(oct, CNXK_SDP_R_IN_PKT_CNT(q_no), val);
++	octep_write_csr64(oct, CNXK_SDP_R_IN_BYTE_CNT(q_no), val);
++	octep_write_csr64(oct, CNXK_SDP_R_IN_INSTR_BADDR(q_no), val);
++	octep_write_csr64(oct, CNXK_SDP_R_IN_INSTR_RSIZE(q_no), val);
++
++	val = 0xFFFFFFFF;
++	octep_write_csr64(oct, CNXK_SDP_R_IN_INSTR_DBELL(q_no), val);
++
++	return 0;
++}
++
++/* Reset Hardware Rx queue */
++static void cnxk_reset_oq(struct octep_device *oct, int q_no)
++{
++	u64 val = 0ULL;
++
++	q_no += CFG_GET_PORTS_PF_SRN(oct->conf);
++
++	/* Disable Output (Rx) Ring */
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_ENABLE(q_no), val);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_BADDR(q_no), val);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_RSIZE(q_no), val);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_INT_LEVELS(q_no), val);
++
++	/* Clear count CSRs */
++	val = octep_read_csr(oct, CNXK_SDP_R_OUT_CNTS(q_no));
++	octep_write_csr(oct, CNXK_SDP_R_OUT_CNTS(q_no), val);
++
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_PKT_CNT(q_no), 0xFFFFFFFFFULL);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_DBELL(q_no), 0xFFFFFFFF);
++}
++
++/* Reset all hardware Tx/Rx queues */
++static void octep_reset_io_queues_cnxk_pf(struct octep_device *oct)
++{
++	struct pci_dev *pdev = oct->pdev;
++	int q;
++
++	dev_dbg(&pdev->dev, "Reset OCTEP_CNXK PF IO Queues\n");
++
++	for (q = 0; q < CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf); q++) {
++		cnxk_reset_iq(oct, q);
++		cnxk_reset_oq(oct, q);
++	}
++}
++
++/* Initialize windowed addresses to access some hardware registers */
++static void octep_setup_pci_window_regs_cnxk_pf(struct octep_device *oct)
++{
++	u8 __iomem *bar0_pciaddr = oct->mmio[0].hw_addr;
++
++	oct->pci_win_regs.pci_win_wr_addr = (u8 __iomem *)(bar0_pciaddr + CNXK_SDP_WIN_WR_ADDR64);
++	oct->pci_win_regs.pci_win_rd_addr = (u8 __iomem *)(bar0_pciaddr + CNXK_SDP_WIN_RD_ADDR64);
++	oct->pci_win_regs.pci_win_wr_data = (u8 __iomem *)(bar0_pciaddr + CNXK_SDP_WIN_WR_DATA64);
++	oct->pci_win_regs.pci_win_rd_data = (u8 __iomem *)(bar0_pciaddr + CNXK_SDP_WIN_RD_DATA64);
++}
++
++/* Configure Hardware mapping: inform hardware which rings belong to PF. */
++static void octep_configure_ring_mapping_cnxk_pf(struct octep_device *oct)
++{
++	struct octep_config *conf = oct->conf;
++	struct pci_dev *pdev = oct->pdev;
++	u64 pf_srn = CFG_GET_PORTS_PF_SRN(oct->conf);
++	int q;
++
++	for (q = 0; q < CFG_GET_PORTS_ACTIVE_IO_RINGS(conf); q++) {
++		u64 regval = 0;
++
++		if (oct->pcie_port)
++			regval = 8 << CNXK_SDP_FUNC_SEL_EPF_BIT_POS;
++
++		octep_write_csr64(oct, CNXK_SDP_EPVF_RING(pf_srn + q), regval);
++
++		regval = octep_read_csr64(oct, CNXK_SDP_EPVF_RING(pf_srn + q));
++		dev_dbg(&pdev->dev, "Write SDP_EPVF_RING[0x%llx] = 0x%llx\n",
++			CNXK_SDP_EPVF_RING(pf_srn + q), regval);
++	}
++}
++
++/* Initialize configuration limits and initial active config */
++static void octep_init_config_cnxk_pf(struct octep_device *oct)
++{
++	struct octep_config *conf = oct->conf;
++	struct pci_dev *pdev = oct->pdev;
++	u8 link = 0;
++	u64 val;
++	int pos;
++
++	/* Read ring configuration:
++	 * PF ring count, number of VFs and rings per VF supported
++	 */
++	val = octep_read_csr64(oct, CNXK_SDP_EPF_RINFO);
++	dev_info(&pdev->dev, "SDP_EPF_RINFO[0x%x]:0x%llx\n", CNXK_SDP_EPF_RINFO, val);
++	conf->sriov_cfg.max_rings_per_vf = CNXK_SDP_EPF_RINFO_RPVF(val);
++	conf->sriov_cfg.active_rings_per_vf = conf->sriov_cfg.max_rings_per_vf;
++	conf->sriov_cfg.max_vfs = CNXK_SDP_EPF_RINFO_NVFS(val);
++	conf->sriov_cfg.active_vfs = conf->sriov_cfg.max_vfs;
++	conf->sriov_cfg.vf_srn = CNXK_SDP_EPF_RINFO_SRN(val);
++
++	val = octep_read_csr64(oct, CNXK_SDP_MAC_PF_RING_CTL(oct->pcie_port));
++	dev_info(&pdev->dev, "SDP_MAC_PF_RING_CTL[%d]:0x%llx\n", oct->pcie_port, val);
++	conf->pf_ring_cfg.srn =  CNXK_SDP_MAC_PF_RING_CTL_SRN(val);
++	conf->pf_ring_cfg.max_io_rings = CNXK_SDP_MAC_PF_RING_CTL_RPPF(val);
++	conf->pf_ring_cfg.active_io_rings = conf->pf_ring_cfg.max_io_rings;
++	dev_info(&pdev->dev, "pf_srn=%u rpvf=%u nvfs=%u rppf=%u\n",
++		 conf->pf_ring_cfg.srn, conf->sriov_cfg.active_rings_per_vf,
++		 conf->sriov_cfg.active_vfs, conf->pf_ring_cfg.active_io_rings);
++
++	conf->iq.num_descs = OCTEP_IQ_MAX_DESCRIPTORS;
++	conf->iq.instr_type = OCTEP_64BYTE_INSTR;
++	conf->iq.db_min = OCTEP_DB_MIN;
++	conf->iq.intr_threshold = OCTEP_IQ_INTR_THRESHOLD;
++
++	conf->oq.num_descs = OCTEP_OQ_MAX_DESCRIPTORS;
++	conf->oq.buf_size = OCTEP_OQ_BUF_SIZE;
++	conf->oq.refill_threshold = OCTEP_OQ_REFILL_THRESHOLD;
++	conf->oq.oq_intr_pkt = OCTEP_OQ_INTR_PKT_THRESHOLD;
++	conf->oq.oq_intr_time = OCTEP_OQ_INTR_TIME_THRESHOLD;
++
++	conf->msix_cfg.non_ioq_msix = CNXK_NUM_NON_IOQ_INTR;
++	conf->msix_cfg.ioq_msix = conf->pf_ring_cfg.active_io_rings;
++	conf->msix_cfg.non_ioq_msix_names = cnxk_non_ioq_msix_names;
++
++	pos = pci_find_ext_capability(oct->pdev, PCI_EXT_CAP_ID_SRIOV);
++	if (pos) {
++		pci_read_config_byte(oct->pdev,
++				     pos + PCI_SRIOV_FUNC_LINK,
++				     &link);
++		link = PCI_DEVFN(PCI_SLOT(oct->pdev->devfn), link);
++	}
++	conf->ctrl_mbox_cfg.barmem_addr = (void __iomem *)oct->mmio[2].hw_addr +
++					   CNXK_PEM_BAR4_INDEX_OFFSET +
++					   (link * CTRL_MBOX_SZ);
++
++	conf->fw_info.hb_interval = OCTEP_DEFAULT_FW_HB_INTERVAL;
++	conf->fw_info.hb_miss_count = OCTEP_DEFAULT_FW_HB_MISS_COUNT;
++}
++
++/* Setup registers for a hardware Tx Queue  */
++static void octep_setup_iq_regs_cnxk_pf(struct octep_device *oct, int iq_no)
++{
++	struct octep_iq *iq = oct->iq[iq_no];
++	u32 reset_instr_cnt;
++	u64 reg_val;
++
++	iq_no += CFG_GET_PORTS_PF_SRN(oct->conf);
++	reg_val = octep_read_csr64(oct, CNXK_SDP_R_IN_CONTROL(iq_no));
++
++	/* wait for IDLE to set to 1 */
++	if (!(reg_val & CNXK_R_IN_CTL_IDLE)) {
++		do {
++			reg_val = octep_read_csr64(oct, CNXK_SDP_R_IN_CONTROL(iq_no));
++		} while (!(reg_val & CNXK_R_IN_CTL_IDLE));
++	}
++
++	reg_val |= CNXK_R_IN_CTL_RDSIZE;
++	reg_val |= CNXK_R_IN_CTL_IS_64B;
++	reg_val |= CNXK_R_IN_CTL_ESR;
++	octep_write_csr64(oct, CNXK_SDP_R_IN_CONTROL(iq_no), reg_val);
++
++	/* Write the start of the input queue's ring and its size  */
++	octep_write_csr64(oct, CNXK_SDP_R_IN_INSTR_BADDR(iq_no),
++			  iq->desc_ring_dma);
++	octep_write_csr64(oct, CNXK_SDP_R_IN_INSTR_RSIZE(iq_no),
++			  iq->max_count);
++
++	/* Remember the doorbell & instruction count register addr
++	 * for this queue
++	 */
++	iq->doorbell_reg = oct->mmio[0].hw_addr +
++			   CNXK_SDP_R_IN_INSTR_DBELL(iq_no);
++	iq->inst_cnt_reg = oct->mmio[0].hw_addr +
++			   CNXK_SDP_R_IN_CNTS(iq_no);
++	iq->intr_lvl_reg = oct->mmio[0].hw_addr +
++			   CNXK_SDP_R_IN_INT_LEVELS(iq_no);
++
++	/* Store the current instruction counter (used in flush_iq calculation) */
++	reset_instr_cnt = readl(iq->inst_cnt_reg);
++	writel(reset_instr_cnt, iq->inst_cnt_reg);
++
++	/* INTR_THRESHOLD is set to max(FFFFFFFF) to disable the INTR */
++	reg_val = CFG_GET_IQ_INTR_THRESHOLD(oct->conf) & 0xffffffff;
++	octep_write_csr64(oct, CNXK_SDP_R_IN_INT_LEVELS(iq_no), reg_val);
++}
++
++/* Setup registers for a hardware Rx Queue  */
++static void octep_setup_oq_regs_cnxk_pf(struct octep_device *oct, int oq_no)
++{
++	u64 reg_val;
++	u64 oq_ctl = 0ULL;
++	u32 time_threshold = 0;
++	struct octep_oq *oq = oct->oq[oq_no];
++
++	oq_no += CFG_GET_PORTS_PF_SRN(oct->conf);
++	reg_val = octep_read_csr64(oct, CNXK_SDP_R_OUT_CONTROL(oq_no));
++
++	/* wait for IDLE to set to 1 */
++	if (!(reg_val & CNXK_R_OUT_CTL_IDLE)) {
++		do {
++			reg_val = octep_read_csr64(oct, CNXK_SDP_R_OUT_CONTROL(oq_no));
++		} while (!(reg_val & CNXK_R_OUT_CTL_IDLE));
++	}
++
++	reg_val &= ~(CNXK_R_OUT_CTL_IMODE);
++	reg_val &= ~(CNXK_R_OUT_CTL_ROR_P);
++	reg_val &= ~(CNXK_R_OUT_CTL_NSR_P);
++	reg_val &= ~(CNXK_R_OUT_CTL_ROR_I);
++	reg_val &= ~(CNXK_R_OUT_CTL_NSR_I);
++	reg_val &= ~(CNXK_R_OUT_CTL_ES_I);
++	reg_val &= ~(CNXK_R_OUT_CTL_ROR_D);
++	reg_val &= ~(CNXK_R_OUT_CTL_NSR_D);
++	reg_val &= ~(CNXK_R_OUT_CTL_ES_D);
++	reg_val |= (CNXK_R_OUT_CTL_ES_P);
++
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_CONTROL(oq_no), reg_val);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_BADDR(oq_no),
++			  oq->desc_ring_dma);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_RSIZE(oq_no),
++			  oq->max_count);
++
++	oq_ctl = octep_read_csr64(oct, CNXK_SDP_R_OUT_CONTROL(oq_no));
++
++	/* Clear the ISIZE and BSIZE (22-0) */
++	oq_ctl &= ~0x7fffffULL;
++
++	/* Populate the BSIZE (15-0) */
++	oq_ctl |= (oq->buffer_size & 0xffff);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_CONTROL(oq_no), oq_ctl);
++
++	/* Get the mapped address of the pkt_sent and pkts_credit regs */
++	oq->pkts_sent_reg = oct->mmio[0].hw_addr + CNXK_SDP_R_OUT_CNTS(oq_no);
++	oq->pkts_credit_reg = oct->mmio[0].hw_addr +
++			      CNXK_SDP_R_OUT_SLIST_DBELL(oq_no);
++
++	time_threshold = CFG_GET_OQ_INTR_TIME(oct->conf);
++	reg_val = ((u64)time_threshold << 32) |
++		  CFG_GET_OQ_INTR_PKT(oct->conf);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_INT_LEVELS(oq_no), reg_val);
++}
++
++/* Setup registers for a PF mailbox */
++static void octep_setup_mbox_regs_cnxk_pf(struct octep_device *oct, int q_no)
++{
++	struct octep_mbox *mbox = oct->mbox[q_no];
++
++	mbox->q_no = q_no;
++
++	/* PF mbox interrupt reg */
++	mbox->mbox_int_reg = oct->mmio[0].hw_addr + CNXK_SDP_EPF_MBOX_RINT(0);
++
++	/* PF to VF DATA reg. PF writes into this reg */
++	mbox->mbox_write_reg = oct->mmio[0].hw_addr + CNXK_SDP_R_MBOX_PF_VF_DATA(q_no);
++
++	/* VF to PF DATA reg. PF reads from this reg */
++	mbox->mbox_read_reg = oct->mmio[0].hw_addr + CNXK_SDP_R_MBOX_VF_PF_DATA(q_no);
++}
++
++/* Poll OEI events like heartbeat */
++static void octep_poll_oei_cnxk_pf(struct octep_device *oct)
++{
++	u64 reg0;
++
++	/* Check for OEI INTR */
++	reg0 = octep_read_csr64(oct, CNXK_SDP_EPF_OEI_RINT);
++	if (reg0) {
++		octep_write_csr64(oct, CNXK_SDP_EPF_OEI_RINT, reg0);
++		if (reg0 & CNXK_SDP_EPF_OEI_RINT_DATA_BIT_MBOX)
++			queue_work(octep_wq, &oct->ctrl_mbox_task);
++		if (reg0 & CNXK_SDP_EPF_OEI_RINT_DATA_BIT_HBEAT)
++			atomic_set(&oct->hb_miss_cnt, 0);
++	}
 +}
 +
 +/* OEI interrupt handler */
-+static irqreturn_t octep_oei_intr_handler_cn93_pf(void *dev)
++static irqreturn_t octep_oei_intr_handler_cnxk_pf(void *dev)
 +{
 +	struct octep_device *oct = (struct octep_device *)dev;
- 
--	return handled;
-+	octep_poll_oei_cn93_pf(oct);
++
++	octep_poll_oei_cnxk_pf(oct);
 +	return IRQ_HANDLED;
 +}
 +
 +/* Process non-ioq interrupts required to keep pf interface running.
 + * OEI_RINT is needed for control mailbox
++ * MBOX_RINT is needed for pfvf mailbox
 + */
-+static void octep_poll_non_ioq_interrupts_cn93_pf(struct octep_device *oct)
++static void octep_poll_non_ioq_interrupts_cnxk_pf(struct octep_device *oct)
 +{
-+	octep_poll_oei_cn93_pf(oct);
- }
- 
--/* Interrupts handler for all non-queue generic interrupts. */
--static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
-+/* Interrupt handler for input ring error interrupts. */
-+static irqreturn_t octep_ire_intr_handler_cn93_pf(void *dev)
- {
- 	struct octep_device *oct = (struct octep_device *)dev;
- 	struct pci_dev *pdev = oct->pdev;
-@@ -421,8 +427,17 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
- 						  reg_val);
- 			}
- 		}
--		goto irq_handled;
- 	}
-+	return IRQ_HANDLED;
++	octep_poll_oei_cnxk_pf(oct);
 +}
 +
-+/* Interrupt handler for output ring error interrupts. */
-+static irqreturn_t octep_ore_intr_handler_cn93_pf(void *dev)
++/* Interrupt handler for input ring error interrupts. */
++static irqreturn_t octep_ire_intr_handler_cnxk_pf(void *dev)
 +{
 +	struct octep_device *oct = (struct octep_device *)dev;
 +	struct pci_dev *pdev = oct->pdev;
 +	u64 reg_val = 0;
 +	int i = 0;
- 
- 	/* Check for ORERR INTR */
- 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_ORERR_RINT);
-@@ -440,9 +455,16 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
- 						  reg_val);
- 			}
- 		}
--
--		goto irq_handled;
- 	}
++
++	/* Check for IRERR INTR */
++	reg_val = octep_read_csr64(oct, CNXK_SDP_EPF_IRERR_RINT);
++	if (reg_val) {
++		dev_info(&pdev->dev,
++			 "received IRERR_RINT intr: 0x%llx\n", reg_val);
++		octep_write_csr64(oct, CNXK_SDP_EPF_IRERR_RINT, reg_val);
++
++		for (i = 0; i < CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf); i++) {
++			reg_val = octep_read_csr64(oct,
++						   CNXK_SDP_R_ERR_TYPE(i));
++			if (reg_val) {
++				dev_info(&pdev->dev,
++					 "Received err type on IQ-%d: 0x%llx\n",
++					 i, reg_val);
++				octep_write_csr64(oct, CNXK_SDP_R_ERR_TYPE(i),
++						  reg_val);
++			}
++		}
++	}
++	return IRQ_HANDLED;
++}
++
++/* Interrupt handler for output ring error interrupts. */
++static irqreturn_t octep_ore_intr_handler_cnxk_pf(void *dev)
++{
++	struct octep_device *oct = (struct octep_device *)dev;
++	struct pci_dev *pdev = oct->pdev;
++	u64 reg_val = 0;
++	int i = 0;
++
++	/* Check for ORERR INTR */
++	reg_val = octep_read_csr64(oct, CNXK_SDP_EPF_ORERR_RINT);
++	if (reg_val) {
++		dev_info(&pdev->dev,
++			 "Received ORERR_RINT intr: 0x%llx\n", reg_val);
++		octep_write_csr64(oct, CNXK_SDP_EPF_ORERR_RINT, reg_val);
++		for (i = 0; i < CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf); i++) {
++			reg_val = octep_read_csr64(oct, CNXK_SDP_R_ERR_TYPE(i));
++			if (reg_val) {
++				dev_info(&pdev->dev,
++					 "Received err type on OQ-%d: 0x%llx\n",
++					 i, reg_val);
++				octep_write_csr64(oct, CNXK_SDP_R_ERR_TYPE(i),
++						  reg_val);
++			}
++		}
++	}
 +	return IRQ_HANDLED;
 +}
 +
 +/* Interrupt handler for vf input ring error interrupts. */
-+static irqreturn_t octep_vfire_intr_handler_cn93_pf(void *dev)
++static irqreturn_t octep_vfire_intr_handler_cnxk_pf(void *dev)
 +{
 +	struct octep_device *oct = (struct octep_device *)dev;
 +	struct pci_dev *pdev = oct->pdev;
 +	u64 reg_val = 0;
- 
- 	/* Check for VFIRE INTR */
- 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_VFIRE_RINT(0));
-@@ -450,8 +472,16 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
- 		dev_info(&pdev->dev,
- 			 "Received VFIRE_RINT intr: 0x%llx\n", reg_val);
- 		octep_write_csr64(oct, CN93_SDP_EPF_VFIRE_RINT(0), reg_val);
--		goto irq_handled;
- 	}
++
++	/* Check for VFIRE INTR */
++	reg_val = octep_read_csr64(oct, CNXK_SDP_EPF_VFIRE_RINT(0));
++	if (reg_val) {
++		dev_info(&pdev->dev,
++			 "Received VFIRE_RINT intr: 0x%llx\n", reg_val);
++		octep_write_csr64(oct, CNXK_SDP_EPF_VFIRE_RINT(0), reg_val);
++	}
 +	return IRQ_HANDLED;
 +}
 +
 +/* Interrupt handler for vf output ring error interrupts. */
-+static irqreturn_t octep_vfore_intr_handler_cn93_pf(void *dev)
++static irqreturn_t octep_vfore_intr_handler_cnxk_pf(void *dev)
 +{
 +	struct octep_device *oct = (struct octep_device *)dev;
 +	struct pci_dev *pdev = oct->pdev;
 +	u64 reg_val = 0;
- 
- 	/* Check for VFORE INTR */
- 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_VFORE_RINT(0));
-@@ -459,19 +489,30 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
- 		dev_info(&pdev->dev,
- 			 "Received VFORE_RINT intr: 0x%llx\n", reg_val);
- 		octep_write_csr64(oct, CN93_SDP_EPF_VFORE_RINT(0), reg_val);
--		goto irq_handled;
- 	}
++
++	/* Check for VFORE INTR */
++	reg_val = octep_read_csr64(oct, CNXK_SDP_EPF_VFORE_RINT(0));
++	if (reg_val) {
++		dev_info(&pdev->dev,
++			 "Received VFORE_RINT intr: 0x%llx\n", reg_val);
++		octep_write_csr64(oct, CNXK_SDP_EPF_VFORE_RINT(0), reg_val);
++	}
 +	return IRQ_HANDLED;
 +}
- 
--	/* Check for MBOX INTR and OEI INTR */
--	if (octep_poll_non_ioq_interrupts_cn93_pf(oct))
--		goto irq_handled;
++
 +/* Interrupt handler for dpi dma related interrupts. */
-+static irqreturn_t octep_dma_intr_handler_cn93_pf(void *dev)
++static irqreturn_t octep_dma_intr_handler_cnxk_pf(void *dev)
 +{
 +	struct octep_device *oct = (struct octep_device *)dev;
 +	u64 reg_val = 0;
- 
- 	/* Check for DMA INTR */
- 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_DMA_RINT);
- 	if (reg_val) {
- 		octep_write_csr64(oct, CN93_SDP_EPF_DMA_RINT, reg_val);
--		goto irq_handled;
- 	}
++
++	/* Check for DMA INTR */
++	reg_val = octep_read_csr64(oct, CNXK_SDP_EPF_DMA_RINT);
++	if (reg_val)
++		octep_write_csr64(oct, CNXK_SDP_EPF_DMA_RINT, reg_val);
++
 +	return IRQ_HANDLED;
 +}
 +
 +/* Interrupt handler for dpi dma transaction error interrupts for VFs  */
-+static irqreturn_t octep_dma_vf_intr_handler_cn93_pf(void *dev)
++static irqreturn_t octep_dma_vf_intr_handler_cnxk_pf(void *dev)
 +{
 +	struct octep_device *oct = (struct octep_device *)dev;
 +	struct pci_dev *pdev = oct->pdev;
 +	u64 reg_val = 0;
- 
- 	/* Check for DMA VF INTR */
- 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_DMA_VF_RINT(0));
-@@ -479,8 +520,16 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
- 		dev_info(&pdev->dev,
- 			 "Received DMA_VF_RINT intr: 0x%llx\n", reg_val);
- 		octep_write_csr64(oct, CN93_SDP_EPF_DMA_VF_RINT(0), reg_val);
--		goto irq_handled;
- 	}
++
++	/* Check for DMA VF INTR */
++	reg_val = octep_read_csr64(oct, CNXK_SDP_EPF_DMA_VF_RINT(0));
++	if (reg_val) {
++		dev_info(&pdev->dev,
++			 "Received DMA_VF_RINT intr: 0x%llx\n", reg_val);
++		octep_write_csr64(oct, CNXK_SDP_EPF_DMA_VF_RINT(0), reg_val);
++	}
 +	return IRQ_HANDLED;
 +}
 +
 +/* Interrupt handler for pp transaction error interrupts for VFs  */
-+static irqreturn_t octep_pp_vf_intr_handler_cn93_pf(void *dev)
++static irqreturn_t octep_pp_vf_intr_handler_cnxk_pf(void *dev)
 +{
 +	struct octep_device *oct = (struct octep_device *)dev;
 +	struct pci_dev *pdev = oct->pdev;
 +	u64 reg_val = 0;
- 
- 	/* Check for PPVF INTR */
- 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_PP_VF_RINT(0));
-@@ -488,8 +537,16 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
- 		dev_info(&pdev->dev,
- 			 "Received PP_VF_RINT intr: 0x%llx\n", reg_val);
- 		octep_write_csr64(oct, CN93_SDP_EPF_PP_VF_RINT(0), reg_val);
--		goto irq_handled;
- 	}
++
++	/* Check for PPVF INTR */
++	reg_val = octep_read_csr64(oct, CNXK_SDP_EPF_PP_VF_RINT(0));
++	if (reg_val) {
++		dev_info(&pdev->dev,
++			 "Received PP_VF_RINT intr: 0x%llx\n", reg_val);
++		octep_write_csr64(oct, CNXK_SDP_EPF_PP_VF_RINT(0), reg_val);
++	}
 +	return IRQ_HANDLED;
 +}
 +
 +/* Interrupt handler for mac related interrupts. */
-+static irqreturn_t octep_misc_intr_handler_cn93_pf(void *dev)
++static irqreturn_t octep_misc_intr_handler_cnxk_pf(void *dev)
 +{
 +	struct octep_device *oct = (struct octep_device *)dev;
 +	struct pci_dev *pdev = oct->pdev;
 +	u64 reg_val = 0;
- 
- 	/* Check for MISC INTR */
- 	reg_val = octep_read_csr64(oct, CN93_SDP_EPF_MISC_RINT);
-@@ -497,11 +554,17 @@ static irqreturn_t octep_non_ioq_intr_handler_cn93_pf(void *dev)
- 		dev_info(&pdev->dev,
- 			 "Received MISC_RINT intr: 0x%llx\n", reg_val);
- 		octep_write_csr64(oct, CN93_SDP_EPF_MISC_RINT, reg_val);
--		goto irq_handled;
- 	}
++
++	/* Check for MISC INTR */
++	reg_val = octep_read_csr64(oct, CNXK_SDP_EPF_MISC_RINT);
++	if (reg_val) {
++		dev_info(&pdev->dev,
++			 "Received MISC_RINT intr: 0x%llx\n", reg_val);
++		octep_write_csr64(oct, CNXK_SDP_EPF_MISC_RINT, reg_val);
++	}
 +	return IRQ_HANDLED;
 +}
 +
 +/* Interrupts handler for all reserved interrupts. */
-+static irqreturn_t octep_rsvd_intr_handler_cn93_pf(void *dev)
++static irqreturn_t octep_rsvd_intr_handler_cnxk_pf(void *dev)
 +{
 +	struct octep_device *oct = (struct octep_device *)dev;
 +	struct pci_dev *pdev = oct->pdev;
- 
- 	dev_info(&pdev->dev, "Reserved interrupts raised; Ignore\n");
--irq_handled:
- 	return IRQ_HANDLED;
- }
- 
-@@ -565,8 +628,15 @@ static void octep_enable_interrupts_cn93_pf(struct octep_device *oct)
- 	octep_write_csr64(oct, CN93_SDP_EPF_IRERR_RINT_ENA_W1S, intr_mask);
- 	octep_write_csr64(oct, CN93_SDP_EPF_ORERR_RINT_ENA_W1S, intr_mask);
- 	octep_write_csr64(oct, CN93_SDP_EPF_OEI_RINT_ENA_W1S, -1ULL);
 +
-+	octep_write_csr64(oct, CN93_SDP_EPF_VFIRE_RINT_ENA_W1S(0), -1ULL);
-+	octep_write_csr64(oct, CN93_SDP_EPF_VFORE_RINT_ENA_W1S(0), -1ULL);
++	dev_info(&pdev->dev, "Reserved interrupts raised; Ignore\n");
++	return IRQ_HANDLED;
++}
 +
- 	octep_write_csr64(oct, CN93_SDP_EPF_MISC_RINT_ENA_W1S, intr_mask);
- 	octep_write_csr64(oct, CN93_SDP_EPF_DMA_RINT_ENA_W1S, intr_mask);
++/* Tx/Rx queue interrupt handler */
++static irqreturn_t octep_ioq_intr_handler_cnxk_pf(void *data)
++{
++	struct octep_ioq_vector *vector = (struct octep_ioq_vector *)data;
++	struct octep_oq *oq = vector->oq;
 +
-+	octep_write_csr64(oct, CN93_SDP_EPF_DMA_VF_RINT_ENA_W1S(0), -1ULL);
-+	octep_write_csr64(oct, CN93_SDP_EPF_PP_VF_RINT_ENA_W1S(0), -1ULL);
- }
- 
- /* Disable all interrupts */
-@@ -584,8 +654,15 @@ static void octep_disable_interrupts_cn93_pf(struct octep_device *oct)
- 	octep_write_csr64(oct, CN93_SDP_EPF_IRERR_RINT_ENA_W1C, intr_mask);
- 	octep_write_csr64(oct, CN93_SDP_EPF_ORERR_RINT_ENA_W1C, intr_mask);
- 	octep_write_csr64(oct, CN93_SDP_EPF_OEI_RINT_ENA_W1C, -1ULL);
++	napi_schedule_irqoff(oq->napi);
++	return IRQ_HANDLED;
++}
 +
-+	octep_write_csr64(oct, CN93_SDP_EPF_VFIRE_RINT_ENA_W1C(0), -1ULL);
-+	octep_write_csr64(oct, CN93_SDP_EPF_VFORE_RINT_ENA_W1C(0), -1ULL);
++/* soft reset */
++static int octep_soft_reset_cnxk_pf(struct octep_device *oct)
++{
++	dev_info(&oct->pdev->dev, "CNXKXX: Doing soft reset\n");
 +
- 	octep_write_csr64(oct, CN93_SDP_EPF_MISC_RINT_ENA_W1C, intr_mask);
- 	octep_write_csr64(oct, CN93_SDP_EPF_DMA_RINT_ENA_W1C, intr_mask);
++	octep_write_csr64(oct, CNXK_SDP_WIN_WR_MASK_REG, 0xFF);
 +
-+	octep_write_csr64(oct, CN93_SDP_EPF_DMA_VF_RINT_ENA_W1C(0), -1ULL);
-+	octep_write_csr64(oct, CN93_SDP_EPF_PP_VF_RINT_ENA_W1C(0), -1ULL);
- }
- 
- /* Get new Octeon Read Index: index of descriptor that Octeon reads next. */
-@@ -718,7 +795,16 @@ void octep_device_setup_cn93_pf(struct octep_device *oct)
- 	oct->hw_ops.setup_oq_regs = octep_setup_oq_regs_cn93_pf;
- 	oct->hw_ops.setup_mbox_regs = octep_setup_mbox_regs_cn93_pf;
- 
--	oct->hw_ops.non_ioq_intr_handler = octep_non_ioq_intr_handler_cn93_pf;
-+	oct->hw_ops.oei_intr_handler = octep_oei_intr_handler_cn93_pf;
-+	oct->hw_ops.ire_intr_handler = octep_ire_intr_handler_cn93_pf;
-+	oct->hw_ops.ore_intr_handler = octep_ore_intr_handler_cn93_pf;
-+	oct->hw_ops.vfire_intr_handler = octep_vfire_intr_handler_cn93_pf;
-+	oct->hw_ops.vfore_intr_handler = octep_vfore_intr_handler_cn93_pf;
-+	oct->hw_ops.dma_intr_handler = octep_dma_intr_handler_cn93_pf;
-+	oct->hw_ops.dma_vf_intr_handler = octep_dma_vf_intr_handler_cn93_pf;
-+	oct->hw_ops.pp_vf_intr_handler = octep_pp_vf_intr_handler_cn93_pf;
-+	oct->hw_ops.misc_intr_handler = octep_misc_intr_handler_cn93_pf;
-+	oct->hw_ops.rsvd_intr_handler = octep_rsvd_intr_handler_cn93_pf;
- 	oct->hw_ops.ioq_intr_handler = octep_ioq_intr_handler_cn93_pf;
- 	oct->hw_ops.soft_reset = octep_soft_reset_cn93_pf;
- 	oct->hw_ops.reinit_regs = octep_reinit_regs_cn93_pf;
++	/* Firmware status CSR is supposed to be cleared by
++	 * core domain reset, but due to a hw bug, it is not.
++	 * Set it to RUNNING right before reset so that it is not
++	 * left in READY (1) state after a reset.  This is required
++	 * in addition to the early setting to handle the case where
++	 * the OcteonTX is unexpectedly reset, reboots, and then
++	 * the module is removed.
++	 */
++	OCTEP_PCI_WIN_WRITE(oct, CNXK_PEMX_PFX_CSX_PFCFGX(0, 0, CNXK_PCIEEP_VSECST_CTL),
++			    FW_STATUS_RUNNING);
++
++	/* Set chip domain reset bit */
++	OCTEP_PCI_WIN_WRITE(oct, CNXK_RST_CHIP_DOMAIN_W1S, 1);
++	/* Wait till Octeon resets. */
++	mdelay(10);
++	/* restore the  reset value */
++	octep_write_csr64(oct, CNXK_SDP_WIN_WR_MASK_REG, 0xFF);
++
++	return 0;
++}
++
++/* Re-initialize Octeon hardware registers */
++static void octep_reinit_regs_cnxk_pf(struct octep_device *oct)
++{
++	u32 i;
++
++	for (i = 0; i < CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf); i++)
++		oct->hw_ops.setup_iq_regs(oct, i);
++
++	for (i = 0; i < CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf); i++)
++		oct->hw_ops.setup_oq_regs(oct, i);
++
++	oct->hw_ops.enable_interrupts(oct);
++	oct->hw_ops.enable_io_queues(oct);
++
++	for (i = 0; i < CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf); i++)
++		writel(oct->oq[i]->max_count, oct->oq[i]->pkts_credit_reg);
++}
++
++/* Enable all interrupts */
++static void octep_enable_interrupts_cnxk_pf(struct octep_device *oct)
++{
++	u64 intr_mask = 0ULL;
++	int srn, num_rings, i;
++
++	srn = CFG_GET_PORTS_PF_SRN(oct->conf);
++	num_rings = CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf);
++
++	for (i = 0; i < num_rings; i++)
++		intr_mask |= (0x1ULL << (srn + i));
++
++	octep_write_csr64(oct, CNXK_SDP_EPF_IRERR_RINT_ENA_W1S, intr_mask);
++	octep_write_csr64(oct, CNXK_SDP_EPF_ORERR_RINT_ENA_W1S, intr_mask);
++	octep_write_csr64(oct, CNXK_SDP_EPF_OEI_RINT_ENA_W1S, -1ULL);
++
++	octep_write_csr64(oct, CNXK_SDP_EPF_VFIRE_RINT_ENA_W1S(0), -1ULL);
++	octep_write_csr64(oct, CNXK_SDP_EPF_VFORE_RINT_ENA_W1S(0), -1ULL);
++
++	octep_write_csr64(oct, CNXK_SDP_EPF_MISC_RINT_ENA_W1S, intr_mask);
++	octep_write_csr64(oct, CNXK_SDP_EPF_DMA_RINT_ENA_W1S, intr_mask);
++
++	octep_write_csr64(oct, CNXK_SDP_EPF_DMA_VF_RINT_ENA_W1S(0), -1ULL);
++	octep_write_csr64(oct, CNXK_SDP_EPF_PP_VF_RINT_ENA_W1S(0), -1ULL);
++}
++
++/* Disable all interrupts */
++static void octep_disable_interrupts_cnxk_pf(struct octep_device *oct)
++{
++	u64 intr_mask = 0ULL;
++	int srn, num_rings, i;
++
++	srn = CFG_GET_PORTS_PF_SRN(oct->conf);
++	num_rings = CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf);
++
++	for (i = 0; i < num_rings; i++)
++		intr_mask |= (0x1ULL << (srn + i));
++
++	octep_write_csr64(oct, CNXK_SDP_EPF_IRERR_RINT_ENA_W1C, intr_mask);
++	octep_write_csr64(oct, CNXK_SDP_EPF_ORERR_RINT_ENA_W1C, intr_mask);
++	octep_write_csr64(oct, CNXK_SDP_EPF_OEI_RINT_ENA_W1C, -1ULL);
++
++	octep_write_csr64(oct, CNXK_SDP_EPF_VFIRE_RINT_ENA_W1C(0), -1ULL);
++	octep_write_csr64(oct, CNXK_SDP_EPF_VFORE_RINT_ENA_W1C(0), -1ULL);
++
++	octep_write_csr64(oct, CNXK_SDP_EPF_MISC_RINT_ENA_W1C, intr_mask);
++	octep_write_csr64(oct, CNXK_SDP_EPF_DMA_RINT_ENA_W1C, intr_mask);
++
++	octep_write_csr64(oct, CNXK_SDP_EPF_DMA_VF_RINT_ENA_W1C(0), -1ULL);
++	octep_write_csr64(oct, CNXK_SDP_EPF_PP_VF_RINT_ENA_W1C(0), -1ULL);
++}
++
++/* Get new Octeon Read Index: index of descriptor that Octeon reads next. */
++static u32 octep_update_iq_read_index_cnxk_pf(struct octep_iq *iq)
++{
++	u32 pkt_in_done = readl(iq->inst_cnt_reg);
++	u32 last_done, new_idx;
++
++	last_done = pkt_in_done - iq->pkt_in_done;
++	iq->pkt_in_done = pkt_in_done;
++
++	new_idx = (iq->octep_read_index + last_done) % iq->max_count;
++
++	return new_idx;
++}
++
++/* Enable a hardware Tx Queue */
++static void octep_enable_iq_cnxk_pf(struct octep_device *oct, int iq_no)
++{
++	u64 loop = HZ;
++	u64 reg_val;
++
++	iq_no += CFG_GET_PORTS_PF_SRN(oct->conf);
++
++	octep_write_csr64(oct, CNXK_SDP_R_IN_INSTR_DBELL(iq_no), 0xFFFFFFFF);
++
++	while (octep_read_csr64(oct, CNXK_SDP_R_IN_INSTR_DBELL(iq_no)) &&
++	       loop--) {
++		schedule_timeout_interruptible(1);
++	}
++
++	reg_val = octep_read_csr64(oct,  CNXK_SDP_R_IN_INT_LEVELS(iq_no));
++	reg_val |= (0x1ULL << 62);
++	octep_write_csr64(oct, CNXK_SDP_R_IN_INT_LEVELS(iq_no), reg_val);
++
++	reg_val = octep_read_csr64(oct, CNXK_SDP_R_IN_ENABLE(iq_no));
++	reg_val |= 0x1ULL;
++	octep_write_csr64(oct, CNXK_SDP_R_IN_ENABLE(iq_no), reg_val);
++}
++
++/* Enable a hardware Rx Queue */
++static void octep_enable_oq_cnxk_pf(struct octep_device *oct, int oq_no)
++{
++	u64 reg_val = 0ULL;
++
++	oq_no += CFG_GET_PORTS_PF_SRN(oct->conf);
++
++	reg_val = octep_read_csr64(oct,  CNXK_SDP_R_OUT_INT_LEVELS(oq_no));
++	reg_val |= (0x1ULL << 62);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_INT_LEVELS(oq_no), reg_val);
++
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_DBELL(oq_no), 0xFFFFFFFF);
++
++	reg_val = octep_read_csr64(oct, CNXK_SDP_R_OUT_ENABLE(oq_no));
++	reg_val |= 0x1ULL;
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_ENABLE(oq_no), reg_val);
++}
++
++/* Enable all hardware Tx/Rx Queues assined to PF */
++static void octep_enable_io_queues_cnxk_pf(struct octep_device *oct)
++{
++	u8 q;
++
++	for (q = 0; q < CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf); q++) {
++		octep_enable_iq_cnxk_pf(oct, q);
++		octep_enable_oq_cnxk_pf(oct, q);
++	}
++}
++
++/* Disable a hardware Tx Queue assined to PF */
++static void octep_disable_iq_cnxk_pf(struct octep_device *oct, int iq_no)
++{
++	u64 reg_val = 0ULL;
++
++	iq_no += CFG_GET_PORTS_PF_SRN(oct->conf);
++
++	reg_val = octep_read_csr64(oct, CNXK_SDP_R_IN_ENABLE(iq_no));
++	reg_val &= ~0x1ULL;
++	octep_write_csr64(oct, CNXK_SDP_R_IN_ENABLE(iq_no), reg_val);
++}
++
++/* Disable a hardware Rx Queue assined to PF */
++static void octep_disable_oq_cnxk_pf(struct octep_device *oct, int oq_no)
++{
++	u64 reg_val = 0ULL;
++
++	oq_no += CFG_GET_PORTS_PF_SRN(oct->conf);
++	reg_val = octep_read_csr64(oct, CNXK_SDP_R_OUT_ENABLE(oq_no));
++	reg_val &= ~0x1ULL;
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_ENABLE(oq_no), reg_val);
++}
++
++/* Disable all hardware Tx/Rx Queues assined to PF */
++static void octep_disable_io_queues_cnxk_pf(struct octep_device *oct)
++{
++	int q = 0;
++
++	for (q = 0; q < CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf); q++) {
++		octep_disable_iq_cnxk_pf(oct, q);
++		octep_disable_oq_cnxk_pf(oct, q);
++	}
++}
++
++/* Dump hardware registers (including Tx/Rx queues) for debugging. */
++static void octep_dump_registers_cnxk_pf(struct octep_device *oct)
++{
++	u8 srn, num_rings, q;
++
++	srn = CFG_GET_PORTS_PF_SRN(oct->conf);
++	num_rings = CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf);
++
++	for (q = srn; q < srn + num_rings; q++)
++		cnxk_dump_regs(oct, q);
++}
++
++/**
++ * octep_device_setup_cnxk_pf() - Setup Octeon device.
++ *
++ * @oct: Octeon device private data structure.
++ *
++ * - initialize hardware operations.
++ * - get target side pcie port number for the device.
++ * - setup window access to hardware registers.
++ * - set initial configuration and max limits.
++ * - setup hardware mapping of rings to the PF device.
++ */
++void octep_device_setup_cnxk_pf(struct octep_device *oct)
++{
++	oct->hw_ops.setup_iq_regs = octep_setup_iq_regs_cnxk_pf;
++	oct->hw_ops.setup_oq_regs = octep_setup_oq_regs_cnxk_pf;
++	oct->hw_ops.setup_mbox_regs = octep_setup_mbox_regs_cnxk_pf;
++
++	oct->hw_ops.oei_intr_handler = octep_oei_intr_handler_cnxk_pf;
++	oct->hw_ops.ire_intr_handler = octep_ire_intr_handler_cnxk_pf;
++	oct->hw_ops.ore_intr_handler = octep_ore_intr_handler_cnxk_pf;
++	oct->hw_ops.vfire_intr_handler = octep_vfire_intr_handler_cnxk_pf;
++	oct->hw_ops.vfore_intr_handler = octep_vfore_intr_handler_cnxk_pf;
++	oct->hw_ops.dma_intr_handler = octep_dma_intr_handler_cnxk_pf;
++	oct->hw_ops.dma_vf_intr_handler = octep_dma_vf_intr_handler_cnxk_pf;
++	oct->hw_ops.pp_vf_intr_handler = octep_pp_vf_intr_handler_cnxk_pf;
++	oct->hw_ops.misc_intr_handler = octep_misc_intr_handler_cnxk_pf;
++	oct->hw_ops.rsvd_intr_handler = octep_rsvd_intr_handler_cnxk_pf;
++	oct->hw_ops.ioq_intr_handler = octep_ioq_intr_handler_cnxk_pf;
++	oct->hw_ops.soft_reset = octep_soft_reset_cnxk_pf;
++	oct->hw_ops.reinit_regs = octep_reinit_regs_cnxk_pf;
++
++	oct->hw_ops.enable_interrupts = octep_enable_interrupts_cnxk_pf;
++	oct->hw_ops.disable_interrupts = octep_disable_interrupts_cnxk_pf;
++	oct->hw_ops.poll_non_ioq_interrupts = octep_poll_non_ioq_interrupts_cnxk_pf;
++
++	oct->hw_ops.update_iq_read_idx = octep_update_iq_read_index_cnxk_pf;
++
++	oct->hw_ops.enable_iq = octep_enable_iq_cnxk_pf;
++	oct->hw_ops.enable_oq = octep_enable_oq_cnxk_pf;
++	oct->hw_ops.enable_io_queues = octep_enable_io_queues_cnxk_pf;
++
++	oct->hw_ops.disable_iq = octep_disable_iq_cnxk_pf;
++	oct->hw_ops.disable_oq = octep_disable_oq_cnxk_pf;
++	oct->hw_ops.disable_io_queues = octep_disable_io_queues_cnxk_pf;
++	oct->hw_ops.reset_io_queues = octep_reset_io_queues_cnxk_pf;
++
++	oct->hw_ops.dump_registers = octep_dump_registers_cnxk_pf;
++
++	octep_setup_pci_window_regs_cnxk_pf(oct);
++
++	oct->pcie_port = octep_read_csr64(oct, CNXK_SDP_MAC_NUMBER) & 0xff;
++	dev_info(&oct->pdev->dev,
++		 "Octeon device using PCIE Port %d\n", oct->pcie_port);
++
++	octep_init_config_cnxk_pf(oct);
++	octep_configure_ring_mapping_cnxk_pf(oct);
++
++	/* Firmware status CSR is supposed to be cleared by
++	 * core domain reset, but due to IPBUPEM-38842, it is not.
++	 * Set it to RUNNING early in boot, so that unexpected resets
++	 * leave it in a state that is not READY (1).
++	 */
++	OCTEP_PCI_WIN_WRITE(oct, CNXK_PEMX_PFX_CSX_PFCFGX(0, 0, CNXK_PCIEEP_VSECST_CTL),
++			    FW_STATUS_RUNNING);
++}
 diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-index 32740d0a4216a..b19f756e24489 100644
+index b19f756e24489..db24c290a9079 100644
 --- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
 +++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-@@ -155,18 +155,153 @@ static void octep_disable_msix(struct octep_device *oct)
- }
- 
- /**
-- * octep_non_ioq_intr_handler() - common handler for all generic interrupts.
-+ * octep_oei_intr_handler() - common handler for output endpoint interrupts.
-  *
-  * @irq: Interrupt number.
-  * @data: interrupt data.
-  *
-- * this is common handler for all non-queue (generic) interrupts.
-+ * this is common handler for all output endpoint interrupts.
-+ */
-+static irqreturn_t octep_oei_intr_handler(int irq, void *data)
-+{
-+	struct octep_device *oct = data;
-+
-+	return oct->hw_ops.oei_intr_handler(oct);
-+}
-+
-+/**
-+ * octep_ire_intr_handler() - common handler for input ring error interrupts.
-+ *
-+ * @irq: Interrupt number.
-+ * @data: interrupt data.
-+ *
-+ * this is common handler for input ring error interrupts.
-+ */
-+static irqreturn_t octep_ire_intr_handler(int irq, void *data)
-+{
-+	struct octep_device *oct = data;
-+
-+	return oct->hw_ops.ire_intr_handler(oct);
-+}
-+
-+/**
-+ * octep_ore_intr_handler() - common handler for output ring error interrupts.
-+ *
-+ * @irq: Interrupt number.
-+ * @data: interrupt data.
-+ *
-+ * this is common handler for output ring error interrupts.
-+ */
-+static irqreturn_t octep_ore_intr_handler(int irq, void *data)
-+{
-+	struct octep_device *oct = data;
-+
-+	return oct->hw_ops.ore_intr_handler(oct);
-+}
-+
-+/**
-+ * octep_vfire_intr_handler() - common handler for vf input ring error interrupts.
-+ *
-+ * @irq: Interrupt number.
-+ * @data: interrupt data.
-+ *
-+ * this is common handler for vf input ring error interrupts.
-+ */
-+static irqreturn_t octep_vfire_intr_handler(int irq, void *data)
-+{
-+	struct octep_device *oct = data;
-+
-+	return oct->hw_ops.vfire_intr_handler(oct);
-+}
-+
-+/**
-+ * octep_vfore_intr_handler() - common handler for vf output ring error interrupts.
-+ *
-+ * @irq: Interrupt number.
-+ * @data: interrupt data.
-+ *
-+ * this is common handler for vf output ring error interrupts.
-  */
--static irqreturn_t octep_non_ioq_intr_handler(int irq, void *data)
-+static irqreturn_t octep_vfore_intr_handler(int irq, void *data)
- {
- 	struct octep_device *oct = data;
- 
--	return oct->hw_ops.non_ioq_intr_handler(oct);
-+	return oct->hw_ops.vfore_intr_handler(oct);
-+}
-+
-+/**
-+ * octep_dma_intr_handler() - common handler for dpi dma related interrupts.
-+ *
-+ * @irq: Interrupt number.
-+ * @data: interrupt data.
-+ *
-+ * this is common handler for dpi dma related interrupts.
-+ */
-+static irqreturn_t octep_dma_intr_handler(int irq, void *data)
-+{
-+	struct octep_device *oct = data;
-+
-+	return oct->hw_ops.dma_intr_handler(oct);
-+}
-+
-+/**
-+ * octep_dma_vf_intr_handler() - common handler for dpi dma transaction error interrupts for VFs.
-+ *
-+ * @irq: Interrupt number.
-+ * @data: interrupt data.
-+ *
-+ * this is common handler for dpi dma transaction error interrupts for VFs.
-+ */
-+static irqreturn_t octep_dma_vf_intr_handler(int irq, void *data)
-+{
-+	struct octep_device *oct = data;
-+
-+	return oct->hw_ops.dma_vf_intr_handler(oct);
-+}
-+
-+/**
-+ * octep_pp_vf_intr_handler() - common handler for pp transaction error interrupts for VFs.
-+ *
-+ * @irq: Interrupt number.
-+ * @data: interrupt data.
-+ *
-+ * this is common handler for pp transaction error interrupts for VFs.
-+ */
-+static irqreturn_t octep_pp_vf_intr_handler(int irq, void *data)
-+{
-+	struct octep_device *oct = data;
-+
-+	return oct->hw_ops.pp_vf_intr_handler(oct);
-+}
-+
-+/**
-+ * octep_misc_intr_handler() - common handler for mac related interrupts.
-+ *
-+ * @irq: Interrupt number.
-+ * @data: interrupt data.
-+ *
-+ * this is common handler for mac related interrupts.
-+ */
-+static irqreturn_t octep_misc_intr_handler(int irq, void *data)
-+{
-+	struct octep_device *oct = data;
-+
-+	return oct->hw_ops.misc_intr_handler(oct);
-+}
-+
-+/**
-+ * octep_rsvd_intr_handler() - common handler for reserved interrupts (future use).
-+ *
-+ * @irq: Interrupt number.
-+ * @data: interrupt data.
-+ *
-+ * this is common handler for all reserved interrupts.
-+ */
-+static irqreturn_t octep_rsvd_intr_handler(int irq, void *data)
-+{
-+	struct octep_device *oct = data;
-+
-+	return oct->hw_ops.rsvd_intr_handler(oct);
- }
- 
- /**
-@@ -222,9 +357,57 @@ static int octep_request_irqs(struct octep_device *oct)
- 
- 		snprintf(irq_name, OCTEP_MSIX_NAME_SIZE,
- 			 "%s-%s", netdev->name, non_ioq_msix_names[i]);
--		ret = request_irq(msix_entry->vector,
--				  octep_non_ioq_intr_handler, 0,
--				  irq_name, oct);
-+		if (!strncmp(non_ioq_msix_names[i], "epf_oei_rint",
-+			     strlen("epf_oei_rint"))) {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_oei_intr_handler, 0,
-+					  irq_name, oct);
-+		} else if (!strncmp(non_ioq_msix_names[i], "epf_ire_rint",
-+			   strlen("epf_ire_rint"))) {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_ire_intr_handler, 0,
-+					  irq_name, oct);
-+		} else if (!strncmp(non_ioq_msix_names[i], "epf_ore_rint",
-+			   strlen("epf_ore_rint"))) {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_ore_intr_handler, 0,
-+					  irq_name, oct);
-+		} else if (!strncmp(non_ioq_msix_names[i], "epf_vfire_rint",
-+			   strlen("epf_vfire_rint"))) {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_vfire_intr_handler, 0,
-+					  irq_name, oct);
-+		} else if (!strncmp(non_ioq_msix_names[i], "epf_vfore_rint",
-+			   strlen("epf_vfore_rint"))) {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_vfore_intr_handler, 0,
-+					  irq_name, oct);
-+		} else if (!strncmp(non_ioq_msix_names[i], "epf_dma_rint",
-+			   strlen("epf_dma_rint"))) {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_dma_intr_handler, 0,
-+					  irq_name, oct);
-+		} else if (!strncmp(non_ioq_msix_names[i], "epf_dma_vf_rint",
-+			   strlen("epf_dma_vf_rint"))) {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_dma_vf_intr_handler, 0,
-+					  irq_name, oct);
-+		} else if (!strncmp(non_ioq_msix_names[i], "epf_pp_vf_rint",
-+			   strlen("epf_pp_vf_rint"))) {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_pp_vf_intr_handler, 0,
-+					  irq_name, oct);
-+		} else if (!strncmp(non_ioq_msix_names[i], "epf_misc_rint",
-+			   strlen("epf_misc_rint"))) {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_misc_intr_handler, 0,
-+					  irq_name, oct);
-+		} else {
-+			ret = request_irq(msix_entry->vector,
-+					  octep_rsvd_intr_handler, 0,
-+					  irq_name, oct);
-+		}
-+
- 		if (ret) {
- 			netdev_err(netdev,
- 				   "request_irq failed for %s; err=%d",
+@@ -24,6 +24,10 @@ struct workqueue_struct *octep_wq;
+ static const struct pci_device_id octep_pci_id_tbl[] = {
+ 	{PCI_DEVICE(PCI_VENDOR_ID_CAVIUM, OCTEP_PCI_DEVICE_ID_CN93_PF)},
+ 	{PCI_DEVICE(PCI_VENDOR_ID_CAVIUM, OCTEP_PCI_DEVICE_ID_CNF95N_PF)},
++	{PCI_DEVICE(PCI_VENDOR_ID_CAVIUM, OCTEP_PCI_DEVICE_ID_CN10KA_PF)},
++	{PCI_DEVICE(PCI_VENDOR_ID_CAVIUM, OCTEP_PCI_DEVICE_ID_CNF10KA_PF)},
++	{PCI_DEVICE(PCI_VENDOR_ID_CAVIUM, OCTEP_PCI_DEVICE_ID_CNF10KB_PF)},
++	{PCI_DEVICE(PCI_VENDOR_ID_CAVIUM, OCTEP_PCI_DEVICE_ID_CN10KB_PF)},
+ 	{0, },
+ };
+ MODULE_DEVICE_TABLE(pci, octep_pci_id_tbl);
+@@ -1126,6 +1130,14 @@ static const char *octep_devid_to_str(struct octep_device *oct)
+ 		return "CN93XX";
+ 	case OCTEP_PCI_DEVICE_ID_CNF95N_PF:
+ 		return "CNF95N";
++	case OCTEP_PCI_DEVICE_ID_CN10KA_PF:
++		return "CN10KA";
++	case OCTEP_PCI_DEVICE_ID_CNF10KA_PF:
++		return "CNF10KA";
++	case OCTEP_PCI_DEVICE_ID_CNF10KB_PF:
++		return "CNF10KB";
++	case OCTEP_PCI_DEVICE_ID_CN10KB_PF:
++		return "CN10KB";
+ 	default:
+ 		return "Unsupported";
+ 	}
+@@ -1171,6 +1183,14 @@ int octep_device_setup(struct octep_device *oct)
+ 			 OCTEP_MINOR_REV(oct));
+ 		octep_device_setup_cn93_pf(oct);
+ 		break;
++	case OCTEP_PCI_DEVICE_ID_CNF10KA_PF:
++	case OCTEP_PCI_DEVICE_ID_CN10KA_PF:
++	case OCTEP_PCI_DEVICE_ID_CNF10KB_PF:
++	case OCTEP_PCI_DEVICE_ID_CN10KB_PF:
++		dev_info(&pdev->dev, "Setting up OCTEON %s PF PASS%d.%d\n",
++			 octep_devid_to_str(oct), OCTEP_MAJOR_REV(oct), OCTEP_MINOR_REV(oct));
++		octep_device_setup_cnxk_pf(oct);
++		break;
+ 	default:
+ 		dev_err(&pdev->dev,
+ 			"%s: unsupported device\n", __func__);
 diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.h b/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
-index e0907a7191330..6df902ebb7f33 100644
+index 6df902ebb7f33..f67bb87901005 100644
 --- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
 +++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
-@@ -65,7 +65,16 @@ struct octep_hw_ops {
- 	void (*setup_oq_regs)(struct octep_device *oct, int q);
- 	void (*setup_mbox_regs)(struct octep_device *oct, int mbox);
+@@ -23,6 +23,11 @@
  
--	irqreturn_t (*non_ioq_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*oei_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*ire_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*ore_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*vfire_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*vfore_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*dma_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*dma_vf_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*pp_vf_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*misc_intr_handler)(void *ioq_vector);
-+	irqreturn_t (*rsvd_intr_handler)(void *ioq_vector);
- 	irqreturn_t (*ioq_intr_handler)(void *ioq_vector);
- 	int (*soft_reset)(struct octep_device *oct);
- 	void (*reinit_regs)(struct octep_device *oct);
-@@ -73,7 +82,7 @@ struct octep_hw_ops {
+ #define  OCTEP_PCI_DEVICE_ID_CNF95N_PF 0xB400    //95N PF
  
- 	void (*enable_interrupts)(struct octep_device *oct);
- 	void (*disable_interrupts)(struct octep_device *oct);
--	bool (*poll_non_ioq_interrupts)(struct octep_device *oct);
-+	void (*poll_non_ioq_interrupts)(struct octep_device *oct);
- 
- 	void (*enable_io_queues)(struct octep_device *oct);
- 	void (*disable_io_queues)(struct octep_device *oct);
++#define  OCTEP_PCI_DEVICE_ID_CN10KA_PF  0xB900   //CN10KA PF
++#define  OCTEP_PCI_DEVICE_ID_CNF10KA_PF 0xBA00   //CNF10KA PF
++#define  OCTEP_PCI_DEVICE_ID_CNF10KB_PF 0xBC00   //CNF10KB PF
++#define  OCTEP_PCI_DEVICE_ID_CN10KB_PF  0xBD00   //CN10KB PF
++
+ #define  OCTEP_MAX_QUEUES   63
+ #define  OCTEP_MAX_IQ       OCTEP_MAX_QUEUES
+ #define  OCTEP_MAX_OQ       OCTEP_MAX_QUEUES
+@@ -377,6 +382,7 @@ int octep_setup_oqs(struct octep_device *oct);
+ void octep_free_oqs(struct octep_device *oct);
+ void octep_oq_dbell_init(struct octep_device *oct);
+ void octep_device_setup_cn93_pf(struct octep_device *oct);
++void octep_device_setup_cnxk_pf(struct octep_device *oct);
+ int octep_iq_process_completions(struct octep_iq *iq, u16 budget);
+ int octep_oq_process_rx(struct octep_oq *oq, int budget);
+ void octep_set_ethtool_ops(struct net_device *netdev);
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
+new file mode 100644
+index 0000000000000..abe02df8af117
+--- /dev/null
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
+@@ -0,0 +1,400 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/* Marvell Octeon EP (EndPoint) Ethernet Driver
++ *
++ * Copyright (C) 2020 Marvell.
++ *
++ */
++
++#ifndef _OCTEP_REGS_CNXK_PF_H_
++#define _OCTEP_REGS_CNXK_PF_H_
++
++/* ############################ RST ######################### */
++#define    CNXK_RST_BOOT               0x000087E006001600ULL
++#define    CNXK_RST_CHIP_DOMAIN_W1S    0x000087E006001810ULL
++#define    CNXK_RST_CORE_DOMAIN_W1S    0x000087E006001820ULL
++#define    CNXK_RST_CORE_DOMAIN_W1C    0x000087E006001828ULL
++
++#define     CNXK_CONFIG_XPANSION_BAR             0x38
++#define     CNXK_CONFIG_PCIE_CAP                 0x70
++#define     CNXK_CONFIG_PCIE_DEVCAP              0x74
++#define     CNXK_CONFIG_PCIE_DEVCTL              0x78
++#define     CNXK_CONFIG_PCIE_LINKCAP             0x7C
++#define     CNXK_CONFIG_PCIE_LINKCTL             0x80
++#define     CNXK_CONFIG_PCIE_SLOTCAP             0x84
++#define     CNXK_CONFIG_PCIE_SLOTCTL             0x88
++
++#define     CNXK_PCIE_SRIOV_FDL                  0x188      /* 0x98 */
++#define     CNXK_PCIE_SRIOV_FDL_BIT_POS          0x10
++#define     CNXK_PCIE_SRIOV_FDL_MASK             0xFF
++
++#define     CNXK_CONFIG_PCIE_FLTMSK              0x720
++
++/* ################# Offsets of RING, EPF, MAC ######################### */
++#define    CNXK_RING_OFFSET                      (0x1ULL << 17)
++#define    CNXK_EPF_OFFSET                       (0x1ULL << 25)
++#define    CNXK_MAC_OFFSET                       (0x1ULL << 4)
++#define    CNXK_BIT_ARRAY_OFFSET                 (0x1ULL << 4)
++#define    CNXK_EPVF_RING_OFFSET                 (0x1ULL << 4)
++
++/* ################# Scratch Registers ######################### */
++#define    CNXK_SDP_EPF_SCRATCH                  0x209E0
++
++/* ################# Window Registers ######################### */
++#define    CNXK_SDP_WIN_WR_ADDR64                0x20000
++#define    CNXK_SDP_WIN_RD_ADDR64                0x20010
++#define    CNXK_SDP_WIN_WR_DATA64                0x20020
++#define    CNXK_SDP_WIN_WR_MASK_REG              0x20030
++#define    CNXK_SDP_WIN_RD_DATA64                0x20040
++
++#define    CNXK_SDP_MAC_NUMBER                   0x2C100
++
++/* ################# Global Previliged registers ######################### */
++#define    CNXK_SDP_EPF_RINFO                    0x209F0
++
++#define    CNXK_SDP_EPF_RINFO_SRN(val)           ((val) & 0x7F)
++#define    CNXK_SDP_EPF_RINFO_RPVF(val)          (((val) >> 32) & 0xF)
++#define    CNXK_SDP_EPF_RINFO_NVFS(val)          (((val) >> 48) & 0x7F)
++
++/* SDP Function select */
++#define    CNXK_SDP_FUNC_SEL_EPF_BIT_POS         7
++#define    CNXK_SDP_FUNC_SEL_FUNC_BIT_POS        0
++
++/* ##### RING IN (Into device from PCI: Tx Ring) REGISTERS #### */
++#define    CNXK_SDP_R_IN_CONTROL_START           0x10000
++#define    CNXK_SDP_R_IN_ENABLE_START            0x10010
++#define    CNXK_SDP_R_IN_INSTR_BADDR_START       0x10020
++#define    CNXK_SDP_R_IN_INSTR_RSIZE_START       0x10030
++#define    CNXK_SDP_R_IN_INSTR_DBELL_START       0x10040
++#define    CNXK_SDP_R_IN_CNTS_START              0x10050
++#define    CNXK_SDP_R_IN_INT_LEVELS_START        0x10060
++#define    CNXK_SDP_R_IN_PKT_CNT_START           0x10080
++#define    CNXK_SDP_R_IN_BYTE_CNT_START          0x10090
++
++#define    CNXK_SDP_R_IN_CONTROL(ring)		\
++	(CNXK_SDP_R_IN_CONTROL_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_ENABLE(ring)		\
++	(CNXK_SDP_R_IN_ENABLE_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_INSTR_BADDR(ring)	\
++	(CNXK_SDP_R_IN_INSTR_BADDR_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_INSTR_RSIZE(ring)	\
++	(CNXK_SDP_R_IN_INSTR_RSIZE_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_INSTR_DBELL(ring)	\
++	(CNXK_SDP_R_IN_INSTR_DBELL_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_CNTS(ring)		\
++	(CNXK_SDP_R_IN_CNTS_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_INT_LEVELS(ring)	\
++	(CNXK_SDP_R_IN_INT_LEVELS_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_PKT_CNT(ring)		\
++	(CNXK_SDP_R_IN_PKT_CNT_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_BYTE_CNT(ring)		\
++	(CNXK_SDP_R_IN_BYTE_CNT_START + ((ring) * CNXK_RING_OFFSET))
++
++/* Rings per Virtual Function */
++#define    CNXK_R_IN_CTL_RPVF_MASK	(0xF)
++#define    CNXK_R_IN_CTL_RPVF_POS	(48)
++
++/* Number of instructions to be read in one MAC read request.
++ * setting to Max value(4)
++ */
++#define    CNXK_R_IN_CTL_IDLE                    (0x1ULL << 28)
++#define    CNXK_R_IN_CTL_RDSIZE                  (0x3ULL << 25)
++#define    CNXK_R_IN_CTL_IS_64B                  (0x1ULL << 24)
++#define    CNXK_R_IN_CTL_D_NSR                   (0x1ULL << 8)
++#define    CNXK_R_IN_CTL_D_ESR                   (0x1ULL << 6)
++#define    CNXK_R_IN_CTL_D_ROR                   (0x1ULL << 5)
++#define    CNXK_R_IN_CTL_NSR                     (0x1ULL << 3)
++#define    CNXK_R_IN_CTL_ESR                     (0x1ULL << 1)
++#define    CNXK_R_IN_CTL_ROR                     (0x1ULL << 0)
++
++#define    CNXK_R_IN_CTL_MASK  (CNXK_R_IN_CTL_RDSIZE | CNXK_R_IN_CTL_IS_64B)
++
++/* ##### RING OUT (out from device to PCI host: Rx Ring) REGISTERS #### */
++#define    CNXK_SDP_R_OUT_CNTS_START              0x10100
++#define    CNXK_SDP_R_OUT_INT_LEVELS_START        0x10110
++#define    CNXK_SDP_R_OUT_SLIST_BADDR_START       0x10120
++#define    CNXK_SDP_R_OUT_SLIST_RSIZE_START       0x10130
++#define    CNXK_SDP_R_OUT_SLIST_DBELL_START       0x10140
++#define    CNXK_SDP_R_OUT_CONTROL_START           0x10150
++#define    CNXK_SDP_R_OUT_WMARK_START             0x10160
++#define    CNXK_SDP_R_OUT_ENABLE_START            0x10170
++#define    CNXK_SDP_R_OUT_PKT_CNT_START           0x10180
++#define    CNXK_SDP_R_OUT_BYTE_CNT_START          0x10190
++
++#define    CNXK_SDP_R_OUT_CONTROL(ring)          \
++	(CNXK_SDP_R_OUT_CONTROL_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_ENABLE(ring)          \
++	(CNXK_SDP_R_OUT_ENABLE_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_SLIST_BADDR(ring)          \
++	(CNXK_SDP_R_OUT_SLIST_BADDR_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_SLIST_RSIZE(ring)          \
++	(CNXK_SDP_R_OUT_SLIST_RSIZE_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_SLIST_DBELL(ring)          \
++	(CNXK_SDP_R_OUT_SLIST_DBELL_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_CNTS(ring)          \
++	(CNXK_SDP_R_OUT_CNTS_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_INT_LEVELS(ring)          \
++	(CNXK_SDP_R_OUT_INT_LEVELS_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_PKT_CNT(ring)          \
++	(CNXK_SDP_R_OUT_PKT_CNT_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_BYTE_CNT(ring)          \
++	(CNXK_SDP_R_OUT_BYTE_CNT_START + ((ring) * CNXK_RING_OFFSET))
++
++/*------------------ R_OUT Masks ----------------*/
++#define    CNXK_R_OUT_INT_LEVELS_BMODE            BIT_ULL(63)
++#define    CNXK_R_OUT_INT_LEVELS_TIMET            (32)
++
++#define    CNXK_R_OUT_CTL_IDLE                    BIT_ULL(40)
++#define    CNXK_R_OUT_CTL_ES_I                    BIT_ULL(34)
++#define    CNXK_R_OUT_CTL_NSR_I                   BIT_ULL(33)
++#define    CNXK_R_OUT_CTL_ROR_I                   BIT_ULL(32)
++#define    CNXK_R_OUT_CTL_ES_D                    BIT_ULL(30)
++#define    CNXK_R_OUT_CTL_NSR_D                   BIT_ULL(29)
++#define    CNXK_R_OUT_CTL_ROR_D                   BIT_ULL(28)
++#define    CNXK_R_OUT_CTL_ES_P                    BIT_ULL(26)
++#define    CNXK_R_OUT_CTL_NSR_P                   BIT_ULL(25)
++#define    CNXK_R_OUT_CTL_ROR_P                   BIT_ULL(24)
++#define    CNXK_R_OUT_CTL_IMODE                   BIT_ULL(23)
++
++/* ############### Interrupt Moderation Registers ############### */
++#define CNXK_SDP_R_IN_INT_MDRT_CTL0_START         0x10280
++#define CNXK_SDP_R_IN_INT_MDRT_CTL1_START         0x102A0
++#define CNXK_SDP_R_IN_INT_MDRT_DBG_START          0x102C0
++
++#define CNXK_SDP_R_OUT_INT_MDRT_CTL0_START        0x10380
++#define CNXK_SDP_R_OUT_INT_MDRT_CTL1_START        0x103A0
++#define CNXK_SDP_R_OUT_INT_MDRT_DBG_START         0x103C0
++
++#define CNXK_SDP_R_OUT_CNTS_ISM_START             0x10510
++#define CNXK_SDP_R_IN_CNTS_ISM_START              0x10520
++
++#define    CNXK_SDP_R_IN_INT_MDRT_CTL0(ring)		\
++	(CNXK_SDP_R_IN_INT_MDRT_CTL0_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_INT_MDRT_CTL1(ring)		\
++	(CNXK_SDP_R_IN_INT_MDRT_CTL1_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_INT_MDRT_DBG(ring)		\
++	(CNXK_SDP_R_IN_INT_MDRT_DBG_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_INT_MDRT_CTL0(ring)		\
++	(CNXK_SDP_R_OUT_INT_MDRT_CTL0_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_INT_MDRT_CTL1(ring)		\
++	(CNXK_SDP_R_OUT_INT_MDRT_CTL1_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_INT_MDRT_DBG(ring)		\
++	(CNXK_SDP_R_OUT_INT_MDRT_DBG_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_CNTS_ISM(ring)          \
++	(CNXK_SDP_R_OUT_CNTS_ISM_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_CNTS_ISM(ring)          \
++	(CNXK_SDP_R_IN_CNTS_ISM_START + ((ring) * CNXK_RING_OFFSET))
++
++/* ##################### Mail Box Registers ########################## */
++/* INT register for VF. when a MBOX write from PF happed to a VF,
++ * corresponding bit will be set in this register as well as in
++ * PF_VF_INT register.
++ *
++ * This is a RO register, the int can be cleared by writing 1 to PF_VF_INT
++ */
++/* Basically first 3 are from PF to VF. The last one is data from VF to PF */
++#define    CNXK_SDP_R_MBOX_PF_VF_DATA_START       0x10210
++#define    CNXK_SDP_R_MBOX_PF_VF_INT_START        0x10220
++#define    CNXK_SDP_R_MBOX_VF_PF_DATA_START       0x10230
++
++#define    CNXK_SDP_R_MBOX_PF_VF_DATA(ring)		\
++	(CNXK_SDP_R_MBOX_PF_VF_DATA_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_MBOX_PF_VF_INT(ring)		\
++	(CNXK_SDP_R_MBOX_PF_VF_INT_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_MBOX_VF_PF_DATA(ring)		\
++	(CNXK_SDP_R_MBOX_VF_PF_DATA_START + ((ring) * CNXK_RING_OFFSET))
++
++/* ##################### Interrupt Registers ########################## */
++#define	   CNXK_SDP_R_ERR_TYPE_START	          0x10400
++
++#define    CNXK_SDP_R_ERR_TYPE(ring)		\
++	(CNXK_SDP_R_ERR_TYPE_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_MBOX_ISM_START              0x10500
++#define    CNXK_SDP_R_OUT_CNTS_ISM_START          0x10510
++#define    CNXK_SDP_R_IN_CNTS_ISM_START           0x10520
++
++#define    CNXK_SDP_R_MBOX_ISM(ring)		\
++	(CNXK_SDP_R_MBOX_ISM_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_OUT_CNTS_ISM(ring)	\
++	(CNXK_SDP_R_OUT_CNTS_ISM_START + ((ring) * CNXK_RING_OFFSET))
++
++#define    CNXK_SDP_R_IN_CNTS_ISM(ring)		\
++	(CNXK_SDP_R_IN_CNTS_ISM_START + ((ring) * CNXK_RING_OFFSET))
++
++#define	   CNXK_SDP_EPF_MBOX_RINT_START	          0x20100
++#define	   CNXK_SDP_EPF_MBOX_RINT_W1S_START	  0x20120
++#define	   CNXK_SDP_EPF_MBOX_RINT_ENA_W1C_START   0x20140
++#define	   CNXK_SDP_EPF_MBOX_RINT_ENA_W1S_START   0x20160
++
++#define	   CNXK_SDP_EPF_VFIRE_RINT_START          0x20180
++#define	   CNXK_SDP_EPF_VFIRE_RINT_W1S_START      0x201A0
++#define	   CNXK_SDP_EPF_VFIRE_RINT_ENA_W1C_START  0x201C0
++#define	   CNXK_SDP_EPF_VFIRE_RINT_ENA_W1S_START  0x201E0
++
++#define	   CNXK_SDP_EPF_IRERR_RINT                0x20200
++#define	   CNXK_SDP_EPF_IRERR_RINT_W1S            0x20210
++#define	   CNXK_SDP_EPF_IRERR_RINT_ENA_W1C        0x20220
++#define	   CNXK_SDP_EPF_IRERR_RINT_ENA_W1S        0x20230
++
++#define	   CNXK_SDP_EPF_VFORE_RINT_START          0x20240
++#define	   CNXK_SDP_EPF_VFORE_RINT_W1S_START      0x20260
++#define	   CNXK_SDP_EPF_VFORE_RINT_ENA_W1C_START  0x20280
++#define	   CNXK_SDP_EPF_VFORE_RINT_ENA_W1S_START  0x202A0
++
++#define	   CNXK_SDP_EPF_ORERR_RINT                0x20320
++#define	   CNXK_SDP_EPF_ORERR_RINT_W1S            0x20330
++#define	   CNXK_SDP_EPF_ORERR_RINT_ENA_W1C        0x20340
++#define	   CNXK_SDP_EPF_ORERR_RINT_ENA_W1S        0x20350
++
++#define	   CNXK_SDP_EPF_OEI_RINT                  0x20400
++#define	   CNXK_SDP_EPF_OEI_RINT_W1S              0x20500
++#define	   CNXK_SDP_EPF_OEI_RINT_ENA_W1C          0x20600
++#define	   CNXK_SDP_EPF_OEI_RINT_ENA_W1S          0x20700
++
++#define	   CNXK_SDP_EPF_DMA_RINT                  0x20800
++#define	   CNXK_SDP_EPF_DMA_RINT_W1S              0x20810
++#define	   CNXK_SDP_EPF_DMA_RINT_ENA_W1C          0x20820
++#define	   CNXK_SDP_EPF_DMA_RINT_ENA_W1S          0x20830
++
++#define	   CNXK_SDP_EPF_DMA_INT_LEVEL_START	    0x20840
++#define	   CNXK_SDP_EPF_DMA_CNT_START	            0x20860
++#define	   CNXK_SDP_EPF_DMA_TIM_START	            0x20880
++
++#define	   CNXK_SDP_EPF_MISC_RINT                 0x208A0
++#define	   CNXK_SDP_EPF_MISC_RINT_W1S	            0x208B0
++#define	   CNXK_SDP_EPF_MISC_RINT_ENA_W1C         0x208C0
++#define	   CNXK_SDP_EPF_MISC_RINT_ENA_W1S         0x208D0
++
++#define	   CNXK_SDP_EPF_DMA_VF_RINT_START           0x208E0
++#define	   CNXK_SDP_EPF_DMA_VF_RINT_W1S_START       0x20900
++#define	   CNXK_SDP_EPF_DMA_VF_RINT_ENA_W1C_START   0x20920
++#define	   CNXK_SDP_EPF_DMA_VF_RINT_ENA_W1S_START   0x20940
++
++#define	   CNXK_SDP_EPF_PP_VF_RINT_START            0x20960
++#define	   CNXK_SDP_EPF_PP_VF_RINT_W1S_START        0x20980
++#define	   CNXK_SDP_EPF_PP_VF_RINT_ENA_W1C_START    0x209A0
++#define	   CNXK_SDP_EPF_PP_VF_RINT_ENA_W1S_START    0x209C0
++
++#define	   CNXK_SDP_EPF_MBOX_RINT(index)		\
++		(CNXK_SDP_EPF_MBOX_RINT_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_MBOX_RINT_W1S(index)		\
++		(CNXK_SDP_EPF_MBOX_RINT_W1S_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_MBOX_RINT_ENA_W1C(index)	\
++		(CNXK_SDP_EPF_MBOX_RINT_ENA_W1C_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_MBOX_RINT_ENA_W1S(index)	\
++		(CNXK_SDP_EPF_MBOX_RINT_ENA_W1S_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++
++#define	   CNXK_SDP_EPF_VFIRE_RINT(index)		\
++		(CNXK_SDP_EPF_VFIRE_RINT_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_VFIRE_RINT_W1S(index)		\
++		(CNXK_SDP_EPF_VFIRE_RINT_W1S_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_VFIRE_RINT_ENA_W1C(index)	\
++		(CNXK_SDP_EPF_VFIRE_RINT_ENA_W1C_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_VFIRE_RINT_ENA_W1S(index)	\
++		(CNXK_SDP_EPF_VFIRE_RINT_ENA_W1S_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++
++#define	   CNXK_SDP_EPF_VFORE_RINT(index)		\
++		(CNXK_SDP_EPF_VFORE_RINT_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_VFORE_RINT_W1S(index)		\
++		(CNXK_SDP_EPF_VFORE_RINT_W1S_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_VFORE_RINT_ENA_W1C(index)	\
++		(CNXK_SDP_EPF_VFORE_RINT_ENA_W1C_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_VFORE_RINT_ENA_W1S(index)	\
++		(CNXK_SDP_EPF_VFORE_RINT_ENA_W1S_START + ((index) * CNXK_BIT_ARRAY_OFFSET))
++
++#define	   CNXK_SDP_EPF_DMA_VF_RINT(index)		\
++		(CNXK_SDP_EPF_DMA_VF_RINT_START + ((index) + CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_DMA_VF_RINT_W1S(index)		\
++		(CNXK_SDP_EPF_DMA_VF_RINT_W1S_START + ((index) + CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_DMA_VF_RINT_ENA_W1C(index)	\
++		(CNXK_SDP_EPF_DMA_VF_RINT_ENA_W1C_START + ((index) + CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_DMA_VF_RINT_ENA_W1S(index)	\
++		(CNXK_SDP_EPF_DMA_VF_RINT_ENA_W1S_START + ((index) + CNXK_BIT_ARRAY_OFFSET))
++
++#define	   CNXK_SDP_EPF_PP_VF_RINT(index)		\
++		(CNXK_SDP_EPF_PP_VF_RINT_START + ((index) + CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_PP_VF_RINT_W1S(index)		\
++		(CNXK_SDP_EPF_PP_VF_RINT_W1S_START + ((index) + CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_PP_VF_RINT_ENA_W1C(index)	\
++		(CNXK_SDP_EPF_PP_VF_RINT_ENA_W1C_START + ((index) + CNXK_BIT_ARRAY_OFFSET))
++#define	   CNXK_SDP_EPF_PP_VF_RINT_ENA_W1S(index)	\
++		(CNXK_SDP_EPF_PP_VF_RINT_ENA_W1S_START + ((index) + CNXK_BIT_ARRAY_OFFSET))
++
++/*------------------ Interrupt Masks ----------------*/
++#define	   CNXK_INTR_R_SEND_ISM       BIT_ULL(63)
++#define	   CNXK_INTR_R_OUT_INT        BIT_ULL(62)
++#define    CNXK_INTR_R_IN_INT         BIT_ULL(61)
++#define    CNXK_INTR_R_MBOX_INT       BIT_ULL(60)
++#define    CNXK_INTR_R_RESEND         BIT_ULL(59)
++#define    CNXK_INTR_R_CLR_TIM        BIT_ULL(58)
++
++/* ####################### Ring Mapping Registers ################################## */
++#define    CNXK_SDP_EPVF_RING_START          0x26000
++#define    CNXK_SDP_IN_RING_TB_MAP_START     0x28000
++#define    CNXK_SDP_IN_RATE_LIMIT_START      0x2A000
++#define    CNXK_SDP_MAC_PF_RING_CTL_START    0x2C000
++
++#define	   CNXK_SDP_EPVF_RING(ring)		\
++		(CNXK_SDP_EPVF_RING_START + ((ring) * CNXK_EPVF_RING_OFFSET))
++#define	   CNXK_SDP_IN_RING_TB_MAP(ring)	\
++		(CNXK_SDP_N_RING_TB_MAP_START + ((ring) * CNXK_EPVF_RING_OFFSET))
++#define	   CNXK_SDP_IN_RATE_LIMIT(ring)		\
++		(CNXK_SDP_IN_RATE_LIMIT_START + ((ring) * CNXK_EPVF_RING_OFFSET))
++#define	   CNXK_SDP_MAC_PF_RING_CTL(mac)	\
++		(CNXK_SDP_MAC_PF_RING_CTL_START + ((mac) * CNXK_MAC_OFFSET))
++
++#define    CNXK_SDP_MAC_PF_RING_CTL_NPFS(val)  ((val) & 0x3)
++#define    CNXK_SDP_MAC_PF_RING_CTL_SRN(val)   (((val) >> 8) & 0x7F)
++#define    CNXK_SDP_MAC_PF_RING_CTL_RPPF(val)  (((val) >> 16) & 0x3F)
++
++/* Number of non-queue interrupts in CNXKxx */
++#define    CNXK_NUM_NON_IOQ_INTR    32
++
++/* bit 0 for control mbox interrupt */
++#define CNXK_SDP_EPF_OEI_RINT_DATA_BIT_MBOX	BIT_ULL(0)
++/* bit 1 for firmware heartbeat interrupt */
++#define CNXK_SDP_EPF_OEI_RINT_DATA_BIT_HBEAT	BIT_ULL(1)
++#define FW_STATUS_RUNNING      2ULL
++#define CNXK_PEMX_PFX_CSX_PFCFGX(pem, pf, offset)      ({ typeof(offset) _off = (offset); \
++							  ((0x8e0000008000 | \
++							    (uint64_t)(pem) << 36 \
++							    | (pf) << 18 \
++							    | ((_off >> 16) & 1) << 16 \
++							    | (_off >> 3) << 3) \
++							   + (((_off >> 2) & 1) << 2)); \
++							})
++
++/* Register defines for use with CNXK_PEMX_PFX_CSX_PFCFGX */
++#define CNXK_PCIEEP_VSECST_CTL  0x418
++
++#define CNXK_PEM_BAR4_INDEX		7
++#define CNXK_PEM_BAR4_INDEX_SIZE	0x400000ULL
++#define CNXK_PEM_BAR4_INDEX_OFFSET	(CNXK_PEM_BAR4_INDEX * CNXK_PEM_BAR4_INDEX_SIZE)
++
++#endif /* _OCTEP_REGS_CNXK_PF_H_ */
 -- 
 2.51.0
 
