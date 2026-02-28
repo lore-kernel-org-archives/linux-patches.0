@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F65034252B
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDEB34252B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301769; cv=none; b=ZE61G2FfIHfJhMylXaCQbXOw6bmPHqV0h1dqngd9ueaGa6SquYQYrHlrImOO3k+a8ZGbJOwxEbS00nmS42LSS0CAA9ulRUuLj0+jvihsaJYXPpewxVkC0Px6b6cRqT5du1kh0KNdXIsl3/l9cn6xyn5Db3J8OixBWmuglMxDWGs=
+	t=1772301770; cv=none; b=jr4H+9/ViRHuShfPUg1RuwQoWjyA/Ybu7aQFLwZL9wp9C5MP09fsc+scOGt+8vUFgSzFJlBPWxZpyfLzfNBrnLA+lIzrveTXYDWVggflleSC+2C2s2SLsmU0ad/Jqd3wHZdfuekAHjRCYcfPBrlmkm7St5yIyAtNpNv0q/4cN8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301769; c=relaxed/simple;
-	bh=nJXbVlmHPH79nHU8XYjdHlLUo4ElEQBlb0L7BuarAFI=;
+	s=arc-20240116; t=1772301770; c=relaxed/simple;
+	bh=dA9RqxmqyJs2gc1SKW2oGI4cByhxr1HEDdA5Y2MVUXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TyLBmVLMAxbVCFlhhT88q61KgaUgrf/TDMi/Ibz+ym51ldDp6KqcL/o+DhP7M0SVOYGdH7iNx7+yND8PysQQeJU4sx4CAYd40K0lp3nrrsTdLiMLqkAurab0sJMJ0OncsiO/+FSjOnpjBwi8qkC9ztDUDp6CSd/09YV+esLixGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=spuyle//; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aaaVguIMiEq2FWUaQmQTxOq4x4PJenCtmNzt0hiIc6GLVrAV1icmEKIEl9WxL91jL39KkWdq3dQPxznEaSNBoLcEYZrdiuCSWLxsPz6dqspITWfSVeBze6svwaynjJZEi9lqlRsZTJjJ7ECNp+dQ6u6JHWvaVbw1RI2VNHjNp4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PTTFFjVQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="spuyle//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93741C116D0;
-	Sat, 28 Feb 2026 18:02:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PTTFFjVQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C35C19423;
+	Sat, 28 Feb 2026 18:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301769;
-	bh=nJXbVlmHPH79nHU8XYjdHlLUo4ElEQBlb0L7BuarAFI=;
+	s=k20201202; t=1772301770;
+	bh=dA9RqxmqyJs2gc1SKW2oGI4cByhxr1HEDdA5Y2MVUXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=spuyle//5hAth7s0ahXB5Bzcc3FFSF0KDNqC23BMm2jO/A0JqAg2Sl9E/mybUO9II
-	 3CWyj85mxGg+ij059mGlTfN0q1sWnjLaK99oTJgWlrvxgb22Rg/JwDs9BH9V+o6S4C
-	 E40et6+dNQGtJ397OfhREevehvXikuJ6HO4r9MO8NfnUAUWDNLjtDmL1RnKouetaAE
-	 h4Zvn2IVDD5kIFGOS3Sv7MOLK3QPNh8lQ5R/sR9Wq3mW8vSV9lmOceFqfyh3xa78Vs
-	 OEJ6inNCtZh6yF1OrXqH5ELf/nsH3vcG+KUcQT4/GoSsKpsZwgSB3CLlRbdfIlCZTr
-	 7EADEhNA/8qcw==
+	b=PTTFFjVQr7aifAD9RjxFFAZRcYIsgKU8A0x24fSXgoGiFH+Luygmt8MBGdVQg6K9X
+	 HlvS7hmIrtAK0xZHXhvIiSDKrFwvmVv/nvawUkNmFZ4rnBakCSjLoy1tg49yS32LEB
+	 CQGnZWWX4Xrbyidt/Dswk2HBDDulHnjn2cjRk3R9DIlf7tvsXFQhMK31fSDph8q3AV
+	 ihe3OhWd2dc1M6NoHiSb7scGaft47pI7NXrVRLk5GqRoZCoHmY/6rlGiCEoZfTAaX3
+	 dmbRjOwOePyylX2pbapupO4SYUk/rF0+ZSaTY814TOlzLmT8Bjqfa61ZhKG4NcII12
+	 YNO1MRqWuCLFQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Huang Chenming <chenming.huang@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Hou Tao <houtao1@huawei.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Alistair Popple <apopple@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 176/385] wifi: cfg80211: Fix use_for flag update on BSS refresh
-Date: Sat, 28 Feb 2026 12:56:38 -0500
-Message-ID: <20260228180011.1568201-176-sashal@kernel.org>
+Subject: [PATCH 6.12 177/385] PCI/P2PDMA: Release per-CPU pgmap ref when vm_insert_page() fails
+Date: Sat, 28 Feb 2026 12:56:39 -0500
+Message-ID: <20260228180011.1568201-177-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -43,54 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Huang Chenming <chenming.huang@oss.qualcomm.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 4073ea516106e5f98ed0476f89cdede8baa98d37 ]
+[ Upstream commit 6220694c52a5a04102b48109e4f24e958b559bd3 ]
 
-Userspace may fail to connect to certain BSS that were initially
-marked as unusable due to regulatory restrictions (use_for = 0,
-e.g., 6 GHz power type mismatch). Even after these restrictions
-are removed and the BSS becomes usable, connection attempts still
-fail.
+When vm_insert_page() fails in p2pmem_alloc_mmap(), p2pmem_alloc_mmap()
+doesn't invoke percpu_ref_put() to free the per-CPU ref of pgmap acquired
+after gen_pool_alloc_owner(), and memunmap_pages() will hang forever when
+trying to remove the PCI device.
 
-The issue occurs in cfg80211_update_known_bss() where the use_for
-flag is updated using bitwise AND (&=) instead of direct assignment.
-Once a BSS is marked with use_for = 0, the AND operation masks out
-any subsequent non-zero values, permanently keeping the flag at 0.
-This causes __cfg80211_get_bss(), invoked by nl80211_assoc_bss(), to
-fail the check "(bss->pub.use_for & use_for) != use_for", thereby
-blocking association.
+Fix it by adding the missed percpu_ref_put().
 
-Replace the bitwise AND operation with direct assignment so the use_for
-flag accurately reflects the current BSS state.
-
-Fixes: d02a12b8e4bb ("wifi: cfg80211: add BSS usage reporting")
-Signed-off-by: Huang Chenming <chenming.huang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251209025733.2098456-1-chenming.huang@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 7e9c7ef83d78 ("PCI/P2PDMA: Allow userspace VMA allocations through sysfs")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Link: https://patch.msgid.link/20251220040446.274991-2-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/p2pdma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index f00ccc6d803be..f9aff1c58e800 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1906,7 +1906,7 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
- 	ether_addr_copy(known->parent_bssid, new->parent_bssid);
- 	known->pub.max_bssid_indicator = new->pub.max_bssid_indicator;
- 	known->pub.bssid_index = new->pub.bssid_index;
--	known->pub.use_for &= new->pub.use_for;
-+	known->pub.use_for = new->pub.use_for;
- 	known->pub.cannot_use_reasons = new->pub.cannot_use_reasons;
- 	known->bss_source = new->bss_source;
- 
+diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+index 52e1564eadd0b..ec53b2b0d57fe 100644
+--- a/drivers/pci/p2pdma.c
++++ b/drivers/pci/p2pdma.c
+@@ -143,6 +143,7 @@ static int p2pmem_alloc_mmap(struct file *filp, struct kobject *kobj,
+ 		ret = vm_insert_page(vma, vaddr, virt_to_page(kaddr));
+ 		if (ret) {
+ 			gen_pool_free(p2pdma->pool, (uintptr_t)kaddr, len);
++			percpu_ref_put(ref);
+ 			return ret;
+ 		}
+ 		percpu_ref_get(ref);
 -- 
 2.51.0
 
