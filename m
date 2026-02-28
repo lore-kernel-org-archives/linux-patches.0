@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6B4345736
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A901A2DB7B2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301863; cv=none; b=VskAwBYIj5qD7cruEkc7YA9uphRFI8qTAr1EVXDn/IOZfJdnV9YIgOX61iCxuejWDzR88pGuZYBMVH9wIv3+zmbFLr5uD2Ogn8F0BJjGFpurwT2y1grsvuy3Xu/BUzc4NpAWOETgdzEfwakeN8+6ykBe/j/5yXRDQA8b2jfLwFU=
+	t=1772301863; cv=none; b=dc/vVEnUwzMvH6wkubXzNIjWAKHITmyxHKdmLyqniQDA6G93AB+gOpxfZKkjC0vfCV5aW9S1/4qNGjyofZytRUK/i6GvqfEJbj5PBGNqntxeyQ1vfeq0GhjWOFeGyG8x0w+NRIS8SI2CNW9vzITpflGTLD6PfXKq3o9I7V22jYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301863; c=relaxed/simple;
-	bh=3dlDQKzit/DrVDyBMNZZfGkQgiTse6KrFZEK9ZkNGk8=;
+	bh=IzgKjF09oD/Bye43Y/AyMG7BJrZLvBnfPyLybBNUiAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AAdBx6BQZ+IXe3tUcEcvGMcCC+KqXPTUcp3lLPp35fho6Nspu3sl8+JOdXjF0foIuv9IxvwvZaG6RKFd0dF6D79g9qIz2WkGw5B6bTtxQwxQ3HKzwbM39RQWwPPwwN+amLx+s9hVu8DEhHHU2+xEj2mzRhN/w2H0b6Zqdb30I08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RbBA+/iU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XqeaBWJq2prcFeoVn47SDTt9ihRNMVy+oLeWhVQmgaEM4d6t0RWm3GHkYTRF1T4QksRln04shalzoWD6kkAFKjDxcycPVl2oXz2Mid8X6GjzfIqqKkB+jzEzUbtte4k49dpsZlu7sEzRcZKKrWCq4eIB5iwR1BKqI9Njnzn6BUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kJJ9KBKW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RbBA+/iU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EED0C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kJJ9KBKW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02817C19424;
 	Sat, 28 Feb 2026 18:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301862;
-	bh=3dlDQKzit/DrVDyBMNZZfGkQgiTse6KrFZEK9ZkNGk8=;
+	s=k20201202; t=1772301863;
+	bh=IzgKjF09oD/Bye43Y/AyMG7BJrZLvBnfPyLybBNUiAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RbBA+/iU4sO8iKHKKo9U79iGlCTAW11cqe27FsZjhimXADjKmmG7TCMnq/OPpRctm
-	 EDxr1Vu2jhc06fwIye9t9cSh+uCFm5yRiUBch9AD+K8E9CaKtaAFfmerE23kkdawhl
-	 wEytQ77F15VjnzbePHSEFLrv42v9kZSqrnaULHgDLhmSyQ/ajL2EBJpZLKuSxDTMRd
-	 FKYAaoKce+uDGnTtz0N4jk+HPbl5QVOGYD52ngXaEIgnzeZBLLJ+qRVRvamoEqwLwI
-	 SAl77hcIgZxOEr2cIEvmFd3XPMF00ARvBGBo6snW3pQWoXvSiloMWzE2uKzETBDill
-	 T8UQ33XM/bbGw==
+	b=kJJ9KBKWvaDowZpplC5Qpuv7rpEN1FBpjIDlucC9ERLOeeYZyqsepO2Gu9uzMuIW6
+	 ISc+0D+PIjT9kAPwyajaDlIrdDdtG8RoSjssdqSeC23bgOdaKfpbLyI9c1EUQLBH3S
+	 /LY3+pKurJFsXmhI9Xg0ckYLUbI8j6JBEsH+pT3QTsV0guUZurU/UAu5QaK/HUzRvU
+	 VoWwsQoBT0bbxReU2PCLFPA7z+mCzzLtv6NhaeFTJ8rDynKR/ds0MesrppLfSY77s7
+	 4p9v4hHkV2XiW8kyqQyHoP5D5QTVJVmRmkPYhaHrGQBSICbW1oFLFHWjBpRjxWHN5I
+	 DeEjPyq2ZwZrA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
+Cc: Waqar Hameed <waqar.hameed@axis.com>,
+	Nikita Travkin <nikita@trvn.ru>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 285/385] mtd: spinand: Fix kernel doc
-Date: Sat, 28 Feb 2026 12:58:27 -0500
-Message-ID: <20260228180011.1568201-285-sashal@kernel.org>
+Subject: [PATCH 6.12 286/385] power: supply: pm8916_lbc: Fix use-after-free for extcon in IRQ handler
+Date: Sat, 28 Feb 2026 12:58:28 -0500
+Message-ID: <20260228180011.1568201-286-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,34 +48,64 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit a57b1f07d2d35843a7ada30c8cf9a215c0931868 ]
+[ Upstream commit 23067259919663580c6f81801847cfc7bd54fd1f ]
 
-The @data buffer is 5 bytes, not 4, it has been extended for the need of
-devices with an extra ID bytes.
+Using the `devm_` variant for requesting IRQ _before_ the `devm_`
+variant for allocating/registering the `extcon` handle, means that the
+`extcon` handle will be deallocated/unregistered _before_ the interrupt
+handler (since `devm_` naturally deallocates in reverse allocation
+order). This means that during removal, there is a race condition where
+an interrupt can fire just _after_ the `extcon` handle has been
+freed, *but* just _before_ the corresponding unregistration of the IRQ
+handler has run.
 
-Fixes: 34a956739d29 ("mtd: spinand: Add support for 5-byte IDs")
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+This will lead to the IRQ handler calling `extcon_set_state_sync()` with
+a freed `extcon` handle. Which usually crashes the system or otherwise
+silently corrupts the memory...
+
+Fix this racy use-after-free by making sure the IRQ is requested _after_
+the registration of the `extcon` handle.
+
+Fixes: f8d7a3d21160 ("power: supply: Add driver for pm8916 lbc")
+Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
+Reviewed-by: Nikita Travkin <nikita@trvn.ru>
+Link: https://patch.msgid.link/e2a4cd2fcd42b6cd97d856c17c097289a2aed393.1769163273.git.waqar.hameed@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mtd/spinand.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/pm8916_lbc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
-index 702e5fb13dae7..4bf33cefbae5f 100644
---- a/include/linux/mtd/spinand.h
-+++ b/include/linux/mtd/spinand.h
-@@ -195,7 +195,7 @@ struct spinand_device;
+diff --git a/drivers/power/supply/pm8916_lbc.c b/drivers/power/supply/pm8916_lbc.c
+index ab324ce3b8721..e6c44f342eeb4 100644
+--- a/drivers/power/supply/pm8916_lbc.c
++++ b/drivers/power/supply/pm8916_lbc.c
+@@ -327,11 +327,6 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
  
- /**
-  * struct spinand_id - SPI NAND id structure
-- * @data: buffer containing the id bytes. Currently 4 bytes large, but can
-+ * @data: buffer containing the id bytes. Currently 5 bytes large, but can
-  *	  be extended if required
-  * @len: ID length
-  */
+-	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
+-					IRQF_ONESHOT, "pm8916_lbc", chg);
+-	if (ret)
+-		return ret;
+-
+ 	chg->edev = devm_extcon_dev_allocate(dev, pm8916_lbc_charger_cable);
+ 	if (IS_ERR(chg->edev))
+ 		return PTR_ERR(chg->edev);
+@@ -340,6 +335,11 @@ static int pm8916_lbc_charger_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		return dev_err_probe(dev, ret, "failed to register extcon device\n");
+ 
++	ret = devm_request_threaded_irq(dev, irq, NULL, pm8916_lbc_charger_state_changed_irq,
++					IRQF_ONESHOT, "pm8916_lbc", chg);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_read(chg->regmap, chg->reg[LBC_USB] + PM8916_INT_RT_STS, &tmp);
+ 	if (ret)
+ 		goto comm_error;
 -- 
 2.51.0
 
