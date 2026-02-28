@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9C547B43F;
-	Sat, 28 Feb 2026 17:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7F047B43F;
+	Sat, 28 Feb 2026 17:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301295; cv=none; b=hDhp9H0WXbU1K99Ku3u172v6MhYhpSbntXthv1z0dpyU5nUSqgzdiq8bTwQyLJxCJT9vgyP7lsAIHtCbpmIShdpcg1iz4X9fbKVgn7x7QsDIuMVEJ67CuMWS1BbPTpvWfKxaHzXJKkWsfQsRlMx57oVYgAWWCSbk+IjnDi87/5o=
+	t=1772301296; cv=none; b=ZLrfPICDVPP4D8DbgPSlLXiY+AG9Lx2ERdwp6Ld0cfb4v8Wv5AJzx0RmQeCAYUobXjGY0Rj0TTfeEzRl5jUeqPgIRYRZDJHqJzmw6hwX7dY4EHMn+5dBwb4uGSdKSmJ6A9plmlYUBnjffsd2at4DDDNi0q2eMU7bBdcLVkLpGYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301295; c=relaxed/simple;
-	bh=7/IR8FSMgLJn+jx5lefrG4UI8KaNTEfvyd7SrohzmpY=;
+	s=arc-20240116; t=1772301296; c=relaxed/simple;
+	bh=fdZxNkDEir7Gj+h8PL+4WK7qPvK1K5hf3Uh8lZeH47E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJ3ApuJQSqHgtGdC+EEzRktkNx5GsakgHuylBSE6zuGoYrOnN8bIt0xbK2DmCjEDbO+8gFR8qjadC7W2ZLJKY3Otv/mZwBCzCNI+yOokoQthPxelut2Oj6ZpyPBoqc+u7WnZLFZMApBCMj5g+59HbJxEH7NKxMnQZ1EBuhnN8oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uS64Q3Va; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a9AR8yxCm9fonoOfYeOYxh34mjVQ3DVug2fzVKl5inYmQRo6ZeZ4TfhlkPzymCcuX8tHRITqzP/UO8WxivmAFf/iyASUNroIdxlzmZRusUkDoY5GMdSxi+Iw3n2JeTakwEeLt9FOc/YW2Ae8RVLzPj2R5BMzjtKxt/WuoPPwebM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pVB+IgE/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uS64Q3Va"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0304AC2BC87;
-	Sat, 28 Feb 2026 17:54:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pVB+IgE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3736C2BCB0;
+	Sat, 28 Feb 2026 17:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301295;
-	bh=7/IR8FSMgLJn+jx5lefrG4UI8KaNTEfvyd7SrohzmpY=;
+	s=k20201202; t=1772301296;
+	bh=fdZxNkDEir7Gj+h8PL+4WK7qPvK1K5hf3Uh8lZeH47E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uS64Q3VakjevcbpepBICleT69NJurAaBXwjXqIZBA/bYzOH5ebN73NyLGb9xR8Odq
-	 HRHjBS/z8WhFWcC4zlRuPpVr3gGQBil1T8s3mdxPzHPA46mdr6r5jZffKMzQBtUaC5
-	 zsfAzwISi6Os4Md4jTzbtF/7WnYUhpRBo8uUz2xjwjylB1OVO/8yoPDUlweQMuurPz
-	 egJwuUsWTjvevcWGw7uXlICsS7zd2YMKLfTevMxehpWtl7rX46lyy983uxt1ZtDQK4
-	 n2kdtrKV+AA4Wf2CYdfj5gVVr4qR9mPDeBoWXiIbrE3d9r3m2IWAyE4nZve3bk+I4a
-	 xS7lhmYBzoISg==
+	b=pVB+IgE/pPvZI9oPHnwb0eeYK8U9PyD0M95M0FWKITenTjGhmeUCQ22eNP0hqMZG9
+	 8Ou5iTILJs9hu1azOtZCBrWVE2Yyd61kEQSosR2OYvrvVvKmPGvnZ3MmjZfDwgeJWO
+	 MLLQqYgnlrnXEUG+AQ8IyM7goNOtFxk2i5mqRuebfncdORLuM7B6Cq185VDtb/R/6M
+	 CT8sP7EDJFdVMXrWOOiN0YWzoOpMj9Vpl7OicQDx9lLEeq+gZxYo7Ycj+Sj3mLNwE2
+	 +rOA/0n45N0/+NyAeaLF3P30qUGdoNvXpl4KXOf7BF0cUTc4m/uYhYZyuJyjVbNVOB
+	 x98UFDuix7EUg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Eric Biggers <ebiggers@kernel.org>,
+Cc: Ricardo Ribalda <ribalda@chromium.org>,
 	stable@vger.kernel.org,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 480/752] dm-verity: correctly handle dm_bufio_client_create() failure
-Date: Sat, 28 Feb 2026 12:43:11 -0500
-Message-ID: <20260228174750.1542406-480-sashal@kernel.org>
+Subject: [PATCH 6.18 481/752] media: uvcvideo: Fix support for V4L2_CTRL_FLAG_HAS_WHICH_MIN_MAX
+Date: Sat, 28 Feb 2026 12:43:12 -0500
+Message-ID: <20260228174750.1542406-481-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,40 +49,125 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 119f4f04186fa4f33ee6bd39af145cdaff1ff17f ]
+[ Upstream commit 4238bd6dc6ba36f44d89a60338223d5a4f708cbf ]
 
-If either of the calls to dm_bufio_client_create() in verity_fec_ctr()
-fails, then dm_bufio_client_destroy() is later called with an ERR_PTR()
-argument.  That causes a crash.  Fix this.
+The VIDIOC_G_EXT_CTRLS with which V4L2_CTRL_WHICH_(MIN|MAX)_VAL can only
+work for controls that have previously announced support for it.
 
-Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
+This patch fixes the following v4l2-compliance error:
+
+  info: checking extended control 'User Controls' (0x00980001)
+  fail: v4l2-test-controls.cpp(980): ret != EINVAL (got 13)
+        test VIDIOC_G/S/TRY_EXT_CTRLS: FAIL
+
+Fixes: 39d2c891c96e ("media: uvcvideo: support V4L2_CTRL_WHICH_MIN/MAX_VAL")
 Cc: stable@vger.kernel.org
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-verity-fec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c | 14 ++++++++++++--
+ drivers/media/usb/uvc/uvc_v4l2.c | 10 ++++++----
+ drivers/media/usb/uvc/uvcvideo.h |  2 +-
+ 3 files changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/dm-verity-fec.c b/drivers/md/dm-verity-fec.c
-index e41bde1d3b15b..5365b3987374a 100644
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -533,9 +533,9 @@ void verity_fec_dtr(struct dm_verity *v)
- 	mempool_exit(&f->output_pool);
- 	kmem_cache_destroy(f->cache);
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index 2905505c240c0..2738ef74c7373 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1432,7 +1432,7 @@ static bool uvc_ctrl_is_readable(u32 which, struct uvc_control *ctrl,
+  * auto_exposure=1, exposure_time_absolute=251.
+  */
+ int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
+-			   const struct v4l2_ext_controls *ctrls,
++			   const struct v4l2_ext_controls *ctrls, u32 which,
+ 			   unsigned long ioctl)
+ {
+ 	struct uvc_control_mapping *master_map = NULL;
+@@ -1442,14 +1442,24 @@ int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
+ 	s32 val;
+ 	int ret;
+ 	int i;
++	/*
++	 * There is no need to check the ioctl, all the ioctls except
++	 * VIDIOC_G_EXT_CTRLS use which=V4L2_CTRL_WHICH_CUR_VAL.
++	 */
++	bool is_which_min_max = which == V4L2_CTRL_WHICH_MIN_VAL ||
++				which == V4L2_CTRL_WHICH_MAX_VAL;
  
--	if (f->data_bufio)
-+	if (!IS_ERR_OR_NULL(f->data_bufio))
- 		dm_bufio_client_destroy(f->data_bufio);
--	if (f->bufio)
-+	if (!IS_ERR_OR_NULL(f->bufio))
- 		dm_bufio_client_destroy(f->bufio);
+ 	if (__uvc_query_v4l2_class(chain, v4l2_id, 0) >= 0)
+-		return -EACCES;
++		return is_which_min_max ? -EINVAL : -EACCES;
  
- 	if (f->dev)
+ 	ctrl = uvc_find_control(chain, v4l2_id, &mapping);
+ 	if (!ctrl)
+ 		return -EINVAL;
+ 
++	if ((!(ctrl->info.flags & UVC_CTRL_FLAG_GET_MIN) ||
++	     !(ctrl->info.flags & UVC_CTRL_FLAG_GET_MAX)) && is_which_min_max)
++		return -EINVAL;
++
+ 	if (ioctl == VIDIOC_G_EXT_CTRLS)
+ 		return uvc_ctrl_is_readable(ctrls->which, ctrl, mapping);
+ 
+diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
+index 9e4a251eca880..30c160daed8cb 100644
+--- a/drivers/media/usb/uvc/uvc_v4l2.c
++++ b/drivers/media/usb/uvc/uvc_v4l2.c
+@@ -765,14 +765,15 @@ static int uvc_ioctl_query_ext_ctrl(struct file *file, void *priv,
+ 
+ static int uvc_ctrl_check_access(struct uvc_video_chain *chain,
+ 				 struct v4l2_ext_controls *ctrls,
+-				 unsigned long ioctl)
++				 u32 which, unsigned long ioctl)
+ {
+ 	struct v4l2_ext_control *ctrl = ctrls->controls;
+ 	unsigned int i;
+ 	int ret = 0;
+ 
+ 	for (i = 0; i < ctrls->count; ++ctrl, ++i) {
+-		ret = uvc_ctrl_is_accessible(chain, ctrl->id, ctrls, ioctl);
++		ret = uvc_ctrl_is_accessible(chain, ctrl->id, ctrls, which,
++					     ioctl);
+ 		if (ret)
+ 			break;
+ 	}
+@@ -806,7 +807,7 @@ static int uvc_ioctl_g_ext_ctrls(struct file *file, void *priv,
+ 		which = V4L2_CTRL_WHICH_CUR_VAL;
+ 	}
+ 
+-	ret = uvc_ctrl_check_access(chain, ctrls, VIDIOC_G_EXT_CTRLS);
++	ret = uvc_ctrl_check_access(chain, ctrls, which, VIDIOC_G_EXT_CTRLS);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -840,7 +841,8 @@ static int uvc_ioctl_s_try_ext_ctrls(struct uvc_fh *handle,
+ 	if (!ctrls->count)
+ 		return 0;
+ 
+-	ret = uvc_ctrl_check_access(chain, ctrls, ioctl);
++	ret = uvc_ctrl_check_access(chain, ctrls, V4L2_CTRL_WHICH_CUR_VAL,
++				    ioctl);
+ 	if (ret < 0)
+ 		return ret;
+ 
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index 3f2e832025e71..8480d65ecb85e 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -787,7 +787,7 @@ int uvc_ctrl_get(struct uvc_video_chain *chain, u32 which,
+ 		 struct v4l2_ext_control *xctrl);
+ int uvc_ctrl_set(struct uvc_fh *handle, struct v4l2_ext_control *xctrl);
+ int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
+-			   const struct v4l2_ext_controls *ctrls,
++			   const struct v4l2_ext_controls *ctrls, u32 which,
+ 			   unsigned long ioctl);
+ 
+ int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
 -- 
 2.51.0
 
