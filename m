@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AB038F62D
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A9438CFFE
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302162; cv=none; b=TxXrTyJ+XWz/y2vfIHWeoSwGsmd07iqFgOFZ3wDQymsd3IP1oPiDM/SUdJ/C6gt0afVqtZW0QS80TuxMRryMSphaQUJObduukNh9//S/ZlS2L61ECpP+57/M+9yrf/iPaBjrVVlIzFQGE/fiMzcpmuqd7w9j32fCAAxYchNsb2M=
+	t=1772302162; cv=none; b=CWz9XR1eaKnJuZxRN8oHQnHdduGLNxWoZYm09lpICgTykE62DIdlLJYtne9fbNiCctNsKtDamm/KCjlED4l8R52id36vREG9Q1AWJukxam+OPQM7Gcfoc/96tJ8wonh2fdR8ZlMVPILV3Pg7CMnHmRjyndDEw4AGRh3nNUUxm1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302162; c=relaxed/simple;
-	bh=ys28/AKhk8b3/zrliHtETh9BjoKS44p1V7kRtWX2Rt0=;
+	bh=NatNncjPfgJMEWU1jBlTq40LKGv1JNKZJ38UKMqewzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGHYRH5WxeCuLqpTq0s50xDl0OfTtTo6+rJ9Rxvy/C5/AGhOmhwzDY5JAVvFOLxGJ+ts2ACSct/ettNTS2nu3rZ4N7o55P6m58fwQhpaOjaoxIr8/4NFZItAEpsaMBej84iHZjSssRcukArzqgp+e9Q4/f7/5ZwJtFQqq/lPJag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KykCeEhV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEDZEzYtuUiThKWikIqPnhaRHL+bUuRFFL1Zk4/dAxu85Azc3STNd5wSM/SPMKix99aSQWk4ZIotd3Vj/3djF2vi/17HWATfjasQGX76hkF1K8AKciSkCotr32D7zVMHIAhG6VRwxVTUQ4CSMHRyuTDShXkM86vibjtXkvWZhDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FvzfrZ5u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KykCeEhV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEBDC19423;
-	Sat, 28 Feb 2026 18:09:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FvzfrZ5u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D36C19423;
+	Sat, 28 Feb 2026 18:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302161;
-	bh=ys28/AKhk8b3/zrliHtETh9BjoKS44p1V7kRtWX2Rt0=;
+	s=k20201202; t=1772302162;
+	bh=NatNncjPfgJMEWU1jBlTq40LKGv1JNKZJ38UKMqewzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KykCeEhV9LTfDZcfEGI1lHxstXGB6IGNaaMM39BJv6xfJKcqQu5e+gtPbST0m0dVw
-	 1lwk5hY8nuyZrYHqpoAqh3ZVjRplElXt04wbNnppXOBDrwXMdCGSVrYAqiGyuEu1cW
-	 CmMZJVyL14lapqdzIL/RqOBESZ+zBoLLuZ9vYJu8lwBhgKi/Frp+uikwk6xDgGQlfn
-	 rrVO1ykIMgMKcwU/Y9KDpZUww1ZaqSSxUur4m+OH/HSO3PBzjOcKT2t1P5N2nFrLT0
-	 ZrzRzyXgoqFVBrSFJHAurhTxfL9OKtlrSxv3U0L5rtfvryVBF5oyGDP6j7InMSxJ3a
-	 As58BnHlx+eCw==
+	b=FvzfrZ5uLZAYrbh+Rabu3UyTBRS/iwyMBiDR7FmUACaTJdCRtJ/L2wjgWqteXpzTU
+	 5/Yc1AHxTb1IoVDAV07TXUA1TzwKyw1d+u4jSaX9hJO5+D85sEQ187QABFpXl3ebBf
+	 kM0qBIpfVQt5H2idsbrPxFsUzD9SyZU5zF0mfb98YMY3+Zh0RSvbZTfmG7zHYvAIyy
+	 fEBY7isENbd2DOTYto0WAYujK2yU6no//6hi8nMTEUKojhfhiw8i9Z7mB8fmKkceYh
+	 ZeJu5UUjX7KPXlLBma+ys0HkJsQy74yZpROjk4SVW9CtSRE5LlNkITvDbpbTwl397a
+	 uG207Ne/MESjQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
-	syzbot+827272712bd6d12c79a4@syzkaller.appspotmail.com,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Shinas Rasheed <srasheed@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 157/283] serial: caif: fix use-after-free in caif_serial ldisc_close()
-Date: Sat, 28 Feb 2026 13:04:59 -0500
-Message-ID: <20260228180709.1583486-157-sashal@kernel.org>
+Subject: [PATCH 6.6 158/283] octeon_ep: support to fetch firmware info
+Date: Sat, 28 Feb 2026 13:05:00 -0500
+Message-ID: <20260228180709.1583486-158-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -50,150 +47,249 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Shinas Rasheed <srasheed@marvell.com>
 
-[ Upstream commit 308e7e4d0a846359685f40aade023aee7b27284c ]
+[ Upstream commit 8d6198a14e2bfb09f190055b387c90b4ac9b49a4 ]
 
-There is a use-after-free bug in caif_serial where handle_tx() may
-access ser->tty after the tty has been freed.
+Add support to fetch firmware info such as heartbeat miss count,
+heartbeat interval. This shall be used for heartbeat monitor.
 
-The race condition occurs between ldisc_close() and packet transmission:
-
-    CPU 0 (close)                     CPU 1 (xmit)
-    -------------                     ------------
-    ldisc_close()
-      tty_kref_put(ser->tty)
-      [tty may be freed here]
-                     <-- race window -->
-                                      caif_xmit()
-                                        handle_tx()
-                                          tty = ser->tty  // dangling ptr
-                                          tty->ops->write() // UAF!
-      schedule_work()
-        ser_release()
-          unregister_netdevice()
-
-The root cause is that tty_kref_put() is called in ldisc_close() while
-the network device is still active and can receive packets.
-
-Since ser and tty have a 1:1 binding relationship with consistent
-lifecycles (ser is allocated in ldisc_open and freed in ser_release
-via unregister_netdevice, and each ser binds exactly one tty), we can
-safely defer the tty reference release to ser_release() where the
-network device is unregistered.
-
-Fix this by moving tty_kref_put() from ldisc_close() to ser_release(),
-after unregister_netdevice(). This ensures the tty reference is held
-as long as the network device exists, preventing the UAF.
-
-Note: We save ser->tty before unregister_netdevice() because ser is
-embedded in netdev's private data and will be freed along with netdev
-(needs_free_netdev = true).
-
-How to reproduce: Add mdelay(500) at the beginning of ldisc_close()
-to widen the race window, then run the reproducer program [1].
-
-Note: There is a separate deadloop issue in handle_tx() when using
-PORT_UNKNOWN serial ports (e.g., /dev/ttyS3 in QEMU without proper
-serial backend). This deadloop exists even without this patch,
-and is likely caused by inconsistency between uart_write_room() and
-uart_write() in serial core. It has been addressed in a separate
-patch [2].
-
-KASAN report:
-
-==================================================================
-BUG: KASAN: slab-use-after-free in handle_tx+0x5d1/0x620
-Read of size 1 at addr ffff8881131e1490 by task caif_uaf_trigge/9929
-
-Call Trace:
- <TASK>
- dump_stack_lvl+0x10e/0x1f0
- print_report+0xd0/0x630
- kasan_report+0xe4/0x120
- handle_tx+0x5d1/0x620
- dev_hard_start_xmit+0x9d/0x6c0
- __dev_queue_xmit+0x6e2/0x4410
- packet_xmit+0x243/0x360
- packet_sendmsg+0x26cf/0x5500
- __sys_sendto+0x4a3/0x520
- __x64_sys_sendto+0xe0/0x1c0
- do_syscall_64+0xc9/0xf80
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f615df2c0d7
-
-Allocated by task 9930:
-
-Freed by task 64:
-
-Last potentially related work creation:
-
-The buggy address belongs to the object at ffff8881131e1000
- which belongs to the cache kmalloc-cg-2k of size 2048
-The buggy address is located 1168 bytes inside of
- freed 2048-byte region [ffff8881131e1000, ffff8881131e1800)
-
-The buggy address belongs to the physical page:
-page_owner tracks the page as allocated
-page last free pid 9778 tgid 9778 stack trace:
-
-Memory state around the buggy address:
- ffff8881131e1380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8881131e1400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff8881131e1480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                         ^
- ffff8881131e1500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8881131e1580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-[1]: https://gist.github.com/mrpre/f683f244544f7b11e7fa87df9e6c2eeb
-[2]: https://lore.kernel.org/linux-serial/20260204074327.226165-1-jiayuan.chen@linux.dev/T/#u
-
-Reported-by: syzbot+827272712bd6d12c79a4@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000a4a7550611e234f5@google.com/T/
-Fixes: 56e0ef527b18 ("drivers/net: caif: fix wrong rtnl_is_locked() usage")
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20260206074450.154267-1-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 73e6ffa37ceb ("octeon_ep: disable per ring interrupts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/caif/caif_serial.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../marvell/octeon_ep/octep_cn9k_pf.c         | 10 +++-----
+ .../ethernet/marvell/octeon_ep/octep_config.h | 22 +++++++++++++----
+ .../marvell/octeon_ep/octep_ctrl_net.c        | 24 ++++++++++++++++++-
+ .../marvell/octeon_ep/octep_ctrl_net.h        | 18 ++++++++++++++
+ .../ethernet/marvell/octeon_ep/octep_main.c   | 16 +++++++++----
+ .../marvell/octeon_ep/octep_regs_cn9k_pf.h    |  4 ++++
+ 6 files changed, 77 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/caif/caif_serial.c b/drivers/net/caif/caif_serial.c
-index ed3a589def6b1..699ed0ff461e8 100644
---- a/drivers/net/caif/caif_serial.c
-+++ b/drivers/net/caif/caif_serial.c
-@@ -298,6 +298,7 @@ static void ser_release(struct work_struct *work)
- {
- 	struct list_head list;
- 	struct ser_device *ser, *tmp;
-+	struct tty_struct *tty;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
+index 90c3a419932d1..f282cd5b29ea5 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
+@@ -16,9 +16,6 @@
+ #define CTRL_MBOX_MAX_PF	128
+ #define CTRL_MBOX_SZ		((size_t)(0x400000 / CTRL_MBOX_MAX_PF))
  
- 	spin_lock(&ser_lock);
- 	list_replace_init(&ser_release_list, &list);
-@@ -306,9 +307,11 @@ static void ser_release(struct work_struct *work)
- 	if (!list_empty(&list)) {
- 		rtnl_lock();
- 		list_for_each_entry_safe(ser, tmp, &list, node) {
-+			tty = ser->tty;
- 			dev_close(ser->dev);
- 			unregister_netdevice(ser->dev);
- 			debugfs_deinit(ser);
-+			tty_kref_put(tty);
- 		}
- 		rtnl_unlock();
- 	}
-@@ -369,8 +372,6 @@ static void ldisc_close(struct tty_struct *tty)
- {
- 	struct ser_device *ser = tty->disc_data;
- 
--	tty_kref_put(ser->tty);
+-#define FW_HB_INTERVAL_IN_SECS		1
+-#define FW_HB_MISS_COUNT		10
 -
- 	spin_lock(&ser_lock);
- 	list_move(&ser->node, &ser_release_list);
- 	spin_unlock(&ser_lock);
+ /* Names of Hardware non-queue generic interrupts */
+ static char *cn93_non_ioq_msix_names[] = {
+ 	"epf_ire_rint",
+@@ -250,12 +247,11 @@ static void octep_init_config_cn93_pf(struct octep_device *oct)
+ 		link = PCI_DEVFN(PCI_SLOT(oct->pdev->devfn), link);
+ 	}
+ 	conf->ctrl_mbox_cfg.barmem_addr = (void __iomem *)oct->mmio[2].hw_addr +
+-					   (0x400000ull * 7) +
++					   CN93_PEM_BAR4_INDEX_OFFSET +
+ 					   (link * CTRL_MBOX_SZ);
+ 
+-	conf->hb_interval = FW_HB_INTERVAL_IN_SECS;
+-	conf->max_hb_miss_cnt = FW_HB_MISS_COUNT;
+-
++	conf->fw_info.hb_interval = OCTEP_DEFAULT_FW_HB_INTERVAL;
++	conf->fw_info.hb_miss_count = OCTEP_DEFAULT_FW_HB_MISS_COUNT;
+ }
+ 
+ /* Setup registers for a hardware Tx Queue  */
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_config.h b/drivers/net/ethernet/marvell/octeon_ep/octep_config.h
+index df7cd39d9fce1..1622a6ebf0362 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_config.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_config.h
+@@ -49,6 +49,11 @@
+ /* Default MTU */
+ #define OCTEP_DEFAULT_MTU    1500
+ 
++/* pf heartbeat interval in milliseconds */
++#define OCTEP_DEFAULT_FW_HB_INTERVAL           1000
++/* pf heartbeat miss count */
++#define OCTEP_DEFAULT_FW_HB_MISS_COUNT         20
++
+ /* Macros to get octeon config params */
+ #define CFG_GET_IQ_CFG(cfg)             ((cfg)->iq)
+ #define CFG_GET_IQ_NUM_DESC(cfg)        ((cfg)->iq.num_descs)
+@@ -181,6 +186,16 @@ struct octep_ctrl_mbox_config {
+ 	void __iomem *barmem_addr;
+ };
+ 
++/* Info from firmware */
++struct octep_fw_info {
++	/* interface pkind */
++	u16 pkind;
++	/* heartbeat interval in milliseconds */
++	u16 hb_interval;
++	/* heartbeat miss count */
++	u16 hb_miss_count;
++};
++
+ /* Data Structure to hold configuration limits and active config */
+ struct octep_config {
+ 	/* Input Queue attributes. */
+@@ -201,10 +216,7 @@ struct octep_config {
+ 	/* ctrl mbox config */
+ 	struct octep_ctrl_mbox_config ctrl_mbox_cfg;
+ 
+-	/* Configured maximum heartbeat miss count */
+-	u32 max_hb_miss_cnt;
+-
+-	/* Configured firmware heartbeat interval in secs */
+-	u32 hb_interval;
++	/* fw info */
++	struct octep_fw_info fw_info;
+ };
+ #endif /* _OCTEP_CONFIG_H_ */
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.c b/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.c
+index 17bfd5cdf4620..0594607a25854 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.c
+@@ -26,7 +26,7 @@ static atomic_t ctrl_net_msg_id;
+ 
+ /* Control plane version in which OCTEP_CTRL_NET_H2F_CMD was added */
+ static const u32 octep_ctrl_net_h2f_cmd_versions[OCTEP_CTRL_NET_H2F_CMD_MAX] = {
+-	[OCTEP_CTRL_NET_H2F_CMD_INVALID ... OCTEP_CTRL_NET_H2F_CMD_LINK_INFO] =
++	[OCTEP_CTRL_NET_H2F_CMD_INVALID ... OCTEP_CTRL_NET_H2F_CMD_GET_INFO] =
+ 	 OCTEP_CP_VERSION(1, 0, 0)
+ };
+ 
+@@ -353,6 +353,28 @@ void octep_ctrl_net_recv_fw_messages(struct octep_device *oct)
+ 	}
+ }
+ 
++int octep_ctrl_net_get_info(struct octep_device *oct, int vfid,
++			    struct octep_fw_info *info)
++{
++	struct octep_ctrl_net_wait_data d = {0};
++	struct octep_ctrl_net_h2f_resp *resp;
++	struct octep_ctrl_net_h2f_req *req;
++	int err;
++
++	req = &d.data.req;
++	init_send_req(&d.msg, req, 0, vfid);
++	req->hdr.s.cmd = OCTEP_CTRL_NET_H2F_CMD_GET_INFO;
++	req->link_info.cmd = OCTEP_CTRL_NET_CMD_GET;
++	err = octep_send_mbox_req(oct, &d, true);
++	if (err < 0)
++		return err;
++
++	resp = &d.data.resp;
++	memcpy(info, &resp->info.fw_info, sizeof(struct octep_fw_info));
++
++	return 0;
++}
++
+ int octep_ctrl_net_uninit(struct octep_device *oct)
+ {
+ 	struct octep_ctrl_net_wait_data *pos, *n;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.h b/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.h
+index 1c2ef4ee31d91..b330f370131be 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_ctrl_net.h
+@@ -41,6 +41,7 @@ enum octep_ctrl_net_h2f_cmd {
+ 	OCTEP_CTRL_NET_H2F_CMD_LINK_STATUS,
+ 	OCTEP_CTRL_NET_H2F_CMD_RX_STATE,
+ 	OCTEP_CTRL_NET_H2F_CMD_LINK_INFO,
++	OCTEP_CTRL_NET_H2F_CMD_GET_INFO,
+ 	OCTEP_CTRL_NET_H2F_CMD_MAX
+ };
+ 
+@@ -161,6 +162,11 @@ struct octep_ctrl_net_h2f_resp_cmd_state {
+ 	u16 state;
+ };
+ 
++/* get info request */
++struct octep_ctrl_net_h2f_resp_cmd_get_info {
++	struct octep_fw_info fw_info;
++};
++
+ /* Host to fw response data */
+ struct octep_ctrl_net_h2f_resp {
+ 	union octep_ctrl_net_resp_hdr hdr;
+@@ -171,6 +177,7 @@ struct octep_ctrl_net_h2f_resp {
+ 		struct octep_ctrl_net_h2f_resp_cmd_state link;
+ 		struct octep_ctrl_net_h2f_resp_cmd_state rx;
+ 		struct octep_ctrl_net_link_info link_info;
++		struct octep_ctrl_net_h2f_resp_cmd_get_info info;
+ 	};
+ } __packed;
+ 
+@@ -330,6 +337,17 @@ int octep_ctrl_net_set_link_info(struct octep_device *oct,
+  */
+ void octep_ctrl_net_recv_fw_messages(struct octep_device *oct);
+ 
++/** Get info from firmware.
++ *
++ * @param oct: non-null pointer to struct octep_device.
++ * @param vfid: Index of virtual function.
++ * @param info: non-null pointer to struct octep_fw_info.
++ *
++ * return value: 0 on success, -errno on failure.
++ */
++int octep_ctrl_net_get_info(struct octep_device *oct, int vfid,
++			    struct octep_fw_info *info);
++
+ /** Uninitialize data for ctrl net.
+  *
+  * @param oct: non-null pointer to struct octep_device.
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+index c385084546639..32740d0a4216a 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+@@ -907,9 +907,9 @@ static void octep_hb_timeout_task(struct work_struct *work)
+ 	int miss_cnt;
+ 
+ 	miss_cnt = atomic_inc_return(&oct->hb_miss_cnt);
+-	if (miss_cnt < oct->conf->max_hb_miss_cnt) {
++	if (miss_cnt < oct->conf->fw_info.hb_miss_count) {
+ 		queue_delayed_work(octep_wq, &oct->hb_task,
+-				   msecs_to_jiffies(oct->conf->hb_interval * 1000));
++				   msecs_to_jiffies(oct->conf->fw_info.hb_interval));
+ 		return;
+ 	}
+ 
+@@ -1002,8 +1002,7 @@ int octep_device_setup(struct octep_device *oct)
+ 
+ 	atomic_set(&oct->hb_miss_cnt, 0);
+ 	INIT_DELAYED_WORK(&oct->hb_task, octep_hb_timeout_task);
+-	queue_delayed_work(octep_wq, &oct->hb_task,
+-			   msecs_to_jiffies(oct->conf->hb_interval * 1000));
++
+ 	return 0;
+ 
+ unsupported_dev:
+@@ -1133,6 +1132,15 @@ static int octep_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 		dev_err(&pdev->dev, "Device setup failed\n");
+ 		goto err_octep_config;
+ 	}
++
++	octep_ctrl_net_get_info(octep_dev, OCTEP_CTRL_NET_INVALID_VFID,
++				&octep_dev->conf->fw_info);
++	dev_info(&octep_dev->pdev->dev, "Heartbeat interval %u msecs Heartbeat miss count %u\n",
++		 octep_dev->conf->fw_info.hb_interval,
++		 octep_dev->conf->fw_info.hb_miss_count);
++	queue_delayed_work(octep_wq, &octep_dev->hb_task,
++			   msecs_to_jiffies(octep_dev->conf->fw_info.hb_interval));
++
+ 	INIT_WORK(&octep_dev->tx_timeout_task, octep_tx_timeout_task);
+ 	INIT_WORK(&octep_dev->ctrl_mbox_task, octep_ctrl_mbox_task);
+ 	INIT_DELAYED_WORK(&octep_dev->intr_poll_task, octep_intr_poll_task);
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
+index b25c3093dc7b4..0a43983e91015 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
+@@ -370,4 +370,8 @@
+ /* bit 1 for firmware heartbeat interrupt */
+ #define CN93_SDP_EPF_OEI_RINT_DATA_BIT_HBEAT	BIT_ULL(1)
+ 
++#define CN93_PEM_BAR4_INDEX            7
++#define CN93_PEM_BAR4_INDEX_SIZE       0x400000ULL
++#define CN93_PEM_BAR4_INDEX_OFFSET     (CN93_PEM_BAR4_INDEX * CN93_PEM_BAR4_INDEX_SIZE)
++
+ #endif /* _OCTEP_REGS_CN9K_PF_H_ */
 -- 
 2.51.0
 
