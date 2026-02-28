@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551DB346772
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0489633A702
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302089; cv=none; b=p2CNr78JIe2Xzh20m0bHwAT0l7WlTvVwHTIZmytToHo5ifrIqBbbHhvEhV9GmVscpTdmnfTvqOQAY5gizQlDJrXlKLXxrw49IKbJ0nyTO3Issgdkb8N5X0ax1FDaYEiwwUrDVjMzw6jBnuVx9osOV0pvhNXSLEKtATAHGYG5Vl0=
+	t=1772302090; cv=none; b=WWGIOihmg5+KOS3f0sQVZsJzDj3LfqrVYwqzVEsbPRL0/iik25wjsSUWPpF7/YYjYxD1YjY900YsOR6ctzkDC/cO4UNLqluGXzNa8kMlowC1D8si+zH7/CmZEpMHjiRu09szcJCT88HnA7nBMXw/oCZowDvbxMoz9cvG5WPn6bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302089; c=relaxed/simple;
-	bh=yptz+dZjhQtL2cr1U5UymTb+DvvTJqMtwTLEiKjX03k=;
+	s=arc-20240116; t=1772302090; c=relaxed/simple;
+	bh=9VEreTt5Aaygh9YK2NbK6mbbaAwpA9M7HdUIldQEY/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mNxy1rQYX4Yfed3Ydgulra83BbN+XkDriIim70fIh3vX1SJdRuoRjD7Zs1s3Fv6F+/rtO5Rsdwi32BsPNKdt9N9Gks4NRwFKKniW4kUOl2Gg2NGKZp33MrkT+HbiCzkE8yC4Q+/j0MkpzNhImXg2F4gxrRwRzjAyolEXf+WQ2A0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ou5FeREo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgAW2S03120jplsSH096QvGQL3xwgVpYx5oosoHl6NFdy+mTu/goOUilZ+zEoDEVyHuscRSaXVm4765Lo/JjTJqthe4O4MS5FZpQAyccorZ/AreupoA3anQ/pGfMKX/FdH7E8nHp7XdrglnMkY840dFUABNnyt2BfHItLRwNoDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O5OUaIfE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ou5FeREo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F40C116D0;
-	Sat, 28 Feb 2026 18:08:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O5OUaIfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BC5C19423;
+	Sat, 28 Feb 2026 18:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302089;
-	bh=yptz+dZjhQtL2cr1U5UymTb+DvvTJqMtwTLEiKjX03k=;
+	bh=9VEreTt5Aaygh9YK2NbK6mbbaAwpA9M7HdUIldQEY/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ou5FeREooy8PAagXUaiOQP3QW9G5aQNnayWYFRsUGYl6Y6CsfSLf3XHx0rykWMifZ
-	 4arbzWNDetyUT6B4F/1DwPDUE7VHN48ADlg1tXwTjfV6gz74k4AEwmv+Bb7b29IOk8
-	 HowAJ3xaJCCRCpBBL8Wa+p27cS+tNuuVQD4sOQ+tTeoN1eJMaIvWWb4ME6/5SOJmUO
-	 fYQSmb99OSoS9P4AW4BjscIVDh0nWKqmjqa0intk7Tdka9hTz98+0olqDIr94y9GaJ
-	 xL8wysj538UZa19F73kYQ2Ur/sYyNoFARJA8kElaJns4Ekz4BDorGVyLWTZIlZilGF
-	 FURz7TSwwVQSQ==
+	b=O5OUaIfEY9ye6nBpVhCA7y5GyWzdBxjw182GXBv97nu2qN1DVm3ql4WqhUd4z8ZNj
+	 d4n0EsRKzzVRAZ9OcPhJBMmE2N/Fv6kujxrPXFBNz7DAx6UQOPt33DwaW5eixAEjie
+	 HOZfFqESkedtjKTgvsrQkr1wli9VwSBPei+jzSrzkxeIAiaGVswH+Z8Mg3CAydz4np
+	 44tyXqJM5RsSxvJHLfEDPdeFvFUQS83BCuYvnn7a2uIbFSi545N1S2VV4Txx5mJrgE
+	 UFSj5El0N7/74eVEus11aZWLcc/F3mMNKac6BvZG1/R1nuIYouUacFd4CmpLLscaNU
+	 S6oVPM45mWUlw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Vladimir Zapolskiy <vz@mleia.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/283] ARM: dts: lpc32xx: Set motor PWM #pwm-cells property value to 3 cells
-Date: Sat, 28 Feb 2026 13:03:34 -0500
-Message-ID: <20260228180709.1583486-72-sashal@kernel.org>
+Subject: [PATCH 6.6 073/283] arm: dts: lpc32xx: add clocks property to Motor Control PWM device tree node
+Date: Sat, 28 Feb 2026 13:03:35 -0500
+Message-ID: <20260228180709.1583486-73-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -44,47 +42,36 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
 From: Vladimir Zapolskiy <vz@mleia.com>
 
-[ Upstream commit 65ae9ea77e1f2a20ad2866f99596df7ccdbd3b95 ]
+[ Upstream commit 71630e581a0e34c03757f5c1706f57c853b92555 ]
 
-Since commit 4cd2f417a0ac ("dt-bindings: pwm: Convert lpc32xx-pwm.txt
-to yaml format") both types of PWM controlles on NXP LPC32xx SoC
-fairly gained 3 cells, reflect it in the platform dtsi file.
+Motor Control PWM depends on its own supply clock, the clock gate control
+is present in TIMCLK_CTRL1 register.
 
-The change removes a dt binding checker warning:
-
-    mpwm@400e8000: #pwm-cells:0:0: 3 was expected
-
-Cc: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: b7d41c937ed7 ("ARM: LPC32xx: Add the motor PWM to base dts file")
 Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
-Stable-dep-of: 71630e581a0e ("arm: dts: lpc32xx: add clocks property to Motor Control PWM device tree node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/lpc/lpc32xx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/nxp/lpc/lpc32xx.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/arch/arm/boot/dts/nxp/lpc/lpc32xx.dtsi b/arch/arm/boot/dts/nxp/lpc/lpc32xx.dtsi
-index 974410918f35b..770e85b8268f3 100644
+index 770e85b8268f3..7503074d2877c 100644
 --- a/arch/arm/boot/dts/nxp/lpc/lpc32xx.dtsi
 +++ b/arch/arm/boot/dts/nxp/lpc/lpc32xx.dtsi
-@@ -301,8 +301,8 @@ i2c2: i2c@400a8000 {
+@@ -301,6 +301,7 @@ i2c2: i2c@400a8000 {
  			mpwm: mpwm@400e8000 {
  				compatible = "nxp,lpc3220-motor-pwm";
  				reg = <0x400e8000 0x78>;
-+				#pwm-cells = <3>;
++				clocks = <&clk LPC32XX_CLK_MCPWM>;
+ 				#pwm-cells = <3>;
  				status = "disabled";
--				#pwm-cells = <2>;
  			};
- 		};
- 
 -- 
 2.51.0
 
