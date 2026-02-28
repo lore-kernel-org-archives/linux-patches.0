@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDEB34252B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA224342538
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301770; cv=none; b=jr4H+9/ViRHuShfPUg1RuwQoWjyA/Ybu7aQFLwZL9wp9C5MP09fsc+scOGt+8vUFgSzFJlBPWxZpyfLzfNBrnLA+lIzrveTXYDWVggflleSC+2C2s2SLsmU0ad/Jqd3wHZdfuekAHjRCYcfPBrlmkm7St5yIyAtNpNv0q/4cN8w=
+	t=1772301770; cv=none; b=JqUP063W0Od+rzEvIoyB408zXl44Vhm0XrGdVgzu6X1VvLe+eetQQOYNCgfYek/62sg120fkQgncLBQhbBTp8pfEDdwSSvtupYnl/Rk+C8q4sbF/Eb/tMjPmRZC44d7FL/hNq1spCbHhrM9h9IOR8Pi+gR8q69ECJd9xHN2+w38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301770; c=relaxed/simple;
-	bh=dA9RqxmqyJs2gc1SKW2oGI4cByhxr1HEDdA5Y2MVUXk=;
+	bh=84XuOJBX5ixFB5dY8gadeLiy28oWLo8dKX3MMmHeGfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aaaVguIMiEq2FWUaQmQTxOq4x4PJenCtmNzt0hiIc6GLVrAV1icmEKIEl9WxL91jL39KkWdq3dQPxznEaSNBoLcEYZrdiuCSWLxsPz6dqspITWfSVeBze6svwaynjJZEi9lqlRsZTJjJ7ECNp+dQ6u6JHWvaVbw1RI2VNHjNp4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PTTFFjVQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DW4P3893suSjosuAcIU5csiBu7IA5za7wkLpPWwnR248S0Pgmv4yVHUgUn7SdnOfBoczdO4KwLO6ZwyOcSCpZU6iA2BNRaV3iWJ2NkKO3JmH0i1ghyd/iLeGckLf9XIMRG+Mge9CkHu/BTbNoXbky1/wuPHM1p/bd0ortwK3Ds8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q5PiVBOt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PTTFFjVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C35C19423;
-	Sat, 28 Feb 2026 18:02:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q5PiVBOt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4411CC116D0;
+	Sat, 28 Feb 2026 18:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301770;
-	bh=dA9RqxmqyJs2gc1SKW2oGI4cByhxr1HEDdA5Y2MVUXk=;
+	bh=84XuOJBX5ixFB5dY8gadeLiy28oWLo8dKX3MMmHeGfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PTTFFjVQr7aifAD9RjxFFAZRcYIsgKU8A0x24fSXgoGiFH+Luygmt8MBGdVQg6K9X
-	 HlvS7hmIrtAK0xZHXhvIiSDKrFwvmVv/nvawUkNmFZ4rnBakCSjLoy1tg49yS32LEB
-	 CQGnZWWX4Xrbyidt/Dswk2HBDDulHnjn2cjRk3R9DIlf7tvsXFQhMK31fSDph8q3AV
-	 ihe3OhWd2dc1M6NoHiSb7scGaft47pI7NXrVRLk5GqRoZCoHmY/6rlGiCEoZfTAaX3
-	 dmbRjOwOePyylX2pbapupO4SYUk/rF0+ZSaTY814TOlzLmT8Bjqfa61ZhKG4NcII12
-	 YNO1MRqWuCLFQ==
+	b=q5PiVBOtorul/AacrXCTiSF1Wft7ckQy5c4HJMIMRjGeIUxeIBnMfAHz/FaBXbTI0
+	 ozLDzaJBdEUMakogGVlJqkqD7GWHGsvV0thXdLqfUUKleKFuv7SwzjOrJnXRNhNI5e
+	 Zy5fZHfdsQE0zJaQh/4T6RZvpx1aPMpbN73S7/sRvCITbxNn2Um+nD6/jCYpPORZ9/
+	 YNErDHbO3rHXMShCTZ6Q+cqTCRdk1XIHsHbIVlqT0AGZJzXvq5ODBWrA5oqAUgC4w6
+	 TjrN5MKaTdnNAyqYpGtQ5KQWhm14tPI5z2GXtX90oWgSqFWCCwI9PTeoeER6bJ+o4Q
+	 z/iegjWLS9o1g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Hou Tao <houtao1@huawei.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Alistair Popple <apopple@nvidia.com>,
+Cc: SurajSonawane2415 <surajsonawane0215@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 177/385] PCI/P2PDMA: Release per-CPU pgmap ref when vm_insert_page() fails
-Date: Sat, 28 Feb 2026 12:56:39 -0500
-Message-ID: <20260228180011.1568201-177-sashal@kernel.org>
+Subject: [PATCH 6.12 178/385] docs: fix WARNING document not included in any toctree
+Date: Sat, 28 Feb 2026 12:56:40 -0500
+Message-ID: <20260228180011.1568201-178-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -49,40 +47,34 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Hou Tao <houtao1@huawei.com>
+From: SurajSonawane2415 <surajsonawane0215@gmail.com>
 
-[ Upstream commit 6220694c52a5a04102b48109e4f24e958b559bd3 ]
+[ Upstream commit 998bece1d22bf2cbc819cb3a492148932d4e12a8 ]
 
-When vm_insert_page() fails in p2pmem_alloc_mmap(), p2pmem_alloc_mmap()
-doesn't invoke percpu_ref_put() to free the per-CPU ref of pgmap acquired
-after gen_pool_alloc_owner(), and memunmap_pages() will hang forever when
-trying to remove the PCI device.
+Add debugging.rst to the relevant toctree to fix warning
+about missing documentation inclusion in toctree.
 
-Fix it by adding the missed percpu_ref_put().
-
-Fixes: 7e9c7ef83d78 ("PCI/P2PDMA: Allow userspace VMA allocations through sysfs")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Link: https://patch.msgid.link/20251220040446.274991-2-houtao@huaweicloud.com
+Signed-off-by: SurajSonawane2415 <surajsonawane0215@gmail.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20241002195817.22972-1-surajsonawane0215@gmail.com
+Stable-dep-of: 8236fc613d44 ("Documentation: tracing: Add PCI tracepoint documentation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/p2pdma.c | 1 +
+ Documentation/trace/index.rst | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
-index 52e1564eadd0b..ec53b2b0d57fe 100644
---- a/drivers/pci/p2pdma.c
-+++ b/drivers/pci/p2pdma.c
-@@ -143,6 +143,7 @@ static int p2pmem_alloc_mmap(struct file *filp, struct kobject *kobj,
- 		ret = vm_insert_page(vma, vaddr, virt_to_page(kaddr));
- 		if (ret) {
- 			gen_pool_free(p2pdma->pool, (uintptr_t)kaddr, len);
-+			percpu_ref_put(ref);
- 			return ret;
- 		}
- 		percpu_ref_get(ref);
+diff --git a/Documentation/trace/index.rst b/Documentation/trace/index.rst
+index 0b300901fd750..2c991dc96ace6 100644
+--- a/Documentation/trace/index.rst
++++ b/Documentation/trace/index.rst
+@@ -24,6 +24,7 @@ Linux Tracing Technologies
+    histogram
+    histogram-design
+    boottime-trace
++   debugging
+    hwlat_detector
+    osnoise-tracer
+    timerlat-tracer
 -- 
 2.51.0
 
