@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AEB332628
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1763321D8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301231; cv=none; b=aOJmoRp2eT1rdb1WR4mEscPkgbQ7ABjD7MFMXUwZ7//H7Nv544DPmt00fes33tVxD4qiaaDxaBxk5j63ofaHNcnYNHBffPeoyXFTeEjtytVFpWSu905nCijdOnnx+VIwKPxMSS0S5+ALPruWynT3AydF2ZtYtlBHL+vRGJFKIwc=
+	t=1772301231; cv=none; b=WaT92tcBQ0P1GE0y0tZbbCqVyU2GlE1RHLz+/ltJcYvnn4DyY21xmYGY1PJKhI1DAz2njStMBEJttDNjxdXMWksA9P2h7nu897WourcGrCobxz0iip8uTSi7sG4SQEYEKw9gRdvlra901Pr65PXYFbRuIHMa1ZeeJA5nwO4Pms8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301231; c=relaxed/simple;
-	bh=pUCiQnWyxC0p8wloLakDOX3hNyutKCYZb/R46N5Q2zc=;
+	bh=K+vWixumeWL2fRMPBy/mNqW6qNoi92HvkM4bZ8OqI4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEImj9cmLFB0mnEi/DZqZjnK0oBSDvdJRDKJtFgHQVn6Qxo5HDUwgjNI/krBI5bIc2+CFAJavPSbwfkbLZhqvhStn5BW3TC54nN0MeRJ46snrA4k1o+Vup1vvxctIA9TL+Kw5X5fVoCVlITCyPFgiaEo+VdBHm7JcY6pdHoE2gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ggzN7QS6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ob7he29iAJ857CAv82WVD3Ry3ysBU3mo1TqCC1emTk4EC3bv6G/RfOcwnIc3VrERxDboqDsg57gLUC6YRDvMyvb4FKicj7lRNHTIhiCsZ0Qg4Apdf2rU2+Qy0rFoqw61xsXikL3VAzlBkDNs+ZCR9d91aUu+iZm9N5Lup1+x7s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qYn2kZzR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ggzN7QS6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC11C19424;
-	Sat, 28 Feb 2026 17:53:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qYn2kZzR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24012C116D0;
+	Sat, 28 Feb 2026 17:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301230;
-	bh=pUCiQnWyxC0p8wloLakDOX3hNyutKCYZb/R46N5Q2zc=;
+	s=k20201202; t=1772301231;
+	bh=K+vWixumeWL2fRMPBy/mNqW6qNoi92HvkM4bZ8OqI4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ggzN7QS6av2eKmPdy+Wz0o3hBuQ/qZq9/0E5lGWAbiZySwDgQiFUwGhg5PV9W9+sK
-	 N4ctl3lJwoJ/7W+yr9/WZ/EP8FZoyjyemdFdDnFCm/3S5clhG4CgljdTLPIAeL2Xem
-	 WKuRDbCDfjd2YUPj1o1QKFtU39OOHPHhWDxssZC3Jm9VHfsMoRHjqLdbrOUsyqNFqi
-	 HYMf89Dhj06OuWtnoGNsalUrv2INP8naOuSnrTv1NgtQuKFeZdmdnjoXWhXwNeJ8Yd
-	 UYdrP8uPEZZ63szjvok2ctB4kVjUijoKaYsjEct4uquQ56NNTJvSbkepmkjkrMGs3H
-	 rJ00bJ8nmwHNQ==
+	b=qYn2kZzRVrb59qQPBl+5Ww7A9wUkcWmwzehpMPICcYhxznCZQa4GTlc/2/a+9gPVv
+	 A/xMn80d3MJzkH7z62GW35fv4gRDrlLHU3F15ONSUw6Fx3kcoFbnDa383Y6fPZEIG1
+	 A5++ZDfBjNKf3Cenxz3TKdn0I26XvgCDNO8Ewscg0pH/mY2hhg2MGV/OhdW1llLBG2
+	 AGplXBMn7BBJUo4Tdl1fn7TF+cC4+h8HxHt4eEqr3AE2iDhBfzg2UpQd0G5gle7gy2
+	 44ix0G1nKjXuT6c/POUtYTmb8PnlEkqPQZ/tidHdPhkWaA19pM4z0lj/x0F8WNThN4
+	 p6lPTA+1xrQ4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Linus Walleij <linusw@kernel.org>,
+Cc: Kuniyuki Iwashima <kuniyu@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 409/752] net: ethernet: xscale: Check for PTP support properly
-Date: Sat, 28 Feb 2026 12:42:00 -0500
-Message-ID: <20260228174750.1542406-409-sashal@kernel.org>
+Subject: [PATCH 6.18 410/752] udplite: Fix null-ptr-deref in __udp_enqueue_schedule_skb().
+Date: Sat, 28 Feb 2026 12:42:01 -0500
+Message-ID: <20260228174750.1542406-410-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,86 +48,126 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linusw@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 594163ea88a03bdb412063af50fc7177ef3cbeae ]
+[ Upstream commit 470c7ca2b4c3e3a51feeb952b7f97a775b5c49cd ]
 
-In ixp4xx_get_ts_info() ixp46x_ptp_find() is called
-unconditionally despite this feature only existing on
-ixp46x, leading to the following splat from tcpdump:
+syzbot reported null-ptr-deref of udp_sk(sk)->udp_prod_queue. [0]
 
-root@OpenWrt:~# tcpdump -vv -X -i eth0
-(...)
-Unable to handle kernel NULL pointer dereference at virtual address
-  00000238 when read
-(...)
-Call trace:
- ptp_clock_index from ixp46x_ptp_find+0x1c/0x38
- ixp46x_ptp_find from ixp4xx_get_ts_info+0x4c/0x64
- ixp4xx_get_ts_info from __ethtool_get_ts_info+0x90/0x108
- __ethtool_get_ts_info from __dev_ethtool+0xa00/0x2648
- __dev_ethtool from dev_ethtool+0x160/0x234
- dev_ethtool from dev_ioctl+0x2cc/0x460
- dev_ioctl from sock_ioctl+0x1ec/0x524
- sock_ioctl from sys_ioctl+0x51c/0xa94
- sys_ioctl from ret_fast_syscall+0x0/0x44
- (...)
-Segmentation fault
+Since the cited commit, udp_lib_init_sock() can fail, as can
+udp_init_sock() and udpv6_init_sock().
 
-Check for ixp46x in ixp46x_ptp_find() before trying to set up
-PTP to avoid this.
+Let's handle the error in udplite_sk_init() and udplitev6_sk_init().
 
-To avoid altering the returned error code from ixp4xx_hwtstamp_set()
-which before this patch was -EOPNOTSUPP, we return -EOPNOTSUPP
-from ixp4xx_hwtstamp_set() if ixp46x_ptp_find() fails no matter
-the error code. The helper function ixp46x_ptp_find() helper
-returns -ENODEV.
+[0]:
+BUG: KASAN: null-ptr-deref in instrument_atomic_read include/linux/instrumented.h:82 [inline]
+BUG: KASAN: null-ptr-deref in atomic_read include/linux/atomic/atomic-instrumented.h:32 [inline]
+BUG: KASAN: null-ptr-deref in __udp_enqueue_schedule_skb+0x151/0x1480 net/ipv4/udp.c:1719
+Read of size 4 at addr 0000000000000008 by task syz.2.18/2944
 
-Fixes: 9055a2f59162 ("ixp4xx_eth: make ptp support a platform driver")
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260219-ixp4xx-fix-ethernet-v3-1-f235ccc3cd46@kernel.org
+CPU: 1 UID: 0 PID: 2944 Comm: syz.2.18 Not tainted syzkaller #0 PREEMPTLAZY
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+ kasan_report+0xa2/0xe0 mm/kasan/report.c:595
+ check_region_inline mm/kasan/generic.c:-1 [inline]
+ kasan_check_range+0x264/0x2c0 mm/kasan/generic.c:200
+ instrument_atomic_read include/linux/instrumented.h:82 [inline]
+ atomic_read include/linux/atomic/atomic-instrumented.h:32 [inline]
+ __udp_enqueue_schedule_skb+0x151/0x1480 net/ipv4/udp.c:1719
+ __udpv6_queue_rcv_skb net/ipv6/udp.c:795 [inline]
+ udpv6_queue_rcv_one_skb+0xa2e/0x1ad0 net/ipv6/udp.c:906
+ udp6_unicast_rcv_skb+0x227/0x380 net/ipv6/udp.c:1064
+ ip6_protocol_deliver_rcu+0xe17/0x1540 net/ipv6/ip6_input.c:438
+ ip6_input_finish+0x191/0x350 net/ipv6/ip6_input.c:489
+ NF_HOOK+0x354/0x3f0 include/linux/netfilter.h:318
+ ip6_input+0x16c/0x2b0 net/ipv6/ip6_input.c:500
+ NF_HOOK+0x354/0x3f0 include/linux/netfilter.h:318
+ __netif_receive_skb_one_core net/core/dev.c:6149 [inline]
+ __netif_receive_skb+0xd3/0x370 net/core/dev.c:6262
+ process_backlog+0x4d6/0x1160 net/core/dev.c:6614
+ __napi_poll+0xae/0x320 net/core/dev.c:7678
+ napi_poll net/core/dev.c:7741 [inline]
+ net_rx_action+0x60d/0xdc0 net/core/dev.c:7893
+ handle_softirqs+0x209/0x8d0 kernel/softirq.c:622
+ do_softirq+0x52/0x90 kernel/softirq.c:523
+ </IRQ>
+ <TASK>
+ __local_bh_enable_ip+0xe7/0x120 kernel/softirq.c:450
+ local_bh_enable include/linux/bottom_half.h:33 [inline]
+ rcu_read_unlock_bh include/linux/rcupdate.h:924 [inline]
+ __dev_queue_xmit+0x109c/0x2dc0 net/core/dev.c:4856
+ __ip6_finish_output net/ipv6/ip6_output.c:-1 [inline]
+ ip6_finish_output+0x158/0x4e0 net/ipv6/ip6_output.c:219
+ NF_HOOK_COND include/linux/netfilter.h:307 [inline]
+ ip6_output+0x342/0x580 net/ipv6/ip6_output.c:246
+ ip6_send_skb+0x1d7/0x3c0 net/ipv6/ip6_output.c:1984
+ udp_v6_send_skb+0x9a5/0x1770 net/ipv6/udp.c:1442
+ udp_v6_push_pending_frames+0xa2/0x140 net/ipv6/udp.c:1469
+ udpv6_sendmsg+0xfe0/0x2830 net/ipv6/udp.c:1759
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg+0xe5/0x270 net/socket.c:742
+ __sys_sendto+0x3eb/0x580 net/socket.c:2206
+ __do_sys_sendto net/socket.c:2213 [inline]
+ __se_sys_sendto net/socket.c:2209 [inline]
+ __x64_sys_sendto+0xde/0x100 net/socket.c:2209
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xd2/0xf20 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7f67b4d9c629
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f67b5c98028 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 00007f67b5015fa0 RCX: 00007f67b4d9c629
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
+RBP: 00007f67b4e32b39 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000040000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f67b5016038 R14: 00007f67b5015fa0 R15: 00007ffe3cb66dd8
+ </TASK>
+
+Fixes: b650bf0977d3 ("udp: remove busylock and add per NUMA queues")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260219173142.310741-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xscale/ixp4xx_eth.c | 5 +----
- drivers/net/ethernet/xscale/ptp_ixp46x.c | 3 +++
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/ipv4/udplite.c | 3 +--
+ net/ipv6/udplite.c | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/xscale/ixp4xx_eth.c b/drivers/net/ethernet/xscale/ixp4xx_eth.c
-index e1e7f65553e76..b0faa0f1780d0 100644
---- a/drivers/net/ethernet/xscale/ixp4xx_eth.c
-+++ b/drivers/net/ethernet/xscale/ixp4xx_eth.c
-@@ -403,15 +403,12 @@ static int ixp4xx_hwtstamp_set(struct net_device *netdev,
- 	int ret;
- 	int ch;
- 
--	if (!cpu_is_ixp46x())
--		return -EOPNOTSUPP;
--
- 	if (!netif_running(netdev))
- 		return -EINVAL;
- 
- 	ret = ixp46x_ptp_find(&port->timesync_regs, &port->phc_index);
- 	if (ret)
--		return ret;
-+		return -EOPNOTSUPP;
- 
- 	ch = PORT2CHANNEL(port);
- 	regs = port->timesync_regs;
-diff --git a/drivers/net/ethernet/xscale/ptp_ixp46x.c b/drivers/net/ethernet/xscale/ptp_ixp46x.c
-index 94203eb46e6b0..93c64db22a696 100644
---- a/drivers/net/ethernet/xscale/ptp_ixp46x.c
-+++ b/drivers/net/ethernet/xscale/ptp_ixp46x.c
-@@ -232,6 +232,9 @@ static struct ixp_clock ixp_clock;
- 
- int ixp46x_ptp_find(struct ixp46x_ts_regs *__iomem *regs, int *phc_index)
+diff --git a/net/ipv4/udplite.c b/net/ipv4/udplite.c
+index d3e621a11a1aa..826e9e79eb19c 100644
+--- a/net/ipv4/udplite.c
++++ b/net/ipv4/udplite.c
+@@ -20,10 +20,9 @@ EXPORT_SYMBOL(udplite_table);
+ /* Designate sk as UDP-Lite socket */
+ static int udplite_sk_init(struct sock *sk)
  {
-+	if (!cpu_is_ixp46x())
-+		return -ENODEV;
-+
- 	*regs = ixp_clock.regs;
- 	*phc_index = ptp_clock_index(ixp_clock.ptp_clock);
+-	udp_init_sock(sk);
+ 	pr_warn_once("UDP-Lite is deprecated and scheduled to be removed in 2025, "
+ 		     "please contact the netdev mailing list\n");
+-	return 0;
++	return udp_init_sock(sk);
+ }
  
+ static int udplite_rcv(struct sk_buff *skb)
+diff --git a/net/ipv6/udplite.c b/net/ipv6/udplite.c
+index 2cec542437f74..e867721cda4d3 100644
+--- a/net/ipv6/udplite.c
++++ b/net/ipv6/udplite.c
+@@ -16,10 +16,9 @@
+ 
+ static int udplitev6_sk_init(struct sock *sk)
+ {
+-	udpv6_init_sock(sk);
+ 	pr_warn_once("UDP-Lite is deprecated and scheduled to be removed in 2025, "
+ 		     "please contact the netdev mailing list\n");
+-	return 0;
++	return udpv6_init_sock(sk);
+ }
+ 
+ static int udplitev6_rcv(struct sk_buff *skb)
 -- 
 2.51.0
 
