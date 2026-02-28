@@ -1,51 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467B336C9F0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D79636C9EC
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302374; cv=none; b=Z9sXBFLpWmVIQpoAe+nYeNHqFuTPJ/esbxQ5ofXqcWC/KU49RHldKhMOSH3wnyRzgHiR7WhdgjnCKdqGiCNlxGnyQZt2YuOBbHrvu22MZxmP7JpamG2PBw7z/pZq7sqHpZHIDuOxNwNVwN5VqS+fm9dxbBPlJ+X4QjxHI2+alL0=
+	t=1772302375; cv=none; b=u8FqHegK9B6j6Oe3X3V6cHpm3oDjqRQiMBjxx4YD8vlNpb5s3v63GEtUq2VXiAteCVaFQoix2CMD3NoyNHTB7+SyXYp7xAU8u2gEx4mjIOEuatSsTrnAdTQOvMEP5X3n7xYlvARH48GzV0kD8tanU+6KCra9cWaRaUeQJ23S5co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302374; c=relaxed/simple;
-	bh=QenyCUkpKrr9gtIuDh4lMhw+Ifj5bjb9GDb/SCw42PM=;
+	s=arc-20240116; t=1772302375; c=relaxed/simple;
+	bh=iOBdFpxqjEAIIItBaV+TwPLqZ2rOxg8J4A5y6gtYFiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2oaSP6B0/0ZyRYOuCArsOSTrIvOr9LrJH00wa91Qm4yW+bjmJpNJZ8iaymIwrFvbjcay0/Hi2E1Hsx7GVZnx3Y+H/2Svmd9Ym7M1yLfyBU3QRpsIGROp9dcLsQRnB+2Wh5jyznrJF7d2cog22cpcNqhIfzZBBQxqM8SFMfHKU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WazDMw7k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F8Z/Syq8Zek2pFrwb/C85wlxQ+Xr0ChLR6pAWoXknd6tteaNU2Y6azcTjapjCmKjINhGRC2oRLUKm5ylXjsQoR9xLgQITheNrfvv63Gu7AbGE15oHyGu4J2RbZbEYdyl8NT4S3bE4IyZU5U/Sn1dlzROZfItAOwB1/KW8/Ia/MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k3NQGPZE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WazDMw7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99210C116D0;
-	Sat, 28 Feb 2026 18:12:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k3NQGPZE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D94BC2BC87;
+	Sat, 28 Feb 2026 18:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302374;
-	bh=QenyCUkpKrr9gtIuDh4lMhw+Ifj5bjb9GDb/SCw42PM=;
+	bh=iOBdFpxqjEAIIItBaV+TwPLqZ2rOxg8J4A5y6gtYFiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WazDMw7k1GJYjf0onAVzkKT2JQP6DkvuB5Z+ALjiPid9aww7IRWJojGxDR0tcNtSb
-	 WagIHrx3Hpf+xYACqjIVcTpGRDDarLdTtZP5N3FoT5XkB950krnIcaRpjQKx5V0UJp
-	 /l/P0syCELxN7AaOLu8D6wLD9yT37+y73KQwcSYHfQRzNpKZRyJD7BMzAEN0UutQrY
-	 uyHSnReJpitABpBosh+SroDNxTcmRtwz+9bWbm9DSzO4RM8Nf39H/aXgvln3ecFYv/
-	 wPPkGBSGjbSmeRJWvOTiShCaMqm0Yq8Nsq6aELZEhJF2QlezewKtSc2tBNbMmZ51eD
-	 H0CYqVCkJMBQA==
+	b=k3NQGPZEcX28EgzgcLNyzvAb64UdyxRNWDRRoxzR/VIaG5e/uDw1ULqcgP7YiANAl
+	 sO4wQuxM/JP3FSv6F2EhziahcBAd0cyzuK/k+N6HRvd75OD9oi7ga+cKK07SFm82+I
+	 JI4fz/aqTOpkSSUwZDcvy3U+NZnsnz+i7+iA8R4WOEB04Mj0s2V61UVC/x6aanCgL8
+	 VwusdPTPR+KQPiqacT06kOFV7mpxQRRiPiFsvw/qt8+Np7Xhu+Iv1mC5xlp1+D0OhI
+	 cBSLTXEPUWRNv4nnUhT3PLJc+SKEn/NpVxgqbGyT/5UxVA/Efrsm+IPhap+25ZGmgn
+	 pW1iFlbE7K54A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Petr Mladek <pmladek@suse.com>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkman <daniel@iogearbox.net>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kees Cook <kees@kernel.org>,
-	Luis Chamberalin <mcgrof@kernel.org>,
-	Marc Rutland <mark.rutland@arm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+Cc: =?UTF-8?q?J=C3=B6rg=20Wedekind?= <joerg@wedekind.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/232] kallsyms/ftrace: set module buildid in ftrace_mod_address_lookup()
-Date: Sat, 28 Feb 2026 13:09:14 -0500
-Message-ID: <20260228181127.1592657-101-sashal@kernel.org>
+Subject: [PATCH 6.1 102/232] PCI: Mark 3ware-9650SA Root Port Extended Tags as broken
+Date: Sat, 28 Feb 2026 13:09:15 -0500
+Message-ID: <20260228181127.1592657-102-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -55,102 +43,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Petr Mladek <pmladek@suse.com>
+From: Jörg Wedekind <joerg@wedekind.de>
 
-[ Upstream commit e8a1e7eaa19d0b757b06a2f913e3eeb4b1c002c6 ]
+[ Upstream commit 959ac08a2c2811305be8c2779779e8b0932e5a99 ]
 
-__sprint_symbol() might access an invalid pointer when
-kallsyms_lookup_buildid() returns a symbol found by
-ftrace_mod_address_lookup().
+Per PCIe r7.0, sec 2.2.6.2.1 and 7.5.3.4, a Requester may not use 8-bit Tags
+unless its Extended Tag Field Enable is set, but all Receivers/Completers
+must handle 8-bit Tags correctly regardless of their Extended Tag Field
+Enable.
 
-The ftrace lookup function must set both @modname and @modbuildid the same
-way as module_address_lookup().
+Some devices do not handle 8-bit Tags as Completers, so add a quirk for
+them.  If we find such a device, we disable Extended Tags for the entire
+hierarchy to make peer-to-peer DMA possible.
 
-Link: https://lkml.kernel.org/r/20251128135920.217303-7-pmladek@suse.com
-Fixes: 9294523e3768 ("module: add printk formats to add module build ID to stacktraces")
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkman <daniel@iogearbox.net>
-Cc: Daniel Gomez <da.gomez@samsung.com>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Luis Chamberalin <mcgrof@kernel.org>
-Cc: Marc Rutland <mark.rutland@arm.com>
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Petr Pavlu <petr.pavlu@suse.com>
-Cc: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The 3ware 9650SA seems to have issues with handling 8-bit tags. Mark it as
+broken.
+
+This fixes PCI Parity Errors like :
+
+  3w-9xxx: scsi0: ERROR: (0x06:0x000C): PCI Parity Error: clearing.
+  3w-9xxx: scsi0: ERROR: (0x06:0x000D): PCI Abort: clearing.
+  3w-9xxx: scsi0: ERROR: (0x06:0x000E): Controller Queue Error: clearing.
+  3w-9xxx: scsi0: ERROR: (0x06:0x0010): Microcontroller Error: clearing.
+
+Fixes: 60db3a4d8cc9 ("PCI: Enable PCIe Extended Tags if supported")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=202425
+Signed-off-by: Jörg Wedekind <joerg@wedekind.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260119143114.21948-1-joerg@wedekind.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ftrace.h | 6 ++++--
- kernel/kallsyms.c      | 4 ++--
- kernel/trace/ftrace.c  | 5 ++++-
- 3 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/pci/quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/ftrace.h b/include/linux/ftrace.h
-index 8128059db5ed7..d29b74e4e7c3d 100644
---- a/include/linux/ftrace.h
-+++ b/include/linux/ftrace.h
-@@ -75,11 +75,13 @@ struct ftrace_direct_func;
- 	defined(CONFIG_DYNAMIC_FTRACE)
- const char *
- ftrace_mod_address_lookup(unsigned long addr, unsigned long *size,
--		   unsigned long *off, char **modname, char *sym);
-+			  unsigned long *off, char **modname,
-+			  const unsigned char **modbuildid, char *sym);
- #else
- static inline const char *
- ftrace_mod_address_lookup(unsigned long addr, unsigned long *size,
--		   unsigned long *off, char **modname, char *sym)
-+			  unsigned long *off, char **modname,
-+			  const unsigned char **modbuildid, char *sym)
- {
- 	return NULL;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index e8cfae79a47a9..fc793635a3d81 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5465,6 +5465,7 @@ static void quirk_no_ext_tags(struct pci_dev *pdev)
+ 	pci_walk_bus(bridge->bus, pci_configure_extended_tags, NULL);
  }
-diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
-index 5e98cd80eed89..5a3ae3365049b 100644
---- a/kernel/kallsyms.c
-+++ b/kernel/kallsyms.c
-@@ -434,8 +434,8 @@ static const char *kallsyms_lookup_buildid(unsigned long addr,
- 					 offset, modname, namebuf);
- 
- 	if (!ret)
--		ret = ftrace_mod_address_lookup(addr, symbolsize,
--						offset, modname, namebuf);
-+		ret = ftrace_mod_address_lookup(addr, symbolsize, offset,
-+						modname, modbuildid, namebuf);
- 
- found:
- 	cleanup_symbol_name(namebuf);
-diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index e24906e7fcc5d..7217b872ff4ff 100644
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -7230,7 +7230,8 @@ ftrace_func_address_lookup(struct ftrace_mod_map *mod_map,
- 
- const char *
- ftrace_mod_address_lookup(unsigned long addr, unsigned long *size,
--		   unsigned long *off, char **modname, char *sym)
-+			  unsigned long *off, char **modname,
-+			  const unsigned char **modbuildid, char *sym)
- {
- 	struct ftrace_mod_map *mod_map;
- 	const char *ret = NULL;
-@@ -7242,6 +7243,8 @@ ftrace_mod_address_lookup(unsigned long addr, unsigned long *size,
- 		if (ret) {
- 			if (modname)
- 				*modname = mod_map->mod->name;
-+			if (modbuildid)
-+				*modbuildid = module_buildid(mod_map->mod);
- 			break;
- 		}
- 	}
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_3WARE, 0x1004, quirk_no_ext_tags);
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_3WARE, 0x1005, quirk_no_ext_tags);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0132, quirk_no_ext_tags);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0140, quirk_no_ext_tags);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0141, quirk_no_ext_tags);
 -- 
 2.51.0
 
