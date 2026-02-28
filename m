@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3871347FCC
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C57359A96
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302448; cv=none; b=mk0QBkcrFey8f5YXccYYjf+X5xJbPQD/0nQ23qI50ixa7Ix+DUjMHhnBwhtLvmUY40uZIe46hjCuKM6UNevgT1uL1M894948g578I01cb5wxt5oUZscJ197GPSQRRQoFBrzKxOJEU6hICMVDShS0ipiRiIru6s5LEKIVt/CS6Fw=
+	t=1772302449; cv=none; b=gftueHF7IP2Uf7QrtMSTHMV5RFB5uBfAvMuLGm7Y6/RTcL7prVjXcZxhvqout1Dgpx+dstOmArpGhDHFDOAOOji0zwV2TpIUex8mqJjJGkmXUkuiD8yZUpNCD2jXwD873sJIkrmPnO9yvLU9+7hgupKdOcRCGccV3r/1Qx6nL4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302448; c=relaxed/simple;
-	bh=aYbuFL337hrTzWhO5ucTTy4qxzqbuhcM84CqDCzw1Dk=;
+	s=arc-20240116; t=1772302449; c=relaxed/simple;
+	bh=6eP2Y0M2FJ2siuxDo6sQi6OPoEBhPV3VAIsZlyeMmwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5U8l1QKXW5DEPX18Lre9SPjA68Rp1H7ZNr5R5ljE8ghT8l6e4OIcI92rs3Sjcs44ez3W13eQHy0N31Hvhw8IokgHwl6tnO0iF215ugSP1Y5rAUQPNasH/5Dt1SliAWT0ZasMTnXOctOgrIov4dqBSfcIZ74xE4ValTCnN3wiec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gk2dJzlf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJFa8lPl141cwOMFWE77IfqynXsm3q57wU3UY8xcGIYBl+nfqQ00EK3S2i4xKXT6oCtjHWA3Exxx1PAmf3D4WkxXOyo8Idy0SFMCm5EcrWN8yaEikNtIqmfHVAv0kIETcrk6YRT7mUB2KH+7g0zy7QdEmHbqbTgMqn+zAB1QBQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DCshoAtl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gk2dJzlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A29C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DCshoAtl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB27DC19423;
 	Sat, 28 Feb 2026 18:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302448;
-	bh=aYbuFL337hrTzWhO5ucTTy4qxzqbuhcM84CqDCzw1Dk=;
+	s=k20201202; t=1772302449;
+	bh=6eP2Y0M2FJ2siuxDo6sQi6OPoEBhPV3VAIsZlyeMmwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gk2dJzlfRsuo8iv9k4Rq1QdoJeThd56kChIW2jggmxEjXP+tJ7Oddr/0rdPHjpTHC
-	 P2MWfHf5wY4gevKMdHNjwMguwcUSo6D6zLjS4AmFuE8gWzyoPH9k/79lj7nV66HyQc
-	 pa3dY+b6fPERs/3d/O2yw5qSagltsVFn3y3X2rby35XuM9vr2BNjx1lJ5NtvoYwAP/
-	 BsdRL3gGMUL9WFrfRgKr7dSCVLCGWu9tw8ZVD9tj6I7GdlE7k3kCW9xhOQxRVKngXR
-	 Xi+VhD/ctMK8TJf52yVpAdye96e3DMyXTLUrmkOoTuSL+IlMfeA+syQAy1dW7MlUbF
-	 iQJJ3Pgkz9Nmw==
+	b=DCshoAtl8LplLFwfuGRfHOVf16ScYslcVJjF/uqnoGRNWRWsPJNejqOeVERIAkck4
+	 FeuiK6omc0siyUkAAABezt4UoSKP8Wf7vuJc1MnxPKWDV99XD0iUFh5aqdlnnJj4aW
+	 0RhGD0A/tTgWYOVjHV57holy1FI6BrTxFj/C4Xn25ncZ6tbehUD3shL8BC2Ri6fWIv
+	 1Qry+mB82jWQtR019VDvOVNOxiTXegaKRGpWdGFSzvVR4MW5yaO0f9YUXaJEGG0XSj
+	 QviyS0FxMdYM90EKbxsl3b5Nqm3SgsdT66l6t2gbXs8Agz4W1U3KznLV0HTbTN/0AL
+	 IzrYVbuRc4SGQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Randy Dunlap <rdunlap@infradead.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 188/232] serial: imx: change SERIAL_IMX_CONSOLE to bool
-Date: Sat, 28 Feb 2026 13:10:41 -0500
-Message-ID: <20260228181127.1592657-188-sashal@kernel.org>
+Subject: [PATCH 6.1 189/232] serial: SH_SCI: improve "DMA support" prompt
+Date: Sat, 28 Feb 2026 13:10:42 -0500
+Message-ID: <20260228181127.1592657-189-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,46 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 79527d86ba91c2d9354832d19fd12b3baa66bd10 ]
+[ Upstream commit 93bb95a11238d66a4c9aa6eabf9774b073a5895c ]
 
-SERIAL_IMX_CONSOLE is a build option for the imx driver (SERIAL_IMX).
-It does not build a separate console driver file, so it can't be built
-as a module since it isn't built at all.
+Having a prompt of "DMA support" suddenly appear during a
+"make oldconfig" can be confusing. Add a little helpful text to
+the prompt message.
 
-Change the Kconfig symbol from tristate to bool and update the help
-text accordingly.
-
-Fixes: 0db4f9b91c86 ("tty: serial: imx: enable imx serial console port as module")
+Fixes: 73a19e4c0301 ("serial: sh-sci: Add DMA support.")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20260110232643.3533351-2-rdunlap@infradead.org
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260110232643.3533351-5-rdunlap@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/Kconfig | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/serial/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/tty/serial/Kconfig b/drivers/tty/serial/Kconfig
-index 71951b543d4c2..3c45956a1d454 100644
+index 3c45956a1d454..32b4db13fa963 100644
 --- a/drivers/tty/serial/Kconfig
 +++ b/drivers/tty/serial/Kconfig
-@@ -486,14 +486,14 @@ config SERIAL_IMX
- 	  can enable its onboard serial port by enabling this option.
+@@ -668,7 +668,7 @@ config SERIAL_SH_SCI_EARLYCON
+ 	default ARCH_RENESAS
  
- config SERIAL_IMX_CONSOLE
--	tristate "Console on IMX serial port"
-+	bool "Console on IMX serial port"
- 	depends on SERIAL_IMX
- 	select SERIAL_CORE_CONSOLE
- 	help
- 	  If you have enabled the serial port on the Freescale IMX
--	  CPU you can make it the console by answering Y/M to this option.
-+	  CPU you can make it the console by answering Y to this option.
+ config SERIAL_SH_SCI_DMA
+-	bool "DMA support" if EXPERT
++	bool "Support for DMA on SuperH SCI(F)" if EXPERT
+ 	depends on SERIAL_SH_SCI && DMA_ENGINE
+ 	default ARCH_RENESAS
  
--	  Even if you say Y/M here, the currently visible virtual console
-+	  Even if you say Y here, the currently visible virtual console
- 	  (/dev/tty0) will still be used as the system console by default, but
- 	  you can alter that using a kernel command line option such as
- 	  "console=ttymxc0". (Try "man bootparam" or see the documentation of
 -- 
 2.51.0
 
