@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C1348875
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A2F37524F
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302602; cv=none; b=rGCpgerNqviDqYSl7yFsOLul9La4inDvzW4gsGuHFh3+bxRT/Nnyn1debx0T9Y1oh0p7zRF5o10YcU2xSWh77LwYxLUjP12QBtK8RvWdVHq3VnWt2B5GyjaJmR8WQcIgGt9tWbcJ597k2d4mVIF0WBioWMPaS72Ogxsbs8anIa4=
+	t=1772302603; cv=none; b=MyGKUxlwK4sUoyXRreFDf1Y5aIaWLBjrkgi3fsIu1nufEcWTgAT8rkU5CprQ78hIIoh6LgrUrFrfQS9lXTBbZ2f4frr2FK0DmMExguz/SinITVJNu05fx7FaMn+PpC9TyVrzHilrtIRkZkEuSFVkQRsfHEJR7E2UqOfuOfJxNAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302602; c=relaxed/simple;
-	bh=Dyu/h/xRJr7Bra6YeHSDsk79CLI+t8u2wAn+QXdS99s=;
+	s=arc-20240116; t=1772302603; c=relaxed/simple;
+	bh=p8tzr+aJj8k5+Xsu4N9v0bIRJ2qztcnep0+aIcYXLks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c5ZxFY0qRbq67z1X5WmAH9QlDa0YR2t0T+Pn3rK/Rxx41XLzED75zIVPyCGtRBmCgyHx/lIsTtNeXzA+Z1ZsGP+pgBaUVwG05/XeD4sNRsZNo9ylQvh29f+jKB6kLGE60mLxgj4V1S3qNc1zKLLIb8IdVprqiVmwuN9oxuW1who=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KmRiSZen; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SG+EiaiW61Daan5Ihk8MTp/sbGY4VzRNox5B8TtdnS/lHOMsHU3s5fPYmBbRvgxJnoOhS1caF7+NoPXtUY45Z5JZnaodmM3plcWhW56B1x3vOSl++XBYodCiQD9x1jvBxfTwXx2oalRKEvWJgHdbTOAuXJOuE+GuTt1LcQnObUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DYuYbL10; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KmRiSZen"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32212C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DYuYbL10"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09BBC19423;
 	Sat, 28 Feb 2026 18:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302602;
-	bh=Dyu/h/xRJr7Bra6YeHSDsk79CLI+t8u2wAn+QXdS99s=;
+	s=k20201202; t=1772302603;
+	bh=p8tzr+aJj8k5+Xsu4N9v0bIRJ2qztcnep0+aIcYXLks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmRiSZen0oo5E+aYnu5JvoLz3s5FOb5KYvdTN8YQWcqiupxwdyu/rENiTmyc9pfmj
-	 sy8Q3DBu7lnHa/Q6SIN1ihFotYWSBcBkg/EXujJvxGXjA8vNPlW0RD1tdxafBtW90A
-	 p/6hiP6gmOhuV9G1/ZC62045zwanFbULyPD/2Go0aZq2Lt2prV+UtNqUFPXgP5b/wV
-	 a38+xjjZAWxQHU+P3YepBFwskU09SRU72rhr5fHHFyz0MUD5qKI64f7DrzCH+fE1S4
-	 lWLHNZu5qDyW9AHKKzjNfIPWBZAuVRAQt0y5QLXLJZRMQN+F50zq7To8FWzPSYkXmD
-	 mrUqrskfDmXHw==
+	b=DYuYbL10k9vFPJn0x8x8+LLuEIxzrvawvIzQz5gUAtM7dELwPwX5Igr1doeBAEdBZ
+	 bjLVtiFVVDU1I0jpSDSoXxqDA99w2lIMSEfEv/leykiBJZ7FnMVPW79PTgPuN/36rK
+	 ryjnAzw/wD3nB4JEP4jDyYORBWTtSfRE2mfGPbo4q18uqOY7uX42YYGHH1SFU/i89i
+	 8KYk/2jQD3BT55C20LCAOfwgTExe+fB/YgCgpAK48XYdmJXyxLdnnZWbXfrBP4w9b0
+	 kqQT9xn9xK5/lTogDwKBkj1XI2fvzL9mKjMWO4k6Rk4s+8FJG0dbpSArBSUsNmpa0Y
+	 wbxNLYuQxiZhg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 116/164] svcrdma: Clean up comment in svc_rdma_accept()
-Date: Sat, 28 Feb 2026 13:14:15 -0500
-Message-ID: <20260228181505.1600663-116-sashal@kernel.org>
+Subject: [PATCH 5.15 117/164] svcrdma: Increase the per-transport rw_ctx count
+Date: Sat, 28 Feb 2026 13:14:16 -0500
+Message-ID: <20260228181505.1600663-117-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,60 +48,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit fc2e69db82c1ac506cd7f539a3ab66d51d3380dc ]
+[ Upstream commit 2da0f610e733606e06284ac3c1f188b9dec75d68 ]
 
-The comment that starts "Qualify ..." applies to only some of the
-following code paragraph. Re-arrange the lines so the comment makes
-more sense.
+rdma_rw_mr_factor() returns the smallest number of MRs needed to
+move a particular number of pages. svcrdma currently asks for the
+number of MRs needed to move RPCSVC_MAXPAGES (a little over one
+megabyte), as that is the number of pages in the largest r/wsize
+the server supports.
+
+This call assumes that the client's NIC can bundle a full one
+megabyte payload in a single rdma_segment. In fact, most NICs cannot
+handle a full megabyte with a single rkey / rdma_segment. Clients
+will typically split even a single Read chunk into many segments.
+
+The server needs one MR to read each rdma_segment in a Read chunk,
+and thus each one needs an rw_ctx.
+
+svcrdma has been vastly underestimating the number of rw_ctxs needed
+to handle 64 RPC requests with large Read chunks using small
+rdma_segments.
+
+Unfortunately there doesn't seem to be a good way to estimate this
+number without knowing the client NIC's capabilities. Even then,
+the client RPC/RDMA implementation is still free to split a chunk
+into smaller segments (for example, it might be using physical
+registration, which needs an rdma_segment per page).
+
+The best we can do for now is choose a number that will guarantee
+forward progress in the worst case (one page per segment).
+
+At some later point, we could add some mechanisms to make this
+much less of a problem:
+- Add a core API to add more rw_ctxs to an already-established QP
+- svcrdma could treat rw_ctx exhaustion as a temporary error and
+  try again
+- Limit the number of Reads in flight
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Stable-dep-of: afcae7d7b8a2 ("RDMA/core: add rdma_rw_max_sge() helper for SQ sizing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-index 7b7e882c7a508..31e6f4a14bbc0 100644
+index 31e6f4a14bbc0..3d3b15f9d6d51 100644
 --- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
 +++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -393,18 +393,22 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
- 	dev = newxprt->sc_cm_id->device;
- 	newxprt->sc_port_num = newxprt->sc_cm_id->port_num;
- 
--	/* Qualify the transport resource defaults with the
--	 * capabilities of this particular device */
-+	newxprt->sc_max_req_size = svcrdma_max_req_size;
-+	newxprt->sc_max_requests = svcrdma_max_requests;
-+	newxprt->sc_max_bc_requests = svcrdma_max_bc_requests;
-+	newxprt->sc_recv_batch = RPCRDMA_MAX_RECV_BATCH;
-+	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
-+
-+	/* Qualify the transport's resource defaults with the
-+	 * capabilities of this particular device.
-+	 */
-+
- 	/* Transport header, head iovec, tail iovec */
- 	newxprt->sc_max_send_sges = 3;
- 	/* Add one SGE per page list entry */
- 	newxprt->sc_max_send_sges += (svcrdma_max_req_size / PAGE_SIZE) + 1;
- 	if (newxprt->sc_max_send_sges > dev->attrs.max_send_sge)
- 		newxprt->sc_max_send_sges = dev->attrs.max_send_sge;
--	newxprt->sc_max_req_size = svcrdma_max_req_size;
--	newxprt->sc_max_requests = svcrdma_max_requests;
--	newxprt->sc_max_bc_requests = svcrdma_max_bc_requests;
--	newxprt->sc_recv_batch = RPCRDMA_MAX_RECV_BATCH;
- 	rq_depth = newxprt->sc_max_requests + newxprt->sc_max_bc_requests +
- 		   newxprt->sc_recv_batch;
- 	if (rq_depth > dev->attrs.max_qp_wr) {
-@@ -413,7 +417,6 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+@@ -417,8 +417,13 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
  		newxprt->sc_max_requests = rq_depth - 2;
  		newxprt->sc_max_bc_requests = 2;
  	}
--	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
- 	ctxts = rdma_rw_mr_factor(dev, newxprt->sc_port_num, RPCSVC_MAXPAGES);
- 	ctxts *= newxprt->sc_max_requests;
+-	ctxts = rdma_rw_mr_factor(dev, newxprt->sc_port_num, RPCSVC_MAXPAGES);
+-	ctxts *= newxprt->sc_max_requests;
++
++	/* Arbitrarily estimate the number of rw_ctxs needed for
++	 * this transport. This is enough rw_ctxs to make forward
++	 * progress even if the client is using one rkey per page
++	 * in each Read chunk.
++	 */
++	ctxts = 3 * RPCSVC_MAXPAGES;
  	newxprt->sc_sq_depth = rq_depth + ctxts;
+ 	if (newxprt->sc_sq_depth > dev->attrs.max_qp_wr)
+ 		newxprt->sc_sq_depth = dev->attrs.max_qp_wr;
 -- 
 2.51.0
 
