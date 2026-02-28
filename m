@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5111E332EA7
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABEF33FE27
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301256; cv=none; b=fESrwp3jpRpM3Tk6Gc5Pgyo0PES2hS5CLgqPzMxRuDHtMzvxOZUUpzA1ReUYd2fVu9qjxRYNjnqt8gh+4iPLGAK+4m1A7xbXhsNCf2rqy8DqhZDe/cgaIVYfVH2LpmklXqGLQwaa4vEr5srYov4Ab+K6Wi01BdxEZyWvYYhUwsk=
+	t=1772301257; cv=none; b=TZlU3sSHWri7byhmVwB/dg3XYamVpRYhTLlQ2ftGFXaWm4DSH3FTfyFjCrnXK6amx10pGNp/QB6EYAS9cerempa2SuJiXSL9ldvTur6dNY0k3fTcoCCw/gqDWxYGLjXNX6jMWbeETfgXndw72NYUoKGgCuPDglKU6I48jGTgjfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301256; c=relaxed/simple;
-	bh=H4+M4frMpuu9VZziEWFTpF/5sUXIheXRCgWyulN+qZc=;
+	s=arc-20240116; t=1772301257; c=relaxed/simple;
+	bh=cA0iyVRujC2xfGltGqfFBfS7ZxxYDuTQ0L0yzi6eVWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQHcqFbxfPhifZfPAN0Wjii2NzsHeHgYOFEMOlRpWiHphZUdoSh7gdLBBJpao6/wY6d+6/Mu5VcpNxHo0dCVdZrwO/pQajOZ2OFuOn8ZJ+wkPlbf2cxqup5o8QafHs9O4ggmQUbeUiiAwaqIwsU277hfYKyAmoh0b2uv4QlGb60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jP9wsEuz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NecmDIMh2kLcY/bz5jjX80bQtlriQ357dK9BjJr3HtgZg+8Qo9Z2BsS5hDe8jxgcvEAboL0qpBrnr8FO9MNAnIk35n/8f5A7zn9ltQwuOCtgcZ6z1t9m2SD1zkB/Xln3a7dT6PizKJRTc/gsBBX4rphUaioLOFFgatexBjUX99k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gaXinb/i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jP9wsEuz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1F2C116D0;
-	Sat, 28 Feb 2026 17:54:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gaXinb/i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE07C19425;
+	Sat, 28 Feb 2026 17:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301256;
-	bh=H4+M4frMpuu9VZziEWFTpF/5sUXIheXRCgWyulN+qZc=;
+	bh=cA0iyVRujC2xfGltGqfFBfS7ZxxYDuTQ0L0yzi6eVWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jP9wsEuz99VsjiNCM2dyDexQB5TPdnymSe22Uc40H3eeqnsbczK3uz6fpJ6C4Rj81
-	 nJl68H0trOnRgFtUCH5ygIVpsdluqlYecKfpuvTtzADcvZtINSC/QRbCh2ztvCOF6B
-	 hu/6YVbSA252M4z4np0eWplKoEUhjOXD3hSg6a9sH5dG/haykyR/RUUibxQQ4C6JZq
-	 vpW1o7LXQ0by0W9Qn0A3ySS1i1cM1c6dfSnyKsRlEOwBpBZNvG7y5BgyKEIaoMoF52
-	 8UYR71YbKzArI8Qis8+7pr9l6XGxRr9KOWuFG7eKhIOQtWpJ51D5XwRtTM5JRE7/X+
-	 iv//gTGxXvbjg==
+	b=gaXinb/iXYgZ3KfHP4AwbpRt0fJMQyDjPcsvzAPjeX/WFpSkctDvYore0/QhFhBBb
+	 feBRwaEyjqpOtt4jlJSQBChZtWBQDk0elpit7o2e0mwA4CIGz2gYmuYSVj5xZqBtsI
+	 b17uZowxmeZrKinmF3IwN3eurpX9kg2MrdNW3PmdnHWm0UYRsQB0iqrAnSsjwcTaEb
+	 sG0g2Ryi8WfBBXEwCznKopzPMoTZUtvaALrgQUAUE52BYEFtcszeB0tAkzM/lSC52h
+	 I7cijEX0EuckWb9yAx/hSXXr6BmWP7jwqLD3AuwLh8K1TZ3bvWib/yDHuL4zzJIZQX
+	 bZBuWCfVg2v5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Gao Xiang <hsiangkao@linux.alibaba.com>,
-	syzbot+d988dc155e740d76a331@syzkaller.appspotmail.com,
+Cc: Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 439/752] erofs: fix interlaced plain identification for encoded extents
-Date: Sat, 28 Feb 2026 12:42:30 -0500
-Message-ID: <20260228174750.1542406-439-sashal@kernel.org>
+Subject: [PATCH 6.18 440/752] RDMA/umem: Fix double dma_buf_unpin in failure path
+Date: Sat, 28 Feb 2026 12:42:31 -0500
+Message-ID: <20260228174750.1542406-440-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,61 +47,50 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 4a2d046e4b13202a6301a993961f5b30ae4d7119 ]
+[ Upstream commit 104016eb671e19709721c1b0048dd912dc2e96be ]
 
-Only plain data whose start position and on-disk physical length are
-both aligned to the block size should be classified as interlaced
-plain extents. Otherwise, it must be treated as shifted plain extents.
+In ib_umem_dmabuf_get_pinned_with_dma_device(), the call to
+ib_umem_dmabuf_map_pages() can fail. If this occurs, the dmabuf
+is immediately unpinned but the umem_dmabuf->pinned flag is still
+set. Then, when ib_umem_release() is called, it calls
+ib_umem_dmabuf_revoke() which will call dma_buf_unpin() again.
 
-This issue was found by syzbot using a crafted compressed image
-containing plain extents with unaligned physical lengths, which can
-cause OOB read in z_erofs_transform_plain().
+Fix this by removing the immediate unpin upon failure and just let
+the ib_umem_release/revoke path handle it. This also ensures the
+proper unmap-unpin unwind ordering if the dmabuf_map_pages call
+happened to fail due to dma_resv_wait_timeout (and therefore has
+a non-NULL umem_dmabuf->sgt).
 
-Reported-and-tested-by: syzbot+d988dc155e740d76a331@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/699d5714.050a0220.cdd3c.03e7.GAE@google.com
-Fixes: 1d191b4ca51d ("erofs: implement encoded extent metadata")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 1e4df4a21c5a ("RDMA/umem: Allow pinned dmabuf umem usage")
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Link: https://patch.msgid.link/20260224234153.1207849-1-jmoroni@google.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/umem_dmabuf.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index c8d8e129eb4ba..30775502b56da 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -513,6 +513,7 @@ static int z_erofs_map_blocks_ext(struct inode *inode,
- 	unsigned int recsz = z_erofs_extent_recsize(vi->z_advise);
- 	erofs_off_t pos = round_up(Z_EROFS_MAP_HEADER_END(erofs_iloc(inode) +
- 				   vi->inode_isize + vi->xattr_isize), recsz);
-+	unsigned int bmask = sb->s_blocksize - 1;
- 	bool in_mbox = erofs_inode_in_metabox(inode);
- 	erofs_off_t lend = inode->i_size;
- 	erofs_off_t l, r, mid, pa, la, lstart;
-@@ -596,17 +597,17 @@ static int z_erofs_map_blocks_ext(struct inode *inode,
- 			map->m_flags |= EROFS_MAP_MAPPED |
- 				EROFS_MAP_FULL_MAPPED | EROFS_MAP_ENCODED;
- 			fmt = map->m_plen >> Z_EROFS_EXTENT_PLEN_FMT_BIT;
-+			if (map->m_plen & Z_EROFS_EXTENT_PLEN_PARTIAL)
-+				map->m_flags |= EROFS_MAP_PARTIAL_REF;
-+			map->m_plen &= Z_EROFS_EXTENT_PLEN_MASK;
- 			if (fmt)
- 				map->m_algorithmformat = fmt - 1;
--			else if (interlaced && !erofs_blkoff(sb, map->m_pa))
-+			else if (interlaced && !((map->m_pa | map->m_plen) & bmask))
- 				map->m_algorithmformat =
- 					Z_EROFS_COMPRESSION_INTERLACED;
- 			else
- 				map->m_algorithmformat =
- 					Z_EROFS_COMPRESSION_SHIFTED;
--			if (map->m_plen & Z_EROFS_EXTENT_PLEN_PARTIAL)
--				map->m_flags |= EROFS_MAP_PARTIAL_REF;
--			map->m_plen &= Z_EROFS_EXTENT_PLEN_MASK;
- 		}
- 	}
- 	map->m_llen = lend - map->m_la;
+diff --git a/drivers/infiniband/core/umem_dmabuf.c b/drivers/infiniband/core/umem_dmabuf.c
+index 0ec2e4120cc94..17b16fe0e49d9 100644
+--- a/drivers/infiniband/core/umem_dmabuf.c
++++ b/drivers/infiniband/core/umem_dmabuf.c
+@@ -221,13 +221,11 @@ ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
+ 
+ 	err = ib_umem_dmabuf_map_pages(umem_dmabuf);
+ 	if (err)
+-		goto err_unpin;
++		goto err_release;
+ 	dma_resv_unlock(umem_dmabuf->attach->dmabuf->resv);
+ 
+ 	return umem_dmabuf;
+ 
+-err_unpin:
+-	dma_buf_unpin(umem_dmabuf->attach);
+ err_release:
+ 	dma_resv_unlock(umem_dmabuf->attach->dmabuf->resv);
+ 	ib_umem_release(&umem_dmabuf->umem);
 -- 
 2.51.0
 
