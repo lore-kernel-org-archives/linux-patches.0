@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08047375256
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47A737524F
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302524; cv=none; b=A7+a0LdHYNfh2UNhvQ1hw0TL1ro5P+cDinW4Z79Vv2O/xRoXxZxUOs1JI4BTqyofIDa4Vf9/L+dAuuHKZv/vv24tFPUPgnOo2fjKST9AsknSy30ACBzyVkk1OVXoXYPDv8qcTMnbfjmgpyWO/otVOlolgeABjoHYYU3a3NL0reg=
+	t=1772302524; cv=none; b=Oy6HFnPNH0OogPjtRyywSWbXzDu+goH3xPmCX+QjaOv2q9bqwhhRORlUtzq02LhfYVIYbse8Y8tf5NXrA7PlfPI+tkCC35tWYr/MsSpx7yJw6iJpRkEk/xjbwhSuQBkV0l/zyEBOLyY+jcuOBYuZv+fRJGi0v3VP2Hqz+Qn2W9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302524; c=relaxed/simple;
-	bh=fgeC/Oo11rslpcR5xqKnlzQphsTQTpO01IvnqfFlgSg=;
+	bh=M5slKZIxWNkSNWmTaguYLtuZZ6p+m8YUWx+PIPQYwXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rcniJMlE4GIiBHQ10M30zj6Hw6VeBNs1qxQQ5pw+hONfRCmTOGqfSwr8cMP2uoux5J2o2WO+zV8BrhaVzzj5lnBg/O8/YtsDuk3RpdIrk0Kt82DRe6tz+ZmqDl4cYVS6XQ0y0vFOfV2+Y75qbspSz1zhxT12Iv6FkzlTdaXtOqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fm9//NCh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cfuiGjQFygUEamgLi3XrcUc5LMHN23mcrlZz47VggcGVWxgpXrHFOcSKOwNt+6+hP2L0LZQ14amBLELJhMPtX6z5rdl87fKvfeniBJFcVxfnStFkaDySj6Od/eIk1U/iGF570ZZN8/tR1nHruh4HndVIPY0MOz8TClX6BGTiIU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ooelg5z7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fm9//NCh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE7BC116D0;
-	Sat, 28 Feb 2026 18:15:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ooelg5z7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340F8C19423;
+	Sat, 28 Feb 2026 18:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302523;
-	bh=fgeC/Oo11rslpcR5xqKnlzQphsTQTpO01IvnqfFlgSg=;
+	s=k20201202; t=1772302524;
+	bh=M5slKZIxWNkSNWmTaguYLtuZZ6p+m8YUWx+PIPQYwXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fm9//NChDT5qf4RwDPYSsJ2vIEHyfEFt6DBKJKjnvI8HP7J/SiUL2of5tnFvZvyyz
-	 1nj5nBgxojYpx+Yt6ATFdSKr1oO0x2bM0hoES5ruR06/C6TZT/WWVi0wev0yCeocaT
-	 l2hUhav2d5YLI+HTy2DCSXFOTGlm5IuOyFY3N7jQ4Lb82UdCrrm2RSDptGauTZkRPt
-	 kRKRyLfn/MEnCOrYub3Jn3Vk+lP0IFggUZyJEeCnZo1HjEK9LtFQXm+o+rXpDU19OZ
-	 ohmmOJ0nyH1U1iDPjXghCDqpZP0bMIG0bVuGrAiqSt2KjlUOtrhNEOLfrjVX5VCFMo
-	 zWOmJsOWy0tAw==
+	b=Ooelg5z7iN8WNYtm2yHWNeW0PpYjEj/o8SUF2SGE6MoTEa7MBlicwLnAAzVBLzGts
+	 3mMW6q5yBHmoaqhS9bKgPhXOFmzmUBW3GFoupcuWQCxNFte7SXDLH2pxPkc9zHQaVe
+	 8z0CdmfYnMu40mSIIETsmucI8S5cC6LMmiGVjOnTzD/wxIs60pPi4ibu3ECHQlll1F
+	 G9ULwREW2pfHNseNtse5+jrBw4ON8GOO4gUcOmtdMevlivT/C/uOACB+Tn2uUKBFhx
+	 YzebuhpYmrIqQcbBnxLAM5g7PtNMbDjbp9eXalw5LifAli9V5Pe+CbXCDvTAguX8fh
+	 dgZoH7WT1kf2w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Fourier <fourier.thomas@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/164] crypto: octeontx - fix dma_free_coherent() size
-Date: Sat, 28 Feb 2026 13:12:41 -0500
-Message-ID: <20260228181505.1600663-22-sashal@kernel.org>
+Subject: [PATCH 5.15 023/164] hrtimer: Fix trace oddity
+Date: Sat, 28 Feb 2026 13:12:42 -0500
+Message-ID: <20260228181505.1600663-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -47,36 +47,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 624a6760bf8464965c17c8df10b40b557eaa3002 ]
+[ Upstream commit 5d6446f409da00e5a389125ddb5ce09f5bc404c9 ]
 
-The size of the buffer in alloc_command_queues() is
-curr->size + OTX_CPT_NEXT_CHUNK_PTR_SIZE, so used that length for
-dma_free_coherent().
+It turns out that __run_hrtimer() will trace like:
 
-Fixes: 10b4f09491bf ("crypto: marvell - add the Virtual Function driver for CPT")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+          <idle>-0     [032] d.h2. 20705.474563: hrtimer_cancel:       hrtimer=0xff2db8f77f8226e8
+          <idle>-0     [032] d.h1. 20705.474563: hrtimer_expire_entry: hrtimer=0xff2db8f77f8226e8 now=20699452001850 function=tick_nohz_handler/0x0
+
+Which is a bit nonsensical, the timer doesn't get canceled on
+expiration. The cause is the use of the incorrect debug helper.
+
+Fixes: c6a2a1770245 ("hrtimer: Add tracepoint for hrtimers")
+Reported-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260121143208.219595606@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/octeontx/otx_cptvf_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/time/hrtimer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/marvell/octeontx/otx_cptvf_main.c b/drivers/crypto/marvell/octeontx/otx_cptvf_main.c
-index c076d0b3ad5f1..bbac7778201d2 100644
---- a/drivers/crypto/marvell/octeontx/otx_cptvf_main.c
-+++ b/drivers/crypto/marvell/octeontx/otx_cptvf_main.c
-@@ -170,7 +170,8 @@ static void free_command_queues(struct otx_cptvf *cptvf,
- 			chunk = list_first_entry(&cqinfo->queue[i].chead,
- 					struct otx_cpt_cmd_chunk, nextchunk);
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index abb375816e4c1..0246b32e907d2 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -1650,7 +1650,7 @@ static void __run_hrtimer(struct hrtimer_cpu_base *cpu_base,
  
--			dma_free_coherent(&pdev->dev, chunk->size,
-+			dma_free_coherent(&pdev->dev,
-+					  chunk->size + OTX_CPT_NEXT_CHUNK_PTR_SIZE,
- 					  chunk->head,
- 					  chunk->dma_addr);
- 			chunk->head = NULL;
+ 	lockdep_assert_held(&cpu_base->lock);
+ 
+-	debug_deactivate(timer);
++	debug_hrtimer_deactivate(timer);
+ 	base->running = timer;
+ 
+ 	/*
 -- 
 2.51.0
 
