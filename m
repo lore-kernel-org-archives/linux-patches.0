@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C580A344D9A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06CF379ED5
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301702; cv=none; b=XFLmm7KIlYQOAMfByZujCt5d7v7NvdW38q7ZeLYN2N3/QNViPYkgxcY+EO+FdLWDEahfA7YzhU3Gb4V0r8VpiQ2NXQUr4RcViGYvxCMmJsMuaR9cLIZITdMQ2K05r5xD727irUMj6svzWl/YkqyHUZetM4dv603GtRfPb65r6J0=
+	t=1772301703; cv=none; b=KkMd51fDXsDwHEAHn1Ff7umvmJWXKBL3Da6uONTMXbydf5hoPYaPBh8YmtxZ7/sYhkWjsmyNSR3TOxo5ZFuwtPgcoGkBL2CgtwDaNSZVm9x0ccSBMeQveGJIigpyVmjfnz7fkDjZzeIfy/82UEFF+AvaIIomZMZj4htVbKKOFEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301702; c=relaxed/simple;
-	bh=71XPasmX0dh+j1wKlos4iSgEp8cxPZ+4+lAux1Dzb5o=;
+	s=arc-20240116; t=1772301703; c=relaxed/simple;
+	bh=IAyaIrmZRX/59J2rgd7t3OgHBf/TvXFbw2T3imScbzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0W2dbd/tgdT4TBnftBOSz6ZTF4FTT49VanVfbakhU3huA6SBPxs69TEcfDMnkG30mD9lyYA82oED7sbqYsWzDltEAf2p0XhiJDVd4Sjhc21nA3/FcDhkMhwQuKyYJUY6DR0cK9PfhAV6cPGB3yt93zygvtAOgFc4empSiV++NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qo85tr1L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PmaFNIpN59wYeQKKQgzNp/GBqFJjmIWaRlrQYPE8ijdW6f2ecMcX781Hva/VsfhYLaagxbSghl938R4YwHcUNifxmsWMFzM3osCO+xuzaFeW2rIV5vuids65PROQ+5w+2tHynjihj/ffyzJ5dEsUdGYEI9G2NSV+kVabyS4AKCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vF/SHY4R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qo85tr1L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36685C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vF/SHY4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0084C116D0;
 	Sat, 28 Feb 2026 18:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301702;
-	bh=71XPasmX0dh+j1wKlos4iSgEp8cxPZ+4+lAux1Dzb5o=;
+	s=k20201202; t=1772301703;
+	bh=IAyaIrmZRX/59J2rgd7t3OgHBf/TvXFbw2T3imScbzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qo85tr1LrONv4hj2IWZOFk5kir8a1euhszp+SaUv1wJjGpJuKdmCwmQheCYSYSvmi
-	 qO+A9XEIbrFbJUqWri/LQwiUafSvniD/gi15tahsoPs9RKcN+J8WYo80R9TdfIP6GM
-	 ZwN8YSqmMHm1wLcPgnaBqaNBDarhQN3gZFFAYbpP1A8VftraDbh2/JDonTyGlgvjnR
-	 6OLjYUgexodd6gxrSsDw3dEuofTaxIBszoacSJxOoPmJRgmYL1X9nRdx68cnplKG1M
-	 /6pELxR/gHS9CoSb0krYMn/H3qow1psoVKLITmgq+Bo9VZoWEBRxNz5v9mynt6sM4l
-	 QzOUCTygsWIow==
+	b=vF/SHY4RTGz2/grPYBcP9bk4J02mYiu5vXCTTSeOSnX/O/EtWpSJwCvm8RXrJpZvO
+	 I4sFDwWqjxMHGNEMFQILcO2lEvokvMVk12sn2LZYh8A3NpdXxI10Wlt1aH+y4MJYhz
+	 0GzzUo9qODGdMWPVbAnkeGmz7V01zWmjNsjJ+0UmuHb6kdtULVrRVxG9V5utV+yJT4
+	 8qimbx4xpXxSLu+BRWx+z95hJJWVVtOBLms0I3EXCLCWxqit9iSgGOb8FamsQkq4dH
+	 HTZYian1zay+FlLFmOLX7sfZqDw/7aZy3s7zHMIRQzwBC+N4+1+2TRHhAqCPpyO0YW
+	 WXeBFaMAdXWqg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 096/385] arm64: dts: tqma8mpql-mba8mp-ras314: Fix HDMI CEC pad control settings
-Date: Sat, 28 Feb 2026 12:55:18 -0500
-Message-ID: <20260228180011.1568201-96-sashal@kernel.org>
+Subject: [PATCH 6.12 097/385] clk: qcom: Return correct error code in qcom_cc_probe_by_index()
+Date: Sat, 28 Feb 2026 12:55:19 -0500
+Message-ID: <20260228180011.1568201-97-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,34 +48,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 53a5c1d98d1155ece4c9446c0fea55e17d08774a ]
+[ Upstream commit 1e07ebe744fb522983bd52a4a6148601675330c7 ]
 
-As per datasheet of the HDMI protection IC the CEC_IC pin has been
-configured as open-drain.
+When devm_platform_ioremap_resource() fails, it returns various
+error codes. Returning a hardcoded -ENOMEM masks the actual
+failure reason.
 
-Fixes: ddabb3ce3f90 ("arm64: dts: freescale: add TQMa8MPQL on MBa8MP-RAS314")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Use PTR_ERR() to propagate the actual error code returned by
+devm_platform_ioremap_resource() instead of -ENOMEM.
+
+Fixes: 75e0a1e30191 ("clk: qcom: define probe by index API as common API")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251217041338.2432-1-vulab@iscas.ac.cn
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts | 2 +-
+ drivers/clk/qcom/common.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts
-index f7346b3d35fe5..a122f2ed5f531 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts
-@@ -704,7 +704,7 @@ pinctrl_hdmi: hdmigrp {
- 		fsl,pins = <MX8MP_IOMUXC_HDMI_DDC_SCL__HDMIMIX_HDMI_SCL	0x400001c2>,
- 			   <MX8MP_IOMUXC_HDMI_DDC_SDA__HDMIMIX_HDMI_SDA	0x400001c2>,
- 			   <MX8MP_IOMUXC_HDMI_HPD__HDMIMIX_HDMI_HPD	0x40000010>,
--			   <MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC	0x40000154>;
-+			   <MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC	0x40000030>;
- 	};
+diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+index cab2dbb7a8d49..e1a83ec481509 100644
+--- a/drivers/clk/qcom/common.c
++++ b/drivers/clk/qcom/common.c
+@@ -375,7 +375,7 @@ int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
  
- 	pinctrl_gpt1: gpt1grp {
+ 	base = devm_platform_ioremap_resource(pdev, index);
+ 	if (IS_ERR(base))
+-		return -ENOMEM;
++		return PTR_ERR(base);
+ 
+ 	regmap = devm_regmap_init_mmio(&pdev->dev, base, desc->config);
+ 	if (IS_ERR(regmap))
 -- 
 2.51.0
 
