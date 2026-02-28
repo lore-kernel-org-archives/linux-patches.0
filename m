@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF4A37702D
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12923375AC8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301660; cv=none; b=dvHGUgq8OjQW1Pw0f3rq8a4R5U1npxElq7lsHBsCy3/tYFVBXaHarutnxf+dukHgoU+A6jZHQ0G3tzi/7UKXGjdqw5UAFimnaZ1Ktwl748UjTe48tmKoDxiEFyd4qqlZMuiUehogwkRt4xS7FbgiFgSVKtr4rsUMHphIsB3ycGc=
+	t=1772301661; cv=none; b=LOSPNyn7yN/n9hSbdKvaKvtib0Wv+xT1H/m3oddg+mm4vOJsAG0H1KH7tlnqRaOoqjXMKrMLv9pZa8d0em8fl1S0JFp0dYLKCcwDuLGVpKq4eduRInkUsVciP27uUK56uVndvM1WplrlDyNgA9safiybf4FfE0nPm3Te8nt7Cy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301660; c=relaxed/simple;
-	bh=zLrOqwF2igl7icuzvy+7unU3FTitpzX5ep1qU5+ZkbM=;
+	s=arc-20240116; t=1772301661; c=relaxed/simple;
+	bh=dBVI438N2MfctTF8hJulZxtSXRYiqYpzX1jLlInQzKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tffBnyoQ5aQtytepeqEgXok86Q/86tLrgHfFY92DBy9Ant9CixzH6Cr51tmCKbfq7xlb2fqAhnBhhiUB+yFGTN8+N3YINoZZFmIcS6A4B3yWDJWkOq1luWOLhrdcPJQR4uIqN70yaP/G9GlD9akfa8KuQYYZioFv1CzNXthKPIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nhTlsaIU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eoaLE1JKxHOkZsg1YofPk9MLhnF81++LhhmGhbJJ77Lxjp4fNRpOeij6xFFDlU6quGljZ1L9HFnwdkw+jMVkWwphCZiyXAym2ANQID+uJWpu9VwNinWLXIPe6fJC6oLbPTQf4F0lHmD7bSIH+LVZzQouGwf5SNLBRfjDxDO8Sy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p54mMjfc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nhTlsaIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986B4C19423;
-	Sat, 28 Feb 2026 18:00:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p54mMjfc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D87C19423;
+	Sat, 28 Feb 2026 18:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301660;
-	bh=zLrOqwF2igl7icuzvy+7unU3FTitpzX5ep1qU5+ZkbM=;
+	s=k20201202; t=1772301661;
+	bh=dBVI438N2MfctTF8hJulZxtSXRYiqYpzX1jLlInQzKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhTlsaIU+CjwD1Lh5PDLRe614lHUoO52mL2NfaNnQaaiFSlInd2Nm5tFlK8TSO9p/
-	 Li0/IaXjFW3MfTWlSe1baD1/njvfnncRlADjCcqX4dc/xcePrCNtqVPSasJuWcEWS6
-	 5dS6IYEJ6iXUd1CmzQkfD9KLojEPt8HOqIGajkEwayX/K3hj3b2iJi6jSmExO6rKfi
-	 xcE60gEXFF/Ot1RpuG24uJGVGznhuOvByIpC9TW6a+CbaneS2nkvnABNqr/Xq1QOW5
-	 KMXYuZTuLq5YDWU39M02j7STfxoY4z5HjMUh8iRp3kT+X2nFuspZh+bWG2a42L6GR3
-	 E2qAhxyTE40Fw==
+	b=p54mMjfcnPQ49eN5zavPW3+OuVTKvy78mzsUrlSpcZhQnNgrI60AMfFqLz+uf7jSc
+	 Af8vFMwIR7IhAjwaeYouLSCNv8jwd2/J4hjRzGYFo7Z32nQn8ezaV971k+z7LOqD2O
+	 vXR6SyiiMljL0WImKZR7XnjkYy3Aso/xWbHfcnW0UhOJXkb1nNvnwdLHRXsPW8Qm0h
+	 rz6XUFwAuTRkeISSYcsMNArl225CCVp3Ef/JNnnCwtUvYtPdGwZR5oLuPwVssXG8Yw
+	 c4EBUKtuki7itJWZlIwoUP6eFPKo7ZXmX2nNrxKJYJM/Io5PxDiLy7Hk8Q1nbjEgLy
+	 7yUCE03zw82uQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Kery Qi <qikeyu2017@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/385] selftests/bpf: Fix resource leak in serial_test_wq on attach failure
-Date: Sat, 28 Feb 2026 12:54:40 -0500
-Message-ID: <20260228180011.1568201-58-sashal@kernel.org>
+Subject: [PATCH 6.12 059/385] hrtimer: Fix trace oddity
+Date: Sat, 28 Feb 2026 12:54:41 -0500
+Message-ID: <20260228180011.1568201-59-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,58 +47,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit a32ae2658471dd87a2f7a438388ed7d9a5767212 ]
+[ Upstream commit 5d6446f409da00e5a389125ddb5ce09f5bc404c9 ]
 
-When wq__attach() fails, serial_test_wq() returns early without calling
-wq__destroy(), leaking the skeleton resources allocated by
-wq__open_and_load(). This causes ASAN leak reports in selftests runs.
+It turns out that __run_hrtimer() will trace like:
 
-Fix this by jumping to a common clean_up label that calls wq__destroy()
-on all exit paths after successful open_and_load.
+          <idle>-0     [032] d.h2. 20705.474563: hrtimer_cancel:       hrtimer=0xff2db8f77f8226e8
+          <idle>-0     [032] d.h1. 20705.474563: hrtimer_expire_entry: hrtimer=0xff2db8f77f8226e8 now=20699452001850 function=tick_nohz_handler/0x0
 
-Note that the early return after wq__open_and_load() failure is correct
-and doesn't need fixing, since that function returns NULL on failure
-(after internally cleaning up any partial allocations).
+Which is a bit nonsensical, the timer doesn't get canceled on
+expiration. The cause is the use of the incorrect debug helper.
 
-Fixes: 8290dba51910 ("selftests/bpf: wq: add bpf_wq_start() checks")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/bpf/20260121094114.1801-3-qikeyu2017@gmail.com
+Fixes: c6a2a1770245 ("hrtimer: Add tracepoint for hrtimers")
+Reported-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260121143208.219595606@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/wq.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/time/hrtimer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/wq.c b/tools/testing/selftests/bpf/prog_tests/wq.c
-index 99e438fe12acd..15ac8e6d17450 100644
---- a/tools/testing/selftests/bpf/prog_tests/wq.c
-+++ b/tools/testing/selftests/bpf/prog_tests/wq.c
-@@ -16,12 +16,12 @@ void serial_test_wq(void)
- 	/* re-run the success test to check if the timer was actually executed */
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index 184d5c3d89bac..640d2ea4bd1fa 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -1714,7 +1714,7 @@ static void __run_hrtimer(struct hrtimer_cpu_base *cpu_base,
  
- 	wq_skel = wq__open_and_load();
--	if (!ASSERT_OK_PTR(wq_skel, "wq_skel_load"))
-+	if (!ASSERT_OK_PTR(wq_skel, "wq__open_and_load"))
- 		return;
+ 	lockdep_assert_held(&cpu_base->lock);
  
- 	err = wq__attach(wq_skel);
- 	if (!ASSERT_OK(err, "wq_attach"))
--		return;
-+		goto clean_up;
+-	debug_deactivate(timer);
++	debug_hrtimer_deactivate(timer);
+ 	base->running = timer;
  
- 	prog_fd = bpf_program__fd(wq_skel->progs.test_syscall_array_sleepable);
- 	err = bpf_prog_test_run_opts(prog_fd, &topts);
-@@ -31,6 +31,7 @@ void serial_test_wq(void)
- 	usleep(50); /* 10 usecs should be enough, but give it extra */
- 
- 	ASSERT_EQ(wq_skel->bss->ok_sleepable, (1 << 1), "ok_sleepable");
-+clean_up:
- 	wq__destroy(wq_skel);
- }
- 
+ 	/*
 -- 
 2.51.0
 
