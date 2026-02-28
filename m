@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841D5301EE2;
-	Sat, 28 Feb 2026 17:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D32175A98;
+	Sat, 28 Feb 2026 17:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301402; cv=none; b=L+3dkW2WBbuSbsdDBeCEzANMV2IGxwQRuTs1ykVMYb+kTGmCQHY6wt9v3hWWQFHtyp2yL/q6dlhxp63BqMc/HcYg1DJCS/wW/KPaZZ+hboIeUJ/qH2Ids6Asfmi9UCpME5q3ZVN5WJQP1yaDD+iOLmgLAzHQDHtb76gpLvnxECo=
+	t=1772301403; cv=none; b=J3nh79yGJ92pRrnKX2d2DpxBsv4c8Y6B0Yq87WY4Wh63lgqgqoUOEjSYTATp8hsKaTsEcgi2wqGNwMRk+HK024Mgc+qPo7dxgATPiZDGAIVnP4kXMjdY/7WX6I9WEAo7DGGFD2LmvIuufNfDCHmEYZAs4DB9ORE0SpkyOrbuyFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301402; c=relaxed/simple;
-	bh=D69dLqnG4kE0GPvxaIQ4APaQPnLIBI7aapXZ5ZXWLI0=;
+	s=arc-20240116; t=1772301403; c=relaxed/simple;
+	bh=VYxZee+WZHv8VmJp6p+SGQWMaZCd5KJAiLp5Is6OUJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tUw48fRdSqfkL1N1kNF3t4PQoP3RLzJ7KS9Vx3pRmEzvd0fD71EbUT14Zi0tGWi2Scc6rbxmsPSFtPknhHWbcTBFQ14kH5qVSxGRMN7KjJtcoYWMN4mKGxWN312IBS9C4TMR5cYZqPewQilBBWm6s5SYiEp7kXLvwxdUrayCwjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sa5MazW1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lhXBj9QklVHa8B6qlHhh9Ek+pcEMlp4wRAG3v5anqE4Xchy3JyYV1udXimLro1+WnSKqebp0Nj6fHxFNTcoEVJ03+SwCHRVrx6gjzSz3MYcf9nWeCpvJh2WBW13a9TVrmYEjPo/olG/OFJpumyMPIYcFSvNKQSuRVDSv8dZ2s8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O2lOsRSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sa5MazW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23B7C116D0;
-	Sat, 28 Feb 2026 17:56:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O2lOsRSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BAFC116D0;
+	Sat, 28 Feb 2026 17:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301402;
-	bh=D69dLqnG4kE0GPvxaIQ4APaQPnLIBI7aapXZ5ZXWLI0=;
+	s=k20201202; t=1772301403;
+	bh=VYxZee+WZHv8VmJp6p+SGQWMaZCd5KJAiLp5Is6OUJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sa5MazW1ig8DQVC1GygWjT9Yjzyy2dj3u+dTfOjXoYzoutCle3qfGjTzU2rEGe00j
-	 3Iv1vwxNLE2nlrqvIPvLa6fKeA/bbujYnFcf69/97kiq4c854NBtHiUOSs3GjjucuF
-	 TahmdcBb3GX8tKaZcFabedkx06hdCoss7CZlNBgEkGESUA87j+v8xkhwZGFKkwr1kp
-	 niHTvd+rXuVF32Pt7cKibu6IovtDBTMSkmjjLoWuxGMRdKFT+DJsTg/QoRywsKEZ1D
-	 XSgTcBcOjLec5jl0e4zObpjaFH5JgiBjv05q5aF5qblUcgTbykfL6/NBCKdp/G4c4a
-	 Qp50cz5xlT9cw==
+	b=O2lOsRSAFkUKFgOwNv9Lcf+l82bRIeekTq0eTxQgSCxoSaavPqk+kAFNSlgB2L44p
+	 fm/2BYgD5fDqNN+hehgLtqrKHIWJJF5L+jcHD2JJ/EAnmLHKfbbJcEgobi0Y7im2z3
+	 boG0PHFjB+GaVGaKSsrbRCnuuO4sKWb8T07PzdgA0zRr2z/efmmSkByuMGsHKl4tot
+	 9phobHLy+MV/4HZ41oRxnVle0L0/w2DzwiAfh/vGbN6Zp4t1J452YtdgAnHHizdDjk
+	 LI0DjuwQu8R2sQagjcH3IslVYAuc62cVfT/tSfbKvbe5UqYshAui5m+jSrsX8gruh9
+	 rP+itqSB+g5bQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Douglas Anderson <dianders@chromium.org>,
+Cc: "Kory Maincent (TI.com)" <kory.maincent@bootlin.com>,
 	stable@vger.kernel.org,
+	Andrew Davis <afd@ti.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 591/752] mfd: core: Add locking around 'mfd_of_node_list'
-Date: Sat, 28 Feb 2026 12:45:02 -0500
-Message-ID: <20260228174750.1542406-591-sashal@kernel.org>
+Subject: [PATCH 6.18 592/752] mfd: tps65219: Implement LOCK register handling for TPS65214
+Date: Sat, 28 Feb 2026 12:45:03 -0500
+Message-ID: <20260228174750.1542406-592-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,99 +49,67 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: "Kory Maincent (TI.com)" <kory.maincent@bootlin.com>
 
-[ Upstream commit 20117c92bcf9c11afd64d7481d8f94fdf410726e ]
+[ Upstream commit d3fcf276b501a82d4504fd5b1ed40249546530d1 ]
 
-Manipulating a list in the kernel isn't safe without some sort of
-mutual exclusion. Add a mutex any time we access / modify
-'mfd_of_node_list' to prevent possible crashes.
+The TPS65214 PMIC variant has a LOCK_REG register that prevents writes to
+nearly all registers when locked. Unlock the registers at probe time and
+leave them unlocked permanently.
+
+This approach is justified because:
+- Register locking is very uncommon in typical system operation
+- No code path is expected to lock the registers during runtime
+- Adding a custom regmap write function would add overhead to every
+  register write, including voltage changes triggered by CPU OPP
+  transitions from the cpufreq governor which could happen quite
+  frequently
 
 Cc: stable@vger.kernel.org
-Fixes: 466a62d7642f ("mfd: core: Make a best effort attempt to match devices with the correct of_nodes")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20251210113002.1.I6ceaca2cfb7eb25737012b166671f516696be4fd@changeid
+Fixes: 7947219ab1a2d ("mfd: tps65219: Add support for TI TPS65214 PMIC")
+Reviewed-by: Andrew Davis <afd@ti.com>
+Signed-off-by: Kory Maincent (TI.com) <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20251218-fix_tps65219-v5-1-8bb511417f3a@bootlin.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/mfd-core.c | 36 ++++++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 14 deletions(-)
+ drivers/mfd/tps65219.c       | 9 +++++++++
+ include/linux/mfd/tps65219.h | 2 ++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/drivers/mfd/mfd-core.c b/drivers/mfd/mfd-core.c
-index 7d14a1e7631ee..c55223ce4327a 100644
---- a/drivers/mfd/mfd-core.c
-+++ b/drivers/mfd/mfd-core.c
-@@ -22,6 +22,7 @@
- #include <linux/regulator/consumer.h>
+diff --git a/drivers/mfd/tps65219.c b/drivers/mfd/tps65219.c
+index 65a952555218d..7275dcdb7c44f 100644
+--- a/drivers/mfd/tps65219.c
++++ b/drivers/mfd/tps65219.c
+@@ -498,6 +498,15 @@ static int tps65219_probe(struct i2c_client *client)
+ 		return ret;
+ 	}
  
- static LIST_HEAD(mfd_of_node_list);
-+static DEFINE_MUTEX(mfd_of_node_mutex);
- 
- struct mfd_of_node_entry {
- 	struct list_head list;
-@@ -105,9 +106,11 @@ static int mfd_match_of_node_to_dev(struct platform_device *pdev,
- 	u64 of_node_addr;
- 
- 	/* Skip if OF node has previously been allocated to a device */
--	list_for_each_entry(of_entry, &mfd_of_node_list, list)
--		if (of_entry->np == np)
--			return -EAGAIN;
-+	scoped_guard(mutex, &mfd_of_node_mutex) {
-+		list_for_each_entry(of_entry, &mfd_of_node_list, list)
-+			if (of_entry->np == np)
-+				return -EAGAIN;
++	if (chip_id == TPS65214) {
++		ret = i2c_smbus_write_byte_data(client, TPS65214_REG_LOCK,
++						TPS65214_LOCK_ACCESS_CMD);
++		if (ret) {
++			dev_err(tps->dev, "Failed to unlock registers %d\n", ret);
++			return ret;
++		}
 +	}
- 
- 	if (!cell->use_of_reg)
- 		/* No of_reg defined - allocate first free compatible match */
-@@ -129,7 +132,8 @@ static int mfd_match_of_node_to_dev(struct platform_device *pdev,
- 
- 	of_entry->dev = &pdev->dev;
- 	of_entry->np = np;
--	list_add_tail(&of_entry->list, &mfd_of_node_list);
-+	scoped_guard(mutex, &mfd_of_node_mutex)
-+		list_add_tail(&of_entry->list, &mfd_of_node_list);
- 
- 	of_node_get(np);
- 	device_set_node(&pdev->dev, of_fwnode_handle(np));
-@@ -286,11 +290,13 @@ static int mfd_add_device(struct device *parent, int id,
- 	if (cell->swnode)
- 		device_remove_software_node(&pdev->dev);
- fail_of_entry:
--	list_for_each_entry_safe(of_entry, tmp, &mfd_of_node_list, list)
--		if (of_entry->dev == &pdev->dev) {
--			list_del(&of_entry->list);
--			kfree(of_entry);
--		}
-+	scoped_guard(mutex, &mfd_of_node_mutex) {
-+		list_for_each_entry_safe(of_entry, tmp, &mfd_of_node_list, list)
-+			if (of_entry->dev == &pdev->dev) {
-+				list_del(&of_entry->list);
-+				kfree(of_entry);
-+			}
-+	}
- fail_alias:
- 	regulator_bulk_unregister_supply_alias(&pdev->dev,
- 					       cell->parent_supplies,
-@@ -360,11 +366,13 @@ static int mfd_remove_devices_fn(struct device *dev, void *data)
- 	if (cell->swnode)
- 		device_remove_software_node(&pdev->dev);
- 
--	list_for_each_entry_safe(of_entry, tmp, &mfd_of_node_list, list)
--		if (of_entry->dev == &pdev->dev) {
--			list_del(&of_entry->list);
--			kfree(of_entry);
--		}
-+	scoped_guard(mutex, &mfd_of_node_mutex) {
-+		list_for_each_entry_safe(of_entry, tmp, &mfd_of_node_list, list)
-+			if (of_entry->dev == &pdev->dev) {
-+				list_del(&of_entry->list);
-+				kfree(of_entry);
-+			}
-+	}
- 
- 	regulator_bulk_unregister_supply_alias(dev, cell->parent_supplies,
- 					       cell->num_parent_supplies);
++
+ 	ret = devm_regmap_add_irq_chip(tps->dev, tps->regmap, client->irq,
+ 				       IRQF_ONESHOT, 0, pmic->irq_chip,
+ 				       &tps->irq_data);
+diff --git a/include/linux/mfd/tps65219.h b/include/linux/mfd/tps65219.h
+index 55234e771ba73..3abf937191d0c 100644
+--- a/include/linux/mfd/tps65219.h
++++ b/include/linux/mfd/tps65219.h
+@@ -149,6 +149,8 @@ enum pmic_id {
+ #define TPS65215_ENABLE_LDO2_EN_MASK                    BIT(5)
+ #define TPS65214_ENABLE_LDO1_EN_MASK			BIT(5)
+ #define TPS65219_ENABLE_LDO4_EN_MASK			BIT(6)
++/* Register Unlock */
++#define TPS65214_LOCK_ACCESS_CMD			0x5a
+ /* power ON-OFF sequence slot */
+ #define TPS65219_BUCKS_LDOS_SEQUENCE_OFF_SLOT_MASK	GENMASK(3, 0)
+ #define TPS65219_BUCKS_LDOS_SEQUENCE_ON_SLOT_MASK	GENMASK(7, 4)
 -- 
 2.51.0
 
