@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1A436C9E9
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258BF36C9ED
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302367; cv=none; b=Ogs9ZYKgqBn21p+AVC2RsMY/GfHtf98hoiwEoj0YxqqNW6phVgyH2zGuEpyUJ/wBaHp7M36THiB+K8TXQwKraoQWdFzH4w98jXCNLiBr/U35nsKB1VT2SxbhlMKrIMFfSlsT1qrfhwTjhDZvbO4XT5FlnN/CkNcwNtArarD9Hfs=
+	t=1772302368; cv=none; b=sfOf3VYD+xg7pQwedhbvX8eJ6T0IZ3QrZCKaCx9OplEFBGjQY/f9u0MPXaO2+H3tYPi6Azkc5TP1wdetFyYEgDWK7QBBNx/g45eJbDPJS71XVyyI9mmhCsUItVuO0LTHTiuapNoe+a2mYSSIyvqtqp4o5p3B2ONYe28JsWIbMW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302367; c=relaxed/simple;
-	bh=QQ5vc5RpaBpqwIdCPjgLBrCNRIxhjJaXAlHawHIGE94=;
+	s=arc-20240116; t=1772302368; c=relaxed/simple;
+	bh=Us4u7UKJUcwuiKxU/zN/rDKx+I2ow7PPDJz2XclRFE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3l4OMYPv2gYfKYnqJuDb0NOlQnUXimKuheqEWXtjRc5/JY57i097dz06293onUyOYGYlU76ii72Brr3niztzLY4lo6+KZPlcWHzR/eEIq2IDu8pPsN5djmYdx4HDVqX3XBKMOPFs+CmkgnqJ/by1R4pfhnh356vJiEbf9DYr4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bVOebRId; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UdoAZG98/tMSshA3cwocR1n+cOZtMbZJe3cGQl6ta1rbLBj19ChumpZv6HuB/dcLETO8VZQLpU0iszDfqftGJ+k/xWhun/+q82tYREpe4yP1Q5ZWHug4rKFjbIAyF/zuumI7zCGR9NQAgyYwMYszWhe5vkTXDg0rKOmXQqWqu4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gD/EZnnu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bVOebRId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75E8C116D0;
-	Sat, 28 Feb 2026 18:12:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gD/EZnnu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C430C116D0;
+	Sat, 28 Feb 2026 18:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302367;
-	bh=QQ5vc5RpaBpqwIdCPjgLBrCNRIxhjJaXAlHawHIGE94=;
+	s=k20201202; t=1772302368;
+	bh=Us4u7UKJUcwuiKxU/zN/rDKx+I2ow7PPDJz2XclRFE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVOebRIdIucNfi44ayuZzfFYVuQUoCP1BrK47Ka8vT4AjffqAQ/1aHYhZFBuZPJys
-	 kLzgmoxaohOPpVkxMS8+R1WwByEbyO19HekuDZlm0dykrkIJIsexwA/h7q7pVj0gNL
-	 5IeFok4K9y++buqIZXU4cW4nHmaYTjFmVy27qe0zNwW9RUod7STQh/+HCyxB7anGUm
-	 A2SzdLFoXIWXt9x4rMjfFB4dru/O4aNTlMfEb6TfMT0S5MIQTF9RvglyqOKNQ4auSp
-	 13kU+EVuQEF1ysPwc3sfhFLt4MhraddAMdLBc81gC1+Mmwh4jaBPRvnLQFHzJCvVI/
-	 6JdrBtpV8I/lg==
+	b=gD/EZnnu4lh1mkRuxL7ziImjCA608yKH8R5e3Nar7I+HBYvfeWIHn0VFr/7Rggmn2
+	 KSN/plhHH4v6ij4+BvMbrX7gPnNke9qkh6KrdTuhK3VS1gI1Tv2itQu0N6FCRMJ10U
+	 WPeVNcrzsqy81DmQXWKtv1VMbuDJpD+g4gcY6d+b1C6FwUsgqey/nVWjRF89paHjbF
+	 vLY1u1tHmBuPGMdWRqF1ux7xM0C7q5/idJtBU0bt/lXRgD4JRv5Koq2yKIUKr8aRzk
+	 pAeeRja+dvF2cS2XZUWlDe3+nO2o90iDE+8/pDHT8+ywfBLEaRuG3E1ICMcI7XAFAu
+	 Dmx+MqOzojpKw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/232] wifi: cfg80211: stop NAN and P2P in cfg80211_leave
-Date: Sat, 28 Feb 2026 13:09:08 -0500
-Message-ID: <20260228181127.1592657-95-sashal@kernel.org>
+Subject: [PATCH 6.1 096/232] netfilter: nf_conncount: make nf_conncount_gc_list() to disable BH
+Date: Sat, 28 Feb 2026 13:09:09 -0500
+Message-ID: <20260228181127.1592657-96-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,45 +47,91 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit e1696c8bd0056bc1a5f7766f58ac333adc203e8a ]
+[ Upstream commit c0362b5748282e22fa1592a8d3474f726ad964c2 ]
 
-Seems that there is an assumption that this function should be called
-only for netdev interfaces, but it can also be called in suspend, or
-from nl80211_netlink_notify (indirectly).
-Note that the documentation of NL80211_ATTR_SOCKET_OWNER explicitly
-says that NAN interfaces would be destroyed as well in the
-nl80211_netlink_notify case.
+For convenience when performing GC over the connection list, make
+nf_conncount_gc_list() to disable BH. This unifies the behavior with
+nf_conncount_add() and nf_conncount_count().
 
-Fix this by also stopping P2P and NAN.
-
-Fixes: cb3b7d87652a ("cfg80211: add start / stop NAN commands")
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260107140430.dab142cbef0b.I290cc47836d56dd7e35012ce06bec36c6da688cd@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 21d033e47273 ("netfilter: nf_conncount: increase the connection clean up limit to 64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conncount.c  | 24 +++++++++++++++++-------
+ net/netfilter/nft_connlimit.c |  7 +------
+ 2 files changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 1788431c82207..2b6bdb7eaf18d 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1328,8 +1328,10 @@ void __cfg80211_leave(struct cfg80211_registered_device *rdev,
- 		__cfg80211_leave_ocb(rdev, dev);
- 		break;
- 	case NL80211_IFTYPE_P2P_DEVICE:
-+		cfg80211_stop_p2p_device(rdev, wdev);
-+		break;
- 	case NL80211_IFTYPE_NAN:
--		/* cannot happen, has no netdev */
-+		cfg80211_stop_nan(rdev, wdev);
- 		break;
- 	case NL80211_IFTYPE_AP_VLAN:
- 	case NL80211_IFTYPE_MONITOR:
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index a2c5a7ba0c6fc..70e9662fe1777 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -282,8 +282,8 @@ void nf_conncount_list_init(struct nf_conncount_list *list)
+ EXPORT_SYMBOL_GPL(nf_conncount_list_init);
+ 
+ /* Return true if the list is empty. Must be called with BH disabled. */
+-bool nf_conncount_gc_list(struct net *net,
+-			  struct nf_conncount_list *list)
++static bool __nf_conncount_gc_list(struct net *net,
++				   struct nf_conncount_list *list)
+ {
+ 	const struct nf_conntrack_tuple_hash *found;
+ 	struct nf_conncount_tuple *conn, *conn_n;
+@@ -295,10 +295,6 @@ bool nf_conncount_gc_list(struct net *net,
+ 	if ((u32)jiffies == READ_ONCE(list->last_gc))
+ 		return false;
+ 
+-	/* don't bother if other cpu is already doing GC */
+-	if (!spin_trylock(&list->list_lock))
+-		return false;
+-
+ 	list_for_each_entry_safe(conn, conn_n, &list->head, node) {
+ 		found = find_or_evict(net, list, conn);
+ 		if (IS_ERR(found)) {
+@@ -327,7 +323,21 @@ bool nf_conncount_gc_list(struct net *net,
+ 	if (!list->count)
+ 		ret = true;
+ 	list->last_gc = (u32)jiffies;
+-	spin_unlock(&list->list_lock);
++
++	return ret;
++}
++
++bool nf_conncount_gc_list(struct net *net,
++			  struct nf_conncount_list *list)
++{
++	bool ret;
++
++	/* don't bother if other cpu is already doing GC */
++	if (!spin_trylock_bh(&list->list_lock))
++		return false;
++
++	ret = __nf_conncount_gc_list(net, list);
++	spin_unlock_bh(&list->list_lock);
+ 
+ 	return ret;
+ }
+diff --git a/net/netfilter/nft_connlimit.c b/net/netfilter/nft_connlimit.c
+index f47a4932dc734..b3411dec16fd2 100644
+--- a/net/netfilter/nft_connlimit.c
++++ b/net/netfilter/nft_connlimit.c
+@@ -231,13 +231,8 @@ static void nft_connlimit_destroy_clone(const struct nft_ctx *ctx,
+ static bool nft_connlimit_gc(struct net *net, const struct nft_expr *expr)
+ {
+ 	struct nft_connlimit *priv = nft_expr_priv(expr);
+-	bool ret;
+ 
+-	local_bh_disable();
+-	ret = nf_conncount_gc_list(net, priv->list);
+-	local_bh_enable();
+-
+-	return ret;
++	return nf_conncount_gc_list(net, priv->list);
+ }
+ 
+ static struct nft_expr_type nft_connlimit_type;
 -- 
 2.51.0
 
