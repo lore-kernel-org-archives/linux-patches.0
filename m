@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0ECF38F623
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E9738F623
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302166; cv=none; b=mMrO+obBgOHCo/T7WoToEBoRC5gUQstvzuivrerMbGLOXYIBM8JSP7Hh+NbvGlvCfQtN1UIzJGoaSQz4RaJpJ/9tqa1AWa/UYhaVvQbw5TFEqNGbrCMcFpCSKnFmcg4t60vQIQynJEfELpvawDsgXUvMkdA5+TOSwuH53zGbnTo=
+	t=1772302167; cv=none; b=SVrzwXef7ERb+KsiFOQ2ZEXPGwJBgEVj2OO2x9q+mL6xpJUcSrMVvD83R1yQiOeuqlDFl9WnquU3Yd77ftRg8BBbZw8TpQupUpnQ2HTPCDI6YX9ceBs3/bVpU6K+j6gJSdGvE+mSkN9fEMqjoKFCujm6byr+z59FpnROjlTuEo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302166; c=relaxed/simple;
-	bh=kxo4wTKpEv0n79/q1iVJUPT0fNE4I3QNdI7IbfLb3qg=;
+	s=arc-20240116; t=1772302167; c=relaxed/simple;
+	bh=PkkC+irWPdJkFtjWPJ6xp5YXD8j1WVjAD7WxZ2QY6WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a98EBgPPqJGsf6p1ys0PXVAFSIqgqEitIoeyTxFhhSyQusN/xjDrfgPC0Gsi+7KSeaHftHq7TTW7Rvz9Uw0zdF+IEwqxln4fJY8H+bcNcIr59cZzgoUX0AMvUyCnU6GuWoi7BhRT9NiwhahfmKGU1gndMTZrIB7X0HPNdBx+/jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V1FbFspT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdhvKlpkrKyaKNQt3z1UQbA0lWwdOZ6MVWAt1wwaTGpiw/CsB+SKLEQHk9fH93bCaG9zCe0vV6A+wE2JL/FRBlQY2RVDUDB3yUmP1YirSv6+g0omaiORPXNYy8XoB2lERzArTIbd0GavUlrduxveQ1q2N0ct4I4fBnS0WxUH/hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HPKwP2i8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V1FbFspT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142A8C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HPKwP2i8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04414C116D0;
 	Sat, 28 Feb 2026 18:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302166;
-	bh=kxo4wTKpEv0n79/q1iVJUPT0fNE4I3QNdI7IbfLb3qg=;
+	s=k20201202; t=1772302167;
+	bh=PkkC+irWPdJkFtjWPJ6xp5YXD8j1WVjAD7WxZ2QY6WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1FbFspT9UgSHxgvzUYus9S+u26DJgQoJDWpDYo4iYdi43KWts2BloC7yrN0B4KLr
-	 jRbr7pwoZTPUlFowwYwys+x9Kvm0lmZ3L+4jZ5FLWYmymrlQ20OLqXvNfrLC4ph/8c
-	 BEDx8USvF81G1clUO81S0YJPsN3shmuz1FqPzWRdVNRLAZyYnGj/6LLYTmKgHh57pQ
-	 rt1AYkJs6dHAK1jI6CmNqNkolfg+J75WIkj7PUzzpqZxmtIH7/gTXtDehp4WpYwPNq
-	 MZeoFDhIhnh1i0OR+YBPSJpRtDGfNIN5mDfjYeHzRm7Pc/SL1MYUKfg4Bjt1olKyp5
-	 AYAqGbo+AwvNA==
+	b=HPKwP2i8GNeL+8ek3ic2WRvUdIgWZgL6Ii7uyzWdcXwMWJXkPRhc5SNtIM8hWrfXJ
+	 QyPydXfoF8qCXi/GZGknjd03u4NJqk7pawL479GWe0LYJIj9YtS7W2727vUGJo3f+f
+	 uYDw4XFO1mPdZfO/o9DZUeD4NVEWf+y1j+wdjKWu1iUhN2Ei/cigCHylw/gGquzG3O
+	 vv34CAw62UpmyG8812pDx/3DEGfLqlDZIaCwHt/zEa45zFuQ3rk5ekcZWL8RExAleU
+	 0Rkh5Wv9XvGsABkJo26jaVdWuB01yiUH+pKx+wSoCl2AwEILdyA7Hvu99eSqVKi0hG
+	 yz4fj3Xy8qCEQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Vimlesh Kumar <vimleshk@marvell.com>,
-	Sathesh Edara <sedara@marvell.com>,
-	Shinas Rasheed <srasheed@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Eric Joyner <eric.joyner@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/283] octeon_ep: ensure dbell BADDR updation
-Date: Sat, 28 Feb 2026 13:05:05 -0500
-Message-ID: <20260228180709.1583486-163-sashal@kernel.org>
+Subject: [PATCH 6.6 164/283] ionic: Rate limit unknown xcvr type messages
+Date: Sat, 28 Feb 2026 13:05:06 -0500
+Message-ID: <20260228180709.1583486-164-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,184 +48,49 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Vimlesh Kumar <vimleshk@marvell.com>
+From: Eric Joyner <eric.joyner@amd.com>
 
-[ Upstream commit ce8fe3fc4f99efd872120301c0f72f2e90ab9769 ]
+[ Upstream commit cdb1634de3bf197c0d86487d1fb84c128a79cc7c ]
 
-Make sure the OUT DBELL base address reflects the
-latest values written to it.
+Running ethtool repeatedly with a transceiver unknown to the driver or
+firmware will cause the driver to spam the kernel logs with "unknown
+xcvr type" messages which can distract from real issues; and this isn't
+interesting information outside of debugging. Fix this by rate limiting
+the output so that there are still notifications but not so many that
+they flood the log.
 
-Fix:
-Add a wait until the OUT DBELL base address register
-is updated with the DMA ring descriptor address,
-and modify the setup_oq function to properly
-handle failures.
+Using dev_dbg_once() would reduce the number of messages further, but
+this would miss the case where a different unknown transceiver type is
+plugged in, and its status is requested.
 
-Fixes: 0807dc76f3bf5 ("octeon_ep: support Octeon CN10K devices")
-Signed-off-by: Sathesh Edara <sedara@marvell.com>
-Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
-Signed-off-by: Vimlesh Kumar <vimleshk@marvell.com>
-Link: https://patch.msgid.link/20260206111510.1045092-3-vimleshk@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
+Signed-off-by: Eric Joyner <eric.joyner@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Link: https://patch.msgid.link/20260206224651.1491-1-eric.joyner@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeon_ep/octep_cn9k_pf.c         |  3 +-
- .../marvell/octeon_ep/octep_cnxk_pf.c         | 46 +++++++++++++++----
- .../ethernet/marvell/octeon_ep/octep_main.h   |  2 +-
- .../net/ethernet/marvell/octeon_ep/octep_rx.c |  8 +++-
- 4 files changed, 48 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-index f7156d093cccf..0ed07aad066f4 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-@@ -302,7 +302,7 @@ static void octep_setup_iq_regs_cn93_pf(struct octep_device *oct, int iq_no)
- }
- 
- /* Setup registers for a hardware Rx Queue  */
--static void octep_setup_oq_regs_cn93_pf(struct octep_device *oct, int oq_no)
-+static int octep_setup_oq_regs_cn93_pf(struct octep_device *oct, int oq_no)
- {
- 	u64 reg_val;
- 	u64 oq_ctl = 0ULL;
-@@ -350,6 +350,7 @@ static void octep_setup_oq_regs_cn93_pf(struct octep_device *oct, int oq_no)
- 	reg_val = ((u64)time_threshold << 32) |
- 		  CFG_GET_OQ_INTR_PKT(oct->conf);
- 	octep_write_csr64(oct, CN93_SDP_R_OUT_INT_LEVELS(oq_no), reg_val);
-+	return 0;
- }
- 
- /* Setup registers for a PF mailbox */
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
-index 38a03cef314e3..b1f7bf6e0f5d0 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
-@@ -8,6 +8,7 @@
- #include <linux/pci.h>
- #include <linux/netdevice.h>
- #include <linux/etherdevice.h>
-+#include <linux/jiffies.h>
- 
- #include "octep_config.h"
- #include "octep_main.h"
-@@ -327,12 +328,14 @@ static void octep_setup_iq_regs_cnxk_pf(struct octep_device *oct, int iq_no)
- }
- 
- /* Setup registers for a hardware Rx Queue  */
--static void octep_setup_oq_regs_cnxk_pf(struct octep_device *oct, int oq_no)
-+static int octep_setup_oq_regs_cnxk_pf(struct octep_device *oct, int oq_no)
- {
--	u64 reg_val;
--	u64 oq_ctl = 0ULL;
--	u32 time_threshold = 0;
- 	struct octep_oq *oq = oct->oq[oq_no];
-+	unsigned long t_out_jiffies;
-+	u32 time_threshold = 0;
-+	u64 oq_ctl = 0ULL;
-+	u64 reg_ba_val;
-+	u64 reg_val;
- 
- 	oq_no += CFG_GET_PORTS_PF_SRN(oct->conf);
- 	reg_val = octep_read_csr64(oct, CNXK_SDP_R_OUT_CONTROL(oq_no));
-@@ -343,6 +346,36 @@ static void octep_setup_oq_regs_cnxk_pf(struct octep_device *oct, int oq_no)
- 			reg_val = octep_read_csr64(oct, CNXK_SDP_R_OUT_CONTROL(oq_no));
- 		} while (!(reg_val & CNXK_R_OUT_CTL_IDLE));
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+index d76e63f57ff1e..b07dd56b0c76d 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+@@ -222,9 +222,10 @@ static int ionic_get_link_ksettings(struct net_device *netdev,
+ 		/* This means there's no module plugged in */
+ 		break;
+ 	default:
+-		dev_info(lif->ionic->dev, "unknown xcvr type pid=%d / 0x%x\n",
+-			 idev->port_info->status.xcvr.pid,
+-			 idev->port_info->status.xcvr.pid);
++		dev_dbg_ratelimited(lif->ionic->dev,
++				    "unknown xcvr type pid=%d / 0x%x\n",
++				    idev->port_info->status.xcvr.pid,
++				    idev->port_info->status.xcvr.pid);
+ 		break;
  	}
-+	octep_write_csr64(oct, CNXK_SDP_R_OUT_WMARK(oq_no),  oq->max_count);
-+	/* Wait for WMARK to get applied */
-+	usleep_range(10, 15);
-+
-+	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_BADDR(oq_no),
-+			  oq->desc_ring_dma);
-+	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_RSIZE(oq_no),
-+			  oq->max_count);
-+	reg_ba_val = octep_read_csr64(oct, CNXK_SDP_R_OUT_SLIST_BADDR(oq_no));
-+
-+	if (reg_ba_val != oq->desc_ring_dma) {
-+		t_out_jiffies = jiffies + 10 * HZ;
-+		do {
-+			if (reg_ba_val == ULLONG_MAX)
-+				return -EFAULT;
-+			octep_write_csr64(oct,
-+					  CNXK_SDP_R_OUT_SLIST_BADDR(oq_no),
-+					  oq->desc_ring_dma);
-+			octep_write_csr64(oct,
-+					  CNXK_SDP_R_OUT_SLIST_RSIZE(oq_no),
-+					  oq->max_count);
-+			reg_ba_val =
-+			octep_read_csr64(oct,
-+					 CNXK_SDP_R_OUT_SLIST_BADDR(oq_no));
-+		} while ((reg_ba_val != oq->desc_ring_dma) &&
-+			  time_before(jiffies, t_out_jiffies));
-+
-+		if (reg_ba_val != oq->desc_ring_dma)
-+			return -EAGAIN;
-+	}
  
- 	reg_val &= ~(CNXK_R_OUT_CTL_IMODE);
- 	reg_val &= ~(CNXK_R_OUT_CTL_ROR_P);
-@@ -356,10 +389,6 @@ static void octep_setup_oq_regs_cnxk_pf(struct octep_device *oct, int oq_no)
- 	reg_val |= (CNXK_R_OUT_CTL_ES_P);
- 
- 	octep_write_csr64(oct, CNXK_SDP_R_OUT_CONTROL(oq_no), reg_val);
--	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_BADDR(oq_no),
--			  oq->desc_ring_dma);
--	octep_write_csr64(oct, CNXK_SDP_R_OUT_SLIST_RSIZE(oq_no),
--			  oq->max_count);
- 
- 	oq_ctl = octep_read_csr64(oct, CNXK_SDP_R_OUT_CONTROL(oq_no));
- 
-@@ -385,6 +414,7 @@ static void octep_setup_oq_regs_cnxk_pf(struct octep_device *oct, int oq_no)
- 	reg_val &= ~0xFFFFFFFFULL;
- 	reg_val |= CFG_GET_OQ_WMARK(oct->conf);
- 	octep_write_csr64(oct, CNXK_SDP_R_OUT_WMARK(oq_no), reg_val);
-+	return 0;
- }
- 
- /* Setup registers for a PF mailbox */
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.h b/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
-index f67bb87901005..ce92a20127894 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
-@@ -67,7 +67,7 @@ struct octep_pci_win_regs {
- 
- struct octep_hw_ops {
- 	void (*setup_iq_regs)(struct octep_device *oct, int q);
--	void (*setup_oq_regs)(struct octep_device *oct, int q);
-+	int (*setup_oq_regs)(struct octep_device *oct, int q);
- 	void (*setup_mbox_regs)(struct octep_device *oct, int mbox);
- 
- 	irqreturn_t (*oei_intr_handler)(void *ioq_vector);
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
-index c7f4e3c058b7f..60afb6bf2f679 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
-@@ -12,6 +12,8 @@
- #include "octep_config.h"
- #include "octep_main.h"
- 
-+static void octep_oq_free_ring_buffers(struct octep_oq *oq);
-+
- static void octep_oq_reset_indices(struct octep_oq *oq)
- {
- 	oq->host_read_idx = 0;
-@@ -169,11 +171,15 @@ static int octep_setup_oq(struct octep_device *oct, int q_no)
- 		goto oq_fill_buff_err;
- 
- 	octep_oq_reset_indices(oq);
--	oct->hw_ops.setup_oq_regs(oct, q_no);
-+	if (oct->hw_ops.setup_oq_regs(oct, q_no))
-+		goto oq_setup_err;
-+
- 	oct->num_oqs++;
- 
- 	return 0;
- 
-+oq_setup_err:
-+	octep_oq_free_ring_buffers(oq);
- oq_fill_buff_err:
- 	vfree(oq->buff_info);
- 	oq->buff_info = NULL;
 -- 
 2.51.0
 
