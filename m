@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018A73446C0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CD7375AAD
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301651; cv=none; b=hGKVL4ONwy9wDxE/9Zkt1PQErs+n1SsCGIfX3+RVMK1Gv/k8OWU9rQFpJLuDJm+Mhk17SpesBgCYsVXsYN1y2YZgynEypuHSlie3sXlnrpOScb/3CbqaiqR8Oap1a0nAsHsbkphFoT3c+b8kaavhYiLW1HySsh09/38O+1nY+IE=
+	t=1772301652; cv=none; b=MGT9hkUzSzBESiGMj0ZcbeusTIDzycw4OOIwkF/O/SqRPNKKiRJ2HuKa7rtNIt8HLhxAXdP86H24AYW2cmez0tzM5ZU1mXv3H52cQbhlqKTpEeHSdaid5C4OC+x1g3eRdI9k3CANB3p3Ftqgn9S2ppD0BoOp+7vXz4+X23LXnFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301651; c=relaxed/simple;
-	bh=yoJ7WeKGaTiJqVxHpKc45bDibvRBlhY+IGTN5l2RU0U=;
+	s=arc-20240116; t=1772301652; c=relaxed/simple;
+	bh=JX3033z/zlhuCfZb/lO0VFVsnlilJFuRhH9QQgJLtxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXkViGzT17wa3qcm1qVAHtaS1l3zewJBLWn5cMDKs3xf52OPqBPvtze67IFgrCWgVExHFHFCTbKsv11gaN2Y/6bp2r5hmVkZLKyffbVzVegQ5YmW9GIzNXY9gwurTeIFKz75fBvxkJr97sFOd7QikNh84UxeLsV5NxK984AgRK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X83oFtt4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jXhZpzdFe1ZlFXZqsK5i4RZ1tC8nhMSUtYhQQMvSYbZkrTvat19WONOyxEExfxk/zcYwst3wNk5QqF28L41rFV+ewGaqpdAzKmyZQsgFhzenGb7223/Jy41MP9auxQcP43QZH8LGYkcKQuUsdiMITTuvX8DgBib4h8g7ha0zsag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ObKb2KoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X83oFtt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51977C116D0;
-	Sat, 28 Feb 2026 18:00:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ObKb2KoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28983C19423;
+	Sat, 28 Feb 2026 18:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301650;
-	bh=yoJ7WeKGaTiJqVxHpKc45bDibvRBlhY+IGTN5l2RU0U=;
+	s=k20201202; t=1772301652;
+	bh=JX3033z/zlhuCfZb/lO0VFVsnlilJFuRhH9QQgJLtxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X83oFtt4mPJLVft9rXsY6dchIqr1D5aRma+R/6SlGaUEp7bg9EuHtLATylTlWSAPC
-	 /N45qHKqBuY6wVIPw/xwGoL7USQ2rkCl9rEXx+AmPpxuFjC5dsfmzX4kb/1jPcxObY
-	 WEIuYLKybYoGCf7XiOU2Pl7BvYvbPpksvXOv/09pQGz31/m3E5ojvxBHZX/3H0sCUK
-	 noNAfFGfqE1HxijeFAmfd+RmzeTVijtLjXPqB7aOnrXt6SxT0E/z5pNxxo7voMvEC7
-	 23adCCJ9GF6JTvtfkiNBiSMCOV1FoKzRFhhmRlc2gJI1Xsgg73H/rGymw5u3KdoAO3
-	 G7XCUIetqV3Kw==
+	b=ObKb2KoLX8lPrlBJEq7tKGDpu1hb8cvgTKNovXACAIFUmxqA21q0rsrVqGdFS8xPv
+	 9UaB8KChxwJWZPawf9iZa+VPfmUxEX/UOJcguUaHlExpLzeG340Hfe1HLAQcOksk56
+	 XHY4ClXG/oxBJhiQbdEGAnQIbSjOxKonU9QYgQucn5jEIjcs1q/7cYlJz4OPwaYkFD
+	 2RMfaweGveJsCqcIV2KXvYcrXdLZcUE1GmfWtzi9eLDgUGgqyPQIddLOxixRTPIUsn
+	 JY9hpaIdjB51fW1laCfa20rxqIMnPD/dUzZfYmA1rJXgcp1NIknTkbfBtkOw+q3NIr
+	 m/Tw3YtdLSWOw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Salah Triki <salah.triki@gmail.com>,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+Cc: Sandipan Das <sandipan.das@amd.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Mingwei Zhang <mizhang@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Xudong Hao <xudong.hao@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 047/385] s390/cio: Fix device lifecycle handling in css_alloc_subchannel()
-Date: Sat, 28 Feb 2026 12:54:29 -0500
-Message-ID: <20260228180011.1568201-47-sashal@kernel.org>
+Subject: [PATCH 6.12 048/385] perf/x86/core: Do not set bit width for unavailable counters
+Date: Sat, 28 Feb 2026 12:54:30 -0500
+Message-ID: <20260228180011.1568201-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,47 +51,44 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit f65c75b0b9b5a390bc3beadcde0a6fbc3ad118f7 ]
+[ Upstream commit b456a6ba5756b6fb7e651775343e713bd08418e7 ]
 
-`css_alloc_subchannel()` calls `device_initialize()` before setting up
-the DMA masks. If `dma_set_coherent_mask()` or `dma_set_mask()` fails,
-the error path frees the subchannel structure directly, bypassing
-the device model reference counting.
+Not all x86 processors have fixed counters. It may also be the case that
+a processor has only fixed counters and no general-purpose counters. Set
+the bit widths corresponding to each counter type only if such counters
+are available.
 
-Once `device_initialize()` has been called, the embedded struct device
-must be released via `put_device()`, allowing the release callback to
-free the container structure.
-
-Fix the error path by dropping the initial device reference with
-`put_device()` instead of calling `kfree()` directly.
-
-This ensures correct device lifetime handling and avoids potential
-use-after-free or double-free issues.
-
-Fixes: e5dcf0025d7af ("s390/css: move subchannel lock allocation")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: b3d9468a8bd2 ("perf, x86: Expose perf capability to other modules")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Co-developed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Mingwei Zhang <mizhang@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Link: https://patch.msgid.link/20251206001720.468579-11-seanjc@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/css.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/s390/cio/css.c b/drivers/s390/cio/css.c
-index 7b59d20bf7850..61be7c0550bc4 100644
---- a/drivers/s390/cio/css.c
-+++ b/drivers/s390/cio/css.c
-@@ -236,7 +236,7 @@ struct subchannel *css_alloc_subchannel(struct subchannel_id schid,
- 	return sch;
- 
- err:
--	kfree(sch);
-+	put_device(&sch->dev);
- 	return ERR_PTR(ret);
- }
- 
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 86ba035f17a35..0f935cced0b7d 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -3051,8 +3051,8 @@ void perf_get_x86_pmu_capability(struct x86_pmu_capability *cap)
+ 	cap->version		= x86_pmu.version;
+ 	cap->num_counters_gp	= x86_pmu_num_counters(NULL);
+ 	cap->num_counters_fixed	= x86_pmu_num_counters_fixed(NULL);
+-	cap->bit_width_gp	= x86_pmu.cntval_bits;
+-	cap->bit_width_fixed	= x86_pmu.cntval_bits;
++	cap->bit_width_gp	= cap->num_counters_gp ? x86_pmu.cntval_bits : 0;
++	cap->bit_width_fixed	= cap->num_counters_fixed ? x86_pmu.cntval_bits : 0;
+ 	cap->events_mask	= (unsigned int)x86_pmu.events_maskl;
+ 	cap->events_mask_len	= x86_pmu.events_mask_len;
+ 	cap->pebs_ept		= x86_pmu.pebs_ept;
 -- 
 2.51.0
 
