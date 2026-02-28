@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080A036C9E3;
-	Sat, 28 Feb 2026 18:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0DF36C9D8
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302302; cv=none; b=Zt7Vb+qW2m4jy1fFkA1H0v/WREsKfRYX3pRGdtYu4zOL3iUQUMDjaS7QNDq2Ax/pMBIseq+IdX/telDd/HXLqh2xsndaZa9GYIwjFEUvsvKCz5IP+FtxcbzuAYYxDdskHJ/6qDWlisefO8rQ0YuUC9Y/3Db8SC6+lMWHTmPkgRw=
+	t=1772302303; cv=none; b=cY2iP/sKqAQQwmKX3yH/2HhCHlOdnzCzCMlSZKyNqCWxyBAtI19S549OHDIwSA/w+r460FcCl/qP4ij0rjg2qufDGW1oBOJL6yemd5QAfSLwjLCLSk0iCewxlg3bQrVBW3xXTCiPQ7+rh8MkmIqUk9a3nvq+hInwNbzGZgb0//E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302302; c=relaxed/simple;
-	bh=zznhd6DL/qGbxjlCL45kekXNq+70fznZPjXWcEVWt4E=;
+	s=arc-20240116; t=1772302303; c=relaxed/simple;
+	bh=oThyo1gZyDr5v6+kh6srDT8e3K0jaR6bM9PJOT/VVAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOyaIez/FRes2fV4K638F9ZbGTYL6atKDAfmsS5XW+HkmeDvVu+ghx6BTjqHjGZJzu9eSYOA8uWK3JvufPNiYLuUU9NDBsyH9tlDBAZT4/G8jiq+UGmCOTNLJTZpMNXlCS3Yv3jxG8kdXKXVKLn8uk3YrL6/89C+CsOX5R83YpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g3YxNU30; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oxztghlErMOTlrVVyh2gVZeCYsD8HwclusGbJV1BCilAVQIHDojwQvsdO5K71gsw31wd2MtVka3n4XK2H7bE+u+9oLs+iBrn85PdWZ7fwbAvJouwriycapa4Bo53EMUC2Gq/Wd/4D1euWjhYVG+LQP22YxQy4w58rcZy47tAhIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uiGsIL5H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g3YxNU30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A60C19425;
-	Sat, 28 Feb 2026 18:11:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uiGsIL5H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9F8C116D0;
+	Sat, 28 Feb 2026 18:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302301;
-	bh=zznhd6DL/qGbxjlCL45kekXNq+70fznZPjXWcEVWt4E=;
+	s=k20201202; t=1772302302;
+	bh=oThyo1gZyDr5v6+kh6srDT8e3K0jaR6bM9PJOT/VVAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g3YxNU30a6urJWBpti1Uh+aane0vfFjaYr3eleYmn+UoOeulgC6qSNS8l/XMnnR/F
-	 ZA72EubhamvROe7cWXky+WlxzmCqeM3gb6hrAnl5zFBgtb7wH4Xtf/vjWhQng5Zghg
-	 b5t6hSsMX4VvOvg5dysty2IqyxAZoreydAfNd1DxQvPSskjH/nwwNkr9Qzn7/cSdxt
-	 WsNoQ9WvST0ygDaofuasAo6Bq2jzBVX7KausI3IyyLHiBFuDVB8/FiFv8TDTYOSOH2
-	 1vgJ6i8RnORqU/+sDZzffv/r4nXwTxZRjtcqPqav7Ydgg1PHrV2mbh+n81TObl0UTv
-	 lt2RWx2ClMV4Q==
+	b=uiGsIL5Hwl4R0SNiBhObQaIxWIzJvH3LJHwi9uGgjKkhUdjanLSW6Ii7yL/it6rhI
+	 gVdQF/EGHI99D5fUEYv98EqrRVk78ZIx39FuVXBvC2jHyQYiUt7+yqIruIwLIE0O5C
+	 sfiSDnS1/DJN/w4MaHD38gAjsXGYudH/moaKkobo8P2HpwtdVNB+10XHI2i78F5hW9
+	 cuMp7MxPrLOWZ7rAGSA5a3hntHC6FfIvKsQ1QQitCmc7A30DiHKoReALV+bwMHS4mh
+	 m0iIGO7kHYCHOh0iNcswfU0dTsVn4RfVyxBCR2LkNFdILWhcn/fSLU0K0+I67PleFQ
+	 lrBr2VTQhwcTA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+Cc: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	Xenia Ragiadakou <burzalodowa@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/232] smb: client: fix potential UAF and double free in smb2_open_file()
-Date: Sat, 28 Feb 2026 13:07:49 -0500
-Message-ID: <20260228181127.1592657-16-sashal@kernel.org>
+Subject: [PATCH 6.1 017/232] xen/virtio: Optimize the setup of "xen-grant-dma" devices
+Date: Sat, 28 Feb 2026 13:07:50 -0500
+Message-ID: <20260228181127.1592657-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -50,39 +49,230 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
 
-[ Upstream commit ebbbc4bfad4cb355d17c671223d0814ee3ef4eda ]
+[ Upstream commit 035e3a4321f73c352b6408ec2153fa5bc3feb459 ]
 
-Zero out @err_iov and @err_buftype before retrying SMB2_open() to
-prevent an UAF bug if @data != NULL, otherwise a double free.
+This is needed to avoid having to parse the same device-tree
+several times for a given device.
 
-Fixes: e3a43633023e ("smb/client: fix memory leak in smb2_open_file()")
-Reported-by: David Howells <dhowells@redhat.com>
-Closes: https://lore.kernel.org/r/2892312.1770306653@warthog.procyon.org.uk
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Cc: linux-cifs@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+For this to work we need to install the xen_virtio_restricted_mem_acc
+callback in Arm's xen_guest_init() which is same callback as x86's
+PV and HVM modes already use and remove the manual assignment in
+xen_setup_dma_ops(). Also we need to split the code to initialize
+backend_domid into a separate function.
+
+Prior to current patch we parsed the device-tree three times:
+1. xen_setup_dma_ops()->...->xen_is_dt_grant_dma_device()
+2. xen_setup_dma_ops()->...->xen_dt_grant_init_backend_domid()
+3. xen_virtio_mem_acc()->...->xen_is_dt_grant_dma_device()
+
+With current patch we parse the device-tree only once in
+xen_virtio_restricted_mem_acc()->...->xen_dt_grant_init_backend_domid()
+
+Other benefits are:
+- Not diverge from x86 when setting up Xen grant DMA ops
+- Drop several global functions
+
+Signed-off-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Reviewed-by: Xenia Ragiadakou <burzalodowa@gmail.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Link: https://lore.kernel.org/r/20221025162004.8501-2-olekstysh@gmail.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: dc8ea8714311 ("xen/virtio: Don't use grant-dma-ops when running as Dom0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2file.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/xen/enlighten.c    |  2 +-
+ drivers/xen/grant-dma-ops.c | 77 ++++++++++++++-----------------------
+ include/xen/arm/xen-ops.h   |  4 +-
+ include/xen/xen-ops.h       | 16 --------
+ 4 files changed, 30 insertions(+), 69 deletions(-)
 
-diff --git a/fs/smb/client/smb2file.c b/fs/smb/client/smb2file.c
-index 7fc7fcabce80c..fe016144f3405 100644
---- a/fs/smb/client/smb2file.c
-+++ b/fs/smb/client/smb2file.c
-@@ -124,6 +124,8 @@ int smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms, __u32
- 		       &err_buftype);
- 	if (rc == -EACCES && retry_without_read_attributes) {
- 		free_rsp_buf(err_buftype, err_iov.iov_base);
-+		memset(&err_iov, 0, sizeof(err_iov));
-+		err_buftype = CIFS_NO_BUFFER;
- 		oparms->desired_access &= ~FILE_READ_ATTRIBUTES;
- 		rc = SMB2_open(xid, oparms, smb2_path, &smb2_oplock, smb2_data, NULL, &err_iov,
- 			       &err_buftype);
+diff --git a/arch/arm/xen/enlighten.c b/arch/arm/xen/enlighten.c
+index eace3607fef41..a395b6c0aae2a 100644
+--- a/arch/arm/xen/enlighten.c
++++ b/arch/arm/xen/enlighten.c
+@@ -442,7 +442,7 @@ static int __init xen_guest_init(void)
+ 		return 0;
+ 
+ 	if (IS_ENABLED(CONFIG_XEN_VIRTIO))
+-		virtio_set_mem_acc_cb(xen_virtio_mem_acc);
++		virtio_set_mem_acc_cb(xen_virtio_restricted_mem_acc);
+ 
+ 	if (!acpi_disabled)
+ 		xen_acpi_guest_init();
+diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
+index daa525df7bdc5..1e797a043980a 100644
+--- a/drivers/xen/grant-dma-ops.c
++++ b/drivers/xen/grant-dma-ops.c
+@@ -292,50 +292,20 @@ static const struct dma_map_ops xen_grant_dma_ops = {
+ 	.dma_supported = xen_grant_dma_supported,
+ };
+ 
+-static bool xen_is_dt_grant_dma_device(struct device *dev)
+-{
+-	struct device_node *iommu_np;
+-	bool has_iommu;
+-
+-	iommu_np = of_parse_phandle(dev->of_node, "iommus", 0);
+-	has_iommu = iommu_np &&
+-		    of_device_is_compatible(iommu_np, "xen,grant-dma");
+-	of_node_put(iommu_np);
+-
+-	return has_iommu;
+-}
+-
+-bool xen_is_grant_dma_device(struct device *dev)
+-{
+-	/* XXX Handle only DT devices for now */
+-	if (dev->of_node)
+-		return xen_is_dt_grant_dma_device(dev);
+-
+-	return false;
+-}
+-
+-bool xen_virtio_mem_acc(struct virtio_device *dev)
+-{
+-	if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain())
+-		return true;
+-
+-	return xen_is_grant_dma_device(dev->dev.parent);
+-}
+-
+ static int xen_dt_grant_init_backend_domid(struct device *dev,
+-					   struct xen_grant_dma_data *data)
++					   domid_t *backend_domid)
+ {
+ 	struct of_phandle_args iommu_spec;
+ 
+ 	if (of_parse_phandle_with_args(dev->of_node, "iommus", "#iommu-cells",
+ 			0, &iommu_spec)) {
+-		dev_err(dev, "Cannot parse iommus property\n");
++		dev_dbg(dev, "Cannot parse iommus property\n");
+ 		return -ESRCH;
+ 	}
+ 
+ 	if (!of_device_is_compatible(iommu_spec.np, "xen,grant-dma") ||
+ 			iommu_spec.args_count != 1) {
+-		dev_err(dev, "Incompatible IOMMU node\n");
++		dev_dbg(dev, "Incompatible IOMMU node\n");
+ 		of_node_put(iommu_spec.np);
+ 		return -ESRCH;
+ 	}
+@@ -346,12 +316,28 @@ static int xen_dt_grant_init_backend_domid(struct device *dev,
+ 	 * The endpoint ID here means the ID of the domain where the
+ 	 * corresponding backend is running
+ 	 */
+-	data->backend_domid = iommu_spec.args[0];
++	*backend_domid = iommu_spec.args[0];
+ 
+ 	return 0;
+ }
+ 
+-void xen_grant_setup_dma_ops(struct device *dev)
++static int xen_grant_init_backend_domid(struct device *dev,
++					domid_t *backend_domid)
++{
++	int ret = -ENODEV;
++
++	if (dev->of_node) {
++		ret = xen_dt_grant_init_backend_domid(dev, backend_domid);
++	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain()) {
++		dev_info(dev, "Using dom0 as backend\n");
++		*backend_domid = 0;
++		ret = 0;
++	}
++
++	return ret;
++}
++
++static void xen_grant_setup_dma_ops(struct device *dev, domid_t backend_domid)
+ {
+ 	struct xen_grant_dma_data *data;
+ 
+@@ -365,16 +351,7 @@ void xen_grant_setup_dma_ops(struct device *dev)
+ 	if (!data)
+ 		goto err;
+ 
+-	if (dev->of_node) {
+-		if (xen_dt_grant_init_backend_domid(dev, data))
+-			goto err;
+-	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT)) {
+-		dev_info(dev, "Using dom0 as backend\n");
+-		data->backend_domid = 0;
+-	} else {
+-		/* XXX ACPI device unsupported for now */
+-		goto err;
+-	}
++	data->backend_domid = backend_domid;
+ 
+ 	if (store_xen_grant_dma_data(dev, data)) {
+ 		dev_err(dev, "Cannot store Xen grant DMA data\n");
+@@ -392,12 +369,14 @@ void xen_grant_setup_dma_ops(struct device *dev)
+ 
+ bool xen_virtio_restricted_mem_acc(struct virtio_device *dev)
+ {
+-	bool ret = xen_virtio_mem_acc(dev);
++	domid_t backend_domid;
+ 
+-	if (ret)
+-		xen_grant_setup_dma_ops(dev->dev.parent);
++	if (!xen_grant_init_backend_domid(dev->dev.parent, &backend_domid)) {
++		xen_grant_setup_dma_ops(dev->dev.parent, backend_domid);
++		return true;
++	}
+ 
+-	return ret;
++	return false;
+ }
+ 
+ MODULE_DESCRIPTION("Xen grant DMA-mapping layer");
+diff --git a/include/xen/arm/xen-ops.h b/include/xen/arm/xen-ops.h
+index b0766a660338f..70073f5a2b545 100644
+--- a/include/xen/arm/xen-ops.h
++++ b/include/xen/arm/xen-ops.h
+@@ -8,9 +8,7 @@
+ static inline void xen_setup_dma_ops(struct device *dev)
+ {
+ #ifdef CONFIG_XEN
+-	if (xen_is_grant_dma_device(dev))
+-		xen_grant_setup_dma_ops(dev);
+-	else if (xen_swiotlb_detect())
++	if (xen_swiotlb_detect())
+ 		dev->dma_ops = &xen_swiotlb_dma_ops;
+ #endif
+ }
+diff --git a/include/xen/xen-ops.h b/include/xen/xen-ops.h
+index a34f4271a2e9f..47f11bec5e90c 100644
+--- a/include/xen/xen-ops.h
++++ b/include/xen/xen-ops.h
+@@ -216,26 +216,10 @@ static inline void xen_preemptible_hcall_end(void) { }
+ #endif /* CONFIG_XEN_PV && !CONFIG_PREEMPTION */
+ 
+ #ifdef CONFIG_XEN_GRANT_DMA_OPS
+-void xen_grant_setup_dma_ops(struct device *dev);
+-bool xen_is_grant_dma_device(struct device *dev);
+-bool xen_virtio_mem_acc(struct virtio_device *dev);
+ bool xen_virtio_restricted_mem_acc(struct virtio_device *dev);
+ #else
+-static inline void xen_grant_setup_dma_ops(struct device *dev)
+-{
+-}
+-static inline bool xen_is_grant_dma_device(struct device *dev)
+-{
+-	return false;
+-}
+-
+ struct virtio_device;
+ 
+-static inline bool xen_virtio_mem_acc(struct virtio_device *dev)
+-{
+-	return false;
+-}
+-
+ static inline bool xen_virtio_restricted_mem_acc(struct virtio_device *dev)
+ {
+ 	return false;
 -- 
 2.51.0
 
