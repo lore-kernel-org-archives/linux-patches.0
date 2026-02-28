@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A0D33F8A1
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C6B33F8A1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300934; cv=none; b=UhgxT2S5qO9sIxYqNrGr+9ZsPBCZtwfzOzY2ZlK26F22mSrVIicHPH2ST7yC9SZiWm/AKtd+0/TXk/DZdsHS7Zcqp/2ZYYJnK1Jos6vDJl7lMpG2eeOe0JVtp5OqUTbCI+b8EEICwU10d2VLXXHdrf6YLdEo05aoZyaqhz+moeM=
+	t=1772300935; cv=none; b=t6nsVWtgTdP34/zAj4UxuvpHY4mU1QbyPyVtjpyGxprIzFrXwO2UUAopHqslIJz3TGGfv8nsVh0XgxgTnobriKDAl2NmqRmaah5P1T7dDlAmzNQFaFNpK0nNR95oyRLuuNJ5elksfMnnRZ+gVZ/SbzZy/EyRjaIp0t1ctjtgyJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300934; c=relaxed/simple;
-	bh=5S/7kcRVQlkpK9glB9huyKBHqryLp0EkmV+CGCw8ssU=;
+	s=arc-20240116; t=1772300935; c=relaxed/simple;
+	bh=0CCz9biBOud+8uzG72V1nDJ7Iom/YHhR3IuKnMgsuys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sq3oLEKRicv/ATcVxta9Npov9BWLtbOuETOWVkqu3Wn+kolPuzP7p0TwZfSnI9H6FRtmrTshlBEUFkaf1X6YJuv0jmBNz2pm8UvIopojfwUPPDn7dJI/u4axeMLDjTD962x4A4DigzwxcC1+q3aMYD2mj0Ija1cm8AjSJvCdKLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q/njEuBS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Me1hW7sPtJKcquQHnpt9jHcFXdosuKPM5Sl023mkMk2QwjKyBgPiTvys9fhS83T0SfqMg/VYd6BwpJkN46kdHtvaiTQDJL8VcEAn73xUgt08I8WEaghvQSRi28HPkvaShcq3kQ3WLbPdtylVbyfndk+iOnoutU0txbjMVxfFpWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IhojQ9iV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q/njEuBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02167C19423;
-	Sat, 28 Feb 2026 17:48:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IhojQ9iV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0483FC116D0;
+	Sat, 28 Feb 2026 17:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300934;
-	bh=5S/7kcRVQlkpK9glB9huyKBHqryLp0EkmV+CGCw8ssU=;
+	s=k20201202; t=1772300935;
+	bh=0CCz9biBOud+8uzG72V1nDJ7Iom/YHhR3IuKnMgsuys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/njEuBS+4IEojnNkyUPfDfAFJpCP74rIQD5Ous5/Nw5/gjJe6unPybw3VpUHQvKd
-	 A64DI1NKt4h20RLWB4VDq7bkAH0tGVWP+YZw463RBTXD3zjauGHltcgD2N0cRhplPw
-	 j6ptHs91mwl25fAo25yp9aWLQ+APHzvwf8xf86dpgv2Krj2ur+iKDUrLlZTl7xW10J
-	 2SDJSmJ2BsUGQeY2tPcoG/3tZld+bDnV1J6qq4h9SrztsW1FgkYu1RyaIb2Liao86q
-	 DqW5BVb5cteGVhJxHtEgKIhs3cZj3Vo+GjCwu8a44lEGQBHA3H5bTA/MMLhmYEZ/R9
-	 RfJkd3fc29qOw==
+	b=IhojQ9iVors4VeAGvWai76RXTbjZhwB31OJq84vX6HK0SAQ6HLnDNCWGm7Cs+9gq8
+	 GZIsKZe4y0lBRWm88zZ5MPRG4KjZNumflNAwTcbO3upJACN0e7uVN4Wlu0E0//9Ehg
+	 tqg50cX8P91RmRKNxVpxjT0EDJ3hUJcvp24yr2VA1tyoQak9NE472aPKYyrJNCxxYc
+	 GExfiE2b0ZqLAAk3Iz9IT+63f/JVKY5hhW5Ce6sGgaLFPkaELjs1K1U3Unz6TzsEBE
+	 RbDOFRTJHS6+RR3QuC2K6yG/ciUUWY3byfuActgiKxjCkYuSSjz6JgbXSXra6jYb68
+	 By+94XAY37CAQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Hanjun Guo <guohanjun@huawei.com>,
+Cc: Tuo Li <islituo@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 054/752] EFI/CPER: don't go past the ARM processor CPER record buffer
-Date: Sat, 28 Feb 2026 12:36:05 -0500
-Message-ID: <20260228174750.1542406-54-sashal@kernel.org>
+Subject: [PATCH 6.18 055/752] ACPI: processor: Fix NULL-pointer dereference in acpi_processor_errata_piix4()
+Date: Sat, 28 Feb 2026 12:36:06 -0500
+Message-ID: <20260228174750.1542406-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,105 +47,98 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit eae21beecb95a3b69ee5c38a659f774e171d730e ]
+[ Upstream commit f132e089fe89cadc2098991f0a3cb05c3f824ac6 ]
 
-There's a logic inside GHES/CPER to detect if the section_length
-is too small, but it doesn't detect if it is too big.
+In acpi_processor_errata_piix4(), the pointer dev is first assigned an IDE
+device and then reassigned an ISA device:
 
-Currently, if the firmware receives an ARM processor CPER record
-stating that a section length is big, kernel will blindly trust
-section_length, producing a very long dump. For instance, a 67
-bytes record with ERR_INFO_NUM set 46198 and section length
-set to 854918320 would dump a lot of data going a way past the
-firmware memory-mapped area.
+  dev = pci_get_subsys(..., PCI_DEVICE_ID_INTEL_82371AB, ...);
+  dev = pci_get_subsys(..., PCI_DEVICE_ID_INTEL_82371AB_0, ...);
 
-Fix it by adding a logic to prevent it to go past the buffer
-if ERR_INFO_NUM is too big, making it report instead:
+If the first lookup succeeds but the second fails, dev becomes NULL. This
+leads to a potential null-pointer dereference when dev_dbg() is called:
 
-	[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
-	[Hardware Error]: event severity: recoverable
-	[Hardware Error]:  Error 0, type: recoverable
-	[Hardware Error]:   section_type: ARM processor error
-	[Hardware Error]:   MIDR: 0xff304b2f8476870a
-	[Hardware Error]:   section length: 854918320, CPER size: 67
-	[Hardware Error]:   section length is too big
-	[Hardware Error]:   firmware-generated error record is incorrect
-	[Hardware Error]:   ERR_INFO_NUM is 46198
+  if (errata.piix4.bmisx)
+    dev_dbg(&dev->dev, ...);
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-[ rjw: Subject and changelog tweaks ]
-Link: https://patch.msgid.link/41cd9f6b3ace3cdff7a5e864890849e4b1c58b63.1767871950.git.mchehab+huawei@kernel.org
+To prevent this, use two temporary pointers and retrieve each device
+independently, avoiding overwriting dev with a possible NULL value.
+
+Signed-off-by: Tuo Li <islituo@gmail.com>
+[ rjw: Subject adjustment, added an empty code line ]
+Link: https://patch.msgid.link/20260111163214.202262-1-islituo@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/cper-arm.c | 12 ++++++++----
- drivers/firmware/efi/cper.c     |  3 ++-
- include/linux/cper.h            |  3 ++-
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ drivers/acpi/acpi_processor.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/firmware/efi/cper-arm.c b/drivers/firmware/efi/cper-arm.c
-index 76542a53e2027..b21cb1232d820 100644
---- a/drivers/firmware/efi/cper-arm.c
-+++ b/drivers/firmware/efi/cper-arm.c
-@@ -226,7 +226,8 @@ static void cper_print_arm_err_info(const char *pfx, u32 type,
- }
- 
- void cper_print_proc_arm(const char *pfx,
--			 const struct cper_sec_proc_arm *proc)
-+			 const struct cper_sec_proc_arm *proc,
-+			 u32 length)
+diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
+index 7ec1dc04fd11b..85096ce7b658b 100644
+--- a/drivers/acpi/acpi_processor.c
++++ b/drivers/acpi/acpi_processor.c
+@@ -50,6 +50,7 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
  {
- 	int i, len, max_ctx_type;
- 	struct cper_arm_err_info *err_info;
-@@ -238,9 +239,12 @@ void cper_print_proc_arm(const char *pfx,
+ 	u8 value1 = 0;
+ 	u8 value2 = 0;
++	struct pci_dev *ide_dev = NULL, *isa_dev = NULL;
  
- 	len = proc->section_length - (sizeof(*proc) +
- 		proc->err_info_num * (sizeof(*err_info)));
--	if (len < 0) {
--		printk("%ssection length: %d\n", pfx, proc->section_length);
--		printk("%ssection length is too small\n", pfx);
+ 
+ 	if (!dev)
+@@ -107,12 +108,12 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
+ 		 * each IDE controller's DMA status to make sure we catch all
+ 		 * DMA activity.
+ 		 */
+-		dev = pci_get_subsys(PCI_VENDOR_ID_INTEL,
++		ide_dev = pci_get_subsys(PCI_VENDOR_ID_INTEL,
+ 				     PCI_DEVICE_ID_INTEL_82371AB,
+ 				     PCI_ANY_ID, PCI_ANY_ID, NULL);
+-		if (dev) {
+-			errata.piix4.bmisx = pci_resource_start(dev, 4);
+-			pci_dev_put(dev);
++		if (ide_dev) {
++			errata.piix4.bmisx = pci_resource_start(ide_dev, 4);
++			pci_dev_put(ide_dev);
+ 		}
+ 
+ 		/*
+@@ -124,24 +125,25 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
+ 		 * disable C3 support if this is enabled, as some legacy
+ 		 * devices won't operate well if fast DMA is disabled.
+ 		 */
+-		dev = pci_get_subsys(PCI_VENDOR_ID_INTEL,
++		isa_dev = pci_get_subsys(PCI_VENDOR_ID_INTEL,
+ 				     PCI_DEVICE_ID_INTEL_82371AB_0,
+ 				     PCI_ANY_ID, PCI_ANY_ID, NULL);
+-		if (dev) {
+-			pci_read_config_byte(dev, 0x76, &value1);
+-			pci_read_config_byte(dev, 0x77, &value2);
++		if (isa_dev) {
++			pci_read_config_byte(isa_dev, 0x76, &value1);
++			pci_read_config_byte(isa_dev, 0x77, &value2);
+ 			if ((value1 & 0x80) || (value2 & 0x80))
+ 				errata.piix4.fdma = 1;
+-			pci_dev_put(dev);
++			pci_dev_put(isa_dev);
+ 		}
+ 
+ 		break;
+ 	}
+ 
+-	if (errata.piix4.bmisx)
+-		dev_dbg(&dev->dev, "Bus master activity detection (BM-IDE) erratum enabled\n");
+-	if (errata.piix4.fdma)
+-		dev_dbg(&dev->dev, "Type-F DMA livelock erratum (C3 disabled)\n");
++	if (ide_dev)
++		dev_dbg(&ide_dev->dev, "Bus master activity detection (BM-IDE) erratum enabled\n");
 +
-+	if (len < 0 || proc->section_length > length) {
-+		printk("%ssection length: %d, CPER size: %d\n",
-+		       pfx, proc->section_length, length);
-+		printk("%ssection length is too %s\n", pfx,
-+		       (len < 0) ? "small" : "big");
- 		printk("%sfirmware-generated error record is incorrect\n", pfx);
- 		printk("%sERR_INFO_NUM is %d\n", pfx, proc->err_info_num);
- 		return;
-diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
-index d58ff956a699c..d4dc69693ece4 100644
---- a/drivers/firmware/efi/cper.c
-+++ b/drivers/firmware/efi/cper.c
-@@ -664,7 +664,8 @@ cper_estatus_print_section(const char *pfx, struct acpi_hest_generic_data *gdata
++	if (isa_dev)
++		dev_dbg(&isa_dev->dev, "Type-F DMA livelock erratum (C3 disabled)\n");
  
- 		printk("%ssection_type: ARM processor error\n", newpfx);
- 		if (gdata->error_data_length >= sizeof(*arm_err))
--			cper_print_proc_arm(newpfx, arm_err);
-+			cper_print_proc_arm(newpfx, arm_err,
-+					    gdata->error_data_length);
- 		else
- 			goto err_section_too_small;
- #endif
-diff --git a/include/linux/cper.h b/include/linux/cper.h
-index 5b1236d8c65bb..440b35e459e53 100644
---- a/include/linux/cper.h
-+++ b/include/linux/cper.h
-@@ -595,7 +595,8 @@ void cper_mem_err_pack(const struct cper_sec_mem_err *,
- const char *cper_mem_err_unpack(struct trace_seq *,
- 				struct cper_mem_err_compact *);
- void cper_print_proc_arm(const char *pfx,
--			 const struct cper_sec_proc_arm *proc);
-+			 const struct cper_sec_proc_arm *proc,
-+			 u32 length);
- void cper_print_proc_ia(const char *pfx,
- 			const struct cper_sec_proc_ia *proc);
- int cper_mem_err_location(struct cper_mem_err_compact *mem, char *msg);
+ 	return 0;
+ }
 -- 
 2.51.0
 
