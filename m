@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDE7313E31
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C6F340A5A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301090; cv=none; b=JogMwh9At2iT5dJhVSwKoxAH6DowvPdtOFtGXgUTUJTIqCNbruoPS9wMiZ8y60cGgOwqfcyIbNkQvQ/c33ZKiteMHYD+bxUSvp4jUcaTMIuu3GQko0Mp7WEoaD1Y5n4f1Y60gunVrpElUYjDgOa97QpdfnGdCYDCw12ZpcHF3/Q=
+	t=1772301091; cv=none; b=owUl5ZQQF3EHb0hJ/rIpOchmBjRxUAKL8Xg7xJ3xh6jWT4pnCNDqzR6BY4D6rMVa7aq0oCiqU/wGR9SiNZbNAa91LyCfZXzBGgxFUyvNHgXMu6rz5jmCPoaNVQaEDymxRAzMleoZDnqEJ9XFkgkRomU0Bubi5RmLEIOcxtrkbwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301090; c=relaxed/simple;
-	bh=JKLgXofhNpt7vNqQzIkqinwzRafpahfOCG8WwoyiWq8=;
+	s=arc-20240116; t=1772301091; c=relaxed/simple;
+	bh=0XL87ncdRefuTJBlIeL4ASiEzjFaiEv8O+qCsZfUpPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9dMzSWqodKuNP/0+8x4sj6UgPWTNSgxSMjBwyOF6VT5Ttch8oAIFVnCUWAkDz+W9tycZF8hN7PXWMYK9lJGghBiMB8ymsO/AJf3Qioq3XXgUybh75O96NOdF1DiovqjAGItXmFr0UdI8bI25+YYTrMPwr3yiGWOdbby6gMecxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EY6vhO/J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KeXtWnkzPEfA2Fg1vGLYiKipPHQNC4gPi/MYuCBPfXfIjc62sTXjss3I7g7WLatEZJE+oYZ0cQJNs7oil13GCEFqMWxD0l6R51HUhE92KBjeZ6872iJXt7fC2t2FyrXxkpI5VqmUkFsse1iHGifwzrgIuGmZG3JjoZAvYNDH2sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aHA02gpd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EY6vhO/J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962AEC19423;
-	Sat, 28 Feb 2026 17:51:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aHA02gpd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3ECC19424;
+	Sat, 28 Feb 2026 17:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301090;
-	bh=JKLgXofhNpt7vNqQzIkqinwzRafpahfOCG8WwoyiWq8=;
+	s=k20201202; t=1772301091;
+	bh=0XL87ncdRefuTJBlIeL4ASiEzjFaiEv8O+qCsZfUpPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EY6vhO/JJK1j7VykVpFsz41qjqGUh8gqNBGwug+mCUg0mwUR5tNoHJ/CNUoCfDtGk
-	 hJ8/9lPbsvtoHizu3CWg6fAdSHHsG32Np+eBKjvayWr/89DDFdAr6dgRr1Dc57mfWl
-	 CrLVM/jIIaR4EmI43CvrbnBqt1pY6Hpbu+yHA5S/3rv5nSgDWuaAtYJ7W4Rb2G9pV8
-	 oHIsL6AGy1t1rhp/Gzf0miS6wJa7Dmr+xcbHDZfkUThCLbB30ilGtcAPY5zWyLsarP
-	 k/kWgddu8ZxRVU/fqx7WOYDUVPPeXaSL/AZBuLZCzzDGcR0+jYy4VeZad0K5vNS9SJ
-	 GuLwfaH7IiCkA==
+	b=aHA02gpd9k1Pb2M292xDsgt9iEVO9g9uWUcqYDKqgtlUwEMx6CowUJL3pFuO7QxB8
+	 5kSDHJB10dQzjFsFwzDAZxj2BlAgc9HS9lF8iVPKRYUdydiHAuEWX0hOM3pXlRWR0U
+	 1UBNVckvZSsGSNYXfTbXi9fHlKcj90p24WMxtwq+ZYK9UZaj/H5dwRjvclpVciGT9v
+	 ZQKJm6FqB0knvZxSymof7R0NtkDmlxsAnGIX/H4TvhT9Ze2b3oc/3Tgi+/uEfBrydK
+	 QPE2LOYPRANulknVxBO3eVwy01rfH7BGs0Bt5VhQMFMifebwF2r+a/NregxoWaQ7oG
+	 BDx/vxn5f7Crg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 240/752] wifi: ath12k: fix preferred hardware mode calculation
-Date: Sat, 28 Feb 2026 12:39:11 -0500
-Message-ID: <20260228174750.1542406-240-sashal@kernel.org>
+Subject: [PATCH 6.18 241/752] wifi: ath12k: fix mac phy capability parsing
+Date: Sat, 28 Feb 2026 12:39:12 -0500
+Message-ID: <20260228174750.1542406-241-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,46 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 7f852de0003219c431a6f2ffd951fd82a4673660 ]
+[ Upstream commit b5151c9b6e3a347416a4b4b55fc00195526d8771 ]
 
-For single pdev device like WCN7850/QCC2072, preferred_hw_mode is
-initialized to WMI_HOST_HW_MODE_SINGLE. Later when firmware sends
-supported modes to host, each mode is compared with the initial one
-and if the priority of the new mode is higher, update the parameter
-and store mode capability.
+Currently ath12k_pull_mac_phy_cap_svc_ready_ext() assumes only one band
+supported in each phy, hence it skips 5 GHz band if 2 GHz band support
+is detected. This does not work for device which gets only one phy but
+has both bands supported, such as QCC2072.
 
-For WCN7850, this does not result in issue, as one of the supported
-mode indeed has a higher priority. However the only available mode of
-QCC2072 at this stage is WMI_HOST_HW_MODE_SINGLE, which fails the
-comparison, hence mode capability is not stored. Subsequently driver
-initialization fails.
-
-Fix it by accepting a mode with the same priority.
+Change to check each band individually to fix this issue.
 
 Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
 
 Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260112-ath12k-support-qcc2072-v2-4-fc8ce1e43969@oss.qualcomm.com
+Link: https://patch.msgid.link/20260112-ath12k-support-qcc2072-v2-6-fc8ce1e43969@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 44e99b47e445d..6dd95bcaf2436 100644
+index 6dd95bcaf2436..f3474a13e32aa 100644
 --- a/drivers/net/wireless/ath/ath12k/wmi.c
 +++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -4490,7 +4490,7 @@ static int ath12k_wmi_hw_mode_caps(struct ath12k_base *soc,
+@@ -493,6 +493,7 @@ ath12k_pull_mac_phy_cap_svc_ready_ext(struct ath12k_wmi_pdev *wmi_handle,
+ 	struct ath12k_band_cap *cap_band;
+ 	struct ath12k_pdev_cap *pdev_cap = &pdev->cap;
+ 	struct ath12k_fw_pdev *fw_pdev;
++	u32 supported_bands;
+ 	u32 phy_map;
+ 	u32 hw_idx, phy_idx = 0;
+ 	int i;
+@@ -516,14 +517,19 @@ ath12k_pull_mac_phy_cap_svc_ready_ext(struct ath12k_wmi_pdev *wmi_handle,
+ 		return -EINVAL;
  
- 		pref = soc->wmi_ab.preferred_hw_mode;
+ 	mac_caps = wmi_mac_phy_caps + phy_idx;
++	supported_bands = le32_to_cpu(mac_caps->supported_bands);
++
++	if (!(supported_bands & WMI_HOST_WLAN_2GHZ_CAP) &&
++	    !(supported_bands & WMI_HOST_WLAN_5GHZ_CAP))
++		return -EINVAL;
  
--		if (ath12k_hw_mode_pri_map[mode] < ath12k_hw_mode_pri_map[pref]) {
-+		if (ath12k_hw_mode_pri_map[mode] <= ath12k_hw_mode_pri_map[pref]) {
- 			svc_rdy_ext->pref_hw_mode_caps = *hw_mode_caps;
- 			soc->wmi_ab.preferred_hw_mode = mode;
- 		}
+ 	pdev->pdev_id = ath12k_wmi_mac_phy_get_pdev_id(mac_caps);
+ 	pdev->hw_link_id = ath12k_wmi_mac_phy_get_hw_link_id(mac_caps);
+-	pdev_cap->supported_bands |= le32_to_cpu(mac_caps->supported_bands);
++	pdev_cap->supported_bands |= supported_bands;
+ 	pdev_cap->ampdu_density = le32_to_cpu(mac_caps->ampdu_density);
+ 
+ 	fw_pdev = &ab->fw_pdev[ab->fw_pdev_count];
+-	fw_pdev->supported_bands = le32_to_cpu(mac_caps->supported_bands);
++	fw_pdev->supported_bands = supported_bands;
+ 	fw_pdev->pdev_id = ath12k_wmi_mac_phy_get_pdev_id(mac_caps);
+ 	fw_pdev->phy_id = le32_to_cpu(mac_caps->phy_id);
+ 	ab->fw_pdev_count++;
+@@ -532,10 +538,12 @@ ath12k_pull_mac_phy_cap_svc_ready_ext(struct ath12k_wmi_pdev *wmi_handle,
+ 	 * band to band for a single radio, need to see how this should be
+ 	 * handled.
+ 	 */
+-	if (le32_to_cpu(mac_caps->supported_bands) & WMI_HOST_WLAN_2GHZ_CAP) {
++	if (supported_bands & WMI_HOST_WLAN_2GHZ_CAP) {
+ 		pdev_cap->tx_chain_mask = le32_to_cpu(mac_caps->tx_chain_mask_2g);
+ 		pdev_cap->rx_chain_mask = le32_to_cpu(mac_caps->rx_chain_mask_2g);
+-	} else if (le32_to_cpu(mac_caps->supported_bands) & WMI_HOST_WLAN_5GHZ_CAP) {
++	}
++
++	if (supported_bands & WMI_HOST_WLAN_5GHZ_CAP) {
+ 		pdev_cap->vht_cap = le32_to_cpu(mac_caps->vht_cap_info_5g);
+ 		pdev_cap->vht_mcs = le32_to_cpu(mac_caps->vht_supp_mcs_5g);
+ 		pdev_cap->he_mcs = le32_to_cpu(mac_caps->he_supp_mcs_5g);
+@@ -545,8 +553,6 @@ ath12k_pull_mac_phy_cap_svc_ready_ext(struct ath12k_wmi_pdev *wmi_handle,
+ 			WMI_NSS_RATIO_EN_DIS_GET(mac_caps->nss_ratio);
+ 		pdev_cap->nss_ratio_info =
+ 			WMI_NSS_RATIO_INFO_GET(mac_caps->nss_ratio);
+-	} else {
+-		return -EINVAL;
+ 	}
+ 
+ 	/* tx/rx chainmask reported from fw depends on the actual hw chains used,
+@@ -562,7 +568,7 @@ ath12k_pull_mac_phy_cap_svc_ready_ext(struct ath12k_wmi_pdev *wmi_handle,
+ 	pdev_cap->rx_chain_mask_shift =
+ 			find_first_bit((unsigned long *)&pdev_cap->rx_chain_mask, 32);
+ 
+-	if (le32_to_cpu(mac_caps->supported_bands) & WMI_HOST_WLAN_2GHZ_CAP) {
++	if (supported_bands & WMI_HOST_WLAN_2GHZ_CAP) {
+ 		cap_band = &pdev_cap->band[NL80211_BAND_2GHZ];
+ 		cap_band->phy_id = le32_to_cpu(mac_caps->phy_id);
+ 		cap_band->max_bw_supported = le32_to_cpu(mac_caps->max_bw_supported_2g);
+@@ -582,7 +588,7 @@ ath12k_pull_mac_phy_cap_svc_ready_ext(struct ath12k_wmi_pdev *wmi_handle,
+ 				le32_to_cpu(mac_caps->he_ppet2g.ppet16_ppet8_ru3_ru0[i]);
+ 	}
+ 
+-	if (le32_to_cpu(mac_caps->supported_bands) & WMI_HOST_WLAN_5GHZ_CAP) {
++	if (supported_bands & WMI_HOST_WLAN_5GHZ_CAP) {
+ 		cap_band = &pdev_cap->band[NL80211_BAND_5GHZ];
+ 		cap_band->phy_id = le32_to_cpu(mac_caps->phy_id);
+ 		cap_band->max_bw_supported =
 -- 
 2.51.0
 
