@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAF13446B0;
-	Sat, 28 Feb 2026 18:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E880379EF1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302048; cv=none; b=nMnjFHJsUM3RMj28mb5Xp2GkHuNg6KNcSfGW+YX+4JQKnwZiRD+Ff/dDxTcNL29TaHOVk8ChRRfQW7OlifBDp7c+OgFnfdgVhxKiJXiyFHxw6GtSVS3D2kIMuGN0DGh82puzOe0VWeK/1G3T/5WXyUQkDEXDTZ08OAkGxAc9OUQ=
+	t=1772302049; cv=none; b=G26pvOBY3Gp/lsLQh3wXV92FmjohUh1/HVbTVK/CUAJJ6VER4KRA09Q5Wd/XVAjGWnl2Y5bYF+B4hiK9N0LOskVzLdmpzPzOMfC+wfr1cN/GnZz95tsaZ7FPmeyMWk1UrqV7HkKrs54baiKCTc0/LKg29dQ7yjGiTayY6IVswBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302048; c=relaxed/simple;
-	bh=kjLW5FoeNvKfnh4AnGeR8DLJWVR9/HO0025+MoELJ3Y=;
+	s=arc-20240116; t=1772302049; c=relaxed/simple;
+	bh=4aIeTImStaS5QuL/sWUjQivKC4NYdyFGlsiRCkbyiso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HhXQy6cIpTNkDRCZX/iTUNL1nypgWGLu56E30cUxmz4oLjdykiXC9LqYKXCWobHcqRUkO7v40k3ouw+fIa5GxAO3D3ql3s5Qopjju1+Jye0Kpigf2A8xXIAAgAc4ypaK3EeXKwC35m8jnkpRq++kqrNpLeH8aygqmPtM08JHpfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H6n4+aSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fGffSchcYkhDiSaExF35zP9ezj8ZyUHubZ2MyVGBPUkWkft8xtFJPazV4tNRdhPv56Y4rnWMgZTXfvZb76nas1kSLGnyTLg3Akx8rlx7pAt6F/MtKf87hP2moGbcHemdvu8cTWVBWfeoPFeXy0cj6TLsQwtllRYjqPDKcf+KAIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ikxVq7LW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H6n4+aSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF40C19423;
-	Sat, 28 Feb 2026 18:07:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ikxVq7LW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0673C116D0;
+	Sat, 28 Feb 2026 18:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302048;
-	bh=kjLW5FoeNvKfnh4AnGeR8DLJWVR9/HO0025+MoELJ3Y=;
+	s=k20201202; t=1772302049;
+	bh=4aIeTImStaS5QuL/sWUjQivKC4NYdyFGlsiRCkbyiso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H6n4+aSA8ge8dd5QRFPwABUA7Bys78STslTNaM6ejKiYM+srfWRY0K6JL3xgqO/1u
-	 o9ZlSXG+fUNq69n06MDDhjeaXh21BETT1fSpBm3SEUVY/8ivrb424s+4zXO6TH5zUJ
-	 erQsfck0qLIRTjOjOvCbwXI+yKsWN7VuBl5sBdCsZIv/F2uSMau1Haah2TfuLBJRPH
-	 kG9tLMRqopcWGJnsPQXZjQJRBNo5t7yqNmqKcJGcp2JmRK8han9F93Y9glSDC/GPxx
-	 OFjewUUiEB6vK1cDkMjYhQGmqkS9rgALDobaEDgsHEYWcAQShoOUWIYAUsbcqxHbkF
-	 5s1bYLlZ9Xocg==
+	b=ikxVq7LWG23aBiIAJE8HDQgzsA7daYhnMK0hpGLSeF2mqrIv0uZ9P55ecnpYoSEUW
+	 LI2SZKgn9ycBQ8Ze8dBtzlhfftcZJTLx4n4CESpTxHry5By1dOErxB9EpQqTq1mIaM
+	 HW6UH1hx14b8FvgXhI18971dHUs1Lt4lc1miL+5TNZtZ/EytmEayvWairkKQBdPB4N
+	 dciVm+E4e/Qin6zxNxgM1VguAplwAitE52yli43hr4UsLakC76+0ZhV+WiUSsaANnL
+	 HpKFFLuTjJtOEAVV+7Z6NSzHJvAksCsr7JkMwuZpMANjOXsNB9cMtKkOmoEv8yhpOg
+	 a+zew8m5MqmSQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+Cc: Teddy Astie <teddy.astie@vates.tech>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/283] smb: client: fix potential UAF and double free in smb2_open_file()
-Date: Sat, 28 Feb 2026 13:02:44 -0500
-Message-ID: <20260228180709.1583486-22-sashal@kernel.org>
+Subject: [PATCH 6.6 023/283] xen/virtio: Don't use grant-dma-ops when running as Dom0
+Date: Sat, 28 Feb 2026 13:02:45 -0500
+Message-ID: <20260228180709.1583486-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -50,39 +47,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Teddy Astie <teddy.astie@vates.tech>
 
-[ Upstream commit ebbbc4bfad4cb355d17c671223d0814ee3ef4eda ]
+[ Upstream commit dc8ea8714311e549ee93a2b0bdd5487d20bfadbf ]
 
-Zero out @err_iov and @err_buftype before retrying SMB2_open() to
-prevent an UAF bug if @data != NULL, otherwise a double free.
+Dom0 inherit devices from the machine and is usually in PV mode.
+If we are running in a virtual that has virtio devices, these devices
+would be considered as using grants with Dom0 as backend, while being
+the said Dom0 itself, while we want to use these devices like regular
+PCI devices.
 
-Fixes: e3a43633023e ("smb/client: fix memory leak in smb2_open_file()")
-Reported-by: David Howells <dhowells@redhat.com>
-Closes: https://lore.kernel.org/r/2892312.1770306653@warthog.procyon.org.uk
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Cc: linux-cifs@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix this by preventing grant-dma-ops from being used when running as Dom0
+(initial domain). We still keep the device-tree logic as-is.
+
+Signed-off-by: Teddy Astie <teddy.astie@vates.tech>
+Fixes: 61367688f1fb0 ("xen/virtio: enable grant based virtio on x86")
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <6698564dd2270a9f7377b78ebfb20cb425cabbe8.1767720955.git.teddy.astie@vates.tech>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2file.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/xen/grant-dma-ops.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2file.c b/fs/smb/client/smb2file.c
-index d436057ed77e3..4e7d5c612256d 100644
---- a/fs/smb/client/smb2file.c
-+++ b/fs/smb/client/smb2file.c
-@@ -123,6 +123,8 @@ int smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms, __u32
- 		       &err_buftype);
- 	if (rc == -EACCES && retry_without_read_attributes) {
- 		free_rsp_buf(err_buftype, err_iov.iov_base);
-+		memset(&err_iov, 0, sizeof(err_iov));
-+		err_buftype = CIFS_NO_BUFFER;
- 		oparms->desired_access &= ~FILE_READ_ATTRIBUTES;
- 		rc = SMB2_open(xid, oparms, smb2_path, &smb2_oplock, smb2_data, NULL, &err_iov,
- 			       &err_buftype);
+diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
+index 76f6f26265a3b..12fbe89382593 100644
+--- a/drivers/xen/grant-dma-ops.c
++++ b/drivers/xen/grant-dma-ops.c
+@@ -362,7 +362,8 @@ static int xen_grant_init_backend_domid(struct device *dev,
+ 	if (np) {
+ 		ret = xen_dt_grant_init_backend_domid(dev, np, backend_domid);
+ 		of_node_put(np);
+-	} else if (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain()) {
++	} else if (!xen_initial_domain() &&
++		   (IS_ENABLED(CONFIG_XEN_VIRTIO_FORCE_GRANT) || xen_pv_domain())) {
+ 		dev_info(dev, "Using dom0 as backend\n");
+ 		*backend_domid = 0;
+ 		ret = 0;
 -- 
 2.51.0
 
