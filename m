@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69644175A62;
-	Sat, 28 Feb 2026 17:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CC4342CB2;
+	Sat, 28 Feb 2026 17:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301425; cv=none; b=Lt+ju57PxdBtISydal7kjzUDf7DetRFZh1QcR7UMUOt5DmVYLkfDVmOg2p930ovJaPao95Lt4XgcuXylDHScTgYnu8QHgbBJMKV0+bw58d1m80vu7/c5ypXtSa3uxKqaw00+O7LvYXX8ZgGTcXVo4Qx4Qe0yYA0X1IBNzG24nsA=
+	t=1772301426; cv=none; b=n4oNd9hvhaJ7tNWc7ZnwCJ+yFdGK1tEjOcAOQIifNLkBYbheJiJZ1zEd2O5X+JAWdIVG2elff8KMmiJYbug578NtcNiPwSrrzr4LMLvs+x0L1jSu0JEPQVp/U4SrAUjap1bAOPebegP3yuk4DWUXUgv2lTx97ooBEE6cXK7/Em0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301425; c=relaxed/simple;
-	bh=0gyeaJeEvy8mAjJ9Rf2x728MJKlHIwZPHrIr5G9Oqfw=;
+	s=arc-20240116; t=1772301426; c=relaxed/simple;
+	bh=cuz0HrJojVSCVZxXgiwczN+3ALnzoM2hqpMUZbMXo5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B0o3qZdi+C9xC4ceEo/+HCyLQGlLQTmgJ2EqUhM60lFQ2GLToF43FWqJicSdbf/zTpjwhR6C6mp/AR3hizSMvMVpcSAMiBTptA3bLMlCMNZkx81E6c7Ic368iNEmhxdgG0LX+WJesu0rExtnNJhOOWexRgV63TDrTG6G3XGeDjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VhWsybSX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ttkavRBp2v/sGntpufO0oqQ/qmRet/at9VlYHws70VRrX81WV6CjajTnPa9W8iRKVNXCGzkhGGHUcnPubAxAZkvht9uTpl7CI1Elk6L3qsn/dO3PglGI6Sa2wzegItDry/zQ/vtI+mIQn2JAJss6C+lI+eReypq7ApNgzQuM+wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BEZj0Pa7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VhWsybSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9069DC19424;
-	Sat, 28 Feb 2026 17:57:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BEZj0Pa7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E08C116D0;
+	Sat, 28 Feb 2026 17:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301425;
-	bh=0gyeaJeEvy8mAjJ9Rf2x728MJKlHIwZPHrIr5G9Oqfw=;
+	s=k20201202; t=1772301426;
+	bh=cuz0HrJojVSCVZxXgiwczN+3ALnzoM2hqpMUZbMXo5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VhWsybSXvPiFMkWT7AJrZljHdOFU0rKNW85t1i0pn1Q7jD2X+UExiwkokJAGBQfFQ
-	 DIg1bZ4YFZltcXOodaTY5ziJNNbs5CNEVQ/OURWbGBrF9ypzg06dcLNNxpfPKlkaXE
-	 gmxCUfirn0YuIuGMYRLaIHSwbcveF/sFE5DqNVqyUUR+H6mMryR0V9k0FHGOrv+x8I
-	 Te4mkChtq45992DnHlanYGorkpxnrS/hEBop2N842uiwdpWniVsDBpvz/pdbCF4b6I
-	 YguJQ0oz8yGPpCzNviPOzc/vEI4emUiJ0OWyC3vXrGl3bO+u9eHzmZeb7jEFKJGtEy
-	 VO+JoqdVnwnsQ==
+	b=BEZj0Pa74DUMIz0FChNSyQDomwBsvPdrOTxOiJmho0W3pPSneE9AIZnUeeG79IcaC
+	 0WQvdJ9+FraPO2E8GgaTkDZ3ZUxpVjtk0p9aY8hJkdUecE+X6454rmSx51ttrCrRQI
+	 xazvQtXy6OMq0yehaZ2OIFtWVsSquQNJ2HbK0KRX5MACPrqWVRxbffKIyHO5Wvejz/
+	 8P8KgMbQTK16g2Oa0skPKK9F6NoTupOjg9xHbTpTBj6Kh9PaMw9v9HZ0Chno3u4P6u
+	 sK9BQ6vFO1pEMjtTAewmoHb1cTUO6QkoW3xXuurcEyKTJoIRQIin8hSWG15ZOvkvO2
+	 8im+ekhJQc9cg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Raag Jadav <raag.jadav@intel.com>,
+Cc: "Darrick J. Wong" <djwong@kernel.org>,
+	r772577952@gmail.com,
 	stable@vger.kernel.org,
-	Guido Trentalancia <guido@trentalancia.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 615/752] pinctrl: intel: Add code name documentation
-Date: Sat, 28 Feb 2026 12:45:26 -0500
-Message-ID: <20260228174750.1542406-615-sashal@kernel.org>
+Subject: [PATCH 6.18 616/752] xfs: only call xf{array,blob}_destroy if we have a valid pointer
+Date: Sat, 28 Feb 2026 12:45:27 -0500
+Message-ID: <20260228174750.1542406-616-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,79 +49,118 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Raag Jadav <raag.jadav@intel.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit fc32c5725fbe1164d353400389d3e29d19960a3a ]
+[ Upstream commit ba408d299a3bb3c5309f40c5326e4fb83ead4247 ]
 
-Intel pinctrl drivers support large set of platforms and the IPs are
-often reused by their different variants, but it's currently not possible
-to figure out the exact driver that supports specific variant. Add user
-friendly documentation for them.
+Only call the xfarray and xfblob destructor if we have a valid pointer,
+and be sure to null out that pointer afterwards.  Note that this patch
+fixes a large number of commits, most of which were merged between 6.9
+and 6.10.
 
-Cc: stable@vger.kernel.org
-Reported-by: Guido Trentalancia <guido@trentalancia.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220056
-Signed-off-by: Raag Jadav <raag.jadav@intel.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Acked-by: Guido Trentalancia <guido@trentalancia.com>
-[andy: added Oxford comma]
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: r772577952@gmail.com
+Cc: <stable@vger.kernel.org> # v6.12
+Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Tested-by: Jiaming Zhang <r772577952@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/intel/Kconfig | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ fs/xfs/scrub/agheader_repair.c | 8 ++++++--
+ fs/xfs/scrub/attr_repair.c     | 6 ++++--
+ fs/xfs/scrub/dir_repair.c      | 8 ++++++--
+ fs/xfs/scrub/dirtree.c         | 8 ++++++--
+ fs/xfs/scrub/nlinks.c          | 3 ++-
+ 5 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pinctrl/intel/Kconfig b/drivers/pinctrl/intel/Kconfig
-index 248c2e558ff32..3ebf072371457 100644
---- a/drivers/pinctrl/intel/Kconfig
-+++ b/drivers/pinctrl/intel/Kconfig
-@@ -52,7 +52,10 @@ config PINCTRL_ALDERLAKE
- 	select PINCTRL_INTEL
- 	help
- 	  This pinctrl driver provides an interface that allows configuring
--	  of Intel Alder Lake PCH pins and using them as GPIOs.
-+	  PCH pins of the following platforms and using them as GPIOs:
-+	  - Alder Lake HX, N, and S
-+	  - Raptor Lake HX, E, and S
-+	  - Twin Lake
+diff --git a/fs/xfs/scrub/agheader_repair.c b/fs/xfs/scrub/agheader_repair.c
+index a2f6a7f71d839..6e3fef36d6614 100644
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -837,8 +837,12 @@ xrep_agi_buf_cleanup(
+ {
+ 	struct xrep_agi	*ragi = buf;
  
- config PINCTRL_BROXTON
- 	tristate "Intel Broxton pinctrl and GPIO driver"
-@@ -136,15 +139,17 @@ config PINCTRL_METEORLAKE
- 	select PINCTRL_INTEL
- 	help
- 	  This pinctrl driver provides an interface that allows configuring
--	  of Intel Meteor Lake pins and using them as GPIOs.
-+	  SoC pins of the following platforms and using them as GPIOs:
-+	  - Arrow Lake (all variants)
-+	  - Meteor Lake (all variants)
+-	xfarray_destroy(ragi->iunlink_prev);
+-	xfarray_destroy(ragi->iunlink_next);
++	if (ragi->iunlink_prev)
++		xfarray_destroy(ragi->iunlink_prev);
++	ragi->iunlink_prev = NULL;
++	if (ragi->iunlink_next)
++		xfarray_destroy(ragi->iunlink_next);
++	ragi->iunlink_next = NULL;
+ 	xagino_bitmap_destroy(&ragi->iunlink_bmp);
+ }
  
- config PINCTRL_METEORPOINT
- 	tristate "Intel Meteor Point pinctrl and GPIO driver"
- 	select PINCTRL_INTEL
- 	help
--	  Meteor Point is the PCH of Intel Meteor Lake. This pinctrl driver
--	  provides an interface that allows configuring of PCH pins and
--	  using them as GPIOs.
-+	  This pinctrl driver provides an interface that allows configuring
-+	  PCH pins of the following platforms and using them as GPIOs:
-+	  - Arrow Lake HX and S
+diff --git a/fs/xfs/scrub/attr_repair.c b/fs/xfs/scrub/attr_repair.c
+index eded354dec11e..dd24044c44efd 100644
+--- a/fs/xfs/scrub/attr_repair.c
++++ b/fs/xfs/scrub/attr_repair.c
+@@ -1516,8 +1516,10 @@ xrep_xattr_teardown(
+ 		xfblob_destroy(rx->pptr_names);
+ 	if (rx->pptr_recs)
+ 		xfarray_destroy(rx->pptr_recs);
+-	xfblob_destroy(rx->xattr_blobs);
+-	xfarray_destroy(rx->xattr_records);
++	if (rx->xattr_blobs)
++		xfblob_destroy(rx->xattr_blobs);
++	if (rx->xattr_records)
++		xfarray_destroy(rx->xattr_records);
+ 	mutex_destroy(&rx->lock);
+ 	kfree(rx);
+ }
+diff --git a/fs/xfs/scrub/dir_repair.c b/fs/xfs/scrub/dir_repair.c
+index 7a21b688a4715..d5a55eabf6801 100644
+--- a/fs/xfs/scrub/dir_repair.c
++++ b/fs/xfs/scrub/dir_repair.c
+@@ -172,8 +172,12 @@ xrep_dir_teardown(
+ 	struct xrep_dir		*rd = sc->buf;
  
- config PINCTRL_SUNRISEPOINT
- 	tristate "Intel Sunrisepoint pinctrl and GPIO driver"
-@@ -159,7 +164,11 @@ config PINCTRL_TIGERLAKE
- 	select PINCTRL_INTEL
- 	help
- 	  This pinctrl driver provides an interface that allows configuring
--	  of Intel Tiger Lake PCH pins and using them as GPIOs.
-+	  PCH pins of the following platforms and using them as GPIOs:
-+	  - Alder Lake H, P, PS, and U
-+	  - Raptor Lake H, P, PS, PX, and U
-+	  - Rocket Lake S
-+	  - Tiger Lake (all variants)
+ 	xrep_findparent_scan_teardown(&rd->pscan);
+-	xfblob_destroy(rd->dir_names);
+-	xfarray_destroy(rd->dir_entries);
++	if (rd->dir_names)
++		xfblob_destroy(rd->dir_names);
++	rd->dir_names = NULL;
++	if (rd->dir_entries)
++		xfarray_destroy(rd->dir_entries);
++	rd->dir_names = NULL;
+ }
  
- source "drivers/pinctrl/intel/Kconfig.tng"
- endmenu
+ /* Set up for a directory repair. */
+diff --git a/fs/xfs/scrub/dirtree.c b/fs/xfs/scrub/dirtree.c
+index f9c85b8b194fa..3e0bbe75c44cf 100644
+--- a/fs/xfs/scrub/dirtree.c
++++ b/fs/xfs/scrub/dirtree.c
+@@ -81,8 +81,12 @@ xchk_dirtree_buf_cleanup(
+ 		kfree(path);
+ 	}
+ 
+-	xfblob_destroy(dl->path_names);
+-	xfarray_destroy(dl->path_steps);
++	if (dl->path_names)
++		xfblob_destroy(dl->path_names);
++	dl->path_names = NULL;
++	if (dl->path_steps)
++		xfarray_destroy(dl->path_steps);
++	dl->path_steps = NULL;
+ 	mutex_destroy(&dl->lock);
+ }
+ 
+diff --git a/fs/xfs/scrub/nlinks.c b/fs/xfs/scrub/nlinks.c
+index 2ba686e4de8bc..dec3b9b47453e 100644
+--- a/fs/xfs/scrub/nlinks.c
++++ b/fs/xfs/scrub/nlinks.c
+@@ -971,7 +971,8 @@ xchk_nlinks_teardown_scan(
+ 
+ 	xfs_dir_hook_del(xnc->sc->mp, &xnc->dhook);
+ 
+-	xfarray_destroy(xnc->nlinks);
++	if (xnc->nlinks)
++		xfarray_destroy(xnc->nlinks);
+ 	xnc->nlinks = NULL;
+ 
+ 	xchk_iscan_teardown(&xnc->collect_iscan);
 -- 
 2.51.0
 
