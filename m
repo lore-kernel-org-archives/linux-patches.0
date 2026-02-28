@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1DA332628
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B71F332628
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301227; cv=none; b=XGmd7VqzeUigJZmmFTRZ0dhyNcq7OfWKKmt0EzyNuaO49MaBubx5bhWNFA5Y03EPplb5zRj0vqlUcjkHQHHW1KhgaRh77lPW7cAOG4a1KzH2QsyaxALLEqzEuEkT8b7C69x3uaLnmRSyDD1brqsr0yyYo1Ww1puJqdAoehLetjk=
+	t=1772301228; cv=none; b=imPp3yc/XivOdhLgUHiB7dh4DDUjC/iMutPYpiZCD5/U+j8K/qBEItM0eb4QJdj3oL4/DdwENmcaJKfBnnxPlIQHaH6CLIU1upCXq+POOV3eyYOTd9ZyPj1GF7Gi6PU2uEAdf/gT/8Uiqc+OtWlxCxvXjJTZOKuDOiI3ciZ9Lqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301227; c=relaxed/simple;
-	bh=sUGRmpIzP6VTIdZXiy1GrpAXt4jwWFVe8WWblpyBuAs=;
+	s=arc-20240116; t=1772301228; c=relaxed/simple;
+	bh=zaLi0pMp0bWbvEXHJsbhu3SFVHOuKzj/+3rDcft9+5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxvCSs04Y3SMgkUTgTVqEZXpwUKb7JjUx0/wAUpUVTBqpqJdwmEC5za+1uIXZb8uD5fqXStOMYk6bgaiRHnqooqeZomi8fCU8ZCxWbSlF/7mzmFV1qFrLRZ1rEpT7hubsDzqPpsCQ2wuY1LgyLbAgKDovv19qwPum8tERXB3uJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d3xvKlj9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=synrXOs6yXEqqMmoOc56w/jnOL50vh862ORZ6bFZottu1Xoa4JGwP8vIIKzLwj/n/EO9oc06bVjpPiOHovRX/f5C7yXUe7GxYc+T2lC3Y0O+N46EmkB4d3rwY7P+XjLqojHBl4dDBem9kb4wqQP6Y4H2iRzB5g9++yQhk9+RXUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mmTMy7Kw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d3xvKlj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26374C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mmTMy7Kw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F114FC19425;
 	Sat, 28 Feb 2026 17:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301227;
-	bh=sUGRmpIzP6VTIdZXiy1GrpAXt4jwWFVe8WWblpyBuAs=;
+	s=k20201202; t=1772301228;
+	bh=zaLi0pMp0bWbvEXHJsbhu3SFVHOuKzj/+3rDcft9+5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d3xvKlj9KT/NhQyNJEWPxE3H7+1f1avic2fNN1ERygfb6bcL3lJAIB0E+6kKkFDQ9
-	 3394u/30uFP8P8jTSgIaB5usobd6AK2TyZpxBH5hOzEea+ZVTpZnaA7I4hv7iBQ5oQ
-	 WvbcsGGp8vD2yBO84ClaSM8z0ENhPl+qn9mliJyB6kBE/nveo2TYLgUv5sp55yOQPU
-	 FFPuJXkCbhisaLW6FusqHihSdGdV/T0rfTjWsEz+sXIp/vRnB43FmlnSqDC1N22u0W
-	 +G9HyYXeQiYG/jtFC2Sw172/lZMMYt3sOs8LS54OMF/Wr5qG+Z6AI0736EryqbU66M
-	 q7QgW1KYIE+Ag==
+	b=mmTMy7KwSIZKCmVzCjBwqmcQjH8pi0UU6SVKzaVcz4dIX3poSzgJ6Ud/hW6si5ozI
+	 8nMrxzVQt6RdNgzOS2zVLVhcSSb3bt67BcXPdmBtrIblMYQ5eA4Ml7zhbAFaQWBDog
+	 P2grQVAeHgIaWCtwsmn+lB6Rm3sop6wqMwCX2URA5UMYy54aG+uXQm7FqGKQQcLAMX
+	 J3OVgMYakqgeUgA7gR+Z/9bAGX5zIfdxL43cOQXnQ9bUA1Xr9NCTHXlVHHbq+92YH2
+	 TRG+jYnzAH/l98/E1/BYcxcvTujBJR5d9jrYCvnNlJYSTeZRqIFJJQ41qe0l4hjAql
+	 KYHXPvTCS9WqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: =?UTF-8?q?Martin=20P=C3=A5lsson?= <martin@poleshift.se>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 405/752] net: usb: kaweth: remove TX queue manipulation in kaweth_set_rx_mode
-Date: Sat, 28 Feb 2026 12:41:56 -0500
-Message-ID: <20260228174750.1542406-405-sashal@kernel.org>
+Subject: [PATCH 6.18 406/752] net: usb: lan78xx: scan all MDIO addresses on LAN7801
+Date: Sat, 28 Feb 2026 12:41:57 -0500
+Message-ID: <20260228174750.1542406-406-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -44,78 +43,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Martin Pålsson <martin@poleshift.se>
 
-[ Upstream commit 64868f5ecadeb359a49bc4485bfa7c497047f13a ]
+[ Upstream commit f1e2f0ce704e4a14e3f367d3b97d3dd2d8e183b7 ]
 
-kaweth_set_rx_mode(), the ndo_set_rx_mode callback, calls
-netif_stop_queue() and netif_wake_queue(). These are TX queue flow
-control functions unrelated to RX multicast configuration.
+The LAN7801 is designed exclusively for external PHYs (unlike the
+LAN7800/LAN7850 which have internal PHYs), but lan78xx_mdio_init()
+restricts PHY scanning to MDIO addresses 0-7 by setting phy_mask to
+~(0xFF). This prevents discovery of external PHYs wired to addresses
+outside that range.
 
-The premature netif_wake_queue() can re-enable TX while tx_urb is still
-in-flight, leading to a double usb_submit_urb() on the same URB:
+One such case is the DP83TC814 100BASE-T1 PHY, which is typically
+configured at MDIO address 10 via PHYAD bootstrap pins and goes
+undetected with the current mask.
 
-kaweth_start_xmit() {
-    netif_stop_queue();
-    usb_submit_urb(kaweth->tx_urb);
-}
+Remove the restrictive phy_mask assignment for the LAN7801 so that the
+default mask of 0 applies, allowing all 32 MDIO addresses to be
+scanned during bus registration.
 
-kaweth_set_rx_mode() {
-    netif_stop_queue();
-    netif_wake_queue();             // wakes TX queue before URB is done
-}
-
-kaweth_start_xmit() {
-    netif_stop_queue();
-    usb_submit_urb(kaweth->tx_urb); // URB submitted while active
-}
-
-This triggers the WARN in usb_submit_urb():
-
-  "URB submitted while active"
-
-This is a similar class of bug fixed in rtl8150 by
-
-- commit 958baf5eaee3 ("net: usb: Remove disruptive netif_wake_queue in rtl8150_set_multicast").
-
-Also kaweth_set_rx_mode() is already functionally broken, the
-real set_rx_mode action is performed by kaweth_async_set_rx_mode(),
-which in turn is not a no-op only at ndo_open() time.
-
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Link: https://patch.msgid.link/20260217175012.1234494-1-n7l8m4@u.northwestern.edu
+Fixes: 02dc1f3d613d ("lan78xx: add LAN7801 MAC only support")
+Signed-off-by: Martin Pålsson <martin@poleshift.se>
+Link: https://patch.msgid.link/0110019c6f388aff-98d99cf0-4425-4fff-b16b-dea5ad8fafe0-000000@eu-north-1.amazonses.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/kaweth.c | 2 --
+ drivers/net/usb/lan78xx.c | 2 --
  1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/usb/kaweth.c b/drivers/net/usb/kaweth.c
-index c9efb7df892ec..e01d14f6c3667 100644
---- a/drivers/net/usb/kaweth.c
-+++ b/drivers/net/usb/kaweth.c
-@@ -765,7 +765,6 @@ static void kaweth_set_rx_mode(struct net_device *net)
- 
- 	netdev_dbg(net, "Setting Rx mode to %d\n", packet_filter_bitmap);
- 
--	netif_stop_queue(net);
- 
- 	if (net->flags & IFF_PROMISC) {
- 		packet_filter_bitmap |= KAWETH_PACKET_FILTER_PROMISCUOUS;
-@@ -775,7 +774,6 @@ static void kaweth_set_rx_mode(struct net_device *net)
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 00397a8073934..065588c9cfa65 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -2094,8 +2094,6 @@ static int lan78xx_mdio_init(struct lan78xx_net *dev)
+ 		dev->mdiobus->phy_mask = ~(1 << 1);
+ 		break;
+ 	case ID_REV_CHIP_ID_7801_:
+-		/* scan thru PHYAD[2..0] */
+-		dev->mdiobus->phy_mask = ~(0xFF);
+ 		break;
  	}
  
- 	kaweth->packet_filter_bitmap = packet_filter_bitmap;
--	netif_wake_queue(net);
- }
- 
- /****************************************************************
 -- 
 2.51.0
 
