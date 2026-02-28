@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297CE39B976
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B6739B974
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302612; cv=none; b=PjtdTDCXjU6kPO7nIy4ewr1odrZlpBiSYBkYBdpXDEWz6ybLW5MTYEhz7lzO8A3Jay1udVIX3ekLgL6rqjMtOG9zEMk8TbDWu2pNAoAbQGx42DwuQ7XJ1d22tiyN/P5cK2ceeD6AUP1nBe02jA2YEkmbrDhDEB2d7Qp5fJux8xQ=
+	t=1772302613; cv=none; b=WCj1liTBq5yfIMFWPLHIacTnho2/+oXk+SSwP8e8zLVCQlWpt4MPsNYH6rX/z/8Uw5BO8zOLe80wywe+Q5V3PHpWJjZQ9zrgLCeqPjP7U+orO8G4SHyhQf/YqyN12xAP9SyWjDZ6UWwpQbYp3wwxezvf2tfBoDVE4PmQflT64RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302612; c=relaxed/simple;
-	bh=4lkz5QtqazdIxX2cZN66Jk0z3fss+lyB1L6jK0pFnrI=;
+	s=arc-20240116; t=1772302613; c=relaxed/simple;
+	bh=n5y23WWqhEThf5yrD0ZaUkRk9OYK3rffUwCCHj8tmo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cfv0yM29ZQ/KRhbGWzgTXFFz1+7NyLwrN3mKBcSA4e3ZygeUZJLAaKQJe4f3TlFhdid0QSJa8qwnb1NiesrLomU3Awp/YLS4POHLsBYq63ftmpaevxiIRnW+VmbC1XFZZnkuiBBl9FKPJ9JYSaGlkBWWy9eDM7uYCOBAtIArjq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m70ZcX4M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qM6HoxJX+OdWbIXUHZwsntdbm2g7JebK+/E+/cUv1CgMDFiR0A0rjO35Isggiryyy46wnX0xIPO9WgJC+9MyM8lgEDViMvh10vlK4DYjRAWGNB4aupwHn+kU66Lmiy7EoTY7SvjBlGR3681qc5CLrj1QBFqfBuiO0s/apQLTKAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8iXVqQv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m70ZcX4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFE1C19424;
-	Sat, 28 Feb 2026 18:16:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8iXVqQv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F155C116D0;
+	Sat, 28 Feb 2026 18:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302612;
-	bh=4lkz5QtqazdIxX2cZN66Jk0z3fss+lyB1L6jK0pFnrI=;
+	bh=n5y23WWqhEThf5yrD0ZaUkRk9OYK3rffUwCCHj8tmo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m70ZcX4MPEBNItRI/YHIXg0p1bHOv6viswouArCKfGhuEksaVDGZ2FizzEHjkk6X0
-	 5/97D6GUILvnUFZ5hQH2RheH4voDkswQLbF4Gy+fcsqmX5Bxt/o5vM7Drek+7FPRSG
-	 W03cqO0VVSek5bwl/UesawqH65e0uoQu9k+0da4Ljc62AZd9pq1rmaQZe7cSLWLO6C
-	 0pdT4YrdcgqsAC1hcDT4/DIhg/GCyq/5qrJM5u3mCEqHbMhJbYVHLNA+WaXKPoeSEI
-	 +djvPOOvSKVjl3y61JRowWw2cR3fO1ebTWuPGZU9IMcRGinaHF2sGNCEggjRP8V1Ox
-	 QcHrNAT0T5XuA==
+	b=g8iXVqQvHXW7vQ2vKvu2cFAW4HsOYQoptTkJxLZVNN/gUVtiLAvMnz+CkVt7P0TL3
+	 sQERLSCTLzzb+auIJkggExQhPXjpqCd/wt4vVVjS7lLZuuVm7NUeZOS7LQiV6RjyKY
+	 6uRW8OPsrkAvN5aZICdl+MClPzr+//FTsiAQgR+tydNi8YwIwMbfoWmeblm+qzBimn
+	 DmVDPwGeNoZA5ZzpBgxU0tKkElxeC+aw2WPG6si2UeapDUfsH5XrZF/AfXBr2ghR34
+	 pi/osuwGvumboj87TfIKpukkW8M/B9USbFf/ZY27aS6iafRvWeL0xlk5QoZoiplzLS
+	 r0xlP6vCBQh4A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+Cc: =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/164] clk: meson: gxbb: Limit the HDMI PLL OD to /4 on GXL/GXM SoCs
-Date: Sat, 28 Feb 2026 13:14:27 -0500
-Message-ID: <20260228181505.1600663-128-sashal@kernel.org>
+Subject: [PATCH 5.15 129/164] clk: qcom: gcc-msm8953: Remove ALWAYS_ON flag from cpp_gdsc
+Date: Sat, 28 Feb 2026 13:14:28 -0500
+Message-ID: <20260228181505.1600663-129-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -43,89 +44,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-[ Upstream commit 5b1a43950fd3162af0ce52b13c14a2d29b179d4f ]
+[ Upstream commit 5f613e7034187179a9d088ff5fd02b1089d0cf20 ]
 
-GXBB has the HDMI PLL OD in the HHI_HDMI_PLL_CNTL2 register while for
-GXL/GXM the OD has moved to HHI_HDMI_PLL_CNTL3. At first glance the rest
-of the OD setup seems identical.
+cpp_gdsc should not be always on, ALWAYS_ON flag was set accidentally.
 
-However, looking at the downstream kernel sources as well as testing
-shows that GXL only supports three OD values:
-- register value 0 means: divide by 1
-- register value 1 means: divide by 2
-- register value 2 means: divide by 4
-
-Using register value 3 (which on GXBB means: divide by 8) still divides
-by 4 as verified using meson-clk-measure. Downstream sources are also
-only using OD register values 0, 1 and 2 for GXL (while for GXBB the
-downstream kernel sources are also using value 3).
-
-Add clk_div_table and have it replace the CLK_DIVIDER_POWER_OF_TWO flag
-to make the kernel's view of this register match with how the hardware
-actually works.
-
-Fixes: 69d92293274b ("clk: meson: add the gxl hdmi pll")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20260105204710.447779-2-martin.blumenstingl@googlemail.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: 9bb6cfc3c77e ("clk: qcom: Add Global Clock Controller driver for MSM8953")
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251117-fix-gdsc-cpp-msm8917-msm8953-v1-1-db33adcff28a@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/gxbb.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/gcc-msm8953.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
-index 35bc13e73c0dd..6f3918f0a7826 100644
---- a/drivers/clk/meson/gxbb.c
-+++ b/drivers/clk/meson/gxbb.c
-@@ -316,12 +316,23 @@ static struct clk_regmap gxbb_hdmi_pll = {
+diff --git a/drivers/clk/qcom/gcc-msm8953.c b/drivers/clk/qcom/gcc-msm8953.c
+index 9d11f993843db..0d7235e1fd9e4 100644
+--- a/drivers/clk/qcom/gcc-msm8953.c
++++ b/drivers/clk/qcom/gcc-msm8953.c
+@@ -3947,7 +3947,6 @@ static struct gdsc cpp_gdsc = {
+ 	.pd = {
+ 		.name = "cpp_gdsc",
  	},
+-	.flags = ALWAYS_ON,
+ 	.pwrsts = PWRSTS_OFF_ON,
  };
  
-+/*
-+ * GXL hdmi OD dividers are POWER_OF_TWO dividers but limited to /4.
-+ * A divider value of 3 should map to /8 but instead map /4 so ignore it.
-+ */
-+static const struct clk_div_table gxl_hdmi_pll_od_div_table[] = {
-+	{ .val = 0, .div = 1 },
-+	{ .val = 1, .div = 2 },
-+	{ .val = 2, .div = 4 },
-+	{ /* sentinel */ }
-+};
-+
- static struct clk_regmap gxl_hdmi_pll_od = {
- 	.data = &(struct clk_regmap_div_data){
- 		.offset = HHI_HDMI_PLL_CNTL + 8,
- 		.shift = 21,
- 		.width = 2,
--		.flags = CLK_DIVIDER_POWER_OF_TWO,
-+		.table = gxl_hdmi_pll_od_div_table,
- 	},
- 	.hw.init = &(struct clk_init_data){
- 		.name = "hdmi_pll_od",
-@@ -339,7 +350,7 @@ static struct clk_regmap gxl_hdmi_pll_od2 = {
- 		.offset = HHI_HDMI_PLL_CNTL + 8,
- 		.shift = 23,
- 		.width = 2,
--		.flags = CLK_DIVIDER_POWER_OF_TWO,
-+		.table = gxl_hdmi_pll_od_div_table,
- 	},
- 	.hw.init = &(struct clk_init_data){
- 		.name = "hdmi_pll_od2",
-@@ -357,7 +368,7 @@ static struct clk_regmap gxl_hdmi_pll = {
- 		.offset = HHI_HDMI_PLL_CNTL + 8,
- 		.shift = 19,
- 		.width = 2,
--		.flags = CLK_DIVIDER_POWER_OF_TWO,
-+		.table = gxl_hdmi_pll_od_div_table,
- 	},
- 	.hw.init = &(struct clk_init_data){
- 		.name = "hdmi_pll",
 -- 
 2.51.0
 
