@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC79375AAA
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA8E33D6F7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301627; cv=none; b=hQdgrsHXZ+Oke+5JbpabyXUxgO8cancgAr1VQ7euq4tlbiEcXp1R4O1UBjK6WrHAZ6FqXfoHGUdUiApGIqmuYcq1+8OuEWjsI2uY4kNF4JoNtBlesxDQlo/htyh8s+Ya+TX802307tDdq/UljZY36t5qbF9NwGFI265Ic2h43Tw=
+	t=1772301627; cv=none; b=RjhJDmGlQtHabf4ydvmDOTDXrh6R/WNLx8Fv6W5vSvf7/OsP2DORxo57xo+dRC7w+Ob0EYY5lPQIBvtWjIPLlH+Fg5CpJPXCDYFRULCnAwzzCvllDcd+0TKa/V/eTUCfHg0ETSB8e8Dascmq8kok6VvVwlfbbse3GEOAw/FukVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301627; c=relaxed/simple;
-	bh=tMRhH3b4Qv16+wIX0wq6CYBKRItvqPMaTdl2WXtNBZE=;
+	bh=I0y4qAyFVqx0g8hXXZLxCFYwfh9DZEu+xmcP9+xzMAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gv0BQO0CBw7a7u2qS0DMO6pRm/XamC/yqKx/5ZYvHK6pvRdLTrvauBkeMDjcRJdDpj+e7EnPLrKL6SggtO4QC7ItldW+lZWNxy7x/QLzinUe3A7g5SrWhhoZTtXDp9X50VuiaMgI1fR+q75En5FG8nVZcgKptkRot5PXvti7als=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gDvojDwz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HRJafB/n4r7MArDwZREVov5vJYQKNyTJRHNfAXxlV6td8uYeIbOwc+d8f9dezYc3uazH6+spNwzMgzPz30U60Qu5Guu/oXKrsO2zyd+7yMyk39g8n9F64t+fFT6wpuvYrAspxNxrK4lZvGg4QN+e9NEN312geunnlHD61wZpBjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FM/RFvSN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gDvojDwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628A6C19424;
-	Sat, 28 Feb 2026 18:00:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FM/RFvSN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24ADDC116D0;
+	Sat, 28 Feb 2026 18:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301626;
-	bh=tMRhH3b4Qv16+wIX0wq6CYBKRItvqPMaTdl2WXtNBZE=;
+	s=k20201202; t=1772301627;
+	bh=I0y4qAyFVqx0g8hXXZLxCFYwfh9DZEu+xmcP9+xzMAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDvojDwzp0Q5PujR/sbraVV6++lnyKjrXDLkYSkvUDpmRa3QrEZe+RXQ/0FXPL+uu
-	 x1Qt8Gl8D1uoVUJDL1Mf5SUaHK8m41If6PqdAU8iOIeAFYEX02yL8NqvjZ8QYMPyrg
-	 iMJTIz9e3fwWf8IcbZik3otY4Z8wCUH1AQnw9av0yFyXRXqmvTIPnsIQlj7/ZomBYU
-	 mNvsowczi46KWSB2N+EDJrxsTGM4sjcyefpEQrWgoKLsVB7h/gA1LWIjn48O4Peh+n
-	 NfrQUQLRok6I5BzVfuXgunFWd7LtxgZxDgijSiyDvJu5K3XCmIYejiOtQPHWt/5dU3
-	 L0nXArf+ZhdKg==
+	b=FM/RFvSN9pHZDlrwHYLc8V4DlunsH+LJMdiVGHdUDvH6j9KX6ARO9go+ION9Ihb5h
+	 0SLQnuc7CCDNAA9AU0JsYAiRKjGSt0ShBay6tLdVIc6LoudejknxSGzYNC37ATKcy9
+	 q3VEdT9qQ7RIKHs4IZpVdNLR4Gm3CBPvPRMRQxy14vRoWlgqT4B6PemOv7HmpXDClL
+	 qWWD8Ix3cTdH4p5mJiwdsjX2yf7tVJ7iAz0SVVavAk3qliK3qb/KZg/EyJd1v91HuP
+	 vIsrTDjrUydcWypHJf0bTIM+JZyM9J1NgR6sTPo/3C+EAS1v4FHOv2V/wl619rma4F
+	 G31PxmjRniQqg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alper Ak <alperyasinak1@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+Cc: Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Chao Yu <chao@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/385] tpm: st33zp24: Fix missing cleanup on get_burstcount() error
-Date: Sat, 28 Feb 2026 12:54:00 -0500
-Message-ID: <20260228180011.1568201-18-sashal@kernel.org>
+Subject: [PATCH 6.12 019/385] erofs: get rid of raw bi_end_io() usage
+Date: Sat, 28 Feb 2026 12:54:01 -0500
+Message-ID: <20260228180011.1568201-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,41 +49,69 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alper Ak <alperyasinak1@gmail.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 3e91b44c93ad2871f89fc2a98c5e4fe6ca5db3d9 ]
+[ Upstream commit 80d0c27a0a4af8e0678d7412781482e6f73c22c7 ]
 
-get_burstcount() can return -EBUSY on timeout. When this happens,
-st33zp24_send() returns directly without releasing the locality
-acquired earlier.
+These BIOs are actually harmless in practice, as they are all pseudo
+BIOs and do not use advanced features like chaining.  Using the BIO
+interface is a more friendly and unified approach for both bdev and
+and file-backed I/Os (compared to awkward bvec interfaces).
 
-Use goto out_err to ensure proper cleanup when get_burstcount() fails.
+Let's use bio_endio() instead.
 
-Fixes: bf38b8710892 ("tpm/tpm_i2c_stm_st33: Split tpm_i2c_tpm_st33 in 2 layers (core + phy)")
-Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Stable-dep-of: bc804a8d7e86 ("erofs: handle end of filesystem properly for file-backed mounts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/st33zp24/st33zp24.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/erofs/fileio.c  | 2 +-
+ fs/erofs/fscache.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
-index c0771980bc2ff..06caf53a42ee5 100644
---- a/drivers/char/tpm/st33zp24/st33zp24.c
-+++ b/drivers/char/tpm/st33zp24/st33zp24.c
-@@ -328,8 +328,10 @@ static int st33zp24_send(struct tpm_chip *chip, unsigned char *buf,
+diff --git a/fs/erofs/fileio.c b/fs/erofs/fileio.c
+index 990defcf93043..bc2c9fb44236e 100644
+--- a/fs/erofs/fileio.c
++++ b/fs/erofs/fileio.c
+@@ -35,13 +35,13 @@ static void erofs_fileio_ki_complete(struct kiocb *iocb, long ret)
+ 	if (rq->bio.bi_end_io) {
+ 		if (ret < 0 && !rq->bio.bi_status)
+ 			rq->bio.bi_status = errno_to_blk_status(ret);
+-		rq->bio.bi_end_io(&rq->bio);
+ 	} else {
+ 		bio_for_each_folio_all(fi, &rq->bio) {
+ 			DBG_BUGON(folio_test_uptodate(fi.folio));
+ 			erofs_onlinefolio_end(fi.folio, ret, false);
+ 		}
+ 	}
++	bio_endio(&rq->bio);
+ 	bio_uninit(&rq->bio);
+ 	if (refcount_dec_and_test(&rq->ref))
+ 		kfree(rq);
+diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
+index ce3d8737df85d..20e2cb18ed1d4 100644
+--- a/fs/erofs/fscache.c
++++ b/fs/erofs/fscache.c
+@@ -187,7 +187,7 @@ static void erofs_fscache_bio_endio(void *priv,
  
- 	for (i = 0; i < len - 1;) {
- 		burstcnt = get_burstcount(chip);
--		if (burstcnt < 0)
--			return burstcnt;
-+		if (burstcnt < 0) {
-+			ret = burstcnt;
-+			goto out_err;
-+		}
- 		size = min_t(int, len - i - 1, burstcnt);
- 		ret = tpm_dev->ops->send(tpm_dev->phy_id, TPM_DATA_FIFO,
- 					 buf + i, size);
+ 	if (IS_ERR_VALUE(transferred_or_error))
+ 		io->bio.bi_status = errno_to_blk_status(transferred_or_error);
+-	io->bio.bi_end_io(&io->bio);
++	bio_endio(&io->bio);
+ 	BUILD_BUG_ON(offsetof(struct erofs_fscache_bio, io) != 0);
+ 	erofs_fscache_io_put(&io->io);
+ }
+@@ -218,7 +218,7 @@ void erofs_fscache_submit_bio(struct bio *bio)
+ 	if (!ret)
+ 		return;
+ 	bio->bi_status = errno_to_blk_status(ret);
+-	bio->bi_end_io(bio);
++	bio_endio(bio);
+ }
+ 
+ static int erofs_fscache_meta_read_folio(struct file *data, struct folio *folio)
 -- 
 2.51.0
 
