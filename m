@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0DC1FBEB0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F47432ED2A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301941; cv=none; b=cNgVCWTMw08gNHJcG0cB9VEKiElZxzCcSjSEpBFShgSDYfXB2PLK1mrc545ysEx91vx/s7gNSnw8TAEGJ5Dj72OIVYfL5o+yrDi/Wrpsm2H1yiTpc2lJoWVRgl3uGlpPZxXoaspJ3JGZ8c2iJJTCcfvcdFWw1b3bGJ2zNCazrfc=
+	t=1772301942; cv=none; b=SOozCI5PbxKWnNE+dU/+ECyupkz2PEUF4/nbM/USAazyvPechxFbdHaakPq9iXZS2Ov1lunyqRILJNZ0Vvx+j3Z2zuRebxOKC1gmq9CmuHaJjAvFXWxiSdvNEqDQgOSt88rIZtLjk/rOaGUvNY3Z50Iye6Dt9kYIZFNEtz86mKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301941; c=relaxed/simple;
-	bh=Q6GBT8Cn62mjIQ9xE9BwRUGdHw3n/wRUyD/DW5egki0=;
+	s=arc-20240116; t=1772301942; c=relaxed/simple;
+	bh=jscaZRorEQn4QV26UB6lCf2P8roqynxLWjwZvM5QmwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7PxzzzLs5pIcuJnrVo388C/eWFsgaUkTVR5s3+VvyR9R5zSuzHTe474b58Wthzkg3nQfrVzMgUwCzV6DUnD1b56IL7LqMW8aa1FA9CLzyykS60JVWqloByS77jw5qQGVtzHm5ofMX6iwjI3wSkqw4rxE4eZO5e8JbtAoycBlpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZrPOiSf4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=acMAvakk/N9cRNCyzAFslzNJuemeBZRlqnhlvbWBnzbc4MDB5hXgD1jqW/afFGefK038njpjLJyQcfh55Aq0VP3U30bhIIZeErAaAKcUGDPWQvYTaUNihQukXlwSWDCpZZuNNgKnZte4uvKUPO71qrMBm0zLxeibbnTqoA2MPmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fhXxH+U1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZrPOiSf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7174C19423;
-	Sat, 28 Feb 2026 18:05:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fhXxH+U1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72372C116D0;
+	Sat, 28 Feb 2026 18:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301941;
-	bh=Q6GBT8Cn62mjIQ9xE9BwRUGdHw3n/wRUyD/DW5egki0=;
+	bh=jscaZRorEQn4QV26UB6lCf2P8roqynxLWjwZvM5QmwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrPOiSf4JamIDwo6hc15DlOYlQvpEeJGZrKWxkY2fe67mLBYxl7/xe9EDdNZ7Rpwl
-	 DlDjPbEvFAD9G4jIdJQK+pTBp16hXoSmIybOReftJHbMI6HQlB+bgE2FfisZk6xcYj
-	 lRk6t+BKsXNVWE8wIN3nGMoVN31jEcukknZVXgIW1JlnoipJtgm5uB3YzT3nk9FlGg
-	 CS94N6YWSzoqjLB56fiCsRyOaU9r28dB/S3NZamB4hKaYdC+tp/jpc3iAHHuMyj4PR
-	 wgkm08U5BnikdbqrPn+QMythr5NLvlhrgZudkQFx7veM2FTRCzoQQhz4atcFq6K34K
-	 gnAKQPwMMb5vA==
+	b=fhXxH+U1nPLnB331K6YhnJfuqdONhQgLAR9xlS54uG8t3sgwOXwLqviZ02ujLy26m
+	 g8WX6C5fZHoFXuVlGYQ+AHBT3SwRngEzCDl5XxXi3gMtBxr8jQysyAzDlJ1ddUB6u5
+	 AzmFIimlET1dqdVyod3JEcrUSIElmcGnKd1sccNI1bng0l2uRnE+CVMZQsDmQfaUjV
+	 n5U1+n7KM3nfTZjc3bSVhM9XWdcSfbnTkRcqT06I8tDNq2Ye9UxL05kTNcKEQiQAtF
+	 /wramd34Z4Z9pbleeIrDgwxAQkOVUUJ/SsCiY2OE3XGSR7pw21LGF96+FU5kKBnk3J
+	 uAA8o8i6mlMUQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Florian Westphal <fw@strlen.de>,
+Cc: Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 378/385] netfilter: nf_conntrack_h323: don't pass uninitialised l3num value
-Date: Sat, 28 Feb 2026 13:00:00 -0500
-Message-ID: <20260228180011.1568201-378-sashal@kernel.org>
+Subject: [PATCH 6.12 379/385] ipvs: do not keep dest_dst if dev is going down
+Date: Sat, 28 Feb 2026 13:00:01 -0500
+Message-ID: <20260228180011.1568201-379-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -46,56 +47,127 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit a6d28eb8efe96b3e35c92efdf1bfacb0cccf541f ]
+[ Upstream commit 8fde939b0206afc1d5846217a01a16b9bc8c7896 ]
 
-Mihail Milev reports: Error: UNINIT (CWE-457):
- net/netfilter/nf_conntrack_h323_main.c:1189:2: var_decl:
-	Declaring variable "tuple" without initializer.
- net/netfilter/nf_conntrack_h323_main.c:1197:2:
-	uninit_use_in_call: Using uninitialized value "tuple.src.l3num" when calling "__nf_ct_expect_find".
- net/netfilter/nf_conntrack_expect.c:142:2:
-	read_value: Reading value "tuple->src.l3num" when calling "nf_ct_expect_dst_hash".
+There is race between the netdev notifier ip_vs_dst_event()
+and the code that caches dst with dev that is going down.
+As the FIB can be notified for the closed device after our
+handler finishes, it is possible valid route to be returned
+and cached resuling in a leaked dev reference until the dest
+is not removed.
 
-  1195|   	tuple.dst.protonum = IPPROTO_TCP;
-  1196|
-  1197|-> 	exp = __nf_ct_expect_find(net, nf_ct_zone(ct), &tuple);
-  1198|   	if (exp && exp->master == ct)
-  1199|   		return exp;
+To prevent new dest_dst to be attached to dest just after the
+handler dropped the old one, add a netif_running() check
+to make sure the notifier handler is not currently running
+for device that is closing.
 
-Switch this to a C99 initialiser and set the l3num value.
-
-Fixes: f587de0e2feb ("[NETFILTER]: nf_conntrack/nf_nat: add H.323 helper port")
+Fixes: 7a4f0761fce3 ("IPVS: init and cleanup restructuring")
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_h323_main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/netfilter/ipvs/ip_vs_xmit.c | 46 ++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 10 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_h323_main.c b/net/netfilter/nf_conntrack_h323_main.c
-index 5a9bce24f3c3d..ed983421e2eb2 100644
---- a/net/netfilter/nf_conntrack_h323_main.c
-+++ b/net/netfilter/nf_conntrack_h323_main.c
-@@ -1186,13 +1186,13 @@ static struct nf_conntrack_expect *find_expect(struct nf_conn *ct,
- {
- 	struct net *net = nf_ct_net(ct);
- 	struct nf_conntrack_expect *exp;
--	struct nf_conntrack_tuple tuple;
-+	struct nf_conntrack_tuple tuple = {
-+		.src.l3num = nf_ct_l3num(ct),
-+		.dst.protonum = IPPROTO_TCP,
-+		.dst.u.tcp.port = port,
-+	};
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index fa2db17f6298b..8892f261451e9 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -295,6 +295,12 @@ static inline bool decrement_ttl(struct netns_ipvs *ipvs,
+ 	return true;
+ }
  
--	memset(&tuple.src.u3, 0, sizeof(tuple.src.u3));
--	tuple.src.u.tcp.port = 0;
- 	memcpy(&tuple.dst.u3, addr, sizeof(tuple.dst.u3));
--	tuple.dst.u.tcp.port = port;
--	tuple.dst.protonum = IPPROTO_TCP;
++/* rt has device that is down */
++static bool rt_dev_is_down(const struct net_device *dev)
++{
++	return dev && !netif_running(dev);
++}
++
+ /* Get route to destination or remote server */
+ static int
+ __ip_vs_get_out_rt(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
+@@ -310,9 +316,11 @@ __ip_vs_get_out_rt(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
  
- 	exp = __nf_ct_expect_find(net, nf_ct_zone(ct), &tuple);
- 	if (exp && exp->master == ct)
+ 	if (dest) {
+ 		dest_dst = __ip_vs_dst_check(dest);
+-		if (likely(dest_dst))
++		if (likely(dest_dst)) {
+ 			rt = dst_rtable(dest_dst->dst_cache);
+-		else {
++			if (ret_saddr)
++				*ret_saddr = dest_dst->dst_saddr.ip;
++		} else {
+ 			dest_dst = ip_vs_dest_dst_alloc();
+ 			spin_lock_bh(&dest->dst_lock);
+ 			if (!dest_dst) {
+@@ -328,14 +336,22 @@ __ip_vs_get_out_rt(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
+ 				ip_vs_dest_dst_free(dest_dst);
+ 				goto err_unreach;
+ 			}
+-			__ip_vs_dst_set(dest, dest_dst, &rt->dst, 0);
++			/* It is forbidden to attach dest->dest_dst if
++			 * device is going down.
++			 */
++			if (!rt_dev_is_down(dst_dev_rcu(&rt->dst)))
++				__ip_vs_dst_set(dest, dest_dst, &rt->dst, 0);
++			else
++				noref = 0;
+ 			spin_unlock_bh(&dest->dst_lock);
+ 			IP_VS_DBG(10, "new dst %pI4, src %pI4, refcnt=%d\n",
+ 				  &dest->addr.ip, &dest_dst->dst_saddr.ip,
+ 				  rcuref_read(&rt->dst.__rcuref));
++			if (ret_saddr)
++				*ret_saddr = dest_dst->dst_saddr.ip;
++			if (!noref)
++				ip_vs_dest_dst_free(dest_dst);
+ 		}
+-		if (ret_saddr)
+-			*ret_saddr = dest_dst->dst_saddr.ip;
+ 	} else {
+ 		noref = 0;
+ 
+@@ -472,9 +488,11 @@ __ip_vs_get_out_rt_v6(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
+ 
+ 	if (dest) {
+ 		dest_dst = __ip_vs_dst_check(dest);
+-		if (likely(dest_dst))
++		if (likely(dest_dst)) {
+ 			rt = dst_rt6_info(dest_dst->dst_cache);
+-		else {
++			if (ret_saddr)
++				*ret_saddr = dest_dst->dst_saddr.in6;
++		} else {
+ 			u32 cookie;
+ 
+ 			dest_dst = ip_vs_dest_dst_alloc();
+@@ -495,14 +513,22 @@ __ip_vs_get_out_rt_v6(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
+ 			}
+ 			rt = dst_rt6_info(dst);
+ 			cookie = rt6_get_cookie(rt);
+-			__ip_vs_dst_set(dest, dest_dst, &rt->dst, cookie);
++			/* It is forbidden to attach dest->dest_dst if
++			 * device is going down.
++			 */
++			if (!rt_dev_is_down(dst_dev_rcu(&rt->dst)))
++				__ip_vs_dst_set(dest, dest_dst, &rt->dst, cookie);
++			else
++				noref = 0;
+ 			spin_unlock_bh(&dest->dst_lock);
+ 			IP_VS_DBG(10, "new dst %pI6, src %pI6, refcnt=%d\n",
+ 				  &dest->addr.in6, &dest_dst->dst_saddr.in6,
+ 				  rcuref_read(&rt->dst.__rcuref));
++			if (ret_saddr)
++				*ret_saddr = dest_dst->dst_saddr.in6;
++			if (!noref)
++				ip_vs_dest_dst_free(dest_dst);
+ 		}
+-		if (ret_saddr)
+-			*ret_saddr = dest_dst->dst_saddr.in6;
+ 	} else {
+ 		noref = 0;
+ 		dst = __ip_vs_route_output_v6(net, daddr, ret_saddr, do_xfrm,
 -- 
 2.51.0
 
