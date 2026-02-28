@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6172632AABE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F92B332628
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301224; cv=none; b=c865jRZyoDy4Ramxl6UZMG3viTV8079FevcHO/dAwIN4D2j6PI49tx1p+Zgug+TOFyjDJksCfqAHA/bZgnJ08CB4JXTHArJifkQ2dDBHIDqByskpHLTxZkC5qSvwemkWmycs9OOCmL1LV1yuytBNFUn85Mf/O24lfWsdcdrFAjM=
+	t=1772301225; cv=none; b=gV51PTEHxG5RkQ6IwuBjE83S99yFIGno6d3IusPT2+VJH8I+ZpdUlDujhVHFpbZ9Ets4SxwfV2y2IUe9PDlCFHHkjmOYVPvtYt3ihhcscDgHFvFGuM9xrwLaiYfkFOhU2+iQqfGdhGwt2EnQVjdZiPmtF7aRlFfw86HeMVSJNik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301224; c=relaxed/simple;
-	bh=yCfNBq7Fo9e+pBVdYI9qAJ5rU2Im4hPIyV8dGPCuDkE=;
+	s=arc-20240116; t=1772301225; c=relaxed/simple;
+	bh=Wn5Wil5SZijED6HEpJr8NWNLSVhz3vk4CQ5JQd3wZ7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6SzzKbxHSR1W+gyLUn2uk0kpOYwHvHliWjTGeGeLvrbjms8W5xRrQRjlHubxlUVX3o8WJafWDKcy2Y1EigGEfc72+cr9ZT3rmqaWHFKxDBXAM6TKoG5BEPm8joJliQVKTGGcXT3uFLgUO+CRN/TW+eOMK2hHzfXBy2SjQvgt3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RzharDb8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Unwdxk/VaVlHu424X73K3b0TpzQ7My6ZayQoj7RPGdmAOaXxRYXvbplRyj47j4fvLWKTUXtXwZGNby1aFQRwp4edbVuqUkbN//LikIBCY0cTKKIJ9fRoQD7iUyUANRUZt0HkQMEYaSfb0BxS25qCPqCFZwHPZQRqete/Ew6di40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QGNxI0XH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RzharDb8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43D2C116D0;
-	Sat, 28 Feb 2026 17:53:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QGNxI0XH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89523C19423;
+	Sat, 28 Feb 2026 17:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301224;
-	bh=yCfNBq7Fo9e+pBVdYI9qAJ5rU2Im4hPIyV8dGPCuDkE=;
+	s=k20201202; t=1772301225;
+	bh=Wn5Wil5SZijED6HEpJr8NWNLSVhz3vk4CQ5JQd3wZ7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RzharDb8YxqqmUPkAsncTzvo/1a5ehrP+wJgaM2NMKZd2zksj83nkXRWpDZNXtaPQ
-	 xcSLfe4cAylYAdezWLjiPj+kMz4TsSpycIAitAaT05ZrkCDMYSWOJFC8/siRcxqGaj
-	 XnyoElbgM7NDDsZ75a3lkqiZnt1GKqZBzWilXbT4SOW6fToi5sKpO45WU7Mlvvnvpf
-	 ZyWLrTilDxpas1sSX/5YeLOoodRI/vAYwqSb5rCcM6Jd57/pYR27AX8sZxDE/GHd67
-	 Pv4McXnBBufSPTQUMJyOag/n7tkrqE39/7A3+yjEItzPprZX1SVFqmUdnq9gZ3eirQ
-	 /8pDwsKW2Ynrw==
+	b=QGNxI0XHV9TbYD/lkhzlDpUckdB71I3BRJ74lW+haCmf9iRRWTFpr0XR3i2FwpDSB
+	 J+WcB1xlDXVGd/v2zVzuMMAImJ94c38IGw+h5gp1EuKNGfuPD3sOpXC2rg361463la
+	 Bd3aDxqzlN0sfaFIoj6r3B1YtJnROhVMnscE3qIrK8GJ4uQTRpFk6OJBFuCZYpT8nn
+	 ddUGWGKOayDiCNsz0px/at3A0JN+m6T1nPZigK8pjL94XJgoJsJlVgpeclDz30g6++
+	 3/gR15718lRQ+QBMVXZOrZ6UlHHGdh9hUTQJrxgaTDvwlNYLGcC9YuWYnpW/8QBFZf
+	 Ds5zjbiEE1ltw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	syzbot+937b5bbb6a815b3e5d0b@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 401/752] ipv6: Move ipv6_fl_list from ipv6_pinfo to inet_sock.
-Date: Sat, 28 Feb 2026 12:41:52 -0500
-Message-ID: <20260228174750.1542406-401-sashal@kernel.org>
+Subject: [PATCH 6.18 402/752] tcp: fix potential race in tcp_v6_syn_recv_sock()
+Date: Sat, 28 Feb 2026 12:41:53 -0500
+Message-ID: <20260228174750.1542406-402-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,459 +49,310 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1c17f4373d4db1e1f0ebd3ddcd8e7a642927a826 ]
+[ Upstream commit 858d2a4f67ff69e645a43487ef7ea7f28f06deae ]
 
-In {tcp6,udp6,raw6}_sock, struct ipv6_pinfo is always placed at
-the beginning of a new cache line because
+Code in tcp_v6_syn_recv_sock() after the call to tcp_v4_syn_recv_sock()
+is done too late.
 
-  1. __alignof__(struct tcp_sock) is 64 due to ____cacheline_aligned
-     of __cacheline_group_begin(tcp_sock_write_tx)
+After tcp_v4_syn_recv_sock(), the child socket is already visible
+from TCP ehash table and other cpus might use it.
 
-  2. __alignof__(struct udp_sock) is 64 due to ____cacheline_aligned
-     of struct numa_drop_counters
+Since newinet->pinet6 is still pointing to the listener ipv6_pinfo
+bad things can happen as syzbot found.
 
-  3. in raw6_sock, struct numa_drop_counters is placed before
-     struct ipv6_pinfo
+Move the problematic code in tcp_v6_mapped_child_init()
+and call this new helper from tcp_v4_syn_recv_sock() before
+the ehash insertion.
 
-.  struct ipv6_pinfo is 136 bytes, but the last cache line is
-only used by ipv6_fl_list:
+This allows the removal of one tcp_sync_mss(), since
+tcp_v4_syn_recv_sock() will call it with the correct
+context.
 
-  $ pahole -C ipv6_pinfo vmlinux
-  struct ipv6_pinfo {
-  ...
-  	/* --- cacheline 2 boundary (128 bytes) --- */
-  	struct ipv6_fl_socklist *  ipv6_fl_list;         /*   128     8 */
-
-  	/* size: 136, cachelines: 3, members: 23 */
-
-Let's move ipv6_fl_list from struct ipv6_pinfo to struct inet_sock
-to save a full cache line for {tcp6,udp6,raw6}_sock.
-
-Now, struct ipv6_pinfo is 128 bytes, and {tcp6,udp6,raw6}_sock have
-64 bytes less, while {tcp,udp,raw}_sock retain the same size.
-
-Before:
-
-  # grep -E "^(RAW|UDP[^L\-]|TCP)" /proc/slabinfo | awk '{print $1, "\t", $4}'
-  RAWv6 	 1408
-  UDPv6 	 1472
-  TCPv6 	 2560
-  RAW 		 1152
-  UDP	 	 1280
-  TCP 		 2368
-
-After:
-
-  # grep -E "^(RAW|UDP[^L\-]|TCP)" /proc/slabinfo | awk '{print $1, "\t", $4}'
-  RAWv6 	 1344
-  UDPv6 	 1408
-  TCPv6 	 2496
-  RAW 		 1152
-  UDP	 	 1280
-  TCP 		 2368
-
-Also, ipv6_fl_list and inet_flags (SNDFLOW bit) are placed in the
-same cache line.
-
-  $ pahole -C inet_sock vmlinux
-  ...
-  	/* --- cacheline 11 boundary (704 bytes) was 56 bytes ago --- */
-  	struct ipv6_pinfo *        pinet6;               /*   760     8 */
-  	/* --- cacheline 12 boundary (768 bytes) --- */
-  	struct ipv6_fl_socklist *  ipv6_fl_list;         /*   768     8 */
-  	unsigned long              inet_flags;           /*   776     8 */
-
-Doc churn is due to the insufficient Type column (only 1 space short).
-
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20251014224210.2964778-1-kuniyu@google.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+937b5bbb6a815b3e5d0b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69949275.050a0220.2eeac1.0145.GAE@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260217161205.2079883-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 858d2a4f67ff ("tcp: fix potential race in tcp_v6_syn_recv_sock()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../networking/net_cachelines/inet_sock.rst   | 79 ++++++++++---------
- .../chelsio/inline_crypto/chtls/chtls_cm.c    |  4 +-
- include/linux/ipv6.h                          |  1 -
- include/net/inet_sock.h                       |  1 +
- net/ipv6/ip6_flowlabel.c                      | 44 +++++------
- net/ipv6/tcp_ipv6.c                           | 13 +--
- net/sctp/ipv6.c                               |  8 +-
- 7 files changed, 76 insertions(+), 74 deletions(-)
+ include/net/inet_connection_sock.h |  4 +-
+ include/net/tcp.h                  |  4 +-
+ net/ipv4/syncookies.c              |  2 +-
+ net/ipv4/tcp_fastopen.c            |  2 +-
+ net/ipv4/tcp_ipv4.c                |  8 ++-
+ net/ipv4/tcp_minisocks.c           |  2 +-
+ net/ipv6/tcp_ipv6.c                | 98 +++++++++++++-----------------
+ net/mptcp/subflow.c                |  6 +-
+ net/smc/af_smc.c                   |  6 +-
+ 9 files changed, 66 insertions(+), 66 deletions(-)
 
-diff --git a/Documentation/networking/net_cachelines/inet_sock.rst b/Documentation/networking/net_cachelines/inet_sock.rst
-index b11bf48fa2b36..4c72a28a7012e 100644
---- a/Documentation/networking/net_cachelines/inet_sock.rst
-+++ b/Documentation/networking/net_cachelines/inet_sock.rst
-@@ -5,42 +5,43 @@
- inet_sock struct fast path usage breakdown
- ==========================================
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index b4b8866476075..afec146b8bafd 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -42,7 +42,9 @@ struct inet_connection_sock_af_ops {
+ 				      struct request_sock *req,
+ 				      struct dst_entry *dst,
+ 				      struct request_sock *req_unhash,
+-				      bool *own_req);
++				      bool *own_req,
++				      void (*opt_child_init)(struct sock *newsk,
++							     const struct sock *sk));
+ 	u16	    net_header_len;
+ 	int	    (*setsockopt)(struct sock *sk, int level, int optname,
+ 				  sockptr_t optval, unsigned int optlen);
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 3c84d95cdba81..aa4d24c42a270 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -528,7 +528,9 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 				  struct request_sock *req,
+ 				  struct dst_entry *dst,
+ 				  struct request_sock *req_unhash,
+-				  bool *own_req);
++				  bool *own_req,
++				  void (*opt_child_init)(struct sock *newsk,
++							 const struct sock *sk));
+ int tcp_v4_do_rcv(struct sock *sk, struct sk_buff *skb);
+ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len);
+ int tcp_connect(struct sock *sk);
+diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
+index 569befcf021ba..061751aabc8e1 100644
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -203,7 +203,7 @@ struct sock *tcp_get_cookie_sock(struct sock *sk, struct sk_buff *skb,
+ 	bool own_req;
  
--======================= ===================== =================== =================== ======================================================================================================
--Type                    Name                  fastpath_tx_access  fastpath_rx_access  comment
--======================= ===================== =================== =================== ======================================================================================================
--struct sock             sk                    read_mostly         read_mostly         tcp_init_buffer_space,tcp_init_transfer,tcp_finish_connect,tcp_connect,tcp_send_rcvq,tcp_send_syn_data
--struct ipv6_pinfo*      pinet6
--be16                    inet_sport            read_mostly                             __tcp_transmit_skb
--be32                    inet_daddr            read_mostly                             ip_select_ident_segs
--be32                    inet_rcv_saddr
--be16                    inet_dport            read_mostly                             __tcp_transmit_skb
--u16                     inet_num
--be32                    inet_saddr
--s16                     uc_ttl                read_mostly                             __ip_queue_xmit/ip_select_ttl
--u16                     cmsg_flags
--struct ip_options_rcu*  inet_opt              read_mostly                             __ip_queue_xmit
--u16                     inet_id               read_mostly                             ip_select_ident_segs
--u8                      tos                   read_mostly                             ip_queue_xmit
--u8                      min_ttl
--u8                      mc_ttl
--u8                      pmtudisc
--u8:1                    recverr
--u8:1                    is_icsk
--u8:1                    freebind
--u8:1                    hdrincl
--u8:1                    mc_loop
--u8:1                    transparent
--u8:1                    mc_all
--u8:1                    nodefrag
--u8:1                    bind_address_no_port
--u8:1                    recverr_rfc4884
--u8:1                    defer_connect         read_mostly                             tcp_sendmsg_fastopen
--u8                      rcv_tos
--u8                      convert_csum
--int                     uc_index
--int                     mc_index
--be32                    mc_addr
--struct ip_mc_socklist*  mc_list
--struct inet_cork_full   cork                  read_mostly                             __tcp_transmit_skb
--struct                  local_port_range
--======================= ===================== =================== =================== ======================================================================================================
-+======================== ===================== =================== =================== ======================================================================================================
-+Type                     Name                  fastpath_tx_access  fastpath_rx_access  comment
-+======================== ===================== =================== =================== ======================================================================================================
-+struct sock              sk                    read_mostly         read_mostly         tcp_init_buffer_space,tcp_init_transfer,tcp_finish_connect,tcp_connect,tcp_send_rcvq,tcp_send_syn_data
-+struct ipv6_pinfo*       pinet6
-+struct ipv6_fl_socklist* ipv6_fl_list          read_mostly                             tcp_v6_connect,__ip6_datagram_connect,udpv6_sendmsg,rawv6_sendmsg
-+be16                     inet_sport            read_mostly                             __tcp_transmit_skb
-+be32                     inet_daddr            read_mostly                             ip_select_ident_segs
-+be32                     inet_rcv_saddr
-+be16                     inet_dport            read_mostly                             __tcp_transmit_skb
-+u16                      inet_num
-+be32                     inet_saddr
-+s16                      uc_ttl                read_mostly                             __ip_queue_xmit/ip_select_ttl
-+u16                      cmsg_flags
-+struct ip_options_rcu*   inet_opt              read_mostly                             __ip_queue_xmit
-+u16                      inet_id               read_mostly                             ip_select_ident_segs
-+u8                       tos                   read_mostly                             ip_queue_xmit
-+u8                       min_ttl
-+u8                       mc_ttl
-+u8                       pmtudisc
-+u8:1                     recverr
-+u8:1                     is_icsk
-+u8:1                     freebind
-+u8:1                     hdrincl
-+u8:1                     mc_loop
-+u8:1                     transparent
-+u8:1                     mc_all
-+u8:1                     nodefrag
-+u8:1                     bind_address_no_port
-+u8:1                     recverr_rfc4884
-+u8:1                     defer_connect         read_mostly                             tcp_sendmsg_fastopen
-+u8                       rcv_tos
-+u8                       convert_csum
-+int                      uc_index
-+int                      mc_index
-+be32                     mc_addr
-+struct ip_mc_socklist*   mc_list
-+struct inet_cork_full    cork                  read_mostly                             __tcp_transmit_skb
-+struct                   local_port_range
-+======================== ===================== =================== =================== ======================================================================================================
-diff --git a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
-index 4ee970f3bad6e..ee0154337a9c5 100644
---- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
-+++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
-@@ -1199,12 +1199,12 @@ static struct sock *chtls_recv_sock(struct sock *lsk,
- 		struct ipv6_pinfo *newnp = inet6_sk(newsk);
- 		struct ipv6_pinfo *np = inet6_sk(lsk);
+ 	child = icsk->icsk_af_ops->syn_recv_sock(sk, skb, req, dst,
+-						 NULL, &own_req);
++						 NULL, &own_req, NULL);
+ 	if (child) {
+ 		refcount_set(&req->rsk_refcnt, 1);
+ 		sock_rps_save_rxhash(child, skb);
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index 7d945a527daf0..444306af444ae 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -247,7 +247,7 @@ static struct sock *tcp_fastopen_create_child(struct sock *sk,
+ 	bool own_req;
  
--		inet_sk(newsk)->pinet6 = &newtcp6sk->inet6;
-+		newinet->pinet6 = &newtcp6sk->inet6;
-+		newinet->ipv6_fl_list = NULL;
- 		memcpy(newnp, np, sizeof(struct ipv6_pinfo));
- 		newsk->sk_v6_daddr = treq->ir_v6_rmt_addr;
- 		newsk->sk_v6_rcv_saddr = treq->ir_v6_loc_addr;
- 		inet6_sk(newsk)->saddr = treq->ir_v6_loc_addr;
--		newnp->ipv6_fl_list = NULL;
- 		newnp->pktoptions = NULL;
- 		newsk->sk_bound_dev_if = treq->ir_iif;
- 		newinet->inet_opt = NULL;
-diff --git a/include/linux/ipv6.h b/include/linux/ipv6.h
-index 43b7bb8287388..7294e4e89b797 100644
---- a/include/linux/ipv6.h
-+++ b/include/linux/ipv6.h
-@@ -271,7 +271,6 @@ struct ipv6_pinfo {
+ 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
+-							 NULL, &own_req);
++							 NULL, &own_req, NULL);
+ 	if (!child)
+ 		return NULL;
  
- 	struct ipv6_mc_socklist	__rcu *ipv6_mc_list;
- 	struct ipv6_ac_socklist	*ipv6_ac_list;
--	struct ipv6_fl_socklist __rcu *ipv6_fl_list;
- };
- 
- /* We currently use available bits from inet_sk(sk)->inet_flags,
-diff --git a/include/net/inet_sock.h b/include/net/inet_sock.h
-index 1086256549faa..b6ec08072533a 100644
---- a/include/net/inet_sock.h
-+++ b/include/net/inet_sock.h
-@@ -214,6 +214,7 @@ struct inet_sock {
- 	struct sock		sk;
- #if IS_ENABLED(CONFIG_IPV6)
- 	struct ipv6_pinfo	*pinet6;
-+	struct ipv6_fl_socklist __rcu *ipv6_fl_list;
- #endif
- 	/* Socket demultiplex comparisons on incoming packets. */
- #define inet_daddr		sk.__sk_common.skc_daddr
-diff --git a/net/ipv6/ip6_flowlabel.c b/net/ipv6/ip6_flowlabel.c
-index a3ff575798dda..60d0be47a9f31 100644
---- a/net/ipv6/ip6_flowlabel.c
-+++ b/net/ipv6/ip6_flowlabel.c
-@@ -66,8 +66,8 @@ EXPORT_SYMBOL(ipv6_flowlabel_exclusive);
- 	     fl != NULL;					\
- 	     fl = rcu_dereference(fl->next))
- 
--#define for_each_sk_fl_rcu(np, sfl)				\
--	for (sfl = rcu_dereference(np->ipv6_fl_list);	\
-+#define for_each_sk_fl_rcu(sk, sfl)				\
-+	for (sfl = rcu_dereference(inet_sk(sk)->ipv6_fl_list);	\
- 	     sfl != NULL;					\
- 	     sfl = rcu_dereference(sfl->next))
- 
-@@ -262,12 +262,11 @@ static struct ip6_flowlabel *fl_intern(struct net *net,
- struct ip6_flowlabel *__fl6_sock_lookup(struct sock *sk, __be32 label)
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index b1fcf3e4e1ce0..0fbf13dcf3c2b 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1756,7 +1756,9 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 				  struct request_sock *req,
+ 				  struct dst_entry *dst,
+ 				  struct request_sock *req_unhash,
+-				  bool *own_req)
++				  bool *own_req,
++				  void (*opt_child_init)(struct sock *newsk,
++							 const struct sock *sk))
  {
- 	struct ipv6_fl_socklist *sfl;
--	struct ipv6_pinfo *np = inet6_sk(sk);
- 
- 	label &= IPV6_FLOWLABEL_MASK;
- 
- 	rcu_read_lock();
--	for_each_sk_fl_rcu(np, sfl) {
-+	for_each_sk_fl_rcu(sk, sfl) {
- 		struct ip6_flowlabel *fl = sfl->fl;
- 
- 		if (fl->label == label && atomic_inc_not_zero(&fl->users)) {
-@@ -283,16 +282,16 @@ EXPORT_SYMBOL_GPL(__fl6_sock_lookup);
- 
- void fl6_free_socklist(struct sock *sk)
- {
--	struct ipv6_pinfo *np = inet6_sk(sk);
-+	struct inet_sock *inet = inet_sk(sk);
- 	struct ipv6_fl_socklist *sfl;
- 
--	if (!rcu_access_pointer(np->ipv6_fl_list))
-+	if (!rcu_access_pointer(inet->ipv6_fl_list))
- 		return;
- 
- 	spin_lock_bh(&ip6_sk_fl_lock);
--	while ((sfl = rcu_dereference_protected(np->ipv6_fl_list,
-+	while ((sfl = rcu_dereference_protected(inet->ipv6_fl_list,
- 						lockdep_is_held(&ip6_sk_fl_lock))) != NULL) {
--		np->ipv6_fl_list = sfl->next;
-+		inet->ipv6_fl_list = sfl->next;
- 		spin_unlock_bh(&ip6_sk_fl_lock);
- 
- 		fl_release(sfl->fl);
-@@ -470,16 +469,15 @@ fl_create(struct net *net, struct sock *sk, struct in6_flowlabel_req *freq,
- 
- static int mem_check(struct sock *sk)
- {
--	struct ipv6_pinfo *np = inet6_sk(sk);
--	struct ipv6_fl_socklist *sfl;
- 	int room = FL_MAX_SIZE - atomic_read(&fl_size);
-+	struct ipv6_fl_socklist *sfl;
- 	int count = 0;
- 
- 	if (room > FL_MAX_SIZE - FL_MAX_PER_SOCK)
- 		return 0;
- 
- 	rcu_read_lock();
--	for_each_sk_fl_rcu(np, sfl)
-+	for_each_sk_fl_rcu(sk, sfl)
- 		count++;
- 	rcu_read_unlock();
- 
-@@ -492,13 +490,15 @@ static int mem_check(struct sock *sk)
- 	return 0;
- }
- 
--static inline void fl_link(struct ipv6_pinfo *np, struct ipv6_fl_socklist *sfl,
--		struct ip6_flowlabel *fl)
-+static inline void fl_link(struct sock *sk, struct ipv6_fl_socklist *sfl,
-+			   struct ip6_flowlabel *fl)
- {
-+	struct inet_sock *inet = inet_sk(sk);
-+
- 	spin_lock_bh(&ip6_sk_fl_lock);
- 	sfl->fl = fl;
--	sfl->next = np->ipv6_fl_list;
--	rcu_assign_pointer(np->ipv6_fl_list, sfl);
-+	sfl->next = inet->ipv6_fl_list;
-+	rcu_assign_pointer(inet->ipv6_fl_list, sfl);
- 	spin_unlock_bh(&ip6_sk_fl_lock);
- }
- 
-@@ -520,7 +520,7 @@ int ipv6_flowlabel_opt_get(struct sock *sk, struct in6_flowlabel_req *freq,
- 
- 	rcu_read_lock();
- 
--	for_each_sk_fl_rcu(np, sfl) {
-+	for_each_sk_fl_rcu(sk, sfl) {
- 		if (sfl->fl->label == (np->flow_label & IPV6_FLOWLABEL_MASK)) {
- 			spin_lock_bh(&ip6_fl_lock);
- 			freq->flr_label = sfl->fl->label;
-@@ -559,7 +559,7 @@ static int ipv6_flowlabel_put(struct sock *sk, struct in6_flowlabel_req *freq)
+ 	struct inet_request_sock *ireq;
+ 	bool found_dup_sk = false;
+@@ -1808,6 +1810,10 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
  	}
+ 	sk_setup_caps(newsk, dst);
  
- 	spin_lock_bh(&ip6_sk_fl_lock);
--	for (sflp = &np->ipv6_fl_list;
-+	for (sflp = &inet_sk(sk)->ipv6_fl_list;
- 	     (sfl = socklist_dereference(*sflp)) != NULL;
- 	     sflp = &sfl->next) {
- 		if (sfl->fl->label == freq->flr_label)
-@@ -579,13 +579,12 @@ static int ipv6_flowlabel_put(struct sock *sk, struct in6_flowlabel_req *freq)
++#if IS_ENABLED(CONFIG_IPV6)
++	if (opt_child_init)
++		opt_child_init(newsk, sk);
++#endif
+ 	tcp_ca_openreq_child(newsk, dst);
  
- static int ipv6_flowlabel_renew(struct sock *sk, struct in6_flowlabel_req *freq)
- {
--	struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct net *net = sock_net(sk);
- 	struct ipv6_fl_socklist *sfl;
- 	int err;
+ 	tcp_sync_mss(newsk, dst_mtu(dst));
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index 1fade94813c62..95c30b6ec44cd 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -911,7 +911,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 	 * socket is created, wait for troubles.
+ 	 */
+ 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
+-							 req, &own_req);
++							 req, &own_req, NULL);
+ 	if (!child)
+ 		goto listen_overflow;
  
- 	rcu_read_lock();
--	for_each_sk_fl_rcu(np, sfl) {
-+	for_each_sk_fl_rcu(sk, sfl) {
- 		if (sfl->fl->label == freq->flr_label) {
- 			err = fl6_renew(sfl->fl, freq->flr_linger,
- 					freq->flr_expires);
-@@ -614,7 +613,6 @@ static int ipv6_flowlabel_get(struct sock *sk, struct in6_flowlabel_req *freq,
- {
- 	struct ipv6_fl_socklist *sfl, *sfl1 = NULL;
- 	struct ip6_flowlabel *fl, *fl1 = NULL;
--	struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct net *net = sock_net(sk);
- 	int err;
- 
-@@ -645,7 +643,7 @@ static int ipv6_flowlabel_get(struct sock *sk, struct in6_flowlabel_req *freq,
- 	if (freq->flr_label) {
- 		err = -EEXIST;
- 		rcu_read_lock();
--		for_each_sk_fl_rcu(np, sfl) {
-+		for_each_sk_fl_rcu(sk, sfl) {
- 			if (sfl->fl->label == freq->flr_label) {
- 				if (freq->flr_flags & IPV6_FL_F_EXCL) {
- 					rcu_read_unlock();
-@@ -682,7 +680,7 @@ static int ipv6_flowlabel_get(struct sock *sk, struct in6_flowlabel_req *freq,
- 				fl1->linger = fl->linger;
- 			if ((long)(fl->expires - fl1->expires) > 0)
- 				fl1->expires = fl->expires;
--			fl_link(np, sfl1, fl1);
-+			fl_link(sk, sfl1, fl1);
- 			fl_free(fl);
- 			return 0;
- 
-@@ -716,7 +714,7 @@ static int ipv6_flowlabel_get(struct sock *sk, struct in6_flowlabel_req *freq,
- 		}
- 	}
- 
--	fl_link(np, sfl1, fl);
-+	fl_link(sk, sfl1, fl);
- 	return 0;
- done:
- 	fl_free(fl);
 diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 2e07dba293b41..0937d69658310 100644
+index 0937d69658310..5faa46f4cf9a2 100644
 --- a/net/ipv6/tcp_ipv6.c
 +++ b/net/ipv6/tcp_ipv6.c
-@@ -1387,7 +1387,9 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- 		if (!newsk)
- 			return NULL;
+@@ -1356,11 +1356,48 @@ static void tcp_v6_restore_cb(struct sk_buff *skb)
+ 		sizeof(struct inet6_skb_parm));
+ }
  
--		inet_sk(newsk)->pinet6 = tcp_inet6_sk(newsk);
-+		newinet = inet_sk(newsk);
-+		newinet->pinet6 = tcp_inet6_sk(newsk);
-+		newinet->ipv6_fl_list = NULL;
- 
- 		newnp = tcp_inet6_sk(newsk);
- 		newtp = tcp_sk(newsk);
-@@ -1406,7 +1408,6 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- 
- 		newnp->ipv6_mc_list = NULL;
- 		newnp->ipv6_ac_list = NULL;
--		newnp->ipv6_fl_list = NULL;
- 		newnp->pktoptions  = NULL;
- 		newnp->opt	   = NULL;
- 		newnp->mcast_oif   = inet_iif(skb);
-@@ -1454,10 +1455,12 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- 	newsk->sk_gso_type = SKB_GSO_TCPV6;
- 	inet6_sk_rx_dst_set(newsk, skb);
- 
--	inet_sk(newsk)->pinet6 = tcp_inet6_sk(newsk);
-+	newinet = inet_sk(newsk);
-+	newinet->pinet6 = tcp_inet6_sk(newsk);
++/* Called from tcp_v4_syn_recv_sock() for v6_mapped children. */
++static void tcp_v6_mapped_child_init(struct sock *newsk, const struct sock *sk)
++{
++	struct inet_sock *newinet = inet_sk(newsk);
++	struct ipv6_pinfo *newnp;
++
++	newinet->pinet6 = newnp = tcp_inet6_sk(newsk);
 +	newinet->ipv6_fl_list = NULL;
-+	newinet->inet_opt = NULL;
- 
- 	newtp = tcp_sk(newsk);
--	newinet = inet_sk(newsk);
- 	newnp = tcp_inet6_sk(newsk);
- 
- 	memcpy(newnp, np, sizeof(struct ipv6_pinfo));
-@@ -1470,10 +1473,8 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- 
- 	   First: no IPv4 options.
- 	 */
--	newinet->inet_opt = NULL;
- 	newnp->ipv6_mc_list = NULL;
- 	newnp->ipv6_ac_list = NULL;
--	newnp->ipv6_fl_list = NULL;
- 
- 	/* Clone RX bits */
- 	newnp->rxopt.all = np->rxopt.all;
-diff --git a/net/sctp/ipv6.c b/net/sctp/ipv6.c
-index 568ff8797c393..d725b21587588 100644
---- a/net/sctp/ipv6.c
-+++ b/net/sctp/ipv6.c
-@@ -782,9 +782,10 @@ static struct sock *sctp_v6_create_accept_sk(struct sock *sk,
- 					     struct sctp_association *asoc,
- 					     bool kern)
++
++	memcpy(newnp, tcp_inet6_sk(sk), sizeof(struct ipv6_pinfo));
++
++	newnp->saddr = newsk->sk_v6_rcv_saddr;
++
++	inet_csk(newsk)->icsk_af_ops = &ipv6_mapped;
++	if (sk_is_mptcp(newsk))
++		mptcpv6_handle_mapped(newsk, true);
++	newsk->sk_backlog_rcv = tcp_v4_do_rcv;
++#if defined(CONFIG_TCP_MD5SIG) || defined(CONFIG_TCP_AO)
++	tcp_sk(newsk)->af_specific = &tcp_sock_ipv6_mapped_specific;
++#endif
++
++	newnp->ipv6_mc_list = NULL;
++	newnp->ipv6_ac_list = NULL;
++	newnp->pktoptions  = NULL;
++	newnp->opt	   = NULL;
++
++	/* tcp_v4_syn_recv_sock() has initialized newinet->mc_{index,ttl} */
++	newnp->mcast_oif   = newinet->mc_index;
++	newnp->mcast_hops  = newinet->mc_ttl;
++
++	newnp->rcv_flowinfo = 0;
++	if (inet6_test_bit(REPFLOW, sk))
++		newnp->flow_label = 0;
++}
++
+ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 					 struct request_sock *req,
+ 					 struct dst_entry *dst,
+ 					 struct request_sock *req_unhash,
+-					 bool *own_req)
++					 bool *own_req,
++					 void (*opt_child_init)(struct sock *newsk,
++								const struct sock *sk))
  {
--	struct sock *newsk;
- 	struct ipv6_pinfo *newnp, *np = inet6_sk(sk);
- 	struct sctp6_sock *newsctp6sk;
-+	struct inet_sock *newinet;
-+	struct sock *newsk;
+ 	struct inet_request_sock *ireq;
+ 	struct ipv6_pinfo *newnp;
+@@ -1376,61 +1413,10 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
+ #endif
+ 	struct flowi6 fl6;
  
- 	newsk = sk_alloc(sock_net(sk), PF_INET6, GFP_KERNEL, sk->sk_prot, kern);
- 	if (!newsk)
-@@ -796,7 +797,9 @@ static struct sock *sctp_v6_create_accept_sk(struct sock *sk,
- 	sock_reset_flag(sk, SOCK_ZAPPED);
+-	if (skb->protocol == htons(ETH_P_IP)) {
+-		/*
+-		 *	v6 mapped
+-		 */
+-
+-		newsk = tcp_v4_syn_recv_sock(sk, skb, req, dst,
+-					     req_unhash, own_req);
+-
+-		if (!newsk)
+-			return NULL;
+-
+-		newinet = inet_sk(newsk);
+-		newinet->pinet6 = tcp_inet6_sk(newsk);
+-		newinet->ipv6_fl_list = NULL;
+-
+-		newnp = tcp_inet6_sk(newsk);
+-		newtp = tcp_sk(newsk);
+-
+-		memcpy(newnp, np, sizeof(struct ipv6_pinfo));
+-
+-		newnp->saddr = newsk->sk_v6_rcv_saddr;
+-
+-		inet_csk(newsk)->icsk_af_ops = &ipv6_mapped;
+-		if (sk_is_mptcp(newsk))
+-			mptcpv6_handle_mapped(newsk, true);
+-		newsk->sk_backlog_rcv = tcp_v4_do_rcv;
+-#if defined(CONFIG_TCP_MD5SIG) || defined(CONFIG_TCP_AO)
+-		newtp->af_specific = &tcp_sock_ipv6_mapped_specific;
+-#endif
+-
+-		newnp->ipv6_mc_list = NULL;
+-		newnp->ipv6_ac_list = NULL;
+-		newnp->pktoptions  = NULL;
+-		newnp->opt	   = NULL;
+-		newnp->mcast_oif   = inet_iif(skb);
+-		newnp->mcast_hops  = ip_hdr(skb)->ttl;
+-		newnp->rcv_flowinfo = 0;
+-		if (inet6_test_bit(REPFLOW, sk))
+-			newnp->flow_label = 0;
+-
+-		/*
+-		 * No need to charge this sock to the relevant IPv6 refcnt debug socks count
+-		 * here, tcp_create_openreq_child now does this for us, see the comment in
+-		 * that function for the gory details. -acme
+-		 */
+-
+-		/* It is tricky place. Until this moment IPv4 tcp
+-		   worked with IPv6 icsk.icsk_af_ops.
+-		   Sync it now.
+-		 */
+-		tcp_sync_mss(newsk, inet_csk(newsk)->icsk_pmtu_cookie);
+-
+-		return newsk;
+-	}
+-
++	if (skb->protocol == htons(ETH_P_IP))
++		return tcp_v4_syn_recv_sock(sk, skb, req, dst,
++					    req_unhash, own_req,
++					    tcp_v6_mapped_child_init);
+ 	ireq = inet_rsk(req);
  
- 	newsctp6sk = (struct sctp6_sock *)newsk;
--	inet_sk(newsk)->pinet6 = &newsctp6sk->inet6;
-+	newinet = inet_sk(newsk);
-+	newinet->pinet6 = &newsctp6sk->inet6;
-+	newinet->ipv6_fl_list = NULL;
+ 	if (sk_acceptq_is_full(sk))
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index a8c281bc53778..838203e2740e5 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -807,7 +807,9 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 					  struct request_sock *req,
+ 					  struct dst_entry *dst,
+ 					  struct request_sock *req_unhash,
+-					  bool *own_req)
++					  bool *own_req,
++					  void (*opt_child_init)(struct sock *newsk,
++								 const struct sock *sk))
+ {
+ 	struct mptcp_subflow_context *listener = mptcp_subflow_ctx(sk);
+ 	struct mptcp_subflow_request_sock *subflow_req;
+@@ -854,7 +856,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
  
- 	sctp_sk(newsk)->v4mapped = sctp_sk(sk)->v4mapped;
+ create_child:
+ 	child = listener->icsk_af_ops->syn_recv_sock(sk, skb, req, dst,
+-						     req_unhash, own_req);
++						     req_unhash, own_req, opt_child_init);
  
-@@ -805,7 +808,6 @@ static struct sock *sctp_v6_create_accept_sk(struct sock *sk,
- 	memcpy(newnp, np, sizeof(struct ipv6_pinfo));
- 	newnp->ipv6_mc_list = NULL;
- 	newnp->ipv6_ac_list = NULL;
--	newnp->ipv6_fl_list = NULL;
+ 	if (child && *own_req) {
+ 		struct mptcp_subflow_context *ctx = mptcp_subflow_ctx(child);
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 77b99e8ef35a4..efdadb2d8d390 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -124,7 +124,9 @@ static struct sock *smc_tcp_syn_recv_sock(const struct sock *sk,
+ 					  struct request_sock *req,
+ 					  struct dst_entry *dst,
+ 					  struct request_sock *req_unhash,
+-					  bool *own_req)
++					  bool *own_req,
++					  void (*opt_child_init)(struct sock *newsk,
++								 const struct sock *sk))
+ {
+ 	struct smc_sock *smc;
+ 	struct sock *child;
+@@ -142,7 +144,7 @@ static struct sock *smc_tcp_syn_recv_sock(const struct sock *sk,
  
- 	sctp_v6_copy_ip_options(sk, newsk);
- 
+ 	/* passthrough to original syn recv sock fct */
+ 	child = smc->ori_af_ops->syn_recv_sock(sk, skb, req, dst, req_unhash,
+-					       own_req);
++					       own_req, opt_child_init);
+ 	/* child must not inherit smc or its ops */
+ 	if (child) {
+ 		rcu_assign_sk_user_data(child, NULL);
 -- 
 2.51.0
 
