@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D7333AD85
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E211C35AC28
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302752; cv=none; b=Sg/XBs5bdCZ/T7gH0y6hvml//djs0Uu1i+weyHwsvzQ6d9RDOx4v4IkB7Q/K6LgjhOuoDqFNwTdTg+ohVbvsJU9JRixk8ITX1UwZ8WImLzIzpJNYRkDibOY5CKVXob00slQqaLlE2Xfu027pS7ZjHg+cahGvqQDukgGGZr6Vqoc=
+	t=1772302753; cv=none; b=ZaWmWDT8XNpcBYglOBl30TeRaLeMmpGQ1SyklTRb+A3P93tn+6DIYW1F3nbfD016OFNTwZlLUMrdnxsEG1Iiaa2+fH0zqbVbn4hPEfHS3wMobNgtmyDmturpsJhckZKFJjEwfT46sYyNl9nm3sap1l7dw8R+3JpnT5Ym3Fh19XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302752; c=relaxed/simple;
-	bh=9jX3Qa+vsP4rXne9iNEtm8Mq8RgB5NMkF9NAKbA6SGc=;
+	s=arc-20240116; t=1772302753; c=relaxed/simple;
+	bh=bU/64E8pc+rMMXD87qpGwAyJYYKO9brwR4hNi53mfPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fA49XycOF012Wniq76bCVRDPJ4gAOokiI9ilmlKP/zGPLkSplK7YUqT7NkA/SsLbwAxE/AEb4raF3sMK7bI9FhI7C/yBcjtMofAM7qNMA35xwtTQhiCXkOXvruNz8gag/LbPpiUvfq2qAmK2URZurJ9k1MZ84g5POkKXw6uvMtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DKH+crAQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F3kx8Mf3DSYpHNKxDDIz1zjm3g4p6ODgSBjc6BGv+T1opauiHy/Ti3a97uUWPah2veW6E+o26XGiOqcoBeis4ZbHAmCNdc6hESNnL13c6DSZfWcl6Oe3Jo3rgVuOH0lv7Kh29cA/Q7bP5eZxacTFvKkiCn+wuScHv06USq/Ld2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f8Jv4lKz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DKH+crAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BCB0C116D0;
-	Sat, 28 Feb 2026 18:19:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f8Jv4lKz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3FCC19425;
+	Sat, 28 Feb 2026 18:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302752;
-	bh=9jX3Qa+vsP4rXne9iNEtm8Mq8RgB5NMkF9NAKbA6SGc=;
+	bh=bU/64E8pc+rMMXD87qpGwAyJYYKO9brwR4hNi53mfPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DKH+crAQfo6X8g7fKRUq6Y6k03/oxczxFGsKRiWtjuMWoiFcOu2rEtB5RqnLZOFWA
-	 9zurOrNGC57AMCYVsms5pz3Q5lyQcF8SZGsDYSLSBR8k4xM3GNY+9Z6KGc1TG/0/9j
-	 Ji0tH9Z/DqD8vUfnKN6VhsS5xd6OYFTINxLaJjRQ/CejMLGbdyKGp6EkTzGZ4uVGUA
-	 82T6F9ILy3Iu5vsoz5i6rBAz8XUT2bIU73JHt5Lry1LzApLvvefASxrNSo+VErX+ST
-	 IgyLhidXwd/hMOCAvwndT4Y5qY5PGV3UtP0YVzWoC+l+QqkirtPW/NlgP+uHQcVKO0
-	 qSvpzFh9kbNrw==
+	b=f8Jv4lKztNRQccNWCJs4imB2IuvTBMMN0IZVLVfqJIV2Rqj3sNwZILBLeZA3FTiTl
+	 /pUFzTTWuzXtU21JLGvp4MxKSemheuF/y0fpLunQexhmQXRGlSlrpFP5ami91X2/3/
+	 Wg5dnFUE5HvbdRKoJXUrrN/eJBEIjTX1EN7LudLgEfd/jqKDheZHfBn6pkvsw81DLV
+	 Y6AvJevPxFcizgsr1WNXK2z07B+4uXDhP4d5uKfoGYw2xtL0LbKGMBYQLTEThJirnC
+	 RDGisrhUHwZVq52UsvcpvoheYSDgTdmnB4TcrgtqWlpg2w+IQ5r6GM+1Vn8PjWXuWP
+	 aVbmzEozJF74g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Chaitanya Mishra <chaitanyamishra.ai@gmail.com>,
+	Rui Miguel Silva <rui.silva@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/147] dma: dma-axi-dmac: fix SW cyclic transfers
-Date: Sat, 28 Feb 2026 13:17:08 -0500
-Message-ID: <20260228181736.1605592-120-sashal@kernel.org>
+Subject: [PATCH 5.10 121/147] staging: greybus: lights: avoid NULL deref
+Date: Sat, 28 Feb 2026 13:17:09 -0500
+Message-ID: <20260228181736.1605592-121-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -44,57 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Chaitanya Mishra <chaitanyamishra.ai@gmail.com>
 
-[ Upstream commit 9bd257181fd5c996d922e9991500ad27987cfbf4 ]
+[ Upstream commit efcffd9a6ad8d190651498d5eda53bfc7cf683a7 ]
 
-If 'hw_cyclic' is false we should still be able to do cyclic transfers in
-"software". That was not working for the case where 'desc->num_sgs' is 1
-because 'chan->next_desc' is never set with the current desc which means
-that the cyclic transfer only runs once and in the next SOT interrupt we
-do nothing since vchan_next_desc() will return NULL.
+gb_lights_light_config() stores channel_count before allocating the
+channels array. If kcalloc() fails, gb_lights_release() iterates the
+non-zero count and dereferences light->channels, which is NULL.
 
-Fix it by setting 'chan->next_desc' as soon as we get a new desc via
-vchan_next_desc().
+Allocate channels first and only then publish channels_count so the
+cleanup path can't walk a NULL pointer.
 
-Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-base-commit: 398035178503bf662281bbffb4bebce1460a4bc5
-change-id: 20251104-axi-dmac-fixes-and-improvs-e3ad512a329c
-Acked-by: Michael Hennerich <michael.hennerich@analog.com>
-Link: https://patch.msgid.link/20251104-axi-dmac-fixes-and-improvs-v1-1-3e6fd9328f72@analog.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 2870b52bae4c ("greybus: lights: add lights implementation")
+Link: https://lore.kernel.org/all/20260108103700.15384-1-chaitanyamishra.ai@gmail.com/
+Reviewed-by: Rui Miguel Silva <rui.silva@linaro.org>
+Signed-off-by: Chaitanya Mishra <chaitanyamishra.ai@gmail.com>
+Link: https://patch.msgid.link/20260108151254.81553-1-chaitanyamishra.ai@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dma-axi-dmac.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/staging/greybus/light.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index e91aeec71c811..6194ef0ac17f6 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -221,6 +221,7 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
- 			return;
- 		list_move_tail(&vdesc->node, &chan->active_descs);
- 		desc = to_axi_dmac_desc(vdesc);
-+		chan->next_desc = desc;
- 	}
- 	sg = &desc->sg[desc->num_submitted];
+diff --git a/drivers/staging/greybus/light.c b/drivers/staging/greybus/light.c
+index 7352d7deb8ba0..af91913794ee6 100644
+--- a/drivers/staging/greybus/light.c
++++ b/drivers/staging/greybus/light.c
+@@ -1030,14 +1030,18 @@ static int gb_lights_light_config(struct gb_lights *glights, u8 id)
+ 	if (!strlen(conf.name))
+ 		return -EINVAL;
  
-@@ -238,8 +239,6 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
- 		else
- 			chan->next_desc = NULL;
- 		flags |= AXI_DMAC_FLAG_LAST;
--	} else {
--		chan->next_desc = desc;
- 	}
+-	light->channels_count = conf.channel_count;
+ 	light->name = kstrndup(conf.name, NAMES_MAX, GFP_KERNEL);
+ 	if (!light->name)
+ 		return -ENOMEM;
+-	light->channels = kcalloc(light->channels_count,
++	light->channels = kcalloc(conf.channel_count,
+ 				  sizeof(struct gb_channel), GFP_KERNEL);
+ 	if (!light->channels)
+ 		return -ENOMEM;
++	/*
++	 * Publish channels_count only after channels allocation so cleanup
++	 * doesn't walk a NULL channels pointer on allocation failure.
++	 */
++	light->channels_count = conf.channel_count;
  
- 	sg->id = axi_dmac_read(dmac, AXI_DMAC_REG_TRANSFER_ID);
+ 	/* First we collect all the configurations for all channels */
+ 	for (i = 0; i < light->channels_count; i++) {
 -- 
 2.51.0
 
