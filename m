@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B2C37524F
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399D375256
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302566; cv=none; b=KY9vWclEC142DpMcL2TP/AD2ZqADMf6Fyk+HcHE3kA580muzS/7xvrreibxm90V/RuNZI6pPhen0E82voYjfhMuYl5fZJF/IktoSX9TstBhgWcPmCQWXdynJSgwY6mxzuUsgDdDptYPu7+wQuBqP1+Q3BxixoqTrDfItmbvl664=
+	t=1772302567; cv=none; b=lUeiY5B/5hpSKWEdmECgkkce6Q5TPNcWG0FzSE6M18zFV8OkXWmNdmNAOAx2UgiKGmDUezRY6aEOKbqX5ZI9Zi0YEqCz8pLTFqzkhRXZHXuJvOT91wETSTEfYNZl5OOpCCXTaXqWY9U7hvDBv6RkzO0OORhrSWPEjT0h9HQ4LYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302566; c=relaxed/simple;
-	bh=90vCP5f5elWMiM5PH9CDxTDGBt3zCsAVTcZ5AIG55HU=;
+	s=arc-20240116; t=1772302567; c=relaxed/simple;
+	bh=DxlyWX6KhSOqzDs+YejTdeKU8xtzitO4B7L5auo51oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CP6OrQQ1JCLmWasQ4RaMQ8zhMFCD+FovOs56Wy/03iQmf3pIdw+zEZWPGkgAaob/u7HgTcTjkWtz8caxxIrWZJmgvBbsoQxY/cLNyxxM3QYoPCSErmZ5bxqwNL3kTSvOyvpCDyIuSO4sgwYLdYNd5SnUrJhoZtee1JmGz2ugnys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pkguZECs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RdWCHmX7j2wpmcxGwgmgcQE/FHBxA83OPMHSt3fVtf2k5iW/KWN1LgVhnoXAw0IRb2g3Iao+69DsgOk5nEXjcCHhWTR96h5Fh+2MyohZh+u8JdCTzB8z5noYuMP43tOfdAhS7TU3T5BJrGTVXWv1r173XHgsiKCw8Gtvl5seolw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GyNb8Ife; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pkguZECs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB5CC116D0;
-	Sat, 28 Feb 2026 18:16:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GyNb8Ife"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613E7C19424;
+	Sat, 28 Feb 2026 18:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302566;
-	bh=90vCP5f5elWMiM5PH9CDxTDGBt3zCsAVTcZ5AIG55HU=;
+	s=k20201202; t=1772302567;
+	bh=DxlyWX6KhSOqzDs+YejTdeKU8xtzitO4B7L5auo51oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkguZECsFCVQ5PJioxbiXHuOZxZiXp6EcRqCPxfnfxi2YlynP3FOCSe5PxjfZNysC
-	 wYuFRzCtYGBXfkWJHTO0QG0lwgCHstw2ypEJshMpzYyc+HNw/AlUrF29cYG8LMrUXK
-	 hS1mx0bDr/XFE3CCR+1kvAQJw+CsXXQoU1NdnVJKm8pEeLsKB+qiqmY0lUsIee73xv
-	 ZbsoCtlQ26tMwoeFuQpNe+0DBfFZFuXUHNsqE8HyxtPwPeRIpALXkkFtLdUomOyVja
-	 gxerOhpu4n0DO/ErB+GkCS2hGZLdWKCkVSwV+nqEisTi2WMvjgSL1OA2VBsbn5bKao
-	 sILm/+vaA9p0w==
+	b=GyNb8IfeXZ+JjaW6U3b+6uaa4y9ujF1Ii7X4LKxV0H8ZQcjCz9kXl2vhPJ3qKTdP2
+	 jn6e7eliKdoBiXirYJSviLUrqXQ5H9B4aRCAEGBj9Iqh3NTOIIdq8N7pV9W0ofBhqm
+	 kJ7J6QCZ2kTdB3hqlYbcelT4SkR1x8x0qhIZddpw7Fh0OD7CcdKUVyMCsJGaTrkL1Y
+	 SZ/BBtolHZDx9teiw5Z/QiaAVgwCrznno9JGZJLEbs2MK50BqubDpeS5zFAz/0jAQf
+	 B4RQZGu99sDt4d6K+nVsGd7bj75nb4ghP5XziuAjNuiKRZYxLYQZpK+TDkccPYW6pY
+	 EsRx9dsJOPthg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Ondrej Mosnacek <omosnace@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Serge Hallyn <serge@hallyn.com>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Alexey Gladkov <legion@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/164] PCI: Initialize RCB from pci_configure_device()
-Date: Sat, 28 Feb 2026 13:13:31 -0500
-Message-ID: <20260228181505.1600663-72-sashal@kernel.org>
+Subject: [PATCH 5.15 073/164] ucount: check for CAP_SYS_RESOURCE using ns_capable_noaudit()
+Date: Sat, 28 Feb 2026 13:13:32 -0500
+Message-ID: <20260228181505.1600663-73-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -43,90 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit 1a6845aaa6de81f95959b380b45de8f10d6a8502 ]
+[ Upstream commit 0895a000e4fff9e950a7894210db45973e485c35 ]
 
-Commit e42010d8207f ("PCI: Set Read Completion Boundary to 128 iff Root
-Port supports it (_HPX)") worked around a bogus _HPX type 2 record, which
-caused program_hpx_type2() to set the RCB in an endpoint even though the
-Root Port did not have the RCB bit set.
+The user.* sysctls implement the ctl_table_root::permissions hook and they
+override the file access mode based on the CAP_SYS_RESOURCE capability (at
+most rwx if capable, at most r-- if not).  The capability is being checked
+unconditionally, so if an LSM denies the capability, an audit record may
+be logged even when access is in fact granted.
 
-e42010d8207f fixed that by setting the RCB in the endpoint only when it was
-set in the Root Port.
+Given the logic in the set_permissions() function in kernel/ucount.c and
+the unfortunate way the permission checking is implemented, it doesn't
+seem viable to avoid false positive denials by deferring the capability
+check.  Thus, do the same as in net_ctl_permissions() (net/sysctl_net.c) -
+switch from ns_capable() to ns_capable_noaudit(), so that the check never
+logs an audit record.
 
-In retrospect, program_hpx_type2() is intended for AER-related settings,
-and the RCB should be configured elsewhere so it doesn't depend on the
-presence or contents of an _HPX record.
-
-Explicitly program the RCB from pci_configure_device() so it matches the
-Root Port's RCB.  The Root Port may not be visible to virtualized guests;
-in that case, leave RCB alone.
-
-Fixes: e42010d8207f ("PCI: Set Read Completion Boundary to 128 iff Root Port supports it (_HPX)")
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260129175237.727059-2-haakon.bugge@oracle.com
+Link: https://lkml.kernel.org/r/20260122140745.239428-1-omosnace@redhat.com
+Fixes: dbec28460a89 ("userns: Add per user namespace sysctls.")
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Reviewed-by: Paul Moore <paul@paul-moore.com>
+Acked-by: Serge Hallyn <serge@hallyn.com>
+Cc: Eric Biederman <ebiederm@xmission.com>
+Cc: Alexey Gladkov <legion@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/probe.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ kernel/ucount.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index b54474ae17477..2180013a1a65a 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -2278,6 +2278,37 @@ static void pci_configure_serr(struct pci_dev *dev)
- 	}
- }
+diff --git a/kernel/ucount.c b/kernel/ucount.c
+index 8c21398f7b4fc..cc8ec071d46d3 100644
+--- a/kernel/ucount.c
++++ b/kernel/ucount.c
+@@ -45,7 +45,7 @@ static int set_permissions(struct ctl_table_header *head,
+ 	int mode;
  
-+static void pci_configure_rcb(struct pci_dev *dev)
-+{
-+	struct pci_dev *rp;
-+	u16 rp_lnkctl;
-+
-+	/*
-+	 * Per PCIe r7.0, sec 7.5.3.7, RCB is only meaningful in Root Ports
-+	 * (where it is read-only), Endpoints, and Bridges.  It may only be
-+	 * set for Endpoints and Bridges if it is set in the Root Port. For
-+	 * Endpoints, it is 'RsvdP' for Virtual Functions.
-+	 */
-+	if (!pci_is_pcie(dev) ||
-+	    pci_pcie_type(dev) == PCI_EXP_TYPE_ROOT_PORT ||
-+	    pci_pcie_type(dev) == PCI_EXP_TYPE_UPSTREAM ||
-+	    pci_pcie_type(dev) == PCI_EXP_TYPE_DOWNSTREAM ||
-+	    pci_pcie_type(dev) == PCI_EXP_TYPE_RC_EC ||
-+	    dev->is_virtfn)
-+		return;
-+
-+	/* Root Port often not visible to virtualized guests */
-+	rp = pcie_find_root_port(dev);
-+	if (!rp)
-+		return;
-+
-+	pcie_capability_read_word(rp, PCI_EXP_LNKCTL, &rp_lnkctl);
-+	pcie_capability_clear_and_set_word(dev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_RCB,
-+					   (rp_lnkctl & PCI_EXP_LNKCTL_RCB) ?
-+					   PCI_EXP_LNKCTL_RCB : 0);
-+}
-+
- static void pci_configure_device(struct pci_dev *dev)
- {
- 	pci_configure_mps(dev);
-@@ -2286,6 +2317,7 @@ static void pci_configure_device(struct pci_dev *dev)
- 	pci_configure_ltr(dev);
- 	pci_configure_eetlp_prefix(dev);
- 	pci_configure_serr(dev);
-+	pci_configure_rcb(dev);
- 
- 	pci_acpi_program_hp_params(dev);
- }
+ 	/* Allow users with CAP_SYS_RESOURCE unrestrained access */
+-	if (ns_capable(user_ns, CAP_SYS_RESOURCE))
++	if (ns_capable_noaudit(user_ns, CAP_SYS_RESOURCE))
+ 		mode = (table->mode & S_IRWXU) >> 6;
+ 	else
+ 	/* Allow all others at most read-only access */
 -- 
 2.51.0
 
