@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9F235AC12
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4AB35AC20
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302730; cv=none; b=UR1YZWe8JrfGCQo9T/vOUMIifetV1bZvPHw1N7yIr/QQiqnm6c2cus4wPiaoqkaLAmQZiazDKm0F2lrp6D/aK7hmChOCRUsXpRzCc08z4er5sUtsCwo3EptxuLB/jhbXE1ZrOEUQNntvh0w3Qgj68XjG9lQXQPhEXmzPfDBX86I=
+	t=1772302731; cv=none; b=YkSCCZLyEuV/zMGYazXvs2BWO3TUcE75tQ/jTuC40Po/+kAsvDzlOno842pSlhZKPTfIk94DVq0nySwLzBVh6KjCe4dNYOfWscoPbDGCy77Z6saTNfJKrTAZHEaJx9xqK5W07LGdlttItEH18vspLdb6S91iIyLDF3qVViTex8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302730; c=relaxed/simple;
-	bh=4WL4niNBc4LNDjYLHXwe/xfh27MyGtS+WTgnDFNMZ6s=;
+	s=arc-20240116; t=1772302731; c=relaxed/simple;
+	bh=6hYmZAbDsLTe5G4GU6gYlGiDS7kGiljeEbE6L8fxfT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+8DFwLC7Exx/IhsGXG5Eg9LEmOg7U4WA1llu3RvOd7D5hgVb1lqx9BDtUFQ8OxsZJRSA6IaWUVfWOCKUgekBQ/ZbN9TebRrq8wxZw+Wvq0UsZkkXYizdxLCrNYc0JtozsVyCP2wjL5uBealnED7dq7Uk4o9coMJzR5GP1HfFO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=geNJDCV4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NtLMMCsQmZeElnD+NJphzvB4bMeAacAAKTX3mYJZd0yPgS46KSEchRKHNkaBBjfUVlZ+PF4a0a++NllKpR2BWJzyhl9Pl4pNf9d0I+ZPcLgG7POiz7zxD+0eeTMR2qT2dRDTYpHQRiTVBoLuE8H2keuaqgXuy7lzbdJM6cIPJKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=opq8AK4t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="geNJDCV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C649C19424;
-	Sat, 28 Feb 2026 18:18:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="opq8AK4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804A2C19423;
+	Sat, 28 Feb 2026 18:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302730;
-	bh=4WL4niNBc4LNDjYLHXwe/xfh27MyGtS+WTgnDFNMZ6s=;
+	s=k20201202; t=1772302731;
+	bh=6hYmZAbDsLTe5G4GU6gYlGiDS7kGiljeEbE6L8fxfT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=geNJDCV4LekaAYqiwlk6QUUsoK7zp1ckHShoJM8TMR0urKxreuOAicCBl64hXxyWm
-	 0PXLRQlblWNjtF/Zw+7wxxuR4lB1IWUVTNkg74LYuOXEITFuf3AGLYfdDuu59ZHxT/
-	 YqaWuSmv96i20qemPU7LyGCz3rlejwkGGe5ZMIEn2UISWnH23iBsOfau+p4hVwux9m
-	 LMAIfzf3o4+4ldoWKsHlTmFfft4C2A2hk93UyQT4vwdKaLHJKuSrcTH0c3us3LlgUp
-	 +zwAZF9NPctlD1V/rhRBOoDMEzeSN6Tytm1kH+WvBvAGuDp0NJsLXL2mfD4n4oP7T3
-	 PBNPj1GI6wddg==
+	b=opq8AK4ttrCtEohGKGRF6MI+26/7KGRkHUOXfi7iZKsiPhAaInOU0LnwBnaBM4hdK
+	 SX8l+C/c21bN3vTV0pCG0DN6K40wWdhSD7yEPokgONWp34dIL0RJOZBXUcvJwRJv9i
+	 bJaKAni+6SAQuXbM77KcxNBCZFJUvisX8nc5qGfPKRZaXp+IhQFaiZA1esWsvJWSNp
+	 2Hec64WKrnghtiffyEygEb3IYO9IWzeMDu9I+KFo5OaY1cfHgVUou30HDVxKxQo1cZ
+	 ABfVwR33T1FgpJdWfF22aV+fvrxrf2aeS06UIlF1EIqmE7Yz1fgACd9g/iKift7AcS
+	 +zJ7JUVHKgKNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	linux-arm-kernel@lists.infradead.org,
-	Daniel Mack <daniel@zonque.org>,
+Cc: Waqar Hameed <waqar.hameed@axis.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 092/147] power: supply: wm97xx_battery: Convert to GPIO descriptor
-Date: Sat, 28 Feb 2026 13:16:40 -0500
-Message-ID: <20260228181736.1605592-92-sashal@kernel.org>
+Subject: [PATCH 5.10 093/147] power: supply: wm97xx: Fix NULL pointer dereference in power_supply_changed()
+Date: Sat, 28 Feb 2026 13:16:41 -0500
+Message-ID: <20260228181736.1605592-93-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -51,184 +47,95 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit cb6d6918c56ffd98e88164d5471f692d33dabf2b ]
+[ Upstream commit 39fe0eac6d755ef215026518985fcf8de9360e9e ]
 
-This converts the WM97xx driver to use a GPIO descriptor
-instead of passing a GPIO number thru platform data.
+In `probe()`, `request_irq()` is called before allocating/registering a
+`power_supply` handle. If an interrupt is fired between the call to
+`request_irq()` and `power_supply_register()`, the `power_supply` handle
+will be used uninitialized in `power_supply_changed()` in
+`wm97xx_bat_update()` (triggered from the interrupt handler). This will
+lead to a `NULL` pointer dereference since
 
-Like everything else in the driver, use a simple local
-variable for the descriptor, it can only ever appear in
-one instance anyway so it should not hurt.
+Fix this racy `NULL` pointer dereference by making sure the IRQ is
+requested _after_ the registration of the `power_supply` handle. Since
+the IRQ is the last thing requests in the `probe()` now, remove the
+error path for freeing it. Instead add one for unregistering the
+`power_supply` handle when IRQ request fails.
 
-After converting the driver I noticed that none of the
-boardfiles actually define a meaningful GPIO line for
-this, but hey, it is converted.
-
-Cc: Haojian Zhuang <haojian.zhuang@gmail.com>
-Cc: Robert Jarzmik <robert.jarzmik@free.fr>
-Cc: linux-arm-kernel@lists.infradead.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Daniel Mack <daniel@zonque.org>
+Fixes: 7c87942aef52 ("wm97xx_battery: Use irq to detect charger state")
+Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
+Link: https://patch.msgid.link/97b55f0479a932eea7213844bf66f28a974e27a2.1766270196.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: 39fe0eac6d75 ("power: supply: wm97xx: Fix NULL pointer dereference in power_supply_changed()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-pxa/mioa701.c           |  1 -
- arch/arm/mach-pxa/palm27x.c           |  1 -
- arch/arm/mach-pxa/palmte2.c           |  1 -
- drivers/power/supply/wm97xx_battery.c | 45 +++++++++++----------------
- include/linux/wm97xx.h                |  1 -
- 5 files changed, 19 insertions(+), 30 deletions(-)
+ drivers/power/supply/wm97xx_battery.c | 34 +++++++++++++++------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm/mach-pxa/mioa701.c b/arch/arm/mach-pxa/mioa701.c
-index d3af80317f2da..a79f296e81e02 100644
---- a/arch/arm/mach-pxa/mioa701.c
-+++ b/arch/arm/mach-pxa/mioa701.c
-@@ -577,7 +577,6 @@ static struct platform_device power_dev = {
- static struct wm97xx_batt_pdata mioa701_battery_data = {
- 	.batt_aux	= WM97XX_AUX_ID1,
- 	.temp_aux	= -1,
--	.charge_gpio	= -1,
- 	.min_voltage	= 0xc00,
- 	.max_voltage	= 0xfc0,
- 	.batt_tech	= POWER_SUPPLY_TECHNOLOGY_LION,
-diff --git a/arch/arm/mach-pxa/palm27x.c b/arch/arm/mach-pxa/palm27x.c
-index 0d246a1aebbcd..6230381a7ca0c 100644
---- a/arch/arm/mach-pxa/palm27x.c
-+++ b/arch/arm/mach-pxa/palm27x.c
-@@ -212,7 +212,6 @@ void __init palm27x_irda_init(int pwdn)
- static struct wm97xx_batt_pdata palm27x_batt_pdata = {
- 	.batt_aux	= WM97XX_AUX_ID3,
- 	.temp_aux	= WM97XX_AUX_ID2,
--	.charge_gpio	= -1,
- 	.batt_mult	= 1000,
- 	.batt_div	= 414,
- 	.temp_mult	= 1,
-diff --git a/arch/arm/mach-pxa/palmte2.c b/arch/arm/mach-pxa/palmte2.c
-index e3bcf58b4e639..a2b10db4aacc4 100644
---- a/arch/arm/mach-pxa/palmte2.c
-+++ b/arch/arm/mach-pxa/palmte2.c
-@@ -273,7 +273,6 @@ static struct platform_device power_supply = {
- static struct wm97xx_batt_pdata palmte2_batt_pdata = {
- 	.batt_aux	= WM97XX_AUX_ID3,
- 	.temp_aux	= WM97XX_AUX_ID2,
--	.charge_gpio	= -1,
- 	.max_voltage	= PALMTE2_BAT_MAX_VOLTAGE,
- 	.min_voltage	= PALMTE2_BAT_MIN_VOLTAGE,
- 	.batt_mult	= 1000,
 diff --git a/drivers/power/supply/wm97xx_battery.c b/drivers/power/supply/wm97xx_battery.c
-index 58f01659daa5f..a0e1eaa25d93e 100644
+index a0e1eaa25d93e..e2a41f9c903c5 100644
 --- a/drivers/power/supply/wm97xx_battery.c
 +++ b/drivers/power/supply/wm97xx_battery.c
-@@ -15,11 +15,12 @@
- #include <linux/wm97xx.h>
- #include <linux/spinlock.h>
- #include <linux/interrupt.h>
--#include <linux/gpio.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/irq.h>
- #include <linux/slab.h>
- 
- static struct work_struct bat_work;
-+static struct gpio_desc *charge_gpiod;
- static DEFINE_MUTEX(work_lock);
- static int bat_status = POWER_SUPPLY_STATUS_UNKNOWN;
- static enum power_supply_property *prop;
-@@ -96,12 +97,11 @@ static void wm97xx_bat_external_power_changed(struct power_supply *bat_ps)
- static void wm97xx_bat_update(struct power_supply *bat_ps)
- {
- 	int old_status = bat_status;
--	struct wm97xx_batt_pdata *pdata = power_supply_get_drvdata(bat_ps);
- 
- 	mutex_lock(&work_lock);
- 
--	bat_status = (pdata->charge_gpio >= 0) ?
--			(gpio_get_value(pdata->charge_gpio) ?
-+	bat_status = (charge_gpiod) ?
-+			(gpiod_get_value(charge_gpiod) ?
- 			POWER_SUPPLY_STATUS_DISCHARGING :
- 			POWER_SUPPLY_STATUS_CHARGING) :
- 			POWER_SUPPLY_STATUS_UNKNOWN;
-@@ -171,18 +171,19 @@ static int wm97xx_bat_probe(struct platform_device *dev)
- 	if (dev->id != -1)
- 		return -EINVAL;
- 
--	if (gpio_is_valid(pdata->charge_gpio)) {
--		ret = gpio_request(pdata->charge_gpio, "BATT CHRG");
+@@ -178,12 +178,6 @@ static int wm97xx_bat_probe(struct platform_device *dev)
+ 				     "failed to get charge GPIO\n");
+ 	if (charge_gpiod) {
+ 		gpiod_set_consumer_name(charge_gpiod, "BATT CHRG");
+-		ret = request_irq(gpiod_to_irq(charge_gpiod),
+-				wm97xx_chrg_irq, 0,
+-				"AC Detect", dev);
 -		if (ret)
--			goto err;
--		ret = gpio_direction_input(pdata->charge_gpio);
--		if (ret)
--			goto err2;
--		ret = request_irq(gpio_to_irq(pdata->charge_gpio),
-+	charge_gpiod = devm_gpiod_get_optional(&dev->dev, NULL, GPIOD_IN);
-+	if (IS_ERR(charge_gpiod))
-+		return dev_err_probe(&dev->dev,
-+				     PTR_ERR(charge_gpiod),
-+				     "failed to get charge GPIO\n");
-+	if (charge_gpiod) {
-+		gpiod_set_consumer_name(charge_gpiod, "BATT CHRG");
-+		ret = request_irq(gpiod_to_irq(charge_gpiod),
- 				wm97xx_chrg_irq, 0,
- 				"AC Detect", dev);
- 		if (ret)
--			goto err2;
-+			return dev_err_probe(&dev->dev, ret,
-+					     "failed to request GPIO irq\n");
+-			return dev_err_probe(&dev->dev, ret,
+-					     "failed to request GPIO irq\n");
  		props++;	/* POWER_SUPPLY_PROP_STATUS */
  	}
  
-@@ -204,7 +205,7 @@ static int wm97xx_bat_probe(struct platform_device *dev)
- 	}
+@@ -199,10 +193,8 @@ static int wm97xx_bat_probe(struct platform_device *dev)
+ 		props++;	/* POWER_SUPPLY_PROP_VOLTAGE_MIN */
+ 
+ 	prop = kcalloc(props, sizeof(*prop), GFP_KERNEL);
+-	if (!prop) {
+-		ret = -ENOMEM;
+-		goto err3;
+-	}
++	if (!prop)
++		return -ENOMEM;
  
  	prop[i++] = POWER_SUPPLY_PROP_PRESENT;
--	if (pdata->charge_gpio >= 0)
-+	if (charge_gpiod)
- 		prop[i++] = POWER_SUPPLY_PROP_STATUS;
- 	if (pdata->batt_tech >= 0)
- 		prop[i++] = POWER_SUPPLY_PROP_TECHNOLOGY;
-@@ -242,23 +243,15 @@ static int wm97xx_bat_probe(struct platform_device *dev)
- err4:
+ 	if (charge_gpiod)
+@@ -236,15 +228,27 @@ static int wm97xx_bat_probe(struct platform_device *dev)
+ 		schedule_work(&bat_work);
+ 	} else {
+ 		ret = PTR_ERR(bat_psy);
+-		goto err4;
++		goto free;
++	}
++
++	if (charge_gpiod) {
++		ret = request_irq(gpiod_to_irq(charge_gpiod), wm97xx_chrg_irq,
++				  0, "AC Detect", dev);
++		if (ret) {
++			dev_err_probe(&dev->dev, ret,
++				      "failed to request GPIO irq\n");
++			goto unregister;
++		}
+ 	}
+ 
+ 	return 0;
+-err4:
++
++unregister:
++	power_supply_unregister(bat_psy);
++
++free:
  	kfree(prop);
- err3:
--	if (gpio_is_valid(pdata->charge_gpio))
--		free_irq(gpio_to_irq(pdata->charge_gpio), dev);
--err2:
--	if (gpio_is_valid(pdata->charge_gpio))
--		gpio_free(pdata->charge_gpio);
--err:
-+	if (charge_gpiod)
-+		free_irq(gpiod_to_irq(charge_gpiod), dev);
+-err3:
+-	if (charge_gpiod)
+-		free_irq(gpiod_to_irq(charge_gpiod), dev);
++
  	return ret;
  }
  
- static int wm97xx_bat_remove(struct platform_device *dev)
- {
--	struct wm97xx_batt_pdata *pdata = dev->dev.platform_data;
--
--	if (pdata && gpio_is_valid(pdata->charge_gpio)) {
--		free_irq(gpio_to_irq(pdata->charge_gpio), dev);
--		gpio_free(pdata->charge_gpio);
--	}
-+	if (charge_gpiod)
-+		free_irq(gpiod_to_irq(charge_gpiod), dev);
- 	cancel_work_sync(&bat_work);
- 	power_supply_unregister(bat_psy);
- 	kfree(prop);
-diff --git a/include/linux/wm97xx.h b/include/linux/wm97xx.h
-index 58e082dadc683..462854f4f286c 100644
---- a/include/linux/wm97xx.h
-+++ b/include/linux/wm97xx.h
-@@ -294,7 +294,6 @@ struct wm97xx {
- struct wm97xx_batt_pdata {
- 	int	batt_aux;
- 	int	temp_aux;
--	int	charge_gpio;
- 	int	min_voltage;
- 	int	max_voltage;
- 	int	batt_div;
 -- 
 2.51.0
 
