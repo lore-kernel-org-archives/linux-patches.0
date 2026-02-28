@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82F23603DE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE2D36B055
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300959; cv=none; b=mNrMmXKETWc8Mh4cjUkE9HRJ7EG4Kw6KuqrvAU+AVIqEuK56jBvdq6VRQ8nHMuIXEexeHYgoX9z5a00vajw2sn2bPWYq/9hOnpcdCL+biJb+RHvKyfoVn9RwKLGqwn5BYUL5YEvNQbDw25ZLPSRjXC8Eq3/DWOaC1jbH9q9ddsQ=
+	t=1772300960; cv=none; b=G2MKPLsZkdm+3KUsS/7Vpb3p0+sIWTUakvDLz+VNRRMwHKN40WypwYBlduK3J0e6NYz7ZL4ZxJcbD2M+tYgMB1CI3bWFWXaxPpydE7hlwm9ItKKV3CrtlrRCUySMZcN4Xq0AvrPgUD2j8aYIjImFE9WNbHe0mpByAOZeY8kiWNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300959; c=relaxed/simple;
-	bh=O0zjvxCnfgAxetSvkvrDx7ywm50HRLlddW+o6X9PQbA=;
+	s=arc-20240116; t=1772300960; c=relaxed/simple;
+	bh=szvlFF3i0wh8Y38w8LClFAbcm0MHnZBIOdlx2IhOYH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iot/m28g8sopjy9pFJ+fQoOGi96MVphTC+6+Fl81aCDlD1UPyH5X0uobLnmcROFdV99hUvOcRGtTx7J68PzpvSrg+Xz90qHW1GIFC05GcPdVbvZvj55n8Nkxth6rGGpxH0phSENRcW5oYEVupAO78VU6UzxwXq2DCA8nd7ZQHM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nMsD3kf9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VvvAJWSlRRibQnyc+4zvPgVvxNtS4ODPmT2C9Z/fDMOWnBrhRdianfqJkTMkEFCqh7aYvoR8HIt2s/VXVF1ZeepB4A/ElTwFK1MyeED4wlr7JIqJu3ogSEAtO9cyp1HqNQCGHZYv4z8xPTLlIJJT4YazevyGXxcWRvFPH/75ARM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ksrv+2Wg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nMsD3kf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C38C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ksrv+2Wg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09808C19424;
 	Sat, 28 Feb 2026 17:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300959;
-	bh=O0zjvxCnfgAxetSvkvrDx7ywm50HRLlddW+o6X9PQbA=;
+	s=k20201202; t=1772300960;
+	bh=szvlFF3i0wh8Y38w8LClFAbcm0MHnZBIOdlx2IhOYH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nMsD3kf9eYijIIL9wdcnxsd79T6oivaxqR/1Bgql2QYhkCE4csVsRtjRoJXoxKIhr
-	 VcaS5vDhziDHbLxxlAxkcCpS7Pmxrun9aKzbIflCdZ+AhHS6g0Ee6EfDUSrji0GgXq
-	 ELUB6naZiNa02KlzX5LxsKkmKb9AxKpUSulU/RamoAa/PE9LlY7wmgIrCh4bovayVt
-	 YC//XP7y+6Kytm11ZSagSTnFk7UPvE0qq2cq8Py5RASB3GwbFE1LGtAL1G7XY08/Th
-	 oLd95t9B3DeX7p/uAxdxD3XWzeoi4CqxY8vwTru5Yh+Sfnz5RFL7VwQF/eg9hNVAxf
-	 I5WVHt5cqdCmQ==
+	b=ksrv+2WgnRE9072bmnWkg6LhX0oi1l91EJWHJd5xDKhOHKjomxeJGyCBIlmwywwYm
+	 mlp6clEj0y3it1P5aQPBjoi9JFlfl6Vn9u7ygsp2UMuPze1PFh6wYmxTcXxfjnm4Uj
+	 D1wD210WlrOvmVk6tb4hgLdJBCDoRSNk806BbSbZ4l4uujjbx/8vQuWdMigu3yPn9z
+	 MzwwkXLjMWdISYmR6toBqqkORsr6fcB+fNdrwnlalzQs583m65CkbOU2p8wuBoOO/8
+	 0krb14joxnNqSErTOLM6PeQMuDJKmEWFhzP3ECTwiIs1LHy7B5GHsVN1T/949iArFQ
+	 SEH6RAuowTvSw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Imran Khan <imran.f.khan@oracle.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+Cc: Anton Protopopov <a.s.protopopov@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 084/752] genirq/cpuhotplug: Notify about affinity changes breaking the affinity mask
-Date: Sat, 28 Feb 2026 12:36:35 -0500
-Message-ID: <20260228174750.1542406-84-sashal@kernel.org>
+Subject: [PATCH 6.18 085/752] bpf: Properly mark live registers for indirect jumps
+Date: Sat, 28 Feb 2026 12:36:36 -0500
+Message-ID: <20260228174750.1542406-85-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,120 +47,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Imran Khan <imran.f.khan@oracle.com>
+From: Anton Protopopov <a.s.protopopov@gmail.com>
 
-[ Upstream commit dd9f6d30c64001ca4dde973ac04d8d155e856743 ]
+[ Upstream commit d1aab1ca576c90192ba961094d51b0be6355a4d6 ]
 
-During CPU offlining the interrupts affined to that CPU are moved to other
-online CPUs, which might break the original affinity mask if the outgoing
-CPU was the last online CPU in that mask. This change is not propagated to
-irq_desc::affinity_notify(), which leaves users of the affinity notifier
-mechanism with stale information.
+For a `gotox rX` instruction the rX register should be marked as used
+in the compute_insn_live_regs() function. Fix this.
 
-Avoid this by scheduling affinity change notification work for interrupts
-that were affined to the CPU being offlined, if the new target CPU is not
-part of the original affinity mask.
-
-Since irq_set_affinity_locked() uses the same logic to schedule affinity
-change notification work, split out this logic into a dedicated function
-and use that at both places.
-
-[ tglx: Removed the EXPORT(), removed the !SMP stub, moved the prototype,
-  	added a lockdep assert instead of a comment, fixed up coding style
-  	and name space. Polished and clarified the change log ]
-
-Signed-off-by: Imran Khan <imran.f.khan@oracle.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260113143727.1041265-1-imran.f.khan@oracle.com
+Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
+Link: https://lore.kernel.org/r/20260114162544.83253-2-a.s.protopopov@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/cpuhotplug.c |  6 ++++--
- kernel/irq/internals.h  |  2 +-
- kernel/irq/manage.c     | 26 ++++++++++++++++++--------
- 3 files changed, 23 insertions(+), 11 deletions(-)
+ kernel/bpf/verifier.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/irq/cpuhotplug.c b/kernel/irq/cpuhotplug.c
-index 755346ea98196..cd5689e383b00 100644
---- a/kernel/irq/cpuhotplug.c
-+++ b/kernel/irq/cpuhotplug.c
-@@ -177,9 +177,11 @@ void irq_migrate_all_off_this_cpu(void)
- 		bool affinity_broken;
- 
- 		desc = irq_to_desc(irq);
--		scoped_guard(raw_spinlock, &desc->lock)
-+		scoped_guard(raw_spinlock, &desc->lock) {
- 			affinity_broken = migrate_one_irq(desc);
--
-+			if (affinity_broken && desc->affinity_notify)
-+				irq_affinity_schedule_notify_work(desc);
-+		}
- 		if (affinity_broken) {
- 			pr_debug_ratelimited("IRQ %u: no longer affine to CPU%u\n",
- 					    irq, smp_processor_id());
-diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
-index 0164ca48da59e..5568ed3a8b852 100644
---- a/kernel/irq/internals.h
-+++ b/kernel/irq/internals.h
-@@ -135,6 +135,7 @@ extern bool irq_can_set_affinity_usr(unsigned int irq);
- 
- extern int irq_do_set_affinity(struct irq_data *data,
- 			       const struct cpumask *dest, bool force);
-+extern void irq_affinity_schedule_notify_work(struct irq_desc *desc);
- 
- #ifdef CONFIG_SMP
- extern int irq_setup_affinity(struct irq_desc *desc);
-@@ -142,7 +143,6 @@ extern int irq_setup_affinity(struct irq_desc *desc);
- static inline int irq_setup_affinity(struct irq_desc *desc) { return 0; }
- #endif
- 
--
- #define for_each_action_of_desc(desc, act)			\
- 	for (act = desc->action; act; act = act->next)
- 
-diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index 400856abf6721..c09751b7a0c49 100644
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -347,6 +347,21 @@ static bool irq_set_affinity_deactivated(struct irq_data *data,
- 	return true;
- }
- 
-+/**
-+ * irq_affinity_schedule_notify_work - Schedule work to notify about affinity change
-+ * @desc:  Interrupt descriptor whose affinity changed
-+ */
-+void irq_affinity_schedule_notify_work(struct irq_desc *desc)
-+{
-+	lockdep_assert_held(&desc->lock);
-+
-+	kref_get(&desc->affinity_notify->kref);
-+	if (!schedule_work(&desc->affinity_notify->work)) {
-+		/* Work was already scheduled, drop our extra ref */
-+		kref_put(&desc->affinity_notify->kref, desc->affinity_notify->release);
-+	}
-+}
-+
- int irq_set_affinity_locked(struct irq_data *data, const struct cpumask *mask,
- 			    bool force)
- {
-@@ -367,14 +382,9 @@ int irq_set_affinity_locked(struct irq_data *data, const struct cpumask *mask,
- 		irq_copy_pending(desc, mask);
- 	}
- 
--	if (desc->affinity_notify) {
--		kref_get(&desc->affinity_notify->kref);
--		if (!schedule_work(&desc->affinity_notify->work)) {
--			/* Work was already scheduled, drop our extra ref */
--			kref_put(&desc->affinity_notify->kref,
--				 desc->affinity_notify->release);
--		}
--	}
-+	if (desc->affinity_notify)
-+		irq_affinity_schedule_notify_work(desc);
-+
- 	irqd_set(data, IRQD_AFFINITY_SET);
- 
- 	return ret;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index e94a02ae3e1cd..dcbf21f61d2e6 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -24292,6 +24292,12 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
+ 	case BPF_JMP32:
+ 		switch (code) {
+ 		case BPF_JA:
++			def = 0;
++			if (BPF_SRC(insn->code) == BPF_X)
++				use = dst;
++			else
++				use = 0;
++			break;
+ 		case BPF_JCOND:
+ 			def = 0;
+ 			use = 0;
 -- 
 2.51.0
 
