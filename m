@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47A737524F
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D4A39B94E
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302524; cv=none; b=Oy6HFnPNH0OogPjtRyywSWbXzDu+goH3xPmCX+QjaOv2q9bqwhhRORlUtzq02LhfYVIYbse8Y8tf5NXrA7PlfPI+tkCC35tWYr/MsSpx7yJw6iJpRkEk/xjbwhSuQBkV0l/zyEBOLyY+jcuOBYuZv+fRJGi0v3VP2Hqz+Qn2W9k=
+	t=1772302525; cv=none; b=YW6EMWb294T4muoXD6uyA8LezYM1DYBGXml6j7lj0EAzb6SoUrLPuuTq7ubloxhh5BvGsqAVTZksPLaJTPPrO/A9Ax0kJjsx8FBOKXdkApAFzIG9ve+KSxFDYDNJyoBM9IKS6Z+6CbJSR7bFTMzF6N46HrmHBHn7ql8RMZEu8LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302524; c=relaxed/simple;
-	bh=M5slKZIxWNkSNWmTaguYLtuZZ6p+m8YUWx+PIPQYwXU=;
+	s=arc-20240116; t=1772302525; c=relaxed/simple;
+	bh=MUHlAQYSEysZEQexaNbrw0IwTulqIBoQY5XOa54i4GI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cfuiGjQFygUEamgLi3XrcUc5LMHN23mcrlZz47VggcGVWxgpXrHFOcSKOwNt+6+hP2L0LZQ14amBLELJhMPtX6z5rdl87fKvfeniBJFcVxfnStFkaDySj6Od/eIk1U/iGF570ZZN8/tR1nHruh4HndVIPY0MOz8TClX6BGTiIU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ooelg5z7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nq50ip5MKkr06Dr8VZ32UyqbU5V8DCuC9cjiOzw0NcLIm8PDqjKAO6lzXApat1lAyz/o6uxuwR90+0f1A1VdmOU82ePWrpLWINX1SaYwI2GZT2mbldBzpNjBXszn1RBRuVeNAZDtFT8N/qJRmkk5aCESxLXUNPgTD/EKsEOY5c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J9ZUdTT/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ooelg5z7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340F8C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J9ZUdTT/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA093C116D0;
 	Sat, 28 Feb 2026 18:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302524;
-	bh=M5slKZIxWNkSNWmTaguYLtuZZ6p+m8YUWx+PIPQYwXU=;
+	s=k20201202; t=1772302525;
+	bh=MUHlAQYSEysZEQexaNbrw0IwTulqIBoQY5XOa54i4GI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ooelg5z7iN8WNYtm2yHWNeW0PpYjEj/o8SUF2SGE6MoTEa7MBlicwLnAAzVBLzGts
-	 3mMW6q5yBHmoaqhS9bKgPhXOFmzmUBW3GFoupcuWQCxNFte7SXDLH2pxPkc9zHQaVe
-	 8z0CdmfYnMu40mSIIETsmucI8S5cC6LMmiGVjOnTzD/wxIs60pPi4ibu3ECHQlll1F
-	 G9ULwREW2pfHNseNtse5+jrBw4ON8GOO4gUcOmtdMevlivT/C/uOACB+Tn2uUKBFhx
-	 YzebuhpYmrIqQcbBnxLAM5g7PtNMbDjbp9eXalw5LifAli9V5Pe+CbXCDvTAguX8fh
-	 dgZoH7WT1kf2w==
+	b=J9ZUdTT/f/Cnmob4CeLvcdicB2tWfQ6U65haaBUWvWiCKDdnqY+8lyS3wwU0CBVdy
+	 3o8XNQu5eblFze2Pongb8ImyVIpCYSvKGYIOY5ODkGrWceHImDXqDoIidV76fwPXVe
+	 bou5Aci0cRIZx/eoSOqaWVPYSdwi3BdMRRU6Ppcs/0DPCTg5IVbxt3OoF7M/8/bTs5
+	 s4Ob3D1hh1oliqi+Zmamp7ZzqEwFpJmEzuxZJTDki1se6I+S0FFXsMdcgVq8/+FO5H
+	 RZZc5+9ypIHZ2Kex+AuuBqEA5v7/ZXq4fC78oAUm1UEQRvZ23HrBy9d1FiIWYa5qYo
+	 DRO007GBYpnWQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/164] hrtimer: Fix trace oddity
-Date: Sat, 28 Feb 2026 13:12:42 -0500
-Message-ID: <20260228181505.1600663-23-sashal@kernel.org>
+Subject: [PATCH 5.15 024/164] crypto: hisilicon/trng - modifying the order of header files
+Date: Sat, 28 Feb 2026 13:12:43 -0500
+Message-ID: <20260228181505.1600663-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -47,41 +47,54 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit 5d6446f409da00e5a389125ddb5ce09f5bc404c9 ]
+[ Upstream commit f5dd7c43022799ac5c4e3a0d445f9c293a198413 ]
 
-It turns out that __run_hrtimer() will trace like:
+Header files is included Order-ref: standard library headers,
+OS library headers, and project-specific headers. This patch
+modifies the order of header files according to suggestions.
 
-          <idle>-0     [032] d.h2. 20705.474563: hrtimer_cancel:       hrtimer=0xff2db8f77f8226e8
-          <idle>-0     [032] d.h1. 20705.474563: hrtimer_expire_entry: hrtimer=0xff2db8f77f8226e8 now=20699452001850 function=tick_nohz_handler/0x0
+In addition, use %u to print unsigned int variables to prevent
+overflow.
 
-Which is a bit nonsensical, the timer doesn't get canceled on
-expiration. The cause is the use of the incorrect debug helper.
-
-Fixes: c6a2a1770245 ("hrtimer: Add tracepoint for hrtimers")
-Reported-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260121143208.219595606@infradead.org
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 3d3135057ff5 ("crypto: hisilicon/trng - support tfms sharing the device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/hrtimer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/hisilicon/trng/trng.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index abb375816e4c1..0246b32e907d2 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -1650,7 +1650,7 @@ static void __run_hrtimer(struct hrtimer_cpu_base *cpu_base,
+diff --git a/drivers/crypto/hisilicon/trng/trng.c b/drivers/crypto/hisilicon/trng/trng.c
+index 829f2caf0f67f..71cf7c9e9a338 100644
+--- a/drivers/crypto/hisilicon/trng/trng.c
++++ b/drivers/crypto/hisilicon/trng/trng.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* Copyright (c) 2019 HiSilicon Limited. */
  
- 	lockdep_assert_held(&cpu_base->lock);
++#include <crypto/internal/rng.h>
+ #include <linux/acpi.h>
+ #include <linux/crypto.h>
+ #include <linux/err.h>
+@@ -13,7 +14,6 @@
+ #include <linux/mutex.h>
+ #include <linux/platform_device.h>
+ #include <linux/random.h>
+-#include <crypto/internal/rng.h>
  
--	debug_deactivate(timer);
-+	debug_hrtimer_deactivate(timer);
- 	base->running = timer;
+ #define HISI_TRNG_REG		0x00F0
+ #define HISI_TRNG_BYTES		4
+@@ -121,7 +121,7 @@ static int hisi_trng_generate(struct crypto_rng *tfm, const u8 *src,
+ 	u32 i;
  
- 	/*
+ 	if (dlen > SW_DRBG_BLOCKS_NUM * SW_DRBG_BYTES || dlen == 0) {
+-		pr_err("dlen(%d) exceeds limit(%d)!\n", dlen,
++		pr_err("dlen(%u) exceeds limit(%d)!\n", dlen,
+ 			SW_DRBG_BLOCKS_NUM * SW_DRBG_BYTES);
+ 		return -EINVAL;
+ 	}
 -- 
 2.51.0
 
