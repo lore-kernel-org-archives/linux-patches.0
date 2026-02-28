@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7565346FA0
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C12346FA0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302240; cv=none; b=INilOXtQG936SvNGgo7UZzd5Vt/2Dc6S9VTjQuiDUUV27JDE1ZnmCfYlfBzwv2EfCyFrE4Te/rVvZyRme+k354QFrfkjB543xoMcfJPOb/tvY5SnzOBqjtT7ABzO5Okq07mdzOd2MQ8xQN0ZwyN3R/UD3439twQC6WIiwdxJEaE=
+	t=1772302241; cv=none; b=n6PXbaPI06X/6LPyA411gIjByMMdsJ98ib37cvew2NJ4RIbc4gCYueS2slhgreXo4NHSBIc+817G4AJ/wFfgrp5kfyH9Y48g1iMPCegvQEfeVIAjTug0ydAPd7Gd/5IgOgNYJ6aZFGoP9lVJk0naeBM2uAmCOmLqZZSYFyW7GuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302240; c=relaxed/simple;
-	bh=HQ4tIRf1tsKLjUa8K6jwg7ruQLLdjFIAL6z7N4DuP0M=;
+	s=arc-20240116; t=1772302241; c=relaxed/simple;
+	bh=oARXlMaEGs+eko5A11pni1Ur1Wgx8zfLgbhPlzSSEL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NOZlraywVakGQeWxvG7c692g8InAPNYXv0d0BxpehIw13xyAqjXm5wVfM5GRkOA7RYzmEwlmczFG97RvCWsbdwzu4NEgoDptUZk3y6lAreABOk0jEECBvENdL9BgVgBR1Mn3BGpxA3/GdFwiHuV7bvyqyKuVQphi8ync6z8C8Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FMlnuN25; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gWppoQfHzvPKRgSUDvtMiI96ntmsWvy3Q1DvCQRNoEpoj63N1pYgZHS/p1rCCQjMvXDyuNkWskSj8ek9Y2XDGiSRIFuu2/h5vhmhnZXa3KbAXQyLLBhfes+ryZBZroCDfxm3s8IAH5X27awbBIwNS2h71za4s0YPeaXZFmhpvj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r6vAbURB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FMlnuN25"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38ACDC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r6vAbURB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF634C116D0;
 	Sat, 28 Feb 2026 18:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302240;
-	bh=HQ4tIRf1tsKLjUa8K6jwg7ruQLLdjFIAL6z7N4DuP0M=;
+	s=k20201202; t=1772302241;
+	bh=oARXlMaEGs+eko5A11pni1Ur1Wgx8zfLgbhPlzSSEL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FMlnuN25iNsTDpKW7uAOmDqIeJFa7T3Woxpgj7PFRGDVgfHQ2hCrRlcjsv/hxqf/r
-	 QZIA3V+NH6LJYs9U5B5unpGOLEkueHETrJEoY3y4BCSbutv3UrHHz0oqQPIfDecje/
-	 fAevx9ZFgFHjBiBLBDtUbLdpxJ3nghFYmzJOUen85XPiqB7J/l+zhHESm73yIu7PMy
-	 buN6fzwrhbtQ1DdFRv4NKlzsyov8C3wZ4ug0dSlNpxxp+oWMc4YI3sXPagSm8E1NIb
-	 TfL+oUBGjpaDYlxNzgsVDoBFLo1jCa6KYgXJ76TdH7IozZVnbCh/C8jD8IflJyv5Us
-	 elIoLlPvNVPQg==
+	b=r6vAbURBskr55IK7zHUskrmfjrBEgtVpEB2ekA7GOeD0FhcyIc6GFWOgcTvfcWwsi
+	 EiJVScvyL69D2u64r94f1+slj6+hvE78dfadIzQt+FxmYTxV7/LXTHa6rYq7J5AI39
+	 N5YvXWiImLo2MBgNBvKQPuD5xlOpKw7aDy5lA/Pvsukmb8tB7GdsZZGLU0JfKPAsEl
+	 JvcdQHAYHGRpjqdx6eYXmOsxn85lk2BQ+23Yl7nGyadkaKwdIZlkHNgZ6gNAniabL0
+	 p3GE7tUnURLefPRuL6/Ev4DX+B5VUa7t9XDHbaCaW0czE2FOqDlxAR076W76MclCuy
+	 Q2MIYuHr2f5Lw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+Cc: Jared Kangas <jkangas@redhat.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 252/283] dmaengine: fsl-edma-main: Convert to platform remove callback returning void
-Date: Sat, 28 Feb 2026 13:06:34 -0500
-Message-ID: <20260228180709.1583486-252-sashal@kernel.org>
+Subject: [PATCH 6.6 253/283] dmaengine: fsl-edma: don't explicitly disable clocks in .remove()
+Date: Sat, 28 Feb 2026 13:06:35 -0500
+Message-ID: <20260228180709.1583486-253-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -43,67 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Jared Kangas <jkangas@redhat.com>
 
-[ Upstream commit fa13c3ef3f45bca5a1474755dac57bfaf28ef61b ]
+[ Upstream commit 666c53e94c1d0bf0bdf14c49505ece9ddbe725bc ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() is renamed to .remove().
+The clocks in fsl_edma_engine::muxclk are allocated and enabled with
+devm_clk_get_enabled(), which automatically cleans these resources up,
+but these clocks are also manually disabled in fsl_edma_remove(). This
+causes warnings on driver removal for each clock:
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+        edma_module already disabled
+        WARNING: CPU: 0 PID: 418 at drivers/clk/clk.c:1200 clk_core_disable+0x198/0x1c8
+        [...]
+        Call trace:
+         clk_core_disable+0x198/0x1c8 (P)
+         clk_disable+0x34/0x58
+         fsl_edma_remove+0x74/0xe8 [fsl_edma]
+         [...]
+        ---[ end trace 0000000000000000 ]---
+        edma_module already unprepared
+        WARNING: CPU: 0 PID: 418 at drivers/clk/clk.c:1059 clk_core_unprepare+0x1f8/0x220
+        [...]
+        Call trace:
+         clk_core_unprepare+0x1f8/0x220 (P)
+         clk_unprepare+0x34/0x58
+         fsl_edma_remove+0x7c/0xe8 [fsl_edma]
+         [...]
+        ---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230919133207.1400430-13-u.kleine-koenig@pengutronix.de
+Fix these warnings by removing the unnecessary fsl_disable_clocks() call
+in fsl_edma_remove().
+
+Fixes: a9903de3aa16 ("dmaengine: fsl-edma: refactor using devm_clk_get_enabled")
+Signed-off-by: Jared Kangas <jkangas@redhat.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260113-fsl-edma-clock-removal-v1-1-2025b49e7bcc@redhat.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 666c53e94c1d ("dmaengine: fsl-edma: don't explicitly disable clocks in .remove()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl-edma-main.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/dma/fsl-edma-main.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
-index eccbcf67951fb..7dedd85d74d9b 100644
+index 7dedd85d74d9b..34b194759d218 100644
 --- a/drivers/dma/fsl-edma-main.c
 +++ b/drivers/dma/fsl-edma-main.c
-@@ -669,7 +669,7 @@ static int fsl_edma_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int fsl_edma_remove(struct platform_device *pdev)
-+static void fsl_edma_remove(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
- 	struct fsl_edma_engine *fsl_edma = platform_get_drvdata(pdev);
-@@ -679,8 +679,6 @@ static int fsl_edma_remove(struct platform_device *pdev)
+@@ -678,7 +678,6 @@ static void fsl_edma_remove(struct platform_device *pdev)
+ 	of_dma_controller_free(np);
  	dma_async_device_unregister(&fsl_edma->dma_dev);
  	fsl_edma_cleanup_vchan(&fsl_edma->dma_dev);
- 	fsl_disable_clocks(fsl_edma, fsl_edma->drvdata->dmamuxs);
--
--	return 0;
+-	fsl_disable_clocks(fsl_edma, fsl_edma->drvdata->dmamuxs);
  }
  
  static int fsl_edma_suspend_late(struct device *dev)
-@@ -749,7 +747,7 @@ static struct platform_driver fsl_edma_driver = {
- 		.pm     = &fsl_edma_pm_ops,
- 	},
- 	.probe          = fsl_edma_probe,
--	.remove		= fsl_edma_remove,
-+	.remove_new	= fsl_edma_remove,
- };
- 
- static int __init fsl_edma_init(void)
 -- 
 2.51.0
 
