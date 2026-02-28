@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A6C355049
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B12A3D903F
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301100; cv=none; b=mvaPBYKgFLWXHjZ4vIBhvd+5TrVyICq0rxgWWK2W4HKZWDya8Hnr0zYxIknh2/6+p1stqkZ+1CpAqcChMZDrUVS31hTgxYjfs7WHq0rCj0IOJ2nAqvb5CEMjTPU0v8rTJ+mSQx+cYvlt3/RVr2XWCby3D/d6b52COzr3e6VAG3Y=
+	t=1772301101; cv=none; b=JpWaUNGLm3jdiepV9nFv8aU7hrzsmYvigbyVvDZ5+S5fnB93y8vmbLr86tfetbFlt5LVPLpB2YrdmG57vvmR8Z8RuxT1Q6sVJ1oBmtllR2+t2CCsPE1zFlQL0UXYeWd5dBQ766vBX1BTDLbSUzgqAwOzL2xX7IdvtAjRXeRNUMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301100; c=relaxed/simple;
-	bh=pFE7KMqNgpCOcihLdheVtz6wir2jtJW5f5QbLKUawRM=;
+	s=arc-20240116; t=1772301101; c=relaxed/simple;
+	bh=cSWzlnpqidfMV0fh8o4QeLP6rReA62/EY2yPIuusBFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=miBu2rhf+bx7UIG/RLGjIGrJxROuk/IOG2rwY37pmBIT0GcKWK+qYNPXhOhQpnBmtIUMLNEffbxeohFmnUDGeOXAjZIvhmVdNPCF+EOMGrEPiJ6jOTmjtr0zS0HYEfeoH2CbMW8F0Spbr0nnSHADQVyL2lctN5Xlt/tFrmKUEGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gaqiy8fj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V0/uOVTEBwvI5A/J++jlzdN6u5j9Kp1OJr8BPdX1W7iqcTGhAfohvTSwgqp9bTquJl2E+Vta1RumyWgLa5Oy6YYPVsgvQW5Ys5e4XgvvRIJC/vmx1VxFmQHDF9ohs3ClQS2KcHMxRDM2pGV34a2sIIW0alKKz4DHd6T+3vQAlF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jtipvc1D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gaqiy8fj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924A6C19423;
-	Sat, 28 Feb 2026 17:51:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jtipvc1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0E1C19424;
+	Sat, 28 Feb 2026 17:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301100;
-	bh=pFE7KMqNgpCOcihLdheVtz6wir2jtJW5f5QbLKUawRM=;
+	bh=cSWzlnpqidfMV0fh8o4QeLP6rReA62/EY2yPIuusBFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gaqiy8fjmfvQLxCUE2qM9b1Ue/fh+F3AIOzny2aC/j/Lugo7r6cGNVXi4FSonHuYw
-	 8qAi/nx4Ne9es11fE9qtZK1lXfccV/lCVNLZLa57zsj6KiX9984PU9ZvtxMPtOPAtV
-	 6GC+01gnjSHV1P44LmeyWJxd+v+Mkdys5P87ZBOTcd6uZx9a9CYAi5h+Y0l0ObCZxw
-	 AYY8eobHncdJVYkJ9PO5IjFJqt2m7hh4wljCHIUBfcRQjiz4iQHeyLOfXFmtNkhCPD
-	 gjyWftBxqX0JeIDkJogRlK5+4DfayCXgXHvgbiHNHOCFzFDEoyt3Yfa0GIO9DtKa3U
-	 zvCFNmuHTh7Ig==
+	b=jtipvc1DqZ4XuUxzXnCZCJHbFXHdQyf5DlQLmkE8/CoCq3hkLsyi+3vxDXKNLkrUb
+	 OYrhx+0vJK3pRidyQJfPAif8EIMYrMfSNLUwEQGI47zyPKKgZQW03AJBsfBJ9WjoDe
+	 Cm8PSxMELv5ef4b3pRmdhG7Ln2UiuaZBUWeW3N8UeutgmGeJi77IYWUuxciMKhiuoP
+	 WzDqPxveBcEKTZ1vhLgnYGFQSCgjC7V4sQDZ+gKlgoH+e3tKel3TZOnsWfVm+jeIrU
+	 hpcMrPKUR/antPMV+HK+yMVC5B3pZZqrwhk3aYsjdmI6I0AbYloOxF3++cEhzlbpVV
+	 Y321A/jOZ+SJQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Florian Westphal <fw@strlen.de>,
-	sungzii <sungzii@pm.me>,
+Cc: Brian Masney <bmasney@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 252/752] netfilter: xt_tcpmss: check remaining length before reading optlen
-Date: Sat, 28 Feb 2026 12:39:23 -0500
-Message-ID: <20260228174750.1542406-252-sashal@kernel.org>
+Subject: [PATCH 6.18 253/752] openrisc: define arch-specific version of nop()
+Date: Sat, 28 Feb 2026 12:39:24 -0500
+Message-ID: <20260228174750.1542406-253-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,40 +48,51 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 735ee8582da3d239eb0c7a53adca61b79fb228b3 ]
+[ Upstream commit 0dfffa5479d6260d04d021f69203b1926f73d889 ]
 
-Quoting reporter:
-  In net/netfilter/xt_tcpmss.c (lines 53-68), the TCP option parser reads
- op[i+1] directly without validating the remaining option length.
+When compiling a driver written for MIPS on OpenRISC that uses the nop()
+function, it fails due to the following error:
 
-  If the last byte of the option field is not EOL/NOP (0/1), the code attempts
-  to index op[i+1]. In the case where i + 1 == optlen, this causes an
-  out-of-bounds read, accessing memory past the optlen boundary
-  (either reading beyond the stack buffer _opt or the
-  following payload).
+    drivers/watchdog/pic32-wdt.c: Assembler messages:
+    drivers/watchdog/pic32-wdt.c:125: Error: unrecognized instruction `nop'
 
-Reported-by: sungzii <sungzii@pm.me>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+The driver currently uses the generic version of nop() from
+include/asm-generic/barrier.h:
+
+    #ifndef nop
+    #define nop()   asm volatile ("nop")
+    #endif
+
+Let's fix this on OpenRISC by defining an architecture-specific version
+of nop().
+
+This was tested by performing an allmodconfig openrisc cross compile on
+an aarch64 host.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202601180236.BVy480We-lkp@intel.com/
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_tcpmss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/openrisc/include/asm/barrier.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/xt_tcpmss.c b/net/netfilter/xt_tcpmss.c
-index 37704ab017992..0d32d4841cb32 100644
---- a/net/netfilter/xt_tcpmss.c
-+++ b/net/netfilter/xt_tcpmss.c
-@@ -61,7 +61,7 @@ tcpmss_mt(const struct sk_buff *skb, struct xt_action_param *par)
- 			return (mssval >= info->mss_min &&
- 				mssval <= info->mss_max) ^ info->invert;
- 		}
--		if (op[i] < 2)
-+		if (op[i] < 2 || i == optlen - 1)
- 			i++;
- 		else
- 			i += op[i+1] ? : 1;
+diff --git a/arch/openrisc/include/asm/barrier.h b/arch/openrisc/include/asm/barrier.h
+index 7538294721bed..8e592c9909023 100644
+--- a/arch/openrisc/include/asm/barrier.h
++++ b/arch/openrisc/include/asm/barrier.h
+@@ -4,6 +4,8 @@
+ 
+ #define mb() asm volatile ("l.msync" ::: "memory")
+ 
++#define nop() asm volatile ("l.nop")
++
+ #include <asm-generic/barrier.h>
+ 
+ #endif /* __ASM_BARRIER_H */
 -- 
 2.51.0
 
