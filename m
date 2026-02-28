@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B38634252B
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFFD379ED5
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301696; cv=none; b=TrzZV0OVIOPU8SBgzYVMpfg1d9UNKzyPFW59XLqOlexusMqZuAYW2M1b2xQfwDVZo3ia1c5VXw/3eGfvqFQWnfgRgKQNjGTDPn0s96tb8wtt40G7Ja1sdd3bQ2KyZT5InOWPmYSVscQ34X/pf+qrPiZREkZUemqwL0bVUsuJu/c=
+	t=1772301697; cv=none; b=ZV8FIpI7eTrB+29/7ZcbedIy4cD1VHPKKJlXX9IpGm5Q1vwnAVNgGfVCS0Kk4xA2YRouGKzzn7D1PX5SE2dcvmF2PQL38TNoCu3lMkrYA8bry8ZV3vk2SLWShI7uP3gBHUvDcGM2QCsMQ8mKtEP5rQE4IyUqkpR6y+nKg5o571c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301696; c=relaxed/simple;
-	bh=p3Iyn/xCyc4P2qLDbpXnKPQWVeSHHmo4oHOLWoYB6Qg=;
+	s=arc-20240116; t=1772301697; c=relaxed/simple;
+	bh=nt/RcEOiLmmAkWAqCxyHOPh9VJ53Dc7NNk2o+o8xxqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAvNFIPyZFAaNEURI6Phs8Gukkr0tm5vvznLKHhrxBB9pMNaiMnL0dPRe0zXuwzuawvHwZq7u3sGq05Vey1oKVyFRnncFksy4hCGQNQCesJMmDtdEXljvnG0fhFTsVjYqBh95i3LMtDxGxEs5z6TWKvW6pgk5lvAl9wRh1oF2d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YJ1jM485; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YU1ZL+K4iMj2wCVN6TnrXNuJyfhCFLfQqWILUZ/2VfFJ+IYLLgb+2ZShE3ikdwY2WvDwjm30pHnuPCE6PcRJFw98HCn/uNU9iET3qzmMBMvKdnzuxlXIWu4GfWiOPDu2tT74ugt3Cn2aiHOGLTw16dRnM2nh5+pNCR2HZd884WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i89TEZtY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YJ1jM485"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCCFC116D0;
-	Sat, 28 Feb 2026 18:01:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i89TEZtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EDFC116D0;
+	Sat, 28 Feb 2026 18:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301696;
-	bh=p3Iyn/xCyc4P2qLDbpXnKPQWVeSHHmo4oHOLWoYB6Qg=;
+	s=k20201202; t=1772301697;
+	bh=nt/RcEOiLmmAkWAqCxyHOPh9VJ53Dc7NNk2o+o8xxqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YJ1jM485jFgUSovNmJdrC+VDk66axsXAiFaZkuEg7q83INRuufNoLrxBnNHxZYtY4
-	 Ckxg2qC/H5GhG8YrX60fYiWlWaJoCMdyRLiQV7p+2Z/idEuim1y1Y+1ACQGx8YfXdu
-	 2QTViOPIg/qx1vDMYfUaRTlFJ93J6QEhF6tauwdoE0k1t+s8ttN2xlDnE3dhI0NeRb
-	 dC85pHgdXZAhVESLiSUdUiQcO1y+1aecRcfcbxSjcHJH7n8kScHN5sHlVx0T9e+Euk
-	 zKmOX771tX4G8cRnFKgvjS3Ytg++15kPIGGf3OuKnVCmXmHUp176hcto8/0stYTp4z
-	 zBjUEJHR2wbhw==
+	b=i89TEZtYUS/Xk8hGwcEvqSyGrPiAV9ziLFxDmACZxcWBnXPHt49yGUdwLRVkK+3hb
+	 2k0firndXCqKhyQI0wAAM3iZ3fu91FSQgq9I2Le2a/DKrHFIyVtRLSJOcD6rtYXq9c
+	 t1O70bOnGmNcaHuM5EmyWvIVrUNHH3cEOsJnxqtBoypk1wbu3JEE2iiy2+wwZ2Uwm9
+	 UvYrbnBfLml+0mtyE/4xKu23x/eVNhab9blZxLFyiaRwlhmbskT7O1X7V56svD1qW/
+	 ruOWJCuhHYUzvABHLPlDCAE4T+rgBCWDyjONP7bhLpVWyvCK0mQkVy1NF3Lwv7eU/1
+	 811IO/0KIOPkQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jonathan McDowell <noodles@meta.com>,
+Cc: Lianjie Wang <karin0.zst@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 088/385] hwrng: core - Allow runtime disabling of the HW RNG
-Date: Sat, 28 Feb 2026 12:55:10 -0500
-Message-ID: <20260228180011.1568201-88-sashal@kernel.org>
+Subject: [PATCH 6.12 089/385] hwrng: core - use RCU and work_struct to fix race condition
+Date: Sat, 28 Feb 2026 12:55:11 -0500
+Message-ID: <20260228180011.1568201-89-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,93 +47,444 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan McDowell <noodles@meta.com>
+From: Lianjie Wang <karin0.zst@gmail.com>
 
-[ Upstream commit e74b96d77da9eb5ee1b603c937c2adab5134a04b ]
+[ Upstream commit cc2f39d6ac48e6e3cb2d6240bc0d6df839dd0828 ]
 
-The HW RNG core allows for manual selection of which RNG device to use,
-but does not allow for no device to be enabled. It may be desirable to
-do this on systems with only a single suitable hardware RNG, where we
-need exclusive access to other functionality on this device. In
-particular when performing TPM firmware upgrades this lets us ensure the
-kernel does not try to access the device.
+Currently, hwrng_fill is not cleared until the hwrng_fillfn() thread
+exits. Since hwrng_unregister() reads hwrng_fill outside the rng_mutex
+lock, a concurrent hwrng_unregister() may call kthread_stop() again on
+the same task.
 
-Before:
+Additionally, if hwrng_unregister() is called immediately after
+hwrng_register(), the stopped thread may have never been executed. Thus,
+hwrng_fill remains dirty even after hwrng_unregister() returns. In this
+case, subsequent calls to hwrng_register() will fail to start new
+threads, and hwrng_unregister() will call kthread_stop() on the same
+freed task. In both cases, a use-after-free occurs:
 
-root@debian-qemu-efi:~# grep "" /sys/devices/virtual/misc/hw_random/rng_*
-/sys/devices/virtual/misc/hw_random/rng_available:tpm-rng-0
-/sys/devices/virtual/misc/hw_random/rng_current:tpm-rng-0
-/sys/devices/virtual/misc/hw_random/rng_quality:1024
-/sys/devices/virtual/misc/hw_random/rng_selected:0
+refcount_t: addition on 0; use-after-free.
+WARNING: ... at lib/refcount.c:25 refcount_warn_saturate+0xec/0x1c0
+Call Trace:
+ kthread_stop+0x181/0x360
+ hwrng_unregister+0x288/0x380
+ virtrng_remove+0xe3/0x200
 
-After:
+This patch fixes the race by protecting the global hwrng_fill pointer
+inside the rng_mutex lock, so that hwrng_fillfn() thread is stopped only
+once, and calls to kthread_run() and kthread_stop() are serialized
+with the lock held.
 
-root@debian-qemu-efi:~# grep "" /sys/devices/virtual/misc/hw_random/rng_*
-/sys/devices/virtual/misc/hw_random/rng_available:tpm-rng-0 none
-/sys/devices/virtual/misc/hw_random/rng_current:tpm-rng-0
-/sys/devices/virtual/misc/hw_random/rng_quality:1024
-/sys/devices/virtual/misc/hw_random/rng_selected:0
+To avoid deadlock in hwrng_fillfn() while being stopped with the lock
+held, we convert current_rng to RCU, so that get_current_rng() can read
+current_rng without holding the lock. To remove the lock from put_rng(),
+we also delay the actual cleanup into a work_struct.
 
-root@debian-qemu-efi:~# echo none > /sys/devices/virtual/misc/hw_random/rng_current
-root@debian-qemu-efi:~# grep "" /sys/devices/virtual/misc/hw_random/rng_*
-/sys/devices/virtual/misc/hw_random/rng_available:tpm-rng-0 none
-/sys/devices/virtual/misc/hw_random/rng_current:none
-grep: /sys/devices/virtual/misc/hw_random/rng_quality: No such device
-/sys/devices/virtual/misc/hw_random/rng_selected:1
+Since get_current_rng() no longer returns ERR_PTR values, the IS_ERR()
+checks are removed from its callers.
 
-(Observe using bpftrace no calls to TPM being made)
+With hwrng_fill protected by the rng_mutex lock, hwrng_fillfn() can no
+longer clear hwrng_fill itself. Therefore, if hwrng_fillfn() returns
+directly after current_rng is dropped, kthread_stop() would be called on
+a freed task_struct later. To fix this, hwrng_fillfn() calls schedule()
+now to keep the task alive until being stopped. The kthread_stop() call
+is also moved from hwrng_unregister() to drop_current_rng(), ensuring
+kthread_stop() is called on all possible paths where current_rng becomes
+NULL, so that the thread would not wait forever.
 
-root@debian-qemu-efi:~# echo "" > /sys/devices/virtual/misc/hw_random/rng_current
-root@debian-qemu-efi:~# grep "" /sys/devices/virtual/misc/hw_random/rng_*
-/sys/devices/virtual/misc/hw_random/rng_available:tpm-rng-0 none
-/sys/devices/virtual/misc/hw_random/rng_current:tpm-rng-0
-/sys/devices/virtual/misc/hw_random/rng_quality:1024
-/sys/devices/virtual/misc/hw_random/rng_selected:0
-
-(Observe using bpftrace that calls to the TPM resume)
-
-Signed-off-by: Jonathan McDowell <noodles@meta.com>
+Fixes: be4000bc4644 ("hwrng: create filler thread")
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Lianjie Wang <karin0.zst@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: cc2f39d6ac48 ("hwrng: core - use RCU and work_struct to fix race condition")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/core.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/char/hw_random/core.c | 168 +++++++++++++++++++++-------------
+ include/linux/hw_random.h     |   2 +
+ 2 files changed, 107 insertions(+), 63 deletions(-)
 
 diff --git a/drivers/char/hw_random/core.c b/drivers/char/hw_random/core.c
-index 57c51efa56131..7be3d504d8c01 100644
+index 7be3d504d8c01..c6e913497e1df 100644
 --- a/drivers/char/hw_random/core.c
 +++ b/drivers/char/hw_random/core.c
-@@ -334,6 +334,9 @@ static ssize_t rng_current_store(struct device *dev,
+@@ -20,23 +20,25 @@
+ #include <linux/miscdevice.h>
+ #include <linux/module.h>
+ #include <linux/random.h>
++#include <linux/rcupdate.h>
+ #include <linux/sched.h>
+ #include <linux/sched/signal.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ #include <linux/uaccess.h>
++#include <linux/workqueue.h>
  
- 	if (sysfs_streq(buf, "")) {
- 		err = enable_best_rng();
-+	} else if (sysfs_streq(buf, "none")) {
-+		cur_rng_set_by_user = 1;
-+		drop_current_rng();
- 	} else {
- 		list_for_each_entry(rng, &rng_list, list) {
- 			if (sysfs_streq(rng->name, buf)) {
-@@ -385,7 +388,7 @@ static ssize_t rng_available_show(struct device *dev,
- 		strlcat(buf, rng->name, PAGE_SIZE);
- 		strlcat(buf, " ", PAGE_SIZE);
+ #define RNG_MODULE_NAME		"hw_random"
+ 
+ #define RNG_BUFFER_SIZE (SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES)
+ 
+-static struct hwrng *current_rng;
++static struct hwrng __rcu *current_rng;
+ /* the current rng has been explicitly chosen by user via sysfs */
+ static int cur_rng_set_by_user;
+ static struct task_struct *hwrng_fill;
+ /* list of registered rngs */
+ static LIST_HEAD(rng_list);
+-/* Protects rng_list and current_rng */
++/* Protects rng_list, hwrng_fill and updating on current_rng */
+ static DEFINE_MUTEX(rng_mutex);
+ /* Protects rng read functions, data_avail, rng_buffer and rng_fillbuf */
+ static DEFINE_MUTEX(reading_mutex);
+@@ -64,18 +66,39 @@ static size_t rng_buffer_size(void)
+ 	return RNG_BUFFER_SIZE;
+ }
+ 
+-static inline void cleanup_rng(struct kref *kref)
++static void cleanup_rng_work(struct work_struct *work)
+ {
+-	struct hwrng *rng = container_of(kref, struct hwrng, ref);
++	struct hwrng *rng = container_of(work, struct hwrng, cleanup_work);
++
++	/*
++	 * Hold rng_mutex here so we serialize in case they set_current_rng
++	 * on rng again immediately.
++	 */
++	mutex_lock(&rng_mutex);
++
++	/* Skip if rng has been reinitialized. */
++	if (kref_read(&rng->ref)) {
++		mutex_unlock(&rng_mutex);
++		return;
++	}
+ 
+ 	if (rng->cleanup)
+ 		rng->cleanup(rng);
+ 
+ 	complete(&rng->cleanup_done);
++	mutex_unlock(&rng_mutex);
++}
++
++static inline void cleanup_rng(struct kref *kref)
++{
++	struct hwrng *rng = container_of(kref, struct hwrng, ref);
++
++	schedule_work(&rng->cleanup_work);
+ }
+ 
+ static int set_current_rng(struct hwrng *rng)
+ {
++	struct hwrng *old_rng;
+ 	int err;
+ 
+ 	BUG_ON(!mutex_is_locked(&rng_mutex));
+@@ -84,8 +107,14 @@ static int set_current_rng(struct hwrng *rng)
+ 	if (err)
+ 		return err;
+ 
+-	drop_current_rng();
+-	current_rng = rng;
++	old_rng = rcu_dereference_protected(current_rng,
++					    lockdep_is_held(&rng_mutex));
++	rcu_assign_pointer(current_rng, rng);
++
++	if (old_rng) {
++		synchronize_rcu();
++		kref_put(&old_rng->ref, cleanup_rng);
++	}
+ 
+ 	/* if necessary, start hwrng thread */
+ 	if (!hwrng_fill) {
+@@ -101,47 +130,56 @@ static int set_current_rng(struct hwrng *rng)
+ 
+ static void drop_current_rng(void)
+ {
+-	BUG_ON(!mutex_is_locked(&rng_mutex));
+-	if (!current_rng)
++	struct hwrng *rng;
++
++	rng = rcu_dereference_protected(current_rng,
++					lockdep_is_held(&rng_mutex));
++	if (!rng)
+ 		return;
+ 
++	RCU_INIT_POINTER(current_rng, NULL);
++	synchronize_rcu();
++
++	if (hwrng_fill) {
++		kthread_stop(hwrng_fill);
++		hwrng_fill = NULL;
++	}
++
+ 	/* decrease last reference for triggering the cleanup */
+-	kref_put(&current_rng->ref, cleanup_rng);
+-	current_rng = NULL;
++	kref_put(&rng->ref, cleanup_rng);
+ }
+ 
+-/* Returns ERR_PTR(), NULL or refcounted hwrng */
++/* Returns NULL or refcounted hwrng */
+ static struct hwrng *get_current_rng_nolock(void)
+ {
+-	if (current_rng)
+-		kref_get(&current_rng->ref);
++	struct hwrng *rng;
++
++	rng = rcu_dereference_protected(current_rng,
++					lockdep_is_held(&rng_mutex));
++	if (rng)
++		kref_get(&rng->ref);
+ 
+-	return current_rng;
++	return rng;
+ }
+ 
+ static struct hwrng *get_current_rng(void)
+ {
+ 	struct hwrng *rng;
+ 
+-	if (mutex_lock_interruptible(&rng_mutex))
+-		return ERR_PTR(-ERESTARTSYS);
++	rcu_read_lock();
++	rng = rcu_dereference(current_rng);
++	if (rng)
++		kref_get(&rng->ref);
+ 
+-	rng = get_current_rng_nolock();
++	rcu_read_unlock();
+ 
+-	mutex_unlock(&rng_mutex);
+ 	return rng;
+ }
+ 
+ static void put_rng(struct hwrng *rng)
+ {
+-	/*
+-	 * Hold rng_mutex here so we serialize in case they set_current_rng
+-	 * on rng again immediately.
+-	 */
+-	mutex_lock(&rng_mutex);
+ 	if (rng)
+ 		kref_put(&rng->ref, cleanup_rng);
+-	mutex_unlock(&rng_mutex);
+ }
+ 
+ static int hwrng_init(struct hwrng *rng)
+@@ -206,10 +244,6 @@ static ssize_t rng_dev_read(struct file *filp, char __user *buf,
+ 
+ 	while (size) {
+ 		rng = get_current_rng();
+-		if (IS_ERR(rng)) {
+-			err = PTR_ERR(rng);
+-			goto out;
+-		}
+ 		if (!rng) {
+ 			err = -ENODEV;
+ 			goto out;
+@@ -296,7 +330,7 @@ static struct miscdevice rng_miscdev = {
+ 
+ static int enable_best_rng(void)
+ {
+-	struct hwrng *rng, *new_rng = NULL;
++	struct hwrng *rng, *cur_rng, *new_rng = NULL;
+ 	int ret = -ENODEV;
+ 
+ 	BUG_ON(!mutex_is_locked(&rng_mutex));
+@@ -314,7 +348,9 @@ static int enable_best_rng(void)
+ 			new_rng = rng;
  	}
--	strlcat(buf, "\n", PAGE_SIZE);
-+	strlcat(buf, "none\n", PAGE_SIZE);
- 	mutex_unlock(&rng_mutex);
  
- 	return strlen(buf);
-@@ -537,8 +540,8 @@ int hwrng_register(struct hwrng *rng)
+-	ret = ((new_rng == current_rng) ? 0 : set_current_rng(new_rng));
++	cur_rng = rcu_dereference_protected(current_rng,
++					    lockdep_is_held(&rng_mutex));
++	ret = ((new_rng == cur_rng) ? 0 : set_current_rng(new_rng));
+ 	if (!ret)
+ 		cur_rng_set_by_user = 0;
+ 
+@@ -364,8 +400,6 @@ static ssize_t rng_current_show(struct device *dev,
+ 	struct hwrng *rng;
+ 
+ 	rng = get_current_rng();
+-	if (IS_ERR(rng))
+-		return PTR_ERR(rng);
+ 
+ 	ret = sysfs_emit(buf, "%s\n", rng ? rng->name : "none");
+ 	put_rng(rng);
+@@ -409,8 +443,6 @@ static ssize_t rng_quality_show(struct device *dev,
+ 	struct hwrng *rng;
+ 
+ 	rng = get_current_rng();
+-	if (IS_ERR(rng))
+-		return PTR_ERR(rng);
+ 
+ 	if (!rng) /* no need to put_rng */
+ 		return -ENODEV;
+@@ -425,6 +457,7 @@ static ssize_t rng_quality_store(struct device *dev,
+ 				 struct device_attribute *attr,
+ 				 const char *buf, size_t len)
+ {
++	struct hwrng *rng;
+ 	u16 quality;
+ 	int ret = -EINVAL;
+ 
+@@ -441,12 +474,13 @@ static ssize_t rng_quality_store(struct device *dev,
+ 		goto out;
+ 	}
+ 
+-	if (!current_rng) {
++	rng = rcu_dereference_protected(current_rng, lockdep_is_held(&rng_mutex));
++	if (!rng) {
+ 		ret = -ENODEV;
+ 		goto out;
+ 	}
+ 
+-	current_rng->quality = quality;
++	rng->quality = quality;
+ 	current_quality = quality; /* obsolete */
+ 
+ 	/* the best available RNG may have changed */
+@@ -482,8 +516,20 @@ static int hwrng_fillfn(void *unused)
+ 		struct hwrng *rng;
+ 
+ 		rng = get_current_rng();
+-		if (IS_ERR(rng) || !rng)
++		if (!rng) {
++			/*
++			 * Keep the task_struct alive until kthread_stop()
++			 * is called to avoid UAF in drop_current_rng().
++			 */
++			while (!kthread_should_stop()) {
++				set_current_state(TASK_INTERRUPTIBLE);
++				if (!kthread_should_stop())
++					schedule();
++			}
++			set_current_state(TASK_RUNNING);
+ 			break;
++		}
++
+ 		mutex_lock(&reading_mutex);
+ 		rc = rng_get_data(rng, rng_fillbuf,
+ 				  rng_buffer_size(), 1);
+@@ -511,14 +557,13 @@ static int hwrng_fillfn(void *unused)
+ 		add_hwgenerator_randomness((void *)rng_fillbuf, rc,
+ 					   entropy >> 10, true);
+ 	}
+-	hwrng_fill = NULL;
+ 	return 0;
+ }
+ 
+ int hwrng_register(struct hwrng *rng)
+ {
+ 	int err = -EINVAL;
+-	struct hwrng *tmp;
++	struct hwrng *cur_rng, *tmp;
+ 
+ 	if (!rng->name || (!rng->data_read && !rng->read))
+ 		goto out;
+@@ -533,6 +578,7 @@ int hwrng_register(struct hwrng *rng)
+ 	}
+ 	list_add_tail(&rng->list, &rng_list);
+ 
++	INIT_WORK(&rng->cleanup_work, cleanup_rng_work);
+ 	init_completion(&rng->cleanup_done);
+ 	complete(&rng->cleanup_done);
+ 	init_completion(&rng->dying);
+@@ -540,16 +586,19 @@ int hwrng_register(struct hwrng *rng)
  	/* Adjust quality field to always have a proper value */
  	rng->quality = min_t(u16, min_t(u16, default_quality, 1024), rng->quality ?: 1024);
  
--	if (!current_rng ||
--	    (!cur_rng_set_by_user && rng->quality > current_rng->quality)) {
-+	if (!cur_rng_set_by_user &&
-+	    (!current_rng || rng->quality > current_rng->quality)) {
- 		/*
- 		 * Set new rng as current as the new rng source
- 		 * provides better entropy quality and was not
+-	if (!cur_rng_set_by_user &&
+-	    (!current_rng || rng->quality > current_rng->quality)) {
+-		/*
+-		 * Set new rng as current as the new rng source
+-		 * provides better entropy quality and was not
+-		 * chosen by userspace.
+-		 */
+-		err = set_current_rng(rng);
+-		if (err)
+-			goto out_unlock;
++	if (!cur_rng_set_by_user) {
++		cur_rng = rcu_dereference_protected(current_rng,
++						    lockdep_is_held(&rng_mutex));
++		if (!cur_rng || rng->quality > cur_rng->quality) {
++			/*
++			 * Set new rng as current as the new rng source
++			 * provides better entropy quality and was not
++			 * chosen by userspace.
++			 */
++			err = set_current_rng(rng);
++			if (err)
++				goto out_unlock;
++		}
+ 	}
+ 	mutex_unlock(&rng_mutex);
+ 	return 0;
+@@ -562,14 +611,17 @@ EXPORT_SYMBOL_GPL(hwrng_register);
+ 
+ void hwrng_unregister(struct hwrng *rng)
+ {
+-	struct hwrng *new_rng;
++	struct hwrng *cur_rng;
+ 	int err;
+ 
+ 	mutex_lock(&rng_mutex);
+ 
+ 	list_del(&rng->list);
+ 	complete_all(&rng->dying);
+-	if (current_rng == rng) {
++
++	cur_rng = rcu_dereference_protected(current_rng,
++					    lockdep_is_held(&rng_mutex));
++	if (cur_rng == rng) {
+ 		err = enable_best_rng();
+ 		if (err) {
+ 			drop_current_rng();
+@@ -577,17 +629,7 @@ void hwrng_unregister(struct hwrng *rng)
+ 		}
+ 	}
+ 
+-	new_rng = get_current_rng_nolock();
+-	if (list_empty(&rng_list)) {
+-		mutex_unlock(&rng_mutex);
+-		if (hwrng_fill)
+-			kthread_stop(hwrng_fill);
+-	} else
+-		mutex_unlock(&rng_mutex);
+-
+-	if (new_rng)
+-		put_rng(new_rng);
+-
++	mutex_unlock(&rng_mutex);
+ 	wait_for_completion(&rng->cleanup_done);
+ }
+ EXPORT_SYMBOL_GPL(hwrng_unregister);
+@@ -675,7 +717,7 @@ static int __init hwrng_modinit(void)
+ static void __exit hwrng_modexit(void)
+ {
+ 	mutex_lock(&rng_mutex);
+-	BUG_ON(current_rng);
++	WARN_ON(rcu_access_pointer(current_rng));
+ 	kfree(rng_buffer);
+ 	kfree(rng_fillbuf);
+ 	mutex_unlock(&rng_mutex);
+diff --git a/include/linux/hw_random.h b/include/linux/hw_random.h
+index b424555753b11..b77bc55a4cf35 100644
+--- a/include/linux/hw_random.h
++++ b/include/linux/hw_random.h
+@@ -15,6 +15,7 @@
+ #include <linux/completion.h>
+ #include <linux/kref.h>
+ #include <linux/types.h>
++#include <linux/workqueue_types.h>
+ 
+ /**
+  * struct hwrng - Hardware Random Number Generator driver
+@@ -48,6 +49,7 @@ struct hwrng {
+ 	/* internal. */
+ 	struct list_head list;
+ 	struct kref ref;
++	struct work_struct cleanup_work;
+ 	struct completion cleanup_done;
+ 	struct completion dying;
+ };
 -- 
 2.51.0
 
