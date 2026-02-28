@@ -1,46 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9E13090D5
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E80433F378;
+	Sat, 28 Feb 2026 17:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300905; cv=none; b=hK81ci2UDXFy2v0ZO6RhdH2f+U7X9hZqhgycyPS8V8Bm7TZKAsFZyT/9dVeT/aqOQBt+HeEp4/j/p2ew+YmcdoEFMZtUKV2L/CH03lodlxzsNq479lQvUFNtpQZobJX90z6gsjfUDjOBk5M5cXnd+52HaUurHb1KrlQaxoVEvQU=
+	t=1772300906; cv=none; b=JcCU5bnd2NYJsdvD0iLa7lRgzhuBaOURrTvx495Uk1tfJufBu4iH2Y9w1lMcSrcXd+CUAdxN5jq3hYqplNQ+oXOWaaD7zeMtFxIotCEcb9McMomOPuOn6HeAc6zS69J8hxNsgRQoRPXCl6t3o4ry4XK8kJiSYxg0jw7GzFzCtsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300905; c=relaxed/simple;
-	bh=arL/7RVLXJxrKVxhxcK9OJ/+zcoX0CjtV+x8HUGf0ic=;
+	s=arc-20240116; t=1772300906; c=relaxed/simple;
+	bh=bjZvF3HoqucTEu5JA0Fv2fjutW/UGHafxWfYSwNBAoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzubAlr/JZeInNokLx9cl4qI8LfxnEli8NyfbWWhptb/qMlka5BnCNmOC6zF7ajPwTBmDXJdWtr8v50p9Vlf9q2n5UR49nB0lSGm4mZu0yuvXQIhmXaqWbntMHTjEJ+3Vh9PMdJXHu8VuNB3UFZinAuo2sKjPU/izlFXjB5B5JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qASwp+L0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nMn1JA9WdMN4HEEq98r/az171CysHV6Nc96aSfp5dMOA0nJS2riXskxyRgR6Df+h9zmG8c+DeD177pCuMzIo/Y28dSjGXL4gwJJDgeCkRmEdPHoO2SMFzjZgBANa+4TudaDR8VhHopzgi+n2FRSzNIRhYFc9sEiwwQydIWZOg2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SFPrCK9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qASwp+L0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4155C19423;
-	Sat, 28 Feb 2026 17:48:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SFPrCK9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3584DC116D0;
+	Sat, 28 Feb 2026 17:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300904;
-	bh=arL/7RVLXJxrKVxhxcK9OJ/+zcoX0CjtV+x8HUGf0ic=;
+	s=k20201202; t=1772300906;
+	bh=bjZvF3HoqucTEu5JA0Fv2fjutW/UGHafxWfYSwNBAoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qASwp+L0NCP630m28Y2dqNpd7K36gOPNLswQysVuFpcmUUxlF5uLS7S9Dktefa8ZJ
-	 9eoOy16yntOCTotjxmRaSd2RJZ2MhKC8zxzMR3dLlFIR8qz1MlvSWrbjnUbGBArAgC
-	 BsgSQD6bsNcauu/IaL3h42DNjRdjykaz1Z3OF1lOOX4eTCCW+LbmuDShzzRA/pXscb
-	 5FRDfft7DzY2hjYRbJlr7TVwX3gypixhuJo6rimKYzNOV1M4Co/zy87VRmPHPMWPrd
-	 4Z9pWB/mikHqpRqZneoM/ZHLZ8MtWkXBxb+J51q9FcwvrZ6bp6fpCOuIFxsxn7DrCs
-	 AuNIWoCAXVWZg==
+	b=SFPrCK9UMveqTujE8khluLueeERuSiYW1ugxUhArv9/SMwyBd7dYCWaSx6QH5cTHi
+	 kSvmwd137fKg0+i3QYsrtXnx5a6q+TVgDYJawwzNtvqz0aHs7ZWjllmn2IfG0LR/g1
+	 oWoljd7r1ZTU2c9z6XdreHddETeu+XKDX4iUwoUzqS7Rt/c53osjsDOn6d0JwHhro+
+	 jEG94HMBpBSEPWr0aZyifixwUSjvRUgZ7o635KauXOhU0v6GE+rqErq67LMND5mJIc
+	 QJjBBpZkC3mYcCe0TL6/3jkwIdanilX64bHX+42WVtMOokeYwrNnOqKH3nzihzwhbX
+	 Nhz3mO8TIrbNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
+Cc: Thomas Richter <tmricht@linux.ibm.com>,
+	Jan Polensky <japo@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	linux-s390@vger.kernel.org,
 	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 019/752] libperf build: Always place libperf includes first
-Date: Sat, 28 Feb 2026 12:35:30 -0500
-Message-ID: <20260228174750.1542406-19-sashal@kernel.org>
+Subject: [PATCH 6.18 020/752] perf test: Fix test case perftool-testsuite_report for s390
+Date: Sat, 28 Feb 2026 12:35:31 -0500
+Message-ID: <20260228174750.1542406-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -54,54 +55,112 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ian Rogers <irogers@google.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit 8c5b40678c63be6b85f1c2dc8c8b89d632faf988 ]
+[ Upstream commit 3d012b8614ee020666f3dd15af9f65dc487e3f5f ]
 
-When building tools/perf the CFLAGS can contain a directory for the
-installed headers.
+Test case perftool-testsuite_report fails on s390 for some time
+now.
 
-As the headers may be being installed while building libperf.a this can
-cause headers to be partially installed and found in the include path
-while building an object file for libperf.a.
+Root cause is a time out which is too tight for large s390 machines.
+The time out value addr2line_timeout_ms is per default set to 1 second.
 
-The installed header may reference other installed headers that are
-missing given the partial nature of the install and then the build fails
-with a missing header file.
+This is the maximum time the function read_addr2line_record() waits for
+a reply from the forked off tool addr2line, which is started as a child
+in interactive mode.
 
-Avoid this by ensuring the libperf source headers are always first in
-the CFLAGS.
+It reads stdin (an address in hexadecimal) and replies on stdout with
+function name, file name and line number. This might take more than one
+second.
 
-Fixes: 3143504918105156 ("libperf: Make libperf.a part of the perf build")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
+However one second is not always enough and the reply from addr2line
+tool is not received. Function read_addr2line_record() fails and emits
+a warning, which is not expected by the test case. It fails.
+
+Output before:
+
+ # perf test -F 133
+ -- [ PASS ] -- perf_report :: setup :: prepare the perf.data file
+ ==================
+ [ perf record: Woken up 1 times to write data ]
+ [ perf record: Captured and wrote 0.087 MB \
+	/tmp/perftool-testsuite_report.FHz/perf_report/perf.data.1 \
+	(207 samples) ]
+ ==================
+ -- [ PASS ] -- perf_report :: setup :: prepare the perf.data.1 file
+ ## [ PASS ] ## perf_report :: setup SUMMARY
+ -- [ SKIP ] -- perf_report :: test_basic :: help message :: testcase skipped
+ Line did not match any pattern: "cmd__addr2line /usr/lib/debug/lib/modules/
+ 	6.19.0-20260205.rc8.git366.9845cf73f7db.300.fc43.s390x+next/
+	vmlinux: could not read first record"
+ Line did not match any pattern: "cmd__addr2line /usr/lib/debug/lib/modules/
+	6.19.0-20260205.rc8.git366.9845cf73f7db.300.fc43.s390x+next/
+	vmlinux: could not read first record"
+ -- [ FAIL ] -- perf_report :: test_basic :: basic execution
+	(output regexp parsing)
+ ....
+ 133: perftool-testsuite_report      : FAILED!
+
+Output after:
+
+ # ./perf test -F 133
+ -- [ PASS ] -- perf_report :: setup :: prepare the perf.data file
+ ==================
+ [ perf record: Woken up 1 times to write data ]
+ [ perf record: Captured and wrote 0.087 MB \
+	 /tmp/perftool-testsuite_report.Mlp/perf_report/perf.data.1
+	 (188 samples) ]
+ ==================
+ -- [ PASS ] -- perf_report :: setup :: prepare the perf.data.1 file
+ ## [ PASS ] ## perf_report :: setup SUMMARY
+ -- [ SKIP ] -- perf_report :: test_basic :: help message :: testcase skipped
+ -- [ PASS ] -- perf_report :: test_basic :: basic execution
+ -- [ PASS ] -- perf_report :: test_basic :: number of samples
+ -- [ PASS ] -- perf_report :: test_basic :: header
+ -- [ PASS ] -- perf_report :: test_basic :: header timestamp
+ -- [ PASS ] -- perf_report :: test_basic :: show CPU utilization
+ -- [ PASS ] -- perf_report :: test_basic :: pid
+ -- [ PASS ] -- perf_report :: test_basic :: non-existing symbol
+ -- [ PASS ] -- perf_report :: test_basic :: symbol filter
+ -- [ PASS ] -- perf_report :: test_basic :: latency header
+ -- [ PASS ] -- perf_report :: test_basic :: default report for latency profile
+ -- [ PASS ] -- perf_report :: test_basic :: latency report for latency profile
+ -- [ PASS ] -- perf_report :: test_basic :: parallelism histogram
+ ## [ PASS ] ## perf_report :: test_basic SUMMARY
+ 133: perftool-testsuite_report      : Ok
+ #
+
+Fixes: 257046a36750a6db ("perf srcline: Fallback between addr2line implementations")
+Reviewed-by: Jan Polensky <japo@linux.ibm.com>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: linux-s390@vger.kernel.org
 Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/perf/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/addr2line.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/lib/perf/Makefile b/tools/lib/perf/Makefile
-index 7fbb50b74c00b..5c64122bf5374 100644
---- a/tools/lib/perf/Makefile
-+++ b/tools/lib/perf/Makefile
-@@ -51,9 +51,9 @@ INCLUDES = \
- -I$(srctree)/tools/include/uapi
+diff --git a/tools/perf/util/addr2line.c b/tools/perf/util/addr2line.c
+index f2d94a3272d71..a8b39f4f202b6 100644
+--- a/tools/perf/util/addr2line.c
++++ b/tools/perf/util/addr2line.c
+@@ -18,8 +18,8 @@
  
- # Append required CFLAGS
-+override CFLAGS := $(INCLUDES) $(CFLAGS)
- override CFLAGS += -g -Werror -Wall
- override CFLAGS += -fPIC
--override CFLAGS += $(INCLUDES)
- override CFLAGS += -fvisibility=hidden
- override CFLAGS += $(EXTRA_WARNINGS)
- override CFLAGS += $(EXTRA_CFLAGS)
+ #define MAX_INLINE_NEST 1024
+ 
+-/* If addr2line doesn't return data for 1 second then timeout. */
+-int addr2line_timeout_ms = 1 * 1000;
++/* If addr2line doesn't return data for 5 seconds then timeout. */
++int addr2line_timeout_ms = 5 * 1000;
+ 
+ static int filename_split(char *filename, unsigned int *line_nr)
+ {
 -- 
 2.51.0
 
