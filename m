@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57ED359A62
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE74B359A6B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302400; cv=none; b=gHoM9vsqRqc5BtTJ38QewnSDgj+lIo8rSZ0qtKA348JW5/LKiT3tFZzxgWl/AVDIRywg31haxiPG+70i7/6oC9KHMqLZF/Ob2LuORCddhH+GnOnNJHZ6Zsw/Cs+X29FRoUPhIpuKjnGGJGtuiLvOc6IDEMGrMxsctll8DBRxVCI=
+	t=1772302400; cv=none; b=sgHeywsHrdHCaahink96z1Pl0YvJ3ndgtgMrvufcGO7KjHfsRav7p4aLT8oz3W1tHP4p8kkc1vQKWXnQuiuzs1RluRkOoh7TQXWxs01+pPbYt5hOnrHrweiCMz/2+wkziphuf2VNkqkZqisFP4/J8smOsx/iKJ+z6+mr4eIQp2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302400; c=relaxed/simple;
-	bh=IUQnGUypTUhmQeXFI0MkQUo1oQVw0P8WaCKX1EgzFwo=;
+	bh=7C+wcDeyjgR7GRw+fFWz7LB4wNiZqX+J1OPHQGpU82c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUHjReG7OtAyTo5OVZqJDLDq2UCSywunfCXVALzlBr3Dza/XxR3gOUAIxLQvQ8e95dYQTlRlUECUo06W7FopMI2H8MRSugstVPz/mFtHbG+1lo5CKZC9fa8Dyb2IKK8xhBpHCeMKEH63s2Nb/QaaRKJzmaGOdZ3o/lLMwd1IGt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oCFD0puH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iYIdtmqG8hI64DrWeE+bpdu2wjJrtdBBXD4YgKG2v5g0zZPfF5exJPIjvGcmSS6ZH257w7pdMOuNKt+2/PvDV2ehBYNITBDK1cA0Qb++RKlvP8TLhTspJF0xWMNkM6mk+t0IkDgZXzPWqJe9/0s94Q9QQebXx0pbI8LTwA8MmOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p6XD6IYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oCFD0puH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54476C116D0;
-	Sat, 28 Feb 2026 18:13:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p6XD6IYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1877CC116D0;
+	Sat, 28 Feb 2026 18:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302399;
-	bh=IUQnGUypTUhmQeXFI0MkQUo1oQVw0P8WaCKX1EgzFwo=;
+	s=k20201202; t=1772302400;
+	bh=7C+wcDeyjgR7GRw+fFWz7LB4wNiZqX+J1OPHQGpU82c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oCFD0puHArji1ytfQbY2iOLk+Xu1BtIErrIoXafxbMMWJUG0Oy3o4pc2mpffC1V0q
-	 sEbGJHJfraubebxpTlZE3XDy0GtQEMOjVFO4T/3HDmFl4o+zrBJIZALAqYvb6Q6NNc
-	 E5bgsiLHfUAqfJuHwcusekYrRz+bAfy9Io1dnI4i1eLNdSptnftiC8DAn5l6tyeKNz
-	 qoDXhHSay6XUX4XgCSn98nibTn3rkLL12n3f/YW6FGwqJwvhqVwnk0qODuQB1FdvGO
-	 nL2XJf/KeHOijzsQSe2ra/gyVl1+/f3nRyifaHi7wkcjflVXBUaVqNxd7FoSnDGU71
-	 QPx7lY7PTO4AA==
+	b=p6XD6IYZBFb7X5PE+mWm/H1LHYmvxg6/5vU16+sBFSXScgZBSsoPvk7N16x9SYsWF
+	 mozOZfYZFe277TD6hT7DuA6i1Jdx/CddgZGztxOiHlVAYqB/DCxmOTCDTN2VB36QZX
+	 +u3poDyod4LPizG5Njpd13QowpwAPP/aZFaCf8y9LwYZ0RQGflvzHsY7Zxk9MoY/lQ
+	 R1WZjPlJUwqQySeR11cKBYIUl7W/w16SuV1ng3ByhSX81HAq+Q8AKMXoyUwCH/tR1w
+	 WJWzgAHJ/McNDPS8ro+4HD//skB6lClFKrKk2VdJYVEaTSTFJ03SOOdfO0mMdJ/zdD
+	 pW16vFh8TDYlQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Honggang LI <honggangli@163.com>,
+Cc: Etienne AUJAMES <eaujames@ddn.com>,
+	Parav Pandit <parav@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 130/232] RDMA/rtrs: server: remove dead code
-Date: Sat, 28 Feb 2026 13:09:43 -0500
-Message-ID: <20260228181127.1592657-130-sashal@kernel.org>
+Subject: [PATCH 6.1 131/232] IB/cache: update gid cache on client reregister event
+Date: Sat, 28 Feb 2026 13:09:44 -0500
+Message-ID: <20260228181127.1592657-131-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -43,59 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Honggang LI <honggangli@163.com>
+From: Etienne AUJAMES <eaujames@ddn.com>
 
-[ Upstream commit a3572bdc3a028ca47f77d7166ac95b719cf77d50 ]
+[ Upstream commit ddd6c8c873e912cb1ead79def54de5e24ff71c80 ]
 
-As rkey had been initialized to zero, the WARN_ON_ONCE should never been
-triggered. Remove it.
+Some HCAs (e.g: ConnectX4) do not trigger a IB_EVENT_GID_CHANGE on
+subnet prefix update from SM (PortInfo).
 
-Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
-Signed-off-by: Honggang LI <honggangli@163.com>
-Link: https://patch.msgid.link/20251224023819.138846-1-honggangli@163.com
+Since the commit d58c23c92548 ("IB/core: Only update PKEY and GID caches
+on respective events"), the GID cache is updated exclusively on
+IB_EVENT_GID_CHANGE. If this event is not emitted, the subnet prefix in the
+IPoIB interface’s hardware address remains set to its default value
+(0xfe80000000000000).
+
+Then rdma_bind_addr() failed because it relies on hardware address to
+find the port GID (subnet_prefix + port GUID).
+
+This patch fixes this issue by updating the GID cache on
+IB_EVENT_CLIENT_REREGISTER event (emitted on PortInfo::ClientReregister=1).
+
+Fixes: d58c23c92548 ("IB/core: Only update PKEY and GID caches on respective events")
+Signed-off-by: Etienne AUJAMES <eaujames@ddn.com>
+Link: https://patch.msgid.link/aVUfsO58QIDn5bGX@eaujamesFR0130
+Reviewed-by: Parav Pandit <parav@nvidia.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/infiniband/core/cache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index 51ec4620ca821..b69d6c5c9442b 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -203,7 +203,6 @@ static int rdma_write_sg(struct rtrs_srv_op *id)
- 	size_t sg_cnt;
- 	int err, offset;
- 	bool need_inval;
--	u32 rkey = 0;
- 	struct ib_reg_wr rwr;
- 	struct ib_sge *plist;
- 	struct ib_sge list;
-@@ -235,11 +234,6 @@ static int rdma_write_sg(struct rtrs_srv_op *id)
- 	wr->wr.num_sge	= 1;
- 	wr->remote_addr	= le64_to_cpu(id->rd_msg->desc[0].addr);
- 	wr->rkey	= le32_to_cpu(id->rd_msg->desc[0].key);
--	if (rkey == 0)
--		rkey = wr->rkey;
--	else
--		/* Only one key is actually used */
--		WARN_ON_ONCE(rkey != wr->rkey);
+diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
+index 0023aad0e7e43..6d980ac2488a9 100644
+--- a/drivers/infiniband/core/cache.c
++++ b/drivers/infiniband/core/cache.c
+@@ -1555,7 +1555,8 @@ static void ib_cache_event_task(struct work_struct *_work)
+ 	 * the cache.
+ 	 */
+ 	ret = ib_cache_update(work->event.device, work->event.element.port_num,
+-			      work->event.event == IB_EVENT_GID_CHANGE,
++			      work->event.event == IB_EVENT_GID_CHANGE ||
++			      work->event.event == IB_EVENT_CLIENT_REREGISTER,
+ 			      work->event.event == IB_EVENT_PKEY_CHANGE,
+ 			      work->enforce_security);
  
- 	wr->wr.opcode = IB_WR_RDMA_WRITE;
- 	wr->wr.wr_cqe   = &io_comp_cqe;
-@@ -272,7 +266,7 @@ static int rdma_write_sg(struct rtrs_srv_op *id)
- 		inv_wr.opcode = IB_WR_SEND_WITH_INV;
- 		inv_wr.wr_cqe   = &io_comp_cqe;
- 		inv_wr.send_flags = 0;
--		inv_wr.ex.invalidate_rkey = rkey;
-+		inv_wr.ex.invalidate_rkey = wr->rkey;
- 	}
- 
- 	imm_wr.wr.next = NULL;
 -- 
 2.51.0
 
