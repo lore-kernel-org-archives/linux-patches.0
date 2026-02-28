@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F97313E31
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD72F340A59
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301066; cv=none; b=cI9Nh+eRCfHlzN2YWevjDah7t1XY7QSMAveNDPFqnyFO+4I+FqOI7zu2tJNClPtiPdfbJhMFajybNPucryVMVsYTBj1t50HHPYMwxq+cNV/tQ0cn9GyVHr14Rh1uvmM6EtwjigLGVfftTir7cVgwlN5AAvAlFAFOUnOmSYE2u20=
+	t=1772301066; cv=none; b=EGc1/+u5Eo08YRQ6ITX1AVZWKg/I+l9c690l7GAVfwB75+4PVWAVDacKLkcqhfzeLP5Msrd/8drNG5Umitks8HSsNFd5aZF7uNiZ7+YDBJ71494hezNys81lcG2vrSXvpQ/KkYBQtKmsKl2E6cqhxmnTPEFaPivyXGlw+tfM2CA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301066; c=relaxed/simple;
-	bh=8NYj5MqQRfE49UHoasW3T3ZjMCJflVO/gNWxdPgZLp4=;
+	bh=2C3PvQ3oNtjqA1jHbZObfAZmPYi9fmUQxfmXYKyqRNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P27PABPkbCW2eurDJV79AyLfX9NMfkbhgB8/VGVbfOmZcCW2ssu2ECZ+ccZAVLdftliJcRNcm1f+wDQtHcsp02DQokPvpvxdhDfQFmYV1JIpvuwU/Oycv0qpPdCylGnfq2sMS8WRAE9lxlRHHsvUmVkp2XxdL4MqYH9XO4RtGx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hsjYY5j2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jBs+cs4NJNrdDlecoGlFV5fd36yMwGickYQXBcQzu+LG9yKwgb4iiBO0hZHuf5QW2/a3dZJMymcnkHOQTzSZmRpmIYAB2ku+5jFQTqLQAeEpUw/XVFPbV1ArcB0gTkQs/qQjbRF8ao5X4Um9D8NVDi/ZHL8e9e7gtd9avKQlAls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VUnJ4LA8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hsjYY5j2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C245C19423;
-	Sat, 28 Feb 2026 17:51:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VUnJ4LA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B013C19425;
+	Sat, 28 Feb 2026 17:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301065;
-	bh=8NYj5MqQRfE49UHoasW3T3ZjMCJflVO/gNWxdPgZLp4=;
+	s=k20201202; t=1772301066;
+	bh=2C3PvQ3oNtjqA1jHbZObfAZmPYi9fmUQxfmXYKyqRNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsjYY5j2nbUednmUq0QRhG/aljrFPzggemtxR3KV2pMHwysmSai2dRrAMoppj+OE+
-	 No53v1oLOKihshr2kE9LILqYjUlSC7OPqbLniVtdmpJ0rcLbU+5ikdc2t1/z7b+VH7
-	 kD7KzlEO2E5wcfdPq89F7+LAYb7ZlaZdCy+/fCuw6yDmHWJuVhg9f/i3LKSVWNd5Q4
-	 kGUM9/oOT9CJuHxcPpJRkTjTBUeBN+700R2sMzQZqa03tHHUc9fKoMt2R1EdicG2K1
-	 hZ/W1YPSKLGa4QpN9uk4IYjrulW4RL0g1jywc29vXRYEPtT+BujNRc9fGSTitZ01hb
-	 sRjc6Hi8/5rBQ==
+	b=VUnJ4LA8fGaP7N3r7Qbc4JWo6v2dychv9rsq9xyH6b7QNoxg9maO4M6w3Eusq+4JN
+	 JDcM7YJ9s0HEROseZBUCH7iSU109QS9ER2ykgQHfm8YLItHy3zSePq3iQWVQJMdclV
+	 UvYDh1mZHGba7gBEH5nw5wDJ4M+lx7HVrlcbWDJ7gsNt2tZlk3fZ2ub7w4hhVe0DRE
+	 JnzFFTtQNpL7s3yUDASAePLGZV0TUC3MaWyQeyoaecNP4prsfg0NSfNuzHaCYhRp94
+	 JtJrPwUru110/ni9B3WDSbIDwjPwXDpZ668dJnIfvTk5RH3DC64GC3YA5rxKE1k5LN
+	 B5L2Tr6s60Ifw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Takashi Iwai <tiwai@suse.de>,
+Cc: Lianqin Hu <hulianqin@vivo.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 209/752] ALSA: mixer: oss: Add card disconnect checkpoints
-Date: Sat, 28 Feb 2026 12:38:40 -0500
-Message-ID: <20260228174750.1542406-209-sashal@kernel.org>
+Subject: [PATCH 6.18 210/752] ALSA: usb-audio: Add iface reset and delay quirk for AB13X USB Audio
+Date: Sat, 28 Feb 2026 12:38:41 -0500
+Message-ID: <20260228174750.1542406-210-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -46,101 +47,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-[ Upstream commit 084d5d44418148662365eced3e126ad1a81ee3e2 ]
+[ Upstream commit ac656d7d7c70f7c352c7652bc2bb0c1c8c2dde08 ]
 
-ALSA OSS mixer layer calls the kcontrol ops rather individually, and
-pending calls might be not always caught at disconnecting the device.
+Setting up the interface when suspended/resumeing fail on this card.
+Adding a reset and delay quirk will eliminate this problem.
 
-For avoiding the potential UAF scenarios, add sanity checks of the
-card disconnection at each entry point of OSS mixer accesses.  The
-rwsem is taken just before that check, hence the rest context should
-be covered by that properly.
+usb 1-1: New USB device found, idVendor=001f, idProduct=0b21
+usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1: Product: AB13X USB Audio
+usb 1-1: Manufacturer: Generic
+usb 1-1: SerialNumber: 20210926172016
 
-Link: https://patch.msgid.link/20260209121212.171430-1-tiwai@suse.de
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Link: https://patch.msgid.link/TYUPR06MB6217522D0DB6E2C9DF46B56ED265A@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/oss/mixer_oss.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
-index e839a4bb93f81..aa98caaaea3c5 100644
---- a/sound/core/oss/mixer_oss.c
-+++ b/sound/core/oss/mixer_oss.c
-@@ -525,6 +525,8 @@ static void snd_mixer_oss_get_volume1_vol(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return;
- 	kctl = snd_ctl_find_numid(card, numid);
- 	if (!kctl)
- 		return;
-@@ -558,6 +560,8 @@ static void snd_mixer_oss_get_volume1_sw(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return;
- 	kctl = snd_ctl_find_numid(card, numid);
- 	if (!kctl)
- 		return;
-@@ -618,6 +622,8 @@ static void snd_mixer_oss_put_volume1_vol(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return;
- 	kctl = snd_ctl_find_numid(card, numid);
- 	if (!kctl)
- 		return;
-@@ -655,6 +661,8 @@ static void snd_mixer_oss_put_volume1_sw(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return;
- 	kctl = snd_ctl_find_numid(card, numid);
- 	if (!kctl)
- 		return;
-@@ -792,6 +800,8 @@ static int snd_mixer_oss_get_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
- 	if (uinfo == NULL || uctl == NULL)
- 		return -ENOMEM;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return -ENODEV;
- 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
- 	if (!kctl)
- 		return -ENOENT;
-@@ -835,6 +845,8 @@ static int snd_mixer_oss_put_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
- 	if (uinfo == NULL || uctl == NULL)
- 		return -ENOMEM;
- 	guard(rwsem_read)(&card->controls_rwsem);
-+	if (card->shutdown)
-+		return -ENODEV;
- 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
- 	if (!kctl)
- 		return -ENOENT;
-@@ -878,6 +890,8 @@ static int snd_mixer_oss_build_test(struct snd_mixer_oss *mixer, struct slot *sl
- 	int err;
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 8a646891ebb44..6860b5bd55f1e 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2147,6 +2147,8 @@ struct usb_audio_quirk_flags_table {
  
- 	scoped_guard(rwsem_read, &card->controls_rwsem) {
-+		if (card->shutdown)
-+			return -ENODEV;
- 		kcontrol = snd_mixer_oss_test_id(mixer, name, index);
- 		if (kcontrol == NULL)
- 			return 0;
-@@ -1002,6 +1016,8 @@ static int snd_mixer_oss_build_input(struct snd_mixer_oss *mixer,
- 	if (snd_mixer_oss_build_test_all(mixer, ptr, &slot))
- 		return 0;
- 	guard(rwsem_read)(&mixer->card->controls_rwsem);
-+	if (mixer->card->shutdown)
-+		return -ENODEV;
- 	kctl = NULL;
- 	if (!ptr->index)
- 		kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
+ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	/* Device matches */
++	DEVICE_FLG(0x001f, 0x0b21, /* AB13X USB Audio */
++		   QUIRK_FLAG_FORCE_IFACE_RESET | QUIRK_FLAG_IFACE_DELAY),
+ 	DEVICE_FLG(0x03f0, 0x654a, /* HP 320 FHD Webcam */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
+ 	DEVICE_FLG(0x041e, 0x3000, /* Creative SB Extigy */
 -- 
 2.51.0
 
