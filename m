@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB41E32AABE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE060332EA7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301259; cv=none; b=oOpyL4okjIFwde9wjcUqrIF4D76vDXOeGtJjo8LD2BmshUQM/9HFR1BYjt2kZEnbGxoiA1Mm4tBKU3VOYypdrtVaG7DXhAch3/wpS3+Zaeh+/w0ukKhSKY7wCHToInxfc0+C9rRzMCMozJS4ecOIPBPNuUcelXO8+zvf5GnBuMA=
+	t=1772301260; cv=none; b=qSX43CALvIi3pHThTxsQUZxff5TpP+gi3fIIOx/+K8Q5N0ohzE7j/ynDPJ4E7ap6eLWt9Y1js2gEqSIKioLqNCx1CfaOuz+0EdpBfug7oYH3WtvCGQmLXjkx3nrPBxXMlVnEyOI8hqXZ5P3YziXfJYP2ZtcrNj8gCj8VTqZFrzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301259; c=relaxed/simple;
-	bh=vAbDcYMI6KGTRUOWcArUtIL8IPB9URLkH4nK8C5U7Jc=;
+	s=arc-20240116; t=1772301260; c=relaxed/simple;
+	bh=kjPV0T0hJ5hNaWKfqB1Ib29vSWzSEK004blGecTl5dQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0VDmEmUCCaO/LNS1vnQkdy1Oa+kmj1RSda8V0MlMCzzrGxHPf73mxkW3dCx9VkkUtUgxC8Aq1eYD3UDT+U8KsWg68XVmd8m6XFe3kIigqX9MF+BHNCTCL5HqAOuzPTSMI29t+Xotve8iHQkqR2Gslo6ACXKuEdidB9t90B93yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OFPKPk5E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jDkBgdQZrv8fgFqdEFCcn3BZIc420MJ44oFiCzjoBWy9BtRCnV5VCRvV3QpFFmLHqa7POp3xMKe7TbNLVkreULj4A+o6MCUD9qpwXJZJm1AKdfHDX7Yvli4KsMzJ1sJJd98BJ3wWhBbh+N19AMVYI+wKsEt/uhp7QRr5FDp1ngg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FPga6z17; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OFPKPk5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F063EC19423;
-	Sat, 28 Feb 2026 17:54:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FPga6z17"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CFBC19424;
+	Sat, 28 Feb 2026 17:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301259;
-	bh=vAbDcYMI6KGTRUOWcArUtIL8IPB9URLkH4nK8C5U7Jc=;
+	s=k20201202; t=1772301260;
+	bh=kjPV0T0hJ5hNaWKfqB1Ib29vSWzSEK004blGecTl5dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFPKPk5EEY7grPAFiK73V36gNK3zFGWnGAX4oyJq/6D49OXfExR7dr89rvs8wBcZq
-	 0No8QNqmLxO1/8c109MI1f5imGCOZr0/izO632WYizs1uU9Ttl6VdVGPdAuFPXl6Mi
-	 0hJeRNwKubEqMMxgWNmbbXiy6td923DMCDFNQNdnNPGLT9g858bSdOnhH78g8+Thll
-	 aIQHLCt56+hqXOZuJ7YnTxcC6qcQEL1NkZ8qK8iuFOrfSeEqmdBZ/guIz+/isCVobn
-	 TyukIMdRPrhydFx4pYV1gzcFAlxQdSIR4mUDQRowdZKp6gyEXcoF3OJuxjCLqsLovy
-	 vXdAOzuCWoaYg==
+	b=FPga6z17F1b0nmuQIly84K1UWCBpI2gdrltGoXnHaPcl+irFjqkbJ/jmTVsYnmmfw
+	 xghdmSeD6Dcyx0zQLiV/UpYp6Zsj3itflVU2XmynY1NVMhrBuYci0wDHmntQf1b6rh
+	 ewNa7uD2GdgY9X/RlAdnnc4asTJ7IGBHFnC5H8Kg3uqizSDUqqOFyvQRxCQoG46EJ7
+	 WzHoBP0FurTIkFe1ao6Ug2ELfM1YYFOr7hX57dgbP6KE0+PGBRxQ/2bz0qL+ylYSnm
+	 2Wf2+oA2oGvlKOKRax4glptf5hCv4I9hj8w4zqKA+53SYcwY2rSJmrI0+9raEnjLBI
+	 IzrPU3G5hpoeA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Dipayaan Roy <dipayanroy@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
+Cc: Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 443/752] net: mana: Fix double destroy_workqueue on service rescan PCI path
-Date: Sat, 28 Feb 2026 12:42:34 -0500
-Message-ID: <20260228174750.1542406-443-sashal@kernel.org>
+Subject: [PATCH 6.18 444/752] net: add a common function to compute features for upper devices
+Date: Sat, 28 Feb 2026 12:42:35 -0500
+Message-ID: <20260228174750.1542406-444-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,88 +50,173 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit f975a0955276579e2176a134366ed586071c7c6a ]
+[ Upstream commit 28098defc79fe7d29e6bfe4eb6312991f6bdc3d3 ]
 
-While testing corner cases in the driver, a use-after-free crash
-was found on the service rescan PCI path.
+Some high level software drivers need to compute features from lower
+devices. But each has their own implementations and may lost some
+feature compute. Let's use one common function to compute features
+for kinds of these devices.
 
-When mana_serv_reset() calls mana_gd_suspend(), mana_gd_cleanup()
-destroys gc->service_wq. If the subsequent mana_gd_resume() fails
-with -ETIMEDOUT or -EPROTO, the code falls through to
-mana_serv_rescan() which triggers pci_stop_and_remove_bus_device().
-This invokes the PCI .remove callback (mana_gd_remove), which calls
-mana_gd_cleanup() a second time, attempting to destroy the already-
-freed workqueue. Fix this by NULL-checking gc->service_wq in
-mana_gd_cleanup() and setting it to NULL after destruction.
+The new helper uses the current bond implementation as the reference
+one, as the latter already handles all the relevant aspects: netdev
+features, TSO limits and dst retention.
 
-Call stack of issue for reference:
-[Sat Feb 21 18:53:48 2026] Call Trace:
-[Sat Feb 21 18:53:48 2026]  <TASK>
-[Sat Feb 21 18:53:48 2026]  mana_gd_cleanup+0x33/0x70 [mana]
-[Sat Feb 21 18:53:48 2026]  mana_gd_remove+0x3a/0xc0 [mana]
-[Sat Feb 21 18:53:48 2026]  pci_device_remove+0x41/0xb0
-[Sat Feb 21 18:53:48 2026]  device_remove+0x46/0x70
-[Sat Feb 21 18:53:48 2026]  device_release_driver_internal+0x1e3/0x250
-[Sat Feb 21 18:53:48 2026]  device_release_driver+0x12/0x20
-[Sat Feb 21 18:53:48 2026]  pci_stop_bus_device+0x6a/0x90
-[Sat Feb 21 18:53:48 2026]  pci_stop_and_remove_bus_device+0x13/0x30
-[Sat Feb 21 18:53:48 2026]  mana_do_service+0x180/0x290 [mana]
-[Sat Feb 21 18:53:48 2026]  mana_serv_func+0x24/0x50 [mana]
-[Sat Feb 21 18:53:48 2026]  process_one_work+0x190/0x3d0
-[Sat Feb 21 18:53:48 2026]  worker_thread+0x16e/0x2e0
-[Sat Feb 21 18:53:48 2026]  kthread+0xf7/0x130
-[Sat Feb 21 18:53:48 2026]  ? __pfx_worker_thread+0x10/0x10
-[Sat Feb 21 18:53:48 2026]  ? __pfx_kthread+0x10/0x10
-[Sat Feb 21 18:53:48 2026]  ret_from_fork+0x269/0x350
-[Sat Feb 21 18:53:48 2026]  ? __pfx_kthread+0x10/0x10
-[Sat Feb 21 18:53:48 2026]  ret_from_fork_asm+0x1a/0x30
-[Sat Feb 21 18:53:48 2026]  </TASK>
-
-Fixes: 505cc26bcae0 ("net: mana: Add support for auxiliary device servicing events")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/aZ2bzL64NagfyHpg@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20251017034155.61990-2-liuhangbin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: bb4c698633c0 ("team: avoid NETDEV_CHANGEMTU event when unregistering slave")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/gdma_main.c | 5 ++++-
- drivers/net/ethernet/microsoft/mana/mana_en.c   | 4 +++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ include/linux/netdev_features.h | 18 +++++++
+ include/linux/netdevice.h       |  1 +
+ net/core/dev.c                  | 88 +++++++++++++++++++++++++++++++++
+ 3 files changed, 107 insertions(+)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-index 43f034e180c41..e22a98a9c9856 100644
---- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
-+++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-@@ -1866,7 +1866,10 @@ static void mana_gd_cleanup(struct pci_dev *pdev)
+diff --git a/include/linux/netdev_features.h b/include/linux/netdev_features.h
+index 7a01c518e5730..93e4da7046a10 100644
+--- a/include/linux/netdev_features.h
++++ b/include/linux/netdev_features.h
+@@ -255,6 +255,24 @@ static inline int find_next_netdev_feature(u64 feature, unsigned long start)
+ 				 NETIF_F_GSO_UDP_TUNNEL |		\
+ 				 NETIF_F_GSO_UDP_TUNNEL_CSUM)
  
- 	mana_gd_remove_irqs(pdev);
- 
--	destroy_workqueue(gc->service_wq);
-+	if (gc->service_wq) {
-+		destroy_workqueue(gc->service_wq);
-+		gc->service_wq = NULL;
-+	}
- 	dev_dbg(&pdev->dev, "mana gdma cleanup successful\n");
- }
- 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index 0142fd98392c2..5712ec4f644a4 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -3580,7 +3580,9 @@ void mana_rdma_remove(struct gdma_dev *gd)
- 	}
- 
- 	WRITE_ONCE(gd->rdma_teardown, true);
--	flush_workqueue(gc->service_wq);
++/* virtual device features */
++#define MASTER_UPPER_DEV_VLAN_FEATURES	 (NETIF_F_HW_CSUM | NETIF_F_SG | \
++					  NETIF_F_FRAGLIST | NETIF_F_GSO_SOFTWARE | \
++					  NETIF_F_GSO_ENCAP_ALL | \
++					  NETIF_F_HIGHDMA | NETIF_F_LRO)
 +
-+	if (gc->service_wq)
-+		flush_workqueue(gc->service_wq);
++#define MASTER_UPPER_DEV_ENC_FEATURES	 (NETIF_F_HW_CSUM | NETIF_F_SG | \
++					  NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE | \
++					  NETIF_F_GSO_PARTIAL)
++
++#define MASTER_UPPER_DEV_MPLS_FEATURES	 (NETIF_F_HW_CSUM | NETIF_F_SG | \
++					  NETIF_F_GSO_SOFTWARE)
++
++#define MASTER_UPPER_DEV_XFRM_FEATURES	 (NETIF_F_HW_ESP | NETIF_F_HW_ESP_TX_CSUM | \
++					  NETIF_F_GSO_ESP)
++
++#define MASTER_UPPER_DEV_GSO_PARTIAL_FEATURES (NETIF_F_GSO_ESP)
++
+ static inline netdev_features_t netdev_base_features(netdev_features_t features)
+ {
+ 	features &= ~NETIF_F_ONE_FOR_ALL;
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index c6c04cd0a6816..3d9f21274dc32 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -5306,6 +5306,7 @@ static inline netdev_features_t netdev_add_tso_features(netdev_features_t featur
+ int __netdev_update_features(struct net_device *dev);
+ void netdev_update_features(struct net_device *dev);
+ void netdev_change_features(struct net_device *dev);
++void netdev_compute_master_upper_features(struct net_device *dev, bool update_header);
  
- 	if (gd->adev)
- 		remove_adev(gd);
+ void netif_stacked_transfer_operstate(const struct net_device *rootdev,
+ 					struct net_device *dev);
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 2dc1cf7f8d892..6c15f9b040ba8 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -12657,6 +12657,94 @@ netdev_features_t netdev_increment_features(netdev_features_t all,
+ }
+ EXPORT_SYMBOL(netdev_increment_features);
+ 
++/**
++ *	netdev_compute_master_upper_features - compute feature from lowers
++ *	@dev: the upper device
++ *	@update_header: whether to update upper device's header_len/headroom/tailroom
++ *
++ *	Recompute the upper device's feature based on all lower devices.
++ */
++void netdev_compute_master_upper_features(struct net_device *dev, bool update_header)
++{
++	unsigned int dst_release_flag = IFF_XMIT_DST_RELEASE | IFF_XMIT_DST_RELEASE_PERM;
++	netdev_features_t gso_partial_features = MASTER_UPPER_DEV_GSO_PARTIAL_FEATURES;
++	netdev_features_t xfrm_features = MASTER_UPPER_DEV_XFRM_FEATURES;
++	netdev_features_t mpls_features = MASTER_UPPER_DEV_MPLS_FEATURES;
++	netdev_features_t vlan_features = MASTER_UPPER_DEV_VLAN_FEATURES;
++	netdev_features_t enc_features = MASTER_UPPER_DEV_ENC_FEATURES;
++	unsigned short max_header_len = ETH_HLEN;
++	unsigned int tso_max_size = TSO_MAX_SIZE;
++	unsigned short max_headroom = 0;
++	unsigned short max_tailroom = 0;
++	u16 tso_max_segs = TSO_MAX_SEGS;
++	struct net_device *lower_dev;
++	struct list_head *iter;
++
++	mpls_features = netdev_base_features(mpls_features);
++	vlan_features = netdev_base_features(vlan_features);
++	enc_features = netdev_base_features(enc_features);
++
++	netdev_for_each_lower_dev(dev, lower_dev, iter) {
++		gso_partial_features = netdev_increment_features(gso_partial_features,
++								 lower_dev->gso_partial_features,
++								 MASTER_UPPER_DEV_GSO_PARTIAL_FEATURES);
++
++		vlan_features = netdev_increment_features(vlan_features,
++							  lower_dev->vlan_features,
++							  MASTER_UPPER_DEV_VLAN_FEATURES);
++
++		enc_features = netdev_increment_features(enc_features,
++							 lower_dev->hw_enc_features,
++							 MASTER_UPPER_DEV_ENC_FEATURES);
++
++		if (IS_ENABLED(CONFIG_XFRM_OFFLOAD))
++			xfrm_features = netdev_increment_features(xfrm_features,
++								  lower_dev->hw_enc_features,
++								  MASTER_UPPER_DEV_XFRM_FEATURES);
++
++		mpls_features = netdev_increment_features(mpls_features,
++							  lower_dev->mpls_features,
++							  MASTER_UPPER_DEV_MPLS_FEATURES);
++
++		dst_release_flag &= lower_dev->priv_flags;
++
++		if (update_header) {
++			max_header_len = max(max_header_len, lower_dev->hard_header_len);
++			max_headroom = max(max_headroom, lower_dev->needed_headroom);
++			max_tailroom = max(max_tailroom, lower_dev->needed_tailroom);
++		}
++
++		tso_max_size = min(tso_max_size, lower_dev->tso_max_size);
++		tso_max_segs = min(tso_max_segs, lower_dev->tso_max_segs);
++	}
++
++	dev->gso_partial_features = gso_partial_features;
++	dev->vlan_features = vlan_features;
++	dev->hw_enc_features = enc_features | NETIF_F_GSO_ENCAP_ALL |
++			       NETIF_F_HW_VLAN_CTAG_TX |
++			       NETIF_F_HW_VLAN_STAG_TX;
++	if (IS_ENABLED(CONFIG_XFRM_OFFLOAD))
++		dev->hw_enc_features |= xfrm_features;
++	dev->mpls_features = mpls_features;
++
++	dev->priv_flags &= ~IFF_XMIT_DST_RELEASE;
++	if ((dev->priv_flags & IFF_XMIT_DST_RELEASE_PERM) &&
++	    dst_release_flag == (IFF_XMIT_DST_RELEASE | IFF_XMIT_DST_RELEASE_PERM))
++		dev->priv_flags |= IFF_XMIT_DST_RELEASE;
++
++	if (update_header) {
++		dev->hard_header_len = max_header_len;
++		dev->needed_headroom = max_headroom;
++		dev->needed_tailroom = max_tailroom;
++	}
++
++	netif_set_tso_max_segs(dev, tso_max_segs);
++	netif_set_tso_max_size(dev, tso_max_size);
++
++	netdev_change_features(dev);
++}
++EXPORT_SYMBOL(netdev_compute_master_upper_features);
++
+ static struct hlist_head * __net_init netdev_create_hash(void)
+ {
+ 	int i;
 -- 
 2.51.0
 
