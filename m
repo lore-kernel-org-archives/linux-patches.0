@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614794A33EE
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A920F4A33F1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300993; cv=none; b=dJ4ocPc8FTkpjg5a/gFgyFtF8MoY+7+tKHcL+fP14kEoI4k45tbplXO0j5ZDJPSrwu4iuD0Lc+DwE+IWRLlx59AiMSOhJXCVO3cUNS8pjRv0lraeFj4woh6l1mJEfPlMySIDsSJFvCQiK7GPZu+VdtA8PCcwxcrBZVQnZnZMYY4=
+	t=1772300994; cv=none; b=SYDJsdflsI8lV0vDGPd0YxU4tHweig1kbdbD/55nqAv/HlqkfpVgQfdA8z84iA3g4by/DRl9Cv54iwdBtW0Pe7nLmnH/lSOwC5hD0+otTTy56lsw4yyQwB5vU/u69uLkIcOfjaTh8Q7pTN1teaagqFNzuKoUr+XjYFRvi1zSsk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300993; c=relaxed/simple;
-	bh=O8LuF7uBLdULn1bPDrcQwl65kbPEhILYhTD+sMnXaPw=;
+	s=arc-20240116; t=1772300994; c=relaxed/simple;
+	bh=iIt6d5bJBWv/HXppUH7hgW+elfsL6jgbAZ6J2R5Bz/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndZwGS2TUo5eHQmJmnevkchme5g9N89bL/QBIu3jDQYPCaxk9I7NOQj3ESnp/actWxKMxRtHW1+sOaXYkspKZjB85aik+mtIcozITiM6yP0yBk4Y5krqWKq9RRd4Kpw+9V6Dqi9f5RLCbB49k5QRG1wSQ+Z1LNZYx5ivgVPvVYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aEXAEfAx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K16X9iuuP+A9W0/WQ2MRbxSwVbfqdn0hmdKDk7y8ZaG7zlE0oN2vP2iRR+vXKRRkLJgDZZteP6/1XHnHkrpNf1wpM/RQuUm8NTC1+DDMBc8tnlDm+6nn2DtYwaxoOt17fy10rpbC5JPXyT84mRy4ZF6vsKTjteKJ/seryCwgwG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UBWvaUt0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aEXAEfAx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C3EC116D0;
-	Sat, 28 Feb 2026 17:49:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UBWvaUt0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8658BC116D0;
+	Sat, 28 Feb 2026 17:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300993;
-	bh=O8LuF7uBLdULn1bPDrcQwl65kbPEhILYhTD+sMnXaPw=;
+	s=k20201202; t=1772300994;
+	bh=iIt6d5bJBWv/HXppUH7hgW+elfsL6jgbAZ6J2R5Bz/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aEXAEfAxRerz3Sor0FXeLA3+wWnGglZAPRWhX6gOgOdmUJqvzMKpSKh6Atzb/CX36
-	 VY3GuEdjwxXRuJvOxiJSef5ftu0VkIvqDbdS3bWII3y9sCvfI6cKWxM4Tcv7LNhGMA
-	 Daoo75JIIoWPnqAE0WxL+zaRgJSvP29zN+ZFs3F15txUSvKAqt3rLi67X5D+WSxm/+
-	 Mf/0ru7BT7FENNxvycfNcqzqcfrOojTKvPYUAKM4wPN/9b9stLaPNFVBe6l+th5rLW
-	 U1RTLl/6zqUbid+rFj7mnjysXjBnkFcAlNor7oN/KNZTPsAb5H44B8cbaKl2iw0Lqa
-	 u5Dkqn3617vhg==
+	b=UBWvaUt06/hlzoIByzN2+uV1JU79An4CU0qmJ+A6gDLSjeW8Dk2fYN7e1DWAj/QwT
+	 usZnge2I/xdfLA5VOPfDlvfbfSGJLwnk0ZBKS15l6TBJaeQyZ5jOIUB+31t8D94/s6
+	 oHBTKnUfosdk3yudGzmDbd0oEi1iZHM9Rak6BKMFphDU8ttmxx0DT37DMLjA0oDrpN
+	 Dw5oXEUlkPm/favWaOJYc/wbaHujOeHb6S0G6+J088r3Ga3I1sOzTC530pq4sr98Lu
+	 6b4A2olSvbJDfbD0Ux8Fg8OnmOjcuRKw8g8O8hD1/CNLHOpT2ri27RN2f8DJ4D4OUG
+	 zGSgGgpqTKdUQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Peichen Huang <PeiChen.Huang@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Chenyu Chen <chen-yu.chen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 124/752] drm/amd/display: Don't disable DPCD mst_en if sink connected
-Date: Sat, 28 Feb 2026 12:37:15 -0500
-Message-ID: <20260228174750.1542406-124-sashal@kernel.org>
+Subject: [PATCH 6.18 125/752] ASoC: SOF: ipc4: Support for sending payload along with LARGE_CONFIG_GET
+Date: Sat, 28 Feb 2026 12:37:16 -0500
+Message-ID: <20260228174750.1542406-125-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,84 +51,126 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peichen Huang <PeiChen.Huang@amd.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 9aeb31b2456452257ad1ff7ec566f21bab1f3e8a ]
+[ Upstream commit d96cb0b86d6e8bbbbfa425771606f6c1aebc318e ]
 
-[WHY]
-User may connect mst dock with multi monitors and do quick unplug
-and plug in one of the monitor. This operatioin may create CSN from
-dock to display driver. Then display driver would disable and then enable
-mst link and also disable/enable DPCD mst_en bit in dock RX. However,
-when mst_en bit being disabled, if dock has another CSN message to
-transmit then the message would be removed because of the disabling of
-mst_en. In this case, the message is missing and it ends up no display in
-the replugged monitor.
+There are message types when we would need to send a payload along with
+the LARGE_CONFIG_GET message to provide information to the firmware on
+what data is requested.
+Such cases are the ALSA Kcontrol related messages when the high level
+param_id tells only the type of the control, but the ID/index of the exact
+control is specified in the payload area.
 
-[HOW]
-Don't disable mst_en bit when link still has sink connected.
+The caller must place the payload for TX before calling the set_get_data()
+and this payload will be sent alongside with the message to the firmware.
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Peichen Huang <PeiChen.Huang@amd.com>
-Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The data area will be overwritten by the received data from firmware.
+
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://patch.msgid.link/20251217143945.2667-7-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ sound/soc/sof/ipc4.c | 44 ++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 42 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-index b66fbcb0040d6..a084c698ed6ef 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -1928,7 +1928,7 @@ static void disable_link_dp(struct dc_link *link,
- 			link->dc->hwss.edp_power_control(link, false);
- 	}
+diff --git a/sound/soc/sof/ipc4.c b/sound/soc/sof/ipc4.c
+index a4a090e6724a6..20d723f48fff0 100644
+--- a/sound/soc/sof/ipc4.c
++++ b/sound/soc/sof/ipc4.c
+@@ -15,6 +15,7 @@
+ #include "sof-audio.h"
+ #include "ipc4-fw-reg.h"
+ #include "ipc4-priv.h"
++#include "ipc4-topology.h"
+ #include "ipc4-telemetry.h"
+ #include "ops.h"
  
--	if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
-+	if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST && link->sink_count == 0)
- 		/* set the sink to SST mode after disabling the link */
- 		enable_mst_on_sink(link, false);
+@@ -433,6 +434,23 @@ static int sof_ipc4_tx_msg(struct snd_sof_dev *sdev, void *msg_data, size_t msg_
+ 	return ret;
+ }
  
-@@ -2079,7 +2079,12 @@ static enum dc_status enable_link_dp(struct dc_state *state,
- 			pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT &&
- 			link->dc->debug.set_mst_en_for_sst) {
- 		enable_mst_on_sink(link, true);
-+	} else if (link->dpcd_caps.is_mst_capable &&
-+		pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT) {
-+		/* disable mst on sink */
-+		enable_mst_on_sink(link, false);
- 	}
++static bool sof_ipc4_tx_payload_for_get_data(struct sof_ipc4_msg *tx)
++{
++	/*
++	 * Messages that require TX payload with LARGE_CONFIG_GET.
++	 * The TX payload is placed into the IPC message data section by caller,
++	 * which needs to be copied to temporary buffer since the received data
++	 * will overwrite it.
++	 */
++	switch (tx->extension & SOF_IPC4_MOD_EXT_MSG_PARAM_ID_MASK) {
++	case SOF_IPC4_MOD_EXT_MSG_PARAM_ID(SOF_IPC4_SWITCH_CONTROL_PARAM_ID):
++	case SOF_IPC4_MOD_EXT_MSG_PARAM_ID(SOF_IPC4_ENUM_CONTROL_PARAM_ID):
++		return true;
++	default:
++		return false;
++	}
++}
 +
- 	if (pipe_ctx->stream->signal == SIGNAL_TYPE_EDP) {
- 		/*in case it is not on*/
- 		if (!link->dc->config.edp_no_power_sequencing)
-@@ -2358,9 +2363,9 @@ void link_set_dpms_off(struct pipe_ctx *pipe_ctx)
- 	if (pipe_ctx->stream->sink) {
- 		if (pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_VIRTUAL &&
- 			pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_NONE) {
--			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d\n", __func__,
-+			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d sink_count=%d\n", __func__,
- 			pipe_ctx->stream->sink->edid_caps.display_name,
--			pipe_ctx->stream->signal, link->link_index);
-+			pipe_ctx->stream->signal, link->link_index, link->sink_count);
- 		}
- 	}
+ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
+ 				 size_t payload_bytes, bool set)
+ {
+@@ -444,6 +462,8 @@ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
+ 	struct sof_ipc4_msg tx = {{ 0 }};
+ 	struct sof_ipc4_msg rx = {{ 0 }};
+ 	size_t remaining = payload_bytes;
++	void *tx_payload_for_get = NULL;
++	size_t tx_data_size = 0;
+ 	size_t offset = 0;
+ 	size_t chunk_size;
+ 	int ret;
+@@ -469,10 +489,20 @@ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
  
-@@ -2474,10 +2479,11 @@ void link_set_dpms_on(
- 	if (pipe_ctx->stream->sink) {
- 		if (pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_VIRTUAL &&
- 			pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_NONE) {
--			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d\n", __func__,
-+			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d sink_count=%d\n", __func__,
- 			pipe_ctx->stream->sink->edid_caps.display_name,
- 			pipe_ctx->stream->signal,
--			link->link_index);
-+			link->link_index,
-+			link->sink_count);
+ 	tx.extension |= SOF_IPC4_MOD_EXT_MSG_FIRST_BLOCK(1);
+ 
++	if (sof_ipc4_tx_payload_for_get_data(&tx)) {
++		tx_data_size = min(ipc4_msg->data_size, payload_limit);
++		tx_payload_for_get = kmemdup(ipc4_msg->data_ptr, tx_data_size,
++					     GFP_KERNEL);
++		if (!tx_payload_for_get)
++			return -ENOMEM;
++	}
++
+ 	/* ensure the DSP is in D0i0 before sending IPC */
+ 	ret = snd_sof_dsp_set_power_state(sdev, &target_state);
+-	if (ret < 0)
++	if (ret < 0) {
++		kfree(tx_payload_for_get);
+ 		return ret;
++	}
+ 
+ 	/* Serialise IPC TX */
+ 	mutex_lock(&sdev->ipc->tx_mutex);
+@@ -506,7 +536,15 @@ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
+ 			rx.data_size = chunk_size;
+ 			rx.data_ptr = ipc4_msg->data_ptr + offset;
+ 
+-			tx_size = 0;
++			if (tx_payload_for_get) {
++				tx_size = tx_data_size;
++				tx.data_size = tx_size;
++				tx.data_ptr = tx_payload_for_get;
++			} else {
++				tx_size = 0;
++				tx.data_size = 0;
++				tx.data_ptr = NULL;
++			}
+ 			rx_size = chunk_size;
  		}
- 	}
+ 
+@@ -553,6 +591,8 @@ static int sof_ipc4_set_get_data(struct snd_sof_dev *sdev, void *data,
+ 
+ 	mutex_unlock(&sdev->ipc->tx_mutex);
+ 
++	kfree(tx_payload_for_get);
++
+ 	return ret;
+ }
  
 -- 
 2.51.0
