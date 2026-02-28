@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0344D34250D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3AF32ED2A
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301916; cv=none; b=stly6AzuU7QYUbK0xKRtGkhEqEcJfPMDJj0a1i3ZWZg2/wIc6CS1p6qX7fvhqmvClwN9VGxsw+xye2QGv7u0Q9c2juS3ShwYu/gAOZRHvFAK1kd92E38qN2BN/dWSzfizXwdFAEi6X3q9P0aYxQEtCJ98yB80JagNmjAEFVFEjE=
+	t=1772301916; cv=none; b=c7qFqGuxDwkVSIvHL33f491OqcGqZKmQcNzqXohCr2+DxVwV8M6qM77mGJ0UsoqC+Ul/A+GkGNBRofzYqOSUNGevVtnCT+sexklCg3ejWjj/u86ZSM2q0bfp7OYChm+nCoxX+GQDbNxRHI8iO8fQkLETDPBk4sB61kdhFA2vPAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301916; c=relaxed/simple;
-	bh=GG+SVGHWOzHlzvUYM0bUu8kewNyHl0A3P5/GzNqmg98=;
+	bh=3mwP6kznYyfkESHOLI2pSkeQTHVZmh6DBvlZpT+RJ44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWlACV39TyfgSCEINkJUn7W1vsf3zKx3ovNYE0hLrYkPTnvUdrRTkyEOq19cc6f5wKMUuuEsnhdLNZBbEs4qxUuxmcwbVwOb9TXoU5RcNvEZyNDczFOctqXmcTS4AzXcFgQdOogWuAU+K066NpB2y8DgHP4hRGFk/BhGt8hDZHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bchOq0d4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pBe0kM4zV6YOToYdk8G0kk7vKDaFe9WR0MMcKCnMx0e8IPTmk24zK8XZ89zhstyyncc1VD448Cj8JldWbyXlxirqRvHYBQfkp3P3rzA64CYzmZzdwOCxYJM2PgCY+TIVyvlSCLXGLSEDGkQo0Qk0tyDs1srGKhOlsGAtC6Z0yWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E2cC7Mkr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bchOq0d4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E23C19423;
-	Sat, 28 Feb 2026 18:05:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E2cC7Mkr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD52C116D0;
+	Sat, 28 Feb 2026 18:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301915;
-	bh=GG+SVGHWOzHlzvUYM0bUu8kewNyHl0A3P5/GzNqmg98=;
+	s=k20201202; t=1772301916;
+	bh=3mwP6kznYyfkESHOLI2pSkeQTHVZmh6DBvlZpT+RJ44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bchOq0d4Ixy4uZXx3vI4cXoyBU2wpe8v/tZaabY6SAVlTrJU+ukozMW3tKui8HWmB
-	 azXQmBqty3w1r2ACqpmclBOzGN3mz4omVpgkq8EfN5UIiwLcD0zqgAqp+w7pgyy4of
-	 aOH7sEQ8gNST+9rTl0S3Cxf3uTs1eUoXkD3cTqU9sBPu4yOa0Ryc9VHRDFQob02GhI
-	 J+nsC3X68YILp5lRreM4/BEWoiqWHT+aNGQG7+BYCkJbQhjUSu4LreiqZdHhyXK/3R
-	 v9tm3i+BuLWGMMVm/pCp/v+0T1DOwm8F3fTFyJm066jQl3xUlMKVzoIVkDcXkZ4/VU
-	 Nv9PQTIZTYPJA==
+	b=E2cC7Mkr2K168rrm2h7c2JTkZ2JszhdNyYXkGNpZh5NZ77VMAE+Wm5YelsQkkAolz
+	 /FiTzqjuqZXv70gPt2WfTQnX3amxsSZWCBW+1fEOF8vCIzJvwkuK3mlBwKcyJQbKbV
+	 7CRh4QumAGo0l8v5ixjm0FBkQxp5k7azt7gQhNGcsDNnr6YJEUtat4bFmx/W0xyvty
+	 hVVzkIGLQZPmHWVWM5iFxKb9q2TKwHDIVljTN8I/E2hS36/mubr+SEz2Msjl2ICSPH
+	 UPlTQa/CWu0o8KYgvpgJ0GA2ZOwNVE22srmVUvDUgGGWvxloPftyeuNvgUtZYkjyrV
+	 mmoaML+y91rRw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Wei Li <unsw.weili@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 348/385] pinctrl: single: fix refcount leak in pcs_add_gpio_func()
-Date: Sat, 28 Feb 2026 12:59:30 -0500
-Message-ID: <20260228180011.1568201-348-sashal@kernel.org>
+Subject: [PATCH 6.12 349/385] leds: qcom-lpg: Check the return value of regmap_bulk_write()
+Date: Sat, 28 Feb 2026 12:59:31 -0500
+Message-ID: <20260228180011.1568201-349-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,48 +47,53 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Wei Li <unsw.weili@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 353353309b0f7afa407df29e455f9d15b5acc296 ]
+[ Upstream commit f42033b5ce8c79c5db645916c9a72ee3e10cecfa ]
 
-of_parse_phandle_with_args() returns a device_node pointer with refcount
-incremented in gpiospec.np. The loop iterates through all phandles but
-never releases the reference, causing a refcount leak on each iteration.
+The lpg_lut_store() function currently ignores the return value of
+regmap_bulk_write() and always returns 0. This can cause hardware write
+failures to go undetected, leading the caller to believe LUT programming
+succeeded when it may have failed.
 
-Add of_node_put() calls to release the reference after extracting the
-needed arguments and on the error path when devm_kzalloc() fails.
+Check the return value of regmap_bulk_write() in lpg_lut_store and return
+the error to the caller on failure.
 
-This bug was detected by our static analysis tool and verified by my
-code review.
-
-Fixes: a1a277eb76b3 ("pinctrl: single: create new gpio function range")
-Signed-off-by: Wei Li <unsw.weili@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260108175133.638-1-vulab@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/leds/rgb/leds-qcom-lpg.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 2218d65a7d842..a2fb549307adb 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -1359,6 +1359,7 @@ static int pcs_add_gpio_func(struct device_node *node, struct pcs_device *pcs)
- 		}
- 		range = devm_kzalloc(pcs->dev, sizeof(*range), GFP_KERNEL);
- 		if (!range) {
-+			of_node_put(gpiospec.np);
- 			ret = -ENOMEM;
- 			break;
- 		}
-@@ -1368,6 +1369,7 @@ static int pcs_add_gpio_func(struct device_node *node, struct pcs_device *pcs)
- 		mutex_lock(&pcs->mutex);
- 		list_add_tail(&range->node, &pcs->gpiofuncs);
- 		mutex_unlock(&pcs->mutex);
-+		of_node_put(gpiospec.np);
+diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+index 84e02867f3b43..98c60e971b48f 100644
+--- a/drivers/leds/rgb/leds-qcom-lpg.c
++++ b/drivers/leds/rgb/leds-qcom-lpg.c
+@@ -368,7 +368,7 @@ static int lpg_lut_store(struct lpg *lpg, struct led_pattern *pattern,
+ {
+ 	unsigned int idx;
+ 	u16 val;
+-	int i;
++	int i, ret;
+ 
+ 	idx = bitmap_find_next_zero_area(lpg->lut_bitmap, lpg->lut_size,
+ 					 0, len, 0);
+@@ -378,8 +378,10 @@ static int lpg_lut_store(struct lpg *lpg, struct led_pattern *pattern,
+ 	for (i = 0; i < len; i++) {
+ 		val = pattern[i].brightness;
+ 
+-		regmap_bulk_write(lpg->map, lpg->lut_base + LPG_LUT_REG(idx + i),
+-				  &val, sizeof(val));
++		ret = regmap_bulk_write(lpg->map, lpg->lut_base + LPG_LUT_REG(idx + i),
++					&val, sizeof(val));
++		if (ret)
++			return ret;
  	}
- 	return ret;
- }
+ 
+ 	bitmap_set(lpg->lut_bitmap, idx, len);
 -- 
 2.51.0
 
