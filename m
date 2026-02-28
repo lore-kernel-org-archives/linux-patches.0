@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B4F3D903F
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D254D39448A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301097; cv=none; b=ddoWFiIknZcyLlZGXEgUbj7R8J/clW6qQuCF7NwTucyVyvrVt7LbC3NpRhw5jUZ+0jfpP8DTYY9hSxntCxrs/n2nxA3PuWUHzEv6XFPoZ+aFQJnfcQ7sz/AEJp7rjbzP09Aw7UBPoXrZXsNGbvHwDEQ3c0+VKbbW5NSecCnqcPc=
+	t=1772301098; cv=none; b=u5GmNt3ANMUlrM/Y762f2GJhJGdqtv8n40zWaWpm51gtXeMjRuwqzIplVCMyOr3gQRwZmIS3eCx/6PSXdsJOV+XOwzLIQSqBj7JOlk6mQSDs+FVKhPUo4u6h8d0PyS1+Rd3RTbfxENhZrEORtuFlYAS3JK3Gvtc5AAplNLvehE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301097; c=relaxed/simple;
-	bh=h2TKtrj+8rGSw4amenWeK+UZZ9XDKmHzELBa5BjL5AY=;
+	s=arc-20240116; t=1772301098; c=relaxed/simple;
+	bh=zyfKnpCqXTFCfjfLFGUkUa6IbnWaHjfwhruIC5jBlPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTF7hxxf/UkDQv39OgTA7klmaStFFADG8xkrhTRqZTFS6WJLb6y/F7cO3yeiyguy7hNvVu4dpofWgDoLxN8po/khkzfKtjyoraj2eDqbBuU7SVTMFAhXuw+x7QY0f/8aI7d02AQz+YmDPiJfcPXDqEA1L2ZXsywWt4SXaoEAgtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dNwViG7x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NbK8/m2adsG3eucwjxgVsdgqWiMAVHIPnH/db9negphsBahXDGTVl0YNyp4xbjMcjzN6mTzcxGwlJ5U9i80miZSvNP5lbDbrk0xA1Rfl2rDg5Ff2d6wsuQ4He3s2t0xwIX1wrrnkk+myuPp3Kg+vd7C9kJIyx845cTcKKmb12O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hLCMBiB5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dNwViG7x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16EA1C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hLCMBiB5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE731C19425;
 	Sat, 28 Feb 2026 17:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301097;
-	bh=h2TKtrj+8rGSw4amenWeK+UZZ9XDKmHzELBa5BjL5AY=;
+	s=k20201202; t=1772301098;
+	bh=zyfKnpCqXTFCfjfLFGUkUa6IbnWaHjfwhruIC5jBlPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNwViG7x3EMyhu38SR3m5cbIpmC4LhyhxsN+5GlavjpVW8jcbHWOY0srqo+R1kqxH
-	 1UcyRquoZhoHjb9cjbXJzvB/ooHyyZtr4PhGpTRF3o/Vl6DLG9HvLxhDCBbbNSpj/A
-	 /3dlWdWxysxx79nem+cE6G4YApr5sIFKF+4iA88kxRY5cKyFfs6mdAEnFHt0/si/+2
-	 dFOXVFP8hz7c7C33BS73L29w3lj2xnklk6Z1QxmNqxe14HCtJPHg36i0byEurDJ995
-	 kGqyrNwXR6edQgdySZGWAW+0YmQNOMXbB3r7FP1pqhAg8Idr0qvsMY+TqHmk4nJW9n
-	 IkroBWnIk4zMg==
+	b=hLCMBiB59jVoYoL9n2I6XOnHpOJBaIdhzPajb/OR2/eQwaaSjTP7MUbwoLQjmQkYB
+	 qlAiYiqfCC8F6ki2eMI9nuXKgmquI+RMyQvpa3ehb4kkDTAb/RgZDitNEVat9gTSV6
+	 GCdOr1koqCob4ngm0IIalWLOzD9F9+KVpZ3F79y3rH4YNkyb4NXQj+eX6/KjSz80U8
+	 OrftPdd4KF8XyhWgObtsCJs0suM+VHiCMPHRuf2hekhIYgJ6Vl8vGNoPy8haqT/eFf
+	 mB8YJfdrRhdYhtcCbqCS7GgNZ8wiUYSUlbntIuaf74CdGq54iDss77Ezn9bPTyXtf3
+	 VtTtAq8Bcw+rw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Li Chen <me@linux.beauty>,
+Cc: Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Theodore Ts'o <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 249/752] ext4: mark group extend fast-commit ineligible
-Date: Sat, 28 Feb 2026 12:39:20 -0500
-Message-ID: <20260228174750.1542406-249-sashal@kernel.org>
+Subject: [PATCH 6.18 250/752] ext4: use reserved metadata blocks when splitting extent on endio
+Date: Sat, 28 Feb 2026 12:39:21 -0500
+Message-ID: <20260228174750.1542406-250-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,67 +50,62 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Li Chen <me@linux.beauty>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 1f8dd813a1c771b13c303f73d876164bc9b327cc ]
+[ Upstream commit 01942af95ab6c9d98e64ae01fdc243a03e4b973f ]
 
-Fast commits only log operations that have dedicated replay support.
-EXT4_IOC_GROUP_EXTEND grows the filesystem to the end of the last
-block group and updates the same on-disk metadata without going
-through the fast commit tracking paths.
-In practice these operations are rare and usually followed by further
-updates, but mixing them into a fast commit makes the overall
-semantics harder to reason about and risks replay gaps if new call
-sites appear.
+When performing buffered writes, we may need to split and convert an
+unwritten extent into a written one during the end I/O process. However,
+we do not reserve space specifically for these metadata changes, we only
+reserve 2% of space or 4096 blocks. To address this, we use
+EXT4_GET_BLOCKS_PRE_IO to potentially split extents in advance and
+EXT4_GET_BLOCKS_METADATA_NOFAIL to utilize reserved space if necessary.
 
-Teach ext4 to mark the filesystem fast-commit ineligible when
-EXT4_IOC_GROUP_EXTEND grows the filesystem.
-This forces those transactions to fall back to a full commit,
-ensuring that the group extension changes are captured by the normal
-journal rather than partially encoded in fast commit TLVs.
-This change should not affect common workloads but makes online
-resize via GROUP_EXTEND safer and easier to reason about under fast
-commit.
+These two approaches can reduce the likelihood of running out of space
+and losing data. However, these methods are merely best efforts, we
+could still run out of space, and there is not much difference between
+converting an extent during the writeback process and the end I/O
+process, it won't increase the risk of losing data if we postpone the
+conversion.
 
-Testing:
-1. prepare:
-    dd if=/dev/zero of=/root/fc_resize.img bs=1M count=0 seek=256
-    mkfs.ext4 -O fast_commit -F /root/fc_resize.img
-    mkdir -p /mnt/fc_resize && mount -t ext4 -o loop /root/fc_resize.img /mnt/fc_resize
-2. Extended the filesystem to the end of the last block group using a
-   helper that calls EXT4_IOC_GROUP_EXTEND on the mounted filesystem
-   and checked fc_info:
-    ./group_extend_helper /mnt/fc_resize
-    cat /proc/fs/ext4/loop0/fc_info
-   shows the "Resize" ineligible reason increased.
-3. Fsynced a file on the resized filesystem and confirmed that the fast
-   commit ineligible counter incremented for the resize transaction:
-    touch /mnt/fc_resize/file
-    /root/fsync_file /mnt/fc_resize/file
-    sync
-    cat /proc/fs/ext4/loop0/fc_info
+Therefore, also use EXT4_GET_BLOCKS_METADATA_NOFAIL in
+ext4_convert_unwritten_extents_endio() to prepare for the buffered I/O
+iomap conversion, which may perform extent conversion during the end I/O
+process.
 
-Signed-off-by: Li Chen <me@linux.beauty>
-Link: https://patch.msgid.link/20251211115146.897420-6-me@linux.beauty
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260105014522.1937690-2-yi.zhang@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ioctl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/extents.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
-index d26914fa0cb46..acc28aa5744b1 100644
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -1612,6 +1612,8 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index ae7f2d6b32e32..7338f93313b61 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -3805,6 +3805,8 @@ ext4_convert_unwritten_extents_endio(handle_t *handle, struct inode *inode,
+ 	 * illegal.
+ 	 */
+ 	if (ee_block != map->m_lblk || ee_len > map->m_len) {
++		int flags = EXT4_GET_BLOCKS_CONVERT |
++			    EXT4_GET_BLOCKS_METADATA_NOFAIL;
+ #ifdef CONFIG_EXT4_DEBUG
+ 		ext4_warning(inode->i_sb, "Inode (%ld) finished: extent logical block %llu,"
+ 			     " len %u; IO logical block %llu, len %u",
+@@ -3812,7 +3814,7 @@ ext4_convert_unwritten_extents_endio(handle_t *handle, struct inode *inode,
+ 			     (unsigned long long)map->m_lblk, map->m_len);
+ #endif
+ 		path = ext4_split_convert_extents(handle, inode, map, path,
+-						EXT4_GET_BLOCKS_CONVERT, NULL);
++						  flags, NULL);
+ 		if (IS_ERR(path))
+ 			return path;
  
- 		err = ext4_group_extend(sb, EXT4_SB(sb)->s_es, n_blocks_count);
- 		if (EXT4_SB(sb)->s_journal) {
-+			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_RESIZE,
-+						NULL);
- 			jbd2_journal_lock_updates(EXT4_SB(sb)->s_journal);
- 			err2 = jbd2_journal_flush(EXT4_SB(sb)->s_journal, 0);
- 			jbd2_journal_unlock_updates(EXT4_SB(sb)->s_journal);
 -- 
 2.51.0
 
