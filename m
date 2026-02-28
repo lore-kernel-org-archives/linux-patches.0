@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CC6270545
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495B633A712
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302179; cv=none; b=mSYpip5VmMr/Mk/YG44tMlYsR9OWJX2T2R7wHp7R+rR8fpxF0y1YiFYV8xcxX7YsBqaJ8NNZIw3CeHUuLgsxR9NCOEp4QmJMVExEyVtlgMrYedG7uJjhjjWLrCTpyegivUjUUqRK+oCN/krbh/wJOZzTyie0RmEAJgIXT/DICQw=
+	t=1772302180; cv=none; b=uJU+Rj+0jqwNeaqyU7D3KEUP9/PR5TVrajbsyzVPgO4SPoNbaIngOFOM8qjCv8SnHzpPfdWGzeNTjOXOjF5UJILtzLtvjCDRVPspKgj22UoY4oLPtaxJ63qmQpPYY+5W1Jcd5Adu3xGqQZ0UiVhzVNAnWd39/PFekqkDy6G+S28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302179; c=relaxed/simple;
-	bh=XSYw8N+21TtiMdKmwDRvwFUQc43Yiw5hTO7532u2ZNM=;
+	s=arc-20240116; t=1772302180; c=relaxed/simple;
+	bh=9r1rMaAyj6pWsF3OWePOF6nN+aYDPfT+2ccdNRJztsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XTSO4NERDKFb4w6HbnzEb9/9sjWTX6NajOO2WyOPAFdMY726f9mTilu/5k5ClPGsj9jCru3kSylMB4BVrPqfIHG4b97mHiotiiDyxCXSche3SbTtNk+QiO4YIayzYIP/zo+LXs78aoDRDXayygvkgd0Z1+90gJYOC7Kppp4WUOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LoVRZRea; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ExZPfggAM2LUkQ0zJvApwcopB0xwGfq6Ql1oFpoKOnMntGhKoYNvHVwMXSOAXEVnpOobYq8ORNImiTzb/a0W/AYccUDiiV8MlYRCdDfoGLZmEzBACKkJTBkkkE7AiDqJlyt5s9SriQ1L/PQ7LjVmbRB2qK/mZ54nEEggyAOmTO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=caU3Rfrt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LoVRZRea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3EF1C19423;
-	Sat, 28 Feb 2026 18:09:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="caU3Rfrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC049C116D0;
+	Sat, 28 Feb 2026 18:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302179;
-	bh=XSYw8N+21TtiMdKmwDRvwFUQc43Yiw5hTO7532u2ZNM=;
+	s=k20201202; t=1772302180;
+	bh=9r1rMaAyj6pWsF3OWePOF6nN+aYDPfT+2ccdNRJztsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoVRZRearPEegGLNCc0r94UWRuc4TfPsnM4Hu97WgyyoflVnQJW3qtfxHDb+4i9rV
-	 wIGZO3NLxcbaQkloZdm4nQBnqOeDu3tYiDMisPX5OcMnNbcsvePdNvlDx0FeT+D2WM
-	 ZCMC4fYuqYLXdfdXKE/Q/6dadL95lFogyjIQ0Xn41ntYoyqUsBPiJZNecZ1LqK+3yk
-	 2Jq2ajcVWGFFRaNO6mkZZCxROPBlK1c5jloDUjZeWNIrfCrwKqCElvElLRXYTDUoZi
-	 FF9ty+t0J6StbM4O0a7P1fvIbVEiPIwanLaiKE5+Z+6oKIk+0ej+a8BsVVr4bwHkSm
-	 7PY9al7vA1n/Q==
+	b=caU3RfrtjdJsA2qIK1biSmMGkxN8SVZOgPqY7CJi+Kb/RnY+iEoxZbiREVbRPLNHx
+	 iTz6TXK5NdRC4m+mdV9fkFrr2p5kmfweGyvS9we7AMIJTZCUbOl8Ymq+br8kp/YCI6
+	 IYgu/wt021h2+yN14YUR3B+svBWcYp+HRRSi0dcmT4LJh+ryg/1Ky1ApmTkky9r7Ke
+	 WaSXpljWwKaJzlMOnCpX0/17PZI0QO8XL64rWAL6lQjJNtzdgIhGvpI9f6AAi88koA
+	 jHJ6a1sLDHU09GFnFh7dZ8SPbSRCat+uTgOjzhiYvFWSmZo1p3C8c7OZX7sravVjpW
+	 dN+l6uFv6EXqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Haotian Zhang <vulab@iscas.ac.cn>,
-	Matt Ranostay <matt@ranostay.sg>,
+Cc: Waqar Hameed <waqar.hameed@axis.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/283] power: supply: bq27xxx: fix wrong errno when bus ops are unsupported
-Date: Sat, 28 Feb 2026 13:05:21 -0500
-Message-ID: <20260228180709.1583486-179-sashal@kernel.org>
+Subject: [PATCH 6.6 180/283] power: supply: wm97xx: Fix NULL pointer dereference in power_supply_changed()
+Date: Sat, 28 Feb 2026 13:05:22 -0500
+Message-ID: <20260228180709.1583486-180-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,59 +47,95 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit 688364a11647dc09ba1e4429313e0008066ec790 ]
+[ Upstream commit 39fe0eac6d755ef215026518985fcf8de9360e9e ]
 
-bq27xxx_write(), bq27xxx_read_block(), and bq27xxx_write_block()
-return -EPERM when the bus callback pointer is NULL. A NULL callback
-indicates the operation is not supported by the bus/driver,
-not that permission is denied.
+In `probe()`, `request_irq()` is called before allocating/registering a
+`power_supply` handle. If an interrupt is fired between the call to
+`request_irq()` and `power_supply_register()`, the `power_supply` handle
+will be used uninitialized in `power_supply_changed()` in
+`wm97xx_bat_update()` (triggered from the interrupt handler). This will
+lead to a `NULL` pointer dereference since
 
-Return -EOPNOTSUPP instead of -EPERM when di->bus.write/
-read_bulk/write_bulk is NULL.
+Fix this racy `NULL` pointer dereference by making sure the IRQ is
+requested _after_ the registration of the `power_supply` handle. Since
+the IRQ is the last thing requests in the `probe()` now, remove the
+error path for freeing it. Instead add one for unregistering the
+`power_supply` handle when IRQ request fails.
 
-Fixes: 14073f6614f6 ("power: supply: bq27xxx: Add bulk transfer bus methods")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Matt Ranostay <matt@ranostay.sg>
-Link: https://patch.msgid.link/20251204083436.1367-1-vulab@iscas.ac.cn
+Fixes: 7c87942aef52 ("wm97xx_battery: Use irq to detect charger state")
+Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
+Link: https://patch.msgid.link/97b55f0479a932eea7213844bf66f28a974e27a2.1766270196.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/power/supply/wm97xx_battery.c | 34 +++++++++++++++------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 1f06dee4b8b4e..ff01d5d850f9a 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1162,7 +1162,7 @@ static inline int bq27xxx_write(struct bq27xxx_device_info *di, int reg_index,
- 		return -EINVAL;
+diff --git a/drivers/power/supply/wm97xx_battery.c b/drivers/power/supply/wm97xx_battery.c
+index f4b190adb3359..d3e5c2f7762a6 100644
+--- a/drivers/power/supply/wm97xx_battery.c
++++ b/drivers/power/supply/wm97xx_battery.c
+@@ -178,12 +178,6 @@ static int wm97xx_bat_probe(struct platform_device *dev)
+ 				     "failed to get charge GPIO\n");
+ 	if (charge_gpiod) {
+ 		gpiod_set_consumer_name(charge_gpiod, "BATT CHRG");
+-		ret = request_irq(gpiod_to_irq(charge_gpiod),
+-				wm97xx_chrg_irq, 0,
+-				"AC Detect", dev);
+-		if (ret)
+-			return dev_err_probe(&dev->dev, ret,
+-					     "failed to request GPIO irq\n");
+ 		props++;	/* POWER_SUPPLY_PROP_STATUS */
+ 	}
  
- 	if (!di->bus.write)
--		return -EPERM;
-+		return -EOPNOTSUPP;
+@@ -199,10 +193,8 @@ static int wm97xx_bat_probe(struct platform_device *dev)
+ 		props++;	/* POWER_SUPPLY_PROP_VOLTAGE_MIN */
  
- 	ret = di->bus.write(di, di->regs[reg_index], value, single);
- 	if (ret < 0)
-@@ -1181,7 +1181,7 @@ static inline int bq27xxx_read_block(struct bq27xxx_device_info *di, int reg_ind
- 		return -EINVAL;
+ 	prop = kcalloc(props, sizeof(*prop), GFP_KERNEL);
+-	if (!prop) {
+-		ret = -ENOMEM;
+-		goto err3;
+-	}
++	if (!prop)
++		return -ENOMEM;
  
- 	if (!di->bus.read_bulk)
--		return -EPERM;
-+		return -EOPNOTSUPP;
+ 	prop[i++] = POWER_SUPPLY_PROP_PRESENT;
+ 	if (charge_gpiod)
+@@ -236,15 +228,27 @@ static int wm97xx_bat_probe(struct platform_device *dev)
+ 		schedule_work(&bat_work);
+ 	} else {
+ 		ret = PTR_ERR(bat_psy);
+-		goto err4;
++		goto free;
++	}
++
++	if (charge_gpiod) {
++		ret = request_irq(gpiod_to_irq(charge_gpiod), wm97xx_chrg_irq,
++				  0, "AC Detect", dev);
++		if (ret) {
++			dev_err_probe(&dev->dev, ret,
++				      "failed to request GPIO irq\n");
++			goto unregister;
++		}
+ 	}
  
- 	ret = di->bus.read_bulk(di, di->regs[reg_index], data, len);
- 	if (ret < 0)
-@@ -1200,7 +1200,7 @@ static inline int bq27xxx_write_block(struct bq27xxx_device_info *di, int reg_in
- 		return -EINVAL;
+ 	return 0;
+-err4:
++
++unregister:
++	power_supply_unregister(bat_psy);
++
++free:
+ 	kfree(prop);
+-err3:
+-	if (charge_gpiod)
+-		free_irq(gpiod_to_irq(charge_gpiod), dev);
++
+ 	return ret;
+ }
  
- 	if (!di->bus.write_bulk)
--		return -EPERM;
-+		return -EOPNOTSUPP;
- 
- 	ret = di->bus.write_bulk(di, di->regs[reg_index], data, len);
- 	if (ret < 0)
 -- 
 2.51.0
 
