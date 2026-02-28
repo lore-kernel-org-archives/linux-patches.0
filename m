@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BF0421A16
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A25D33F38A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301167; cv=none; b=UbtS0nhmGg7n2DTpMvLV2z7nuA1G0qnAK3DJIZBZmfDGmhQfE2Tnv5oa3sZ7CmBamqKxF3+Jf2+xMpvUFDT9SyN/IKgTH9FmzlylOv/KvQkKJ9La1Oakoiwk4VZ/9LgHESI90lGAcLFJKz1h9JuvQvhFHbvVrwvrVWI2uRNqKz8=
+	t=1772301168; cv=none; b=l87dLPzRxE47SRHxBUeuROHTGa8Mf3AANdyLNzmgJBqVG7rSc4yFApp//NyaBYLk4CzGOQ10slnWCkfR8sa77agycOSMckki/GYvbzB2Iuur5GoXZdwXsh1kS6BdBP6uUvNQxgtsKIRLShAsC1NK++nlxnk05vBlU6UW0ZmeHl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301167; c=relaxed/simple;
-	bh=kk2/UZdY4A+i9yZHtFFnvjm4Eqf8Gk9+iUrxy+RCzw8=;
+	s=arc-20240116; t=1772301168; c=relaxed/simple;
+	bh=QmJOBZaR5RMLhXGQoqBBPsyIqSkr6eHuIJHE0yzIkCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGMT+o88wa1P983oJUz3ehDe/DLc7pYOaYARoeFkqgVandpyi39FrMJtMsO4FyeOJmZPvsGJETaWjrwWcvF9jmHVH9mx3tEN+DYLat3Rk0fGgNGwK0kNWtHmTRyIMSeA7vXHM6hRfA1w0SCcFMPHHcDA3Ku7r+Qoij7+c/jaeZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LvgUPbrE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f5930MjCUG2/zIn4MJlR0F16bprRpteHzQH7eiI2qkcBzX2TarNo1MG5Evi36CD9hM3g7/hBdkqcNOic4CEq96B7+jkG9Kk5Z2fLS+XoyLCmBWMyWgVDpvUNSCXU/vPUVTLhup5wLqewbvKR8dmUqIpcwthYOS78hMWGaERG/g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PkK/RWSE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LvgUPbrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED239C19424;
-	Sat, 28 Feb 2026 17:52:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PkK/RWSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6DAC19424;
+	Sat, 28 Feb 2026 17:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301167;
-	bh=kk2/UZdY4A+i9yZHtFFnvjm4Eqf8Gk9+iUrxy+RCzw8=;
+	s=k20201202; t=1772301168;
+	bh=QmJOBZaR5RMLhXGQoqBBPsyIqSkr6eHuIJHE0yzIkCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LvgUPbrEsTRRLBr0W1U4jSpLMpwFmoneB2202YCQ/Nop2QQ3mHAiEm29T143Qhxdp
-	 AjEChHxeHMYA0W0HsRiaVoXJnn6Heluz2PsnM+LvarugnYzP4cG9u0ER+AJ3BRCpAH
-	 dTqnjKoL/rdWpEvBpdVtOf/h8x9O3issIxpzH72R150ZFS+4yxUYh1qmAUODKDcUn1
-	 3wjgfaGd/qm6tM4Q0tsif4ZLz+TPaQ692b+gnquQt6NHuzJRl/wl1bMevMETRcGuGk
-	 3yPuWu2b176V3ndOebtQPWizQS8OOfJcDBf22oQHZOVW4Pbo2mhUf+Na5U+xUFXGKk
-	 DCfwWy/x65q7w==
+	b=PkK/RWSE4RS65bWpXzx7uq93kEm/4LqpgkyohM0jF4NI8x0IhrCZKV5cKKcgbFZ0o
+	 fKLoB8gbM7cNeq0T89sWLG/x+Gjs3LjqWWxQ9NmQazg0AzHZpCXlamXERy7TPv0hOV
+	 Zi/k2tXTdxmWXqKTQRpsC0Pu10XRxr7QyWwl+ulm2iNaR3+N+AcmplDvMIkwa0urA0
+	 JuEXGQ4XZRzlTWwy8R80stVeoYMqn0/L2dvKnKYCSjRxJjPt/0weOx6qqYnbk6T2PX
+	 WY5RiL23E/3n2/myb4Nb+LtEdvmmsqY3n4+qLoVcrzlUt782G7BRUrMnETm2N3p1Re
+	 qSryEPgMPNLPw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: "Thomas Richard (TI.com)" <thomas.richard@bootlin.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 333/752] phy: ti: phy-j721e-wiz: restore mux selection during resume
-Date: Sat, 28 Feb 2026 12:40:44 -0500
-Message-ID: <20260228174750.1542406-333-sashal@kernel.org>
+Subject: [PATCH 6.18 334/752] phy: cadence-torrent: restore parent clock for refclk during resume
+Date: Sat, 28 Feb 2026 12:40:45 -0500
+Message-ID: <20260228174750.1542406-334-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,67 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 From: "Thomas Richard (TI.com)" <thomas.richard@bootlin.com>
 
-[ Upstream commit 53f6240e88c9e8715e09fc19942f13450db4cb33 ]
+[ Upstream commit 434e1a0ee145d0389b192252be4c993f86cf1134 ]
 
-While suspend and resume mux selection was getting lost. So save and
-restore these values in suspend and resume operations.
+While suspend and resume, parent clock config for refclk was getting lost.
+So save and restore it in suspend and resume operations.
 
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Thomas Richard (TI.com) <thomas.richard@bootlin.com>
-Link: https://patch.msgid.link/20251216-phy-ti-phy-j721e-wiz-resume-restore-mux-sel-v1-1-771d564db966@bootlin.com
+Link: https://patch.msgid.link/20251216-phy-cadence-torrent-resume-restore-refclk-parent-v3-1-8a7ed84b47e3@bootlin.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/ti/phy-j721e-wiz.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/phy/cadence/phy-cadence-torrent.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/phy/ti/phy-j721e-wiz.c b/drivers/phy/ti/phy-j721e-wiz.c
-index a8b440c6c46bb..ba31b0a1f7f79 100644
---- a/drivers/phy/ti/phy-j721e-wiz.c
-+++ b/drivers/phy/ti/phy-j721e-wiz.c
-@@ -393,6 +393,7 @@ struct wiz {
- 	struct clk		*output_clks[WIZ_MAX_OUTPUT_CLOCKS];
- 	struct clk_onecell_data	clk_data;
- 	const struct wiz_data	*data;
-+	int			mux_sel_status[WIZ_MUX_NUM_CLOCKS];
+diff --git a/drivers/phy/cadence/phy-cadence-torrent.c b/drivers/phy/cadence/phy-cadence-torrent.c
+index 37fa4bad6bd72..877f22177c699 100644
+--- a/drivers/phy/cadence/phy-cadence-torrent.c
++++ b/drivers/phy/cadence/phy-cadence-torrent.c
+@@ -397,6 +397,7 @@ struct cdns_torrent_refclk_driver {
+ 	struct clk_hw		hw;
+ 	struct regmap_field	*cmn_fields[REFCLK_OUT_NUM_CMN_CONFIG];
+ 	struct clk_init_data	clk_data;
++	u8 parent_index;
  };
  
- static int wiz_reset(struct wiz *wiz)
-@@ -1654,11 +1655,25 @@ static void wiz_remove(struct platform_device *pdev)
- 	pm_runtime_disable(dev);
- }
+ #define to_cdns_torrent_refclk_driver(_hw)	\
+@@ -3326,11 +3327,29 @@ static const struct cdns_torrent_vals sgmii_qsgmii_xcvr_diag_ln_vals = {
+ 	.num_regs = ARRAY_SIZE(sgmii_qsgmii_xcvr_diag_ln_regs),
+ };
  
-+static int wiz_suspend_noirq(struct device *dev)
++static void cdns_torrent_refclk_driver_suspend(struct cdns_torrent_phy *cdns_phy)
 +{
-+	struct wiz *wiz = dev_get_drvdata(dev);
-+	int i;
++	struct clk_hw *hw = cdns_phy->clk_hw_data->hws[CDNS_TORRENT_REFCLK_DRIVER];
++	struct cdns_torrent_refclk_driver *refclk_driver = to_cdns_torrent_refclk_driver(hw);
 +
-+	for (i = 0; i < WIZ_MUX_NUM_CLOCKS; i++)
-+		regmap_field_read(wiz->mux_sel_field[i], &wiz->mux_sel_status[i]);
-+
-+	return 0;
++	refclk_driver->parent_index = cdns_torrent_refclk_driver_get_parent(hw);
 +}
 +
- static int wiz_resume_noirq(struct device *dev)
- {
- 	struct device_node *node = dev->of_node;
- 	struct wiz *wiz = dev_get_drvdata(dev);
--	int ret;
-+	int ret, i;
++static int cdns_torrent_refclk_driver_resume(struct cdns_torrent_phy *cdns_phy)
++{
++	struct clk_hw *hw = cdns_phy->clk_hw_data->hws[CDNS_TORRENT_REFCLK_DRIVER];
++	struct cdns_torrent_refclk_driver *refclk_driver = to_cdns_torrent_refclk_driver(hw);
 +
-+	for (i = 0; i < WIZ_MUX_NUM_CLOCKS; i++)
-+		regmap_field_write(wiz->mux_sel_field[i], wiz->mux_sel_status[i]);
++	return cdns_torrent_refclk_driver_set_parent(hw, refclk_driver->parent_index);
++}
++
+ static int cdns_torrent_phy_suspend_noirq(struct device *dev)
+ {
+ 	struct cdns_torrent_phy *cdns_phy = dev_get_drvdata(dev);
+ 	int i;
  
- 	/* Enable supplemental Control override if available */
- 	if (wiz->sup_legacy_clk_override)
-@@ -1680,7 +1695,7 @@ static int wiz_resume_noirq(struct device *dev)
- 	return ret;
- }
++	cdns_torrent_refclk_driver_suspend(cdns_phy);
++
+ 	reset_control_assert(cdns_phy->phy_rst);
+ 	reset_control_assert(cdns_phy->apb_rst);
+ 	for (i = 0; i < cdns_phy->nsubnodes; i++)
+@@ -3352,6 +3371,10 @@ static int cdns_torrent_phy_resume_noirq(struct device *dev)
+ 	int node = cdns_phy->nsubnodes;
+ 	int ret, i;
  
--static DEFINE_NOIRQ_DEV_PM_OPS(wiz_pm_ops, NULL, wiz_resume_noirq);
-+static DEFINE_NOIRQ_DEV_PM_OPS(wiz_pm_ops, wiz_suspend_noirq, wiz_resume_noirq);
- 
- static struct platform_driver wiz_driver = {
- 	.probe		= wiz_probe,
++	ret = cdns_torrent_refclk_driver_resume(cdns_phy);
++	if (ret)
++		return ret;
++
+ 	ret = cdns_torrent_clk(cdns_phy);
+ 	if (ret)
+ 		return ret;
 -- 
 2.51.0
 
