@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13E936C9E5
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C76F2737F2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302321; cv=none; b=NG2zHno+qLFLuUmAZ7K1mx9U2zrcgLNiMOefb9ept4mKrWdy0mIsfM3MbfHQRKTMVniZe/DBzXg4fDi8zM5kc6MzApcbflGPv5ZAxu8GvLqSkKfcK833iZiZ8JE2iNm3O77HSpBtn4ZIw/SFcx7YsYPhusqYheRaopYqBoYMcno=
+	t=1772302322; cv=none; b=ZYIxrk1Cz3YWalrriPsvPf1Tpa/tfctlsACOTkrVQASMtil6ips2siyNa2+Ez0L3k3LZ+/iUmiJMDvYXtNeD3Fbu0dBREF/SPJVLJlowrAxVJsNHdvesR0DrL6DUgb1mucLSvhvUNH+xh9ZzqSy3zy6NJjr6bxR5drHtSDwErjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302321; c=relaxed/simple;
-	bh=j+dfmpyXr3PflnG+fxb2wrNo8Fgmxwro1qvPHdL4Gv8=;
+	s=arc-20240116; t=1772302322; c=relaxed/simple;
+	bh=D90zmZOychr1fX84xt4oVcwKQLVPDQX5pYKwxuCjVL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GV+/vNB7XS8ge7A2Kv1oYVT6vSfPJS5YFDdRoTtonMPkz1beiDVUnOVjnDmTDgwr3dulFzhRmJOW7zuZ2plZQmztKgm0ne4QtdhzI0OWCZGgp0d5xSe0VtXUUFVVE+raVaEc15MCVAS+Te8MNvwDAU6LQ75OOltj8AMZxCC1+Ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R3VfJcRY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sJ6ZgUFMiEmtopP7oDbpImLDynLCPyHiUtLGG3vfTKm3urH+empBfTGukJ6q8G3cer6LqGjcsxOttfdKivlVqA0mmN/GmfBfDU67YvIw01AAbdtSS8dHL4mTbAtuW0Q/EEftCXXbtvcivt7uVwDakURzl+wbpdx4xGJcAyb+7I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jrwljPmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R3VfJcRY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CFBC19423;
-	Sat, 28 Feb 2026 18:12:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jrwljPmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04ABC116D0;
+	Sat, 28 Feb 2026 18:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302321;
-	bh=j+dfmpyXr3PflnG+fxb2wrNo8Fgmxwro1qvPHdL4Gv8=;
+	s=k20201202; t=1772302322;
+	bh=D90zmZOychr1fX84xt4oVcwKQLVPDQX5pYKwxuCjVL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3VfJcRYHbZ8mDTLjxDVlba/SG3yTxnBqfF1ckh0p17yB0IpiRoarqk8cAU0jx05G
-	 969fQeOKeS/dcSwan+M05dNoNCNaditROvJjhiWCLWwAwdASzouLjol4V1tvXlLd4h
-	 8Mr2ch9Xd2SfjFi1OqjpYYI06R506r7HyKaGM+D2M/e0bV46NmrVl2uB3kcKNTtfN4
-	 5+2LoL3ti1XL2feqoatHA+DGqnt9QCt1H7j59yj7i3a6KKDeAhsA+84QrXNFfpmRpt
-	 3VDgWJQskIFfeCdi/4nSnt0Iq1NMjI7775hx30+3LliGvHs3+6C202noda6azS8pV/
-	 gfHQLTO7JirVw==
+	b=jrwljPmPtNZZVjraFlyfRn3OkYZFU9+mUGsgRhT8MI8sAa3sRVc4a9wNF6v/IFq7j
+	 L99r4CsK1/k6xx0Hh4/u9m6iqhEI6300nsdBoCyGZT6cGyprYpyBbUR2GU5CNvzUfA
+	 IJimlpUduBXu2I9PiJKkfoOkyypX/6dml5+dehbaBv313O6NzPWS48t/G9djb2ZlHT
+	 rBaUuRZmgUAwuXzjuOyBPZF+PPUmMX/5Nfehn/Mvbbv1pVVAh4MkBNDsRa51WY2oHQ
+	 JzuKET3YzfmwMn5uNuhAii2ALlUvN9I6W2rOJq2PJx9l2DJhpgvMCLP+nfpsY38HjS
+	 SPCQfmd7ptIiA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/232] hrtimer: Fix trace oddity
-Date: Sat, 28 Feb 2026 13:08:13 -0500
-Message-ID: <20260228181127.1592657-40-sashal@kernel.org>
+Subject: [PATCH 6.1 041/232] bpf, sockmap: Fix incorrect copied_seq calculation
+Date: Sat, 28 Feb 2026 13:08:14 -0500
+Message-ID: <20260228181127.1592657-41-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,41 +49,176 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 5d6446f409da00e5a389125ddb5ce09f5bc404c9 ]
+[ Upstream commit b40cc5adaa80e1471095a62d78233b611d7a558c ]
 
-It turns out that __run_hrtimer() will trace like:
+A socket using sockmap has its own independent receive queue: ingress_msg.
+This queue may contain data from its own protocol stack or from other
+sockets.
 
-          <idle>-0     [032] d.h2. 20705.474563: hrtimer_cancel:       hrtimer=0xff2db8f77f8226e8
-          <idle>-0     [032] d.h1. 20705.474563: hrtimer_expire_entry: hrtimer=0xff2db8f77f8226e8 now=20699452001850 function=tick_nohz_handler/0x0
+The issue is that when reading from ingress_msg, we update tp->copied_seq
+by default. However, if the data is not from its own protocol stack,
+tcp->rcv_nxt is not increased. Later, if we convert this socket to a
+native socket, reading from this socket may fail because copied_seq might
+be significantly larger than rcv_nxt.
 
-Which is a bit nonsensical, the timer doesn't get canceled on
-expiration. The cause is the use of the incorrect debug helper.
+This fix also addresses the syzkaller-reported bug referenced in the
+Closes tag.
 
-Fixes: c6a2a1770245 ("hrtimer: Add tracepoint for hrtimers")
-Reported-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260121143208.219595606@infradead.org
+This patch marks the skmsg objects in ingress_msg. When reading, we update
+copied_seq only if the data is from its own protocol stack.
+
+                                                     FD1:read()
+                                                     --  FD1->copied_seq++
+                                                         |  [read data]
+                                                         |
+                                [enqueue data]           v
+                  [sockmap]     -> ingress to self ->  ingress_msg queue
+FD1 native stack  ------>                                 ^
+-- FD1->rcv_nxt++               -> redirect to other      | [enqueue data]
+                                       |                  |
+                                       |             ingress to FD1
+                                       v                  ^
+                                      ...                 |  [sockmap]
+                                                     FD2 native stack
+
+Closes: https://syzkaller.appspot.com/bug?extid=06dbd397158ec0ea4983
+Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20260124113314.113584-2-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/hrtimer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/skmsg.h |  2 ++
+ net/core/skmsg.c      | 27 ++++++++++++++++++++++++---
+ net/ipv4/tcp_bpf.c    |  5 +++--
+ 3 files changed, 29 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 049dd5b37274b..002b29e566cb3 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -1712,7 +1712,7 @@ static void __run_hrtimer(struct hrtimer_cpu_base *cpu_base,
+diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
+index 32bbebf5b71e3..5c5a2d65184c3 100644
+--- a/include/linux/skmsg.h
++++ b/include/linux/skmsg.h
+@@ -132,6 +132,8 @@ int sk_msg_memcopy_from_iter(struct sock *sk, struct iov_iter *from,
+ 			     struct sk_msg *msg, u32 bytes);
+ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+ 		   int len, int flags);
++int __sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
++		     int len, int flags, int *copied_from_self);
+ bool sk_msg_is_readable(struct sock *sk);
  
- 	lockdep_assert_held(&cpu_base->lock);
+ static inline void sk_msg_check_to_free(struct sk_msg *msg, u32 i, u32 bytes)
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 01ca497fe2cd6..444b9b25ade28 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -407,22 +407,26 @@ int sk_msg_memcopy_from_iter(struct sock *sk, struct iov_iter *from,
+ }
+ EXPORT_SYMBOL_GPL(sk_msg_memcopy_from_iter);
  
--	debug_deactivate(timer);
-+	debug_hrtimer_deactivate(timer);
- 	base->running = timer;
+-/* Receive sk_msg from psock->ingress_msg to @msg. */
+-int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+-		   int len, int flags)
++int __sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
++		     int len, int flags, int *copied_from_self)
+ {
+ 	struct iov_iter *iter = &msg->msg_iter;
+ 	int peek = flags & MSG_PEEK;
+ 	struct sk_msg *msg_rx;
+ 	int i, copied = 0;
++	bool from_self;
  
- 	/*
+ 	msg_rx = sk_psock_peek_msg(psock);
++	if (copied_from_self)
++		*copied_from_self = 0;
++
+ 	while (copied != len) {
+ 		struct scatterlist *sge;
+ 
+ 		if (unlikely(!msg_rx))
+ 			break;
+ 
++		from_self = msg_rx->sk == sk;
+ 		i = msg_rx->sg.start;
+ 		do {
+ 			struct page *page;
+@@ -441,6 +445,9 @@ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+ 			}
+ 
+ 			copied += copy;
++			if (from_self && copied_from_self)
++				*copied_from_self += copy;
++
+ 			if (likely(!peek)) {
+ 				sge->offset += copy;
+ 				sge->length -= copy;
+@@ -485,6 +492,13 @@ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+ out:
+ 	return copied;
+ }
++
++/* Receive sk_msg from psock->ingress_msg to @msg. */
++int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
++		   int len, int flags)
++{
++	return __sk_msg_recvmsg(sk, psock, msg, len, flags, NULL);
++}
+ EXPORT_SYMBOL_GPL(sk_msg_recvmsg);
+ 
+ bool sk_msg_is_readable(struct sock *sk)
+@@ -614,6 +628,12 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
+ 	if (unlikely(!msg))
+ 		return -EAGAIN;
+ 	skb_set_owner_r(skb, sk);
++
++	/* This is used in tcp_bpf_recvmsg_parser() to determine whether the
++	 * data originates from the socket's own protocol stack. No need to
++	 * refcount sk because msg's lifetime is bound to sk via the ingress_msg.
++	 */
++	msg->sk = sk;
+ 	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg, take_ref);
+ 	if (err < 0)
+ 		kfree(msg);
+@@ -907,6 +927,7 @@ int sk_psock_msg_verdict(struct sock *sk, struct sk_psock *psock,
+ 	sk_msg_compute_data_pointers(msg);
+ 	msg->sk = sk;
+ 	ret = bpf_prog_run_pin_on_cpu(prog, msg);
++	msg->sk = NULL;
+ 	ret = sk_psock_map_verd(ret, msg->sk_redir);
+ 	psock->apply_bytes = msg->apply_bytes;
+ 	if (ret == __SK_REDIRECT) {
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 1727ac094e106..8e6c0737bfe12 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -221,6 +221,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 	int peek = flags & MSG_PEEK;
+ 	struct sk_psock *psock;
+ 	struct tcp_sock *tcp;
++	int copied_from_self = 0;
+ 	int copied = 0;
+ 	u32 seq;
+ 
+@@ -257,7 +258,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 	}
+ 
+ msg_bytes_ready:
+-	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
++	copied = __sk_msg_recvmsg(sk, psock, msg, len, flags, &copied_from_self);
+ 	/* The typical case for EFAULT is the socket was gracefully
+ 	 * shutdown with a FIN pkt. So check here the other case is
+ 	 * some error on copy_page_to_iter which would be unexpected.
+@@ -272,7 +273,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 			goto out;
+ 		}
+ 	}
+-	seq += copied;
++	seq += copied_from_self;
+ 	if (!copied) {
+ 		long timeo;
+ 		int data;
 -- 
 2.51.0
 
