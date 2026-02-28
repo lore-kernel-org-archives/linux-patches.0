@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7027136C9D8
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F5836C9E9
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302358; cv=none; b=A12OOsZ5NqTcW8NYUw0C46ZCOLlMbn9gFFpdT/r9GyAHY0BL9VCIg0dYWAsD0sDu/zlBP64N76Bh5h2VhdrVn077VNRbJS+H1BwtwD8B5wFNLx8twZl91ldaf+SjcBPaKfW6wbMrArRGxT6EndF/Wi/7voIzNQHSqAn5YYu1dBA=
+	t=1772302359; cv=none; b=t3xCuxl6VMaPRbml218DHJCxXoot9U7FZ/WG13tPhzq7/0OXZxeVY8AuyuhUpsctGR50T6UdMRxmpmFwWBuFAPwdRs5nrBTjHYRcEDxu6tz1A8pCk71XvxcuF3ZHkRAtOWfiefxPNMwnMGUgOZ7L0IdwQY9AC0gC9FoZEPnLRSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302358; c=relaxed/simple;
-	bh=EE6p/UWOdTkT7VhS7rr9hblIQsTGj+IPshl+HgqfJq4=;
+	s=arc-20240116; t=1772302359; c=relaxed/simple;
+	bh=1QL6Pcu6xYCUr82c1I+Edg0WJY/+5NxRguUtZhPT5zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJ+it8FsIjVySBsT7TtgOsn8E3/TcjwnojLpwBiZmin/3CSA94vIeeysmSbri93uRUMnnYQksoyhtO/0xacgjx1Kt2GiTZtBpy1vccbb8aoWreGWNCR34T1Jj/6Nzz9LxQ3tBEv6JRbJ7omGn/eP3Egs2eDSk+/GY33B3h9S0R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r8Dify2F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZ85xePbE/mYu0IZQ8r4Exac0mxCAz920LbP6YhnPMT2tfSmk/yDsVpnlDxzJ+dTzcS+Kv/9FUDf4FES17ljG8f6+T32IFnvRcQnjGG2A3kVTFOYifbOufC2hefAyNGHpJdpZDdHPnn8wjs3Noj5xvD5bF6qMqWaMzCBv0umq3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fAKfI/xe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r8Dify2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A461AC19423;
-	Sat, 28 Feb 2026 18:12:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fAKfI/xe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9649AC19424;
+	Sat, 28 Feb 2026 18:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302358;
-	bh=EE6p/UWOdTkT7VhS7rr9hblIQsTGj+IPshl+HgqfJq4=;
+	s=k20201202; t=1772302359;
+	bh=1QL6Pcu6xYCUr82c1I+Edg0WJY/+5NxRguUtZhPT5zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r8Dify2FbzksYcn4bee90CwswYgee6AFmzNpP2Qt5L+1nxEBpX5kFLN3w+pCBKU1J
-	 B1FSBh5TJCR22YKblgnJ5QxSbXywZ0KIUZ1iSzc1mjBv9LRLGgnnoMl3UBabip8b7l
-	 njRZaPtpBB0FU60WSNvom9jKt7qNZFt0Vq6qY493X3p7JgPeHT29ASQr9D8tG6K05M
-	 /Q2+3lqAjLGAn5ruW94RxMT+Sol7iEuKnoKXWMjTvszS0Ij/O2BF+jU2puCFdnMyI1
-	 009eYgp5HgH8M9QlSpaSrA4RpC1sTxvrK+l4FGO8gmc4Whf+8Ed3kHVAOrFLc9w2o3
-	 VDtS2JKVqPNNA==
+	b=fAKfI/xebn0YZ4LFIf/X9cIPGqsCDAbH4wtOoCfTmTjrKMbs4Sfctp45KXf6aJhke
+	 nCzb5Ok0LRnJryKhm0Mc92Kf337xaZxp94HdFeRWDAbkcG/lY1L51eZVrfEu7AA0q3
+	 VWjcljpi+jVJBDzQUNbtNjWlA4aPkwgZQ72iqsuWsvxO1Gr5839bbZ3nGGyaLxZZyV
+	 ZJSOI0rE/3wHFyYC032e5WQ4YmpTuH/gZatu0xo23rHvcyxwCDoj6pvg39bFwbYhfR
+	 eehi9Wk+C40PkLk9QRke/gWDRHqe8/0vMQ4gDXl45eA7IiQBr3Pu4+Koiv3IBowJgM
+	 TG3j1G2wlHn3g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ricardo Ribalda <ribalda@chromium.org>,
-	Itay Chamiel <itay.chamiel@q.ai>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>,
+	Gwendal Grignou <gwendal@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/232] media: uvcvideo: Fix allocation for small frame sizes
-Date: Sat, 28 Feb 2026 13:08:57 -0500
-Message-ID: <20260228181127.1592657-84-sashal@kernel.org>
+Subject: [PATCH 6.1 085/232] platform/chrome: cros_ec_lightbar: Fix response size initialization
+Date: Sat, 28 Feb 2026 13:08:58 -0500
+Message-ID: <20260228181127.1592657-85-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,55 +47,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 40d3ac25c11310bfaa50ed7614846ef75cb69a1e ]
+[ Upstream commit ec0dd36dbf8b0b209e63d0cd795451fa2203c736 ]
 
-If a frame has size of less or equal than one packet size
-uvc_alloc_urb_buffers() is unable to allocate memory for it due to a
-off-by-one error.
+Commit 1e7913ff5f9f ("platform/chrome: cros_ec_lightbar: Reduce
+ligthbar get version command") meant to set smaller values for both
+request and response sizes.
 
-Fix the off-by-one-error and now that we are at it, make sure that
-stream->urb_size has always a valid value when we return from the
-function, even when an error happens.
+However, it incorrectly assigned the response size to the `result` field
+instead of `insize`.  Fix it.
 
-Fixes: efdc8a9585ce ("V4L/DVB (10295): uvcvideo: Retry URB buffers allocation when the system is low on memory.")
-Reported-by: Itay Chamiel <itay.chamiel@q.ai>
-Closes: https://lore.kernel.org/linux-media/CANiDSCsSoZf2LsCCoWAUbCg6tJT-ypXR1B85aa6rAdMVYr2iBQ@mail.gmail.com/T/#t
-Co-developed-by: Itay Chamiel <itay.chamiel@q.ai>
-Signed-off-by: Itay Chamiel <itay.chamiel@q.ai>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Tested-by: Itay Chamiel <itay.chamiel@q.ai>
-Link: https://patch.msgid.link/20260114-uvc-alloc-urb-v1-1-cedf3fb66711@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reported-by: Gwendal Grignou <gwendal@google.com>
+Closes: https://lore.kernel.org/chrome-platform/CAMHSBOVrrYaB=1nEqZk09VkczCrj=6B-P8Fe29TpPdSDgT2CCQ@mail.gmail.com
+Fixes: 1e7913ff5f9f ("platform/chrome: cros_ec_lightbar: Reduce ligthbar get version command")
+Link: https://lore.kernel.org/r/20260130040335.361997-1-tzungbi@kernel.org
+Reviewed-by: Gwendal Grignou <gwendal@google.com>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_lightbar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index da693e3905dd9..87262bf0232c4 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1758,7 +1758,7 @@ static int uvc_alloc_urb_buffers(struct uvc_streaming *stream,
- 		npackets = UVC_MAX_PACKETS;
- 
- 	/* Retry allocations until one succeed. */
--	for (; npackets > 1; npackets /= 2) {
-+	for (; npackets > 0; npackets /= 2) {
- 		stream->urb_size = psize * npackets;
- 
- 		for (i = 0; i < UVC_URBS; ++i) {
-@@ -1783,6 +1783,7 @@ static int uvc_alloc_urb_buffers(struct uvc_streaming *stream,
- 	uvc_dbg(stream->dev, VIDEO,
- 		"Failed to allocate URB buffers (%u bytes per packet)\n",
- 		psize);
-+	stream->urb_size = 0;
- 	return 0;
- }
- 
+diff --git a/drivers/platform/chrome/cros_ec_lightbar.c b/drivers/platform/chrome/cros_ec_lightbar.c
+index 469dfc7a4a030..e2365788d4590 100644
+--- a/drivers/platform/chrome/cros_ec_lightbar.c
++++ b/drivers/platform/chrome/cros_ec_lightbar.c
+@@ -117,7 +117,7 @@ static int get_lightbar_version(struct cros_ec_dev *ec,
+ 	param = (struct ec_params_lightbar *)msg->data;
+ 	param->cmd = LIGHTBAR_CMD_VERSION;
+ 	msg->outsize = sizeof(param->cmd);
+-	msg->result = sizeof(resp->version);
++	msg->insize = sizeof(resp->version);
+ 	ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
+ 	if (ret < 0 && ret != -EINVAL) {
+ 		ret = 0;
 -- 
 2.51.0
 
