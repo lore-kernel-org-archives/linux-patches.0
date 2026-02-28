@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494BB33FE12
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA3233FE12
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300918; cv=none; b=uFEkJ5oc9o1VOdd8FXeoSXp4E9godCgVnUMEjF7xn61APPSFTtZGo7ggujAtS5/8hF1xA/2vu2eXOWzHvDNr4ntmOlruptG3sGw/WwDcnXDS/KoZVsSuxCfphWALYoI8yU70CJAKf0jLHnHIPZBfWAFjKCW+U/xK7Eb4WeZK/6s=
+	t=1772300919; cv=none; b=Xhzy7Ogeyau24LawHabei59saYNTrcR28H7JZEcoTJF7hbf1qPxdyOvVLb50Bz0VjQNB3joPRebhJWEeAvV1q6eVkfnUL6/UPv+8G+ZiJ8mcrbHBhmJ0h7Qq129hcihTdH1AQVblE9LSXdYyRbw5+d/9zXRO3OwTnZgi4s/Wl44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300918; c=relaxed/simple;
-	bh=3dV0RPjMNWINt+6QFtoWas7+zSIy0ETw5CiB81N64WU=;
+	s=arc-20240116; t=1772300919; c=relaxed/simple;
+	bh=qFxe7UMVks0SzFECFu0TKvPZLn9NTWwEwRkXjs1MK28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHGme8QdYsepwqoUMjBETiQLGzHknHv8r8u9+D+5nujL1uRCDyxOSvZPAAl/CiE4SBgrn6dMlMyCiFrPF53hiWz4niAcULcspPJ2bftTNqWHspbXA3xp2PaMnPK/38e/s8mUUGOlM+g8b0En9OQzq9kD1RYTrICyvYWq8AINjNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HNn07YCe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQTlWuvLO7MzIRtNAdcTa6EhqKG6qv/rG1zG7pfPIrwhwvK+QNAZqJ6P8ozmxRcSM78OlLL4x8Vo6s5i/+IOwnzjcrU7w1zc/raF5zLrrOpj6Qq1pVJJyUnqKTOgGq37EYSmcw9R3bZ3bByBPsTtSqYgLpGh7Ao85RQRYRrR8Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PXRREQsv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HNn07YCe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FF2C116D0;
-	Sat, 28 Feb 2026 17:48:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PXRREQsv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFF7C2BC87;
+	Sat, 28 Feb 2026 17:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300918;
-	bh=3dV0RPjMNWINt+6QFtoWas7+zSIy0ETw5CiB81N64WU=;
+	s=k20201202; t=1772300919;
+	bh=qFxe7UMVks0SzFECFu0TKvPZLn9NTWwEwRkXjs1MK28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNn07YCe27BGeTYLLiXndAVrJ0xvJ1s9/IslVXZNYlzgp9zsuTwv5Mh/tilIiRvwF
-	 VH+swI/7M8x772qVHbXBS9xLHpj7GGJd4je4m9Mk+Vm/HnEZuuuSQ+Z2NFcsBuk1eo
-	 l8NuTsLhYrJqIu8Liwe+fBtijaSPaNcfU2U65pASuiE3XETRyxp8t9fDIGTtQo/Lmx
-	 IVpmigFIsGg37zjqFC9E12CvtFhWBQv8x+JwkGDOh9UE5XF/FDqAWAkkemFcJ5f76h
-	 VBYBQqY/8zkJvPd9Qj8uGyN6ZGjkfUVT41yNPNGIWEG8nvLBotUCu5YrAnu4TqKLTX
-	 mr0QhdGO1PQKw==
+	b=PXRREQsvu0SA/w1MqkpYinL/s7XJqNmze7jlwvSCtczXL8kLUj3xeHNt7LlyRGn2F
+	 5TiTZoo3iG6R8KdON5PIoTgeByWrcXH0Kl0LO2bbckQXTCT9l1LyjwiuPLQfnl2u34
+	 UI9s6kS1fftS5p6lalaYNzbOoxjd2/vCG5O05NYx/JeMdjvmY9QnycX6d+avqULL83
+	 xDYRWC+bQeFeQOZnX/DHEEPhdCXnS5eMgrXQVCzg6Q1Ub9Z4IHCRiRD0zu4yUsU79G
+	 tWjzdIeuG0jc9xx3E/tJ0sLMBSjaRg4BgmGivh95HnLm7oWL6QsVMDSprjwI9xrNS5
+	 4Oo2mYFnBgXwg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jori Koolstra <jkoolstra@xs4all.nl>,
-	Jan Kara <jack@suse.cz>,
-	syzbot+5ad0824204c7bf9b67f2@syzkaller.appspotmail.com,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Ezrak1e <ezrakiez@gmail.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 034/752] minix: Add required sanity checking to minix_check_superblock()
-Date: Sat, 28 Feb 2026 12:35:45 -0500
-Message-ID: <20260228174750.1542406-34-sashal@kernel.org>
+Subject: [PATCH 6.18 035/752] dlm: validate length in dlm_search_rsb_tree
+Date: Sat, 28 Feb 2026 12:35:46 -0500
+Message-ID: <20260228174750.1542406-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,101 +48,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jori Koolstra <jkoolstra@xs4all.nl>
+From: Ezrak1e <ezrakiez@gmail.com>
 
-[ Upstream commit 8c97a6ddc95690a938ded44b4e3202f03f15078c ]
+[ Upstream commit 080e5563f878c64e697b89e7439d730d0daad882 ]
 
-The fs/minix implementation of the minix filesystem does not currently
-support any other value for s_log_zone_size than 0. This is also the
-only value supported in util-linux; see mkfs.minix.c line 511. In
-addition, this patch adds some sanity checking for the other minix
-superblock fields, and moves the minix_blocks_needed() checks for the
-zmap and imap also to minix_check_super_block().
+The len parameter in dlm_dump_rsb_name() is not validated and comes
+from network messages. When it exceeds DLM_RESNAME_MAXLEN, it can
+cause out-of-bounds write in dlm_search_rsb_tree().
 
-This also closes a related syzbot bug report.
+Add length validation to prevent potential buffer overflow.
 
-Signed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
-Link: https://patch.msgid.link/20251208153947.108343-1-jkoolstra@xs4all.nl
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reported-by: syzbot+5ad0824204c7bf9b67f2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5ad0824204c7bf9b67f2
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Ezrak1e <ezrakiez@gmail.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/minix/inode.c | 50 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 29 insertions(+), 21 deletions(-)
+ fs/dlm/lock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/minix/inode.c b/fs/minix/inode.c
-index 32db676127a9e..7bdd240ea1584 100644
---- a/fs/minix/inode.c
-+++ b/fs/minix/inode.c
-@@ -154,10 +154,38 @@ static int minix_reconfigure(struct fs_context *fc)
- static bool minix_check_superblock(struct super_block *sb)
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index c01a291db401b..a393ecaf3442a 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -626,7 +626,8 @@ int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name, int len,
+ 			struct dlm_rsb **r_ret)
  {
- 	struct minix_sb_info *sbi = minix_sb(sb);
-+	unsigned long block;
- 
--	if (sbi->s_imap_blocks == 0 || sbi->s_zmap_blocks == 0)
-+	if (sbi->s_log_zone_size != 0) {
-+		printk("minix-fs error: zone size must equal block size. "
-+		       "s_log_zone_size > 0 is not supported.\n");
-+		return false;
-+	}
-+
-+	if (sbi->s_ninodes < 1 || sbi->s_firstdatazone <= 4 ||
-+	    sbi->s_firstdatazone >= sbi->s_nzones)
- 		return false;
- 
-+	/* Apparently minix can create filesystems that allocate more blocks for
-+	 * the bitmaps than needed.  We simply ignore that, but verify it didn't
-+	 * create one with not enough blocks and bail out if so.
-+	 */
-+	block = minix_blocks_needed(sbi->s_ninodes, sb->s_blocksize);
-+	if (sbi->s_imap_blocks < block) {
-+		printk("MINIX-fs: file system does not have enough "
-+		       "imap blocks allocated. Refusing to mount.\n");
-+		return false;
-+	}
-+
-+	block = minix_blocks_needed(
-+			(sbi->s_nzones - sbi->s_firstdatazone + 1),
-+			sb->s_blocksize);
-+	if (sbi->s_zmap_blocks < block) {
-+		printk("MINIX-fs: file system does not have enough "
-+		       "zmap blocks allocated. Refusing to mount.\n");
-+		return false;
-+	}
-+
- 	/*
- 	 * s_max_size must not exceed the block mapping limitation.  This check
- 	 * is only needed for V1 filesystems, since V2/V3 support an extra level
-@@ -277,26 +305,6 @@ static int minix_fill_super(struct super_block *s, struct fs_context *fc)
- 	minix_set_bit(0,sbi->s_imap[0]->b_data);
- 	minix_set_bit(0,sbi->s_zmap[0]->b_data);
- 
--	/* Apparently minix can create filesystems that allocate more blocks for
--	 * the bitmaps than needed.  We simply ignore that, but verify it didn't
--	 * create one with not enough blocks and bail out if so.
--	 */
--	block = minix_blocks_needed(sbi->s_ninodes, s->s_blocksize);
--	if (sbi->s_imap_blocks < block) {
--		printk("MINIX-fs: file system does not have enough "
--				"imap blocks allocated.  Refusing to mount.\n");
--		goto out_no_bitmap;
--	}
+ 	char key[DLM_RESNAME_MAXLEN] = {};
 -
--	block = minix_blocks_needed(
--			(sbi->s_nzones - sbi->s_firstdatazone + 1),
--			s->s_blocksize);
--	if (sbi->s_zmap_blocks < block) {
--		printk("MINIX-fs: file system does not have enough "
--				"zmap blocks allocated.  Refusing to mount.\n");
--		goto out_no_bitmap;
--	}
--
- 	/* set up enough so that it can read an inode */
- 	s->s_op = &minix_sops;
- 	s->s_time_min = 0;
++	if (len > DLM_RESNAME_MAXLEN)
++		return -EINVAL;
+ 	memcpy(key, name, len);
+ 	*r_ret = rhashtable_lookup_fast(rhash, &key, dlm_rhash_rsb_params);
+ 	if (*r_ret)
 -- 
 2.51.0
 
