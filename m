@@ -1,66 +1,94 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF6939449C
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 22:14:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC1223C50A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 23:41:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772316842; cv=none; b=nbgi1TizwREPGqkdf01FEyda5PwmrsDY6aftCDIzFU9Lo64lZFH6uidyLPMM6nxST/sH/nvl6fipKJ2v0SULLo/dOjJTIX21RX2lK+uv6mHCbTWgCYVyjgYd5DS4vZm1qRrMqbT1iUagZb6jfIUxWr5ibSrr/qWLiOmzjvA7DBs=
+	t=1772322093; cv=none; b=MIuUxHCZLKzf8uGTUOVevw3Klrh2vStyWBnUsdReReO6FCcrbPooNQXiznITqF7/GDniJkJgqRaSgyHlFs/trvFpva+XgKcLQqwIXLARl4SzSR7OheoDrUPtj7GwnYXzwFMud7ZwTm9DKbc4B+walfSCAt6ZH8yBWiEWBgLdRmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772316842; c=relaxed/simple;
-	bh=YmaOwhLufLLr2rHqj3svb39rppAI7BngrthP8I4DUSE=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=N9tXTsG5v086fAMgnyZv6JDBSUZgZQ4kVoPpuTN+0AUVRNSjOED2JLJkclrNs/eZ4uQ7A3fOshzxsNAYTT7dhx/vGAR0laPaDvyYrHo6XW0hmMcLwPro/MbFLnQl541bAXuUAVpJo1P93+KBlSvmD9dFZOTmQZhIPkQsn/6J9xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GwHx8FxT; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772322093; c=relaxed/simple;
+	bh=eKNZaC3XxAPvfv9hHSICGD9nR0lJKTbaPDsOeXAghxA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=WjGuB+XPyfJRoLun5VzRNRattfbs5Al9u/CyRnkeHdotdwOkqXTMrD+1mRUYJdaDYRB9MrvXwF/fWbtosR0gOVrueVkx8eMrib610qx2C/64f9PyaWnyqIbvmGDVx/xeQfP48Iay/afyksYc0ABTHdFGUvdH3j6EXNqdCjltP4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TTyJUxhH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T28USL3F; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GwHx8FxT"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8c9f6b78ca4so435037485a.0
-        for <patches@lists.linux.dev>; Sat, 28 Feb 2026 14:14:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772316840; x=1772921640; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
-         :message-id:from:references:cc:to:subject:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nr1P/0C2nV683CJOfzLd7UkpSzK419t46a/I54eghlk=;
-        b=GwHx8FxTAfUGvxT1XvmYurjc4F5gDXwTajPeI+XPDNy3aVbQixXsQxI3uM4a2ejnaQ
-         6LBgBWiIc6kWr6Ohbfc0lzLEz0fWKkrYlOdlRXoik3u8XKyl0c9Cj9SHgH8e43/zaz+q
-         LjQbTY8B0KBImaasvtoTtkaCzRlrU89dwmUgMtrMCF/gLPeMOftjH16SgnAUXe+F4GfM
-         DivzUN/LRpTRMD6vJjF0/bSHoLbDZVufnh04gpfiO+6hKKQny7pXKVdAKTkn4H3iUgw0
-         pasbC0sHJ0Gzh/+8DkKtUwJDU8IuqzxL83Y6RjPr44GejVQXNy3JqwhTbXOzp6fTJG1x
-         3+0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772316840; x=1772921640;
-        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
-         :message-id:from:references:cc:to:subject:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nr1P/0C2nV683CJOfzLd7UkpSzK419t46a/I54eghlk=;
-        b=ez0m9r8QdpK6w4xtK+A2MyKTGHF+GH6RQr/I5xMIUTC5/KNOnoSGBze+yy2Gmrx2BA
-         Uuf/0fYGoTr49/5MAOU+D7RReE0wPjYlPaBRCNzvy4nvb4mngGSVs7gtSDx+b+ccxcRH
-         UAoiiBgTsl/HLQb1ky66T00aauJDWCCaNCyYw3wX3vJ587C4isZOcyCtpFKjGouTagGw
-         LI9UEODCBuVDPAWU7mk9xGg7vWBSfXkTQolN62pbmpw40FbLIBZemE8N2Cqa5eALhG5u
-         kCpugIROTuidSAZIUQUYiPW5j5yfUhgLIdIxhsRWGXap6h0TiQxr1lZ9RxyYThvm6C5B
-         ALPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX8/VVzigQ2rm4APcyxHx0lj+bB+2p3vhM6e1wreYD5WCQjv1QevFqW6YJ7Wj0yI6Ah8qxVOBkK@lists.linux.dev
-X-Gm-Message-State: AOJu0YxDMxFzLKOwlgdByf2eYum+LdNdMLs/nuxGnWu8aU5O5vVBYm1w
-	uJ4hVHkoydGKFcxNUAT3vAmcPNpEKQmobOwfr16R8xhmLq0PJm6jGFE=
-X-Gm-Gg: ATEYQzw2Jw88dXlQ9F6sZEmtJBsHtrCvyIlrJOgwn87+A+u+UWvO+8t+ZC4pHjte6zJ
-	PmTnjPTaAuzNeYHVaFj6VT9ks6mDkAGM9MPoYC+yVJJjX68dF63eolCy9GEiOytiQIrzE7IpTem
-	ijfO6Cw7PxTa7yXFLmsm0BD+ZG88wCOfFuZOoHB0mTcnJrWZRg0FJMk0qix0kAucCmKT5M7jS7W
-	MH2QSrfOExHRzAf7eh5Cg3X3Y2oYi0sYBYgaeWjCOUCgGU2RLGA2W1gi0GnH1chaTiCCzaKijfn
-	eiid/hnRcbiFRfMigNbNfst3hm+pGjmmsLyIgX28lVOpeIiCD6WcTGfYttwhnLgDwYJLgILLlSV
-	0yEJbr3G6ok9X1Y1GyffFckRt8vVWe4Kx64dt6qxg87da/hTCMOKVX2VDA2RxGCrRe7OzjW6OG1
-	bsv+VvrUd6xHp7+IM+O/9YazFR7I7yfL2X4aRfnBMlwN53r+3YRUg=
-X-Received: by 2002:a05:620a:7118:b0:8cb:4059:a90d with SMTP id af79cd13be357-8cbc8e50bf3mr964752285a.38.1772316839779;
-        Sat, 28 Feb 2026 14:13:59 -0800 (PST)
-Received: from [120.7.1.23] (135-23-93-252.cpe.pppoe.ca. [135.23.93.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf68a0fbsm778891485a.22.2026.02.28.14.13.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Feb 2026 14:13:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TTyJUxhH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T28USL3F"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id BE1841D00125;
+	Sat, 28 Feb 2026 18:41:29 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sat, 28 Feb 2026 18:41:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1772322089;
+	 x=1772408489; bh=uuZmFrv9AWrdMZr6yL+vBRfXbPdj+HVHSytH9DSa6UM=; b=
+	TTyJUxhH/Uvh8u17qdw6UZhvOc3PBy/Vx3qz8rhh5j1v5p9JYc24QrWOvmOk2wLt
+	Zsnrlobv0Ucsvw5FU8fSyC8iVqExXUTx+DL6hDXhOSZy4xndQY/npjrOJKFWcXl+
+	Jvyzii7N5KKxU6+gx64cK9LXFFoLrACmgEJDZEmp+6sO/8NV+GuqpiYmwkzCPPyB
+	PGzg9Nmd5evj0noL06DlDvmVrMhLsnu2PWg4TpzkdO1c34RCC53WGvy7EfOe9ZXI
+	4Lcwy4eWoKq54FDgAWlExbcZAOwiJdfnE6mLTFzhgla7ZqJITzIvjP8YwfgsxiH7
+	y+bYZRQo55VTOjBXU3d1Tw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772322089; x=
+	1772408489; bh=uuZmFrv9AWrdMZr6yL+vBRfXbPdj+HVHSytH9DSa6UM=; b=T
+	28USL3FX9gih0C7TrRhO2eWaJP/ryjuyG6HFwoCUbuS0uz7EO0r+oyqKVJwjDxuV
+	yD1nTqSrwKxcs/f6LFsxYfjW9xbWP6Yk/Xdimh9V1JAefG/ml30gW3+/j0S3ka4t
+	5bZWr0+y6lafBrhZ0YdHtGs9F9N6B2QYmwxcc0N/anbxDOkXtmhiubtc+vDOmZ5U
+	A3GQkDfiOoSZqH6/jBWszPWfpJ5eeKoCNPop7nMjAkp9U1LTpTUiGHpux5P7ROfD
+	L2Ick7iFM0GaI9OBVVa2otHlAiLoPj80KOgz+w5ZPCSkWx9FRwb8Iv87pQpMKon3
+	Asu8576MUUpoaro5+3J2Q==
+X-ME-Sender: <xms:KH2jaV8VtC7gjFmKj_ooiXoCV8J-9oDqHG-yErK_J19oyaau_ckQ9g>
+    <xme:KH2jaaI64d7AOfKvSvGz9jjxZBV8kbR-28n_zih72FpootCwn1lu8Q4KnomJq3Bk-
+    wm0Q3IL1n3CF7q9Xr4bwBoWPjmOGYo45fVvG_lEU3Fk6-2LjyBWbbaT>
+X-ME-Received: <xmr:KH2jaYfGqZ7Mw-u4bNeEJrCiQkAa5_WXBcNeFlLKXfN6vypQ9KerPhfSXKYW6W5W4rly59mKZgR0giGsAuW4-S__KjIz9A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheefvdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepkfffgggfhffuvfevfhgjtgfgsehtkeertddtvdejnecuhfhrohhmpedfuegrrhhr
+    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeeiffefteetgeehueetvdfhvdduvdetueeivdeiudduhffhfffhveeg
+    ueegheduudenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopedvvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epthgvrhhrrghluhhnrgeljeejsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhifrghr
+    shhofiesghhmgidruggvpdhrtghpthhtohepshgrshhhrghlsehkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehsthgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphht
+    thhopehprghttghhvghssehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtohepth
+    horhhvrghlughssehlihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthho
+    pegrkhhpmheslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhg
+X-ME-Proxy: <xmx:KH2jaXYoU0MxIoIrnDC1wNIOhuztZWY50Mh-X5V-iIJMDlAqlEEPjw>
+    <xmx:KH2jaeC2QfmDqthVOmMvMA1f-NcZ3q9Rwz_KUv-Ji5izt46Ws1vtEg>
+    <xmx:KH2jaaIkkRc_kaNThpffKCpHEYUj8-oxDu0ECh13krH_tRjzECPn3Q>
+    <xmx:KH2jaVoK0BdpxCOygcTHUHgBkjvXRfvWjPpYYTQuYp4KEDmiSP0Qnw>
+    <xmx:KX2jaUb9Kxm442sydkT-7jYbCeVan-KuP-4Dcc7B260FJWTbM35IEvBx>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 28 Feb 2026 18:41:26 -0500 (EST)
+Message-ID: <2a740a8d-e5f8-4922-bd2b-04bc76893bbc@pobox.com>
+Date: Sat, 28 Feb 2026 15:41:25 -0800
+Precedence: bulk
+X-Mailing-List: patches@lists.linux.dev
+List-Id: <patches.lists.linux.dev>
+List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: "Barry K. Nathan" <barryn@pobox.com>
 Subject: Re: [PATCH 6.19 000/844] 6.19.6-rc1 review
-To: Ronald Warsow <rwarsow@gmx.de>, Sasha Levin <sashal@kernel.org>,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
+To: Woody Suwalski <terraluna977@gmail.com>, Ronald Warsow <rwarsow@gmx.de>,
+ Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
 Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
@@ -70,50 +98,95 @@ Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev,
  sr@sladewatkins.com
 References: <20260228173244.1509663-1-sashal@kernel.org>
  <601576c7-970a-4e9d-af5e-c818740be8e8@gmx.de>
-From: Woody Suwalski <terraluna977@gmail.com>
-Message-ID: <879487cc-c667-8cc6-4775-02c7de3b8c27@gmail.com>
-Date: Sat, 28 Feb 2026 17:13:59 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101
- Firefox/128.0 SeaMonkey/2.53.23
-Precedence: bulk
-X-Mailing-List: patches@lists.linux.dev
-List-Id: <patches.lists.linux.dev>
-List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-In-Reply-To: <601576c7-970a-4e9d-af5e-c818740be8e8@gmx.de>
+ <879487cc-c667-8cc6-4775-02c7de3b8c27@gmail.com>
+Content-Language: en-US
+In-Reply-To: <879487cc-c667-8cc6-4775-02c7de3b8c27@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Ronald Warsow wrote:
-> On 28.02.26 18:18, Sasha Levin wrote:
+On 2/28/26 14:13, Woody Suwalski wrote:
+> Ronald Warsow wrote:
+>> On 28.02.26 18:18, Sasha Levin wrote:
+>>>
+>>> This is the start of the stable review cycle for the 6.19.6 release.
+>>> There are 844 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>
+>>> Responses should be made by Mon Mar  2 05:32:25 PM UTC 2026.
+>>> Anything received after that time might be too late.
+>>>
+>>> The whole patch series can be found in one patch at:
+>>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable- 
+>>> rc.git/patch/?id=linux-6.19.y&id2=v6.19.5
+>>> or in the git tree and branch at:
+>>> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable- 
+>>> rc.git linux-6.19.y
+>>> and the diffstat can be found below.
+>>>
 >>
->> This is the start of the stable review cycle for the 6.19.6 release.
->> There are 844 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
+>> It would be nice to have a download link to an patch-*.gz what Greg 
+>> usually provides.
 >>
->> Responses should be made by Mon Mar  2 05:32:25 PM UTC 2026.
->> Anything received after that time might be too late.
+>> ron
 >>
->> The whole patch series can be found in one patch at:
->> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-6.19.y&id2=v6.19.5
->> or in the git tree and branch at:
->> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git 
->> linux-6.19.y
->> and the diffstat can be found below.
->>
->
-> It would be nice to have a download link to an patch-*.gz what Greg 
-> usually provides.
->
-> ron
->
-I second this request. Trying to setup a build for  5.10.252-rc1 was 
-tricky...
-We need something similar to
+> I second this request. Trying to setup a build for  5.10.252-rc1 was 
+> tricky...
+> We need something similar to
+> 
+> https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/ 
+> patch-5.10.251-rc1.gz
+> 
+> Thanks, Woody
 
-https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.251-rc1.gz
+I didn't find things particularly difficult for 5.10.252-rc1 through
+6.12.75-rc1 (the "hardest" part was renaming the file after each
+download), but I get this while trying to apply the patches for
+6.18.16-rc1/6.19.6-rc1:
 
-Thanks, Woody
 
+patching file arch/powerpc/platforms/pseries/msi.c
+patching file arch/x86/kvm/x86.c
+(Patch is indented 2 spaces.)
+can't find file to patch at input line 41896
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|--
+|cgit 1.2.3-korg
+|
+|
+|From 1d0d76474aeadb174d9fbd27b9f2e9b5cfc124c6 Mon Sep 17 00:00:00 2001
+|From: Sean Christopherson <seanjc@google.com>
+|Date: Tue, 16 Dec 2025 08:17:54 -0800
+|Subject: KVM: nSVM: Remove a user-triggerable WARN on nested_svm_load_cr3()
+| succeeding
+|
+|[ Upstream commit fc3ba56385d03501eb582e4b86691ba378e556f9 ]
+|
+|Drop the WARN in svm_set_nested_state() on nested_svm_load_cr3() failing
+|as it is trivially easy to trigger from userspace by modifying CPUID after
+|loading CR3.  E.g. modifying the state restoration selftest like so:
+|
+|  --- tools/testing/selftests/kvm/x86/state_test.c
+|  +++ tools/testing/selftests/kvm/x86/state_test.c
+--------------------------
+File to patch:
+
+
+As it turns out, GNU patch (v2.7.6 on Debian 12 bookworm, or v2.8 on
+Debian 13 trixie, I tested both) is misinterpreting part of the commit
+comment for vm-nsvm-remove-a-user-triggerable-warn-on-nested_sv.patch
+and trying to apply that part of the commit description as a patch.
+
+Pressing Enter twice at this prompt causes patch to skip this
+incorrectly detected hunk, and all of the actual patches end up being
+applied correctly, but it's still an unexpected surprise and I had to
+stop and figure out what was going on.
+
+With the way the stable rc patches are usually posted on kernel.org,
+the patch file would've omitted the commit comments, thus avoiding
+this problem.
+
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
