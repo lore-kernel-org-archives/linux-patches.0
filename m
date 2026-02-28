@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC67736C9D3
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED8236C9D2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302207; cv=none; b=pO0WWNFglVhxjokDJVETk1yzii9jif4AVxeb6q+ZfrKfFNQjGFyPB2MCe5u6yWKgL+ctGhyBLqIy055PzT7XslRt4Nq2XfLgRubU7WqMKjIN6YKHkzaaILluPgrqohI6M0XagY3oz22aB0imZbBfBbBnXFaGyJfyLiY1F31c+bM=
+	t=1772302208; cv=none; b=sQyu2BotrNL4njfX6U0ZXnsy2wsvVDTP+0ii+z9MqReYdHPtbozPAgFa12iDoUUL4sV2KbyQYMlKNcTUIZBALW9BZjy2i4xRnDh5wT62A4fWFIr6xuoNsq4c3wOHfYVONJpUnpcJUFvL4Hpt/Z0iLAM5pWnqr9vjQY0p9fEZyKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302207; c=relaxed/simple;
-	bh=DNB9Q3TSsITaraF82B6N1G1tr7RXR7YoCOZkw4CrsJA=;
+	s=arc-20240116; t=1772302208; c=relaxed/simple;
+	bh=EYZsd6zmLSGisQ/GNH6zj5iIUpORF0C0pwELmW9QNNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zak6N8J6my/HcajznGO0BpGLpzdtHWbQhbx3gRhZimK7MOq4ne4yA2yfT38X+eaRMu6MCQ7BXMhZ9P4bczgeOU4ks2WTz9IR5nBDHy4N8Iew8H0b4Z7NUyPGoc7iqLq9WJIHKkJL/pIXyxqYIaJeuahtAropWUyZpU9Vri0N8GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oft0exEI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UkkfcYPTCeC6F3V6HHyMSwTDtP9AN3dJL1ILCYyE1+it2dOVuuVQ4iWs4oEyp+TdIMHPUOkczmopiRS4o1ugzOrGogrFz7WI56NPBPXXZQ3JZl3pKiud1Sy7WPONo6Ds+KdTLuZ+lxF6M4OpCpn4bT8W5oL4OkFeCHgpPYNbm1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k+Rsx8+8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oft0exEI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A31C19424;
-	Sat, 28 Feb 2026 18:10:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k+Rsx8+8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2900C19423;
+	Sat, 28 Feb 2026 18:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302207;
-	bh=DNB9Q3TSsITaraF82B6N1G1tr7RXR7YoCOZkw4CrsJA=;
+	s=k20201202; t=1772302208;
+	bh=EYZsd6zmLSGisQ/GNH6zj5iIUpORF0C0pwELmW9QNNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oft0exEI/GBXvZ2ruTyM/VVduelpkzxMh4ErJ8nwJw/aADrwu26r6Y2xJ+HqvzAIB
-	 lKO+ekQOOmCeIGeWcgNT+oL2ZFYcBE+NsZxjjAuaA6W0/I61/WHtTjYG7I2vxKk6PE
-	 pOgT405xp4Ij+K+FJFtoonMrzXBLnB3cc0KB3IWo78sN4zX39H7OAfQtEIdabTHCwl
-	 gBwj5ac0UkJgB5JM0GuiGAsgfZNN2paoHyjwe0t9G2Rgwpkc1mGDtgJV5HzsMsS5p0
-	 y3ieLdtaNnuZ/qfSMPqAkEeFVUuijwkJ+fZVPZz9yfliAZMldamyQJFfKoizfc+rWo
-	 VAoPqO/B/jWhA==
+	b=k+Rsx8+8V1lrtLhtRPV9JtGe5oqPzCwG0tFszwtE6W3Rnfwu87PLmHLV+ylrRu7Lh
+	 bLRh9rOVBybFWnO0+obdS+sDIuurgEWc70IACWOaOkoRDuEN6Nd0Ak+6IflpN9rHUE
+	 wqyu1Uw9iq4TR/bUmQGhAJmVdtVAOqbMCaFr60TlWwJ9Ave92U85yExF7w4ALJATY3
+	 Z2xvTRjEehxqW23eecALSHAu6691NHaM5/XRJCRmllMdh5hplrUhAVtURDu4a9Vgu/
+	 21ysVcQcpUeK9X9mxMRehBbXeYpO5k7VgVYe4s9HIZHiI2lS/6OvxuXFn1/D128QCW
+	 88SrFXA+BrqPw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
+Cc: Taniya Das <taniya.das@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 213/283] clk: qcom: gcc-sm8550: Use floor ops for SDCC RCGs
-Date: Sat, 28 Feb 2026 13:05:55 -0500
-Message-ID: <20260228180709.1583486-213-sashal@kernel.org>
+Subject: [PATCH 6.6 214/283] clk: qcom: rcg2: compute 2d using duty fraction directly
+Date: Sat, 28 Feb 2026 13:05:56 -0500
+Message-ID: <20260228180709.1583486-214-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -45,57 +43,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit 1c06e3956054fb5a0930f07b02726b1774b6c700 ]
+[ Upstream commit d6205a1878dd4cc9664c4b4829b68a29c0426efc ]
 
-In line with commit a27ac3806b0a ("clk: qcom: gcc-sm8450: Use floor ops
-for SDCC RCGs") done to fix issues with overclocked SD cards on SM8450
-powered boards set floor clock operations for SDCC RCGs on SM8550.
+The duty-cycle calculation in clk_rcg2_set_duty_cycle() currently
+derives an intermediate percentage `duty_per = (num * 100) / den` and
+then computes:
 
-This change fixes initialization of some SD cards, where the problem
-is manifested by the SDHC driver:
+    d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
 
-    mmc0: Card appears overclocked; req 50000000 Hz, actual 100000000 Hz
-    mmc0: error -110 whilst initialising SD card
+This introduces integer truncation at the percentage step (division by
+`den`) and a redundant scaling by 100, which can reduce precision for
+large `den` and skew the final rounding.
 
-Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251124212012.3660189-2-vladimir.zapolskiy@linaro.org
+Compute `2d` directly from the duty fraction to preserve precision and
+avoid the unnecessary scaling:
+
+    d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+
+This keeps the intended formula `d ≈ n * 2 * (num/den)` while performing
+a single, final rounded division, improving accuracy especially for small
+duty cycles or large denominators. It also removes the unused `duty_per`
+variable, simplifying the code.
+
+There is no functional changes beyond improved numerical accuracy.
+
+Fixes: 7f891faf596ed ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260105-duty_cycle_precision-v2-1-d1d466a6330a@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8550.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/clk-rcg2.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index b30ece62216f7..3e5ce6fa68058 100644
---- a/drivers/clk/qcom/gcc-sm8550.c
-+++ b/drivers/clk/qcom/gcc-sm8550.c
-@@ -1025,7 +1025,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.parent_data = gcc_parent_data_9,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_9),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index fae1c07982aba..658d2ee7aacff 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -434,7 +434,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+-	u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
++	u32 notn_m, n, m, d, not2d, mask, cfg;
+ 	int ret;
  
-@@ -1048,7 +1048,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
+ 	/* Duty-cycle cannot be modified for non-MND RCGs */
+@@ -453,10 +453,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
  
+ 	n = (~(notn_m) + m) & mask;
+ 
+-	duty_per = (duty->num * 100) / duty->den;
+-
+ 	/* Calculate 2d value */
+-	d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
++	d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+ 
+ 	/*
+ 	 * Check bit widths of 2d. If D is too big reduce duty cycle.
 -- 
 2.51.0
 
