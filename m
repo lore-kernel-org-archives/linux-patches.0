@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC450313E31
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8863E340A59
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301102; cv=none; b=KwhzeLxgcbWUPfwCx+a/hdvlDz4r+rNUXXU4QikmajzxYK9KK/RMfe4TqqvH6IqKd6rM9UVeCHzY4q1BkFIGesCnc4i2SRH6XfRU6Fy1eFR9VX8fMASVRy3nI5AmI7CgWC4IpeycVecfyS9hBCjumXkwVOo4p3JdxBz1V/rIhlI=
+	t=1772301103; cv=none; b=Viik+0y9Rw4sf3xgMGiqdD8GAoa8ifF7rZoBmvhtIhteJQ3C3iFoITlYPyJ4ZM0jIqnv84wtKpa/+98oUo190aZHgCHZY/LkWvxbXTLetZVfscRARAtQqYuk+xXayh52aTq4gGWYBmHphVaMdPVpkJAkN+ba9kBmNo4Ynz8b1IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301102; c=relaxed/simple;
-	bh=vGkaU8DRRlH5wnHokma/+c94Vb7tTBWsHsJNxRH2A+Y=;
+	s=arc-20240116; t=1772301103; c=relaxed/simple;
+	bh=bJq2LZ/QHMgMd9+Pf3DGjsGyDKmiuUdJu/6wChtH6Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbmolknTvs3VtGIIBwXQCVORE+ldXSLHLOnoy+VwjQGsW26rsi8+br39iObgEesDZ6mirx4iHgk0ed+NnyijwsL2i1kHsvzJOGVQ/gAHxJTw79T/Gw0RN8liDfeUHouS0KocR+Hmc+MK4lApemfxhyqTb1KfXNYOrgNfW3nVWjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mQVR+71T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YyiH3/xPXo+otnJWsl7RCATntZnvtxRS00UIaG8d6v39dujiZT6jR9erqmV/85ddtkigvcG9740BCw0dR5dcwaIEcmzjw7p+xMe3UZ6aJG5+rk/XrVsjlJs4+wk43gcirkeI3DAE9p87vdM52D5Ty0KYRCbjXrHCKGAp5tnNrKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1ep2yzh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mQVR+71T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7F2C19423;
-	Sat, 28 Feb 2026 17:51:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1ep2yzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB271C116D0;
+	Sat, 28 Feb 2026 17:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301102;
-	bh=vGkaU8DRRlH5wnHokma/+c94Vb7tTBWsHsJNxRH2A+Y=;
+	s=k20201202; t=1772301103;
+	bh=bJq2LZ/QHMgMd9+Pf3DGjsGyDKmiuUdJu/6wChtH6Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQVR+71TUXrMhchRVzIHc/knpaV9QryBRaxcfxsW1xID3k/mz8a3W8/W5VdStNpwp
-	 sl4FUWZKkWjkiib8BX1jl9huwWbW3BeOVqIzebNmZhZRey8klmagprk6mm2NswRIM1
-	 H/C5zL3T/VGKR+Y57/wQ6gAth0o/BeU8smBkosvW3THx8DUICZLYv9W6HJ6d1plA0f
-	 16Dks9aywp32W7uVtZHrLMlwVKl2qLieuDITjTs2nFx73FaKRtterWGRS91A2wxNKr
-	 6xzgSEuBTYh28DIeGNeg91+AFQwhtiOcgUBzTKIWbUe5F2OweZbhREzx30nmYWwk2c
-	 jyWXdap8v6NAQ==
+	b=Q1ep2yzhoaTHBV5pvwcEVDfhKPSThBIe6/gJEUmFLLC1iuKcY/8/SoJQ4m+Wpz22N
+	 Aj7OBXYVlexKdiwSYsHAKxKNUu6CT4ixD7ZvD+YrUJ37f9Wy9JBbyxcgRb/evfB7/K
+	 /wB0kBR7TmWYrvFkJWTMAScc08yCJ+iT79PLPSN7JIp3BkFs5i7nDSobic3v2narA4
+	 WbMLtPGuYqxjiiniK8zATzXTRtyW4hLaATfJqkPSXVH7RPGGZ2MB1EJNHshBBRLo3q
+	 322MOtX4pyP9bA9iuwHV5sdZHHGJrdTqFeN+WgLuHuItYmGsqUMUINjGCC4d2pjBC5
+	 sUG4cp8/sbodg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Frank Li <Frank.Li@nxp.com>,
+Cc: Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 255/752] PCI: imx6: Add CLKREQ# override to enable REFCLK for i.MX95 PCIe
-Date: Sat, 28 Feb 2026 12:39:26 -0500
-Message-ID: <20260228174750.1542406-255-sashal@kernel.org>
+Subject: [PATCH 6.18 256/752] wifi: iwlwifi: mld: Handle rate selection for NAN interface
+Date: Sat, 28 Feb 2026 12:39:27 -0500
+Message-ID: <20260228174750.1542406-256-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,86 +47,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 27a064aba2da6bc58fc36a6b8e889187ae3bf89d ]
+[ Upstream commit dbbeebece03050cd510073ce89fee83844e06b00 ]
 
-The CLKREQ# is an open drain, active low signal that is driven low by
-the card to request reference clock. It's an optional signal added in
-PCIe CEM r4.0, sec 2. Thus, this signal wouldn't be driven low if it's
-not exposed on the slot.
+Frames transmitted over a NAN interface might not have channel
+information assigned to them. In such cases assign the lowest
+OFDM to the frame.
 
-On the i.MX95 EVK board, REFCLK to the host and endpoint is gated by this
-CLKREQ# signal. So if the CLKREQ# signal is not driven by the endpoint, it
-will gate the REFCLK to host too, leading to operational failure.
-
-Hence, enable the REFCLK on this SoC by enabling the CLKREQ# override using
-imx95_pcie_clkreq_override() helper during probe. This override should only
-be cleared when the CLKREQ# signal is exposed on the slot.
-
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-[mani: reworded description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20251015030428.2980427-11-hongxing.zhu@nxp.com
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251110180612.72046f98f878.Ib784931fffd0747acd9d7bb22eabbbec5282733e@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mld/tx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 4668fc9648bff..34f8f69ddfae9 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -52,6 +52,8 @@
- #define IMX95_PCIE_REF_CLKEN			BIT(23)
- #define IMX95_PCIE_PHY_CR_PARA_SEL		BIT(9)
- #define IMX95_PCIE_SS_RW_REG_1			0xf4
-+#define IMX95_PCIE_CLKREQ_OVERRIDE_EN		BIT(8)
-+#define IMX95_PCIE_CLKREQ_OVERRIDE_VAL		BIT(9)
- #define IMX95_PCIE_SYS_AUX_PWR_DET		BIT(31)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/tx.c b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
+index 3b4b575aadaa5..e3fb4fc4f452e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
+@@ -345,6 +345,11 @@ u8 iwl_mld_get_lowest_rate(struct iwl_mld *mld,
  
- #define IMX95_PE0_GEN_CTRL_1			0x1050
-@@ -706,6 +708,22 @@ static int imx7d_pcie_enable_ref_clk(struct imx_pcie *imx_pcie, bool enable)
- 	return 0;
- }
+ 	iwl_mld_get_basic_rates_and_band(mld, vif, info, &basic_rates, &band);
  
-+static void imx95_pcie_clkreq_override(struct imx_pcie *imx_pcie, bool enable)
-+{
-+	regmap_update_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_1,
-+			   IMX95_PCIE_CLKREQ_OVERRIDE_EN,
-+			   enable ? IMX95_PCIE_CLKREQ_OVERRIDE_EN : 0);
-+	regmap_update_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_1,
-+			   IMX95_PCIE_CLKREQ_OVERRIDE_VAL,
-+			   enable ? IMX95_PCIE_CLKREQ_OVERRIDE_VAL : 0);
-+}
++	if (band >= NUM_NL80211_BANDS) {
++		WARN_ON(vif->type != NL80211_IFTYPE_NAN);
++		return IWL_FIRST_OFDM_RATE;
++	}
 +
-+static int imx95_pcie_enable_ref_clk(struct imx_pcie *imx_pcie, bool enable)
-+{
-+	imx95_pcie_clkreq_override(imx_pcie, enable);
-+	return 0;
-+}
-+
- static int imx_pcie_clk_enable(struct imx_pcie *imx_pcie)
- {
- 	struct dw_pcie *pci = imx_pcie->pci;
-@@ -1913,6 +1931,7 @@ static const struct imx_pcie_drvdata drvdata[] = {
- 		.core_reset = imx95_pcie_core_reset,
- 		.init_phy = imx95_pcie_init_phy,
- 		.wait_pll_lock = imx95_pcie_wait_for_phy_pll_lock,
-+		.enable_ref_clk = imx95_pcie_enable_ref_clk,
- 	},
- 	[IMX8MQ_EP] = {
- 		.variant = IMX8MQ_EP,
-@@ -1969,6 +1988,7 @@ static const struct imx_pcie_drvdata drvdata[] = {
- 		.core_reset = imx95_pcie_core_reset,
- 		.wait_pll_lock = imx95_pcie_wait_for_phy_pll_lock,
- 		.epc_features = &imx95_pcie_epc_features,
-+		.enable_ref_clk = imx95_pcie_enable_ref_clk,
- 		.mode = DW_PCIE_EP_TYPE,
- 	},
- };
+ 	sband = mld->hw->wiphy->bands[band];
+ 	for_each_set_bit(i, &basic_rates, BITS_PER_LONG) {
+ 		u16 hw = sband->bitrates[i].hw_value;
 -- 
 2.51.0
 
