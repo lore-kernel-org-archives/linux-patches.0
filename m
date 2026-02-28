@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655B835AC06
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A19235AC06
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302734; cv=none; b=uovSBk6IWhv+TDM/14Ba5TzEEJEkEqfHOkAWB5uIjWbGIbmOrGp9PQnCAoojeBoGuMnSR+V7qP9tO59X7VOtCf+4zjOj/lfnrJV0yVe12rtj0R1bjTpRpRWS0xiGc4McfCq5DBl/Z3eBhDM9+D4qSsCSTznJBa4Vt3mSRlBoWTQ=
+	t=1772302735; cv=none; b=nRyhLD138QlpjciyJY4UhH8ALOJP8zZF/8uvHQtAx5216Z0l61fHFfJhoj4a2Rn5jlI6WggTkNTxDzQcCaK1T0e1b2JSQ2bOvwfXCYvLxZ7x8BMY/1886Ju2DTxnM0UbJcwpEPqMpK0CRZp30ZxPjCwmlY0Rl5ea2TkofiYvQzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302734; c=relaxed/simple;
-	bh=yWCE/NI+m1d+ML6l9F2mZxDfFziUjzBlg9vZEMowvbA=;
+	s=arc-20240116; t=1772302735; c=relaxed/simple;
+	bh=sYTykIP+vV73L91zQ0FRWdt59/Q+1N3bIweKOPjurwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nD5BnIVFuL98azhtjb2DW4U2JbdZWlTu16SocGOvdrnF5UK94RQ7M7cuTikf5IbYjBzqMeF9ikUdgJK2UYb23pR6kLcms4tlpUUkEwRoLC8lMZH9ePpeRu/RCYvL5HySPlycaMV/0K4Xy7RMQET2rOUbOLWnYiCM8yZGmRBhcyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nVMUtFSE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s2xhOSyMzgrNRqu27+zqJphR/Chj6EOsrlP/hqkrcBWn7kDi+jvan1xE5H7FPhhVlbq/NPdDB/+vvthW8bS/HO3BJz2ZN0yb9c0nkkcbz+RaeAmquivlwYb5RhDuHrv4zvpUDtYnPUtAwCm2Vk4+PajhM2BLu/P3RYm4EQvjPg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XI3XCnLl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nVMUtFSE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D7CC116D0;
-	Sat, 28 Feb 2026 18:18:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XI3XCnLl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBD2C19423;
+	Sat, 28 Feb 2026 18:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302734;
-	bh=yWCE/NI+m1d+ML6l9F2mZxDfFziUjzBlg9vZEMowvbA=;
+	s=k20201202; t=1772302735;
+	bh=sYTykIP+vV73L91zQ0FRWdt59/Q+1N3bIweKOPjurwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nVMUtFSESasaGLCu7QZtTrhUiLsBdZB1RICgtWMJbtS+I4WYy4Jyrw6iCxCrgluc1
-	 1NhiDXc/Wiqh+Zkel3qUjVpv46omil0wfwTI6cHGa6oxL69if6UOr6nx92UU3hGxGf
-	 AwmSbk1iL26qpZSWXCwJxw3GUDG4rT3/cbQK8sPmINiqIwoOr7uvL/+U3muDv1jCZ3
-	 eLx14chfBYeoM6wikCpbaQOg8/WzcUwmkq7rCsKDxIDOzYfVPJBHKTnhSXlKJUo54N
-	 LHb0ZqeEqAGdhnjByYabUSMHgr51LRXkH2Iy+QjQCLKdHiSBbVoKY41bHAYM/4i5UB
-	 JUnDl+8VRxPdQ==
+	b=XI3XCnLlh39uBLGKbXfrWk8kf0FQgn8aBIv+PwF22RuexhRYjwlPUEjqr4pfLhV1H
+	 tPX+iED7Ruv+yeZzYds8pMi8djbWDUpviuORjrLBRrCn+ChvHlOk8m8dkckCLV/qhw
+	 Kpa0fxn/e6qakLn7/E7TZf71w7dsCdFjo6QC+U4Ujp96kchAwOzFgHM2rfFQVmhxWX
+	 bB84TAzH5AbAy4Kg7diq/wHO2KCHT06gty2x+/kmpimuX1/gRAhg7gJNnKt/Ffg+Tf
+	 fhKDyQrL0MjG2Xs2dwT+UofCgTCA0Rpe3ccSe/2QFJipQ7mJ9p9yK7h55xQhmqXYki
+	 UWxQlJ+WwzC3w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Paul Cercueil <paul@crapouillou.net>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: "Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Lars Francke <lars.francke@gmail.com>,
+	Yijun Shen <Yijun.Shen@Dell.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/147] PM: core: Add new *_PM_OPS macros, deprecate old ones
-Date: Sat, 28 Feb 2026 13:16:45 -0500
-Message-ID: <20260228181736.1605592-97-sashal@kernel.org>
+Subject: [PATCH 5.10 098/147] crypto: ccp - Add an S4 restore flow
+Date: Sat, 28 Feb 2026 13:16:46 -0500
+Message-ID: <20260228181736.1605592-98-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181736.1605592-1-sashal@kernel.org>
 References: <20260228181736.1605592-1-sashal@kernel.org>
@@ -44,199 +47,168 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Paul Cercueil <paul@crapouillou.net>
+From: "Mario Limonciello (AMD)" <superm1@kernel.org>
 
-[ Upstream commit 1a3c7bb088266fa2db017be299f91f1c1894c857 ]
+[ Upstream commit 0ba2035026d0ab6c7c7e65ad8b418dc73d5700d9 ]
 
-This commit introduces the following macros:
+The system will have lost power during S4.  The ring used for TEE
+communications needs to be initialized before use.
 
-SYSTEM_SLEEP_PM_OPS()
-LATE_SYSTEM_SLEEP_PM_OPS()
-NOIRQ_SYSTEM_SLEEP_PM_OPS()
-RUNTIME_PM_OPS()
-
-These new macros are very similar to their SET_*_PM_OPS() equivalent.
-They however differ in the fact that the callbacks they set will always
-be seen as referenced by the compiler. This means that the callback
-functions don't need to be wrapped with a #ifdef CONFIG_PM guard, or
-tagged with __maybe_unused, to prevent the compiler from complaining
-about unused static symbols. The compiler will then simply evaluate at
-compile time whether or not these symbols are dead code.
-
-The callbacks that are only useful with CONFIG_PM_SLEEP is enabled, are
-now also wrapped with a new pm_sleep_ptr() macro, which is inspired from
-pm_ptr(). This is needed for drivers that use different callbacks for
-sleep and runtime PM, to handle the case where CONFIG_PM is set and
-CONFIG_PM_SLEEP is not.
-
-This commit also deprecates the following macros:
-
-SIMPLE_DEV_PM_OPS()
-UNIVERSAL_DEV_PM_OPS()
-
-And introduces the following macros:
-
-DEFINE_SIMPLE_DEV_PM_OPS()
-DEFINE_UNIVERSAL_DEV_PM_OPS()
-
-These macros are similar to the functions they were created to replace,
-with the following differences:
-
- - They use the new macros introduced above, and as such always
-   reference the provided callback functions.
-
- - They are not tagged with __maybe_unused. They are meant to be used
-   with pm_ptr() or pm_sleep_ptr() for DEFINE_UNIVERSAL_DEV_PM_OPS()
-   and DEFINE_SIMPLE_DEV_PM_OPS() respectively.
-
- - They declare the symbol static, since every driver seems to do that
-   anyway; and if a non-static use-case is needed an indirection pointer
-   could be used.
-
-The point of this change, is to progressively switch from a code model
-where PM callbacks are all protected behind CONFIG_PM guards, to a code
-model where the PM callbacks are always seen by the compiler, but
-discarded if not used.
-
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 0ba2035026d0 ("crypto: ccp - Add an S4 restore flow")
+Fixes: f892a21f51162 ("crypto: ccp - use generic power management")
+Reported-by: Lars Francke <lars.francke@gmail.com>
+Closes: https://lore.kernel.org/platform-driver-x86/CAD-Ua_gfJnQSo8ucS_7ZwzuhoBRJ14zXP7s8b-zX3ZcxcyWePw@mail.gmail.com/
+Tested-by: Yijun Shen <Yijun.Shen@Dell.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://patch.msgid.link/20260116041132.153674-4-superm1@kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pm.h | 74 +++++++++++++++++++++++++++++++---------------
- 1 file changed, 50 insertions(+), 24 deletions(-)
+ drivers/crypto/ccp/psp-dev.c | 11 +++++++++++
+ drivers/crypto/ccp/sp-dev.c  | 12 ++++++++++++
+ drivers/crypto/ccp/sp-dev.h  |  3 +++
+ drivers/crypto/ccp/sp-pci.c  | 16 +++++++++++++++-
+ drivers/crypto/ccp/tee-dev.c |  5 +++++
+ drivers/crypto/ccp/tee-dev.h |  1 +
+ 6 files changed, 47 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/pm.h b/include/linux/pm.h
-index 5ac2c9ba5baf7..b4974dc837032 100644
---- a/include/linux/pm.h
-+++ b/include/linux/pm.h
-@@ -301,47 +301,59 @@ struct dev_pm_ops {
- 	int (*runtime_idle)(struct device *dev);
+diff --git a/drivers/crypto/ccp/psp-dev.c b/drivers/crypto/ccp/psp-dev.c
+index 4bf9eaab4456f..61f5302e7cf1a 100644
+--- a/drivers/crypto/ccp/psp-dev.c
++++ b/drivers/crypto/ccp/psp-dev.c
+@@ -251,6 +251,17 @@ struct psp_device *psp_get_master_device(void)
+ 	return sp ? sp->psp_data : NULL;
+ }
+ 
++int psp_restore(struct sp_device *sp)
++{
++	struct psp_device *psp = sp->psp_data;
++	int ret = 0;
++
++	if (psp->tee_data)
++		ret = tee_restore(psp);
++
++	return ret;
++}
++
+ void psp_pci_init(void)
+ {
+ 	psp_master = psp_get_master_device();
+diff --git a/drivers/crypto/ccp/sp-dev.c b/drivers/crypto/ccp/sp-dev.c
+index 6284a15e50472..26f8e0a7865f9 100644
+--- a/drivers/crypto/ccp/sp-dev.c
++++ b/drivers/crypto/ccp/sp-dev.c
+@@ -237,6 +237,18 @@ int sp_resume(struct sp_device *sp)
+ 	return 0;
+ }
+ 
++int sp_restore(struct sp_device *sp)
++{
++	if (sp->psp_data) {
++		int ret = psp_restore(sp);
++
++		if (ret)
++			return ret;
++	}
++
++	return sp_resume(sp);
++}
++
+ struct sp_device *sp_get_psp_master_device(void)
+ {
+ 	struct sp_device *i, *ret = NULL;
+diff --git a/drivers/crypto/ccp/sp-dev.h b/drivers/crypto/ccp/sp-dev.h
+index 0218d0670eeef..c8f6e53702f7f 100644
+--- a/drivers/crypto/ccp/sp-dev.h
++++ b/drivers/crypto/ccp/sp-dev.h
+@@ -121,6 +121,7 @@ struct sp_device *sp_get_master(void);
+ 
+ int sp_suspend(struct sp_device *sp);
+ int sp_resume(struct sp_device *sp);
++int sp_restore(struct sp_device *sp);
+ int sp_request_ccp_irq(struct sp_device *sp, irq_handler_t handler,
+ 		       const char *name, void *data);
+ void sp_free_ccp_irq(struct sp_device *sp, void *data);
+@@ -161,6 +162,7 @@ int psp_dev_init(struct sp_device *sp);
+ void psp_pci_init(void);
+ void psp_dev_destroy(struct sp_device *sp);
+ void psp_pci_exit(void);
++int psp_restore(struct sp_device *sp);
+ 
+ #else /* !CONFIG_CRYPTO_DEV_SP_PSP */
+ 
+@@ -168,6 +170,7 @@ static inline int psp_dev_init(struct sp_device *sp) { return 0; }
+ static inline void psp_pci_init(void) { }
+ static inline void psp_dev_destroy(struct sp_device *sp) { }
+ static inline void psp_pci_exit(void) { }
++static inline int psp_restore(struct sp_device *sp) { return 0; }
+ 
+ #endif /* CONFIG_CRYPTO_DEV_SP_PSP */
+ 
+diff --git a/drivers/crypto/ccp/sp-pci.c b/drivers/crypto/ccp/sp-pci.c
+index 8efcdd6a2eab9..16dd40e266a82 100644
+--- a/drivers/crypto/ccp/sp-pci.c
++++ b/drivers/crypto/ccp/sp-pci.c
+@@ -282,6 +282,13 @@ static int __maybe_unused sp_pci_resume(struct device *dev)
+ 	return sp_resume(sp);
+ }
+ 
++static int __maybe_unused sp_pci_restore(struct device *dev)
++{
++	struct sp_device *sp = dev_get_drvdata(dev);
++
++	return sp_restore(sp);
++}
++
+ #ifdef CONFIG_CRYPTO_DEV_SP_PSP
+ static const struct sev_vdata sevv1 = {
+ 	.cmdresp_reg		= 0x10580,
+@@ -377,7 +384,14 @@ static const struct pci_device_id sp_pci_table[] = {
  };
+ MODULE_DEVICE_TABLE(pci, sp_pci_table);
  
-+#define SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
-+	.suspend = pm_sleep_ptr(suspend_fn), \
-+	.resume = pm_sleep_ptr(resume_fn), \
-+	.freeze = pm_sleep_ptr(suspend_fn), \
-+	.thaw = pm_sleep_ptr(resume_fn), \
-+	.poweroff = pm_sleep_ptr(suspend_fn), \
-+	.restore = pm_sleep_ptr(resume_fn),
-+
-+#define LATE_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
-+	.suspend_late = pm_sleep_ptr(suspend_fn), \
-+	.resume_early = pm_sleep_ptr(resume_fn), \
-+	.freeze_late = pm_sleep_ptr(suspend_fn), \
-+	.thaw_early = pm_sleep_ptr(resume_fn), \
-+	.poweroff_late = pm_sleep_ptr(suspend_fn), \
-+	.restore_early = pm_sleep_ptr(resume_fn),
-+
-+#define NOIRQ_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
-+	.suspend_noirq = pm_sleep_ptr(suspend_fn), \
-+	.resume_noirq = pm_sleep_ptr(resume_fn), \
-+	.freeze_noirq = pm_sleep_ptr(suspend_fn), \
-+	.thaw_noirq = pm_sleep_ptr(resume_fn), \
-+	.poweroff_noirq = pm_sleep_ptr(suspend_fn), \
-+	.restore_noirq = pm_sleep_ptr(resume_fn),
-+
-+#define RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
-+	.runtime_suspend = suspend_fn, \
-+	.runtime_resume = resume_fn, \
-+	.runtime_idle = idle_fn,
-+
- #ifdef CONFIG_PM_SLEEP
- #define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
--	.suspend = suspend_fn, \
--	.resume = resume_fn, \
--	.freeze = suspend_fn, \
--	.thaw = resume_fn, \
--	.poweroff = suspend_fn, \
--	.restore = resume_fn,
-+	SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
- #else
- #define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
- #endif
+-static SIMPLE_DEV_PM_OPS(sp_pci_pm_ops, sp_pci_suspend, sp_pci_resume);
++static const struct dev_pm_ops sp_pci_pm_ops = {
++	.suspend = pm_sleep_ptr(sp_pci_suspend),
++	.resume = pm_sleep_ptr(sp_pci_resume),
++	.freeze = pm_sleep_ptr(sp_pci_suspend),
++	.thaw = pm_sleep_ptr(sp_pci_resume),
++	.poweroff = pm_sleep_ptr(sp_pci_suspend),
++	.restore_early = pm_sleep_ptr(sp_pci_restore),
++};
  
- #ifdef CONFIG_PM_SLEEP
- #define SET_LATE_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
--	.suspend_late = suspend_fn, \
--	.resume_early = resume_fn, \
--	.freeze_late = suspend_fn, \
--	.thaw_early = resume_fn, \
--	.poweroff_late = suspend_fn, \
--	.restore_early = resume_fn,
-+	LATE_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
- #else
- #define SET_LATE_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
- #endif
- 
- #ifdef CONFIG_PM_SLEEP
- #define SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
--	.suspend_noirq = suspend_fn, \
--	.resume_noirq = resume_fn, \
--	.freeze_noirq = suspend_fn, \
--	.thaw_noirq = resume_fn, \
--	.poweroff_noirq = suspend_fn, \
--	.restore_noirq = resume_fn,
-+	NOIRQ_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
- #else
- #define SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
- #endif
- 
- #ifdef CONFIG_PM
- #define SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
--	.runtime_suspend = suspend_fn, \
--	.runtime_resume = resume_fn, \
--	.runtime_idle = idle_fn,
-+	RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn)
- #else
- #define SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn)
- #endif
-@@ -350,9 +362,9 @@ struct dev_pm_ops {
-  * Use this if you want to use the same suspend and resume callbacks for suspend
-  * to RAM and hibernation.
-  */
--#define SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
--const struct dev_pm_ops __maybe_unused name = { \
--	SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
-+#define DEFINE_SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
-+static const struct dev_pm_ops name = { \
-+	SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+ static struct pci_driver sp_pci_driver = {
+ 	.name = "ccp",
+diff --git a/drivers/crypto/ccp/tee-dev.c b/drivers/crypto/ccp/tee-dev.c
+index bcb81fef42118..ff49ecbcf003e 100644
+--- a/drivers/crypto/ccp/tee-dev.c
++++ b/drivers/crypto/ccp/tee-dev.c
+@@ -394,3 +394,8 @@ int psp_check_tee_status(void)
+ 	return 0;
  }
- 
- /*
-@@ -368,6 +380,19 @@ const struct dev_pm_ops __maybe_unused name = { \
-  * .resume_early(), to the same routines as .runtime_suspend() and
-  * .runtime_resume(), respectively (and analogously for hibernation).
-  */
-+#define DEFINE_UNIVERSAL_DEV_PM_OPS(name, suspend_fn, resume_fn, idle_fn) \
-+static const struct dev_pm_ops name = { \
-+	SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
-+	RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
-+}
+ EXPORT_SYMBOL(psp_check_tee_status);
 +
-+/* Deprecated. Use DEFINE_SIMPLE_DEV_PM_OPS() instead. */
-+#define SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
-+const struct dev_pm_ops __maybe_unused name = { \
-+	SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
++int tee_restore(struct psp_device *psp)
++{
++	return tee_init_ring(psp->tee_data);
 +}
-+
-+/* Deprecated. Use DEFINE_UNIVERSAL_DEV_PM_OPS() instead. */
- #define UNIVERSAL_DEV_PM_OPS(name, suspend_fn, resume_fn, idle_fn) \
- const struct dev_pm_ops __maybe_unused name = { \
- 	SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
-@@ -375,6 +400,7 @@ const struct dev_pm_ops __maybe_unused name = { \
- }
+diff --git a/drivers/crypto/ccp/tee-dev.h b/drivers/crypto/ccp/tee-dev.h
+index 49d26158b71e3..b0bf1de94ea6f 100644
+--- a/drivers/crypto/ccp/tee-dev.h
++++ b/drivers/crypto/ccp/tee-dev.h
+@@ -122,5 +122,6 @@ struct tee_ring_cmd {
  
- #define pm_ptr(_ptr) PTR_IF(IS_ENABLED(CONFIG_PM), (_ptr))
-+#define pm_sleep_ptr(_ptr) PTR_IF(IS_ENABLED(CONFIG_PM_SLEEP), (_ptr))
+ int tee_dev_init(struct psp_device *psp);
+ void tee_dev_destroy(struct psp_device *psp);
++int tee_restore(struct psp_device *psp);
  
- /*
-  * PM_EVENT_ messages
+ #endif /* __TEE_DEV_H__ */
 -- 
 2.51.0
 
