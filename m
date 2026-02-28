@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244CE34252B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE16379EF7
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301893; cv=none; b=ZvkzxiZd0vtgnknhytBLFUbhIou59+AfmSbFo7xpxrRZekFkYaMVxw4hp1oRTassQY3A1+zKNCMCh85eL2y7SZmKyJGGq6yQ6rnHK3vEAPvIusAYKRzkBBVmeDmCreXizPvcQjKnILYzhnpupAE9YJz7ShEeBzwt0vziyd8sRIk=
+	t=1772301893; cv=none; b=LxX4dUUic/9okKe5QfYGooB3HzMQYXy1rfVLD66Pn7nyJHggEFGHjIvezLyT2iKrBVMPCV2y9Qc2T2kIWSqBfWy1B90LX904+neVSpr7XDdPDpx3RAuR8qNxzraDX/Tk2NeAhEKFUtye8brr5KlfAD2E6FgqJIVQH2EC265ykw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301893; c=relaxed/simple;
-	bh=HXzN/JRO+pBleMuVAsd2xW4kfP7Pc9DcD8DBuEMcewA=;
+	bh=azGAy0U9lhIpAe5iZFZEw04x31TjJDIcYvSO/4NUc7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nHQ0GcDiU08LtZDCEgOE7CvaP5C4WckeZB5V3zMFQS3JLWlhXqZCehMAzbRYXdTRAYPtSEDP9wPfVtqBzDnULD35FeqB1jwrwtCh9HS/aEhs8rbTJ1dmyAfYwaWcmwq58EMUjvCLRWYXIw1NoR1A9hJelQJqiIxfNnNi2P66SdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KMo2WBQT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uflsp5Y6YSdHxCeH85rVUMZWIRwYANaT93cUMy4TYByKZUss3uc/DPdHmQnRWODCy8hHgT4w/gkIgGSV4TUtBA6byHXoMh1JvuY1/V/5xuPgWwrabh8uU4jpNO+rWzQH7/Ii8UxeWKujoq9x2Kc1U1lf4aaGyhby7cfMiFslq8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=boQBOFWF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KMo2WBQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6726BC2BCB1;
-	Sat, 28 Feb 2026 18:04:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="boQBOFWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C316C2BCB4;
+	Sat, 28 Feb 2026 18:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301893;
-	bh=HXzN/JRO+pBleMuVAsd2xW4kfP7Pc9DcD8DBuEMcewA=;
+	bh=azGAy0U9lhIpAe5iZFZEw04x31TjJDIcYvSO/4NUc7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KMo2WBQTQ9HziMYwTHruFsnh7i35BG9GBWchaTlTDEZn4Ip5IGQUUCn+ENWCx9ZvJ
-	 D1Vx1l3pu2HG1dDcvCf3dMusKmNMmsgbgSCUZuhoMjZxsDj5Md7Dtaz5tD1RutKNSi
-	 4SvNfvZEdwEesrI4OpS/qh/k/mVw1hfETv4o8vR0sJYLeuymvG1Hv9hJqhTfEWlzIl
-	 cjFc76F7BYAO8p7WkU/iZbTGnVBz8AL+J43StqTpP9QnS0swScWQ1f8OkPCRFrCGvM
-	 764sJMJ6FfMdTKBqQm4Q4uv6BV2Y5Q2nN95Ro0hUSgWmJLX+1JEK8tb12U8tWwgUhP
-	 WLbtZAsZHQu0w==
+	b=boQBOFWFbFsoxcS48pRPn/3Za8InwKpN8KCmSHqL73jhv/El+5R+JHLaUszSSMa10
+	 zCLU88DVNljC0jK+TPz/hv54zLl18l7Gn+i6jaUBXJwzkmynuOaXytP0iZPrvHe3J4
+	 t8romID42FpnE/oJS8Fn9x1F0KzWcVogsiQR4SCZe/IY4cPFMHe08l2eawJTEshl5m
+	 1KYIA+VB9i05Q5aDAHdPbkzx0cyAArtN8RrRwbUARGd97HbjRYO1C0/tfLYP4EXm+E
+	 xn4hqfSlC0hzlK6rjBJVif7nLnr7eS/+KABPd0qK87SKn2hNs7VjkzGNrj8hcelOas
+	 JT6fcH9g5Ls5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Michael Hennerich <michael.hennerich@analog.com>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 320/385] dma: dma-axi-dmac: fix HW scatter-gather not looking at the queue
-Date: Sat, 28 Feb 2026 12:59:02 -0500
-Message-ID: <20260228180011.1568201-320-sashal@kernel.org>
+Subject: [PATCH 6.12 321/385] soundwire: intel_ace2x: add SND_HDA_CORE dependency
+Date: Sat, 28 Feb 2026 12:59:03 -0500
+Message-ID: <20260228180011.1568201-321-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -44,51 +43,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit bbcbafb99df41a1d81403eb4f5bb443b38228b57 ]
+[ Upstream commit dc3a6a942e9ee3f18560bfcb16c06bb94f37fabf ]
 
-For HW scatter gather transfers we still need to look for the queue. The
-HW is capable of queueing 3 concurrent transfers and if we try more than
-that we'll get the submit queue full and should return. Otherwise, if we
-go ahead and program the new transfer, we end up discarding it.
+The ace2x driver can optionally use the HDA infrastructure, but can still
+build without that. However, with SND_HDA_CORE=m and SND_HDA_ALIGNED_MMIO=y,
+it fails to link as built-in:
 
-Fixes: e97dc7435972 ("dmaengine: axi-dmac: Add support for scatter-gather transfers")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-base-commit: 398035178503bf662281bbffb4bebce1460a4bc5
-change-id: 20251104-axi-dmac-fixes-and-improvs-e3ad512a329c
-Acked-by: Michael Hennerich <michael.hennerich@analog.com>
-Link: https://patch.msgid.link/20251104-axi-dmac-fixes-and-improvs-v1-2-3e6fd9328f72@analog.com
+aarch64-linux-ld: drivers/soundwire/intel_ace2x.o: in function `intel_shim_wake':
+intel_ace2x.c:(.text+0x2518): undefined reference to `snd_hdac_aligned_read'
+aarch64-linux-ld: intel_ace2x.c:(.text+0x25d4): undefined reference to `snd_hdac_aligned_read'
+aarch64-linux-ld: intel_ace2x.c:(.text+0x268c): undefined reference to `snd_hdac_aligned_write'
+
+Add a Kconfig dependency that forces the soundwire driver to be a loadable
+module if necessary.
+
+Fixes: 79e7123c078d ("soundwire: intel_ace2x: fix wakeup handling")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20251223215014.534756-1-arnd@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dma-axi-dmac.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/soundwire/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index 2aa06f66624ba..47d95d2d743b1 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -233,11 +233,9 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
- 	unsigned int flags = 0;
- 	unsigned int val;
- 
--	if (!chan->hw_sg) {
--		val = axi_dmac_read(dmac, AXI_DMAC_REG_START_TRANSFER);
--		if (val) /* Queue is full, wait for the next SOT IRQ */
--			return;
--	}
-+	val = axi_dmac_read(dmac, AXI_DMAC_REG_START_TRANSFER);
-+	if (val) /* Queue is full, wait for the next SOT IRQ */
-+		return;
- 
- 	desc = chan->next_desc;
- 
+diff --git a/drivers/soundwire/Kconfig b/drivers/soundwire/Kconfig
+index 4d8f3b7024ae5..a057c64d93f0b 100644
+--- a/drivers/soundwire/Kconfig
++++ b/drivers/soundwire/Kconfig
+@@ -38,6 +38,7 @@ config SOUNDWIRE_INTEL
+ 	select AUXILIARY_BUS
+ 	depends on ACPI && SND_SOC
+ 	depends on SND_SOC_SOF_HDA_MLINK || !SND_SOC_SOF_HDA_MLINK
++	depends on SND_HDA_CORE || !SND_HDA_ALIGNED_MMIO
+ 	help
+ 	  SoundWire Intel Master driver.
+ 	  If you have an Intel platform which has a SoundWire Master then
 -- 
 2.51.0
 
