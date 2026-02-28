@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5514D4A341C;
-	Sat, 28 Feb 2026 17:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2EB47CC62;
+	Sat, 28 Feb 2026 17:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301311; cv=none; b=s/BSFCH8uyp+/EBOTfNh9QLxvTXd+rBKK2iL30gXkJhSdPhxFGWEZix0p+qkCDiKtOg67nolnqddnlLe0go1zO0X1qL8Mzpw2+ER8nS0mPbHbdF5U9ddeCRS/o63D+Zz4Tqnox2LNSuLCAVOziANqXw3+4mb67t39kFG3fmjtwM=
+	t=1772301312; cv=none; b=lJ2tjMF1dW/c5b5lsaOpJiFuzoaC/wgXoNXRcBFnYTqm5LqCBfCiUh/eUER9XFJNJnkVNBRaRB3xXm+XEMPbrev81011GAtVT1BUIQmvygabREIX82VqTNwLTrAK0+l+SX/W+zeWZQ8qIoR1hPWsXY/2X68Yn37Iq4lDOh48kpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301311; c=relaxed/simple;
-	bh=uo0zheTrvVxNjJYDzhSfBNrPEoWnK7upvG0njhOADD0=;
+	s=arc-20240116; t=1772301312; c=relaxed/simple;
+	bh=3kbo5eabQVn/8jsbQHi8bNNF8ZkEN2sFUSWSGR+8m5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nl60jP6TOQAD+U3Ty9H8wICNwb/AKyqG7Ara2x2Q5KegPMEOmucjdDJxazMdmAt6itzas9XAP9x4VnybzDwW5acv6Tqm6n83yLfjzfVd3lVRAtK5vVa2oGXT2daOM7IX4osZ7Zq1lY3KO5gcdSt+ptzygBgqLStYZQuedch9fNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i8lvmkbM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PBHgf9rO7GaXJ9c/76leQC+Kaf/n2qx5EnI3zm8eciWMMXWNFMbYjlhDz11eWuz96iWhABF9Krc9H6AJ1klJ2yyHnWxApsJR8V3qa+ZhHJExxJi2kvfxpBTDq2UkdBzx5228Wpfh2X5VZ3TZ5xJTL75lXBn1d7L/jkz5DPvmp+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HcgkNXSQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i8lvmkbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90886C19424;
-	Sat, 28 Feb 2026 17:55:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HcgkNXSQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0F5C116D0;
+	Sat, 28 Feb 2026 17:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301311;
-	bh=uo0zheTrvVxNjJYDzhSfBNrPEoWnK7upvG0njhOADD0=;
+	s=k20201202; t=1772301312;
+	bh=3kbo5eabQVn/8jsbQHi8bNNF8ZkEN2sFUSWSGR+8m5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i8lvmkbMFBDiQUnN8nBLAD1remlsCwHUSiFmN3eO7r7Ah/RqK8NRHKTogGXOQ0I6N
-	 7/X8f5L/hAzIYIpmhndK2wAjnJeB7YpAh9SOs9wVvivTq33zPPMKT0zdwhLikNKY/0
-	 xAFp7unW+rAL/YufRcoKg4XvqU5/aCP2K01CaqctlhvNSkqT+OBzg3igl4B0XGDHi/
-	 P36uPA7Y5zzSF/G6EEIN8oc+V/yojc0kMZel/fBcYEMzTIUI0mpACvak+e6If+ThVf
-	 ad2I7wZKGFbOoZtNzUETNJR9mDmtOF9xm2W27D7bOrZO5m2+sT7LRGdPkJ/1Ac+VeI
-	 ZiRuStvVpUOIA==
+	b=HcgkNXSQqSL1mdUVAQ4ufU7Rzm1Tde60Q2R3cj0Wkut53OQFRUtbulbHMQFB37rcE
+	 YGsm69zE3S6FeJsuzcYAwKY0vOq6lORUKdJ1bgm4VDfpQqutFBBGdfdEISssM9dyDi
+	 WcJNPHLiu+O6xrm7w7Cs45mi8z1GJDYumVU8058Sq/CWcvz4FV8piLCPYZCkEsVQ6b
+	 6BZJz9a2go+HGDnxaBsuZWZyfd4oHFWFW6zMQWIz/vsfld1uGYyiqoOaQo2FmX7A9d
+	 /ev41jcC9T3b25jQyfe5SKHF6ql48vovyHZqlPDL5LpC/6wuUlpegJvrwPQedoN86T
+	 /tOTLsxVqEE5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Nam Cao <namcao@linutronix.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
+Cc: Sean Christopherson <seanjc@google.com>,
 	stable@vger.kernel.org,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Jim Mattson <jmattson@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 496/752] powerpc/pseries: Fix MSI-X allocation failure when quota is exceeded
-Date: Sat, 28 Feb 2026 12:43:27 -0500
-Message-ID: <20260228174750.1542406-496-sashal@kernel.org>
+Subject: [PATCH 6.18 497/752] KVM: x86: Return "unsupported" instead of "invalid" on access to unsupported PV MSR
+Date: Sat, 28 Feb 2026 12:43:28 -0500
+Message-ID: <20260228174750.1542406-497-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,160 +48,194 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Nam Cao <namcao@linutronix.de>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit c0215e2d72debcd9cbc1c002fb012d50a3140387 ]
+[ Upstream commit 5bb9ac1865123356337a389af935d3913ee917ed ]
 
-Nilay reported that since commit daaa574aba6f ("powerpc/pseries/msi: Switch
-to msi_create_parent_irq_domain()"), the NVMe driver cannot enable MSI-X
-when the device's MSI-X table size is larger than the firmware's MSI quota
-for the device.
+Return KVM_MSR_RET_UNSUPPORTED instead of '1' (which for all intents and
+purposes means "invalid") when rejecting accesses to KVM PV MSRs to adhere
+to KVM's ABI of allowing host reads and writes of '0' to MSRs that are
+advertised to userspace via KVM_GET_MSR_INDEX_LIST, even if the vCPU model
+doesn't support the MSR.
 
-This is because the commit changes how rtas_prepare_msi_irqs() is called:
+E.g. running a QEMU VM with
 
-  - Before, it is called when interrupts are allocated at the global
-    interrupt domain with nvec_in being the number of allocated interrupts.
-    rtas_prepare_msi_irqs() can return a positive number and the allocation
-    will be retried.
+  -cpu host,-kvmclock,kvm-pv-enforce-cpuid
 
-  - Now, it is called at the creation of per-device interrupt domain with
-    nvec_in being the number of interrupts that the device supports. If
-    rtas_prepare_msi_irqs() returns positive, domain creation just fails.
+yields:
 
-For Nilay's NVMe driver case, rtas_prepare_msi_irqs() returns a positive
-number (the quota). This causes per-device interrupt domain creation to
-fail and thus the NVMe driver cannot enable MSI-X.
+  qemu: error: failed to set MSR 0x12 to 0x0
+  qemu: target/i386/kvm/kvm.c:3301: kvm_buf_set_msrs:
+        Assertion `ret == cpu->kvm_msr_buf->nmsrs' failed.
 
-Rework to make this scenario works again:
-
-  - pseries_msi_ops_prepare() only prepares as many interrupts as the quota
-    permit.
-
-  - pseries_irq_domain_alloc() fails if the device's quota is exceeded.
-
-Now, if the quota is exceeded, pseries_msi_ops_prepare() will only prepare
-as allowed by the quota. If device drivers attempt to allocate more
-interrupts than the quota permits, pseries_irq_domain_alloc() will return
-an error code and msi_handle_pci_fail() will allow device drivers a retry.
-
-Reported-by: Nilay Shroff <nilay@linux.ibm.com>
-Closes: https://lore.kernel.org/linuxppc-dev/6af2c4c2-97f6-4758-be33-256638ef39e5@linux.ibm.com/
-Fixes: daaa574aba6f ("powerpc/pseries/msi: Switch to msi_create_parent_irq_domain()")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
+Fixes: 66570e966dd9 ("kvm: x86: only provide PV features if enabled in guest's CPUID")
 Cc: stable@vger.kernel.org
-Tested-by: Nilay Shroff <nilay@linux.ibm.com>
-Acked-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260107100230.1466093-1-namcao@linutronix.de
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Link: https://patch.msgid.link/20251230205948.4094097-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/msi.c | 44 ++++++++++++++++++++++++++--
- 1 file changed, 41 insertions(+), 3 deletions(-)
+ arch/x86/kvm/x86.c | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/msi.c b/arch/powerpc/platforms/pseries/msi.c
-index a82aaa786e9e0..edc30cda5dbcb 100644
---- a/arch/powerpc/platforms/pseries/msi.c
-+++ b/arch/powerpc/platforms/pseries/msi.c
-@@ -19,6 +19,11 @@
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index c075ee23aeade..79d0abaf71dde 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -4136,47 +4136,47 @@ int kvm_set_msr_common(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 		break;
+ 	case MSR_KVM_WALL_CLOCK_NEW:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_CLOCKSOURCE2))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
- #include "pseries.h"
+ 		vcpu->kvm->arch.wall_clock = data;
+ 		kvm_write_wall_clock(vcpu->kvm, data, 0);
+ 		break;
+ 	case MSR_KVM_WALL_CLOCK:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_CLOCKSOURCE))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
-+struct pseries_msi_device {
-+	unsigned int msi_quota;
-+	unsigned int msi_used;
-+};
-+
- static int query_token, change_token;
+ 		vcpu->kvm->arch.wall_clock = data;
+ 		kvm_write_wall_clock(vcpu->kvm, data, 0);
+ 		break;
+ 	case MSR_KVM_SYSTEM_TIME_NEW:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_CLOCKSOURCE2))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
- #define RTAS_QUERY_FN		0
-@@ -433,8 +438,28 @@ static int pseries_msi_ops_prepare(struct irq_domain *domain, struct device *dev
- 	struct msi_domain_info *info = domain->host_data;
- 	struct pci_dev *pdev = to_pci_dev(dev);
- 	int type = (info->flags & MSI_FLAG_PCI_MSIX) ? PCI_CAP_ID_MSIX : PCI_CAP_ID_MSI;
-+	int ret;
-+
-+	struct pseries_msi_device *pseries_dev __free(kfree)
-+		= kmalloc(sizeof(*pseries_dev), GFP_KERNEL);
-+	if (!pseries_dev)
-+		return -ENOMEM;
-+
-+	while (1) {
-+		ret = rtas_prepare_msi_irqs(pdev, nvec, type, arg);
-+		if (!ret)
-+			break;
-+		else if (ret > 0)
-+			nvec = ret;
-+		else
-+			return ret;
-+	}
+ 		kvm_write_system_time(vcpu, data, false, msr_info->host_initiated);
+ 		break;
+ 	case MSR_KVM_SYSTEM_TIME:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_CLOCKSOURCE))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
--	return rtas_prepare_msi_irqs(pdev, nvec, type, arg);
-+	pseries_dev->msi_quota = nvec;
-+	pseries_dev->msi_used = 0;
-+
-+	arg->scratchpad[0].ptr = no_free_ptr(pseries_dev);
-+	return 0;
- }
+ 		kvm_write_system_time(vcpu, data, true,  msr_info->host_initiated);
+ 		break;
+ 	case MSR_KVM_ASYNC_PF_EN:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_ASYNC_PF))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
- /*
-@@ -443,9 +468,13 @@ static int pseries_msi_ops_prepare(struct irq_domain *domain, struct device *dev
-  */
- static void pseries_msi_ops_teardown(struct irq_domain *domain, msi_alloc_info_t *arg)
- {
-+	struct pseries_msi_device *pseries_dev = arg->scratchpad[0].ptr;
- 	struct pci_dev *pdev = to_pci_dev(domain->dev);
+ 		if (kvm_pv_enable_async_pf(vcpu, data))
+ 			return 1;
+ 		break;
+ 	case MSR_KVM_ASYNC_PF_INT:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_ASYNC_PF_INT))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
- 	rtas_disable_msi(pdev);
-+
-+	WARN_ON(pseries_dev->msi_used);
-+	kfree(pseries_dev);
- }
+ 		if (kvm_pv_enable_async_pf_int(vcpu, data))
+ 			return 1;
+ 		break;
+ 	case MSR_KVM_ASYNC_PF_ACK:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_ASYNC_PF_INT))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
+ 		if (data & 0x1) {
+ 			vcpu->arch.apf.pageready_pending = false;
+ 			kvm_check_async_pf_completion(vcpu);
+@@ -4184,7 +4184,7 @@ int kvm_set_msr_common(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 		break;
+ 	case MSR_KVM_STEAL_TIME:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_STEAL_TIME))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
- static void pseries_msi_shutdown(struct irq_data *d)
-@@ -546,12 +575,18 @@ static int pseries_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
- 				    unsigned int nr_irqs, void *arg)
- {
- 	struct pci_controller *phb = domain->host_data;
-+	struct pseries_msi_device *pseries_dev;
- 	msi_alloc_info_t *info = arg;
- 	struct msi_desc *desc = info->desc;
- 	struct pci_dev *pdev = msi_desc_to_pci_dev(desc);
- 	int hwirq;
- 	int i, ret;
+ 		if (unlikely(!sched_info_on()))
+ 			return 1;
+@@ -4202,7 +4202,7 @@ int kvm_set_msr_common(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 		break;
+ 	case MSR_KVM_PV_EOI_EN:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_PV_EOI))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
-+	pseries_dev = info->scratchpad[0].ptr;
-+
-+	if (pseries_dev->msi_used + nr_irqs > pseries_dev->msi_quota)
-+		return -ENOSPC;
-+
- 	hwirq = rtas_query_irq_number(pci_get_pdn(pdev), desc->msi_index);
- 	if (hwirq < 0) {
- 		dev_err(&pdev->dev, "Failed to query HW IRQ: %d\n", hwirq);
-@@ -567,9 +602,10 @@ static int pseries_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
- 			goto out;
+ 		if (kvm_lapic_set_pv_eoi(vcpu, data, sizeof(u8)))
+ 			return 1;
+@@ -4210,7 +4210,7 @@ int kvm_set_msr_common(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
  
- 		irq_domain_set_hwirq_and_chip(domain, virq + i, hwirq + i,
--					      &pseries_msi_irq_chip, domain->host_data);
-+					      &pseries_msi_irq_chip, pseries_dev);
- 	}
+ 	case MSR_KVM_POLL_CONTROL:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_POLL_CONTROL))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
-+	pseries_dev->msi_used++;
- 	return 0;
+ 		/* only enable bit supported */
+ 		if (data & (-1ULL << 1))
+@@ -4511,61 +4511,61 @@ int kvm_get_msr_common(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 		break;
+ 	case MSR_KVM_WALL_CLOCK:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_CLOCKSOURCE))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
- out:
-@@ -582,9 +618,11 @@ static void pseries_irq_domain_free(struct irq_domain *domain, unsigned int virq
- 				    unsigned int nr_irqs)
- {
- 	struct irq_data *d = irq_domain_get_irq_data(domain, virq);
--	struct pci_controller *phb = irq_data_get_irq_chip_data(d);
-+	struct pseries_msi_device *pseries_dev = irq_data_get_irq_chip_data(d);
-+	struct pci_controller *phb = domain->host_data;
+ 		msr_info->data = vcpu->kvm->arch.wall_clock;
+ 		break;
+ 	case MSR_KVM_WALL_CLOCK_NEW:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_CLOCKSOURCE2))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
- 	pr_debug("%s bridge %pOF %d #%d\n", __func__, phb->dn, virq, nr_irqs);
-+	pseries_dev->msi_used -= nr_irqs;
- 	irq_domain_free_irqs_parent(domain, virq, nr_irqs);
- }
+ 		msr_info->data = vcpu->kvm->arch.wall_clock;
+ 		break;
+ 	case MSR_KVM_SYSTEM_TIME:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_CLOCKSOURCE))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
  
+ 		msr_info->data = vcpu->arch.time;
+ 		break;
+ 	case MSR_KVM_SYSTEM_TIME_NEW:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_CLOCKSOURCE2))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
+ 
+ 		msr_info->data = vcpu->arch.time;
+ 		break;
+ 	case MSR_KVM_ASYNC_PF_EN:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_ASYNC_PF))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
+ 
+ 		msr_info->data = vcpu->arch.apf.msr_en_val;
+ 		break;
+ 	case MSR_KVM_ASYNC_PF_INT:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_ASYNC_PF_INT))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
+ 
+ 		msr_info->data = vcpu->arch.apf.msr_int_val;
+ 		break;
+ 	case MSR_KVM_ASYNC_PF_ACK:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_ASYNC_PF_INT))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
+ 
+ 		msr_info->data = 0;
+ 		break;
+ 	case MSR_KVM_STEAL_TIME:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_STEAL_TIME))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
+ 
+ 		msr_info->data = vcpu->arch.st.msr_val;
+ 		break;
+ 	case MSR_KVM_PV_EOI_EN:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_PV_EOI))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
+ 
+ 		msr_info->data = vcpu->arch.pv_eoi.msr_val;
+ 		break;
+ 	case MSR_KVM_POLL_CONTROL:
+ 		if (!guest_pv_has(vcpu, KVM_FEATURE_POLL_CONTROL))
+-			return 1;
++			return KVM_MSR_RET_UNSUPPORTED;
+ 
+ 		msr_info->data = vcpu->arch.msr_kvm_poll_control;
+ 		break;
 -- 
 2.51.0
 
