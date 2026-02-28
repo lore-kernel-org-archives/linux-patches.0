@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DE6372244;
-	Sat, 28 Feb 2026 17:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71606342146;
+	Sat, 28 Feb 2026 17:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301497; cv=none; b=IOK68bFbX96uA/iPiC7c1oxRey2HpPk3TuWv7R/XQU0kp5OtrFFy+0aWHxsNRH2Kq+s+8v++M5OW3NLxtl1kCYWx1GkNZsBtd0zmoV8AgKHxV2052DONx6dPqsC96gPziRyiLQZDJZhXO+81xxylRFpD6OW+oTVlEcghF21hxm0=
+	t=1772301498; cv=none; b=hu9AezhIsUpO5iwldb6VdkAirplNWGr8CUK49JZLnePHAfHGd5yHtxs/FBJYHc9t8m+vGiCoXeMM9+Fi+NQ2E43l3UrZQkRkogmJK02CX1/0IAmqt6qvITo2VqizFOE+XVG9wKB2f2A2QrI1DcDhWGz24DfWxJKTpTwkazUl3kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301497; c=relaxed/simple;
-	bh=uCj6fyoWP8ic3Hhbfari2dvyUvkMRZW3CnuTEJyV7O4=;
+	s=arc-20240116; t=1772301498; c=relaxed/simple;
+	bh=Ssi4ys2hsnK4l5iOGPWzKxKmZumXDR9aWBZNhATU+mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtjG7IsSuANaumB2Y2HOwiL6j4jIAEMOahxPN+TgLIiLiiMxpkZH5useAJuHuCl7Z2bmfw1LnSjAzQpBcWIWtQSKajGKlRt4F3NmEeStV7Hog8GHwOqlcFwhYcnBpd+gcL9Do+m1lcSijqZOAjXF7pP1hlbagXlaODcFe5m0CJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IWzjKQqJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=noiXrnXuKdmHCuKlWIq9Lqn95Enql79CVD6Ks8qxmuCGKoZRvYDrmF1bIe3+qTvsZPXa76qwqmXZKnaYbK8GXuOhHEJ17EAN+K6lEtYYlOqyPWgEiNF2310HoKCwp283/5FyIcDgw8Av2g3iRc9JC9LLrzbL0FAhBGzL/pDEQK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tPFY7WiZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IWzjKQqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1827C19423;
-	Sat, 28 Feb 2026 17:58:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tPFY7WiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE41C2BC87;
+	Sat, 28 Feb 2026 17:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301497;
-	bh=uCj6fyoWP8ic3Hhbfari2dvyUvkMRZW3CnuTEJyV7O4=;
+	s=k20201202; t=1772301498;
+	bh=Ssi4ys2hsnK4l5iOGPWzKxKmZumXDR9aWBZNhATU+mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWzjKQqJlXtiefcrdQowyPg6e4ehlFLfKQTQylnY43vaIbuv78L9O9O9u8HoJy0Qz
-	 QidL769JVzEKX5Me4SCralRS1QaFXiBGZiYDawWEdPBZ3x1T53xw3KNZITd0IEk9/7
-	 WyOr9orSz8RHGwSytoRUOA44yY5uPukN/3pSzCnt/CXmvbsZ+c+sUjWwcV2A2+hhJF
-	 hb9AFImu7XnkDUSe1AeuWjrE0fx6S9CXlmIqM3TLcayo9zlBOysOA1dToJHJoJjFCR
-	 fzVy0fpWvjJNuYK0bk2ZjRXa2DTtwToYOQzasizqCIXTdwlypw5EMGYo6+nfM7L+6d
-	 KtkhkSGWzGDWA==
+	b=tPFY7WiZ5lGqN8uwFhAAhkV61ZfvllDWil6Fq4x55fSGlMZWk1u7dgWZjeZx1pNWg
+	 DajxJ4J8uVmBZF1/yAmsKwblOcwRO36Wg0NuwUDuj1N32C330BkeuSvfx4WsflO7yN
+	 SQnPLTcOgrWnq4tPxtS6iA4LMCMn4GqkueSZp91escgwfVhfsi9qQN7LOuIqefhXo4
+	 6sHZhckKtPx3ZtKV7wSYl0hfGbYNjO1uQMf8oo7jDC+XwoA6UHQ1Whf7uu2r7YmZKj
+	 xfyfx7R0jITbwl86SGqXnH97PPREAbuEzKpmlCuJa/9Y2pD5O5S/BEEL2UOEyGgBza
+	 HmgmGUoIoyNOA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Shyam Prasad N <sprasad@microsoft.com>,
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	stable@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Waldemar Brodkorb <wbx@openadk.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 681/752] cifs: Fix locking usage for tcon fields
-Date: Sat, 28 Feb 2026 12:46:32 -0500
-Message-ID: <20260228174750.1542406-681-sashal@kernel.org>
+Subject: [PATCH 6.18 682/752] MIPS: rb532: Fix MMIO UART resource registration
+Date: Sat, 28 Feb 2026 12:46:33 -0500
+Message-ID: <20260228174750.1542406-682-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,134 +49,49 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit 96c4af418586ee9a6aab61738644366426e05316 ]
+[ Upstream commit e93bb4b76cfefb302534246e892c7667491cb8cc ]
 
-We used to use the cifs_tcp_ses_lock to protect a lot of objects
-that are not just the server, ses or tcon lists. We later introduced
-srv_lock, ses_lock and tc_lock to protect fields within the
-corresponding structs. This was done to provide a more granular
-protection and avoid unnecessary serialization.
+Since commit 6e690d54cfa8 ("serial: 8250: fix return error code in
+serial8250_request_std_resource()"), registering an 8250 MMIO port
+without mapbase no longer works, as the resource range is derived from
+mapbase/mapsize.
 
-There were still a couple of uses of cifs_tcp_ses_lock to provide
-tcon fields. In this patch, I've replaced them with tc_lock.
+Populate mapbase and mapsize accordingly. Also drop ugly membase KSEG1
+pointer and set UPF_IOREMAP instead, letting the 8250 core perform the
+ioremap.
 
+Fixes: 6e690d54cfa8 ("serial: 8250: fix return error code in serial8250_request_std_resource()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Waldemar Brodkorb <wbx@openadk.org>
+Link: https://lore.kernel.org/linux-mips/aX-d0ShTplHKZT33@waldemar-brodkorb.de/
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cached_dir.c | 4 ++--
- fs/smb/client/smb2misc.c   | 6 +++---
- fs/smb/client/smb2ops.c    | 8 +++-----
- fs/smb/client/smb2pdu.c    | 2 ++
- fs/smb/client/trace.h      | 1 +
- 5 files changed, 11 insertions(+), 10 deletions(-)
+ arch/mips/rb532/devices.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
-index e3ea6fe7edb47..09939fe9666ea 100644
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -788,11 +788,11 @@ static void cfids_laundromat_worker(struct work_struct *work)
- 		cfid->dentry = NULL;
- 
- 		if (cfid->is_open) {
--			spin_lock(&cifs_tcp_ses_lock);
-+			spin_lock(&cfid->tcon->tc_lock);
- 			++cfid->tcon->tc_count;
- 			trace_smb3_tcon_ref(cfid->tcon->debug_id, cfid->tcon->tc_count,
- 					    netfs_trace_tcon_ref_get_cached_laundromat);
--			spin_unlock(&cifs_tcp_ses_lock);
-+			spin_unlock(&cfid->tcon->tc_lock);
- 			queue_work(serverclose_wq, &cfid->close_work);
- 		} else
- 			/*
-diff --git a/fs/smb/client/smb2misc.c b/fs/smb/client/smb2misc.c
-index 96bfe4c63ccf9..a6fc8ff398ebf 100644
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -819,14 +819,14 @@ smb2_handle_cancelled_close(struct cifs_tcon *tcon, __u64 persistent_fid,
- 	int rc;
- 
- 	cifs_dbg(FYI, "%s: tc_count=%d\n", __func__, tcon->tc_count);
--	spin_lock(&cifs_tcp_ses_lock);
-+	spin_lock(&tcon->tc_lock);
- 	if (tcon->tc_count <= 0) {
- 		struct TCP_Server_Info *server = NULL;
- 
- 		trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 				    netfs_trace_tcon_ref_see_cancelled_close);
- 		WARN_ONCE(tcon->tc_count < 0, "tcon refcount is negative");
--		spin_unlock(&cifs_tcp_ses_lock);
-+		spin_unlock(&tcon->tc_lock);
- 
- 		if (tcon->ses) {
- 			server = tcon->ses->server;
-@@ -840,7 +840,7 @@ smb2_handle_cancelled_close(struct cifs_tcon *tcon, __u64 persistent_fid,
- 	tcon->tc_count++;
- 	trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 			    netfs_trace_tcon_ref_get_cancelled_close);
--	spin_unlock(&cifs_tcp_ses_lock);
-+	spin_unlock(&tcon->tc_lock);
- 
- 	rc = __smb2_handle_cancelled_cmd(tcon, SMB2_CLOSE_HE, 0,
- 					 persistent_fid, volatile_fid);
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index c3c5fddb2caab..1b404def355e9 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3074,7 +3074,9 @@ smb2_get_dfs_refer(const unsigned int xid, struct cifs_ses *ses,
- 						struct cifs_tcon,
- 						tcon_list);
- 		if (tcon) {
-+			spin_lock(&tcon->tc_lock);
- 			tcon->tc_count++;
-+			spin_unlock(&tcon->tc_lock);
- 			trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 					    netfs_trace_tcon_ref_get_dfs_refer);
- 		}
-@@ -3143,13 +3145,9 @@ smb2_get_dfs_refer(const unsigned int xid, struct cifs_ses *ses,
-  out:
- 	if (tcon && !tcon->ipc) {
- 		/* ipc tcons are not refcounted */
--		spin_lock(&cifs_tcp_ses_lock);
--		tcon->tc_count--;
-+		cifs_put_tcon(tcon, netfs_trace_tcon_ref_put_dfs_refer);
- 		trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 				    netfs_trace_tcon_ref_dec_dfs_refer);
--		/* tc_count can never go negative */
--		WARN_ON(tcon->tc_count < 0);
--		spin_unlock(&cifs_tcp_ses_lock);
- 	}
- 	kfree(utf16_path);
- 	kfree(dfs_req);
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index e661d40213eab..8082507586e81 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -4174,7 +4174,9 @@ void smb2_reconnect_server(struct work_struct *work)
- 
- 		list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
- 			if (tcon->need_reconnect || tcon->need_reopen_files) {
-+				spin_lock(&tcon->tc_lock);
- 				tcon->tc_count++;
-+				spin_unlock(&tcon->tc_lock);
- 				trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 						    netfs_trace_tcon_ref_get_reconnect_server);
- 				list_add_tail(&tcon->rlist, &tmp_list);
-diff --git a/fs/smb/client/trace.h b/fs/smb/client/trace.h
-index 28e00c34df1cb..e592b2627119f 100644
---- a/fs/smb/client/trace.h
-+++ b/fs/smb/client/trace.h
-@@ -59,6 +59,7 @@
- 	EM(netfs_trace_tcon_ref_put_cancelled_close_fid, "PUT Cn-Fid") \
- 	EM(netfs_trace_tcon_ref_put_cancelled_mid,	"PUT Cn-Mid") \
- 	EM(netfs_trace_tcon_ref_put_mnt_ctx,		"PUT MntCtx") \
-+	EM(netfs_trace_tcon_ref_put_dfs_refer,		"PUT DfsRfr") \
- 	EM(netfs_trace_tcon_ref_put_reconnect_server,	"PUT Reconn") \
- 	EM(netfs_trace_tcon_ref_put_tlink,		"PUT Tlink ") \
- 	EM(netfs_trace_tcon_ref_see_cancelled_close,	"SEE Cn-Cls") \
+diff --git a/arch/mips/rb532/devices.c b/arch/mips/rb532/devices.c
+index b7f6f782d9a13..ffa4d38ca95df 100644
+--- a/arch/mips/rb532/devices.c
++++ b/arch/mips/rb532/devices.c
+@@ -212,11 +212,12 @@ static struct platform_device rb532_wdt = {
+ static struct plat_serial8250_port rb532_uart_res[] = {
+ 	{
+ 		.type           = PORT_16550A,
+-		.membase	= (char *)KSEG1ADDR(REGBASE + UART0BASE),
++		.mapbase        = REGBASE + UART0BASE,
++		.mapsize        = 0x1000,
+ 		.irq		= UART0_IRQ,
+ 		.regshift	= 2,
+ 		.iotype		= UPIO_MEM,
+-		.flags		= UPF_BOOT_AUTOCONF,
++		.flags		= UPF_BOOT_AUTOCONF | UPF_IOREMAP,
+ 	},
+ 	{
+ 		.flags		= 0,
 -- 
 2.51.0
 
