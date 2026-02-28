@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BF932ED2A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425811FBEB0
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301914; cv=none; b=MD4Hcoi5HX1CTNiipoh2AOP3wGlWrnGiDsZzdD1Dpf3nnPGWuHM1EiR5yyBdnxH/sc0dhe/Rk/cSLZ2bHkEW4h/fEZ77QFPX5T49bBq0Oo+VpeRkrsTvJUFgptNxsLSw0nPEl4BmVnOlwyB06rJdKD+JHuyNFq08kOPqc0SETxM=
+	t=1772301915; cv=none; b=nI3X4oaqocVmygzVKjRSnK1+Eaj+CZZLcxwjZnKQT9nHATUXOMCY7FKIIiqFOaA8EH2po+ZTaV9uDrMkWrB02v1vXl4I+pOmlwf94ykgXNbCb1ZIpuwb9Yiqomtk59S/iZWXXIP+cfH5JFoRX97rYr/dvuIJq9yoGIVkJ5o/TLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301914; c=relaxed/simple;
-	bh=oNnP7jEHEx/ez04Ua6X0OTzjvAmZLSA9NcxM1gcsYwA=;
+	s=arc-20240116; t=1772301915; c=relaxed/simple;
+	bh=LqouKln1HkUR3sanZFx7v6Kcl7Ca++KCYXaFyXqZxbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uByRM1eXyBx7YC83xzU9KH8YS4iWvoFVX/vGDl0XO2mhmxqfYU5QakB1nVWAJkOrRpb/j94Wjo826ZRsNLoQEisuY8EV/qg3NbMKwUEJQNzTqDo3YRcBNabrG80jlc9qpBWXoz35dh4n6RAsA0P+uMJMn0utd6PD9sW85P2pQYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ELBi67GB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S4imF3OtZkS6PwhwH64/2wDm+D24Iq7+N86GKBipndce3N2ujdzsZ98XGKfnH5SYC/7lUHxKIsGdD4lx7OHPGlFz9/4JD9x6n8tJhiqzRNgRrYKgMDhE1Gax6l4ZAn9QXxQUIZCOllWuQzJombN9WlsnOAQilEdSg/QcNz9TD4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lmp1AgSK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ELBi67GB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FA9C19424;
-	Sat, 28 Feb 2026 18:05:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lmp1AgSK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D835C2BC87;
+	Sat, 28 Feb 2026 18:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301914;
-	bh=oNnP7jEHEx/ez04Ua6X0OTzjvAmZLSA9NcxM1gcsYwA=;
+	s=k20201202; t=1772301915;
+	bh=LqouKln1HkUR3sanZFx7v6Kcl7Ca++KCYXaFyXqZxbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELBi67GBrnsE3IZxN4TrmKv1Mr64E6nlxsW4FpjnCOhdJMtItud0Y940U+sVky2Je
-	 1Fmbi9jCYiBOQY47YSLWQjq59p20nNh7SnhEUhv5y3Wm5vjSBeZ+dYK4tMAR70avcS
-	 SAElYqW9eizb2s5Ju9rx61j4ham8kSSapllPj78nHnojSKBiMwu2Q9xjoQmdGBWY8D
-	 IR6XllKWNVydV/1KeC3kRKT9i+gwMKyGm3NoednEXmzhypC2Xm+UQXwcYTXsaF3Ybs
-	 1x+UX56nUg+Ow+EXwyTEUGupPMAL9aLnXJxrDg4G4WzhOXG+ThnlbOaYqHSjwxpF8b
-	 9dmFtnjcOo57g==
+	b=Lmp1AgSK3EC612VLWR40yVLUdnDT/iNscpn64Qg9gHXT7PLVm3FGxr/7GuSvDKODX
+	 hZ9qN7J+2xskAO5N2S7ipqpv5QYRtNrg981IHwvMYr+WQIuOUzoJiNIpFkoIfEwORG
+	 VZCEYfad4Mmz4e4mgj275L4LbUFzASqtnZG0ShHTMJNTj97uoYTwO3SUeWTVr7Y1Vf
+	 5DbQsFHVO8R1itorlRouY0fpe8OLnyUw6Hy0PH6P1YH0p9CCsdqTI3QHVcK6+cKuwU
+	 aOsLTq+dk7Syaq7uGZGKXa8OWB5RHZIJYDXvbhCkzCVESNc+SicVTOqgxLXgru30T+
+	 sBpA0FPVkcv2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Luca Weiss <luca.weiss@fairphone.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 346/385] iio: sca3000: Fix a resource leak in sca3000_probe()
-Date: Sat, 28 Feb 2026 12:59:28 -0500
-Message-ID: <20260228180011.1568201-346-sashal@kernel.org>
+Subject: [PATCH 6.12 347/385] pinctrl: qcom: sm8250-lpass-lpi: Fix i2s2_data_groups definition
+Date: Sat, 28 Feb 2026 12:59:29 -0500
+Message-ID: <20260228180011.1568201-347-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,40 +49,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 62b44ebc1f2c71db3ca2d4737c52e433f6f03038 ]
+[ Upstream commit eabf273c8466af3f033473c2d2267a6ea7946d57 ]
 
-spi->irq from request_threaded_irq() not released when
-iio_device_register() fails. Add an return value check and jump to a
-common error handler when iio_device_register() fails.
+The i2s2_data function is available on both gpio12 and gpio13. Fix the
+groups definition.
 
-Fixes: 9a4936dc89a3 ("staging:iio:accel:sca3000 Tidy up probe order to avoid a race.")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/sca3000.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/sca3000.c b/drivers/iio/accel/sca3000.c
-index 87c54e41f6ccd..2b87f7f5508bb 100644
---- a/drivers/iio/accel/sca3000.c
-+++ b/drivers/iio/accel/sca3000.c
-@@ -1496,7 +1496,11 @@ static int sca3000_probe(struct spi_device *spi)
- 	if (ret)
- 		goto error_free_irq;
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
+index 9791d9ba5087c..4e90b29640ff0 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
+@@ -73,7 +73,7 @@ static const char * const i2s1_ws_groups[] = { "gpio7" };
+ static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
+ static const char * const wsa_swr_clk_groups[] = { "gpio10" };
+ static const char * const wsa_swr_data_groups[] = { "gpio11" };
+-static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
++static const char * const i2s2_data_groups[] = { "gpio12", "gpio13" };
  
--	return iio_device_register(indio_dev);
-+	ret = iio_device_register(indio_dev);
-+	if (ret)
-+		goto error_free_irq;
-+
-+	return 0;
- 
- error_free_irq:
- 	if (spi->irq)
+ static const struct lpi_pingroup sm8250_groups[] = {
+ 	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
 -- 
 2.51.0
 
