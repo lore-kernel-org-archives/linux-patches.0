@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9C7301EE3;
-	Sat, 28 Feb 2026 17:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4201175A98;
+	Sat, 28 Feb 2026 17:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301399; cv=none; b=PUhXDzFFSvT17U/KM4asF92t3aBJNvuRShE6Td2sdWipQSYeFkBgBN1kn0T3KJdu2kysztr+YsOfqBIksM+Q3OFsr2P3a2g8X8bCWMPEGA2s/Q3JIkq78ynQcABRV/6I6Z3YWyFJ06vbh/w2MVxi9G8ph/UYriYp4GuknEbeWPY=
+	t=1772301401; cv=none; b=XRE6HnMTtd6nIXj2cBPLisc7EpBW57hANUhwsEetDjWi3MZcKuFCPor793ncHFBW8R8DXURSI2a+LDBgSrh+e68tehzE8i6PXW4UaIN6cNK3cQ4yZXToGfb/3al814TQmKWZrGdLA9MVE7MbE8tp2CfsX378fXbCWhNESejx3eE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301399; c=relaxed/simple;
-	bh=rQsxdeDZ480m7skH3l8/h/NuJK1gSv8geEtcIRimRQU=;
+	s=arc-20240116; t=1772301401; c=relaxed/simple;
+	bh=WuxCK1wydY82CCy7fyUfGoYlroN8zPTI2IvEl3U21/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UqbyQnNlyUQI1J0CI/UwTcc9GT39e1NFdL9PPPsgOm7ytXDh1Q0YPmpseFI25WNWGV4PITrd+iyJNsW7TpJwOCCQKWqT+BsMq96xt/k9lHmN+odzgM7oJucKjD93lmI+lieUiYwaSQ5DLf1YNMDGSRpY6Ue1KNCxBy1UxKc9LiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t1V1wEih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SxCmvbngkgJV0JE/nk/TajitbU6HMEEk3aqXmXkKyym/N86oOylsb2OoMiRlFfxMZ2AqguG6XOwetz1ndDZ1MHefQ//TQfh4nRbswzaGG2cbnVesxs/tvcG67TZHkRXNC70X0tVAG4ZY0REFWEPhAjp0istEoMdgNQk6fMsZ15g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U0/VsDup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t1V1wEih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B681C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U0/VsDup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C121C116D0;
 	Sat, 28 Feb 2026 17:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301399;
-	bh=rQsxdeDZ480m7skH3l8/h/NuJK1gSv8geEtcIRimRQU=;
+	s=k20201202; t=1772301400;
+	bh=WuxCK1wydY82CCy7fyUfGoYlroN8zPTI2IvEl3U21/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1V1wEihq4Wc8AT/kXxtdYaFUCQAOrwFtabI35CwSEwcGI56y0cyaHUZ+QET7TLUf
-	 5KKutzmO+jGoGeKqq+6P4iJExAM0xWl9lvWNibRa7ejuM/KzvD+UQoKP22KeXBaUqe
-	 6GM5zYg57y6cW4LX+q02JvVburTdYl+xwFB1XjwODOyuc9dnf330d34Nm62wWA52vd
-	 AEgfdv35HCnG1LQspzdj5DoimTDtMdJ04lwko1Vvk6T3BwBkKg+8DB48I+vEY9O/HH
-	 aOW5OvTW4NIC6HHEL+Y02zrvX4PAKa9LOwoTGLufMupkoEIpRDNcPgZGC8Tbzdozhp
-	 TMSm4pjJThVQA==
+	b=U0/VsDupwehHSJcaI0aurojltDr3EBR/nZq2gJvoX+Uj9wV2SSfQ37aTXdB5Sp/0o
+	 CNMC52mRkktsMbe11JRl7G24nNitKelPMBqnUw9n1snCN3bav9C3qHQ80dcAwmHF24
+	 lYn4aRuByCiN676XHKmVZHvUJdQB7yd0kzJwUzrbXot+hZJElDzIIWCdmZN0LcjjOD
+	 M7sqD58z3jgYZKMKIfZnlqazeovKGf4OhF6o5NutDP6D/GPTJRISkepnrDsx5vf2WG
+	 aOos0X43u4P+2dFhgnhU8wPVQGjqugqyODQDUz31WDm157FhcZ1P87X5RMnr7r5aHH
+	 C9JECzH5SmGrg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jinhui Guo <guojinhui.liam@bytedance.com>,
+Cc: Yi Liu <yi.l.liu@intel.com>,
 	stable@vger.kernel.org,
+	Kevin Tian <kevin.tian@intel.com>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 588/752] iommu/vt-d: Flush dev-IOTLB only when PCIe device is accessible in scalable mode
-Date: Sat, 28 Feb 2026 12:44:59 -0500
-Message-ID: <20260228174750.1542406-588-sashal@kernel.org>
+Subject: [PATCH 6.18 589/752] iommu/vt-d: Flush piotlb for SVM and Nested domain
+Date: Sat, 28 Feb 2026 12:45:00 -0500
+Message-ID: <20260228174750.1542406-589-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -45,82 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jinhui Guo <guojinhui.liam@bytedance.com>
+From: Yi Liu <yi.l.liu@intel.com>
 
-[ Upstream commit 10e60d87813989e20eac1f3eda30b3bae461e7f9 ]
+[ Upstream commit 04b1b069f151e793767755f58b51670bff00cbc1 ]
 
-Commit 4fc82cd907ac ("iommu/vt-d: Don't issue ATS Invalidation
-request when device is disconnected") relies on
-pci_dev_is_disconnected() to skip ATS invalidation for
-safely-removed devices, but it does not cover link-down caused
-by faults, which can still hard-lock the system.
+Besides the paging domains that use FS, SVM and Nested domains need to
+use piotlb invalidation descriptor as well.
 
-For example, if a VM fails to connect to the PCIe device,
-"virsh destroy" is executed to release resources and isolate
-the fault, but a hard-lockup occurs while releasing the group fd.
-
-Call Trace:
- qi_submit_sync
- qi_flush_dev_iotlb
- intel_pasid_tear_down_entry
- device_block_translation
- blocking_domain_attach_dev
- __iommu_attach_device
- __iommu_device_set_domain
- __iommu_group_set_domain_internal
- iommu_detach_group
- vfio_iommu_type1_detach_group
- vfio_group_detach_container
- vfio_group_fops_release
- __fput
-
-Although pci_device_is_present() is slower than
-pci_dev_is_disconnected(), it still takes only ~70 µs on a
-ConnectX-5 (8 GT/s, x2) and becomes even faster as PCIe speed
-and width increase.
-
-Besides, devtlb_invalidation_with_pasid() is called only in the
-paths below, which are far less frequent than memory map/unmap.
-
-1. mm-struct release
-2. {attach,release}_dev
-3. set/remove PASID
-4. dirty-tracking setup
-
-The gain in system stability far outweighs the negligible cost
-of using pci_device_is_present() instead of pci_dev_is_disconnected()
-to decide when to skip ATS invalidation, especially under GDR
-high-load conditions.
-
-Fixes: 4fc82cd907ac ("iommu/vt-d: Don't issue ATS Invalidation request when device is disconnected")
+Fixes: b33125296b50 ("iommu/vt-d: Create unique domain ops for each stage")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
-Link: https://lore.kernel.org/r/20251211035946.2071-3-guojinhui.liam@bytedance.com
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20251223065824.6164-1-yi.l.liu@intel.com
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/intel/cache.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index d13099a6cb9c3..6782ba5f5e57f 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -219,7 +219,7 @@ devtlb_invalidation_with_pasid(struct intel_iommu *iommu,
- 	if (!info || !info->ats_enabled)
- 		return;
+diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
+index 265e7290256b5..385ae5cfb30d4 100644
+--- a/drivers/iommu/intel/cache.c
++++ b/drivers/iommu/intel/cache.c
+@@ -363,6 +363,13 @@ static void qi_batch_add_pasid_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16
+ 	qi_batch_increment_index(iommu, batch);
+ }
  
--	if (pci_dev_is_disconnected(to_pci_dev(dev)))
-+	if (!pci_device_is_present(to_pci_dev(dev)))
- 		return;
++static bool intel_domain_use_piotlb(struct dmar_domain *domain)
++{
++	return domain->domain.type == IOMMU_DOMAIN_SVA ||
++			domain->domain.type == IOMMU_DOMAIN_NESTED ||
++			intel_domain_is_fs_paging(domain);
++}
++
+ static void cache_tag_flush_iotlb(struct dmar_domain *domain, struct cache_tag *tag,
+ 				  unsigned long addr, unsigned long pages,
+ 				  unsigned long mask, int ih)
+@@ -370,7 +377,7 @@ static void cache_tag_flush_iotlb(struct dmar_domain *domain, struct cache_tag *
+ 	struct intel_iommu *iommu = tag->iommu;
+ 	u64 type = DMA_TLB_PSI_FLUSH;
  
- 	sid = PCI_DEVID(info->bus, info->devfn);
+-	if (intel_domain_is_fs_paging(domain)) {
++	if (intel_domain_use_piotlb(domain)) {
+ 		qi_batch_add_piotlb(iommu, tag->domain_id, tag->pasid, addr,
+ 				    pages, ih, domain->qi_batch);
+ 		return;
 -- 
 2.51.0
 
