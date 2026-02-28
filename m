@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055F139B970
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E765E39B94E
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302609; cv=none; b=DIoMkdZKYj80AtvQNXhbHbnbfRwQztoW/S5V4XJ7fpHYDJdePq3ESspVLubPlnYGwhh15xZl8FIY6XgxdaT5kEoNTOnsOFnP8uhu3aocCv1JdYydojRuEHG34A/U+h6FRQq7yG5/4MGkfYwV3E+tma2v55A1DWwWdkTfbGqh8oA=
+	t=1772302610; cv=none; b=filGNCfx41nVM8GFnmi16zYIXyirOV+1ZkpvregZcmf8x8/9tN22DILYAU5oSfHVu3xg2PGj8hcDMqAjMqHzZxxk1dqsc23rpzP6wxAWyA9f0mud//scRTyVdGAWVF9HZceCVI+yGlZVX7nRry5wIiYBNg7uRpRncUIcP3Sci9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302609; c=relaxed/simple;
-	bh=EDo7W1uYlGdiidZWiG3rh4kHafjHWj5vI+6XO3d2J1s=;
+	s=arc-20240116; t=1772302610; c=relaxed/simple;
+	bh=bN/644zBTSd900vC2SE3jke87FUYoA6ClsrCDeBiMuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqA+HrYrK0Dr18Le5rrVOd0HqXcOdBkykoDAJcBUiKcp1wQH3vCLwzzCwObEJX9l4yaMWnRh1omdpwmIiP8sTy+3yd9+uOt42DgBnx9zojKD/ZVTYdYRlJif2q/ow2kcZNFHekdjBRvxBn1ClkamKRbseDyjuHDYtGaRsvyYFPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eA4X32Sn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lBdxhHhfnuuldIpFc2Er3NRzQNnhyeCAdLqBsr4VVbzGgbw4Gbvl717NAUwCBes7BBuz3rFSpErblkkFYXOK/hqinLuL2M2StfycpZTkm9oM8YnXc+pY9Kuby3tnGAuBwpY5vJsnmXvJP4rB7EFE68EArpdeDiw0cx6Xe3e+aFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KsbQoONZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eA4X32Sn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40ABFC19423;
-	Sat, 28 Feb 2026 18:16:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KsbQoONZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAA0C116D0;
+	Sat, 28 Feb 2026 18:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302608;
-	bh=EDo7W1uYlGdiidZWiG3rh4kHafjHWj5vI+6XO3d2J1s=;
+	s=k20201202; t=1772302609;
+	bh=bN/644zBTSd900vC2SE3jke87FUYoA6ClsrCDeBiMuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eA4X32SnnW9kYT69YPN6lxJUCIBjsRSz86riJNn1xb2J2KmluGoTchtk5mCu90GG+
-	 0/y1QCu0mEqIxW5GmFx8ayIsupAc0O0u4bnr+EsJH10D6Z3BqyQmC4coaNJprbOs9Z
-	 Q/H/XkBbYErTzDJ0kVZ47y9Mlk+s0/A7EW2EF+Gc4OvNa+8BMtki/CyjYsQo/+djJp
-	 nAA9QuZNfniz2HaoYH08C3KLQdymAGNUq2skzX9Jtkb4Dg39MRYnEDRLEm48hPT1bK
-	 2xeB4Oi4GVbPQ/pqDTE72hswjlXZ4WEOCNLwpYZvcuaJxNgGApfEh6p7gdItCYmtLa
-	 dBKfCv3KRYdsQ==
+	b=KsbQoONZ6mK+7VTeHkqYEszg7RhfcO/q4Hilkc3DEHtnPBUQDSAWuAwDovfDNfkhd
+	 4fU6LQLkbmo0Z4mk2+Glztg8HmrChG4GRbHfXUKnytrQpfQvYaXPTaImk6mhSiDLWg
+	 14HxfHHtVA6zCPfDCoaTAGXCSXl4vh2cUoLMD4VRpgoLwJyj0XUbVZ1GTNkyQmbJD+
+	 vlJZJ2DaGsfLZGOac692V3viZU8qzqJ+pkwRcFXC5tHjHYmqNfWTsY3yKxyno26u3C
+	 eShyuJ+led3P13pSXCnH/w6OImYy6bCLLRYA3PtkiHd/a41kWA5YYOzmAkUKuVVzC3
+	 HSoA2wPq9ZJjQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Li Chen <me@linux.beauty>,
-	Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+Cc: Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tom Zanussi <zanussi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 124/164] nvdimm: virtio_pmem: serialize flush requests
-Date: Sat, 28 Feb 2026 13:14:23 -0500
-Message-ID: <20260228181505.1600663-124-sashal@kernel.org>
+Subject: [PATCH 5.15 125/164] tracing: Remove duplicate ENABLE_EVENT_STR and DISABLE_EVENT_STR macros
+Date: Sat, 28 Feb 2026 13:14:24 -0500
+Message-ID: <20260228181505.1600663-125-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -49,96 +49,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Li Chen <me@linux.beauty>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit a9ba6733c7f1096c4506bf4e34a546e07242df74 ]
+[ Upstream commit 9df0e49c5b9b8d051529be9994e4f92f2d20be6f ]
 
-Under heavy concurrent flush traffic, virtio-pmem can overflow its request
-virtqueue (req_vq): virtqueue_add_sgs() starts returning -ENOSPC and the
-driver logs "no free slots in the virtqueue". Shortly after that the
-device enters VIRTIO_CONFIG_S_NEEDS_RESET and flush requests fail with
-"virtio pmem device needs a reset".
+The macros ENABLE_EVENT_STR and DISABLE_EVENT_STR were added to trace.h so
+that more than one file can have access to them, but was never removed
+from their original location. Remove the duplicates.
 
-Serialize virtio_pmem_flush() with a per-device mutex so only one flush
-request is in-flight at a time. This prevents req_vq descriptor overflow
-under high concurrency.
-
-Reproducer (guest with virtio-pmem):
-  - mkfs.ext4 -F /dev/pmem0
-  - mount -t ext4 -o dax,noatime /dev/pmem0 /mnt/bench
-  - fio: ioengine=io_uring rw=randwrite bs=4k iodepth=64 numjobs=64
-        direct=1 fsync=1 runtime=30s time_based=1
-  - dmesg: "no free slots in the virtqueue"
-           "virtio pmem device needs a reset"
-
-Fixes: 6e84200c0a29 ("virtio-pmem: Add virtio pmem driver")
-Signed-off-by: Li Chen <me@linux.beauty>
-Acked-by: Pankaj Gupta <pankaj.gupta.linux@gmail.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260203021353.121091-1-me@linux.beauty
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Link: https://patch.msgid.link/20260126130037.4ba201f9@gandalf.local.home
+Fixes: d0bad49bb0a09 ("tracing: Add enable_hist/disable_hist triggers")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/nd_virtio.c   | 3 ++-
- drivers/nvdimm/virtio_pmem.c | 1 +
- drivers/nvdimm/virtio_pmem.h | 4 ++++
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/nvdimm/nd_virtio.c b/drivers/nvdimm/nd_virtio.c
-index 41e97c6567cf9..204d1a05f8e32 100644
---- a/drivers/nvdimm/nd_virtio.c
-+++ b/drivers/nvdimm/nd_virtio.c
-@@ -44,6 +44,8 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
- 	unsigned long flags;
- 	int err, err1;
+diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
+index 4e282deb6f787..1dfdbd365c8c2 100644
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -3294,11 +3294,6 @@ void trace_put_event_file(struct trace_event_file *file)
+ EXPORT_SYMBOL_GPL(trace_put_event_file);
  
-+	guard(mutex)(&vpmem->flush_lock);
-+
- 	/*
- 	 * Don't bother to submit the request to the device if the device is
- 	 * not activated.
-@@ -53,7 +55,6 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
- 		return -EIO;
- 	}
- 
--	might_sleep();
- 	req_data = kmalloc(sizeof(*req_data), GFP_KERNEL);
- 	if (!req_data)
- 		return -ENOMEM;
-diff --git a/drivers/nvdimm/virtio_pmem.c b/drivers/nvdimm/virtio_pmem.c
-index 726c7354d4659..23ce47b67df50 100644
---- a/drivers/nvdimm/virtio_pmem.c
-+++ b/drivers/nvdimm/virtio_pmem.c
-@@ -50,6 +50,7 @@ static int virtio_pmem_probe(struct virtio_device *vdev)
- 		goto out_err;
- 	}
- 
-+	mutex_init(&vpmem->flush_lock);
- 	vpmem->vdev = vdev;
- 	vdev->priv = vpmem;
- 	err = init_vq(vpmem);
-diff --git a/drivers/nvdimm/virtio_pmem.h b/drivers/nvdimm/virtio_pmem.h
-index 0dddefe594c46..f72cf17f9518f 100644
---- a/drivers/nvdimm/virtio_pmem.h
-+++ b/drivers/nvdimm/virtio_pmem.h
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <uapi/linux/virtio_pmem.h>
- #include <linux/libnvdimm.h>
-+#include <linux/mutex.h>
- #include <linux/spinlock.h>
- 
- struct virtio_pmem_request {
-@@ -35,6 +36,9 @@ struct virtio_pmem {
- 	/* Virtio pmem request queue */
- 	struct virtqueue *req_vq;
- 
-+	/* Serialize flush requests to the device. */
-+	struct mutex flush_lock;
-+
- 	/* nvdimm bus registers virtio pmem device */
- 	struct nvdimm_bus *nvdimm_bus;
- 	struct nvdimm_bus_descriptor nd_desc;
+ #ifdef CONFIG_DYNAMIC_FTRACE
+-
+-/* Avoid typos */
+-#define ENABLE_EVENT_STR	"enable_event"
+-#define DISABLE_EVENT_STR	"disable_event"
+-
+ struct event_probe_data {
+ 	struct trace_event_file	*file;
+ 	unsigned long			count;
 -- 
 2.51.0
 
