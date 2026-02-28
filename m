@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE9E37702A
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EC5377031
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301632; cv=none; b=sCZwr4idpl2aUPZ4wmW8WjNUbPGpXZNXRcYaAm53bfybcZ8KUoUHePADMX44p+8WaGjofcnvpg5RB/CANDMkBxku/TZn3uVtNQXx/nmD8itl3ey3a29cITjXIcDFy4+q3tyu4xKow/R08Q2GXXWPVaYgPUfgzjZ4CvBmnXxUfqQ=
+	t=1772301633; cv=none; b=a5GcC8us0YngeS4GNlPwLzop7MZ+Dk8PtJB4LFLVa9BFBlznHWZca/jHe5V+Cq2xnEG5yJAV5PO9jIHt/EkT9PhkPcWeiql+YGKziQsy7FDS8kgoQ+mBoFkMKdaHpIjM++Z+5z/QM7UsjOXh9aQcI3wCkeGEQ7EX7ypVCsqod0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301632; c=relaxed/simple;
-	bh=RFtpnhPunX2DUQZ4/rRyUHxGsw05eMJrizjF0XTaL6o=;
+	s=arc-20240116; t=1772301633; c=relaxed/simple;
+	bh=2/ObjYxlJfK7ml+w3G+Sn8zUsfj5cKOo1KBq9mdBTgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXbRFH8SIKTBf8ij9/nW1C1wgZtZs3NFD1WeJpICVrR747x3jYvteuIsZszclp0RM+pt7aYbakN4sGJ8U4pZgTRvPzKj54/PgcDQoAT/w4dNVXEz+CDtW/tSm5SBKDlDHkctze03NBAcnLh9y5FSi5cceHZ9DtbQaBVh1q4M2WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JrST/ZZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JzrgaWHrci22uuwtm8wbhoLKCiQufteEpKqSocH/Zc9zwvcsOMs9DOBuaEunCpfz/wXvE+U6+Ktbtz0zZCZ4JadmUECaPUXUeFkaZDSEWuzO2UUqf6bwyI4AFWXohpY8h/C3CRL5SHYY3uiCQlPeegZ5pzqjfd/LnSZdi9J7jsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AZcCTgyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JrST/ZZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6430AC116D0;
-	Sat, 28 Feb 2026 18:00:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AZcCTgyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B358C19424;
+	Sat, 28 Feb 2026 18:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301632;
-	bh=RFtpnhPunX2DUQZ4/rRyUHxGsw05eMJrizjF0XTaL6o=;
+	s=k20201202; t=1772301633;
+	bh=2/ObjYxlJfK7ml+w3G+Sn8zUsfj5cKOo1KBq9mdBTgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JrST/ZZGBrLGUhtAdp1df2yzqkuoZzuHWJvVIa3S4XJDEtOBfFuC9vIDeo9J4XDSw
-	 W9cKxWT/TjeWXR4IzfcUPwUXilo2BTSUfLx96hc1kkebaZhTLILWrfOiRjUWiTiqzo
-	 d1/P3AbHdZsrHGXYQGvMQSZJHPCaw813XugHSpCvnxyhnvUaTOUSmQcU1OPVv7fx8+
-	 rEyrlAE/TEnwsc8ohTPE0deW7cprieyqcUCOtEsLNDk68nQuDz5TcKkyRXJN5pxKHl
-	 7hMkrn0LCQNNqkBFYlAYnKMUMoiIbJ7HzL2S6e6Sq842X8KspRo54yz/SynV1YvdvD
-	 Xxe5M/Ivr/yLA==
+	b=AZcCTgyTkc0eqqOoy6QLwlj7iRQRzRXPVZyk2ru3XUYzwcfgmftBHMpiuhpEBs82x
+	 7A2i0N+BJ28fFz/78s4+9dxiLwxGBLSSsKQnnnn6iHNGHhnB1YQb860IQ9Tpjhp7j7
+	 H1hzKhNZZOileiahrgLIgoeVtAIpaB+xkjo+cURxBCKxXkZWCRFQBDo57CRZYk4JgV
+	 xHH0KF3pKebYuYIRqIIek6TfFkiK1eHuukCNE+xZQejjG4HeS1cjwxxyDKtjKbhv8f
+	 sluw+S/l29jpvpuBRpHS3kHgeYNZwmJq64zAJ6yM4P+y8thSrWmMLzFAevK9tFzQ6o
+	 E6xPztt+XOv2w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Christoph Hellwig <hch@lst.de>,
+	Jack Wang <jinpu.wang@ionos.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/385] block: add a bio_add_virt_nofail helper
-Date: Sat, 28 Feb 2026 12:54:06 -0500
-Message-ID: <20260228180011.1568201-24-sashal@kernel.org>
+Subject: [PATCH 6.12 025/385] rnbd-srv: use bio_add_virt_nofail
+Date: Sat, 28 Feb 2026 12:54:07 -0500
+Message-ID: <20260228180011.1568201-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -52,67 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 850e210d5ad21b94b55b97d4d82b4cdeb0bb05df ]
+[ Upstream commit a216081323a1391991c9073fed2459265bfc7f5c ]
 
-Add a helper to add a directly mapped kernel virtual address to a
-bio so that callers don't have to convert to pages or folios.
-
-For now only the _nofail variant is provided as that is what all the
-obvious callers want.
+Use the bio_add_virt_nofail to add a single kernel virtual address
+to a bio as that can't fail.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20250507120451.4000627-2-hch@lst.de
+Link: https://lore.kernel.org/r/20250507120451.4000627-10-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: 4ac9690d4b94 ("rnbd-srv: Fix server side setting of bi_size for special IOs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio.c         | 16 ++++++++++++++++
- include/linux/bio.h |  2 ++
- 2 files changed, 18 insertions(+)
+ drivers/block/rnbd/rnbd-srv.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/block/bio.c b/block/bio.c
-index 094a5adf79d23..b919f3fa2f2d4 100644
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -1119,6 +1119,22 @@ void __bio_add_page(struct bio *bio, struct page *page,
- }
- EXPORT_SYMBOL_GPL(__bio_add_page);
+diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
+index 08ce6d96d04cf..dd4d813718fd2 100644
+--- a/drivers/block/rnbd/rnbd-srv.c
++++ b/drivers/block/rnbd/rnbd-srv.c
+@@ -147,12 +147,7 @@ static int process_rdma(struct rnbd_srv_session *srv_sess,
  
-+/**
-+ * bio_add_virt_nofail - add data in the direct kernel mapping to a bio
-+ * @bio: destination bio
-+ * @vaddr: data to add
-+ * @len: length of the data to add, may cross pages
-+ *
-+ * Add the data at @vaddr to @bio.  The caller must have ensure a segment
-+ * is available for the added data.  No merging into an existing segment
-+ * will be performed.
-+ */
-+void bio_add_virt_nofail(struct bio *bio, void *vaddr, unsigned len)
-+{
-+	__bio_add_page(bio, virt_to_page(vaddr), len, offset_in_page(vaddr));
-+}
-+EXPORT_SYMBOL_GPL(bio_add_virt_nofail);
-+
- /**
-  *	bio_add_page	-	attempt to add page(s) to bio
-  *	@bio: destination bio
-diff --git a/include/linux/bio.h b/include/linux/bio.h
-index 1289b8e487801..80ca2fb879504 100644
---- a/include/linux/bio.h
-+++ b/include/linux/bio.h
-@@ -425,6 +425,8 @@ void __bio_add_page(struct bio *bio, struct page *page,
- 		unsigned int len, unsigned int off);
- void bio_add_folio_nofail(struct bio *bio, struct folio *folio, size_t len,
- 			  size_t off);
-+void bio_add_virt_nofail(struct bio *bio, void *vaddr, unsigned len);
-+
- int bio_iov_iter_get_pages(struct bio *bio, struct iov_iter *iter);
- void bio_iov_bvec_set(struct bio *bio, struct iov_iter *iter);
- void __bio_release_pages(struct bio *bio, bool mark_dirty);
+ 	bio = bio_alloc(file_bdev(sess_dev->bdev_file), 1,
+ 			rnbd_to_bio_flags(le32_to_cpu(msg->rw)), GFP_KERNEL);
+-	if (bio_add_page(bio, virt_to_page(data), datalen,
+-			offset_in_page(data)) != datalen) {
+-		rnbd_srv_err_rl(sess_dev, "Failed to map data to bio\n");
+-		err = -EINVAL;
+-		goto bio_put;
+-	}
++	bio_add_virt_nofail(bio, data, datalen);
+ 
+ 	bio->bi_opf = rnbd_to_bio_flags(le32_to_cpu(msg->rw));
+ 	if (bio_has_data(bio) &&
 -- 
 2.51.0
 
