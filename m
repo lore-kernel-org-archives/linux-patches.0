@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9B9375226;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF160375222;
 	Sat, 28 Feb 2026 17:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301551; cv=none; b=lck0+Hy+uxnkwvCKkszG7tNxKWa4QeTsJyodoZcNcoSxeaVVFbkNfqX7BG3Q9zySFPq6JT8yEZ43gcM4aCTs82p8qMDinMviBmXrrgKe0MOoH7oJBQJIlA5CR3UJSb4rzAbJoqdhvB9/EggvSYEsiQb8ogKgWJJnrR0lfNgfBtA=
+	t=1772301551; cv=none; b=l8bh/BmWVNt6COaBeJlKdU9RlrnL3iqrkcETh7Yd6R8sTjyPK3D5I1IH45OMFJA4D6eiPkiC7k6n9o9JgN0v4cIuC7ORJblJXGzc5QaLW/y6wC5lME12N5uRk76ma8VXKp5EdxIapPUfx4xkfpiZBKANWXRWy5x1S7/uoKyjWRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301551; c=relaxed/simple;
-	bh=k1DnN2Hm2VVazC3n3KjivJWVQHEahzdU2aXAU7qCdv8=;
+	bh=49oIs/oTGfxRNFYKoZCt0EzCE9469vwMbZg/yGgoTnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdHKI0cDL3PyOTqnaqemE5Zb/11dcZ6YmQc5HyNQXMQfnNK0c0ggkqh2tAGqFdUz1rfU9bH6WnfqyaBxJMj3wD6QttoQWDpWgo0jEiCVsfr4VNB9wMiZVfwHyVD/vkzWJzFeGXgsG+AgU/74BGtrbKx8ehcPfI1Al2eEUF+6snc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ov9hI3m/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uxsFI3Zffg6x7ClxIjto/37KZmCvFtqOZj12Whcna+LXjLgbFbCUa5YP/VFXhCR2qbU78P02liZJz3tabVRCnrCXPZhQIQIfE705ZTEmQkcmvu/tEDxTzgZ6fm1aWRrexWv9ksiBP9l1W1LvUjkW+kPU0ZGquiEthAzAPmg2G+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f0lTAYzc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ov9hI3m/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B04C19423;
-	Sat, 28 Feb 2026 17:59:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f0lTAYzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6BEC19424;
+	Sat, 28 Feb 2026 17:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301551;
-	bh=k1DnN2Hm2VVazC3n3KjivJWVQHEahzdU2aXAU7qCdv8=;
+	bh=49oIs/oTGfxRNFYKoZCt0EzCE9469vwMbZg/yGgoTnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ov9hI3m/yIwNJxOW8QNaQAnif6aRcm2Vu08a9txf/QEXG5C4lXdJBpQ7Qf/GzS3pL
-	 IiHuo/akqK+EHC/t/Z2TtnjLiR5MyaWTydrV0raf+3RMPbmFNpQo3iLugo/NcTY9jQ
-	 pongonxWXtQJkOM2W5UDqtz09HWlNbq9b3mdtjvtz70wvSsWWv1PEWNmJ4TcZHZSEt
-	 uFgscZexIbIiHq5ku0On4pR/XaFcGKgB5g5rOvX+aSkEHuoq0F4Mc+NNVbAD3uZe2N
-	 58R6SkntbAz/iQHxKnfjjzCiQjdAGcZir8iiW4dK48MZU4mYeZYbct/2faKzhICih2
-	 WE0CqgduBtROw==
+	b=f0lTAYzcA/ETPFib4LyUstSZwOhf0nUaJXR1zMhQfGyt+CYvNV9JUNvlYiBpWrB6s
+	 m4vsiMYK03h/xO4fmNzuy5wWkANtfYz8FPJnwk2JOYw9hEew5eUCT5+bF15/lRBclr
+	 UHfXJkSP7btXhWzq0Fl+kMh3hgw1Dt0MuppJSnlVqz2xe2Vsiwj6riJZsX8EJB6R9X
+	 sklCJvy3hAi8Tf6BrisshffC4HokQJwZGgsPkCOEkFIVIIQfdaJQYkIugs0HQp7pVs
+	 DvsrdKYeR30+vS28KCiuKWm7xrVkCpG89E1Tq1hlOEIE2bWf2ovKQAKQ0axKG6S1or
+	 96DLosdhERxsg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+Cc: Ard Biesheuvel <ardb@kernel.org>,
 	stable@vger.kernel.org,
+	Dave Young <dyoung@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 734/752] gpio: sysfs: fix chip removal with GPIOs exported over sysfs
-Date: Sat, 28 Feb 2026 12:47:25 -0500
-Message-ID: <20260228174750.1542406-734-sashal@kernel.org>
+Subject: [PATCH 6.18 735/752] x86/kexec: Copy ACPI root pointer address from config table
+Date: Sat, 28 Feb 2026 12:47:26 -0500
+Message-ID: <20260228174750.1542406-735-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,183 +48,48 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 6766f59012301f1bf3f46c6e7149caca45d92309 ]
+[ Upstream commit e00ac9e5afb5d80c0168ec88d8e8662a54af8249 ]
 
-Currently if we export a GPIO over sysfs and unbind the parent GPIO
-controller, the exported attribute will remain under /sys/class/gpio
-because once we remove the parent device, we can no longer associate the
-descriptor with it in gpiod_unexport() and never drop the final
-reference.
+Dave reports that kexec may fail when the first kernel boots via the EFI
+stub but without EFI runtime services, as in that case, the RSDP address
+field in struct bootparams is never assigned. Kexec copies this value
+into the version of struct bootparams that it provides to the incoming
+kernel, which may have no other means to locate the ACPI root pointer.
 
-Rework the teardown code: provide an unlocked variant of
-gpiod_unexport() and remove all exported GPIOs with the sysfs_lock taken
-before unregistering the parent device itself. This is done to prevent
-any new exports happening before we unregister the device completely.
+So take the value from the EFI config tables if no root pointer has been
+set in the first kernel's struct bootparams.
 
-Cc: stable@vger.kernel.org
-Fixes: 1cd53df733c2 ("gpio: sysfs: don't look up exported lines as class devices")
-Link: https://patch.msgid.link/20260212133505.81516-1-bartosz.golaszewski@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: a1b87d54f4e4 ("x86/efistub: Avoid legacy decompressor when doing EFI boot")
+Cc: <stable@vger.kernel.org> # v6.1
+Reported-by: Dave Young <dyoung@redhat.com>
+Tested-by: Dave Young <dyoung@redhat.com>
+Link: https://lore.kernel.org/linux-efi/aZQg_tRQmdKNadCg@darkstar.users.ipa.redhat.com/
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-sysfs.c | 106 ++++++++++++++++++-----------------
- 1 file changed, 55 insertions(+), 51 deletions(-)
+ arch/x86/kernel/kexec-bzimage64.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpio/gpiolib-sysfs.c b/drivers/gpio/gpiolib-sysfs.c
-index 7d5fc1ea2aa54..e044690ad412b 100644
---- a/drivers/gpio/gpiolib-sysfs.c
-+++ b/drivers/gpio/gpiolib-sysfs.c
-@@ -919,63 +919,68 @@ int gpiod_export_link(struct device *dev, const char *name,
- }
- EXPORT_SYMBOL_GPL(gpiod_export_link);
+diff --git a/arch/x86/kernel/kexec-bzimage64.c b/arch/x86/kernel/kexec-bzimage64.c
+index c3244ac680d14..f3b451eb49be1 100644
+--- a/arch/x86/kernel/kexec-bzimage64.c
++++ b/arch/x86/kernel/kexec-bzimage64.c
+@@ -192,6 +192,13 @@ setup_efi_state(struct boot_params *params, unsigned long params_load_addr,
+ 	struct efi_info *current_ei = &boot_params.efi_info;
+ 	struct efi_info *ei = &params->efi_info;
  
--/**
-- * gpiod_unexport - reverse effect of gpiod_export()
-- * @desc: GPIO to make unavailable
-- *
-- * This is implicit on gpiod_free().
-- */
--void gpiod_unexport(struct gpio_desc *desc)
-+static void gpiod_unexport_unlocked(struct gpio_desc *desc)
- {
- 	struct gpiod_data *tmp, *desc_data = NULL;
- 	struct gpiodev_data *gdev_data;
- 	struct gpio_device *gdev;
- 
--	if (!desc) {
--		pr_warn("%s: invalid GPIO\n", __func__);
-+	if (!test_bit(GPIOD_FLAG_EXPORT, &desc->flags))
- 		return;
--	}
- 
--	scoped_guard(mutex, &sysfs_lock) {
--		if (!test_bit(GPIOD_FLAG_EXPORT, &desc->flags))
--			return;
--
--		gdev = gpiod_to_gpio_device(desc);
--		gdev_data = gdev_get_data(gdev);
--		if (!gdev_data)
--			return;
-+	gdev = gpiod_to_gpio_device(desc);
-+	gdev_data = gdev_get_data(gdev);
-+	if (!gdev_data)
-+		return;
- 
--		list_for_each_entry(tmp, &gdev_data->exported_lines, list) {
--			if (gpiod_is_equal(desc, tmp->desc)) {
--				desc_data = tmp;
--				break;
--			}
-+	list_for_each_entry(tmp, &gdev_data->exported_lines, list) {
-+		if (gpiod_is_equal(desc, tmp->desc)) {
-+			desc_data = tmp;
-+			break;
- 		}
-+	}
- 
--		if (!desc_data)
--			return;
-+	if (!desc_data)
-+		return;
- 
--		list_del(&desc_data->list);
--		clear_bit(GPIOD_FLAG_EXPORT, &desc->flags);
-+	list_del(&desc_data->list);
-+	clear_bit(GPIOD_FLAG_EXPORT, &desc->flags);
- #if IS_ENABLED(CONFIG_GPIO_SYSFS_LEGACY)
--		sysfs_put(desc_data->value_kn);
--		device_unregister(desc_data->dev);
--
--		/*
--		 * Release irq after deregistration to prevent race with
--		 * edge_store.
--		 */
--		if (desc_data->irq_flags)
--			gpio_sysfs_free_irq(desc_data);
-+	sysfs_put(desc_data->value_kn);
-+	device_unregister(desc_data->dev);
-+
-+	/*
-+	 * Release irq after deregistration to prevent race with
-+	 * edge_store.
-+	 */
-+	if (desc_data->irq_flags)
-+		gpio_sysfs_free_irq(desc_data);
- #endif /* CONFIG_GPIO_SYSFS_LEGACY */
- 
--		sysfs_remove_groups(desc_data->parent,
--				    desc_data->chip_attr_groups);
--	}
-+	sysfs_remove_groups(desc_data->parent,
-+			    desc_data->chip_attr_groups);
- 
- 	mutex_destroy(&desc_data->mutex);
- 	kfree(desc_data);
- }
-+
-+/**
-+ * gpiod_unexport - reverse effect of gpiod_export()
-+ * @desc: GPIO to make unavailable
-+ *
-+ * This is implicit on gpiod_free().
-+ */
-+void gpiod_unexport(struct gpio_desc *desc)
-+{
-+	if (!desc) {
-+		pr_warn("%s: invalid GPIO\n", __func__);
-+		return;
++	if (!params->acpi_rsdp_addr) {
++		if (efi.acpi20 != EFI_INVALID_TABLE_ADDR)
++			params->acpi_rsdp_addr = efi.acpi20;
++		else if (efi.acpi != EFI_INVALID_TABLE_ADDR)
++			params->acpi_rsdp_addr = efi.acpi;
 +	}
 +
-+	guard(mutex)(&sysfs_lock);
-+
-+	gpiod_unexport_unlocked(desc);
-+}
- EXPORT_SYMBOL_GPL(gpiod_unexport);
+ 	if (!efi_enabled(EFI_RUNTIME_SERVICES))
+ 		return 0;
  
- int gpiochip_sysfs_register(struct gpio_device *gdev)
-@@ -1054,29 +1059,28 @@ void gpiochip_sysfs_unregister(struct gpio_device *gdev)
- 	struct gpio_desc *desc;
- 	struct gpio_chip *chip;
- 
--	scoped_guard(mutex, &sysfs_lock) {
--		data = gdev_get_data(gdev);
--		if (!data)
--			return;
-+	guard(mutex)(&sysfs_lock);
- 
--#if IS_ENABLED(CONFIG_GPIO_SYSFS_LEGACY)
--		device_unregister(data->cdev_base);
--#endif /* CONFIG_GPIO_SYSFS_LEGACY */
--		device_unregister(data->cdev_id);
--		kfree(data);
--	}
-+	data = gdev_get_data(gdev);
-+	if (!data)
-+		return;
- 
- 	guard(srcu)(&gdev->srcu);
--
- 	chip = srcu_dereference(gdev->chip, &gdev->srcu);
- 	if (!chip)
- 		return;
- 
- 	/* unregister gpiod class devices owned by sysfs */
- 	for_each_gpio_desc_with_flag(chip, desc, GPIOD_FLAG_SYSFS) {
--		gpiod_unexport(desc);
-+		gpiod_unexport_unlocked(desc);
- 		gpiod_free(desc);
- 	}
-+
-+#if IS_ENABLED(CONFIG_GPIO_SYSFS_LEGACY)
-+	device_unregister(data->cdev_base);
-+#endif /* CONFIG_GPIO_SYSFS_LEGACY */
-+	device_unregister(data->cdev_id);
-+	kfree(data);
- }
- 
- /*
 -- 
 2.51.0
 
