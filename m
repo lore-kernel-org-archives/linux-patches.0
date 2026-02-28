@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6E5359A72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AC9359A90
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302452; cv=none; b=JlAF9hZAjuoqJ5OD7iZvUb491UkrLoExqJOADYW07BrQSz6pRCOHXOlely4ZDJXFTOssZD6Sgqb/uxQueMEJLrq2eKThv3k6o+2VyR1sH6OhCvW6pwj+Nh8mQ8g+NwP2GonzjBI8RP6jTHEJ3K5Db+ERplNHa+7+BPtT4PDSKEI=
+	t=1772302452; cv=none; b=Gt0odiHeJX4iDwVN6lE8qVKNUyUbWCMYTmx9JKIjRHCtZQ0oCr3w+A1LOQfAkqoD5y2xaxdkBaP+MetmBlWfCW+w6OtfRkzlul4YQ5wyO0TkJApzkTQB7FvPjAB9kSIfSP4xis8MzUeQSarLOJnGgCifApSR7xA2Uv8NCX7KJ58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302452; c=relaxed/simple;
-	bh=OfClsPc+6vglVTFABxcmg4jNSV3OX7xEiyNb4x7IrfI=;
+	bh=AJGnjivqcq6Q8bcwCFRdMie3j1ywce37sfDMqI7UJvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYSSUtH8Ku+Lycs+T1otyf++SpxCbVQLd/iFol5i64ycg6fdzjHvBSreFWVxzzKb4Q2zLh7rtFGjJOm09vEuvnIqOvLB0cWIO+wfdC3CEaG9/Xn6Ivimt1p+rmYVI/btJej3OWb261iXme6yvvrZhMkYwe326yZRTggNmX/cTDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lSIOmgk+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r1+YDD48aBDlfRbQk08ckgePvQfBEnLGOojv0pDhO/aJvdp4ki/GnqoZnGYSXstPp0QenJbIVnMn6QjF15Xx89OAYTC7Rn7GiVXTx7KplsWfZhetPsBeWPf5cS3vSIIVGcudJUbe7MzjsPYr6uoGDIrLv8AxjohKscdkSCRdM/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MlNRhMYF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lSIOmgk+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AE2C116D0;
-	Sat, 28 Feb 2026 18:14:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MlNRhMYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BCEC116D0;
+	Sat, 28 Feb 2026 18:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302451;
-	bh=OfClsPc+6vglVTFABxcmg4jNSV3OX7xEiyNb4x7IrfI=;
+	s=k20201202; t=1772302452;
+	bh=AJGnjivqcq6Q8bcwCFRdMie3j1ywce37sfDMqI7UJvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSIOmgk+B7cr+pnpjF7oSUdV7c9c4/aHJ8A+jBebX1RxM3z7ZiDNYVExdR9W3Gnhm
-	 hEvMnKe5Jwva6byzVQVxVtA/5yWRWkF8MUAadcYkHQFgSBw1tGqgwZcaCRrdyzAF86
-	 RBbE3PScQgD7XFKFTC2Bxxjlk7voG7wPwuUecmqyfXrcnRFxQ1mbyDv6m8oVOL7L9q
-	 tE8i7O6pZhaEaz/Q9oOMhPxwUGLEZZEAia4Qys9QTwbfsqvQ2oQxLp6JhZgiu2RRm7
-	 UH5A8zXoHpgyd0TOIMUkYDR7tCtN9YCOT+iFTh1ew2UlapBQLrwloOa0AuWdyW3ZSd
-	 RtpFm+Gh/n+fg==
+	b=MlNRhMYF/a/oGWZLxdiaANtnWGkfESaSwBK0N8Y06OdbAYxsZBjOGqDMKMSafdFRX
+	 J17CBZBg3TCOm74L6o1EjjbFLq8pk4y4UgVpaPd1zP4nU9TJL3yLkvDk8YUveOk7tB
+	 pV/m8pOhyL6RnnRt9+fSrGjhziB97CR9xfexcdhB5gquUpk+pBdTXYbLHQRD3ucDyN
+	 T3vwSAlywktGu30VVgue+t9Uek75VJZ9vFG3pzXWKDLn+0i5OguKRpys8pjGvDg+QK
+	 bZVQf9G/lWRE/ZXhZL6vGcFfsAciwXqscPR9x+tBjDj+300FCI2KE20ezWOysXCTlI
+	 DlDkdWSWr2F3Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 192/232] Revert "mmc: rtsx_pci_sdmmc: increase power-on settling delay to 5ms"
-Date: Sat, 28 Feb 2026 13:10:45 -0500
-Message-ID: <20260228181127.1592657-192-sashal@kernel.org>
+Subject: [PATCH 6.1 193/232] mfd: arizona: Fix regulator resource leak on wm5102_clear_write_sequencer() failure
+Date: Sat, 28 Feb 2026 13:10:46 -0500
+Message-ID: <20260228181127.1592657-193-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,37 +48,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit ff112f1ecd10b72004eac05bae395e1c65f0c63c ]
+[ Upstream commit 4feb753ba6e5e5bbaba868b841a2db41c21e56fa ]
 
-This reverts commit aced969e9bf3701dc75cfca57c78c031b7875b9d.
+The wm5102_clear_write_sequencer() helper may return an error
+and just return, bypassing the cleanup sequence and causing
+regulators to remain enabled, leading to a resource leak.
 
-It was determined that this was not the correct "fix", so should be
-reverted.
+Change the direct return to jump to the err_reset label to
+properly free the resources.
 
-Fixes: aced969e9bf3 ("mmc: rtsx_pci_sdmmc: increase power-on settling delay to 5ms")
-Cc: Matthew Schwartz <matthew.schwartz@linux.dev>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1c1c6bba57f5 ("mfd: wm5102: Ensure we always boot the device fully")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251214145804.2037-1-vulab@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c | 2 +-
+ drivers/mfd/arizona-core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
-index 02da9016245bd..d063d50d69feb 100644
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -938,7 +938,7 @@ static int sd_power_on(struct realtek_pci_sdmmc *host, unsigned char power_mode)
- 	if (err < 0)
- 		return err;
- 
--	mdelay(5);
-+	mdelay(1);
- 
- 	err = rtsx_pci_write_register(pcr, CARD_OE, SD_OUTPUT_EN, SD_OUTPUT_EN);
- 	if (err < 0)
+diff --git a/drivers/mfd/arizona-core.c b/drivers/mfd/arizona-core.c
+index b1c53e0407710..9ac671ec26684 100644
+--- a/drivers/mfd/arizona-core.c
++++ b/drivers/mfd/arizona-core.c
+@@ -1106,7 +1106,7 @@ int arizona_dev_init(struct arizona *arizona)
+ 		} else if (val & 0x01) {
+ 			ret = wm5102_clear_write_sequencer(arizona);
+ 			if (ret)
+-				return ret;
++				goto err_reset;
+ 		}
+ 		break;
+ 	default:
 -- 
 2.51.0
 
