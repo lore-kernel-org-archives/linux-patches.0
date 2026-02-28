@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC803451A7
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7B7333434
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301885; cv=none; b=oyy0NeIEcjk8YqN5spLVfPleamPDhgJRteJU5yABL6FnLvI3YN2f6KWbr0ZDl4co6l1kiMQc+E03zyd4Mi8LLSO4kA3T2ltFeOCWFDPuXp41sgylk7Dn3xN3GgsFMtpt5m5MdpWYY6hPo7iZm+/NLG+qp7UndqENSxeiE9RpWvk=
+	t=1772301886; cv=none; b=o9almi/So65QiKUaSR5aIf1yO8510r1l7r6QfOQigSu/mPMm1UV4OL7NzXOTr6ruI7gLn9KwNxh1JyG6njWyH6jDRY5KAlzEIX5b2P/+P5DLIwL4nfuNpBKpPUuGzmpNH27xCaXxShNjmwjuw3L0gX/cmUdnRLjlnS2iwa8JzRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301885; c=relaxed/simple;
-	bh=y71R+/tYJyD9Nz+i0gPmEEa3UdmKkjBTSOWVKxPx0uY=;
+	s=arc-20240116; t=1772301886; c=relaxed/simple;
+	bh=SgBw40HkhmUMh/fgewbB+4Mfp0G9CWUSemRHU4y62a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=av8xCMSEUfe962rI5IE0H+WMJYY+9UIMyiow/+jJoqFOeN3F8Sg6xMO9urY/P7egwT8ujiMDroqtj4R7ei/8SeTeG2N/hI7Pyqw2rOuR20Cfmd5aIrzH/zUt0Zn09y+aOCmPXHu/sIWPb3xKUedI0J75CJqtOATWAqsF4C7fP+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=blCtn09l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=grchcr7eERKKREC+Ud7mavmMNUqwovn8mqSZIS2BIsYXuJCLJk25i78QGPisIg0PVJT82/CFlAcymU3AaKBplb6B5FXAoHofe5LmBV5wTl/GByyJw0WFx/9KlAHtwSO3EAw5B5BKSVOazQTbps5CQMa2vipLMQkVzJNV6krYte0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NXp0mUFn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="blCtn09l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9DEC116D0;
-	Sat, 28 Feb 2026 18:04:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NXp0mUFn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4089C19423;
+	Sat, 28 Feb 2026 18:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301885;
-	bh=y71R+/tYJyD9Nz+i0gPmEEa3UdmKkjBTSOWVKxPx0uY=;
+	s=k20201202; t=1772301886;
+	bh=SgBw40HkhmUMh/fgewbB+4Mfp0G9CWUSemRHU4y62a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blCtn09lyBE3PPX2N1eI/ziiNRGEUal8D8FB+lS6wSdo9dLul2x0tqEDbbibQo32L
-	 HVlNp9kjF/Tjn8glb5+BLI5/Jw8nWtqu/IMpxA2pk9POc9nZ2L9WlJ0mQ6vnyMFvFM
-	 93l5iloPUNmLcez6ruivMbKC7sjYiaoUxPzeyfkOfOhlouN8lg3fkf7xyJNSbcIIk3
-	 Cibf7e6u7yb74hnElGg1azLPLFQCe6e11Oq+CPgXiLjvjATKI8VmugtRWhM3gWmcVq
-	 ki5qoXuT87TVEGZRVVIekJ6srlQrEUJoKCWyJtORJTr8Vzd5HZDWOs1vZnh/zZUL9Y
-	 ncRrztQenTNDQ==
+	b=NXp0mUFn3ZBTTsSQOKS445IkxbbsKUgyAAa5LG0x4xQDuolUPl6pe6fodR7LemQO9
+	 OG5D7c9kkJRVCkCtWTEBtD+cG8H/cJy43stjxbnvyaoodDy9mumFiuYdjUR1hnMc+q
+	 8QMRO9BybHKZcbHU+sOIdLptJkqVjZ0NikowUrN8nE+do74hbhvYt7H9ACmvJuoHNq
+	 RjEsgvQ5R+91/XZJkdQhL4nd97mL9Tqgt4gdt8q+JMVfBsXH1hBYULHQ+xCc5ZOOc6
+	 bDikhcTImCiVw24M7jw0zjCkWCQlhFsCQG6q35+4GaYaonle8BGAOks1eqcGtAwAr3
+	 n20uh5zmTxOAA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
-	kernel test robot <lkp@intel.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+Cc: Petr Hodina <petr.hodina@protonmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	David Heidelberg <david@ixit.cz>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 311/385] clk: Move clk_{save,restore}_context() to COMMON_CLK section
-Date: Sat, 28 Feb 2026 12:58:53 -0500
-Message-ID: <20260228180011.1568201-311-sashal@kernel.org>
+Subject: [PATCH 6.12 312/385] clk: qcom: dispcc-sdm845: Enable parents for pixel clocks
+Date: Sat, 28 Feb 2026 12:58:54 -0500
+Message-ID: <20260228180011.1568201-312-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -48,115 +49,47 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert@linux-m68k.org>
+From: Petr Hodina <petr.hodina@protonmail.com>
 
-[ Upstream commit f47c1b77d0a2a9c0d49ec14302e74f933398d1a3 ]
+[ Upstream commit a1d63493634e98360140027fef49d82b1ff0a267 ]
 
-The clk_save_context() and clk_restore_context() helpers are only
-implemented by the Common Clock Framework.  They are not available when
-using legacy clock frameworks.  Dummy implementations are provided, but
-only if no clock support is available at all.
+Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
+clocks are enabled during clock operations, preventing potential
+stability issues during display configuration.
 
-Hence when CONFIG_HAVE_CLK=y, but CONFIG_COMMON_CLK is not enabled:
-
-    m68k-linux-gnu-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_resume':
-    air_en8811h.c:(.text+0x83e): undefined reference to `clk_restore_context'
-    m68k-linux-gnu-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_suspend':
-    air_en8811h.c:(.text+0x856): undefined reference to `clk_save_context'
-
-Fix this by moving forward declarations and dummy implementions from the
-HAVE_CLK to the COMMON_CLK section.
-
-Fixes: 8b95d1ce3300c411 ("clk: Add functions to save/restore clock context en-masse")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202511301553.eaEz1nEW-lkp@intel.com/
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 81351776c9fb ("clk: qcom: Add display clock controller driver for SDM845")
+Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: David Heidelberg <david@ixit.cz>
+Link: https://lore.kernel.org/r/20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/clk.h | 48 ++++++++++++++++++++++-----------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ drivers/clk/qcom/dispcc-sdm845.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/clk.h b/include/linux/clk.h
-index 851a0f2cf42c8..9488c58d8e6af 100644
---- a/include/linux/clk.h
-+++ b/include/linux/clk.h
-@@ -228,6 +228,23 @@ int devm_clk_rate_exclusive_get(struct device *dev, struct clk *clk);
-  */
- void clk_rate_exclusive_put(struct clk *clk);
- 
-+/**
-+ * clk_save_context - save clock context for poweroff
-+ *
-+ * Saves the context of the clock register for powerstates in which the
-+ * contents of the registers will be lost. Occurs deep within the suspend
-+ * code so locking is not necessary.
-+ */
-+int clk_save_context(void);
-+
-+/**
-+ * clk_restore_context - restore clock context after poweroff
-+ *
-+ * This occurs with all clocks enabled. Occurs deep within the resume code
-+ * so locking is not necessary.
-+ */
-+void clk_restore_context(void);
-+
- #else
- 
- static inline int clk_notifier_register(struct clk *clk,
-@@ -293,6 +310,13 @@ static inline int devm_clk_rate_exclusive_get(struct device *dev, struct clk *cl
- 
- static inline void clk_rate_exclusive_put(struct clk *clk) {}
- 
-+static inline int clk_save_context(void)
-+{
-+	return 0;
-+}
-+
-+static inline void clk_restore_context(void) {}
-+
- #endif
- 
- #ifdef CONFIG_HAVE_CLK_PREPARE
-@@ -931,23 +955,6 @@ struct clk *clk_get_parent(struct clk *clk);
-  */
- struct clk *clk_get_sys(const char *dev_id, const char *con_id);
- 
--/**
-- * clk_save_context - save clock context for poweroff
-- *
-- * Saves the context of the clock register for powerstates in which the
-- * contents of the registers will be lost. Occurs deep within the suspend
-- * code so locking is not necessary.
-- */
--int clk_save_context(void);
--
--/**
-- * clk_restore_context - restore clock context after poweroff
-- *
-- * This occurs with all clocks enabled. Occurs deep within the resume code
-- * so locking is not necessary.
-- */
--void clk_restore_context(void);
--
- #else /* !CONFIG_HAVE_CLK */
- 
- static inline struct clk *clk_get(struct device *dev, const char *id)
-@@ -1127,13 +1134,6 @@ static inline struct clk *clk_get_sys(const char *dev_id, const char *con_id)
- 	return NULL;
- }
- 
--static inline int clk_save_context(void)
--{
--	return 0;
--}
--
--static inline void clk_restore_context(void) {}
--
- #endif
- 
- /* clk_prepare_enable helps cases using clk_enable in non-atomic context. */
+diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
+index e6139e8f74dc0..1859c093a241b 100644
+--- a/drivers/clk/qcom/dispcc-sdm845.c
++++ b/drivers/clk/qcom/dispcc-sdm845.c
+@@ -280,7 +280,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
+ 		.name = "disp_cc_mdss_pclk0_clk_src",
+ 		.parent_data = disp_cc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_4),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_pixel_ops,
+ 	},
+ };
+@@ -295,7 +295,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk1_clk_src = {
+ 		.name = "disp_cc_mdss_pclk1_clk_src",
+ 		.parent_data = disp_cc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_4),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_pixel_ops,
+ 	},
+ };
 -- 
 2.51.0
 
