@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0188426ECD
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FB03314C3
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301184; cv=none; b=mwmOCIPKKocp1ZXPrWVwdXesu0S3WeYboNXBq+H++HFTEPdq108nj1CHrhzScXYauIo8RT1Pmc+qMujqLY5q2deM0qWVMWVgvI3E9VWnX6HEpCe2MPrg1LXVdQUzDXCseK3M1YQAMpx9TwgRwmnWNhHHOZQh0bZqCwW6SDDa+kc=
+	t=1772301185; cv=none; b=cPlIl9JPabSQ+9nftMJ6zVqCmPYHPbeDc4QISAfMGYkHRQiZJcdEUDtacChN/U+MGxzLoozXqIE2exWKiQUI0Lam/zIzyDizR9lA5oSxYY+DcdEMnIL0XpM69UVAN3XLYGm+Xs39zX7IeYcisjcJeQJDGEEeCsgz03kEJl55HeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301184; c=relaxed/simple;
-	bh=0UMkOyGjMxIoCr9XoxNfWkc7FQFB4U5HlxQCUve25mU=;
+	s=arc-20240116; t=1772301185; c=relaxed/simple;
+	bh=f1c3761UCRyf4cWsV3oJHwqJWcKxzIdOUIZpC3Sf0GI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k2JEOoU0tGEcymLbNpim8Dplthli9kAG2QQtNSdSu54H+AouYyUbqWZlI/HxV9dNl2T3PRgDlqwCqyIuPgQBmUKBZPHWbBU/5h4JqtMYjYywKFsIySYMxCpedlOs+uoizKCzH1H1dqPKpWACJGgy9aWPNkt/K4u8hppa3nWD/5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LClLwIRP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WeiGbusZ7VS8W+DrW1T7AdSgzx5RbMQ4X26BPCSAJtFxsALdgdemJVTmm6ynrDLOKSolD+Kb7g5W1UCVXdJ3l8dmIzALCUHHzP9keXj+we/qbQ9fD+W1ceBXS8EiB8vuIT5Iwku+DHC7UfPrbd1QU07CPk+wLRz4NxkuPgMeSko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TOsV5FXO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LClLwIRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0E2C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TOsV5FXO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132E2C19423;
 	Sat, 28 Feb 2026 17:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301184;
-	bh=0UMkOyGjMxIoCr9XoxNfWkc7FQFB4U5HlxQCUve25mU=;
+	s=k20201202; t=1772301185;
+	bh=f1c3761UCRyf4cWsV3oJHwqJWcKxzIdOUIZpC3Sf0GI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LClLwIRPQH2ve3drdq6OOR1wdbVGTzoBjaUTirw/ckGZ3Upzlb8GWytKg+vcyD9p5
-	 dqTPf69yPXUee6YeDO4tTA1jkC5WmH6gbi6mlGkvFnQ8ru9e+JSEj5bIIzlwqLkuJW
-	 XczsQlzYCyk/mfJMOXcQgtGweilaqCSvroTz3XWyo42RKGXPEy9VBGRkmf/rmO53RU
-	 u3SAsBJwoE8oEkwKxJUYxYCxi6L1/uxrJ1kc1n/EtG+QdTiJ3gedabjNXvbTJmQNos
-	 DXeX/OBQIXJTWNJQwI8AtTfOjP0tMZA9nDrpQLv30d/aKETZW+O5orVCfo6BtlhCfE
-	 RAba+3esk8guQ==
+	b=TOsV5FXONvWckDvHq1ajAVwEYcMHkbe79XgMo4CnvG/hJi5Jr/+SOiHuzdKbuVHT0
+	 qZyx05MOEdnpUkmufU7P7N1VDs23FhFfFGsW709jtYuRRwCZcDse6nX7lh0wKtZgf8
+	 pZ6usCN9voN/03BsJ/eDAvUSYW/DXOYqL7tKAIYhwvlTF93dd246QqTXAo2osbKQ3e
+	 nUKsi5m9VqlpiXTXLUeS5MQYzXQB8mT2QorHqzh7lq8zhah+tfgbltRTjh/NJ+HIKl
+	 7H+Oun5CFRupfX8CWpuXbabeJX7Cz0SRpma4NBfrg1K52gtsfmvCcF4J+74eixp1e2
+	 J0w9aKHG3q5rA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>,
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 354/752] mfd: intel-lpss: Add Intel Nova Lake-S PCI IDs
-Date: Sat, 28 Feb 2026 12:41:05 -0500
-Message-ID: <20260228174750.1542406-354-sashal@kernel.org>
+Subject: [PATCH 6.18 355/752] iio: Use IRQF_NO_THREAD
+Date: Sat, 28 Feb 2026 12:41:06 -0500
+Message-ID: <20260228174750.1542406-355-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -44,50 +44,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit cefd793fa17de708d043adab50e7f96f414b0f1d ]
+[ Upstream commit 04d390af97f2c28166f7ddfe1a6bda622e3a4766 ]
 
-Add Intel Nova Lake-S LPSS PCI IDs.
+The interrupt handler iio_trigger_generic_data_rdy_poll() will invoke
+other interrupt handler and this supposed to happen from within the
+hardirq.
 
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260113172151.48062-1-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Use IRQF_NO_THREAD to forbid forced-threading.
+
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel-lpss-pci.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/iio/accel/bma180.c        | 5 +++--
+ drivers/iio/adc/ad7766.c          | 2 +-
+ drivers/iio/gyro/itg3200_buffer.c | 8 +++-----
+ drivers/iio/light/si1145.c        | 2 +-
+ 4 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/mfd/intel-lpss-pci.c b/drivers/mfd/intel-lpss-pci.c
-index 8d92c895d3aef..713a5bfb1a3c2 100644
---- a/drivers/mfd/intel-lpss-pci.c
-+++ b/drivers/mfd/intel-lpss-pci.c
-@@ -437,6 +437,19 @@ static const struct pci_device_id intel_lpss_pci_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0x5ac4), (kernel_ulong_t)&bxt_spi_info },
- 	{ PCI_VDEVICE(INTEL, 0x5ac6), (kernel_ulong_t)&bxt_spi_info },
- 	{ PCI_VDEVICE(INTEL, 0x5aee), (kernel_ulong_t)&bxt_uart_info },
-+	/* NVL-S */
-+	{ PCI_VDEVICE(INTEL, 0x6e28), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e29), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e2a), (kernel_ulong_t)&tgl_spi_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e2b), (kernel_ulong_t)&tgl_spi_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e4c), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e4d), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e4e), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e4f), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e5c), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e5e), (kernel_ulong_t)&tgl_spi_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e7a), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x6e7b), (kernel_ulong_t)&ehl_i2c_info },
- 	/* ARL-H */
- 	{ PCI_VDEVICE(INTEL, 0x7725), (kernel_ulong_t)&bxt_uart_info },
- 	{ PCI_VDEVICE(INTEL, 0x7726), (kernel_ulong_t)&bxt_uart_info },
+diff --git a/drivers/iio/accel/bma180.c b/drivers/iio/accel/bma180.c
+index 8925f5279e627..7bc6761f51354 100644
+--- a/drivers/iio/accel/bma180.c
++++ b/drivers/iio/accel/bma180.c
+@@ -986,8 +986,9 @@ static int bma180_probe(struct i2c_client *client)
+ 		}
+ 
+ 		ret = devm_request_irq(dev, client->irq,
+-			iio_trigger_generic_data_rdy_poll, IRQF_TRIGGER_RISING,
+-			"bma180_event", data->trig);
++				       iio_trigger_generic_data_rdy_poll,
++				       IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
++				       "bma180_event", data->trig);
+ 		if (ret) {
+ 			dev_err(dev, "unable to request IRQ\n");
+ 			goto err_trigger_free;
+diff --git a/drivers/iio/adc/ad7766.c b/drivers/iio/adc/ad7766.c
+index 4d570383ef025..1e6bfe8765ab3 100644
+--- a/drivers/iio/adc/ad7766.c
++++ b/drivers/iio/adc/ad7766.c
+@@ -261,7 +261,7 @@ static int ad7766_probe(struct spi_device *spi)
+ 		 * don't enable the interrupt to avoid extra load on the system
+ 		 */
+ 		ret = devm_request_irq(&spi->dev, spi->irq, ad7766_irq,
+-				       IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN,
++				       IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN | IRQF_NO_THREAD,
+ 				       dev_name(&spi->dev),
+ 				       ad7766->trig);
+ 		if (ret < 0)
+diff --git a/drivers/iio/gyro/itg3200_buffer.c b/drivers/iio/gyro/itg3200_buffer.c
+index a624400a239cb..cf97adfa97274 100644
+--- a/drivers/iio/gyro/itg3200_buffer.c
++++ b/drivers/iio/gyro/itg3200_buffer.c
+@@ -118,11 +118,9 @@ int itg3200_probe_trigger(struct iio_dev *indio_dev)
+ 	if (!st->trig)
+ 		return -ENOMEM;
+ 
+-	ret = request_irq(st->i2c->irq,
+-			  &iio_trigger_generic_data_rdy_poll,
+-			  IRQF_TRIGGER_RISING,
+-			  "itg3200_data_rdy",
+-			  st->trig);
++	ret = request_irq(st->i2c->irq, &iio_trigger_generic_data_rdy_poll,
++			  IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
++			  "itg3200_data_rdy", st->trig);
+ 	if (ret)
+ 		goto error_free_trig;
+ 
+diff --git a/drivers/iio/light/si1145.c b/drivers/iio/light/si1145.c
+index f8eb251eca8dc..ef0abc4499b74 100644
+--- a/drivers/iio/light/si1145.c
++++ b/drivers/iio/light/si1145.c
+@@ -1248,7 +1248,7 @@ static int si1145_probe_trigger(struct iio_dev *indio_dev)
+ 
+ 	ret = devm_request_irq(&client->dev, client->irq,
+ 			  iio_trigger_generic_data_rdy_poll,
+-			  IRQF_TRIGGER_FALLING,
++			  IRQF_TRIGGER_FALLING | IRQF_NO_THREAD,
+ 			  "si1145_irq",
+ 			  trig);
+ 	if (ret < 0) {
 -- 
 2.51.0
 
