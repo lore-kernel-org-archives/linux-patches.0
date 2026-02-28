@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5E6372228;
-	Sat, 28 Feb 2026 17:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE141372242;
+	Sat, 28 Feb 2026 17:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301487; cv=none; b=t7MbOHtqPajw7RhRw/6XHF6IFqf6BkjEElkQlc6DCTOkw102HdkBF/vi/LElKX7ZpCf2gcTR2jNUcq2EQOf7M5L0iuTKqupVBqZeLnyKUYPF6nt5YZFXCumcsIz5cMPe6E16KcAQk1kzgGMsAprWMUru2UaPIDuGeDzIuLEIP0E=
+	t=1772301488; cv=none; b=BNfDBkCaa1egNM1KsGqD4aTU//216/yiHNSR0xHYnXbxVk5T/5fErlmHtbKJmR32j49tNSU5ftAeR6nk4qSK6j9nnoTjLdnsMJJYZoBhXGTrGcgTUshYKd3FOCBBpSeCCH20UFxHDa3uYiMQiLhdcUbYVtIl7woDCdLl4KAj43s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301487; c=relaxed/simple;
-	bh=zxQD0QF20d25dMynZ6egejmOa/yapQiB1fmBclY3TLU=;
+	s=arc-20240116; t=1772301488; c=relaxed/simple;
+	bh=XmUWvmMkqZbf6OY/z1ICtchVT2A7ctd9pKK+1ZnxMOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IXWgv/TS9TIcjIU6sYEXXlDLFK7cFoJMERoUNqgn5R9uXrZqEAw26Fjd0afT6TqhzgILSKZyl46fktlqGbZdPv/aR0UIsXdVHkil25qb0iLXtCLTHMGdVbOQIZRoYFHPUnsHhnRqKfNxl51+QtAMTSpDPJjEyjpNSW9wPkcn0Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B3OFxcEE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VoKeglQubLu4bkWbmPqpKqqUcK1teRyUZmQSQFMa8QbAnXbVBegtxfmA24eSdxeegTcK1dAe8aWOdNTC01CYGu68GhHKjd4CKQ7U8v0zZzTN/lFOSuorU1pECziuFsRBhjbO6J9dgfn7TTEg3XLpqbuoXiIL2yqKZz+mV+oUDIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lHn9QoQK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B3OFxcEE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7EAC19423;
-	Sat, 28 Feb 2026 17:58:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lHn9QoQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01482C19424;
+	Sat, 28 Feb 2026 17:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301487;
-	bh=zxQD0QF20d25dMynZ6egejmOa/yapQiB1fmBclY3TLU=;
+	s=k20201202; t=1772301488;
+	bh=XmUWvmMkqZbf6OY/z1ICtchVT2A7ctd9pKK+1ZnxMOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3OFxcEE7r6eWyBCCgPqgIbN/QcnUxY/Y/ODuAqXxvVknj7uChsOW1mTWB+fDZHjJ
-	 lWqjpvGIIp3XOS0x0d57Zp6QfqAs/yt73QpRB+zJpPo0Jv3nEERzxAg3TND4+zLw5K
-	 F9orj0uC1yweqixWkHo/W2N3rOCpJdzzUPixkUXCE1khfDjOGIEO3z+cZb588N3oCr
-	 zb03YV2nD7W49YlyiPWc5HXs86arYiZxrEyTIXuiXPDgAzNmQWifTJSpEv2zyoJ689
-	 SnBauR+MavAq6sBhPWeK5gZZiN4U+95VbsCoXIFFCFdZPgRUifVQlA3uUwFl4bGkrQ
-	 W7G/Xdj2XmJkQ==
+	b=lHn9QoQKlOghgr3nJ/RJDi2X07CIQTOYt0YM/1zs45mCo5eJ4x9Nf8AsTDkJYDw2j
+	 GRtq2TRNVROThu8jQ01S3odtUJJc8zhbF6OJuQz/EmoFlT3HQ2RgGqn/KCmYnGRy4x
+	 lZDGieFtVDGEFlQDFJSBlMSMphIVxKS+xaTqzJoZs/LoY+XyyjkQrolc/8JAD3uj7u
+	 FLX0JTEvZVIJLHWuBSf+c8EvpkZnO6uHvK0FDur5MZ897lTtzWyKjAnA8krJepvJOe
+	 mwVZhOVjzdW0bqG+5BUsOIjYN+ZZrI++waz/I/rVeksYZxDpsixcSXYLeQy8ifVHmF
+	 Y0QsVdZuQtFcQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sizhe Liu <liusizhe5@huawei.com>,
+Cc: Jinhui Guo <guojinhui.liam@bytedance.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	stable@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 673/752] PCI: Don't claim disabled bridge windows
-Date: Sat, 28 Feb 2026 12:46:24 -0500
-Message-ID: <20260228174750.1542406-673-sashal@kernel.org>
+Subject: [PATCH 6.18 674/752] PCI: Fix pci_slot_trylock() error handling
+Date: Sat, 28 Feb 2026 12:46:25 -0500
+Message-ID: <20260228174750.1542406-674-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -45,68 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-[ Upstream commit 2ecc1bf14e2fdaff78bd1b8e7ed3dba336a3fad5 ]
+[ Upstream commit 9368d1ee62829b08aa31836b3ca003803caf0b72 ]
 
-The commit 8278c6914306 ("PCI: Preserve bridge window resource type flags")
-changed bridge window resource behavior such that flags are no longer zero
-if the bridge window is not valid or is disabled (mainly to preserve the
-type flags for later use). If a bridge window has its limit smaller than
-base address, pci_read_bridge_*() sets both IORESOURCE_UNSET and
-IORESOURCE_DISABLED to indicate the bridge window exists but is not valid
-with the current base and limit configuration.
+Commit a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
+delegates the bridge device's pci_dev_trylock() to pci_bus_trylock() in
+pci_slot_trylock(), but it forgets to remove the corresponding
+pci_dev_unlock() when pci_bus_trylock() fails.
 
-The code in pci_claim_bridge_resources() still depends on the old behavior
-of checking validity of the bridge window solely based on !r->flags,
-whereas after 8278c6914306, also IORESOURCE_DISABLED may indicate bridge
-window addresses are not valid.
+Before a4e772898f8b, the code did:
 
-While pci_claim_resource() does check IORESOURCE_UNSET,
-pci_claim_bridge_resource() attempts to clip the resource if
-pci_claim_resource() fails, which is not correct for bridge window
-resources that are not valid. As pci_bus_clip_resource() performs clipping
-regardless of flags and then clears IORESOURCE_UNSET, it should not be
-called unless the resource is valid.
+  if (!pci_dev_trylock(dev)) /* <- lock bridge device */
+    goto unlock;
+  if (dev->subordinate) {
+    if (!pci_bus_trylock(dev->subordinate)) {
+      pci_dev_unlock(dev);   /* <- unlock bridge device */
+      goto unlock;
+    }
+  }
 
-The problem is visible in this log:
+After a4e772898f8b the bridge-device lock is no longer taken, but the
+pci_dev_unlock(dev) on the failure path was left in place, leading to the
+bug.
 
-  pci 0000:20:00.0: PCI bridge to [bus 21]
-  pci 0000:20:00.0: bridge window [io  size 0x0000 disabled]: can't claim; no address assigned
-  pci 0000:20:00.0: [io  0x0000-0xffffffffffffffff disabled] clipped to [io 0x0000-0xffff disabled]
+This yields one of two errors:
 
-Add IORESOURCE_DISABLED check in pci_claim_bridge_resources() to only
-claim bridge windows that appear to have a valid configuration.
+  1. A warning that the lock is being unlocked when no one holds it.
+  2. An incorrect unlock of a lock that belongs to another thread.
 
-Fixes: 8278c6914306 ("PCI: Preserve bridge window resource type flags")
-Reported-by: Sizhe Liu <liusizhe5@huawei.com>
-Link: https://lore.kernel.org/all/20260203023545.2753811-1-liusizhe5@huawei.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fix it by removing the now-redundant pci_dev_unlock(dev) on the failure
+path.
+
+[Same patch later posted by Keith at
+https://patch.msgid.link/20260116184150.3013258-1-kbusch@meta.com]
+
+Fixes: a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/4d9228d6-a230-6ddf-e300-fbf42d523863@linux.intel.com
+Link: https://patch.msgid.link/20251212145528.2555-1-guojinhui.liam@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/pci.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index 5d15298469cbc..c2d640164f697 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -1681,6 +1681,8 @@ static void pci_claim_bridge_resources(struct pci_dev *dev)
- 
- 		if (!r->flags || r->parent)
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 7858121344655..d4e70570d09f2 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5500,10 +5500,8 @@ static int pci_slot_trylock(struct pci_slot *slot)
+ 		if (!dev->slot || dev->slot != slot)
  			continue;
-+		if (r->flags & IORESOURCE_DISABLED)
-+			continue;
- 
- 		pci_claim_bridge_resource(dev, i);
+ 		if (dev->subordinate) {
+-			if (!pci_bus_trylock(dev->subordinate)) {
+-				pci_dev_unlock(dev);
++			if (!pci_bus_trylock(dev->subordinate))
+ 				goto unlock;
+-			}
+ 		} else if (!pci_dev_trylock(dev))
+ 			goto unlock;
  	}
 -- 
 2.51.0
