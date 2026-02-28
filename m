@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A819144A730;
-	Sat, 28 Feb 2026 17:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDA144B686;
+	Sat, 28 Feb 2026 17:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301280; cv=none; b=C178pXNK+KHHFjEoPdGeVymLSibGw9uEFqRcSiWYz35b4WkrbHvz294uVZYfzvOz6qtRmeGxxruV9glcCHBtBa+qtnGCnAE1kIgcqyWh2sB4dHfBYCyDKFabdBjW7iIAx7ZhW5UntgaAIrUWgWCpiDDphBBkt09Dt27bv4rHjCE=
+	t=1772301281; cv=none; b=Zw8E+nbSrshq8cFd1lrfKtAALERMBPPh7vDXtff5C64JlSQnVPEV44P99nsGqL6lvf3tt/BKqCGv2ttDWzYX4C3OMpy9js/qaTEOPkPG3qSbl3+vD1ocndIYaDHicxPPq2ynINkKZrT5wjSs9hl1MkXFuHV6oFwtMkoM04x0JOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301280; c=relaxed/simple;
-	bh=auVoWXV1RNh0FwXOVbRVyFBpw7870SHSuTh2DfWtG9A=;
+	s=arc-20240116; t=1772301281; c=relaxed/simple;
+	bh=gFiBiJN5gHtn8/5nUyXBJeb3LWUklhye6VF7SCOesm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o78+kmK7w+HOWs/HGd1+IStWbU8T4tGwFeeRYURKLB9CNrE1mmBotzrcGR1yp+XFWUflhRinqPW1+J25IoovIj8FHAlPX+vK7aGTOm+kihphQn8Ft13caT30moHTXH9LfTADdgSjLNNn3bDcmVRmHtrFTvyQNBO9zDcZ7Da00lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rc44y7o8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f8Rz69vmnczIXWe01/d2BzE9YKl1qnXJ2pkiJcWXETHJC5aFazSN6HVBPBbUVkUijy8Q1hva1cFLxo6CvN1WdkUGjNey/mnULdhsd9aVYGWRJGDfxqF9llpwXrYMatQHFuA+qsVnWTdl7hMIqY/WYCqzdrbYK1BbgTlQ4IYynic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z6x73Zz8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rc44y7o8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A82C116D0;
-	Sat, 28 Feb 2026 17:54:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z6x73Zz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17F2C19424;
+	Sat, 28 Feb 2026 17:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301280;
-	bh=auVoWXV1RNh0FwXOVbRVyFBpw7870SHSuTh2DfWtG9A=;
+	s=k20201202; t=1772301281;
+	bh=gFiBiJN5gHtn8/5nUyXBJeb3LWUklhye6VF7SCOesm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rc44y7o8kg2pojuA1oRfBzIAvuxx79Z6N7BSXlQR/9+uLKoIgsDqFCHHNzdS4oUW2
-	 yWLNBtF61Lns+TZ08XBbn1qPiDZmWbXO5LIh+8VIo3tmEAqq5wnZ8uF19UKzRaptCQ
-	 nDfLovY83+YW3lKKgdEoA5ZTKGc63LOfpxSJFOE7Po5LveEtfP3DHdWvSCF0whw/K3
-	 6RZV2xoNIcswee9kpTUZOKXf9Ed3mj0Wf5/vRqH1vX4ZKdA0+aACbAQNoLdbFb/pJ5
-	 jPsaUzzFWKRbqhvKSXvGUJD6n/z51dcPDWLdB/2JHnMqcj3ah+uVkOD3P7zsb1BbYS
-	 BK6wdLTPZYjgQ==
+	b=Z6x73Zz8MHMz5nKTRFVV2p/LixENzvb8lhwrMEbdgUexOp1+/WL3wrLQHTEgVthVW
+	 +wWQSUZdSpixhvnLjtajfF/SxDiT9DQ4PtYRsmhTBrGo/4dl0zRw1O2Ct6zHvpGMwF
+	 fFMx6o/s33WblxBPw4CdO47bAfRBqowQa8pbBCGhAxOZgOld/pF8hr/G4dGMRT71yi
+	 Ei/KibbB8C5HXevt6iCCj6Ax5ErHcE4Re/nhHLcB1g9VUVBhvLvtZR7TXrqnTh3C/3
+	 1KVAhEEEkpgdtS2ODv/pTCgpptijd6/nUwqecvd90BFKbesZbleTfEhPz9R2Uxd6cJ
+	 QcmrHrwMAk0Ag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+Cc: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
 	stable@vger.kernel.org,
-	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 464/752] ASoC: SOF: ipc4-control: Keep the payload size up to date
-Date: Sat, 28 Feb 2026 12:42:55 -0500
-Message-ID: <20260228174750.1542406-464-sashal@kernel.org>
+Subject: [PATCH 6.18 465/752] fpga: dfl: use subsys_initcall to allow built-in drivers to be added
+Date: Sat, 28 Feb 2026 12:42:56 -0500
+Message-ID: <20260228174750.1542406-465-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -52,97 +49,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit ebcfdbe4add923dfb690e6fb9d158da87ae0b6bf ]
+[ Upstream commit 267f53140c9d0bf270bbe0148082e9b8e5011273 ]
 
-When the bytes data is read from the firmware, the size of the payload
-can be different than what it was previously.
-For example when the topology did not contained payload data at all for the
-control, the data size was 0.
-For get operation allow maximum size of payload to be read and then update
-the sizes according to the completed message.
+The dfl code adds a bus. If it is built-in and there is a built-in driver
+as well, the dfl module_init may be called after the driver module_init,
+leading to a failure to register the driver as the bus has not been added
+yet.
 
-Similarly, keep the size in sync when updating the data in firmware.
+Use subsys_initcall, which guarantees it will be called before the drivers
+init code.
 
-With the change we will be able to read data from firmware for bytes
-controls which did not had initial payload defined in topology.
+Without the fix, we see failures like this:
 
-Fixes: a062c8899fed ("ASoC: SOF: ipc4-control: Add support for bytes control get and put")
+[    0.479475] Driver 'intel-m10-bmc' was unable to register with bus_type 'dfl' because the bus was not initialized.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://patch.msgid.link/20251217143945.2667-5-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9ba3a0aa09fe ("fpga: dfl: create a dfl bus type to support DFL devices")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://lore.kernel.org/r/20251215-dfl_subsys-v1-1-21807bad6b10@igalia.com
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-control.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/fpga/dfl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/ipc4-control.c b/sound/soc/sof/ipc4-control.c
-index 80111672c1796..453ed1643b89c 100644
---- a/sound/soc/sof/ipc4-control.c
-+++ b/sound/soc/sof/ipc4-control.c
-@@ -426,13 +426,21 @@ static int sof_ipc4_set_get_bytes_data(struct snd_sof_dev *sdev,
- 	msg->extension = SOF_IPC4_MOD_EXT_MSG_PARAM_ID(data->type);
- 
- 	msg->data_ptr = data->data;
--	msg->data_size = data->size;
-+	if (set)
-+		msg->data_size = data->size;
-+	else
-+		msg->data_size = scontrol->max_size - sizeof(*data);
- 
- 	ret = sof_ipc4_set_get_kcontrol_data(scontrol, set, lock);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(sdev->dev, "Failed to %s for %s\n",
- 			set ? "set bytes update" : "get bytes",
- 			scontrol->name);
-+	} else if (!set) {
-+		/* Update the sizes according to the received payload data */
-+		data->size = msg->data_size;
-+		scontrol->size = sizeof(*cdata) + sizeof(*data) + data->size;
-+	}
- 
- 	msg->data_ptr = NULL;
- 	msg->data_size = 0;
-@@ -448,6 +456,7 @@ static int sof_ipc4_bytes_put(struct snd_sof_control *scontrol,
- 	struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
- 	struct sof_abi_hdr *data = cdata->data;
- 	size_t size;
-+	int ret;
- 
- 	if (scontrol->max_size > sizeof(ucontrol->value.bytes.data)) {
- 		dev_err_ratelimited(scomp->dev,
-@@ -469,9 +478,12 @@ static int sof_ipc4_bytes_put(struct snd_sof_control *scontrol,
- 	/* copy from kcontrol */
- 	memcpy(data, ucontrol->value.bytes.data, size);
- 
--	sof_ipc4_set_get_bytes_data(sdev, scontrol, true, true);
-+	ret = sof_ipc4_set_get_bytes_data(sdev, scontrol, true, true);
-+	if (!ret)
-+		/* Update the cdata size */
-+		scontrol->size = sizeof(*cdata) + size;
- 
--	return 0;
-+	return ret;
+diff --git a/drivers/fpga/dfl.c b/drivers/fpga/dfl.c
+index 7022657243c0a..449c3a082e232 100644
+--- a/drivers/fpga/dfl.c
++++ b/drivers/fpga/dfl.c
+@@ -2018,7 +2018,7 @@ static void __exit dfl_fpga_exit(void)
+ 	bus_unregister(&dfl_bus_type);
  }
  
- static int sof_ipc4_bytes_get(struct snd_sof_control *scontrol,
-@@ -581,6 +593,9 @@ static int sof_ipc4_bytes_ext_put(struct snd_sof_control *scontrol,
- 		return -EFAULT;
- 	}
+-module_init(dfl_fpga_init);
++subsys_initcall(dfl_fpga_init);
+ module_exit(dfl_fpga_exit);
  
-+	/* Update the cdata size */
-+	scontrol->size = sizeof(*cdata) + header.length;
-+
- 	return sof_ipc4_set_get_bytes_data(sdev, scontrol, true, true);
- }
- 
+ MODULE_DESCRIPTION("FPGA Device Feature List (DFL) Support");
 -- 
 2.51.0
 
