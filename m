@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9964A3402
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1979E4A33F2
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300995; cv=none; b=u5zF/Wt43Bt7ZY2kmsb1U/TogbLoiHINYF2Lo5m2OxwINfITdkWHtAB1F5KVqLHTUhlLvGfJ+ntvAyFY29x+fz7nXDsWBrWCwjfLzQo+ekhncgk6/nzds6De7CkSMwgSVrJ74QqSTTgU05xsahlVVMkhb0bizUFFrEh4OXUPGi0=
+	t=1772300996; cv=none; b=qgX2AKMHgItSIyCayysSjLds2OSUWomvoI+ctZgONfnme4dq7M9zeqV+rJrRLACTi6nocULGk788v42CepscmmH/bQvjbCbBEt8HREp7DxtjE7bNERPKxTwutX5jjofgkHBcwvySWkIm7gdCJ+NkFLSbs75+sKyZlhphr7/+KSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300995; c=relaxed/simple;
-	bh=IdhmLKuWOidnkaxRzWz3RCEfg4U/Ju35W0NcPka7ons=;
+	s=arc-20240116; t=1772300996; c=relaxed/simple;
+	bh=9FS0Rl3rOFg+dN6V++aP4jwOMvB+C59lHo7wwSNbwXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/3+ogx+DZDHNMSSP92G/VjgelFdjQaKoGZxX+CK4sbfjyg43Fqf/dagDW/U4QF4PEAEcBsvYBIpANM7mLSmDtGH5McuFkybhrkCEU8wDnAbPuROh3iRG0O7CYFRQ1MB6SWmtsQz7SDhHxc4iviQ9nkQ6bob+15f7dacOy1dEJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qnloNGlm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=goq5F9fNfJYR3kkanMAOWh57o4s9GIMt6+1todqp0y3KKWAyI0HLPrJdOKlV2Yw55xYdblDynN7IbXaz4lVstJosRX6rNBl2hgACdg7aiHKr+uC4tFdMIgySVMW7IeRpHB9l0fB6ZD97jaIKg+xswqYrmRzSmL6XuKx4m6hwk4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vEDXxPgW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qnloNGlm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D68FC19424;
-	Sat, 28 Feb 2026 17:49:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vEDXxPgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611F3C19424;
+	Sat, 28 Feb 2026 17:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772300995;
-	bh=IdhmLKuWOidnkaxRzWz3RCEfg4U/Ju35W0NcPka7ons=;
+	bh=9FS0Rl3rOFg+dN6V++aP4jwOMvB+C59lHo7wwSNbwXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnloNGlm9EyNKufyiI/BnU9K0ufEUCi6n3KHoYmmZR5HBGYTsuZgWmnfrVPSytC0r
-	 OJkPNmndZzbOfOFEMEo0V7SLkm8Euon9Nfr+NtGKxgXHqM1wpc6HNF6krJ9DliGKF1
-	 CcgBhqE/kamBkSnpTYGOs/TYGwyYmVDRZSKZUNeVHRW6lcTIxccexZWRLnOxhstQCN
-	 hRevNAYGzdbhzpaGqktqCc9dpuU2SSqrKfRdisg3nZNoYt2y73dpQtj3AHlRj98OFw
-	 vwZDDlB54TCYKm1P1MCayq1ik8GF9jc1aviREdyqC4d+x+H2OfRprK4WK8HDlJAGgU
-	 Bv16EH1pZWIzg==
+	b=vEDXxPgWqi34yi8SArEkTnacDR8cFDWuUcISbXTFuGGNmE532Z1C36enVk82O70vD
+	 evLMbNRypXIZioIQ6tKdnDGXoQZl9bGOvpSdldsy2UCRccLKJw9GS0gGYmhfdZv1nO
+	 a9dyNZmvP8fYgpU8NRBRG4gYEYLOD+mylJ0WXab3Rhuc1LnK1FSYOHbcEpe06YREG2
+	 QrGk64i8H/vqR4pwbXuz5Wn4GVVPCqOxpDICSq/9mBSn/dDuD6x9zswKut2bn2wd1Y
+	 A0WXvde6BqNK3h0wuAGCEpSw6HLfq9JmMX5A2c7lyOPu3ycl5/p5EkPLtLbKeBBtKn
+	 eNlw2SL0fEJwg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Hans Verkuil <hverkuil@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+Cc: Jan Remmet <j.remmet@phytec.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 126/752] media: dvb-core: dmxdevfilter must always flush bufs
-Date: Sat, 28 Feb 2026 12:37:17 -0500
-Message-ID: <20260228174750.1542406-126-sashal@kernel.org>
+Subject: [PATCH 6.18 127/752] gpio: pca953x: Add support for TCAL6408 TCAL6416
+Date: Sat, 28 Feb 2026 12:37:18 -0500
+Message-ID: <20260228174750.1542406-127-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,108 +47,71 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: Jan Remmet <j.remmet@phytec.de>
 
-[ Upstream commit c4e620eccbef76aa5564ebb295e23d6540e27215 ]
+[ Upstream commit a30a9cb9bca4296d25f253619883e7013b6be158 ]
 
-Currently the buffers are being filled until full, which works fine
-for the transport stream, but not when reading sections, those have
-to be returned to userspace immediately, otherwise dvbv5-scan will
-just wait forever.
+TCAL6408 and TCAL6416 supports latchable inputs and maskable interrupt.
+Tested on a TCAL6416, checked datasheets for the TCAL6408.
 
-Add a 'flush' argument to dvb_vb2_fill_buffer to indicate whether
-the buffer must be flushed or wait until it is full.
+They use the same programming model ad the NXP PCAL64xx, but
+support a lower supply power (1.08V to 3.6V) compared to PCAL
+(1.65V to 5.5V)
 
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Datasheet: https://www.ti.com/lit/ds/symlink/tcal6408.pdf
+Datasheet: https://www.ti.com/lit/ds/symlink/tcal6416.pdf
+
+Signed-off-by: Jan Remmet <j.remmet@phytec.de>
+Link: https://lore.kernel.org/r/20251216-wip-jremmet-tcal6416rtw-v2-3-6516d98a9836@phytec.de
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dmxdev.c  | 8 ++++----
- drivers/media/dvb-core/dvb_vb2.c | 5 +++--
- include/media/dvb_vb2.h          | 6 ++++--
- 3 files changed, 11 insertions(+), 8 deletions(-)
+ drivers/gpio/Kconfig        | 4 ++--
+ drivers/gpio/gpio-pca953x.c | 6 ++++++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dmxdev.c b/drivers/media/dvb-core/dmxdev.c
-index 151177e5a06d8..8a9cca6da3e0e 100644
---- a/drivers/media/dvb-core/dmxdev.c
-+++ b/drivers/media/dvb-core/dmxdev.c
-@@ -397,11 +397,11 @@ static int dvb_dmxdev_section_callback(const u8 *buffer1, size_t buffer1_len,
- 	if (dvb_vb2_is_streaming(&dmxdevfilter->vb2_ctx)) {
- 		ret = dvb_vb2_fill_buffer(&dmxdevfilter->vb2_ctx,
- 					  buffer1, buffer1_len,
--					  buffer_flags);
-+					  buffer_flags, true);
- 		if (ret == buffer1_len)
- 			ret = dvb_vb2_fill_buffer(&dmxdevfilter->vb2_ctx,
- 						  buffer2, buffer2_len,
--						  buffer_flags);
-+						  buffer_flags, true);
- 	} else {
- 		ret = dvb_dmxdev_buffer_write(&dmxdevfilter->buffer,
- 					      buffer1, buffer1_len);
-@@ -452,10 +452,10 @@ static int dvb_dmxdev_ts_callback(const u8 *buffer1, size_t buffer1_len,
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index e053524c5e35f..4d644dcecad93 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -1194,11 +1194,11 @@ config GPIO_PCA953X
  
- 	if (dvb_vb2_is_streaming(ctx)) {
- 		ret = dvb_vb2_fill_buffer(ctx, buffer1, buffer1_len,
--					  buffer_flags);
-+					  buffer_flags, false);
- 		if (ret == buffer1_len)
- 			ret = dvb_vb2_fill_buffer(ctx, buffer2, buffer2_len,
--						  buffer_flags);
-+						  buffer_flags, false);
- 	} else {
- 		if (buffer->error) {
- 			spin_unlock(&dmxdevfilter->dev->lock);
-diff --git a/drivers/media/dvb-core/dvb_vb2.c b/drivers/media/dvb-core/dvb_vb2.c
-index 29edaaff7a5c9..7444bbc2f24d9 100644
---- a/drivers/media/dvb-core/dvb_vb2.c
-+++ b/drivers/media/dvb-core/dvb_vb2.c
-@@ -249,7 +249,8 @@ int dvb_vb2_is_streaming(struct dvb_vb2_ctx *ctx)
+ 	  8 bits:       max7310, max7315, pca6107, pca9534, pca9538, pca9554,
+ 	                pca9556, pca9557, pca9574, tca6408, tca9554, xra1202,
+-			pcal6408, pcal9554b, tca9538
++			pcal6408, pcal9554b, tca9538, tcal6408
  
- int dvb_vb2_fill_buffer(struct dvb_vb2_ctx *ctx,
- 			const unsigned char *src, int len,
--			enum dmx_buffer_flags *buffer_flags)
-+			enum dmx_buffer_flags *buffer_flags,
-+			bool flush)
- {
- 	unsigned long flags = 0;
- 	void *vbuf = NULL;
-@@ -306,7 +307,7 @@ int dvb_vb2_fill_buffer(struct dvb_vb2_ctx *ctx,
- 		}
- 	}
+ 	  16 bits:      max7312, max7313, pca9535, pca9539, pca9555, pca9575,
+ 	                tca6416, pca6416, pcal6416, pcal9535, pcal9555a, max7318,
+-			tca9539
++			tca9539, tcal6416
  
--	if (ctx->nonblocking && ctx->buf) {
-+	if (flush && ctx->buf) {
- 		vb2_set_plane_payload(&ctx->buf->vb, 0, ll);
- 		vb2_buffer_done(&ctx->buf->vb, VB2_BUF_STATE_DONE);
- 		list_del(&ctx->buf->list);
-diff --git a/include/media/dvb_vb2.h b/include/media/dvb_vb2.h
-index 8cb88452cd6c2..0fbbfc65157e6 100644
---- a/include/media/dvb_vb2.h
-+++ b/include/media/dvb_vb2.h
-@@ -124,7 +124,7 @@ static inline int dvb_vb2_release(struct dvb_vb2_ctx *ctx)
- 	return 0;
+ 	  18 bits:	tca6418
+ 
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index 34cadce9b3101..f7daeadaea57c 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -126,6 +126,9 @@ static const struct i2c_device_id pca953x_id[] = {
+ 	{ "tca9539", 16 | PCA953X_TYPE | PCA_INT, },
+ 	{ "tca9554", 8  | PCA953X_TYPE | PCA_INT, },
+ 	{ "xra1202", 8  | PCA953X_TYPE },
++
++	{ "tcal6408", 8  | PCA953X_TYPE | PCA_LATCH_INT, },
++	{ "tcal6416", 16 | PCA953X_TYPE | PCA_LATCH_INT, },
+ 	{ }
  };
- #define dvb_vb2_is_streaming(ctx) (0)
--#define dvb_vb2_fill_buffer(ctx, file, wait, flags) (0)
-+#define dvb_vb2_fill_buffer(ctx, file, wait, flags, flush) (0)
+ MODULE_DEVICE_TABLE(i2c, pca953x_id);
+@@ -1466,6 +1469,9 @@ static const struct of_device_id pca953x_dt_ids[] = {
+ 	{ .compatible = "ti,tca9538", .data = OF_953X( 8, PCA_INT), },
+ 	{ .compatible = "ti,tca9539", .data = OF_953X(16, PCA_INT), },
  
- static inline __poll_t dvb_vb2_poll(struct dvb_vb2_ctx *ctx,
- 				    struct file *file,
-@@ -166,10 +166,12 @@ int dvb_vb2_is_streaming(struct dvb_vb2_ctx *ctx);
-  * @buffer_flags:
-  *		pointer to buffer flags as defined by &enum dmx_buffer_flags.
-  *		can be NULL.
-+ * @flush:	flush the buffer, even if it isn't full.
-  */
- int dvb_vb2_fill_buffer(struct dvb_vb2_ctx *ctx,
- 			const unsigned char *src, int len,
--			enum dmx_buffer_flags *buffer_flags);
-+			enum dmx_buffer_flags *buffer_flags,
-+			bool flush);
- 
- /**
-  * dvb_vb2_poll - Wrapper to vb2_core_streamon() for Digital TV
++	{ .compatible = "ti,tcal6408", .data = OF_953X( 8, PCA_LATCH_INT), },
++	{ .compatible = "ti,tcal6416", .data = OF_953X(16, PCA_LATCH_INT), },
++
+ 	{ .compatible = "onnn,cat9554", .data = OF_953X( 8, PCA_INT), },
+ 	{ .compatible = "onnn,pca9654", .data = OF_953X( 8, PCA_INT), },
+ 	{ .compatible = "onnn,pca9655", .data = OF_953X(16, PCA_INT), },
 -- 
 2.51.0
 
