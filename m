@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1252038CFFE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D445138D017
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302177; cv=none; b=ERFlbtkC5APvK+Ur/ctsuGIO633AX1Hw1DY9OFWopZ8S3FCZ1DGYhAJC2TToWs6Pd9/rC4u4d5KjUxlfDobNOefXi0yQTyHfeC69oaNwEmpJ8PETVgyMa01r39NN6mD93u+i/iRRbAaHaTMYRlmBv6mjPOTHjWKHMs/9jcBmo+Q=
+	t=1772302177; cv=none; b=EpetLr7Q5U7n8oa7y65kiNMGH8DXDXEOPcEA3UC+hbrNv88DVqGiPWiMgiOUO4XEfSpq38xPqZvk3llh+scEeG1rvYF0xvTBO11be0O7NNzY5qO5i6EnUIYTTKf0mpJtALOzxNeUb1Q6hDh2zIoxGADQniSsGjxsPX2lsEdSl3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302177; c=relaxed/simple;
-	bh=6aGQ9EXmxtkg3zn4c73M2EK0fokDcKDky/rtwnQ0wEk=;
+	bh=XS7yCkPaoW2IEsg4gRh6jYV2eyPp/1gD2vs+glAbB/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIVJBPGI56xl16jf/yfZiV+R3X8xIKRspsazatWyty8w9pXifx0M1c5ooceQlJwOA4gnjClr5zv11E2FoZji9jjabv3cOE7wVSTs+bMuu1TBoJWc/HxmM5lZE+zgURfJYd5gUS7c+3pHRj5Hg+dErKtvSAkt2KBuRiFP9GOnpE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sp8J8m0f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CsPD1OIerL4mud7UpobLQPScazIEhe3V9PC7gy5Ufte3lZHMV0J6k3A2ulXqvWJ0m/kUu0gc6x9eZUd2DHTqOdXzm6PT8PgBiAJDddgJttp52xTeqXz6ABZkYP53lrgMw1fR2/A2j09Mpa0wdPrtN6jK2nvQm68RJhNLoXJONNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pGD/RcjC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sp8J8m0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE7EC116D0;
-	Sat, 28 Feb 2026 18:09:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pGD/RcjC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F847C19424;
+	Sat, 28 Feb 2026 18:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302176;
-	bh=6aGQ9EXmxtkg3zn4c73M2EK0fokDcKDky/rtwnQ0wEk=;
+	s=k20201202; t=1772302177;
+	bh=XS7yCkPaoW2IEsg4gRh6jYV2eyPp/1gD2vs+glAbB/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sp8J8m0fsKHr4WaPBXbRxp3xpYnirL4CSO36CckTiK66IzPttPVUbDwEbE14sfJ1a
-	 YUWIO4Fl0viRBu1u+/+VPc+kv+STAU9tCX0mDYOCJXeaOvsoNDs9O9fWPPqF6J0OKM
-	 FhvTeoqqKPUDFxLM0ewNcDpe8XW+75gF9Yu0jTClhZVIAzl2rG9OMw9LkBhcZC/q0M
-	 aI2Dear9oVa9hdKovzcZkDGh62+JmJlfgjFcPB5M5hlxcsLLCRh+YO+KqXQczmogab
-	 a2+r3vzkLE2MceMxhJFXqQdaCozA08PW22WbTp1tLLqNmpGBYATFNxMDjO/80Bi/gj
-	 A8sNbnI/ZkJvA==
+	b=pGD/RcjCmoaPVHBR7M+EN8NY1YfkHZxEzTowp6EdXkOhBgV5CZ5vSfBZLctWuDd49
+	 D1eSWCx86jXueswfidHl+BvarcrTn9IUyy/sYBs6sCcRLHndIdrMsOSvJmdG0GKBf1
+	 Dp3OA2RWY/GBwWe0yRBsk8q90KcooLZGRmeyBREMakpSGNEdnNzUXVjYdBznqluyPx
+	 10mhBhoaZYbmOVPJFUPkqetN+JMZU4rJxFCRkdPJcWb7KwQ3gLpPpJtG4dpnw/qDp0
+	 ivqYjWBbCYyvetRov6LhnLB9x3heWxIA3jksSzisQLC59gkThuIKU6nRJBl2Mo0Adc
+	 f/Qs2HKMdupJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Waqar Hameed <waqar.hameed@axis.com>,
+	Phil Reid <preid@electromag.com.au>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/283] power: supply: rt9455: Fix use-after-free in power_supply_changed()
-Date: Sat, 28 Feb 2026 13:05:18 -0500
-Message-ID: <20260228180709.1583486-176-sashal@kernel.org>
+Subject: [PATCH 6.6 177/283] power: supply: sbs-battery: Fix use-after-free in power_supply_changed()
+Date: Sat, 28 Feb 2026 13:05:19 -0500
+Message-ID: <20260228180709.1583486-177-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,7 +50,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Waqar Hameed <waqar.hameed@axis.com>
 
-[ Upstream commit e2febe375e5ea5afed92f4cd9711bde8f24ee6d2 ]
+[ Upstream commit 8d59cf3887fbabacef53bfba473e33e8a8d9d07b ]
 
 Using the `devm_` variant for requesting IRQ _before_ the `devm_`
 variant for allocating/registering the `power_supply` handle, means that
@@ -71,52 +72,74 @@ of using the `power_supply` handle *uninitialized* in
 `power_supply_changed()`.
 
 Fix this racy use-after-free by making sure the IRQ is requested _after_
-the registration of the `power_supply` handle.
+the registration of the `power_supply` handle. Keep the old behavior of
+just printing a warning in case of any failures during the IRQ request
+and finishing the probe successfully.
 
-Fixes: e86d69dd786e ("power_supply: Add support for Richtek RT9455 battery charger")
+Fixes: d2cec82c2880 ("power: sbs-battery: Request threaded irq and fix dev callback cookie")
 Signed-off-by: Waqar Hameed <waqar.hameed@axis.com>
-Link: https://patch.msgid.link/1567d831e04c3e2fcb9e18dd36b7bcba4634581a.1766268280.git.waqar.hameed@axis.com
+Reviewed-by: Phil Reid <preid@electromag.com.au>
+Link: https://patch.msgid.link/0ef896e002495e615157b482d18a437af19ddcd0.1766268280.git.waqar.hameed@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/rt9455_charger.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/power/supply/sbs-battery.c | 36 +++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/power/supply/rt9455_charger.c b/drivers/power/supply/rt9455_charger.c
-index e4dbacd50a437..248dc2b5e1f7c 100644
---- a/drivers/power/supply/rt9455_charger.c
-+++ b/drivers/power/supply/rt9455_charger.c
-@@ -1663,6 +1663,15 @@ static int rt9455_probe(struct i2c_client *client)
- 	rt9455_charger_config.supplied_to	= rt9455_charger_supplied_to;
- 	rt9455_charger_config.num_supplicants	=
- 					ARRAY_SIZE(rt9455_charger_supplied_to);
-+
-+	info->charger = devm_power_supply_register(dev, &rt9455_charger_desc,
-+						   &rt9455_charger_config);
-+	if (IS_ERR(info->charger)) {
-+		dev_err(dev, "Failed to register charger\n");
-+		ret = PTR_ERR(info->charger);
-+		goto put_usb_notifier;
-+	}
-+
- 	ret = devm_request_threaded_irq(dev, client->irq, NULL,
- 					rt9455_irq_handler_thread,
- 					IRQF_TRIGGER_LOW | IRQF_ONESHOT,
-@@ -1678,14 +1687,6 @@ static int rt9455_probe(struct i2c_client *client)
- 		goto put_usb_notifier;
- 	}
+diff --git a/drivers/power/supply/sbs-battery.c b/drivers/power/supply/sbs-battery.c
+index cdfc8466d129b..f30a542d4716c 100644
+--- a/drivers/power/supply/sbs-battery.c
++++ b/drivers/power/supply/sbs-battery.c
+@@ -1173,24 +1173,6 @@ static int sbs_probe(struct i2c_client *client)
  
--	info->charger = devm_power_supply_register(dev, &rt9455_charger_desc,
--						   &rt9455_charger_config);
--	if (IS_ERR(info->charger)) {
--		dev_err(dev, "Failed to register charger\n");
--		ret = PTR_ERR(info->charger);
--		goto put_usb_notifier;
+ 	i2c_set_clientdata(client, chip);
+ 
+-	if (!chip->gpio_detect)
+-		goto skip_gpio;
+-
+-	irq = gpiod_to_irq(chip->gpio_detect);
+-	if (irq <= 0) {
+-		dev_warn(&client->dev, "Failed to get gpio as irq: %d\n", irq);
+-		goto skip_gpio;
 -	}
 -
- 	return 0;
+-	rc = devm_request_threaded_irq(&client->dev, irq, NULL, sbs_irq,
+-		IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+-		dev_name(&client->dev), chip);
+-	if (rc) {
+-		dev_warn(&client->dev, "Failed to request irq: %d\n", rc);
+-		goto skip_gpio;
+-	}
+-
+-skip_gpio:
+ 	/*
+ 	 * Before we register, we might need to make sure we can actually talk
+ 	 * to the battery.
+@@ -1216,6 +1198,24 @@ static int sbs_probe(struct i2c_client *client)
+ 		return dev_err_probe(&client->dev, PTR_ERR(chip->power_supply),
+ 				     "Failed to register power supply\n");
  
- put_usb_notifier:
++	if (!chip->gpio_detect)
++		goto out;
++
++	irq = gpiod_to_irq(chip->gpio_detect);
++	if (irq <= 0) {
++		dev_warn(&client->dev, "Failed to get gpio as irq: %d\n", irq);
++		goto out;
++	}
++
++	rc = devm_request_threaded_irq(&client->dev, irq, NULL, sbs_irq,
++		IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
++		dev_name(&client->dev), chip);
++	if (rc) {
++		dev_warn(&client->dev, "Failed to request irq: %d\n", rc);
++		goto out;
++	}
++
++out:
+ 	dev_info(&client->dev,
+ 		"%s: battery gas gauge device registered\n", client->name);
+ 
 -- 
 2.51.0
 
