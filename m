@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0954383C69
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73505346AC1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302051; cv=none; b=hJpTJFXfj5WzypkROU9+QGtl1MLZA8bwdHWhOTuMWYpJ3VjH4p91NAgodc5n/SzGTgJ1NaA7QCBa89KEy+bqzJx27kS5q9VB0pdrC4/exYhAvNH7UiDItqFnZHrXB60jkIgYBoIgwAuu4LKcGS2Pf+ei6L95WL8TWooIIP6pXpw=
+	t=1772302052; cv=none; b=nh4S3+DDwpQy66XBrB423JbEKDBvUj36DU7bm1Gds6/Qst0RVldyceJp/V7CxQkGYkMqwTk/SOqyAjvBhFGyp19VhON0wzhVF3865TSF/IMp2XQ+ybkMhpGXh2ujdi0EqUBpItvHhVIaIsVxoGKff6Iu9zkmfKINUqbFkeNXCvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302051; c=relaxed/simple;
-	bh=vfXcpkLA8Pkd58DbLx3sz7lXjVrfLGt+1JWgzn4iDdc=;
+	s=arc-20240116; t=1772302052; c=relaxed/simple;
+	bh=jUNVdBPhuCzwCecYihv4JhrLIeJmuUsyLn9nbtcW7TY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5GZF+F+1avHj7VSq9CE+ob+KDSLmC98n0ZrZzV9cq9jX3tZvw2ahurh9qVdj9PjF8Llucwp8tgyO+vCpSos3IpEaWtdlR8DElgSn7n9hhfqWWm9cGUbq4wWv5YEbQwyWEAp54h65R0DgyMhENDodZWvcNPZizHd4w+nBS45otg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gy/UjUvn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cEUG5JiPTpFzi/LpZSgXkmFA3OzSLycTX/88GPDDoWefTZzLxbemRpwbl2epnqBmwM5ikLkeftahV1iUuBlcQO5jRwyO4QVEaDY5csysSYFo4tsaOrp+hAEPKNfCcZGLbPVsYw0aY0nCS0klPZFQ11q/5gImrn7yBTX+gGCl+Xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WT6uo/os; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gy/UjUvn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2198BC19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WT6uo/os"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48A3C19425;
 	Sat, 28 Feb 2026 18:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302051;
-	bh=vfXcpkLA8Pkd58DbLx3sz7lXjVrfLGt+1JWgzn4iDdc=;
+	s=k20201202; t=1772302052;
+	bh=jUNVdBPhuCzwCecYihv4JhrLIeJmuUsyLn9nbtcW7TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gy/UjUvnlaXDWMR52vUWOSISUrCPQpeNHhiYYZ2f8hPcFBNn4OXlN4u6t0WdKGqFV
-	 QdrSfnly1V8yma8Ocp6UFFVgPds3Swp5mjLV18fxnsd5scsinmwl9IIphdYbJuqcjt
-	 jSrwfPKkcn4TIp0NU6Hm1lbEbpxgccINCeXk9yYrUQf+RHtCk6FDji5ho8FXzpUGkU
-	 UMG/CcT+UxMOzxoNeX5KiBVeXuLLs0GpaFM4BY9rOXjV6PHHu3p98fs3a6qsyCTktA
-	 t74F4Bdbb1ycM3cW7I18PrzP3jQkv90wTOFJKHF4vCl2mdwgT2ZehucPOD2eVVIO3R
-	 9IxMG2B8fOtMA==
+	b=WT6uo/osewKe64Ky97Dtj9D3Pr2ObFb4nwrR7Pe1zcgPDCTp4LVjawGJbCVlQC45l
+	 2LoZbq/53g4mLMtUqMFPiDDO6rrHyjnJZk24wze4UNf9OB8ZMz64lp/iiptoNEuC7D
+	 4QyCnGRs15Vw3zxtDPKhoCAeCx+uxLoyWQnPQ6K/pRptlN0zQjFnsA54SXOkzGU9vs
+	 hjE+uKiaPcXiHzcOXPaJn5lkg71R/2oM/ktXbN8nJJ5Y7mllf/RyzAwbKRXkdi4gcz
+	 SuRnuCHVIuWGzAqLAa+Ig+zfZJitXIe6ICawMFomvuR3WVCPMznD5GaIhr2DbxNhIw
+	 ANL0Qhyn6ZxaQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/283] cpuidle: menu: Cleanup after loadavg removal
-Date: Sat, 28 Feb 2026 13:02:48 -0500
-Message-ID: <20260228180709.1583486-26-sashal@kernel.org>
+Subject: [PATCH 6.6 027/283] cpuidle: governors: menu: Always check timers with tick stopped
+Date: Sat, 28 Feb 2026 13:02:49 -0500
+Message-ID: <20260228180709.1583486-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -47,58 +47,86 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit bf183113842b0fcf4b6f977a97fa9cf8e2b21625 ]
+[ Upstream commit 80606f4eb8d7484ab7f7d6f0fd30d71e6fbcf328 ]
 
-The performance impact of loadavg was removed with commit a7fe5190c03f
-("cpuidle: menu: Remove get_loadavg() from the performance multiplier")
-With only iowait remaining the description can be simplified, remove
-also the no longer needed includes.
+After commit 5484e31bbbff ("cpuidle: menu: Skip tick_nohz_get_sleep_length()
+call in some cases"), if the return value of get_typical_interval()
+multiplied by NSEC_PER_USEC is not greater than RESIDENCY_THRESHOLD_NS,
+the menu governor will skip computing the time till the closest timer.
+If that happens when the tick has been stopped already, the selected
+idle state may be too deep due to the subsequent check comparing
+predicted_ns with TICK_NSEC and causing its value to be replaced with
+the expected time till the closest timer, which is KTIME_MAX in that
+case.  That will cause the deepest enabled idle state to be selected,
+but the time till the closest timer very well may be shorter than the
+target residency of that state, in which case a shallower state should
+be used.
 
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Address this by making menu_select() always compute the time till the
+closest timer when the tick has been stopped.
+
+Also move the predicted_ns check mentioned above into the branch in
+which the time till the closest timer is determined because it only
+needs to be done in that case.
+
+Fixes: 5484e31bbbff ("cpuidle: menu: Skip tick_nohz_get_sleep_length() call in some cases")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 80606f4eb8d7 ("cpuidle: governors: menu: Always check timers with tick stopped")
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/5959091.DvuYhMxLoT@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/menu.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ drivers/cpuidle/governors/menu.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index 27010eee6d1bc..864a7be7ba485 100644
+index 864a7be7ba485..bedf6c4b8d1b5 100644
 --- a/drivers/cpuidle/governors/menu.c
 +++ b/drivers/cpuidle/governors/menu.c
-@@ -14,8 +14,6 @@
- #include <linux/ktime.h>
- #include <linux/hrtimer.h>
- #include <linux/tick.h>
--#include <linux/sched.h>
--#include <linux/sched/loadavg.h>
- #include <linux/sched/stat.h>
- #include <linux/math64.h>
+@@ -269,7 +269,7 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
  
-@@ -94,16 +92,11 @@
-  * state, and thus the less likely a busy CPU will hit such a deep
-  * C state.
-  *
-- * Two factors are used in determing this multiplier:
-- * a value of 10 is added for each point of "per cpu load average" we have.
-- * a value of 5 points is added for each process that is waiting for
-- * IO on this CPU.
-- * (these values are experimentally determined)
-- *
-- * The load average factor gives a longer term (few seconds) input to the
-- * decision, while the iowait value gives a cpu local instantanious input.
-- * The iowait factor may look low, but realize that this is also already
-- * represented in the system load average.
-+ * Currently there is only one value determining the factor:
-+ * 10 points are added for each process that is waiting for IO on this CPU.
-+ * (This value was experimentally determined.)
-+ * Utilization is no longer a factor as it was shown that it never contributed
-+ * significantly to the performance multiplier in the first place.
-  *
-  */
+ 	/* Find the shortest expected idle interval. */
+ 	predicted_ns = get_typical_interval(data) * NSEC_PER_USEC;
+-	if (predicted_ns > RESIDENCY_THRESHOLD_NS) {
++	if (predicted_ns > RESIDENCY_THRESHOLD_NS || tick_nohz_tick_stopped()) {
+ 		unsigned int timer_us;
  
+ 		/* Determine the time till the closest timer. */
+@@ -289,6 +289,16 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 				   RESOLUTION * DECAY * NSEC_PER_USEC);
+ 		/* Use the lowest expected idle interval to pick the idle state. */
+ 		predicted_ns = min((u64)timer_us * NSEC_PER_USEC, predicted_ns);
++		/*
++		 * If the tick is already stopped, the cost of possible short
++		 * idle duration misprediction is much higher, because the CPU
++		 * may be stuck in a shallow idle state for a long time as a
++		 * result of it.  In that case, say we might mispredict and use
++		 * the known time till the closest timer event for the idle
++		 * state selection.
++		 */
++		if (tick_nohz_tick_stopped() && predicted_ns < TICK_NSEC)
++			predicted_ns = data->next_timer_ns;
+ 	} else {
+ 		/*
+ 		 * Because the next timer event is not going to be determined
+@@ -314,16 +324,6 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		return 0;
+ 	}
+ 
+-	/*
+-	 * If the tick is already stopped, the cost of possible short idle
+-	 * duration misprediction is much higher, because the CPU may be stuck
+-	 * in a shallow idle state for a long time as a result of it.  In that
+-	 * case, say we might mispredict and use the known time till the closest
+-	 * timer event for the idle state selection.
+-	 */
+-	if (tick_nohz_tick_stopped() && predicted_ns < TICK_NSEC)
+-		predicted_ns = data->next_timer_ns;
+-
+ 	/*
+ 	 * Find the idle state with the lowest power while satisfying
+ 	 * our constraints.
 -- 
 2.51.0
 
