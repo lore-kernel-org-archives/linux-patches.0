@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4993314C3
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CE83314C3
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301229; cv=none; b=rXjY8oVjJNO4+a7gY64hRfx/v8KnuzPhX570GNSqi1JkO7qKjEtxFprdFJKbb0t7EEC4V7yfuKiN4Xwv6slikN8/OJjJ+K98vzpaMNNaxwEJnuHzlqQGhlHXFg+jcpqHKJMx9tHqlJ18ycB0xcyzofCIkq1DUhpLzJAyX/8hj7k=
+	t=1772301230; cv=none; b=KgKgcQy2mrw1EcWIB0LDGKPTIEkf+cm0QWAEoBfxJbmSpyrlE0CLLaiwG0eTY3We8TM+bzgMS9OkSOohiYC1wcv9l3QrTClqEGq/B+Kcouf4Dx/teYPorePZHpqwitGUGLCBEYW5Rhn+5vacAKfStdRb1nRgrGAMe0aMiipsuXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301229; c=relaxed/simple;
-	bh=8SK6cn4UIAO0V1Yt0CPJedWBxWCigaILwoBEhj6avFM=;
+	s=arc-20240116; t=1772301230; c=relaxed/simple;
+	bh=weKkzB8KZ5DLReewVFSur3h8mJwcAvL7MIgP5XVfu5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4SZm4FiEXy21od/XwB9q5bOxAxZIB5XozR6S1qSbTKCUlYX+9NXF3Yctsj6UrMGj3JWJRy3oe8tVoCwoBJLDo/cLBis84xWiPUr7X9N+1nwgk8lGQMX06yuntZCr3ot+qkcn6mH1mmIiQv5SAwRP47rKUQdB3+sWE/u9/wDfQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YV3S+h5h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0qimWzZ6MJHliKmtEtkurmeEbufQPe8uQy1CNEHTkeGJ7PhW269ZCVHEUh7OBkb2O/ZKJfSyWMsk2QyCvwbgJTSNxxDJEjrCQPN9q9sz5LlMzSO1sa0837JaJcpBAWKHHVXk1JzW8k2GOZCuTt9J866RiKkU6Od2elH+BEG7N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qk7dB9JX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YV3S+h5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD76C19423;
-	Sat, 28 Feb 2026 17:53:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qk7dB9JX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72468C19424;
+	Sat, 28 Feb 2026 17:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301229;
-	bh=8SK6cn4UIAO0V1Yt0CPJedWBxWCigaILwoBEhj6avFM=;
+	s=k20201202; t=1772301230;
+	bh=weKkzB8KZ5DLReewVFSur3h8mJwcAvL7MIgP5XVfu5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YV3S+h5hUXLIi+Dk4ue8I4remRARecDH7XGsfaES7b75X7MtZCiq6CstPsmJSstER
-	 HKQSADuV+7rkRvsYqp/jRanRNVlld22hixrsCp2uqI8Ye1WupRzKADdxcWfhWXgAQV
-	 8EL7zoa0EOVNXx38C7vkXtB9R8ljoO4iblrBzLK7JzAtmEY5alyknhyR+r0YC1IArK
-	 Z7H8PC8X93gypek7iSL/2a84n50BxbqiOeXgW5011f/20/yQoF0sZ+SANTLlRDLzhn
-	 0XGBiKqAhApDw4FmSwY4DUZODUCqh3PjJNeHHZ+VhoMgJjvjIsHg+hKC7fkNZiTG8y
-	 vZDRhtyvPqwJw==
+	b=qk7dB9JXhxw66Bhkjn+PhpfhXGccpJx+kkTSyGbVCFLL4Uqzb808/5K/3lo98SaHH
+	 UwMr/wfbGSWFfErPNxO+utztvDPYm/iiVm/fbmvJM09oXbn7tpLD3vIlZmHD8AKI2T
+	 eeKKNtr6jcHnZ90gNmgHBytomtV8gpPpVhv9Sf2+1OOA3ABf7nogfQAp5/5Z1rvwr0
+	 slbndyWCbartz7zHCkMiWM0MOV4IuMFKVF4/tJf2rzoKuVtCPmZjad901/khtGLV3i
+	 RmFaftlnC7co6Fkmv81AcKLwLkHbysdqC5c49Z9lCOcrpSp7xfIBNmhRruhIEVMY3I
+	 ITVPyIq0SUZig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ethan Tidmore <ethantidmore06@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 407/752] proc: Fix pointer error dereference
-Date: Sat, 28 Feb 2026 12:41:58 -0500
-Message-ID: <20260228174750.1542406-407-sashal@kernel.org>
+Subject: [PATCH 6.18 408/752] net: phy: qcom: qca807x: normalize return value of gpio_get
+Date: Sat, 28 Feb 2026 12:41:59 -0500
+Message-ID: <20260228174750.1542406-408-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,40 +49,38 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit f6a495484a27150fb85f943e1a7464da88c2a797 ]
+[ Upstream commit 2bb995e6155cb4f254574598cbd6fe1dcc99766a ]
 
-The function try_lookup_noperm() can return an error pointer. Add check
-for error pointer.
+The GPIO get callback is expected to return 0 or 1 (or a negative error
+code). Ensure that the value returned by qca807x_gpio_get() is
+normalized to the [0, 1] range.
 
-Detected by Smatch:
-fs/proc/base.c:2148 proc_fill_cache() error:
-'child' dereferencing possible ERR_PTR()
-
-Fixes: 1df98b8bbcca ("proc_fill_cache(): clean up, get rid of pointless find_inode_number() use")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Link: https://patch.msgid.link/20260219221001.1117135-1-ethantidmore06@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 86ef402d805d ("gpiolib: sanitize the return value of gpio_chip::get()")
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/aZZeyr2ysqqk2GqA@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/base.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/phy/qcom/qca807x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/proc/base.c b/fs/proc/base.c
-index 6299878e3d97e..a314fd9af17c0 100644
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -2128,6 +2128,9 @@ bool proc_fill_cache(struct file *file, struct dir_context *ctx,
- 	ino_t ino = 1;
+diff --git a/drivers/net/phy/qcom/qca807x.c b/drivers/net/phy/qcom/qca807x.c
+index 1be8295a95cb5..511cde345e089 100644
+--- a/drivers/net/phy/qcom/qca807x.c
++++ b/drivers/net/phy/qcom/qca807x.c
+@@ -375,7 +375,7 @@ static int qca807x_gpio_get(struct gpio_chip *gc, unsigned int offset)
+ 	reg = QCA807X_MMD7_LED_FORCE_CTRL(offset);
+ 	val = phy_read_mmd(priv->phy, MDIO_MMD_AN, reg);
  
- 	child = try_lookup_noperm(&qname, dir);
-+	if (IS_ERR(child))
-+		goto end_instantiate;
-+
- 	if (!child) {
- 		DECLARE_WAIT_QUEUE_HEAD_ONSTACK(wq);
- 		child = d_alloc_parallel(dir, &qname, &wq);
+-	return FIELD_GET(QCA807X_GPIO_FORCE_MODE_MASK, val);
++	return !!FIELD_GET(QCA807X_GPIO_FORCE_MODE_MASK, val);
+ }
+ 
+ static int qca807x_gpio_set(struct gpio_chip *gc, unsigned int offset, int value)
 -- 
 2.51.0
 
