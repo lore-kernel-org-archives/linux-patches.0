@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D5C342538
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEC63451A7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301777; cv=none; b=e30iu/dDzmlC9iqrwBNWcnl8s7Dp0sujrHgTqOTL6+vnvCGDCnqasgzdwK80PBm+ZvHV9JOJxxkzqaxCMrVM1J0Bk5mvBbKQE3+KaqOqcAcr2x41ylU4jS/MHP9YEicUJkbviyMOws507ipLar/3syYQjatygBbFh9O1KgtCH2U=
+	t=1772301778; cv=none; b=FtMEhYr2NqQhuweXXxNVDdtwTzMQGhwDKpc8T6r005WgzIi9G0aqN5pBKXOVQxxQtH57+1H5SZLP586+aDQ9byGhl/P0tO6C3UdmQaGGntqgSGmuNx6L8gXayd4c32AXYfuk2tNAvCeKAgApapyLRM0ci6qz5CSr0tYkHkItF6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301777; c=relaxed/simple;
-	bh=75/D9RC2Pxqws5VQEIQCJ3+ZJuDRD81/pLpKoby4ov0=;
+	s=arc-20240116; t=1772301778; c=relaxed/simple;
+	bh=yjCtKJ2DQfdkjV2oKIQbcVTMcZ1x018/79RnLk7hZOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r0cFjMK2dSjruTQjHb/UiwAOUOedRk81fTBY0kjOvYVoyGOenR+7mbLzMiolor7FHp/Zkwfhd6qUnYC0ah/ZC5Y4uaHXqSCnOy49NQLYYV3jJAgyAIX7dK6ItnTyj/U0iKYKnWtkxO3aoxQljmM5ftVPYQeE+l+ScZhhP1dO3Js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fGVBHHiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X7icdDwlOa/vANb3DKbXYdFKRo/3W1Uomu8L6dsOThvWkj8mjzg9dMcqxsiaDUF+HzDBy7Ev1reQxg/BF1UINQ6h8HK22dPYNIsQNCAAiBFXGh3k768wsa9w27zFuyDz9DKamRYCdug3Nsz/1sChvx6Nx9GwwrhP2GcDroe7IXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yf7X8E61; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fGVBHHiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F52C116D0;
-	Sat, 28 Feb 2026 18:02:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yf7X8E61"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A38BC116D0;
+	Sat, 28 Feb 2026 18:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301777;
-	bh=75/D9RC2Pxqws5VQEIQCJ3+ZJuDRD81/pLpKoby4ov0=;
+	s=k20201202; t=1772301778;
+	bh=yjCtKJ2DQfdkjV2oKIQbcVTMcZ1x018/79RnLk7hZOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGVBHHiw5ucykGIJTCgttc7qSHDMjHhOOC9fY/j/fAjREfNVPYAZtejuyPsgFCOeO
-	 P+u+XAuw+7t7kBVXXCZ06Qo5QAMaKViEZip08PT3EVcKMUbEsa/bZOybWTyoD96N3D
-	 OX/MTw8vRBs9x8QMTlHcFsfgNLuIaFhSbQFSQLx5Muh2aWa6WEbfDsrFSko+ZtfY2c
-	 VKn+B8Kw7gaumovO+ICf8QQgtsSc5uk+A3vlhaMBHcbreQeEUlGY5GNwnXIG0ffb/z
-	 Ai3ntC1Oobn12jnuidVbNs8zuoIXaiX6j3wHAEYKaneO9cJzpoz2t1B0wjF+8yZQdi
-	 xRW8K6GZ41WJg==
+	b=Yf7X8E61vdyeZNrKBkv4YQSJ5XlkRDUCdDEbEIEVcQCwSA3rxoKdIc87z7o8abW1p
+	 VeB75en89eBthmkZQQxCxBLlRhcD2Uct9aQEdj9O6PD/34qzJAp8P8N2UuzW+D3Rmn
+	 hfkHS2u0f6I7x/jLgBzK5KKEfeBKnBQDY0H6hL8BlAzm20oEf7d+644xa7hTrwsFAa
+	 qQ+BRgvM+rU+oXYBhd5W6znxXok7wgrI+tcRb8fAFbeXCEEoGKAnoLMZqSqq3TzHT5
+	 QK8KPdSiHu+tLS+wtUG9YVaXyhKthH9s7x7aVgARFZ1eX0jtCleJYdP2xAJx6l7OL/
+	 RyRdLzeyMBkrQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Jian Zhang <zhangjian.3032@bytedance.com>,
+Cc: Matt Johnston <matt@codeconstruct.com.au>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 186/385] net: mctp-i2c: fix duplicate reception of old data
-Date: Sat, 28 Feb 2026 12:56:48 -0500
-Message-ID: <20260228180011.1568201-186-sashal@kernel.org>
+Subject: [PATCH 6.12 187/385] mctp i2c: initialise event handler read bytes
+Date: Sat, 28 Feb 2026 12:56:49 -0500
+Message-ID: <20260228180011.1568201-187-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,47 +47,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jian Zhang <zhangjian.3032@bytedance.com>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit ae4744e173fadd092c43eda4ca92dcb74645225a ]
+[ Upstream commit 2a14e91b6d76639dac70ea170f4384c1ee3cb48d ]
 
-The MCTP I2C slave callback did not handle I2C_SLAVE_READ_REQUESTED
-events. As a result, i2c read event will trigger repeated reception of
-old data, reset rx_pos when a read request is received.
+Set a 0xff value for i2c reads of an mctp-i2c device. Otherwise reads
+will return "val" from the i2c bus driver. For i2c-aspeed and
+i2c-npcm7xx that is a stack uninitialised u8.
 
-Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
-Link: https://patch.msgid.link/20260108101829.1140448-1-zhangjian.3032@bytedance.com
+Tested with "i2ctransfer -y 1 r10@0x34" where 0x34 is a mctp-i2c
+instance, now it returns all 0xff.
+
+Fixes: f5b8abf9fc3d ("mctp i2c: MCTP I2C binding driver")
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Link: https://patch.msgid.link/20260113-mctp-read-fix-v1-1-70c4b59c741c@codeconstruct.com.au
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 2a14e91b6d76 ("mctp i2c: initialise event handler read bytes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i2c.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/mctp/mctp-i2c.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
-index 503a9174321c6..8a30d0559d60d 100644
+index 8a30d0559d60d..617333343ca00 100644
 --- a/drivers/net/mctp/mctp-i2c.c
 +++ b/drivers/net/mctp/mctp-i2c.c
-@@ -243,6 +243,9 @@ static int mctp_i2c_slave_cb(struct i2c_client *client,
- 		return 0;
+@@ -244,7 +244,10 @@ static int mctp_i2c_slave_cb(struct i2c_client *client,
  
  	switch (event) {
-+	case I2C_SLAVE_READ_REQUESTED:
-+		midev->rx_pos = 0;
-+		break;
+ 	case I2C_SLAVE_READ_REQUESTED:
++	case I2C_SLAVE_READ_PROCESSED:
++		/* MCTP I2C transport only uses writes */
+ 		midev->rx_pos = 0;
++		*val = 0xff;
+ 		break;
  	case I2C_SLAVE_WRITE_RECEIVED:
  		if (midev->rx_pos < MCTP_I2C_BUFSZ) {
- 			midev->rx_buffer[midev->rx_pos] = *val;
-@@ -280,6 +283,9 @@ static int mctp_i2c_recv(struct mctp_i2c_dev *midev)
- 	size_t recvlen;
- 	int status;
- 
-+	if (midev->rx_pos == 0)
-+		return 0;
-+
- 	/* + 1 for the PEC */
- 	if (midev->rx_pos < MCTP_I2C_MINLEN + 1) {
- 		ndev->stats.rx_length_errors++;
 -- 
 2.51.0
 
