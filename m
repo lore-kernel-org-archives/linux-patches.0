@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7E338D014
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CDB38F623
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302165; cv=none; b=WK7dV8AZvrg9fWyl7WUijo9N/NtJGVdbVqgi9ZYexeMB1t0UHryv5eowgggRqzb3dZTwhZ7hYxG6N1V3ZOuYkicvakxaV8wHii1ptfZL19YoSLZbLW/lGA8uaCWi6d9KeVVQa9qdYnpO/UFtTO7vILcKHwLV+eo4huTbHC5kT2I=
+	t=1772302166; cv=none; b=qbQ/1kPgp595t3npnvHee1YG2jRt25ARO1bBIkwvT6XnOR3h/wpXgmPXOXWQLaxzyXW9No7y3T7XA1M+LzyiZlwTAB3NMEsBWeQuqjnRwb6EmiVF0Iv9sjkr1ll3rqVD9gEurhf6rI9E2DtRQHWLzZLCQH4hTTQQohegspGK0wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302165; c=relaxed/simple;
-	bh=v7OPv9zP73+Fr8vI+qyDIXdpn6eJWovDg1e4IDRMq40=;
+	s=arc-20240116; t=1772302166; c=relaxed/simple;
+	bh=XzpKapDkOWrc7TVlTelX58CQ9Exyao72Hn6IB8FycEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OK8xChEIjVd0a6n96o4PGafP/1p/ZpfOd/9VXiGnNsx/GqYO/9dpUKhELCUceqlt6IFKbHt+P2ppxzbuE7YvnxvNFKiya4SnHdJnJExz+0K9JxMt9/laZJqWoXAu/nJ9jH/XIH1lKMoM37+xuAX3YUkv62OygRLVTujLRDRJU8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=im9/jcWB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IFqlGOXD0TdH7L+PmnhGHxVL7eW4xGeS3SgC+XsdoWeiJIO0knBLaXNzv1OZ5mz35Jice3xF5d0+L4XYhU12BYCfMbeZX9sheD7MWm66LxRq//0/ySw2ceHc13+xUwS8U32qtg/Ld0buaZRXAX0qA5NisAykdHu0W3GE/sfqfAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u2jzZrk9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="im9/jcWB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66876C19425;
-	Sat, 28 Feb 2026 18:09:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u2jzZrk9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52897C116D0;
+	Sat, 28 Feb 2026 18:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302165;
-	bh=v7OPv9zP73+Fr8vI+qyDIXdpn6eJWovDg1e4IDRMq40=;
+	bh=XzpKapDkOWrc7TVlTelX58CQ9Exyao72Hn6IB8FycEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=im9/jcWBrAhtWTaXMqQGHRA4KbZrSrTdlyhKiIB5usrxWPOfncF3QgmMEFEjqhopo
-	 Qm4D6hqs9HtSogHAQnLd3Xbc6eemPpe12+omRwk0qUm4WdSOdX+8P3f80y0NjDHS17
-	 mcSp9fzDC5PoBwNT2y11B/wO0zxT0tVCwOaBWpzHgkZBhzyK965dpZAi3uCSfGSF1Y
-	 0rj/kepRYcOI+mXy5EroXR+RYoOxtsI/GPFr13bqEtwRKjY3C9DhNf3omomieRNTPH
-	 a2rEUf5gf55tENvmDel15hjTmLltO6H+tzb6LHvMd3MYDk6AW56iw34GcxoNt818Iv
-	 AKujQK9ntDPcA==
+	b=u2jzZrk9InUncLz7y3vCem4qCrqBYIGUm04pEWWLf0rsJiblGCtQ95bFpp+0c8SzT
+	 U0V/MI4FTCSE7E1nxdeHBgFeF7EgjHqNeZbyrS0wLX48seh4x/UVhytmgV7gbmh0ot
+	 5thQdLomXACfueiXzBxi5/QhRen8Yv82wWCdG9kVVcLRofHre/d65BcMkp1vE3fo/2
+	 dYjrGcNkHJcXeMjNFShPmr9jNcT6n+YMO9vymI4cwBwWubLtx0kkw+rhnu8L62RY+o
+	 9iX1/lCSYbJ7l2jmIkyiNchX834RbdcjOo+6qZuVc6vDQRJ3duxuZ6fkLQum0l2AXG
+	 4X2r2nw6BggQQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Vimlesh Kumar <vimleshk@marvell.com>,
-	Sathesh Edara <sedara@marvell.com>,
-	Shinas Rasheed <srasheed@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Shinas Rasheed <srasheed@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/283] octeon_ep: disable per ring interrupts
-Date: Sat, 28 Feb 2026 13:05:03 -0500
-Message-ID: <20260228180709.1583486-161-sashal@kernel.org>
+Subject: [PATCH 6.6 162/283] octeon_ep: set backpressure watermark for RX queues
+Date: Sat, 28 Feb 2026 13:05:04 -0500
+Message-ID: <20260228180709.1583486-162-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -49,117 +47,100 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Vimlesh Kumar <vimleshk@marvell.com>
+From: Shinas Rasheed <srasheed@marvell.com>
 
-[ Upstream commit 73e6ffa37cebee152c07c5f2b8bc70fd2899ea6e ]
+[ Upstream commit 15bc81212f593fbd7bda787598418b931842dc14 ]
 
-Disable the MSI-X per ring interrupt for every PF ring when PF
-netdev goes down.
+Set backpressure watermark for hardware RX queues. Backpressure
+gets triggered when the available buffers of a hardware RX queue
+falls below the set watermark. This backpressure will propagate
+to packet processing pipeline in the OCTEON card, so that the host
+receives fewer packets and prevents packet dropping at host.
 
-Fixes: 1f2c2d0cee023 ("octeon_ep: add hardware configuration APIs")
-Signed-off-by: Sathesh Edara <sedara@marvell.com>
 Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
-Signed-off-by: Vimlesh Kumar <vimleshk@marvell.com>
-Link: https://patch.msgid.link/20260206111510.1045092-2-vimleshk@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: ce8fe3fc4f99 ("octeon_ep: ensure dbell BADDR updation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeon_ep/octep_cn9k_pf.c | 18 +++++++++++++++---
- .../ethernet/marvell/octeon_ep/octep_cnxk_pf.c | 18 +++++++++++++++---
- .../marvell/octeon_ep/octep_regs_cn9k_pf.h     |  1 +
- .../marvell/octeon_ep/octep_regs_cnxk_pf.h     |  1 +
- 4 files changed, 32 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c |  7 +++++++
+ drivers/net/ethernet/marvell/octeon_ep/octep_config.h  | 10 ++++++++++
+ .../ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h    |  3 +++
+ 3 files changed, 20 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-index d4ee2454675b6..f7156d093cccf 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cn9k_pf.c
-@@ -642,14 +642,26 @@ static void octep_enable_interrupts_cn93_pf(struct octep_device *oct)
- /* Disable all interrupts */
- static void octep_disable_interrupts_cn93_pf(struct octep_device *oct)
- {
--	u64 intr_mask = 0ULL;
-+	u64 reg_val, intr_mask = 0ULL;
- 	int srn, num_rings, i;
- 
- 	srn = CFG_GET_PORTS_PF_SRN(oct->conf);
- 	num_rings = CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf);
- 
--	for (i = 0; i < num_rings; i++)
--		intr_mask |= (0x1ULL << (srn + i));
-+	for (i = 0; i < num_rings; i++) {
-+		intr_mask |= BIT_ULL(srn + i);
-+		reg_val = octep_read_csr64(oct,
-+					   CN93_SDP_R_IN_INT_LEVELS(srn + i));
-+		reg_val &= ~CN93_INT_ENA_BIT;
-+		octep_write_csr64(oct,
-+				  CN93_SDP_R_IN_INT_LEVELS(srn + i), reg_val);
-+
-+		reg_val = octep_read_csr64(oct,
-+					   CN93_SDP_R_OUT_INT_LEVELS(srn + i));
-+		reg_val &= ~CN93_INT_ENA_BIT;
-+		octep_write_csr64(oct,
-+				  CN93_SDP_R_OUT_INT_LEVELS(srn + i), reg_val);
-+	}
- 
- 	octep_write_csr64(oct, CN93_SDP_EPF_IRERR_RINT_ENA_W1C, intr_mask);
- 	octep_write_csr64(oct, CN93_SDP_EPF_ORERR_RINT_ENA_W1C, intr_mask);
 diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
-index abb03e9119e72..633d39690eec8 100644
+index 633d39690eec8..38a03cef314e3 100644
 --- a/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
 +++ b/drivers/net/ethernet/marvell/octeon_ep/octep_cnxk_pf.c
-@@ -683,14 +683,26 @@ static void octep_enable_interrupts_cnxk_pf(struct octep_device *oct)
- /* Disable all interrupts */
- static void octep_disable_interrupts_cnxk_pf(struct octep_device *oct)
- {
--	u64 intr_mask = 0ULL;
-+	u64 reg_val, intr_mask = 0ULL;
- 	int srn, num_rings, i;
+@@ -258,6 +258,7 @@ static void octep_init_config_cnxk_pf(struct octep_device *oct)
+ 	conf->oq.refill_threshold = OCTEP_OQ_REFILL_THRESHOLD;
+ 	conf->oq.oq_intr_pkt = OCTEP_OQ_INTR_PKT_THRESHOLD;
+ 	conf->oq.oq_intr_time = OCTEP_OQ_INTR_TIME_THRESHOLD;
++	conf->oq.wmark = OCTEP_OQ_WMARK_MIN;
  
- 	srn = CFG_GET_PORTS_PF_SRN(oct->conf);
- 	num_rings = CFG_GET_PORTS_ACTIVE_IO_RINGS(oct->conf);
- 
--	for (i = 0; i < num_rings; i++)
--		intr_mask |= (0x1ULL << (srn + i));
-+	for (i = 0; i < num_rings; i++) {
-+		intr_mask |= BIT_ULL(srn + i);
-+		reg_val = octep_read_csr64(oct,
-+					   CNXK_SDP_R_IN_INT_LEVELS(srn + i));
-+		reg_val &= ~CNXK_INT_ENA_BIT;
-+		octep_write_csr64(oct,
-+				  CNXK_SDP_R_IN_INT_LEVELS(srn + i), reg_val);
+ 	conf->msix_cfg.non_ioq_msix = CNXK_NUM_NON_IOQ_INTR;
+ 	conf->msix_cfg.ioq_msix = conf->pf_ring_cfg.active_io_rings;
+@@ -378,6 +379,12 @@ static void octep_setup_oq_regs_cnxk_pf(struct octep_device *oct, int oq_no)
+ 	reg_val = ((u64)time_threshold << 32) |
+ 		  CFG_GET_OQ_INTR_PKT(oct->conf);
+ 	octep_write_csr64(oct, CNXK_SDP_R_OUT_INT_LEVELS(oq_no), reg_val);
 +
-+		reg_val = octep_read_csr64(oct,
-+					   CNXK_SDP_R_OUT_INT_LEVELS(srn + i));
-+		reg_val &= ~CNXK_INT_ENA_BIT;
-+		octep_write_csr64(oct,
-+				  CNXK_SDP_R_OUT_INT_LEVELS(srn + i), reg_val);
-+	}
++	/* set watermark for backpressure */
++	reg_val = octep_read_csr64(oct, CNXK_SDP_R_OUT_WMARK(oq_no));
++	reg_val &= ~0xFFFFFFFFULL;
++	reg_val |= CFG_GET_OQ_WMARK(oct->conf);
++	octep_write_csr64(oct, CNXK_SDP_R_OUT_WMARK(oq_no), reg_val);
+ }
  
- 	octep_write_csr64(oct, CNXK_SDP_EPF_IRERR_RINT_ENA_W1C, intr_mask);
- 	octep_write_csr64(oct, CNXK_SDP_EPF_ORERR_RINT_ENA_W1C, intr_mask);
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
-index 0a43983e91015..9ecfbabe3b9c5 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cn9k_pf.h
-@@ -373,5 +373,6 @@
- #define CN93_PEM_BAR4_INDEX            7
- #define CN93_PEM_BAR4_INDEX_SIZE       0x400000ULL
- #define CN93_PEM_BAR4_INDEX_OFFSET     (CN93_PEM_BAR4_INDEX * CN93_PEM_BAR4_INDEX_SIZE)
-+#define CN93_INT_ENA_BIT	BIT_ULL(62)
+ /* Setup registers for a PF mailbox */
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_config.h b/drivers/net/ethernet/marvell/octeon_ep/octep_config.h
+index 1622a6ebf0362..ecc2947931410 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_config.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_config.h
+@@ -19,6 +19,9 @@
+ /* Packet threshold for Tx queue interrupt */
+ #define OCTEP_IQ_INTR_THRESHOLD     0x0
  
- #endif /* _OCTEP_REGS_CN9K_PF_H_ */
++/* Minimum watermark for backpressure */
++#define OCTEP_OQ_WMARK_MIN 256
++
+ /* Rx Queue: maximum descriptors per ring */
+ #define OCTEP_OQ_MAX_DESCRIPTORS   1024
+ 
+@@ -68,6 +71,7 @@
+ #define CFG_GET_OQ_REFILL_THRESHOLD(cfg)  ((cfg)->oq.refill_threshold)
+ #define CFG_GET_OQ_INTR_PKT(cfg)          ((cfg)->oq.oq_intr_pkt)
+ #define CFG_GET_OQ_INTR_TIME(cfg)         ((cfg)->oq.oq_intr_time)
++#define CFG_GET_OQ_WMARK(cfg)             ((cfg)->oq.wmark)
+ 
+ #define CFG_GET_PORTS_MAX_IO_RINGS(cfg)    ((cfg)->pf_ring_cfg.max_io_rings)
+ #define CFG_GET_PORTS_ACTIVE_IO_RINGS(cfg) ((cfg)->pf_ring_cfg.active_io_rings)
+@@ -137,6 +141,12 @@ struct octep_oq_config {
+ 	 * default. The time is specified in microseconds.
+ 	 */
+ 	u32 oq_intr_time;
++
++	/* Water mark for backpressure.
++	 * Output queue sends backpressure signal to source when
++	 * free buffer count falls below wmark.
++	 */
++	u32 wmark;
+ };
+ 
+ /* Tx/Rx configuration */
 diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
-index abe02df8af117..214aab88bb427 100644
+index 214aab88bb427..f0b3937002b62 100644
 --- a/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
 +++ b/drivers/net/ethernet/marvell/octeon_ep/octep_regs_cnxk_pf.h
-@@ -396,5 +396,6 @@
- #define CNXK_PEM_BAR4_INDEX		7
- #define CNXK_PEM_BAR4_INDEX_SIZE	0x400000ULL
- #define CNXK_PEM_BAR4_INDEX_OFFSET	(CNXK_PEM_BAR4_INDEX * CNXK_PEM_BAR4_INDEX_SIZE)
-+#define CNXK_INT_ENA_BIT	BIT_ULL(62)
+@@ -143,6 +143,9 @@
+ #define    CNXK_SDP_R_OUT_SLIST_DBELL(ring)          \
+ 	(CNXK_SDP_R_OUT_SLIST_DBELL_START + ((ring) * CNXK_RING_OFFSET))
  
- #endif /* _OCTEP_REGS_CNXK_PF_H_ */
++#define    CNXK_SDP_R_OUT_WMARK(ring)         \
++	(CNXK_SDP_R_OUT_WMARK_START + ((ring) * CNXK_RING_OFFSET))
++
+ #define    CNXK_SDP_R_OUT_CNTS(ring)          \
+ 	(CNXK_SDP_R_OUT_CNTS_START + ((ring) * CNXK_RING_OFFSET))
+ 
 -- 
 2.51.0
 
