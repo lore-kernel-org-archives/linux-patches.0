@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB18326D63
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F905326D63
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300979; cv=none; b=dYVS/nZH5ARfuzO7mThEg0Yo/uglsmj4bQ252IozZwUZ2I8bxeXp/q5CnrlDaj90ykepsgZlgH7Ed/HkTfxYzKtsaolvxw1C5S0X5p03wIYKksj7Al8vg4T4P+Mx6YtWUE/XnMFEii6Rc8D0VURM6hRyNjolzM2y5NDn3fJEp8U=
+	t=1772300980; cv=none; b=hMKDEC4ybd9JzqtKH5/o8NDGqL+Y7hIFDau3eSy5OHnyMqQdvH3ePY/DF5/mUsfpbFXqVKOGwxTyzsk8nsZ8ubFoYJYe/F7IcN9jPTQB2pPdJ9a5TYiwMnOyjdkkIEzcuPQ8pOl+ojnXUNrJkRIRuzLTyN2gL5wzk96qZUP2Qi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300979; c=relaxed/simple;
-	bh=FY8CeVY88weBCGa2RQnVCBng5D48wMZTOLCW68rPoiI=;
+	s=arc-20240116; t=1772300980; c=relaxed/simple;
+	bh=SbfuuVD8bjuM3QXr4hweJu2hSXe/cwklSkcZiE+ns/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uh0j5ShUsmSMtACbdnppcA47h3oj/BFLQnwIQ4Sb5HhXa8+GPa2cBShMdzudLXhBVNXpqoN8heGzSUMINbpOlXhLGYFtxJbEm2az8t+FqsQmn6t80CcI3uermW6Y+1Fa84O/yqyHuSPUD+Hv3fGxfib+x4iZ5HtfsBfoqoA/snY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IdEDdEFV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IbcM52COE8vNPIoWRgxTCClGM9W92N+OZxo3ji11uTTM9G+MHmcbZG0TewADm3D2HJnlchcbHfRKIcY3iMnbghYX7GwxUOeiDDhl85pRT3lpLs4vw7/GHZgyrX0j0koIeGnebkqDdwTgdd2VYWvlg6Nf9nvwJKcaRYx6hCjrhPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oalJK65h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IdEDdEFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC18C2BC87;
-	Sat, 28 Feb 2026 17:49:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oalJK65h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C516FC116D0;
+	Sat, 28 Feb 2026 17:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300979;
-	bh=FY8CeVY88weBCGa2RQnVCBng5D48wMZTOLCW68rPoiI=;
+	s=k20201202; t=1772300980;
+	bh=SbfuuVD8bjuM3QXr4hweJu2hSXe/cwklSkcZiE+ns/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdEDdEFVSeXSEmmc7l3aqTD2CQg4KyLPsd6r06wqYgT66i0Xs5O70BhE221pTw0uh
-	 nwp4IlWbT+7FckoZjtuLgnmnYMkL1iX7y2paN8XRdasy3NKvu3EYUIJutqUuLZMlZ6
-	 2lXjIHuAg8tEGBPObe+GxH4XR4/4Cy+hmXuCscZSd4EEdC9+23XIeaLJ6wBiTIidYF
-	 a9yLnitzJHP+gC2nRkYS+oezu2f5QYqy/LK44O71Ai8jiSIZizKM6rihD1ydvAbuMx
-	 goWhMYmR6iTOOGv1aZjPrAZeB+31zlRHSKLZ1GvLplsxMp+M5BEqsCVm8svnwMb+H0
-	 D6EgWw6jSWZWA==
+	b=oalJK65hgnLYhcpRMKIRGd4Gpqc12sxO8Sptz+jG2cCHncE8A7N2jW0xibej6AXms
+	 Xz6IxGOnfx4uVvRyPaWqqsUPm2V1LsOC8PNNNeMFWsE3TgHOz8WAx1oFtKLawDCRPe
+	 ExDiV+LayS0TFfbLBbEm7Pebe7BtGR/6lGHYoK+3m88JvuEITops33UyIVlyeT9luv
+	 LeqR0CgCeCYRBHdp1PsXk9Tp/IeL4Chf8QjL2OOwDnneYlDOwJvxW++nUodmv6Svkm
+	 M2RRFr8UsJ3UhUtP2LYu6tfhTbbfgFLak39r8g9l6ZOklr2bPM+i4X2M7MZ2A0X9/+
+	 90W8LLHCLnoJw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Lyude Paul <lyude@redhat.com>,
+Cc: Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 108/752] drm/display/dp_mst: Add protection against 0 vcpi
-Date: Sat, 28 Feb 2026 12:36:59 -0500
-Message-ID: <20260228174750.1542406-108-sashal@kernel.org>
+Subject: [PATCH 6.18 109/752] drm/panthor: Always wait after sending a command to an AS
+Date: Sat, 28 Feb 2026 12:37:00 -0500
+Message-ID: <20260228174750.1542406-109-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,94 +47,122 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Suraj Kandpal <suraj.kandpal@intel.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 342ccffd9f77fc29fe1c05fd145e4d842bd2feaa ]
+[ Upstream commit d2c6fde56d451ca48a5e03428535ce3dbc8fc910 ]
 
-When releasing a timeslot there is a slight chance we may end up
-with the wrong payload mask due to overflow if the delayed_destroy_work
-ends up coming into play after a DP 2.1 monitor gets disconnected
-which causes vcpi to become 0 then we try to make the payload =
-~BIT(vcpi - 1) which is a negative shift. VCPI id should never
-really be 0 hence skip changing the payload mask if VCPI is 0.
+There's currently no situation where we want to issue a command to an
+AS and not wait for this command to complete. The wait is either
+explicitly done (LOCK, UNLOCK) or it's missing (UPDATE). So let's
+turn write_cmd() into as_send_cmd_and_wait() that has the wait after
+a command is sent.
 
-Otherwise it leads to
-<7> [515.287237] xe 0000:03:00.0: [drm:drm_dp_mst_get_port_malloc
-[drm_display_helper]] port ffff888126ce9000 (3)
-<4> [515.287267] -----------[ cut here ]-----------
-<3> [515.287268] UBSAN: shift-out-of-bounds in
-../drivers/gpu/drm/display/drm_dp_mst_topology.c:4575:36
-<3> [515.287271] shift exponent -1 is negative
-<4> [515.287275] CPU: 7 UID: 0 PID: 3108 Comm: kworker/u64:33 Tainted: G
-S U 6.17.0-rc6-lgci-xe-xe-3795-3e79699fa1b216e92+ #1 PREEMPT(voluntary)
-<4> [515.287279] Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
-<4> [515.287279] Hardware name: ASUS System Product Name/PRIME Z790-P
-WIFI, BIOS 1645 03/15/2024
-<4> [515.287281] Workqueue: drm_dp_mst_wq drm_dp_delayed_destroy_work
-[drm_display_helper]
-<4> [515.287303] Call Trace:
-<4> [515.287304] <TASK>
-<4> [515.287306] dump_stack_lvl+0xc1/0xf0
-<4> [515.287313] dump_stack+0x10/0x20
-<4> [515.287316] __ubsan_handle_shift_out_of_bounds+0x133/0x2e0
-<4> [515.287324] ? drm_atomic_get_private_obj_state+0x186/0x1d0
-<4> [515.287333] drm_dp_atomic_release_time_slots.cold+0x17/0x3d
-[drm_display_helper]
-<4> [515.287355] mst_connector_atomic_check+0x159/0x180 [xe]
-<4> [515.287546] drm_atomic_helper_check_modeset+0x4d9/0xfa0
-<4> [515.287550] ? __ww_mutex_lock.constprop.0+0x6f/0x1a60
-<4> [515.287562] intel_atomic_check+0x119/0x2b80 [xe]
-<4> [515.287740] ? find_held_lock+0x31/0x90
-<4> [515.287747] ? lock_release+0xce/0x2a0
-<4> [515.287754] drm_atomic_check_only+0x6a2/0xb40
-<4> [515.287758] ? drm_atomic_add_affected_connectors+0x12b/0x140
-<4> [515.287765] drm_atomic_commit+0x6e/0xf0
-<4> [515.287766] ? _pfx__drm_printfn_info+0x10/0x10
-<4> [515.287774] drm_client_modeset_commit_atomic+0x25c/0x2b0
-<4> [515.287794] drm_client_modeset_commit_locked+0x60/0x1b0
-<4> [515.287795] ? mutex_lock_nested+0x1b/0x30
-<4> [515.287801] drm_client_modeset_commit+0x26/0x50
-<4> [515.287804] __drm_fb_helper_restore_fbdev_mode_unlocked+0xdc/0x110
-<4> [515.287810] drm_fb_helper_hotplug_event+0x120/0x140
-<4> [515.287814] drm_fbdev_client_hotplug+0x28/0xd0
-<4> [515.287819] drm_client_hotplug+0x6c/0xf0
-<4> [515.287824] drm_client_dev_hotplug+0x9e/0xd0
-<4> [515.287829] drm_kms_helper_hotplug_event+0x1a/0x30
-<4> [515.287834] drm_dp_delayed_destroy_work+0x3df/0x410
-[drm_display_helper]
-<4> [515.287861] process_one_work+0x22b/0x6f0
-<4> [515.287874] worker_thread+0x1e8/0x3d0
-<4> [515.287879] ? __pfx_worker_thread+0x10/0x10
-<4> [515.287882] kthread+0x11c/0x250
-<4> [515.287886] ? __pfx_kthread+0x10/0x10
-<4> [515.287890] ret_from_fork+0x2d7/0x310
-<4> [515.287894] ? __pfx_kthread+0x10/0x10
-<4> [515.287897] ret_from_fork_asm+0x1a/0x30
+v2:
+- New patch
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6303
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20251119094650.799135-1-suraj.kandpal@intel.com
+v3:
+- Collect R-b
+
+v4:
+- No changes
+
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20251128084841.3804658-2-boris.brezillon@collabora.com
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_dp_mst_topology.c b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-index 64e5c176d5cce..be749dcad3b58 100644
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -4572,7 +4572,8 @@ int drm_dp_atomic_release_time_slots(struct drm_atomic_state *state,
- 	if (!payload->delete) {
- 		payload->pbn = 0;
- 		payload->delete = true;
--		topology_state->payload_mask &= ~BIT(payload->vcpi - 1);
-+		if (payload->vcpi > 0)
-+			topology_state->payload_mask &= ~BIT(payload->vcpi - 1);
- 	}
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index 0fd8ffec92dd0..5647a24741095 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -523,27 +523,29 @@ static int wait_ready(struct panthor_device *ptdev, u32 as_nr)
+ 	return ret;
+ }
  
- 	return 0;
+-static int write_cmd(struct panthor_device *ptdev, u32 as_nr, u32 cmd)
++static int as_send_cmd_and_wait(struct panthor_device *ptdev, u32 as_nr, u32 cmd)
+ {
+ 	int status;
+ 
+ 	/* write AS_COMMAND when MMU is ready to accept another command */
+ 	status = wait_ready(ptdev, as_nr);
+-	if (!status)
++	if (!status) {
+ 		gpu_write(ptdev, AS_COMMAND(as_nr), cmd);
++		status = wait_ready(ptdev, as_nr);
++	}
+ 
+ 	return status;
+ }
+ 
+-static void lock_region(struct panthor_device *ptdev, u32 as_nr,
+-			u64 region_start, u64 size)
++static int lock_region(struct panthor_device *ptdev, u32 as_nr,
++		       u64 region_start, u64 size)
+ {
+ 	u8 region_width;
+ 	u64 region;
+ 	u64 region_end = region_start + size;
+ 
+ 	if (!size)
+-		return;
++		return 0;
+ 
+ 	/*
+ 	 * The locked region is a naturally aligned power of 2 block encoded as
+@@ -566,7 +568,7 @@ static void lock_region(struct panthor_device *ptdev, u32 as_nr,
+ 
+ 	/* Lock the region that needs to be updated */
+ 	gpu_write64(ptdev, AS_LOCKADDR(as_nr), region);
+-	write_cmd(ptdev, as_nr, AS_COMMAND_LOCK);
++	return as_send_cmd_and_wait(ptdev, as_nr, AS_COMMAND_LOCK);
+ }
+ 
+ static int mmu_hw_do_operation_locked(struct panthor_device *ptdev, int as_nr,
+@@ -599,9 +601,7 @@ static int mmu_hw_do_operation_locked(struct panthor_device *ptdev, int as_nr,
+ 	 * power it up
+ 	 */
+ 
+-	lock_region(ptdev, as_nr, iova, size);
+-
+-	ret = wait_ready(ptdev, as_nr);
++	ret = lock_region(ptdev, as_nr, iova, size);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -614,10 +614,7 @@ static int mmu_hw_do_operation_locked(struct panthor_device *ptdev, int as_nr,
+ 	 * at the end of the GPU_CONTROL cache flush command, unlike
+ 	 * AS_COMMAND_FLUSH_MEM or AS_COMMAND_FLUSH_PT.
+ 	 */
+-	write_cmd(ptdev, as_nr, AS_COMMAND_UNLOCK);
+-
+-	/* Wait for the unlock command to complete */
+-	return wait_ready(ptdev, as_nr);
++	return as_send_cmd_and_wait(ptdev, as_nr, AS_COMMAND_UNLOCK);
+ }
+ 
+ static int mmu_hw_do_operation(struct panthor_vm *vm,
+@@ -646,7 +643,7 @@ static int panthor_mmu_as_enable(struct panthor_device *ptdev, u32 as_nr,
+ 	gpu_write64(ptdev, AS_MEMATTR(as_nr), memattr);
+ 	gpu_write64(ptdev, AS_TRANSCFG(as_nr), transcfg);
+ 
+-	return write_cmd(ptdev, as_nr, AS_COMMAND_UPDATE);
++	return as_send_cmd_and_wait(ptdev, as_nr, AS_COMMAND_UPDATE);
+ }
+ 
+ static int panthor_mmu_as_disable(struct panthor_device *ptdev, u32 as_nr)
+@@ -661,7 +658,7 @@ static int panthor_mmu_as_disable(struct panthor_device *ptdev, u32 as_nr)
+ 	gpu_write64(ptdev, AS_MEMATTR(as_nr), 0);
+ 	gpu_write64(ptdev, AS_TRANSCFG(as_nr), AS_TRANSCFG_ADRMODE_UNMAPPED);
+ 
+-	return write_cmd(ptdev, as_nr, AS_COMMAND_UPDATE);
++	return as_send_cmd_and_wait(ptdev, as_nr, AS_COMMAND_UPDATE);
+ }
+ 
+ static u32 panthor_mmu_fault_mask(struct panthor_device *ptdev, u32 value)
 -- 
 2.51.0
 
