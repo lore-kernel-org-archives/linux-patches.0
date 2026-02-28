@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2D9379EE2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE08379EE4
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301692; cv=none; b=c8iVR6vTba4Nn12y9Aa6VYI2686qx6qyoXcj6xRvMqfI8m5sbFssXiQY/x7SVA+OTUg2jbG2b5nuK6BZVOWFonKb142WgM5o35XQ5TD8k5exdLkrEjqSO9iEdoQr3vra7NDjsd6V844cprO75RYEnr19POkoghgrlqqhuSCsTYg=
+	t=1772301693; cv=none; b=nqPhJfThRmR/hBsDAjWU2HVX/nheRoKO7AaPK8fsQvG5Yyl9eG/6uT+dimv8hUQpVrwfBnU0qlgITgisemgDp3LHyA+18YR/Y+vFHsjbsV1mvi/4ExOX8yUjad55L4FpAqtcq3I46PWGYaHMKTMsmN7zvVS2MKQtf6dM80elaqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301692; c=relaxed/simple;
-	bh=qQ8SRzWNg80Ad38u4kZjfmfvHTa/ixcIDRm6XOwk8tU=;
+	s=arc-20240116; t=1772301693; c=relaxed/simple;
+	bh=77osr6DQ1VZV3fXFkRrww/pN0oI/WsL4mCIIdwhYJMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2LK1mg/lbPo3vhF+1laO3qI8WHUzixEjWsqRmOXlf0SGOA4qt45og3YnlW4NuBVPTu83IH+Asqgx2osCVafz7d/2lMoF7UNVHU3RtRNFCkdVeRzZlPU8rkKuwsUr6GZzv7h1DNlszgH42UB2vTIgVU6/jQOtxaLZYGjUlyj52U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WLY4lhyt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PdLqZ5AYwDIbZ6ojOBCy6ca/gXZWUzE3z1wu/WdS+C94oZ585FjDFavCWFZVtzqQxuZalqv3KSO0ayvLod723vvXVr+o+lOcZgT3bTU2Rw3qaYV1UmznCt2u6rn9GDcpMYK4NLJFnCiuMnznPIt05uHKX9FGQIj91Pn0sjNXIYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cM5iMuG/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WLY4lhyt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD422C116D0;
-	Sat, 28 Feb 2026 18:01:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cM5iMuG/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71346C116D0;
+	Sat, 28 Feb 2026 18:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301692;
-	bh=qQ8SRzWNg80Ad38u4kZjfmfvHTa/ixcIDRm6XOwk8tU=;
+	s=k20201202; t=1772301693;
+	bh=77osr6DQ1VZV3fXFkRrww/pN0oI/WsL4mCIIdwhYJMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLY4lhytW4hG5KaFz4+Z5hVtzGmKeLzVijBp/RU79PpMCNmujZdAlmRVIDv3PQZ7S
-	 9lJJwteIVbMVrw++45U8cM8APmXyiDmWoSeQ88VfvjJz1bKhJheguAgBfunxxhzSU8
-	 2y6OqnGAGEqG2th89ypL0T6RpHLS6vL6UlvxMHGKFkf/XspMGNBh+WDWAcGi9nGG0F
-	 BXXgDdZRC1VCu5qzO8h2s9A1j+esQIKN+6iFrW9rL0tXuSLQUWTLcAR28WWKV68PRO
-	 yendeQm7LluTb4DBHOUrq/FQ6w/eTpFMgmIUZaxlt7N1UjY2dndO/OWWIQ3uBg9aW1
-	 ELu/RZ57eA8Sg==
+	b=cM5iMuG/qVV70+/gOqhrzgUkTSQG9OrsxDdKapxN3Ye44/1n78v/WxL4Wz/1zvfEw
+	 2ZNMUwL2Jx2FvWNZgcJTXkP2p72v4IoSAcWUkpRFVNA2dzvC51Y/Y8duip4fXLy76X
+	 B/ExLqaq0/csky4yIdt9KbRunFARjp5qRVLcN7fhUgjo/MvOb+/kRp58Ag7zv9dTx1
+	 im/IYBgVpyOV/vONeNnoOfrIJcLhhKMJ9SHUN18sFdeLeRIoNfaQ35HJ3fOL6TD6U3
+	 kGl7cX48vvRBHGhaZoSvm7VCEGP6Gqnxy9joCOAncIdWWqbJLm0kkoChdyKNySwPGb
+	 t42NZRjnOnP6w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+Cc: Joel Fernandes <joelagnelf@nvidia.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Christian Loehle <christian.loehle@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/385] media: pci: mg4b: Use IRQF_NO_THREAD
-Date: Sat, 28 Feb 2026 12:55:05 -0500
-Message-ID: <20260228180011.1568201-83-sashal@kernel.org>
+Subject: [PATCH 6.12 084/385] sched/deadline: Clear the defer params
+Date: Sat, 28 Feb 2026 12:55:06 -0500
+Message-ID: <20260228180011.1568201-84-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,37 +50,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Joel Fernandes <joelagnelf@nvidia.com>
 
-[ Upstream commit ef92b98f5f6758a049898b53aa30476010db04fa ]
+[ Upstream commit 3cb3b27693bf30defb16aa096158a3b24583b8d2 ]
 
-The interrupt handler iio_trigger_generic_data_rdy_poll() will invoke other
-interrupt handlers and this supposed to happen from hard interrupt context.
+The defer params were not cleared in __dl_clear_params. Clear them.
 
-Use IRQF_NO_THREAD to forbid forced-threading.
+Without this is some of my test cases are flaking and the DL timer is
+not starting correctly AFAICS.
 
-Fixes: 0ab13674a9bd1 ("media: pci: mgb4: Added Digiteq Automotive MGB4 driver")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260128095540.863589-21-bigeasy@linutronix.de
+Fixes: a110a81c52a9 ("sched/deadline: Deferrable dl server")
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260126100050.3854740-2-arighi@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/mgb4/mgb4_trigger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/deadline.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/pci/mgb4/mgb4_trigger.c b/drivers/media/pci/mgb4/mgb4_trigger.c
-index d7dddc5c8728e..10c23f0c833d5 100644
---- a/drivers/media/pci/mgb4/mgb4_trigger.c
-+++ b/drivers/media/pci/mgb4/mgb4_trigger.c
-@@ -114,7 +114,7 @@ static int probe_trigger(struct iio_dev *indio_dev, int irq)
- 	if (!st->trig)
- 		return -ENOMEM;
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 1689d190dea8f..8acdd97538546 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -3649,6 +3649,9 @@ static void __dl_clear_params(struct sched_dl_entity *dl_se)
+ 	dl_se->dl_non_contending	= 0;
+ 	dl_se->dl_overrun		= 0;
+ 	dl_se->dl_server		= 0;
++	dl_se->dl_defer			= 0;
++	dl_se->dl_defer_running		= 0;
++	dl_se->dl_defer_armed		= 0;
  
--	ret = request_irq(irq, &iio_trigger_generic_data_rdy_poll, 0,
-+	ret = request_irq(irq, &iio_trigger_generic_data_rdy_poll, IRQF_NO_THREAD,
- 			  "mgb4-trigger", st->trig);
- 	if (ret)
- 		goto error_free_trig;
+ #ifdef CONFIG_RT_MUTEXES
+ 	dl_se->pi_se			= dl_se;
 -- 
 2.51.0
 
