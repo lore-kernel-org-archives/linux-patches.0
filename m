@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61C2340A79
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DB6340A5A
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301063; cv=none; b=TGC6grjFxjoIzYMKwKQfNJRW22zccFeyjcZzDlmgzy226+M6QbpdYDJsFlGSJI6gpY0X7aWN5/213uwP7fdkVtSRSdHdOWg6mGs8ov9zSDEAb7L6X6JGyC8YCXAJKZsg6qdleh+UiRiDHDejUXsGoTkc6tDC4wL0Xnx0B5Zp6LQ=
+	t=1772301064; cv=none; b=SFNea6t3DNbL6xV0PsCbCAeERnLVZm6YELuxH5t5lMeGFeGGoNQNRmaVSSpS0JmBKEgiBkgMnDxff/yQpf1P7HGN5P2kMvFTdZuh4cOVvYizx57tckI12g00UV7K391D4gX5oPBZliLNxjyfGGhEXiKhYS08eJhmgekiW+Y93ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301063; c=relaxed/simple;
-	bh=9DePG+3ApJLWUkuXD2BkxLNtgVIC0JyRLY+gVS8vJo4=;
+	s=arc-20240116; t=1772301064; c=relaxed/simple;
+	bh=SIfzGEicaXiCjBcV50bvfzgGKiwNjSrvEnyg+Jf+vec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jX5F7jxUY5sply05MuGv+CAjW3RCYJY4kZrTeYOTP95re3I27e4FmY+EzZhWv61Scm01A4R/ZEe0bxvOzDRCDWSjol+O+esGc06c4Una7CVxwQ/1ahJSSscitXdsTsKRbp0h37q1twQmU4jyNjRO9865A9RbHErx1y1NH8P+Ndc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fjSjpmSh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o2RuZApBmgbGA6vFePIVQ+0wVfv3w1N1gVF3pSGCf6wa3ozQtpIuV01pmiEYmcSP6jJI0pjMXWxtq5zDTj2T+zUZZ+tfM/Re6rOSjXhgTnYNHVNaOab+Aa75JR92TilGd4Sw7U4Y6dzbAZJMlSKANZEO2yGgsYeUjXCYTTG0KlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R6gkcxHN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fjSjpmSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10230C116D0;
-	Sat, 28 Feb 2026 17:51:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R6gkcxHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF278C19423;
+	Sat, 28 Feb 2026 17:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301063;
-	bh=9DePG+3ApJLWUkuXD2BkxLNtgVIC0JyRLY+gVS8vJo4=;
+	s=k20201202; t=1772301064;
+	bh=SIfzGEicaXiCjBcV50bvfzgGKiwNjSrvEnyg+Jf+vec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjSjpmShL/JXNMbxAKklsSUEDDMufncUxcffFlRrP3WGIMN6+bWfxq78PHbYHoUQ0
-	 9q95uC7vCvARXUIwuYqsgudF7ek7nyh8jCj+4LqI1aNw5nwOiaeVtTHmNS7pDfa3g/
-	 Jy3aLQt+3s9FrfkpbIK7lOfzZWSEHMeTjdAsbe1bUt3rDhnmL2tVkto3NvvG+kAt2N
-	 D+phiYoS0H7XeJYFnywPpeSVfdQPzSY8u8hIFB9xzPrD8gsgWV0SF3syoO3JBgV1qh
-	 V7+lUdj2VkasgigqxDowEj/YmmffN2dF4JE6k5/cLLsNJHGsY5ABVDS4lSvq/02b8f
-	 2+vrLATl+KpZA==
+	b=R6gkcxHNKN5eZ9g0Dm+cEBj+aGQamyuFHB20+2vZAZC1X1oMZkmJhUwNmv+A0LhHp
+	 kTVw2UfqdAfvJ0I6sQImHI+IBzoS7oI7uN/BOAEceG3kJ4Fot93ygjWb0BcRUESuOG
+	 VAsQGMQSLXJH1LFnKhrQwzcyWdAqJt+uN6lVvOrr2GJgSPmSz/Rza9Wh0ssN03mlBd
+	 Rt1JCpFmhw0KMZcS1VIv6LKtG0LxuydqChzD3srDxie5wqttJugr/wRamgOR/5BdBP
+	 RoXVz9CMY05yngdr2a9V9DF0M7FEt8SPFLbmGZ/dSHpdOAGNWt+oNguYUeJZn7ps8m
+	 zm+HtyfLaogfw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Frank Li <Frank.Li@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 206/752] spi: geni-qcom: Fix abort sequence execution for serial engine errors
-Date: Sat, 28 Feb 2026 12:38:37 -0500
-Message-ID: <20260228174750.1542406-206-sashal@kernel.org>
+Subject: [PATCH 6.18 207/752] ASoC: fsl: imx-rpmsg: use snd_soc_find_dai_with_mutex() in probe
+Date: Sat, 28 Feb 2026 12:38:38 -0500
+Message-ID: <20260228174750.1542406-207-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,69 +48,43 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit 96e041647bb0f9d92f95df1d69cb7442d7408b79 ]
+[ Upstream commit 84faa91585fa22a161763f2fe8f84a602a196c87 ]
 
-The driver currently skips the abort sequence for target mode when serial
-engine errors occur. This leads to improper error recovery as the serial
-engine may remain in an undefined state without proper cleanup, potentially
-causing subsequent operations to fail or behave unpredictably.
+imx_rpmsg_probe() calls snd_soc_find_dai() without holding client_mutex.
+However, snd_soc_find_dai() has lockdep_assert_held(&client_mutex)
+indicating callers must hold this lock, as the function iterates over the
+global component list.
 
-Fix this by ensuring the abort sequence and DMA reset always execute during
-error recovery, as both are required for proper serial engine error
-handling.
+All other callers of snd_soc_find_dai() either hold client_mutex via the
+snd_soc_bind_card() path or use the snd_soc_find_dai_with_mutex() wrapper.
 
-Co-developed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260204162854.1206323-3-praveen.talari@oss.qualcomm.com
+Use snd_soc_find_dai_with_mutex() instead to fix the missing lock
+protection.
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260205052429.4046903-1-n7l8m4@u.northwestern.edu
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-geni-qcom.c | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ sound/soc/fsl/imx-rpmsg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 5ab20d7955121..acfcf870efd84 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -160,24 +160,20 @@ static void handle_se_timeout(struct spi_controller *spi,
- 	xfer = mas->cur_xfer;
- 	mas->cur_xfer = NULL;
+diff --git a/sound/soc/fsl/imx-rpmsg.c b/sound/soc/fsl/imx-rpmsg.c
+index 7cd3aa4c87060..39b2d64eb410d 100644
+--- a/sound/soc/fsl/imx-rpmsg.c
++++ b/sound/soc/fsl/imx-rpmsg.c
+@@ -145,7 +145,7 @@ static int imx_rpmsg_probe(struct platform_device *pdev)
+ 	data->dai.ignore_pmdown_time = 1;
  
--	if (spi->target) {
--		/*
--		 * skip CMD Cancel sequnece since spi target
--		 * doesn`t support CMD Cancel sequnece
--		 */
-+	/* The controller doesn't support the Cancel commnand in target mode */
-+	if (!spi->target) {
-+		reinit_completion(&mas->cancel_done);
-+		geni_se_cancel_m_cmd(se);
-+
- 		spin_unlock_irq(&mas->lock);
--		goto reset_if_dma;
--	}
- 
--	reinit_completion(&mas->cancel_done);
--	geni_se_cancel_m_cmd(se);
--	spin_unlock_irq(&mas->lock);
-+		time_left = wait_for_completion_timeout(&mas->cancel_done, HZ);
-+		if (time_left)
-+			goto reset_if_dma;
- 
--	time_left = wait_for_completion_timeout(&mas->cancel_done, HZ);
--	if (time_left)
--		goto reset_if_dma;
-+		spin_lock_irq(&mas->lock);
-+	}
- 
--	spin_lock_irq(&mas->lock);
- 	reinit_completion(&mas->abort_done);
- 	geni_se_abort_m_cmd(se);
- 	spin_unlock_irq(&mas->lock);
+ 	data->dai.cpus->dai_name = pdev->dev.platform_data;
+-	cpu_dai = snd_soc_find_dai(data->dai.cpus);
++	cpu_dai = snd_soc_find_dai_with_mutex(data->dai.cpus);
+ 	if (!cpu_dai) {
+ 		ret = -EPROBE_DEFER;
+ 		goto fail;
 -- 
 2.51.0
 
