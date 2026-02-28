@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EF72737F2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7255B36C9E2
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302318; cv=none; b=N68+jKDkzfW6pqaHDjUVFIoaHmzSHaXzxEdC/STwn0Ia5HuXq7RRenUmayV6U4ny9LxjPobAKlR1O0hIvFpmCiVgtk0Qj24be4XuGlee6n5+dJQBWGwaaj7Ahz+iFW9ASttDrQ20pE9foYZcQHxOkTlmTqcJlMbx6Vlt38TklAU=
+	t=1772302319; cv=none; b=iucd61AakGXI/Vlj6yHUh2QiRqvP7DAw2ptAqNk1npjz1OONE2nUsHyRxwRQ5YdpMa5p0PTntRMk7zaihER23hXo6LJOIvFtZ0QrfAbgQXu0iHYVbcfEdGXhlgnTg1GNcUSxlGT+UaT9BlZzk5UoxExGXFifnttYOt8hewjDccE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302318; c=relaxed/simple;
-	bh=QwM/PeDCyOfUoFaySeK8v18HNiaxQHi9rT5NkOhbCFo=;
+	s=arc-20240116; t=1772302319; c=relaxed/simple;
+	bh=HiHhlEvaaI4qY6El36Q09R+YbneNwYK4VCYa/87ZSA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5i6JcyO2bw19uTNwWo9XUUPb2izpXfzBcX/1eeSzqlOmppHBCuAJ+PzIoBUTC/Ir3b30lRgORx4o5lxpC0FWJKHQMo3f8ZUlg1WUyvdHFC1Qm/oSu18RKYT74puYFUiYnhyzEST4ieW5IyfxcF0OMLCw5xTQ0ZSszzpdaZ94fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mHaZSjjV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IaMOPdbYl8SO+hEaWQ+AOMPMr0X9969yX2VUuZ8eA1y3u5DgVNxvuaTUuKhsdOOXR7sdHY442FDETNgBfek2q0r3x8Uv1s+J8bzQqJ+OTHqJHZa26rMviA1OpiJxV9fRc0HRsP3eLvF/Tqfc+dNgbhj+Gj9EUbhqgegcb0ya2bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jBL44UDU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mHaZSjjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C256FC19423;
-	Sat, 28 Feb 2026 18:11:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jBL44UDU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C87BC116D0;
+	Sat, 28 Feb 2026 18:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302318;
-	bh=QwM/PeDCyOfUoFaySeK8v18HNiaxQHi9rT5NkOhbCFo=;
+	s=k20201202; t=1772302319;
+	bh=HiHhlEvaaI4qY6El36Q09R+YbneNwYK4VCYa/87ZSA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHaZSjjVaEIy2MhI5G1mniblmHoqLAacl4EijiKQGxd7pinbHPQDAOYap+JUHcuKt
-	 rLTL4rUyajmacn5yI+lST5eoUyU0xMxpvVIkTQ7tYemB8CCHIPBtpyB/i9zrPboZQi
-	 FZf6aurA6Vlgioo0ep/XsXYh0jkBDbHvlKmogmHYEaHbrSEo6tK2aKPpq9cDBWvWCq
-	 LwJRJuF7dbS0aHukQ92bhnxmxBlsrcIxGlAnHfqAG+Jc9rKhWZW1eqw255quUpD7Re
-	 uKeFA/ip9Efc2vwxgzjksfHb0fHCTen18eXe794jwbB4oeFuwkk7OwbGNiRLA2z7ib
-	 0qSQO/BoeXZqA==
+	b=jBL44UDUi60TBBpzvI07f7JXih7fck9lI9TyzidgRUwXz+Dqnif7iLlyFsh8Iy46N
+	 4PelJFjjOe3QuFqsfKZXLvmQCvuv5dAsC1DzSgSZ3+EGWJKDy69Frq7MdCbCp5zL/k
+	 2maHhDolDBsY1ba5MZPuWfM8ihkzFzjc0W7JFEDFO0PvB9w4IsxkUQQaHe6o70ucJQ
+	 UNhkLirDUe3tGS/JhYNRzFNRSYkBjO6hxaUZ8YmcCfh42WuBGHJrdwveBC/7nAT8iM
+	 Xn9npaiJ9UQV2lNOzU7zKx7hcQ8CHaES035M+acu18KlviQOx+ABUzZDY+qe1y+dYU
+	 VZdzSkuLWkmCQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Chenghai Huang <huangchenghai2@huawei.com>,
-	Weili Qian <qianweili@huawei.com>,
+Cc: Kai Ye <yekai13@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/232] crypto: hisilicon/zip - adjust the way to obtain the req in the callback function
-Date: Sat, 28 Feb 2026 13:08:09 -0500
-Message-ID: <20260228181127.1592657-36-sashal@kernel.org>
+Subject: [PATCH 6.1 037/232] crypto: hisilicon/sec - fix spelling mistake 'ckeck' -> 'check'
+Date: Sat, 28 Feb 2026 13:08:10 -0500
+Message-ID: <20260228181127.1592657-37-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,125 +47,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Chenghai Huang <huangchenghai2@huawei.com>
+From: Kai Ye <yekai13@huawei.com>
 
-[ Upstream commit 19c2475ce1984cf675ebfbbeaa5509b2fb1887d6 ]
+[ Upstream commit 2132d4efaa66388f1f79c79a920908a22464686b ]
 
-In the shared queue design, multiple tfms use same qp, and one qp
-need to corresponds to multiple qp_ctx. So use tag to obtain the
-req virtual address. Build a one-to-one relationship between tfm
-and qp_ctx. finaly remove the old get_tag operation.
+There are a couple of spelling mistakes in sec2. Fix them.
 
-Fixes: 2bcf36348ce5 ("crypto: hisilicon/zip - initialize operations about 'sqe' in 'acomp_alg.init'")
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Kai Ye <yekai13@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: e75074396280 ("crypto: hisilicon/sec2 - support skcipher/aead fallback for hardware queue unavailable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/zip/zip_crypto.c | 24 +++++++++--------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/zip/zip_crypto.c b/drivers/crypto/hisilicon/zip/zip_crypto.c
-index 636ac794ebb75..d21ce4094d7db 100644
---- a/drivers/crypto/hisilicon/zip/zip_crypto.c
-+++ b/drivers/crypto/hisilicon/zip/zip_crypto.c
-@@ -36,6 +36,7 @@ enum {
- 	HZIP_CTX_Q_NUM
- };
- 
-+#define GET_REQ_FROM_SQE(sqe)	((u64)(sqe)->dw26 | (u64)(sqe)->dw27 << 32)
- #define COMP_NAME_TO_TYPE(alg_name)					\
- 	(!strcmp((alg_name), "deflate") ? HZIP_ALG_TYPE_DEFLATE : 0)
- 
-@@ -45,6 +46,7 @@ struct hisi_zip_req {
- 	struct hisi_acc_hw_sgl *hw_dst;
- 	dma_addr_t dma_src;
- 	dma_addr_t dma_dst;
-+	struct hisi_zip_qp_ctx *qp_ctx;
- 	u16 req_id;
- };
- 
-@@ -71,7 +73,6 @@ struct hisi_zip_sqe_ops {
- 	void (*fill_req_type)(struct hisi_zip_sqe *sqe, u8 req_type);
- 	void (*fill_tag)(struct hisi_zip_sqe *sqe, struct hisi_zip_req *req);
- 	void (*fill_sqe_type)(struct hisi_zip_sqe *sqe, u8 sqe_type);
--	u32 (*get_tag)(struct hisi_zip_sqe *sqe);
- 	u32 (*get_status)(struct hisi_zip_sqe *sqe);
- 	u32 (*get_dstlen)(struct hisi_zip_sqe *sqe);
- };
-@@ -128,6 +129,7 @@ static struct hisi_zip_req *hisi_zip_create_req(struct hisi_zip_qp_ctx *qp_ctx,
- 	req_cache = q + req_id;
- 	req_cache->req_id = req_id;
- 	req_cache->req = req;
-+	req_cache->qp_ctx = qp_ctx;
- 
- 	return req_cache;
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index 292ab0ff2b07c..fe34e17b44424 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -2002,7 +2002,7 @@ static int sec_aead_sha512_ctx_init(struct crypto_aead *tfm)
+ 	return sec_aead_ctx_init(tfm, "sha512");
  }
-@@ -178,7 +180,8 @@ static void hisi_zip_fill_req_type(struct hisi_zip_sqe *sqe, u8 req_type)
  
- static void hisi_zip_fill_tag(struct hisi_zip_sqe *sqe, struct hisi_zip_req *req)
+-static int sec_skcipher_cryptlen_ckeck(struct sec_ctx *ctx,
++static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx,
+ 	struct sec_req *sreq)
  {
--	sqe->dw26 = req->req_id;
-+	sqe->dw26 = lower_32_bits((u64)req);
-+	sqe->dw27 = upper_32_bits((u64)req);
- }
- 
- static void hisi_zip_fill_sqe_type(struct hisi_zip_sqe *sqe, u8 sqe_type)
-@@ -232,7 +235,7 @@ static int hisi_zip_do_work(struct hisi_zip_qp_ctx *qp_ctx,
- 						    &req->dma_dst);
- 	if (IS_ERR(req->hw_dst)) {
- 		ret = PTR_ERR(req->hw_dst);
--		dev_err(dev, "failed to map the dst buffer to hw slg (%d)!\n",
-+		dev_err(dev, "failed to map the dst buffer to hw sgl (%d)!\n",
- 			ret);
- 		goto err_unmap_input;
+ 	u32 cryptlen = sreq->c_req.sk_req->cryptlen;
+@@ -2064,7 +2064,7 @@ static int sec_skcipher_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
+ 		}
+ 		return 0;
+ 	} else if (c_alg == SEC_CALG_AES || c_alg == SEC_CALG_SM4) {
+-		return sec_skcipher_cryptlen_ckeck(ctx, sreq);
++		return sec_skcipher_cryptlen_check(ctx, sreq);
  	}
-@@ -258,11 +261,6 @@ static int hisi_zip_do_work(struct hisi_zip_qp_ctx *qp_ctx,
- 	return ret;
- }
  
--static u32 hisi_zip_get_tag(struct hisi_zip_sqe *sqe)
--{
--	return sqe->dw26;
--}
--
- static u32 hisi_zip_get_status(struct hisi_zip_sqe *sqe)
- {
- 	return sqe->dw3 & HZIP_BD_STATUS_M;
-@@ -275,14 +273,12 @@ static u32 hisi_zip_get_dstlen(struct hisi_zip_sqe *sqe)
- 
- static void hisi_zip_acomp_cb(struct hisi_qp *qp, void *data)
- {
--	struct hisi_zip_qp_ctx *qp_ctx = qp->qp_ctx;
-+	struct hisi_zip_sqe *sqe = data;
-+	struct hisi_zip_req *req = (struct hisi_zip_req *)GET_REQ_FROM_SQE(sqe);
-+	struct hisi_zip_qp_ctx *qp_ctx = req->qp_ctx;
- 	const struct hisi_zip_sqe_ops *ops = qp_ctx->ctx->ops;
- 	struct hisi_zip_dfx *dfx = &qp_ctx->zip_dev->dfx;
--	struct hisi_zip_req_q *req_q = &qp_ctx->req_q;
- 	struct device *dev = &qp->qm->pdev->dev;
--	struct hisi_zip_sqe *sqe = data;
--	u32 tag = ops->get_tag(sqe);
--	struct hisi_zip_req *req = req_q->q + tag;
- 	struct acomp_req *acomp_req = req->req;
- 	int err = 0;
- 	u32 status;
-@@ -386,7 +382,6 @@ static const struct hisi_zip_sqe_ops hisi_zip_ops = {
- 	.fill_req_type		= hisi_zip_fill_req_type,
- 	.fill_tag		= hisi_zip_fill_tag,
- 	.fill_sqe_type		= hisi_zip_fill_sqe_type,
--	.get_tag		= hisi_zip_get_tag,
- 	.get_status		= hisi_zip_get_status,
- 	.get_dstlen		= hisi_zip_get_dstlen,
- };
-@@ -574,7 +569,6 @@ static void hisi_zip_acomp_exit(struct crypto_acomp *tfm)
- {
- 	struct hisi_zip_ctx *ctx = crypto_tfm_ctx(&tfm->base);
- 
--	hisi_zip_set_acomp_cb(ctx, NULL);
- 	hisi_zip_release_sgl_pool(ctx);
- 	hisi_zip_release_req_q(ctx);
- 	hisi_zip_ctx_exit(ctx);
+ 	dev_err(dev, "skcipher algorithm error!\n");
 -- 
 2.51.0
 
