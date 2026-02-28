@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEED3451A7
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C05A34252B
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301823; cv=none; b=B13PZiBrYDhwEF+Y1bidr2l1brx06ypdtAzF5gHaoSenznukfpq3Rpv8x1qTjiKTfSwzj7hr4FSEFnuPyoVh8KZVKsLdLEbmgkIq9OwZeAq3O+S56pdYvAa7gEPrQO28eDeLy+4sYJMSdPZIgGhayXBoV+AM5NLBMcsm2ds8hrA=
+	t=1772301824; cv=none; b=c3XwW/SvbGzerY5I5AZhPboyE9OHGlR8Qr3GGHX7IC7PcQ4BkPSHMY4xnyorlpyKvLkWSGSBANZa4ArJlK11OZxJ3Ih6r+QIoxblXUfhyNa8kfQ+zecghBKaOS4VZKTBXFX3SREub9QcvQbgg/Zgf9Iqe0dN725CegK6wwweicg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301823; c=relaxed/simple;
-	bh=I0K+aV9uIQdS75VQJE0zSJfBRnU6/sh7zAF+ZUpauk0=;
+	s=arc-20240116; t=1772301824; c=relaxed/simple;
+	bh=ys28/AKhk8b3/zrliHtETh9BjoKS44p1V7kRtWX2Rt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLjb1EsfhZlTyx/qzsWhCurORy+853xja/+fPpuujrPPN7Z7m7epuqh+Yr/YSzXV3UOGuw84D16lyCxRBLWTUftU0gas1A5TYiIn6MNKY6H8SKu0/HAgrk8xN/N090Wl2QFotjE9zZff8VdpXcVhcI38+nDtlWYvUBwPV/+fRa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SYijqDQJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o4lg8Mcr0AwLJwDf0iBB78SO3+Szq1JgQ1yOcs/uI/rbKJGaMelCRHcTlFkApM/WhT7vg8RJvQdDHglRxD/GFhMIoFfh30rMfBuBgqXpA3LDKfRu0n/ABVYF2uuxRFUThtNCEsntvsgiYiYxUrFen0OSEBT8TVXnuKNiXqU8mYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fXF1yCnr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SYijqDQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89080C19425;
-	Sat, 28 Feb 2026 18:03:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fXF1yCnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750CBC116D0;
+	Sat, 28 Feb 2026 18:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301823;
-	bh=I0K+aV9uIQdS75VQJE0zSJfBRnU6/sh7zAF+ZUpauk0=;
+	s=k20201202; t=1772301824;
+	bh=ys28/AKhk8b3/zrliHtETh9BjoKS44p1V7kRtWX2Rt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SYijqDQJRpnwveUmjLe2ZEo+42Fanu4HeM/ob1mW0jcwCr9ODiMejhEaIUMw5J/En
-	 JHpK5eToZzjxWHTd4PMosciLAzQOG3t/wuWiqEBbdLxzBs3mZinLC6qpWRpiZekKZF
-	 46GjaagorMWxygHqAS5UMZGZjNukgAj1okMTZfs4ThJbyg980FPXnC3zTXom7zgmQQ
-	 WtFY7fQjgRLpwEuedDwdCz6K5TQDhA4L+Re/DsriFebYEAhjAVCWGKblnEbW7jimOe
-	 tw3bLut3+F17qtyTFuHP1Wjq4MzYWK9lrnhyM6yqnCh/oCdD75yIBd9r1ObFuxkgRd
-	 ps/UTixzOQpNA==
+	b=fXF1yCnrFYArA0Opv6kTW0fUaScaJOEm4zS87xSE/Hf4Qof02zz/9C6RFRT/4BKbw
+	 PjLYBZC4ArSKT6oXA+0DvV5f2XJFQL3U4Zz6Yi2UXyeigXrN3k5g2vb8EAjOtmRCs/
+	 HnhFuZQNRd7I4ovaAH1uB4S4CIUmtWj9Hj4gBdhmoUOPknaf4muqcWHw5z+1nvK/uy
+	 NMkujX6SKArlOolE8B++XzAASCnVTBxvCIJiBeAecOM6bL2WJU6sZl3f+I4YhmRNTJ
+	 oe0sIJaIs/hqSEcCzT3rujh4e6PPwxbZ7VZIeT0kokfFnijoTpsbrGfT5qar2gK6G2
+	 ms8P5PzBBoY7A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
-	syzbot+e738404dcd14b620923c@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	syzbot+827272712bd6d12c79a4@syzkaller.appspotmail.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 238/385] xfrm: fix ip_rt_bug race in icmp_route_lookup reverse path
-Date: Sat, 28 Feb 2026 12:57:40 -0500
-Message-ID: <20260228180011.1568201-238-sashal@kernel.org>
+Subject: [PATCH 6.12 239/385] serial: caif: fix use-after-free in caif_serial ldisc_close()
+Date: Sat, 28 Feb 2026 12:57:41 -0500
+Message-ID: <20260228180011.1568201-239-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -51,96 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 81b84de32bb27ae1ae2eb9acf0420e9d0d14bf00 ]
+[ Upstream commit 308e7e4d0a846359685f40aade023aee7b27284c ]
 
-icmp_route_lookup() performs multiple route lookups to find a suitable
-route for sending ICMP error messages, with special handling for XFRM
-(IPsec) policies.
+There is a use-after-free bug in caif_serial where handle_tx() may
+access ser->tty after the tty has been freed.
 
-The lookup sequence is:
-1. First, lookup output route for ICMP reply (dst = original src)
-2. Pass through xfrm_lookup() for policy check
-3. If blocked (-EPERM) or dst is not local, enter "reverse path"
-4. In reverse path, call xfrm_decode_session_reverse() to get fl4_dec
-   which reverses the original packet's flow (saddr<->daddr swapped)
-5. If fl4_dec.saddr is local (we are the original destination), use
-   __ip_route_output_key() for output route lookup
-6. If fl4_dec.saddr is NOT local (we are a forwarding node), use
-   ip_route_input() to simulate the reverse packet's input path
-7. Finally, pass rt2 through xfrm_lookup() with XFRM_LOOKUP_ICMP flag
+The race condition occurs between ldisc_close() and packet transmission:
 
-The bug occurs in step 6: ip_route_input() is called with fl4_dec.daddr
-(original packet's source) as destination. If this address becomes local
-between the initial check and ip_route_input() call (e.g., due to
-concurrent "ip addr add"), ip_route_input() returns a LOCAL route with
-dst.output set to ip_rt_bug.
+    CPU 0 (close)                     CPU 1 (xmit)
+    -------------                     ------------
+    ldisc_close()
+      tty_kref_put(ser->tty)
+      [tty may be freed here]
+                     <-- race window -->
+                                      caif_xmit()
+                                        handle_tx()
+                                          tty = ser->tty  // dangling ptr
+                                          tty->ops->write() // UAF!
+      schedule_work()
+        ser_release()
+          unregister_netdevice()
 
-This route is then used for ICMP output, causing dst_output() to call
-ip_rt_bug(), triggering a WARN_ON:
+The root cause is that tty_kref_put() is called in ldisc_close() while
+the network device is still active and can receive packets.
 
- ------------[ cut here ]------------
- WARNING: net/ipv4/route.c:1275 at ip_rt_bug+0x21/0x30, CPU#1
- Call Trace:
-  <TASK>
-  ip_push_pending_frames+0x202/0x240
-  icmp_push_reply+0x30d/0x430
-  __icmp_send+0x1149/0x24f0
-  ip_options_compile+0xa2/0xd0
-  ip_rcv_finish_core+0x829/0x1950
-  ip_rcv+0x2d7/0x420
-  __netif_receive_skb_one_core+0x185/0x1f0
-  netif_receive_skb+0x90/0x450
-  tun_get_user+0x3413/0x3fb0
-  tun_chr_write_iter+0xe4/0x220
-  ...
+Since ser and tty have a 1:1 binding relationship with consistent
+lifecycles (ser is allocated in ldisc_open and freed in ser_release
+via unregister_netdevice, and each ser binds exactly one tty), we can
+safely defer the tty reference release to ser_release() where the
+network device is unregistered.
 
-Fix this by checking rt2->rt_type after ip_route_input(). If it's
-RTN_LOCAL, the route cannot be used for output, so treat it as an error.
+Fix this by moving tty_kref_put() from ldisc_close() to ser_release(),
+after unregister_netdevice(). This ensures the tty reference is held
+as long as the network device exists, preventing the UAF.
 
-The reproducer requires kernel modification to widen the race window,
-making it unsuitable as a selftest. It is available at:
+Note: We save ser->tty before unregister_netdevice() because ser is
+embedded in netdev's private data and will be freed along with netdev
+(needs_free_netdev = true).
 
-  https://gist.github.com/mrpre/eae853b72ac6a750f5d45d64ddac1e81
+How to reproduce: Add mdelay(500) at the beginning of ldisc_close()
+to widen the race window, then run the reproducer program [1].
 
-Reported-by: syzbot+e738404dcd14b620923c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000b1060905eada8881@google.com/T/
-Closes: https://lore.kernel.org/r/20260128090523.356953-1-jiayuan.chen@linux.dev
-Fixes: 8b7817f3a959 ("[IPSEC]: Add ICMP host relookup support")
+Note: There is a separate deadloop issue in handle_tx() when using
+PORT_UNKNOWN serial ports (e.g., /dev/ttyS3 in QEMU without proper
+serial backend). This deadloop exists even without this patch,
+and is likely caused by inconsistency between uart_write_room() and
+uart_write() in serial core. It has been addressed in a separate
+patch [2].
+
+KASAN report:
+
+==================================================================
+BUG: KASAN: slab-use-after-free in handle_tx+0x5d1/0x620
+Read of size 1 at addr ffff8881131e1490 by task caif_uaf_trigge/9929
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x10e/0x1f0
+ print_report+0xd0/0x630
+ kasan_report+0xe4/0x120
+ handle_tx+0x5d1/0x620
+ dev_hard_start_xmit+0x9d/0x6c0
+ __dev_queue_xmit+0x6e2/0x4410
+ packet_xmit+0x243/0x360
+ packet_sendmsg+0x26cf/0x5500
+ __sys_sendto+0x4a3/0x520
+ __x64_sys_sendto+0xe0/0x1c0
+ do_syscall_64+0xc9/0xf80
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f615df2c0d7
+
+Allocated by task 9930:
+
+Freed by task 64:
+
+Last potentially related work creation:
+
+The buggy address belongs to the object at ffff8881131e1000
+ which belongs to the cache kmalloc-cg-2k of size 2048
+The buggy address is located 1168 bytes inside of
+ freed 2048-byte region [ffff8881131e1000, ffff8881131e1800)
+
+The buggy address belongs to the physical page:
+page_owner tracks the page as allocated
+page last free pid 9778 tgid 9778 stack trace:
+
+Memory state around the buggy address:
+ ffff8881131e1380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff8881131e1400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff8881131e1480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                         ^
+ ffff8881131e1500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff8881131e1580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+[1]: https://gist.github.com/mrpre/f683f244544f7b11e7fa87df9e6c2eeb
+[2]: https://lore.kernel.org/linux-serial/20260204074327.226165-1-jiayuan.chen@linux.dev/T/#u
+
+Reported-by: syzbot+827272712bd6d12c79a4@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000a4a7550611e234f5@google.com/T/
+Fixes: 56e0ef527b18 ("drivers/net: caif: fix wrong rtnl_is_locked() usage")
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260206050220.59642-1-jiayuan.chen@linux.dev
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20260206074450.154267-1-jiayuan.chen@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/icmp.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/caif/caif_serial.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 2bda14908273c..ee24728fc60bf 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -555,6 +555,21 @@ static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
- 		/* steal dst entry from skb_in, don't drop refcnt */
- 		skb_dstref_steal(skb_in);
- 		skb_dstref_restore(skb_in, orefdst);
-+
-+		/*
-+		 * At this point, fl4_dec.daddr should NOT be local (we
-+		 * checked fl4_dec.saddr above). However, a race condition
-+		 * may occur if the address is added to the interface
-+		 * concurrently. In that case, ip_route_input() returns a
-+		 * LOCAL route with dst.output=ip_rt_bug, which must not
-+		 * be used for output.
-+		 */
-+		if (!err && rt2 && rt2->rt_type == RTN_LOCAL) {
-+			net_warn_ratelimited("detected local route for %pI4 during ICMP sending, src %pI4\n",
-+					     &fl4_dec.daddr, &fl4_dec.saddr);
-+			dst_release(&rt2->dst);
-+			err = -EINVAL;
-+		}
- 	}
+diff --git a/drivers/net/caif/caif_serial.c b/drivers/net/caif/caif_serial.c
+index ed3a589def6b1..699ed0ff461e8 100644
+--- a/drivers/net/caif/caif_serial.c
++++ b/drivers/net/caif/caif_serial.c
+@@ -298,6 +298,7 @@ static void ser_release(struct work_struct *work)
+ {
+ 	struct list_head list;
+ 	struct ser_device *ser, *tmp;
++	struct tty_struct *tty;
  
- 	if (err)
+ 	spin_lock(&ser_lock);
+ 	list_replace_init(&ser_release_list, &list);
+@@ -306,9 +307,11 @@ static void ser_release(struct work_struct *work)
+ 	if (!list_empty(&list)) {
+ 		rtnl_lock();
+ 		list_for_each_entry_safe(ser, tmp, &list, node) {
++			tty = ser->tty;
+ 			dev_close(ser->dev);
+ 			unregister_netdevice(ser->dev);
+ 			debugfs_deinit(ser);
++			tty_kref_put(tty);
+ 		}
+ 		rtnl_unlock();
+ 	}
+@@ -369,8 +372,6 @@ static void ldisc_close(struct tty_struct *tty)
+ {
+ 	struct ser_device *ser = tty->disc_data;
+ 
+-	tty_kref_put(ser->tty);
+-
+ 	spin_lock(&ser_lock);
+ 	list_move(&ser->node, &ser_release_list);
+ 	spin_unlock(&ser_lock);
 -- 
 2.51.0
 
