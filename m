@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B22344044;
-	Sat, 28 Feb 2026 17:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60794373BF2;
+	Sat, 28 Feb 2026 17:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301546; cv=none; b=QZM0mKXY2w7MIyqhfgAphoVnI0EtDmenbaQAKTBxmdRWUnBfGeq3X8fsFqSwUcdGXHDAQ1d9VLJMHCMPUSDo7dTcnJTvRfy8hfzDIPpQh3WlZNKmyvsktRQJe5UXLy7bc4Opfjr3DtsQAu+bfuMXvMhVWH8dOYCOiMBs1isbt7c=
+	t=1772301547; cv=none; b=PSmdLxqftpbbjaqvV04N/+B215i6yLA68P+HW1//iiBjvvfNQR7CFRwwrD87mXLldrU4bWB8QP84cAkQByv5z4g2gQa9F0fujV+QAdRcQNfKP+2RGnRcR74Da5qPI9Z5ntFao/kLhFJQWcxTLct/Vkb5PcbcsB978s0vFac9DI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301546; c=relaxed/simple;
-	bh=/PlTOHnxU+YtZ/oVw0B8iKFTALZYB8xaIPwatim10WM=;
+	s=arc-20240116; t=1772301547; c=relaxed/simple;
+	bh=vWWgYDOWrP/1sJh38suuQpb9ZQiOHx8/B0uMDWh4wBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChglwZspZT2xtAjcZu3RTt5B0NKBkJJJjU6+J3UAqgJXkKCbcEDBN+lwcTsHvdmCq+Tga5YAPX/l7fOGNAZaZDWofRYAeyTWl0J0ho9VaRArXCy8V3RJsmbOSP8QJUurbqOqilYWWamsqSRFmu+RPVykMBVqNBlEW5Xlwz7wgD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S6WW+pL4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CdyofGnI74BhXx9pkajmF34puLhmu1zZgmNf4ImOPoL/RbYcrhnsmfxyClsRBDAsuxVwp3ZflOqmXT2MPoKgACufTS0bk9Mgwcdvyh8fnlNyL4IjMW863vC3P9vqJZIIdxnV0KhkSFInW1BEpsTKI4hqjbQugeFsh1rJOXht47M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rsuf9J1S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S6WW+pL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D8EC19424;
-	Sat, 28 Feb 2026 17:59:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rsuf9J1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF28EC19423;
+	Sat, 28 Feb 2026 17:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301546;
-	bh=/PlTOHnxU+YtZ/oVw0B8iKFTALZYB8xaIPwatim10WM=;
+	s=k20201202; t=1772301547;
+	bh=vWWgYDOWrP/1sJh38suuQpb9ZQiOHx8/B0uMDWh4wBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6WW+pL4tqiQUvr9WHUKxkrzXf7ADCjfOT4L6bySdi844GKoxs30Gf8JynONP0ZtP
-	 /txePBcYog+V03QbylcBB6kEXE5j/dWqphAcspDyrDTqouwn7tZTnVJB8S9bp12n0v
-	 +srKhFlBwuMPIxMZoSMFTKV+F2hbvJ83Ue6YE+vPzh85USWnEKJYKGGxU+rLOpXvAV
-	 J3FcexHHppiBl1aHeuFkkXWJhTMOUbjDM6dj620iG8Ja2yQsxPSurFUO44qhB6PNuv
-	 y/85FZb8Ulq3MOGgRew0UOV+2P29uekNFM915xxJDbKC9i+NSiABmtgXZiKWVbr18Z
-	 HaBko8wb8RSgw==
+	b=Rsuf9J1SKVBaTjNc5E9Ab5vPTbuHq5DK4q9xOUzoOz3Jzzbefwdhrxzm0iddWLdPK
+	 QnKwW+hEmabAYBlInAgrKJODkj+Z1zdfgu7+J0WIKmVZhn9ZnEbUUD4xwl+UFH4/T8
+	 McOVlbODCJOQXGo/RLWMn5hjQDJ+dX8IcFN8WuKKni4Dt20eerekgrWJ8QzrsAr25/
+	 EQTdpCulWQt0t4RdWYCK4TF0XFETBNvSNN+kNJNQM2zK2IyxygOtNxbPQqmfoHmNVa
+	 DplI1JGK/dPblRc2y2DyiIDH2/o5bmf7ef1utnW5l+QLldM52P1Oya7V9xGhfwY/Ud
+	 Qe4qxqFdUsr9g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Gustavo Salvini <guspatagonico@gmail.com>,
+Cc: Nathan Chancellor <nathan@kernel.org>,
 	stable@vger.kernel.org,
-	Mark Brown <broonie@kernel.org>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 729/752] ASoC: amd: yc: Add DMI quirk for ASUS Vivobook Pro 15X M6501RR
-Date: Sat, 28 Feb 2026 12:47:20 -0500
-Message-ID: <20260228174750.1542406-729-sashal@kernel.org>
+Subject: [PATCH 6.18 730/752] kbuild: rpm-pkg: Disable automatic requires for manual debuginfo package
+Date: Sat, 28 Feb 2026 12:47:21 -0500
+Message-ID: <20260228174750.1542406-730-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -44,50 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Gustavo Salvini <guspatagonico@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit ff9cadd1a2c0b2665b7377ac79540d66f212e7e3 ]
+[ Upstream commit f94711255a73d8938cf3bb405a0af3a4d2700ed1 ]
 
-The ASUS Vivobook Pro 15X (M6501RR) with AMD Ryzen 9 6900HX has an
-internal DMIC that is not detected without a DMI quirk entry, as the
-BIOS does not set the AcpDmicConnected ACPI _DSD property.
+Stefano reports that after commit 62089b804895 ("kbuild: rpm-pkg:
+Generate debuginfo package manually"), building with an rpm package
+using rpm 4.20.0 fails with:
 
-Adding the DMI entry enables the ACP6x DMIC machine driver to probe
-successfully.
+  RPM build errors:
+      Dependency tokens must begin with alpha-numeric, '_' or '/': #�) = 0x0d000002
+      Dependency tokens must begin with alpha-numeric, '_' or '/': �) = 0x0d000000
+      Dependency tokens must begin with alpha-numeric, '_' or '/': ) = 0x7c0e000000
+      Unknown rich dependency op 'Hat': (Red Hat 15.2.1-7)) = 0x3130363230322000
+      Unknown rich dependency op 'Hat': (Red Hat 15.2.1-7)) = 0x4728203a43434800
+      Unknown rich dependency op 'Hat': (Red Hat 15.2.1-7)) = 0x3130363230322000
+      Unknown rich dependency op 'Hat': (Red Hat 15.2.1-7)) = 0x4728203a43434800
+
+This error comes from the automatic requirements feature of rpm. The
+-debuginfo subpackage has no dependencies, so disable this feature with
+'AutoReq: 0' for this subpackage, avoiding the error. This matches the
+official %_debug_template macro that rpm provides. While automatic
+provides should be default enabled, be explicit like %_debug_template
+does.
+
+Additionally, while in the area, add the manual debug information
+package to the Development/Debug group, further aligning with
+%_debug_template.
 
 Cc: stable@vger.kernel.org
-
-Signed-off-by: Gustavo Salvini <guspatagonico@gmail.com>
-Link: https://patch.msgid.link/20260210155156.29079-1-guspatagonico@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 62089b804895 ("kbuild: rpm-pkg: Generate debuginfo package manually")
+Reported-by: Stefano Garzarella <sgarzare@redhat.com>
+Closes: https://lore.kernel.org/CAGxU2F7FFNgb781_A7a1oL63n9Oy8wsyWceKhUpeZ6mLk=focw@mail.gmail.com/
+Tested-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260216-improve-manual-debuginfo-template-v1-1-e584b3f8d3be@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ scripts/package/kernel.spec | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 67f2fee193980..f1a63475100d1 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -696,7 +696,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "XyloD5_RBU"),
- 		}
- 	},
--
-+	{
-+			.driver_data = &acp6x_card,
-+			.matches = {
-+				DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+				DMI_MATCH(DMI_PRODUCT_NAME, "Vivobook_ASUSLaptop M6501RR_M6501RR"),
-+			}
-+		},
- 	{}
- };
- 
+diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
+index bccf58bdd45fd..b3c956205af00 100644
+--- a/scripts/package/kernel.spec
++++ b/scripts/package/kernel.spec
+@@ -48,6 +48,9 @@ against the %{version} kernel package.
+ %if %{with_debuginfo_manual}
+ %package debuginfo
+ Summary: Debug information package for the Linux kernel
++Group: Development/Debug
++AutoReq: 0
++AutoProv: 1
+ %description debuginfo
+ This package provides debug information for the kernel image and modules from the
+ %{version} package.
 -- 
 2.51.0
 
