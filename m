@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A45392811
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B63C392811
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301095; cv=none; b=MDp7NgJk9IkV8nLYTpMuDgg3sYrPx1ws7dmYZDmyuPWvgMtyG+wzy118h+yWIsJWlNjSkU7R63oZxhCFv1CURmgtlYf7pPY/t2BT3q0LzrFySoUEfM9KNmkY+4QyDX8mrlS4WJgG0QHjCK7/cZD8bv7fojCEwoBniBf0oy7ApBU=
+	t=1772301096; cv=none; b=j2Td+j5oByvu1FnIZgrdZsWS7OxNYD0DBKgL7ssitgi+2/dup3d/oF591I6nDnSYyD2PGzpAyCHYtQflevbZtdzsq2aSmS5gLBpyvKRY5eVeYi9dRtCkRcl4o3Yi7AhGuGUJS1ee40YIDNIcQYHgBw46ckr4k+lyENfvo0r8jtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301095; c=relaxed/simple;
-	bh=W15cyp0xaAgC3j6Km803kuRKxO/r6w2fW0XBj3f2/Ds=;
+	s=arc-20240116; t=1772301096; c=relaxed/simple;
+	bh=aWekrkEU8xXR9pKPyKkGVUhqPeF2RkHNBsPv3Yj+yxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nx2u88qitmBu6ZFWVFodkodhOiIuD+XD6SPk3CQnpIi0RQFGRpHskvZ9rKtRFL1o4HyI17qHlhdeSbCg2GW1pOcZXpcR5sKpZn072HReN86FXtnT7/OvXFIScWSAU+iauu9F8niew7Fh4CdDZ8KOKJRpXthchsRxB67hwdZVDbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZGde6ZBK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H9P9ZwjzmjQM3F/KCcj2CM6VBtViqn/UpuWg0aj0wCD1W8nOBeBrAP0IWZyIUHFfyn2ZJf7olJdDh89ebriuKlMBUBq1LZ3NtYtf+Abv6IT2O9TeqneT3vHdUoyeF+IhILLUmFvMmAYZ9uuB3GlnckorlP/SQz2Ro6T/099+0/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KG+KhipG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZGde6ZBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91531C116D0;
-	Sat, 28 Feb 2026 17:51:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KG+KhipG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679DBC19424;
+	Sat, 28 Feb 2026 17:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301095;
-	bh=W15cyp0xaAgC3j6Km803kuRKxO/r6w2fW0XBj3f2/Ds=;
+	bh=aWekrkEU8xXR9pKPyKkGVUhqPeF2RkHNBsPv3Yj+yxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGde6ZBK1NdLgWGtDWDIIYuM8V7KEqhaF1eYvkRYYidwwjch0foFW+CjRu9sbyCoq
-	 ry2NJLusx/amXlbZeUSIfQ+wO90tmYlm3qlchtN2htoVU4/DDGZwYnLo5jhDy6M1vB
-	 NL1ZeM57msGvmSxzplz3vqT7/5FlmVwD8UoGJn4BpQLzl28/bhQsdlknwnf06rsZ/K
-	 ERPO88oGQgGg5DPvwLEPv3YiTWmRSPLeHp6X3s8BzEIkM6K+V1OZc2I9zjCcckbfdm
-	 JKa8LbJrGuuLXswCBZJbcsZw0g5AtQv0y/3sI3QHCdsz6aybf6QDR6Gn8Bd5YASrjE
-	 K6ayRCSReMEVA==
+	b=KG+KhipG8uln+n6H0U3vH2IbG6YBz1FWt4uyoT/pCrpFepoTIf1lKm8sbdh8KOy9E
+	 XVeMkl4kocCGrQPgtOGK+7x2FXY7rJxRqT0bzEn8r8dxA57Q9cmwGEPBpJ8s6Qzvxe
+	 H8++WzqPJhwqBaNekeYfDD6aJZnN5kLwTRM8EiV+c4tJt3k0iKfKwx0z4DiFb40dhz
+	 VsMPk5NALefpa0RGdDMrhqJay7Jx+JezeVaeSfpiyJBjHaPGb7/Ue/53JrABXRNE6+
+	 Cvuy+UaPs8jZHXgxQexOQmLOz73eRozjvAFt9hM4Oldz8eS6+5vICUbA3FYV0qWPSe
+	 P5H7A/QGoiyIA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Li Chen <me@linux.beauty>,
+	Theodore Ts'o <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 246/752] ipv6: exthdrs: annotate data-race over multiple sysctl
-Date: Sat, 28 Feb 2026 12:39:17 -0500
-Message-ID: <20260228174750.1542406-246-sashal@kernel.org>
+Subject: [PATCH 6.18 247/752] ext4: mark group add fast-commit ineligible
+Date: Sat, 28 Feb 2026 12:39:18 -0500
+Message-ID: <20260228174750.1542406-247-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -48,64 +47,66 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Li Chen <me@linux.beauty>
 
-[ Upstream commit 978b67d28358b0b4eacfa94453d1ad4e09b123ad ]
+[ Upstream commit 89b4336fd5ec78f51f9d3a1d100f3ffa3228e604 ]
 
-Following four sysctls can change under us, add missing READ_ONCE().
+Fast commits only log operations that have dedicated replay support.
+Online resize via EXT4_IOC_GROUP_ADD updates the superblock and group
+descriptor metadata without going through the fast commit tracking
+paths.
+In practice these operations are rare and usually followed by further
+updates, but mixing them into a fast commit makes the overall
+semantics harder to reason about and risks replay gaps if new call
+sites appear.
 
-- ipv6.sysctl.max_dst_opts_len
-- ipv6.sysctl.max_dst_opts_cnt
-- ipv6.sysctl.max_hbh_opts_len
-- ipv6.sysctl.max_hbh_opts_cnt
+Teach ext4 to mark the filesystem fast-commit ineligible when
+ext4_ioctl_group_add() adds new block groups.
+This forces those transactions to fall back to a full commit,
+ensuring that the filesystem geometry updates are captured by the
+normal journal rather than partially encoded in fast commit TLVs.
+This change should not affect common workloads but makes online
+resize via GROUP_ADD safer and easier to reason about under fast
+commit.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260115094141.3124990-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Testing:
+1. prepare:
+    dd if=/dev/zero of=/root/fc_resize.img bs=1M count=0 seek=256
+    mkfs.ext4 -O fast_commit -F /root/fc_resize.img
+    mkdir -p /mnt/fc_resize && mount -t ext4 -o loop /root/fc_resize.img /mnt/fc_resize
+2. Ran a helper that issues EXT4_IOC_GROUP_ADD on the mounted
+   filesystem and checked the resize ineligible reason:
+    ./group_add_helper /mnt/fc_resize
+    cat /proc/fs/ext4/loop0/fc_info
+   shows "Resize": > 0.
+3. Fsynced a file on the resized filesystem and verified that the fast
+   commit stats report at least one ineligible commit:
+    touch /mnt/fc_resize/file
+    /root/fsync_file /mnt/fc_resize/file
+    sync
+    cat /proc/fs/ext4/loop0/fc_info
+   shows fc stats ineligible > 0.
+
+Signed-off-by: Li Chen <me@linux.beauty>
+Link: https://patch.msgid.link/20251211115146.897420-5-me@linux.beauty
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/exthdrs.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/ext4/ioctl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index a23eb8734e151..54088fa0c09d0 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -314,7 +314,7 @@ static int ipv6_destopt_rcv(struct sk_buff *skb)
- 	}
+diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
+index 3dec26c939fde..d26914fa0cb46 100644
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -966,6 +966,7 @@ static long ext4_ioctl_group_add(struct file *file,
  
- 	extlen = (skb_transport_header(skb)[1] + 1) << 3;
--	if (extlen > net->ipv6.sysctl.max_dst_opts_len)
-+	if (extlen > READ_ONCE(net->ipv6.sysctl.max_dst_opts_len))
- 		goto fail_and_free;
- 
- 	opt->lastopt = opt->dst1 = skb_network_header_len(skb);
-@@ -322,7 +322,8 @@ static int ipv6_destopt_rcv(struct sk_buff *skb)
- 	dstbuf = opt->dst1;
- #endif
- 
--	if (ip6_parse_tlv(false, skb, net->ipv6.sysctl.max_dst_opts_cnt)) {
-+	if (ip6_parse_tlv(false, skb,
-+			  READ_ONCE(net->ipv6.sysctl.max_dst_opts_cnt))) {
- 		skb->transport_header += extlen;
- 		opt = IP6CB(skb);
- #if IS_ENABLED(CONFIG_IPV6_MIP6)
-@@ -1049,11 +1050,12 @@ int ipv6_parse_hopopts(struct sk_buff *skb)
- 	}
- 
- 	extlen = (skb_transport_header(skb)[1] + 1) << 3;
--	if (extlen > net->ipv6.sysctl.max_hbh_opts_len)
-+	if (extlen > READ_ONCE(net->ipv6.sysctl.max_hbh_opts_len))
- 		goto fail_and_free;
- 
- 	opt->flags |= IP6SKB_HOPBYHOP;
--	if (ip6_parse_tlv(true, skb, net->ipv6.sysctl.max_hbh_opts_cnt)) {
-+	if (ip6_parse_tlv(true, skb,
-+			  READ_ONCE(net->ipv6.sysctl.max_hbh_opts_cnt))) {
- 		skb->transport_header += extlen;
- 		opt = IP6CB(skb);
- 		opt->nhoff = sizeof(struct ipv6hdr);
+ 	err = ext4_group_add(sb, input);
+ 	if (EXT4_SB(sb)->s_journal) {
++		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_RESIZE, NULL);
+ 		jbd2_journal_lock_updates(EXT4_SB(sb)->s_journal);
+ 		err2 = jbd2_journal_flush(EXT4_SB(sb)->s_journal, 0);
+ 		jbd2_journal_unlock_updates(EXT4_SB(sb)->s_journal);
 -- 
 2.51.0
 
