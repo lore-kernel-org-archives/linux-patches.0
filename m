@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B45342538
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B96375AAD
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301790; cv=none; b=VCMjpSQbwe0D6VCJ5I7Oyn8bH9Q5FweXctE8mvJ94HVqL3MRFEWyMzquWTgCzDFwM9wmDfsCgkSJfFHTa5yTD7EUobPq2QzNNI4Pw0rOzAM5Y7z59hkjEokqg0CUCzIsqMSF35lD6TBDrl2s3APLMM5zlkL4c2bM22WCefY4l1A=
+	t=1772301791; cv=none; b=EZrnAOaQiKZva8cu21RUIhAoDCW7ZWo033Th8WEkEWQcUTrEvMiLMuQ5CUHJr3+2eccw5aj+ZvIOaFdTS+Du44wo25sWMk0g9AE+8ZDvVkLICyVO2qBJMaKvl2X9eXETay22n+HsFZsM1LZy8C4NuHp3lITH8evMafSd/INNuA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301790; c=relaxed/simple;
-	bh=5XqUcN3C17NhN0paxfvWXJ1w8pq6SNS2QEOb308TB1Y=;
+	s=arc-20240116; t=1772301791; c=relaxed/simple;
+	bh=dZU9vKczvyW1Kxn++ptKQ0Fp8ycPoYF+vXDUpomQx3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WTCxib/VuyKwBW1eqtU6SDQvqE+HwlC3l9vaA9VJ5JVyIgBiP4YcY0+nKzIkBJQxGhnYTxrQwN1Y1RAh5O1srfXhP0OP91AcP4pKLrMV6kiJqmipeIw51wE/+kSBud0KsMx6JhmdqViOIZrYrNmdkCgTN0kh8e8eI+O59z9L/4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1zpXv2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qgdKV/nkC6q0ZM8x8hBWMs2cqLC+mfmfftNQxvPHOHEoTB956repnw0dBe3/co1Vb2hg89StQyXg1Ncz8TLsh9ZkEDFeXGeJq7CPA5wzo94bs0ZDRZK0Tt8UyqNBNtROZWUrIskIUB/tHWdiZBl2BhVXZeMqlH9844kNh4VCi9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lh/tj2by; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m1zpXv2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 058A5C19423;
-	Sat, 28 Feb 2026 18:03:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lh/tj2by"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E950DC19424;
+	Sat, 28 Feb 2026 18:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301790;
-	bh=5XqUcN3C17NhN0paxfvWXJ1w8pq6SNS2QEOb308TB1Y=;
+	s=k20201202; t=1772301791;
+	bh=dZU9vKczvyW1Kxn++ptKQ0Fp8ycPoYF+vXDUpomQx3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1zpXv2I8+ZbMuJQzd6QBG+tzzu5iaJ7CsxSDJj1MO/DAVfaqJfJaZ5p+vDgEcw0t
-	 jnMxVUrlPyKMrWauNpOkbVoQitqVnmbiv40Qs5zBSv311U2PIQaApI3irM+esEC6MN
-	 7dAE7Z54bPiXESIj17rydiHTh+PrNu83Gi+FAgktYViZTj5+wKabicU5XhBoGMb84O
-	 7VrEpPiLzW/4ipJtNRQv7RHyI8xYLDJnrTND8Wc6iH0v8AXvWQ0ayM41hxq41bsaBM
-	 a9zS2yrfPD3fn2bu/6gXl88eiRFF8pr2bP9TuwgOx3F3B1dZHfCvf6wwB20pAV18o6
-	 R/WBydOf4uhhA==
+	b=lh/tj2byWO39Q8IAf3YlUvDhy9IJjfObWYFbyzupPkOyXCvGYmHEoD4MhK6QDom3z
+	 nqtkU2ScFeyndut3yv8vrgKDSc0OgMA5LTTdsirSSM/cOyCtaYiZKNK/xd5Tli1ohS
+	 zIGAfLIWSNNDKghYIozMVdAHw2ZnXU86qulIH1VGjzF3H0JIFUI+lj9eV3FTas3Ado
+	 ReK0ysjZMoHehm//aZbqpsKJLvWThB7wNadVWcbUSRdDQOpt5E0zJAnTxmYII/S9yp
+	 I7uYPdykLMrqVtjZ+BGnewRbWSp0AQikQmj06ruZEWMG+p9sJ8IXDrlGM8iUX6Xp3J
+	 aUx/AV0Ww2d2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Lu Baolu <baolu.lu@linux.intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dmytro Maluka <dmaluka@chromium.org>,
+	Samiullah Khawaja <skhawaja@google.com>,
 	Kevin Tian <kevin.tian@intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 200/385] iommu/vt-d: Avoid draining PRQ in sva mm release path
-Date: Sat, 28 Feb 2026 12:57:02 -0500
-Message-ID: <20260228180011.1568201-200-sashal@kernel.org>
+Subject: [PATCH 6.12 201/385] iommu/vt-d: Clear Present bit before tearing down PASID entry
+Date: Sat, 28 Feb 2026 12:57:03 -0500
+Message-ID: <20260228180011.1568201-201-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -51,57 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit dda2b8c3c6ccc50deae65cc75f246577348e2ec5 ]
+[ Upstream commit 75ed00055c059dedc47b5daaaa2f8a7a019138ff ]
 
-When a PASID is used for SVA by a device, it's possible that the PASID
-entry is cleared before the device flushes all ongoing DMA requests and
-removes the SVA domain. This can occur when an exception happens and the
-process terminates before the device driver stops DMA and calls the
-iommu driver to unbind the PASID.
+The Intel VT-d Scalable Mode PASID table entry consists of 512 bits (64
+bytes). When tearing down an entry, the current implementation zeros the
+entire 64-byte structure immediately using multiple 64-bit writes.
 
-There's no need to drain the PRQ in the mm release path. Instead, the PRQ
-will be drained in the SVA unbind path.
+Since the IOMMU hardware may fetch these 64 bytes using multiple
+internal transactions (e.g., four 128-bit bursts), updating or zeroing
+the entire entry while it is active (P=1) risks a "torn" read. If a
+hardware fetch occurs simultaneously with the CPU zeroing the entry, the
+hardware could observe an inconsistent state, leading to unpredictable
+behavior or spurious faults.
 
-Unfortunately, commit c43e1ccdebf2 ("iommu/vt-d: Drain PRQs when domain
-removed from RID") changed this behavior by unconditionally draining the
-PRQ in intel_pasid_tear_down_entry(). This can lead to a potential
-sleeping-in-atomic-context issue.
+Follow the "Guidance to Software for Invalidations" in the VT-d spec
+(Section 6.5.3.3) by implementing the recommended ownership handshake:
 
-Smatch static checker warning:
+1. Clear only the 'Present' (P) bit of the PASID entry.
+2. Use a dma_wmb() to ensure the cleared bit is visible to hardware
+   before proceeding.
+3. Execute the required invalidation sequence (PASID cache, IOTLB, and
+   Device-TLB flush) to ensure the hardware has released all cached
+   references.
+4. Only after the flushes are complete, zero out the remaining fields
+   of the PASID entry.
 
-	drivers/iommu/intel/prq.c:95 intel_iommu_drain_pasid_prq()
-	warn: sleeping in atomic context
+Also, add a dma_wmb() in pasid_set_present() to ensure that all other
+fields of the PASID entry are visible to the hardware before the Present
+bit is set.
 
-To avoid this issue, prevent draining the PRQ in the SVA mm release path
-and restore the previous behavior.
-
-Fixes: c43e1ccdebf2 ("iommu/vt-d: Drain PRQs when domain removed from RID")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-iommu/c5187676-2fa2-4e29-94e0-4a279dc88b49@stanley.mountain/
+Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Dmytro Maluka <dmaluka@chromium.org>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20241212021529.1104745-1-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Stable-dep-of: 75ed00055c05 ("iommu/vt-d: Clear Present bit before tearing down PASID entry")
+Link: https://lore.kernel.org/r/20260120061816.2132558-2-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/intel/pasid.c |  6 +++++-
+ drivers/iommu/intel/pasid.h | 14 ++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 4e4d167720ba8..57969ba2d3975 100644
+index 57969ba2d3975..7fa3efb8c223e 100644
 --- a/drivers/iommu/intel/pasid.c
 +++ b/drivers/iommu/intel/pasid.c
-@@ -266,7 +266,8 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
+@@ -252,7 +252,7 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
+ 
+ 	did = pasid_get_domain_id(pte);
+ 	pgtt = pasid_pte_get_pgtt(pte);
+-	intel_pasid_clear_entry(dev, pasid, fault_ignore);
++	pasid_clear_present(pte);
+ 	spin_unlock(&iommu->lock);
+ 
+ 	if (!ecap_coherent(iommu->ecap))
+@@ -266,6 +266,10 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
  		iommu->flush.flush_iotlb(iommu, did, 0, 0, DMA_TLB_DSI_FLUSH);
  
  	devtlb_invalidation_with_pasid(iommu, dev, pasid);
--	intel_iommu_drain_pasid_prq(dev, pasid);
-+	if (!fault_ignore)
-+		intel_iommu_drain_pasid_prq(dev, pasid);
++	intel_pasid_clear_entry(dev, pasid, fault_ignore);
++	if (!ecap_coherent(iommu->ecap))
++		clflush_cache_range(pte, sizeof(*pte));
++
+ 	if (!fault_ignore)
+ 		intel_iommu_drain_pasid_prq(dev, pasid);
+ }
+diff --git a/drivers/iommu/intel/pasid.h b/drivers/iommu/intel/pasid.h
+index dde6d3ba5ae0f..55cad7bfa294e 100644
+--- a/drivers/iommu/intel/pasid.h
++++ b/drivers/iommu/intel/pasid.h
+@@ -235,9 +235,23 @@ static inline void pasid_set_wpe(struct pasid_entry *pe)
+  */
+ static inline void pasid_set_present(struct pasid_entry *pe)
+ {
++	dma_wmb();
+ 	pasid_set_bits(&pe->val[0], 1 << 0, 1);
  }
  
++/*
++ * Clear the Present (P) bit (bit 0) of a scalable-mode PASID table entry.
++ * This initiates the transition of the entry's ownership from hardware
++ * to software. The caller is responsible for fulfilling the invalidation
++ * handshake recommended by the VT-d spec, Section 6.5.3.3 (Guidance to
++ * Software for Invalidations).
++ */
++static inline void pasid_clear_present(struct pasid_entry *pe)
++{
++	pasid_set_bits(&pe->val[0], 1 << 0, 0);
++	dma_wmb();
++}
++
  /*
+  * Setup Page Walk Snoop bit (Bit 87) of a scalable mode PASID
+  * entry.
 -- 
 2.51.0
 
