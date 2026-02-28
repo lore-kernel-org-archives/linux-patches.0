@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1869379EE2
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910F933A03F
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301897; cv=none; b=JLZagddJdNXeguaPZya+S/vFU24H5tJ4H5goMPPRXBAWjgFc5ZylamRb7kZa+baSgO62G/44S+n9dSRPeC62t4iZoF5+5NGN2kH7s+0/GefjmGb57MD5LHo+2sYXV0n2ABdMNAFzUYT+OuzjASo1GUhZPDnY6ckQsLjPny6vqZc=
+	t=1772301898; cv=none; b=h5w1yAILkd4Dm0sSxty03wSEzSHVUR+DW8EZwB0C/jq+CbV8klF5aVGihZF3gffhcRCF5/qcec3smK3fTfrMIRvbi6rslR7K4SYFYG8w38g7FDjhDSCvxZT/5S1rQbOpISz9W9g4zw5rJ+Gc4Fs3uanwKqrn8Fx+y1Hlw4gz/Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301897; c=relaxed/simple;
-	bh=xDoFfkezXp0xr/q6dD0gMIZB2GSrs5mvz9ej24iiAJs=;
+	s=arc-20240116; t=1772301898; c=relaxed/simple;
+	bh=NBkSPAqt5/m1QkA8NdtXUd0KSDqZs8reSPq17+mhANE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XeXEP3EjnA/PkehvMlSf16TLdflziKOdPuFosq1VQuPoGzuN/A1XdIXe0T5TueY8b/Y66rb9r29kvZyiknE60pOg+jhU/6W6SxB5kNB+pFImiwmwdi/OmDfycGL077bDnJxOfO2I2TmqTSBDGIq4SfGJlSpeL8ujugEPCoAVXp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U4OYHpgO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WMlyAilEbioqq45KO1HUakPAVxw0uaN5yXP1WzhgdAGLcwxUcbUesVoYtl3zktqzOYS1Bbrbj24jOoBZF0bQMqjNq5F/FM1JPAaBSueJLKxjHFgM2aQnjH7cCkIBXUA6CmuNarm04PHHKcTLsFU8hUk5Bl/FqLW6s09Mw5+NDNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vJ9vFzAD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U4OYHpgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21952C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vJ9vFzAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DCBC19423;
 	Sat, 28 Feb 2026 18:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301897;
-	bh=xDoFfkezXp0xr/q6dD0gMIZB2GSrs5mvz9ej24iiAJs=;
+	s=k20201202; t=1772301898;
+	bh=NBkSPAqt5/m1QkA8NdtXUd0KSDqZs8reSPq17+mhANE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4OYHpgOaO68ssl+Cg/+oQU47rOz3ig1+ZrSg+XxjQzSveUNH/l8B9NGQlfd/UXtt
-	 HQm6tHclQjkAKnINPsKT49bm7ua0xCwGxaRAG2Ao4L81SLSv/ow1/GDSOINKxbkmgd
-	 aDwjmZhqbfjArsR2Dxio+/5YnZAKzRDl7hMwj6yvt4XfcKSLsoGKpqE550a5Xdp5iQ
-	 ZsLnp+2UmoLNXjTU+ViooVp46n/AUvzVol+9to68CtjyIgSqul8zVfBlQmLxmgyTRk
-	 E+//2+waDycm60B7c9RLn6kHOFbAMsXm2CV0X/yX4FMEvciLeZ8a8ucDM82x12KLy5
-	 LBv/zErvOlaKQ==
+	b=vJ9vFzADg2Sy9kaaeqtFLHCznW8eTnGyh6Zpa5fEVuugGWVqpi9al7DBdFvdPZ84o
+	 uiAVnQ7+43VEFT8YOVfSmRgeDNo8llUpsbA94dOwxrfCSbHOL4e2mrmqFhgiO+AXZ8
+	 4WXqOd3VHZTntclUCQYzTY6QeWLqATVcaBzBRgXGhqfH7yySl+DWNT/WSP/TWLxR9h
+	 6xeKGRWi9ZiymMZjRXPybzRbvHPDiGgI70EQ2dh1qxkB0tTxUcZrxSZYRlhcrJeghm
+	 4H/LoTyYRebArKnBlNaT7qotRmu23RQbe3MnCDa8p6EnSZ0yNjGAisglFq0T6jWPIo
+	 M0AEZEYFxcB/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Petre Rodan <petre.rodan@subdimension.ro>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 326/385] mmc: rtsx_pci_sdmmc: increase power-on settling delay to 5ms
-Date: Sat, 28 Feb 2026 12:59:08 -0500
-Message-ID: <20260228180011.1568201-326-sashal@kernel.org>
+Subject: [PATCH 6.12 327/385] iio: pressure: mprls0025pa: fix spi_transfer struct initialisation
+Date: Sat, 28 Feb 2026 12:59:09 -0500
+Message-ID: <20260228180011.1568201-327-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,38 +48,34 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Petre Rodan <petre.rodan@subdimension.ro>
 
-[ Upstream commit aced969e9bf3701dc75cfca57c78c031b7875b9d ]
+[ Upstream commit 1e0ac56c92e26115cbc8cfc639843725cb3a7d6a ]
 
-The existing 1ms delay in sd_power_on is insufficient and causes resume
-errors around 4% of the time.
+Make sure that the spi_transfer struct is zeroed out before use.
 
-Increasing the delay to 5ms resolves this issue after testing 300
-s2idle cycles.
-
-Fixes: 1f311c94aabd ("mmc: rtsx: add 74 Clocks in power on flow")
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Link: https://patch.msgid.link/20260105060236.400366-3-matthew.schwartz@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a0858f0cd28e ("iio: pressure: mprls0025pa add SPI driver")
+Signed-off-by: Petre Rodan <petre.rodan@subdimension.ro>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c | 2 +-
+ drivers/iio/pressure/mprls0025pa_spi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
-index 04aa47f1a24fb..f5bc757ddaa27 100644
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -939,7 +939,7 @@ static int sd_power_on(struct realtek_pci_sdmmc *host, unsigned char power_mode)
- 	if (err < 0)
- 		return err;
+diff --git a/drivers/iio/pressure/mprls0025pa_spi.c b/drivers/iio/pressure/mprls0025pa_spi.c
+index 3aed14cd95c5a..f4807dac61e0f 100644
+--- a/drivers/iio/pressure/mprls0025pa_spi.c
++++ b/drivers/iio/pressure/mprls0025pa_spi.c
+@@ -40,7 +40,7 @@ static int mpr_spi_xfer(struct mpr_data *data, const u8 cmd, const u8 pkt_len)
+ {
+ 	struct spi_device *spi = to_spi_device(data->dev);
+ 	struct mpr_spi_buf *buf = spi_get_drvdata(spi);
+-	struct spi_transfer xfer;
++	struct spi_transfer xfer = { };
  
--	mdelay(1);
-+	mdelay(5);
- 
- 	err = rtsx_pci_write_register(pcr, CARD_OE, SD_OUTPUT_EN, SD_OUTPUT_EN);
- 	if (err < 0)
+ 	if (pkt_len > MPR_MEASUREMENT_RD_SIZE)
+ 		return -EOVERFLOW;
 -- 
 2.51.0
 
