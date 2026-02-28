@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6EAA338939
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935E03451A7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301759; cv=none; b=fGgKdgovIudyld0nNTYe/+jHzdn/9bSK/uFVd4S4Pbv8Kn3RiS38Crf5tG8MeX3NfwqDiNc7ut6MKy8oxEW1K1cuWDKLm/Eq2+bxAvkJNjEygDfApFqDKTQVLxTEJrVgPKj83YtrGqd2E5bn1Vw6upaUMn1VObUKzdthxDMXz/M=
+	t=1772301760; cv=none; b=F4HwxTH/bqnOST1tDWbjvvzDyh+PMt2X/OvEVbcHfBL6l+VvH3pYCzx+5EZG1yV7n04Bl5/vdt9kglfJkLMw5DJGWzrX3an0Vase5/AhjqNx7kb9JJz5YpTJh3QGsc5BUOPlzJkXFU463v/3n5EVSrqacNBqQNe9mwUu/sZAHSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301759; c=relaxed/simple;
-	bh=ARAz3M9cU7wy6u0prYkWe8RFGv1FekFwsGHrprojO3g=;
+	s=arc-20240116; t=1772301760; c=relaxed/simple;
+	bh=B3IuouuHtcupOFY9O0phpCGQkEjBFSJcf1Ue/Xe64Tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4vecI+cvE3kQzQDQ7+eFq//ifyXTNCTuUXrlXa+zSLHxB9V3teox9enbYNXFW+uC6CWI69IfHGcxNV1/sgPmI325m8BQQSUn5qTrJFxlbKtenIm1E0hx64GIuszLZi15GuaWFlrowujwLxGtqOUnW+kTKJXRac9ch2QTUn9Wic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ne6dlXlK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PDGSTEEhsUYe2HS7c0c1YM7RhlG0FbXs6ZR8/X8B38vKMBhgOSFbSwBNaPLeGRkQgfD2hOkuugsRcovwYAlIdtkuiUSNFUnD/ssBBENxiGIWbEyP4uelYMiXy2w3GA9aURSP6XhwGZ0Tt/VW6rTnYhfLLGopoNGpqX93ym0hxW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pPA77Xnq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ne6dlXlK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147BEC116D0;
-	Sat, 28 Feb 2026 18:02:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pPA77Xnq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04EA8C116D0;
+	Sat, 28 Feb 2026 18:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301759;
-	bh=ARAz3M9cU7wy6u0prYkWe8RFGv1FekFwsGHrprojO3g=;
+	s=k20201202; t=1772301760;
+	bh=B3IuouuHtcupOFY9O0phpCGQkEjBFSJcf1Ue/Xe64Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ne6dlXlK44rJbMboVIi445mrcBPBuWFcAX2+v1tew6V/5sqGoeT84sKojad26bNM+
-	 0R6HRyLPREAuYxvB8tRbf54Vm///gklgWpsd3ACAW5kR5AIzUix3UP9PLjcqyNvqCv
-	 mU7l1wjbizV1z62Mrz10ZHkZmNt4I2T0u4YZgbTEpYeypb8BS5pao5xBeWAYISyVc8
-	 M2+TgNDjVcQ5LfEC76DnHOp3GoI7LF0dmHvieR9WXlA+JXt9uQ5KgQIoHhWbZtNQXS
-	 v3ALY0DUpPSialXkAe3BL6a9rMlV5XCXG02e4jAQb3BGpFKNb0QXDoK6SX0GmCi0sT
-	 T0ZB8al/PQ0Ug==
+	b=pPA77XnqLH752ttOvEuxhHAFWbBN5CktYL+AAZy83aBi7NBkb0MEHjFgjTuwMLvQr
+	 ZczjmW3+/gws9hC4ZkoWHZWVGliRVrZEpnWaMGmI6ImXbQ3jCJhADils4RMoiTkHTC
+	 WmfEsPSIafMZ6k/Y2MW7mIwvOeDE19ebXyN3Cr7PluIjeWxak4fSjBtVxong6ui7TW
+	 mz3IIw38aJetX1pb34pfif/bf2MPPnGscB5TcVTRTvFGd2GWEjWqfznNrQ/nQexMUm
+	 cRvCN3dw+j0AVhnmrYVAoXp0eJTydEAId7L8Vx7WT/XwnTR/1yAJKnWayTc055fdRf
+	 cR6jZ3iKUADwA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Shuicheng Lin <shuicheng.lin@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>,
+	Gwendal Grignou <gwendal@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 164/385] drm/xe: Unregister drm device on probe error
-Date: Sat, 28 Feb 2026 12:56:26 -0500
-Message-ID: <20260228180011.1568201-164-sashal@kernel.org>
+Subject: [PATCH 6.12 165/385] platform/chrome: cros_ec_lightbar: Fix response size initialization
+Date: Sat, 28 Feb 2026 12:56:27 -0500
+Message-ID: <20260228180011.1568201-165-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -49,89 +47,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 96c2c72b817d70e8d110e78b0162e044a0c41f9f ]
+[ Upstream commit ec0dd36dbf8b0b209e63d0cd795451fa2203c736 ]
 
-Call drm_dev_unregister() when xe_device_probe() fails after successful
-drm_dev_register(). This ensures the DRM device is promptly unregistered
-before returning an error, avoiding leaving it registered on the failure
-path.
-Otherwise, there is warn message if xe_device_probe() is called again:
-"
-[  207.322365] [drm:drm_minor_register]
-[  207.322381] debugfs: '128' already exists in 'dri'
-[  207.322432] sysfs: cannot create duplicate filename '/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:01.0/0000:03:00.0/drm/renderD128'
-[  207.322435] CPU: 5 UID: 0 PID: 10261 Comm: modprobe Tainted: G    B   W           6.19.0-rc2-lgci-xe-kernel+ #223 PREEMPT(voluntary)
-[  207.322439] Tainted: [B]=BAD_PAGE, [W]=WARN
-[  207.322440] Hardware name: ASUS System Product Name/PRIME Z790-P WIFI, BIOS 0812 02/24/2023
-[  207.322441] Call Trace:
-[  207.322442]  <TASK>
-[  207.322443]  dump_stack_lvl+0xa0/0xc0
-[  207.322446]  dump_stack+0x10/0x20
-[  207.322448]  sysfs_warn_dup+0xd5/0x110
-[  207.322451]  sysfs_create_dir_ns+0x1f6/0x280
-[  207.322453]  ? __pfx_sysfs_create_dir_ns+0x10/0x10
-[  207.322455]  ? lock_acquire+0x1a4/0x2e0
-[  207.322458]  ? __kasan_check_read+0x11/0x20
-[  207.322461]  kobject_add_internal+0x28d/0x8e0
-[  207.322464]  kobject_add+0x11f/0x1f0
-[  207.322465]  ? lock_acquire+0x1a4/0x2e0
-[  207.322467]  ? __pfx_kobject_add+0x10/0x10
-[  207.322469]  ? __kasan_check_write+0x14/0x20
-[  207.322471]  ? kobject_put+0x62/0x4a0
-[  207.322473]  ? get_device_parent.isra.0+0x1bb/0x4c0
-[  207.322475]  ? kobject_put+0x62/0x4a0
-[  207.322477]  device_add+0x2d7/0x1500
-[  207.322479]  ? __pfx_device_add+0x10/0x10
-[  207.322481]  ? drm_debugfs_add_file+0xfa/0x170
-[  207.322483]  ? drm_debugfs_add_files+0x82/0xd0
-[  207.322485]  ? drm_debugfs_add_files+0x82/0xd0
-[  207.322487]  drm_minor_register+0x10a/0x2d0
-[  207.322489]  drm_dev_register+0x143/0x860
-[  207.322491]  ? xe_configfs_get_psmi_enabled+0x12/0x90 [xe]
-[  207.322667]  xe_device_probe+0x185b/0x2c40 [xe]
-[  207.322812]  ? __pfx___drm_dev_dbg+0x10/0x10
-[  207.322815]  ? add_dr+0x180/0x220
-[  207.322818]  ? __pfx___drmm_mutex_release+0x10/0x10
-[  207.322821]  ? __pfx_xe_device_probe+0x10/0x10 [xe]
-[  207.322966]  ? xe_pm_init_early+0x33a/0x410 [xe]
-[  207.323136]  xe_pci_probe+0x936/0x1250 [xe]
-[  207.323298]  ? lock_acquire+0x1a4/0x2e0
-[  207.323302]  ? __pfx_xe_pci_probe+0x10/0x10 [xe]
-[  207.323464]  local_pci_probe+0xe6/0x1a0
-[  207.323468]  pci_device_probe+0x523/0x840
-[  207.323470]  ? __pfx_pci_device_probe+0x10/0x10
-[  207.323473]  ? sysfs_do_create_link_sd.isra.0+0x8c/0x110
-[  207.323476]  ? sysfs_create_link+0x48/0xc0
-[  207.323479]  really_probe+0x1fd/0x8a0
-...
-"
+Commit 1e7913ff5f9f ("platform/chrome: cros_ec_lightbar: Reduce
+ligthbar get version command") meant to set smaller values for both
+request and response sizes.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://patch.msgid.link/20260109211041.2446012-2-shuicheng.lin@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 60bfb8baf8f0d5b0d521744dfd01c880ce1a23f3)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+However, it incorrectly assigned the response size to the `result` field
+instead of `insize`.  Fix it.
+
+Reported-by: Gwendal Grignou <gwendal@google.com>
+Closes: https://lore.kernel.org/chrome-platform/CAMHSBOVrrYaB=1nEqZk09VkczCrj=6B-P8Fe29TpPdSDgT2CCQ@mail.gmail.com
+Fixes: 1e7913ff5f9f ("platform/chrome: cros_ec_lightbar: Reduce ligthbar get version command")
+Link: https://lore.kernel.org/r/20260130040335.361997-1-tzungbi@kernel.org
+Reviewed-by: Gwendal Grignou <gwendal@google.com>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_device.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/chrome/cros_ec_lightbar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-index 161c73e676640..3ce5bf902f700 100644
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -783,6 +783,7 @@ int xe_device_probe(struct xe_device *xe)
- static void xe_device_remove_display(struct xe_device *xe)
- {
- 	xe_display_unregister(xe);
-+	drm_dev_unregister(&xe->drm);
- 
- 	drm_dev_unplug(&xe->drm);
- 	xe_display_driver_remove(xe);
+diff --git a/drivers/platform/chrome/cros_ec_lightbar.c b/drivers/platform/chrome/cros_ec_lightbar.c
+index 1e69f61115a4d..de64292faa24e 100644
+--- a/drivers/platform/chrome/cros_ec_lightbar.c
++++ b/drivers/platform/chrome/cros_ec_lightbar.c
+@@ -119,7 +119,7 @@ static int get_lightbar_version(struct cros_ec_dev *ec,
+ 	param = (struct ec_params_lightbar *)msg->data;
+ 	param->cmd = LIGHTBAR_CMD_VERSION;
+ 	msg->outsize = sizeof(param->cmd);
+-	msg->result = sizeof(resp->version);
++	msg->insize = sizeof(resp->version);
+ 	ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
+ 	if (ret < 0 && ret != -EINVAL) {
+ 		ret = 0;
 -- 
 2.51.0
 
