@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C65039B948
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA43A38F65A
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302512; cv=none; b=dZQkf3Hkq3MIHKxN8qBedSmX0BeC3aVVkhzRy+Nz7hp8LeduTEbPRPnFLS8FwG5a4x4d5mKEZAMfJ2XGHPzlRgW6uaWOlBCfaenxDMhpZKB4n5HEeoy+GG4mLCNpgXWkZOIzDS8F7UaGbUx2i41+Y6sa9u/PtjATYtM9WYekPv8=
+	t=1772302512; cv=none; b=Rp8rVZ1aq9Be+u6oZir/qLiAIOje9jrrNI8cQJE81RLqd5ZHveYUlkUocVxgMF7Ytlnxy/k1Q9J6BkQghE7JuFMYTFbF1/QobFyqWf2dV+Qp7xWD88LmGjeLgbJ/D2qBI/wcC7gieSkvAF7nMUozR6h4xL9HgLmjDsuKbsudAQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302512; c=relaxed/simple;
-	bh=mi98M0NtUiWOAzTxHoAUPCHLfOuTIf9vsM+ym3LXw3s=;
+	bh=vz4heyLxtzySdTCcMM2oTGqMh1FZh2KsmvrEBzwqW+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=teYppRAL1Oc8hsHTvMHA0n1+cUXcUgWWsNo1SPZCMfospK7SV/27DK98yN0fk74HCLLBsHN1CwQHNkv9usha7zPugxw57iXJaeyWLJqd/tbTu7XBp9nlZgbNvFiZm7xVuPJvP8hMLrHX2w/2zMyR74Xh4uYBIvBHVn3eYimpXHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hDn3skK3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o3RCZ2jeiXYmoZZmRrV3OrFsC4thIXanq5pHW3d/zM3rrsBj4hOfYQ08zzjUJ3uGgFO1wJ83ytSPASM9BZmBoqyqvXJDKSJvtrLnzvCKhX4sMkEeWy7FwHpX30dY/GRVmHO9XK/AuR0PZfobTOsTcE9xWGn072ibZuKL5YPe/0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vHesaCWC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hDn3skK3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C95EC19423;
-	Sat, 28 Feb 2026 18:15:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vHesaCWC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE4AC19424;
+	Sat, 28 Feb 2026 18:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302512;
-	bh=mi98M0NtUiWOAzTxHoAUPCHLfOuTIf9vsM+ym3LXw3s=;
+	bh=vz4heyLxtzySdTCcMM2oTGqMh1FZh2KsmvrEBzwqW+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDn3skK3uauWxQH6/iHYFpMetzl5UNQD9Uz1T0IkOI5chr2VLdWsetIIt3pCkUxOx
-	 cenEEvAu8RjWve9mjwvvu7iUIBXeMWkSkfrN6m12+pxabTGTGY5IfyztF98vEeMF9a
-	 S56E6TpbqxF5Oqqj4JY2XJxKNfPmdZWs+BiGzQeSMA+op82HZWtawG4e+QxdYEtnnC
-	 909z2oEgb74ESrRjziV9449mRNC4ElQRwaIi2nmkGQcQbOmwWRtTVZUZwRYEQ+CKs/
-	 N3x95BoHoS9MMmahrZJwQDhfx2qswmds2+Yjdp+0ZY8o+RdOx36hX2lBJDVKxD2kP2
-	 2cSVG/LjbVxOQ==
+	b=vHesaCWCcWCjUfEsfyJP0YMdDMxrTcb04SEkHK/h/J6qEYHEmtwrFwtGDHtIcnR0p
+	 r882sDlstZgIbi7f00P+pKaCFP3tIjhpwO0lVz69r0vFs7On7rd8zbUyfxTAR5mNkM
+	 fB4zPMpsCvnUeU/fnEnbUvFZjFoSPSJetLWdoR6jO8bXETsjgF+q2GO7Et/77ugeej
+	 aKcsNVsRfFyt1DqncisP/CQhEEDYc+qcCth7yscy1b7OC+GWjn+/pwQFy+2I8vIG+g
+	 y5mwkpjUEjCXevOgMOLE+GSYvaN4g5kopy/tyH3aI8ehVEt1y4BFmZmv/fKDb/5DE+
+	 /b7/7vpb+oBRA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ben Dooks <ben.dooks@codethink.co.uk>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/164] fs: add <linux/init_task.h> for 'init_fs'
-Date: Sat, 28 Feb 2026 13:12:26 -0500
-Message-ID: <20260228181505.1600663-7-sashal@kernel.org>
+Subject: [PATCH 5.15 008/164] gfs2: Add metapath_dibh helper
+Date: Sat, 28 Feb 2026 13:12:27 -0500
+Message-ID: <20260228181505.1600663-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -48,38 +46,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 589cff4975afe1a4eaaa1d961652f50b1628d78d ]
+[ Upstream commit 92099f0c92270c8c7a79e6bc6e0312ad248ea331 ]
 
-The init_fs symbol is defined in <linux/init_task.h> but was
-not included in fs/fs_struct.c so fix by adding the include.
+Add a metapath_dibh() helper for extracting the inode's buffer head from
+a metapath.
 
-Fixes the following sparse warning:
-fs/fs_struct.c:150:18: warning: symbol 'init_fs' was not declared. Should it be static?
-
-Fixes: 3e93cd671813e ("Take fs_struct handling to new file")
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Link: https://patch.msgid.link/20260108115856.238027-1-ben.dooks@codethink.co.uk
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: faddeb848305 ("gfs2: Fix use-after-free in iomap inline data write path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs_struct.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/gfs2/bmap.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fs_struct.c b/fs/fs_struct.c
-index 04b3f5b9c6295..0b0f88259cc60 100644
---- a/fs/fs_struct.c
-+++ b/fs/fs_struct.c
-@@ -6,6 +6,7 @@
- #include <linux/path.h>
- #include <linux/slab.h>
- #include <linux/fs_struct.h>
-+#include <linux/init_task.h>
- #include "internal.h"
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index d2011c3c33fc2..7425c90e47eb5 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -318,6 +318,12 @@ static void gfs2_metapath_ra(struct gfs2_glock *gl, __be64 *start, __be64 *end)
+ 	}
+ }
  
- /*
++static inline struct buffer_head *
++metapath_dibh(struct metapath *mp)
++{
++	return mp->mp_bh[0];
++}
++
+ static int __fillup_metapath(struct gfs2_inode *ip, struct metapath *mp,
+ 			     unsigned int x, unsigned int h)
+ {
+@@ -662,7 +668,7 @@ static int __gfs2_iomap_alloc(struct inode *inode, struct iomap *iomap,
+ {
+ 	struct gfs2_inode *ip = GFS2_I(inode);
+ 	struct gfs2_sbd *sdp = GFS2_SB(inode);
+-	struct buffer_head *dibh = mp->mp_bh[0];
++	struct buffer_head *dibh = metapath_dibh(mp);
+ 	u64 bn;
+ 	unsigned n, i, blks, alloced = 0, iblks = 0, branch_start = 0;
+ 	size_t dblks = iomap->length >> inode->i_blkbits;
 -- 
 2.51.0
 
