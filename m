@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEC63451A7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00B02DB7B2
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301778; cv=none; b=FtMEhYr2NqQhuweXXxNVDdtwTzMQGhwDKpc8T6r005WgzIi9G0aqN5pBKXOVQxxQtH57+1H5SZLP586+aDQ9byGhl/P0tO6C3UdmQaGGntqgSGmuNx6L8gXayd4c32AXYfuk2tNAvCeKAgApapyLRM0ci6qz5CSr0tYkHkItF6g=
+	t=1772301778; cv=none; b=Kxo3zjy5HpJiqGR5EDSRSELE+geP846mFz6t0/z0tjrNZFU/SxBr5mYx2JdlHRvUg0q5oBp68RhWeQtJfpFXjDsijU60rsKA5dlSOCjsKStwf5GErSYHxmJMz1SKVYq6YL3YWUJ770fDqR4Ym384JFe8tuz1wHq9tPg9yyw59sM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772301778; c=relaxed/simple;
-	bh=yjCtKJ2DQfdkjV2oKIQbcVTMcZ1x018/79RnLk7hZOU=;
+	bh=42xZ0gKUROcuTe0VlPXDtmxocs8f83I6Y2quKgf2Slo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7icdDwlOa/vANb3DKbXYdFKRo/3W1Uomu8L6dsOThvWkj8mjzg9dMcqxsiaDUF+HzDBy7Ev1reQxg/BF1UINQ6h8HK22dPYNIsQNCAAiBFXGh3k768wsa9w27zFuyDz9DKamRYCdug3Nsz/1sChvx6Nx9GwwrhP2GcDroe7IXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yf7X8E61; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DfqRQ8e57pRtrtRJ/08Hg2u9m3EHbKv2vkLW0nzlRvluXIBNOLkKzJrUU6242vuvoTNBm7H/Vzb6fP4Wjbl4tBl6TuPOqNtdY1tYEt87lZYpXZxaSMdsW3fnpal4Kv5HL7VnoqwarAcrP+KWgxPGt+Fn3/GUWKzwDKqCB2a0h5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=giispAJN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yf7X8E61"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A38BC116D0;
-	Sat, 28 Feb 2026 18:02:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="giispAJN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA5DC19423;
+	Sat, 28 Feb 2026 18:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301778;
-	bh=yjCtKJ2DQfdkjV2oKIQbcVTMcZ1x018/79RnLk7hZOU=;
+	bh=42xZ0gKUROcuTe0VlPXDtmxocs8f83I6Y2quKgf2Slo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yf7X8E61vdyeZNrKBkv4YQSJ5XlkRDUCdDEbEIEVcQCwSA3rxoKdIc87z7o8abW1p
-	 VeB75en89eBthmkZQQxCxBLlRhcD2Uct9aQEdj9O6PD/34qzJAp8P8N2UuzW+D3Rmn
-	 hfkHS2u0f6I7x/jLgBzK5KKEfeBKnBQDY0H6hL8BlAzm20oEf7d+644xa7hTrwsFAa
-	 qQ+BRgvM+rU+oXYBhd5W6znxXok7wgrI+tcRb8fAFbeXCEEoGKAnoLMZqSqq3TzHT5
-	 QK8KPdSiHu+tLS+wtUG9YVaXyhKthH9s7x7aVgARFZ1eX0jtCleJYdP2xAJx6l7OL/
-	 RyRdLzeyMBkrQ==
+	b=giispAJNvtxQptzfMfnHPA9X9/TKDwRK/7QZ6Yw/vYVIOxDn/ibFpQlzkmO4rwjO0
+	 VOQQ38JFzL5NjjV23efF/BAxaWoqPmVG0BuWmoBdOMRopx8hMVhrtWIIqnTiystvvz
+	 FsxgMkeui/r8WZdN7gkxPM3ifUq/o8UFB4iqA/mXavFq6jBEQ1/BBBJL8i6soPrtZB
+	 /9e3MTvS2eF8Zd0rQHzhUPt2wF91v5GSJoK6mkIBjew5yedMV8J96viZvawIkI5TfG
+	 ze1jX34zvv8Hti1Cw5duMwTU8FlKK96Y0l83qWnLluLgm5vlD8JF55eHYuVPyOjnhO
+	 YoFKVbXBXpV8Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Matt Johnston <matt@codeconstruct.com.au>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 187/385] mctp i2c: initialise event handler read bytes
-Date: Sat, 28 Feb 2026 12:56:49 -0500
-Message-ID: <20260228180011.1568201-187-sashal@kernel.org>
+Subject: [PATCH 6.12 188/385] wifi: cfg80211: stop NAN and P2P in cfg80211_leave
+Date: Sat, 28 Feb 2026 12:56:50 -0500
+Message-ID: <20260228180011.1568201-188-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180011.1568201-1-sashal@kernel.org>
 References: <20260228180011.1568201-1-sashal@kernel.org>
@@ -47,41 +47,45 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Matt Johnston <matt@codeconstruct.com.au>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 2a14e91b6d76639dac70ea170f4384c1ee3cb48d ]
+[ Upstream commit e1696c8bd0056bc1a5f7766f58ac333adc203e8a ]
 
-Set a 0xff value for i2c reads of an mctp-i2c device. Otherwise reads
-will return "val" from the i2c bus driver. For i2c-aspeed and
-i2c-npcm7xx that is a stack uninitialised u8.
+Seems that there is an assumption that this function should be called
+only for netdev interfaces, but it can also be called in suspend, or
+from nl80211_netlink_notify (indirectly).
+Note that the documentation of NL80211_ATTR_SOCKET_OWNER explicitly
+says that NAN interfaces would be destroyed as well in the
+nl80211_netlink_notify case.
 
-Tested with "i2ctransfer -y 1 r10@0x34" where 0x34 is a mctp-i2c
-instance, now it returns all 0xff.
+Fix this by also stopping P2P and NAN.
 
-Fixes: f5b8abf9fc3d ("mctp i2c: MCTP I2C binding driver")
-Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
-Link: https://patch.msgid.link/20260113-mctp-read-fix-v1-1-70c4b59c741c@codeconstruct.com.au
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cb3b7d87652a ("cfg80211: add start / stop NAN commands")
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260107140430.dab142cbef0b.I290cc47836d56dd7e35012ce06bec36c6da688cd@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i2c.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/wireless/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
-index 8a30d0559d60d..617333343ca00 100644
---- a/drivers/net/mctp/mctp-i2c.c
-+++ b/drivers/net/mctp/mctp-i2c.c
-@@ -244,7 +244,10 @@ static int mctp_i2c_slave_cb(struct i2c_client *client,
- 
- 	switch (event) {
- 	case I2C_SLAVE_READ_REQUESTED:
-+	case I2C_SLAVE_READ_PROCESSED:
-+		/* MCTP I2C transport only uses writes */
- 		midev->rx_pos = 0;
-+		*val = 0xff;
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 6bb8a7037d24d..ad32386ed2e11 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1378,8 +1378,10 @@ void cfg80211_leave(struct cfg80211_registered_device *rdev,
+ 		cfg80211_leave_ocb(rdev, dev);
  		break;
- 	case I2C_SLAVE_WRITE_RECEIVED:
- 		if (midev->rx_pos < MCTP_I2C_BUFSZ) {
+ 	case NL80211_IFTYPE_P2P_DEVICE:
++		cfg80211_stop_p2p_device(rdev, wdev);
++		break;
+ 	case NL80211_IFTYPE_NAN:
+-		/* cannot happen, has no netdev */
++		cfg80211_stop_nan(rdev, wdev);
+ 		break;
+ 	case NL80211_IFTYPE_AP_VLAN:
+ 	case NL80211_IFTYPE_MONITOR:
 -- 
 2.51.0
 
