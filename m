@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934BF361648
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFC433F8A1
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300927; cv=none; b=rVqTbIhryP0h8hgVs8rvtBGm+ycdH+4id7APSyy8LUEXxo++oJ/1M7byHJBHF5GUZu7zNbYeNn2jHGq+jmvJIc/Xuvy1neqY34lnqKIma/RV4V+uEOo/42bSSB7Ae0n4Lc2auRVZ1gmW+QV1p07w3GcZwV2K41iloF5jnLNJGs0=
+	t=1772300928; cv=none; b=UEZASw/FIkm1UaRRglHO7gQ9/aL+PsjyU1k53PaXCiKTwxVPOlbPbh39YP9tcKY76Wz5hAF+ziCTlW+E12W3CmPjY7qpnHhM3u3CLb7tIzObVzP4KGGL9pS9lAO/TY4V2ie/OxPw+E9G9fyu/HTLetPJtKpKcJV0FvphbV74UuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300927; c=relaxed/simple;
-	bh=ac4WStoxKfAasctsVBfwXUUhvWrA9GNM2xoK62d7wz8=;
+	s=arc-20240116; t=1772300928; c=relaxed/simple;
+	bh=eZhw+wdg5qva2KkhBd421DUYgq7bIAGOMWDp7kXJ3IA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCSApQprw2oLthznYUWR9u2AYSKk9n+8XomXNrgFtwxPPLFUmtaWzTLKtUbLqOLrQI+LVdyZQEyg9KGAqEwD58wju8mywvuFJbOBw2Tbi6L3+o3OSsqiHteQetD32PQu1MBtcyRwk0uT2T8zNkjoOd6Sf5mWXYqttkCxmlh9I38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L9LMuPeH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ppgM7sS53hC6zfSHByafuoVRneQtfW1FCPeZk77uIp4xcT4T+dGUFJqrNwQ1C7RIliucTv4vMS2dFaf89FqVDp1/jQsnb4/EYZQQzy8WN7f+idp3ff7cOW5BGg/NLcfG8+2/OnhAVfpIfMGF0dS7Fwo9n2l5MUlnOeV3C6ufNmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Irk00a4D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L9LMuPeH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8A7C19423;
-	Sat, 28 Feb 2026 17:48:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Irk00a4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1CCC19425;
+	Sat, 28 Feb 2026 17:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772300927;
-	bh=ac4WStoxKfAasctsVBfwXUUhvWrA9GNM2xoK62d7wz8=;
+	s=k20201202; t=1772300928;
+	bh=eZhw+wdg5qva2KkhBd421DUYgq7bIAGOMWDp7kXJ3IA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9LMuPeHa8on7U1GpjMxIFa3QAqHKpnNVNibqJun0NKc79LQKUv+6CIdkvhgGrD+f
-	 WA3Fvk97G+zuNWihxiJUK+LTg5m4iN5L8X4poKBCwoeANg4FIHdaF5d+/aLVrqCobw
-	 4T+tkOuu9+tSXXT1OJgUptWoH0Sq3rOP8HdB+QPv6xmh8W1S7yFxq6X2J+dEUESsXx
-	 dFwVY/JLm1csax7zHup50LCK9eRZ9sKu1jw11KrY+o5I3gBA/RQbaFDQiKArr/HZyw
-	 U+bMQtSgfZ4NKUofqOt7LqQ2jMRuQfqruMdA9L8t/vDJofYjiLnEXyg268K4GZISe+
-	 kyvavf30I4kew==
+	b=Irk00a4DoCCfPdxWBIVwfLOWBhjoSpUw2ku9thbAlW4sqPJIGvpGIUsF4w7s7XTFX
+	 nw7W16qzvEjjwzrXxWPOC3CdiY/WSo3L1j4yupCN9j+nuu1AQcMqyyxsLbbnKUXE9R
+	 vYrhIwSSlF4s+fTtn099ZFkjs7EcSSrktJkChJHuNMa9AsH3TcCn00GrU+8Mz721i5
+	 7/G4b1Yu/FRZzR6XpyFeFDTTy0Fbtc+4/37d34aPOiz03h67+0QmYe8UxCechiP+OH
+	 e2sGwadMv+sxRIorZLSHSN80NsiW1piiLs00jlO5pPThIsGGxxt/M80u7yQe/NphXV
+	 w5yWmzeHPmzGg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Robin Murphy <robin.murphy@arm.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Michal Simek <michal.simek@amd.com>,
+Cc: Jinqian Yang <yangjinqian1@huawei.com>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/752] perf/arm-cmn: Support CMN-600AE
-Date: Sat, 28 Feb 2026 12:35:57 -0500
-Message-ID: <20260228174750.1542406-46-sashal@kernel.org>
+Subject: [PATCH 6.18 047/752] arm64: Add support for TSV110 Spectre-BHB mitigation
+Date: Sat, 28 Feb 2026 12:35:58 -0500
+Message-ID: <20260228174750.1542406-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,48 +48,35 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Jinqian Yang <yangjinqian1@huawei.com>
 
-[ Upstream commit 12a94953c37e834c3eabb839ce057094946fe67a ]
+[ Upstream commit e3baa5d4b361276efeb87b20d8beced451a7dbd5 ]
 
-The functional safety features of CMN-600AE have little to no impact on
-the PMU relative to the base CMN-600 design, so for simplicity we can
-reasonably just treat it as the same thing. The only obvious difference
-is that the revision numbers aren't aligned, so we may hide some aliases
-for events which do actually exist, but those can still be specified via
-the underlying "type,eventid" format so it's not too big a deal.
+The TSV110 processor is vulnerable to the Spectre-BHB (Branch History
+Buffer) attack, which can be exploited to leak information through
+branch prediction side channels. This commit adds the MIDR of TSV110
+to the list for software mitigation.
 
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Tested-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Jinqian Yang <yangjinqian1@huawei.com>
+Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/kernel/proton-pack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 23245352a3fc0..651edd73bfcb1 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -210,6 +210,7 @@ enum cmn_model {
- enum cmn_part {
- 	PART_CMN600 = 0x434,
- 	PART_CMN650 = 0x436,
-+	PART_CMN600AE = 0x438,
- 	PART_CMN700 = 0x43c,
- 	PART_CI700 = 0x43a,
- 	PART_CMN_S3 = 0x43e,
-@@ -2266,6 +2267,9 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 	reg = readq_relaxed(cfg_region + CMN_CFGM_PERIPH_ID_01);
- 	part = FIELD_GET(CMN_CFGM_PID0_PART_0, reg);
- 	part |= FIELD_GET(CMN_CFGM_PID1_PART_1, reg) << 8;
-+	/* 600AE is close enough that it's not really worth more complexity */
-+	if (part == PART_CMN600AE)
-+		part = PART_CMN600;
- 	if (cmn->part && cmn->part != part)
- 		dev_warn(cmn->dev,
- 			 "Firmware binding mismatch: expected part number 0x%x, found 0x%x\n",
+diff --git a/arch/arm64/kernel/proton-pack.c b/arch/arm64/kernel/proton-pack.c
+index 80a580e019c50..b3801f532b10b 100644
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -887,6 +887,7 @@ static u8 spectre_bhb_loop_affected(void)
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
+ 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
+ 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
++		MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
+ 		{},
+ 	};
+ 	static const struct midr_range spectre_bhb_k24_list[] = {
 -- 
 2.51.0
 
