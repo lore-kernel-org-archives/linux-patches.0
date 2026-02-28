@@ -1,58 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1232B36DA0B;
-	Sat, 28 Feb 2026 17:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAFE36D9E9;
+	Sat, 28 Feb 2026 17:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301440; cv=none; b=m/KYEZ+qvnkL0EmsFZxv3/cXxB0zVhUUOBAZT9Zc6UOZpEUfT0KzWLRvVzuG4crAWiQtIgVG5K+wzza+QfqKcYiWDYIPMeXLwzlde6VMy04QcKWm9IwdAEaQslWYcJTbn+Wkrr59cmv4fBmP1MGL5rW4AhgW6PtO37axZnZ0Fgs=
+	t=1772301441; cv=none; b=nEUyCb40EmH4jw94i7dz+fHo9jggp89itbFfOmETu7mqRvux7I+SkITa8lrWqaEsE9L8bhEwjTDpa1xfNU5YJ03QjCNj78KQyoevfMsO20JM5icHBfGQT0SZksT5vPIQOj4fJtTAuqpsM9THt46rk+ahWKlmWlr0BdU4h2WCv0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301440; c=relaxed/simple;
-	bh=eka7zON3gX8jz16OwPRfwdNq2KwQ6lxsdlOJPMoc0bU=;
+	s=arc-20240116; t=1772301441; c=relaxed/simple;
+	bh=5s8BBKdf4ztkBwOi4i6eDwdPKMgB3eEiCkhMfk7U7/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZbLlyVJUja8rnpmx58FBaUlmgiUndyjUnEWzb+5tpK23FxVjj9btlbXV9ge3L73t5V5yd84EV/E1rn07S+5n8pY695wYTPUJvl7nu1dnz/ecrqLhrOT4lwOwb58y5naReXn7KAAYyY+MZtBJn4QqR4zUHpFKwiWlCsZhcVzQcgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aJ1QhhcJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kXLw7GemV7YnTP0OImRDGgfHnbY8a9IUM5884CM3FYhR9G3pO0npohgh5/K0l5iWK0Rpt8sXasfReVpvPcIoqcQ6JGylCKCP1wLDfPeyB2aGgQGeS36HJxhmEwHiO4EsFnpsAi138adSaKrgkkiav7UBEawTuSkzeAqmYStXfgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PgqvI3s4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aJ1QhhcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BDCC19423;
-	Sat, 28 Feb 2026 17:57:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PgqvI3s4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397DAC2BC87;
+	Sat, 28 Feb 2026 17:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301440;
-	bh=eka7zON3gX8jz16OwPRfwdNq2KwQ6lxsdlOJPMoc0bU=;
+	s=k20201202; t=1772301441;
+	bh=5s8BBKdf4ztkBwOi4i6eDwdPKMgB3eEiCkhMfk7U7/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJ1QhhcJo3v9Qhx8cl4M9hz4pOykgDe8rANkywz7jzPsETD6bcFJ/uM1UtSujLovI
-	 /BVt96wD0V0ZhoRoDsf9Fbvvv5eLEvGeqqaP2hyLtUVRkYzeqlQ0ElzmZDoicCdeYk
-	 DmHbZFJ00m80iMwUSfLoX5gavG2uJxObT5XVaqlA96/JkOExeBlzCnhgietnI47r2y
-	 guJ9LrBnCvjHG3fJ8qCqoA0R7D4Q+WNev1lfTFpqAp46EKTBJOXQc5/IAmgJ/34au1
-	 5pLrsKYryJZt0pBKnrghQP3vRvkbQJDBIXXQws00xxfPwydBVXQhfBqWFO4g3D5o1+
-	 HpSpYcT8N+a+g==
+	b=PgqvI3s4uqnL3DfUfiAH4lq2UgquU02rCVyh82FY3zDXPtwSjniftHwAVF1rVQgGc
+	 OKei7XXggxwn8tlzRKTXX0C0O0eRtr2ZO/t3wbBnvbMgHVLEh2qPcslTrMGJRBWh2F
+	 jR1sIc+Z9KYPXESMRAsLJHXKpWDWlrsHKE+WMf/ACrv+BeVVpXuUU/0JCC99uF6PQu
+	 9LgkIVz5iaepsYPKPUoZLJR5DSfwps84SmqsOBjN9ZNxgPr3Ix3g12moa8YycmvNgQ
+	 RJ/GxSKsRDWGC6QPj7eHXJl4e5cDcAg46+ZLNMmuoz0LuPneEdhSSSfv092oohpmLU
+	 oCHlaNaErxUOQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Paul Webb <paul.x.webb@oracle.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Alexander Graf <graf@amazon.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Baoquan He <bhe@redhat.com>,
-	Borislav Betkov <bp@alien8.de>,
-	guoweikang <guoweikang.kernel@gmail.com>,
-	Henry Willard <henry.willard@oracle.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Bohac <jbohac@suse.cz>,
-	Joel Granados <joel.granados@kernel.org>,
-	Jonathan McDowell <noodles@fb.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Thomas Gleinxer <tglx@linutronix.de>,
-	Yifei Liu <yifei.l.liu@oracle.com>,
+Cc: Deepanshu Kartikey <kartikey406@gmail.com>,
+	syzbot+d8d4c31d40f868eaea30@syzkaller.appspotmail.com,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Hillf Danton <hdanton@sina.com>,
 	stable@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 626/752] x86/kexec: add a sanity check on previous kernel's ima kexec buffer
-Date: Sat, 28 Feb 2026 12:45:37 -0500
-Message-ID: <20260228174750.1542406-626-sashal@kernel.org>
+Subject: [PATCH 6.18 627/752] mm/vmalloc: prevent RCU stalls in kasan_release_vmalloc_node
+Date: Sat, 28 Feb 2026 12:45:38 -0500
+Message-ID: <20260228174750.1542406-627-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -62,79 +47,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit c5489d04337b47e93c0623e8145fcba3f5739efd ]
+[ Upstream commit 5747435e0fd474c24530ef1a6822f47e7d264b27 ]
 
-When the second-stage kernel is booted via kexec with a limiting command
-line such as "mem=<size>", the physical range that contains the carried
-over IMA measurement list may fall outside the truncated RAM leading to a
-kernel panic.
+When CONFIG_PAGE_OWNER is enabled, freeing KASAN shadow pages during
+vmalloc cleanup triggers expensive stack unwinding that acquires RCU read
+locks.  Processing a large purge_list without rescheduling can cause the
+task to hold CPU for extended periods (10+ seconds), leading to RCU stalls
+and potential OOM conditions.
 
-    BUG: unable to handle page fault for address: ffff97793ff47000
-    RIP: ima_restore_measurement_list+0xdc/0x45a
-    #PF: error_code(0x0000) – not-present page
+The issue manifests in purge_vmap_node() -> kasan_release_vmalloc_node()
+where iterating through hundreds or thousands of vmap_area entries and
+freeing their associated shadow pages causes:
 
-Other architectures already validate the range with page_is_ram(), as done
-in commit cbf9c4b9617b ("of: check previous kernel's ima-kexec-buffer
-against memory bounds") do a similar check on x86.
+  rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+  rcu: Tasks blocked on level-0 rcu_node (CPUs 0-1): P6229/1:b..l
+  ...
+  task:kworker/0:17 state:R running task stack:28840 pid:6229
+  ...
+  kasan_release_vmalloc_node+0x1ba/0xad0 mm/vmalloc.c:2299
+  purge_vmap_node+0x1ba/0xad0 mm/vmalloc.c:2299
 
-Without carrying the measurement list across kexec, the attestation
-would fail.
+Each call to kasan_release_vmalloc() can free many pages, and with
+page_owner tracking, each free triggers save_stack() which performs stack
+unwinding under RCU read lock.  Without yielding, this creates an
+unbounded RCU critical section.
 
-Link: https://lkml.kernel.org/r/20251231061609.907170-4-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Fixes: b69a2afd5afc ("x86/kexec: Carry forward IMA measurement log on kexec")
-Reported-by: Paul Webb <paul.x.webb@oracle.com>
-Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
-Cc: Alexander Graf <graf@amazon.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: guoweikang <guoweikang.kernel@gmail.com>
-Cc: Henry Willard <henry.willard@oracle.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Bohac <jbohac@suse.cz>
-Cc: Joel Granados <joel.granados@kernel.org>
-Cc: Jonathan McDowell <noodles@fb.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Sohil Mehta <sohil.mehta@intel.com>
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
-Cc: Yifei Liu <yifei.l.liu@oracle.com>
+Add periodic cond_resched() calls within the loop to allow:
+- RCU grace periods to complete
+- Other tasks to run
+- Scheduler to preempt when needed
+
+The fix uses need_resched() for immediate response under load, with a
+batch count of 32 as a guaranteed upper bound to prevent worst-case stalls
+even under light load.
+
+Link: https://lkml.kernel.org/r/20260112103612.627247-1-kartikey406@gmail.com
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reported-by: syzbot+d8d4c31d40f868eaea30@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d8d4c31d40f868eaea30
+Link: https://lore.kernel.org/all/20260112084723.622910-1-kartikey406@gmail.com/T/ [v1]
+Suggested-by: Uladzislau Rezki <urezki@gmail.com>
+Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Cc: Hillf Danton <hdanton@sina.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/setup.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/vmalloc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-index 1b2edd07a3e17..383d4a4784f5b 100644
---- a/arch/x86/kernel/setup.c
-+++ b/arch/x86/kernel/setup.c
-@@ -439,9 +439,15 @@ int __init ima_free_kexec_buffer(void)
+diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+index 4fbd6e7dc479a..e2f526ad7abba 100644
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -2241,11 +2241,14 @@ decay_va_pool_node(struct vmap_node *vn, bool full_decay)
+ 	reclaim_list_global(&decay_list);
+ }
  
- int __init ima_get_kexec_buffer(void **addr, size_t *size)
++#define KASAN_RELEASE_BATCH_SIZE 32
++
+ static void
+ kasan_release_vmalloc_node(struct vmap_node *vn)
  {
-+	int ret;
-+
- 	if (!ima_kexec_buffer_size)
- 		return -ENOENT;
+ 	struct vmap_area *va;
+ 	unsigned long start, end;
++	unsigned int batch_count = 0;
  
-+	ret = ima_validate_range(ima_kexec_buffer_phys, ima_kexec_buffer_size);
-+	if (ret)
-+		return ret;
+ 	start = list_first_entry(&vn->purge_list, struct vmap_area, list)->va_start;
+ 	end = list_last_entry(&vn->purge_list, struct vmap_area, list)->va_end;
+@@ -2255,6 +2258,11 @@ kasan_release_vmalloc_node(struct vmap_node *vn)
+ 			kasan_release_vmalloc(va->va_start, va->va_end,
+ 				va->va_start, va->va_end,
+ 				KASAN_VMALLOC_PAGE_RANGE);
 +
- 	*addr = __va(ima_kexec_buffer_phys);
- 	*size = ima_kexec_buffer_size;
++		if (need_resched() || (++batch_count >= KASAN_RELEASE_BATCH_SIZE)) {
++			cond_resched();
++			batch_count = 0;
++		}
+ 	}
  
+ 	kasan_release_vmalloc(start, end, start, end, KASAN_VMALLOC_TLB_FLUSH);
 -- 
 2.51.0
 
