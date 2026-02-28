@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5DC359A69
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CDD36C9F9
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302383; cv=none; b=bVRFABGgjvqGsuj7iUal59DIM1NM024M8iUE1af4r9C85L12S3fqEfRiNSJcc768pZEpMMVd6sdIMVXiX1fHjupsKEUnintgG/hE8JcyhMaa6iNq9nQuFw9iknsGRk1lKNLetcETQqEsVdqefHrYpHXuljmXF8CXm0Cl4xQ0cqE=
+	t=1772302384; cv=none; b=SaVnwQ5o87HwYcGR5AVoEKPwGtQH9Molr5odOXcGucNBrwKH0sPKu1Iq/3P8nYuv6U+tDZwcPwusfTbhC5Dq/1eVxPLlGXMfXcR74gLZvhSFKW451OKOi4AkHRnbv5O8f2kjuGUdR5Y8vqLygIjk0xm5SBHJUsGHb72r6sYYgAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302383; c=relaxed/simple;
-	bh=0Z9GDsyWT9Nbk+3V/l0yiuxlnRm0Qe16ms7i6y0y6Uw=;
+	s=arc-20240116; t=1772302384; c=relaxed/simple;
+	bh=XNCyqiQoXrT4aYR2eI5Hey+yIGL5+LPeXY0/1wTBJK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zx+nI+scj+OBZWHIg5dTDiloRWWvnKSkt6bn9iaUtbbqhW4YVpRqiq7sWslGLsCN5RRjM7nW+rq2pH2Yujhi+oKY5jjx0aBF7OtxKNVlGyR+3nC8eLTkKfMdoLLWv3L16QXWzduuQvwHBnoFrUE8/jvmIXbVaKGYpAhWvd92DMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o7wqytKn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XUGk4zMZC14Yx8xr245DYNrEOw/Wh0qV2fyzidujNgzQmFbqIKYqW7D27iaINnin2ML2o+VFs5zHHNFEq/bC9Wpy5LP9AlhZPg5p1qCC04Tf/5EYluTCKB/qN4r1P1sxcIggRlEb8dlMgLp6RCK+epiosUD4aWv5K+Eh8RMEL+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XBP+60fE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o7wqytKn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3CEC116D0;
-	Sat, 28 Feb 2026 18:13:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XBP+60fE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C78C19424;
+	Sat, 28 Feb 2026 18:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302383;
-	bh=0Z9GDsyWT9Nbk+3V/l0yiuxlnRm0Qe16ms7i6y0y6Uw=;
+	s=k20201202; t=1772302384;
+	bh=XNCyqiQoXrT4aYR2eI5Hey+yIGL5+LPeXY0/1wTBJK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o7wqytKnO95yhWFb6koLMrtyvogneqvYkqGw0A1V442iG38xDNumA9wKPsafv8TCS
-	 QN+BsnhEn57ybGCihSJwwNROxUPQlusz8C4xnfQNmU6euRaGqjC/LTghFk6nMZH4n2
-	 6O7bfRfxXs66wTW1mCaGquyBMmdxM9AkYvmJ0xnAu0sv+sq+hAKmzpYaDr9IUNxSHA
-	 T+BtLk+wn5TusqGbBABYKZFvOt8dUDXmv7mMm4GcdJLN98omsS5a4MfJN+SYi06ZN5
-	 Xo/mOTxkSaNotfPocnGRbJr4N9W8o+t1DYyRy2MeYQozvPFR8HspsSu2T9t+PJ2NfI
-	 UcEtckLFJmeFQ==
+	b=XBP+60fEEsHcPIJG6hSbhEi9Sgf153vWRkgR9N2x7NKhCyKs8qW7S6x4mLsXG0yOZ
+	 lOS8ClUH0oozj27Zwm21SaI7wIw5QJdmmgiXehceavXRKLINBvSrMkLiXXkk9dJnOh
+	 NQdqw95gTGT5QD8LnnZbtJLIuwuy0iWAB1HHjCaLNUnl25rWDTdbOyKJgI+mCW7URJ
+	 wJ52RaBi7yADtVtC2yC/TK0bo6KQh+ZjMKTJabuvUTT9DkvV93kVJTgTPDKfMQVOvM
+	 gcp2DbR7jKFh8gSCK6ftCHVzTV3LkNfFVX/4qQDE9UbpjbiPnOzIDZshqbtvm7SU+T
+	 p3V7wF/LBI/EQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Ondrej Mosnacek <omosnace@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Alexey Gladkov <legion@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+Cc: Anshumali Gaur <agaur@marvell.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/232] ucount: check for CAP_SYS_RESOURCE using ns_capable_noaudit()
-Date: Sat, 28 Feb 2026 13:09:24 -0500
-Message-ID: <20260228181127.1592657-111-sashal@kernel.org>
+Subject: [PATCH 6.1 112/232] octeontx2-af: Fix PF driver crash with kexec kernel booting
+Date: Sat, 28 Feb 2026 13:09:25 -0500
+Message-ID: <20260228181127.1592657-112-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -51,49 +48,60 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Anshumali Gaur <agaur@marvell.com>
 
-[ Upstream commit 0895a000e4fff9e950a7894210db45973e485c35 ]
+[ Upstream commit 2d2d574309e3ae84ee794869a5da8b4c38753a94 ]
 
-The user.* sysctls implement the ctl_table_root::permissions hook and they
-override the file access mode based on the CAP_SYS_RESOURCE capability (at
-most rwx if capable, at most r-- if not).  The capability is being checked
-unconditionally, so if an LSM denies the capability, an audit record may
-be logged even when access is in fact granted.
+During a kexec reboot the hardware is not power-cycled, so AF state from
+the old kernel can persist into the new kernel. When AF and PF drivers
+are built as modules, the PF driver may probe before AF reinitializes
+the hardware.
 
-Given the logic in the set_permissions() function in kernel/ucount.c and
-the unfortunate way the permission checking is implemented, it doesn't
-seem viable to avoid false positive denials by deferring the capability
-check.  Thus, do the same as in net_ctl_permissions() (net/sysctl_net.c) -
-switch from ns_capable() to ns_capable_noaudit(), so that the check never
-logs an audit record.
+The PF driver treats the RVUM block revision as an indication that AF
+initialization is complete. If this value is left uncleared at shutdown,
+PF may incorrectly assume AF is ready and access stale hardware state,
+leading to a crash.
 
-Link: https://lkml.kernel.org/r/20260122140745.239428-1-omosnace@redhat.com
-Fixes: dbec28460a89 ("userns: Add per user namespace sysctls.")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Acked-by: Serge Hallyn <serge@hallyn.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Alexey Gladkov <legion@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Clear the RVUM block revision during AF shutdown to avoid PF
+mis-detecting AF readiness after kexec.
+
+Fixes: 54494aa5d1e6 ("octeontx2-af: Add Marvell OcteonTX2 RVU AF driver")
+Signed-off-by: Anshumali Gaur <agaur@marvell.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260203050701.2616685-1-agaur@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/ucount.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/kernel/ucount.c b/kernel/ucount.c
-index 8afa2878422d5..7f29cc9728189 100644
---- a/kernel/ucount.c
-+++ b/kernel/ucount.c
-@@ -45,7 +45,7 @@ static int set_permissions(struct ctl_table_header *head,
- 	int mode;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index 7034a977102ea..1e3661524040a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -3442,11 +3442,22 @@ static void rvu_remove(struct pci_dev *pdev)
+ 	devm_kfree(&pdev->dev, rvu);
+ }
  
- 	/* Allow users with CAP_SYS_RESOURCE unrestrained access */
--	if (ns_capable(user_ns, CAP_SYS_RESOURCE))
-+	if (ns_capable_noaudit(user_ns, CAP_SYS_RESOURCE))
- 		mode = (table->mode & S_IRWXU) >> 6;
- 	else
- 	/* Allow all others at most read-only access */
++static void rvu_shutdown(struct pci_dev *pdev)
++{
++	struct rvu *rvu = pci_get_drvdata(pdev);
++
++	if (!rvu)
++		return;
++
++	rvu_clear_rvum_blk_revid(rvu);
++}
++
+ static struct pci_driver rvu_driver = {
+ 	.name = DRV_NAME,
+ 	.id_table = rvu_id_table,
+ 	.probe = rvu_probe,
+ 	.remove = rvu_remove,
++	.shutdown = rvu_shutdown,
+ };
+ 
+ static int __init rvu_init_module(void)
 -- 
 2.51.0
 
