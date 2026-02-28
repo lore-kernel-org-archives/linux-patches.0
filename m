@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DE837524F
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E17B39B949
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302528; cv=none; b=A3jB9blG8K7E/PSHGyfrKuhKpJUJ4hk1SMQUez3j6vU0kaL7Ec3L/OBEW8umlHDOvTWyNAgKG3twUWaFdQwlRM2ofGadB4pDG9p2v2itll8OgkhGXoEO6zOHmp+U0dhSO4KnI6KgW95cor5BYq6SPC3A9SkKK478whnFeXfYXwg=
+	t=1772302529; cv=none; b=Pg5GLwq/VQ43RLQ5xAN+auWyOcC+nGlUzzAm33aglgp2QNjNEIYuCC17pp4h0IkVXmWjU264HIqZk+REh1H5KjNWJPTEQ6KSxnni9vdRpQY1FHVGiEILjxp2tmx1ONOdjrQKFOPAfDnE+jAH8VFiyGtg7tZYyOm8Dyg3Z6mLB44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302528; c=relaxed/simple;
-	bh=59LITi7aOoN7r4wDqGtmrfOjDVR9dos2nmNH/nlGLZU=;
+	s=arc-20240116; t=1772302529; c=relaxed/simple;
+	bh=dRLhpepTXNwFk1pQVeRp1JsaIP6PeI4quhvOVy3MNU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBDhhSqR2amvzUNc+42n5lFLOXosmo5tmi4SHJQrd8Gl5v+2Lto0Tmyss6lcZyztAeX9SmjIbn7xtaFlF6OWrxHLoVMNhgk/y+AjJNDLeTg23jtWKi7nl8+mGgRexc5c21dyyPOV9toARVcGD2VccMW6ATUxUc4aNUuhgZZFgKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m/44CTO1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BlXm9Y74vqnEhdoaRFtAH76/h9exFGGhKcEwDtRPkgCv5kCE/p23FW/vn7Zpnyk/nikO3l7suvk5M47M5pK7IbLufqZfDgs8JzLq75ZN7VWiHMwnY73530GAu4tmTrNE6/7t3jKjT3OmXMTv1/0+ChHAC/PbVXgJXHuXZinC5xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EeJpHslL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m/44CTO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6667EC19424;
-	Sat, 28 Feb 2026 18:15:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EeJpHslL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204A6C19423;
+	Sat, 28 Feb 2026 18:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302527;
-	bh=59LITi7aOoN7r4wDqGtmrfOjDVR9dos2nmNH/nlGLZU=;
+	s=k20201202; t=1772302528;
+	bh=dRLhpepTXNwFk1pQVeRp1JsaIP6PeI4quhvOVy3MNU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m/44CTO1dA1YuJm7jX5UOqqbvLivDohu1jIp1cMdvhD+WAe/27iF5+K26DJWR+9/G
-	 NaYNGRcF+DCCcMjVCbpPlvKqfAMAjCBeBMsFbotn1HEa3wXg3yUEkTjc0P7YGrFHG2
-	 MQnSetQKqfTPzz8XJL0nIWSGxFrEzBVDnD+sbUgI9JOp13PmkcITrWfuSRpivqxvil
-	 moqL8uwC20aq2ngSyurO1AVrrCEVhHFQ5oRJSDN0sIpjjM3hpfRUQrZ9mk5zqfVPnd
-	 1Lut63hcz+2zbuLzmWP6cUBOFp+LaRWtQPhyIyC5hc3JtMxweSxprYDiapgD9IdBAG
-	 lmEX00F3enoSQ==
+	b=EeJpHslLFCS1oOHPVpQkNNAMSvEjYeDh7JY6+WmPbl8S4VDw9/1J8Yb81btMBR2E9
+	 Iz3cPyjet/Ui9Fgdz9m4ap1KEFrlpKwbdTs+2t8ZJXX8ZECPkSMGIut7hbYmIEPusT
+	 jjxmR4E6mJ9oxJ8Wr1aXiE7ESM0/7osmQVab2WcOhyIEIgHZFKUKLrEv5cB/bibn8+
+	 sfkP91qKIUOPHigKQjRecnLHzWdAQFGIigxVoBAh2nK0uHfgTQ3Wt46u5PoBmYwPu2
+	 hoSR8pwkV66iTAmUuoRAwURbzKt4p4IpoVgGerkQXwU1HD+uiRqeCOct37mumA0uP0
+	 4uOyDWynxsQzQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
 Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Thomas Gleixner <tglx@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/164] EDAC/altera: Remove IRQF_ONESHOT
-Date: Sat, 28 Feb 2026 13:12:46 -0500
-Message-ID: <20260228181505.1600663-27-sashal@kernel.org>
+Subject: [PATCH 5.15 028/164] mfd: wm8350-core: Use IRQF_ONESHOT
+Date: Sat, 28 Feb 2026 13:12:47 -0500
+Message-ID: <20260228181505.1600663-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181505.1600663-1-sashal@kernel.org>
 References: <20260228181505.1600663-1-sashal@kernel.org>
@@ -49,70 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 5c858d6c66304b4c7579582ec5235f02d43578ea ]
+[ Upstream commit 553b4999cbe231b5011cb8db05a3092dec168aca ]
 
-Passing IRQF_ONESHOT ensures that the interrupt source is masked until
-the secondary (threaded) handler is done. If only a primary handler is
-used then the flag makes no sense because the interrupt can not fire
-(again) while its handler is running.
+Using a threaded interrupt without a dedicated primary handler mandates
+the IRQF_ONESHOT flag to mask the interrupt source while the threaded
+handler is active. Otherwise the interrupt can fire again before the
+threaded handler had a chance to run.
 
-The flag also prevents force-threading of the primary handler and the
-irq-core will warn about this.
+Mark explained that this should not happen with this hardware since it
+is a slow irqchip which is behind an I2C/ SPI bus but the IRQ-core will
+refuse to accept such a handler.
 
-Remove IRQF_ONESHOT from irqflags.
+Set IRQF_ONESHOT so the interrupt source is masked until the secondary
+handler is done.
 
-Fixes: a29d64a45eed1 ("EDAC, altera: Add IRQ Flags to disable IRQ while handling")
+Fixes: 1c6c69525b40e ("genirq: Reject bogus threaded irq requests")
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260128095540.863589-11-bigeasy@linutronix.de
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260128095540.863589-16-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/altera_edac.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ include/linux/mfd/wm8350/core.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/edac/altera_edac.c b/drivers/edac/altera_edac.c
-index f1f8c34638339..ff65779b5d657 100644
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1535,8 +1535,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
- 		goto err_release_group_1;
- 	}
- 	rc = devm_request_irq(&altdev->ddev, altdev->sb_irq,
--			      prv->ecc_irq_handler,
--			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
-+			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
- 			      ecc_name, altdev);
- 	if (rc) {
- 		edac_printk(KERN_ERR, EDAC_DEVICE, "PortB SBERR IRQ error\n");
-@@ -1559,8 +1558,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
- 		goto err_release_group_1;
- 	}
- 	rc = devm_request_irq(&altdev->ddev, altdev->db_irq,
--			      prv->ecc_irq_handler,
--			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
-+			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
- 			      ecc_name, altdev);
- 	if (rc) {
- 		edac_printk(KERN_ERR, EDAC_DEVICE, "PortB DBERR IRQ error\n");
-@@ -1943,8 +1941,7 @@ static int altr_edac_a10_device_add(struct altr_arria10_edac *edac,
- 		goto err_release_group1;
- 	}
- 	rc = devm_request_irq(edac->dev, altdev->sb_irq, prv->ecc_irq_handler,
--			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
--			      ecc_name, altdev);
-+			      IRQF_TRIGGER_HIGH, ecc_name, altdev);
- 	if (rc) {
- 		edac_printk(KERN_ERR, EDAC_DEVICE, "No SBERR IRQ resource\n");
- 		goto err_release_group1;
-@@ -1966,7 +1963,7 @@ static int altr_edac_a10_device_add(struct altr_arria10_edac *edac,
- 		goto err_release_group1;
- 	}
- 	rc = devm_request_irq(edac->dev, altdev->db_irq, prv->ecc_irq_handler,
--			      IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
-+			      IRQF_TRIGGER_HIGH,
- 			      ecc_name, altdev);
- 	if (rc) {
- 		edac_printk(KERN_ERR, EDAC_DEVICE, "No DBERR IRQ resource\n");
+diff --git a/include/linux/mfd/wm8350/core.h b/include/linux/mfd/wm8350/core.h
+index a3241e4d75486..4816d4f472101 100644
+--- a/include/linux/mfd/wm8350/core.h
++++ b/include/linux/mfd/wm8350/core.h
+@@ -663,7 +663,7 @@ static inline int wm8350_register_irq(struct wm8350 *wm8350, int irq,
+ 		return -ENODEV;
+ 
+ 	return request_threaded_irq(irq + wm8350->irq_base, NULL,
+-				    handler, flags, name, data);
++				    handler, flags | IRQF_ONESHOT, name, data);
+ }
+ 
+ static inline void wm8350_free_irq(struct wm8350 *wm8350, int irq, void *data)
 -- 
 2.51.0
 
