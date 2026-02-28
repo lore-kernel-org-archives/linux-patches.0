@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5396B3B5315
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F97313E31
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301065; cv=none; b=Vg2v++Vn0HSs3HKWmImSUu8/7FvYzJ4wAk0s+fZM1l3vjI+LSKcooxrN/MHwH6MX9cZHi6VO++HsXFToST5Y57Vdt3qtIaVm9/vicc0w9KsGmSBMQhg+219sQZEyYzvtOLUnh8tT4SPxi9iGyuV2Gnca7NnatmTzd4XuxTtgUOA=
+	t=1772301066; cv=none; b=cI9Nh+eRCfHlzN2YWevjDah7t1XY7QSMAveNDPFqnyFO+4I+FqOI7zu2tJNClPtiPdfbJhMFajybNPucryVMVsYTBj1t50HHPYMwxq+cNV/tQ0cn9GyVHr14Rh1uvmM6EtwjigLGVfftTir7cVgwlN5AAvAlFAFOUnOmSYE2u20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301065; c=relaxed/simple;
-	bh=oNf/o6E9qGrNq1UiEnmJf5RGLTAqUoXKqLBoSb6++IA=;
+	s=arc-20240116; t=1772301066; c=relaxed/simple;
+	bh=8NYj5MqQRfE49UHoasW3T3ZjMCJflVO/gNWxdPgZLp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbMY/qf10qKWx7tddItOP9VecfTpM0sJ6qbROHCyUAg4oCw/U8I+xmpsWlo5sTlYPX5slvmc+lvy6rTg0ceu0Sl7FTNmx58z3E2Lo3aES1O6xfVHeq2l6Z7RaoLOghmoyt/3P2m3lGMKeR5YeLJB5Luvs7GPYldtCZFBGpeRgDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NakiH71y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P27PABPkbCW2eurDJV79AyLfX9NMfkbhgB8/VGVbfOmZcCW2ssu2ECZ+ccZAVLdftliJcRNcm1f+wDQtHcsp02DQokPvpvxdhDfQFmYV1JIpvuwU/Oycv0qpPdCylGnfq2sMS8WRAE9lxlRHHsvUmVkp2XxdL4MqYH9XO4RtGx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hsjYY5j2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NakiH71y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A09C116D0;
-	Sat, 28 Feb 2026 17:51:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hsjYY5j2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C245C19423;
+	Sat, 28 Feb 2026 17:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772301065;
-	bh=oNf/o6E9qGrNq1UiEnmJf5RGLTAqUoXKqLBoSb6++IA=;
+	bh=8NYj5MqQRfE49UHoasW3T3ZjMCJflVO/gNWxdPgZLp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NakiH71yvbpKkpy6jBwNmLXn7sjII7iqztgDK42/QVG3rElPIabEGcRnvm840F+uP
-	 ssip3Cd/vJ3dJQWmLM+ZoPQtuAhKsRNEbwc74aHWf0rLSl3QkDW7d9HngJenGkfCFt
-	 Pz8JX67W6JEsre+aujW+HYzLzIiFtuRFzrrVd3Jc1F/Zhcb8t6h/S7tTznAobyP5wN
-	 Ew3md/C2t7OzHWzraoLada5OFwCIaB+0j1GzcWtn8JGVgcupibXQyukOaux90lB3+W
-	 bHqqpc+9IojueFccAMpk/TOGkree4n/GQYgO1Uz/tYUuN6jKXAu/SmfV+2FLLmefu0
-	 FY1t0K9GXJ2TQ==
+	b=hsjYY5j2nbUednmUq0QRhG/aljrFPzggemtxR3KV2pMHwysmSai2dRrAMoppj+OE+
+	 No53v1oLOKihshr2kE9LILqYjUlSC7OPqbLniVtdmpJ0rcLbU+5ikdc2t1/z7b+VH7
+	 kD7KzlEO2E5wcfdPq89F7+LAYb7ZlaZdCy+/fCuw6yDmHWJuVhg9f/i3LKSVWNd5Q4
+	 kGUM9/oOT9CJuHxcPpJRkTjTBUeBN+700R2sMzQZqa03tHHUc9fKoMt2R1EdicG2K1
+	 hZ/W1YPSKLGa4QpN9uk4IYjrulW4RL0g1jywc29vXRYEPtT+BujNRc9fGSTitZ01hb
+	 sRjc6Hi8/5rBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Illia Barbashyn <04baril@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 208/752] ALSA: hda/realtek - Enable mute LEDs on HP ENVY x360 15-es0xxx
-Date: Sat, 28 Feb 2026 12:38:39 -0500
-Message-ID: <20260228174750.1542406-208-sashal@kernel.org>
+Subject: [PATCH 6.18 209/752] ALSA: mixer: oss: Add card disconnect checkpoints
+Date: Sat, 28 Feb 2026 12:38:40 -0500
+Message-ID: <20260228174750.1542406-209-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -47,70 +46,101 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Illia Barbashyn <04baril@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ac1ff574bbc09a6c90f4fe8f9e6b8d66c983064c ]
+[ Upstream commit 084d5d44418148662365eced3e126ad1a81ee3e2 ]
 
-The mute and mic-mute LEDs on HP ENVY x360 Convertible 15-es0xxx
-(PCI SSID 103c:88b3) do not work with the current driver.
+ALSA OSS mixer layer calls the kcontrol ops rather individually, and
+pending calls might be not always caught at disconnecting the device.
 
-This model requires a combination of COEFBIT and GPIO fixups to
-correctly control the LEDs. Introduce a new fixup function
-alc245_fixup_hp_envy_x360_mute_led and add a quirk to apply it.
+For avoiding the potential UAF scenarios, add sanity checks of the
+card disconnection at each entry point of OSS mixer accesses.  The
+rwsem is taken just before that check, hence the rest context should
+be covered by that properly.
 
-Signed-off-by: Illia Barbashyn <04baril@gmail.com>
-Link: https://patch.msgid.link/20260207221955.24132-1-04baril@gmail.com
+Link: https://patch.msgid.link/20260209121212.171430-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ sound/core/oss/mixer_oss.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 138570d2da68e..553ffed048ea7 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -1646,6 +1646,13 @@ static void alc285_fixup_hp_spectre_x360_mute_led(struct hda_codec *codec,
- 	alc285_fixup_hp_gpio_micmute_led(codec, fix, action);
- }
+diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
+index e839a4bb93f81..aa98caaaea3c5 100644
+--- a/sound/core/oss/mixer_oss.c
++++ b/sound/core/oss/mixer_oss.c
+@@ -525,6 +525,8 @@ static void snd_mixer_oss_get_volume1_vol(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return;
+ 	kctl = snd_ctl_find_numid(card, numid);
+ 	if (!kctl)
+ 		return;
+@@ -558,6 +560,8 @@ static void snd_mixer_oss_get_volume1_sw(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return;
+ 	kctl = snd_ctl_find_numid(card, numid);
+ 	if (!kctl)
+ 		return;
+@@ -618,6 +622,8 @@ static void snd_mixer_oss_put_volume1_vol(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return;
+ 	kctl = snd_ctl_find_numid(card, numid);
+ 	if (!kctl)
+ 		return;
+@@ -655,6 +661,8 @@ static void snd_mixer_oss_put_volume1_sw(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return;
+ 	kctl = snd_ctl_find_numid(card, numid);
+ 	if (!kctl)
+ 		return;
+@@ -792,6 +800,8 @@ static int snd_mixer_oss_get_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
+ 	if (uinfo == NULL || uctl == NULL)
+ 		return -ENOMEM;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return -ENODEV;
+ 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
+ 	if (!kctl)
+ 		return -ENOENT;
+@@ -835,6 +845,8 @@ static int snd_mixer_oss_put_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
+ 	if (uinfo == NULL || uctl == NULL)
+ 		return -ENOMEM;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return -ENODEV;
+ 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
+ 	if (!kctl)
+ 		return -ENOENT;
+@@ -878,6 +890,8 @@ static int snd_mixer_oss_build_test(struct snd_mixer_oss *mixer, struct slot *sl
+ 	int err;
  
-+static void alc245_fixup_hp_envy_x360_mute_led(struct hda_codec *codec,
-+				const struct hda_fixup *fix, int action)
-+{
-+	alc245_fixup_hp_mute_led_v1_coefbit(codec, fix, action);
-+	alc245_fixup_hp_gpio_led(codec, fix, action);
-+}
-+
- static void alc236_fixup_hp_mute_led(struct hda_codec *codec,
- 				const struct hda_fixup *fix, int action)
- {
-@@ -3810,6 +3817,7 @@ enum {
- 	ALC285_FIXUP_HP_GPIO_LED,
- 	ALC285_FIXUP_HP_MUTE_LED,
- 	ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED,
-+	ALC245_FIXUP_HP_ENVY_X360_MUTE_LED,
- 	ALC285_FIXUP_HP_BEEP_MICMUTE_LED,
- 	ALC236_FIXUP_HP_MUTE_LED_COEFBIT2,
- 	ALC236_FIXUP_HP_GPIO_LED,
-@@ -5460,6 +5468,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc285_fixup_hp_spectre_x360_mute_led,
- 	},
-+	[ALC245_FIXUP_HP_ENVY_X360_MUTE_LED] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc245_fixup_hp_envy_x360_mute_led,
-+	},
- 	[ALC285_FIXUP_HP_BEEP_MICMUTE_LED] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc285_fixup_hp_beep,
-@@ -6708,6 +6720,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8895, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8896, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8898, "HP EliteBook 845 G8 Notebook PC", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0x103c, 0x88b3, "HP ENVY x360 Convertible 15-es0xxx", ALC245_FIXUP_HP_ENVY_X360_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x88d0, "HP Pavilion 15-eh1xxx (mainboard 88D0)", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x88dd, "HP Pavilion 15z-ec200", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x88eb, "HP Victus 16-e0xxx", ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT),
+ 	scoped_guard(rwsem_read, &card->controls_rwsem) {
++		if (card->shutdown)
++			return -ENODEV;
+ 		kcontrol = snd_mixer_oss_test_id(mixer, name, index);
+ 		if (kcontrol == NULL)
+ 			return 0;
+@@ -1002,6 +1016,8 @@ static int snd_mixer_oss_build_input(struct snd_mixer_oss *mixer,
+ 	if (snd_mixer_oss_build_test_all(mixer, ptr, &slot))
+ 		return 0;
+ 	guard(rwsem_read)(&mixer->card->controls_rwsem);
++	if (mixer->card->shutdown)
++		return -ENODEV;
+ 	kctl = NULL;
+ 	if (!ptr->index)
+ 		kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
 -- 
 2.51.0
 
