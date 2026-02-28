@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB66301EE6;
-	Sat, 28 Feb 2026 17:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E49301EE6;
+	Sat, 28 Feb 2026 17:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301409; cv=none; b=dTuS78dGbhk0qYk/faoQ2AHgChT9JSLSs0OAKfQmzcsQCZl9euYl9RgleQ7hnGEdfDA+6NHlLz0kf6Hwdp+E/SlPA4RJXV+4mdY2jRMRcrBIe2sk+1NP677HjGfn/Oi2Q0Pl6t1fzEiVlDitMWRJlPxK0SeIlmY81Y0dAYd73sQ=
+	t=1772301410; cv=none; b=VHd3clX6GbXnJoeQQz09g6nE+L4hQ5dnmjCPFMAPH3lUtjnI95NBK5c0lALTpdO4JSo7zWo9M7Ruq91meqijZlIt8qR2CcbOiI69mXTguo1DcuQM2gWaskbBdRx/Fkps1PpvJ9aLaBTHGdwZQPGrITtsxozHdPX9xHyAG448kGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301409; c=relaxed/simple;
-	bh=ztlT3saRJbDT5bqLP6NFt7aq6pAsT7FeK9qce3Gfwuk=;
+	s=arc-20240116; t=1772301410; c=relaxed/simple;
+	bh=MenJfSJBb9oAi44ExVGtxlUCrnQXJC9zI93xwrmb4rA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlOvoiUFVjEPrVwOlD09cPYwnHn7iXilxQJNz8cQBm8Sc/7/SWT1ff1F14BTABye8yj2rqdbnjEoCMzucOCl2wcob2sZucPE8Z1gkzN0d7cuSCfMbnYiZnT3Rq+rGqBp3U4EcSpp7etG/Eh+V/Ota6/4JerS59iPEyKXboJzLro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QR81EpcN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fcsnKSwEiMggD8boA6fraAanly4Ovqm90FiOoALdY1bJgZjP+uxrNm6J/9Qns0afwfVE3IlG+NvA63Q0CQIYIDGFg/kCAqmVLclN9h0CkLCNoFmp6DFBSEP+0UBrbUPovf0riLy9gfBwP5qh5qokmJ/YNuvtJ/Jts3FVixQarf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sPDbgzfZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QR81EpcN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740F2C19423;
-	Sat, 28 Feb 2026 17:56:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sPDbgzfZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62246C116D0;
+	Sat, 28 Feb 2026 17:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301409;
-	bh=ztlT3saRJbDT5bqLP6NFt7aq6pAsT7FeK9qce3Gfwuk=;
+	s=k20201202; t=1772301410;
+	bh=MenJfSJBb9oAi44ExVGtxlUCrnQXJC9zI93xwrmb4rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QR81EpcNHQhCgLgPIM/3YCXqAYQwpAEPwDjy6MH/H8zIyV04Rrjo4kcvXgv2cD/Nt
-	 yQz4PQlPVcujqENrdTuLtSurl+Qvv17go5sSw/chwd0x4Al0eR31GvbfdnFjAWHDrc
-	 +hTsb/VwHjjgbxVwFDebFCK0P3pf7F0RdwI5SrujsEqj26RJteRsF8N5utQL1A5DQk
-	 aZ06eX2mOXR7a1uCcyXI4LlnKx7/bVH/BOmxK6puI5N91HVK8HBjek/fMwoJmHZy0s
-	 F097CGz/8KrWXXxVlu83q/YM9SV2DKZdkLaoNwr3J7A2CTv8sImPSD+JBg0CIe8VWd
-	 BDKnBRodMj3mw==
+	b=sPDbgzfZAxLuL99O1TF5yYnISP38sxYOJxc4pGa7bYqxJ7Wpjyq0MzRle1yNmNor1
+	 rBwJirbDy9M+nmnBiy/LL+XfUo2VToF13KFMt198Q5vmRfFIxaMds1uSr/wnI4d7gV
+	 RXuCIE4KaDxDjOXF4240+th8hTaXW43gbWLwdJ9mzCDUkpU0RuCkmg+5m+Q9Y0zgEd
+	 wF3+2AQJQG3uvZzqpUV20foi3L/9xWkWe78ypa+LoAv9WKDXpQFi44KHmekEocO3v+
+	 Ngu8Xe/SLFIGyaf1Rxd+U1BJ7N0UBqnY5YLI72g0rzUSUWtubb+lYtRWlmgMVJoTZR
+	 /2vj2dbt/rpCg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Alexey Charkov <alchark@gmail.com>,
+Cc: Brian Norris <briannorris@chromium.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	stable@vger.kernel.org,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 598/752] arm64: dts: rockchip: Explicitly request UFS reset pin on RK3576
-Date: Sat, 28 Feb 2026 12:45:09 -0500
-Message-ID: <20260228174750.1542406-598-sashal@kernel.org>
+Subject: [PATCH 6.18 599/752] PCI/PM: Prevent runtime suspend until devices are fully initialized
+Date: Sat, 28 Feb 2026 12:45:10 -0500
+Message-ID: <20260228174750.1542406-599-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -49,96 +49,104 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Charkov <alchark@gmail.com>
+From: Brian Norris <briannorris@chromium.org>
 
-[ Upstream commit 79a3286e61829fc43abdd6e3beb31b24930c7af6 ]
+[ Upstream commit 51c0996dadaea20d73eb0495aeda9cb0422243e8 ]
 
-Rockchip RK3576 UFS controller uses a dedicated pin to reset the connected
-UFS device, which can operate either in a hardware controlled mode or as a
-GPIO pin.
+Previously, it was possible for a PCI device to be runtime-suspended before
+it was fully initialized. When that happened, the suspend process could
+save invalid device state, for example, before BAR assignment. Restoring
+the invalid state during resume may leave the device non-functional.
 
-Power-on default is GPIO mode, but the boot ROM reconfigures it to a
-hardware controlled mode if it uses UFS to load the next boot stage.
+Prevent runtime suspend for PCI devices until they are fully initialized by
+deferring pm_runtime_enable().
 
-Given that existing bindings (and rk3576.dtsi) expect a GPIO-controlled
-device reset, request the required pin config explicitly.
+More details on how exactly this may occur:
 
-The pin is requested with pull-down enabled, which is in line with the
-SoC power-on default and helps ensure that the attached UFS chip stays
-in reset until the driver takes over the control of the respective
-GPIO line.
+  1. PCI device is created by pci_scan_slot() or similar
 
-This doesn't appear to affect Linux, but it does affect U-boot:
+  2. As part of pci_scan_slot(), pci_pm_init() puts the device in D0 and
+     prevents runtime suspend prevented via pm_runtime_forbid()
 
-Before:
-=> md.l 0x2604b398
-2604b398: 00000011 00000000 00000000 00000000  ................
-< ... snip ... >
-=> ufs init
-ufshcd-rockchip ufshc@2a2d0000: [RX, TX]: gear=[3, 3], lane[2, 2], pwr[FASTAUTO_MODE, FASTAUTO_MODE], rate = 2
-=> md.l 0x2604b398
-2604b398: 00000011 00000000 00000000 00000000  ................
+  3. pci_device_add() adds the underlying 'struct device' via device_add(),
+     which means user space can allow runtime suspend, e.g.,
 
-After:
-=> md.l 0x2604b398
-2604b398: 00000011 00000000 00000000 00000000  ................
-< ... snip ...>
-=> ufs init
-ufshcd-rockchip ufshc@2a2d0000: [RX, TX]: gear=[3, 3], lane[2, 2], pwr[FASTAUTO_MODE, FASTAUTO_MODE], rate = 2
-=> md.l 0x2604b398
-2604b398: 00000010 00000000 00000000 00000000  ................
+       echo auto > /sys/bus/pci/devices/.../power/control
 
-(0x2604b398 is the respective pin mux register, with its BIT0 driving the
-mode of UFS_RST: unset = GPIO, set = hardware controlled UFS_RST)
+  4. PCI device receives BAR configuration
+     (pci_assign_unassigned_bus_resources(), etc.)
 
-This helps ensure that GPIO-driven device reset actually fires when the
-system requests it, not when whatever black box magic inside the UFSHC
-decides to reset the flash chip.
+  5. pci_bus_add_device() applies final fixups, saves device state, and
+     tries to attach a driver
 
+The device may potentially be suspended between #3 and #5, so this is racy
+with user space (udev or similar).
+
+Many PCI devices are enumerated at subsys_initcall time and so will not
+race with user space, but devices created later by hotplug or modular
+pwrctrl or host controller drivers are susceptible to this race.
+
+More runtime PM details at the first Link: below.
+
+Link: https://lore.kernel.org/all/0e35a4e1-894a-47c1-9528-fc5ffbafd9e2@samsung.com/
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+[bhelgaas: update comments per https://lore.kernel.org/r/CAJZ5v0iBNOmMtqfqEbrYyuK2u+2J2+zZ-iQd1FvyCPjdvU2TJg@mail.gmail.com]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Cc: stable@vger.kernel.org
-Fixes: c75e5e010fef ("scsi: arm64: dts: rockchip: Add UFS support for RK3576 SoC")
-Reported-by: Quentin Schulz <quentin.schulz@cherry.de>
-Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
-Signed-off-by: Alexey Charkov <alchark@gmail.com>
-Link: https://patch.msgid.link/20260121-ufs-rst-v3-1-35839bcb4ca7@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260122094815.v5.1.I60a53c170a8596661883bd2b4ef475155c7aa72b@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3576-pinctrl.dtsi | 7 +++++++
- arch/arm64/boot/dts/rockchip/rk3576.dtsi         | 2 +-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/pci/bus.c | 8 ++++++++
+ drivers/pci/pci.c | 8 +++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3576-pinctrl.dtsi b/arch/arm64/boot/dts/rockchip/rk3576-pinctrl.dtsi
-index 0b0851a7e4ea9..98c9f8013158c 100644
---- a/arch/arm64/boot/dts/rockchip/rk3576-pinctrl.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3576-pinctrl.dtsi
-@@ -5228,6 +5228,13 @@ ufs_rst: ufs-rst {
- 				/* ufs_rstn */
- 				<4 RK_PD0 1 &pcfg_pull_none>;
- 		};
-+
-+		/omit-if-no-ref/
-+		ufs_rstgpio: ufs-rstgpio {
-+			rockchip,pins =
-+				/* ufs_rstn */
-+				<4 RK_PD0 RK_FUNC_GPIO &pcfg_pull_down>;
-+		};
- 	};
+diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
+index 9daf13ed3714e..81a6d356729ef 100644
+--- a/drivers/pci/bus.c
++++ b/drivers/pci/bus.c
+@@ -14,6 +14,7 @@
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_runtime.h>
+ #include <linux/proc_fs.h>
+ #include <linux/slab.h>
  
- 	ufs_testdata0 {
-diff --git a/arch/arm64/boot/dts/rockchip/rk3576.dtsi b/arch/arm64/boot/dts/rockchip/rk3576.dtsi
-index c72343e7a0456..70e67d4dccb8a 100644
---- a/arch/arm64/boot/dts/rockchip/rk3576.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3576.dtsi
-@@ -1826,7 +1826,7 @@ ufshc: ufshc@2a2d0000 {
- 			assigned-clock-parents = <&cru CLK_REF_MPHY_26M>;
- 			interrupts = <GIC_SPI 361 IRQ_TYPE_LEVEL_HIGH>;
- 			power-domains = <&power RK3576_PD_USB>;
--			pinctrl-0 = <&ufs_refclk>;
-+			pinctrl-0 = <&ufs_refclk &ufs_rstgpio>;
- 			pinctrl-names = "default";
- 			resets = <&cru SRST_A_UFS_BIU>, <&cru SRST_A_UFS_SYS>,
- 				 <&cru SRST_A_UFS>, <&cru SRST_P_UFS_GRF>;
+@@ -378,6 +379,13 @@ void pci_bus_add_device(struct pci_dev *dev)
+ 		put_device(&pdev->dev);
+ 	}
+ 
++	/*
++	 * Enable runtime PM, which potentially allows the device to
++	 * suspend immediately, only after the PCI state has been
++	 * configured completely.
++	 */
++	pm_runtime_enable(&dev->dev);
++
+ 	if (!dn || of_device_is_available(dn))
+ 		pci_dev_allow_binding(dev);
+ 
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index d147e412668bf..7858121344655 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -3225,8 +3225,14 @@ void pci_pm_init(struct pci_dev *dev)
+ poweron:
+ 	pci_pm_power_up_and_verify_state(dev);
+ 	pm_runtime_forbid(&dev->dev);
++
++	/*
++	 * Runtime PM will be enabled for the device when it has been fully
++	 * configured, but since its parent and suppliers may suspend in
++	 * the meantime, prevent them from doing so by changing the
++	 * device's runtime PM status to "active".
++	 */
+ 	pm_runtime_set_active(&dev->dev);
+-	pm_runtime_enable(&dev->dev);
+ }
+ 
+ static unsigned long pci_ea_flags(struct pci_dev *dev, u8 prop)
 -- 
 2.51.0
 
