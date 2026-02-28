@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024A3347FCC;
-	Sat, 28 Feb 2026 18:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0433F359A73
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302432; cv=none; b=epNya6H8sWR3KeSSzfBzAqbRXqwbBR2OR/V11MpvTwGwvOIyPiHspb0Ntdfqdbqtrdv7JQvgqntn/608Ao7aK0NgMeCwfWlEEcL7yfHJErpspwWDv+CeMmBDoo30Er3PAan2LUyr05ihgNRCpxK8VtCrn9ZjxeFSlYdcZcG6WVQ=
+	t=1772302433; cv=none; b=aAks3yEcGSIb8aBNf/N+4GyRr9J7tEW5IDf8ZIAyhTNPK8P2++pTHzbtM7fPn8+sDVdnpa9x2Mu8x6p+nXCBAKUJiEK62K0ODEh6RGS40Wj3hHLhut2vIFT9ZiZMEWahLdaWHAe3cRKi9QSsXNm9SJyZIbJN/KmKudcK6wgPVUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302432; c=relaxed/simple;
-	bh=vUeFqc4SigPQJZ6Bx9dPgvQ6qYdAUyvXC9qIDH3Zlqc=;
+	s=arc-20240116; t=1772302433; c=relaxed/simple;
+	bh=ydDWJ/2BF3aKyW9nfVs1dGbkLJVxJHoGb/nuXugozaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzEC3FG4hfRQSgEJFCTuJJ0VosmhfERKxe+Az8vn+bsfI3uW0CZqKdV67Op6l9LGuwS1qVCBcxBfViP9Tr7LhkbOCSlhhMmz64mJI7HSL0C/FMkKzGSlPfU/rnTPAmU9h2snq60GX6OHzLaYz14gWiac1Ibv8pvZL99LUMYVRuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EYdNj3bV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FMazsQ49gWJKx7OsN0RwrtkmYxzkNbO/KUkGruuVNlJwRn6YcnnxCDD0n+KlLJoOpwUqDBeqlxTL+r1F+ymEeZEgOt8hKHxhe9W1Vxngl09XAVgW2IzmF642PztgDr9vWzqvy99fH/NF4d5vZl4v8TYplhvRhf99AhL/XcJeuRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=orHj9EOP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EYdNj3bV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF87C116D0;
-	Sat, 28 Feb 2026 18:13:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="orHj9EOP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2763AC19425;
+	Sat, 28 Feb 2026 18:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302431;
-	bh=vUeFqc4SigPQJZ6Bx9dPgvQ6qYdAUyvXC9qIDH3Zlqc=;
+	s=k20201202; t=1772302432;
+	bh=ydDWJ/2BF3aKyW9nfVs1dGbkLJVxJHoGb/nuXugozaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EYdNj3bVnBahRdLUyKkDMgOvmbNFfsf1M7grnUnZSqLPdLmb0qkE6GMFTzR96Iyy8
-	 ACcWMUHqpIz2KHNsEX4HUL//3FxWYNLkZjzdsiuFwKLM+cg+xpgI5uQ/O7IC3w005X
-	 qJX5v3sL1z9ZV1IhHh03VMrRD0SYrpRrhCkmKrbfB4/975nlYQxWCS//UKTzTbE569
-	 hNVfRFZHx8D12fMRXPYNH9o/380nCZrmtRHcr1YUrmI2ATkMMHw1tiEdpkQRlU+Ye1
-	 Nvzf4vRYwX0yY7GUAHpU558J+2zaIpBd0HgyO1n8G3gzfzAqGl5QO/tjMDXnQ2l2c0
-	 JoTkk6K/midtw==
+	b=orHj9EOPuUN5UoeAJOVwft3xBXLLu9LatsbiPCzP6SuAf4buVCCcd1Z9lLC+1hbt0
+	 IYcQb9FISbdRb0bqULR+qTN2vibK14Ww1fAwkOc460EKF+TDPOF6ARvAedy81y2LUy
+	 CoQ/Wbt66S7R7KlKBtIbFlhu9Vf3Tg7OkdkZO3SvQmhhNHUAZHWvAPz9wrml9Gjs00
+	 7++5tz6JE5Jvt1b+T6eEF5uDR6E5T3VD8GMsl/njlbeYTGFChRMsoWjemsrO1hrTfk
+	 PgMLmIzJLLaAkc5qMSO/Gkz5yHnvrd4oIYsUwEcQ6E8rz96s7eSOzwY0iMCHVRUNLg
+	 sl1sVM3uwjfww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Yao Zi <me@ziyao.cc>,
-	stable@vger.kernel.org,
-	Nathan Chancellor <nathan@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+Cc: Zhang Yi <yi.zhang@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	stable@kernel.org,
+	Theodore Ts'o <tytso@mit.edu>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.1 169/232] MIPS: Work around LLVM bug when gp is used as global register variable
-Date: Sat, 28 Feb 2026 13:10:22 -0500
-Message-ID: <20260228181127.1592657-169-sashal@kernel.org>
+Subject: [PATCH 6.1 170/232] ext4: don't cache extent during splitting extent
+Date: Sat, 28 Feb 2026 13:10:23 -0500
+Message-ID: <20260228181127.1592657-170-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -49,101 +50,77 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Yao Zi <me@ziyao.cc>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 30bfc2d6a1132a89a5f1c3b96c59cf3e4d076ea3 upstream.
+commit 8b4b19a2f96348d70bfa306ef7d4a13b0bcbea79 upstream.
 
-On MIPS, __current_thread_info is defined as global register variable
-locating in $gp, and is simply assigned with new address during kernel
-relocation.
+Caching extents during the splitting process is risky, as it may result
+in stale extents remaining in the status tree. Moreover, in most cases,
+the corresponding extent block entries are likely already cached before
+the split happens, making caching here not particularly useful.
 
-This however is broken with LLVM, which always restores $gp if it finds
-$gp is clobbered in any form, including when intentionally through a
-global register variable. This is against GCC's documentation[1], which
-requires a callee-saved register used as global register variable not to
-be restored if it's clobbered.
+Assume we have an unwritten extent, and then DIO writes the first half.
 
-As a result, $gp will continue to point to the unrelocated kernel after
-the epilog of relocate_kernel(), leading to an early crash in init_idle,
+  [UUUUUUUUUUUUUUUU] on-disk extent        U: unwritten extent
+  [UUUUUUUUUUUUUUUU] extent status tree
+  |<-   ->| ----> dio write this range
 
-[    0.000000] CPU 0 Unable to handle kernel paging request at virtual address 0000000000000000, epc == ffffffff81afada8, ra == ffffffff81afad90
-[    0.000000] Oops[#1]:
-[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper Tainted: G        W           6.19.0-rc5-00262-gd3eeb99bbc99-dirty #188 VOLUNTARY
-[    0.000000] Tainted: [W]=WARN
-[    0.000000] Hardware name: loongson,loongson64v-4core-virtio
-[    0.000000] $ 0   : 0000000000000000 0000000000000000 0000000000000001 0000000000000000
-[    0.000000] $ 4   : ffffffff80b80ec0 ffffffff80b53d48 0000000000000000 00000000000f4240
-[    0.000000] $ 8   : 0000000000000100 ffffffff81d82f80 ffffffff81d82f80 0000000000000001
-[    0.000000] $12   : 0000000000000000 ffffffff81776f58 00000000000005da 0000000000000002
-[    0.000000] $16   : ffffffff80b80e40 0000000000000000 ffffffff80b81614 9800000005dfbe80
-[    0.000000] $20   : 00000000540000e0 ffffffff81980000 0000000000000000 ffffffff80f81c80
-[    0.000000] $24   : 0000000000000a26 ffffffff8114fb90
-[    0.000000] $28   : ffffffff80b50000 ffffffff80b53d40 0000000000000000 ffffffff81afad90
-[    0.000000] Hi    : 0000000000000000
-[    0.000000] Lo    : 0000000000000000
-[    0.000000] epc   : ffffffff81afada8 init_idle+0x130/0x270
-[    0.000000] ra    : ffffffff81afad90 init_idle+0x118/0x270
-[    0.000000] Status: 540000e2	KX SX UX KERNEL EXL
-[    0.000000] Cause : 00000008 (ExcCode 02)
-[    0.000000] BadVA : 0000000000000000
-[    0.000000] PrId  : 00006305 (ICT Loongson-3)
-[    0.000000] Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____), tls=0000000000000000)
-[    0.000000] Stack : 9800000005dfbf00 ffffffff8178e950 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 ffffffff81970000 000000000000003f ffffffff810a6528
-[    0.000000]         0000000000000001 9800000005dfbe80 9800000005dfbf00 ffffffff81980000
-[    0.000000]         ffffffff810a6450 ffffffff81afb6c0 0000000000000000 ffffffff810a2258
-[    0.000000]         ffffffff81d82ec8 ffffffff8198d010 ffffffff81b67e80 ffffffff8197dd98
-[    0.000000]         ffffffff81d81c80 ffffffff81930000 0000000000000040 0000000000000000
-[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 000000000000009e ffffffff9fc01000 0000000000000000
-[    0.000000]         0000000000000000 0000000000000000 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 ffffffff81ae86dc ffffffff81b3c741 0000000000000002
-[    0.000000]         ...
-[    0.000000] Call Trace:
-[    0.000000] [<ffffffff81afada8>] init_idle+0x130/0x270
-[    0.000000] [<ffffffff81afb6c0>] sched_init+0x5c8/0x6c0
-[    0.000000] [<ffffffff81ae86dc>] start_kernel+0x27c/0x7a8
+First, when ext4_split_extent_at() splits this extent, it truncates the
+existing extent and then inserts a new one. During this process, this
+extent status entry may be shrunk, and calls to ext4_find_extent() and
+ext4_cache_extents() may occur, which could potentially insert the
+truncated range as a hole into the extent status tree. After the split
+is completed, this hole is not replaced with the correct status.
 
-This bug has been reported to LLVM[2] and affects version from (at
-least) 18 to 21. Let's work around this by using inline assembly to
-assign $gp before a fix is widely available.
+  [UUUUUUU|UUUUUUUU] on-disk extent        U: unwritten extent
+  [UUUUUUU|HHHHHHHH] extent status tree    H: hole
 
-Cc: stable@vger.kernel.org
-Link: https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Global-Register-Variables.html # [1]
-Link: https://github.com/llvm/llvm-project/issues/176546 # [2]
-Signed-off-by: Yao Zi <me@ziyao.cc>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Then, the outer calling functions will not correct this remaining hole
+extent either. Finally, if we perform a delayed buffer write on this
+latter part, it will re-insert the delayed extent and cause an error in
+space accounting.
+
+In adition, if the unwritten extent cache is not shrunk during the
+splitting, ext4_cache_extents() also conflicts with existing extents
+when caching extents. In the future, we will add checks when caching
+extents, which will trigger a warning. Therefore, Do not cache extents
+that are being split.
+
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Cc: stable@kernel.org
+Message-ID: <20251129103247.686136-6-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/relocate.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/ext4/extents.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/mips/kernel/relocate.c b/arch/mips/kernel/relocate.c
-index 58fc8d089402b..dcc2763b39d6e 100644
---- a/arch/mips/kernel/relocate.c
-+++ b/arch/mips/kernel/relocate.c
-@@ -420,7 +420,20 @@ void *__init relocate_kernel(void)
- 			goto out;
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 1aad4ae0e7ae4..1398da08fd5a3 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -3174,6 +3174,9 @@ static int ext4_split_extent_at(handle_t *handle,
+ 	BUG_ON((split_flag & (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2)) ==
+ 	       (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2));
  
- 		/* The current thread is now within the relocated image */
-+#ifndef CONFIG_CC_IS_CLANG
- 		__current_thread_info = RELOCATED(&init_thread_union);
-+#else
-+		/*
-+		 * LLVM may wrongly restore $gp ($28) in epilog even if it's
-+		 * intentionally modified. Work around this by using inline
-+		 * assembly to assign $gp. $gp couldn't be listed as output or
-+		 * clobber, or LLVM will still restore its original value.
-+		 * See also LLVM upstream issue
-+		 * https://github.com/llvm/llvm-project/issues/176546
-+		 */
-+		asm volatile("move $28, %0" : :
-+			     "r" (RELOCATED(&init_thread_union)));
-+#endif
++	/* Do not cache extents that are in the process of being modified. */
++	flags |= EXT4_EX_NOCACHE;
++
+ 	ext_debug(inode, "logical block %llu\n", (unsigned long long)split);
  
- 		/* Return the new kernel's entry point */
- 		kernel_entry = RELOCATED(start_kernel);
+ 	ext4_ext_show_leaf(inode, path);
+@@ -3344,6 +3347,9 @@ static int ext4_split_extent(handle_t *handle,
+ 	ee_len = ext4_ext_get_actual_len(ex);
+ 	unwritten = ext4_ext_is_unwritten(ex);
+ 
++	/* Do not cache extents that are in the process of being modified. */
++	flags |= EXT4_EX_NOCACHE;
++
+ 	if (map->m_lblk + map->m_len < ee_block + ee_len) {
+ 		split_flag1 = split_flag & EXT4_EXT_MAY_ZEROOUT;
+ 		flags1 = flags | EXT4_GET_BLOCKS_PRE_IO;
 -- 
 2.51.0
 
