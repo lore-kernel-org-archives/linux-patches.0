@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B4436C9CD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D382D346FA0
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302243; cv=none; b=SOgyiJRuGTOBZlRyAs/trOv9pmMR/5rOIkHhJ1nurxyD0Md0Tx3PXAMrzJ0Z5a+Jq7JtdSqTYHPla85tZB5xylFNtS244KpNOjHomFXDjHuFyNCjIU0LquYSm+oM6DkfH0RcIroBX1qc/d4Dey5JNf5r+icmwDof5XuVPKPXoDw=
+	t=1772302243; cv=none; b=LFBC2W8whkbwvQ3mXEd80vRSIp8aNxuvfNmgBX6NuToBJOzw7V0rASpY0qqTiOP1b+//4OKs1KbDXg9kW4Eews9bN/x6J4nUCW5rAfz+gK+7iDmhbpAzssghpyWwYHPGD7pwJhUUdSK6IwMiSR2aE4lSXi3PrC4MYNJ+tASok3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302243; c=relaxed/simple;
-	bh=3Stt41bL6mx5bfmLD/cy3DpdMkI0cquujZCtb1fc9xk=;
+	bh=ToBBrG6yhZj32UEh4WWGlV6l3aOIanYZKl6A0j9k/ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2ArUEllA08h9qYHAqJr7/fY3JfZTH2HzyJzfr98AUm5Y8SdpKsvc8N4KcwQJMrpW2uPGH3voGDR3ed8U7zKbeu0SJIMOACeG2tFE01MEYF59ysr4gca/I+0q7hzDqcz183QU9P8tsbBTolx1vLJaojwDp3i68v7B7UeakrhkVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZlCNpuaK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a5XS6RslLdnQdSitv1S04u4WPxNnIqfUXhjnX9qweI3xeVjqIouD7JTNl8MkS5BSw3yBzJ/MoVlqxqyHL23/Hk+g73005CpRczjJSMiWXk81w80ahjSwitnwsixVmWRcyQBPkAbJysgz8PtpcG97daW6jOqOPq4NzPK+otZi9b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X9b7q+qA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZlCNpuaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7207EC116D0;
-	Sat, 28 Feb 2026 18:10:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X9b7q+qA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465D0C19425;
+	Sat, 28 Feb 2026 18:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302243;
-	bh=3Stt41bL6mx5bfmLD/cy3DpdMkI0cquujZCtb1fc9xk=;
+	bh=ToBBrG6yhZj32UEh4WWGlV6l3aOIanYZKl6A0j9k/ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZlCNpuaK/aiahnLcbnhoyXOlHYCJQBugmesQyFiWc5AbaK7BdrGC9d81NSR8tkSE7
-	 T7Z1ujKTdBD4uw7m2KTVSM7kiQvzJ9ILEsuyS0pvRh3UryFsr+jfzOPSEgX0iz17Kd
-	 +QRabU4+IOudTUGgRubmJ8DynYylnbekHq2r9W2jABUKA56F5CbO+X1OfdTq4riXYp
-	 E2ykclIe4c/RN3JnOu3BSc3CmiilbZ5cv4GoWyg86ywtgB+n/fLiw/8yy8XufDdeVa
-	 /mC5spvdGxs4MjpIe3/zHeaejKmyzBxjgrYssSNMQarvd5K6sr9g0hsaZ8Pwp6wIXS
-	 xABxFMA6A/BYA==
+	b=X9b7q+qAwLw6Gnqwn9USkRFKDBGb4oZuS+UTCWjCvP46r8/cm6zqBJQpzrQJprqul
+	 h880mh43Ltkf/f/DwvZ26XvZQC0l34gLaCTccE6Vv8AtGRPOXK+Lf3z1RioLM/QoUq
+	 zrFyQF+YCIQF5qxMoDCy0ieYirhwZXwquyYNQIcJT7xZeGc2G13IQzFLBW0EiahV7h
+	 YcmUAwFpKNzx72p6FGOx7y0pFCPVvkVPjiTPCaGwQgGCy0oUpG9V6B2n9ZcZF7VJi7
+	 V5Js2VzS08qrjMZ7VyOnIMPiIBmckEBbwhhlulbZTFL0vsltm9s0654vNXu5Sp40yh
+	 eQkcfUsPREhZg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Edward Adam Davis <eadavis@qq.com>,
-	syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com,
+Cc: Jiasheng Jiang <jiashengjiangcool@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 255/283] fs/ntfs3: prevent infinite loops caused by the next valid being the same
-Date: Sat, 28 Feb 2026 13:06:37 -0500
-Message-ID: <20260228180709.1583486-255-sashal@kernel.org>
+Subject: [PATCH 6.6 256/283] fs/ntfs3: Fix slab-out-of-bounds read in DeleteIndexEntryRoot
+Date: Sat, 28 Feb 2026 13:06:38 -0500
+Message-ID: <20260228180709.1583486-256-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228180709.1583486-1-sashal@kernel.org>
 References: <20260228180709.1583486-1-sashal@kernel.org>
@@ -48,55 +47,49 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 27b75ca4e51e3e4554dc85dbf1a0246c66106fd3 ]
+[ Upstream commit b2bc7c44ed1779fc9eaab9a186db0f0d01439622 ]
 
-When processing valid within the range [valid : pos), if valid cannot
-be retrieved correctly, for example, if the retrieved valid value is
-always the same, this can trigger a potential infinite loop, similar
-to the hung problem reported by syzbot [1].
+In the 'DeleteIndexEntryRoot' case of the 'do_action' function, the
+entry size ('esize') is retrieved from the log record without adequate
+bounds checking.
 
-Adding a check for the valid value within the loop body, and terminating
-the loop and returning -EINVAL if the value is the same as the current
-value, can prevent this.
+Specifically, the code calculates the end of the entry ('e2') using:
+    e2 = Add2Ptr(e1, esize);
 
-[1]
-INFO: task syz.4.21:6056 blocked for more than 143 seconds.
-Call Trace:
- rwbase_write_lock+0x14f/0x750 kernel/locking/rwbase_rt.c:244
- inode_lock include/linux/fs.h:1027 [inline]
- ntfs_file_write_iter+0xe6/0x870 fs/ntfs3/file.c:1284
+It then calculates the size for memmove using 'PtrOffset(e2, ...)',
+which subtracts the end pointer from the buffer limit. If 'esize' is
+maliciously large, 'e2' exceeds the used buffer size. This results in
+a negative offset which, when cast to size_t for memmove, interprets
+as a massive unsigned integer, leading to a heap buffer overflow.
 
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: syzbot+bcf9e1868c1a0c7e04f1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bcf9e1868c1a0c7e04f1
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+This commit adds a check to ensure that the entry size ('esize') strictly
+fits within the remaining used space of the index header before performing
+memory operations.
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ntfs3/fslog.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index a7fe2e02c32ee..212737a816d7a 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -901,8 +901,12 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
- 			goto out;
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 2a1aeab53ea4b..598b7f42b5e7e 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3431,6 +3431,9 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
  
- 		if (lcn == SPARSE_LCN) {
--			ni->i_valid = valid =
--				frame_vbo + ((u64)clen << sbi->cluster_bits);
-+			valid = frame_vbo + ((u64)clen << sbi->cluster_bits);
-+			if (ni->i_valid == valid) {
-+				err = -EINVAL;
-+				goto out;
-+			}
-+			ni->i_valid = valid;
- 			continue;
- 		}
+ 		e1 = Add2Ptr(attr, le16_to_cpu(lrh->attr_off));
+ 		esize = le16_to_cpu(e1->size);
++		if (PtrOffset(e1, Add2Ptr(hdr, used)) < esize)
++			goto dirty_vol;
++
+ 		e2 = Add2Ptr(e1, esize);
  
+ 		memmove(e1, e2, PtrOffset(e2, Add2Ptr(hdr, used)));
 -- 
 2.51.0
 
