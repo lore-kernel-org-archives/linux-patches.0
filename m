@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B58313E31
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300EE313E31
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 17:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772301042; cv=none; b=jvEUtOPIUmQdzTXYjreL1zXuJE4NGkLR97qMxfRp8VG76UBpoAfmETevtrci5S4kiVrHsK+81yo0Nkt9BgjNf1e2kpBAy0ptM0VtdTDKxU51H4Xp2jShxk2EoykKYmbcBSWOLA7sVWeuPYBBqht9B2A/py2BQFzekJbFVOC48zE=
+	t=1772301043; cv=none; b=OVMz//f/TchzbbxiwzEIc2E37Rga+bnyqRnKL6ZiZhwXwpCw2D5XPh1aSMum8Vx7gU3fRQ24utZfoEX8CM8IDGv3Qic0WsYCuQl7HF++itu8/eu5dPjcSDBp5f+lQIk+RO+j2YMhAirzEDBcpu6Ez3mumVWihOp6E+vUZclzD0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772301042; c=relaxed/simple;
-	bh=3CLd5qKIcPjQnHfPnPrBIHoRr5SRZxROPj3AIzkr4O4=;
+	s=arc-20240116; t=1772301043; c=relaxed/simple;
+	bh=nXzmEiLLXrf5EXfhatpWTro5+flNAki6Q+fpz314hb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9PQTSs19DwYid3FbJlY+83dYYU9tKHJBM5VLDZp3mF/SusXBfCfnqPbdoJz44aRU1IfuX7w4XtbTePj3CnxZkvO1GxHShrtABDvXmdm4GJz7qc1AHo+FQtps8+uX53Wsezev6AdK/MBZfwvWZ7SHffLdDVSpt2Ydm3S5687q/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TlYMLxW/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qNtyObJiPKeyePBTGDZpFr2lFt8dVaBI2bbJZexRjTfofDGWUbY4VT2djYCyIoo33r11wrSYvceiW69eH+Qwcx9g0ehXRTdTt5fAinDziqQTsdpivpSpYHX8mqNctJzaOBrxpb8RPV/vpzVhsHteBnu0+RFjUxo+bher61uIwTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CfbrLSVR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TlYMLxW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB99C116D0;
-	Sat, 28 Feb 2026 17:50:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CfbrLSVR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5393BC19424;
+	Sat, 28 Feb 2026 17:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772301042;
-	bh=3CLd5qKIcPjQnHfPnPrBIHoRr5SRZxROPj3AIzkr4O4=;
+	s=k20201202; t=1772301043;
+	bh=nXzmEiLLXrf5EXfhatpWTro5+flNAki6Q+fpz314hb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TlYMLxW/zU+Z3bFM2rHyaQoaHGwo4VXjpRAJgXgUKbjUbZLvu05JjDJGpgrNpzxMn
-	 p8YnHbFYkWj+p3DnGPkS0m8DOQJcwwx6MmaEtoosQ7mThvLqL7FaQIOYj4WIqs1Pxo
-	 XtPNYANSf+CwFTVvsXBfyo8FeKwZrIc92WQVsHX108CGIBmnMWThefFEBLNdk7ie+t
-	 BuqoeMNijZErg6vWnPqbv4WuoGcK7Pw9RXhavlQV/OrHfb23TtQFE59LLvpJjjDRMa
-	 sthwYmeh/tNz/E7ZqhEBeDxYyMgzxp4+hVtyewgUONZaqG0T0bkJ0r5qf3T5r58RBn
-	 D0dg+CnVaGJzg==
+	b=CfbrLSVR7E6JrEqLmAocmxkYFEBgoKQK/ZQY00fB6p1uAFFTUJ5fzWoaDyeMaqCB7
+	 gn4188Zm0ybRLG1lZ9PonI5TQglCfMI/bHEayRJlOETJa7FGGUrIc2mhun36xFjA/h
+	 8U9rTUmuqPzqe0GF1i1zfpD9cuPvZ8yDasqxBYZkVuWETWHtv9dxfGsDGWvRB2STuN
+	 qLwoKgcjdZzY+igbZClQTBkJWY1YTZ4Mq5wr5w7BWEsySF+MthwdI5EWQX17ea6lWs
+	 +j1sVMPGCArWEgwvkxf+bFp9zdyFD+mhQsFc5Iq7HpDpIlTZ8L74mYBnh4zG2dRhgc
+	 /Y3stVNcX1VIQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Rui Wang <rui.wang@ideasonboard.com>,
-	Stefan Klug <stefan.klug@ideasonboard.com>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: "Wang, Sung-huai" <Danny.Wang@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Matthew Stewart <matthew.stewart2@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 180/752] media: rkisp1: Fix filter mode register configuration
-Date: Sat, 28 Feb 2026 12:38:11 -0500
-Message-ID: <20260228174750.1542406-180-sashal@kernel.org>
+Subject: [PATCH 6.18 181/752] drm/amd/display: Revert "init dispclk from bootup clock for DCN315"
+Date: Sat, 28 Feb 2026 12:38:12 -0500
+Message-ID: <20260228174750.1542406-181-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228174750.1542406-1-sashal@kernel.org>
 References: <20260228174750.1542406-1-sashal@kernel.org>
@@ -50,51 +50,48 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Rui Wang <rui.wang@ideasonboard.com>
+From: "Wang, Sung-huai" <Danny.Wang@amd.com>
 
-[ Upstream commit 5a50f2b61104d0d351b59ec179f67abab7870453 ]
+[ Upstream commit a625dc4989a2affb8f06e7b418bf30e1474b99c1 ]
 
-The rkisp1_flt_config() function performs an initial direct write to
-RKISP1_CIF_ISP_FILT_MODE without including the RKISP1_CIF_ISP_FLT_ENA
-bit, which clears the filter enable bit in the hardware.
+[Why&How]
+This reverts commit 14bb17cc37e0.
+Due to the change, the display shows garbage on startup.
 
-The subsequent read/modify/write sequence then reads back the register
-with the enable bit already cleared and cannot restore it, resulting in
-the filter being inadvertently disabled.
+We have an alternative solution for the original issue:
+d24203bb629f ("drm/amd/display: Re-check seamless boot can be enabled or not")
 
-Remove the redundant direct write. The read/modify/write sequence alone
-correctly preserves the existing enable bit state while updating the
-DNR mode and filter configuration bits.
-
-Signed-off-by: Rui Wang <rui.wang@ideasonboard.com>
-Reviewed-by: Stefan Klug <stefan.klug@ideasonboard.com>
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://patch.msgid.link/20260105171142.147792-2-rui.wang@ideasonboard.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Wang, Sung-huai <Danny.Wang@amd.com>
+Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rockchip/rkisp1/rkisp1-params.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c
-index f1585f8fa0f47..1c90b1810fcb9 100644
---- a/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c
-+++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c
-@@ -409,12 +409,6 @@ static void rkisp1_flt_config(struct rkisp1_params *params,
- 	rkisp1_write(params->rkisp1, RKISP1_CIF_ISP_FILT_LUM_WEIGHT,
- 		     arg->lum_weight);
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
+index b315ed91e010b..c49268db85f68 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
+@@ -138,7 +138,7 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
+ 	if (dc->work_arounds.skip_clock_update)
+ 		return;
  
--	rkisp1_write(params->rkisp1, RKISP1_CIF_ISP_FILT_MODE,
--		     (arg->mode ? RKISP1_CIF_ISP_FLT_MODE_DNR : 0) |
--		     RKISP1_CIF_ISP_FLT_CHROMA_V_MODE(arg->chr_v_mode) |
--		     RKISP1_CIF_ISP_FLT_CHROMA_H_MODE(arg->chr_h_mode) |
--		     RKISP1_CIF_ISP_FLT_GREEN_STAGE1(arg->grn_stage1));
--
- 	/* avoid to override the old enable value */
- 	filt_mode = rkisp1_read(params->rkisp1, RKISP1_CIF_ISP_FILT_MODE);
- 	filt_mode &= RKISP1_CIF_ISP_FLT_ENA;
+-	clk_mgr_base->clks.zstate_support = new_clocks->zstate_support;
++	display_count = dcn315_get_active_display_cnt_wa(dc, context);
+ 	/*
+ 	 * if it is safe to lower, but we are already in the lower state, we don't have to do anything
+ 	 * also if safe to lower is false, we just go in the higher state
+@@ -151,7 +151,6 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
+ 		}
+ 		/* check that we're not already in lower */
+ 		if (clk_mgr_base->clks.pwr_state != DCN_PWR_STATE_LOW_POWER) {
+-			display_count = dcn315_get_active_display_cnt_wa(dc, context);
+ 			/* if we can go lower, go lower */
+ 			if (display_count == 0) {
+ 				union display_idle_optimization_u idle_info = { 0 };
 -- 
 2.51.0
 
