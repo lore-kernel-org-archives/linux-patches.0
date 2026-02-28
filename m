@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA6436C9E5
-	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0353436C9E7
+	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302292; cv=none; b=XCu1mCQG07OdZBWVvSXXtWOP6y0+MMuh3r8mAtWoIgVjMg1vdzsnVi0cKlanv8TfaeyGevugbuXkcCsQLFBUkR+uUXr5+pG1Q6eKykqrFbtZ9nMN2cIuWGleJBZVqycgZjuSVi3BmI50/OsxzdfWT+gaDeRFXgaBsBBXgvvZbjg=
+	t=1772302293; cv=none; b=OIGPi87mloerPfk6s1DtLK55jHDMHwl3pRuzQoSDrB1BjXdP2phd3zGuuu109dviAEBWg/edqF8eq9kdd0stT/xyDJE7bm5uNpTR+XJ9P3QCIZ5n5VhCmnt4wqbW5tgRRrU/FBfdr9li1x/RyoV7WBngM6HOtoz24AMk85bYvIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772302292; c=relaxed/simple;
-	bh=irCTvV80UA/HegHh5k6Q5EDCxsA8yNewTFu9PPD89YI=;
+	s=arc-20240116; t=1772302293; c=relaxed/simple;
+	bh=gOCrc03Zt2BRdjdRb1MkdQ0rU2Y1j7AzOQadYecUgeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ja0PIHSA15HBstbjCWelR6ql29V0g0JQvCfOrYN/dsWRdHqwMExzurnn1pqzWEfNw/zPudZvIPrUyV5nxjZ1rJdoLgJCXURKcyYMSmqOGKEPnBevkuG3JRbPhr6R9m2gx1UStTwE0hRGvjzLySC1SlVEtbHEcEY62nHJrKYO+Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hV5HkkWZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iZTqMCEpxrlsTMOcxBA9gkzS+8Vy2/eLKZ7eJREq43DLAgrCWgw6XHjptrOJixVGznm3vF+IG3POisn3WsgeTQCi+vL5FeqN46DYrn/nYNRTiiTjU7rtKSx5Xu+w/liNqMeb1Y/Gcx38/Ykz8RQa7AW7hRDxU+Yy9AWnyA2KkuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NTt6YyvD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hV5HkkWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD20C19423;
-	Sat, 28 Feb 2026 18:11:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NTt6YyvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DBBC116D0;
+	Sat, 28 Feb 2026 18:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772302292;
-	bh=irCTvV80UA/HegHh5k6Q5EDCxsA8yNewTFu9PPD89YI=;
+	bh=gOCrc03Zt2BRdjdRb1MkdQ0rU2Y1j7AzOQadYecUgeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hV5HkkWZZgm5Ctaup6kpt6ThgVvPgeOutQz23izoN9vxoPSId+3QbhXxlJJpWM4iE
-	 mm1Z3CaCssUcI9XwRt7an0zrdgrJwajbZBtGG5tkAJSfJTnx9NvsfIhHyIEeXlYR8Y
-	 ngqOWVUZnWVK92zru2QaYnknzk7TdB/ab6pPCx2WCPzQ0hQdeQ/I9xV2XpsHJkXonL
-	 Cl4PSDqTLxyvKLLxUV/kO+Tl2iB/hdX1mRHFc0Fo8MYXSwkFSuftCiNWeSAcx1O734
-	 XEghXh58cfKT18qLy4xlVaPNsKaMDojGQeGdeaUK+PjdqSXCF0BW8cArMrHCrPzObn
-	 oeovX85Tfk71Q==
+	b=NTt6YyvD9Hy5PyJOKknpypUK48aIjh3hra+HY6+bX1DXuqbVV/EzmVwblRRJ69GsO
+	 krURnwWdz8LTjISc2od+W/qTJUP0U6JfiGApqXhV1R2CCm2chjpbfWtRO8kGQQ0XL0
+	 IpPqMgrPgpiYUlQ41rTV2PYb0gvGBbwM04Vx2Aqf21RI8OOkrbUyGk2J0v7zPD/1m7
+	 IQteYWanIDsC6P60QpxudvUZc0Jyq3SkLFxg+UedsEuY0QUG1P5Y15tLqSOOwlgaGI
+	 NLMKBNcM460Ilwog4/C4Re9RoXkVZ6tv1ZhwcTOj2ZKR2mqY7BTcl6iAaU5i7ThBOg
+	 k/Mxa15vEX+tQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	syzbot+1c8ff72d0cd8a50dfeaa@syzkaller.appspotmail.com,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/232] hfsplus: return error when node already exists in hfs_bnode_create
-Date: Sat, 28 Feb 2026 13:07:37 -0500
-Message-ID: <20260228181127.1592657-4-sashal@kernel.org>
+Subject: [PATCH 6.1 005/232] audit: avoid missing-prototype warnings
+Date: Sat, 28 Feb 2026 13:07:38 -0500
+Message-ID: <20260228181127.1592657-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -48,56 +47,72 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d8a73cc46c8462a969a7516131feb3096f4c49d3 ]
+[ Upstream commit e455ca40dbcf2cd50d1e59bf4b2752b300bcdad4 ]
 
-When hfs_bnode_create() finds that a node is already hashed (which should
-not happen in normal operation), it currently returns the existing node
-without incrementing its reference count. This causes a reference count
-inconsistency that leads to a kernel panic when the node is later freed
-in hfs_bnode_put():
+Building with 'make W=1' reveals two function definitions without
+a previous prototype in the audit code:
 
-    kernel BUG at fs/hfsplus/bnode.c:676!
-    BUG_ON(!atomic_read(&node->refcnt))
+lib/compat_audit.c:32:5: error: no previous prototype for 'audit_classify_compat_syscall' [-Werror=missing-prototypes]
+kernel/audit.c:1813:14: error: no previous prototype for 'audit_serial' [-Werror=missing-prototypes]
 
-This scenario can occur when hfs_bmap_alloc() attempts to allocate a node
-that is already in use (e.g., when node 0's bitmap bit is incorrectly
-unset), or due to filesystem corruption.
+The first one needs a declaration from linux/audit.h but cannot
+include that header without causing conflicting (compat) syscall number
+definitions, so move the it into linux/audit_arch.h.
 
-Returning an existing node from a create path is not normal operation.
+The second one is declared conditionally based on CONFIG_AUDITSYSCALL
+but needed as a local function even when that option is disabled, so
+move the declaration out of the #ifdef block.
 
-Fix this by returning ERR_PTR(-EEXIST) instead of the node when it's
-already hashed. This properly signals the error condition to callers,
-which already check for IS_ERR() return values.
-
-Reported-by: syzbot+1c8ff72d0cd8a50dfeaa@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=1c8ff72d0cd8a50dfeaa
-Link: https://lore.kernel.org/all/784415834694f39902088fa8946850fc1779a318.camel@ibm.com/
-Fixes: 634725a92938 ("[PATCH] hfs: cleanup HFS+ prints")
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20251229204938.1907089-1-shardul.b@mpiricsoftware.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Stable-dep-of: 76489955c6d4 ("audit: move the compat_xxx_class[] extern declarations to audit_arch.h")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/bnode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/audit.h      | 2 --
+ include/linux/audit_arch.h | 2 ++
+ kernel/audit.h             | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
-index c0089849be50e..fb437598e2625 100644
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -629,7 +629,7 @@ struct hfs_bnode *hfs_bnode_create(struct hfs_btree *tree, u32 num)
- 	if (node) {
- 		pr_crit("new node %u already hashed?\n", num);
- 		WARN_ON(1);
--		return node;
-+		return ERR_PTR(-EEXIST);
- 	}
- 	node = __hfs_bnode_create(tree, num);
- 	if (!node)
+diff --git a/include/linux/audit.h b/include/linux/audit.h
+index 3608992848d3c..6efadd7f60a55 100644
+--- a/include/linux/audit.h
++++ b/include/linux/audit.h
+@@ -129,8 +129,6 @@ extern unsigned compat_dir_class[];
+ extern unsigned compat_chattr_class[];
+ extern unsigned compat_signal_class[];
+ 
+-extern int audit_classify_compat_syscall(int abi, unsigned syscall);
+-
+ /* audit_names->type values */
+ #define	AUDIT_TYPE_UNKNOWN	0	/* we don't know yet */
+ #define	AUDIT_TYPE_NORMAL	1	/* a "normal" audit record */
+diff --git a/include/linux/audit_arch.h b/include/linux/audit_arch.h
+index 8fdb1afe251a1..0e34d673ef171 100644
+--- a/include/linux/audit_arch.h
++++ b/include/linux/audit_arch.h
+@@ -21,4 +21,6 @@ enum auditsc_class_t {
+ 	AUDITSC_NVALS /* count */
+ };
+ 
++extern int audit_classify_compat_syscall(int abi, unsigned syscall);
++
+ #endif
+diff --git a/kernel/audit.h b/kernel/audit.h
+index c57b008b9914e..94738bce40b27 100644
+--- a/kernel/audit.h
++++ b/kernel/audit.h
+@@ -259,8 +259,8 @@ extern struct tty_struct *audit_get_tty(void);
+ extern void audit_put_tty(struct tty_struct *tty);
+ 
+ /* audit watch/mark/tree functions */
+-#ifdef CONFIG_AUDITSYSCALL
+ extern unsigned int audit_serial(void);
++#ifdef CONFIG_AUDITSYSCALL
+ extern int auditsc_get_stamp(struct audit_context *ctx,
+ 			      struct timespec64 *t, unsigned int *serial);
+ 
 -- 
 2.51.0
 
