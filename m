@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C68F36C9E2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA6736C9E3
 	for <patches@lists.linux.dev>; Sat, 28 Feb 2026 18:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772302325; cv=none; b=ms7+3LcyKou523NSf2D30bIWEzU6jTIjtChm47/eewpDItuNQs4rFNMGm8Xj4uRCKhd+M6j3YYhcjwCBDBt1ZOmIE9f6ZViZYAPsBTlwfXKPlT1fqVD9n49kV9OmPNp5+Sjvpfp2IM+uqSgU+ceM/BNJlLFYZEYjqr5Z+abeDYo=
+	t=1772302325; cv=none; b=jPn6Y6ZwZzVRyZlDFJITV0l7kU9bqSG2LNEh1Dv4lEuwB+xanO8Jiq02kR8XNe+ZAzPFup9iRHkyOWLDk3wcvo8QQeIzJD5MOXO8vXdObij+H3VZJT5ECUJWhyPxqiM7leFeG/BavK83pdc6S6LQlC7wa9QHV9Cn87+YNPgkLe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772302325; c=relaxed/simple;
-	bh=l1mam7WHiv8EBy0ZaOU9eI7fD6QcybXS8bmLfrUySWU=;
+	bh=UyoWqlxixb3SoMs2BlyTc4bCKC4DVRh2QbtBUz/WhsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+CDt9jHvPpfblxV6qtRqgIvqk2icjWfpn++5ABHQNTfj1sctNYQK9lCwNjPrRkilqKDUoAmAtthMTV7bIBmf/kYb120QvAHcC2u6ADyzzHbOpjkrN9zgIWsUP4BiCuXwmZGgtnbaIr4bWkjbQp1l9R8KMLmbxX3WhSvHTsiAv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ashA9ODn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SmD9ZyqmAoho5FKmr5KJTcG8ViQmOxuIUz6WkUz5xoWPXPwaR+VJIXHxNxFAttVxQT0zFZ4+/OmWPnBH9d/l9hurTDzF1wr9K52j8Di5fKTSAr1Oze+NOv3wG1Zmzdu2NrSje1fqVdQOIrhuRbCaIEUxL+pLgJXUrOl1TYwMFio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b0rVjDgU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ashA9ODn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EA7C116D0;
-	Sat, 28 Feb 2026 18:12:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b0rVjDgU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382FEC19423;
+	Sat, 28 Feb 2026 18:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772302324;
-	bh=l1mam7WHiv8EBy0ZaOU9eI7fD6QcybXS8bmLfrUySWU=;
+	s=k20201202; t=1772302325;
+	bh=UyoWqlxixb3SoMs2BlyTc4bCKC4DVRh2QbtBUz/WhsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ashA9ODnU5lwpt3ZdKHEEE3UEmg99x4S5jt/qGngEv7x01QyM/l2CIxhVG+5Tc34y
-	 QNRJdEDkFDRaTvMIhYUIoRUmQtakyd8Ai3+csZdB5LTk5lUMpGV2F8BahcwTOfrHGV
-	 2O6VMIJs8SYAkl8vK+BbtJCuloY+UDySW20aL9X9gsUjEP07cAMh6somH+k0d2XBlR
-	 /8jBR0NbrSRHAlv8l/fIjCGkc5r4lwRJG8vDt1XNMU/F4WLijBc246F/bsGrd0sQoV
-	 +2KJm8VdYszzI26wKpVCM6C1LABjE2xvezHMVz7ry/Jfc4PmTRo8i9IhVIDEY2+KOc
-	 H1xuRER+4z/sw==
+	b=b0rVjDgUjMaIQAUWqdggvBSt9pNhnVW3/JuQGRoqFmKwi3ScOmwAk5L9nvJpmNo50
+	 vyRFX5fMOef3Wk1H1+l3CtP4qhxcNfJ/yv6wqRIS+oHRiHtk7S3/qKxDyfgIMznI0T
+	 tQf+PqM+zy0uQ2bh+t1y1NRwzUugHggWjkSTBmg4bNUBVHFSVqFDAYv3ueZK4pIqlV
+	 X9vU10cdMESaS1mMvGBt1194V3MQs7/TmuRiXvPAgkzrkJcWUXpSRtuzkscozr0d/G
+	 Ka5ufWrVgnAzYLAmphYgfKfyzoRnQqirhnQY64XcNhayGuQU9KDtX9xsDPM1AT5d/9
+	 fb+COfGbME52g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev
-Cc: Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/232] bpf: Fix bpf_xdp_store_bytes proto for read-only arg
-Date: Sat, 28 Feb 2026 13:08:17 -0500
-Message-ID: <20260228181127.1592657-44-sashal@kernel.org>
+Subject: [PATCH 6.1 045/232] scsi: efct: Use IRQF_ONESHOT and default primary handler
+Date: Sat, 28 Feb 2026 13:08:18 -0500
+Message-ID: <20260228181127.1592657-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260228181127.1592657-1-sashal@kernel.org>
 References: <20260228181127.1592657-1-sashal@kernel.org>
@@ -47,58 +47,57 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 6557f1565d779851c4db9c488c49c05a47a6e72f ]
+[ Upstream commit bd81f07e9a27c341cd7e72be95eb0b7cf3910926 ]
 
-While making some maps in Cilium read-only from the BPF side, we noticed
-that the bpf_xdp_store_bytes proto is incorrect. In particular, the
-verifier was throwing the following error:
+There is no added value in efct_intr_msix() compared to
+irq_default_primary_handler().
 
-  ; ret = ctx_store_bytes(ctx, l3_off + offsetof(struct iphdr, saddr),
-                          &nat->address, 4, 0);
-  635: (79) r1 = *(u64 *)(r10 -144)     ; R1=ctx() R10=fp0 fp-144=ctx()
-  636: (b4) w2 = 26                     ; R2=26
-  637: (b4) w4 = 4                      ; R4=4
-  638: (b4) w5 = 0                      ; R5=0
-  639: (85) call bpf_xdp_store_bytes#190
-  write into map forbidden, value_size=6 off=0 size=4
+Using a threaded interrupt without a dedicated primary handler mandates
+the IRQF_ONESHOT flag to mask the interrupt source while the threaded
+handler is active. Otherwise the interrupt can fire again before the
+threaded handler had a chance to run.
 
-nat comes from a BPF_F_RDONLY_PROG map, so R3 is a PTR_TO_MAP_VALUE.
-The verifier checks the helper's memory access to R3 in
-check_mem_size_reg, as it reaches ARG_CONST_SIZE argument. The third
-argument has expected type ARG_PTR_TO_UNINIT_MEM, which includes the
-MEM_WRITE flag. The verifier thus checks for a BPF_WRITE access on R3.
-Given R3 points to a read-only map, the check fails.
+Use the default primary interrupt handler by specifying NULL and set
+IRQF_ONESHOT so the interrupt source is masked until the secondary
+handler is done.
 
-Conversely, ARG_PTR_TO_UNINIT_MEM can also lead to the helper reading
-from uninitialized memory.
-
-This patch simply fixes the expected argument type to match that of
-bpf_skb_store_bytes.
-
-Fixes: 3f364222d032 ("net: xdp: introduce bpf_xdp_pointer utility routine")
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/9fa3c9f72d806e82541071c4df88b8cba28ad6a9.1769875479.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 4df84e8466242 ("scsi: elx: efct: Driver initialization routines")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260128095540.863589-8-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/elx/efct/efct_driver.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index e19bf63ad9a44..c177e40e70770 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4069,7 +4069,7 @@ static const struct bpf_func_proto bpf_xdp_store_bytes_proto = {
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_CTX,
- 	.arg2_type	= ARG_ANYTHING,
--	.arg3_type	= ARG_PTR_TO_UNINIT_MEM,
-+	.arg3_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg4_type	= ARG_CONST_SIZE,
- };
+diff --git a/drivers/scsi/elx/efct/efct_driver.c b/drivers/scsi/elx/efct/efct_driver.c
+index 49fd2cfed70c7..37aba56e07217 100644
+--- a/drivers/scsi/elx/efct/efct_driver.c
++++ b/drivers/scsi/elx/efct/efct_driver.c
+@@ -415,12 +415,6 @@ efct_intr_thread(int irq, void *handle)
+ 	return IRQ_HANDLED;
+ }
  
+-static irqreturn_t
+-efct_intr_msix(int irq, void *handle)
+-{
+-	return IRQ_WAKE_THREAD;
+-}
+-
+ static int
+ efct_setup_msix(struct efct *efct, u32 num_intrs)
+ {
+@@ -450,7 +444,7 @@ efct_setup_msix(struct efct *efct, u32 num_intrs)
+ 		intr_ctx->index = i;
+ 
+ 		rc = request_threaded_irq(pci_irq_vector(efct->pci, i),
+-					  efct_intr_msix, efct_intr_thread, 0,
++					  NULL, efct_intr_thread, IRQF_ONESHOT,
+ 					  EFCT_DRIVER_NAME, intr_ctx);
+ 		if (rc) {
+ 			dev_err(&efct->pci->dev,
 -- 
 2.51.0
 
