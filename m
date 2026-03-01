@@ -1,93 +1,147 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53484332629;
-	Sun,  1 Mar 2026 16:20:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7434F2773D3
+	for <patches@lists.linux.dev>; Sun,  1 Mar 2026 16:43:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772382034; cv=none; b=XUHfoyhBfy1taspD9qMH9VENf2TwTWJbNWXMyOW66rluTcYH9nQ0KuraCaApBKGvtvYM/es0lylaKAjoXKiOOkmHVpCK3fpuqPb5FMBLAXlfBhV3mYCHmSlZ+0iLJShemxdFfPaF/cGYKyFnD9Q1unG/jZBObyFTaSLhLohTSBg=
+	t=1772383431; cv=none; b=JEZ0J5htopBoc0oiUMenCNC1wUBC//UmhdDHnYtf1srqu3fVUUidVfPHhKU1hdYjEC1KW2gvEe7X0BfENFhpJZhhH9kWCm8tun5LhEzRwgVU6crXYsSvmf61pNa+4N1QQXgeRmxmbO5/JTOv2yN8TwVk4ksZxW9+rYGHxHOQqJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772382034; c=relaxed/simple;
-	bh=OHnRHFrYC6glnsMCUEwpsr4r4ZAcDMkIrINt16eHBt0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cvGeiixXl2mecjKC2MR6z0vyWtdWCaYW9XTUUkeqgFxr1cc/F40LELqRDeoD0udMf27JLQ2yI5+Ht6FNm5m1n1g7139qqQBXdNQ+pD/IRUSaNivcigsgMIu4VbFSe4GPGNGYTKVyq3gkcd+UF1AoMp580vG65VlNAZqjP/i/Lt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i3hkcp29; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772383431; c=relaxed/simple;
+	bh=zKXWDPgm0KPVWYaLKYUuwFJ9zNLf8brpKTooPNimpxk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=dq1fREj0Y0dyaZG1IXJaw1cHPBsSYL3VIuVdJnxfm3G34mACF/3XgSO+t5/+1PX4i7ULQnM5LxLOoWDhlL8aFj7bPHWFMIPcTF0K4av8y6COEOoQDJqwyBl5P+elqa34sdTKH3V7q78g0RBb9/XSwYjj87EQZ6JiHB+H7ZauDss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IYTZQaa3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xkvo6VRN; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i3hkcp29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EE7C116C6;
-	Sun,  1 Mar 2026 16:20:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772382033;
-	bh=OHnRHFrYC6glnsMCUEwpsr4r4ZAcDMkIrINt16eHBt0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=i3hkcp292V5I2MSIREFNM0Mp00Rm0O9MqMlAcA1R6Kd7I0UGE5DdQuzFRTcz6GEOi
-	 o6f8kJSZ3++mo85gDGWDXuOi7mdYfi+VOI8zmAqbUdTKH2m/ayBo6gplCcYNkcOYgU
-	 BtNR6NlH44Dbd3CzEQgyldl6RdETu4DbjSS51stxcwClAHjHVvGw2IseX+tJ2YYxFT
-	 F1dlfeV7qLzo3sNPBXezwunPYleTzi/AbTT4/LUUPMprbCMnTt+Z6VTJIF2Xoq5yR8
-	 kFM6Ii1IlGeCNzHEgy1B9k2jxorZH5MpAbekXQzkLeDe1T5AjysI8B9U8pP5n01Qrp
-	 igcMiLL0EWYMw==
-Date: Sun, 1 Mar 2026 16:20:27 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Peter Schneider <pschneider1968@googlemail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	patches@lists.linux.dev, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.19 000/844] 6.19.6-rc1 review
-Message-ID: <9c67aab0-7199-4958-a2ca-81da34ba1ca0@sirena.org.uk>
-References: <20260228173244.1509663-1-sashal@kernel.org>
- <aaQriDS9IOr6tI4x@sirena.co.uk>
- <055deed0-4b00-422e-8afb-5c3e577a6046@googlemail.com>
- <aaRlIJFcOpBVlD9f@laps>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IYTZQaa3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xkvo6VRN"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id BBB411D000C4;
+	Sun,  1 Mar 2026 11:43:47 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Sun, 01 Mar 2026 11:43:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1772383427;
+	 x=1772469827; bh=3TyE9bze55O1rfqf9ChrdG6CnxVHihNnBi+Beiuiie4=; b=
+	IYTZQaa3fMMjbLiH+irKDKu41evVvTM/WKmX5a0QgV/e7s6ygStd16FBcyxxypzw
+	HLANtdfzc5ekm/SolR3Fdr75nnWreuGWgjd3zc1fLf5/jnWYvpCtKzxTBri/v044
+	GDdGefQo5Y6KtHx0HYNCeKWvM26Nhngehw40aEtA5CcWN5l968UmlleAhf8mn7LK
+	HHV+MUuXm/rOgqoHrRnEtNae/5HE57ppQJXQATYnYHfUBjX8Fochw1SEDY9TjAzu
+	KtQFzB3joa41eCBIwpY3r4wGTbtHXmixGP77nEuuz1hece1UOcL5WAgCNjd7xViQ
+	9DrZ5dddSx+1NFSV1fIoXA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772383427; x=
+	1772469827; bh=3TyE9bze55O1rfqf9ChrdG6CnxVHihNnBi+Beiuiie4=; b=x
+	kvo6VRNFsJccy0MeIR1lzKWi2axNAtVxBJLevM7wKDhKDd8D1qBieEMcBBayPNyS
+	YkcNf3k8wcyn5HPfeTC051c8SDSdakb754MkxhezuZc53DXWQX7CV/K31UeJDX6d
+	OGVTQJ+dVxCu9BqjtPtuk3PGpE+ykQlJFeJ+GioJIJeiMqnM59QZK00ke+Bi+q/k
+	SpO7ZRdxmcscgVV+aQVQ6+DxcLqq92hIju6Sf/WUtmPuJBLUBfbCNGt3M/tXb6Sd
+	pHONVo5Rc1n4LOQU8L+r2IRUT//J8ph23wDugqjpumzIx79ieo9PnbYznDWHp4/8
+	I9bqIGvMf5J34VSD1k9Kw==
+X-ME-Sender: <xms:wmykac-44X-KVtAFjinpOI54o6eHYTJK4U5AQOiA0tttMfhH-Mj-eg>
+    <xme:wmykaVFeCOqThKo2KxpLB1L1ibOLEeml-ppt9qNDtqyWf9NbYZwDeFVyLk4xRjZlh
+    7Oh9pTBhKg9SOBLmsQ0eV5pMhd77s95cgPVaU91MR-rf1HPsAJhtC8>
+X-ME-Received: <xmr:wmykaTL8stm6KUvifwxp38zVent8qXMC5qXU_yu_a1Jw1RrHvfK4Mlnw5R2Ohqiy74T1d59mqQtQF54GM42pTmuKgBifFA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheehfedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepkfffgggfhffuvfevfhgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
+    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeduvdeuheevffetfeegteeuieelvddvjedvteffhfeiffehhfehiedv
+    gedukeekudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpegsrghrrhihnhesphhosghogidrtghomhdpnhgspghrtghpthhtohepvddupdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehsrghshhgrlheskhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepshhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthht
+    ohepphgrthgthhgvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehtoh
+    hrvhgrlhgusheslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
+    rghkphhmsehlihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlih
+    hnuhigsehrohgvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgv
+    lhdrohhrgh
+X-ME-Proxy: <xmx:wmykaYf-s_dIrurNOZfZF6K0kEHqp1dhUK5ZSOoxtuK-UX7Dag2rPw>
+    <xmx:wmykaQWu83_Y3yexve4DlA8JZQWpacTwzAT8U4M4logWTdh6Th449A>
+    <xmx:wmykafE9cdYMc8BIvqditvCaVZz6QIDH3pzTcucfHhl203cEc3_Dqw>
+    <xmx:wmykaRWDL2q7VPqH7rLr59xsIQRAo8ZvF_Ee6cemmokq5Dbwq6O50A>
+    <xmx:w2ykaZID5eFvUQvS_y3nk-O1cWcJfUWO7r_5LFdo8PHHv1yKzylnrtje>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 1 Mar 2026 11:43:44 -0500 (EST)
+Message-ID: <bf650251-9254-4d42-9224-0b8db08042c7@pobox.com>
+Date: Sun, 1 Mar 2026 08:43:43 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/Hy1HOMXoJc1WvVv"
-Content-Disposition: inline
-In-Reply-To: <aaRlIJFcOpBVlD9f@laps>
-X-Cookie: Sic Transit Gloria Thursdi.
+User-Agent: Mozilla Thunderbird
+From: "Barry K. Nathan" <barryn@pobox.com>
+Subject: Re: [PATCH 6.19 000/844] 6.19.6-rc1 review
+To: Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260228173244.1509663-1-sashal@kernel.org>
+ <9623f4e6-41b4-4dc8-a6ff-cf0de3604dfb@pobox.com>
+Content-Language: en-US
+In-Reply-To: <9623f4e6-41b4-4dc8-a6ff-cf0de3604dfb@pobox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 3/1/26 00:49, Barry K. Nathan wrote:
+> Unfortunately, 6.19.6-rc1 won't even build for me:
+> 
+> Warning: drivers/gpu/drm/i915/intel_wakeref.h:156 expecting prototype for __intel_wakeref_put(). Prototype was for INTEL_WAKEREF_PUT_ASYNC() instead
+> 1 warnings as errors
+> make[9]: *** [drivers/gpu/drm/i915/Makefile:449: drivers/gpu/drm/i915/intel_wakeref.hdrtest] Error 3
+> make[8]: *** [scripts/Makefile.build:546: drivers/gpu/drm/i915] Error 2
+> make[8]: *** Waiting for unfinished jobs....
+> 
+> This only happens with 6.19.6-rc1, not any of this weekend's other
+> stable rc's. (I'm still testing 6.12.75-rc1 and 6.18.16-rc1, but
+> they're doing well so far. I have successfully built 5.15.202-rc1
+> and 6.1.165-rc1 but I won't have a chance to do any further testing
+> of them before they're released.)
+> 
+> As soon as I can (in the next hour or two) I'll minimize my config
+> a little to shorten the compile time, then I'll start bisecting.
 
---/Hy1HOMXoJc1WvVv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Result of bisecting:
+first bad commit: [0ef5d235ab57bc90831ddf38eb1742ff68f345e1]
+docs: kdoc: fix logic to handle unissued warnings
 
-On Sun, Mar 01, 2026 at 11:11:12AM -0500, Sasha Levin wrote:
+This commit breaks the i915 DRM build if (and only if)
+CONFIG_DRM_I915_WERROR=y, whether CONFIG_WERROR is enabled or
+disabled. However, the "bad" commit is definitely fixing a real
+bug, and this build failure doesn't happen on current mainline
+as of this writing (commit eb71ab2bf722), so I don't think
+dropping the patch is the correct way forward.
 
-> For the release deadline, you definitely shouldn't sacrifice personal time to
-> test: at the end of the day, releasing is a judgement call, and if we don't see
-> the usual reports then we will hold off the release for a bit until we know
-> what is going on.
+Rather, adding commit 524696a19e34598c9173fdd5b32fb7e5d16a91d3
+     drm/i915/wakeref: clean up INTEL_WAKEREF_PUT_* flag macros
+(it applies cleanly) fixes the warning, thereby fixing the build.
 
-I know that I will be put off looking at things if I see the deadline
-has passed, it always seems likely that either the release happened
-already (as happened with the ones I mentioned where there was a
-regression, I only reported that because there were a bunch of very
-clear reports about an issue I knew about from my tooling) or it'll race
-with me checking.
+The resulting kernel works fine in my testing, too. I'm using
+6.19.6-rc1 + 524696a19e34598c9173fdd5b32fb7e5d16a91d3 to write
+and send this email from my ThinkPad T14 Gen 1, which uses the
+i915 DRM driver for its Intel integrated graphics. (I also
+tested it on my 2017 MacBook Air, which also uses i915 DRM for
+its Intel integrated graphics.)
 
---/Hy1HOMXoJc1WvVv
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmkZ0oACgkQJNaLcl1U
-h9D6pgf8CnfYumYkuZGVW06FH6iZQ5BQRCswzm9Q4yT9va1Ebpqvx8Nnsraq+U51
-28/SWFCeRqcwiDx1AgFe6zVhdk15LxtxRLEKdbzHqVRlD/VDscmxub3EvZ3JRNFz
-awhTFo5gMvo+CjfCUwLjKIURzyQ9CTTVE0NTJ4gWeJNidYvkuJI3mfy2cd9Qhz1Q
-Y9uje9U6Od6Ra0A2wiQUIwAET0VRePlZF7q4CODEvUX/YfPdjgnuX6awxPQC23FS
-YkKZdGnYtIT3Z/GkWcDn1WkrTT2+m1snAZsYg9WQEgOA5eFCs1FI4yuGj7Mkt/AM
-SZi88+VrxbwSLvP23QUHSeYL6+I7Vw==
-=+mA/
------END PGP SIGNATURE-----
-
---/Hy1HOMXoJc1WvVv--
