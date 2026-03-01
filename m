@@ -1,47 +1,47 @@
 Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011030.outbound.protection.outlook.com [40.93.194.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93812D94A0
-	for <patches@lists.linux.dev>; Sun,  1 Mar 2026 18:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FE62E541E
+	for <patches@lists.linux.dev>; Sun,  1 Mar 2026 18:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.30
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772391489; cv=fail; b=poPVuRaPrmJqFp1AuWfTqbrxdKGCu/avG50AHQfqWU9ruEE9FD9FjTG4bpjmVk/qnTcmKH0FwqRr7Wf1ei/lD8nAWrRO3kFMpyV1rZzdbc0t/v+XaHVkCs9AfGTMYcgCAoOhgpcVy6u0Lc36wJMP7OH6DUsKifL1XhxS3HWxjSQ=
+	t=1772391491; cv=fail; b=TyA1OfCXbMwIUg2D8vpvgYasppP4B1M+tJExYSViDJEF17VY3PILlHlLlns8jXpZ6hhHw8tvY7A+f5Lq8bq/y+hXX9zu9zVetzU61/llWRM5yo1r4kIt3vXe0ZmKgdrcPYcYrhjYFJpcNN1yN1HgZan98iClEcWchLPOq7ZALhY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772391489; c=relaxed/simple;
-	bh=2SgQG2JfQZTjEgKneOE4gohBAjoXbLKeMdmmZjvgJwc=;
+	s=arc-20240116; t=1772391491; c=relaxed/simple;
+	bh=vrtow17nfspkk82vd29DSfjggJgFCNIvqF9VuA4/szc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ln4E/wVGEbusGXD+0ErNyJlUZ+jddCrBXBE6ueVGnE3ZBB8YY949dzgHAiTp2AeODHoujZkXs4DhdGHfzJNk2XulLJerKefGDdrsWrzZ67OhLW9AE8MTqwsKoabJ9b4rxkPYbMGQ7WppMNTeiTG2J/wEYpP5plzOu21PBg+Dr84=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kCz0FYs+; arc=fail smtp.client-ip=40.93.194.30
+	 Content-Type:MIME-Version; b=JAf+Oc31OhDnXyz5FuG5o3eVMGdXqS+B+8zIPz3uUbTozTTZvXU7A6VZnV8gkoyGk1oC6yN+vlBJZpQIF6S7uUmzyM3eH26X5nCqf9w491tz/sY1qIPWPSic9WUA+iyim0K+uXGxFgu2wm+KRm9wT4A8eZL+Zr5STVvVnJwiqig=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=BVpaB6Eu; arc=fail smtp.client-ip=40.93.194.30
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kCz0FYs+"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BVpaB6Eu"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=q9PYcU5e/kJDfLNjgblrCYWrhUbrBQIKBqebZ/vIG1z9DOdOMo92d8j8ypT6u58OuuwrVtPy+/Xw6312Nbvgbe0jCQFQg3zhyUwIWG7nDOm7zx+Z89GhBwq4bSFcJXVCwGdmx62h1c+6uzdHJs5iYEiIVzH/mdNPgJjFXdNNABDP8oEQebzWBdod+iBBXpS+fILT0kHkV8ZKNB5TzgbhSAu5C4i5Q8Ado8M6P4eGMWorSZ7xkGU98zFl9sIezcCYwiClHN3ghAtPweYKlFFJK58NtxSWWM/lNJJgTa+7YrZQ1CVSI724BLhLaBtKCcx3YiOExIYDymdlOeA64OLZ3w==
+ b=ns0rvvhZaIUUebxbk4v45NXBVYYK2W/z7mx32oAGWZbIKKrGjJ4NDY0XuFuto/Curvztt4OXKpxxDrFhBQuljstHkDUSsVt1o2MKvynoJkwUmMt3i8b4pRNM/4+TFXt3iBamtoQ86tLA6SPbQpG4MRAICG/pnwUoIpzmR3NsAMFZojEdeK9ESI3VMi5wloM9Tvx4VCkJ0OZr5My7a6GWWGxO2UPhflxEWaPHYuuxG12Z6FMd+390uC+JxlIWL22Uj7ievaqgVxsrPQxAPS/NeW7VJNwXi+rBL3HAQnJ8i/HAJlc6PTsbF/uKp4MZ5dTwqygAGUOwauKXWN18sj7/UQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lz4990U5peHB+guUcGVvhQ3px+EmAIMqj2P8VyHOg1U=;
- b=Xmat8gtqFdH4CbdT1UEnECEEBwtacQcq/3UupXxs2U1gwQS8Kxk5N4VCgKY6eGgYNCgoY2VEF0bx3/51+g0Ylm7Nsf7gbIx1hVk2DNQHYklKaZD9U1v71WzSJ8tDrIR/KvIJS1GZdVcOk8OeBLfV0aGneu+ZTUi7P/1gFKLlZzIPBbJ8k8ijQiK6Fr30E/RiUYbtYAn7NZLNn0j4l55LJNPfiBF1javiaAw9+MiKGjIn2QUlJGOvE0QBYg985otIsqxgDj815hPJElyKwSlSo3MBcyr6fWn4q6n8anI0IOylwmOWDmXYiJqLRgSTc/Do8k6xMsDsleowllJjlFuTiQ==
+ bh=3DZNcxOD1jpsUjrV9l+z5rGHQTc15PlZFbLDCINc2Xg=;
+ b=LrAo4kr/2cZHr8y1t61ZtG0WSKPpMTDzc4C9t6tTYGADrR+eqVlV19pbpdj0SUJxg72CGuzaMMRkXArFU4KERfTonRUu7j1AKelCXkaxlPjMzikn8MWhyRIMEwgRlscCv0pLPhekB393xNf7yPj43C/HwJppUtZmEliQbCvZjB5GqXHv443Eb1y0Mn1ZAlTmvzF4FtN0nFyhVWLIx7wIQIwf83TzYDFPdbmmHbQLYgURYgR7uio+AlnnW7Lbj6cxFyUOmbSJ3KWYoxZBO4wrIRgLwVCllxhjnbW9Zq9G/yvs6ezBFwAV9tx7y5L3Jifa1hF7clE9fg9ogVB51LGBFQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lz4990U5peHB+guUcGVvhQ3px+EmAIMqj2P8VyHOg1U=;
- b=kCz0FYs+r1B4HB6z4hB2g6hY0lGt573Uyuf3r2ky7k/8JBIC9CR7RBLzdetY6BR2zMbjLgyb8FomEQ3FR5eqh6ZMKNsgepBS5sTd4eGTBG5dp26Q+kvsQEMIndRRvWZR+FuDVSUdqZGEkonD+CjxAC8k8v1dU0GBBssVriG6x+zp7lpEEkdEE8VKdR8DurTbqdvU37xpIn+jdRQEP534ccTRv2HyjcYp0RtH5zUksAZMtJMzaMItbGnCq2u4h5Hp/SvueO8GgsQbkCTS2WzKWaRD599rL6mYlUDzGxxrVXi61eHc6Hujp+Et8V208SWl+JvDPA2ZG0c+6nFjP0zOTw==
+ bh=3DZNcxOD1jpsUjrV9l+z5rGHQTc15PlZFbLDCINc2Xg=;
+ b=BVpaB6Eu7lWQEmP1IAXJi45NedzOb0wQzGl8Lzea6iRehVzjBXvKK5W2Cy4hLXWEG3bIEskRHJPmCbBChqQZcyIGhca4TkfDMTjk+H0hhocJK25qcpyK3mTOwsWqzmSM3ePfD9jJCXH7Vn2axK/5OEvtqOgrX/UheP/5hMKbaYOYYmIx5gba4VED/Si+cXqR1WQiDb8ECwuxiyjx0EEP235FOwNmrghqV8JWHn+l4Wtz1OgSzQ9aCIhjOwQgmsFRulCimH5apz/Yu/pk6AIfrGM6HXx7t+HWeQ1kQG3PeYm0K6/aw6SWSYj14z9a7gUEcIsEEGtMHFGdnSB4B6/4XQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
  by BL1PR12MB5993.namprd12.prod.outlook.com (2603:10b6:208:399::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.18; Sun, 1 Mar
- 2026 18:58:01 +0000
+ 2026 18:58:00 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.014; Sun, 1 Mar 2026
- 18:58:01 +0000
+ 18:58:00 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: David Airlie <airlied@gmail.com>,
 	=?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
@@ -56,15 +56,15 @@ To: David Airlie <airlied@gmail.com>,
 	Sumit Semwal <sumit.semwal@linaro.org>,
 	Tvrtko Ursulin <tursulin@ursulin.net>
 Cc: patches@lists.linux.dev
-Subject: [PATCH 1/5] dma-buf: Change st-dma-resv.c to use kunit
-Date: Sun,  1 Mar 2026 14:57:53 -0400
-Message-ID: <1-v1-0a349a394eff+14110-dmabuf_kunit_jgg@nvidia.com>
+Subject: [PATCH 3/5] dma-buf: Change st-dma-fence-unwrap.c to use kunit
+Date: Sun,  1 Mar 2026 14:57:55 -0400
+Message-ID: <3-v1-0a349a394eff+14110-dmabuf_kunit_jgg@nvidia.com>
 In-Reply-To: <0-v1-0a349a394eff+14110-dmabuf_kunit_jgg@nvidia.com>
 References:
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BLAPR03CA0153.namprd03.prod.outlook.com
- (2603:10b6:208:32f::19) To LV8PR12MB9620.namprd12.prod.outlook.com
+Content-Type: text/plain
+X-ClientProxiedBy: BLAPR03CA0156.namprd03.prod.outlook.com
+ (2603:10b6:208:32f::29) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -74,497 +74,763 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|BL1PR12MB5993:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1702019c-4534-4c61-272f-08de77c4755c
+X-MS-Office365-Filtering-Correlation-Id: 95bfcaae-02b4-4e5e-23f4-08de77c47496
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|7416014|366016|1800799024|921020;
 X-Microsoft-Antispam-Message-Info:
-	hLdlHQtWwVl5sSjtDwYbtvK8g2bPXBS6BN+v9p7jcHnygkzggK3znVX0onwrj163KdUmnWxZ3ayhPDISEn90po/dkIsHp2FdQqwFC9+QLmkhDWgYgWgHL+gg5R9ftCr0MVzuUhc4+nbDZY9DSsSjPKP2O/RB5w+E287rhrIEf5WFU7yRAIR5ImaAjfH2YuXkyeStaeRWl13rOdnU6MzYizLn2YHzJEk3ybi44fsASZ2ss87esPyC3ej1Ggk/3oSlCmfAbS6R3oQ1sUjNg896r7L7LDXGCvPDdtO84nJuso6J3dBV9REGMLw22cpqnAw6t8s8atXQ3iPaZhEBERvNp05q8i+gIDpNrL8Eb2n5DouDWuDNI+8HEZ1BU2f9pb9wmB4s3RNOAIgPQE+nLgQ8AvjkgNv40JlvJX5ZmoJ5E9OiFL/dDSHgUM4jAfz1OEw28OJH7CW/j1WksVdPVANWso5YnvaaifDl8PWVosh6XHIaDvtlwEw7Pnx750VG7Sd6D6RsjUkkSUjA401hGHkPhBDZNXkbp3PH/F6u5rDqnDak+ofWS7uOMAhpCtvZYddu/l0dVOO8h4uZcLc7gLbg2ruRzVthSZzi7anAstelJV3C7RuIndMtF9w1awvptCX4jEazsmRlokDMc+dLBB5TVhE1+dv84bpI5CnuNYe4g/J9P24JJ/3OHktBFChZa6saz7EOCFsmHO82FYhr5bsjHpa2kWfOp7UlYxv2hsV5Ya3KFrBJeKoFeC283CghcLV8ZU+yvMEB8K8Fk5e06TG5nQ==
+	DAOaOTp1HYL0wWdgxc4RYeL+nOPswqK7C8semsK7TmGtsg0Z8yVpJEBZ8UUpbhTHEHXGhN5Hpea1s7z6Z451xpgyfSva6vD51W3T2PLyrGMOFamU+HFgAQnu9xciRfF2w+fHF05kNbAmIu51tJcf34fMh5TNQ+KFqSqkHstJbxe3DICC9RNzjZtWOLNhwsCrP9s/GswDmRjArHouBgN9ST2HN2KbJXiT7jgp/K53vEZVtvhgByM0v4ItDFpy181iSu+DZBPQjo5npe16ZlfHWRlx+rSLKMGUTpL/rXSLBhVD6kBa698q6g4EkIzTsG1BPLW6/G+qJhTeL0KhPPW0FN1q925mRKw7asRABq6aE//Ohs8Riwzka3AtL/9V6AiLJQrnBrqxEeK8dViAWaPFj0o1SfxcDt2MBdtUmEnYjlFhSMD3nbLsELvGSmQFu33Jf+2cBFcVulTn0mn8Kh434loKvcQI/HUW5p5C+H4/PwAuoLl1x1GWfEJmLer7C/ZOrDYlFlTcNrJqcbk9+Y+FgaBNurMrxMsPXq1ZqJwOh0Fn8ytE7LkVhOxZxsOxTG15WzlArxvi/siQBB+jBV7IkgGB7uozZrUeUwFl3Ar2PZbwmDdihxrVsrdaZqAr8Ckbn6jQpPzlyJKpwX+OV6HUOE78HO8Dj0FqwisXHtpMLSyPSxap32drDEt/P8lG23/ogN810iU4qYQPqHkF0yYsWztZmZrdmr8lVHkGtz042ognrVFy1DX6MLHTsVAegEJoYs0JLvcKVrAe+5ICS17Zww==
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?T1VzbXN3ckJiVGJaUVpRZmFaRHB4dXdibkJFWGFrTzhUMXgyUUdZaTQ4djZ1?=
- =?utf-8?B?ak5JYzgrd2JGQXhyQVU2QnJNd1pGQW1qalVSdzBkTXE1L2NkdHAybmFSTEND?=
- =?utf-8?B?cFBEQkNaRzlEL004QTJDMVlySW9USnV3MmtvMC8zZE0zaGhoTnVpN2ZzdThT?=
- =?utf-8?B?UTRKS0I2QXFPSTg3SUFmdlNVblpBU2JobU8xdCtHSVd1VE5aVmdNQURxM1l3?=
- =?utf-8?B?aXE4QTJpcHQ4RnNDWEJFUHJ4V201UGN1MnZQY0xndGlNZW80bk1HMkoydmI0?=
- =?utf-8?B?dmlxV3U5Tzkxc1Q5dTRMSGdaSWxBcGdUMll1QmJFK25abU13bnlGVktYUEN6?=
- =?utf-8?B?V1oxbWIraWl3Tndia1hWYUs0LzIwWVZyY1k1bTNVOVpMZVhMak1MVSt4SkMx?=
- =?utf-8?B?cU1FYkNZRDI3OTBXUVpjNTBsUXJ4RUYxQXlOeEJWQTUvRjJPb1E0NHI1SmxD?=
- =?utf-8?B?R2QxYWhUWjVNL1ZYa29DbTY4VXFaaGJ6NU9heS8vR2xMUVhYMFQxbVBLRUZk?=
- =?utf-8?B?cU5rckVtRHIzcG0xUGZGYUJ3MFN3WDJ6OElEN1dpTmx1eE05R2liMm13UnE3?=
- =?utf-8?B?eUNKK3hPUldldmM4VUtLU3p4eEpFMWlUTStJdll4b2tScFBJdzlpbldvUXhQ?=
- =?utf-8?B?ckVkb0xXUklhZmhOMk84cDBVZDFINkZ4QjVxc2V3NjNIL0dKS2crRFlpZHJt?=
- =?utf-8?B?TUc1WlE1QmZ3WHlEL1Y2b2REM3hQb25qdGZNL1RRWkRsTWR3QldZZWVGWVpL?=
- =?utf-8?B?UlExQml1SUgyRlhjQ25haGVMdVpVY0lGVTBhdXVhSWViTTVaMHNKc1JsZnhr?=
- =?utf-8?B?cTVoRUVhaTU4ejAwZ2h5RWR6YUZmYjdQRmNIMUxES1Q5OXN5MkdsS0ZkRTAr?=
- =?utf-8?B?NzBkbmpqTVV3bHZ3NWlHNm9KcTFpRnp6RGViaDFrdVBnbVhPamdKYVFTeU5r?=
- =?utf-8?B?QzA2b0JneWR5QWIyNXdUUWc5Q1p2MUdERUtsMzFVMVNYQjB0WVBMSnlkWHBO?=
- =?utf-8?B?TWNOYmFLRGNXN3JiZWFwZFN5NWYzVFR3Qnd0RzI1N1RjbEhvSHpjMDB3Unpk?=
- =?utf-8?B?TGxleFBEaVRLaE1sN2VIaC9qUDJQY2d0UXpleFY1OEpJV21JbVJlckdPY2hH?=
- =?utf-8?B?OG9QTzhHbGIvazVNcHI5WkxGUHA4aW90cytjV0ZVTUQ3SXZ4Mlo2dDdSenpl?=
- =?utf-8?B?emsxS25oUitXWDBDRm42NnJrTHFKZXc2Yi9WM0Z0OTZGN0V2VjMvQk1nQk03?=
- =?utf-8?B?Njd2b0o0YmMrYlR2NVA5Y3ZqVWtGQldpZ0t6dENTYXZOYlhDZUdsWEJOMlFS?=
- =?utf-8?B?bkxKQzZBSk81ZDI5WHNyK1UyWGwra0NROVROYWcrVzhYOHVRcWNDd1JjWFpW?=
- =?utf-8?B?VC9vWlFYKzQyNWZIZVdiTXZqT2ZVNzU2K0hiZGlzcmFoQWV6dXYxZ3Z5Y29T?=
- =?utf-8?B?cjB4VitFNCt6OHM3VGl1dGFESlhnemlSZmlFd2c3WXFNRkNHaFJ6SEhzNG5x?=
- =?utf-8?B?RjdVZ0ZWVUQ4ZlhFbkwvWnFoZVQvOTBIbWxLZU8reENSUnZMSmNVdU16LzJU?=
- =?utf-8?B?U1hWVFhmS2ZDZzRiT0NKWElHK3MvTGx2dkZaN2VSM01LVnMxdklSUmJsMkZ4?=
- =?utf-8?B?OUZPdTNLcWFDMlhRcElaMFpWbEtZc2cydDRVME1XTDZpeXdzWG1EUkFZWjlG?=
- =?utf-8?B?S0J6dDFmaGhUZzJXRWExYTc0cmtHYktVSVJvVG5URXQ1aE9hcDBENEpQQXhN?=
- =?utf-8?B?SUFOZHdaZnBwdDREVHNoaDVISzhEb1FTVzIxdFNSeDBUVmpzTERCekFTczQw?=
- =?utf-8?B?OGluMmowTmpVMk9ISHdqbk8wRm93SkZ0QS9rRCtsaTg1UDlBSDZJa0dhUDZ0?=
- =?utf-8?B?ODZXcjRNcFp5eStZbGhkUVQvOXRUTXVwaTNJTGw2K1RVR0JET0llYzNHbURE?=
- =?utf-8?B?Q3hyUENLb0dvV1ZZcktpRGZKOGwyOE1nUjlvaVQ2RTBOSUlGVGgyQnhYRmYr?=
- =?utf-8?B?OHg3Tm01YW5xSUQxMCticDRkZDJrb0FBMnIvb280b1ZzNWs5Y0xxc3kxT2xt?=
- =?utf-8?B?V3MycmY0VisrSTN6YW1zNUg1aStoOXIxZVRDc2N1RDg4Z2lNclQ1TkVpdmhJ?=
- =?utf-8?B?R3h3K1pYSUVDZDdQMVJuUzd1bFNPcWg5d3pyRXJha2JXOVhhUzB3a1FwSXNN?=
- =?utf-8?B?cklnNUdxU3d6T2ZMK1ZtcG41ZkJUV2lYUGl0MmYrTVJBRmE0U3Z5b0g5MEgz?=
- =?utf-8?B?QXcyL0tPRUV5VWtJL3BJOGd4WXBsSVpZZnpjL0ZZS0t1ZHkrUjBySHQvNEZi?=
- =?utf-8?B?blFRME9UdzR5UFM0OEJabElBNkMvTVF3SVN0TnhlQnBxYzBLV0N3Zz09?=
+	=?us-ascii?Q?R2fdbAPYFR5mkwAqieNDBXuqcie/QaY8lqEFKjmUKTODuHj1JAcGSS5HIrQ5?=
+ =?us-ascii?Q?+B/DRjCHooAgHwGjfMCrrKaRUKc16joNXR3QsZJ2Xh9PwSzEuJJKugPGhP0L?=
+ =?us-ascii?Q?0K/9JVl1f2jPZXMNd7vUVJFxXY5w5M2jsy9Mn459P61u6zMC57nTFPX8mIHW?=
+ =?us-ascii?Q?NzTX5BgMoKfc6tmeSXsEJnkPZhtRut3hn8inZdEWsvKBEbyoORNnH0g8iYVu?=
+ =?us-ascii?Q?6Ab9iLJ+Ym3cLc5bWS4DP2yP1vZWVCvzFmXjbCXOnFlU3DRrpUyZEs+FYeyE?=
+ =?us-ascii?Q?wZ7JZediOEbm5Ubvzi8ivNP9BzY3QjJynNNKrpf9o1unZEmu5QYe3DCqUmXi?=
+ =?us-ascii?Q?JOh9RulyKyaFiWAq5adMHaflf/01XJD5nlV4FrmmVMdf/YYKbM6Tbrgzp1GH?=
+ =?us-ascii?Q?CbcfZGc2AXPSQBgiKrcyA0Aaib5XUWvDagAfrIyMJDXR564caIYRSLgdWayH?=
+ =?us-ascii?Q?CCbHByIT2bZbIiXd40OUSDubFurxu7rMA+N6OmKYvAttO3oytaA0aKqvJAlv?=
+ =?us-ascii?Q?vJvg8XzOvqqLbCkrkG0uvfHd/EL96Z8veWAPFxYUeWqq9yWNOjqs3NdPv6zU?=
+ =?us-ascii?Q?jxROaigk2hjeMB/Hg0/bVibg8HOdokyHwCr2jnxhtEgMs+JxxbXuo1JcjgWu?=
+ =?us-ascii?Q?J22VJK9p9rxhFCGqguP74StOqYwPZqnug8d2XH8PcNy1OHlGLnIooMwNQtwG?=
+ =?us-ascii?Q?9CdX2+/WA6kZZyosXPvU1u2Q7jMRDKELwNH8vu6G1Z+MN3by0XdPAuD2thA4?=
+ =?us-ascii?Q?qtaPNc5Nlces7yNR9smNf3gNIc1zVh/P60DokmSlJK9bKFNKfbtRUY5dhod0?=
+ =?us-ascii?Q?plFCI9I35lJKQz5Znx3wUIOuQduFIAor1B+eKjL3tONvHqIEeP+3dbov1FzF?=
+ =?us-ascii?Q?VtqaMdMthpktUt1MUKo+uWfLHQI68Mt3DEZFDVYJUN7sDVtspxzEf+Z44xTm?=
+ =?us-ascii?Q?SJu3dgTuriBnM+WJpbFUMhhcshiLRaDwZSUS30XczZauLnbe2S6cDcKqR7Zl?=
+ =?us-ascii?Q?9ppyamLXBg4+KB4N+dz5hcsdAD4OYwgP+Wy2/i/urNyF4RSfaNXqiG3Vlyoz?=
+ =?us-ascii?Q?6nQL6kPI1Cd2DYHXBae5m3jYHYemoMI2VtxawJRJSm0lAScbLFVfcHfNVTZ4?=
+ =?us-ascii?Q?Ka+7vfUs4uCtnkTgjm7zaO53aHN7J+LObbfHuprSlo4dOflqGxSh6Qnta4+J?=
+ =?us-ascii?Q?aTWV9BhphyoR5ffu3LZY9sS4t+rRdaaxrw2EZzazUZ1MjDPq2KDYYIbC3b4A?=
+ =?us-ascii?Q?e0s7EN30zB2sDUNnWIZzT5EXb/Xq2suJxBrulYFvomJeCL+jF5369ZogTr8R?=
+ =?us-ascii?Q?J3JFLMgRDnDpGBSjtmRYAHTUdQn2EjD7NeT0W09vbp3c/jjuJegVQEjSPTFc?=
+ =?us-ascii?Q?b9fT1l/MjWrVsq3AD2NBB57VU5N4lrmK9D+4FH83S2oCYNxMJ1YtFqFFfrfy?=
+ =?us-ascii?Q?0PmgfBVEdSq2Rj5/pCL7G6+0uoOO+tqkHl49fDbRZKjiavVr+x/oPoMaGDVN?=
+ =?us-ascii?Q?dmleJu26IPcNdT/FM40GEk5j54njGd8r/54NBoiklJigFjfHCv8SDni4xnJd?=
+ =?us-ascii?Q?k6VfBCGGscffmx0jGg2rUd5A6YkgB5OBar3k1X5THjNaGSG8rOVptIeViNZt?=
+ =?us-ascii?Q?30XZ8qrLQSD4FClyJLexfUTPsaWuw8/YDAMs2aTt2XjSPw5+ep86G9bn886N?=
+ =?us-ascii?Q?FrcsWtF9GKgvoz7Nu/Yy3i4ckvWTb8/44/+8hF+TBP2f05NYqgke9BHsWIUx?=
+ =?us-ascii?Q?Vt+hf7EBEw=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1702019c-4534-4c61-272f-08de77c4755c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95bfcaae-02b4-4e5e-23f4-08de77c47496
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Mar 2026 18:58:00.4646
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Mar 2026 18:57:59.3575
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1sId4k0YuNzbi5DQe3ykVPcsIGQBgGbfMjoi9hIocoAubRk2VOWNZha21IMaU8Hp
+X-MS-Exchange-CrossTenant-UserPrincipalName: kIIqxMisUSLIc6CvSu5vbAuKZcV1NfSLRhSWQswYjMfklCx1hz4cn15ESlRAYrWQ
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5993
 
 Modernize the open coded test framework by using kunit.
 
-The kunit tool can be used to build a kernel and run it in a VM with:
-
-$ tools/testing/kunit/kunit.py run --build_dir build_kunit_x86_64 --arch x86_64 --kunitconfig ./drivers/dma-buf/.kunitconfig
-
-Along with the other ways to run kunits.
-
-To make the kunit tool work like this the DMABUF_KUNIT_TEST kconfig must
-select DMA_SHARED_BUFFER to get it turned on without building a driver
-using it.
-
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/dma-buf/.kunitconfig  |   2 +
- drivers/dma-buf/Kconfig       |   8 ++
- drivers/dma-buf/Makefile      |   8 +-
- drivers/dma-buf/selftests.h   |   1 -
- drivers/dma-buf/st-dma-resv.c | 145 +++++++++++++++++-----------------
- 5 files changed, 88 insertions(+), 76 deletions(-)
- create mode 100644 drivers/dma-buf/.kunitconfig
+ drivers/dma-buf/Makefile              |   4 +-
+ drivers/dma-buf/selftests.h           |   1 -
+ drivers/dma-buf/st-dma-fence-unwrap.c | 290 +++++++++++---------------
+ 3 files changed, 129 insertions(+), 166 deletions(-)
 
-diff --git a/drivers/dma-buf/.kunitconfig b/drivers/dma-buf/.kunitconfig
-new file mode 100644
-index 00000000000000..1ce5fb7e6cf9ff
---- /dev/null
-+++ b/drivers/dma-buf/.kunitconfig
-@@ -0,0 +1,2 @@
-+CONFIG_KUNIT=y
-+CONFIG_DMABUF_KUNIT_TEST=y
-diff --git a/drivers/dma-buf/Kconfig b/drivers/dma-buf/Kconfig
-index 8d4f2f89f24e3c..7d13c8f4484dd3 100644
---- a/drivers/dma-buf/Kconfig
-+++ b/drivers/dma-buf/Kconfig
-@@ -54,6 +54,14 @@ config DMABUF_SELFTESTS
- 	default n
- 	depends on DMA_SHARED_BUFFER
- 
-+config DMABUF_KUNIT_TEST
-+	tristate "KUnit tests for DMA-BUF" if !KUNIT_ALL_TESTS
-+	depends on KUNIT
-+	select DMA_SHARED_BUFFER
-+	default KUNIT_ALL_TESTS
-+	help
-+	   Enable kunit tests for DMA-BUF
-+
- menuconfig DMABUF_HEAPS
- 	bool "DMA-BUF Userland Memory Heaps"
- 	select DMA_SHARED_BUFFER
 diff --git a/drivers/dma-buf/Makefile b/drivers/dma-buf/Makefile
-index 7a85565d906ba1..2e7a1453e2fe04 100644
+index 37c94562e677ca..65bda1b7cc73eb 100644
 --- a/drivers/dma-buf/Makefile
 +++ b/drivers/dma-buf/Makefile
-@@ -11,7 +11,11 @@ dmabuf_selftests-y := \
+@@ -9,13 +9,13 @@ obj-$(CONFIG_UDMABUF)		+= udmabuf.o
+ 
+ dmabuf_selftests-y := \
  	selftest.o \
- 	st-dma-fence.o \
- 	st-dma-fence-chain.o \
--	st-dma-fence-unwrap.o \
--	st-dma-resv.o
-+	st-dma-fence-unwrap.o
+-	st-dma-fence-chain.o \
+-	st-dma-fence-unwrap.o
++	st-dma-fence-chain.o
  
  obj-$(CONFIG_DMABUF_SELFTESTS)	+= dmabuf_selftests.o
-+
-+dmabuf_kunit-y := \
-+	st-dma-resv.o
-+
-+obj-$(CONFIG_DMABUF_KUNIT_TEST) += dmabuf_kunit.o
+ 
+ dmabuf_kunit-y := \
+ 	st-dma-fence.o \
++	st-dma-fence-unwrap.o \
+ 	st-dma-resv.o
+ 
+ obj-$(CONFIG_DMABUF_KUNIT_TEST) += dmabuf_kunit.o
 diff --git a/drivers/dma-buf/selftests.h b/drivers/dma-buf/selftests.h
-index 851965867d9c7f..2fdaca6b3e92e2 100644
+index 0a348a5cbbebc7..7104cf0cce26d1 100644
 --- a/drivers/dma-buf/selftests.h
 +++ b/drivers/dma-buf/selftests.h
-@@ -13,4 +13,3 @@ selftest(sanitycheck, __sanitycheck__) /* keep first (igt selfcheck) */
- selftest(dma_fence, dma_fence)
+@@ -11,4 +11,3 @@
+  */
+ selftest(sanitycheck, __sanitycheck__) /* keep first (igt selfcheck) */
  selftest(dma_fence_chain, dma_fence_chain)
- selftest(dma_fence_unwrap, dma_fence_unwrap)
--selftest(dma_resv, dma_resv)
-diff --git a/drivers/dma-buf/st-dma-resv.c b/drivers/dma-buf/st-dma-resv.c
-index ad4dfb49dcd9fa..95a4becdb8926d 100644
---- a/drivers/dma-buf/st-dma-resv.c
-+++ b/drivers/dma-buf/st-dma-resv.c
-@@ -5,13 +5,17 @@
- * Copyright © 2021 Advanced Micro Devices, Inc.
- */
+-selftest(dma_fence_unwrap, dma_fence_unwrap)
+diff --git a/drivers/dma-buf/st-dma-fence-unwrap.c b/drivers/dma-buf/st-dma-fence-unwrap.c
+index 9c74195f47fd33..51c87869b7b82c 100644
+--- a/drivers/dma-buf/st-dma-fence-unwrap.c
++++ b/drivers/dma-buf/st-dma-fence-unwrap.c
+@@ -4,13 +4,12 @@
+  * Copyright (C) 2022 Advanced Micro Devices, Inc.
+  */
  
 +#include <kunit/test.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
- #include <linux/dma-resv.h>
+ #include <linux/dma-fence.h>
+ #include <linux/dma-fence-array.h>
+ #include <linux/dma-fence-chain.h>
+ #include <linux/dma-fence-unwrap.h>
  
 -#include "selftest.h"
-+static DEFINE_SPINLOCK(fence_lock);
+-
+ #define CHAIN_SZ (4 << 10)
  
--static struct spinlock fence_lock;
-+struct dma_resv_usage_param {
-+	enum dma_resv_usage usage;
-+	const char *desc;
-+};
- 
- static const char *fence_name(struct dma_fence *f)
- {
-@@ -35,15 +39,14 @@ static struct dma_fence *alloc_fence(void)
- 	return f;
+ struct mock_fence {
+@@ -97,52 +96,45 @@ static struct dma_fence *mock_chain(struct dma_fence *prev,
+ 	return &f->base;
  }
  
 -static int sanitycheck(void *arg)
 +static void test_sanitycheck(struct kunit *test)
  {
- 	struct dma_resv resv;
- 	struct dma_fence *f;
- 	int r;
+ 	struct dma_fence *f, *chain, *array;
+-	int err = 0;
  
- 	f = alloc_fence();
+ 	f = mock_fence();
 -	if (!f)
 -		return -ENOMEM;
 +	KUNIT_ASSERT_NOT_NULL(test, f);
  
  	dma_fence_enable_sw_signaling(f);
  
-@@ -53,49 +56,46 @@ static int sanitycheck(void *arg)
- 	dma_resv_init(&resv);
- 	r = dma_resv_lock(&resv, NULL);
- 	if (r)
--		pr_err("Resv locking failed\n");
-+		KUNIT_FAIL(test, "Resv locking failed\n");
- 	else
- 		dma_resv_unlock(&resv);
- 	dma_resv_fini(&resv);
--	return r;
+ 	array = mock_array(1, f);
+-	if (!array)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, array);
+ 
+ 	chain = mock_chain(NULL, array);
+-	if (!chain)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, chain);
+ 
+ 	dma_fence_put(chain);
+-	return err;
  }
  
--static int test_signaling(void *arg)
-+static void test_signaling(struct kunit *test)
+-static int unwrap_array(void *arg)
++static void test_unwrap_array(struct kunit *test)
  {
--	enum dma_resv_usage usage = (unsigned long)arg;
-+	const struct dma_resv_usage_param *param = test->param_value;
-+	enum dma_resv_usage usage = param->usage;
- 	struct dma_resv resv;
- 	struct dma_fence *f;
- 	int r;
+ 	struct dma_fence *fence, *f1, *f2, *array;
+ 	struct dma_fence_unwrap iter;
+-	int err = 0;
  
- 	f = alloc_fence();
--	if (!f)
+ 	f1 = mock_fence();
+-	if (!f1)
 -		return -ENOMEM;
-+	KUNIT_ASSERT_NOT_NULL(test, f);
++	KUNIT_ASSERT_NOT_NULL(test, f1);
  
- 	dma_fence_enable_sw_signaling(f);
+ 	dma_fence_enable_sw_signaling(f1);
  
- 	dma_resv_init(&resv);
- 	r = dma_resv_lock(&resv, NULL);
- 	if (r) {
--		pr_err("Resv locking failed\n");
-+		KUNIT_FAIL(test, "Resv locking failed");
- 		goto err_free;
+ 	f2 = mock_fence();
+ 	if (!f2) {
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		dma_fence_put(f1);
+-		return -ENOMEM;
++		return;
  	}
  
- 	r = dma_resv_reserve_fences(&resv, 1);
- 	if (r) {
--		pr_err("Resv shared slot allocation failed\n");
-+		KUNIT_FAIL(test, "Resv shared slot allocation failed");
- 		goto err_unlock;
+ 	dma_fence_enable_sw_signaling(f2);
+ 
+ 	array = mock_array(2, f1, f2);
+-	if (!array)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, array);
+ 
+ 	dma_fence_unwrap_for_each(fence, &iter, array) {
+ 		if (fence == f1) {
+@@ -150,43 +142,37 @@ static int unwrap_array(void *arg)
+ 		} else if (fence == f2) {
+ 			f2 = NULL;
+ 		} else {
+-			pr_err("Unexpected fence!\n");
+-			err = -EINVAL;
++			KUNIT_FAIL(test, "Unexpected fence!");
+ 		}
  	}
  
- 	dma_resv_add_fence(&resv, f, usage);
- 	if (dma_resv_test_signaled(&resv, usage)) {
--		pr_err("Resv unexpectedly signaled\n");
--		r = -EINVAL;
-+		KUNIT_FAIL(test, "Resv unexpectedly signaled");
- 		goto err_unlock;
- 	}
- 	dma_fence_signal(f);
- 	if (!dma_resv_test_signaled(&resv, usage)) {
--		pr_err("Resv not reporting signaled\n");
--		r = -EINVAL;
-+		KUNIT_FAIL(test, "Resv not reporting signaled");
- 		goto err_unlock;
- 	}
- err_unlock:
-@@ -103,33 +103,32 @@ static int test_signaling(void *arg)
- err_free:
- 	dma_resv_fini(&resv);
- 	dma_fence_put(f);
--	return r;
+-	if (f1 || f2) {
+-		pr_err("Not all fences seen!\n");
+-		err = -EINVAL;
+-	}
++	if (f1 || f2)
++		KUNIT_FAIL(test, "Not all fences seen!");
+ 
+ 	dma_fence_put(array);
+-	return err;
  }
  
--static int test_for_each(void *arg)
-+static void test_for_each(struct kunit *test)
+-static int unwrap_chain(void *arg)
++static void test_unwrap_chain(struct kunit *test)
  {
--	enum dma_resv_usage usage = (unsigned long)arg;
-+	const struct dma_resv_usage_param *param = test->param_value;
-+	enum dma_resv_usage usage = param->usage;
- 	struct dma_resv_iter cursor;
- 	struct dma_fence *f, *fence;
- 	struct dma_resv resv;
- 	int r;
+ 	struct dma_fence *fence, *f1, *f2, *chain;
+ 	struct dma_fence_unwrap iter;
+-	int err = 0;
  
- 	f = alloc_fence();
--	if (!f)
+ 	f1 = mock_fence();
+-	if (!f1)
 -		return -ENOMEM;
-+	KUNIT_ASSERT_NOT_NULL(test, f);
++	KUNIT_ASSERT_NOT_NULL(test, f1);
  
- 	dma_fence_enable_sw_signaling(f);
+ 	dma_fence_enable_sw_signaling(f1);
  
- 	dma_resv_init(&resv);
- 	r = dma_resv_lock(&resv, NULL);
- 	if (r) {
--		pr_err("Resv locking failed\n");
-+		KUNIT_FAIL(test, "Resv locking failed");
- 		goto err_free;
+ 	f2 = mock_fence();
+ 	if (!f2) {
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		dma_fence_put(f1);
+-		return -ENOMEM;
++		return;
  	}
  
- 	r = dma_resv_reserve_fences(&resv, 1);
- 	if (r) {
--		pr_err("Resv shared slot allocation failed\n");
-+		KUNIT_FAIL(test, "Resv shared slot allocation failed");
- 		goto err_unlock;
- 	}
+ 	dma_fence_enable_sw_signaling(f2);
  
-@@ -138,24 +137,23 @@ static int test_for_each(void *arg)
- 	r = -ENOENT;
- 	dma_resv_for_each_fence(&cursor, &resv, usage, fence) {
- 		if (!r) {
--			pr_err("More than one fence found\n");
--			r = -EINVAL;
-+			KUNIT_FAIL(test, "More than one fence found");
- 			goto err_unlock;
+ 	chain = mock_chain(f1, f2);
+-	if (!chain)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, chain);
+ 
+ 	dma_fence_unwrap_for_each(fence, &iter, chain) {
+ 		if (fence == f1) {
+@@ -194,47 +180,40 @@ static int unwrap_chain(void *arg)
+ 		} else if (fence == f2) {
+ 			f2 = NULL;
+ 		} else {
+-			pr_err("Unexpected fence!\n");
+-			err = -EINVAL;
++			KUNIT_FAIL(test, "Unexpected fence!");
  		}
- 		if (f != fence) {
--			pr_err("Unexpected fence\n");
-+			KUNIT_FAIL(test, "Unexpected fence");
- 			r = -EINVAL;
- 			goto err_unlock;
- 		}
- 		if (dma_resv_iter_usage(&cursor) != usage) {
--			pr_err("Unexpected fence usage\n");
-+			KUNIT_FAIL(test, "Unexpected fence usage");
- 			r = -EINVAL;
- 			goto err_unlock;
- 		}
- 		r = 0;
  	}
- 	if (r) {
--		pr_err("No fence found\n");
-+		KUNIT_FAIL(test, "No fence found");
- 		goto err_unlock;
- 	}
- 	dma_fence_signal(f);
-@@ -164,33 +162,32 @@ static int test_for_each(void *arg)
- err_free:
- 	dma_resv_fini(&resv);
- 	dma_fence_put(f);
--	return r;
+ 
+-	if (f1 || f2) {
+-		pr_err("Not all fences seen!\n");
+-		err = -EINVAL;
+-	}
++	if (f1 || f2)
++		KUNIT_FAIL(test, "Not all fences seen!");
+ 
+ 	dma_fence_put(chain);
+-	return err;
  }
  
--static int test_for_each_unlocked(void *arg)
-+static void test_for_each_unlocked(struct kunit *test)
+-static int unwrap_chain_array(void *arg)
++static void test_unwrap_chain_array(struct kunit *test)
  {
--	enum dma_resv_usage usage = (unsigned long)arg;
-+	const struct dma_resv_usage_param *param = test->param_value;
-+	enum dma_resv_usage usage = param->usage;
- 	struct dma_resv_iter cursor;
- 	struct dma_fence *f, *fence;
- 	struct dma_resv resv;
- 	int r;
+ 	struct dma_fence *fence, *f1, *f2, *array, *chain;
+ 	struct dma_fence_unwrap iter;
+-	int err = 0;
  
- 	f = alloc_fence();
--	if (!f)
+ 	f1 = mock_fence();
+-	if (!f1)
 -		return -ENOMEM;
-+	KUNIT_ASSERT_NOT_NULL(test, f);
++	KUNIT_ASSERT_NOT_NULL(test, f1);
  
- 	dma_fence_enable_sw_signaling(f);
+ 	dma_fence_enable_sw_signaling(f1);
  
- 	dma_resv_init(&resv);
- 	r = dma_resv_lock(&resv, NULL);
- 	if (r) {
--		pr_err("Resv locking failed\n");
-+		KUNIT_FAIL(test, "Resv locking failed");
- 		goto err_free;
+ 	f2 = mock_fence();
+ 	if (!f2) {
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		dma_fence_put(f1);
+-		return -ENOMEM;
++		return;
  	}
  
- 	r = dma_resv_reserve_fences(&resv, 1);
- 	if (r) {
--		pr_err("Resv shared slot allocation failed\n");
-+		KUNIT_FAIL(test, "Resv shared slot allocation failed");
- 		dma_resv_unlock(&resv);
- 		goto err_free;
- 	}
-@@ -202,21 +199,20 @@ static int test_for_each_unlocked(void *arg)
- 	dma_resv_iter_begin(&cursor, &resv, usage);
- 	dma_resv_for_each_fence_unlocked(&cursor, fence) {
- 		if (!r) {
--			pr_err("More than one fence found\n");
--			r = -EINVAL;
-+			KUNIT_FAIL(test, "More than one fence found");
- 			goto err_iter_end;
- 		}
- 		if (!dma_resv_iter_is_restarted(&cursor)) {
--			pr_err("No restart flag\n");
-+			KUNIT_FAIL(test, "No restart flag");
- 			goto err_iter_end;
- 		}
- 		if (f != fence) {
--			pr_err("Unexpected fence\n");
-+			KUNIT_FAIL(test, "Unexpected fence");
- 			r = -EINVAL;
- 			goto err_iter_end;
- 		}
- 		if (dma_resv_iter_usage(&cursor) != usage) {
--			pr_err("Unexpected fence usage\n");
-+			KUNIT_FAIL(test, "Unexpected fence usage");
- 			r = -EINVAL;
- 			goto err_iter_end;
- 		}
-@@ -230,40 +226,38 @@ static int test_for_each_unlocked(void *arg)
- 			r = 0;
+ 	dma_fence_enable_sw_signaling(f2);
+ 
+ 	array = mock_array(2, f1, f2);
+-	if (!array)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, array);
+ 
+ 	chain = mock_chain(NULL, array);
+-	if (!chain)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, chain);
+ 
+ 	dma_fence_unwrap_for_each(fence, &iter, chain) {
+ 		if (fence == f1) {
+@@ -242,35 +221,29 @@ static int unwrap_chain_array(void *arg)
+ 		} else if (fence == f2) {
+ 			f2 = NULL;
+ 		} else {
+-			pr_err("Unexpected fence!\n");
+-			err = -EINVAL;
++			KUNIT_FAIL(test, "Unexpected fence!");
  		}
  	}
--	if (r)
--		pr_err("No fence found\n");
-+	KUNIT_EXPECT_EQ(test, r, 0);
- err_iter_end:
- 	dma_resv_iter_end(&cursor);
- 	dma_fence_signal(f);
- err_free:
- 	dma_resv_fini(&resv);
- 	dma_fence_put(f);
--	return r;
+ 
+-	if (f1 || f2) {
+-		pr_err("Not all fences seen!\n");
+-		err = -EINVAL;
+-	}
++	if (f1 || f2)
++		KUNIT_FAIL(test, "Not all fences seen!");
+ 
+ 	dma_fence_put(chain);
+-	return err;
  }
  
--static int test_get_fences(void *arg)
-+static void test_get_fences(struct kunit *test)
+-static int unwrap_merge(void *arg)
++static void test_unwrap_merge(struct kunit *test)
  {
--	enum dma_resv_usage usage = (unsigned long)arg;
-+	const struct dma_resv_usage_param *param = test->param_value;
-+	enum dma_resv_usage usage = param->usage;
- 	struct dma_fence *f, **fences = NULL;
- 	struct dma_resv resv;
- 	int r, i;
+ 	struct dma_fence *fence, *f1, *f2, *f3;
+ 	struct dma_fence_unwrap iter;
+-	int err = 0;
  
- 	f = alloc_fence();
--	if (!f)
+ 	f1 = mock_fence();
+-	if (!f1)
 -		return -ENOMEM;
-+	KUNIT_ASSERT_NOT_NULL(test, f);
++	KUNIT_ASSERT_NOT_NULL(test, f1);
  
- 	dma_fence_enable_sw_signaling(f);
+ 	dma_fence_enable_sw_signaling(f1);
  
- 	dma_resv_init(&resv);
- 	r = dma_resv_lock(&resv, NULL);
- 	if (r) {
--		pr_err("Resv locking failed\n");
-+		KUNIT_FAIL(test, "Resv locking failed");
- 		goto err_resv;
+ 	f2 = mock_fence();
+ 	if (!f2) {
+-		err = -ENOMEM;
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		goto error_put_f1;
  	}
  
- 	r = dma_resv_reserve_fences(&resv, 1);
- 	if (r) {
--		pr_err("Resv shared slot allocation failed\n");
-+		KUNIT_FAIL(test, "Resv shared slot allocation failed");
- 		dma_resv_unlock(&resv);
- 		goto err_resv;
- 	}
-@@ -273,12 +267,12 @@ static int test_get_fences(void *arg)
+@@ -278,7 +251,7 @@ static int unwrap_merge(void *arg)
  
- 	r = dma_resv_get_fences(&resv, usage, &i, &fences);
- 	if (r) {
--		pr_err("get_fences failed\n");
-+		KUNIT_FAIL(test, "get_fences failed");
- 		goto err_free;
+ 	f3 = dma_fence_unwrap_merge(f1, f2);
+ 	if (!f3) {
+-		err = -ENOMEM;
++		KUNIT_FAIL(test, "Failed to merge fences");
+ 		goto error_put_f2;
  	}
  
- 	if (i != 1 || fences[0] != f) {
--		pr_err("get_fences returned unexpected fence\n");
-+		KUNIT_FAIL(test, "get_fences returned unexpected fence");
- 		goto err_free;
+@@ -290,39 +263,33 @@ static int unwrap_merge(void *arg)
+ 			dma_fence_put(f2);
+ 			f2 = NULL;
+ 		} else {
+-			pr_err("Unexpected fence!\n");
+-			err = -EINVAL;
++			KUNIT_FAIL(test, "Unexpected fence!");
+ 		}
  	}
  
-@@ -290,27 +284,32 @@ static int test_get_fences(void *arg)
- err_resv:
- 	dma_resv_fini(&resv);
- 	dma_fence_put(f);
--	return r;
+-	if (f1 || f2) {
+-		pr_err("Not all fences seen!\n");
+-		err = -EINVAL;
+-	}
++	if (f1 || f2)
++		KUNIT_FAIL(test, "Not all fences seen!");
+ 
+ 	dma_fence_put(f3);
+ error_put_f2:
+ 	dma_fence_put(f2);
+ error_put_f1:
+ 	dma_fence_put(f1);
+-	return err;
  }
  
--int dma_resv(void)
+-static int unwrap_merge_duplicate(void *arg)
++static void test_unwrap_merge_duplicate(struct kunit *test)
+ {
+ 	struct dma_fence *fence, *f1, *f2;
+ 	struct dma_fence_unwrap iter;
+-	int err = 0;
+ 
+ 	f1 = mock_fence();
+-	if (!f1)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, f1);
+ 
+ 	dma_fence_enable_sw_signaling(f1);
+ 
+ 	f2 = dma_fence_unwrap_merge(f1, f1);
+ 	if (!f2) {
+-		err = -ENOMEM;
++		KUNIT_FAIL(test, "Failed to merge fences");
+ 		goto error_put_f1;
+ 	}
+ 
+@@ -331,41 +298,35 @@ static int unwrap_merge_duplicate(void *arg)
+ 			dma_fence_put(f1);
+ 			f1 = NULL;
+ 		} else {
+-			pr_err("Unexpected fence!\n");
+-			err = -EINVAL;
++			KUNIT_FAIL(test, "Unexpected fence!");
+ 		}
+ 	}
+ 
+-	if (f1) {
+-		pr_err("Not all fences seen!\n");
+-		err = -EINVAL;
+-	}
++	if (f1)
++		KUNIT_FAIL(test, "Not all fences seen!");
+ 
+ 	dma_fence_put(f2);
+ error_put_f1:
+ 	dma_fence_put(f1);
+-	return err;
+ }
+ 
+-static int unwrap_merge_seqno(void *arg)
++static void test_unwrap_merge_seqno(struct kunit *test)
+ {
+ 	struct dma_fence *fence, *f1, *f2, *f3, *f4;
+ 	struct dma_fence_unwrap iter;
+-	int err = 0;
+ 	u64 ctx[2];
+ 
+ 	ctx[0] = dma_fence_context_alloc(1);
+ 	ctx[1] = dma_fence_context_alloc(1);
+ 
+ 	f1 = __mock_fence(ctx[1], 1);
+-	if (!f1)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, f1);
+ 
+ 	dma_fence_enable_sw_signaling(f1);
+ 
+ 	f2 = __mock_fence(ctx[1], 2);
+ 	if (!f2) {
+-		err = -ENOMEM;
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		goto error_put_f1;
+ 	}
+ 
+@@ -373,7 +334,7 @@ static int unwrap_merge_seqno(void *arg)
+ 
+ 	f3 = __mock_fence(ctx[0], 1);
+ 	if (!f3) {
+-		err = -ENOMEM;
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		goto error_put_f2;
+ 	}
+ 
+@@ -381,7 +342,7 @@ static int unwrap_merge_seqno(void *arg)
+ 
+ 	f4 = dma_fence_unwrap_merge(f1, f2, f3);
+ 	if (!f4) {
+-		err = -ENOMEM;
++		KUNIT_FAIL(test, "Failed to merge fences");
+ 		goto error_put_f3;
+ 	}
+ 
+@@ -393,15 +354,12 @@ static int unwrap_merge_seqno(void *arg)
+ 			dma_fence_put(f2);
+ 			f2 = NULL;
+ 		} else {
+-			pr_err("Unexpected fence!\n");
+-			err = -EINVAL;
++			KUNIT_FAIL(test, "Unexpected fence!");
+ 		}
+ 	}
+ 
+-	if (f2 || f3) {
+-		pr_err("Not all fences seen!\n");
+-		err = -EINVAL;
+-	}
++	if (f2 || f3)
++		KUNIT_FAIL(test, "Not all fences seen!");
+ 
+ 	dma_fence_put(f4);
+ error_put_f3:
+@@ -410,40 +368,41 @@ static int unwrap_merge_seqno(void *arg)
+ 	dma_fence_put(f2);
+ error_put_f1:
+ 	dma_fence_put(f1);
+-	return err;
+ }
+ 
+-static int unwrap_merge_order(void *arg)
++static void test_unwrap_merge_order(struct kunit *test)
+ {
+ 	struct dma_fence *fence, *f1, *f2, *a1, *a2, *c1, *c2;
+ 	struct dma_fence_unwrap iter;
+-	int err = 0;
+ 
+ 	f1 = mock_fence();
+-	if (!f1)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, f1);
+ 
+ 	dma_fence_enable_sw_signaling(f1);
+ 
+ 	f2 = mock_fence();
+ 	if (!f2) {
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		dma_fence_put(f1);
+-		return -ENOMEM;
++		return;
+ 	}
+ 
+ 	dma_fence_enable_sw_signaling(f2);
+ 
+ 	a1 = mock_array(2, f1, f2);
+-	if (!a1)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, a1);
+ 
+ 	c1 = mock_chain(NULL, dma_fence_get(f1));
+-	if (!c1)
++	if (!c1) {
++		KUNIT_FAIL(test, "Failed to create chain");
+ 		goto error_put_a1;
++	}
+ 
+ 	c2 = mock_chain(c1, dma_fence_get(f2));
+-	if (!c2)
++	if (!c2) {
++		KUNIT_FAIL(test, "Failed to create chain");
+ 		goto error_put_a1;
++	}
+ 
+ 	/*
+ 	 * The fences in the chain are the same as in a1 but in oposite order,
+@@ -455,63 +414,64 @@ static int unwrap_merge_order(void *arg)
+ 		if (fence == f1) {
+ 			f1 = NULL;
+ 			if (!f2)
+-				pr_err("Unexpected order!\n");
++				KUNIT_FAIL(test, "Unexpected order!");
+ 		} else if (fence == f2) {
+ 			f2 = NULL;
+ 			if (f1)
+-				pr_err("Unexpected order!\n");
++				KUNIT_FAIL(test, "Unexpected order!");
+ 		} else {
+-			pr_err("Unexpected fence!\n");
+-			err = -EINVAL;
++			KUNIT_FAIL(test, "Unexpected fence!");
+ 		}
+ 	}
+ 
+-	if (f1 || f2) {
+-		pr_err("Not all fences seen!\n");
+-		err = -EINVAL;
+-	}
++	if (f1 || f2)
++		KUNIT_FAIL(test, "Not all fences seen!");
+ 
+ 	dma_fence_put(a2);
+-	return err;
++	return;
+ 
+ error_put_a1:
+ 	dma_fence_put(a1);
+-	return -ENOMEM;
+ }
+ 
+-static int unwrap_merge_complex(void *arg)
++static void test_unwrap_merge_complex(struct kunit *test)
+ {
+ 	struct dma_fence *fence, *f1, *f2, *f3, *f4, *f5;
+ 	struct dma_fence_unwrap iter;
+-	int err = -ENOMEM;
+ 
+ 	f1 = mock_fence();
+-	if (!f1)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, f1);
+ 
+ 	dma_fence_enable_sw_signaling(f1);
+ 
+ 	f2 = mock_fence();
+-	if (!f2)
++	if (!f2) {
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		goto error_put_f1;
++	}
+ 
+ 	dma_fence_enable_sw_signaling(f2);
+ 
+ 	f3 = dma_fence_unwrap_merge(f1, f2);
+-	if (!f3)
++	if (!f3) {
++		KUNIT_FAIL(test, "Failed to merge fences");
+ 		goto error_put_f2;
++	}
+ 
+ 	/* The resulting array has the fences in reverse */
+ 	f4 = mock_array(2, dma_fence_get(f2), dma_fence_get(f1));
+-	if (!f4)
++	if (!f4) {
++		KUNIT_FAIL(test, "Failed to create array");
+ 		goto error_put_f3;
++	}
+ 
+ 	/* Signaled fences should be filtered, the two arrays merged. */
+ 	f5 = dma_fence_unwrap_merge(f3, f4, dma_fence_get_stub());
+-	if (!f5)
++	if (!f5) {
++		KUNIT_FAIL(test, "Failed to merge fences");
+ 		goto error_put_f4;
++	}
+ 
+-	err = 0;
+ 	dma_fence_unwrap_for_each(fence, &iter, f5) {
+ 		if (fence == f1) {
+ 			dma_fence_put(f1);
+@@ -520,15 +480,12 @@ static int unwrap_merge_complex(void *arg)
+ 			dma_fence_put(f2);
+ 			f2 = NULL;
+ 		} else {
+-			pr_err("Unexpected fence!\n");
+-			err = -EINVAL;
++			KUNIT_FAIL(test, "Unexpected fence!");
+ 		}
+ 	}
+ 
+-	if (f1 || f2) {
+-		pr_err("Not all fences seen!\n");
+-		err = -EINVAL;
+-	}
++	if (f1 || f2)
++		KUNIT_FAIL(test, "Not all fences seen!");
+ 
+ 	dma_fence_put(f5);
+ error_put_f4:
+@@ -539,56 +496,64 @@ static int unwrap_merge_complex(void *arg)
+ 	dma_fence_put(f2);
+ error_put_f1:
+ 	dma_fence_put(f1);
+-	return err;
+ }
+ 
+-static int unwrap_merge_complex_seqno(void *arg)
++static void test_unwrap_merge_complex_seqno(struct kunit *test)
+ {
+ 	struct dma_fence *fence, *f1, *f2, *f3, *f4, *f5, *f6, *f7;
+ 	struct dma_fence_unwrap iter;
+-	int err = -ENOMEM;
+ 	u64 ctx[2];
+ 
+ 	ctx[0] = dma_fence_context_alloc(1);
+ 	ctx[1] = dma_fence_context_alloc(1);
+ 
+ 	f1 = __mock_fence(ctx[0], 2);
+-	if (!f1)
+-		return -ENOMEM;
++	KUNIT_ASSERT_NOT_NULL(test, f1);
+ 
+ 	dma_fence_enable_sw_signaling(f1);
+ 
+ 	f2 = __mock_fence(ctx[1], 1);
+-	if (!f2)
++	if (!f2) {
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		goto error_put_f1;
++	}
+ 
+ 	dma_fence_enable_sw_signaling(f2);
+ 
+ 	f3 = __mock_fence(ctx[0], 1);
+-	if (!f3)
++	if (!f3) {
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		goto error_put_f2;
++	}
+ 
+ 	dma_fence_enable_sw_signaling(f3);
+ 
+ 	f4 = __mock_fence(ctx[1], 2);
+-	if (!f4)
++	if (!f4) {
++		KUNIT_FAIL(test, "Failed to create mock fence");
+ 		goto error_put_f3;
++	}
+ 
+ 	dma_fence_enable_sw_signaling(f4);
+ 
+ 	f5 = mock_array(2, dma_fence_get(f1), dma_fence_get(f2));
+-	if (!f5)
++	if (!f5) {
++		KUNIT_FAIL(test, "Failed to create array");
+ 		goto error_put_f4;
++	}
+ 
+ 	f6 = mock_array(2, dma_fence_get(f3), dma_fence_get(f4));
+-	if (!f6)
++	if (!f6) {
++		KUNIT_FAIL(test, "Failed to create array");
+ 		goto error_put_f5;
++	}
+ 
+ 	f7 = dma_fence_unwrap_merge(f5, f6);
+-	if (!f7)
++	if (!f7) {
++		KUNIT_FAIL(test, "Failed to merge fences");
+ 		goto error_put_f6;
++	}
+ 
+-	err = 0;
+ 	dma_fence_unwrap_for_each(fence, &iter, f7) {
+ 		if (fence == f1 && f4) {
+ 			dma_fence_put(f1);
+@@ -597,15 +562,12 @@ static int unwrap_merge_complex_seqno(void *arg)
+ 			dma_fence_put(f4);
+ 			f4 = NULL;
+ 		} else {
+-			pr_err("Unexpected fence!\n");
+-			err = -EINVAL;
++			KUNIT_FAIL(test, "Unexpected fence!");
+ 		}
+ 	}
+ 
+-	if (f1 || f4) {
+-		pr_err("Not all fences seen!\n");
+-		err = -EINVAL;
+-	}
++	if (f1 || f4)
++		KUNIT_FAIL(test, "Not all fences seen!");
+ 
+ 	dma_fence_put(f7);
+ error_put_f6:
+@@ -620,23 +582,25 @@ static int unwrap_merge_complex_seqno(void *arg)
+ 	dma_fence_put(f2);
+ error_put_f1:
+ 	dma_fence_put(f1);
+-	return err;
+ }
+ 
+-int dma_fence_unwrap(void)
 -{
 -	static const struct subtest tests[] = {
 -		SUBTEST(sanitycheck),
--		SUBTEST(test_signaling),
--		SUBTEST(test_for_each),
--		SUBTEST(test_for_each_unlocked),
--		SUBTEST(test_get_fences),
+-		SUBTEST(unwrap_array),
+-		SUBTEST(unwrap_chain),
+-		SUBTEST(unwrap_chain_array),
+-		SUBTEST(unwrap_merge),
+-		SUBTEST(unwrap_merge_duplicate),
+-		SUBTEST(unwrap_merge_seqno),
+-		SUBTEST(unwrap_merge_order),
+-		SUBTEST(unwrap_merge_complex),
+-		SUBTEST(unwrap_merge_complex_seqno),
 -	};
--	enum dma_resv_usage usage;
--	int r;
-+static const struct dma_resv_usage_param dma_resv_usage_params[] = {
-+	{ DMA_RESV_USAGE_KERNEL, "kernel" },
-+	{ DMA_RESV_USAGE_WRITE, "write" },
-+	{ DMA_RESV_USAGE_READ, "read" },
-+	{ DMA_RESV_USAGE_BOOKKEEP, "bookkeep" },
-+};
- 
--	spin_lock_init(&fence_lock);
--	for (usage = DMA_RESV_USAGE_KERNEL; usage <= DMA_RESV_USAGE_BOOKKEEP;
--	     ++usage) {
--		r = subtests(tests, (void *)(unsigned long)usage);
--		if (r)
--			return r;
--	}
--	return 0;
--}
-+KUNIT_ARRAY_PARAM_DESC(dma_resv_usage, dma_resv_usage_params, desc);
-+
-+static struct kunit_case dma_resv_cases[] = {
++static struct kunit_case dma_fence_unwrap_cases[] = {
 +	KUNIT_CASE(test_sanitycheck),
-+	KUNIT_CASE_PARAM(test_signaling, dma_resv_usage_gen_params),
-+	KUNIT_CASE_PARAM(test_for_each, dma_resv_usage_gen_params),
-+	KUNIT_CASE_PARAM(test_for_each_unlocked, dma_resv_usage_gen_params),
-+	KUNIT_CASE_PARAM(test_get_fences, dma_resv_usage_gen_params),
++	KUNIT_CASE(test_unwrap_array),
++	KUNIT_CASE(test_unwrap_chain),
++	KUNIT_CASE(test_unwrap_chain_array),
++	KUNIT_CASE(test_unwrap_merge),
++	KUNIT_CASE(test_unwrap_merge_duplicate),
++	KUNIT_CASE(test_unwrap_merge_seqno),
++	KUNIT_CASE(test_unwrap_merge_order),
++	KUNIT_CASE(test_unwrap_merge_complex),
++	KUNIT_CASE(test_unwrap_merge_complex_seqno),
 +	{}
 +};
-+
-+static struct kunit_suite dma_resv_test_suite = {
-+	.name = "dma-buf-resv",
-+	.test_cases = dma_resv_cases,
+ 
+-	return subtests(tests, NULL);
+-}
++static struct kunit_suite dma_fence_unwrap_test_suite = {
++	.name = "dma-buf-fence-unwrap",
++	.test_cases = dma_fence_unwrap_cases,
 +};
 +
-+kunit_test_suite(dma_resv_test_suite);
-+
-+MODULE_DESCRIPTION("KUnit tests for DMA-BUF");
-+MODULE_LICENSE("GPL");
++kunit_test_suite(dma_fence_unwrap_test_suite);
 -- 
 2.43.0
 
