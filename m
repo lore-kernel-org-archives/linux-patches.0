@@ -1,114 +1,225 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1023E37BE75
-	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 18:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB23387574
+	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 18:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772477197; cv=none; b=P1BsKd+x2zlxTMk7jcKoZwT+7IadZHOXzM6cFJ6WH2d/RcrzY84edVN0SDuGwZkkpLFVFHOxsqPRSJjnTdB4vuILMFSJ6lWLBnyC7g80XroJqujsGrFxYfggExf258mOZeJ7nPm+JKnppRz5LEpU2RCCHsFyjMZipQ/lYEM203A=
+	t=1772477197; cv=none; b=n1tWMxp9j8ejIrGwE05y3tpUo/6QcVMAlnWLzfdnvS/qCO/bA4DSm4FmBMLWJ1zxhUtX88d8tZVNHZikjsWpMGiD/KCvjmYH0EKQhuHiIIv6xV6BskrY61/KHeZjLCCNmfN1N6kFHoKIX9WiRPX2gH0SpKnRQJnbNu5ijUjyowA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772477197; c=relaxed/simple;
-	bh=Lry8ExSeWB9EpusoHkxojQVZihp63rGi1LQPnn8u6D0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ob+sD0CuRiS2wfpmdWI4szBd2Qsr0LdevzJ0mBYLlMqn3Pascg5bzC4EmcENxLl43oKdYvefD44LQ1MBHcNN1Lw6VywyYfiaBbEG2ZKQiliWClWfypHYzFJ+Q3f2TN+BTQ9Kczx9vMm5/BN/g2Cu/deH3iugtlQFerE34vqYg0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BTZz9EoM; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	bh=z+I4Oh28rTlzW4CAMClsLNIZcZbgb28hRpbqm0vRka4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=F+pyd049X6Y7P1nL0d+nBw2oJd4qrQo40qXsk/UFXUcP3iG3xwdDJ/mvRNlwStqMzY/rH6s7DKnOgMG1EDGqUrv2x3IlS2iS7935Xj9o3JaSnupWpUnzcQEX+xWI4MuNuqIcvmgOnUqe2bnwLTbqt2tuPQUX7ezH2oV7h4lT/14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=S4kbU/lb; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BTZz9EoM"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cbb2329e7eso499283785a.0
-        for <patches@lists.linux.dev>; Mon, 02 Mar 2026 10:46:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772477192; x=1773081992; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2/fCL0PVbWZ+CTSzMuw98+KycxkLtqaDaxlUz1qwLO8=;
-        b=BTZz9EoMwROS/lXQ8BuDS63Nejcim1IzYmzHoiK9Pr4O2w4ZWGBt3GbV9mKO1ioZb0
-         hk4I4l92ysWZ59AjEvZXeJoqvb1jShYtMyAM6ficp5vEE7M2wye464X0J0cCl2COoOZq
-         S+NWPs8PG/ig+xFuLMqNprtWNcQRnBAiCzX2ER5IA2q/XA+Ms5zwY10Vb29C6A1Br20o
-         5q4sOfCa3O9BV4kD5aqsUkHZZXIPpUjqJDkJhyWx988iAeQhI+FuY3IyJfo7hQuEkKFj
-         lVyPoRJ7c7qlObhDF5ulaktzwA/kEiNzEsAS+MAaoOr2LDeOzweqivyQHBBrTE0Kvqsh
-         dVZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772477192; x=1773081992;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2/fCL0PVbWZ+CTSzMuw98+KycxkLtqaDaxlUz1qwLO8=;
-        b=cAvwKHssKg/FS8vv1STv5F97+On6Ioyllv7d6AlDqHEP69TYVZF0wyy1CNjYMmBbVx
-         whbSpqAmTxKtId08NwUejowFEfdkhLAlH+PJ+OK6JxlNfW7GDQ0uhnFXkhDB0vIREQgD
-         wsnPxuGAyyY0NAqKzcgFNG3UF42ty/fTcsXF4+Y4qKaloVC5C0N3p6C6rfBTLRL0eOXi
-         3rM71J0GbPqdUCszYuOLt+/KpgN56rrCEhmNdSAu5zxPrc5RmPZtKOQgmgUaX7OsXlWm
-         mb0lOGyY8SPAMheKwfN3xU1EorFt4loq2ZAuUDXeCyHIUnaodfNgq4Stox5UblN1W6rx
-         5Jfw==
-X-Forwarded-Encrypted: i=1; AJvYcCVojwySbtuAnwz3R1F6W0/Z9WiMk2aS97NdPoVW2XCIz+LEGy+fwdUqufAjGCmYDk4Y6cTlI/iD@lists.linux.dev
-X-Gm-Message-State: AOJu0YzXGFUvN2v3Jzg/3pXRrtPl4sgpZVN/XUERNNqUg92JoBNmWvQv
-	S+en+RncMMcWBpBBf2Fk71XmuxV8vMMKTyJWlCapKFpg4p43VHAqNEvT
-X-Gm-Gg: ATEYQzx2xFV6IPpIdKfNccVzmFslxrSi3AAzU1XNDNpVUJr91JOJhZQEVN2Xre+LNyJ
-	z3geKgUi6Zz8OxUl0Dxjz0Ga7bivXARmsp1VTru/rQqHP2EJ6MgMIIilR4NA3JfDwaLxP8964Gz
-	rKxZbu8UG6FEbgpmqAyJGE/BsG5RoXgK6T26WX/5Hgxw45GFNTa4B74qApcGfibSI9YCCgtaaNR
-	mSuV7Fe8+Wzime329M6mTIrS3awY1GOtmcuqlLWEzmiEkbXaK7EtT/pOc17/ArfsAd7GCXrjNuL
-	3bh3+lI79Zmne+nzYKgt1HsjJUUDYZXqwsqC3RrAmYF2zu0LDWHeoE3s0J0rRrLRjPLyAwmLVoC
-	/qbsQTSISrEQzeYj1Znsp42VShzeL7SxE1MuI3bSfMyLEx69CiJWPcqnG695YCBuyhPQqp+kQcR
-	uKNe457UCRrCknkWf7AdJK8nEllC4GCJ72rHOd8BShij7IP2BZhg==
-X-Received: by 2002:a05:620a:4141:b0:8c7:19f4:b585 with SMTP id af79cd13be357-8cbc8e4b595mr1721232985a.43.1772477191900;
-        Mon, 02 Mar 2026 10:46:31 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf717301sm1199062585a.36.2026.03.02.10.46.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Mar 2026 10:46:31 -0800 (PST)
-Message-ID: <a2baa254-0b3f-4514-846d-e905f1fefb10@gmail.com>
-Date: Mon, 2 Mar 2026 10:46:26 -0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="S4kbU/lb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1772477195; x=1804013195;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=z+I4Oh28rTlzW4CAMClsLNIZcZbgb28hRpbqm0vRka4=;
+  b=S4kbU/lb803+Q475Mu/kA2FvDsZyghCJoderwHuqWUmTFMiX3w8Rz5BB
+   0K/c2DVvdJqMoujqF69d1E92ajtvhKIIR8mauscT84wh2jxYIeGrnVxmf
+   cYd2cW6z4VFnu9sjE69FPN4b2ZnsmRHfNbpXXNl7cGsJxRpF7kvzVQvQl
+   mlP7Fl+SHA/7ZulIO2K1D7T5DEC8igZKxkvQ1Je36ZcbxIeNErl3B/qBc
+   rzfPZVMBpWF8sUN/SSgTCStqhDG+b2tRdbcFyewBH+oKzrsXUxccpdxV9
+   Fit4eVIk42LIBxiRe3l1nVj2DX9edAPdQikndxV1H7xQZRrdXUCrmp2An
+   w==;
+X-CSE-ConnectionGUID: 4Oeh5T8nQKiO6/bkgmPYEQ==
+X-CSE-MsgGUID: LNqN2aF/S/GAPDECW6KpKg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11717"; a="84135530"
+X-IronPort-AV: E=Sophos;i="6.21,320,1763452800"; 
+   d="scan'208";a="84135530"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2026 10:46:27 -0800
+X-CSE-ConnectionGUID: uGAxpUKASqiLqiHIjSHJtA==
+X-CSE-MsgGUID: PIXfq16aSIuuUlWyNKAmcw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,320,1763452800"; 
+   d="scan'208";a="255604107"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2026 10:46:26 -0800
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: tony.luck@intel.com,
+	james.morse@arm.com,
+	Dave.Martin@arm.com,
+	babu.moger@amd.com,
+	bp@alien8.de,
+	tglx@linutronix.de,
+	dave.hansen@linux.intel.com
+Cc: x86@kernel.org,
+	hpa@zytor.com,
+	ben.horgan@arm.com,
+	fustini@kernel.org,
+	fenghuay@nvidia.com,
+	peternewman@google.com,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	reinette.chatre@intel.com
+Subject: [PATCH 11/11] fs/resctrl: Communicate resource group deleted error via last_cmd_status
+Date: Mon,  2 Mar 2026 10:46:17 -0800
+Message-ID: <f5d06640a0c0a43601abb3be3593a20dcef56ea6.1772476561.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <cover.1772476561.git.reinette.chatre@intel.com>
+References: <cover.1772476561.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/410] 5.15.202-rc2 review
-To: Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260302160955.2522727-1-sashal@kernel.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260302160955.2522727-1-sashal@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 3/2/26 08:09, Sasha Levin wrote:
-> 
-> This is the start of the stable review cycle for the 5.15.202 release.
-> There are 410 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed Mar  4 04:09:54 PM UTC 2026.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
->          https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-5.15.y&id2=v5.15.201
-> or in the git tree and branch at:
->          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> Thanks,
-> Sasha
-> 
-> -------------
+User space expects last_cmd_status to contain additional information if
+any resctrl command fails.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+A resctrl command may be blocked waiting on the rdtgroup_mutex waiting for
+another command to finish and find that once the mutex is available that
+the resource group has since been deleted. In this scenario the command
+will fail while last_cmd_status contains either "ok" if the last_cmd_status
+buffer is empty or an outdated error from a previous command failure if
+last_cmd_status buffer has content.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Include clearing of last_cmd_status buffer as part of
+rdtgroup_kn_lock_live() that is used to obtain access and needed locking
+to a resource group before attempting a command on the group. With the
+last_cmd_status buffer ready, provide an appropriate message to user space
+if the resource group has been deleted.
+
+No last_cmd_status treatment is needed for the remaining failure of
+rdtgroup_kn_lock_live() encountering a non-existent resource group since
+that could only occur during an attempt to obtain a resource group lock
+on a file in info/ which is an invalid usage.
+
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+ fs/resctrl/ctrlmondata.c |  3 ---
+ fs/resctrl/monitor.c     |  2 --
+ fs/resctrl/rdtgroup.c    | 14 +++++---------
+ 3 files changed, 5 insertions(+), 14 deletions(-)
+
+diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+index 7b90c36ff0a6..9915f714e26a 100644
+--- a/fs/resctrl/ctrlmondata.c
++++ b/fs/resctrl/ctrlmondata.c
+@@ -317,7 +317,6 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 		rdtgroup_kn_unlock(of->kn);
+ 		return -ENOENT;
+ 	}
+-	rdt_last_cmd_clear();
+ 
+ 	/* Valid input requires a trailing newline */
+ 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
+@@ -434,7 +433,6 @@ int rdtgroup_schemata_show(struct kernfs_open_file *of,
+ 			}
+ 		} else if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
+ 			if (!rdtgrp->plr->d) {
+-				rdt_last_cmd_clear();
+ 				rdt_last_cmd_puts("Cache domain offline\n");
+ 				ret = -ENODEV;
+ 			} else {
+@@ -475,7 +473,6 @@ ssize_t rdtgroup_mba_mbps_event_write(struct kernfs_open_file *of,
+ 		rdtgroup_kn_unlock(of->kn);
+ 		return -ENOENT;
+ 	}
+-	rdt_last_cmd_clear();
+ 
+ 	/* Valid input requires a trailing newline */
+ 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 6c499a0bd435..73893a7e14e0 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -1632,7 +1632,6 @@ int mbm_L3_assignments_show(struct kernfs_open_file *of, struct seq_file *s, voi
+ 		goto out_unlock;
+ 	}
+ 
+-	rdt_last_cmd_clear();
+ 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
+ 		rdt_last_cmd_puts("mbm_event counter assignment mode is not enabled\n");
+ 		ret = -EINVAL;
+@@ -1772,7 +1771,6 @@ ssize_t mbm_L3_assignments_write(struct kernfs_open_file *of, char *buf,
+ 		rdtgroup_kn_unlock(of->kn);
+ 		return -ENOENT;
+ 	}
+-	rdt_last_cmd_clear();
+ 
+ 	/* Valid input requires a trailing newline */
+ 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 3b3acc748d03..09d688bee0a3 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -359,7 +359,6 @@ static int rdtgroup_cpus_show(struct kernfs_open_file *of,
+ 	if (rdtgrp) {
+ 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
+ 			if (!rdtgrp->plr->d) {
+-				rdt_last_cmd_clear();
+ 				rdt_last_cmd_puts("Cache domain offline\n");
+ 				ret = -ENODEV;
+ 			} else {
+@@ -522,8 +521,6 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
+ 		goto out_unlock;
+ 	}
+ 
+-	rdt_last_cmd_clear();
+-
+ 	if (!buf || nbytes == 0) {
+ 		rdt_last_cmd_puts("Invalid input\n");
+ 		ret = -EINVAL;
+@@ -783,7 +780,6 @@ static ssize_t rdtgroup_tasks_write(struct kernfs_open_file *of,
+ 		rdtgroup_kn_unlock(of->kn);
+ 		return -ENOENT;
+ 	}
+-	rdt_last_cmd_clear();
+ 
+ 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED ||
+ 	    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
+@@ -1464,7 +1460,6 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
+ 		return -ENOENT;
+ 	}
+ 
+-	rdt_last_cmd_clear();
+ 	/* Valid input requires a trailing newline */
+ 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
+ 		rdt_last_cmd_puts("Invalid input\n");
+@@ -1601,7 +1596,6 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
+ 
+ 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
+ 		if (!rdtgrp->plr->d) {
+-			rdt_last_cmd_clear();
+ 			rdt_last_cmd_puts("Cache domain offline\n");
+ 			ret = -ENODEV;
+ 		} else {
+@@ -2639,10 +2633,14 @@ struct rdtgroup *rdtgroup_kn_lock_live(struct kernfs_node *kn)
+ 
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
++	rdt_last_cmd_clear();
+ 
+ 	/* Was this group deleted while we waited? */
+-	if (rdtgrp->flags & RDT_DELETED)
++	if (rdtgrp->flags & RDT_DELETED) {
++		rdt_last_cmd_printf("Resource group %s deleted. No commands possible.\n",
++				    rdt_kn_name(rdtgrp->kn));
+ 		return NULL;
++	}
+ 
+ 	return rdtgrp;
+ }
+@@ -3765,8 +3763,6 @@ static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
+ 		goto out_unlock;
+ 	}
+ 
+-	rdt_last_cmd_clear();
+-
+ 	/*
+ 	 * Check that the parent directory for a monitor group is a "mon_groups"
+ 	 * directory.
 -- 
-Florian
+2.50.1
+
