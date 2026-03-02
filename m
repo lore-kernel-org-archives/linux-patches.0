@@ -1,141 +1,168 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010022.outbound.protection.outlook.com [52.101.85.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B682D97BB;
-	Mon,  2 Mar 2026 13:52:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772459541; cv=none; b=ECIqgIcvAvu1HUwEJEx1cWOC59cbU6vzf2mGHPe5+dUUlheMGGYJsKgN1QSnIic2lrOPBGEHE0iHYklt7QYYNqlVavSBlHay1Ccb/pyqbXjg+I9s8HMuKlo/dpfEw+zgNwBhNE2xpPQeO3XkJ0QD9mEwY3J2sccv4Y2VTSISZLE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772459541; c=relaxed/simple;
-	bh=6gfMUTzTUSlChUd4RFMxjyxhJAdG8HDKJNuSWu1BIH4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hAy4l0jIg4ENjAhsuOqThz3055coHwCABPdeGx0twC5tqI/yBQGcy5mnWUorJLSm4OmiSe7CHjIL0GHumFPTTf16T1BBAzIX0i8LQo0Wm0rN5hNUB9ADLjAI6fA3TraZL33eGsTz58l04MY3/uoDbHcShFWCldxg3F5fOBDsKqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M3Eji0Q+; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFC73E5563
+	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 13:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.22
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772459946; cv=fail; b=kwiQi2e0wQl/me5bE+bg6Z+TFLmLMlbk/pcMwSfuhW8Yr17K07yJGhYHcwYuU8314PmsRYQZttFiyMYECHyCO/yQ4kLCIHV9t5uNJmxhGR0LBZIEht1YvaCtsu1BStpwv2c+kaayhjXYTlJy+kJpjSXrqNoDEOO2x8RlzG0Nars=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772459946; c=relaxed/simple;
+	bh=7mwX++ZEWvs71dmuJ2dlAU/6THEHv+zS+/6xoe2+xyo=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=LQY1FFlmOoNc5R1q1Ai9aHnUfuTojCAAtekZxkwV6VpUy9LknqJnjaa7TSv2eFBB0Ud068OA5DIbNg95Fhvoog7s25PiqN4LE3gSS57OoBMRUDyLYs+HeBrk5y4b1Bp3TpmF6disIBr4Kzg1xFjKaAx44wDtyyzAXa2rOYJumtY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=HQOhajVY; arc=fail smtp.client-ip=52.101.85.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3Eji0Q+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F78DC19423;
-	Mon,  2 Mar 2026 13:52:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772459541;
-	bh=6gfMUTzTUSlChUd4RFMxjyxhJAdG8HDKJNuSWu1BIH4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=M3Eji0Q+Ii1HMOWh/kkgUtteiPM8ZSXaqYtmiUBDALoLGm6rD0j4Qx/lu+9qyTTcq
-	 GaF42WTHpLa4r2nDy/p2iS/2D8heUlCIuF3fyvYEr4cMjN1Mnya9NG46E3F/e+8+kq
-	 ap/OEu36X0H8M42OK3PKHewd3L0nf3EJ2NxfrQUx9qmUqRWSSwz0Ol4vxlRuaugtAv
-	 f/bv+70Mzqn1UsDFKtqCc5S88y4Qgapx6ZqLFxRs1nyDsfMggp/GQF4aBH/6/bKNyX
-	 e9773XMHYHVUoNjKnysMDSVMW09AOQ9lg4USQksdMd3nECpijwu42cOX9UoWOVFUuW
-	 gPLz4VEfC2DuQ==
-Date: Mon, 2 Mar 2026 08:52:19 -0500
-From: Sasha Levin <sashal@kernel.org>
-To: "Barry K. Nathan" <barryn@pobox.com>
-Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	gregkh@linuxfoundation.org, patches@lists.linux.dev,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@nabladev.com,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.12 000/385] 6.12.75-rc1 review
-Message-ID: <aaWWE5uQqz_eG69i@laps>
-References: <20260228180001.1567994-1-sashal@kernel.org>
- <41b35d0e-bd7e-4bcd-a22c-cd96ee6c43d8@pobox.com>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="HQOhajVY"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Wgi0a1zTWTRXdGMlO6jhBMWKbbVX5V9seLfszBuJoBjuwrSgqTAVVeJPr/qVO9meebcZaDsA2ixACkLwBbD0pjxwUgwXKjN8vp9VOJ08UPFxxFjhnqPzP6IjzozEKHuJV+BDg4A3R6MGFkXUItaQUYvdXi2bxtvcFpvAbO75FV7IQsTOipAwjM6f/vyuoUOZjTKHf8m2iqJMk2ysC4uMeAtVz1Z0Ys5F61PrDhbC3Tllj+WqT753VsjPuhA1evZWf/R1hdOI6HykLFhyyFhV+6iSJMEV7jLo8dSxnlpcXXDcg5Ow16XvVnUAbjYFQMrpfG8nxfSNVpYPvm23SZzJBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Fvk+KdHJWpwgtE20rmk5rnspvKis9Oeccv6Dy65Yv9E=;
+ b=vREpGJmBFkg1DDbXFEr8m6JDUcPHCEBq4zxrFhM0L/9ycqQjTED7ixXl7Kb65u1MFthCsYTfppZ43HsO1lICHbrNGVoFakk38TDPB0x6PrEcnvXnd0fvbWUkUa8pGIrxBfg62Zk06xFeUHJDhD6f48fby6w5XJ7J1SSTs3pSlQ/OkQoPkf7wKltsjcOo12Kf7kVua/GXPSteThpCy+k6IyXEtRiEI95c5v185WVblPK86VyZXrtyrehT28Dz89j7h+Jc4QbF9vwgn5RQt75RkISKsxMaD+nEIeZLlc+QvBBuqDpK0NQK9sRJtqN7t+BW0Uz4BAODfo3gAln+lTPsiA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Fvk+KdHJWpwgtE20rmk5rnspvKis9Oeccv6Dy65Yv9E=;
+ b=HQOhajVYL67DuxN3m5nkfyfDrK2pN2AiDlpDSTFikc5GBfd3jxh7WwqmI1XpMaBuXi6Sy00yAex7EUZL3CHePQtkLX/opsDqpUw0xQK1uaihjFJkKC1seGnki7xlPI3tOiC+P/D8GYclHIqe47MCc5nAVx1p2uyr0iEkgM0XUJE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
+ by DS4PR12MB999076.namprd12.prod.outlook.com (2603:10b6:8:2fa::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.20; Mon, 2 Mar
+ 2026 13:59:03 +0000
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::ce69:cfae:774d:a65c]) by PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::ce69:cfae:774d:a65c%5]) with mapi id 15.20.9654.014; Mon, 2 Mar 2026
+ 13:59:03 +0000
+Message-ID: <c088698d-0bb2-4b0a-acad-946ec3df5777@amd.com>
+Date: Mon, 2 Mar 2026 14:58:55 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] Replace the dmabuf custom test framework with kunit
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: David Airlie <airlied@gmail.com>, dri-devel@lists.freedesktop.org,
+ intel-gfx@lists.freedesktop.org, Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ linaro-mm-sig@lists.linaro.org, linux-media@vger.kernel.org,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Simona Vetter <simona@ffwll.ch>,
+ Sumit Semwal <sumit.semwal@linaro.org>, Tvrtko Ursulin
+ <tursulin@ursulin.net>, patches@lists.linux.dev
+References: <0-v1-0a349a394eff+14110-dmabuf_kunit_jgg@nvidia.com>
+ <7c30f527-abc4-43a9-a11c-9233015b0a59@amd.com>
+ <20260302130113.GV5933@nvidia.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+In-Reply-To: <20260302130113.GV5933@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BN0PR04CA0207.namprd04.prod.outlook.com
+ (2603:10b6:408:e9::32) To PH7PR12MB5685.namprd12.prod.outlook.com
+ (2603:10b6:510:13c::22)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <41b35d0e-bd7e-4bcd-a22c-cd96ee6c43d8@pobox.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|DS4PR12MB999076:EE_
+X-MS-Office365-Filtering-Correlation-Id: ead43ae5-2532-41b5-25af-08de7863dc6e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	30Ut3JnSvAcze54VavS+F/Q+GzwFg2YuSgN4wcLBMDXhihyvSnHBjBwVPn6WeGHORLhg5YK6hBLIC1KEpthWF/95iKV+jek3awOlgbe1O8RoW5Bifs4OsWPWTNZ7jtsNWI9YPTmeVWxKPenGGOyebwe6rG/sogKL+pFCDbs95B5qIrhRfZuWy6FmlfM9qrs8T7GlD+d1eINpFLQRp2rdh+DvfZ0M/cus5doq5wWBHJqEhTVwuqrWMH6s/Wh4YMigrkYc/xtn5IleQUMl0j3d9whOYd0pW5HBaF1EXFHErPpV9p6Jc7wtEzmMViKWGr0+LvR7s8asNLqa8h56YEBGtjPbnR9Uvbu5+/IViiVBB5rxOeKYGM8bbJLkfdsfs344qJAfTW56AUTE0FEbJM+0GINSXjwvedyo929L84sFc2YlYGGPHbAQ/m4L6JyNc89Z3jjslgGmc0FZr73TTiOCZhcdLICc72eMTcQSDRploFM5jqP0iZwHf8F37tIanstzCG31ZlFJO6yOfgc0ERIAPZCYCHAzSpnb1T6KgzIUeW3XEOvzlmkB8KOAFECXWDsCdvTvMWPgAh/F1ZAO06FVt3h6AGbqcxlFFQYA1aCAy5ms2tCVJJPDoh2SGSu2hU+cPbwDKdmiPLQ6iWG8Sl4nQLjx8zWpPZqdmzpDmC68Q3Wj3B7r1Dy3ioDef0juFGsSz20ui213PRCI+RFQ2+00XaFEl8zsDoXgJvP/7v0p7QA=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SkwxZ3pRWlFTcDdlaXN4WFlydUlUQmg5c2RKNDlvdHgySXBLQmpzZldERkFt?=
+ =?utf-8?B?dTVsR1oyVmVJeS85eW1FUWxGR245eERSSytsK1VHckk2NzRpTGNGbEF2alE4?=
+ =?utf-8?B?WTNCd3V2ZEFRMVZDeEorNGtSR2NkZkpwbFd6Ylk5SFlhMnN5c3k2QnJucnZy?=
+ =?utf-8?B?Z1Y3ek5WbzViTlp6NGdtdE1DMkNKekNSbTRweDY5aFZuYktUQkJQTzdVQmJM?=
+ =?utf-8?B?M2l2aTRXN0NDcEZPb2hRdkpKU3YrMFA2bEFNQ1plQ3JNTUNCSGhvWGlvbEU0?=
+ =?utf-8?B?azhtc3NaZGxHVElTZGtHM1lPeEZOWWFqUm1SMkVyMlkwYkN5WmtMSW5nSS9l?=
+ =?utf-8?B?TFVlWktRMGczdkY3aUMzNGwvb296OEhQODJDTnQwSzcvL3FiVE5sWmJHaS85?=
+ =?utf-8?B?bE02YVE4ZGR3ODRsbHB1RFVSME5NT21nZ0RGQzZJdVBOczRPM29waE5rd2JO?=
+ =?utf-8?B?WHJvODdQendvZkVvNGZUVjljdHBFRzNzbHpGWXpsY25QQmtBWjdRUUZQS280?=
+ =?utf-8?B?YlU4bXRjWGtGTXI0QllRaXdMdFBQaDFuVVZUdjJuYVFoTjZOcXNFMmhGRy9S?=
+ =?utf-8?B?N0NtdzZFb2lHNnk3RDMxMStBZk0zRWRtRXRORzhneDFvYVhSRktXSzVTL2xV?=
+ =?utf-8?B?NW9PZ1RPRXU3YVhPK1BIbzVuNys2QlhrYTBhemkyNlkzamh0TnB0WXBRTWFv?=
+ =?utf-8?B?eWYrbncrQVZJRTlqL3hXWnZKSkxDaHY0SVdpTnoxRUtiQ0k4cVFLeis1MS9s?=
+ =?utf-8?B?dERJckNRS1I5OUxFQ1hwTU9aa3BRcjUrcEtUNStONXJQdkl2TmgwM0grZWdV?=
+ =?utf-8?B?Zkc4ZWJlaVVxWmQwaFUvS3JLMHUvZHBzc3lpRnJWWUd3SlRwaWNFVlZyNEt6?=
+ =?utf-8?B?cEYvTGUzTUk3NkNQVXhaRUZwRlBnVGx6RHE2TWwwYmVRczl4WS9waTJtV1U5?=
+ =?utf-8?B?QjlxS3ZRR1ZiK09sR2x4K2VPa00rUFNlVERDUWVBb2twcFhGNDJ5dVZuQ2NT?=
+ =?utf-8?B?cFVLMkVBYlR0L3AzN2k3cnpuU0Q1Y3lFbGFjN2hZK2l4c1NZWE44KzFuMGI3?=
+ =?utf-8?B?U3U0L2hrc3k4OFVnWDd3bUlENmF1bjhsU1FMamNWYzhWb1Rqa3VneHJ0Z2pX?=
+ =?utf-8?B?Mm0vTW9YSGVXMWNLbUgrUldreDNrbnpTSVRnUUc2cWFiN2Z1dEM4Q3lJVERz?=
+ =?utf-8?B?VkhqZVhxQklUdWljcXRzYkd6WFZadTh0Y2x2ZmJRdHJVZE5WeUYyRzNwQThn?=
+ =?utf-8?B?N2cvcWdFVmJTejk0Myt5c2laUDY5citLU043K01MekFQMEs0ZUxWTGoxVDFn?=
+ =?utf-8?B?b2lieDUwbUx1RGNRcHF3K1pBWGQzR1dNOXQ5N3YxSjhWdlFFSjcxSmVIek5l?=
+ =?utf-8?B?ZU9TLzRRUHBDUDlFSHA4YXhqUklOME92Z1UzOWlSRzdNc0NyenFOUjFGTTBF?=
+ =?utf-8?B?OGdUQVY1bTJLTzJFeVNGUTYwaS9wcm5PZEZzOERxaHRybUlWOTU0NFhoaGdl?=
+ =?utf-8?B?Qmw1NGVoeXh4ZVpmZzFGRDlYTzFGQTYyZjFqN0poMEF3WG5BaFhIWW9nT1o1?=
+ =?utf-8?B?aC9aWmNHbVlDdTk4Yk1OVEZ2d1E2MmpTZGd4WVZyNlFybTdHNWVjSkkrc1E0?=
+ =?utf-8?B?c0xsdXBpdGJrWXFVOUZPWFlIRjZ2ZUZ5T3pYdGtGSE9IMzRXbm11cmk1TDcx?=
+ =?utf-8?B?TDlrcFA4aUd3YmxoT3Nhbllra2tFTzFqNzA5cVlEU0dMNWkrVUxjcS9tbWdO?=
+ =?utf-8?B?MGxOUkoyMEFNZzNiK0NuQlNyRitRVThFNENGUS9FbHlnakNqYXp1dlVSanpQ?=
+ =?utf-8?B?TGJvUDk5WkJweXhOV0dnOHFXenFjVUxUWTFKRTRrNUxDVmR5OXRQUWdYdFNI?=
+ =?utf-8?B?NEMxQ3g2ZlpMUlU0K0FGOEZSVG9Xd1gxdWFCT0c2RlI5TDJ5ajRWeTJsZUF5?=
+ =?utf-8?B?aDVDc0I2R3U1T2tXb04xa3lNMGRhYXhPVHYwL25XY1NYcGRmZU95azFOM2tZ?=
+ =?utf-8?B?RGFrWWdLTHFKRnRDNUhxVHJxNEZTeU9PWmRSM1ovU0IvWkh4aDVuWVd2dVpQ?=
+ =?utf-8?B?ZTBQMURpbG1BblNQeVRoSGFiNHpFZFNQcDI1UXNqOC9WemF6bHh1ZkhCeUlT?=
+ =?utf-8?B?eGhpZWJFemZoOGc3cTBiU08rQ2toZTRwbE1qVER3elVGYkwxK1BkOGIyemMv?=
+ =?utf-8?B?WDFYNFk5aU5XbUozL1pCVjhmSDIxeld3Qi9TME92U05kejMzeUFCa2FqclBO?=
+ =?utf-8?B?b2xZa2FUeUZNQTM4YVh4dUxWamxvVlMzS2Z6MUQ1SHc5a1o5cWlTWE0xNnUr?=
+ =?utf-8?Q?h37upnR+HjIhgzgkiZ?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ead43ae5-2532-41b5-25af-08de7863dc6e
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 13:59:03.0158
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: G4t7MB9QFidkugl/al+qO2G+k1h+U0gcQDho/1ReEiCRYFq45uNZAGQySYUAmpq4
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB999076
 
-On Sun, Mar 01, 2026 at 10:05:02PM -0800, Barry K. Nathan wrote:
->On 2/28/26 10:00, Sasha Levin wrote:
->>This is the start of the stable review cycle for the 6.12.75 release.
->>There are 385 patches in this series, all will be posted as a response
->>to this one.  If anyone has any issues with these being applied, please
->>let me know.
+On 3/2/26 14:01, Jason Gunthorpe wrote:
+> On Mon, Mar 02, 2026 at 12:43:34PM +0100, Christian König wrote:
+>> On 3/1/26 19:57, Jason Gunthorpe wrote:
+>>> Using kunit to write tests for new work on dmabuf is coming up:
+>>>
+>>> https://lore.kernel.org/all/26-v1-b5cab63049c0+191af-dmabuf_map_type_jgg@nvidia.com/
+>>>
+>>> Replace the custom test framework with kunit to avoid maintaining two
+>>> concurrent test frameworks.
 >>
->>Responses should be made by Mon Mar  2 05:59:55 PM UTC 2026.
->>Anything received after that time might be too late.
+>> Oh, yes that was on my todo list for like an eternity as well.
 >>
->>The whole patch series can be found in one patch at:
->>         https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-6.12.y&id2=v6.12.74
->>or in the git tree and branch at:
->>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
->>and the diffstat can be found below.
->>
->>Thanks,
->>Sasha
->
->I just now noticed a sizable discrepancy between what's in the
->stable-queue and what's in -rc1, for 5.10.y through 6.12.y. (6.18.y
->and 6.19.y appear unaffected.)
->
->To make sure this is an apples-to-apples comparison, I'll compare with
->the stable-queue as of commit 2370009958172f632d48973387e7b6ae116086b1
->("Drop a broken ACPI patch"); I'd expect the queue as of that commit to
->match the -rc1 patches, if I'm not mistaken.
->
->
->                      # of patches in         # of patches in
->                      stable mailing list     stable-queue git
->                      thread                  @ 237000995817
->
->5.10.252-rc1          147                     334
->5.15.202-rc1          164                     411
->6.1.165-rc1           232                     533
->6.6.128-rc1           283                     683
->6.12.75-rc1           385                     953
->6.18.16-rc1           752                     751
->6.19.6-rc1            844                     843
->
->The off-by-one difference for 6.18.y/6.19.y is expected, since
->(unlike the stable-queue itself) the -rc1 patch and the mailing
->list thread include a Makefile patch to update the version number.
->
->For the other kernels, though, it looks to me like something
->went wrong somewhere. Of course I could be mistaken, but that's
->how it appears to me.
->
->In any case, I figured I should bring this to your attention.
+>> No idea when or even if I have time to review that, but feel free to
+>> add my Acked-by should that go upstream.
+> 
+> I'm confused by this statement, aren't you the person who would send
+> it upstream?
 
-Barry, this is a great catch. Thank you!
+Sumit and me are the maintainers for DMA-buf, but the drm-misc-next/-fixes branches used to send DMA-buf patches upstream are used by much more people.
 
-The root cause turned out to be a bug in git-quiltimport. One of the
-patches queued has the literal text "\0" in its subject line:
+> It is just a kunit, I wouldn't expect an intensive review. The tests
+> still run after all
 
-   selftests: tc_actions: don't dump 2MB of \0 to stdout
+When somebody else has time to take a look over those patches I think we can push them to drm-misc-next ASAP. I just wanted to note that I'm ok with that as maintainer and those patches doesn't need to be reviewed by me.
 
-git-quiltimport constructs commit messages using echo(1):
+Regards,
+Christian.
 
-   commit=$( { echo "$SUBJECT"; echo; cat "$tmp_msg"; } | git commit-tree $tree -p $commit)
+> 
+> Thanks,
+> Jason
 
-The problem is that echo interprets backslash escape sequences, so
-"\0" gets expanded into an actual NUL byte (0x00). git commit-tree
-then rejects the commit with:
-
-   error: a NUL byte in commit log message not allowed.
-
-This caused git-quiltimport to bail out mid-way through building
-several trees during -rc construction. The trees that had this patch
-queued (5.10 through 6.12) only got a partial set of patches into
-the -rc branch, while 6.18 and 6.19 were unaffected because they
-hadn't hit the problematic patch yet.
-
-6.18 and 6.19 were also previously released by Greg, who uses actual
-quilt rather than git-quiltimport, so he wouldn't have run into this.
-
-This also explains the bogus FAILED emails that went out for patches
-that actually apply cleanly - since the patches never made it into the
--rc branch, my scripts concluded they had failed to apply.
-
-I'll propose a fix for git to use printf '%s\n' instead of echo on
-that line, which doesn't interpret escape sequences.
-
--- 
-Thanks,
-Sasha
