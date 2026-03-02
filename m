@@ -1,235 +1,155 @@
-Received: from smtp134-25.sina.com.cn (smtp134-25.sina.com.cn [180.149.134.25])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2880321D3CC
-	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 06:20:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=180.149.134.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A03175A9A
+	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 06:34:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772432413; cv=none; b=kLnhdn2qFRJvlrPNU167668Wx5I5FY0PPKOyFdHaq6GsNWS9WV65tD53HBu/ynnP9cO+MLTAKwaxozY7J3jNdTZE1ZESVm8x/Adh+uTK141rzrceDqkOMviLBbMMTXzkRE4KXN+xTyTqiPDNyx5fyGk7I2jdnk0ORAHcdpi4RM4=
+	t=1772433290; cv=none; b=njHykHr/e1+GCtQjp95rcbg7H6iD0aSrYjAxi30DIA+6t7uDmFWDUUE9n/k4hcIHV0byQHR5TLpjwA4Gg/CwjFSAmCYsW5St0fJagfS5yg0DH/Wr9EACNe461S9OSBhg05hGc847OugvDz2IjXROPBn+cyMLVwgB5Ga03m01TcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772432413; c=relaxed/simple;
-	bh=slg8SM4ynOKms53eQv2wcJ57WnYI6guMdGs+fPU8aQo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=EPZLSAb5uld17NKZdGCg5r4kFscVNNwYaY+tYtrsoZolQG23UjcPeR7EIUFSQ0MGIMAXjVHsv4n7vtEqfGK+RQYyWJoBND+n6GVeQSm6hru2ulh2hKOilA6sT618iwGX0anfNQR1JXM+W0BLt2u+8nfDchBSK7h6n8vEM2mbxIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=DfgRyzTR; arc=none smtp.client-ip=180.149.134.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
+	s=arc-20240116; t=1772433290; c=relaxed/simple;
+	bh=vRO+oHmk5YGGkTB88G6/eykYcRBEka1Mo09t9KaR6AU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sTIVbJvISasHhKJgOSzitKLZHtptpQPgL1lZh6rk1+6c9RCo9LaBq096Jo7KKPyxr2abMm6CWRXrGQ7UwpiEEz2fZaX7RuPSJ9o9MPXkpau3y00jdocpEo2ihAx44SY+hn9PKJqbv0K+e1DglYyP+hLVGmh64CXGeHGduSrbo5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jnIW/xdx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ofEGStyC; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="DfgRyzTR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1772432404;
-	bh=K88WGoNKj/7zsSpUnwtuBnEb5pHhWeEyPp3270DPR6E=;
-	h=From:Subject:Date:Message-Id;
-	b=DfgRyzTRrPXmc3p1/XOe7isEikuN1zt0yABCBzYVhT2uiPzQ924Bm4GkOp8T7lMlH
-	 AWbUutW+cju8s4w/J3kLpcyYcFwrt0sa0Ker1UCSu+JJ1cUCOXPvTC/YL9S/dekDjb
-	 VWXaeifkeGjhfyTicEyul1s/QVwlXuHJnUY0gpyg=
-X-SMAIL-HELO: NTT-kernel-dev
-Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
-	by sina.cn (10.185.250.21) with ESMTP
-	id 69A52ACB000002BE; Mon, 2 Mar 2026 14:14:37 +0800 (CST)
-X-Sender: jianqkang@sina.cn
-X-Auth-ID: jianqkang@sina.cn
-Authentication-Results: sina.cn;
-	 spf=none smtp.mailfrom=jianqkang@sina.cn;
-	 dkim=none header.i=none;
-	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 6587363408595
-X-SMAIL-UIID: 94AF8027E21E4C1CBF91639DFB83F4DF-20260302-141437-1
-From: Jianqiang kang <jianqkang@sina.cn>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	aahringo@redhat.com
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	ccaulfie@redhat.com,
-	teigland@redhat.com,
-	cluster-devel@redhat.com
-Subject: [PATCH 5.15.y] fs: dlm: fix use after free in midcomms commit
-Date: Mon,  2 Mar 2026 14:14:35 +0800
-Message-Id: <20260302061435.2670935-1-jianqkang@sina.cn>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jnIW/xdx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ofEGStyC"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id C552E1D001A8;
+	Mon,  2 Mar 2026 01:34:45 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Mon, 02 Mar 2026 01:34:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1772433285;
+	 x=1772519685; bh=Yizj12luU/DOkZYFAXinlxaAGnXOovaAVzGZmDXvoeQ=; b=
+	jnIW/xdxK+ClcP4hzDuC5vkpAkEKNF2sw5/LST39h3iRvTJZlvsjZDrX6zfPkG+o
+	RpuhVtUpSiRIKlMtjjJkpNl53ZW9iD0EzzZWj2KfjHCxBc+vTL8fipMhkmuyopM8
+	kQn7fNC6x3TJN1ZR1jlgFQ2uh7wC2uTrwn6pWOmsDeP46bM7waG4K9uniUIiiDPk
+	cGjaq5EVl1BsLR6GvZVEYcEDrEJ1XZQnfshKBXr1fDBl4oHYWwbZ3TzURqyn4w9n
+	NT953Yl2zqjtyyT0RVcPQjoVutANVG7wm2NUeXUU0KxIvCgUfepB20AY3nPIZZnZ
+	/wilXJcZtXRPSS6qJD4TUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772433285; x=
+	1772519685; bh=Yizj12luU/DOkZYFAXinlxaAGnXOovaAVzGZmDXvoeQ=; b=o
+	fEGStyC8hzKqAOFpGQNPFnf1l2/tOirsc5b0csE8ZK0ERBDeFVrcPTOd3ncQzVaG
+	1Fr7VwNPiHkx6zcUDHg2R9fns1yWXkBXuJfaM3Td5bgIkkDadqaGPKepaqq4rqaR
+	H0jMJNZoUGCnR4I+EdnDqWFXUoqeXwldCKLZQw/pNmfoJJghl1oK8rN/9oYLESdq
+	wVbb4EUX1a2ZintW7P9zcYUHeMY+28mIyVycsUu4KV7wu3Hla/c0q+h3nKrQBUxF
+	ah3V6z1LTrO5/+5PAI9TZWM2lUjV8dKj8V5eU6c5L1vWWYMl0bdI8QJMJ4fS3wU8
+	VMh9We7xK5crihbMEZHhw==
+X-ME-Sender: <xms:hS-lab_BJ3Lafy_SBbq4w6Ow5P4GCWiIStjND7Dee3nSGeXA6SJAPg>
+    <xme:hS-laYHMIVuPIzjrqZLdVXrfzjGjf6-gQllFBki9-W0zyC1AlGRux-iFLWhy9Exlb
+    D7bUnv4s57VzQJy12LXBUDpJsEqYgjf7dubZkAs3Y0I949q7iH9OFE>
+X-ME-Received: <xmr:hS-laaIGxg6289RFhwz2AIRTji2pJqmPSKt5kcJHeGEOZZpj2_164sbU6VV_-ul95Sx866HLTSc5uvXd3T8SU0qZfneayQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheeileeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepkfffgggfuffvvehfhfgjtgfgsehtkeertddtvdejnecuhfhrohhmpedfuegrrhhr
+    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeduvddtleefjeffkefgkeefkefgkeevleelheekueehteeutddvveeg
+    feeijeetkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpegsrghrrhihnhesphhosghogidrtghomhdpnhgspghrtghpthhtohepvddupdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehsrghshhgrlheskhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepshhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthht
+    ohepphgrthgthhgvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehtoh
+    hrvhgrlhgusheslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
+    rghkphhmsehlihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlih
+    hnuhigsehrohgvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgv
+    lhdrohhrgh
+X-ME-Proxy: <xmx:hS-laTcQcGvBM9EyhQR6jOiJRGDmQnnZdLqzc9NUBsj-flZw4-0SJg>
+    <xmx:hS-lafVVK634R554Ehsslyg4KVXxKH90AGfxUQ62ag4b4TEdImteKA>
+    <xmx:hS-laSFfRQl-XAW18X3XiZDRU0ab-boLb1yyFMIkFUfzo9Dsc9sUfQ>
+    <xmx:hS-laYXEktz-5AMOfG5QYdgNi_qCTCfZcP51G8l5z9zGqcRw_ALUEg>
+    <xmx:hS-laTk0h6V7kwzhA36cD9Ur_hlh0yqC9jMKI3nFC21-49E5PviH2dx8>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Mar 2026 01:34:42 -0500 (EST)
+Message-ID: <761b2e6e-6e49-496d-8fe7-39d4f628405b@pobox.com>
+Date: Sun, 1 Mar 2026 22:34:41 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.19 000/844] 6.19.6-rc1 review
+To: Sasha Levin <sashal@kernel.org>
+Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+ gregkh@linuxfoundation.org, patches@lists.linux.dev,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260228173244.1509663-1-sashal@kernel.org>
+ <9623f4e6-41b4-4dc8-a6ff-cf0de3604dfb@pobox.com>
+ <bf650251-9254-4d42-9224-0b8db08042c7@pobox.com> <aaTef1CyYVhpE4k2@laps>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <aaTef1CyYVhpE4k2@laps>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+On 3/1/26 16:49, Sasha Levin wrote:
+> On Sun, Mar 01, 2026 at 08:43:43AM -0800, Barry K. Nathan wrote:
+>> On 3/1/26 00:49, Barry K. Nathan wrote:
+>>> Unfortunately, 6.19.6-rc1 won't even build for me:
+>>>
+>>> Warning: drivers/gpu/drm/i915/intel_wakeref.h:156 expecting prototype for __intel_wakeref_put(). Prototype was for INTEL_WAKEREF_PUT_ASYNC() instead
+>>> 1 warnings as errors
+>>> make[9]: *** [drivers/gpu/drm/i915/Makefile:449: drivers/gpu/drm/i915/intel_wakeref.hdrtest] Error 3
+>>> make[8]: *** [scripts/Makefile.build:546: drivers/gpu/drm/i915] Error 2
+>>> make[8]: *** Waiting for unfinished jobs....
+>>>
+>>> This only happens with 6.19.6-rc1, not any of this weekend's other
+>>> stable rc's. (I'm still testing 6.12.75-rc1 and 6.18.16-rc1, but
+>>> they're doing well so far. I have successfully built 5.15.202-rc1
+>>> and 6.1.165-rc1 but I won't have a chance to do any further testing
+>>> of them before they're released.)
+>>>
+>>> As soon as I can (in the next hour or two) I'll minimize my config
+>>> a little to shorten the compile time, then I'll start bisecting.
+>>
+>> Result of bisecting:
+>> first bad commit: [0ef5d235ab57bc90831ddf38eb1742ff68f345e1]
+>> docs: kdoc: fix logic to handle unissued warnings
+>>
+>> This commit breaks the i915 DRM build if (and only if)
+>> CONFIG_DRM_I915_WERROR=y, whether CONFIG_WERROR is enabled or
+>> disabled. However, the "bad" commit is definitely fixing a real
+>> bug, and this build failure doesn't happen on current mainline
+>> as of this writing (commit eb71ab2bf722), so I don't think
+>> dropping the patch is the correct way forward.
+>>
+>> Rather, adding commit 524696a19e34598c9173fdd5b32fb7e5d16a91d3
+>>    drm/i915/wakeref: clean up INTEL_WAKEREF_PUT_* flag macros
+>> (it applies cleanly) fixes the warning, thereby fixing the build.
+>>
+>> The resulting kernel works fine in my testing, too. I'm using
+>> 6.19.6-rc1 + 524696a19e34598c9173fdd5b32fb7e5d16a91d3 to write
+>> and send this email from my ThinkPad T14 Gen 1, which uses the
+>> i915 DRM driver for its Intel integrated graphics. (I also
+>> tested it on my 2017 MacBook Air, which also uses i915 DRM for
+>> its Intel integrated graphics.)
+> 
+> I'll queue 524696a19e345 up, thanks for the report!
 
-[ Upstream commit 724b6bab0d75f1dc01fdfbf7fe8d4217a5cb90ba ]
+You're welcome.
 
-While working on processing dlm message in softirq context I experienced
-the following KASAN use-after-free warning:
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
-[  151.760477] ==================================================================
-[  151.761803] BUG: KASAN: use-after-free in dlm_midcomms_commit_mhandle+0x19d/0x4b0
-[  151.763414] Read of size 4 at addr ffff88811a980c60 by task lock_torture/1347
-
-[  151.765284] CPU: 7 PID: 1347 Comm: lock_torture Not tainted 6.1.0-rc4+ #2828
-[  151.766778] Hardware name: Red Hat KVM/RHEL-AV, BIOS 1.16.0-3.module+el8.7.0+16134+e5908aa2 04/01/2014
-[  151.768726] Call Trace:
-[  151.769277]  <TASK>
-[  151.769748]  dump_stack_lvl+0x5b/0x86
-[  151.770556]  print_report+0x180/0x4c8
-[  151.771378]  ? kasan_complete_mode_report_info+0x7c/0x1e0
-[  151.772241]  ? dlm_midcomms_commit_mhandle+0x19d/0x4b0
-[  151.773069]  kasan_report+0x93/0x1a0
-[  151.773668]  ? dlm_midcomms_commit_mhandle+0x19d/0x4b0
-[  151.774514]  __asan_load4+0x7e/0xa0
-[  151.775089]  dlm_midcomms_commit_mhandle+0x19d/0x4b0
-[  151.775890]  ? create_message.isra.29.constprop.64+0x57/0xc0
-[  151.776770]  send_common+0x19f/0x1b0
-[  151.777342]  ? remove_from_waiters+0x60/0x60
-[  151.778017]  ? lock_downgrade+0x410/0x410
-[  151.778648]  ? __this_cpu_preempt_check+0x13/0x20
-[  151.779421]  ? rcu_lockdep_current_cpu_online+0x88/0xc0
-[  151.780292]  _convert_lock+0x46/0x150
-[  151.780893]  convert_lock+0x7b/0xc0
-[  151.781459]  dlm_lock+0x3ac/0x580
-[  151.781993]  ? 0xffffffffc0540000
-[  151.782522]  ? torture_stop+0x120/0x120 [dlm_locktorture]
-[  151.783379]  ? dlm_scan_rsbs+0xa70/0xa70
-[  151.784003]  ? preempt_count_sub+0xd6/0x130
-[  151.784661]  ? is_module_address+0x47/0x70
-[  151.785309]  ? torture_stop+0x120/0x120 [dlm_locktorture]
-[  151.786166]  ? 0xffffffffc0540000
-[  151.786693]  ? lockdep_init_map_type+0xc3/0x360
-[  151.787414]  ? 0xffffffffc0540000
-[  151.787947]  torture_dlm_lock_sync.isra.3+0xe9/0x150 [dlm_locktorture]
-[  151.789004]  ? torture_stop+0x120/0x120 [dlm_locktorture]
-[  151.789858]  ? 0xffffffffc0540000
-[  151.790392]  ? lock_torture_cleanup+0x20/0x20 [dlm_locktorture]
-[  151.791347]  ? delay_tsc+0x94/0xc0
-[  151.791898]  torture_ex_iter+0xc3/0xea [dlm_locktorture]
-[  151.792735]  ? torture_start+0x30/0x30 [dlm_locktorture]
-[  151.793606]  lock_torture+0x177/0x270 [dlm_locktorture]
-[  151.794448]  ? torture_dlm_lock_sync.isra.3+0x150/0x150 [dlm_locktorture]
-[  151.795539]  ? lock_torture_stats+0x80/0x80 [dlm_locktorture]
-[  151.796476]  ? do_raw_spin_lock+0x11e/0x1e0
-[  151.797152]  ? mark_held_locks+0x34/0xb0
-[  151.797784]  ? _raw_spin_unlock_irqrestore+0x30/0x70
-[  151.798581]  ? __kthread_parkme+0x79/0x110
-[  151.799246]  ? trace_preempt_on+0x2a/0xf0
-[  151.799902]  ? __kthread_parkme+0x79/0x110
-[  151.800579]  ? preempt_count_sub+0xd6/0x130
-[  151.801271]  ? __kasan_check_read+0x11/0x20
-[  151.801963]  ? __kthread_parkme+0xec/0x110
-[  151.802630]  ? lock_torture_stats+0x80/0x80 [dlm_locktorture]
-[  151.803569]  kthread+0x192/0x1d0
-[  151.804104]  ? kthread_complete_and_exit+0x30/0x30
-[  151.804881]  ret_from_fork+0x1f/0x30
-[  151.805480]  </TASK>
-
-[  151.806111] Allocated by task 1347:
-[  151.806681]  kasan_save_stack+0x26/0x50
-[  151.807308]  kasan_set_track+0x25/0x30
-[  151.807920]  kasan_save_alloc_info+0x1e/0x30
-[  151.808609]  __kasan_slab_alloc+0x63/0x80
-[  151.809263]  kmem_cache_alloc+0x1ad/0x830
-[  151.809916]  dlm_allocate_mhandle+0x17/0x20
-[  151.810590]  dlm_midcomms_get_mhandle+0x96/0x260
-[  151.811344]  _create_message+0x95/0x180
-[  151.811994]  create_message.isra.29.constprop.64+0x57/0xc0
-[  151.812880]  send_common+0x129/0x1b0
-[  151.813467]  _convert_lock+0x46/0x150
-[  151.814074]  convert_lock+0x7b/0xc0
-[  151.814648]  dlm_lock+0x3ac/0x580
-[  151.815199]  torture_dlm_lock_sync.isra.3+0xe9/0x150 [dlm_locktorture]
-[  151.816258]  torture_ex_iter+0xc3/0xea [dlm_locktorture]
-[  151.817129]  lock_torture+0x177/0x270 [dlm_locktorture]
-[  151.817986]  kthread+0x192/0x1d0
-[  151.818518]  ret_from_fork+0x1f/0x30
-
-[  151.819369] Freed by task 1336:
-[  151.819890]  kasan_save_stack+0x26/0x50
-[  151.820514]  kasan_set_track+0x25/0x30
-[  151.821128]  kasan_save_free_info+0x2e/0x50
-[  151.821812]  __kasan_slab_free+0x107/0x1a0
-[  151.822483]  kmem_cache_free+0x204/0x5e0
-[  151.823152]  dlm_free_mhandle+0x18/0x20
-[  151.823781]  dlm_mhandle_release+0x2e/0x40
-[  151.824454]  rcu_core+0x583/0x1330
-[  151.825047]  rcu_core_si+0xe/0x20
-[  151.825594]  __do_softirq+0xf4/0x5c2
-
-[  151.826450] Last potentially related work creation:
-[  151.827238]  kasan_save_stack+0x26/0x50
-[  151.827870]  __kasan_record_aux_stack+0xa2/0xc0
-[  151.828609]  kasan_record_aux_stack_noalloc+0xb/0x20
-[  151.829415]  call_rcu+0x4c/0x760
-[  151.829954]  dlm_mhandle_delete+0x97/0xb0
-[  151.830718]  dlm_process_incoming_buffer+0x2fc/0xb30
-[  151.831524]  process_dlm_messages+0x16e/0x470
-[  151.832245]  process_one_work+0x505/0xa10
-[  151.832905]  worker_thread+0x67/0x650
-[  151.833507]  kthread+0x192/0x1d0
-[  151.834046]  ret_from_fork+0x1f/0x30
-
-[  151.834900] The buggy address belongs to the object at ffff88811a980c30
-                which belongs to the cache dlm_mhandle of size 88
-[  151.836894] The buggy address is located 48 bytes inside of
-                88-byte region [ffff88811a980c30, ffff88811a980c88)
-
-[  151.839007] The buggy address belongs to the physical page:
-[  151.839904] page:0000000076cf5d62 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x11a980
-[  151.841378] flags: 0x8000000000000200(slab|zone=2)
-[  151.842141] raw: 8000000000000200 0000000000000000 dead000000000122 ffff8881089b43c0
-[  151.843401] raw: 0000000000000000 0000000000220022 00000001ffffffff 0000000000000000
-[  151.844640] page dumped because: kasan: bad access detected
-
-[  151.845822] Memory state around the buggy address:
-[  151.846602]  ffff88811a980b00: fb fb fb fb fc fc fc fc fa fb fb fb fb fb fb fb
-[  151.847761]  ffff88811a980b80: fb fb fb fc fc fc fc fa fb fb fb fb fb fb fb fb
-[  151.848921] >ffff88811a980c00: fb fb fc fc fc fc fa fb fb fb fb fb fb fb fb fb
-[  151.850076]                                                        ^
-[  151.851085]  ffff88811a980c80: fb fc fc fc fc fa fb fb fb fb fb fb fb fb fb fb
-[  151.852269]  ffff88811a980d00: fc fc fc fc fa fb fb fb fb fb fb fb fb fb fb fc
-[  151.853428] ==================================================================
-[  151.855618] Disabling lock debugging due to kernel taint
-
-It is accessing a mhandle in dlm_midcomms_commit_mhandle() and the mhandle
-was freed by a call_rcu() call in dlm_process_incoming_buffer(),
-dlm_mhandle_delete(). It looks like it was freed because an ack of
-this message was received. There is a short race between committing the
-dlm message to be transmitted and getting an ack back. If the ack is
-faster than returning from dlm_midcomms_commit_msg_3_2(), then we run
-into a use-after free because we still need to reference the mhandle when
-calling srcu_read_unlock().
-
-To avoid that, we don't allow that mhandle to be freed between
-dlm_midcomms_commit_msg_3_2() and srcu_read_unlock() by using rcu read
-lock. We can do that because mhandle is protected by rcu handling.
-
-Cc: stable@vger.kernel.org
-Fixes: 489d8e559c65 ("fs: dlm: add reliable connection if reconnect")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-[ Minor conflict resolved. ]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
----
- fs/dlm/midcomms.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/fs/dlm/midcomms.c b/fs/dlm/midcomms.c
-index 84a7a39fc12e..3f32f860ee9a 100644
---- a/fs/dlm/midcomms.c
-+++ b/fs/dlm/midcomms.c
-@@ -1131,8 +1131,15 @@ void dlm_midcomms_commit_mhandle(struct dlm_mhandle *mh)
- 		kfree(mh);
- 		break;
- 	case DLM_VERSION_3_2:
-+		/* held rcu read lock here, because we sending the
-+		 * dlm message out, when we do that we could receive
-+		 * an ack back which releases the mhandle and we
-+		 * get a use after free.
-+		 */
-+		rcu_read_lock();
- 		dlm_midcomms_commit_msg_3_2(mh);
- 		srcu_read_unlock(&nodes_srcu, mh->idx);
-+		rcu_read_unlock();
- 		break;
- 	default:
- 		srcu_read_unlock(&nodes_srcu, mh->idx);
 -- 
-2.34.1
-
+-Barry K. Nathan  <barryn@pobox.com>
